@@ -20,39 +20,15 @@
 /* Specification.  */
 #include <wchar.h>
 
-extern mbstate_t _gl_wcsrtombs_state;
-
-#if HAVE_WCSRTOMBS && !WCSRTOMBS_TERMINATION_BUG
-/* Override the system's wcsrtombs() function.  */
-
-# undef wcsrtombs
-
-size_t
-rpl_wcsrtombs (char *dest, const wchar_t **srcp, size_t len, mbstate_t *ps)
-{
-  if (ps == NULL)
-    ps = &_gl_wcsrtombs_state;
-# if WCSRTOMBS_NULL_ARG_BUG
-  if (dest == NULL)
-    {
-      const wchar_t *temp_src = *srcp;
-
-      return wcsrtombs (NULL, &temp_src, len, ps);
-    }
-  else
-# endif
-    return wcsrtombs (dest, srcp, len, ps);
-}
-
-#else
-/* Implement wcsrtombs on top of wcrtomb().  */
-
 # include <errno.h>
 # include <stdlib.h>
 # include <string.h>
 
+
+extern mbstate_t _gl_wcsrtombs_state;
+
 size_t
-wcsrtombs (char *dest, const wchar_t **srcp, size_t len, mbstate_t *ps)
+wcsnrtombs (char *dest, const wchar_t **srcp, size_t srclen, size_t len, mbstate_t *ps)
 {
   if (ps == NULL)
     ps = &_gl_wcsrtombs_state;
@@ -68,7 +44,7 @@ wcsrtombs (char *dest, const wchar_t **srcp, size_t len, mbstate_t *ps)
       {
 	char *destptr = dest;
 
-	for (; len > 0; src++)
+	for (; srclen > 0 && len > 0; src++, srclen--)
 	  {
 	    wchar_t wc = *src;
 	    size_t ret = wcrtomb (len >= cur_max ? destptr : buf, wc, ps);
@@ -100,7 +76,7 @@ wcsrtombs (char *dest, const wchar_t **srcp, size_t len, mbstate_t *ps)
 	mbstate_t state = *ps;
 	size_t totalcount = 0;
 
-	for (;; src++)
+	for (; srclen > 0; src++, srclen--)
 	  {
 	    wchar_t wc = *src;
 	    size_t ret = wcrtomb (buf, wc, &state);

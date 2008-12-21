@@ -241,6 +241,20 @@ extern size_t wcsrtombs (char *dest, const wchar_t **srcp, size_t len, mbstate_t
 #endif
 
 
+/* Convert a wide string to a string.  */
+#if @GNULIB_WCSNRTOMBS@
+# if !@HAVE_WCSNRTOMBS@
+extern size_t wcsnrtombs (char *dest, const wchar_t **srcp, size_t srclen, size_t len, mbstate_t *ps);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef wcsnrtombs
+# define wcsnrtombs(d,s,n,l,p) \
+    (GL_LINK_WARNING ("wcsnrtombs is unportable - " \
+                      "use gnulib module wcsnrtombs for portability"), \
+     wcsnrtombs (d, s, n, l, p))
+#endif
+
+
 /* Return the number of screen columns needed for WC.  */
 #if @GNULIB_WCWIDTH@
 # if @REPLACE_WCWIDTH@

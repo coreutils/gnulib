@@ -1,5 +1,24 @@
 2008-12-21  Bruno Haible  <bruno@clisp.org>
 
+	New module 'wcsnrtombs'.
+	* lib/wchar.in.h (wcsnrtombs): New declaration.
+	* lib/wcsnrtombs.c: New file.
+	* lib/wcsrtombs-state.c: New file.
+	* lib/wcsrtombs.c: Refer to _gl_wcsrtombs_state.
+	(internal_state): Remove variable.
+	* m4/wcsnrtombs.m4: New file.
+	* m4/wcsrtombs.m4 (gl_FUNC_WCSRTOMBS): Add wcsrtombs-state.c to the
+	compilation units.
+	* m4/wchar.m4 (gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WCSNRTOMBS,
+	HAVE_WCSNRTOMBS.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WCSNRTOMBS,
+	HAVE_WCSNRTOMBS.
+	* modules/wcsnrtombs: New file.
+	* modules/wcsrtombs (Files): Add lib/wcsrtombs-state.c.
+	* doc/posix-functions/wcsnrtombs.texi: Mention the new module.
+
+2008-12-21  Bruno Haible  <bruno@clisp.org>
+
 	* modules/wcsrtombs-tests: New file.
 	* tests/test-wcsrtombs1.sh: New file.
 	* tests/test-wcsrtombs2.sh: New file.

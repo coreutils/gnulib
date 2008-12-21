@@ -1,21 +1,19 @@
 Description:
-wcsrtombs() function: convert wide string to string.
+wcsnrtombs() function: convert wide string to string.
 
 Files:
-lib/wcsrtombs.c
+lib/wcsnrtombs.c
 lib/wcsrtombs-state.c
-m4/wcsrtombs.m4
+m4/wcsnrtombs.m4
 m4/mbstate_t.m4
-m4/locale-fr.m4
-m4/codeset.m4
 
 Depends-on:
 wchar
 wcrtomb
 
 configure.ac:
-gl_FUNC_WCSRTOMBS
-gl_WCHAR_MODULE_INDICATOR([wcsrtombs])
+gl_FUNC_WCSNRTOMBS
+gl_WCHAR_MODULE_INDICATOR([wcsnrtombs])
 
 Makefile.am:
 
