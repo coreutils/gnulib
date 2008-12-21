@@ -97,7 +97,11 @@ extern wint_t btowc (int c);
 
 /* Convert a wide character to a single-byte character.  */
 #if @GNULIB_WCTOB@
-# if !defined wctob && !@HAVE_DECL_WCTOB@
+# if @REPLACE_WCTOB@
+#  undef wctob
+#  define wctob rpl_wctob
+# endif
+# if (!defined wctob && !@HAVE_DECL_WCTOB@) || @REPLACE_WCTOB@
 /* wctob is provided by gnulib, or wctob exists but is not declared.  */
 extern int wctob (wint_t wc);
 # endif
