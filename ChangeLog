@@ -1,5 +1,9 @@
 2008-12-21  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-mbsrtowcs.c (main): Execute the loop also for unlimited=1.
+
+2008-12-21  Bruno Haible  <bruno@clisp.org>
+
 	Update doc for AIX.
 	* doc/pastposix-functions/wcswcs.texi: Mention that AIX has only a
 	16-bit wchar_t type.

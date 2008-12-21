@@ -141,7 +141,7 @@ main (int argc, char *argv[])
 		  ASSERT (buf[1] == (wchar_t) 0xBADFACE);
 		ASSERT (mbsinit (&state));
 	      }
-	      return 0;
+	      break;
 
 	    case '2':
 	      /* Locale encoding is UTF-8.  */
@@ -187,7 +187,7 @@ main (int argc, char *argv[])
 		  ASSERT (buf[2] == (wchar_t) 0xBADFACE);
 		ASSERT (mbsinit (&state));
 	      }
-	      return 0;
+	      break;
 
 	    case '3':
 	      /* Locale encoding is EUC-JP.  */
@@ -240,7 +240,7 @@ main (int argc, char *argv[])
 		  ASSERT (buf[2] == (wchar_t) 0xBADFACE);
 		ASSERT (mbsinit (&state));
 	      }
-	      return 0;
+	      break;
 
 	    case '4':
 	      /* Locale encoding is GB18030.  */
@@ -286,7 +286,7 @@ main (int argc, char *argv[])
 		  ASSERT (buf[2] == (wchar_t) 0xBADFACE);
 		ASSERT (mbsinit (&state));
 	      }
-	      return 0;
+	      break;
 
 	    default:
 	      return 1;
