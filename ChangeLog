@@ -1,5 +1,12 @@
 2008-12-21  Bruno Haible  <bruno@clisp.org>
 
+	* modules/wcsrtombs-tests: New file.
+	* tests/test-wcsrtombs1.sh: New file.
+	* tests/test-wcsrtombs2.sh: New file.
+	* tests/test-wcsrtombs3.sh: New file.
+	* tests/test-wcsrtombs4.sh: New file.
+	* tests/test-wcsrtombs.c: New file.
+
 	New module 'wcsrtombs'.
 	* lib/wchar.in.h (wcsrtombs): New declaration.
 	* lib/wcsrtombs.c: New file.
