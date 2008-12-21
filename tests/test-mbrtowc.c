@@ -225,51 +225,50 @@ main (int argc, char *argv[])
       case '3':
 	/* Locale encoding is EUC-JP.  */
 	{
-	  char input[] = "B\217\253\344\217\251\316er"; /* "Büßer" */
+	  char input[] = "<\306\374\313\334\270\354>"; /* "<日本語>" */
 	  memset (&state, '\0', sizeof (mbstate_t));
 
 	  wc = (wchar_t) 0xBADFACE;
 	  ret = mbrtowc (&wc, input, 1, &state);
 	  ASSERT (ret == 1);
-	  ASSERT (wc == 'B');
+	  ASSERT (wc == '<');
 	  ASSERT (mbsinit (&state));
 	  input[0] = '\0';
 
 	  wc = (wchar_t) 0xBADFACE;
-	  ret = mbrtowc (&wc, input + 1, 1, &state);
-	  ASSERT (ret == (size_t)(-2));
-	  ASSERT (wc == (wchar_t) 0xBADFACE);
-	  ASSERT (!mbsinit (&state));
-	  input[1] = '\0';
-
-	  wc = (wchar_t) 0xBADFACE;
-	  ret = mbrtowc (&wc, input + 2, 7, &state);
+	  ret = mbrtowc (&wc, input + 1, 2, &state);
 	  ASSERT (ret == 2);
 	  ASSERT (wctob (wc) == EOF);
 	  ASSERT (mbsinit (&state));
+	  input[1] = '\0';
 	  input[2] = '\0';
+
+	  wc = (wchar_t) 0xBADFACE;
+	  ret = mbrtowc (&wc, input + 3, 1, &state);
+	  ASSERT (ret == (size_t)(-2));
+	  ASSERT (wc == (wchar_t) 0xBADFACE);
+	  ASSERT (!mbsinit (&state));
 	  input[3] = '\0';
 
 	  wc = (wchar_t) 0xBADFACE;
-	  ret = mbrtowc (&wc, input + 4, 5, &state);
-	  ASSERT (ret == 3);
+	  ret = mbrtowc (&wc, input + 4, 4, &state);
+	  ASSERT (ret == 1);
 	  ASSERT (wctob (wc) == EOF);
 	  ASSERT (mbsinit (&state));
 	  input[4] = '\0';
+
+	  wc = (wchar_t) 0xBADFACE;
+	  ret = mbrtowc (&wc, input + 5, 3, &state);
+	  ASSERT (ret == 2);
+	  ASSERT (wctob (wc) == EOF);
+	  ASSERT (mbsinit (&state));
 	  input[5] = '\0';
 	  input[6] = '\0';
 
 	  wc = (wchar_t) 0xBADFACE;
-	  ret = mbrtowc (&wc, input + 7, 2, &state);
+	  ret = mbrtowc (&wc, input + 7, 1, &state);
 	  ASSERT (ret == 1);
-	  ASSERT (wc == 'e');
-	  ASSERT (mbsinit (&state));
-	  input[5] = '\0';
-
-	  wc = (wchar_t) 0xBADFACE;
-	  ret = mbrtowc (&wc, input + 8, 1, &state);
-	  ASSERT (ret == 1);
-	  ASSERT (wc == 'r');
+	  ASSERT (wc == '>');
 	  ASSERT (mbsinit (&state));
 	}
 	return 0;

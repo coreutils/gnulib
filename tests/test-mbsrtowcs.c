@@ -189,41 +189,48 @@ main (int argc, char *argv[])
 	    case '3':
 	      /* Locale encoding is EUC-JP.  */
 	      {
-		char input[] = "B\217\253\344\217\251\316er"; /* "Büßer" */
+		char input[] = "<\306\374\313\334\270\354>"; /* "<日本語>" */
 		memset (&state, '\0', sizeof (mbstate_t));
 
 		wc = (wchar_t) 0xBADFACE;
 		ret = mbrtowc (&wc, input, 1, &state);
 		ASSERT (ret == 1);
-		ASSERT (wc == 'B');
+		ASSERT (wc == '<');
 		ASSERT (mbsinit (&state));
 		input[0] = '\0';
 
 		wc = (wchar_t) 0xBADFACE;
-		ret = mbrtowc (&wc, input + 1, 1, &state);
+		ret = mbrtowc (&wc, input + 1, 2, &state);
+		ASSERT (ret == 2);
+		ASSERT (wctob (wc) == EOF);
+		ASSERT (mbsinit (&state));
+		input[1] = '\0';
+		input[2] = '\0';
+
+		wc = (wchar_t) 0xBADFACE;
+		ret = mbrtowc (&wc, input + 3, 1, &state);
 		ASSERT (ret == (size_t)(-2));
 		ASSERT (wc == (wchar_t) 0xBADFACE);
 		ASSERT (!mbsinit (&state));
-		input[1] = '\0';
+		input[3] = '\0';
 
-		src = input + 2;
+		src = input + 4;
 		ret = mbsrtowcs (NULL, &src, unlimited ? BUFSIZE : 2, &state);
-		ASSERT (ret == 4);
-		ASSERT (src == input + 2);
+		ASSERT (ret == 3);
+		ASSERT (src == input + 4);
 		ASSERT (!mbsinit (&state));
 
-		src = input + 2;
+		src = input + 4;
 		ret = mbsrtowcs (buf, &src, unlimited ? BUFSIZE : 2, &state);
-		ASSERT (ret == (unlimited ? 4 : 2));
+		ASSERT (ret == (unlimited ? 3 : 2));
 		ASSERT (src == (unlimited ? NULL : input + 7));
 		ASSERT (wctob (buf[0]) == EOF);
 		ASSERT (wctob (buf[1]) == EOF);
 		if (unlimited)
 		  {
-		    ASSERT (buf[2] == 'e');
-		    ASSERT (buf[3] == 'r');
-		    ASSERT (buf[4] == 0);
-		    ASSERT (buf[5] == (wchar_t) 0xBADFACE);
+		    ASSERT (buf[2] == '>');
+		    ASSERT (buf[3] == 0);
+		    ASSERT (buf[4] == (wchar_t) 0xBADFACE);
 		  }
 		else
 		  ASSERT (buf[2] == (wchar_t) 0xBADFACE);

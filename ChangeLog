@@ -1,5 +1,11 @@
 2008-12-20  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-mbrtowc.c (main): Change sample string in EUC-JP encoding
+	so that there are no conversion errors on AIX.
+	* tests/test-mbsrtowcs.c (main): LIkewise.
+
+2008-12-20  Bruno Haible  <bruno@clisp.org>
+
 	Work around wctob bug on Solaris <= 9.
 	* lib/wchar.in.h (wctob): Redefine if REPLACE_WCTOB is set.
 	* m4/wctob.m4 (gl_FUNC_WCTOB): Test whether wctob works.
