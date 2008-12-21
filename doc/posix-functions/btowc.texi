@@ -11,6 +11,9 @@ Portability problems fixed by Gnulib:
 @item
 This function is missing on some platforms:
 HP-UX 11.00, IRIX 5.3, Solaris 2.6, mingw, Interix 3.5.
+@item
+This function does not return WEOF for an EOF argument on some platforms:
+IRIX 6.5.
 @end itemize
 
 Portability problems not fixed by Gnulib:

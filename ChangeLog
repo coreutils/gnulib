@@ -1,5 +1,15 @@
 2008-12-21  Bruno Haible  <bruno@clisp.org>
 
+	Work around a btowc() bug on IRIX 6.5.
+	* lib/wchar.in.h (btowc): Override if REPLACE_BTOWC is set.
+	* m4/btowc.m4 (gl_FUNC_BTOWC): Test whether btowc(EOF) is correct. Set
+	REPLACE_WTOBC if not.
+	* m4/wchar.m4 (gl_WCHAR_H_DEFAULTS): Initialize REPLACE_BTOWC.
+	* modules/wchar (Makefile.am): Substitute REPLACE_BTOWC.
+	* doc/posix-functions/btowc.texi: Mention the IRIX bug.
+
+2008-12-21  Bruno Haible  <bruno@clisp.org>
+
 	* modules/wcrtomb-tests: New file.
 	* tests/test-wcrtomb.sh: New file.
 	* tests/test-wcrtomb.c: New file.

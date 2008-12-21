@@ -84,7 +84,11 @@ typedef int rpl_mbstate_t;
 
 /* Convert a single-byte character to a wide character.  */
 #if @GNULIB_BTOWC@
-# if !@HAVE_BTOWC@
+# if @REPLACE_BTOWC@
+#  undef btowc
+#  define btowc rpl_btowc
+# endif
+# if !@HAVE_BTOWC@ || @REPLACE_BTOWC@
 extern wint_t btowc (int c);
 # endif
 #elif defined GNULIB_POSIXCHECK
