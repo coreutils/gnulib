@@ -7,6 +7,7 @@ tests/unistdio/test-ulc-vasnprintf2.c
 tests/unistdio/test-ulc-vasnprintf3.sh
 tests/unistdio/test-ulc-vasnprintf3.c
 m4/locale-fr.m4
+m4/codeset.m4
 
 Depends-on:
 

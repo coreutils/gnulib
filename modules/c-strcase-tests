@@ -4,6 +4,7 @@ tests/test-c-strcasecmp.c
 tests/test-c-strncasecmp.c
 m4/locale-fr.m4
 m4/locale-tr.m4
+m4/codeset.m4
 
 Depends-on:
 

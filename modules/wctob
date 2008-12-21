@@ -5,6 +5,7 @@ Files:
 lib/wctob.c
 m4/wctob.m4
 m4/locale-fr.m4
+m4/codeset.m4
 
 Depends-on:
 wchar
