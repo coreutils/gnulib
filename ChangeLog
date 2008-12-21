@@ -1,6 +1,89 @@
 2008-12-21  Bruno Haible  <bruno@clisp.org>
 
-	Update for HP-UX 11.11.
+	Update doc for AIX.
+	* doc/pastposix-functions/wcswcs.texi: Mention that AIX has only a
+	16-bit wchar_t type.
+	* doc/posix-functions/btowc.texi: Likewise.
+	* doc/posix-functions/fgetwc.texi: Likewise.
+	* doc/posix-functions/fgetws.texi: Likewise.
+	* doc/posix-functions/fputwc.texi: Likewise.
+	* doc/posix-functions/fputws.texi: Likewise.
+	* doc/posix-functions/fwide.texi: Likewise.
+	* doc/posix-functions/fwprintf.texi: Likewise.
+	* doc/posix-functions/fwscanf.texi: Likewise.
+	* doc/posix-functions/getwchar.texi: Likewise.
+	* doc/posix-functions/getwc.texi: Likewise.
+	* doc/posix-functions/iswalnum.texi: Likewise.
+	* doc/posix-functions/iswalpha.texi: Likewise.
+	* doc/posix-functions/iswblank.texi: Likewise.
+	* doc/posix-functions/iswcntrl.texi: Likewise.
+	* doc/posix-functions/iswctype.texi: Likewise.
+	* doc/posix-functions/iswdigit.texi: Likewise.
+	* doc/posix-functions/iswgraph.texi: Likewise.
+	* doc/posix-functions/iswlower.texi: Likewise.
+	* doc/posix-functions/iswprint.texi: Likewise.
+	* doc/posix-functions/iswpunct.texi: Likewise.
+	* doc/posix-functions/iswspace.texi: Likewise.
+	* doc/posix-functions/iswupper.texi: Likewise.
+	* doc/posix-functions/iswxdigit.texi: Likewise.
+	* doc/posix-functions/mbrtowc.texi: Likewise.
+	* doc/posix-functions/mbsrtowcs.texi: Likewise.
+	* doc/posix-functions/mbstowcs.texi: Likewise.
+	* doc/posix-functions/mbtowc.texi: Likewise.
+	* doc/posix-functions/putwchar.texi: Likewise.
+	* doc/posix-functions/putwc.texi: Likewise.
+	* doc/posix-functions/swprintf.texi: Likewise.
+	* doc/posix-functions/tolower.texi: Likewise.
+	* doc/posix-functions/toupper.texi: Likewise.
+	* doc/posix-functions/towctrans.texi: Likewise.
+	* doc/posix-functions/ungetwc.texi: Likewise.
+	* doc/posix-functions/vswprintf.texi: Likewise.
+	* doc/posix-functions/wcrtomb.texi: Likewise.
+	* doc/posix-functions/wcscat.texi: Likewise.
+	* doc/posix-functions/wcschr.texi: Likewise.
+	* doc/posix-functions/wcscmp.texi: Likewise.
+	* doc/posix-functions/wcscoll.texi: Likewise.
+	* doc/posix-functions/wcscpy.texi: Likewise.
+	* doc/posix-functions/wcscspn.texi: Likewise.
+	* doc/posix-functions/wcsftime.texi: Likewise.
+	* doc/posix-functions/wcslen.texi: Likewise.
+	* doc/posix-functions/wcsncat.texi: Likewise.
+	* doc/posix-functions/wcsncmp.texi: Likewise.
+	* doc/posix-functions/wcsncpy.texi: Likewise.
+	* doc/posix-functions/wcspbrk.texi: Likewise.
+	* doc/posix-functions/wcsrchr.texi: Likewise.
+	* doc/posix-functions/wcsrtombs.texi: Likewise.
+	* doc/posix-functions/wcsspn.texi: Likewise.
+	* doc/posix-functions/wcsstr.texi: Likewise.
+	* doc/posix-functions/wcstod.texi: Likewise.
+	* doc/posix-functions/wcstof.texi: Likewise.
+	* doc/posix-functions/wcstoimax.texi: Likewise.
+	* doc/posix-functions/wcstok.texi: Likewise.
+	* doc/posix-functions/wcstold.texi: Likewise.
+	* doc/posix-functions/wcstoll.texi: Likewise.
+	* doc/posix-functions/wcstol.texi: Likewise.
+	* doc/posix-functions/wcstombs.texi: Likewise.
+	* doc/posix-functions/wcstoull.texi: Likewise.
+	* doc/posix-functions/wcstoul.texi: Likewise.
+	* doc/posix-functions/wcstoumax.texi: Likewise.
+	* doc/posix-functions/wcswidth.texi: Likewise.
+	* doc/posix-functions/wcsxfrm.texi: Likewise.
+	* doc/posix-functions/wctob.texi: Likewise.
+	* doc/posix-functions/wctomb.texi: Likewise.
+	* doc/posix-functions/wctrans.texi: Likewise.
+	* doc/posix-functions/wctype.texi: Likewise.
+	* doc/posix-functions/wcwidth.texi: Likewise.
+	* doc/posix-functions/wmemchr.texi: Likewise.
+	* doc/posix-functions/wmemcmp.texi: Likewise.
+	* doc/posix-functions/wmemcpy.texi: Likewise.
+	* doc/posix-functions/wmemmove.texi: Likewise.
+	* doc/posix-functions/wmemset.texi: Likewise.
+	* doc/posix-functions/wprintf.texi: Likewise.
+	* doc/posix-functions/wscanf.texi: Likewise.
+
+2008-12-21  Bruno Haible  <bruno@clisp.org>
+
+	Update doc for HP-UX 11.11.
 	* doc/posix-functions/btowc.texi: Clarify that the function is missing
 	in HP-UX version 11.00, not in all versions of HP-UX 11.
 	* doc/posix-functions/fwide.texi: Likewise.

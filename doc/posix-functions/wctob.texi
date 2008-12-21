@@ -22,6 +22,6 @@ IRIX 6.5.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-On Windows platforms, @code{wchar_t} is a 16-bit type and therefore cannot
+On AIX and Windows platforms, @code{wchar_t} is a 16-bit type and therefore cannot
 accommodate all Unicode characters.
 @end itemize

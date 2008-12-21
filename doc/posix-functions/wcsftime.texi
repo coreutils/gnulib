@@ -16,6 +16,6 @@ Portability problems not fixed by Gnulib:
 This function is missing on some platforms:
 OpenBSD 3.8, IRIX 5.3, Solaris 2.5.1, Cygwin, BeOS.
 @item
-On Windows platforms, @code{wchar_t} is a 16-bit type and therefore cannot
+On AIX and Windows platforms, @code{wchar_t} is a 16-bit type and therefore cannot
 accommodate all Unicode characters.
 @end itemize
