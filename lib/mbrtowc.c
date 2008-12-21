@@ -20,12 +20,15 @@
 /* Specification.  */
 #include <wchar.h>
 
-#include <errno.h>
-#include <stdlib.h>
+#if GNULIB_defined_mbstate_t
+/* Implement mbrtowc() on top of mbtowc().  */
 
-#include "localcharset.h"
-#include "streq.h"
-#include "verify.h"
+# include <errno.h>
+# include <stdlib.h>
+
+# include "localcharset.h"
+# include "streq.h"
+# include "verify.h"
 
 
 verify (sizeof (mbstate_t) >= 4);
@@ -88,10 +91,10 @@ mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
 
     /* Here 0 < m ≤ 4.  */
 
-#if __GLIBC__
+# if __GLIBC__
     /* Work around bug <http://sourceware.org/bugzilla/show_bug.cgi?id=9674> */
     mbtowc (NULL, NULL, 0);
-#endif
+# endif
     {
       int res = mbtowc (pwc, p, m);
 
@@ -272,3 +275,75 @@ mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
     }
   }
 }
+
+#else
+/* Override the system's mbrtowc() function.  */
+
+# undef mbrtowc
+
+size_t
+rpl_mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
+{
+# if MBRTOWC_NULL_ARG_BUG || MBRTOWC_RETVAL_BUG
+  if (s == NULL)
+    {
+      pwc = NULL;
+      s = "";
+      n = 1;
+    }
+# endif
+
+# if MBRTOWC_RETVAL_BUG
+  {
+    static mbstate_t internal_state;
+
+    /* Override mbrtowc's internal state.  We can not call mbsinit() on the
+       hidden internal state, but we can call it on our variable.  */
+    if (ps == NULL)
+      ps = &internal_state;
+
+    if (!mbsinit (ps))
+      {
+	/* Parse the rest of the multibyte character byte for byte.  */
+	size_t count = 0;
+	for (; n > 0; s++, n--)
+	  {
+	    wchar_t wc;
+	    size_t ret = mbrtowc (&wc, s, 1, ps);
+
+	    if (ret == (size_t)(-1))
+	      return (size_t)(-1);
+	    count++;
+	    if (ret != (size_t)(-2))
+	      {
+		/* The multibyte character has been completed.  */
+		if (pwc != NULL)
+		  *pwc = wc;
+		return (wc == 0 ? 0 : count);
+	      }
+	  }
+	return (size_t)(-2);
+      }
+  }
+# endif
+
+# if MBRTOWC_NUL_RETVAL_BUG
+  {
+    wchar_t wc;
+    size_t ret = mbrtowc (&wc, s, n, ps);
+
+    if (ret != (size_t)(-1) && ret != (size_t)(-2))
+      {
+	if (pwc != NULL)
+	  *pwc = wc;
+	if (wc == 0)
+	  ret = 0;
+      }
+    return ret;
+  }
+# else
+  return mbrtowc (pwc, s, n, ps);
+# endif
+}
+
+#endif

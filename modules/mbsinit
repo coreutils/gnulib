@@ -8,6 +8,7 @@ m4/mbstate_t.m4
 
 Depends-on:
 wchar
+mbrtowc
 verify
 extensions
 

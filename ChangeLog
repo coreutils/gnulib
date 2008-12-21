@@ -1,5 +1,33 @@
 2008-12-20  Bruno Haible  <bruno@clisp.org>
 
+	Work around mbrtowc bugs on AIX, HP-UX, OSF/1, Solaris.
+	* lib/wchar.in.h (mbstate_t): Redefine also if REPLACE_MBSTATE_T is
+	set.
+	(GNULIB_defined_mbstate_t): New macro.
+	(mbsinit): Redefine if REPLACE_MBSINIT is set.
+	(mbrtowc): Redefine if REPLACE_MBRTOWC is set.
+	* lib/mbrtowc.c (rpl_mbrtowc): Add an alternative implementation that
+	reuses the system's mbrtowc function but works around the bugs.
+	* m4/mbrtowc.m4 (gl_MBSTATE_T_BROKEN, gl_MBRTOWC_INCOMPLETE_STATE,
+	gl_MBRTOWC_NULL_ARG, gl_MBRTOWC_RETVAL, gl_MBRTOWC_NUL_RETVAL): New
+	macros.
+	(gl_FUNC_MBRTOWC): Invoke them. Set REPLACE_MBRTOWC if mbrtowc needs to
+	be overridden. Optionally define MBRTOWC_NULL_ARG_BUG,
+	MBRTOWC_RETVAL_BUG, MBRTOWC_NUL_RETVAL_BUG.
+	* m4/mbsinit.m4 (gl_FUNC_MBSINIT): Invoke gl_MBSTATE_T_BROKEN. Set
+	REPLACE_MBSINIT if mbsinit needs to be overridden.
+	* m4/wchar.m4 (gl_WCHAR_H_DEFAULTS): Initialize REPLACE_MBSTATE_T,
+	REPLACE_MBSINIT, REPLACE_MBRTOWC.
+	* modules/wchar (Makefile.am): Substitute REPLACE_MBSTATE_T,
+	REPLACE_MBSINIT, REPLACE_MBRTOWC.
+	* modules/mbrtowc (Files): Add m4/locale-fr.m4, m4/locale-ja.m4,
+	m4/locale-zh.m4.
+	(Depends): Add mbsinit.
+	* modules/mbsinit (Depends): Add mbrtowc.
+	* doc/posix-functions/mbrtowc.texi: Mention the various bugs.
+
+2008-12-20  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-mbrtowc.c (main): Change sample string in EUC-JP encoding
 	so that there are no conversion errors on AIX.
 	* tests/test-mbsrtowcs.c (main): LIkewise.

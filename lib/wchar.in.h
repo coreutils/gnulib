@@ -74,10 +74,11 @@ extern "C" {
 /* Override mbstate_t if it is too small.
    On IRIX 6.5, sizeof (mbstate_t) == 1, which is not sufficient for
    implementing mbrtowc for encodings like UTF-8.  */
-#if !(@HAVE_MBSINIT@ && @HAVE_MBRTOWC@)
+#if !(@HAVE_MBSINIT@ && @HAVE_MBRTOWC@) || @REPLACE_MBSTATE_T@
 typedef int rpl_mbstate_t;
 # undef mbstate_t
 # define mbstate_t rpl_mbstate_t
+# define GNULIB_defined_mbstate_t 1
 #endif
 
 
@@ -116,7 +117,11 @@ extern int wctob (wint_t wc);
 
 /* Test whether *PS is in the initial state.  */
 #if @GNULIB_MBSINIT@
-# if !@HAVE_MBSINIT@
+# if @REPLACE_MBSINIT@
+#  undef mbsinit
+#  define mbsinit rpl_mbsinit
+# endif
+# if !@HAVE_MBSINIT@ || @REPLACE_MBSINIT@
 extern int mbsinit (const mbstate_t *ps);
 # endif
 #elif defined GNULIB_POSIXCHECK
@@ -130,7 +135,11 @@ extern int mbsinit (const mbstate_t *ps);
 
 /* Convert a multibyte character to a wide character.  */
 #if @GNULIB_MBRTOWC@
-# if !@HAVE_MBRTOWC@
+# if @REPLACE_MBRTOWC@
+#  undef mbrtowc
+#  define mbrtowc rpl_mbrtowc
+# endif
+# if !@HAVE_MBRTOWC@ || @REPLACE_MBRTOWC@
 extern size_t mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps);
 # endif
 #elif defined GNULIB_POSIXCHECK
