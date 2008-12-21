@@ -4,15 +4,21 @@
 
 POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/mbsnrtowcs.html}
 
-Gnulib module: ---
+Gnulib module: mbsnrtowcs
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This function is missing on some platforms:
+MacOS X 10.3, FreeBSD 5.2.1, NetBSD 3.0, OpenBSD 3.8, AIX 4.3.2, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin, mingw, Interix 3.5, BeOS.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-This function is missing on some platforms:
-MacOS X 10.3, FreeBSD 5.2.1, NetBSD 3.0, OpenBSD 3.8, AIX 4.3.2, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin, mingw, Interix 3.5, BeOS.
+The specification is not clear about whether this function should update the
+conversion state when the first argument (the destination pointer) is NULL.
+The glibc, MacOS X, FreeBSD implementations do update the state in this case.
+For portability, when passing a NULL destination argument, it is best to pass
+a pointer to a temporary copy of the conversion state.
 @end itemize

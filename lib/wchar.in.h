@@ -183,6 +183,24 @@ extern size_t mbsrtowcs (wchar_t *dest, const char **srcp, size_t len, mbstate_t
 #endif
 
 
+/* Convert a string to a wide string.  */
+#if @GNULIB_MBSNRTOWCS@
+# if @REPLACE_MBSNRTOWCS@
+#  undef mbsnrtowcs
+#  define mbsnrtowcs rpl_mbsnrtowcs
+# endif
+# if !@HAVE_MBSNRTOWCS@ || @REPLACE_MBSNRTOWCS@
+extern size_t mbsnrtowcs (wchar_t *dest, const char **srcp, size_t srclen, size_t len, mbstate_t *ps);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef mbsnrtowcs
+# define mbsnrtowcs(d,s,n,l,p) \
+    (GL_LINK_WARNING ("mbsnrtowcs is unportable - " \
+                      "use gnulib module mbsnrtowcs for portability"), \
+     mbsnrtowcs (d, s, n, l, p))
+#endif
+
+
 /* Return the number of screen columns needed for WC.  */
 #if @GNULIB_WCWIDTH@
 # if @REPLACE_WCWIDTH@

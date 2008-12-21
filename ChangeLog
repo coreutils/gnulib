@@ -1,5 +1,25 @@
 2008-12-21  Bruno Haible  <bruno@clisp.org>
 
+	New module 'mbsnrtowcs'.
+	* lib/wchar.in.h (mbsnrtowcs): New declaration.
+	* lib/mbsnrtowcs.c: New file.
+	* lib/mbsrtowcs-state.c: New file.
+	* lib/mbsrtowcs.c: Refer to _gl_mbsrtowcs_state.
+	(internal_state): Remove variable.
+	* m4/mbsnrtowcs.m4: New file.
+	* m4/mbsrtowcs.m4 (gl_FUNC_MBSRTOWCS): Add mbsrtowcs-state.c to the
+	compilation units.
+	* m4/wchar.m4 (gl_WCHAR_H_DEFAULTS): Initialize GNULIB_MBSNRTOWCS,
+	HAVE_MBSNRTOWCS, REPLACE_MBSNRTOWCS.
+	* modules/wchar (Makefile.am): Substitute GNULIB_MBSNRTOWCS,
+	HAVE_MBSNRTOWCS, REPLACE_MBSNRTOWCS.
+	* modules/mbsnrtowcs: New file.
+	* modules/mbsrtowcs (Files): Add lib/mbsrtowcs-state.c.
+	* doc/posix-functions/mbsnrtowcs.texi: Mention the new module and a
+	portability problem.
+
+2008-12-21  Bruno Haible  <bruno@clisp.org>
+
 	Work around mbsrtowcs bug.
 	* m4/mbsrtowcs.m4 (gl_MBSRTOWCS_WORKS): New macro.
 	(gl_FUNC_MBSRTOWCS): Invoke it.

@@ -24,13 +24,14 @@
 #include <limits.h>
 #include <stdlib.h>
 
+#include "minmax.h"
 #include "strnlen1.h"
 
 
 extern mbstate_t _gl_mbsrtowcs_state;
 
 size_t
-mbsrtowcs (wchar_t *dest, const char **srcp, size_t len, mbstate_t *ps)
+mbsnrtowcs (wchar_t *dest, const char **srcp, size_t srclen, size_t len, mbstate_t *ps)
 {
   if (ps == NULL)
     ps = &_gl_mbsrtowcs_state;
@@ -41,23 +42,23 @@ mbsrtowcs (wchar_t *dest, const char **srcp, size_t len, mbstate_t *ps)
       {
 	wchar_t *destptr = dest;
 
-	for (; len > 0; destptr++, len--)
+	for (; srclen > 0 && len > 0; destptr++, len--)
 	  {
 	    size_t src_avail;
 	    size_t ret;
 
 	    /* An optimized variant of
-	       src_avail = strnlen1 (src, MB_LEN_MAX);  */
-	    if (src[0] == '\0')
+	       src_avail = strnlen1 (src, MIN (srclen, MB_LEN_MAX));  */
+	    if (srclen == 1 || src[0] == '\0')
 	      src_avail = 1;
-	    else if (src[1] == '\0')
+	    else if (srclen == 2 || src[1] == '\0')
 	      src_avail = 2;
-	    else if (src[2] == '\0')
+	    else if (srclen == 3 || src[2] == '\0')
 	      src_avail = 3;
-	    else if (MB_LEN_MAX <= 4 || src[3] == '\0')
+	    else if (MB_LEN_MAX <= 4 || srclen == 4 || src[3] == '\0')
 	      src_avail = 4;
 	    else
-	      src_avail = 4 + strnlen1 (src + 4, MB_LEN_MAX - 4);
+	      src_avail = 4 + strnlen1 (src + 4, MIN (srclen, MB_LEN_MAX) - 4);
 
 	    /* Parse the next multibyte character.  */
 	    ret = mbrtowc (destptr, src, src_avail, ps);
@@ -76,6 +77,7 @@ mbsrtowcs (wchar_t *dest, const char **srcp, size_t len, mbstate_t *ps)
 		break;
 	      }
 	    src += ret;
+	    srclen -= ret;
 	  }
 
 	*srcp = src;
@@ -88,23 +90,23 @@ mbsrtowcs (wchar_t *dest, const char **srcp, size_t len, mbstate_t *ps)
 	mbstate_t state = *ps;
 	size_t totalcount = 0;
 
-	for (;; totalcount++)
+	for (; srclen > 0; totalcount++)
 	  {
 	    size_t src_avail;
 	    size_t ret;
 
 	    /* An optimized variant of
-	       src_avail = strnlen1 (src, MB_LEN_MAX);  */
-	    if (src[0] == '\0')
+	       src_avail = strnlen1 (src, MIN (srclen, MB_LEN_MAX));  */
+	    if (srclen == 1 || src[0] == '\0')
 	      src_avail = 1;
-	    else if (src[1] == '\0')
+	    else if (srclen == 2 || src[1] == '\0')
 	      src_avail = 2;
-	    else if (src[2] == '\0')
+	    else if (srclen == 3 || src[2] == '\0')
 	      src_avail = 3;
-	    else if (MB_LEN_MAX <= 4 || src[3] == '\0')
+	    else if (MB_LEN_MAX <= 4 || srclen == 4 || src[3] == '\0')
 	      src_avail = 4;
 	    else
-	      src_avail = 4 + strnlen1 (src + 4, MB_LEN_MAX - 4);
+	      src_avail = 4 + strnlen1 (src + 4, MIN (srclen, MB_LEN_MAX) - 4);
 
 	    /* Parse the next multibyte character.  */
 	    ret = mbrtowc (NULL, src, src_avail, &state);
@@ -122,6 +124,7 @@ mbsrtowcs (wchar_t *dest, const char **srcp, size_t len, mbstate_t *ps)
 		break;
 	      }
 	    src += ret;
+	    srclen -= ret;
 	  }
 
 	return totalcount;
