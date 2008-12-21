@@ -1,5 +1,14 @@
 2008-12-21  Bruno Haible  <bruno@clisp.org>
 
+	Work around mbsrtowcs bug.
+	* m4/mbsrtowcs.m4 (gl_MBSRTOWCS_WORKS): New macro.
+	(gl_FUNC_MBSRTOWCS): Invoke it.
+	* modules/mbsrtowcs (Files): Add m4/locale-fr.m4, m4/locale-ja.m4,
+	m4/locale-zh.m4.
+	* doc/posix-functions/mbsrtowcs.texi: Document the bug.
+
+2008-12-21  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-mbsrtowcs.c (main): Execute the loop also for unlimited=1.
 
 2008-12-21  Bruno Haible  <bruno@clisp.org>
