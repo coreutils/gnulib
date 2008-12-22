@@ -1,7 +1,7 @@
 #! /bin/sh
 # Common stub for a few missing GNU programs while installing.
 
-scriptversion=2008-12-13.14
+scriptversion=2008-12-21.33
 
 # Copyright (C) 1996, 1997, 1999, 2000, 2002, 2003, 2004, 2005, 2006,
 # 2008  Free Software Foundation, Inc.
@@ -285,7 +285,7 @@ WARNING: \`$1' is $msg.  You should only need it if
     else
 	test -z "$file" || exec >$file
 	echo ".ab help2man is required to generate this page"
-	exit 1
+	exit $?
     fi
     ;;
 
