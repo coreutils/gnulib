@@ -2212,7 +2212,7 @@ func_all_modules ()
   func_echo 'These modules are not listed among dependencies below, for simplicity.'
   func_echo 'If your package requires portability to old, obsolete systems, you need to list these modules explicitly among the modules to import through gnulib-tool.'
 
-  element="Support for systems lacking POSIX:200"
+  element="Support for systems lacking POSIX:2008"
   func_section_wrap posix_sup
   func_wrap H2
   func_echo "$element"
