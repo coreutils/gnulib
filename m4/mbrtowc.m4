@@ -1,4 +1,4 @@
-# mbrtowc.m4 serial 11
+# mbrtowc.m4 serial 12
 dnl Copyright (C) 2001-2002, 2004-2005, 2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -111,7 +111,6 @@ int main ()
       const char input[] = "B\217\253\344\217\251\316er"; /* "Büßer" */
       mbstate_t state;
       wchar_t wc;
-      int ret;
 
       memset (&state, '\0', sizeof (mbstate_t));
       if (mbrtowc (&wc, input + 1, 1, &state) == (size_t)(-2))

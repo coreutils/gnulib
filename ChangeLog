@@ -1,3 +1,8 @@
+2008-12-22  Bruno Haible  <bruno@clisp.org>
+
+	* m4/mbrtowc.m4 (gl_MBRTOWC_INCOMPLETE_STATE): Remove unused variable
+	from test code.
+
 2008-12-22  Eric Blake  <ebb9@byu.net>
 
 	Avoid gcc warnings on cygwin.
