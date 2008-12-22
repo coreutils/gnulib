@@ -20,9 +20,9 @@
 /* Specification.  */
 #include <wchar.h>
 
-# include <errno.h>
-# include <stdlib.h>
-# include <string.h>
+#include <errno.h>
+#include <stdlib.h>
+#include <string.h>
 
 
 extern mbstate_t _gl_wcsrtombs_state;
@@ -100,5 +100,3 @@ wcsnrtombs (char *dest, const wchar_t **srcp, size_t srclen, size_t len, mbstate
     return (size_t)(-1);
   }
 }
-
-#endif
