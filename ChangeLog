@@ -1,3 +1,9 @@
+2008-12-22  Paolo Bonzini  <bonzini@gnu.org>
+
+	* modules/regex: Request emulations for the mb*/wc* functions we need.
+	* m4/regex.m4: Don't look for those functions here.
+	* lib/regex_internal.h: Do not check HAVE_WCRTOMB and HAVE_MBRTOWC.
+
 2008-12-22  Bruno Haible  <bruno@clisp.org>
 
 	* modules/fnmatch (Depends-on): Remove duplicated dependency.

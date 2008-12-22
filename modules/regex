@@ -13,16 +13,20 @@ m4/mbstate_t.m4
 
 Depends-on:
 alloca
+btowc
 extensions
 gettext-h
 localcharset
 malloc
 memcmp
 memmove
+mbrtowc
+mbsinit
 stdbool
 stdint
 ssize_t
 wchar
+wcrtomb
 wctype
 
 configure.ac:
