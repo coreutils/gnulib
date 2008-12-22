@@ -16,7 +16,6 @@ wchar
 wctype
 memchr
 memcmp
-extensions
 
 configure.ac:
 # No macro. You should also use one of fnmatch-posix or fnmatch-gnu.

@@ -1,3 +1,7 @@
+2008-12-22  Bruno Haible  <bruno@clisp.org>
+
+	* modules/fnmatch (Depends-on): Remove duplicated dependency.
+
 2008-12-21  Bruno Haible  <bruno@clisp.org>
 
 	Make mbiter.h, mbuiter.h, mbfile.h usable unconditionally.
