@@ -2084,6 +2084,14 @@ func_all_modules ()
 
   func_begin_table
   func_module wchar
+  func_module btowc
+  func_module wctob
+  func_module mbsinit
+  func_module mbrlen
+  func_module mbrtowc
+  func_module mbsrtowcs
+  func_module wcrtomb
+  func_module wcsrtombs
   func_end_table
 
   element="Wide character classification and mapping utilities <wctype.h>"
@@ -2218,13 +2226,18 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module accept
   func_module arpa_inet
+  func_module bind
   func_module calloc-posix
   func_module chown
+  func_module close
+  func_module connect
   func_module dup2
   func_module environ
   func_module errno
   func_module fchdir
+  func_module fclose
   func_module fcntl
   func_module flock
   func_module fopen
@@ -2241,15 +2254,21 @@ func_all_modules ()
   func_module getgroups
   func_module gethostname
   func_module getlogin_r
+  func_module getpeername
+  func_module getsockname
+  func_module getsockopt
   func_module getsubopt
   func_module gettimeofday
+  func_module hostent
   func_module iconv_open
   func_module inet_ntop
   func_module inet_pton
   func_module locale
   func_module lseek
+  func_module listen
   func_module lstat
   func_module malloc-posix
+  func_module mbsnrtowcs
   func_module mkdir
   func_module mkdtemp
   func_module mkstemp
@@ -2258,12 +2277,44 @@ func_all_modules ()
   func_module open
   func_module perror
   func_module poll
+  func_module posix_spawn
+  func_module posix_spawnattr_destroy
+  func_module posix_spawnattr_getflags
+  func_module posix_spawnattr_getpgroup
+  func_module posix_spawnattr_getschedparam
+  func_module posix_spawnattr_getschedpolicy
+  func_module posix_spawnattr_getsigdefault
+  func_module posix_spawnattr_getsigmask
+  func_module posix_spawnattr_init
+  func_module posix_spawnattr_setflags
+  func_module posix_spawnattr_setpgroup
+  func_module posix_spawnattr_setschedparam
+  func_module posix_spawnattr_setschedpolicy
+  func_module posix_spawnattr_setsigdefault
+  func_module posix_spawnattr_setsigmask
+  func_module posix_spawn_file_actions_addclose
+  func_module posix_spawn_file_actions_adddup2
+  func_module posix_spawn_file_actions_addopen
+  func_module posix_spawn_file_actions_destroy
+  func_module posix_spawn_file_actions_init
+  func_module posix_spawn-internal
+  func_module posix_spawnp
   func_module printf-posix
   func_module readlink
   func_module realloc-posix
+  func_module recv
+  func_module recvfrom
+  func_module sched
+  func_module select
+  func_module send
+  func_module sendto
+  func_module setsockopt
+  func_module shutdown
   func_module signal
   func_module sleep
   func_module snprintf-posix
+  func_module socket
+  func_module spawn
   func_module sprintf-posix
   func_module strdup-posix
   func_module string
@@ -2289,6 +2340,7 @@ func_all_modules ()
   func_module sys_stat
   func_module sys_time
   func_module sys_times
+  func_module sys_wait
   func_module tsearch
   func_module unistd
   func_module utime
@@ -2298,7 +2350,9 @@ func_all_modules ()
   func_module vprintf-posix
   func_module vsnprintf-posix
   func_module vsprintf-posix
+  func_module wcsnrtombs
   func_module wcwidth
+  func_module write
   func_end_table
 
   element="Compatibility checks for POSIX:2008 functions"

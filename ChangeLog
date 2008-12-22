@@ -1,5 +1,15 @@
 2008-12-21  Bruno Haible  <bruno@clisp.org>
 
+	* MODULES.html.sh (Extended multibyte and wide character utilities
+	<wchar.h>): Add btowc, wctob, mbsinit, mbrlen, mbrtowc, mbsrtowcs,
+	wcrtomb, wcsrtombs.
+	(Support for systems lacking POSIX:2008): Add accept, bind, close,
+	connect, fclose, getpeername, getsockname, getsockopt, hostent, listen,
+	mbsnrtowcs, posix_spawn*, recv, recvfrom, sched, select, send, sendto,
+	setsockopt, shutdown, socket, spawn, sys_wait, wcsnrtombs, write.
+
+2008-12-21  Bruno Haible  <bruno@clisp.org>
+
 	* MODULES.html.sh: Change section titles to refer to POSIX:2008.
 
 2008-12-21  Bruno Haible  <bruno@clisp.org>
