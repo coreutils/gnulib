@@ -8,6 +8,8 @@ m4/mbrtowc.m4
 
 Depends-on:
 mbchar
+mbrtowc
+mbsinit
 wchar
 stdbool
 strnlen1
@@ -19,9 +21,7 @@ Makefile.am:
 lib_SOURCES += mbuiter.h
 
 Include:
-#if HAVE_MBRTOWC
 #include "mbuiter.h"
-#endif
 
 License:
 LGPL

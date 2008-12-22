@@ -6,6 +6,13 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2008-12-21  mbiter          The header files "mbiter.h", "mbuiter.h",
+            mbuiter         "mbfile.h" can now be included without checking
+            mbfile          HAVE_MBRTOWC. The macro HAVE_MBRTOWC will no
+                            longer be defined by these modules in a year. If
+                            you want to continue to use it, you need to invoke
+                            AC_FUNC_MBRTOWC yourself.
+
 2008-11-11  warnings        This module subsumes the file m4/warning.m4 which
                             was removed.
 

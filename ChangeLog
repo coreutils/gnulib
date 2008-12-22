@@ -1,5 +1,20 @@
 2008-12-21  Bruno Haible  <bruno@clisp.org>
 
+	Make mbiter.h, mbuiter.h, mbfile.h usable unconditionally.
+	* modules/mbiter (Depends-on): Add mbrtowc, mbsinit.
+	(Include): Remove conditionalization.
+	* modules/mbuiter (Depends-on): Add mbrtowc, mbsinit.
+	(Include): Remove conditionalization.
+	* modules/mbfile (Depends-on): Add mbrtowc, mbsinit.
+	(Include): Remove conditionalization.
+	* m4/mbiter.m4 (gl_MBITER): Deprecate the use of AC_FUNC_MBRTOWC.
+	* m4/mbfile.m4 (gl_MBFILE): Likewise.
+	* NEWS: Mention the change.
+	Reported by Alan Hourihane <alanh@fairlite.co.uk>
+	via Sergey Poznyakoff <gray@gnu.org.ua>.
+
+2008-12-21  Bruno Haible  <bruno@clisp.org>
+
 	* MODULES.html.sh (Extended multibyte and wide character utilities
 	<wchar.h>): Add btowc, wctob, mbsinit, mbrlen, mbrtowc, mbsrtowcs,
 	wcrtomb, wcsrtombs.
