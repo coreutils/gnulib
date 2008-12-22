@@ -1,5 +1,9 @@
 2008-12-22  Bruno Haible  <bruno@clisp.org>
 
+	* doc/posix-functions/mbtowc.texi: Mention a glibc bug.
+
+2008-12-22  Bruno Haible  <bruno@clisp.org>
+
 	* modules/fnmatch (Depends-on): Remove duplicated dependency.
 
 2008-12-21  Bruno Haible  <bruno@clisp.org>
