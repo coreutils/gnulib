@@ -1,5 +1,5 @@
 /* Searching a string for a character among a given set of characters.
-   Copyright (C) 1999, 2002, 2006-2007 Free Software Foundation, Inc.
+   Copyright (C) 1999, 2002, 2006-2008 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2007.
 
    This program is free software: you can redistribute it and/or modify
@@ -20,9 +20,7 @@
 /* Specification.  */
 #include <string.h>
 
-#if HAVE_MBRTOWC
-# include "mbuiter.h"
-#endif
+#include "mbuiter.h"
 
 /* Find the first occurrence in the character string STRING of any character
    in the character string ACCEPT.  Return the pointer to it, or NULL if none
@@ -36,7 +34,6 @@ mbspbrk (const char *string, const char *accept)
   if (accept[1] == '\0')
     return mbschr (string, accept[0]);
   /* General case.  */
-#if HAVE_MBRTOWC
   if (MB_CUR_MAX > 1)
     {
       mbui_iterator_t iter;
@@ -62,6 +59,5 @@ mbspbrk (const char *string, const char *accept)
       return NULL;
     }
   else
-#endif
     return strpbrk (string, accept);
 }

@@ -1,5 +1,5 @@
 /* Determine the number of screen columns needed for a string.
-   Copyright (C) 2000-2007 Free Software Foundation, Inc.
+   Copyright (C) 2000-2008 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -35,12 +35,6 @@
 /* Get iswcntrl().  */
 #include <wctype.h>
 
-#ifndef mbsinit
-# if !HAVE_MBSINIT
-#  define mbsinit(ps) 1
-# endif
-#endif
-
 /* Returns the number of columns needed to represent the multibyte
    character string pointed to by STRING.  If a non-printable character
    occurs, and MBSW_REJECT_UNPRINTABLE is specified, -1 is returned.
@@ -66,7 +60,6 @@ mbsnwidth (const char *string, size_t nbytes, int flags)
   int width;
 
   width = 0;
-#if HAVE_MBRTOWC
   if (MB_CUR_MAX > 1)
     {
       while (p < plimit)
@@ -158,7 +151,6 @@ mbsnwidth (const char *string, size_t nbytes, int flags)
 	  }
       return width;
     }
-#endif
 
   while (p < plimit)
     {

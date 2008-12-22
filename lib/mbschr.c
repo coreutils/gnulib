@@ -1,5 +1,5 @@
 /* Searching a string for a character.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2007.
 
    This program is free software: you can redistribute it and/or modify
@@ -20,16 +20,13 @@
 /* Specification.  */
 #include <string.h>
 
-#if HAVE_MBRTOWC
-# include "mbuiter.h"
-#endif
+#include "mbuiter.h"
 
 /* Locate the first single-byte character C in the character string STRING,
    and return a pointer to it.  Return NULL if C is not found in STRING.  */
 char *
 mbschr (const char *string, int c)
 {
-#if HAVE_MBRTOWC
   if (MB_CUR_MAX > 1
       /* Optimization: We know that ASCII characters < 0x30 don't occur as
 	 part of multibyte characters longer than 1 byte.  Hence, if c < 0x30,
@@ -51,6 +48,5 @@ mbschr (const char *string, int c)
       return NULL;
     }
   else
-#endif
     return strchr (string, c);
 }

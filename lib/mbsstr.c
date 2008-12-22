@@ -24,15 +24,12 @@
 #include <stddef.h>  /* for NULL, in case a nonstandard string.h lacks it */
 
 #include "malloca.h"
-#if HAVE_MBRTOWC
-# include "mbuiter.h"
-#endif
+#include "mbuiter.h"
 
 /* Knuth-Morris-Pratt algorithm.  */
 #define CANON_ELEMENT(c) c
 #include "str-kmp.h"
 
-#if HAVE_MBRTOWC
 /* Knuth-Morris-Pratt algorithm.
    See http://en.wikipedia.org/wiki/Knuth-Morris-Pratt_algorithm
    Return a boolean indicating success:
@@ -178,7 +175,6 @@ knuth_morris_pratt_multibyte (const char *haystack, const char *needle,
   freea (memory);
   return true;
 }
-#endif
 
 /* Find the first occurrence of the character string NEEDLE in the character
    string HAYSTACK.  Return NULL if NEEDLE is not found in HAYSTACK.  */
@@ -190,7 +186,6 @@ mbsstr (const char *haystack, const char *needle)
        - haystack may be very long, and a match of needle found early,
        - needle may be very long, and not even a short initial segment of
          needle may be found in haystack.  */
-#if HAVE_MBRTOWC
   if (MB_CUR_MAX > 1)
     {
       mbui_iterator_t iter_needle;
@@ -291,7 +286,6 @@ mbsstr (const char *haystack, const char *needle)
 	return (char *) haystack;
     }
   else
-#endif
     {
       if (*needle != '\0')
 	{

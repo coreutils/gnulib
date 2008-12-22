@@ -11,6 +11,8 @@ m4/quotearg.m4
 Depends-on:
 extensions
 gettext-h
+mbrtowc
+mbsinit
 memcmp
 stdbool
 wchar

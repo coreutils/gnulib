@@ -11,6 +11,8 @@ m4/mbswidth.m4
 Depends-on:
 wchar
 wctype
+mbrtowc
+mbsinit
 wcwidth
 extensions
 

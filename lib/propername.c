@@ -31,9 +31,7 @@
 
 #include "trim.h"
 #include "mbchar.h"
-#if HAVE_MBRTOWC
-# include "mbuiter.h"
-#endif
+#include "mbuiter.h"
 #include "localcharset.h"
 #include "c-strcase.h"
 #include "xstriconv.h"
@@ -60,7 +58,6 @@ mbsstr_trimmed_wordbounded (const char *string, const char *sub)
 	break;
       else
 	{
-#if HAVE_MBRTOWC
 	  if (MB_CUR_MAX > 1)
 	    {
 	      mbui_iterator_t string_iter;
@@ -117,7 +114,6 @@ mbsstr_trimmed_wordbounded (const char *string, const char *sub)
 	      string = tsub_in_string + mb_len (mbui_cur (string_iter));
 	    }
 	  else
-#endif /* HAVE_MBRTOWC */
 	    {
 	      bool word_boundary_before;
 	      const char *p;

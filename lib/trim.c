@@ -23,14 +23,11 @@
 
 #include <ctype.h>
 #include <string.h>
+#include <stddef.h>
+#include <stdlib.h>
 
-#if HAVE_MBRTOWC
-# include <stddef.h>
-# include <stdlib.h>
-# include "mbchar.h"
-# include "mbiter.h"
-#endif
-
+#include "mbchar.h"
+#include "mbiter.h"
 #include "xalloc.h"
 
 /* Use this to suppress gcc's `...may be used before initialized' warnings. */
@@ -50,7 +47,6 @@ trim2(const char *s, int how)
   if (!d)
     xalloc_die();
 
-#if HAVE_MBRTOWC
   if (MB_CUR_MAX > 1)
     {
       mbi_iterator_t i;
@@ -114,7 +110,6 @@ trim2(const char *s, int how)
 	}
     }
   else
-#endif /* HAVE_MBRTOWC */
     {
       char *p;
 

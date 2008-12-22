@@ -1,5 +1,5 @@
 /* Case-insensitive string comparison function.
-   Copyright (C) 1998-1999, 2005-2007 Free Software Foundation, Inc.
+   Copyright (C) 1998-1999, 2005-2008 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2007.
 
    This program is free software: you can redistribute it and/or modify
@@ -22,9 +22,7 @@
 
 #include <ctype.h>
 
-#if HAVE_MBRTOWC
-# include "mbuiter.h"
-#endif
+#include "mbuiter.h"
 
 #define TOLOWER(Ch) (isupper (Ch) ? tolower (Ch) : (Ch))
 
@@ -47,7 +45,6 @@ mbspcasecmp (const char *string, const char *prefix)
   /* Be careful not to look at the entire extent of STRING or PREFIX until
      needed.  This is useful because when two strings differ, the difference is
      most often already in the very few first characters.  */
-#if HAVE_MBRTOWC
   if (MB_CUR_MAX > 1)
     {
       mbui_iterator_t iter1;
@@ -74,7 +71,6 @@ mbspcasecmp (const char *string, const char *prefix)
 	return NULL;
     }
   else
-#endif
     {
       const unsigned char *p1 = (const unsigned char *) string;
       const unsigned char *p2 = (const unsigned char *) prefix;

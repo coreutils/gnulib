@@ -1,5 +1,47 @@
 2008-12-22  Bruno Haible  <bruno@clisp.org>
 
+	Remove HAVE_MBRTOWC conditionals.
+	* lib/mbscasecmp.c: Include mbuiter.h unconditionally.
+	(mbscasecmp): Assume mbrtowc function.
+	* lib/mbscasestr.c: Include mbuiter.h unconditionally.
+	(knuth_morris_pratt_multibyte, mbscasestr): Assume mbrtowc function.
+	* lib/mbschr.c: Include mbuiter.h unconditionally.
+	(mbschr): Assume mbrtowc function.
+	* lib/mbscspn.c: Include mbuiter.h unconditionally.
+	(mbscspn): Assume mbrtowc function.
+	* lib/mbslen.c: Include mbuiter.h unconditionally.
+	(mbslen): Assume mbrtowc function.
+	* lib/mbsncasecmp.c: Include mbuiter.h unconditionally.
+	(mbsncasecmp): Assume mbrtowc function.
+	* lib/mbsnlen.c: Include mbiter.h unconditionally.
+	(mbsnlen): Assume mbrtowc function.
+	* lib/mbspbrk.c: Include mbuiter.h unconditionally.
+	(mbspbrk): Assume mbrtowc function.
+	* lib/mbspcasecmp.c: Include mbuiter.h unconditionally.
+	(mbspcasecmp): Assume mbrtowc function.
+	* lib/mbsrchr.c: Include mbuiter.h unconditionally.
+	(mbsrchr): Assume mbrtowc function.
+	* lib/mbssep.c: Include mbuiter.h unconditionally.
+	(mbssep): Assume mbrtowc function.
+	* lib/mbsspn.c: Include mbuiter.h unconditionally.
+	(mbsspn): Assume mbrtowc function.
+	* lib/mbsstr.c: Include mbuiter.h unconditionally.
+	(knuth_morris_pratt_multibyte, mbsstr): Assume mbrtowc function.
+	* lib/mbstok_r.c: Include mbuiter.h unconditionally.
+	(mbstok_r): Assume mbrtowc function.
+	* lib/propername.c: Include mbuiter.h unconditionally.
+	(mbsstr_trimmed_wordbounded): Assume mbrtowc function.
+	* lib/trim.c: Include mbchar.h, mbiter.h uncondtionally.
+	(trim2): Assume mbrtowc function.
+	* lib/mbswidth.c (mbsinit): Remove fallback definition.
+	(mbsnwidth): Assume mbrtowc function.
+	* modules/mbswidth (Depends-on): Add mbrtowc, mbsinit.
+	* lib/quotearg.c (MB_CUR_MAX, mbstate_t, mbrtowc, iswprint): Remove
+	fallback definitions.
+	* modules/quotearg (Depends-on): Add mbrtowc, mbsinit.
+
+2008-12-22  Bruno Haible  <bruno@clisp.org>
+
 	* doc/posix-functions/mbtowc.texi: Mention a glibc bug.
 
 2008-12-22  Paolo Bonzini  <bonzini@gnu.org>

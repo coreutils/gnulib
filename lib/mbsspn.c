@@ -1,5 +1,5 @@
 /* Searching a string for a character outside a given set of characters.
-   Copyright (C) 1999, 2002, 2006-2007 Free Software Foundation, Inc.
+   Copyright (C) 1999, 2002, 2006-2008 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2007.
 
    This program is free software: you can redistribute it and/or modify
@@ -20,9 +20,7 @@
 /* Specification.  */
 #include <string.h>
 
-#if HAVE_MBRTOWC
-# include "mbuiter.h"
-#endif
+#include "mbuiter.h"
 
 /* Find the first occurrence in the character string STRING of any character
    not in the character string REJECT.  Return the number of bytes from the
@@ -38,7 +36,6 @@ mbsspn (const char *string, const char *reject)
     {
       unsigned char uc = (unsigned char) reject[0];
 
-#if HAVE_MBRTOWC
       if (MB_CUR_MAX > 1)
 	{
 	  mbui_iterator_t iter;
@@ -50,7 +47,6 @@ mbsspn (const char *string, const char *reject)
 	  return mbui_cur_ptr (iter) - string;
 	}
       else
-#endif
 	{
 	  const char *ptr;
 
@@ -61,7 +57,6 @@ mbsspn (const char *string, const char *reject)
 	}
     }
   /* General case.  */
-#if HAVE_MBRTOWC
   if (MB_CUR_MAX > 1)
     {
       mbui_iterator_t iter;
@@ -90,6 +85,5 @@ mbsspn (const char *string, const char *reject)
       return mbui_cur_ptr (iter) - string;
     }
   else
-#endif
     return strspn (string, reject);
 }

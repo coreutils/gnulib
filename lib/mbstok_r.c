@@ -1,5 +1,5 @@
 /* Tokenizing a string.
-   Copyright (C) 1999, 2002, 2006-2007 Free Software Foundation, Inc.
+   Copyright (C) 1999, 2002, 2006-2008 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2007.
 
    This program is free software: you can redistribute it and/or modify
@@ -20,14 +20,11 @@
 /* Specification.  */
 #include <string.h>
 
-#if HAVE_MBRTOWC
-# include "mbuiter.h"
-#endif
+#include "mbuiter.h"
 
 char *
 mbstok_r (char *string, const char *delim, char **save_ptr)
 {
-#if HAVE_MBRTOWC
   if (MB_CUR_MAX > 1)
     {
       if (string == NULL)
@@ -65,6 +62,5 @@ mbstok_r (char *string, const char *delim, char **save_ptr)
       return string;
     }
   else
-#endif
     return strtok_r (string, delim, save_ptr);
 }
