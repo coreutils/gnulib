@@ -157,7 +157,11 @@ extern size_t mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps);
 
 /* Recognize a multibyte character.  */
 #if @GNULIB_MBRLEN@
-# if !@HAVE_MBRLEN@
+# if @REPLACE_MBRLEN@
+#  undef mbrlen
+#  define mbrlen rpl_mbrlen
+# endif
+# if !@HAVE_MBRLEN@ || @REPLACE_MBRLEN@
 extern size_t mbrlen (const char *s, size_t n, mbstate_t *ps);
 # endif
 #elif defined GNULIB_POSIXCHECK

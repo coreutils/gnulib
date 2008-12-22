@@ -1,5 +1,17 @@
 2008-12-22  Bruno Haible  <bruno@clisp.org>
 
+	Work around mbrlen() bugs on AIX, HP-UX, OSF/1, Solaris.
+	* m4/mbrlen.m4 (gl_FUNC_MBRLEN): Set REPLACE_MBRLEN if mbrtowc is
+	being overridden.
+	(gl_MBRLEN_INCOMPLETE_STATE, gl_MBRLEN_RETVAL, gl_MBRLEN_NUL_RETVAL):
+	New macros.
+	* lib/wchar.in.h (mbrlen): Override if REPLACE_MBRLEN is set.
+	* m4/wchar.m4 (gl_WCHAR_H_DEFAULTS): Initialize REPLACE_MBRLEN.
+	* modules/wchar (Makefile.am): Substitute REPLACE_MBRLEN.
+	* doc/posix-functions/mbrlen.texi: Mention the various platform bugs.
+
+2008-12-22  Bruno Haible  <bruno@clisp.org>
+
 	* m4/mbrtowc.m4 (gl_MBRTOWC_INCOMPLETE_STATE): Remove unused variable
 	from test code.
 
