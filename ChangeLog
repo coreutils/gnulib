@@ -1,3 +1,11 @@
+2008-12-22  Eric Blake  <ebb9@byu.net>
+
+	Avoid gcc warnings on cygwin.
+	* lib/regex_internal.c (re_string_reconstruct) [!RE_ENABLE_I18N]:
+	Avoid unused variable.
+	* lib/regexec.c (check_arrival_add_next_nodes) [!RE_ENABLE_I18N]:
+	Likewise.
+
 2008-12-22  Bruno Haible  <bruno@clisp.org>
 
 	Remove HAVE_MBRTOWC conditionals.

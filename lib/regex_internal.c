@@ -1,5 +1,5 @@
 /* Extended regular expression matching and search library.
-   Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007 Free Software
+   Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008 Free Software
    Foundation, Inc.
    This file is part of the GNU C Library.
    Contributed by Isamu Hasegawa <isamu@yamato.ibm.com>.
@@ -687,10 +687,10 @@ re_string_reconstruct (re_string_t *pstr, Idx idx, int eflags)
 	}
       else
 	{
+#ifdef RE_ENABLE_I18N
 	  /* No, skip all characters until IDX.  */
 	  Idx prev_valid_len = pstr->valid_len;
 
-#ifdef RE_ENABLE_I18N
 	  if (BE (pstr->offsets_needed, 0))
 	    {
 	      pstr->len = pstr->raw_len - idx + offset;
