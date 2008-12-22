@@ -1,5 +1,9 @@
 2008-12-22  Bruno Haible  <bruno@clisp.org>
 
+	* m4/locale-fr.m4 (gt_LOCALE_FR_UTF8): Treat Haiku like BeOS.
+
+2008-12-22  Bruno Haible  <bruno@clisp.org>
+
 	Work around mbrlen() bugs on AIX, HP-UX, OSF/1, Solaris.
 	* m4/mbrlen.m4 (gl_FUNC_MBRLEN): Set REPLACE_MBRLEN if mbrtowc is
 	being overridden.

@@ -1,4 +1,4 @@
-# locale-fr.m4 serial 8
+# locale-fr.m4 serial 9
 dnl Copyright (C) 2003, 2005-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -133,10 +133,10 @@ changequote(,)dnl
 struct tm t;
 char buf[16];
 int main () {
-  /* On BeOS, locales are not implemented in libc.  Rather, libintl
+  /* On BeOS nd Haiku, locales are not implemented in libc.  Rather, libintl
      imitates locale dependent behaviour by looking at the environment
      variables, and all locales use the UTF-8 encoding.  */
-#if !defined(__BEOS__)
+#if !(defined __BEOS__ || defined __HAIKU__)
   /* Check whether the given locale name is recognized by the system.  */
   if (setlocale (LC_ALL, "") == NULL) return 1;
   /* Check whether nl_langinfo(CODESET) is nonempty and not "ASCII" or "646".
