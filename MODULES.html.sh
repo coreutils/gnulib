@@ -2200,7 +2200,7 @@ func_all_modules ()
   func_module mbfile
   func_end_table
 
-  element="Support for obsolete systems lacking POSIX:2001"
+  element="Support for obsolete systems lacking POSIX:2008"
   func_section_wrap posix_sup_obsolete
   func_wrap H2
   func_echo "$element"
@@ -2212,7 +2212,7 @@ func_all_modules ()
   func_echo 'These modules are not listed among dependencies below, for simplicity.'
   func_echo 'If your package requires portability to old, obsolete systems, you need to list these modules explicitly among the modules to import through gnulib-tool.'
 
-  element="Support for systems lacking POSIX:2001"
+  element="Support for systems lacking POSIX:200"
   func_section_wrap posix_sup
   func_wrap H2
   func_echo "$element"
@@ -2301,7 +2301,7 @@ func_all_modules ()
   func_module wcwidth
   func_end_table
 
-  element="Compatibility checks for POSIX:2001 functions"
+  element="Compatibility checks for POSIX:2008 functions"
   func_section_wrap posix_compat
   func_wrap H2
   func_echo "$element"
@@ -2318,7 +2318,7 @@ func_all_modules ()
   func_module winsz-termios
   func_end_table
 
-  element="Enhancements for POSIX:2001 functions"
+  element="Enhancements for POSIX:2008 functions"
   func_section_wrap posix_enh
   func_wrap H2
   func_echo "$element"
@@ -2336,7 +2336,7 @@ func_all_modules ()
   func_module exclude
   func_end_table
 
-  element="Extra functions based on POSIX:2001"
+  element="Extra functions based on POSIX:2008"
   func_section_wrap posix_ext
   func_wrap H2
   func_echo "$element"

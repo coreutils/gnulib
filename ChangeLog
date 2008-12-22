@@ -1,5 +1,9 @@
 2008-12-21  Bruno Haible  <bruno@clisp.org>
 
+	* MODULES.html.sh: Change section titles to refer to POSIX:2008.
+
+2008-12-21  Bruno Haible  <bruno@clisp.org>
+
 	* modules/wcsnrtombs-tests: New file.
 	* tests/test-wcsnrtombs1.sh: New file.
 	* tests/test-wcsnrtombs2.sh: New file.
