@@ -82,6 +82,9 @@ typedef struct sigaltstack stack_t;
 # define SIGACTION_WORKS 1
 #else
 # define SIGACTION_WORKS 0
+# ifndef SA_ONSTACK
+#  define SA_ONSTACK 0
+# endif
 #endif
 
 extern char *program_name;
@@ -317,7 +320,7 @@ c_stack_action (void (*action) (int))
   act.sa_flags = SA_NODEFER | SA_ONSTACK | SA_RESETHAND | SA_SIGINFO;
   act.sa_sigaction = segv_handler;
 # else
-  act.sa_flags = SA_NODEFER | SA_RESETHAND;
+  act.sa_flags = SA_NODEFER | SA_ONSTACK | SA_RESETHAND;
   act.sa_handler = die;
 # endif
 

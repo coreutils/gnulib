@@ -1,3 +1,12 @@
+2008-12-22  Ingo Weinhold  <ingo_weinhold@gmx.de>  (tiny change)
+            Eric Blake  <ebb9@byu.net>
+            Paolo Bonzini  <bonzini@gnu.org>
+            Bruno Haible  <bruno@clisp.org>
+
+	Make c-stack work on Haiku.
+	* lib/c-stack.c (SA_ONSTACK): Define fallback.
+	(c_stack_action): Use SA_ONSTACK flag.
+
 2008-12-22  Bruno Haible  <bruno@clisp.org>
 
 	* m4/locale-fr.m4 (gt_LOCALE_FR_UTF8): Treat Haiku like BeOS.
