@@ -28,6 +28,9 @@ Makefile.am:
 Include:
 <netdb.h>
 
+Link:
+$(GETADDRINFO_LIB)
+
 License:
 LGPLv2+
 

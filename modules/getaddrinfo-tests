@@ -9,7 +9,7 @@ configure.ac:
 Makefile.am:
 TESTS += test-getaddrinfo
 check_PROGRAMS += test-getaddrinfo
-test_getaddrinfo_LDADD = $(LDADD) @LIBINTL@
+test_getaddrinfo_LDADD = $(LDADD) @GETADDRINFO_LIB@ @LIBINTL@
 
 License:
 LGPL

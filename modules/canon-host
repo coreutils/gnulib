@@ -19,6 +19,9 @@ Makefile.am:
 Include:
 #include "canon-host.h"
 
+Link:
+$(GETADDRINFO_LIB)
+
 License:
 LGPL
 

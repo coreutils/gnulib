@@ -6,6 +6,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2008-12-22  getaddrinfo     When using this module, you now need to link with
+            canon-host      $(GETADDRINFO_LIB).
+
 2008-12-21  mbiter          The header files "mbiter.h", "mbuiter.h",
             mbuiter         "mbfile.h" can now be included without checking
             mbfile          HAVE_MBRTOWC. The macro HAVE_MBRTOWC will no

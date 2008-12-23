@@ -1,4 +1,4 @@
-# getaddrinfo.m4 serial 18
+# getaddrinfo.m4 serial 19
 dnl Copyright (C) 2004, 2005, 2006, 2007, 2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,8 +9,21 @@ AC_DEFUN([gl_GETADDRINFO],
   AC_REQUIRE([gl_HEADER_SYS_SOCKET])dnl for HAVE_SYS_SOCKET_H, HAVE_WINSOCK2_H
   AC_REQUIRE([gl_HEADER_NETDB])dnl for HAVE_NETDB_H
   AC_MSG_NOTICE([checking how to do getaddrinfo, freeaddrinfo and getnameinfo])
+  GETADDRINFO_LIB=
+  gai_saved_LIBS="$LIBS"
 
-  AC_SEARCH_LIBS(getaddrinfo, [nsl socket])
+  dnl Where is getaddrinfo()?
+  dnl - On Solaris, it is in libsocket.
+  dnl - On Haiku, it is in libnetwork.
+  dnl - On BeOS, it is in libnet.
+  dnl - On native Windows, it is in ws2_32.dll.
+  dnl - Otherwise it is in libc.
+  AC_SEARCH_LIBS(getaddrinfo, [socket network net],
+    [if test "$ac_cv_search_getaddrinfo" != "none required"; then
+       GETADDRINFO_LIB="$ac_cv_search_getaddrinfo"
+     fi])
+  LIBS="$gai_saved_LIBS $GETADDRINFO_LIB"
+
   AC_CACHE_CHECK([for getaddrinfo], [gl_cv_func_getaddrinfo], [
     AC_TRY_LINK([
 #include <sys/types.h>
@@ -39,7 +52,8 @@ AC_DEFUN([gl_GETADDRINFO],
       LIBS="$am_save_LIBS"
     ])
     if test "$gl_cv_w32_getaddrinfo" = "yes"; then
-      LIBS="$LIBS -lws2_32"
+      GETADDRINFO_LIB="-lws2_32"
+      LIBS="$gai_saved_LIBS $GETADDRINFO_LIB"
     else
       AC_LIBOBJ(getaddrinfo)
     fi
@@ -69,7 +83,11 @@ AC_DEFUN([gl_GETADDRINFO],
     AC_LIBOBJ(gai_strerror)
   fi
 
+  LIBS="$gai_saved_LIBS"
+
   gl_PREREQ_GETADDRINFO
+
+  AC_SUBST([GETADDRINFO_LIB])
 ])
 
 # Prerequisites of lib/netdb.in.h and lib/getaddrinfo.c.
@@ -78,7 +96,6 @@ AC_DEFUN([gl_PREREQ_GETADDRINFO], [
   AC_REQUIRE([gl_HEADER_SYS_SOCKET])dnl for HAVE_SYS_SOCKET_H, HAVE_WINSOCK2_H
   AC_REQUIRE([gl_HOSTENT]) dnl for HOSTENT_LIB
   AC_REQUIRE([gl_SERVENT]) dnl for SERVENT_LIB
-  LIBS="$LIBS $HOSTENT_LIB $SERVENT_LIB"
   AC_REQUIRE([AC_C_RESTRICT])
   AC_REQUIRE([gl_SOCKET_FAMILIES])
   AC_REQUIRE([gl_HEADER_SYS_SOCKET])
@@ -134,4 +151,16 @@ AC_DEFUN([gl_PREREQ_GETADDRINFO], [
   if test $ac_cv_type_struct_addrinfo = no; then
     HAVE_STRUCT_ADDRINFO=0
   fi
+
+  dnl Append $HOSTENT_LIB to GETADDRINFO_LIB, avoiding gratuitous duplicates.
+  case " $GETADDRINFO_LIB " in
+    *" $HOSTENT_LIB "*) ;;
+    *) GETADDRINFO_LIB="$GETADDRINFO_LIB $HOSTENT_LIB" ;;
+  esac
+
+  dnl Append $SERVENT_LIB to GETADDRINFO_LIB, avoiding gratuitous duplicates.
+  case " $GETADDRINFO_LIB " in
+    *" $SERVENT_LIB "*) ;;
+    *) GETADDRINFO_LIB="$GETADDRINFO_LIB $SERVENT_LIB" ;;
+  esac
 ])
