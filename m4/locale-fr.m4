@@ -133,7 +133,7 @@ changequote(,)dnl
 struct tm t;
 char buf[16];
 int main () {
-  /* On BeOS nd Haiku, locales are not implemented in libc.  Rather, libintl
+  /* On BeOS and Haiku, locales are not implemented in libc.  Rather, libintl
      imitates locale dependent behaviour by looking at the environment
      variables, and all locales use the UTF-8 encoding.  */
 #if !(defined __BEOS__ || defined __HAIKU__)
