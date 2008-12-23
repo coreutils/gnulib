@@ -1,7 +1,7 @@
 #serial 23
 # Obtaining file system usage information.
 
-# Copyright (C) 1997, 1998, 2000, 2001, 2003-2007 Free Software Foundation, Inc.
+# Copyright (C) 1997, 1998, 2000, 2001, 2003-2008 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -47,12 +47,12 @@ if test $ac_fsusage_space = no; then
   # SVR4
   AC_CACHE_CHECK([for statvfs function (SVR4)], fu_cv_sys_stat_statvfs,
 		 [AC_TRY_LINK([#include <sys/types.h>
-#if defined __GLIBC__ && !defined __BEOS__
-Do not use statvfs on systems with GNU libc, because that function stats
-all preceding entries in /proc/mounts, and that makes df hang if even
+#if defined __GLIBC__ && defined __linux__
+Do not use statvfs on systems with GNU libc on Linux, because that function
+stats all preceding entries in /proc/mounts, and that makes df hang if even
 one of the corresponding file systems is hard-mounted, but not available.
-statvfs in GNU libc on BeOS operates differently: it only makes a system
-call.
+statvfs in GNU libc on Hurd, BeOS, Haiku operates differently: it only makes
+a system call.
 #endif
 
 #ifdef __osf__

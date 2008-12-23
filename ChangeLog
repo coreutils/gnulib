@@ -1,5 +1,9 @@
 2008-12-23  Bruno Haible  <bruno@clisp.org>
 
+	* m4/fsusage.m4 (gl_FILE_SYSTEM_USAGE): Fix conditional and comment.
+
+2008-12-23  Bruno Haible  <bruno@clisp.org>
+
 	Module getaddrinfo requires linking with $(GETADDRINFO_LIB).
 	* m4/getaddrinfo.m4 (gl_GETADDRINFO): Put link options into
 	GETADDRINFO_LIB, not in LIBS.
