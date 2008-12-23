@@ -215,6 +215,13 @@ directory contains several dysfunctional programs; working variants
 of these programs are available in @code{/usr/bin}.  So, if you need
 @code{/usr/ucb} in your @env{PATH}, put it @emph{after} @code{/usr/bin}.
 
+On Haiku, software installed for all users goes in @file{/boot/common},
+not @file{/usr/local}.  It is recommended to use the following options:
+
+@example
+./configure --prefix=/boot/common
+@end example
+
 @node System Type
 @section Specifying the System Type
 
