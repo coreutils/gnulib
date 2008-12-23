@@ -1,3 +1,65 @@
+2008-12-22  Bruno Haible  <bruno@clisp.org>
+
+	* doc/posix-functions/iswalnum_l.texi: Mention limitation of wchar_t.
+	* doc/posix-functions/iswalpha_l.texi: Likewise.
+	* doc/posix-functions/iswblank_l.texi: Likewise.
+	* doc/posix-functions/iswcntrl_l.texi: Likewise.
+	* doc/posix-functions/iswctype_l.texi: Likewise.
+	* doc/posix-functions/iswdigit_l.texi: Likewise.
+	* doc/posix-functions/iswgraph_l.texi: Likewise.
+	* doc/posix-functions/iswlower_l.texi: Likewise.
+	* doc/posix-functions/iswprint_l.texi: Likewise.
+	* doc/posix-functions/iswpunct_l.texi: Likewise.
+	* doc/posix-functions/iswspace_l.texi: Likewise.
+	* doc/posix-functions/iswupper_l.texi: Likewise.
+	* doc/posix-functions/iswxdigit_l.texi: Likewise.
+	* doc/posix-functions/mbsnrtowcs.texi: Likewise.
+	* doc/posix-functions/open_wmemstream.texi: Likewise.
+	* doc/posix-functions/swscanf.texi: Likewise.
+	* doc/posix-functions/towctrans_l.texi: Likewise.
+	* doc/posix-functions/towlower.texi: Likewise.
+	* doc/posix-functions/towlower_l.texi: Likewise.
+	* doc/posix-functions/towupper.texi: Likewise.
+	* doc/posix-functions/towupper_l.texi: Likewise.
+	* doc/posix-functions/vfwprintf.texi: Likewise.
+	* doc/posix-functions/vfwscanf.texi: Likewise.
+	* doc/posix-functions/vswscanf.texi: Likewise.
+	* doc/posix-functions/vwprintf.texi: Likewise.
+	* doc/posix-functions/vwscanf.texi: Likewise.
+	* doc/posix-functions/wcpcpy.texi: Likewise.
+	* doc/posix-functions/wcpncpy.texi: Likewise.
+	* doc/posix-functions/wcscasecmp.texi: Likewise.
+	* doc/posix-functions/wcscasecmp_l.texi: Likewise.
+	* doc/posix-functions/wcscoll_l.texi: Likewise.
+	* doc/posix-functions/wcsdup.texi: Likewise.
+	* doc/posix-functions/wcsncasecmp.texi: Likewise.
+	* doc/posix-functions/wcsncasecmp_l.texi: Likewise.
+	* doc/posix-functions/wcsnlen.texi: Likewise.
+	* doc/posix-functions/wcsnrtombs.texi: Likewise.
+	* doc/posix-functions/wcsxfrm_l.texi: Likewise.
+	* doc/posix-functions/wctrans_l.texi: Likewise.
+	* doc/posix-functions/wctype_l.texi: Likewise.
+	* doc/glibc-functions/fgetwc_unlocked.texi: Likewise.
+	* doc/glibc-functions/fgetws_unlocked.texi: Likewise.
+	* doc/glibc-functions/fputwc_unlocked.texi: Likewise.
+	* doc/glibc-functions/fputws_unlocked.texi: Likewise.
+	* doc/glibc-functions/getwc_unlocked.texi: Likewise.
+	* doc/glibc-functions/getwchar_unlocked.texi: Likewise.
+	* doc/glibc-functions/putwc_unlocked.texi: Likewise.
+	* doc/glibc-functions/putwchar_unlocked.texi: Likewise.
+	* doc/glibc-functions/wcschrnul.texi: Likewise.
+	* doc/glibc-functions/wcsftime_l.texi: Likewise.
+	* doc/glibc-functions/wcstod_l.texi: Likewise.
+	* doc/glibc-functions/wcstof_l.texi: Likewise.
+	* doc/glibc-functions/wcstol_l.texi: Likewise.
+	* doc/glibc-functions/wcstold_l.texi: Likewise.
+	* doc/glibc-functions/wcstoll_l.texi: Likewise.
+	* doc/glibc-functions/wcstoq.texi: Likewise.
+	* doc/glibc-functions/wcstoul_l.texi: Likewise.
+	* doc/glibc-functions/wcstoull_l.texi: Likewise.
+	* doc/glibc-functions/wcstouq.texi: Likewise.
+	* doc/glibc-functions/wmempcpy.texi: Likewise.
+
 2008-12-22  Ingo Weinhold  <ingo_weinhold@gmx.de>  (tiny change)
             Eric Blake  <ebb9@byu.net>
             Paolo Bonzini  <bonzini@gnu.org>

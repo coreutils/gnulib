@@ -16,6 +16,9 @@ MacOS X 10.3, FreeBSD 5.2.1, NetBSD 3.0, OpenBSD 3.8, AIX 4.3.2, HP-UX 11, IRIX 
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+On AIX and Windows platforms, @code{wchar_t} is a 16-bit type and therefore cannot
+accommodate all Unicode characters.
+@item
 The specification is not clear about whether this function should update the
 conversion state when the first argument (the destination pointer) is NULL.
 The glibc, MacOS X, FreeBSD implementations do update the state in this case.
