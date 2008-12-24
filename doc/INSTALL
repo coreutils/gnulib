@@ -159,7 +159,7 @@ Particular systems
 CC is not installed, it is recommended to use the following options in
 order to use an ANSI C compiler:
 
-     ./configure CC="cc -Ae"
+     ./configure CC="cc -Ae -D_XOPEN_SOURCE=500"
 
 and if that doesn't work, install pre-built binaries of GCC for HP-UX.
 
@@ -173,6 +173,16 @@ to try
 and if that doesn't work, try
 
      ./configure CC="cc -nodtk"
+
+   On Solaris, don't put `/usr/ucb' early in your `PATH'.  This
+directory contains several dysfunctional programs; working variants of
+these programs are available in `/usr/bin'.  So, if you need `/usr/ucb'
+in your `PATH', put it _after_ `/usr/bin'.
+
+   On Haiku, software installed for all users goes in `/boot/common',
+not `/usr/local'.  It is recommended to use the following options:
+
+     ./configure --prefix=/boot/common
 
 Specifying the System Type
 ==========================
@@ -277,7 +287,7 @@ operates.
      `configure' can determine that directory automatically.
 
 `--prefix=DIR'
-     Use DIR as the installation prefix.  *Note Installation Names::
+     Use DIR as the installation prefix.  *note Installation Names::
      for more details, including other options available for fine-tuning
      the installation locations.
 
