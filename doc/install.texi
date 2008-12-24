@@ -188,7 +188,7 @@ not installed, it is recommended to use the following options in order to
 use an ANSI C compiler:
 
 @example
-./configure CC="cc -Ae"
+./configure CC="cc -Ae -D_XOPEN_SOURCE=500"
 @end example
 
 @noindent
