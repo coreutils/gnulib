@@ -4032,7 +4032,9 @@ func_create_testdir ()
    if test -f $m4base/gettext.m4; then
      func_execute_command ${AUTOPOINT} --force || func_exit 1
      for f in $m4base/*.m4~; do
-       mv -f $f `echo $f | sed -e 's,~$,,'` || func_exit 1
+       if test -f $f; then
+         mv -f $f `echo $f | sed -e 's,~$,,'` || func_exit 1
+       fi
      done
    fi
    func_execute_command ${ACLOCAL} -I $m4base || func_exit 1
@@ -4051,7 +4053,9 @@ func_create_testdir ()
      if test -f ../$m4base/gettext.m4; then
        func_execute_command ${AUTOPOINT} --force || func_exit 1
        for f in ../$m4base/*.m4~; do
-         mv -f $f `echo $f | sed -e 's,~$,,'` || func_exit 1
+         if test -f $f; then
+           mv -f $f `echo $f | sed -e 's,~$,,'` || func_exit 1
+         fi
        done
      fi
      func_execute_command ${ACLOCAL} -I ../$m4base || func_exit 1
