@@ -443,10 +443,20 @@ typedef int _verify_intmax_size[2 * (sizeof (intmax_t) == sizeof (uintmax_t)) - 
 /* ptrdiff_t limits */
 #undef PTRDIFF_MIN
 #undef PTRDIFF_MAX
-#define PTRDIFF_MIN  \
-   _STDINT_MIN (1, @BITSIZEOF_PTRDIFF_T@, 0@PTRDIFF_T_SUFFIX@)
-#define PTRDIFF_MAX  \
-   _STDINT_MAX (1, @BITSIZEOF_PTRDIFF_T@, 0@PTRDIFF_T_SUFFIX@)
+#if @APPLE_UNIVERSAL_BUILD@
+# if _LP64
+#  define PTRDIFF_MIN  _STDINT_MIN (1, 64, 0l)
+#  define PTRDIFF_MAX  _STDINT_MAX (1, 64, 0l)
+# else
+#  define PTRDIFF_MIN  _STDINT_MIN (1, 32, 0)
+#  define PTRDIFF_MAX  _STDINT_MAX (1, 32, 0)
+# endif
+#else
+# define PTRDIFF_MIN  \
+    _STDINT_MIN (1, @BITSIZEOF_PTRDIFF_T@, 0@PTRDIFF_T_SUFFIX@)
+# define PTRDIFF_MAX  \
+    _STDINT_MAX (1, @BITSIZEOF_PTRDIFF_T@, 0@PTRDIFF_T_SUFFIX@)
+#endif
 
 /* sig_atomic_t limits */
 #undef SIG_ATOMIC_MIN
@@ -461,7 +471,15 @@ typedef int _verify_intmax_size[2 * (sizeof (intmax_t) == sizeof (uintmax_t)) - 
 
 /* size_t limit */
 #undef SIZE_MAX
-#define SIZE_MAX  _STDINT_MAX (0, @BITSIZEOF_SIZE_T@, 0@SIZE_T_SUFFIX@)
+#if @APPLE_UNIVERSAL_BUILD@
+# if _LP64
+#  define SIZE_MAX  _STDINT_MAX (0, 64, 0ul)
+# else
+#  define SIZE_MAX  _STDINT_MAX (0, 32, 0ul)
+# endif
+#else
+# define SIZE_MAX  _STDINT_MAX (0, @BITSIZEOF_SIZE_T@, 0@SIZE_T_SUFFIX@)
+#endif
 
 /* wchar_t limits */
 #undef WCHAR_MIN
