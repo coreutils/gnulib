@@ -1,4 +1,4 @@
-# inttypes.m4 serial 12
+# inttypes.m4 serial 13
 dnl Copyright (C) 2006-2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -144,6 +144,8 @@ const char *l = /* implicit string concatenation */
     AC_REQUIRE([gl_INTTYPES_H_DEFAULTS])
     gl_CHECK_NEXT_HEADERS([inttypes.h])
 
+    AC_REQUIRE([gl_MULTIARCH])
+
     dnl Ensure that <stdint.h> defines the limit macros, since gnulib's
     dnl <inttypes.h> relies on them.  This macro is only needed when a
     dnl C++ compiler is in use; it has no effect for a C compiler.
@@ -212,21 +214,29 @@ const char *l = /* implicit string concatenation */
       [defined INT32_MAX && defined INTMAX_MAX],
       [INT32_MAX < INTMAX_MAX],
       [sizeof (int) < sizeof (long long int)])
-    gl_INTTYPES_CHECK_LONG_LONG_INT_CONDITION(
-      [INT64_MAX_EQ_LONG_MAX],
-      [defined INT64_MAX],
-      [INT64_MAX == LONG_MAX],
-      [sizeof (long long int) == sizeof (long int)])
+    if test $APPLE_UNIVERSAL_BUILD = 0; then
+      gl_INTTYPES_CHECK_LONG_LONG_INT_CONDITION(
+        [INT64_MAX_EQ_LONG_MAX],
+        [defined INT64_MAX],
+        [INT64_MAX == LONG_MAX],
+        [sizeof (long long int) == sizeof (long int)])
+    else
+      INT64_MAX_EQ_LONG_MAX=-1
+    fi
     gl_INTTYPES_CHECK_LONG_LONG_INT_CONDITION(
       [UINT32_MAX_LT_UINTMAX_MAX],
       [defined UINT32_MAX && defined UINTMAX_MAX],
       [UINT32_MAX < UINTMAX_MAX],
       [sizeof (unsigned int) < sizeof (unsigned long long int)])
-    gl_INTTYPES_CHECK_LONG_LONG_INT_CONDITION(
-      [UINT64_MAX_EQ_ULONG_MAX],
-      [defined UINT64_MAX],
-      [UINT64_MAX == ULONG_MAX],
-      [sizeof (unsigned long long int) == sizeof (unsigned long int)])
+    if test $APPLE_UNIVERSAL_BUILD = 0; then
+      gl_INTTYPES_CHECK_LONG_LONG_INT_CONDITION(
+        [UINT64_MAX_EQ_ULONG_MAX],
+        [defined UINT64_MAX],
+        [UINT64_MAX == ULONG_MAX],
+        [sizeof (unsigned long long int) == sizeof (unsigned long int)])
+    else
+      UINT64_MAX_EQ_ULONG_MAX=-1
+    fi
 
     INTTYPES_H='inttypes.h'
   fi

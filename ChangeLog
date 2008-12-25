@@ -1,5 +1,14 @@
 2008-12-25  Bruno Haible  <bruno@clisp.org>
 
+	Add support for universal builds to <inttypes.h>.
+	* lib/inttypes.in.h (_PRI64_PREFIX, _PRIu64_PREFIX, _SCN64_PREFIX,
+	_SCNu64_PREFIX): In Apple
+	universal builds, define directly, using _LP64.
+	* m4/inttypes.m4 (gl_INTTYPES_H): In Apple universal builds, set
+	INT64_MAX_EQ_LONG_MAX and UINT64_MAX_EQ_ULONG_MAX to -1.
+	* modules/inttypes (Depends-on): Add multiarch.
+	(Makefile.am): Substitute APPLE_UNIVERSAL_BUILD.
+
 	Add support for universal builds to <stdint.h>.
 	* lib/stdint.in.h (PDFDIFF_MIN, PTRDIFF_MAX, SIZE_MAX): In Apple
 	universal builds, define directly, using _LP64.
