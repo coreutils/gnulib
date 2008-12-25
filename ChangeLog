@@ -1,3 +1,12 @@
+2008-12-25  Bruno Haible  <bruno@clisp.org>
+
+	* modules/btowc (License): Relicense under LGPLv2+.
+	* modules/mbsinit (License): Likewise.
+	* modules/mbrtowc (License): Likewise.
+	* modules/wcrtomb (License): Likewise.
+	* modules/streq (License): Likewise.
+	Reported by David Lutterkort <lutter@redhat.com>.
+
 2008-12-23  Bruno Haible  <bruno@clisp.org>
 
 	* m4/fsusage.m4 (gl_FILE_SYSTEM_USAGE): Fix conditional and comment.
