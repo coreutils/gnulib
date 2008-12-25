@@ -21,6 +21,7 @@ nocrash
 printf-safe
 stdint
 errno
+multiarch
 
 configure.ac:
 gl_FUNC_VSPRINTF_POSIX

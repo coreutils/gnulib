@@ -1,5 +1,24 @@
 2008-12-25  Bruno Haible  <bruno@clisp.org>
 
+	Add support for universal builds to vasnprintf.
+	* m4/printf.m4 (gl_PRINTF_ENOMEM): Require gl_MULTIARCH. In Apple
+	universal builds, guess no.
+	* modules/vasnprintf-posix (Depends-on): Add multiarch.
+	* modules/vasprintf-posix (Depends-on): Likewise.
+	* modules/fprintf-posix (Depends-on): Likewise.
+	* modules/vfprintf-posix (Depends-on): Likewise.
+	* modules/snprintf-posix (Depends-on): Likewise.
+	* modules/vsnprintf-posix (Depends-on): Likewise.
+	* modules/sprintf-posix (Depends-on): Likewise.
+	* modules/vsprintf-posix (Depends-on): Likewise.
+	* modules/unistdio/u8-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/u8-u8-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/u16-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/u16-u16-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/u32-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/u32-u32-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/ulc-vasnprintf (Depends-on): Likewise.
+
 	Add support for universal builds to <inttypes.h>.
 	* lib/inttypes.in.h (_PRI64_PREFIX, _PRIu64_PREFIX, _SCN64_PREFIX,
 	_SCNu64_PREFIX): In Apple

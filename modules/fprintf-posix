@@ -21,6 +21,7 @@ fpucw
 nocrash
 printf-safe
 errno
+multiarch
 
 configure.ac:
 gl_FUNC_FPRINTF_POSIX

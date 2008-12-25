@@ -42,6 +42,7 @@ alloca-opt
 localcharset
 xsize
 errno
+multiarch
 
 configure.ac:
 gl_PREREQ_VASNPRINTF_WITH_EXTRAS

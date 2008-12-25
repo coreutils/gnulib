@@ -18,6 +18,7 @@ signbit
 fpucw
 nocrash
 printf-safe
+multiarch
 
 configure.ac:
 gl_FUNC_VASNPRINTF_POSIX
