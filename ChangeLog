@@ -1,5 +1,9 @@
 2008-12-26  Bruno Haible  <bruno@clisp.org>
 
+	* lib/stdlib.in.h (struct random_data): Fix indentation of comments.
+
+2008-12-26  Bruno Haible  <bruno@clisp.org>
+
 	* lib/stdint.in.h: Move the include of <wchar.h> down until after all
 	the types are defined. Also conditionalize it on __STDC_LIMIT_MACROS,
 	not __STDC_CONSTANT_MACROS.
