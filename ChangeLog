@@ -1,5 +1,10 @@
 2008-12-26  Bruno Haible  <bruno@clisp.org>
 
+	* m4/multiarch.m4 (gl_MULTIARCH): Recognize also the architecture names
+	i486, i586, i686.
+
+2008-12-26  Bruno Haible  <bruno@clisp.org>
+
 	* lib/stdlib.in.h (struct random_data): Fix indentation of comments.
 
 2008-12-26  Bruno Haible  <bruno@clisp.org>
