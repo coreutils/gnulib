@@ -1,3 +1,31 @@
+2008-12-29  Bruno Haible  <bruno@clisp.org>
+
+	* m4/codeset.m4 (AM_LANGINFO_CODESET): More systematic m4 argument
+	quoting.
+	* m4/gettext.m4 (AM_GNU_GETTEXT): Likewise.
+	* m4/glibc2.m4 (gt_GLIBC2): Likewise.
+	* m4/glibc21.m4 (gl_GLIBC21): Likewise.
+	* m4/iconv.m4 (AM_ICONV_LINK, AM_ICONV): Likewise.
+	* m4/intdiv0.m4 (gt_INTDIV0): Likewise.
+	* m4/intlmacosx.m4 (gt_INTL_MACOSX): Likewise.
+	* m4/intmax.m4 (gt_TYPE_INTMAX_T): Likewise.
+	* m4/inttypes-pri.m4 (gt_INTTYPES_PRI): Likewise.
+	* m4/inttypes_h.m4 (gl_AC_HEADER_INTTYPES_H): Likewise.
+	* m4/lcmessage.m4 (gt_LC_MESSAGES): Likewise.
+	* m4/nls.m4 (AM_NLS): Likewise.
+	* m4/po.m4 (AM_PO_SUBDIRS): Likewise.
+	* m4/printf-posix.m4 (gt_PRINTF_POSIX): Likewise.
+	* m4/progtest.m4 (AM_PATH_PROG_WITH_TEST): Likewise.
+	* m4/size_max.m4 (gl_SIZE_MAX): Likewise.
+	* m4/stdint_h.m4 (gl_AC_HEADER_STDINT_H): Likewise.
+	* m4/threadlib.m4 (gl_THREADLIB_BODY): Likewise.
+	* m4/uintmax_t.m4 (gl_AC_TYPE_UINTMAX_T): Likewise.
+	* m4/visibility.m4 (gl_VISIBILITY): Likewise.
+	* m4/wchar_t.m4 (gt_TYPE_WCHAR_T): Likewise.
+	* m4/wint_t.m4 (gt_TYPE_WINT_T): Likewise.
+	* m4/xsize.m4 (gl_XSIZE): Likewise.
+	Suggested by Jim Meyering.
+
 2008-11-17  Bruce Korb  <bkorb@gnu.org>
 
 	* lib/parse-duration.h: non-iso form accepts years, months weeks, too
