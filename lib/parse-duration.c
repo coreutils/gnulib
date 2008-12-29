@@ -566,38 +566,24 @@ parse_non_iso8601(cch_t * pz)
 time_t
 parse_duration (char const * pz)
 {
-  time_t res = 0;
-
   while (isspace ((unsigned char)*pz))
     pz++;
 
-  do {
-    if (*pz == 'P')
-      {
-        res = parse_period (pz + 1);
-        if (res == BAD_TIME)
-          break;
-        return res;
-      }
+  switch (*pz)
+    {
+    case 'P':
+      return parse_period (pz + 1);
 
-    if (*pz == 'T')
-      {
-        res = parse_time (pz + 1);
-        if (res == BAD_TIME)
-          break;
-        return res;
-      }
+    case 'T':
+      return parse_time (pz + 1);
 
-    if (! isdigit ((unsigned char)*pz))
-      break;
+    default:
+      if (isdigit ((unsigned char)*pz))
+        return parse_non_iso8601 (pz);
 
-    res = parse_non_iso8601 (pz);
-    if (res != BAD_TIME)
-      return res;
-
-  } while (0);
-
-  return BAD_TIME;
+      errno = EINVAL;
+      return BAD_TIME;
+    }
 }
 
 /*

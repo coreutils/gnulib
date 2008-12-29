@@ -1,3 +1,8 @@
+2008-11-17  Bruce Korb  <bkorb@gnu.org>
+
+	* lib/parse-duration.h: non-iso form accepts years, months weeks, too
+	* lib/parse-duration.c: use a switch instead of cascading if's.
+
 2008-12-29  Eric Blake  <ebb9@byu.net>
 
 	wchar.h: supply WEOF on Irix 5.3

@@ -28,10 +28,12 @@
 
   ==== if it is a digit
 
-  the string may contain:  NNN d NNN h NNN m NNN s
-  This represents NNN days, NNN hours, NNN minutes and NNN seconds.
+  the string may contain:  NNN Y NNN M NNN W NNN d NNN h NNN m NNN s
+  This represents NNN years, NNN months, NNN weeks, NNN days, NNN hours,
+    NNN minutes and NNN seconds.
   The embeded white space is optional.
   These terms must appear in this order.
+  Case is significant:  'M' is months and 'm' is minutes.
   The final "s" is optional.
   All of the terms ("NNN" plus designator) are optional.
   Minutes and seconds may optionally be represented as NNN:NNN.
