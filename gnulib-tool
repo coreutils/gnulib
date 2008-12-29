@@ -3464,8 +3464,8 @@ s,//*$,/,'
               if $doit; then
                 echo "Updating $destdir/$dir$ignore (backup in $destdir/$dir${ignore}~)"
                 mv -f "$destdir/$dir$ignore" "$destdir/$dir$ignore"~
-                { sed -e 's,^,/^,' -e 's,$,\$/d,' < "$tmp"/ignore-removed
-                  if test -n "$anchor"; then sed -e "s,^,/^${doubly_escaped_anchor}," -e 's,$,\$/d,' < "$tmp"/ignore-removed; fi
+                { sed -e 's,/,\\/,g' -e 's,^,/^,' -e 's,$,\$/d,' < "$tmp"/ignore-removed
+                  if test -n "$anchor"; then sed -e 's,/,\\/,g' -e "s,^,/^${doubly_escaped_anchor}," -e 's,$,\$/d,' < "$tmp"/ignore-removed; fi
                 } > "$tmp"/sed-ignore-removed
                 { cat "$destdir/$dir$ignore"~
                   sed -e "s|^|$anchor|" < "$tmp"/ignore-added
