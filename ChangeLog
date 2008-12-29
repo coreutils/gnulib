@@ -1,3 +1,8 @@
+2008-12-29  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* gnulib-tool (func_update_ignorelist): Use 'join - FILE'
+	rather than 'join FILE -', for Solaris join.
+
 2008-12-29  Bruno Haible  <bruno@clisp.org>
 
 	* m4/codeset.m4 (AM_LANGINFO_CODESET): More systematic m4 argument

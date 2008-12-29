@@ -3456,9 +3456,9 @@ s,//*$,/,'
             sed -e "s|^$anchor||" < "$destdir/$dir$ignore" | LC_ALL=C sort > "$tmp"/ignore
             (func_reset_sigpipe
              echo "$dir_added" | sed -e '/^$/d' | LC_ALL=C sort -u \
-               | LC_ALL=C join -v 2 "$tmp"/ignore - > "$tmp"/ignore-added
+               | LC_ALL=C join -v 1 - "$tmp"/ignore > "$tmp"/ignore-added
              echo "$dir_removed" | sed -e '/^$/d' | LC_ALL=C sort -u \
-               | LC_ALL=C join -v 2 "$tmp"/ignore - > "$tmp"/ignore-removed
+               | LC_ALL=C join -v 1 - "$tmp"/ignore > "$tmp"/ignore-removed
             )
             if test -s "$tmp"/ignore-added || test -s "$tmp"/ignore-removed; then
               if $doit; then
