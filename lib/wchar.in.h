@@ -68,6 +68,9 @@ extern "C" {
 /* Define wint_t.  (Also done in wctype.in.h.)  */
 #if !@HAVE_WINT_T@ && !defined wint_t
 # define wint_t int
+# ifndef WEOF
+#  define WEOF -1
+# endif
 #endif
 
 

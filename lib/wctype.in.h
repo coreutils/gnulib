@@ -57,6 +57,9 @@
 /* Define wint_t.  (Also done in wchar.in.h.)  */
 #if !@HAVE_WINT_T@ && !defined wint_t
 # define wint_t int
+# ifndef WEOF
+#  define WEOF -1
+# endif
 #endif
 
 /* FreeBSD 4.4 to 4.11 has <wctype.h> but lacks the functions.

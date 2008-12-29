@@ -1,3 +1,12 @@
+2008-12-29  Eric Blake  <ebb9@byu.net>
+
+	wchar.h: supply WEOF on Irix 5.3
+	* lib/wchar.in.h (wint_t): Also supply WEOF.
+	* lib/wctype.in.h (wint_t): Likewise.
+	* doc/posix-headers/wchar.texi (wchar.h): Document the bug.
+	* doc/posix-headers/wctype.texi (wctype.h): Likewise.
+	Reported by Tom G. Christensen.
+
 2008-12-26  Bruno Haible  <bruno@clisp.org>
 
 	* m4/multiarch.m4 (gl_MULTIARCH): Recognize also the architecture names
@@ -148,9 +157,9 @@
 	* doc/glibc-functions/wmempcpy.texi: Likewise.
 
 2008-12-22  Ingo Weinhold  <ingo_weinhold@gmx.de>  (tiny change)
-            Eric Blake  <ebb9@byu.net>
-            Paolo Bonzini  <bonzini@gnu.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Eric Blake  <ebb9@byu.net>
+	    Paolo Bonzini  <bonzini@gnu.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Make c-stack work on Haiku.
 	* lib/c-stack.c (SA_ONSTACK): Define fallback.
