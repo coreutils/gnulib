@@ -1,4 +1,4 @@
-# multiarch.m4 serial 2
+# multiarch.m4 serial 3
 dnl Copyright (C) 2008 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -20,6 +20,15 @@ dnl with or without modifications, as long as this notice is preserved.
 # beginning of config.h and set APPLE_UNIVERSAL_BUILD accordingly.
 
 AC_DEFUN([gl_MULTIARCH],
+[
+  dnl This AC_REQUIRE is not necessary in theory. It works around a bug in
+  dnl autoconf <= 2.63: AC_REQUIRE invocations inside AC_REQUIREd macros are
+  dnl being handled better than AC_REQUIRE invocations inside normally invoked
+  dnl macros.
+  AC_REQUIRE([gl_MULTIARCH_BODY])
+])
+
+AC_DEFUN([gl_MULTIARCH_BODY],
 [
   dnl Code similar to autoconf-2.63 AC_C_BIGENDIAN.
   gl_cv_c_multiarch=no
