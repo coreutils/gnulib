@@ -3,11 +3,11 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2008-12-16.21}
+\def\texinfoversion{2009-01-01.14}
 %
-% Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
+% Copyright 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
-% 2007, 2008 Free Software Foundation, Inc.
+% 2007, 2008, 2009 Free Software Foundation, Inc.
 %
 % This texinfo.tex file is free software: you can redistribute it and/or
 % modify it under the terms of the GNU General Public License as
@@ -100,6 +100,7 @@
 \let\ptextop=\top
 {\catcode`\'=\active
 \global\let\ptexquoteright'}% Math-mode def from plain.tex.
+\let\ptexraggedright=\raggedright
 
 % If this character appears in an error message or help string, it
 % starts a new line in the output.
@@ -1577,6 +1578,9 @@ output) for that.)}
       \def\@{@}%
       \let\/=\empty
       \makevalueexpandable
+      % \indexnofonts -- is that what we want?
+      \def\var##1{##1}%
+      %
       \leavevmode\setcolor{\urlcolor}%
       \startlink attr{/Border [0 0 0]}%
         user{/Subtype /Link /A << /S /URI /URI (#1) >>}%
@@ -5259,7 +5263,7 @@ end
 \def\chapheading{\chapbreak \parsearg\chapheadingzzz}
 \def\chapheadingzzz#1{%
   {\chapfonts \vbox{\hyphenpenalty=10000\tolerance=5000
-                    \parindent=0pt\raggedright
+                    \parindent=0pt\ptexraggedright
                     \rmisbold #1\hfill}}%
   \bigskip \par\penalty 200\relax
   \suppressfirstparagraphindent
@@ -5416,7 +5420,7 @@ end
     %
     % Typeset the actual heading.
     \nobreak % Avoid page breaks at the interline glue.
-    \vbox{\hyphenpenalty=10000 \tolerance=5000 \parindent=0pt \raggedright
+    \vbox{\hyphenpenalty=10000 \tolerance=5000 \parindent=0pt \ptexraggedright
           \hangindent=\wd0 \centerparametersmaybe
           \unhbox0 #1\par}%
   }%
@@ -5440,7 +5444,7 @@ end
 %
 \def\unnchfopen #1{%
 \chapoddpage {\chapfonts \vbox{\hyphenpenalty=10000\tolerance=5000
-                       \parindent=0pt\raggedright
+                       \parindent=0pt\ptexraggedright
                        \rmisbold #1\hfill}}\bigskip \par\nobreak
 }
 \def\chfopen #1#2{\chapoddpage {\chapfonts
@@ -5573,7 +5577,7 @@ end
     \nobreak
     %
     % Output the actual section heading.
-    \vbox{\hyphenpenalty=10000 \tolerance=5000 \parindent=0pt \raggedright
+    \vbox{\hyphenpenalty=10000 \tolerance=5000 \parindent=0pt \ptexraggedright
           \hangindent=\wd0  % zero if no section number
           \unhbox0 #1}%
   }%
@@ -6149,6 +6153,30 @@ end
   \gobble
 }
 \let\Eflushright = \afterenvbreak
+
+
+% @raggedright does more-or-less normal line breaking but no right
+% justification.  From plain.tex.
+\envdef\raggedright{%
+  \rightskip0pt plus2em \spaceskip.3333em \xspaceskip.5em\relax
+}
+\let\Eraggedright\par
+
+\envdef\raggedleft{%
+  \parindent=0pt \leftskip0pt plus2em
+  \spaceskip.3333em \xspaceskip.5em \parfillskip=0pt
+  \hbadness=10000 % Last line will usually be underfull, so turn off
+                  % badness reporting.
+}
+\let\Eraggedleft\par
+
+\envdef\raggedcenter{%
+  \parindent=0pt \rightskip0pt plus1em \leftskip0pt plus1em
+  \spaceskip.3333em \xspaceskip.5em \parfillskip=0pt
+  \hbadness=10000 % Last line will usually be underfull, so turn off
+                  % badness reporting.
+}
+\let\Eraggedcenter\par
 
 
 % @quotation does normal linebreaking (hence we can't use \nonfillstart)
