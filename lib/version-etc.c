@@ -1,5 +1,5 @@
 /* Utility to help print --version output in a consistent format.
-   Copyright (C) 1999-2008 Free Software Foundation, Inc.
+   Copyright (C) 1999-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@
 #include "gettext.h"
 #define _(msgid) gettext (msgid)
 
-enum { COPYRIGHT_YEAR = 2008 };
+enum { COPYRIGHT_YEAR = 2009 };
 
 /* Like version_etc, below, but with the NULL-terminated author list
    provided via a variable of type va_list.  */

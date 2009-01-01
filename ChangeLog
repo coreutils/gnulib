@@ -1,3 +1,7 @@
+2009-01-01  Jim Meyering  <meyering@redhat.com>
+
+	* lib/version-etc.c (version_etc_va): Update copyright year.
+
 2008-12-30  Bruno Haible  <bruno@clisp.org>
 
 	* m4/lib-prefix.m4 (AC_LIB_LINKFLAGS_BODY): Don't overwrite
@@ -47305,7 +47309,7 @@
 	coding: utf-8
 	End:
 
-	Copyright (C) 1997-2008 Free Software Foundation, Inc.
+	Copyright (C) 1997-2009 Free Software Foundation, Inc.
 
 	Copying and distribution of this file, with or without
 	modification, are permitted provided the copyright notice
