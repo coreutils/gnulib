@@ -1,3 +1,9 @@
+2009-01-01  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* gnulib-tool (func_modules_add_dummy, func_emit_lib_Makefile_am,
+	func_emit_tests_Makefile_am, func_import): Abort loops early if we
+	already know the answer.
+
 2009-01-01  Jim Meyering  <meyering@redhat.com>
 
 	* lib/version-etc.c (version_etc_va): Update copyright year.

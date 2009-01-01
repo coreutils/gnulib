@@ -1,6 +1,6 @@
 #! /bin/sh
 #
-# Copyright (C) 2002-2008 Free Software Foundation, Inc.
+# Copyright (C) 2002-2009 Free Software Foundation, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -1590,6 +1590,7 @@ func_modules_transitive_closure ()
 # - modules         list of modules, including 'dummy' if needed
 func_modules_add_dummy ()
 {
+  # Determine whether any module provides a lib_SOURCES augmentation.
   have_lib_SOURCES=
   sed_remove_backslash_newline=':a
 /\\$/{
@@ -1606,7 +1607,10 @@ ba
         # Ignore .h files since they are not compiled.
         case "$file" in
           *.h) ;;
-          *) have_lib_SOURCES=yes ;;
+          *)
+            have_lib_SOURCES=yes
+            break 2
+            ;;
         esac
       done
     fi
@@ -1769,7 +1773,10 @@ func_emit_lib_Makefile_am ()
         # Test whether there are some source files in subdirectories.
         for f in `func_get_filelist "$module"`; do
           case $f in
-            lib/*/*.c) uses_subdirs=yes ;;
+            lib/*/*.c)
+              uses_subdirs=yes
+              break
+              ;;
           esac
         done
       fi
@@ -2016,7 +2023,10 @@ func_emit_tests_Makefile_am ()
         # Test whether there are some source files in subdirectories.
         for f in `func_get_filelist "$module"`; do
           case $f in
-            lib/*/*.c | tests/*/*.c) uses_subdirs=yes ;;
+            lib/*/*.c | tests/*/*.c)
+              uses_subdirs=yes
+              break
+              ;;
           esac
         done
       fi
@@ -2538,15 +2548,15 @@ func_import ()
     func_verify_nontests_module
     if test -n "$module"; then
       all_files=`func_get_filelist $module`
-      lib_files=`for f in $all_files; do \
-                   case $f in \
-                     lib/*) echo $f ;; \
-                   esac; \
-                 done | sed -e 's,^lib/,,'`
-      if test -n "$lib_files"; then
-        use_libtests=true
-        break
-      fi
+      # Test whether some file in $all_files lies in lib/.
+      for f in $all_files; do
+        case $f in
+          lib/*)
+            use_libtests=true
+            break 2
+            ;;
+        esac
+      done
     fi
   done
 
