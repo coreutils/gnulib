@@ -1,5 +1,12 @@
 2009-01-01  Bruno Haible  <bruno@clisp.org>
 
+	Fix a security bug.
+	* gnulib-tool (func_import, import, update): Don't allow the characters
+	'"', '$', '`', '\' in macro arguments that become part of commands that
+	are evaluated.
+
+2009-01-01  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_reset_sigpipe): Add more comments.
 
 2009-01-01  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>

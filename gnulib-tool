@@ -2314,7 +2314,7 @@ func_import ()
       s,^dnl .*$,,
       s, dnl .*$,,
       /gl_LOCAL_DIR(/ {
-        s,^.*gl_LOCAL_DIR([[ ]*\([^])]*\).*$,cached_local_gnulib_dir="\1",p
+        s,^.*gl_LOCAL_DIR([[ ]*\([^]"$`\\)]*\).*$,cached_local_gnulib_dir="\1",p
       }
       /gl_MODULES(/ {
         ta
@@ -2324,55 +2324,55 @@ func_import ()
           N
           ba
         :b
-        s,^.*gl_MODULES([[ ]*\([^])]*\).*$,cached_specified_modules="\1",p
+        s,^.*gl_MODULES([[ ]*\([^]"$`\\)]*\).*$,cached_specified_modules="\1",p
       }
       /gl_WITH_OBSOLETE/ {
         s,^.*$,cached_incobsolete=true,p
       }
       /gl_AVOID(/ {
-        s,^.*gl_AVOID([[ ]*\([^])]*\).*$,cached_avoidlist="\1",p
+        s,^.*gl_AVOID([[ ]*\([^]"$`\\)]*\).*$,cached_avoidlist="\1",p
       }
       /gl_SOURCE_BASE(/ {
-        s,^.*gl_SOURCE_BASE([[ ]*\([^])]*\).*$,cached_sourcebase="\1",p
+        s,^.*gl_SOURCE_BASE([[ ]*\([^]"$`\\)]*\).*$,cached_sourcebase="\1",p
       }
       /gl_M4_BASE(/ {
-        s,^.*gl_M4_BASE([[ ]*\([^])]*\).*$,cached_m4base="\1",p
+        s,^.*gl_M4_BASE([[ ]*\([^]"$`\\)]*\).*$,cached_m4base="\1",p
       }
       /gl_PO_BASE(/ {
-        s,^.*gl_PO_BASE([[ ]*\([^])]*\).*$,cached_pobase="\1",p
+        s,^.*gl_PO_BASE([[ ]*\([^]"$`\\)]*\).*$,cached_pobase="\1",p
       }
       /gl_DOC_BASE(/ {
-        s,^.*gl_DOC_BASE([[ ]*\([^])]*\).*$,cached_docbase="\1",p
+        s,^.*gl_DOC_BASE([[ ]*\([^]"$`\\)]*\).*$,cached_docbase="\1",p
       }
       /gl_TESTS_BASE(/ {
-        s,^.*gl_TESTS_BASE([[ ]*\([^])]*\).*$,cached_testsbase="\1",p
+        s,^.*gl_TESTS_BASE([[ ]*\([^]"$`\\)]*\).*$,cached_testsbase="\1",p
       }
       /gl_WITH_TESTS/ {
         s,^.*$,cached_inctests=true,p
       }
       /gl_LIB(/ {
-        s,^.*gl_LIB([[ ]*\([^])]*\).*$,cached_libname="\1",p
+        s,^.*gl_LIB([[ ]*\([^]"$`\\)]*\).*$,cached_libname="\1",p
       }
       /gl_LGPL(/ {
-        s,^.*gl_LGPL([[ ]*\([^])]*\).*$,cached_lgpl="\1",p
+        s,^.*gl_LGPL([[ ]*\([^]"$`\\)]*\).*$,cached_lgpl="\1",p
       }
       /gl_LGPL/ {
         s,^.*$,cached_lgpl=yes,p
       }
       /gl_MAKEFILE_NAME(/ {
-        s,^.*gl_MAKEFILE_NAME([[ ]*\([^])]*\).*$,cached_makefile_name="\1",p
+        s,^.*gl_MAKEFILE_NAME([[ ]*\([^]"$`\\)]*\).*$,cached_makefile_name="\1",p
       }
       /gl_LIBTOOL/ {
         s,^.*$,cached_libtool=true,p
       }
       /gl_MACRO_PREFIX(/ {
-        s,^.*gl_MACRO_PREFIX([[ ]*\([^])]*\).*$,cached_macro_prefix="\1",p
+        s,^.*gl_MACRO_PREFIX([[ ]*\([^]"$`\\)]*\).*$,cached_macro_prefix="\1",p
       }
       /gl_PO_DOMAIN(/ {
-        s,^.*gl_PO_DOMAIN([[ ]*\([^])]*\).*$,cached_po_domain="\1",p
+        s,^.*gl_PO_DOMAIN([[ ]*\([^]"$`\\)]*\).*$,cached_po_domain="\1",p
       }
       /gl_VC_FILES(/ {
-        s,^.*gl_VC_FILES([[ ]*\([^])]*\).*$,cached_vc_files="\1",p
+        s,^.*gl_VC_FILES([[ ]*\([^]"$`\\)]*\).*$,cached_vc_files="\1",p
       }'
     eval `sed -n -e "$my_sed_traces" < "$destdir"/$m4base/gnulib-cache.m4`
     if test -f "$destdir"/$m4base/gnulib-comp.m4; then
@@ -2387,6 +2387,7 @@ func_import ()
           :a
           s,^\]).*$,",
           tb
+          s,["$`\\],,g
           p
           n
           ba
@@ -4247,7 +4248,7 @@ case $mode in
       s,^dnl .*$,,
       s, dnl .*$,,
       /AC_CONFIG_AUX_DIR/ {
-        s,^.*AC_CONFIG_AUX_DIR([[ ]*\([^])]*\).*$,guessed_auxdir="\1",p
+        s,^.*AC_CONFIG_AUX_DIR([[ ]*\([^]"$`\\)]*\).*$,guessed_auxdir="\1",p
       }
       /A[CM]_PROG_LIBTOOL/ {
         s,^.*$,guessed_libtool=true,p
