@@ -10,6 +10,8 @@ m4/strftime.m4
 
 Depends-on:
 extensions
+mbrlen
+mbsinit
 stdbool
 time_r
 wchar

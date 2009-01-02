@@ -1,5 +1,14 @@
+2009-01-02  Jim Meyering  <meyering@redhat.com>
+
+	strftime: avoid compilation failure on Solaris 2.6
+	* modules/strftime (Depends-on): Add mbrlen and mbsinit.
+	* lib/strftime.c [DO_MULTIBYTE]: Include <wchar.h> unconditionally.
+	Don't #define mbrlen or mbsinit, since now they're guaranteed to
+	be available.  Reported by Tom G. Christensen.  Details in
+	<http://thread.gmane.org/gmane.comp.lib.gnulib.bugs/16180>.
+
 2009-01-01  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Speed up gnulib-tool by doing more string processing through shell
 	built-ins.

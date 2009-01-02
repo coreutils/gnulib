@@ -50,14 +50,7 @@ extern char *tzname[];
 #define DO_MULTIBYTE (HAVE_MBLEN && ! MULTIBYTE_IS_FORMAT_SAFE)
 
 #if DO_MULTIBYTE
-# if HAVE_MBRLEN
-#  include <wchar.h>
-# else
-   /* Simulate mbrlen with mblen as best we can.  */
-#  define mbstate_t int
-#  define mbrlen(s, n, ps) mblen (s, n)
-#  define mbsinit(ps) (*(ps) == 0)
-# endif
+# include <wchar.h>
   static const mbstate_t mbstate_zero;
 #endif
 
