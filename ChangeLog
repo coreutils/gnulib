@@ -1,3 +1,9 @@
+2009-01-03  Jim Meyering  <meyering@redhat.com>
+
+	gnulib-tool: fix sed-based filtering
+	* gnulib-tool (func_filter_filelist): Remove extra backslash
+	in sed_fff_filter definition.
+
 2009-01-02  Jim Meyering  <meyering@redhat.com>
 
 	strftime: avoid compilation failure on Solaris 2.6
