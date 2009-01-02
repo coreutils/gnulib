@@ -83,16 +83,14 @@ There are also <a href="/contact/">other ways to contact</a>
 the FSF.
 <br />
 Please send broken links and other corrections or suggestions to
-<a href="mailto:webmasters@gnu.org"><em>webmasters@gnu.org</em></a>.
+<a href="mailto:%%EMAIL%%"><em>%%EMAIL%%</em></a>.
 </p>
 
-<p>
-Copyright &copy; 2008 Free Software Foundation, Inc.,
-</p>
-<address>51 Franklin Street, Fifth Floor, Boston, MA 02111, USA</address>
+<p>Copyright &copy; 2009 Free Software Foundation, Inc.</p>
+
 <p>Verbatim copying and distribution of this entire article is
-permitted in any medium, provided this notice is preserved.
-</p>
+permitted in any medium, provided this notice is preserved.</p>
+
 
 </div>
 </div>

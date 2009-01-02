@@ -2,9 +2,9 @@
 # gendocs.sh -- generate a GNU manual in many formats.  This script is
 #   mentioned in maintain.texi.  See the help message below for usage details.
 
-scriptversion=2008-03-05.14
+scriptversion=2009-01-01.11
 
-# Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008
+# Copyright 2003, 2004, 2005, 2006, 2007, 2008, 2009
 # Free Software Foundation, Inc.
 #
 # This program is free software; you can redistribute it and/or modify
@@ -44,7 +44,7 @@ unset use_texi2html
 
 version="gendocs.sh $scriptversion
 
-Copyright (C) 2007 Free Software Foundation, Inc.
+Copyright 2009 Free Software Foundation, Inc.
 There is NO warranty.  You may redistribute this software
 under the terms of the GNU General Public License.
 For more information about these matters, see the files named COPYING."
@@ -57,23 +57,27 @@ See the GNU Maintainers document for a more extensive discussion:
 
 Options:
   -o OUTDIR   write files into OUTDIR, instead of manual/.
+  --email ADR use ADR as contact in generated web pages.
   --docbook   convert to DocBook too (xml, txt, html, pdf and ps).
   --html ARG  pass indicated ARG to makeinfo or texi2html for HTML targets.
   --texi2html use texi2html to generate HTML targets.
   --help      display this help and exit successfully.
   --version   display version information and exit successfully.
 
-Simple example: $prog emacs \"GNU Emacs Manual\"
+Simple example: $prog --email bug-gnu-emacs@gnu.org emacs \"GNU Emacs Manual\"
 
 Typical sequence:
-  cd YOURPACKAGESOURCE/doc
+  cd PACKAGESOURCE/doc
   wget \"$scripturl\"
   wget \"$templateurl\"
-  $prog YOURMANUAL \"GNU YOURMANUAL - One-line description\"
+  $prog --email BUGLIST MANUAL \"GNU MANUAL - One-line description\"
 
 Output will be in a new subdirectory \"manual\" (by default, use -o OUTDIR
 to override).  Move all the new files into your web CVS tree, as
 explained in the Web Pages node of maintain.texi.
+
+Please use the --email ADDRESS option to specify your bug-reporting
+address in the generated HTML pages.
 
 MANUAL-TITLE is included as part of the HTML <title> of the overall
 manual/index.html file.  It should include the name of the package being
@@ -82,11 +86,11 @@ $GENDOCS_TEMPLATE_DIR/gendocs_template.  (Feel free to modify the
 generic template for your own purposes.)
 
 If you have several manuals, you'll need to run this script several
-times with different YOURMANUAL values, specifying a different output
+times with different MANUAL values, specifying a different output
 directory with -o each time.  Then write (by hand) an overall index.html
 with links to them all.
 
-If a manual's texinfo sources are spread across several directories,
+If a manual's Texinfo sources are spread across several directories,
 first copy or symlink all Texinfo sources into a single directory.
 (Part of the script's work is to make a tar.gz of the sources.)
 
@@ -98,7 +102,7 @@ DOCBOOK2TXT are also respected.)
 
 By default, makeinfo is run in the default (English) locale, since
 that's the language of most Texinfo manuals.  If you happen to have a
-non-English manual and non-English web site, check the SETLANG setting
+non-English manual and non-English web site, see the SETLANG setting
 in the source.
 
 Email bug reports or enhancement requests to bug-texinfo@gnu.org.
@@ -110,21 +114,23 @@ calcsize()
   echo $size
 }
 
-outdir=manual
-html=
-PACKAGE=
 MANUAL_TITLE=
+PACKAGE=
+EMAIL=webmasters@gnu.org  # please override with --email
+htmlarg=
+outdir=manual
 
 while test $# -gt 0; do
   case $1 in
+    --email) shift; EMAIL=$1;;
     --help) echo "$usage"; exit 0;;
     --version) echo "$version"; exit 0;;
     -o) shift; outdir=$1;;
     --docbook) docbook=yes;;
-    --html) shift; html=$1;;
+    --html) shift; htmlarg=$1;;
     --texi2html) use_texi2html=1;;
     -*)
-      echo "$0: Unknown or ambiguous option \`$1'." >&2
+      echo "$0: Unknown option \`$1'." >&2
       echo "$0: Try \`--help' for more information." >&2
       exit 1;;
     *)
@@ -203,8 +209,10 @@ gzip -f -9 -c $PACKAGE.txt >$outdir/$PACKAGE.txt.gz
 ascii_gz_size=`calcsize $outdir/$PACKAGE.txt.gz`
 mv $PACKAGE.txt $outdir/
 
-html_split() {
-  cmd="$SETLANG $TEXI2HTML --output $PACKAGE.html --split=$1 $html --node-files \"$srcfile\""
+html_split()
+{
+  opt="--split=$1 $htmlarg --node-files"
+  cmd="$SETLANG $TEXI2HTML --output $PACKAGE.html $opt \"$srcfile\""
   echo "Generating html by $1... ($cmd)"
   eval "$cmd"
   split_html_dir=$PACKAGE.html
@@ -221,7 +229,8 @@ html_split() {
 }
 
 if test -z "$use_texi2html"; then
-  cmd="$SETLANG $MAKEINFO --no-split --html -o $PACKAGE.html $html \"$srcfile\""
+  opt="--no-split --html -o $PACKAGE.html $htmlarg"
+  cmd="$SETLANG $MAKEINFO $opt \"$srcfile\""
   echo "Generating monolithic html... ($cmd)"
   rm -rf $PACKAGE.html  # in case a directory is left over
   eval "$cmd"
@@ -230,7 +239,7 @@ if test -z "$use_texi2html"; then
   html_mono_gz_size=`calcsize $outdir/$PACKAGE.html.gz`
   mv $PACKAGE.html $outdir/
 
-  cmd="$SETLANG $MAKEINFO --html -o $PACKAGE.html $html \"$srcfile\""
+  cmd="$SETLANG $MAKEINFO --html -o $PACKAGE.html $htmlarg \"$srcfile\""
   echo "Generating html by node... ($cmd)"
   eval "$cmd"
   split_html_dir=$PACKAGE.html
@@ -244,7 +253,7 @@ if test -z "$use_texi2html"; then
   mv ${split_html_dir}/*.html $outdir/html_node/
   rmdir ${split_html_dir}
 else
-  cmd="$SETLANG $TEXI2HTML --output $PACKAGE.html $html \"$srcfile\"" 
+  cmd="$SETLANG $TEXI2HTML --output $PACKAGE.html $htmlarg \"$srcfile\"" 
   echo "Generating monolithic html... ($cmd)"
   rm -rf $PACKAGE.html  # in case a directory is left over
   eval "$cmd"
@@ -306,7 +315,7 @@ if test -n "$docbook"; then
   mv $PACKAGE-db.pdf $outdir/
 fi
 
-echo Writing index file...
+echo "Writing index file..."
 if test -z "$use_texi2html"; then
    CONDS="/%%IF  *HTML_SECTION%%/,/%%ENDIF  *HTML_SECTION%%/d;\
           /%%IF  *HTML_CHAPTER%%/,/%%ENDIF  *HTML_CHAPTER%%/d"
@@ -316,8 +325,9 @@ fi
 curdate=`$SETLANG date '+%B %d, %Y'`
 sed \
    -e "s!%%TITLE%%!$MANUAL_TITLE!g" \
-   -e "s!%%DATE%%!$curdate!g" \
+   -e "s!%%EMAIL%%!$EMAIL!g" \
    -e "s!%%PACKAGE%%!$PACKAGE!g" \
+   -e "s!%%DATE%%!$curdate!g" \
    -e "s!%%HTML_MONO_SIZE%%!$html_mono_size!g" \
    -e "s!%%HTML_MONO_GZ_SIZE%%!$html_mono_gz_size!g" \
    -e "s!%%HTML_NODE_TGZ_SIZE%%!$html_node_tgz_size!g" \
@@ -341,7 +351,7 @@ sed \
    -e "$CONDS" \
 $GENDOCS_TEMPLATE_DIR/gendocs_template >$outdir/index.html
 
-echo "Done!  See $outdir/ subdirectory for new files."
+echo "Done, see $outdir/ subdirectory for new files."
 
 # Local variables:
 # eval: (add-hook 'write-file-hooks 'time-stamp)
