@@ -1,3 +1,16 @@
+2009-01-01  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+            Bruno Haible  <bruno@clisp.org>
+
+	Speed up gnulib-tool by doing more string processing through shell
+	built-ins.
+	* gnulib-tool (fast_func_append): New variable.
+	(func_remove_prefix, func_remove_suffix): New functions.
+	(fast_func_remove_prefix, fast_func_remove_suffix): New variables.
+	(func_filter_filelist): New function.
+	(func_get_dependencies): Use func_remove_suffix instead of sed.
+	(func_get_automake_snippet): Use func_filter_filelist instead of a
+	subshell and sed invocation.
+
 2009-01-01  Bruno Haible  <bruno@clisp.org>
 
 	Fix a security bug.

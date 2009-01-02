@@ -398,11 +398,57 @@ if ( foo=bar; foo+=baz && test "$foo" = barbaz ) >/dev/null 2>&1; then
   {
     eval "$1+=\"\$2\""
   }
+  fast_func_append=true
 else
   func_append ()
   {
     eval "$1=\"\$$1\$2\""
   }
+  fast_func_append=false
+fi
+
+# func_remove_prefix var prefix
+# removes the given prefix from the value of the shell variable var.
+# var should be the name of a shell variable.
+# Its value should not contain a newline and not start or end with whitespace.
+# prefix should not contain the characters "$`\{}|.
+if ( foo=bar; eval 'test "${foo#b}" = ar' ) >/dev/null 2>&1; then
+  func_remove_prefix ()
+  {
+    eval "$1=\${$1#\$2}"
+  }
+  fast_func_remove_prefix=true
+else
+  func_remove_prefix ()
+  {
+    eval "value=\"\$$1\""
+    prefix="$2"
+    value=`echo "$value" | sed -e "s|^${prefix}||"`
+    eval "$1=\"\$value\""
+  }
+  fast_func_remove_prefix=false
+fi
+
+# func_remove_suffix var suffix
+# removes the given suffix from the value of the shell variable var.
+# var should be the name of a shell variable.
+# Its value should not contain a newline and not start or end with whitespace.
+# suffix should not contain the characters "$`\{}|.
+if ( foo=bar; eval 'test "${foo%r}" = ba' ) >/dev/null 2>&1; then
+  func_remove_suffix ()
+  {
+    eval "$1=\${$1%\$2}"
+  }
+  fast_func_remove_suffix=true
+else
+  func_remove_suffix ()
+  {
+    eval "value=\"\$$1\""
+    suffix="$2"
+    value=`echo "$value" | sed -e "s|${suffix}\$||"`
+    eval "$1=\"\$value\""
+  }
+  fast_func_remove_suffix=false
 fi
 
 # func_fatal_error message
@@ -1328,13 +1374,63 @@ func_get_filelist ()
   esac
 }
 
+# func_filter_filelist outputvar separator filelist prefix suffix removed_prefix removed_suffix [added_prefix [added_suffix]]
+# stores in outputvar the filtered and processed filelist. Filtering: Only the
+# elements starting with prefix and ending with suffix are considered.
+# Processing: removed_prefix and removed_suffix are removed from each element,
+# added_prefix and added_suffix are added to each element.
+# removed_prefix, removed_suffix should not contain the characters "$`\{}|.
+# added_prefix, added_suffix should not contain the characters \|.
+func_filter_filelist ()
+{
+  if test "$2" != "$nl" \
+     || { $fast_func_append \
+          && { test -z "$6" || $fast_func_remove_prefix; } \
+          && { test -z "$7" || $fast_func_remove_suffix; }; \
+        }; then
+    ffflist=
+    for fff in $3; do
+      case "$fff" in
+        "$4"*"$5")
+          if test -n "$6"; then
+            func_remove_prefix fff "$6"
+          fi
+          if test -n "$7"; then
+            func_remove_suffix fff "$7"
+          fi
+          fff="$8${fff}$9"
+          if test -z "$ffflist"; then
+            ffflist="${fff}"
+          else
+            func_append ffflist "$2${fff}"
+          fi
+          ;;
+      esac
+    done
+  else
+    sed_fff_filter="s|^$6\(.*\)$7\\$|$8\\1$9|"
+    ffflist=`for fff in $3; do
+               case "$fff" in
+                 "$4"*"$5") echo "$fff" ;;
+               esac
+             done | sed -e "$sed_fff_filter"`
+  fi
+  eval "$1=\"\$ffflist\""
+}
+
 # func_get_dependencies module
 # Input:
 # - local_gnulib_dir  from --local-dir
 func_get_dependencies ()
 {
   # ${module}-tests always implicitly depends on ${module}.
-  echo "$1" | sed -n -e 's/-tests$//p'
+  case "$1" in
+    *-tests)
+      fgd1="$1"
+      func_remove_suffix fgd1 '-tests'
+      echo "$fgd1"
+      ;;
+  esac
   # Then the explicit dependencies listed in the module description.
   func_lookup_file "modules/$1"
   sed -n -e "/^Depends-on$sed_extract_prog" < "$lookedup_file"
@@ -1370,11 +1466,7 @@ func_get_automake_snippet ()
       # *-tests module live in tests/, not lib/.
       # Synthesize an EXTRA_DIST augmentation.
       all_files=`func_get_filelist $1`
-      tests_files=`for f in $all_files; do \
-                     case $f in \
-                       tests/*) echo $f ;; \
-                     esac; \
-                   done | sed -e 's,^tests/,,'`
+      func_filter_filelist tests_files " " "$all_files" 'tests/' '' 'tests/' ''
       extra_files="$tests_files"
       if test -n "$extra_files"; then
         echo "EXTRA_DIST +=" $extra_files
@@ -1396,11 +1488,7 @@ func_get_automake_snippet ()
         | sed -e "$sed_combine_lines" \
         | sed -n -e "$sed_extract_mentioned_files" | sed -e 's/#.*//'`
       all_files=`func_get_filelist $1`
-      lib_files=`for f in $all_files; do \
-                   case $f in \
-                     lib/*) echo $f ;; \
-                   esac; \
-                 done | sed -e 's,^lib/,,'`
+      func_filter_filelist lib_files "$nl" "$all_files" 'lib/' '' 'lib/' ''
       # Remove $already_mentioned_files from $lib_files.
       echo "$lib_files" | LC_ALL=C sort -u > "$tmp"/lib-files
       extra_files=`func_reset_sigpipe; \
@@ -1424,8 +1512,7 @@ func_get_automake_snippet ()
       case "$1" in
         relocatable-prog-wrapper) ;;
         *)
-          sed_extract_c_files='/\.c$/p'
-          extra_files=`echo "$extra_files" | sed -n -e "$sed_extract_c_files"`
+          func_filter_filelist extra_files "$nl" "$extra_files" '' '.c' '' ''
           if test -n "$extra_files"; then
             echo "EXTRA_lib_SOURCES +=" $extra_files
             echo
@@ -1433,22 +1520,14 @@ func_get_automake_snippet ()
           ;;
       esac
       # Synthesize an EXTRA_DIST augmentation also for the files in build-aux/.
-      buildaux_files=`for f in $all_files; do \
-                        case $f in \
-                          build-aux/*) echo $f ;; \
-                        esac; \
-                      done | sed -e 's,^build-aux/,,'`
+      func_filter_filelist buildaux_files "$nl" "$all_files" 'build-aux/' '' 'build-aux/' ''
       if test -n "$buildaux_files"; then
         sed_prepend_auxdir='s,^,$(top_srcdir)/'"$auxdir"'/,'
         echo "EXTRA_DIST += "`echo "$buildaux_files" | sed -e "$sed_prepend_auxdir"`
         echo
       fi
       # Synthesize an EXTRA_DIST augmentation also for the files from top/.
-      top_files=`for f in $all_files; do \
-                   case $f in \
-                     top/*) echo $f ;; \
-                   esac; \
-                 done | sed -e 's,^top/,,'`
+      func_filter_filelist top_files "$nl" "$all_files" 'top/' '' 'top/' ''
       if test -n "$top_files"; then
         sed_prepend_topdir='s,^,$(top_srcdir)/,'
         echo "EXTRA_DIST += "`echo "$top_files" | sed -e "$sed_prepend_topdir"`
