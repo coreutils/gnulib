@@ -2,7 +2,7 @@
 # gendocs.sh -- generate a GNU manual in many formats.  This script is
 #   mentioned in maintain.texi.  See the help message below for usage details.
 
-scriptversion=2009-01-01.11
+scriptversion=2009-01-02.08
 
 # Copyright 2003, 2004, 2005, 2006, 2007, 2008, 2009
 # Free Software Foundation, Inc.
@@ -253,7 +253,7 @@ if test -z "$use_texi2html"; then
   mv ${split_html_dir}/*.html $outdir/html_node/
   rmdir ${split_html_dir}
 else
-  cmd="$SETLANG $TEXI2HTML --output $PACKAGE.html $htmlarg \"$srcfile\"" 
+  cmd="$SETLANG $TEXI2HTML --output $PACKAGE.html $htmlarg \"$srcfile\""
   echo "Generating monolithic html... ($cmd)"
   rm -rf $PACKAGE.html  # in case a directory is left over
   eval "$cmd"
