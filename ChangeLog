@@ -1,3 +1,16 @@
+2009-01-04  Jim Meyering  <meyering@redhat.com>
+
+	remove duplicate inclusion of <stdio.h>
+	* tests/test-fprintf-posix.c: Likewise.
+	* tests/test-printf-posix.c: Likewise.
+	* tests/test-snprintf-posix.c: Likewise.
+	* tests/test-sprintf-posix.c: Likewise.
+	* tests/test-vasprintf-posix.c: Likewise.
+	* tests/test-vfprintf-posix.c: Likewise.
+	* tests/test-vprintf-posix.c: Likewise.
+	* tests/test-vsnprintf-posix.c: Likewise.
+	* tests/test-vsprintf-posix.c: Likewise.
+
 2009-01-03  Jim Meyering  <meyering@redhat.com>
 
 	gnulib-tool: fix sed-based filtering
