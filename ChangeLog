@@ -1,3 +1,9 @@
+2009-01-06  Jeremy Olexa <darkside@gentoo.org>  (tiny change)
+
+	avoid compile failure on AIX 6.1
+	* lib/getloadavg.c [HAVE_LIBPERFSTAT]: Include <sys/protosw.h>.
+	Details in http://thread.gmane.org/gmane.comp.gnu.coreutils.bugs/15465
+
 2009-01-04  Jim Meyering  <meyering@redhat.com>
 
 	remove duplicate inclusion of <stdio.h>

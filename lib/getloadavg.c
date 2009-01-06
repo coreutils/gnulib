@@ -409,6 +409,7 @@
 # endif /* LOAD_AVE_TYPE */
 
 # if defined HAVE_LIBPERFSTAT
+#  include <sys/protosw.h>
 #  include <libperfstat.h>
 #  include <sys/proc.h>
 #  ifndef SBITS
