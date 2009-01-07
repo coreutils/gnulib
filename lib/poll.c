@@ -1,7 +1,7 @@
 /* Emulation for poll(2)
    Contributed by Paolo Bonzini.
 
-   Copyright 2001, 2002, 2003, 2006, 2007, 2008 Free Software Foundation, Inc.
+   Copyright 2001-2003, 2006-2009 Free Software Foundation, Inc.
 
    This file is part of gnulib.
 
@@ -405,7 +405,7 @@ poll (pfd, nfd, timeout)
   BOOL poll_again;
   MSG msg;
   char sockbuf[256];
-  int rc;
+  int rc = 0;
   nfds_t i;
 
   if (nfd < 0 || timeout < -1)
