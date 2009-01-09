@@ -1,5 +1,11 @@
 2009-01-09  Paolo Bonzini  <bonzini@gnu.org>
 
+	regex: fix glibc bug 9697
+	* lib/regcomp.c (re_compile_fastmap_iter): Rewrite COMPLEX_BRACKET
+	handling.
+
+2009-01-09  Paolo Bonzini  <bonzini@gnu.org>
+
 	regex: fix glibc bug 697
 	* lib/regexec.c (prune_impossible_nodes): Handle sifted_states[0]
 	being NULL also if there are no backreferences.
