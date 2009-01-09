@@ -1,3 +1,11 @@
+2009-01-09  Paolo Bonzini  <bonzini@gnu.org>
+
+	regex: merge glibc changes
+	* lib/regcomp.c (re_compile_fastmap_iter): Use __mbrtowc.
+	* lib/regex_internal.c (build_wcs_buffer, build_wcs_upper_buffer,
+	re_string_skip_chars, re_string_reconstruct): Likewise.
+	* lib/regex_internal.h [!_LIBC] (__mbrtowc): New #define.
+
 2009-01-07  Jim Meyering  <meyering@redhat.com>
 
 	poll: filter through cppi

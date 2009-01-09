@@ -1,5 +1,6 @@
 /* Extended regular expression matching and search library.
-   Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009
+   Free Software Foundation, Inc.
    This file is part of the GNU C Library.
    Contributed by Isamu Hasegawa <isamu@yamato.ibm.com>.
 
@@ -115,6 +116,7 @@
 # define __iswctype iswctype
 # define __btowc btowc
 # define __wcrtomb wcrtomb
+# define __mbrtowc mbrtowc
 # define __regfree regfree
 # define attribute_hidden
 #endif /* not _LIBC */

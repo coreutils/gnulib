@@ -1,6 +1,6 @@
 /* Extended regular expression matching and search library.
-   Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008 Free Software
-   Foundation, Inc.
+   Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009
+   Free Software Foundation, Inc.
    This file is part of the GNU C Library.
    Contributed by Isamu Hasegawa <isamu@yamato.ibm.com>.
 
@@ -236,7 +236,7 @@ build_wcs_buffer (re_string_t *pstr)
 	}
       else
 	p = (const char *) pstr->raw_mbs + pstr->raw_mbs_idx + byte_idx;
-      mbclen = mbrtowc (&wc, p, remain_len, &pstr->cur_state);
+      mbclen = __mbrtowc (&wc, p, remain_len, &pstr->cur_state);
       if (BE (mbclen == (size_t) -2, 0))
 	{
 	  /* The buffer doesn't have enough space, finish to build.  */
@@ -306,9 +306,9 @@ build_wcs_upper_buffer (re_string_t *pstr)
 
 	  remain_len = end_idx - byte_idx;
 	  prev_st = pstr->cur_state;
-	  mbclen = mbrtowc (&wc,
-			    ((const char *) pstr->raw_mbs + pstr->raw_mbs_idx
-			     + byte_idx), remain_len, &pstr->cur_state);
+	  mbclen = __mbrtowc (&wc,
+			      ((const char *) pstr->raw_mbs + pstr->raw_mbs_idx
+			       + byte_idx), remain_len, &pstr->cur_state);
 	  if (BE (mbclen < (size_t) -2, 1))
 	    {
 	      wchar_t wcu = wc;
@@ -376,7 +376,7 @@ build_wcs_upper_buffer (re_string_t *pstr)
 	  }
 	else
 	  p = (const char *) pstr->raw_mbs + pstr->raw_mbs_idx + src_idx;
-	mbclen = mbrtowc (&wc, p, remain_len, &pstr->cur_state);
+	mbclen = __mbrtowc (&wc, p, remain_len, &pstr->cur_state);
 	if (BE (mbclen < (size_t) -2, 1))
 	  {
 	    wchar_t wcu = wc;
@@ -499,8 +499,8 @@ re_string_skip_chars (re_string_t *pstr, Idx new_raw_idx, wint_t *last_wc)
       Idx remain_len;
       remain_len = pstr->len - rawbuf_idx;
       prev_st = pstr->cur_state;
-      mbclen = mbrtowc (&wc2, (const char *) pstr->raw_mbs + rawbuf_idx,
-			remain_len, &pstr->cur_state);
+      mbclen = __mbrtowc (&wc2, (const char *) pstr->raw_mbs + rawbuf_idx,
+			  remain_len, &pstr->cur_state);
       if (BE (mbclen == (size_t) -2 || mbclen == (size_t) -1 || mbclen == 0, 0))
 	{
 	  /* We treat these cases as a single byte character.  */
@@ -745,8 +745,8 @@ re_string_reconstruct (re_string_t *pstr, Idx idx, int eflags)
 			  /* XXX Don't use mbrtowc, we know which conversion
 			     to use (UTF-8 -> UCS4).  */
 			  memset (&cur_state, 0, sizeof (cur_state));
-			  mbclen = mbrtowc (&wc2, (const char *) p, mlen,
-					    &cur_state);
+			  mbclen = __mbrtowc (&wc2, (const char *) p, mlen,
+					      &cur_state);
 			  if (raw + offset - p <= mbclen
 			      && mbclen < (size_t) -2)
 			    {
