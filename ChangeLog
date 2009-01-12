@@ -1,3 +1,22 @@
+2009-01-12  Eric Blake  <ebb9@byu.net>
+
+	tests: IRIX 6.2 cc can't compile -0.0 into .data
+	* tests/test-ceill.c (minus_zero): Compute -0.0L at runtime,
+	rather than at compile-time.
+	* tests/test-floorl.c (minus_zero): Likewise.
+	* tests/test-frexpl.c (minus_zero): Likewise.
+	* tests/test-isnan.c (minus_zerol): Likewise.
+	* tests/test-isnanl.h (minus_zero): Likewise.
+	* tests/test-ldexpl.c (minus_zero): Likewise.
+	* tests/test-roundl.c (minus_zero): Likewise.
+	* tests/test-signbit.c (minus_zerol): Likewise.
+	* tests/test-snprintf-posix.h (minus_zerol): Likewise.
+	* tests/test-sprintf-posix.h (minus_zerol): Likewise.
+	* tests/test-truncl.c (minus_zero): Likewise.
+	* tests/test-vasnprintf-posix.c (minus_zerol): Likewise.
+	* tests/test-vasprintf-posix.c (minus_zerol): Likewise.
+	Reported by Tom G. Christensen and Nelson H. F. Beebe.
+
 2009-01-09  Paolo Bonzini  <bonzini@gnu.org>
 
 	regex: fix glibc bug 9697
