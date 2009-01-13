@@ -1,3 +1,8 @@
+2009-01-13  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/unistdio/u16-printf-parse (Files): Add m4/stdint_h.m4
+	and m4/inttypes_h.m4 too.
+
 2009-01-12  Eric Blake  <ebb9@byu.net>
 
 	tests: IRIX 6.2 cc can't compile -0.0 into .data

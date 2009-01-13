@@ -8,6 +8,8 @@ lib/printf-parse.h
 lib/printf-parse.c
 m4/vasnprintf.m4
 m4/intmax_t.m4
+m4/stdint_h.m4
+m4/inttypes_h.m4
 
 Depends-on:
 unistdio/u-printf-args
