@@ -1,5 +1,13 @@
 2009-01-13  Bruno Haible  <bruno@clisp.org>
 
+	Avoid test-copy-file.sh failures when ACL support insufficient.
+	* modules/copy-file-tests (Makefile.am): Pass USE_ACL in
+	TESTS_ENVIRONMENT.
+	* tests/test-copy-file.sh: Skip the ACL comparisons if USE_ACL is 0.
+	Reported by Jim Meyering.
+
+2009-01-13  Bruno Haible  <bruno@clisp.org>
+
 	* modules/unistdio/u-printf-args (Files): Add m4/stdint_h.m4 and
 	m4/inttypes_h.m4, needed by m4/intmax_t.m4.
 	* modules/unistdio/u8-printf-parse (Files): Likewise.

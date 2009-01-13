@@ -172,13 +172,15 @@ cd "$builddir" ||
   func_test_copy ()
   {
     "$builddir"/test-copy-file${EXEEXT} "$1" "$2" || exit 1
-    "$builddir"/test-sameacls${EXEEXT}  "$1" "$2" || exit 1
-    func_test_same_acls                 "$1" "$2" || exit 1
+    if test "$USE_ACL" != 0; then
+      "$builddir"/test-sameacls${EXEEXT} "$1" "$2" || exit 1
+      func_test_same_acls                "$1" "$2" || exit 1
+    fi
   }
 
   func_test_copy tmpfile0 tmpfile1
 
-  if test $acl_flavor != none; then
+  if test "$USE_ACL" != 0 && test $acl_flavor != none; then
     # Use a user and group id different from the current one, to avoid
     # redundant/ambiguous ACLs.
     myuid=`id -u`
