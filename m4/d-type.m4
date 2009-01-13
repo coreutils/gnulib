@@ -1,12 +1,11 @@
-#serial 9
+# serial 10
 
 dnl From Jim Meyering.
 dnl
 dnl Check whether struct dirent has a member named d_type.
 dnl
 
-# Copyright (C) 1997, 1999, 2000, 2001, 2002, 2003, 2004, 2006 Free Software
-# Foundation, Inc.
+# Copyright (C) 1997, 1999-2004, 2006, 2009 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -27,7 +26,7 @@ AC_DEFUN([gl_CHECK_TYPE_STRUCT_DIRENT_D_TYPE],
      ]
    )
    if test $gl_cv_struct_dirent_d_type = yes; then
-     AC_DEFINE(HAVE_STRUCT_DIRENT_D_TYPE, 1,
+     AC_DEFINE([HAVE_STRUCT_DIRENT_D_TYPE], [1],
        [Define if there is a member named d_type in the struct describing
         directory headers.])
    fi

@@ -1,7 +1,6 @@
 # Check for fnmatch - serial 2.
 
-# Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007 Free Software
-# Foundation, Inc.
+# Copyright (C) 2000-2007, 2009 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
@@ -9,7 +8,7 @@
 # Autoconf defines AC_FUNC_FNMATCH, but that is obsolescent.
 # New applications should use the macros below instead.
 
-# _AC_FUNC_FNMATCH_IF(STANDARD = GNU | POSIX, CACHE_VAR, IF-TRUE, IF-FALSE)
+# _AC_FUNC_FNMATCH_IF([STANDARD = GNU | POSIX], [CACHE_VAR], [IF-TRUE], [IF-FALSE])
 # -------------------------------------------------------------------------
 # If a STANDARD compliant fnmatch is found, run IF-TRUE, otherwise
 # IF-FALSE.  Use CACHE_VAR.

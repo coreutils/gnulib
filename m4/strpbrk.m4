@@ -1,5 +1,5 @@
-# strpbrk.m4 serial 4
-dnl Copyright (C) 2002-2003, 2007 Free Software Foundation, Inc.
+# strpbrk.m4 serial 5
+dnl Copyright (C) 2002-2003, 2007, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -7,7 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_STRPBRK],
 [
   AC_REQUIRE([gl_HEADER_STRING_H_DEFAULTS])
-  AC_REPLACE_FUNCS(strpbrk)
+  AC_REPLACE_FUNCS([strpbrk])
   if test $ac_cv_func_strpbrk = no; then
     HAVE_STRPBRK=0
     gl_PREREQ_STRPBRK

@@ -1,6 +1,6 @@
 # Detect some bugs in glibc's implementation of utimes.
 
-dnl Copyright (C) 2003, 2004, 2005 Free Software Foundation, Inc.
+dnl Copyright (C) 2003, 2004, 2005, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -78,6 +78,6 @@ main ()
        [gl_cv_func_working_utimes=no])])
 
   if test $gl_cv_func_working_utimes = yes; then
-    AC_DEFINE([HAVE_WORKING_UTIMES], 1, [Define if utimes works properly. ])
+    AC_DEFINE([HAVE_WORKING_UTIMES], [1], [Define if utimes works properly. ])
   fi
 ])

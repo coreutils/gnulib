@@ -1,5 +1,5 @@
-# serial 1   -*- Autoconf -*-
-# Copyright (C) 2006, 2007 Free Software Foundation, Inc.
+# serial 2   -*- Autoconf -*-
+# Copyright (C) 2006, 2007, 2009 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
@@ -20,6 +20,6 @@ AC_DEFUN([gl_HEADERS_SELINUX_SELINUX_H],
   AC_SEARCH_LIBS([setfilecon], [selinux],
                  [test "$ac_cv_search_setfilecon" = "none required" ||
                   LIB_SELINUX=$ac_cv_search_setfilecon])
-  AC_SUBST(LIB_SELINUX)
+  AC_SUBST([LIB_SELINUX])
   LIBS=$gl_save_LIBS
 ])

@@ -1,12 +1,12 @@
-# nocrash.m4 serial 1
-dnl Copyright (C) 2005 Free Software Foundation, Inc.
+# nocrash.m4 serial 2
+dnl Copyright (C) 2005, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
 dnl Based on libsigsegv, from Bruno Haible and Paolo Bonzini.
 
-AC_PREREQ(2.13)
+AC_PREREQ([2.13])
 
 dnl Expands to some code for use in .c programs that will cause the configure
 dnl test to exit instead of crashing. This is useful to avoid triggering

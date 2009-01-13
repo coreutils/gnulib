@@ -1,5 +1,5 @@
-# relocatable.m4 serial 12
-dnl Copyright (C) 2003, 2005-2007 Free Software Foundation, Inc.
+# relocatable.m4 serial 13
+dnl Copyright (C) 2003, 2005-2007, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -88,7 +88,7 @@ AC_DEFUN([AC_LIB_LIBPATH],
   AC_REQUIRE([AC_LIB_PROG_LD])            dnl we use $LD
   AC_REQUIRE([AC_CANONICAL_HOST])         dnl we use $host
   AC_REQUIRE([AC_CONFIG_AUX_DIR_DEFAULT]) dnl we use $ac_aux_dir
-  AC_CACHE_CHECK([for shared library path variable], acl_cv_libpath, [
+  AC_CACHE_CHECK([for shared library path variable], [acl_cv_libpath], [
     LD="$LD" \
     ${CONFIG_SHELL-/bin/sh} "$ac_aux_dir/config.libpath" "$host" > conftest.sh
     . ./conftest.sh

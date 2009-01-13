@@ -1,13 +1,13 @@
 # Check prerequisites for compiling lib/c-stack.c.
 
-# Copyright (C) 2002, 2003, 2004, 2008 Free Software Foundation, Inc.
+# Copyright (C) 2002, 2003, 2004, 2008, 2009 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
 
 # Written by Paul Eggert.
 
-# serial 8
+# serial 9
 
 AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
   [# for STACK_DIRECTION
@@ -307,7 +307,7 @@ int main ()
 	[ac_cv_sys_xsi_stack_overflow_heuristic=cross-compiling])])
 
    if test $ac_cv_sys_xsi_stack_overflow_heuristic = yes; then
-     AC_DEFINE(HAVE_XSI_STACK_OVERFLOW_HEURISTIC, 1,
+     AC_DEFINE([HAVE_XSI_STACK_OVERFLOW_HEURISTIC], [1],
        [Define to 1 if extending the stack slightly past the limit causes
 	a SIGSEGV, and an alternate stack can be established with sigaltstack,
 	and the signal handler is passed a context that specifies the

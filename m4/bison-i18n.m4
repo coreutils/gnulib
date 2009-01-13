@@ -1,5 +1,5 @@
-# bison-i18n.m4 serial 2
-dnl Copyright (C) 2005-2006 Free Software Foundation, Inc.
+# bison-i18n.m4 serial 3
+dnl Copyright (C) 2005-2006, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -42,7 +42,7 @@ AC_DEFUN([BISON_I18N],
     fi
   fi
   if test $BISON_USE_NLS = yes; then
-    AC_DEFINE([YYENABLE_NLS], 1,
+    AC_DEFINE([YYENABLE_NLS], [1],
       [Define to 1 to internationalize bison runtime messages.])
   fi
 ])

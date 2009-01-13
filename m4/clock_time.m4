@@ -1,5 +1,5 @@
-# clock_time.m4 serial 8
-dnl Copyright (C) 2002-2006 Free Software Foundation, Inc.
+# clock_time.m4 serial 9
+dnl Copyright (C) 2002-2006, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -21,10 +21,10 @@ AC_DEFUN([gl_CLOCK_TIME],
   # programs in the package would end up linked with that potentially-shared
   # library, inducing unnecessary run-time overhead.
   gl_saved_libs=$LIBS
-    AC_SEARCH_LIBS(clock_gettime, [rt posix4],
+    AC_SEARCH_LIBS([clock_gettime], [rt posix4],
                    [test "$ac_cv_search_clock_gettime" = "none required" ||
                     LIB_CLOCK_GETTIME=$ac_cv_search_clock_gettime])
     AC_SUBST([LIB_CLOCK_GETTIME])
-    AC_CHECK_FUNCS(clock_gettime clock_settime)
+    AC_CHECK_FUNCS([clock_gettime clock_settime])
   LIBS=$gl_saved_libs
 ])

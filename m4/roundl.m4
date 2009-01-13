@@ -1,5 +1,5 @@
-# roundl.m4 serial 4
-dnl Copyright (C) 2007 Free Software Foundation, Inc.
+# roundl.m4 serial 5
+dnl Copyright (C) 2007, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -22,7 +22,7 @@ AC_DEFUN([gl_FUNC_ROUNDL],
       gl_FUNC_FLOORL_LIBS
       gl_FUNC_CEILL_LIBS
       if test "$FLOORL_LIBM" != '?' && test "$CEILL_LIBM" != '?'; then
-        AC_DEFINE([HAVE_FLOORL_AND_CEILL], 1,
+        AC_DEFINE([HAVE_FLOORL_AND_CEILL], [1],
           [Define if the both the floorl() and ceill() functions exist.])
         ROUNDL_LIBM="$FLOORL_LIBM $CEILL_LIBM"
       else

@@ -1,6 +1,6 @@
-#serial 6
+# serial 7
 
-# Copyright (C) 1996, 1999, 2001, 2004 Free Software Foundation, Inc.
+# Copyright (C) 1996, 1999, 2001, 2004, 2009 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
@@ -22,7 +22,7 @@ AC_DEFUN([gl_HEADER_TIOCGWINSZ_NEEDS_SYS_IOCTL],
   fi
   ])
   if test $gl_cv_sys_tiocgwinsz_needs_sys_ioctl_h = yes; then
-    AC_DEFINE(GWINSZ_IN_SYS_IOCTL, 1,
+    AC_DEFINE([GWINSZ_IN_SYS_IOCTL], [1],
       [Define if your system defines TIOCGWINSZ in sys/ioctl.h.])
   fi
 ])

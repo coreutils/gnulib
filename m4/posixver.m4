@@ -1,5 +1,5 @@
-# posixver.m4 serial 9
-dnl Copyright (C) 2002, 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
+# posixver.m4 serial 10
+dnl Copyright (C) 2002-2006, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -23,7 +23,7 @@ AC_DEFUN([gl_DEFAULT_POSIX2_VERSION],
   gl_default_posix2_version=none-specified
   if test -n "$ac_cv_env_DEFAULT_POSIX2_VERSION_set"; then
     gl_default_posix2_version=$ac_cv_env_DEFAULT_POSIX2_VERSION_value
-    AC_DEFINE_UNQUOTED(DEFAULT_POSIX2_VERSION,
+    AC_DEFINE_UNQUOTED([DEFAULT_POSIX2_VERSION],
       $gl_default_posix2_version,
       [Define the default level of POSIX conformance. The value is of
        the form YYYYMM, specifying the year and month the standard was
@@ -38,7 +38,7 @@ AC_DEFUN([gl_DEFAULT_POSIX2_VERSION],
        overridden at run time via the _POSIX2_VERSION environment
        variable.])
   fi
-  AC_MSG_RESULT($gl_default_posix2_version)
+  AC_MSG_RESULT([$gl_default_posix2_version])
   AC_ARG_VAR(
     [DEFAULT_POSIX2_VERSION],
     [POSIX version to default to; see 'config.hin'.])

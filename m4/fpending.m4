@@ -1,7 +1,6 @@
-#serial 13
+# serial 14
 
-# Copyright (C) 2000, 2001, 2004, 2005, 2006, 2007, 2008 Free Software
-# Foundation, Inc.
+# Copyright (C) 2000-2001, 2004-2009 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
@@ -16,7 +15,7 @@ dnl we have to grub around in the FILE struct.
 
 AC_DEFUN([gl_FUNC_FPENDING],
 [
-  AC_CHECK_HEADERS_ONCE(stdio_ext.h)
+  AC_CHECK_HEADERS_ONCE([stdio_ext.h])
   AC_CHECK_FUNCS_ONCE([__fpending])
   fp_headers='
 #     include <stdio.h>
@@ -78,7 +77,7 @@ AC_DEFUN([gl_FUNC_FPENDING],
 	ac_cv_sys_pending_output_n_bytes=$ac_expr
       ]
     )
-    AC_DEFINE_UNQUOTED(PENDING_OUTPUT_N_BYTES,
+    AC_DEFINE_UNQUOTED([PENDING_OUTPUT_N_BYTES],
       $ac_cv_sys_pending_output_n_bytes,
       [the number of pending output bytes on stream `fp'])
     AC_LIBOBJ([fpending])

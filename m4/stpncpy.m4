@@ -1,5 +1,5 @@
-# stpncpy.m4 serial 9
-dnl Copyright (C) 2002-2003, 2005-2007 Free Software Foundation, Inc.
+# stpncpy.m4 serial 10
+dnl Copyright (C) 2002-2003, 2005-2007, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -24,7 +24,7 @@ AC_DEFUN([gl_FUNC_STPNCPY],
   dnl   in AIX:     dest + max(0,n-1)
   dnl Only the glibc return value is useful in practice.
 
-  AC_CACHE_CHECK([for working stpncpy], gl_cv_func_stpncpy, [
+  AC_CACHE_CHECK([for working stpncpy], [gl_cv_func_stpncpy], [
     AC_TRY_RUN([
 #include <stdlib.h>
 #include <string.h> /* for strcpy */
@@ -53,7 +53,7 @@ int main () {
 ], gl_cv_func_stpncpy=yes, gl_cv_func_stpncpy=no)])])
 
   if test $gl_cv_func_stpncpy = yes; then
-    AC_DEFINE(HAVE_STPNCPY, 1,
+    AC_DEFINE([HAVE_STPNCPY], [1],
       [Define if you have the stpncpy() function and it works.])
   else
     HAVE_STPNCPY=0

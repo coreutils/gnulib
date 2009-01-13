@@ -1,5 +1,5 @@
-# locale-fr.m4 serial 9
-dnl Copyright (C) 2003, 2005-2008 Free Software Foundation, Inc.
+# locale-fr.m4 serial 10
+dnl Copyright (C) 2003, 2005-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -11,7 +11,7 @@ AC_DEFUN([gt_LOCALE_FR],
 [
   AC_REQUIRE([AC_CANONICAL_HOST])
   AC_REQUIRE([AM_LANGINFO_CODESET])
-  AC_CACHE_CHECK([for a traditional french locale], gt_cv_locale_fr, [
+  AC_CACHE_CHECK([for a traditional french locale], [gt_cv_locale_fr], [
     macosx=
 changequote(,)dnl
     case "$host_os" in
@@ -120,7 +120,7 @@ dnl Determine the name of a french locale with UTF-8 encoding.
 AC_DEFUN([gt_LOCALE_FR_UTF8],
 [
   AC_REQUIRE([AM_LANGINFO_CODESET])
-  AC_CACHE_CHECK([for a french Unicode locale], gt_cv_locale_fr_utf8, [
+  AC_CACHE_CHECK([for a french Unicode locale], [gt_cv_locale_fr_utf8], [
     AC_LANG_CONFTEST([AC_LANG_SOURCE([
 changequote(,)dnl
 #include <locale.h>

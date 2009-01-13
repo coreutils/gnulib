@@ -1,11 +1,11 @@
-#serial 10
+# serial 11
 
 dnl From Jim Meyering.
 dnl
 dnl Check whether struct dirent has a member named d_ino.
 dnl
 
-# Copyright (C) 1997, 1999, 2000, 2001, 2003, 2004, 2006, 2007 Free Software
+# Copyright (C) 1997, 1999-2001, 2003-2004, 2006-2007, 2009 Free Software
 # Foundation, Inc.
 
 # This file is free software; the Free Software Foundation
@@ -34,7 +34,7 @@ AC_DEFUN([gl_CHECK_TYPE_STRUCT_DIRENT_D_INO],
 	    [gl_cv_struct_dirent_d_ino=no],
 	    [gl_cv_struct_dirent_d_ino=no])])
    if test $gl_cv_struct_dirent_d_ino = yes; then
-     AC_DEFINE(D_INO_IN_DIRENT, 1,
+     AC_DEFINE([D_INO_IN_DIRENT], [1],
        [Define if struct dirent has a member d_ino that actually works.])
    fi
   ]

@@ -1,6 +1,6 @@
 # Check whether to use a replacement tmpfile() function.
 
-# Copyright (C) 2007 Free Software Foundation, Inc.
+# Copyright (C) 2007, 2009 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
@@ -28,8 +28,8 @@ choke me
        [gl_cv_func_tmpfile_unusable=yes],
        [gl_cv_func_tmpfile_unusable=no])])
   if test $gl_cv_func_tmpfile_unusable = yes; then
-    AC_LIBOBJ(tmpfile)
-    AC_DEFINE(tmpfile, rpl_tmpfile,
+    AC_LIBOBJ([tmpfile])
+    AC_DEFINE([tmpfile], [rpl_tmpfile],
       [Define to rpl_tmpfile if the replacement function should be used.])
     gl_PREREQ_TMPFILE
   fi

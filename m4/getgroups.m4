@@ -1,10 +1,9 @@
-#serial 11
+# serial 12
 
 dnl From Jim Meyering.
 dnl A wrapper around AC_FUNC_GETGROUPS.
 
-# Copyright (C) 1996, 1997, 1999, 2000, 2001, 2002, 2003, 2004, 2008 Free
-# Software Foundation, Inc.
+# Copyright (C) 1996-1997, 1999-2004, 2008-2009 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -14,8 +13,8 @@ AC_DEFUN([gl_FUNC_GETGROUPS],
 [
   AC_REQUIRE([AC_FUNC_GETGROUPS])
   if test "$ac_cv_func_getgroups_works" != yes; then
-    AC_LIBOBJ(getgroups)
-    AC_DEFINE(getgroups, rpl_getgroups,
+    AC_LIBOBJ([getgroups])
+    AC_DEFINE([getgroups], [rpl_getgroups],
       [Define as rpl_getgroups if getgroups doesn't work right.])
     gl_PREREQ_GETGROUPS
   fi

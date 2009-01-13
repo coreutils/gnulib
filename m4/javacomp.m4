@@ -1,5 +1,5 @@
-# javacomp.m4 serial 10
-dnl Copyright (C) 2001-2003, 2006-2007 Free Software Foundation, Inc.
+# javacomp.m4 serial 11
+dnl Copyright (C) 2001-2003, 2006-2007, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -58,7 +58,7 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gt_JAVACOMP],
 [
   ifelse([$2], [], [AC_REQUIRE([gt_JAVAEXEC])], [])
-  AC_EGREP_CPP(yes, [
+  AC_EGREP_CPP([yes], [
 #if defined _WIN32 || defined __WIN32__ || defined __CYGWIN__ || defined __EMX__ || defined __DJGPP__
   yes
 #endif
@@ -404,9 +404,9 @@ changequote([,])dnl
     pushdef([AC_MSG_CHECKING],[:])dnl
     pushdef([AC_CHECKING],[:])dnl
     pushdef([AC_MSG_RESULT],[:])dnl
-    AC_CHECK_PROG(HAVE_GCJ_IN_PATH, gcj, yes)
-    AC_CHECK_PROG(HAVE_JAVAC_IN_PATH, javac, yes)
-    AC_CHECK_PROG(HAVE_JIKES_IN_PATH, jikes, yes)
+    AC_CHECK_PROG([HAVE_GCJ_IN_PATH], [gcj], [yes])
+    AC_CHECK_PROG([HAVE_JAVAC_IN_PATH], [javac], [yes])
+    AC_CHECK_PROG([HAVE_JIKES_IN_PATH], [jikes], [yes])
     popdef([AC_MSG_RESULT])dnl
     popdef([AC_CHECKING])dnl
     popdef([AC_MSG_CHECKING])dnl
@@ -626,11 +626,11 @@ changequote([,])dnl
     ac_result="no"
   fi
   AC_MSG_RESULT([$ac_result])
-  AC_SUBST(CONF_JAVAC)
-  AC_SUBST(CLASSPATH)
-  AC_SUBST(CLASSPATH_SEPARATOR)
-  AC_SUBST(HAVE_JAVAC_ENVVAR)
-  AC_SUBST(HAVE_GCJ_C)
-  AC_SUBST(HAVE_JAVAC)
-  AC_SUBST(HAVE_JIKES)
+  AC_SUBST([CONF_JAVAC])
+  AC_SUBST([CLASSPATH])
+  AC_SUBST([CLASSPATH_SEPARATOR])
+  AC_SUBST([HAVE_JAVAC_ENVVAR])
+  AC_SUBST([HAVE_GCJ_C])
+  AC_SUBST([HAVE_JAVAC])
+  AC_SUBST([HAVE_JIKES])
 ])

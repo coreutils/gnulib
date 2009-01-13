@@ -1,7 +1,7 @@
 # acl.m4 - check for access control list (ACL) primitives
-# serial 8
+# serial 9
 
-# Copyright (C) 2002, 2004-2008 Free Software Foundation, Inc.
+# Copyright (C) 2002, 2004-2009 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
@@ -52,7 +52,7 @@ int type = ACL_FIRST_ENTRY;]],
 		  [gl_cv_acl_ACL_FIRST_ENTRY=yes],
 		  [gl_cv_acl_ACL_FIRST_ENTRY=no])])
 	     if test $gl_cv_acl_ACL_FIRST_ENTRY = yes; then
-	       AC_DEFINE([HAVE_ACL_FIRST_ENTRY], 1,
+	       AC_DEFINE([HAVE_ACL_FIRST_ENTRY], [1],
 		 [Define to 1 if the constant ACL_FIRST_ENTRY exists.])
 	     fi
 	     dnl On MacOS X, other types of ACLs are supported.
@@ -65,7 +65,7 @@ int type = ACL_TYPE_EXTENDED;]],
 		  [gl_cv_acl_ACL_TYPE_EXTENDED=yes],
 		  [gl_cv_acl_ACL_TYPE_EXTENDED=no])])
 	     if test $gl_cv_acl_ACL_TYPE_EXTENDED = yes; then
-	       AC_DEFINE([HAVE_ACL_TYPE_EXTENDED], 1,
+	       AC_DEFINE([HAVE_ACL_TYPE_EXTENDED], [1],
 		 [Define to 1 if the ACL type ACL_TYPE_EXTENDED exists.])
 	     fi
 	   else
@@ -133,7 +133,7 @@ int type = ACL_TYPE_EXTENDED;]],
 # but sets errno = ENOENT for an existing file or directory.
 AC_DEFUN([gl_ACL_GET_FILE],
 [
-  AC_CACHE_CHECK([for working acl_get_file], gl_cv_func_working_acl_get_file,
+  AC_CACHE_CHECK([for working acl_get_file], [gl_cv_func_working_acl_get_file],
     [AC_RUN_IFELSE(
        [AC_LANG_PROGRAM(
 	  [[#include <sys/types.h>

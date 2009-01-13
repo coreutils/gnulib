@@ -1,6 +1,6 @@
-#serial 5
+# serial 6
 
-# Copyright (C) 2005, 2006, 2007 Free Software Foundation, Inc.
+# Copyright (C) 2005, 2006, 2007, 2009 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -11,7 +11,7 @@
 AC_DEFUN([gl_UNLINKDIR],
 [
   AC_REQUIRE([AC_CANONICAL_HOST])
-  AC_CHECK_HEADERS_ONCE(priv.h)
+  AC_CHECK_HEADERS_ONCE([priv.h])
 
   AC_LIBOBJ([unlinkdir])
 
@@ -27,7 +27,7 @@ AC_DEFUN([gl_UNLINKDIR],
   *-*-linux-* | *-*-linux | \
   *-*-freebsd2.2* | *-*-freebsd[[3-9]]* | *-*-freebsd[[1-9]][[0-9]]* | \
   *-cygwin)
-    AC_DEFINE([UNLINK_CANNOT_UNLINK_DIR], 1,
+    AC_DEFINE([UNLINK_CANNOT_UNLINK_DIR], [1],
       [Define to 1 if unlink (dir) cannot possibly succeed.]);;
   esac
 ])

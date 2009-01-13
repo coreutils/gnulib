@@ -1,4 +1,4 @@
-#serial 13
+# serial 14
 # Check for several getcwd bugs with long file names.
 # If so, arrange to compile the wrapper function.
 
@@ -6,7 +6,7 @@
 # I've heard that this is due to a Linux kernel bug, and that it has
 # been fixed between 2.4.21-pre3 and 2.4.21-pre4.  */
 
-# Copyright (C) 2003, 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
+# Copyright (C) 2003-2007, 2009 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
@@ -15,7 +15,7 @@
 
 AC_DEFUN([gl_FUNC_GETCWD_PATH_MAX],
 [
-  AC_CHECK_DECLS_ONCE(getcwd)
+  AC_CHECK_DECLS_ONCE([getcwd])
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_CACHE_CHECK([whether getcwd handles long file names properly],
     gl_cv_func_getcwd_path_max,
@@ -181,7 +181,7 @@ main ()
   ])
   case $gl_cv_func_getcwd_path_max in
   no,*)
-    AC_DEFINE([HAVE_PARTLY_WORKING_GETCWD], 1,
+    AC_DEFINE([HAVE_PARTLY_WORKING_GETCWD], [1],
       [Define to 1 if getcwd works, except it sometimes fails when it shouldn't,
        setting errno to ERANGE, ENAMETOOLONG, or ENOENT.  If __GETCWD_PREFIX
        is not defined, it doesn't matter whether HAVE_PARTLY_WORKING_GETCWD

@@ -1,5 +1,5 @@
-# locale-ja.m4 serial 5
-dnl Copyright (C) 2003, 2005-2008 Free Software Foundation, Inc.
+# locale-ja.m4 serial 6
+dnl Copyright (C) 2003, 2005-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -11,7 +11,7 @@ AC_DEFUN([gt_LOCALE_JA],
 [
   AC_REQUIRE([AC_CANONICAL_HOST])
   AC_REQUIRE([AM_LANGINFO_CODESET])
-  AC_CACHE_CHECK([for a traditional japanese locale], gt_cv_locale_ja, [
+  AC_CACHE_CHECK([for a traditional japanese locale], [gt_cv_locale_ja], [
     macosx=
 changequote(,)dnl
     case "$host_os" in

@@ -1,5 +1,5 @@
-# csharpexec.m4 serial 3 (gettext-0.15)
-dnl Copyright (C) 2003-2005 Free Software Foundation, Inc.
+# csharpexec.m4 serial 4 (gettext-0.15)
+dnl Copyright (C) 2003-2005, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -13,7 +13,7 @@ AC_DEFUN([gt_CSHARPEXEC],
 [
   AC_REQUIRE([gt_CSHARP_CHOICE])
   AC_MSG_CHECKING([for C[#] program execution engine])
-  AC_EGREP_CPP(yes, [
+  AC_EGREP_CPP([yes], [
 #if defined _WIN32 || defined __WIN32__ || defined __EMX__ || defined __DJGPP__
   yes
 #endif
@@ -22,9 +22,9 @@ AC_DEFUN([gt_CSHARPEXEC],
   pushdef([AC_MSG_CHECKING],[:])dnl
   pushdef([AC_CHECKING],[:])dnl
   pushdef([AC_MSG_RESULT],[:])dnl
-  AC_CHECK_PROG(HAVE_ILRUN_IN_PATH, ilrun, yes)
-  AC_CHECK_PROG(HAVE_MONO_IN_PATH, mono, yes)
-  AC_CHECK_PROG(HAVE_CLIX_IN_PATH, clix, yes)
+  AC_CHECK_PROG([HAVE_ILRUN_IN_PATH], [ilrun], [yes])
+  AC_CHECK_PROG([HAVE_MONO_IN_PATH], [mono], [yes])
+  AC_CHECK_PROG([HAVE_CLIX_IN_PATH], [clix], [yes])
   popdef([AC_MSG_RESULT])dnl
   popdef([AC_CHECKING])dnl
   popdef([AC_MSG_CHECKING])dnl
@@ -76,11 +76,11 @@ AC_DEFUN([gt_CSHARPEXEC],
     esac
   done
   AC_MSG_RESULT([$ac_result])
-  AC_SUBST(MONO_PATH)
-  AC_SUBST(MONO_PATH_SEPARATOR)
-  AC_SUBST(CLIX_PATH_VAR)
-  AC_SUBST(CLIX_PATH)
-  AC_SUBST(HAVE_ILRUN)
-  AC_SUBST(HAVE_MONO)
-  AC_SUBST(HAVE_CLIX)
+  AC_SUBST([MONO_PATH])
+  AC_SUBST([MONO_PATH_SEPARATOR])
+  AC_SUBST([CLIX_PATH_VAR])
+  AC_SUBST([CLIX_PATH])
+  AC_SUBST([HAVE_ILRUN])
+  AC_SUBST([HAVE_MONO])
+  AC_SUBST([HAVE_CLIX])
 ])

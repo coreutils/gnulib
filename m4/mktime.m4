@@ -1,5 +1,5 @@
-#serial 13
-dnl Copyright (C) 2002, 2003, 2005, 2006, 2007 Free Software Foundation, Inc.
+# serial 14
+dnl Copyright (C) 2002-2003, 2005-2007, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -13,9 +13,9 @@ dnl From Jim Meyering.
 # AC_FUNC_MKTIME
 # --------------
 AC_DEFUN([AC_FUNC_MKTIME],
-[AC_CHECK_HEADERS_ONCE(unistd.h)
-AC_CHECK_FUNCS_ONCE(alarm)
-AC_CACHE_CHECK([for working mktime], ac_cv_func_working_mktime,
+[AC_CHECK_HEADERS_ONCE([unistd.h])
+AC_CHECK_FUNCS_ONCE([alarm])
+AC_CACHE_CHECK([for working mktime], [ac_cv_func_working_mktime],
 [AC_RUN_IFELSE([AC_LANG_SOURCE(
 [[/* Test program from Paul Eggert and Tony Leneis.  */
 #include <limits.h>
@@ -212,9 +212,9 @@ fi
 AC_DEFUN([gl_FUNC_MKTIME],
 [
   AC_FUNC_MKTIME
-  dnl Note: AC_FUNC_MKTIME does AC_LIBOBJ(mktime).
+  dnl Note: AC_FUNC_MKTIME does AC_LIBOBJ([mktime]).
   if test $ac_cv_func_working_mktime = no; then
-    AC_DEFINE(mktime, rpl_mktime,
+    AC_DEFINE([mktime], [rpl_mktime],
       [Define to rpl_mktime if the replacement function should be used.])
     gl_PREREQ_MKTIME
   fi

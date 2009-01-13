@@ -1,5 +1,5 @@
-# readline.m4 serial 5
-dnl Copyright (C) 2005, 2006 Free Software Foundation, Inc.
+# readline.m4 serial 6
+dnl Copyright (C) 2005, 2006, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -24,7 +24,7 @@ AC_DEFUN([gl_FUNC_READLINE],
   am_save_CPPFLAGS="$CPPFLAGS"
   AC_LIB_APPENDTOVAR([CPPFLAGS], [$INCREADLINE])
 
-  AC_CACHE_CHECK(for readline, gl_cv_lib_readline, [
+  AC_CACHE_CHECK([for readline], [gl_cv_lib_readline], [
     gl_cv_lib_readline=no
     am_save_LIBS="$LIBS"
     dnl On some systems, -lreadline doesn't link without an additional
@@ -49,7 +49,7 @@ AC_DEFUN([gl_FUNC_READLINE],
   ])
 
   if test "$gl_cv_lib_readline" != no; then
-    AC_DEFINE(HAVE_READLINE, 1, [Define if you have the readline library.])
+    AC_DEFINE([HAVE_READLINE], [1], [Define if you have the readline library.])
     if test "$gl_cv_lib_readline" != " -l"; then
       LIBREADLINE="$LIBREADLINE$gl_cv_lib_readline"
       LTLIBREADLINE="$LTLIBREADLINE$gl_cv_lib_readline"
@@ -63,13 +63,13 @@ AC_DEFUN([gl_FUNC_READLINE],
     LIBREADLINE=
     LTLIBREADLINE=
   fi
-  AC_SUBST(LIBREADLINE)
-  AC_SUBST(LTLIBREADLINE)
+  AC_SUBST([LIBREADLINE])
+  AC_SUBST([LTLIBREADLINE])
 
-  AC_CHECK_HEADERS(readline/readline.h)
+  AC_CHECK_HEADERS([readline/readline.h])
 
   if test $gl_cv_lib_readline = no; then
-    AC_LIBOBJ(readline)
+    AC_LIBOBJ([readline])
     gl_PREREQ_READLINE
   fi
 ])

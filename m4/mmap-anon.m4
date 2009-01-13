@@ -1,5 +1,5 @@
-# mmap-anon.m4 serial 4
-dnl Copyright (C) 2005, 2007 Free Software Foundation, Inc.
+# mmap-anon.m4 serial 5
+dnl Copyright (C) 2005, 2007, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -34,13 +34,13 @@ AC_DEFUN([gl_FUNC_MMAP_ANON],
     I cant identify this map.
 #endif
 ],
-        [AC_DEFINE(MAP_ANONYMOUS, MAP_ANON,
+        [AC_DEFINE([MAP_ANONYMOUS], [MAP_ANON],
           [Define to a substitute value for mmap()'s MAP_ANONYMOUS flag.])
          gl_have_mmap_anonymous=yes])
     fi
-    AC_MSG_RESULT($gl_have_mmap_anonymous)
+    AC_MSG_RESULT([$gl_have_mmap_anonymous])
     if test $gl_have_mmap_anonymous = yes; then
-      AC_DEFINE(HAVE_MAP_ANONYMOUS, 1,
+      AC_DEFINE([HAVE_MAP_ANONYMOUS], [1],
         [Define to 1 if mmap()'s MAP_ANONYMOUS flag is available after including
          config.h and <sys/mman.h>.])
     fi

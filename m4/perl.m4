@@ -1,9 +1,9 @@
-#serial 8
+# serial 9
 
 dnl From Jim Meyering.
 dnl Find a new-enough version of Perl.
 
-# Copyright (C) 1998-2001, 2003, 2004, 2007 Free Software Foundation, Inc.
+# Copyright (C) 1998-2001, 2003-2004, 2007, 2009 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -23,7 +23,7 @@ AC_DEFUN([gl_PERL],
   fi
 
   found=no
-  AC_SUBST(PERL)
+  AC_SUBST([PERL])
   PERL="$am_missing_run perl"
   for perl in $candidate_perl_names; do
     # Run test in a subshell; some versions of sh will print an error if
@@ -35,7 +35,7 @@ AC_DEFUN([gl_PERL],
     fi
   done
 
-  AC_MSG_RESULT($found)
+  AC_MSG_RESULT([$found])
   test $found = no && AC_MSG_WARN([
 WARNING: You don't seem to have perl5.005 or newer installed, or you lack
          a usable version of the Perl File::Compare module.  As a result,

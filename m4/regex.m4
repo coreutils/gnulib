@@ -1,7 +1,7 @@
-#serial 52
+# serial 53
 
 # Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2003, 2004, 2005,
-# 2006, 2007, 2008 Free Software Foundation, Inc.
+# 2006, 2007, 2008, 2009 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -175,7 +175,7 @@ AC_DEFUN([gl_REGEX],
   esac
 
   if test $ac_use_included_regex = yes; then
-    AC_DEFINE([_REGEX_LARGE_OFFSETS], 1,
+    AC_DEFINE([_REGEX_LARGE_OFFSETS], [1],
       [Define if you want regoff_t to be at least as wide POSIX requires.])
     AC_DEFINE([re_syntax_options], [rpl_re_syntax_options],
       [Define to rpl_re_syntax_options if the replacement should be used.])

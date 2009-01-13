@@ -1,5 +1,5 @@
-# fprintf-posix.m4 serial 12
-dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
+# fprintf-posix.m4 serial 13
+dnl Copyright (C) 2007-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -96,7 +96,7 @@ AC_DEFUN([gl_REPLACE_FPRINTF],
   AC_REQUIRE([gl_STDIO_H_DEFAULTS])
   AC_LIBOBJ([fprintf])
   REPLACE_FPRINTF=1
-  AC_DEFINE([REPLACE_FPRINTF_POSIX], 1,
+  AC_DEFINE([REPLACE_FPRINTF_POSIX], [1],
     [Define if fprintf is overridden by a POSIX compliant gnulib implementation.])
   gl_PREREQ_FPRINTF
 ])

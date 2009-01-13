@@ -1,5 +1,5 @@
-# locale-tr.m4 serial 5
-dnl Copyright (C) 2003, 2005-2008 Free Software Foundation, Inc.
+# locale-tr.m4 serial 6
+dnl Copyright (C) 2003, 2005-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -10,7 +10,7 @@ dnl Determine the name of a turkish locale with UTF-8 encoding.
 AC_DEFUN([gt_LOCALE_TR_UTF8],
 [
   AC_REQUIRE([AM_LANGINFO_CODESET])
-  AC_CACHE_CHECK([for a turkish Unicode locale], gt_cv_locale_tr_utf8, [
+  AC_CACHE_CHECK([for a turkish Unicode locale], [gt_cv_locale_tr_utf8], [
     AC_LANG_CONFTEST([AC_LANG_SOURCE([
 changequote(,)dnl
 #include <locale.h>

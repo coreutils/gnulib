@@ -1,8 +1,8 @@
-#serial 17
+# serial 18
 # Determine whether we need the chown wrapper.
 
-dnl Copyright (C) 1997, 1998, 1999, 2000, 2001, 2003, 2004, 2005, 2007 Free
-dnl Software Foundation, Inc.
+dnl Copyright (C) 1997-2001, 2003-2005, 2007, 2009
+dnl Free Software Foundation, Inc.
 
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -22,7 +22,7 @@ AC_DEFUN([gl_FUNC_CHOWN],
   AC_REQUIRE([gl_FUNC_CHOWN_FOLLOWS_SYMLINK])
 
   if test $ac_cv_func_chown_works = no; then
-    AC_DEFINE(CHOWN_FAILS_TO_HONOR_ID_OF_NEGATIVE_ONE, 1,
+    AC_DEFINE([CHOWN_FAILS_TO_HONOR_ID_OF_NEGATIVE_ONE], [1],
       [Define if chown is not POSIX compliant regarding IDs of -1.])
   fi
 
@@ -31,7 +31,7 @@ AC_DEFUN([gl_FUNC_CHOWN],
     : # no wrapper needed
   else
     REPLACE_CHOWN=1
-    AC_LIBOBJ(chown)
+    AC_LIBOBJ([chown])
     gl_PREREQ_CHOWN
   fi
 ])
@@ -71,7 +71,7 @@ AC_DEFUN([gl_FUNC_CHOWN_FOLLOWS_SYMLINK],
   )
 
   if test $gl_cv_func_chown_follows_symlink = no; then
-    AC_DEFINE(CHOWN_MODIFIES_SYMLINK, 1,
+    AC_DEFINE([CHOWN_MODIFIES_SYMLINK], [1],
       [Define if chown modifies symlinks.])
   fi
 ])
@@ -79,5 +79,5 @@ AC_DEFUN([gl_FUNC_CHOWN_FOLLOWS_SYMLINK],
 # Prerequisites of lib/chown.c.
 AC_DEFUN([gl_PREREQ_CHOWN],
 [
-  AC_CHECK_FUNC([fchown], , [AC_LIBOBJ(fchown-stub)])
+  AC_CHECK_FUNC([fchown], , [AC_LIBOBJ([fchown-stub])])
 ])

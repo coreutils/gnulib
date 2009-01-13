@@ -1,5 +1,5 @@
-# printf.m4 serial 25
-dnl Copyright (C) 2003, 2007-2008 Free Software Foundation, Inc.
+# printf.m4 serial 26
+dnl Copyright (C) 2003, 2007-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -230,7 +230,7 @@ AC_DEFUN([gl_PRINTF_INFINITE_LONG_DOUBLE],
   dnl The user can set or unset the variable gl_printf_safe to indicate
   dnl that he wishes a safe handling of non-IEEE-754 'long double' values.
   if test -n "$gl_printf_safe"; then
-    AC_DEFINE([CHECK_PRINTF_SAFE], 1,
+    AC_DEFINE([CHECK_PRINTF_SAFE], [1],
       [Define if you wish *printf() functions that have a safe handling of
        non-IEEE-754 'long double' values.])
   fi

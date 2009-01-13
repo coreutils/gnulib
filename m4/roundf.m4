@@ -1,5 +1,5 @@
-# roundf.m4 serial 5
-dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
+# roundf.m4 serial 6
+dnl Copyright (C) 2007-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -57,7 +57,7 @@ int main()
       gl_FUNC_FLOORF_LIBS
       gl_FUNC_CEILF_LIBS
       if test "$FLOORF_LIBM" != '?' && test "$CEILF_LIBM" != '?'; then
-        AC_DEFINE([HAVE_FLOORF_AND_CEILF], 1,
+        AC_DEFINE([HAVE_FLOORF_AND_CEILF], [1],
           [Define if the both the floorf() and ceilf() functions exist.])
         ROUNDF_LIBM="$FLOORF_LIBM $CEILF_LIBM"
       else

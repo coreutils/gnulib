@@ -1,5 +1,5 @@
-# ldexpl.m4 serial 3
-dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
+# ldexpl.m4 serial 4
+dnl Copyright (C) 2007-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -48,7 +48,7 @@ AC_DEFUN([gl_FUNC_LDEXPL],
     gl_func_ldexpl=no
   fi
   if test $gl_func_ldexpl = yes; then
-    AC_DEFINE([HAVE_LDEXPL], 1,
+    AC_DEFINE([HAVE_LDEXPL], [1],
       [Define if the ldexpl() function is available.])
     dnl Also check whether it's declared.
     dnl MacOS X 10.3 has ldexpl() in libc but doesn't declare it in <math.h>.

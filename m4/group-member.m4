@@ -1,7 +1,6 @@
-#serial 11
+# serial 12
 
-# Copyright (C) 1999, 2000, 2001, 2003, 2004, 2005, 2006, 2007 Free Software
-# Foundation, Inc.
+# Copyright (C) 1999-2001, 2003-2007, 2009 Free Software Foundation, Inc.
 
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -16,8 +15,8 @@ AC_DEFUN([gl_FUNC_GROUP_MEMBER],
 
   dnl Do this replacement check manually because I want the hyphen
   dnl (not the underscore) in the filename.
-  AC_CHECK_FUNC(group_member, , [
-    AC_LIBOBJ(group-member)
+  AC_CHECK_FUNC([group_member], , [
+    AC_LIBOBJ([group-member])
     gl_PREREQ_GROUP_MEMBER
   ])
 ])

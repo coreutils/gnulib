@@ -1,5 +1,5 @@
-# signbit.m4 serial 5
-dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
+# signbit.m4 serial 6
+dnl Copyright (C) 2007-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -74,7 +74,7 @@ AC_DEFUN([gl_SIGNBIT],
                 [gl_cv_func_copysignf_no_libm=no])
             ])
           if test $gl_cv_func_copysignf_no_libm = yes; then
-            AC_DEFINE([HAVE_COPYSIGNF_IN_LIBC], 1,
+            AC_DEFINE([HAVE_COPYSIGNF_IN_LIBC], [1],
               [Define if the copysignf function is declared in <math.h> and available in libc.])
           fi
         fi
@@ -94,7 +94,7 @@ AC_DEFUN([gl_SIGNBIT],
                 [gl_cv_func_copysign_no_libm=no])
             ])
           if test $gl_cv_func_copysign_no_libm = yes; then
-            AC_DEFINE([HAVE_COPYSIGN_IN_LIBC], 1,
+            AC_DEFINE([HAVE_COPYSIGN_IN_LIBC], [1],
               [Define if the copysign function is declared in <math.h> and available in libc.])
           fi
         fi
@@ -114,7 +114,7 @@ AC_DEFUN([gl_SIGNBIT],
                 [gl_cv_func_copysignl_no_libm=no])
             ])
           if test $gl_cv_func_copysignl_no_libm = yes; then
-            AC_DEFINE([HAVE_COPYSIGNL_IN_LIBC], 1,
+            AC_DEFINE([HAVE_COPYSIGNL_IN_LIBC], [1],
               [Define if the copysignl function is declared in <math.h> and available in libc.])
           fi
         fi

@@ -1,7 +1,7 @@
-# serial 1
+# serial 2
 # Check for flexible array member support.
 
-# Copyright (C) 2006 Free Software Foundation, Inc.
+# Copyright (C) 2006, 2009 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
@@ -36,6 +36,6 @@ AC_DEFUN([AC_C_FLEXIBLE_ARRAY_MEMBER],
        Don't use 'offsetof (struct s, d@<:@0@:>@)', as this doesn't work with
        MSVC and with C++ compilers.])
   else
-    AC_DEFINE([FLEXIBLE_ARRAY_MEMBER], 1)
+    AC_DEFINE([FLEXIBLE_ARRAY_MEMBER], [1])
   fi
 ])

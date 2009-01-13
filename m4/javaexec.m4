@@ -1,5 +1,5 @@
-# javaexec.m4 serial 4 (gettext-0.15)
-dnl Copyright (C) 2001-2003, 2006 Free Software Foundation, Inc.
+# javaexec.m4 serial 5 (gettext-0.15)
+dnl Copyright (C) 2001-2003, 2006, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -11,7 +11,7 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gt_JAVAEXEC],
 [
   AC_MSG_CHECKING([for Java virtual machine])
-  AC_EGREP_CPP(yes, [
+  AC_EGREP_CPP([yes], [
 #if defined _WIN32 || defined __WIN32__ || defined __CYGWIN__ || defined __EMX__ || defined __DJGPP__
   yes
 #endif
@@ -30,10 +30,10 @@ AC_DEFUN([gt_JAVAEXEC],
     pushdef([AC_MSG_CHECKING],[:])dnl
     pushdef([AC_CHECKING],[:])dnl
     pushdef([AC_MSG_RESULT],[:])dnl
-    AC_CHECK_PROG(HAVE_GIJ_IN_PATH, gij, yes)
-    AC_CHECK_PROG(HAVE_JAVA_IN_PATH, java, yes)
-    AC_CHECK_PROG(HAVE_JRE_IN_PATH, jre, yes)
-    AC_CHECK_PROG(HAVE_JVIEW_IN_PATH, jview, yes)
+    AC_CHECK_PROG([HAVE_GIJ_IN_PATH], [gij], [yes])
+    AC_CHECK_PROG([HAVE_JAVA_IN_PATH], [java], [yes])
+    AC_CHECK_PROG([HAVE_JRE_IN_PATH], [jre], [yes])
+    AC_CHECK_PROG([HAVE_JVIEW_IN_PATH], [jview], [yes])
     popdef([AC_MSG_RESULT])dnl
     popdef([AC_CHECKING])dnl
     popdef([AC_MSG_CHECKING])dnl
@@ -93,12 +93,12 @@ AC_DEFUN([gt_JAVAEXEC],
     ac_result="no"
   fi
   AC_MSG_RESULT([$ac_result])
-  AC_SUBST(CONF_JAVA)
-  AC_SUBST(CLASSPATH)
-  AC_SUBST(CLASSPATH_SEPARATOR)
-  AC_SUBST(HAVE_JAVA_ENVVAR)
-  AC_SUBST(HAVE_GIJ)
-  AC_SUBST(HAVE_JAVA)
-  AC_SUBST(HAVE_JRE)
-  AC_SUBST(HAVE_JVIEW)
+  AC_SUBST([CONF_JAVA])
+  AC_SUBST([CLASSPATH])
+  AC_SUBST([CLASSPATH_SEPARATOR])
+  AC_SUBST([HAVE_JAVA_ENVVAR])
+  AC_SUBST([HAVE_GIJ])
+  AC_SUBST([HAVE_JAVA])
+  AC_SUBST([HAVE_JRE])
+  AC_SUBST([HAVE_JVIEW])
 ])

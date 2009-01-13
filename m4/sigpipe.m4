@@ -1,5 +1,5 @@
-# sigpipe.m4 serial 1
-dnl Copyright (C) 2008 Free Software Foundation, Inc.
+# sigpipe.m4 serial 2
+dnl Copyright (C) 2008, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -16,8 +16,8 @@ AC_DEFUN([gl_SIGNAL_SIGPIPE],
 AC_DEFUN([gl_SIGNAL_SIGPIPE_BODY],
 [
   AC_REQUIRE([AC_PROG_CC])
-  AC_CACHE_CHECK([for SIGPIPE], gl_cv_header_signal_h_SIGPIPE, [
-    AC_EGREP_CPP(booboo,[
+  AC_CACHE_CHECK([for SIGPIPE], [gl_cv_header_signal_h_SIGPIPE], [
+    AC_EGREP_CPP([booboo],[
 #include <signal.h>
 #if !defined SIGPIPE
 booboo

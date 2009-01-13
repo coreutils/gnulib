@@ -1,5 +1,5 @@
-# mbrtowc.m4 serial 12
-dnl Copyright (C) 2001-2002, 2004-2005, 2008 Free Software Foundation, Inc.
+# mbrtowc.m4 serial 13
+dnl Copyright (C) 2001-2002, 2004-2005, 2008, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -318,7 +318,7 @@ AC_DEFUN([AC_FUNC_MBRTOWC],
        gl_cv_func_mbrtowc=yes,
        gl_cv_func_mbrtowc=no)])
   if test $gl_cv_func_mbrtowc = yes; then
-    AC_DEFINE([HAVE_MBRTOWC], 1,
+    AC_DEFINE([HAVE_MBRTOWC], [1],
       [Define to 1 if mbrtowc and mbstate_t are properly declared.])
   fi
 ])

@@ -1,13 +1,13 @@
 # Portability macros for glibc argz.                    -*- Autoconf -*-
 #
-#   Copyright (C) 2004, 2005, 2006, 2007, 2008 Free Software Foundation, Inc.
+#   Copyright (C) 2004-2009 Free Software Foundation, Inc.
 #   Written by Gary V. Vaughan <gary@gnu.org>
 #
 # This file is free software; the Free Software Foundation gives
 # unlimited permission to copy and/or distribute it, with or without
 # modifications, as long as this notice is preserved.
 
-# serial 6 argz.m4
+# serial 7 argz.m4
 
 AC_DEFUN([gl_FUNC_ARGZ],
 [gl_PREREQ_ARGZ
@@ -68,7 +68,7 @@ AS_IF([test -z "$ARGZ_H"],
 	 *) lt_cv_sys_argz_works=yes ;;
 	 esac]])
      AS_IF([test $lt_cv_sys_argz_works = yes],
-        [AC_DEFINE([HAVE_WORKING_ARGZ], 1,
+        [AC_DEFINE([HAVE_WORKING_ARGZ], [1],
                    [This value is set to 1 to indicate that the system argz facility works])],
         [ARGZ_H=argz.h
         AC_LIBOBJ([argz])])])

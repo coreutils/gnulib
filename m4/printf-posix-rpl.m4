@@ -1,5 +1,5 @@
-# printf-posix-rpl.m4 serial 2
-dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
+# printf-posix-rpl.m4 serial 3
+dnl Copyright (C) 2007-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -17,7 +17,7 @@ AC_DEFUN([gl_REPLACE_PRINTF],
   AC_REQUIRE([gl_STDIO_H_DEFAULTS])
   AC_LIBOBJ([printf])
   REPLACE_PRINTF=1
-  AC_DEFINE([REPLACE_PRINTF_POSIX], 1,
+  AC_DEFINE([REPLACE_PRINTF_POSIX], [1],
     [Define if printf is overridden by a POSIX compliant gnulib implementation.])
   gl_PREREQ_PRINTF
 ])

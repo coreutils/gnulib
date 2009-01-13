@@ -1,6 +1,6 @@
 # Test whether a file descriptor is a pipe.
 
-dnl Copyright (C) 2006 Free Software Foundation, Inc.
+dnl Copyright (C) 2006, 2009 Free Software Foundation, Inc.
 
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,7 +11,7 @@ dnl Written by Paul Eggert.
 AC_DEFUN([gl_ISAPIPE],
 [
   # OpenVMS has isapipe already, so check for it.
-  AC_REPLACE_FUNCS(isapipe)
+  AC_REPLACE_FUNCS([isapipe])
   if test $ac_cv_func_isapipe = no; then
     gl_PREREQ_ISAPIPE
   fi
@@ -73,11 +73,11 @@ AC_DEFUN([gl_PREREQ_ISAPIPE],
 
   case $gl_cv_pipes_are_fifos in #(
   'yes ('*')')
-    AC_DEFINE([HAVE_FIFO_PIPES], 1,
+    AC_DEFINE([HAVE_FIFO_PIPES], [1],
       [Define to 1 if pipes are FIFOs, 0 if sockets.  Leave undefined
        if not known.]);; #(
   'no ('*')')
-    AC_DEFINE([HAVE_FIFO_PIPES], 0);;
+    AC_DEFINE([HAVE_FIFO_PIPES], [0]);;
   esac
 
   case $gl_cv_pipes_are_fifos in #(

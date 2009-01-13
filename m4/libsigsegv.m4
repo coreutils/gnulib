@@ -1,5 +1,5 @@
-# libsigsegv.m4 serial 2
-dnl Copyright (C) 2002-2003, 2008 Free Software Foundation, Inc.
+# libsigsegv.m4 serial 3
+dnl Copyright (C) 2002-2003, 2008, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -22,7 +22,7 @@ AC_DEFUN([gl_LIBSIGSEGV],
   gl_save_CPPFLAGS="$CPPFLAGS"
   AC_LIB_APPENDTOVAR([CPPFLAGS], [$INCSIGSEGV])
 
-  AC_CACHE_CHECK([for libsigsegv], gl_cv_lib_sigsegv, [
+  AC_CACHE_CHECK([for libsigsegv], [gl_cv_lib_sigsegv], [
     gl_cv_lib_sigsegv="no, consider installing GNU libsigsegv"
     gl_save_LIBS="$LIBS"
     LIBS="$LIBS $LIBSIGSEGV"
@@ -32,7 +32,7 @@ AC_DEFUN([gl_LIBSIGSEGV],
     LIBS="$gl_save_LIBS"
   ])
   if test "$gl_cv_lib_sigsegv" = yes; then
-    AC_DEFINE([HAVE_LIBSIGSEGV], 1,
+    AC_DEFINE([HAVE_LIBSIGSEGV], [1],
       [Define if you have the libsigsegv library.])
     AC_MSG_CHECKING([how to link with libsigsegv])
     AC_MSG_RESULT([$LIBSIGSEGV])
@@ -43,6 +43,6 @@ AC_DEFUN([gl_LIBSIGSEGV],
     LIBSIGSEGV=
     LTLIBSIGSEGV=
   fi
-  AC_SUBST(LIBSIGSEGV)
-  AC_SUBST(LTLIBSIGSEGV)
+  AC_SUBST([LIBSIGSEGV])
+  AC_SUBST([LTLIBSIGSEGV])
 ])

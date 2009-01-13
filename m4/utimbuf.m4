@@ -1,6 +1,6 @@
-#serial 8
+# serial 9
 
-# Copyright (C) 1998, 1999, 2000, 2001, 2003, 2004, 2007 Free Software
+# Copyright (C) 1998-2001, 2003-2004, 2007, 2009 Free Software
 # Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
@@ -15,7 +15,7 @@ dnl Some systems have utime.h but don't declare the struct anywhere.
 
 AC_DEFUN([gl_CHECK_TYPE_STRUCT_UTIMBUF],
 [
-  AC_CHECK_HEADERS_ONCE(sys/time.h utime.h)
+  AC_CHECK_HEADERS_ONCE([sys/time.h utime.h])
   AC_CACHE_CHECK([for struct utimbuf], [gl_cv_sys_struct_utimbuf],
     [AC_COMPILE_IFELSE(
        [AC_LANG_PROGRAM(
@@ -32,7 +32,7 @@ AC_DEFUN([gl_CHECK_TYPE_STRUCT_UTIMBUF],
        [gl_cv_sys_struct_utimbuf=no])])
 
   if test $gl_cv_sys_struct_utimbuf = yes; then
-    AC_DEFINE(HAVE_STRUCT_UTIMBUF, 1,
+    AC_DEFINE([HAVE_STRUCT_UTIMBUF], [1],
       [Define if struct utimbuf is declared -- usually in <utime.h>.
        Some systems have utime.h but don't declare the struct anywhere. ])
   fi

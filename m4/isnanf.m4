@@ -1,5 +1,5 @@
-# isnanf.m4 serial 9
-dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
+# isnanf.m4 serial 10
+dnl Copyright (C) 2007-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -51,7 +51,7 @@ AC_DEFUN([gl_FUNC_ISNANF_NO_LIBM],
             *) false;;
           esac
         }; then
-    AC_DEFINE([HAVE_ISNANF_IN_LIBC], 1,
+    AC_DEFINE([HAVE_ISNANF_IN_LIBC], [1],
       [Define if the isnan(float) function is available in libc.])
   else
     gl_BUILD_ISNANF

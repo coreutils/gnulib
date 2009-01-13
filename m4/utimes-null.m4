@@ -1,6 +1,6 @@
-#serial 7
+# serial 8
 
-# Copyright (C) 1998, 1999, 2001, 2003, 2004, 2006 Free Software
+# Copyright (C) 1998-1999, 2001, 2003-2004, 2006, 2009 Free Software
 # Foundation, Inc.
 
 # This file is free software; the Free Software Foundation
@@ -11,7 +11,7 @@ dnl Shamelessly cloned from acspecific.m4's AC_FUNC_UTIME_NULL,
 dnl then do case-insensitive s/utime/utimes/.
 
 AC_DEFUN([gl_FUNC_UTIMES_NULL],
-[AC_CACHE_CHECK(whether utimes accepts a null argument, ac_cv_func_utimes_null,
+[AC_CACHE_CHECK([whether utimes accepts a null argument], [ac_cv_func_utimes_null],
 [rm -f conftest.data; > conftest.data
 AC_TRY_RUN([
 /* In case stat has been defined to rpl_stat, undef it here.  */
@@ -34,7 +34,7 @@ return ! (stat ("conftest.data", &s) == 0
 rm -f core core.* *.core])
 
     if test $ac_cv_func_utimes_null = yes; then
-      AC_DEFINE(HAVE_UTIMES_NULL, 1,
+      AC_DEFINE([HAVE_UTIMES_NULL], [1],
 		[Define if utimes accepts a null argument])
     fi
   ]

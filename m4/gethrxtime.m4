@@ -1,5 +1,5 @@
-# gethrxtime.m4 serial 7
-dnl Copyright (C) 2005, 2006, 2008 Free Software Foundation, Inc.
+# gethrxtime.m4 serial 8
+dnl Copyright (C) 2005, 2006, 2008, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -26,14 +26,14 @@ AC_DEFUN([gl_GETHRXTIME],
 AC_DEFUN([gl_ARITHMETIC_HRTIME_T],
 [
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
-  AC_CACHE_CHECK([for arithmetic hrtime_t], gl_cv_arithmetic_hrtime_t,
+  AC_CACHE_CHECK([for arithmetic hrtime_t], [gl_cv_arithmetic_hrtime_t],
     [AC_COMPILE_IFELSE(
        [AC_LANG_PROGRAM([[#include <time.h>]],
 	  [[hrtime_t x = 0; return x/x;]])],
        [gl_cv_arithmetic_hrtime_t=yes],
        [gl_cv_arithmetic_hrtime_t=no])])
   if test $gl_cv_arithmetic_hrtime_t = yes; then
-    AC_DEFINE([HAVE_ARITHMETIC_HRTIME_T], 1,
+    AC_DEFINE([HAVE_ARITHMETIC_HRTIME_T], [1],
       [Define if you have an arithmetic hrtime_t type.])
   fi
 ])
@@ -51,7 +51,7 @@ AC_DEFUN([gl_PREREQ_GETHRXTIME],
 [
   AC_REQUIRE([gl_CLOCK_TIME])
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
-  AC_CHECK_FUNCS_ONCE(microuptime nanouptime)
+  AC_CHECK_FUNCS_ONCE([microuptime nanouptime])
 
   if test $ac_cv_func_nanouptime != yes; then
     LIB_GETHRXTIME=

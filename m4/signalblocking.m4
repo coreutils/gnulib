@@ -1,5 +1,5 @@
-# signalblocking.m4 serial 9
-dnl Copyright (C) 2001-2002, 2006-2008 Free Software Foundation, Inc.
+# signalblocking.m4 serial 10
+dnl Copyright (C) 2001-2002, 2006-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -13,9 +13,9 @@ AC_DEFUN([gl_SIGNALBLOCKING],
 [
   AC_REQUIRE([gl_SIGNAL_H_DEFAULTS])
   signals_not_posix=
-  AC_EGREP_HEADER(sigset_t, signal.h, , signals_not_posix=1)
+  AC_EGREP_HEADER([sigset_t], [signal.h], , [signals_not_posix=1])
   if test -z "$signals_not_posix"; then
-    AC_CHECK_FUNC(sigprocmask, [gl_cv_func_sigprocmask=1])
+    AC_CHECK_FUNC([sigprocmask], [gl_cv_func_sigprocmask=1])
   fi
   if test -z "$gl_cv_func_sigprocmask"; then
     HAVE_POSIX_SIGNALBLOCKING=0

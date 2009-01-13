@@ -1,9 +1,8 @@
-#serial 15   -*- Autoconf -*-
+# serial 16   -*- Autoconf -*-
 
 dnl Find out how to get the file descriptor associated with an open DIR*.
 
-# Copyright (C) 2001, 2002, 2003, 2004, 2005, 2006, 2008 Free Software
-# Foundation, Inc.
+# Copyright (C) 2001-2006, 2008-2009 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
@@ -22,7 +21,7 @@ AC_DEFUN([gl_FUNC_DIRFD],
   AC_REQUIRE([AC_PROG_CPP])
   AC_REQUIRE([AC_PROG_EGREP])
 
-  AC_CHECK_FUNCS(dirfd)
+  AC_CHECK_FUNCS([dirfd])
   AC_CHECK_DECLS([dirfd], , ,
     [#include <sys/types.h>
      #include <dirent.h>])
@@ -69,7 +68,7 @@ AC_DEFUN([gl_FUNC_DIRFD],
       ]
     )
     if test $gl_cv_sys_dir_fd_member_name != no_such_member; then
-      AC_DEFINE_UNQUOTED(DIR_FD_MEMBER_NAME,
+      AC_DEFINE_UNQUOTED([DIR_FD_MEMBER_NAME],
 	$gl_cv_sys_dir_fd_member_name,
 	[the name of the file descriptor member of DIR])
     fi

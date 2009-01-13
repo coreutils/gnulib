@@ -1,6 +1,6 @@
-#serial 3
+# serial 4
 
-# Copyright (C) 2003, 2007 Free Software Foundation, Inc.
+# Copyright (C) 2003, 2007, 2009 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
@@ -45,15 +45,15 @@ main ()
        [gl_cv_func_tzset_clobber=yes],
        [gl_cv_func_tzset_clobber=yes])])
 
-  AC_DEFINE(HAVE_RUN_TZSET_TEST, 1,
+  AC_DEFINE([HAVE_RUN_TZSET_TEST], [1],
     [Define to 1 if you have run the test for working tzset.])
 
   if test $gl_cv_func_tzset_clobber = yes; then
     gl_GETTIMEOFDAY_REPLACE_LOCALTIME
 
-    AC_DEFINE(tzset, rpl_tzset,
+    AC_DEFINE([tzset], [rpl_tzset],
       [Define to rpl_tzset if the wrapper function should be used.])
-    AC_DEFINE([TZSET_CLOBBERS_LOCALTIME], 1,
+    AC_DEFINE([TZSET_CLOBBERS_LOCALTIME], [1],
       [Define if tzset clobbers localtime's static buffer.])
   fi
 ])

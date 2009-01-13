@@ -1,6 +1,7 @@
-#serial 9
+# serial 10
 
-# Copyright (C) 1996, 1999, 2001, 2002, 2004, 2006 Free Software Foundation, Inc.
+# Copyright (C) 1996, 1999, 2001-2002, 2004, 2006, 2009
+# Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
@@ -42,6 +43,6 @@ AC_DEFUN([gl_WINSIZE_IN_PTEM],
 	  [], [gl_cv_sys_struct_winsize_needs_sys_ptem_h=no])
       fi])
    if test $gl_cv_sys_struct_winsize_needs_sys_ptem_h = yes; then
-     AC_DEFINE([WINSIZE_IN_PTEM], 1,
+     AC_DEFINE([WINSIZE_IN_PTEM], [1],
        [Define if sys/ptem.h is required for struct winsize.])
    fi])

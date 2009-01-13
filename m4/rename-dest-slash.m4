@@ -1,6 +1,6 @@
-#serial 2
+# serial 3
 
-# Copyright (C) 2006 Free Software Foundation, Inc.
+# Copyright (C) 2006, 2009 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
@@ -34,8 +34,8 @@ AC_DEFUN([gl_FUNC_RENAME_TRAILING_DEST_SLASH],
       rm -rf conftest.d1 conftest.d2
   ])
   if test $gl_cv_func_rename_trailing_dest_slash_bug = yes; then
-    AC_LIBOBJ(rename-dest-slash)
-    AC_DEFINE(rename, rpl_rename_dest_slash,
+    AC_LIBOBJ([rename-dest-slash])
+    AC_DEFINE([rename], [rpl_rename_dest_slash],
       [Define to rpl_rename_dest_slash if the replacement function should be used.])
   fi
 ])

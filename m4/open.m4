@@ -1,5 +1,5 @@
-# open.m4 serial 4
-dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
+# open.m4 serial 5
+dnl Copyright (C) 2007-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -39,7 +39,7 @@ changequote([,])dnl
         ])
       case "$gl_cv_func_open_slash" in
         *no)
-          AC_DEFINE([OPEN_TRAILING_SLASH_BUG], 1,
+          AC_DEFINE([OPEN_TRAILING_SLASH_BUG], [1],
             [Define to 1 if open() fails to recognize a trailing slash.])
           gl_REPLACE_OPEN
           ;;

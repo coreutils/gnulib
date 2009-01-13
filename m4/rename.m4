@@ -1,6 +1,6 @@
-#serial 10
+# serial 11
 
-# Copyright (C) 2001, 2003, 2005, 2006 Free Software Foundation, Inc.
+# Copyright (C) 2001, 2003, 2005, 2006, 2009 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
@@ -38,10 +38,10 @@ AC_DEFUN([gl_FUNC_RENAME],
       rm -rf conftest.d1 conftest.d2
   ])
   if test $gl_cv_func_rename_trailing_slash_bug = yes; then
-    AC_LIBOBJ(rename)
-    AC_DEFINE(rename, rpl_rename,
+    AC_LIBOBJ([rename])
+    AC_DEFINE([rename], [rpl_rename],
       [Define to rpl_rename if the replacement function should be used.])
-    AC_DEFINE(RENAME_TRAILING_SLASH_BUG, 1,
+    AC_DEFINE([RENAME_TRAILING_SLASH_BUG], [1],
       [Define if rename does not work for source file names with a trailing
        slash, like the one from SunOS 4.1.1_U1.])
     gl_PREREQ_RENAME

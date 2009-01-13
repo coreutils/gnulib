@@ -1,5 +1,5 @@
-# gc-camellia.m4 serial 1
-dnl Copyright (C) 2007 Free Software Foundation, Inc.
+# gc-camellia.m4 serial 2
+dnl Copyright (C) 2007, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -14,7 +14,7 @@ AC_DEFUN([gl_GC_CAMELLIA],
         [gl_cv_libgcrypt_camellia=yes],
         [gl_cv_libgcrypt_camellia=no])])
     if test "$gl_cv_libgcrypt_camellia" = yes; then
-      AC_DEFINE(HAVE_CAMELLIA, 1, [Define if your libgcrypt supports Camellia.])
+      AC_DEFINE([HAVE_CAMELLIA], [1], [Define if your libgcrypt supports Camellia.])
     fi
   fi
 ])

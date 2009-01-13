@@ -1,6 +1,6 @@
-#serial 6
+# serial 7
 
-# Copyright (C) 2001, 2003, 2004, 2006 Free Software Foundation, Inc.
+# Copyright (C) 2001, 2003, 2004, 2006, 2009 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
@@ -76,7 +76,7 @@ AC_DEFUN([gl_HOST_OS],
 	 os=$host_os;;
      esac
      gl_cv_host_operating_system=$os]])
-  AC_DEFINE_UNQUOTED(HOST_OPERATING_SYSTEM,
+  AC_DEFINE_UNQUOTED([HOST_OPERATING_SYSTEM],
     "$gl_cv_host_operating_system",
     [The host operating system.])
 ])
