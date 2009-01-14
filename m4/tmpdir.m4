@@ -1,4 +1,4 @@
-# tmpdir.m4 serial 3 (gettext-0.15)
+# tmpdir.m4 serial 3
 dnl Copyright (C) 2001-2002, 2006, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,

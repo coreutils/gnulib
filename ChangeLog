@@ -1,5 +1,16 @@
 2009-01-14  Bruno Haible  <bruno@clisp.org>
 
+	* m4/csharp.m4: Don't mention gettext on the serial number line.
+	* m4/csharpexec.m4: Likewise.
+	* m4/eaccess.m4: Likewise.
+	* m4/javaexec.m4: Likewise.
+	* m4/sig_atomic_t.m4: Likewise.
+	* m4/tmpdir.m4: Likewise.
+	* m4/intldir.m4: Bump gettext version.
+	* m4/lib-ld.m4: Likewise.
+
+2009-01-14  Bruno Haible  <bruno@clisp.org>
+
 	* lib/progname.c (set_program_name): Add more comments.
 	Reported by Sergey Poznyakoff <gray@gnu.org.ua>.
 
