@@ -1,3 +1,19 @@
+2009-01-14  Jim Meyering  <meyering@redhat.com>
+
+	many *.m4 files: improve m4 quoting
+	99% of this change was performed by running the following commands:
+	git ls-files | grep '\.m4$' | xargs perl -pi \
+	  -e 's/(AC_\w+\()([^[()]+?)([,)])/$1\[$2]$3/g;' \
+	  -e 's/(AC_\w+\((?:\[[^,]+?\], ){1})([^,[()]+?)([,)])/$1\[$2]$3/g;' \
+	  -e 's/(AC_\w+\((?:\[[^,]+?\], ){2})([^,[()]+?)([,)])/$1\[$2]$3/g;' \
+	  -e 's/(AC_\w+\((?:\[[^,]+?\], ){3})([^,[()]+?)([,)])/$1\[$2]$3/g'
+	perl -pi -e 's/\[\.\.\.\]/.../' m4/onceonly.m4
+	The remainder were to add Copyright dates, increment serial numbers,
+	undo some changes in comments, exclude m4/intl.m4, and add quotes
+	around the "1" in ",1" where the unusual spacing prohibited the
+	above regexps from doing the job.  For more details, see
+	<http://thread.gmane.org/gmane.comp.lib.gnulib.bugs/16175>.
+
 2009-01-13  Bruno Haible  <bruno@clisp.org>
 
 	Avoid test-copy-file.sh failures when ACL support insufficient.
