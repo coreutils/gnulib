@@ -68,16 +68,14 @@ spring_forward_gap ()
 }
 
 static int
-mktime_test1 (now)
-     time_t now;
+mktime_test1 (time_t now)
 {
   struct tm *lt;
   return ! (lt = localtime (&now)) || mktime (lt) == now;
 }
 
 static int
-mktime_test (now)
-     time_t now;
+mktime_test (time_t now)
 {
   return (mktime_test1 (now)
 	  && mktime_test1 ((time_t) (time_t_max - now))
@@ -101,8 +99,7 @@ irix_6_4_bug ()
 }
 
 static int
-bigtime_test (j)
-     int j;
+bigtime_test (int j)
 {
   struct tm tm;
   time_t now;

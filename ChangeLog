@@ -1,3 +1,9 @@
+2009-01-15  Albert Chin-A-Young  <china@thewrittenword.com>
+
+	mktime.m4: remove K&R-style function prototypes
+	* m4/mktime.m4 (AC_FUNC_MKTIME): Remove K&R-style function prototypes
+	for the Sun C++ compiler.
+
 2009-01-14  Bruno Haible  <bruno@clisp.org>
 
 	* lib/stdint.in.h (_GL_JUST_INCLUDE_SYSTEM_WCHAR_H): New macro, defined
