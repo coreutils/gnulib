@@ -1,3 +1,8 @@
+2009-01-14  Simon Josefsson  <simon@josefsson.org>
+
+	* lib/sys_stat.in.h: Include sys/types.h for nlink_t on systems
+	were sys/stat.h does not define it.
+
 2009-01-14  Jim Meyering  <meyering@redhat.com>
 
 	many *.m4 files: improve m4 quoting
