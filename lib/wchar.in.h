@@ -1,6 +1,6 @@
 /* A substitute for ISO C99 <wchar.h>, for platforms that have issues.
 
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -30,8 +30,15 @@
 @PRAGMA_SYSTEM_HEADER@
 #endif
 
-#ifdef __need_mbstate_t
-/* Special invocation convention inside uClibc header files.  */
+#if defined __need_mbstate_t || (defined __hpux && ((defined _INTTYPES_INCLUDED && !defined strtoimax) || defined _GL_JUST_INCLUDE_SYSTEM_WCHAR_H))
+/* Special invocation convention:
+   - Inside uClibc header files.
+   - On HP-UX 11.00 we have a sequence of nested includes
+     <wchar.h> -> <stdlib.h> -> <stdint.h>, and the latter includes <wchar.h>,
+     once indirectly <stdint.h> -> <sys/types.h> -> <inttypes.h> -> <wchar.h>
+     and once directly.  In both situations 'wint_t' is not yet defined,
+     therefore we cannot provide the function overrides; instead include only
+     the system's <wchar.h>.  */
 
 #@INCLUDE_NEXT@ @NEXT_WCHAR_H@
 

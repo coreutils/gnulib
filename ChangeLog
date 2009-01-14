@@ -1,5 +1,13 @@
 2009-01-14  Bruno Haible  <bruno@clisp.org>
 
+	* lib/stdint.in.h (_GL_JUST_INCLUDE_SYSTEM_WCHAR_H): New macro, defined
+	while including <wchar.h>.
+	* lib/wchar.in.h: In two particular situations on HP-UX, include only
+	the system's <wchar.h> file.
+	Reported by Albert Chin <bug-gnulib@mlists.thewrittenword.com>.
+
+2009-01-14  Bruno Haible  <bruno@clisp.org>
+
 	* m4/csharp.m4: Don't mention gettext on the serial number line.
 	* m4/csharpexec.m4: Likewise.
 	* m4/eaccess.m4: Likewise.
