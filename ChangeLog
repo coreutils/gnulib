@@ -1,3 +1,8 @@
+2009-01-14  Bruno Haible  <bruno@clisp.org>
+
+	* lib/progname.c (set_program_name): Add more comments.
+	Reported by Sergey Poznyakoff <gray@gnu.org.ua>.
+
 2009-01-14  Simon Josefsson  <simon@josefsson.org>
 
 	* lib/sys_stat.in.h: Include sys/types.h for nlink_t on systems
