@@ -1,3 +1,11 @@
+2009-01-15  Bruno Haible  <bruno@clisp.org>
+
+	* tests/test-fflush2.sh: Invoke test-fflush2 twice.
+	* tests/test-fflush2.c (ASSERT): Always fail.
+	(main): Add two tests for fflush() after ungetc(), taking into account
+	the Austin Group's clarification.
+	Suggested by Eric Blake.
+
 2009-01-15  Albert Chin-A-Young  <china@thewrittenword.com>
 
 	mktime.m4: remove K&R-style function prototypes

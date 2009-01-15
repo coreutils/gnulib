@@ -1,5 +1,5 @@
 /* Test of POSIX compatible fflush() function.
-   Copyright (C) 2008 Free Software Foundation, Inc.
+   Copyright (C) 2008-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -20,9 +20,7 @@
 
 #include <stdlib.h>
 
-/* This test can only be made to work on specific platforms.  */
-#if defined _IO_ferror_unlocked || defined __sferror /* GNU libc, BeOS; FreeBSD, NetBSD, OpenBSD, MacOS X, Cygwin */
-# define ASSERT(expr) \
+#define ASSERT(expr) \
   do									     \
     {									     \
       if (!(expr))							     \
@@ -33,57 +31,85 @@
         }								     \
     }									     \
   while (0)
-#else
-# define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
-          printf ("Skipping test: expected failure on this platform\n");     \
-          exit (77);							     \
-        }								     \
-    }									     \
-  while (0)
-#endif
 
 int
 main (int argc, char **argv)
 {
-#if 0
-  /* Check fflush after a backup ungetc() call.  This is case 1 in terms of
-     <http://lists.gnu.org/archive/html/bug-gnulib/2008-03/msg00131.html>.
-     The Austin Group has not yet decided how this should behave.  */
-#endif
-#if 0
-  /* Check fflush after a non-backup ungetc() call.  This is case 2 in terms of
-     <http://lists.gnu.org/archive/html/bug-gnulib/2008-03/msg00131.html>.
-     The Austin Group has not yet decided how this should behave.  */
-  /* Check that fflush after a non-backup ungetc() call discards the ungetc
-     buffer.  This is mandated by POSIX
-     <http://www.opengroup.org/susv3/functions/ungetc.html>:
-       "The value of the file-position indicator for the stream after
-        reading or discarding all pushed-back bytes shall be the same
-        as it was before the bytes were pushed back."  */
   int c;
 
-  c = fgetc (stdin);
-  ASSERT (c == '#');
+  if (argc > 1)
+    switch (argv[1][0])
+      {
+      case '1':
+	/* Check fflush after a backup ungetc() call.  This is case 1a in
+	   terms of
+	   <http://lists.gnu.org/archive/html/bug-gnulib/2008-03/msg00131.html>,
+	   according to the Austin Group's resolution on 2009-01-08.  */
 
-  c = fgetc (stdin);
-  ASSERT (c == '!');
+	c = fgetc (stdin);
+	ASSERT (c == '#');
 
-  /* Here the file-position indicator must be 2.  */
+	c = fgetc (stdin);
+	ASSERT (c == '!');
 
-  c = ungetc ('@', stdin);
-  ASSERT (c == '@');
+	/* Here the file-position indicator must be 2.  */
 
-  fflush (stdin);
+	c = ungetc ('!', stdin);
+	ASSERT (c == '!');
 
-  /* Here the file-position indicator must be 2 again.  */
+	fflush (stdin);
 
-  c = fgetc (stdin);
-  ASSERT (c == '/');
-#endif
+	/* Here the file-position indicator must be 1.  */
 
-  return 0;
+	c = fgetc (stdin);
+	ASSERT (c == '!');
+
+	c = fgetc (stdin);
+	ASSERT (c == '/');
+
+	return 0;
+
+      case '2':
+	/* Check fflush after a non-backup ungetc() call.  This is case 2a in
+	   terms of
+	   <http://lists.gnu.org/archive/html/bug-gnulib/2008-03/msg00131.html>,
+	   according to the Austin Group's resolution on 2009-01-08.  */
+	/* Check that fflush after a non-backup ungetc() call discards the
+	   ungetc buffer.  This is mandated by POSIX
+	   <http://www.opengroup.org/susv3/functions/ungetc.html>:
+	     "The value of the file-position indicator for the stream after
+	      reading or discarding all pushed-back bytes shall be the same
+	      as it was before the bytes were pushed back."
+	   <http://www.opengroup.org/austin/aardvark/latest/xshbug3.txt>
+	     "[After fflush(),] the file offset of the underlying open file
+	      description shall be set to the file position of the stream, and
+	      any characters pushed back onto the stream by ungetc() or
+	      ungetwc() that have not subsequently been read from the stream
+	      shall be discarded."  */
+
+	c = fgetc (stdin);
+	ASSERT (c == '#');
+
+	c = fgetc (stdin);
+	ASSERT (c == '!');
+
+	/* Here the file-position indicator must be 2.  */
+
+	c = ungetc ('@', stdin);
+	ASSERT (c == '@');
+
+	fflush (stdin);
+
+	/* Here the file-position indicator must be 1.  */
+
+	c = fgetc (stdin);
+	ASSERT (c == '!');
+
+	c = fgetc (stdin);
+	ASSERT (c == '/');
+
+	return 0;
+      }
+
+  return 1;
 }
