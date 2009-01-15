@@ -404,7 +404,6 @@ poll (pfd, nfd, timeout)
   fd_set rfds, wfds, xfds;
   BOOL poll_again;
   MSG msg;
-  char sockbuf[256];
   int rc = 0;
   nfds_t i;
 
@@ -426,7 +425,6 @@ poll (pfd, nfd, timeout)
   /* Classify socket handles and create fd sets. */
   for (i = 0; i < nfd; i++)
     {
-      size_t optlen = sizeof(sockbuf);
       pfd[i].revents = 0;
       if (pfd[i].fd < 0)
         continue;
