@@ -1,3 +1,15 @@
+2009-01-15  Bruno Haible  <bruno@clisp.org>
+
+	Make fflush-after-ungetc POSIX compliant on glibc systems.
+	* m4/fflush.m4 (gl_FUNC_FFLUSH): Test also the behaviour of fflush
+	after ungetc.
+	* lib/fflush.c (clear_ungetc_buffer): Implement for glibc systems.
+	(rpl_fflush): On glibc systems, simply call the system's fflush
+	function after clearing the ungetc buffer.
+	* lib/fseeko.c (rpl_fseeko): Don't try to lseek past the end of file.
+	Instead, lseek only to the end of file, then use the system's fseeko
+	for the rest. On glibc systems, reset the EOF indicator bit.
+
 2009-01-15  Jim Meyering  <meyering@redhat.com>
 
 	openmp.m4: revert quote-adding change, for portability to older autoconf

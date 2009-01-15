@@ -1,5 +1,5 @@
 /* fflush.c -- allow flushing input streams
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -34,7 +34,11 @@
 static inline void
 clear_ungetc_buffer (FILE *fp)
 {
-#if defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, MacOS X, Cygwin */
+#if defined _IO_ftrylockfile || __GNU_LIBRARY__ == 1 /* GNU libc, BeOS, Haiku, Linux libc5 */
+  if (fp->_flags & _IO_IN_BACKUP)
+    /* _IO_free_backup_area is a bit complicated.  Simply call fseek.  */
+    fseek (fp, 0, SEEK_CUR);
+#elif defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, MacOS X, Cygwin */
   if (HASUB (fp))
     {
       fp_->_p += fp_->_r;
@@ -123,6 +127,12 @@ rpl_fflush (FILE *stream)
      pushed-back bytes and the read-ahead bytes.  */
   clear_ungetc_buffer (stream);
 
+#if defined _IO_ftrylockfile || __GNU_LIBRARY__ == 1 /* GNU libc, BeOS, Haiku, Linux libc5 */
+
+  return fflush (stream);
+
+#else
+
   /* POSIX does not specify fflush behavior for non-seekable input
      streams.  Some implementations purge unread data, some return
      EBADF, some do nothing.  */
@@ -140,7 +150,7 @@ rpl_fflush (FILE *stream)
   if (result != 0)
     return result;
 
-#if (defined __sferror || defined __DragonFly__) && defined __SNPT /* FreeBSD, NetBSD, OpenBSD, DragonFly, MacOS X, Cygwin */
+# if (defined __sferror || defined __DragonFly__) && defined __SNPT /* FreeBSD, NetBSD, OpenBSD, DragonFly, MacOS X, Cygwin */
 
   {
     /* Disable seek optimization for the next fseeko call.  This tells the
@@ -154,7 +164,7 @@ rpl_fflush (FILE *stream)
   }
   return result;
 
-#else
+# else
 
   pos = lseek (fileno (stream), pos, SEEK_SET);
   if (pos == -1)
@@ -165,5 +175,6 @@ rpl_fflush (FILE *stream)
 
   return 0;
 
+# endif
 #endif
 }

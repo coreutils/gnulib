@@ -1,6 +1,6 @@
-# fflush.m4 serial 6
+# fflush.m4 serial 7
 
-# Copyright (C) 2007-2008 Free Software Foundation, Inc.
+# Copyright (C) 2007-2009 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
@@ -22,6 +22,7 @@ AC_DEFUN([gl_FUNC_FFLUSH],
        ]], [[FILE *f = fopen ("conftest.txt", "r");
 	 char buffer[10];
 	 int fd;
+	 int c;
 	 if (f == NULL)
 	   return 1;
 	 fd = fileno (f);
@@ -30,17 +31,31 @@ AC_DEFUN([gl_FUNC_FFLUSH],
 	 /* For deterministic results, ensure f read a bigger buffer.  */
 	 if (lseek (fd, 0, SEEK_CUR) == 5)
 	   return 3;
-	 /* POSIX requires fflush-fseek to set file offset of fd.  */
+	 /* POSIX requires fflush-fseek to set file offset of fd.  This fails
+	    on BSD systems and on mingw.  */
 	 if (fflush (f) != 0 || fseek (f, 0, SEEK_CUR) != 0)
 	   return 4;
 	 if (lseek (fd, 0, SEEK_CUR) != 5)
 	   return 5;
-	 /* TODO: Verify behaviour of fflush after ungetc, see
-	    <http://lists.gnu.org/archive/html/bug-gnulib/2008-03/msg00131.html>.  */
+	 /* Verify behaviour of fflush after ungetc. See
+	    <http://www.opengroup.org/austin/aardvark/latest/xshbug3.txt>  */
+	 /* Verify behaviour of fflush after a backup ungetc.  This fails on
+	    mingw.  */
+	 c = fgetc (f);
+	 ungetc (c, f);
+	 fflush (f);
+	 if (fgetc (f) != c)
+	   return 6;
+	 /* Verify behaviour of fflush after a non-backup ungetc.  This fails
+	    on glibc 2.8 and on BSD systems.  */
+	 c = fgetc (f);
+	 ungetc ('@', f);
+	 fflush (f);
+	 if (fgetc (f) != c)
+	   return 7;
 	 return 0;
        ]])], [gl_cv_func_fflush_stdin=yes], [gl_cv_func_fflush_stdin=no],
-     [dnl Pessimistically assume fflush is broken.  This is wrong for
-      dnl at least glibc and cygwin; but lib/fflush.c takes this into account.
+     [dnl Pessimistically assume fflush is broken.
       gl_cv_func_fflush_stdin=no])
      rm conftest.txt
     ])
