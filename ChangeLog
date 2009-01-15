@@ -1,3 +1,10 @@
+2009-01-15  Jim Meyering  <meyering@redhat.com>
+
+	openmp.m4: revert quote-adding change, for portability to older autoconf
+	* m4/openmp.m4: Remove the quotes added on 2009-01-14.
+	This reverts part of 42d1eda5dcce2d68deab7a642e7f29bcd7144a0d.
+	Simon Josefsson noticed the problem when using autoconf-2.61.
+
 2009-01-15  Bruno Haible  <bruno@clisp.org>
 
 	* tests/test-fflush2.sh: Invoke test-fflush2 twice.

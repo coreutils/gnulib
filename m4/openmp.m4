@@ -1,4 +1,4 @@
-# openmp.m4 serial 6
+# openmp.m4 serial 7
 dnl Copyright (C) 2006-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -15,11 +15,11 @@ m4_ifdef([AC_OPENMP], [], [
 # Expands to some language dependent source code for testing the presence of
 # OpenMP.
 AC_DEFUN([_AC_LANG_OPENMP],
-[_AC_LANG_DISPATCH([$0], [_AC_LANG], [$@])])
+[_AC_LANG_DISPATCH([$0], _AC_LANG, $@)])
 
 # _AC_LANG_OPENMP(C)
 # ------------------
-m4_define([_AC_LANG_OPENMP([C])],
+m4_define([_AC_LANG_OPENMP(C)],
 [
 #ifndef _OPENMP
  choke me
@@ -30,16 +30,16 @@ int main () { return omp_get_num_threads (); }
 
 # _AC_LANG_OPENMP(C++)
 # --------------------
-m4_copy([_AC_LANG_OPENMP([C])], [_AC_LANG_OPENMP([C++])])
+m4_copy([_AC_LANG_OPENMP(C)], [_AC_LANG_OPENMP(C++)])
 
 # _AC_LANG_OPENMP(Fortran 77)
 # ---------------------------
-m4_define([_AC_LANG_OPENMP([Fortran 77])],
+m4_define([_AC_LANG_OPENMP(Fortran 77)],
 [AC_LANG_FUNC_LINK_TRY([omp_get_num_threads])])
 
 # _AC_LANG_OPENMP(Fortran)
 # ---------------------------
-m4_copy([_AC_LANG_OPENMP([Fortran 77])], [_AC_LANG_OPENMP([Fortran])])
+m4_copy([_AC_LANG_OPENMP(Fortran 77)], [_AC_LANG_OPENMP(Fortran)])
 
 # AC_OPENMP
 # ---------
