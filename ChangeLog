@@ -1,3 +1,9 @@
+2009-01-16  Bruno Haible  <bruno@clisp.org>
+
+	* m4/printf.m4 (gl_SNPRINTF_SIZE1, gl_VSNPRINTF_ZEROSIZE_C99): Use an
+	array initializer syntax that also works in C++ mode.
+	Reported by Albert Chin <bug-gnulib@mlists.thewrittenword.com>.
+
 2009-01-16  Jim Meyering  <meyering@redhat.com>
 
 	poll: suppress a warning

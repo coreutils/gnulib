@@ -1,4 +1,4 @@
-# printf.m4 serial 26
+# printf.m4 serial 27
 dnl Copyright (C) 2003, 2007-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -1142,7 +1142,7 @@ AC_DEFUN([gl_SNPRINTF_SIZE1],
 #include <stdio.h>
 int main()
 {
-  static char buf[8] = "DEADBEEF";
+  static char buf[8] = { 'D', 'E', 'A', 'D', 'B', 'E', 'E', 'F' };
   snprintf (buf, 1, "%d", 12345);
   return buf[1] != 'E';
 }],
@@ -1160,7 +1160,7 @@ dnl     ---------------------------------------------------------------------
 dnl     #include <stdio.h>
 dnl     int main()
 dnl     {
-dnl       static char buf[8] = "DEADBEEF";
+dnl       static char buf[8] = { 'D', 'E', 'A', 'D', 'B', 'E', 'E', 'F' };
 dnl       snprintf (buf, 0, "%d", 12345);
 dnl       return buf[0] != 'D';
 dnl     }
@@ -1181,7 +1181,7 @@ dnl       return ret;
 dnl     }
 dnl     int main()
 dnl     {
-dnl       static char buf[8] = "DEADBEEF";
+dnl       static char buf[8] = { 'D', 'E', 'A', 'D', 'B', 'E', 'E', 'F' };
 dnl       my_snprintf (buf, 0, "%d", 12345);
 dnl       return buf[0] != 'D';
 dnl     }
@@ -1209,7 +1209,7 @@ static int my_snprintf (char *buf, int size, const char *format, ...)
 }
 int main()
 {
-  static char buf[8] = "DEADBEEF";
+  static char buf[8] = { 'D', 'E', 'A', 'D', 'B', 'E', 'E', 'F' };
   my_snprintf (buf, 0, "%d", 12345);
   return buf[0] != 'D';
 }],
