@@ -1,3 +1,10 @@
+2009-01-16  Jim Meyering  <meyering@redhat.com>
+
+	strerror: avoid warnings about discarding "const"
+	* lib/strerror.c (rpl_strerror): Instead of returning a const
+	string from each and every "case", use a variable, and add a single
+	cast after the switch.
+
 2009-01-16  Albert Chin-A-Young <china@thewrittenword.com>
 
 	* lib/arpa_inet.in.h: Add extern "C" block for C++.
