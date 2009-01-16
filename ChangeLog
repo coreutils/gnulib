@@ -1,5 +1,14 @@
 2009-01-15  Bruno Haible  <bruno@clisp.org>
 
+	Make fflush-after-ungetc POSIX compliant on BSD systems.
+	* lib/fflush.c (clear_ungetc_buffer_preserving_position): New function.
+	(clear_ungetc_buffer): Implement also for other systems.
+	(rpl_fflush): On glibc systems, invoke
+	clear_ungetc_buffer_preserving_position. Otherwise, invoke
+	clear_ungetc_buffer after fetching the stream's position, not before.
+
+2009-01-15  Bruno Haible  <bruno@clisp.org>
+
 	Make fflush-after-ungetc POSIX compliant on glibc systems.
 	* m4/fflush.m4 (gl_FUNC_FFLUSH): Test also the behaviour of fflush
 	after ungetc.

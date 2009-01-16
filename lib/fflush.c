@@ -31,21 +31,44 @@
 
 #undef fflush
 
-static inline void
-clear_ungetc_buffer (FILE *fp)
-{
+
 #if defined _IO_ftrylockfile || __GNU_LIBRARY__ == 1 /* GNU libc, BeOS, Haiku, Linux libc5 */
+
+/* Clear the stream's ungetc buffer, preserving the value of ftello (fp).  */
+static inline void
+clear_ungetc_buffer_preserving_position (FILE *fp)
+{
   if (fp->_flags & _IO_IN_BACKUP)
     /* _IO_free_backup_area is a bit complicated.  Simply call fseek.  */
     fseek (fp, 0, SEEK_CUR);
-#elif defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, MacOS X, Cygwin */
+}
+
+#else
+
+/* Clear the stream's ungetc buffer.  May modify the value of ftello (fp).  */
+static inline void
+clear_ungetc_buffer (FILE *fp)
+{
+# if defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, MacOS X, Cygwin */
   if (HASUB (fp))
     {
       fp_->_p += fp_->_r;
       fp_->_r = 0;
     }
-#endif
+# elif defined __EMX__              /* emx+gcc */
+  if (fp->_ungetc_count > 0)
+    {
+      fp->_ungetc_count = 0;
+      fp->_rcount = - fp->_rcount;
+    }
+# elif defined _IOERR               /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */
+  /* Nothing to do.  */
+# else                              /* other implementations */
+  fseek (fp, 0, SEEK_CUR);
+# endif
 }
+
+#endif
 
 #if (defined __sferror || defined __DragonFly__) && defined __SNPT /* FreeBSD, NetBSD, OpenBSD, DragonFly, MacOS X, Cygwin */
 
@@ -104,9 +127,15 @@ rpl_fflush (FILE *stream)
   if (stream == NULL || ! freading (stream))
     return fflush (stream);
 
-  /* Clear the ungetc buffer.
+#if defined _IO_ftrylockfile || __GNU_LIBRARY__ == 1 /* GNU libc, BeOS, Haiku, Linux libc5 */
 
-     This is needed before fetching the file-position indicator, because
+  clear_ungetc_buffer_preserving_position (stream);
+
+  return fflush (stream);
+
+#else
+
+  /* Notes about the file-position indicator:
      1) The file position indicator is incremented by fgetc() and decremented
         by ungetc():
         <http://www.opengroup.org/susv3/functions/fgetc.html>
@@ -119,19 +148,12 @@ rpl_fflush (FILE *stream)
           "The value of the file-position indicator for the stream after
            reading or discarding all pushed-back bytes shall be the same
            as it was before the bytes were pushed back."
-     3) Here we are discarding all pushed-back bytes.
-
-     Unfortunately it is impossible to implement this on platforms with
-     _IOERR, because an ungetc() on this platform prepends the pushed-back
-     bytes to the buffer without an indication of the limit between the
-     pushed-back bytes and the read-ahead bytes.  */
-  clear_ungetc_buffer (stream);
-
-#if defined _IO_ftrylockfile || __GNU_LIBRARY__ == 1 /* GNU libc, BeOS, Haiku, Linux libc5 */
-
-  return fflush (stream);
-
-#else
+        Here we are discarding all pushed-back bytes.  But more specifically,
+     3) <http://www.opengroup.org/austin/aardvark/latest/xshbug3.txt> says:
+          "[After fflush(),] the file offset of the underlying open file
+           description shall be set to the file position of the stream, and
+           any characters pushed back onto the stream by ungetc() ... shall
+           be discarded."  */
 
   /* POSIX does not specify fflush behavior for non-seekable input
      streams.  Some implementations purge unread data, some return
@@ -142,6 +164,9 @@ rpl_fflush (FILE *stream)
       errno = EBADF;
       return EOF;
     }
+
+  /* Clear the ungetc buffer.  */
+  clear_ungetc_buffer (stream);
 
   /* To get here, we must be flushing a seekable input stream, so the
      semantics of fpurge are now appropriate to clear the buffer.  To
