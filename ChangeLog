@@ -1,3 +1,7 @@
+2009-01-16  Albert Chin-A-Young <china@thewrittenword.com>
+
+	* lib/arpa_inet.in.h: Add extern "C" block for C++.
+
 2009-01-16  Bruno Haible  <bruno@clisp.org>
 
 	* m4/printf.m4 (gl_SNPRINTF_SIZE1, gl_VSNPRINTF_ZEROSIZE_C99): Use an
