@@ -1,3 +1,9 @@
+2009-01-16  Jim Meyering  <meyering@redhat.com>
+
+	poll: suppress a warning
+	* lib/poll.c: Use #pragma GCC diagnostic ignored "-Wtype-limits"
+	to ignore "...unsigned expression < 0 is always false" warnings.
+
 2009-01-16  Daniel P. Berrange  <berrange@redhat.com>
 
 	poll: remove declarations of unused variables
