@@ -1,6 +1,6 @@
 #!/bin/sh
 # install-reloc - install a program including a relocating wrapper
-# Copyright (C) 2003, 2005-2007 Free Software Foundation, Inc.
+# Copyright (C) 2003, 2005-2007, 2009 Free Software Foundation, Inc.
 # Written by Bruno Haible <bruno@clisp.org>, 2003.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -169,6 +169,12 @@ rm -f relocwrapper.o \
       strerror.o \
       c-ctype.o
 test $rc = 0 || exit $?
+# Clean up debugging information left over by the native C compiler on MacOS X.
+rm -rf "$destprog.wrapper$exeext.dSYM"
+test $rc = 0 || exit $?
+
+# Strip wrapper.
+test "$strip_prog" = ':' || func_verbose "$strip_prog" "$destprog.wrapper$exeext" || exit $?
 
 # Rename $destprog.wrapper -> $destprog -> $destprog.bin.
 ln -f "$destprog$exeext" "$destprog.bin$exeext" \
