@@ -1,3 +1,9 @@
+2009-01-17  Bruno Haible  <bruno@clisp.org>
+
+	Update use of _NSGetExecutablePath after API change in MacOS X 10.4.
+	* lib/progreloc.c (find_executable): Fix type of pointer passed to
+	_NSGetExecutablePath.
+
 2009-01-16  Jim Meyering  <meyering@redhat.com>
 
 	strerror: avoid warnings about discarding "const"

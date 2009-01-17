@@ -1,5 +1,5 @@
 /* Provide relocatable programs.
-   Copyright (C) 2003-2008 Free Software Foundation, Inc.
+   Copyright (C) 2003-2009 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software: you can redistribute it and/or modify
@@ -196,10 +196,10 @@ find_executable (const char *argv0)
 #endif
 #if HAVE_MACH_O_DYLD_H && HAVE__NSGETEXECUTABLEPATH
   /* On MacOS X 10.2 or newer, the function
-       int _NSGetExecutablePath (char *buf, unsigned long *bufsize);
+       int _NSGetExecutablePath (char *buf, uint32_t *bufsize);
      can be used to retrieve the executable's full path.  */
   char location[4096];
-  unsigned long length = sizeof (location);
+  unsigned int length = sizeof (location);
   if (_NSGetExecutablePath (location, &length) == 0
       && location[0] == '/')
     return canonicalize_file_name (location);
