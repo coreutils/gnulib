@@ -18,7 +18,8 @@
 
 # Usage:
 #   install-reloc library_path_var library_path_value prefix destdir \
-#                 compile_command srcdir config_h_dir exeext \
+#                 compile_command srcdir builddir config_h_dir exeext \
+#                 strip_command \
 #                 install_command... destprog
 # where
 #   - library_path_var is the platform dependent runtime library path variable
@@ -34,7 +35,9 @@
 #     alloca.h and stdbool.h)
 #   - config_h_dir is the directory where to find config.h
 #   - exeext is platform dependent suffix of executables
-#   - install-command is the install command line, excluding the final destprog
+#   - strip_command is the command for stripping executables, or : if no
+#     stripping is desired
+#   - install_command is the install command line, excluding the final destprog
 #   - destprog is the destination program name
 # install-reloc renames destprog to destprog.bin and installs a relocating
 # wrapper in the place of destprog.
@@ -52,33 +55,37 @@ if test $# -eq 2; then
   builddir=$RELOC_BUILDDIR
   config_h_dir=$RELOC_CONFIG_H_DIR
   exeext=$RELOC_EXEEXT
+  strip_prog=$RELOC_STRIP_PROG
   install_prog=$RELOC_INSTALL_PROG # including the "-c" option
 else
-  if test $# -ge 10; then
+  if test $# -ge 11; then
     # Get fixed position arguments.
     library_path_var=$1
     library_path_value=$2
     prefix=$3
     destdir=$4
-    compile_command=$5
-    srcdir=$6
-    builddir=$7
-    config_h_dir=$8
-    exeext=$9
+    shift
+    shift
+    shift
+    shift
+    compile_command=$1
+    srcdir=$2
+    builddir=$3
+    config_h_dir=$4
+    exeext=$5
     shift
     shift
     shift
     shift
     shift
-    shift
-    shift
-    shift
+    strip_prog=$1
     shift
     install_prog=$1 # maybe not including the "-c" option
     shift
   else
     echo "Usage: $0 library_path_var library_path_value prefix destdir" \
          "compile_command srcdir builddir config_h_dir exeext" \
+         "strip_command" \
          "install_command... destprog" 1>&2
     exit 1
   fi
@@ -106,6 +113,9 @@ func_verbose ()
 
 # Run install_command.
 func_verbose $install_prog "$@" || exit $?
+
+# Run strip_command.
+test "$strip_prog" = ':' || func_verbose "$strip_prog" "$destprog$exeext" || exit $?
 
 # If the platform doesn't support LD_LIBRARY_PATH or similar, we cannot build
 # a wrapper.
@@ -172,6 +182,9 @@ test $rc = 0 || exit $?
 # Clean up debugging information left over by the native C compiler on MacOS X.
 rm -rf "$destprog.wrapper$exeext.dSYM"
 test $rc = 0 || exit $?
+
+# Strip wrapper.
+test "$strip_prog" = ':' || func_verbose "$strip_prog" "$destprog.wrapper$exeext" || exit $?
 
 # Rename $destprog.wrapper -> $destprog -> $destprog.bin.
 ln -f "$destprog$exeext" "$destprog.bin$exeext" \

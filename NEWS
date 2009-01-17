@@ -6,6 +6,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2009-01-17  relocatable-prog  In the Makefile.am or Makefile.in, you now also
+                            need to set RELOCATABLE_STRIP = :.
+
 2008-12-22  getaddrinfo     When using this module, you now need to link with
             canon-host      $(GETADDRINFO_LIB).
 

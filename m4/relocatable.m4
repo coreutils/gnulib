@@ -1,4 +1,4 @@
-# relocatable.m4 serial 13
+# relocatable.m4 serial 14
 dnl Copyright (C) 2003, 2005-2007, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -62,7 +62,7 @@ AC_DEFUN([gl_RELOCATABLE_BODY],
         dnl consisting of more than one word - libtool doesn't support this.
         dnl So we abuse the INSTALL_PROGRAM_ENV hook, originally meant for the
         dnl 'install-strip' target.
-        INSTALL_PROGRAM_ENV="RELOC_LIBRARY_PATH_VAR=\"$shlibpath_var\" RELOC_LIBRARY_PATH_VALUE=\"\$(RELOCATABLE_LIBRARY_PATH)\" RELOC_PREFIX=\"\$(prefix)\" RELOC_DESTDIR=\"\$(DESTDIR)\" RELOC_COMPILE_COMMAND=\"\$(CC) \$(CPPFLAGS) \$(CFLAGS) \$(LDFLAGS)\" RELOC_SRCDIR=\"\$(RELOCATABLE_SRC_DIR)\" RELOC_BUILDDIR=\"\$(RELOCATABLE_BUILD_DIR)\" RELOC_CONFIG_H_DIR=\"\$(RELOCATABLE_CONFIG_H_DIR)\" RELOC_EXEEXT=\"\$(EXEEXT)\" RELOC_INSTALL_PROG=\"$INSTALL_PROGRAM\""
+        INSTALL_PROGRAM_ENV="RELOC_LIBRARY_PATH_VAR=\"$shlibpath_var\" RELOC_LIBRARY_PATH_VALUE=\"\$(RELOCATABLE_LIBRARY_PATH)\" RELOC_PREFIX=\"\$(prefix)\" RELOC_DESTDIR=\"\$(DESTDIR)\" RELOC_COMPILE_COMMAND=\"\$(CC) \$(CPPFLAGS) \$(CFLAGS) \$(LDFLAGS)\" RELOC_SRCDIR=\"\$(RELOCATABLE_SRC_DIR)\" RELOC_BUILDDIR=\"\$(RELOCATABLE_BUILD_DIR)\" RELOC_CONFIG_H_DIR=\"\$(RELOCATABLE_CONFIG_H_DIR)\" RELOC_EXEEXT=\"\$(EXEEXT)\" RELOC_STRIP_PROG=\"\$(RELOCATABLE_STRIP)\" RELOC_INSTALL_PROG=\"$INSTALL_PROGRAM\""
         AC_SUBST([INSTALL_PROGRAM_ENV])
         case "$ac_aux_dir" in
           /*) INSTALL_PROGRAM="$ac_aux_dir/install-reloc" ;;
