@@ -1,5 +1,13 @@
 2009-01-17  Bruno Haible  <bruno@clisp.org>
 
+	* lib/wchar.in.h: In another particular situation, include only the
+	system's <wchar.h> file.
+	(_GL_ALREADY_INCLUDING_WCHAR_H): New macro.
+	Reported by Albert Chin-A-Young <china@thewrittenword.com>
+	and Thomas Guyot-Sionnest <dermoth@aei.ca>.
+
+2009-01-17  Bruno Haible  <bruno@clisp.org>
+
 	Support for stripping executables in --enable-relocatable.
 	* build-aux/install-reloc: Expect one more argument, or an environment
 	variable RELOC_STRIP_PROG. If set, strip the destination program and
