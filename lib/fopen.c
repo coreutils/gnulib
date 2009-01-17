@@ -1,5 +1,5 @@
 /* Open a stream to a file.
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -36,6 +36,8 @@ orig_fopen (const char *filename, const char *mode)
 #include <fcntl.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 FILE *
 rpl_fopen (const char *filename, const char *mode)

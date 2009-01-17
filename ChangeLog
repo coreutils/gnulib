@@ -1,5 +1,10 @@
 2009-01-17  Bruno Haible  <bruno@clisp.org>
 
+	Fix compilation error on HP-UX 11.00, present since 2008-09-24.
+	* lib/fopen.c: Include <sys/types.h> and <sys/types.h>.
+
+2009-01-17  Bruno Haible  <bruno@clisp.org>
+
 	Avoid test-fflush2.sh failure on mingw.
 	* tests/test-fflush2.c: Include binary-io.h.
 	(main): Put standard input into binary mode.
