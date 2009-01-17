@@ -1,5 +1,11 @@
 2009-01-17  Bruno Haible  <bruno@clisp.org>
 
+	Fix replacement of fopen on mingw.
+	* m4/fopen.m4 (gl_FUNC_FOPEN): Define FOPEN_TRAILING_SLASH_BUG also on
+	mingw.
+
+2009-01-17  Bruno Haible  <bruno@clisp.org>
+
 	Fix compilation error on HP-UX 11.00, present since 2008-09-24.
 	* lib/fopen.c: Include <sys/types.h> and <sys/types.h>.
 

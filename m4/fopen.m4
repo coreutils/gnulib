@@ -1,4 +1,4 @@
-# fopen.m4 serial 4
+# fopen.m4 serial 5
 dnl Copyright (C) 2007-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,8 +10,10 @@ AC_DEFUN([gl_FUNC_FOPEN],
   AC_REQUIRE([AC_CANONICAL_HOST])
   case "$host_os" in
     mingw* | pw*)
+      dnl Replace fopen, for handling of "/dev/null".
       REPLACE_FOPEN=1
-      AC_LIBOBJ([fopen])
+      dnl fopen on mingw also has the trailing slash bug.
+      gl_cv_func_fopen_slash="guessing no"
       ;;
     *)
       dnl fopen("foo/", "w") should not create a file when the file name has a
@@ -37,17 +39,19 @@ changequote([,])dnl
             ])
           rm -f conftest.sl
         ])
-      case "$gl_cv_func_fopen_slash" in
-        *no)
-          AC_DEFINE([FOPEN_TRAILING_SLASH_BUG], [1],
-            [Define to 1 if fopen() fails to recognize a trailing slash.])
-          REPLACE_FOPEN=1
-          AC_LIBOBJ([fopen])
-          gl_PREREQ_FOPEN
-          ;;
-      esac
       ;;
   esac
+  case "$gl_cv_func_fopen_slash" in
+    *no)
+      AC_DEFINE([FOPEN_TRAILING_SLASH_BUG], [1],
+        [Define to 1 if fopen() fails to recognize a trailing slash.])
+      REPLACE_FOPEN=1
+      ;;
+  esac
+  if test $REPLACE_FOPEN = 1; then
+    AC_LIBOBJ([fopen])
+    gl_PREREQ_FOPEN
+  fi
 ])
 
 # Prerequisites of lib/fopen.c.
