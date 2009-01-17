@@ -20,6 +20,8 @@
 
 #include <stdlib.h>
 
+#include "binary-io.h"
+
 #define ASSERT(expr) \
   do									     \
     {									     \
@@ -36,6 +38,10 @@ int
 main (int argc, char **argv)
 {
   int c;
+
+  /* Avoid the well-known bugs of fflush() on streams in O_TEXT mode
+     on native Windows platforms.  */
+  SET_BINARY (0);
 
   if (argc > 1)
     switch (argv[1][0])

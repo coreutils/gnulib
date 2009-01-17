@@ -4,6 +4,7 @@ tests/test-fflush2.sh
 tests/test-fflush2.c
 
 Depends-on:
+binary-io
 fseeko
 
 configure.ac:

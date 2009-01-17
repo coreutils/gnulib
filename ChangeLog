@@ -1,5 +1,12 @@
 2009-01-17  Bruno Haible  <bruno@clisp.org>
 
+	Avoid test-fflush2.sh failure on mingw.
+	* tests/test-fflush2.c: Include binary-io.h.
+	(main): Put standard input into binary mode.
+	* modules/fflush-tests (Depends-on): Add binary-io.
+
+2009-01-17  Bruno Haible  <bruno@clisp.org>
+
 	* lib/wchar.in.h: In another particular situation, include only the
 	system's <wchar.h> file.
 	(_GL_ALREADY_INCLUDING_WCHAR_H): New macro.
