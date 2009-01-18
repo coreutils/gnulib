@@ -1,0 +1,28 @@
+Description:
+dprintf() function: print formatted output to a file descriptor
+
+Files:
+lib/dprintf.c
+m4/dprintf.m4
+
+Depends-on:
+stdio
+vasnprintf
+full-write
+errno
+
+configure.ac:
+gl_FUNC_DPRINTF
+gl_STDIO_MODULE_INDICATOR([dprintf])
+
+Makefile.am:
+
+Include:
+<stdio.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

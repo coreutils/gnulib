@@ -1,5 +1,20 @@
 2009-01-17  Bruno Haible  <bruno@clisp.org>
 
+	New modules 'dprintf', 'dprintf-posix'.
+	* lib/stdio.in.h (dprintf): New declaration.
+	* lib/dprintf.c: New file.
+	* m4/dprintf.m4: New file.
+	* m4/dprintf-posix.m4: New file.
+	* modules/dprintf: New file.
+	* modules/dprintf-posix: New file.
+	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Initialize GNULIB_DPRINTF,
+	HAVE_DPRINTF, REPLACE_DPRINTF.
+	* modules/stdio (Makefile.am): Substitute also GNULIB_DPRINTF,
+	HAVE_DPRINTF, REPLACE_DPRINTF.
+	* doc/posix-functions/dprintf.texi: Mention the new modules.
+
+2009-01-17  Bruno Haible  <bruno@clisp.org>
+
 	* modules/vdprintf-posix-tests: New file.
 	* tests/test-vdprintf-posix.sh: New file.
 	* tests/test-vdprintf-posix.c: New file.

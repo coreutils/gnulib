@@ -216,6 +216,22 @@ extern int vsprintf (char *str, const char *format, va_list args)
      vsprintf (b, f, a))
 #endif
 
+#if @GNULIB_DPRINTF@
+# if @REPLACE_DPRINTF@
+#  define dprintf rpl_dprintf
+# endif
+# if @REPLACE_DPRINTF@ || !@HAVE_DPRINTF@
+extern int dprintf (int fd, const char *format, ...)
+       __attribute__ ((__format__ (__printf__, 2, 3)));
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef dprintf
+# define dprintf(d,f,a) \
+    (GL_LINK_WARNING ("dprintf is unportable - " \
+                      "use gnulib module dprintf for portability"), \
+     dprintf (d, f, a))
+#endif
+
 #if @GNULIB_VDPRINTF@
 # if @REPLACE_VDPRINTF@
 #  define vdprintf rpl_vdprintf
