@@ -1,0 +1,14 @@
+Files:
+tests/test-dprintf-posix.sh
+tests/test-dprintf-posix.c
+tests/test-printf-posix.output
+
+Depends-on:
+stdint
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-dprintf-posix.sh
+TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' srcdir='$(srcdir)'
+check_PROGRAMS += test-dprintf-posix

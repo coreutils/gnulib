@@ -1,5 +1,9 @@
 2009-01-17  Bruno Haible  <bruno@clisp.org>
 
+	* modules/dprintf-posix-tests: New file.
+	* tests/test-dprintf-posix.sh: New file.
+	* tests/test-dprintf-posix.c: New file.
+
 	New modules 'dprintf', 'dprintf-posix'.
 	* lib/stdio.in.h (dprintf): New declaration.
 	* lib/dprintf.c: New file.
