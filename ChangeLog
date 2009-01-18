@@ -1,5 +1,11 @@
 2009-01-18  Bruno Haible  <bruno@clisp.org>
 
+	* m4/strftime.m4 (gl_FUNC_STRFTIME): Don't test for mblen and mbrlen.
+	* lib/strftime.c (HAVE_MBLEN, HAVE_MBRLEN): Remove macros.
+	(MULTIBYTE_IS_FORMAT_SAFE): Define to 1 on all platforms except OSF/1.
+
+2009-01-18  Bruno Haible  <bruno@clisp.org>
+
 	* lib/strftime.c (MEMPCPY): Remove unused macro.
 	* m4/strftime.m4 (gl_FUNC_STRFTIME): Don't test for mempcpy.
 

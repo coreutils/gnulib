@@ -1,4 +1,4 @@
-# serial 31
+# serial 32
 
 # Copyright (C) 1996, 1997, 1999, 2000, 2001, 2002, 2003, 2004, 2005,
 # 2006, 2007, 2009 Free Software Foundation, Inc.
@@ -25,7 +25,7 @@ AC_DEFUN([gl_FUNC_STRFTIME],
  AC_REQUIRE([AC_TYPE_MBSTATE_T])
  AC_REQUIRE([gl_TM_GMTOFF])
 
- AC_CHECK_FUNCS_ONCE([mblen mbrlen tzset])
+ AC_CHECK_FUNCS_ONCE([tzset])
  AC_CHECK_HEADERS_ONCE([wchar.h])
 
  AC_DEFINE([my_strftime], [nstrftime],
