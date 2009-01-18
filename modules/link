@@ -1,0 +1,24 @@
+Description:
+link() function: create a new link for an existing file
+
+Files:
+lib/link.c
+m4/link.m4
+
+Depends-on:
+unistd
+
+configure.ac:
+gl_FUNC_LINK
+gl_UNISTD_MODULE_INDICATOR([link])
+
+Makefile.am:
+
+Include:
+<unistd.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+Martin Lambers

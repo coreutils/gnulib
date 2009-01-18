@@ -1,5 +1,5 @@
 /* Substitute for and wrapper around <unistd.h>.
-   Copyright (C) 2003-2008 Free Software Foundation, Inc.
+   Copyright (C) 2003-2009 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -472,6 +472,23 @@ extern int lchown (char const *file, uid_t owner, gid_t group);
     (GL_LINK_WARNING ("lchown is unportable to pre-POSIX.1-2001 " \
                       "systems - use gnulib module lchown for portability"), \
      lchown (f, u, g))
+#endif
+
+
+#if @GNULIB_LINK@
+/* Create a new hard link for an existing file.
+   Return 0 if successful, otherwise -1 and errno set.
+   See POSIX:2001 specification
+   <http://www.opengroup.org/susv3xsh/link.html>.  */
+# if !@HAVE_LINK@
+extern int link (const char *path1, const char *path2);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef link
+# define link(path1,path2) \
+    (GL_LINK_WARNING ("link is unportable - " \
+                      "use gnulib module link for portability"), \
+     link (path1, path2))
 #endif
 
 

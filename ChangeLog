@@ -1,3 +1,15 @@
+2009-01-18  Martin Lambers  <marlam@marlam.de>
+
+	New module 'link'.
+	* lib/unistd.in.h (link): New declaration.
+	* lib/link.c: New file.
+	* m4/link.m4: New file.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize GNULIB_LINK,
+	HAVE_LINK.
+	* modules/unistd (Makefile.am): Substitute GNULIB_LINK, HAVE_LINK.
+	* modules/link: New file.
+	* doc/posix-functions/link.texi: Mention the new module.
+
 2009-01-18  Bruno Haible  <bruno@clisp.org>
 
 	* tests/test-avltree_list.c (main): Call set_program_name.
