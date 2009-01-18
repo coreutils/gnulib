@@ -1,0 +1,26 @@
+Description:
+scandir() function: collect entries of a directory
+
+Files:
+lib/scandir.c
+m4/scandir.m4
+
+Depends-on:
+dirent
+extensions
+
+configure.ac:
+gl_FUNC_SCANDIR
+gl_DIRENT_MODULE_INDICATOR([scandir])
+
+Makefile.am:
+
+Include:
+<dirent.h>
+
+License:
+LGPL
+
+Maintainer:
+all, glibc
+

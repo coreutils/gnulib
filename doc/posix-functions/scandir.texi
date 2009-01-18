@@ -4,15 +4,21 @@
 
 POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/scandir.html}
 
-Gnulib module: ---
+Gnulib module: scandir
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This function is missing on some platforms:
+Solaris 9, mingw, BeOS.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-This function is missing on some platforms:
-Solaris 9, mingw, BeOS.
+The fourth parameter of this function is declared as @code{int (*) (const void *, const void *)} on some platforms:
+glibc 2.3.6, MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, Interix 3.5.
+@item
+The fourth parameter of this function is declared as @code{int (*) (void *, void *)} on some platforms:
+AIX 5.1.
 @end itemize

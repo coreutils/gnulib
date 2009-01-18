@@ -1,5 +1,5 @@
 /* A GNU-like <dirent.h>.
-   Copyright (C) 2006-2008 Free Software Foundation, Inc.
+   Copyright (C) 2006-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ extern DIR * opendir (const char *);
 extern int closedir (DIR *);
 #endif
 
-/* Declare GNU extensions.  */
+/* Declare other POSIX functions.  */
 
 #if @GNULIB_DIRFD@
 # if !@HAVE_DECL_DIRFD@ && !defined dirfd
@@ -56,6 +56,24 @@ extern int dirfd (DIR const *dir);
     (GL_LINK_WARNING ("dirfd is unportable - " \
                       "use gnulib module dirfd for portability"), \
      dirfd (d))
+#endif
+
+#if @GNULIB_SCANDIR@
+/* Scan the directory DIR, calling FILTER on each directory entry.
+   Entries for which FILTER returns nonzero are individually malloc'd,
+   sorted using qsort with CMP, and collected in a malloc'd array in
+   *NAMELIST.  Returns the number of entries selected, or -1 on error.  */
+# if !@HAVE_SCANDIR@
+extern int scandir (const char *dir, struct dirent ***namelist,
+		    int (*filter) (const struct dirent *),
+		    int (*cmp) (const struct dirent **, const struct dirent **));
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef scandir
+# define scandir(d,n,f,c) \
+    (GL_LINK_WARNING ("scandir is unportable - " \
+                      "use gnulib module scandir for portability"), \
+     scandir (d, n, f, c))
 #endif
 
 #ifdef __cplusplus
