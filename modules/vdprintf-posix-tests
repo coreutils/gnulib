@@ -1,0 +1,15 @@
+Files:
+tests/test-vdprintf-posix.sh
+tests/test-vdprintf-posix.c
+tests/test-fprintf-posix.h
+tests/test-printf-posix.output
+
+Depends-on:
+stdint
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-vdprintf-posix.sh
+TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' srcdir='$(srcdir)'
+check_PROGRAMS += test-vdprintf-posix

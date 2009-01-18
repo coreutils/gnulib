@@ -1,5 +1,9 @@
 2009-01-17  Bruno Haible  <bruno@clisp.org>
 
+	* modules/vdprintf-posix-tests: New file.
+	* tests/test-vdprintf-posix.sh: New file.
+	* tests/test-vdprintf-posix.c: New file.
+
 	New modules 'vdprintf', 'vdprintf-posix'.
 	* lib/stdio.in.h (vdprintf): New declaration.
 	* lib/vdprintf.c: New file.
