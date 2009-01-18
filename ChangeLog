@@ -1,5 +1,14 @@
 2009-01-17  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_remove_prefix): Escape all dots in the prefix.
+	Update documentation.
+	(func_remove_suffix): Escape all dots in the suffix. Update
+	documentation.
+	(func_filter_filelist): Update documentation.
+	Reported by Ralf Wildenhues.
+
+2009-01-17  Bruno Haible  <bruno@clisp.org>
+
 	* modules/dprintf-posix-tests: New file.
 	* tests/test-dprintf-posix.sh: New file.
 	* tests/test-dprintf-posix.c: New file.

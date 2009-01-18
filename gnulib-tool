@@ -411,7 +411,7 @@ fi
 # removes the given prefix from the value of the shell variable var.
 # var should be the name of a shell variable.
 # Its value should not contain a newline and not start or end with whitespace.
-# prefix should not contain the characters "$`\{}|.
+# prefix should not contain the characters "$`\{}[]^|.
 if ( foo=bar; eval 'test "${foo#b}" = ar' ) >/dev/null 2>&1; then
   func_remove_prefix ()
   {
@@ -423,6 +423,12 @@ else
   {
     eval "value=\"\$$1\""
     prefix="$2"
+    case "$prefix" in
+      *.*)
+        sed_escape_dots='s/\([.]\)/\\\1/g'
+        prefix=`echo "$prefix" | sed -e "$sed_escape_dots"`
+        ;;
+    esac
     value=`echo "$value" | sed -e "s|^${prefix}||"`
     eval "$1=\"\$value\""
   }
@@ -433,7 +439,7 @@ fi
 # removes the given suffix from the value of the shell variable var.
 # var should be the name of a shell variable.
 # Its value should not contain a newline and not start or end with whitespace.
-# suffix should not contain the characters "$`\{}|.
+# suffix should not contain the characters "$`\{}[]^|.
 if ( foo=bar; eval 'test "${foo%r}" = ba' ) >/dev/null 2>&1; then
   func_remove_suffix ()
   {
@@ -445,6 +451,12 @@ else
   {
     eval "value=\"\$$1\""
     suffix="$2"
+    case "$suffix" in
+      *.*)
+        sed_escape_dots='s/\([.]\)/\\\1/g'
+        suffix=`echo "$suffix" | sed -e "$sed_escape_dots"`
+        ;;
+    esac
     value=`echo "$value" | sed -e "s|${suffix}\$||"`
     eval "$1=\"\$value\""
   }
@@ -1379,7 +1391,7 @@ func_get_filelist ()
 # elements starting with prefix and ending with suffix are considered.
 # Processing: removed_prefix and removed_suffix are removed from each element,
 # added_prefix and added_suffix are added to each element.
-# removed_prefix, removed_suffix should not contain the characters "$`\{}|.
+# removed_prefix, removed_suffix should not contain the characters "$`\{}[]^|.
 # added_prefix, added_suffix should not contain the characters \|.
 func_filter_filelist ()
 {
