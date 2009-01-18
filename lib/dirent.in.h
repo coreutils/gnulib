@@ -76,6 +76,19 @@ extern int scandir (const char *dir, struct dirent ***namelist,
      scandir (d, n, f, c))
 #endif
 
+#if @GNULIB_ALPHASORT@
+/* Compare two 'struct dirent' entries alphabetically.  */
+# if !@HAVE_ALPHASORT@
+extern int alphasort (const struct dirent **, const struct dirent **);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef alphasort
+# define alphasort(a,b) \
+    (GL_LINK_WARNING ("alphasort is unportable - " \
+                      "use gnulib module alphasort for portability"), \
+     alphasort (a, b))
+#endif
+
 #ifdef __cplusplus
 }
 #endif

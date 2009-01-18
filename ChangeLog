@@ -1,5 +1,19 @@
 2009-01-18  Bruno Haible  <bruno@clisp.org>
 
+	New module 'alphasort'.
+	* lib/dirent.in.h (alphasort): New declaration.
+	* lib/alphasort.c: New file, from glibc with modifications.
+	* m4/alphasort.m4: New file.
+	* modules/alphasort: New file.
+	* m4/dirent_h.m4 (gl_DIRENT_H_DEFAULTS): Initialize GNULIB_ALPHASORT,
+	HAVE_ALPHASORT.
+	* modules/dirent (Makefile.am): Substitute GNULIB_ALPHASORT,
+	HAVE_ALPHASORT.
+	* doc/posix-functions/alphasort.texi: Mention the new module and the
+	portability problems.
+
+2009-01-18  Bruno Haible  <bruno@clisp.org>
+
 	New module 'scandir'.
 	* lib/dirent.in.h (scandir): New declaration.
 	* lib/scandir.c: New file, from glibc with modifications.
