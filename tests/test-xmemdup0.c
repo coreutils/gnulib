@@ -1,5 +1,5 @@
 /* Test of xmemdup0() function.
-   Copyright (C) 2008 Free Software Foundation, Inc.
+   Copyright (C) 2008-2009 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -25,6 +25,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "progname.h"
+
 #define ASSERT(expr) \
   do									     \
     {									     \
@@ -42,6 +44,8 @@ main (int argc, char **argv)
 {
   char buffer[10] = { 'a', 'b', 'c', 'd', '\0',
 		      'f', 'g', 'h', 'i', 'j'   };
+
+  set_program_name (argv[0]);
 
   /* Empty string.  */
   {

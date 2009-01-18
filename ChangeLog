@@ -1,5 +1,16 @@
 2009-01-18  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-avltree_list.c (main): Call set_program_name.
+	* tests/test-avltree_oset.c (main): Likewise.
+	* tests/test-obstack-printf.c: Include progname.h.
+	(main): Call set_program_name.
+	* tests/test-quotearg.c: Include progname.h.
+	(main): Call set_program_name.
+	* tests/test-xmemdup0.c: Include progname.h.
+	(main): Call set_program_name.
+
+2009-01-18  Bruno Haible  <bruno@clisp.org>
+
 	New module 'alphasort'.
 	* lib/dirent.in.h (alphasort): New declaration.
 	* lib/alphasort.c: New file, from glibc with modifications.

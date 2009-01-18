@@ -1,5 +1,5 @@
 /* Test of quotearg family of functions.
-   Copyright (C) 2008 Free Software Foundation, Inc.
+   Copyright (C) 2008-2009 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -27,6 +27,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "progname.h"
 
 #if ENABLE_NLS
 /* On Linux, gettext is optionally defined as a forwarding macro,
@@ -284,9 +286,11 @@ dcgettext (char const *d, char const *str, int c)
 #endif /* ENABLE_NLS */
 
 int
-main ()
+main (int argc, char *argv[])
 {
   int i;
+
+  set_program_name (argv[0]);
 
   /* This program is hard-wired to the C locale since it does not call
      setlocale.  */
