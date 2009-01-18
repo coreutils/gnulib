@@ -1,3 +1,8 @@
+2009-01-18  Bruno Haible  <bruno@clisp.org>
+
+	* lib/strftime.c (MEMPCPY): Remove unused macro.
+	* m4/strftime.m4 (gl_FUNC_STRFTIME): Don't test for mempcpy.
+
 2009-01-18  Martin Lambers  <marlam@marlam.de>
 
 	New module 'link'.

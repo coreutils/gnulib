@@ -1,4 +1,4 @@
-/* Copyright (C) 1991-1999, 2000, 2001, 2003, 2004, 2005, 2006, 2007 Free Software
+/* Copyright (C) 1991-1999, 2000, 2001, 2003, 2004, 2005, 2006, 2007, 2009 Free Software
    Foundation, Inc.
 
    NOTE: The canonical source of this file is maintained with the GNU C Library.
@@ -79,13 +79,6 @@ extern char *tzname[];
 # define MEMCPY(d, s, n) memcpy (d, s, n)
 # define STRLEN(s) strlen (s)
 
-# ifdef _LIBC
-#  define MEMPCPY(d, s, n) __mempcpy (d, s, n)
-# else
-#  ifndef HAVE_MEMPCPY
-#   define MEMPCPY(d, s, n) ((void *) ((char *) memcpy (d, s, n) + (n)))
-#  endif
-# endif
 #endif
 
 /* Shift A right by B bits portably, by dividing A by 2**B and
