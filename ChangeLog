@@ -1,5 +1,20 @@
 2009-01-17  Bruno Haible  <bruno@clisp.org>
 
+	New modules 'vdprintf', 'vdprintf-posix'.
+	* lib/stdio.in.h (vdprintf): New declaration.
+	* lib/vdprintf.c: New file.
+	* m4/vdprintf.m4: New file.
+	* m4/vdprintf-posix.m4: New file.
+	* modules/vdprintf: New file.
+	* modules/vdprintf-posix: New file.
+	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Initialize GNULIB_VDPRINTF,
+	HAVE_VDPRINTF, REPLACE_VDPRINTF.
+	* modules/stdio (Makefile.am): Substitute also GNULIB_VDPRINTF,
+	HAVE_VDPRINTF, REPLACE_VDPRINTF.
+	* doc/posix-functions/vdprintf.texi: Mention the new modules.
+
+2009-01-17  Bruno Haible  <bruno@clisp.org>
+
 	Fix replacement of fopen on mingw.
 	* m4/fopen.m4 (gl_FUNC_FOPEN): Define FOPEN_TRAILING_SLASH_BUG also on
 	mingw.
