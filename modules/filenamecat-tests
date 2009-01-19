@@ -3,6 +3,7 @@ tests/test-filenamecat.c
 
 Depends-on:
 stdbool
+progname
 
 configure.ac:
 

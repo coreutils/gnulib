@@ -1,6 +1,6 @@
 /* Test of concatenation of two arbitrary file names.
 
-   Copyright (C) 1996-2007 Free Software Foundation, Inc.
+   Copyright (C) 1996-2007, 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -26,8 +26,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "progname.h"
+
 int
-main ()
+main (int argc, char *argv[])
 {
   static char const *const tests[][3] =
     {
@@ -46,6 +48,9 @@ main ()
     };
   unsigned int i;
   bool fail = false;
+
+  set_program_name (argv[0]);
+
   for (i = 0; i < sizeof tests / sizeof tests[0]; i++)
     {
       char *base_in_result;

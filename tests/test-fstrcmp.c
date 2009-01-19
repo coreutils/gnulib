@@ -1,5 +1,5 @@
 /* Test of fuzzy string comparison.
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -23,6 +23,8 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+#include "progname.h"
 
 #define ASSERT(expr) \
   do									     \
@@ -75,8 +77,10 @@ check_fstrcmp (const char *string1, const char *string2, double expected)
 }
 
 int
-main ()
+main (int argc, char *argv[])
 {
+  set_program_name (argv[0]);
+
   ASSERT (check_fstrcmp ("Langstrumpf", "Langstrumpf", 1.0));
   ASSERT (check_fstrcmp ("Levenshtein", "Levenstein", 20./21.));
   ASSERT (check_fstrcmp ("Levenstein", "Levenshtein", 20./21.));

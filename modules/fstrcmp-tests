@@ -3,6 +3,7 @@ tests/test-fstrcmp.c
 
 Depends-on:
 stdbool
+progname
 
 configure.ac:
 
