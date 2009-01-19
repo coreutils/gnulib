@@ -1,3 +1,9 @@
+2009-01-20  Jim Meyering  <meyering@redhat.com>
+
+	gettimeofday: move more declarations out of functions
+	* lib/gettimeofday.c: Move extern declarations of tzset and
+	gmtime out of containing functions.  Prompted by Bruno Haible.
+
 2009-01-20  Paolo Bonzini  <bonzini@gnu.org>
 
 	regex: do not depend on obsolete modules.
