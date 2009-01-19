@@ -15,7 +15,7 @@ Portability problems not fixed by Gnulib:
 @item
 Some platforms mistakenly close all stdio streams prior to raising
 SIGABRT:
-Cygwin.
+Cygwin 1.5.x.
 
 @item
 Some platforms always print a message to stderr, even if a SIGABRT handler

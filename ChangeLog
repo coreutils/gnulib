@@ -1,3 +1,59 @@
+2009-01-19  Eric Blake  <ebb9@byu.net>
+
+	doc: mention more functions added in cygwin 1.7.0
+	* doc/posix-functions/abort.texi (abort): Update wording related
+	to cygwin.
+	* doc/posix-functions/daylight.texi (daylight): Likewise.
+	* doc/posix-functions/optarg.texi (optarg): Likewise.
+	* doc/posix-functions/optarg.texi (opterr): Likewise.
+	* doc/posix-functions/optarg.texi (optind): Likewise.
+	* doc/posix-functions/optarg.texi (optopt): Likewise.
+	* doc/posix-functions/wprintf.texi (wprintf): Cygwin wprintf never
+	worked in 1.5.x, and was withdrawn in 1.7.
+	* doc/posix-functions/vwprintf.texi (vwprintf): Likewise.
+	* doc/posix-functions/fprintf.texi (fprintf): Tighten mention of
+	cygwin versions.
+	* doc/posix-functions/perror.texi (perror): Likewise.
+	* doc/posix-functions/printf.texi (printf): Likewise.
+	* doc/posix-functions/snprintf.texi (snprintf): Likewise.
+	* doc/posix-functions/sprintf.texi (sprintf): Likewise.
+	* doc/posix-functions/vfprintf.texi (vfprintf): Likewise.
+	* doc/posix-functions/vprintf.texi (vprintf): Likewise.
+	* doc/posix-functions/vsnprintf.texi (vsnprintf): Likewise.
+	* doc/posix-functions/vsprintf.texi (vsprintf): Likewise.
+	* doc/glibc-functions/obstack_printf.texi (obstack_printf):
+	Likewise.
+	* doc/glibc-functions/obstack_vprintf.texi (obstack_vprintf):
+	Likewise.
+	* doc/glibc-functions/cfmakeraw.texi (cfmakeraw): Cygwin 1.7 adds
+	this function.
+	* doc/glibc-functions/in6addr_any.texi (in6addr_any): Likewise.
+	* doc/glibc-functions/in6addr_loopback.texi (in6addr_loopback):
+	Likewise.
+	* doc/glibc-functions/updwtmpx.texi (updwtmpx): Likewise.
+	* doc/posix-functions/_Exit_C99.texi (_Exit): Likewise.
+	* doc/posix-functions/confstr.texi (confstr): Likewise.
+	* doc/posix-functions/dprintf.texi (dprintf): Likewise.
+	* doc/posix-functions/fgetwc.texi (fgetwc): Likewise.
+	* doc/posix-functions/fgetws.texi (fgetws): Likewise.
+	* doc/posix-functions/fputwc.texi (fputwc): Likewise.
+	* doc/posix-functions/fputws.texi (fputws): Likewise.
+	* doc/posix-functions/fwide.texi (fwide): Likewise.
+	* doc/posix-functions/getwc.texi (getwc): Likewise.
+	* doc/posix-functions/getwchar.texi (getwchar): Likewise.
+	* doc/posix-functions/putwc.texi (putwc): Likewise.
+	* doc/posix-functions/putwchar.texi (putwchar): Likewise.
+	* doc/posix-functions/sigignore.texi (sigignore): Likewise.
+	* doc/posix-functions/ungetwc.texi (ungetwc): Likewise.
+	* doc/posix-functions/vdprintf.texi (vdprintf): Likewise.
+	* doc/posix-functions/wcpcpy.texi (wcpcpy): Likewise.
+	* doc/posix-functions/wcpncpy.texi (wcpncpy): Likewise.
+	* doc/posix-functions/wcstol.texi (wcstol): Likewise.
+	* doc/posix-functions/wcstoll.texi (wcstoll): Likewise.
+	* doc/posix-functions/wcstoul.texi (wcstoul): Likewise.
+	* doc/posix-functions/wcstoull.texi (wcstoull): Likewise.
+	* doc/posix-functions/wcsxfrm.texi (wcsxfrm): Likewise.
+
 2009-01-19  Daniel P. Berrange  <berrange@redhat.com>
 
 	ioctl: avoid warning: no previous prototype for 'rpl_ioctl'
