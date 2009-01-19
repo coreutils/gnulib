@@ -1,5 +1,29 @@
 2009-01-19  Eric Blake  <ebb9@byu.net>
 
+	unistd: guarantee STDIN_FILENO here, for OS/2 EMX
+	* lib/unistd.in.h (STDIN_FILENO, STDOUT_FILENO, STDERR_FILENO):
+	Guarantee a definition.
+	* doc/posix-headers/unistd.texi (unistd.h): Document the bug.
+	* modules/unistd-safer (Depends-on): Add dependency on unistd.
+	* lib/c-stack.c (STDERR_FILENO): Rely on <unistd.h>.
+	* lib/dup-safer.c (STDERR_FILENO): Likewise.
+	* lib/execute.c (STDIN_FILENO, STDOUT_FILENO, STDERR_FILENO):
+	Likewise.
+	* lib/fd-safer.c (STDIN_FILENO, STDERR_FILENO): Likewise.
+	* lib/fopen-safer.c (STDERR_FILENO): Likewise.
+	* lib/pipe.c (STDIN_FILENO, STDOUT_FILENO, STDERR_FILENO):
+	Likewise.
+	* lib/tmpfile-safer.c (STDERR_FILENO): Likewise.
+	* tests/test-posix_spawn1.c (STDIN_FILENO, STDOUT_FILENO)
+	(STDERR_FILENO): Likewise.
+	* tests/test-posix_spawn2.c (STDIN_FILENO, STDOUT_FILENO)
+	(STDERR_FILENO): Likewise.
+	* tests/test-posix_spawn3.c (STDIN_FILENO, STDOUT_FILENO)
+	(STDERR_FILENO): Likewise.
+	Reported by Elbert Pol.
+
+2009-01-19  Eric Blake  <ebb9@byu.net>
+
 	doc: mention more functions added in cygwin 1.7.0
 	* doc/posix-functions/abort.texi (abort): Update wording related
 	to cygwin.

@@ -1,5 +1,5 @@
 /* Test of posix_spawn() function.
-   Copyright (C) 2008 Free Software Foundation, Inc.
+   Copyright (C) 2008, 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -34,16 +34,6 @@
 #include <sys/wait.h>
 
 extern char **environ;
-
-#ifndef STDIN_FILENO
-# define STDIN_FILENO 0
-#endif
-#ifndef STDOUT_FILENO
-# define STDOUT_FILENO 1
-#endif
-#ifndef STDERR_FILENO
-# define STDERR_FILENO 2
-#endif
 
 #define CHILD_PROGRAM_FILENAME "test-posix_spawn3"
 #define DATA_FILENAME "t!#$%&'()*+,-;=?@[\\]^_`{|}~.tmp"

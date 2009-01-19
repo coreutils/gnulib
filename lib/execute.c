@@ -1,5 +1,5 @@
 /* Creation of autonomous subprocesses.
-   Copyright (C) 2001-2004, 2006-2008 Free Software Foundation, Inc.
+   Copyright (C) 2001-2004, 2006-2009 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify
@@ -52,16 +52,6 @@
 #  endif
 # endif
 
-#endif
-
-#ifndef STDIN_FILENO
-# define STDIN_FILENO 0
-#endif
-#ifndef STDOUT_FILENO
-# define STDOUT_FILENO 1
-#endif
-#ifndef STDERR_FILENO
-# define STDERR_FILENO 2
 #endif
 
 /* The results of open() in this file are not used with fchdir,

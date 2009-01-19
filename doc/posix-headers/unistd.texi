@@ -10,7 +10,11 @@ Portability problems fixed by Gnulib:
 @item
 This header file is missing on some platforms: msvc.
 @item
-The SEEK_* macros are not defined in this file on some platforms: mingw.
+The SEEK_* macros are not defined in this file on some platforms:
+mingw.
+@item
+The *_FILENO macros are not defined in this file on some platforms:
+OS/2 EMX, mingw.
 @item
 The @code{_exit} function is not declared in this file on some platforms:
 mingw.

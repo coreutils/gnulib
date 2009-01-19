@@ -10,6 +10,7 @@ lib/unistd-safer.h
 m4/unistd-safer.m4
 
 Depends-on:
+unistd
 
 configure.ac:
 gl_UNISTD_SAFER

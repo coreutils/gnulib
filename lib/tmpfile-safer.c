@@ -1,5 +1,5 @@
 /* Invoke tmpfile, but avoid some glitches.
-   Copyright (C) 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006, 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -25,10 +25,6 @@
 #include "unistd-safer.h"
 
 #include "binary-io.h"
-
-#ifndef STDERR_FILENO
-# define STDERR_FILENO 2
-#endif
 
 /* Like tmpfile, but do not return stdin, stdout, or stderr.
 

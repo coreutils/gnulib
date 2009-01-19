@@ -29,7 +29,7 @@
 #ifndef _GL_UNISTD_H
 #define _GL_UNISTD_H
 
-/* mingw doesn't define the SEEK_* macros in <unistd.h>.  */
+/* mingw doesn't define the SEEK_* or *_FILENO macros in <unistd.h>.  */
 #if !(defined SEEK_CUR && defined SEEK_END && defined SEEK_SET)
 # include <stdio.h>
 #endif
@@ -86,6 +86,17 @@
 
 /* The definition of GL_LINK_WARNING is copied here.  */
 
+
+/* OS/2 EMX lacks these macros.  */
+#ifndef STDIN_FILENO
+# define STDIN_FILENO 0
+#endif
+#ifndef STDOUT_FILENO
+# define STDOUT_FILENO 1
+#endif
+#ifndef STDERR_FILENO
+# define STDERR_FILENO 2
+#endif
 
 /* Declare overridden functions.  */
 
