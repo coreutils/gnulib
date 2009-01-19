@@ -2,6 +2,7 @@ Files:
 tests/test-getdate.c
 
 Depends-on:
+progname
 
 configure.ac:
 

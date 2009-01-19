@@ -1,5 +1,5 @@
 /* Test of getdate() function.
-   Copyright (C) 2008 Free Software Foundation, Inc.
+   Copyright (C) 2008, 2009 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -22,6 +22,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "progname.h"
 
 #include "getdate.h"
 
@@ -53,6 +55,8 @@ main (int argc, char **argv)
   struct timespec result2;
   struct timespec now;
   const char *p;
+
+  set_program_name (argv[0]);
 
   now.tv_sec = 4711;
   now.tv_nsec = 1267;

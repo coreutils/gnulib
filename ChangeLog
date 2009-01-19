@@ -1,3 +1,9 @@
+2009-01-19  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/getdate-tests (Depends-on): Add progname.
+	* tests/test-getdate.c: Use progname module, to avoid link errors
+	on non-glibc systems.
+
 2009-01-18  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/filenamecat-tests (Depends-on): Add progname.
