@@ -1,5 +1,5 @@
-# isinf.m4 serial 1
-dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
+# isinf.m4 serial 2
+dnl Copyright (C) 2007-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -35,7 +35,7 @@ dnl Test whether isinf() correctly returns false for LDBL_MAX.
 AC_DEFUN([gl_ISINFL_WORKS],
 [
   AC_REQUIRE([AC_PROG_CC])
-  AC_REQUIRE([AC_C_BIGENDIAN])
+  AC_REQUIRE([gl_BIGENDIAN])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether isinf(long double) works], [gl_cv_func_isinfl_works],
     [

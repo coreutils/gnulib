@@ -1,4 +1,4 @@
-# isnanl.m4 serial 10
+# isnanl.m4 serial 11
 dnl Copyright (C) 2007-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -114,7 +114,7 @@ dnl - for pseudo-zeroes, unnormalized numbers, and pseudo-denormals on ia64.
 AC_DEFUN([gl_FUNC_ISNANL_WORKS],
 [
   AC_REQUIRE([AC_PROG_CC])
-  AC_REQUIRE([AC_C_BIGENDIAN])
+  AC_REQUIRE([gl_BIGENDIAN])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether isnanl works], [gl_cv_func_isnanl_works],
     [

@@ -1,5 +1,21 @@
 2009-01-19  Bruno Haible  <bruno@clisp.org>
 
+	Don't use AC_REQUIRE([AC_C_BIGENDIAN]).
+	* m4/gnulib-common.m4 (gl_BIGENDIAN): New macro.
+	* m4/exponentl.m4 (gl_LONG_DOUBLE_EXPONENT_LOCATION): Require
+	gl_BIGENDIAN, not AC_C_BIGENDIAN.
+	* m4/isfinite.m4 (gl_ISFINITEL_WORKS): Likewise.
+	* m4/isinf.m4 (gl_ISINFL_WORKS): Likewise.
+	* m4/isnanl.m4 (gl_FUNC_ISNANL_WORKS): Likewise.
+	* m4/md4.m4 (gl_MD4): Likewise.
+	* m4/md5.m4 (gl_MD5): Likewise.
+	* m4/printf.m4 (gl_PRINTF_INFINITE_LONG_DOUBLE): Likewise.
+	* m4/sha1.m4 (gl_SHA1): Likewise.
+	* m4/sha256.m4 (gl_SHA256): Likewise.
+	* m4/sha512.m4 (gl_SHA512): Likewise.
+
+2009-01-19  Bruno Haible  <bruno@clisp.org>
+
 	* modules/uniname/uniname-tests (Depends-on): Add progname.
 	* tests/uniname/test-uninames.c: Include progname.h.
 	(main): Call set_program_name.

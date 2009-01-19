@@ -1,11 +1,11 @@
-# exponentl.m4 serial 1
-dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
+# exponentl.m4 serial 2
+dnl Copyright (C) 2007-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_LONG_DOUBLE_EXPONENT_LOCATION],
 [
-  AC_REQUIRE([AC_C_BIGENDIAN])
+  AC_REQUIRE([gl_BIGENDIAN])
   AC_CACHE_CHECK([where to find the exponent in a 'long double'],
     [gl_cv_cc_long_double_expbit0],
     [

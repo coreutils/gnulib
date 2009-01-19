@@ -1,4 +1,4 @@
-# gnulib-common.m4 serial 7
+# gnulib-common.m4 serial 8
 dnl Copyright (C) 2007-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -98,4 +98,13 @@ AC_DEFUN([AC_C_RESTRICT],
    no) AC_DEFINE([restrict], []) ;;
    *)  AC_DEFINE_UNQUOTED([restrict], [$ac_cv_c_restrict]) ;;
  esac
+])
+
+# gl_BIGENDIAN
+# is like AC_C_BIGENDIAN, except that it can be AC_REQUIREd.
+# Note that AC_REQUIRE([AC_C_BIGENDIAN]) does not work reliably because some
+# macros invoke AC_C_BIGENDIAN with arguments.
+AC_DEFUN([gl_BIGENDIAN],
+[
+  AC_C_BIGENDIAN
 ])

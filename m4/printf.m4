@@ -1,4 +1,4 @@
-# printf.m4 serial 27
+# printf.m4 serial 28
 dnl Copyright (C) 2003, 2007-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -225,7 +225,7 @@ AC_DEFUN([gl_PRINTF_INFINITE_LONG_DOUBLE],
 [
   AC_REQUIRE([gl_PRINTF_LONG_DOUBLE])
   AC_REQUIRE([AC_PROG_CC])
-  AC_REQUIRE([AC_C_BIGENDIAN])
+  AC_REQUIRE([gl_BIGENDIAN])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   dnl The user can set or unset the variable gl_printf_safe to indicate
   dnl that he wishes a safe handling of non-IEEE-754 'long double' values.

@@ -1,5 +1,5 @@
-# isfinite.m4 serial 3
-dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
+# isfinite.m4 serial 4
+dnl Copyright (C) 2007-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -44,7 +44,7 @@ dnl   pseudo-denormals on ia64.
 AC_DEFUN([gl_ISFINITEL_WORKS],
 [
   AC_REQUIRE([AC_PROG_CC])
-  AC_REQUIRE([AC_C_BIGENDIAN])
+  AC_REQUIRE([gl_BIGENDIAN])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether isfinite(long double) works], [gl_cv_func_isfinitel_works],
     [
