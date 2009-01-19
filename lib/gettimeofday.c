@@ -41,6 +41,9 @@
 static struct tm tm_zero_buffer;
 static struct tm *localtime_buffer_addr = &tm_zero_buffer;
 
+#undef localtime
+extern struct tm *localtime (time_t const *);
+
 /* This is a wrapper for localtime.  It is used only on systems for which
    gettimeofday clobbers the static buffer used for localtime's result.
 
@@ -50,8 +53,6 @@ static struct tm *localtime_buffer_addr = &tm_zero_buffer;
 struct tm *
 rpl_localtime (time_t const *timep)
 {
-#undef localtime
-  extern struct tm *localtime (time_t const *);
   struct tm *tm = localtime (timep);
 
   if (localtime_buffer_addr == &tm_zero_buffer)

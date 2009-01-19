@@ -1,3 +1,8 @@
+2009-01-19  Daniel P. Berrange  <berrange@redhat.com>
+
+	gettimeofday: avoid warning: nested extern declaration of 'localtime'
+	* lib/gettimeofday.c: Move extern declaration out of function.
+
 2009-01-18  Bruno Haible  <bruno@clisp.org>
 
 	* m4/strftime.m4 (gl_FUNC_STRFTIME): Don't test for mblen and mbrlen.
