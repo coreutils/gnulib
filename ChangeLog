@@ -1,3 +1,9 @@
+2009-01-19  Eric Blake  <ebb9@byu.net>
+
+	doc: mention another function added in cygwin 1.7.0
+	* doc/glibc-functions/glob_pattern_p.texi (glob_pattern_p):
+	Another new function in cygwin 1.7.
+
 2009-01-19  Bruno Haible  <bruno@clisp.org>
 
 	Don't use AC_REQUIRE([AC_C_BIGENDIAN]).
