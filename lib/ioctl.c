@@ -1,6 +1,6 @@
 /* ioctl.c --- wrappers for Windows ioctl function
 
-   Copyright (C) 2008 Free Software Foundation, Inc.
+   Copyright (C) 2008, 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 
 #include <config.h>
 
+#include <sys/ioctl.h>
 #include <stdarg.h>
 
 #define WIN32_LEAN_AND_MEAN

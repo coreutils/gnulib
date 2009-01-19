@@ -1,3 +1,8 @@
+2009-01-19  Daniel P. Berrange  <berrange@redhat.com>
+
+	ioctl: avoid warning: no previous prototype for 'rpl_ioctl'
+	* lib/ioctl.c: Include <sys/ioctl.h>.
+
 2009-01-19  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/getdate-tests (Depends-on): Add progname.
