@@ -20,6 +20,7 @@
 #include <config.h>
 
 #include <sys/ioctl.h>
+
 #include <stdarg.h>
 
 #define WIN32_LEAN_AND_MEAN
