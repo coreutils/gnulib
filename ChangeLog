@@ -1,3 +1,41 @@
+2009-01-19  Bruno Haible  <bruno@clisp.org>
+
+	* modules/uniname/uniname-tests (Depends-on): Add progname.
+	* tests/uniname/test-uninames.c: Include progname.h.
+	(main): Call set_program_name.
+
+	* modules/unistdio/u8-vsprintf-tests (Depends-on): Add progname.
+	* tests/unistdio/test-u8-vsprintf1.c: Include progname.h.
+	(main): Call set_program_name.
+
+	* modules/unistdio/u8-vsnprintf-tests (Depends-on): Add progname.
+	* tests/unistdio/test-u8-vsnprintf1.c: Include progname.h.
+	(main): Call set_program_name.
+
+	* modules/unistdio/u16-vsprintf-tests (Depends-on): Add progname.
+	* tests/unistdio/test-u16-vsprintf1.c: Include progname.h.
+	(main): Call set_program_name.
+
+	* modules/unistdio/u16-vsnprintf-tests (Depends-on): Add progname.
+	* tests/unistdio/test-u16-vsnprintf1.c: Include progname.h.
+	(main): Call set_program_name.
+
+	* modules/unistdio/u32-vsprintf-tests (Depends-on): Add progname.
+	* tests/unistdio/test-u32-vsprintf1.c: Include progname.h.
+	(main): Call set_program_name.
+
+	* modules/unistdio/u32-vsnprintf-tests (Depends-on): Add progname.
+	* tests/unistdio/test-u32-vsnprintf1.c: Include progname.h.
+	(main): Call set_program_name.
+
+	* modules/unistdio/ulc-vsprintf-tests (Depends-on): Add progname.
+	* tests/unistdio/test-ulc-vsprintf1.c: Include progname.h.
+	(main): Call set_program_name.
+
+	* modules/unistdio/ulc-vsnprintf-tests (Depends-on): Add progname.
+	* tests/unistdio/test-ulc-vsnprintf1.c: Include progname.h.
+	(main): Call set_program_name.
+
 2009-01-19  Eric Blake  <ebb9@byu.net>
 
 	test-unistd: test previous patch

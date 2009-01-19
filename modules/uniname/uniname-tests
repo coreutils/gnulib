@@ -5,6 +5,7 @@ tests/uniname/UnicodeDataNames.txt
 
 Depends-on:
 xalloc
+progname
 
 configure.ac:
 

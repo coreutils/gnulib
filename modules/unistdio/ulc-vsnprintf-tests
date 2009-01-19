@@ -4,6 +4,7 @@ tests/unistdio/test-ulc-printf1.h
 
 Depends-on:
 xalloc
+progname
 
 configure.ac:
 

@@ -1,5 +1,5 @@
 /* Test of ulc_vsprintf() function.
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
 #include <string.h>
 
 #include "xalloc.h"
+#include "progname.h"
 
 #define SIZEOF(array) (sizeof (array) / sizeof (array[0]))
 #define ASSERT(expr) \
@@ -68,6 +69,9 @@ test_vsprintf ()
 int
 main (int argc, char *argv[])
 {
+  set_program_name (argv[0]);
+
   test_vsprintf ();
+
   return 0;
 }

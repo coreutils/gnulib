@@ -1,5 +1,5 @@
 /* Test the Unicode character name functions.
-   Copyright (C) 2000-2003, 2005, 2007 Free Software Foundation, Inc.
+   Copyright (C) 2000-2003, 2005, 2007, 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 
 #include "xalloc.h"
 #include "uniname.h"
+#include "progname.h"
 
 /* The names according to the UnicodeData.txt file, modified to contain the
    Hangul syllable names, as described in the Unicode 3.0 book.  */
@@ -248,6 +249,8 @@ int
 main (int argc, char *argv[])
 {
   int error = 0;
+
+  set_program_name (argv[0]);
 
   fill_names (argv[1]);
 
