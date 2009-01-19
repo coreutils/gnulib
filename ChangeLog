@@ -1,5 +1,8 @@
 2009-01-19  Eric Blake  <ebb9@byu.net>
 
+	test-unistd: test previous patch
+	* tests/test-unistd.c: Test *_FILENO macros.
+
 	unistd: guarantee STDIN_FILENO here, for OS/2 EMX
 	* lib/unistd.in.h (STDIN_FILENO, STDOUT_FILENO, STDERR_FILENO):
 	Guarantee a definition.
