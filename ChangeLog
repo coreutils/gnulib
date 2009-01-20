@@ -1,3 +1,12 @@
+2009-01-19  Bruno Haible  <bruno@clisp.org>
+
+	* tests/test-link.c: Include <errno.h>.
+	(main): Exit with code 77 when a hard link cannot be created due to
+	the file system.
+	* tests/test-link.sh: Skip test when a hard link cannot be created due
+	to the file system.
+	Suggested by Eric Blake.
+
 2009-01-19  Martin Lambers  <marlam@marlam.de>
 
 	* modules/link-tests: New file.

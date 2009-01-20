@@ -18,6 +18,7 @@
 
 #include <unistd.h>
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -36,8 +37,20 @@
 int
 main (int argc, char **argv)
 {
+  int ret;
+
   ASSERT (argc == 3);
-  ASSERT (link (argv[1], argv[2]) == 0);
+
+  ret = link (argv[1], argv[2]);
+  if (ret < 0)
+    {
+      /* If the device does not support hard links, errno is
+	 EPERM on Linux, EOPNOTSUPP on FreeBSD.  */
+      if (errno == EPERM || errno == EOPNOTSUPP)
+	return 77;
+      perror ("link");
+      return 1;
+    }
 
   return 0;
 }

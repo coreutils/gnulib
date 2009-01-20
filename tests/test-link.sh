@@ -7,7 +7,16 @@ trap 'rm -fr $tmpfiles' 1 2 3 15
 echo "hello" > test-link-a.txt || exit 1
 
 # Use link() to create a new name for it.
-./test-link${EXEEXT} test-link-a.txt test-link-b.txt || exit 1
+./test-link${EXEEXT} test-link-a.txt test-link-b.txt
+case $? in
+  0) ;;
+  77)
+    echo "Skipping test: hard links are not supported on this file system"
+    rm -fr $tmpfiles
+    exit 77
+    ;;
+  *) exit 1 ;;
+esac
 cmp test-link-a.txt test-link-b.txt || exit 1
 
 # Modify the contents of the first file.
