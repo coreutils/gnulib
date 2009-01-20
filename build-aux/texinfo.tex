@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2009-01-05.21}
+\def\texinfoversion{2009-01-18.17}
 %
 % Copyright 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -1578,7 +1578,8 @@ output) for that.)}
       \def\@{@}%
       \let\/=\empty
       \makevalueexpandable
-      % \indexnofonts -- is that what we want?
+      % do we want to go so far as to use \indexnofonts instead of just
+      % special-casing \var here?
       \def\var##1{##1}%
       %
       \leavevmode\setcolor{\urlcolor}%
@@ -3418,9 +3419,18 @@ end
   \parindent=0pt
   \parskip=\smallskipamount
   \ifdim\parskip=0pt \parskip=2pt \fi
+  %
+  % Try typesetting the item mark that if the document erroneously says
+  % something like @itemize @samp (intending @table), there's an error
+  % right away at the @itemize.  It's not the best error message in the
+  % world, but it's better than leaving it to the @item.  This means if
+  % the user wants an empty mark, they have to say @w{} not just @w.
   \def\itemcontents{#1}%
+  \setbox0 = \hbox{\itemcontents}%
+  %
   % @itemize with no arg is equivalent to @itemize @bullet.
   \ifx\itemcontents\empty\def\itemcontents{\bullet}\fi
+  %
   \let\item=\itemizeitem
 }
 
@@ -3441,6 +3451,7 @@ end
    \ifnum\lastpenalty<10000 \parskip=0in \fi
    \noindent
    \hbox to 0pt{\hss \itemcontents \kern\itemmargin}%
+   %
    \vadjust{\penalty 1200}}% not good to break after first line of item.
   \flushcr
 }
@@ -3662,12 +3673,19 @@ end
 %
 % @headitem starts a heading row, which we typeset in bold.
 % Assignments have to be global since we are inside the implicit group
-% of an alignment entry.  Note that \everycr resets \everytab.
-\def\headitem{\checkenv\multitable \crcr \global\everytab={\bf}\the\everytab}%
+% of an alignment entry.  \everycr resets \everytab so we don't have to
+% undo it ourselves.
+\def\headitemfont{\b}% for people to use in the template row; not changeable
+\def\headitem{%
+  \checkenv\multitable
+  \crcr
+  \global\everytab={\bf}% can't use \headitemfont since the parsing differs
+  \the\everytab % for the first item
+}%
 %
 % A \tab used to include \hskip1sp.  But then the space in a template
 % line is not enough.  That is bad.  So let's go back to just `&' until
-% we encounter the problem it was intended to solve again.
+% we again encounter the problem the 1sp was intended to solve.
 %					--karl, nathan@acm.org, 20apr99.
 \def\tab{\checkenv\multitable &\the\everytab}%
 
