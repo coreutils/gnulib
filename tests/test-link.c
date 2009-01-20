@@ -46,10 +46,17 @@ main (int argc, char **argv)
     {
       /* If the device does not support hard links, errno is
 	 EPERM on Linux, EOPNOTSUPP on FreeBSD.  */
-      if (errno == EPERM || errno == EOPNOTSUPP)
-	return 77;
-      perror ("link");
-      return 1;
+      switch (errno)
+	{
+	case EPERM:
+#ifdef EOPNOTSUPP
+	case EOPNOTSUPP:
+#endif
+	  return 77;
+	default:
+	  perror ("link");
+	  return 1;
+	}
     }
 
   return 0;
