@@ -1,3 +1,9 @@
+2009-01-19  Martin Lambers  <marlam@marlam.de>
+
+	* modules/link-tests: New file.
+	* tests/test-link.sh: New file.
+	* tests/test-link.c: New file.
+
 2009-01-19  Eric Blake  <ebb9@byu.net>
 
 	doc: mention another function added in cygwin 1.7.0

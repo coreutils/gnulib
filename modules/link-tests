@@ -1,0 +1,12 @@
+Files:
+tests/test-link.sh
+tests/test-link.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-link.sh
+TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
+check_PROGRAMS += test-link
