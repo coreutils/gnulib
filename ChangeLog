@@ -1,3 +1,7 @@
+2009-01-20  Michael Gold  <mgold@ncf.ca>  (tiny change)
+
+	* doc/c-strtod.texi: Mention a couple of restrictions.
+
 2009-01-20  Jim Meyering  <meyering@redhat.com>
 
 	gettimeofday: move more declarations out of functions
