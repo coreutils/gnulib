@@ -13,7 +13,7 @@ unistr/u16-to-u8
 unistr/u16-strlen
 
 configure.ac:
-AC_REQUIRE([AC_C_BIGENDIAN])
+AC_REQUIRE([gl_BIGENDIAN])
 
 Makefile.am:
 lib_SOURCES += uniconv/u16-strconv-to-enc.c

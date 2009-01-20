@@ -14,7 +14,7 @@ unistr/u8-mblen
 unistr/u16-mblen
 
 configure.ac:
-AC_REQUIRE([AC_C_BIGENDIAN])
+AC_REQUIRE([gl_BIGENDIAN])
 
 Makefile.am:
 lib_SOURCES += uniconv/u16-conv-from-enc.c
