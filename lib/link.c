@@ -21,16 +21,42 @@
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 
 #define WIN32_LEAN_AND_MEAN
-#define _WIN32_WINNT 0x0500
 #include <unistd.h>
 #include <windows.h>
 
 #include <errno.h>
 
+/* CreateHardLink was introduced only in Windows 2000.  */
+typedef BOOL (WINAPI * CreateHardLinkFuncType) (LPCTSTR lpFileName,
+						LPCTSTR lpExistingFileName,
+						LPSECURITY_ATTRIBUTES lpSecurityAttributes);
+static CreateHardLinkFuncType CreateHardLinkFunc = NULL;
+static BOOL initialized = FALSE;
+
+static void
+initialize (void)
+{
+  HMODULE kernel32 = LoadLibrary ("kernel32.dll");
+  if (kernel32 != NULL)
+    {
+      CreateHardLinkFunc =
+	(CreateHardLinkFuncType) GetProcAddress (kernel32, "CreateHardLinkA");
+    }
+  initialized = TRUE;
+}
+
 int
 link (const char *path1, const char *path2)
 {
-  if (CreateHardLink (path2, path1, NULL) == 0)
+  if (!initialized)
+    initialize ();
+  if (CreateHardLinkFunc == NULL)
+    {
+      /* System does not support hard links.  */
+      errno = EPERM;
+      return -1;
+    }
+  if (CreateHardLinkFunc (path2, path1, NULL) == 0)
     {
       /* It is not documented which errors CreateHardLink() can produce.
        * The following conversions are based on tests on a Windows XP SP2
