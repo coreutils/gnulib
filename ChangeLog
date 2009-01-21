@@ -1,4 +1,10 @@
 2009-01-21  Bruno Haible  <bruno@clisp.org>
+
+	* lib/c-strtod.c: Include errno.h.
+	(C_STRTOD): Check against NULL return from newlocale. Preserve errno
+	value from STRTOD_L and STRTOD.
+
+2009-01-21  Bruno Haible  <bruno@clisp.org>
 	and Jim Meyering  <meyering@redhat.com>
 
 	nanosleep: skip configure test (fail it) for apple universal builds

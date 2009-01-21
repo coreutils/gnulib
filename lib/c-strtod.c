@@ -1,6 +1,6 @@
 /* Convert string to double, using the C locale.
 
-   Copyright (C) 2003, 2004, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2003, 2004, 2006, 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
 
 #include "c-strtod.h"
 
+#include <errno.h>
 #include <locale.h>
 #include <stdlib.h>
 
@@ -50,9 +51,18 @@ C_STRTOD (char const *nptr, char **endptr)
 
 #ifdef LC_ALL_MASK
 
-  locale_t c_locale = newlocale (LC_ALL_MASK, "C", 0);
+  locale_t c_locale;
+  int saved_errno;
+
+  c_locale = newlocale (LC_ALL_MASK, "C", (locale_t) 0);
+  if (!c_locale)
+    return 0; /* errno is set here */
+
   r = STRTOD_L (nptr, endptr, c_locale);
+
+  saved_errno = errno;
   freelocale (c_locale);
+  errno = saved_errno;
 
 #else
 
@@ -68,8 +78,11 @@ C_STRTOD (char const *nptr, char **endptr)
 
   if (saved_locale)
     {
+      int saved_errno = errno;
+
       setlocale (LC_NUMERIC, saved_locale);
       free (saved_locale);
+      errno = saved_errno;
     }
 
 #endif
