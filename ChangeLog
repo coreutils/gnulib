@@ -1,5 +1,13 @@
 2009-01-21  Eric Blake  <ebb9@byu.net>
 
+	multiarch: avoid expand-before-require warning
+	* modules/multiarch (configure.ac): Require, rather than expand,
+	gl_MULTIARCH.
+	* m4/multiarch.m4 (gl_MULTIARCH_BODY): Merge...
+	(gl_MULTIARCH): ...into this macro, and use AC_DEFUN_ONCE to
+	enforce that all clients require it.  Partial reversion of
+	2008-12-29 patch.
+
 	error: avoid expand-before-require warning
 	* modules/errno (configure.ac): Require, rather than expand,
 	gl_HEADER_ERRNO_H.

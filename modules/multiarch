@@ -7,7 +7,7 @@ m4/multiarch.m4
 Depends-on:
 
 configure.ac:
-gl_MULTIARCH
+AC_REQUIRE([gl_MULTIARCH])
 
 Makefile.am:
 
