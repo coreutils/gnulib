@@ -1,6 +1,11 @@
 2009-01-21  Bruno Haible  <bruno@clisp.org>
 	and Jim Meyering  <meyering@redhat.com>
 
+	nanosleep: skip configure test (fail it) for apple universal builds
+	* m4/nanosleep.m4 (gl_FUNC_NANOSLEEP): Require gl_MULTIARCH. In Apple
+	universal builds, assume that nanosleep does not work.
+	* modules/nanosleep (Depends-on): Add multiarch.
+
 	mktime: skip configure test (fail it) for apple universal builds
 	* m4/mktime.m4 (AC_FUNC_MKTIME): Require gl_MULTIARCH. In Apple
 	universal builds, assume that mktime does not work.

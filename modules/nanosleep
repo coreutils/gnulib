@@ -9,6 +9,7 @@ Depends-on:
 clock-time
 extensions
 gettime
+multiarch
 sigaction
 stdbool
 sys_select

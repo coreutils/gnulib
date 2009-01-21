@@ -1,4 +1,4 @@
-# serial 26
+# serial 27
 
 dnl From Jim Meyering.
 dnl Check for the nanosleep function.
@@ -27,6 +27,15 @@ AC_DEFUN([gl_FUNC_NANOSLEEP],
  AC_SEARCH_LIBS([nanosleep], [rt posix4],
                 [test "$ac_cv_search_nanosleep" = "none required" ||
 	         LIB_NANOSLEEP=$ac_cv_search_nanosleep])
+
+ AC_REQUIRE([gl_MULTIARCH])
+ if test $APPLE_UNIVERSAL_BUILD = 1; then
+   # A universal build on Apple MacOS X platforms.
+   # The test result would be 'no (mishandles large arguments)' in 64-bit mode
+   # but 'yes' in 32-bit mode. But we need a configuration result that is
+   # valid in both modes.
+   gl_cv_func_nanosleep='no (mishandles large arguments)'
+ fi
 
  AC_CACHE_CHECK([for working nanosleep],
   [gl_cv_func_nanosleep],
