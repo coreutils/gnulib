@@ -3378,9 +3378,6 @@ s,//*$,/,'
     if test -n "$uses_subdirs"; then
       echo "  AC_REQUIRE([AM_PROG_CC_C_O])"
     fi
-    if grep AC_GNU_SOURCE "$destdir"/$m4base/*.m4 >/dev/null 2>/dev/null; then
-      echo "  AC_REQUIRE([AC_GNU_SOURCE])"
-    fi
     for module in $final_modules; do
       func_verify_module
       if test -n "$module"; then
@@ -3919,10 +3916,6 @@ func_create_testdir ()
      echo "AC_PROG_MAKE_SET"
      echo "AC_PROG_RANLIB"
      echo
-     if grep AC_GNU_SOURCE "$testdir/$m4base"/*.m4 >/dev/null 2>/dev/null; then
-       echo "AC_GNU_SOURCE"
-       echo
-     fi
      for module in $modules; do
        func_verify_module
        if test -n "$module"; then
@@ -4050,10 +4043,6 @@ func_create_testdir ()
    echo
    if test -n "$any_uses_subdirs"; then
      echo "AM_PROG_CC_C_O"
-     echo
-   fi
-   if grep AC_GNU_SOURCE "$testdir/$m4base"/*.m4 >/dev/null 2>/dev/null; then
-     echo "AC_GNU_SOURCE"
      echo
    fi
    for module in $modules; do

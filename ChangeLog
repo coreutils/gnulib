@@ -1,3 +1,10 @@
+2009-01-21  Eric Blake  <ebb9@byu.net>
+
+	gnulib-tool: avoid warnings from using obsolete AC_GNU_SOURCE
+	* gnulib-tool (func_dest_tmpfilename, func_create_testdir): Using
+	obsolete AC_GNU_SOURCE causes out-of-order expansion; avoid it,
+	and rely solely on gl_USE_SYSTEM_EXTENSIONS.
+
 2009-01-21  Paolo Bonzini  <bonzini@gnu.org>
 
 	Revert:
