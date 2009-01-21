@@ -9,7 +9,7 @@ Depends-on:
 include_next
 
 configure.ac:
-gl_HEADER_ERRNO_H
+AC_REQUIRE([gl_HEADER_ERRNO_H])
 
 Makefile.am:
 BUILT_SOURCES += $(ERRNO_H)

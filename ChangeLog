@@ -1,5 +1,12 @@
 2009-01-21  Eric Blake  <ebb9@byu.net>
 
+	error: avoid expand-before-require warning
+	* modules/errno (configure.ac): Require, rather than expand,
+	gl_HEADER_ERRNO_H.
+	* m4/errno_h.m4 (gl_HEADER_ERRNO_H_BODY): Merge...
+	(gl_HEADER_ERRNO_H): ...into this macro, and use AC_DEFUN_ONCE to
+	enforce that all clients require it.
+
 	gnulib-tool: avoid warnings from using obsolete AC_GNU_SOURCE
 	* gnulib-tool (func_dest_tmpfilename, func_create_testdir): Using
 	obsolete AC_GNU_SOURCE causes out-of-order expansion; avoid it,
