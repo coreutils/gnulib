@@ -18,6 +18,8 @@ extensions
 gettext-h
 localcharset
 malloc
+memcmp
+memmove
 mbrtowc
 mbsinit
 stdbool
