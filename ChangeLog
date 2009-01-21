@@ -1,3 +1,11 @@
+2009-01-21  Bruno Haible  <bruno@clisp.org>
+	and Jim Meyering  <meyering@redhat.com>
+
+	mktime: skip configure test (fail it) for apple universal builds
+	* m4/mktime.m4 (AC_FUNC_MKTIME): Require gl_MULTIARCH. In Apple
+	universal builds, assume that mktime does not work.
+	* modules/mktime (Depends-on): Add multiarch.
+
 2009-01-21  Eric Blake  <ebb9@byu.net>
 
 	multiarch: avoid expand-before-require warning

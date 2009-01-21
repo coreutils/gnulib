@@ -6,6 +6,7 @@ lib/mktime.c
 m4/mktime.m4
 
 Depends-on:
+multiarch
 time_r
 
 configure.ac:
@@ -21,4 +22,3 @@ LGPLv2+
 
 Maintainer:
 Paul Eggert, Jim Meyering, glibc
-
