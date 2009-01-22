@@ -1,3 +1,12 @@
+2009-01-22  Bruno Haible  <bruno@clisp.org>
+
+	Cache the C locale object.
+	* lib/c-strtod.c (c_locale_cache): New variable.
+	(c_locale): New function.
+	(C_STRTOD): Use it, and don't call freelocale.
+	* m4/c-strtod.m4 (gl_C_STRTOD, gl_C_STRTOLD): Require AC_C_INLINE.
+	Suggested by Paolo Bonzini.
+
 2009-01-21  Bruno Haible  <bruno@clisp.org>
 
 	* lib/getloadavg.c (getloadavg): Check c_strtod result against error

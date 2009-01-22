@@ -44,6 +44,25 @@
 # define STRTOD strtod
 #endif
 
+#ifdef LC_ALL_MASK
+
+/* Cache for the C locale object.
+   Marked volatile so that different threads see the same value
+   (avoids locking).  */
+static volatile locale_t c_locale_cache;
+
+/* Return the C locale object, or (locale_t) 0 with errno set
+   if it cannot be created.  */
+static inline locale_t
+c_locale (void)
+{
+  if (!c_locale_cache)
+    c_locale_cache = newlocale (LC_ALL_MASK, "C", (locale_t) 0);
+  return c_locale_cache;
+}
+
+#endif
+
 DOUBLE
 C_STRTOD (char const *nptr, char **endptr)
 {
@@ -51,18 +70,11 @@ C_STRTOD (char const *nptr, char **endptr)
 
 #ifdef LC_ALL_MASK
 
-  locale_t c_locale;
-  int saved_errno;
-
-  c_locale = newlocale (LC_ALL_MASK, "C", (locale_t) 0);
-  if (!c_locale)
+  locale_t locale = c_locale ();
+  if (!locale)
     return 0; /* errno is set here */
 
-  r = STRTOD_L (nptr, endptr, c_locale);
-
-  saved_errno = errno;
-  freelocale (c_locale);
-  errno = saved_errno;
+  r = STRTOD_L (nptr, endptr, locale);
 
 #else
 
