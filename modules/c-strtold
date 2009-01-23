@@ -9,7 +9,7 @@ m4/c-strtod.m4
 
 Depends-on:
 extensions
-xalloc
+strdup-posix
 
 configure.ac:
 gl_C_STRTOLD

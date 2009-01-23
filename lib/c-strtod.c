@@ -24,8 +24,7 @@
 #include <errno.h>
 #include <locale.h>
 #include <stdlib.h>
-
-#include "xalloc.h"
+#include <string.h>
 
 #if LONG
 # define C_STRTOD c_strtold
@@ -74,7 +73,7 @@ C_STRTOD (char const *nptr, char **endptr)
   if (!locale)
     {
       if (endptr)
-        *endptr = nptr;
+	*endptr = nptr;
       return 0; /* errno is set here */
     }
 
@@ -86,7 +85,13 @@ C_STRTOD (char const *nptr, char **endptr)
 
   if (saved_locale)
     {
-      saved_locale = xstrdup (saved_locale);
+      saved_locale = strdup (saved_locale);
+      if (saved_locale == NULL)
+	{
+	  if (endptr)
+	    *endptr = nptr;
+	  return 0; /* errno is set here */
+	}
       setlocale (LC_NUMERIC, "C");
     }
 

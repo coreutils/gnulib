@@ -23,6 +23,5 @@ In particular, only a period @samp{.} is accepted as decimal point, even
 when the current locale's notion of decimal point is a comma @samp{,},
 and no characters outside the basic character set are accepted.
 
-This function aborts via @code{xalloc_die} if it cannot allocate memory.
-On platforms without @code{strtod_l}, it is not safe for use in
+On platforms without @code{strtod_l}, this function is not safe for use in
 multi-threaded applications since it calls @code{setlocale}.

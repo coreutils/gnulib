@@ -1,3 +1,14 @@
+2009-01-23  Bruno Haible  <bruno@clisp.org>
+
+	Make c-strtod, c-strtold usable in libraries.
+	* lib/c-strtod.c: Include string.h instead of xalloc.h.
+	(C_STRTOD): Call strdup instead of xstrdup.
+	* modules/c-strtod (Depends-on): Add strdup-posix, remove xalloc.
+	* modules/c-strtold (Depends-on): Likewise.
+	* doc/c-strtod.texi: Remove the sentence mentioning xalloc_die.
+	* NEWS: Mention the change.
+	Reported by Michael Gold <mgold@ncf.ca>.
+
 2009-01-23  Jim Meyering  <meyering@redhat.com>
 
 	c-strtod: when ENDPTR is non-NULL, set *ENDPTR in new failure path

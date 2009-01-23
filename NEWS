@@ -6,6 +6,15 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2009-01-22  c-strtod        This function no longer calls xalloc_die(). If
+            c-strtold       you want to exit the program in case of out-of-
+                            memory, the calling function needs to arrange
+                            for it, like this:
+                                errno = 0;
+                                val = c_strtod (...);
+                                if (val == 0 && errno == ENOMEM)
+                                  xalloc_die ();
+
 2009-01-17  relocatable-prog  In the Makefile.am or Makefile.in, you now also
                             need to set RELOCATABLE_STRIP = :.
 
