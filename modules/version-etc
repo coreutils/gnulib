@@ -1,5 +1,5 @@
 Description:
-Print --version output.
+Print --version and bug-reporting information in a consistent format.
 
 Files:
 lib/version-etc.h

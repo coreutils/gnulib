@@ -1,5 +1,5 @@
-/* Utility to help print --version output in a consistent format.
-   Copyright (C) 1999, 2003, 2005 Free Software Foundation, Inc.
+/* Print --version and bug-reporting information in a consistent format.
+   Copyright (C) 1999, 2003, 2005, 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -31,6 +31,8 @@ extern void version_etc_va (FILE *stream,
 extern void version_etc (FILE *stream,
 			 const char *command_name, const char *package,
 			 const char *version,
-		         /* const char *author1, ...*/ ...);
+			 /* const char *author1, ...*/ ...);
+
+extern void emit_bug_reporting_address (void);
 
 #endif /* VERSION_ETC_H */

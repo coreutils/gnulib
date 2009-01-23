@@ -1,4 +1,4 @@
-/* Utility to help print --version output in a consistent format.
+/* Print --version and bug-reporting information in a consistent format.
    Copyright (C) 1999-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -169,4 +169,17 @@ version_etc (FILE *stream,
 
   va_start (authors, version);
   version_etc_va (stream, command_name, package, version, authors);
+}
+
+void
+emit_bug_reporting_address (void)
+{
+  /* TRANSLATORS: The placeholder indicates the bug-reporting address
+     for this package.  Please add _another line_ saying
+     "Report translation bugs to <...>\n" with the address for translation
+     bugs (typically your translation team's web or email address).  */
+  printf (_("\nReport bugs to <%s>.\n"), PACKAGE_BUGREPORT);
+  printf (_("%s home page: http://www.gnu.org/software/%s/\n"),
+	  PACKAGE_NAME, PACKAGE);
+  printf (_("General help using GNU software: http://www.gnu.org/gethelp/\n"));
 }

@@ -1,3 +1,10 @@
+2009-01-23  Simon Josefsson  <simon@josefsson.org>
+
+	* lib/version-etc.c: Add emit_bug_reporting_address, inspired by
+	GNU CoreUtils.
+	* lib/version-etc.h: Add prototype for emit_bug_reporting_address.
+	* modules/version-etc (Description): Update.
+
 2009-01-22  Bruno Haible  <bruno@clisp.org>
 
 	Cache the C locale object.
