@@ -1,3 +1,9 @@
+2009-01-23  Jim Meyering  <meyering@redhat.com>
+
+	c-strtod: when ENDPTR is non-NULL, set *ENDPTR in new failure path
+	* lib/c-strtod.c (C_STRTOD) [LC_ALL_MASKC]: Ensure that when
+	ENDPTR is non-NULL, *ENDPTR is set to NPTR upon failure.
+
 2009-01-23  Simon Josefsson  <simon@josefsson.org>
 
 	* lib/version-etc.c: Add emit_bug_reporting_address, inspired by

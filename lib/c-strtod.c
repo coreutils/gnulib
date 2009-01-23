@@ -72,7 +72,11 @@ C_STRTOD (char const *nptr, char **endptr)
 
   locale_t locale = c_locale ();
   if (!locale)
-    return 0; /* errno is set here */
+    {
+      if (endptr)
+        *endptr = nptr;
+      return 0; /* errno is set here */
+    }
 
   r = STRTOD_L (nptr, endptr, locale);
 
