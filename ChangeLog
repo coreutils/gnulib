@@ -1,5 +1,14 @@
 2009-01-24  Bruno Haible  <bruno@clisp.org>
 
+	Add support for non-UTF-8 locales on MacOS X.
+	* lib/config.charset: Add CP1131, ARMSCII-8, PT154 to the list of
+	canonical encodings. For Darwin 7 and newer, don't map traditional
+	encodings to UTF-8.
+	Reported by Vincent Lefevre <vincent@vinc17.org>
+	at <http://savannah.gnu.org/bugs/?25235>.
+
+2009-01-24  Bruno Haible  <bruno@clisp.org>
+
 	* doc/gnulib.texi (Obsolete modules): New section.
 	Reported by Mike Frysinger <vapier@gentoo.org>.
 
