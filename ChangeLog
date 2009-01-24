@@ -1,3 +1,7 @@
+2009-01-24  Bruno Haible  <bruno@clisp.org>
+
+	* lib/c-strtod.h (c_strtod, c_strtold): Add specification.
+
 2009-01-23  Bruno Haible  <bruno@clisp.org>
 
 	Make c-strtod, c-strtold usable in libraries.
