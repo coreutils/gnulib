@@ -1,5 +1,10 @@
 2009-01-24  Bruno Haible  <bruno@clisp.org>
 
+	* doc/gnulib.texi (Obsolete modules): New section.
+	Reported by Mike Frysinger <vapier@gentoo.org>.
+
+2009-01-24  Bruno Haible  <bruno@clisp.org>
+
 	* doc/Makefile (%.pdf): Clarify where to find texmf.cnf.
 	(%.dvi): New rule.
 

@@ -1,5 +1,4 @@
 \input texinfo   @c -*-texinfo-*-
-@comment $Id: gnulib.texi,v 1.44 2007-09-09 13:20:45 haible Exp $
 @comment %**start of header
 @setfilename gnulib.info
 @settitle GNU Gnulib
@@ -18,8 +17,7 @@ This manual is for GNU Gnulib (updated @value{UPDATED}),
 which is a library of common routines intended to be shared at the
 source level.
 
-Copyright @copyright{} 2004, 2005, 2006, 2007, 2008 Free Software
-Foundation, Inc.
+Copyright @copyright{} 2004-2009 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -122,6 +120,7 @@ Resources:
 * Comments::
 * Header files::
 * Out of memory handling::
+* Obsolete modules::
 * Library version handling::
 * Windows sockets::
 * Libtool and Windows::
@@ -261,6 +260,30 @@ GSS library functions.  The hook is only intended to allow the
 application to log the situation in a special way.  Of course, care
 must be taken to not allocate more memory, as that will likely also
 fail.
+
+
+@node Obsolete modules
+@section Obsolete modules
+
+Modules can be marked obsolete.  This means that the problems they fix
+don't occur any more on the platforms that are reasonable porting targets
+now.  @code{gnulib-tool} warns when obsolete modules are mentioned on the
+command line, and by default ignores dependencies from modules to obsolete
+modules.  When you pass the option @code{--with-obsolete} to
+@code{gnulib-tool}, dependencies to obsolete modules will be included,
+however, unless blocked through an @code{--avoid} option.  This option
+is useful if your package should be portable even to very old platforms.
+
+In order to mark a module obsolete, you need to add this to the module
+description:
+
+@example
+Status:
+obsolete
+
+Notice:
+This module is obsolete.
+@end example
 
 
 @node Library version handling
