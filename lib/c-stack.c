@@ -239,21 +239,21 @@ segv_handler (int signo, siginfo_t *info,
 	      void *context __attribute__ ((unused)))
 {
   /* Clear SIGNO if it seems to have been a stack overflow.  */
+#  if ! HAVE_XSI_STACK_OVERFLOW_HEURISTIC
+  /* We can't easily determine whether it is a stack overflow; so
+     assume that the rest of our program is perfect (!) and that
+     this segmentation violation is a stack overflow.
+
+     Note that although both Linux and Solaris provide
+     sigaltstack, SA_ONSTACK, and SA_SIGINFO, currently only
+     Solaris satisfies the XSI heueristic.  This is because
+     Solaris populates uc_stack with the details of the
+     interrupted stack, while Linux populates it with the details
+     of the current stack.  */
+  signo = 0;
+#  else
   if (0 < info->si_code)
     {
-#  if ! HAVE_XSI_STACK_OVERFLOW_HEURISTIC
-      /* We can't easily determine whether it is a stack overflow; so
-	 assume that the rest of our program is perfect (!) and that
-	 this segmentation violation is a stack overflow.
-
-	 Note that although both Linux and Solaris provide
-	 sigaltstack, SA_ONSTACK, and SA_SIGINFO, currently only
-	 Solaris satisfies the XSI heueristic.  This is because
-	 Solaris populates uc_stack with the details of the
-	 interrupted stack, while Linux populates it with the details
-	 of the current stack.  */
-      signo = 0;
-#  else
       /* If the faulting address is within the stack, or within one
 	 page of the stack end, assume that it is a stack
 	 overflow.  */
@@ -278,8 +278,8 @@ segv_handler (int signo, siginfo_t *info,
 	write (STDERR_FILENO, buf, strlen (buf));
       }
 #   endif
-#  endif
     }
+#  endif
 
   die (signo);
 }

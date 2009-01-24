@@ -1,5 +1,11 @@
 2009-01-24  Bruno Haible  <bruno@clisp.org>
 
+	* lib/c-stack.c (segv_handler): If !HAVE_XSI_STACK_OVERFLOW_HEURISTIC,
+	set signo = 0 also if info->si_code <= 0. Needed on HP-UX 11.11.
+	Reported by Gary V. Vaughan <gary@gnu.org>.
+
+2009-01-24  Bruno Haible  <bruno@clisp.org>
+
 	* lib/c-strtod.h (c_strtod, c_strtold): Add specification.
 
 2009-01-23  Bruno Haible  <bruno@clisp.org>
