@@ -30,8 +30,8 @@
    - In case of underflow, return a value very near to 0 and set errno to
      ERANGE.
    - If the string does not start with a number at all, return 0 (and recall
-     that if ENDPTR != NULL, *ENDPTR is set to NPTR).
-   - In case of other error, return 0 and set errno, for example to EINVAL
-     or ENOMEM.  */
+     that if ENDPTR != NULL, *ENDPTR is set to NPTR), and maybe set errno to
+     EINVAL.
+   - In case of other error, return 0 and set errno, for example to ENOMEM.  */
 extern double      c_strtod  (char const *nptr, char **endptr);
 extern long double c_strtold (char const *nptr, char **endptr);
