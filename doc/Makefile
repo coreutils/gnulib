@@ -1,5 +1,5 @@
 # Makefile for gnulib doc.
-# Copyright (C) 2004, 2006-2008 Free Software Foundation, Inc.
+# Copyright (C) 2004, 2006-2009 Free Software Foundation, Inc.
 #
 # Copying and distribution of this file, with or without modification,
 # are permitted in any medium without royalty provided the copyright
@@ -9,14 +9,18 @@ doc = gnulib
 
 MAKEINFO = env LANG= LC_MESSAGES= LC_ALL= LANGUAGE= makeinfo
 TEXI2HTML = $(MAKEINFO) --no-split --reference-limit=2000 --html
-%.html: %.texi
-	$(TEXI2HTML) -o $@ $<
 
 %.info: %.texi
 	LANG= LC_MESSAGES= LC_ALL= LANGUAGE= makeinfo --no-split --reference-limit=2000 $<
 
+%.html: %.texi
+	$(TEXI2HTML) -o $@ $<
+
+%.dvi: %.texi
+	texi2dvi $< || { if texi2dvi $< 2>/dev/null | grep 'TeX capacity exceeded, sorry \[save size=' > /dev/null; then echo '*** You must increase the save_size in your texmf.cnf file, often located under /etc/texmf/.'; fi; exit 1; }
+
 %.pdf: %.texi
-	texi2pdf $< || { if texi2pdf $< 2>/dev/null | grep 'TeX capacity exceeded, sorry \[save size=' > /dev/null; then echo '*** You must increase the save_size in your texmf.cnf file.'; fi; exit 1; }
+	texi2pdf $< || { if texi2pdf $< 2>/dev/null | grep 'TeX capacity exceeded, sorry \[save size=' > /dev/null; then echo '*** You must increase the save_size in your texmf.cnf file, often located under /etc/texmf/.'; fi; exit 1; }
 
 all: info html dvi
 info: $(doc).info
