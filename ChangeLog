@@ -1,5 +1,14 @@
 2009-01-25  Bruno Haible  <bruno@clisp.org>
 
+	Avoid redefining 'struct random_data' on OSF/1 5.1.
+	* lib/stdlib.in.h: Include <random.h> if it exists.
+	* m4/stdlib_h.m4 (gl_STDLIB_H): Test whether <random.h> exists. Set
+	HAVE_RANDOM_H. Include <random.h> when testing whether
+	'struct random_data' exists.
+	* modules/stdlib (Makefile.am): Substitute HAVE_RANDOM_H.
+
+2009-01-25  Bruno Haible  <bruno@clisp.org>
+
 	Don't install charset.alias on MacOS X >= 10.3.
 	* lib/localcharset.c (DARWIN7): New macro.
 	(get_charset_aliases): Hardcode the result for Darwin7.
