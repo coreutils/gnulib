@@ -44,13 +44,7 @@
 #else
 
 /* Unix API.  */
-# if HAVE_POSIX_SPAWN
-#  include <spawn.h>
-# else
-#  if HAVE_VFORK_H
-#   include <vfork.h>
-#  endif
-# endif
+# include <spawn.h>
 
 #endif
 
@@ -204,7 +198,6 @@ execute (const char *progname,
      subprocess to exit with return code 127.  It is implementation
      dependent which error is reported which way.  We treat both cases as
      equivalent.  */
-#if HAVE_POSIX_SPAWN
   sigset_t blocked_signals;
   posix_spawn_file_actions_t actions;
   bool actions_allocated;
@@ -212,11 +205,7 @@ execute (const char *progname,
   bool attrs_allocated;
   int err;
   pid_t child;
-#else
-  int child;
-#endif
 
-#if HAVE_POSIX_SPAWN
   if (slave_process)
     {
       sigprocmask (SIG_SETMASK, NULL, &blocked_signals);
@@ -274,48 +263,6 @@ execute (const char *progname,
   posix_spawn_file_actions_destroy (&actions);
   if (attrs_allocated)
     posix_spawnattr_destroy (&attrs);
-#else
-  if (slave_process)
-    block_fatal_signals ();
-  /* Use vfork() instead of fork() for efficiency.  */
-  if ((child = vfork ()) == 0)
-    {
-      /* Child process code.  */
-      int nullinfd;
-      int nulloutfd;
-
-      if ((!null_stdin
-	   || ((nullinfd = open ("/dev/null", O_RDONLY, 0)) >= 0
-	       && (nullinfd == STDIN_FILENO
-		   || (dup2 (nullinfd, STDIN_FILENO) >= 0
-		       && close (nullinfd) >= 0))))
-	  && (!(null_stdout || null_stderr)
-	      || ((nulloutfd = open ("/dev/null", O_RDWR, 0)) >= 0
-		  && (!null_stdout
-		      || nulloutfd == STDOUT_FILENO
-		      || dup2 (nulloutfd, STDOUT_FILENO) >= 0)
-		  && (!null_stderr
-		      || nulloutfd == STDERR_FILENO
-		      || dup2 (nulloutfd, STDERR_FILENO) >= 0)
-		  && ((null_stdout && nulloutfd == STDOUT_FILENO)
-		      || (null_stderr && nulloutfd == STDERR_FILENO)
-		      || close (nulloutfd) >= 0)))
-	  && (!slave_process || (unblock_fatal_signals (), true)))
-	execvp (prog_path, prog_argv);
-      _exit (127);
-    }
-  if (child == -1)
-    {
-      if (slave_process)
-	unblock_fatal_signals ();
-      if (termsigp != NULL)
-	*termsigp = 0;
-      if (exit_on_error || !null_stderr)
-	error (exit_on_error ? EXIT_FAILURE : 0, errno,
-	       _("%s subprocess failed"), progname);
-      return 127;
-    }
-#endif
   if (slave_process)
     {
       register_slave_subprocess (child);

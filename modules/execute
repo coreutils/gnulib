@@ -6,7 +6,6 @@ lib/execute.h
 lib/execute.c
 lib/w32spawn.h
 m4/execute.m4
-m4/posix_spawn.m4
 
 Depends-on:
 error
@@ -14,6 +13,15 @@ exit
 fatal-signal
 wait-process
 gettext-h
+spawn
+posix_spawnp
+posix_spawn_file_actions_init
+posix_spawn_file_actions_addopen
+posix_spawn_file_actions_destroy
+posix_spawnattr_init
+posix_spawnattr_setsigmask
+posix_spawnattr_setflags
+posix_spawnattr_destroy
 stdbool
 strpbrk
 unistd

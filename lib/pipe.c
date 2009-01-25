@@ -44,13 +44,7 @@
 #else
 
 /* Unix API.  */
-# if HAVE_POSIX_SPAWN
-#  include <spawn.h>
-# else
-#  if HAVE_VFORK_H
-#   include <vfork.h>
-#  endif
-# endif
+# include <spawn.h>
 
 #endif
 
@@ -253,7 +247,6 @@ create_pipe (const char *progname,
   /* Unix API.  */
   int ifd[2];
   int ofd[2];
-# if HAVE_POSIX_SPAWN
   sigset_t blocked_signals;
   posix_spawn_file_actions_t actions;
   bool actions_allocated;
@@ -261,9 +254,6 @@ create_pipe (const char *progname,
   bool attrs_allocated;
   int err;
   pid_t child;
-# else
-  int child;
-# endif
 
   if (pipe_stdout)
     if (pipe (ifd) < 0
@@ -282,7 +272,6 @@ create_pipe (const char *progname,
  *
  */
 
-# if HAVE_POSIX_SPAWN
   if (slave_process)
     {
       sigprocmask (SIG_SETMASK, NULL, &blocked_signals);
@@ -370,64 +359,6 @@ create_pipe (const char *progname,
   posix_spawn_file_actions_destroy (&actions);
   if (attrs_allocated)
     posix_spawnattr_destroy (&attrs);
-# else
-  if (slave_process)
-    block_fatal_signals ();
-  /* Use vfork() instead of fork() for efficiency.  */
-  if ((child = vfork ()) == 0)
-    {
-      /* Child process code.  */
-      int nulloutfd;
-      int stdinfd;
-      int stdoutfd;
-
-      if ((!pipe_stdin || dup2 (ofd[0], STDIN_FILENO) >= 0)
-	  && (!pipe_stdout || dup2 (ifd[1], STDOUT_FILENO) >= 0)
-	  && (!pipe_stdin || close (ofd[0]) >= 0)
-	  && (!pipe_stdout || close (ifd[1]) >= 0)
-	  && (!pipe_stdin || close (ofd[1]) >= 0)
-	  && (!pipe_stdout || close (ifd[0]) >= 0)
-	  && (!null_stderr
-	      || ((nulloutfd = open ("/dev/null", O_RDWR, 0)) >= 0
-		  && (nulloutfd == STDERR_FILENO
-		      || (dup2 (nulloutfd, STDERR_FILENO) >= 0
-			  && close (nulloutfd) >= 0))))
-	  && (pipe_stdin
-	      || prog_stdin == NULL
-	      || ((stdinfd = open (prog_stdin, O_RDONLY, 0)) >= 0
-		  && (stdinfd == STDIN_FILENO
-		      || (dup2 (stdinfd, STDIN_FILENO) >= 0
-			  && close (stdinfd) >= 0))))
-	  && (pipe_stdout
-	      || prog_stdout == NULL
-	      || ((stdoutfd = open (prog_stdout, O_WRONLY, 0)) >= 0
-		  && (stdoutfd == STDOUT_FILENO
-		      || (dup2 (stdoutfd, STDOUT_FILENO) >= 0
-			  && close (stdoutfd) >= 0))))
-	  && (!slave_process || (unblock_fatal_signals (), true)))
-	execvp (prog_path, prog_argv);
-      _exit (127);
-    }
-  if (child == -1)
-    {
-      if (slave_process)
-	unblock_fatal_signals ();
-      if (exit_on_error || !null_stderr)
-	error (exit_on_error ? EXIT_FAILURE : 0, errno,
-	       _("%s subprocess failed"), progname);
-      if (pipe_stdout)
-	{
-	  close (ifd[0]);
-	  close (ifd[1]);
-	}
-      if (pipe_stdin)
-	{
-	  close (ofd[0]);
-	  close (ofd[1]);
-	}
-      return -1;
-    }
-# endif
   if (slave_process)
     {
       register_slave_subprocess (child);

@@ -6,7 +6,6 @@ lib/pipe.h
 lib/pipe.c
 lib/w32spawn.h
 m4/pipe.m4
-m4/posix_spawn.m4
 
 Depends-on:
 environ
@@ -15,6 +14,17 @@ exit
 fatal-signal
 gettext-h
 open
+spawn
+posix_spawnp
+posix_spawn_file_actions_init
+posix_spawn_file_actions_addclose
+posix_spawn_file_actions_adddup2
+posix_spawn_file_actions_addopen
+posix_spawn_file_actions_destroy
+posix_spawnattr_init
+posix_spawnattr_setsigmask
+posix_spawnattr_setflags
+posix_spawnattr_destroy
 stdbool
 strpbrk
 unistd

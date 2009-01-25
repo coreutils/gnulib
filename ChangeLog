@@ -1,5 +1,24 @@
 2009-01-25  Bruno Haible  <bruno@clisp.org>
 
+	* lib/pipe.c: On Unix, assume HAVE_POSIX_SPAWN and use posix_spawnp.
+	* m4/pipe.m4 (gl_PIPE): Remove tests for vfork() based code.
+	* modules/pipe (Files): Remove m4/posix_spawn.m4.
+	(Depends-on): Add spawn, posix_spawnp, posix_spawn_file_actions_init,
+	posix_spawn_file_actions_addclose, posix_spawn_file_actions_adddup2,
+	posix_spawn_file_actions_addopen, posix_spawn_file_actions_destroy,
+	posix_spawnattr_init, posix_spawnattr_setsigmask,
+	posix_spawnattr_setflags, posix_spawnattr_destroy.
+
+	* lib/execute.c: On Unix, assume HAVE_POSIX_SPAWN and use posix_spawnp.
+	* m4/execute.m4 (gl_EXECUTE): Remove tests for vfork() based code.
+	* modules/execute (Files): Remove m4/posix_spawn.m4.
+	(Depends-on): Add spawn, posix_spawnp, posix_spawn_file_actions_init,
+	posix_spawn_file_actions_addopen, posix_spawn_file_actions_destroy,
+	posix_spawnattr_init, posix_spawnattr_setsigmask,
+	posix_spawnattr_setflags, posix_spawnattr_destroy.
+
+2009-01-25  Bruno Haible  <bruno@clisp.org>
+
 	* lib/glthread/threadlib.c: Include <stdlib.h>.
 
 2009-01-25  Bruno Haible  <bruno@clisp.org>
