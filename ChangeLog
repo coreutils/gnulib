@@ -1,3 +1,9 @@
+2009-01-25  Bruno Haible  <bruno@clisp.org>
+
+	Make it possible again to use AC_GNU_SOURCE together with gnulib.
+	* m4/extensions.m4 (gl_USE_SYSTEM_EXTENSIONS): Require AC_GNU_SOURCE
+	before requiring AC_USE_SYSTEM_EXTENSIONS.
+
 2009-01-25  Jim Meyering  <meyering@redhat.com>
 
 	c-strtod: avoid warnings
