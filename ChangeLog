@@ -1,5 +1,9 @@
 2009-01-25  Bruno Haible  <bruno@clisp.org>
 
+	* lib/glthread/threadlib.c (dummy): New declaration.
+
+2009-01-25  Bruno Haible  <bruno@clisp.org>
+
 	* lib/mbrtowc.c (mbrtowc): Distinguish invalid and incomplete
 	multibyte characters also for the GB18030 encoding. Don't crash when
 	the encoding is unknown and nstate = 0. Needed on OSF/1 5.1.
