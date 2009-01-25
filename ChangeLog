@@ -1,5 +1,11 @@
 2009-01-25  Bruno Haible  <bruno@clisp.org>
 
+	* lib/mbrtowc.c (mbrtowc): Distinguish invalid and incomplete
+	multibyte characters also for the GB18030 encoding. Don't crash when
+	the encoding is unknown and nstate = 0. Needed on OSF/1 5.1.
+
+2009-01-25  Bruno Haible  <bruno@clisp.org>
+
 	Avoid redefining 'struct random_data' on OSF/1 5.1.
 	* lib/stdlib.in.h: Include <random.h> if it exists.
 	* m4/stdlib_h.m4 (gl_STDLIB_H): Test whether <random.h> exists. Set
