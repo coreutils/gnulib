@@ -1,5 +1,9 @@
 2009-01-25  Bruno Haible  <bruno@clisp.org>
 
+	* lib/glthread/threadlib.c: Include <stdlib.h>.
+
+2009-01-25  Bruno Haible  <bruno@clisp.org>
+
 	* lib/glthread/threadlib.c (dummy): New declaration.
 
 2009-01-25  Bruno Haible  <bruno@clisp.org>
