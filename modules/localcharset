@@ -40,13 +40,25 @@ all-local: charset.alias ref-add.sed ref-del.sed
 charset_alias = $(DESTDIR)$(libdir)/charset.alias
 charset_tmp = $(DESTDIR)$(libdir)/charset.tmp
 install-exec-local: all-local
-	test $(GLIBC21) != no || $(mkinstalldirs) $(DESTDIR)$(libdir)
+	if test $(GLIBC21) = no; then \
+	  case '$(host_os)' in \
+	    cygwin* | mingw* | pw32* | cegcc*) \
+	      need_charset_alias=false ;; \
+	    *) \
+	      need_charset_alias=true ;; \
+	  esac ; \
+	else \
+	  need_charset_alias=false ; \
+	fi ; \
+	if $$need_charset_alias; then \
+	  $(mkinstalldirs) $(DESTDIR)$(libdir) ; \
+	fi ; \
 	if test -f $(charset_alias); then \
 	  sed -f ref-add.sed $(charset_alias) > $(charset_tmp) ; \
 	  $(INSTALL_DATA) $(charset_tmp) $(charset_alias) ; \
 	  rm -f $(charset_tmp) ; \
 	else \
-	  if test $(GLIBC21) = no; then \
+	  if $$need_charset_alias; then \
 	    sed -f ref-add.sed charset.alias > $(charset_tmp) ; \
 	    $(INSTALL_DATA) $(charset_tmp) $(charset_alias) ; \
 	    rm -f $(charset_tmp) ; \
