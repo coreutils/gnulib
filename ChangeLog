@@ -1,3 +1,9 @@
+2009-01-25  Jim Meyering  <meyering@redhat.com>
+
+	c-strtod: avoid warnings
+	* lib/c-strtod.c (C_STRTOD): Cast nptr to (char *) to avoid
+	"assignment discards qualifiers from pointer target type" warnings.
+
 2009-01-24  Bruno Haible  <bruno@clisp.org>
 
 	Add support for non-UTF-8 locales on MacOS X.

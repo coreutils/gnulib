@@ -73,7 +73,7 @@ C_STRTOD (char const *nptr, char **endptr)
   if (!locale)
     {
       if (endptr)
-	*endptr = nptr;
+	*endptr = (char *) nptr;
       return 0; /* errno is set here */
     }
 
@@ -89,7 +89,7 @@ C_STRTOD (char const *nptr, char **endptr)
       if (saved_locale == NULL)
 	{
 	  if (endptr)
-	    *endptr = nptr;
+	    *endptr = (char *) nptr;
 	  return 0; /* errno is set here */
 	}
       setlocale (LC_NUMERIC, "C");
