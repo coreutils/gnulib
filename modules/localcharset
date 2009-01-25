@@ -42,7 +42,9 @@ charset_tmp = $(DESTDIR)$(libdir)/charset.tmp
 install-exec-local: all-local
 	if test $(GLIBC21) = no; then \
 	  case '$(host_os)' in \
-	    cygwin* | mingw* | pw32* | cegcc*) \
+	    darwin[56]*) \
+	      need_charset_alias=true ;; \
+	    darwin* | cygwin* | mingw* | pw32* | cegcc*) \
 	      need_charset_alias=false ;; \
 	    *) \
 	      need_charset_alias=true ;; \

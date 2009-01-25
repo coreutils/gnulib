@@ -1,5 +1,13 @@
 2009-01-25  Bruno Haible  <bruno@clisp.org>
 
+	Don't install charset.alias on MacOS X >= 10.3.
+	* lib/localcharset.c (DARWIN7): New macro.
+	(get_charset_aliases): Hardcode the result for Darwin7.
+	* modules/localcharset (install-exec-local): Don't install
+	charset.alias on MacOS X >= 10.3, if the file does not yet exist.
+
+2009-01-25  Bruno Haible  <bruno@clisp.org>
+
 	Don't install charset.alias on mingw and Cygwin.
 	* modules/localcharset (install-exec-local): Don't install
 	charset.alias on mingw and Cygwin, if the file does not yet exist.
