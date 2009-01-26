@@ -1,4 +1,4 @@
-# serial 7  -*- Autoconf -*-
+# serial 8  -*- Autoconf -*-
 # Enable extensions on systems that normally disable them.
 
 # Copyright (C) 2003, 2006-2009 Free Software Foundation, Inc.
@@ -20,7 +20,7 @@
 # AC_DEFINE.  The goal here is to define all known feature-enabling
 # macros, then, if reports of conflicts are made, disable macros that
 # cause problems on some platforms (such as __EXTENSIONS__).
-AC_DEFUN([AC_USE_SYSTEM_EXTENSIONS],
+AC_DEFUN_ONCE([AC_USE_SYSTEM_EXTENSIONS],
 [AC_BEFORE([$0], [AC_COMPILE_IFELSE])dnl
 AC_BEFORE([$0], [AC_RUN_IFELSE])dnl
 
@@ -90,7 +90,7 @@ AC_BEFORE([$0], [AC_RUN_IFELSE])dnl
 # ------------------------
 # Enable extensions on systems that normally disable them,
 # typically due to standards-conformance issues.
-AC_DEFUN([gl_USE_SYSTEM_EXTENSIONS],
+AC_DEFUN_ONCE([gl_USE_SYSTEM_EXTENSIONS],
 [
   dnl Require this macro before AC_USE_SYSTEM_EXTENSIONS.
   dnl gnulib does not need it. But if it gets required by third-party macros

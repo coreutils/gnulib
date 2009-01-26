@@ -1,5 +1,10 @@
 2009-01-26  Eric Blake  <ebb9@byu.net>
 
+	Silence warning reintroduced by recent extensions patch.
+	* m4/extensions.m4 (AC_USE_SYSTEM_EXTENSIONS)
+	(gl_USE_SYSTEM_EXTENSIONS): Use AC_DEFUN_ONCE to silence newer
+	autoconf.
+
 	Backport improved autoconf semantics of AC_DEFUN_ONCE.
 	* m4/00gnulib.m4: New file.
 	* gnulib-tool (func_get_filelist): Always use it.
