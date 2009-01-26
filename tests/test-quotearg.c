@@ -22,6 +22,7 @@
 #include "quotearg.h"
 
 #include <ctype.h>
+#include <locale.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -29,20 +30,7 @@
 #include <string.h>
 
 #include "progname.h"
-
-#if ENABLE_NLS
-/* On Linux, gettext is optionally defined as a forwarding macro,
-   which would cause syntax errors in our definition below.  But on
-   platforms that require -lintl, we cannot #undef gettext, since we
-   want to provide the entry point libintl_gettext.  So we disable
-   optimizations to avoid the Linux macros.  */
-# undef __OPTIMIZE__
-# include <libintl.h>
-
-/* These quotes are borrowed from a pt_PT.utf8 translation.  */
-# define LQ "\302\253"
-# define RQ "\302\273"
-#endif
+#include "gettext.h"
 
 #define ASSERT(expr) \
   do									     \
@@ -163,6 +151,11 @@ static struct result_groups flag_results[] = {
 };
 
 #if ENABLE_NLS
+
+/* These quotes are borrowed from a pt_PT.utf8 translation.  */
+# define LQ "\302\253"
+# define RQ "\302\273"
+
 static struct result_groups locale_results[] = {
   /* locale_quoting_style */
   { { LQ RQ, LQ "\\0001\\0" RQ, 11, LQ "simple" RQ,
@@ -180,6 +173,7 @@ static struct result_groups locale_results[] = {
     { LQ RQ, LQ "\\0001\\0" RQ, 11, LQ "simple" RQ,
       LQ " \\t\\n'\"\\033?""?/\\\\" RQ, LQ "a\\:b" RQ, LQ "a\\\\b" RQ } }
 };
+
 #endif /* ENABLE_NLS */
 
 static void
@@ -251,40 +245,6 @@ use_quotearg_colon (const char *str, size_t *len)
   return p;
 }
 
-#if ENABLE_NLS
-/* True if the locale should be faked.  */
-static bool fake_locale;
-
-/* A replacement gettext that allows testing of locale quotes without
-   requiring a locale.  */
-char *
-gettext (char const *str)
-{
-  if (fake_locale)
-    {
-      static char lq[] = LQ;
-      static char rq[] = RQ;
-      if (strcmp (str, "`") == 0)
-	return lq;
-      if (strcmp (str, "'") == 0)
-	return rq;
-    }
-  return (char *) str;
-}
-
-char *
-dgettext (char const *d, char const *str)
-{
-  return gettext (str);
-}
-
-char *
-dcgettext (char const *d, char const *str, int c)
-{
-  return gettext (str);
-}
-#endif /* ENABLE_NLS */
-
 int
 main (int argc, char *argv[])
 {
@@ -292,7 +252,7 @@ main (int argc, char *argv[])
 
   set_program_name (argv[0]);
 
-  /* This program is hard-wired to the C locale since it does not call
+  /* This program part is hard-wired to the C locale since it does not call
      setlocale.  */
   ASSERT (!isprint ('\033'));
   for (i = literal_quoting_style; i <= clocale_quoting_style; i++)
@@ -325,21 +285,37 @@ main (int argc, char *argv[])
   ASSERT (set_quoting_flags (NULL, 0) == QA_SPLIT_TRIGRAPHS);
 
 #if ENABLE_NLS
-  /* Rather than change locales, and require a .gmo file with
-     translations for "`" and "'" that match our expectations, we
-     merely override the gettext function to satisfy the link
-     dependencies of quotearg.c.  */
-  fake_locale = true;
+  /* Clean up environment.  */
+  unsetenv ("LANGUAGE");
+  unsetenv ("LC_ALL");
+  unsetenv ("LC_MESSAGES");
+  unsetenv ("LC_CTYPE");
+  unsetenv ("LANG");
+  unsetenv ("OUTPUT_CHARSET");
 
-  set_quoting_style (NULL, locale_quoting_style);
-  compare_strings (use_quotearg_buffer, &locale_results[0].group1);
-  compare_strings (use_quotearg, &locale_results[0].group2);
-  compare_strings (use_quotearg_colon, &locale_results[0].group3);
+  /* This program part runs in a French UTF-8 locale.  It uses
+     the test-quotearg.mo message catalog.  */
+  {
+    const char *locale_name = getenv ("LOCALE");
 
-  set_quoting_style (NULL, clocale_quoting_style);
-  compare_strings (use_quotearg_buffer, &locale_results[1].group1);
-  compare_strings (use_quotearg, &locale_results[1].group2);
-  compare_strings (use_quotearg_colon, &locale_results[1].group3);
+    if (locale_name != NULL && strcmp (locale_name, "none") != 0
+	&& setenv ("LC_ALL", locale_name, 1) == 0
+	&& setlocale (LC_ALL, "") != NULL)
+      {
+	textdomain ("test-quotearg");
+	bindtextdomain ("test-quotearg", getenv ("LOCALEDIR"));
+
+	set_quoting_style (NULL, locale_quoting_style);
+	compare_strings (use_quotearg_buffer, &locale_results[0].group1);
+	compare_strings (use_quotearg, &locale_results[0].group2);
+	compare_strings (use_quotearg_colon, &locale_results[0].group3);
+
+	set_quoting_style (NULL, clocale_quoting_style);
+	compare_strings (use_quotearg_buffer, &locale_results[1].group1);
+	compare_strings (use_quotearg, &locale_results[1].group2);
+	compare_strings (use_quotearg_colon, &locale_results[1].group3);
+      }
+  }
 #endif /* ENABLE_NLS */
 
   quotearg_free ();

@@ -1,5 +1,23 @@
 2009-01-25  Bruno Haible  <bruno@clisp.org>
 
+	Make test-quotearg work on MacOS X and AIX.
+	* tests/test-quotearg.sh: New file.
+	* tests/locale/fr/LC_MESSAGES/test-quotearg.po: New file.
+	* tests/locale/fr/LC_MESSAGES/test-quotearg.mo: New file.
+	* tests/test-quotearg.c: Include <locale.h> and gettext.h. Don't
+	include <libintl.h>.
+	(fake_locale): Remove variable.
+	(gettext, dgettext, dcgettext): Remove functions.
+	(main): Instead of setting a fake locale, set a real locale. Call
+	textdomain and bindtextdomain.
+	* modules/quotearg-tests (Files): Add the new files.
+	(Depends-on): Add gettext, setenv, unsetenv.
+	(configure.ac): Invoke gt_LOCALE_FR and gt_LOCALE_FR_UTF8.
+	(Makefile.am): Add test-quotearg.sh to TESTS, remove test-quotearg.
+	Augment TESTS_ENVIRONMENT.
+
+2009-01-25  Bruno Haible  <bruno@clisp.org>
+
 	* m4/locale-fr.m4 (gt_LOCALE_FR): Remove special code that hid the
 	fr_FR.ISO8859-1 locale on MacOS X.
 	* m4/locale-ja.m4 (gt_LOCALE_JA): Remove special code that hid the

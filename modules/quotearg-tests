@@ -1,13 +1,24 @@
 Files:
+tests/test-quotearg.sh
 tests/test-quotearg.c
+tests/locale/fr/LC_MESSAGES/test-quotearg.po
+tests/locale/fr/LC_MESSAGES/test-quotearg.mo
+m4/locale-fr.m4
+m4/codeset.m4
 
 Depends-on:
+gettext
 progname
 stdint
+setenv
+unsetenv
 
 configure.ac:
+gt_LOCALE_FR
+gt_LOCALE_FR_UTF8
 
 Makefile.am:
-TESTS += test-quotearg
+TESTS += test-quotearg.sh
+TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' srcdir='$(srcdir)' LOCALE_FR='@LOCALE_FR@' LOCALE_FR_UTF8='@LOCALE_FR_UTF8@'
 check_PROGRAMS += test-quotearg
 test_quotearg_LDADD = $(LDADD) @LIBINTL@
