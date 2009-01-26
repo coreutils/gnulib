@@ -1,5 +1,14 @@
 2009-01-25  Bruno Haible  <bruno@clisp.org>
 
+	* m4/locale-fr.m4 (gt_LOCALE_FR): Remove special code that hid the
+	fr_FR.ISO8859-1 locale on MacOS X.
+	* m4/locale-ja.m4 (gt_LOCALE_JA): Remove special code that hid the
+	ja_JP.eucJP locale on MacOS X.
+	* m4/locale-zh.m4 (gt_LOCALE_ZH_CN): Remove special code that hid the
+	zh_CN.GB18030 locale on MacOS X.
+
+2009-01-25  Bruno Haible  <bruno@clisp.org>
+
 	Avoid link errors on MacOS X 10.3.
 	* lib/mbsrtowcs-state.c (_gl_mbsrtowcs_state): Add initializer.
 	* lib/wcsrtombs-state.c (_gl_wcsrtombs_state): Likewise.
