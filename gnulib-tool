@@ -1378,6 +1378,7 @@ func_get_filelist ()
 {
   func_lookup_file "modules/$1"
   sed -n -e "/^Files$sed_extract_prog" < "$lookedup_file"
+  echo m4/00gnulib.m4
   echo m4/gnulib-common.m4
   case "$autoconf_minversion" in
     2.59)

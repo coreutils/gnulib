@@ -1,3 +1,11 @@
+2009-01-26  Eric Blake  <ebb9@byu.net>
+
+	Backport improved autoconf semantics of AC_DEFUN_ONCE.
+	* m4/00gnulib.m4: New file.
+	* gnulib-tool (func_get_filelist): Always use it.
+	* m4/gnulib-common.m4 (gl_COMMON): Force the file to be used.
+	Reported by Bruno Haible, with suggestions from Paolo Bonzini.
+
 2009-01-25  Bruno Haible  <bruno@clisp.org>
 
 	Make test-quotearg work on MacOS X and AIX.
