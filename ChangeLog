@@ -1,5 +1,11 @@
 2009-01-25  Bruno Haible  <bruno@clisp.org>
 
+	Avoid link errors on MacOS X 10.3.
+	* lib/mbsrtowcs-state.c (_gl_mbsrtowcs_state): Add initializer.
+	* lib/wcsrtombs-state.c (_gl_wcsrtombs_state): Likewise.
+
+2009-01-25  Bruno Haible  <bruno@clisp.org>
+
 	* lib/pipe.c: On Unix, assume HAVE_POSIX_SPAWN and use posix_spawnp.
 	* m4/pipe.m4 (gl_PIPE): Remove tests for vfork() based code.
 	* modules/pipe (Files): Remove m4/posix_spawn.m4.
