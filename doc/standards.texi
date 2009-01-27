@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate November 6, 2008
+@set lastupdate January 26, 2009
 @c %**end of header
 
 @dircategory GNU organization
@@ -27,7 +27,7 @@
 The GNU coding standards, last updated @value{lastupdate}.
 
 Copyright @copyright{} 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999,
-2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008 Free Software
+2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009 Free Software
 Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
@@ -1086,12 +1086,18 @@ is seen, and the program should not perform its normal function.
 
 @cindex address for bug reports
 @cindex bug reports
-Near the end of the @samp{--help} option's output there should be a line
-that says where to mail bug reports.  It should have this format:
+Near the end of the @samp{--help} option's output, please place lines
+giving the email address for bug reports, the package's home page
+(normally @indicateurl{http://www.gnu.org/software/@var{pkg}}, and the
+general page for help using GNU programs.  The format should be like this:
 
 @example
 Report bugs to @var{mailing-address}.
+@var{pkg} home page: http://www.gnu.org/software/@var{pkg}/
+General help using GNU software: http://www.gnu.org/gethelp/
 @end example
+
+It is ok to mention other appropriate mailing lists and web pages.
 
 
 @node Option Table
