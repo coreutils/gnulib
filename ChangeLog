@@ -1,3 +1,9 @@
+2009-01-28  Eric Blake  <ebb9@byu.net>
+
+	version-etc: use consistent URL formatting
+	* lib/version-etc.c (emit_bug_reporting_address, version_etc_va):
+	Improve formatting.  Use fputs for string without %.
+
 2009-01-28  Jim Meyering  <meyering@redhat.com>
 
 	00gnulib.m4: add m4 quotes in shell comment to avoid autoconf warning

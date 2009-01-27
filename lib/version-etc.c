@@ -66,7 +66,7 @@ version_etc_va (FILE *stream,
 
   fputs (_("\
 \n\
-License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>\n\
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.\n\
 This is free software: you are free to change and redistribute it.\n\
 There is NO WARRANTY, to the extent permitted by law.\n\
 \n\
@@ -179,7 +179,8 @@ emit_bug_reporting_address (void)
      "Report translation bugs to <...>\n" with the address for translation
      bugs (typically your translation team's web or email address).  */
   printf (_("\nReport bugs to <%s>.\n"), PACKAGE_BUGREPORT);
-  printf (_("%s home page: http://www.gnu.org/software/%s/\n"),
+  printf (_("%s home page: <http://www.gnu.org/software/%s/>.\n"),
 	  PACKAGE_NAME, PACKAGE);
-  printf (_("General help using GNU software: http://www.gnu.org/gethelp/\n"));
+  fputs (_("General help using GNU software: <http://www.gnu.org/gethelp/>.\n"),
+         stdout);
 }
