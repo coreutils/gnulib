@@ -1,6 +1,6 @@
 /* Test the getaddrinfo module.
 
-   Copyright (C) 2006-2008 Free Software Foundation, Inc.
+   Copyright (C) 2006-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -64,6 +64,14 @@ int simple (char *host, char *service)
 
   if (res != 0)
     {
+      /* EAI_AGAIN is returned if no network is available. Don't fail
+	 the test merely because someone is down the country on their
+	 in-law's farm. */
+      if (res == EAI_AGAIN)
+	{
+	  fprintf (stderr, "skipping getaddrinfo test: no network?\n");
+	  return 77;
+	}
       /* IRIX reports EAI_NONAME for "https".  Don't fail the test
 	 merely because of this.  */
       if (res == EAI_NONAME)

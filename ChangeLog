@@ -1,3 +1,9 @@
+2009-01-27  Mark McLoughlin  <markmc@redhat.com>
+
+	test-getaddrinfo: skip (don't fail) this test when there's no network
+	* tests/test-getaddrinfo.c: Skip test upon failure with EAI_AGAIN,
+	on the presumption that it means you lack network access.
+
 2009-01-26  Jim Meyering  <meyering@redhat.com>
 
 	fflush: avoid warnings on modern systems
