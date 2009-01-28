@@ -1,4 +1,4 @@
-# 00gnulib.m4 serial 1
+# 00gnulib.m4 serial 2
 dnl Copyright (C) 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,8 +8,8 @@ dnl This file must be named something that sorts before all other
 dnl gnulib-provided .m4 files.  It is needed until such time as we can
 dnl assume Autoconf 2.64, with its improved AC_DEFUN_ONCE semantics.
 
-# AC_DEFUN_ONCE(NAME, VALUE)
-# --------------------------
+# AC_DEFUN_ONCE([NAME], VALUE)
+# ----------------------------
 # Define NAME to expand to VALUE on the first use (whether by direct
 # expansion, or by AC_REQUIRE), and to nothing on all subsequent uses.
 # Avoid bugs in AC_REQUIRE in Autoconf 2.63 and earlier.  This

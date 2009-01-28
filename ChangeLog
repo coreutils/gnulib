@@ -1,3 +1,9 @@
+2009-01-28  Jim Meyering  <meyering@redhat.com>
+
+	00gnulib.m4: add m4 quotes in shell comment to avoid autoconf warning
+	* m4/00gnulib.m4 (AC_DEFUN_ONCE): Add quotes to avoid an
+	"underquoted definition of NAME" from autoconf-2.59.
+
 2009-01-28  Bruno Haible  <bruno@clisp.org>
 
 	* doc/gnulib.texi: Add "Obsolete modules" to index.
