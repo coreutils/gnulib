@@ -2,9 +2,9 @@
 # Detect instances of "if (p) free (p);".
 # Likewise for "if (p != NULL) free (p);".  And with braces.
 # Also detect "if (NULL != p) free (p);".
-# And with 0 or "(void *)0" in place of NULL.
+# And with 0 in place of NULL.
 
-my $VERSION = '2009-01-28 08:16'; # UTC
+my $VERSION = '2009-01-28 08:23'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -89,9 +89,7 @@ EOF
 sub is_NULL ($)
 {
   my ($expr) = @_;
-  return ($expr eq 'NULL'
-          || $expr eq '0'
-          || $expr =~ /^\(\s*(char|void)\s*\*\s*\)\s*0$/);
+  return ($expr eq 'NULL' || $expr eq '0');
 }
 
 {
