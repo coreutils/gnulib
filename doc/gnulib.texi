@@ -265,6 +265,7 @@ fail.
 @node Obsolete modules
 @section Obsolete modules
 
+@cindex Obsolete modules
 Modules can be marked obsolete.  This means that the problems they fix
 don't occur any more on the platforms that are reasonable porting targets
 now.  @code{gnulib-tool} warns when obsolete modules are mentioned on the
