@@ -1,4 +1,4 @@
-# gnulib-common.m4 serial 9
+# gnulib-common.m4 serial 10
 dnl Copyright (C) 2007-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -53,7 +53,7 @@ m4_ifndef([m4_foreach_w],
 # is a backport of autoconf-2.60's AC_PROG_MKDIR_P.
 # Remove this macro when we can assume autoconf >= 2.60.
 m4_ifdef([AC_PROG_MKDIR_P], [], [
-  AC_DEFUN([AC_PROG_MKDIR_P],
+  AC_DEFUN_ONCE([AC_PROG_MKDIR_P],
     [AC_REQUIRE([AM_PROG_MKDIR_P])dnl defined by automake
      MKDIR_P='$(mkdir_p)'
      AC_SUBST([MKDIR_P])])])

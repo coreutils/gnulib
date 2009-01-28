@@ -1,3 +1,10 @@
+2009-01-30  Eric Blake  <ebb9@byu.net>
+
+	fix more require-before-expand issues
+	* m4/pmccabe2html.m4 (gl_PMCCABE2HTML): Require, rather than
+	expand, AC_PROG_AWK.
+	* m4/gnulib-common.m4 (AC_PROG_MKDIR_P): Use AC_DEFUN_ONCE.
+
 2009-01-28  Eric Blake  <ebb9@byu.net>
 
 	version-etc: use consistent URL formatting
