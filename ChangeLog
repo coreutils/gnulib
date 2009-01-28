@@ -1,3 +1,9 @@
+2009-01-28  Jim Meyering  <meyering@redhat.com>
+
+	useless-if-before-free: recognize more variants
+	* build-aux/useless-if-before-free: Also recognize e.g.,
+	if (NULL != p) free (p);
+
 2009-01-27  Mark McLoughlin  <markmc@redhat.com>
 
 	test-getaddrinfo: skip (don't fail) this test when there's no network
