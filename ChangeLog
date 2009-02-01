@@ -1,3 +1,15 @@
+2009-02-01  Bruno Haible  <bruno@clisp.org>
+
+	Don't assume sizeof (long) >= sizeof (void *).
+	* lib/memcmp.c: Include stdint.h.
+	(memcmp_bytes): Change argument types to op_t. Change type of srcp1,
+	srcp2 to 'const byte *'.
+	(memcmp_common_alignment, memcmp_not_common_alignment): Change argument
+	types to uintptr_t.
+	(rpl_memcmp): Change type of srcp1, srcp2 to 'uintptr_t'.
+	* modules/memcmp (Depends-on): Add stdint.
+	Reported by Ozkan Sezer <sezeroz@gmail.com>.
+
 2009-01-30  Eric Blake  <ebb9@byu.net>
 
 	fix more require-before-expand issues

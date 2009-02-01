@@ -12,6 +12,7 @@ lib/memcmp.c
 m4/memcmp.m4
 
 Depends-on:
+stdint
 
 configure.ac:
 gl_FUNC_MEMCMP
