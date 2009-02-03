@@ -7,6 +7,7 @@ lib/w32sock.h
 
 Depends-on:
 sys_socket
+sys_time
 errno
 
 configure.ac:
