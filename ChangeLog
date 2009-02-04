@@ -1,5 +1,8 @@
 2009-02-04  Jim Meyering  <meyering@redhat.com>
 
+	fsusage.c: correct copyright year
+	* lib/fsusage.c: Reflect year in which the change is pushed into
+
 	avoid misc. warnings
 	* lib/fsusage.c (UNUSED_PARAM): Define.
 	(get_fs_usage): Mark parameter "disk" as unused.
