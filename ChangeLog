@@ -1,3 +1,11 @@
+2009-02-04  Jim Meyering  <meyering@redhat.com>
+
+	dirfd: set errno upon failure
+	* lib/dirfd.c: Include <errno.h>.
+	Set errno to ENOTSUP when returning -1.
+	* modules/dirfd (Depends-on): Add errno.
+	Suggested by John Kodis <kodis@comcast.net>.
+
 2009-02-01  Bruno Haible  <bruno@clisp.org>
 
 	Don't assume sizeof (long) >= sizeof (void *).
