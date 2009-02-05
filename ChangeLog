@@ -1,3 +1,12 @@
+2009-02-05  Jim Meyering  <meyering@redhat.com>
+
+	still avoid unused-parameter warnings, but do it cleanly
+	* lib/fsusage.c (UNUSED_PARAM): Remove definition.
+	(get_fs_usage): Cast to void instead.
+	* lib/mountlist.c (UNUSED_PARAM): Remove definition.
+	(dev_from_mount_options, read_file_system_list): Cast to void.
+	Prompted by Bruno Haible.
+
 2009-02-04  Jim Meyering  <meyering@redhat.com>
 
 	fsusage.c: correct copyright year

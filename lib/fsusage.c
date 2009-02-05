@@ -84,12 +84,6 @@
    otherwise, use PROPAGATE_ALL_ONES.  */
 #define PROPAGATE_TOP_BIT(x) ((x) | ~ (EXTRACT_TOP_BIT (x) - 1))
 
-#ifdef STAT_READ_FILSYS
-# define UNUSED_PARAM /* empty */
-#else
-# define UNUSED_PARAM _UNUSED_PARAMETER_
-#endif
-
 /* Fill in the fields of FSP with information about space usage for
    the file system on which FILE resides.
    DISK is the device on which FILE is mounted, for space-getting
@@ -98,9 +92,9 @@
    ERRNO is either a system error value, or zero if DISK is NULL
    on a system that requires a non-NULL value.  */
 int
-get_fs_usage (char const *file, char const *disk UNUSED_PARAM,
-	      struct fs_usage *fsp)
+get_fs_usage (char const *file, char const *disk, struct fs_usage *fsp)
 {
+  (void) disk;  /* avoid argument-unused warning */
 #if defined STAT_STATVFS		/* POSIX */
 
   struct statvfs fsd;
