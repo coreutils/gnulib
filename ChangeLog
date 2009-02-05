@@ -1,3 +1,10 @@
+2009-02-07  Jim Meyering  <meyering@redhat.com>
+
+	regex: avoid compilation failure with upcoming gcc-4.4
+	* lib/regex_internal.h: Revert e48d8b47fb3eee81d341b71c3e006efe9e3433a7
+	[workaround for PGC prior to 6.1-2].  Otherwise, we'd get this:
+	"... error: integer overflow in preprocessor expression".
+
 2009-02-05  Ben Pfaff  <blp@gnu.org>
 
 	Fix link errors on Windows when close module is used.
