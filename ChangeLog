@@ -1,5 +1,14 @@
 2009-02-07  Bruno Haible  <bruno@clisp.org>
 
+	* test-mbrtowc4.sh (LOCALE_ZH_CN): Fix default value.
+	* test-mbsnrtowcs4.sh (LOCALE_ZH_CN): Likewise.
+	* test-mbsrtowcs4.sh (LOCALE_ZH_CN): Likewise.
+	* test-wcrtomb.sh (LOCALE_ZH_CN): Likewise.
+	* test-wcsnrtombs4.sh (LOCALE_ZH_CN): Likewise.
+	* test-wcsrtombs4.sh (LOCALE_ZH_CN): Likewise.
+
+2009-02-07  Bruno Haible  <bruno@clisp.org>
+
 	Make 64-bit clean.
 	* lib/unictype/gen-ctype.c (output_predicate, output_category,
 	output_combclass, output_bidi_category, output_decimal_digit,

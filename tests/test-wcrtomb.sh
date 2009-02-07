@@ -25,7 +25,7 @@ if test $LOCALE_JA != none; then
 fi
 
 # Test whether a specific GB18030 locale is installed.
-: ${LOCALE_ZH_CN=zh_CN}
+: ${LOCALE_ZH_CN=zh_CN.GB18030}
 if test $LOCALE_ZH_CN != none; then
   LC_ALL=$LOCALE_ZH_CN \
   ./test-wcrtomb${EXEEXT} 4 \
