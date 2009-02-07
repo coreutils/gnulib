@@ -1,5 +1,13 @@
 2009-02-07  Bruno Haible  <bruno@clisp.org>
 
+	Make 64-bit clean.
+	* lib/unictype/gen-ctype.c (output_predicate, output_category,
+	output_combclass, output_bidi_category, output_decimal_digit,
+	output_digit, output_numeric, output_mirror, output_scripts,
+	output_ident_category): Use proper width specifier in format strings.
+
+2009-02-07  Bruno Haible  <bruno@clisp.org>
+
 	* doc/posix-functions/dirfd.texi: Clarify situation on mingw. Document
 	failure behaviour.
 
