@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate January 26, 2009
+@set lastupdate January 31, 2009
 @c %**end of header
 
 @dircategory GNU organization
@@ -1092,9 +1092,9 @@ giving the email address for bug reports, the package's home page
 general page for help using GNU programs.  The format should be like this:
 
 @example
-Report bugs to @var{mailing-address}.
-@var{pkg} home page: http://www.gnu.org/software/@var{pkg}/
-General help using GNU software: http://www.gnu.org/gethelp/
+Report bugs to: @var{mailing-address}
+@var{pkg} home page: <http://www.gnu.org/software/@var{pkg}/>
+General help using GNU software: <http://www.gnu.org/gethelp/>
 @end example
 
 It is ok to mention other appropriate mailing lists and web pages.

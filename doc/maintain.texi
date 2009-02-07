@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate January 1, 2009
+@set lastupdate February 1, 2009
 @c %**end of header
 
 @dircategory GNU organization
@@ -1230,8 +1230,10 @@ command @code{gpg --gen-key}.  (For full information about GPG, see
 @url{http://www.gnu.org/software/gpg}).
 
 @item
-Send a message, preferably GPG-signed, to @email{ftp-upload@@gnu.org}
-with the following:
+Compose a message with the following items in some @var{msgfile}.
+Then GPG-sign it by running @code{gpg --clearsign @var{msgfile}}, and
+finally email the resulting @file{@var{msgfile}.asc}), to
+@email{ftp-upload@@gnu.org}.
 
 @enumerate
 @item
@@ -1255,6 +1257,9 @@ ASCII armored copies of GnuPG keys for any individuals listed in (3).
 The administrators will acknowledge your message when they have added
 the proper GPG keys as authorized to upload files for the
 corresponding packages.
+
+The upload system will email receipts to the given email addresses
+when an upload is made, either successfully or unsuccessfully.
 
 
 @node Automated Upload Procedure
@@ -1381,7 +1386,15 @@ directives.  A @code{filename} directive is not allowed, and a
 @code{comment} directive remains optional.
 
 If you use more than one directive, the directives are executed in the
-sequence they are specified in.
+sequence they are specified in.  If a directive results in an error,
+further execution of the upload is aborted.
+
+Removing a symbolic link (with @code{rmsymlink}) which does not exist
+results in an error.  However, attempting to create a symbolic link
+that already exists (with @code{symlink}) is not an error.  In this
+case @code{symlink} behaves like the command @command{ln -s -f}: any
+existing symlink is removed before creating the link.  (But an
+existing regular file or directory is not removed.)
 
 Here are a few examples.  The first removes a symlink:
 
