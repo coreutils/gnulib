@@ -1,5 +1,12 @@
 2009-02-07  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unistr/u8-strcoll'.
+	* modules/unistr/u8-strcoll: New file.
+	* lib/unistr/u8-strcoll.c: New file.
+	* lib/unistr/u-strcoll.h: New file.
+
+2009-02-07  Bruno Haible  <bruno@clisp.org>
+
 	* test-mbrtowc4.sh (LOCALE_ZH_CN): Fix default value.
 	* test-mbsnrtowcs4.sh (LOCALE_ZH_CN): Likewise.
 	* test-mbsrtowcs4.sh (LOCALE_ZH_CN): Likewise.
