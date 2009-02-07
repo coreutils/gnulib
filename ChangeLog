@@ -1,5 +1,9 @@
 2009-02-07  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unistr/u32-strcoll'.
+	* modules/unistr/u32-strcoll: New file.
+	* lib/unistr/u32-strcoll.c: New file.
+
 	New module 'unistr/u16-strcoll'.
 	* modules/unistr/u16-strcoll: New file.
 	* lib/unistr/u16-strcoll.c: New file.
