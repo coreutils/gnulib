@@ -1,5 +1,7 @@
 2009-02-07  Bruno Haible  <bruno@clisp.org>
 
+	* lib/unistr.h (u8_strcoll, u16_strcoll, u32_strcoll): New declations.
+
 	New module 'unistr/u32-strcoll'.
 	* modules/unistr/u32-strcoll: New file.
 	* lib/unistr/u32-strcoll.c: New file.

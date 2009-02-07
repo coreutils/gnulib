@@ -1,5 +1,5 @@
 /* Elementary Unicode string functions.
-   Copyright (C) 2001-2002, 2005-2008 Free Software Foundation, Inc.
+   Copyright (C) 2001-2002, 2005-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify it
    under the terms of the GNU Lesser General Public License as published
@@ -552,6 +552,17 @@ extern int
        u16_strcmp (const uint16_t *s1, const uint16_t *s2);
 extern int
        u32_strcmp (const uint32_t *s1, const uint32_t *s2);
+
+/* Compare S1 and S2 using the collation rules of the current locale.
+   Return -1 if S1 < S2, 0 if S1 = S2, 1 if S1 > S2.
+   Upon failure, set errno and return any value.  */
+/* Similar to strcoll(), wcscoll().  */
+extern int
+       u8_strcoll (const uint8_t *s1, const uint8_t *s2);
+extern int
+       u16_strcoll (const uint16_t *s1, const uint16_t *s2);
+extern int
+       u32_strcoll (const uint32_t *s1, const uint32_t *s2);
 
 /* Compare no more than N units of S1 and S2.  */
 /* Similar to strncmp(), wcsncmp().  */
