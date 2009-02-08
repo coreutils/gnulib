@@ -1,5 +1,11 @@
 2009-02-08  Bruno Haible  <bruno@clisp.org>
 
+	Fix wrong order of sections, compared to TOC.
+	* doc/gnulib.texi: Include relocatable-maint.texi after the
+	"Regular expressions" node, not before.
+
+2009-02-08  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'unicase/totitle'.
 	* modules/unicase/totitle-tests: New file.
 

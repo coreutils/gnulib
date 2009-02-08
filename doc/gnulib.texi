@@ -5888,9 +5888,10 @@ ASCII characters.
 @include c-strtold.texi
 
 @include quote.texi
+
 @include error.texi
+
 @include gcd.texi
-@include relocatable-maint.texi
 
 @node Regular expressions
 @section Regular expressions
@@ -5901,6 +5902,8 @@ varies.  The descriptions given here for the different types are
 generated automatically.
 
 @include regexprops-generic.texi
+
+@include relocatable-maint.texi
 
 @include func.texi
 
