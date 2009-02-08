@@ -1,5 +1,9 @@
 2009-02-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'uniwbrk/wordbreak-property'.
+	* modules/uniwbrk/wordbreak-property: New file.
+	* lib/uniwbrk/wordbreak-property.c: New file.
+
 	* lib/gen-uni-tables.c (WBP_*): New enum items.
 	(get_wbp, debug_output_wbp, debug_output_wbrk_tables): New functions.
 	(unicode_org_wbp): New variable.
