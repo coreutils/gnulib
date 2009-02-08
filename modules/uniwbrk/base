@@ -1,0 +1,22 @@
+Description:
+Base layer for word breaks.
+
+Files:
+lib/uniwbrk.h
+
+Depends-on:
+unitypes
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+"uniwbrk.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

@@ -1,5 +1,11 @@
 2009-02-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'uniwbrk/base'.
+	* modules/uniwbrk/base: New file.
+	* lib/uniwbrk.h: New file.
+
+2009-02-08  Bruno Haible  <bruno@clisp.org>
+
 	Update to Unicode 5.1.0.
 	* lib/gen-uni-tables.c (is_property_alphabetic): Include
 	U+2185..U+2188.
