@@ -1,6 +1,19 @@
 2009-02-08  Bruno Haible  <bruno@clisp.org>
 
 	Update to Unicode 5.1.0.
+	* lib/uniwidth/width.c (nonspacing_table_data): Add U+0487,
+	U+0616..U+061A, U+0A51, U+0A75, U+0B44, U+0B62..U+0B63, U+0C62..U+0C63,
+	U+0D44, U+0D62..U+0D63, U+1033..U+1035, U+103A, U+103D..U+103E,
+	U+105E..U+1060, U+1071..U+1074, U+1082, U+1085..U+1086, U+108D,
+	U+1B80..U+1B81, U+1BA2..U+1BA5, U+1BA8..U+1BA9, U+1C2C..U+1C33,
+	U+1C36..U+1C37, U+1DCB..U+1DE6, U+2064, U+20F0, U+2DE0..U+2DFF,
+	U+A66F..U+A672, U+A67C..U+A67D, U+A8C4, U+A926..U+A92D, U+A947..U+A951,
+	U+AA29..U+AA2E, U+AA31..U+AA32, U+AA35..U+AA36, U+AA43, U+AA4C,
+	U+FE24..U+FE26, U+101FD. Remove U+1929..U+192B.
+	(nonspacing_table_ind): Update.
+	* tests/uniwidth/test-uc_width2.sh: Update expected result.
+
+	Update to Unicode 5.1.0.
 	* lib/uniname/gen-uninames.lisp (main): Add the range 0x1Fxxx to the
 	code transform.
 	* lib/uniname/uniname.c (unicode_character_name,
