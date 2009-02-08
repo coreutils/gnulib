@@ -27,7 +27,9 @@
     { 0x1D9B, 0x1DBF },
     { 0x2090, 0x2094 },
     { 0x2170, 0x217F },
-    { 0x24D0, 0x24E9 }
+    { 0x24D0, 0x24E9 },
+    { 0x2C7D, 0x2C7D },
+    { 0xA770, 0xA770 }
 
 #define PREDICATE(c) uc_is_property_other_lowercase (c)
 #include "test-predicate-part2.h"

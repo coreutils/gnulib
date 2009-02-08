@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Categories of Unicode characters.  */
-/* Generated automatically by gen-ctype.c for Unicode 5.0.0.  */
+/* Generated automatically by gen-ctype.c for Unicode 5.1.0.  */
 #define header_0 16
 #define header_2 9
 #define header_3 127
@@ -286,7 +286,7 @@ u_categ_Nl =
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0xFFFFFFFF,
-    0x00000007, 0x00000000, 0x00000000, 0x00000000,
+    0x000001E7, 0x00000000, 0x00000000, 0x00000000,
     0x00000080, 0x070003FE, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,

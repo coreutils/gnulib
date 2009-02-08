@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-ctype.c for Unicode 5.0.0.  */
+/* Generated automatically by gen-ctype.c for Unicode 5.1.0.  */
 #define header_0 16
 #define header_2 9
 #define header_3 127
@@ -300,7 +300,7 @@ u_property_other_default_ignorable_code_point =
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x80000000, 0x00000001,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x000003F0,
+    0x00000000, 0x00000000, 0x00000000, 0x000003E0,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,

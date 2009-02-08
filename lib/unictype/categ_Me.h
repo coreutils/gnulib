@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Categories of Unicode characters.  */
-/* Generated automatically by gen-ctype.c for Unicode 5.0.0.  */
+/* Generated automatically by gen-ctype.c for Unicode 5.1.0.  */
 #define header_0 16
 #define header_2 9
 #define header_3 127
@@ -11,7 +11,7 @@ struct
     int header[1];
     int level1[1];
     short level2[1 << 7];
-    /*unsigned*/ int level3[3 << 4];
+    /*unsigned*/ int level3[4 << 4];
   }
 u_categ_Me =
 {
@@ -101,7 +101,7 @@ u_categ_Me =
        -1,
        -1,
        -1,
-       -1,
+        2 +   128 * sizeof (short) / sizeof (int) +    48,
        -1,
        -1,
        -1,
@@ -158,6 +158,10 @@ u_categ_Me =
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0xE0000000, 0x0000001D,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00070000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000
   }

@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-ctype.c for Unicode 5.0.0.  */
+/* Generated automatically by gen-ctype.c for Unicode 5.1.0.  */
 #define header_0 16
 #define header_2 9
 #define header_3 127
@@ -11,23 +11,23 @@ struct
     int header[1];
     int level1[1];
     short level2[1 << 7];
-    /*unsigned*/ int level3[1 << 4];
+    /*unsigned*/ int level3[3 << 4];
   }
 u_property_other_id_continue =
 {
   { 1 },
   {     2 * sizeof (int) / sizeof (short) +     0 },
   {
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
         2 +   128 * sizeof (short) / sizeof (int) +     0,
+        2 +   128 * sizeof (short) / sizeof (int) +    16,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+        2 +   128 * sizeof (short) / sizeof (int) +    32,
        -1,
        -1,
        -1,
@@ -148,6 +148,14 @@ u_property_other_id_continue =
        -1
   },
   {
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00800000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000080, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x0003FE00,

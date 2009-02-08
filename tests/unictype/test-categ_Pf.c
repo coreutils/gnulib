@@ -25,7 +25,8 @@
     { 0x2E05, 0x2E05 },
     { 0x2E0A, 0x2E0A },
     { 0x2E0D, 0x2E0D },
-    { 0x2E1D, 0x2E1D }
+    { 0x2E1D, 0x2E1D },
+    { 0x2E21, 0x2E21 }
 
 #define PREDICATE(c) uc_is_general_category (c, UC_CATEGORY_Pf)
 #include "test-predicate-part2.h"

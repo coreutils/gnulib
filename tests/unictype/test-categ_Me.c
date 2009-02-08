@@ -20,7 +20,8 @@
     { 0x0488, 0x0489 },
     { 0x06DE, 0x06DE },
     { 0x20DD, 0x20E0 },
-    { 0x20E2, 0x20E4 }
+    { 0x20E2, 0x20E4 },
+    { 0xA670, 0xA672 }
 
 #define PREDICATE(c) uc_is_general_category (c, UC_CATEGORY_Me)
 #include "test-predicate-part2.h"

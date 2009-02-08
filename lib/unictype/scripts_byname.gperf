@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Unicode scripts.  */
-/* Generated automatically by gen-ctype.c for Unicode 5.0.0.  */
+/* Generated automatically by gen-ctype.c for Unicode 5.1.0.  */
 struct named_script { const char *name; unsigned int index; };
 %struct-type
 %language=ANSI-C
@@ -76,3 +76,14 @@ Cuneiform, 62
 Phoenician, 63
 Phags_Pa, 64
 Nko, 65
+Sundanese, 66
+Lepcha, 67
+Ol_Chiki, 68
+Vai, 69
+Saurashtra, 70
+Kayah_Li, 71
+Rejang, 72
+Lycian, 73
+Carian, 74
+Lydian, 75
+Cham, 76

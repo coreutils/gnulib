@@ -20,7 +20,9 @@
     { 0x0340, 0x0341 },
     { 0x17A3, 0x17A3 },
     { 0x17D3, 0x17D3 },
-    { 0x206A, 0x206F }
+    { 0x206A, 0x206F },
+    { 0xE0001, 0xE0001 },
+    { 0xE0020, 0xE007F }
 
 #define PREDICATE(c) uc_is_property_deprecated (c)
 #include "test-predicate-part2.h"
