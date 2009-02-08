@@ -1,5 +1,6 @@
 /* Generate Unicode conforming character classification tables and
-   Line Break Properties tables from a UnicodeData file.
+   line break properties tables and word break property tables and
+   case mapping tables from a UnicodeData file.
    Copyright (C) 2000-2002, 2004, 2007-2009 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2000-2002.
 
@@ -6723,6 +6724,208 @@ output_wbrk_tables (const char *filename, const char *version)
 
 /* ========================================================================= */
 
+/* Output the test for a simple character mapping table to the given file.  */
+
+static void
+output_simple_mapping_test (const char *filename,
+			    const char *function_name,
+			    unsigned int (*func) (unsigned int),
+			    const char *version)
+{
+  FILE *stream;
+  bool need_comma;
+  unsigned int ch;
+
+  stream = fopen (filename, "w");
+  if (stream == NULL)
+    {
+      fprintf (stderr, "cannot open '%s' for writing\n", filename);
+      exit (1);
+    }
+
+  fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
+  fprintf (stream, "/* Test the Unicode character mapping functions.\n");
+  fprintf (stream, "   Copyright (C) 2009 Free Software Foundation, Inc.\n");
+  fprintf (stream, "\n");
+  fprintf (stream, "   This program is free software: you can redistribute it and/or modify\n");
+  fprintf (stream, "   it under the terms of the GNU General Public License as published by\n");
+  fprintf (stream, "   the Free Software Foundation; either version 3 of the License, or\n");
+  fprintf (stream, "   (at your option) any later version.\n");
+  fprintf (stream, "\n");
+  fprintf (stream, "   This program is distributed in the hope that it will be useful,\n");
+  fprintf (stream, "   but WITHOUT ANY WARRANTY; without even the implied warranty of\n");
+  fprintf (stream, "   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n");
+  fprintf (stream, "   GNU General Public License for more details.\n");
+  fprintf (stream, "\n");
+  fprintf (stream, "   You should have received a copy of the GNU General Public License\n");
+  fprintf (stream, "   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */\n");
+  fprintf (stream, "\n");
+  fprintf (stream, "/* Generated automatically by gen-case.c for Unicode %s.  */\n",
+	   version);
+  fprintf (stream, "\n");
+  fprintf (stream, "#include \"test-mapping-part1.h\"\n");
+  fprintf (stream, "\n");
+
+  need_comma = false;
+  for (ch = 0; ch < 0x110000; ch++)
+    {
+      unsigned int value = func (ch);
+
+      if (value != ch)
+	{
+	  if (need_comma)
+	    fprintf (stream, ",\n");
+	  fprintf (stream, "    { 0x%04X, 0x%04X }", ch, value);
+	  need_comma = true;
+	}
+    }
+  if (need_comma)
+    fprintf (stream, "\n");
+
+  fprintf (stream, "\n");
+  fprintf (stream, "#define MAP(c) %s (c)\n", function_name);
+  fprintf (stream, "#include \"test-mapping-part2.h\"\n");
+
+  if (ferror (stream) || fclose (stream))
+    {
+      fprintf (stderr, "error writing to '%s'\n", filename);
+      exit (1);
+    }
+}
+
+/* Construction of sparse 3-level tables.  */
+#define TABLE mapping_table
+#define ELEMENT int32_t
+#define DEFAULT 0
+#define xmalloc malloc
+#define xrealloc realloc
+#include "3level.h"
+
+/* Output a simple character mapping table to the given file.  */
+
+static void
+output_simple_mapping (const char *filename,
+		       unsigned int (*func) (unsigned int),
+		       const char *version)
+{
+  FILE *stream;
+  unsigned int ch, i;
+  struct mapping_table t;
+  unsigned int level1_offset, level2_offset, level3_offset;
+
+  stream = fopen (filename, "w");
+  if (stream == NULL)
+    {
+      fprintf (stderr, "cannot open '%s' for writing\n", filename);
+      exit (1);
+    }
+
+  fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
+  fprintf (stream, "/* Simple character mapping of Unicode characters.  */\n");
+  fprintf (stream, "/* Generated automatically by gen-case.c for Unicode %s.  */\n",
+	   version);
+
+  t.p = 7;
+  t.q = 9;
+  mapping_table_init (&t);
+
+  for (ch = 0; ch < 0x110000; ch++)
+    {
+      int value = (int) func (ch) - (int) ch;
+
+      mapping_table_add (&t, ch, value);
+    }
+
+  mapping_table_finalize (&t);
+
+  /* Offsets in t.result, in memory of this process.  */
+  level1_offset =
+    5 * sizeof (uint32_t);
+  level2_offset =
+    5 * sizeof (uint32_t)
+    + t.level1_size * sizeof (uint32_t);
+  level3_offset =
+    5 * sizeof (uint32_t)
+    + t.level1_size * sizeof (uint32_t)
+    + (t.level2_size << t.q) * sizeof (uint32_t);
+
+  for (i = 0; i < 5; i++)
+    fprintf (stream, "#define mapping_header_%d %d\n", i,
+	     ((uint32_t *) t.result)[i]);
+  fprintf (stream, "static const\n");
+  fprintf (stream, "struct\n");
+  fprintf (stream, "  {\n");
+  fprintf (stream, "    int level1[%zu];\n", t.level1_size);
+  fprintf (stream, "    short level2[%zu << %d];\n", t.level2_size, t.q);
+  fprintf (stream, "    int level3[%zu << %d];\n", t.level3_size, t.p);
+  fprintf (stream, "  }\n");
+  fprintf (stream, "u_mapping =\n");
+  fprintf (stream, "{\n");
+  fprintf (stream, "  {");
+  if (t.level1_size > 8)
+    fprintf (stream, "\n   ");
+  for (i = 0; i < t.level1_size; i++)
+    {
+      uint32_t offset;
+      if (i > 0 && (i % 8) == 0)
+	fprintf (stream, "\n   ");
+      offset = ((uint32_t *) (t.result + level1_offset))[i];
+      if (offset == 0)
+	fprintf (stream, " %5d", -1);
+      else
+	fprintf (stream, " %5zd",
+		 (offset - level2_offset) / sizeof (uint32_t));
+      if (i+1 < t.level1_size)
+	fprintf (stream, ",");
+    }
+  if (t.level1_size > 8)
+    fprintf (stream, "\n ");
+  fprintf (stream, " },\n");
+  fprintf (stream, "  {");
+  if (t.level2_size << t.q > 8)
+    fprintf (stream, "\n   ");
+  for (i = 0; i < t.level2_size << t.q; i++)
+    {
+      uint32_t offset;
+      if (i > 0 && (i % 8) == 0)
+	fprintf (stream, "\n   ");
+      offset = ((uint32_t *) (t.result + level2_offset))[i];
+      if (offset == 0)
+	fprintf (stream, " %5d", -1);
+      else
+	fprintf (stream, " %5zd",
+		 (offset - level3_offset) / sizeof (int32_t));
+      if (i+1 < t.level2_size << t.q)
+	fprintf (stream, ",");
+    }
+  if (t.level2_size << t.q > 8)
+    fprintf (stream, "\n ");
+  fprintf (stream, " },\n");
+  fprintf (stream, "  {");
+  if (t.level3_size << t.p > 8)
+    fprintf (stream, "\n   ");
+  for (i = 0; i < t.level3_size << t.p; i++)
+    {
+      if (i > 0 && (i % 8) == 0)
+	fprintf (stream, "\n   ");
+      fprintf (stream, " %5d", ((int32_t *) (t.result + level3_offset))[i]);
+      if (i+1 < t.level3_size << t.p)
+	fprintf (stream, ",");
+    }
+  if (t.level3_size << t.p > 8)
+    fprintf (stream, "\n ");
+  fprintf (stream, " }\n");
+  fprintf (stream, "};\n");
+
+  if (ferror (stream) || fclose (stream))
+    {
+      fprintf (stderr, "error writing to '%s'\n", filename);
+      exit (1);
+    }
+}
+
+/* ========================================================================= */
+
 int
 main (int argc, char * argv[])
 {
@@ -6791,6 +6994,13 @@ main (int argc, char * argv[])
   debug_output_wbrk_tables ("uniwbrk/wbrkprop.txt");
   debug_output_org_wbrk_tables ("uniwbrk/wbrkprop_org.txt");
   output_wbrk_tables ("uniwbrk/wbrkprop.h", version);
+
+  output_simple_mapping_test ("../tests/unicase/test-uc_toupper.c", "uc_toupper", to_upper, version);
+  output_simple_mapping_test ("../tests/unicase/test-uc_tolower.c", "uc_tolower", to_lower, version);
+  output_simple_mapping_test ("../tests/unicase/test-uc_totitle.c", "uc_totitle", to_title, version);
+  output_simple_mapping ("unicase/toupper.h", to_upper, version);
+  output_simple_mapping ("unicase/tolower.h", to_lower, version);
+  output_simple_mapping ("unicase/totitle.h", to_title, version);
 
   return 0;
 }

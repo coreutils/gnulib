@@ -1,5 +1,6 @@
 Description:
-Generates the tables in lib/unictype/* and lib/unilbrk/* and lib/uniwbrk/*.
+Generates the tables in lib/unictype/* and lib/unilbrk/* and lib/uniwbrk/* and
+lib/unicase/*.
 
 Files:
 lib/gen-uni-tables.c
