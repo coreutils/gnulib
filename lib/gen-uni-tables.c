@@ -25,6 +25,7 @@
                       /usr/local/share/Unidata/PropList-3.0.1.txt \
                       /usr/local/share/Unidata/EastAsianWidth.txt \
                       /usr/local/share/Unidata/LineBreak.txt \
+                      /usr/local/share/Unidata/WordBreakProperty.txt \
                       5.1.0
  */
 
@@ -6252,6 +6253,476 @@ output_lbrk_tables (const char *filename1, const char *filename2, const char *ve
 
 /* ========================================================================= */
 
+/* Word break property.  */
+
+/* Possible values of the Word_Break property.  */
+enum
+{
+  WBP_OTHER        = 0,
+  WBP_CR           = 11,
+  WBP_LF           = 12,
+  WBP_NEWLINE      = 10,
+  WBP_EXTEND       = 8,
+  WBP_FORMAT       = 9,
+  WBP_KATAKANA     = 1,
+  WBP_ALETTER      = 2,
+  WBP_MIDNUMLET    = 3,
+  WBP_MIDLETTER    = 4,
+  WBP_MIDNUM       = 5,
+  WBP_NUMERIC      = 6,
+  WBP_EXTENDNUMLET = 7
+};
+
+/* Returns the word breaking property for ch, as a bit mask.  */
+static int
+get_wbp (unsigned int ch)
+{
+  int attr = 0;
+
+  if (unicode_attributes[ch].name != NULL)
+    {
+      if (ch == 0x000D)
+	attr |= 1 << WBP_CR;
+
+      if (ch == 0x000A)
+	attr |= 1 << WBP_LF;
+
+      if (ch == 0x000B || ch == 0x000C
+	  || ch == 0x0085
+	  || ch == 0x2028 || ch == 0x2029)
+	attr |= 1 << WBP_NEWLINE;
+
+      if (((unicode_properties[ch] >> PROP_GRAPHEME_EXTEND) & 1) != 0
+	  || (unicode_attributes[ch].category != NULL
+	      && strcmp (unicode_attributes[ch].category, "Mc") == 0))
+	attr |= 1 << WBP_EXTEND;
+
+      if (unicode_attributes[ch].category != NULL
+	  && strcmp (unicode_attributes[ch].category, "Cf") == 0
+	  && ch != 0x200C && ch != 0x200D)
+	attr |= 1 << WBP_FORMAT;
+
+      if ((unicode_scripts[ch] < numscripts
+	   && strcmp (scripts[unicode_scripts[ch]], "Katakana") == 0)
+	  || (ch >= 0x3031 && ch <= 0x3035)
+	  || ch == 0x309B || ch == 0x309C || ch == 0x30A0 || ch == 0x30FC
+	  || ch == 0xFF70)
+	attr |= 1 << WBP_KATAKANA;
+
+      if ((((unicode_properties[ch] >> PROP_ALPHABETIC) & 1) != 0
+	   || ch == 0x05F3)
+	  && ((unicode_properties[ch] >> PROP_IDEOGRAPHIC) & 1) == 0
+	  && (attr & (1 << WBP_KATAKANA)) == 0
+	  && ((get_lbp (ch) >> LBP_SA) & 1) == 0
+	  && !(unicode_scripts[ch] < numscripts
+	       && strcmp (scripts[unicode_scripts[ch]], "Hiragana") == 0)
+	  && (attr & (1 << WBP_EXTEND)) == 0)
+	attr |= 1 << WBP_ALETTER;
+
+      if (ch == 0x0027 || ch == 0x002E || ch == 0x2018 || ch == 0x2019
+	  || ch == 0x2024 || ch == 0xFE52 || ch == 0xFF07 || ch == 0xFF0E)
+	attr |= 1 << WBP_MIDNUMLET;
+
+      if (ch == 0x00B7 || ch == 0x05F4 || ch == 0x2027 || ch == 0x003A
+	  || ch == 0x0387 || ch == 0xFE13 || ch == 0xFE55 || ch == 0xFF1A)
+	attr |= 1 << WBP_MIDLETTER;
+
+      if ((((get_lbp (ch) >> LBP_IS) & 1) != 0
+	   || ch == 0x066C || ch == 0xFE50 || ch == 0xFE54 || ch == 0xFF0C
+	   || ch == 0xFF1B)
+	  && ch != 0x003A && ch != 0xFE13 && ch != 0x002E)
+	attr |= 1 << WBP_MIDNUM;
+
+      if (((get_lbp (ch) >> LBP_NU) & 1) != 0
+	  && ch != 0x066C)
+	attr |= 1 << WBP_NUMERIC;
+
+      if (unicode_attributes[ch].category != NULL
+	  && strcmp (unicode_attributes[ch].category, "Pc") == 0)
+	attr |= 1 << WBP_EXTENDNUMLET;
+    }
+
+  if (attr == 0)
+    /* other */
+    attr |= 1 << WBP_OTHER;
+
+  return attr;
+}
+
+/* Output the word break property in a human readable format.  */
+static void
+debug_output_wbp (FILE *stream)
+{
+  unsigned int i;
+
+  for (i = 0; i < 0x110000; i++)
+    {
+      int attr = get_wbp (i);
+      if (attr != 1 << WBP_OTHER)
+	{
+	  fprintf (stream, "0x%04X", i);
+	  if (attr & (1 << WBP_CR))
+	    fprintf (stream, " CR");
+	  if (attr & (1 << WBP_LF))
+	    fprintf (stream, " LF");
+	  if (attr & (1 << WBP_NEWLINE))
+	    fprintf (stream, " Newline");
+	  if (attr & (1 << WBP_EXTEND))
+	    fprintf (stream, " Extend");
+	  if (attr & (1 << WBP_FORMAT))
+	    fprintf (stream, " Format");
+	  if (attr & (1 << WBP_KATAKANA))
+	    fprintf (stream, " Katakana");
+	  if (attr & (1 << WBP_ALETTER))
+	    fprintf (stream, " ALetter");
+	  if (attr & (1 << WBP_MIDNUMLET))
+	    fprintf (stream, " MidNumLet");
+	  if (attr & (1 << WBP_MIDLETTER))
+	    fprintf (stream, " MidLetter");
+	  if (attr & (1 << WBP_MIDNUM))
+	    fprintf (stream, " MidNum");
+	  if (attr & (1 << WBP_NUMERIC))
+	    fprintf (stream, " Numeric");
+	  if (attr & (1 << WBP_EXTENDNUMLET))
+	    fprintf (stream, " ExtendNumLet");
+	  fprintf (stream, "\n");
+	}
+    }
+}
+
+static void
+debug_output_wbrk_tables (const char *filename)
+{
+  FILE *stream;
+
+  stream = fopen (filename, "w");
+  if (stream == NULL)
+    {
+      fprintf (stderr, "cannot open '%s' for writing\n", filename);
+      exit (1);
+    }
+
+  debug_output_wbp (stream);
+
+  if (ferror (stream) || fclose (stream))
+    {
+      fprintf (stderr, "error writing to '%s'\n", filename);
+      exit (1);
+    }
+}
+
+/* The word break property from the WordBreakProperty.txt file.  */
+int unicode_org_wbp[0x110000];
+
+/* Stores in unicode_org_wbp[] the word break property from the
+   WordBreakProperty.txt file.  */
+static void
+fill_org_wbp (const char *wordbreakproperty_filename)
+{
+  unsigned int i;
+  FILE *stream;
+
+  for (i = 0; i < 0x110000; i++)
+    unicode_org_wbp[i] = WBP_OTHER;
+
+  stream = fopen (wordbreakproperty_filename, "r");
+  if (stream == NULL)
+    {
+      fprintf (stderr, "error during fopen of '%s'\n", wordbreakproperty_filename);
+      exit (1);
+    }
+
+  for (;;)
+    {
+      char buf[200+1];
+      unsigned int i1, i2;
+      char padding[200+1];
+      char propname[200+1];
+      int propvalue;
+
+      if (fscanf (stream, "%200[^\n]\n", buf) < 1)
+	break;
+
+      if (buf[0] == '\0' || buf[0] == '#')
+	continue;
+
+      if (sscanf (buf, "%X..%X%[ ;]%[^ ]", &i1, &i2, padding, propname) != 4)
+	{
+	  if (sscanf (buf, "%X%[ ;]%[^ ]", &i1, padding, propname) != 3)
+	    {
+	      fprintf (stderr, "parse error in '%s'\n",
+		       wordbreakproperty_filename);
+	      exit (1);
+	    }
+	  i2 = i1;
+	}
+#define PROP(name,value) \
+      if (strcmp (propname, name) == 0) propvalue = value; else
+      PROP ("CR", WBP_CR)
+      PROP ("LF", WBP_LF)
+      PROP ("Newline", WBP_NEWLINE)
+      PROP ("Extend", WBP_EXTEND)
+      PROP ("Format", WBP_FORMAT)
+      PROP ("Katakana", WBP_KATAKANA)
+      PROP ("ALetter", WBP_ALETTER)
+      PROP ("MidNumLet", WBP_MIDNUMLET)
+      PROP ("MidLetter", WBP_MIDLETTER)
+      PROP ("MidNum", WBP_MIDNUM)
+      PROP ("Numeric", WBP_NUMERIC)
+      PROP ("ExtendNumLet", WBP_EXTENDNUMLET)
+#undef PROP
+	{
+	  fprintf (stderr, "unknown property value '%s' in '%s'\n", propname,
+		   wordbreakproperty_filename);
+	  exit (1);
+	}
+      if (!(i1 <= i2 && i2 < 0x110000))
+	abort ();
+
+      for (i = i1; i <= i2; i++)
+	unicode_org_wbp[i] = propvalue;
+    }
+
+  if (ferror (stream) || fclose (stream))
+    {
+      fprintf (stderr, "error reading from '%s'\n", wordbreakproperty_filename);
+      exit (1);
+    }
+}
+
+/* Output the word break property in a human readable format.  */
+static void
+debug_output_org_wbp (FILE *stream)
+{
+  unsigned int i;
+
+  for (i = 0; i < 0x110000; i++)
+    {
+      int propvalue = unicode_org_wbp[i];
+      if (propvalue != WBP_OTHER)
+	{
+	  fprintf (stream, "0x%04X", i);
+#define PROP(name,value) \
+	  if (propvalue == value) fprintf (stream, " " name); else
+	  PROP ("CR", WBP_CR)
+	  PROP ("LF", WBP_LF)
+	  PROP ("Newline", WBP_NEWLINE)
+	  PROP ("Extend", WBP_EXTEND)
+	  PROP ("Format", WBP_FORMAT)
+	  PROP ("Katakana", WBP_KATAKANA)
+	  PROP ("ALetter", WBP_ALETTER)
+	  PROP ("MidNumLet", WBP_MIDNUMLET)
+	  PROP ("MidLetter", WBP_MIDLETTER)
+	  PROP ("MidNum", WBP_MIDNUM)
+	  PROP ("Numeric", WBP_NUMERIC)
+	  PROP ("ExtendNumLet", WBP_EXTENDNUMLET)
+#undef PROP
+	  fprintf (stream, " ??");
+	  fprintf (stream, "\n");
+	}
+    }
+}
+
+static void
+debug_output_org_wbrk_tables (const char *filename)
+{
+  FILE *stream;
+
+  stream = fopen (filename, "w");
+  if (stream == NULL)
+    {
+      fprintf (stderr, "cannot open '%s' for writing\n", filename);
+      exit (1);
+    }
+
+  debug_output_org_wbp (stream);
+
+  if (ferror (stream) || fclose (stream))
+    {
+      fprintf (stderr, "error writing to '%s'\n", filename);
+      exit (1);
+    }
+}
+
+/* Construction of sparse 3-level tables.  */
+#define TABLE wbp_table
+#define ELEMENT unsigned char
+#define DEFAULT WBP_OTHER
+#define xmalloc malloc
+#define xrealloc realloc
+#include "3level.h"
+
+static void
+output_wbp (FILE *stream)
+{
+  unsigned int i;
+  struct wbp_table t;
+  unsigned int level1_offset, level2_offset, level3_offset;
+
+  t.p = 7;
+  t.q = 9;
+  wbp_table_init (&t);
+
+  for (i = 0; i < 0x110000; i++)
+    {
+      int attr = get_wbp (i);
+
+      /* Now attr should contain exactly one bit.  */
+      if (attr == 0 || ((attr & (attr - 1)) != 0))
+	abort ();
+
+      if (attr != 1 << WBP_OTHER)
+	{
+	  unsigned int log2_attr;
+	  for (log2_attr = 0; attr > 1; attr >>= 1, log2_attr++);
+
+	  wbp_table_add (&t, i, log2_attr);
+	}
+    }
+
+  wbp_table_finalize (&t);
+
+  level1_offset =
+    5 * sizeof (uint32_t);
+  level2_offset =
+    5 * sizeof (uint32_t)
+    + t.level1_size * sizeof (uint32_t);
+  level3_offset =
+    5 * sizeof (uint32_t)
+    + t.level1_size * sizeof (uint32_t)
+    + (t.level2_size << t.q) * sizeof (uint32_t);
+
+  for (i = 0; i < 5; i++)
+    fprintf (stream, "#define wbrkprop_header_%d %d\n", i,
+	     ((uint32_t *) t.result)[i]);
+  fprintf (stream, "\n");
+  fprintf (stream, "typedef struct\n");
+  fprintf (stream, "  {\n");
+  fprintf (stream, "    int level1[%zu];\n", t.level1_size);
+  fprintf (stream, "    int level2[%zu << %d];\n", t.level2_size, t.q);
+  fprintf (stream, "    unsigned char level3[%zu << %d];\n", t.level3_size, t.p);
+  fprintf (stream, "  }\n");
+  fprintf (stream, "wbrkprop_t;\n");
+  fprintf (stream, "static const wbrkprop_t uniwbrkprop =\n");
+  fprintf (stream, "{\n");
+  fprintf (stream, "  {");
+  if (t.level1_size > 8)
+    fprintf (stream, "\n   ");
+  for (i = 0; i < t.level1_size; i++)
+    {
+      uint32_t offset;
+      if (i > 0 && (i % 8) == 0)
+	fprintf (stream, "\n   ");
+      offset = ((uint32_t *) (t.result + level1_offset))[i];
+      fprintf (stream, " %5zd%s",
+	       offset == 0 ? -1 : (offset - level2_offset) / sizeof (uint32_t),
+	       (i+1 < t.level1_size ? "," : ""));
+    }
+  if (t.level1_size > 8)
+    fprintf (stream, "\n ");
+  fprintf (stream, " },\n");
+  fprintf (stream, "  {");
+  if (t.level2_size << t.q > 8)
+    fprintf (stream, "\n   ");
+  for (i = 0; i < t.level2_size << t.q; i++)
+    {
+      uint32_t offset;
+      if (i > 0 && (i % 8) == 0)
+	fprintf (stream, "\n   ");
+      offset = ((uint32_t *) (t.result + level2_offset))[i];
+      fprintf (stream, " %5zd%s",
+	       offset == 0 ? -1 : (offset - level3_offset) / sizeof (uint8_t),
+	       (i+1 < t.level2_size << t.q ? "," : ""));
+    }
+  if (t.level2_size << t.q > 8)
+    fprintf (stream, "\n ");
+  fprintf (stream, " },\n");
+  fprintf (stream, "  {");
+  if (t.level3_size << t.p > 4)
+    fprintf (stream, "\n   ");
+  for (i = 0; i < t.level3_size << t.p; i++)
+    {
+      unsigned char value = ((unsigned char *) (t.result + level3_offset))[i];
+      const char *value_string;
+      switch (value)
+	{
+#define CASE(x) case x: value_string = #x; break;
+	  CASE(WBP_OTHER);
+	  CASE(WBP_CR);
+	  CASE(WBP_LF);
+	  CASE(WBP_NEWLINE);
+	  CASE(WBP_EXTEND);
+	  CASE(WBP_FORMAT);
+	  CASE(WBP_KATAKANA);
+	  CASE(WBP_ALETTER);
+	  CASE(WBP_MIDNUMLET);
+	  CASE(WBP_MIDLETTER);
+	  CASE(WBP_MIDNUM);
+	  CASE(WBP_NUMERIC);
+	  CASE(WBP_EXTENDNUMLET);
+#undef CASE
+	  default:
+	    abort ();
+	}
+      if (i > 0 && (i % 4) == 0)
+	fprintf (stream, "\n   ");
+      fprintf (stream, " %s%s", value_string,
+	       (i+1 < t.level3_size << t.p ? "," : ""));
+    }
+  if (t.level3_size << t.p > 4)
+    fprintf (stream, "\n ");
+  fprintf (stream, " }\n");
+  fprintf (stream, "};\n");
+}
+
+static void
+output_wbrk_tables (const char *filename, const char *version)
+{
+  FILE *stream;
+
+  stream = fopen (filename, "w");
+  if (stream == NULL)
+    {
+      fprintf (stderr, "cannot open '%s' for writing\n", filename);
+      exit (1);
+    }
+
+  fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
+  fprintf (stream, "/* Line breaking properties of Unicode characters.  */\n");
+  fprintf (stream, "/* Generated automatically by gen-uni-tables for Unicode %s.  */\n",
+	   version);
+  fprintf (stream, "\n");
+
+  /* Put a GPL header on it.  The gnulib module is under LGPL (although it
+     still carries the GPL header), and it's gnulib-tool which replaces the
+     GPL header with an LGPL header.  */
+  fprintf (stream, "/* Copyright (C) 2000-2002, 2004, 2007-2009 Free Software Foundation, Inc.\n");
+  fprintf (stream, "\n");
+  fprintf (stream, "   This program is free software: you can redistribute it and/or modify\n");
+  fprintf (stream, "   it under the terms of the GNU General Public License as published by\n");
+  fprintf (stream, "   the Free Software Foundation; either version 3 of the License, or\n");
+  fprintf (stream, "   (at your option) any later version.\n");
+  fprintf (stream, "\n");
+  fprintf (stream, "   This program is distributed in the hope that it will be useful,\n");
+  fprintf (stream, "   but WITHOUT ANY WARRANTY; without even the implied warranty of\n");
+  fprintf (stream, "   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n");
+  fprintf (stream, "   GNU General Public License for more details.\n");
+  fprintf (stream, "\n");
+  fprintf (stream, "   You should have received a copy of the GNU General Public License\n");
+  fprintf (stream, "   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */\n");
+  fprintf (stream, "\n");
+
+  output_wbp (stream);
+
+  if (ferror (stream) || fclose (stream))
+    {
+      fprintf (stderr, "error writing to '%s'\n", filename);
+      exit (1);
+    }
+}
+
+/* ========================================================================= */
+
 int
 main (int argc, char * argv[])
 {
@@ -6263,11 +6734,12 @@ main (int argc, char * argv[])
   const char *proplist30_filename;
   const char *eastasianwidth_filename;
   const char *linebreak_filename;
+  const char *wordbreakproperty_filename;
   const char *version;
 
-  if (argc != 10)
+  if (argc != 11)
     {
-      fprintf (stderr, "Usage: %s UnicodeData.txt PropList.txt DerivedCoreProperties.txt Scripts.txt Blocks.txt PropList-3.0.1.txt EastAsianWidth.txt LineBreak.txt version\n",
+      fprintf (stderr, "Usage: %s UnicodeData.txt PropList.txt DerivedCoreProperties.txt Scripts.txt Blocks.txt PropList-3.0.1.txt EastAsianWidth.txt LineBreak.txt WordBreakProperty.txt version\n",
 	       argv[0]);
       exit (1);
     }
@@ -6280,7 +6752,8 @@ main (int argc, char * argv[])
   proplist30_filename = argv[6];
   eastasianwidth_filename = argv[7];
   linebreak_filename = argv[8];
-  version = argv[9];
+  wordbreakproperty_filename = argv[9];
+  version = argv[10];
 
   fill_attributes (unicodedata_filename);
   clear_properties ();
@@ -6291,6 +6764,7 @@ main (int argc, char * argv[])
   fill_blocks (blocks_filename);
   fill_width (eastasianwidth_filename);
   fill_org_lbp (linebreak_filename);
+  fill_org_wbp (wordbreakproperty_filename);
 
   output_categories (version);
   output_category ("unictype/categ_of.h", version);
@@ -6314,6 +6788,10 @@ main (int argc, char * argv[])
   debug_output_org_lbrk_tables ("unilbrk/lbrkprop_org.txt");
   output_lbrk_tables ("unilbrk/lbrkprop1.h", "unilbrk/lbrkprop2.h", version);
 
+  debug_output_wbrk_tables ("uniwbrk/wbrkprop.txt");
+  debug_output_org_wbrk_tables ("uniwbrk/wbrkprop_org.txt");
+  output_wbrk_tables ("uniwbrk/wbrkprop.h", version);
+
   return 0;
 }
 
@@ -6331,6 +6809,7 @@ main (int argc, char * argv[])
         /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/3.0.1/PropList-3.0.1.txt \
         /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.1.0/ucd/EastAsianWidth.txt \
         /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.1.0/ucd/LineBreak.txt \
+        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.1.0/ucd/auxiliary/WordBreakProperty.txt \
         5.1.0
    "
  * End:
