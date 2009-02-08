@@ -1,5 +1,8 @@
 2009-02-08  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unicase/tolower'.
+	* modules/unicase/tolower-tests: New file.
+
 	Tests for module 'unicase/toupper'.
 	* modules/unicase/toupper-tests: New file.
 	* tests/unicase/test-mapping-part1.h: New file.
