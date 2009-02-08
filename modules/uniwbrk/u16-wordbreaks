@@ -1,0 +1,26 @@
+Description:
+Word breaks in UTF-16 strings.
+
+Files:
+lib/uniwbrk/u16-wordbreaks.c
+lib/uniwbrk/u-wordbreaks.h
+
+Depends-on:
+uniwbrk/base
+uniwbrk/table
+unistr/u16-mbtouc-unsafe
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += uniwbrk/u16-wordbreaks.c
+
+Include:
+"uniwbrk.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
