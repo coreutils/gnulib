@@ -1,0 +1,25 @@
+Description:
+Titlecase mapping for Unicode characters (locale and context independent).
+
+Files:
+lib/unicase/totitle.c
+lib/unicase/totitle.h
+lib/unicase/simple-mapping.h
+
+Depends-on:
+unicase/base
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unicase/totitle.c
+
+Include:
+"unicase.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

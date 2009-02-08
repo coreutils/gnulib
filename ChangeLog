@@ -1,5 +1,9 @@
 2009-02-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unicase/totitle'.
+	* modules/unicase/totitle: New file.
+	* lib/unicase/totitle.c: New file.
+
 	New module 'unicase/tolower'.
 	* modules/unicase/tolower: New file.
 	* lib/unicase/tolower.c: New file.
