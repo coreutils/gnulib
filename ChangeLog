@@ -1,5 +1,9 @@
 2009-02-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'uniwbrk/ulc-wordbreaks'.
+	* modules/uniwbrk/ulc-wordbreaks: New file.
+	* lib/uniwbrk/ulc-wordbreaks.c: New file.
+
 	New module 'uniwbrk/u32-wordbreaks'.
 	* modules/uniwbrk/u32-wordbreaks: New file.
 	* lib/uniwbrk/u32-wordbreaks.c: New file.

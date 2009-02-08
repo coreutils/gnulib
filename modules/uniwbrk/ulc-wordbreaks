@@ -1,0 +1,27 @@
+Description:
+Word breaks in strings.
+
+Files:
+lib/uniwbrk/ulc-wordbreaks.c
+
+Depends-on:
+uniwbrk/base
+uniwbrk/u8-wordbreaks
+unilbrk/ulc-common
+uniconv/u8-conv-from-enc
+c-ctype
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += uniwbrk/ulc-wordbreaks.c
+
+Include:
+"uniwbrk.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
