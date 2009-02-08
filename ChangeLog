@@ -1,5 +1,17 @@
 2009-02-07  Bruno Haible  <bruno@clisp.org>
 
+	Merge gen-ctype and gen-lbrk into a single program.
+	* lib/gen-uni-tables.c: New file, incorporating
+	lib/unictype/gen-ctype.c and lib/unilbrk/gen-lbrk.c.
+	Add directory prefixes to the names of the generated files.
+	* lib/unictype/gen-ctype.c: Remove file.
+	* lib/unilbrk/gen-lbrk.c: Remove file.
+	* modules/gen-uni-tables: New file.
+	* modules/unictype/gen-ctype: Remove file.
+	* modules/unilbrk/gen-lbrk: Remove file.
+
+2009-02-07  Bruno Haible  <bruno@clisp.org>
+
 	* lib/unistr.h (u8_strcoll, u16_strcoll, u32_strcoll): New declations.
 
 	New module 'unistr/u32-strcoll'.

@@ -1,8 +1,8 @@
 Description:
-Generates the tables in lib/unictype/*.
+Generates the tables in lib/unictype/* and lib/unilbrk/*.
 
 Files:
-lib/unictype/gen-ctype.c
+lib/gen-uni-tables.c
 lib/unictype/3level.h
 lib/unictype/3levelbit.h
 
