@@ -25,7 +25,7 @@
                       /usr/local/share/Unidata/PropList-3.0.1.txt \
                       /usr/local/share/Unidata/EastAsianWidth.txt \
                       /usr/local/share/Unidata/LineBreak.txt \
-                      5.0.0
+                      5.1.0
  */
 
 #include <stdbool.h>
@@ -2766,6 +2766,7 @@ is_property_alphabetic (unsigned int ch)
        Alphabetic but not as having property Other_Alphabetic.  */
     || (ch >= 0x16EE && ch <= 0x16F0) /* RUNIC SYMBOLS */
     || (ch >= 0x2160 && ch <= 0x2182) /* ROMAN NUMERALS */
+    || (ch >= 0x2185 && ch <= 0x2188) /* ROMAN NUMERALS */
     || (ch >= 0x24D0 && ch <= 0x24E9) /* CIRCLED LATIN SMALL LETTER */
     || (ch == 0x3007) /* IDEOGRAPHIC NUMBER ZERO */
     || (ch >= 0x3021 && ch <= 0x3029) /* HANGZHOU NUMERAL */
@@ -2804,12 +2805,10 @@ is_property_default_ignorable_code_point (unsigned int ch)
 {
   bool result1 =
     (is_category_Cf (ch)
-     && !(ch >= 0xFFF9 && ch <= 0xFFFB)) /* Annotations */
-    || ((is_category_Cc (ch) || is_category_Cs (ch))
-	&& !is_property_white_space (ch))
+     && !(ch >= 0xFFF9 && ch <= 0xFFFB) /* Annotations */
+     && !((ch >= 0x0600 && ch <= 0x0603) || ch == 0x06DD || ch == 0x070F))
     || ((unicode_properties[ch] & (1ULL << PROP_OTHER_DEFAULT_IGNORABLE_CODE_POINT)) != 0)
-    || ((unicode_properties[ch] & (1ULL << PROP_VARIATION_SELECTOR)) != 0)
-    || is_property_not_a_character (ch);
+    || ((unicode_properties[ch] & (1ULL << PROP_VARIATION_SELECTOR)) != 0);
   bool result2 =
     ((unicode_properties[ch] & (1ULL << PROP_DEFAULT_IGNORABLE_CODE_POINT)) != 0);
 
@@ -6351,15 +6350,15 @@ main (int argc, char * argv[])
  * compile-command: "
    gcc -O -Wall gen-uni-tables.c -Iunictype -o gen-uni-tables && \
    ./gen-uni-tables \
-        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.0.0/ucd/UnicodeData.txt \
-        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.0.0/ucd/PropList.txt \
-        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.0.0/ucd/DerivedCoreProperties.txt \
-        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.0.0/ucd/Scripts.txt \
-        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.0.0/ucd/Blocks.txt \
+        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.1.0/ucd/UnicodeData.txt \
+        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.1.0/ucd/PropList.txt \
+        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.1.0/ucd/DerivedCoreProperties.txt \
+        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.1.0/ucd/Scripts.txt \
+        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.1.0/ucd/Blocks.txt \
         /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/3.0.1/PropList-3.0.1.txt \
-        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.0.0/ucd/EastAsianWidth.txt \
-        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.0.0/ucd/LineBreak.txt \
-        5.0.0
+        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.1.0/ucd/EastAsianWidth.txt \
+        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.1.0/ucd/LineBreak.txt \
+        5.1.0
    "
  * End:
  */
