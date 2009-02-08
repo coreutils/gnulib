@@ -1,0 +1,22 @@
+Description:
+Base layer for Unicode character case mappings.
+
+Files:
+lib/unicase.h
+
+Depends-on:
+unitypes
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+"unicase.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
