@@ -1,5 +1,10 @@
 2009-02-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'uniwbrk/table'.
+	* modules/uniwbrk/table: New file.
+	* lib/uniwbrk/wbrktable.h: New file.
+	* lib/uniwbrk/wbrktable.c: New file.
+
 	New module 'uniwbrk/wordbreak-property'.
 	* modules/uniwbrk/wordbreak-property: New file.
 	* lib/uniwbrk/wordbreak-property.c: New file.
