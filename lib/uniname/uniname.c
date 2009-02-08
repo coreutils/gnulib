@@ -1,5 +1,5 @@
 /* Association between Unicode characters and their names.
-   Copyright (C) 2000-2002, 2005-2007 Free Software Foundation, Inc.
+   Copyright (C) 2000-2002, 2005-2007, 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify it
    under the terms of the GNU Lesser General Public License as published
@@ -225,11 +225,14 @@ unicode_character_name (ucs4_t c, char *buf)
 	case 0x1D:
 	  c -= 0x14000;
 	  break;
+	case 0x1F:
+	  c -= 0x15000;
+	  break;
 	case 0x2F:
-	  c -= 0x25000;
+	  c -= 0x24000;
 	  break;
 	case 0xE0:
-	  c -= 0xD5000;
+	  c -= 0xD4000;
 	  break;
 	default:
 	  return NULL;
@@ -494,11 +497,11 @@ unicode_name_character (const char *name)
 			    unsigned int c = unicode_name_to_code[i].code;
 
 			    /* Undo the transformation to 16-bit space.  */
-			    static const unsigned int offset[12] =
+			    static const unsigned int offset[13] =
 			      {
 				0x00000, 0x00000, 0x00000, 0x00000, 0x00000,
 				0x05000, 0x09000, 0x09000, 0x0A000, 0x14000,
-				0x25000, 0xD5000
+				0x15000, 0x24000, 0xD4000
 			      };
 			    return c + offset[c >> 12];
 			  }

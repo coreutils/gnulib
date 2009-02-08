@@ -1,3 +1,13 @@
+2009-02-08  Bruno Haible  <bruno@clisp.org>
+
+	Update to Unicode 5.1.0.
+	* lib/uniname/gen-uninames.lisp (main): Add the range 0x1Fxxx to the
+	code transform.
+	* lib/uniname/uniname.c (unicode_character_name,
+	unicode_name_character): Add the range 0x1Fxxx to the code transform.
+	* lib/uniname/uninames.h: Regenerated.
+	* tests/uniname/UnicodeDataNames.txt: Update to Unicode 5.1.0.
+
 2009-02-07  Bruno Haible  <bruno@clisp.org>
 
 	Merge gen-ctype and gen-lbrk into a single program.

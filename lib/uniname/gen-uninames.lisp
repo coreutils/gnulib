@@ -42,15 +42,16 @@
                 (unless (or (<= #xF900 code #xFA2D) (<= #xFA30 code #xFA6A)
                             (<= #xFA70 code #xFAD9) (<= #x2F800 code #x2FA1D))
                   ; Transform the code so that it fits in 16 bits. In
-                  ; Unicode 3.1 the following ranges are used.
+                  ; Unicode 5.1 the following ranges are used.
                   ;   0x00000..0x04DFF  >>12=  0x00..0x04  -> 0x0..0x4
-                  ;   0x0A000..0x0A4FF  >>12=  0x0A        -> 0x5
+                  ;   0x0A000..0x0AAFF  >>12=  0x0A        -> 0x5
                   ;   0x0F900..0x0FFFF  >>12=  0x0F        -> 0x6
-                  ;   0x10300..0x104FF  >>12=  0x10        -> 0x7
+                  ;   0x10000..0x10A58  >>12=  0x10        -> 0x7
                   ;   0x12000..0x12473  >>12=  0x12        -> 0x8
-                  ;   0x1D000..0x1D7DD  >>12=  0x1D        -> 0x9
-                  ;   0x2F800..0x2FAFF  >>12=  0x2F        -> 0xA
-                  ;   0xE0000..0xE00FF  >>12=  0xE0        -> 0xB
+                  ;   0x1D000..0x1D7FF  >>12=  0x1D        -> 0x9
+                  ;   0x1F000..0x1F093  >>12=  0x1F        -> 0xA
+                  ;   0x2F800..0x2FAFF  >>12=  0x2F        -> 0xB
+                  ;   0xE0000..0xE00FF  >>12=  0xE0        -> 0xC
                   (flet ((transform (x)
                            (dpb
                              (case (ash x -12)
@@ -60,8 +61,9 @@
                                (#x10 7)
                                (#x12 8)
                                (#x1D 9)
-                               (#x2F #xA)
-                               (#xE0 #xB)
+                               (#x1F #xA)
+                               (#x2F #xB)
+                               (#xE0 #xC)
                                (t (error "Update the transform function for 0x~5,'0X" x))
                              )
                              (byte 8 12)
