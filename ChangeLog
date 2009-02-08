@@ -1,5 +1,10 @@
 2009-02-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unicase/toupper'.
+	* modules/unicase/toupper: New file.
+	* lib/unicase/toupper.c: New file.
+	* lib/unicase/simple-mapping.h: New file.
+
 	* lib/gen-uni-tables.c (output_simple_mapping_test): New function.
 	(mapping_table): New structure.
 	(output_simple_mapping): New function.

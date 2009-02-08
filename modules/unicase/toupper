@@ -1,0 +1,25 @@
+Description:
+Uppercase mapping for Unicode characters (locale and context independent).
+
+Files:
+lib/unicase/toupper.c
+lib/unicase/toupper.h
+lib/unicase/simple-mapping.h
+
+Depends-on:
+unicase/base
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unicase/toupper.c
+
+Include:
+"unicase.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
