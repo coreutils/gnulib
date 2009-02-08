@@ -5,6 +5,8 @@
 	U+2185..U+2188.
 	(is_property_default_ignorable_code_point): Don't include characters
 	of category Cc or Cs and not-a-characters.
+	(get_lbp): Assume REVISION_22. Special handling of U+0609, U+060A,
+	U+0D79, U+109E, U+109F, U+A60C.
 	* lib/unictype/bidi_of.h: Regenerated.
 	* lib/unictype/blocks.h: Regenerated.
 	* lib/unictype/categ_C.h: Regenerated.

@@ -5298,16 +5298,8 @@ get_lbp (unsigned int ch)
 	  || ch == 0x0FBE /* TIBETAN KU RU KHA */
 	  || ch == 0x0FBF /* TIBETAN KU RU KHA BZHI MIG CAN */
 	  || ch == 0x0FD2 /* TIBETAN MARK NYIS TSHEG */
-#if !REVISION_22
-	  || ch == 0x1802 /* MONGOLIAN COMMA */
-	  || ch == 0x1803 /* MONGOLIAN FULL STOP */
-#endif
 	  || ch == 0x1804 /* MONGOLIAN COLON */
 	  || ch == 0x1805 /* MONGOLIAN FOUR DOTS */
-#if !REVISION_22
-	  || ch == 0x1808 /* MONGOLIAN MANCHU COMMA */
-	  || ch == 0x1809 /* MONGOLIAN MANCHU FULL STOP */
-#endif
 	  || ch == 0x1B5A /* BALINESE PANTI */
 	  || ch == 0x1B5B /* BALINESE PAMADA */
 	  || ch == 0x1B5C /* BALINESE WINDU */
@@ -5320,15 +5312,9 @@ get_lbp (unsigned int ch)
 	  || ch == 0x1C3F /* LEPCHA PUNCTUATION TSHOOK */
 	  || ch == 0x1C7E /* OL CHIKI PUNCTUATION MUCAAD */
 	  || ch == 0x1C7F /* OL CHIKI PUNCTUATION DOUBLE MUCAAD */
-#if !REVISION_22
-	  || ch == 0x2CF9 /* COPTIC OLD NUBIAN FULL STOP */
-#endif
 	  || ch == 0x2CFA /* COPTIC OLD NUBIAN DIRECT QUESTION MARK */
 	  || ch == 0x2CFB /* COPTIC OLD NUBIAN INDIRECT QUESTION MARK */
 	  || ch == 0x2CFC /* COPTIC OLD NUBIAN VERSE DIVIDER */
-#if !REVISION_22
-	  || ch == 0x2CFE /* COPTIC FULL STOP */
-#endif
 	  || ch == 0x2CFF /* COPTIC MORPHOLOGICAL DIVIDER */
 	  || (ch >= 0x2E0E && ch <= 0x2E15) /* EDITORIAL CORONIS .. UPWARDS ANCORA */
 	  || ch == 0x2E17 /* DOUBLE OBLIQUE HYPHEN */
@@ -5343,9 +5329,6 @@ get_lbp (unsigned int ch)
 	  || ch == 0x10A54 /* KHAROSHTHI PUNCTUATION MANGALAM */
 	  || ch == 0x10A55 /* KHAROSHTHI PUNCTUATION LOTUS */
 	  /* Extra characters for compatibility with Unicode LineBreak.txt.  */
-#if !REVISION_22
-	  || ch == 0x1A1E /* BUGINESE PALLAWA */
-#endif
 	  || ch == 0x12471 /* CUNEIFORM PUNCTUATION SIGN VERTICAL COLON */
 	  || ch == 0x12472 /* CUNEIFORM PUNCTUATION SIGN DIAGONAL COLON */
 	  || ch == 0x12473 /* CUNEIFORM PUNCTUATION SIGN DIAGONAL TRICOLON */)
@@ -5353,10 +5336,8 @@ get_lbp (unsigned int ch)
 
       /* break opportunity before */
       if (ch == 0x00B4 /* ACUTE ACCENT */
-#if REVISION_22
 	  || ch == 0x1FFD /* GREEK OXIA */
 	  || ch == 0x02DF /* MODIFIER LETTER CROSS ACCENT */
-#endif
 	  || ch == 0x02C8 /* MODIFIER LETTER VERTICAL LINE */
 	  || ch == 0x02CC /* MODIFIER LETTER LOW VERTICAL LINE */
 	  || ch == 0x0F01 /* TIBETAN MARK GTER YIG MGO TRUNCATED A */
@@ -5402,15 +5383,9 @@ get_lbp (unsigned int ch)
       if (ch == 0x0021 /* EXCLAMATION MARK */
 	  || ch == 0x003F /* QUESTION MARK */
 	  || ch == 0x05C6 /* HEBREW PUNCTUATION NUN HAFUKHA */
-#if !REVISION_22
-	  || ch == 0x060C /* ARABIC COMMA */
-#endif
 	  || ch == 0x061B /* ARABIC SEMICOLON */
 	  || ch == 0x061E /* ARABIC TRIPLE DOT PUNCTUATION MARK */
 	  || ch == 0x061F /* ARABIC QUESTION MARK */
-#if !REVISION_22
-	  || ch == 0x066A /* ARABIC PERCENT SIGN */
-#endif
 	  || ch == 0x06D4 /* ARABIC FULL STOP */
 	  || ch == 0x07F9 /* NKO EXCLAMATION MARK */
 	  || ch == 0x0F0D /* TIBETAN MARK SHAD */
@@ -5419,22 +5394,20 @@ get_lbp (unsigned int ch)
 	  || ch == 0x0F10 /* TIBETAN MARK NYIS TSHEG SHAD */
 	  || ch == 0x0F11 /* TIBETAN MARK RIN CHEN SPUNGS SHAD */
 	  || ch == 0x0F14 /* TIBETAN MARK GTER TSHEG */
-#if REVISION_22
 	  || ch == 0x1802 /* MONGOLIAN COMMA */
 	  || ch == 0x1803 /* MONGOLIAN FULL STOP */
 	  || ch == 0x1808 /* MONGOLIAN MANCHU COMMA */
 	  || ch == 0x1809 /* MONGOLIAN MANCHU FULL STOP */
-#endif
 	  || ch == 0x1944 /* LIMBU EXCLAMATION MARK */
 	  || ch == 0x1945 /* LIMBU QUESTION MARK */
 	  || ch == 0x2762 /* HEAVY EXCLAMATION MARK ORNAMENT */
 	  || ch == 0x2763 /* HEAVY HEART EXCLAMATION MARK ORNAMENT */
-#if REVISION_22
 	  || ch == 0x2CF9 /* COPTIC OLD NUBIAN FULL STOP */
 	  || ch == 0x2CFE /* COPTIC FULL STOP */
-#endif
 	  || ch == 0x2E2E /* REVERSED QUESTION MARK */
+#if REVISION_22
 	  || ch == 0xA60C /* VAI SYLLABLE LENGTHENER */
+#endif
 	  || ch == 0xA60E /* VAI FULL STOP */
 	  || ch == 0xA876 /* PHAGS-PA MARK SHAD */
 	  || ch == 0xA877 /* PHAGS-PA MARK DOUBLE SHAD */
@@ -5489,10 +5462,8 @@ get_lbp (unsigned int ch)
       /* opening punctuation */
       if ((unicode_attributes[ch].category[0] == 'P'
 	   && unicode_attributes[ch].category[1] == 's')
-#if REVISION_22
 	  || ch == 0x00A1 /* INVERTED EXCLAMATION MARK */
 	  || ch == 0x00BF /* INVERTED QUESTION MARK */
-#endif
 	  || ch == 0x2E18 /* INVERTED INTERROBANG */)
 	attr |= 1 << LBP_OP;
 
@@ -5521,9 +5492,7 @@ get_lbp (unsigned int ch)
 	  || ch == 0x003B /* SEMICOLON */
 	  || ch == 0x037E /* GREEK QUESTION MARK */
 	  || ch == 0x0589 /* ARMENIAN FULL STOP */
-#if REVISION_22
 	  || ch == 0x060C /* ARABIC COMMA */
-#endif
 	  || ch == 0x060D /* ARABIC DATE SEPARATOR */
 	  || ch == 0x07F8 /* NKO COMMA */
 	  || ch == 0x2044 /* FRACTION SLASH */
@@ -5545,9 +5514,7 @@ get_lbp (unsigned int ch)
 	  || ch == 0x00A2 /* CENT SIGN */
 	  || ch == 0x00B0 /* DEGREE SIGN */
 	  || ch == 0x060B /* AFGHANI SIGN */
-#if REVISION_22
 	  || ch == 0x066A /* ARABIC PERCENT SIGN */
-#endif
 	  || ch == 0x2030 /* PER MILLE SIGN */
 	  || ch == 0x2031 /* PER TEN THOUSAND SIGN */
 	  || ch == 0x2032 /* PRIME */
@@ -5562,7 +5529,11 @@ get_lbp (unsigned int ch)
 	  || ch == 0xFDFC /* RIAL SIGN */
 	  || ch == 0xFE6A /* SMALL PERCENT SIGN */
 	  || ch == 0xFF05 /* FULLWIDTH PERCENT SIGN */
-	  || ch == 0xFFE0 /* FULLWIDTH DIGIT ZERO */)
+	  || ch == 0xFFE0 /* FULLWIDTH DIGIT ZERO */
+	  /* Extra characters for compatibility with Unicode LineBreak.txt.  */
+	  || ch == 0x0609 /* ARABIC-INDIC PER MILLE SIGN */
+	  || ch == 0x060A /* ARABIC-INDIC PER TEN THOUSAND SIGN */
+	  || ch == 0x0D79 /* MALAYALAM DATE MARK */)
 	attr |= 1 << LBP_PO;
 
       /* prefix (numeric) */
@@ -5606,6 +5577,8 @@ get_lbp (unsigned int ch)
 	       && (unicode_attributes[ch].category[1] == 'c'
 		   || unicode_attributes[ch].category[1] == 'n'))
 	   /* Extra characters for compatibility with Unicode LineBreak.txt.  */
+	   || ch == 0x109E /* MYANMAR SYMBOL SHAN ONE */
+	   || ch == 0x109F /* MYANMAR SYMBOL SHAN EXCLAMATION */
 	   || ch == 0x19DE /* NEW TAI LUE SIGN LAE */
 	   || ch == 0x19DF /* NEW TAI LUE SIGN LAEV */)
 	  && ((ch >= 0x0E00 && ch <= 0x0EFF)
@@ -5631,7 +5604,7 @@ get_lbp (unsigned int ch)
 	  || (ch >= 0x3040 && ch <= 0x309F) /* HIRAGANA */
 	  || (ch >= 0x30A0 && ch <= 0x30FF) /* KATAKANA */
 	  || (ch >= 0x3400 && ch <= 0x4DB5) /* CJK Ideograph Extension A */
-	  || (ch >= 0x4E00 && ch <= 0x9FBB) /* CJK Ideograph */
+	  || (ch >= 0x4E00 && ch <= 0x9FC3) /* CJK Ideograph */
 	  || (ch >= 0xF900 && ch <= 0xFAD9) /* CJK COMPATIBILITY IDEOGRAPH */
 	  || (ch >= 0xA000 && ch <= 0xA48F) /* YI SYLLABLE */
 	  || (ch >= 0xA490 && ch <= 0xA4CF) /* YI RADICAL */
