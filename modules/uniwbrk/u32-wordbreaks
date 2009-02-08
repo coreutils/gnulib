@@ -1,0 +1,26 @@
+Description:
+Word breaks in UTF-32 strings.
+
+Files:
+lib/uniwbrk/u32-wordbreaks.c
+lib/uniwbrk/u-wordbreaks.h
+
+Depends-on:
+uniwbrk/base
+uniwbrk/table
+unistr/u32-mbtouc-unsafe
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += uniwbrk/u32-wordbreaks.c
+
+Include:
+"uniwbrk.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
