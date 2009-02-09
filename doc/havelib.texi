@@ -165,3 +165,42 @@ and use a test like
 @smallexample
   AC_TRY_RUN([int main () @{ return lib@var{name}_version != LIB@var{NAME}_VERSION; @}])
 @end smallexample
+
+@unnumberedsubsubsec Bi-arch systems
+
+A bi-arch system is one where
+@itemize
+@item
+the processor has a 32-bit execution mode and a 64-bit execution mode
+(for example, x86_64, ia64, sparc64, powerpc64), and
+@item
+32-bit mode libraries and executables and 64-bit mode libraries are both
+installed, and
+@item
+32-bit mode libraries and object files cannot be mixed with 64-bit mode
+ones.
+@end itemize
+
+On several types of such systems, for historical reasons, the 32-bit libraries
+are installed in @file{@var{prefix}/lib}, whereas the 64-bit libraries are
+installed in
+@itemize
+@item
+@file{@var{prefix}/lib64} on many glibc systems,
+@item
+@file{@var{prefix}/lib/64} on Solaris systems.
+@end itemize
+
+On such systems, in 64-bit mode, @command{configure} will search for the
+libraries in @file{@var{prefix}/lib64} or @file{@var{prefix}/lib/64},
+respectively, not in @file{@var{prefix}/lib}.  A user can adhere to these
+system-wide conventions by using the @samp{--libdir} option when installing
+packages.  When a user has already installed packages in 64-bit mode using
+the GNU default @samp{--libdir=@var{prefix}/lib}, he can make this directory
+adhere to the system-wide convention by placing a symbolic link:
+@table @asis
+@item On glibc systems:
+@code{ln -s lib @var{prefix}/lib64}
+@item On Solaris systems:
+@code{ln -s . @var{prefix}/lib/64}
+@end table
