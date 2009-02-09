@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 Free Software Foundation
+ * Copyright (C) 2008, 2009 Free Software Foundation
  * Written by Simon Josefsson.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -39,6 +39,8 @@ main (int argc, char *argv[])
       printf ("wsacleanup failed %d\n", err);
       return 1;
     }
+
+  gl_fd_to_handle (0);
 
   return 0;
 }

@@ -1,6 +1,6 @@
 /* sockets.h - wrappers for Windows socket functions
 
-   Copyright (C) 2008 Free Software Foundation, Inc.
+   Copyright (C) 2008, 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -28,5 +28,18 @@
 
 int gl_sockets_startup (int version);
 int gl_sockets_cleanup (void);
+
+/* This function is useful it you create a socket using gnulib's
+   Winsock wrappers but needs to pass on the socket handle to some
+   other library that only accepts sockets. */
+#if WINDOWS_SOCKETS
+static inline SOCKET
+gl_fd_to_handle (int fd)
+{
+  return _get_osfhandle (fd);
+}
+#else
+#define gl_fd_to_handle(x) (x)
+#endif
 
 #endif

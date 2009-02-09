@@ -1,3 +1,9 @@
+2009-02-09  Simon Josefsson  <simon@josefsson.org>
+
+	* lib/sockets.h (gl_fd_to_handle): New function.
+
+	* tests/test-sockets.c: Call gl_fd_to_handle.
+
 2009-02-09  Bruno Haible  <bruno@clisp.org>
 
 	* doc/havelib.texi: Document the conventions on bi-arch systems.
