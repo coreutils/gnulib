@@ -1,5 +1,11 @@
 2009-02-08  Bruno Haible  <bruno@clisp.org>
 
+	Document the AC_LIB_LINKFLAGS macro.
+	* doc/havelib.texi: New file, mostly written on 2005-05-24.
+	* doc/gnulib.texi: Include it.
+
+2009-02-08  Bruno Haible  <bruno@clisp.org>
+
 	Fix wrong order of sections, compared to TOC.
 	* doc/gnulib.texi: Include relocatable-maint.texi after the
 	"Regular expressions" node, not before.

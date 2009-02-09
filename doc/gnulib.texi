@@ -5819,6 +5819,7 @@ This list of functions is sorted according to the header that declares them.
 * error and progname::
 * gcd::
 * Regular expressions::
+* Searching for Libraries::
 * Supporting Relocation::
 * func::
 * warnings::
@@ -5902,6 +5903,8 @@ varies.  The descriptions given here for the different types are
 generated automatically.
 
 @include regexprops-generic.texi
+
+@include havelib.texi
 
 @include relocatable-maint.texi
 
