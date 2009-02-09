@@ -1,29 +1,25 @@
-Legal Issues about Contributing Code to GNU	last updated 3 Mar 98
+Legal Issues about Contributing Code to GNU	last updated 8 Feb 2009
 
-Project GNU has to be careful to obey intellectual property laws, even
-though these laws are wrong and people generally should share useful
-information without hesitation, because we are in the public eye.
+Project GNU has to be careful to obey copyright laws, even though
+these laws are wrong when they stop people from sharing generally
+useful published information such as software, because we are in the
+public eye.  We also use copyright to defend users' freedom, by means
+of copyleft (though this does not excuse copyright law for helping
+to make software proprietary).
 
-This means that if you want to contribute software, you have to do
-something to give us legal permission to use it.  There are four ways
-this can be done:
+This means that if you want to contribute software to GNU, you have to
+do something to give us legal permission to use it.  There are three
+ways this can be done:
 
 * Assign the copyright to the Free Software Foundation.
-This is what we prefer because it allows us to use the copyright law
-to prevent others from hoarding modified versions of the program.
-
-* Keep the copyright yourself and give us a suitable nonexclusive
-license.  It will then be up to you to prevent any unauthorized
-hoarding of modified versions; we will be unable to act.  (This
-alternative is impractical for us if the use for your work is to be
-merged into a preexisting GNU program.)
+This allows the FSF to act to stop violations of the GPL.
 
 * Keep the copyright and release the program yourself under the GNU
-GPL.  (This alternative too is impractical for contributions to a
-preexisting GNU program.)
+GPL.  (This alternative too impractical for contributions to a
+preexisting FSF-copyrighted GNU program.)
 
-* Put the code in the public domain.  Then there is nothing to stop hoarding
-of modified versions, but we can still use the program in GNU.
+* Put the code in the public domain.  Then there is nothing to stop
+hoarding of modified versions, but we can still use the program in GNU.
 
 Most of these alternatives require a signed piece of paper to make it
 happen.
@@ -36,10 +32,7 @@ As the copyright holder, the Foundation can sue anyone who tries to
 distribute the program as a proprietary product.  We are willing to
 keep your name on the program as the author for as long as the program
 remains recognizably distinct.  ("Owner" is in quotes to show that we
-don't really believe in this kind of ownership.  We are against the
-copyright law, because it is intended to assist information hoarding,
-but since we cannot get it repealed just yet, we use it to stop
-hoarding when we can.)
+don't really believe in this kind of ownership.)
 
 The assignment contract commits the foundation to setting distribution
 terms that permit free redistribution.
@@ -63,21 +56,6 @@ You're giving us a gift in the first place.
 
 You don't need to invoke this clause in order to distribute copies as
 free software under the GNU GPL, since everyone is allowed to do that.
-
-* Keeping the copyright.
-
-Keeping the copyright and giving the Free Software Foundation a
-nonexclusive license also requires signing a contract.  The license we
-need permits us to add our usual distribution terms; it recognizes
-possession of a copy with our distribution terms accurately stated as
-licensing anyone to redistribute on those terms.  However, if someone
-violates these terms--for example, if he gets a copy from us, and uses
-it as a basis for a proprietary product in violation of our terms--we
-cannot sue him.  You have to sue, or he gets away with it.
-
-The law doesn't recognize the idea that he, by doing this, is stealing
-rights from the public; it thinks that information exists to be
-hoarded and is concerned only with how the spoils are to be divided.
 
 * Releasing it yourself.
 
@@ -152,10 +130,7 @@ sources or other non-free software that might have any bearing on the
 project.  Don't refer to them at all, unless you are forced to for
 non-GNU reasons.
 
-Especially, if you are working on an imitation of a Unix utility, DO
-NOT refer to the source for that utility.
-
 It is not considered a serious problem if you have read Unix sources
-in the past for other purposes, provided you don't copy anything in
-particular from them.  But referring to them while you do the work
-could cause us legal problems later.
+or other non-free source code in the past for other purposes, provided
+you don't copy anything in particular from them.  However, referring
+to them while you do the work could cause us legal problems later.
