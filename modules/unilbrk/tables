@@ -2,8 +2,8 @@ Description:
 Line breaking auxiliary tables.
 
 Files:
-lib/unilbrk/tables.h
-lib/unilbrk/tables.c
+lib/unilbrk/lbrktables.h
+lib/unilbrk/lbrktables.c
 lib/unilbrk/lbrkprop1.h
 lib/unilbrk/lbrkprop2.h
 
@@ -14,10 +14,10 @@ configure.ac:
 AC_REQUIRE([AC_C_INLINE])
 
 Makefile.am:
-lib_SOURCES += unilbrk/tables.c
+lib_SOURCES += unilbrk/lbrktables.c
 
 Include:
-"unilbrk/tables.h"
+"unilbrk/lbrktables.h"
 
 License:
 LGPL

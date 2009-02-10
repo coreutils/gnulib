@@ -1,5 +1,5 @@
 /* Line breaking of UTF-16 strings.
-   Copyright (C) 2001-2003, 2006-2008 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2006-2009 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify it
@@ -23,7 +23,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "unilbrk/tables.h"
+#include "unilbrk/lbrktables.h"
 #include "uniwidth/cjk.h"
 #include "unistr.h"
 
