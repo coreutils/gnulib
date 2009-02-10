@@ -1,3 +1,8 @@
+2009-02-10  Simon Josefsson  <simon@josefsson.org>
+
+	* m4/sockets.m4: Call AC_C_INLINE since sockets.h now can use
+	inline keywords.  Reported by Bruno Haible <bruno@clisp.org>.
+
 2009-02-10  Bruno Haible  <bruno@clisp.org>
 
 	* lib/unilbrk/lbrktables.h: Renamed from lib/unilbrk/tables.h.
