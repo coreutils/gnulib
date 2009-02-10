@@ -1,3 +1,12 @@
+2009-02-10  Bruno Haible  <bruno@clisp.org>
+
+	* lib/unilbrk/lbrktables.h: Renamed from lib/unilbrk/tables.h.
+	* lib/unilbrk/lbrktables.c: Renamed from lib/unilbrk/tables.c.
+	* modules/unilbrk/tables (Files, Makefile.am, Include): Update.
+	* lib/unilbrk/u8-possible-linebreaks.c: Update.
+	* lib/unilbrk/u16-possible-linebreaks.c: Likewise.
+	* lib/unilbrk/u32-possible-linebreaks.c: Likewise.
+
 2009-02-09  Simon Josefsson  <simon@josefsson.org>
 
 	* lib/sockets.h (gl_fd_to_handle): New function.
