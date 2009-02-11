@@ -1,5 +1,11 @@
 2009-02-10  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'uniwbrk/u8-wordbreaks'.
+	* modules/uniwbrk/u8-wordbreaks-tests: New file.
+	* tests/uniwbrk/test-u8-wordbreaks.c: New file.
+
+2009-02-10  Bruno Haible  <bruno@clisp.org>
+
 	* modules/uniwbrk/u8-wordbreaks (Depends-on): Add uniwbrk/wordbreak
 	property.
 	* modules/uniwbrk/u16-wordbreaks (Depends-on): Likewise.

@@ -1,0 +1,12 @@
+Files:
+tests/uniwbrk/test-u8-wordbreaks.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-u8-wordbreaks
+check_PROGRAMS += test-u8-wordbreaks
+test_u8_wordbreaks_SOURCES = uniwbrk/test-u8-wordbreaks.c
+
