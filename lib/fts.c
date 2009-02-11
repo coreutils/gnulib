@@ -617,6 +617,10 @@ fts_close (FTS *sp)
 	  }
 
 	fd_ring_clear (&sp->fts_fd_ring);
+
+	if (sp->fts_leaf_optimization_works_ht)
+	  hash_free (sp->fts_leaf_optimization_works_ht);
+
 	free_dir (sp);
 
 	/* Free up the stream pointer. */
@@ -639,6 +643,8 @@ fts_close (FTS *sp)
 /* Linux-specific constants from coreutils' src/fs.h */
 # define S_MAGIC_TMPFS 0x1021994
 # define S_MAGIC_NFS 0x6969
+# define S_MAGIC_REISERFS 0x52654973
+# define S_MAGIC_PROC 0x9FA0
 
 /* Return false if it is easy to determine the file system type of
    the directory on which DIR_FD is open, and sorting dirents on
@@ -672,9 +678,126 @@ dirent_inode_sort_may_be_useful (int dir_fd)
       return true;
     }
 }
+
+/* Given a file descriptor DIR_FD open on a directory D,
+   return true if it is valid to apply the leaf-optimization
+   technique of counting directories in D via stat.st_nlink.  */
+static bool
+leaf_optimization_applies (int dir_fd)
+{
+  struct statfs fs_buf;
+
+  /* If fstatfs fails, assume we can't use the optimization.  */
+  if (fstatfs (dir_fd, &fs_buf) != 0)
+    return false;
+
+  /* FIXME: do we need to detect AFS mount points?  I doubt it,
+     unless fstatfs can report S_MAGIC_REISERFS for such a directory.  */
+
+  switch (fs_buf.f_type)
+    {
+      /* List here the file system types that lack useable dirent.d_type
+	 info, yet for which the optimization does apply.  */
+    case S_MAGIC_REISERFS:
+      return true;
+
+    case S_MAGIC_PROC:
+      /* Explicitly listing this or any other file system type for which
+	 the optimization is not applicable is not necessary, but we leave
+	 it here to document the risk.  Per http://bugs.debian.org/143111,
+	 /proc may have bogus stat.st_nlink values.  */
+      /* fall through */
+    default:
+      return false;
+    }
+}
+
 #else
 static bool dirent_inode_sort_may_be_useful (int dir_fd) { return true; }
+static bool leaf_optimization_applies (int dir_fd) { return false; }
 #endif
+
+/* link-count-optimization entry:
+   map an stat.st_dev number to a boolean: leaf_optimization_works */
+struct LCO_ent
+{
+  dev_t st_dev;
+  bool opt_ok;
+};
+
+/* Use a tiny initial size.  If a traversal encounters more than
+   a few devices, the cost of growing/rehashing this table will be
+   rendered negligible by the number of inodes processed.  */
+enum { LCO_HT_INITIAL_SIZE = 13 };
+
+static size_t
+LCO_hash (void const *x, size_t table_size)
+{
+  struct LCO_ent const *ax = x;
+  return (uintmax_t) ax->st_dev % table_size;
+}
+
+static bool
+LCO_compare (void const *x, void const *y)
+{
+  struct LCO_ent const *ax = x;
+  struct LCO_ent const *ay = y;
+  return ax->st_dev == ay->st_dev;
+}
+
+/* Ask the same question as leaf_optimization_applies, but query
+   the cache first (FTS.fts_leaf_optimization_works_ht), and if necessary,
+   update that cache.  */
+static bool
+link_count_optimize_ok (FTSENT const *p)
+{
+  FTS *sp = p->fts_fts;
+  Hash_table *h = sp->fts_leaf_optimization_works_ht;
+  struct LCO_ent tmp;
+  struct LCO_ent *ent;
+  bool opt_ok;
+  struct LCO_ent *t2;
+
+  /* If we're not in CWDFD mode, don't bother with this optimization,
+     since the caller is not serious about performance. */
+  if (!ISSET(FTS_CWDFD))
+    return false;
+
+  /* map st_dev to the boolean, leaf_optimization_works */
+  if (h == NULL)
+    {
+      h = sp->fts_leaf_optimization_works_ht
+	= hash_initialize (LCO_HT_INITIAL_SIZE, NULL, LCO_hash,
+			   LCO_compare, free);
+      if (h == NULL)
+	return false;
+    }
+  tmp.st_dev = p->fts_statp->st_dev;
+  ent = hash_lookup (h, &tmp);
+  if (ent)
+    return ent->opt_ok;
+
+  /* Look-up failed.  Query directly and cache the result.  */
+  t2 = malloc (sizeof *t2);
+  if (t2 == NULL)
+    return false;
+
+  /* Is it ok to perform the optimization in the dir, FTS_CWD_FD?  */
+  opt_ok = leaf_optimization_applies (sp->fts_cwd_fd);
+  t2->opt_ok = opt_ok;
+  t2->st_dev = p->fts_statp->st_dev;
+
+  ent = hash_insert (h, t2);
+  if (ent == NULL)
+    {
+      /* insertion failed */
+      free (t2);
+      return false;
+    }
+  fts_assert (ent == t2);
+
+  return opt_ok;
+}
 
 /*
  * Special case of "/" at the end of the file name so that slashes aren't
@@ -836,7 +959,25 @@ check_for_dir:
 		if (p->fts_info == FTS_NSOK)
 		  {
 		    if (p->fts_statp->st_size == FTS_STAT_REQUIRED)
-		      p->fts_info = fts_stat(sp, p, false);
+		      {
+			FTSENT *parent = p->fts_parent;
+			if (parent->fts_n_dirs_remaining == 0
+			    && ISSET(FTS_NOSTAT)
+			    && ISSET(FTS_PHYSICAL)
+			    && link_count_optimize_ok (parent))
+			  {
+			    /* nothing more needed */
+			  }
+			else
+			  {
+			    p->fts_info = fts_stat(sp, p, false);
+			    if (S_ISDIR(p->fts_statp->st_mode))
+			      {
+				if (parent->fts_n_dirs_remaining)
+				  parent->fts_n_dirs_remaining--;
+			      }
+			  }
+		      }
 		    else
 		      fts_assert (p->fts_statp->st_size == FTS_NO_STAT_REQUIRED);
 		  }
@@ -1560,6 +1701,8 @@ err:		memset(sbp, 0, sizeof(struct stat));
 	}
 
 	if (S_ISDIR(sbp->st_mode)) {
+		p->fts_n_dirs_remaining = (sbp->st_nlink
+					   - (ISSET(FTS_SEEDOT) ? 0 : 2));
 		if (ISDOT(p->fts_name)) {
 			/* Command-line "." and ".." are real directories. */
 			return (p->fts_level == FTS_ROOTLEVEL ? FTS_D : FTS_DOT);

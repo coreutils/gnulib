@@ -1,5 +1,25 @@
 2009-02-13  Jim Meyering  <meyering@redhat.com>
 
+	fts: arrange not to stat non-directories in more cases
+	This makes GNU find (when it doesn't need to stat each file)
+	*much* more efficient at traversing reiserfs file systems.
+	* lib/fts_.h (struct ftsent) [fts_n_dirs_remaining]: New member.
+	(struct FTS) [fts_leaf_optimization_works_ht]: Add member.
+	* lib/fts.c (fts_close): Free ->fts_leaf_optimization_works_ht.
+	(S_MAGIC_REISERFS, S_MAGIC_PROC): Define.
+	(leaf_optimization_applies): New function.
+	(LCO_hash, LCO_compare): New helper functions.
+	(link_count_optimize_ok): New function.
+	(fts_stat): Initialize new member (if dir).
+	(fts_read): Decrement parent's fts_n_dirs_remaining count if
+	we've just stat'ed a directory.  Skip the stat call when possible.
+	---
+	Note this AFS-related exchange:
+	http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=143111
+	and note find's pioctl call in find/fstype.c.
+	But that is necessary only if you want to enable the
+	optimization for AFS, and for now, I don't.
+
 	fts: move a function definition "up" (no semantic change)
 	* lib/fts.c (dirent_inode_sort_may_be_useful): Move definition
 	"up" to precede upcoming use of a related function.

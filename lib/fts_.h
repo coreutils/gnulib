@@ -1,6 +1,6 @@
 /* Traverse a file hierarchy.
 
-   Copyright (C) 2004-2008 Free Software Foundation, Inc.
+   Copyright (C) 2004-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -144,6 +144,15 @@ typedef struct {
 	int fts_options;		/* fts_open options, global flags */
 
 # if GNULIB_FTS
+	/* Map a directory's device number to a boolean.  The boolean is
+	   true if for that file system (type determined by a single fstatfs
+	   call per FS) st_nlink can be used to calculate the number of
+	   sub-directory entries in a directory.
+	   Using this table is an optimization that permits us to look up
+	   file system type on a per-inode basis at the minimal cost of
+	   calling fstatfs only once per traversed device.  */
+	struct hash_table *fts_leaf_optimization_works_ht;
+
 	union {
 		/* This data structure is used if FTS_TIGHT_CYCLE_CHECK is
 		   specified.  It records the directories between a starting
@@ -192,6 +201,7 @@ typedef struct _ftsent {
 	ptrdiff_t fts_level;		/* depth (-1 to N) */
 
 	size_t fts_namelen;		/* strlen(fts_name) */
+	nlink_t fts_n_dirs_remaining;	/* count down from st_nlink */
 
 # define FTS_D		 1		/* preorder directory */
 # define FTS_DC		 2		/* directory that causes cycles */
