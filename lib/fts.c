@@ -1,6 +1,6 @@
 /* Traverse a file hierarchy.
 
-   Copyright (C) 2004, 2005, 2006, 2007, 2008 Free Software Foundation, Inc.
+   Copyright (C) 2004-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -631,6 +631,51 @@ fts_close (FTS *sp)
 	return (0);
 }
 
+#if defined __linux__ \
+  && HAVE_SYS_VFS_H && HAVE_FSTATFS && HAVE_STRUCT_STATFS_F_TYPE
+
+#include <sys/vfs.h>
+
+/* Linux-specific constants from coreutils' src/fs.h */
+# define S_MAGIC_TMPFS 0x1021994
+# define S_MAGIC_NFS 0x6969
+
+/* Return false if it is easy to determine the file system type of
+   the directory on which DIR_FD is open, and sorting dirents on
+   inode numbers is known not to improve traversal performance with
+   that type of file system.  Otherwise, return true.  */
+static bool
+dirent_inode_sort_may_be_useful (int dir_fd)
+{
+  /* Skip the sort only if we can determine efficiently
+     that skipping it is the right thing to do.
+     The cost of performing an unnecessary sort is negligible,
+     while the cost of *not* performing it can be O(N^2) with
+     a very large constant.  */
+  struct statfs fs_buf;
+
+  /* If fstatfs fails, assume sorting would be useful.  */
+  if (fstatfs (dir_fd, &fs_buf) != 0)
+    return true;
+
+  /* FIXME: what about when f_type is not an integral type?
+     deal with that if/when it's encountered.  */
+  switch (fs_buf.f_type)
+    {
+    case S_MAGIC_TMPFS:
+    case S_MAGIC_NFS:
+      /* On a file system of any of these types, sorting
+	 is unnecessary, and hence wasteful.  */
+      return false;
+
+    default:
+      return true;
+    }
+}
+#else
+static bool dirent_inode_sort_may_be_useful (int dir_fd) { return true; }
+#endif
+
 /*
  * Special case of "/" at the end of the file name so that slashes aren't
  * appended which would cause file names to be written as "....//foo".
@@ -960,51 +1005,6 @@ fts_children (register FTS *sp, int instr)
 	  }
 	return (sp->fts_child);
 }
-
-#if defined __linux__ \
-  && HAVE_SYS_VFS_H && HAVE_FSTATFS && HAVE_STRUCT_STATFS_F_TYPE
-
-#include <sys/vfs.h>
-
-/* Linux-specific constants from coreutils' src/fs.h */
-# define S_MAGIC_TMPFS 0x1021994
-# define S_MAGIC_NFS 0x6969
-
-/* Return false if it is easy to determine the file system type of
-   the directory on which DIR_FD is open, and sorting dirents on
-   inode numbers is known not to improve traversal performance with
-   that type of file system.  Otherwise, return true.  */
-static bool
-dirent_inode_sort_may_be_useful (int dir_fd)
-{
-  /* Skip the sort only if we can determine efficiently
-     that skipping it is the right thing to do.
-     The cost of performing an unnecessary sort is negligible,
-     while the cost of *not* performing it can be O(N^2) with
-     a very large constant.  */
-  struct statfs fs_buf;
-
-  /* If fstatfs fails, assume sorting would be useful.  */
-  if (fstatfs (dir_fd, &fs_buf) != 0)
-    return true;
-
-  /* FIXME: what about when f_type is not an integral type?
-     deal with that if/when it's encountered.  */
-  switch (fs_buf.f_type)
-    {
-    case S_MAGIC_TMPFS:
-    case S_MAGIC_NFS:
-      /* On a file system of any of these types, sorting
-	 is unnecessary, and hence wasteful.  */
-      return false;
-
-    default:
-      return true;
-    }
-}
-#else
-static bool dirent_inode_sort_may_be_useful (int dir_fd) { return true; }
-#endif
 
 /* A comparison function to sort on increasing inode number.
    For some file system types, sorting either way makes a huge

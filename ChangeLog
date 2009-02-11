@@ -1,3 +1,9 @@
+2009-02-13  Jim Meyering  <meyering@redhat.com>
+
+	fts: move a function definition "up" (no semantic change)
+	* lib/fts.c (dirent_inode_sort_may_be_useful): Move definition
+	"up" to precede upcoming use of a related function.
+
 2009-02-11  Jim Meyering  <meyering@redhat.com>
 
 	fts: correct internal computation of nlinks (optimization-related)
