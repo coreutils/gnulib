@@ -1,0 +1,12 @@
+Files:
+tests/uniwbrk/test-u32-wordbreaks.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-u32-wordbreaks
+check_PROGRAMS += test-u32-wordbreaks
+test_u32_wordbreaks_SOURCES = uniwbrk/test-u32-wordbreaks.c
+
