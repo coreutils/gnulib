@@ -1,3 +1,11 @@
+2009-02-10  Bruno Haible  <bruno@clisp.org>
+
+	* modules/uniwbrk/u8-wordbreaks (Depends-on): Add uniwbrk/wordbreak
+	property.
+	* modules/uniwbrk/u16-wordbreaks (Depends-on): Likewise.
+	* modules/uniwbrk/u32-wordbreaks (Depends-on): Likewise.
+	* modules/uniwbrk/ulc-wordbreaks (Depends-on): Add localcharset.
+
 2009-02-10  Simon Josefsson  <simon@josefsson.org>
 
 	* m4/sockets.m4: Call AC_C_INLINE since sockets.h now can use
