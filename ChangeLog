@@ -1,5 +1,10 @@
 2009-02-10  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'uniwbrk/ulc-wordbreaks'.
+	* modules/uniwbrk/ulc-wordbreaks-tests: New file.
+	* tests/uniwbrk/test-ulc-wordbreaks.sh: New file.
+	* tests/uniwbrk/test-ulc-wordbreaks.c: New file.
+
 	Tests for module 'uniwbrk/u32-wordbreaks'.
 	* modules/uniwbrk/u32-wordbreaks-tests: New file.
 	* tests/uniwbrk/test-u32-wordbreaks.c: New file.
