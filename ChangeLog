@@ -1,3 +1,9 @@
+2009-02-11  Jim Meyering  <meyering@redhat.com>
+
+	fts: correct internal computation of nlinks (optimization-related)
+	* lib/fts.c (fts_build): ISSET(FTS_NOSTAT) has no bearing on
+	whether the current entry is a directory, so don't test it.
+
 2009-02-10  Bruno Haible  <bruno@clisp.org>
 
 	Tests for module 'uniwbrk/ulc-wordbreaks'.

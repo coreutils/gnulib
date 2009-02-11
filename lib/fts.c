@@ -1286,7 +1286,7 @@ mem1:				saved_errno = errno;
 			   to caller, when possible.  */
 			set_stat_type (p->fts_statp, D_TYPE (dp));
 			fts_set_stat_required(p, !skip_stat);
-			is_dir = (ISSET(FTS_PHYSICAL) && ISSET(FTS_NOSTAT)
+			is_dir = (ISSET(FTS_PHYSICAL)
 				  && DT_MUST_BE(dp, DT_DIR));
 		} else {
 			p->fts_info = fts_stat(sp, p, false);
