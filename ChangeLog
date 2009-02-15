@@ -1,3 +1,8 @@
+2009-02-15  Albert Chin-A-Young  <china@thewrittenword.com>
+
+	* m4/include_next.m4: Update comment about IBM C 9.0/10.1 bug, now that
+	fixes are available from IBM.
+
 2009-02-13  Jim Meyering  <meyering@redhat.com>
 
 	fts: arrange not to stat non-directories in more cases
