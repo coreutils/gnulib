@@ -1,3 +1,12 @@
+2009-02-15  Bruno Haible  <bruno@clisp.org>
+
+	Fix 2009-02-07 commit.
+	* lib/gen-uni-tables.c (output_predicate, output_category,
+	output_combclass, output_bidi_category, output_decimal_digit,
+	output_digit, output_numeric, output_mirror, output_scripts,
+	output_ident_category, output_simple_mapping): Fix format directives.
+	(output_lbp, output_wbp): Don't convert -1 to a size_t implicitly.
+
 2009-02-15  Albert Chin-A-Young  <china@thewrittenword.com>
 
 	* m4/include_next.m4: Update comment about IBM C 9.0/10.1 bug, now that

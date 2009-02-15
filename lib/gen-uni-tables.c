@@ -738,7 +738,7 @@ output_predicate (const char *filename, bool (*predicate) (unsigned int), const 
       if (offset == 0)
 	fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zd * sizeof (int) / sizeof (short) + %5zd",
+	fprintf (stream, " %5zu * sizeof (int) / sizeof (short) + %5zu",
 		 1 + t.level1_size, (offset - level2_offset) / sizeof (uint32_t));
       if (i+1 < t.level1_size)
         fprintf (stream, ",");
@@ -758,7 +758,7 @@ output_predicate (const char *filename, bool (*predicate) (unsigned int), const 
       if (offset == 0)
 	fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zd + %5zd * sizeof (short) / sizeof (int) + %5zd",
+	fprintf (stream, " %5zu + %5zu * sizeof (short) / sizeof (int) + %5zu",
 		 1 + t.level1_size, t.level2_size << t.q, (offset - level3_offset) / sizeof (uint32_t));
       if (i+1 < t.level2_size << t.q)
 	fprintf (stream, ",");
@@ -1056,7 +1056,7 @@ output_category (const char *filename, const char *version)
       if (offset == 0)
 	fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zd",
+	fprintf (stream, " %5zu",
 		 (offset - level2_offset) / sizeof (uint32_t));
       if (i+1 < t.level1_size)
 	fprintf (stream, ",");
@@ -1076,7 +1076,7 @@ output_category (const char *filename, const char *version)
       if (offset == 0)
 	fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zd",
+	fprintf (stream, " %5zu",
 		 (offset - level3_offset) / sizeof (uint8_t));
       if (i+1 < t.level2_size << t.q)
 	fprintf (stream, ",");
@@ -1207,7 +1207,7 @@ output_combclass (const char *filename, const char *version)
       if (offset == 0)
 	fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zd",
+	fprintf (stream, " %5zu",
 		 (offset - level2_offset) / sizeof (uint32_t));
       if (i+1 < t.level1_size)
 	fprintf (stream, ",");
@@ -1227,7 +1227,7 @@ output_combclass (const char *filename, const char *version)
       if (offset == 0)
 	fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zd",
+	fprintf (stream, " %5zu",
 		 (offset - level3_offset) / sizeof (uint8_t));
       if (i+1 < t.level2_size << t.q)
 	fprintf (stream, ",");
@@ -1546,7 +1546,7 @@ output_bidi_category (const char *filename, const char *version)
       if (offset == 0)
 	fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zd",
+	fprintf (stream, " %5zu",
 		 (offset - level2_offset) / sizeof (uint32_t));
       if (i+1 < t.level1_size)
 	fprintf (stream, ",");
@@ -1566,7 +1566,7 @@ output_bidi_category (const char *filename, const char *version)
       if (offset == 0)
 	fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zd",
+	fprintf (stream, " %5zu",
 		 (offset - level3_offset) / sizeof (uint8_t));
       if (i+1 < t.level2_size << t.q)
 	fprintf (stream, ",");
@@ -1753,7 +1753,7 @@ output_decimal_digit (const char *filename, const char *version)
       if (offset == 0)
 	fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zd",
+	fprintf (stream, " %5zu",
 		 (offset - level2_offset) / sizeof (uint32_t));
       if (i+1 < t.level1_size)
 	fprintf (stream, ",");
@@ -1773,7 +1773,7 @@ output_decimal_digit (const char *filename, const char *version)
       if (offset == 0)
 	fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zd",
+	fprintf (stream, " %5zu",
 		 (offset - level3_offset) / sizeof (uint8_t));
       if (i+1 < t.level2_size << t.q)
 	fprintf (stream, ",");
@@ -1940,7 +1940,7 @@ output_digit (const char *filename, const char *version)
       if (offset == 0)
 	fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zd",
+	fprintf (stream, " %5zu",
 		 (offset - level2_offset) / sizeof (uint32_t));
       if (i+1 < t.level1_size)
 	fprintf (stream, ",");
@@ -1960,7 +1960,7 @@ output_digit (const char *filename, const char *version)
       if (offset == 0)
 	fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zd",
+	fprintf (stream, " %5zu",
 		 (offset - level3_offset) / sizeof (uint8_t));
       if (i+1 < t.level2_size << t.q)
 	fprintf (stream, ",");
@@ -2196,7 +2196,7 @@ output_numeric (const char *filename, const char *version)
       if (offset == 0)
 	fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zd",
+	fprintf (stream, " %5zu",
 		 (offset - level2_offset) / sizeof (uint32_t));
       if (i+1 < t.level1_size)
 	fprintf (stream, ",");
@@ -2216,7 +2216,7 @@ output_numeric (const char *filename, const char *version)
       if (offset == 0)
 	fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zd",
+	fprintf (stream, " %5zu",
 		 (offset - level3_offset) / sizeof (uint8_t));
       if (i+1 < t.level2_size << t.q)
 	fprintf (stream, ",");
@@ -2434,7 +2434,7 @@ output_mirror (const char *filename, const char *version)
       if (offset == 0)
 	fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zd",
+	fprintf (stream, " %5zu",
 		 (offset - level2_offset) / sizeof (uint32_t));
       if (i+1 < t.level1_size)
 	fprintf (stream, ",");
@@ -2454,7 +2454,7 @@ output_mirror (const char *filename, const char *version)
       if (offset == 0)
 	fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zd",
+	fprintf (stream, " %5zu",
 		 (offset - level3_offset) / sizeof (int32_t));
       if (i+1 < t.level2_size << t.q)
 	fprintf (stream, ",");
@@ -3754,7 +3754,7 @@ output_scripts (const char *version)
       if (offset == 0)
 	fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zd",
+	fprintf (stream, " %5zu",
 		 (offset - level2_offset) / sizeof (uint32_t));
       if (i+1 < t.level1_size)
 	fprintf (stream, ",");
@@ -3774,7 +3774,7 @@ output_scripts (const char *version)
       if (offset == 0)
 	fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zd",
+	fprintf (stream, " %5zu",
 		 (offset - level3_offset) / sizeof (uint8_t));
       if (i+1 < t.level2_size << t.q)
 	fprintf (stream, ",");
@@ -4430,7 +4430,7 @@ output_ident_category (const char *filename, int (*predicate) (unsigned int), co
       if (offset == 0)
 	fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zd",
+	fprintf (stream, " %5zu",
 		 (offset - level2_offset) / sizeof (uint32_t));
       if (i+1 < t.level1_size)
 	fprintf (stream, ",");
@@ -4450,7 +4450,7 @@ output_ident_category (const char *filename, int (*predicate) (unsigned int), co
       if (offset == 0)
 	fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zd",
+	fprintf (stream, " %5zu",
 		 (offset - level3_offset) / sizeof (uint8_t));
       if (i+1 < t.level2_size << t.q)
 	fprintf (stream, ",");
@@ -6110,9 +6110,13 @@ output_lbp (FILE *stream1, FILE *stream2)
       if (i > 0 && (i % 8) == 0)
 	fprintf (stream2, "\n   ");
       offset = ((uint32_t *) (t.result + level1_offset))[i];
-      fprintf (stream2, " %5zd%s",
-	       offset == 0 ? -1 : (offset - level2_offset) / sizeof (uint32_t),
-	       (i+1 < t.level1_size ? "," : ""));
+      if (offset == 0)
+	fprintf (stream2, " %5d", -1);
+      else
+	fprintf (stream2, " %5zu",
+		 (offset - level2_offset) / sizeof (uint32_t));
+      if (i+1 < t.level1_size)
+	fprintf (stream2, ",");
     }
   if (t.level1_size > 8)
     fprintf (stream2, "\n ");
@@ -6126,9 +6130,13 @@ output_lbp (FILE *stream1, FILE *stream2)
       if (i > 0 && (i % 8) == 0)
 	fprintf (stream2, "\n   ");
       offset = ((uint32_t *) (t.result + level2_offset))[i];
-      fprintf (stream2, " %5zd%s",
-	       offset == 0 ? -1 : (offset - level3_offset) / sizeof (uint8_t),
-	       (i+1 < t.level2_size << t.q ? "," : ""));
+      if (offset == 0)
+	fprintf (stream2, " %5d", -1);
+      else
+	fprintf (stream2, " %5zu",
+		 (offset - level3_offset) / sizeof (unsigned char));
+      if (i+1 < t.level2_size << t.q)
+	fprintf (stream2, ",");
     }
   if (t.level2_size << t.q > 8)
     fprintf (stream2, "\n ");
@@ -6615,9 +6623,13 @@ output_wbp (FILE *stream)
       if (i > 0 && (i % 8) == 0)
 	fprintf (stream, "\n   ");
       offset = ((uint32_t *) (t.result + level1_offset))[i];
-      fprintf (stream, " %5zd%s",
-	       offset == 0 ? -1 : (offset - level2_offset) / sizeof (uint32_t),
-	       (i+1 < t.level1_size ? "," : ""));
+      if (offset == 0)
+	fprintf (stream, " %5d", -1);
+      else
+	fprintf (stream, " %5zu",
+		 (offset - level2_offset) / sizeof (uint32_t));
+      if (i+1 < t.level1_size)
+	fprintf (stream, ",");
     }
   if (t.level1_size > 8)
     fprintf (stream, "\n ");
@@ -6631,9 +6643,13 @@ output_wbp (FILE *stream)
       if (i > 0 && (i % 8) == 0)
 	fprintf (stream, "\n   ");
       offset = ((uint32_t *) (t.result + level2_offset))[i];
-      fprintf (stream, " %5zd%s",
-	       offset == 0 ? -1 : (offset - level3_offset) / sizeof (uint8_t),
-	       (i+1 < t.level2_size << t.q ? "," : ""));
+      if (offset == 0)
+	fprintf (stream, " %5d", -1);
+      else
+	fprintf (stream, " %5zu",
+		 (offset - level3_offset) / sizeof (unsigned char));
+      if (i+1 < t.level2_size << t.q)
+	fprintf (stream, ",");
     }
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n ");
@@ -6873,7 +6889,7 @@ output_simple_mapping (const char *filename,
       if (offset == 0)
 	fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zd",
+	fprintf (stream, " %5zu",
 		 (offset - level2_offset) / sizeof (uint32_t));
       if (i+1 < t.level1_size)
 	fprintf (stream, ",");
@@ -6893,7 +6909,7 @@ output_simple_mapping (const char *filename,
       if (offset == 0)
 	fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zd",
+	fprintf (stream, " %5zu",
 		 (offset - level3_offset) / sizeof (int32_t));
       if (i+1 < t.level2_size << t.q)
 	fprintf (stream, ",");
