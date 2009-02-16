@@ -1,0 +1,21 @@
+Description:
+Merge-sort algorithm on arrays.
+
+Files:
+lib/array-mergesort.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+"array-mergesort.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

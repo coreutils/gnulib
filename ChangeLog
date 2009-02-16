@@ -1,5 +1,11 @@
 2009-02-15  Bruno Haible  <bruno@clisp.org>
 
+	New module 'array-mergesort'.
+	* modules/array-mergesort: New file.
+	* lib/array-mergesort.h: New file.
+
+2009-02-15  Bruno Haible  <bruno@clisp.org>
+
 	Fix 2009-02-07 commit.
 	* lib/gen-uni-tables.c (output_predicate, output_category,
 	output_combclass, output_bidi_category, output_decimal_digit,
