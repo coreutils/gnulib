@@ -618,8 +618,10 @@ fts_close (FTS *sp)
 
 	fd_ring_clear (&sp->fts_fd_ring);
 
+#if GNULIB_FTS
 	if (sp->fts_leaf_optimization_works_ht)
 	  hash_free (sp->fts_leaf_optimization_works_ht);
+#endif
 
 	free_dir (sp);
 
@@ -717,6 +719,7 @@ static bool dirent_inode_sort_may_be_useful (int dir_fd) { return true; }
 static bool leaf_optimization_applies (int dir_fd) { return false; }
 #endif
 
+#if GNULIB_FTS
 /* link-count-optimization entry:
    map an stat.st_dev number to a boolean: leaf_optimization_works */
 struct LCO_ent
@@ -798,6 +801,7 @@ link_count_optimize_ok (FTSENT const *p)
 
   return opt_ok;
 }
+#endif
 
 /*
  * Special case of "/" at the end of the file name so that slashes aren't

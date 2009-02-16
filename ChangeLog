@@ -1,3 +1,10 @@
+2009-02-16  Jim Meyering  <meyering@redhat.com>
+
+	fts: add #if guards so that the fts_lgpl module still builds
+	* lib/fts.c: Guard just-added hash-table-using parts with
+	#if GNULIB_FTS, so as not to break builds of the fts_lgpl module.
+	Reported by Simon Josefsson.
+
 2009-02-15  Bruno Haible  <bruno@clisp.org>
 
 	* modules/array-mergesort-tests: New file.
