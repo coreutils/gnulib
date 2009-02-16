@@ -1,5 +1,8 @@
 2009-02-15  Bruno Haible  <bruno@clisp.org>
 
+	* modules/array-mergesort-tests: New file.
+	* tests/test-array-mergesort.c: New file.
+
 	New module 'array-mergesort'.
 	* modules/array-mergesort: New file.
 	* lib/array-mergesort.h: New file.

@@ -1,0 +1,10 @@
+Files:
+tests/test-array-mergesort.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-array-mergesort
+check_PROGRAMS += test-array-mergesort
