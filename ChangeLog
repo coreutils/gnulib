@@ -1,3 +1,10 @@
+2009-02-18  Jim Meyering  <meyering@redhat.com>
+
+	fts: avoid used-uninitialized error due to recent change
+	* lib/fts.c (fts_read): Guard uses of the new member,
+	parent->fts_n_dirs_remaining, since it's not relevant for
+	the parent of a directory specified on the command-line.
+
 2009-02-17  James Youngman  <jay@gnu.org>
             Bruno Haible  <bruno@clisp.org>
 

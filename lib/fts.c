@@ -965,7 +965,10 @@ check_for_dir:
 		    if (p->fts_statp->st_size == FTS_STAT_REQUIRED)
 		      {
 			FTSENT *parent = p->fts_parent;
-			if (parent->fts_n_dirs_remaining == 0
+			if (FTS_ROOTLEVEL < p->fts_level
+			    /* ->fts_n_dirs_remaining is not valid
+			       for command-line-specified names.  */
+			    && parent->fts_n_dirs_remaining == 0
 			    && ISSET(FTS_NOSTAT)
 			    && ISSET(FTS_PHYSICAL)
 			    && link_count_optimize_ok (parent))
@@ -975,11 +978,10 @@ check_for_dir:
 			else
 			  {
 			    p->fts_info = fts_stat(sp, p, false);
-			    if (S_ISDIR(p->fts_statp->st_mode))
-			      {
-				if (parent->fts_n_dirs_remaining)
+			    if (S_ISDIR(p->fts_statp->st_mode)
+				&& p->fts_level != FTS_ROOTLEVEL
+				&& parent->fts_n_dirs_remaining)
 				  parent->fts_n_dirs_remaining--;
-			      }
 			  }
 		      }
 		    else
