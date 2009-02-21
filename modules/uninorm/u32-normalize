@@ -1,0 +1,31 @@
+Description:
+Normalization of UTF-32 strings.
+
+Files:
+lib/uninorm/u32-normalize.c
+lib/uninorm/normalize-internal.h
+lib/uninorm/u-normalize-internal.h
+
+Depends-on:
+uninorm/base
+unistr/u32-mbtouc-unsafe
+unistr/u32-uctomb
+unistr/u32-cpy
+unictype/combining-class
+uninorm/decompose-internal
+
+configure.ac:
+gl_MODULE_INDICATOR([uninorm/u32-normalize])
+
+Makefile.am:
+lib_SOURCES += uninorm/u32-normalize.c
+
+Include:
+"uninorm.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
