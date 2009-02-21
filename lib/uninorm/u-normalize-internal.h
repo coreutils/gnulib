@@ -143,7 +143,7 @@ FUNC (uninorm_t nf, const UNIT *s, size_t n,
 
 	    if (ccc == 0)
 	      {
-	        size_t j;
+		size_t j;
 
 		/* Apply the canonical ordering algorithm to the accumulated
 		   sequence of characters.  */
