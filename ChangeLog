@@ -1,5 +1,9 @@
 2009-02-21  Bruno Haible  <bruno@clisp.org>
 
+	New module 'uninorm/nfc'.
+	* lib/uninorm/nfc.c: New file.
+	* modules/uninorm/nfc: New file.
+
 	Tests for module 'uninorm/nfd'.
 	* tests/uninorm/test-nfd.c: New file.
 	* tests/uninorm/test-u8-nfd.c: New file.

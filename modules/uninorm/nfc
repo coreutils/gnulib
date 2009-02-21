@@ -1,0 +1,26 @@
+Description:
+Canonical normalization of Unicode strings.
+
+Files:
+lib/uninorm/nfc.c
+lib/uninorm/normalize-internal.h
+
+Depends-on:
+uninorm/base
+uninorm/canonical-decomposition
+uninorm/composition
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += uninorm/nfc.c
+
+Include:
+"uninorm.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
