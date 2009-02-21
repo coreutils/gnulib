@@ -1,5 +1,9 @@
 2009-02-21  Bruno Haible  <bruno@clisp.org>
 
+	New module 'uninorm/decomposition'.
+	* lib/uninorm/decomposition.c: New file.
+	* modules/uninorm/decomposition: New file.
+
 	New module 'uninorm/decomposition-table'.
 	* lib/uninorm/decomposition-table.h: New file.
 	* lib/uninorm/decomposition-table.c: New file.
