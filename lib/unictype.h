@@ -1,5 +1,5 @@
 /* Unicode character classification and properties.
-   Copyright (C) 2002, 2005-2008 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2005-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify it
    under the terms of the GNU Lesser General Public License as published
@@ -301,7 +301,7 @@ extern bool
 /* ========================================================================= */
 
 /* Field 5 of Unicode Character Database: Character decomposition mapping.
-   See "unicomp.h".  */
+   See "uninorm.h".  */
 
 /* ========================================================================= */
 

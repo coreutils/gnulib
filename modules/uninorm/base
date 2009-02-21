@@ -1,0 +1,22 @@
+Description:
+Base layer for normalization forms of Unicode strings.
+
+Files:
+lib/uninorm.h
+
+Depends-on:
+unitypes
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+"uninorm.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
