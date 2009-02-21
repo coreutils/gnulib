@@ -1,5 +1,9 @@
 2009-02-21  Bruno Haible  <bruno@clisp.org>
 
+	New module 'uninorm/canonical-decomposition'.
+	* lib/uninorm/canonical-decomposition.c: New file.
+	* modules/uninorm/canonical-decomposition: New file.
+
 	Tests for module 'uninorm/decomposition'.
 	* tests/uninorm/test-decomposition.c: New file.
 	* modules/uninorm/decomposition-tests: New file.
