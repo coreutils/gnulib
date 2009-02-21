@@ -1,0 +1,26 @@
+Description:
+Compatibility normalization of Unicode strings.
+
+Files:
+lib/uninorm/nfkc.c
+lib/uninorm/normalize-internal.h
+
+Depends-on:
+uninorm/base
+uninorm/compat-decomposition
+uninorm/composition
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += uninorm/nfkc.c
+
+Include:
+"uninorm.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

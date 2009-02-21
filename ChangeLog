@@ -1,5 +1,9 @@
 2009-02-21  Bruno Haible  <bruno@clisp.org>
 
+	New module 'uninorm/nfkc'.
+	* lib/uninorm/nfkc.c: New file.
+	* modules/uninorm/nfkc: New file.
+
 	Tests for module 'uninorm/nfkd'.
 	* tests/uninorm/test-nfkd.c: New file.
 	* tests/uninorm/test-u8-nfkd.c: New file.
