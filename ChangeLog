@@ -1,5 +1,9 @@
 2009-02-21  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'uninorm/filter'.
+	* tests/uninorm/test-uninorm-filter-nfc.c: New file.
+	* modules/uninorm/filter-tests: New file.
+
 	New module 'uninorm/filter'.
 	* lib/uninorm.h (uninorm_filter_create, uninorm_filter_write,
 	uninorm_filter_flush, uninorm_filter_free): New declarations.
