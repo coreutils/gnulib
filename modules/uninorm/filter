@@ -1,0 +1,27 @@
+Description:
+Normalization of a stream of Unicode characters.
+
+Files:
+lib/uninorm/uninorm-filter.c
+lib/uninorm/normalize-internal.h
+
+Depends-on:
+uninorm/base
+unictype/combining-class
+uninorm/decompose-internal
+malloc-posix
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += uninorm/uninorm-filter.c
+
+Include:
+"uninorm.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

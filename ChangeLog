@@ -1,5 +1,13 @@
 2009-02-21  Bruno Haible  <bruno@clisp.org>
 
+	New module 'uninorm/filter'.
+	* lib/uninorm.h (uninorm_filter_create, uninorm_filter_write,
+	uninorm_filter_flush, uninorm_filter_free): New declarations.
+	* lib/uninorm/uninorm-filter.c: New file.
+	* modules/uninorm/filter: New file.
+
+2009-02-21  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'uninorm/nfkc'.
 	* tests/uninorm/test-nfkc.c: New file.
 	* tests/uninorm/test-u8-nfkc.c: New file.

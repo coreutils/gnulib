@@ -145,6 +145,48 @@ extern uint32_t *
 		      uint32_t *resultbuf, size_t *lengthp);
 
 
+/* Normalization of a stream of Unicode characters.
+
+   A "stream of Unicode characters" is essentially a function that accepts an
+   ucs4_t argument repeatedly, optionally combined with a function that
+   "flushes" the stream.  */
+
+/* Data type of a stream of Unicode characters that normalizes its input
+   according to a given normalization form and passes the normalized character
+   sequence to the encapsulated stream of Unicode characters.  */
+struct uninorm_filter;
+
+/* Create and return a normalization filter for Unicode characters.
+   The pair (stream_func, stream_data) is the encapsulated stream.
+   stream_func (stream_data, uc) receives the Unicode character uc
+   and returns 0 if successful, or -1 with errno set upon failure.
+   Return the new filter, or NULL with errno set upon failure.  */
+extern struct uninorm_filter *
+       uninorm_filter_create (uninorm_t nf,
+			      int (*stream_func) (void *stream_data, ucs4_t uc),
+			      void *stream_data);
+
+/* Stuff a Unicode character into a normalizing filter.
+   Return 0 if successful, or -1 with errno set upon failure.  */
+extern int
+       uninorm_filter_write (struct uninorm_filter *filter, ucs4_t uc);
+
+/* Bring data buffered in the filter to its destination, the encapsulated
+   stream.
+   Return 0 if successful, or -1 with errno set upon failure.
+   Note! If after calling this function, additional characters are written
+   into the filter, the resulting character sequence in the encapsulated stream
+   will not necessarily be normalized.  */
+extern int
+       uninorm_filter_flush (struct uninorm_filter *filter);
+
+/* Bring data buffered in the filter to its destination, the encapsulated
+   stream, then close and free the filter.
+   Return 0 if successful, or -1 with errno set upon failure.  */
+extern int
+       uninorm_filter_free (struct uninorm_filter *filter);
+
+
 #ifdef __cplusplus
 }
 #endif
