@@ -7132,27 +7132,11 @@ debug_output_composition_tables (const char *filename)
     }
 }
 
-#if 0
-/* Construction of sparse 3-level tables.  */
-#define TABLE composition_table
-#define ELEMENT uint32_t
-#define DEFAULT 0
-#define xmalloc malloc
-#define xrealloc realloc
-#include "3level.h"
-#endif
-
 static void
 output_composition_tables (const char *filename, const char *version)
 {
   FILE *stream;
   unsigned int ch;
-#if 0
-  unsigned int mul1, mul2;
-  unsigned int i;
-  struct composition_table t;
-  unsigned int level1_offset, level2_offset, level3_offset;
-#endif
 
   stream = fopen (filename, "w");
   if (stream == NULL)
@@ -7194,212 +7178,13 @@ output_composition_tables (const char *filename, const char *version)
      For a fixed code2, there are from 1 to 117 possible values for code1.
      This is a very sparse matrix.
 
-     We want an O(1) hash lookup.  */
+     We want an O(1) hash lookup.
 
-#if 0 /* This approach leads to a table of size 37 KB.  */
-
-  /* We implement the hash lookup by mapping (code1, code2) to a linear
+     We could implement the hash lookup by mapping (code1, code2) to a linear
      combination  mul1*code1 + mul2*code2, which is then used as an index into
-     a 3-level table.  */
+     a 3-level table.  But this leads to a table of size 37 KB.
 
-  /* Find adequate (mul1, mul2) parameters.
-     The parameters that are found are 17 and 33, which are small enough that
-     the computations can be performed in 'unsigned int' values without
-     risking an overflow.   */
-  mul1 = mul2 = 1;
-  for (;;)
-    {
-      unsigned int bound = (mul1 + mul2) * 0x110000;
-      unsigned char *bitmap = (unsigned char *) calloc (bound / 8 + 1, 1);
-      bool collision = false;
-
-      /*printf ("trying mul1=%u mul2=%u\n", mul1, mul2);*/
-
-      for (ch = 0; ch < 0x110000; ch++)
-	{
-	  unsigned int length;
-	  unsigned int decomposed[MAX_DECOMP_LENGTH];
-	  int type = get_decomposition (ch, &length, decomposed);
-
-	  if (type == UC_DECOMP_CANONICAL
-	      /* Consider only binary decompositions.
-		 Exclude singleton decompositions.  */
-	      && length == 2)
-	    {
-	      unsigned int code1 = decomposed[0];
-	      unsigned int code2 = decomposed[1];
-	      unsigned int combined = ch;
-
-	      /* Exclude decompositions where the first part is not a starter,
-		 i.e. is not of canonical combining class 0.  */
-	      if (strcmp (unicode_attributes[code1].combining, "0") == 0
-		  /* Exclude characters listed in CompositionExclusions.txt.  */
-		  && !unicode_composition_exclusions[combined])
-		{
-		  unsigned int lc = mul1 * code1 + mul2 * code2;
-
-		  if (bitmap[lc / 8] & (1 << (lc % 8)))
-		    {
-		      /* Collision.  */
-		      collision = true;
-		      break;
-		    }
-		  bitmap[lc / 8] |= 1 << (lc % 8);
-		}
-	    }
-	}
-
-      free (bitmap);
-
-      if (!collision)
-	break;
-
-      /* Try other (mul1, mul2) parameters.  */
-      mul1++; mul2--;
-      if (mul2 == 0)
-	{
-	  /* Increment mul1 + mul2.  */
-	  mul2 = mul1;
-	  mul1 = 1;
-	}
-    }
-
-  fprintf (stream, "#define MUL1 %u\n", mul1);
-  fprintf (stream, "#define MUL2 %u\n", mul2);
-
-  /* Because the (code1, code2) -> mul1*code1 + mul2*code2 mapping is not
-     injective, we need to store also code1 or code2 in the hash table entry.
-     Let's choose code2, randomly.  */
-
-  t.p = 2;
-  t.q = 7;
-  composition_table_init (&t);
-
-  for (ch = 0; ch < 0x110000; ch++)
-    {
-      unsigned int length;
-      unsigned int decomposed[MAX_DECOMP_LENGTH];
-      int type = get_decomposition (ch, &length, decomposed);
-
-      if (type == UC_DECOMP_CANONICAL
-	  /* Consider only binary decompositions.
-	     Exclude singleton decompositions.  */
-	  && length == 2)
-	{
-	  unsigned int code1 = decomposed[0];
-	  unsigned int code2 = decomposed[1];
-	  unsigned int combined = ch;
-
-	  /* Exclude decompositions where the first part is not a starter,
-	     i.e. is not of canonical combining class 0.  */
-	  if (strcmp (unicode_attributes[code1].combining, "0") == 0
-	      /* Exclude characters listed in CompositionExclusions.txt.  */
-	      && !unicode_composition_exclusions[combined])
-	    {
-	      /* The combined character must now also be a starter.
-		 Verify this.  */
-	      if (strcmp (unicode_attributes[combined].combining, "0") != 0)
-		abort ();
-
-	      if (!(code2 < 0x10000))
-		abort ();
-	      if (!(combined < 0x10000))
-		abort ();
-
-	      composition_table_add (&t, mul1 * code1 + mul2 * code2, (code2 << 16) | combined);
-	    }
-	}
-    }
-
-  composition_table_finalize (&t);
-
-  /* Offsets in t.result, in memory of this process.  */
-  level1_offset =
-    5 * sizeof (uint32_t);
-  level2_offset =
-    5 * sizeof (uint32_t)
-    + t.level1_size * sizeof (uint32_t);
-  level3_offset =
-    5 * sizeof (uint32_t)
-    + t.level1_size * sizeof (uint32_t)
-    + (t.level2_size << t.q) * sizeof (uint32_t);
-
-  for (i = 0; i < 5; i++)
-    fprintf (stream, "#define composition_header_%d %d\n", i,
-	     ((uint32_t *) t.result)[i]);
-  fprintf (stream, "static const\n");
-  fprintf (stream, "struct\n");
-  fprintf (stream, "  {\n");
-  fprintf (stream, "    int level1[%zu];\n", t.level1_size);
-  fprintf (stream, "    short level2[%zu << %d];\n", t.level2_size, t.q);
-  fprintf (stream, "    unsigned int level3[%zu << %d];\n", t.level3_size, t.p);
-  fprintf (stream, "  }\n");
-  fprintf (stream, "u_composition =\n");
-  fprintf (stream, "{\n");
-  fprintf (stream, "  {");
-  if (t.level1_size > 8)
-    fprintf (stream, "\n   ");
-  for (i = 0; i < t.level1_size; i++)
-    {
-      uint32_t offset;
-      if (i > 0 && (i % 8) == 0)
-	fprintf (stream, "\n   ");
-      offset = ((uint32_t *) (t.result + level1_offset))[i];
-      if (offset == 0)
-	fprintf (stream, " %5d", -1);
-      else
-	fprintf (stream, " %5zu",
-		 (offset - level2_offset) / sizeof (uint32_t));
-      if (i+1 < t.level1_size)
-	fprintf (stream, ",");
-    }
-  if (t.level1_size > 8)
-    fprintf (stream, "\n ");
-  fprintf (stream, " },\n");
-  fprintf (stream, "  {");
-  if (t.level2_size << t.q > 8)
-    fprintf (stream, "\n   ");
-  for (i = 0; i < t.level2_size << t.q; i++)
-    {
-      uint32_t offset;
-      if (i > 0 && (i % 8) == 0)
-	fprintf (stream, "\n   ");
-      offset = ((uint32_t *) (t.result + level2_offset))[i];
-      if (offset == 0)
-	fprintf (stream, " %5d", -1);
-      else
-	fprintf (stream, " %5zu",
-		 (offset - level3_offset) / sizeof (uint32_t));
-      if (i+1 < t.level2_size << t.q)
-	fprintf (stream, ",");
-    }
-  if (t.level2_size << t.q > 8)
-    fprintf (stream, "\n ");
-  fprintf (stream, " },\n");
-  fprintf (stream, "  {");
-  if (t.level3_size << t.p > 4)
-    fprintf (stream, "\n   ");
-  for (i = 0; i < t.level3_size << t.p; i++)
-    {
-      uint32_t value = ((uint32_t *) (t.result + level3_offset))[i];
-
-      if (i > 0 && (i % 4) == 0)
-	fprintf (stream, "\n   ");
-      if (value == 0)
-	fprintf (stream, "          0");
-      else
-	fprintf (stream, " 0x%08X", value);
-      if (i+1 < t.level3_size << t.p)
-	fprintf (stream, ",");
-    }
-  if (t.level3_size << t.p > 4)
-    fprintf (stream, "\n ");
-  fprintf (stream, " }\n");
-  fprintf (stream, "};\n");
-
-#else
-
-  /* We use gperf to implement the hash lookup, giving it the 928 sets of
+     We use gperf to implement the hash lookup, giving it the 928 sets of
      4 bytes (code1, code2) as input.  gperf generates a hash table of size
      1527, which is quite good (60% filled).  It requires an auxiliary table
      lookup in a table of size 0.5 KB.  The total tables size is 11 KB.  */
@@ -7456,8 +7241,6 @@ output_composition_tables (const char *filename, const char *version)
 	    }
 	}
     }
-
-#endif
 
   if (ferror (stream) || fclose (stream))
     {
