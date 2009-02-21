@@ -1,0 +1,25 @@
+Description:
+Compatibility decomposition of Unicode strings.
+
+Files:
+lib/uninorm/nfkd.c
+lib/uninorm/normalize-internal.h
+
+Depends-on:
+uninorm/base
+uninorm/compat-decomposition
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += uninorm/nfkd.c
+
+Include:
+"uninorm.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
