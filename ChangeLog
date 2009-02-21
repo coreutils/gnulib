@@ -1,5 +1,9 @@
 2009-02-21  David Lutterkort  <lutter@redhat.com>
 
+	Tests for module 'safe-alloc'.
+	* tests/test-safe-alloc.c: New file.
+	* modules/safe-alloc-tests: New file.
+
 	New module 'safe-alloc'.
 	* lib/safe-alloc.h: New file.
 	* lib/safe-alloc.c: New file.

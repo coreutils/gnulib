@@ -1,0 +1,10 @@
+Files:
+tests/test-safe-alloc.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-safe-alloc
+check_PROGRAMS += test-safe-alloc
