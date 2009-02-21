@@ -1,5 +1,9 @@
 2009-02-21  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'uninorm/decomposition'.
+	* tests/uninorm/test-decomposition.c: New file.
+	* modules/uninorm/decomposition-tests: New file.
+
 	New module 'uninorm/decomposition'.
 	* lib/uninorm/decomposition.c: New file.
 	* modules/uninorm/decomposition: New file.
