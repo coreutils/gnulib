@@ -1,3 +1,15 @@
+2009-02-21  David Lutterkort  <lutter@redhat.com>
+
+	New module 'safe-alloc'.
+	* lib/safe-alloc.h: New file.
+	* lib/safe-alloc.c: New file.
+	* m4/safe-alloc.m4: New file.
+	* modules/safe-alloc: New file.
+	* doc/safe-alloc.texi: New file.
+	* doc/gnulib.texi: Include it.
+	* MODULES.html.sh (Memory management functions <stdlib.h>): Add
+	safe-alloc.
+
 2009-02-18  Bruno Haible  <bruno@clisp.org>
 
 	Fix link error on non-glibc systems.

@@ -5824,6 +5824,7 @@ This list of functions is sorted according to the header that declares them.
 * func::
 * warnings::
 * manywarnings::
+* Safe Allocation Macros::
 @end menu
 
 @node alloca
@@ -5914,6 +5915,7 @@ generated automatically.
 
 @include manywarnings.texi
 
+@include safe-alloc.texi
 
 @node GNU Free Documentation License
 @appendix GNU Free Documentation License
