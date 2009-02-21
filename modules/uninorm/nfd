@@ -1,0 +1,25 @@
+Description:
+Canonical decomposition of Unicode strings.
+
+Files:
+lib/uninorm/nfd.c
+lib/uninorm/normalize-internal.h
+
+Depends-on:
+uninorm/base
+uninorm/canonical-decomposition
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += uninorm/nfd.c
+
+Include:
+"uninorm.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

@@ -1,5 +1,9 @@
 2009-02-21  Bruno Haible  <bruno@clisp.org>
 
+	New module 'uninorm/nfd'.
+	* lib/uninorm/nfd.c: New file.
+	* modules/uninorm/nfd: New file.
+
 	New module 'uninorm/u32-normalize'.
 	* lib/uninorm/u32-normalize.c: New file.
 	* modules/uninorm/u32-normalize: New file.
