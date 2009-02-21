@@ -22,7 +22,8 @@
 /* Complete definition of normalization form descriptor.  */
 struct unicode_normalization_form
 {
-  /* Bit mask containing meta-information.  */
+  /* Bit mask containing meta-information.
+     This must be the first field.  */
   unsigned int description;
   #define NF_IS_COMPAT_DECOMPOSING  (1 << 0)
   #define NF_IS_COMPOSING           (1 << 1)
