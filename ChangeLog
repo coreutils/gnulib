@@ -1,5 +1,18 @@
 2009-02-21  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'uninorm/nfd'.
+	* tests/uninorm/test-nfd.c: New file.
+	* tests/uninorm/test-u8-nfd.c: New file.
+	* tests/uninorm/test-u16-nfd.c: New file.
+	* tests/uninorm/test-u32-nfd.c: New file.
+	* tests/uninorm/test-u32-nfd-big.sh: New file.
+	* tests/uninorm/test-u32-nfd-big.c: New file.
+	* tests/uninorm/test-u32-normalize-big.h: New file.
+	* tests/uninorm/test-u32-normalize-big.c: New file.
+	* tests/uninorm/NormalizationTest.txt: New file, created from
+	Unicode 5.1.0 NormalizationTest.txt.
+	* modules/uninorm/nfd-tests: New file.
+
 	New module 'uninorm/nfd'.
 	* lib/uninorm/nfd.c: New file.
 	* modules/uninorm/nfd: New file.
