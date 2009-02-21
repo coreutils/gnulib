@@ -1,0 +1,12 @@
+Files:
+tests/uninorm/test-compat-decomposition.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-compat-decomposition
+check_PROGRAMS += test-compat-decomposition
+test_compat_decomposition_SOURCES = uninorm/test-compat-decomposition.c
+
