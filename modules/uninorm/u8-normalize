@@ -1,0 +1,31 @@
+Description:
+Normalization of UTF-8 strings.
+
+Files:
+lib/uninorm/u8-normalize.c
+lib/uninorm/normalize-internal.h
+lib/uninorm/u-normalize-internal.h
+
+Depends-on:
+uninorm/base
+unistr/u8-mbtouc-unsafe
+unistr/u8-uctomb
+unistr/u8-cpy
+unictype/combining-class
+uninorm/decompose-internal
+
+configure.ac:
+gl_MODULE_INDICATOR([uninorm/u8-normalize])
+
+Makefile.am:
+lib_SOURCES += uninorm/u8-normalize.c
+
+Include:
+"uninorm.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

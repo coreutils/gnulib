@@ -1,5 +1,11 @@
 2009-02-21  Bruno Haible  <bruno@clisp.org>
 
+	New module 'uninorm/u8-normalize'.
+	* lib/uninorm/u8-normalize.c: New file.
+	* lib/uninorm/normalize-internal.h: New file.
+	* lib/uninorm/u-normalize-internal.h: New file.
+	* modules/uninorm/u8-normalize: New file.
+
 	New module 'uninorm/decompose-internal'.
 	* lib/uninorm/decompose-internal.c: New file.
 	* modules/uninorm/decompose-internal: New file.
