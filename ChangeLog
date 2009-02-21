@@ -1,5 +1,16 @@
 2009-02-21  Bruno Haible  <bruno@clisp.org>
 
+	* lib/gen-uni-tables.c (MAX_DECOMP_LENGTH): New macro.
+	(UC_DECOMP_*): New enumeration items.
+	(get_decomposition): New function.
+	(struct decomp_table): New type.
+	(output_decomposition, output_decomposition_tables): New functions.
+	(unicode_composition_exclusions): New variable.
+	(fill_composition_exclusions, debug_output_composition_tables): New
+	functions.
+	(main): Accept one more argument. Invoke fill_composition_exclusions.
+	Output decomposition and composition tables.
+
 	New module 'uninorm/base'.
 	* lib/uninorm.h: New file.
 	* lib/unictype.h: Update comment.

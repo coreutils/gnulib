@@ -1,6 +1,6 @@
 /* Generate Unicode conforming character classification tables and
    line break properties tables and word break property tables and
-   case mapping tables from a UnicodeData file.
+   decomposition/composition and case mapping tables from a UnicodeData file.
    Copyright (C) 2000-2002, 2004, 2007-2009 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2000-2002.
 
@@ -27,6 +27,7 @@
                       /usr/local/share/Unidata/EastAsianWidth.txt \
                       /usr/local/share/Unidata/LineBreak.txt \
                       /usr/local/share/Unidata/WordBreakProperty.txt \
+                      /usr/local/share/Unidata/CompositionExclusions.txt \
                       5.1.0
  */
 
@@ -6740,6 +6741,733 @@ output_wbrk_tables (const char *filename, const char *version)
 
 /* ========================================================================= */
 
+/* Maximum number of characters into which a single Unicode character can be
+   decomposed.  */
+#define MAX_DECOMP_LENGTH 18
+
+enum
+{
+  UC_DECOMP_CANONICAL,/*            Canonical decomposition.                  */
+  UC_DECOMP_FONT,    /*   <font>    A font variant (e.g. a blackletter form). */
+  UC_DECOMP_NOBREAK, /* <noBreak>   A no-break version of a space or hyphen.  */
+  UC_DECOMP_INITIAL, /* <initial>   An initial presentation form (Arabic).    */
+  UC_DECOMP_MEDIAL,  /*  <medial>   A medial presentation form (Arabic).      */
+  UC_DECOMP_FINAL,   /*  <final>    A final presentation form (Arabic).       */
+  UC_DECOMP_ISOLATED,/* <isolated>  An isolated presentation form (Arabic).   */
+  UC_DECOMP_CIRCLE,  /*  <circle>   An encircled form.                        */
+  UC_DECOMP_SUPER,   /*  <super>    A superscript form.                       */
+  UC_DECOMP_SUB,     /*   <sub>     A subscript form.                         */
+  UC_DECOMP_VERTICAL,/* <vertical>  A vertical layout presentation form.      */
+  UC_DECOMP_WIDE,    /*   <wide>    A wide (or zenkaku) compatibility character. */
+  UC_DECOMP_NARROW,  /*  <narrow>   A narrow (or hankaku) compatibility character. */
+  UC_DECOMP_SMALL,   /*  <small>    A small variant form (CNS compatibility). */
+  UC_DECOMP_SQUARE,  /*  <square>   A CJK squared font variant.               */
+  UC_DECOMP_FRACTION,/* <fraction>  A vulgar fraction form.                   */
+  UC_DECOMP_COMPAT   /*  <compat>   Otherwise unspecified compatibility character. */
+};
+
+/* Return the decomposition for a Unicode character (ignoring Hangul Jamo
+   decompositions).  Return the type, or -1 for none.  */
+static int
+get_decomposition (unsigned int ch,
+		   unsigned int *lengthp, unsigned int decomposed[MAX_DECOMP_LENGTH])
+{
+  const char *decomposition = unicode_attributes[ch].decomposition;
+
+  if (decomposition != NULL && decomposition[0] != '\0')
+    {
+      int type = UC_DECOMP_CANONICAL;
+      unsigned int length;
+      char *endptr;
+
+      if (decomposition[0] == '<')
+	{
+	  const char *rangle;
+	  size_t typelen;
+
+	  rangle = strchr (decomposition + 1, '>');
+	  if (rangle == NULL)
+	    abort ();
+	  typelen = rangle + 1 - decomposition;
+#define TYPE(t1,t2) \
+	  if (typelen == (sizeof (t1) - 1) && memcmp (decomposition, t1, typelen) == 0) \
+	    type = t2; \
+	  else
+	  TYPE ("<font>", UC_DECOMP_FONT)
+	  TYPE ("<noBreak>", UC_DECOMP_NOBREAK)
+	  TYPE ("<initial>", UC_DECOMP_INITIAL)
+	  TYPE ("<medial>", UC_DECOMP_MEDIAL)
+	  TYPE ("<final>", UC_DECOMP_FINAL)
+	  TYPE ("<isolated>", UC_DECOMP_ISOLATED)
+	  TYPE ("<circle>", UC_DECOMP_CIRCLE)
+	  TYPE ("<super>", UC_DECOMP_SUPER)
+	  TYPE ("<sub>", UC_DECOMP_SUB)
+	  TYPE ("<vertical>", UC_DECOMP_VERTICAL)
+	  TYPE ("<wide>", UC_DECOMP_WIDE)
+	  TYPE ("<narrow>", UC_DECOMP_NARROW)
+	  TYPE ("<small>", UC_DECOMP_SMALL)
+	  TYPE ("<square>", UC_DECOMP_SQUARE)
+	  TYPE ("<fraction>", UC_DECOMP_FRACTION)
+	  TYPE ("<compat>", UC_DECOMP_COMPAT)
+	    {
+	      fprintf (stderr, "unknown decomposition type %*s\n", (int)typelen, decomposition);
+	      exit (1);
+	    }
+#undef TYPE
+	  decomposition = rangle + 1;
+	  if (decomposition[0] == ' ')
+	    decomposition++;
+	}
+      for (length = 0; length < MAX_DECOMP_LENGTH; length++)
+	{
+	  decomposed[length] = strtoul (decomposition, &endptr, 16);
+	  if (endptr == decomposition)
+	    break;
+	  decomposition = endptr;
+	  if (decomposition[0] == ' ')
+	    decomposition++;
+	}
+      if (*decomposition != '\0')
+	/* MAX_DECOMP_LENGTH is too small.  */
+	abort ();
+
+      *lengthp = length;
+      return type;
+    }
+  else
+    return -1;
+}
+
+/* Construction of sparse 3-level tables.  */
+#define TABLE decomp_table
+#define ELEMENT uint16_t
+#define DEFAULT (uint16_t)(-1)
+#define xmalloc malloc
+#define xrealloc realloc
+#include "3level.h"
+
+static void
+output_decomposition (FILE *stream1, FILE *stream2)
+{
+  struct decomp_table t;
+  unsigned int level1_offset, level2_offset, level3_offset;
+  unsigned int offset;
+  unsigned int ch;
+  unsigned int i;
+
+  t.p = 5;
+  t.q = 5;
+  decomp_table_init (&t);
+
+  fprintf (stream1, "extern const unsigned char gl_uninorm_decomp_chars_table[];\n");
+  fprintf (stream1, "\n");
+  fprintf (stream2, "const unsigned char gl_uninorm_decomp_chars_table[] =\n{");
+  offset = 0;
+
+  for (ch = 0; ch < 0x110000; ch++)
+    {
+      unsigned int length;
+      unsigned int decomposed[MAX_DECOMP_LENGTH];
+      int type = get_decomposition (ch, &length, decomposed);
+
+      if (type >= 0)
+	{
+	  if (!(offset < (1 << 15)))
+	    abort ();
+	  decomp_table_add (&t, ch, ((type == UC_DECOMP_CANONICAL ? 0 : 1) << 15) | offset);
+
+	  /* Produce length 3-bytes entries.  */
+	  if (length == 0)
+	    /* We would need a special representation of zero-length entries.  */
+	    abort ();
+	  for (i = 0; i < length; i++)
+	    {
+	      if (offset > 0)
+		fprintf (stream2, ",");
+	      if ((offset % 4) == 0)
+		fprintf (stream2, "\n ");
+	      if (!(decomposed[i] < (1 << 18)))
+		abort ();
+	      fprintf (stream2, " 0x%02X, 0x%02X, 0x%02X",
+		       (((i+1 < length ? (1 << 23) : 0)
+			 | (i == 0 ? (type << 18) : 0)
+			 | decomposed[i]) >> 16) & 0xff,
+		       (decomposed[i] >> 8) & 0xff,
+		       decomposed[i] & 0xff);
+	      offset++;
+	    }
+	}
+    }
+
+  fprintf (stream2, "\n};\n");
+  fprintf (stream2, "\n");
+
+  decomp_table_finalize (&t);
+
+  level1_offset =
+    5 * sizeof (uint32_t);
+  level2_offset =
+    5 * sizeof (uint32_t)
+    + t.level1_size * sizeof (uint32_t);
+  level3_offset =
+    5 * sizeof (uint32_t)
+    + t.level1_size * sizeof (uint32_t)
+    + (t.level2_size << t.q) * sizeof (uint32_t);
+
+  for (i = 0; i < 5; i++)
+    fprintf (stream1, "#define decomp_header_%d %d\n", i,
+	     ((uint32_t *) t.result)[i]);
+  fprintf (stream1, "\n");
+  fprintf (stream1, "typedef struct\n");
+  fprintf (stream1, "  {\n");
+  fprintf (stream1, "    int level1[%zu];\n", t.level1_size);
+  fprintf (stream1, "    int level2[%zu << %d];\n", t.level2_size, t.q);
+  fprintf (stream1, "    unsigned short level3[%zu << %d];\n", t.level3_size, t.p);
+  fprintf (stream1, "  }\n");
+  fprintf (stream1, "decomp_index_table_t;\n");
+  fprintf (stream1, "extern const decomp_index_table_t gl_uninorm_decomp_index_table;\n");
+  fprintf (stream2, "const decomp_index_table_t gl_uninorm_decomp_index_table =\n");
+  fprintf (stream2, "{\n");
+  fprintf (stream2, "  {");
+  if (t.level1_size > 8)
+    fprintf (stream2, "\n   ");
+  for (i = 0; i < t.level1_size; i++)
+    {
+      uint32_t offset;
+      if (i > 0 && (i % 8) == 0)
+	fprintf (stream2, "\n   ");
+      offset = ((uint32_t *) (t.result + level1_offset))[i];
+      if (offset == 0)
+	fprintf (stream2, " %5d", -1);
+      else
+	fprintf (stream2, " %5zu",
+		 (offset - level2_offset) / sizeof (uint32_t));
+      if (i+1 < t.level1_size)
+	fprintf (stream2, ",");
+    }
+  if (t.level1_size > 8)
+    fprintf (stream2, "\n ");
+  fprintf (stream2, " },\n");
+  fprintf (stream2, "  {");
+  if (t.level2_size << t.q > 8)
+    fprintf (stream2, "\n   ");
+  for (i = 0; i < t.level2_size << t.q; i++)
+    {
+      uint32_t offset;
+      if (i > 0 && (i % 8) == 0)
+	fprintf (stream2, "\n   ");
+      offset = ((uint32_t *) (t.result + level2_offset))[i];
+      if (offset == 0)
+	fprintf (stream2, " %5d", -1);
+      else
+	fprintf (stream2, " %5zu",
+		 (offset - level3_offset) / sizeof (uint16_t));
+      if (i+1 < t.level2_size << t.q)
+	fprintf (stream2, ",");
+    }
+  if (t.level2_size << t.q > 8)
+    fprintf (stream2, "\n ");
+  fprintf (stream2, " },\n");
+  fprintf (stream2, "  {");
+  if (t.level3_size << t.p > 8)
+    fprintf (stream2, "\n   ");
+  for (i = 0; i < t.level3_size << t.p; i++)
+    {
+      uint16_t value = ((uint16_t *) (t.result + level3_offset))[i];
+      if (i > 0 && (i % 8) == 0)
+	fprintf (stream2, "\n   ");
+      fprintf (stream2, " %5d", value == (uint16_t)(-1) ? -1 : value);
+      if (i+1 < t.level3_size << t.p)
+	fprintf (stream2, ",");
+    }
+  if (t.level3_size << t.p > 8)
+    fprintf (stream2, "\n ");
+  fprintf (stream2, " }\n");
+  fprintf (stream2, "};\n");
+}
+
+static void
+output_decomposition_tables (const char *filename1, const char *filename2, const char *version)
+{
+  const char *filenames[2];
+  FILE *streams[2];
+  size_t i;
+
+  filenames[0] = filename1;
+  filenames[1] = filename2;
+
+  for (i = 0; i < 2; i++)
+    {
+      streams[i] = fopen (filenames[i], "w");
+      if (streams[i] == NULL)
+	{
+	  fprintf (stderr, "cannot open '%s' for writing\n", filenames[i]);
+	  exit (1);
+	}
+    }
+
+  for (i = 0; i < 2; i++)
+    {
+      FILE *stream = streams[i];
+
+      fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
+      fprintf (stream, "/* Decomposition of Unicode characters.  */\n");
+      fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
+	       version);
+      fprintf (stream, "\n");
+    }
+
+  output_decomposition (streams[0], streams[1]);
+
+  for (i = 0; i < 2; i++)
+    {
+      if (ferror (streams[i]) || fclose (streams[i]))
+	{
+	  fprintf (stderr, "error writing to '%s'\n", filenames[i]);
+	  exit (1);
+	}
+    }
+}
+
+/* The "excluded from composition" property from the CompositionExclusions.txt file.  */
+char unicode_composition_exclusions[0x110000];
+
+static void
+fill_composition_exclusions (const char *compositionexclusions_filename)
+{
+  FILE *stream;
+  unsigned int i;
+
+  stream = fopen (compositionexclusions_filename, "r");
+  if (stream == NULL)
+    {
+      fprintf (stderr, "error during fopen of '%s'\n", compositionexclusions_filename);
+      exit (1);
+    }
+
+  for (i = 0; i < 0x110000; i++)
+    unicode_composition_exclusions[i] = 0;
+
+  for (;;)
+    {
+      char buf[200+1];
+      unsigned int i;
+
+      if (fscanf (stream, "%200[^\n]\n", buf) < 1)
+	break;
+
+      if (buf[0] == '\0' || buf[0] == '#')
+	continue;
+
+      if (sscanf (buf, "%X", &i) != 1)
+	{
+	  fprintf (stderr, "parse error in '%s'\n", compositionexclusions_filename);
+	  exit (1);
+	}
+      if (!(i < 0x110000))
+	abort ();
+
+      unicode_composition_exclusions[i] = 1;
+    }
+
+  if (ferror (stream) || fclose (stream))
+    {
+      fprintf (stderr, "error reading from '%s'\n", compositionexclusions_filename);
+      exit (1);
+    }
+}
+
+static void
+debug_output_composition_tables (const char *filename)
+{
+  FILE *stream;
+  unsigned int ch;
+
+  stream = fopen (filename, "w");
+  if (stream == NULL)
+    {
+      fprintf (stderr, "cannot open '%s' for writing\n", filename);
+      exit (1);
+    }
+
+  for (ch = 0; ch < 0x110000; ch++)
+    {
+      unsigned int length;
+      unsigned int decomposed[MAX_DECOMP_LENGTH];
+      int type = get_decomposition (ch, &length, decomposed);
+
+      if (type == UC_DECOMP_CANONICAL
+	  /* Consider only binary decompositions.
+	     Exclude singleton decompositions.  */
+	  && length == 2)
+	{
+	  unsigned int code1 = decomposed[0];
+	  unsigned int code2 = decomposed[1];
+	  unsigned int combined = ch;
+
+	  /* Exclude decompositions where the first part is not a starter,
+	     i.e. is not of canonical combining class 0.  */
+	  if (strcmp (unicode_attributes[code1].combining, "0") == 0
+	      /* Exclude characters listed in CompositionExclusions.txt.  */
+	      && !unicode_composition_exclusions[combined])
+	    {
+	      /* The combined character must now also be a starter.
+		 Verify this.  */
+	      if (strcmp (unicode_attributes[combined].combining, "0") != 0)
+		abort ();
+
+	      fprintf (stream, "0x%04X\t0x%04X\t0x%04X\t%s\n",
+		       code1,
+		       code2,
+		       combined,
+		       unicode_attributes[code2].combining);
+	    }
+	}
+    }
+
+  if (ferror (stream) || fclose (stream))
+    {
+      fprintf (stderr, "error writing to '%s'\n", filename);
+      exit (1);
+    }
+}
+
+#if 0
+/* Construction of sparse 3-level tables.  */
+#define TABLE composition_table
+#define ELEMENT uint32_t
+#define DEFAULT 0
+#define xmalloc malloc
+#define xrealloc realloc
+#include "3level.h"
+#endif
+
+static void
+output_composition_tables (const char *filename, const char *version)
+{
+  FILE *stream;
+  unsigned int ch;
+#if 0
+  unsigned int mul1, mul2;
+  unsigned int i;
+  struct composition_table t;
+  unsigned int level1_offset, level2_offset, level3_offset;
+#endif
+
+  stream = fopen (filename, "w");
+  if (stream == NULL)
+    {
+      fprintf (stderr, "cannot open '%s' for writing\n", filename);
+      exit (1);
+    }
+
+  fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
+  fprintf (stream, "/* Canonical composition of Unicode characters.  */\n");
+  fprintf (stream, "/* Generated automatically by gen-uni-tables for Unicode %s.  */\n",
+	   version);
+  fprintf (stream, "\n");
+
+  /* Put a GPL header on it.  The gnulib module is under LGPL (although it
+     still carries the GPL header), and it's gnulib-tool which replaces the
+     GPL header with an LGPL header.  */
+  fprintf (stream, "/* Copyright (C) 2009 Free Software Foundation, Inc.\n");
+  fprintf (stream, "\n");
+  fprintf (stream, "   This program is free software: you can redistribute it and/or modify\n");
+  fprintf (stream, "   it under the terms of the GNU General Public License as published by\n");
+  fprintf (stream, "   the Free Software Foundation; either version 3 of the License, or\n");
+  fprintf (stream, "   (at your option) any later version.\n");
+  fprintf (stream, "\n");
+  fprintf (stream, "   This program is distributed in the hope that it will be useful,\n");
+  fprintf (stream, "   but WITHOUT ANY WARRANTY; without even the implied warranty of\n");
+  fprintf (stream, "   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n");
+  fprintf (stream, "   GNU General Public License for more details.\n");
+  fprintf (stream, "\n");
+  fprintf (stream, "   You should have received a copy of the GNU General Public License\n");
+  fprintf (stream, "   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */\n");
+  fprintf (stream, "\n");
+
+  /* The composition table is a set of mappings (code1, code2) -> combined,
+     with 928 entries,
+     367 values for code1 (from 0x003C to 0x30FD),
+      54 values for code2 (from 0x0300 to 0x309A).
+     For a fixed code1, there are from 1 to 19 possible values for code2.
+     For a fixed code2, there are from 1 to 117 possible values for code1.
+     This is a very sparse matrix.
+
+     We want an O(1) hash lookup.  */
+
+#if 0 /* This approach leads to a table of size 37 KB.  */
+
+  /* We implement the hash lookup by mapping (code1, code2) to a linear
+     combination  mul1*code1 + mul2*code2, which is then used as an index into
+     a 3-level table.  */
+
+  /* Find adequate (mul1, mul2) parameters.
+     The parameters that are found are 17 and 33, which are small enough that
+     the computations can be performed in 'unsigned int' values without
+     risking an overflow.   */
+  mul1 = mul2 = 1;
+  for (;;)
+    {
+      unsigned int bound = (mul1 + mul2) * 0x110000;
+      unsigned char *bitmap = (unsigned char *) calloc (bound / 8 + 1, 1);
+      bool collision = false;
+
+      /*printf ("trying mul1=%u mul2=%u\n", mul1, mul2);*/
+
+      for (ch = 0; ch < 0x110000; ch++)
+	{
+	  unsigned int length;
+	  unsigned int decomposed[MAX_DECOMP_LENGTH];
+	  int type = get_decomposition (ch, &length, decomposed);
+
+	  if (type == UC_DECOMP_CANONICAL
+	      /* Consider only binary decompositions.
+		 Exclude singleton decompositions.  */
+	      && length == 2)
+	    {
+	      unsigned int code1 = decomposed[0];
+	      unsigned int code2 = decomposed[1];
+	      unsigned int combined = ch;
+
+	      /* Exclude decompositions where the first part is not a starter,
+		 i.e. is not of canonical combining class 0.  */
+	      if (strcmp (unicode_attributes[code1].combining, "0") == 0
+		  /* Exclude characters listed in CompositionExclusions.txt.  */
+		  && !unicode_composition_exclusions[combined])
+		{
+		  unsigned int lc = mul1 * code1 + mul2 * code2;
+
+		  if (bitmap[lc / 8] & (1 << (lc % 8)))
+		    {
+		      /* Collision.  */
+		      collision = true;
+		      break;
+		    }
+		  bitmap[lc / 8] |= 1 << (lc % 8);
+		}
+	    }
+	}
+
+      free (bitmap);
+
+      if (!collision)
+	break;
+
+      /* Try other (mul1, mul2) parameters.  */
+      mul1++; mul2--;
+      if (mul2 == 0)
+	{
+	  /* Increment mul1 + mul2.  */
+	  mul2 = mul1;
+	  mul1 = 1;
+	}
+    }
+
+  fprintf (stream, "#define MUL1 %u\n", mul1);
+  fprintf (stream, "#define MUL2 %u\n", mul2);
+
+  /* Because the (code1, code2) -> mul1*code1 + mul2*code2 mapping is not
+     injective, we need to store also code1 or code2 in the hash table entry.
+     Let's choose code2, randomly.  */
+
+  t.p = 2;
+  t.q = 7;
+  composition_table_init (&t);
+
+  for (ch = 0; ch < 0x110000; ch++)
+    {
+      unsigned int length;
+      unsigned int decomposed[MAX_DECOMP_LENGTH];
+      int type = get_decomposition (ch, &length, decomposed);
+
+      if (type == UC_DECOMP_CANONICAL
+	  /* Consider only binary decompositions.
+	     Exclude singleton decompositions.  */
+	  && length == 2)
+	{
+	  unsigned int code1 = decomposed[0];
+	  unsigned int code2 = decomposed[1];
+	  unsigned int combined = ch;
+
+	  /* Exclude decompositions where the first part is not a starter,
+	     i.e. is not of canonical combining class 0.  */
+	  if (strcmp (unicode_attributes[code1].combining, "0") == 0
+	      /* Exclude characters listed in CompositionExclusions.txt.  */
+	      && !unicode_composition_exclusions[combined])
+	    {
+	      /* The combined character must now also be a starter.
+		 Verify this.  */
+	      if (strcmp (unicode_attributes[combined].combining, "0") != 0)
+		abort ();
+
+	      if (!(code2 < 0x10000))
+		abort ();
+	      if (!(combined < 0x10000))
+		abort ();
+
+	      composition_table_add (&t, mul1 * code1 + mul2 * code2, (code2 << 16) | combined);
+	    }
+	}
+    }
+
+  composition_table_finalize (&t);
+
+  /* Offsets in t.result, in memory of this process.  */
+  level1_offset =
+    5 * sizeof (uint32_t);
+  level2_offset =
+    5 * sizeof (uint32_t)
+    + t.level1_size * sizeof (uint32_t);
+  level3_offset =
+    5 * sizeof (uint32_t)
+    + t.level1_size * sizeof (uint32_t)
+    + (t.level2_size << t.q) * sizeof (uint32_t);
+
+  for (i = 0; i < 5; i++)
+    fprintf (stream, "#define composition_header_%d %d\n", i,
+	     ((uint32_t *) t.result)[i]);
+  fprintf (stream, "static const\n");
+  fprintf (stream, "struct\n");
+  fprintf (stream, "  {\n");
+  fprintf (stream, "    int level1[%zu];\n", t.level1_size);
+  fprintf (stream, "    short level2[%zu << %d];\n", t.level2_size, t.q);
+  fprintf (stream, "    unsigned int level3[%zu << %d];\n", t.level3_size, t.p);
+  fprintf (stream, "  }\n");
+  fprintf (stream, "u_composition =\n");
+  fprintf (stream, "{\n");
+  fprintf (stream, "  {");
+  if (t.level1_size > 8)
+    fprintf (stream, "\n   ");
+  for (i = 0; i < t.level1_size; i++)
+    {
+      uint32_t offset;
+      if (i > 0 && (i % 8) == 0)
+	fprintf (stream, "\n   ");
+      offset = ((uint32_t *) (t.result + level1_offset))[i];
+      if (offset == 0)
+	fprintf (stream, " %5d", -1);
+      else
+	fprintf (stream, " %5zu",
+		 (offset - level2_offset) / sizeof (uint32_t));
+      if (i+1 < t.level1_size)
+	fprintf (stream, ",");
+    }
+  if (t.level1_size > 8)
+    fprintf (stream, "\n ");
+  fprintf (stream, " },\n");
+  fprintf (stream, "  {");
+  if (t.level2_size << t.q > 8)
+    fprintf (stream, "\n   ");
+  for (i = 0; i < t.level2_size << t.q; i++)
+    {
+      uint32_t offset;
+      if (i > 0 && (i % 8) == 0)
+	fprintf (stream, "\n   ");
+      offset = ((uint32_t *) (t.result + level2_offset))[i];
+      if (offset == 0)
+	fprintf (stream, " %5d", -1);
+      else
+	fprintf (stream, " %5zu",
+		 (offset - level3_offset) / sizeof (uint32_t));
+      if (i+1 < t.level2_size << t.q)
+	fprintf (stream, ",");
+    }
+  if (t.level2_size << t.q > 8)
+    fprintf (stream, "\n ");
+  fprintf (stream, " },\n");
+  fprintf (stream, "  {");
+  if (t.level3_size << t.p > 4)
+    fprintf (stream, "\n   ");
+  for (i = 0; i < t.level3_size << t.p; i++)
+    {
+      uint32_t value = ((uint32_t *) (t.result + level3_offset))[i];
+
+      if (i > 0 && (i % 4) == 0)
+	fprintf (stream, "\n   ");
+      if (value == 0)
+	fprintf (stream, "          0");
+      else
+	fprintf (stream, " 0x%08X", value);
+      if (i+1 < t.level3_size << t.p)
+	fprintf (stream, ",");
+    }
+  if (t.level3_size << t.p > 4)
+    fprintf (stream, "\n ");
+  fprintf (stream, " }\n");
+  fprintf (stream, "};\n");
+
+#else
+
+  /* We use gperf to implement the hash lookup, giving it the 928 sets of
+     4 bytes (code1, code2) as input.  gperf generates a hash table of size
+     1527, which is quite good (60% filled).  It requires an auxiliary table
+     lookup in a table of size 0.5 KB.  The total tables size is 11 KB.  */
+
+  fprintf (stream, "struct composition_rule { char codes[4]; };\n");
+  fprintf (stream, "%%struct-type\n");
+  fprintf (stream, "%%language=ANSI-C\n");
+  fprintf (stream, "%%define slot-name codes\n");
+  fprintf (stream, "%%define hash-function-name gl_uninorm_compose_hash\n");
+  fprintf (stream, "%%define lookup-function-name gl_uninorm_compose_lookup\n");
+  fprintf (stream, "%%compare-lengths\n");
+  fprintf (stream, "%%compare-strncmp\n");
+  fprintf (stream, "%%readonly-tables\n");
+  fprintf (stream, "%%omit-struct-type\n");
+  fprintf (stream, "%%%%\n");
+
+  for (ch = 0; ch < 0x110000; ch++)
+    {
+      unsigned int length;
+      unsigned int decomposed[MAX_DECOMP_LENGTH];
+      int type = get_decomposition (ch, &length, decomposed);
+
+      if (type == UC_DECOMP_CANONICAL
+	  /* Consider only binary decompositions.
+	     Exclude singleton decompositions.  */
+	  && length == 2)
+	{
+	  unsigned int code1 = decomposed[0];
+	  unsigned int code2 = decomposed[1];
+	  unsigned int combined = ch;
+
+	  /* Exclude decompositions where the first part is not a starter,
+	     i.e. is not of canonical combining class 0.  */
+	  if (strcmp (unicode_attributes[code1].combining, "0") == 0
+	      /* Exclude characters listed in CompositionExclusions.txt.  */
+	      && !unicode_composition_exclusions[combined])
+	    {
+	      /* The combined character must now also be a starter.
+		 Verify this.  */
+	      if (strcmp (unicode_attributes[combined].combining, "0") != 0)
+		abort ();
+
+	      if (!(code1 < 0x10000))
+		abort ();
+	      if (!(code2 < 0x10000))
+		abort ();
+	      if (!(combined < 0x10000))
+		abort ();
+
+	      fprintf (stream, "\"\\x%02x\\x%02x\\x%02x\\x%02x\", 0x%04x\n",
+		       (code1 >> 8) & 0xff, code1 & 0xff,
+		       (code2 >> 8) & 0xff, code2 & 0xff,
+		       combined);
+	    }
+	}
+    }
+
+#endif
+
+  if (ferror (stream) || fclose (stream))
+    {
+      fprintf (stderr, "error writing to '%s'\n", filename);
+      exit (1);
+    }
+}
+
+/* ========================================================================= */
+
 /* Output the test for a simple character mapping table to the given file.  */
 
 static void
@@ -6954,11 +7682,12 @@ main (int argc, char * argv[])
   const char *eastasianwidth_filename;
   const char *linebreak_filename;
   const char *wordbreakproperty_filename;
+  const char *compositionexclusions_filename;
   const char *version;
 
-  if (argc != 11)
+  if (argc != 12)
     {
-      fprintf (stderr, "Usage: %s UnicodeData.txt PropList.txt DerivedCoreProperties.txt Scripts.txt Blocks.txt PropList-3.0.1.txt EastAsianWidth.txt LineBreak.txt WordBreakProperty.txt version\n",
+      fprintf (stderr, "Usage: %s UnicodeData.txt PropList.txt DerivedCoreProperties.txt Scripts.txt Blocks.txt PropList-3.0.1.txt EastAsianWidth.txt LineBreak.txt WordBreakProperty.txt CompositionExclusions.txt version\n",
 	       argv[0]);
       exit (1);
     }
@@ -6972,7 +7701,8 @@ main (int argc, char * argv[])
   eastasianwidth_filename = argv[7];
   linebreak_filename = argv[8];
   wordbreakproperty_filename = argv[9];
-  version = argv[10];
+  compositionexclusions_filename = argv[10];
+  version = argv[11];
 
   fill_attributes (unicodedata_filename);
   clear_properties ();
@@ -6984,6 +7714,7 @@ main (int argc, char * argv[])
   fill_width (eastasianwidth_filename);
   fill_org_lbp (linebreak_filename);
   fill_org_wbp (wordbreakproperty_filename);
+  fill_composition_exclusions (compositionexclusions_filename);
 
   output_categories (version);
   output_category ("unictype/categ_of.h", version);
@@ -7011,6 +7742,10 @@ main (int argc, char * argv[])
   debug_output_org_wbrk_tables ("uniwbrk/wbrkprop_org.txt");
   output_wbrk_tables ("uniwbrk/wbrkprop.h", version);
 
+  output_decomposition_tables ("uninorm/decomposition-table1.h", "uninorm/decomposition-table2.h", version);
+  debug_output_composition_tables ("uninorm/composition.txt");
+  output_composition_tables ("uninorm/composition-table.gperf", version);
+
   output_simple_mapping_test ("../tests/unicase/test-uc_toupper.c", "uc_toupper", to_upper, version);
   output_simple_mapping_test ("../tests/unicase/test-uc_tolower.c", "uc_tolower", to_lower, version);
   output_simple_mapping_test ("../tests/unicase/test-uc_totitle.c", "uc_totitle", to_title, version);
@@ -7036,6 +7771,7 @@ main (int argc, char * argv[])
         /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.1.0/ucd/EastAsianWidth.txt \
         /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.1.0/ucd/LineBreak.txt \
         /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.1.0/ucd/auxiliary/WordBreakProperty.txt \
+        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.1.0/ucd/CompositionExclusions.txt \
         5.1.0
    "
  * End:
