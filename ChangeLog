@@ -1,5 +1,14 @@
 2009-02-21  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'uninorm/nfkc'.
+	* tests/uninorm/test-nfkc.c: New file.
+	* tests/uninorm/test-u8-nfkc.c: New file.
+	* tests/uninorm/test-u16-nfkc.c: New file.
+	* tests/uninorm/test-u32-nfkc.c: New file.
+	* tests/uninorm/test-u32-nfkc-big.sh: New file.
+	* tests/uninorm/test-u32-nfkc-big.c: New file.
+	* modules/uninorm/nfkc-tests: New file.
+
 	New module 'uninorm/nfkc'.
 	* lib/uninorm/nfkc.c: New file.
 	* modules/uninorm/nfkc: New file.

@@ -1,0 +1,34 @@
+Files:
+tests/uninorm/test-nfkc.c
+tests/uninorm/test-u8-nfkc.c
+tests/uninorm/test-u16-nfkc.c
+tests/uninorm/test-u32-nfkc.c
+tests/uninorm/test-u32-nfkc-big.sh
+tests/uninorm/test-u32-nfkc-big.c
+tests/uninorm/test-u32-normalize-big.h
+tests/uninorm/test-u32-normalize-big.c
+tests/uninorm/NormalizationTest.txt
+
+Depends-on:
+unistr/u8-cmp
+unistr/u16-cmp
+unistr/u32-cmp
+unistr/u32-strlen
+xalloc
+progname
+
+configure.ac:
+AC_CHECK_DECLS_ONCE([alarm])
+
+Makefile.am:
+TESTS += test-nfkc uninorm/test-u32-nfkc-big.sh
+check_PROGRAMS += test-nfkc test-u32-nfkc-big
+test_nfkc_SOURCES = \
+  uninorm/test-nfkc.c \
+  uninorm/test-u8-nfkc.c \
+  uninorm/test-u16-nfkc.c \
+  uninorm/test-u32-nfkc.c
+test_u32_nfkc_big_SOURCES = \
+  uninorm/test-u32-nfkc-big.c \
+  uninorm/test-u32-normalize-big.c
+
