@@ -1,5 +1,10 @@
 2009-02-21  Bruno Haible  <bruno@clisp.org>
 
+	New module 'uninorm/compat-decomposition'.
+	* lib/uninorm/decompose-internal.h: New file.
+	* lib/uninorm/compat-decomposition.c: New file.
+	* modules/uninorm/compat-decomposition: New file.
+
 	Tests for module 'uninorm/canonical-decomposition'.
 	* tests/uninorm/test-canonical-decomposition.c: New file.
 	* modules/uninorm/canonical-decomposition-tests: New file.
