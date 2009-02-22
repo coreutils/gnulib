@@ -23,11 +23,12 @@
 
 #include <config.h>
 
+/* Specification.  */
+#include "safe-alloc.h"
+
 #include <stdlib.h>
 #include <stddef.h>
 #include <errno.h>
-
-#include "safe-alloc.h"
 
 
 /* Return 1 if an array of N objects, each of size S, cannot exist due

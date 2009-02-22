@@ -22,9 +22,10 @@
 
 #include <config.h>
 
-#include <stdio.h>
+#include "safe-alloc.h"
 
-#include <safe-alloc.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #define ASSERT(expr) \
   do									     \
@@ -38,9 +39,11 @@
     }									     \
   while (0)
 
-int main()
+int
+main ()
 {
-  struct tst {
+  struct tst
+  {
     int a;
     int b;
   };
@@ -48,16 +51,18 @@ int main()
   struct tst *p = NULL;
   int r;
 
-  r = ALLOC(p);
-  ASSERT(r >= 0);
+  r = ALLOC (p);
+  ASSERT (r >= 0);
 
-  ASSERT(p->a == 0 && p->b == 0);
+  ASSERT (p->a == 0 && p->b == 0);
 
   p->a = p->b = 42;
-  r = REALLOC_N(p, 5);
+  r = REALLOC_N (p, 5);
 
-  ASSERT(p[0].a == 42 && p[0].b == 42);
+  ASSERT (p[0].a == 42 && p[0].b == 42);
 
-  FREE(p);
-  ASSERT(p == NULL);
+  FREE (p);
+  ASSERT (p == NULL);
+
+  return 0;
 }

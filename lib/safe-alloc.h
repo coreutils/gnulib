@@ -1,5 +1,5 @@
 /*
- * memory.c: safer memory allocation
+ * safe-alloc.h: safer memory allocation
  *
  * Copyright (C) 2009 Free Software Foundation, Inc.
  *
@@ -108,7 +108,7 @@ safe_alloc_realloc_n (void *ptrptr, size_t size, size_t count)
 # define FREE(ptr)                              \
   do                                            \
     {                                           \
-      free(ptr);                                \
+      free (ptr);                               \
       (ptr) = NULL;                             \
     }                                           \
   while(0)

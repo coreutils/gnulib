@@ -1,5 +1,15 @@
 2009-02-21  Bruno Haible  <bruno@clisp.org>
 
+	* doc/gnulib.texi: Include safe-alloc.texi earlier.
+	* doc/safe-alloc.texi: Terminate sentences with a period. Use two
+	spaces after a period. Put a space between a macro name and its
+	argument list. Trivial rewordings.
+	* lib/safe-alloc.c: Include safe-alloc.h right after config.h.
+	* tests/test-safe-alloc.c: Likewise. Include stdlib.h.
+	(main): Return 0 explicitly.
+
+2009-02-21  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'uninorm/filter'.
 	* tests/uninorm/test-uninorm-filter-nfc.c: New file.
 	* modules/uninorm/filter-tests: New file.

@@ -5814,6 +5814,7 @@ This list of functions is sorted according to the header that declares them.
 @menu
 * alloca::
 * alloca-opt::
+* Safe Allocation Macros::
 * String Functions in C Locale::
 * Quoting::
 * error and progname::
@@ -5824,7 +5825,6 @@ This list of functions is sorted according to the header that declares them.
 * func::
 * warnings::
 * manywarnings::
-* Safe Allocation Macros::
 @end menu
 
 @node alloca
@@ -5836,6 +5836,8 @@ This list of functions is sorted according to the header that declares them.
 @section alloca-opt
 @findex alloca
 @include alloca-opt.texi
+
+@include safe-alloc.texi
 
 @node String Functions in C Locale
 @section Character and String Functions in C Locale
@@ -5914,8 +5916,6 @@ generated automatically.
 @include warnings.texi
 
 @include manywarnings.texi
-
-@include safe-alloc.texi
 
 @node GNU Free Documentation License
 @appendix GNU Free Documentation License
