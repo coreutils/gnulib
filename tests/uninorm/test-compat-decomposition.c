@@ -175,10 +175,18 @@ main ()
 
   /* HANGUL SYLLABLE GEUL */
   ret = uc_compat_decomposition (0xAE00, decomposed);
+  /* See the clarification at <http://www.unicode.org/versions/Unicode5.1.0/>,
+     section "Clarification of Hangul Jamo Handling".  */
+#if 1
+  ASSERT (ret == 2);
+  ASSERT (decomposed[0] == 0xADF8);
+  ASSERT (decomposed[1] == 0x11AF);
+#else
   ASSERT (ret == 3);
   ASSERT (decomposed[0] == 0x1100);
   ASSERT (decomposed[1] == 0x1173);
   ASSERT (decomposed[2] == 0x11AF);
+#endif
 
   /* HANGUL SYLLABLE GEU */
   ret = uc_compat_decomposition (0xADF8, decomposed);

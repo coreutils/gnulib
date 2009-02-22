@@ -1,5 +1,16 @@
 2009-02-22  Bruno Haible  <bruno@clisp.org>
 
+	Implement new clarified decomposition of Hangul syllables.
+	* lib/uninorm/decomposition.c (uc_decomposition): For Hangul syllables
+	of type LTV, return only a pairwise decomposition.
+	* lib/uninorm/canonical-decomposition.c (uc_canonical_decomposition):
+	Likewise.
+	* tests/uninorm/test-decomposition.c (main): Updated expected result.
+	* tests/uninorm/test-canonical-decomposition.c (main): Likewise.
+	* tests/uninorm/test-compat-decomposition.c (main): Likewise.
+
+2009-02-22  Bruno Haible  <bruno@clisp.org>
+
 	* lib/uninorm/u-normalize-internal.h (FUNC): At the end, handle
 	zero-length results and shrink excess allocated memory.
 	* tests/uninorm/test-u8-nfc.c (test_u8_nfc): Check empty string result.
