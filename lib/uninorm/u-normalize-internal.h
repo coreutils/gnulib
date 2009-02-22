@@ -331,6 +331,29 @@ FUNC (uninorm_t nf, const UNIT *s, size_t n,
       }
   }
 
+  if (length == 0)
+    {
+      if (result == NULL)
+	{
+	  /* Return a non-NULL value.  NULL means error.  */
+	  result = (UNIT *) malloc (1);
+	  if (result == NULL)
+	    {
+	      errno = ENOMEM;
+	      goto fail;
+	    }
+	}
+    }
+  else if (result != resultbuf && length < allocated)
+    {
+      /* Shrink the allocated memory if possible.  */
+      UNIT *memory;
+
+      memory = (UNIT *) realloc (result, length * sizeof (UNIT));
+      if (memory != NULL)
+	result = memory;
+    }
+
   if (sortbuf_count > 0)
     abort ();
   if (sortbuf != sortbuf_preallocated)

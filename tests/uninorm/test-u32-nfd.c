@@ -103,6 +103,9 @@ check (const uint32_t *input, size_t input_length,
 void
 test_u32_nfd (void)
 {
+  { /* Empty string.  */
+    ASSERT (check (NULL, 0, NULL, 0) == 0);
+  }
   { /* SPACE */
     static const uint32_t input[]    = { 0x0020 };
     ASSERT (check (input, SIZEOF (input), input, SIZEOF (input)) == 0);

@@ -103,6 +103,9 @@ check (const uint8_t *input, size_t input_length,
 void
 test_u8_nfkc (void)
 {
+  { /* Empty string.  */
+    ASSERT (check (NULL, 0, NULL, 0) == 0);
+  }
   { /* SPACE */
     static const uint8_t input[]    = { 0x20 };
     ASSERT (check (input, SIZEOF (input), input, SIZEOF (input)) == 0);

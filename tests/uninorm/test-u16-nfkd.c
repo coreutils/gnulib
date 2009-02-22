@@ -103,6 +103,9 @@ check (const uint16_t *input, size_t input_length,
 void
 test_u16_nfkd (void)
 {
+  { /* Empty string.  */
+    ASSERT (check (NULL, 0, NULL, 0) == 0);
+  }
   { /* SPACE */
     static const uint16_t input[]    = { 0x0020 };
     ASSERT (check (input, SIZEOF (input), input, SIZEOF (input)) == 0);

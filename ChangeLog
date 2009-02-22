@@ -1,3 +1,20 @@
+2009-02-22  Bruno Haible  <bruno@clisp.org>
+
+	* lib/uninorm/u-normalize-internal.h (FUNC): At the end, handle
+	zero-length results and shrink excess allocated memory.
+	* tests/uninorm/test-u8-nfc.c (test_u8_nfc): Check empty string result.
+	* tests/uninorm/test-u8-nfd.c (test_u8_nfd): Likewise.
+	* tests/uninorm/test-u8-nfkc.c (test_u8_nfkc): Likewise.
+	* tests/uninorm/test-u8-nfkd.c (test_u8_nfkd): Likewise.
+	* tests/uninorm/test-u16-nfc.c (test_u16_nfc): Likewise.
+	* tests/uninorm/test-u16-nfd.c (test_u16_nfd): Likewise.
+	* tests/uninorm/test-u16-nfkc.c (test_u16_nfkc): Likewise.
+	* tests/uninorm/test-u16-nfkd.c (test_u16_nfkd): Likewise.
+	* tests/uninorm/test-u32-nfc.c (test_u32_nfc): Likewise.
+	* tests/uninorm/test-u32-nfd.c (test_u32_nfd): Likewise.
+	* tests/uninorm/test-u32-nfkc.c (test_u32_nfkc): Likewise.
+	* tests/uninorm/test-u32-nfkd.c (test_u32_nfkd): Likewise.
+
 2009-02-21  Bruno Haible  <bruno@clisp.org>
 
 	* doc/gnulib.texi: Include safe-alloc.texi earlier.
