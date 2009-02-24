@@ -3064,4 +3064,50 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     ASSERT (strcmp (result + 4000, " 99") == 0);
     ASSERT (retval == strlen (result));
   }
+
+  /* Test the support of the %s format directive.  */
+
+  /* To verify that these tests succeed, it is necessary to run them under
+     a tool that checks against invalid memory accesses, such as ElectricFence
+     or "valgrind --tool=memcheck".  */
+  {
+    size_t i;
+
+    for (i = 1; i <= 8; i++)
+      {
+	char *block;
+	char result[5000];
+	int retval;
+
+	block = (char *) malloc (i);
+	memcpy (block, "abcdefgh", i);
+	retval = my_snprintf (result, sizeof (result), "%.*s", (int) i, block);
+	ASSERT (memcmp (result, block, i) == 0);
+	ASSERT (result[i] == '\0');
+	ASSERT (retval == strlen (result));
+	free (block);
+      }
+  }
+#if HAVE_WCHAR_T
+  {
+    size_t i;
+
+    for (i = 1; i <= 8; i++)
+      {
+	wchar_t *block;
+	size_t j;
+	char result[5000];
+	int retval;
+
+	block = (wchar_t *) malloc (i * sizeof (wchar_t));
+	for (j = 0; j < i; j++)
+	  block[j] = "abcdefgh"[j];
+	retval = my_snprintf (result, sizeof (result), "%.*ls", (int) i, block);
+	ASSERT (memcmp (result, "abcdefgh", i) == 0);
+	ASSERT (result[i] == '\0');
+	ASSERT (retval == strlen (result));
+	free (block);
+      }
+  }
+#endif
 }

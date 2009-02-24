@@ -1,4 +1,4 @@
-# vasnprintf.m4 serial 26
+# vasnprintf.m4 serial 27
 dnl Copyright (C) 2002-2004, 2006-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -58,7 +58,7 @@ AC_DEFUN([gl_PREREQ_VASNPRINTF],
   AC_REQUIRE([AC_TYPE_LONG_LONG_INT])
   AC_REQUIRE([gt_TYPE_WCHAR_T])
   AC_REQUIRE([gt_TYPE_WINT_T])
-  AC_CHECK_FUNCS([snprintf wcslen])
+  AC_CHECK_FUNCS([snprintf strnlen wcslen wcsnlen mbrtowc wcrtomb])
   dnl Use the _snprintf function only if it is declared (because on NetBSD it
   dnl is defined as a weak alias of snprintf; we prefer to use the latter).
   AC_CHECK_DECLS([_snprintf], , , [#include <stdio.h>])

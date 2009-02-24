@@ -1,3 +1,19 @@
+2009-02-23  Bruno Haible  <bruno@clisp.org>
+
+	Fix invalid read past end of memory block.
+	* lib/vasnprintf.c (DCHAR_SET): Define.
+	(local_wcslen): Define only when needed.
+	(local_strnlen, local_wcsnlen): New functions.
+	(VASNPRINTF) [!USE_SNPRINTF && HAVE_WCHAR_T]: Implement the %s and %ls
+	directives that involve a conversion ourselves.
+	* m4/vasnprintf.m4 (gl_PREREQ_VASNPRINTF): Also check for strnlen,
+	wcsnlen, mbrtowc, wcrtomb.
+	* tests/test-vasnprintf-posix.c (test_function): Add tests for %.*s.
+	* tests/test-vasprintf-posix.c (test_function): Likewise.
+	* tests/test-snprintf-posix.h (test_function): Likewise.
+	* tests/test-sprintf-posix.h (test_function): Likewise.
+	Reported by Ben Pfaff <blp@cs.stanford.edu>.
+
 2009-02-22  Bruno Haible  <bruno@clisp.org>
 
 	Implement new clarified decomposition of Hangul syllables.
