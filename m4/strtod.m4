@@ -1,4 +1,4 @@
-# strtod.m4 serial 10
+# strtod.m4 serial 11
 dnl Copyright (C) 2002-2003, 2006-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,6 +18,7 @@ AC_DEFUN([gl_FUNC_STRTOD],
       [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
 #include <stdlib.h>
 #include <math.h>
+#include <errno.h>
 /* Compare two numbers with ==.
    This is a separate function because IRIX 6.5 "cc -O" miscompiles an
    'x == x' test.  */
@@ -45,11 +46,13 @@ numeric_equal (double x, double y)
       return 1;
   }
   {
-    /* Many platforms do not parse infinities.  */
+    /* Many platforms do not parse infinities.  HP-UX 11.31 parses inf,
+       but mistakenly sets errno.  */
     const char *string = "inf";
     char *term;
+    errno = 0;
     double value = strtod (string, &term);
-    if (value != HUGE_VAL || term != (string + 3))
+    if (value != HUGE_VAL || term != (string + 3) || errno)
       return 1;
   }
   {
