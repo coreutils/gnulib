@@ -4588,7 +4588,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 			{
 #  if WIDE_CHAR_VERSION
 			  /* ISO C says about %ls in fwprintf:
-			       "If the precision is not speciﬁed or is greater
+			       "If the precision is not specified or is greater
 				than the size of the array, the array shall
 				contain a null wide character."
 			     So if there is a precision, we must not use
@@ -4602,7 +4602,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 			    tmp_length = local_wcslen (arg);
 #  else
 			  /* ISO C says about %ls in fprintf:
-			       "If a precision is speciﬁed, no more than that
+			       "If a precision is specified, no more than that
 				many bytes are written (including shift
 				sequences, if any), and the array shall contain
 				a null wide character if, to equal the
@@ -4621,7 +4621,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 			{
 # if WIDE_CHAR_VERSION
 			  /* ISO C says about %s in fwprintf:
-			       "If the precision is not speciﬁed or is greater
+			       "If the precision is not specified or is greater
 				than the size of the converted array, the
 				converted array shall contain a null wide
 				character."
