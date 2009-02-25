@@ -1,3 +1,8 @@
+2009-02-25  Gary V. Vaughan  <gary@gnu.org>
+
+	strtod: avoid C99 decl-after-statement
+	* m4/strtod.m4 (gl_FUNC_STRTOD): Rearrange declaration.
+
 2009-02-24  Eric Blake  <ebb9@byu.net>
 
 	strtod: detect HP-UX 11.31 bug

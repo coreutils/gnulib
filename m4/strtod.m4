@@ -1,4 +1,4 @@
-# strtod.m4 serial 11
+# strtod.m4 serial 12
 dnl Copyright (C) 2002-2003, 2006-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -50,8 +50,9 @@ numeric_equal (double x, double y)
        but mistakenly sets errno.  */
     const char *string = "inf";
     char *term;
+    double value;
     errno = 0;
-    double value = strtod (string, &term);
+    value = strtod (string, &term);
     if (value != HUGE_VAL || term != (string + 3) || errno)
       return 1;
   }
