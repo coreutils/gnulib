@@ -89,7 +89,7 @@ mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
 	return (size_t)(-1);
       }
 
-    /* Here 0 < m ≤ 4.  */
+    /* Here m > 0.  */
 
 # if __GLIBC__
     /* Work around bug <http://sourceware.org/bugzilla/show_bug.cgi?id=9674> */
