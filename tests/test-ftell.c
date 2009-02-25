@@ -1,5 +1,5 @@
 /* Test of ftell() function.
-   Copyright (C) 2007, 2008 Free Software Foundation, Inc.
+   Copyright (C) 2007, 2008, 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -34,6 +34,10 @@
         }								     \
     }									     \
   while (0)
+
+#ifndef FUNC_UNGETC_BROKEN
+# define FUNC_UNGETC_BROKEN 0
+#endif
 
 int
 main (int argc, char **argv)
@@ -80,15 +84,22 @@ main (int argc, char **argv)
   ASSERT (ch == '@');
   ASSERT (ftell (stdin) == 3);
 
-#if !defined __hpux /* HP-UX 11 has a known bug here */
-  /* Test ftell after ungetc without read.  */
-  ASSERT (fseek (stdin, 0, SEEK_CUR) == 0);
-  ASSERT (ftell (stdin) == 3);
-#endif
+  if (2 < argc)
+    {
+      if (FUNC_UNGETC_BROKEN)
+        {
+          fputs ("Skipping test: ungetc cannot handle arbitrary bytes\n",
+                 stderr);
+          return 77;
+        }
+      /* Test ftell after ungetc without read.  */
+      ASSERT (fseek (stdin, 0, SEEK_CUR) == 0);
+      ASSERT (ftell (stdin) == 3);
 
-  ch = ungetc ('~', stdin);
-  ASSERT (ch == '~');
-  ASSERT (ftell (stdin) == 2);
+      ch = ungetc ('~', stdin);
+      ASSERT (ch == '~');
+      ASSERT (ftell (stdin) == 2);
+    }
 
   /* Test ftell beyond end of file.  */
   ASSERT (fseek (stdin, 0, SEEK_END) == 0);

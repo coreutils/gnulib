@@ -1,13 +1,16 @@
 Files:
 tests/test-ftell.c
 tests/test-ftell.sh
+tests/test-ftell2.sh
+m4/ungetc.m4
 
 Depends-on:
 binary-io
 
 configure.ac:
+gl_FUNC_UNGETC_WORKS
 
 Makefile.am:
-TESTS += test-ftell.sh
+TESTS += test-ftell.sh test-ftell2.sh
 TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' srcdir='$(srcdir)'
 check_PROGRAMS += test-ftell

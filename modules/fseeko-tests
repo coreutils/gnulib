@@ -1,12 +1,15 @@
 Files:
 tests/test-fseeko.c
 tests/test-fseeko.sh
+tests/test-fseeko2.sh
+m4/ungetc.m4
 
 Depends-on:
 
 configure.ac:
+gl_FUNC_UNGETC_WORKS
 
 Makefile.am:
-TESTS += test-fseeko.sh
+TESTS += test-fseeko.sh test-fseeko2.sh
 TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' srcdir='$(srcdir)'
 check_PROGRAMS += test-fseeko

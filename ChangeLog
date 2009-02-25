@@ -1,3 +1,21 @@
+2009-02-25  Eric Blake  <ebb9@byu.net>
+
+	tests: skip fseek/ftell tests if ungetc is broken
+	* m4/ungetc.m4: New file.
+	* modules/fseek-tests: Split test, so ungetc dependency is
+	separate from rest of test.
+	* modules/fseeko-tests: Likewise.
+	* modules/ftell-tests: Likewise.
+	* modules/ftello-tests: Likewise.
+	* tests/test-fseek.c (main): Isolate ungetc dependency.
+	* tests/test-fseeko.c (main): Likewise.
+	* tests/test-ftell.c (main): Likewise.
+	* tests/test-ftello.c (main): Likewise.
+	* tests/test-fseek2.sh: New file.
+	* tests/test-fseeko2.sh: Likewise.
+	* tests/test-ftell2.sh: Likewise.
+	* tests/test-ftello2.sh: Likewise.
+
 2009-02-25  Ondřej Vašík  <ovasik@redhat.com>
 
 	test-getaddrinfo: fix usage of skip return code 77
@@ -248,7 +266,7 @@
 	the parent of a directory specified on the command-line.
 
 2009-02-17  James Youngman  <jay@gnu.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* m4/include_next.m4: Reformulate comment.
 
