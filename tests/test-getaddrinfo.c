@@ -45,9 +45,14 @@
 int simple (char *host, char *service)
 {
   char buf[BUFSIZ];
+  static int skip = 0;
   struct addrinfo hints;
   struct addrinfo *ai0, *ai;
   int res;
+
+  /* Once we skipped the test, do not try anything else */
+  if (skip)
+    return 0;
 
   dbgprintf ("Finding %s service %s...\n", host, service);
 
@@ -69,6 +74,7 @@ int simple (char *host, char *service)
 	 in-law's farm. */
       if (res == EAI_AGAIN)
 	{
+	  skip++;
 	  fprintf (stderr, "skipping getaddrinfo test: no network?\n");
 	  return 77;
 	}
