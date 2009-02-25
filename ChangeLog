@@ -2,7 +2,7 @@
 
 	test-getaddrinfo: fix usage of skip return code 77
 	* tests/test-gettaddrinfo.c: Return skip code 77 only
-	  for first occurance of skip (4x77 is not 77)
+	for first occurance of skip (4x77 is not 77)
 
 2009-02-25  Gary V. Vaughan  <gary@gnu.org>
 
