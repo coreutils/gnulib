@@ -1,5 +1,11 @@
 2009-02-25  Bruno Haible  <bruno@clisp.org>
 
+	* m4/mbrtowc.m4 (gl_MBRTOWC_NUL_RETVAL): Update guess for Solaris 8
+	with known value.
+	Reported by Gary V. Vaughan <gary@gnu.org>.
+
+2009-02-25  Bruno Haible  <bruno@clisp.org>
+
 	Work around mbrtowc bug in zh_CN.GB18030 locale on Solaris 8.
 	* m4/mbrtowc.m4 (gl_MBRTOWC_SANITYCHECK): New macro.
 	(gl_MBSTATE_T_BROKEN): Invoke it. Replace mbstate_t when it says "no".

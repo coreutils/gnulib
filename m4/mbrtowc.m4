@@ -315,10 +315,10 @@ AC_DEFUN([gl_MBRTOWC_NUL_RETVAL],
       dnl is present.
 changequote(,)dnl
       case "$host_os" in
-                    # Guess no on Solaris 9.
-        solaris2.9) gl_cv_func_mbrtowc_nul_retval="guessing no" ;;
-                    # Guess yes otherwise.
-        *)          gl_cv_func_mbrtowc_nul_retval="guessing yes" ;;
+                       # Guess no on Solaris 8 and 9.
+        solaris2.[89]) gl_cv_func_mbrtowc_nul_retval="guessing no" ;;
+                       # Guess yes otherwise.
+        *)             gl_cv_func_mbrtowc_nul_retval="guessing yes" ;;
       esac
 changequote([,])dnl
       if test $LOCALE_ZH_CN != none; then
@@ -328,7 +328,7 @@ changequote([,])dnl
 #include <wchar.h>
 int main ()
 {
-  /* This fails on Solaris 9.  */
+  /* This fails on Solaris 8 and 9.  */
   if (setlocale (LC_ALL, "$LOCALE_ZH_CN") != NULL)
     {
       mbstate_t state;
