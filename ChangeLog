@@ -1,3 +1,11 @@
+2009-02-25  Bruno Haible  <bruno@clisp.org>
+
+	Work around broken INT8_MAX, UINT8_MAX etc. values on HP-UX 11.23.
+	* m4/stdint.m4 (gl_STDINT_H): Also check whether the expansions of
+	INT8_MAX, UINT8_MAX etc. contain casts to elementary types.
+	* doc/posix-headers/stdint.texi: Mention the HP-UX bug.
+	Reported by Gary V. Vaughan <gary@gnu.org>.
+
 2009-02-25  Eric Blake  <ebb9@byu.net>
 
 	tests: skip fseek/ftell tests if ungetc is broken

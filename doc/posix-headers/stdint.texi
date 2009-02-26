@@ -19,6 +19,10 @@ FreeBSD 6.2 / ia64.
 @item
 The value of @code{WINT_MAX} is incorrect on some platforms:
 mingw.
+@item
+The values of @code{INT8_MAX}, @code{UINT8_MAX} etc. are not usable in
+preprocessor expressions on some platforms:
+HP-UX 11.23.
 @end itemize
 
 Portability problems not fixed by Gnulib:
