@@ -1,3 +1,9 @@
+2009-02-26  Eric Blake  <ebb9@byu.net>
+
+	stdlib: favor compiler check of random.h
+	* m4/stdlib_h.m4 (gl_STDLIB_H): Skip preprocessor check.  Needed
+	to avoid an ObjC random.h installed by Swarm.
+
 2009-02-26  Bruno Haible  <bruno@clisp.org>
 
 	Work around *printf bug with %g directive and 0.0 on HP-UX 10.20.
