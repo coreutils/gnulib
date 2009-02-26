@@ -1,5 +1,11 @@
 2009-02-26  Bruno Haible  <bruno@clisp.org>
 
+	Work around *printf bug with %g directive and 0.0 on HP-UX 10.20.
+	* m4/printf.m4 (gl_PRINTF_INFINITE): Also test for %g output of -0.0.
+	Reported by Gary V. Vaughan <gary@gnu.org>.
+
+2009-02-26  Bruno Haible  <bruno@clisp.org>
+
 	Fix *printf behaviour regarding the %ls directive.
 	* m4/printf.m4 (gl_PRINTF_DIRECTIVE_LS): New macro.
 	* lib/vasnprintf.c (local_wcslen, VASNPRINTF): Handle

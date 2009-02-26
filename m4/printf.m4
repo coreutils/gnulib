@@ -1,4 +1,4 @@
-# printf.m4 serial 29
+# printf.m4 serial 30
 dnl Copyright (C) 2003, 2007-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -125,7 +125,8 @@ changequote([,])dnl
 ])
 
 dnl Test whether the *printf family of functions supports infinite and NaN
-dnl 'double' arguments in the %f, %e, %g directives. (ISO C99, POSIX:2001)
+dnl 'double' arguments and negative zero arguments in the %f, %e, %g
+dnl directives. (ISO C99, POSIX:2001)
 dnl Result is gl_cv_func_printf_infinite.
 
 AC_DEFUN([gl_PRINTF_INFINITE],
@@ -155,6 +156,13 @@ strisnan (const char *string, size_t start_index, size_t end_index)
         }
     }
   return 0;
+}
+static int
+have_minus_zero ()
+{
+  static double plus_zero = 0.0;
+  double minus_zero = - plus_zero;
+  return memcmp (&plus_zero, &minus_zero, sizeof (double)) != 0;
 }
 static char buf[10000];
 static double zero = 0.0;
@@ -186,6 +194,11 @@ int main ()
     return 1;
   if (sprintf (buf, "%g", zero / zero) < 0
       || !strisnan (buf, 0, strlen (buf)))
+    return 1;
+  /* This test fails on HP-UX 10.20.  */
+  if (have_minus_zero ())
+    if (sprintf (buf, "%g", - zero) < 0
+        || strcmp (buf, "-0") != 0)
     return 1;
   return 0;
 }], [gl_cv_func_printf_infinite=yes], [gl_cv_func_printf_infinite=no],
@@ -1357,7 +1370,7 @@ dnl   AIX 5.2                        .  .  #  #  #  .  .  .  .  .  .  #  .  .  .
 dnl   AIX 4.3.2, 5.1                 #  .  #  #  #  #  .  .  .  .  .  #  .  .  .  .  .  .  .  .
 dnl   HP-UX 11.31                    .  .  .  .  #  .  .  .  .  .  .  #  .  .  .  .  #  #  .  .
 dnl   HP-UX 11.{00,11,23}            #  .  .  .  #  #  .  .  .  .  .  #  .  .  .  .  #  #  .  #
-dnl   HP-UX 10.20                    #  .  .  .  #  #  .  ?  .  .  #  #  .  .  .  .  #  #  ?  #
+dnl   HP-UX 10.20                    #  .  #  .  #  #  .  ?  .  .  #  #  .  .  .  .  #  #  ?  #
 dnl   IRIX 6.5                       #  .  #  #  #  #  .  #  .  .  .  #  .  .  .  .  #  .  .  .
 dnl   OSF/1 5.1                      #  .  #  #  #  #  .  .  .  .  .  #  .  .  .  .  #  .  .  #
 dnl   OSF/1 4.0d                     #  .  #  #  #  #  .  .  .  .  .  #  .  .  #  #  #  #  #  #
