@@ -16,6 +16,10 @@ This function does not put the state into non-initial state when parsing an
 incomplete multibyte character on some platforms:
 AIX 5.1, OSF/1 5.1.
 @item
+This function does not produce correct results in the zh_CN.GB18030 locale on
+some platforms:
+Solaris 8.
+@item
 This function does not ignore the @code{pwc} argument if the string argument is
 NULL on some platforms:
 OSF/1 5.1.

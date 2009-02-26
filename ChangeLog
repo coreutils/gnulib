@@ -1,5 +1,13 @@
 2009-02-25  Bruno Haible  <bruno@clisp.org>
 
+	Work around mbrtowc bug in zh_CN.GB18030 locale on Solaris 8.
+	* m4/mbrtowc.m4 (gl_MBRTOWC_SANITYCHECK): New macro.
+	(gl_MBSTATE_T_BROKEN): Invoke it. Replace mbstate_t when it says "no".
+	* doc/posix-functions/mbrtowc.texi: Document the Solaris 8 bug.
+	Reported by Gary V. Vaughan <gary@gnu.org>.
+
+2009-02-25  Bruno Haible  <bruno@clisp.org>
+
 	Work around broken INT8_MAX, UINT8_MAX etc. values on HP-UX 11.23.
 	* m4/stdint.m4 (gl_STDINT_H): Also check whether the expansions of
 	INT8_MAX, UINT8_MAX etc. contain casts to elementary types.
