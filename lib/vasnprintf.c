@@ -210,7 +210,7 @@ local_strnlen (const char *string, size_t maxlen)
 # endif
 #endif
 
-#if (!USE_SNPRINTF || NEED_PRINTF_DIRECTIVE_LS) && HAVE_WCHAR_T && (WIDE_CHAR_VERSION || DCHAR_IS_TCHAR)
+#if (!USE_SNPRINTF || (NEED_PRINTF_DIRECTIVE_LS && !defined IN_LIBINTL)) && HAVE_WCHAR_T && (WIDE_CHAR_VERSION || DCHAR_IS_TCHAR)
 # if HAVE_WCSLEN
 #  define local_wcslen wcslen
 # else
@@ -2103,7 +2103,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 		  }
 	      }
 #endif
-#if (!USE_SNPRINTF || NEED_PRINTF_DIRECTIVE_LS) && HAVE_WCHAR_T
+#if (!USE_SNPRINTF || (NEED_PRINTF_DIRECTIVE_LS && !defined IN_LIBINTL)) && HAVE_WCHAR_T
 	    else if (dp->conversion == 's'
 # if WIDE_CHAR_VERSION
 		     && a.arg[dp->arg_index].type != TYPE_WIDE_STRING
