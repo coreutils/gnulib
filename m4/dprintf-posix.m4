@@ -1,4 +1,4 @@
-# dprintf-posix.m4 serial 1
+# dprintf-posix.m4 serial 2
 dnl Copyright (C) 2007-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,6 +13,7 @@ AC_DEFUN([gl_FUNC_DPRINTF_POSIX],
   AC_REQUIRE([gl_PRINTF_DIRECTIVE_A])
   AC_REQUIRE([gl_PRINTF_DIRECTIVE_F])
   AC_REQUIRE([gl_PRINTF_DIRECTIVE_N])
+  AC_REQUIRE([gl_PRINTF_DIRECTIVE_LS])
   AC_REQUIRE([gl_PRINTF_POSITIONS])
   AC_REQUIRE([gl_PRINTF_FLAG_GROUPING])
   AC_REQUIRE([gl_PRINTF_FLAG_LEFTADJUST])
@@ -36,21 +37,25 @@ AC_DEFUN([gl_FUNC_DPRINTF_POSIX],
                           *yes)
                             case "$gl_cv_func_printf_directive_n" in
                               *yes)
-                                case "$gl_cv_func_printf_positions" in
+                                case "$gl_cv_func_printf_directive_ls" in
                                   *yes)
-                                    case "$gl_cv_func_printf_flag_grouping" in
+                                    case "$gl_cv_func_printf_positions" in
                                       *yes)
-                                        case "$gl_cv_func_printf_flag_leftadjust" in
+                                        case "$gl_cv_func_printf_flag_grouping" in
                                           *yes)
-                                            case "$gl_cv_func_printf_flag_zero" in
+                                            case "$gl_cv_func_printf_flag_leftadjust" in
                                               *yes)
-                                                case "$gl_cv_func_printf_precision" in
+                                                case "$gl_cv_func_printf_flag_zero" in
                                                   *yes)
-                                                    case "$gl_cv_func_printf_enomem" in
+                                                    case "$gl_cv_func_printf_precision" in
                                                       *yes)
-                                                        # dprintf exists and is
-                                                        # already POSIX compliant.
-                                                        gl_cv_func_dprintf_posix=yes
+                                                        case "$gl_cv_func_printf_enomem" in
+                                                          *yes)
+                                                            # dprintf exists and is
+                                                            # already POSIX compliant.
+                                                            gl_cv_func_dprintf_posix=yes
+                                                            ;;
+                                                        esac
                                                         ;;
                                                     esac
                                                     ;;
@@ -84,6 +89,7 @@ AC_DEFUN([gl_FUNC_DPRINTF_POSIX],
     gl_PREREQ_VASNPRINTF_INFINITE_LONG_DOUBLE
     gl_PREREQ_VASNPRINTF_DIRECTIVE_A
     gl_PREREQ_VASNPRINTF_DIRECTIVE_F
+    gl_PREREQ_VASNPRINTF_DIRECTIVE_LS
     gl_PREREQ_VASNPRINTF_FLAG_GROUPING
     gl_PREREQ_VASNPRINTF_FLAG_LEFTADJUST
     gl_PREREQ_VASNPRINTF_FLAG_ZERO

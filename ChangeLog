@@ -1,3 +1,36 @@
+2009-02-26  Bruno Haible  <bruno@clisp.org>
+
+	Fix *printf behaviour regarding the %ls directive.
+	* m4/printf.m4 (gl_PRINTF_DIRECTIVE_LS): New macro.
+	* lib/vasnprintf.c (local_wcslen, VASNPRINTF): Handle
+	NEED_PRINTF_DIRECTIVE_LS.
+	* m4/vasnprintf.m4 (gl_PREREQ_VASNPRINTF_DIRECTIVE_LS): New macro.
+	(gl_PREREQ_VASNPRINTF_WITH_EXTRAS): Invoke it.
+	* m4/fprintf-posix.m4 (gl_FUNC_FPRINTF_POSIX): Invoke
+	gl_PREREQ_VASNPRINTF_DIRECTIVE_LS and test its result. Invoke
+	gl_PREREQ_VASNPRINTF_DIRECTIVE_LS.
+	* m4/dprintf-posix.m4 (gl_FUNC_DPRINTF_POSIX): Likewise.
+	* m4/obstack-printf-posix.m4 (gl_FUNC_OBSTACK_PRINTF_POSIX): Likewise.
+	* m4/snprintf-posix.m4 (gl_FUNC_SNPRINTF_POSIX): Likewise.
+	* m4/sprintf-posix.m4 (gl_FUNC_SPRINTF_POSIX): Likewise.
+	* m4/vasnprintf-posix.m4 (gl_FUNC_VASNPRINTF_POSIX): Likewise.
+	* m4/vasprintf-posix.m4 (gl_FUNC_VASPRINTF_POSIX): Likewise.
+	* m4/vdprintf-posix.m4 (gl_FUNC_VDPRINTF_POSIX): Likewise.
+	* m4/vfprintf-posix.m4 (gl_FUNC_VFPRINTF_POSIX): Likewise.
+	* m4/vsnprintf-posix.m4 (gl_FUNC_VSNPRINTF_POSIX): Likewise.
+	* m4/vsprintf-posix.m4 (gl_FUNC_VSPRINTF_POSIX): Likewise.
+	* doc/posix-functions/fprintf.texi: Update.
+	* doc/posix-functions/printf.texi: Update.
+	* doc/posix-functions/snprintf.texi: Update.
+	* doc/posix-functions/sprintf.texi: Update.
+	* doc/posix-functions/vfprintf.texi: Update.
+	* doc/posix-functions/vprintf.texi: Update.
+	* doc/posix-functions/vsnprintf.texi: Update.
+	* doc/posix-functions/vsprintf.texi: Update.
+	* doc/glibc-functions/obstack_printf.texi: Update.
+	* doc/glibc-functions/obstack_vprintf.texi: Update.
+	Reported by Eric Blake.
+
 2009-02-25  Bruno Haible  <bruno@clisp.org>
 
 	* m4/mbrtowc.m4 (gl_MBRTOWC_NUL_RETVAL): Update guess for Solaris 8

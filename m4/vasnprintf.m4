@@ -1,4 +1,4 @@
-# vasnprintf.m4 serial 27
+# vasnprintf.m4 serial 28
 dnl Copyright (C) 2002-2004, 2006-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -150,6 +150,21 @@ AC_DEFUN([gl_PREREQ_VASNPRINTF_DIRECTIVE_F],
   esac
 ])
 
+# Extra prerequisites of lib/vasnprintf.c for supporting the 'ls' directive.
+AC_DEFUN([gl_PREREQ_VASNPRINTF_DIRECTIVE_LS],
+[
+  AC_REQUIRE([gl_PRINTF_DIRECTIVE_LS])
+  case "$gl_cv_func_printf_directive_ls" in
+    *yes)
+      ;;
+    *)
+      AC_DEFINE([NEED_PRINTF_DIRECTIVE_LS], [1],
+        [Define if the vasnprintf implementation needs special code for
+         the 'ls' directive.])
+      ;;
+  esac
+])
+
 # Extra prerequisites of lib/vasnprintf.c for supporting the ' flag.
 AC_DEFUN([gl_PREREQ_VASNPRINTF_FLAG_GROUPING],
 [
@@ -247,6 +262,7 @@ AC_DEFUN([gl_PREREQ_VASNPRINTF_WITH_EXTRAS],
   gl_PREREQ_VASNPRINTF_INFINITE_LONG_DOUBLE
   gl_PREREQ_VASNPRINTF_DIRECTIVE_A
   gl_PREREQ_VASNPRINTF_DIRECTIVE_F
+  gl_PREREQ_VASNPRINTF_DIRECTIVE_LS
   gl_PREREQ_VASNPRINTF_FLAG_GROUPING
   gl_PREREQ_VASNPRINTF_FLAG_LEFTADJUST
   gl_PREREQ_VASNPRINTF_FLAG_ZERO
