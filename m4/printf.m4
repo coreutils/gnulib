@@ -1,4 +1,4 @@
-# printf.m4 serial 32
+# printf.m4 serial 33
 dnl Copyright (C) 2003, 2007-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -656,7 +656,7 @@ int main ()
      This test fails on OpenBSD 4.0, IRIX 6.5, Solaris 2.6, Haiku,
      Cygwin 1.5.  */
   {
-    static const wchar_t wstring[] = { 'a', 'b', 'c', 0 };
+    static wchar_t wstring[] = { 'a', 'b', 'c', 0 };
     buf[0] = '\0';
     if (sprintf (buf, "%ls", wstring) < 0
         || strcmp (buf, "abc") != 0)

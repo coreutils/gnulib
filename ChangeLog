@@ -1,3 +1,8 @@
+2009-02-27  Eric Blake  <ebb9@byu.net>
+
+	printf: fix regression in previous patch
+	* m4/printf.m4 (gl_PRINTF_DIRECTIVE_LS): Fix compilation error.
+
 2009-02-27  Bruno Haible  <bruno@clisp.org>
 
 	* lib/inttypes.in.h: Test merely whether _LP64 is defined, not its
@@ -58,7 +63,7 @@
 	See http://lists.gnu.org/archive/html/bug-gnulib/2009-02/msg00190.html.
 
 2009-02-26  Eric Blake  <ebb9@byu.net>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Work around a *printf bug with %ls on Solaris.
 	* m4/printf.m4 (gl_PRINTF_DIRECTIVE_LS): Also test whether, when a
