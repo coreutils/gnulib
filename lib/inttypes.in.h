@@ -1,4 +1,4 @@
-/* Copyright (C) 2006-2008 Free Software Foundation, Inc.
+/* Copyright (C) 2006-2009 Free Software Foundation, Inc.
    Written by Paul Eggert, Bruno Haible, Derek Price.
    This file is part of gnulib.
 
@@ -168,7 +168,7 @@
 #  endif
 # endif
 # ifdef INT64_MAX
-#  if (@APPLE_UNIVERSAL_BUILD@ ? _LP64 : @INT64_MAX_EQ_LONG_MAX@)
+#  if (@APPLE_UNIVERSAL_BUILD@ ? defined _LP64 : @INT64_MAX_EQ_LONG_MAX@)
 #   define _PRI64_PREFIX "l"
 #  elif defined _MSC_VER || defined __MINGW32__
 #   define _PRI64_PREFIX "I64"
@@ -185,7 +185,7 @@
 #  endif
 # endif
 # ifdef UINT64_MAX
-#  if (@APPLE_UNIVERSAL_BUILD@ ? _LP64 : @UINT64_MAX_EQ_ULONG_MAX@)
+#  if (@APPLE_UNIVERSAL_BUILD@ ? defined _LP64 : @UINT64_MAX_EQ_ULONG_MAX@)
 #   define _PRIu64_PREFIX "l"
 #  elif defined _MSC_VER || defined __MINGW32__
 #   define _PRIu64_PREFIX "I64"
@@ -661,7 +661,7 @@
 #  endif
 # endif
 # ifdef INT64_MAX
-#  if (@APPLE_UNIVERSAL_BUILD@ ? _LP64 : @INT64_MAX_EQ_LONG_MAX@)
+#  if (@APPLE_UNIVERSAL_BUILD@ ? defined _LP64 : @INT64_MAX_EQ_LONG_MAX@)
 #   define _SCN64_PREFIX "l"
 #  elif defined _MSC_VER || defined __MINGW32__
 #   define _SCN64_PREFIX "I64"
@@ -678,7 +678,7 @@
 #  endif
 # endif
 # ifdef UINT64_MAX
-#  if (@APPLE_UNIVERSAL_BUILD@ ? _LP64 : @UINT64_MAX_EQ_ULONG_MAX@)
+#  if (@APPLE_UNIVERSAL_BUILD@ ? defined _LP64 : @UINT64_MAX_EQ_ULONG_MAX@)
 #   define _SCNu64_PREFIX "l"
 #  elif defined _MSC_VER || defined __MINGW32__
 #   define _SCNu64_PREFIX "I64"
