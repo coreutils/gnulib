@@ -1,4 +1,4 @@
-# printf.m4 serial 31
+# printf.m4 serial 32
 dnl Copyright (C) 2003, 2007-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -558,7 +558,7 @@ int main ()
   if (sprintf (buf, "%F", 1.0 / 0.0) < 0
       || (strcmp (buf, "INF") != 0 && strcmp (buf, "INFINITY") != 0))
     return 1;
-  /* This catches a Cygwin 2007 bug.  */
+  /* This catches a Cygwin 1.5.x bug.  */
   if (sprintf (buf, "%.F", 1234.0) < 0
       || strcmp (buf, "1234") != 0)
     return 1;
@@ -653,12 +653,18 @@ int main ()
 {
   char buf[100];
   /* Test whether %ls works at all.
-     This test fails on OpenBSD 4.0, IRIX 6.5, Solaris 2.6, Haiku.  */
+     This test fails on OpenBSD 4.0, IRIX 6.5, Solaris 2.6, Haiku,
+     Cygwin 1.5.  */
   {
     static const wchar_t wstring[] = { 'a', 'b', 'c', 0 };
     buf[0] = '\0';
     if (sprintf (buf, "%ls", wstring) < 0
         || strcmp (buf, "abc") != 0)
+      return 1;
+    buf[0] = '\0';
+    wstring[1] = 0;
+    if (sprintf (buf, "%ls", wstring) < 0
+        || strcmp (buf, "a") != 0)
       return 1;
   }
   /* Test whether precisions in %ls are supported as specified in ISO C 99
@@ -685,6 +691,7 @@ changequote(,)dnl
          solaris*)        gl_cv_func_printf_directive_ls="guessing no";;
          irix*)           gl_cv_func_printf_directive_ls="guessing no";;
          beos* | haiku*)  gl_cv_func_printf_directive_ls="guessing no";;
+         cygwin*)         gl_cv_func_printf_directive_ls="guessing no";;
          *)               gl_cv_func_printf_directive_ls="guessing yes";;
        esac
 changequote([,])dnl
@@ -1384,8 +1391,9 @@ dnl   glibc 2.3.6                    .  .  .  .  #  .  .  .  .  .  .  .  .  .  .
 dnl   FreeBSD 5.4, 6.1               .  .  .  .  #  .  .  .  .  .  .  #  .  #  .  .  .  .  .  .
 dnl   MacOS X 10.3.9                 .  .  .  .  #  .  .  .  .  .  .  #  .  #  .  .  .  .  .  .
 dnl   OpenBSD 3.9, 4.0               .  .  #  #  #  #  .  #  .  #  .  #  .  #  .  .  .  .  .  .
-dnl   Cygwin 2007 (= Cygwin 1.5.24)  .  .  .  .  #  #  .  .  .  .  ?  #  ?  ?  .  .  .  .  .  .
-dnl   Cygwin 2006 (= Cygwin 1.5.19)  #  .  .  .  #  #  .  ?  .  #  ?  #  ?  ?  .  .  .  .  .  .
+dnl   Cygwin 1.7.0 (2009)            .  .  .  #  .  .  .  ?  .  .  .  .  .  ?  .  .  .  .  .  .
+dnl   Cygwin 1.5.25 (2008)           .  .  .  #  #  .  .  #  .  .  .  .  .  #  .  .  .  .  .  .
+dnl   Cygwin 1.5.19 (2006)           #  .  .  #  #  #  .  #  .  #  .  #  #  #  .  .  .  .  .  .
 dnl   Solaris 10                     .  .  #  #  #  .  .  #  .  .  .  #  .  .  .  .  .  .  .  .
 dnl   Solaris 2.6 ... 9              #  .  #  #  #  #  .  #  .  .  .  #  .  .  .  .  .  .  .  .
 dnl   Solaris 2.5.1                  #  .  #  #  #  #  .  #  .  .  .  #  .  .  #  #  #  #  #  #

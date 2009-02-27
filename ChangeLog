@@ -1,3 +1,18 @@
+2009-02-27  Eric Blake  <ebb9@byu.net>
+
+	Detect bug in cygwin 1.5.x *printf on 1-character %ls.
+	* m4/printf.m4 (gl_PRINTF_DIRECTIVE_LS): Enhance filter.
+	* doc/posix-functions/fprintf.texi: Update.
+	* doc/posix-functions/printf.texi: Update.
+	* doc/posix-functions/snprintf.texi: Update.
+	* doc/posix-functions/sprintf.texi: Update.
+	* doc/posix-functions/vfprintf.texi: Update.
+	* doc/posix-functions/vprintf.texi: Update.
+	* doc/posix-functions/vsnprintf.texi: Update.
+	* doc/posix-functions/vsprintf.texi: Update.
+	* doc/glibc-functions/obstack_printf.texi: Update.
+	* doc/glibc-functions/obstack_vprintf.texi: Update.
+
 2009-02-26  Eric Blake  <ebb9@byu.net>
 
 	avoid gcc 3.4.3 bug on long double NaN on Irix 6.5
