@@ -1,4 +1,23 @@
 2009-02-26  Eric Blake  <ebb9@byu.net>
+            Bruno Haible  <bruno@clisp.org>
+
+	Work around a *printf bug with %ls on Solaris.
+	* m4/printf.m4 (gl_PRINTF_DIRECTIVE_LS): Also test whether, when a
+	precision is specified, sprintf stops converting the wide string
+	argument when the number of bytes that have been produced by this
+	conversion equals or exceeds the precision.
+	* doc/posix-functions/fprintf.texi: Update.
+	* doc/posix-functions/printf.texi: Update.
+	* doc/posix-functions/snprintf.texi: Update.
+	* doc/posix-functions/sprintf.texi: Update.
+	* doc/posix-functions/vfprintf.texi: Update.
+	* doc/posix-functions/vprintf.texi: Update.
+	* doc/posix-functions/vsnprintf.texi: Update.
+	* doc/posix-functions/vsprintf.texi: Update.
+	* doc/glibc-functions/obstack_printf.texi: Update.
+	* doc/glibc-functions/obstack_vprintf.texi: Update.
+
+2009-02-26  Eric Blake  <ebb9@byu.net>
 
 	stdlib: favor compiler check of random.h
 	* m4/stdlib_h.m4 (gl_STDLIB_H): Skip preprocessor check.  Needed

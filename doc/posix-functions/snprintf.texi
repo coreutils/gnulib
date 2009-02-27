@@ -43,6 +43,10 @@ Cygwin 1.5.x, mingw, BeOS.
 This function does not support the @samp{ls} directive on some platforms:
 OpenBSD 4.0, IRIX 6.5, Solaris 2.6, Haiku.
 @item
+This function does not support precisions in the @samp{ls} directive correctly
+on some platforms:
+Solaris 10.
+@item
 This function does not support format directives that access arguments in an
 arbitrary order, such as @code{"%2$s"}, on some platforms:
 NetBSD 3.0, mingw, BeOS.
