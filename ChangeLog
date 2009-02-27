@@ -1,5 +1,17 @@
 2009-02-27  Eric Blake  <ebb9@byu.net>
 
+	doc: mention more functions added in cygwin 1.7.0
+	* doc/posix-functions/mbsnrtowcs.texi: Mention recent cygwin 1.7.0
+	addition.
+	* doc/posix-functions/open_wmemstream.texi: Likewise.
+	* doc/posix-functions/wcsnlen.texi: Likewise.
+	* doc/posix-functions/wcsnrtombs.texi: Likewise.
+	* doc/posix-functions/wcstod.texi: Likewise.
+	* doc/posix-functions/wcstof.texi: Likewise.
+	* doc/posix-functions/wcstoimax.texi: Likewise.
+	* doc/posix-functions/wcstok.texi: Likewise.
+	* doc/posix-functions/wcstoumax.texi: Likewise.
+
 	Detect bug in cygwin 1.5.x *printf on 1-character %ls.
 	* m4/printf.m4 (gl_PRINTF_DIRECTIVE_LS): Enhance filter.
 	* doc/posix-functions/fprintf.texi: Update.
