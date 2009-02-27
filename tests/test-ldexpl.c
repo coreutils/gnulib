@@ -26,6 +26,7 @@
 
 #include "fpucw.h"
 #include "isnanl-nolibm.h"
+#include "nan.h"
 
 #define ASSERT(expr) \
   do									     \
@@ -66,7 +67,7 @@ main ()
   BEGIN_LONG_DOUBLE_ROUNDING ();
 
   { /* NaN.  */
-    x = 0.0L / 0.0L;
+    x = NaNl ();
     y = ldexpl (x, 0); ASSERT (isnanl (y));
     y = ldexpl (x, 5); ASSERT (isnanl (y));
     y = ldexpl (x, -5); ASSERT (isnanl (y));

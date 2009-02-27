@@ -1,5 +1,29 @@
 2009-02-26  Eric Blake  <ebb9@byu.net>
-            Bruno Haible  <bruno@clisp.org>
+
+	avoid gcc 3.4.3 bug on long double NaN on Irix 6.5
+	* tests/nan.h (NaNl): Rewrite as function on Irix, to avoid
+	compilation bug by using runtime conversion.
+	* m4/isfinite.m4 (gl_ISFINITE): Likewise.
+	* m4/isnanl.m4 (gl_FUNC_ISNANL): Likewise.
+	* modules/ceill-tests (Files): Use nan.h.
+	* modules/floorl-tests (Files): Likewise.
+	* modules/frexpl-tests (Files): Likewise.
+	* modules/isnanl-tests (Files): Likewise.
+	* modules/ldexpl-tests (Files): Likewise.
+	* modules/roundl-tests (Files): Likewise.
+	* modules/truncl-tests (Files): Likewise.
+	* tests/test-ceill.c (main): Use a working NaN.
+	* tests/test-floorl.c (main): Likewise.
+	* tests/test-frexpl.c (main): Likewise.
+	* tests/test-isnan.c (test_long_double): Likewise.
+	* tests/test-isnanl.h (main): Likewise.
+	* tests/test-ldexpl.h (main): Likewise.
+	* tests/test-roundl.h (main): Likewise.
+	* tests/test-truncl.h (main): Likewise.
+	See http://lists.gnu.org/archive/html/bug-gnulib/2009-02/msg00190.html.
+
+2009-02-26  Eric Blake  <ebb9@byu.net>
+           Bruno Haible  <bruno@clisp.org>
 
 	Work around a *printf bug with %ls on Solaris.
 	* m4/printf.m4 (gl_PRINTF_DIRECTIVE_LS): Also test whether, when a

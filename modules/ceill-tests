@@ -1,5 +1,6 @@
 Files:
 tests/test-ceill.c
+tests/nan.h
 
 Depends-on:
 fpucw

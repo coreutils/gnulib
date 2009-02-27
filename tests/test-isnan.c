@@ -163,14 +163,14 @@ test_long_double (void)
   ASSERT (!isnan (1.0L / 0.0L));
   ASSERT (!isnan (-1.0L / 0.0L));
   /* Quiet NaN.  */
-  ASSERT (isnan (0.0L / 0.0L));
+  ASSERT (isnan (NaNl ()));
 
 #if defined LDBL_EXPBIT0_WORD && defined LDBL_EXPBIT0_BIT
   /* A bit pattern that is different from a Quiet NaN.  With a bit of luck,
      it's a Signalling NaN.  */
   {
     memory_long_double m;
-    m.value = 0.0L / 0.0L;
+    m.value = NaNl ();
 # if LDBL_EXPBIT0_BIT > 0
     m.word[LDBL_EXPBIT0_WORD] ^= (unsigned int) 1 << (LDBL_EXPBIT0_BIT - 1);
 # else

@@ -1,5 +1,5 @@
 /* Macros for not-a-number.
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -47,4 +47,14 @@ NaNd ()
 
 /* NaNl () returns a 'long double' not-a-number.  */
 
-#define NaNl() (0.0L / 0.0L)
+/* On Irix 6.5, gcc 3.4.3 can't compute compile-time NaN, and needs the
+   runtime type conversion.  */
+#ifdef __sgi
+static long double NaNl ()
+{
+  double zero = 0.0;
+  return zero / zero;
+}
+#else
+# define NaNl() (0.0L / 0.0L)
+#endif

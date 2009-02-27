@@ -26,6 +26,7 @@
 
 #include "fpucw.h"
 #include "isnanl-nolibm.h"
+#include "nan.h"
 
 #define ASSERT(expr) \
   do									     \
@@ -90,7 +91,7 @@ main ()
   ASSERT (ceill (1.0L / 0.0L) == 1.0L / 0.0L);
   ASSERT (ceill (-1.0L / 0.0L) == -1.0L / 0.0L);
   /* NaNs.  */
-  ASSERT (isnanl (ceill (0.0L / 0.0L)));
+  ASSERT (isnanl (ceill (NaNl ())));
 
   return 0;
 }

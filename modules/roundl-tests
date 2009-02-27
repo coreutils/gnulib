@@ -1,5 +1,6 @@
 Files:
 tests/test-roundl.c
+tests/nan.h
 
 Depends-on:
 fpucw

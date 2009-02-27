@@ -1,5 +1,6 @@
 Files:
 tests/test-floorl.c
+tests/nan.h
 
 Depends-on:
 fpucw

@@ -26,6 +26,7 @@
 
 #include "fpucw.h"
 #include "isnanl-nolibm.h"
+#include "nan.h"
 
 /* Avoid some warnings from "gcc -Wshadow".
    This file doesn't use the exp() function.  */
@@ -95,7 +96,7 @@ main ()
   { /* NaN.  */
     int exp = -9999;
     long double mantissa;
-    x = 0.0L / 0.0L;
+    x = NaNl ();
     mantissa = frexpl (x, &exp);
     ASSERT (isnanl (mantissa));
   }
