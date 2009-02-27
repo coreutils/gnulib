@@ -1,5 +1,14 @@
 2009-02-27  Bruno Haible  <bruno@clisp.org>
 
+	Avoid test link errors.
+	* modules/uninorm/nfc-tests (test_u32_nfc_big_LDADD): New variable.
+	* modules/uninorm/nfd-tests (test_u32_nfd_big_LDADD): New variable.
+	* modules/uninorm/nfkc-tests (test_u32_nfkc_big_LDADD): New variable.
+	* modules/uninorm/nfkd-tests (test_u32_nfkd_big_LDADD): New variable.
+	Reported by Tom G. Christensen <tgc@jupiterrise.com>.
+
+2009-02-27  Bruno Haible  <bruno@clisp.org>
+
 	Avoid spurious "(cached)" in configure output.
 	* m4/gnulib-common.m4 (gl_CACHE_VAL_SILENT): New macro.
 	* m4/ceil.m4 (gl_FUNC_CEIL_LIBS): Use it instead of AC_CACHE_VAL.

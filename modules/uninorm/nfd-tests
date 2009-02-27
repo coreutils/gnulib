@@ -31,4 +31,5 @@ test_nfd_SOURCES = \
 test_u32_nfd_big_SOURCES = \
   uninorm/test-u32-nfd-big.c \
   uninorm/test-u32-normalize-big.c
+test_u32_nfd_big_LDADD = $(LDADD) @LIBINTL@
 
