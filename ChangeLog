@@ -1,3 +1,16 @@
+2009-02-27  Bruno Haible  <bruno@clisp.org>
+
+	Avoid spurious "(cached)" in configure output.
+	* m4/gnulib-common.m4 (gl_CACHE_VAL_SILENT): New macro.
+	* m4/ceil.m4 (gl_FUNC_CEIL_LIBS): Use it instead of AC_CACHE_VAL.
+	* m4/ceilf.m4 (gl_FUNC_CEILF_LIBS): Likewise.
+	* m4/ceill.m4 (gl_FUNC_CEILL_LIBS): Likewise.
+	* m4/floor.m4 (gl_FUNC_FLOOR_LIBS): Likewise.
+	* m4/floorf.m4 (gl_FUNC_FLOORF_LIBS): Likewise.
+	* m4/floorl.m4 (gl_FUNC_FLOORL_LIBS): Likewise.
+	* m4/stdarg.m4 (gl_STDARG_H): Likewise.
+	Reported by Eric Blake.
+
 2009-02-27  Eric Blake  <ebb9@byu.net>
 
 	printf: fix regression in previous patch
@@ -9,7 +22,6 @@
 	value.
 	* lib/stdint.in.h: Likewise.
 	Suggested by Eric Blake. Reported by Peter Bray <pdb_ml@yahoo.com.au>.
-
 
 2009-02-27  Eric Blake  <ebb9@byu.net>
 

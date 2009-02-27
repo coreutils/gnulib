@@ -1,5 +1,5 @@
-# stdarg.m4 serial 2
-dnl Copyright (C) 2006, 2008 Free Software Foundation, Inc.
+# stdarg.m4 serial 3
+dnl Copyright (C) 2006, 2008-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -46,7 +46,7 @@ void (*func) (va_list, va_list) = va_copy;
     else
       dnl Provide a substitute in <config.h>, either __va_copy or as a simple
       dnl assignment.
-      AC_CACHE_VAL([gl_cv_func___va_copy], [
+      gl_CACHE_VAL_SILENT([gl_cv_func___va_copy], [
         AC_TRY_COMPILE([#include <stdarg.h>], [
 #ifndef __va_copy
 error, bail out

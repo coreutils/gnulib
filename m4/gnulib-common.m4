@@ -1,4 +1,4 @@
-# gnulib-common.m4 serial 10
+# gnulib-common.m4 serial 11
 dnl Copyright (C) 2007-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -108,4 +108,17 @@ AC_DEFUN([AC_C_RESTRICT],
 AC_DEFUN([gl_BIGENDIAN],
 [
   AC_C_BIGENDIAN
+])
+
+# gl_CACHE_VAL_SILENT(cache-id, command-to-set-it)
+# is like AC_CACHE_VAL(cache-id, command-to-set-it), except that it does not
+# output a spurious "(cached)" mark in the midst of other configure output.
+# This macro should be used instead of AC_CACHE_VAL when it is not surrounded
+# by an AC_MSG_CHECKING/AC_MSG_RESULT pair.
+AC_DEFUN([gl_CACHE_VAL_SILENT],
+[
+  saved_as_echo_n="$as_echo_n"
+  as_echo_n=':'
+  AC_CACHE_VAL([$1], [$2])
+  as_echo_n="$saved_as_echo_n"
 ])
