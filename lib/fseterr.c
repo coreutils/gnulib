@@ -1,5 +1,5 @@
 /* Set the error indicator of a stream.
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -41,6 +41,8 @@ fseterr (FILE *fp)
   fp->__modeflags |= __FLAG_ERROR;
 #elif defined __QNX__               /* QNX */
   fp->_Mode |= 0x200 /* _MERR */;
+#elif defined __MINT__              /* Atari FreeMiNT */
+  fp->__error = 1;
 #elif 0                             /* unknown  */
   /* Portable fallback, based on an idea by Rich Felker.
      Wow! 6 system calls for something that is just a bit operation!

@@ -63,6 +63,12 @@ clear_ungetc_buffer (FILE *fp)
     }
 # elif defined _IOERR               /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */
   /* Nothing to do.  */
+# elif defined __MINT__             /* Atari FreeMiNT */
+  if (fp->__pushed_back)
+    {
+      fp->__bufp = fp->__pushback_bufp;
+      fp->__pushed_back = 0;
+    }
 # else                              /* other implementations */
   fseek (fp, 0, SEEK_CUR);
 # endif

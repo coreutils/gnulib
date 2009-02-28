@@ -1,5 +1,5 @@
 /* Retrieve information about a FILE stream.
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -46,6 +46,11 @@ freading (FILE *fp)
 #elif defined __QNX__               /* QNX */
   return ((fp->_Mode & 0x2 /* _MOPENW */) == 0
 	  || (fp->_Mode & 0x1000 /* _MREAD */) != 0);
+#elif defined __MINT__              /* Atari FreeMiNT */
+  return (!fp->__mode.__write
+	  || (fp->__mode.__read
+	      && (fp->__buffer < fp->__get_limit
+		  /*|| fp->__bufp == fp->__put_limit ??*/)));
 #else
  #error "Please port gnulib freading.c to your platform!"
 #endif

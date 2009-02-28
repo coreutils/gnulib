@@ -1,5 +1,23 @@
 2009-02-28  Bruno Haible  <bruno@clisp.org>
 
+	Add tentative support for FreeMiNT.
+	* lib/fbufmode.c (fbufmode) [__MINT__]: Add conditional code.
+	* lib/fflush.c (clear_ungetc_buffer): Likewise.
+	* lib/fpurge.c (fpurge): Likewise.
+	* lib/freadable.c (freadable): Likewise.
+	* lib/freading.c (freading): Likewise.
+	* lib/freadptr.c (freadptr): Likewise.
+	* lib/freadseek.c (freadptrinc): Likewise.
+	* lib/fseeko.c (rpl_fseeko): Likewise.
+	* lib/fseterr.c (fseterr): Likewise.
+	* lib/fwritable.c (fwritable): Likewise.
+	* lib/fwriting.c (fwriting): Likewise.
+	* lib/freadahead.c (freadahead): Likewise, based on code by Alan
+	Hourihane.
+	Reported by Alan Hourihane <alanh@fairlite.co.uk>.
+
+2009-02-28  Bruno Haible  <bruno@clisp.org>
+
 	* lib/wait-process.h (wait_subprocess): Clarify restriction regarding
 	SIGCHLD.
 	Reported by Jim Meyering.

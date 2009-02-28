@@ -1,5 +1,5 @@
 /* Retrieve information about a FILE stream.
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -85,6 +85,14 @@ freadptr (FILE *fp, size_t *sizep)
     return NULL;
   *sizep = size;
   return (const char *) fp->_Next;
+#elif defined __MINT__              /* Atari FreeMiNT */
+  if (!fp->__mode.__read)
+    return NULL;
+  size = fp->__get_limit - fp->__bufp;
+  if (size == 0)
+    return NULL;
+  *sizep = size;
+  return fp->__bufp;
 #elif defined SLOW_BUT_NO_HACKS     /* users can define this */
   /* This implementation is correct on any ANSI C platform.  It is just
      awfully slow.  */

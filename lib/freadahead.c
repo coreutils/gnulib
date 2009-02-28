@@ -1,5 +1,5 @@
 /* Retrieve information about a FILE stream.
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -70,6 +70,12 @@ freadahead (FILE *fp)
 	 + (fp->_Mode & 0x4000 /* _MBYTE */
 	    ? (fp->_Back + sizeof (fp->_Back)) - fp->_Rback
 	    : 0);
+#elif defined __MINT__              /* Atari FreeMiNT */
+  if (!fp->__mode.__read)
+    return 0;
+  return (fp->__pushed_back
+	  ? fp->__get_limit - fp->__pushback_bufp + 1
+	  : fp->__get_limit - fp->__bufp);
 #elif defined SLOW_BUT_NO_HACKS     /* users can define this */
   abort ();
   return 0;

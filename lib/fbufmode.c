@@ -1,5 +1,5 @@
 /* Retrieve information about a FILE stream.
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -73,6 +73,10 @@ fbufmode (FILE *fp)
   if (fp->_Mode & 0x800 /* _MNBF */)
     return _IONBF;
   return _IOFBF;
+#elif defined __MINT__              /* Atari FreeMiNT */
+  if (fp->__linebuf)
+    return _IOLBF;
+  return (fp->__bufsize > 0 ? _IOFBF : _IONBF);
 #else
  #error "Please port gnulib fbufmode.c to your platform! Look at the setvbuf implementation."
 #endif

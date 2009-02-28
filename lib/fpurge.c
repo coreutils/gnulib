@@ -1,5 +1,5 @@
 /* Flushing buffers of a FILE stream.
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -113,6 +113,16 @@ fpurge (FILE *fp)
   else
     /* fp->_Buf <= fp->_Next <= fp->_Rend */
     fp->_Rend = fp->_Next;
+  return 0;
+# elif defined __MINT__             /* Atari FreeMiNT */
+  if (fp->__pushed_back)
+    {
+      fp->__bufp = fp->__pushback_bufp;
+      fp->__pushed_back = 0;
+    }
+  fp->__bufp = fp->__buffer;
+  fp->__get_limit = fp->__bufp;
+  fp->__put_limit = fp->__bufp;
   return 0;
 # else
  #error "Please port gnulib fpurge.c to your platform! Look at the definitions of fflush, setvbuf and ungetc on your system, then report this to bug-gnulib."
