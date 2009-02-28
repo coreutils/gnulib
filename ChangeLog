@@ -1,5 +1,11 @@
 2009-02-28  Bruno Haible  <bruno@clisp.org>
 
+	* lib/wait-process.h (wait_subprocess): Clarify restriction regarding
+	SIGCHLD.
+	Reported by Jim Meyering.
+
+2009-02-28  Bruno Haible  <bruno@clisp.org>
+
 	* m4/printf.m4 (gl_PRINTF_DIRECTIVE_LS): Separate the two first tests.
 	Mention the results of these tests on various platforms.
 	* doc/posix-functions/fprintf.texi: Mention platforms in canonical
