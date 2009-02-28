@@ -1,5 +1,11 @@
 2009-02-27  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_import): Make the sed expression used to create the
+	sed script for updating the .gitignore file POSIX compliant.
+	Reported by Eric Blake.
+
+2009-02-27  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (sed): Don't alias as "sed --posix".
 	Reported by Eric Blake.
 
