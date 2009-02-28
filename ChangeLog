@@ -1,3 +1,8 @@
+2009-02-28  Bruno Haible  <bruno@clisp.org>
+
+	* build-aux/po/Makefile.in.in: Update from GNU gettext 0.17.
+	Reported by Loïc Minier <lool@dooz.org>.
+
 2009-02-27  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_import): Make the sed expression used to create the
