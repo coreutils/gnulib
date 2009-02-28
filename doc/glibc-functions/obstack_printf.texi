@@ -36,7 +36,7 @@ NetBSD 3.0, AIX 5.1, HP-UX 11.23, IRIX 6.5, OSF/1 5.1, Solaris 9,
 Cygwin 1.5.x, mingw, BeOS.
 @item
 This function does not support the @samp{ls} directive on some platforms:
-OpenBSD 4.0, IRIX 6.5, Solaris 2.6, Haiku, Cygwin 1.5.x.
+OpenBSD 4.0, IRIX 6.5, Solaris 2.6, Cygwin 1.5.x, Haiku.
 @item
 This function does not support precisions in the @samp{ls} directive correctly
 on some platforms:

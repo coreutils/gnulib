@@ -653,16 +653,20 @@ int main ()
 {
   char buf[100];
   /* Test whether %ls works at all.
-     This test fails on OpenBSD 4.0, IRIX 6.5, Solaris 2.6, Haiku,
+     This test fails on OpenBSD 4.0, IRIX 6.5, Solaris 2.6, Haiku, but not on
      Cygwin 1.5.  */
   {
-    static wchar_t wstring[] = { 'a', 'b', 'c', 0 };
+    static const wchar_t wstring[] = { 'a', 'b', 'c', 0 };
     buf[0] = '\0';
     if (sprintf (buf, "%ls", wstring) < 0
         || strcmp (buf, "abc") != 0)
       return 1;
+  }
+  /* This test fails on IRIX 6.5, Solaris 2.6, Cygwin 1.5, Haiku (with an
+     assertion failure inside libc), but not on OpenBSD 4.0.  */
+  {
+    static const wchar_t wstring[] = { 'a', 0 };
     buf[0] = '\0';
-    wstring[1] = 0;
     if (sprintf (buf, "%ls", wstring) < 0
         || strcmp (buf, "a") != 0)
       return 1;
@@ -688,10 +692,10 @@ int main ()
 changequote(,)dnl
        case "$host_os" in
          openbsd*)        gl_cv_func_printf_directive_ls="guessing no";;
-         solaris*)        gl_cv_func_printf_directive_ls="guessing no";;
          irix*)           gl_cv_func_printf_directive_ls="guessing no";;
-         beos* | haiku*)  gl_cv_func_printf_directive_ls="guessing no";;
+         solaris*)        gl_cv_func_printf_directive_ls="guessing no";;
          cygwin*)         gl_cv_func_printf_directive_ls="guessing no";;
+         beos* | haiku*)  gl_cv_func_printf_directive_ls="guessing no";;
          *)               gl_cv_func_printf_directive_ls="guessing yes";;
        esac
 changequote([,])dnl
