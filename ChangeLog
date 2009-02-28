@@ -1,5 +1,10 @@
 2009-02-27  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (sed): Don't alias as "sed --posix".
+	Reported by Eric Blake.
+
+2009-02-27  Bruno Haible  <bruno@clisp.org>
+
 	Avoid test link errors.
 	* modules/uninorm/nfc-tests (test_u32_nfc_big_LDADD): New variable.
 	* modules/uninorm/nfd-tests (test_u32_nfd_big_LDADD): New variable.

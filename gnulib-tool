@@ -63,24 +63,28 @@ if test -z "${AUTOPOINT}" || test -n "${GETTEXTPATH}"; then
   AUTOPOINT="${GETTEXTPATH}autopoint"
 fi
 
-# When using GNU sed, turn off as many GNU extensions as possible,
-# to minimize the risk of accidentally using non-portable features.
-# However, do this only for gnulib-tool itself, not for the code that
-# gnulib-tool generates, since we don't want "sed --posix" to leak
-# into makefiles.
-if (alias) > /dev/null 2>&1 && echo | sed --posix -e d >/dev/null 2>&1; then
-  # Define sed as an alias.
-  # It is not always possible to use aliases. Aliases are guaranteed to work
-  # if the executing shell is bash and either it is invoked as /bin/sh or
-  # is a version >= 2.0, supporting shopt. This is the common case.
-  # Two other approaches (use of a variable $sed or of a function func_sed
-  # instead of an alias) require massive, fragile code changes.
-  # An other approach (use of function sed) requires `which sed` - but 'which'
-  # is hard to emulate, due to missing "test -x" on some platforms.
-  if test -n "$BASH_VERSION"; then
-    shopt -s expand_aliases >/dev/null 2>&1
+# Disabled because "sed --posix" is buggy in GNU sed 4.1.5, see
+# <http://lists.gnu.org/archive/html/bug-gnulib/2009-02/msg00225.html>.
+if false; then
+  # When using GNU sed, turn off as many GNU extensions as possible,
+  # to minimize the risk of accidentally using non-portable features.
+  # However, do this only for gnulib-tool itself, not for the code that
+  # gnulib-tool generates, since we don't want "sed --posix" to leak
+  # into makefiles.
+  if (alias) > /dev/null 2>&1 && echo | sed --posix -e d >/dev/null 2>&1; then
+    # Define sed as an alias.
+    # It is not always possible to use aliases. Aliases are guaranteed to work
+    # if the executing shell is bash and either it is invoked as /bin/sh or
+    # is a version >= 2.0, supporting shopt. This is the common case.
+    # Two other approaches (use of a variable $sed or of a function func_sed
+    # instead of an alias) require massive, fragile code changes.
+    # An other approach (use of function sed) requires `which sed` - but
+    # 'which' is hard to emulate, due to missing "test -x" on some platforms.
+    if test -n "$BASH_VERSION"; then
+      shopt -s expand_aliases >/dev/null 2>&1
+    fi
+    alias sed='sed --posix'
   fi
-  alias sed='sed --posix'
 fi
 
 # sed_noop is a sed expression that does nothing.
