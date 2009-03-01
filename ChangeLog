@@ -1,4 +1,12 @@
 2009-03-01  Eric Blake  <ebb9@byu.net>
+            Bruno Haible  <bruno@clisp.org>
+
+	* lib/wait-process.h (wait_subprocess): Describe effect of termsigp on
+	error messages.
+	* lib/wait-process.c (wait_subprocess): Omit error message about
+	deadly signal sent to the child of termsigp != NULL.
+
+2009-03-01  Eric Blake  <ebb9@byu.net>
 
 	* lib/wait-process.c (wait_subprocess): Remove unnecessary cast.
 

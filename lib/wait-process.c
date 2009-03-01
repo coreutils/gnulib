@@ -269,7 +269,7 @@ wait_subprocess (pid_t child, const char *progname,
       if (info.si_status == SIGPIPE && ignore_sigpipe)
 	return 0;
 # endif
-      if (exit_on_error || !null_stderr)
+      if (exit_on_error || (!null_stderr && termsigp == NULL))
 	error (exit_on_error ? EXIT_FAILURE : 0, 0,
 	       _("%s subprocess got fatal signal %d"),
 	       progname, info.si_status);
@@ -341,7 +341,7 @@ wait_subprocess (pid_t child, const char *progname,
       if (WTERMSIG (status) == SIGPIPE && ignore_sigpipe)
 	return 0;
 # endif
-      if (exit_on_error || !null_stderr)
+      if (exit_on_error || (!null_stderr && termsigp == NULL))
 	error (exit_on_error ? EXIT_FAILURE : 0, 0,
 	       _("%s subprocess got fatal signal %d"),
 	       progname, (int) WTERMSIG (status));

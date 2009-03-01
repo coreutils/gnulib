@@ -48,9 +48,10 @@ extern "C" {
      slave process.
    - If exit_on_error is true, any error will cause the main process to exit
      with an error status.
-   - If termsigp is not NULL, *termsig will be set to the signal that
+   - If termsigp is not NULL: *termsig will be set to the signal that
      terminated the subprocess (if supported by the platform: not on native
-     Windows platforms), otherwise 0.
+     Windows platforms), otherwise 0, and the error message about the signal
+     that terminated the subprocess will be omitted.
    Prerequisites: The signal handler for SIGCHLD should not be set to SIG_IGN,
    otherwise this function will not work.  */
 extern int wait_subprocess (pid_t child, const char *progname,
