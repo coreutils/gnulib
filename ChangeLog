@@ -1,3 +1,10 @@
+2009-03-01  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	Fix unportable awk script in vc-list-files.
+	* build-aux/vc-list-files: In the replacement awk script, use
+	substr with a second argument of 1, not zero.
+	Report by Simon Josefsson.
+
 2009-02-28  Bruno Haible  <bruno@clisp.org>
 
 	More support for FreeMiNT.
