@@ -1,6 +1,6 @@
 /* Provide a sys/socket header file for systems lacking it (read: MinGW)
    and for systems where it is incomplete.
-   Copyright (C) 2005-2008 Free Software Foundation, Inc.
+   Copyright (C) 2005-2009 Free Software Foundation, Inc.
    Written by Simon Josefsson.
 
    This program is free software; you can redistribute it and/or modify
@@ -256,7 +256,7 @@ extern int rpl_getsockname (int, struct sockaddr *, int *);
 #  if @HAVE_WINSOCK2_H@
 #   undef getsockopt
 #   define getsockopt		rpl_getsockopt
-extern int rpl_getsockopt (int, int, int, void *, int *);
+extern int rpl_getsockopt (int, int, int, void *, socklen_t *);
 #  endif
 # elif @HAVE_WINSOCK2_H@
 #  undef getsockopt
@@ -358,7 +358,7 @@ extern int rpl_sendto (int, const void *, int, int, struct sockaddr *, int);
 #  if @HAVE_WINSOCK2_H@
 #   undef setsockopt
 #   define setsockopt		rpl_setsockopt
-extern int rpl_setsockopt (int, int, int, const void *, int);
+extern int rpl_setsockopt (int, int, int, const void *, socklen_t);
 #  endif
 # elif @HAVE_WINSOCK2_H@
 #  undef setsockopt

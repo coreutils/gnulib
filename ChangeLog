@@ -1,5 +1,15 @@
 2009-03-01  Bruno Haible  <bruno@clisp.org>
 
+	Use socklen_t in the native Windows replacements prototypes.
+	* lib/sys_socket.in.h (rpl_getsockopt, rpl_setsockopt): Use socklen_t
+	instead of 'int'.
+	* lib/getsockopt.c (rpl_getsockopt): Likewise.
+	* lib/setsockopt.c (rpl_setsockopt): Likewise.
+	* modules/getsockopt (Depends-on): Add socklen.
+	* modules/setsockopt (Depends-on): Add socklen.
+
+2009-03-01  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (sed): Do alias as "sed --posix" if sed's version is at
 	least 4.2.
 

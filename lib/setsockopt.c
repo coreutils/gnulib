@@ -1,6 +1,6 @@
 /* setsockopt.c --- wrappers for Windows setsockopt function
 
-   Copyright (C) 2008 Free Software Foundation, Inc.
+   Copyright (C) 2008-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@
 #undef setsockopt
 
 int
-rpl_setsockopt (int fd, int level, int optname, const void *optval, int optlen)
+rpl_setsockopt (int fd, int level, int optname, const void *optval, socklen_t optlen)
 {
   int r;
   SOCKET sock = FD_TO_SOCKET (fd);
