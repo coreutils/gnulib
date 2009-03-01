@@ -1,3 +1,7 @@
+2009-03-01  Eric Blake  <ebb9@byu.net>
+
+	* lib/wait-process.c (wait_subprocess): Remove unnecessary cast.
+
 2009-03-01  Bruno Haible  <bruno@clisp.org>
 
 	Avoid a gcc warning.
