@@ -47,10 +47,15 @@ freading (FILE *fp)
   return ((fp->_Mode & 0x2 /* _MOPENW */) == 0
 	  || (fp->_Mode & 0x1000 /* _MREAD */) != 0);
 #elif defined __MINT__              /* Atari FreeMiNT */
-  return (!fp->__mode.__write
-	  || (fp->__mode.__read
-	      && (fp->__buffer < fp->__get_limit
-		  /*|| fp->__bufp == fp->__put_limit ??*/)));
+  if (!fp->__mode.__write)
+    return 1;
+  if (!fp->__mode.__read)
+    return 0;
+# ifdef _IO_CURRENTLY_GETTING /* Flag added on 2009-02-28 */
+  return (fp->__flags & _IO_CURRENTLY_GETTING) != 0;
+# else
+  return (fp->__buffer < fp->__get_limit /*|| fp->__bufp == fp->__put_limit ??*/);
+# endif
 #else
  #error "Please port gnulib freading.c to your platform!"
 #endif

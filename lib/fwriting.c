@@ -41,10 +41,15 @@ fwriting (FILE *fp)
   return ((fp->_Mode & 0x1 /* _MOPENR */) == 0
 	  || (fp->_Mode & 0x2000 /* _MWRITE */) != 0);
 #elif defined __MINT__              /* Atari FreeMiNT */
-  return (!fp->__mode.__read
-	  || (fp->__mode.__write
-	      && (fp->__buffer < fp->__put_limit
-		  /*|| fp->__bufp == fp->__get_limit ??*/)));
+  if (!fp->__mode.__read)
+    return 1;
+  if (!fp->__mode.__write)
+    return 0;
+# ifdef _IO_CURRENTLY_PUTTING /* Flag added on 2009-02-28 */
+  return (fp->__flags & _IO_CURRENTLY_PUTTING) != 0;
+# else
+  return (fp->__buffer < fp->__put_limit /*|| fp->__bufp == fp->__get_limit ??*/);
+# endif
 #else
  #error "Please port gnulib fwriting.c to your platform!"
 #endif
