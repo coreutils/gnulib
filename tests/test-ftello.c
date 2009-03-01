@@ -111,12 +111,14 @@ main (int argc, char **argv)
       ASSERT (ftello (stdin) == 2);
     }
 
+#if !defined __MINT__ /* FreeMiNT has problems seeking past end of file */
   /* Test ftell beyond end of file.  */
   ASSERT (fseek (stdin, 0, SEEK_END) == 0);
   ch = ftello (stdin);
   ASSERT (fseek (stdin, 10, SEEK_END) == 0);
   ASSERT (ftell (stdin) == ch + 10);
   ASSERT (ftello (stdin) == ch + 10);
+#endif
 
   return 0;
 }

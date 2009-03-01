@@ -1,5 +1,11 @@
 2009-02-28  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-freadseek.c (main): Disable test beyond end of file on FreeMiNT.
+	* tests/test-ftello.c (main): Likewise.
+	Patch by Alan Hourihane <alanh@fairlite.co.uk>.
+
+2009-02-28  Bruno Haible  <bruno@clisp.org>
+
 	Add tentative support for FreeMiNT.
 	* lib/fbufmode.c (fbufmode) [__MINT__]: Add conditional code.
 	* lib/fflush.c (clear_ungetc_buffer): Likewise.
