@@ -1,5 +1,5 @@
 /* Test of <sched.h> substitute.
-   Copyright (C) 2008 Free Software Foundation, Inc.
+   Copyright (C) 2008-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -23,8 +23,8 @@
 /* Check that 'struct sched_param' is defined.  */
 static struct sched_param a;
 
-/* Check that the SCHED_* macris are defined and compile-time constants.  */
-static int b[] = { SCHED_FIFO, SCHED_RR, SCHED_OTHER };
+/* Check that the SCHED_* macros are defined and compile-time constants.  */
+int b[] = { SCHED_FIFO, SCHED_RR, SCHED_OTHER };
 
 static int f1;
 
