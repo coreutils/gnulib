@@ -1,3 +1,11 @@
+2009-01-19  Martin Lambers  <marlam@marlam.de>
+
+	Provide POSIX semantics for socket timeout options on W32.
+	* lib/setsockopt.c: Convert struct timeval to milliseconds on W32.
+	* lib/getsockopt.c: Convert milliseconds to struct timeval on W32.
+	* modules/setsockopt: Depend on sys_time module for struct timeval.
+	* modules/getsockopt: Depend on sys_time module for struct timeval.
+
 2009-03-01  Simon Josefsson  <simon@josefsson.org>
 
 	* lib/gai_strerror.c (values): Use EAI_INPROGRESS instead of
