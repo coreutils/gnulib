@@ -117,6 +117,9 @@ rpl_fseeko (FILE *fp, off_t offset, int whence)
       fp->_flags &= ~_IOEOF;
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */
       fp->_flag &= ~_IOEOF;
+#elif defined __MINT__              /* Atari FreeMiNT */
+      fp->__offset = pos;
+      fp->__eof = 0;
 #endif
       /* If we were not requested to position beyond end of file, we're
 	 done.  */
