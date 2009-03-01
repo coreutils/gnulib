@@ -8,7 +8,6 @@
 
 	Add tentative support for FreeMiNT.
 	* lib/fbufmode.c (fbufmode) [__MINT__]: Add conditional code.
-	* lib/fflush.c (clear_ungetc_buffer): Likewise.
 	* lib/fpurge.c (fpurge): Likewise.
 	* lib/freadable.c (freadable): Likewise.
 	* lib/freading.c (freading): Likewise.
