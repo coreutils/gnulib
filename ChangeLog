@@ -1,3 +1,9 @@
+2009-03-01  Simon Josefsson  <simon@josefsson.org>
+
+	* lib/gai_strerror.c (values): Use EAI_INPROGRESS instead of
+	__USE_GNU, for consistency with netdb.in.h.
+	Reported by Alan Hourihane <alanh@fairlite.co.uk>.
+
 2009-03-01  Bruno Haible  <bruno@clisp.org>
 
 	More support for FreeMiNT.
