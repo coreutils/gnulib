@@ -1,3 +1,9 @@
+2009-03-01  Bruno Haible  <bruno@clisp.org>
+
+	More support for FreeMiNT.
+	* lib/fpurge.c (fpurge): Correct last commit.
+	Reported by Alan Hourihane <alanh@fairlite.co.uk>.
+
 2009-03-01  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	Fix unportable awk script in vc-list-files.

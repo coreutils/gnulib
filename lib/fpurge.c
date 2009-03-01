@@ -120,9 +120,14 @@ fpurge (FILE *fp)
       fp->__bufp = fp->__pushback_bufp;
       fp->__pushed_back = 0;
     }
+  /* Preserve the current file position.  */
+  if (fp->__target != -1)
+    fp->__target += fp->__bufp - fp->__buffer;
   fp->__bufp = fp->__buffer;
+  /* Nothing in the buffer, next getc is nontrivial.  */
   fp->__get_limit = fp->__bufp;
-  fp->__put_limit = fp->__bufp;
+  /* Nothing in the buffer, next putc is nontrivial.  */
+  fp->__put_limit = fp->__buffer;
   return 0;
 # else
  #error "Please port gnulib fpurge.c to your platform! Look at the definitions of fflush, setvbuf and ungetc on your system, then report this to bug-gnulib."
