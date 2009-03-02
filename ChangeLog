@@ -1,3 +1,10 @@
+2009-03-02  Jim Meyering  <meyering@redhat.com>
+
+	announce-gen: new option: --no-print-checksums
+	* build-aux/announce-gen (usage): Describe it.
+	(print_checksums): Print a newline here, not in the [*] footnote.
+	(main): Honor it.
+
 2009-03-01  Bruno Haible  <bruno@clisp.org>
 
 	Use socklen_t in the native Windows replacements prototypes.
