@@ -1,3 +1,8 @@
+2009-03-02  Bruno Haible  <bruno@clisp.org>
+
+	* doc/gnulib.texi (Exported Symbols of Shared Libraries): New section.
+	* doc/visibility.texi: Mention libtool's -export-symbols option.
+
 2009-03-02  Jim Meyering  <meyering@redhat.com>
 
 	announce-gen: new option: --no-print-checksums
