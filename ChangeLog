@@ -1,5 +1,9 @@
 2009-03-03  Bruno Haible  <bruno@clisp.org>
 
+	* doc/ld-version-script.texi: Update node reference.
+
+2009-03-03  Bruno Haible  <bruno@clisp.org>
+
 	* modules/visibility (License): Change to 'unlimited'.
 	Suggested by Simon Josefsson.
 
