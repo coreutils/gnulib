@@ -1,3 +1,8 @@
+2009-03-02  David Lutterkort  <lutter@redhat.com>
+
+	* lib/safe-alloc.h (__GNUC_PREREQ): New macro.
+	Reported by Tom G. Christensen <tgc@jupiterrise.com>.
+
 2009-03-02  Bruno Haible  <bruno@clisp.org>
 
 	* doc/gnulib.texi (Exported Symbols of Shared Libraries): New section.
