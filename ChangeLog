@@ -1,3 +1,9 @@
+2009-03-03  Jim Meyering  <meyering@redhat.com>
+
+	unlinkdir: cannot_unlink_dir may modify process state
+	* lib/unlinkdir.c (cannot_unlink_dir): Add a comment warning that
+	it's neither thread-safe nor appropriate for use in a library.
+
 2009-03-03  Eric Blake  <ebb9@byu.net>
 
 	test-closein: silence test under Darwin

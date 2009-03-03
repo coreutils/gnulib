@@ -1,6 +1,6 @@
 /* unlinkdir.c - determine (and maybe change) whether we can unlink directories
 
-   Copyright (C) 2005, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2005-2006, 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -30,7 +30,11 @@
 
 /* Return true if we cannot unlink directories, false if we might be
    able to unlink directories.  If possible, tell the kernel we don't
-   want to be able to unlink directories, so that we can return true.  */
+   want to be able to unlink directories, so that we can return true.
+
+   Note: this function may modify the process privilege set, to remove
+   the PRIV_SYS_LINKDIR privilege, so is neither thread-safe, nor
+   appropriate for use in a library.  */
 
 bool
 cannot_unlink_dir (void)
