@@ -1,3 +1,8 @@
+2009-03-03  Bruno Haible  <bruno@clisp.org>
+
+	* modules/visibility (License): Change to 'unlimited'.
+	Suggested by Simon Josefsson.
+
 2009-03-03  Jim Meyering  <meyering@redhat.com>
 
 	unlinkdir: cannot_unlink_dir may modify process state
