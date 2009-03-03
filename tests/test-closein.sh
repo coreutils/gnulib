@@ -16,10 +16,10 @@ cmp ${p}out1.tmp ${p}in.tmp || exit 1
 (./test-closein${EXEEXT} consume; cat) < ${p}in.tmp > ${p}out2.tmp || exit 1
 cmp ${p}out2.tmp ${p}xout.tmp || exit 1
 
-# Test for lack of error on pipe
-cat ${p}in.tmp | ./test-closein${EXEEXT} || exit 1
+# Test for lack of error on pipe.  Ignore any EPIPE failures from cat.
+cat ${p}in.tmp 2>/dev/null | ./test-closein${EXEEXT} || exit 1
 
-cat ${p}in.tmp | ./test-closein${EXEEXT} consume || exit 1
+cat ${p}in.tmp 2>/dev/null | ./test-closein${EXEEXT} consume || exit 1
 
 # Test for lack of error when nothing is read
 ./test-closein${EXEEXT} </dev/null || exit 1

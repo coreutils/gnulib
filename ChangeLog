@@ -1,3 +1,9 @@
+2009-03-03  Eric Blake  <ebb9@byu.net>
+
+	test-closein: silence test under Darwin
+	* tests/test-closein.sh: Ignore stderr from cat, since we don't
+	care if it dies from EPIPE or EBADF.
+
 2009-03-03  Bruno Haible  <bruno@clisp.org>
 
 	* doc/gnulib.texi: Include visibility.texi and ld-version-script.texi
