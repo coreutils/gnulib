@@ -1,3 +1,6 @@
+@node visibility
+@section visibility
+
 @c Documentation of gnulib module 'visibility'.
 
 @c Copyright (C) 2005-2006, 2009 Free Software Foundation, Inc.

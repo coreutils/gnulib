@@ -1,3 +1,12 @@
+2009-03-03  Simon Josefsson  <simon@josefsson.org>
+
+	* doc/gnulib.texi: Link to sections for ld version script and
+	visibility.
+	* doc/visibility.texi: Add @node and @section.
+	* modules/ld-version-script: New module.
+	* m4/ld-version-script.m4: New file.
+	* doc/ld-version-script.texi: New file.
+
 2009-03-02  David Lutterkort  <lutter@redhat.com>
 
 	* lib/safe-alloc.h (__GNUC_PREREQ): New macro.
