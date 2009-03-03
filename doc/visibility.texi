@@ -102,7 +102,7 @@ of shared libraries.
 The gnulib autoconf macro @code{gl_VISIBILITY} tests for GCC 4.0 or newer.
 It defines a Makefile variable @code{@@CFLAG_VISIBILITY@@} containing
 @samp{-fvisibility=hidden} or nothing. It also defines as a C macro and
-as a Makefile variable: @@HAVE_VISIBILITY@@. Its value is 1 when symbol
+as a substituted variable: @@HAVE_VISIBILITY@@. Its value is 1 when symbol
 visibility control is supported, and 0 otherwise.
 
 To use this module in a library, say libfoo, you will do these steps:
@@ -120,7 +120,7 @@ for the compilation of the sources that make up the library.
 @item
 Define a macro specific to your library like this.
 @smallexample
-#if @@HAVE_VISIBILITY@@ && BUILDING_LIBFOO
+#if BUILDING_LIBFOO && HAVE_VISIBILITY
 #define LIBFOO_DLL_EXPORTED __attribute__((__visibility__("default")))
 #else
 #define LIBFOO_DLL_EXPORTED
@@ -148,9 +148,9 @@ your library.
 Note about other compilers: MSVC support can be added easily, by extending
 the definition of the macro mentioned above, to something like this:
 @smallexample
-#if @@HAVE_VISIBILITY@@ && BUILDING_LIBFOO
+#if BUILDING_LIBFOO && HAVE_VISIBILITY
 #define LIBFOO_DLL_EXPORTED __attribute__((__visibility__("default")))
-#elif defined _MSC_VER && BUILDING_LIBFOO
+#elif BUILDING_LIBFOO && defined _MSC_VER
 #define LIBFOO_DLL_EXPORTED __declspec(dllexport)
 #elif defined _MSC_VER
 #define LIBFOO_DLL_EXPORTED __declspec(dllimport)

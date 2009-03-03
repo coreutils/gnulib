@@ -1,5 +1,8 @@
 2009-03-03  Bruno Haible  <bruno@clisp.org>
 
+	* doc/visibility.texi: Recommend to use HAVE_VISIBILITY as a C macro.
+	Reported by Simon Josefsson.
+
 	* doc/ld-version-script.texi: Update node reference.
 
 2009-03-03  Bruno Haible  <bruno@clisp.org>
