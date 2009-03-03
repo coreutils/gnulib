@@ -1,5 +1,5 @@
-@node visibility
-@section visibility
+@node Exported Symbols of Shared Libraries
+@section Controlling the Exported Symbols of Shared Libraries
 
 @c Documentation of gnulib module 'visibility'.
 

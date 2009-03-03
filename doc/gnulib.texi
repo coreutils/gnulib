@@ -5821,12 +5821,12 @@ This list of functions is sorted according to the header that declares them.
 * gcd::
 * Regular expressions::
 * Searching for Libraries::
+* Exported Symbols of Shared Libraries::
+* LD Version Scripts::
 * Supporting Relocation::
 * func::
 * warnings::
 * manywarnings::
-* visibility::
-* LD Version Scripts::
 @end menu
 
 @node alloca
@@ -5911,6 +5911,10 @@ generated automatically.
 
 @include havelib.texi
 
+@include visibility.texi
+
+@include ld-version-script.texi
+
 @include relocatable-maint.texi
 
 @include func.texi
@@ -5918,10 +5922,6 @@ generated automatically.
 @include warnings.texi
 
 @include manywarnings.texi
-
-@include visibility.texi
-
-@include ld-version-script.texi
 
 @node GNU Free Documentation License
 @appendix GNU Free Documentation License

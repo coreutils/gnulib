@@ -1,3 +1,9 @@
+2009-03-03  Bruno Haible  <bruno@clisp.org>
+
+	* doc/gnulib.texi: Include visibility.texi and ld-version-script.texi
+	earlier.
+	* doc/visibility.texi: Fix @node and @section.
+
 2009-03-03  Simon Josefsson  <simon@josefsson.org>
 
 	* doc/gnulib.texi: Link to sections for ld version script and
@@ -14,7 +20,6 @@
 
 2009-03-02  Bruno Haible  <bruno@clisp.org>
 
-	* doc/gnulib.texi (Exported Symbols of Shared Libraries): New section.
 	* doc/visibility.texi: Mention libtool's -export-symbols option.
 
 2009-03-02  Jim Meyering  <meyering@redhat.com>
