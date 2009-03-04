@@ -1,3 +1,10 @@
+2009-03-04  Bruno Haible  <bruno@clisp.org>
+
+	* modules/visibility (Makefile.am): Augment AM_CFLAGS.
+	* gnulib-tool (func_emit_lib_Makefile_am): Emit initialization of
+	AM_CFLAGS.
+	Reported by Simon Josefsson.
+
 2009-03-03  Bruno Haible  <bruno@clisp.org>
 
 	* doc/visibility.texi: Recommend to use HAVE_VISIBILITY as a C macro.

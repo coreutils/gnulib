@@ -1932,6 +1932,7 @@ func_emit_lib_Makefile_am ()
   if test -z "$makefile_name"; then
     echo
     echo "AM_CPPFLAGS ="
+    echo "AM_CFLAGS ="
   fi
   echo
   if LC_ALL=C grep "^[a-zA-Z0-9_]*_${perhapsLT}LIBRARIES *+\{0,1\}= *$libname\\.$libext\$" allsnippets.tmp > /dev/null; then
