@@ -124,8 +124,8 @@ verrevcmp (const char *s1, size_t s1_len, const char *s2, size_t s2_len)
 int
 filevercmp (const char *s1, const char *s2)
 {
-  const char *s1_pos = s1;
-  const char *s2_pos = s2;
+  const char *s1_pos;
+  const char *s2_pos;
   const char *s1_suffix, *s2_suffix;
   size_t s1_len, s2_len;
   int result;
@@ -135,7 +135,18 @@ filevercmp (const char *s1, const char *s2)
   if (simple_cmp == 0)
     return 0;
 
+  /* handle hidden files */
+  while (*s1 == '.' || *s2 == '.')
+    {
+      if (*s1 != *s2)
+	return *s1 - *s2;
+      s1++;
+      s2++;
+    }
+
   /* "cut" file suffixes */
+  s1_pos = s1;
+  s2_pos = s2;
   s1_suffix = match_suffix (&s1_pos);
   s2_suffix = match_suffix (&s2_pos);
   s1_len = (s1_suffix ? s1_suffix : s1_pos) - s1;

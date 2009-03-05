@@ -37,6 +37,16 @@
 /* set of well sorted examples */
 static const char *const examples[] =
 {
+  ".",
+  "..",
+  ".a~",
+  ".a",
+  ".b~",
+  ".b",
+  "a~",
+  "a",
+  "b~",
+  "b",
   "gcc-c++-10.fc9.tar.gz",
   "gcc-c++-10.8.12-0.7rc2.fc9.tar.bz2",
   "glibc-2-0.1.beta1.fc10.rpm",
