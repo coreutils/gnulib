@@ -1,7 +1,7 @@
 #! /bin/sh
 # depcomp - compile a program generating dependencies as side-effects
 
-scriptversion=2009-03-03.11
+scriptversion=2009-03-04.20
 
 # Copyright (C) 1999, 2000, 2003, 2004, 2005, 2006, 2007, 2009 Free
 # Software Foundation, Inc.
@@ -199,14 +199,14 @@ sgi)
 ' < "$tmpdepfile" \
     | sed -e 's/^.*\.o://' -e 's/#.*$//' -e '/^$/ d' | \
     tr '
-' ' ' >> $depfile
-    echo >> $depfile
+' ' ' >> "$depfile"
+    echo >> "$depfile"
 
     # The second pass generates a dummy entry for each header file.
     tr ' ' '
 ' < "$tmpdepfile" \
    | sed -e 's/^.*\.o://' -e 's/#.*$//' -e '/^$/ d' -e 's/$/:/' \
-   >> $depfile
+   >> "$depfile"
   else
     # The sourcefile does not contain any dependencies, so just
     # store a dummy comment line, to avoid errors with the Makefile
@@ -335,7 +335,12 @@ hp2)
   if test -f "$tmpdepfile"; then
     sed -e "s,^.*\.[a-z]*:,$object:," "$tmpdepfile" > "$depfile"
     # Add `dependent.h:' lines.
-    sed -ne '2,${; s/^ *//; s/ \\*$//; s/$/:/; p;}' "$tmpdepfile" >> "$depfile"
+    sed -ne '2,${
+	       s/^ *//
+	       s/ \\*$//
+	       s/$/:/
+	       p
+	     }' "$tmpdepfile" >> "$depfile"
   else
     echo "#dummy" > "$depfile"
   fi
@@ -411,7 +416,7 @@ dashmstdout)
 
   # Remove the call to Libtool.
   if test "$libtool" = yes; then
-    while test $1 != '--mode=compile'; do
+    while test "X$1" != 'X--mode=compile'; do
       shift
     done
     shift
@@ -462,7 +467,7 @@ makedepend)
   "$@" || exit $?
   # Remove any Libtool call
   if test "$libtool" = yes; then
-    while test $1 != '--mode=compile'; do
+    while test "X$1" != 'X--mode=compile'; do
       shift
     done
     shift
@@ -470,7 +475,8 @@ makedepend)
   # X makedepend
   shift
   cleared=no
-  for arg in "$@"; do
+  for arg
+  do
     case $cleared in
     no)
       set ""; shift
@@ -487,7 +493,7 @@ makedepend)
       set fnord "$@" "$arg"; shift ;;
     esac
   done
-  obj_suffix="`echo $object | sed 's/^.*\././'`"
+  obj_suffix=`echo "$object" | sed 's/^.*\././'`
   touch "$tmpdepfile"
   ${MAKEDEPEND-makedepend} -o"$obj_suffix" -f"$tmpdepfile" "$@"
   rm -f "$depfile"
@@ -507,7 +513,7 @@ cpp)
 
   # Remove the call to Libtool.
   if test "$libtool" = yes; then
-    while test $1 != '--mode=compile'; do
+    while test "X$1" != 'X--mode=compile'; do
       shift
     done
     shift
@@ -550,7 +556,7 @@ msvisualcpp)
 
   # Remove the call to Libtool.
   if test "$libtool" = yes; then
-    while test $1 != '--mode=compile'; do
+    while test "X$1" != 'X--mode=compile'; do
       shift
     done
     shift
