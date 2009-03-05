@@ -1,3 +1,9 @@
+2009-03-05  Bruno Haible  <bruno@clisp.org>
+
+	* tests/test-ftell.c (main): Disable test beyond end of file on
+	FreeMiNT.
+	Patch by Alan Hourihane <alanh@fairlite.co.uk>.
+
 2009-03-05  Kamil Dudka  <kdudka@redhat.com>
 
 	* lib/filevercmp.c: Move hidden files up in ordering.
