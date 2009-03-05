@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 # Generate a release announcement message.
 
-my $VERSION = '2009-03-02 07:45'; # UTC
+my $VERSION = '2009-03-05 09:52'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -34,6 +34,7 @@ use POSIX qw(strftime);
 (my $ME = $0) =~ s|.*/||;
 
 my %valid_release_types = map {$_ => 1} qw (alpha beta major);
+my @archive_suffixes = ('tar.gz', 'tar.bz2', 'tar.lzma', 'tar.xz');
 
 END
 {
@@ -97,6 +98,7 @@ The following are optional:
                                 in the gnulib source directory.
                                 required if gnulib is in TOOL_LIST.
    --no-print-checksums         do not emit MD5 or SHA1 checksums
+   --archive-suffix=SUF         add SUF to the list of archive suffixes
 
    --help             display this help and exit
    --version          output version information and exit
@@ -391,6 +393,7 @@ sub get_tool_versions ($$)
      'bootstrap-tools=s'  => \$bootstrap_tools,
      'gnulib-version=s'   => \$gnulib_version,
      'print-checksums!'   => \$print_checksums_p,
+     'archive-suffix=s'   => \@archive_suffixes,
 
      help => sub { usage 0 },
      version => sub { print "$ME version $VERSION\n"; exit },
@@ -428,16 +431,14 @@ sub get_tool_versions ($$)
     and usage 1;
 
   my $my_distdir = "$package_name-$curr_version";
-  my $tgz = "$my_distdir.tar.gz";
-  my $tbz = "$my_distdir.tar.bz2";
-  my $lzma = "$my_distdir.tar.lzma";
-  my $xz = "$my_distdir.tar.xz";
 
   my $xd = "$package_name-$prev_version-$curr_version.xdelta";
 
-  my @tarballs = grep {-f $_} ($tgz, $tbz, $lzma, $xz);
+  my @candidates = map { "$my_distdir.$_" } @archive_suffixes;
+  my @tarballs = grep {-f $_} @candidates;
+
   @tarballs
-    or die "$ME: none of $tgz, $tbz, $lzma or $xz were found\n";
+    or die "$ME: none of " . join(', ', @candidates) . " were found\n";
   my @sizable = @tarballs;
   -f $xd
     and push @sizable, $xd;
@@ -475,7 +476,7 @@ the corresponding file (without the .sig suffix) is intact.  First,
 be sure to download both the .sig file and the corresponding tarball.
 Then, run a command like this:
 
-  gpg --verify $tgz.sig
+  gpg --verify $tarballs[0].sig
 
 If that command fails because you don't have the required public key,
 then run this command to import it:
