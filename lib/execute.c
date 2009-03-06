@@ -154,14 +154,16 @@ execute (const char *progname,
        copy of the environment block - ignoring the effects of putenv() and
        [un]setenv().  */
     {
-      exitcode = spawnvpe (P_WAIT, prog_path, prog_argv, environ);
+      exitcode = spawnvpe (P_WAIT, prog_path, (const char **) prog_argv,
+			   (const char **) environ);
       if (exitcode < 0 && errno == ENOEXEC)
 	{
 	  /* prog is not an native executable.  Try to execute it as a
 	     shell script.  Note that prepare_spawn() has already prepended
 	     a hidden element "sh.exe" to prog_argv.  */
 	  --prog_argv;
-	  exitcode = spawnvpe (P_WAIT, prog_argv[0], prog_argv, environ);
+	  exitcode = spawnvpe (P_WAIT, prog_argv[0], (const char **) prog_argv,
+			       (const char **) environ);
 	}
     }
   if (nulloutfd >= 0)
