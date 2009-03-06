@@ -1,5 +1,5 @@
 /* Auxiliary functions for the creation of subprocesses.  Native Woe32 API.
-   Copyright (C) 2003, 2006-2008 Free Software Foundation, Inc.
+   Copyright (C) 2003, 2006-2009 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software: you can redistribute it and/or modify
@@ -45,7 +45,7 @@ dup_noinherit (int fd)
 			FALSE,			    /* InheritHandle */
 			DUPLICATE_SAME_ACCESS))	    /* Options */
     error (EXIT_FAILURE, 0, _("DuplicateHandle failed with error code 0x%08x"),
-	   GetLastError ());
+	   (unsigned int) GetLastError ());
 
   nfd = _open_osfhandle ((long) new_handle, O_BINARY);
   if (nfd < 0)
