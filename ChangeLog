@@ -1,5 +1,9 @@
 2009-03-06  Bruno Haible  <bruno@clisp.org>
 
+	New module 'uninorm/u16-normcmp'.
+	* lib/uninorm/u16-normcmp.c: New file.
+	* modules/uninorm/u16-normcmp: New file.
+
 	New module 'uninorm/u8-normcmp'.
 	* lib/uninorm.h (u8_normcmp, u16_normcmp, u32_normcmp): New
 	declarations.
