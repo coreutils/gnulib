@@ -20,8 +20,17 @@ unistd
 sys_wait
 
 configure.ac:
+AC_EGREP_CPP([notposix], [[
+#if defined _MSC_VER || defined __MINGW32__
+  notposix
+#endif
+  ]],
+  [posix_spawn_ported=no],
+  [posix_spawn_ported=yes])
+AM_CONDITIONAL([POSIX_SPAWN_PORTED], [test $posix_spawn_ported = yes])
 
 Makefile.am:
+if POSIX_SPAWN_PORTED
 TESTS += test-posix_spawn1 test-posix_spawn2
 check_PROGRAMS += test-posix_spawn1 test-posix_spawn2
 
@@ -36,3 +45,4 @@ test-posix_spawn2.sh: test-posix_spawn2.in.sh
 	cp $(srcdir)/test-posix_spawn2.in.sh $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += test-posix_spawn2.sh test-posix_spawn2.sh-t
+endif

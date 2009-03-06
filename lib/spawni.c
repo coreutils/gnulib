@@ -1,5 +1,5 @@
 /* Guts of POSIX spawn interface.  Generic POSIX.1 version.
-   Copyright (C) 2000-2005, 2006, 2008 Free Software Foundation, Inc.
+   Copyright (C) 2000-2006, 2008-2009 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This program is free software: you can redistribute it and/or modify
@@ -87,6 +87,22 @@
    available methods.  The committee chose to signal an error by a
    normal program exit with the exit code 127.  */
 #define SPAWN_ERROR	127
+
+
+#if defined _MSC_VER || defined __MINGW32__
+
+/* Native Woe32 API.  */
+int
+__spawni (pid_t *pid, const char *file,
+	  const posix_spawn_file_actions_t *file_actions,
+	  const posix_spawnattr_t *attrp, char *const argv[],
+	  char *const envp[], int use_path)
+{
+  /* Not yet implemented.  */
+  return ENOSYS;
+}
+
+#else
 
 
 /* The file is accessible but it is not an executable file.  Invoke
@@ -354,3 +370,5 @@ __spawni (pid_t *pid, const char *file,
   /* Return with an error.  */
   _exit (SPAWN_ERROR);
 }
+
+#endif

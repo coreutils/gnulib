@@ -1,4 +1,15 @@
 2009-03-06  Eric Blake  <ebb9@byu.net>
+            Bruno Haible  <bruno@clisp.org>
+
+	* lib/spawni.c (__spawni) [WIN32_NATIVE]: Define as a stub.
+	* modules/posix_spawn-tests (configure.ac): Define POSIX_SPAWN_PORTED
+	condition.
+	(Makefile.am): Do nothing if POSIX_SPAWN_PORTED is false.
+	* modules/posix_spawnp-tests (configure.ac): Define POSIX_SPAWN_PORTED
+	condition.
+	(Makefile.am): Do nothing if POSIX_SPAWN_PORTED is false.
+
+2009-03-06  Eric Blake  <ebb9@byu.net>
 
 	* lib/execute.c (execute) [WIN32_NATIVE]: Cast arguments of spawnvpe,
 	to avoid compiler warnings.
