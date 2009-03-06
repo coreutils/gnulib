@@ -1,0 +1,14 @@
+Files:
+tests/uninorm/test-u8-normcmp.c
+
+Depends-on:
+uninorm/u8-normcmp
+uninorm/nfd
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-u8-normcmp
+check_PROGRAMS += test-u8-normcmp
+test_u8_normcmp_SOURCES = uninorm/test-u8-normcmp.c
+
