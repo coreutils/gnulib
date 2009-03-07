@@ -1,5 +1,24 @@
 2009-03-07  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'uninorm/decomposing-form'.
+	* modules/uninorm/decomposing-form-tests: New file.
+	* tests/uninorm/test-decomposing-form.c: New file.
+
+	New module 'uninorm/decomposing-form'.
+	* lib/uninorm.h (uninorm_decomposing_form): New declaration.
+	* lib/uninorm/normalize-internal.h (struct unicode_normalization_form):
+	Add 'decomposing_variant' field.
+	* lib/uninorm/decomposing-form.c: New file.
+	* lib/uninorm/nfc.c (uninorm_nfc): Update.
+	* lib/uninorm/nfd.c (uninorm_nfd): Update.
+	* lib/uninorm/nfkc.c (uninorm_nfkc): Update.
+	* lib/uninorm/nfkd.c (uninorm_nfkd): Update.
+	* modules/uninorm/decomposing-form: New file.
+	* modules/uninorm/nfc (Depends-on): Add uninorm/nfd.
+	* modules/uninorm/nfkc (Depends-on): Add uninorm/nfkd.
+
+2009-03-07  Bruno Haible  <bruno@clisp.org>
+
 	* lib/uninorm/u-normcmp.h (FUNC): Use stack=allocated buffers for small
 	strings.
 
