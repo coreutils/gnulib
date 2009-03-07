@@ -1,5 +1,17 @@
 2009-03-07  Bruno Haible  <bruno@clisp.org>
 
+	* tests/uninorm/test-u8-normcmp.h: New file, extracted from
+	tests/uninorm/test-u8-normcmp.c.
+	* tests/uninorm/test-u8-normcmp.c: Include it.
+	(test_nonascii): New function, extracted from main. Add some more
+	tests.
+	(main): Invoke test_ascii and test_nonascii.
+	* modules/uninorm/u8-normcmp-tests (Files): Add
+	tests/uninorm/test-u8-normcmp.h.
+	(Depends-on): Remove uninorm/u8-normcmp.
+
+2009-03-07  Bruno Haible  <bruno@clisp.org>
+
 	New module 'uninorm/u32-normcoll'.
 	* lib/uninorm/u32-normcoll.c: New file.
 	* modules/uninorm/u32-normcoll: New file.
