@@ -1,5 +1,9 @@
 2009-03-07  Bruno Haible  <bruno@clisp.org>
 
+	New module 'uninorm/u32-normxfrm'.
+	* lib/uninorm/u32-normxfrm.c: New file.
+	* modules/uninorm/u32-normxfrm: New file.
+
 	New module 'uninorm/u16-normxfrm'.
 	* lib/uninorm/u16-normxfrm.c: New file.
 	* modules/uninorm/u16-normxfrm: New file.
