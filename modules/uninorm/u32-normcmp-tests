@@ -1,8 +1,8 @@
 Files:
 tests/uninorm/test-u32-normcmp.c
+tests/uninorm/test-u32-normcmp.h
 
 Depends-on:
-uninorm/u32-normcmp
 uninorm/nfd
 
 configure.ac:
