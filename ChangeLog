@@ -1,5 +1,9 @@
 2009-03-07  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'uninorm/u16-normcoll'.
+	* modules/uninorm/u16-normcoll-tests: New file.
+	* tests/uninorm/test-u16-normcoll.c: New file.
+
 	Tests for module 'uninorm/u8-normcoll'.
 	* modules/uninorm/u8-normcoll-tests: New file.
 	* tests/uninorm/test-u8-normcoll.c: New file.
