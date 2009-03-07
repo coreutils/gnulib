@@ -1,5 +1,11 @@
 2009-03-07  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'uninorm/u8-normcoll'.
+	* modules/uninorm/u8-normcoll-tests: New file.
+	* tests/uninorm/test-u8-normcoll.c: New file.
+
+2009-03-07  Bruno Haible  <bruno@clisp.org>
+
 	* tests/uninorm/test-u32-normcmp.h: New file, extracted from
 	tests/uninorm/test-u32-normcmp.c.
 	* tests/uninorm/test-u32-normcmp.c: Include it.
