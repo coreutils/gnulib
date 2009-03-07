@@ -1,4 +1,4 @@
-/* Normalization insensitive comparison of UTF-8 strings.
+/* Normalization insensitive comparison of Unicode strings.
    Copyright (C) 2009 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2009.
 
@@ -19,6 +19,8 @@ int
 FUNC (const UNIT *s1, size_t n1, const UNIT *s2, size_t n2,
       uninorm_t nf, int *result)
 {
+  UNIT buf1[2048 / sizeof (UNIT)];
+  UNIT buf2[2048 / sizeof (UNIT)];
   UNIT *norms1;
   size_t norms1_length;
   UNIT *norms2;
@@ -26,16 +28,19 @@ FUNC (const UNIT *s1, size_t n1, const UNIT *s2, size_t n2,
   int cmp;
 
   /* Normalize S1.  */
-  norms1 = U_NORMALIZE (nf, s1, n1, NULL, &norms1_length);
+  norms1_length = sizeof (buf1) / sizeof (UNIT);
+  norms1 = U_NORMALIZE (nf, s1, n1, buf1, &norms1_length);
   if (norms1 == NULL)
     return errno;
 
   /* Normalize S2.  */
-  norms2 = U_NORMALIZE (nf, s2, n2, NULL, &norms2_length);
+  norms2_length = sizeof (buf2) / sizeof (UNIT);
+  norms2 = U_NORMALIZE (nf, s2, n2, buf2, &norms2_length);
   if (norms2 == NULL)
     {
       int saved_errno = errno;
-      free (norms1);
+      if (norms1 != buf1)
+	free (norms1);
       return saved_errno;
     }
 
@@ -53,8 +58,10 @@ FUNC (const UNIT *s1, size_t n1, const UNIT *s2, size_t n2,
   else if (cmp < 0)
     cmp = -1;
 
-  free (norms2);
-  free (norms1);
+  if (norms2 != buf2)
+    free (norms2);
+  if (norms1 != buf1)
+    free (norms1);
   *result = cmp;
   return 0;
 }
