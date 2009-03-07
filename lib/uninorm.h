@@ -179,6 +179,22 @@ extern char *
 		     char *resultbuf, size_t *lengthp);
 
 
+/* Compare S1 and S2, ignoring differences in normalization, using the
+   collation rules of the current locale.
+   NF must be either UNINORM_NFC or UNINORM_NFKC.
+   If successful, set *RESULT to -1 if S1 < S2, 0 if S1 = S2, 1 if S1 > S2, and
+   return 0.  Upon failure, return the error number.  */
+extern int
+       u8_normcoll (const uint8_t *s1, size_t n1, const uint8_t *s2, size_t n2,
+		    uninorm_t nf, int *result);
+extern int
+       u16_normcoll (const uint16_t *s1, size_t n1, const uint16_t *s2, size_t n2,
+		     uninorm_t nf, int *result);
+extern int
+       u32_normcoll (const uint32_t *s1, size_t n1, const uint32_t *s2, size_t n2,
+		     uninorm_t nf, int *result);
+
+
 /* Normalization of a stream of Unicode characters.
 
    A "stream of Unicode characters" is essentially a function that accepts an
