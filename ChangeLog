@@ -1,5 +1,12 @@
 2009-03-07  Bruno Haible  <bruno@clisp.org>
 
+	New module 'memcmp2'.
+	* lib/memcmp2.h: New file.
+	* lib/memcmp2.c: New file.
+	* modules/memcmp2: New file.
+
+2009-03-07  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'uninorm/decomposing-form'.
 	* modules/uninorm/decomposing-form-tests: New file.
 	* tests/uninorm/test-decomposing-form.c: New file.
