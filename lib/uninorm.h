@@ -145,7 +145,7 @@ extern uint32_t *
 		      uint32_t *resultbuf, size_t *lengthp);
 
 
-/* Compare S1 and S2, ignoring normalization.
+/* Compare S1 and S2, ignoring differences in normalization.
    NF must be either UNINORM_NFD or UNINORM_NFKD.
    If successful, set *RESULT to -1 if S1 < S2, 0 if S1 = S2, 1 if S1 > S2, and
    return 0.  Upon failure, return the error number.  */
