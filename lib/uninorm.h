@@ -164,6 +164,21 @@ extern int
 		    uninorm_t nf, int *result);
 
 
+/* Converts the string S of length N to a string in locale encoding, in such a
+   way that comparing uN_normxfrm (S1) and uN_normxfrm (S2) with memcmp2() is
+   equivalent to comparing S1 and S2 with uN_normcoll().
+   NF must be either UNINORM_NFC or UNINORM_NFKC.  */
+extern char *
+       u8_normxfrm (const uint8_t *s, size_t n, uninorm_t nf,
+		    char *resultbuf, size_t *lengthp);
+extern char *
+       u16_normxfrm (const uint16_t *s, size_t n, uninorm_t nf,
+		     char *resultbuf, size_t *lengthp);
+extern char *
+       u32_normxfrm (const uint32_t *s, size_t n, uninorm_t nf,
+		     char *resultbuf, size_t *lengthp);
+
+
 /* Normalization of a stream of Unicode characters.
 
    A "stream of Unicode characters" is essentially a function that accepts an

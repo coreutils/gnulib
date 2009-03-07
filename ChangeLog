@@ -1,5 +1,14 @@
 2009-03-07  Bruno Haible  <bruno@clisp.org>
 
+	New module 'uninorm/u8-normxfrm'.
+	* lib/uninorm.h (u8_normxfrm, u16_normxfrm, u32_normxfrm): New
+	declarations.
+	* lib/uninorm/u8-normxfrm.c: New file.
+	* lib/uninorm/u-normxfrm.h: New file.
+	* modules/uninorm/u8-normxfrm: New file.
+
+2009-03-07  Bruno Haible  <bruno@clisp.org>
+
 	* modules/uninorm/u8-normcmp (Depends-on): Add uninorm/base.
 	* modules/uninorm/u16-normcmp (Depends-on): Likewise.
 	* modules/uninorm/u32-normcmp (Depends-on): Likewise.

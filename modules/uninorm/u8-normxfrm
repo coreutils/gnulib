@@ -1,0 +1,28 @@
+Description:
+Locale dependent transformation for comparison of UTF-8 strings.
+
+Files:
+lib/uninorm/u8-normxfrm.c
+lib/uninorm/u-normxfrm.h
+
+Depends-on:
+uninorm/base
+uninorm/u8-normalize
+uniconv/u8-conv-to-enc
+localcharset
+memxfrm
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += uninorm/u8-normxfrm.c
+
+Include:
+"uninorm.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
