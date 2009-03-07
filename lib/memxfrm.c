@@ -25,7 +25,7 @@
 #include <string.h>
 
 char *
-memxfrm (char *s, size_t n, size_t *lengthp)
+memxfrm (char *s, size_t n, char *resultbuf, size_t *lengthp)
 {
   /* Result accumulator.  */
   char *result;
@@ -35,10 +35,18 @@ memxfrm (char *s, size_t n, size_t *lengthp)
   char orig_sentinel;
 
   /* Initial memory allocation.  */
-  allocated = (n > 0 ? n : 1);
-  result = (char *) malloc (allocated);
-  if (result == NULL)
-    goto out_of_memory_2;
+  if (resultbuf != NULL && *lengthp > 0)
+    {
+      result = resultbuf;
+      allocated = *lengthp;
+    }
+  else
+    {
+      allocated = (n > 0 ? n : 1);
+      result = (char *) malloc (allocated);
+      if (result == NULL)
+	goto out_of_memory_2;
+    }
   length = 0;
 
   /* Add sentinel.byte.  */
@@ -72,7 +80,12 @@ memxfrm (char *s, size_t n, size_t *lengthp)
 		char *new_result;
 
 		allocated = 2 * allocated;
-		new_result = (char *) realloc (result, allocated);
+		if (allocated < 64)
+		  allocated = 64;
+		if (result == resultbuf)
+		  new_result = (char *) malloc (allocated);
+		else
+		  new_result = (char *) realloc (result, allocated);
 		if (new_result == NULL)
 		  goto out_of_memory_1;
 		result = new_result;
@@ -93,7 +106,7 @@ memxfrm (char *s, size_t n, size_t *lengthp)
   }
 
   /* Shrink the allocated memory if possible.  */
-  if ((length > 0 ? length : 1) < allocated)
+  if (result != resultbuf && (length > 0 ? length : 1) < allocated)
     {
       char *memory = (char *) realloc (result, length > 0 ? length : 1);
       if (memory != NULL)
@@ -107,14 +120,16 @@ memxfrm (char *s, size_t n, size_t *lengthp)
  fail:
   {
     int saved_errno = errno;
-    free (result);
+    if (result != resultbuf)
+      free (result);
     s[n] = orig_sentinel;
     errno = saved_errno;
     return NULL;
   }
 
  out_of_memory_1:
-  free (result);
+  if (result != resultbuf)
+    free (result);
   s[n] = orig_sentinel;
  out_of_memory_2:
   errno = ENOMEM;

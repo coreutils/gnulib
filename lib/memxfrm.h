@@ -33,10 +33,12 @@ extern "C" {
    restored before this function returns.
    The result of this function depends on the LC_COLLATE category of the
    current locale.
-   If successful, return the freshly allocated transformed string and set
-   *LENGTHP to its length,
+   If successful: If resultbuf is not NULL and the result fits into *lengthp
+   bytes, it is put in resultbuf, and resultbuf is returned.  Otherwise, a
+   freshly allocated string is returned.  In both cases, *lengthp is set to the
+   length of the returned string.
    Upon failure, return NULL, with errno set.  */
-extern char * memxfrm (char *s, size_t n, size_t *lengthp);
+extern char * memxfrm (char *s, size_t n, char *resultbuf, size_t *lengthp);
 
 
 #ifdef __cplusplus
