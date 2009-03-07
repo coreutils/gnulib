@@ -1,0 +1,22 @@
+Description:
+Locale dependent memory area transformation for comparison.
+
+Files:
+lib/memxfrm.h
+lib/memxfrm.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += memxfrm.c
+
+Include:
+"memxfrm.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible

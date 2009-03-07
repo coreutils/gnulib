@@ -1,5 +1,12 @@
 2009-03-07  Bruno Haible  <bruno@clisp.org>
 
+	New module 'memxfrm'.
+	* lib/memxfrm.h: New file.
+	* lib/memxfrm.c: New file.
+	* modules/memxfrm: New file.
+
+2009-03-07  Bruno Haible  <bruno@clisp.org>
+
 	New module 'memcmp2'.
 	* lib/memcmp2.h: New file.
 	* lib/memcmp2.c: New file.
