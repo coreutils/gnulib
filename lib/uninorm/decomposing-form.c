@@ -1,4 +1,4 @@
-/* Normalization of Unicode strings.
+/* Decomposing variant of a normalization form.
    Copyright (C) 2009 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2009.
 
@@ -15,23 +15,15 @@
    You should have received a copy of the GNU Lesser General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-#include <stddef.h>
+#include <config.h>
 
-#include "unitypes.h"
+/* Specification.  */
+#include "uninorm.h"
 
-/* Complete definition of normalization form descriptor.  */
-struct unicode_normalization_form
+#include "normalize-internal.h"
+
+uninorm_t
+uninorm_decomposing_form (uninorm_t nf)
 {
-  /* Bit mask containing meta-information.
-     This must be the first field.  */
-  unsigned int description;
-  #define NF_IS_COMPAT_DECOMPOSING  (1 << 0)
-  #define NF_IS_COMPOSING           (1 << 1)
-  /* Function that decomposes a Unicode character.  */
-  int (*decomposer) (ucs4_t uc, ucs4_t *decomposition);
-  /* Function that combines two Unicode characters, a starter and another
-     character.  */
-  ucs4_t (*composer) (ucs4_t uc1, ucs4_t uc2);
-  /* Decomposing variant.  */
-  const struct unicode_normalization_form *decomposing_variant;
-};
+  return nf->decomposing_variant;
+}

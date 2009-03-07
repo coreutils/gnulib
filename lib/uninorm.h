@@ -132,6 +132,10 @@ extern const struct unicode_normalization_form uninorm_nfkc;
 #define uninorm_is_composing(nf) \
   ((* (const unsigned int *) (nf) >> 1) & 1)
 
+/* Return the decomposing variant of a normalization form.
+   This maps NFC,NFD -> NFD and NFKC,NFKD -> NFKD.  */
+extern uninorm_t uninorm_decomposing_form (uninorm_t nf);
+
 
 /* Return the specified normalization form of a string.  */
 extern uint8_t *

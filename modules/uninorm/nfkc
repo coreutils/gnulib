@@ -9,6 +9,7 @@ Depends-on:
 uninorm/base
 uninorm/compat-decomposition
 uninorm/composition
+uninorm/nfkd
 
 configure.ac:
 

@@ -26,5 +26,6 @@ const struct unicode_normalization_form uninorm_nfc =
   {
     NF_IS_COMPOSING,
     uc_canonical_decomposition,
-    uc_composition
+    uc_composition,
+    &uninorm_nfd
   };

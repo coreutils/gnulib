@@ -1,20 +1,17 @@
 Description:
-Canonical normalization of Unicode strings.
+Decomposing variant of a normalization form.
 
 Files:
-lib/uninorm/nfc.c
+lib/uninorm/decomposing-form.c
 lib/uninorm/normalize-internal.h
 
 Depends-on:
 uninorm/base
-uninorm/canonical-decomposition
-uninorm/composition
-uninorm/nfd
 
 configure.ac:
 
 Makefile.am:
-lib_SOURCES += uninorm/nfc.c
+lib_SOURCES += uninorm/decomposing-form.c
 
 Include:
 "uninorm.h"

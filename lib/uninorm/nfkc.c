@@ -27,5 +27,6 @@ const struct unicode_normalization_form uninorm_nfkc =
   {
     NF_IS_COMPAT_DECOMPOSING | NF_IS_COMPOSING,
     uc_compat_decomposition,
-    uc_composition
+    uc_composition,
+    &uninorm_nfkd
   };

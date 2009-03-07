@@ -26,5 +26,6 @@ const struct unicode_normalization_form uninorm_nfd =
   {
     0,
     uc_canonical_decomposition,
-    NULL
+    NULL,
+    &uninorm_nfd
   };
