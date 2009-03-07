@@ -6,6 +6,7 @@ lib/uninorm/u8-normcmp.c
 lib/uninorm/u-normcmp.h
 
 Depends-on:
+uninorm/base
 uninorm/u8-normalize
 unistr/u8-cmp
 minmax

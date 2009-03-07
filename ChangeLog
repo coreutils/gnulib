@@ -1,5 +1,11 @@
 2009-03-07  Bruno Haible  <bruno@clisp.org>
 
+	* modules/uninorm/u8-normcmp (Depends-on): Add uninorm/base.
+	* modules/uninorm/u16-normcmp (Depends-on): Likewise.
+	* modules/uninorm/u32-normcmp (Depends-on): Likewise.
+
+2009-03-07  Bruno Haible  <bruno@clisp.org>
+
 	New module 'memxfrm'.
 	* lib/memxfrm.h: New file.
 	* lib/memxfrm.c: New file.
