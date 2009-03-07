@@ -1,0 +1,26 @@
+Description:
+Locale dependent, normalization insensitive comparison of UTF-16 strings.
+
+Files:
+lib/uninorm/u16-normcoll.c
+lib/uninorm/u-normcoll.h
+
+Depends-on:
+uninorm/base
+uninorm/u16-normxfrm
+memcmp2
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += uninorm/u16-normcoll.c
+
+Include:
+"uninorm.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
