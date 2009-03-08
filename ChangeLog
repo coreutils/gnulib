@@ -1,5 +1,10 @@
 2009-03-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unicase/locale-language'.
+	* lib/unicase/locale-language.c: New file.
+	* lib/unicase/locale-languages.gperf: New file.
+	* modules/unicase/locale-language: New file.
+
 	Generate more tables for case conversion and case folding.
 	* lib/gen-uni-tables.c (SCC_*): New enum items.
 	(struct special_casing_rule): New type.
