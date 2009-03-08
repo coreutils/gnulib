@@ -1,5 +1,10 @@
 2009-03-08  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unicase/u8-is-cased'.
+	* modules/unicase/u8-is-cased-tests: New file.
+	* tests/unicase/test-u8-is-cased.c: New file.
+	* tests/unicase/test-is-cased.h: New file.
+
 	New module 'unicase/u32-is-cased'.
 	* lib/unicase/u32-is-cased.c: New file.
 	* modules/unicase/u32-is-cased: New file.
