@@ -1,5 +1,9 @@
 2009-03-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unicase/u8-tolower'.
+	* lib/unicase/u8-tolower.c: New file.
+	* modules/unicase/u8-tolower: New file.
+
 	Tests for module 'unicase/u32-toupper'.
 	* modules/unicase/u32-toupper-tests: New file.
 	* tests/unicase/test-u32-toupper.c: New file.
