@@ -1,0 +1,14 @@
+Files:
+tests/unicase/test-u32-toupper.c
+
+Depends-on:
+unistr/u32-cmp
+uninorm/nfc
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-u32-toupper
+check_PROGRAMS += test-u32-toupper
+test_u32_toupper_SOURCES = unicase/test-u32-toupper.c
+
