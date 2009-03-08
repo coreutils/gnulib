@@ -1,0 +1,25 @@
+Description:
+Test whether an UTF-8 string is already case-folded.
+
+Files:
+lib/unicase/u8-is-casefolded.c
+
+Depends-on:
+unicase/base
+unicase/u8-is-invariant
+unicase/u8-casefold
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unicase/u8-is-casefolded.c
+
+Include:
+"unicase.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
