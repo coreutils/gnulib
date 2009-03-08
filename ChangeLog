@@ -1,5 +1,10 @@
 2009-03-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unicase/u8-casecmp'.
+	* lib/unicase/u8-casecmp.c: New file.
+	* lib/unicase/u-casecmp.h: New file.
+	* modules/unicase/u8-casecmp: New file.
+
 	Tests for module 'unicase/u32-casefold'.
 	* modules/unicase/u32-casefold-tests: New file.
 	* tests/unicase/test-u32-casefold.c: New file.

@@ -1,0 +1,28 @@
+Description:
+Case and normalization insensitive comparison of UTF-8 strings.
+
+Files:
+lib/unicase/u8-casecmp.c
+lib/unicase/u-casecmp.h
+
+Depends-on:
+unicase/base
+unicase/u8-casefold
+uninorm/decomposing-form
+unistr/u8-cmp
+minmax
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unicase/u8-casecmp.c
+
+Include:
+"unicase.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
