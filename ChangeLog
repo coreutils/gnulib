@@ -1,5 +1,9 @@
 2009-03-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unicase/u32-is-invariant'.
+	* lib/unicase/u32-is-invariant.c: New file.
+	* modules/unicase/u32-is-invariant: New file.
+
 	New module 'unicase/u16-is-invariant'.
 	* lib/unicase/u16-is-invariant.c: New file.
 	* modules/unicase/u16-is-invariant: New file.
