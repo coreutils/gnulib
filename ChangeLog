@@ -1,5 +1,9 @@
 2009-03-08  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unicase/u8-casecoll'.
+	* modules/unicase/u8-casecoll-tests: New file.
+	* tests/unicase/test-u8-casecoll.c: New file.
+
 	New module 'unicase/u32-casecoll'.
 	* lib/unicase/u32-casecoll.c: New file.
 	* modules/unicase/u32-casecoll: New file.
