@@ -1,5 +1,9 @@
 2009-03-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unicase/u16-casecoll'.
+	* lib/unicase/u16-casecoll.c: New file.
+	* modules/unicase/u16-casecoll: New file.
+
 	New module 'unicase/u8-casecoll'.
 	* lib/unicase/u8-casecoll.c: New file.
 	* lib/unicase/u-casecoll.h: New file.
