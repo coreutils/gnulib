@@ -1,5 +1,9 @@
 2009-03-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unicase/u32-casexfrm'.
+	* lib/unicase/u32-casexfrm.c: New file.
+	* modules/unicase/u32-casexfrm: New file.
+
 	New module 'unicase/u16-casexfrm'.
 	* lib/unicase/u16-casexfrm.c: New file.
 	* modules/unicase/u16-casexfrm: New file.

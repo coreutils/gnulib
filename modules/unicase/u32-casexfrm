@@ -1,0 +1,29 @@
+Description:
+Locale dependent transformation for case insensitive comparison of UTF-32
+strings.
+
+Files:
+lib/unicase/u32-casexfrm.c
+lib/unicase/u-casexfrm.h
+
+Depends-on:
+unicase/base
+unicase/u32-casefold
+uniconv/u32-conv-to-enc
+localcharset
+memxfrm
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unicase/u32-casexfrm.c
+
+Include:
+"unicase.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
