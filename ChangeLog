@@ -1,5 +1,10 @@
 2009-03-08  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unicase/locale-language'.
+	* modules/unicase/locale-language-tests: New file.
+	* tests/unicase/test-locale-language.sh: New file.
+	* tests/unicase/test-locale-language.c: New file.
+
 	New module 'unicase/locale-language'.
 	* lib/unicase/locale-language.c: New file.
 	* lib/unicase/locale-languages.gperf: New file.
