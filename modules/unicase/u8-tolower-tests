@@ -1,0 +1,14 @@
+Files:
+tests/unicase/test-u8-tolower.c
+
+Depends-on:
+unistr/u8-cmp
+uninorm/nfc
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-u8-tolower
+check_PROGRAMS += test-u8-tolower
+test_u8_tolower_SOURCES = unicase/test-u8-tolower.c
+
