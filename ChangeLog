@@ -1,5 +1,9 @@
 2009-03-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unicase/u32-casecmp'.
+	* lib/unicase/u32-casecmp.c: New file.
+	* modules/unicase/u32-casecmp: New file.
+
 	New module 'unicase/u16-casecmp'.
 	* lib/unicase/u16-casecmp.c: New file.
 	* modules/unicase/u16-casecmp: New file.
