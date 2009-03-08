@@ -1,5 +1,10 @@
 2009-03-08  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unicase/u8-is-titlecase'.
+	* modules/unicase/u8-is-titlecase-tests: New file.
+	* tests/unicase/test-u8-is-titlecase.c: New file.
+	* tests/unicase/test-is-titlecase.h: New file.
+
 	New module 'unicase/u32-is-titlecase'.
 	* lib/unicase/u32-is-titlecase.c: New file.
 	* modules/unicase/u32-is-titlecase: New file.
