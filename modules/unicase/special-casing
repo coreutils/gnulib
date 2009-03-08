@@ -1,0 +1,33 @@
+Description:
+Special casing table.
+
+Files:
+lib/unicase/special-casing.h
+lib/unicase/special-casing.c
+lib/unicase/special-casing-table.gperf
+
+Depends-on:
+gperf
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unicase/special-casing.c
+
+unicase/special-casing-table.h: $(srcdir)/unicase/special-casing-table.gperf
+	$(GPERF) -m 10 $(srcdir)/unicase/special-casing-table.gperf > $@-t
+	mv $@-t $@
+BUILT_SOURCES        += unicase/special-casing-table.h
+MOSTLYCLEANFILES     += unicase/special-casing-table.h-t
+MAINTAINERCLEANFILES += unicase/special-casing-table.h
+EXTRA_DIST           += unicase/special-casing-table.h
+
+Include:
+"unicase/special-casing.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
