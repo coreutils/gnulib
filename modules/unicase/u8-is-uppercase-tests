@@ -1,0 +1,13 @@
+Files:
+tests/unicase/test-u8-is-uppercase.c
+tests/unicase/test-is-uppercase.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-u8-is-uppercase
+check_PROGRAMS += test-u8-is-uppercase
+test_u8_is_uppercase_SOURCES = unicase/test-u8-is-uppercase.c
+
