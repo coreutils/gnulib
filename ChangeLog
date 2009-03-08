@@ -1,5 +1,11 @@
 2009-03-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unicase/u8-casemap'.
+	* lib/unicase/unicasemap.h: New file.
+	* lib/unicase/u8-casemap.c: New file.
+	* lib/unicase/u-casemap.h: New file.
+	* modules/unicase/u8-casemap: New file.
+
 	New module 'unicase/special-casing'.
 	* lib/unicase/special-casing.h: New file.
 	* lib/unicase/special-casing.c: New file.
