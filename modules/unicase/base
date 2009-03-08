@@ -6,6 +6,8 @@ lib/unicase.h
 
 Depends-on:
 unitypes
+uninorm/base
+stdbool
 
 configure.ac:
 

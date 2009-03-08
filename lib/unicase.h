@@ -19,8 +19,13 @@
 
 #include "unitypes.h"
 
+#include <stdbool.h>
+
 /* Get size_t.  */
 #include <stddef.h>
+
+/* Get uninorm_t.  */
+#include "uninorm.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -59,57 +64,223 @@ extern ucs4_t
 extern const char *
        uc_locale_language (void);
 
-/* Return the uppercase mapping of a string.  */
+/* Conventions:
+
+   All functions prefixed with u8_ operate on UTF-8 encoded strings.
+   Their unit is an uint8_t (1 byte).
+
+   All functions prefixed with u16_ operate on UTF-16 encoded strings.
+   Their unit is an uint16_t (a 2-byte word).
+
+   All functions prefixed with u32_ operate on UCS-4 encoded strings.
+   Their unit is an uint32_t (a 4-byte word).
+
+   All argument pairs (s, n) denote a Unicode string s[0..n-1] with exactly
+   n units.
+
+   Functions returning a string result take a (resultbuf, lengthp) argument
+   pair.  If resultbuf is not NULL and the result fits into *lengthp units,
+   it is put in resultbuf, and resultbuf is returned.  Otherwise, a freshly
+   allocated string is returned.  In both cases, *lengthp is set to the
+   length (number of units) of the returned string.  In case of error,
+   NULL is returned and errno is set.  */
+
+/* Return the uppercase mapping of a string.
+   The nf argument identifies the normalization form to apply after the
+   case-mapping.  It can also be NULL, for no normalization.  */
 extern uint8_t *
-       u8_toupper (const uint8_t *s, size_t n, const char *iso639_language, uint8_t *resultbuf, size_t *lengthp);
+       u8_toupper (const uint8_t *s, size_t n, const char *iso639_language,
+		   uninorm_t nf,
+		   uint8_t *resultbuf, size_t *lengthp);
 extern uint16_t *
-       u16_toupper (const uint16_t *s, size_t n, const char *iso639_language, uint16_t *resultbuf, size_t *lengthp);
+       u16_toupper (const uint16_t *s, size_t n, const char *iso639_language,
+		    uninorm_t nf,
+		    uint16_t *resultbuf, size_t *lengthp);
 extern uint32_t *
-       u32_toupper (const uint32_t *s, size_t n, const char *iso639_language, uint32_t *resultbuf, size_t *lengthp);
+       u32_toupper (const uint32_t *s, size_t n, const char *iso639_language,
+		    uninorm_t nf,
+		    uint32_t *resultbuf, size_t *lengthp);
 
-/* Return the lowercase mapping of a string.  */
+/* Return the lowercase mapping of a string.
+   The nf argument identifies the normalization form to apply after the
+   case-mapping.  It can also be NULL, for no normalization.  */
 extern uint8_t *
-       u8_tolower (const uint8_t *s, size_t n, const char *iso639_language, uint8_t *resultbuf, size_t *lengthp);
+       u8_tolower (const uint8_t *s, size_t n, const char *iso639_language,
+		   uninorm_t nf,
+		   uint8_t *resultbuf, size_t *lengthp);
 extern uint16_t *
-       u16_tolower (const uint16_t *s, size_t n, const char *iso639_language, uint16_t *resultbuf, size_t *lengthp);
+       u16_tolower (const uint16_t *s, size_t n, const char *iso639_language,
+		    uninorm_t nf,
+		    uint16_t *resultbuf, size_t *lengthp);
 extern uint32_t *
-       u32_tolower (const uint32_t *s, size_t n, const char *iso639_language, uint32_t *resultbuf, size_t *lengthp);
+       u32_tolower (const uint32_t *s, size_t n, const char *iso639_language,
+		    uninorm_t nf,
+		    uint32_t *resultbuf, size_t *lengthp);
 
-/* Return the titlecase mapping of a string.  */
+/* Return the titlecase mapping of a string.
+   The nf argument identifies the normalization form to apply after the
+   case-mapping.  It can also be NULL, for no normalization.  */
 extern uint8_t *
-       u8_totitle (const uint8_t *s, size_t n, const char *iso639_language, uint8_t *resultbuf, size_t *lengthp);
+       u8_totitle (const uint8_t *s, size_t n, const char *iso639_language,
+		   uninorm_t nf,
+		   uint8_t *resultbuf, size_t *lengthp);
 extern uint16_t *
-       u16_totitle (const uint16_t *s, size_t n, const char *iso639_language, uint16_t *resultbuf, size_t *lengthp);
+       u16_totitle (const uint16_t *s, size_t n, const char *iso639_language,
+		    uninorm_t nf,
+		    uint16_t *resultbuf, size_t *lengthp);
 extern uint32_t *
-       u32_totitle (const uint32_t *s, size_t n, const char *iso639_language, uint32_t *resultbuf, size_t *lengthp);
+       u32_totitle (const uint32_t *s, size_t n, const char *iso639_language,
+		    uninorm_t nf,
+		    uint32_t *resultbuf, size_t *lengthp);
 
-/* Return the case folded string.  */
+/* Return the case folded string.
+   The nf argument identifies the normalization form to apply after the
+   case-mapping.  It can also be NULL, for no normalization.  */
 extern uint8_t *
-       u8_casefold (const uint8_t *s, size_t n, uint8_t *resultbuf, size_t *lengthp);
+       u8_casefold (const uint8_t *s, size_t n, const char *iso639_language,
+		    uninorm_t nf,
+		    uint8_t *resultbuf, size_t *lengthp);
 extern uint16_t *
-       u16_casefold (const uint16_t *s, size_t n, uint16_t *resultbuf, size_t *lengthp);
+       u16_casefold (const uint16_t *s, size_t n, const char *iso639_language,
+		     uninorm_t nf,
+		     uint16_t *resultbuf, size_t *lengthp);
 extern uint32_t *
-       u32_casefold (const uint32_t *s, size_t n, uint32_t *resultbuf, size_t *lengthp);
+       u32_casefold (const uint32_t *s, size_t n, const char *iso639_language,
+		     uninorm_t nf,
+		     uint32_t *resultbuf, size_t *lengthp);
 
-/* Compare S1 and S2, ignoring case.
-   Return -1 if S1 < S2, 0 if S1 = S2, 1 if S1 > S2.  */
+/* Compare S1 and S2, ignoring differences in case and normalization.
+   The nf argument identifies the normalization form to apply after the
+   case-mapping.  It can also be NULL, for no normalization.
+   If successful, set *RESULTP to -1 if S1 < S2, 0 if S1 = S2, 1 if S1 > S2, and
+   return 0.  Upon failure, return -1 with errno set.  */
 extern int
-       u8_casecmp (const uint8_t *s1, size_t n1, const uint8_t *s2, size_t n2);
+       u8_casecmp (const uint8_t *s1, size_t n1,
+		   const uint8_t *s2, size_t n2,
+		   const char *iso639_language, uninorm_t nf, int *resultp);
 extern int
-       u16_casecmp (const uint16_t *s1, size_t n1, const uint16_t *s2, size_t n2);
+       u16_casecmp (const uint16_t *s1, size_t n1,
+		    const uint16_t *s2, size_t n2,
+		    const char *iso639_language, uninorm_t nf, int *resultp);
 extern int
-       u32_casecmp (const uint32_t *s1, size_t n1, const uint32_t *s2, size_t n2);
+       u32_casecmp (const uint32_t *s1, size_t n1,
+		    const uint32_t *s2, size_t n2,
+		    const char *iso639_language, uninorm_t nf, int *resultp);
 
-/* Compare S1 and S2 using the collation rules of the current locale,
-   ignoring case.
-   Return -1 if S1 < S2, 0 if S1 = S2, 1 if S1 > S2.
-   Upon failure, set errno and return any value.  */
+/* Converts the string S of length N to a string in locale encoding, in such a
+   way that comparing uN_casexfrm (S1) and uN_casexfrm (S2) with memcmp2() is
+   equivalent to comparing S1 and S2 with uN_casecoll().
+   NF must be either UNINORM_NFC, UNINORM_NFKC, or NULL for no normalization.  */
+extern char *
+       u8_casexfrm (const uint8_t *s, size_t n, const char *iso639_language,
+		    uninorm_t nf, char *resultbuf, size_t *lengthp);
+extern char *
+       u16_casexfrm (const uint16_t *s, size_t n, const char *iso639_language,
+		     uninorm_t nf, char *resultbuf, size_t *lengthp);
+extern char *
+       u32_casexfrm (const uint32_t *s, size_t n, const char *iso639_language,
+		     uninorm_t nf, char *resultbuf, size_t *lengthp);
+
+/* Compare S1 and S2, ignoring differences in case and normalization, using the
+   collation rules of the current locale.
+   The nf argument identifies the normalization form to apply after the
+   case-mapping.  It must be either UNINORM_NFC or UNINORM_NFKC.  It can also
+   be NULL, for no normalization.
+   If successful, set *RESULTP to -1 if S1 < S2, 0 if S1 = S2, 1 if S1 > S2, and
+   return 0.  Upon failure, return -1 with errno set.  */
 extern int
-       u8_casecoll (const uint8_t *s1, size_t n1, const uint8_t *s2, size_t n2);
+       u8_casecoll (const uint8_t *s1, size_t n1,
+		    const uint8_t *s2, size_t n2,
+		    const char *iso639_language, uninorm_t nf, int *resultp);
 extern int
-       u16_casecoll (const uint16_t *s1, size_t n1, const uint16_t *s2, size_t n2);
+       u16_casecoll (const uint16_t *s1, size_t n1,
+		     const uint16_t *s2, size_t n2,
+		     const char *iso639_language, uninorm_t nf, int *resultp);
 extern int
-       u32_casecoll (const uint32_t *s1, size_t n1, const uint32_t *s2, size_t n2);
+       u32_casecoll (const uint32_t *s1, size_t n1,
+		     const uint32_t *s2, size_t n2,
+		     const char *iso639_language, uninorm_t nf, int *resultp);
+
+
+/* Set *RESULTP to true if mapping NFD(S) to upper case is a no-op, or to false
+   otherwise, and return 0.  Upon failure, return -1 with errno set.  */
+extern int
+       u8_is_uppercase (const uint8_t *s, size_t n,
+			const char *iso639_language,
+			bool *resultp);
+extern int
+       u16_is_uppercase (const uint16_t *s, size_t n,
+			 const char *iso639_language,
+			 bool *resultp);
+extern int
+       u32_is_uppercase (const uint32_t *s, size_t n,
+			 const char *iso639_language,
+			 bool *resultp);
+
+/* Set *RESULTP to true if mapping NFD(S) to lower case is a no-op, or to false
+   otherwise, and return 0.  Upon failure, return -1 with errno set.  */
+extern int
+       u8_is_lowercase (const uint8_t *s, size_t n,
+			const char *iso639_language,
+			bool *resultp);
+extern int
+       u16_is_lowercase (const uint16_t *s, size_t n,
+			 const char *iso639_language,
+			 bool *resultp);
+extern int
+       u32_is_lowercase (const uint32_t *s, size_t n,
+			 const char *iso639_language,
+			 bool *resultp);
+
+/* Set *RESULTP to true if mapping NFD(S) to title case is a no-op, or to false
+   otherwise, and return 0.  Upon failure, return -1 with errno set.  */
+extern int
+       u8_is_titlecase (const uint8_t *s, size_t n,
+			const char *iso639_language,
+			bool *resultp);
+extern int
+       u16_is_titlecase (const uint16_t *s, size_t n,
+			 const char *iso639_language,
+			 bool *resultp);
+extern int
+       u32_is_titlecase (const uint32_t *s, size_t n,
+			 const char *iso639_language,
+			 bool *resultp);
+
+/* Set *RESULTP to true if applying case folding to NFD(S) is a no-op, or to
+   false otherwise, and return 0.  Upon failure, return -1 with errno set.  */
+extern int
+       u8_is_casefolded (const uint8_t *s, size_t n,
+			 const char *iso639_language,
+			 bool *resultp);
+extern int
+       u16_is_casefolded (const uint16_t *s, size_t n,
+			  const char *iso639_language,
+			  bool *resultp);
+extern int
+       u32_is_casefolded (const uint32_t *s, size_t n,
+			  const char *iso639_language,
+			  bool *resultp);
+
+/* Set *RESULTP to true if case matters for S, that is, if mapping NFD(S) to
+   either upper case or lower case or title case is not a no-op.
+   Set *RESULTP to false if NFD(S) maps to itself under the upper case mapping,
+   under the lower case mapping, and under the title case mapping; in other
+   words, when NFD(S) consists entirely of caseless characters.
+   Upon failure, return -1 with errno set.  */
+extern int
+       u8_is_cased (const uint8_t *s, size_t n,
+		    const char *iso639_language,
+		    bool *resultp);
+extern int
+       u16_is_cased (const uint16_t *s, size_t n,
+		     const char *iso639_language,
+		     bool *resultp);
+extern int
+       u32_is_cased (const uint32_t *s, size_t n,
+		     const char *iso639_language,
+		     bool *resultp);
+
 
 /* ========================================================================= */
 

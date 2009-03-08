@@ -1,5 +1,24 @@
 2009-03-08  Bruno Haible  <bruno@clisp.org>
 
+	* lib/unicase.h: Include stdbool.h, uninorm.h.
+	(u8_toupper, u16_toupper, u32_toupper, u8_tolower, u16_tolower,
+	u32_tolower, u8_totitle, u16_totitle, u32_totitle): Add nf argument.
+	(u8_casefold, u16_casefold, u32_casefold): Add iso639_language and nf
+	arguments.
+	(u8_casecmp, u16_casecmp, u32_casecmp): Add iso639_language, nf,
+	resultp arguments.
+	(u8_casexfrm, u16_casexfrm, u32_casexfrm): New declarations.
+	(u8_casecoll, u16_casecoll, u32_casecoll): Add iso639_language, nf,
+	resultp arguments.
+	(u8_is_uppercase, u16_is_uppercase, u32_is_uppercase, u8_is_lowercase,
+	u16_is_lowercase, u32_is_lowercase, u8_is_titlecase, u16_is_titlecase,
+	u32_is_titlecase, u8_is_casefolded, u16_is_casefolded,
+	u32_is_casefolded, u8_is_cased, u16_is_cased, u32_is_cased): New
+	declarations.
+	* modules/unicase/base (Depends-on): Add uninorm/base, stdbool.
+
+2009-03-08  Bruno Haible  <bruno@clisp.org>
+
 	* lib/uninorm.h (u8_normcmp, u16_normcmp, u32_normcmp, u8_normcoll,
 	u16_normcoll, u32_normcoll): Rename argument 'result' to 'resultp'.
 	* lib/uninorm/u-normcmp.h (FUNC): Likewise.
