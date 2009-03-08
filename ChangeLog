@@ -1,5 +1,9 @@
 2009-03-08  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unicase/u32-casefold'.
+	* modules/unicase/u32-casefold-tests: New file.
+	* tests/unicase/test-u32-casefold.c: New file.
+
 	Tests for module 'unicase/u16-casefold'.
 	* modules/unicase/u16-casefold-tests: New file.
 	* tests/unicase/test-u16-casefold.c: New file.
