@@ -1,5 +1,9 @@
 2009-03-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unicase/u16-is-uppercase'.
+	* lib/unicase/u16-is-uppercase.c: New file.
+	* modules/unicase/u16-is-uppercase: New file.
+
 	New module 'unicase/u8-is-uppercase'.
 	* lib/unicase/u8-is-uppercase.c: New file.
 	* modules/unicase/u8-is-uppercase: New file.
