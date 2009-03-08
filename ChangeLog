@@ -1,5 +1,9 @@
 2009-03-08  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unicase/u8-toupper'.
+	* modules/unicase/u8-toupper-tests: New file.
+	* tests/unicase/test-u8-toupper.c: New file.
+
 	New module 'unicase/u32-toupper'.
 	* lib/unicase/u32-toupper.c: New file.
 	* modules/unicase/u32-toupper: New file.
