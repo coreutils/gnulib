@@ -17,7 +17,7 @@
 
 int
 FUNC (const UNIT *s1, size_t n1, const UNIT *s2, size_t n2,
-      uninorm_t nf, int *result)
+      uninorm_t nf, int *resultp)
 {
   UNIT buf1[2048 / sizeof (UNIT)];
   UNIT buf2[2048 / sizeof (UNIT)];
@@ -66,6 +66,6 @@ FUNC (const UNIT *s1, size_t n1, const UNIT *s2, size_t n2,
     free (norms2);
   if (norms1 != buf1)
     free (norms1);
-  *result = cmp;
+  *resultp = cmp;
   return 0;
 }

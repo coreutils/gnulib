@@ -1,3 +1,10 @@
+2009-03-08  Bruno Haible  <bruno@clisp.org>
+
+	* lib/uninorm.h (u8_normcmp, u16_normcmp, u32_normcmp, u8_normcoll,
+	u16_normcoll, u32_normcoll): Rename argument 'result' to 'resultp'.
+	* lib/uninorm/u-normcmp.h (FUNC): Likewise.
+	* lib/uninorm/u-normcoll.h (FUNC): Likewise.
+
 2009-03-07  Bruno Haible  <bruno@clisp.org>
 
 	Adjust u*_normcmp, u*_normcoll API.
