@@ -1,5 +1,10 @@
 2009-03-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unicase/u8-casexfrm'.
+	* lib/unicase/u8-casexfrm.c: New file.
+	* lib/unicase/u-casexfrm.h: New file.
+	* modules/unicase/u8-casexfrm: New file.
+
 	Tests for module 'unicase/u32-casecmp'.
 	* modules/unicase/u32-casecmp-tests: New file.
 	* tests/unicase/test-u32-casecmp.c: New file.
