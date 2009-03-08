@@ -1,5 +1,9 @@
 2009-03-08  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unicase/u16-totitle'.
+	* modules/unicase/u16-totitle-tests: New file.
+	* tests/unicase/test-u16-totitle.c: New file.
+
 	Tests for module 'unicase/u8-totitle'.
 	* modules/unicase/u8-totitle-tests: New file.
 	* tests/unicase/test-u8-totitle.c: New file.
