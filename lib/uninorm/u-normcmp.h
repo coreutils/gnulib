@@ -31,17 +31,21 @@ FUNC (const UNIT *s1, size_t n1, const UNIT *s2, size_t n2,
   norms1_length = sizeof (buf1) / sizeof (UNIT);
   norms1 = U_NORMALIZE (nf, s1, n1, buf1, &norms1_length);
   if (norms1 == NULL)
-    return errno;
+    /* errno is set here.  */
+    return -1;
 
   /* Normalize S2.  */
   norms2_length = sizeof (buf2) / sizeof (UNIT);
   norms2 = U_NORMALIZE (nf, s2, n2, buf2, &norms2_length);
   if (norms2 == NULL)
     {
-      int saved_errno = errno;
       if (norms1 != buf1)
-	free (norms1);
-      return saved_errno;
+	{
+	  int saved_errno = errno;
+	  free (norms1);
+	  errno = saved_errno;
+	}
+      return -1;
     }
 
   /* Compare the normalized strings.  */

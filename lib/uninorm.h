@@ -152,7 +152,7 @@ extern uint32_t *
 /* Compare S1 and S2, ignoring differences in normalization.
    NF must be either UNINORM_NFD or UNINORM_NFKD.
    If successful, set *RESULT to -1 if S1 < S2, 0 if S1 = S2, 1 if S1 > S2, and
-   return 0.  Upon failure, return the error number.  */
+   return 0.  Upon failure, return -1 with errno set.  */
 extern int
        u8_normcmp (const uint8_t *s1, size_t n1, const uint8_t *s2, size_t n2,
 		   uninorm_t nf, int *result);
@@ -183,7 +183,7 @@ extern char *
    collation rules of the current locale.
    NF must be either UNINORM_NFC or UNINORM_NFKC.
    If successful, set *RESULT to -1 if S1 < S2, 0 if S1 = S2, 1 if S1 > S2, and
-   return 0.  Upon failure, return the error number.  */
+   return 0.  Upon failure, return -1 with errno set.  */
 extern int
        u8_normcoll (const uint8_t *s1, size_t n1, const uint8_t *s2, size_t n2,
 		    uninorm_t nf, int *result);

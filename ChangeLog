@@ -1,5 +1,14 @@
 2009-03-07  Bruno Haible  <bruno@clisp.org>
 
+	Adjust u*_normcmp, u*_normcoll API.
+	* lib/uninorm.h (u8_normcmp, u16_normcmp, u32_normcmp, u8_normcoll,
+	u16_normcoll, u32_normcoll): Change failure conventions.
+	* lib/uninorm/u-normcmp.h (FUNC): Upon failure, store the error code in
+	errno and return -1.
+	* lib/uninorm/u-normcoll.h (FUNC): Likewise.
+
+2009-03-07  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'uninorm/u32-normcoll'.
 	* modules/uninorm/u32-normcoll-tests: New file.
 	* tests/uninorm/test-u32-normcoll.c: New file.

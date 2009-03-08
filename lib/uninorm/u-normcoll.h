@@ -31,17 +31,21 @@ FUNC (const UNIT *s1, size_t n1, const UNIT *s2, size_t n2,
   transformed1_length = sizeof (buf1);
   transformed1 = U_NORMXFRM (s1, n1, nf, buf1, &transformed1_length);
   if (transformed1 == NULL)
-    return errno;
+    /* errno is set here.  */
+    return -1;
 
   /* Normalize and transform S2.  */
   transformed2_length = sizeof (buf2);
   transformed2 = U_NORMXFRM (s2, n2, nf, buf2, &transformed2_length);
   if (transformed2 == NULL)
     {
-      int saved_errno = errno;
       if (transformed1 != buf1)
-	free (transformed1);
-      return saved_errno;
+	{
+	  int saved_errno = errno;
+	  free (transformed1);
+	  errno = saved_errno;
+	}
+      return -1;
     }
 
   /* Compare the transformed strings.  */
