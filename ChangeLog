@@ -1,5 +1,9 @@
 2009-03-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unicase/u8-is-lowercase'.
+	* lib/unicase/u8-is-lowercase.c: New file.
+	* modules/unicase/u8-is-lowercase: New file.
+
 	Tests for module 'unicase/u32-is-uppercase'.
 	* modules/unicase/u32-is-uppercase-tests: New file.
 	* tests/unicase/test-u32-is-uppercase.c: New file.
