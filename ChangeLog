@@ -1,5 +1,9 @@
 2009-03-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unicase/u32-is-titlecase'.
+	* lib/unicase/u32-is-titlecase.c: New file.
+	* modules/unicase/u32-is-titlecase: New file.
+
 	New module 'unicase/u16-is-titlecase'.
 	* lib/unicase/u16-is-titlecase.c: New file.
 	* modules/unicase/u16-is-titlecase: New file.
