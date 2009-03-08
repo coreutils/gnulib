@@ -1,5 +1,10 @@
 2009-03-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unicase/u8-totitle'.
+	* lib/unicase/u8-totitle.c: New file.
+	* lib/unicase/u-totitle.h: New file.
+	* modules/unicase/u8-totitle: New file.
+
 	Tests for module 'unicase/u32-tolower'.
 	* modules/unicase/u32-tolower-tests: New file.
 	* tests/unicase/test-u32-tolower.c: New file.
