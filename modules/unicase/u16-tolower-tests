@@ -1,0 +1,14 @@
+Files:
+tests/unicase/test-u16-tolower.c
+
+Depends-on:
+unistr/u16-cmp
+uninorm/nfc
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-u16-tolower
+check_PROGRAMS += test-u16-tolower
+test_u16_tolower_SOURCES = unicase/test-u16-tolower.c
+

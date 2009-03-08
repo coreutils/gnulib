@@ -1,5 +1,9 @@
 2009-03-08  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unicase/u16-tolower'.
+	* modules/unicase/u16-tolower-tests: New file.
+	* tests/unicase/test-u16-tolower.c: New file.
+
 	Tests for module 'unicase/u8-tolower'.
 	* modules/unicase/u8-tolower-tests: New file.
 	* tests/unicase/test-u8-tolower.c: New file.
