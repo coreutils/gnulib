@@ -1,0 +1,25 @@
+Description:
+Test whether an UTF-16 string is entirely title case.
+
+Files:
+lib/unicase/u16-is-titlecase.c
+
+Depends-on:
+unicase/base
+unicase/u16-is-invariant
+unicase/u16-totitle
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unicase/u16-is-titlecase.c
+
+Include:
+"unicase.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
