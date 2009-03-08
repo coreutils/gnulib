@@ -1,5 +1,9 @@
 2009-03-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unicase/u16-is-cased'.
+	* lib/unicase/u16-is-cased.c: New file.
+	* modules/unicase/u16-is-cased: New file.
+
 	New module 'unicase/u8-is-cased'.
 	* lib/unicase/u8-is-cased.c: New file.
 	* lib/unicase/u-is-cased.h: New file.
