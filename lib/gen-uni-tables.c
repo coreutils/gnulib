@@ -28,6 +28,8 @@
                       /usr/local/share/Unidata/LineBreak.txt \
                       /usr/local/share/Unidata/WordBreakProperty.txt \
                       /usr/local/share/Unidata/CompositionExclusions.txt \
+                      /usr/local/share/Unidata/SpecialCasing.txt \
+                      /usr/local/share/Unidata/CaseFolding.txt \
                       5.1.0
  */
 
@@ -7453,6 +7455,761 @@ output_simple_mapping (const char *filename,
 
 /* ========================================================================= */
 
+/* A special casing context.
+   A context is negated through x -> -x.  */
+enum
+{
+  SCC_ALWAYS             = 0,
+  SCC_FINAL_SIGMA,
+  SCC_AFTER_SOFT_DOTTED,
+  SCC_MORE_ABOVE,
+  SCC_BEFORE_DOT,
+  SCC_AFTER_I
+};
+
+/* A special casing rule.  */
+struct special_casing_rule
+{
+  unsigned int code;
+  unsigned int lower_mapping[3];
+  unsigned int title_mapping[3];
+  unsigned int upper_mapping[3];
+  unsigned int casefold_mapping[3];
+  const char *language;
+  int context;
+};
+
+/* The special casing rules.  */
+struct special_casing_rule **casing_rules;
+unsigned int num_casing_rules;
+unsigned int allocated_casing_rules;
+
+static void
+add_casing_rule (struct special_casing_rule *new_rule)
+{
+  if (num_casing_rules == allocated_casing_rules)
+    {
+      allocated_casing_rules = 2 * allocated_casing_rules;
+      if (allocated_casing_rules < 16)
+	allocated_casing_rules = 16;
+      casing_rules =
+	(struct special_casing_rule **)
+	realloc (casing_rules, allocated_casing_rules * sizeof (struct special_casing_rule *));
+    }
+  casing_rules[num_casing_rules++] = new_rule;
+}
+
+/* Stores in casing_rules the special casing rules found in
+   specialcasing_filename.  */
+static void
+fill_casing_rules (const char *specialcasing_filename)
+{
+  FILE *stream;
+
+  stream = fopen (specialcasing_filename, "r");
+  if (stream == NULL)
+    {
+      fprintf (stderr, "error during fopen of '%s'\n", specialcasing_filename);
+      exit (1);
+    }
+
+  casing_rules = NULL;
+  num_casing_rules = 0;
+  allocated_casing_rules = 0;
+
+  for (;;)
+    {
+      char buf[200+1];
+      char *scanptr;
+      char *endptr;
+      int i;
+
+      unsigned int code;
+      unsigned int lower_mapping[3];
+      unsigned int title_mapping[3];
+      unsigned int upper_mapping[3];
+      char *language;
+      int context;
+
+      if (fscanf (stream, "%200[^\n]\n", buf) < 1)
+	break;
+
+      if (buf[0] == '\0' || buf[0] == '#')
+	continue;
+
+      /* Scan code.  */
+      scanptr = buf;
+      code = strtoul (scanptr, &endptr, 16);
+      if (endptr == scanptr)
+	{
+	  fprintf (stderr, "parse error in '%s'\n", specialcasing_filename);
+	  exit (1);
+	}
+      scanptr = endptr;
+      if (*scanptr != ';')
+	{
+	  fprintf (stderr, "parse error in '%s'\n", specialcasing_filename);
+	  exit (1);
+	}
+      scanptr++;
+
+      /* Scan lower mapping.  */
+      for (i = 0; i < 3; i++)
+	lower_mapping[i] = 0;
+      for (i = 0; i < 3; i++)
+	{
+	  while (*scanptr == ' ')
+	    scanptr++;
+	  if (*scanptr == ';')
+	    break;
+	  lower_mapping[i] = strtoul (scanptr, &endptr, 16);
+	  if (endptr == scanptr)
+	    {
+	      fprintf (stderr, "parse error in '%s'\n", specialcasing_filename);
+	      exit (1);
+	    }
+	  scanptr = endptr;
+	}
+      if (*scanptr != ';')
+	{
+	  fprintf (stderr, "parse error in '%s'\n", specialcasing_filename);
+	  exit (1);
+	}
+      scanptr++;
+
+      /* Scan title mapping.  */
+      for (i = 0; i < 3; i++)
+	title_mapping[i] = 0;
+      for (i = 0; i < 3; i++)
+	{
+	  while (*scanptr == ' ')
+	    scanptr++;
+	  if (*scanptr == ';')
+	    break;
+	  title_mapping[i] = strtoul (scanptr, &endptr, 16);
+	  if (endptr == scanptr)
+	    {
+	      fprintf (stderr, "parse error in '%s'\n", specialcasing_filename);
+	      exit (1);
+	    }
+	  scanptr = endptr;
+	}
+      if (*scanptr != ';')
+	{
+	  fprintf (stderr, "parse error in '%s'\n", specialcasing_filename);
+	  exit (1);
+	}
+      scanptr++;
+
+      /* Scan upper mapping.  */
+      for (i = 0; i < 3; i++)
+	upper_mapping[i] = 0;
+      for (i = 0; i < 3; i++)
+	{
+	  while (*scanptr == ' ')
+	    scanptr++;
+	  if (*scanptr == ';')
+	    break;
+	  upper_mapping[i] = strtoul (scanptr, &endptr, 16);
+	  if (endptr == scanptr)
+	    {
+	      fprintf (stderr, "parse error in '%s'\n", specialcasing_filename);
+	      exit (1);
+	    }
+	  scanptr = endptr;
+	}
+      if (*scanptr != ';')
+	{
+	  fprintf (stderr, "parse error in '%s'\n", specialcasing_filename);
+	  exit (1);
+	}
+      scanptr++;
+
+      /* Scan language and context.  */
+      language = NULL;
+      context = SCC_ALWAYS;
+      while (*scanptr == ' ')
+	scanptr++;
+      if (*scanptr != '\0' && *scanptr != '#')
+	{
+	  const char *word_begin = scanptr;
+	  const char *word_end;
+
+	  while (*scanptr != '\0' && *scanptr != '#' && *scanptr != ';' && *scanptr != ' ')
+	    scanptr++;
+	  word_end = scanptr;
+
+	  while (*scanptr == ' ')
+	    scanptr++;
+
+	  if (word_end - word_begin == 2)
+	    {
+	      language = (char *) malloc ((word_end - word_begin) + 1);
+	      memcpy (language, word_begin, 2);
+	      language[word_end - word_begin] = '\0';
+	      word_begin = word_end = NULL;
+
+	      if (*scanptr != '\0' && *scanptr != '#' &&  *scanptr != ';')
+		{
+		  word_begin = scanptr;
+		  while (*scanptr != '\0' && *scanptr != '#' && *scanptr != ';' && *scanptr != ' ')
+		    scanptr++;
+		  word_end = scanptr;
+		}
+	    }
+
+	  if (word_end > word_begin)
+	    {
+	      bool negate = false;
+
+	      if (word_end - word_begin >= 4 && memcmp (word_begin, "Not_", 4) == 0)
+		{
+		  word_begin += 4;
+		  negate = true;
+		}
+	      if (word_end - word_begin == 11 && memcmp (word_begin, "Final_Sigma", 11) == 0)
+		context = SCC_FINAL_SIGMA;
+	      else if (word_end - word_begin == 17 && memcmp (word_begin, "After_Soft_Dotted", 17) == 0)
+		context = SCC_AFTER_SOFT_DOTTED;
+	      else if (word_end - word_begin == 10 && memcmp (word_begin, "More_Above", 10) == 0)
+		context = SCC_MORE_ABOVE;
+	      else if (word_end - word_begin == 10 && memcmp (word_begin, "Before_Dot", 10) == 0)
+		context = SCC_BEFORE_DOT;
+	      else if (word_end - word_begin == 7 && memcmp (word_begin, "After_I", 7) == 0)
+		context = SCC_AFTER_I;
+	      else
+		{
+		  fprintf (stderr, "unknown context type in '%s'\n", specialcasing_filename);
+		  exit (1);
+		}
+	      if (negate)
+		context = - context;
+	    }
+
+	  if (*scanptr != '\0' && *scanptr != '#' &&  *scanptr != ';')
+	    {
+	      fprintf (stderr, "parse error in '%s'\n", specialcasing_filename);
+	      exit (1);
+	    }
+	}
+
+      /* Store the rule.  */
+      {
+	struct special_casing_rule *new_rule =
+	  (struct special_casing_rule *) malloc (sizeof (struct special_casing_rule));
+	new_rule->code = code;
+	new_rule->language = language;
+	new_rule->context = context;
+	memcpy (new_rule->lower_mapping, lower_mapping, sizeof (new_rule->lower_mapping));
+	memcpy (new_rule->title_mapping, title_mapping, sizeof (new_rule->title_mapping));
+	memcpy (new_rule->upper_mapping, upper_mapping, sizeof (new_rule->upper_mapping));
+
+	add_casing_rule (new_rule);
+      }
+    }
+
+  if (ferror (stream) || fclose (stream))
+    {
+      fprintf (stderr, "error reading from '%s'\n", specialcasing_filename);
+      exit (1);
+    }
+}
+
+/* A casefolding rule.  */
+struct casefold_rule
+{
+  unsigned int code;
+  unsigned int mapping[3];
+  const char *language;
+};
+
+/* The casefolding rules.  */
+struct casefold_rule **casefolding_rules;
+unsigned int num_casefolding_rules;
+unsigned int allocated_casefolding_rules;
+
+/* Stores in casefolding_rules the case folding rules found in
+   casefolding_filename.  */
+static void
+fill_casefolding_rules (const char *casefolding_filename)
+{
+  FILE *stream;
+
+  stream = fopen (casefolding_filename, "r");
+  if (stream == NULL)
+    {
+      fprintf (stderr, "error during fopen of '%s'\n", casefolding_filename);
+      exit (1);
+    }
+
+  casefolding_rules = NULL;
+  num_casefolding_rules = 0;
+  allocated_casefolding_rules = 0;
+
+  for (;;)
+    {
+      char buf[200+1];
+      char *scanptr;
+      char *endptr;
+      int i;
+
+      unsigned int code;
+      char type;
+      unsigned int mapping[3];
+
+      if (fscanf (stream, "%200[^\n]\n", buf) < 1)
+	break;
+
+      if (buf[0] == '\0' || buf[0] == '#')
+	continue;
+
+      /* Scan code.  */
+      scanptr = buf;
+      code = strtoul (scanptr, &endptr, 16);
+      if (endptr == scanptr)
+	{
+	  fprintf (stderr, "parse error in '%s'\n", casefolding_filename);
+	  exit (1);
+	}
+      scanptr = endptr;
+      if (*scanptr != ';')
+	{
+	  fprintf (stderr, "parse error in '%s'\n", casefolding_filename);
+	  exit (1);
+	}
+      scanptr++;
+
+      /* Scan type.  */
+      while (*scanptr == ' ')
+	scanptr++;
+
+      switch (*scanptr)
+	{
+	case 'C': case 'F': case 'S': case 'T':
+	  type = *scanptr;
+	  break;
+	default:
+	  fprintf (stderr, "parse error in '%s'\n", casefolding_filename);
+	  exit (1);
+	}
+      scanptr++;
+      if (*scanptr != ';')
+	{
+	  fprintf (stderr, "parse error in '%s'\n", casefolding_filename);
+	  exit (1);
+	}
+      scanptr++;
+
+      /* Scan casefold mapping.  */
+      for (i = 0; i < 3; i++)
+	mapping[i] = 0;
+      for (i = 0; i < 3; i++)
+	{
+	  while (*scanptr == ' ')
+	    scanptr++;
+	  if (*scanptr == ';')
+	    break;
+	  mapping[i] = strtoul (scanptr, &endptr, 16);
+	  if (endptr == scanptr)
+	    {
+	      fprintf (stderr, "parse error in '%s'\n", casefolding_filename);
+	      exit (1);
+	    }
+	  scanptr = endptr;
+	}
+      if (*scanptr != ';')
+	{
+	  fprintf (stderr, "parse error in '%s'\n", casefolding_filename);
+	  exit (1);
+	}
+      scanptr++;
+
+      /* Ignore rules of type 'S'; we use the rules of type 'F' instead.  */
+      if (type != 'S')
+	{
+	  const char * const *languages;
+	  unsigned int languages_count;
+
+	  /* Type 'T' indicates that the rule is applicable to Turkish
+	     languages only.  */
+	  if (type == 'T')
+	    {
+	      static const char * const turkish_languages[] = { "tr", "az" };
+	      languages = turkish_languages;
+	      languages_count = 2;
+	    }
+	  else
+	    {
+	      static const char * const all_languages[] = { NULL };
+	      languages = all_languages;
+	      languages_count = 1;
+	    }
+
+	  for (i = 0; i < languages_count; i++)
+	    {
+	      /* Store a new rule.  */
+	      struct casefold_rule *new_rule =
+		(struct casefold_rule *) malloc (sizeof (struct casefold_rule));
+	      new_rule->code = code;
+	      memcpy (new_rule->mapping, mapping, sizeof (new_rule->mapping));
+	      new_rule->language = languages[i];
+
+	      if (num_casefolding_rules == allocated_casefolding_rules)
+		{
+		  allocated_casefolding_rules = 2 * allocated_casefolding_rules;
+		  if (allocated_casefolding_rules < 16)
+		    allocated_casefolding_rules = 16;
+		  casefolding_rules =
+		    (struct casefold_rule **)
+		    realloc (casefolding_rules,
+			     allocated_casefolding_rules * sizeof (struct casefold_rule *));
+		}
+	      casefolding_rules[num_casefolding_rules++] = new_rule;
+	    }
+	}
+    }
+
+  if (ferror (stream) || fclose (stream))
+    {
+      fprintf (stderr, "error reading from '%s'\n", casefolding_filename);
+      exit (1);
+    }
+}
+
+/* Casefold mapping, when it maps to a single character.  */
+unsigned int unicode_casefold[0x110000];
+
+static unsigned int
+to_casefold (unsigned int ch)
+{
+  return unicode_casefold[ch];
+}
+
+/* Redistribute the casefolding_rules:
+   - Rules that map to a single character, language independently, are stored
+     in unicode_casefold.
+   - Other rules are merged into casing_rules.  */
+static void
+redistribute_casefolding_rules (void)
+{
+  unsigned int ch, i, j;
+
+  /* Fill unicode_casefold[].  */
+  for (ch = 0; ch < 0x110000; ch++)
+    unicode_casefold[ch] = ch;
+  for (i = 0; i < num_casefolding_rules; i++)
+    {
+      struct casefold_rule *cfrule = casefolding_rules[i];
+
+      if (cfrule->language == NULL && cfrule->mapping[1] == 0)
+	{
+	  ch = cfrule->code;
+	  if (!(ch < 0x110000))
+	    abort ();
+	  unicode_casefold[ch] = cfrule->mapping[0];
+	}
+    }
+
+  /* Extend the special casing rules by filling in their casefold_mapping[]
+     field.  */
+  for (j = 0; j < num_casing_rules; j++)
+    {
+      struct special_casing_rule *rule = casing_rules[j];
+      unsigned int k;
+
+      rule->casefold_mapping[0] = to_casefold (rule->code);
+      for (k = 1; k < 3; k++)
+	rule->casefold_mapping[k] = 0;
+    }
+
+  /* Now merge the other casefolding rules into casing_rules.  */
+  for (i = 0; i < num_casefolding_rules; i++)
+    {
+      struct casefold_rule *cfrule = casefolding_rules[i];
+
+      if (!(cfrule->language == NULL && cfrule->mapping[1] == 0))
+	{
+	  /* Find a rule that applies to the same code, same language, and it
+	     has context SCC_ALWAYS.  At the same time, update all rules that
+	     have the same code and same or more specific language.  */
+	  struct special_casing_rule *found_rule = NULL;
+
+	  for (j = 0; j < num_casing_rules; j++)
+	    {
+	      struct special_casing_rule *rule = casing_rules[j];
+
+	      if (rule->code == cfrule->code
+		  && (cfrule->language == NULL
+		      || (rule->language != NULL
+			  && strcmp (rule->language, cfrule->language) == 0)))
+		{
+		  memcpy (rule->casefold_mapping, cfrule->mapping,
+			  sizeof (rule->casefold_mapping));
+
+		  if ((cfrule->language == NULL
+		       ? rule->language == NULL
+		       : rule->language != NULL
+			 && strcmp (rule->language, cfrule->language) == 0)
+		      && rule->context == SCC_ALWAYS)
+		    {
+		      /* Found it.  */
+		      found_rule = rule;
+		    }
+		}
+	    }
+
+	  if (found_rule == NULL)
+	    {
+	      /* Create a new rule.  */
+	      struct special_casing_rule *new_rule =
+		(struct special_casing_rule *) malloc (sizeof (struct special_casing_rule));
+
+	      /* Try to find a rule that applies to the same code, no language
+		 restriction, and with context SCC_ALWAYS.  */
+	      for (j = 0; j < num_casing_rules; j++)
+		{
+		  struct special_casing_rule *rule = casing_rules[j];
+
+		  if (rule->code == cfrule->code
+		      && rule->context == SCC_ALWAYS
+		      && rule->language == NULL)
+		    {
+		      /* Found it.  */
+		      found_rule = rule;
+		      break;
+		    }
+		}
+
+	      new_rule->code = cfrule->code;
+	      new_rule->language = cfrule->language;
+	      new_rule->context = SCC_ALWAYS;
+	      if (found_rule != NULL)
+		{
+		  memcpy (new_rule->lower_mapping, found_rule->lower_mapping,
+			  sizeof (new_rule->lower_mapping));
+		  memcpy (new_rule->title_mapping, found_rule->title_mapping,
+			  sizeof (new_rule->title_mapping));
+		  memcpy (new_rule->upper_mapping, found_rule->upper_mapping,
+			  sizeof (new_rule->upper_mapping));
+		}
+	      else
+		{
+		  unsigned int k;
+
+		  new_rule->lower_mapping[0] = to_lower (cfrule->code);
+		  for (k = 1; k < 3; k++)
+		    new_rule->lower_mapping[k] = 0;
+		  new_rule->title_mapping[0] = to_title (cfrule->code);
+		  for (k = 1; k < 3; k++)
+		    new_rule->title_mapping[k] = 0;
+		  new_rule->upper_mapping[0] = to_upper (cfrule->code);
+		  for (k = 1; k < 3; k++)
+		    new_rule->upper_mapping[k] = 0;
+		}
+	      memcpy (new_rule->casefold_mapping, cfrule->mapping,
+		      sizeof (new_rule->casefold_mapping));
+
+	      add_casing_rule (new_rule);
+	    }
+	}
+    }
+}
+
+static int
+compare_casing_rules (const void *a, const void *b)
+{
+  struct special_casing_rule *a_rule = *(struct special_casing_rule **) a;
+  struct special_casing_rule *b_rule = *(struct special_casing_rule **) b;
+  unsigned int a_code = a_rule->code;
+  unsigned int b_code = b_rule->code;
+
+  if (a_code < b_code)
+    return -1;
+  if (a_code > b_code)
+    return 1;
+
+  /* Sort the more specific rules before the more general ones.  */
+  return (- ((a_rule->language != NULL ? 1 : 0) + (a_rule->context != SCC_ALWAYS ? 1 : 0))
+	  + ((b_rule->language != NULL ? 1 : 0) + (b_rule->context != SCC_ALWAYS ? 1 : 0)));
+}
+
+static void
+sort_casing_rules (void)
+{
+  /* Sort the rules 1. by code, 2. by specificity.  */
+  if (num_casing_rules > 1)
+    qsort (casing_rules, num_casing_rules, sizeof (struct special_casing_rule *),
+	   compare_casing_rules);
+}
+
+/* Output the special casing rules.  */
+static void
+output_casing_rules (const char *filename, const char *version)
+{
+  FILE *stream;
+  unsigned int i, j;
+  unsigned int minor;
+
+  stream = fopen (filename, "w");
+  if (stream == NULL)
+    {
+      fprintf (stderr, "cannot open '%s' for writing\n", filename);
+      exit (1);
+    }
+
+  fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
+  fprintf (stream, "/* Special casing rules of Unicode characters.  */\n");
+  fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
+	   version);
+  fprintf (stream, "struct special_casing_rule { char code[3]; };\n");
+  fprintf (stream, "%%struct-type\n");
+  fprintf (stream, "%%language=ANSI-C\n");
+  fprintf (stream, "%%define slot-name code\n");
+  fprintf (stream, "%%define hash-function-name gl_unicase_special_hash\n");
+  fprintf (stream, "%%define lookup-function-name gl_unicase_special_lookup\n");
+  fprintf (stream, "%%compare-lengths\n");
+  fprintf (stream, "%%compare-strncmp\n");
+  fprintf (stream, "%%readonly-tables\n");
+  fprintf (stream, "%%omit-struct-type\n");
+  fprintf (stream, "%%%%\n");
+
+  minor = 0;
+  for (i = 0; i < num_casing_rules; i++)
+    {
+      struct special_casing_rule *rule = casing_rules[i];
+      int context;
+
+      if (i > 0 && rule->code == casing_rules[i - 1]->code)
+	minor += 1;
+      else
+	minor = 0;
+
+      if (!(rule->code < 0x10000))
+	{
+	  fprintf (stderr, "special rule #%u: code %u out of range\n", i, rule->code);
+	  exit (1);
+	}
+
+      fprintf (stream, "\"\\x%02x\\x%02x\\x%02x\", ",
+	       (rule->code >> 8) & 0xff, rule->code & 0xff, minor);
+
+      fprintf (stream, "%d, ",
+	       i + 1 < num_casing_rules && casing_rules[i + 1]->code == rule->code ? 1 : 0);
+
+      context = rule->context;
+      if (context < 0)
+	{
+	  fprintf (stream, "-");
+	  context = - context;
+	}
+      else
+	fprintf (stream, " ");
+      switch (context)
+	{
+	case SCC_ALWAYS:
+	  fprintf (stream, "SCC_ALWAYS           ");
+	  break;
+	case SCC_FINAL_SIGMA:
+	  fprintf (stream, "SCC_FINAL_SIGMA      ");
+	  break;
+	case SCC_AFTER_SOFT_DOTTED:
+	  fprintf (stream, "SCC_AFTER_SOFT_DOTTED");
+	  break;
+	case SCC_MORE_ABOVE:
+	  fprintf (stream, "SCC_MORE_ABOVE       ");
+	  break;
+	case SCC_BEFORE_DOT:
+	  fprintf (stream, "SCC_BEFORE_DOT       ");
+	  break;
+	case SCC_AFTER_I:
+	  fprintf (stream, "SCC_AFTER_I          ");
+	  break;
+	default:
+	  abort ();
+	}
+      fprintf (stream, ", ");
+
+      if (rule->language != NULL)
+	{
+	  if (strlen (rule->language) != 2)
+	    abort ();
+	  fprintf (stream, "{  '%c',  '%c' }, ", rule->language[0], rule->language[1]);
+	}
+      else
+	fprintf (stream, "{ '\\0', '\\0' }, ");
+
+      fprintf (stream, "{ ");
+      for (j = 0; j < 3; j++)
+	{
+	  if (j > 0)
+	    fprintf (stream, ", ");
+	  if (!(rule->upper_mapping[j] < 0x10000))
+	    {
+	      fprintf (stderr, "special rule #%u: upper mapping of code %u out of range\n", i, rule->code);
+	      exit (1);
+	    }
+	  if (rule->upper_mapping[j] != 0)
+	    fprintf (stream, "0x%04X", rule->upper_mapping[j]);
+	  else
+	    fprintf (stream, "     0");
+	}
+      fprintf (stream, " }, { ");
+      for (j = 0; j < 3; j++)
+	{
+	  if (j > 0)
+	    fprintf (stream, ", ");
+	  if (!(rule->lower_mapping[j] < 0x10000))
+	    {
+	      fprintf (stderr, "special rule #%u: lower mapping of code %u out of range\n", i, rule->code);
+	      exit (1);
+	    }
+	  if (rule->lower_mapping[j] != 0)
+	    fprintf (stream, "0x%04X", rule->lower_mapping[j]);
+	  else
+	    fprintf (stream, "     0");
+	}
+      fprintf (stream, " }, { ");
+      for (j = 0; j < 3; j++)
+	{
+	  if (j > 0)
+	    fprintf (stream, ", ");
+	  if (!(rule->title_mapping[j] < 0x10000))
+	    {
+	      fprintf (stderr, "special rule #%u: title mapping of code %u out of range\n", i, rule->code);
+	      exit (1);
+	    }
+	  if (rule->title_mapping[j] != 0)
+	    fprintf (stream, "0x%04X", rule->title_mapping[j]);
+	  else
+	    fprintf (stream, "     0");
+	}
+      fprintf (stream, " }, { ");
+      for (j = 0; j < 3; j++)
+	{
+	  if (j > 0)
+	    fprintf (stream, ", ");
+	  if (!(rule->casefold_mapping[j] < 0x10000))
+	    {
+	      fprintf (stderr, "special rule #%u: casefold mapping of code %u out of range\n", i, rule->code);
+	      exit (1);
+	    }
+	  if (rule->casefold_mapping[j] != 0)
+	    fprintf (stream, "0x%04X", rule->casefold_mapping[j]);
+	  else
+	    fprintf (stream, "     0");
+	}
+      fprintf (stream, " }\n");
+    }
+
+  if (ferror (stream) || fclose (stream))
+    {
+      fprintf (stderr, "error writing to '%s'\n", filename);
+      exit (1);
+    }
+}
+
+/* ========================================================================= */
+
 int
 main (int argc, char * argv[])
 {
@@ -7466,11 +8223,13 @@ main (int argc, char * argv[])
   const char *linebreak_filename;
   const char *wordbreakproperty_filename;
   const char *compositionexclusions_filename;
+  const char *specialcasing_filename;
+  const char *casefolding_filename;
   const char *version;
 
-  if (argc != 12)
+  if (argc != 14)
     {
-      fprintf (stderr, "Usage: %s UnicodeData.txt PropList.txt DerivedCoreProperties.txt Scripts.txt Blocks.txt PropList-3.0.1.txt EastAsianWidth.txt LineBreak.txt WordBreakProperty.txt CompositionExclusions.txt version\n",
+      fprintf (stderr, "Usage: %s UnicodeData.txt PropList.txt DerivedCoreProperties.txt Scripts.txt Blocks.txt PropList-3.0.1.txt EastAsianWidth.txt LineBreak.txt WordBreakProperty.txt CompositionExclusions.txt SpecialCasing.txt CaseFolding.txt version\n",
 	       argv[0]);
       exit (1);
     }
@@ -7485,7 +8244,9 @@ main (int argc, char * argv[])
   linebreak_filename = argv[8];
   wordbreakproperty_filename = argv[9];
   compositionexclusions_filename = argv[10];
-  version = argv[11];
+  specialcasing_filename = argv[11];
+  casefolding_filename = argv[12];
+  version = argv[13];
 
   fill_attributes (unicodedata_filename);
   clear_properties ();
@@ -7498,6 +8259,10 @@ main (int argc, char * argv[])
   fill_org_lbp (linebreak_filename);
   fill_org_wbp (wordbreakproperty_filename);
   fill_composition_exclusions (compositionexclusions_filename);
+  fill_casing_rules (specialcasing_filename);
+  fill_casefolding_rules (casefolding_filename);
+  redistribute_casefolding_rules ();
+  sort_casing_rules ();
 
   output_categories (version);
   output_category ("unictype/categ_of.h", version);
@@ -7535,6 +8300,8 @@ main (int argc, char * argv[])
   output_simple_mapping ("unicase/toupper.h", to_upper, version);
   output_simple_mapping ("unicase/tolower.h", to_lower, version);
   output_simple_mapping ("unicase/totitle.h", to_title, version);
+  output_simple_mapping ("unicase/tocasefold.h", to_casefold, version);
+  output_casing_rules ("unicase/special-casing-table.gperf", version);
 
   return 0;
 }
@@ -7555,6 +8322,8 @@ main (int argc, char * argv[])
         /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.1.0/ucd/LineBreak.txt \
         /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.1.0/ucd/auxiliary/WordBreakProperty.txt \
         /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.1.0/ucd/CompositionExclusions.txt \
+        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.1.0/ucd/SpecialCasing.txt \
+        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.1.0/ucd/CaseFolding.txt \
         5.1.0
    "
  * End:

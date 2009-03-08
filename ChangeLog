@@ -1,5 +1,23 @@
 2009-03-08  Bruno Haible  <bruno@clisp.org>
 
+	Generate more tables for case conversion and case folding.
+	* lib/gen-uni-tables.c (SCC_*): New enum items.
+	(struct special_casing_rule): New type.
+	(casing_rules, num_casing_rules, allocated_casing_rules): New
+	variables.
+	(add_casing_rule, fill_casing_rules): New functions.
+	(struct casefold_rule): New type.
+	(casefolding_rules, num_casefolding_rules,
+	allocated_casefolding_rules): New variables.
+	(fill_casefolding_rules): New function.
+	(unicode_casefold): New variable.
+	(to_casefold, redistribute_casefolding_rules, compare_casing_rules,
+	sort_casing_rules, output_casing_rules): New functions.
+	(main): Accept to more arguments: SpecialCasing.txt and
+	CaseFolding.txt. Invoke fill_casing_rules, fill_casefolding_rules,
+	redistribute_casefolding_rules, sort_casing_rules, output_casing_rules.
+	Output mapping for casefolding.
+
 	* lib/unicase.h: Include stdbool.h, uninorm.h.
 	(u8_toupper, u16_toupper, u32_toupper, u8_tolower, u16_tolower,
 	u32_tolower, u8_totitle, u16_totitle, u32_totitle): Add nf argument.
