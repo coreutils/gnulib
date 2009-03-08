@@ -1,5 +1,10 @@
 2009-03-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unicase/u8-casefold'.
+	* lib/unicase/u8-casefold.c: New file.
+	* lib/unicase/u-casefold.h: New file.
+	* modules/unicase/u8-casefold: New file.
+
 	New module 'unicase/tocasefold'.
 	* lib/unicase/casefold.h: New file.
 	* lib/unicase/tocasefold.c: New file.
