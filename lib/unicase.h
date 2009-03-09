@@ -166,6 +166,10 @@ extern int
        u32_casecmp (const uint32_t *s1, size_t n1,
 		    const uint32_t *s2, size_t n2,
 		    const char *iso639_language, uninorm_t nf, int *resultp);
+extern int
+       ulc_casecmp (const char *s1, size_t n1,
+		    const char *s2, size_t n2,
+		    const char *iso639_language, uninorm_t nf, int *resultp);
 
 /* Converts the string S of length N to a string in locale encoding, in such a
    way that comparing uN_casexfrm (S1) and uN_casexfrm (S2) with memcmp2() is

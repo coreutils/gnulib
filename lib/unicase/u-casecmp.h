@@ -16,7 +16,7 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 int
-FUNC (const UNIT *s1, size_t n1, const UNIT *s2, size_t n2,
+FUNC (const SRC_UNIT *s1, size_t n1, const SRC_UNIT *s2, size_t n2,
       const char *iso639_language, uninorm_t nf, int *resultp)
 {
   UNIT buf1[2048 / sizeof (UNIT)];

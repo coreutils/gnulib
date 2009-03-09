@@ -29,6 +29,7 @@
 
 #define FUNC u8_casecmp
 #define UNIT uint8_t
+#define SRC_UNIT uint8_t
 #define U_CASEFOLD u8_casefold
 #define U_CMP u8_cmp
 #include "u-casecmp.h"

@@ -29,6 +29,7 @@
 
 #define FUNC u16_casecmp
 #define UNIT uint16_t
+#define SRC_UNIT uint16_t
 #define U_CASEFOLD u16_casefold
 #define U_CMP u16_cmp
 #include "u-casecmp.h"

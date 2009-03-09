@@ -1,5 +1,15 @@
 2009-03-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unicase/ulc-casecmp'.
+	* lib/unicase.h (ulc_casecmp): New declaration.
+	* lib/unicase/ulc-casecmp.c: New file.
+	* lib/unicase/u-casecmp.h (FUNC): Change argument types to
+	'const SRC_UNIT *'.
+	* lib/unicase/u8-casecmp.c (SRC_UNIT): Define like UNIT.
+	* lib/unicase/u16-casecmp.c (SRC_UNIT): Likewise.
+	* lib/unicase/u32-casecmp.c (SRC_UNIT): Likewise.
+	* modules/unicase/ulc-casecmp: New file.
+
 	Tests for module 'unicase/u32-is-cased'.
 	* modules/unicase/u32-is-cased-tests: New file.
 	* tests/unicase/test-u32-is-cased.c: New file.
