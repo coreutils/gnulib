@@ -3,6 +3,7 @@ tests/test-mbmemcasecmp1.sh
 tests/test-mbmemcasecmp2.sh
 tests/test-mbmemcasecmp3.sh
 tests/test-mbmemcasecmp.c
+tests/test-mbmemcasecmp.h
 m4/locale-fr.m4
 m4/locale-tr.m4
 m4/codeset.m4

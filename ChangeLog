@@ -1,4 +1,13 @@
-2009-03-08  Bruno Haible  <bruno@clisp.org>
+2009-03-10  Bruno Haible  <bruno@clisp.org>
+
+	* tests/test-mbmemcasecmp.h: New file, extracted from
+	tests/test-mbmemcasecmp.c.
+	* tests/test-mbmemcasecmp.c: Include test-mbmemcasecmp.h.
+	(test_ascii, test_iso_8859_1, test_utf_8): Remove functions.
+	(main): Update.
+	* modules/mbmemcasecmp-tests (Files): Add tests/test-mbmemcasecmp.h.
+
+2009-03-09  Bruno Haible  <bruno@clisp.org>
 
 	Tests for module 'mbmemcasecmp'.
 	* modules/mbmemcasecmp-tests: New file.
@@ -12,7 +21,7 @@
 	* lib/mbmemcasecmp.c: New file.
 	* modules/mbmemcasecmp: New file.
 
-2009-03-08  Bruno Haible  <bruno@clisp.org>
+2009-03-09  Bruno Haible  <bruno@clisp.org>
 
 	Tests for module 'unicase/ulc-casecoll'.
 	* modules/unicase/ulc-casecoll-tests: New file.
