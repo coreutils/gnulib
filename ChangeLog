@@ -1,5 +1,12 @@
 2009-03-08  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'mbmemcasecmp'.
+	* modules/mbmemcasecmp-tests: New file.
+	* tests/test-mbmemcasecmp1.sh: New file.
+	* tests/test-mbmemcasecmp2.sh: New file.
+	* tests/test-mbmemcasecmp3.sh: New file.
+	* tests/test-mbmemcasecmp.c: New file.
+
 	New module 'mbmemcasecmp'.
 	* lib/mbmemcasecmp.h: New file.
 	* lib/mbmemcasecmp.c: New file.
