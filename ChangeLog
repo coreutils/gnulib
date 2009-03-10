@@ -1,5 +1,10 @@
 2009-03-10  Bruno Haible  <bruno@clisp.org>
 
+	New module 'mbmemcasecoll'.
+	* lib/mbmemcasecoll.h: New file.
+	* lib/mbmemcasecoll.c: New file.
+	* modules/mbmemcasecoll: New file.
+
 	* tests/test-mbmemcasecmp.h: New file, extracted from
 	tests/test-mbmemcasecmp.c.
 	* tests/test-mbmemcasecmp.c: Include test-mbmemcasecmp.h.
