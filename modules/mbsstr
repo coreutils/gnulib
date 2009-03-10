@@ -4,8 +4,6 @@ mbsstr() function: search for a substring in a string.
 Files:
 lib/mbsstr.c
 lib/str-kmp.h
-m4/mbsstr.m4
-m4/mbrtowc.m4
 
 Depends-on:
 mbuiter
@@ -16,7 +14,6 @@ malloca
 strnlen
 
 configure.ac:
-gl_FUNC_MBSSTR
 gl_STRING_MODULE_INDICATOR([mbsstr])
 
 Makefile.am:

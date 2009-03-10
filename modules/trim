@@ -13,7 +13,6 @@ memmove
 strdup
 
 configure.ac:
-AC_FUNC_MBRTOWC
 
 Makefile.am:
 lib_SOURCES += trim.c

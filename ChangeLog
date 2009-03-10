@@ -1,3 +1,71 @@
+2009-03-09  Bruno Haible  <bruno@clisp.org>
+
+	Followup to 2008-12-22 commit: Remove unnecessary AC_FUNC_MBRTOWC
+	invocations.
+
+	* m4/mbscasecmp.m4: Remove file.
+	* modules/mbscasecmp (Files): Remove it and m4/mbrtowc.m4
+	(configure.ac): Remove gl_FUNC_MBSCASECMP invocation.
+
+	* m4/mbscasestr.m4: Remove file.
+	* modules/mbscasestr (Files): Remove it and m4/mbrtowc.m4
+	(configure.ac): Remove gl_FUNC_MBSCASESTR invocation.
+
+	* m4/mbschr.m4: Remove file.
+	* modules/mbschr (Files): Remove it and m4/mbrtowc.m4
+	(configure.ac): Remove gl_FUNC_MBSCHR invocation.
+
+	* m4/mbscspn.m4: Remove file.
+	* modules/mbscspn (Files): Remove it and m4/mbrtowc.m4
+	(configure.ac): Remove gl_FUNC_MBSCSPN invocation.
+
+	* m4/mbslen.m4: Remove file.
+	* modules/mbslen (Files): Remove it and m4/mbrtowc.m4
+	(configure.ac): Remove gl_FUNC_MBSLEN invocation.
+
+	* m4/mbsncasecmp.m4: Remove file.
+	* modules/mbsncasecmp (Files): Remove it and m4/mbrtowc.m4
+	(configure.ac): Remove gl_FUNC_MBSNCASECMP invocation.
+
+	* m4/mbsnlen.m4: Remove file.
+	* modules/mbsnlen (Files): Remove it and m4/mbrtowc.m4
+	(configure.ac): Remove gl_FUNC_MBSNLEN invocation.
+
+	* m4/mbspbrk.m4: Remove file.
+	* modules/mbspbrk (Files): Remove it and m4/mbrtowc.m4
+	(configure.ac): Remove gl_FUNC_MBSPBRK invocation.
+
+	* m4/mbspcasecmp.m4: Remove file.
+	* modules/mbspcasecmp (Files): Remove it and m4/mbrtowc.m4
+	(configure.ac): Remove gl_FUNC_MBSPCASECMP invocation.
+
+	* m4/mbsrchr.m4: Remove file.
+	* modules/mbsrchr (Files): Remove it and m4/mbrtowc.m4
+	(configure.ac): Remove gl_FUNC_MBSRCHR invocation.
+
+	* m4/mbssep.m4: Remove file.
+	* modules/mbssep (Files): Remove it and m4/mbrtowc.m4
+	(configure.ac): Remove gl_FUNC_MBSSEP invocation.
+
+	* m4/mbsspn.m4: Remove file.
+	* modules/mbsspn (Files): Remove it and m4/mbrtowc.m4
+	(configure.ac): Remove gl_FUNC_MBSSPN invocation.
+
+	* m4/mbsstr.m4: Remove file.
+	* modules/mbsstr (Files): Remove it and m4/mbrtowc.m4
+	(configure.ac): Remove gl_FUNC_MBSSTR invocation.
+
+	* m4/mbstok_r.m4: Remove file.
+	* modules/mbstok_r (Files): Remove it and m4/mbrtowc.m4
+	(configure.ac): Remove gl_FUNC_MBSTOK_R invocation.
+
+	* m4/mbswidth.m4 (gl_MBSWIDTH): Remove AC_FUNC_MBRTOWC invocation.
+
+	* m4/quotearg.m4 (gl_QUOTEARG): Remove mbsinit test and
+	AC_TYPE_MBSTATE_T, AC_FUNC_MBRTOWC invocations.
+
+	* modules/trim (configure.ac): Remove AC_FUNC_MBRTOWC invocation.
+
 2009-03-08  Bruno Haible  <bruno@clisp.org>
 
 	Tests for module 'unicase/ulc-casecmp'.

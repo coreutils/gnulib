@@ -3,8 +3,6 @@ mbstok_r() function: split string into tokens, thread safe.
 
 Files:
 lib/mbstok_r.c
-m4/mbstok_r.m4
-m4/mbrtowc.m4
 
 Depends-on:
 mbuiter
@@ -14,7 +12,6 @@ mbspbrk
 strtok_r
 
 configure.ac:
-gl_FUNC_MBSTOK_R
 gl_STRING_MODULE_INDICATOR([mbstok_r])
 
 Makefile.am:

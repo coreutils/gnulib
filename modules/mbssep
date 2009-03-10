@@ -3,8 +3,6 @@ mbssep() function: split string into tokens, thread safe.
 
 Files:
 lib/mbssep.c
-m4/mbssep.m4
-m4/mbrtowc.m4
 
 Depends-on:
 mbuiter
@@ -13,7 +11,6 @@ mbspbrk
 strsep
 
 configure.ac:
-gl_FUNC_MBSSEP
 gl_STRING_MODULE_INDICATOR([mbssep])
 
 Makefile.am:

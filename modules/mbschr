@@ -3,15 +3,12 @@ mbschr() function: search a string for a character.
 
 Files:
 lib/mbschr.c
-m4/mbschr.m4
-m4/mbrtowc.m4
 
 Depends-on:
 mbuiter
 string
 
 configure.ac:
-gl_FUNC_MBSCHR
 gl_STRING_MODULE_INDICATOR([mbschr])
 
 Makefile.am:

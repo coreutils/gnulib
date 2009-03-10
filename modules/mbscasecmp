@@ -3,15 +3,12 @@ mbscasecmp() function: case-insensitive string comparison.
 
 Files:
 lib/mbscasecmp.c
-m4/mbscasecmp.m4
-m4/mbrtowc.m4
 
 Depends-on:
 mbuiter
 string
 
 configure.ac:
-gl_FUNC_MBSCASECMP
 gl_STRING_MODULE_INDICATOR([mbscasecmp])
 
 Makefile.am:

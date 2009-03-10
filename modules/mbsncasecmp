@@ -3,15 +3,12 @@ mbsncasecmp() function: case-insensitive string prefix comparison.
 
 Files:
 lib/mbsncasecmp.c
-m4/mbsncasecmp.m4
-m4/mbrtowc.m4
 
 Depends-on:
 mbuiter
 string
 
 configure.ac:
-gl_FUNC_MBSNCASECMP
 gl_STRING_MODULE_INDICATOR([mbsncasecmp])
 
 Makefile.am:

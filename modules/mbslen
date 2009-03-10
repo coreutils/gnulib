@@ -3,15 +3,12 @@ mbslen() function: Determine the number of multibyte characters in a string.
 
 Files:
 lib/mbslen.c
-m4/mbslen.m4
-m4/mbrtowc.m4
 
 Depends-on:
 mbuiter
 string
 
 configure.ac:
-gl_FUNC_MBSLEN
 gl_STRING_MODULE_INDICATOR([mbslen])
 
 Makefile.am:

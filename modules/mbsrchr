@@ -3,15 +3,12 @@ mbsrchr() function: search a string for a character, from the end.
 
 Files:
 lib/mbsrchr.c
-m4/mbsrchr.m4
-m4/mbrtowc.m4
 
 Depends-on:
 mbuiter
 string
 
 configure.ac:
-gl_FUNC_MBSRCHR
 gl_STRING_MODULE_INDICATOR([mbsrchr])
 
 Makefile.am:

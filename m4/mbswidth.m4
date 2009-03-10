@@ -1,4 +1,4 @@
-# mbswidth.m4 serial 16
+# mbswidth.m4 serial 17
 dnl Copyright (C) 2000-2002, 2004, 2006-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,7 +11,6 @@ AC_DEFUN([gl_MBSWIDTH],
 [
   AC_CHECK_HEADERS_ONCE([wchar.h])
   AC_CHECK_FUNCS_ONCE([isascii mbsinit])
-  AC_FUNC_MBRTOWC
 
   dnl UnixWare 7.1.1 <wchar.h> has a declaration of a function mbswidth()
   dnl that clashes with ours.
