@@ -1,3 +1,10 @@
+2009-03-08  Bruno Haible  <bruno@clisp.org>
+
+	New module 'unicase/ulc-casexfrm'.
+	* lib/unicase.h (ulc_casexfrm): New declaration.
+	* lib/unicase/ulc-casexfrm.c: New file.
+	* modules/unicase/ulc-casexfrm: New file.
+
 2009-03-09  Bruno Haible  <bruno@clisp.org>
 
 	Followup to 2008-12-22 commit: Remove unnecessary AC_FUNC_MBRTOWC

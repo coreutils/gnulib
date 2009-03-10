@@ -184,6 +184,9 @@ extern char *
 extern char *
        u32_casexfrm (const uint32_t *s, size_t n, const char *iso639_language,
 		     uninorm_t nf, char *resultbuf, size_t *lengthp);
+extern char *
+       ulc_casexfrm (const char *s, size_t n, const char *iso639_language,
+		     uninorm_t nf, char *resultbuf, size_t *lengthp);
 
 /* Compare S1 and S2, ignoring differences in case and normalization, using the
    collation rules of the current locale.
