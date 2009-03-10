@@ -1,5 +1,12 @@
 2009-03-10  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'mbmemcasecoll'.
+	* modules/mbmemcasecoll-tests: New file.
+	* tests/test-mbmemcasecoll1.sh: New file.
+	* tests/test-mbmemcasecoll2.sh: New file.
+	* tests/test-mbmemcasecoll3.sh: New file.
+	* tests/test-mbmemcasecoll.c: New file.
+
 	New module 'mbmemcasecoll'.
 	* lib/mbmemcasecoll.h: New file.
 	* lib/mbmemcasecoll.c: New file.
