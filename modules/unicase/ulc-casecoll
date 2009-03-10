@@ -1,0 +1,26 @@
+Description:
+Locale dependent, case and normalization insensitive comparison of strings.
+
+Files:
+lib/unicase/ulc-casecoll.c
+lib/unicase/u-casecoll.h
+
+Depends-on:
+unicase/base
+unicase/ulc-casexfrm
+memcmp2
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unicase/ulc-casecoll.c
+
+Include:
+"unicase.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

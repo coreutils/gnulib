@@ -207,6 +207,10 @@ extern int
        u32_casecoll (const uint32_t *s1, size_t n1,
 		     const uint32_t *s2, size_t n2,
 		     const char *iso639_language, uninorm_t nf, int *resultp);
+extern int
+       ulc_casecoll (const char *s1, size_t n1,
+		     const char *s2, size_t n2,
+		     const char *iso639_language, uninorm_t nf, int *resultp);
 
 
 /* Set *RESULTP to true if mapping NFD(S) to upper case is a no-op, or to false

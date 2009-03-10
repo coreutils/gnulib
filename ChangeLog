@@ -1,5 +1,10 @@
 2009-03-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unicase/ulc-casecoll'.
+	* lib/unicase.h (ulc_casecoll): New declaration.
+	* lib/unicase/ulc-casecoll.c: New file.
+	* modules/unicase/ulc-casecoll: New file.
+
 	New module 'unicase/ulc-casexfrm'.
 	* lib/unicase.h (ulc_casexfrm): New declaration.
 	* lib/unicase/ulc-casexfrm.c: New file.
