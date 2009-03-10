@@ -1,5 +1,11 @@
 2009-03-08  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unicase/ulc-casecoll'.
+	* modules/unicase/ulc-casecoll-tests: New file.
+	* tests/unicase/test-ulc-casecoll1.sh: New file.
+	* tests/unicase/test-ulc-casecoll2.sh: New file.
+	* tests/unicase/test-ulc-casecoll.c: New file.
+
 	New module 'unicase/ulc-casecoll'.
 	* lib/unicase.h (ulc_casecoll): New declaration.
 	* lib/unicase/ulc-casecoll.c: New file.
