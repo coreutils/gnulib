@@ -31,15 +31,12 @@
 #include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdint.h>
 
 #include "xalloc.h"
 
 #if USE_UNLOCKED_IO
 # include "unlocked-io.h"
-#endif
-
-#ifndef SIZE_MAX
-# define SIZE_MAX ((size_t) -1)
 #endif
 
 /* Copy UT->ut_name into storage obtained from malloc.  Then remove any

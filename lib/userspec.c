@@ -71,6 +71,8 @@
 # define MAXGID GID_T_MAX
 #endif
 
+#ifdef __DJGPP__
+
 /* ISDIGIT differs from isdigit, as follows:
    - Its arg may be any int or unsigned int; it need not be an unsigned char
      or EOF.
@@ -79,8 +81,6 @@
    isdigit unless it's important to use the locale's definition
    of `digit' even when the host does not conform to POSIX.  */
 #define ISDIGIT(c) ((unsigned int) (c) - '0' <= 9)
-
-#ifdef __DJGPP__
 
 /* Return true if STR represents an unsigned decimal integer.  */
 

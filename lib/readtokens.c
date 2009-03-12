@@ -1,6 +1,6 @@
 /* readtokens.c  -- Functions for reading tokens from an input stream.
 
-   Copyright (C) 1990-1991, 1999-2004, 2006 Free Software Foundation, Inc.
+   Copyright (C) 1990-1991, 1999-2004, 2006, 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -35,9 +35,6 @@
 #if USE_UNLOCKED_IO
 # include "unlocked-io.h"
 #endif
-
-#define STREQ(a,b) ((a) == (b) || ((a) && (b) && *(a) == *(b) \
-				   && strcmp(a, b) == 0))
 
 /* Initialize a tokenbuffer. */
 

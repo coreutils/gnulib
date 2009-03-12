@@ -1,3 +1,16 @@
+2009-03-12  Jim Meyering  <meyering@redhat.com>
+
+	avoid gcc warnings about unused macro definitions
+	* lib/readtokens.c (STREQ): Remove unused definition.
+	* lib/xmalloc.c (SIZE_MAX): Likewise.
+	* lib/openat-die.c (N_): Likewise.
+	* lib/mountlist.c (SIZE_MAX): Remove definition.
+	Instead, include <stdint.h>.
+	* lib/readutmp.c: Likewise.
+	* modules/readutmp (Depends-on): Add stdint.
+	* modules/mountlist (Depends-on): Add stdint.
+	* lib/userspec.c (ISDIGIT): Move definition into #if block where used.
+
 2009-03-10  Bruno Haible  <bruno@clisp.org>
 
 	Tests for module 'mbmemcasecoll'.

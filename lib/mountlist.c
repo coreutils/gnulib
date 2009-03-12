@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdint.h>
 
 #include "xalloc.h"
 
@@ -131,10 +132,6 @@
 
 #if USE_UNLOCKED_IO
 # include "unlocked-io.h"
-#endif
-
-#ifndef SIZE_MAX
-# define SIZE_MAX ((size_t) -1)
 #endif
 
 /* The results of open() in this file are not used with fchdir,
