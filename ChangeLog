@@ -1,5 +1,18 @@
 2009-03-12  Bruno Haible  <bruno@clisp.org>
 
+	Work around select() bug on Interix 3.5.
+	* lib/sys_select.in.h (select): Also replace if REPLACE_SELECT is 1.
+	* lib/select.c (rpl_select): Add an implementation for Unix platforms.
+	* m4/select.m4: New file.
+	* m4/sys_select_h.m4 (gl_SYS_SELECT_H_DEFAULTS): Initialize REPLACE_SELECT.
+	* modules/sys_select (Makefile.am): Substitute REPLACE_SELECT.
+	* modules/select (Files): Add m4/select.m4.
+	(configure.ac): Move conditional to m4/select.m4. Invoke gl_FUNC_SELECT.
+	* modules/nanosleep (Depends-on): Add select.
+	* modules/poll (Depends-on): Likewise.
+	* doc/posix-functions/select.texi: Mention the Interix bug.
+	Reported by Markus Duft <mduft@gentoo.org>.
+
 	* lib/select.c: Renamed from lib/winsock-select.c.
 	* modules/select (Files): Add lib/select.c, remove
 	lib/winsock-select.c.

@@ -1,5 +1,5 @@
-# sys_select_h.m4 serial 6
-dnl Copyright (C) 2006-2008 Free Software Foundation, Inc.
+# sys_select_h.m4 serial 7
+dnl Copyright (C) 2006-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -42,4 +42,6 @@ AC_DEFUN([gl_SYS_SELECT_MODULE_INDICATOR],
 AC_DEFUN([gl_SYS_SELECT_H_DEFAULTS],
 [
   GNULIB_SELECT=0; AC_SUBST([GNULIB_SELECT])
+  dnl Assume proper GNU behavior unless another module says otherwise.
+  REPLACE_SELECT=0; AC_SUBST([REPLACE_SELECT])
 ])

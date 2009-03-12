@@ -1,7 +1,7 @@
 /* Emulation for select(2)
    Contributed by Paolo Bonzini.
 
-   Copyright 2008 Free Software Foundation, Inc.
+   Copyright 2008-2009 Free Software Foundation, Inc.
 
    This file is part of gnulib.
 
@@ -23,6 +23,8 @@
 #include <alloca.h>
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+/* Native Win32.  */
+
 #include <sys/types.h>
 #include <stdbool.h>
 #include <errno.h>
@@ -420,4 +422,25 @@ rpl_select (int nfds, fd_set *rfds, fd_set *wfds, fd_set *xfds,
   return rc;
 }
 
-#endif /* Native Win32.  */
+#else /* ! Native Win32.  */
+
+#include <sys/select.h>
+
+#undef select
+
+int
+rpl_select (int nfds, fd_set *rfds, fd_set *wfds, fd_set *xfds,
+            struct timeval *timeout)
+{
+  /* Interix 3.5 has a bug: it does not support nfds == 0.  */
+  if (nfds == 0)
+    {
+      nfds = 1;
+      rfds = NULL;
+      wfds = NULL;
+      xfds = NULL;
+    }
+  return select (nfds, rfds, wfds, xfds, timeout);
+}
+
+#endif

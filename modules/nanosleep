@@ -10,6 +10,7 @@ clock-time
 extensions
 gettime
 multiarch
+select
 sigaction
 stdbool
 sys_select

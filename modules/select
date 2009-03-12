@@ -3,16 +3,14 @@ select() function: synchronous I/O multiplexing.
 
 Files:
 lib/select.c
+m4/select.m4
 
 Depends-on:
 alloca
 sys_select
 
 configure.ac:
-AC_REQUIRE([gl_HEADER_SYS_SELECT])
-if test "$ac_cv_header_winsock2_h" = yes; then
-  AC_LIBOBJ([select])
-fi
+gl_FUNC_SELECT
 gl_SYS_SELECT_MODULE_INDICATOR([select])
 
 Makefile.am:

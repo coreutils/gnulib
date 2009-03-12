@@ -8,6 +8,7 @@ m4/poll.m4
 
 Depends-on:
 alloca
+select
 sys_select
 sys_time
 errno

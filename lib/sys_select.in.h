@@ -1,5 +1,5 @@
 /* Substitute for <sys/select.h>.
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -66,7 +66,7 @@ extern "C" {
 # endif
 
 # if @GNULIB_SELECT@
-#  if @HAVE_WINSOCK2_H@
+#  if @HAVE_WINSOCK2_H@ || @REPLACE_SELECT@
 #   undef select
 #   define select rpl_select
 extern int rpl_select (int, fd_set *, fd_set *, fd_set *, struct timeval *);
