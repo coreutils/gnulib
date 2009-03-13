@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate February 1, 2009
+@set lastupdate March 12, 2009
 @c %**end of header
 
 @dircategory GNU organization
@@ -1490,24 +1490,50 @@ official new releases, including those made just to fix bugs, we
 strongly recommend using the (moderated) general GNU announcements
 list, @email{info-gnu@@gnu.org}.  Doing so makes it easier for users
 and developers to find the latest GNU releases.  On the other hand,
-please do not announce test releases on @code{info-gnu} unless it's an
-unusual situation.
+please do not announce test releases on @code{info-gnu} unless it's a
+highly unusual situation.
 
 @cindex @url{http://planet.gnu.org}
 @cindex Savannah, news area
 Please also post release announcements in the news section of your
 Savannah project site.  It is fine to also write news entries for test
 releases and any other newsworthy events.  The news feeds from all GNU
-projects at savannah are aggregated at @url{http://planet.gnu.org}.
-(You can also post items directly, or arrange for feeds from other
-locations; see contact information on the GNU Planet web page.) 
+projects at savannah are aggregated at @url{http://planet.gnu.org}
+(GNU Planet).  You can also post items directly, or arrange for feeds
+from other locations; see contact information on the GNU Planet web
+page.
 
 @cindex announcement mailing list, project-specific
 You can maintain your own mailing list (typically
 @email{info-@var{program}@@gnu.org}) for announcements as well if you
-like.  For your own list, of course you can decide as you see fit what
+like.  For your own list, of course you decide as you see fit what
 events are worth announcing.  (@xref{Mail}, for more suggestions on
 handling mail for your package.)
+
+@cindex contents of announcements
+When writing an announcement, please include the following:
+
+@itemize @bullet
+@item
+A very brief description (a few sentences at most) of the general
+purpose of your package.
+
+@item
+Your package's web page (normally
+@indicateurl{http://www.gnu.org/software/@var{package}/}).
+
+@item
+Your package's download location (normally
+@indicateurl{http://ftp.gnu.org/gnu/@var{package}/}).  It is also
+useful to mention the FTP mirror list at
+@url{http://www.gnu.org/order/ftp.html}, and that
+@url{http://ftpmirror.gnu.org/@var{package/}} will automatically
+redirect to a nearby mirror.
+
+@item
+The NEWS (@pxref{NEWS File,,, standards, GNU Coding Standards}) for
+the present release.
+@end itemize
 
 
 @node Web Pages
@@ -1521,11 +1547,11 @@ The overall goals are to support a wide variety of browsers, to focus
 on information rather than flashy eye candy, and to keep the site
 simple and uniform.
 
-The simplest way to maintain the web pages for your project is to
-register the project on @code{savannah.gnu.org}.  Then you can edit
-the pages using CVS.  You can keep the source files there too, but if
-you want to use @code{savannah.gnu.org} only for the web pages, simply
-register a ``web-only'' project.
+The best way to maintain the web pages for your project is to register
+the project on @code{savannah.gnu.org}.  Then you can edit the pages
+using CVS.  You can keep your source files there too, but if you want
+to use @code{savannah.gnu.org} only for the web pages, that's ok;
+simply register a ``web-only'' project.
 
 If you don't want to use that method, please talk with
 @email{webmasters@@gnu.org} about other possible methods.  For
