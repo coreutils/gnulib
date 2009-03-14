@@ -110,15 +110,15 @@ syntax-check: $(syntax-check-rules)
 # Code Coverage
 
 init-coverage:
-	$(MAKE) clean
+	$(MAKE) $(AM_MAKEFLAGS) clean
 	lcov --directory . --zerocounters
 
 COVERAGE_CCOPTS ?= "-g --coverage"
 COVERAGE_OUT ?= doc/coverage
 
 build-coverage:
-	$(MAKE) CFLAGS=$(COVERAGE_CCOPTS) CXXFLAGS=$(COVERAGE_CCOPTS)
-	$(MAKE) CFLAGS=$(COVERAGE_CCOPTS) CXXFLAGS=$(COVERAGE_CCOPTS) check
+	$(MAKE) $(AM_MAKEFLAGS) CFLAGS=$(COVERAGE_CCOPTS) CXXFLAGS=$(COVERAGE_CCOPTS)
+	$(MAKE) $(AM_MAKEFLAGS) CFLAGS=$(COVERAGE_CCOPTS) CXXFLAGS=$(COVERAGE_CCOPTS) check
 	mkdir -p $(COVERAGE_OUT)
 	lcov --directory . --output-file $(COVERAGE_OUT)/$(PACKAGE).info \
 		--capture

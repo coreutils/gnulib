@@ -1,5 +1,10 @@
 2009-03-14  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
+	maint.mk: really add $(AM_MAKEFLAGS)
+	* top/maint.mk (init-coverage, build-coverage): `$(AM_MAKEFLAGS)'
+	was inadvertently omitted in the last commit.
+	Spotted by Bruno Haible.
+
 	maint.mk: use $(MAKE) $(AM_MAKEFLAGS) not make
 	* top/maint.mk (init-coverage, build-coverage): Use `$(MAKE)
 	$(AM_MAKEFLAGS)' rather than plain `make'.
