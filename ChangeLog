@@ -1,5 +1,7 @@
 2009-03-14  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
+	* top/GNUmakefile (_have-git-version-gen): Fix typo.
+
 	GNUmakefile: disable parallelism only for multiple, recursive targets
 	* top/GNUmakefile (ALL_RECURSIVE_TARGETS): New macro; allow user
 	additions in the Makefile.

@@ -64,7 +64,7 @@ ifeq ($(_have-git-version-gen)0,yes$(MAKELEVEL))
                    && $(_build-aux)/git-version-gen .tarball-version)
     ifneq ($(_curr-ver),$(VERSION))
       ifeq ($(_curr-ver),UNKNOWN)
-        $(info WARNING: unable to verify if $(VERSION) is correct version)
+        $(info WARNING: unable to verify if $(VERSION) is the correct version)
       else
         ifneq (,$(_is-install-target))
           # GNU Coding Standards state that 'make install' should not cause
