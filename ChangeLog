@@ -1,3 +1,14 @@
+2009-03-14  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	GNUmakefile: disable parallelism only for multiple, recursive targets
+	* top/GNUmakefile (ALL_RECURSIVE_TARGETS): New macro; allow user
+	additions in the Makefile.
+	(AM_RECURSIVE_TARGETS): New macro, override only if not provided
+	by Automake.
+	(.NOTPARALLEL): Only disable parallel builds if multiple targets
+	are listed on the command line and at least one of them is
+	listed in $(ALL_RECURSIVE_TARGETS).
+
 2009-03-14  Bruno Haible  <bruno@clisp.org>
 
 	* modules/unilbrk/u8-possible-linebreaks (Depends-on): Replace
