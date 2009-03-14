@@ -2,7 +2,7 @@
 # This Makefile fragment is intended to be useful by any GNU-like project.
 # This file originate from coreutils, CPPI, Bison, and Autoconf.
 
-# Copyright (C) 2001-2008 Free Software Foundation, Inc.
+# Copyright (C) 2001-2009 Free Software Foundation, Inc.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -110,15 +110,15 @@ syntax-check: $(syntax-check-rules)
 # Code Coverage
 
 init-coverage:
-	make clean
+	$(MAKE) clean
 	lcov --directory . --zerocounters
 
 COVERAGE_CCOPTS ?= "-g --coverage"
 COVERAGE_OUT ?= doc/coverage
 
 build-coverage:
-	make CFLAGS=$(COVERAGE_CCOPTS) CXXFLAGS=$(COVERAGE_CCOPTS)
-	make CFLAGS=$(COVERAGE_CCOPTS) CXXFLAGS=$(COVERAGE_CCOPTS) check
+	$(MAKE) CFLAGS=$(COVERAGE_CCOPTS) CXXFLAGS=$(COVERAGE_CCOPTS)
+	$(MAKE) CFLAGS=$(COVERAGE_CCOPTS) CXXFLAGS=$(COVERAGE_CCOPTS) check
 	mkdir -p $(COVERAGE_OUT)
 	lcov --directory . --output-file $(COVERAGE_OUT)/$(PACKAGE).info \
 		--capture

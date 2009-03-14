@@ -1,5 +1,9 @@
 2009-03-14  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
+	maint.mk: use $(MAKE) $(AM_MAKEFLAGS) not make
+	* top/maint.mk (init-coverage, build-coverage): Use `$(MAKE)
+	$(AM_MAKEFLAGS)' rather than plain `make'.
+
 	gnulib-tool: execute $MAKE not make
 	* gnulib-tool: Default $MAKE to 'make'.
 	(func_create_testdir, func_create_megatestdir): Use $MAKE rather
