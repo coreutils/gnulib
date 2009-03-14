@@ -63,6 +63,11 @@ if test -z "${AUTOPOINT}" || test -n "${GETTEXTPATH}"; then
   AUTOPOINT="${GETTEXTPATH}autopoint"
 fi
 
+# You can set MAKE.
+if test -z "${MAKE}"; then
+  MAKE=make
+fi
+
 # When using GNU sed, turn off as many GNU extensions as possible,
 # to minimize the risk of accidentally using non-portable features.
 # However, do this only for gnulib-tool itself, not for the code that
@@ -4193,9 +4198,9 @@ func_create_testdir ()
      ./configure || func_exit 1
        cd "$sourcebase"
        echo 'built_sources: $(BUILT_SOURCES)' >> Makefile
-       make built_sources || func_exit 1
+       $MAKE built_sources || func_exit 1
        cd ..
-     make distclean || func_exit 1
+     $MAKE distclean || func_exit 1
     ) || func_exit 1
   fi
 }
@@ -4472,9 +4477,9 @@ case $mode in
       mkdir build
       cd build
         ../configure || func_exit 1
-        make || func_exit 1
-        make check || func_exit 1
-        make distclean || func_exit 1
+        $MAKE || func_exit 1
+        $MAKE check || func_exit 1
+        $MAKE distclean || func_exit 1
         remaining=`find . -type f -print`
         if test -n "$remaining"; then
           echo "Remaining files:" $remaining 1>&2
@@ -4495,9 +4500,9 @@ case $mode in
       mkdir build
       cd build
         ../configure
-        make
-        make check
-        make distclean
+        $MAKE
+        $MAKE check
+        $MAKE distclean
         remaining=`find . -type f -print`
         if test -n "$remaining"; then
           echo "Remaining files:" $remaining 1>&2

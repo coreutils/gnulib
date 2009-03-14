@@ -1,5 +1,10 @@
 2009-03-14  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
+	gnulib-tool: execute $MAKE not make
+	* gnulib-tool: Default $MAKE to 'make'.
+	(func_create_testdir, func_create_megatestdir): Use $MAKE rather
+	than make.  Initialize $MAKE in the do-autobuild script.
+
 	gnulib-tool: use $MAKE not make in generated files
 	* gnulib-tool (func_create_megatestdir): Use $MAKE rather than
 	make, in generated files.  Initialize $MAKE in the do-autobuild
