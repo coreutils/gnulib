@@ -1,3 +1,20 @@
+2009-03-14  Bruno Haible  <bruno@clisp.org>
+
+	* modules/unilbrk/u8-possible-linebreaks (Depends-on): Replace
+	utf8-ucs4-unsafe with unistr/u8-mbtouc-unsafe.
+	* modules/unilbrk/u8-width-linebreaks (Depends-on): Likewise.
+	* modules/unilbrk/u16-possible-linebreaks (Depends-on): Replace
+	utf16-ucs4-unsafe with unistr/u16-mbtouc-unsafe.
+	* modules/unilbrk/u16-width-linebreaks (Depends-on): Likewise.
+	* modules/unistr/u8-chr (Depends-on): Replace ucs4-utf8 with
+	unistr/u8-uctomb.
+	* modules/unistr/u8-strchr (Depends-on): Likewise.
+	* modules/unistr/u8-strrchr (Depends-on): Likewise.
+	* modules/unistr/u16-chr (Depends-on): Replace ucs4-utf16 with
+	unistr/u16-uctomb.
+	* modules/unistr/u16-strchr (Depends-on): Likewise.
+	* modules/unistr/u16-strrchr (Depends-on): Likewise.
+
 2009-03-12  Bruno Haible  <bruno@clisp.org>
 
 	Work around select() bug on Interix 3.5.

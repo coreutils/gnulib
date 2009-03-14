@@ -8,7 +8,7 @@ Depends-on:
 unilbrk/base
 unilbrk/u16-possible-linebreaks
 uniwidth/width
-utf16-ucs4-unsafe
+unistr/u16-mbtouc-unsafe
 
 configure.ac:
 

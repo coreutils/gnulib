@@ -8,7 +8,7 @@ lib/uniwidth/cjk.h
 Depends-on:
 unilbrk/base
 unilbrk/tables
-utf16-ucs4-unsafe
+unistr/u16-mbtouc-unsafe
 streq
 
 configure.ac:
