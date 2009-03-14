@@ -1,5 +1,10 @@
 2009-03-14  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
+	gnulib-tool: use $MAKE not make in generated files
+	* gnulib-tool (func_create_megatestdir): Use $MAKE rather than
+	make, in generated files.  Initialize $MAKE in the do-autobuild
+	script.
+
 	* top/GNUmakefile (_have-git-version-gen): Fix typo.
 
 	GNUmakefile: disable parallelism only for multiple, recursive targets

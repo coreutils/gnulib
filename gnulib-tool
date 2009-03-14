@@ -4248,6 +4248,7 @@ func_create_megatestdir ()
                    -e 's,^\([0-9]*\) \([0-9]*\) \([0-9]*\),\3\2\1,'`
   (echo '#!/bin/sh'
    echo "CVSDATE=$cvsdate"
+   echo ": \${MAKE=make}"
    echo "test -d logs || mkdir logs"
    echo "for module in $megasubdirs; do"
    echo "  echo \"Working on module \$module...\""
@@ -4259,7 +4260,7 @@ func_create_megatestdir ()
    echo "   : autobuild revision... cvs-\$CVSDATE-000000"
    echo "   : autobuild timestamp... \`date \"+%Y%m%d-%H%M%S\"\`"
    echo "   : autobuild hostname... \`hostname\`"
-   echo "   cd \$module && ./configure \$CONFIGURE_OPTIONS && make && make check && make distclean"
+   echo "   cd \$module && ./configure \$CONFIGURE_OPTIONS && \$MAKE && \$MAKE check && \$MAKE distclean"
    echo "   echo rc=\$?"
    echo "  ) 2>&1 | { if test -n \"\$AUTOBUILD_SUBST\"; then sed -e \"\$AUTOBUILD_SUBST\"; else cat; fi; } > logs/\$safemodule"
    echo "done"
