@@ -1,3 +1,25 @@
+2009-03-17  Eric Blake  <ebb9@byu.net>
+
+	doc: mention more functions added in cygwin 1.7.0
+	* doc/posix-functions/fwprintf.texi: Mention recent cygwin 1.7.0
+	addition.
+	* doc/posix-functions/fwscanf.texi: Likewise.
+	* doc/posix-functions/swprintf.texi: Likewise.
+	* doc/posix-functions/swscanf.texi: Likewise.
+	* doc/posix-functions/vfwprintf.texi: Likewise.
+	* doc/posix-functions/vfwscanf.texi: Likewise.
+	* doc/posix-functions/vswprintf.texi: Likewise.
+	* doc/posix-functions/vswscanf.texi: Likewise.
+	* doc/posix-functions/vwprintf.texi: Likewise.
+	* doc/posix-functions/vwscanf.texi: Likewise.
+	* doc/posix-functions/wcscasecmp.texi: Likewise.
+	* doc/posix-functions/wcsdup.texi: Likewise.
+	* doc/posix-functions/wcsftime.texi: Likewise.
+	* doc/posix-functions/wcsncasecmp.texi: Likewise.
+	* doc/posix-functions/wprintf.texi: Likewise.
+	* doc/posix-functions/wscanf.texi: Likewise.
+	* doc/glibc-functions/gethostbyname2.texi: Likewise.
+
 2009-03-14  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	maint.mk: really add $(AM_MAKEFLAGS)
