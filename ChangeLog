@@ -1,3 +1,8 @@
+2009-03-17  Reuben Thomas  <rrt@sc3d.org>
+
+	* m4/regex.m4: update and improve help for
+	--without-included-regex.
+
 2009-03-17  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/isnanl-nolibm-tests (Files): Add tests/nan.h to avoid
