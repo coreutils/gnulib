@@ -21,7 +21,7 @@
    default merge driver has no clue how to deal with this. Furthermore
    the conflicts are presented with more <<<< ==== >>>> markers than
    necessary; this is because the default merge driver makes pointless
-   effects to look at the individual line changes inside a ChangeLog entry.
+   efforts to look at the individual line changes inside a ChangeLog entry.
 
    This program serves as a 'git' merge driver that avoids these problems.
    1. It produces no conflict when ChangeLog entries have been inserted

@@ -1,3 +1,8 @@
+2009-03-17  Bruno Haible  <bruno@clisp.org>
+
+	* lib/git-merge-changelog.c: Fix typo in comment.
+	Reported by Reuben Thomas <rrt@sc3d.org>.
+
 2009-03-17  Reuben Thomas  <rrt@sc3d.org>
 
 	* m4/regex.m4: update and improve help for
