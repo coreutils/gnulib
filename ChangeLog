@@ -1,3 +1,10 @@
+2009-03-19  Jim Meyering  <meyering@redhat.com>
+
+	fsusage: avoid syntax error due to statement-before-declaration
+	* lib/fsusage.c (get_fs_usage): Put warning-avoidance statement
+	after all declarations.  Reported by Matthew Woehlke in
+	http://thread.gmane.org/gmane.comp.gnu.coreutils.bugs/16231
+
 2009-03-18  Eric Blake  <ebb9@byu.net>
 
 	build-aux/compile: sync from automake
