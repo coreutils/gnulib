@@ -1,3 +1,10 @@
+2009-03-19  Eric Blake  <ebb9@byu.net>
+
+	doc: mention more functions added in cygwin 1.7.0
+	* doc/posix-functions/log2.texi: Mention recent cygwin 1.7.0
+	addition.
+	* doc/posix-functions/log2f.texi: Likewise.
+
 2009-03-19  Jim Meyering  <meyering@redhat.com>
 
 	fsusage: avoid syntax error due to statement-before-declaration
