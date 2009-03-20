@@ -1,5 +1,5 @@
 /* Test of filevercmp() function.
-   Copyright (C) 2008 Free Software Foundation, Inc.
+   Copyright (C) 2008-2009 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -45,10 +45,17 @@ static const char *const examples[] =
   ".b",
   "a~",
   "a",
+  "a.b~",
+  "a.b",
+  "a.bc~",
+  "a.bc",
   "b~",
   "b",
   "gcc-c++-10.fc9.tar.gz",
+  "gcc-c++-10.fc9.tar.gz.~1~",
+  "gcc-c++-10.fc9.tar.gz.~2~",
   "gcc-c++-10.8.12-0.7rc2.fc9.tar.bz2",
+  "gcc-c++-10.8.12-0.7rc2.fc9.tar.bz2.~1~",
   "glibc-2-0.1.beta1.fc10.rpm",
   "glibc-common-5-0.2.beta2.fc9.ebuild",
   "glibc-common-5-0.2b.deb",

@@ -1,3 +1,9 @@
+2009-03-24  Kamil Dudka  <kdudka@redhat.com>
+
+	filevercmp: handle simple~ and numbered.~3~ backup suffixes
+	* lib/filevercmp.c: Handle simple~ and numbered.~3~ backup suffixes.
+	* tests/test-filevercmp.c: Add tests for backup suffixes.
+
 2009-03-24  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/stdlib (Depends-on): Add stdint, needed when defining

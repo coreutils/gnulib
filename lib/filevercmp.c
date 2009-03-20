@@ -1,7 +1,7 @@
 /*
    Copyright (C) 1995 Ian Jackson <iwj10@cus.cam.ac.uk>
    Copyright (C) 2001 Anthony Towns <aj@azure.humbug.org.au>
-   Copyright (C) 2008 Free Software Foundation, Inc.
+   Copyright (C) 2008-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
 #include <limits.h>
 
 /* Match a file suffix defined by this regular expression:
-   /(\.[A-Za-z][A-Za-z0-9]*)*$/
+   /(\.[A-Za-z~][A-Za-z0-9~]*)*$/
    Scan the string *STR and return a pointer to the matching suffix, or
    NULL if not found.  Upon return, *STR points to terminating NUL.  */
 static const char *
@@ -40,7 +40,7 @@ match_suffix (const char **str)
       if (read_alpha)
         {
           read_alpha = false;
-          if (!c_isalpha (**str))
+          if (!c_isalpha (**str) && '~' != **str)
             match = NULL;
         }
       else if ('.' == **str)
@@ -49,7 +49,7 @@ match_suffix (const char **str)
           if (!match)
             match = *str;
         }
-      else if (!c_isalnum (**str))
+      else if (!c_isalnum (**str) && '~' != **str)
         match = NULL;
       (*str)++;
     }
