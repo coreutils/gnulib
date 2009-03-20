@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2009-01-18.17}
+\def\texinfoversion{2009-03-20.11}
 %
 % Copyright 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -2906,9 +2906,16 @@ end
   \thiseurofont
 }
 
-% Hacks for glyphs from the EC fonts similar to \euro.  We don't
-% use \let for the aliases, because sometimes we redefine the original
-% macro, and the alias should reflect the redefinition.
+% Glyphs from the EC fonts.  We don't use \let for the aliases, because
+% sometimes we redefine the original macro, and the alias should reflect
+% the redefinition.
+% 
+% Use LaTeX names for the Icelandic letters.
+\def\DH{{\ecfont \char"D0}} % Eth
+\def\dh{{\ecfont \char"F0}} % eth
+\def\TH{{\ecfont \char"DE}} % Thorn
+\def\th{{\ecfont \char"FE}} % thorn
+%
 \def\guillemetleft{{\ecfont \char"13}}
 \def\guillemotleft{\guillemetleft}
 \def\guillemetright{{\ecfont \char"14}}
@@ -2945,6 +2952,7 @@ end
 \def\Eogonek{{\ecfont \char"86}}\def\macrocharE{E}
 \def\eogonek{{\ecfont \char"A6}}\def\macrochare{e}
 %
+% Use the ec* fonts (cm-super in outline format) for non-CM glyphs.
 \def\ecfont{%
   % We can't distinguish serif/sans and italic/slanted, but this
   % is used for crude hacks anyway (like adding French and German
@@ -8152,7 +8160,7 @@ directory should work if nowhere else does.}
   \gdef^^ce{\^I}
   \gdef^^cf{\"I}
   %
-  \gdef^^d0{\missingcharmsg{LATIN CAPITAL LETTER ETH}}
+  \gdef^^d0{\DH}
   \gdef^^d1{\~N}
   \gdef^^d2{\`O}
   \gdef^^d3{\'O}
@@ -8166,7 +8174,7 @@ directory should work if nowhere else does.}
   \gdef^^db{\^U}
   \gdef^^dc{\"U}
   \gdef^^dd{\'Y}
-  \gdef^^de{\missingcharmsg{LATIN CAPITAL LETTER THORN}}
+  \gdef^^de{\TH}
   \gdef^^df{\ss}
   %
   \gdef^^e0{\`a}
@@ -8186,7 +8194,7 @@ directory should work if nowhere else does.}
   \gdef^^ee{\^{\dotless i}}
   \gdef^^ef{\"{\dotless i}}
   %
-  \gdef^^f0{\missingcharmsg{LATIN SMALL LETTER ETH}}
+  \gdef^^f0{\dh}
   \gdef^^f1{\~n}
   \gdef^^f2{\`o}
   \gdef^^f3{\'o}
@@ -8200,7 +8208,7 @@ directory should work if nowhere else does.}
   \gdef^^fb{\^u}
   \gdef^^fc{\"u}
   \gdef^^fd{\'y}
-  \gdef^^fe{\missingcharmsg{LATIN SMALL LETTER THORN}}
+  \gdef^^fe{\th}
   \gdef^^ff{\"y}
 }
 
@@ -8272,7 +8280,7 @@ directory should work if nowhere else does.}
   \gdef^^ce{\^I}
   \gdef^^cf{\v D}
   %
-  \gdef^^d0{\missingcharmsg{LATIN CAPITAL LETTER D WITH STROKE}}
+  \gdef^^d0{\DH}
   \gdef^^d1{\'N}
   \gdef^^d2{\v N}
   \gdef^^d3{\'O}
@@ -8306,7 +8314,7 @@ directory should work if nowhere else does.}
   \gdef^^ee{\^\i}
   \gdef^^ef{\v d}
   %
-  \gdef^^f0{\missingcharmsg{LATIN SMALL LETTER D WITH STROKE}}
+  \gdef^^f0{\dh}
   \gdef^^f1{\'n}
   \gdef^^f2{\v n}
   \gdef^^f3{\'o}
@@ -8479,6 +8487,7 @@ directory should work if nowhere else does.}
   \DeclareUnicodeCharacter{00CE}{\^I}
   \DeclareUnicodeCharacter{00CF}{\"I}
 
+  \DeclareUnicodeCharacter{00D0}{\DH}
   \DeclareUnicodeCharacter{00D1}{\~N}
   \DeclareUnicodeCharacter{00D2}{\`O}
   \DeclareUnicodeCharacter{00D3}{\'O}
@@ -8491,6 +8500,7 @@ directory should work if nowhere else does.}
   \DeclareUnicodeCharacter{00DB}{\^U}
   \DeclareUnicodeCharacter{00DC}{\"U}
   \DeclareUnicodeCharacter{00DD}{\'Y}
+  \DeclareUnicodeCharacter{00DE}{\TH}
   \DeclareUnicodeCharacter{00DF}{\ss}
 
   \DeclareUnicodeCharacter{00E0}{\`a}
@@ -8510,6 +8520,7 @@ directory should work if nowhere else does.}
   \DeclareUnicodeCharacter{00EE}{\^{\dotless{i}}}
   \DeclareUnicodeCharacter{00EF}{\"{\dotless{i}}}
 
+  \DeclareUnicodeCharacter{00F0}{\dh}
   \DeclareUnicodeCharacter{00F1}{\~n}
   \DeclareUnicodeCharacter{00F2}{\`o}
   \DeclareUnicodeCharacter{00F3}{\'o}
@@ -8522,6 +8533,7 @@ directory should work if nowhere else does.}
   \DeclareUnicodeCharacter{00FB}{\^u}
   \DeclareUnicodeCharacter{00FC}{\"u}
   \DeclareUnicodeCharacter{00FD}{\'y}
+  \DeclareUnicodeCharacter{00FE}{\th}
   \DeclareUnicodeCharacter{00FF}{\"y}
 
   \DeclareUnicodeCharacter{0100}{\=A}
