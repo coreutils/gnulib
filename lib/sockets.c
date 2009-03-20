@@ -1,6 +1,6 @@
 /* sockets.c --- wrappers for Windows socket functions
 
-   Copyright (C) 2008 Free Software Foundation, Inc.
+   Copyright (C) 2008-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -19,10 +19,11 @@
 
 #include <config.h>
 
+/* Specification.  */
+#include "sockets.h"
+
 /* This includes winsock2.h on MinGW. */
 #include <sys/socket.h>
-
-#include "sockets.h"
 
 int
 gl_sockets_startup (int version)
