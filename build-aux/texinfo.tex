@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2009-03-20.11}
+\def\texinfoversion{2009-03-20.13}
 %
 % Copyright 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -2909,7 +2909,7 @@ end
 % Glyphs from the EC fonts.  We don't use \let for the aliases, because
 % sometimes we redefine the original macro, and the alias should reflect
 % the redefinition.
-% 
+%
 % Use LaTeX names for the Icelandic letters.
 \def\DH{{\ecfont \char"D0}} % Eth
 \def\dh{{\ecfont \char"F0}} % eth
@@ -2929,7 +2929,7 @@ end
 % we have the precomposed glyphs for the most common cases.  We put the
 % tests to use those glyphs in the single \ogonek macro so we have fewer
 % dummy definitions to worry about for index entries, etc.
-% 
+%
 % ogonek is also used with other letters in Lithuanian (IOU), but using
 % the precomposed glyphs for those is not so easy since they aren't in
 % the same EC font.
@@ -2987,7 +2987,7 @@ end
 % Laurent Siebenmann reports \Orb undefined with:
 %  Textures 1.7.7 (preloaded format=plain 93.10.14)  (68K)  16 APR 2004 02:38
 % so we'll define it if necessary.
-% 
+%
 \ifx\Orb\undefined
 \def\Orb{\mathhexbox20D}
 \fi
@@ -3333,7 +3333,7 @@ end
     % cause the example and the item to crash together.  So we use this
     % bizarre value of 10001 as a signal to \aboveenvbreak to insert
     % \parskip glue after all.  Section titles are handled this way also.
-    % 
+    %
     \penalty 10001
     \endgroup
     \itemxneedsnegativevskipfalse
@@ -4146,7 +4146,7 @@ end
   % processing continues to some further point.  On the other hand, it
   % seems \endinput does not hurt in the printed index arg, since that
   % is still getting written without apparent harm.
-  % 
+  %
   % Sample source (mac-idx3.tex, reported by Graham Percival to
   % help-texinfo, 22may06):
   % @macro funindex {WORD}
@@ -4154,12 +4154,12 @@ end
   % @end macro
   % ...
   % @funindex commtest
-  % 
+  %
   % The above is not enough to reproduce the bug, but it gives the flavor.
-  % 
+  %
   % Sample whatsit resulting:
   % .@write3{\entry{xyz}{@folio }{@code {xyz@endinput }}}
-  % 
+  %
   % So:
   \let\endinput = \empty
   %
@@ -4417,11 +4417,11 @@ end
   % makeinfo does not expand macros in the argument to @deffn, which ends up
   % writing an index entry, and texindex isn't prepared for an index sort entry
   % that starts with \.
-  % 
+  %
   % Since macro invocations are followed by braces, we can just redefine them
   % to take a single TeX argument.  The case of a macro invocation that
   % goes to end-of-line is not handled.
-  % 
+  %
   \macrolist
 }
 
@@ -4549,7 +4549,7 @@ end
     % to re-insert the same penalty (values >10000 are used for various
     % signals); since we just inserted a non-discardable item, any
     % following glue (such as a \parskip) would be a breakpoint.  For example:
-    % 
+    %
     %   @deffn deffn-whatever
     %   @vindex index-whatever
     %   Description.
@@ -5619,11 +5619,11 @@ end
   % glue accumulate.  (Not a breakpoint because it's preceded by a
   % discardable item.)
   \vskip-\parskip
-  % 
+  %
   % This is purely so the last item on the list is a known \penalty >
   % 10000.  This is so \startdefun can avoid allowing breakpoints after
   % section headings.  Otherwise, it would insert a valid breakpoint between:
-  % 
+  %
   %   @section sec-whatever
   %   @deffn def-whatever
   \penalty 10001
@@ -5681,7 +5681,7 @@ end
 % These characters do not print properly in the Computer Modern roman
 % fonts, so we must take special care.  This is more or less redundant
 % with the Texinfo input format setup at the end of this file.
-% 
+%
 \def\activecatcodes{%
   \catcode`\"=\active
   \catcode`\$=\active
@@ -5731,7 +5731,7 @@ end
 
 % redefined for the two-volume lispref.  We always output on
 % \jobname.toc even if this is redefined.
-% 
+%
 \def\tocreadfilename{\jobname.toc}
 
 % Normal (long) toc.
@@ -6823,7 +6823,7 @@ end
 % This does \let #1 = #2, with \csnames; that is,
 %   \let \csname#1\endcsname = \csname#2\endcsname
 % (except of course we have to play expansion games).
-% 
+%
 \def\cslet#1#2{%
   \expandafter\let
   \csname#1\expandafter\endcsname
@@ -7987,7 +7987,7 @@ end
 %
 % If they passed de_DE, and txi-de_DE.tex doesn't exist,
 % try txi-de.tex.
-% 
+%
 \def\documentlanguagetrywithoutunderscore#1_#2\finish{%
   \openin 1 txi-#1.tex
   \ifeof 1
@@ -8006,16 +8006,16 @@ directory should work if nowhere else does.}
 % This macro is called from txi-??.tex files; the first argument is the
 % \language name to set (without the "\lang@" prefix), the second and
 % third args are \{left,right}hyphenmin.
-% 
+%
 % The language names to pass are determined when the format is built.
 % See the etex.log file created at that time, e.g.,
 % /usr/local/texlive/2008/texmf-var/web2c/pdftex/etex.log.
-% 
+%
 % With TeX Live 2008, etex now includes hyphenation patterns for all
 % available languages.  This means we can support hyphenation in
 % Texinfo, at least to some extent.  (This still doesn't solve the
 % accented characters problem.)
-% 
+%
 \catcode`@=11
 \def\txisetlanguage#1#2#3{%
   % do not set the language if the name is undefined in the current TeX.
@@ -8070,7 +8070,7 @@ directory should work if nowhere else does.}
      \setnonasciicharscatcode\active
      \lattwochardefs
   %
-  \else \ifx \declaredencoding \latone 
+  \else \ifx \declaredencoding \latone
      \setnonasciicharscatcode\active
      \latonechardefs
   %
@@ -8082,7 +8082,7 @@ directory should work if nowhere else does.}
      \setnonasciicharscatcode\active
      \utfeightchardefs
   %
-  \else 
+  \else
     \message{Unknown document encoding #1, ignoring.}%
   %
   \fi % utfeight
@@ -8094,7 +8094,7 @@ directory should work if nowhere else does.}
 
 % A message to be logged when using a character that isn't available
 % the default font encoding (OT1).
-% 
+%
 \def\missingcharmsg#1{\message{Character missing in OT1 encoding: #1.}}
 
 % Take account of \c (plain) vs. \, (Texinfo) difference.
@@ -8107,21 +8107,21 @@ directory should work if nowhere else does.}
 %
 % Latin1 (ISO-8859-1) character definitions.
 \def\latonechardefs{%
-  \gdef^^a0{~} 
+  \gdef^^a0{~}
   \gdef^^a1{\exclamdown}
-  \gdef^^a2{\missingcharmsg{CENT SIGN}} 
+  \gdef^^a2{\missingcharmsg{CENT SIGN}}
   \gdef^^a3{{\pounds}}
   \gdef^^a4{\missingcharmsg{CURRENCY SIGN}}
   \gdef^^a5{\missingcharmsg{YEN SIGN}}
-  \gdef^^a6{\missingcharmsg{BROKEN BAR}} 
+  \gdef^^a6{\missingcharmsg{BROKEN BAR}}
   \gdef^^a7{\S}
-  \gdef^^a8{\"{}} 
-  \gdef^^a9{\copyright} 
+  \gdef^^a8{\"{}}
+  \gdef^^a9{\copyright}
   \gdef^^aa{\ordf}
   \gdef^^ab{\guillemetleft}
   \gdef^^ac{$\lnot$}
-  \gdef^^ad{\-} 
-  \gdef^^ae{\registeredsymbol} 
+  \gdef^^ad{\-}
+  \gdef^^ae{\registeredsymbol}
   \gdef^^af{\={}}
   %
   \gdef^^b0{\textdegree}
@@ -8148,7 +8148,7 @@ directory should work if nowhere else does.}
   \gdef^^c2{\^A}
   \gdef^^c3{\~A}
   \gdef^^c4{\"A}
-  \gdef^^c5{\ringaccent A} 
+  \gdef^^c5{\ringaccent A}
   \gdef^^c6{\AE}
   \gdef^^c7{\cedilla C}
   \gdef^^c8{\`E}
@@ -8289,7 +8289,7 @@ directory should work if nowhere else does.}
   \gdef^^d6{\"O}
   \gdef^^d7{$\times$}
   \gdef^^d8{\v R}
-  \gdef^^d9{\ringaccent U} 
+  \gdef^^d9{\ringaccent U}
   \gdef^^da{\'U}
   \gdef^^db{\H U}
   \gdef^^dc{\"U}
@@ -8333,11 +8333,11 @@ directory should work if nowhere else does.}
 }
 
 % UTF-8 character definitions.
-% 
+%
 % This code to support UTF-8 is based on LaTeX's utf8.def, with some
 % changes for Texinfo conventions.  It is included here under the GPL by
 % permission from Frank Mittelbach and the LaTeX team.
-% 
+%
 \newcount\countUTFx
 \newcount\countUTFy
 \newcount\countUTFz
@@ -9190,7 +9190,7 @@ directory should work if nowhere else does.}
 
 % Same as @turnoffactive except outputs \ as {\tt\char`\\} instead of
 % the literal character `\'.
-% 
+%
 @def@normalturnoffactive{%
   @let\=@normalbackslash
   @let"=@normaldoublequote
@@ -9246,7 +9246,7 @@ directory should work if nowhere else does.}
 @catcode`@`=@active
 @markupsetuplqdefault
 @markupsetuprqdefault
- 
+
 @c Local variables:
 @c eval: (add-hook 'write-file-hooks 'time-stamp)
 @c page-delimiter: "^\\\\message"
