@@ -1,5 +1,5 @@
-# signal_h.m4 serial 6
-dnl Copyright (C) 2007, 2008 Free Software Foundation, Inc.
+# signal_h.m4 serial 7
+dnl Copyright (C) 2007, 2008, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -8,6 +8,12 @@ AC_DEFUN([gl_SIGNAL_H],
 [
   AC_REQUIRE([gl_SIGNAL_H_DEFAULTS])
   gl_CHECK_NEXT_HEADERS([signal.h])
+# AIX declares sig_atomic_t to already include volatile, and C89 compilers
+# then choke on 'volatile sig_atomic_t'.  C99 requires that it compile.
+  AC_CHECK_TYPE([volatile sig_atomic_t], [],
+    [HAVE_TYPE_VOLATILE_SIG_ATOMIC_T=0], [[
+#include <signal.h>
+    ]])
 ])
 
 AC_DEFUN([gl_SIGNAL_MODULE_INDICATOR],
@@ -29,4 +35,6 @@ AC_DEFUN([gl_SIGNAL_H_DEFAULTS],
   HAVE_SIGACTION=1;            AC_SUBST([HAVE_SIGACTION])
   HAVE_STRUCT_SIGACTION_SA_SIGACTION=1;
                                AC_SUBST([HAVE_STRUCT_SIGACTION_SA_SIGACTION])
+  HAVE_TYPE_VOLATILE_SIG_ATOMIC_T=1;
+                               AC_SUBST([HAVE_TYPE_VOLATILE_SIG_ATOMIC_T])
 ])

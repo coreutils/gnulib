@@ -8,6 +8,10 @@ Gnulib module: signal
 Portability problems fixed by Gnulib:
 @itemize
 @item
+@code{volatile sig_atomic_t} is rejected by older compilers on some
+platforms:
+AIX.
+@item
 @code{sigset_t} is only declared in <sys/types.h> on some platforms:
 mingw.
 @item

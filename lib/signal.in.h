@@ -1,6 +1,6 @@
 /* A GNU-like <signal.h>.
 
-   Copyright (C) 2006-2008 Free Software Foundation, Inc.
+   Copyright (C) 2006-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -40,6 +40,15 @@
 /* Define pid_t, uid_t.
    Also, mingw defines sigset_t not in <signal.h>, but in <sys/types.h>.  */
 #include <sys/types.h>
+
+/* On AIX, sig_atomic_t already includes volatile.  C99 requires that
+   'volatile sig_atomic_t' ignore the extra modifier, but C89 did not.
+   Hence, redefine this to a non-volatile type as needed.  */
+#if ! @HAVE_TYPE_VOLATILE_SIG_ATOMIC_T@
+typedef int rpl_sig_atomic_t;
+# undef sig_atomic_t
+# define sig_atomic_t rpl_sig_atomic_t
+#endif
 
 #ifdef __cplusplus
 extern "C" {

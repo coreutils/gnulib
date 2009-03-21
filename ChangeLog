@@ -1,3 +1,14 @@
+2009-03-23  Eric Blake  <ebb9@byu.net>
+
+	signal.h: always support 'volatile sig_atomic_t'
+	* m4/signal_h.m4 (gl_SIGNAL_H): Check for AIX limitation.
+	(gl_SIGNAL_H_DEFAULTS): Add a default.
+	* modules/signal (Makefile.am): Substitute if needed.
+	* lib/signal.in.h (sig_atomic_t): Redefine if needed, so that
+	users can blindly add volatile.
+	* doc/posix-headers/signal.texi (signal.h): Document it.
+	Reported by Matthew Woehlke.
+
 2009-03-23  Jim Meyering  <meyering@redhat.com>
 
 	pathmax: PATH_MAX: use pathconf only when available
