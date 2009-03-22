@@ -413,7 +413,7 @@ divide (mpn_t a, mpn_t b, mpn_t *q)
        Normalise [q[m-1],...,q[0]], yields q.
      If m>=n>1, perform a multiple-precision division:
        We have a/b < beta^(m-n+1).
-       s:=intDsize-1-(hightest bit in b[n-1]), 0<=s<intDsize.
+       s:=intDsize-1-(highest bit in b[n-1]), 0<=s<intDsize.
        Shift a and b left by s bits, copying them. r:=a.
        r=[r[m],...,r[0]], b=[b[n-1],...,b[0]] with b[n-1]>=beta/2.
        For j=m-n,...,0: {Here 0 <= r < b*beta^(j+1).}

@@ -1,3 +1,7 @@
+2009-03-23  Jim Meyering  <meyering@redhat.com>
+
+	* lib/vasnprintf.c (divide): Fix typo in comment.
+
 2009-03-23  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* gnulib-tool (func_filter_filelist): Fix comment.
