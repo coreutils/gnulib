@@ -1,5 +1,12 @@
 2009-03-23  Jim Meyering  <meyering@redhat.com>
 
+	pathmax: PATH_MAX: use pathconf only when available
+	* lib/pathmax.h (PATH_MAX): Select the pathconf-using definition
+	only if HAVE_PATHCONF is defined.  Patch by Sylvain Beucler.
+	* m4/pathmax.m4 (gl_PATHMAX): Check for pathconf.
+	This avoids a link failure in a PSP cross-compilation environment
+	described in http://thread.gmane.org/gmane.comp.lib.gnulib.bugs/17048
+
 	* lib/vasnprintf.c (divide): Fix typo in comment.
 
 2009-03-23  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
