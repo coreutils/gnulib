@@ -1,5 +1,9 @@
 2009-03-23  Eric Blake  <ebb9@byu.net>
 
+	signal-tests: test previous patch
+	* tests/test-signal.c: New file.
+	* modules/signal-tests: Likewise.
+
 	signal.h: always support 'volatile sig_atomic_t'
 	* m4/signal_h.m4 (gl_SIGNAL_H): Check for AIX limitation.
 	(gl_SIGNAL_H_DEFAULTS): Add a default.

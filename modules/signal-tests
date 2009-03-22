@@ -1,0 +1,13 @@
+Files:
+tests/test-signal.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-signal
+check_PROGRAMS += test-signal
+
+License:
+LGPL
