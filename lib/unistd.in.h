@@ -131,10 +131,6 @@ extern int chown (const char *file, uid_t uid, gid_t gid);
 
 
 #if @GNULIB_CLOSE@
-# if @UNISTD_H_HAVE_WINSOCK2_H@
-/* Need a gnulib internal function.  */
-#  define HAVE__GL_CLOSE_FD_MAYBE_SOCKET 1
-# endif
 # if @REPLACE_CLOSE@
 /* Automatically included by modules that need a replacement for close.  */
 #  undef close

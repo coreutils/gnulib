@@ -1,5 +1,5 @@
-# close.m4 serial 2
-dnl Copyright (C) 2008 Free Software Foundation, Inc.
+# close.m4 serial 3
+dnl Copyright (C) 2008-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -22,6 +22,4 @@ AC_DEFUN([gl_REPLACE_CLOSE],
   fi
   REPLACE_CLOSE=1
   gl_REPLACE_FCLOSE
-  LIB_CLOSE="-lws2_32"
-  AC_SUBST([LIB_CLOSE])
 ])

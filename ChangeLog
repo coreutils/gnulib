@@ -1,3 +1,30 @@
+2009-03-20  Bruno Haible  <bruno@clisp.org>
+
+	Remove dependency from 'close' module to -lws2_32 on native Windows.
+	* lib/close-hook.h: New file.
+	* lib/close-hook.c: New file.
+	* lib/close.c: Include close-hook.h. Don't include <sys/socket.h>,
+	w32sock.h.
+	(_gl_close_fd_maybe_socket): Remove function.
+	(rpl_close): Invoke execute_all_close_hooks instead of
+	_gl_close_fd_maybe_socket.
+	* lib/sockets.c: Include close-hook.h, w32sock.h.
+	(close_fd_maybe_socket): New function, essentially from lib/close.c.
+	(close_sockets_hook): New variable.
+	(gl_sockets_startup): Register close_fd_maybe_socket as a hook.
+	(gl_sockets_cleanup): Unregister it.
+	* lib/unistd.in.h (HAVE__GL_CLOSE_FD_MAYBE_SOCKET): Remove macro.
+	* m4/close.m4 (gl_REPLACE_CLOSE): Undo 2009-02-05 change.
+	* modules/close-hook: New file.
+	* modules/close (Files): Remove lib/w32sock.h.
+	(Depends-on): Add close-hook.
+	(Link): Remove section.
+	* modules/sockets (Files): Add lib/w32sock.h.
+	(Depends-on): Add close-hook.
+	* modules/sys_socket (configure.ac): Remove gl_MODULE_INDICATOR
+	invocation.
+	* NEWS: Mention that LIB_CLOSE is gone.
+
 2009-03-23  Eric Blake  <ebb9@byu.net>
 
 	signal-tests: test previous patch

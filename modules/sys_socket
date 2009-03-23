@@ -13,7 +13,6 @@ errno
 
 configure.ac:
 gl_HEADER_SYS_SOCKET
-gl_MODULE_INDICATOR([sys_socket])
 AC_PROG_MKDIR_P
 
 Makefile.am:

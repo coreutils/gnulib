@@ -4,10 +4,12 @@ General facilities for using sockets
 Files:
 lib/sockets.c
 lib/sockets.h
+lib/w32sock.h
 m4/sockets.m4
 
 Depends-on:
 sys_socket
+close-hook
 
 configure.ac:
 gl_SOCKETS

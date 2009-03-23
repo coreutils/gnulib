@@ -6,6 +6,8 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2009-03-20  close           The substituted variable LIB_CLOSE is removed.
+
 2009-03-05  filevercmp      Move hidden files up in ordering.
 
 2009-01-22  c-strtod        This function no longer calls xalloc_die(). If

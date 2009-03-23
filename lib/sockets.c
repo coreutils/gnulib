@@ -22,8 +22,54 @@
 /* Specification.  */
 #include "sockets.h"
 
+#if WINDOWS_SOCKETS
+
 /* This includes winsock2.h on MinGW. */
 #include <sys/socket.h>
+
+#include "close-hook.h"
+
+/* Get set_winsock_errno, FD_TO_SOCKET etc. */
+#include "w32sock.h"
+
+static int
+close_fd_maybe_socket (int fd, const struct close_hook *remaining_list)
+{
+  SOCKET sock;
+  WSANETWORKEVENTS ev;
+
+  /* Test whether fd refers to a socket.  */
+  sock = FD_TO_SOCKET (fd);
+  ev.lNetworkEvents = 0xDEADBEEF;
+  WSAEnumNetworkEvents (sock, NULL, &ev);
+  if (ev.lNetworkEvents != 0xDEADBEEF)
+    {
+      /* fd refers to a socket.  */
+      /* FIXME: other applications, like squid, use an undocumented
+	 _free_osfhnd free function.  But this is not enough: The 'osfile'
+	 flags for fd also needs to be cleared, but it is hard to access it.
+	 Instead, here we just close twice the file descriptor.  */
+      if (closesocket (sock))
+	{
+	  set_winsock_errno ();
+	  return -1;
+	}
+      else
+	{
+	  /* This call frees the file descriptor and does a
+	     CloseHandle ((HANDLE) _get_osfhandle (fd)), which fails.  */
+	  _close (fd);
+	  return 0;
+	}
+    }
+  else
+    /* Some other type of file descriptor.  */
+    return execute_close_hooks (fd, remaining_list);
+}
+
+static struct close_hook close_sockets_hook;
+
+#endif
 
 int
 gl_sockets_startup (int version)
@@ -38,6 +84,8 @@ gl_sockets_startup (int version)
 
   if (data.wVersion < version)
     return 2;
+
+  register_close_hook (close_fd_maybe_socket, &close_sockets_hook);
 #endif
 
   return 0;
@@ -48,6 +96,8 @@ gl_sockets_cleanup (void)
 {
 #if WINDOWS_SOCKETS
   int err;
+
+  unregister_close_hook (&close_sockets_hook);
 
   err = WSACleanup ();
   if (err != 0)
