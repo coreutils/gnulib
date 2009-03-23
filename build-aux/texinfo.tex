@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2009-03-21.17}
+\def\texinfoversion{2009-03-22.17}
 %
 % Copyright 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -5138,7 +5138,9 @@ end
   \gdef\chaplevelprefix{\the\chapno.}%
   \resetallfloatnos
   %
-  \message{\putwordChapter\space \the\chapno}%
+  % \putwordChapter can contain complex things in translations.
+  \toks0=\expandafter{\putwordChapter}%
+  \message{\the\toks0 \space \the\chapno}%
   %
   % Write the actual heading.
   \chapmacro{#1}{Ynumbered}{\the\chapno}%
@@ -5157,8 +5159,9 @@ end
   \gdef\chaplevelprefix{\appendixletter.}%
   \resetallfloatnos
   %
-  \def\appendixnum{\putwordAppendix\space \appendixletter}%
-  \message{\appendixnum}%
+  % \putwordAppendix can contain complex things in translations.
+  \toks0=\expandafter{\putwordAppendix}%
+  \message{\the\toks0 \space \appendixletter}%
   %
   \chapmacro{#1}{Yappendix}{\appendixletter}%
   %
@@ -5391,7 +5394,10 @@ end
     \xdef\lastchapterdefs{%
       \gdef\noexpand\thischaptername{\the\toks0}%
       \gdef\noexpand\thischapternum{\appendixletter}%
-      \gdef\noexpand\thischapter{\putwordAppendix{} \noexpand\thischapternum:
+      % \noexpand\putwordAppendix avoids expanding indigestible
+      % commands in some of the translations.
+      \gdef\noexpand\thischapter{\noexpand\putwordAppendix{}
+                                 \noexpand\thischapternum:
                                  \noexpand\thischaptername}%
     }%
   \else
@@ -5399,7 +5405,10 @@ end
     \xdef\lastchapterdefs{%
       \gdef\noexpand\thischaptername{\the\toks0}%
       \gdef\noexpand\thischapternum{\the\chapno}%
-      \gdef\noexpand\thischapter{\putwordChapter{} \noexpand\thischapternum:
+      % \noexpand\putwordChapter avoids expanding indigestible
+      % commands in some of the translations.
+      \gdef\noexpand\thischapter{\noexpand\putwordChapter{}
+                                 \noexpand\thischapternum:
                                  \noexpand\thischaptername}%
     }%
   \fi\fi\fi
@@ -5542,7 +5551,10 @@ end
         \xdef\lastsectiondefs{%
           \gdef\noexpand\thissectionname{\the\toks0}%
           \gdef\noexpand\thissectionnum{#4}%
-          \gdef\noexpand\thissection{\putwordSection{} \noexpand\thissectionnum:
+          % \noexpand\putwordSection avoids expanding indigestible
+          % commands in some of the translations.
+          \gdef\noexpand\thissection{\noexpand\putwordSection{}
+                                     \noexpand\thissectionnum:
                                      \noexpand\thissectionname}%
         }%
       \fi
@@ -5552,7 +5564,10 @@ end
         \xdef\lastsectiondefs{%
           \gdef\noexpand\thissectionname{\the\toks0}%
           \gdef\noexpand\thissectionnum{#4}%
-          \gdef\noexpand\thissection{\putwordSection{} \noexpand\thissectionnum:
+          % \noexpand\putwordSection avoids expanding indigestible
+          % commands in some of the translations.
+          \gdef\noexpand\thissection{\noexpand\putwordSection{}
+                                     \noexpand\thissectionnum:
                                      \noexpand\thissectionname}%
         }%
       \fi
@@ -7992,12 +8007,11 @@ end
     \closein 1
   \endgroup % end raw TeX
 \endgroup}
-}% end of special _ catcode
 %
 % If they passed de_DE, and txi-de_DE.tex doesn't exist,
 % try txi-de.tex.
 %
-\def\documentlanguagetrywithoutunderscore#1_#2\finish{%
+\gdef\documentlanguagetrywithoutunderscore#1_#2\finish{%
   \openin 1 txi-#1.tex
   \ifeof 1
     \errhelp = \nolanghelp
@@ -8008,6 +8022,7 @@ end
   \fi
   \closein 1
 }
+}% end of special _ catcode
 %
 \newhelp\nolanghelp{The given language definition file cannot be found or
 is empty.  Maybe you need to install it?  Putting it in the current
