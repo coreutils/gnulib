@@ -1406,7 +1406,7 @@ func_get_filelist ()
 # Processing: removed_prefix and removed_suffix are removed from each element,
 # added_prefix and added_suffix are added to each element.
 # removed_prefix, removed_suffix should not contain the characters "$`\{}[]^|.
-# added_prefix, added_suffix should not contain the characters \|.
+# added_prefix, added_suffix should not contain the characters \|&.
 func_filter_filelist ()
 {
   if test "$2" != "$nl" \
