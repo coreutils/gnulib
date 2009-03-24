@@ -1,3 +1,8 @@
+2009-03-24  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/unicase/locale-language-tests (test_locale_language_LDADD):
+	New variable.
+
 2009-03-24  Kamil Dudka  <kdudka@redhat.com>
 
 	filevercmp: handle simple~ and numbered.~3~ backup suffixes
