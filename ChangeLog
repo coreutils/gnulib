@@ -1,5 +1,11 @@
 2009-03-24  Simon Josefsson  <simon@josefsson.org>
 
+	* modules/stdlib (Depends-on): Add stdint, needed when defining
+	struct random_data on, for example, HP-UX 10.20.  Reported by
+	Albert Chin <bug-gnulib@mlists.thewrittenword.com>.
+
+2009-03-24  Simon Josefsson  <simon@josefsson.org>
+
 	* lib/readline.c (readline): Call fflush on stdout after printing
 	prompt.
 
