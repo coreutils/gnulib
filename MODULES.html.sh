@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright (C) 2002-2008 Free Software Foundation, Inc.
+# Copyright (C) 2002-2009 Free Software Foundation, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -2301,6 +2301,7 @@ func_all_modules ()
   func_module posix_spawn-internal
   func_module posix_spawnp
   func_module printf-posix
+  func_module pthread
   func_module readlink
   func_module realloc-posix
   func_module recv
@@ -3101,6 +3102,7 @@ func_all_modules ()
   func_module getloadavg
   func_module getpagesize
   func_module getusershell
+  func_module nproc
   func_module physmem
   func_module posixver
   func_module progname

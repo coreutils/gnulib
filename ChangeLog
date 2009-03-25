@@ -1,3 +1,15 @@
+2009-03-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	New modules nproc, pthread, contributed by Glen Lenker.
+
+	* MODULES.html.sh: Add pthread, nproc.
+	* lib/nproc.c: New file.
+	* lib/nproc.h: New file.
+	* lib/pthread.in.h: New file.
+	* m4/pthread.m4: New file.
+	* modules/nproc: New file.
+	* modules/pthread: New file.
+
 2009-03-24  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/unicase/locale-language-tests (test_locale_language_LDADD):

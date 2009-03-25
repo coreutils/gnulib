@@ -1,0 +1,29 @@
+Description:
+Implement a trivial subset of the pthreads library.
+
+Files:
+lib/pthread.in.h
+m4/pthread.m4
+
+Depends-on:
+
+configure.ac:
+gl_PTHREAD_CHECK
+
+Makefile.am:
+BUILT_SOURCES += $(PTHREAD_H)
+
+# We need the following in order to create <pthread.h> when the system
+# doesn't have one that works with the given compiler.
+pthread.h: pthread.in.h
+	ln -f pthread.in.h $@ || cp pthread.in.h $@
+MOSTLYCLEANFILES += pthread.h
+
+Include:
+#include <pthread.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+Glen Lenker and Paul Eggert

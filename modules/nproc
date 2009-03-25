@@ -1,0 +1,23 @@
+Description:
+Detect the number of processors
+
+Files:
+lib/nproc.h
+lib/nproc.c
+
+Depends-on:
+unistd
+
+configure.ac:
+AC_LIBOBJ([nproc])
+
+Makefile.am:
+
+Include:
+#include "nproc.h"
+
+License:
+GPL
+
+Maintainer:
+Glen Lenker and Paul Eggert
