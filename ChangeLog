@@ -1,3 +1,8 @@
+2009-03-25  Eric Blake  <ebb9@byu.net>
+
+	test-sockets: avoid gcc warning
+	* tests/test-sockets.c (main): Silence compiler warning.
+
 2009-03-25  Paul Eggert  <eggert@cs.ucla.edu>
 
 	New modules nproc, pthread, contributed by Glen Lenker.

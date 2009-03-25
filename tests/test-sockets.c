@@ -40,7 +40,7 @@ main (int argc, char *argv[])
       return 1;
     }
 
-  gl_fd_to_handle (0);
+  (void) gl_fd_to_handle (0);
 
   return 0;
 }
