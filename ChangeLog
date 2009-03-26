@@ -1,3 +1,9 @@
+2009-03-25  Bruno Haible  <bruno@clisp.org>
+
+	Fix a problem with --enable-relocatable on Solaris 7.
+	* modules/relocatable-prog-wrapper (Depends-on): Add environ. Needed
+	since 2008-02-24.
+
 2009-03-25  Eric Blake  <ebb9@byu.net>
 
 	test-sockets: avoid gcc warning

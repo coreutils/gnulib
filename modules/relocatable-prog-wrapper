@@ -39,6 +39,7 @@ ssize_t
 stdbool
 stdlib
 unistd
+environ
 intprops
 string
 
