@@ -87,7 +87,7 @@ int simple (char *host, char *service)
       if (res == EAI_NONAME)
 	return 0;
       /* Solaris reports EAI_SERVICE for "http" and "https".  Don't
-         fail the test merely because of this.  */
+	 fail the test merely because of this.  */
       if (res == EAI_SERVICE)
 	return 0;
       /* AIX reports EAI_NODATA for "https".  Don't fail the test
@@ -96,7 +96,7 @@ int simple (char *host, char *service)
 	return 0;
       /* Provide details if errno was set.  */
       if (res == EAI_SYSTEM)
-         dbgprintf ("system error: %s\n", strerror (err));
+	dbgprintf ("system error: %s\n", strerror (err));
 
       return 1;
     }
