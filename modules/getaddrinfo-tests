@@ -3,6 +3,7 @@ tests/test-getaddrinfo.c
 
 Depends-on:
 inet_ntop
+strerror
 
 configure.ac:
 

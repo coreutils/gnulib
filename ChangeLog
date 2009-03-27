@@ -1,3 +1,10 @@
+2009-03-27  Eric Blake  <ebb9@byu.net>
+
+	test-strerror: make debugging EAI_SYSTEM easier
+	* modules/getaddrinfo-tests (Depends-on): Add strerror.
+	* test-getaddrinfo.c (simple) [ENABLE_DEBUGGING]: Report errno if
+	failure was EAI_SYSTEM.
+
 2009-03-25  Bruno Haible  <bruno@clisp.org>
 
 	Fix a problem with --enable-relocatable on Solaris 7.
