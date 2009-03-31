@@ -1,0 +1,17 @@
+Description:
+uint64_t-like operations that work even on hosts lacking uint64_t
+
+Files:
+lib/u64.h
+
+Depends-on:
+stdint
+
+Include:
+"u64.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+Paul Eggert
