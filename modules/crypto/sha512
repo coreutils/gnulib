@@ -5,10 +5,10 @@ Files:
 lib/sha512.h
 lib/sha512.c
 m4/sha512.m4
-lib/u64.h
 
 Depends-on:
 stdint
+u64
 
 configure.ac:
 gl_SHA512
