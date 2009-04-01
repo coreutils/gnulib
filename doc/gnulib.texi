@@ -5823,6 +5823,7 @@ This list of functions is sorted according to the header that declares them.
 * Searching for Libraries::
 * Exported Symbols of Shared Libraries::
 * LD Version Scripts::
+* Visual Studio Compatibility::
 * Supporting Relocation::
 * func::
 * warnings::
@@ -5914,6 +5915,8 @@ generated automatically.
 @include visibility.texi
 
 @include ld-version-script.texi
+
+@include ld-output-def.texi
 
 @include relocatable-maint.texi
 

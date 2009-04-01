@@ -1,5 +1,15 @@
 2009-04-01  Simon Josefsson  <simon@josefsson.org>
 
+	* modules/lib-msvc-compat: New module.  Thanks to Bruno Haible
+	<bruno@clisp.org>, Ralf Wildenhues <Ralf.Wildenhues@gmx.de>, and
+	Eric Blake <ebb9@byu.net> for review.
+	* MODULES.html.sh: Add lib-msvc-compat.
+	* doc/gnulib.texi: Link to new section.
+	* m4/ld-output-def.m4: New file.
+	* doc/ld-output-def.texi: New file.
+
+2009-04-01  Simon Josefsson  <simon@josefsson.org>
+
 	Rename ld-version-script to lib-symbol-versions.  Suggested by
 	Bruno Haible <bruno@clisp.org>.
 	* modules/ld-version-script: Renamed to lib-symbol-versions.
