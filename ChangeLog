@@ -1,3 +1,12 @@
+2009-04-01  Bruno Haible  <bruno@clisp.org>
+
+	Rename module 'visibility'.
+	* modules/lib-symbol-visibility: Renamed from modules/visibility.
+	* doc/lib-symbol-visibility.texi: Renamed from visibility.texi.
+	* doc/gnulib.texi: Update.
+	* MODULES.html.sh (Misc): Update.
+	* NEWS: Mention the change.
+
 2009-04-01  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/lib-msvc-compat: New module.  Thanks to Bruno Haible

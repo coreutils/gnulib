@@ -1,7 +1,7 @@
 @node Exported Symbols of Shared Libraries
 @section Controlling the Exported Symbols of Shared Libraries
 
-@c Documentation of gnulib module 'visibility'.
+@c Documentation of gnulib module 'lib-symbol-visibility'.
 
 @c Copyright (C) 2005-2006, 2009 Free Software Foundation, Inc.
 
@@ -12,8 +12,8 @@
 @c Texts.  A copy of the license is included in the ``GNU Free
 @c Documentation License'' file as part of this distribution.
 
-The @code{visibility} module allows precise control of the symbols
-exported by a shared library.  This is useful because
+The @code{lib-symbol-visibility} module allows precise control of the
+symbols exported by a shared library.  This is useful because
 
 @itemize @bullet
 @item

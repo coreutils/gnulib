@@ -5912,7 +5912,7 @@ generated automatically.
 
 @include havelib.texi
 
-@include visibility.texi
+@include lib-symbol-visibility.texi
 
 @include ld-version-script.texi
 

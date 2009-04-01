@@ -6,6 +6,8 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2009-04-01  visibility      Renamed to lib-symbol-visibility.
+
 2009-04-01  ld-version-script  Renamed to lib-symbol-versions.
 
 2009-03-20  close           The substituted variable LIB_CLOSE is removed.

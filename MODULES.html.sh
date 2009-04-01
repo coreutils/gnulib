@@ -3102,6 +3102,7 @@ func_all_modules ()
   func_module getloadavg
   func_module getpagesize
   func_module getusershell
+  func_module lib-symbol-visibility
   func_module nproc
   func_module physmem
   func_module posixver
@@ -3113,7 +3114,6 @@ func_all_modules ()
   func_module sysexits
   func_module u64
   func_module verror
-  func_module visibility
   func_end_table
 
   element="Support for building libraries and executables"
