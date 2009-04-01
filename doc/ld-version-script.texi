@@ -1,9 +1,9 @@
 i@node LD Version Scripts
 @section LD Version Scripts
 
-The @code{ld-version-script} module can be used to add shared library
-versioning support.  Currently, only GNU LD and the Solaris linker
-supports this.
+The @code{lib-symbol-versions} module can be used to add shared
+library versioning support.  Currently, only GNU LD and the Solaris
+linker supports this.
 
 Version scripts provides information that can be used by GNU/Linux
 distribution packaging tools.  For example, Debian has a tool

@@ -1,3 +1,11 @@
+2009-04-01  Simon Josefsson  <simon@josefsson.org>
+
+	Rename ld-version-script to lib-symbol-versions.  Suggested by
+	Bruno Haible <bruno@clisp.org>.
+	* modules/ld-version-script: Renamed to lib-symbol-versions.
+	* doc/ld-version-script.texi: Fix module name.
+	* MODULES.html.sh: Add lib-symbol-versions.
+
 2009-03-31  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/u64-tests: New file.

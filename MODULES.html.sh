@@ -3132,6 +3132,7 @@ func_all_modules ()
   func_module include_next
   func_module ldd
   func_module lib-ignore
+  func_module lib-symbol-versions
   func_module link-warning
   func_module no-c++
   func_module relocatable-lib
