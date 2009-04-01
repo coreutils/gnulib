@@ -1,5 +1,9 @@
 2009-04-01  Bruno Haible  <bruno@clisp.org>
 
+	* doc/lib-symbol-visibility.texi: Follow texinfo style conventions.
+
+2009-04-01  Bruno Haible  <bruno@clisp.org>
+
 	Rename module 'visibility'.
 	* modules/lib-symbol-visibility: Renamed from modules/visibility.
 	* doc/lib-symbol-visibility.texi: Renamed from visibility.texi.
