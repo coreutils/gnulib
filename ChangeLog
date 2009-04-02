@@ -1,3 +1,8 @@
+2009-04-02  Simon Josefsson  <simon@josefsson.org>
+
+	* doc/ld-output-def.texi: Use DLL_VERSION instead of confusing
+	SOVERSION variable.
+
 2009-04-02  Bruno Haible  <bruno@clisp.org>
 
 	* Makefile (info, html, dvi, pdf): Combine the rules.

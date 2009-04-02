@@ -44,21 +44,21 @@ library:
 
 @smallexample
 if HAVE_LD_OUTPUT_DEF
-libfoo_la_LDFLAGS += -Wl,--output-def,libfoo-$(SOVERSION).def
+libfoo_la_LDFLAGS += -Wl,--output-def,libfoo-$(DLL_VERSION).def
 defexecdir = $(bindir)
-defexec_DATA = libfoo-$(SOVERSION).def
+defexec_DATA = libfoo-$(DLL_VERSION).def
 DISTCLEANFILES += $(defexec_DATA)
 endif
 @end smallexample
 
-The @code{SOVERSION} variable needs to be defined.  It should be the
+The @code{DLL_VERSION} variable needs to be defined.  It should be the
 shared library version number used in the DLL filename.  For Windows
 targets you compute this value from the values you pass to Libtool's
 @code{-version-info}.  Assuming you have variables @code{LT_CURRENT}
 and @code{LT_AGE} defined for the @code{CURRENT} and @code{AGE}
-libtool version integers, you compute @code{SOVERSION} as follows:
+libtool version integers, you compute @code{DLL_VERSION} as follows:
 
 @smallexample
-SOVERSION=`expr $@{LT_CURRENT@} - $@{LT_AGE@}`
-AC_SUBST(SOVERSION)
+DLL_VERSION=`expr $@{LT_CURRENT@} - $@{LT_AGE@}`
+AC_SUBST(DLL_VERSION)
 @end smallexample
