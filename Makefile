@@ -9,14 +9,8 @@
 all:
 
 # Produce the documentation in readable form.
-info:
-	cd doc && $(MAKE) info
-html:
-	cd doc && $(MAKE) html
-dvi:
-	cd doc && $(MAKE) dvi && $(MAKE) mostlyclean
-pdf:
-	cd doc && $(MAKE) pdf && $(MAKE) mostlyclean
+info html dvi pdf:
+	cd doc && $(MAKE) $@ && $(MAKE) mostlyclean
 
 # Perform some platform independent checks on the gnulib code.
 check:

@@ -1,3 +1,8 @@
+2009-04-02  Bruno Haible  <bruno@clisp.org>
+
+	* Makefile (info, html, dvi, pdf): Combine the rules.
+	Suggested by Jim Meyering.
+
 2009-04-01  Bruno Haible  <bruno@clisp.org>
 
 	* Makefile (info, html, dvi, pdf): New targets.
