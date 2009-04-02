@@ -1,5 +1,11 @@
 2009-04-01  Bruno Haible  <bruno@clisp.org>
 
+	* doc/gnulib-tool.texi (Invoking gnulib-tool): Document how gnulib-tool
+	can be put into PATH.
+	Reported by Reuben Thomas <rrt@sc3d.org>. Suggested by Karl Berry.
+
+2009-04-01  Bruno Haible  <bruno@clisp.org>
+
 	* doc/lib-symbol-visibility.texi: Follow texinfo style conventions.
 
 2009-04-01  Bruno Haible  <bruno@clisp.org>

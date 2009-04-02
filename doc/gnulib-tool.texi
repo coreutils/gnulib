@@ -1,7 +1,7 @@
 @node Invoking gnulib-tool
 @chapter Invoking gnulib-tool
 
-@c Copyright (C) 2005-2008 Free Software Foundation, Inc.
+@c Copyright (C) 2005-2009 Free Software Foundation, Inc.
 
 @c Permission is granted to copy, distribute and/or modify this document
 @c under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -20,6 +20,17 @@ meta-information stored in the @file{modules/*} files, but with a
 growing number of modules this becomes tedious.  @command{gnulib-tool}
 simplifies the management of source files, @file{Makefile.am}s and
 @file{configure.ac} in packages incorporating Gnulib modules.
+
+@file{gnulib-tool} is not installed in a standard directory that is
+contained in the @code{PATH} variable.  It needs to be run directly in
+the directory that contains the Gnulib source code.  You can do this
+either by specifying the absolute filename of @file{gnulib-tool}, or
+you can also use a symbolic link from a place inside your @code{PATH}
+to the @file{gnulib-tool} file of your preferred and most up-to-date
+Gnulib checkout, like this:
+@smallexample
+$ ln -s $HOME/gnu/src/gnulib.git/gnulib-tool $HOME/bin/gnulib-tool
+@end smallexample
 
 Run @samp{gnulib-tool --help} for information.  To get familiar with
 @command{gnulib-tool} without affecting your sources, you can also try
