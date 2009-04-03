@@ -1,3 +1,7 @@
+2009-04-03  Simon Josefsson  <simon@josefsson.org>
+
+	* m4/ld-version-script.m4: Add FIXME comment.
+
 2009-04-02  Simon Josefsson  <simon@josefsson.org>
 
 	* doc/ld-output-def.texi: Use DLL_VERSION instead of confusing

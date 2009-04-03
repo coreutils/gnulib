@@ -6,6 +6,11 @@ dnl with or without modifications, as long as this notice is preserved.
 
 dnl From Simon Josefsson
 
+# FIXME: The test below returns a false positive for mingw
+# cross-compiles, 'local:' statements does not reduce number of
+# exported symbols in a DLL.  Use --disable-ld-version-script to work
+# around the problem.
+
 # gl_LD_VERSION_SCRIPT
 # --------------------
 # Check if LD supports linker scripts, and define automake conditional
