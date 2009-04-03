@@ -1,5 +1,13 @@
 2009-04-03  Paul Eggert  <eggert@cs.ucla.edu>
 
+	Port coreutils 7.2 to Solaris 8.
+
+	* m4/inet_ntop.m4 (gl_INET_NTOP): Search for inet_ntop in -lnsl,
+	for Solaris 8.  This is a bit of a hack, as it means it's the
+	caller's responsibility to add -lnsl if needed, but most likely it
+	won't be needed since only getaddrinfo uses this and getaddrinfo
+	isn't neede on Solaris 8.
+
 	* modules/fnmatch (Depends-on): Add mbsrtowcs, to fix a porting
 	problem to Solaris 8 encountered with coreutils 7.2, which
 	resulted in a message "fnmatch.c:292: warning: passing argument 4
