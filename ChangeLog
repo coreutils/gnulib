@@ -1,3 +1,11 @@
+2009-04-03  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/fnmatch (Depends-on): Add mbsrtowcs, to fix a porting
+	problem to Solaris 8 encountered with coreutils 7.2, which
+	resulted in a message "fnmatch.c:292: warning: passing argument 4
+	of 'mbsrtowcs' from incompatible pointer type".  Also, add mbsinit
+	at the suggestion of Bruno Haible, since fnmatch uses mbsinit.
+
 2009-04-03  Simon Josefsson  <simon@josefsson.org>
 
 	* m4/ld-version-script.m4: Add FIXME comment.
