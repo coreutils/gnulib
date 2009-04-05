@@ -1,5 +1,11 @@
 2009-04-05  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_emit_lib_Makefile_am): Don't add the library to
+	noinst_LTLIBRARIES if the Makefile.am in the same directory specifies
+	that it should be installed.
+
+2009-04-05  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool: New option --copy-file.
 	(func_usage): Document it.
 	(func_dest_tmpfilename): Moved out of func_import.

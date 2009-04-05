@@ -2047,9 +2047,14 @@ func_emit_lib_Makefile_am ()
     echo "AM_CFLAGS ="
   fi
   echo
-  if LC_ALL=C grep "^[a-zA-Z0-9_]*_${perhapsLT}LIBRARIES *+\{0,1\}= *$libname\\.$libext\$" allsnippets.tmp > /dev/null; then
-    # One of the snippets already specifies an installation location for the
-    # library. Don't confuse automake by saying it should not be installed.
+  if LC_ALL=C grep "^[a-zA-Z0-9_]*_${perhapsLT}LIBRARIES *+\{0,1\}= *$libname\\.$libext\$" allsnippets.tmp > /dev/null \
+     || { test -n "$makefile_name" \
+          && test -f "$sourcebase/Makefile.am" \
+          && LC_ALL=C grep "^[a-zA-Z0-9_]*_${perhapsLT}LIBRARIES *+\{0,1\}= *$libname\\.$libext\$" "$sourcebase/Makefile.am" > /dev/null; \
+        }; then
+    # One of the snippets or the user's Makefile.am already specifies an
+    # installation location for the library. Don't confuse automake by saying
+    # it should not be installed.
     :
   else
     # By default, the generated library should not be installed.
