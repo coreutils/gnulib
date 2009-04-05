@@ -29,5 +29,5 @@
 #define FUNC u8_normcmp
 #define UNIT uint8_t
 #define U_NORMALIZE u8_normalize
-#define U_CMP u8_cmp
+#define U_CMP2 u8_cmp2
 #include "u-normcmp.h"

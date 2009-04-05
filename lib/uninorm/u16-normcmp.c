@@ -29,5 +29,5 @@
 #define FUNC u16_normcmp
 #define UNIT uint16_t
 #define U_NORMALIZE u16_normalize
-#define U_CMP u16_cmp
+#define U_CMP2 u16_cmp2
 #include "u-normcmp.h"

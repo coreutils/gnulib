@@ -1,5 +1,17 @@
 2009-04-05  Bruno Haible  <bruno@clisp.org>
 
+	* lib/uninorm.h: Mention u*_cmp2.
+	* lib/uninorm/u-normcmp.h (FUNC): Invoke U_CMP2 instead of U_CMP.
+	* lib/uninorm/u8-normcmp.c: Use u8_cmp2 instead of u8_cmp.
+	* lib/uninorm/u16-normcmp.c: Use u16_cmp2 instead of u16_cmp.
+	* lib/uninorm/u32-normcmp.c: Use u32_cmp2 instead of u32_cmp.
+	* modules/uninorm/u8-normcmp (Depends-on): Add unistr/u8-cmp2, remove
+	unistr/u8-cmp.
+	* modules/uninorm/u16-normcmp (Depends-on): Add unistr/u16-cmp2, remove
+	unistr/u16-cmp.
+	* modules/uninorm/u32-normcmp (Depends-on): Add unistr/u32-cmp2, remove
+	unistr/u32-cmp.
+
 	New module 'unistr/u32-cmp2'.
 	* lib/unistr/u32-cmp2.c: New file.
 	* modules/unistr/u32-cmp2: New file.

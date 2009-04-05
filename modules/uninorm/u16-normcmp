@@ -8,7 +8,7 @@ lib/uninorm/u-normcmp.h
 Depends-on:
 uninorm/base
 uninorm/u16-normalize
-unistr/u16-cmp
+unistr/u16-cmp2
 minmax
 
 configure.ac:

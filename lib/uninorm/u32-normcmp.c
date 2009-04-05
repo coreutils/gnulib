@@ -29,5 +29,5 @@
 #define FUNC u32_normcmp
 #define UNIT uint32_t
 #define U_NORMALIZE u32_normalize
-#define U_CMP u32_cmp
+#define U_CMP2 u32_cmp2
 #include "u-normcmp.h"
