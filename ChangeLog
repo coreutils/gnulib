@@ -1,5 +1,9 @@
 2009-04-05  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unistr/u16-cmp2'.
+	* lib/unistr/u16-cmp2.c: New file.
+	* modules/unistr/u16-cmp2: New file.
+
 	New module 'unistr/u8-cmp2'.
 	* lib/unistr.h (u8_cmp2, u16_cmp2, u32_cmp2): New declarations.
 	* lib/unistr/u8-cmp2.c: New file.
