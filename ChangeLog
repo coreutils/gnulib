@@ -1,3 +1,9 @@
+2009-04-05  Bruno Haible  <bruno@clisp.org>
+
+	* lib/unistr.h: Doc fixes.
+	* lib/uniconv.h: Doc fixes.
+	* lib/unictype.h: Doc fixes.
+
 2009-04-03  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Port coreutils 7.2 to Solaris 8.

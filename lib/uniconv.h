@@ -1,5 +1,5 @@
 /* Conversions between Unicode and legacy encodings.
-   Copyright (C) 2002, 2005, 2007 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2005, 2007, 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify it
    under the terms of the GNU Lesser General Public License as published
@@ -47,7 +47,7 @@ extern "C" {
    array is filled with offsets into the result, i.e. the character starting
    at SRC[i] corresponds to the character starting at (*RESULTP)[OFFSETS[i]],
    and other offsets are set to (size_t)(-1).
-   *RESULTP and *LENGTH should initially be a scratch buffer and its size,
+   *RESULTP and *LENGTHP should initially be a scratch buffer and its size,
    or *RESULTP can initially be NULL.
    May erase the contents of the memory at *RESULTP.
    Return value: 0 if successful, otherwise -1 and errno set.
@@ -84,7 +84,7 @@ extern int
    array is filled with offsets into the result, i.e. the character starting
    at SRC[i] corresponds to the character starting at (*RESULTP)[OFFSETS[i]],
    and other offsets are set to (size_t)(-1).
-   *RESULTP and *LENGTH should initially be a scratch buffer and its size,
+   *RESULTP and *LENGTHP should initially be a scratch buffer and its size,
    or *RESULTP can initially be NULL.
    May erase the contents of the memory at *RESULTP.
    Return value: 0 if successful, otherwise -1 and errno set.

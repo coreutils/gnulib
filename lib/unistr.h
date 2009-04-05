@@ -516,8 +516,8 @@ extern uint16_t *
 extern uint32_t *
        u32_strncpy (uint32_t *dest, const uint32_t *src, size_t n);
 
-/* Copy no more than N characters of SRC to DEST, returning the address of
-   the last character written into DEST.  */
+/* Copy no more than N units of SRC to DEST, returning the address of
+   the last unit written into DEST.  */
 /* Similar to stpncpy().  */
 extern uint8_t *
        u8_stpncpy (uint8_t *dest, const uint8_t *src, size_t n);

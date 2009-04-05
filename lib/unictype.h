@@ -56,7 +56,8 @@ uc_general_category_t;
 
 /* Bits and bit masks denoting General category values.  UnicodeData-3.2.0.html
    says a 32-bit integer will always suffice to represent them.
-   These bit masks are just informative; you cannot use them in any API.  */
+   These bit masks can only be used with the uc_is_general_category_withtable
+   function.  */
 enum
 {
   UC_CATEGORY_MASK_L  = 0x0000001f,
@@ -212,7 +213,7 @@ extern uc_general_category_t
        uc_general_category (ucs4_t uc);
 
 /* Test whether a Unicode character belongs to a given category.
-   The CATEGORY argument can be the combination of several built-in
+   The CATEGORY argument can be the combination of several predefined
    general categories.  */
 extern bool
        uc_is_general_category (ucs4_t uc, uc_general_category_t category);
@@ -547,7 +548,7 @@ extern bool uc_is_property_ignorable_control (ucs4_t uc);
 
 /* ========================================================================= */
 
-/* Subdivision of the the Unicode characters into scripts.  */
+/* Subdivision of the Unicode characters into scripts.  */
 
 typedef struct
 {
@@ -693,9 +694,8 @@ extern bool
 extern bool
        uc_is_upper (ucs4_t uc);
 
-/* Test for any character that corresponds to a hexadecimal-digit character
-   equivalent to that performed by the functions described in the previous
-   subclause.  */
+/* Test for any character that corresponds to a hexadecimal-digit
+   character.  */
 extern bool
        uc_is_xdigit (ucs4_t uc);
 
