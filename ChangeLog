@@ -1,3 +1,8 @@
+2009-04-05  Karl Berry  <karl@gnu.org>
+
+	* README: prominently mention gnulib-tool.
+	Rearrange sections so getting the code is near the top.
+
 2009-04-05  Bruno Haible  <bruno@clisp.org>
 
 	* lib/unicase.h: Mention u*_cmp2.

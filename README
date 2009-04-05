@@ -1,22 +1,93 @@
 Gnulib
 ======
 
-Gnulib is intended to be the canonical source for most of the important
-"portability" and/or common files for GNU projects.  These are files
-intended to be shared at the source level; Gnulib is not a library meant
-to be installed and linked against.  Unlike most projects, Gnulib does
-not normally generate a source tarball distribution; instead, developers
-should just grab modules directly from the repository.
-
 While portability across operating systems is not one of GNU's primary
 goals, it has helped introduce many people to the GNU system, and is
 worthwhile when it can be achieved at a low cost.  This collection helps
 lower that cost.
 
+Gnulib is intended to be the canonical source for most of the important
+"portability" and/or common files for GNU projects.  These are files
+intended to be shared at the source level; Gnulib is not a typical
+library meant to be installed and linked against.  Thus, unlike most
+projects, Gnulib does not normally generate a source tarball
+distribution; instead, developers grab modules directly from the
+source repository.
+
+The easiest, and recommended, way to do this is to use the gnulib-tool
+script.  Since there is no installation procedure for Gnulib,
+gnulib-tool needs to be run directly in the directory that contains the
+Gnulib source code.  You can do this either by specifying the absolute
+filename of gnulib-tool, or by using a symbolic link from a
+place inside your PATH to the gnulib-tool file of your preferred 
+Gnulib checkout.  For example:
+  $ ln -s $HOME/gnu/src/gnulib.git/gnulib-tool $HOME/bin/gnulib-tool
+
+The home page for Gnulib is http://www.gnu.org/software/gnulib.
+
+
+git and CVS
+===========
+
+Gnulib is available for anonymous checkout.  In any Bourne-shell the
+following should work:
+  $ git clone git://git.sv.gnu.org/gnulib.git
+Or, if you prefer the CVS-like 'cogito' frontend to plain 'git':
+  $ cg clone git://git.sv.gnu.org/gnulib.git
+
+For a read-write checkout you need to have a login on savannah.gnu.org and be
+a member of the gnulib project at http://savannah.gnu.org/projects/gnulib .
+Then, instead of the URL
+  git://git.sv.gnu.org/gnulib
+use the URL
+  ssh://<user>@git.sv.gnu.org/srv/git/gnulib
+where <user> is your login name on savannah.gnu.org.
+
+git resources:
+  Overview: http://en.wikipedia.org/wiki/Git_(software)
+  Homepage: http://git.or.cz/
+  Download: http://www.kernel.org/pub/software/scm/git/
+  Tutorial: http://git.or.cz/course/
+            http://www.kernel.org/pub/software/scm/git/docs/tutorial.html
+  FAQ:      http://git.or.cz/gitwiki/GitFaq
+
+cogito resources:
+  Overview: http://en.wikipedia.org/wiki/Cogito_(software)
+  Homepage: http://git.or.cz/cogito/
+  Download: http://kernel.org/pub/software/scm/cogito/
+  Tutorial: http://git.or.cz/course/
+
+For those among us who have tightly limited disk space and a fast network
+connection, CVS checkouts are also supported:
+  $ cvs -d :pserver:anonymous@pserver.git.sv.gnu.org:/gnulib.git co -d gnulib HEAD
+
+CVS checkouts from before 2007-09-19 can be converted to the new read-only CVS
+location through commands like these:
+  $ find . -name Root       -exec sed --in-place 's|.*|:pserver:anonymous@pserver.git.sv.gnu.org:/gnulib.git|' {} ';'
+  $ find . -name Repository -exec sed --in-place 's|^gnulib|/srv/git/gnulib.git/HEAD|' {} ';'
+
+Gnulib is hosted on savannah.gnu.org.  The project page is
+http://savannah.gnu.org/projects/gnulib.
+
+
+Keeping Up-to-date
+==================
+
+The best way to work with Gnulib is to check it out of git.
+Subscribing to the bug-gnulib@gnu.org mailing list will help you to
+plan when to update your local copy of Gnulib (which you use to
+maintain your software) from git.  To synchronize, you can use "git pull"
+or "cg update", or "cvs update -dP" if you are still using CVS.
+
+Sometimes, using an updated version of Gnulib will require you to use
+newer versions of GNU Automake or Autoconf.  You may find it helpful
+to join the autotools-announce mailing list to be advised of such
+changes.
+
 
 Contributing to Gnulib
 ======================
-All software here is Copyright (c) Free Software Foundation - you need
+All software here is copyrighted by the Free Software Foundation - you need
 to have filled out an assignment form for a project that uses the
 module for that contribution to be accepted here.
 
@@ -90,6 +161,7 @@ Other things:
   code), then ensure that the compilation unit is not empty after
   preprocessing.  One way to do this is to #include <stddef.h> or
   <stdio.h> before the big #if.
+
 
 Portability guidelines
 ----------------------
@@ -197,77 +269,22 @@ hosts, e.g., hosts conforming to C99 or to recent POSIX standards.
 Hence Gnulib code should avoid using constructs (e.g., undeclared
 functions return 'int') that do not conform to C99.
 
+
 High Quality
 ============
 
-We will be developing a testsuite for these applications.  The goal is
-to have a 100% firm interface so that maintainers can feel free to
-update to the code in git at *any* time and know that their
-application will not break.  This means that before any change can be
-committed to the repository, a test suite program must be produced
-that exposes the bug for regression testing.  All experimental work
-should be done on branches to help promote this.
-
-git and CVS
-===========
-
-Gnulib is available for anonymous checkout.  In any Bourne-shell the
-following should work:
-  $ git clone git://git.sv.gnu.org/gnulib.git
-Or, if you prefer the CVS-like 'cogito' frontend to plain 'git':
-  $ cg clone git://git.sv.gnu.org/gnulib.git
-
-For a read-write checkout you need to have a login on savannah.gnu.org and be
-a member of the gnulib project at http://savannah.gnu.org/projects/gnulib .
-Then, instead of the URL
-  git://git.sv.gnu.org/gnulib
-use the URL
-  ssh://<user>@git.sv.gnu.org/srv/git/gnulib
-where <user> is your login name on savannah.gnu.org.
-
-git resources:
-  Overview: http://en.wikipedia.org/wiki/Git_(software)
-  Homepage: http://git.or.cz/
-  Download: http://www.kernel.org/pub/software/scm/git/
-  Tutorial: http://git.or.cz/course/
-            http://www.kernel.org/pub/software/scm/git/docs/tutorial.html
-  FAQ:      http://git.or.cz/gitwiki/GitFaq
-
-cogito resources:
-  Overview: http://en.wikipedia.org/wiki/Cogito_(software)
-  Homepage: http://git.or.cz/cogito/
-  Download: http://kernel.org/pub/software/scm/cogito/
-  Tutorial: http://git.or.cz/course/
-
-For those among us who have tightly limited disk space and a fast network
-connection, CVS checkouts are also supported:
-  $ cvs -d :pserver:anonymous@pserver.git.sv.gnu.org:/gnulib.git co -d gnulib HEAD
-
-CVS checkouts from before 2007-09-19 can be converted to the new read-only CVS
-location through commands like these:
-  $ find . -name Root       -exec sed --in-place 's|.*|:pserver:anonymous@pserver.git.sv.gnu.org:/gnulib.git|' {} ';'
-  $ find . -name Repository -exec sed --in-place 's|^gnulib|/srv/git/gnulib.git/HEAD|' {} ';'
-
-Gnulib is hosted on savannah.gnu.org.  The project page is
-http://savannah.gnu.org/projects/gnulib.
-
-Keeping Up-to-date
-==================
-
-The best way to work with Gnulib is to check it out of git.
-Subscribing to the bug-gnulib@gnu.org mailing list will help you to
-plan when to update your local copy of Gnulib (which you use to
-maintain your software) from git.  To synchronize, you can use "git pull"
-or "cg update", or "cvs update -dP" if you are still using CVS.
-
-Sometimes, using an updated version of Gnulib will require you to use
-newer versions of GNU Automake or Autoconf.  You may find it helpful
-to join the autotools-announce mailing list to be advised of such
-changes.
+We develop and maintain a testsuite for Gnulib.  The goal is to have a
+100% firm interface so that maintainers can feel free to update to the
+code in git at *any* time and know that their application will not
+break.  This means that before any change can be committed to the
+repository, a test suite program must be produced that exposes the bug
+for regression testing.  All experimental work should be done on
+branches to help promote this.
 
 
 -----
-Copyright (C) 2001, 2003, 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
+Copyright 2001, 2003, 2004, 2005, 2006, 2007, 2008, 2009 Free
+Software Foundation, Inc.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -280,4 +297,4 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
