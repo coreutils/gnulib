@@ -19,7 +19,7 @@ script.  Since there is no installation procedure for Gnulib,
 gnulib-tool needs to be run directly in the directory that contains the
 Gnulib source code.  You can do this either by specifying the absolute
 filename of gnulib-tool, or by using a symbolic link from a
-place inside your PATH to the gnulib-tool file of your preferred 
+place inside your PATH to the gnulib-tool file of your preferred
 Gnulib checkout.  For example:
   $ ln -s $HOME/gnu/src/gnulib.git/gnulib-tool $HOME/bin/gnulib-tool
 
