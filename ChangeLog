@@ -1,5 +1,8 @@
 2009-04-05  Bruno Haible  <bruno@clisp.org>
 
+	* lib/unictype.h (uc_property_is_valid): New macro.
+	* tests/unictype/test-pr_byname.c (main): Use it.
+
 	* lib/unistr.h: Doc fixes.
 	* lib/uniconv.h: Doc fixes.
 	* lib/unictype.h: Doc fixes.

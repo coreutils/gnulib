@@ -463,6 +463,9 @@ extern const uc_property_t UC_PROPERTY_IGNORABLE_CONTROL;
 extern uc_property_t
        uc_property_byname (const char *property_name);
 
+/* Test whether a property is valid.  */
+#define uc_property_is_valid(property) ((property).test_fn != NULL)
+
 /* Test whether a Unicode character has a given property.  */
 extern bool
        uc_is_property (ucs4_t uc, uc_property_t property);

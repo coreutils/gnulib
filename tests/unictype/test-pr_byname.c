@@ -1,5 +1,5 @@
 /* Test the Unicode character type functions.
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@ main ()
 
   {
     uc_property_t pr = uc_property_byname ("foobar");
-    ASSERT (pr.test_fn == NULL);
+    ASSERT (! uc_property_is_valid (pr));
   }
 
   return 0;
