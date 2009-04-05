@@ -124,6 +124,7 @@ Usage: gnulib-tool --list
        gnulib-tool --extract-license module
        gnulib-tool --extract-maintainer module
        gnulib-tool --extract-tests-module module
+       gnulib-tool --copy-file file [destination]
 
 Operation modes:
       --list                print the available module names
@@ -152,6 +153,7 @@ Operation modes:
                                    under lib/
       --extract-maintainer         report the maintainer(s) inside gnulib
       --extract-tests-module       report the unit test module, if it exists
+      --copy-file                  copy a file that is not part of any module
 
 General options:
       --dir=DIRECTORY       Specify the target directory.
@@ -896,6 +898,9 @@ fi
         shift ;;
       --extract-* )
         mode=`echo "X$1" | sed -e 's/^X--//'`
+        shift ;;
+      --copy-file | --copy-fil | --copy-fi | --copy-f | --copy- | --copy | --cop | --co )
+        mode=copy-file
         shift ;;
       --dir )
         shift
@@ -1791,6 +1796,108 @@ func_execute_command ()
       cat "$tmp"/cmdout 1>&2
       rm -f "$tmp"/cmdout
       (exit $cmdret)
+    fi
+  fi
+}
+
+# func_dest_tmpfilename file
+# determines the name of a temporary file (file is relative to destdir).
+# Input:
+# - destdir         target directory
+# - doit            : if actions shall be executed, false if only to be printed
+# - tmp             pathname of a temporary directory
+# Sets variable:
+#   - tmpfile       absolute filename of the temporary file
+func_dest_tmpfilename ()
+{
+  if $doit; then
+    # Put the new contents of $file in a file in the same directory (needed
+    # to guarantee that an 'mv' to "$destdir/$file" works).
+    tmpfile="$destdir/$1.tmp"
+  else
+    # Put the new contents of $file in a file in a temporary directory
+    # (because the directory of "$file" might not exist).
+    tmpfile="$tmp"/`basename "$1"`.tmp
+  fi
+}
+
+# func_add_file
+# copies a file from gnulib into the destination directory. The destination
+# is known to not exist.
+# Input:
+# - destdir         target directory
+# - local_gnulib_dir  from --local-dir
+# - f               the original file name
+# - lookedup_file   name of the merged (combined) file
+# - lookedup_tmp    true if it is located in the tmp directory, blank otherwise
+# - g               the rewritten file name
+# - tmpfile         absolute filename of the temporary file
+# - doit            : if actions shall be executed, false if only to be printed
+# - symbolic        true if files should be symlinked, copied otherwise
+# - lsymbolic       true if files from local_gnulib_dir should be symlinked,
+#                   copied otherwise
+func_add_file ()
+{
+  if $doit; then
+    echo "Copying file $g"
+    if { test -n "$symbolic" \
+         || { test -n "$lsymbolic" \
+              && test "$lookedup_file" = "$local_gnulib_dir/$f"; }; } \
+       && test -z "$lookedup_tmp" \
+       && cmp "$lookedup_file" "$tmpfile" > /dev/null; then
+      func_ln_if_changed "$lookedup_file" "$destdir/$g"
+    else
+      mv -f "$tmpfile" "$destdir/${g}" || func_fatal_error "failed"
+    fi
+  else
+    echo "Copy file $g"
+  fi
+}
+
+# func_update_file
+# copies a file from gnulib into the destination directory. The destination
+# is known to exist.
+# Input:
+# - destdir         target directory
+# - local_gnulib_dir  from --local-dir
+# - f               the original file name
+# - lookedup_file   name of the merged (combined) file
+# - lookedup_tmp    true if it is located in the tmp directory, blank otherwise
+# - g               the rewritten file name
+# - tmpfile         absolute filename of the temporary file
+# - doit            : if actions shall be executed, false if only to be printed
+# - symbolic        true if files should be symlinked, copied otherwise
+# - lsymbolic       true if files from local_gnulib_dir should be symlinked,
+#                   copied otherwise
+# - already_present  nonempty if the file should already exist, empty otherwise
+func_update_file ()
+{
+  if cmp "$destdir/$g" "$tmpfile" > /dev/null; then
+    : # The file has not changed.
+  else
+    # Replace the file.
+    if $doit; then
+      if test -n "$already_present"; then
+        echo "Updating file $g (backup in ${g}~)"
+      else
+        echo "Replacing file $g (non-gnulib code backed up in ${g}~) !!"
+      fi
+      mv -f "$destdir/$g" "$destdir/${g}~" || func_fatal_error "failed"
+      if { test -n "$symbolic" \
+           || { test -n "$lsymbolic" \
+                && test "$lookedup_file" = "$local_gnulib_dir/$f"; }; } \
+         && test -z "$lookedup_tmp" \
+         && cmp "$lookedup_file" "$tmpfile" > /dev/null; then
+        func_ln_if_changed "$lookedup_file" "$destdir/$g"
+      else
+        mv -f "$tmpfile" "$destdir/${g}" || func_fatal_error "failed"
+      fi
+    else
+      if test -n "$already_present"; then
+        echo "Update file $g (backup in ${g}~)"
+      else
+        echo "Replace file $g (non-gnulib code backed up in ${g}~) !!"
+      fi
     fi
   fi
 }
@@ -2850,23 +2957,6 @@ s,^\(.................................................[^ ]*\) *,                
     exec 0<&5 5<&-
   }
 
-  # func_dest_tmpfilename file
-  # determines the name of a temporary file (file is relative to destdir).
-  # Sets variable:
-  #   - tmpfile       absolute filename of the temporary file
-  func_dest_tmpfilename ()
-  {
-    if $doit; then
-      # Put the new contents of $file in a file in the same directory (needed
-      # to guarantee that an 'mv' to "$destdir/$file" works).
-      tmpfile="$destdir/$1.tmp"
-    else
-      # Put the new contents of $file in a file in a temporary directory
-      # (because the directory of "$file" might not exist).
-      tmpfile="$tmp"/`basename "$1"`.tmp
-    fi
-  }
-
   # Copy files or make symbolic links. Remove obsolete files.
   added_files=''
   removed_files=''
@@ -2901,7 +2991,8 @@ s,^\(.................................................[^ ]*\) *,                
   # Uses parameters
   # - f             the original file name
   # - g             the rewritten file name
-  # - already_present  nonempty if the file already exists, empty otherwise
+  # - already_present  nonempty if the file should already exist, empty
+  #                    otherwise
   func_add_or_update ()
   {
     of="$f"
@@ -2929,52 +3020,12 @@ s,^\(.................................................[^ ]*\) *,                
     fi
     if test -f "$destdir/$g"; then
       # The file already exists.
-      if cmp "$destdir/$g" "$tmpfile" > /dev/null; then
-        : # The file has not changed.
-      else
-        # Replace the file.
-        if $doit; then
-          if test -n "$already_present"; then
-            echo "Updating file $g (backup in ${g}~)"
-          else
-            echo "Replacing file $g (non-gnulib code backed up in ${g}~) !!"
-          fi
-          mv -f "$destdir/$g" "$destdir/${g}~" || func_fatal_error "failed"
-          if { test -n "$symbolic" \
-               || { test -n "$lsymbolic" \
-                    && test "$lookedup_file" = "$local_gnulib_dir/$f"; }; } \
-             && test -z "$lookedup_tmp" \
-             && cmp "$lookedup_file" "$tmpfile" > /dev/null; then
-            func_ln_if_changed "$lookedup_file" "$destdir/$g"
-          else
-            mv -f "$tmpfile" "$destdir/${g}" || func_fatal_error "failed"
-          fi
-        else
-          if test -n "$already_present"; then
-            echo "Update file $g (backup in ${g}~)"
-          else
-            echo "Replace file $g (non-gnulib code backed up in ${g}~) !!"
-          fi
-        fi
-      fi
+      func_update_file
     else
       # Install the file.
       # Don't protest if the file should be there but isn't: it happens
       # frequently that developers don't put autogenerated files into CVS.
-      if $doit; then
-        echo "Copying file $g"
-        if { test -n "$symbolic" \
-             || { test -n "$lsymbolic" \
-                  && test "$lookedup_file" = "$local_gnulib_dir/$f"; }; } \
-           && test -z "$lookedup_tmp" \
-           && cmp "$lookedup_file" "$tmpfile" > /dev/null; then
-          func_ln_if_changed "$lookedup_file" "$destdir/$g"
-        else
-          mv -f "$tmpfile" "$destdir/${g}" || func_fatal_error "failed"
-        fi
-      else
-        echo "Copy file $g"
-      fi
+      func_add_file
       func_append added_files "$g$nl"
     fi
     rm -f "$tmpfile"
@@ -4632,6 +4683,64 @@ case $mode in
         func_get_tests_module "$module"
       fi
     done
+    ;;
+
+  copy-file )
+    # Verify the number of arguments.
+    if test $# -lt 1 || test $# -gt 2; then
+      func_fatal_error "invalid number of arguments for --$mode"
+    fi
+
+    # The first argument is the file to be copied.
+    f="$1"
+    # Verify the file exists.
+    func_lookup_file "$f"
+
+    # The second argument is the destination; either a directory ot a file.
+    # It defaults to the current directory.
+    dest="$2"
+    test -n "$dest" || dest='.'
+    test -n "$sourcebase" || sourcebase="lib"
+    test -n "$m4base" || m4base="m4"
+    test -n "$docbase" || docbase="doc"
+    test -n "$testsbase" || testsbase="tests"
+    test -n "$auxdir" || auxdir="build-aux"
+    sed_rewrite_files="\
+      s,^build-aux/,$auxdir/,
+      s,^doc/,$docbase/,
+      s,^lib/,$sourcebase/,
+      s,^m4/,$m4base/,
+      s,^tests/,$testsbase/,
+      s,^top/,,"
+    if test -d "$dest"; then
+      destdir="$dest"
+      g=`echo "$f" | sed -e "$sed_rewrite_files"`
+    else
+      destdir=`dirname "$dest"`
+      g=`basename "$dest"`
+    fi
+
+    # Create the directory for destfile.
+    d=`dirname "$destdir/$g"`
+    if $doit; then
+      if test -n "$d" && test ! -d "$d"; then
+        mkdir -p "$d" || func_fatal_error "failed"
+      fi
+    fi
+    # Copy the file.
+    func_dest_tmpfilename "$g"
+    cp "$lookedup_file" "$tmpfile" || func_fatal_error "failed"
+    already_present=true
+    if test -f "$destdir/$g"; then
+      # The file already exists.
+      func_update_file
+    else
+      # Install the file.
+      # Don't protest if the file should be there but isn't: it happens
+      # frequently that developers don't put autogenerated files into CVS.
+      func_add_file
+    fi
+    rm -f "$tmpfile"
     ;;
 
   * )

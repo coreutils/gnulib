@@ -1,3 +1,12 @@
+2009-04-05  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool: New option --copy-file.
+	(func_usage): Document it.
+	(func_dest_tmpfilename): Moved out of func_import.
+	(func_add_file, func_update_file): New functions, extracted from
+	func_import.
+	(func_import): Update.
+
 2009-04-05  Karl Berry  <karl@gnu.org>
 
 	* README: prominently mention gnulib-tool.
