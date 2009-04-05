@@ -135,6 +135,8 @@ extern uint32_t *
 		    uint32_t *resultbuf, size_t *lengthp);
 
 /* Return the case folded string.
+   Comparing uN_casefold (S1) and uN_casefold (S2) with uN_cmp2() is equivalent
+   to comparing S1 and S2 with uN_casecmp().
    The nf argument identifies the normalization form to apply after the
    case-mapping.  It can also be NULL, for no normalization.  */
 extern uint8_t *
@@ -172,8 +174,8 @@ extern int
 		    const char *s2, size_t n2,
 		    const char *iso639_language, uninorm_t nf, int *resultp);
 
-/* Converts the string S of length N to a string in locale encoding, in such a
-   way that comparing uN_casexfrm (S1) and uN_casexfrm (S2) with uN_cmp2() is
+/* Convert the string S of length N to a string in locale encoding, in such a
+   way that comparing uN_casexfrm (S1) and uN_casexfrm (S2) with memcmp2() is
    equivalent to comparing S1 and S2 with uN_casecoll().
    NF must be either UNINORM_NFC, UNINORM_NFKC, or NULL for no normalization.  */
 extern char *
