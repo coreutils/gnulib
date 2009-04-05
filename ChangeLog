@@ -1,5 +1,11 @@
 2009-04-05  Bruno Haible  <bruno@clisp.org>
 
+	Avoid test failure with libiconv-1.13.
+	* tests/test-striconveh.c (main): Allow result of libiconv 1.13 as one
+	of the expected test results.
+
+2009-04-05  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_emit_lib_Makefile_am): Don't add the library to
 	noinst_LTLIBRARIES if the Makefile.am in the same directory specifies
 	that it should be installed.

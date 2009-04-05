@@ -1,5 +1,5 @@
 /* Test of character set conversion with error handling.
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -392,15 +392,25 @@ main ()
 	    case iconveh_question_mark:
 	    case iconveh_escape_sequence:
 	      {
-		static const char expected1[] = "?????"; /* glibc */
-		static const char expected2[] = "?2D/YQNhB"; /* libiconv */
+		/* glibc result */
+		static const char expected1[] = "?????";
+		/* libiconv <= 1.12 result */
+		static const char expected2[] = "?2D/YQNhB";
+		/* libiconv behaviour changed in version 1.13: the result is
+		   '?' U+0FF6 U+1036; this is U+D83F U+D840 U+D841 shifted left
+		   by 6 bits.  */
+		static const char expected3[] = "?\340\277\266\341\200\266";
 		ASSERT (retval == 0);
-		ASSERT (length == strlen (expected1) || length == strlen (expected2));
+		ASSERT (length == strlen (expected1)
+			|| length == strlen (expected2)
+			|| length == strlen (expected3));
 		ASSERT (result != NULL);
 		if (length == strlen (expected1))
 		  ASSERT (memcmp (result, expected1, strlen (expected1)) == 0);
-		else
+		else if (length == strlen (expected2))
 		  ASSERT (memcmp (result, expected2, strlen (expected2)) == 0);
+		else
+		  ASSERT (memcmp (result, expected3, strlen (expected3)) == 0);
 		free (result);
 	      }
 	      break;
