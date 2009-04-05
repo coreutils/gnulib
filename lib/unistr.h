@@ -402,6 +402,15 @@ extern int
 extern int
        u32_cmp (const uint32_t *s1, const uint32_t *s2, size_t n);
 
+/* Compare S1 and S2.  */
+/* Similar to memcmp2().  */
+extern int
+       u8_cmp2 (const uint8_t *s1, size_t n1, const uint8_t *s2, size_t n2);
+extern int
+       u16_cmp2 (const uint16_t *s1, size_t n1, const uint16_t *s2, size_t n2);
+extern int
+       u32_cmp2 (const uint32_t *s1, size_t n1, const uint32_t *s2, size_t n2);
+
 /* Search the string at S for UC.  */
 /* Similar to memchr().  */
 extern uint8_t *

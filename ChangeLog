@@ -1,5 +1,13 @@
 2009-04-05  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unistr/u8-cmp2'.
+	* lib/unistr.h (u8_cmp2, u16_cmp2, u32_cmp2): New declarations.
+	* lib/unistr/u8-cmp2.c: New file.
+	* lib/unistr/u-cmp2.h: New file.
+	* modules/unistr/u8-cmp2: New file.
+
+2009-04-05  Bruno Haible  <bruno@clisp.org>
+
 	* lib/unictype.h (uc_property_is_valid): New macro.
 	* tests/unictype/test-pr_byname.c (main): Use it.
 
