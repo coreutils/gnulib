@@ -1,5 +1,19 @@
 2009-04-05  Bruno Haible  <bruno@clisp.org>
 
+	* lib/unicase.h: Mention u*_cmp2.
+	* lib/unicase/u-casecmp.h (FUNC): Invoke U_CMP2 instead of U_CMP.
+	* lib/unicase/u8-casecmp.c: Use u8_cmp2 instead of u8_cmp.
+	* lib/unicase/ulc-casecmp.c: Likewise.
+	* lib/unicase/u16-casecmp.c: Use u16_cmp2 instead of u16_cmp.
+	* lib/unicase/u32-casecmp.c: Use u32_cmp2 instead of u32_cmp.
+	* modules/unicase/u8-casecmp (Depends-on): Add unistr/u8-cmp2, remove
+	unistr/u8-cmp.
+	* modules/unicase/ulc-casecmp (Depends-on): Likewise.
+	* modules/unicase/u16-casecmp (Depends-on): Add unistr/u16-cmp2, remove
+	unistr/u16-cmp.
+	* modules/unicase/u32-casecmp (Depends-on): Add unistr/u32-cmp2, remove
+	unistr/u32-cmp.
+
 	* lib/uninorm.h: Mention u*_cmp2.
 	* lib/uninorm/u-normcmp.h (FUNC): Invoke U_CMP2 instead of U_CMP.
 	* lib/uninorm/u8-normcmp.c: Use u8_cmp2 instead of u8_cmp.

@@ -31,5 +31,5 @@
 #define UNIT uint8_t
 #define SRC_UNIT uint8_t
 #define U_CASEFOLD u8_casefold
-#define U_CMP u8_cmp
+#define U_CMP2 u8_cmp2
 #include "u-casecmp.h"

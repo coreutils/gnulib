@@ -9,7 +9,7 @@ Depends-on:
 unicase/base
 unicase/u32-casefold
 uninorm/decomposing-form
-unistr/u32-cmp
+unistr/u32-cmp2
 minmax
 
 configure.ac:

@@ -31,5 +31,5 @@
 #define UNIT uint16_t
 #define SRC_UNIT uint16_t
 #define U_CASEFOLD u16_casefold
-#define U_CMP u16_cmp
+#define U_CMP2 u16_cmp2
 #include "u-casecmp.h"

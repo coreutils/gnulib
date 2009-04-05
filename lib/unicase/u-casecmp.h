@@ -54,15 +54,8 @@ FUNC (const SRC_UNIT *s1, size_t n1, const SRC_UNIT *s2, size_t n2,
     }
 
   /* Compare the normalized strings.  */
-  cmp = U_CMP (norms1, norms2, MIN (norms1_length, norms2_length));
-  if (cmp == 0)
-    {
-      if (norms1_length < norms2_length)
-	cmp = -1;
-      else if (norms1_length > norms2_length)
-	cmp = 1;
-    }
-  else if (cmp > 0)
+  cmp = U_CMP2 (norms1, norms1_length, norms2, norms2_length);
+  if (cmp > 0)
     cmp = 1;
   else if (cmp < 0)
     cmp = -1;

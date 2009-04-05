@@ -10,7 +10,7 @@ unicase/base
 unicase/u8-casefold
 uninorm/decomposing-form
 uniconv/u8-conv-from-enc
-unistr/u8-cmp
+unistr/u8-cmp2
 localcharset
 minmax
 

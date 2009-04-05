@@ -69,5 +69,5 @@ ulc_u8_casefold (const char *s, size_t n, const char *iso639_language,
 #define UNIT uint8_t
 #define SRC_UNIT char
 #define U_CASEFOLD ulc_u8_casefold
-#define U_CMP u8_cmp
+#define U_CMP2 u8_cmp2
 #include "u-casecmp.h"

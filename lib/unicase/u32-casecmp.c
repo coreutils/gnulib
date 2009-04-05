@@ -31,5 +31,5 @@
 #define UNIT uint32_t
 #define SRC_UNIT uint32_t
 #define U_CASEFOLD u32_casefold
-#define U_CMP u32_cmp
+#define U_CMP2 u32_cmp2
 #include "u-casecmp.h"
