@@ -1,5 +1,11 @@
 2009-04-05  Bruno Haible  <bruno@clisp.org>
 
+	Work around an autoconf limitation.
+	* gnulib-tool (func_emit_lib_Makefile_am): Omit the "Reproduce by"
+	comment line if it would be longer than 3 KB.
+
+2009-04-05  Bruno Haible  <bruno@clisp.org>
+
 	Avoid test failure with libiconv-1.13.
 	* tests/test-striconveh.c (main): Allow result of libiconv 1.13 as one
 	of the expected test results.

@@ -1953,7 +1953,14 @@ func_emit_lib_Makefile_am ()
   echo "## Process this file with automake to produce Makefile.in."
   func_emit_copyright_notice
   if test -n "$actioncmd"; then
-    echo "# Reproduce by: $actioncmd"
+    # The maximum line length (excluding the terminating newline) of any file
+    # that is to be preprocessed by config.status is 3070.  config.status uses
+    # awk, and the HP-UX 11.00 awk fails if a line has length >= 3071;
+    # similarly, the IRIX 6.5 awk fails if a line has length >= 3072.
+    len=`echo "$actioncmd" | wc -c`
+    if test -n "$len" && test "$len" -le 3000; then
+      echo "# Reproduce by: $actioncmd"
+    fi
   fi
   echo
   uses_subdirs=
