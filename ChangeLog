@@ -1,3 +1,9 @@
+2009-04-07  Reuben Thomas  <rrt@sc3d.org>
+
+	maint.mk: import changes to syntax-check macros from coreutils
+	* top/maint.mk (_prohibit_regexp, _header_without_use): Define.
+	Use them in the relevant macros.
+
 2009-04-06  Bruno Haible  <bruno@clisp.org>
 
 	Fix unportable use of bit-fields.

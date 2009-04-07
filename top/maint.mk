@@ -38,34 +38,42 @@ GZIP_ENV = '--no-name --best $(gzip_rsyncable)'
 # Doing it here saves us from having to set LC_ALL elsewhere in this file.
 export LC_ALL = C
 
+# There are many rules below that prohibit constructs in this package.
+# If the offending construct can be matched with a grep-E-style regexp,
+# use this macro.  The shell variables "re" and "msg" must be defined.
+define _prohibit_regexp
+  dummy=; : so we do not need a semicolon before each use;		\
+  test "x$$re" != x || { echo '$(ME): re not defined' 1>&2; exit 1; };	\
+  test "x$$msg" != x || { echo '$(ME): msg not defined' 1>&2; exit 1; };\
+  grep $(_ignore_case) -nE "$$re" $(C_SOURCES) &&			\
+    { echo '$(ME): '"$$msg" 1>&2; exit 1; } || :
+endef
+
 # Casting arguments to free is never necessary.
 sc_cast_of_argument_to_free:
-	@grep -nE '\<free *\( *\(' $(C_SOURCES) &&			\
-	  { echo '$(ME): don'\''t cast free argument' 1>&2;		\
-	    exit 1; } || :
+	@re='\<free *\( *\(' msg='don'\''t cast free argument'		\
+	  $(_prohibit_regexp)
 
 sc_cast_of_x_alloc_return_value:
-	@grep -nE '\*\) *x(m|c|re)alloc\>' $(C_SOURCES) &&		\
-	  { echo '$(ME): don'\''t cast x*alloc return value' 1>&2;	\
-	    exit 1; } || :
+	@re='\*\) *x(m|c|re)alloc\>'					\
+	msg='don'\''t cast x*alloc return value'			\
+	  $(_prohibit_regexp)
 
 sc_cast_of_alloca_return_value:
-	@grep -nE '\*\) *alloca\>' $(C_SOURCES) &&			\
-	  { echo '$(ME): don'\''t cast alloca return value' 1>&2;	\
-	    exit 1; } || :
+	@re='\*\) *alloca\>' msg='don'\''t cast alloca return value'	\
+	  $(_prohibit_regexp)
 
 sc_space_tab:
-	@grep -n '[ ]	' $(C_SOURCES) &&				\
-	  { echo '$(ME): found SPACE-TAB sequence; remove the SPACE'	\
-		1>&2; exit 1; } || :
+	@re='[ ]	' msg='found SPACE-TAB sequence; remove the SPACE' \
+	  $(_prohibit_regexp)
 
-# Don't use the old ato* functions in `real' code.
+# Don't use *scanf or the old ato* functions in `real' code.
 # They provide no error checking mechanism.
 # Instead, use strto* functions.
 sc_prohibit_atoi_atof:
-	@grep -nE '\<ato([filq]|ll)\>' $(C_SOURCES) &&			\
-	  { echo '$(ME): do not use ato''f, ato''i, ato''l, ato''ll, or ato''q'	\
-		1>&2; exit 1; } || :
+	@re='\<([fs]?scanf|ato([filq]|ll)) *\('				\
+	msg='do not use *scan''f, ato''f, ato''i, ato''l, ato''ll or ato''q' \
+	  $(_prohibit_regexp)
 
 # Using EXIT_SUCCESS as the first argument to error is misleading,
 # since when that parameter is 0, error does not exit.  Use `0' instead.
@@ -80,21 +88,31 @@ sc_no_if_have_config_h:
 	  { echo '$(ME): found use of #if HAVE_CONFIG_H; use #ifdef'	\
 		1>&2; exit 1; } || :
 
+# To use this "command" macro, you must first define two shell variables:
+# h: the header, enclosed in <> or ""
+# re: a regular expression that matches IFF something provided by $h is used.
+define _header_without_use
+  h_esc=`echo "$$h"|sed 's/\./\\./g'`;					\
+  if $(C_SOURCES) | grep -l '\.c$$' > /dev/null; then			\
+    files=$$(grep -l '^# *include '"$$h_esc"				\
+	     $$($(C_SOURCES) | grep '\.c$$')) &&			\
+    grep -LE "$$re" $$files | grep . &&					\
+      { echo "$(ME): the above files include $$h but don't use it"	\
+	1>&2; exit 1; } || :;						\
+  else :;								\
+  fi
+endef
+
 # Prohibit the inclusion of assert.h without an actual use of assert.
 sc_prohibit_assert_without_use:
-	@files=$$(grep -l '# *include [<"]assert\.h[>"]' $(C_SOURCES)	\
-			| grep '\.[cy]$$') &&				\
-	grep -L '\<assert (' $$files					\
-	    | grep . &&							\
-	  { echo "$(ME): the above files include <assert.h> but don't use it" \
-		1>&2; exit 1; } || :
+	@h='<assert.h>' re='\<assert *\(' $(_header_without_use)
 
 sc_obsolete_symbols:
-	@grep -nE '\<(HAVE''_FCNTL_H|O''_NDELAY)\>' $(C_SOURCES) &&	\
-	  { echo '$(ME): do not use HAVE''_FCNTL_H or O''_NDELAY'	\
-		1>&2; exit 1; } || :
+	@re='\<(HAVE''_FCNTL_H|O''_NDELAY)\>'				\
+	msg='do not use HAVE''_FCNTL_H or O'_NDELAY			\
+	  $(_prohibit_regexp)
 
-# Each nonempty line must start with a year number, or a TAB.
+# Each nonempty ChangeLog line must start with a year number, or a TAB.
 sc_changelog:
 	@grep -n '^[^12	]' $$(find . -name ChangeLog) &&	\
 	  { echo '$(ME): found unexpected prefix in a ChangeLog' 1>&2;	\
