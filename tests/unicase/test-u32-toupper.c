@@ -86,7 +86,7 @@ check (const uint32_t *input, size_t input_length,
     result = u32_toupper (input, input_length, iso639_language, nf, preallocated, &length);
     if (!(result != NULL))
       return 8;
-    if (!(result == preallocated))
+    if (!(preallocated == NULL || result == preallocated))
       return 9;
     if (!(length == expected_length))
       return 10;

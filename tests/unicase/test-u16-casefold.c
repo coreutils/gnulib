@@ -86,7 +86,7 @@ check (const uint16_t *input, size_t input_length,
     result = u16_casefold (input, input_length, iso639_language, nf, preallocated, &length);
     if (!(result != NULL))
       return 8;
-    if (!(result == preallocated))
+    if (!(preallocated == NULL || result == preallocated))
       return 9;
     if (!(length == expected_length))
       return 10;

@@ -1,3 +1,32 @@
+2009-04-06  Bruno Haible  <bruno@clisp.org>
+
+	Avoid test failures on AIX and OSF/1.
+	* tests/unicase/test-u8-casefold.c (check): Account for the possibility
+	that malloc(0) = NULL.
+	* tests/unicase/test-u8-tolower.c (check): Likewise.
+	* tests/unicase/test-u8-totitle.c (check): Likewise.
+	* tests/unicase/test-u8-toupper.c (check): Likewise.
+	* tests/unicase/test-u16-casefold.c (check): Likewise.
+	* tests/unicase/test-u16-tolower.c (check): Likewise.
+	* tests/unicase/test-u16-totitle.c (check): Likewise.
+	* tests/unicase/test-u16-toupper.c (check): Likewise.
+	* tests/unicase/test-u32-casefold.c (check): Likewise.
+	* tests/unicase/test-u32-tolower.c (check): Likewise.
+	* tests/unicase/test-u32-totitle.c (check): Likewise.
+	* tests/unicase/test-u32-toupper.c (check): Likewise.
+	* tests/uninorm/test-u8-nfc.c (check): Likewise.
+	* tests/uninorm/test-u8-nfd.c (check): Likewise.
+	* tests/uninorm/test-u8-nfkc.c (check): Likewise.
+	* tests/uninorm/test-u8-nfkd.c (check): Likewise.
+	* tests/uninorm/test-u16-nfc.c (check): Likewise.
+	* tests/uninorm/test-u16-nfd.c (check): Likewise.
+	* tests/uninorm/test-u16-nfkc.c (check): Likewise.
+	* tests/uninorm/test-u16-nfkd.c (check): Likewise.
+	* tests/uninorm/test-u32-nfc.c (check): Likewise.
+	* tests/uninorm/test-u32-nfd.c (check): Likewise.
+	* tests/uninorm/test-u32-nfkc.c (check): Likewise.
+	* tests/uninorm/test-u32-nfkd.c (check): Likewise.
+
 2009-04-05  Bruno Haible  <bruno@clisp.org>
 
 	Work around an autoconf limitation.
