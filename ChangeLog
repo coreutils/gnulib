@@ -1,5 +1,12 @@
 2009-04-06  Bruno Haible  <bruno@clisp.org>
 
+	Fix unportable use of bit-fields.
+	* lib/unicase/special-casing.h (struct special_casing_rule): Change the
+	bit-field type from 'int' to 'signed int'. Otherwise Solaris cc,
+	AIX xlc, and OSF/1 cc interpret it as 'unsigned int'.
+
+2009-04-06  Bruno Haible  <bruno@clisp.org>
+
 	Avoid test failures on AIX and OSF/1.
 	* tests/unicase/test-u8-casefold.c (check): Account for the possibility
 	that malloc(0) = NULL.

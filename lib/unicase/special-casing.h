@@ -38,7 +38,7 @@ struct special_casing_rule
   /*bool*/ unsigned int has_next : 1;
 
   /* Context.  */
-  int context : 7;
+  signed int context : 7;
 
   /* Language, or an empty string.  */
   char language[2];
