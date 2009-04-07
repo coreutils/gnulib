@@ -1,3 +1,8 @@
+2009-04-07  Jim Meyering  <meyering@redhat.com>
+
+	useless-if-before-free: show how to remove braced useless free, too
+	* build-aux/useless-if-before-free: still only in a comment, though.
+
 2009-04-07  Reuben Thomas  <rrt@sc3d.org>
 
 	maint.mk: import changes to syntax-check macros from coreutils
