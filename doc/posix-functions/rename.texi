@@ -12,8 +12,15 @@ Portability problems fixed by Gnulib:
 This function does not work when the source file name ends in a slash on
 some platforms:
 SunOS 4.1.
+@item
+This function will not replace an existing destination on some
+platforms:
+mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
+This function will not replace a destination that is currently opened
+by any process:
+mingw.
 @end itemize

@@ -1,8 +1,9 @@
-/* Work around the bug in some systems whereby rename fails when the source
-   file has a trailing slash.  The rename functions of SunOS 4.1.1_U1 and
-   mips-dec-ultrix4.4 have this bug.
+/* Work around rename bugs in some systems.  On SunOS 4.1.1_U1
+   and mips-dec-ultrix4.4, rename fails when the source file has
+   a trailing slash.  On mingw, rename fails when the destination
+   exists.
 
-   Copyright (C) 2001, 2002, 2003, 2005, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2001, 2002, 2003, 2005, 2006, 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -22,6 +23,113 @@
 #include <config.h>
 #undef rename
 
+#if RENAME_DEST_EXISTS_BUG
+/* This replacement must come first, otherwise when cross
+ * compiling to Windows we will guess that it has the trailing
+ * slash bug and entirely miss this one. */
+#include <errno.h>
+
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+
+/* Rename the file SRC to DST.  This replacement is necessary on
+   Windows, on which the system rename function will not replace
+   an existing DST.  */
+int
+rpl_rename (char const *src, char const *dst)
+{
+  int error;
+
+  /* MoveFileEx works if SRC is a directory without any flags,
+     but fails with MOVEFILE_REPLACE_EXISTING, so try without
+     flags first. */
+  if (MoveFileEx (src, dst, 0))
+    return 0;
+
+  /* Retry with MOVEFILE_REPLACE_EXISTING if the move failed
+   * due to the destination already existing. */
+  error = GetLastError ();
+  if (error == ERROR_FILE_EXISTS || error == ERROR_ALREADY_EXISTS)
+    {
+      if (MoveFileEx (src, dst, MOVEFILE_REPLACE_EXISTING))
+        return 0;
+
+      error = GetLastError ();
+    }
+
+  switch (error)
+    {
+    case ERROR_FILE_NOT_FOUND:
+    case ERROR_PATH_NOT_FOUND:
+    case ERROR_BAD_PATHNAME:
+    case ERROR_DIRECTORY:
+      errno = ENOENT;
+      break;
+
+    case ERROR_ACCESS_DENIED:
+    case ERROR_SHARING_VIOLATION:
+      errno = EACCES;
+      break;
+
+    case ERROR_OUTOFMEMORY:
+      errno = ENOMEM;
+      break;
+
+    case ERROR_CURRENT_DIRECTORY:
+      errno = EBUSY;
+      break;
+
+    case ERROR_NOT_SAME_DEVICE:
+      errno = EXDEV;
+      break;
+
+    case ERROR_WRITE_PROTECT:
+      errno = EROFS;
+      break;
+
+    case ERROR_WRITE_FAULT:
+    case ERROR_READ_FAULT:
+    case ERROR_GEN_FAILURE:
+      errno = EIO;
+      break;
+
+    case ERROR_HANDLE_DISK_FULL:
+    case ERROR_DISK_FULL:
+    case ERROR_DISK_TOO_FRAGMENTED:
+      errno = ENOSPC;
+      break;
+
+    case ERROR_FILE_EXISTS:
+    case ERROR_ALREADY_EXISTS:
+      errno = EEXIST;
+      break;
+
+    case ERROR_BUFFER_OVERFLOW:
+    case ERROR_FILENAME_EXCED_RANGE:
+      errno = ENAMETOOLONG;
+      break;
+
+    case ERROR_INVALID_NAME:
+    case ERROR_DELETE_PENDING:
+      errno = EPERM;        /* ? */
+      break;
+
+#ifndef ERROR_FILE_TOO_LARGE
+/* This value is documented but not defined in all versions of windows.h. */
+#define ERROR_FILE_TOO_LARGE 223
+#endif
+    case ERROR_FILE_TOO_LARGE:
+      errno = EFBIG;
+      break;
+
+    default:
+      errno = EINVAL;
+      break;
+    }
+
+  return -1;
+}
+#elif RENAME_TRAILING_SLASH_BUG
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -54,3 +162,4 @@ rpl_rename (char const *src, char const *dst)
 
   return ret_val;
 }
+#endif /* RENAME_TRAILING_SLASH_BUG */

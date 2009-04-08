@@ -1,3 +1,11 @@
+2009-03-20  Ben Pfaff  <blp@gnu.org>
+
+	Make rename replace existing destinations on Windows.
+	* m4/rename.m4: Add test for Mingw.
+	* lib/rename.c: Add rename replacement that uses MoveFileEx with
+	MOVEFILE_REPLACE_EXISTING to replace existing destination files.
+	* doc/posix-functions/rename.texi: Document.
+
 2009-04-10  Bruno Haible  <bruno@clisp.org>
 
 	New include file "iconveh.h".

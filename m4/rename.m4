@@ -1,4 +1,4 @@
-# serial 11
+# serial 12
 
 # Copyright (C) 2001, 2003, 2005, 2006, 2009 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -15,7 +15,8 @@ dnl
 
 AC_DEFUN([gl_FUNC_RENAME],
 [
- AC_CACHE_CHECK([whether rename is broken],
+  AC_REQUIRE([AC_CANONICAL_HOST])
+ AC_CACHE_CHECK([whether rename is broken with a trailing slash],
   gl_cv_func_rename_trailing_slash_bug,
   [
     rm -rf conftest.d1 conftest.d2
@@ -37,13 +38,29 @@ AC_DEFUN([gl_FUNC_RENAME],
 
       rm -rf conftest.d1 conftest.d2
   ])
-  if test $gl_cv_func_rename_trailing_slash_bug = yes; then
+ AC_CACHE_CHECK([whether rename is broken when the destination exists],
+  gl_cv_func_rename_dest_exists_bug,
+  [
+    case "$host_os" in
+      mingw*) gl_cv_func_rename_dest_exists_bug=yes ;;
+      *) gl_cv_func_rename_dest_exists_bug=no ;;
+    esac
+  ])
+  if test $gl_cv_func_rename_trailing_slash_bug = yes ||
+     test $gl_cv_func_rename_dest_exists_bug = yes; then
     AC_LIBOBJ([rename])
     AC_DEFINE([rename], [rpl_rename],
       [Define to rpl_rename if the replacement function should be used.])
-    AC_DEFINE([RENAME_TRAILING_SLASH_BUG], [1],
-      [Define if rename does not work for source file names with a trailing
-       slash, like the one from SunOS 4.1.1_U1.])
+    if test $gl_cv_func_rename_trailing_slash_bug; then
+      AC_DEFINE([RENAME_TRAILING_SLASH_BUG], [1],
+	[Define if rename does not work for source file names with a trailing
+	 slash, like the one from SunOS 4.1.1_U1.])
+    fi
+    if test $gl_cv_func_rename_dest_exists_bug; then
+      AC_DEFINE([RENAME_DEST_EXISTS_BUG], [1],
+	[Define if rename does not work when the destination file exists,
+	 as on Windows.])
+    fi
     gl_PREREQ_RENAME
   fi
 ])
