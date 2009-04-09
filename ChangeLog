@@ -1,5 +1,9 @@
 2009-04-09  Kamil Dudka  <kdudka@redhat.com>
 
+	filevercmp: correct today's change
+	* lib/filevercmp.c: Also handle coreutils' test inputs.
+	* tests/test-filevercmp.c: Add inputs from one of coreutils' test scripts.
+
 	Fix regression in 'filevercmp' module. Thanks Sven Joachim
 	for reporting it.
 	* lib/filevercmp.c: Special handle for "", "." and "..".

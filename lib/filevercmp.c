@@ -149,6 +149,17 @@ filevercmp (const char *s1, const char *s2)
   if (0 == strcmp ("..", s2))
     return 1;
 
+  /* special handle for other hidden files */
+  if (*s1 == '.' && *s2 != '.')
+    return -1;
+  if (*s1 != '.' && *s2 == '.')
+    return 1;
+  if (*s1 == '.' && *s2 == '.')
+    {
+      s1++;
+      s2++;
+    }
+
   /* "cut" file suffixes */
   s1_pos = s1;
   s2_pos = s2;
