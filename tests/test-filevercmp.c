@@ -37,6 +37,7 @@
 /* set of well sorted examples */
 static const char *const examples[] =
 {
+  "",
   ".",
   "..",
   ".a~",
@@ -73,6 +74,7 @@ static const char *const examples[] =
   "nss_ldap-1.0-0.1a.tar.gz",
   "nss_ldap-10beta1.fc8.tar.gz",
   "nss_ldap-10.11.8.6.20040204cvs.fc10.ebuild",
+  "#.b#",
   NULL
 };
 

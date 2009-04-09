@@ -1,3 +1,10 @@
+2009-04-09  Kamil Dudka  <kdudka@redhat.com>
+
+	Fix regression in 'filevercmp' module. Thanks Sven Joachim
+	for reporting it.
+	* lib/filevercmp.c: Special handle for "", "." and "..".
+	* tests/test-filevercmp.c: Enlarge the set suite.
+
 2009-04-07  Jim Meyering  <meyering@redhat.com>
 
 	useless-if-before-free: show how to remove braced useless free, too
