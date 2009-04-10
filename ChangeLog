@@ -6,6 +6,7 @@
 	(enum iconv_ilseq_handler): Remove definition.
 	* lib/striconveha.h: Include <stddef.h> and iconveh.h instead of
 	striconveh.h.
+	* lib/striconveha.c: Include striconveh.h.
 	* lib/uniconv.h: Include iconveh.h instead of striconveh.h.
 	* modules/striconveh (Files): Add lib/iconveh.h.
 	* modules/uniconv/base (Files): Add lib/iconveh.h. Remove

@@ -1,5 +1,5 @@
 /* Character set conversion with error handling and autodetection.
-   Copyright (C) 2002, 2005, 2007 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2005, 2007, 2009 Free Software Foundation, Inc.
    Written by Bruno Haible.
 
    This program is free software: you can redistribute it and/or modify
@@ -26,6 +26,7 @@
 
 #include "malloca.h"
 #include "c-strcase.h"
+#include "striconveh.h"
 
 #define SIZEOF(a) (sizeof(a)/sizeof(a[0]))
 
