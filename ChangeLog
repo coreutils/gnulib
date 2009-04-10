@@ -1,5 +1,9 @@
 2009-04-10  Bruno Haible  <bruno@clisp.org>
 
+	Mark 'utime' obsolete.
+	* modules/utime (Status, Notice): New sections.
+	Suggested by Jim Meyering.
+
 	Fix cross-compile guess for utime test.
 	* m4/utime.m4 (AC_FUNC_UTIME_NULL): Add definition from newest unstable
 	autoconf.

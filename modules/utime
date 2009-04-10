@@ -1,6 +1,12 @@
 Description:
 utime() function: change access and/or modification times of a file.
 
+Status:
+obsolete
+
+Notice:
+This module is obsolete. It can be removed on 2010-01-01.
+
 Files:
 lib/utime.c
 m4/utimbuf.m4
