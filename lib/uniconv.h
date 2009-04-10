@@ -23,7 +23,7 @@
 #include "unitypes.h"
 
 /* Get enum iconv_ilseq_handler.  */
-#include "striconveh.h"
+#include "iconveh.h"
 
 /* Get uniconv_register_autodetect() declaration.  */
 #include "striconveha.h"

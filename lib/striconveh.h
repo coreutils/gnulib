@@ -1,5 +1,5 @@
 /* Character set conversion with error handling.
-   Copyright (C) 2001-2007 Free Software Foundation, Inc.
+   Copyright (C) 2001-2007, 2009 Free Software Foundation, Inc.
    Written by Bruno Haible and Simon Josefsson.
 
    This program is free software: you can redistribute it and/or modify
@@ -23,19 +23,13 @@
 #include <iconv.h>
 #endif
 
+#include "iconveh.h"
+
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-
-/* Handling of unconvertible characters.  */
-enum iconv_ilseq_handler
-{
-  iconveh_error,		/* return and set errno = EILSEQ */
-  iconveh_question_mark,	/* use one '?' per unconvertible character */
-  iconveh_escape_sequence	/* use escape sequence \uxxxx or \Uxxxxxxxx */
-};
 
 #if HAVE_ICONV
 

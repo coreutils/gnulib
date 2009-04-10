@@ -1,5 +1,18 @@
 2009-04-10  Bruno Haible  <bruno@clisp.org>
 
+	New include file "iconveh.h".
+	* lib/iconveh.h: New file, extracted from lib/striconveh.h.
+	* lib/striconveh.h: Include it.
+	(enum iconv_ilseq_handler): Remove definition.
+	* lib/striconveha.h: Include <stddef.h> and iconveh.h instead of
+	striconveh.h.
+	* lib/uniconv.h: Include iconveh.h instead of striconveh.h.
+	* modules/striconveh (Files): Add lib/iconveh.h.
+	* modules/uniconv/base (Files): Add lib/iconveh.h. Remove
+	lib/striconveh.h.
+
+2009-04-10  Bruno Haible  <bruno@clisp.org>
+
 	* lib/uniconv.h: Update comment.
 
 2009-04-10  Bruno Haible  <bruno@clisp.org>

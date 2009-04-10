@@ -4,6 +4,7 @@ Character set conversion of strings with error handling, uses iconv.
 Files:
 lib/striconveh.h
 lib/striconveh.c
+lib/iconveh.h
 
 Depends-on:
 stdbool

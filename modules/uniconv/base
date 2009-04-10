@@ -3,7 +3,7 @@ Base layer for conversion from/to legacy encodings.
 
 Files:
 lib/uniconv.h
-lib/striconveh.h
+lib/iconveh.h
 lib/striconveha.h
 lib/localcharset.h
 
