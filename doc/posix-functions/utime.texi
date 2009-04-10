@@ -9,8 +9,8 @@ Gnulib module: utime
 Portability problems fixed by Gnulib:
 @itemize
 @item
-On some old platforms, @code{utime (file, NULL)} fails to set the file's
-timestamp to the current time.
+On some old platforms (Sequent), @code{utime (file, NULL)} fails to set the
+file's timestamp to the current time.
 @end itemize
 
 Portability problems not fixed by Gnulib:

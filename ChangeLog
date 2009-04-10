@@ -1,3 +1,11 @@
+2009-04-10  Bruno Haible  <bruno@clisp.org>
+
+	Fix cross-compile guess for utime test.
+	* m4/utime.m4 (AC_FUNC_UTIME_NULL): Add definition from newest unstable
+	autoconf.
+	* doc/posix-functions/utime.texi: Give more precisions.
+	Reported by Jan <ipif@ymail.com>.
+
 2009-04-09  Kamil Dudka  <kdudka@redhat.com>
 
 	filevercmp: correct today's change
