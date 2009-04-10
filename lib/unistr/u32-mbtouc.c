@@ -1,5 +1,5 @@
 /* Look at first character in UTF-32 string.
-   Copyright (C) 2002, 2006-2007 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2006-2007, 2009 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2002.
 
    This program is free software: you can redistribute it and/or modify it
@@ -16,6 +16,11 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 #include <config.h>
+
+#if defined IN_LIBUNISTRING
+/* Tell unistr.h to declare u32_mbtouc as 'extern', not 'static inline'.  */
+# include "unistring-notinline.h"
+#endif
 
 /* Specification.  */
 #include "unistr.h"

@@ -1,5 +1,23 @@
 2009-04-10  Bruno Haible  <bruno@clisp.org>
 
+	* lib/unistr/u8-mbtouc-aux.c: Inside libunistring, define the function
+	always.
+	* lib/unistr/u8-mbtouc-unsafe-aux.c: Likewise.
+	* lib/unistr/u16-mbtouc-aux.c: Likewise.
+	* lib/unistr/u16-mbtouc-unsafe-aux.c: Likewise.
+	* lib/unistr/u8-mbtouc.c: Inside libunistring, include
+	"unistring-notinline.h", so that the function gets defined always.
+	* lib/unistr/u8-mbtouc-unsafe.c: Likewise.
+	* lib/unistr/u8-uctomb.c: Likewise.
+	* lib/unistr/u16-mbtouc.c: Likewise.
+	* lib/unistr/u16-mbtouc-unsafe.c: Likewise.
+	* lib/unistr/u16-uctomb.c: Likewise.
+	* lib/unistr/u32-mbtouc.c: Likewise.
+	* lib/unistr/u32-mbtouc-unsafe.c: Likewise.
+	* lib/unistr/u32-uctomb.c: Likewise.
+
+2009-04-10  Bruno Haible  <bruno@clisp.org>
+
 	Mark 'utime' obsolete.
 	* modules/utime (Status, Notice): New sections.
 	Suggested by Jim Meyering.
