@@ -1,5 +1,9 @@
 2009-04-10  Bruno Haible  <bruno@clisp.org>
 
+	* lib/uniconv.h: Update comment.
+
+2009-04-10  Bruno Haible  <bruno@clisp.org>
+
 	* lib/unistr/u8-mbtouc-aux.c: Inside libunistring, define the function
 	always.
 	* lib/unistr/u8-mbtouc-unsafe-aux.c: Likewise.

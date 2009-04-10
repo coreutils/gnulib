@@ -25,7 +25,7 @@
 /* Get enum iconv_ilseq_handler.  */
 #include "striconveh.h"
 
-/* Get iconv_register_autodetect(), mem_iconveha() declaration.  */
+/* Get uniconv_register_autodetect() declaration.  */
 #include "striconveha.h"
 
 /* Get locale_charset() declaration.  */
