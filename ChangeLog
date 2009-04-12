@@ -1,3 +1,8 @@
+2009-04-12  Ben Pfaff  <blp@gnu.org>
+
+	Make fcntl module detect O_NOATIME, O_NOFOLLOW on GNU/Linux.
+	* m4/fcntl_h.m4 (gl_FCNTL_H): Require AC_USE_SYSTEM_EXTENSIONS.
+
 2009-03-20  Ben Pfaff  <blp@gnu.org>
 
 	Make rename replace existing destinations on Windows.

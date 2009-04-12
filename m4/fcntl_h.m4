@@ -8,6 +8,7 @@ dnl Written by Paul Eggert.
 
 AC_DEFUN([gl_FCNTL_H],
 [
+  AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
   AC_REQUIRE([gl_FCNTL_H_DEFAULTS])
   AC_CACHE_CHECK([for working fcntl.h], [gl_cv_header_working_fcntl_h],
     [AC_RUN_IFELSE(
