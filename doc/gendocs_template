@@ -15,7 +15,7 @@
 <p>This manual (%%PACKAGE%%) is available in the following formats:</p>
 
 <ul>
-<li><a href="%%PACKAGE%%.html">HTML 
+<li><a href="%%PACKAGE%%.html">HTML
     (%%HTML_MONO_SIZE%%K bytes)</a> - entirely on one web page.</li>
 <li><a href="html_node/index.html">HTML</a> - with one web page per
     node.</li>
@@ -28,7 +28,7 @@
     chapter.</li>
 %%ENDIF HTML_CHAPTER%%
 <li><a href="%%PACKAGE%%.html.gz">HTML compressed
-    (%%HTML_MONO_GZ_SIZE%%K gzipped characters)</a> - entirely on 
+    (%%HTML_MONO_GZ_SIZE%%K gzipped characters)</a> - entirely on
     one web page.</li>
 <li><a href="%%PACKAGE%%.html_node.tar.gz">HTML compressed
     (%%HTML_NODE_TGZ_SIZE%%K gzipped tar file)</a> -
@@ -69,7 +69,7 @@ script</a>.)</p>
 <!-- If needed, change the copyright block at the bottom. In general, -->
 <!-- all pages on the GNU web server should have the section about    -->
 <!-- verbatim copying.  Please do NOT remove this without talking     -->
-<!-- with the webmasters first. --> 
+<!-- with the webmasters first. -->
 <!-- Please make sure the copyright date is consistent with the document -->
 <!-- and that it is like this "2001, 2002" not this "2001-2002." -->
 </div><!-- for id="content", starts in the include above -->
@@ -77,9 +77,9 @@ script</a>.)</p>
 <div id="footer">
 
 <p>
-Please send FSF &amp; GNU inquiries to 
+Please send FSF &amp; GNU inquiries to
 <a href="mailto:gnu@gnu.org"><em>gnu@gnu.org</em></a>.
-There are also <a href="/contact/">other ways to contact</a> 
+There are also <a href="/contact/">other ways to contact</a>
 the FSF.
 <br />
 Please send broken links and other corrections or suggestions to

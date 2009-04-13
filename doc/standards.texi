@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate January 31, 2009
+@set lastupdate April 8, 2009
 @c %**end of header
 
 @dircategory GNU organization
@@ -313,7 +313,7 @@ Guile also includes bindings for GTK+/GNOME, making it practical to
 write modern GUI functionality within Guile.  We don't reject programs
 written in other ``scripting languages'' such as Perl and Python, but
 using Guile is very important for the overall consistency of the GNU
-system.  
+system.
 
 
 @node Compatibility

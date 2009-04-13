@@ -28,6 +28,17 @@ $GNUSTANDARDS/make-stds.texi	doc
 $GNUSTANDARDS/gnu-oids.texi	doc
 $GNUSTANDARDS/fdl.texi		doc
 #
+$GNUWWWLICENSES/lgpl-3.0.txt			doc/COPYING.LESSERv3
+$GNUWWWLICENSES/old-licenses/lgpl-2.1.txt	doc/COPYING.LESSERv2
+$GNUWWWLICENSES/gpl-3.0.txt			doc/COPYINGv3
+$GNUWWWLICENSES/old-licenses/gpl-2.0.txt	doc/COPYINGv2
+$GNUWWWLICENSES/old-licenses/lgpl-2.1.texi	doc
+$GNUWWWLICENSES/old-licenses/gpl-2.0.texi	doc
+$GNUWWWLICENSES/old-licenses/fdl-1.2.texi	doc
+$GNUWWWLICENSES/agpl-3.0.texi			doc
+$GNUWWWLICENSES/fdl-1.3.texi			doc
+$GNUWWWLICENSES/fdl-1.3.texi			doc/fdl.texi
+#
 # The official forms for contributors to fill out, mentioned in maintain.
 $GNUORG/conditions.text				doc/Copyright
 $GNUORG/Copyright/request-assign.changes	doc/Copyright

@@ -2,7 +2,7 @@
 # gendocs.sh -- generate a GNU manual in many formats.  This script is
 #   mentioned in maintain.texi.  See the help message below for usage details.
 
-scriptversion=2009-01-02.08
+scriptversion=2009-04-08.09
 
 # Copyright 2003, 2004, 2005, 2006, 2007, 2008, 2009
 # Free Software Foundation, Inc.
@@ -19,7 +19,7 @@ scriptversion=2009-01-02.08
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-# 
+#
 # Original author: Mohit Agarwal.
 # Send bug reports and any other correspondence to bug-texinfo@gnu.org.
 
@@ -98,7 +98,7 @@ You can set the environment variables MAKEINFO, TEXI2DVI, and DVIPS to
 control the programs that get executed, and GENDOCS_TEMPLATE_DIR to
 control where the gendocs_template file is looked for.  (With --docbook,
 the environment variables DOCBOOK2HTML, DOCBOOK2PDF, DOCBOOK2PS, and
-DOCBOOK2TXT are also respected.) 
+DOCBOOK2TXT are also respected.)
 
 By default, makeinfo is run in the default (English) locale, since
 that's the language of most Texinfo manuals.  If you happen to have a
@@ -247,7 +247,7 @@ if test -z "$use_texi2html"; then
    cd ${split_html_dir} || exit 1
    tar -czf $dotdot_outdir/${PACKAGE}.html_node.tar.gz -- *.html
   )
-  html_node_tgz_size=`calcsize $outdir/${PACKAGE}.html_node.tar.gz` 
+  html_node_tgz_size=`calcsize $outdir/${PACKAGE}.html_node.tar.gz`
   rm -f $outdir/html_node/*.html
   mkdir -p $outdir/html_node/
   mv ${split_html_dir}/*.html $outdir/html_node/

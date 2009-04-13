@@ -33,7 +33,7 @@
 <p>This manual (%%PACKAGE%%) is available in the following formats:</p>
 
 <ul>
-<li><a href="%%PACKAGE%%.html">HTML 
+<li><a href="%%PACKAGE%%.html">HTML
     (%%HTML_MONO_SIZE%%K bytes)</a> - entirely on one web page.</li>
 <li><a href="html_node/index.html">HTML</a> - with one web page per
     node.</li>
@@ -46,7 +46,7 @@
     chapter.</li>
 %%ENDIF HTML_CHAPTER%%
 <li><a href="%%PACKAGE%%.html.gz">HTML compressed
-    (%%HTML_MONO_GZ_SIZE%%K gzipped characters)</a> - entirely on 
+    (%%HTML_MONO_GZ_SIZE%%K gzipped characters)</a> - entirely on
     one web page.</li>
 <li><a href="%%PACKAGE%%.html_node.tar.gz">HTML compressed
     (%%HTML_NODE_TGZ_SIZE%%K gzipped tar file)</a> -
@@ -86,9 +86,9 @@ Return to the <a href="/home.html">GNU Project home page</a>.
 </p>
 
 <p>
-Please send FSF &amp; GNU inquiries to 
+Please send FSF &amp; GNU inquiries to
 <a href="mailto:gnu@gnu.org"><em>gnu@gnu.org</em></a>.
-There are also <a href="/home.html#ContactInfo">other ways to contact</a> 
+There are also <a href="/home.html#ContactInfo">other ways to contact</a>
 the FSF.
 <br />
 Please send broken links and other corrections (or suggestions) to

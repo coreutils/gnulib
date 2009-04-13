@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate March 12, 2009
+@set lastupdate April 8, 2009
 @c %**end of header
 
 @dircategory GNU organization
@@ -322,7 +322,7 @@ contributor the papers; if they haven't, then you should send the
 papers.  In any case, you should wait for the confirmation from the
 FSF that the signed papers have been received and accepted before
 integrating the new contributor's material, as usual.
- 
+
 If a contributor is reluctant to sign an assignment for a large change,
 and is willing to sign a disclaimer instead, that is acceptable, so you
 should offer this alternative if it helps you reach agreement.  We
@@ -1708,10 +1708,10 @@ correspondence to @email{bug-texinfo@@gnu.org}.
 
 @node CVS Keywords in Web Pages
 @section CVS Keywords in Web Pages
-@cindex cvs keywords in web pages
-@cindex rcs keywords in web pages
+@cindex CVS keywords in web pages
+@cindex RCS keywords in web pages
 @cindex $ keywords in web pages
-@cindex web pages, and cvs keywords
+@cindex web pages, and CVS keywords
 
 Since @code{www.gnu.org} works through CVS, CVS keywords in your
 manual, such as @code{@w{$}Log$}, need special treatment (even if you
