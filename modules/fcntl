@@ -8,6 +8,7 @@ m4/fcntl_h.m4
 Depends-on:
 include_next
 unistd
+extensions
 
 configure.ac:
 gl_FCNTL_H

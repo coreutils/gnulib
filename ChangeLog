@@ -1,3 +1,8 @@
+2009-04-14  Bruno Haible  <bruno@clisp.org>
+
+	* modules/fcntl (Depends-on): Add extensions.
+	* m4/fcntl_h.m4 (gl_FCNTL_H): Add a comment.
+
 2009-04-12  Ben Pfaff  <blp@gnu.org>
 
 	Make fcntl module detect O_NOATIME, O_NOFOLLOW on GNU/Linux.
