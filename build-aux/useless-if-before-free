@@ -4,7 +4,7 @@
 # Also detect "if (NULL != p) free (p);".
 # And with 0 in place of NULL.
 
-my $VERSION = '2009-04-07 08:05'; # UTC
+my $VERSION = '2009-04-16 15:57'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -175,9 +175,11 @@ my $foo = <<'EOF';
 # This adjusts them, removing the unnecessary "if (p)" part.
 
 # FIXME: do something like this as an option (doesn't do braces):
-useless-if-before-free -l $(lid -knone free) | xargs -0 \
-  perl -0x3b -pi -e \
-   's/\bif\s*\(\s*(\S+?)(?:\s*!=\s*NULL)?\s*\)\s+(free\s*\((?:\s*\([^)]+\))?\s*\1\s*\))/$2/s'
+free=xfree
+git grep -l -z "$free *(" \
+  | xargs -0 useless-if-before-free -l --name="$free" \
+  | xargs -0 perl -0x3b -pi -e \
+   's/\bif\s*\(\s*(\S+?)(?:\s*!=\s*(?:0|NULL))?\s*\)\s+('"$free"'\s*\((?:\s*\([^)]+\))?\s*\1\s*\))/$2/s'
 
 # Use the following to remove redundant uses of kfree inside braces.
 # Note that -0777 puts perl in slurp-whole-file mode;
@@ -186,7 +188,7 @@ free=kfree
 git grep -l -z "$free *(" \
   | xargs -0 useless-if-before-free -l --name="$free" \
   | xargs -0 perl -0777 -pi -e \
-     's/\bif\s*\(\s*(\S+?)(?:\s*!=\s*NULL)?\s*\)\s*\{\s*('"$free"'\s*\((?:\s*\([^)]+\))?\s*\1\s*\);)\s*\}[^\n]*$/$2/gms'
+     's/\bif\s*\(\s*(\S+?)(?:\s*!=\s*(?:0|NULL))?\s*\)\s*\{\s*('"$free"'\s*\((?:\s*\([^)]+\))?\s*\1\s*\);)\s*\}[^\n]*$/$2/gms'
 
 Be careful that the result of the above transformation is valid.
 If the matched string is followed by "else", then obviously, it won't be.
