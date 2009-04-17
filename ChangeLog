@@ -1,3 +1,8 @@
+2009-04-17  Simon Josefsson  <simon@josefsson.org>
+
+	* top/maint.mk (PO_DOMAIN): New variable, allows overriding of
+	gettext domain.
+
 2009-04-16  Jim Meyering  <meyering@redhat.com>
 
 	useless-if-before-free: improve conversion code

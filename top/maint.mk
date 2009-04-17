@@ -151,7 +151,8 @@ coverage: init-coverage build-coverage gen-coverage
 
 # Update gettext files.
 PACKAGE ?= $(shell basename $(PWD))
-POURL = http://translationproject.org/latest/$(PACKAGE)/
+PO_DOMAIN ?= $(PACKAGE)
+POURL = http://translationproject.org/latest/$(PO_DOMAIN)/
 PODIR ?= po
 refresh-po:
 	rm -f $(PODIR)/*.po && \
