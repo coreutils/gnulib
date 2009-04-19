@@ -1,3 +1,8 @@
+2009-04-19  Bruno Haible  <bruno@clisp.org>
+
+	* modules/configmake (Makefile.am): When the contents of configmake.h
+	does not change, arrange to preserve its modification time.
+
 2009-04-17  Simon Josefsson  <simon@josefsson.org>
 
 	* top/maint.mk (PO_DOMAIN): New variable, allows overriding of
