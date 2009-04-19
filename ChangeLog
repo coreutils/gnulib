@@ -1,5 +1,11 @@
 2009-04-19  Bruno Haible  <bruno@clisp.org>
 
+	Avoid a compiler warning.
+	* tests/uninorm/test-u32-normalize-big.c (read_normalization_test_file):
+	Change type of variable 'sequence'.
+
+2009-04-19  Bruno Haible  <bruno@clisp.org>
+
 	* modules/configmake (Makefile.am): When the contents of configmake.h
 	does not change, arrange to preserve its modification time.
 

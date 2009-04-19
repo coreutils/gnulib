@@ -224,7 +224,7 @@ read_normalization_test_file (const char *filename,
 
     for (line_index = 0; line_index < p->lines_length; line_index++)
       {
-	const unsigned int *sequence = p->lines[line_index].sequences[0];
+	const uint32_t *sequence = p->lines[line_index].sequences[0];
 	/* In part 1, every sequences[0] consists of a single character.  */
 	if (!(sequence[0] != 0 && sequence[1] == 0))
 	  abort ();
