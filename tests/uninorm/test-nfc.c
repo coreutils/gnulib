@@ -20,8 +20,10 @@
 
 #include "uninorm.h"
 
+#if !WOE32DLL
 /* Check that UNINORM_NFC is defined and links.  */
 uninorm_t n = UNINORM_NFC;
+#endif
 
 extern void test_u8_nfc (void);
 extern void test_u16_nfc (void);
@@ -30,6 +32,10 @@ extern void test_u32_nfc (void);
 int
 main ()
 {
+  /* Check that UNINORM_NFC is defined and links.  */
+  uninorm_t nf = UNINORM_NFC;
+  (void) nf;
+
   test_u32_nfc ();
   test_u16_nfc ();
   test_u8_nfc ();

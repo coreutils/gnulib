@@ -20,8 +20,10 @@
 
 #include "uninorm.h"
 
+#if !WOE32DLL
 /* Check that UNINORM_NFKC is defined and links.  */
 uninorm_t n = UNINORM_NFKC;
+#endif
 
 extern void test_u8_nfkc (void);
 extern void test_u16_nfkc (void);
@@ -30,6 +32,10 @@ extern void test_u32_nfkc (void);
 int
 main ()
 {
+  /* Check that UNINORM_NFKC is defined and links.  */
+  uninorm_t nf = UNINORM_NFKC;
+  (void) nf;
+
   test_u32_nfkc ();
   test_u16_nfkc ();
   test_u8_nfkc ();

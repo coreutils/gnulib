@@ -20,8 +20,10 @@
 
 #include "uninorm.h"
 
+#if !WOE32DLL
 /* Check that UNINORM_NFD is defined and links.  */
 uninorm_t n = UNINORM_NFD;
+#endif
 
 extern void test_u8_nfd (void);
 extern void test_u16_nfd (void);
@@ -30,6 +32,10 @@ extern void test_u32_nfd (void);
 int
 main ()
 {
+  /* Check that UNINORM_NFD is defined and links.  */
+  uninorm_t nf = UNINORM_NFD;
+  (void) nf;
+
   test_u32_nfd ();
   test_u16_nfd ();
   test_u8_nfd ();
