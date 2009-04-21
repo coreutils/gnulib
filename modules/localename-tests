@@ -2,6 +2,7 @@ Files:
 tests/test-localename.c
 
 Depends-on:
+locale
 setenv
 unsetenv
 
