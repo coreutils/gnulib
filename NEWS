@@ -6,6 +6,16 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2009-04-24 maintainer-makefile
+                            The maint.mk file was copied from
+                            coreutils, and the old
+                            coverage/gettext/indent rules were
+                            re-added.  If you used 'make syntax-check'
+                            this will add several new checks.  If some
+                            new check is annoying, add the name of the
+                            checks to 'local-checks-to-skip' in your
+                            cfg.mk.
+
 2009-04-01  visibility      Renamed to lib-symbol-visibility.
 
 2009-04-01  ld-version-script  Renamed to lib-symbol-versions.

@@ -1,3 +1,8 @@
+2009-04-24  Simon Josefsson  <simon@josefsson.org>
+
+	* top/maint.mk: Sync with coreutils.
+	* NEWS: Explain incompatibilities.
+
 2009-04-22  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
             Bruno Haible  <bruno@clisp.org>
 
