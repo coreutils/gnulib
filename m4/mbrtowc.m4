@@ -1,4 +1,4 @@
-# mbrtowc.m4 serial 14
+# mbrtowc.m4 serial 15
 dnl Copyright (C) 2001-2002, 2004-2005, 2008, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -127,7 +127,7 @@ int main ()
 }],
           [gl_cv_func_mbrtowc_incomplete_state=yes],
           [gl_cv_func_mbrtowc_incomplete_state=no],
-          [])
+          [:])
       fi
     ])
 ])
@@ -178,7 +178,7 @@ int main ()
 }],
           [gl_cv_func_mbrtowc_sanitycheck=yes],
           [gl_cv_func_mbrtowc_sanitycheck=no],
-          [])
+          [:])
       fi
     ])
 ])
@@ -225,7 +225,7 @@ int main ()
         return 1;
     }
   return 0;
-}], [gl_cv_func_mbrtowc_null_arg=yes], [gl_cv_func_mbrtowc_null_arg=no], [])
+}], [gl_cv_func_mbrtowc_null_arg=yes], [gl_cv_func_mbrtowc_null_arg=no], [:])
       fi
     ])
 ])
@@ -295,7 +295,7 @@ int main ()
 }],
           [gl_cv_func_mbrtowc_retval=yes],
           [gl_cv_func_mbrtowc_retval=no],
-          [])
+          [:])
       fi
     ])
 ])
@@ -342,7 +342,7 @@ int main ()
 }],
           [gl_cv_func_mbrtowc_nul_retval=yes],
           [gl_cv_func_mbrtowc_nul_retval=no],
-          [])
+          [:])
       fi
     ])
 ])

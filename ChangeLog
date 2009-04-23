@@ -1,3 +1,19 @@
+2009-04-22  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	Fix cross-compilation results.
+	* m4/btowc.m4 (gl_FUNC_BTOWC): Use no-op statement, rather than empty
+	statement, as third argument of AC_TRY_RUN.
+	* m4/mbrtowc.m4 (gl_MBRTOWC_INCOMPLETE_STATE, gl_MBRTOWC_SANITYCHECK,
+	gl_MBRTOWC_NULL_ARG, gl_MBRTOWC_RETVAL, gl_MBRTOWC_NUL_RETVAL):
+	Likewise.
+	* m4/mbsrtowcs.m4 (gl_MBSRTOWCS_WORKS): Likewise.
+	* m4/wcsrtombs.m4 (gl_WCSRTOMBS_TERMINATION, gl_WCSRTOMBS_NULL):
+	Likewise.
+	* m4/wctob.m4 (gl_FUNC_WCTOB): Likewise.
+	* m4/wcrtomb.m4 (gl_FUNC_WCRTOMB): Likewise. Update for AIX 4.3.
+	* doc/posix-functions/wcrtomb.texi: Mention the bug on AIX 4.3.
+
 2009-04-20  Bruno Haible  <bruno@clisp.org>
 
 	Avoid test failure on mingw.

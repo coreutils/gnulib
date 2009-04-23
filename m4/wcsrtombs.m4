@@ -1,5 +1,5 @@
-# wcsrtombs.m4 serial 2
-dnl Copyright (C) 2008 Free Software Foundation, Inc.
+# wcsrtombs.m4 serial 3
+dnl Copyright (C) 2008-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -86,7 +86,7 @@ int main ()
 }],
           [gl_cv_func_wcsrtombs_termination=yes],
           [gl_cv_func_wcsrtombs_termination=no],
-          [])
+          [:])
       fi
     ])
 ])
@@ -139,7 +139,7 @@ int main ()
 }],
           [gl_cv_func_wcsrtombs_null=yes],
           [gl_cv_func_wcsrtombs_null=no],
-          [])
+          [:])
       fi
     ])
 ])
