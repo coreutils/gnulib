@@ -1,7 +1,7 @@
 #! /bin/sh
 # depcomp - compile a program generating dependencies as side-effects
 
-scriptversion=2009-03-04.20
+scriptversion=2009-04-22.22
 
 # Copyright (C) 1999, 2000, 2003, 2004, 2005, 2006, 2007, 2009 Free
 # Software Foundation, Inc.
@@ -474,7 +474,7 @@ makedepend)
   fi
   # X makedepend
   shift
-  cleared=no
+  cleared=no eat=no
   for arg
   do
     case $cleared in
@@ -482,11 +482,17 @@ makedepend)
       set ""; shift
       cleared=yes ;;
     esac
+    if test $eat = yes; then
+      eat=no
+      continue
+    fi
     case "$arg" in
     -D*|-I*)
       set fnord "$@" "$arg"; shift ;;
     # Strip any option that makedepend may not understand.  Remove
     # the object too, otherwise makedepend will parse it as a source file.
+    -arch)
+      eat=yes ;;
     -*|$object)
       ;;
     *)
