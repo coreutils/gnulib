@@ -1,5 +1,10 @@
 2009-04-24  Jim Meyering  <meyering@redhat.com>
 
+	maint.mk: remove coreutils-specific rules and variables
+	* top/maint.mk (bin, taint-distcheck, coreutils-path-check, t): Remove.
+	(fake_home, install-transform-check, my-instcheck, pfx, TMPDIR): Remove.
+	(t_prefix, t_taint, tp, warn_cflags, write_loser, my-distcheck): Remove.
+
 	maint.mk: remove obsolete rule
 	* top/maint.mk (rel-check): Remove rule.
 	(WGET, WGETFLAGS): Remove now-unused variables.
