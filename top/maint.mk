@@ -72,8 +72,7 @@ syntax-check-rules := $(shell sed -n 's/^\(sc_[a-zA-Z0-9_-]*\):.*/\1/p' \
 .PHONY: $(syntax-check-rules)
 
 local-checks-available = \
-  $(syntax-check-rules) \
-  makefile-check
+  $(syntax-check-rules)
 .PHONY: $(local-checks-available)
 
 # Arrange to print the name of each syntax-checking rule just before running it.
@@ -488,7 +487,7 @@ update-NEWS-hash: NEWS
 # to emit a definition for each substituted variable.
 # We use perl rather than "grep -nE ..." to exempt a single
 # use of an @...@-delimited variable name in src/Makefile.am.
-makefile-check:
+sc_makefile_check:
 	@perl -ne '/\@[A-Z_0-9]+\@/ && !/^cu_install_program =/'	\
 	  -e 'and (print "$$ARGV:$$.: $$_"), $$m=1; END {exit !$$m}'	\
 	    $$($(VC_LIST_EXCEPT) | grep -E '(^|/)Makefile\.am$$')	\

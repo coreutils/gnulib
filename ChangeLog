@@ -1,5 +1,8 @@
 2009-04-24  Simon Josefsson  <simon@josefsson.org>
 
+	* top/maint.mk (makefile-check): Renamed to sc_makefile_check for
+	consistency.
+
 	* modules/vc-list-files-tests (TESTS_ENVIRONMENT): Use
 	'$(PATH_SEPARATOR)' instead of ':'.
 
