@@ -1,5 +1,9 @@
 2009-04-24  Eric Blake  <ebb9@byu.net>
 
+	vc-list-files: ignore git symlinks
+	* build-aux/vc-list-files (.git): Use ls-tree and a filter, rather
+	than ls-files, to ignore git symlinks.
+
 	maint.mk: import improvements from m4
 	* top/maint.mk (VC-tag): Use signing key from cfg.mk.
 	(move_if_change): Delete unused macro.

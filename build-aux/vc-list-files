@@ -2,7 +2,7 @@
 # List version-controlled file names.
 
 # Print a version string.
-scriptversion=2009-03-01.09
+scriptversion=2009-04-24.14
 
 # Copyright (C) 2006-2009 Free Software Foundation, Inc.
 
@@ -72,7 +72,17 @@ esac
 test "x$dir" = x && dir=.
 
 if test -d .git; then
-  eval exec git ls-files '"$dir"' $postprocess
+  if test "x$dir" = x. ; then
+    dir=HEAD
+  else
+    dir=HEAD:$dir
+  fi
+  # Ignore git symlinks - either they point into the tree, in which case
+  # we don't need to visit the target twice, or they point somewhere
+  # else (often into a submodule), in which case the content does not
+  # belong to this package.
+  eval exec git ls-tree -r '"$dir"' \| sed -n '"s/^100[^	]*.//p"' \
+    $postprocess
 elif test -d .hg; then
   eval exec hg locate '"$dir/*"' $postprocess
 elif test -d .bzr; then
