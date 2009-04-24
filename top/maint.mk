@@ -1,6 +1,6 @@
 # -*-Makefile-*-
 # This Makefile fragment tries to be general-purpose enough to be
-# used by at least coreutils, idutils, CPPI, Bison, and Autoconf.
+# used by many projects via the gnulib maintainer-makefile module.
 
 ## Copyright (C) 2001-2009 Free Software Foundation, Inc.
 ##
@@ -27,14 +27,15 @@ gzip_rsyncable := \
   $(shell gzip --help 2>/dev/null|grep rsyncable >/dev/null && echo --rsyncable)
 GZIP_ENV = '--no-name --best $(gzip_rsyncable)'
 
+# cfg.mk must define the gpg_key_ID used by this package.
 GIT = git
 VC = $(GIT)
-VC-tag = git tag -s -m '$(VERSION)'
+VC-tag = git tag -s -m '$(VERSION)' -u '$(gpg_key_ID)'
 
-VC_LIST = $(srcdir)/build-aux/vc-list-files
+VC_LIST = $(gnulib_dir)/build-aux/vc-list-files -C $(srcdir)
 
 VC_LIST_EXCEPT = \
-  $(VC_LIST) | if test -f .x-$@; then grep -vEf .x-$@; else grep -v ChangeLog; fi
+  $(VC_LIST) | if test -f $(srcdir)/.x-$@; then grep -vEf $(srcdir)/.x-$@; else grep -v ChangeLog; fi
 
 ifeq ($(origin prev_version_file), undefined)
   prev_version_file = $(srcdir)/.prev-version
@@ -68,7 +69,7 @@ export LC_ALL = C
 
 # Collect the names of rules starting with `sc_'.
 syntax-check-rules := $(shell sed -n 's/^\(sc_[a-zA-Z0-9_-]*\):.*/\1/p' \
-                        $(srcdir)/$(ME) $(srcdir)/cfg.mk)
+			$(srcdir)/$(ME) $(srcdir)/cfg.mk)
 .PHONY: $(syntax-check-rules)
 
 local-checks-available = \
@@ -110,7 +111,7 @@ define _prohibit_regexp
 endef
 
 sc_avoid_if_before_free:
-	@$(srcdir)/build-aux/useless-if-before-free			\
+	@$(gnulib_dir)/build-aux/useless-if-before-free			\
 		$(useless_free_options)					\
 	    $$($(VC_LIST_EXCEPT)) &&					\
 	  { echo '$(ME): found useless "if" before "free" above' 1>&2;	\
@@ -495,7 +496,7 @@ sc_makefile_check:
 
 news-date-check: NEWS
 	today=`date +%Y-%m-%d`;						\
-	if head NEWS | grep '^\*.* $(VERSION_REGEXP) ('$$today')'	\
+	if head $(srcdir)/NEWS | grep '^\*.* $(VERSION_REGEXP) ('$$today')' \
 	    >/dev/null; then						\
 	  :;								\
 	else								\
@@ -593,7 +594,7 @@ sc_copyright_check:
 	fi
 
 vc-diff-check:
-	$(VC) diff > vc-diffs || :
+	(unset CDPATH; cd $(srcdir) && $(VC) diff) > vc-diffs || :
 	if test -s vc-diffs; then				\
 	  cat vc-diffs;						\
 	  echo "Some files are locally modified:" 1>&2;		\
@@ -631,16 +632,17 @@ built_programs = $$(cd src && MAKEFLAGS= $(MAKE) -s built_programs.list)
 rel-files = $(DIST_ARCHIVES)
 
 gnulib-version = $$(cd $(gnulib_dir) && git describe)
+bootstrap-tools ?= autoconf,automake,gnulib
 
 announcement: NEWS ChangeLog $(rel-files)
-	@./build-aux/announce-gen					\
+	@$(srcdir)/build-aux/announce-gen				\
 	    --release-type=$(RELEASE_TYPE)				\
 	    --package=$(PACKAGE)					\
 	    --prev=$(PREV_VERSION)					\
 	    --curr=$(VERSION)						\
 	    --gpg-key-id=$(gpg_key_ID)					\
 	    --news=NEWS							\
-	    --bootstrap-tools=autoconf,automake,bison,gnulib		\
+	    --bootstrap-tools=$(bootstrap-tools)			\
 	    --gnulib-version=$(gnulib-version)				\
 	    --no-print-checksums					\
 	    $(addprefix --url-dir=, $(url_dir_list))
@@ -651,9 +653,6 @@ announcement: NEWS ChangeLog $(rel-files)
 
 ftp-gnu = ftp://ftp.gnu.org/gnu
 www-gnu = http://www.gnu.org
-
-# Use mv, if you don't have/want move-if-change.
-move_if_change ?= move-if-change
 
 emit_upload_commands:
 	@echo =====================================

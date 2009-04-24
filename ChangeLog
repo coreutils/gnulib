@@ -1,3 +1,17 @@
+2009-04-24  Eric Blake  <ebb9@byu.net>
+
+	maint.mk: import improvements from m4
+	* top/maint.mk (VC-tag): Use signing key from cfg.mk.
+	(move_if_change): Delete unused macro.
+	(news-date-check, vc-diff-check): Support VPATH builds.
+	(announcement): Likewise.  Split --bootstrap-tools list...
+	(boostrap-tools): ...into separate list, which can be overridden
+	in cfg.mk.
+	(sc_avoid_if_before_free): Point to $(gnulib_dir), rather than
+	requiring dependency on useless-if-before-free module.
+	(VC_LIST, VC_LIST_EXCEPT): Likewise for vc-list-files module.
+	Support VPATH builds.
+
 2009-04-24  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: remove coreutils-specific rules and variables
@@ -27,7 +41,7 @@
 	* NEWS: Explain incompatibilities.
 
 2009-04-22  Yoann Vandoorselaere  <yoann.v@prelude-ids.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Fix cross-compilation results.
 	* m4/btowc.m4 (gl_FUNC_BTOWC): Use no-op statement, rather than empty
