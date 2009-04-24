@@ -1,5 +1,9 @@
 2009-04-24  Simon Josefsson  <simon@josefsson.org>
 
+	* lib/getopt1.c (main): Use 'const' for static array.
+
+2009-04-24  Simon Josefsson  <simon@josefsson.org>
+
 	* top/maint.mk: Sync with coreutils.
 	* NEWS: Explain incompatibilities.
 
