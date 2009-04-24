@@ -1,5 +1,10 @@
 2009-04-24  Simon Josefsson  <simon@josefsson.org>
 
+	* modules/vc-list-files-tests (TESTS_ENVIRONMENT): Use
+	'$(PATH_SEPARATOR)' instead of ':'.
+
+2009-04-24  Simon Josefsson  <simon@josefsson.org>
+
 	* lib/getopt1.c (main): Use 'const' for static array.
 
 2009-04-24  Simon Josefsson  <simon@josefsson.org>
