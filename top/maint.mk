@@ -762,18 +762,6 @@ my-distcheck: $(DIST_ARCHIVES) $(local-check)
 	echo "$(distdir).tar.gz is ready for distribution"; \
 	echo "========================"
 
-WGET = wget
-WGETFLAGS = -C off
-
-rel-check:
-	tarz=/tmp/rel-check-tarz-$$$$; \
-	md5_tmp=/tmp/rel-check-md5-$$$$; \
-	set -e; \
-	trap 'status=$$?; rm -f $$tarz $$md5_tmp; exit $$status' 0 1 2 3 15; \
-	$(WGET) $(WGETFLAGS) -q --output-document=$$tarz $(url); \
-	echo "$(md5)  -" > $$md5_tmp; \
-	md5sum -c $$md5_tmp < $$tarz
-
 rel-files = $(DIST_ARCHIVES)
 
 gnulib-version = $$(cd $(gnulib_dir) && git describe)
