@@ -1,3 +1,10 @@
+2009-04-25  Jim Meyering  <meyering@redhat.com>
+
+	vc-list-files: restore lost functionality with subdir argument
+	* build-aux/vc-list-files: When given a non-"." sub-directory
+	argument, substitute the $dir/ prefix back onto each resulting name.
+	Otherwise, coreutils' root_tests check would fail.
+
 2009-04-24  Eric Blake  <ebb9@byu.net>
 
 	vc-list-files: ignore git symlinks
