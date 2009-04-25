@@ -1,3 +1,9 @@
+2009-04-25  Jim Meyering  <meyering@redhat.com>
+
+	vc-list-files: fix another quoting bug
+	* build-aux/vc-list-files: Avoid sed backslash expansion
+	of pathological directory names.
+
 2009-04-25  Eric Blake  <ebb9@byu.net>
 
 	vc-list-files: fix shell quoting error

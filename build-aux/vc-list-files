@@ -72,13 +72,15 @@ esac
 test "x$dir" = x && dir=.
 
 if test -d .git; then
-  test "x$dir" = x. && dir= || dir="$dir/"
+  test "x$dir" = x. \
+    && dir= sed_esc= \
+    || dir="$dir/" sed_esc=`echo "$dir"|sed 's,\([\\/]\),\\\\\1,g'`
   # Ignore git symlinks - either they point into the tree, in which case
   # we don't need to visit the target twice, or they point somewhere
   # else (often into a submodule), in which case the content does not
   # belong to this package.
   eval exec git ls-tree -r 'HEAD:"$dir"' \
-    \| sed -n '"s!^100[^	]*.!$dir!p"' $postprocess
+    \| sed -n '"s/^100[^	]*./$sed_esc/p"' $postprocess
 elif test -d .hg; then
   eval exec hg locate '"$dir/*"' $postprocess
 elif test -d .bzr; then
