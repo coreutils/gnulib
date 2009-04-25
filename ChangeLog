@@ -1,3 +1,12 @@
+2009-04-25  Bruno Haible  <bruno@clisp.org>
+
+	Avoid link error when creating a namespace clean library.
+	* lib/math.in.h (gl_signbitf, gl_signbitd, gl_signbitl): Don't define
+	as macro with arguments if already defined as an alias.
+	* lib/signbitf.c (gl_signbitf): Don't undefine.
+	* lib/signbitd.c (gl_signbitd): Don't undefine.
+	* lib/signbitl.c (gl_signbitl): Don't undefine.
+
 2009-04-25  Jim Meyering  <meyering@redhat.com>
 
 	vc-list-files: fix another quoting bug
