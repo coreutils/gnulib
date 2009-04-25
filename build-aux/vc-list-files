@@ -2,7 +2,7 @@
 # List version-controlled file names.
 
 # Print a version string.
-scriptversion=2009-04-25.10
+scriptversion=2009-04-25.13; # UTC
 
 # Copyright (C) 2006-2009 Free Software Foundation, Inc.
 
@@ -78,7 +78,7 @@ if test -d .git; then
   # else (often into a submodule), in which case the content does not
   # belong to this package.
   eval exec git ls-tree -r 'HEAD:"$dir"' \
-    \| sed -n '"s!^100[^	]*.!'"$dir"'!p"' $postprocess
+    \| sed -n '"s!^100[^	]*.!$dir!p"' $postprocess
 elif test -d .hg; then
   eval exec hg locate '"$dir/*"' $postprocess
 elif test -d .bzr; then
@@ -109,5 +109,6 @@ fi
 # eval: (add-hook 'write-file-hooks 'time-stamp)
 # time-stamp-start: "scriptversion="
 # time-stamp-format: "%:y-%02m-%02d.%02H"
-# time-stamp-end: "$"
+# time-stamp-time-zone: "UTC"
+# time-stamp-end: "; # UTC"
 # End:
