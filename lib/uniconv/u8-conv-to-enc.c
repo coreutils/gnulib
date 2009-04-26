@@ -70,13 +70,11 @@ u8_conv_to_encoding (const char *tocode,
     {
       char *result = resultbuf;
       size_t length = *lengthp;
-      int retval =
-	mem_iconveha ((const char *) src, srclen,
-		      "UTF-8", tocode,
-		      handler == iconveh_question_mark, handler,
-		      offsets, &result, &length);
 
-      if (retval < 0)
+      if (mem_iconveha ((const char *) src, srclen,
+			"UTF-8", tocode,
+			handler == iconveh_question_mark, handler,
+			offsets, &result, &length) < 0)
 	return NULL;
 
       if (result == NULL) /* when (resultbuf == NULL && length == 0)  */

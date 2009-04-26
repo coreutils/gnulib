@@ -25,7 +25,6 @@ FUNC (const char *tocode,
   size_t *scaled_offsets;
   char *result;
   size_t length;
-  int retval;
 
   if (offsets != NULL && srclen > 0)
     {
@@ -42,11 +41,10 @@ FUNC (const char *tocode,
 
   result = resultbuf;
   length = *lengthp;
-  retval = mem_iconveha ((const char *) src, srclen * sizeof (UNIT),
-			 UTF_NAME, tocode,
-			 handler == iconveh_question_mark, handler,
-			 scaled_offsets, &result, &length);
-  if (retval < 0)
+  if (mem_iconveha ((const char *) src, srclen * sizeof (UNIT),
+		    UTF_NAME, tocode,
+		    handler == iconveh_question_mark, handler,
+		    scaled_offsets, &result, &length) < 0)
     {
       int saved_errno = errno;
       free (scaled_offsets);
