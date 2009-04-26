@@ -1,5 +1,5 @@
 /* Line breaking of strings.
-   Copyright (C) 2001-2003, 2006-2008 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2006-2009 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify it
@@ -64,9 +64,10 @@ ulc_width_linebreaks (const char *s, size_t n,
 					 s, n, offsets, &t, &m)
 		  == 0)
 		{
-		  char *memory = (char *) malloc (m + (o != NULL ? m : 0));
+		  char *memory =
+		    (char *) (m > 0 ? malloc (m + (o != NULL ? m : 0)) : NULL);
 
-		  if (memory != NULL)
+		  if (m == 0 || memory != NULL)
 		    {
 		      char *q = (char *) memory;
 		      char *o8 = (o != NULL ? (char *) (q + m) : NULL);

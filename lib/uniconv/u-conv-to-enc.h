@@ -1,5 +1,5 @@
 /* Conversion from UTF-16/UTF-32 to legacy encodings.
-   Copyright (C) 2002, 2006-2008 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2006-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify it
    under the terms of the GNU Lesser General Public License as published
@@ -25,7 +25,7 @@ FUNC (const char *tocode,
   size_t *scaled_offsets;
   int retval;
 
-  if (offsets != NULL)
+  if (offsets != NULL && srclen > 0)
     {
       scaled_offsets =
 	(size_t *) malloc (srclen * sizeof (UNIT) * sizeof (size_t));
@@ -70,7 +70,7 @@ FUNC (const char *tocode,
     return -1;
   utf8_srclen = tmpbufsize;
 
-  if (offsets != NULL)
+  if (offsets != NULL && utf8_srclen > 0)
     {
       scaled_offsets = (size_t *) malloc (utf8_srclen * sizeof (size_t));
       if (scaled_offsets == NULL)
@@ -88,12 +88,11 @@ FUNC (const char *tocode,
 				scaled_offsets, resultp, lengthp);
   if (retval < 0)
     {
+      int saved_errno = errno;
+      free (scaled_offsets);
       if (utf8_src != tmpbuf)
-	{
-	  int saved_errno = errno;
-	  free (utf8_src);
-	  errno = saved_errno;
-	}
+	free (utf8_src);
+      errno = saved_errno;
       return -1;
     }
   if (offsets != NULL)

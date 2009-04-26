@@ -64,9 +64,9 @@ ulc_wordbreaks (const char *s, size_t n, char *p)
 					 s, n, offsets, &t, &m)
 		  == 0)
 		{
-		  char *q = (char *) malloc (m);
+		  char *q = (char *) (m > 0 ? malloc (m) : NULL);
 
-		  if (q != NULL)
+		  if (m == 0 || q != NULL)
 		    {
 		      size_t i;
 
