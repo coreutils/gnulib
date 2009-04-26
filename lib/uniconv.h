@@ -84,32 +84,32 @@ extern int
    array is filled with offsets into the result, i.e. the character starting
    at SRC[i] corresponds to the character starting at (*RESULTP)[OFFSETS[i]],
    and other offsets are set to (size_t)(-1).
-   *RESULTP and *LENGTHP should initially be a scratch buffer and its size,
-   or *RESULTP can initially be NULL.
+   RESULTBUF and *LENGTHP should initially be a scratch buffer and its size,
+   or RESULTBUF can be NULL.
    May erase the contents of the memory at *RESULTP.
-   Return value: 0 if successful, otherwise -1 and errno set.
-   If successful: The resulting string is stored in *RESULTP and its length
-   in *LENGTHP.  *RESULTP is set to a freshly allocated memory block, or is
-   unchanged if no dynamic memory allocation was necessary.
-   Particular errno values: EINVAL, EILSEQ, ENOMEM.  */
-extern int
+   If successful: The resulting string (non-NULL) is returned and its length
+   stored in *LENGTHP.  The resulting string is RESULTBUF if no dynamic memory
+   allocation was necessary, or a freshly allocated memory block otherwise.
+   In case of error: NULL is returned and errno is set.  Particular errno
+   values: EINVAL, EILSEQ, ENOMEM.  */
+extern char *
        u8_conv_to_encoding (const char *tocode,
 			    enum iconv_ilseq_handler handler,
 			    const uint8_t *src, size_t srclen,
 			    size_t *offsets,
-			    char **resultp, size_t *lengthp);
-extern int
+			    char *resultbuf, size_t *lengthp);
+extern char *
        u16_conv_to_encoding (const char *tocode,
 			     enum iconv_ilseq_handler handler,
 			     const uint16_t *src, size_t srclen,
 			     size_t *offsets,
-			     char **resultp, size_t *lengthp);
-extern int
+			     char *resultbuf, size_t *lengthp);
+extern char *
        u32_conv_to_encoding (const char *tocode,
 			     enum iconv_ilseq_handler handler,
 			     const uint32_t *src, size_t srclen,
 			     size_t *offsets,
-			     char **resultp, size_t *lengthp);
+			     char *resultbuf, size_t *lengthp);
 
 /* Converts a NUL terminated string from a given encoding.
    The result is malloc allocated, or NULL (with errno set) in case of error.

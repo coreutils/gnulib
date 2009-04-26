@@ -14,15 +14,17 @@
    You should have received a copy of the GNU Lesser General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-int
+char *
 FUNC (const char *tocode,
       enum iconv_ilseq_handler handler,
       const UNIT *src, size_t srclen,
       size_t *offsets,
-      char **resultp, size_t *lengthp)
+      char *resultbuf, size_t *lengthp)
 {
 #if HAVE_UTF_NAME
   size_t *scaled_offsets;
+  char *result;
+  size_t length;
   int retval;
 
   if (offsets != NULL && srclen > 0)
@@ -32,42 +34,59 @@ FUNC (const char *tocode,
       if (scaled_offsets == NULL)
 	{
 	  errno = ENOMEM;
-	  return -1;
+	  return NULL;
 	}
     }
   else
     scaled_offsets = NULL;
 
+  result = resultbuf;
+  length = *lengthp;
   retval = mem_iconveha ((const char *) src, srclen * sizeof (UNIT),
 			 UTF_NAME, tocode,
 			 handler == iconveh_question_mark, handler,
-			 scaled_offsets, resultp, lengthp);
+			 scaled_offsets, &result, &length);
+  if (retval < 0)
+    {
+      int saved_errno = errno;
+      free (scaled_offsets);
+      errno = saved_errno;
+      return NULL;
+    }
 
   if (offsets != NULL)
     {
-      if (retval >= 0)
-	{
-	  /* Convert scaled_offsets[srclen * sizeof (UNIT)] to
-	     offsets[srclen].  */
-	  size_t i;
+      /* Convert scaled_offsets[srclen * sizeof (UNIT)] to
+	 offsets[srclen].  */
+      size_t i;
 
-	  for (i = 0; i < srclen; i++)
-	    offsets[i] = scaled_offsets[i * sizeof (UNIT)];
-	}
+      for (i = 0; i < srclen; i++)
+	offsets[i] = scaled_offsets[i * sizeof (UNIT)];
       free (scaled_offsets);
     }
-  return retval;
+
+  if (result == NULL) /* when (resultbuf == NULL && length == 0)  */
+    {
+      result = (char *) malloc (1);
+      if (result == NULL)
+	{
+	  errno = ENOMEM;
+	  return NULL;
+	}
+    }
+  *lengthp = length;
+  return result;
 #else
   uint8_t tmpbuf[4096];
   size_t tmpbufsize = SIZEOF (tmpbuf);
   uint8_t *utf8_src;
   size_t utf8_srclen;
   size_t *scaled_offsets;
-  int retval;
+  char *result;
 
   utf8_src = U_TO_U8 (src, srclen, tmpbuf, &tmpbufsize);
   if (utf8_src == NULL)
-    return -1;
+    return NULL;
   utf8_srclen = tmpbufsize;
 
   if (offsets != NULL && utf8_srclen > 0)
@@ -78,22 +97,22 @@ FUNC (const char *tocode,
 	  if (utf8_src != tmpbuf)
 	    free (utf8_src);
 	  errno = ENOMEM;
-	  return -1;
+	  return NULL;
 	}
     }
   else
     scaled_offsets = NULL;
 
-  retval = u8_conv_to_encoding (tocode, handler, utf8_src, utf8_srclen,
-				scaled_offsets, resultp, lengthp);
-  if (retval < 0)
+  result = u8_conv_to_encoding (tocode, handler, utf8_src, utf8_srclen,
+				scaled_offsets, resultbuf, lengthp);
+  if (result == NULL)
     {
       int saved_errno = errno;
       free (scaled_offsets);
       if (utf8_src != tmpbuf)
 	free (utf8_src);
       errno = saved_errno;
-      return -1;
+      return NULL;
     }
   if (offsets != NULL)
     {
@@ -134,6 +153,6 @@ FUNC (const char *tocode,
     }
   if (utf8_src != tmpbuf)
     free (utf8_src);
-  return retval;
+  return result;
 #endif
 }

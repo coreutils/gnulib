@@ -1,5 +1,22 @@
 2009-04-26  Bruno Haible  <bruno@clisp.org>
 
+	Simplify calling convention of u*_conv_to_encoding.
+	* lib/uniconv.h (u8_conv_to_encoding, u16_conv_to_encoding,
+	u32_conv_to_encoding): Expect a resultbuf argument and return the
+	result directly as a pointer.
+	* lib/uniconv/u8-conv-to-enc.c (u8_conv_to_encoding): Likewise.
+	* lib/uniconv/u-conv-to-enc.h (FUNC): Likewise. Preserve errno while
+	freeing scaled_offsets if mem_iconveha failed.
+	* lib/unicase/u-casexfrm.h (FUNC): Update.
+	* lib/uninorm/u-normxfrm.h (FUNC): Update.
+	* lib/vasnprintf.c (VASNPRINTF): Update.
+	* tests/uniconv/test-u8-conv-to-enc.c (main): Update.
+	* tests/uniconv/test-u16-conv-to-enc.c (main): Update.
+	* tests/uniconv/test-u32-conv-to-enc.c (main): Update.
+	* NEWS: Mention the change.
+
+2009-04-26  Bruno Haible  <bruno@clisp.org>
+
 	Avoid test failures on AIX and OSF/1.
 	* lib/uniconv/u8-conv-from-enc.c (u8_conv_from_encoding): Avoid calling
 	malloc(0).

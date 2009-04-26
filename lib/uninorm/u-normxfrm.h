@@ -25,7 +25,6 @@ FUNC (const UNIT *s, size_t n, uninorm_t nf,
   char convsbuf[2048];
   char *convs;
   size_t convs_length;
-  int ret;
   char *result;
 
   /* Normalize the Unicode string.  */
@@ -36,14 +35,13 @@ FUNC (const UNIT *s, size_t n, uninorm_t nf,
     return NULL;
 
   /* Convert it to locale encoding.  */
-  convs = convsbuf;
   convs_length = sizeof (convsbuf) - 1;
-  ret = U_CONV_TO_ENCODING (locale_charset (),
-			    iconveh_error,
-			    norms, norms_length,
-			    NULL,
-			    &convs, &convs_length);
-  if (ret < 0)
+  convs = U_CONV_TO_ENCODING (locale_charset (),
+			      iconveh_error,
+			      norms, norms_length,
+			      NULL,
+			      convsbuf, &convs_length);
+  if (convs == NULL)
     {
       if (norms != normsbuf)
 	{

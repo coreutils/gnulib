@@ -26,7 +26,6 @@ FUNC (const UNIT *s, size_t n, const char *iso639_language, uninorm_t nf,
   char convsbuf[2048];
   char *convs;
   size_t convs_length;
-  int ret;
   char *result;
 
   /* Casefold and normalize the Unicode string.  */
@@ -37,14 +36,13 @@ FUNC (const UNIT *s, size_t n, const char *iso639_language, uninorm_t nf,
     return NULL;
 
   /* Convert it to locale encoding.  */
-  convs = convsbuf;
   convs_length = sizeof (convsbuf) - 1;
-  ret = U_CONV_TO_ENCODING (locale_charset (),
-			    iconveh_error,
-			    foldeds, foldeds_length,
-			    NULL,
-			    &convs, &convs_length);
-  if (ret < 0)
+  convs = U_CONV_TO_ENCODING (locale_charset (),
+			      iconveh_error,
+			      foldeds, foldeds_length,
+			      NULL,
+			      convsbuf, &convs_length);
+  if (convs == NULL)
     {
       if (foldeds != foldedsbuf)
 	{

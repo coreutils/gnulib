@@ -29,47 +29,66 @@
 #include "striconveha.h"
 #include "unistr.h"
 
-int
+char *
 u8_conv_to_encoding (const char *tocode,
 		     enum iconv_ilseq_handler handler,
 		     const uint8_t *src, size_t srclen,
 		     size_t *offsets,
-		     char **resultp, size_t *lengthp)
+		     char *resultbuf, size_t *lengthp)
 {
-  char *result;
-
   if (STRCASEEQ (tocode, "UTF-8", 'U','T','F','-','8',0,0,0,0))
     {
+      char *result;
+
       /* Conversion from UTF-8 to UTF-8.  No need to go through iconv().  */
 #if CONFIG_UNICODE_SAFETY
       if (u8_check (src, srclen))
 	{
 	  errno = EILSEQ;
-	  return -1;
+	  return NULL;
 	}
 #endif
 
       /* Memory allocation.  */
-      if ((*resultp != NULL && *lengthp >= srclen) || srclen == 0)
-	result = *resultp;
+      if (resultbuf != NULL && *lengthp >= srclen)
+	result = resultbuf;
       else
 	{
-	  result = (char *) malloc (srclen);
+	  result = (char *) malloc (srclen > 0 ? srclen : 1);
 	  if (result == NULL)
 	    {
 	      errno = ENOMEM;
-	      return -1;
+	      return NULL;
 	    }
 	}
 
       memcpy (result, (const char *) src, srclen);
-      *resultp = result;
       *lengthp = srclen;
-      return 0;
+      return result;
     }
   else
-    return mem_iconveha ((const char *) src, srclen,
-			 "UTF-8", tocode,
-			 handler == iconveh_question_mark, handler,
-			 offsets, resultp, lengthp);
+    {
+      char *result = resultbuf;
+      size_t length = *lengthp;
+      int retval =
+	mem_iconveha ((const char *) src, srclen,
+		      "UTF-8", tocode,
+		      handler == iconveh_question_mark, handler,
+		      offsets, &result, &length);
+
+      if (retval < 0)
+	return NULL;
+
+      if (result == NULL) /* when (resultbuf == NULL && length == 0)  */
+	{
+	  result = (char *) malloc (1);
+	  if (result == NULL)
+	    {
+	      errno = ENOMEM;
+	      return NULL;
+	    }
+	}
+      *lengthp = length;
+      return result;
+    }
 }

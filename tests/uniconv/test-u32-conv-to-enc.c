@@ -1,5 +1,5 @@
 /* Test of conversion from UTF-32 to legacy encodings.
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -76,15 +76,13 @@ main ()
       for (o = 0; o < 2; o++)
 	{
 	  size_t *offsets = (o ? new_offsets (SIZEOF (input)) : NULL);
-	  char *result = NULL;
-	  size_t length = 0;
-	  int retval = u32_conv_to_encoding ("ISO-8859-1", handler,
-					     input, SIZEOF (input),
-					     offsets,
-					     &result, &length);
-	  ASSERT (retval == 0);
-	  ASSERT (length == strlen (expected));
+	  size_t length;
+	  char *result = u32_conv_to_encoding ("ISO-8859-1", handler,
+					       input, SIZEOF (input),
+					       offsets,
+					       NULL, &length);
 	  ASSERT (result != NULL);
+	  ASSERT (length == strlen (expected));
 	  ASSERT (memcmp (result, expected, length) == 0);
 	  if (o)
 	    {
@@ -109,26 +107,24 @@ main ()
       for (o = 0; o < 2; o++)
 	{
 	  size_t *offsets = (o ? new_offsets (SIZEOF (input)) : NULL);
-	  char *result = NULL;
-	  size_t length = 0;
-	  int retval = u32_conv_to_encoding ("ISO-8859-1", handler,
-					     input, SIZEOF (input),
-					     offsets,
-					     &result, &length);
+	  size_t length = 0xdead;
+	  char *result = u32_conv_to_encoding ("ISO-8859-1", handler,
+					       input, SIZEOF (input),
+					       offsets,
+					       NULL, &length);
 	  switch (handler)
 	    {
 	    case iconveh_error:
-	      ASSERT (retval == -1 && errno == EILSEQ);
 	      ASSERT (result == NULL);
-	      ASSERT (length == 0);
+	      ASSERT (errno == EILSEQ);
+	      ASSERT (length == 0xdead);
 	      break;
 	    case iconveh_question_mark:
 	      {
 		static const char expected[] = "Rafa? Maszkowski";
 		static const char expected_translit[] = "Rafal Maszkowski";
-		ASSERT (retval == 0);
-		ASSERT (length == strlen (expected));
 		ASSERT (result != NULL);
+		ASSERT (length == strlen (expected));
 		ASSERT (memcmp (result, expected, length) == 0
 			|| memcmp (result, expected_translit, length) == 0);
 		if (o)
@@ -144,9 +140,8 @@ main ()
 	    case iconveh_escape_sequence:
 	      {
 		static const char expected[] = "Rafa\\u0142 Maszkowski";
-		ASSERT (retval == 0);
-		ASSERT (length == strlen (expected));
 		ASSERT (result != NULL);
+		ASSERT (length == strlen (expected));
 		ASSERT (memcmp (result, expected, length) == 0);
 		if (o)
 		  {
