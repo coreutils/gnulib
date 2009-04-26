@@ -49,7 +49,7 @@ extern "C" {
    and other offsets are set to (size_t)(-1).
    RESULTBUF and *LENGTHP should initially be a scratch buffer and its size,
    or *RESULTBUF can be NULL.
-   May erase the contents of the memory at *RESULTP.
+   May erase the contents of the memory at RESULTBUF.
    If successful: The resulting Unicode string (non-NULL) is returned and its
    length stored in *LENGTHP.  The resulting string is RESULTBUF if no dynamic
    memory allocation was necessary, or a freshly allocated memory block
@@ -87,7 +87,7 @@ extern uint32_t *
    and other offsets are set to (size_t)(-1).
    RESULTBUF and *LENGTHP should initially be a scratch buffer and its size,
    or RESULTBUF can be NULL.
-   May erase the contents of the memory at *RESULTP.
+   May erase the contents of the memory at RESULTBUF.
    If successful: The resulting string (non-NULL) is returned and its length
    stored in *LENGTHP.  The resulting string is RESULTBUF if no dynamic memory
    allocation was necessary, or a freshly allocated memory block otherwise.
