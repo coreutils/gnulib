@@ -36,10 +36,11 @@ ulc_casexfrm (const char *s, size_t n, const char *iso639_language,
   char *result;
 
   /* Convert the string to UTF-8.  */
-  conv = convbuf;
   conv_length = sizeof (convbuf) / sizeof (uint8_t);
-  if (u8_conv_from_encoding (locale_charset (), iconveh_error, s, n, NULL,
-			     &conv, &conv_length) < 0)
+  conv =
+    u8_conv_from_encoding (locale_charset (), iconveh_error, s, n, NULL,
+			   convbuf, &conv_length);
+  if (conv == NULL)
     /* errno is set here.  */
     return NULL;
 

@@ -1,5 +1,5 @@
 /* Test of conversion to UTF-8 from legacy encodings.
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -72,15 +72,14 @@ main ()
       for (o = 0; o < 2; o++)
 	{
 	  size_t *offsets = (o ? new_offsets (strlen (input)) : NULL);
-	  uint8_t *result = NULL;
-	  size_t length = 0;
-	  int retval = u8_conv_from_encoding ("ISO-8859-1", handler,
-					      input, strlen (input),
-					      offsets,
-					      &result, &length);
-	  ASSERT (retval == 0);
+	  size_t length;
+	  uint8_t *result = u8_conv_from_encoding ("ISO-8859-1", handler,
+						   input, strlen (input),
+						   offsets,
+						   NULL, &length);
+	  ASSERT (result != NULL);
 	  ASSERT (length == u8_strlen (expected));
-	  ASSERT (result != NULL && u8_cmp (result, expected, u8_strlen (expected)) == 0);
+	  ASSERT (u8_cmp (result, expected, u8_strlen (expected)) == 0);
 	  if (o)
 	    {
 	      for (i = 0; i < 37; i++)
@@ -104,15 +103,14 @@ main ()
       for (o = 0; o < 2; o++)
 	{
 	  size_t *offsets = (o ? new_offsets (strlen (input)) : NULL);
-	  uint8_t *result = NULL;
-	  size_t length = 0;
-	  int retval = u8_conv_from_encoding ("ISO-8859-2", handler,
-					      input, strlen (input),
-					      offsets,
-					      &result, &length);
-	  ASSERT (retval == 0);
+	  size_t length;
+	  uint8_t *result = u8_conv_from_encoding ("ISO-8859-2", handler,
+						   input, strlen (input),
+						   offsets,
+						   NULL, &length);
+	  ASSERT (result != NULL);
 	  ASSERT (length == u8_strlen (expected));
-	  ASSERT (result != NULL && u8_cmp (result, expected, u8_strlen (expected)) == 0);
+	  ASSERT (u8_cmp (result, expected, u8_strlen (expected)) == 0);
 	  if (o)
 	    {
 	      for (i = 0; i < 16; i++)
@@ -136,15 +134,14 @@ main ()
       for (o = 0; o < 2; o++)
 	{
 	  size_t *offsets = (o ? new_offsets (strlen (input)) : NULL);
-	  uint8_t *result = NULL;
-	  size_t length = 0;
-	  int retval = u8_conv_from_encoding ("autodetect_jp", handler,
-					      input, strlen (input),
-					      offsets,
-					      &result, &length);
-	  ASSERT (retval == 0);
+	  size_t length;
+	  uint8_t *result = u8_conv_from_encoding ("autodetect_jp", handler,
+						   input, strlen (input),
+						   offsets,
+						   NULL, &length);
+	  ASSERT (result != NULL);
 	  ASSERT (length == u8_strlen (expected));
-	  ASSERT (result != NULL && u8_cmp (result, expected, u8_strlen (expected)) == 0);
+	  ASSERT (u8_cmp (result, expected, u8_strlen (expected)) == 0);
 	  if (o)
 	    {
 	      for (i = 0; i < 10; i++)
@@ -163,15 +160,14 @@ main ()
       for (o = 0; o < 2; o++)
 	{
 	  size_t *offsets = (o ? new_offsets (strlen (input)) : NULL);
-	  uint8_t *result = NULL;
-	  size_t length = 0;
-	  int retval = u8_conv_from_encoding ("autodetect_jp", handler,
-					      input, strlen (input),
-					      offsets,
-					      &result, &length);
-	  ASSERT (retval == 0);
+	  size_t length;
+	  uint8_t *result = u8_conv_from_encoding ("autodetect_jp", handler,
+						   input, strlen (input),
+						   offsets,
+						   NULL, &length);
+	  ASSERT (result != NULL);
 	  ASSERT (length == u8_strlen (expected));
-	  ASSERT (result != NULL && u8_cmp (result, expected, u8_strlen (expected)) == 0);
+	  ASSERT (u8_cmp (result, expected, u8_strlen (expected)) == 0);
 	  if (o)
 	    {
 	      for (i = 0; i < 10; i++)
@@ -190,15 +186,14 @@ main ()
       for (o = 0; o < 2; o++)
 	{
 	  size_t *offsets = (o ? new_offsets (strlen (input)) : NULL);
-	  uint8_t *result = NULL;
-	  size_t length = 0;
-	  int retval = u8_conv_from_encoding ("autodetect_jp", handler,
-					      input, strlen (input),
-					      offsets,
-					      &result, &length);
-	  ASSERT (retval == 0);
+	  size_t length;
+	  uint8_t *result = u8_conv_from_encoding ("autodetect_jp", handler,
+						   input, strlen (input),
+						   offsets,
+						   NULL, &length);
+	  ASSERT (result != NULL);
 	  ASSERT (length == u8_strlen (expected));
-	  ASSERT (result != NULL && u8_cmp (result, expected, u8_strlen (expected)) == 0);
+	  ASSERT (u8_cmp (result, expected, u8_strlen (expected)) == 0);
 	  if (o)
 	    {
 	      for (i = 0; i < 16; i++)

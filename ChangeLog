@@ -1,5 +1,26 @@
 2009-04-26  Bruno Haible  <bruno@clisp.org>
 
+	Simplify calling convention of u*_conv_from_encoding.
+	* lib/uniconv.h (u8_conv_from_encoding, u16_conv_from_encoding,
+	u32_conv_from_encoding): Expect a resultbuf argument and return the
+	result directly as a pointer.
+	* lib/uniconv/u8-conv-from-enc.c (u8_conv_from_encoding): Likewise.
+	* lib/uniconv/u-conv-from-enc.h (FUNC): Likewise.
+	* lib/uniconv/u-strconv-from-enc.h (FUNC): Update.
+	* lib/unicase/ulc-casecmp.c (ulc_u8_casefold): Update.
+	* lib/unicase/ulc-casexfrm.c (ulc_casexfrm): Update.
+	* lib/unilbrk/ulc-possible-linebreaks.c (ulc_possible_linebreaks):
+	Update.
+	* lib/unilbrk/ulc-width-linebreaks.c (ulc_width_linebreaks): Update.
+	* lib/uniwbrk/ulc-wordbreaks.c (ulc_wordbreaks): Update.
+	* lib/vasnprintf.c (VASNPRINTF): Update.
+	* tests/uniconv/test-u8-conv-from-enc.c (main): Update.
+	* tests/uniconv/test-u16-conv-from-enc.c (main): Update.
+	* tests/uniconv/test-u32-conv-from-enc.c (main): Update.
+	* NEWS: Mention the change.
+
+2009-04-26  Bruno Haible  <bruno@clisp.org>
+
 	Simplify calling convention of u*_conv_to_encoding.
 	* lib/uniconv.h (u8_conv_to_encoding, u16_conv_to_encoding,
 	u32_conv_to_encoding): Expect a resultbuf argument and return the

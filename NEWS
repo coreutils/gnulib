@@ -6,6 +6,12 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2009-04-26  modules/uniconv/u8-conv-from-enc
+            modules/uniconv/u16-conv-from-enc
+            modules/uniconv/u32-conv-from-enc
+                            The calling convention of the functions
+                            u*_conv_from_encoding is changed.
+
 2009-04-26  modules/uniconv/u8-conv-to-enc
             modules/uniconv/u16-conv-to-enc
             modules/uniconv/u32-conv-to-enc

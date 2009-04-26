@@ -58,11 +58,12 @@ ulc_width_linebreaks (const char *s, size_t n,
 
 	  if (offsets != NULL)
 	    {
-	      uint8_t *t = NULL;
+	      uint8_t *t;
 	      size_t m;
-	      if (u8_conv_from_encoding (encoding, iconveh_question_mark,
-					 s, n, offsets, &t, &m)
-		  == 0)
+
+	      t = u8_conv_from_encoding (encoding, iconveh_question_mark,
+					 s, n, offsets, NULL, &m);
+	      if (t != NULL)
 		{
 		  char *memory =
 		    (char *) (m > 0 ? malloc (m + (o != NULL ? m : 0)) : NULL);

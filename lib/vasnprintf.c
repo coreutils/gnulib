@@ -2493,14 +2493,13 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 		  }
 
 		  /* Convert from TCHAR_T[] to DCHAR_T[].  */
-		  tmpdst = NULL;
-		  tmpdst_len = 0;
-		  if (DCHAR_CONV_FROM_ENCODING (locale_charset (),
-						iconveh_question_mark,
-						tmpsrc, characters,
-						NULL,
-						&tmpdst, &tmpdst_len)
-		      < 0)
+		  tmpdst =
+		    DCHAR_CONV_FROM_ENCODING (locale_charset (),
+					      iconveh_question_mark,
+					      tmpsrc, characters,
+					      NULL,
+					      NULL, &tmpdst_len);
+		  if (tmpdst == NULL)
 		    {
 		      int saved_errno = errno;
 		      free (tmpsrc);
@@ -5216,14 +5215,13 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 # else
 			tmpsrc = tmp;
 # endif
-			tmpdst = NULL;
-			tmpdst_len = 0;
-			if (DCHAR_CONV_FROM_ENCODING (locale_charset (),
-						      iconveh_question_mark,
-						      tmpsrc, count,
-						      NULL,
-						      &tmpdst, &tmpdst_len)
-			    < 0)
+			tmpdst =
+			  DCHAR_CONV_FROM_ENCODING (locale_charset (),
+						    iconveh_question_mark,
+						    tmpsrc, count,
+						    NULL,
+						    NULL, &tmpdst_len);
+			if (tmpdst == NULL)
 			  {
 			    int saved_errno = errno;
 			    if (!(result == resultbuf || result == NULL))

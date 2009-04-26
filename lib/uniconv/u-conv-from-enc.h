@@ -1,5 +1,5 @@
 /* Conversion to UTF-16/UTF-32 from legacy encodings.
-   Copyright (C) 2002, 2006-2007 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2006-2007, 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify it
    under the terms of the GNU Lesser General Public License as published
@@ -14,19 +14,20 @@
    You should have received a copy of the GNU Lesser General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-int
+UNIT *
 FUNC (const char *fromcode,
       enum iconv_ilseq_handler handler,
       const char *src, size_t srclen,
       size_t *offsets,
-      UNIT **resultp, size_t *lengthp)
+      UNIT *resultbuf, size_t *lengthp)
 {
 #if HAVE_UTF_NAME
-  size_t length;
+  char *result = (char *) resultbuf;
+  size_t length = *lengthp * sizeof (UNIT);
 
   if (mem_iconveha (src, srclen, fromcode, UTF_NAME, true, handler,
-		    offsets, (char **) resultp, &length) < 0)
-    return -1;
+		    offsets, &result, &length) < 0)
+    return NULL;
   if (offsets != NULL)
     {
       /* Convert 'char *' offsets to 'UNIT *' offsets.  */
@@ -40,27 +41,24 @@ FUNC (const char *fromcode,
   if ((length % sizeof (UNIT)) != 0)
     abort ();
   *lengthp = length / sizeof (UNIT);
-  return 0;
+  return (UNIT *) result;
 #else
-  uint8_t *utf8_string = NULL;
-  size_t utf8_length = 0;
+  uint8_t *utf8_string;
+  size_t utf8_length;
   UNIT *result;
 
-  if (u8_conv_from_encoding (fromcode, handler, src, srclen, offsets,
-			     &utf8_string, &utf8_length) < 0)
-    return -1;
+  utf8_string =
+    u8_conv_from_encoding (fromcode, handler, src, srclen, offsets,
+			   NULL, &utf8_length);
   if (utf8_string == NULL)
-    {
-      *lengthp = 0;
-      return 0;
-    }
-  result = U8_TO_U (utf8_string, utf8_length, *resultp, lengthp);
+    return NULL;
+  result = U8_TO_U (utf8_string, utf8_length, resultbuf, lengthp);
   if (result == NULL)
     {
       int saved_errno = errno;
       free (utf8_string);
       errno = saved_errno;
-      return -1;
+      return NULL;
     }
   if (offsets != NULL)
     {
@@ -88,7 +86,6 @@ FUNC (const char *fromcode,
 	  }
     }
   free (utf8_string);
-  *resultp = result;
-  return 0;
+  return result;
 #endif
 }

@@ -51,28 +51,30 @@ extern "C" {
    or *RESULTP can initially be NULL.
    May erase the contents of the memory at *RESULTP.
    Return value: 0 if successful, otherwise -1 and errno set.
-   If successful: The resulting string is stored in *RESULTP and its length
-   in *LENGTHP.  *RESULTP is set to a freshly allocated memory block, or is
-   unchanged if no dynamic memory allocation was necessary.
-   Particular errno values: EINVAL, EILSEQ, ENOMEM.  */
-extern int
+   If successful: The resulting Unicode string (non-NULL) is returned and its
+   length stored in *LENGTHP.  The resulting string is RESULTBUF if no dynamic
+   memory allocation was necessary, or a freshly allocated memory block
+   otherwise.
+   In case of error: NULL is returned and errno is set.  Particular errno
+   values: EINVAL, EILSEQ, ENOMEM.  */
+extern uint8_t *
        u8_conv_from_encoding (const char *fromcode,
 			      enum iconv_ilseq_handler handler,
 			      const char *src, size_t srclen,
 			      size_t *offsets,
-			      uint8_t **resultp, size_t *lengthp);
-extern int
+			      uint8_t *resultbuf, size_t *lengthp);
+extern uint16_t *
        u16_conv_from_encoding (const char *fromcode,
 			       enum iconv_ilseq_handler handler,
 			       const char *src, size_t srclen,
 			       size_t *offsets,
-			       uint16_t **resultp, size_t *lengthp);
-extern int
+			       uint16_t *resultbuf, size_t *lengthp);
+extern uint32_t *
        u32_conv_from_encoding (const char *fromcode,
 			       enum iconv_ilseq_handler handler,
 			       const char *src, size_t srclen,
 			       size_t *offsets,
-			       uint32_t **resultp, size_t *lengthp);
+			       uint32_t *resultbuf, size_t *lengthp);
 
 /* Converts an entire Unicode string, possibly including NUL units, from a
    Unicode encoding to a given encoding.
