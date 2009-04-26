@@ -1,5 +1,11 @@
 2009-04-26  Bruno Haible  <bruno@clisp.org>
 
+	Make the lib vs. lib64 recognition work on openSUSE 11 with "gcc -m32".
+	* m4/lib-prefix.m4 (AC_LIB_PREPARE_MULTILIB): Ignore paths that end in
+	"../" or "..".
+
+2009-04-26  Bruno Haible  <bruno@clisp.org>
+
 	* m4/lib-link.m4 (AC_LIB_HAVE_LINKFLAGS): Accept a fifth argument.
 	* m4/libsigsegv.m4 (gl_LIBSIGSEGV): Simplify by using
 	AC_LIB_HAVE_LINKFLAGS.
