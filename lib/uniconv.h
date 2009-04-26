@@ -47,8 +47,8 @@ extern "C" {
    array is filled with offsets into the result, i.e. the character starting
    at SRC[i] corresponds to the character starting at (*RESULTP)[OFFSETS[i]],
    and other offsets are set to (size_t)(-1).
-   *RESULTP and *LENGTHP should initially be a scratch buffer and its size,
-   or *RESULTP can initially be NULL.
+   RESULTBUF and *LENGTHP should initially be a scratch buffer and its size,
+   or *RESULTBUF can be NULL.
    May erase the contents of the memory at *RESULTP.
    If successful: The resulting Unicode string (non-NULL) is returned and its
    length stored in *LENGTHP.  The resulting string is RESULTBUF if no dynamic
