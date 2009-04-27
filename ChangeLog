@@ -1,3 +1,12 @@
+2009-04-27  Eric Blake  <ebb9@byu.net>
+
+	maintainer-makefile: depend on all required helper scripts
+	* modules/maintainer-makefile (Depends-on): Add vc-list-files and
+	useless-if-before-free.
+	* top/maint.mk (VC_LIST, sc_avoid_if_before_free): Use local
+	version, rather than assuming gnulib checkout is available.
+	Reported by Simen Josefsson.
+
 2009-04-26  Bruno Haible  <bruno@clisp.org>
 
 	Make the lib vs. lib64 recognition work on openSUSE 11 with "gcc -m32".

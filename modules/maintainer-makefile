@@ -6,6 +6,8 @@ top/maint.mk
 
 Depends-on:
 gnumakefile
+useless-if-before-free
+vc-list-files
 
 License:
 GPLed build tool

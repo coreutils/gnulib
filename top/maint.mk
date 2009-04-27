@@ -32,7 +32,7 @@ GIT = git
 VC = $(GIT)
 VC-tag = git tag -s -m '$(VERSION)' -u '$(gpg_key_ID)'
 
-VC_LIST = $(gnulib_dir)/build-aux/vc-list-files -C $(srcdir)
+VC_LIST = $(srcdir)/build-aux/vc-list-files -C $(srcdir)
 
 VC_LIST_EXCEPT = \
   $(VC_LIST) | if test -f $(srcdir)/.x-$@; then grep -vEf $(srcdir)/.x-$@; else grep -v ChangeLog; fi
@@ -111,7 +111,7 @@ define _prohibit_regexp
 endef
 
 sc_avoid_if_before_free:
-	@$(gnulib_dir)/build-aux/useless-if-before-free			\
+	@$(srcdir)/build-aux/useless-if-before-free			\
 		$(useless_free_options)					\
 	    $$($(VC_LIST_EXCEPT)) &&					\
 	  { echo '$(ME): found useless "if" before "free" above' 1>&2;	\
