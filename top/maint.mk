@@ -191,10 +191,13 @@ sc_prohibit_have_config_h:
 	  { echo '$(ME): found use of HAVE''_CONFIG_H; remove'		\
 		1>&2; exit 1; } || :
 
-# Nearly all .c files must include <config.h>.
+# Nearly all .c files must include <config.h>.  However, we also permit this
+# via inclusion of a package-specific header, if cfg.mk specified one.
+# config_h_header must be suitable for grep -E.
+config_h_header ?= <config\.h>
 sc_require_config_h:
-	@if $(VC_LIST_EXCEPT) | grep -l '\.c$$' > /dev/null; then		\
-	  grep -L '^# *include <config\.h>'				\
+	@if $(VC_LIST_EXCEPT) | grep -l '\.c$$' > /dev/null; then	\
+	  grep -EL '^# *include $(config_h_header)'			\
 		$$($(VC_LIST_EXCEPT) | grep '\.c$$')			\
 	      | grep . &&						\
 	  { echo '$(ME): the above files do not include <config.h>'	\
@@ -203,12 +206,13 @@ sc_require_config_h:
 	fi
 
 # You must include <config.h> before including any other header file.
+# This can possibly be via a package-specific header, if given by cfg.mk.
 sc_require_config_h_first:
 	@if $(VC_LIST_EXCEPT) | grep -l '\.c$$' > /dev/null; then	\
 	  fail=0;							\
 	  for i in $$($(VC_LIST_EXCEPT) | grep '\.c$$'); do		\
 	    grep '^# *include\>' $$i | sed 1q				\
-		| grep '^# *include <config\.h>' > /dev/null		\
+		| grep -E '^# *include $(config_h_header)' > /dev/null	\
 	      || { echo $$i; fail=1; };					\
 	  done;								\
 	  test $$fail = 1 &&						\

@@ -1,3 +1,9 @@
+2009-04-27  Eric Blake  <ebb9@byu.net>
+
+	maint.mk: allow package-specific header to provide <config.h>
+	* top/maint.mk (sc_require_config_h): New variable.
+	(sc_require_config_h, sc_require_config_h_first): Use it.
+
 2009-04-27  Simon Josefsson  <simon@josefsson.org>
 
 	* top/maint.mk (sc_avoid_if_before_free): Except
