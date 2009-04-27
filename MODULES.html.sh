@@ -2646,6 +2646,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module libunistring
   func_module unitypes
   func_module ucs4-utf8
   func_module ucs4-utf16

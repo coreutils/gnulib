@@ -1,3 +1,10 @@
+2009-04-27  Bruno Haible  <bruno@clisp.org>
+
+	New module 'libunistring'.
+	* modules/libunistring: New file.
+	* m4/libunistring.m4: New file.
+	* MODULES.html.sh (Unicode string functions): Add it.
+
 2009-04-27  Eric Blake  <ebb9@byu.net>
 
 	maint.mk: allow package-specific header to provide <config.h>
