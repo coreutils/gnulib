@@ -1,3 +1,8 @@
+2009-04-27  Simon Josefsson  <simon@josefsson.org>
+
+	* top/maint.mk (sc_avoid_if_before_free): Except
+	useless-if-before-free script.
+
 2009-04-27  Eric Blake  <ebb9@byu.net>
 
 	maintainer-makefile: depend on all required helper scripts

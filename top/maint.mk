@@ -113,7 +113,7 @@ endef
 sc_avoid_if_before_free:
 	@$(srcdir)/build-aux/useless-if-before-free			\
 		$(useless_free_options)					\
-	    $$($(VC_LIST_EXCEPT)) &&					\
+	    $$($(VC_LIST_EXCEPT) | grep -v useless-if-before-free) &&	\
 	  { echo '$(ME): found useless "if" before "free" above' 1>&2;	\
 	    exit 1; } || :
 
