@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate April 8, 2009
+@set lastupdate April 29, 2009
 @c %**end of header
 
 @dircategory GNU organization
@@ -765,7 +765,8 @@ all-permissive license like this one:
 @smallexample
 Copying and distribution of this file, with or without modification,
 are permitted in any medium without royalty provided the copyright
-notice and this notice are preserved.
+notice and this notice are preserved.  This file is offered as-is,
+without warranty of any kind.
 @end smallexample
 
 If your package distributes Autoconf macros that are intended to be
