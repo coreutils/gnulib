@@ -403,7 +403,7 @@ extern int
        u32_cmp (const uint32_t *s1, const uint32_t *s2, size_t n);
 
 /* Compare S1 and S2.  */
-/* Similar to memcmp2().  */
+/* Similar to the gnulib function memcmp2().  */
 extern int
        u8_cmp2 (const uint8_t *s1, size_t n1, const uint8_t *s2, size_t n2);
 extern int

@@ -174,9 +174,9 @@ extern int
 		    const char *s2, size_t n2,
 		    const char *iso639_language, uninorm_t nf, int *resultp);
 
-/* Convert the string S of length N to a string in locale encoding, in such a
-   way that comparing uN_casexfrm (S1) and uN_casexfrm (S2) with memcmp2() is
-   equivalent to comparing S1 and S2 with uN_casecoll().
+/* Convert the string S of length N to a NUL-terminated byte sequence, in such
+   a way that comparing uN_casexfrm (S1) and uN_casexfrm (S2) with the gnulib
+   function memcmp2() is equivalent to comparing S1 and S2 with uN_casecoll().
    NF must be either UNINORM_NFC, UNINORM_NFKC, or NULL for no normalization.  */
 extern char *
        u8_casexfrm (const uint8_t *s, size_t n, const char *iso639_language,

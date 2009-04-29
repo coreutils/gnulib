@@ -1,5 +1,13 @@
 2009-04-28  Bruno Haible  <bruno@clisp.org>
 
+	Comment tweaks.
+	* lib/unistr.h (u*_cmp2): Clarify what memcmp2 is.
+	* lib/uninorm.h (u*_normxfrm): Fix description of return value.
+	* lib/unicase.h (u*_casexfrm): Likewise.
+	Reported by Paolo Bonzini.
+
+2009-04-28  Bruno Haible  <bruno@clisp.org>
+
 	Fix a compilation error.
 	* lib/mbsrtowcs-state.c (_gl_mbsrtowcs_state): Fix initializer.
 	* lib/wcsrtombs-state.c (_gl_wcsrtombs_state): Likewise.

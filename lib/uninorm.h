@@ -164,8 +164,8 @@ extern int
 		    uninorm_t nf, int *resultp);
 
 
-/* Converts the string S of length N to a string in locale encoding, in such a
-   way that comparing uN_normxfrm (S1) and uN_normxfrm (S2) with uN_cmp2() is
+/* Converts the string S of length N to a NUL-terminated byte sequence, in such
+   a way that comparing uN_normxfrm (S1) and uN_normxfrm (S2) with uN_cmp2() is
    equivalent to comparing S1 and S2 with uN_normcoll().
    NF must be either UNINORM_NFC or UNINORM_NFKC.  */
 extern char *
