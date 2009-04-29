@@ -1,5 +1,5 @@
 Description:
-Determine (and maybe change) whether we can unlink directories.
+Determine whether we can unlink directories.
 
 Files:
 lib/unlinkdir.h
@@ -8,6 +8,7 @@ m4/unlinkdir.m4
 
 Depends-on:
 stdbool
+priv-set
 
 configure.ac:
 gl_UNLINKDIR

@@ -1,0 +1,13 @@
+Files:
+tests/test-priv-set.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-priv-set
+check_PROGRAMS += test-priv-set
+
+License:
+GPL

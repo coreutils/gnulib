@@ -1,3 +1,19 @@
+2009-04-27  David Bartley  <dtbartle@csclub.uwaterloo.ca>
+
+	priv-set: new module and tests; adapt write-any-file
+	* lib/priv-set.c: New file.
+	* lib/priv-set.h: New file.
+	* lib/unlinkdir.c: Make cannot_unlink_dir thread-safe.
+	* lib/write-any-file.c: Simplify by using priv-set module.
+	* m4/priv-set.m4: New file.
+	* modules/priv-set: New file.
+	* modules/unlinkdir: Add dependency on priv-set module.
+	* modules/write-any-file: Likewise.
+
+	Tests for module 'priv-set'.
+	* modules/priv-set-tests: New file.
+	* tests/test-priv-set.c: New file.
+
 2009-05-03  Jim Meyering  <meyering@redhat.com>
             Bruno Haible  <bruno@clisp.org>
 

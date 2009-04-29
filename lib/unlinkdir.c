@@ -1,4 +1,4 @@
-/* unlinkdir.c - determine (and maybe change) whether we can unlink directories
+/* unlinkdir.c - determine whether we can unlink directories
 
    Copyright (C) 2005-2006, 2009 Free Software Foundation, Inc.
 
@@ -15,26 +15,18 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-/* Written by Paul Eggert and Jim Meyering.  */
+/* Written by Paul Eggert, Jim Meyering, and David Bartley.  */
 
 #include <config.h>
 
 #include "unlinkdir.h"
-
-#if HAVE_PRIV_H
-# include <priv.h>
-#endif
+#include "priv-set.h"
 #include <unistd.h>
 
 #if ! UNLINK_CANNOT_UNLINK_DIR
 
 /* Return true if we cannot unlink directories, false if we might be
-   able to unlink directories.  If possible, tell the kernel we don't
-   want to be able to unlink directories, so that we can return true.
-
-   Note: this function may modify the process privilege set, to remove
-   the PRIV_SYS_LINKDIR privilege, so is neither thread-safe, nor
-   appropriate for use in a library.  */
+   able to unlink directories.  */
 
 bool
 cannot_unlink_dir (void)
@@ -44,20 +36,11 @@ cannot_unlink_dir (void)
 
   if (! initialized)
     {
-# if defined PRIV_EFFECTIVE && defined PRIV_SYS_LINKDIR
+# if defined PRIV_SYS_LINKDIR
       /* We might be able to unlink directories if we cannot
 	 determine our privileges, or if we have the
-	 PRIV_SYS_LINKDIR privilege and cannot delete it.  */
-      priv_set_t *pset = priv_allocset ();
-      if (pset)
-	{
-	  cannot =
-	    (getppriv (PRIV_EFFECTIVE, pset) == 0
-	     && (! priv_ismember (pset, PRIV_SYS_LINKDIR)
-		 || (priv_delset (pset, PRIV_SYS_LINKDIR) == 0
-		     && setppriv (PRIV_SET, PRIV_EFFECTIVE, pset) == 0)));
-	  priv_freeset (pset);
-	}
+	 PRIV_SYS_LINKDIR privilege.  */
+      cannot = (priv_set_ismember (PRIV_SYS_LINKDIR) == 0);
 # else
       /* In traditional Unix, only root can unlink directories.  */
       cannot = (geteuid () != 0);

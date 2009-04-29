@@ -20,10 +20,8 @@
 #include <config.h>
 
 #include "write-any-file.h"
+#include "priv-set.h"
 
-#if HAVE_PRIV_H
-# include <priv.h>
-#endif
 #include <unistd.h>
 
 /* Return true if we know that we can write any file, including
@@ -38,15 +36,8 @@ can_write_any_file (void)
   if (! initialized)
     {
       bool can = false;
-#if defined PRIV_EFFECTIVE && defined PRIV_FILE_DAC_WRITE
-      priv_set_t *pset = priv_allocset ();
-      if (pset)
-	{
-	  can =
-	    (getppriv (PRIV_EFFECTIVE, pset) == 0
-	     && priv_ismember (pset, PRIV_FILE_DAC_WRITE));
-	  priv_freeset (pset);
-	}
+#if defined PRIV_FILE_DAC_WRITE
+      can = (priv_set_ismember (PRIV_FILE_DAC_WRITE) == 1);
 #else
       /* In traditional Unix, only root can unlink directories.  */
       can = (geteuid () == 0);
