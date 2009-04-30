@@ -1,3 +1,16 @@
+2009-04-30  Bruno Haible  <bruno@clisp.org>
+
+	Fix bug introduced on 2009-04-25.
+	* lib/math.in.h (gl_signbitf_OPTIMIZED_MACRO,
+	gl_signbitd_OPTIMIZED_MACRO, gl_signbitl_OPTIMIZED_MACRO): New macros.
+	* lib/signbitf.c (gl_signbitd): Undefine if gl_signbitf_OPTIMIZED_MACRO
+	is defined.
+	* lib/signbitd.c (gl_signbitd): Undefine if gl_signbitd_OPTIMIZED_MACRO
+	is defined.
+	* lib/signbitl.c (gl_signbitd): Undefine if gl_signbitl_OPTIMIZED_MACRO
+	is defined.
+	Reported by Elbert_Pol <elbert.pol@gmail.com>.
+
 2009-04-28  Bruno Haible  <bruno@clisp.org>
 
 	Comment tweaks.

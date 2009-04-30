@@ -519,6 +519,7 @@ extern int gl_signbitd (double arg);
 extern int gl_signbitl (long double arg);
 #  if __GNUC__ >= 2 && !__STRICT_ANSI__
 #   if defined FLT_SIGNBIT_WORD && defined FLT_SIGNBIT_BIT && !defined gl_signbitf
+#    define gl_signbitf_OPTIMIZED_MACRO
 #    define gl_signbitf(arg) \
        ({ union { float _value;						\
                   unsigned int _word[(sizeof (float) + sizeof (unsigned int) - 1) / sizeof (unsigned int)]; \
@@ -528,6 +529,7 @@ extern int gl_signbitl (long double arg);
         })
 #   endif
 #   if defined DBL_SIGNBIT_WORD && defined DBL_SIGNBIT_BIT && !defined gl_signbitd
+#    define gl_signbitd_OPTIMIZED_MACRO
 #    define gl_signbitd(arg) \
        ({ union { double _value;						\
                   unsigned int _word[(sizeof (double) + sizeof (unsigned int) - 1) / sizeof (unsigned int)]; \
@@ -537,6 +539,7 @@ extern int gl_signbitl (long double arg);
         })
 #   endif
 #   if defined LDBL_SIGNBIT_WORD && defined LDBL_SIGNBIT_BIT && !defined gl_signbitl
+#    define gl_signbitl_OPTIMIZED_MACRO
 #    define gl_signbitl(arg) \
        ({ union { long double _value;					\
                   unsigned int _word[(sizeof (long double) + sizeof (unsigned int) - 1) / sizeof (unsigned int)]; \

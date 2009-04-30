@@ -23,6 +23,10 @@
 #include "isnand-nolibm.h"
 #include "float+.h"
 
+#ifdef gl_signbitd_OPTIMIZED_MACRO
+# undef gl_signbitd
+#endif
+
 int
 gl_signbitd (double arg)
 {
