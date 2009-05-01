@@ -1,3 +1,10 @@
+2009-05-01  Bruno Haible  <bruno@clisp.org>
+
+	Avoid compiler warnings when redefining macros defined by <libintl.h>.
+	* lib/gettext.h [!ENABLE_NLS] (gettext, dgettext, dcgettext, ngettext,
+	dngettext, dcngettext, textdomain, bindtextdomain,
+	bind_textdomain_codeset): Undefine before redefining.
+
 2009-04-30  Bruno Haible  <bruno@clisp.org>
 
 	Fix bug introduced on 2009-04-25.
