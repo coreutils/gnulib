@@ -1,4 +1,4 @@
-# wcrtomb.m4 serial 3
+# wcrtomb.m4 serial 4
 dnl Copyright (C) 2008-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,11 +9,15 @@ AC_DEFUN([gl_FUNC_WCRTOMB],
   AC_REQUIRE([gl_WCHAR_H_DEFAULTS])
 
   AC_REQUIRE([AC_TYPE_MBSTATE_T])
+  gl_MBSTATE_T_BROKEN
+  if test $REPLACE_MBSTATE_T = 1; then
+    REPLACE_WCRTOMB=1
+  fi
   AC_CHECK_FUNCS_ONCE([wcrtomb])
   if test $ac_cv_func_wcrtomb = no; then
     HAVE_WCRTOMB=0
-  else
-
+  fi
+  if test $HAVE_WCRTOMB != 0 && test $REPLACE_WCRTOMB != 1; then
     dnl On AIX 4.3, OSF/1 5.1 and Solaris 10, wcrtomb (NULL, 0, NULL) sometimes
     dnl returns 0 instead of 1.
     AC_REQUIRE([AC_PROG_CC])

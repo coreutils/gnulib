@@ -1,5 +1,5 @@
-# wcsnrtombs.m4 serial 1
-dnl Copyright (C) 2008 Free Software Foundation, Inc.
+# wcsnrtombs.m4 serial 2
+dnl Copyright (C) 2008-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -9,9 +9,15 @@ AC_DEFUN([gl_FUNC_WCSNRTOMBS],
   AC_REQUIRE([gl_WCHAR_H_DEFAULTS])
 
   AC_REQUIRE([AC_TYPE_MBSTATE_T])
+  gl_MBSTATE_T_BROKEN
+  if test $REPLACE_MBSTATE_T = 1; then
+    REPLACE_WCSNRTOMBS=1
+  fi
   AC_CHECK_FUNCS_ONCE([wcsnrtombs])
   if test $ac_cv_func_wcsnrtombs = no; then
     HAVE_WCSNRTOMBS=0
+  fi
+  if test $HAVE_WCSNRTOMBS = 0 || test $REPLACE_WCSNRTOMBS = 1; then
     gl_REPLACE_WCHAR_H
     AC_LIBOBJ([wcsnrtombs])
     AC_LIBOBJ([wcsrtombs-state])
