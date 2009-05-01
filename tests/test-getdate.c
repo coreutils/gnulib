@@ -48,6 +48,22 @@
 #define LOG(str, now, res) (void) 0
 #endif
 
+static const char* const day_table[] =
+{
+  "SUNDAY",
+  "MONDAY",
+  "TUESDAY",
+  "TUES",
+  "WEDNESDAY",
+  "WEDNES",
+  "THURSDAY",
+  "THUR",
+  "THURS",
+  "FRIDAY",
+  "SATURDAY",
+  NULL
+};
+
 int
 main (int argc, char **argv)
 {
@@ -55,6 +71,7 @@ main (int argc, char **argv)
   struct timespec result2;
   struct timespec now;
   const char *p;
+  int i;
 
   set_program_name (argv[0]);
 
@@ -210,6 +227,43 @@ main (int argc, char **argv)
   LOG (p, now, result2);
   ASSERT (result.tv_sec == result2.tv_sec
 	  && result.tv_nsec == result2.tv_nsec);
+
+  /* Check that every 'last/next DAY' is in the past/future.  */
+  for (i = 0; day_table[i]; i++)
+    {
+      char tmp[32];
+      sprintf (tmp, "NEXT %s", day_table[i]);
+      now.tv_sec = 4711;
+      now.tv_nsec = 1267;
+      ASSERT (get_date (&result, tmp, &now));
+      LOG (tmp, now, result);
+      ASSERT (result.tv_sec > now.tv_sec
+              && result.tv_nsec == 0);
+
+      sprintf (tmp, "LAST %s", day_table[i]);
+      now.tv_sec = 4711;
+      now.tv_nsec = 1267;
+      ASSERT (get_date (&result, tmp, &now));
+      LOG (tmp, now, result);
+      ASSERT (result.tv_sec < now.tv_sec
+              && result.tv_nsec == 0);
+    }
+
+  p = "THURSDAY UTC+00";  /* The epoch was on Thursday.  */
+  now.tv_sec = 0;
+  now.tv_nsec = 0;
+  ASSERT (get_date (&result, p, &now));
+  LOG (p, now, result);
+  ASSERT (result.tv_sec == now.tv_sec
+	  && result.tv_nsec == now.tv_nsec);
+
+  p = "FRIDAY UTC+00";
+  now.tv_sec = 0;
+  now.tv_nsec = 0;
+  ASSERT (get_date (&result, p, &now));
+  LOG (p, now, result);
+  ASSERT (result.tv_sec >= now.tv_sec
+	  && result.tv_nsec == now.tv_nsec);
 
   return 0;
 }

@@ -1,3 +1,15 @@
+2009-05-03  Giuseppe Scrivano  <gscrivano@gnu.org>
+
+	getdate: correctly interpret "next monday" when run on a Monday
+	* lib/getdate.y (get_date): Correct the calculation of tm_mday so
+	that e.g., "next tues" (when run on a tuesday) results in a date
+	that is one week in the future, and not today's date.
+	I.e., add a week when the wday is the same as the current one.
+	Reported by Tom Broadhurst in http://savannah.gnu.org/bugs/?25406,
+	and earlier by Martin Bernreuther and Jan Minář.
+	* tests/test-getdate.c (main): Check that "next DAY" is always in
+	the future and that "last DAY" is always in the past.
+
 2009-05-02  Jim Meyering  <meyering@redhat.com>
 
 	build: ensure that a release build fails when a submodule is unclean
