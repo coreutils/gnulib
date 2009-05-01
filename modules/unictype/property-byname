@@ -89,11 +89,13 @@ unictype/property-zero-width
 gperf
 
 configure.ac:
+AC_PROG_MKDIR_P
 
 Makefile.am:
 lib_SOURCES += unictype/pr_byname.c
 
 unictype/pr_byname.h: unictype/pr_byname.gperf
+	@MKDIR_P@ unictype
 	$(GPERF) -m 10 $(srcdir)/unictype/pr_byname.gperf > $@-t
 	mv $@-t $@
 BUILT_SOURCES        += unictype/pr_byname.h

@@ -11,11 +11,13 @@ localename
 gperf
 
 configure.ac:
+AC_PROG_MKDIR_P
 
 Makefile.am:
 lib_SOURCES += unicase/locale-language.c
 
 unicase/locale-languages.h: $(srcdir)/unicase/locale-languages.gperf
+	@MKDIR_P@ unicase
 	$(GPERF) -m 10 $(srcdir)/unicase/locale-languages.gperf > $@-t
 	mv $@-t $@
 BUILT_SOURCES        += unicase/locale-languages.h

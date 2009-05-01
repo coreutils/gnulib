@@ -10,11 +10,13 @@ Depends-on:
 gperf
 
 configure.ac:
+AC_PROG_MKDIR_P
 
 Makefile.am:
 lib_SOURCES += unicase/special-casing.c
 
 unicase/special-casing-table.h: $(srcdir)/unicase/special-casing-table.gperf
+	@MKDIR_P@ unicase
 	$(GPERF) -m 10 $(srcdir)/unicase/special-casing-table.gperf > $@-t
 	mv $@-t $@
 BUILT_SOURCES        += unicase/special-casing-table.h
