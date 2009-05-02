@@ -1,5 +1,16 @@
 2009-05-02  Bruno Haible  <bruno@clisp.org>
 
+	Remove incompatibility between modules fnmatch-posix and fnmatch-gnu.
+	* m4/fnmatch.m4 (gl_FUNC_FNMATCH_POSIX, gl_FUNC_FNMATCH_GNU): Use a
+	shell variable gl_fnmatch_required to detect which variant is
+	requested.
+	(_AC_FUNC_FNMATCH_IF, _AC_LIBOBJ_FNMATCH): Remove macros. Inlined into
+	gl_FUNC_FNMATCH_POSIX.
+	* gnulib-tool (func_create_testdir, func_create_megatestdir): Don't
+	exclude fnmatch-posix.
+
+2009-05-02  Bruno Haible  <bruno@clisp.org>
+
 	Relicense mbsrtowcs and strnlen1 under LGPLv2+.
 	* modules/mbsrtowcs (License): Change to LGPLv2+.
 	* modules/strnlen1 (License): Likewise.

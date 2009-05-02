@@ -3796,10 +3796,9 @@ func_create_testdir ()
   if test -z "$modules"; then
     # All modules together.
     # Except config-h, which breaks all modules which use HAVE_CONFIG_H.
-    # Except fnmatch-posix, which conflicts with fnmatch-gnu. FIXME.
     # Except ftruncate, mountlist, which abort the configuration on mingw. FIXME.
     modules=`func_all_modules`
-    modules=`for m in $modules; do case $m in config-h | fnmatch-posix | ftruncate | mountlist) ;; *) echo $m;; esac; done`
+    modules=`for m in $modules; do case $m in config-h | ftruncate | mountlist) ;; *) echo $m;; esac; done`
   fi
   modules=`for m in $modules; do echo $m; done | LC_ALL=C sort -u`
 
@@ -4288,8 +4287,7 @@ func_create_megatestdir ()
   done
   # Then, all modules all together.
   # Except config-h, which breaks all modules which use HAVE_CONFIG_H.
-  # Except fnmatch-posix, which conflicts with fnmatch-gnu. FIXME.
-  allmodules=`for m in $allmodules; do if test $m != config-h && test $m != fnmatch-posix; then echo $m; fi; done`
+  allmodules=`for m in $allmodules; do if test $m != config-h; then echo $m; fi; done`
   func_create_testdir "$megatestdir/ALL" "$allmodules"
   func_append megasubdirs "ALL"
 
