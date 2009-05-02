@@ -39,7 +39,8 @@ all-local: charset.alias ref-add.sed ref-del.sed
 
 charset_alias = $(DESTDIR)$(libdir)/charset.alias
 charset_tmp = $(DESTDIR)$(libdir)/charset.tmp
-install-exec-local: all-local
+install-exec-local: install-exec-localcharset
+install-exec-localcharset: all-local
 	if test $(GLIBC21) = no; then \
 	  case '$(host_os)' in \
 	    darwin[56]*) \
@@ -67,7 +68,8 @@ install-exec-local: all-local
 	  fi ; \
 	fi
 
-uninstall-local: all-local
+uninstall-local: uninstall-localcharset
+uninstall-localcharset: all-local
 	if test -f $(charset_alias); then \
 	  sed -f ref-del.sed $(charset_alias) > $(charset_tmp); \
 	  if grep '^# Packages using this file: $$' $(charset_tmp) \

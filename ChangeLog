@@ -1,3 +1,12 @@
+2009-05-02  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	Use automake *-local hooks without commands, for extensibility.
+	* modules/localcharset (Makefile.am): Rename install-exec-local
+	rule to install-exec-localcharset, mark it phony, and make it a
+	prerequisite of install-exec-local.  Likewise, rename the
+	uninstall-local rule to uninstall-localcharset, mark phony, and
+	make it a prerequisite of the former.
+
 2009-05-01  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
             Bruno Haible  <bruno@clisp.org>
 
