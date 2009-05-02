@@ -1,5 +1,12 @@
 2009-05-02  Bruno Haible  <bruno@clisp.org>
 
+	Relicense mbsrtowcs and strnlen1 under LGPLv2+.
+	* modules/mbsrtowcs (License): Change to LGPLv2+.
+	* modules/strnlen1 (License): Likewise.
+	Reported by Simon Josefsson.
+
+2009-05-02  Bruno Haible  <bruno@clisp.org>
+
 	* m4/fnmatch.m4 (_AC_FUNC_FNMATCH_IF): Say "guessing no" instead of
 	"cross".
 	(gl_FUNC_FNMATCH_POSIX, gl_FUNC_FNMATCH_GNU): Update. Don't assume that
