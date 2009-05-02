@@ -1,4 +1,4 @@
-# Check for fnmatch - serial 2.
+# Check for fnmatch - serial 3.
 
 # Copyright (C) 2000-2007, 2009 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -70,8 +70,8 @@ AC_DEFUN([_AC_FUNC_FNMATCH_IF],
 		   1))[;]])],
       [$2=yes],
       [$2=no],
-      [$2=cross])])
-AS_IF([test $$2 = yes], [$3], [$4])
+      [$2="guessing no"])])
+AS_IF([test "$$2" = yes], [$3], [$4])
 ])# _AC_FUNC_FNMATCH_IF
 
 
@@ -93,9 +93,9 @@ AC_DEFUN([gl_FUNC_FNMATCH_POSIX],
 [
   FNMATCH_H=
   _AC_FUNC_FNMATCH_IF([POSIX], [ac_cv_func_fnmatch_posix],
-		      [rm -f lib/fnmatch.h],
+		      [rm -f "$gl_source_base/fnmatch.h"],
 		      [_AC_LIBOBJ_FNMATCH])
-  if test $ac_cv_func_fnmatch_posix != yes; then
+  if test "$ac_cv_func_fnmatch_posix" != yes; then
     dnl We must choose a different name for our function, since on ELF systems
     dnl a broken fnmatch() in libc.so would override our fnmatch() if it is
     dnl compiled into a shared library.
@@ -113,9 +113,9 @@ AC_DEFUN([gl_FUNC_FNMATCH_GNU],
 
   FNMATCH_H=
   _AC_FUNC_FNMATCH_IF([GNU], [ac_cv_func_fnmatch_gnu],
-		      [rm -f lib/fnmatch.h],
+		      [rm -f "$gl_source_base/fnmatch.h"],
 		      [_AC_LIBOBJ_FNMATCH])
-  if test $ac_cv_func_fnmatch_gnu != yes; then
+  if test "$ac_cv_func_fnmatch_gnu" != yes; then
     dnl We must choose a different name for our function, since on ELF systems
     dnl a broken fnmatch() in libc.so would override our fnmatch() if it is
     dnl compiled into a shared library.

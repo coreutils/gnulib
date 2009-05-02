@@ -1,3 +1,10 @@
+2009-05-02  Bruno Haible  <bruno@clisp.org>
+
+	* m4/fnmatch.m4 (_AC_FUNC_FNMATCH_IF): Say "guessing no" instead of
+	"cross".
+	(gl_FUNC_FNMATCH_POSIX, gl_FUNC_FNMATCH_GNU): Update. Don't assume that
+	gnulib-tool was called with option --source-base=lib.
+
 2009-05-02  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	Use automake *-local hooks without commands, for extensibility.
