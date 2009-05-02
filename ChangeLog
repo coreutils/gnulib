@@ -1,3 +1,9 @@
+2009-05-02  Jim Meyering  <meyering@redhat.com>
+
+	build: ensure that a release build fails when a submodule is unclean
+	* top/maint.mk (no-submodule-changes): New rule.
+	(alpha beta major): Depend on it.
+
 2009-05-02  Bruno Haible  <bruno@clisp.org>
 
 	Remove incompatibility between modules fnmatch-posix and fnmatch-gnu.

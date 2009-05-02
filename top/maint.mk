@@ -676,9 +676,21 @@ define emit-commit-log
     '* cfg.mk (old_NEWS_hash): Auto-update.'
 endef
 
+.PHONY: no-submodule-changes
+no-submodule-changes:
+	if test -d .git; then						\
+	  diff=$$(git submodule -q foreach git diff-index --name-only HEAD) \
+	    || exit 1;							\
+	  case $$diff in '') ;;						\
+	    *) echo '$(ME): submodule files are locally modified:';	\
+		echo "$$diff"; exit 1;; esac;				\
+	else								\
+	  : ;								\
+	fi
+
 .PHONY: alpha beta major
 ALL_RECURSIVE_TARGETS += alpha beta major
-alpha beta major: $(local-check) writable-files
+alpha beta major: $(local-check) writable-files no-submodule-changes
 	test $@ = major						\
 	  && { echo $(VERSION) | grep -E '^[0-9]+(\.[0-9]+)+$$'	\
 	       || { echo "invalid version string: $(VERSION)" 1>&2; exit 1;};}\
