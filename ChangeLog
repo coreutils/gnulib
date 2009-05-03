@@ -1,3 +1,7 @@
+2009-05-04  Simon Josefsson  <simon@josefsson.org>
+
+	* m4/fnmatch.m4: Fix fnmatch re-define.
+
 2009-04-27  David Bartley  <dtbartle@csclub.uwaterloo.ca>
 
 	priv-set: new module and tests; adapt write-any-file

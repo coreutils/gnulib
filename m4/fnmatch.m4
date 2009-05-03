@@ -101,7 +101,7 @@ AC_DEFUN([gl_FUNC_FNMATCH_POSIX],
     dnl We must choose a different name for our function, since on ELF systems
     dnl a broken fnmatch() in libc.so would override our fnmatch() if it is
     dnl compiled into a shared library.
-    AC_DEFINE([fnmatch], [${gl_fnmatch_required_lowercase}_fnmatch],
+    AC_DEFINE_UNQUOTED([fnmatch], [${gl_fnmatch_required_lowercase}_fnmatch],
       [Define to a replacement function name for fnmatch().])
     dnl Prerequisites of lib/fnmatch.c.
     AC_REQUIRE([AC_TYPE_MBSTATE_T])
