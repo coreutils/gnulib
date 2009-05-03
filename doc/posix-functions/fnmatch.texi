@@ -4,7 +4,7 @@
 
 POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/fnmatch.html}
 
-Gnulib module: fnmatch-posix or fnmatch-gnu
+Gnulib module: fnmatch or fnmatch-gnu
 
 Portability problems fixed by Gnulib:
 @itemize

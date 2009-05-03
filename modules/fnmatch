@@ -1,5 +1,5 @@
 Description:
-GNU implementation of the fnmatch() function.
+fnmatch() function: wildcard matching.
 
 Files:
 lib/fnmatch.in.h
@@ -20,7 +20,7 @@ mbsrtowcs
 mbsinit
 
 configure.ac:
-# No macro. You should also use one of fnmatch-posix or fnmatch-gnu.
+gl_FUNC_FNMATCH_POSIX
 
 Makefile.am:
 BUILT_SOURCES += $(FNMATCH_H)

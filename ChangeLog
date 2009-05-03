@@ -1,5 +1,13 @@
 2009-05-03  Bruno Haible  <bruno@clisp.org>
 
+	* modules/fnmatch (Description, configure.ac): Taken from
+	fnmatch-posix.
+	* modules/fnmatch-posix: Turn into a symbolic reference to the
+	'fnmatch' module, and deprecate.
+	* doc/posix-functions/fnmatch.texi: Mention the fnmatch module.
+
+2009-05-03  Bruno Haible  <bruno@clisp.org>
+
 	* m4/vasnprintf.m4 (gl_PREREQ_VASNPRINTF,
 	gl_PREREQ_VASNPRINTF_LONG_DOUBLE): Define through AC_DEFUN_ONCE.
 	Reported by Ralf Wildenhues.
