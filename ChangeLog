@@ -1,3 +1,8 @@
+2009-05-04  Eric Blake  <ebb9@byu.net>
+
+	maint: make the new no-submodule-changes rule VPATH-safe
+	* top/maint.mk (no-submodule-changes): Don't assume a srcdir build.
+
 2009-05-04  David Bartley  <dtbartle@csclub.uwaterloo.ca>
             Bruno Haible  <bruno@clisp.org>
 

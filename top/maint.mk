@@ -678,8 +678,9 @@ endef
 
 .PHONY: no-submodule-changes
 no-submodule-changes:
-	if test -d .git; then						\
-	  diff=$$(git submodule -q foreach git diff-index --name-only HEAD) \
+	if test -d $(srcdir)/.git; then					\
+	  diff=$$(cd $(srcdir) && git submodule -q foreach		\
+		  git diff-index --name-only HEAD)			\
 	    || exit 1;							\
 	  case $$diff in '') ;;						\
 	    *) echo '$(ME): submodule files are locally modified:';	\
