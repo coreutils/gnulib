@@ -11,13 +11,11 @@ unictype/base
 gperf
 
 configure.ac:
-AC_PROG_MKDIR_P
 
 Makefile.am:
 lib_SOURCES += unictype/scripts.c
 
 unictype/scripts_byname.h: unictype/scripts_byname.gperf
-	@MKDIR_P@ unictype
 	$(GPERF) -m 10 $(srcdir)/unictype/scripts_byname.gperf > $@-t
 	mv $@-t $@
 BUILT_SOURCES        += unictype/scripts_byname.h

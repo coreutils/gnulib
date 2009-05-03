@@ -10,13 +10,11 @@ uninorm/base
 gperf
 
 configure.ac:
-AC_PROG_MKDIR_P
 
 Makefile.am:
 lib_SOURCES += uninorm/composition.c
 
 uninorm/composition-table.h: $(srcdir)/uninorm/composition-table.gperf
-	@MKDIR_P@ uninorm
 	$(GPERF) -m 1 $(srcdir)/uninorm/composition-table.gperf > $@-t
 	mv $@-t $@
 BUILT_SOURCES        += uninorm/composition-table.h

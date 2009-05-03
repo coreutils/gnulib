@@ -95,31 +95,6 @@
 	install-exec-local.  Likewise, rename the uninstall-local rule to
 	uninstall-localcharset, and make it a prerequisite of the former.
 
-2009-05-01  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
-            Bruno Haible  <bruno@clisp.org>
-
-	Make it possible for the first build to be a VPATH build.
-	* modules/unicase/locale-language (configure.ac): Invoke
-	AC_PROG_MKDIR_P.
-	(Makefile.am): When invoking gperf, ensure the destination file's
-	subdirectory exists also in the build tree.
-	* modules/unicase/special-casing (configure.ac): Invoke
-	AC_PROG_MKDIR_P.
-	(Makefile.am): When invoking gperf, ensure the destination file's
-	subdirectory exists also in the build tree.
-	* modules/unictype/property-byname (configure.ac): Invoke
-	AC_PROG_MKDIR_P.
-	(Makefile.am): When invoking gperf, ensure the destination file's
-	subdirectory exists also in the build tree.
-	* modules/unictype/scripts (configure.ac): Invoke AC_PROG_MKDIR_P.
-	(Makefile.am): When invoking gperf, ensure the destination file's
-	subdirectory exists also in the build tree.
-	* modules/uninorm/composition (configure.ac): Invoke AC_PROG_MKDIR_P.
-	(Makefile.am): When invoking gperf, ensure the destination file's
-	subdirectory exists also in the build tree.
-	* lib/uninorm/composition.c: Include "uninorm/composition-table.h", not
-	"composition-table.h".
-
 2009-05-01  Bruno Haible  <bruno@clisp.org>
 
 	* lib/wchar.in.h (wcsnrtombs): Define if REPLACE_WCSNRTOMBS is 1.

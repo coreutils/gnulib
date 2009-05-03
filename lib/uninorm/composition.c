@@ -24,7 +24,7 @@
 
 struct composition_rule { char codes[4]; unsigned short combined; };
 
-#include "uninorm/composition-table.h"
+#include "composition-table.h"
 
 ucs4_t
 uc_composition (ucs4_t uc1, ucs4_t uc2)
