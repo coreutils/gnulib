@@ -1,5 +1,5 @@
 /* Localization of proper names.
-   Copyright (C) 2006-2008 Free Software Foundation, Inc.
+   Copyright (C) 2006-2009 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify
@@ -242,7 +242,10 @@ proper_name_utf8 (const char *name_ascii, const char *name_utf8)
 	  name_converted_translit != NULL ? name_converted_translit :
 	  name_ascii);
 
-  if (translation != name_ascii)
+  /* See whether we have a translation.  Some translators have not understood
+     that they should use the UTF-8 form of the name, if possible.  So if the
+     translator provided a no-op translation, we ignore it.  */
+  if (strcmp (translation, name_ascii) != 0)
     {
       /* See whether the translation contains the original name.  */
       if (mbsstr_trimmed_wordbounded (translation, name_ascii)

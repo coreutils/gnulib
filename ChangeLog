@@ -1,4 +1,10 @@
 2009-05-03  Jim Meyering  <meyering@redhat.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	* lib/propername.c (proper_name_utf8): Ignore no-op translations;
+	use the converted UTF-8 variant of the name instead.
+
+2009-05-03  Jim Meyering  <meyering@redhat.com>
 
 	tests: tighten some getdate tests
 	* tests/test-getdate.c (main): Tighten tests: require equality,
