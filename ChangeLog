@@ -1,3 +1,9 @@
+2009-05-03  Jim Meyering  <meyering@redhat.com>
+
+	tests: tighten some getdate tests
+	* tests/test-getdate.c (main): Tighten tests: require equality,
+	not just greater than.  Set TZ envvar to UTC0.
+
 2009-05-03  Giuseppe Scrivano  <gscrivano@gnu.org>
 
 	getdate: correctly interpret "next monday" when run on a Monday

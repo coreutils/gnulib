@@ -53,12 +53,8 @@ static const char* const day_table[] =
   "SUNDAY",
   "MONDAY",
   "TUESDAY",
-  "TUES",
   "WEDNESDAY",
-  "WEDNES",
   "THURSDAY",
-  "THUR",
-  "THURS",
   "FRIDAY",
   "SATURDAY",
   NULL
@@ -228,25 +224,27 @@ main (int argc, char **argv)
   ASSERT (result.tv_sec == result2.tv_sec
 	  && result.tv_nsec == result2.tv_nsec);
 
-  /* Check that every 'last/next DAY' is in the past/future.  */
+  /* Check that some "next Monday", "last Wednesday", etc. are correct.  */
+  putenv ("TZ=UTC0");
   for (i = 0; day_table[i]; i++)
     {
+      unsigned int thur2 = 7 * 24 * 3600; /* 2nd thursday */
       char tmp[32];
       sprintf (tmp, "NEXT %s", day_table[i]);
-      now.tv_sec = 4711;
+      now.tv_sec = thur2 + 4711;
       now.tv_nsec = 1267;
       ASSERT (get_date (&result, tmp, &now));
       LOG (tmp, now, result);
-      ASSERT (result.tv_sec > now.tv_sec
-              && result.tv_nsec == 0);
+      ASSERT (result.tv_nsec == 0);
+      ASSERT (result.tv_sec == thur2 + (i == 4 ? 7 : (i + 3) % 7) * 24 * 3600);
 
       sprintf (tmp, "LAST %s", day_table[i]);
-      now.tv_sec = 4711;
+      now.tv_sec = thur2 + 4711;
       now.tv_nsec = 1267;
       ASSERT (get_date (&result, tmp, &now));
       LOG (tmp, now, result);
-      ASSERT (result.tv_sec < now.tv_sec
-              && result.tv_nsec == 0);
+      ASSERT (result.tv_nsec == 0);
+      ASSERT (result.tv_sec == thur2 + ((i + 3) % 7 - 7) * 24 * 3600);
     }
 
   p = "THURSDAY UTC+00";  /* The epoch was on Thursday.  */
@@ -262,7 +260,7 @@ main (int argc, char **argv)
   now.tv_nsec = 0;
   ASSERT (get_date (&result, p, &now));
   LOG (p, now, result);
-  ASSERT (result.tv_sec >= now.tv_sec
+  ASSERT (result.tv_sec == 24 * 3600
 	  && result.tv_nsec == now.tv_nsec);
 
   return 0;
