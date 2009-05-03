@@ -1,3 +1,9 @@
+2009-05-03  Bruno Haible  <bruno@clisp.org>
+
+	* m4/vasnprintf.m4 (gl_PREREQ_VASNPRINTF,
+	gl_PREREQ_VASNPRINTF_LONG_DOUBLE): Define through AC_DEFUN_ONCE.
+	Reported by Ralf Wildenhues.
+
 2009-05-04  Simon Josefsson  <simon@josefsson.org>
 
 	* m4/fnmatch.m4: Fix fnmatch re-define.
