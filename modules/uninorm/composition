@@ -15,8 +15,8 @@ Makefile.am:
 lib_SOURCES += uninorm/composition.c
 
 uninorm/composition-table.h: $(srcdir)/uninorm/composition-table.gperf
-	$(GPERF) -m 1 $(srcdir)/uninorm/composition-table.gperf > $@-t
-	mv $@-t $@
+	$(GPERF) -m 1 $(srcdir)/uninorm/composition-table.gperf > $(srcdir)/uninorm/composition-table.h-t
+	mv $(srcdir)/uninorm/composition-table.h-t $(srcdir)/uninorm/composition-table.h
 BUILT_SOURCES        += uninorm/composition-table.h
 MOSTLYCLEANFILES     += uninorm/composition-table.h-t
 MAINTAINERCLEANFILES += uninorm/composition-table.h

@@ -94,8 +94,8 @@ Makefile.am:
 lib_SOURCES += unictype/pr_byname.c
 
 unictype/pr_byname.h: unictype/pr_byname.gperf
-	$(GPERF) -m 10 $(srcdir)/unictype/pr_byname.gperf > $@-t
-	mv $@-t $@
+	$(GPERF) -m 10 $(srcdir)/unictype/pr_byname.gperf > $(srcdir)/unictype/pr_byname.h-t
+	mv $(srcdir)/unictype/pr_byname.h-t $(srcdir)/unictype/pr_byname.h
 BUILT_SOURCES        += unictype/pr_byname.h
 MOSTLYCLEANFILES     += unictype/pr_byname.h-t
 MAINTAINERCLEANFILES += unictype/pr_byname.h

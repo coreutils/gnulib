@@ -43,17 +43,17 @@ iconv.h: iconv.in.h
 MOSTLYCLEANFILES += iconv.h iconv.h-t
 
 iconv_open-aix.h: iconv_open-aix.gperf
-	$(GPERF) -m 10 $(srcdir)/iconv_open-aix.gperf > $@-t
-	mv $@-t $@
+	$(GPERF) -m 10 $(srcdir)/iconv_open-aix.gperf > $(srcdir)/iconv_open-aix.h-t
+	mv $(srcdir)/iconv_open-aix.h-t $(srcdir)/iconv_open-aix.h
 iconv_open-hpux.h: iconv_open-hpux.gperf
-	$(GPERF) -m 10 $(srcdir)/iconv_open-hpux.gperf > $@-t
-	mv $@-t $@
+	$(GPERF) -m 10 $(srcdir)/iconv_open-hpux.gperf > $(srcdir)/iconv_open-hpux.h-t
+	mv $(srcdir)/iconv_open-hpux.h-t $(srcdir)/iconv_open-hpux.h
 iconv_open-irix.h: iconv_open-irix.gperf
-	$(GPERF) -m 10 $(srcdir)/iconv_open-irix.gperf > $@-t
-	mv $@-t $@
+	$(GPERF) -m 10 $(srcdir)/iconv_open-irix.gperf > $(srcdir)/iconv_open-irix.h-t
+	mv $(srcdir)/iconv_open-irix.h-t $(srcdir)/iconv_open-irix.h
 iconv_open-osf.h: iconv_open-osf.gperf
-	$(GPERF) -m 10 $(srcdir)/iconv_open-osf.gperf > $@-t
-	mv $@-t $@
+	$(GPERF) -m 10 $(srcdir)/iconv_open-osf.gperf > $(srcdir)/iconv_open-osf.h-t
+	mv $(srcdir)/iconv_open-osf.h-t $(srcdir)/iconv_open-osf.h
 BUILT_SOURCES        += iconv_open-aix.h iconv_open-hpux.h iconv_open-irix.h iconv_open-osf.h
 MOSTLYCLEANFILES     += iconv_open-aix.h-t iconv_open-hpux.h-t iconv_open-irix.h-t iconv_open-osf.h-t
 MAINTAINERCLEANFILES += iconv_open-aix.h iconv_open-hpux.h iconv_open-irix.h iconv_open-osf.h

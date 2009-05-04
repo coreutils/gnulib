@@ -15,8 +15,8 @@ Makefile.am:
 lib_SOURCES += unicase/special-casing.c
 
 unicase/special-casing-table.h: $(srcdir)/unicase/special-casing-table.gperf
-	$(GPERF) -m 10 $(srcdir)/unicase/special-casing-table.gperf > $@-t
-	mv $@-t $@
+	$(GPERF) -m 10 $(srcdir)/unicase/special-casing-table.gperf > $(srcdir)/unicase/special-casing-table.h-t
+	mv $(srcdir)/unicase/special-casing-table.h-t $(srcdir)/unicase/special-casing-table.h
 BUILT_SOURCES        += unicase/special-casing-table.h
 MOSTLYCLEANFILES     += unicase/special-casing-table.h-t
 MAINTAINERCLEANFILES += unicase/special-casing-table.h

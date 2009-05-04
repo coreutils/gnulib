@@ -16,8 +16,8 @@ Makefile.am:
 lib_SOURCES += unictype/scripts.c
 
 unictype/scripts_byname.h: unictype/scripts_byname.gperf
-	$(GPERF) -m 10 $(srcdir)/unictype/scripts_byname.gperf > $@-t
-	mv $@-t $@
+	$(GPERF) -m 10 $(srcdir)/unictype/scripts_byname.gperf > $(srcdir)/unictype/scripts_byname.h-t
+	mv $(srcdir)/unictype/scripts_byname.h-t $(srcdir)/unictype/scripts_byname.h
 BUILT_SOURCES        += unictype/scripts_byname.h
 MOSTLYCLEANFILES     += unictype/scripts_byname.h-t
 MAINTAINERCLEANFILES += unictype/scripts_byname.h

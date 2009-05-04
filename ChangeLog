@@ -1,5 +1,19 @@
 2009-05-03  Bruno Haible  <bruno@clisp.org>
 
+	Create gperf-generated file in the source dir, not in the build dir.
+	* modules/iconv_open (iconv_open-aix.h, iconv_open-hpux.h,
+	iconv_open-irix.h, iconv_open-osf.h): Create file in the source tree.
+	* modules/unicase/locale-language (unicase/locale-languages.h):
+	Likewise.
+	* modules/unicase/special-casing (unicase/special-casing-table.h):
+	Likewise.
+	* modules/unictype/property-byname (unictype/pr_byname.h): Likewise.
+	* modules/unictype/scripts (unictype/scripts_byname.h): Likewise.
+	* modules/uninorm/composition (uninorm/composition-table.h): Likewise.
+	Reported by Ralf Wildenhues.
+
+2009-05-03  Bruno Haible  <bruno@clisp.org>
+
 	* modules/fnmatch (Description, configure.ac): Taken from
 	fnmatch-posix.
 	* modules/fnmatch-posix: Turn into a symbolic reference to the
