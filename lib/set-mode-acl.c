@@ -1,6 +1,6 @@
 /* set-mode-acl.c - set access control list equivalent to a mode
 
-   Copyright (C) 2002-2003, 2005-2008 Free Software Foundation, Inc.
+   Copyright (C) 2002-2003, 2005-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -354,10 +354,10 @@ qset_acl (char const *name, int desc, mode_t mode)
 	}
       if (desc != -1)
 	ret = facl (desc, ACE_SETACL,
-		    sizeof (entries) / sizeof (aclent_t), entries);
+		    sizeof (entries) / sizeof (ace_t), entries);
       else
 	ret = acl (name, ACE_SETACL,
-		   sizeof (entries) / sizeof (aclent_t), entries);
+		   sizeof (entries) / sizeof (ace_t), entries);
       if (ret < 0 && errno != EINVAL && errno != ENOTSUP)
 	{
 	  if (errno == ENOSYS)
