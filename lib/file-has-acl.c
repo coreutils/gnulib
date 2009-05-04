@@ -1,6 +1,6 @@
 /* Test whether a file has a nontrivial access control list.
 
-   Copyright (C) 2002-2003, 2005-2008 Free Software Foundation, Inc.
+   Copyright (C) 2002-2003, 2005-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -55,11 +55,11 @@ acl_access_nontrivial (acl_t acl)
 #  if HAVE_ACL_FIRST_ENTRY /* Linux, FreeBSD */
 
   acl_entry_t ace;
-  int at_end;
+  int got_one;
 
-  for (at_end = acl_get_entry (acl, ACL_FIRST_ENTRY, &ace);
-       !at_end;
-       at_end = acl_get_entry (acl, ACL_NEXT_ENTRY, &ace))
+  for (got_one = acl_get_entry (acl, ACL_FIRST_ENTRY, &ace);
+       got_one > 0;
+       got_one = acl_get_entry (acl, ACL_NEXT_ENTRY, &ace))
     {
       acl_tag_t tag;
       if (acl_get_tag_type (ace, &tag) < 0)
@@ -67,7 +67,7 @@ acl_access_nontrivial (acl_t acl)
       if (!(tag == ACL_USER_OBJ || tag == ACL_GROUP_OBJ || tag == ACL_OTHER))
 	return 1;
     }
-  return 0;
+  return got_one;
 
 #  else /* IRIX, Tru64 */
 #   if HAVE_ACL_TO_SHORT_TEXT /* IRIX */

@@ -1,3 +1,12 @@
+2009-05-04  David Bartley  <dtbartle@csclub.uwaterloo.ca>
+            Bruno Haible  <bruno@clisp.org>
+
+	acl: Fix infinite loop on FreeBSD.
+	* lib/acl_entries.c (acl_entries) [Linux, FreeBSD]: Fix interpretation
+	of return value from acl_get_entry.
+	* lib/file-has-acl.c (acl_access_nontrivial) [Linux, FreeBSD]:
+	Likewise.
+
 2009-05-03  Bruno Haible  <bruno@clisp.org>
 
 	* lib/acl-internal.h (acl_entries): Clarify return value.

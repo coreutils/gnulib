@@ -35,13 +35,29 @@ acl_entries (acl_t acl)
   if (acl != NULL)
     {
 #if HAVE_ACL_FIRST_ENTRY /* Linux, FreeBSD, MacOS X */
+# if HAVE_ACL_TYPE_EXTENDED /* MacOS X */
+      /* acl_get_entry returns 0 when it successfully fetches an entry,
+	 and -1/EINVAL at the end.  */
       acl_entry_t ace;
-      int at_end;
+      int got_one;
 
-      for (at_end = acl_get_entry (acl, ACL_FIRST_ENTRY, &ace);
-	   !at_end;
-	   at_end = acl_get_entry (acl, ACL_NEXT_ENTRY, &ace))
+      for (got_one = acl_get_entry (acl, ACL_FIRST_ENTRY, &ace);
+	   got_one >= 0;
+	   got_one = acl_get_entry (acl, ACL_NEXT_ENTRY, &ace))
 	count++;
+# else /* Linux, FreeBSD */
+      /* acl_get_entry returns 1 when it successfully fetches an entry,
+	 and 0 at the end.  */
+      acl_entry_t ace;
+      int got_one;
+
+      for (got_one = acl_get_entry (acl, ACL_FIRST_ENTRY, &ace);
+	   got_one > 0;
+	   got_one = acl_get_entry (acl, ACL_NEXT_ENTRY, &ace))
+	count++;
+      if (got_one < 0)
+	return -1;
+# endif
 #else /* IRIX, Tru64 */
 # if HAVE_ACL_TO_SHORT_TEXT /* IRIX */
       /* Don't use acl_get_entry: it is undocumented.  */
