@@ -1,10 +1,9 @@
-# errno_h.m4 serial 4
+# errno_h.m4 serial 5
 dnl Copyright (C) 2004, 2006, 2008, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
-dnl This macro must pass through AC_REQUIRE (never directly invoke it).
 AC_DEFUN_ONCE([gl_HEADER_ERRNO_H],
 [
   AC_REQUIRE([AC_PROG_CC])

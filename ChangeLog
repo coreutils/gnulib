@@ -1,3 +1,11 @@
+2009-05-04  Bruno Haible  <bruno@clisp.org>
+
+	Exploit new semantics of AC_DEFUN_ONCE available since 2009-01-26.
+	* m4/errno_h.m4 (gl_HEADER_ERRNO_H): Remove outdated comment.
+	* modules/errno (configure.ac): Drop AC_REQUIRE.
+	* m4/multiarch.m4 (gl_MULTIARCH): Remove outdated comment.
+	* modules/multiarch (configure.ac): Drop AC_REQUIRE.
+
 2009-05-04  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/glob-tests: New module.

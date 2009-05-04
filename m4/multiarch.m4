@@ -1,4 +1,4 @@
-# multiarch.m4 serial 4
+# multiarch.m4 serial 5
 dnl Copyright (C) 2008, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,7 +19,6 @@ dnl with or without modifications, as long as this notice is preserved.
 # Detect this situation and set the macro AA_APPLE_UNIVERSAL_BUILD at the
 # beginning of config.h and set APPLE_UNIVERSAL_BUILD accordingly.
 
-dnl This macro must pass through AC_REQUIRE (never directly invoke it).
 AC_DEFUN_ONCE([gl_MULTIARCH],
 [
   dnl Code similar to autoconf-2.63 AC_C_BIGENDIAN.
