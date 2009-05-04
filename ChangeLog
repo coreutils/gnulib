@@ -1,3 +1,13 @@
+2009-05-04  David Bartley  <dtbartle@csclub.uwaterloo.ca>
+            Bruno Haible  <bruno@clisp.org>
+
+	Fix test-file-has-acl on FreeBSD.
+	* tests/test-file-has-acl.sh: Also test a directory. On FreeBSD, the
+	mask is implicitly added.
+	* tests/test-file-has-acl.c: Include <signal.h>.
+	(main): Terminate the test after 5 seconds.
+	* modules/acl-tests (configure.ac): Check for alarm function.
+
 2009-05-04  Bruno Haible  <bruno@clisp.org>
 
 	Exploit new semantics of AC_DEFUN_ONCE available since 2009-01-26.

@@ -1,5 +1,5 @@
 /* Test for presence of ACL.
-   Copyright (C) 2008 Free Software Foundation, Inc.
+   Copyright (C) 2008-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 
 #include "acl.h"
 
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -53,6 +54,14 @@ main (int argc, char *argv[])
       fprintf (stderr, "could not access file \"%s\"\n", file);
       exit (EXIT_FAILURE);
     }
+
+  /* Check against possible infinite loop in file_has_acl.  */
+#if HAVE_DECL_ALARM
+  /* Declare failure if test takes too long, by using default abort
+     caused by SIGALRM.  */
+  signal (SIGALRM, SIG_DFL);
+  alarm (5);
+#endif
 
 #if USE_ACL
   {

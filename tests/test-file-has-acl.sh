@@ -183,6 +183,9 @@ cd "$builddir" ||
 
   func_test_has_acl tmpfile0 no
 
+  mkdir tmpdir0
+  func_test_has_acl tmpdir0 no
+
   if test $acl_flavor != none; then
     # Use a user and group id different from the current one, to avoid
     # redundant/ambiguous ACLs.
@@ -208,11 +211,11 @@ cd "$builddir" ||
             *)       setfacl -d user:$auid:1 tmpfile0 ;;
           esac
 
-          # On Linux, the ACL for the mask is implicitly added.
+          # On Linux and FreeBSD, the ACL for the mask is implicitly added.
           # On Solaris, it is always there.
           case $acl_flavor in
-            linux) func_test_has_acl tmpfile0 yes ;;
-            *)     func_test_has_acl tmpfile0 no ;;
+            linux | freebsd) func_test_has_acl tmpfile0 yes ;;
+            *)               func_test_has_acl tmpfile0 no ;;
           esac
 
           # Remove the ACL for the mask, if it was implicitly added.
@@ -328,6 +331,7 @@ cd "$builddir" ||
   fi
 
   rm -f tmpfile[0-9] tmp.err
+  rm -rf tmpdir0
 ) || exit 1
 
 rm -rf "$tmp"
