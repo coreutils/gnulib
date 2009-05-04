@@ -1,3 +1,8 @@
+2009-05-03  Bruno Haible  <bruno@clisp.org>
+
+	* lib/acl-internal.h (acl_entries): Clarify return value.
+	* lib/acl_entries.c (acl_entries): Likewise.
+
 2009-05-04  David Bartley  <dtbartle@csclub.uwaterloo.ca>
 
 	Bug fix in acl module.

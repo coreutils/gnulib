@@ -1,6 +1,6 @@
 /* Return the number of entries in an ACL.
 
-   Copyright (C) 2002-2003, 2005-2008 Free Software Foundation, Inc.
+   Copyright (C) 2002-2003, 2005-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -24,7 +24,8 @@
 /* This file assumes POSIX-draft like ACLs
    (Linux, FreeBSD, MacOS X, IRIX, Tru64).  */
 
-/* Return the number of entries in ACL.  */
+/* Return the number of entries in ACL.
+   Return -1 and set errno upon failure to determine it.  */
 
 int
 acl_entries (acl_t acl)

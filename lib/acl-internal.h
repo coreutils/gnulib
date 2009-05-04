@@ -1,6 +1,6 @@
 /* Internal implementation of access control lists.
 
-   Copyright (C) 2002-2003, 2005-2008 Free Software Foundation, Inc.
+   Copyright (C) 2002-2003, 2005-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -136,6 +136,8 @@ rpl_acl_set_fd (int fd, acl_t acl)
      ((Err) == ENOTSUP || (Err) == ENOSYS || (Err) == EINVAL || (Err) == EBUSY)
 #  endif
 
+/* Return the number of entries in ACL.
+   Return -1 and set errno upon failure to determine it.  */
 /* Define a replacement for acl_entries if needed. (Only Linux has it.)  */
 #  if !HAVE_ACL_ENTRIES
 #   define acl_entries rpl_acl_entries
