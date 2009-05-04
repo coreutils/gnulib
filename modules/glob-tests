@@ -1,0 +1,6 @@
+Files:
+tests/test-glob.c
+
+Makefile.am:
+TESTS += test-glob
+check_PROGRAMS += test-glob

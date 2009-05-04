@@ -1,5 +1,10 @@
 2009-05-04  Simon Josefsson  <simon@josefsson.org>
 
+	* modules/glob-tests: New module.
+	* tests/test-glob.c: Add.
+
+2009-05-04  Simon Josefsson  <simon@josefsson.org>
+
 	* modules/fnmatch-tests: New module.
 	* tests/test-fnmatch.c: Add.
 
