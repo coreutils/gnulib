@@ -1,0 +1,6 @@
+Files:
+tests/test-fnmatch.c
+
+Makefile.am:
+TESTS += test-fnmatch
+check_PROGRAMS += test-fnmatch

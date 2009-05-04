@@ -1,3 +1,8 @@
+2009-05-04  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/fnmatch-tests: New module.
+	* tests/test-fnmatch.c: Add.
+
 2009-05-04  Eric Blake  <ebb9@byu.net>
 
 	maint: make the new no-submodule-changes rule VPATH-safe
