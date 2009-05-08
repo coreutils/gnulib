@@ -1,3 +1,8 @@
+2009-05-08  Bruno Haible  <bruno@clisp.org>
+
+	* lib/sys_socket.in.h (_SS_PADSIZE): Use a conditional expression
+	instead of 'max'.
+
 2009-05-08  Simon Josefsson  <simon@josefsson.org>
 
 	* m4/sys_socket_h.m4: Test for ws2tcpip.h earlier, needed for
