@@ -40,6 +40,8 @@ AC_DEFUN([gl_HEADER_SYS_SOCKET],
   else
     SYS_SOCKET_H='sys/socket.h'
   fi
+  # We need to check for ws2tcpip.h now.
+  gl_PREREQ_SYS_H_SOCKET
   AC_CHECK_TYPES([struct sockaddr_storage],,,[
   /* sys/types.h is not needed according to POSIX, but the
      sys/socket.h in i386-unknown-freebsd4.10 and
@@ -57,29 +59,33 @@ AC_DEFUN([gl_HEADER_SYS_SOCKET],
     SYS_SOCKET_H='sys/socket.h'
   fi
   if test -n "$SYS_SOCKET_H"; then
-    dnl Check prerequisites of the <sys/socket.h> replacement.
-    gl_CHECK_NEXT_HEADERS([sys/socket.h])
-    if test $ac_cv_header_sys_socket_h = yes; then
-      HAVE_SYS_SOCKET_H=1
-      HAVE_WS2TCPIP_H=0
-    else
-      HAVE_SYS_SOCKET_H=0
-      dnl We cannot use AC_CHECK_HEADERS_ONCE here, because that would make
-      dnl the check for those headers unconditional; yet cygwin reports
-      dnl that the headers are present but cannot be compiled (since on
-      dnl cygwin, all socket information should come from sys/socket.h).
-      AC_CHECK_HEADERS([ws2tcpip.h])
-      if test $ac_cv_header_ws2tcpip_h = yes; then
-        HAVE_WS2TCPIP_H=1
-      else
-        HAVE_WS2TCPIP_H=0
-      fi
-    fi
     gl_PREREQ_SYS_H_WINSOCK2
-    AC_SUBST([HAVE_SYS_SOCKET_H])
-    AC_SUBST([HAVE_WS2TCPIP_H])
   fi
   AC_SUBST([SYS_SOCKET_H])
+])
+
+AC_DEFUN([gl_PREREQ_SYS_H_SOCKET],
+[
+  dnl Check prerequisites of the <sys/socket.h> replacement.
+  gl_CHECK_NEXT_HEADERS([sys/socket.h])
+  if test $ac_cv_header_sys_socket_h = yes; then
+    HAVE_SYS_SOCKET_H=1
+    HAVE_WS2TCPIP_H=0
+  else
+    HAVE_SYS_SOCKET_H=0
+    dnl We cannot use AC_CHECK_HEADERS_ONCE here, because that would make
+    dnl the check for those headers unconditional; yet cygwin reports
+    dnl that the headers are present but cannot be compiled (since on
+    dnl cygwin, all socket information should come from sys/socket.h).
+    AC_CHECK_HEADERS([ws2tcpip.h])
+    if test $ac_cv_header_ws2tcpip_h = yes; then
+      HAVE_WS2TCPIP_H=1
+    else
+      HAVE_WS2TCPIP_H=0
+    fi
+  fi
+  AC_SUBST([HAVE_SYS_SOCKET_H])
+  AC_SUBST([HAVE_WS2TCPIP_H])
 ])
 
 # Common prerequisites of of the <sys/socket.h> replacement and of the
