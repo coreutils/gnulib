@@ -1,3 +1,7 @@
+2009-05-08  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/alignof (Makefile.am): Dist alignof.h.
+
 2009-05-07  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/sys_socket (Makefile.am): Substitute

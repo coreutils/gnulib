@@ -9,6 +9,7 @@ Depends-on:
 configure.ac:
 
 Makefile.am:
+lib_SOURCES += alignof.h
 
 Include:
 "alignof.h"
