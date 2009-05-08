@@ -1,3 +1,11 @@
+2009-05-07  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/sys_socket (Makefile.am): Substitute
+	HAVE_STRUCT_SOCKADDR_STORAGE.  Depend on alignof.
+	* m4/sys_socket_h.m4: Check for sockaddr_storage.
+	* lib/sys_socket.in.h (sockaddr_storage): Define when needed.
+	* tests/test-sys_socket.c: Check sockaddr_storage.
+
 2009-05-08  Bruno Haible  <bruno@clisp.org>
 
 	Use module 'alignof'.
