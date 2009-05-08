@@ -1,3 +1,9 @@
+2009-05-08  Bruno Haible  <bruno@clisp.org>
+
+	New module 'alignof'.
+	* lib/alignof.h: New file.
+	* modules/alignof: New file.
+
 2009-05-04  David Bartley  <dtbartle@csclub.uwaterloo.ca>
             Bruno Haible  <bruno@clisp.org>
 
