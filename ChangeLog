@@ -1,5 +1,11 @@
 2009-05-08  Bruno Haible  <bruno@clisp.org>
 
+	Use module 'alignof'.
+	* lib/malloca.h: Include alignof.h.
+	(sa_alignof): Remove macro.
+	(sa_alignment_*): Use the alignof macro.
+	* modules/malloca (Depends-on): Add alignof.
+
 	New module 'alignof'.
 	* lib/alignof.h: New file.
 	* modules/alignof: New file.
