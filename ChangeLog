@@ -1,3 +1,8 @@
+2009-05-08  Simon Josefsson  <simon@josefsson.org>
+
+	* tests/test-vc-list-files-git.sh: Do git config of user.email and
+	user.name to prevent git commit from complaining.
+
 2009-05-10  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_import, func_create_testdir, copy-file): Change

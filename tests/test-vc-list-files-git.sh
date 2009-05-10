@@ -1,6 +1,6 @@
 #!/bin/sh
 # Unit tests for vc-list-files
-# Copyright (C) 2008 Free Software Foundation, Inc.
+# Copyright (C) 2008, 2009 Free Software Foundation, Inc.
 # This file is part of the GNUlib Library.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -36,6 +36,8 @@ mkdir $tmpdir && cd $tmpdir &&
     || { echo "Skipping test: git not found in PATH"; (exit 77); exit 77; }; } &&
   mkdir d &&
   touch d/a b c &&
+  git config user.email "you@example.com"
+  git config user.name "Your Name"
   git add . > /dev/null &&
   git commit -q -a -m log &&
   printf '%s\n' b c d/a > expected &&
