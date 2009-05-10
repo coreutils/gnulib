@@ -2917,22 +2917,25 @@ s,^\(.................................................[^ ]*\) *,                
     func_append old_files " m4/gnulib-tool.m4"
   fi
 
+  rewritten='%REWRITTEN%'
   sed_rewrite_old_files="\
-    s,^build-aux/,$auxdir/,
-    s,^doc/,$cached_docbase/,
-    s,^lib/,$cached_sourcebase/,
-    s,^m4/,$cached_m4base/,
-    s,^tests/,$cached_testsbase/,
-    s,^tests=lib/,$cached_testsbase/,
-    s,^top/,,"
+    s,^build-aux/,$rewritten$auxdir/,
+    s,^doc/,$rewritten$cached_docbase/,
+    s,^lib/,$rewritten$cached_sourcebase/,
+    s,^m4/,$rewritten$cached_m4base/,
+    s,^tests/,$rewritten$cached_testsbase/,
+    s,^tests=lib/,$rewritten$cached_testsbase/,
+    s,^top/,$rewritten,
+    s,^$rewritten,,"
   sed_rewrite_new_files="\
-    s,^build-aux/,$auxdir/,
-    s,^doc/,$docbase/,
-    s,^lib/,$sourcebase/,
-    s,^m4/,$m4base/,
-    s,^tests/,$testsbase/,
-    s,^tests=lib/,$testsbase/,
-    s,^top/,,"
+    s,^build-aux/,$rewritten$auxdir/,
+    s,^doc/,$rewritten$docbase/,
+    s,^lib/,$rewritten$sourcebase/,
+    s,^m4/,$rewritten$m4base/,
+    s,^tests/,$rewritten$testsbase/,
+    s,^tests=lib/,$rewritten$testsbase/,
+    s,^top/,$rewritten,
+    s,^$rewritten,,"
 
   # Create directories.
   { echo "$sourcebase"
@@ -3883,13 +3886,15 @@ func_create_testdir ()
     echo "$files" | sed -e 's/^/  /'
   fi
 
+  rewritten='%REWRITTEN%'
   sed_rewrite_files="\
-    s,^build-aux/,$auxdir/,
-    s,^doc/,$docbase/,
-    s,^lib/,$sourcebase/,
-    s,^m4/,$m4base/,
-    s,^tests/,$testsbase/,
-    s,^top/,,"
+    s,^build-aux/,$rewritten$auxdir/,
+    s,^doc/,$rewritten$docbase/,
+    s,^lib/,$rewritten$sourcebase/,
+    s,^m4/,$rewritten$m4base/,
+    s,^tests/,$rewritten$testsbase/,
+    s,^top/,$rewritten,
+    s,^$rewritten,,"
 
   # Create directories.
   for f in $files; do echo $f; done \
@@ -4715,13 +4720,15 @@ case $mode in
     test -n "$docbase" || docbase="doc"
     test -n "$testsbase" || testsbase="tests"
     test -n "$auxdir" || auxdir="build-aux"
+    rewritten='%REWRITTEN%'
     sed_rewrite_files="\
-      s,^build-aux/,$auxdir/,
-      s,^doc/,$docbase/,
-      s,^lib/,$sourcebase/,
-      s,^m4/,$m4base/,
-      s,^tests/,$testsbase/,
-      s,^top/,,"
+      s,^build-aux/,$rewritten$auxdir/,
+      s,^doc/,$rewritten$docbase/,
+      s,^lib/,$rewritten$sourcebase/,
+      s,^m4/,$rewritten$m4base/,
+      s,^tests/,$rewritten$testsbase/,
+      s,^top/,$rewritten,
+      s,^$rewritten,,"
     if test -d "$dest"; then
       destdir="$dest"
       g=`echo "$f" | sed -e "$sed_rewrite_files"`

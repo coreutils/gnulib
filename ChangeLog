@@ -1,3 +1,10 @@
+2009-05-10  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_import, func_create_testdir, copy-file): Change
+	sed_rewrite_old_files, sed_rewrite_new_files, sed_rewrite_files so that
+	it rewrites every file name only once.
+	Reported by Simon Josefsson. Helped by Ralf Wildenhues.
+
 2009-05-08  Bruno Haible  <bruno@clisp.org>
 
 	* lib/sys_socket.in.h (_SS_PADSIZE): Use a conditional expression
