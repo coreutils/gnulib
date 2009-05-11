@@ -1,3 +1,7 @@
+2009-05-11  Simon Josefsson  <simon@josefsson.org>
+
+	* top/maint.mk: Make $(srcdir)/build-aux configurable.
+
 2009-05-11  Eric Blake  <ebb9@byu.net>
 
 	argp: avoid undefined behavior
