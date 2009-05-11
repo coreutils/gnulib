@@ -226,7 +226,7 @@ __argp_fmtstream_update (argp_fmtstream_t fs)
 	  int i;
 
 	  p = buf + (r + 1 - fs->point_col);
-	  while (p >= buf && !isblank (*p))
+	  while (p >= buf && !isblank ((unsigned char) *p))
 	    --p;
 	  nextline = p + 1;	/* This will begin the next line.  */
 
@@ -236,7 +236,7 @@ __argp_fmtstream_update (argp_fmtstream_t fs)
 	      if (p >= buf)
 		do
 		  --p;
-		while (p >= buf && isblank (*p));
+		while (p >= buf && isblank ((unsigned char) *p));
 	      nl = p + 1;	/* The newline will replace the first blank. */
 	    }
 	  else
@@ -248,7 +248,7 @@ __argp_fmtstream_update (argp_fmtstream_t fs)
 	      if (p < nl)
 		do
 		  ++p;
-		while (p < nl && !isblank (*p));
+		while (p < nl && !isblank ((unsigned char) *p));
 	      if (p == nl)
 		{
 		  /* It already ends a line.  No fussing required.  */
@@ -261,7 +261,7 @@ __argp_fmtstream_update (argp_fmtstream_t fs)
 	      /* Swallow separating blanks.  */
 	      do
 		++p;
-	      while (isblank (*p));
+	      while (isblank ((unsigned char) *p));
 	      /* The next line will start here.  */
 	      nextline = p;
 	    }

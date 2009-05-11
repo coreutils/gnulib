@@ -1,3 +1,9 @@
+2009-05-11  Eric Blake  <ebb9@byu.net>
+
+	argp: avoid undefined behavior
+	* lib/argp-fmtstream.c (weak_alias): Pass correct types to ctype
+	macros.
+
 2009-05-08  Simon Josefsson  <simon@josefsson.org>
 
 	* tests/test-vc-list-files-git.sh: Do git config of user.email and
@@ -41,7 +47,7 @@
 	* modules/alignof: New file.
 
 2009-05-04  David Bartley  <dtbartle@csclub.uwaterloo.ca>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Fix test-file-has-acl on FreeBSD.
 	* tests/test-file-has-acl.sh: Also test a directory. On FreeBSD, the
@@ -74,7 +80,7 @@
 	* top/maint.mk (no-submodule-changes): Don't assume a srcdir build.
 
 2009-05-04  David Bartley  <dtbartle@csclub.uwaterloo.ca>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	acl: Fix infinite loop on FreeBSD.
 	* lib/acl_entries.c (acl_entries) [Linux, FreeBSD]: Fix interpretation
@@ -141,7 +147,7 @@
 	* tests/test-priv-set.c: New file.
 
 2009-05-03  Jim Meyering  <meyering@redhat.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* lib/propername.c (proper_name_utf8): Ignore no-op translations;
 	use the converted UTF-8 variant of the name instead.
