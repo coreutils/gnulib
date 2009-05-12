@@ -114,7 +114,7 @@ define _prohibit_regexp
 endef
 
 sc_avoid_if_before_free:
-	@$(build_aux)/useless-if-before-free			\
+	@$(build_aux)/useless-if-before-free				\
 		$(useless_free_options)					\
 	    $$($(VC_LIST_EXCEPT) | grep -v useless-if-before-free) &&	\
 	  { echo '$(ME): found useless "if" before "free" above' 1>&2;	\
@@ -642,7 +642,7 @@ gnulib-version = $$(cd $(gnulib_dir) && git describe)
 bootstrap-tools ?= autoconf,automake,gnulib
 
 announcement: NEWS ChangeLog $(rel-files)
-	@$(build_aux)/announce-gen				\
+	@$(build_aux)/announce-gen					\
 	    --release-type=$(RELEASE_TYPE)				\
 	    --package=$(PACKAGE)					\
 	    --prev=$(PREV_VERSION)					\

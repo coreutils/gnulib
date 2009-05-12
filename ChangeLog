@@ -1,3 +1,7 @@
+2009-05-12  Jim Meyering  <meyering@redhat.com>
+
+	* top/maint.mk: Adjust backslash alignment.
+
 2009-05-11  Simon Josefsson  <simon@josefsson.org>
 
 	* top/maint.mk: Make $(srcdir)/build-aux configurable.
