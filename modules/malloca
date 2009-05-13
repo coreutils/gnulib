@@ -10,7 +10,6 @@ m4/eealloc.m4
 m4/longlong.m4
 
 Depends-on:
-alignof
 alloca-opt
 
 configure.ac:

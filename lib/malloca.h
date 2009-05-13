@@ -1,5 +1,5 @@
 /* Safe automatic memory allocation.
-   Copyright (C) 2003-2007, 2009 Free Software Foundation, Inc.
+   Copyright (C) 2003-2007 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software; you can redistribute it and/or modify
@@ -22,8 +22,6 @@
 #include <alloca.h>
 #include <stddef.h>
 #include <stdlib.h>
-
-#include "alignof.h"
 
 
 #ifdef __cplusplus
@@ -94,16 +92,34 @@ extern void * nmalloca (size_t n, size_t s);
 
 /* ------------------- Auxiliary, non-public definitions ------------------- */
 
+/* Determine the alignment of a type at compile time.  */
+#if defined __GNUC__
+# define sa_alignof __alignof__
+#elif defined __cplusplus
+  template <class type> struct sa_alignof_helper { char __slot1; type __slot2; };
+# define sa_alignof(type) offsetof (sa_alignof_helper<type>, __slot2)
+#elif defined __hpux
+  /* Work around a HP-UX 10.20 cc bug with enums constants defined as offsetof
+     values.  */
+# define sa_alignof(type) (sizeof (type) <= 4 ? 4 : 8)
+#elif defined _AIX
+  /* Work around an AIX 3.2.5 xlc bug with enums constants defined as offsetof
+     values.  */
+# define sa_alignof(type) (sizeof (type) <= 4 ? 4 : 8)
+#else
+# define sa_alignof(type) offsetof (struct { char __slot1; type __slot2; }, __slot2)
+#endif
+
 enum
 {
 /* The desired alignment of memory allocations is the maximum alignment
    among all elementary types.  */
-  sa_alignment_long = alignof (long),
-  sa_alignment_double = alignof (double),
+  sa_alignment_long = sa_alignof (long),
+  sa_alignment_double = sa_alignof (double),
 #if HAVE_LONG_LONG_INT
-  sa_alignment_longlong = alignof (long long),
+  sa_alignment_longlong = sa_alignof (long long),
 #endif
-  sa_alignment_longdouble = alignof (long double),
+  sa_alignment_longdouble = sa_alignof (long double),
   sa_alignment_max = ((sa_alignment_long - 1) | (sa_alignment_double - 1)
 #if HAVE_LONG_LONG_INT
 		      | (sa_alignment_longlong - 1)
