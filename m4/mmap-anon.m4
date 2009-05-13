@@ -1,4 +1,4 @@
-# mmap-anon.m4 serial 6
+# mmap-anon.m4 serial 7
 dnl Copyright (C) 2005, 2007, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -22,12 +22,14 @@ AC_DEFUN([gl_FUNC_MMAP_ANON],
   dnl Persuade glibc <sys/mman.h> to define MAP_ANONYMOUS.
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
-  # Check for mmap()
-  AC_FUNC_MMAP
+  # Check for mmap(). Don't use AC_FUNC_MMAP, because it checks too much: it
+  # fails on HP-UX 11, because MAP_FIXED mappings do not work. But this is
+  # irrelevant for anonymous mappings.
+  AC_CHECK_FUNC([mmap], [gl_have_mmap=yes], [gl_have_mmap=no])
 
   # Try to allow MAP_ANONYMOUS.
   gl_have_mmap_anonymous=no
-  if test $ac_cv_func_mmap_fixed_mapped = yes; then
+  if test $gl_have_mmap = yes; then
     AC_MSG_CHECKING([for MAP_ANONYMOUS])
     AC_EGREP_CPP([I cant identify this map.], [
 #include <sys/mman.h>
