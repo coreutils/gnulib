@@ -1,5 +1,11 @@
 2009-05-12  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'alignof'.
+	* modules/alignof-tests: New file.
+	* tests/test-alignof.c: New file.
+
+2009-05-12  Bruno Haible  <bruno@clisp.org>
+
 	Fix alignof macro.
 	* lib/alignof.h (alignof): Remove special cases for AIX and HP-UX
 	vendor compilers that are always correct.

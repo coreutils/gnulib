@@ -1,0 +1,12 @@
+Files:
+tests/test-alignof.c
+
+Depends-on:
+verify
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-alignof
+check_PROGRAMS += test-alignof
+
