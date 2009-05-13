@@ -26,14 +26,6 @@
 #elif defined __cplusplus
   template <class type> struct alignof_helper { char __slot1; type __slot2; };
 # define alignof(type) offsetof (alignof_helper<type>, __slot2)
-#elif defined __hpux
-  /* Work around a HP-UX 10.20 cc bug with enums constants defined as offsetof
-     values.  */
-# define alignof(type) (sizeof (type) <= 4 ? 4 : 8)
-#elif defined _AIX
-  /* Work around an AIX 3.2.5 xlc bug with enums constants defined as offsetof
-     values.  */
-# define alignof(type) (sizeof (type) <= 4 ? 4 : 8)
 #else
 # define alignof(type) offsetof (struct { char __slot1; type __slot2; }, __slot2)
 #endif

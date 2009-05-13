@@ -1,5 +1,11 @@
 2009-05-12  Bruno Haible  <bruno@clisp.org>
 
+	Fix alignof macro.
+	* lib/alignof.h (alignof): Remove special cases for AIX and HP-UX
+	vendor compilers that are always correct.
+
+2009-05-12  Bruno Haible  <bruno@clisp.org>
+
 	Make the MAP_ANONYMOUS detection work on HP-UX 11.
 	* m4/mmap-anon.m4 (gl_FUNC_MMAP_ANON): Check whether mmap exists, but
 	not whether its fully works.
