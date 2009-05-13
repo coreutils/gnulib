@@ -1,8 +1,17 @@
-# mmap-anon.m4 serial 5
+# mmap-anon.m4 serial 6
 dnl Copyright (C) 2005, 2007, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
+
+# Detect how mmap can be used to create anonymous (not file-backed) memory
+# mappings.
+# - On Linux, AIX, OSF/1, Solaris, Cygwin, Interix, Haiku, both MAP_ANONYMOUS
+#   and MAP_ANON exist and have the same value.
+# - On HP-UX, only MAP_ANONYMOUS exists.
+# - On MacOS X, FreeBSD, NetBSD, OpenBSD, only MAP_ANON exists.
+# - On IRIX, neither exists, and a file descriptor opened to /dev/zero must be
+#   used.
 
 AC_DEFUN([gl_FUNC_MMAP_ANON],
 [

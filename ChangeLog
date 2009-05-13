@@ -1,3 +1,7 @@
+2009-05-12  Bruno Haible  <bruno@clisp.org>
+
+	* m4/mmap-anon.m4 (gl_FUNC_MMAP_ANON): Add comments.
+
 2009-05-12  Jim Meyering  <meyering@redhat.com>
 
 	* top/maint.mk: Adjust backslash alignment.
