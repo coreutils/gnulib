@@ -1,9 +1,14 @@
 Files:
 tests/test-memrchr.c
+tests/zerosize-ptr.h
+m4/mmap-anon.m4
 
 Depends-on:
+getpagesize
 
 configure.ac:
+gl_FUNC_MMAP_ANON
+AC_CHECK_FUNCS_ONCE([mprotect])
 
 Makefile.am:
 TESTS += test-memrchr

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 Free Software Foundation
+ * Copyright (C) 2008-2009 Free Software Foundation
  * Written by Simon Josefsson
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,6 +22,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "zerosize-ptr.h"
+
 #define ASSERT(expr) \
   do									     \
     {									     \
@@ -37,10 +39,8 @@
 int
 main (void)
 {
-  void *nil = NULL; /* Use to avoid gcc attribute((nonnull)) warnings.  */
-
   /* Test equal / not equal distinction.  */
-  ASSERT (memcmp (nil, nil, 0) == 0);
+  ASSERT (memcmp (zerosize_ptr (), zerosize_ptr (), 0) == 0);
   ASSERT (memcmp ("foo", "foobar", 2) == 0);
   ASSERT (memcmp ("foo", "foobar", 3) == 0);
   ASSERT (memcmp ("foo", "foobar", 4) != 0);

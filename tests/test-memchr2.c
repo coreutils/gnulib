@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 Free Software Foundation
+ * Copyright (C) 2008-2009 Free Software Foundation
  * Written by Eric Blake
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,6 +22,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "zerosize-ptr.h"
 
 #define ASSERT(expr) \
   do									     \
@@ -58,7 +60,7 @@ main ()
   ASSERT (MEMCHR2 (input, 'b', 'a', n) == input);
 
   ASSERT (MEMCHR2 (input, 'a', 'b', 0) == NULL);
-  ASSERT (MEMCHR2 (NULL, 'a', 'b', 0) == NULL);
+  ASSERT (MEMCHR2 (zerosize_ptr (), 'a', 'b', 0) == NULL);
 
   ASSERT (MEMCHR2 (input, 'b', 'd', n) == input + 1);
   ASSERT (MEMCHR2 (input + 2, 'b', 'd', n - 2) == input + 1026);

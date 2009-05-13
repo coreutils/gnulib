@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004, 2007, 2008 Free Software Foundation
+ * Copyright (C) 2004, 2007-2009 Free Software Foundation
  * Written by Bruno Haible and Eric Blake
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,6 +23,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+
+#include "zerosize-ptr.h"
 
 #define ASSERT(expr) \
   do									     \
@@ -78,9 +80,9 @@ main (int argc, char *argv[])
     ASSERT (result == input + 11);
   }
 
-  /* Check that length 0 does not dereference NULL.  */
+  /* Check that length 0 does not dereference the pointer.  */
   {
-    const char *result = memmem (NULL, 0, "foo", 3);
+    const char *result = memmem (zerosize_ptr (), 0, "foo", 3);
     ASSERT (result == NULL);
   }
 

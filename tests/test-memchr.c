@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 Free Software Foundation
+ * Copyright (C) 2008-2009 Free Software Foundation
  * Written by Eric Blake and Bruno Haible
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,6 +22,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "zerosize-ptr.h"
+
 #define ASSERT(expr) \
   do									     \
     {									     \
@@ -41,8 +43,6 @@
 int
 main ()
 {
-  void *nil = NULL; /* Use to avoid gcc attribute((nonnull)) warnings.  */
-
   size_t n = 0x100000;
   char *input = malloc (n);
   ASSERT (input);
@@ -58,7 +58,7 @@ main ()
   ASSERT (MEMCHR (input, 'a', n) == input);
 
   ASSERT (MEMCHR (input, 'a', 0) == NULL);
-  ASSERT (MEMCHR (nil, 'a', 0) == NULL);
+  ASSERT (MEMCHR (zerosize_ptr (), 'a', 0) == NULL);
 
   ASSERT (MEMCHR (input, 'b', n) == input + 1);
   ASSERT (MEMCHR (input, 'c', n) == input + 2);

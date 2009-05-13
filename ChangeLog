@@ -1,3 +1,38 @@
+2009-05-13  Bruno Haible  <bruno@clisp.org>
+
+	Make some tests ISO C 99 compliant.
+	* tests/zerosize-ptr.h: New file.
+	* tests/test-memchr.c: Include zerosize-ptr.h.
+	(main): Use a zero-size object pointer instead of NULL.
+	* tests/test-memchr2.c: Include zerosize-ptr.h.
+	(main): Use a zero-size object pointer instead of NULL.
+	* tests/test-memcmp.c: Include zerosize-ptr.h.
+	(main): Use a zero-size object pointer instead of NULL.
+	* tests/test-memmem.c: Include zerosize-ptr.h.
+	(main): Use a zero-size object pointer instead of NULL.
+	* tests/test-memrchr.c: Include zerosize-ptr.h.
+	(main): Use a zero-size object pointer instead of NULL.
+	* modules/memchr-tests (Files): Add tests/zerosize-ptr.h,
+	m4/mmap-anon.m4.
+	(Depends-on): Add getpagesize.
+	(configure.ac): Invoke gl_FUNC_MMAP_ANON. Check for mprotect.
+	* modules/memchr2-tests (Files): Add tests/zerosize-ptr.h,
+	m4/mmap-anon.m4.
+	(Depends-on): Add getpagesize.
+	(configure.ac): Invoke gl_FUNC_MMAP_ANON. Check for mprotect.
+	* modules/memcmp-tests (Files): Add tests/zerosize-ptr.h,
+	m4/mmap-anon.m4.
+	(Depends-on): Add getpagesize.
+	(configure.ac): Invoke gl_FUNC_MMAP_ANON. Check for mprotect.
+	* modules/memmem-tests (Files): Add tests/zerosize-ptr.h,
+	m4/mmap-anon.m4.
+	(Depends-on): Add getpagesize.
+	(configure.ac): Invoke gl_FUNC_MMAP_ANON. Check for mprotect.
+	* modules/memrchr-tests (Files): Add tests/zerosize-ptr.h,
+	m4/mmap-anon.m4.
+	(Depends-on): Add getpagesize.
+	(configure.ac): Invoke gl_FUNC_MMAP_ANON. Check for mprotect.
+
 2009-05-12  Bruno Haible  <bruno@clisp.org>
 
 	Tests for module 'alignof'.
