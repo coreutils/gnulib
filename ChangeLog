@@ -1,3 +1,14 @@
+2009-05-13  Eric Blake  <ebb9@byu.net>
+
+	mmap-anon: avoid out-of-order autoconf expansion
+	* m4/mmap-anon.m4 (gl_FUNC_MMAP_ANON): Use correct
+	SYSTEM_EXTENSIONS macro to silence warnings from autoconf 2.63b.
+	* modules/memchr-tests (Depends-on): Add extensions.
+	* modules/memchr2-tests (Depends-on): Add extensions.
+	* modules/memcmp-tests (Depends-on): Add extensions.
+	* modules/memmem-tests (Depends-on): Add extensions.
+	* modules/memrchr-tests (Depends-on): Add extensions.
+
 2009-05-13  Bruno Haible  <bruno@clisp.org>
 
 	Make some tests ISO C 99 compliant.
