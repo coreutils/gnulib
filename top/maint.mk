@@ -638,6 +638,7 @@ built_programs = $$(cd src && MAKEFLAGS= $(MAKE) -s built_programs.list)
 
 rel-files = $(DIST_ARCHIVES)
 
+gnulib_dir ?= gnulib
 gnulib-version = $$(cd $(gnulib_dir) && git describe)
 bootstrap-tools ?= autoconf,automake,gnulib
 
