@@ -1,3 +1,8 @@
+2009-05-18  Eric Blake  <ebb9@byu.net>
+
+	maint.mk: allow gnulib_dir in VPATH build
+	* top/maint.mk (gnulib_dir): Make relative to $(srcdir).
+
 2009-05-15  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: Give gnulib_dir a default definition.
