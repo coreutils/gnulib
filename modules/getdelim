@@ -8,6 +8,7 @@ m4/getdelim.m4
 Depends-on:
 extensions
 stdio
+stdint
 realloc-posix
 errno
 

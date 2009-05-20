@@ -1,5 +1,11 @@
 2009-05-20  Simon Josefsson  <simon@josefsson.org>
 
+	* modules/getdelim (Depends-on): Add explicit stdint, although it
+	was implicitly already pulled in via realloc-posix.
+	* lib/getdelim.c: Get SIZE_MAX from stdint.h.
+
+2009-05-20  Simon Josefsson  <simon@josefsson.org>
+
 	MinGW and IRIX does not have sa_family_t type.  Reported by "Tom
 	G. Christensen" <tgc@jupiterrise.com>.
 	* m4/sys_socket_h.m4: Check for sa_family_t.
