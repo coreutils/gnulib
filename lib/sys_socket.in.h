@@ -43,6 +43,10 @@
 #ifndef _GL_SYS_SOCKET_H
 #define _GL_SYS_SOCKET_H
 
+#if !@HAVE_SA_FAMILY_T@
+typedef unsigned short  sa_family_t;
+#endif
+
 #if !@HAVE_STRUCT_SOCKADDR_STORAGE@
 # include <alignof.h>
 /* Code taken from glibc sysdeps/unix/sysv/linux/bits/socket.h on

@@ -1,3 +1,12 @@
+2009-05-20  Simon Josefsson  <simon@josefsson.org>
+
+	MinGW and IRIX does not have sa_family_t type.  Reported by "Tom
+	G. Christensen" <tgc@jupiterrise.com>.
+	* m4/sys_socket_h.m4: Check for sa_family_t.
+	* lib/sys_socket.in.h: Typedef sa_family_t when needed.
+	* modules/sys_socket: Substitute HAVE_SA_FAMILY_T.
+	* tests/test-sys_socket.c: Check that sa_family_t works.
+
 2009-05-18  Eric Blake  <ebb9@byu.net>
 
 	maint.mk: allow gnulib_dir in VPATH build

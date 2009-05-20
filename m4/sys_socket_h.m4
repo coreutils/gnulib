@@ -42,7 +42,7 @@ AC_DEFUN([gl_HEADER_SYS_SOCKET],
   fi
   # We need to check for ws2tcpip.h now.
   gl_PREREQ_SYS_H_SOCKET
-  AC_CHECK_TYPES([struct sockaddr_storage],,,[
+  AC_CHECK_TYPES([struct sockaddr_storage, sa_family_t],,,[
   /* sys/types.h is not needed according to POSIX, but the
      sys/socket.h in i386-unknown-freebsd4.10 and
      powerpc-apple-darwin5.5 required it. */
@@ -56,6 +56,10 @@ AC_DEFUN([gl_HEADER_SYS_SOCKET],
 ])
   if test $ac_cv_type_struct_sockaddr_storage = no; then
     HAVE_STRUCT_SOCKADDR_STORAGE=0
+    SYS_SOCKET_H='sys/socket.h'
+  fi
+  if test $ac_cv_type_sa_family_t = no; then
+    HAVE_SA_FAMILY_T=0
     SYS_SOCKET_H='sys/socket.h'
   fi
   if test -n "$SYS_SOCKET_H"; then
@@ -137,4 +141,5 @@ AC_DEFUN([gl_SYS_SOCKET_H_DEFAULTS],
   GNULIB_SETSOCKOPT=0;  AC_SUBST([GNULIB_SETSOCKOPT])
   GNULIB_SHUTDOWN=0;    AC_SUBST([GNULIB_SHUTDOWN])
   HAVE_STRUCT_SOCKADDR_STORAGE=1; AC_SUBST([HAVE_STRUCT_SOCKADDR_STORAGE])
+  HAVE_SA_FAMILY_T=1;   AC_SUBST([HAVE_SA_FAMILY_T])
 ])

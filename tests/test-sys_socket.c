@@ -31,6 +31,7 @@ int
 main ()
 {
   struct sockaddr_storage x;
+  sa_family_t i;
 
   /* Check some errno values.  */
   switch (0)
@@ -46,6 +47,7 @@ main ()
     }
 
   x.ss_family = 42;
+  i = 4711;
 
   return 0;
 }
