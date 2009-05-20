@@ -1,5 +1,9 @@
 2009-05-20  Simon Josefsson  <simon@josefsson.org>
 
+	* tests/test-glob.c: Include string.h for strcmp prototype.
+
+2009-05-20  Simon Josefsson  <simon@josefsson.org>
+
 	* modules/getdelim (Depends-on): Add explicit stdint, although it
 	was implicitly already pulled in via realloc-posix.
 	* lib/getdelim.c: Get SIZE_MAX from stdint.h.
