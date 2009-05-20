@@ -20,7 +20,11 @@
 
 #include <stdlib.h>
 
-#if HAVE_MPROTECT
+/* Test whether mmap() and mprotect() are available.
+   We don't use HAVE_MMAP, because AC_FUNC_MMAP would not define it on HP-UX.
+   HAVE_MPROTECT is not enough, because mingw does not have mmap() but has an
+   mprotect() function in libgcc.a.  */
+#if HAVE_SYS_MMAN_H && HAVE_MPROTECT
 # include <fcntl.h>
 # include <unistd.h>
 # include <sys/types.h>
@@ -39,7 +43,7 @@ zerosize_ptr (void)
 {
 /* Use mmap and mprotect when they exist.  Don't test HAVE_MMAP, because it is
    not defined on HP-UX 11 (since it does not support MAP_FIXED).  */
-#if HAVE_MPROTECT
+#if HAVE_SYS_MMAN_H && HAVE_MPROTECT
 # if HAVE_MAP_ANONYMOUS
   const int flags = MAP_ANONYMOUS | MAP_PRIVATE;
   const int fd = -1;

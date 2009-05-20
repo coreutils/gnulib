@@ -1,3 +1,15 @@
+2009-05-20  Bruno Haible  <bruno@clisp.org>
+
+	Make zeroptr.h work on mingw.
+	* tests/zerosize-ptr.h: Test for the presence of <sys/mman.h> and
+	mprotect.
+	* modules/memchr-tests (configure.ac): Also test for sys/mman.h.
+	* modules/memchr2-tests (configure.ac): Likewise.
+	* modules/memcmp-tests (configure.ac): Likewise.
+	* modules/memmem-tests (configure.ac): Likewise.
+	* modules/memrchr-tests (configure.ac): Likewise.
+	Reported by Simon Josefsson.
+
 2009-05-20  Simon Josefsson  <simon@josefsson.org>
 
 	* tests/test-glob.c: Include string.h for strcmp prototype.
