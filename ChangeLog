@@ -1,3 +1,15 @@
+2009-05-21  Eric Blake  <ebb9@byu.net>
+            Bruno Haible  <bruno@clisp.org>
+
+	Second attempt to work around an AIX 5.3, 6.1 compiler bug with
+	include_next. Fix of 2008-11-20 commit.
+	* m4/include_next.m4 (gl_CHECK_NEXT_HEADERS): Also set
+	NEXT_AS_FIRST_DIRECTIVE_FOO_H.
+	* lib/math.in.h: Use NEXT_AS_FIRST_DIRECTIVE_MATH_H instead of
+	NEXT_MATH_H.
+	* modules/math (Makefile.am): Substitute NEXT_AS_FIRST_DIRECTIVE_MATH_H
+	instead of NEXT_MATH_H.
+
 2009-05-21  Bruno Haible  <bruno@clisp.org>
 
 	Avoid redefinition warnings for SIZE_MAX.

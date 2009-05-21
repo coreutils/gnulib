@@ -1,4 +1,4 @@
-# include_next.m4 serial 12
+# include_next.m4 serial 13
 dnl Copyright (C) 2006-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -104,8 +104,14 @@ EOF
 # For each arg foo.h, if #include_next works, define NEXT_FOO_H to be
 # '<foo.h>'; otherwise define it to be
 # '"///usr/include/foo.h"', or whatever other absolute file name is suitable.
+# Also, if #include_next works as first preprocessing directive in a file,
+# define NEXT_AS_FIRST_DIRECTIVE_FOO_H to be '<foo.h>'; otherwise define it to
+# be
+# '"///usr/include/foo.h"', or whatever other absolute file name is suitable.
 # That way, a header file with the following line:
 #	#@INCLUDE_NEXT@ @NEXT_FOO_H@
+# or
+#	#@INCLUDE_NEXT_AS_FIRST_DIRECTIVE@ @NEXT_AS_FIRST_DIRECTIVE_FOO_H@
 # behaves (after sed substitution) as if it contained
 #	#include_next <foo.h>
 # even if the compiler does not support include_next.
@@ -167,5 +173,15 @@ AC_DEFUN([gl_CHECK_NEXT_HEADERS],
      AC_SUBST(
        AS_TR_CPP([NEXT_]m4_quote(m4_defn([gl_HEADER_NAME]))),
        [AS_VAR_GET([gl_next_header])])
+     if test $gl_cv_have_include_next = yes || test $gl_cv_have_include_next = buggy; then
+       # INCLUDE_NEXT_AS_FIRST_DIRECTIVE='include_next'
+       gl_next_as_first_directive='<'gl_HEADER_NAME'>'
+     else
+       # INCLUDE_NEXT_AS_FIRST_DIRECTIVE='include'
+       gl_next_as_first_directive=AS_VAR_GET([gl_next_header])
+     fi
+     AC_SUBST(
+       AS_TR_CPP([NEXT_AS_FIRST_DIRECTIVE_]m4_quote(m4_defn([gl_HEADER_NAME]))),
+       [$gl_next_as_first_directive])
      AS_VAR_POPDEF([gl_next_header])])
 ])
