@@ -1,5 +1,5 @@
-# size_max.m4 serial 7
-dnl Copyright (C) 2003, 2005-2006, 2008 Free Software Foundation, Inc.
+# size_max.m4 serial 8
+dnl Copyright (C) 2003, 2005-2006, 2008-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -10,8 +10,7 @@ AC_DEFUN([gl_SIZE_MAX],
 [
   AC_CHECK_HEADERS([stdint.h])
   dnl First test whether the system already has SIZE_MAX.
-  AC_MSG_CHECKING([for SIZE_MAX])
-  AC_CACHE_VAL([gl_cv_size_max], [
+  AC_CACHE_CHECK([for SIZE_MAX], [gl_cv_size_max], [
     gl_cv_size_max=
     AC_EGREP_CPP([Found it], [
 #include <limits.h>
@@ -54,7 +53,6 @@ Found it
       fi
     fi
   ])
-  AC_MSG_RESULT([$gl_cv_size_max])
   if test "$gl_cv_size_max" != yes; then
     AC_DEFINE_UNQUOTED([SIZE_MAX], [$gl_cv_size_max],
       [Define as the maximum value of type 'size_t', if the system doesn't define it.])
