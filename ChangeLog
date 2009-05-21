@@ -1,5 +1,11 @@
 2009-05-21  Bruno Haible  <bruno@clisp.org>
 
+	Avoid redefinition warnings for SIZE_MAX.
+	* m4/size_max.m4 (gl_SIZE_MAX): Avoid redefining SIZE_MAX in config.h.
+	Reported by Simon Josefsson.
+
+2009-05-21  Bruno Haible  <bruno@clisp.org>
+
 	* m4/size_max.m4 (gl_SIZE_MAX): Use AC_CACHE_CHECK instead of
 	AC_CACHE_VAL.
 

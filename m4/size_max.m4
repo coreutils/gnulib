@@ -1,4 +1,4 @@
-# size_max.m4 serial 8
+# size_max.m4 serial 9
 dnl Copyright (C) 2003, 2005-2006, 2008-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -57,6 +57,15 @@ Found it
     AC_DEFINE_UNQUOTED([SIZE_MAX], [$gl_cv_size_max],
       [Define as the maximum value of type 'size_t', if the system doesn't define it.])
   fi
+  dnl Don't redefine SIZE_MAX in config.h if config.h is re-included after
+  dnl <stdint.h>. Remember that the #undef in AH_VERBATIM gets replaced with
+  dnl #define by AC_DEFINE_UNQUOTED.
+  AH_VERBATIM([SIZE_MAX],
+[/* Define as the maximum value of type 'size_t', if the system doesn't define
+   it. */
+#ifndef SIZE_MAX
+# undef SIZE_MAX
+#endif])
 ])
 
 dnl Autoconf >= 2.61 has AC_COMPUTE_INT built-in.
