@@ -1,6 +1,13 @@
 2009-05-21  Eric Blake  <ebb9@byu.net>
             Bruno Haible  <bruno@clisp.org>
 
+	* m4/include_next.m4 (gl_CHECK_NEXT_HEADERS): Remove redundant m4_quote
+	invocations.
+	* m4/absolute-header.m4 (gl_ABSOLUTE_HEADER): Likewise.
+
+2009-05-21  Eric Blake  <ebb9@byu.net>
+            Bruno Haible  <bruno@clisp.org>
+
 	Second attempt to work around an AIX 5.3, 6.1 compiler bug with
 	include_next. Fix of 2008-11-20 commit.
 	* m4/include_next.m4 (gl_CHECK_NEXT_HEADERS): Also set

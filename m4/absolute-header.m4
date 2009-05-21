@@ -1,5 +1,5 @@
-# absolute-header.m4 serial 10
-dnl Copyright (C) 2006-2008 Free Software Foundation, Inc.
+# absolute-header.m4 serial 11
+dnl Copyright (C) 2006-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -24,12 +24,12 @@ AC_DEFUN([gl_ABSOLUTE_HEADER],
 AC_LANG_PREPROC_REQUIRE()dnl
 m4_foreach_w([gl_HEADER_NAME], [$1],
   [AS_VAR_PUSHDEF([gl_absolute_header],
-                  [gl_cv_absolute_]m4_quote(m4_defn([gl_HEADER_NAME])))dnl
-  AC_CACHE_CHECK([absolute name of <]m4_quote(m4_defn([gl_HEADER_NAME]))[>],
-    m4_quote(m4_defn([gl_absolute_header])),
+                  [gl_cv_absolute_]m4_defn([gl_HEADER_NAME]))dnl
+  AC_CACHE_CHECK([absolute name of <]m4_defn([gl_HEADER_NAME])[>],
+    m4_defn([gl_absolute_header]),
     [AS_VAR_PUSHDEF([ac_header_exists],
-                    [ac_cv_header_]m4_quote(m4_defn([gl_HEADER_NAME])))dnl
-    AC_CHECK_HEADERS_ONCE(m4_quote(m4_defn([gl_HEADER_NAME])))dnl
+                    [ac_cv_header_]m4_defn([gl_HEADER_NAME]))dnl
+    AC_CHECK_HEADERS_ONCE(m4_defn([gl_HEADER_NAME]))dnl
     if test AS_VAR_GET(ac_header_exists) = yes; then
       AC_LANG_CONFTEST([AC_LANG_SOURCE([[#include <]]m4_dquote(m4_defn([gl_HEADER_NAME]))[[>]])])
       dnl AIX "xlc -E" and "cc -E" omit #line directives for header files
@@ -48,8 +48,8 @@ m4_foreach_w([gl_HEADER_NAME], [$1],
       dnl so use subshell.
       AS_VAR_SET(gl_absolute_header,
 [`(eval "$gl_absname_cpp conftest.$ac_ext") 2>&AS_MESSAGE_LOG_FD |
-sed -n '\#/]m4_quote(m4_defn([gl_HEADER_NAME]))[#{
-	s#.*"\(.*/]m4_quote(m4_defn([gl_HEADER_NAME]))[\)".*#\1#
+sed -n '\#/]m4_defn([gl_HEADER_NAME])[#{
+	s#.*"\(.*/]m4_defn([gl_HEADER_NAME])[\)".*#\1#
 	s#^/[^/]#//&#
 	p
 	q
@@ -57,9 +57,9 @@ sed -n '\#/]m4_quote(m4_defn([gl_HEADER_NAME]))[#{
     fi
     AS_VAR_POPDEF([ac_header_exists])dnl
     ])dnl
-  AC_DEFINE_UNQUOTED(AS_TR_CPP([ABSOLUTE_]m4_quote(m4_defn([gl_HEADER_NAME]))),
+  AC_DEFINE_UNQUOTED(AS_TR_CPP([ABSOLUTE_]m4_defn([gl_HEADER_NAME])),
                      ["AS_VAR_GET(gl_absolute_header)"],
-                     [Define this to an absolute name of <]m4_quote(m4_defn([gl_HEADER_NAME]))[>.])
+                     [Define this to an absolute name of <]m4_defn([gl_HEADER_NAME])[>.])
   AS_VAR_POPDEF([gl_absolute_header])dnl
 ])dnl
 ])# gl_ABSOLUTE_HEADER
