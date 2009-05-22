@@ -3632,9 +3632,11 @@ This list of functions is sorted according to the header that declares them.
 @section Glibc Extensions to @code{<fcntl.h>}
 
 @menu
+* fallocate::
 * readahead::
 @end menu
 
+@include glibc-functions/fallocate.texi
 @include glibc-functions/readahead.texi
 
 @node Glibc fenv.h

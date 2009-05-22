@@ -1,3 +1,8 @@
+2009-05-21  Pádraig Brady  <P@draigbrady.com>
+
+	* doc/glibc-functions/fallocate.texi: New file.
+	* doc/gnulib.texi: Include it.
+
 2009-05-21  Eric Blake  <ebb9@byu.net>
             Bruno Haible  <bruno@clisp.org>
 
