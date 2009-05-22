@@ -7,6 +7,7 @@ lib/creat-safer.c
 lib/fcntl-safer.h
 lib/open-safer.c
 m4/fcntl-safer.m4
+m4/mode_t.m4
 
 Depends-on:
 open

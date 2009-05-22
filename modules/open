@@ -4,6 +4,7 @@ open() function: open a descriptor to a file.
 Files:
 lib/open.c
 m4/open.m4
+m4/mode_t.m4
 
 Depends-on:
 fcntl
