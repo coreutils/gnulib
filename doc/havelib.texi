@@ -31,13 +31,14 @@ by @code{-I} options.
 This macro should be used when @code{lib<@var{name}>} is expected to be found.
 @end deffn
 
-@deffn Macro @code{AC_LIB_HAVE_LINKFLAGS(@var{name}, [@var{dependencies}], [@var{includes}], [@var{testcode}])}
+@deffn Macro @code{AC_LIB_HAVE_LINKFLAGS(@var{name}, [@var{dependencies}], [@var{includes}], [@var{testcode}], [@var{missing-message}])}
 
 Searches for @code{lib<@var{name}>} and the libraries corresponding to
 explicit and implicit dependencies, together with the specified include files
-and the ability to compile and link the specified @var{testcode}.  If found,
-it sets and AC_SUBSTs @code{HAVE_LIB<@var{NAME}>=yes} and the
-@code{LIB<@var{NAME}>} and @code{LTLIB<@var{NAME}>} variables (with
+and the ability to compile and link the specified @var{testcode}.  The
+@var{missing-message} defaults to @code{no} and may contain additional hints
+for the user.  If found, it sets and AC_SUBSTs @code{HAVE_LIB<@var{NAME}>=yes}
+and the @code{LIB<@var{NAME}>} and @code{LTLIB<@var{NAME}>} variables (with
 @code{<@var{NAME}>} in upper case) and augments the @code{CPPFLAGS} variable
 by @code{-I} options, and #defines @code{HAVE_LIB<@var{NAME}>} to 1.
 Otherwise, it sets and AC_SUBSTs @code{HAVE_LIB<@var{NAME}>=no} and
