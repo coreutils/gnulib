@@ -62,8 +62,12 @@ main (int argc, char *argv[])
 
   {
     /* See http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=521737 */
-    char *input = strdup ("aBaaaaaaaaaaax");
-    const char *result = strstr (input, "B1x");
+    const char *fix = "aBaaaaaaaaaaax";
+    char *input = malloc (strlen (fix) + 1);
+    const char *result;
+
+    strcpy (input, fix);
+    result = strstr (input, "B1x");
     ASSERT (result == NULL);
     free (input);
   }

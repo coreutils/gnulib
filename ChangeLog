@@ -1,6 +1,8 @@
 2009-05-26  Simon Josefsson  <simon@josefsson.org>
 
 	* tests/test-strstr.c: Add another self-test.
+	* tests/test-strstr.c: Rewrite to use malloc/strcpy instead of
+	strdup.  Suggested by Eric Blake  <ebb9@byu.net>.
 
 2009-05-23  Bruno Haible  <bruno@clisp.org>
 
