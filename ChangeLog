@@ -1,3 +1,7 @@
+2009-05-26  Simon Josefsson  <simon@josefsson.org>
+
+	* tests/test-strstr.c: Add another self-test.
+
 2009-05-23  Bruno Haible  <bruno@clisp.org>
 
 	* doc/havelib.texi (AC_LIB_HAVE_LINKFLAGS): Update for 2009-04-26

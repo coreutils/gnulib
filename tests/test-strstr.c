@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004, 2007, 2008 Free Software Foundation
+ * Copyright (C) 2004, 2007, 2008, 2009 Free Software Foundation
  * Written by Bruno Haible and Eric Blake
  *
  * This program is free software: you can redistribute it and/or modify
@@ -58,6 +58,14 @@ main (int argc, char *argv[])
     const char input[] = "foo";
     const char *result = strstr (input, "o");
     ASSERT (result == input + 1);
+  }
+
+  {
+    /* See http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=521737 */
+    char *input = strdup ("aBaaaaaaaaaaax");
+    const char *result = strstr (input, "B1x");
+    ASSERT (result == NULL);
+    free (input);
   }
 
   {
