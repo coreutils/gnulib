@@ -1,3 +1,9 @@
+2009-05-27  Simon Josefsson  <simon@josefsson.org>
+
+	* gnulib-tool (sed_transform_main_lib_file)
+	(sed_transform_testsrelated_lib_file): : Don't use non-POSIX
+	regexps.
+
 2009-05-26  Simon Josefsson  <simon@josefsson.org>
 
 	* tests/test-strstr.c: Add another self-test.

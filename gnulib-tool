@@ -2869,7 +2869,7 @@ s,^\(.................................................[^ ]*\) *,                
       sed_transform_main_lib_file=$sed_transform_main_lib_file'
         s/GNU Lesser General/GNU General/g
         s/GNU Library General/GNU General/g
-        s/version \(2\|2\.1\)\([ ,]\)/version 3\2/g
+        s/version 2\(.1\)\{0,1\}\([ ,]\)/version 3\2/g
       '
     fi
   fi
@@ -2881,7 +2881,7 @@ s,^\(.................................................[^ ]*\) *,                
     sed_transform_testsrelated_lib_file=$sed_transform_testsrelated_lib_file'
       s/GNU Lesser General/GNU General/g
       s/GNU Library General/GNU General/g
-      s/version \(2\|2\.1\)\([ ,]\)/version 3\2/g
+      s/version 2\(.1\)\{0,1\}\([ ,]\)/version 3\2/g
     '
   fi
 
