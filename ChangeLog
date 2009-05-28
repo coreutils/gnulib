@@ -1,6 +1,11 @@
+2009-05-28  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool (func_import): Don't do HAVE_CONFIG_H replacements on
+	build-aux/ files.
+
 2009-05-28  Simon Josefsson  <simon@josefsson.org>
 
-	* gnulib-tool: Transform license on build-aux/ files too.
+	* gnulib-tool (func_import): Transform license on build-aux/ files too.
 
 2009-05-27  Simon Josefsson  <simon@josefsson.org>
 
