@@ -15,11 +15,15 @@ The variants we have considered include:
 
 @itemize @bullet
 @item Use DUMPBIN /EXPORTS.
+This is explained in @url{http://support.microsoft.com/kb/131313/en-us}.
 The tool does not generate DEF files directly, so its output needs to
-be post processed manually.  The tool is documented to potentially not
-work with non-MS development tools
-(@url{http://support.microsoft.com/kb/131313/en-us}), which is the
-case when MinGW is used to build the library.
+be post processed manually:
+@smallexample
+$ { echo EXPORTS; \
+    dumpbin /EXPORTS libfoo-0.dll | tail -n+20 | awk '{ print $4 }'; \
+  } > libfoo-0.def
+$ lib /def:libfoo-0.def
+@end smallexample
 
 @item Use IMPDEF.
 There is a tool called IMPDEF
