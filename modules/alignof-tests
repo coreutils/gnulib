@@ -3,6 +3,7 @@ tests/test-alignof.c
 
 Depends-on:
 verify
+stdint
 
 configure.ac:
 

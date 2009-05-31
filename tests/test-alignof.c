@@ -21,9 +21,11 @@
 #include <alignof.h>
 
 #include <stddef.h>
+#include <stdint.h>
 
 #include "verify.h"
 
+typedef long double longdouble;
 typedef struct { char a[1]; } struct1;
 typedef struct { char a[2]; } struct2;
 typedef struct { char a[3]; } struct3;
@@ -41,6 +43,8 @@ CHECK (int)
 CHECK (long)
 CHECK (float)
 CHECK (double)
+CHECK (long double)
+CHECK (int64_t)
 CHECK (struct1)
 CHECK (struct2)
 CHECK (struct3)
