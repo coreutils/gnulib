@@ -94,6 +94,36 @@ main ()
       }
   }
 
+  /* Check that memchr() does not read past the first occurrence of the
+     byte being searched.  See the Austin Group's clarification
+     <http://www.opengroup.org/austin/docs/austin_454.txt>.  */
+  {
+    char *page_boundary = (char *) zerosize_ptr ();
+
+    if (page_boundary != NULL)
+      {
+	int n;
+
+	for (n = 1; n <= 500; n++)
+	  {
+	    char *mem = page_boundary - n;
+	    memset (mem, 'X', n);
+	    ASSERT (MEMCHR (mem, 'U', n) == NULL);
+
+	    {
+	      int i;
+
+	      for (i = 0; i < n; i++)
+		{
+		  mem[i] = 'U';
+		  ASSERT (MEMCHR (mem, 'U', 4000) == mem + i);
+		  mem[i] = 'X';
+		}
+	    }
+	  }
+      }
+  }
+
   free (input);
 
   return 0;

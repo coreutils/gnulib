@@ -1,3 +1,11 @@
+2009-05-31  Bruno Haible  <bruno@clisp.org>
+
+	* tests/zerosize-ptr.h (zerosize_ptr): Specify more details.
+	* tests/test-memchr.c (main): Check that memchr does not read past the
+	first occurrence of the byte.
+	* tests/test-strstr.c (main): Update comment.
+	Suggested by Eric Blake.
+
 2009-05-30  Bruno Haible  <bruno@clisp.org>
 
 	* doc/ld-output-def.texi (Visual Studio Compatibility): Explain in more

@@ -35,7 +35,9 @@
 # endif
 #endif
 
-/* Return a pointer to a zero-size object in memory, if possible.
+/* Return a pointer to a zero-size object in memory (that is, actually, a
+   pointer to a page boundary where the previous page is readable and writable
+   and the next page is neither readable not writable), if possible.
    Return NULL otherwise.  */
 
 static void *
