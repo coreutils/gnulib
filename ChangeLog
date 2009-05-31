@@ -1,3 +1,9 @@
+2009-05-31  Bruno Haible  <bruno@clisp.org>
+
+	* lib/alignof.h (alignof_slot, alignof_type, alignof): Document
+	restriction due to compiler bugs.
+	Reported by Eric Blake.
+
 2009-05-31  Simon Josefsson  <simon@josefsson.org>
             Bruno Haible  <bruno@clisp.org>
 
