@@ -1,3 +1,14 @@
+2009-05-31  Simon Josefsson  <simon@josefsson.org>
+            Bruno Haible  <bruno@clisp.org>
+
+	Fix test-alignof failure.
+	* lib/alignof.h (alignof_slot): New macro.
+	(alignof_type): New macro, with the same semantics as the previous
+	'alignof'.
+	(alignof): Alias to alignof_slot.
+	* tests/test-alignof.c (CHECK): Check alignof_slot, not alignof. Also
+	check that the results are usable as constant expressions.
+
 2009-05-31  Bruno Haible  <bruno@clisp.org>
 
 	* tests/zerosize-ptr.h (zerosize_ptr): Specify more details.

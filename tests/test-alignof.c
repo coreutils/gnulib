@@ -31,7 +31,9 @@ typedef struct { char a[4]; } struct4;
 
 #define CHECK(type) \
   typedef struct { char slot1; type slot2; } type##_helper; \
-  verify (alignof (type) == offsetof (type##_helper, slot2));
+  verify (alignof_slot (type) == offsetof (type##_helper, slot2)); \
+  const int type##_slot_alignment = alignof_slot (type); \
+  const int type##_type_alignment = alignof_type (type);
 
 CHECK (char)
 CHECK (short)

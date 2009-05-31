@@ -20,14 +20,29 @@
 
 #include <stddef.h>
 
-/* Determine the alignment of a type at compile time.  */
-#if defined __GNUC__
-# define alignof __alignof__
-#elif defined __cplusplus
+/* Determine the alignment of a structure slot (field) of a given type,
+   at compile time.  Note that the result depends on the ABI.  */
+#if defined __cplusplus
   template <class type> struct alignof_helper { char __slot1; type __slot2; };
-# define alignof(type) offsetof (alignof_helper<type>, __slot2)
+# define alignof_slot(type) offsetof (alignof_helper<type>, __slot2)
 #else
-# define alignof(type) offsetof (struct { char __slot1; type __slot2; }, __slot2)
+# define alignof_slot(type) offsetof (struct { char __slot1; type __slot2; }, __slot2)
 #endif
+
+/* Determine the good alignment of a object of the given type at compile time.
+   Note that this is not necessarily the same as alignof_slot(type).
+   For example, with GNU C on x86 platforms: alignof_type(double) = 8, but
+   - when -malign-double is not specified:  alignof_slot(double) = 4,
+   - when -malign-double is specified:      alignof_slot(double) = 8.  */
+#if defined __GNUC__
+# define alignof_type __alignof__
+#else
+# define alignof_type alignof_slot
+#endif
+
+/* alignof is an alias for alignof_slot semantics, since that's what most
+   callers need.
+   Note: The result cannot be used as a value for an 'enum' constant,  */
+#define alignof alignof_slot
 
 #endif /* _ALIGNOF_H */
