@@ -1,3 +1,32 @@
+2009-06-03  Mike Frysinger  <vapier@gentoo.org>
+
+	version-etc: extend for packagers
+	Add three new configure options, intended for packagers:
+	  --with-packager="packager name"
+	  --with-packager-version="packager-specific version"
+	  --with-packager-bug-reports="packager bug reporting"
+	An example with coreutils:
+	  $ ./configure \
+	    --with-packager=Gentoo \
+	    --with-packager-bug-report=http://bugs.gentoo.org/ \
+	    --with-packager-version="patchset 1.6"
+	  $ ./src/ls --version | head -n3
+	  ls (GNU coreutils) 7.1-dirty
+	  Packaged by Gentoo (patchset 1.6)
+	  Copyright (C) 2009 Free Software Foundation, Inc.
+	Note that the bug reporting info via --help doesn't show up because
+	coreutils uses its own custom emit_bug_reporting_address() implementation
+	in src/system.h.  If it didn't, it'd look like:
+	  $ ./src/ls --help | tail -n4
+	  Report bugs to <bug-coreutils@gnu.org>.
+	  Report Gentoo bugs to <http://bugs.gentoo.org/>.
+	  GNU coreutils home page: <http://www.gnu.org/software/coreutils/>.
+	  General help using GNU software: <http://www.gnu.org/gethelp/>.
+	* lib/version-etc.c: Print new information, if provided.
+	* m4/version-etc.m4: New file.
+	* modules/version-etc (Files): Add m4/version-etc.m4.
+	(configure.ac): Add gl_VERSION_ETC.
+
 2009-05-31  Bruno Haible  <bruno@clisp.org>
 
 	* tests/test-alignof.c: Include <stdint.h>. Check also 'long double'

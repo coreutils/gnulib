@@ -59,6 +59,15 @@ version_etc_va (FILE *stream,
   else
     fprintf (stream, "%s %s\n", package, version);
 
+#ifdef PACKAGE_PACKAGER
+# ifdef PACKAGE_PACKAGER_VERSION
+  fprintf (stream, _("Packaged by %s (%s)\n"), PACKAGE_PACKAGER,
+	   PACKAGE_PACKAGER_VERSION);
+# else
+  fprintf (stream, _("Packaged by %s\n"), PACKAGE_PACKAGER);
+# endif
+#endif
+
   /* TRANSLATORS: Translate "(C)" to the copyright symbol
      (C-in-a-circle), if this symbol is available in the user's
      locale.  Otherwise, do not translate "(C)"; leave it as-is.  */
@@ -179,6 +188,10 @@ emit_bug_reporting_address (void)
      "Report translation bugs to <...>\n" with the address for translation
      bugs (typically your translation team's web or email address).  */
   printf (_("\nReport bugs to <%s>.\n"), PACKAGE_BUGREPORT);
+#ifdef PACKAGE_PACKAGER_BUG_REPORTS
+  printf (_("Report %s bugs to <%s>.\n"), PACKAGE_PACKAGER,
+	  PACKAGE_PACKAGER_BUG_REPORTS);
+#endif
   printf (_("%s home page: <http://www.gnu.org/software/%s/>.\n"),
 	  PACKAGE_NAME, PACKAGE);
   fputs (_("General help using GNU software: <http://www.gnu.org/gethelp/>.\n"),
