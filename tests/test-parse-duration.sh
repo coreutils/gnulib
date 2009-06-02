@@ -60,7 +60,7 @@ cat > "${tmpf}" <<- _EOF_
 	_EOF_
 
 exec 3< "${tmpf}"
-while read -u3 line
+while read line <&3
 do
     v=`${exe} "${line}"` || { ls -l "${tmpf}"; die "Failed: ${exe} '${line}'"; }
     test $v -eq 38898367 || die $v is not 38898367
