@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate April 29, 2009
+@set lastupdate May 26, 2009
 @c %**end of header
 
 @dircategory GNU organization
@@ -526,9 +526,9 @@ instead of a copyright notice, it should have a notice saying explicitly
 that it is in the public domain.
 
 Even image files and sound files should contain copyright notices and
-license notices, if they can.  Some formats do not have room for textual
-annotations; for these files, state the copyright and copying
-permissions in a README file in the same directory.
+license notices, if their format permits.  Some formats do not have
+room for textual annotations; for these files, state the copyright and
+copying permissions in a @file{README} file in the same directory.
 
 Change log files should have a copyright notice and license notice at
 the end, since new material is added at the beginning but the end
@@ -759,15 +759,19 @@ usually simplest to include the GFDL in each manual.
 @subsection License Notices for Other Files
 
 Small supporting files, short manuals (under 300 lines long) and rough
-documentation (README files, INSTALL files, etc) can use a simple
-all-permissive license like this one:
+documentation (@file{README} files, @file{INSTALL} files, etc.)@: can
+use a simple all-permissive license like this one:
 
 @smallexample
 Copying and distribution of this file, with or without modification,
 are permitted in any medium without royalty provided the copyright
 notice and this notice are preserved.  This file is offered as-is,
-without warranty of any kind.
+without any warranty.
 @end smallexample
+
+Older versions of this license did not have the second sentence with
+the express warranty disclaimer.  There is no urgent need to update
+existing files, but new files should use the new text.
 
 If your package distributes Autoconf macros that are intended to be
 used (hence distributed) by third-party packages under possibly
