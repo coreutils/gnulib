@@ -19,9 +19,9 @@ This is explained in @url{http://support.microsoft.com/kb/131313/en-us}.
 The tool does not generate DEF files directly, so its output needs to
 be post processed manually:
 @smallexample
-$ { echo EXPORTS; \
-    dumpbin /EXPORTS libfoo-0.dll | tail -n+20 | awk '{ print $4 }'; \
-  } > libfoo-0.def
+$ @{ echo EXPORTS; \
+    dumpbin /EXPORTS libfoo-0.dll | tail -n+20 | awk '@{ print $4 @}'; \
+  @} > libfoo-0.def
 $ lib /def:libfoo-0.def
 @end smallexample
 
