@@ -1,3 +1,9 @@
+2009-06-06  Eric Blake  <ebb9@byu.net>
+
+	test-alignof: fix typo with long double
+	* tests/test-alignof.c (CHECK): Use longdouble typedef to avoid
+	compiler error.
+
 2009-06-06  Neil Jerram  <neil@ossau.uklinux.net>  (tiny change)
 
 	Escape non-texinfo { and }s.
