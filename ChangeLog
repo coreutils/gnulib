@@ -1,3 +1,8 @@
+2009-06-07  Jim Meyering  <meyering@redhat.com>
+
+	hash: declare some functions with the warn_unused_result attribute
+	* lib/hash.h (__attribute__, ATTRIBUTE_WUR): Define.
+
 2009-06-07  Bruno Haible  <bruno@clisp.org>
 
 	* tests/test-alignof.c: Don't test int64_t if it does not exist.
