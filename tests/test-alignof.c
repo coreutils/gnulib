@@ -44,7 +44,9 @@ CHECK (long)
 CHECK (float)
 CHECK (double)
 CHECK (longdouble)
+#ifdef INT64_MAX
 CHECK (int64_t)
+#endif
 CHECK (struct1)
 CHECK (struct2)
 CHECK (struct3)

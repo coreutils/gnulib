@@ -1,3 +1,8 @@
+2009-06-07  Bruno Haible  <bruno@clisp.org>
+
+	* tests/test-alignof.c: Don't test int64_t if it does not exist.
+	Reported by Eric Blake.
+
 2009-06-06  Eric Blake  <ebb9@byu.net>
 
 	test-alignof: fix typo with long double
