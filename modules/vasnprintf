@@ -24,6 +24,7 @@ float
 stdint
 xsize
 errno
+memchr
 
 configure.ac:
 gl_FUNC_VASNPRINTF
@@ -38,4 +39,3 @@ LGPLv2+
 
 Maintainer:
 Bruno Haible
-

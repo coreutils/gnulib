@@ -1,3 +1,10 @@
+2009-06-08  Eric Blake  <ebb9@byu.net>
+
+	memchr: no longer obsolete, for wider field testing
+	* modules/memchr (Status, Notice): Delete, this module is no
+	longer obsolete.
+	* modules/vasnprintf (Depends-on): Add memchr.
+
 2009-06-07  Jim Meyering  <meyering@redhat.com>
 
 	hash: declare some functions with the warn_unused_result attribute
@@ -69,7 +76,7 @@
 	Reported by Eric Blake.
 
 2009-05-31  Simon Josefsson  <simon@josefsson.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Fix test-alignof failure.
 	* lib/alignof.h (alignof_slot): New macro.
@@ -149,14 +156,14 @@
 	* doc/gnulib.texi: Include it.
 
 2009-05-21  Eric Blake  <ebb9@byu.net>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* m4/include_next.m4 (gl_CHECK_NEXT_HEADERS): Remove redundant m4_quote
 	invocations.
 	* m4/absolute-header.m4 (gl_ABSOLUTE_HEADER): Likewise.
 
 2009-05-21  Eric Blake  <ebb9@byu.net>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Second attempt to work around an AIX 5.3, 6.1 compiler bug with
 	include_next. Fix of 2008-11-20 commit.
