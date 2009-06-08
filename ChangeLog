@@ -1,5 +1,11 @@
 2009-06-08  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'idpriv-drop'.
+	* modules/idpriv-drop-tests: New file.
+	* tests/test-idpriv-drop.sh: New file.
+	* tests/test-idpriv-drop.su.sh: New file.
+	* tests/test-idpriv-drop.c: New file.
+
 	New module 'idpriv-drop'.
 	* lib/idpriv.h: New file.
 	* lib-idpriv-drop.c: New file.
