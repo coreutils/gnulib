@@ -1,5 +1,11 @@
 2009-06-19  Eric Blake  <ebb9@byu.net>
 
+	hash: avoid memory leak on allocation failure
+	* lib/hash.c: (hash_rehash): Avoid memory leak on allocation
+	failure.  Factor repeated algorithm...
+	(transfer_entries): ...into new helper routine.
+	(hash_delete): React to hash_rehash return value.
+
 	hash: reduce memory pressure in hash_rehash no-op case
 	* lib/hash.c (next_prime): Avoid overflow.
 	(hash_initialize): Factor bucket size computation...

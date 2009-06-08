@@ -846,6 +846,93 @@ hash_find_entry (Hash_table *table, const void *entry,
   return NULL;
 }
 
+/* Internal helper, to move entries from SRC to DST.  Both tables must
+   share the same free entry list.  If SAFE, only move overflow
+   entries, saving bucket heads for later, so that no allocations will
+   occur.  Return false if the free entry list is exhausted and an
+   allocation fails.  */
+
+static bool
+transfer_entries (Hash_table *src, Hash_table *dst, bool safe)
+{
+  struct hash_entry *bucket;
+  struct hash_entry *cursor;
+  struct hash_entry *next;
+  for (bucket = src->bucket; bucket < src->bucket_limit; bucket++)
+    if (bucket->data)
+      {
+	void *data;
+	struct hash_entry *new_bucket;
+
+	/* Within each bucket, transfer overflow entries first and
+	   then the bucket head, to minimize memory pressure.  After
+	   all, the only time we might allocate is when moving the
+	   bucket head, but moving overflow entries first may create
+	   free entries that can be recycled by the time we finally
+	   get to the bucket head.  */
+	for (cursor = bucket->next; cursor; cursor = next)
+	  {
+	    data = cursor->data;
+	    new_bucket = (dst->bucket + dst->hasher (data, dst->n_buckets));
+
+	    if (! (new_bucket < dst->bucket_limit))
+	      abort ();
+
+	    next = cursor->next;
+
+	    if (new_bucket->data)
+	      {
+		/* Merely relink an existing entry, when moving from a
+		   bucket overflow into a bucket overflow.  */
+		cursor->next = new_bucket->next;
+		new_bucket->next = cursor;
+	      }
+	    else
+	      {
+		/* Free an existing entry, when moving from a bucket
+		   overflow into a bucket header.  */
+		new_bucket->data = data;
+		dst->n_buckets_used++;
+		free_entry (dst, cursor);
+	      }
+	  }
+	/* Now move the bucket head.  Be sure that if we fail due to
+	   allocation failure that the src table is in a consistent
+	   state.  */
+	data = bucket->data;
+	bucket->next = NULL;
+	if (safe)
+	  continue;
+	new_bucket = (dst->bucket + dst->hasher (data, dst->n_buckets));
+
+	if (! (new_bucket < dst->bucket_limit))
+	  abort ();
+
+	if (new_bucket->data)
+	  {
+	    /* Allocate or recycle an entry, when moving from a bucket
+	       header into a bucket overflow.  */
+	    struct hash_entry *new_entry = allocate_entry (dst);
+
+	    if (new_entry == NULL)
+	      return false;
+
+	    new_entry->data = data;
+	    new_entry->next = new_bucket->next;
+	    new_bucket->next = new_entry;
+	  }
+	else
+	  {
+	    /* Move from one bucket header to another.  */
+	    new_bucket->data = data;
+	    dst->n_buckets_used++;
+	  }
+	bucket->data = NULL;
+	src->n_buckets_used--;
+      }
+  return true;
+}
+
 /* For an already existing hash table, change the number of buckets through
    specifying CANDIDATE.  The contents of the hash table are preserved.  The
    new number of buckets is automatically selected so as to _guarantee_ that
@@ -859,9 +946,6 @@ hash_rehash (Hash_table *table, size_t candidate)
 {
   Hash_table storage;
   Hash_table *new_table;
-  struct hash_entry *bucket;
-  struct hash_entry *cursor;
-  struct hash_entry *next;
   size_t new_size = compute_bucket_size (candidate, table->tuning);
 
   if (!new_size)
@@ -881,70 +965,59 @@ hash_rehash (Hash_table *table, size_t candidate)
   new_table->comparator = table->comparator;
   new_table->data_freer = table->data_freer;
 
+  /* In order for the transfer to successfully complete, we need
+     additional overflow entries when distinct buckets in the old
+     table collide into a common bucket in the new table.  The worst
+     case possible is a hasher that gives a good spread with the old
+     size, but returns a constant with the new size; if we were to
+     guarantee table->n_buckets_used-1 free entries in advance, then
+     the transfer would be guaranteed to not allocate memory.
+     However, for large tables, a guarantee of no further allocation
+     introduces a lot of extra memory pressure, all for an unlikely
+     corner case (most rehashes reduce, rather than increase, the
+     number of overflow entries needed).  So, we instead ensure that
+     the transfer process can be reversed if we hit a memory
+     allocation failure mid-transfer.  */
+
   /* Merely reuse the extra old space into the new table.  */
 #if USE_OBSTACK
   new_table->entry_stack = table->entry_stack;
 #endif
   new_table->free_entry_list = table->free_entry_list;
 
-  for (bucket = table->bucket; bucket < table->bucket_limit; bucket++)
-    if (bucket->data)
-      for (cursor = bucket; cursor; cursor = next)
-	{
-	  void *data = cursor->data;
-	  struct hash_entry *new_bucket
-	    = (new_table->bucket
-	       + new_table->hasher (data, new_table->n_buckets));
+  if (transfer_entries (table, new_table, false))
+    {
+      /* Entries transferred successfully; tie up the loose ends.  */
+      free (table->bucket);
+      table->bucket = new_table->bucket;
+      table->bucket_limit = new_table->bucket_limit;
+      table->n_buckets = new_table->n_buckets;
+      table->n_buckets_used = new_table->n_buckets_used;
+      table->free_entry_list = new_table->free_entry_list;
+      /* table->n_entries and table->entry_stack already hold their value.  */
+      return true;
+    }
 
-	  if (! (new_bucket < new_table->bucket_limit))
-	    abort ();
+  /* We've allocated new_table->bucket (and possibly some entries),
+     exhausted the free list, and moved some but not all entries into
+     new_table.  We must undo the partial move before returning
+     failure.  The only way to get into this situation is if new_table
+     uses fewer buckets than the old table, so we will reclaim some
+     free entries as overflows in the new table are put back into
+     distinct buckets in the old table.
 
-	  next = cursor->next;
-
-	  if (new_bucket->data)
-	    {
-	      if (cursor == bucket)
-		{
-		  /* Allocate or recycle an entry, when moving from a bucket
-		     header into a bucket overflow.  */
-		  struct hash_entry *new_entry = allocate_entry (new_table);
-
-		  if (new_entry == NULL)
-		    return false;
-
-		  new_entry->data = data;
-		  new_entry->next = new_bucket->next;
-		  new_bucket->next = new_entry;
-		}
-	      else
-		{
-		  /* Merely relink an existing entry, when moving from a
-		     bucket overflow into a bucket overflow.  */
-		  cursor->next = new_bucket->next;
-		  new_bucket->next = cursor;
-		}
-	    }
-	  else
-	    {
-	      /* Free an existing entry, when moving from a bucket
-		 overflow into a bucket header.  Also take care of the
-		 simple case of moving from a bucket header into a bucket
-		 header.  */
-	      new_bucket->data = data;
-	      new_table->n_buckets_used++;
-	      if (cursor != bucket)
-		free_entry (new_table, cursor);
-	    }
-	}
-
-  free (table->bucket);
-  table->bucket = new_table->bucket;
-  table->bucket_limit = new_table->bucket_limit;
-  table->n_buckets = new_table->n_buckets;
-  table->n_buckets_used = new_table->n_buckets_used;
+     There are some pathological cases where a single pass through the
+     table requires more intermediate overflow entries than using two
+     passes.  Two passes give worse cache performance and takes
+     longer, but at this point, we're already out of memory, so slow
+     and safe is better than failure.  */
   table->free_entry_list = new_table->free_entry_list;
-  /* table->n_entries and table->entry_stack already hold their value.  */
-  return true;
+  if (! (transfer_entries (new_table, table, true)
+	 && transfer_entries (new_table, table, false)))
+    abort ();
+  /* table->n_entries already holds its value.  */
+  free (new_table->bucket);
+  return false;
 }
 
 /* If ENTRY matches an entry already in the hash table, return the pointer
@@ -1066,7 +1139,25 @@ hash_delete (Hash_table *table, const void *entry)
 		 : (table->n_buckets * tuning->shrink_factor
 		    * tuning->growth_threshold));
 
-	      hash_rehash (table, candidate);
+	      if (!hash_rehash (table, candidate))
+		{
+		  /* Failure to allocate memory in an attempt to
+		     shrink the table is not fatal.  But since memory
+		     is low, we can at least be kind and free any
+		     spare entries, rather than keeping them tied up
+		     in the free entry list.  */
+#if ! USE_OBSTACK
+		  struct hash_entry *cursor = table->free_entry_list;
+		  struct hash_entry *next;
+		  while (cursor)
+		    {
+		      next = cursor->next;
+		      free (cursor);
+		      cursor = next;
+		    }
+		  table->free_entry_list = NULL;
+#endif
+		}
 	    }
 	}
     }
@@ -1081,9 +1172,9 @@ hash_delete (Hash_table *table, const void *entry)
 void
 hash_print (const Hash_table *table)
 {
-  struct hash_entry const *bucket;
+  struct hash_entry *bucket = (struct hash_entry *) table->bucket;
 
-  for (bucket = table->bucket; bucket < table->bucket_limit; bucket++)
+  for ( ; bucket < table->bucket_limit; bucket++)
     {
       struct hash_entry *cursor;
 
