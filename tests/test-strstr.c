@@ -24,6 +24,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#include "zerosize-ptr.h"
+
 #define ASSERT(expr) \
   do									     \
     {									     \
@@ -68,13 +70,16 @@ main (int argc, char *argv[])
        This is a bug in memchr(), see the Austin Group's clarification
        <http://www.opengroup.org/austin/docs/austin_454.txt>.  */
     const char *fix = "aBaaaaaaaaaaax";
-    char *input = malloc (strlen (fix) + 1);
+    char *page_boundary = (char *) zerosize_ptr ();
+    size_t len = strlen (fix) + 1;
+    char *input = page_boundary ? page_boundary - len : malloc (len);
     const char *result;
 
     strcpy (input, fix);
     result = strstr (input, "B1x");
     ASSERT (result == NULL);
-    free (input);
+    if (!page_boundary)
+      free (input);
   }
 
   {

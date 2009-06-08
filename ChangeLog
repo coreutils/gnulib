@@ -1,5 +1,10 @@
 2009-06-08  Eric Blake  <ebb9@byu.net>
 
+	test-strstr: use memory fence, when possible
+	* tests/test-strstr.c (main): Use memory fence, in order to be
+	more likely to trigger Debian bug 521737.
+	* modules/strstr-tests (Files): Pull in additional files.
+
 	memchr: no longer obsolete, for wider field testing
 	* modules/memchr (Status, Notice): Delete, this module is no
 	longer obsolete.
