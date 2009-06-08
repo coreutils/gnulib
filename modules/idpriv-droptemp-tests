@@ -1,0 +1,19 @@
+Notice:
+The 'idpriv-droptemp-tests' module asks the user for the root password.  It is
+therefore not suitable for all environments. To disable it, pass option
+'--avoid=idpriv-drop-tests' to gnulib-tool.
+
+Files:
+tests/test-idpriv-droptemp.sh
+tests/test-idpriv-droptemp.su.sh
+tests/test-idpriv-droptemp.c
+
+Depends-on:
+stdbool
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-idpriv-droptemp.sh
+TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' srcdir='$(srcdir)'
+check_PROGRAMS += test-idpriv-droptemp
