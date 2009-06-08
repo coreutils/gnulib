@@ -1,3 +1,17 @@
+2009-06-12  Eric Blake  <ebb9@byu.net>
+
+	memchr: detect broken x86_64 and alpha implementations
+	* modules/memchr-tests (Depends-on): Move mmap detection...
+	* modules/memchr (Depends-on): ...here.
+	(configure.ac): Set indicator.
+	* lib/string.in.h (memchr): Declare replacement.
+	* modules/string (Makefile.am): Trigger replacement.
+	* m4/string_h.m4 (gl_HEADER_STRING_H_DEFAULTS): Likewise.
+	* m4/memchr.m4 (gl_FUNC_MEMCHR): Use mmap to detect platform
+	bugs.
+	* doc/posix-functions/memchr.texi (memchr): Document the bug.
+	* modules/getpagesize (License): Relax license.
+
 2009-06-11  Bruno Haible  <bruno@clisp.org>
 
 	* lib/idpriv.h: Add more references.

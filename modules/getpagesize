@@ -18,7 +18,7 @@ Include:
 <unistd.h>
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Jim Meyering

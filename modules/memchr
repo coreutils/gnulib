@@ -4,11 +4,16 @@ memchr() function: scan memory for a byte.
 Files:
 lib/memchr.c
 m4/memchr.m4
+m4/mmap-anon.m4
 
 Depends-on:
+extensions
+getpagesize
+string
 
 configure.ac:
 gl_FUNC_MEMCHR
+gl_STRING_MODULE_INDICATOR([memchr])
 
 Makefile.am:
 
