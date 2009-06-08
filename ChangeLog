@@ -1,5 +1,11 @@
 2009-06-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'idpriv-droptemp'.
+	* lib/idpriv-droptemp.c: New file.
+	* modules/idpriv-droptemp: New file.
+
+2009-06-08  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'idpriv-drop'.
 	* modules/idpriv-drop-tests: New file.
 	* tests/test-idpriv-drop.sh: New file.
