@@ -1,5 +1,13 @@
 2009-06-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'idpriv-drop'.
+	* lib/idpriv.h: New file.
+	* lib-idpriv-drop.c: New file.
+	* m4/idpriv.m4: New file.
+	* modules/idpriv-drop: New file.
+
+2009-06-08  Bruno Haible  <bruno@clisp.org>
+
 	* modules/unistdio/u8-vasnprintf (Depends-on): Add memchr.
 	* modules/unistdio/u8-u8-vasnprintf (Depends-on): Likewise.
 	* modules/unistdio/u16-vasnprintf (Depends-on): Likewise.
