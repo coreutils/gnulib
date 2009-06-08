@@ -1,3 +1,13 @@
+2009-06-08  Bruno Haible  <bruno@clisp.org>
+
+	* modules/unistdio/u8-vasnprintf (Depends-on): Add memchr.
+	* modules/unistdio/u8-u8-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/u16-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/u16-u16-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/u32-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/u32-u32-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/ulc-vasnprintf (Depends-on): Likewise.
+
 2009-06-08  Eric Blake  <ebb9@byu.net>
 
 	test-strstr: use memory fence, when possible

@@ -42,6 +42,7 @@ alloca-opt
 localcharset
 xsize
 errno
+memchr
 multiarch
 
 configure.ac:
