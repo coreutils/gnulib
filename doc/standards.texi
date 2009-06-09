@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate April 16, 2009
+@set lastupdate June 7, 2009
 @c %**end of header
 
 @dircategory GNU organization
@@ -3742,15 +3742,10 @@ page explaining that you don't maintain it and that the Texinfo manual
 is more authoritative.  The note should say how to access the Texinfo
 documentation.
 
-Be sure that man pages include a copyright statement and free
-license.  The simple all-permissive license is appropriate for simple
-man pages:
-
-@example
-Copying and distribution of this file, with or without modification,
-are permitted in any medium without royalty provided the copyright
-notice and this notice are preserved.
-@end example
+Be sure that man pages include a copyright statement and free license.
+The simple all-permissive license is appropriate for simple man pages
+(@pxref{License Notices for Other Files,,,maintain,Information for GNU
+Maintainers}).
 
 For long man pages, with enough explanation and documentation that
 they can be considered true manuals, use the GFDL (@pxref{License for
