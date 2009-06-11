@@ -72,9 +72,17 @@ extern "C" {
    you should better stay away from this approach.
  */
 
-/* For more in-depth discussion of these topics, see the paper
-   Hao Chen, David Wagner, Drew Dean: Setuid Demystified
-   <http://www.usenix.org/events/sec02/full_papers/chen/chen.pdf>  */
+/* For more in-depth discussion of these topics, see the papers/articles
+   * Hao Chen, David Wagner, Drew Dean: Setuid Demystified
+     <http://www.usenix.org/events/sec02/full_papers/chen/chen.pdf>
+   * Dan Tsafrir, Dilma da Silva, David Wagner: The Murky Issue of Changing
+     Process Identity: Revising "Setuid Demystified"
+     <http://www.eecs.berkeley.edu/~daw/papers/setuid-login08b.pdf>
+     <http://code.google.com/p/change-process-identity/>
+   * Dhruv Mohindra: Observe correct revocation order while relinquishing
+     privileges
+     <https://www.securecoding.cert.org/confluence/display/seccode/POS36-C.+Observe+correct+revocation+order+while+relinquishing+privileges>
+ */
 
 
 /* For approach 2.  */

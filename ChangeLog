@@ -1,3 +1,7 @@
+2009-06-11  Bruno Haible  <bruno@clisp.org>
+
+	* lib/idpriv.h: Add more references.
+
 2009-06-08  Bruno Haible  <bruno@clisp.org>
 
 	Tests for module 'idpriv-droptemp'.
