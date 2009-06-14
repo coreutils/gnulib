@@ -1,3 +1,9 @@
+2009-06-14  Jim Meyering  <meyering@redhat.com>
+
+	link-follow: fix the "checking..." message to not mention trailing slash
+	* m4/link-follow.m4 (gl_AC_FUNC_LINK_FOLLOWS_SYMLINK): This test has
+	never considered trailing slashes.
+
 2009-06-14  Bruno Haible  <bruno@clisp.org>
 
 	* m4/memchr.m4: Mention also the bug on IA-64.

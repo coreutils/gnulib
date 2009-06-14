@@ -1,4 +1,4 @@
-# serial 10
+# serial 11
 dnl Run a program to determine whether link(2) follows symlinks.
 dnl Set LINK_FOLLOWS_SYMLINKS accordingly.
 
@@ -9,8 +9,7 @@ dnl Set LINK_FOLLOWS_SYMLINKS accordingly.
 
 AC_DEFUN([gl_AC_FUNC_LINK_FOLLOWS_SYMLINK],
 [dnl
-  AC_CACHE_CHECK(
-    [whether link(2) dereferences a symlink specified with a trailing slash],
+  AC_CACHE_CHECK([whether link(2) dereferences a symlink],
 		 gl_ac_cv_func_link_follows_symlink,
   [
     # Create a regular file.
