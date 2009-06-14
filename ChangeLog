@@ -1,3 +1,8 @@
+2009-06-14  Bruno Haible  <bruno@clisp.org>
+
+	* m4/memchr.m4: Mention also the bug on IA-64.
+	* doc/posix-functions/memchr.texi: Likewise.
+
 2009-06-12  Eric Blake  <ebb9@byu.net>
 
 	memchr: detect broken x86_64 and alpha implementations

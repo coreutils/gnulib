@@ -13,7 +13,7 @@ This function is missing on some older platforms.
 
 @item
 This function dereferences too much memory on some platforms:
-glibc 2.10 on x86_64 or Alpha
+glibc 2.10 on x86_64, IA-64, Alpha.
 @end itemize
 
 Portability problems not fixed by Gnulib:

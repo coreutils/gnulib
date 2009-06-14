@@ -25,6 +25,7 @@ AC_DEFUN([gl_FUNC_MEMCHR],
     #   http://bugzilla.redhat.com/499689
     # memchr should not dereference overestimated length after a match
     #   http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=521737
+    #   http://sourceware.org/bugzilla/show_bug.cgi?id=10162
     # Assume that memchr works on platforms that lack mprotect.
     AC_CACHE_CHECK([whether memchr works], [gl_cv_func_memchr_works],
       [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
