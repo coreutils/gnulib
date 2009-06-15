@@ -1,5 +1,11 @@
 2009-06-15  Eric Blake  <ebb9@byu.net>
 
+	memchr, memchr2: add valgrind exception
+	* lib/memchr.valgrind: New file.
+	* lib/memchr2.valgrind: New file.
+	* modules/memchr (Files): Distribute valgrind file.
+	* modules/memchr2 (Files): Likewise.
+
 	docs: memchr is no longer obsolete
 	* MODULES.html.sh: Move memchr from obsolete to string.h section.
 	* lib/string.in.h (memchr): Simplify logic.

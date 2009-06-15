@@ -4,6 +4,7 @@ memchr2() function: scan memory for the first of two bytes.
 Files:
 lib/memchr2.h
 lib/memchr2.c
+lib/memchr2.valgrind
 
 Depends-on:
 stdint
