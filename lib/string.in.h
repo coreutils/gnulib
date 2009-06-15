@@ -53,8 +53,6 @@ extern "C" {
 #if @GNULIB_MEMCHR@
 # if @REPLACE_MEMCHR@
 #  define memchr rpl_memchr
-# endif
-# if @REPLACE_MEMCHR@
 extern void *memchr (void const *__s, int __c, size_t __n)
   __attribute__ ((__pure__));
 # endif

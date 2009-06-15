@@ -1,3 +1,9 @@
+2009-06-15  Eric Blake  <ebb9@byu.net>
+
+	docs: memchr is no longer obsolete
+	* MODULES.html.sh: Move memchr from obsolete to string.h section.
+	* lib/string.in.h (memchr): Simplify logic.
+
 2009-06-14  Jim Meyering  <meyering@redhat.com>
 
 	link-follow: fix the "checking..." message to not mention trailing slash

@@ -1606,7 +1606,6 @@ func_all_modules ()
   func_module exit
   func_module strtol
   func_module strtoul
-  func_module memchr
   func_module memcmp
   func_module memcpy
   func_module memmove
@@ -1770,6 +1769,7 @@ func_all_modules ()
 
   func_begin_table
   func_module bcopy
+  func_module memchr
   func_module memchr2
   func_module memmem
   func_module memmem-simple
