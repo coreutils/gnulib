@@ -1,13 +1,24 @@
-# strstr.m4 serial 5
-dnl Copyright (C) 2008 Free Software Foundation, Inc.
+# strstr.m4 serial 6
+dnl Copyright (C) 2008, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
-dnl Check that strstr is efficient.
-AC_DEFUN([gl_FUNC_STRSTR],
+dnl Check that strstr works.
+AC_DEFUN([gl_FUNC_STRSTR_SIMPLE],
 [
   AC_REQUIRE([gl_HEADER_STRING_H_DEFAULTS])
+  AC_REQUIRE([gl_FUNC_MEMCHR])
+  if test "$gl_cv_func_memchr_works" != yes; then
+    REPLACE_STRSTR=1
+    AC_LIBOBJ([strstr])
+  fi
+]) # gl_FUNC_STRSTR_SIMPLE
+
+dnl Additionally, check that strstr is efficient.
+AC_DEFUN([gl_FUNC_STRSTR],
+[
+  AC_REQUIRE([gl_FUNC_STRSTR_SIMPLE])
   AC_CACHE_CHECK([whether strstr works in linear time],
     [gl_cv_func_strstr_linear],
     [AC_RUN_IFELSE([AC_LANG_PROGRAM([[

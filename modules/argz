@@ -12,6 +12,7 @@ mempcpy
 stpcpy
 strndup
 strnlen
+strstr
 
 configure.ac:
 gl_FUNC_ARGZ

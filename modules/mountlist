@@ -11,6 +11,7 @@ m4/mountlist.m4
 Depends-on:
 stdbool
 stdint
+strstr-simple
 xalloc
 
 configure.ac:

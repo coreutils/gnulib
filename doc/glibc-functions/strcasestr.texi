@@ -9,7 +9,12 @@ or @code{strcasestr}:
 @itemize
 @item
 This function is missing on some platforms:
-AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin 1.5.x, mingw, BeOS.
+AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin 1.5.x,
+mingw, BeOS.
+
+@item
+This function can trigger memchr bugs on some platforms:
+glibc 2.10.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{strcasestr}:

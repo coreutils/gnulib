@@ -4,14 +4,23 @@
 
 POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/strstr.html}
 
-Gnulib module: strstr
+Gnulib module: strstr or strstr-simple
 
-Portability problems fixed by Gnulib:
+Portability problems fixed by either Gnulib module @code{strstr-simple}
+or @code{strstr}:
+@itemize
+@item
+This function can trigger memchr bugs on some platforms:
+glibc 2.10.
+@end itemize
+
+Portability problems fixed by Gnulib @code{strstr}:
 @itemize
 @item
 This function has quadratic instead of linear worst-case complexity on some
 platforms:
-glibc 2.8, MacOS X 10.3, FreeBSD 6.2, NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin 1.5.x, mingw.
+glibc 2.8, MacOS X 10.3, FreeBSD 6.2, NetBSD 3.0, OpenBSD 4.0, AIX
+5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin 1.5.x, mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:

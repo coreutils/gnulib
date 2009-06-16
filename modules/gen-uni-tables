@@ -10,6 +10,7 @@ lib/unictype/3levelbit.h
 Depends-on:
 memcmp
 strdup
+strstr-simple
 
 configure.ac:
 

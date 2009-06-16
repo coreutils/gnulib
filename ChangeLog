@@ -1,3 +1,21 @@
+2009-06-17  Eric Blake  <ebb9@byu.net>
+
+	strstr, strcasestr: replace on platforms with broken memchr
+	* modules/strstr: Split into...
+	* modules/strstr-simple: ...new module that does not care about
+	performance, but does care about glibc bug.
+	* m4/strstr.m4 (gl_FUNC_STRSTR): Split...
+	(gl_FUNC_STRSTR_SIMPLE): ...into new macro, which replaces strstr
+	if platform memchr is broken, per Debian bug 521737.
+	* m4/strcasestr.m4 (gl_FUNC_STRCASESTR_SIMPLE): React to broken
+	memchr.
+	* m4/memchr.m4 (gl_FUNC_MEMCHR): Only expand once.
+	* doc/posix-functions/strstr.texi (strstr): Document the fix.
+	* doc/glibc-functions/strcasestr.texi (strcasestr): Likewise.
+	* modules/mountlist (Depends-on): Add strstr-simple.
+	* modules/gen-uni-tables (Depends-on): Likewise.
+	* modules/argz (Depends-on): Add strstr.
+
 2009-06-17  Bruno Haible  <bruno@clisp.org>
 
 	* modules/posix_spawn-internal (Depends-on): Add errno.
