@@ -1791,6 +1791,7 @@ func_all_modules ()
   func_module strndup
   func_module strsep
   func_module strstr
+  func_module strstr-simple
   func_module c-strstr
   func_module trim
   func_module fstrcmp

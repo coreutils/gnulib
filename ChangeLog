@@ -1,5 +1,8 @@
 2009-06-17  Eric Blake  <ebb9@byu.net>
 
+	strstr-simple: document new module
+	* MODULES.html.sh: Document new module.
+
 	strstr, strcasestr: replace on platforms with broken memchr
 	* modules/strstr: Split into...
 	* modules/strstr-simple: ...new module that does not care about
