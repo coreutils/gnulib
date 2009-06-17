@@ -1,3 +1,10 @@
+2009-06-18  Eric Blake  <ebb9@byu.net>
+
+	hash: check for resize before insertion
+	* lib/hash.c (hash_insert): Check whether bucket usage exceeds
+	threshold before insertion, so that a pathological hash_rehash
+	that fills every bucket can still trigger another rehash.
+
 2009-06-18  Jim Meyering  <meyering@redhat.com>
 
 	hash-tests: add a loop around the small tests

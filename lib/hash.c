@@ -931,30 +931,6 @@ hash_insert (Hash_table *table, const void *entry)
   if ((data = hash_find_entry (table, entry, &bucket, false)) != NULL)
     return data;
 
-  /* ENTRY is not matched, it should be inserted.  */
-
-  if (bucket->data)
-    {
-      struct hash_entry *new_entry = allocate_entry (table);
-
-      if (new_entry == NULL)
-	return NULL;
-
-      /* Add ENTRY in the overflow of the bucket.  */
-
-      new_entry->data = (void *) entry;
-      new_entry->next = bucket->next;
-      bucket->next = new_entry;
-      table->n_entries++;
-      return (void *) entry;
-    }
-
-  /* Add ENTRY right in the bucket head.  */
-
-  bucket->data = (void *) entry;
-  table->n_entries++;
-  table->n_buckets_used++;
-
   /* If the growth threshold of the buckets in use has been reached, increase
      the table size and rehash.  There's no point in checking the number of
      entries:  if the hashing function is ill-conditioned, rehashing is not
@@ -981,9 +957,37 @@ hash_insert (Hash_table *table, const void *entry)
 
 	  /* If the rehash fails, arrange to return NULL.  */
 	  if (!hash_rehash (table, candidate))
-	    entry = NULL;
+	    return NULL;
+
+	  /* Update the bucket we are interested in.  */
+	  if (hash_find_entry (table, entry, &bucket, false) != NULL)
+	    abort ();
 	}
     }
+
+  /* ENTRY is not matched, it should be inserted.  */
+
+  if (bucket->data)
+    {
+      struct hash_entry *new_entry = allocate_entry (table);
+
+      if (new_entry == NULL)
+	return NULL;
+
+      /* Add ENTRY in the overflow of the bucket.  */
+
+      new_entry->data = (void *) entry;
+      new_entry->next = bucket->next;
+      bucket->next = new_entry;
+      table->n_entries++;
+      return (void *) entry;
+    }
+
+  /* Add ENTRY right in the bucket head.  */
+
+  bucket->data = (void *) entry;
+  table->n_entries++;
+  table->n_buckets_used++;
 
   return (void *) entry;
 }
