@@ -1,5 +1,9 @@
 2009-06-17  Bruno Haible  <bruno@clisp.org>
 
+	* modules/posix_spawn-internal (Depends-on): Add errno.
+
+2009-06-17  Bruno Haible  <bruno@clisp.org>
+
 	Define missing ESTALE on Interix 3.5.
 	* lib/errno.in.h (ESTALE): Assign a value if missing.
 	* lib/strerror.c (rpl_strerror): Handle missing ESTALE and ECANCELED.
