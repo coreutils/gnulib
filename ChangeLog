@@ -1,3 +1,13 @@
+2009-06-17  Bruno Haible  <bruno@clisp.org>
+
+	Define missing ESTALE on Interix 3.5.
+	* lib/errno.in.h (ESTALE): Assign a value if missing.
+	* lib/strerror.c (rpl_strerror): Handle missing ESTALE and ECANCELED.
+	* m4/errno_h.m4 (gl_HEADER_ERRNO_H): Also test whether ESTALE is
+	missing.
+	* doc/posix-headers/errno.texi: Mention the Interix bug.
+	Reported by Jay Krell <jay.krell@cornell.edu> via Eric Blake.
+
 2009-06-15  Eric Blake  <ebb9@byu.net>
 
 	memchr, memchr2: add valgrind exception
