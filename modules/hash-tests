@@ -1,0 +1,15 @@
+Files:
+tests/test-hash.c
+
+Depends-on:
+hash-pjw
+inttostr
+progname
+stdbool
+xalloc
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-hash
+check_PROGRAMS += test-hash
