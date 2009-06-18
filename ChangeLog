@@ -1,5 +1,8 @@
 2009-06-18  Eric Blake  <ebb9@byu.net>
 
+	hash: avoid no-op rehashing
+	* lib/hash.c (hash_rehash): Recognize useless rehash attempts.
+
 	hash: provide default callback functions
 	* lib/hash.c (raw_hasher, raw_comparator): New functions.
 	(hash_initialize): Use them as defaults.

@@ -862,6 +862,8 @@ hash_rehash (Hash_table *table, size_t candidate)
 			       table->comparator, table->data_freer);
   if (new_table == NULL)
     return false;
+  if (new_table->n_buckets == table->n_buckets)
+    return true;
 
   /* Merely reuse the extra old space into the new table.  */
 #if USE_OBSTACK
