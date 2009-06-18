@@ -135,6 +135,18 @@ main (void)
       hash_clear (ht);
       ASSERT (hash_get_n_entries (ht) == 0);
       hash_free (ht);
+
+      /* Test pointer hashing.  */
+      ht = hash_initialize (sz, NULL, NULL, NULL, NULL);
+      ASSERT (ht);
+      {
+	char *str = xstrdup ("a");
+	insert_new (ht, "a");
+	insert_new (ht, str);
+	ASSERT (hash_lookup (ht, str) == str);
+	free (str);
+      }
+      hash_free (ht);
     }
 
   /* Now, each entry is malloc'd.  */

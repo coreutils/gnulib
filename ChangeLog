@@ -1,5 +1,10 @@
 2009-06-18  Eric Blake  <ebb9@byu.net>
 
+	hash: provide default callback functions
+	* lib/hash.c (raw_hasher, raw_comparator): New functions.
+	(hash_initialize): Use them as defaults.
+	* tests/test-hash.c (main): Test this.
+
 	hash: minor optimization
 	* lib/hash.c (hash_lookup, hash_find_entry): Avoid function call
 	when possible.
