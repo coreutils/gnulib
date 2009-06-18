@@ -1,3 +1,9 @@
+2009-06-18  Jim Meyering  <meyering@redhat.com>
+
+	hash-tests: add a loop around the small tests
+	* tests/test-hash.c (main): Repeat small tests with selected
+	small initial table sizes.
+
 2009-06-17  Eric Blake  <ebb9@byu.net>
 
 	hash: minor cleanups

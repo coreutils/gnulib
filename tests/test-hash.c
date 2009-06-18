@@ -29,6 +29,7 @@
 #include <unistd.h>
 
 #define STREQ(a, b) (strcmp (a, b) == 0)
+#define ARRAY_CARDINALITY(Array) (sizeof (Array) / sizeof *(Array))
 
 #define ASSERT(expr) \
   do									     \
@@ -80,55 +81,60 @@ int
 main (void)
 {
   unsigned int i;
-  Hash_table *ht = hash_initialize (53, NULL, hash_pjw,
-				    hash_compare_strings, NULL);
+  unsigned int table_size[] = {1, 2, 3, 4, 5, 23, 53};
+  Hash_table *ht;
   Hash_tuning tuning;
 
-  ASSERT (ht);
-  insert_new (ht, "a");
-  {
-    char *str1 = xstrdup ("a");
-    char *str2 = hash_insert (ht, str1);
-    ASSERT (str1 != str2);
-    ASSERT (STREQ (str1, str2));
-    free (str1);
-  }
-  insert_new (ht, "b");
-  insert_new (ht, "c");
-  i = 0;
-  ASSERT (hash_do_for_each (ht, walk, &i) == 3);
-  ASSERT (i == 7);
-  {
-    void *buf[5] = { NULL };
-    ASSERT (hash_get_entries (ht, NULL, 0) == 0);
-    ASSERT (hash_get_entries (ht, buf, 5) == 3);
-    ASSERT (STREQ (buf[0], "a") || STREQ (buf[0], "b") || STREQ (buf[0], "c"));
-  }
-  ASSERT (hash_delete (ht, "a"));
-  ASSERT (hash_delete (ht, "a") == NULL);
-  ASSERT (hash_delete (ht, "b"));
-  ASSERT (hash_delete (ht, "c"));
+  for (i = 0; i < ARRAY_CARDINALITY (table_size); i++)
+    {
+      size_t sz = table_size[i];
+      ht = hash_initialize (sz, NULL, hash_pjw, hash_compare_strings, NULL);
+      ASSERT (ht);
+      insert_new (ht, "a");
+      {
+	char *str1 = xstrdup ("a");
+	char *str2 = hash_insert (ht, str1);
+	ASSERT (str1 != str2);
+	ASSERT (STREQ (str1, str2));
+	free (str1);
+      }
+      insert_new (ht, "b");
+      insert_new (ht, "c");
+      i = 0;
+      ASSERT (hash_do_for_each (ht, walk, &i) == 3);
+      ASSERT (i == 7);
+      {
+	void *buf[5] = { NULL };
+	ASSERT (hash_get_entries (ht, NULL, 0) == 0);
+	ASSERT (hash_get_entries (ht, buf, 5) == 3);
+	ASSERT (STREQ (buf[0], "a") || STREQ (buf[0], "b") || STREQ (buf[0], "c"));
+      }
+      ASSERT (hash_delete (ht, "a"));
+      ASSERT (hash_delete (ht, "a") == NULL);
+      ASSERT (hash_delete (ht, "b"));
+      ASSERT (hash_delete (ht, "c"));
 
-  ASSERT (hash_rehash (ht, 47));
-  ASSERT (hash_rehash (ht, 467));
+      ASSERT (hash_rehash (ht, 47));
+      ASSERT (hash_rehash (ht, 467));
 
-  /* Free an empty table. */
-  hash_clear (ht);
-  hash_free (ht);
+      /* Free an empty table. */
+      hash_clear (ht);
+      hash_free (ht);
 
-  ht = hash_initialize (53, NULL, hash_pjw, hash_compare_strings, NULL);
-  ASSERT (ht);
+      ht = hash_initialize (sz, NULL, hash_pjw, hash_compare_strings, NULL);
+      ASSERT (ht);
 
-  insert_new (ht, "z");
-  insert_new (ht, "y");
-  insert_new (ht, "x");
-  insert_new (ht, "w");
-  insert_new (ht, "v");
-  insert_new (ht, "u");
+      insert_new (ht, "z");
+      insert_new (ht, "y");
+      insert_new (ht, "x");
+      insert_new (ht, "w");
+      insert_new (ht, "v");
+      insert_new (ht, "u");
 
-  hash_clear (ht);
-  ASSERT (hash_get_n_entries (ht) == 0);
-  hash_free (ht);
+      hash_clear (ht);
+      ASSERT (hash_get_n_entries (ht) == 0);
+      hash_free (ht);
+    }
 
   /* Now, each entry is malloc'd.  */
   ht = hash_initialize (4651, NULL, hash_pjw, hash_compare_strings, hash_freer);
