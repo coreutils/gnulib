@@ -1,7 +1,7 @@
 /* hash - hashing table processing.
 
-   Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2006, 2007 Free
-   Software Foundation, Inc.
+   Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2006, 2007,
+   2009 Free Software Foundation, Inc.
 
    Written by Jim Meyering, 1992.
 
@@ -46,6 +46,12 @@
 # define SIZE_MAX ((size_t) -1)
 #endif
 
+struct hash_entry
+  {
+    void *data;
+    struct hash_entry *next;
+  };
+
 struct hash_table
   {
     /* The array of buckets starts at BUCKET and extends to BUCKET_LIMIT-1,
@@ -57,7 +63,7 @@ struct hash_table
     size_t n_buckets_used;
     size_t n_entries;
 
-    /* Tuning arguments, kept in a physicaly separate structure.  */
+    /* Tuning arguments, kept in a physically separate structure.  */
     const Hash_tuning *tuning;
 
     /* Three functions are given to `hash_initialize', see the documentation
@@ -81,7 +87,7 @@ struct hash_table
   };
 
 /* A hash table contains many internal entries, each holding a pointer to
-   some user provided data (also called a user entry).  An entry indistinctly
+   some user-provided data (also called a user entry).  An entry indistinctly
    refers to both the internal entry and its associated user entry.  A user
    entry contents may be hashed by a randomization function (the hashing
    function, or just `hasher' for short) into a number (or `slot') between 0
@@ -268,7 +274,9 @@ hash_lookup (const Hash_table *table, const void *entry)
 /* The functions in this page traverse the hash table and process the
    contained entries.  For the traversal to work properly, the hash table
    should not be resized nor modified while any particular entry is being
-   processed.  In particular, entries should not be added or removed.  */
+   processed.  In particular, entries should not be added, and an entry
+   may be removed only if there is no shrink threshold and the entry being
+   removed has already been passed to hash_get_next.  */
 
 /* Return the first data in the table, or NULL if the table is empty.  */
 
@@ -481,6 +489,8 @@ static bool
 check_tuning (Hash_table *table)
 {
   const Hash_tuning *tuning = table->tuning;
+  if (tuning == &default_tuning)
+    return true;
 
   /* Be a bit stricter than mathematics would require, so that
      rounding errors in size calculations do not cause allocations to
@@ -513,7 +523,9 @@ check_tuning (Hash_table *table)
 
    TUNING points to a structure of user-supplied values, in case some fine
    tuning is wanted over the default behavior of the hasher.  If TUNING is
-   NULL, the default tuning parameters are used instead.
+   NULL, the default tuning parameters are used instead.  If TUNING is
+   provided but the values requested are out of bounds or might cause
+   rounding errors, return NULL.
 
    The user-supplied HASHER function should be provided.  It accepts two
    arguments ENTRY and TABLE_SIZE.  It computes, by hashing ENTRY contents, a
@@ -697,7 +709,7 @@ hash_free (Hash_table *table)
 
 /* Insertion and deletion.  */
 
-/* Get a new hash entry for a bucket overflow, possibly by reclying a
+/* Get a new hash entry for a bucket overflow, possibly by recycling a
    previously freed one.  If this is not possible, allocate a new one.  */
 
 static struct hash_entry *
@@ -812,7 +824,7 @@ hash_find_entry (Hash_table *table, const void *entry,
    the table may receive at least CANDIDATE different user entries, including
    those already in the table, before any other growth of the hash table size
    occurs.  If TUNING->IS_N_BUCKETS is true, then CANDIDATE specifies the
-   exact number of buckets desired.  */
+   exact number of buckets desired.  Return true iff the rehash succeeded.  */
 
 bool
 hash_rehash (Hash_table *table, size_t candidate)
@@ -901,7 +913,9 @@ hash_rehash (Hash_table *table, size_t candidate)
 
 /* If ENTRY matches an entry already in the hash table, return the pointer
    to the entry from the table.  Otherwise, insert ENTRY and return ENTRY.
-   Return NULL if the storage required for insertion cannot be allocated.  */
+   Return NULL if the storage required for insertion cannot be allocated.
+   This implementation does not support duplicate entries or insertion of
+   NULL.  */
 
 void *
 hash_insert (Hash_table *table, const void *entry)

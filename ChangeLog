@@ -1,3 +1,14 @@
+2009-06-17  Eric Blake  <ebb9@byu.net>
+
+	hash: minor cleanups
+	* lib/hash.h (hash_entry): Make opaque, by moving...
+	* lib/hash.c (hash_entry): ...here.
+	(hash_insert): Clarify restrictions on what can be inserted.
+	(hash_get_next): Clarify when it is safe to remove an element
+	during traversal.
+	(check_tuning): Skip verification when tuning is known safe.
+	(hash_initialize): Clarify restrictions on tuning.
+
 2009-06-17  Jim Meyering  <jim@meyering.net>
 	and Eric Blake  <ebb9@byu.net>
 

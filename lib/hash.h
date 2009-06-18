@@ -42,12 +42,6 @@ typedef bool (*Hash_comparator) (const void *, const void *);
 typedef void (*Hash_data_freer) (void *);
 typedef bool (*Hash_processor) (void *, void *);
 
-struct hash_entry
-  {
-    void *data;
-    struct hash_entry *next;
-  };
-
 struct hash_tuning
   {
     /* This structure is mainly used for `hash_initialize', see the block
