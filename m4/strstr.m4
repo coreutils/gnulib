@@ -19,9 +19,10 @@ dnl Additionally, check that strstr is efficient.
 AC_DEFUN([gl_FUNC_STRSTR],
 [
   AC_REQUIRE([gl_FUNC_STRSTR_SIMPLE])
-  AC_CACHE_CHECK([whether strstr works in linear time],
-    [gl_cv_func_strstr_linear],
-    [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
+  if test $REPLACE_STRSTR = 0; then
+    AC_CACHE_CHECK([whether strstr works in linear time],
+      [gl_cv_func_strstr_linear],
+      [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
 #include <signal.h> /* for signal */
 #include <string.h> /* for memmem */
 #include <stdlib.h> /* for malloc */
@@ -46,11 +47,11 @@ AC_DEFUN([gl_FUNC_STRSTR],
 	result = strstr (haystack, needle);
       }
     return !result;]])],
-      [gl_cv_func_strstr_linear=yes], [gl_cv_func_strstr_linear=no],
-      [dnl Only glibc >= 2.9 and cygwin >= 1.7.0 are known to have a
-       dnl strstr that works in linear time.
-       AC_EGREP_CPP([Lucky user],
-	 [
+        [gl_cv_func_strstr_linear=yes], [gl_cv_func_strstr_linear=no],
+        [dnl Only glibc >= 2.9 and cygwin >= 1.7.0 are known to have a
+         dnl strstr that works in linear time.
+         AC_EGREP_CPP([Lucky user],
+           [
 #include <features.h>
 #ifdef __GNU_LIBRARY__
  #if (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 9) || (__GLIBC__ > 2)
@@ -63,13 +64,14 @@ AC_DEFUN([gl_FUNC_STRSTR],
   Lucky user
  #endif
 #endif
-	 ],
-	 [gl_cv_func_strstr_linear=yes],
-	 [gl_cv_func_strstr_linear="guessing no"])
+           ],
+           [gl_cv_func_strstr_linear=yes],
+           [gl_cv_func_strstr_linear="guessing no"])
+        ])
       ])
-    ])
-  if test "$gl_cv_func_strstr_linear" != yes; then
-    REPLACE_STRSTR=1
-    AC_LIBOBJ([strstr])
+    if test "$gl_cv_func_strstr_linear" != yes; then
+      REPLACE_STRSTR=1
+      AC_LIBOBJ([strstr])
+    fi
   fi
 ]) # gl_FUNC_STRSTR

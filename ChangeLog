@@ -1,5 +1,10 @@
 2009-06-18  Bruno Haible  <bruno@clisp.org>
 
+	* m4/strstr.m4 (gl_FUNC_STRSTR): Skip linear time test if strstr is
+	going to be replaced anyway.
+
+2009-06-18  Bruno Haible  <bruno@clisp.org>
+
 	* m4/strcasestr.m4 (gl_FUNC_STRCASESTR_SIMPLE): Invoke AC_LIBOBJ only
 	in one place.
 	(gl_FUNC_STRCASESTR): Skip linear time test if strcasestr is going to
