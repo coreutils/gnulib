@@ -1,3 +1,10 @@
+2009-06-18  Bruno Haible  <bruno@clisp.org>
+
+	* m4/strcasestr.m4 (gl_FUNC_STRCASESTR_SIMPLE): Invoke AC_LIBOBJ only
+	in one place.
+	(gl_FUNC_STRCASESTR): Skip linear time test if strcasestr is going to
+	be replaced anyway.
+
 2009-06-18  Eric Blake  <ebb9@byu.net>
 
 	hash: check for resize before insertion
