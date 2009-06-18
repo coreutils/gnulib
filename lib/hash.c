@@ -863,7 +863,11 @@ hash_rehash (Hash_table *table, size_t candidate)
   if (new_table == NULL)
     return false;
   if (new_table->n_buckets == table->n_buckets)
-    return true;
+    {
+      free (new_table->bucket);
+      free (new_table);
+      return true;
+    }
 
   /* Merely reuse the extra old space into the new table.  */
 #if USE_OBSTACK

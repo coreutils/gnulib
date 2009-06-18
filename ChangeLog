@@ -1,5 +1,8 @@
 2009-06-18  Eric Blake  <ebb9@byu.net>
 
+	hash: fix memory leak in last patch
+	* lib/hash.c (hash_rehash): Avoid memory leak.
+
 	hash: avoid no-op rehashing
 	* lib/hash.c (hash_rehash): Recognize useless rehash attempts.
 
