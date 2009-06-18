@@ -1,3 +1,12 @@
+2009-06-18  Eric Blake  <ebb9@byu.net>
+
+	hash: minor optimization
+	* lib/hash.c (hash_lookup, hash_find_entry): Avoid function call
+	when possible.
+	(hash_initialize): Document this promise.
+	(hash_do_for_each, hash_clear, hash_free): Use C89 syntax.
+	* tests/test-hash.c (hash_compare_strings): Test this.
+
 2009-06-18  Bruno Haible  <bruno@clisp.org>
 
 	* m4/strstr.m4 (gl_FUNC_STRSTR): Skip linear time test if strstr is

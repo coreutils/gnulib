@@ -46,6 +46,7 @@
 static bool
 hash_compare_strings (void const *x, void const *y)
 {
+  ASSERT (x != y);
   return STREQ (x, y) ? true : false;
 }
 

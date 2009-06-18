@@ -263,7 +263,7 @@ hash_lookup (const Hash_table *table, const void *entry)
     return NULL;
 
   for (cursor = bucket; cursor; cursor = cursor->next)
-    if (table->comparator (entry, cursor->data))
+    if (entry == cursor->data || table->comparator (entry, cursor->data))
       return cursor->data;
 
   return NULL;
@@ -373,7 +373,7 @@ hash_do_for_each (const Hash_table *table, Hash_processor processor,
 	{
 	  for (cursor = bucket; cursor; cursor = cursor->next)
 	    {
-	      if (!(*processor) (cursor->data, processor_data))
+	      if (! processor (cursor->data, processor_data))
 		return counter;
 	      counter++;
 	    }
@@ -535,7 +535,8 @@ check_tuning (Hash_table *table)
    The user-supplied COMPARATOR function should be provided.  It accepts two
    arguments pointing to user data, it then returns true for a pair of entries
    that compare equal, or false otherwise.  This function is internally called
-   on entries which are already known to hash to the same bucket index.
+   on entries which are already known to hash to the same bucket index,
+   but which are distinct pointers.
 
    The user-supplied DATA_FREER function, when not NULL, may be later called
    with the user data as an argument, just before the entry containing the
@@ -628,7 +629,7 @@ hash_clear (Hash_table *table)
 	  for (cursor = bucket->next; cursor; cursor = next)
 	    {
 	      if (table->data_freer)
-		(*table->data_freer) (cursor->data);
+		table->data_freer (cursor->data);
 	      cursor->data = NULL;
 
 	      next = cursor->next;
@@ -640,7 +641,7 @@ hash_clear (Hash_table *table)
 
 	  /* Free the bucket head.  */
 	  if (table->data_freer)
-	    (*table->data_freer) (bucket->data);
+	    table->data_freer (bucket->data);
 	  bucket->data = NULL;
 	  bucket->next = NULL;
 	}
@@ -670,9 +671,7 @@ hash_free (Hash_table *table)
 	  if (bucket->data)
 	    {
 	      for (cursor = bucket; cursor; cursor = cursor->next)
-		{
-		  (*table->data_freer) (cursor->data);
-		}
+		table->data_freer (cursor->data);
 	    }
 	}
     }
@@ -769,7 +768,7 @@ hash_find_entry (Hash_table *table, const void *entry,
     return NULL;
 
   /* See if the entry is the first in the bucket.  */
-  if ((*table->comparator) (entry, bucket->data))
+  if (entry == bucket->data || table->comparator (entry, bucket->data))
     {
       void *data = bucket->data;
 
@@ -796,7 +795,8 @@ hash_find_entry (Hash_table *table, const void *entry,
   /* Scan the bucket overflow.  */
   for (cursor = bucket; cursor->next; cursor = cursor->next)
     {
-      if ((*table->comparator) (entry, cursor->next->data))
+      if (entry == cursor->next->data
+	  || table->comparator (entry, cursor->next->data))
 	{
 	  void *data = cursor->next->data;
 
