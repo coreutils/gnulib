@@ -26,9 +26,11 @@
 #include <config.h>
 
 #include "hash.h"
+
+#include "bitrotate.h"
 #include "xalloc.h"
 
-#include <limits.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -40,10 +42,6 @@
 # ifndef obstack_chunk_free
 #  define obstack_chunk_free free
 # endif
-#endif
-
-#ifndef SIZE_MAX
-# define SIZE_MAX ((size_t) -1)
 #endif
 
 struct hash_entry
@@ -399,10 +397,8 @@ hash_do_for_each (const Hash_table *table, Hash_processor processor,
 size_t
 hash_string (const char *string, size_t n_buckets)
 {
-# define ROTATE_LEFT(Value, Shift) \
-  ((Value) << (Shift) | (Value) >> ((sizeof (size_t) * CHAR_BIT) - (Shift)))
 # define HASH_ONE_CHAR(Value, Byte) \
-  ((Byte) + ROTATE_LEFT (Value, 7))
+  ((Byte) + rotl_sz (Value, 7))
 
   size_t value = 0;
   unsigned char ch;
@@ -411,7 +407,6 @@ hash_string (const char *string, size_t n_buckets)
     value = HASH_ONE_CHAR (value, ch);
   return value % n_buckets;
 
-# undef ROTATE_LEFT
 # undef HASH_ONE_CHAR
 }
 
@@ -488,8 +483,7 @@ raw_hasher (const void *data, size_t n)
      bits are 0.  As this tends to give poorer performance with small
      tables, we rotate the pointer value before performing division,
      in an attempt to improve hash quality.  */
-  size_t val = (size_t) data;
-  val = ((val >> 3) | (val << (CHAR_BIT * sizeof val - 3))) & SIZE_MAX;
+  size_t val = rotr_sz ((size_t) data, 3);
   return val % n;
 }
 

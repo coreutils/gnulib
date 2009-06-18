@@ -7,7 +7,9 @@ lib/hash.h
 m4/hash.m4
 
 Depends-on:
+bitrotate
 stdbool
+stdint
 xalloc
 
 configure.ac:
