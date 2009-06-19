@@ -462,7 +462,7 @@ next_prime (size_t candidate)
   /* Make it definitely odd.  */
   candidate |= 1;
 
-  while (!is_prime (candidate))
+  while (SIZE_MAX != candidate && !is_prime (candidate))
     candidate += 2;
 
   return candidate;
@@ -528,6 +528,26 @@ check_tuning (Hash_table *table)
   return false;
 }
 
+/* Compute the size of the bucket array for the given CANDIDATE and
+   TUNING, or return 0 if there is no possible way to allocate that
+   many entries.  */
+
+static size_t
+compute_bucket_size (size_t candidate, const Hash_tuning *tuning)
+{
+  if (!tuning->is_n_buckets)
+    {
+      float new_candidate = candidate / tuning->growth_threshold;
+      if (SIZE_MAX <= new_candidate)
+	return 0;
+      candidate = new_candidate;
+    }
+  candidate = next_prime (candidate);
+  if (xalloc_oversized (candidate, sizeof (struct hash_entry *)))
+    return 0;
+  return candidate;
+}
+
 /* Allocate and return a new hash table, or NULL upon failure.  The initial
    number of buckets is automatically selected so as to _guarantee_ that you
    may insert at least CANDIDATE different user entries before any growth of
@@ -591,18 +611,8 @@ hash_initialize (size_t candidate, const Hash_tuning *tuning,
       goto fail;
     }
 
-  if (!tuning->is_n_buckets)
-    {
-      float new_candidate = candidate / tuning->growth_threshold;
-      if (SIZE_MAX <= new_candidate)
-	goto fail;
-      candidate = new_candidate;
-    }
-
-  if (xalloc_oversized (candidate, sizeof *table->bucket))
-    goto fail;
-  table->n_buckets = next_prime (candidate);
-  if (xalloc_oversized (table->n_buckets, sizeof *table->bucket))
+  table->n_buckets = compute_bucket_size (candidate, tuning);
+  if (!table->n_buckets)
     goto fail;
 
   table->bucket = calloc (table->n_buckets, sizeof *table->bucket);
@@ -847,25 +857,32 @@ hash_find_entry (Hash_table *table, const void *entry,
 bool
 hash_rehash (Hash_table *table, size_t candidate)
 {
+  Hash_table storage;
   Hash_table *new_table;
   struct hash_entry *bucket;
   struct hash_entry *cursor;
   struct hash_entry *next;
+  size_t new_size = compute_bucket_size (candidate, table->tuning);
 
-  new_table = hash_initialize (candidate, table->tuning, table->hasher,
-			       table->comparator, table->data_freer);
-  if (new_table == NULL)
+  if (!new_size)
     return false;
-  if (new_table->n_buckets == table->n_buckets)
-    {
-      free (new_table->bucket);
-      free (new_table);
-      return true;
-    }
+  if (new_size == table->n_buckets)
+    return true;
+  new_table = &storage;
+  new_table->bucket = calloc (new_size, sizeof *new_table->bucket);
+  if (new_table->bucket == NULL)
+    return false;
+  new_table->n_buckets = new_size;
+  new_table->bucket_limit = new_table->bucket + new_size;
+  new_table->n_buckets_used = 0;
+  new_table->n_entries = 0;
+  new_table->tuning = table->tuning;
+  new_table->hasher = table->hasher;
+  new_table->comparator = table->comparator;
+  new_table->data_freer = table->data_freer;
 
   /* Merely reuse the extra old space into the new table.  */
 #if USE_OBSTACK
-  obstack_free (&new_table->entry_stack, NULL);
   new_table->entry_stack = table->entry_stack;
 #endif
   new_table->free_entry_list = table->free_entry_list;
@@ -926,12 +943,7 @@ hash_rehash (Hash_table *table, size_t candidate)
   table->n_buckets = new_table->n_buckets;
   table->n_buckets_used = new_table->n_buckets_used;
   table->free_entry_list = new_table->free_entry_list;
-  /* table->n_entries already holds its value.  */
-#if USE_OBSTACK
-  table->entry_stack = new_table->entry_stack;
-#endif
-  free (new_table);
-
+  /* table->n_entries and table->entry_stack already hold their value.  */
   return true;
 }
 

@@ -1,3 +1,13 @@
+2009-06-19  Eric Blake  <ebb9@byu.net>
+
+	hash: reduce memory pressure in hash_rehash no-op case
+	* lib/hash.c (next_prime): Avoid overflow.
+	(hash_initialize): Factor bucket size computation...
+	(compute_bucket_size): ...into new helper function.
+	(hash_rehash): Use new function and open coding to reduce memory
+	pressure, and avoid a memory leak in USE_OBSTACK code.
+	Reported by Jim Meyering.
+
 2009-06-18  Eric Blake  <ebb9@byu.net>
 
 	hash: make rotation more obvious
