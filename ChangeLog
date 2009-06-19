@@ -1,3 +1,10 @@
+2009-06-20  Jim Meyering  <meyering@redhat.com>
+
+	tests: make sc_require_test_exit_idiom more generic
+	* top/maint.mk (Exit_witness_file): New overridable variable.
+	(sc_require_test_exit_idiom): Don't hard-code tests/test-lib.sh.
+	Relax test for /^Exit \$fail$$/ to just /^Exit ./.
+
 2009-06-19  Jim Meyering  <meyering@redhat.com>
 
 	hash: reverse order of src/dst parameters in an internal interface

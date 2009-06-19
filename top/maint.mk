@@ -363,16 +363,19 @@ sc_program_name:
 # Require that the final line of each test-lib.sh-using test be this one:
 # Exit $fail
 # Note: this test requires GNU grep's --label= option.
+Exit_witness_file ?= tests/test-lib.sh
+Exit_base := $(notdir $(Exit_witness_file))
 sc_require_test_exit_idiom:
-	@if test -f $(srcdir)/tests/test-lib.sh; then			\
+	@if test -f $(srcdir)/$(Exit_witness_file); then		\
 	  die=0;							\
-	  for i in $$(grep -l -F /../test-lib.sh $$($(VC_LIST) tests)); do \
-	    tail -n1 $$i | grep '^Exit \$$fail$$' > /dev/null		\
+	  for i in $$(grep -l -F 'srcdir/$(Exit_base)'			\
+		$$($(VC_LIST) tests)); do				\
+	    tail -n1 $$i | grep '^Exit .' > /dev/null			\
 	      && : || { die=1; echo $$i; }				\
 	  done;								\
 	  test $$die = 1 &&						\
 	    { echo 1>&2 '$(ME): the final line in each of the above is not:'; \
-	      echo 1>&2 'Exit $$fail';					\
+	      echo 1>&2 'Exit something';				\
 	      exit 1; } || :;						\
 	fi
 
