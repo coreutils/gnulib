@@ -853,7 +853,7 @@ hash_find_entry (Hash_table *table, const void *entry,
    allocation fails.  */
 
 static bool
-transfer_entries (Hash_table *src, Hash_table *dst, bool safe)
+transfer_entries (Hash_table *dst, Hash_table *src, bool safe)
 {
   struct hash_entry *bucket;
   struct hash_entry *cursor;
@@ -985,7 +985,7 @@ hash_rehash (Hash_table *table, size_t candidate)
 #endif
   new_table->free_entry_list = table->free_entry_list;
 
-  if (transfer_entries (table, new_table, false))
+  if (transfer_entries (new_table, table, false))
     {
       /* Entries transferred successfully; tie up the loose ends.  */
       free (table->bucket);
@@ -1012,8 +1012,8 @@ hash_rehash (Hash_table *table, size_t candidate)
      longer, but at this point, we're already out of memory, so slow
      and safe is better than failure.  */
   table->free_entry_list = new_table->free_entry_list;
-  if (! (transfer_entries (new_table, table, true)
-	 && transfer_entries (new_table, table, false)))
+  if (! (transfer_entries (table, new_table, true)
+	 && transfer_entries (table, new_table, false)))
     abort ();
   /* table->n_entries already holds its value.  */
   free (new_table->bucket);

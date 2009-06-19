@@ -1,5 +1,9 @@
 2009-06-19  Jim Meyering  <meyering@redhat.com>
 
+	hash: reverse order of src/dst parameters in an internal interface
+	* lib/hash.c (transfer_entries): Reverse order of parameters to
+	put DST before SRC.  Adjust callers.
+
 	tests: test-hash: avoid wholesale duplication
 	* tests/test-hash.c (main): Don't copy/paste a 60-line loop.
 	Instead, use a loop and add a single conditional.
