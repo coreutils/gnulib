@@ -1,5 +1,9 @@
 2009-06-19  Jim Meyering  <meyering@redhat.com>
 
+	tests: test-hash: avoid wholesale duplication
+	* tests/test-hash.c (main): Don't copy/paste a 60-line loop.
+	Instead, use a loop and add a single conditional.
+
 	tests: test-hash: allow seed selection via a command line argument
 	* tests/test-hash.c (get_seed): New function.
 	(main): Use it.

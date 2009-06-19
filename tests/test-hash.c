@@ -93,9 +93,17 @@ int
 main (int argc, char **argv)
 {
   unsigned int i;
+  unsigned int k;
   unsigned int table_size[] = {1, 2, 3, 4, 5, 23, 53};
   Hash_table *ht;
   Hash_tuning tuning;
+
+  hash_reset_tuning (&tuning);
+  tuning.shrink_threshold = 0.3;
+  tuning.shrink_factor = 0.707;
+  tuning.growth_threshold = 1.5;
+  tuning.growth_factor = 2.0;
+  tuning.is_n_buckets = true;
 
   if (1 < argc)
     {
@@ -172,70 +180,6 @@ main (int argc, char **argv)
       hash_free (ht);
     }
 
-  /* Now, each entry is malloc'd.  */
-  ht = hash_initialize (4651, NULL, hash_pjw, hash_compare_strings, hash_freer);
-  ASSERT (ht);
-  for (i = 0; i < 10000; i++)
-    {
-      unsigned int op = rand () % 10;
-      switch (op)
-	{
-	case 0:
-	case 1:
-	case 2:
-	case 3:
-	case 4:
-	case 5:
-	  {
-	    char buf[50];
-	    char const *p = uinttostr (i, buf);
-	    insert_new (ht, xstrdup (p));
-	  }
-	  break;
-
-	case 6:
-	  {
-	    size_t n = hash_get_n_entries (ht);
-	    ASSERT (hash_rehash (ht, n + rand () % 20));
-	  }
-	  break;
-
-	case 7:
-	  {
-	    size_t n = hash_get_n_entries (ht);
-	    size_t delta = rand () % 20;
-	    if (delta < n)
-	      ASSERT (hash_rehash (ht, n - delta));
-	  }
-	  break;
-
-	case 8:
-	case 9:
-	  {
-	    /* Delete a random entry.  */
-	    size_t n = hash_get_n_entries (ht);
-	    if (n)
-	      {
-		size_t k = rand () % n;
-		void const *p;
-		void *v;
-		for (p = hash_get_first (ht); k; --k, p = hash_get_next (ht, p))
-		  {
-		    /* empty */
-		  }
-		ASSERT (p);
-		v = hash_delete (ht, p);
-		ASSERT (v);
-		free (v);
-	      }
-	    break;
-	  }
-	}
-      ASSERT (hash_table_ok (ht));
-    }
-
-  hash_free (ht);
-
   hash_reset_tuning (&tuning);
   tuning.shrink_threshold = 0.3;
   tuning.shrink_factor = 0.707;
@@ -249,69 +193,77 @@ main (int argc, char **argv)
 
   /* Alternate tuning.  */
   tuning.growth_threshold = 0.89;
-  ht = hash_initialize (4651, &tuning, hash_pjw, hash_compare_strings,
-			hash_freer);
-  ASSERT (ht);
-  for (i = 0; i < 10000; i++)
+
+  /* Run with default tuning, then with custom tuning settings.  */
+  for (k = 0; k < 2; k++)
     {
-      unsigned int op = rand () % 10;
-      switch (op)
+      Hash_tuning const *tune = (k == 0 ? NULL : &tuning);
+      /* Now, each entry is malloc'd.  */
+      ht = hash_initialize (4651, tune, hash_pjw,
+			    hash_compare_strings, hash_freer);
+      ASSERT (ht);
+      for (i = 0; i < 10000; i++)
 	{
-	case 0:
-	case 1:
-	case 2:
-	case 3:
-	case 4:
-	case 5:
-	  {
-	    char buf[50];
-	    char const *p = uinttostr (i, buf);
-	    insert_new (ht, xstrdup (p));
-	  }
-	  break;
-
-	case 6:
-	  {
-	    size_t n = hash_get_n_entries (ht);
-	    ASSERT (hash_rehash (ht, n + rand () % 20));
-	  }
-	  break;
-
-	case 7:
-	  {
-	    size_t n = hash_get_n_entries (ht);
-	    size_t delta = rand () % 20;
-	    if (delta < n)
-	      ASSERT (hash_rehash (ht, n - delta));
-	  }
-	  break;
-
-	case 8:
-	case 9:
-	  {
-	    /* Delete a random entry.  */
-	    size_t n = hash_get_n_entries (ht);
-	    if (n)
+	  unsigned int op = rand () % 10;
+	  switch (op)
+	    {
+	    case 0:
+	    case 1:
+	    case 2:
+	    case 3:
+	    case 4:
+	    case 5:
 	      {
-		size_t k = rand () % n;
-		void const *p;
-		void *v;
-		for (p = hash_get_first (ht); k; --k, p = hash_get_next (ht, p))
-		  {
-		    /* empty */
-		  }
-		ASSERT (p);
-		v = hash_delete (ht, p);
-		ASSERT (v);
-		free (v);
+		char buf[50];
+		char const *p = uinttostr (i, buf);
+		insert_new (ht, xstrdup (p));
 	      }
-	    break;
-	  }
-	}
-      ASSERT (hash_table_ok (ht));
-    }
+	      break;
 
-  hash_free (ht);
+	    case 6:
+	      {
+		size_t n = hash_get_n_entries (ht);
+		ASSERT (hash_rehash (ht, n + rand () % 20));
+	      }
+	      break;
+
+	    case 7:
+	      {
+		size_t n = hash_get_n_entries (ht);
+		size_t delta = rand () % 20;
+		if (delta < n)
+		  ASSERT (hash_rehash (ht, n - delta));
+	      }
+	      break;
+
+	    case 8:
+	    case 9:
+	      {
+		/* Delete a random entry.  */
+		size_t n = hash_get_n_entries (ht);
+		if (n)
+		  {
+		    size_t k = rand () % n;
+		    void const *p;
+		    void *v;
+		    for (p = hash_get_first (ht); k;
+			 --k, p = hash_get_next (ht, p))
+		      {
+			/* empty */
+		      }
+		    ASSERT (p);
+		    v = hash_delete (ht, p);
+		    ASSERT (v);
+		    free (v);
+		  }
+		break;
+	      }
+	    }
+	  ASSERT (hash_table_ok (ht));
+	}
+
+      hash_free (ht);
+    }
 
   return 0;
 }
