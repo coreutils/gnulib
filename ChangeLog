@@ -1,3 +1,9 @@
+2009-06-19  Jim Meyering  <meyering@redhat.com>
+
+	tests: test-hash: allow seed selection via a command line argument
+	* tests/test-hash.c (get_seed): New function.
+	(main): Use it.
+
 2009-06-19  Eric Blake  <ebb9@byu.net>
 
 	hash: avoid memory leak on allocation failure

@@ -78,13 +78,36 @@ walk (void *ent, void *data)
   return false;
 }
 
+static int
+get_seed (char const *str, unsigned int *seed)
+{
+  size_t len = strlen (str);
+  if (len == 0 || strspn (str, "0123456789") != len || 10 < len)
+    return 1;
+
+  *seed = atoi (str);
+  return 0;
+}
+
 int
-main (void)
+main (int argc, char **argv)
 {
   unsigned int i;
   unsigned int table_size[] = {1, 2, 3, 4, 5, 23, 53};
   Hash_table *ht;
   Hash_tuning tuning;
+
+  if (1 < argc)
+    {
+      unsigned int seed;
+      if (get_seed (argv[1], &seed) != 0)
+	{
+	  fprintf (stderr, "invalid seed: %s\n", argv[1]);
+	  exit (EXIT_FAILURE);
+	}
+
+      srand (seed);
+    }
 
   for (i = 0; i < ARRAY_CARDINALITY (table_size); i++)
     {
