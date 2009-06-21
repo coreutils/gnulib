@@ -1,4 +1,4 @@
-# lib-link.m4 serial 19 (gettext-0.18)
+# lib-link.m4 serial 20 (gettext-0.18)
 dnl Copyright (C) 2001-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -210,6 +210,9 @@ AC_DEFUN([AC_LIB_LINKFLAGS_BODY],
   LTLIB[]NAME=
   INC[]NAME=
   LIB[]NAME[]_PREFIX=
+  dnl HAVE_LIB${NAME} is an indicator that LIB${NAME}, LTLIB${NAME} have been
+  dnl computed. So it has to be reset here.
+  HAVE_LIB[]NAME=
   rpathdirs=
   ltrpathdirs=
   names_already_handled=
