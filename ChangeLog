@@ -1,3 +1,8 @@
+2009-06-23  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/hash-tests (test_hash_LDADD): Link to libintl when
+	needed.
+
 2009-06-21  Bruno Haible  <bruno@clisp.org>
 
 	Make two consecutive identical invocations of AC_LIB_HAVE_LINKFLAGS

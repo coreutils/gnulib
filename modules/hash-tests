@@ -13,3 +13,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-hash
 check_PROGRAMS += test-hash
+test_hash_LDADD = $(LDADD) @LIBINTL@
