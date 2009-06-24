@@ -1,3 +1,9 @@
+2009-06-24  Bruno Haible  <bruno@clisp.org>
+
+	* m4/lib-link.m4 (AC_LIB_HAVE_LINKFLAGS): Fix description of
+	HAVE_LIB${NAME} macro.
+	Reported by Sam Steingold <sds@gnu.org>.
+
 2009-06-23  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/hash-tests (test_hash_LDADD): Link to libintl when

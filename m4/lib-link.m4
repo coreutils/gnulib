@@ -82,7 +82,7 @@ AC_DEFUN([AC_LIB_HAVE_LINKFLAGS],
   ])
   if test "$ac_cv_lib[]Name" = yes; then
     HAVE_LIB[]NAME=yes
-    AC_DEFINE([HAVE_LIB]NAME, 1, [Define if you have the lib[]$1 library.])
+    AC_DEFINE([HAVE_LIB]NAME, 1, [Define if you have the lib][$1 library.])
     AC_MSG_CHECKING([how to link with lib[]$1])
     AC_MSG_RESULT([$LIB[]NAME])
   else
