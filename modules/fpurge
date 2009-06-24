@@ -2,21 +2,22 @@ Description:
 fpurge() function: Flush buffers.
 
 Files:
-lib/fpurge.h
 lib/fpurge.c
 lib/stdio-impl.h
 m4/fpurge.m4
 
 Depends-on:
+stdio
 
 configure.ac:
 gl_FUNC_FPURGE
+gl_STDIO_MODULE_INDICATOR([fpurge])
 
 Makefile.am:
 lib_SOURCES += fpurge.c
 
 Include:
-"fpurge.h"
+<stdio.h>
 
 License:
 LGPL

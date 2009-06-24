@@ -1,3 +1,19 @@
+2009-06-25  Eric Blake  <ebb9@byu.net>
+
+	fpurge: migrate into <stdio.h>
+	* lib/fpurge.h: Delete...
+	* lib/stdio.in.h (fpurge): ...and declare here, instead.
+	* lib/fpurge.c (fpurge): Change declaring header.
+	* modules/fpurge (Files): Drop deleted file.
+	(Depends-on): Add stdio.
+	(configure.ac): Set witness.
+	* modules/stdio (Makefile.am): Support fpurge macros.
+	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Likewise.
+	* m4/fpurge.m4 (gl_FUNC_FPURGE): Set appropriate variables.
+	* lib/fflush.c: Update client.
+	* tests/test-fpurge.c: Likewise.
+	* NEWS: Mention the change.
+
 2009-06-25  Sergey Poznyakoff  <gray@gnu.org.ua>
 
        * lib/argp-version-etc.c (program_authors): Add const

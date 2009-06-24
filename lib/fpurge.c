@@ -17,7 +17,7 @@
 #include <config.h>
 
 /* Specification.  */
-#include "fpurge.h"
+#include <stdio.h>
 
 #if HAVE___FPURGE                   /* glibc >= 2.2, Haiku, Solaris >= 7 */
 # include <stdio_ext.h>

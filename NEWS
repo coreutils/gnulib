@@ -6,6 +6,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2009-06-25  fpurge          The include file is changed from "fpurge.h" to
+                            <stdio.h>.
+
 2009-04-26  modules/uniconv/u8-conv-from-enc
             modules/uniconv/u16-conv-from-enc
             modules/uniconv/u32-conv-from-enc
