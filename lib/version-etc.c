@@ -161,7 +161,7 @@ Written by %s, %s, %s,\n%s, %s, %s, %s,\n%s, and %s.\n"),
       fprintf (stream, _("\
 Written by %s, %s, %s,\n%s, %s, %s, %s,\n%s, %s, and others.\n"),
 		authors[0], authors[1], authors[2], authors[3], authors[4],
-		authors[5], authors[6], authors[7], authors[8], authors[9]);
+		authors[5], authors[6], authors[7], authors[8]);
       break;
     }
 }
@@ -196,7 +196,7 @@ version_etc_va (FILE *stream,
 
   for (n_authors = 0;
        n_authors < 10
-	 && (authtab[n_authors++] = va_arg (authors, const char *)) != NULL;
+	 && (authtab[n_authors] = va_arg (authors, const char *)) != NULL;
        n_authors++)
     ;
   version_etc_arn (stream, command_name, package, version,

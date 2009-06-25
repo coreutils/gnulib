@@ -22,6 +22,15 @@
 # include <stdarg.h>
 # include <stdio.h>
 
+/* The `sentinel' attribute was added in gcc 4.0.  */
+#ifndef ATTRIBUTE_SENTINEL
+# if 4 <= __GNUC__
+#  define ATTRIBUTE_SENTINEL __attribute__ ((__sentinel__))
+# else
+#  define ATTRIBUTE_SENTINEL /* empty */
+# endif
+#endif
+
 extern const char version_etc_copyright[];
 
 /* The three functions below display the --version information in the
@@ -39,28 +48,29 @@ extern const char version_etc_copyright[];
 
    The functions differ in the way they are passed author names: */
 
-/* N_AUTHORS names are supplied in array AUTHORS */
+/* N_AUTHORS names are supplied in array AUTHORS.  */
 extern void version_etc_arn (FILE *stream,
 			     const char *command_name, const char *package,
 			     const char *version,
 			     const char * const * authors, size_t n_authors);
 
-/* Names are passed in the NULL-terminated array AUTHORS */
+/* Names are passed in the NULL-terminated array AUTHORS.  */
 extern void version_etc_ar (FILE *stream,
 			    const char *command_name, const char *package,
 			    const char *version, const char * const * authors);
 
-/* Names are passed in the NULL-terminated va_list */
+/* Names are passed in the NULL-terminated va_list.  */
 extern void version_etc_va (FILE *stream,
 			    const char *command_name, const char *package,
 			    const char *version, va_list authors);
 
 /* Names are passed as separate arguments, with an additional
-   NULL argument at the end. */
+   NULL argument at the end.  */
 extern void version_etc (FILE *stream,
 			 const char *command_name, const char *package,
 			 const char *version,
-			 /* const char *author1, ...*/ ...);
+			 /* const char *author1, ..., NULL */ ...)
+  ATTRIBUTE_SENTINEL;
 
 /* Display the usual `Report bugs to' stanza */
 extern void emit_bug_reporting_address (void);

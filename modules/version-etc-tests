@@ -1,0 +1,13 @@
+Files:
+tests/test-version-etc.c
+tests/test-version-etc.sh
+
+Depends-on:
+progname
+version-etc-fsf
+
+Makefile.am:
+TESTS += test-version-etc.sh
+TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
+check_PROGRAMS += test-version-etc
+test_version_etc_LDADD = $(LDADD) @LIBINTL@

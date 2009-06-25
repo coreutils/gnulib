@@ -1,3 +1,15 @@
+2009-06-25  Eric Blake  <ebb9@byu.net>
+
+	version-etc: fix regression
+	* lib/version-etc.h (ATTRIBUTE_SENTINEL): Define for new enough
+	gcc.
+	(version_etc): Use it, to catch bugs with trailing NULL.
+	* lib/version-etc.c (version_etc_arn): Delete unused argument.
+	(version_etc_va): Fix logic bug.
+	* modules/version-etc-tests: Add test.
+	* tests/test-version-etc.c: New file.
+	* tests/test-version-etc.sh: Likewise.
+
 2009-06-25  Sam Steingold  <sds@gnu.org>
 
 	* mbrtowc.m4 (gl_MBRTOWC_SANITYCHECK): Include <stdlib.h>, for the
