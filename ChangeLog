@@ -1,5 +1,16 @@
 2009-06-25  Sergey Poznyakoff  <gray@gnu.org.ua>
 
+	argp-version-etc: new module.
+
+	* lib/argp-version-etc.c: New file.
+	* lib/argp-version-etc.h: New file.
+	* modules/argp-version-etc: New file.
+	* modules/argp-version-etc-tests: New file.
+	* tests/test-argp-version-etc.c: New test.
+	* tests/test-argp-version-etc-1.sh: New test.
+
+2009-06-25  Sergey Poznyakoff  <gray@gnu.org.ua>
+
 	Provide additional interfaces and documentation for version-etc
 	module.
 
