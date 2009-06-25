@@ -20,7 +20,7 @@
 #include <argp-version-etc.h>
 
 static const char *program_canonical_name;
-static const char **program_authors;
+static const char * const *program_authors;
 
 static void
 version_etc_hook (FILE *stream, struct argp_state *state)

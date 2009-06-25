@@ -1,5 +1,12 @@
 2009-06-25  Sergey Poznyakoff  <gray@gnu.org.ua>
 
+       * lib/argp-version-etc.c (program_authors): Add const
+       qualifier.
+       * lib/version-etc.c: Fix typos in the comments.
+       * modules/argp-version-etc: Depends on version-etc.
+
+2009-06-25  Sergey Poznyakoff  <gray@gnu.org.ua>
+
 	argp-version-etc: new module.
 
 	* lib/argp-version-etc.c: New file.

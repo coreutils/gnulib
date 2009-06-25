@@ -37,7 +37,7 @@ enum { COPYRIGHT_YEAR = 2009 };
 /* The three functions below display the --version information the
    standard way.
 
-   If COMMAND_NAME is NULL, the PACKAGE is asumed to be the name of
+   If COMMAND_NAME is NULL, the PACKAGE is assumed to be the name of
    the program.  The formats are therefore:
 
    PACKAGE VERSION
@@ -206,7 +206,7 @@ version_etc_va (FILE *stream,
 
 /* Display the --version information the standard way.
 
-   If COMMAND_NAME is NULL, the PACKAGE is asumed to be the name of
+   If COMMAND_NAME is NULL, the PACKAGE is assumed to be the name of
    the program.  The formats are therefore:
 
    PACKAGE VERSION

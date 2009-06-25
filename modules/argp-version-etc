@@ -7,6 +7,7 @@ lib/argp-version-etc.h
 
 Depends-on:
 argp
+version-etc
 
 Makefile.am:
 lib_SOURCES += argp-version-etc.h argp-version-etc.c
