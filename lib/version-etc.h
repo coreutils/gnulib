@@ -24,15 +24,45 @@
 
 extern const char version_etc_copyright[];
 
+/* The three functions below display the --version information in the
+   standard way: command and package names, package version, followed
+   by a short GPLv3+ notice and a list of up to 10 author names.
+
+   If COMMAND_NAME is NULL, the PACKAGE is asumed to be the name of
+   the program.  The formats are therefore:
+
+   PACKAGE VERSION
+
+   or
+
+   COMMAND_NAME (PACKAGE) VERSION.
+
+   The functions differ in the way they are passed author names: */
+
+/* N_AUTHORS names are supplied in array AUTHORS */
+extern void version_etc_arn (FILE *stream,
+			     const char *command_name, const char *package,
+			     const char *version,
+			     const char * const * authors, size_t n_authors);
+
+/* Names are passed in the NULL-terminated array AUTHORS */
+extern void version_etc_ar (FILE *stream,
+			    const char *command_name, const char *package,
+			    const char *version, const char * const * authors);
+
+/* Names are passed in the NULL-terminated va_list */
 extern void version_etc_va (FILE *stream,
 			    const char *command_name, const char *package,
 			    const char *version, va_list authors);
 
+/* Names are passed as separate arguments, with an additional
+   NULL argument at the end. */
 extern void version_etc (FILE *stream,
 			 const char *command_name, const char *package,
 			 const char *version,
 			 /* const char *author1, ...*/ ...);
 
+/* Display the usual `Report bugs to' stanza */
 extern void emit_bug_reporting_address (void);
 
 #endif /* VERSION_ETC_H */

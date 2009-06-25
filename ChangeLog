@@ -1,3 +1,13 @@
+2009-06-25  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Provide additional interfaces and documentation for version-etc
+	module.
+
+	* lib/version-etc.c (version_etc_arn, version_etc_ar): New
+	interfaces.
+	* lib/version-etc.h (version_etc_arn, version_etc_ar): New
+	prototypes.
+
 2009-06-24  Bruno Haible  <bruno@clisp.org>
 
 	* m4/lib-link.m4 (AC_LIB_HAVE_LINKFLAGS): Fix description of
