@@ -2,6 +2,7 @@ Files:
 tests/test-unistd.c
 
 Depends-on:
+verify
 
 configure.ac:
 

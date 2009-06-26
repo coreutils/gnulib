@@ -2,6 +2,7 @@ Files:
 tests/test-locale.c
 
 Depends-on:
+verify
 
 configure.ac:
 

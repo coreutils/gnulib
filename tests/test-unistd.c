@@ -20,6 +20,12 @@
 
 #include <unistd.h>
 
+#include "verify.h"
+
+/* Check that NULL can be passed through varargs as a pointer type,
+   per POSIX 2008.  */
+verify (sizeof NULL == sizeof (void *));
+
 /* Check that the various SEEK_* macros are defined.  */
 int sk[] = { SEEK_CUR, SEEK_END, SEEK_SET };
 

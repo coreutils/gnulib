@@ -1,3 +1,17 @@
+2009-06-27  Eric Blake  <ebb9@byu.net>
+
+	tests: add test for bogus NULL definition
+	* tests/test-stdio.c: Ensure POSIX 2008 requirement on NULL.
+	* tests/test-stdlib.c: Likewise.
+	* tests/test-string.c: Likewise.
+	* tests/test-locale.c: Likewise.
+	* tests/test-unistd.c: Likewise.
+	* modules/stdio-tests (Depends-on): Add verify.
+	* modules/stdlib-tests (Depends-on): Likewise.
+	* modules/string-tests (Depends-on): Likewise.
+	* modules/locale-tests (Depends-on): Likewise.
+	* modules/unistd-tests (Depends-on): Likewise.
+
 2009-06-27  Paolo Bonzini  <bonzini@gnu.org>
 
 	* m4/selinux-context-h (gl_HEADERS_SELINUX_CONTEXT_H): Remove

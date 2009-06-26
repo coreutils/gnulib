@@ -2,6 +2,7 @@ Files:
 tests/test-stdio.c
 
 Depends-on:
+verify
 
 configure.ac:
 
