@@ -1,4 +1,4 @@
-# mbrtowc.m4 serial 15
+# mbrtowc.m4 serial 16
 dnl Copyright (C) 2001-2002, 2004-2005, 2008, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -156,6 +156,7 @@ changequote([,])dnl
       if test $LOCALE_ZH_CN != none; then
         AC_TRY_RUN([
 #include <locale.h>
+#include <stdlib.h>
 #include <string.h>
 #include <wchar.h>
 int main ()
