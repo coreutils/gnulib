@@ -9,7 +9,6 @@
 
 AC_DEFUN([gl_HEADERS_SELINUX_CONTEXT_H],
 [
-  # Check for <selinux/context.h>,
   AC_CHECK_HEADERS([selinux/context.h],
 		   [SELINUX_CONTEXT_H=],
 		   [SELINUX_CONTEXT_H=selinux/context.h])

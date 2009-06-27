@@ -1,3 +1,13 @@
+2009-06-27  Paolo Bonzini  <bonzini@gnu.org>
+
+	* m4/selinux-context-h (gl_HEADERS_SELINUX_CONTEXT_H): Remove
+	self-explaining comment.
+	* m4/selinux-selinux-h: Update serial.
+	(gl_LIBSELINUX): New macro, adding a warning for missing development
+	packages to code extracted from...
+	(gl_HEADERS_SELINUX_SELINUX_H): ... this one.  Require gl_LIBSELINUX.
+	Add warning for missing development packages here, too.
+
 2009-06-26  Paolo Bonzini  <bonzini@gnu.org>
 
 	* build-aux/bootstrap: Do not use GIT_CONFIG_LOCAL.
