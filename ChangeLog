@@ -1,3 +1,7 @@
+2009-06-26  Paolo Bonzini  <bonzini@gnu.org>
+
+	* build-aux/bootstrap: Do not use GIT_CONFIG_LOCAL.
+
 2009-06-25  Eric Blake  <ebb9@byu.net>
 
 	version-etc: fix regression
