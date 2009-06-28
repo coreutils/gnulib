@@ -1,5 +1,8 @@
 2009-06-28  Jim Meyering  <meyering@redhat.com>
 
+	bootstrap: split long lines
+	* build-aux/bootstrap: Keep line length < 80.
+
 	bootstrap: sync from coreutils
 	* build-aux/bootstrap: Honor variables like $ACLOCAL, etc.,
 	just as autoreconf does.  Verify a list of prerequisite
