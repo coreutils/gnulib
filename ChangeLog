@@ -1,5 +1,8 @@
 2009-06-28  Jim Meyering  <meyering@redhat.com>
 
+	boostrap: indent only with spaces
+	* build-aux/bootstrap: Indent only with spaces, never TABs.
+
 	bootstrap: split long lines
 	* build-aux/bootstrap: Keep line length < 80.
 
