@@ -7,23 +7,9 @@ lib/unicase/u-totitle.h
 
 Depends-on:
 unicase/base
-unicase/special-casing
-unicase/totitle
-unicase/tolower
-uniwbrk/wordbreak-property
-uniwbrk/u32-wordbreaks
-unictype/category-of
-unictype/category-test
-unictype/category-Lt
-unictype/combining-class
-unictype/property-lowercase
-unictype/property-uppercase
-unictype/property-soft-dotted
-unistr/u32-mbtouc-unsafe
-unistr/u32-uctomb
-unistr/u32-cpy
-uninorm/u32-normalize
-stdbool
+unicase/u32-ct-totitle
+unicase/empty-prefix-context
+unicase/empty-suffix-context
 
 configure.ac:
 

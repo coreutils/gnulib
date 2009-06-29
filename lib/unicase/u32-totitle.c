@@ -20,22 +20,7 @@
 /* Specification.  */
 #include "unicase.h"
 
-#include <errno.h>
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdlib.h>
-
-#include "unistr.h"
-#include "unictype.h"
-#include "uniwbrk.h"
-#include "uninorm.h"
-#include "special-casing.h"
-
 #define FUNC u32_totitle
 #define UNIT uint32_t
-#define U_WORDBREAKS u32_wordbreaks
-#define U_MBTOUC_UNSAFE u32_mbtouc_unsafe
-#define U_UCTOMB u32_uctomb
-#define U_CPY u32_cpy
-#define U_NORMALIZE u32_normalize
+#define U_CT_TOTITLE u32_ct_totitle
 #include "u-totitle.h"
