@@ -1,5 +1,10 @@
 2009-06-29  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unicase/u8-ct-totitle'.
+	* lib/unicase/u8-ct-totitle.c: New file.
+	* lib/unicase/u-ct-totitle.h: New file.
+	* modules/unicase/u8-ct-totitle: New file.
+
 	New module 'unicase/u32-ct-tolower'.
 	* lib/unicase/u32-ct-tolower.c: New file.
 	* modules/unicase/u32-ct-tolower: New file.
