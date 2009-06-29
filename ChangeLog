@@ -1,5 +1,9 @@
 2009-06-29  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unicase/empty-prefix-context'.
+	* lib/unicase/empty-prefix-context.c: New file.
+	* modules/unicase/empty-prefix-context: New file.
+
 	New module 'unicase/ignorable'.
 	* lib/unicase/ignorable.c: New file.
 	* modules/unicase/ignorable: New file.
