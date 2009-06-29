@@ -7,12 +7,9 @@ lib/unicase/u-casefold.h
 
 Depends-on:
 unicase/base
-unicase/u16-casemap
-unicase/special-casing
-unicase/tocasefold
-uninorm/decomposing-form
-uninorm/u16-normalize
-uninorm/nfd
+unicase/u16-ct-casefold
+unicase/empty-prefix-context
+unicase/empty-suffix-context
 
 configure.ac:
 

@@ -1,5 +1,11 @@
 2009-06-29  Bruno Haible  <bruno@clisp.org>
 
+	Define u16_casefold as a wrapper around u16_ct_casefold.
+	* lib/unicase/u16-casefold.c: Update.
+	* modules/unicase/u16-casefold (Depends-on): Add
+	unicase/u16-ct-casefold, unicase/empty-prefix-context,
+	unicase/empty-suffix-context. Clean up.
+
 	Define u8_casefold as a wrapper around u8_ct_casefold.
 	* lib/unicase/u-casefold.h (FUNC): Delegate to U_CT_CASEFOLD.
 	* lib/unicase/u8-casefold.c: Update.
