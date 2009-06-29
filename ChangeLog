@@ -1,5 +1,23 @@
 2009-06-29  Bruno Haible  <bruno@clisp.org>
 
+	Add context arguments to u*_casemap functions.
+	* lib/unicase/unicasemap.h: Include unicase.h.
+	(u8_casemap, u16_casemap, u32_casemap): Add prefix_context and
+	suffix_context arguments.
+	* lib/unicase/u-casemap.h (is_cased, is_case_ignorable): Remove
+	functions.
+	(FUNC): Add prefix_context and suffix_context arguments. Use
+	uc_is_cased and uc_is_case_ignorable.
+	* lib/unicase/u8-casemap.c: Include caseprop.h and context.h.
+	* lib/unicase/u16-casemap.c: Likewise.
+	* lib/unicase/u32-casemap.c: Likewise.
+	* modules/unicase/u8-casemap (Files): Add lib/unicase/context.h.
+	(Depends-on): Add unicase/cased, unicase/ignorable. Clean up.
+	* modules/unicase/u16-casemap (Files): Add lib/unicase/context.h.
+	(Depends-on): Add unicase/cased, unicase/ignorable. Clean up.
+	* modules/unicase/u32-casemap (Files): Add lib/unicase/context.h.
+	(Depends-on): Add unicase/cased, unicase/ignorable. Clean up.
+
 	New module 'unicase/u32-suffix-context'.
 	* lib/unicase/u32-suffix-context.c: New file.
 	* modules/unicase/u32-suffix-context: New file.

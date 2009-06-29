@@ -28,6 +28,8 @@
 #include "unictype.h"
 #include "uniwbrk.h"
 #include "uninorm.h"
+#include "caseprop.h"
+#include "context.h"
 #include "special-casing.h"
 
 #define FUNC u8_casemap

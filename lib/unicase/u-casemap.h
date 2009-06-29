@@ -15,40 +15,11 @@
    You should have received a copy of the GNU Lesser General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-/* Quoting the Unicode standard:
-     Definition: A character is defined to be "cased" if it has the Lowercase or
-     Uppercase property or has a General_Category value of Titlecase_Letter.  */
-static inline bool
-is_cased (ucs4_t uc)
-{
-  return (uc_is_property_lowercase (uc)
-	  || uc_is_property_uppercase (uc)
-	  || uc_is_general_category (uc, UC_TITLECASE_LETTER));
-}
-
-/* Quoting the Unicode standard:
-     Definition: A character is defined to be "case-ignorable" if it has the
-     value MidLetter {or the value MidNumLet} for the Word_Break property or
-     its General_Category is one of Nonspacing_Mark (Mn), Enclosing_Mark (Me),
-     Format (Cf), Modifier_Letter (Lm), or Modifier_Symbol (Sk).
-   The text marked in braces was added in Unicode 5.1.0, see
-   <http://www.unicode.org/versions/Unicode5.1.0/> section "Update of
-   Definition of case-ignorable".   */
-static inline bool
-is_case_ignorable (ucs4_t uc)
-{
-  int wbp = uc_wordbreak_property (uc);
-
-  return (wbp == WBP_MIDLETTER || wbp == WBP_MIDNUMLET
-	  || uc_is_general_category_withtable (uc, UC_CATEGORY_MASK_Mn
-						   | UC_CATEGORY_MASK_Me
-						   | UC_CATEGORY_MASK_Cf
-						   | UC_CATEGORY_MASK_Lm
-						   | UC_CATEGORY_MASK_Sk));
-}
-
 UNIT *
-FUNC (const UNIT *s, size_t n, const char *iso639_language,
+FUNC (const UNIT *s, size_t n,
+      casing_prefix_context_t prefix_context,
+      casing_suffix_context_t suffix_context,
+      const char *iso639_language,
       ucs4_t (*single_character_map) (ucs4_t),
       size_t offset_in_rule, /* offset in 'struct special_casing_rule' */
       uninorm_t nf,
@@ -77,11 +48,13 @@ FUNC (const UNIT *s, size_t n, const char *iso639_language,
 
     /* Helper for evaluating the FINAL_SIGMA condition:
        Last character that was not case-ignorable.  */
-    ucs4_t last_char_except_ignorable = 0xFFFD;
+    ucs4_t last_char_except_ignorable =
+      prefix_context.last_char_except_ignorable;
 
     /* Helper for evaluating the AFTER_SOFT_DOTTED and AFTER_I conditions:
        Last character that was of combining class 230 ("Above") or 0.  */
-    ucs4_t last_char_normal_or_above = 0xFFFD;
+    ucs4_t last_char_normal_or_above =
+      prefix_context.last_char_normal_or_above;
 
     while (s < s_end)
       {
@@ -134,23 +107,31 @@ FUNC (const UNIT *s, size_t n, const char *iso639_language,
 			   consisting of a case-ignorable sequence and then a
 			   cased letter.  */
 			/* Test the "before" condition.  */
-			applies = is_cased (last_char_except_ignorable);
+			applies = uc_is_cased (last_char_except_ignorable);
 			/* Test the "after" condition.  */
 			if (applies)
 			  {
 			    const UNIT *s2 = s + count;
-			    while (s2 < s_end)
+			    for (;;)
 			      {
-				ucs4_t uc2;
-				int count2 = U_MBTOUC_UNSAFE (&uc2, s2, s_end - s2);
-				if (is_cased (uc2))
+				if (s2 < s_end)
 				  {
-				    applies = false;
+				    ucs4_t uc2;
+				    int count2 = U_MBTOUC_UNSAFE (&uc2, s2, s_end - s2);
+				    if (uc_is_cased (uc2))
+				      {
+					applies = false;
+					break;
+				      }
+				    if (!uc_is_case_ignorable (uc2))
+				      break;
+				    s2 += count2;
+				  }
+				else
+				  {
+				    applies = ((suffix_context.bits & SCC_FINAL_SIGMA_MASK) == 0);
 				    break;
 				  }
-				if (!is_case_ignorable (uc2))
-				  break;
-				s2 += count2;
 			      }
 			  }
 			break;
@@ -171,19 +152,27 @@ FUNC (const UNIT *s, size_t n, const char *iso639_language,
 			{
 			  const UNIT *s2 = s + count;
 			  applies = false;
-			  while (s2 < s_end)
+			  for (;;)
 			    {
-			      ucs4_t uc2;
-			      int count2 = U_MBTOUC_UNSAFE (&uc2, s2, s_end - s2);
-			      int ccc = uc_combining_class (uc2);
-			      if (ccc == UC_CCC_A)
+			      if (s2 < s_end)
 				{
-				  applies = true;
+				  ucs4_t uc2;
+				  int count2 = U_MBTOUC_UNSAFE (&uc2, s2, s_end - s2);
+				  int ccc = uc_combining_class (uc2);
+				  if (ccc == UC_CCC_A)
+				    {
+				      applies = true;
+				      break;
+				    }
+				  if (ccc == UC_CCC_NR)
+				    break;
+				  s2 += count2;
+				}
+			      else
+				{
+				  applies = ((suffix_context.bits & SCC_MORE_ABOVE_MASK) != 0);
 				  break;
 				}
-			      if (ccc == UC_CCC_NR)
-				break;
-			      s2 += count2;
 			    }
 			}
 			break;
@@ -198,21 +187,29 @@ FUNC (const UNIT *s, size_t n, const char *iso639_language,
 			{
 			  const UNIT *s2 = s + count;
 			  applies = false;
-			  while (s2 < s_end)
+			  for (;;)
 			    {
-			      ucs4_t uc2;
-			      int count2 = U_MBTOUC_UNSAFE (&uc2, s2, s_end - s2);
-			      if (uc2 == 0x0307) /* COMBINING DOT ABOVE */
+			      if (s2 < s_end)
 				{
-				  applies = true;
+				  ucs4_t uc2;
+				  int count2 = U_MBTOUC_UNSAFE (&uc2, s2, s_end - s2);
+				  if (uc2 == 0x0307) /* COMBINING DOT ABOVE */
+				    {
+				      applies = true;
+				      break;
+				    }
+				  {
+				    int ccc = uc_combining_class (uc2);
+				    if (ccc == UC_CCC_A || ccc == UC_CCC_NR)
+				      break;
+				  }
+				  s2 += count2;
+				}
+			      else
+				{
+				  applies = ((suffix_context.bits & SCC_BEFORE_DOT_MASK) != 0);
 				  break;
 				}
-			      {
-				int ccc = uc_combining_class (uc2);
-				if (ccc == UC_CCC_A || ccc == UC_CCC_NR)
-				  break;
-			      }
-			      s2 += count2;
 			    }
 			}
 			break;
@@ -354,7 +351,7 @@ FUNC (const UNIT *s, size_t n, const char *iso639_language,
 	    }
 	}
 
-	if (!is_case_ignorable (uc))
+	if (!uc_is_case_ignorable (uc))
 	  last_char_except_ignorable = uc;
 
 	{

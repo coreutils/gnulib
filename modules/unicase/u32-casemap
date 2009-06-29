@@ -5,17 +5,14 @@ Files:
 lib/unicase/unicasemap.h
 lib/unicase/u32-casemap.c
 lib/unicase/u-casemap.h
+lib/unicase/context.h
 
 Depends-on:
 unicase/base
+unicase/cased
+unicase/ignorable
 unicase/special-casing
-uniwbrk/wordbreak-property
-unictype/category-of
-unictype/category-test
-unictype/category-Lt
 unictype/combining-class
-unictype/property-lowercase
-unictype/property-uppercase
 unictype/property-soft-dotted
 unistr/u32-mbtouc-unsafe
 unistr/u32-uctomb
