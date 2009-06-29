@@ -1,5 +1,9 @@
 2009-06-29  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unicase/u32-ct-tolower'.
+	* lib/unicase/u32-ct-tolower.c: New file.
+	* modules/unicase/u32-ct-tolower: New file.
+
 	New module 'unicase/u16-ct-tolower'.
 	* lib/unicase/u16-ct-tolower.c: New file.
 	* modules/unicase/u16-ct-tolower: New file.

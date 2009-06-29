@@ -1,0 +1,26 @@
+Description:
+Lowercase mapping for UTF-32 substrings (locale dependent).
+
+Files:
+lib/unicase/u32-ct-tolower.c
+
+Depends-on:
+unicase/base
+unicase/u8-casemap
+unicase/special-casing
+unicase/toupper
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unicase/u32-ct-tolower.c
+
+Include:
+"unicase.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
