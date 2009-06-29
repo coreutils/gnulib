@@ -1,5 +1,11 @@
 2009-06-29  Bruno Haible  <bruno@clisp.org>
 
+	Define u32_casefold as a wrapper around u32_ct_casefold.
+	* lib/unicase/u32-casefold.c: Update.
+	* modules/unicase/u32-casefold (Depends-on): Add
+	unicase/u32-ct-casefold, unicase/empty-prefix-context,
+	unicase/empty-suffix-context. Clean up.
+
 	Define u16_casefold as a wrapper around u16_ct_casefold.
 	* lib/unicase/u16-casefold.c: Update.
 	* modules/unicase/u16-casefold (Depends-on): Add

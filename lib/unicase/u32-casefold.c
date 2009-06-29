@@ -20,16 +20,7 @@
 /* Specification.  */
 #include "unicase.h"
 
-#include <errno.h>
-#include <stddef.h>
-#include <stdlib.h>
-
-#include "unicasemap.h"
-#include "special-casing.h"
-#include "casefold.h"
-
 #define FUNC u32_casefold
 #define UNIT uint32_t
-#define U_CASEMAP u32_casemap
-#define U_NORMALIZE u32_normalize
+#define U_CT_CASEFOLD u32_ct_casefold
 #include "u-casefold.h"
