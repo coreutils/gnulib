@@ -1,5 +1,9 @@
 2009-06-29  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unicase/u16-prefix-context'.
+	* lib/unicase/u16-prefix-context.c: New file.
+	* modules/unicase/u16-prefix-context: New file.
+
 	New module 'unicase/u8-prefix-context'.
 	* lib/unicase/u8-prefix-context.c: New file.
 	* lib/unicase/u-prefix-context.h: New file.
