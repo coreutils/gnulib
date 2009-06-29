@@ -1,5 +1,9 @@
 2009-06-29  Bruno Haible  <bruno@clisp.org>
 
+	* lib/unicase/u8-tolower.c (u8_tolower): Update u8_casemap invocation.
+	* modules/unicase/u8-tolower (Depends-on): Add
+	unicase/empty-prefix-context, unicase/empty-suffix-context.
+
 	* lib/unicase/u32-toupper.c (u32_toupper): Update u32_casemap
 	invocation.
 	* modules/unicase/u32-toupper (Depends-on): Add

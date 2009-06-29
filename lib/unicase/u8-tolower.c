@@ -30,7 +30,9 @@ u8_tolower (const uint8_t *s, size_t n, const char *iso639_language,
 	    uninorm_t nf,
 	    uint8_t *resultbuf, size_t *lengthp)
 {
-  return u8_casemap (s, n, iso639_language,
+  return u8_casemap (s, n,
+		     unicase_empty_prefix_context, unicase_empty_suffix_context,
+		     iso639_language,
 		     uc_tolower, offsetof (struct special_casing_rule, lower[0]),
 		     nf,
 		     resultbuf, lengthp);
