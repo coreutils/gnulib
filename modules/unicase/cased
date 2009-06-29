@@ -1,0 +1,29 @@
+Description:
+Test whether a Unicode character is "cased".
+
+Files:
+lib/unicase/caseprop.h
+lib/unicase/cased.c
+
+Depends-on:
+unictype/category-test
+unictype/category-Lt
+unictype/property-lowercase
+unictype/property-uppercase
+unitypes
+stdbool
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unicase/cased.c
+
+Include:
+"unicase/caseprop.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
