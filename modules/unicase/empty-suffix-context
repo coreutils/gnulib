@@ -1,0 +1,23 @@
+Description:
+Case-mapping context of empty suffix string.
+
+Files:
+lib/unicase/empty-suffix-context.c
+
+Depends-on:
+unicase/base
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unicase/empty-suffix-context.c
+
+Include:
+"unicase.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

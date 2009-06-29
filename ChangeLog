@@ -1,5 +1,9 @@
 2009-06-29  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unicase/empty-suffix-context'.
+	* lib/unicase/empty-suffix-context.c: New file.
+	* modules/unicase/empty-suffix-context: New file.
+
 	New module 'unicase/u32-prefix-context'.
 	* lib/unicase/u32-prefix-context.c: New file.
 	* modules/unicase/u32-prefix-context: New file.
