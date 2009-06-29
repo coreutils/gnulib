@@ -134,6 +134,136 @@ extern uint32_t *
 		    uninorm_t nf,
 		    uint32_t *resultbuf, size_t *lengthp);
 
+/* The case-mapping context given by a prefix string.  */
+typedef struct casing_prefix_context
+	{
+	  /* These fields are private, undocumented.  */
+	  uint32_t last_char_except_ignorable;
+	  uint32_t last_char_normal_or_above;
+	}
+	casing_prefix_context_t;
+/* The case-mapping context of the empty prefix string.  */
+extern const casing_prefix_context_t unicase_empty_prefix_context;
+/* Return the case-mapping context of a given prefix string.  */
+extern casing_prefix_context_t
+       u8_casing_prefix_context (const uint8_t *s, size_t n);
+extern casing_prefix_context_t
+       u16_casing_prefix_context (const uint16_t *s, size_t n);
+extern casing_prefix_context_t
+       u32_casing_prefix_context (const uint32_t *s, size_t n);
+/* Return the case-mapping context of the prefix concat(A, S), given the
+   case-mapping context of the prefix A.  */
+extern casing_prefix_context_t
+       u8_casing_prefixes_context (const uint8_t *s, size_t n,
+				   casing_prefix_context_t a_context);
+extern casing_prefix_context_t
+       u16_casing_prefixes_context (const uint16_t *s, size_t n,
+				    casing_prefix_context_t a_context);
+extern casing_prefix_context_t
+       u32_casing_prefixes_context (const uint32_t *s, size_t n,
+				    casing_prefix_context_t a_context);
+
+/* The case-mapping context given by a suffix string.  */
+typedef struct casing_suffix_context
+	{
+	  /* These fields are private, undocumented.  */
+	  uint32_t bits;
+	  uint32_t unused_bits;
+	}
+	casing_suffix_context_t;
+/* The case-mapping context of the empty suffix string.  */
+extern const casing_suffix_context_t unicase_empty_suffix_context;
+/* Return the case-mapping context of a given suffix string.  */
+extern casing_suffix_context_t
+       u8_casing_suffix_context (const uint8_t *s, size_t n);
+extern casing_suffix_context_t
+       u16_casing_suffix_context (const uint16_t *s, size_t n);
+extern casing_suffix_context_t
+       u32_casing_suffix_context (const uint32_t *s, size_t n);
+/* Return the case-mapping context of the suffix concat(S, A), given the
+   case-mapping context of the suffix A.  */
+extern casing_suffix_context_t
+       u8_casing_suffixes_context (const uint8_t *s, size_t n,
+				   casing_suffix_context_t a_context);
+extern casing_suffix_context_t
+       u16_casing_suffixes_context (const uint16_t *s, size_t n,
+				    casing_suffix_context_t a_context);
+extern casing_suffix_context_t
+       u32_casing_suffixes_context (const uint32_t *s, size_t n,
+				    casing_suffix_context_t a_context);
+
+/* Return the uppercase mapping of a string that is surrounded by a prefix
+   and a suffix.  */
+extern uint8_t *
+       u8_ct_toupper (const uint8_t *s, size_t n,
+		      casing_prefix_context_t prefix_context,
+		      casing_suffix_context_t suffix_context,
+		      const char *iso639_language,
+		      uninorm_t nf,
+		      uint8_t *resultbuf, size_t *lengthp);
+extern uint16_t *
+       u16_ct_toupper (const uint16_t *s, size_t n,
+		      casing_prefix_context_t prefix_context,
+		      casing_suffix_context_t suffix_context,
+		      const char *iso639_language,
+		      uninorm_t nf,
+		      uint16_t *resultbuf, size_t *lengthp);
+extern uint32_t *
+       u32_ct_toupper (const uint32_t *s, size_t n,
+		      casing_prefix_context_t prefix_context,
+		      casing_suffix_context_t suffix_context,
+		      const char *iso639_language,
+		      uninorm_t nf,
+		      uint32_t *resultbuf, size_t *lengthp);
+
+/* Return the lowercase mapping of a string that is surrounded by a prefix
+   and a suffix.  */
+extern uint8_t *
+       u8_ct_tolower (const uint8_t *s, size_t n,
+		      casing_prefix_context_t prefix_context,
+		      casing_suffix_context_t suffix_context,
+		      const char *iso639_language,
+		      uninorm_t nf,
+		      uint8_t *resultbuf, size_t *lengthp);
+extern uint16_t *
+       u16_ct_tolower (const uint16_t *s, size_t n,
+		      casing_prefix_context_t prefix_context,
+		      casing_suffix_context_t suffix_context,
+		      const char *iso639_language,
+		      uninorm_t nf,
+		      uint16_t *resultbuf, size_t *lengthp);
+extern uint32_t *
+       u32_ct_tolower (const uint32_t *s, size_t n,
+		      casing_prefix_context_t prefix_context,
+		      casing_suffix_context_t suffix_context,
+		      const char *iso639_language,
+		      uninorm_t nf,
+		      uint32_t *resultbuf, size_t *lengthp);
+
+/* Return the titlecase mapping of a string that is surrounded by a prefix
+   and a suffix.  */
+extern uint8_t *
+       u8_ct_totitle (const uint8_t *s, size_t n,
+		      casing_prefix_context_t prefix_context,
+		      casing_suffix_context_t suffix_context,
+		      const char *iso639_language,
+		      uninorm_t nf,
+		      uint8_t *resultbuf, size_t *lengthp);
+extern uint16_t *
+       u16_ct_totitle (const uint16_t *s, size_t n,
+		      casing_prefix_context_t prefix_context,
+		      casing_suffix_context_t suffix_context,
+		      const char *iso639_language,
+		      uninorm_t nf,
+		      uint16_t *resultbuf, size_t *lengthp);
+extern uint32_t *
+       u32_ct_totitle (const uint32_t *s, size_t n,
+		      casing_prefix_context_t prefix_context,
+		      casing_suffix_context_t suffix_context,
+		      const char *iso639_language,
+		      uninorm_t nf,
+		      uint32_t *resultbuf, size_t *lengthp);
+
 /* Return the case folded string.
    Comparing uN_casefold (S1) and uN_casefold (S2) with uN_cmp2() is equivalent
    to comparing S1 and S2 with uN_casecmp().
@@ -151,6 +281,28 @@ extern uint32_t *
        u32_casefold (const uint32_t *s, size_t n, const char *iso639_language,
 		     uninorm_t nf,
 		     uint32_t *resultbuf, size_t *lengthp);
+/* Likewise, for a string that is surrounded by a prefix and a suffix.  */
+extern uint8_t *
+       u8_ct_casefold (const uint8_t *s, size_t n,
+		       casing_prefix_context_t prefix_context,
+		       casing_suffix_context_t suffix_context,
+		       const char *iso639_language,
+		       uninorm_t nf,
+		       uint8_t *resultbuf, size_t *lengthp);
+extern uint16_t *
+       u16_ct_casefold (const uint16_t *s, size_t n,
+			casing_prefix_context_t prefix_context,
+			casing_suffix_context_t suffix_context,
+			const char *iso639_language,
+			uninorm_t nf,
+			uint16_t *resultbuf, size_t *lengthp);
+extern uint32_t *
+       u32_ct_casefold (const uint32_t *s, size_t n,
+			casing_prefix_context_t prefix_context,
+			casing_suffix_context_t suffix_context,
+			const char *iso639_language,
+			uninorm_t nf,
+			uint32_t *resultbuf, size_t *lengthp);
 
 /* Compare S1 and S2, ignoring differences in case and normalization.
    The nf argument identifies the normalization form to apply after the

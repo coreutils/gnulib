@@ -1,3 +1,22 @@
+2009-06-29  Bruno Haible  <bruno@clisp.org>
+
+	New functions for case mapping of substrings.
+	* lib/unicase.h (casing_prefix_context_t): New type.
+	(unicase_empty_prefix_context): New variable.
+	(u8_casing_prefix_context, u16_casing_prefix_context,
+	u32_casing_prefix_context, u8_casing_prefixes_context,
+	u16_casing_prefixes_context, u32_casing_prefixes_context): New
+	declarations.
+	(casing_suffix_context_t): New type.
+	(unicase_empty_suffix_context): New variable.
+	(u8_casing_suffix_context, u16_casing_suffix_context,
+	u32_casing_suffix_context, u8_casing_suffixes_context,
+	u16_casing_suffixes_context, u32_casing_suffixes_context,
+	u8_ct_toupper, u16_ct_toupper, u32_ct_toupper, u8_ct_tolower,
+	u16_ct_tolower, u32_ct_tolower, u8_ct_totitle, u16_ct_totitle,
+	u32_ct_totitle, u8_ct_casefold, u16_ct_casefold, u32_ct_casefold): New
+	declarations.
+
 2009-06-28  Jim Meyering  <meyering@redhat.com>
 
 	boostrap: indent only with spaces
