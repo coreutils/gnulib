@@ -1,0 +1,30 @@
+Description:
+Casefolding mapping for UTF-16 substrings (locale dependent).
+
+Files:
+lib/unicase/u16-ct-casefold.c
+lib/unicase/u-ct-casefold.h
+
+Depends-on:
+unicase/base
+unicase/u16-casemap
+unicase/special-casing
+unicase/tocasefold
+uninorm/decomposing-form
+uninorm/u16-normalize
+uninorm/nfd
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unicase/u16-ct-casefold.c
+
+Include:
+"unicase.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
