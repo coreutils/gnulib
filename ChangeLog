@@ -1,5 +1,9 @@
 2009-06-29  Bruno Haible  <bruno@clisp.org>
 
+	* lib/unicase/u8-toupper.c (u8_toupper): Update u8_casemap invocation.
+	* modules/unicase/u8-toupper (Depends-on): Add
+	unicase/empty-prefix-context, unicase/empty-suffix-context.
+
 	New module 'unicase/u32-ct-casefold'.
 	* lib/unicase/u32-ct-casefold.c: New file.
 	* modules/unicase/u32-ct-casefold: New file.
