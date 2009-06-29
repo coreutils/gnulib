@@ -1,5 +1,9 @@
 2009-06-29  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unicase/u32-ct-casefold'.
+	* lib/unicase/u32-ct-casefold.c: New file.
+	* modules/unicase/u32-ct-casefold: New file.
+
 	New module 'unicase/u16-ct-casefold'.
 	* lib/unicase/u16-ct-casefold.c: New file.
 	* modules/unicase/u16-ct-casefold: New file.
