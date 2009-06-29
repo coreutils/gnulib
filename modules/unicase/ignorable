@@ -1,0 +1,27 @@
+Description:
+Test whether a Unicode character is "case-ignorable".
+
+Files:
+lib/unicase/caseprop.h
+lib/unicase/ignorable.c
+
+Depends-on:
+uniwbrk/wordbreak-property
+unictype/category-of
+unitypes
+stdbool
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unicase/ignorable.c
+
+Include:
+"unicase/caseprop.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+

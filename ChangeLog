@@ -1,5 +1,9 @@
 2009-06-29  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unicase/ignorable'.
+	* lib/unicase/ignorable.c: New file.
+	* modules/unicase/ignorable: New file.
+
 	New module 'unicase/cased'.
 	* lib/unicase/caseprop.h: New file.
 	* lib/unicase/cased.c: New file.
