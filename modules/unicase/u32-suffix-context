@@ -1,0 +1,30 @@
+Description:
+Case-mapping context of suffix UTF-32 string.
+
+Files:
+lib/unicase/u32-suffix-context.c
+lib/unicase/u-suffix-context.h
+lib/unicase/context.h
+
+Depends-on:
+unicase/base
+unicase/empty-prefix-context
+unicase/cased
+unicase/ignorable
+unictype/combining-class
+unistr/u32-mbtouc-unsafe
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unicase/u32-suffix-context.c
+
+Include:
+"unicase.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
