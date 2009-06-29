@@ -1,5 +1,10 @@
 2009-06-29  Bruno Haible  <bruno@clisp.org>
 
+	Define u16_totitle as a wrapper around u16_ct_totitle.
+	* lib/unicase/u16-totitle.c: Update.
+	* modules/unicase/u16-totitle (Depends-on): Add unicase/u16-ct-totitle,
+	unicase/empty-prefix-context, unicase/empty-suffix-context. Clean up.
+
 	Define u8_totitle as a wrapper around u8_ct_totitle.
 	* lib/unicase/u-totitle.h (is_cased, is_case_ignorable): Remove
 	functions.
