@@ -20,18 +20,9 @@
 /* Specification.  */
 #include "unicase.h"
 
-#include <errno.h>
-#include <stddef.h>
-#include <stdlib.h>
-
-#include "unicasemap.h"
-#include "special-casing.h"
-#include "casefold.h"
-
 #define FUNC u8_casefold
 #define UNIT uint8_t
-#define U_CASEMAP u8_casemap
-#define U_NORMALIZE u8_normalize
+#define U_CT_CASEFOLD u8_ct_casefold
 #include "u-casefold.h"
 
 

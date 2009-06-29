@@ -20,84 +20,9 @@ FUNC (const UNIT *s, size_t n, const char *iso639_language,
       uninorm_t nf,
       UNIT *resultbuf, size_t *lengthp)
 {
-  /* Implement the three definitions of caseless matching, as described in
-     Unicode 5.0, section "Default caseless matching":
-       - If no normalization is requested, simply apply the casefolding.
-           X -> toCasefold(X).
-       - If canonical normalization is requested, apply it, and apply an NFD
-         before.
-           X -> NFD(toCasefold(NFD(X))).
-       - If compatibility normalization is requested, apply it twice, apply
-         the normalization after each, and apply an NFD before:
-           X -> NFKD(toCasefold(NFKD(toCasefold(NFD(X))))).  */
-  if (nf == NULL)
-    /* X -> toCasefold(X) */
-    return U_CASEMAP (s, n, iso639_language,
-		      uc_tocasefold, offsetof (struct special_casing_rule, casefold[0]),
-		      NULL,
-		      resultbuf, lengthp);
-  else
-    {
-      uninorm_t nfd = uninorm_decomposing_form (nf);
-      /* X -> nf(toCasefold(NFD(X))) or
-	 X -> nf(toCasefold(nfd(toCasefold(NFD(X)))))  */
-      int repeat = (uninorm_is_compat_decomposing (nf) ? 2 : 1);
-      UNIT tmpbuf1[2048 / sizeof (UNIT)];
-      UNIT tmpbuf2[2048 / sizeof (UNIT)];
-      UNIT *tmp1;
-      size_t tmp1_length;
-      UNIT *tmp2;
-      size_t tmp2_length;
-
-      tmp1_length = sizeof (tmpbuf1) / sizeof (UNIT);
-      tmp1 = U_NORMALIZE (UNINORM_NFD, s, n, tmpbuf1, &tmp1_length);
-      if (tmp1 == NULL)
-	/* errno is set here.  */
-	return NULL;
-
-      do
-	{
-	  tmp2_length = sizeof (tmpbuf2) / sizeof (UNIT);
-	  tmp2 = U_CASEMAP (tmp1, tmp1_length, iso639_language,
-			    uc_tocasefold, offsetof (struct special_casing_rule, casefold[0]),
-			    NULL,
-			    tmpbuf2, &tmp2_length);
-	  if (tmp2 == NULL)
-	    {
-	      int saved_errno = errno;
-	      if (tmp1 != tmpbuf1)
-		free (tmp1);
-	      errno = saved_errno;
-	      return NULL;
-	    }
-
-	  if (tmp1 != tmpbuf1)
-	    free (tmp1);
-
-	  if (repeat > 1)
-	    {
-	      tmp1_length = sizeof (tmpbuf1) / sizeof (UNIT);
-	      tmp1 = U_NORMALIZE (nfd, tmp2, tmp2_length,
-				  tmpbuf1, &tmp1_length);
-	    }
-	  else
-	    /* Last run through this loop.  */
-	    tmp1 = U_NORMALIZE (nf, tmp2, tmp2_length,
-				resultbuf, lengthp);
-	  if (tmp1 == NULL)
-	    {
-	      int saved_errno = errno;
-	      if (tmp2 != tmpbuf2)
-		free (tmp2);
-	      errno = saved_errno;
-	      return NULL;
-	    }
-
-	  if (tmp2 != tmpbuf2)
-	    free (tmp2);
-	}
-      while (--repeat > 0);
-
-      return tmp1;
-    }
+  return U_CT_CASEFOLD (s, n,
+			unicase_empty_prefix_context, unicase_empty_suffix_context,
+			iso639_language,
+			nf,
+			resultbuf, lengthp);
 }
