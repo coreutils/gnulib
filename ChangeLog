@@ -1,5 +1,10 @@
 2009-06-29  Bruno Haible  <bruno@clisp.org>
 
+	* lib/unicase/u32-toupper.c (u32_toupper): Update u32_casemap
+	invocation.
+	* modules/unicase/u32-toupper (Depends-on): Add
+	unicase/empty-prefix-context, unicase/empty-suffix-context.
+
 	* lib/unicase/u16-toupper.c (u16_toupper): Update u16_casemap
 	invocation.
 	* modules/unicase/u16-toupper (Depends-on): Add

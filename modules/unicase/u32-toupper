@@ -8,6 +8,8 @@ Depends-on:
 unicase/base
 unicase/u32-casemap
 unicase/special-casing
+unicase/empty-prefix-context
+unicase/empty-suffix-context
 unicase/toupper
 
 configure.ac:
