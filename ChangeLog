@@ -1,5 +1,11 @@
 2009-06-29  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unicase/u8-prefix-context'.
+	* lib/unicase/u8-prefix-context.c: New file.
+	* lib/unicase/u-prefix-context.h: New file.
+	* lib/unicase/context.h: New file.
+	* modules/unicase/u8-prefix-context: New file.
+
 	New module 'unicase/empty-prefix-context'.
 	* lib/unicase/empty-prefix-context.c: New file.
 	* modules/unicase/empty-prefix-context: New file.

@@ -1,0 +1,30 @@
+Description:
+Case-mapping context of prefix UTF-8 string.
+
+Files:
+lib/unicase/u8-prefix-context.c
+lib/unicase/u-prefix-context.h
+lib/unicase/context.h
+
+Depends-on:
+unicase/base
+unicase/empty-prefix-context
+unicase/ignorable
+unictype/combining-class
+unistr/u8-mbtouc-unsafe
+unistr/u8-prev
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += unicase/u8-prefix-context.c
+
+Include:
+"unicase.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
+
