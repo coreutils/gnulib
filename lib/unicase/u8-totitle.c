@@ -20,24 +20,9 @@
 /* Specification.  */
 #include "unicase.h"
 
-#include <errno.h>
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdlib.h>
-
-#include "unistr.h"
-#include "unictype.h"
-#include "uniwbrk.h"
-#include "uninorm.h"
-#include "special-casing.h"
-
 #define FUNC u8_totitle
 #define UNIT uint8_t
-#define U_WORDBREAKS u8_wordbreaks
-#define U_MBTOUC_UNSAFE u8_mbtouc_unsafe
-#define U_UCTOMB u8_uctomb
-#define U_CPY u8_cpy
-#define U_NORMALIZE u8_normalize
+#define U_CT_TOTITLE u8_ct_totitle
 #include "u-totitle.h"
 
 

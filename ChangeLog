@@ -1,5 +1,13 @@
 2009-06-29  Bruno Haible  <bruno@clisp.org>
 
+	Define u8_totitle as a wrapper around u8_ct_totitle.
+	* lib/unicase/u-totitle.h (is_cased, is_case_ignorable): Remove
+	functions.
+	(FUNC): Delegate to U_CT_TOTITLE.
+	* lib/unicase/u8-totitle.c: Update.
+	* modules/unicase/u8-totitle (Depends-on): Add unicase/u8-ct-totitle,
+	unicase/empty-prefix-context, unicase/empty-suffix-context. Clean up.
+
 	* lib/unicase/u32-tolower.c (u32_tolower): Update u32_casemap
 	invocation.
 	* modules/unicase/u32-tolower (Depends-on): Add
