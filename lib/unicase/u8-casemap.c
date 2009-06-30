@@ -26,7 +26,6 @@
 
 #include "unistr.h"
 #include "unictype.h"
-#include "uniwbrk.h"
 #include "uninorm.h"
 #include "caseprop.h"
 #include "context.h"

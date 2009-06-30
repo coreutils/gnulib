@@ -1,3 +1,9 @@
+2009-06-30  Bruno Haible  <bruno@clisp.org>
+
+	* lib/unicase/u8-casemap.c: Don't include uniwbrk.h.
+	* lib/unicase/u16-casemap.c: Likewise.
+	* lib/unicase/u32-casemap.c: Likewise.
+
 2009-06-29  Bruno Haible  <bruno@clisp.org>
 
 	Define u32_casefold as a wrapper around u32_ct_casefold.
