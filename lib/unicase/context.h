@@ -44,20 +44,22 @@
    casing_suffix_context_t contains the following fields:
 
      // For evaluating the FINAL_SIGMA condition:
-     // Bit 0 is set if the suffix starts with a sequence consisting of a
-     // case-ignorable sequence and then a cased letter.
-     //
+     //  First character that was not case-ignorable.
+     ucs4_t first_char_except_ignorable;
+
      // For evaluating the MORE_ABOVE condition:
-     // Bit 1 is set if the suffix contains a character of combining class
+     // Bit 0 is set if the suffix contains a character of combining class
      // 230 (Above) with no character of combining class 0 or 230 (Above)
      // before it.
      //
      // For evaluating the BEFORE_DOT condition:
-     // Bit 2 is set if the suffix contains a COMBINING DOT ABOVE (U+0307)
+     // Bit 1 is set if the suffix contains a COMBINING DOT ABOVE (U+0307)
      // with no character of combining class 0 or 230 (Above) before it.
      //
      uint32_t bits;
- */
-#define SCC_FINAL_SIGMA_MASK 1
-#define SCC_MORE_ABOVE_MASK  2
-#define SCC_BEFORE_DOT_MASK  4
+
+   Three bits would be sufficient to carry the context information, but
+   that would require to invoke uc_is_cased ahead of time, more often than
+   actually needed.  */
+#define SCC_MORE_ABOVE_MASK  1
+#define SCC_BEFORE_DOT_MASK  2

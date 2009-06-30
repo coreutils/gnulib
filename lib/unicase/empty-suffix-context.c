@@ -22,6 +22,6 @@
 
 const casing_suffix_context_t unicase_empty_suffix_context =
   {
-    0 /* bits */,
-    0 /* unused_bits */
+    0xFFFD /* first_char_except_ignorable */,
+    0 /* bits */
   };

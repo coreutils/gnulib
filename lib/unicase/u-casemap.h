@@ -118,18 +118,20 @@ FUNC (const UNIT *s, size_t n,
 				  {
 				    ucs4_t uc2;
 				    int count2 = U_MBTOUC_UNSAFE (&uc2, s2, s_end - s2);
-				    if (uc_is_cased (uc2))
+				    /* Our uc_is_case_ignorable function is
+				       known to return false for all cased
+				       characters.  So we can call
+				       uc_is_case_ignorable first.  */
+				    if (!uc_is_case_ignorable (uc2))
 				      {
-					applies = false;
+					applies = ! uc_is_cased (uc2);
 					break;
 				      }
-				    if (!uc_is_case_ignorable (uc2))
-				      break;
 				    s2 += count2;
 				  }
 				else
 				  {
-				    applies = ((suffix_context.bits & SCC_FINAL_SIGMA_MASK) == 0);
+				    applies = ! uc_is_cased (suffix_context.first_char_except_ignorable);
 				    break;
 				  }
 			      }

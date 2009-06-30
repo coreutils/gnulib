@@ -28,7 +28,7 @@ FUNC2 (const UNIT *s, size_t n, casing_suffix_context_t a_context)
   /* Evaluate all three conditions in a single pass through the string S.
      The three variables are -1 as long as the value of the condition has
      not been determined.  */
-  int scc_FINAL_SIGMA = -1;
+  ucs4_t first_char_except_ignorable = (ucs4_t)(-1);
   int scc_MORE_ABOVE = -1;
   int scc_BEFORE_DOT = -1;
   const UNIT *s_end = s + n;
@@ -38,12 +38,10 @@ FUNC2 (const UNIT *s, size_t n, casing_suffix_context_t a_context)
       ucs4_t uc;
       int count = U_MBTOUC_UNSAFE (&uc, s, s_end - s);
 
-      if (scc_FINAL_SIGMA < 0)
+      if (first_char_except_ignorable == (ucs4_t)(-1))
 	{
-	  if (uc_is_cased (uc))
-	    scc_FINAL_SIGMA = SCC_FINAL_SIGMA_MASK;
-	  else if (!uc_is_case_ignorable (uc))
-	    scc_FINAL_SIGMA = 0;
+	  if (!uc_is_case_ignorable (uc))
+	    first_char_except_ignorable = uc;
 	}
 
       if (scc_MORE_ABOVE < 0)
@@ -67,7 +65,8 @@ FUNC2 (const UNIT *s, size_t n, casing_suffix_context_t a_context)
 	    }
 	}
 
-      if ((scc_FINAL_SIGMA | scc_MORE_ABOVE | scc_BEFORE_DOT) >= 0)
+      if (first_char_except_ignorable != (ucs4_t)(-1)
+	  && (scc_MORE_ABOVE | scc_BEFORE_DOT) >= 0)
 	/* All conditions have been determined.  */
 	break;
 
@@ -76,13 +75,14 @@ FUNC2 (const UNIT *s, size_t n, casing_suffix_context_t a_context)
 
   /* For those conditions that have not been determined so far, use the
      value from the argument context.  */
+  context.first_char_except_ignorable =
+    (first_char_except_ignorable != (ucs4_t)(-1)
+     ? first_char_except_ignorable
+     : a_context.first_char_except_ignorable);
   context.bits =
-    (scc_FINAL_SIGMA >= 0
-     ? scc_FINAL_SIGMA
-     : a_context.bits & SCC_FINAL_SIGMA_MASK)
-    | (scc_MORE_ABOVE >= 0
-       ? scc_MORE_ABOVE
-       : a_context.bits & SCC_MORE_ABOVE_MASK)
+    (scc_MORE_ABOVE >= 0
+     ? scc_MORE_ABOVE
+     : a_context.bits & SCC_MORE_ABOVE_MASK)
     | (scc_BEFORE_DOT >= 0
        ? scc_BEFORE_DOT
        : a_context.bits & SCC_BEFORE_DOT_MASK);

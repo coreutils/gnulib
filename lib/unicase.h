@@ -167,8 +167,8 @@ extern casing_prefix_context_t
 typedef struct casing_suffix_context
 	{
 	  /* These fields are private, undocumented.  */
+	  uint32_t first_char_except_ignorable;
 	  uint32_t bits;
-	  uint32_t unused_bits;
 	}
 	casing_suffix_context_t;
 /* The case-mapping context of the empty suffix string.  */

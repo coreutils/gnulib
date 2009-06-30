@@ -9,7 +9,6 @@ lib/unicase/context.h
 Depends-on:
 unicase/base
 unicase/empty-prefix-context
-unicase/cased
 unicase/ignorable
 unictype/combining-class
 unistr/u8-mbtouc-unsafe
