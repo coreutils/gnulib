@@ -185,6 +185,67 @@ main ()
       };
     ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
   }
+  { /* "Σ" -> "σ" */
+    static const uint32_t input[] =      { 0x03A3 };
+    static const uint32_t casemapped[] = { 0x03C3 };
+    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+  }
+  { /* "ΑΣ" -> "ας" */
+    static const uint32_t input[] =      { 0x0391, 0x03A3 };
+    static const uint32_t casemapped[] = { 0x03B1, 0x03C2 };
+    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+  }
+  /* It's a final sigma only if not followed by a case-ignorable sequence and
+     then a cased letter.  Note that U+0345 and U+037A are simultaneously
+     case-ignorable and cased (which is a bit paradoxical).  */
+  { /* "ΑΣΑ" -> "ασα" */
+    static const uint32_t input[] =      { 0x0391, 0x03A3, 0x0391 };
+    static const uint32_t casemapped[] = { 0x03B1, 0x03C3, 0x03B1 };
+    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+  }
+  { /* "ΑΣ:" -> "ας:" */
+    static const uint32_t input[] =      { 0x0391, 0x03A3, 0x003A };
+    static const uint32_t casemapped[] = { 0x03B1, 0x03C2, 0x003A };
+    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+  }
+  { /* "ΑΣ:Α" -> "ασ:α" */
+    static const uint32_t input[] =      { 0x0391, 0x03A3, 0x003A, 0x0391 };
+    static const uint32_t casemapped[] = { 0x03B1, 0x03C3, 0x003A, 0x03B1 };
+    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+  }
+  { /* "ΑΣ:ͺ" -> "ασ:ͺ" */
+    static const uint32_t input[] =      { 0x0391, 0x03A3, 0x003A, 0x037A };
+    static const uint32_t casemapped[] = { 0x03B1, 0x03C3, 0x003A, 0x037A };
+    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+  }
+  { /* "ΑΣ:ͺ " -> "ασ:ͺ " */
+    static const uint32_t input[] =      { 0x0391, 0x03A3, 0x003A, 0x037A, 0x0020 };
+    static const uint32_t casemapped[] = { 0x03B1, 0x03C3, 0x003A, 0x037A, 0x0020 };
+    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+  }
+  /* It's a final sigma only if preceded by a case-ignorable sequence and
+     a cased letter before it.  Note that U+0345 and U+037A are simultaneously
+     case-ignorable and cased (which is a bit paradoxical).  */
+  { /* ":Σ" -> ":σ" */
+    static const uint32_t input[] =      { 0x003A, 0x03A3 };
+    static const uint32_t casemapped[] = { 0x003A, 0x03C3 };
+    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+  }
+  { /* "Α:Σ" -> "α:ς" */
+    static const uint32_t input[] =      { 0x0391, 0x003A, 0x03A3 };
+    static const uint32_t casemapped[] = { 0x03B1, 0x003A, 0x03C2 };
+    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+  }
+  { /* "ͺ:Σ" -> "ͺ:ς" */
+    static const uint32_t input[] =      { 0x037A, 0x003A, 0x03A3 };
+    static const uint32_t casemapped[] = { 0x037A, 0x003A, 0x03C2 };
+    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+  }
+  { /* " ͺ:Σ" -> " ͺ:ς" */
+    static const uint32_t input[] =      { 0x0020, 0x037A, 0x003A, 0x03A3 };
+    static const uint32_t casemapped[] = { 0x0020, 0x037A, 0x003A, 0x03C2 };
+    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+  }
 
   return 0;
 }

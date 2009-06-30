@@ -8210,6 +8210,63 @@ output_casing_rules (const char *filename, const char *version)
 
 /* ========================================================================= */
 
+/* Quoting the Unicode standard:
+     Definition: A character is defined to be "cased" if it has the Lowercase
+     or Uppercase property or has a General_Category value of
+     Titlecase_Letter.  */
+static bool
+is_cased (unsigned int ch)
+{
+  return (is_property_lowercase (ch)
+	  || is_property_uppercase (ch)
+	  || is_category_Lt (ch));
+}
+
+/* Quoting the Unicode standard:
+     Definition: A character is defined to be "case-ignorable" if it has the
+     value MidLetter {or the value MidNumLet} for the Word_Break property or
+     its General_Category is one of Nonspacing_Mark (Mn), Enclosing_Mark (Me),
+     Format (Cf), Modifier_Letter (Lm), or Modifier_Symbol (Sk).
+   The text marked in braces was added in Unicode 5.1.0, see
+   <http://www.unicode.org/versions/Unicode5.1.0/> section "Update of
+   Definition of case-ignorable".   */
+/* Since this predicate is only used for the "Before C" and "After C"
+   conditions of FINAL_SIGMA, we exclude the "cased" characters here.
+   This simplifies the evaluation of the regular expressions
+     \p{cased} (\p{case-ignorable})* C
+   and
+     C (\p{case-ignorable})* \p{cased}
+ */
+static bool
+is_case_ignorable (unsigned int ch)
+{
+  return (unicode_org_wbp[ch] == WBP_MIDLETTER
+	  || unicode_org_wbp[ch] == WBP_MIDNUMLET
+	  || is_category_Mn (ch)
+	  || is_category_Me (ch)
+	  || is_category_Cf (ch)
+	  || is_category_Lm (ch)
+	  || is_category_Sk (ch))
+	 && !is_cased (ch);
+}
+
+/* ------------------------------------------------------------------------- */
+
+/* Output all case related properties.  */
+static void
+output_casing_properties (const char *version)
+{
+#define PROPERTY(FN,P) \
+  debug_output_predicate ("unicase/" #FN ".txt", is_ ## P); \
+  output_predicate_test ("../tests/unicase/test-" #FN ".c", is_ ## P, "uc_is_" #P " (c)"); \
+  output_predicate ("unicase/" #FN ".h", is_ ## P, "u_casing_property_" #P, "Casing Properties", version);
+  PROPERTY(cased, cased)
+  PROPERTY(ignorable, case_ignorable)
+#undef PROPERTY
+}
+
+/* ========================================================================= */
+
 int
 main (int argc, char * argv[])
 {
@@ -8302,6 +8359,7 @@ main (int argc, char * argv[])
   output_simple_mapping ("unicase/totitle.h", to_title, version);
   output_simple_mapping ("unicase/tocasefold.h", to_casefold, version);
   output_casing_rules ("unicase/special-casing-table.gperf", version);
+  output_casing_properties (version);
 
   return 0;
 }

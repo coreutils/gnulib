@@ -4,14 +4,13 @@ Test whether a Unicode character is "cased".
 Files:
 lib/unicase/caseprop.h
 lib/unicase/cased.c
+lib/unicase/cased.h
+lib/unictype/bitmap.h
 
 Depends-on:
-unictype/category-test
-unictype/category-Lt
-unictype/property-lowercase
-unictype/property-uppercase
 unitypes
 stdbool
+inline
 
 configure.ac:
 

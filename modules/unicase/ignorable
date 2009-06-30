@@ -4,12 +4,13 @@ Test whether a Unicode character is "case-ignorable".
 Files:
 lib/unicase/caseprop.h
 lib/unicase/ignorable.c
+lib/unicase/ignorable.h
+lib/unictype/bitmap.h
 
 Depends-on:
-uniwbrk/wordbreak-property
-unictype/category-of
 unitypes
 stdbool
+inline
 
 configure.ac:
 

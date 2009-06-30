@@ -191,6 +191,67 @@ main ()
       };
     ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
   }
+  { /* "Σ" -> "σ" */
+    static const uint8_t input[] =      { 0xCE, 0xA3 };
+    static const uint8_t casemapped[] = { 0xCF, 0x83 };
+    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+  }
+  { /* "ΑΣ" -> "ας" */
+    static const uint8_t input[] =      { 0xCE, 0x91, 0xCE, 0xA3 };
+    static const uint8_t casemapped[] = { 0xCE, 0xB1, 0xCF, 0x82 };
+    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+  }
+  /* It's a final sigma only if not followed by a case-ignorable sequence and
+     then a cased letter.  Note that U+0345 and U+037A are simultaneously
+     case-ignorable and cased (which is a bit paradoxical).  */
+  { /* "ΑΣΑ" -> "ασα" */
+    static const uint8_t input[] =      { 0xCE, 0x91, 0xCE, 0xA3, 0xCE, 0x91 };
+    static const uint8_t casemapped[] = { 0xCE, 0xB1, 0xCF, 0x83, 0xCE, 0xB1 };
+    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+  }
+  { /* "ΑΣ:" -> "ας:" */
+    static const uint8_t input[] =      { 0xCE, 0x91, 0xCE, 0xA3, 0x3A };
+    static const uint8_t casemapped[] = { 0xCE, 0xB1, 0xCF, 0x82, 0x3A };
+    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+  }
+  { /* "ΑΣ:Α" -> "ασ:α" */
+    static const uint8_t input[] =      { 0xCE, 0x91, 0xCE, 0xA3, 0x3A, 0xCE, 0x91 };
+    static const uint8_t casemapped[] = { 0xCE, 0xB1, 0xCF, 0x83, 0x3A, 0xCE, 0xB1 };
+    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+  }
+  { /* "ΑΣ:ͺ" -> "ασ:ͺ" */
+    static const uint8_t input[] =      { 0xCE, 0x91, 0xCE, 0xA3, 0x3A, 0xCD, 0xBA };
+    static const uint8_t casemapped[] = { 0xCE, 0xB1, 0xCF, 0x83, 0x3A, 0xCD, 0xBA };
+    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+  }
+  { /* "ΑΣ:ͺ " -> "ασ:ͺ " */
+    static const uint8_t input[] =      { 0xCE, 0x91, 0xCE, 0xA3, 0x3A, 0xCD, 0xBA, 0x20 };
+    static const uint8_t casemapped[] = { 0xCE, 0xB1, 0xCF, 0x83, 0x3A, 0xCD, 0xBA, 0x20 };
+    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+  }
+  /* It's a final sigma only if preceded by a case-ignorable sequence and
+     a cased letter before it.  Note that U+0345 and U+037A are simultaneously
+     case-ignorable and cased (which is a bit paradoxical).  */
+  { /* ":Σ" -> ":σ" */
+    static const uint8_t input[] =      { 0x3A, 0xCE, 0xA3 };
+    static const uint8_t casemapped[] = { 0x3A, 0xCF, 0x83 };
+    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+  }
+  { /* "Α:Σ" -> "α:ς" */
+    static const uint8_t input[] =      { 0xCE, 0x91, 0x3A, 0xCE, 0xA3 };
+    static const uint8_t casemapped[] = { 0xCE, 0xB1, 0x3A, 0xCF, 0x82 };
+    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+  }
+  { /* "ͺ:Σ" -> "ͺ:ς" */
+    static const uint8_t input[] =      { 0xCD, 0xBA, 0x3A, 0xCE, 0xA3 };
+    static const uint8_t casemapped[] = { 0xCD, 0xBA, 0x3A, 0xCF, 0x82 };
+    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+  }
+  { /* " ͺ:Σ" -> " ͺ:ς" */
+    static const uint8_t input[] =      { 0x20, 0xCD, 0xBA, 0x3A, 0xCE, 0xA3 };
+    static const uint8_t casemapped[] = { 0x20, 0xCD, 0xBA, 0x3A, 0xCF, 0x82 };
+    ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
+  }
 
   return 0;
 }
