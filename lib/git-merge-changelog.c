@@ -211,9 +211,12 @@ entry_hashcode (const void *elt)
 
 /* Perform a fuzzy comparison of two ChangeLog entries.
    Return a similarity measure of the two entries, a value between 0 and 1.
-   0 stands for very distinct, 1 for identical.  */
+   0 stands for very distinct, 1 for identical.
+   If the result is < LOWER_BOUND, an arbitrary other value < LOWER_BOUND can
+   be returned.  */
 static double
-entry_fstrcmp (const struct entry *entry1, const struct entry *entry2)
+entry_fstrcmp (const struct entry *entry1, const struct entry *entry2,
+	       double lower_bound)
 {
   /* fstrcmp works only on NUL terminated strings.  */
   char *memory;
@@ -233,7 +236,8 @@ entry_fstrcmp (const struct entry *entry1, const struct entry *entry2)
     p += entry2->length;
     *p++ = '\0';
   }
-  similarity = fstrcmp (memory, memory + entry1->length + 1);
+  similarity =
+    fstrcmp_bounded (memory, memory + entry1->length + 1, lower_bound);
   freea (memory);
   return similarity;
 }
@@ -410,7 +414,8 @@ compute_mapping (struct changelog_file *file1, struct changelog_file *file2,
 	for (j = n2 - 1; j >= 0; j--)
 	  if (index_mapping_reverse[j] < 0)
 	    {
-	      double similarity = entry_fstrcmp (entry_i, file2->entries[j]);
+	      double similarity =
+		entry_fstrcmp (entry_i, file2->entries[j], best_j_similarity);
 	      if (similarity > best_j_similarity)
 		{
 		  best_j = j;
@@ -429,7 +434,8 @@ compute_mapping (struct changelog_file *file1, struct changelog_file *file2,
 	      if (index_mapping[ii] < 0)
 		{
 		  double similarity =
-		    entry_fstrcmp (file1->entries[ii], entry_j);
+		    entry_fstrcmp (file1->entries[ii], entry_j,
+				   best_i_similarity);
 		  if (similarity > best_i_similarity)
 		    {
 		      best_i = i;
@@ -729,7 +735,8 @@ try_split_merged_entry (const struct entry *old_entry,
 
       new_body.string = new_entry->string + split_offset;
       new_body.length = new_entry->length - split_offset;
-      similarity = entry_fstrcmp (&old_body, &new_body);
+      similarity =
+	entry_fstrcmp (&old_body, &new_body, best_similarity);
       if (similarity > best_similarity)
 	{
 	  best_split_offset = split_offset;
@@ -1219,7 +1226,8 @@ There is NO WARRANTY, to the extent permitted by law.\n\
 			    size_t i;
 			    for (i = edit->i1 + 1; i <= edit->i2; i++)
 			      if (entry_fstrcmp (ancestor_file.entries[i],
-						 modified_file.entries[i + edit->j2 - edit->i2])
+						 modified_file.entries[i + edit->j2 - edit->i2],
+						 FSTRCMP_THRESHOLD)
 				  < FSTRCMP_THRESHOLD)
 				{
 				  simple_merged = false;
@@ -1300,7 +1308,8 @@ There is NO WARRANTY, to the extent permitted by law.\n\
 			simple = true;
 			for (i = edit->i1; i <= edit->i2; i++)
 			  if (entry_fstrcmp (ancestor_file.entries[i],
-					     modified_file.entries[i + edit->j2 - edit->i2])
+					     modified_file.entries[i + edit->j2 - edit->i2],
+					     FSTRCMP_THRESHOLD)
 			      < FSTRCMP_THRESHOLD)
 			    {
 			      simple = false;
