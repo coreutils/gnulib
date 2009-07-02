@@ -975,7 +975,8 @@ There is NO WARRANTY, to the extent permitted by law.\n\
        How to distinguish these situation? There are several hints:
 	 - During a "git stash apply", GIT_REFLOG_ACTION is not set.  During
 	   a "git pull", it is set to 'pull '. During a "git pull --rebase",
-	   it is set to 'pull --rebase'.
+	   it is set to 'pull --rebase'.  During a "git cherry-pick", it is
+	   set to 'cherry-pick'.
 	 - During a "git stash apply", there is an environment variable of
 	   the form GITHEAD_<40_hex_digits>='Stashed changes'.  */
     {
@@ -1002,7 +1003,8 @@ There is NO WARRANTY, to the extent permitted by law.\n\
 		downstream = true;
 	      else
 		{
-		  /* "git stash apply", "git rebase" and similar.  */
+		  /* "git stash apply", "git rebase", "git cherry-pick" and
+		     similar.  */
 		  downstream = false;
 		}
 	    }
