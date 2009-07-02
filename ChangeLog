@@ -1,5 +1,16 @@
 2009-07-02  Bruno Haible  <bruno@clisp.org>
 
+	Speedup git-merge-changelog for git cherry-pick.
+	* lib/git-merge-changelog.c (struct entries_mapping): New type.
+	(entries_mapping_get): New function, extracted from compute_mapping.
+	(entries_mapping_reverse_get): New function.
+	(compute_mapping): Add a 'full' argument. Return the result in a
+	'struct entries_mapping'.
+	(main): Update. Access the mappings through entries_mapping_get.
+	Reported by Eric Blake.
+
+2009-07-02  Bruno Haible  <bruno@clisp.org>
+
 	* lib/git-merge-changelog.c (compute_mapping): Fix determination of
 	best_i.
 

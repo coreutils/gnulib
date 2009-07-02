@@ -329,18 +329,159 @@ read_changelog_file (const char *filename, struct changelog_file *result)
   }
 }
 
+/* A mapping (correspondence) between entries of FILE1 and of FILE2.  */
+struct entries_mapping
+{
+  struct changelog_file *file1;
+  struct changelog_file *file2;
+  /* Mapping from indices in FILE1 to indices in FILE2.
+     A value -1 means that the entry from FILE1 is not found in FILE2.
+     A value -2 means that it has not yet been computed.  */
+  ssize_t *index_mapping;
+  /* Mapping from indices in FILE2 to indices in FILE1.
+     A value -1 means that the entry from FILE2 is not found in FILE1.
+     A value -2 means that it has not yet been computed.  */
+  ssize_t *index_mapping_reverse;
+};
+
+/* Look up (or lazily compute) the mapping of an entry in FILE1.
+   i is the index in FILE1.
+   Return the index in FILE2, or -1 when the entry is not found in FILE2.  */
+static ssize_t
+entries_mapping_get (struct entries_mapping *mapping, ssize_t i)
+{
+  if (mapping->index_mapping[i] < -1)
+    {
+      struct changelog_file *file1 = mapping->file1;
+      struct changelog_file *file2 = mapping->file2;
+      size_t n1 = file1->num_entries;
+      size_t n2 = file2->num_entries;
+      struct entry *entry_i = file1->entries[i];
+      ssize_t j;
+
+      /* Search whether it approximately occurs in file2.  */
+      ssize_t best_j = -1;
+      double best_j_similarity = 0.0;
+      for (j = n2 - 1; j >= 0; j--)
+	if (mapping->index_mapping_reverse[j] < 0)
+	  {
+	    double similarity =
+	      entry_fstrcmp (entry_i, file2->entries[j], best_j_similarity);
+	    if (similarity > best_j_similarity)
+	      {
+		best_j = j;
+		best_j_similarity = similarity;
+	      }
+	  }
+      if (best_j_similarity >= FSTRCMP_THRESHOLD)
+	{
+	  /* Found a similar entry in file2.  */
+	  struct entry *entry_j = file2->entries[best_j];
+	  /* Search whether it approximately occurs in file1 at index i.  */
+	  ssize_t best_i = -1;
+	  double best_i_similarity = 0.0;
+	  ssize_t ii;
+	  for (ii = n1 - 1; ii >= 0; ii--)
+	    if (mapping->index_mapping[ii] < 0)
+	      {
+		double similarity =
+		  entry_fstrcmp (file1->entries[ii], entry_j,
+				 best_i_similarity);
+		if (similarity > best_i_similarity)
+		  {
+		    best_i = ii;
+		    best_i_similarity = similarity;
+		  }
+	      }
+	  if (best_i_similarity >= FSTRCMP_THRESHOLD && best_i == i)
+	    {
+	      mapping->index_mapping[i] = best_j;
+	      mapping->index_mapping_reverse[best_j] = i;
+	    }
+	}
+      if (mapping->index_mapping[i] < -1)
+	/* It does not approximately occur in FILE2.
+	   Remember it, for next time.  */
+	mapping->index_mapping[i] = -1;
+    }
+  return mapping->index_mapping[i];
+}
+
+/* Look up (or lazily compute) the mapping of an entry in FILE2.
+   j is the index in FILE2.
+   Return the index in FILE1, or -1 when the entry is not found in FILE1.  */
+static ssize_t
+entries_mapping_reverse_get (struct entries_mapping *mapping, ssize_t j)
+{
+  if (mapping->index_mapping_reverse[j] < -1)
+    {
+      struct changelog_file *file1 = mapping->file1;
+      struct changelog_file *file2 = mapping->file2;
+      size_t n1 = file1->num_entries;
+      size_t n2 = file2->num_entries;
+      struct entry *entry_j = file2->entries[j];
+      ssize_t i;
+
+      /* Search whether it approximately occurs in file1.  */
+      ssize_t best_i = -1;
+      double best_i_similarity = 0.0;
+      for (i = n1 - 1; i >= 0; i--)
+	if (mapping->index_mapping[i] < 0)
+	  {
+	    double similarity =
+	      entry_fstrcmp (file1->entries[i], entry_j, best_i_similarity);
+	    if (similarity > best_i_similarity)
+	      {
+		best_i = i;
+		best_i_similarity = similarity;
+	      }
+	  }
+      if (best_i_similarity >= FSTRCMP_THRESHOLD)
+	{
+	  /* Found a similar entry in file1.  */
+	  struct entry *entry_i = file1->entries[best_i];
+	  /* Search whether it approximately occurs in file2 at index j.  */
+	  ssize_t best_j = -1;
+	  double best_j_similarity = 0.0;
+	  ssize_t jj;
+	  for (jj = n2 - 1; jj >= 0; jj--)
+	    if (mapping->index_mapping_reverse[jj] < 0)
+	      {
+		double similarity =
+		  entry_fstrcmp (entry_i, file2->entries[jj],
+				 best_j_similarity);
+		if (similarity > best_j_similarity)
+		  {
+		    best_j = jj;
+		    best_j_similarity = similarity;
+		  }
+	      }
+	  if (best_j_similarity >= FSTRCMP_THRESHOLD && best_j == j)
+	    {
+	      mapping->index_mapping_reverse[j] = best_i;
+	      mapping->index_mapping[best_i] = j;
+	    }
+	}
+      if (mapping->index_mapping_reverse[j] < -1)
+	/* It does not approximately occur in FILE1.
+	   Remember it, for next time.  */
+	mapping->index_mapping_reverse[j] = -1;
+    }
+  return mapping->index_mapping_reverse[j];
+}
+
 /* Compute a mapping (correspondence) between entries of FILE1 and of FILE2.
-   Return a set of two arrays:
-     - An array mapping FILE1 indices to FILE2 indices (or -1 when the entry
-       from FILE1 is not found in FILE2).
-     - An array mapping FILE2 indices to FILE1 indices (or -1 when the entry
-       from FILE2 is not found in FILE1).
    The correspondence also takes into account small modifications; i.e. the
    indicated relation is not equality of entries but best-match similarity
-   of entries.  */
+   of entries.
+   If FULL is true, the maximum of matching is done up-front.  If it is false,
+   it is done in a lazy way through the functions entries_mapping_get and
+   entries_mapping_reverse_get.
+   Return the result in *RESULT.  */
 static void
 compute_mapping (struct changelog_file *file1, struct changelog_file *file2,
-		 ssize_t *result[2])
+		 bool full,
+		 struct entries_mapping *result)
 {
   /* Mapping from indices in file1 to indices in file2.  */
   ssize_t *index_mapping;
@@ -352,15 +493,15 @@ compute_mapping (struct changelog_file *file1, struct changelog_file *file2,
 
   index_mapping = XNMALLOC (n1, ssize_t);
   for (i = 0; i < n1; i++)
-    index_mapping[i] = -1;
+    index_mapping[i] = -2;
 
   index_mapping_reverse = XNMALLOC (n2, ssize_t);
   for (j = 0; j < n2; j++)
-    index_mapping_reverse[j] = -1;
+    index_mapping_reverse[j] = -2;
 
   for (i = n1 - 1; i >= 0; i--)
     /* Take an entry from file1.  */
-    if (index_mapping[i] < 0)
+    if (index_mapping[i] < -1)
       {
 	struct entry *entry = file1->entries[i];
 	/* Search whether it occurs in file2.  */
@@ -403,55 +544,14 @@ compute_mapping (struct changelog_file *file1, struct changelog_file *file2,
 	  }
       }
 
-  for (i = n1 - 1; i >= 0; i--)
-    /* Take an entry from file1.  */
-    if (index_mapping[i] < 0)
-      {
-	struct entry *entry_i = file1->entries[i];
-	/* Search whether it approximately occurs in file2.  */
-	ssize_t best_j = -1;
-	double best_j_similarity = 0.0;
-	for (j = n2 - 1; j >= 0; j--)
-	  if (index_mapping_reverse[j] < 0)
-	    {
-	      double similarity =
-		entry_fstrcmp (entry_i, file2->entries[j], best_j_similarity);
-	      if (similarity > best_j_similarity)
-		{
-		  best_j = j;
-		  best_j_similarity = similarity;
-		}
-	    }
-	if (best_j_similarity >= FSTRCMP_THRESHOLD)
-	  {
-	    /* Found a similar entry in file2.  */
-	    struct entry *entry_j = file2->entries[best_j];
-	    /* Search whether it approximately occurs in file1 at index i.  */
-	    ssize_t best_i = -1;
-	    double best_i_similarity = 0.0;
-	    ssize_t ii;
-	    for (ii = n1 - 1; ii >= 0; ii--)
-	      if (index_mapping[ii] < 0)
-		{
-		  double similarity =
-		    entry_fstrcmp (file1->entries[ii], entry_j,
-				   best_i_similarity);
-		  if (similarity > best_i_similarity)
-		    {
-		      best_i = ii;
-		      best_i_similarity = similarity;
-		    }
-		}
-	    if (best_i_similarity >= FSTRCMP_THRESHOLD && best_i == i)
-	      {
-		index_mapping[i] = best_j;
-		index_mapping_reverse[best_j] = i;
-	      }
-	  }
-      }
+  result->file1 = file1;
+  result->file2 = file2;
+  result->index_mapping = index_mapping;
+  result->index_mapping_reverse = index_mapping_reverse;
 
-  result[0] = index_mapping;
-  result[1] = index_mapping_reverse;
+  if (full)
+    for (i = n1 - 1; i >= 0; i--)
+      entries_mapping_get (result, i);
 }
 
 /* An "edit" is a textual modification performed by the user, that needs to
@@ -929,9 +1029,7 @@ There is NO WARRANTY, to the extent permitted by law.\n\
     struct changelog_file mainstream_file;
     struct changelog_file modified_file;
     /* Mapping from indices in ancestor_file to indices in mainstream_file.  */
-    ssize_t *index_mapping;
-    /* Mapping from indices in mainstream_file to indices in ancestor_file.  */
-    ssize_t *index_mapping_reverse;
+    struct entries_mapping mapping;
     struct differences diffs;
     gl_list_node_t *result_entries_pointers; /* array of pointers into result_entries */
     gl_list_t /* <struct entry *> */ result_entries;
@@ -1050,12 +1148,8 @@ There is NO WARRANTY, to the extent permitted by law.\n\
 
     /* Compute correspondence between the entries of ancestor_file and of
        mainstream_file.  */
-    {
-      ssize_t *result[2];
-      compute_mapping (&ancestor_file, &mainstream_file, result);
-      index_mapping = result[0];
-      index_mapping_reverse = result[1];
-    }
+    compute_mapping (&ancestor_file, &mainstream_file, false, &mapping);
+    (void) entries_mapping_reverse_get; /* avoid gcc "defined but not" warning */
 
     /* Compute differences between the entries of ancestor_file and of
        modified_file.  */
@@ -1111,10 +1205,10 @@ There is NO WARRANTY, to the extent permitted by law.\n\
 		     ancestor_file.entries[i_after].  See whether these two
 		     entries still exist in mainstream_file and are still
 		     consecutive.  */
-		  k_before = index_mapping[i_before];
+		  k_before = entries_mapping_get (&mapping, i_before);
 		  k_after = (i_after == ancestor_file.num_entries
 			     ? mainstream_file.num_entries
-			     : index_mapping[i_after]);
+			     : entries_mapping_get (&mapping, i_after));
 		  if (k_before >= 0 && k_after >= 0 && k_after == k_before + 1)
 		    {
 		      /* Yes, the entry before and after are still neighbours
@@ -1164,7 +1258,7 @@ There is NO WARRANTY, to the extent permitted by law.\n\
 		for (i = edit->i1; i <= edit->i2; i++)
 		  {
 		    struct entry *removed_entry = ancestor_file.entries[i];
-		    ssize_t k = index_mapping[i];
+		    ssize_t k = entries_mapping_get (&mapping, i);
 		    if (k >= 0
 			&& entry_equals (removed_entry,
 					 mainstream_file.entries[k]))
@@ -1258,7 +1352,7 @@ There is NO WARRANTY, to the extent permitted by law.\n\
 				   ? split[1]
 				   : modified_file.entries[j]);
 				size_t i = j + edit->i2 - edit->j2;
-				ssize_t k = index_mapping[i];
+				ssize_t k = entries_mapping_get (&mapping, i);
 				if (k >= 0
 				    && entry_equals (ancestor_file.entries[i],
 						     mainstream_file.entries[k]))
@@ -1338,7 +1432,7 @@ There is NO WARRANTY, to the extent permitted by law.\n\
 			      {
 				struct entry *changed_entry = modified_file.entries[j];
 				size_t i = j + edit->i2 - edit->j2;
-				ssize_t k = index_mapping[i];
+				ssize_t k = entries_mapping_get (&mapping, i);
 				if (k >= 0
 				    && entry_equals (ancestor_file.entries[i],
 						     mainstream_file.entries[k]))
@@ -1377,13 +1471,13 @@ There is NO WARRANTY, to the extent permitted by law.\n\
 			       See whether this entry and the following num_changed
 			       entries still exist in mainstream_file and are still
 			       consecutive.  */
-			    k_before = index_mapping[i_before];
+			    k_before = entries_mapping_get (&mapping, i_before);
 			    linear = (k_before >= 0);
 			    if (linear)
 			      {
 				size_t i;
 				for (i = i_before + 1; i <= i_before + num_changed; i++)
-				  if (index_mapping[i] != k_before + (i - i_before))
+				  if (entries_mapping_get (&mapping, i) != k_before + (i - i_before))
 				    {
 				      linear = false;
 				      break;
@@ -1403,7 +1497,7 @@ There is NO WARRANTY, to the extent permitted by law.\n\
 				  {
 				    struct entry *changed_entry = modified_file.entries[j];
 				    size_t i = j + edit->i2 - edit->j2;
-				    ssize_t k = index_mapping[i];
+				    ssize_t k = entries_mapping_get (&mapping, i);
 				    ASSERT (k >= 0);
 				    if (entry_equals (ancestor_file.entries[i],
 						      mainstream_file.entries[k]))
@@ -1443,7 +1537,7 @@ There is NO WARRANTY, to the extent permitted by law.\n\
 			ssize_t k_first;
 			bool linear_unchanged;
 			i_first = edit->i1;
-			k_first = index_mapping[i_first];
+			k_first = entries_mapping_get (&mapping, i_first);
 			linear_unchanged =
 			  (k_first >= 0
 			   && entry_equals (ancestor_file.entries[i_first],
@@ -1452,9 +1546,9 @@ There is NO WARRANTY, to the extent permitted by law.\n\
 			  {
 			    size_t i;
 			    for (i = i_first + 1; i <= edit->i2; i++)
-			      if (!(index_mapping[i] == k_first + (i - i_first)
+			      if (!(entries_mapping_get (&mapping, i) == k_first + (i - i_first)
 				    && entry_equals (ancestor_file.entries[i],
-						     mainstream_file.entries[index_mapping[i]])))
+						     mainstream_file.entries[entries_mapping_get (&mapping, i)])))
 				{
 				  linear_unchanged = false;
 				  break;
@@ -1473,7 +1567,7 @@ There is NO WARRANTY, to the extent permitted by law.\n\
 			      }
 			    for (i = edit->i1; i <= edit->i2; i++)
 			      {
-				ssize_t k = index_mapping[i];
+				ssize_t k = entries_mapping_get (&mapping, i);
 				ASSERT (k >= 0);
 				ASSERT (entry_equals (ancestor_file.entries[i],
 						      mainstream_file.entries[k]));
