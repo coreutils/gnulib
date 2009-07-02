@@ -1,5 +1,10 @@
 2009-07-02  Bruno Haible  <bruno@clisp.org>
 
+	* lib/git-merge-changelog.c (compute_mapping): Fix determination of
+	best_i.
+
+2009-07-02  Bruno Haible  <bruno@clisp.org>
+
 	Speed up approximate search for matching ChangeLog entries.
 	* lib/git-merge-changelog.c (entry_fstrcmp): Add a lower_bound
 	argument. Call fstrcmp_bounded instead of fstrcmp.

@@ -1,5 +1,5 @@
 /* git-merge-changelog - git "merge" driver for GNU style ChangeLog files.
-   Copyright (C) 2008 Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2008-2009 Bruno Haible <bruno@clisp.org>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -438,7 +438,7 @@ compute_mapping (struct changelog_file *file1, struct changelog_file *file2,
 				   best_i_similarity);
 		  if (similarity > best_i_similarity)
 		    {
-		      best_i = i;
+		      best_i = ii;
 		      best_i_similarity = similarity;
 		    }
 		}
