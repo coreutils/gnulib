@@ -1869,6 +1869,7 @@ func_all_modules ()
 
   func_begin_table
   func_module argmatch
+  func_module argv-iter
   func_module version-etc
   func_module version-etc-fsf
   func_module long-options
