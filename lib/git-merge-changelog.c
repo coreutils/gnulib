@@ -510,37 +510,44 @@ compute_mapping (struct changelog_file *file1, struct changelog_file *file2,
 	  {
 	    j = n2 - 1 - j;
 	    /* Found an exact correspondence.  */
-	    ASSERT (index_mapping_reverse[j] < 0);
-	    index_mapping[i] = j;
-	    index_mapping_reverse[j] = i;
-	    /* Look for more occurrences of the same entry.  */
-	    {
-	      ssize_t curr_i = i;
-	      ssize_t curr_j = j;
-
-	      for (;;)
+	    /* If index_mapping_reverse[j] >= 0, we have already seen other
+	       copies of this entry, and there were more occurrences of it in
+	       file1 than in file2.  In this case, do nothing.  */
+	    if (index_mapping_reverse[j] < 0)
+	      {
+		index_mapping[i] = j;
+		index_mapping_reverse[j] = i;
+		/* Look for more occurrences of the same entry.  Match them
+		   as long as they pair up.  Unpaired occurrences of the same
+		   entry are left without mapping.  */
 		{
-		  ssize_t next_i;
-		  ssize_t next_j;
+		  ssize_t curr_i = i;
+		  ssize_t curr_j = j;
 
-		  next_i =
-		    gl_list_indexof_from (file1->entries_reversed, n1 - curr_i,
-					  entry);
-		  if (next_i < 0)
-		    break;
-		  next_j =
-		    gl_list_indexof_from (file2->entries_reversed, n2 - curr_j,
-					  entry);
-		  if (next_j < 0)
-		    break;
-		  curr_i = n1 - 1 - next_i;
-		  curr_j = n2 - 1 - next_j;
-		  ASSERT (index_mapping[curr_i] < 0);
-		  ASSERT (index_mapping_reverse[curr_j] < 0);
-		  index_mapping[curr_i] = curr_j;
-		  index_mapping_reverse[curr_j] = curr_i;
+		  for (;;)
+		    {
+		      ssize_t next_i;
+		      ssize_t next_j;
+
+		      next_i =
+			gl_list_indexof_from (file1->entries_reversed,
+					      n1 - curr_i, entry);
+		      if (next_i < 0)
+			break;
+		      next_j =
+			gl_list_indexof_from (file2->entries_reversed,
+					      n2 - curr_j, entry);
+		      if (next_j < 0)
+			break;
+		      curr_i = n1 - 1 - next_i;
+		      curr_j = n2 - 1 - next_j;
+		      ASSERT (index_mapping[curr_i] < 0);
+		      ASSERT (index_mapping_reverse[curr_j] < 0);
+		      index_mapping[curr_i] = curr_j;
+		      index_mapping_reverse[curr_j] = curr_i;
+		    }
 		}
-	    }
+	      }
 	  }
       }
 
