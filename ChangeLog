@@ -1,3 +1,11 @@
+2009-07-05  Jim Meyering  <meyering@redhat.com>
+
+	remove superfluous parentheses in STREQ definition
+	* tests/test-argv-iter.c (STREQ): Remove redundant parentheses.
+	* lib/getugroups.c (STREQ): Likewise.
+	* lib/fnmatch.c (STREQ): Likewise.
+	Spotted by Bruno Haible.
+
 2009-07-04  Jim Meyering  <meyering@redhat.com>
 
 	argv-iter: new module

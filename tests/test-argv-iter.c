@@ -22,7 +22,7 @@
 #include <string.h>
 
 #define ARRAY_CARDINALITY(Array) (sizeof (Array) / sizeof *(Array))
-#define STREQ(s1, s2) ((strcmp (s1, s2) == 0))
+#define STREQ(s1, s2) (strcmp (s1, s2) == 0)
 #define ASSERT(expr) \
   do                                                                         \
     {                                                                        \
