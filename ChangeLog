@@ -1,3 +1,9 @@
+2009-07-07  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: don't look for translatable strings in *.m4 or *.mk
+	* top/maint.mk (sc_po_check): Skip *.m4 and *.mk files,
+	when searching for translatable strings.
+
 2009-07-05  Jim Meyering  <meyering@redhat.com>
 
 	remove superfluous parentheses in STREQ definition

@@ -540,6 +540,7 @@ sc_po_check:
 	  for file in $$($(VC_LIST_EXCEPT)) lib/*.[ch]; do		\
 	    test -r $$file || continue;					\
 	    case $$file in						\
+	      *.m4|*.mk) continue ;;					\
 	      *.?|*.??) ;;						\
 	      *) continue;;						\
 	    esac;							\
