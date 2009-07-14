@@ -1,5 +1,5 @@
-# wcwidth.m4 serial 14
-dnl Copyright (C) 2006-2008 Free Software Foundation, Inc.
+# wcwidth.m4 serial 15
+dnl Copyright (C) 2006-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -7,6 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_WCWIDTH],
 [
   AC_REQUIRE([gl_WCHAR_H_DEFAULTS])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
 
   dnl Persuade glibc <wchar.h> to declare wcwidth().
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
@@ -68,7 +69,15 @@ int main ()
       return 1;
   return 0;
 }], [gl_cv_func_wcwidth_works=yes], [gl_cv_func_wcwidth_works=no],
-          [gl_cv_func_wcwidth_works="guessing no"])
+          [
+changequote(,)dnl
+           case "$host_os" in
+                     # Guess yes on glibc systems.
+             *-gnu*) gl_cv_func_wcwidth_works="guessing yes";;
+             *)      gl_cv_func_wcwidth_works="guessing no";;
+           esac
+changequote([,])dnl
+          ])
       ])
     case "$gl_cv_func_wcwidth_works" in
       *yes) ;;

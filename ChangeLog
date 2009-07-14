@@ -1,3 +1,8 @@
+2009-07-14  Bruno Haible  <bruno@clisp.org>
+
+	* m4/wcwidth.m4 (gl_FUNC_WCWIDTH): Guess it works on glibc systems.
+	Reported by anonymous kc.
+
 2009-07-07  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: don't look for translatable strings in *.m4 or *.mk
