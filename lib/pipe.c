@@ -134,10 +134,12 @@ create_pipe (const char *progname,
 
   if (pipe_stdout)
     if (_pipe (ifd, 4096, O_BINARY | O_NOINHERIT) < 0
-	|| (ifd[0] = fd_safer (ifd[0])) < 0)
+	|| (ifd[0] = fd_safer (ifd[0])) < 0
+	|| (ifd[1] = fd_safer (ifd[1])) < 0)
       error (EXIT_FAILURE, errno, _("cannot create pipe"));
   if (pipe_stdin)
     if (_pipe (ofd, 4096, O_BINARY | O_NOINHERIT) < 0
+	|| (ofd[0] = fd_safer (ofd[0])) < 0
 	|| (ofd[1] = fd_safer (ofd[1])) < 0)
       error (EXIT_FAILURE, errno, _("cannot create pipe"));
 /* Data flow diagram:
@@ -258,12 +260,10 @@ create_pipe (const char *progname,
   pid_t child;
 
   if (pipe_stdout)
-    if (pipe (ifd) < 0
-	|| (ifd[0] = fd_safer (ifd[0])) < 0)
+    if (pipe_safer (ifd) < 0)
       error (EXIT_FAILURE, errno, _("cannot create pipe"));
   if (pipe_stdin)
-    if (pipe (ofd) < 0
-	|| (ofd[1] = fd_safer (ofd[1])) < 0)
+    if (pipe_safer (ofd) < 0)
       error (EXIT_FAILURE, errno, _("cannot create pipe"));
 /* Data flow diagram:
  *
