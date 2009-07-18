@@ -11,4 +11,4 @@ Makefile.am:
 TESTS += test-pipe.sh
 TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
 check_PROGRAMS += test-pipe
-test_closein_LDADD = $(LDADD) @LIBINTL@
+test_pipe_LDADD = $(LDADD) @LIBINTL@
