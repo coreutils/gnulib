@@ -238,7 +238,7 @@ error (int status, int errnum, const char *message, ...)
 		   0);
 #endif
 
-#if !_LIBC
+#if !_LIBC && defined F_GETFL
   /* POSIX states that fflush (stdout) after fclose is unspecified; it
      is safe in glibc, but not on all other platforms.  fflush (NULL)
      is always defined, but too draconian.  */
@@ -303,7 +303,7 @@ error_at_line (int status, int errnum, const char *file_name,
 		   0);
 #endif
 
-#if !_LIBC
+#if !_LIBC && defined F_GETFL
   /* POSIX states that fflush (stdout) after fclose is unspecified; it
      is safe in glibc, but not on all other platforms.  fflush (NULL)
      is always defined, but too draconian.  */

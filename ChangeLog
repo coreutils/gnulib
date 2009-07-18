@@ -1,5 +1,9 @@
 2009-07-18  Eric Blake  <ebb9@byu.net>
 
+	error: fix mingw build
+	* lib/error.c (error, error_at_line): Avoid fcntl on mingw.
+	Reported by Bruno Haible.
+
 	error: avoid undefined use of stdout
 	* lib/error.c (error, error_at_line): Check that fd 1 is open
 	before flushing stdout.  Avoids a crash on cygwin when libsigsegv
