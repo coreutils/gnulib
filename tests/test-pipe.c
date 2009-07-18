@@ -131,7 +131,13 @@ main (int argc, const char *argv[])
         buffer[0]++;
         ASSERT (write (STDOUT_FILENO, buffer, 1) == 1);
         errno = 0;
+#ifdef F_GETFL
+        /* Try to keep stderr open for better diagnostics.  */
         i = fcntl (STDERR_FILENO, F_GETFL);
+#else
+        /* But allow compilation on mingw.  */
+        i = close (STDERR_FILENO);
+#endif
         if (test == 8)
           ASSERT (0 <= i);
         else
