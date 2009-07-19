@@ -1,5 +1,10 @@
 2009-07-19  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-pipe.c (child_main, parent_main): New functions, extracted
+	from main.
+	(test_pipe): Pass an extra argument for disambiguation.
+	(main): Invoke parent_main or child_main.
+
 	* tests/test-pipe.c (test_pipe): Pass slave_process = true argument
 	consistently.
 

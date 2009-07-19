@@ -42,6 +42,59 @@
     }                                                                        \
   while (0)
 
+/* Code executed by the child process.  argv[1] = "child".  */
+static int
+child_main (int argc, char *argv[])
+{
+  char buffer[1];
+  int i;
+  int fd;
+
+  ASSERT (argc == 3);
+
+  /* Read one byte from fd 0, and write its value plus one to fd 1.
+     fd 2 should be closed iff the argument is 1.  Check that no other file
+     descriptors leaked.  */
+
+  ASSERT (read (STDIN_FILENO, buffer, 1) == 1);
+
+  buffer[0]++;
+  ASSERT (write (STDOUT_FILENO, buffer, 1) == 1);
+
+  errno = 0;
+#ifdef F_GETFL
+  /* Try to keep stderr open for better diagnostics.  */
+  i = fcntl (STDERR_FILENO, F_GETFL);
+#else
+  /* But allow compilation on mingw.  You might need to disable this code for
+     debugging failures.  */
+  i = close (STDERR_FILENO);
+#endif
+  switch (atoi (argv[2]))
+    {
+    case 0:
+      /* Expect fd 2 was open.  */
+      ASSERT (i >= 0);
+      break;
+    case 1:
+      /* Expect fd 2 was closed.  */
+      ASSERT (i < 0);
+      ASSERT (errno == EBADF);
+      break;
+    default:
+      ASSERT (false);
+    }
+
+  for (fd = 3; fd < 7; fd++)
+    {
+      errno = 0;
+      ASSERT (close (fd) == -1);
+      ASSERT (errno == EBADF);
+    }
+
+  return 0;
+}
+
 /* Create a bi-directional pipe to a test child, and validate that the
    child program returns the expected output.  The child is the same
    program as the parent ARGV0, but with different arguments.
@@ -50,16 +103,16 @@ static void
 test_pipe (const char *argv0, bool stderr_closed)
 {
   int fd[2];
-  const char *argv[3];
+  char *argv[4];
   pid_t pid;
-  char buffer[2] = { 'a', 'a' };
+  char buffer[2] = { 'a', 't' };
 
   /* Set up child.  */
-  argv[0] = argv0;
-  argv[1] = stderr_closed ? "9" : "8";
-  argv[2] = NULL;
-  pid = create_pipe_bidi (argv0, argv0, (char **) argv,
-			  false, true, true, fd);
+  argv[0] = (char *) argv0;
+  argv[1] = (char *) "child";
+  argv[2] = (char *) (stderr_closed ? "1" : "0");
+  argv[3] = NULL;
+  pid = create_pipe_bidi (argv0, argv0, argv, false, true, true, fd);
   ASSERT (0 <= pid);
   ASSERT (STDERR_FILENO < fd[0]);
   ASSERT (STDERR_FILENO < fd[1]);
@@ -77,20 +130,23 @@ test_pipe (const char *argv0, bool stderr_closed)
 
   /* Check the result.  */
   ASSERT (buffer[0] == 'b');
-  ASSERT (buffer[1] == 'a');
+  ASSERT (buffer[1] == 't');
 }
 
-int
-main (int argc, const char *argv[])
+/* Code executed by the parent process.  */
+static int
+parent_main (int argc, char *argv[])
 {
-  int i;
   int test;
+  int fd;
+
   ASSERT (argc == 2);
+
+  /* Selectively close various standard fds, to verify the child process is
+     not impacted by this.  */
   test = atoi (argv[1]);
   switch (test)
     {
-      /* Driver cases.  Selectively close various standard fds, to
-         ensure the child process is not impacted by this.  */
     case 0:
       break;
     case 1:
@@ -119,48 +175,27 @@ main (int argc, const char *argv[])
       close (1);
       close (2);
       break;
-
-      /* Slave cases.  Read one byte from fd 0, and write its value
-         plus one to fd 1.  fd 2 should be closed iff the argument is
-         9.  Check that no other fd's leaked.  */
-    case 8:
-    case 9:
-      {
-        char buffer[1];
-        ASSERT (read (STDIN_FILENO, buffer, 1) == 1);
-        buffer[0]++;
-        ASSERT (write (STDOUT_FILENO, buffer, 1) == 1);
-        errno = 0;
-#ifdef F_GETFL
-        /* Try to keep stderr open for better diagnostics.  */
-        i = fcntl (STDERR_FILENO, F_GETFL);
-#else
-        /* But allow compilation on mingw.  */
-        i = close (STDERR_FILENO);
-#endif
-        if (test == 8)
-          ASSERT (0 <= i);
-        else
-          {
-            ASSERT (i < 0);
-            ASSERT (errno == EBADF);
-          }
-        for (i = 3; i < 7; i++)
-          {
-            errno = 0;
-            ASSERT (close (i) == -1);
-            ASSERT (errno == EBADF);
-          }
-        return 0;
-      }
     default:
-      ASSERT (0);
+      ASSERT (false);
     }
-  /* All remaining code is for the driver.  Plug any leaks inherited
-     from outside world before starting, so that child has a clean
-     slate (at least for the fds that we might be manipulating).  */
-  for (i = 3; i < 7; i++)
-    close (i);
-  test_pipe (argv[0], 3 < test);
+
+  /* Plug any file descriptor leaks inherited from outside world before
+     starting, so that child has a clean slate (at least for the fds that we
+     might be manipulating).  */
+  for (fd = 3; fd < 7; fd++)
+    close (fd);
+
+  test_pipe (argv[0], test >= 4);
+
   return 0;
+}
+
+int
+main (int argc, char *argv[])
+{
+  ASSERT (argc >= 2);
+  if (strcmp (argv[1], "child") == 0)
+    return child_main (argc, argv);
+  else
+    return parent_main (argc, argv);
 }
