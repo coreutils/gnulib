@@ -18,6 +18,7 @@ sigprocmask
 stdbool
 unistd
 sys_wait
+close
 
 configure.ac:
 AC_EGREP_CPP([notposix], [[

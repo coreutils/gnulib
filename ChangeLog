@@ -1,5 +1,20 @@
 2009-07-19  Bruno Haible  <bruno@clisp.org>
 
+	Fix build error on mingw with the modules sys_select and unistd.
+	* modules/acl-tests (Depends-on): Add close.
+	* modules/binary-io-tests (Depends-on): Likewise.
+	* modules/closein-tests (Depends-on): Likewise.
+	* modules/flock-tests (Depends-on): Likewise.
+	* modules/fsync-tests (Depends-on): Likewise.
+	* modules/lseek-tests (Depends-on): Likewise.
+	* modules/pipe-tests (Depends-on): Likewise.
+	* modules/posix_spawn-tests (Depends-on): Likewise.
+	* modules/posix_spawnp-tests (Depends-on): Likewise.
+	* modules/stat-time-tests (Depends-on): Likewise.
+	* modules/yesno-tests (Depends-on): Likewise.
+
+2009-07-19  Bruno Haible  <bruno@clisp.org>
+
 	Unify conditionals.
 	* lib/pipe.h: Detect native Win32 by looking at _WIN32 and __WIN32__
 	macros, not at the compiler macros.

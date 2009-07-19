@@ -3,6 +3,7 @@ tests/test-binary-io.sh
 tests/test-binary-io.c
 
 Depends-on:
+close
 
 configure.ac:
 

@@ -3,6 +3,7 @@ tests/test-lseek.c
 tests/test-lseek.sh
 
 Depends-on:
+close
 
 configure.ac:
 

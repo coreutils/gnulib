@@ -3,6 +3,7 @@ tests/test-flock.c
 
 Depends-on:
 unistd
+close
 
 configure.ac:
 

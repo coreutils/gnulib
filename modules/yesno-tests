@@ -5,6 +5,7 @@ tests/test-yesno.sh
 Depends-on:
 closein
 binary-io
+close
 
 configure.ac:
 

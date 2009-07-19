@@ -4,6 +4,7 @@ tests/test-pipe.c
 
 Depends-on:
 progname
+close
 
 configure.ac:
 
