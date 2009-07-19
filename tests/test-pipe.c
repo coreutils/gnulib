@@ -58,8 +58,8 @@ test_pipe (const char *argv0, bool stderr_closed)
   argv[0] = argv0;
   argv[1] = stderr_closed ? "9" : "8";
   argv[2] = NULL;
-  pid = create_pipe_bidi(argv0, argv0, (char **) argv,
-                         false, true, true, fd);
+  pid = create_pipe_bidi (argv0, argv0, (char **) argv,
+			  false, true, true, fd);
   ASSERT (0 <= pid);
   ASSERT (STDERR_FILENO < fd[0]);
   ASSERT (STDERR_FILENO < fd[1]);
@@ -71,7 +71,7 @@ test_pipe (const char *argv0, bool stderr_closed)
   ASSERT (read (fd[0], buffer, 2) == 1);
 
   /* Wait for child.  */
-  ASSERT (wait_subprocess (pid, argv0, true, false, false, true, NULL) == 0);
+  ASSERT (wait_subprocess (pid, argv0, true, false, true, true, NULL) == 0);
   ASSERT (close (fd[0]) == 0);
   ASSERT (close (fd[1]) == 0);
 
