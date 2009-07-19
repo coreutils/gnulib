@@ -1,5 +1,14 @@
 2009-07-19  Bruno Haible  <bruno@clisp.org>
 
+	Unify conditionals.
+	* lib/pipe.h: Detect native Win32 by looking at _WIN32 and __WIN32__
+	macros, not at the compiler macros.
+	* lib/pipe.c: Likewise.
+	* lib/execute.c: Likewise.
+	* lib/spawni.c: Likewise.
+
+2009-07-19  Bruno Haible  <bruno@clisp.org>
+
 	Fix handling of closed stdin/stdout/stderr on mingw.
 	* lib/w32spawn.h: Include unistd.h.
 	(dup_noinherit): Return -1 if the old handle is invalid. Allocate new

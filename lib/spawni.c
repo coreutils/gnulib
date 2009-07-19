@@ -89,7 +89,7 @@
 #define SPAWN_ERROR	127
 
 
-#if defined _MSC_VER || defined __MINGW32__
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 
 /* Native Woe32 API.  */
 int

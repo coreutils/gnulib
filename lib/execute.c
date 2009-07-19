@@ -35,7 +35,7 @@
 
 #define _(str) gettext (str)
 
-#if defined _MSC_VER || defined __MINGW32__
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 
 /* Native Woe32 API.  */
 # include <process.h>
@@ -104,7 +104,7 @@ execute (const char *progname,
 	 bool slave_process, bool exit_on_error,
 	 int *termsigp)
 {
-#if defined _MSC_VER || defined __MINGW32__
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 
   /* Native Woe32 API.  */
   int orig_stdin;

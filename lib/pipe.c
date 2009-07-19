@@ -35,7 +35,7 @@
 
 #define _(str) gettext (str)
 
-#if defined _MSC_VER || defined __MINGW32__
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 
 /* Native Woe32 API.  */
 # include <process.h>
@@ -112,7 +112,7 @@ create_pipe (const char *progname,
 	     bool slave_process, bool exit_on_error,
 	     int fd[2])
 {
-#if defined _MSC_VER || defined __MINGW32__
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 
   /* Native Woe32 API.
      This uses _pipe(), dup2(), and spawnv().  It could also be implemented
