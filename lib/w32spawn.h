@@ -1,5 +1,5 @@
 /* Auxiliary functions for the creation of subprocesses.  Native Woe32 API.
-   Copyright (C) 2003, 2006-2009 Free Software Foundation, Inc.
+   Copyright (C) 2001, 2003, 2004-2009 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software: you can redistribute it and/or modify
@@ -24,11 +24,13 @@
 
 #include <stdbool.h>
 #include <string.h>
+#include <unistd.h>
 #include <errno.h>
 
 #include "xalloc.h"
 
-/* Duplicates a file handle, making the copy uninheritable.  */
+/* Duplicates a file handle, making the copy uninheritable.
+   Returns -1 for a file handle that is equivalent to closed.  */
 static int
 dup_noinherit (int fd)
 {
@@ -36,6 +38,12 @@ dup_noinherit (int fd)
   HANDLE old_handle = (HANDLE) _get_osfhandle (fd);
   HANDLE new_handle;
   int nfd;
+
+  if (old_handle == INVALID_HANDLE_VALUE)
+    /* fd is closed, or is open to no handle at all.
+       We cannot duplicate fd in this case, because _open_osfhandle fails for
+       an INVALID_HANDLE_VALUE argument.  */
+    return -1;
 
   if (!DuplicateHandle (curr_process,		    /* SourceProcessHandle */
 			old_handle,		    /* SourceHandle */
@@ -47,11 +55,59 @@ dup_noinherit (int fd)
     error (EXIT_FAILURE, 0, _("DuplicateHandle failed with error code 0x%08x"),
 	   (unsigned int) GetLastError ());
 
-  nfd = _open_osfhandle ((long) new_handle, O_BINARY);
+  nfd = _open_osfhandle ((long) new_handle, O_BINARY | O_NOINHERIT);
   if (nfd < 0)
     error (EXIT_FAILURE, errno, _("_open_osfhandle failed"));
 
   return nfd;
+}
+
+/* Returns a file descriptor equivalent to FD, except that the resulting file
+   descriptor is none of STDIN_FILENO, STDOUT_FILENO, STDERR_FILENO.
+   FD must be open and non-inheritable.  The result will be non-inheritable as
+   well.
+   If FD < 0, FD itself is returned.  */
+static int
+fd_safer_noinherit (int fd)
+{
+  if (STDIN_FILENO <= fd && fd <= STDERR_FILENO)
+    {
+      /* The recursion depth is at most 3.  */
+      int nfd = fd_safer_noinherit (dup_noinherit (fd));
+      int saved_errno = errno;
+      close (fd);
+      errno = saved_errno;
+      return nfd;
+    }
+  return fd;
+}
+
+/* Duplicates a file handle, making the copy uninheritable and ensuring the
+   result is none of STDIN_FILENO, STDOUT_FILENO, STDERR_FILENO.
+   Returns -1 for a file handle that is equivalent to closed.  */
+static int
+dup_safer_noinherit (int fd)
+{
+  return fd_safer_noinherit (dup_noinherit (fd));
+}
+
+/* Undoes the effect of TEMPFD = dup_safer_noinherit (ORIGFD);  */
+static void
+undup_safer_noinherit (int tempfd, int origfd)
+{
+  if (tempfd >= 0)
+    {
+      if (dup2 (tempfd, origfd) < 0)
+        error (EXIT_FAILURE, errno, _("cannot restore fd %d: dup2 failed"),
+	       origfd);
+      close (tempfd);
+    }
+  else
+    {
+      /* origfd was closed or open to no handle at all.  Set it to a closed
+	 state.  This is (nearly) equivalent to the original state.  */
+      close (origfd);
+    }
 }
 
 /* Prepares an argument vector before calling spawn().

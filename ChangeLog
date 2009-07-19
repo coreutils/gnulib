@@ -1,5 +1,19 @@
 2009-07-19  Bruno Haible  <bruno@clisp.org>
 
+	Fix handling of closed stdin/stdout/stderr on mingw.
+	* lib/w32spawn.h: Include unistd.h.
+	(dup_noinherit): Return -1 if the old handle is invalid. Allocate new
+	file descriptor with O_NOINHERIT flag.
+	(fd_safer_noinherit): New function, based on fd-safer.c.
+	(dup_safer_noinherit): New function, based on dup-safer.c.
+	(undup_safer_noinherit): New function.
+	* lib/execute.c (execute) [WIN32]: Use dup_safer_noinherit instead of
+	dup_noinherit. Use undup_safer_noinherit instead of dup2 and close.
+	* lib/pipe.c (create_pipe) [WIN32]: Likewise. Use fd_safer_noinherit
+	instead of fd_safer.
+	* tests/test-pipe.c: Include <windows.h>.
+	(child_main) [WIN32]: Test the handle of STDERR_FILENO, not its close() result.
+
 	* tests/test-pipe.c (child_main, parent_main): New functions, extracted
 	from main.
 	(test_pipe): Pass an extra argument for disambiguation.

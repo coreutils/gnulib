@@ -20,6 +20,12 @@
 #include "pipe.h"
 #include "wait-process.h"
 
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+/* Get declarations of the Win32 API functions.  */
+# define WIN32_LEAN_AND_MEAN
+# include <windows.h>
+#endif
+
 #include <errno.h>
 #include <fcntl.h>
 #include <stdbool.h>
@@ -47,7 +53,6 @@ static int
 child_main (int argc, char *argv[])
 {
   char buffer[1];
-  int i;
   int fd;
 
   ASSERT (argc == 3);
@@ -61,29 +66,46 @@ child_main (int argc, char *argv[])
   buffer[0]++;
   ASSERT (write (STDOUT_FILENO, buffer, 1) == 1);
 
-  errno = 0;
-#ifdef F_GETFL
-  /* Try to keep stderr open for better diagnostics.  */
-  i = fcntl (STDERR_FILENO, F_GETFL);
-#else
-  /* But allow compilation on mingw.  You might need to disable this code for
-     debugging failures.  */
-  i = close (STDERR_FILENO);
-#endif
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+  /* On Win32, the initial state of unassigned standard file descriptors is
+     that they are open but point to an INVALID_HANDLE_VALUE.  Thus
+     close (STDERR_FILENO) would always succeed.  */
   switch (atoi (argv[2]))
     {
     case 0:
-      /* Expect fd 2 was open.  */
-      ASSERT (i >= 0);
+      /* Expect fd 2 is open to a valid handle.  */
+      ASSERT ((HANDLE) _get_osfhandle (STDERR_FILENO) != INVALID_HANDLE_VALUE);
       break;
     case 1:
-      /* Expect fd 2 was closed.  */
-      ASSERT (i < 0);
-      ASSERT (errno == EBADF);
+      /* Expect fd 2 is pointing to INVALID_HANDLE_VALUE.  */
+      ASSERT ((HANDLE) _get_osfhandle (STDERR_FILENO) == INVALID_HANDLE_VALUE);
       break;
     default:
       ASSERT (false);
     }
+#elif defined F_GETFL
+  /* On Unix, the initial state of unassigned standard file descriptors is
+     that they are closed.  */
+  {
+    int ret;
+    errno = 0;
+    ret = fcntl (STDERR_FILENO, F_GETFL);
+    switch (atoi (argv[2]))
+      {
+      case 0:
+	/* Expect fd 2 is open.  */
+	ASSERT (ret >= 0);
+	break;
+      case 1:
+	/* Expect fd 2 is closed.  */
+	ASSERT (ret < 0);
+	ASSERT (errno == EBADF);
+	break;
+      default:
+	ASSERT (false);
+      }
+  }
+#endif
 
   for (fd = 3; fd < 7; fd++)
     {

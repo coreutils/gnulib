@@ -119,11 +119,11 @@ execute (const char *progname,
 
   /* Save standard file handles of parent process.  */
   if (null_stdin)
-    orig_stdin = dup_noinherit (STDIN_FILENO);
+    orig_stdin = dup_safer_noinherit (STDIN_FILENO);
   if (null_stdout)
-    orig_stdout = dup_noinherit (STDOUT_FILENO);
+    orig_stdout = dup_safer_noinherit (STDOUT_FILENO);
   if (null_stderr)
-    orig_stderr = dup_noinherit (STDERR_FILENO);
+    orig_stderr = dup_safer_noinherit (STDERR_FILENO);
   exitcode = -1;
 
   /* Create standard file handles of child process.  */
@@ -173,11 +173,11 @@ execute (const char *progname,
 
   /* Restore standard file handles of parent process.  */
   if (null_stderr)
-    dup2 (orig_stderr, STDERR_FILENO), close (orig_stderr);
+    undup_safer_noinherit (orig_stderr, STDERR_FILENO);
   if (null_stdout)
-    dup2 (orig_stdout, STDOUT_FILENO), close (orig_stdout);
+    undup_safer_noinherit (orig_stdout, STDOUT_FILENO);
   if (null_stdin)
-    dup2 (orig_stdin, STDIN_FILENO), close (orig_stdin);
+    undup_safer_noinherit (orig_stdin, STDIN_FILENO);
 
   if (termsigp != NULL)
     *termsigp = 0;

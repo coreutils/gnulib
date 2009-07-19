@@ -134,13 +134,13 @@ create_pipe (const char *progname,
 
   if (pipe_stdout)
     if (_pipe (ifd, 4096, O_BINARY | O_NOINHERIT) < 0
-	|| (ifd[0] = fd_safer (ifd[0])) < 0
-	|| (ifd[1] = fd_safer (ifd[1])) < 0)
+	|| (ifd[0] = fd_safer_noinherit (ifd[0])) < 0
+	|| (ifd[1] = fd_safer_noinherit (ifd[1])) < 0)
       error (EXIT_FAILURE, errno, _("cannot create pipe"));
   if (pipe_stdin)
     if (_pipe (ofd, 4096, O_BINARY | O_NOINHERIT) < 0
-	|| (ofd[0] = fd_safer (ofd[0])) < 0
-	|| (ofd[1] = fd_safer (ofd[1])) < 0)
+	|| (ofd[0] = fd_safer_noinherit (ofd[0])) < 0
+	|| (ofd[1] = fd_safer_noinherit (ofd[1])) < 0)
       error (EXIT_FAILURE, errno, _("cannot create pipe"));
 /* Data flow diagram:
  *
@@ -153,11 +153,11 @@ create_pipe (const char *progname,
 
   /* Save standard file handles of parent process.  */
   if (pipe_stdin || prog_stdin != NULL)
-    orig_stdin = dup_noinherit (STDIN_FILENO);
+    orig_stdin = dup_safer_noinherit (STDIN_FILENO);
   if (pipe_stdout || prog_stdout != NULL)
-    orig_stdout = dup_noinherit (STDOUT_FILENO);
+    orig_stdout = dup_safer_noinherit (STDOUT_FILENO);
   if (null_stderr)
-    orig_stderr = dup_noinherit (STDERR_FILENO);
+    orig_stderr = dup_safer_noinherit (STDERR_FILENO);
   child = -1;
 
   /* Create standard file handles of child process.  */
@@ -218,11 +218,11 @@ create_pipe (const char *progname,
 
   /* Restore standard file handles of parent process.  */
   if (null_stderr)
-    dup2 (orig_stderr, STDERR_FILENO), close (orig_stderr);
+    undup_safer_noinherit (orig_stderr, STDERR_FILENO);
   if (pipe_stdout || prog_stdout != NULL)
-    dup2 (orig_stdout, STDOUT_FILENO), close (orig_stdout);
+    undup_safer_noinherit (orig_stdout, STDOUT_FILENO);
   if (pipe_stdin || prog_stdin != NULL)
-    dup2 (orig_stdin, STDIN_FILENO), close (orig_stdin);
+    undup_safer_noinherit (orig_stdin, STDIN_FILENO);
 
   if (pipe_stdin)
     close (ofd[0]);
