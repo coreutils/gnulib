@@ -38,6 +38,7 @@
    (outside the range of interesting fd's during the test) set up to
    duplicate the original stderr.  */
 
+#define BACKUP_STDERR_FILENO 10
 static FILE *myerr;
 
 #define ASSERT(expr) \
@@ -226,15 +227,16 @@ main (int argc, char *argv[])
     }
   if (strcmp (argv[1], "child") == 0)
     {
-      /* fd 2 might be closed, but fd 10 is the original stderr.  */
-      myerr = fdopen (10, "w");
+      /* fd 2 might be closed, but fd BACKUP_STDERR_FILENO is the original
+	 stderr.  */
+      myerr = fdopen (BACKUP_STDERR_FILENO, "w");
       if (!myerr)
 	return 2;
       return child_main (argc, argv);
     }
   /* We might close fd 2 later, so save it in fd 10.  */
-  if (dup2 (STDERR_FILENO, 10) != 10
-      || (myerr = fdopen (10, "w")) == NULL)
+  if (dup2 (STDERR_FILENO, BACKUP_STDERR_FILENO) != BACKUP_STDERR_FILENO
+      || (myerr = fdopen (BACKUP_STDERR_FILENO, "w")) == NULL)
     return 2;
   return parent_main (argc, argv);
 }
