@@ -109,6 +109,18 @@ extern pid_t create_pipe_in (const char *progname,
  *
  * Note: When writing to a child process, it is useful to ignore the SIGPIPE
  * signal and the EPIPE error code.
+ *
+ * Note: The parent process must be careful to avoid deadlock.
+ * 1) If you write more than PIPE_MAX bytes or, more generally, if you write
+ *    more bytes than the subprocess can handle at once, the subprocess
+ *    may write its data and wait on you to read it, but you are currently
+ *    busy writing.
+ * 2) When you don't know ahead of time how many bytes the subprocess
+ *    will produce, the usual technique of calling read (fd, buf, BUFSIZ)
+ *    with a fixed BUFSIZ will, on Linux 2.2.17 and on BSD systems, cause
+ *    the read() call to block until *all* of the buffer has been filled.
+ *    But the subprocess cannot produce more data until you gave it more
+ *    input.  But you are currently busy reading from it.
  */
 extern pid_t create_pipe_bidi (const char *progname,
 			       const char *prog_path, char **prog_argv,

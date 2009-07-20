@@ -185,9 +185,7 @@ create_pipe (const char *progname,
 		      && close (stdoutfd) >= 0)))))
     /* The child process doesn't inherit ifd[0], ifd[1], ofd[0], ofd[1],
        but it inherits all open()ed or dup2()ed file handles (which is what
-       we want in the case of STD*_FILENO) and also orig_stdin,
-       orig_stdout, orig_stderr (which is not explicitly wanted but
-       harmless).  */
+       we want in the case of STD*_FILENO).  */
     /* Use spawnvpe and pass the environment explicitly.  This is needed if
        the program has modified the environment using putenv() or [un]setenv().
        On Windows, programs have two environments, one in the "environment

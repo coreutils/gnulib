@@ -34,15 +34,19 @@
 #include <string.h>
 
 /* Depending on arguments, this test intentionally closes stderr or
-   starts life with stderr closed.  So, the error messages might not
-   always print, but at least the exit status will be reliable.  */
+   starts life with stderr closed.  So, we arrange to have fd 10
+   (outside the range of interesting fd's during the test) set up to
+   duplicate the original stderr.  */
+
+static FILE *myerr;
+
 #define ASSERT(expr) \
   do                                                                         \
     {                                                                        \
       if (!(expr))                                                           \
         {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);                                                   \
+          fprintf (myerr, "%s:%d: assertion failed\n", __FILE__, __LINE__);  \
+          fflush (myerr);                                                    \
           abort ();                                                          \
         }                                                                    \
     }                                                                        \
@@ -52,7 +56,7 @@
 static int
 child_main (int argc, char *argv[])
 {
-  char buffer[1];
+  char buffer[2] = { 's', 't' };
   int fd;
 
   ASSERT (argc == 3);
@@ -61,7 +65,7 @@ child_main (int argc, char *argv[])
      fd 2 should be closed iff the argument is 1.  Check that no other file
      descriptors leaked.  */
 
-  ASSERT (read (STDIN_FILENO, buffer, 1) == 1);
+  ASSERT (read (STDIN_FILENO, buffer, 2) == 1);
 
   buffer[0]++;
   ASSERT (write (STDOUT_FILENO, buffer, 1) == 1);
@@ -141,6 +145,7 @@ test_pipe (const char *argv0, bool stderr_closed)
 
   /* Push child's input.  */
   ASSERT (write (fd[1], buffer, 1) == 1);
+  ASSERT (close (fd[1]) == 0);
 
   /* Get child's output.  */
   ASSERT (read (fd[0], buffer, 2) == 1);
@@ -148,7 +153,6 @@ test_pipe (const char *argv0, bool stderr_closed)
   /* Wait for child.  */
   ASSERT (wait_subprocess (pid, argv0, true, false, true, true, NULL) == 0);
   ASSERT (close (fd[0]) == 0);
-  ASSERT (close (fd[1]) == 0);
 
   /* Check the result.  */
   ASSERT (buffer[0] == 'b');
@@ -215,9 +219,22 @@ parent_main (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ASSERT (argc >= 2);
+  if (argc < 2)
+    {
+      fprintf (stderr, "%s: need arguments\n", argv[0]);
+      return 2;
+    }
   if (strcmp (argv[1], "child") == 0)
-    return child_main (argc, argv);
-  else
-    return parent_main (argc, argv);
+    {
+      /* fd 2 might be closed, but fd 10 is the original stderr.  */
+      myerr = fdopen (10, "w");
+      if (!myerr)
+	return 2;
+      return child_main (argc, argv);
+    }
+  /* We might close fd 2 later, so save it in fd 10.  */
+  if (dup2 (STDERR_FILENO, 10) != 10
+      || (myerr = fdopen (10, "w")) == NULL)
+    return 2;
+  return parent_main (argc, argv);
 }
