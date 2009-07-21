@@ -1,5 +1,5 @@
 /* Test of opening a file descriptor.
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@
 int
 main ()
 {
-  ASSERT (open ("nonexist.ent/", O_CREAT, 0600) < 0);
+  ASSERT (open ("nonexist.ent/", O_CREAT | O_RDONLY, 0600) < 0);
   ASSERT (open ("/dev/null/", O_RDONLY) < 0);
 
   ASSERT (open ("/dev/null", O_RDONLY) >= 0);

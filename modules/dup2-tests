@@ -1,0 +1,12 @@
+Files:
+tests/test-dup2.c
+
+Depends-on:
+close
+open
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-dup2
+check_PROGRAMS += test-dup2

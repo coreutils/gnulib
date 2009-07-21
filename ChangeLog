@@ -1,5 +1,12 @@
 2009-07-21  Eric Blake  <ebb9@byu.net>
 
+	dup2-tests: test previous patch
+	* modules/dup2-tests: New file.
+	* tests/test-dup2.c: Likewise.
+	* tests/test-open.c (main): Avoid unspecified behavior.
+	* tests/test-pipe.c (child_main): Use dup2 semantics to simplify
+	test.
+
 	dup2: work around mingw and cygwin 1.5 bug
 	* m4/dup2.m4 (gl_FUNC_DUP2): Detect mingw bug.
 	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Add witness.
