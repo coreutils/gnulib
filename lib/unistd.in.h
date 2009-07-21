@@ -217,10 +217,12 @@ extern int fchdir (int /*fd*/);
 
 #  define dup rpl_dup
 extern int dup (int);
-#  if !@REPLACE_DUP2@
-#   define dup2 rpl_dup2
-extern int dup2 (int, int);
+
+#  if @REPLACE_DUP2@
+#   undef dup2
 #  endif
+#  define dup2 rpl_dup2_fchdir
+extern int dup2 (int, int);
 
 # endif
 #elif defined GNULIB_POSIXCHECK

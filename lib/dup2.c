@@ -26,19 +26,42 @@
 #include <errno.h>
 #include <fcntl.h>
 
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+/* Get declarations of the Win32 API functions.  */
+# define WIN32_LEAN_AND_MEAN
+# include <windows.h>
+#endif
+
 #if REPLACE_DUP2
-/* On mingw, dup2 exists, but always returns 0 for success.  */
+
+# undef dup2
+
 int
-dup2 (int fd, int desired_fd)
-#undef dup2
+rpl_dup2 (int fd, int desired_fd)
 {
-  int result = dup2 (fd, desired_fd);
+  int result;
+# if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+  /* If fd is closed, mingw hangs on dup2 (fd, fd).  If fd is open,
+     dup2 (fd, fd) returns 0, but all further attempts to use fd in
+     future dup2 calls will hang.  */
+  if (fd == desired_fd)
+    {
+      if ((HANDLE) _get_osfhandle (fd) == INVALID_HANDLE_VALUE)
+        {
+          errno = EBADF;
+          return -1;
+        }
+      return fd;
+    }
+# endif
+  result = dup2 (fd, desired_fd);
   if (result == 0)
     result = desired_fd;
   return result;
 }
 
 #else /* !REPLACE_DUP2 */
+
 /* On older platforms, dup2 did not exist.  */
 
 # ifndef F_DUPFD

@@ -172,18 +172,19 @@ rpl_dup (int oldfd)
   return newfd;
 }
 
-int
-rpl_dup2 (int oldfd, int newfd)
-#undef dup2
-{
-  int retval = dup2 (oldfd, newfd);
+/* Our <unistd.h> replacement overrides dup2 twice; be sure to pick
+   the one we want.  */
 #if REPLACE_DUP2
-  /* Inline mingw replacement from dup2.c.  */
-  if (retval == 0)
-    retval = newfd;
+# undef dup2
+# define dup2 rpl_dup2
 #endif
 
-  if (retval >= 0 && oldfd >= 0 && newfd >= 0 && newfd != oldfd)
+int
+rpl_dup2_fchdir (int oldfd, int newfd)
+{
+  int retval = dup2 (oldfd, newfd);
+
+  if (retval >= 0 && newfd != oldfd)
     {
       ensure_dirs_slot (newfd);
       if (newfd < dirs_allocated)
