@@ -21,6 +21,10 @@
 # include <stdio.h>
 # include <stdint.h>
 
+# ifdef __cplusplus
+extern "C" {
+# endif
+
 /* Structure to save state of computation between the single steps.  */
 struct sha256_ctx
 {
@@ -79,5 +83,9 @@ extern int sha224_stream (FILE *stream, void *resblock);
    digest.  */
 extern void *sha256_buffer (const char *buffer, size_t len, void *resblock);
 extern void *sha224_buffer (const char *buffer, size_t len, void *resblock);
+
+# ifdef __cplusplus
+}
+# endif
 
 #endif

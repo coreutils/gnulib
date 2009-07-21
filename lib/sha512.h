@@ -22,6 +22,10 @@
 
 # include "u64.h"
 
+# ifdef __cplusplus
+extern "C" {
+# endif
+
 /* Structure to save state of computation between the single steps.  */
 struct sha512_ctx
 {
@@ -83,5 +87,9 @@ extern int sha384_stream (FILE *stream, void *resblock);
    digest.  */
 extern void *sha512_buffer (const char *buffer, size_t len, void *resblock);
 extern void *sha384_buffer (const char *buffer, size_t len, void *resblock);
+
+# ifdef __cplusplus
+}
+# endif
 
 #endif

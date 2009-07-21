@@ -23,6 +23,10 @@
 # include <stdio.h>
 # include <stdint.h>
 
+# ifdef __cplusplus
+extern "C" {
+# endif
+
 #define SHA1_DIGEST_SIZE 20
 
 /* Structure to save state of computation between the single steps.  */
@@ -80,5 +84,9 @@ extern int sha1_stream (FILE *stream, void *resblock);
    output yields to the wanted ASCII representation of the message
    digest.  */
 extern void *sha1_buffer (const char *buffer, size_t len, void *resblock);
+
+# ifdef __cplusplus
+}
+# endif
 
 #endif

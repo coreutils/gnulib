@@ -22,6 +22,10 @@
 # include <stdio.h>
 # include <stddef.h>
 
+# ifdef __cplusplus
+extern "C" {
+# endif
+
 # define MD2_DIGEST_SIZE 16
 
 /* Structure to save state of computation between the single steps.  */
@@ -72,5 +76,9 @@ extern int md2_stream (FILE *stream, void *resblock);
    output yields to the wanted ASCII representation of the message
    digest.  */
 extern void *md2_buffer (const char *buffer, size_t len, void *resblock);
+
+# ifdef __cplusplus
+}
+# endif
 
 #endif

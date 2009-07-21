@@ -22,6 +22,10 @@
 # include <stdio.h>
 # include <stdint.h>
 
+# ifdef __cplusplus
+extern "C" {
+# endif
+
 # define MD4_DIGEST_SIZE 16
 
 /* Structure to save state of computation between the single steps.  */
@@ -78,5 +82,9 @@ extern int md4_stream (FILE * stream, void *resblock);
    output yields to the wanted ASCII representation of the message
    digest.  */
 extern void *md4_buffer (const char *buffer, size_t len, void *resblock);
+
+# ifdef __cplusplus
+}
+# endif
 
 #endif
