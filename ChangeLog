@@ -1,3 +1,15 @@
+2009-07-21  Jim Meyering  <meyering@redhat.com>
+
+	vc-list-files: avoid failure when /bin/sh is dash
+	* build-aux/vc-list-files: Avoid a shell portability problem with dash.
+	On some Debian based systems, /bin/sh is a symlink to dash, and running
+	this command would omit the "/" following each 'tests' prefix:
+	  dash -x build-aux/vc-list-files -C . tests
+	That is because bash and dash work differently:
+	  $ for i in bash dash; do $i -c 'a=odd; a=ok b=$a; echo '$i' $b'; done
+	  bash ok
+	  dash odd
+
 2009-07-21  Eric Blake  <ebb9@byu.net>
 
 	dup2-tests: test previous patch
