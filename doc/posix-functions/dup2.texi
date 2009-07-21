@@ -9,6 +9,14 @@ Gnulib module: dup2
 Portability problems fixed by Gnulib:
 @itemize
 @item
+This function always returns 0 for success on some platforms:
+mingw.
+
+@item
+This function returns 0 for dup2 (1, 1) on some platforms:
+Cygwin 1.5.x.
+
+@item
 This function is missing on some older platforms.
 @end itemize
 

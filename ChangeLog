@@ -1,3 +1,18 @@
+2009-07-21  Eric Blake  <ebb9@byu.net>
+
+	dup2: work around mingw and cygwin 1.5 bug
+	* m4/dup2.m4 (gl_FUNC_DUP2): Detect mingw bug.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Add witness.
+	* modules/unistd (Makefile.am): Substitute it.
+	* lib/unistd.in.h (dup2): Declare the replacement.
+	* lib/dup2.c (dup2) [REPLACE_DUP2]: Implement it.
+	* doc/posix-functions/dup2.texi (dup2): Document the bugs.
+	* lib/fchdir.c (rpl_dup2): Don't collide with mingw replacement.
+	* modules/execute (Depends-on): Add dup2.
+	* modules/fseterr (Depends-on): Likewise.
+	* modules/pipe (Depends-on): Likewise.
+	* modules/posix_spawn-internal (Depends-on): Likewise.
+
 2009-07-21  Bruno Haible  <bruno@clisp.org>
 
 	* modules/.gitattributes: New file.

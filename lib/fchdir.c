@@ -1,5 +1,5 @@
 /* fchdir replacement.
-   Copyright (C) 2006-2008 Free Software Foundation, Inc.
+   Copyright (C) 2006-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -177,6 +177,11 @@ rpl_dup2 (int oldfd, int newfd)
 #undef dup2
 {
   int retval = dup2 (oldfd, newfd);
+#if REPLACE_DUP2
+  /* Inline mingw replacement from dup2.c.  */
+  if (retval == 0)
+    retval = newfd;
+#endif
 
   if (retval >= 0 && oldfd >= 0 && newfd >= 0 && newfd != oldfd)
     {

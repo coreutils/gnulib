@@ -150,10 +150,13 @@ extern int close (int);
 
 
 #if @GNULIB_DUP2@
-# if !@HAVE_DUP2@
+# if @REPLACE_DUP2@
+#  define dup2 rpl_dup2
+# endif
+# if !@HAVE_DUP2@ || @REPLACE_DUP2@
 /* Copy the file descriptor OLDFD into file descriptor NEWFD.  Do nothing if
    NEWFD = OLDFD, otherwise close NEWFD first if it is open.
-   Return 0 if successful, otherwise -1 and errno set.
+   Return newfd if successful, otherwise -1 and errno set.
    See the POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/dup2.html>.  */
 extern int dup2 (int oldfd, int newfd);
@@ -214,8 +217,10 @@ extern int fchdir (int /*fd*/);
 
 #  define dup rpl_dup
 extern int dup (int);
-#  define dup2 rpl_dup2
+#  if !@REPLACE_DUP2@
+#   define dup2 rpl_dup2
 extern int dup2 (int, int);
+#  endif
 
 # endif
 #elif defined GNULIB_POSIXCHECK

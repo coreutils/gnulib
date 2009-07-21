@@ -1,6 +1,7 @@
 /* Duplicate an open file descriptor to a specified file descriptor.
 
-   Copyright (C) 1999, 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
+   Copyright (C) 1999, 2004, 2005, 2006, 2007, 2009 Free Software
+   Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -25,7 +26,22 @@
 #include <errno.h>
 #include <fcntl.h>
 
-#ifndef F_DUPFD
+#if REPLACE_DUP2
+/* On mingw, dup2 exists, but always returns 0 for success.  */
+int
+dup2 (int fd, int desired_fd)
+#undef dup2
+{
+  int result = dup2 (fd, desired_fd);
+  if (result == 0)
+    result = desired_fd;
+  return result;
+}
+
+#else /* !REPLACE_DUP2 */
+/* On older platforms, dup2 did not exist.  */
+
+# ifndef F_DUPFD
 static int
 dupfd (int fd, int desired_fd)
 {
@@ -41,7 +57,7 @@ dupfd (int fd, int desired_fd)
       return r;
     }
 }
-#endif
+# endif
 
 int
 dup2 (int fd, int desired_fd)
@@ -49,9 +65,10 @@ dup2 (int fd, int desired_fd)
   if (fd == desired_fd)
     return fd;
   close (desired_fd);
-#ifdef F_DUPFD
+# ifdef F_DUPFD
   return fcntl (fd, F_DUPFD, desired_fd);
-#else
+# else
   return dupfd (fd, desired_fd);
-#endif
+# endif
 }
+#endif /* !REPLACE_DUP2 */
