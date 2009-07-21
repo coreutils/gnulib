@@ -1,3 +1,7 @@
+2009-07-21  Bruno Haible  <bruno@clisp.org>
+
+	* modules/.gitattributes: New file.
+
 2009-07-20  Bruno Haible  <bruno@clisp.org>
 
 	* tests/test-pipe.c (BACKUP_STDERR_FILENO): New macro.
