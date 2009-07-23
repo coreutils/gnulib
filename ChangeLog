@@ -1,3 +1,8 @@
+2009-07-22  Matt Kraai  <mkraai@beckman.com>  (tiny change)
+
+	Make fseeko.c compile on QNX.
+	* lib/fseeko.c (rpl_fseeko): Use the numerical value of _MWRITE.
+
 2009-07-22  Peter Simons  <simons@cryp.to>
 
 	C++: wrap md2,md5,sha1,etc. function declarations in extern "C" scope
