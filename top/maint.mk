@@ -627,7 +627,7 @@ maintainer-distcheck:
 # Also, make sure the NEWS file is up-to-date.
 ALL_RECURSIVE_TARGETS += vc-dist
 vc-dist: $(local-check) cvs-check maintainer-distcheck
-	XZ_OPT=-9ev $(MAKE) dist
+	XZ_OPT=9ev $(MAKE) dist
 
 # Use this to make sure we don't run these programs when building
 # from a virgin tgz file, below.
