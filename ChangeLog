@@ -1,5 +1,11 @@
 2009-07-25  Bruno Haible  <bruno@clisp.org>
 
+	* lib/math.in.h (cosl, logl, sinl): Don't declare if they are already
+	defined as macros. Needed on QNX 6.4.1.
+	Reported by Matt Kraai <mkraai@beckman.com>.
+
+2009-07-25  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_create_testdir, func_create_megatestdir): Exclude
 	the maintainer-makefile module.
 	Reported by Matt Kraai <mkraai@beckman.com>.

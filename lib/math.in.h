@@ -148,7 +148,7 @@ extern long double ceill (long double x);
 #endif
 
 
-#if @GNULIB_MATHL@ || !@HAVE_DECL_COSL@
+#if @GNULIB_MATHL@ || (!@HAVE_DECL_COSL@ && !defined cosl)
 extern long double cosl (long double x);
 #endif
 #if !@GNULIB_MATHL@ && defined GNULIB_POSIXCHECK
@@ -237,7 +237,7 @@ extern long double ldexpl (long double x, int exp);
 #endif
 
 
-#if @GNULIB_MATHL@ || !@HAVE_DECL_LOGL@
+#if @GNULIB_MATHL@ || (!@HAVE_DECL_LOGL@ && !defined logl)
 extern long double logl (long double x);
 #endif
 #if !@GNULIB_MATHL@ && defined GNULIB_POSIXCHECK
@@ -292,7 +292,7 @@ extern long double roundl (long double x);
 #endif
 
 
-#if @GNULIB_MATHL@ || !@HAVE_DECL_SINL@
+#if @GNULIB_MATHL@ || (!@HAVE_DECL_SINL@ && !defined sinl)
 extern long double sinl (long double x);
 #endif
 #if !@GNULIB_MATHL@ && defined GNULIB_POSIXCHECK
