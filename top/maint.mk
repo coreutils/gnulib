@@ -44,7 +44,7 @@ ifeq ($(origin prev_version_file), undefined)
   prev_version_file = $(srcdir)/.prev-version
 endif
 
-PREV_VERSION := $(shell cat $(prev_version_file))
+PREV_VERSION := $(shell cat $(prev_version_file) 2>/dev/null)
 VERSION_REGEXP = $(subst .,\.,$(VERSION))
 PREV_VERSION_REGEXP = $(subst .,\.,$(PREV_VERSION))
 
@@ -70,9 +70,11 @@ export LC_ALL = C
 ## Sanity checks.  ##
 ## --------------- ##
 
+_cfg_mk := $(shell test -f $(srcdir)/cfg.mk && echo '$(srcdir)/cfg.mk')
+
 # Collect the names of rules starting with `sc_'.
 syntax-check-rules := $(shell sed -n 's/^\(sc_[a-zA-Z0-9_-]*\):.*/\1/p' \
-			$(srcdir)/$(ME) $(srcdir)/cfg.mk)
+			$(srcdir)/$(ME) $(_cfg_mk))
 .PHONY: $(syntax-check-rules)
 
 local-checks-available = \

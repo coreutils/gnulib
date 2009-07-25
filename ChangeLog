@@ -1,3 +1,13 @@
+2009-07-25  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: avoid warnings about missing files
+	* top/maint.mk (PREV_VERSION): Suppress stderr, to hide a
+	diagnostic when .prev-version does not exist.
+	(_cfg_mk): Define, so it can be empty when cfg.mk does not exist.
+	(syntax-check-rules): Use $(_cfg_mk) to avoid a diagnostic about
+	nonexistent cfg.mk.
+	Suggestions from Simon Josefsson.
+
 2009-07-25  Bruno Haible  <bruno@clisp.org>
 
 	* lib/math.in.h (cosl, logl, sinl): Don't declare if they are already
