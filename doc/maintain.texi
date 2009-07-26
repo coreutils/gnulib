@@ -1,11 +1,11 @@
 \input texinfo.tex    @c -*-texinfo-*-
 @c %**start of header
 @setfilename maintain.info
-@settitle Information For Maintainers of GNU Software
+@settitle Information for Maintainers of GNU Software
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate May 26, 2009
+@set lastupdate July 24, 2009
 @c %**end of header
 
 @dircategory GNU organization
@@ -17,9 +17,7 @@
 
 @c Put everything in one index (arbitrarily chosen to be the concept index).
 @syncodeindex fn cp
-@syncodeindex ky cp
 @syncodeindex pg cp
-@syncodeindex vr cp
 
 @copying
 Information for maintainers of GNU software, last updated @value{lastupdate}.
@@ -39,7 +37,7 @@ Texts.  A copy of the license is included in the section entitled
 @end copying
 
 @titlepage
-@title Information For Maintainers of GNU Software
+@title Information for Maintainers of GNU Software
 @author Richard Stallman
 @author last updated @value{lastupdate}
 @page
@@ -91,6 +89,7 @@ essential to follow these guidelines.
 In addition to this document, please read and follow the GNU Coding
 Standards (@pxref{Top, , Contents, standards, GNU Coding Standards}).
 
+@cindex @code{maintainers@@gnu.org} email address
 Please send corrections or suggestions for this document to
 @email{maintainers@@gnu.org}.  If you make a suggestion, please include
 a suggested new wording for it, to help us consider the suggestion
@@ -99,11 +98,26 @@ but if you don't have that file, you can make a context diff for some
 other version of this document, or propose it in any way that makes it
 clear.
 
+@cindex @code{mentors@@gnu.org} mailing list
 If you have general questions or encounter a situation where it isn't
 clear what to do, you can ask @email{mentors@@gnu.org}, which is a
 list of a few other GNU contributor who have offered to answer
 questions for new maintainers.
 
+The directory @file{/gd/gnuorg} mentioned throughout this document is
+found on the GNU file server, currently @code{fencepost.gnu.org}; if
+you are the maintainer of a GNU package, you should have an account
+there.  See @url{http://www.gnu.org/software/README.accounts.html} if
+you don't have one.  (You can also ask for accounts for people who
+help you a large amount in working on the package.)
+
+If on occasion you find that any GNU computer systems
+(@code{fencepost.gnu.org}, @code{ftp.gnu.org},
+@code{savannah.gnu.org}, or others) seem to be down, you can check the
+current status at @url{http://identi.ca/group/fsfstatus}.  Most likely
+the problem, if it is at the FSF end, is already being worked on.
+
+@cindex Piercy, Marge
 This document uses the gender-neutral third-person pronouns ``person'',
 ``per'', ``pers'' and ``perself'' which were promoted, and perhaps
 invented, by Marge Piercy in @cite{Woman on the Edge of Time}.  They are
@@ -111,13 +125,6 @@ used just like ``she'', ``her'', ``hers'' and ``herself'', except that
 they apply equally to males and females.  For example, ``Person placed
 per new program under the GNU GPL, to let the public benefit from per
 work, and to enable per to feel person has done the right thing.''
-
-The directory @file{/gd/gnuorg} is found on the GNU file server,
-currently @code{fencepost.gnu.org}; if you are the maintainer of a GNU
-package, you should have an account there.  See
-@url{http://www.gnu.org/software/README.accounts.html} if you don't
-have one.  (You can also ask for accounts for people who help you a
-large amount in working on the package.)
 
 This release of the GNU Maintenance Instructions was last updated
 @value{lastupdate}.
@@ -141,10 +148,11 @@ maintainer needs the GNU Project's confirmation, but your judgment that
 a person is capable of doing the job will carry a lot of weight.
 
 As your final act as maintainer, it would be helpful to set up the
-package under @code{savannah.gnu.org} (@pxref{Old Versions}).  This will
-make it much easier for the new maintainer to pick up where you left off
-and will ensure that the source tree is not misplaced if it takes us a
-while to find a new maintainer.
+package under @code{savannah.gnu.org} if it is not there already
+(@pxref{Old Versions}).  This will make it much easier for the new
+maintainer to pick up where you left off and will ensure that the
+source tree is not misplaced if it takes us a while to find a new
+maintainer.
 
 
 @node Recruiting Developers
@@ -1011,6 +1019,7 @@ publicly accessible, be careful not to put anything in the repository or
 change log that you would not want to hand over to another maintainer
 some day.
 
+@cindex @code{savannah-hackers@@gnu.org}
 The GNU Project provides a server that GNU software packages can use
 for source control and other package needs: @code{savannah.gnu.org}.
 You don't have to use this repository, but if you plan to allow public
@@ -1018,9 +1027,17 @@ read-only access to your development sources, it is convenient for
 people to be able to find various GNU packages in a central place.
 Savannah is managed by @email{savannah-hackers@@gnu.org}.
 
-All GNU maintainers are encouraged to take advantage of Savannah, as
-sharing such a central point can serve to foster a sense of community
-among GNU developers and help in keeping up with project management.
+All GNU maintainers are strongly encouraged to take advantage of
+Savannah, as sharing such a central point can serve to foster a sense
+of community among GNU developers and help in keeping up with project
+management.
+
+@cindex @code{savannah-announce@@gnu.org} mailing list
+If you do use Savannah, it is a good idea to subscribe to the
+@email{savannah-announce@@gnu.org} mailing list
+(@url{http://lists.gnu.org/mailman/listinfo/savannah-announce}).  This
+is a very low-volume list to keep Savannah users informed of system
+upgrades, problems, and the like.
 
 
 @node Distributions
@@ -1552,17 +1569,6 @@ The overall goals are to support a wide variety of browsers, to focus
 on information rather than flashy eye candy, and to keep the site
 simple and uniform.
 
-The best way to maintain the web pages for your project is to register
-the project on @code{savannah.gnu.org}.  Then you can edit the pages
-using CVS.  You can keep your source files there too, but if you want
-to use @code{savannah.gnu.org} only for the web pages, that's ok;
-simply register a ``web-only'' project.
-
-If you don't want to use that method, please talk with
-@email{webmasters@@gnu.org} about other possible methods.  For
-instance, you can mail them pages to install, if necessary.  But that
-is more work for them, so please use CVS if you can.
-
 Some GNU packages have just simple web pages, but the more information
 you provide, the better.  So please write as much as you usefully can,
 and put all of it on @code{www.gnu.org}.  However, pages that access
@@ -1570,11 +1576,39 @@ databases (including mail logs and bug tracking) are an exception; set
 them up on whatever site is convenient for you, and make the pages on
 @code{www.gnu.org} link to that site.
 
-Historically, web pages for GNU packages did not include GIF images,
-because of patent problems (@pxref{Ethical and Philosophical
-Consideration}).  Although the GIF patents expired in 2006, using GIF
-images is still not recommended, as the PNG and JPEG formats are
-generally superior.  See @url{http://www.gnu.org/philosophy/gif.html}.
+@menu
+* Hosting for Web Pages::
+* Freedom for Web Pages::
+* Manuals on Web Pages::
+* CVS Keywords in Web Pages::
+@end menu
+
+@node Hosting for Web Pages
+@section Hosting for Web Pages
+
+The best way to maintain the web pages for your project is to register
+the project on @code{savannah.gnu.org}.  Then you can edit the pages
+using CVS, using the separate ``web repository'' available on
+Savannah, which corresponds to
+@indicateurl{http://www.gnu.org/software/@var{package}/}.  You can
+keep your source files there too (using any of a variety of version
+control systems), but you can use @code{savannah.gnu.org} only for
+your gnu.org web pages if you wish; simply register a ``web-only''
+project.
+
+If you don't want to use that method, please talk with
+@email{webmasters@@gnu.org} about other possible methods.  For
+instance, you can mail them pages to install, if necessary.  But that
+is more work for them, so please use Savannah if you can.
+
+If you use Savannah, you can use a special @file{.symlinks} file in
+order to create symbolic links, which are not supported in CVS.  For
+details, see
+@url{http://www.gnu.org/server/standards/README.webmastering.html#symlinks}.
+
+
+@node Freedom for Web Pages
+@section Freedom for Web Pages
 
 If you use a site other than @code{www.gnu.org}, please make sure that
 the site runs on free software alone.  (It is ok if the site uses
@@ -1589,13 +1623,24 @@ Please don't link to a site that is about your package, which the
 public might perceive as connected with it and reflecting the position
 of its developers, unless it follows that criterion.
 
+Historically, web pages for GNU packages did not include GIF images,
+because of patent problems (@pxref{Ethical and Philosophical
+Consideration}).  Although the GIF patents expired in 2006, using GIF
+images is still not recommended, as the PNG and JPEG formats are
+generally superior.  See @url{http://www.gnu.org/philosophy/gif.html}.
+
+
+@node Manuals on Web Pages
+@section Manuals on Web Pages
+
 The web pages for the package should include its manuals, in HTML,
 DVI, Info, PostScript, PDF, plain ASCII, and Texinfo format (source).
-(All of these can be generated automatically from the Texinfo source
-using Makeinfo and other programs.)  When there is only one manual,
-put it in a subdirectory called @file{manual}; the file
-@file{manual/index.html} should have a link to the manual in each of
-its forms.
+All of these can be generated automatically from the Texinfo source
+using Makeinfo and other programs.
+
+When there is only one manual, put it in a subdirectory called
+@file{manual}; the file @file{manual/index.html} should have a link to
+the manual in each of its forms.
 
 If the package has more than one manual, put each one in a
 subdirectory of @file{manual}, set up @file{index.html} in each
@@ -1605,20 +1650,19 @@ subdirectory to link to that manual in all its forms, and make
 See the section below for details on a script to make the job of
 creating all these different formats and index pages easier.
 
-We would like to include links to all these manuals in the page
-@url{http://www.gnu.org/manual}.  Just send mail to
-@code{webmasters@@gnu.org} telling them the name of your package and
-asking them to edit @url{http://www.gnu.org/manual}, and they will do
-so based on the contents of your @file{manual} directory.
+We would like to include links to all GNU manuals on the page
+@url{http://www.gnu.org/manual}, so if yours isn't listed, please send
+mail to @code{webmasters@@gnu.org} telling them the name of your
+package and asking them to edit @url{http://www.gnu.org/manual}, and
+they will do so based on the contents of your @file{manual} directory.
 
 @menu
 * Invoking gendocs.sh::
-* CVS Keywords in Web Pages::
 @end menu
 
 
 @node Invoking gendocs.sh
-@section Invoking @command{gendocs.sh}
+@subsection Invoking @command{gendocs.sh}
 @pindex gendocs.sh
 @cindex generating documentation output
 
@@ -1895,6 +1939,7 @@ We recommend using @code{savannah.gnu.org} for the source code
 repository for your package, and, even more so, using
 @code{ftp.gnu.org} as the standard distribution site.  Doing so makes
 it easier for developers and users to find the latest GNU releases.
+@xref{Old Versions}, for more information about Savannah.
 
 However, it is ok to use other machines if you wish.  If you use a
 company's machine to hold the repository for your program, or as its
