@@ -1,6 +1,6 @@
 /* A more-standard <time.h>.
 
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -64,6 +64,12 @@ struct timespec
 # if @REPLACE_NANOSLEEP@
 #  define nanosleep rpl_nanosleep
 int nanosleep (struct timespec const *__rqtp, struct timespec *__rmtp);
+# endif
+
+/* Return the 'time_t' representation of TP and normalize TP.  */
+# if @REPLACE_MKTIME@
+#  define mktime rpl_mktime
+extern time_t mktime (struct tm *__tp);
 # endif
 
 /* Convert TIMER to RESULT, assuming local time and UTC respectively.  See

@@ -215,11 +215,11 @@ fi
 
 AC_DEFUN([gl_FUNC_MKTIME],
 [
+  AC_REQUIRE([gl_HEADER_TIME_H_DEFAULTS])
   AC_FUNC_MKTIME
   dnl Note: AC_FUNC_MKTIME does AC_LIBOBJ([mktime]).
   if test $ac_cv_func_working_mktime = no; then
-    AC_DEFINE([mktime], [rpl_mktime],
-      [Define to rpl_mktime if the replacement function should be used.])
+    REPLACE_MKTIME=1
     gl_PREREQ_MKTIME
   fi
 ])
