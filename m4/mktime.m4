@@ -221,6 +221,8 @@ AC_DEFUN([gl_FUNC_MKTIME],
   if test $ac_cv_func_working_mktime = no; then
     REPLACE_MKTIME=1
     gl_PREREQ_MKTIME
+  else
+    REPLACE_MKTIME=0
   fi
 ])
 
