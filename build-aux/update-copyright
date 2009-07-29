@@ -1,7 +1,7 @@
 #!/usr/bin/perl -0777 -pi
 # Update an FSF copyright year list to include the current year.
 
-my $VERSION = '2009-07-29.13:34'; # UTC
+my $VERSION = '2009-07-30.13:24'; # UTC
 
 # Copyright (C) 2009 Free Software Foundation
 #
@@ -20,6 +20,46 @@ my $VERSION = '2009-07-29.13:34'; # UTC
 
 # Written by Jim Meyering
 
+# In the copyright statement in each file, "Copyright (C)" must appear
+# at the beginning of the line except that it may be preceded by any
+# sequence (e.g., a comment) of no more than 5 characters.  Iff that
+# prefix is present, the same prefix should appear at the beginning
+# of each remaining line within the copyright statement so that it
+# can be parsed correctly.
+#
+# For example, these are fine:
+#
+#   # Copyright (C) 1990-2005, 2007-2009 Free Software
+#   # Foundation, Inc.
+#
+#   /*
+#    * Copyright (C) 1990-2005, 2007-2009 Free Software
+#    * Foundation, Inc.
+#    */
+#
+# The following format is not recognized:
+#
+#   /* Copyright (C) 1990-2005, 2007-2009 Free Software
+#    * Foundation, Inc.  */
+#
+# A warning is printed for every file for which the copyright format is
+# not recognized.  The culprit may be that the above preconditions are
+# not obeyed as in the previous example, or it may simply be that the
+# stated copyright holder is not the Free Software Foundation.
+#
+# You may wish to place a target like the following in your top-level
+# makefile in your project:
+#
+#   .PHONY: update-copyright
+#   update-copyright:
+#       if test -d .git; then                                   \
+#         git grep -l -w Copyright                              \
+#           | grep -v -E '(^|/)(COPYING|ChangeLog)'             \
+#           | xargs $(srcdir)/build-aux/$@;                     \
+#       fi
+#
+# You can build a list of files to skip in the second grep.
+
 use strict;
 use warnings;
 
@@ -27,7 +67,14 @@ my ($sec, $min, $hour, $mday, $month, $year) = localtime (time());
 my $this_year = $year + 1900;
 my $holder = 'Free Software Foundation';
 
-if (/([- ])((?:\d\d)?\d\d)((?:\n\#)?\s+$holder)/s)
+my $prefix = '';
+if (/(?:^|\n)(.{0,5})Copyright \([cC]\)/) {
+  $prefix = quotemeta $1;
+}
+$holder = " $holder";
+$holder =~ s/\s/\\s*(?:\\s|\\n$prefix)\\s*/g;
+
+if (/([- ])((?:\d\d)?\d\d)($holder)/s)
   {
     my ($sep, $last_c_year, $rest) = ($1, $2, $3);
 
@@ -50,6 +97,11 @@ if (/([- ])((?:\d\d)?\d\d)((?:\n\#)?\s+$holder)/s)
             s//$sep$last_c_year, $this_year$rest/;
           }
       }
+  }
+else
+  {
+    print STDERR
+      "$ARGV: warning: external copyright holder or parse failure\n";
   }
 
 # Local variables:
