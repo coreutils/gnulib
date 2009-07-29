@@ -1,3 +1,10 @@
+2009-07-29  Jim Meyering  <meyering@redhat.com>
+
+	update-copyright: new module
+	* modules/update-copyright: New file.
+	* build-aux/update-copyright: New file.
+	* MODULES.html.sh (maint+release support): Add update-copyright.
+
 2009-07-27  Bruno Haible  <bruno@clisp.org>
 
 	Fix compilation error when <ctime> is used and mktime is replaced.
