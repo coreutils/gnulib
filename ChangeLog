@@ -1,5 +1,13 @@
 2009-07-31  Joel E. Denny  <jdenny@clemson.edu>
 
+	update-copyright: handle leading tabs in line prefix
+	* build-aux/update-copyright: Count leading tabs as 8 spaces
+	when computing margin.  This helps with the formatting of
+	ChangeLogs, for example.
+	Fix documentation a little.
+
+2009-07-31  Joel E. Denny  <jdenny@clemson.edu>
+
 	update-copyright: support EOL=\r\n
 	* build-aux/update-copyright: Implement that.
 

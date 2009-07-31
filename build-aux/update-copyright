@@ -22,7 +22,7 @@ my $VERSION = '2009-07-31.12:44'; # UTC
 
 # The arguments to this script should be names of files that contain FSF
 # copyright statements to be updated.  For example, you may wish to
-# place a target like the following in your top-level makefile in your
+# place a target like the following in the top-level makefile in your
 # project:
 #
 #   .PHONY: update-copyright
@@ -74,8 +74,8 @@ my $VERSION = '2009-07-31.12:44'; # UTC
 # The exact conditions that a file's FSF copyright statement must meet
 # to be recognized are listed below.  They may seem slightly complex,
 # but you need not worry if some file in your project accidentally
-# breaks one.  The worse that can happen is a warning that the file was
-# not updated.
+# breaks one.  The worst that can happen is that a file is not updated
+# and a warning is issued.
 #
 #   1. The format is "Copyright (C)" (where "(C)" can be "(c)"), then a
 #      list of copyright years, and then the name of the copyright
@@ -106,6 +106,7 @@ my $copyright = 'Copyright \([cC]\)';
 my $holder = 'Free Software Foundation, Inc.';
 my $prefix_max = 5;
 my $margin = 72;
+my $tab_width = 8;
 
 # Unless the file consistently uses "\r\n" as the EOL, use "\n" instead.
 my $eol = /(?:^|[^\r])\n/ ? "\n" : "\r\n";
@@ -161,6 +162,9 @@ if (defined($old) && /$old/)
         # Format within margin.
         my $new_wrapped;
         my $text_margin = $margin - length($prefix);
+        if ($prefix =~ /^(\t+)/) {
+          $text_margin -= length($1) * ($tab_width-1);
+        }
         while (length($new))
           {
             if (($new =~ s/^(.{1,$text_margin})(?: |$)//)
