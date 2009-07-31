@@ -1,7 +1,7 @@
 #!/usr/bin/perl -0777 -pi
 # Update an FSF copyright year list to include the current year.
 
-my $VERSION = '2009-07-30.13:24'; # UTC
+my $VERSION = '2009-07-31.12:44'; # UTC
 
 # Copyright (C) 2009 Free Software Foundation
 #
@@ -20,35 +20,10 @@ my $VERSION = '2009-07-30.13:24'; # UTC
 
 # Written by Jim Meyering
 
-# In the copyright statement in each file, "Copyright (C)" must appear
-# at the beginning of the line except that it may be preceded by any
-# sequence (e.g., a comment) of no more than 5 characters.  Iff that
-# prefix is present, the same prefix should appear at the beginning
-# of each remaining line within the copyright statement so that it
-# can be parsed correctly.
-#
-# For example, these are fine:
-#
-#   # Copyright (C) 1990-2005, 2007-2009 Free Software
-#   # Foundation, Inc.
-#
-#   /*
-#    * Copyright (C) 1990-2005, 2007-2009 Free Software
-#    * Foundation, Inc.
-#    */
-#
-# The following format is not recognized:
-#
-#   /* Copyright (C) 1990-2005, 2007-2009 Free Software
-#    * Foundation, Inc.  */
-#
-# A warning is printed for every file for which the copyright format is
-# not recognized.  The culprit may be that the above preconditions are
-# not obeyed as in the previous example, or it may simply be that the
-# stated copyright holder is not the Free Software Foundation.
-#
-# You may wish to place a target like the following in your top-level
-# makefile in your project:
+# The arguments to this script should be names of files that contain FSF
+# copyright statements to be updated.  For example, you may wish to
+# place a target like the following in your top-level makefile in your
+# project:
 #
 #   .PHONY: update-copyright
 #   update-copyright:
@@ -58,25 +33,101 @@ my $VERSION = '2009-07-30.13:24'; # UTC
 #           | xargs $(srcdir)/build-aux/$@;                     \
 #       fi
 #
-# You can build a list of files to skip in the second grep.
+# In the second grep, you can build a list of files to skip within your
+# project.
+#
+# Iff an FSF copyright statement is discovered in a file and the final
+# year is not the current year, the statement is updated for the new
+# year and reformatted to fit within 72 columns.  A warning is printed
+# for every file for which no FSF copyright statement is discovered.
+#
+# Each file's FSF copyright statement must be formated correctly in
+# order to be recognized, and it must appear before other text that
+# looks like the start of a copyright statement.  For example, each of
+# these by itself is fine:
+#
+#   Copyright (C) 1990-2005, 2007-2009 Free Software Foundation,
+#   Inc.
+#
+#   # Copyright (C) 1990-2005, 2007-2009 Free Software
+#   # Foundation, Inc.
+#
+#   /*
+#    * Copyright (C) 90,2005,2007-2009 Free Software
+#    * Foundation, Inc.
+#    */
+#
+# However, the following format is not recognized because the line
+# prefix changes after the first line:
+#
+#   /* Copyright (C) 1990-2005, 2007-2009 Free Software
+#    * Foundation, Inc.  */
+#
+# The following copyright statement is not recognized because the
+# copyright holder is not the FSF:
+#
+#   Copyright (C) 1990-2005, 2007-2009 Acme, Inc.
+#
+# Moreover, any FSF copyright statement following either of the previous
+# copyright statements might not be recognized.
+#
+# The exact conditions that a file's FSF copyright statement must meet
+# to be recognized are listed below.  They may seem slightly complex,
+# but you need not worry if some file in your project accidentally
+# breaks one.  The worse that can happen is a warning that the file was
+# not updated.
+#
+#   1. The format is "Copyright (C)" (where "(C)" can be "(c)"), then a
+#      list of copyright years, and then the name of the copyright
+#      holder, which is "Free Software Foundation, Inc.".
+#   2. "Copyright (C)" appears at the beginning of a line except that it
+#      may be prefixed by any sequence (e.g., a comment) of no more than
+#      5 characters.
+#   3. The prefix of "Copyright (C)" is the same as the prefix on the
+#      file's first occurrence of "Copyright (C)" that matches condition
+#      #2.  Stated more simply, if something that looks like the start
+#      of a copyright statement appears earlier than the FSF copyright
+#      statement, the FSF copyright statement might not be recognized.
+#      This condition might be removed in the future.
+#   4. Iff a prefix is present before "Copyright (C)", the same prefix
+#      appears at the beginning of each remaining line within the FSF
+#      copyright statement.
+#   5. Blank lines, even if preceded by the prefix, do not appear
+#      within the FSF copyright statement.
+#   6. Each copyright year is 2 or 4 digits, and years are separated by
+#      commas or dashes.  Whitespace may occur after commas.
 
 use strict;
 use warnings;
 
 my ($sec, $min, $hour, $mday, $month, $year) = localtime (time());
 my $this_year = $year + 1900;
-my $holder = 'Free Software Foundation';
+my $copyright = 'Copyright \([cC]\)';
+my $holder = 'Free Software Foundation, Inc.';
+my $prefix_max = 5;
+my $margin = 72;
 
-my $prefix = '';
-if (/(?:^|\n)(.{0,5})Copyright \([cC]\)/) {
-  $prefix = quotemeta $1;
-}
-$holder = " $holder";
-$holder =~ s/\s/\\s*(?:\\s|\\n$prefix)\\s*/g;
-
-if (/([- ])((?:\d\d)?\d\d)($holder)/s)
+my $leading;
+my $prefix;
+my $ws;
+my $old;
+if (/(^|\n)(.{0,$prefix_max})$copyright/)
   {
-    my ($sep, $last_c_year, $rest) = ($1, $2, $3);
+    $leading = $1;
+    $prefix = $2;
+    $ws = '[ \t\r\f]'; # \s without \n
+    $ws = "(?:$ws*(?:$ws|\\n" . quotemeta($prefix) . ")$ws*)";
+    $holder =~ s/\s/$ws/g;
+    $old =
+      quotemeta("$leading$prefix") . "($copyright$ws"
+      . "(?:(?:\\d\\d)?\\d\\d(,$ws?|-))*"
+      . "((?:\\d\\d)?\\d\\d)$ws$holder)";
+  }
+if (defined($old) && /$old/)
+  {
+    my $new = $1;
+    my $sep = $2 ? $2 : "";
+    my $last_c_year = $3;
 
     # Handle two-digit year numbers like "98" and "99".
     $last_c_year <= 99
@@ -84,24 +135,53 @@ if (/([- ])((?:\d\d)?\d\d)($holder)/s)
 
     if ($last_c_year != $this_year)
       {
+        # Update the year.
         if ($sep eq '-' && $last_c_year + 1 == $this_year)
           {
-            s//-$this_year$rest/;
+            $new =~ s/$last_c_year/$this_year/;
           }
-        elsif ($sep eq ' ' && $last_c_year + 1 == $this_year)
+        elsif ($sep ne '-' && $last_c_year + 1 == $this_year)
           {
-            s// $last_c_year-$this_year$rest/;
+            $new =~ s/$last_c_year/$last_c_year-$this_year/;
           }
         else
           {
-            s//$sep$last_c_year, $this_year$rest/;
+            $new =~ s/$last_c_year/$last_c_year, $this_year/;
           }
+
+        # Normalize all whitespace including newline-prefix sequences.
+        $new =~ s/$ws/ /g;
+
+        # Put spaces after commas.
+        $new =~ s/, ?/, /g;
+
+        # Format within margin.
+        my $new_wrapped;
+        my $text_margin = $margin - length($prefix);
+        while (length($new))
+          {
+            if (($new =~ s/^(.{1,$text_margin})(?: |$)//)
+                || ($new =~ s/^([\S]+)(?: |$)//))
+              {
+                my $line = $1;
+                $new_wrapped .= $new_wrapped ? "\n" : $leading;
+                $new_wrapped .= "$prefix$line";
+              }
+            else
+              {
+                # Should be unreachable, but we don't want an infinite
+                # loop if it can be reached.
+                die;
+              }
+          }
+
+        # Replace the old copyright statement.
+        s/$old/$new_wrapped/;
       }
   }
 else
   {
-    print STDERR
-      "$ARGV: warning: external copyright holder or parse failure\n";
+    print STDERR "$ARGV: warning: FSF copyright statement not found\n";
   }
 
 # Local variables:
