@@ -1,3 +1,10 @@
+2009-07-31  Jim Meyering  <meyering@redhat.com>
+
+	getloadavg: fix symbol name in comment
+	* lib/getloadavg.c: Correct a typo I introduced when adding
+	comments to Matt's change: s/NLIST_POINTER/N_NAME_POINTER/.
+	Matt Kraai spotted the problem.
+
 2009-07-29  Matt Kraai  <mkraai@beckman.com>
 
 	getloadavg: check whether n_name is a pointer, for QNX 6.4.1

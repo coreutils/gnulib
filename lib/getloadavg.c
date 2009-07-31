@@ -45,7 +45,7 @@
    HAVE_NLIST_H                 nlist.h is available.  NLIST_STRUCT defaults
                                 to this.
    NLIST_STRUCT			Include nlist.h, not a.out.h.
-   NLIST_POINTER		The nlist n_name element is a pointer,
+   N_NAME_POINTER		The nlist n_name element is a pointer,
 				not an array.
    HAVE_STRUCT_NLIST_N_UN_N_NAME `n_un.n_name' is member of `struct nlist'.
    LINUX_LDAV_FILE		[__linux__, __CYGWIN__]: File containing
