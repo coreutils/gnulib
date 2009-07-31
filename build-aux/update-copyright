@@ -107,6 +107,9 @@ my $holder = 'Free Software Foundation, Inc.';
 my $prefix_max = 5;
 my $margin = 72;
 
+# Unless the file consistently uses "\r\n" as the EOL, use "\n" instead.
+my $eol = /(?:^|[^\r])\n/ ? "\n" : "\r\n";
+
 my $leading;
 my $prefix;
 my $ws;
@@ -164,7 +167,7 @@ if (defined($old) && /$old/)
                 || ($new =~ s/^([\S]+)(?: |$)//))
               {
                 my $line = $1;
-                $new_wrapped .= $new_wrapped ? "\n" : $leading;
+                $new_wrapped .= $new_wrapped ? $eol : $leading;
                 $new_wrapped .= "$prefix$line";
               }
             else
