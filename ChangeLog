@@ -1,3 +1,12 @@
+2009-07-29  Matt Kraai  <mkraai@beckman.com>
+
+	getloadavg: check whether n_name is a pointer, for QNX 6.4.1
+	* lib/getloadavg.c (getloadavg): Use the strcpy-into-nlist.n_name
+	code also if ! defined N_NAME_POINTER.
+	* m4/getloadavg.m4 (gl_GETLOADAVG): Add a link-test for N_NAME_POINTER.
+	This is required on QNX 6.4.1, where /usr/include/nlist.h exists,
+	but the n_name member is a 12-byte array.
+
 2009-07-29  Joel E. Denny  <jdenny@clemson.edu>
 
 	update-copyright: generalize comment handling
