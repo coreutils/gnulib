@@ -492,7 +492,7 @@ sc_immutable_NEWS:
 # Update the hash stored above.  Do this after each release and
 # for any corrections to old entries.
 update-NEWS-hash: NEWS
-	perl -pi -e 's/^(old_NEWS_hash = ).*/$${1}'"$(NEWS_hash)/" \
+	perl -pi -e 's/^(old_NEWS_hash[ \t]+:?=[ \t]+).*/$${1}'"$(NEWS_hash)/" \
 	  $(srcdir)/cfg.mk
 
 # Ensure that we use only the standard $(VAR) notation,
