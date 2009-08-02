@@ -1,3 +1,12 @@
+2009-08-02  Bruno Haible  <bruno@clisp.org>
+            Paolo Bonzini  <bonzini@gnu.org>
+
+	New module 'pipe-filter-ii'.
+	* lib/pipe-filter.h: New file.
+	* lib/pipe-filter-ii.c: New file.
+	* lib/pipe-filter-aux.h: New file.
+	* modules/pipe-filter-ii: New file.
+
 2009-08-02  Simon Josefsson  <simon@josefsson.org>
 
 	* lib/gc-libgcrypt.c: Change copyright to FSF.
