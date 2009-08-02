@@ -1,6 +1,6 @@
 /* gethostname emulation for SysV and POSIX.1.
 
-   Copyright (C) 1992, 2003, 2006, 2008 Free Software Foundation, Inc.
+   Copyright (C) 1992, 2003, 2006, 2008, 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -15,9 +15,12 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-/* David MacKenzie <djm@gnu.ai.mit.edu> */
+/* David MacKenzie <djm@gnu.ai.mit.edu>
+   Windows port by Simon Josefsson <simon@josefsson.org> */
 
 #include <config.h>
+
+#if !((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__)
 
 /* Specification.  */
 #include <unistd.h>
@@ -54,3 +57,26 @@ gethostname (char *name, size_t len)
 #endif
   return 0;
 }
+
+#else
+
+#define WIN32_LEAN_AND_MEAN
+/* Get winsock2.h. */
+#include <unistd.h>
+
+/* Get set_winsock_errno. */
+#include "w32sock.h"
+
+#undef gethostname
+
+int
+rpl_gethostname (char *name, size_t namelen)
+{
+  int r = gethostname (name, (int) namelen);
+  if (r < 0)
+    set_winsock_errno ();
+
+  return r;
+}
+
+#endif
