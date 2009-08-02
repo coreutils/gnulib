@@ -17,7 +17,10 @@
 
 #include <config.h>
 
+/* Get gethostname() declaration.  */
 #include <unistd.h>
+/* Get HOST_NAME_MAX definition.  */
+#include <limits.h>
 
 #include <stdio.h>
 #include <string.h>
