@@ -1,5 +1,9 @@
 2009-08-02  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'uname'.
+	* modules/uname-tests: New file.
+	* tests/test-uname.c: New file.
+
 	New module 'uname'.
 	* lib/uname.c: New file.
 	* m4/uname.m4: New file.
