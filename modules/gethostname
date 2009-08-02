@@ -10,6 +10,7 @@ Depends-on:
 unistd
 sys_socket
 errno
+sockets
 
 configure.ac:
 gl_FUNC_GETHOSTNAME

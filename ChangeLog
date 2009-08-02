@@ -1,5 +1,19 @@
 2009-08-02  Bruno Haible  <bruno@clisp.org>
 
+	Implicitly initialize the sockets library.
+	* lib/gethostname.c: Include sockets.h.
+	(rpl_gethostname): Invoke gl_sockets_startup.
+	* lib/socket.c: Include sockets.h.
+	(rpl_socket): Invoke gl_sockets_startup.
+	* modules/gethostname (Depends-on): Add sockets.
+	* modules/socket (Depends-on): Likewise.
+	* tests/test-poll.c: Don't include sockets.h.
+	(main): Don't invoke gl_sockets_startup.
+	* tests/test-select.c: Don't include sockets.h.
+	(main): Don't invoke gl_sockets_startup.
+
+2009-08-02  Bruno Haible  <bruno@clisp.org>
+
 	Allow multiple calls to gl_sockets_startup.
 	* lib/sockets.c (initialized_sockets_version): New variable.
 	(gl_sockets_startup): Do nothing if already called for this or a higher

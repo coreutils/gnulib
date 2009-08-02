@@ -1,5 +1,5 @@
 /* Test of poll() function.
-   Copyright (C) 2008 Free Software Foundation, Inc.
+   Copyright (C) 2008-2009 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -30,7 +30,6 @@
 #include <stdbool.h>
 #include <sys/ioctl.h>
 #include <errno.h>
-#include "sockets.h"
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 # define WIN32_NATIVE
@@ -359,8 +358,6 @@ int
 main ()
 {
   int result;
-
-  gl_sockets_startup (SOCKETS_1_1);
 
 #ifdef INTERACTIVE
   printf ("Please press Enter\n");

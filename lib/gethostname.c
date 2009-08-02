@@ -82,6 +82,8 @@ gethostname (char *name, size_t len)
 /* Get set_winsock_errno. */
 #include "w32sock.h"
 
+#include "sockets.h"
+
 #undef gethostname
 
 int
@@ -91,6 +93,7 @@ rpl_gethostname (char *name, size_t len)
 
   if (len > INT_MAX)
     len = INT_MAX;
+  gl_sockets_startup (SOCKETS_1_1);
   r = gethostname (name, (int) len);
   if (r < 0)
     set_winsock_errno ();

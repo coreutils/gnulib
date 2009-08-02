@@ -1,6 +1,6 @@
 /* socket.c --- wrappers for Windows socket function
 
-   Copyright (C) 2008 Free Software Foundation, Inc.
+   Copyright (C) 2008-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -26,12 +26,18 @@
 /* Get set_winsock_errno, FD_TO_SOCKET etc. */
 #include "w32sock.h"
 
+#include "sockets.h"
+
 int
 rpl_socket (int domain, int type, int protocol)
 {
+  SOCKET fh;
+
+  gl_sockets_startup (SOCKETS_1_1);
+
   /* We have to use WSASocket() to create non-overlapped IO sockets.
      Overlapped IO sockets cannot be used with read/write.  */
-  SOCKET fh = WSASocket (domain, type, protocol, NULL, 0, 0);
+  fh = WSASocket (domain, type, protocol, NULL, 0, 0);
 
   if (fh == INVALID_SOCKET)
     {
