@@ -1,3 +1,11 @@
+2009-08-02  Bruno Haible  <bruno@clisp.org>
+
+	Allow multiple calls to gl_sockets_startup.
+	* lib/sockets.c (initialized_sockets_version): New variable.
+	(gl_sockets_startup): Do nothing if already called for this or a higher
+	version.
+	(gl_sockets_cleanup): Reset initialized_sockets_version.
+
 2009-08-03  Simon Josefsson  <simon@josefsson.org>
 
 	* tests/test-argp-version-etc-1.sh: Use EXEEXT.  Don't fail on
