@@ -1,0 +1,40 @@
+Description:
+A <sys/utsname.h> for systems which lack it.
+
+Files:
+lib/sys_utsname.in.h
+m4/sys_utsname_h.m4
+
+Depends-on:
+link-warning
+
+configure.ac:
+gl_SYS_UTSNAME_H
+AC_PROG_MKDIR_P
+
+Makefile.am:
+BUILT_SOURCES += $(SYS_UTSNAME_H)
+
+# We need the following in order to create <sys/utsname.h> when the system
+# does not have one.
+sys/utsname.h: sys_utsname.in.h
+	@MKDIR_P@ sys
+	rm -f $@-t $@
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  sed -e 's|@''GNULIB_UNAME''@|$(GNULIB_UNAME)|g' \
+	      -e 's|@''HAVE_UNAME''@|$(HAVE_UNAME)|g' \
+	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
+	      < $(srcdir)/sys_utsname.in.h; \
+	} > $@-t
+	mv $@-t $@
+MOSTLYCLEANFILES += sys/utsname.h sys/utsname.h-t
+MOSTLYCLEANDIRS += sys
+
+Include:
+#include <sys/utsname.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+Bruno Haible
