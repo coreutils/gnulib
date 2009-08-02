@@ -1,0 +1,13 @@
+Files:
+tests/test-sys_utsname.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-sys_utsname
+check_PROGRAMS += test-sys_utsname
+
+License:
+LGPL

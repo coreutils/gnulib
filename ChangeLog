@@ -1,5 +1,9 @@
 2009-08-02  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'sys_utsname'.
+	* modules/sys_utsname-tests: New file.
+	* tests/test-sys_utsname.c: New file.
+
 	New module 'sys_utsname'.
 	* lib/sys_utsname.in.h: New file, based on glibc's <sys/utsname.h>.
 	* m4/sys_utsname_h.m4: New file.
