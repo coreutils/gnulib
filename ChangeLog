@@ -1,3 +1,10 @@
+2009-08-02  Paolo Bonzini  <bonzini@gnu.org>
+            Bruno Haible  <bruno@clisp.org>
+
+	New module 'pipe-filter-gi'.
+	* lib/pipe-filter-gi.c: New file.
+	* modules/pipe-filter-gi: New file.
+
 2009-08-02  Bruno Haible  <bruno@clisp.org>
             Paolo Bonzini  <bonzini@gnu.org>
 

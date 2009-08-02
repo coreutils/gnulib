@@ -1,0 +1,34 @@
+Description:
+Filtering of data through a subprocess.
+
+Files:
+lib/pipe-filter.h
+lib/pipe-filter-gi.c
+lib/pipe-filter-aux.h
+
+Depends-on:
+pipe
+wait-process
+error
+exit
+gettext-h
+stdbool
+stdint
+sys_select
+unistd
+
+configure.ac:
+AC_REQUIRE([AC_C_INLINE])
+AC_CHECK_FUNCS([select])
+
+Makefile.am:
+lib_SOURCES += pipe-filter-gi.c
+
+Include:
+"pipe-filter.h"
+
+License:
+GPL
+
+Maintainer:
+Paolo Bonzini, Bruno Haible
