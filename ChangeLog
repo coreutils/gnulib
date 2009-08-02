@@ -1,6 +1,14 @@
 2009-08-02  Paolo Bonzini  <bonzini@gnu.org>
             Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'pipe-filter-gi'.
+	* modules/pipe-filter-gi-tests: New file.
+	* tests/test-pipe-filter-gi1.sh: New file.
+	* tests/test-pipe-filter-gi1.c: New file.
+	* tests/test-pipe-filter-gi2.sh: New file.
+	* tests/test-pipe-filter-gi2-main.c: New file.
+	* tests/test-pipe-filter-gi2-child.c: New file.
+
 	New module 'pipe-filter-gi'.
 	* lib/pipe-filter-gi.c: New file.
 	* modules/pipe-filter-gi: New file.

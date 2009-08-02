@@ -1,0 +1,23 @@
+Files:
+tests/test-pipe-filter-gi1.sh
+tests/test-pipe-filter-gi1.c
+tests/test-vasnprintf-posix.c
+tests/test-pipe-filter-gi2.sh
+tests/test-pipe-filter-gi2-main.c
+tests/test-pipe-filter-gi2-child.c
+
+Depends-on:
+binary-io
+c-ctype
+read-file
+full-write
+sleep
+progname
+
+configure.ac:
+AC_CHECK_FUNCS_ONCE([usleep])
+
+Makefile.am:
+TESTS += test-pipe-filter-gi1.sh test-pipe-filter-gi2.sh
+TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' srcdir='$(srcdir)'
+check_PROGRAMS += test-pipe-filter-gi1 test-pipe-filter-gi2-main test-pipe-filter-gi2-child
