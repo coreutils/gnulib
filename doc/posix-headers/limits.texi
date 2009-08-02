@@ -3,10 +3,12 @@
 
 POSIX specification: @url{http://www.opengroup.org/susv3xbd/limits.h.html}
 
-Gnulib module: ---
+Gnulib module: gethostname
 
 Portability problems fixed by Gnulib:
 @itemize
+The @code{HOST_NAME_MAX} macro is not defined on some platforms:
+mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:

@@ -1,3 +1,12 @@
+2009-08-02  Simon Josefsson  <simon@josefsson.org>
+            Bruno Haible  <bruno@clisp.org>
+
+	Ensure HOST_NAME_MAX as part of the gethostname module.
+	* m4/gethostname.m4 (gl_FUNC_GETHOSTNAME): On native Windows platforms,
+	define also HOST_NAME_MAX.
+	* tests/test-gethostname.c (main): Check also HOST_NAME_MAX.
+	* doc/posix-headers/limits.texi: Document the mingw problem.
+
 2009-08-02  Bruno Haible  <bruno@clisp.org>
 
 	* lib/gethostname.c (gethostname): Fix handling of large len argument.

@@ -1,9 +1,12 @@
-# gethostname.m4 serial 6
+# gethostname.m4 serial 7
 dnl Copyright (C) 2002, 2008, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
+# Ensure
+# - the gethostname() function,
+# - the HOST_NAME_MAX macro in <limits.h>.
 AC_DEFUN([gl_FUNC_GETHOSTNAME],
 [
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
@@ -37,6 +40,16 @@ AC_DEFUN([gl_FUNC_GETHOSTNAME],
     AC_LIBOBJ([gethostname])
     HAVE_GETHOSTNAME=0
     gl_PREREQ_GETHOSTNAME
+  fi
+
+  dnl Also provide HOST_NAME_MAX when <limits.h> lacks it.
+  if test "$gl_cv_w32_gethostname" = "yes"; then
+    # <http://msdn.microsoft.com/en-us/library/ms738527.aspx> says:
+    # "if a buffer of 256 bytes is passed in the name parameter and
+    # the namelen parameter is set to 256, the buffer size will always
+    # be adequate."
+    AC_DEFINE([HOST_NAME_MAX], [256],
+      [Define HOST_NAME_MAX when <limits.h> does not define it.])
   fi
 ])
 
