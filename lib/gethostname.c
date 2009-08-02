@@ -21,6 +21,7 @@
 #include <config.h>
 
 #if !((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__)
+/* Unix API.  */
 
 /* Specification.  */
 #include <unistd.h>
@@ -59,6 +60,17 @@ gethostname (char *name, size_t len)
 }
 
 #else
+/* Native Windows API.  Which primitive to choose?
+   - gethostname() requires linking with -lws2_32.
+   - GetComputerName() does not return the right kind of hostname.
+   - GetComputerNameEx(ComputerNameDnsHostname,...) returns the right hostname,
+     but it hard to use portably:
+       - It requires defining _WIN32_WINNT to at least 0x0500.
+       - With mingw, it also requires
+         "#define GetComputerNameEx GetComputerNameExA".
+       - With older versions of mingw, none of the declarations are present at
+         all, not even of the enum value ComputerNameDnsHostname.
+   So we use gethostname().  Linking with -lws2_32 is the least evil.  */
 
 #define WIN32_LEAN_AND_MEAN
 /* Get winsock2.h. */
@@ -70,9 +82,13 @@ gethostname (char *name, size_t len)
 #undef gethostname
 
 int
-rpl_gethostname (char *name, size_t namelen)
+rpl_gethostname (char *name, size_t len)
 {
-  int r = gethostname (name, (int) namelen);
+  int r;
+
+  if (len > INT_MAX)
+    len = INT_MAX;
+  r = gethostname (name, (int) len);
   if (r < 0)
     set_winsock_errno ();
 
