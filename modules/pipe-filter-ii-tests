@@ -1,0 +1,21 @@
+Files:
+tests/test-pipe-filter-ii1.sh
+tests/test-pipe-filter-ii1.c
+tests/test-vasnprintf-posix.c
+tests/test-pipe-filter-ii2.sh
+tests/test-pipe-filter-ii2-main.c
+tests/test-pipe-filter-ii2-child.c
+
+Depends-on:
+binary-io
+c-ctype
+read-file
+full-write
+progname
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-pipe-filter-ii1.sh test-pipe-filter-ii2.sh
+TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' srcdir='$(srcdir)'
+check_PROGRAMS += test-pipe-filter-ii1 test-pipe-filter-ii2-main test-pipe-filter-ii2-child

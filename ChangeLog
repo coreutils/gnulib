@@ -1,6 +1,14 @@
 2009-08-02  Bruno Haible  <bruno@clisp.org>
             Paolo Bonzini  <bonzini@gnu.org>
 
+	Tests for module 'pipe-filter-ii'.
+	* modules/pipe-filter-ii-tests: New file.
+	* tests/test-pipe-filter-ii1.sh: New file.
+	* tests/test-pipe-filter-ii1.c: New file.
+	* tests/test-pipe-filter-ii2.sh: New file.
+	* tests/test-pipe-filter-ii2-main.c: New file.
+	* tests/test-pipe-filter-ii2-child.c: New file.
+
 	New module 'pipe-filter-ii'.
 	* lib/pipe-filter.h: New file.
 	* lib/pipe-filter-ii.c: New file.
