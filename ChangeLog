@@ -1,7 +1,6 @@
-2009-08-02  Bruno Haible  <bruno@clisp.org>
+2009-08-02  Martin Lambers  <marlam@marlam.de>  (tiny change)
 
 	* lib/gethostname.c: Include limits.h.
-	Reported by Martin Lambers <marlam@marlam.de>.
 
 2009-08-02  Simon Josefsson  <simon@josefsson.org>
             Bruno Haible  <bruno@clisp.org>
