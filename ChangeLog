@@ -1,5 +1,13 @@
 2009-08-02  Bruno Haible  <bruno@clisp.org>
 
+	New module 'uname'.
+	* lib/uname.c: New file.
+	* m4/uname.m4: New file.
+	* modules/uname: New file.
+	* doc/posix-functions/uname.texi: Mention the new module.
+
+2009-08-02  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'sys_utsname'.
 	* modules/sys_utsname-tests: New file.
 	* tests/test-sys_utsname.c: New file.
