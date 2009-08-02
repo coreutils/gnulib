@@ -76,6 +76,9 @@ gethostname (char *name, size_t len)
 /* Get winsock2.h. */
 #include <unistd.h>
 
+/* Get INT_MAX.  */
+#include <limits.h>
+
 /* Get set_winsock_errno. */
 #include "w32sock.h"
 
