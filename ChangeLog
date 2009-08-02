@@ -1,3 +1,8 @@
+2009-08-02  Simon Josefsson  <simon@josefsson.org>
+
+	* lib/gc-libgcrypt.c: Change copyright to FSF.
+	* lib/gc-gnulib.c: Likewise.
+
 2009-08-02  Martin Lambers  <marlam@marlam.de>  (tiny change)
 
 	* lib/gethostname.c: Include limits.h.
