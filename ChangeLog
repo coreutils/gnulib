@@ -1,3 +1,8 @@
+2009-08-03  Simon Josefsson  <simon@josefsson.org>
+
+	* tests/test-argp-version-etc-1.sh: Use EXEEXT.  Don't fail on
+	different project/version.
+
 2009-08-02  Paolo Bonzini  <bonzini@gnu.org>
             Bruno Haible  <bruno@clisp.org>
 

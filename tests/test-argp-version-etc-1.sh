@@ -22,7 +22,7 @@ export LC_ALL
 ERR=0
 
 cat > $TMP <<EOT
-test-argp-version-etc (dummy) 0
+test-argp-version-etc (PROJECT) VERSION
 COPYRIGHT
 License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
 This is free software: you are free to change and redistribute it.
@@ -31,11 +31,11 @@ There is NO WARRANTY, to the extent permitted by law.
 Written by Sergey Poznyakoff.
 EOT
 
-./test-argp-version-etc --version |
+./test-argp-version-etc${EXEEXT} --version |
  sed '2s/Copyright (C) [0-9]\{4,4\} Free Software Foundation, Inc\./COPYRIGHT/' |
+ sed '1s/test-argp-version-etc (.*) .*/test-argp-version-etc (PROJECT) VERSION/' |
  diff -c $TMP - || ERR=1
 
 rm $TMP
 
 exit $ERR
-
