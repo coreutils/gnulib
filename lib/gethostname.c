@@ -64,7 +64,7 @@ gethostname (char *name, size_t len)
    - gethostname() requires linking with -lws2_32.
    - GetComputerName() does not return the right kind of hostname.
    - GetComputerNameEx(ComputerNameDnsHostname,...) returns the right hostname,
-     but it hard to use portably:
+     but it is hard to use portably:
        - It requires defining _WIN32_WINNT to at least 0x0500.
        - With mingw, it also requires
          "#define GetComputerNameEx GetComputerNameExA".
