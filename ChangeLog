@@ -1,3 +1,7 @@
+2009-08-03  Bruno Haible  <bruno@clisp.org>
+
+	* m4/iconv.m4 (AM_ICONV): Fix displayed message with autoconf-2.64.
+
 2009-08-02  Bruno Haible  <bruno@clisp.org>
 
 	Tests for module 'uname'.
