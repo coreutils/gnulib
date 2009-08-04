@@ -771,3 +771,10 @@ INDENT_SOURCES ?= $(C_SOURCES)
 .PHONY: indent
 indent:
 	indent $(INDENT_SOURCES)
+
+# Run this rule once per year (usually early in January)
+# to update all FSF copyright year lists in your project.
+.PHONY: update-copyright
+update-copyright:
+	grep -l -w Copyright $$($(VC_LIST_EXCEPT))		\
+	  | xargs $(build_aux)/$@
