@@ -46,15 +46,15 @@ my $VERSION = '2009-08-04.07:25'; # UTC
 # looks like the start of a copyright statement.  For example, each of
 # these by itself is fine:
 #
-#   Copyright (C) 1990-2005, 2007-2009 Free Software Foundation,
-#   Inc.
+#   Copyright @copyright{} 1990-2005, 2007-2009 Free Software
+#   Foundation, Inc.
 #
-#   # Copyright (c) 1990-2005, 2007-2009 Free Software
+#   # Copyright (C) 1990-2005, 2007-2009 Free Software
 #   # Foundation, Inc.
 #
 #   /*
-#    * Copyright (C) 90,2005,2007-2009 Free Software
-#    * Foundation, Inc.
+#    * Copyright &copy; 90,2005,2007-2009
+#    * Free Software Foundation, Inc.
 #    */
 #
 # However, the following format is not recognized because the line
@@ -77,9 +77,10 @@ my $VERSION = '2009-08-04.07:25'; # UTC
 # breaks one.  The worst that can happen is that a file is not updated
 # and a warning is issued.
 #
-#   1. The format is "Copyright (C)" (where "(C)" can be "(c)"), then a
-#      list of copyright years, and then the name of the copyright
-#      holder, which is "Free Software Foundation, Inc.".
+#   1. The format is "Copyright (C)" (where "(C)" can also be "(c)",
+#      "@copyright{}", or "&copy;"), then a list of copyright years, and
+#      then the name of the copyright holder, which is "Free Software
+#      Foundation, Inc.".
 #   2. "Copyright (C)" appears at the beginning of a line except that it
 #      may be prefixed by any sequence (e.g., a comment) of no more than
 #      5 characters.
@@ -105,7 +106,7 @@ if (!$this_year || $this_year !~ m/^\d\d(\d\d)?$/) {
   my ($sec, $min, $hour, $mday, $month, $year) = localtime (time ());
   $this_year = $year + 1900;
 }
-my $copyright = 'Copyright \([cC]\)';
+my $copyright = 'Copyright (?:\([cC]\)|@copyright{}|&copy;)';
 my $holder = 'Free Software Foundation, Inc.';
 my $prefix_max = 5;
 my $margin = 72;

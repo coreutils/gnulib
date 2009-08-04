@@ -24,17 +24,17 @@ TMP_BASE=update-copyright.test
 
 TMP=$TMP_BASE-ex
 cat > $TMP.1 <<EOF
-Copyright (C) 1990-2005, 2007-2009 Free Software Foundation,
-Inc.
+Copyright @copyright{} 1990-2005, 2007-2009 Free Software
+Foundation, Inc.
 EOF
 cat > $TMP.2 <<EOF
-# Copyright (c) 1990-2005, 2007-2009 Free Software
+# Copyright (C) 1990-2005, 2007-2009 Free Software
 # Foundation, Inc.
 EOF
 cat > $TMP.3 <<EOF
 /*
- * Copyright (C) 90,2005,2007-2009 Free Software
- * Foundation, Inc.
+ * Copyright &copy; 90,2005,2007-2009
+ * Free Software Foundation, Inc.
  */
 EOF
 cat > $TMP.4 <<EOF
@@ -59,17 +59,17 @@ $TMP.4: warning: FSF copyright statement not found
 $TMP.5: warning: FSF copyright statement not found
 EOF
 diff -u - $TMP.1 <<EOF || exit 1
-Copyright (C) 1990-2005, 2007-2009 Free Software Foundation,
-Inc.
+Copyright @copyright{} 1990-2005, 2007-2009 Free Software
+Foundation, Inc.
 EOF
 diff -u - $TMP.2 <<EOF || exit 1
-# Copyright (c) 1990-2005, 2007-2009 Free Software
+# Copyright (C) 1990-2005, 2007-2009 Free Software
 # Foundation, Inc.
 EOF
 diff -u - $TMP.3 <<EOF || exit 1
 /*
- * Copyright (C) 90,2005,2007-2009 Free Software
- * Foundation, Inc.
+ * Copyright &copy; 90,2005,2007-2009
+ * Free Software Foundation, Inc.
  */
 EOF
 diff -u - $TMP.4 <<EOF || exit 1
@@ -94,14 +94,15 @@ $TMP.4: warning: FSF copyright statement not found
 $TMP.5: warning: FSF copyright statement not found
 EOF
 diff -u - $TMP.1 <<EOF || exit 1
-Copyright (C) 1990-2005, 2007-2010 Free Software Foundation, Inc.
+Copyright @copyright{} 1990-2005, 2007-2010 Free Software Foundation,
+Inc.
 EOF
 diff -u - $TMP.2 <<EOF || exit 1
-# Copyright (c) 1990-2005, 2007-2010 Free Software Foundation, Inc.
+# Copyright (C) 1990-2005, 2007-2010 Free Software Foundation, Inc.
 EOF
 diff -u - $TMP.3 <<EOF || exit 1
 /*
- * Copyright (C) 90, 2005, 2007-2010 Free Software Foundation, Inc.
+ * Copyright &copy; 90, 2005, 2007-2010 Free Software Foundation, Inc.
  */
 EOF
 diff -u - $TMP.4 <<EOF || exit 1

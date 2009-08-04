@@ -1,3 +1,9 @@
+2009-08-03  Joel E. Denny  <jdenny@clemson.edu>
+
+	update-copyright: support @copyright{} and &copy;
+	* build-aux/update-copyright: Implement and document.
+	* tests/test-update-copyright.sh: Test.
+
 2009-08-04  Jim Meyering  <meyering@redhat.com>
 
 	update-copyright-tests: correctly test EOL=\r\n handling
