@@ -1,3 +1,10 @@
+2009-08-20  Paolo Bonzini  <bonzini@gnu.org>
+
+	Fix polling for writeability of a screen buffer.
+	* lib/poll.c: Distinguish input and screen buffers for the
+	Win32 implementation.
+	* lib/select.c: Likewise.
+
 2009-08-19  Eric Blake  <ebb9@byu.net>
 
 	popen-safer: prevent popen from clobbering std descriptors
