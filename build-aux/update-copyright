@@ -1,7 +1,7 @@
 #!/usr/bin/perl -0777 -pi
 # Update an FSF copyright year list to include the current year.
 
-my $VERSION = '2009-08-03.23:03'; # UTC
+my $VERSION = '2009-08-04.07:25'; # UTC
 
 # Copyright (C) 2009 Free Software Foundation
 #
@@ -18,7 +18,7 @@ my $VERSION = '2009-08-03.23:03'; # UTC
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Written by Jim Meyering
+# Written by Jim Meyering and Joel E. Denny
 
 # The arguments to this script should be names of files that contain FSF
 # copyright statements to be updated.  For example, you may wish to
@@ -102,7 +102,7 @@ use warnings;
 
 my $this_year = $ENV{UPDATE_COPYRIGHT_YEAR};
 if (!$this_year || $this_year !~ m/^\d\d(\d\d)?$/) {
-  my ($sec, $min, $hour, $mday, $month, $year) = localtime (time());
+  my ($sec, $min, $hour, $mday, $month, $year) = localtime (time ());
   $this_year = $year + 1900;
 }
 my $copyright = 'Copyright \([cC]\)';
@@ -117,7 +117,7 @@ my $eol = /(?:^|[^\r])\n/ ? "\n" : "\r\n";
 my $leading;
 my $prefix;
 my $ws;
-my $old;
+my $old_re;
 if (/(^|\n)(.{0,$prefix_max})$copyright/)
   {
     $leading = $1;
@@ -125,36 +125,36 @@ if (/(^|\n)(.{0,$prefix_max})$copyright/)
     $ws = '[ \t\r\f]'; # \s without \n
     $ws = "(?:$ws*(?:$ws|\\n" . quotemeta($prefix) . ")$ws*)";
     $holder =~ s/\s/$ws/g;
-    $old =
+    $old_re =
       quotemeta("$leading$prefix") . "($copyright$ws"
       . "(?:(?:\\d\\d)?\\d\\d(,$ws?|-))*"
       . "((?:\\d\\d)?\\d\\d)$ws$holder)";
   }
-if (defined($old) && /$old/)
+if (defined $old_re && /$old_re/)
   {
     my $new = $1;
     my $sep = $2 ? $2 : "";
-    my $last_year = $3;
+    my $final_year_orig = $3;
 
     # Handle two-digit year numbers like "98" and "99".
-    my $last_c_year = $last_year;
-    $last_c_year <= 99
-      and $last_c_year += 1900;
+    my $final_year = $final_year_orig;
+    $final_year <= 99
+      and $final_year += 1900;
 
-    if ($last_c_year != $this_year)
+    if ($final_year != $this_year)
       {
         # Update the year.
-        if ($sep eq '-' && $last_c_year + 1 == $this_year)
+        if ($sep eq '-' && $final_year + 1 == $this_year)
           {
-            $new =~ s/$last_year/$this_year/;
+            $new =~ s/$final_year_orig/$this_year/;
           }
-        elsif ($sep ne '-' && $last_c_year + 1 == $this_year)
+        elsif ($sep ne '-' && $final_year + 1 == $this_year)
           {
-            $new =~ s/$last_year/$last_c_year-$this_year/;
+            $new =~ s/$final_year_orig/$final_year-$this_year/;
           }
         else
           {
-            $new =~ s/$last_year/$last_c_year, $this_year/;
+            $new =~ s/$final_year_orig/$final_year, $this_year/;
           }
 
         # Normalize all whitespace including newline-prefix sequences.
@@ -167,9 +167,9 @@ if (defined($old) && /$old/)
         my $new_wrapped;
         my $text_margin = $margin - length($prefix);
         if ($prefix =~ /^(\t+)/) {
-          $text_margin -= length($1) * ($tab_width-1);
+          $text_margin -= length($1) * ($tab_width - 1);
         }
-        while (length($new))
+        while (length $new)
           {
             if (($new =~ s/^(.{1,$text_margin})(?: |$)//)
                 || ($new =~ s/^([\S]+)(?: |$)//))
@@ -187,7 +187,7 @@ if (defined($old) && /$old/)
           }
 
         # Replace the old copyright statement.
-        s/$old/$new_wrapped/;
+        s/$old_re/$new_wrapped/;
       }
   }
 else

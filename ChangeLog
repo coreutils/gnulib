@@ -1,3 +1,9 @@
+2009-08-04  Jim Meyering  <meyering@redhat.com>
+
+	update-copyright: rename some variables
+	* build-aux/update-copyright: Rename a few variables for clarity.
+	Tweak syntax.  List Joel E. Denny as coauthor.
+
 2009-08-03  Joel E. Denny  <jdenny@clemson.edu>
 
 	update-copyright: fix bug for 2-digit last year and add tests
