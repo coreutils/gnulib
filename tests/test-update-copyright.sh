@@ -290,20 +290,21 @@ rm $TMP*
 ## --------- ##
 
 TMP=$TMP_BASE-dos-eol
-cat > $TMP <<EOF
-Rem Copyright (C) 87, 88, 1991, 1992, 1993, 1994, 1995, 1996, 1997,
-Rem 98, 1999, 2000, 2001, 2002, 2003,  2004, 2005, 2006, 2007, 2008,
-Rem 2009 Free Software Foundation, Inc.
+tr @ '\015' > $TMP <<\EOF
+Rem Copyright (C) 87, 88, 1991, 1992, 1993, 1994, 1995, 1996, 1997,@
+Rem 98, 1999, 2000, 2001, 2002, 2003,  2004, 2005, 2006, 2007, 2008,@
+Rem 2009 Free Software Foundation, Inc.@
 EOF
 UPDATE_COPYRIGHT_YEAR=2010 \
   update-copyright $TMP 1> $TMP-stdout 2> $TMP-stderr
 diff -u /dev/null $TMP-stdout || exit 1
 diff -u /dev/null $TMP-stderr || exit 1
-diff -u - $TMP <<EOF || exit 1
-Rem Copyright (C) 87, 88, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 98,
-Rem 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008,
-Rem 2009-2010 Free Software Foundation, Inc.
+tr @ '\015' > $TMP-exp <<\EOF
+Rem Copyright (C) 87, 88, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 98,@
+Rem 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008,@
+Rem 2009-2010 Free Software Foundation, Inc.@
 EOF
+diff -u $TMP-exp $TMP || exit 1
 rm $TMP*
 
 exit 0
