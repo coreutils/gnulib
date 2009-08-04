@@ -1,5 +1,9 @@
 2009-08-04  Jim Meyering  <meyering@redhat.com>
 
+	maint.mk: make update-copyright exclusion list more configurable
+	* top/maint.mk (update-copyright): Default to excluding COPYING,
+	but allow an override, in case someone does want to update that file.
+
 	maint.mk: don't update copyright date in COPYING
 	* top/maint.mk (update-copyright): Exclude COPYING.
 

@@ -774,8 +774,9 @@ indent:
 
 # Run this rule once per year (usually early in January)
 # to update all FSF copyright year lists in your project.
+update-copyright-exclude-regexp ?= (^|/)COPYING$$
 .PHONY: update-copyright
 update-copyright:
 	grep -l -w Copyright $$($(VC_LIST_EXCEPT))		\
-	  | grep -v -E '(^|/)COPYING$$'				\
+	  | grep -v -E '$(update-copyright-exclude-regexp)'	\
 	  | xargs $(build_aux)/$@
