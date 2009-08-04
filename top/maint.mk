@@ -777,4 +777,5 @@ indent:
 .PHONY: update-copyright
 update-copyright:
 	grep -l -w Copyright $$($(VC_LIST_EXCEPT))		\
+	  | grep -v -E '(^|/)COPYING$$'				\
 	  | xargs $(build_aux)/$@

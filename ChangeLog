@@ -1,5 +1,8 @@
 2009-08-04  Jim Meyering  <meyering@redhat.com>
 
+	maint.mk: don't update copyright date in COPYING
+	* top/maint.mk (update-copyright): Exclude COPYING.
+
 	maint.mk: add a copyright-updating rule
 	* top/maint.mk (update-copyright): New rule.
 	Derived from coreutils/Makefile.am.
