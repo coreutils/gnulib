@@ -101,39 +101,43 @@ my $VERSION = '2009-08-04.07:25'; # UTC
 use strict;
 use warnings;
 
-my $this_year = $ENV{UPDATE_COPYRIGHT_YEAR};
-if (!$this_year || $this_year !~ m/^\d\d(\d\d)?$/) {
-  my ($sec, $min, $hour, $mday, $month, $year) = localtime (time ());
-  $this_year = $year + 1900;
-}
-my $copyright = 'Copyright (?:\([cC]\)|@copyright{}|&copy;)';
+my $copyright_re = 'Copyright (?:\([cC]\)|@copyright{}|&copy;)';
 my $holder = 'Free Software Foundation, Inc.';
 my $prefix_max = 5;
 my $margin = 72;
 my $tab_width = 8;
+
+my $this_year = $ENV{UPDATE_COPYRIGHT_YEAR};
+if (!$this_year || $this_year !~ m/^\d{4}$/)
+  {
+    my ($sec, $min, $hour, $mday, $month, $year) = localtime (time ());
+    $this_year = $year + 1900;
+  }
 
 # Unless the file consistently uses "\r\n" as the EOL, use "\n" instead.
 my $eol = /(?:^|[^\r])\n/ ? "\n" : "\r\n";
 
 my $leading;
 my $prefix;
-my $ws;
-my $old_re;
-if (/(^|\n)(.{0,$prefix_max})$copyright/)
+my $ws_re;
+my $stmt_re;
+if (/(^|\n)(.{0,$prefix_max})$copyright_re/)
   {
     $leading = $1;
     $prefix = $2;
-    $ws = '[ \t\r\f]'; # \s without \n
-    $ws = "(?:$ws*(?:$ws|\\n" . quotemeta($prefix) . ")$ws*)";
-    $holder =~ s/\s/$ws/g;
-    $old_re =
-      quotemeta("$leading$prefix") . "($copyright$ws"
-      . "(?:(?:\\d\\d)?\\d\\d(,$ws?|-))*"
-      . "((?:\\d\\d)?\\d\\d)$ws$holder)";
+    $ws_re = '[ \t\r\f]'; # \s without \n
+    $ws_re =
+      "(?:$ws_re*(?:$ws_re|\\n" . quotemeta($prefix) . ")$ws_re*)";
+    my $holder_re = $holder;
+    $holder_re =~ s/\s/$ws_re/g;
+    $stmt_re =
+      quotemeta("$leading$prefix") . "($copyright_re$ws_re"
+      . "(?:(?:\\d\\d)?\\d\\d(,$ws_re?|-))*"
+      . "((?:\\d\\d)?\\d\\d)$ws_re$holder_re)";
   }
-if (defined $old_re && /$old_re/)
+if (defined $stmt_re && /$stmt_re/)
   {
-    my $new = $1;
+    my $stmt = $1;
     my $sep = $2 ? $2 : "";
     my $final_year_orig = $3;
 
@@ -147,37 +151,38 @@ if (defined $old_re && /$old_re/)
         # Update the year.
         if ($sep eq '-' && $final_year + 1 == $this_year)
           {
-            $new =~ s/$final_year_orig/$this_year/;
+            $stmt =~ s/$final_year_orig/$this_year/;
           }
         elsif ($sep ne '-' && $final_year + 1 == $this_year)
           {
-            $new =~ s/$final_year_orig/$final_year-$this_year/;
+            $stmt =~ s/$final_year_orig/$final_year-$this_year/;
           }
         else
           {
-            $new =~ s/$final_year_orig/$final_year, $this_year/;
+            $stmt =~ s/$final_year_orig/$final_year, $this_year/;
           }
 
         # Normalize all whitespace including newline-prefix sequences.
-        $new =~ s/$ws/ /g;
+        $stmt =~ s/$ws_re/ /g;
 
         # Put spaces after commas.
-        $new =~ s/, ?/, /g;
+        $stmt =~ s/, ?/, /g;
 
         # Format within margin.
-        my $new_wrapped;
+        my $stmt_wrapped;
         my $text_margin = $margin - length($prefix);
-        if ($prefix =~ /^(\t+)/) {
-          $text_margin -= length($1) * ($tab_width - 1);
-        }
-        while (length $new)
+        if ($prefix =~ /^(\t+)/)
           {
-            if (($new =~ s/^(.{1,$text_margin})(?: |$)//)
-                || ($new =~ s/^([\S]+)(?: |$)//))
+            $text_margin -= length($1) * ($tab_width - 1);
+          }
+        while (length $stmt)
+          {
+            if (($stmt =~ s/^(.{1,$text_margin})(?: |$)//)
+                || ($stmt =~ s/^([\S]+)(?: |$)//))
               {
                 my $line = $1;
-                $new_wrapped .= $new_wrapped ? $eol : $leading;
-                $new_wrapped .= "$prefix$line";
+                $stmt_wrapped .= $stmt_wrapped ? $eol : $leading;
+                $stmt_wrapped .= "$prefix$line";
               }
             else
               {
@@ -188,7 +193,7 @@ if (defined $old_re && /$old_re/)
           }
 
         # Replace the old copyright statement.
-        s/$old_re/$new_wrapped/;
+        s/$stmt_re/$stmt_wrapped/;
       }
   }
 else

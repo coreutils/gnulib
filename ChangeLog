@@ -1,5 +1,15 @@
 2009-08-05  Joel E. Denny  <jdenny@clemson.edu>
 
+	update-copyright: clean up code a little
+	* build-aux/update-copyright: Append "_re" to the name of any
+	variable holding a regular expression.
+	Replace "old" and "new" with "stmt" in variable names.
+	Do not accept 2-digit UPDATE_COPYRIGHT_YEAR, which was not
+	handled correctly.
+	Format code more consistently.
+
+2009-08-05  Joel E. Denny  <jdenny@clemson.edu>
+
 	update-copyright-tests: improve portability
 	* tests/test-update-copyright.sh: Use cmp if diff cannot handle
 	-u or /dev/null.  Suggested by Jim Meyering and Eric Blake.
