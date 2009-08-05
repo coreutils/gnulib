@@ -1,5 +1,13 @@
 2009-08-05  Joel E. Denny  <jdenny@clemson.edu>
 
+	update-copyright: don't trip on non-FSF copyright statements
+	* build-aux/update-copyright: Fix so that the first correctly
+	formatted FSF copyright statement is recognized no matter what
+	appears before it.  Update documentation.
+	* tests/test-update-copyright.sh: Test that.
+
+2009-08-05  Joel E. Denny  <jdenny@clemson.edu>
+
 	update-copyright: clean up code a little
 	* build-aux/update-copyright: Append "_re" to the name of any
 	variable holding a regular expression.

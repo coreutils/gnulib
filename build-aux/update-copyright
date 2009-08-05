@@ -1,9 +1,9 @@
 #!/usr/bin/perl -0777 -pi
 # Update an FSF copyright year list to include the current year.
 
-my $VERSION = '2009-08-04.07:25'; # UTC
+my $VERSION = '2009-08-05.20:47'; # UTC
 
-# Copyright (C) 2009 Free Software Foundation
+# Copyright (C) 2009 Free Software Foundation, Inc.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -42,9 +42,7 @@ my $VERSION = '2009-08-04.07:25'; # UTC
 # for every file for which no FSF copyright statement is discovered.
 #
 # Each file's FSF copyright statement must be formated correctly in
-# order to be recognized, and it must appear before other text that
-# looks like the start of a copyright statement.  For example, each of
-# these by itself is fine:
+# order to be recognized.  For example, each of these is fine:
 #
 #   Copyright @copyright{} 1990-2005, 2007-2009 Free Software
 #   Foundation, Inc.
@@ -68,35 +66,29 @@ my $VERSION = '2009-08-04.07:25'; # UTC
 #
 #   Copyright (C) 1990-2005, 2007-2009 Acme, Inc.
 #
-# Moreover, any FSF copyright statement following either of the previous
-# copyright statements might not be recognized.
+# However, any correctly formatted FSF copyright statement following
+# either of the previous two copyright statements would be recognized.
 #
 # The exact conditions that a file's FSF copyright statement must meet
-# to be recognized are listed below.  They may seem slightly complex,
-# but you need not worry if some file in your project accidentally
-# breaks one.  The worst that can happen is that a file is not updated
-# and a warning is issued.
+# to be recognized are:
 #
 #   1. The format is "Copyright (C)" (where "(C)" can also be "(c)",
 #      "@copyright{}", or "&copy;"), then a list of copyright years, and
 #      then the name of the copyright holder, which is "Free Software
 #      Foundation, Inc.".
-#   2. "Copyright (C)" appears at the beginning of a line except that it
-#      may be prefixed by any sequence (e.g., a comment) of no more than
-#      5 characters.
-#   3. The prefix of "Copyright (C)" is the same as the prefix on the
-#      file's first occurrence of "Copyright (C)" that matches condition
-#      #2.  Stated more simply, if something that looks like the start
-#      of a copyright statement appears earlier than the FSF copyright
-#      statement, the FSF copyright statement might not be recognized.
-#      This condition might be removed in the future.
-#   4. Iff a prefix is present before "Copyright (C)", the same prefix
-#      appears at the beginning of each remaining line within the FSF
-#      copyright statement.
-#   5. Blank lines, even if preceded by the prefix, do not appear
+#   2. The "Copyright (C)" appears at the beginning of a line except
+#      that it may be prefixed by any sequence (e.g., a comment) of no
+#      more than 5 characters.
+#   3. Iff such a prefix is present, the same prefix appears at the
+#      beginning of each remaining line within the FSF copyright
+#      statement.
+#   4. Blank lines, even if preceded by the prefix, do not appear
 #      within the FSF copyright statement.
-#   6. Each copyright year is 2 or 4 digits, and years are separated by
+#   5. Each copyright year is 2 or 4 digits, and years are separated by
 #      commas or dashes.  Whitespace may occur after commas.
+#   6. It is the first FSF copyright statement that meets all of the
+#      above conditions.  Subsequent FSF copyright statements are
+#      ignored.
 
 use strict;
 use warnings;
@@ -121,7 +113,7 @@ my $leading;
 my $prefix;
 my $ws_re;
 my $stmt_re;
-if (/(^|\n)(.{0,$prefix_max})$copyright_re/)
+while (/(^|\n)(.{0,$prefix_max})$copyright_re/g)
   {
     $leading = $1;
     $prefix = $2;
@@ -130,13 +122,20 @@ if (/(^|\n)(.{0,$prefix_max})$copyright_re/)
       "(?:$ws_re*(?:$ws_re|\\n" . quotemeta($prefix) . ")$ws_re*)";
     my $holder_re = $holder;
     $holder_re =~ s/\s/$ws_re/g;
-    $stmt_re =
-      quotemeta("$leading$prefix") . "($copyright_re$ws_re"
-      . "(?:(?:\\d\\d)?\\d\\d(,$ws_re?|-))*"
-      . "((?:\\d\\d)?\\d\\d)$ws_re$holder_re)";
+    my $stmt_remainder_re =
+      "$ws_re(?:(?:\\d\\d)?\\d\\d(,$ws_re?|-))*"
+      . "((?:\\d\\d)?\\d\\d)$ws_re$holder_re";
+    if (/\G$stmt_remainder_re/)
+      {
+        $stmt_re =
+           quotemeta("$leading$prefix")
+           . "($copyright_re$stmt_remainder_re)";
+        last;
+      }
   }
-if (defined $stmt_re && /$stmt_re/)
+if (defined $stmt_re)
   {
+    /$stmt_re/ or die; # Should never die.
     my $stmt = $1;
     my $sep = $2 ? $2 : "";
     my $final_year_orig = $3;

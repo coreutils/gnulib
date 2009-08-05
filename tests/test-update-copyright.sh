@@ -47,11 +47,18 @@ EOF
 cat > $TMP.4 <<EOF
 /* Copyright (C) 1990-2005, 2007-2009 Free Software
  * Foundation, Inc.  */
+EOF
+cat > $TMP.5 <<EOF
+Copyright (C) 1990-2005, 2007-2009 Acme, Inc.
+EOF
+cat > $TMP.6 <<EOF
+/* Copyright (C) 1990-2005, 2007-2009 Free Software
+ * Foundation, Inc.  */
 
 Copyright (C) 1990-2005, 2007-2009 Free Software Foundation,
 Inc.
 EOF
-cat > $TMP.5 <<EOF
+cat > $TMP.7 <<EOF
 Copyright (C) 1990-2005, 2007-2009 Acme, Inc.
 
 # Copyright (C) 1990-2005, 2007-2009 Free Software
@@ -82,11 +89,18 @@ EOF
 compare - $TMP.4 <<EOF || exit 1
 /* Copyright (C) 1990-2005, 2007-2009 Free Software
  * Foundation, Inc.  */
+EOF
+compare - $TMP.5 <<EOF || exit 1
+Copyright (C) 1990-2005, 2007-2009 Acme, Inc.
+EOF
+compare - $TMP.6 <<EOF || exit 1
+/* Copyright (C) 1990-2005, 2007-2009 Free Software
+ * Foundation, Inc.  */
 
 Copyright (C) 1990-2005, 2007-2009 Free Software Foundation,
 Inc.
 EOF
-compare - $TMP.5 <<EOF || exit 1
+compare - $TMP.7 <<EOF || exit 1
 Copyright (C) 1990-2005, 2007-2009 Acme, Inc.
 
 # Copyright (C) 1990-2005, 2007-2009 Free Software
@@ -115,15 +129,20 @@ EOF
 compare - $TMP.4 <<EOF || exit 1
 /* Copyright (C) 1990-2005, 2007-2009 Free Software
  * Foundation, Inc.  */
-
-Copyright (C) 1990-2005, 2007-2009 Free Software Foundation,
-Inc.
 EOF
 compare - $TMP.5 <<EOF || exit 1
 Copyright (C) 1990-2005, 2007-2009 Acme, Inc.
+EOF
+compare - $TMP.6 <<EOF || exit 1
+/* Copyright (C) 1990-2005, 2007-2009 Free Software
+ * Foundation, Inc.  */
 
-# Copyright (C) 1990-2005, 2007-2009 Free Software
-# Foundation, Inc.
+Copyright (C) 1990-2005, 2007-2010 Free Software Foundation, Inc.
+EOF
+compare - $TMP.7 <<EOF || exit 1
+Copyright (C) 1990-2005, 2007-2009 Acme, Inc.
+
+# Copyright (C) 1990-2005, 2007-2010 Free Software Foundation, Inc.
 EOF
 
 rm $TMP*
