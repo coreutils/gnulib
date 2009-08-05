@@ -1,3 +1,9 @@
+2009-08-05  Joel E. Denny  <jdenny@clemson.edu>
+
+	update-copyright-tests: improve portability
+	* tests/test-update-copyright.sh: Use cmp if diff cannot handle
+	-u or /dev/null.  Suggested by Jim Meyering and Eric Blake.
+
 2009-08-03  Joel E. Denny  <jdenny@clemson.edu>
 
 	update-copyright: support @copyright{} and &copy;
