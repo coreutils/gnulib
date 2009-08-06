@@ -1,3 +1,8 @@
+2009-08-06  Joel E. Denny  <jdenny@clemson.edu>
+
+	update-copyright: update documentation to point to maint.mk
+	* build-aux/update-copyright: Here.
+
 2009-08-06  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: support update-copyright-local

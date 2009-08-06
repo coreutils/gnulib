@@ -21,20 +21,9 @@ my $VERSION = '2009-08-06.01:08'; # UTC
 # Written by Jim Meyering and Joel E. Denny
 
 # The arguments to this script should be names of files that contain FSF
-# copyright statements to be updated.  For example, you may wish to
-# place a target like the following in the top-level makefile in your
-# project:
-#
-#   .PHONY: update-copyright
-#   update-copyright:
-#       if test -d .git; then                                   \
-#         git grep -l -w Copyright                              \
-#           | grep -v -E '(^|/)(COPYING|ChangeLog)'             \
-#           | xargs $(srcdir)/build-aux/$@;                     \
-#       fi
-#
-# In the second grep, you can build a list of files to skip within your
-# project.
+# copyright statements to be updated.  For example, you might wish to
+# use the update-copyright target rule in maint.mk from gnulib's
+# maintainer-makefile module.
 #
 # Iff an FSF copyright statement is discovered in a file and the final
 # year is not the current year, the statement is updated for the new
