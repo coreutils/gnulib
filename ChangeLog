@@ -1,5 +1,12 @@
 2009-08-05  Joel E. Denny  <jdenny@clemson.edu>
 
+	update-copyright: support omitted "(C)"
+	* build-aux/update-copyright: Implement and document.  Also,
+	allow variable whitespace before "(C)".
+	* tests/test-update-copyright.sh: Test.
+
+2009-08-05  Joel E. Denny  <jdenny@clemson.edu>
+
 	update-copyright: don't trip on non-FSF copyright statements
 	* build-aux/update-copyright: Fix so that the first correctly
 	formatted FSF copyright statement is recognized no matter what

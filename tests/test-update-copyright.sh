@@ -334,4 +334,25 @@ EOF
 compare $TMP-exp $TMP || exit 1
 rm $TMP*
 
+## --------------- ##
+## Omitted "(C)".  ##
+## --------------- ##
+
+TMP=$TMP_BASE-omitted-circle-c
+cat > $TMP <<EOF
+  Copyright 87, 88, 1991, 1992, 1993, 1994, 1995, 1996, 1997,
+  98, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008,
+  2009 Free Software Foundation, Inc.
+EOF
+UPDATE_COPYRIGHT_YEAR=2010 \
+  update-copyright $TMP 1> $TMP-stdout 2> $TMP-stderr
+compare /dev/null $TMP-stdout || exit 1
+compare /dev/null $TMP-stderr || exit 1
+compare - $TMP <<EOF || exit 1
+  Copyright 87, 88, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 98, 1999,
+  2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009-2010 Free
+  Software Foundation, Inc.
+EOF
+rm $TMP*
+
 exit 0
