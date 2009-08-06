@@ -58,8 +58,8 @@ my $VERSION = '2009-08-06.01:08'; # UTC
 # However, the following format is not recognized because the line
 # prefix changes after the first line:
 #
-#   /* Copyright (C) 1990-2005, 2007-2009 Free Software
-#    * Foundation, Inc.  */
+#   ## Copyright (C) 1990-2005, 2007-2009 Free Software
+#   #  Foundation, Inc.
 #
 # The following copyright statement is not recognized because the
 # copyright holder is not the FSF:
@@ -91,7 +91,12 @@ my $VERSION = '2009-08-06.01:08'; # UTC
 #      5 characters.
 #   5. Iff such a prefix is present, the same prefix appears at the
 #      beginning of each remaining line within the FSF copyright
-#      statement.
+#      statement.  There is one exception in order to support C-style
+#      comments: if the first line's prefix contains nothing but
+#      whitespace surrounding a "/*", then the prefix for all subsequent
+#      lines is the same as the first line's prefix except with each of
+#      "/" and possibly "*" replaced by a " ".  The replacement of "*"
+#      by " " is consistent throughout all subsequent lines.
 #   6. Blank lines, even if preceded by the prefix, do not appear
 #      within the FSF copyright statement.
 #   7. Each copyright year is 2 or 4 digits, and years are separated by
@@ -123,8 +128,18 @@ my $ws_re;
 my $stmt_re;
 while (/(^|\n)(.{0,$prefix_max})$copyright_re/g)
   {
-    $leading = $1;
+    $leading = "$1$2";
     $prefix = $2;
+    if ($prefix =~ /^(\s*\/)\*(\s*)$/)
+      {
+        $prefix =~ s,/, ,;
+        my $prefix_ws = $prefix;
+        $prefix_ws =~ s/\*/ /; # Only whitespace.
+        if (/\G(?:[^*\n]|\*[^\/\n])*\*?\n$prefix_ws/)
+          {
+            $prefix = $prefix_ws;
+          }
+      }
     $ws_re = '[ \t\r\f]'; # \s without \n
     $ws_re =
       "(?:$ws_re*(?:$ws_re|\\n" . quotemeta($prefix) . ")$ws_re*)";
@@ -137,8 +152,7 @@ while (/(^|\n)(.{0,$prefix_max})$copyright_re/g)
     if (/\G$stmt_remainder_re/)
       {
         $stmt_re =
-          quotemeta("$leading$prefix")
-          . "($copyright_re$stmt_remainder_re)";
+          quotemeta($leading) . "($copyright_re$stmt_remainder_re)";
         last;
       }
   }
@@ -189,8 +203,8 @@ if (defined $stmt_re)
                 || ($stmt =~ s/^([\S]+)(?: |$)//))
               {
                 my $line = $1;
-                $stmt_wrapped .= $stmt_wrapped ? $eol : $leading;
-                $stmt_wrapped .= "$prefix$line";
+                $stmt_wrapped .= $stmt_wrapped ? "$eol$prefix" : $leading;
+                $stmt_wrapped .= $line;
               }
             else
               {

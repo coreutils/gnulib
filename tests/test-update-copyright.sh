@@ -45,15 +45,15 @@ cat > $TMP.3 <<EOF
  */
 EOF
 cat > $TMP.4 <<EOF
-/* Copyright (C) 1990-2005, 2007-2009 Free Software
- * Foundation, Inc.  */
+## Copyright (C) 1990-2005, 2007-2009 Free Software
+#  Foundation, Inc.
 EOF
 cat > $TMP.5 <<EOF
 Copyright (C) 1990-2005, 2007-2009 Acme, Inc.
 EOF
 cat > $TMP.6 <<EOF
-/* Copyright (C) 1990-2005, 2007-2009 Free Software
- * Foundation, Inc.  */
+## Copyright (C) 1990-2005, 2007-2009 Free Software
+#  Foundation, Inc.
 
 Copyright (C) 1990-2005, 2007-2009 Free Software Foundation,
 Inc.
@@ -87,15 +87,15 @@ compare - $TMP.3 <<EOF || exit 1
  */
 EOF
 compare - $TMP.4 <<EOF || exit 1
-/* Copyright (C) 1990-2005, 2007-2009 Free Software
- * Foundation, Inc.  */
+## Copyright (C) 1990-2005, 2007-2009 Free Software
+#  Foundation, Inc.
 EOF
 compare - $TMP.5 <<EOF || exit 1
 Copyright (C) 1990-2005, 2007-2009 Acme, Inc.
 EOF
 compare - $TMP.6 <<EOF || exit 1
-/* Copyright (C) 1990-2005, 2007-2009 Free Software
- * Foundation, Inc.  */
+## Copyright (C) 1990-2005, 2007-2009 Free Software
+#  Foundation, Inc.
 
 Copyright (C) 1990-2005, 2007-2009 Free Software Foundation,
 Inc.
@@ -127,15 +127,15 @@ compare - $TMP.3 <<EOF || exit 1
  */
 EOF
 compare - $TMP.4 <<EOF || exit 1
-/* Copyright (C) 1990-2005, 2007-2009 Free Software
- * Foundation, Inc.  */
+## Copyright (C) 1990-2005, 2007-2009 Free Software
+#  Foundation, Inc.
 EOF
 compare - $TMP.5 <<EOF || exit 1
 Copyright (C) 1990-2005, 2007-2009 Acme, Inc.
 EOF
 compare - $TMP.6 <<EOF || exit 1
-/* Copyright (C) 1990-2005, 2007-2009 Free Software
- * Foundation, Inc.  */
+## Copyright (C) 1990-2005, 2007-2009 Free Software
+#  Foundation, Inc.
 
 Copyright (C) 1990-2005, 2007-2010 Free Software Foundation, Inc.
 EOF
@@ -352,6 +352,68 @@ compare - $TMP <<EOF || exit 1
   Copyright 87, 88, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 98, 1999,
   2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009-2010 Free
   Software Foundation, Inc.
+EOF
+rm $TMP*
+
+## ------------------ ##
+## C-style comments.  ##
+## ------------------ ##
+
+TMP=$TMP_BASE-c-style-comments
+cat > $TMP.star <<EOF
+/*  Copyright 87, 88, 1991, 1992, 1993, 1994, 1995, 1996, 1997,
+ *  98, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008,
+ *  2009 Free Software Foundation, Inc.  */
+EOF
+cat > $TMP.space <<EOF
+  /*Copyright 87, 88, 1991, 1992, 1993, 1994, 1995, 1996, 1997,
+    98, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008,
+    2009 Free Software Foundation, Inc.  */
+EOF
+cat > $TMP.single-line <<EOF
+/* Copyright 87, 88, 1991, 1992 Free Software Foundation, Inc.  */
+EOF
+cat > $TMP.single-line-wrapped <<EOF
+ /* Copyright 1988, 1991, 1992, 1993 Free Software Foundation, Inc.  */
+EOF
+cat > $TMP.extra-text-star <<EOF
+ /* Copyright 1987, 1988, 1991, 1992 Free Software Foundation, Inc.  End
+  * More comments.  */
+EOF
+cat > $TMP.extra-text-space <<EOF
+ /* Copyright 1987, 1988, 1991, 1992 Free Software Foundation, Inc. ***
+    * End of comments. */
+EOF
+UPDATE_COPYRIGHT_YEAR=2010 \
+  update-copyright $TMP.* 1> $TMP-stdout 2> $TMP-stderr
+compare /dev/null $TMP-stdout || exit 1
+compare /dev/null $TMP-stderr || exit 1
+compare - $TMP.star <<EOF || exit 1
+/*  Copyright 87, 88, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 98,
+ *  1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008,
+ *  2009-2010 Free Software Foundation, Inc.  */
+EOF
+compare - $TMP.space <<EOF || exit 1
+  /*Copyright 87, 88, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 98,
+    1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008,
+    2009-2010 Free Software Foundation, Inc.  */
+EOF
+compare - $TMP.single-line <<EOF || exit 1
+/* Copyright 87, 88, 1991, 1992, 2010 Free Software Foundation, Inc.  */
+EOF
+compare - $TMP.single-line-wrapped <<EOF || exit 1
+ /* Copyright 1988, 1991, 1992, 1993, 2010 Free Software Foundation,
+  * Inc.  */
+EOF
+compare - $TMP.extra-text-star <<EOF || exit 1
+ /* Copyright 1987, 1988, 1991, 1992, 2010 Free Software Foundation,
+  * Inc.  End
+  * More comments.  */
+EOF
+compare - $TMP.extra-text-space <<EOF || exit 1
+ /* Copyright 1987, 1988, 1991, 1992, 2010 Free Software Foundation,
+    Inc. ***
+    * End of comments. */
 EOF
 rm $TMP*
 

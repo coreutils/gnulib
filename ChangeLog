@@ -1,5 +1,11 @@
 2009-08-05  Joel E. Denny  <jdenny@clemson.edu>
 
+	update-copyright: support C-style comments
+	* build-aux/update-copyright: Implement and document.
+	* tests/test-update-copyright.sh: Test.
+
+2009-08-05  Joel E. Denny  <jdenny@clemson.edu>
+
 	update-copyright: support omitted "(C)"
 	* build-aux/update-copyright: Implement and document.  Also,
 	allow variable whitespace before "(C)".
