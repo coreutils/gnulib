@@ -1,3 +1,10 @@
+2009-08-06  Jim Meyering  <meyering@redhat.com>
+
+	doc: update README
+	* README: Remove references to cogito.
+	Remove cvs-repo-updating instructions from 2007.
+	Don't imply that CVS is better if you have limited disk space.
+
 2009-08-05  Joel E. Denny  <jdenny@clemson.edu>
 
 	update-copyright: support C-style comments

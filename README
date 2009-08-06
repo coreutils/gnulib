@@ -32,8 +32,6 @@ git and CVS
 Gnulib is available for anonymous checkout.  In any Bourne-shell the
 following should work:
   $ git clone git://git.sv.gnu.org/gnulib.git
-Or, if you prefer the CVS-like 'cogito' frontend to plain 'git':
-  $ cg clone git://git.sv.gnu.org/gnulib.git
 
 For a read-write checkout you need to have a login on savannah.gnu.org and be
 a member of the gnulib project at http://savannah.gnu.org/projects/gnulib .
@@ -51,20 +49,8 @@ git resources:
             http://www.kernel.org/pub/software/scm/git/docs/tutorial.html
   FAQ:      http://git.or.cz/gitwiki/GitFaq
 
-cogito resources:
-  Overview: http://en.wikipedia.org/wiki/Cogito_(software)
-  Homepage: http://git.or.cz/cogito/
-  Download: http://kernel.org/pub/software/scm/cogito/
-  Tutorial: http://git.or.cz/course/
-
-For those among us who have tightly limited disk space and a fast network
-connection, CVS checkouts are also supported:
+CVS checkouts are also supported:
   $ cvs -d :pserver:anonymous@pserver.git.sv.gnu.org:/gnulib.git co -d gnulib HEAD
-
-CVS checkouts from before 2007-09-19 can be converted to the new read-only CVS
-location through commands like these:
-  $ find . -name Root       -exec sed --in-place 's|.*|:pserver:anonymous@pserver.git.sv.gnu.org:/gnulib.git|' {} ';'
-  $ find . -name Repository -exec sed --in-place 's|^gnulib|/srv/git/gnulib.git/HEAD|' {} ';'
 
 Gnulib is hosted on savannah.gnu.org.  The project page is
 http://savannah.gnu.org/projects/gnulib.
@@ -76,8 +62,8 @@ Keeping Up-to-date
 The best way to work with Gnulib is to check it out of git.
 Subscribing to the bug-gnulib@gnu.org mailing list will help you to
 plan when to update your local copy of Gnulib (which you use to
-maintain your software) from git.  To synchronize, you can use "git pull"
-or "cg update", or "cvs update -dP" if you are still using CVS.
+maintain your software) from git.  To synchronize, you can use "git pull",
+or "cvs update -dP" if you are still using CVS.
 
 Sometimes, using an updated version of Gnulib will require you to use
 newer versions of GNU Automake or Autoconf.  You may find it helpful
