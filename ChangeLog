@@ -1,5 +1,11 @@
 2009-08-06  Jim Meyering  <meyering@redhat.com>
 
+	maint.mk: support update-copyright-local
+	* top/maint.mk (update-copyright-local): Define place-holder.
+	(update-copyright): Depend on $(update-copyright-local).
+
+2009-08-06  Jim Meyering  <meyering@redhat.com>
+
 	selinux-at: new module
 	Initially written for coreutils, this module will soon be
 	used by findutils, too.
