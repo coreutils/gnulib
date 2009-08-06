@@ -3114,6 +3114,7 @@ func_all_modules ()
   func_module quote
   func_module readutmp
   func_module random_r
+  func_module selinux-at
   func_module sysexits
   func_module u64
   func_module verror

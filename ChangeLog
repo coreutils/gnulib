@@ -1,5 +1,15 @@
 2009-08-06  Jim Meyering  <meyering@redhat.com>
 
+	selinux-at: new module
+	Initially written for coreutils, this module will soon be
+	used by findutils, too.
+	* MODULES.html.sh [Misc]: Add selinux-at.
+	* lib/selinux-at.h: New file, from coreutils.
+	* lib/selinux-at.c: Likewise.
+	* modules/selinux-at: Likewise.
+	(License): Change from LGPL to GPL, since it depends
+	on the GPL'd openat module.
+
 	doc: update README
 	* README: Remove references to cogito.
 	Remove cvs-repo-updating instructions from 2007.

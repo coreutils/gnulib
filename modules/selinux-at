@@ -1,0 +1,32 @@
+Description:
+openat-style fd-relative functions for SE Linux
+
+Files:
+lib/selinux-at.c
+lib/selinux-at.h
+
+Depends-on:
+openat
+selinux-h
+
+configure.ac:
+AC_CHECK_HEADERS([selinux/flask.h])
+AC_LIBOBJ([selinux-at])
+gl_save_LIBS=$LIBS
+  LIB_SELINUX=
+  AC_SEARCH_LIBS([setfilecon], [selinux],
+                 [test "$ac_cv_search_setfilecon" = "none required" ||
+                  LIB_SELINUX=$ac_cv_search_setfilecon])
+  AC_SUBST(LIB_SELINUX)
+LIBS=$gl_save_LIBS
+
+Makefile.am:
+
+Include:
+selinux-at.h
+
+License:
+GPL
+
+Maintainer:
+Jim Meyering
