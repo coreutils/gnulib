@@ -1,5 +1,5 @@
 /* Default definition for ARGP_PROGRAM_BUG_ADDRESS.
-   Copyright (C) 1996, 1997, 1999 Free Software Foundation, Inc.
+   Copyright (C) 1996, 1997, 1999, 2009 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
    Written by Miles Bader <miles@gnu.ai.mit.edu>.
 
@@ -21,4 +21,14 @@
    the ARGP_HELP_BUG_ADDR flag is set (as it is by various standard help
    messages), embedded in a sentence that says something like `Report bugs to
    ADDR.'.  */
-const char *argp_program_bug_address;
+const char *argp_program_bug_address
+/* This variable should be zero-initialized.  On most systems, putting it into
+   BSS is sufficient.  Not so on MacOS X 10.3 and 10.4, see
+   <http://lists.gnu.org/archive/html/bug-gnulib/2009-01/msg00329.html>
+   <http://lists.gnu.org/archive/html/bug-gnulib/2009-08/msg00096.html>.  */
+#if defined __ELF__
+  /* On ELF systems, variables in BSS behave well.  */
+#else
+  = (const char *) 0
+#endif
+  ;
