@@ -31,7 +31,7 @@ There is NO WARRANTY, to the extent permitted by law.
 Written by Sergey Poznyakoff and Eric Blake.
 EOT
 
-./test-version-etc --version |
+./test-version-etc${EXEEXT} --version |
  sed '2s/Copyright (C) [0-9]\{4,4\}/COPYRIGHT/' |
  diff -c $TMP - || ERR=1
 
