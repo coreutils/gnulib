@@ -1,3 +1,13 @@
+2009-08-07  Jim Meyering  <meyering@redhat.com>
+
+	selinux-at: remove redundant m4 code, add documentation
+	* modules/selinux-at (configure.ac): Remove redundant code.
+	LIB_SELINUX is already set via the dependent module, selinux-h.
+	(Include): Add quotes around selinux-at.h.
+	* lib/selinux-at.h: Add documentation.
+	Reported by Bruno Haible in
+	http://marc.info/?l=gnulib-bug&m=124958988300749
+
 2009-08-07  Bruno Haible  <bruno@clisp.org>
 
 	Avoid link error on MacOS X 10.3 and 10.4.
