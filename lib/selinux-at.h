@@ -19,7 +19,7 @@
 
 /* These are the dir-fd-relative variants of the functions without the
    "at" suffix.  For example, getfileconat (AT_FDCWD, file, &c) is usually
-   equivalent to getfileconat (file, &c).  The emulation is accomplished
+   equivalent to getfilecon (file, &c).  The emulation is accomplished
    by first attempting getfilecon ("/proc/self/fd/DIRFD/FILE", &c).
    Failing that, simulate it via save_cwd/fchdir/getfilecon/restore_cwd.
    If either the save_cwd or the restore_cwd fails (relatively unlikely),

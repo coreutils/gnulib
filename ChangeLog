@@ -1,5 +1,9 @@
 2009-08-07  Jim Meyering  <meyering@redhat.com>
 
+	selinux-at: fix typo in a comment
+	* lib/selinux-at.h: s/getfileconat/getfilecon/ in a comment.
+	Spotted by Paolo Bonzini.
+
 	selinux-at: remove redundant m4 code, add documentation
 	* modules/selinux-at (configure.ac): Remove redundant code.
 	LIB_SELINUX is already set via the dependent module, selinux-h.
