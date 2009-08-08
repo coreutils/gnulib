@@ -1,4 +1,4 @@
-# gethostname.m4 serial 7
+# gethostname.m4 serial 8
 dnl Copyright (C) 2002, 2008, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -43,12 +43,52 @@ AC_DEFUN([gl_FUNC_GETHOSTNAME],
   fi
 
   dnl Also provide HOST_NAME_MAX when <limits.h> lacks it.
-  if test "$gl_cv_w32_gethostname" = "yes"; then
-    # <http://msdn.microsoft.com/en-us/library/ms738527.aspx> says:
-    # "if a buffer of 256 bytes is passed in the name parameter and
-    # the namelen parameter is set to 256, the buffer size will always
-    # be adequate."
-    AC_DEFINE([HOST_NAME_MAX], [256],
+  dnl - On most Unix systems, use MAXHOSTNAMELEN from <sys/param.h> instead.
+  dnl - On Solaris, Cygwin, BeOS, use MAXHOSTNAMELEN from <netdb.h> instead.
+  dnl - On mingw, use 256, because
+  dnl   <http://msdn.microsoft.com/en-us/library/ms738527.aspx> says:
+  dnl   "if a buffer of 256 bytes is passed in the name parameter and
+  dnl    the namelen parameter is set to 256, the buffer size will always
+  dnl    be adequate."
+  dnl With this, there is no need to use sysconf (_SC_HOST_NAME_MAX), which
+  dnl is not a compile-time constant.
+  dnl We cannot override <limits.h> using the usual technique, because
+  dnl gl_CHECK_NEXT_HEADERS does not work for <limits.h>. Therefore retrieve
+  dnl the value of HOST_NAME_MAX at configure time.
+  AC_CHECK_HEADERS_ONCE([sys/param.h])
+  AC_CHECK_HEADERS_ONCE([sys/socket.h])
+  AC_CHECK_HEADERS_ONCE([netdb.h])
+  AC_CACHE_CHECK([for HOST_NAME_MAX], [gl_cv_decl_HOST_NAME_MAX], [
+    gl_cv_decl_HOST_NAME_MAX=
+    AC_EGREP_CPP([lucky], [
+#include <limits.h>
+#ifdef HOST_NAME_MAX
+lucky
+#endif
+      ], [gl_cv_decl_HOST_NAME_MAX=yes])
+    if test -z "$gl_cv_decl_HOST_NAME_MAX"; then
+      dnl It's not defined in <limits.h>. Substitute it.
+      if test "$gl_cv_w32_gethostname" = yes; then
+        dnl mingw.
+        gl_cv_decl_HOST_NAME_MAX=256
+      else
+        _AC_COMPUTE_INT([MAXHOSTNAMELEN], [gl_cv_decl_HOST_NAME_MAX], [
+#include <sys/types.h>
+#if HAVE_SYS_PARAM_H
+# include <sys/param.h>
+#endif
+#if HAVE_SYS_SOCKET_H
+# include <sys/socket.h>
+#endif
+#if HAVE_NETDB_H
+# include <netdb.h>
+#endif
+])
+      fi
+    fi
+  ])
+  if test "$gl_cv_decl_HOST_NAME_MAX" != yes; then
+    AC_DEFINE_UNQUOTED([HOST_NAME_MAX], [$gl_cv_decl_HOST_NAME_MAX],
       [Define HOST_NAME_MAX when <limits.h> does not define it.])
   fi
 ])

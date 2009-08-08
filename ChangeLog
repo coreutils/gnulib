@@ -1,3 +1,11 @@
+2009-08-08  Bruno Haible  <bruno@clisp.org>
+
+	* m4/gethostname.m4 (gl_FUNC_GETHOSTNAME): Define HOST_NAME_MAX also
+	for the various Unix platforms.
+	* doc/posix-headers/limits.texi: Update platforms list regarding
+	HOST_NAME_MAX.
+	Reported by Tom G. Christensen <tgc@jupiterrise.com>.
+
 2009-08-07  Jim Meyering  <meyering@redhat.com>
 
 	selinux-at: fix typo in a comment
