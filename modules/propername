@@ -26,8 +26,8 @@ gettext-h
 
 configure.ac:
 m4_ifdef([AM_XGETTEXT_OPTION],
-  [AM_XGETTEXT_OPTION([--keyword='proper_name:1,\"This is a proper name. See the gettext manual, section Names.\"'])
-   AM_XGETTEXT_OPTION([--keyword='proper_name_utf8:1,\"This is a proper name. See the gettext manual, section Names.\"'])])
+  [AM_][XGETTEXT_OPTION([--keyword='proper_name:1,\"This is a proper name. See the gettext manual, section Names.\"'])
+   AM_][XGETTEXT_OPTION([--keyword='proper_name_utf8:1,\"This is a proper name. See the gettext manual, section Names.\"'])])
 
 Makefile.am:
 lib_SOURCES += propername.h propername.c

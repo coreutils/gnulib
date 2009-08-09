@@ -42,8 +42,8 @@ memmove
 configure.ac:
 gl_ARGP
 m4_ifdef([AM_XGETTEXT_OPTION],
-  [AM_XGETTEXT_OPTION([--flag=argp_error:2:c-format])
-   AM_XGETTEXT_OPTION([--flag=argp_failure:4:c-format])])
+  [AM_][XGETTEXT_OPTION([--flag=argp_error:2:c-format])
+   AM_][XGETTEXT_OPTION([--flag=argp_failure:4:c-format])])
 
 Makefile.am:
 lib_SOURCES += argp.h argp-ba.c argp-eexst.c \

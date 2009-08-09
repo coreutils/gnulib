@@ -1,3 +1,16 @@
+2009-08-09  Bruno Haible  <bruno@clisp.org>
+
+	Avoid warnings from 'aclocal' that are due to a use of macro name
+	AM_XGETTEXT_OPTION that is not defined in automake.
+	* modules/argp (configure.ac): Hide use of AM_XGETTEXT_OPTION from
+	automake.
+	* modules/error (configure.ac): Likewise.
+	* modules/propername (configure.ac): Likewise.
+	* modules/vasprintf (configure.ac): Likewise.
+	* modules/verror (configure.ac): Likewise.
+	* modules/xprintf (configure.ac): Likewise.
+	* modules/xvasprintf (configure.ac): Likewise.
+
 2009-08-08  Bruno Haible  <bruno@clisp.org>
 
 	Avoid compilation error in C++ mode.

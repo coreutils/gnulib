@@ -16,8 +16,8 @@ xvasprintf
 
 configure.ac:
 m4_ifdef([AM_XGETTEXT_OPTION],
-  [AM_XGETTEXT_OPTION([--flag=verror:3:c-format])
-   AM_XGETTEXT_OPTION([--flag=verror_at_line:5:c-format])])
+  [AM_][XGETTEXT_OPTION([--flag=verror:3:c-format])
+   AM_][XGETTEXT_OPTION([--flag=verror_at_line:5:c-format])])
 
 Makefile.am:
 lib_SOURCES += verror.h verror.c

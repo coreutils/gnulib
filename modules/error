@@ -17,8 +17,8 @@ strerror
 configure.ac:
 gl_ERROR
 m4_ifdef([AM_XGETTEXT_OPTION],
-  [AM_XGETTEXT_OPTION([--flag=error:3:c-format])
-   AM_XGETTEXT_OPTION([--flag=error_at_line:5:c-format])])
+  [AM_][XGETTEXT_OPTION([--flag=error:3:c-format])
+   AM_][XGETTEXT_OPTION([--flag=error_at_line:5:c-format])])
 
 Makefile.am:
 
