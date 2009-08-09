@@ -1,5 +1,11 @@
 2009-08-08  Bruno Haible  <bruno@clisp.org>
 
+	Avoid compilation error in C++ mode.
+	* lib/gettimeofday.c (rpl_gettimeofday): Cast timezone argument.
+	Reported by Sam Steingold <sds@gnu.org>.
+
+2009-08-08  Bruno Haible  <bruno@clisp.org>
+
 	* m4/gethostname.m4 (gl_FUNC_GETHOSTNAME): Define HOST_NAME_MAX also
 	for the various Unix platforms.
 	* doc/posix-headers/limits.texi: Update platforms list regarding
