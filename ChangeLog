@@ -1,5 +1,10 @@
 2009-08-10  Bruno Haible  <bruno@clisp.org>
 
+	Fix a gcc warning.
+	* lib/write.c (rpl_write): Cast result of _get_osfhandle.
+
+2009-08-10  Bruno Haible  <bruno@clisp.org>
+
 	Don't optimize AC_LIBOBJs, as they may appear in different contexts.
 	* m4/close.m4 (gl_REPLACE_CLOSE): Execute AC_LIBOBJ unconditionally,
 	not only the first time.
