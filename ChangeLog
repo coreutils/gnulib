@@ -1,3 +1,11 @@
+2009-08-10  Bruno Haible  <bruno@clisp.org>
+
+	Avoid collision between gnulib wrapper and libintl wrapper.
+	* lib/stdio-write.c (printf): Don't define if a printf wrapper is
+	already defined in intl/printf.c.
+	(vprintf): Test REPLACE_VPRINTF_POSIX, not REPLACE_VFPRINTF_POSIX.
+	(vfprintf): Test REPLACE_VFPRINTF_POSIX, not REPLACE_VPRINTF_POSIX.
+
 2009-08-09  Bruno Haible  <bruno@clisp.org>
 
 	Make <sys/select.h> really self-contained, also on Solaris 10.
