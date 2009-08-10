@@ -1,5 +1,15 @@
 2009-08-10  Bruno Haible  <bruno@clisp.org>
 
+	Don't optimize AC_LIBOBJs, as they may appear in different contexts.
+	* m4/close.m4 (gl_REPLACE_CLOSE): Execute AC_LIBOBJ unconditionally,
+	not only the first time.
+	* m4/fclose.m4 (gl_REPLACE_FCLOSE): Likewise.
+	* m4/open.m4 (gl_REPLACE_OPEN): Likewise.
+	* m4/strstr.m4 (gl_FUNC_STRSTR): Execute AC_LIBOBJ when REPLACE_STRSTR
+	is 1, not only the the first time.
+
+2009-08-10  Bruno Haible  <bruno@clisp.org>
+
 	Make it possible to use module 'gethostname' without module 'close'.
 	* lib/unistd.in.h (close): Evoke a link error only if
 	UNISTD_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS is set.

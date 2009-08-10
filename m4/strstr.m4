@@ -1,4 +1,4 @@
-# strstr.m4 serial 6
+# strstr.m4 serial 7
 dnl Copyright (C) 2008, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -71,7 +71,9 @@ AC_DEFUN([gl_FUNC_STRSTR],
       ])
     if test "$gl_cv_func_strstr_linear" != yes; then
       REPLACE_STRSTR=1
-      AC_LIBOBJ([strstr])
     fi
+  fi
+  if test $REPLACE_STRSTR = 1; then
+    AC_LIBOBJ([strstr])
   fi
 ]) # gl_FUNC_STRSTR
