@@ -92,7 +92,7 @@ AC_DEFUN([gl_PREREQ_SYS_H_SOCKET],
   AC_SUBST([HAVE_WS2TCPIP_H])
 ])
 
-# Common prerequisites of of the <sys/socket.h> replacement and of the
+# Common prerequisites of the <sys/socket.h> replacement and of the
 # <sys/select.h> replacement.
 # Sets and substitutes HAVE_WINSOCK2_H.
 AC_DEFUN([gl_PREREQ_SYS_H_WINSOCK2],
