@@ -13,6 +13,9 @@ errno
 configure.ac:
 AC_REQUIRE([gl_HEADER_SYS_SOCKET])
 if test "$ac_cv_header_winsock2_h" = yes; then
+  dnl Even if the 'socket' module is not used here, another part of the
+  dnl application may use it and pass file descriptors that refer to
+  dnl sockets to the ioctl() function. So enable the support for sockets.
   AC_LIBOBJ([ioctl])
   gl_REPLACE_SYS_IOCTL_H
 fi

@@ -1,5 +1,10 @@
 2009-08-10  Bruno Haible  <bruno@clisp.org>
 
+	* m4/close.m4 (gl_FUNC_CLOSE): Add comment.
+	* modules/ioctl (configure.ac): Likewise.
+
+2009-08-10  Bruno Haible  <bruno@clisp.org>
+
 	Avoid collision between gnulib wrapper and libintl wrapper.
 	* lib/stdio-write.c (printf): Don't define if a printf wrapper is
 	already defined in intl/printf.c.
