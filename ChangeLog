@@ -1,5 +1,9 @@
 2009-08-10  Bruno Haible  <bruno@clisp.org>
 
+	* lib/vasnprintf.c (DCHAR_SET): Undefine at the end.
+
+2009-08-10  Bruno Haible  <bruno@clisp.org>
+
 	Fix a gcc warning.
 	* lib/write.c (rpl_write): Cast result of _get_osfhandle.
 
