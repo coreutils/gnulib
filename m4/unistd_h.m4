@@ -1,4 +1,4 @@
-# unistd_h.m4 serial 18
+# unistd_h.m4 serial 19
 dnl Copyright (C) 2006-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -81,4 +81,6 @@ AC_DEFUN([gl_UNISTD_H_DEFAULTS],
   REPLACE_LSEEK=0;        AC_SUBST([REPLACE_LSEEK])
   REPLACE_WRITE=0;        AC_SUBST([REPLACE_WRITE])
   UNISTD_H_HAVE_WINSOCK2_H=0; AC_SUBST([UNISTD_H_HAVE_WINSOCK2_H])
+  UNISTD_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS=0;
+                           AC_SUBST([UNISTD_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS])
 ])

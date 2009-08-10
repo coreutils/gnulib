@@ -1,5 +1,5 @@
-# sys_ioctl_h.m4 serial 2
-dnl Copyright (C) 2008 Free Software Foundation, Inc.
+# sys_ioctl_h.m4 serial 3
+dnl Copyright (C) 2008-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -59,5 +59,7 @@ AC_DEFUN([gl_SYS_IOCTL_H_DEFAULTS],
   GNULIB_IOCTL=0;         AC_SUBST([GNULIB_IOCTL])
   dnl Assume proper GNU behavior unless another module says otherwise.
   SYS_IOCTL_H_HAVE_WINSOCK2_H=0; AC_SUBST([SYS_IOCTL_H_HAVE_WINSOCK2_H])
+  SYS_IOCTL_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS=0;
+                        AC_SUBST([SYS_IOCTL_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS])
   SYS_IOCTL_H='';                AC_SUBST([SYS_IOCTL_H])
 ])
