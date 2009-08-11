@@ -2,7 +2,6 @@ Files:
 tests/test-fsync.c
 
 Depends-on:
-close
 
 configure.ac:
 

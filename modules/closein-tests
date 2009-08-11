@@ -4,7 +4,6 @@ tests/test-closein.c
 
 Depends-on:
 binary-io
-close
 
 configure.ac:
 

@@ -2,7 +2,6 @@ Files:
 tests/test-dup2.c
 
 Depends-on:
-close
 open
 
 configure.ac:

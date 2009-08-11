@@ -12,7 +12,6 @@ progname
 read-file
 unistd
 xalloc
-close
 
 configure.ac:
 AC_CHECK_DECLS_ONCE([alarm])
