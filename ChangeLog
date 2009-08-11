@@ -1,5 +1,16 @@
 2009-08-11  Bruno Haible  <bruno@clisp.org>
 
+	Avoid compilation error on NetBSD 5.0.
+	* tests/test-locale.c: Write sizeof (NULL) instead of sizeof NULL.
+	* tests/test-stdio.c: Likewise.
+	* tests/test-stdlib.c: Likewise.
+	* tests/test-string.c: Likewise.
+	* tests/test-unistd.c: Likewise.
+	Reported by Greg Troxel <gdt@ir.bbn.com>
+	at <https://savannah.gnu.org/support/?106973>.
+
+2009-08-11  Bruno Haible  <bruno@clisp.org>
+
 	* modules/dup2-tests (Depends-on): Remove close.
 
 	Undo 2009-07-19 commit.
