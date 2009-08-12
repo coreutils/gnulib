@@ -1,5 +1,15 @@
 2009-08-12  Bruno Haible  <bruno@clisp.org>
 
+	Ensure that getopt() gets declared by <unistd.h>.
+	* lib/unistd.in.h: Conditionally include getopt.h.
+	* m4/getopt.m4 (gl_GETOPT_SUBSTITUTE): Require gl_UNISTD_H_DEFAULTS.
+	Set GNULIB_UNISTD_H_GETOPT.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize
+	GNULIB_UNISTD_H_GETOPT.
+	* modules/unistd (Makefile.am): Substitute GNULIB_UNISTD_H_GETOPT.
+
+2009-08-12  Bruno Haible  <bruno@clisp.org>
+
 	Clarify logic.
 	* m4/getopt.m4 (gl_GETOPT_CHECK_HEADERS, gl_GETOPT_IFELSE): Use
 	gl_replace_getopt instead of GETOPT_H.

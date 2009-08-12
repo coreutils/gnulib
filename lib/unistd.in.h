@@ -43,6 +43,11 @@
 # include <sys/types.h>
 #endif
 
+/* Get getopt(), optarg, optind, opterr, optopt.  */
+#if @GNULIB_UNISTD_H_GETOPT@
+# include <getopt.h>
+#endif
+
 #if @GNULIB_GETHOSTNAME@
 /* Get all possible declarations of gethostname().  */
 # if @UNISTD_H_HAVE_WINSOCK2_H@

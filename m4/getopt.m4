@@ -1,4 +1,4 @@
-# getopt.m4 serial 16
+# getopt.m4 serial 17
 dnl Copyright (C) 2002-2006, 2008-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,9 +10,14 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_GETOPT_SUBSTITUTE],
 [
+  AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
+  dnl Arrange for getopt.h to be created.
+  gl_GETOPT_SUBSTITUTE_HEADER
+  dnl Arrange for unistd.h to include getopt.h.
+  GNULIB_UNISTD_H_GETOPT=1
+  dnl Arrange to compile the getopt implementation.
   AC_LIBOBJ([getopt])
   AC_LIBOBJ([getopt1])
-  gl_GETOPT_SUBSTITUTE_HEADER
   gl_PREREQ_GETOPT
 ])
 
