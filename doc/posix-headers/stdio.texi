@@ -7,6 +7,10 @@ Gnulib module: stdio
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+Some platforms provide a @code{NULL} macro that cannot be used in arbitrary
+expressions:
+NetBSD 5.0
 @end itemize
 
 Portability problems not fixed by Gnulib:

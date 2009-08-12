@@ -9,6 +9,7 @@ Depends-on:
 include_next
 link-warning
 unistd
+stddef
 stdint
 
 configure.ac:

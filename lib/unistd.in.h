@@ -29,6 +29,9 @@
 #ifndef _GL_UNISTD_H
 #define _GL_UNISTD_H
 
+/* NetBSD 5.0 mis-defines NULL.  Also get size_t.  */
+#include <stddef.h>
+
 /* mingw doesn't define the SEEK_* or *_FILENO macros in <unistd.h>.  */
 #if !(defined SEEK_CUR && defined SEEK_END && defined SEEK_SET)
 # include <stdio.h>
@@ -375,7 +378,6 @@ extern int gethostname(char *name, size_t len);
    See <http://www.opengroup.org/susv3xsh/getlogin.html>.
  */
 # if !@HAVE_DECL_GETLOGIN_R@
-#  include <stddef.h>
 extern int getlogin_r (char *name, size_t size);
 # endif
 #elif defined GNULIB_POSIXCHECK
@@ -536,7 +538,6 @@ extern int link (const char *path1, const char *path2);
    See the POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/readlink.html>.  */
 # if !@HAVE_READLINK@
-#  include <stddef.h>
 extern int readlink (const char *file, char *buf, size_t bufsize);
 # endif
 #elif defined GNULIB_POSIXCHECK

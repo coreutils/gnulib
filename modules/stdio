@@ -10,6 +10,7 @@ Depends-on:
 include_next
 link-warning
 raise
+stddef
 
 configure.ac:
 gl_STDIO_H

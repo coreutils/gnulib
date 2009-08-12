@@ -1,4 +1,47 @@
 2009-08-14  Eric Blake  <ebb9@byu.net>
+	and Bruno Haible  <bruno@clisp.org>
+
+	stddef: fix NetBSD 5.0 NULL bug, rather than working around it
+	* tests/test-locale.c: Revert previous patch related to NULL.
+	* tests/test-stdio.c: Likewise.
+	* tests/test-stdlib.c: Likewise.
+	* tests/test-string.c: Likewise.
+	* tests/test-unistd.c: Likewise.
+	* modules/time-tests (Depends-on): Add verify.
+	* modules/wchar-tests (Depends-on): Likewise.
+	* tests/test-time.c: Test for NULL compliance.
+	* tests/test-wchar.c: Likewise.
+	* modules/locale (Depends-on): Add stddef.
+	* modules/stdio (Depends-on): Likewise.
+	* modules/stdlib (Depends-on): Likewise.
+	* modules/string (Depends-on): Likewise.
+	* modules/time (Depends-on): Likewise.
+	* modules/unistd (Depends-on): Likewise.
+	* modules/wchar (Depends-on): Likewise.
+	* lib/locale.in.h (includes): Use <stddef.h> to fix NULL.
+	* lib/stdlib.in.h (includes): Likewise.
+	* lib/string.in.h (includes): Likewise.
+	* lib/time.in.h (includes): Likewise.
+	* lib/unistd.in.h (includes): Likewise.
+	* m4/locale_h.m4 (gl_LOCALE_H): Replace locale.h if stddef.h was
+	replaced.
+	* m4/wchar.m4 (gl_WCHAR_H): Likewise.
+	* m4/stddef_h.m4: New file.
+	* modules/stddef: Likewise.
+	* lib/stddef.in.h: Likewise.
+	* modules/stddef-tests: Likewise.
+	* tests/test-stddef.c: Likewise.
+	* MODULES.html.sh (Basic types <stddef.h>): Mention new module.
+	* doc/posix-headers/stddef.texi (stddef.h): Document the bug.
+	* doc/posix-headers/locale.texi (locale.h): Likewise.
+	* doc/posix-headers/stdio.texi (stdio.h): Likewise.
+	* doc/posix-headers/stdlib.texi (stdlib.h): Likewise.
+	* doc/posix-headers/string.texi (string.h): Likewise.
+	* doc/posix-headers/time.texi (time.h): Likewise.
+	* doc/posix-headers/unistd.texi (unistd.h): Likewise.
+	* doc/posix-headers/wchar.texi (wchar.h): Likewise.
+
+2009-08-14  Eric Blake  <ebb9@byu.net>
 
 	doc: improve git diff of texinfo files
 	* .gitattributes: Add rule for *.texi files, with hint on how to

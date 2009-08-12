@@ -2032,6 +2032,16 @@ func_all_modules ()
   func_module stdbool
   func_end_table
 
+  element="Basic types <stddef.h>"
+  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
+  func_section_wrap isoc_sup_stddef
+  func_wrap H3
+  func_echo "$element"
+
+  func_begin_table
+  func_module stddef
+  func_end_table
+
   element="Integer types and values <stdint.h>"
   element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
   func_section_wrap isoc_sup_stdint

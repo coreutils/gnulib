@@ -1,5 +1,5 @@
 Files:
-tests/test-time.c
+tests/test-stddef.c
 
 Depends-on:
 verify
@@ -7,8 +7,8 @@ verify
 configure.ac:
 
 Makefile.am:
-TESTS += test-time
-check_PROGRAMS += test-time
+TESTS += test-stddef
+check_PROGRAMS += test-stddef
 
 License:
 LGPL

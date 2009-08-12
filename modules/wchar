@@ -9,6 +9,7 @@ m4/wint_t.m4
 Depends-on:
 include_next
 link-warning
+stddef
 
 configure.ac:
 gl_WCHAR_H

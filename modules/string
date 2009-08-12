@@ -9,6 +9,7 @@ Depends-on:
 extensions
 include_next
 link-warning
+stddef
 
 configure.ac:
 gl_HEADER_STRING_H

@@ -8,6 +8,7 @@ lib/unistd.in.h
 Depends-on:
 include_next
 link-warning
+stddef
 
 configure.ac:
 gl_UNISTD_H

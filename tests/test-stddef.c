@@ -1,5 +1,5 @@
-/* A POSIX <locale.h>.
-   Copyright (C) 2007-2009 Free Software Foundation, Inc.
+/* Test of <stddef.h> substitute.
+   Copyright (C) 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -14,26 +14,25 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-#ifndef _GL_LOCALE_H
+/* Written by Eric Blake <ebb9@byu.net>, 2009.  */
 
-#if __GNUC__ >= 3
-@PRAGMA_SYSTEM_HEADER@
-#endif
+#include <config.h>
 
-/* The include_next requires a split double-inclusion guard.  */
-#@INCLUDE_NEXT@ @NEXT_LOCALE_H@
-
-#ifndef _GL_LOCALE_H
-#define _GL_LOCALE_H
-
-/* NetBSD 5.0 mis-defines NULL.  */
 #include <stddef.h>
 
-/* The LC_MESSAGES locale category is specified in POSIX, but not in ISO C.
-   On systems that don't define it, use the same value as GNU libintl.  */
-#if !defined LC_MESSAGES
-# define LC_MESSAGES 1729
-#endif
+#include "verify.h"
 
-#endif /* _GL_LOCALE_H */
-#endif /* _GL_LOCALE_H */
+/* Check that appropriate types are defined.  */
+wchar_t a = 'c';
+ptrdiff_t b = 1;
+size_t c = 2;
+
+/* Check that NULL can be passed through varargs as a pointer type,
+   per POSIX 2008.  */
+verify (sizeof NULL == sizeof (void *));
+
+int
+main ()
+{
+  return 0;
+}

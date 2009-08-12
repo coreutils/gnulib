@@ -1,5 +1,5 @@
-# locale_h.m4 serial 2
-dnl Copyright (C) 2007 Free Software Foundation, Inc.
+# locale_h.m4 serial 3
+dnl Copyright (C) 2007, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -12,7 +12,11 @@ AC_DEFUN([gl_LOCALE_H],
 int x = LC_MESSAGES;], [],
        [gl_cv_header_working_locale_h=yes],
        [gl_cv_header_working_locale_h=no])])
-  if test $gl_cv_header_working_locale_h = yes; then
+
+  dnl If <stddef.h> is replaced, then <locale.h> must also be replaced.
+  AC_REQUIRE([gl_STDDEF_H])
+
+  if test $gl_cv_header_working_locale_h = yes && test -z "$STDDEF_H"; then
     LOCALE_H=
   else
     gl_CHECK_NEXT_HEADERS([locale.h])

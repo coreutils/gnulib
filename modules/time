@@ -8,6 +8,7 @@ m4/time_h.m4
 Depends-on:
 extensions
 include_next
+stddef
 
 configure.ac:
 gl_HEADER_TIME_H

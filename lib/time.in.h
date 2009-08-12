@@ -37,6 +37,9 @@
 
 # @INCLUDE_NEXT@ @NEXT_TIME_H@
 
+/* NetBSD 5.0 mis-defines NULL.  */
+#include <stddef.h>
+
 # ifdef __cplusplus
 extern "C" {
 # endif
