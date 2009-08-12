@@ -1,5 +1,5 @@
-# getopt.m4 serial 14
-dnl Copyright (C) 2002-2006, 2008 Free Software Foundation, Inc.
+# getopt.m4 serial 15
+dnl Copyright (C) 2002-2006, 2008-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -16,6 +16,7 @@ AC_DEFUN([gl_GETOPT_SUBSTITUTE],
   gl_PREREQ_GETOPT
 ])
 
+# emacs' configure.in uses this.
 AC_DEFUN([gl_GETOPT_SUBSTITUTE_HEADER],
 [
   GETOPT_H=getopt.h
@@ -68,15 +69,18 @@ AC_DEFUN([gl_GETOPT_CHECK_HEADERS],
   fi
 ])
 
+# emacs' configure.in uses this.
 AC_DEFUN([gl_GETOPT_IFELSE],
 [
   AC_REQUIRE([gl_GETOPT_CHECK_HEADERS])
   AS_IF([test -n "$GETOPT_H"], [$1], [$2])
 ])
 
+# This is gnulib's entry-point.
 AC_DEFUN([gl_GETOPT], [gl_GETOPT_IFELSE([gl_GETOPT_SUBSTITUTE])])
 
 # Prerequisites of lib/getopt*.
+# emacs' configure.in uses this.
 AC_DEFUN([gl_PREREQ_GETOPT],
 [
   AC_CHECK_DECLS_ONCE([getenv])
