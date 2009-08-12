@@ -1,3 +1,9 @@
+2009-08-12  Bruno Haible  <bruno@clisp.org>
+
+	* m4/getopt.m4: Reorder macros.
+	(gl_GETOPT): Inline gl_GETOPT_SUBSTITUTE.
+	(gl_GETOPT_SUBSTITUTE): Remove macro.
+
 2009-08-12  Sergey Poznyakoff  <gray@gnu.org.ua>
 
 	Minor improvement in gitlog-to-changelog
@@ -28,12 +34,6 @@
 	* tests/test-exclude5.sh: New file.
 	* tests/test-exclude6.sh: New file.
 	* tests/test-exclude7.sh: New file.
-
-2009-08-12  Bruno Haible  <bruno@clisp.org>
-
-	* m4/getopt.m4: Reorder macros.
-	(gl_GETOPT): Inline gl_GETOPT_SUBSTITUTE.
-	(gl_GETOPT_SUBSTITUTE): Remove macro.
 
 2009-08-12  Bruno Haible  <bruno@clisp.org>
 
