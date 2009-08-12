@@ -1,4 +1,4 @@
-# threadlib.m4 serial 3 (gettext-0.18)
+# threadlib.m4 serial 4 (gettext-0.18)
 dnl Copyright (C) 2005-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -56,7 +56,16 @@ AC_HELP_STRING([--disable-threads], [build without multithread safety]),
          dnl Disable multithreading by default on OSF/1, because it interferes
          dnl with fork()/exec(): When msgexec is linked with -lpthread, its
          dnl child process gets an endless segmentation fault inside execvp().
+         dnl Disable multithreading by default on Cygwin 1.5.x, because it has
+         dnl bugs that lead to endless loops or crashes. See
+         dnl <http://cygwin.com/ml/cygwin/2009-08/msg00283.html>.
          osf*) gl_use_threads=no ;;
+         cygwin*)
+               case `uname -r` in
+                 1.[0-5].*) gl_use_threads=no ;;
+                 *)         gl_use_threads=yes ;;
+               esac
+               ;;
          *)    gl_use_threads=yes ;;
        esac
      fi

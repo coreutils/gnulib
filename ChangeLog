@@ -1,3 +1,9 @@
+2009-08-12  Bruno Haible  <bruno@clisp.org>
+
+	Disable multithread support by default on Cygwin 1.5.x.
+	* m4/threadlib.m4 (gl_THREADLIB_EARLY_BODY): On Cygwin 1.5.x and older,
+	set gl_use_threads=no if not specified otherwise.
+
 2009-08-11  Bruno Haible  <bruno@clisp.org>
 
 	Avoid compilation error on NetBSD 5.0.
