@@ -8,7 +8,9 @@ m4/exclude.m4
 
 Depends-on:
 fnmatch
+hash
 mbscasecmp
+mbuiter
 stdbool
 verify
 xalloc
