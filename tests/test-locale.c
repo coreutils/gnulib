@@ -35,7 +35,7 @@ int a[] =
 
 /* Check that NULL can be passed through varargs as a pointer type,
    per POSIX 2008.  */
-verify (sizeof (NULL) == sizeof (void *));
+verify (sizeof NULL == sizeof (void *));
 
 int
 main ()
