@@ -1,5 +1,11 @@
 2009-08-12  Bruno Haible  <bruno@clisp.org>
 
+	Tests for modules 'getopt-posix', 'getopt-gnu'.
+	* modules/getopt-posix-tests: New file.
+	* tests/test-getopt.c: New file.
+	* tests/test-getopt.h: New file.
+	* tests/test-getopt_long.h: New file.
+
 	New modules 'getopt-posix', 'getopt-gnu'.
 	* modules/getopt-gnu: New file, renamed from modules/getopt.
 	* modules/getopt-posix: New file.

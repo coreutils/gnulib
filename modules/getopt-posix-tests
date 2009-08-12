@@ -1,0 +1,14 @@
+Files:
+tests/test-getopt.c
+tests/test-getopt.h
+tests/test-getopt_long.h
+
+Depends-on:
+unistd
+unsetenv
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-getopt
+check_PROGRAMS += test-getopt
