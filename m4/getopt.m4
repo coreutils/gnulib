@@ -1,4 +1,4 @@
-# getopt.m4 serial 15
+# getopt.m4 serial 16
 dnl Copyright (C) 2002-2006, 2008-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -28,23 +28,25 @@ AC_DEFUN([gl_GETOPT_SUBSTITUTE_HEADER],
 
 AC_DEFUN([gl_GETOPT_CHECK_HEADERS],
 [
-  if test -z "$GETOPT_H"; then
-    AC_CHECK_HEADERS([getopt.h], [], [GETOPT_H=getopt.h])
+  gl_replace_getopt=
+  if test -z "$gl_replace_getopt"; then
+    AC_CHECK_HEADERS([getopt.h], [], [gl_replace_getopt=yes])
   fi
 
-  if test -z "$GETOPT_H"; then
-    AC_CHECK_FUNCS([getopt_long_only], [], [GETOPT_H=getopt.h])
+  if test -z "$gl_replace_getopt"; then
+    AC_CHECK_FUNCS([getopt_long_only], [], [gl_replace_getopt=yes])
   fi
 
   dnl BSD getopt_long uses an incompatible method to reset option processing,
   dnl and (as of 2004-10-15) mishandles optional option-arguments.
-  if test -z "$GETOPT_H"; then
-    AC_CHECK_DECL([optreset], [GETOPT_H=getopt.h], [], [#include <getopt.h>])
+  if test -z "$gl_replace_getopt"; then
+    AC_CHECK_DECL([optreset], [gl_replace_getopt=yes], [],
+      [#include <getopt.h>])
   fi
 
   dnl Solaris 10 getopt doesn't handle `+' as a leading character in an
   dnl option string (as of 2005-05-05).
-  if test -z "$GETOPT_H"; then
+  if test -z "$gl_replace_getopt"; then
     AC_CACHE_CHECK([for working GNU getopt function], [gl_cv_func_gnu_getopt],
       [AC_RUN_IFELSE(
 	[AC_LANG_PROGRAM([[#include <getopt.h>]],
@@ -64,7 +66,7 @@ AC_DEFUN([gl_GETOPT_CHECK_HEADERS],
 	   [gl_cv_func_gnu_getopt=no], [gl_cv_func_gnu_getopt=yes],
 	   [#include <getopt.h>])])])
     if test "$gl_cv_func_gnu_getopt" = "no"; then
-      GETOPT_H=getopt.h
+      gl_replace_getopt=yes
     fi
   fi
 ])
@@ -73,7 +75,7 @@ AC_DEFUN([gl_GETOPT_CHECK_HEADERS],
 AC_DEFUN([gl_GETOPT_IFELSE],
 [
   AC_REQUIRE([gl_GETOPT_CHECK_HEADERS])
-  AS_IF([test -n "$GETOPT_H"], [$1], [$2])
+  AS_IF([test -n "$gl_replace_getopt"], [$1], [$2])
 ])
 
 # This is gnulib's entry-point.

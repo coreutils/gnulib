@@ -1,5 +1,11 @@
 2009-08-12  Bruno Haible  <bruno@clisp.org>
 
+	Clarify logic.
+	* m4/getopt.m4 (gl_GETOPT_CHECK_HEADERS, gl_GETOPT_IFELSE): Use
+	gl_replace_getopt instead of GETOPT_H.
+
+2009-08-12  Bruno Haible  <bruno@clisp.org>
+
 	* m4/getopt.m4: Add comments.
 
 2009-08-12  Bruno Haible  <bruno@clisp.org>
