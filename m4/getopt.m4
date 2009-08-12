@@ -1,4 +1,4 @@
-# getopt.m4 serial 17
+# getopt.m4 serial 18
 dnl Copyright (C) 2002-2006, 2008-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,29 +8,30 @@ dnl with or without modifications, as long as this notice is preserved.
 # rather than vanilla POSIX getopt.  This means your code should
 # always include <getopt.h> for the getopt prototypes.
 
-AC_DEFUN([gl_GETOPT_SUBSTITUTE],
+# This is gnulib's entry-point.
+AC_DEFUN([gl_GETOPT],
 [
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
-  dnl Arrange for getopt.h to be created.
-  gl_GETOPT_SUBSTITUTE_HEADER
-  dnl Arrange for unistd.h to include getopt.h.
-  GNULIB_UNISTD_H_GETOPT=1
-  dnl Arrange to compile the getopt implementation.
-  AC_LIBOBJ([getopt])
-  AC_LIBOBJ([getopt1])
-  gl_PREREQ_GETOPT
+  gl_GETOPT_IFELSE([
+    dnl Arrange for getopt.h to be created.
+    gl_GETOPT_SUBSTITUTE_HEADER
+    dnl Arrange for unistd.h to include getopt.h.
+    GNULIB_UNISTD_H_GETOPT=1
+    dnl Arrange to compile the getopt implementation.
+    AC_LIBOBJ([getopt])
+    AC_LIBOBJ([getopt1])
+    gl_PREREQ_GETOPT
+  ])
 ])
 
 # emacs' configure.in uses this.
-AC_DEFUN([gl_GETOPT_SUBSTITUTE_HEADER],
+AC_DEFUN([gl_GETOPT_IFELSE],
 [
-  GETOPT_H=getopt.h
-  AC_DEFINE([__GETOPT_PREFIX], [[rpl_]],
-    [Define to rpl_ if the getopt replacement functions and variables
-     should be used.])
-  AC_SUBST([GETOPT_H])
+  AC_REQUIRE([gl_GETOPT_CHECK_HEADERS])
+  AS_IF([test -n "$gl_replace_getopt"], [$1], [$2])
 ])
 
+# Determine whether to replace the entire getopt facility.
 AC_DEFUN([gl_GETOPT_CHECK_HEADERS],
 [
   gl_replace_getopt=
@@ -77,14 +78,14 @@ AC_DEFUN([gl_GETOPT_CHECK_HEADERS],
 ])
 
 # emacs' configure.in uses this.
-AC_DEFUN([gl_GETOPT_IFELSE],
+AC_DEFUN([gl_GETOPT_SUBSTITUTE_HEADER],
 [
-  AC_REQUIRE([gl_GETOPT_CHECK_HEADERS])
-  AS_IF([test -n "$gl_replace_getopt"], [$1], [$2])
+  GETOPT_H=getopt.h
+  AC_DEFINE([__GETOPT_PREFIX], [[rpl_]],
+    [Define to rpl_ if the getopt replacement functions and variables
+     should be used.])
+  AC_SUBST([GETOPT_H])
 ])
-
-# This is gnulib's entry-point.
-AC_DEFUN([gl_GETOPT], [gl_GETOPT_IFELSE([gl_GETOPT_SUBSTITUTE])])
 
 # Prerequisites of lib/getopt*.
 # emacs' configure.in uses this.

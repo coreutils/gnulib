@@ -1,5 +1,11 @@
 2009-08-12  Bruno Haible  <bruno@clisp.org>
 
+	* m4/getopt.m4: Reorder macros.
+	(gl_GETOPT): Inline gl_GETOPT_SUBSTITUTE.
+	(gl_GETOPT_SUBSTITUTE): Remove macro.
+
+2009-08-12  Bruno Haible  <bruno@clisp.org>
+
 	Ensure that getopt() gets declared by <unistd.h>.
 	* lib/unistd.in.h: Conditionally include getopt.h.
 	* m4/getopt.m4 (gl_GETOPT_SUBSTITUTE): Require gl_UNISTD_H_DEFAULTS.
