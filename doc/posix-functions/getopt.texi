@@ -4,10 +4,33 @@
 
 POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/getopt.html}
 
-Gnulib module: ---
+Gnulib module: getopt-posix or getopt-gnu
 
-Portability problems fixed by Gnulib:
+The module @code{getopt-gnu} has support for ``long options'' and for
+``options that take optional arguments''.  Compared to the API defined by POSIX,
+it adds a header file @code{<getopt.h>} and a function @code{getopt_long}.
+
+Portability problems fixed by either Gnulib module @code{getopt-posix} or @code{getopt-gnu}:
 @itemize
+@item
+The @code{getopt} function keeps some internal state that cannot be explicitly
+reset on some platforms:
+mingw.
+@end itemize
+
+Portability problems fixed by Gnulib module @code{getopt-gnu}:
+@itemize
+@item
+The function @code{getopt} does not support the @samp{+} flag in the options
+string on some platforms:
+MacOS X 10.5, AIX 5.2, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10.
+@item
+The function @code{getopt} does not support options with optional arguments
+on some platforms:
+MacOS X 10.5, OpenBSD 4.0, AIX 5.2, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin.
+@item
+The function @code{getopt_long} is missing on some platforms:
+AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 9, Interix 3.5.
 @end itemize
 
 Portability problems not fixed by Gnulib:
@@ -18,8 +41,7 @@ mixing option and non-option arguments on the command line in any order.
 Other implementations, such as the one in Cygwin, enforce strict POSIX
 compliance: they require that the option arguments precede the non-option
 arguments.  This is something to watch out in your program's testsuite.
+@item
+The function @code{getopt_long_only} is missing on some platforms:
+MacOS X 10.3, FreeBSD 5.2.1, NetBSD 3.0, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 9, mingw, Interix 3.5.
 @end itemize
-
-Gnulib provides a module @code{getopt} that has support for ``long options''.
-Compared to POSIX, it adds a header file @code{<getopt.h>} and functions
-@code{getopt_long} and @code{getopt_long_only}.

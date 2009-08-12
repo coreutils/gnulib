@@ -1,5 +1,23 @@
 2009-08-12  Bruno Haible  <bruno@clisp.org>
 
+	New modules 'getopt-posix', 'getopt-gnu'.
+	* modules/getopt-gnu: New file, renamed from modules/getopt.
+	* modules/getopt-posix: New file.
+	* modules/getopt: Turn into an obsolete alias for getopt-gnu.
+	* m4/getopt.m4 (gl_FUNC_GETOPT_POSIX, gl_FUNC_GETOPT_GNU): New macros.
+	(gl_GETOPT): Remove macro.
+	(gl_GETOPT_CHECK_HEADERS): Do some checks only for gl_FUNC_GETOPT_GNU.
+	Disable the test against BSD systems that declare optreset. Test
+	against mingw bug. Test against lack of support of optional arguments
+	on many platforms.
+	* doc/glibc-headers/getopt.texi: Update module name and list of
+	relevant platforms.
+	* doc/posix-functions/getopt.texi: Mention modules 'getopt-posix' and
+	'getopt-gnu' and more portability problems.
+	* NEWS: Mention the changes.
+
+2009-08-12  Bruno Haible  <bruno@clisp.org>
+
 	Ensure that optarg etc. get declared by <unistd.h>.
 	* m4/getopt.m4 (gl_GETOPT_CHECK_HEADERS): Require
 	AC_USE_SYSTEM_EXTENSIONS.

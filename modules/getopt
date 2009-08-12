@@ -1,32 +1,20 @@
 Description:
 Process command line arguments.
 
+Status:
+obsolete
+
+Notice:
+This module is obsolete. Use the module 'getopt-posix' or 'getopt-gnu' instead.
+
 Files:
-lib/getopt.in.h
-lib/getopt.c
-lib/getopt1.c
-lib/getopt_int.h
-m4/getopt.m4
 
 Depends-on:
-gettext-h
-unistd
-extensions
+getopt-gnu
 
 configure.ac:
-gl_GETOPT
 
 Makefile.am:
-BUILT_SOURCES += $(GETOPT_H)
-
-# We need the following in order to create <getopt.h> when the system
-# doesn't have one that works with the given compiler.
-getopt.h: getopt.in.h
-	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  cat $(srcdir)/getopt.in.h; \
-	} > $@-t
-	mv -f $@-t $@
-MOSTLYCLEANFILES += getopt.h getopt.h-t
 
 Include:
 <getopt.h>

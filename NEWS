@@ -6,6 +6,11 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2009-08-12  getopt          This module is deprecated. Please choose among
+                            getopt-posix and getopt-gnu. getopt-gnu provides
+                            "long options" and "options with optional
+                            arguments", getopt-posix doesn't.
+
 2009-06-25  fpurge          The include file is changed from "fpurge.h" to
                             <stdio.h>.
 

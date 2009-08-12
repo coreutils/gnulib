@@ -1,0 +1,23 @@
+Description:
+GNU-like getopt() function, getopt_long() function, getopt_long_only() function:
+process command line arguments.
+
+Files:
+
+Depends-on:
+getopt-posix
+
+configure.ac:
+gl_FUNC_GETOPT_GNU
+gl_MODULE_INDICATOR([getopt-gnu])
+
+Makefile.am:
+
+Include:
+<getopt.h>
+
+License:
+LGPL
+
+Maintainer:
+all, glibc
