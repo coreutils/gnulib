@@ -1,3 +1,34 @@
+2009-08-12  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Minor improvement in gitlog-to-changelog
+
+	* build-aux/gitlog-to-changelog: New option `--format' makes
+	output format string configurable.
+
+2009-08-12  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	Optimize exclude: use hash tables for non-wildcard patterns.
+
+	* lib/exclude.c: Include hash.h and mbuiter.h
+	(struct exclude_pattern, exclude_segment): New data types.
+	(struct exclude): Rewrite.
+	(fnmatch_pattern_has_wildcards): New function.
+	(new_exclude_segment, free_exclude_segment): New functions.
+	(excluded_file_pattern_p, excluded_file_name_p): New functions.
+	(excluded_file_name, add_exclude): Rewrite using new struct exclude.
+	* lib/exclude.h (is_fnmatch_pattern): New prototype.
+	* modules/exclude: Depend on hash and mbuiter.
+
+	* modules/exclude-tests: New file.
+	* tests/test-exclude.c: New file.
+	* tests/test-exclude1.sh: New file.
+	* tests/test-exclude2.sh: New file.
+	* tests/test-exclude3.sh: New file.
+	* tests/test-exclude4.sh: New file.
+	* tests/test-exclude5.sh: New file.
+	* tests/test-exclude6.sh: New file.
+	* tests/test-exclude7.sh: New file.
+
 2009-08-12  Bruno Haible  <bruno@clisp.org>
 
 	* m4/getopt.m4: Reorder macros.
