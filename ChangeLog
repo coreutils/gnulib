@@ -1,5 +1,11 @@
 2009-08-12  Bruno Haible  <bruno@clisp.org>
 
+	* m4/getopt.m4 (gl_REPLACE_GETOPT): New macro, was called
+	gl_GETOPT_SUBSTITUTE before.
+	(gl_GETOPT): Use it.
+	* m4/argp.m4 (gl_ARGP): Update.
+	Reported by Sergey Poznyakoff.
+
 	* m4/getopt.m4: Reorder macros.
 	(gl_GETOPT): Inline gl_GETOPT_SUBSTITUTE.
 	(gl_GETOPT_SUBSTITUTE): Remove macro.

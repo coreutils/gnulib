@@ -1,4 +1,4 @@
-# getopt.m4 serial 18
+# getopt.m4 serial 19
 dnl Copyright (C) 2002-2006, 2008-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,15 +13,22 @@ AC_DEFUN([gl_GETOPT],
 [
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
   gl_GETOPT_IFELSE([
-    dnl Arrange for getopt.h to be created.
-    gl_GETOPT_SUBSTITUTE_HEADER
-    dnl Arrange for unistd.h to include getopt.h.
-    GNULIB_UNISTD_H_GETOPT=1
-    dnl Arrange to compile the getopt implementation.
-    AC_LIBOBJ([getopt])
-    AC_LIBOBJ([getopt1])
-    gl_PREREQ_GETOPT
+    gl_REPLACE_GETOPT
   ])
+])
+
+# Request the gnulib implementation of the getopt functions unconditionally.
+# argp.m4 uses this.
+AC_DEFUN([gl_REPLACE_GETOPT],
+[
+  dnl Arrange for getopt.h to be created.
+  gl_GETOPT_SUBSTITUTE_HEADER
+  dnl Arrange for unistd.h to include getopt.h.
+  GNULIB_UNISTD_H_GETOPT=1
+  dnl Arrange to compile the getopt implementation.
+  AC_LIBOBJ([getopt])
+  AC_LIBOBJ([getopt1])
+  gl_PREREQ_GETOPT
 ])
 
 # emacs' configure.in uses this.
