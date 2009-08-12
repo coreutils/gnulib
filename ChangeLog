@@ -1,3 +1,13 @@
+2009-08-26  Pádraig Brady  <P@draigbrady.com>
+
+	ignore-value: handle pointer types, too
+	* lib/ignore-value.h (__attribute__): Remove definition.
+	(ignore_value): Remove use of "__attribute__ ((unused))" in favor
+	of a more concise and more-often effective "(void) i" statement.
+	(ignore_ptr): New function to suppress warnings from functions that
+	return pointers, and to make it explicit that one function doesn't
+	handle all cases.
+
 2009-08-25  Bruno Haible  <bruno@clisp.org>
 
 	dup2: work around a Linux bug.
