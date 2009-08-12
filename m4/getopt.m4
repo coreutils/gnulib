@@ -1,4 +1,4 @@
-# getopt.m4 serial 19
+# getopt.m4 serial 20
 dnl Copyright (C) 2002-2006, 2008-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -41,6 +41,9 @@ AC_DEFUN([gl_GETOPT_IFELSE],
 # Determine whether to replace the entire getopt facility.
 AC_DEFUN([gl_GETOPT_CHECK_HEADERS],
 [
+  dnl Persuade Solaris <unistd.h> to declare optarg, optind, opterr, optopt.
+  AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
+
   gl_replace_getopt=
   if test -z "$gl_replace_getopt"; then
     AC_CHECK_HEADERS([getopt.h], [], [gl_replace_getopt=yes])

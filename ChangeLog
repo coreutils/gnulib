@@ -1,5 +1,12 @@
 2009-08-12  Bruno Haible  <bruno@clisp.org>
 
+	Ensure that optarg etc. get declared by <unistd.h>.
+	* m4/getopt.m4 (gl_GETOPT_CHECK_HEADERS): Require
+	AC_USE_SYSTEM_EXTENSIONS.
+	* modules/getopt (Depends-on): Add 'extensions'.
+
+2009-08-12  Bruno Haible  <bruno@clisp.org>
+
 	Avoid test link errors.
 	* modules/pipe-filter-ii-tests (Makefile.am): Define
 	test_pipe_filter_ii1_LDADD and test_pipe_filter_ii2_main_LDADD.

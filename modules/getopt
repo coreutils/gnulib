@@ -11,6 +11,7 @@ m4/getopt.m4
 Depends-on:
 gettext-h
 unistd
+extensions
 
 configure.ac:
 gl_GETOPT
