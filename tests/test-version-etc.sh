@@ -22,7 +22,7 @@ export LC_ALL
 ERR=0
 
 cat > $TMP <<EOT
-test-version-etc (dummy) 0
+test-version-etc (PROJECT) VERSION
 COPYRIGHT Free Software Foundation, Inc.
 License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
 This is free software: you are free to change and redistribute it.
@@ -33,6 +33,7 @@ EOT
 
 ./test-version-etc${EXEEXT} --version |
  sed '2s/Copyright (C) [0-9]\{4,4\}/COPYRIGHT/' |
+ sed '1s/test-version-etc (.*) .*/test-version-etc (PROJECT) VERSION/' |
  diff -c $TMP - || ERR=1
 
 rm $TMP
