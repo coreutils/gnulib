@@ -19,6 +19,9 @@ mingw, BeOS.
 Some older versions of glibc had @code{nl_langinfo} but not the @code{CODESET}
 macro.
 @item
-On Cygwin, which doesn't have locales, @code{nl_langinfo(CODESET)} always
+On Cygwin 1.5.x, which doesn't have locales, @code{nl_langinfo(CODESET)} always
 returns @code{"US-ASCII"}.
+
+@item
+On Cygwin 1.7.0, only the charset portion of a locale designation is honored.
 @end itemize

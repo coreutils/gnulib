@@ -13,6 +13,9 @@ Portability problems fixed by Gnulib:
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-On Cygwin, which doesn't have locales, @code{setlocale(LC_ALL,NULL)} always
-returns @code{"C"}.
+On Cygwin 1.5.x, which doesn't have locales,
+@code{setlocale(LC_ALL,NULL)} always returns @code{"C"}.
+
+@item
+On Cygwin 1.7.0, only the charset portion of a locale designation is honored.
 @end itemize
