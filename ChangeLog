@@ -1,6 +1,14 @@
 2009-08-13  Simon Josefsson  <simon@josefsson.org>
 
 	* tests/test-version-etc.sh: Don't fail on different
+	project/version.  Don't fail on CRLF differences.  Rewrite to use
+	multiple -e instead of multiple sed forks, suggested by Eric Blake
+	<ebb9@byu.net>.
+	* tests/test-argp-version-etc-1.sh: Likewise.
+
+2009-08-13  Simon Josefsson  <simon@josefsson.org>
+
+	* tests/test-version-etc.sh: Don't fail on different
 	project/version.
 
 2009-08-12  Bruno Haible  <bruno@clisp.org>

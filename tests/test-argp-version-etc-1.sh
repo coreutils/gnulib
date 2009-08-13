@@ -32,8 +32,10 @@ Written by Sergey Poznyakoff.
 EOT
 
 ./test-argp-version-etc${EXEEXT} --version |
- sed '2s/Copyright (C) [0-9]\{4,4\} Free Software Foundation, Inc\./COPYRIGHT/' |
- sed '1s/test-argp-version-etc (.*) .*/test-argp-version-etc (PROJECT) VERSION/' |
+ sed \
+     -e '2s/Copyright (C) [0-9]\{4,4\} Free Software Foundation, Inc\./COPYRIGHT/' \
+     -e '1s/test-argp-version-etc (.*) .*/test-argp-version-etc (PROJECT) VERSION/' \
+     -e 's/\r//g' |
  diff -c $TMP - || ERR=1
 
 rm $TMP
