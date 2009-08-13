@@ -1,3 +1,11 @@
+2009-08-13  Eric Blake  <ebb9@byu.net>
+
+	getopt: update client modules
+	* modules/argp (Depends-on): Use getopt-gnu.
+	* modules/git-merge-changelog (Depends-on): Likewise.
+	* modules/long-options (Depends-on): Likewise.
+	* modules/xstrtol (Depends-on): Likewise.
+
 2009-08-13  Simon Josefsson  <simon@josefsson.org>
 
 	* tests/test-version-etc.sh: Don't fail on different

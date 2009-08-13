@@ -25,7 +25,7 @@ m4/argp.m4
 Depends-on:
 alloca
 dirname
-getopt
+getopt-gnu
 strchrnul
 sysexits
 malloc

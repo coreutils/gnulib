@@ -5,7 +5,7 @@ Files:
 lib/git-merge-changelog.c
 
 Depends-on:
-getopt
+getopt-gnu
 stdbool
 progname
 error

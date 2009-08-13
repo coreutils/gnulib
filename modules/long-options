@@ -7,7 +7,7 @@ lib/long-options.c
 m4/long-options.m4
 
 Depends-on:
-getopt
+getopt-gnu
 version-etc
 
 configure.ac:
