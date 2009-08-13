@@ -1,5 +1,10 @@
 2009-08-13  Eric Blake  <ebb9@byu.net>
 
+	test-version-etc: fix CRLF portability issue
+	* tests/test-version-etc.sh: Use tr, not sed, as not all sed
+	recognize \r.
+	* tests/test-argp-version-etc-1.sh: Likewise.
+
 	getopt: update client modules
 	* modules/argp (Depends-on): Use getopt-gnu.
 	* modules/git-merge-changelog (Depends-on): Likewise.
