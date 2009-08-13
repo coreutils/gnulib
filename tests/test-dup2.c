@@ -67,8 +67,12 @@ main ()
   char buffer[1];
   int fd = open (file, O_CREAT | O_RDWR, 0600);
 
-  ASSERT (0 <= fd);
+  /* Assume std descriptors were provided by invoker.  */
+  ASSERT (STDERR_FILENO < fd);
   ASSERT (is_open (fd));
+  /* Ignore any other fd's leaked into this process.  */
+  close (fd + 1);
+  close (fd + 2);
   ASSERT (!is_open (fd + 1));
   ASSERT (!is_open (fd + 2));
 

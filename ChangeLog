@@ -1,5 +1,9 @@
 2009-08-13  Eric Blake  <ebb9@byu.net>
 
+	test-dup2: fix bad assumption
+	* tests/test-dup2.c (main): Tolerate leaked fds from environment.
+	Reported by Peter Breitenlohner <peb@mppmu.mpg.de>.
+
 	test-version-etc: fix CRLF portability issue
 	* tests/test-version-etc.sh: Use tr, not sed, as not all sed
 	recognize \r.
