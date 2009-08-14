@@ -1,3 +1,13 @@
+2009-08-14  Eric Blake  <ebb9@byu.net>
+
+	maint.mk: simplify update-copyright rule
+	* top/maint.mk (update-copyright-local): Delete, and document how
+	to do it in cfg.mk instead.
+	(update-copyright-exclude-regexp): Delete, and document how to do
+	it in .x-update-copyright instead.
+	(update-copyright): Simplify, thanks to VC_LIST_EXCEPT.  Don't
+	exclude ChangeLog.
+
 2009-08-14  Bruno Haible  <bruno@clisp.org>
 
 	* m4/wchar.m4 (gl_WCHAR_H): Undo invalid optimization in last commit.
