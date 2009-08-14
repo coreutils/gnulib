@@ -776,6 +776,10 @@ indent:
 # define it in cfg.mk and set this variable to its name.
 update-copyright-local ?=
 
+# If you want to set UPDATE_COPYRIGHT_* environment variables,
+# put the assignments in this variable.
+update-copyright-env ?=
+
 # Run this rule once per year (usually early in January)
 # to update all FSF copyright year lists in your project.
 update-copyright-exclude-regexp ?= (^|/)COPYING$$
@@ -783,4 +787,4 @@ update-copyright-exclude-regexp ?= (^|/)COPYING$$
 update-copyright: $(update-copyright-local)
 	grep -l -w Copyright $$($(VC_LIST_EXCEPT))		\
 	  | grep -v -E '$(update-copyright-exclude-regexp)'	\
-	  | xargs $(build_aux)/$@
+	  | $(update-copyright-env) xargs $(build_aux)/$@

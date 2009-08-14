@@ -1,5 +1,12 @@
 2009-08-14  Joel E. Denny  <jdenny@clemson.edu>
 
+	maint.mk: support update-copyright-env
+	* top/maint.mk (update-copyright-env): Define place-holder.
+	(update-copyright): Expand $(update-copyright-env) before
+	invoking update-copyright.
+
+2009-08-14  Joel E. Denny  <jdenny@clemson.edu>
+
 	update-copyright: implement forced reformatting
 	* build-aux/update-copyright: Implement and document
 	UPDATE_COPYRIGHT_FORCE.
