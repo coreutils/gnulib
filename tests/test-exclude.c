@@ -60,6 +60,12 @@ int exclude_flags[] = {
 
 ARGMATCH_VERIFY (exclude_keywords, exclude_flags);
 
+/* Some packages define ARGMATCH_DIE and ARGMATCH_DIE_DECL in <config.h>, and
+   thus must link with a definition of that function.  Provide it here.  */
+#ifdef ARGMATCH_DIE_DECL
+ARGMATCH_DIE_DECL { exit (1); }
+#endif
+
 int
 main (int argc, char **argv)
 {

@@ -1,3 +1,9 @@
+2009-08-14  Jim Meyering  <meyering@redhat.com>
+
+	test-exclude: avoid coreutils "make check" failure
+	* tests/test-exclude.c (ARGMATCH_DIE_DECL) [ARGMATCH_DIE_DECL]: Define,
+	just as in test-argmatch.c.
+
 2009-08-13  Eric Blake  <ebb9@byu.net>
 
 	test-dup2: fix bad assumption
