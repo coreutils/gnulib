@@ -1,3 +1,8 @@
+2009-08-14  Bruno Haible  <bruno@clisp.org>
+
+	Disable multithread support by default on Cygwin 1.5.x for real.
+	* m4/threadlib.m4 (gl_THREADLIB_EARLY_BODY): Fix last commit.
+
 2009-08-14  Joel E. Denny  <jdenny@clemson.edu>
 
 	update-copyright: much ado about intervals

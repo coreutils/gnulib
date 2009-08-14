@@ -52,6 +52,7 @@ AC_HELP_STRING([--disable-threads], [build without multithread safety]),
     [if test -n "$gl_use_threads_default"; then
        gl_use_threads="$gl_use_threads_default"
      else
+changequote(,)dnl
        case "$host_os" in
          dnl Disable multithreading by default on OSF/1, because it interferes
          dnl with fork()/exec(): When msgexec is linked with -lpthread, its
@@ -68,6 +69,7 @@ AC_HELP_STRING([--disable-threads], [build without multithread safety]),
                ;;
          *)    gl_use_threads=yes ;;
        esac
+changequote([,])dnl
      fi
     ])
   if test "$gl_use_threads" = yes || test "$gl_use_threads" = posix; then
