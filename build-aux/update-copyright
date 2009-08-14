@@ -1,7 +1,7 @@
 #!/usr/bin/perl -0777 -pi
 # Update an FSF copyright year list to include the current year.
 
-my $VERSION = '2009-08-14.05:03'; # UTC
+my $VERSION = '2009-08-14.18:56'; # UTC
 
 # Copyright (C) 2009 Free Software Foundation, Inc.
 #
@@ -25,12 +25,17 @@ my $VERSION = '2009-08-14.05:03'; # UTC
 # use the update-copyright target rule in maint.mk from gnulib's
 # maintainer-makefile module.
 #
-# Iff an FSF copyright statement is discovered in a file and the final
+# Iff an FSF copyright statement is recognized in a file and the final
 # year is not the current year, then the statement is updated for the
-# new year, 2-digit years are converted to 4-digit years by prepending
-# "19", and the statement is reformatted to fit within 72 columns.  A
-# warning is printed for every file for which no FSF copyright statement
-# is discovered.
+# new year and it is reformatted to:
+#
+#   1. Fit within 72 columns.
+#   2. Convert 2-digit years to 4-digit years by prepending "19".
+#   3. Expand copyright year intervals.  (See "Environment variables"
+#      below.)
+#
+# A warning is printed for every file for which no FSF copyright
+# statement is recognized.
 #
 # Each file's FSF copyright statement must be formated correctly in
 # order to be recognized.  For example, each of these is fine:
@@ -91,16 +96,21 @@ my $VERSION = '2009-08-14.05:03'; # UTC
 #   6. Blank lines, even if preceded by the prefix, do not appear
 #      within the FSF copyright statement.
 #   7. Each copyright year is 2 or 4 digits, and years are separated by
-#      commas or dashes.  Whitespace may occur after commas.
+#      commas or dashes.  Whitespace may appear after commas.
 #
 # Environment variables:
 #
-#   1. If UPDATE_COPYRIGHT_USE_INTERVALS=1, every series of consecutive
-#      copyright years (such as 90, 1991, 1992-2007, 2008) in an updated
-#      FSF copyright statement is collapsed to a single interval (such
-#      as 1990-2008).  If unset or set to 0, all existing copyright year
-#      intervals are expanded.
-#   2. For testing purposes, you can set the assumed current year in
+#   1. If UPDATE_COPYRIGHT_FORCE=1, a recognized FSF copyright statement
+#      is reformatted even if it does not need updating for the new
+#      year.  If unset or set to 0, only updated FSF copyright
+#      statements are reformatted.
+#   2. If UPDATE_COPYRIGHT_USE_INTERVALS=1, every series of consecutive
+#      copyright years (such as 90, 1991, 1992-2007, 2008) in a
+#      reformatted FSF copyright statement is collapsed to a single
+#      interval (such as 1990-2008).  If unset or set to 0, all existing
+#      copyright year intervals in a reformatted FSF copyright statement
+#      are expanded instead.
+#   3. For testing purposes, you can set the assumed current year in
 #      UPDATE_COPYRIGHT_YEAR.
 
 use strict;
@@ -172,7 +182,9 @@ if (defined $stmt_re)
       {
         # Update the year.
         $stmt =~ s/$final_year_orig/$final_year, $this_year/;
-
+      }
+    if ($final_year != $this_year || $ENV{'UPDATE_COPYRIGHT_FORCE'})
+      {
         # Normalize all whitespace including newline-prefix sequences.
         $stmt =~ s/$ws_re/ /g;
 
