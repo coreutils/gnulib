@@ -123,7 +123,7 @@ compare - $TMP.2 <<EOF || exit 1
 EOF
 compare - $TMP.3 <<EOF || exit 1
 /*
- * Copyright &copy; 90, 2005, 2007-2010 Free Software Foundation, Inc.
+ * Copyright &copy; 1990, 2005, 2007-2010 Free Software Foundation, Inc.
  */
 EOF
 compare - $TMP.4 <<EOF || exit 1
@@ -284,9 +284,9 @@ UPDATE_COPYRIGHT_YEAR=2010 \
 compare /dev/null $TMP-stdout || exit 1
 compare /dev/null $TMP-stderr || exit 1
 compare - $TMP <<EOF || exit 1
-	Copyright (C) 87, 88, 1991, 1992, 1993, 1994, 1995, 1996, 1997,
-	98, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008,
-	2009-2010 Free Software Foundation, Inc.
+	Copyright (C) 1987, 1988, 1991, 1992, 1993, 1994, 1995, 1996,
+	1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
+	2007, 2008, 2009-2010 Free Software Foundation, Inc.
 EOF
 rm $TMP*
 
@@ -305,9 +305,9 @@ UPDATE_COPYRIGHT_YEAR=2010 \
 compare /dev/null $TMP-stdout || exit 1
 compare /dev/null $TMP-stderr || exit 1
 compare - $TMP <<EOF || exit 1
-		# Copyright (C) 87, 88, 1991, 1992, 1993, 1994, 1995,
-		# 1996, 1997, 98, 1999, 2000, 2001, 2002, 2003, 2004,
-		# 2005, 2006, 2007, 2008, 2009-2010 Free Software
+		# Copyright (C) 1987, 1988, 1991, 1992, 1993, 1994,
+		# 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003,
+		# 2004, 2005, 2006, 2007, 2008, 2009-2010 Free Software
 		# Foundation, Inc.
 EOF
 rm $TMP*
@@ -327,8 +327,8 @@ UPDATE_COPYRIGHT_YEAR=2010 \
 compare /dev/null $TMP-stdout || exit 1
 compare /dev/null $TMP-stderr || exit 1
 tr @ '\015' > $TMP-exp <<\EOF
-Rem Copyright (C) 87, 88, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 98,@
-Rem 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008,@
+Rem Copyright (C) 1987, 1988, 1991, 1992, 1993, 1994, 1995, 1996, 1997,@
+Rem 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008,@
 Rem 2009-2010 Free Software Foundation, Inc.@
 EOF
 compare $TMP-exp $TMP || exit 1
@@ -349,9 +349,9 @@ UPDATE_COPYRIGHT_YEAR=2010 \
 compare /dev/null $TMP-stdout || exit 1
 compare /dev/null $TMP-stderr || exit 1
 compare - $TMP <<EOF || exit 1
-  Copyright 87, 88, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 98, 1999,
-  2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009-2010 Free
-  Software Foundation, Inc.
+  Copyright 1987, 1988, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
+  1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009-2010
+  Free Software Foundation, Inc.
 EOF
 rm $TMP*
 
@@ -371,7 +371,7 @@ cat > $TMP.space <<EOF
     2009 Free Software Foundation, Inc.  */
 EOF
 cat > $TMP.single-line <<EOF
-/* Copyright 87, 88, 1991, 1992 Free Software Foundation, Inc.  */
+/*   Copyright 87, 1991, 1992 Free Software Foundation, Inc.  */
 EOF
 cat > $TMP.single-line-wrapped <<EOF
  /* Copyright 1988, 1991, 1992, 1993 Free Software Foundation, Inc.  */
@@ -389,17 +389,17 @@ UPDATE_COPYRIGHT_YEAR=2010 \
 compare /dev/null $TMP-stdout || exit 1
 compare /dev/null $TMP-stderr || exit 1
 compare - $TMP.star <<EOF || exit 1
-/*  Copyright 87, 88, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 98,
- *  1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008,
+/*  Copyright 1987, 1988, 1991, 1992, 1993, 1994, 1995, 1996, 1997,
+ *  1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008,
  *  2009-2010 Free Software Foundation, Inc.  */
 EOF
 compare - $TMP.space <<EOF || exit 1
-  /*Copyright 87, 88, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 98,
-    1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008,
+  /*Copyright 1987, 1988, 1991, 1992, 1993, 1994, 1995, 1996, 1997,
+    1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008,
     2009-2010 Free Software Foundation, Inc.  */
 EOF
 compare - $TMP.single-line <<EOF || exit 1
-/* Copyright 87, 88, 1991, 1992, 2010 Free Software Foundation, Inc.  */
+/*   Copyright 1987, 1991, 1992, 2010 Free Software Foundation, Inc.  */
 EOF
 compare - $TMP.single-line-wrapped <<EOF || exit 1
  /* Copyright 1988, 1991, 1992, 1993, 2010 Free Software Foundation,

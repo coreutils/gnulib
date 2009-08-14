@@ -1,7 +1,7 @@
 #!/usr/bin/perl -0777 -pi
 # Update an FSF copyright year list to include the current year.
 
-my $VERSION = '2009-08-06.01:08'; # UTC
+my $VERSION = '2009-08-14.02:23'; # UTC
 
 # Copyright (C) 2009 Free Software Foundation, Inc.
 #
@@ -26,9 +26,11 @@ my $VERSION = '2009-08-06.01:08'; # UTC
 # maintainer-makefile module.
 #
 # Iff an FSF copyright statement is discovered in a file and the final
-# year is not the current year, the statement is updated for the new
-# year and reformatted to fit within 72 columns.  A warning is printed
-# for every file for which no FSF copyright statement is discovered.
+# year is not the current year, then the statement is updated for the
+# new year, 2-digit years are converted to 4-digit years by prepending
+# "19", and the statement is reformatted to fit within 72 columns.  A
+# warning is printed for every file for which no FSF copyright statement
+# is discovered.
 #
 # Each file's FSF copyright statement must be formated correctly in
 # order to be recognized.  For example, each of these is fine:
@@ -178,6 +180,9 @@ if (defined $stmt_re)
 
         # Put spaces after commas.
         $stmt =~ s/, ?/, /g;
+
+        # Convert 2-digit to 4-digit years.
+        $stmt =~ s/(\b\d\d\b)/19$1/g;
 
         # Format within margin.
         my $stmt_wrapped;
