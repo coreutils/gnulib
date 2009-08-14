@@ -1,5 +1,12 @@
 2009-08-14  Joel E. Denny  <jdenny@clemson.edu>
 
+	update-copyright: much ado about intervals
+	* build-aux/update-copyright: Implement and document
+	UPDATE_COPYRIGHT_USE_INTERVALS to control expansion and collapse
+	of copyright year intervals.
+	Also, document UPDATE_COPYRIGHT_YEAR.
+	* tests/test-update-copyright.sh: Test it.
+
 	update-copyright: convert 2-digit to 4-digit years
 	* build-aux/update-copyright: Implement and document.
 	* tests/test-update-copyright.sh: Update.
