@@ -61,8 +61,9 @@ main ()
     goto skip;
   if (fflush (fp))
     goto skip;
-  if (fwrite ("az", 1, 2, fp) < 2)
+  if (fwrite ("bz", 1, 2, fp) < 2)
     goto skip;
+  /* Discard pending write.  */
   ASSERT (fpurge (fp) == 0);
   ASSERT (fclose (fp) == 0);
 
@@ -72,16 +73,37 @@ main ()
     goto skip;
   {
     char buf[8];
-    if (fread (buf, 1, 8, fp) < 8)
+    if (fread (buf, 1, 7, fp) < 7)
       goto skip;
-    ASSERT (memcmp (buf, "foogarsh", 8) == 0);
+    ASSERT (memcmp (buf, "foogars", 7) == 0);
   }
+  /* Discard the buffered 'h', leaving position at EOF.  */
   ASSERT (fpurge (fp) == 0);
+  ASSERT (getc (fp) == EOF);
   ASSERT (fclose (fp) == 0);
 
+  /* Ensure that purging a read does not corrupt subsequent writes.  */
+  fp = fopen (TESTFILE, "r+");
+  ASSERT (fp);
+  ASSERT (fseek (fp, -1, SEEK_END) == 0);
+  ASSERT (getc (fp) == 'h');
+  ASSERT (getc (fp) == EOF);
+  ASSERT (fpurge (fp) == 0);
+  ASSERT (putc ('!', fp) == '!');
+  ASSERT (fclose (fp) == 0);
+  fp = fopen (TESTFILE, "r");
+  ASSERT (fp);
+  {
+    char buf[9];
+    ASSERT (fread (buf, 1, 9, fp) == 9);
+    ASSERT (memcmp (buf, "foogarsh!", 9) == 0);
+  }
+
+  remove (TESTFILE);
   return 0;
 
  skip:
-  fprintf (stderr, "Skipping test: file operations failed.\n");
+  fprintf (stderr, "Skipping test: prerequisite file operations failed.\n");
+  remove (TESTFILE);
   return 77;
 }

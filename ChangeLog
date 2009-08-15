@@ -1,4 +1,12 @@
 2009-08-15  Eric Blake  <ebb9@byu.net>
+
+	fpurge: don't wrap working cygwin implementation
+	* lib/fpurge.c (fpurge): Fix comment typo.
+	* modules/fpurge (Makefile.am): Make replacement conditional,
+	partially reverting 2007-04-29 change.
+	* tests/test-fpurge.c (main): Enhance test.
+
+2009-08-15  Eric Blake  <ebb9@byu.net>
 	and Jim Meyering  <meyering@redhat.com>
 
 	test-update-copyright: skip if perl is insufficient
@@ -580,7 +588,7 @@
 	different project/version.
 
 2009-08-02  Paolo Bonzini  <bonzini@gnu.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Tests for module 'pipe-filter-gi'.
 	* modules/pipe-filter-gi-tests: New file.
@@ -595,7 +603,7 @@
 	* modules/pipe-filter-gi: New file.
 
 2009-08-02  Bruno Haible  <bruno@clisp.org>
-            Paolo Bonzini  <bonzini@gnu.org>
+	    Paolo Bonzini  <bonzini@gnu.org>
 
 	Tests for module 'pipe-filter-ii'.
 	* modules/pipe-filter-ii-tests: New file.
@@ -621,7 +629,7 @@
 	* lib/gethostname.c: Include limits.h.
 
 2009-08-02  Simon Josefsson  <simon@josefsson.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Ensure HOST_NAME_MAX as part of the gethostname module.
 	* m4/gethostname.m4 (gl_FUNC_GETHOSTNAME): On native Windows platforms,
