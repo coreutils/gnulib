@@ -1,3 +1,10 @@
+2009-08-15  Eric Blake  <ebb9@byu.net>
+	and Jim Meyering  <meyering@redhat.com>
+
+	test-update-copyright: skip if perl is insufficient
+	* tests/test-update-copyright.sh: Failure to run maintainer tool
+	should not cause testsuite failure on cygwin 1.5.
+
 2009-08-14  Eric Blake  <ebb9@byu.net>
 
 	doc: mention more functions added in cygwin 1.7.0

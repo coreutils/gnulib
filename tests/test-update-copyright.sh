@@ -24,6 +24,23 @@ else
 fi
 
 TMP_BASE=update-copyright.test
+trap 'rm -f $TMP_BASE*' 0 1 2 3 15
+
+## --------------------------------- ##
+## Skip if user does not have perl.  ##
+## --------------------------------- ##
+
+TMP=$TMP_BASE
+s=$TMP-script
+printf '#!/usr/bin/perl -pi\ns/a/b/\n' > $s
+chmod a+x $s
+echo a > $TMP-in
+./$s $TMP-in 2>/dev/null && test b = "`cat $TMP-in 2>/dev/null`" ||
+  {
+    printf '%s\n' "$0: skipping this test;" \
+      'your system has insufficient support for Perl' 1>&2
+    exit 77
+  }
 
 ## ----------------------------- ##
 ## Examples from documentation.  ##
