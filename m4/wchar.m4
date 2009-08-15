@@ -7,7 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 dnl Written by Eric Blake.
 
-# wchar.m4 serial 24
+# wchar.m4 serial 25
 
 AC_DEFUN([gl_WCHAR_H],
 [
@@ -45,9 +45,7 @@ wchar_t w;]],
     HAVE_WCHAR_H=0
   fi
   AC_SUBST([HAVE_WCHAR_H])
-  if test -n "$WCHAR_H"; then
-    gl_CHECK_NEXT_HEADERS([wchar.h])
-  fi
+  gl_CHECK_NEXT_HEADERS([wchar.h])
 ])
 
 dnl Unconditionally enables the replacement of <wchar.h>.

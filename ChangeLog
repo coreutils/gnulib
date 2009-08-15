@@ -1,3 +1,7 @@
+2009-08-14  Bruno Haible  <bruno@clisp.org>
+
+	* m4/wchar.m4 (gl_WCHAR_H): Undo invalid optimization in last commit.
+
 2009-08-14  Joel E. Denny  <jdenny@clemson.edu>
 
 	maint.mk: support update-copyright-env
