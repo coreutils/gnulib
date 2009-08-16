@@ -1,4 +1,4 @@
-# fpurge.m4 serial 4
+# fpurge.m4 serial 5
 dnl Copyright (C) 2007, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -34,12 +34,10 @@ AC_DEFUN([gl_FUNC_FPURGE],
       [gl_cv_func_fpurge_works='guessing no'])])
     if test "x$gl_cv_func_fpurge_works" != xyes; then
       REPLACE_FPURGE=1
+      AC_LIBOBJ([fpurge])
     fi
   fi
   if test "x$ac_cv_have_decl_fpurge" = xno; then
     HAVE_DECL_FPURGE=0
-  fi
-  if test "$REPLACE_FPURGE$HAVE_DECL_FPURGE" != 01; then
-    AC_LIBOBJ([fpurge])
   fi
 ])

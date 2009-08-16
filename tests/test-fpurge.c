@@ -51,6 +51,8 @@ main ()
   if (fclose (fp))
     goto skip;
 
+  /* The file's contents is now "foobarsh".  */
+
   /* Open it in read-write mode.  */
   fp = fopen (TESTFILE, "r+");
   if (fp == NULL)
@@ -82,22 +84,30 @@ main ()
   ASSERT (getc (fp) == EOF);
   ASSERT (fclose (fp) == 0);
 
+  /* The file's contents is now "foogarsh".  */
+
   /* Ensure that purging a read does not corrupt subsequent writes.  */
   fp = fopen (TESTFILE, "r+");
-  ASSERT (fp);
-  ASSERT (fseek (fp, -1, SEEK_END) == 0);
+  if (fp == NULL)
+    goto skip;
+  if (fseek (fp, -1, SEEK_END))
+    goto skip;
   ASSERT (getc (fp) == 'h');
   ASSERT (getc (fp) == EOF);
   ASSERT (fpurge (fp) == 0);
   ASSERT (putc ('!', fp) == '!');
   ASSERT (fclose (fp) == 0);
   fp = fopen (TESTFILE, "r");
-  ASSERT (fp);
+  if (fp == NULL)
+    goto skip;
   {
-    char buf[9];
-    ASSERT (fread (buf, 1, 9, fp) == 9);
+    char buf[10];
+    ASSERT (fread (buf, 1, 10, fp) == 9);
     ASSERT (memcmp (buf, "foogarsh!", 9) == 0);
   }
+  ASSERT (fclose (fp) == 0);
+
+  /* The file's contents is now "foogarsh!".  */
 
   remove (TESTFILE);
   return 0;
