@@ -129,7 +129,7 @@ main ()
     }
 
   /* autodetect_jp is only supported when iconv() support ISO-2022-JP-2.  */
-# if defined _LIBICONV_VERSION || !(defined _AIX || defined __sgi || defined __hpux || defined __osf__)
+# if defined _LIBICONV_VERSION || !(defined _AIX || defined __sgi || defined __hpux || defined __osf__ || defined __sun)
   /* Test conversions from autodetect_jp to UTF-16.  */
   for (h = 0; h < SIZEOF (handlers); h++)
     {

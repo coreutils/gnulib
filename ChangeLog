@@ -1,6 +1,17 @@
 2009-08-16  Bruno Haible  <bruno@clisp.org>
 
 	Fix test failures on Solaris 10.
+	* tests/uniconv/test-u8-conv-from-enc.c (main): Disable autodetect_jp
+	tests when Solaris iconv() is used.
+	* tests/uniconv/test-u16-conv-from-enc.c (main): Likewise.
+	* tests/uniconv/test-u32-conv-from-enc.c (main): Likewise.
+	* tests/uniconv/test-u8-strconv-from-enc.c (main): Likewise.
+	* tests/uniconv/test-u16-strconv-from-enc.c (main): Likewise.
+	* tests/uniconv/test-u32-strconv-from-enc.c (main): Likewise.
+
+2009-08-16  Bruno Haible  <bruno@clisp.org>
+
+	Fix test failures on Solaris 10.
 	* tests/test-pipe-filter-ii1.sh: Determine the filename of a working
 	'tr' program and pass it as first argument.
 	* tests/test-pipe-filter-gi1.sh: Likewise.

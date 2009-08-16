@@ -1,5 +1,5 @@
 /* Test of conversion to UTF-8 from legacy encodings.
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -74,7 +74,7 @@ main ()
     }
 
   /* autodetect_jp is only supported when iconv() support ISO-2022-JP-2.  */
-# if defined _LIBICONV_VERSION || !(defined _AIX || defined __sgi || defined __hpux || defined __osf__)
+# if defined _LIBICONV_VERSION || !(defined _AIX || defined __sgi || defined __hpux || defined __osf__ || defined __sun)
   /* Test conversions from autodetect_jp to UTF-8.  */
   for (h = 0; h < SIZEOF (handlers); h++)
     {
