@@ -1,5 +1,12 @@
 2009-08-16  Bruno Haible  <bruno@clisp.org>
 
+	Clarify fpurge's effect on the file position.
+	* lib/stdio.in.h (fpurge): Specify the file position after fpurge.
+	* tests/test-fpurge.c (main): Make a second pass for checking the file
+	position.
+
+2009-08-16  Bruno Haible  <bruno@clisp.org>
+
 	* m4/fpurge.m4 (gl_FUNC_FPURGE): Don't compile fpurge.c if only the
 	declaration of fpurge is missing.
 	* tests/test-fpurge.c (main): Check that the file has not more contents

@@ -414,6 +414,9 @@ extern long rpl_ftell (FILE *fp);
 # if @REPLACE_FPURGE@ || !@HAVE_DECL_FPURGE@
   /* Discard all pending buffered I/O data on STREAM.
      STREAM must not be wide-character oriented.
+     When discarding pending output, the file position is set back to where it
+     was before the write calls.  When discarding pending input, the file
+     position is advanced to match the end of the previously read input.
      Return 0 if successful.  Upon error, return -1 and set errno.  */
   extern int fpurge (FILE *gl_stream);
 # endif
