@@ -105,16 +105,19 @@ done_read (void *data_read, size_t num_bytes_read, void *private_data)
 int
 main (int argc, char *argv[])
 {
+  const char *tr_program;
   const char *input_filename;
   size_t input_size;
   char *input;
 
   set_program_name (argv[0]);
 
-  ASSERT (argc == 2);
+  ASSERT (argc == 3);
+
+  tr_program = argv[1];
 
   /* Read some text from a file.  */
-  input_filename = argv[1];
+  input_filename = argv[2];
   input = read_binary_file (input_filename, &input_size);
   ASSERT (input != NULL);
 
@@ -129,12 +132,12 @@ main (int argc, char *argv[])
     l.nwritten = 0;
     l.nread = 0;
 
-    argv[0] = "tr";
+    argv[0] = tr_program;
     argv[1] = "a-z";
     argv[2] = "A-Z";
     argv[3] = NULL;
 
-    result = pipe_filter_ii_execute ("tr", "tr", argv, false, true,
+    result = pipe_filter_ii_execute ("tr", tr_program, argv, false, true,
 				     prepare_write, done_write,
 				     prepare_read, done_read,
 				     &l);

@@ -1,3 +1,13 @@
+2009-08-16  Bruno Haible  <bruno@clisp.org>
+
+	Fix test failures on Solaris 10.
+	* tests/test-pipe-filter-ii1.sh: Determine the filename of a working
+	'tr' program and pass it as first argument.
+	* tests/test-pipe-filter-gi1.sh: Likewise.
+	* tests/test-pipe-filter-ii1.c (main): Except the filename of a 'tr'
+	program as first argument.
+	* tests/test-pipe-filter-gi1.c (main): Likewise.
+
 2009-08-16  Eric Blake  <ebb9@byu.net>
 
 	fpurge: fix previous commits

@@ -1,7 +1,16 @@
 #!/bin/sh
+
+# Find a 'tr' program that supports character ranges in the POSIX syntax.
+# Solaris /usr/bin/tr does not.
+if test -f /usr/xpg4/bin/tr; then
+  TR=/usr/xpg4/bin/tr
+else
+  TR=tr
+fi
+
 # A small file.
-./test-pipe-filter-gi1${EXEEXT} "${srcdir}/test-pipe-filter-gi1.sh" || exit 1
+./test-pipe-filter-gi1${EXEEXT} ${TR} "${srcdir}/test-pipe-filter-gi1.sh" || exit 1
 # A medium-sized file.
-./test-pipe-filter-gi1${EXEEXT} "${srcdir}/test-pipe-filter-gi1.c" || exit 1
+./test-pipe-filter-gi1${EXEEXT} ${TR} "${srcdir}/test-pipe-filter-gi1.c" || exit 1
 # A large file.
-./test-pipe-filter-gi1${EXEEXT} "${srcdir}/test-vasnprintf-posix.c" || exit 1
+./test-pipe-filter-gi1${EXEEXT} ${TR} "${srcdir}/test-vasnprintf-posix.c" || exit 1
