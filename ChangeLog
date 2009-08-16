@@ -1,3 +1,12 @@
+2009-08-16  Eric Blake  <ebb9@byu.net>
+
+	fpurge: fix previous commits
+	* modules/fpurge (Makefile.am): Make replacement conditional,
+	partially reverting 2007-04-29 change; missed in previous
+	attempt.
+	* m4/fpurge.m4 (gl_FUNC_FPURGE): Also compile fpurge.c when fpurge
+	is missing.
+
 2009-08-16  Bruno Haible  <bruno@clisp.org>
 
 	Clarify fpurge's effect on the file position.
@@ -16,8 +25,8 @@
 
 	fpurge: don't wrap working cygwin implementation
 	* lib/fpurge.c (fpurge): Fix comment typo.
-	* modules/fpurge (Makefile.am): Make replacement conditional,
-	partially reverting 2007-04-29 change.
+	* m4/fpurge.m4 (gl_FUNC_FPURGE): Detect BSD bug, allowing cygwin
+	1.7 to avoid replacement.
 	* tests/test-fpurge.c (main): Enhance test.
 
 2009-08-15  Eric Blake  <ebb9@byu.net>

@@ -1,4 +1,4 @@
-# fpurge.m4 serial 5
+# fpurge.m4 serial 6
 dnl Copyright (C) 2007, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -36,6 +36,8 @@ AC_DEFUN([gl_FUNC_FPURGE],
       REPLACE_FPURGE=1
       AC_LIBOBJ([fpurge])
     fi
+  else
+    AC_LIBOBJ([fpurge])
   fi
   if test "x$ac_cv_have_decl_fpurge" = xno; then
     HAVE_DECL_FPURGE=0
