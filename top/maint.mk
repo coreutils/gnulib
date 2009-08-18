@@ -38,7 +38,8 @@ VC-tag = git tag -s -m '$(VERSION)' -u '$(gpg_key_ID)'
 VC_LIST = $(build_aux)/vc-list-files -C $(srcdir)
 
 VC_LIST_EXCEPT = \
-  $(VC_LIST) | if test -f $(srcdir)/.x-$@; then grep -vEf $(srcdir)/.x-$@; else grep -v ChangeLog; fi
+  $(VC_LIST) | if test -f $(srcdir)/.x-$@; then grep -vEf $(srcdir)/.x-$@; \
+	       else grep -Ev "$${VC_LIST_EXCEPT_DEFAULT-ChangeLog}"; fi
 
 ifeq ($(origin prev_version_file), undefined)
   prev_version_file = $(srcdir)/.prev-version
@@ -785,6 +786,6 @@ update-copyright-env ?=
 # in the file .x-update-copyright.
 .PHONY: update-copyright
 update-copyright:
-	grep -l -w Copyright $$($(VC_LIST_EXCEPT))		\
-		$(srcdir)/ChangeLog | grep -v COPYING		\
+	grep -l -w Copyright                                             \
+	  $$(export VC_LIST_EXCEPT_DEFAULT=COPYING && $(VC_LIST_EXCEPT)) \
 	  | $(update-copyright-env) xargs $(build_aux)/$@

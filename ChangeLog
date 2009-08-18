@@ -1,3 +1,12 @@
+2009-08-17  Joel E. Denny  <jdenny@clemson.edu>
+
+	maint.mk: give full control over update-copyright exclusions
+	* top/maint.mk (VC_LIST_EXCEPT): Instead of ChangeLog, use
+	${VC_LIST_EXCEPT_DEFAULT-ChangeLog} as the default exclusion.
+	(update-copyright): Don't force inclusion of top-level
+	ChangeLog.  Don't force exclusion of all COPYING files, but make
+	them the default exclusion instead.
+
 2009-08-16  Bruno Haible  <bruno@clisp.org>
 
 	Fix test failures on Solaris 10.
