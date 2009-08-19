@@ -4,12 +4,21 @@
 
 POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/popen.html}
 
-Gnulib module: ---
+Gnulib module: popen
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+Some platforms start the child with closed stdin or stdout if the
+standard descriptors were closed in the parent:
+Cygwin 1.5.x.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+Some platforms mistakenly set the close-on-exec bit, then if it is
+cleared by the application, the platform then leaks file descriptors
+from earlier @code{popen} calls into subsequent @code{popen} children:
+Cygwin 1.5.x.
 @end itemize

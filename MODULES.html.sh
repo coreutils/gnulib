@@ -2290,6 +2290,7 @@ func_all_modules ()
   func_module open
   func_module perror
   func_module poll
+  func_module popen
   func_module posix_spawn
   func_module posix_spawnattr_destroy
   func_module posix_spawnattr_getflags

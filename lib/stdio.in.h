@@ -479,6 +479,20 @@ extern int puts (const char *string);
 extern size_t fwrite (const void *ptr, size_t s, size_t n, FILE *stream);
 #endif
 
+#if @GNULIB_POPEN@
+# if @REPLACE_POPEN@
+#  undef popen
+#  define popen rpl_popen
+extern FILE *popen (const char *cmd, const char *mode);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef popen
+# define popen(c,m) \
+   (GL_LINK_WARNING ("popen is buggy on some platforms - " \
+                     "use gnulib module popen or pipe for more portability"), \
+    popen (c, m))
+#endif
+
 #if @GNULIB_GETDELIM@
 # if !@HAVE_DECL_GETDELIM@
 /* Read input, up to (and including) the next occurrence of DELIMITER, from

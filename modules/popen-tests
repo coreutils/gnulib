@@ -1,0 +1,12 @@
+Files:
+tests/test-popen.c
+
+Depends-on:
+dup2
+sys_wait
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-popen
+check_PROGRAMS += test-popen

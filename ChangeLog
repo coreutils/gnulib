@@ -1,3 +1,17 @@
+2009-08-19  Eric Blake  <ebb9@byu.net>
+
+	popen: fix cygwin 1.5 bug when stdin closed
+	* doc/posix-functions/popen.texi (popen): Document cygwin bugs.
+	* modules/popen: New file.
+	* modules/popen-tests: Likewise.
+	* tests/test-popen.c: Likewise.
+	* m4/popen.m4: Likewise.
+	* lib/popen.c: Likewise.
+	* lib/stdio.in.h (popen): New declaration.
+	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Add popen.
+	* modules/stdio (Makefile.am): Likewise.
+	* MODULES.html.sh (systems lacking POSIX:2008): Mention it.
+
 2009-08-17  Joel E. Denny  <jdenny@clemson.edu>
 
 	maint.mk: give full control over update-copyright exclusions
