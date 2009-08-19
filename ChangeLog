@@ -1,5 +1,16 @@
 2009-08-19  Eric Blake  <ebb9@byu.net>
 
+	popen-safer: prevent popen from clobbering std descriptors
+	* modules/popen-safer: New file.
+	* lib/popen-safer.c: Likewise.
+	* m4/stdio-safer.m4 (gl_POPEN_SAFER): New macro.
+	* lib/stdio--.h (popen): Provide override.
+	* lib/stdio-safer.h (popen_safer): Provide declaration.
+	* tests/test-popen.c (includes): Partially test this.
+	* modules/popen-safer-tests: New file, for more tests.
+	* tests/test-popen-safer.c: Likewise.
+	* MODULES.html.sh (file stream based Input/Output): Mention it.
+
 	tests: test some of the *-safer modules
 	* modules/fopen-safer (Depends-on): Add fopen.
 	* modules/fcntl-safer (Depends-on): Add fcntl.

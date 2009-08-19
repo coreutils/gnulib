@@ -29,3 +29,8 @@
 # undef tmpfile
 # define tmpfile tmpfile_safer
 #endif
+
+#if GNULIB_POPEN_SAFER
+# undef popen
+# define popen popen_safer
+#endif

@@ -2538,6 +2538,7 @@ func_all_modules ()
   func_module fwriting
   func_module getpass
   func_module getpass-gnu
+  func_module popen-safer
   func_module stdlib-safer
   func_module tmpfile-safer
   func_end_table

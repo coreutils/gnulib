@@ -27,6 +27,10 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
+#if GNULIB_POPEN_SAFER
+# include "stdio--.h"
+#endif
+
 #define ASSERT(expr) \
   do									     \
     {									     \

@@ -1,0 +1,12 @@
+Files:
+tests/test-popen-safer.c
+
+Depends-on:
+dup2
+sys_wait
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-popen-safer
+check_PROGRAMS += test-popen-safer
