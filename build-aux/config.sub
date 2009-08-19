@@ -4,7 +4,7 @@
 #   2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009
 #   Free Software Foundation, Inc.
 
-timestamp='2009-08-17'
+timestamp='2009-08-19'
 
 # This file is (in principle) common to ALL GNU software.
 # The presence of a machine in this file suggests that SOME GNU software
@@ -32,12 +32,15 @@ timestamp='2009-08-17'
 
 
 # Please send patches to <config-patches@gnu.org>.  Submit a context
-# diff and a properly formatted ChangeLog entry.
+# diff and a properly formatted GNU ChangeLog entry.
 #
 # Configuration subroutine to validate and canonicalize a configuration type.
 # Supply the specified configuration type as an argument.
 # If it is invalid, we print an error message on stderr and exit with code 1.
 # Otherwise, we print the canonical config type on stdout and succeed.
+
+# You can get the latest version of this script from:
+# http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD
 
 # This file is supposed to be the same for all GNU packages
 # and recognize all the CPU types, system types and aliases
