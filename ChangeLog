@@ -1,3 +1,10 @@
+2009-08-19  Akim Demaille  <demaille@gostai.com>
+
+	bootstrap: find sha1sum when named gsha1sum.
+	* bootstrap (find_tool): New.
+	($SHA1SUM): New.
+	Use it.
+
 2009-08-20  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: _header_without_use: fix a quoting bug and remove a bash'ism
