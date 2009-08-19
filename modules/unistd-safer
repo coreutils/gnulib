@@ -14,6 +14,7 @@ unistd
 
 configure.ac:
 gl_UNISTD_SAFER
+gl_MODULE_INDICATOR([unistd-safer])
 
 Makefile.am:
 

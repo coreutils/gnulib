@@ -1,5 +1,19 @@
 2009-08-19  Eric Blake  <ebb9@byu.net>
 
+	tests: test some of the *-safer modules
+	* modules/fopen-safer (Depends-on): Add fopen.
+	* modules/fcntl-safer (Depends-on): Add fcntl.
+	* modules/stdlib-safer (Depends-on): Add stdlib.
+	(configure.ac): Set indicator.
+	* modules/unistd-safer (configure.ac): Likewise.
+	* modules/tmpfile-safer (configure.ac): Likewise.
+	(Depends-on): Add tmpfile.
+	* lib/stdio--.h (fopen, tmpfile): Don't override unless module is
+	active.
+	* tests/test-fopen.c (includes): Test safer versions when they are
+	in use.
+	* tests/test-open.c (includes): Likewise.
+
 	popen: fix cygwin 1.5 bug when stdin closed
 	* doc/posix-functions/popen.texi (popen): Document cygwin bugs.
 	* modules/popen: New file.

@@ -9,10 +9,12 @@ m4/stdlib-safer.m4
 
 Depends-on:
 mkstemp
+stdlib
 unistd-safer
 
 configure.ac:
 gl_STDLIB_SAFER
+gl_MODULE_INDICATOR([stdlib-safer])
 
 Makefile.am:
 

@@ -9,10 +9,12 @@ m4/stdio-safer.m4
 
 Depends-on:
 binary-io
+tmpfile
 unistd-safer
 
 configure.ac:
 gl_TMPFILE_SAFER
+gl_MODULE_INDICATOR([tmpfile-safer])
 
 Makefile.am:
 

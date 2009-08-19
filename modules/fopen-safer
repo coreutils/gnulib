@@ -8,6 +8,7 @@ lib/fopen-safer.c
 m4/stdio-safer.m4
 
 Depends-on:
+fopen
 unistd-safer
 
 configure.ac:

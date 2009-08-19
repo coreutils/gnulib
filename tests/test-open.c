@@ -23,6 +23,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#if GNULIB_FCNTL_SAFER
+# include "fcntl--.h"
+#endif
+
 #define ASSERT(expr) \
   do									     \
     {									     \
