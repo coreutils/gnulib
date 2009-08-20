@@ -1,3 +1,14 @@
+2009-08-20  Eric Blake  <ebb9@byu.net>
+
+	build: avoid some compiler warnings
+	* lib/selinux-at.h: Use dir_fd, not dirfd, to avoid shadowing.
+	* lib/exclude.c (fnmatch_pattern_has_wildcards): Use correct
+	type.
+	(new_exclude_segment, excluded_file_pattern_p)
+	(excluded_file_name_p): Reduce scope.
+	* lib/vasnprintf.c (decimal_point_char): Avoid warning on
+	old-style declaration.
+
 2009-08-20  Simon Josefsson  <simon@josefsson.org>
 
 	* tests/test-exclude1.sh: Handle Windows EOL.
