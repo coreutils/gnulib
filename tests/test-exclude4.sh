@@ -32,7 +32,9 @@ cat > $TMP <<EOT
 foobar: 1
 EOT
 
-./test-exclude$EXEEXT -wildcards $LIST -- foobar | diff -c $TMP - || ERR=1
+./test-exclude$EXEEXT -wildcards $LIST -- foobar |
+ tr -d '\015' |
+ diff -c $TMP - || ERR=1
 
 rm -f $TMP $LIST
 exit $ERR

@@ -35,7 +35,9 @@ barz: 0
 foo/bar: 1
 EOT
 
-./test-exclude$EXEEXT -leading_dir $LIST -- bar bar/qux barz foo/bar | diff -c $TMP - || ERR=1
+./test-exclude$EXEEXT -leading_dir $LIST -- bar bar/qux barz foo/bar |
+ tr -d '\015' |
+ diff -c $TMP - || ERR=1
 
 rm -f $TMP $LIST
 exit $ERR

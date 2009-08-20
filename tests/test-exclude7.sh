@@ -33,8 +33,10 @@ bar: 1
 bar: 0
 EOT
 
-./test-exclude$EXEEXT $LIST -include $LIST -- bar >$TMP.1
-./test-exclude$EXEEXT -include $LIST -no-include $LIST -- bar >>$TMP.1
+./test-exclude$EXEEXT $LIST -include $LIST -- bar |
+ tr -d '\015' >$TMP.1
+./test-exclude$EXEEXT -include $LIST -no-include $LIST -- bar |
+ tr -d '\015' >>$TMP.1
 
 diff -c $TMP $TMP.1 || ERR=1
 

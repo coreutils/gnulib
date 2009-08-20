@@ -1,3 +1,13 @@
+2009-08-20  Simon Josefsson  <simon@josefsson.org>
+
+	* tests/test-exclude1.sh: Handle Windows EOL.
+	* tests/test-exclude2.sh: Likewise.
+	* tests/test-exclude3.sh: Likewise.
+	* tests/test-exclude4.sh: Likewise.
+	* tests/test-exclude5.sh: Likewise.
+	* tests/test-exclude6.sh: Likewise.
+	* tests/test-exclude7.sh: Likewise.
+
 2009-08-19  Akim Demaille  <demaille@gostai.com>
 
 	bootstrap: find sha1sum when named gsha1sum.

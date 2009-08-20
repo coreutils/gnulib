@@ -33,7 +33,9 @@ bar: 1
 foo/bar: 0
 EOT
 
-./test-exclude$EXEEXT -anchored $LIST -- bar foo/bar | diff -c $TMP - || ERR=1
+./test-exclude$EXEEXT -anchored $LIST -- bar foo/bar |
+ tr -d '\015' |
+ diff -c $TMP - || ERR=1
 
 rm -f $TMP $LIST
 exit $ERR

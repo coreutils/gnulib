@@ -37,7 +37,9 @@ baz: 1
 bar/qux: 1
 EOT
 
-./test-exclude$EXEEXT -include $LIST -- foo 'foo*' bar foobar baz bar/qux| diff -c $TMP - || ERR=1
+./test-exclude$EXEEXT -include $LIST -- foo 'foo*' bar foobar baz bar/qux |
+ tr -d '\015' |
+ diff -c $TMP - || ERR=1
 
 rm -f $TMP $LIST
 exit $ERR
