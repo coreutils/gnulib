@@ -27,9 +27,7 @@
 
 #include "cloexec.h"
 
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-# define O_CLOEXEC O_NOINHERIT
-#elif !defined O_CLOEXEC
+#ifndef O_CLOEXEC
 # define O_CLOEXEC 0
 #endif
 

@@ -67,12 +67,23 @@ extern void _gl_register_fd (int fd, const char *filename);
 }
 #endif
 
+/* Fix up the FD_* macros.  */
+
+#ifndef FD_CLOEXEC
+# define FD_CLOEXEC 1
+#endif
 
 /* Fix up the O_* macros.  */
 
 #if !defined O_DIRECT && defined O_DIRECTIO
 /* Tru64 spells it `O_DIRECTIO'.  */
 # define O_DIRECT O_DIRECTIO
+#endif
+
+#if !defined O_CLOEXEC && defined O_NOINHERIT
+/* Mingw spells it `O_NOINHERIT'.  Intentionally leave it
+   undefined if not available.  */
+# define O_CLOEXEC O_NOINHERIT
 #endif
 
 #ifndef O_DIRECT
