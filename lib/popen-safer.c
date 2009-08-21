@@ -27,18 +27,28 @@
 
 #include "cloexec.h"
 
-#ifndef O_CLOEXEC
-# define O_CLOEXEC 0
-#endif
-
 /* Like open (name, flags | O_CLOEXEC), although not necessarily
    atomic.  FLAGS must not include O_CREAT.  */
 
 static int
 open_noinherit (char const *name, int flags)
 {
-  int fd = open (name, flags | O_CLOEXEC);
-  if (0 <= fd && !O_CLOEXEC && set_cloexec_flag (fd, true) != 0)
+  int fd;
+#ifdef O_CLOEXEC
+  /* 0 = unknown, 1 = yes, -1 = no.  */
+  static int have_cloexec;
+  if (have_cloexec >= 0)
+    {
+      fd = open (name, flags | O_CLOEXEC);
+      if (have_cloexec == 0 && (0 <= fd || errno == EINVAL))
+	have_cloexec = (0 <= fd ? 1 : -1);
+      if (have_cloexec == 1)
+	return fd;
+    }
+#endif
+
+  fd = open (name, flags);
+  if (0 <= fd && set_cloexec_flag (fd, true) != 0)
     {
       int saved_errno = errno;
       close (fd);

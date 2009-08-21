@@ -1,5 +1,10 @@
 2009-08-21  Paolo Bonzini  <bonzini@gnu.org>
 
+	popen-safer: test O_CLOEXEC at run-time.
+	* lib/popen-safer.c: Test O_CLOEXEC at run-time.
+
+2009-08-21  Paolo Bonzini  <bonzini@gnu.org>
+
 	fcntl: move more flags to the header
 	* lib/cloexec.c: Do not define FD_CLOEXEC here.
 	* lib/popen-safer.c: Do not alias O_NOINHERIT to O_CLOEXEC here.
