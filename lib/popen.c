@@ -18,17 +18,6 @@
 
 #include <config.h>
 
-/* Get the original definition of popen.  It might be defined as a macro.  */
-#define __need_FILE
-# include <stdio.h>
-#undef __need_FILE
-
-static inline FILE *
-orig_popen (const char *filename, const char *mode)
-{
-  return popen (filename, mode);
-}
-
 /* Specification.  */
 #include <stdio.h>
 
@@ -36,6 +25,8 @@ orig_popen (const char *filename, const char *mode)
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
+
+#undef popen
 
 FILE *
 rpl_popen (const char *filename, const char *mode)
@@ -56,6 +47,15 @@ rpl_popen (const char *filename, const char *mode)
   int cloexec1 = fcntl (STDOUT_FILENO, F_GETFD);
   int saved_errno;
 
+  /* If either stdin or stdout was closed (that is, fcntl failed),
+     then we open a dummy close-on-exec fd to occupy that slot.  That
+     way, popen's internal use of pipe() will not contain either fd 0
+     or 1, overcoming the fact that the child process blindly calls
+     close() on the parent's end of the pipe without first checking
+     whether it is clobbering the fd just placed there via dup2(); the
+     exec will get rid of the dummy fd's in the child.  Fortunately,
+     closed stderr in the parent does not cause problems in the
+     child.  */
   if (cloexec0 < 0)
     {
       if (open ("/dev/null", O_RDONLY) != STDIN_FILENO
@@ -70,7 +70,8 @@ rpl_popen (const char *filename, const char *mode)
 		    fcntl (STDOUT_FILENO, F_GETFD) | FD_CLOEXEC) == -1)
 	abort ();
     }
-  result = orig_popen (filename, mode);
+  result = popen (filename, mode);
+  /* Now, close any dummy fd's created in the parent.  */
   saved_errno = errno;
   if (cloexec0 < 0)
     close (STDIN_FILENO);

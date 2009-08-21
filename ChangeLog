@@ -1,3 +1,10 @@
+2009-08-21  Eric Blake  <ebb9@byu.net>
+
+	popen: simplify access to original popen
+	* lib/popen.c (rpl_popen): No need to worry about popen being a
+	macro.
+	Reported by Bruno Haible.
+
 2009-08-20  Eric Blake  <ebb9@byu.net>
 
 	build: avoid some compiler warnings
