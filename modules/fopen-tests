@@ -1,4 +1,5 @@
 Files:
+tests/test-fopen.h
 tests/test-fopen.c
 
 Depends-on:

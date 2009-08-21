@@ -1,0 +1,11 @@
+Files:
+tests/test-fopen.h
+tests/test-fopen-safer.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-fopen-safer
+check_PROGRAMS += test-fopen-safer

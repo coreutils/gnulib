@@ -1,3 +1,13 @@
+2009-08-21  Eric Blake  <ebb9@byu.net>
+
+	test-fopen-safer: split from test-fopen
+	* tests/test-fopen.c (main): Move...
+	* tests/test-fopen.h: ...into new file.
+	* tests/test-fopen-safer.c: New file.
+	* modules/fopen-tests (Files): Add test-fopen.h.
+	* modules/fopen-safer-tests: New file.
+	Suggested by Bruno Haible.
+
 2009-08-21  Paolo Bonzini  <bonzini@gnu.org>
 
 	popen-safer: test O_CLOEXEC at run-time.

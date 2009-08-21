@@ -16,8 +16,29 @@
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2007.  */
 
-#include <config.h>
+/* Include <config.h> and a form of <stdio.h> first.  */
 
-#include <stdio.h>
+#include <stdlib.h>
 
-#include "test-fopen.h"
+#define ASSERT(expr) \
+  do									     \
+    {									     \
+      if (!(expr))							     \
+        {								     \
+          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
+          fflush (stderr);						     \
+          abort ();							     \
+        }								     \
+    }									     \
+  while (0)
+
+int
+main ()
+{
+  ASSERT (fopen ("nonexist.ent/", "w") == NULL);
+  ASSERT (fopen ("/dev/null/", "r") == NULL);
+
+  ASSERT (fopen ("/dev/null", "r") != NULL);
+
+  return 0;
+}
