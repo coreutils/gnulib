@@ -1,0 +1,11 @@
+Files:
+tests/test-open.h
+tests/test-fcntl-safer.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-fcntl-safer
+check_PROGRAMS += test-fcntl-safer

@@ -18,6 +18,6 @@
 
 #include <config.h>
 
-#include <fcntl.h>
+#include "fcntl--.h"
 
 #include "test-open.h"

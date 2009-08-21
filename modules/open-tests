@@ -1,4 +1,5 @@
 Files:
+tests/test-open.h
 tests/test-open.c
 
 Depends-on:

@@ -16,8 +16,30 @@
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2007.  */
 
-#include <config.h>
+/* Include <config.h> and a form of <fcntl.h> first.  */
 
-#include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-#include "test-open.h"
+#define ASSERT(expr) \
+  do									     \
+    {									     \
+      if (!(expr))							     \
+        {								     \
+          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
+          fflush (stderr);						     \
+          abort ();							     \
+        }								     \
+    }									     \
+  while (0)
+
+int
+main ()
+{
+  ASSERT (open ("nonexist.ent/", O_CREAT | O_RDONLY, 0600) < 0);
+  ASSERT (open ("/dev/null/", O_RDONLY) < 0);
+
+  ASSERT (open ("/dev/null", O_RDONLY) >= 0);
+
+  return 0;
+}

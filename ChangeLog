@@ -1,5 +1,13 @@
 2009-08-21  Eric Blake  <ebb9@byu.net>
 
+	test-fcntl-safer: split from test-open
+	* tests/test-open.c (main): Move...
+	* tests/test-open.h: ...into new file.
+	* tests/test-fcntl-safer.c: New file.
+	* modules/open-tests (Files): Add test-open.h.
+	* modules/fcntl-safer-tests: New file.
+	Suggested by Bruno Haible.
+
 	test-fopen-safer: split from test-fopen
 	* tests/test-fopen.c (main): Move...
 	* tests/test-fopen.h: ...into new file.
