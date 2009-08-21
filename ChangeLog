@@ -1,3 +1,17 @@
+2009-08-21  Jim Meyering  <meyering@redhat.com>
+
+	consistently remove $@-t before redirecting to it
+	* modules/argz: Remove $@-t and $@ before redirecting to the former.
+	* modules/alloca-opt: Likewise.
+	* modules/byteswap: Likewise.
+	* modules/fnmatch: Likewise.
+	* modules/getopt-posix: Likewise.
+	* modules/glob: Likewise.
+	* modules/poll: Likewise.
+	* modules/posix_spawnp-tests: Likewise.
+	* modules/sys_socket: Likewise.
+	* modules/sysexits: Likewise.
+
 2009-08-21  Eric Blake  <ebb9@byu.net>
 
 	popen: simplify access to original popen

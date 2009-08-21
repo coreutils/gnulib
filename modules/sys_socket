@@ -23,6 +23,7 @@ BUILT_SOURCES += $(SYS_SOCKET_H)
 # doesn't have one that works with the given compiler.
 sys/socket.h: sys_socket.in.h
 	@MKDIR_P@ sys
+	rm -f $@-t $@
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
 	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \

@@ -18,6 +18,7 @@ BUILT_SOURCES += $(ALLOCA_H)
 # We need the following in order to create <alloca.h> when the system
 # doesn't have one that works with the given compiler.
 alloca.h: alloca.in.h
+	rm -f $@-t $@
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  cat $(srcdir)/alloca.in.h; \
 	} > $@-t

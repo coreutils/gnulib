@@ -22,6 +22,7 @@ BUILT_SOURCES += $(GETOPT_H)
 # We need the following in order to create <getopt.h> when the system
 # doesn't have one that works with the given compiler.
 getopt.h: getopt.in.h
+	rm -f $@-t $@
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  cat $(srcdir)/getopt.in.h; \
 	} > $@-t

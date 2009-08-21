@@ -36,12 +36,14 @@ check_PROGRAMS += test-posix_spawn1 test-posix_spawn2
 
 BUILT_SOURCES += test-posix_spawn1.sh
 test-posix_spawn1.sh: test-posix_spawn1.in.sh
+	rm -f $@-t $@
 	cp $(srcdir)/test-posix_spawn1.in.sh $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += test-posix_spawn1.sh test-posix_spawn1.sh-t
 
 BUILT_SOURCES += test-posix_spawn2.sh
 test-posix_spawn2.sh: test-posix_spawn2.in.sh
+	rm -f $@-t $@
 	cp $(srcdir)/test-posix_spawn2.in.sh $@-t
 	mv $@-t $@
 MOSTLYCLEANFILES += test-posix_spawn2.sh test-posix_spawn2.sh-t
