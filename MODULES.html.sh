@@ -2251,7 +2251,7 @@ func_all_modules ()
   func_module errno
   func_module fchdir
   func_module fclose
-  func_module fcntl
+  func_module fcntl-h
   func_module flock
   func_module fopen
   func_module fprintf-posix

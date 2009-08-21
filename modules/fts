@@ -13,7 +13,7 @@ d-ino
 d-type
 dirfd
 fchdir
-fcntl
+fcntl-h
 fcntl-safer
 hash
 i-ring

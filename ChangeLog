@@ -1,3 +1,24 @@
+2009-08-23  Eric Blake  <ebb9@byu.net>
+
+	fcntl-h: rename from fcntl, in preparation for fcntl(2)
+	* modules/fcntl: Move <fcntl.h> header replacement...
+	* modules/fcntl-h: ...to new name, so as not to collide with
+	like-named function.
+	* tests/test-fcntl.c: Rename...
+	* tests/test-fcntl-h.c: ...to this.  Test FD_CLOEXEC.
+	* modules/fcntl-tests: Rename...
+	* modules/fcntl-h-tests: ...to this.  Update test file name.
+	* modules/chdir-long (Depends-on): Update clients.
+	* modules/chdir-safer (Depends-on): Likewise.
+	* modules/fcntl-safer (Depends-on): Likewise.
+	* modules/fts (Depends-on): Likewise.
+	* modules/mkancesdirs (Depends-on): Likewise.
+	* modules/mkdir-p (Depends-on): Likewise.
+	* modules/open (Depends-on): Likewise.
+	* modules/savewd (Depends-on): Likewise.
+	* MODULES.html.sh (systems lacking POSIX:2008): Update name.
+	* doc/posix-headers/fcntl.texi (fcntl.h): Update documentation.
+
 2009-08-22  Bruno Haible  <bruno@clisp.org>
 
 	* modules/binary-io (License): Relicense under LGPL.

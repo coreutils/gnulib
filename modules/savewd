@@ -11,7 +11,7 @@ dirname
 exit
 fchdir
 fcntl-safer
-fcntl
+fcntl-h
 raise
 stdbool
 xalloc

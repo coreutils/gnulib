@@ -8,7 +8,7 @@ m4/chdir-safer.m4
 
 Depends-on:
 fchdir
-fcntl
+fcntl-h
 open
 same-inode
 stdbool

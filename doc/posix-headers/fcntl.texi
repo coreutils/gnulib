@@ -3,13 +3,14 @@
 
 POSIX specification: @url{http://www.opengroup.org/susv3xbd/fcntl.h.html}
 
-Gnulib module: fcntl
+Gnulib module: fcntl-h
 
 Portability problems fixed by Gnulib:
 @itemize
 @item
 @samp{O_NOCTTY}, @samp{O_DSYNC}, @samp{O_NONBLOCK}, @samp{O_RSYNC},
-@samp{O_SYNC} are not defined on some platforms.
+@samp{O_SYNC}, @samp{O_DIRECTORY}, and @samp{O_NOFOLLOW} are not
+defined on some platforms.
 
 @item
 @samp{O_BINARY}, @samp{O_TEXT} (not specified by POSIX, but essential for
@@ -17,11 +18,41 @@ portability to Woe32 platforms) are defined on some platforms but not on
 others.
 
 @item
-@samp{O_DIRECT}, @samp{O_DIRECTORY}, @samp{O_NDELAY}, @samp{O_NOATIME},
-@samp{O_NOFOLLOW}, @samp{O_NOLINKS} (not specified by POSIX) are defined
+@samp{O_DIRECT}, @samp{O_NDELAY}, @samp{O_NOATIME},
+and @samp{O_NOLINKS} (not specified by POSIX) are defined
 on some platforms but not on others.
+
+@item
+@samp{FD_CLOEXEC} is not defined on some platforms:
+mingw
+
+@item
+@samp{AT_FDCWD} and friends are provided by modules like openat.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+@samp{O_CLOEXEC} is not defined on some platforms.  The gnulib
+replacement is not atomic on these platforms.
+
+@item
+@samp{O_TTY_INIT}, @samp{O_SEARCH}, and @samp{O_EXEC} are not defined
+on some platforms.
+
+@item
+@samp{F_DUPFD}, @samp{F_DUPFD_CLOEXEC}, @samp{F_GETFD}, and
+@samp{F_SETFD} are not defined on some platforms:
+mingw
+
+@item
+@samp{F_GETFL}, @samp{F_SETFL}, @samp{F_GETLK}, @samp{F_SETLK},
+@samp{F_SETLOKW}, @samp{F_GETOWN}, and @samp{F_SETOWN} are not defined
+on some platforms.
+
+@item
+@samp{POSIX_FADV_DONTNEED}, @samp{POSIX_FADV_NOREUSE},
+@samp{POSIX_FADV_NORMAL}, @samp{POSIX_FADV_RANDOM},
+@samp{POSIX_FADV_SEQUENTIAL}, and @samp{POSIX_FADV_WILLNEED} are not
+defined on some platforms.
 @end itemize

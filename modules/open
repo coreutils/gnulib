@@ -7,7 +7,7 @@ m4/open.m4
 m4/mode_t.m4
 
 Depends-on:
-fcntl
+fcntl-h
 
 configure.ac:
 gl_FUNC_OPEN

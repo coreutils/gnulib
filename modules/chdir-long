@@ -9,7 +9,7 @@ m4/chdir-long.m4
 Depends-on:
 atexit
 fchdir
-fcntl
+fcntl-h
 openat
 memchr
 mempcpy

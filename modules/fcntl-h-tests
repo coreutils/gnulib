@@ -1,0 +1,13 @@
+Files:
+tests/test-fcntl-h.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-fcntl-h
+check_PROGRAMS += test-fcntl-h
+
+License:
+LGPL

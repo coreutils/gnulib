@@ -8,7 +8,7 @@ m4/mkancesdirs.m4
 
 Depends-on:
 dirname
-fcntl
+fcntl-h
 savewd
 stat-macros
 sys_stat
