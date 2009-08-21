@@ -1,5 +1,7 @@
 Files:
+tests/test-popen.h
 tests/test-popen-safer.c
+tests/test-popen-safer2.c
 
 Depends-on:
 dup2
@@ -8,5 +10,5 @@ sys_wait
 configure.ac:
 
 Makefile.am:
-TESTS += test-popen-safer
-check_PROGRAMS += test-popen-safer
+TESTS += test-popen-safer test-popen-safer2
+check_PROGRAMS += test-popen-safer test-popen-safer2

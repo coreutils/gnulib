@@ -19,6 +19,6 @@
 #include <config.h>
 
 /* Specification.  */
-#include <stdio.h>
+#include "stdio--.h"
 
 #include "test-popen.h"

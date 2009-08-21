@@ -1,4 +1,5 @@
 Files:
+tests/test-popen.h
 tests/test-popen.c
 
 Depends-on:

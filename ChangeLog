@@ -1,5 +1,13 @@
 2009-08-21  Eric Blake  <ebb9@byu.net>
 
+	test-popen-safer: split from test-popen
+	* tests/test-popen.c (main): Move...
+	* tests/test-popen.h: ...into new file.
+	* tests/test-popen-safer2.c: New file.
+	* modules/popen-tests (Files): Add test-popen.h.
+	* modules/popen-safer-tests (Files): Add test-popen-safer2.c.
+	Suggested by Bruno Haible.
+
 	test-fcntl-safer: split from test-open
 	* tests/test-open.c (main): Move...
 	* tests/test-open.h: ...into new file.
