@@ -248,9 +248,9 @@ filter_init (struct pipe_filter_gi *filter)
     int fcntl_flags;
 
     if ((fcntl_flags = fcntl (filter->fd[1], F_GETFL, 0)) < 0
-	|| fcntl (filter->fd[1], F_SETFL, fcntl_flags | O_NONBLOCK) < 0
+	|| fcntl (filter->fd[1], F_SETFL, fcntl_flags | O_NONBLOCK) == -1
 	|| (fcntl_flags = fcntl (filter->fd[0], F_GETFL, 0)) < 0
-	|| fcntl (filter->fd[0], F_SETFL, fcntl_flags | O_NONBLOCK) < 0)
+	|| fcntl (filter->fd[0], F_SETFL, fcntl_flags | O_NONBLOCK) == -1)
       {
 	if (filter->exit_on_error)
 	  error (EXIT_FAILURE, errno,

@@ -289,9 +289,9 @@ pipe_filter_ii_execute (const char *progname,
       int fcntl_flags;
 
       if ((fcntl_flags = fcntl (fd[1], F_GETFL, 0)) < 0
-	  || fcntl (fd[1], F_SETFL, fcntl_flags | O_NONBLOCK) < 0
+	  || fcntl (fd[1], F_SETFL, fcntl_flags | O_NONBLOCK) == -1
 	  || (fcntl_flags = fcntl (fd[0], F_GETFL, 0)) < 0
-	  || fcntl (fd[0], F_SETFL, fcntl_flags | O_NONBLOCK) < 0)
+	  || fcntl (fd[0], F_SETFL, fcntl_flags | O_NONBLOCK) == -1)
 	{
 	  if (exit_on_error)
 	    error (EXIT_FAILURE, errno,
