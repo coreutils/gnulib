@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 # Generate a release announcement message.
 
-my $VERSION = '2009-08-21 21:46'; # UTC
+my $VERSION = '2009-08-22 08:05'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -35,31 +35,6 @@ use POSIX qw(strftime);
 
 my %valid_release_types = map {$_ => 1} qw (alpha beta major);
 my @archive_suffixes = ('tar.gz', 'tar.bz2', 'tar.lzma', 'tar.xz');
-
-END
-{
-  # Nobody ever checks the status of print()s.  That's okay, because
-  # if any do fail, we're guaranteed to get an indicator when we close()
-  # the filehandle.
-  #
-  # Close stdout now, and if there were no errors, return happy status.
-  # If stdout has already been closed by the script, though, do nothing.
-  defined fileno STDOUT
-    or return;
-  close STDOUT
-    and return;
-
-  # Errors closing stdout.  Indicate that, and hope stderr is OK.
-  warn "$ME: closing standard output: $!\n";
-
-  # Don't be so arrogant as to assume that we're the first END handler
-  # defined, and thus the last one invoked.  There may be others yet
-  # to come.  $? will be passed on to them, and to the final _exit().
-  #
-  # If it isn't already an error, make it one (and if it _is_ an error,
-  # preserve the value: it might be important).
-  $? ||= 1;
-}
 
 sub usage ($)
 {
@@ -498,14 +473,6 @@ EOF
     or print_changelog_deltas ($package_name, $prev_version);
 
   exit 0;
-}
-
-# use File::Coda; # http://meyering.net/code/Coda/
-END {
-  defined fileno STDOUT or return;
-  close STDOUT and return;
-  warn "$ME: failed to close standard output: $!\n";
-  $? ||= 1;
 }
 
 ### Setup "GNU" style for perl-mode and cperl-mode.
