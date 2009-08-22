@@ -133,12 +133,12 @@ create_pipe (const char *progname,
   prog_argv = prepare_spawn (prog_argv);
 
   if (pipe_stdout)
-    if (_pipe (ifd, 4096, O_BINARY | O_NOINHERIT) < 0
+    if (pipe2 (ifd, O_BINARY | O_NOINHERIT) < 0
 	|| (ifd[0] = fd_safer_noinherit (ifd[0])) < 0
 	|| (ifd[1] = fd_safer_noinherit (ifd[1])) < 0)
       error (EXIT_FAILURE, errno, _("cannot create pipe"));
   if (pipe_stdin)
-    if (_pipe (ofd, 4096, O_BINARY | O_NOINHERIT) < 0
+    if (pipe2 (ofd, O_BINARY | O_NOINHERIT) < 0
 	|| (ofd[0] = fd_safer_noinherit (ofd[0])) < 0
 	|| (ofd[1] = fd_safer_noinherit (ofd[1])) < 0)
       error (EXIT_FAILURE, errno, _("cannot create pipe"));

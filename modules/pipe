@@ -15,6 +15,7 @@ exit
 fatal-signal
 gettext-h
 open
+pipe2
 spawn
 posix_spawnp
 posix_spawn_file_actions_init
