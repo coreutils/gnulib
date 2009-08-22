@@ -1,3 +1,15 @@
+2009-08-22  Bruno Haible  <bruno@clisp.org>
+
+	Reference some new glibc functions.
+	* doc/glibc-functions/accept4.texi: New file.
+	* doc/glibc-functions/dup3.texi: New file.
+	* doc/glibc-functions/mkostemp.texi: New file.
+	* doc/glibc-functions/pipe2.texi: New file.
+	* doc/gnulib.texi (Glibc stdlib.h): Refer to mkostemp.
+	(Glibc sys/socket.h): Refer to accept4.
+	(Glibc unistd.h): Refer to dup3, pipe2.
+	Reported by Eric Blake.
+
 2009-08-22  Jim Meyering  <meyering@redhat.com>
 	    Bruno Haible  <bruno@clisp.org>
 

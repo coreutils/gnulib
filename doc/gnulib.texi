@@ -5063,6 +5063,7 @@ This list of functions is sorted according to the header that declares them.
 * jrand48_r::
 * lcong48_r::
 * lrand48_r::
+* mkostemp::
 * mrand48_r::
 * nrand48_r::
 * on_exit::
@@ -5103,6 +5104,7 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/jrand48_r.texi
 @include glibc-functions/lcong48_r.texi
 @include glibc-functions/lrand48_r.texi
+@include glibc-functions/mkostemp.texi
 @include glibc-functions/mrand48_r.texi
 @include glibc-functions/nrand48_r.texi
 @include glibc-functions/on_exit.texi
@@ -5370,9 +5372,11 @@ This list of functions is sorted according to the header that declares them.
 @section Glibc Extensions to @code{<sys/socket.h>}
 
 @menu
+* accept4::
 * isfdtype::
 @end menu
 
+@include glibc-functions/accept4.texi
 @include glibc-functions/isfdtype.texi
 
 @node Glibc sys/stat.h
@@ -5655,6 +5659,7 @@ This list of functions is sorted according to the header that declares them.
 * brk::
 * chroot::
 * daemon::
+* dup3::
 * endusershell::
 * euidaccess::
 * get_current_dir_name::
@@ -5666,6 +5671,7 @@ This list of functions is sorted according to the header that declares them.
 * getresuid::
 * getusershell::
 * group_member::
+* pipe2::
 * profil::
 * revoke::
 * sbrk::
@@ -5685,6 +5691,7 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/brk.texi
 @include glibc-functions/chroot.texi
 @include glibc-functions/daemon.texi
+@include glibc-functions/dup3.texi
 @include glibc-functions/endusershell.texi
 @include glibc-functions/euidaccess.texi
 @include glibc-functions/get_current_dir_name.texi
@@ -5696,6 +5703,7 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/getresuid.texi
 @include glibc-functions/getusershell.texi
 @include glibc-functions/group_member.texi
+@include glibc-functions/pipe2.texi
 @include glibc-functions/profil.texi
 @include glibc-functions/revoke.texi
 @include glibc-functions/sbrk.texi
