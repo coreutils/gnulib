@@ -52,6 +52,7 @@ struct result_strings {
   char const *str4; /* Translation of " \t\n'\"\033?""?/\\".  */
   char const *str5; /* Translation of "a:b".  */
   char const *str6; /* Translation of "a\\b".  */
+  char const *str7; /* Translation of LQ RQ.  */
 };
 
 struct result_groups {
@@ -60,118 +61,140 @@ struct result_groups {
   struct result_strings group3; /* Via quotearg_colon{,_mem}.  */
 };
 
+/* These quotes are borrowed from a pt_PT.utf8 translation.  */
+# define LQ "\302\253"
+# define RQ "\302\273"
+# define LQ_ENC "\\302\\253"
+# define RQ_ENC "\\302\\273"
+# define RQ_ESC "\\\302\273"
+
 static struct result_strings inputs = {
-  "", "\0001\0", 3, "simple", " \t\n'\"\033?""?/\\", "a:b", "a\\b"
+  "", "\0001\0", 3, "simple", " \t\n'\"\033?""?/\\", "a:b", "a\\b",
+  LQ RQ
 };
 
 static struct result_groups results_g[] = {
   /* literal_quoting_style */
-  { { "", "\0""1\0", 3, "simple", " \t\n'\"\033?""?/\\", "a:b", "a\\b" },
-    { "", "1", 1, "simple", " \t\n'\"\033?""?/\\", "a:b", "a\\b" },
-    { "", "1", 1, "simple", " \t\n'\"\033?""?/\\", "a:b", "a\\b" } },
+  { { "", "\0""1\0", 3, "simple", " \t\n'\"\033?""?/\\", "a:b", "a\\b",
+      LQ RQ },
+    { "", "1", 1, "simple", " \t\n'\"\033?""?/\\", "a:b", "a\\b",
+      LQ RQ },
+    { "", "1", 1, "simple", " \t\n'\"\033?""?/\\", "a:b", "a\\b",
+      LQ RQ } },
 
   /* shell_quoting_style */
   { { "''", "\0""1\0", 3, "simple", "' \t\n'\\''\"\033?""?/\\'", "a:b",
-      "'a\\b'" },
+      "'a\\b'", LQ RQ },
     { "''", "1", 1, "simple", "' \t\n'\\''\"\033?""?/\\'", "a:b",
-      "'a\\b'" },
+      "'a\\b'", LQ RQ },
     { "''", "1", 1, "simple", "' \t\n'\\''\"\033?""?/\\'", "'a:b'",
-      "'a\\b'" } },
+      "'a\\b'", LQ RQ } },
 
   /* shell_always_quoting_style */
   { { "''", "'\0""1\0'", 5, "'simple'", "' \t\n'\\''\"\033?""?/\\'", "'a:b'",
-      "'a\\b'" },
+      "'a\\b'", "'" LQ RQ "'" },
     { "''", "'1'", 3, "'simple'", "' \t\n'\\''\"\033?""?/\\'", "'a:b'",
-      "'a\\b'" },
+      "'a\\b'", "'" LQ RQ "'" },
     { "''", "'1'", 3, "'simple'", "' \t\n'\\''\"\033?""?/\\'", "'a:b'",
-      "'a\\b'" } },
+      "'a\\b'", "'" LQ RQ "'" } },
 
   /* c_quoting_style */
   { { "\"\"", "\"\\0001\\0\"", 9, "\"simple\"",
-      "\" \\t\\n'\\\"\\033?""?/\\\\\"", "\"a:b\"", "\"a\\\\b\"" },
+      "\" \\t\\n'\\\"\\033?""?/\\\\\"", "\"a:b\"", "\"a\\\\b\"",
+      "\"" LQ_ENC RQ_ENC "\"" },
     { "\"\"", "\"\\0001\\0\"", 9, "\"simple\"",
-      "\" \\t\\n'\\\"\\033?""?/\\\\\"", "\"a:b\"", "\"a\\\\b\"" },
+      "\" \\t\\n'\\\"\\033?""?/\\\\\"", "\"a:b\"", "\"a\\\\b\"",
+      "\"" LQ_ENC RQ_ENC "\"" },
     { "\"\"", "\"\\0001\\0\"", 9, "\"simple\"",
-      "\" \\t\\n'\\\"\\033?""?/\\\\\"", "\"a\\:b\"", "\"a\\\\b\"" } },
+      "\" \\t\\n'\\\"\\033?""?/\\\\\"", "\"a\\:b\"", "\"a\\\\b\"",
+      "\"" LQ_ENC RQ_ENC "\"" } },
 
   /* c_maybe_quoting_style */
   { { "", "\"\\0001\\0\"", 9, "simple", "\" \\t\\n'\\\"\\033?""?/\\\\\"",
-      "a:b", "a\\b" },
+      "a:b", "a\\b", "\"" LQ_ENC RQ_ENC "\"" },
     { "", "\"\\0001\\0\"", 9, "simple", "\" \\t\\n'\\\"\\033?""?/\\\\\"",
-      "a:b", "a\\b" },
+      "a:b", "a\\b", "\"" LQ_ENC RQ_ENC "\"" },
     { "", "\"\\0001\\0\"", 9, "simple", "\" \\t\\n'\\\"\\033?""?/\\\\\"",
-      "\"a:b\"", "a\\b" } },
+      "\"a:b\"", "a\\b", "\"" LQ_ENC RQ_ENC "\"" } },
 
   /* escape_quoting_style */
   { { "", "\\0001\\0", 7, "simple", " \\t\\n'\"\\033?""?/\\\\", "a:b",
-      "a\\\\b" },
+      "a\\\\b", LQ_ENC RQ_ENC },
     { "", "\\0001\\0", 7, "simple", " \\t\\n'\"\\033?""?/\\\\", "a:b",
-      "a\\\\b" },
+      "a\\\\b", LQ_ENC RQ_ENC },
     { "", "\\0001\\0", 7, "simple", " \\t\\n'\"\\033?""?/\\\\", "a\\:b",
-      "a\\\\b" } },
+      "a\\\\b", LQ_ENC RQ_ENC } },
 
   /* locale_quoting_style */
   { { "`'", "`\\0001\\0'", 9, "`simple'", "` \\t\\n\\'\"\\033?""?/\\\\'",
-      "`a:b'", "`a\\\\b'" },
+      "`a:b'", "`a\\\\b'", "`" LQ_ENC RQ_ENC "'" },
     { "`'", "`\\0001\\0'", 9, "`simple'", "` \\t\\n\\'\"\\033?""?/\\\\'",
-      "`a:b'", "`a\\\\b'" },
+      "`a:b'", "`a\\\\b'", "`" LQ_ENC RQ_ENC "'" },
     { "`'", "`\\0001\\0'", 9, "`simple'", "` \\t\\n\\'\"\\033?""?/\\\\'",
-      "`a\\:b'", "`a\\\\b'" } },
+      "`a\\:b'", "`a\\\\b'", "`" LQ_ENC RQ_ENC "'" } },
 
   /* clocale_quoting_style */
   { { "\"\"", "\"\\0001\\0\"", 9, "\"simple\"",
-      "\" \\t\\n'\\\"\\033?""?/\\\\\"", "\"a:b\"", "\"a\\\\b\"" },
+      "\" \\t\\n'\\\"\\033?""?/\\\\\"", "\"a:b\"", "\"a\\\\b\"",
+      "\"" LQ_ENC RQ_ENC "\"" },
     { "\"\"", "\"\\0001\\0\"", 9, "\"simple\"",
-      "\" \\t\\n'\\\"\\033?""?/\\\\\"", "\"a:b\"", "\"a\\\\b\"" },
+      "\" \\t\\n'\\\"\\033?""?/\\\\\"", "\"a:b\"", "\"a\\\\b\"",
+      "\"" LQ_ENC RQ_ENC "\"" },
     { "\"\"", "\"\\0001\\0\"", 9, "\"simple\"",
-      "\" \\t\\n'\\\"\\033?""?/\\\\\"", "\"a\\:b\"", "\"a\\\\b\"" } }
+      "\" \\t\\n'\\\"\\033?""?/\\\\\"", "\"a\\:b\"", "\"a\\\\b\"",
+      "\"" LQ_ENC RQ_ENC "\"" } }
 };
 
 static struct result_groups flag_results[] = {
   /* literal_quoting_style and QA_ELIDE_NULL_BYTES */
-  { { "", "1", 1, "simple", " \t\n'\"\033?""?/\\", "a:b", "a\\b" },
-    { "", "1", 1, "simple", " \t\n'\"\033?""?/\\", "a:b", "a\\b" },
-    { "", "1", 1, "simple", " \t\n'\"\033?""?/\\", "a:b", "a\\b" } },
+  { { "", "1", 1, "simple", " \t\n'\"\033?""?/\\", "a:b", "a\\b", LQ RQ },
+    { "", "1", 1, "simple", " \t\n'\"\033?""?/\\", "a:b", "a\\b", LQ RQ },
+    { "", "1", 1, "simple", " \t\n'\"\033?""?/\\", "a:b", "a\\b", LQ RQ } },
 
   /* c_quoting_style and QA_ELIDE_OUTER_QUOTES */
   { { "", "\"\\0001\\0\"", 9, "simple", "\" \\t\\n'\\\"\\033?""?/\\\\\"",
-      "a:b", "a\\b" },
+      "a:b", "a\\b", "\"" LQ_ENC RQ_ENC "\"" },
     { "", "\"\\0001\\0\"", 9, "simple", "\" \\t\\n'\\\"\\033?""?/\\\\\"",
-      "a:b", "a\\b" },
+      "a:b", "a\\b", "\"" LQ_ENC RQ_ENC "\"" },
     { "", "\"\\0001\\0\"", 9, "simple", "\" \\t\\n'\\\"\\033?""?/\\\\\"",
-      "\"a:b\"", "a\\b" } },
+      "\"a:b\"", "a\\b", "\"" LQ_ENC RQ_ENC "\"" } },
 
   /* c_quoting_style and QA_SPLIT_TRIGRAPHS */
   { { "\"\"", "\"\\0001\\0\"", 9, "\"simple\"",
-      "\" \\t\\n'\\\"\\033?\"\"?/\\\\\"", "\"a:b\"", "\"a\\\\b\"" },
+      "\" \\t\\n'\\\"\\033?\"\"?/\\\\\"", "\"a:b\"", "\"a\\\\b\"",
+      "\"" LQ_ENC RQ_ENC "\"" },
     { "\"\"", "\"\\0001\\0\"", 9, "\"simple\"",
-      "\" \\t\\n'\\\"\\033?\"\"?/\\\\\"", "\"a:b\"", "\"a\\\\b\"" },
+      "\" \\t\\n'\\\"\\033?\"\"?/\\\\\"", "\"a:b\"", "\"a\\\\b\"",
+      "\"" LQ_ENC RQ_ENC "\"" },
     { "\"\"", "\"\\0001\\0\"", 9, "\"simple\"",
-      "\" \\t\\n'\\\"\\033?\"\"?/\\\\\"", "\"a\\:b\"", "\"a\\\\b\"" } }
+      "\" \\t\\n'\\\"\\033?\"\"?/\\\\\"", "\"a\\:b\"", "\"a\\\\b\"",
+      "\"" LQ_ENC RQ_ENC "\"" } }
 };
 
 #if ENABLE_NLS
 
-/* These quotes are borrowed from a pt_PT.utf8 translation.  */
-# define LQ "\302\253"
-# define RQ "\302\273"
-
 static struct result_groups locale_results[] = {
   /* locale_quoting_style */
   { { LQ RQ, LQ "\\0001\\0" RQ, 11, LQ "simple" RQ,
-      LQ " \\t\\n'\"\\033?""?/\\\\" RQ, LQ "a:b" RQ, LQ "a\\\\b" RQ },
+      LQ " \\t\\n'\"\\033?""?/\\\\" RQ, LQ "a:b" RQ, LQ "a\\\\b" RQ,
+      LQ LQ RQ_ESC RQ },
     { LQ RQ, LQ "\\0001\\0" RQ, 11, LQ "simple" RQ,
-      LQ " \\t\\n'\"\\033?""?/\\\\" RQ, LQ "a:b" RQ, LQ "a\\\\b" RQ },
+      LQ " \\t\\n'\"\\033?""?/\\\\" RQ, LQ "a:b" RQ, LQ "a\\\\b" RQ,
+      LQ LQ RQ_ESC RQ },
     { LQ RQ, LQ "\\0001\\0" RQ, 11, LQ "simple" RQ,
-      LQ " \\t\\n'\"\\033?""?/\\\\" RQ, LQ "a\\:b" RQ, LQ "a\\\\b" RQ } },
+      LQ " \\t\\n'\"\\033?""?/\\\\" RQ, LQ "a\\:b" RQ, LQ "a\\\\b" RQ,
+      LQ LQ RQ_ESC RQ } },
 
   /* clocale_quoting_style */
   { { LQ RQ, LQ "\\0001\\0" RQ, 11, LQ "simple" RQ,
-      LQ " \\t\\n'\"\\033?""?/\\\\" RQ, LQ "a:b" RQ, LQ "a\\\\b" RQ },
+      LQ " \\t\\n'\"\\033?""?/\\\\" RQ, LQ "a:b" RQ, LQ "a\\\\b" RQ,
+      LQ LQ RQ_ESC RQ },
     { LQ RQ, LQ "\\0001\\0" RQ, 11, LQ "simple" RQ,
-      LQ " \\t\\n'\"\\033?""?/\\\\" RQ, LQ "a:b" RQ, LQ "a\\\\b" RQ },
+      LQ " \\t\\n'\"\\033?""?/\\\\" RQ, LQ "a:b" RQ, LQ "a\\\\b" RQ,
+      LQ LQ RQ_ESC RQ },
     { LQ RQ, LQ "\\0001\\0" RQ, 11, LQ "simple" RQ,
-      LQ " \\t\\n'\"\\033?""?/\\\\" RQ, LQ "a\\:b" RQ, LQ "a\\\\b" RQ } }
+      LQ " \\t\\n'\"\\033?""?/\\\\" RQ, LQ "a\\:b" RQ, LQ "a\\\\b" RQ,
+      LQ LQ RQ_ESC RQ } }
 };
 
 #endif /* ENABLE_NLS */
@@ -214,6 +237,10 @@ compare_strings (char *(func) (char const *, size_t *),
   len = strlen (inputs.str6);
   p = func (inputs.str6, &len);
   compare (results->str6, strlen (results->str6), p, len);
+
+  len = strlen (inputs.str7);
+  p = func (inputs.str7, &len);
+  compare (results->str7, strlen (results->str7), p, len);
 }
 
 static char *

@@ -1,3 +1,15 @@
+2009-08-22  Joel E. Denny  <jdenny@clemson.edu>
+
+	quotearg-tests: test escaping of embedded locale quotes
+	* tests/test-quotearg.c (struct result_strings): Add member for
+	new input.
+	(LQ_ENC, RQ_ENC, RQ_ESC): New macros.
+	(inputs): Add new input.
+	(results_g): Add expected results.
+	(flag_results): Likewise.
+	(locale_results): Likewise.
+	(compare_strings): Check those.
+
 2009-08-23  Bruno Haible  <bruno@clisp.org>
 
 	Tests for module 'dup3'.
