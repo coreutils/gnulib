@@ -1,5 +1,17 @@
 2009-08-22  Bruno Haible  <bruno@clisp.org>
 
+	New module 'pipe2'.
+	* lib/unistd.in.h (pipe2): New declaration.
+	* lib/pipe2.c: New file.
+	* m4/pipe2.m4: New file.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize GNULIB_PIPE2 and
+	HAVE_PIPE2.
+	* modules/unistd (Makefile.am): Substitute GNULIB_PIPE2 and HAVE_PIPE2.
+	* modules/pipe2: New file.
+	* doc/glibc-functions/pipe2.texi: Mention the new module.
+
+2009-08-22  Bruno Haible  <bruno@clisp.org>
+
 	Reference some new glibc functions.
 	* doc/glibc-functions/accept4.texi: New file.
 	* doc/glibc-functions/dup3.texi: New file.

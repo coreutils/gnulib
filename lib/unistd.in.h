@@ -531,6 +531,25 @@ extern int link (const char *path1, const char *path2);
 #endif
 
 
+#if @GNULIB_PIPE2@
+/* Create a pipe, applying the given flags when opening the read-end of the
+   pipe and the write-end of the pipe.
+   The flags are a bitmask, possibly including O_CLOEXEC (defined in <fcntl.h>)
+   and O_TEXT, O_BINARY (defined in "binary-io.h").
+   Store the read-end as fd[0] and the write-end as fd[1].
+   Return 0 upon success, or -1 with errno set upon failure.  */
+# if !@HAVE_PIPE2@
+extern int pipe2 (int fd[2], int flags);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef pipe2
+# define pipe2(f,o) \
+    (GL_LINK_WARNING ("pipe2 is unportable - " \
+                      "use gnulib module pipe2 for portability"), \
+     pipe2 (f, o))
+#endif
+
+
 #if @GNULIB_READLINK@
 /* Read the contents of the symbolic link FILE and place the first BUFSIZE
    bytes of it into BUF.  Return the number of bytes placed into BUF if
