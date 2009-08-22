@@ -1,3 +1,8 @@
+2009-08-22  Jim Meyering  <meyering@redhat.com>
+
+	announce-gen: detect write failure
+	* build-aux/announce-gen: Add Coda.
+
 2009-08-19  Akim Demaille  <demaille@gostai.com>
 
 	bootstrap: --help to stdout.

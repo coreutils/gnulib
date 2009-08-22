@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 # Generate a release announcement message.
 
-my $VERSION = '2009-03-05 09:52'; # UTC
+my $VERSION = '2009-08-21 21:46'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -498,6 +498,14 @@ EOF
     or print_changelog_deltas ($package_name, $prev_version);
 
   exit 0;
+}
+
+# use File::Coda; # http://meyering.net/code/Coda/
+END {
+  defined fileno STDOUT or return;
+  close STDOUT and return;
+  warn "$ME: failed to close standard output: $!\n";
+  $? ||= 1;
 }
 
 ### Setup "GNU" style for perl-mode and cperl-mode.
