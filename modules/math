@@ -18,7 +18,7 @@ BUILT_SOURCES += math.h
 # We need the following in order to create <math.h> when the system
 # doesn't have one that works with the given compiler.
 math.h: math.in.h
-	rm -f $@-t $@
+	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's|@''INCLUDE_NEXT_AS_FIRST_DIRECTIVE''@|$(INCLUDE_NEXT_AS_FIRST_DIRECTIVE)|g' \
 	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
@@ -80,7 +80,7 @@ math.h: math.in.h
 	      -e 's|@''REPLACE_TRUNCL''@|$(REPLACE_TRUNCL)|g' \
 	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
 	      < $(srcdir)/math.in.h; \
-	} > $@-t
+	} > $@-t && \
 	mv $@-t $@
 MOSTLYCLEANFILES += math.h math.h-t
 

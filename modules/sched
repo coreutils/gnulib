@@ -17,7 +17,7 @@ BUILT_SOURCES += $(SCHED_H)
 # We need the following in order to create a replacement for <sched.h> when
 # the system doesn't have one.
 sched.h: sched.in.h
-	rm -f $@-t $@
+	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|@''HAVE_SCHED_H''@|$(HAVE_SCHED_H)|g' \
 	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
@@ -25,7 +25,7 @@ sched.h: sched.in.h
 	      -e 's|@''NEXT_SCHED_H''@|$(NEXT_SCHED_H)|g' \
 	      -e 's|@''HAVE_STRUCT_SCHED_PARAM''@|$(HAVE_STRUCT_SCHED_PARAM)|g' \
 	      < $(srcdir)/sched.in.h; \
-	} > $@-t
+	} > $@-t && \
 	mv $@-t $@
 MOSTLYCLEANFILES += sched.h sched.h-t
 

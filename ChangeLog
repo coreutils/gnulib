@@ -1,4 +1,63 @@
 2009-08-22  Jim Meyering  <meyering@redhat.com>
+	    Bruno Haible  <bruno@clisp.org>
+
+	annotate automake snippets with $(AM_V_GEN) and $(AM_V_at)
+	This makes it so packages using automake-1.11's silent-rules option
+	can print e.g., a single "GEN    configmake.h" line, rather than
+	the 30+ statements that perform the job.  If you want to see the
+	actual commands, you can still run "make V=1".
+	* modules/alloca-opt: Add $(AM_V_GEN) and $(AM_V_at) prefixes
+	so that make output is abbreviated when those variables are defined
+	appropriately.
+	* modules/argz: Likewise.
+	* modules/arpa_inet: Likewise.
+	* modules/byteswap: Likewise.
+	* modules/configmake: Likewise.
+	* modules/dirent: Likewise.
+	* modules/errno: Likewise.
+	* modules/fcntl: Likewise.
+	* modules/float: Likewise.
+	* modules/fnmatch: Likewise.
+	* modules/getopt-posix: Likewise.
+	* modules/glob: Likewise.
+	* modules/iconv_open: Likewise.
+	* modules/inttypes: Likewise.
+	* modules/localcharset: Likewise.
+	* modules/locale: Likewise.
+	* modules/math: Likewise.
+	* modules/netdb: Likewise.
+	* modules/netinet_in: Likewise.
+	* modules/poll: Likewise.
+	* modules/posix_spawnp-tests: Likewise.
+	* modules/sched: Likewise.
+	* modules/search: Likewise.
+	* modules/selinux-h: Likewise.
+	* modules/signal: Likewise.
+	* modules/spawn: Likewise.
+	* modules/stdarg: Likewise.
+	* modules/stdbool: Likewise.
+	* modules/stddef: Likewise.
+	* modules/stdint: Likewise.
+	* modules/stdio: Likewise.
+	* modules/stdlib: Likewise.
+	* modules/string: Likewise.
+	* modules/strings: Likewise.
+	* modules/sys_file: Likewise.
+	* modules/sys_ioctl: Likewise.
+	* modules/sys_select: Likewise.
+	* modules/sys_socket: Likewise.
+	* modules/sys_stat: Likewise.
+	* modules/sys_time: Likewise.
+	* modules/sys_times: Likewise.
+	* modules/sys_utsname: Likewise.
+	* modules/sys_wait: Likewise.
+	* modules/sysexits: Likewise.
+	* modules/time: Likewise.
+	* modules/unistd: Likewise.
+	* modules/wchar: Likewise.
+	* modules/wctype: Likewise.
+
+2009-08-22  Jim Meyering  <meyering@redhat.com>
 
 	announce-gen: detect write failure
 	* build-aux/announce-gen: Add Coda at end.

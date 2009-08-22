@@ -20,7 +20,7 @@ BUILT_SOURCES += string.h
 # We need the following in order to create <string.h> when the system
 # doesn't have one that works with the given compiler.
 string.h: string.in.h
-	rm -f $@-t $@
+	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
 	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
@@ -85,7 +85,7 @@ string.h: string.in.h
 	      -e 's|@''REPLACE_STRSIGNAL''@|$(REPLACE_STRSIGNAL)|g' \
 	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
 	      < $(srcdir)/string.in.h; \
-	} > $@-t
+	} > $@-t && \
 	mv $@-t $@
 MOSTLYCLEANFILES += string.h string.h-t
 

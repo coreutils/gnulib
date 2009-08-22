@@ -20,19 +20,19 @@ lib_SOURCES += se-context.in.h se-selinux.in.h
 
 BUILT_SOURCES += $(SELINUX_SELINUX_H)
 selinux/selinux.h: se-selinux.in.h
-	rm -f $@-t $@
-	$(MKDIR_P) selinux
-	cp $(srcdir)/se-selinux.in.h $@-t
-	chmod a-x $@-t
+	$(AM_V_at)$(MKDIR_P) selinux
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	cp $(srcdir)/se-selinux.in.h $@-t && \
+	chmod a-x $@-t && \
 	mv $@-t $@
 MOSTLYCLEANFILES += selinux/selinux.h selinux/selinux.h-t
 
 BUILT_SOURCES += $(SELINUX_CONTEXT_H)
 selinux/context.h: se-context.in.h
-	rm -f $@-t $@
-	$(MKDIR_P) selinux
-	cp $(srcdir)/se-context.in.h $@-t
-	chmod a-x $@-t
+	$(AM_V_at)$(MKDIR_P) selinux
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	cp $(srcdir)/se-context.in.h $@-t && \
+	chmod a-x $@-t && \
 	mv $@-t $@
 MOSTLYCLEANFILES += selinux/context.h selinux/context.h-t
 MOSTLYCLEANDIRS += selinux

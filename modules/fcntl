@@ -19,7 +19,7 @@ BUILT_SOURCES += $(FCNTL_H)
 # We need the following in order to create <fcntl.h> when the system
 # doesn't have one that works with the given compiler.
 fcntl.h: fcntl.in.h
-	rm -f $@-t $@
+	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
 	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
@@ -27,7 +27,7 @@ fcntl.h: fcntl.in.h
 	      -e 's|@''GNULIB_OPEN''@|$(GNULIB_OPEN)|g' \
 	      -e 's|@''REPLACE_OPEN''@|$(REPLACE_OPEN)|g' \
 	      < $(srcdir)/fcntl.in.h; \
-	} > $@-t
+	} > $@-t && \
 	mv $@-t $@
 MOSTLYCLEANFILES += fcntl.h fcntl.h-t
 

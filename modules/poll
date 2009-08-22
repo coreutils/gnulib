@@ -22,10 +22,10 @@ BUILT_SOURCES += $(POLL_H)
 # We need the following in order to create <poll.h> when the system
 # doesn't have one.
 poll.h: poll.in.h
-	rm -f $@-t $@
+	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  cat $(srcdir)/poll.in.h; \
-	} > $@-t
+	} > $@-t && \
 	mv -f $@-t $@
 MOSTLYCLEANFILES += poll.h poll.h-t
 

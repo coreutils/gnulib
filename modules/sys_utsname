@@ -18,14 +18,14 @@ BUILT_SOURCES += $(SYS_UTSNAME_H)
 # We need the following in order to create <sys/utsname.h> when the system
 # does not have one.
 sys/utsname.h: sys_utsname.in.h
-	@MKDIR_P@ sys
-	rm -f $@-t $@
+	$(AM_V_at)@MKDIR_P@ sys
+	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|@''GNULIB_UNAME''@|$(GNULIB_UNAME)|g' \
 	      -e 's|@''HAVE_UNAME''@|$(HAVE_UNAME)|g' \
 	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
 	      < $(srcdir)/sys_utsname.in.h; \
-	} > $@-t
+	} > $@-t && \
 	mv $@-t $@
 MOSTLYCLEANFILES += sys/utsname.h sys/utsname.h-t
 MOSTLYCLEANDIRS += sys

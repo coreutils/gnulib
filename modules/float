@@ -17,13 +17,13 @@ BUILT_SOURCES += $(FLOAT_H)
 # We need the following in order to create <float.h> when the system
 # doesn't have one that works with the given compiler.
 float.h: float.in.h
-	rm -f $@-t $@
+	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
 	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
 	      -e 's|@''NEXT_FLOAT_H''@|$(NEXT_FLOAT_H)|g' \
 	      < $(srcdir)/float.in.h; \
-	} > $@-t
+	} > $@-t && \
 	mv $@-t $@
 MOSTLYCLEANFILES += float.h float.h-t
 

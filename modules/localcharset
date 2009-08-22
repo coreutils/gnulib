@@ -82,14 +82,14 @@ uninstall-localcharset: all-local
 	fi
 
 charset.alias: config.charset
-	rm -f t-$@ $@
-	$(SHELL) $(srcdir)/config.charset '$(host)' > t-$@
+	$(AM_V_GEN)rm -f t-$@ $@ && \
+	$(SHELL) $(srcdir)/config.charset '$(host)' > t-$@ && \
 	mv t-$@ $@
 
 SUFFIXES += .sed .sin
 .sin.sed:
-	rm -f t-$@ $@
-	sed -e '/^#/d' -e 's/@''PACKAGE''@/$(PACKAGE)/g' $< > t-$@
+	$(AM_V_GEN)rm -f t-$@ $@ && \
+	sed -e '/^#/d' -e 's/@''PACKAGE''@/$(PACKAGE)/g' $< > t-$@ && \
 	mv t-$@ $@
 
 CLEANFILES += charset.alias ref-add.sed ref-del.sed

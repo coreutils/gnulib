@@ -28,10 +28,10 @@ BUILT_SOURCES += $(FNMATCH_H)
 # We need the following in order to create <fnmatch.h> when the system
 # doesn't have one that supports the required API.
 fnmatch.h: fnmatch.in.h
-	rm -f $@-t $@
+	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  cat $(srcdir)/fnmatch.in.h; \
-	} > $@-t
+	} > $@-t && \
 	mv -f $@-t $@
 MOSTLYCLEANFILES += fnmatch.h fnmatch.h-t
 

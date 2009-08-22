@@ -22,8 +22,8 @@ BUILT_SOURCES += $(SYS_SOCKET_H)
 # We need the following in order to create <sys/socket.h> when the system
 # doesn't have one that works with the given compiler.
 sys/socket.h: sys_socket.in.h
-	@MKDIR_P@ sys
-	rm -f $@-t $@
+	$(AM_V_at)@MKDIR_P@ sys
+	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
 	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
@@ -50,7 +50,7 @@ sys/socket.h: sys_socket.in.h
 	      -e 's|@''HAVE_SA_FAMILY_T''@|$(HAVE_SA_FAMILY_T)|g' \
 	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
 	      < $(srcdir)/sys_socket.in.h; \
-	} > $@-t
+	} > $@-t && \
 	mv -f $@-t $@
 MOSTLYCLEANFILES += sys/socket.h sys/socket.h-t
 MOSTLYCLEANDIRS += sys

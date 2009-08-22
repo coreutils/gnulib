@@ -28,7 +28,7 @@ BUILT_SOURCES += $(ICONV_H)
 # We need the following in order to create <iconv.h> when the system
 # doesn't have one that works with the given compiler.
 iconv.h: iconv.in.h
-	rm -f $@-t $@
+	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
 	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
@@ -38,7 +38,7 @@ iconv.h: iconv.in.h
 	      -e 's|@''REPLACE_ICONV_OPEN''@|$(REPLACE_ICONV_OPEN)|g' \
 	      -e 's|@''REPLACE_ICONV_UTF''@|$(REPLACE_ICONV_UTF)|g' \
 	      < $(srcdir)/iconv.in.h; \
-	} > $@-t
+	} > $@-t && \
 	mv $@-t $@
 MOSTLYCLEANFILES += iconv.h iconv.h-t
 

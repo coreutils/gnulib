@@ -19,8 +19,8 @@ BUILT_SOURCES += $(SYS_FILE_H)
 # We need the following in order to create <sys/file.h> when the system
 # has one that is incomplete.
 sys/file.h: sys_file.in.h
-	@MKDIR_P@ sys
-	rm -f $@-t $@
+	$(AM_V_at)@MKDIR_P@ sys
+	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's/@''HAVE_SYS_FILE_H''@/$(HAVE_SYS_FILE_H)/g' \
 	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
@@ -29,7 +29,7 @@ sys/file.h: sys_file.in.h
 	      -e 's/@''HAVE_FLOCK''@/$(HAVE_FLOCK)/g' \
 	      -e 's/@''GNULIB_FLOCK''@/$(GNULIB_FLOCK)/g' \
 	      < $(srcdir)/sys_file.in.h; \
-	} > $@-t
+	} > $@-t && \
 	mv $@-t $@
 MOSTLYCLEANFILES += sys/file.h sys/file.h-t
 MOSTLYCLEANDIRS += sys
