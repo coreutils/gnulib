@@ -255,7 +255,9 @@ void set_quoting_style (struct quoting_options *o, enum quoting_style s);
    set the value of the quoting options for character C to I.
    Return the old value.  Currently, the only values defined for I are
    0 (the default) and 1 (which means to quote the character even if
-   it would not otherwise be quoted).  */
+   it would not otherwise be quoted).  C must never be a digit or a
+   letter that has special meaning after a backslash (for example, "\t"
+   for tab).  */
 int set_char_quoting (struct quoting_options *o, char c, int i);
 
 /* In O (or in the default if O is null),
@@ -345,7 +347,8 @@ char *quotearg_style (enum quoting_style s, char const *arg);
 char *quotearg_style_mem (enum quoting_style s,
 			  char const *arg, size_t argsize);
 
-/* Like quotearg (ARG), except also quote any instances of CH.  */
+/* Like quotearg (ARG), except also quote any instances of CH.
+   See set_char_quoting for a description of acceptable CH values.  */
 char *quotearg_char (char const *arg, char ch);
 
 /* Like quotearg_char (ARG, CH), except it can quote null bytes.  */

@@ -1,3 +1,12 @@
+2009-08-22  Joel E. Denny  <jdenny@clemson.edu>
+
+	quotearg: document limitations of quote_these_too
+	* lib/quotearg.c (quotearg_buffer_restyled): Add comments where
+	those limitations are created.
+	* lib/quotearg.h (set_char_quoting): Document that digits and
+	letters that are special after backslash are not permitted.
+	(quotearg_char): Cross-reference set_char_quoting documentation.
+
 2009-08-23  Joel E. Denny  <jdenny@clemson.edu>
 
 	quotearg: implement custom_quoting_style

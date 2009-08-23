@@ -336,6 +336,10 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
 		  STORE ('0');
 		}
 	      c = '0';
+	      /* We don't have to worry that this last '0' will be
+		 backslash-escaped because, again, quote_string should
+		 not start with it and because quote_these_too is
+		 documented as not accepting it.  */
 	    }
 	  else if (flags & QA_ELIDE_NULL_BYTES)
 	    continue;
@@ -461,7 +465,9 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
 	     escape by prepending a backslash.  However, it's hard to
 	     imagine any locale that would use digits or letters as
 	     quotes, and set_custom_quoting is documented not to accept
-	     them.  */
+	     them.  Also, a digit or a special letter would cause
+	     trouble if it appeared in quote_these_too, but that's also
+	     documented as not accepting them.  */
 	  break;
 
 	default:
