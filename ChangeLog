@@ -1,5 +1,9 @@
 2009-08-23  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'dup3'.
+	* modules/dup3-tests: New file.
+	* tests/test-dup3.c: New file.
+
 	New module 'dup3'.
 	* lib/unistd.in.h (dup3): New declaration.
 	* lib/dup3.c: New file.

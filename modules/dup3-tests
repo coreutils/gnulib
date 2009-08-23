@@ -1,0 +1,11 @@
+Files:
+tests/test-dup3.c
+
+Depends-on:
+open
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-dup3
+check_PROGRAMS += test-dup3
