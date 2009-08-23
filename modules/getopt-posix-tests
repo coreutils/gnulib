@@ -12,3 +12,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-getopt
 check_PROGRAMS += test-getopt
+test_getopt_LDADD = $(LDADD) $(LIBINTL)

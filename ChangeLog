@@ -1,5 +1,11 @@
 2009-08-23  Bruno Haible  <bruno@clisp.org>
 
+	Avoid test link errors when the modules getopt-gnu, gettext are used.
+	* modules/getopt-posix-tests (Makefile.am): Define test_getopt_LDADD.
+	Reported by Tom G. Christensen <tgc@jupiterrise.com>.
+
+2009-08-23  Bruno Haible  <bruno@clisp.org>
+
 	Fix getdtablesize() on mingw.
 	* lib/getdtablesize.c (getdtablesize): Implement differently.
 	* lib/unistd.in.h (getdtablesize): Improve comment.
