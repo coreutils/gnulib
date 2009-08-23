@@ -1,5 +1,10 @@
 2009-08-22  Bruno Haible  <bruno@clisp.org>
 
+	* modules/binary-io (License): Relicense under LGPL.
+	* modules/pipe2 (License): Likewise.
+
+2009-08-22  Bruno Haible  <bruno@clisp.org>
+
 	* lib/pipe-filter-ii.c (pipe_filter_ii_execute): Fix test of fcntl's
 	return value.
 	* lib/pipe-filter-gi.c (filter_init): Likewise.
