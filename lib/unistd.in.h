@@ -179,7 +179,6 @@ extern int dup2 (int oldfd, int newfd);
 
 
 #if @GNULIB_DUP3@
-# if !@HAVE_DUP3@
 /* Copy the file descriptor OLDFD into file descriptor NEWFD, with the
    specified flags.
    The flags are a bitmask, possibly including O_CLOEXEC (defined in <fcntl.h>)
@@ -188,8 +187,10 @@ extern int dup2 (int oldfd, int newfd);
    Return newfd if successful, otherwise -1 and errno set.
    See the Linux man page at
    <http://www.kernel.org/doc/man-pages/online/pages/man2/dup3.2.html>.  */
-extern int dup3 (int oldfd, int newfd, int flags);
+# if @HAVE_DUP3@
+#  define dup3 rpl_dup3
 # endif
+extern int dup3 (int oldfd, int newfd, int flags);
 #elif defined GNULIB_POSIXCHECK
 # undef dup3
 # define dup3(o,n,f) \

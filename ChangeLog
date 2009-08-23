@@ -1,5 +1,15 @@
 2009-08-23  Bruno Haible  <bruno@clisp.org>
 
+	Tolerate declared but missing dup3 syscall.
+	* lib/dup3.c (dup3): Invoke original dup3 function first, if available.
+	* lib/unistd.in.h (dup3): If the function is already present,
+	override it.
+	* m4/dup3.m4 (gl_FUNC_DUP3): Remove AC_LIBOBJ invocation.
+	* modules/dup3 (Makefile.am): Compile dup3.c always.
+	Reported by Paolo Bonzini.
+
+2009-08-23  Bruno Haible  <bruno@clisp.org>
+
 	Tolerate declared but missing pipe2 syscall.
 	* lib/pipe2.c (pipe2): Invoke original pipe2 function first, if
 	available.

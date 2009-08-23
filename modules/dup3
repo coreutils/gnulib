@@ -16,6 +16,7 @@ gl_FUNC_DUP3
 gl_UNISTD_MODULE_INDICATOR([dup3])
 
 Makefile.am:
+lib_SOURCES += dup3.c
 
 Include:
 <unistd.h>
