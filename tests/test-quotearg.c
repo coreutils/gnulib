@@ -264,6 +264,15 @@ use_quotearg (const char *str, size_t *len)
 }
 
 static char *
+use_quote_double_quotes (const char *str, size_t *len)
+{
+  char *p = *len == SIZE_MAX ? quotearg_char (str, '"')
+                               : quotearg_char_mem (str, *len, '"');
+  *len = strlen (p);
+  return p;
+}
+
+static char *
 use_quotearg_colon (const char *str, size_t *len)
 {
   char *p = (*len == SIZE_MAX ? quotearg_colon (str)
@@ -287,6 +296,8 @@ main (int argc, char *argv[])
       set_quoting_style (NULL, i);
       compare_strings (use_quotearg_buffer, &results_g[i].group1);
       compare_strings (use_quotearg, &results_g[i].group2);
+      if (i == c_quoting_style)
+        compare_strings (use_quote_double_quotes, &results_g[i].group2);
       compare_strings (use_quotearg_colon, &results_g[i].group3);
     }
 
@@ -301,12 +312,14 @@ main (int argc, char *argv[])
 	  == QA_ELIDE_NULL_BYTES);
   compare_strings (use_quotearg_buffer, &flag_results[1].group1);
   compare_strings (use_quotearg, &flag_results[1].group2);
+  compare_strings (use_quote_double_quotes, &flag_results[1].group2);
   compare_strings (use_quotearg_colon, &flag_results[1].group3);
 
   ASSERT (set_quoting_flags (NULL, QA_SPLIT_TRIGRAPHS)
 	  == QA_ELIDE_OUTER_QUOTES);
   compare_strings (use_quotearg_buffer, &flag_results[2].group1);
   compare_strings (use_quotearg, &flag_results[2].group2);
+  compare_strings (use_quote_double_quotes, &flag_results[2].group2);
   compare_strings (use_quotearg_colon, &flag_results[2].group3);
 
   ASSERT (set_quoting_flags (NULL, 0) == QA_SPLIT_TRIGRAPHS);

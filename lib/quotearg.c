@@ -280,6 +280,7 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
     {
       unsigned char c;
       unsigned char esc;
+      bool is_right_quote = false;
 
       if (backslash_escapes
 	  && quote_string_len
@@ -288,7 +289,7 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
 	{
 	  if (elide_outer_quotes)
 	    goto force_outer_quoting_style;
-	  STORE ('\\');
+	  is_right_quote = true;
 	}
 
       c = arg[i];
@@ -521,6 +522,11 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
 			STORE ('0' + ((c >> 3) & 7));
 			c = '0' + (c & 7);
 		      }
+		    else if (is_right_quote)
+		      {
+			STORE ('\\');
+			is_right_quote = false;
+		      }
 		    if (ilim <= i + 1)
 		      break;
 		    STORE (c);
@@ -534,7 +540,8 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
 
       if (! ((backslash_escapes || elide_outer_quotes)
 	     && quote_these_too
-	     && quote_these_too[c / INT_BITS] & (1 << (c % INT_BITS))))
+	     && quote_these_too[c / INT_BITS] & (1 << (c % INT_BITS)))
+	  && !is_right_quote)
 	goto store_c;
 
     store_escape:

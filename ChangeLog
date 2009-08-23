@@ -1,5 +1,13 @@
 2009-08-22  Joel E. Denny  <jdenny@clemson.edu>
 
+	quotearg: fix right quote escaping when it's in quote_these_too
+	* lib/quotearg.c (quotearg_buffer_restyled): Upon seeing a right
+	quote, be sure to prepend only one backslash.
+	* tests/test-quotearg.c (use_quote_double_quotes): New function.
+	(main): Test it.
+
+2009-08-22  Joel E. Denny  <jdenny@clemson.edu>
+
 	quotearg-tests: test escaping of embedded locale quotes
 	* tests/test-quotearg.c (struct result_strings): Add member for
 	new input.
