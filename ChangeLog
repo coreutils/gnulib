@@ -1,5 +1,11 @@
 2009-08-23  Bruno Haible  <bruno@clisp.org>
 
+	Fix getdtablesize() on mingw.
+	* lib/getdtablesize.c (getdtablesize): Implement differently.
+	* lib/unistd.in.h (getdtablesize): Improve comment.
+
+2009-08-23  Bruno Haible  <bruno@clisp.org>
+
 	New module 'mkostemp'.
 	Based on Ulrich Drepper's 2007-08-10 change in glibc.
 	* lib/stdlib.in.h (mksotemp): New declaration.

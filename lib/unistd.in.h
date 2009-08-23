@@ -328,7 +328,8 @@ extern int getdomainname(char *name, size_t len);
 
 #if @GNULIB_GETDTABLESIZE@
 # if !@HAVE_GETDTABLESIZE@
-/* Return the maximum number of file descriptors in the current process.  */
+/* Return the maximum number of file descriptors in the current process.
+   In POSIX, this is same as sysconf (_SC_OPEN_MAX).  */
 extern int getdtablesize (void);
 # endif
 #elif defined GNULIB_POSIXCHECK
