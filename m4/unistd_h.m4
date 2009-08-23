@@ -1,4 +1,4 @@
-# unistd_h.m4 serial 20
+# unistd_h.m4 serial 21
 dnl Copyright (C) 2006-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -35,6 +35,7 @@ AC_DEFUN([gl_UNISTD_H_DEFAULTS],
   GNULIB_CHOWN=0;            AC_SUBST([GNULIB_CHOWN])
   GNULIB_CLOSE=0;            AC_SUBST([GNULIB_CLOSE])
   GNULIB_DUP2=0;             AC_SUBST([GNULIB_DUP2])
+  GNULIB_DUP3=0;             AC_SUBST([GNULIB_DUP3])
   GNULIB_ENVIRON=0;          AC_SUBST([GNULIB_ENVIRON])
   GNULIB_EUIDACCESS=0;       AC_SUBST([GNULIB_EUIDACCESS])
   GNULIB_FCHDIR=0;           AC_SUBST([GNULIB_FCHDIR])
@@ -58,6 +59,7 @@ AC_DEFUN([gl_UNISTD_H_DEFAULTS],
   GNULIB_WRITE=0;            AC_SUBST([GNULIB_WRITE])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_DUP2=1;            AC_SUBST([HAVE_DUP2])
+  HAVE_DUP3=1;            AC_SUBST([HAVE_DUP3])
   HAVE_EUIDACCESS=1;      AC_SUBST([HAVE_EUIDACCESS])
   HAVE_FSYNC=1;           AC_SUBST([HAVE_FSYNC])
   HAVE_FTRUNCATE=1;       AC_SUBST([HAVE_FTRUNCATE])

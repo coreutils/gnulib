@@ -1,5 +1,17 @@
 2009-08-23  Bruno Haible  <bruno@clisp.org>
 
+	New module 'dup3'.
+	* lib/unistd.in.h (dup3): New declaration.
+	* lib/dup3.c: New file.
+	* m4/dup3.m4: New file.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize GNULIB_DUP3 and
+	HAVE_DUP3.
+	* modules/unistd (Makefile.am): Substitute GNULIB_DUP3 and HAVE_DUP3.
+	* modules/dup3: New file.
+	* doc/glibc-functions/dup3.texi: Mention the new module.
+
+2009-08-23  Bruno Haible  <bruno@clisp.org>
+
 	Tweak the dup2 test.
 	* tests/test-dup2.c (main): Create the test file empty. Verify that an
 	out-of-range fd yields EBADF. Verify that after writing to /dev/null,

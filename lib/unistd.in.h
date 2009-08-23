@@ -178,6 +178,27 @@ extern int dup2 (int oldfd, int newfd);
 #endif
 
 
+#if @GNULIB_DUP3@
+# if !@HAVE_DUP3@
+/* Copy the file descriptor OLDFD into file descriptor NEWFD, with the
+   specified flags.
+   The flags are a bitmask, possibly including O_CLOEXEC (defined in <fcntl.h>)
+   and O_TEXT, O_BINARY (defined in "binary-io.h").
+   Close NEWFD first if it is open.
+   Return newfd if successful, otherwise -1 and errno set.
+   See the Linux man page at
+   <http://www.kernel.org/doc/man-pages/online/pages/man2/dup3.2.html>.  */
+extern int dup3 (int oldfd, int newfd, int flags);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef dup3
+# define dup3(o,n,f) \
+    (GL_LINK_WARNING ("dup3 is unportable - " \
+                      "use gnulib module dup3 for portability"), \
+     dup3 (o, n, f))
+#endif
+
+
 #if @GNULIB_ENVIRON@
 # if !@HAVE_DECL_ENVIRON@
 /* Set of environment variables and values.  An array of strings of the form
