@@ -537,7 +537,9 @@ extern int link (const char *path1, const char *path2);
    The flags are a bitmask, possibly including O_CLOEXEC (defined in <fcntl.h>)
    and O_TEXT, O_BINARY (defined in "binary-io.h").
    Store the read-end as fd[0] and the write-end as fd[1].
-   Return 0 upon success, or -1 with errno set upon failure.  */
+   Return 0 upon success, or -1 with errno set upon failure.
+   See also the Linux man page at
+   <http://www.kernel.org/doc/man-pages/online/pages/man2/pipe2.2.html>.  */
 # if !@HAVE_PIPE2@
 extern int pipe2 (int fd[2], int flags);
 # endif
