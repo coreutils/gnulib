@@ -1,3 +1,26 @@
+2009-08-23  Joel E. Denny  <jdenny@clemson.edu>
+
+	quotearg: implement custom_quoting_style
+	* lib/quotearg.c: (struct quoting_options): Add left_quote and
+	right_quote fields.
+	(set_custom_quoting): New public function.
+	(quotearg_buffer_restyled): Add left_quote and right_quote
+	arguments, handle them very much like locale quoting, and update
+	all uses.
+	(quotearg_n_custom): New public function.
+	(quotearg_n_custom_mem): New public function.
+	(quotearg_custom): New public function.
+	(quotearg_custom_mem): New public function.
+	* lib/quotearg.h: Prototype and document new public functions.
+	(enum quoting_style): For escape_quoting_style and
+	clocale_quoting_style, comment that QA_SPLIT_TRIGRAPHS is
+	ignored even though they're otherwise like c_quoting_style.
+	Add custom_quoting_style member and document with comparison to
+	clocale_quoting_style.
+	* tests/test-quotearg.c (custom_quotes): New array.
+	(custom_results): New array.
+	(main): Extend to test custom quoting.
+
 2009-08-22  Joel E. Denny  <jdenny@clemson.edu>
 
 	quotearg: fix right quote escaping when it's in quote_these_too

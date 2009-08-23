@@ -199,6 +199,95 @@ static struct result_groups locale_results[] = {
 
 #endif /* ENABLE_NLS */
 
+static char const *custom_quotes[][2] = {
+  { "", ""  },
+  { "'", "'"  },
+  { "(", ")"  },
+  { ":", " "  },
+  { " ", ":"  },
+  { "# ", "\n" },
+  { "\"'", "'\"" }
+};
+
+static struct result_groups custom_results[] = {
+  /* left_quote = right_quote = "" */
+  { { "", "\\0001\\0", 7, "simple",
+      " \\t\\n'\"\\033?""?/\\\\", "a:b", "a\\\\b",
+      LQ_ENC RQ_ENC },
+    { "", "\\0001\\0", 7, "simple",
+      " \\t\\n'\"\\033?""?/\\\\", "a:b", "a\\\\b",
+      LQ_ENC RQ_ENC },
+    { "", "\\0001\\0", 7, "simple",
+      " \\t\\n'\"\\033?""?/\\\\", "a\\:b", "a\\\\b",
+      LQ_ENC RQ_ENC } },
+
+  /* left_quote = right_quote = "'" */
+  { { "''", "'\\0001\\0'", 9, "'simple'",
+      "' \\t\\n\\'\"\\033?""?/\\\\'", "'a:b'", "'a\\\\b'",
+      "'" LQ_ENC RQ_ENC "'" },
+    { "''", "'\\0001\\0'", 9, "'simple'",
+      "' \\t\\n\\'\"\\033?""?/\\\\'", "'a:b'", "'a\\\\b'",
+      "'" LQ_ENC RQ_ENC "'" },
+    { "''", "'\\0001\\0'", 9, "'simple'",
+      "' \\t\\n\\'\"\\033?""?/\\\\'", "'a\\:b'", "'a\\\\b'",
+      "'" LQ_ENC RQ_ENC "'" } },
+
+  /* left_quote = "(" and right_quote = ")" */
+  { { "()", "(\\0001\\0)", 9, "(simple)",
+      "( \\t\\n'\"\\033?""?/\\\\)", "(a:b)", "(a\\\\b)",
+      "(" LQ_ENC RQ_ENC ")" },
+    { "()", "(\\0001\\0)", 9, "(simple)",
+      "( \\t\\n'\"\\033?""?/\\\\)", "(a:b)", "(a\\\\b)",
+      "(" LQ_ENC RQ_ENC ")" },
+    { "()", "(\\0001\\0)", 9, "(simple)",
+      "( \\t\\n'\"\\033?""?/\\\\)", "(a\\:b)", "(a\\\\b)",
+      "(" LQ_ENC RQ_ENC ")" } },
+
+  /* left_quote = ":" and right_quote = " " */
+  { { ": ", ":\\0001\\0 ", 9, ":simple ",
+      ":\\ \\t\\n'\"\\033?""?/\\\\ ", ":a:b ", ":a\\\\b ",
+      ":" LQ_ENC RQ_ENC " " },
+    { ": ", ":\\0001\\0 ", 9, ":simple ",
+      ":\\ \\t\\n'\"\\033?""?/\\\\ ", ":a:b ", ":a\\\\b ",
+      ":" LQ_ENC RQ_ENC " " },
+    { ": ", ":\\0001\\0 ", 9, ":simple ",
+      ":\\ \\t\\n'\"\\033?""?/\\\\ ", ":a\\:b ", ":a\\\\b ",
+      ":" LQ_ENC RQ_ENC " " } },
+
+  /* left_quote = " " and right_quote = ":" */
+  { { " :", " \\0001\\0:", 9, " simple:",
+      "  \\t\\n'\"\\033?""?/\\\\:", " a\\:b:", " a\\\\b:",
+      " " LQ_ENC RQ_ENC ":" },
+    { " :", " \\0001\\0:", 9, " simple:",
+      "  \\t\\n'\"\\033?""?/\\\\:", " a\\:b:", " a\\\\b:",
+      " " LQ_ENC RQ_ENC ":" },
+    { " :", " \\0001\\0:", 9, " simple:",
+      "  \\t\\n'\"\\033?""?/\\\\:", " a\\:b:", " a\\\\b:",
+      " " LQ_ENC RQ_ENC ":" } },
+
+  /* left_quote = "# " and right_quote = "\n" */
+  { { "# \n", "# \\0001\\0\n", 10, "# simple\n",
+      "#  \\t\\n'\"\\033?""?/\\\\\n", "# a:b\n", "# a\\\\b\n",
+      "# " LQ_ENC RQ_ENC "\n" },
+    { "# \n", "# \\0001\\0\n", 10, "# simple\n",
+      "#  \\t\\n'\"\\033?""?/\\\\\n", "# a:b\n", "# a\\\\b\n",
+      "# " LQ_ENC RQ_ENC "\n" },
+    { "# \n", "# \\0001\\0\n", 10, "# simple\n",
+      "#  \\t\\n'\"\\033?""?/\\\\\n", "# a\\:b\n", "# a\\\\b\n",
+      "# " LQ_ENC RQ_ENC "\n" } },
+
+  /* left_quote = "\"'" and right_quote = "'\"" */
+  { { "\"''\"", "\"'\\0001\\0'\"", 11, "\"'simple'\"",
+      "\"' \\t\\n\\'\"\\033?""?/\\\\'\"", "\"'a:b'\"", "\"'a\\\\b'\"",
+      "\"'" LQ_ENC RQ_ENC "'\"" },
+    { "\"''\"", "\"'\\0001\\0'\"", 11, "\"'simple'\"",
+      "\"' \\t\\n\\'\"\\033?""?/\\\\'\"", "\"'a:b'\"", "\"'a\\\\b'\"",
+      "\"'" LQ_ENC RQ_ENC "'\"" },
+    { "\"''\"", "\"'\\0001\\0'\"", 11, "\"'simple'\"",
+      "\"' \\t\\n\\'\"\\033?""?/\\\\'\"", "\"'a\\:b'\"", "\"'a\\\\b'\"",
+      "\"'" LQ_ENC RQ_ENC "'\"" } }
+};
+
 static void
 compare (char const *a, size_t la, char const *b, size_t lb)
 {
@@ -323,6 +412,15 @@ main (int argc, char *argv[])
   compare_strings (use_quotearg_colon, &flag_results[2].group3);
 
   ASSERT (set_quoting_flags (NULL, 0) == QA_SPLIT_TRIGRAPHS);
+
+  for (i = 0; i < sizeof custom_quotes / sizeof *custom_quotes; ++i)
+    {
+      set_custom_quoting (NULL,
+                          custom_quotes[i][0], custom_quotes[i][1]);
+      compare_strings (use_quotearg_buffer, &custom_results[i].group1);
+      compare_strings (use_quotearg, &custom_results[i].group2);
+      compare_strings (use_quotearg_colon, &custom_results[i].group3);
+    }
 
 #if ENABLE_NLS
   /* Clean up environment.  */
