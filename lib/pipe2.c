@@ -28,9 +28,21 @@
 
 # include <io.h>
 
+#else
+/* Unix API.  */
+
+# ifndef O_CLOEXEC
+#  define O_CLOEXEC 0
+# endif
+
+#endif
+
 int
 pipe2 (int fd[2], int flags)
 {
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+/* Native Woe32 API.  */
+
   /* Check the supported flags.  */
   if ((flags & ~(O_CLOEXEC | O_BINARY | O_TEXT)) != 0)
     {
@@ -39,18 +51,10 @@ pipe2 (int fd[2], int flags)
     }
 
   return _pipe (fd, 4096, flags);
-}
 
 #else
 /* Unix API.  */
 
-# ifndef O_CLOEXEC
-#  define O_CLOEXEC 0
-# endif
-
-int
-pipe2 (int fd[2], int flags)
-{
   /* Check the supported flags.  */
   if ((flags & ~(O_CLOEXEC | O_NONBLOCK | O_TEXT | O_BINARY)) != 0)
     {
@@ -87,7 +91,7 @@ pipe2 (int fd[2], int flags)
 	goto fail;
     }
 
-#if O_BINARY
+# if O_BINARY
   if (flags & O_BINARY)
     {
       setmode (fd[1], O_BINARY);
@@ -98,7 +102,7 @@ pipe2 (int fd[2], int flags)
       setmode (fd[1], O_TEXT);
       setmode (fd[0], O_TEXT);
     }
-#endif
+# endif
 
   return 0;
 
@@ -110,6 +114,6 @@ pipe2 (int fd[2], int flags)
     errno = saved_errno;
     return -1;
   }
-}
 
 #endif
+}

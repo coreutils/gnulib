@@ -1,3 +1,7 @@
+2009-08-23  Bruno Haible  <bruno@clisp.org>
+
+	* lib/pipe2.c (pipe2): Move #ifs inside function.
+
 2009-08-22  Joel E. Denny  <jdenny@clemson.edu>
 
 	quotearg: document limitations of quote_these_too
