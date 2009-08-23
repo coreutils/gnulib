@@ -1,5 +1,28 @@
 2009-08-23  Bruno Haible  <bruno@clisp.org>
 
+	New module 'mkostemp'.
+	Based on Ulrich Drepper's 2007-08-10 change in glibc.
+	* lib/stdlib.in.h (mksotemp): New declaration.
+	* lib/mkostemp.c: New file, from glibc with modifications.
+	* lib/tempname.h (GT_FILE): Remove outdated comment.
+	(gen_tempname): Add flags argument.
+	* lib/tempname.c (__GT_BIGFILE): Remove macro.
+	(__GT_FILE): Map to 1.
+	(small_open, large_open): Remove macros.
+	(__gen_tempname): Add flags argument. Remove code for __GT_BIGFILE.
+	* lib/mkstemp.c (mkstemp): Update.
+	* lib/mkdtemp.c (mkdtemp): Likewise.
+	* m4/mkostemp.m4: New file.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Initialize GNULIB_MKOSTEMP,
+	HAVE_MKOSTEMP.
+	* modules/stdlib (Makefile.am): Substitute GNULIB_MKOSTEMP,
+	HAVE_MKOSTEMP.
+	* modules/mkostemp: New file, based on modules/mkstemp.
+	* doc/glibc-functions/mkostemp.texi: Mention the new module.
+	* NEWS: Mention the change.
+
+2009-08-23  Bruno Haible  <bruno@clisp.org>
+
 	* lib/pipe2.c (pipe2): Support O_TEXT, O_BINARY on all platforms.
 	Reported by Eric Blake.
 

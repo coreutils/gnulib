@@ -1,6 +1,6 @@
 /* Create a temporary file or directory.
 
-   Copyright (C) 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006, 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -17,8 +17,6 @@
 
 /* header written by Eric Blake */
 
-/* In gnulib, always prefer large files.  GT_FILE maps to
-   __GT_BIGFILE, not __GT_FILE, for a reason.  */
 #define GT_FILE		1
 #define GT_DIR		2
 #define GT_NOCREATE	3
@@ -36,4 +34,4 @@
    GT_DIR:		create a directory, which will be mode 0700.
 
    We use a clever algorithm to get hard-to-predict names. */
-extern int gen_tempname (char *tmpl, int kind);
+extern int gen_tempname (char *tmpl, int flags, int kind);

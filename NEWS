@@ -6,6 +6,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2009-08-23  tempname        The gen_tempname function takes an additional
+                            'flags' argument. You can safely pass 0.
+
 2009-08-12  getopt          This module is deprecated. Please choose among
                             getopt-posix and getopt-gnu. getopt-gnu provides
                             "long options" and "options with optional

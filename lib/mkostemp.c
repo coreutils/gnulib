@@ -1,5 +1,5 @@
-/* Copyright (C) 1999, 2001-2003, 2006-2007, 2009 Free Software Foundation, Inc.
-   This file is part of the GNU C Library.
+/* Copyright (C) 1998, 1999, 2001, 2005, 2006, 2007, 2009 Free Software Foundation, Inc.
+   This file is derived from the one in the GNU C Library.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -14,25 +14,32 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-/* Extracted from misc/mkdtemp.c.  */
+#if !_LIBC
+# include <config.h>
+#endif
 
-#include <config.h>
-
-/* Specification.  */
 #include <stdlib.h>
 
-#include "tempname.h"
+#if !_LIBC
+# include "tempname.h"
+# define __gen_tempname gen_tempname
+# define __GT_FILE GT_FILE
+#endif
 
-/* Generate a unique temporary directory from TEMPLATE.
+#include <stdio.h>
+
+#ifndef __GT_FILE
+# define __GT_FILE 0
+#endif
+
+/* Generate a unique temporary file name from TEMPLATE.
    The last six characters of TEMPLATE must be "XXXXXX";
-   they are replaced with a string that makes the filename unique.
-   The directory is created, mode 700, and its name is returned.
-   (This function comes from OpenBSD.) */
-char *
-mkdtemp (char *template)
+   they are replaced with a string that makes the file name unique.
+   Then open the file and return a fd. */
+int
+mkostemp (template, flags)
+     char *template;
+     int flags;
 {
-  if (gen_tempname (template, 0, GT_DIR))
-    return NULL;
-  else
-    return template;
+  return __gen_tempname (template, flags, __GT_FILE);
 }
