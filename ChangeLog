@@ -1,5 +1,10 @@
 2009-08-23  Eric Blake  <ebb9@byu.net>
 
+	fcntl-h: add O_TTY_INIT support
+	* lib/fcntl.in.h (O_TTY_INIT): Support another POSIX macro.
+	* tests/test-fcntl-h.c (o): Test it.
+	* doc/posix-headers/fcntl.texi (fcntl.h): Update documentation.
+
 	fcntl-h: rename from fcntl, in preparation for fcntl(2)
 	* modules/fcntl: Move <fcntl.h> header replacement...
 	* modules/fcntl-h: ...to new name, so as not to collide with

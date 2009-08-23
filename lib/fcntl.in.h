@@ -1,6 +1,6 @@
 /* Like <fcntl.h>, but with non-working flags defined to 0.
 
-   Copyright (C) 2006-2008 Free Software Foundation, Inc.
+   Copyright (C) 2006-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -128,6 +128,10 @@ extern void _gl_register_fd (int fd, const char *filename);
 
 #ifndef O_SYNC
 # define O_SYNC 0
+#endif
+
+#ifndef O_TTY_INIT
+# define O_TTY_INIT 0
 #endif
 
 /* For systems that distinguish between text and binary I/O.

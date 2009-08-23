@@ -9,8 +9,8 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 @samp{O_NOCTTY}, @samp{O_DSYNC}, @samp{O_NONBLOCK}, @samp{O_RSYNC},
-@samp{O_SYNC}, @samp{O_DIRECTORY}, and @samp{O_NOFOLLOW} are not
-defined on some platforms.
+@samp{O_SYNC}, @samp{O_DIRECTORY}, @samp{O_NOFOLLOW}, and
+@samp{O_TTY_INIT} are not defined on some platforms.
 
 @item
 @samp{O_BINARY}, @samp{O_TEXT} (not specified by POSIX, but essential for
@@ -37,7 +37,7 @@ Portability problems not fixed by Gnulib:
 replacement is not atomic on these platforms.
 
 @item
-@samp{O_TTY_INIT}, @samp{O_SEARCH}, and @samp{O_EXEC} are not defined
+@samp{O_SEARCH} and @samp{O_EXEC} are not defined
 on some platforms.
 
 @item
