@@ -65,7 +65,7 @@ main ()
 {
   const char *file = "test-dup2.tmp";
   char buffer[1];
-  int fd = open (file, O_CREAT | O_RDWR, 0600);
+  int fd = open (file, O_CREAT | O_TRUNC | O_RDWR, 0600);
 
   /* Assume std descriptors were provided by invoker.  */
   ASSERT (STDERR_FILENO < fd);
@@ -94,6 +94,9 @@ main ()
   errno = 0;
   ASSERT (dup2 (fd, -2) == -1);
   ASSERT (errno == EBADF);
+  errno = 0;
+  ASSERT (dup2 (fd, 10000000) == -1);
+  ASSERT (errno == EBADF);
 
   /* Using dup2 can skip fds.  */
   ASSERT (dup2 (fd, fd + 2) == fd + 2);
@@ -101,14 +104,15 @@ main ()
   ASSERT (!is_open (fd + 1));
   ASSERT (is_open (fd + 2));
 
-  /* Prove that dup2 closes the previous occupant of a fd.  */
+  /* Verify that dup2 closes the previous occupant of a fd.  */
   ASSERT (open ("/dev/null", O_WRONLY, 0600) == fd + 1);
   ASSERT (dup2 (fd + 1, fd) == fd);
   ASSERT (close (fd + 1) == 0);
   ASSERT (write (fd, "1", 1) == 1);
   ASSERT (dup2 (fd + 2, fd) == fd);
+  ASSERT (lseek (fd, 0, SEEK_END) == 0);
   ASSERT (write (fd + 2, "2", 1) == 1);
-  ASSERT (lseek (fd, SEEK_SET, 0) == 0);
+  ASSERT (lseek (fd, 0, SEEK_SET) == 0);
   ASSERT (read (fd, buffer, 1) == 1);
   ASSERT (*buffer == '2');
 
