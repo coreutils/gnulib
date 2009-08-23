@@ -89,9 +89,15 @@ pipe2 (int fd[2], int flags)
 
 #if O_BINARY
   if (flags & O_BINARY)
-    setmode (fd, O_BINARY);
+    {
+      setmode (fd[1], O_BINARY);
+      setmode (fd[0], O_BINARY);
+    }
   else if (flags & O_TEXT)
-    setmode (fd, O_TEXT);
+    {
+      setmode (fd[1], O_TEXT);
+      setmode (fd[0], O_TEXT);
+    }
 #endif
 
   return 0;
