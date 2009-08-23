@@ -52,7 +52,7 @@ int
 pipe2 (int fd[2], int flags)
 {
   /* Check the supported flags.  */
-  if ((flags & ~(O_CLOEXEC | O_NONBLOCK)) != 0)
+  if ((flags & ~(O_CLOEXEC | O_NONBLOCK | O_TEXT | O_BINARY)) != 0)
     {
       errno = EINVAL;
       return -1;
@@ -86,6 +86,13 @@ pipe2 (int fd[2], int flags)
 	  || fcntl (fd[0], F_SETFD, fcntl_flags | FD_CLOEXEC) == -1)
 	goto fail;
     }
+
+#if O_BINARY
+  if (flags & O_BINARY)
+    setmode (fd, O_BINARY);
+  else if (flags & O_TEXT)
+    setmode (fd, O_TEXT);
+#endif
 
   return 0;
 
