@@ -15,6 +15,7 @@ gl_FUNC_PIPE2
 gl_UNISTD_MODULE_INDICATOR([pipe2])
 
 Makefile.am:
+lib_SOURCES += pipe2.c
 
 Include:
 <unistd.h>

@@ -40,6 +40,17 @@
 int
 pipe2 (int fd[2], int flags)
 {
+#if HAVE_PIPE2
+# undef pipe2
+  /* Try the system call first, if it exists.  (We may be running with a glibc
+     that has the function but with an older kernel that lacks it.)  */
+  {
+    int result = pipe2 (fd, flags);
+    if (!(result < 0 && errno == ENOSYS))
+      return result;
+  }
+#endif
+
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 /* Native Woe32 API.  */
 

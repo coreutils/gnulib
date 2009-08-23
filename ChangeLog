@@ -1,5 +1,16 @@
 2009-08-23  Bruno Haible  <bruno@clisp.org>
 
+	Tolerate declared but missing pipe2 syscall.
+	* lib/pipe2.c (pipe2): Invoke original pipe2 function first, if
+	available.
+	* lib/unistd.in.h (pipe2): If the function is already present,
+	override it.
+	* m4/pipe2.m4 (gl_FUNC_PIPE2): Remove AC_LIBOBJ invocation.
+	* modules/pipe2 (Makefile.am): Compile pipe2.c always.
+	Reported by Paolo Bonzini.
+
+2009-08-23  Bruno Haible  <bruno@clisp.org>
+
 	* lib/pipe2.c (pipe2): Move #ifs inside function.
 
 2009-08-22  Joel E. Denny  <jdenny@clemson.edu>

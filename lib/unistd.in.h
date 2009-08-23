@@ -562,9 +562,10 @@ extern int link (const char *path1, const char *path2);
    Return 0 upon success, or -1 with errno set upon failure.
    See also the Linux man page at
    <http://www.kernel.org/doc/man-pages/online/pages/man2/pipe2.2.html>.  */
-# if !@HAVE_PIPE2@
-extern int pipe2 (int fd[2], int flags);
+# if @HAVE_PIPE2@
+#  define pipe2 rpl_pipe2
 # endif
+extern int pipe2 (int fd[2], int flags);
 #elif defined GNULIB_POSIXCHECK
 # undef pipe2
 # define pipe2(f,o) \
