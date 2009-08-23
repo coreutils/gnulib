@@ -7,7 +7,7 @@ m4/pipe2.m4
 
 Depends-on:
 unistd
-fcntl
+fcntl-h
 binary-io
 
 configure.ac:

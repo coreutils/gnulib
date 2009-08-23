@@ -11,7 +11,7 @@ close
 dirent
 dirfd
 dup2
-fcntl
+fcntl-h
 include_next
 open
 strdup
