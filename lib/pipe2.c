@@ -23,6 +23,8 @@
 #include <errno.h>
 #include <fcntl.h>
 
+#include "binary-io.h"
+
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 /* Native Woe32 API.  */
 

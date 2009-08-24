@@ -1,3 +1,9 @@
+2009-08-24  Eric Blake  <ebb9@byu.net>
+
+	dup2, pipe2: fix some recent test failures on cygwin 1.5.x
+	* lib/pipe2.c (includes): Add binary-io.h.
+	* lib/dup2.c (rpl_dup2): Correct buggy errno value.
+
 2009-08-24  Bruno Haible  <bruno@clisp.org>
 
 	Tolerate declared but missing accept4 syscall.

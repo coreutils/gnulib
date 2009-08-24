@@ -57,6 +57,9 @@ rpl_dup2 (int fd, int desired_fd)
   result = dup2 (fd, desired_fd);
   if (result == 0)
     result = desired_fd;
+  /* Correct a cygwin 1.5.x errno value.  */
+  else if (result == -1 && errno == EMFILE)
+    errno = EBADF;
   return result;
 }
 
