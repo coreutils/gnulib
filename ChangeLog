@@ -1,3 +1,15 @@
+2009-08-24  Jim Meyering  <meyering@redhat.com>
+
+	progname: also set global program_invocation_name, when possible
+	Before this change, a libtool-enabled program that calls glibc's
+	error function would report the program name as
+	"/abs/dir/.libs/lt-program_name" rather than the desired program_name.
+	* modules/progname (configure.ac): Check for a declaration of
+	program_invocation_name.
+	* lib/progname.c:  Include <errno.h>.
+	(set_program_name) [HAVE_DECL_PROGRAM_INVOCATION_NAME]:
+	Set program_invocation_name.
+
 2009-08-23  Bruno Haible  <bruno@clisp.org>
 
 	* lib/dup3.c: Include <string.h>.

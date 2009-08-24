@@ -8,6 +8,7 @@ lib/progname.c
 Depends-on:
 
 configure.ac:
+AC_CHECK_DECLS([program_invocation_name], [], [], [#include <errno.h>])
 
 Makefile.am:
 lib_SOURCES += progname.h progname.c
