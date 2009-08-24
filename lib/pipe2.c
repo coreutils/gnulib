@@ -45,9 +45,18 @@ pipe2 (int fd[2], int flags)
   /* Try the system call first, if it exists.  (We may be running with a glibc
      that has the function but with an older kernel that lacks it.)  */
   {
-    int result = pipe2 (fd, flags);
-    if (!(result < 0 && errno == ENOSYS))
-      return result;
+    /* Cache the information whether the system call really exists.  */
+    static int have_pipe2_really; /* 0 = unknown, 1 = yes, -1 = no */
+    if (have_pipe2_really >= 0)
+      {
+	int result = pipe2 (fd, flags);
+	if (!(result < 0 && errno == ENOSYS))
+	  {
+	    have_pipe2_really = 1;
+	    return result;
+	  }
+	have_pipe2_really = -1;
+      }
   }
 #endif
 

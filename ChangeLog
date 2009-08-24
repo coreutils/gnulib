@@ -1,5 +1,11 @@
 2009-08-23  Bruno Haible  <bruno@clisp.org>
 
+	* lib/dup3.c (dup3): Test only once whether the system actually exists.
+	* lib/pipe2.c (pipe2): Likewise.
+	Suggested by Eric Blake.
+
+2009-08-23  Bruno Haible  <bruno@clisp.org>
+
 	Tolerate declared but missing dup3 syscall.
 	* lib/dup3.c (dup3): Invoke original dup3 function first, if available.
 	* lib/unistd.in.h (dup3): If the function is already present,
