@@ -29,6 +29,8 @@
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 /* Native Woe32 API.  */
 
+# include <string.h>
+
 /* Get declarations of the Win32 API functions.  */
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>
