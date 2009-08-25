@@ -1,3 +1,14 @@
+2009-08-24  Bruno Haible  <bruno@clisp.org>
+
+	Tolerate declared but missing accept4 syscall.
+	* lib/accept4.c (accept4): Invoke original accept4 function first, if
+	available.
+	* lib/sys_socket.in.h (accept4): If the function is already present,
+	override it.
+	* m4/accept4.m4 (gl_FUNC_ACCEPT4): Remove AC_LIBOBJ invocation.
+	* modules/accept4 (Makefile.am): Compile accept4.c always.
+	Reported by Paolo Bonzini and Eric Blake.
+
 2009-08-23  Bruno Haible  <bruno@clisp.org>
 
 	New module 'accept4'.

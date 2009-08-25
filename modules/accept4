@@ -17,6 +17,7 @@ gl_FUNC_ACCEPT4
 gl_SYS_SOCKET_MODULE_INDICATOR([accept4])
 
 Makefile.am:
+lib_SOURCES += accept4.c
 
 Include:
 <sys/socket.h>
