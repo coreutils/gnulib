@@ -1,3 +1,11 @@
+2009-08-25  Bruno Haible  <bruno@clisp.org>
+
+	dup2: work around a Linux bug.
+	* m4/dup2.m4 (gl_FUNC_DUP2): Test for the Linux bug.
+	* lib/dup2.c (rpl_dup2): Correct the return value if it is -EBADF.
+	* doc/posix-functions/dup2.texi: Mention the Linux bug.
+	Reported by Simon Josefsson.
+
 2009-08-25  Jim Meyering  <meyering@redhat.com>
 
 	libguestfs uses gnulib

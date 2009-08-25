@@ -17,8 +17,12 @@ This function can hang when duplicating an fd to itself on some platforms:
 mingw.
 
 @item
-This function returns 0 for dup2 (1, 1) on some platforms:
+This function returns 0 for @code(dup2 (1, 1)} on some platforms:
 Cygwin 1.5.x.
+
+@item
+This function may return @code{-EBADF} instead of @code{-1} on some platforms:
+Linux releases between July 2008 and May 2009.
 
 @item
 This function is missing on some older platforms.

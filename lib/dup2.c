@@ -55,6 +55,16 @@ rpl_dup2 (int fd, int desired_fd)
     }
 # endif
   result = dup2 (fd, desired_fd);
+# ifdef __linux__
+  /* Correct a Linux return value.
+     <http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.30.y.git;a=commitdiff;h=2b79bc4f7ebbd5af3c8b867968f9f15602d5f802>
+   */
+  if (fd == desired_fd && result == (unsigned int) -EBADF)
+    {
+      errno = EBADF;
+      result = -1;
+    }
+# endif
   if (result == 0)
     result = desired_fd;
   /* Correct a cygwin 1.5.x errno value.  */
