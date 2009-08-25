@@ -1,3 +1,16 @@
+2009-08-23  Bruno Haible  <bruno@clisp.org>
+
+	New module 'accept4'.
+	* lib/sys_socket.in.h (accept4): New declaration.
+	* lib/accept4.c: New file.
+	* m4/accept4.m4: New file.
+	* m4/sys_socket_h.m4 (gl_SYS_SOCKET_H_DEFAULTS): Initialize
+	GNULIB_ACCEPT4, HAVE_ACCEPT4.
+	* modules/sys_socket (Makefile.am): Substitute GNULIB_ACCEPT4,
+	HAVE_ACCEPT4.
+	* modules/accept4: New file.
+	* doc/glibc-functions/accept4.texi: Mention the new module.
+
 2009-08-24  Jim Meyering  <meyering@redhat.com>
 
 	progname: also set global program_invocation_name, when possible

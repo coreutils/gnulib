@@ -1,0 +1,28 @@
+Description:
+accept4() function: accept a connection on a socket, with specific opening
+flags.
+
+Files:
+lib/accept4.c
+m4/accept4.m4
+
+Depends-on:
+sys_socket
+accept
+fcntl
+binary-io
+
+configure.ac:
+gl_FUNC_ACCEPT4
+gl_SYS_SOCKET_MODULE_INDICATOR([accept4])
+
+Makefile.am:
+
+Include:
+<sys/socket.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible, Simon Josefsson

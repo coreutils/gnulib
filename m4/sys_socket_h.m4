@@ -1,4 +1,4 @@
-# sys_socket_h.m4 serial 12
+# sys_socket_h.m4 serial 13
 dnl Copyright (C) 2005-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -140,6 +140,8 @@ AC_DEFUN([gl_SYS_SOCKET_H_DEFAULTS],
   GNULIB_SENDTO=0;      AC_SUBST([GNULIB_SENDTO])
   GNULIB_SETSOCKOPT=0;  AC_SUBST([GNULIB_SETSOCKOPT])
   GNULIB_SHUTDOWN=0;    AC_SUBST([GNULIB_SHUTDOWN])
+  GNULIB_ACCEPT4=0;     AC_SUBST([GNULIB_ACCEPT4])
   HAVE_STRUCT_SOCKADDR_STORAGE=1; AC_SUBST([HAVE_STRUCT_SOCKADDR_STORAGE])
   HAVE_SA_FAMILY_T=1;   AC_SUBST([HAVE_SA_FAMILY_T])
+  HAVE_ACCEPT4=1;       AC_SUBST([HAVE_ACCEPT4])
 ])
