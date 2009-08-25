@@ -29,6 +29,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   libdap          http://scm.opendap.org:8090/svn/trunk/libdap/
   libffcall       http://savannah.gnu.org/projects/libffcall/
   libgnupdf       http://cvs.savannah.gnu.org/viewvc/libgnupdf/?root=pdf
+  libguestfs      http://libguestfs.org/
   libiconv        http://libiconv.cvs.sourceforge.net/libiconv/libiconv/
   libidn          http://git.sv.gnu.org/gitweb/?p=libidn.git
   libksba         http://cvs.gnupg.org/cgi-bin/viewcvs.cgi/trunk/?root=KSBA

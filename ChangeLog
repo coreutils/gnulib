@@ -1,3 +1,8 @@
+2009-08-25  Jim Meyering  <meyering@redhat.com>
+
+	libguestfs uses gnulib
+	* users.txt: Add libguestfs.
+
 2009-08-24  Eric Blake  <ebb9@byu.net>
 
 	dup2, pipe2: fix some recent test failures on cygwin 1.5.x
