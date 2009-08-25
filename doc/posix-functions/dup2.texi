@@ -22,7 +22,7 @@ Cygwin 1.5.x.
 
 @item
 This function may return @code{-EBADF} instead of @code{-1} on some platforms:
-Linux releases between July 2008 and May 2009.
+Linux releases between July 2008 and May 2009 (versions 2.6.27 to 2.6.29).
 
 @item
 This function is missing on some older platforms.
