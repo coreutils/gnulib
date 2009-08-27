@@ -15,3 +15,6 @@ int main (void)
     printf ("%s: hello world\n", __func__);
 @}
 @end smallexample
+
+Note that @code{sizeof} cannot be applied to @code{__func__}: On SunPRO C
+compiler, @code{sizeof __func__} evaluates to 0.

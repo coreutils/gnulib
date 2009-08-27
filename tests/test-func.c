@@ -1,5 +1,5 @@
 /* Test whether __func__ is available
-   Copyright (C) 2008 Free Software Foundation, Inc.
+   Copyright (C) 2008-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -37,6 +37,13 @@
 int
 main ()
 {
+  ASSERT (strlen (__func__) > 0);
+
+  /* On SunPRO C 5.9, sizeof __func__ evaluates to 0.  The compiler warns:
+     "warning: null dimension: sizeof()".  */
+#if !defined __SUNPRO_C
   ASSERT (strlen (__func__) + 1 == sizeof __func__);
+#endif
+
   return 0;
 }
