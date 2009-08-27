@@ -1,5 +1,5 @@
 /* Test of <bitrotate.h> substitute.
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -224,7 +224,6 @@ main (void)
   ASSERT (rotl64 (16045690984503098046ULL, 62) == 13234794782980550319ULL);
   ASSERT (rotl64 (16045690984503098046ULL, 63) == 8022845492251549023ULL);
 
-  ASSERT (rotr64 (16045690984503098046ULL, 0) == 16045690984503098046ULL);
   ASSERT (rotr64 (16045690984503098046ULL, 1) == 8022845492251549023ULL);
   ASSERT (rotr64 (16045690984503098046ULL, 2) == 13234794782980550319ULL);
   ASSERT (rotr64 (16045690984503098046ULL, 3) == 15840769428345050967ULL);

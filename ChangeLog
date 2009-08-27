@@ -1,5 +1,10 @@
 2009-08-27  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-bitrotate.c (main): Remove test that uses a shift count
+	of 0.
+
+2009-08-27  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-func.c (main): Don't verify sizeof __func__ on SunPRO C
 	compilers.
 	* doc/func.texi: Document the SunPRO C bug.
