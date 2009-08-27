@@ -17,7 +17,7 @@ This function can hang when duplicating an fd to itself on some platforms:
 mingw.
 
 @item
-This function returns 0 for @code(dup2 (1, 1)} on some platforms:
+This function returns 0 for @code{dup2 (1, 1)} on some platforms:
 Cygwin 1.5.x.
 
 @item
