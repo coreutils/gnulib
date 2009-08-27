@@ -1,3 +1,8 @@
+2009-08-27  Bruno Haible  <bruno@clisp.org>
+
+	Fix link error on Solaris.
+	* tests/test-parse-duration.c (xstrdup): Remove function.
+
 2009-08-26  Pádraig Brady  <P@draigbrady.com>
 
 	ignore-value: handle pointer types, too
