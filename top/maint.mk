@@ -618,21 +618,6 @@ vc-diff-check:
 	  rm vc-diffs;						\
 	fi
 
-cvs-check: vc-diff-check
-
-ALL_RECURSIVE_TARGETS += maintainer-distcheck
-maintainer-distcheck:
-	$(MAKE) distcheck
-	$(MAKE) taint-distcheck
-	$(MAKE) my-distcheck
-
-
-# Don't make a distribution if checks fail.
-# Also, make sure the NEWS file is up-to-date.
-ALL_RECURSIVE_TARGETS += vc-dist
-vc-dist: $(local-check) cvs-check maintainer-distcheck
-	XZ_OPT=9ev $(MAKE) dist
-
 # Use this to make sure we don't run these programs when building
 # from a virgin tgz file, below.
 null_AM_MAKEFLAGS = \
@@ -708,8 +693,10 @@ alpha beta major: $(local-check) writable-files no-submodule-changes
 	  && { echo $(VERSION) | grep -E '^[0-9]+(\.[0-9]+)+$$'	\
 	       || { echo "invalid version string: $(VERSION)" 1>&2; exit 1;};}\
 	  || :
-	$(MAKE) vc-dist
+	$(MAKE) vc-diff-check
 	$(MAKE) news-date-check
+	$(MAKE) distcheck
+	$(MAKE) dist XZ_OPT=-9ev
 	$(MAKE) -s announcement RELEASE_TYPE=$@ > /tmp/announce-$(my_distdir)
 	if test -d $(release_archive_dir); then			\
 	  ln $(rel-files) $(release_archive_dir);		\

@@ -1,3 +1,16 @@
+2009-08-29  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: remove more coreutils-specific targets; XZ_OPT=-9ev
+	* top/maint.mk (cvs-check): Remove target; it was just an alias
+	to the better-named vc-diff-check.
+	(maintainer-distcheck): Remove rule.  It was used only from
+	the (alpha/beta/major) target, and all of its commands but one
+	were coreutils-specific.
+	(vc-dist): Remove rule.
+	(alpha beta major): Run "$(MAKE) distcheck" explicitly.
+	Run vc-diff-check, not vc-dist.
+	Run $(MAKE) dist with XZ_OPT=-9ev.  Note spelling, with "-".
+
 2009-08-27  Bruno Haible  <bruno@clisp.org>
 
 	* tests/test-bitrotate.c (main): Remove test that uses a shift count
