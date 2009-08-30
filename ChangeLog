@@ -1,5 +1,12 @@
 2009-08-30  Bruno Haible  <bruno@clisp.org>
 
+	New module 'xstriconveh'.
+	* lib/xstriconveh.h: New file.
+	* lib/xstriconveh.c: New file.
+	* modules/xstriconveh: New file.
+
+2009-08-30  Bruno Haible  <bruno@clisp.org>
+
 	Make it easier to use mem_cd_iconveh.
 	* lib/striconveh.h (iconveh_t): New type.
 	(iconveh_open, iconveh_close): New declarations.
