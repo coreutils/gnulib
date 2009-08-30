@@ -38,5 +38,11 @@ This function is missing on some platforms:
 MacOS X 10.3, FreeBSD 6.0, OpenBSD 3.8, IRIX 5.3, Cygwin, mingw, BeOS,
 when GNU libiconv is not installed.
 @item
+For some encodings A and B, this function cannot convert directly from A to B,
+although an indirect conversion from A through UTF-8 to B is possible.  This
+occurs on some platforms: Solaris 10.  ---  Gnulib provides a higher-level
+facility @code{striconveh} (a wrapper around @code{iconv}) that deals with
+this problem.
+@item
 The set of supported encodings and conversions is system dependent.
 @end itemize

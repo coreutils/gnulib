@@ -1,5 +1,10 @@
 2009-08-30  Bruno Haible  <bruno@clisp.org>
 
+	* doc/posix-functions/iconv_open.texi: Mention indirect conversion
+	problem.
+
+2009-08-30  Bruno Haible  <bruno@clisp.org>
+
 	Work around iconv_open problem on Solaris.
 	* lib/iconv_open-solaris.gperf: New file.
 	* m4/iconv_open.m4 (gl_FUNC_ICONV_OPEN): Also handle Solaris.
