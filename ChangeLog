@@ -1,5 +1,11 @@
 2009-08-30  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-pipe-filter-ii1.sh: Prefer /usr/xpg6/bin/tr over
+	/usr/xpg4/bin/tr when it exists.
+	* tests/test-pipe-filter-gi1.sh: Likewise.
+
+2009-08-30  Bruno Haible  <bruno@clisp.org>
+
 	Work around deficient /usr/bin/id program on Solaris.
 	* tests/test-file-has-acl.sh (ID): New variable.
 	* tests/test-set-mode-acl.sh (ID): Likewise.

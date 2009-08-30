@@ -2,10 +2,14 @@
 
 # Find a 'tr' program that supports character ranges in the POSIX syntax.
 # Solaris /usr/bin/tr does not.
-if test -f /usr/xpg4/bin/tr; then
-  TR=/usr/xpg4/bin/tr
+if test -f /usr/xpg6/bin/tr; then
+  TR=/usr/xpg6/bin/tr
 else
-  TR=tr
+  if test -f /usr/xpg4/bin/tr; then
+    TR=/usr/xpg4/bin/tr
+  else
+    TR=tr
+  fi
 fi
 
 # A small file.
