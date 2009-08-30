@@ -1,3 +1,13 @@
+2009-08-30  Bruno Haible  <bruno@clisp.org>
+
+	Work around iconv_open problem on Solaris.
+	* lib/iconv_open-solaris.gperf: New file.
+	* m4/iconv_open.m4 (gl_FUNC_ICONV_OPEN): Also handle Solaris.
+	* modules/iconv_open (Files): Add lib/iconv_open-solaris.gperf.
+	(Makefile.am): Add rule for iconv_open-solaris.h. Augment
+	BUILT_SOURCES, MOSTLYCLEANFILES, MAINTAINERCLEANFILES, EXTRA_DIST.
+	* doc/posix-functions/iconv_open.texi: Mention the Solaris problem.
+
 2009-08-29  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: remove more coreutils-specific targets; XZ_OPT=-9ev

@@ -20,7 +20,7 @@ Portability problems fixed by Gnulib module @code{iconv_open}:
 @item
 This function recognizes only non-standard aliases for many encodings (not
 the IANA registered encoding names) on many platforms:
-AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1.
+AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{iconv_open-utf}:
