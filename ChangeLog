@@ -36,6 +36,7 @@
 
 	Work around iconv_open problem on Solaris.
 	* lib/iconv_open-solaris.gperf: New file.
+	* lib/iconv_open.c (ICONV_FLAVOR_SOLARIS): New macro.
 	* m4/iconv_open.m4 (gl_FUNC_ICONV_OPEN): Also handle Solaris.
 	* modules/iconv_open (Files): Add lib/iconv_open-solaris.gperf.
 	(Makefile.am): Add rule for iconv_open-solaris.h. Augment
