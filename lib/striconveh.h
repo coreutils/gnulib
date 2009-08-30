@@ -33,14 +33,38 @@ extern "C" {
 
 #if HAVE_ICONV
 
+/* An conversion descriptor for use by the iconveh functions.  */
+typedef struct
+  {
+    /* Conversion descriptor from FROM_CODESET to TO_CODESET, or (iconv_t)(-1)
+       if the system does not support a direct conversion from FROM_CODESET to
+       TO_CODESET.  */
+    iconv_t cd;
+    /* Conversion descriptor from FROM_CODESET to UTF-8 (or (iconv_t)(-1) if
+       FROM_CODESET is UTF-8).  */
+    iconv_t cd1;
+    /* Conversion descriptor from UTF-8 to TO_CODESET (or (iconv_t)(-1) if
+       TO_CODESET is UTF-8).  */
+    iconv_t cd2;
+  }
+  iconveh_t;
+
+/* Open a conversion descriptor for use by the iconveh functions.
+   If successful, fills *CDP and returns 0.  Upon failure, return -1 with errno
+   set.  */
+extern int
+       iconveh_open (const char *to_codeset, const char *from_codeset,
+		     iconveh_t *cdp);
+
+/* Close a conversion descriptor created by iconveh_open().
+   Return value: 0 if successful, otherwise -1 and errno set.  */
+extern int
+       iconveh_close (const iconveh_t *cd);
+
 /* Convert an entire string from one encoding to another, using iconv.
    The original string is at [SRC,...,SRC+SRCLEN-1].
-   CD is the conversion descriptor from FROMCODE to TOCODE, or (iconv_t)(-1) if
-   the system does not support a direct conversion from FROMCODE to TOCODE.
-   CD1 is the conversion descriptor from FROM_CODESET to UTF-8 (or
-   (iconv_t)(-1) if FROM_CODESET is UTF-8).
-   CD2 is the conversion descriptor from UTF-8 to TO_CODESET (or (iconv_t)(-1)
-   if TO_CODESET is UTF-8).
+   CD points to the conversion descriptor from FROMCODE to TOCODE, created by
+   the function iconveh_open().
    If OFFSETS is not NULL, it should point to an array of SRCLEN integers; this
    array is filled with offsets into the result, i.e. the character starting
    at SRC[i] corresponds to the character starting at (*RESULTP)[OFFSETS[i]],
@@ -54,27 +78,23 @@ extern "C" {
    unchanged if no dynamic memory allocation was necessary.  */
 extern int
        mem_cd_iconveh (const char *src, size_t srclen,
-		       iconv_t cd, iconv_t cd1, iconv_t cd2,
+		       const iconveh_t *cd,
 		       enum iconv_ilseq_handler handler,
 		       size_t *offsets,
 		       char **resultp, size_t *lengthp);
 
 /* Convert an entire string from one encoding to another, using iconv.
    The original string is the NUL-terminated string starting at SRC.
-   CD is the conversion descriptor from FROMCODE to TOCODE, or (iconv_t)(-1) if
-   the system does not support a direct conversion from FROMCODE to TOCODE.
+   CD points to the conversion descriptor from FROMCODE to TOCODE, created by
+   the function iconveh_open().
    Both the "from" and the "to" encoding must use a single NUL byte at the end
    of the string (i.e. not UCS-2, UCS-4, UTF-16, UTF-32).
-   CD1 is the conversion descriptor from FROM_CODESET to UTF-8 (or
-   (iconv_t)(-1) if FROM_CODESET is UTF-8).
-   CD2 is the conversion descriptor from UTF-8 to TO_CODESET (or (iconv_t)(-1)
-   if TO_CODESET is UTF-8).
    Allocate a malloced memory block for the result.
    Return value: the freshly allocated resulting NUL-terminated string if
    successful, otherwise NULL and errno set.  */
 extern char *
        str_cd_iconveh (const char *src,
-		       iconv_t cd, iconv_t cd1, iconv_t cd2,
+		       const iconveh_t *cd,
 		       enum iconv_ilseq_handler handler);
 
 #endif

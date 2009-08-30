@@ -1,5 +1,5 @@
 /* Character set conversion with error handling.
-   Copyright (C) 2001-2008 Free Software Foundation, Inc.
+   Copyright (C) 2001-2009 Free Software Foundation, Inc.
    Written by Bruno Haible and Simon Josefsson.
 
    This program is free software: you can redistribute it and/or modify
@@ -40,9 +40,98 @@
 
 #if HAVE_ICONV
 
-/* The caller must provide CD, CD1, CD2, not just CD, because when a conversion
-   error occurs, we may have to determine the Unicode representation of the
-   inconvertible character.  */
+/* The caller must provide an iconveh_t, not just an iconv_t, because when a
+   conversion error occurs, we may have to determine the Unicode representation
+   of the inconvertible character.  */
+
+int
+iconveh_open (const char *to_codeset, const char *from_codeset, iconveh_t *cdp)
+{
+  iconv_t cd;
+  iconv_t cd1;
+  iconv_t cd2;
+
+  /* Avoid glibc-2.1 bug with EUC-KR.  */
+# if (__GLIBC__ - 0 == 2 && __GLIBC_MINOR__ - 0 <= 1) && !defined _LIBICONV_VERSION
+  if (c_strcasecmp (from_codeset, "EUC-KR") == 0
+      || c_strcasecmp (to_codeset, "EUC-KR") == 0)
+    {
+      errno = EINVAL;
+      return -1;
+    }
+# endif
+
+  cd = iconv_open (to_codeset, from_codeset);
+
+  if (STRCASEEQ (from_codeset, "UTF-8", 'U','T','F','-','8',0,0,0,0))
+    cd1 = (iconv_t)(-1);
+  else
+    {
+      cd1 = iconv_open ("UTF-8", from_codeset);
+      if (cd1 == (iconv_t)(-1))
+	{
+	  int saved_errno = errno;
+	  if (cd != (iconv_t)(-1))
+	    iconv_close (cdp->cd);
+	  errno = saved_errno;
+	  return -1;
+	}
+    }
+
+  if (STRCASEEQ (to_codeset, "UTF-8", 'U','T','F','-','8',0,0,0,0)
+# if (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2) || __GLIBC__ > 2 || _LIBICONV_VERSION >= 0x0105
+      || c_strcasecmp (to_codeset, "UTF-8//TRANSLIT") == 0
+# endif
+     )
+    cd2 = (iconv_t)(-1);
+  else
+    {
+      cd2 = iconv_open (to_codeset, "UTF-8");
+      if (cd2 == (iconv_t)(-1))
+	{
+	  int saved_errno = errno;
+	  if (cd1 != (iconv_t)(-1))
+	    iconv_close (cd1);
+	  if (cd != (iconv_t)(-1))
+	    iconv_close (cd);
+	  errno = saved_errno;
+	  return -1;
+	}
+    }
+
+  cdp->cd = cd;
+  cdp->cd1 = cd1;
+  cdp->cd2 = cd2;
+  return 0;
+}
+
+int
+iconveh_close (const iconveh_t *cd)
+{
+  if (cd->cd2 != (iconv_t)(-1) && iconv_close (cd->cd2) < 0)
+    {
+      /* Return -1, but preserve the errno from iconv_close.  */
+      int saved_errno = errno;
+      if (cd->cd1 != (iconv_t)(-1))
+	iconv_close (cd->cd1);
+      if (cd->cd != (iconv_t)(-1))
+	iconv_close (cd->cd);
+      errno = saved_errno;
+      return -1;
+    }
+  if (cd->cd1 != (iconv_t)(-1) && iconv_close (cd->cd1) < 0)
+    {
+      /* Return -1, but preserve the errno from iconv_close.  */
+      int saved_errno = errno;
+      if (cd->cd != (iconv_t)(-1))
+	iconv_close (cd->cd);
+      errno = saved_errno;
+      return -1;
+    }
+  if (cd->cd != (iconv_t)(-1) && iconv_close (cd->cd) < 0)
+    return -1;
+  return 0;
+}
 
 /* iconv_carefully is like iconv, except that it stops as soon as it encounters
    a conversion error, and it returns in *INCREMENTED a boolean telling whether
@@ -913,18 +1002,18 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
 
 int
 mem_cd_iconveh (const char *src, size_t srclen,
-		iconv_t cd, iconv_t cd1, iconv_t cd2,
+		const iconveh_t *cd,
 		enum iconv_ilseq_handler handler,
 		size_t *offsets,
 		char **resultp, size_t *lengthp)
 {
-  return mem_cd_iconveh_internal (src, srclen, cd, cd1, cd2, handler, 0,
-				  offsets, resultp, lengthp);
+  return mem_cd_iconveh_internal (src, srclen, cd->cd, cd->cd1, cd->cd2,
+				  handler, 0, offsets, resultp, lengthp);
 }
 
 char *
 str_cd_iconveh (const char *src,
-		iconv_t cd, iconv_t cd1, iconv_t cd2,
+		const iconveh_t *cd,
 		enum iconv_ilseq_handler handler)
 {
   /* For most encodings, a trailing NUL byte in the input will be converted
@@ -934,8 +1023,8 @@ str_cd_iconveh (const char *src,
   char *result = NULL;
   size_t length = 0;
   int retval = mem_cd_iconveh_internal (src, strlen (src),
-					cd, cd1, cd2, handler, 1, NULL,
-					&result, &length);
+					cd->cd, cd->cd1, cd->cd2, handler, 1,
+					NULL, &result, &length);
 
   if (retval < 0)
     {
@@ -992,110 +1081,32 @@ mem_iconveh (const char *src, size_t srclen,
   else
     {
 #if HAVE_ICONV
-      iconv_t cd;
-      iconv_t cd1;
-      iconv_t cd2;
+      iconveh_t cd;
       char *result;
       size_t length;
       int retval;
 
-      /* Avoid glibc-2.1 bug with EUC-KR.  */
-# if (__GLIBC__ - 0 == 2 && __GLIBC_MINOR__ - 0 <= 1) && !defined _LIBICONV_VERSION
-      if (c_strcasecmp (from_codeset, "EUC-KR") == 0
-	  || c_strcasecmp (to_codeset, "EUC-KR") == 0)
-	{
-	  errno = EINVAL;
-	  return -1;
-	}
-# endif
-
-      cd = iconv_open (to_codeset, from_codeset);
-
-      if (STRCASEEQ (from_codeset, "UTF-8", 'U','T','F','-','8',0,0,0,0))
-	cd1 = (iconv_t)(-1);
-      else
-	{
-	  cd1 = iconv_open ("UTF-8", from_codeset);
-	  if (cd1 == (iconv_t)(-1))
-	    {
-	      int saved_errno = errno;
-	      if (cd != (iconv_t)(-1))
-		iconv_close (cd);
-	      errno = saved_errno;
-	      return -1;
-	    }
-	}
-
-      if (STRCASEEQ (to_codeset, "UTF-8", 'U','T','F','-','8',0,0,0,0)
-# if (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2) || __GLIBC__ > 2 || _LIBICONV_VERSION >= 0x0105
-	  || c_strcasecmp (to_codeset, "UTF-8//TRANSLIT") == 0
-# endif
-	 )
-	cd2 = (iconv_t)(-1);
-      else
-	{
-	  cd2 = iconv_open (to_codeset, "UTF-8");
-	  if (cd2 == (iconv_t)(-1))
-	    {
-	      int saved_errno = errno;
-	      if (cd1 != (iconv_t)(-1))
-		iconv_close (cd1);
-	      if (cd != (iconv_t)(-1))
-		iconv_close (cd);
-	      errno = saved_errno;
-	      return -1;
-	    }
-	}
+      if (iconveh_open (to_codeset, from_codeset, &cd) < 0)
+	return -1;
 
       result = *resultp;
       length = *lengthp;
-      retval = mem_cd_iconveh (src, srclen, cd, cd1, cd2, handler, offsets,
+      retval = mem_cd_iconveh (src, srclen, &cd, handler, offsets,
 			       &result, &length);
 
       if (retval < 0)
 	{
-	  /* Close cd, cd1, cd2, but preserve the errno from str_cd_iconv.  */
+	  /* Close cd, but preserve the errno from str_cd_iconv.  */
 	  int saved_errno = errno;
-	  if (cd2 != (iconv_t)(-1))
-	    iconv_close (cd2);
-	  if (cd1 != (iconv_t)(-1))
-	    iconv_close (cd1);
-	  if (cd != (iconv_t)(-1))
-	    iconv_close (cd);
+	  iconveh_close (&cd);
 	  errno = saved_errno;
 	}
       else
 	{
-	  if (cd2 != (iconv_t)(-1) && iconv_close (cd2) < 0)
+	  if (iconveh_close (&cd) < 0)
 	    {
 	      /* Return -1, but free the allocated memory, and while doing
-		 that, preserve the errno from iconv_close.  */
-	      int saved_errno = errno;
-	      if (cd1 != (iconv_t)(-1))
-		iconv_close (cd1);
-	      if (cd != (iconv_t)(-1))
-		iconv_close (cd);
-	      if (result != *resultp && result != NULL)
-		free (result);
-	      errno = saved_errno;
-	      return -1;
-	    }
-	  if (cd1 != (iconv_t)(-1) && iconv_close (cd1) < 0)
-	    {
-	      /* Return -1, but free the allocated memory, and while doing
-		 that, preserve the errno from iconv_close.  */
-	      int saved_errno = errno;
-	      if (cd != (iconv_t)(-1))
-		iconv_close (cd);
-	      if (result != *resultp && result != NULL)
-		free (result);
-	      errno = saved_errno;
-	      return -1;
-	    }
-	  if (cd != (iconv_t)(-1) && iconv_close (cd) < 0)
-	    {
-	      /* Return -1, but free the allocated memory, and while doing
-		 that, preserve the errno from iconv_close.  */
+		 that, preserve the errno from iconveh_close.  */
 	      int saved_errno = errno;
 	      if (result != *resultp && result != NULL)
 		free (result);
@@ -1134,103 +1145,27 @@ str_iconveh (const char *src,
   else
     {
 #if HAVE_ICONV
-      iconv_t cd;
-      iconv_t cd1;
-      iconv_t cd2;
+      iconveh_t cd;
       char *result;
 
-      /* Avoid glibc-2.1 bug with EUC-KR.  */
-# if (__GLIBC__ - 0 == 2 && __GLIBC_MINOR__ - 0 <= 1) && !defined _LIBICONV_VERSION
-      if (c_strcasecmp (from_codeset, "EUC-KR") == 0
-	  || c_strcasecmp (to_codeset, "EUC-KR") == 0)
-	{
-	  errno = EINVAL;
-	  return NULL;
-	}
-# endif
+      if (iconveh_open (to_codeset, from_codeset, &cd) < 0)
+	return NULL;
 
-      cd = iconv_open (to_codeset, from_codeset);
-
-      if (STRCASEEQ (from_codeset, "UTF-8", 'U','T','F','-','8',0,0,0,0))
-	cd1 = (iconv_t)(-1);
-      else
-	{
-	  cd1 = iconv_open ("UTF-8", from_codeset);
-	  if (cd1 == (iconv_t)(-1))
-	    {
-	      int saved_errno = errno;
-	      if (cd != (iconv_t)(-1))
-		iconv_close (cd);
-	      errno = saved_errno;
-	      return NULL;
-	    }
-	}
-
-      if (STRCASEEQ (to_codeset, "UTF-8", 'U','T','F','-','8',0,0,0,0)
-# if (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2) || __GLIBC__ > 2 || _LIBICONV_VERSION >= 0x0105
-	  || c_strcasecmp (to_codeset, "UTF-8//TRANSLIT") == 0
-# endif
-	 )
-	cd2 = (iconv_t)(-1);
-      else
-	{
-	  cd2 = iconv_open (to_codeset, "UTF-8");
-	  if (cd2 == (iconv_t)(-1))
-	    {
-	      int saved_errno = errno;
-	      if (cd1 != (iconv_t)(-1))
-		iconv_close (cd1);
-	      if (cd != (iconv_t)(-1))
-		iconv_close (cd);
-	      errno = saved_errno;
-	      return NULL;
-	    }
-	}
-
-      result = str_cd_iconveh (src, cd, cd1, cd2, handler);
+      result = str_cd_iconveh (src, &cd, handler);
 
       if (result == NULL)
 	{
-	  /* Close cd, cd1, cd2, but preserve the errno from str_cd_iconv.  */
+	  /* Close cd, but preserve the errno from str_cd_iconv.  */
 	  int saved_errno = errno;
-	  if (cd2 != (iconv_t)(-1))
-	    iconv_close (cd2);
-	  if (cd1 != (iconv_t)(-1))
-	    iconv_close (cd1);
-	  if (cd != (iconv_t)(-1))
-	    iconv_close (cd);
+	  iconveh_close (&cd);
 	  errno = saved_errno;
 	}
       else
 	{
-	  if (cd2 != (iconv_t)(-1) && iconv_close (cd2) < 0)
+	  if (iconveh_close (&cd) < 0)
 	    {
 	      /* Return NULL, but free the allocated memory, and while doing
-		 that, preserve the errno from iconv_close.  */
-	      int saved_errno = errno;
-	      if (cd1 != (iconv_t)(-1))
-		iconv_close (cd1);
-	      if (cd != (iconv_t)(-1))
-		iconv_close (cd);
-	      free (result);
-	      errno = saved_errno;
-	      return NULL;
-	    }
-	  if (cd1 != (iconv_t)(-1) && iconv_close (cd1) < 0)
-	    {
-	      /* Return NULL, but free the allocated memory, and while doing
-		 that, preserve the errno from iconv_close.  */
-	      int saved_errno = errno;
-	      if (cd != (iconv_t)(-1))
-		iconv_close (cd);
-	      free (result);
-	      errno = saved_errno;
-	      return NULL;
-	    }
-	  if (cd != (iconv_t)(-1) && iconv_close (cd) < 0)
-	    {
-	      /* Return NULL, but free the allocated memory, and while doing
-		 that, preserve the errno from iconv_close.  */
+		 that, preserve the errno from iconveh_close.  */
 	      int saved_errno = errno;
 	      free (result);
 	      errno = saved_errno;

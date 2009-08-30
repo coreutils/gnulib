@@ -6,6 +6,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2009-09-30  striconveh      The functions mem_cd_iconveh and str_cd_iconveh
+                            now take an 'iconveh_t *' argument instead of three
+                            iconv_t arguments.
+
 2009-08-23  tempname        The gen_tempname function takes an additional
                             'flags' argument. You can safely pass 0.
 

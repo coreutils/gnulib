@@ -72,11 +72,31 @@ main ()
   iconv_t cd_88592_to_utf8 = iconv_open ("UTF-8", "ISO-8859-2");
   iconv_t cd_utf8_to_88592 = iconv_open ("ISO-8859-2", "UTF-8");
   iconv_t cd_utf7_to_utf8 = iconv_open ("UTF-8", "UTF-7");
+  iconveh_t cdeh_88592_to_88591;
+  iconveh_t cdeh_88591_to_utf8;
+  iconveh_t cdeh_utf8_to_88591;
+  iconveh_t cdeh_utf7_to_utf8;
 
   ASSERT (cd_88591_to_utf8 != (iconv_t)(-1));
   ASSERT (cd_utf8_to_88591 != (iconv_t)(-1));
   ASSERT (cd_88592_to_utf8 != (iconv_t)(-1));
   ASSERT (cd_utf8_to_88592 != (iconv_t)(-1));
+
+  cdeh_88592_to_88591.cd = cd_88592_to_88591;
+  cdeh_88592_to_88591.cd1 = cd_88592_to_utf8;
+  cdeh_88592_to_88591.cd2 = cd_utf8_to_88591;
+
+  cdeh_88591_to_utf8.cd = cd_88591_to_utf8;
+  cdeh_88591_to_utf8.cd1 = cd_88591_to_utf8;
+  cdeh_88591_to_utf8.cd2 = (iconv_t)(-1);
+
+  cdeh_utf8_to_88591.cd = cd_utf8_to_88591;
+  cdeh_utf8_to_88591.cd1 = (iconv_t)(-1);
+  cdeh_utf8_to_88591.cd2 = cd_utf8_to_88591;
+
+  cdeh_utf7_to_utf8.cd = cd_utf7_to_utf8;
+  cdeh_utf7_to_utf8.cd1 = cd_utf7_to_utf8;
+  cdeh_utf7_to_utf8.cd2 = (iconv_t)(-1);
 
   /* ------------------------ Test mem_cd_iconveh() ------------------------ */
 
@@ -92,8 +112,7 @@ main ()
 	  char *result = NULL;
 	  size_t length = 0;
 	  int retval = mem_cd_iconveh (input, strlen (input),
-				       cd_88592_to_88591,
-				       cd_88592_to_utf8, cd_utf8_to_88591,
+				       &cdeh_88592_to_88591,
 				       handler,
 				       offsets,
 				       &result, &length);
@@ -122,8 +141,7 @@ main ()
 	  char *result = NULL;
 	  size_t length = 0;
 	  int retval = mem_cd_iconveh (input, strlen (input),
-				       cd_88592_to_88591,
-				       cd_88592_to_utf8, cd_utf8_to_88591,
+				       &cdeh_88592_to_88591,
 				       handler,
 				       offsets,
 				       &result, &length);
@@ -184,8 +202,7 @@ main ()
 	  char *result = NULL;
 	  size_t length = 0;
 	  int retval = mem_cd_iconveh (input, strlen (input),
-				       cd_88591_to_utf8,
-				       cd_88591_to_utf8, (iconv_t)(-1),
+				       &cdeh_88591_to_utf8,
 				       handler,
 				       offsets,
 				       &result, &length);
@@ -218,8 +235,7 @@ main ()
 	  char *result = NULL;
 	  size_t length = 0;
 	  int retval = mem_cd_iconveh (input, strlen (input),
-				       cd_utf8_to_88591,
-				       (iconv_t)(-1), cd_utf8_to_88591,
+				       &cdeh_utf8_to_88591,
 				       handler,
 				       offsets,
 				       &result, &length);
@@ -255,8 +271,7 @@ main ()
 	  char *result = NULL;
 	  size_t length = 0;
 	  int retval = mem_cd_iconveh (input, strlen (input),
-				       cd_utf8_to_88591,
-				       (iconv_t)(-1), cd_utf8_to_88591,
+				       &cdeh_utf8_to_88591,
 				       handler,
 				       offsets,
 				       &result, &length);
@@ -319,8 +334,7 @@ main ()
 	  char *result = NULL;
 	  size_t length = 0;
 	  int retval = mem_cd_iconveh (input, strlen (input),
-				       cd_utf8_to_88591,
-				       (iconv_t)(-1), cd_utf8_to_88591,
+				       &cdeh_utf8_to_88591,
 				       handler,
 				       offsets,
 				       &result, &length);
@@ -353,8 +367,7 @@ main ()
 	  char *result = NULL;
 	  size_t length = 0;
 	  int retval = mem_cd_iconveh (input, 7,
-				       cd_utf7_to_utf8,
-				       cd_utf7_to_utf8, (iconv_t)(-1),
+				       &cdeh_utf7_to_utf8,
 				       handler,
 				       NULL,
 				       &result, &length);
@@ -378,8 +391,7 @@ main ()
 	  char *result = NULL;
 	  size_t length = 0;
 	  int retval = mem_cd_iconveh (input, strlen (input),
-				       cd_utf7_to_utf8,
-				       cd_utf7_to_utf8, (iconv_t)(-1),
+				       &cdeh_utf7_to_utf8,
 				       handler,
 				       NULL,
 				       &result, &length);
@@ -428,8 +440,7 @@ main ()
       static const char input[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
       static const char expected[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
       char *result = str_cd_iconveh (input,
-				     cd_88592_to_88591,
-				     cd_88592_to_utf8, cd_utf8_to_88591,
+				     &cdeh_88592_to_88591,
 				     handler);
       ASSERT (result != NULL);
       ASSERT (strcmp (result, expected) == 0);
@@ -442,8 +453,7 @@ main ()
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "Rafa\263 Maszkowski"; /* Rafał Maszkowski */
       char *result = str_cd_iconveh (input,
-				     cd_88592_to_88591,
-				     cd_88592_to_utf8, cd_utf8_to_88591,
+				     &cdeh_88592_to_88591,
 				     handler);
       switch (handler)
 	{
@@ -476,8 +486,7 @@ main ()
       static const char input[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
       static const char expected[] = "\303\204rger mit b\303\266sen B\303\274bchen ohne Augenma\303\237";
       char *result = str_cd_iconveh (input,
-				     cd_88591_to_utf8,
-				     cd_88591_to_utf8, (iconv_t)(-1),
+				     &cdeh_88591_to_utf8,
 				     handler);
       ASSERT (result != NULL);
       ASSERT (strcmp (result, expected) == 0);
@@ -491,8 +500,7 @@ main ()
       static const char input[] = "\303\204rger mit b\303\266sen B\303\274bchen ohne Augenma\303\237";
       static const char expected[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
       char *result = str_cd_iconveh (input,
-				     cd_utf8_to_88591,
-				     (iconv_t)(-1), cd_utf8_to_88591,
+				     &cdeh_utf8_to_88591,
 				     handler);
       ASSERT (result != NULL);
       ASSERT (strcmp (result, expected) == 0);
@@ -505,8 +513,7 @@ main ()
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "Costs: 27 \342\202\254"; /* EURO SIGN */
       char *result = str_cd_iconveh (input,
-				     cd_utf8_to_88591,
-				     (iconv_t)(-1), cd_utf8_to_88591,
+				     &cdeh_utf8_to_88591,
 				     handler);
       switch (handler)
 	{
@@ -538,8 +545,7 @@ main ()
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "\342";
       char *result = str_cd_iconveh (input,
-				     cd_utf8_to_88591,
-				     (iconv_t)(-1), cd_utf8_to_88591,
+				     &cdeh_utf8_to_88591,
 				     handler);
       ASSERT (result != NULL);
       ASSERT (strcmp (result, "") == 0);

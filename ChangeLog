@@ -1,5 +1,19 @@
 2009-08-30  Bruno Haible  <bruno@clisp.org>
 
+	Make it easier to use mem_cd_iconveh.
+	* lib/striconveh.h (iconveh_t): New type.
+	(iconveh_open, iconveh_close): New declarations.
+	(mem_cd_iconveh, str_cd_iconveh): Replace the three iconv_t arguments
+	with a single 'const iconveh_t *' argument.
+	* lib/striconveh.c (iconveh_open, iconveh_close): New functions.
+	(mem_cd_iconveh, str_cd_iconveh): Replace the three iconv_t arguments
+	with a single 'const iconveh_t *' argument.
+	(mem_iconveh, str_iconveh): Use iconveh_open, iconveh_close.
+	* tests/test-striconveh.c (main): Update.
+	* NEWS: Mention the change.
+
+2009-08-30  Bruno Haible  <bruno@clisp.org>
+
 	* doc/posix-functions/iconv_open.texi: Mention indirect conversion
 	problem.
 
