@@ -1,5 +1,11 @@
 2009-08-30  Bruno Haible  <bruno@clisp.org>
 
+	Fix an unnecessary error on Solaris 10 on NFSv3 file systems.
+	* lib/set-mode-acl.c (qset_acl) [Solaris 10 new]: Treat EOPNOTSUPP like
+	ENOSYS.
+
+2009-08-30  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-pipe-filter-ii1.sh: Prefer /usr/xpg6/bin/tr over
 	/usr/xpg4/bin/tr when it exists.
 	* tests/test-pipe-filter-gi1.sh: Likewise.
