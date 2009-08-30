@@ -1,5 +1,13 @@
 2009-08-30  Bruno Haible  <bruno@clisp.org>
 
+	Work around deficient /usr/bin/id program on Solaris.
+	* tests/test-file-has-acl.sh (ID): New variable.
+	* tests/test-set-mode-acl.sh (ID): Likewise.
+	* tests/test-copy-acl.sh (ID): Likewise.
+	* tests/test-copy-file.sh (ID): Likewise.
+
+2009-08-30  Bruno Haible  <bruno@clisp.org>
+
 	New module 'xstriconveh'.
 	* lib/xstriconveh.h: New file.
 	* lib/xstriconveh.c: New file.

@@ -107,10 +107,16 @@ cd "$builddir" ||
   fi
 
   if test $acl_flavor != none; then
+    # A POSIX compliant 'id' program.
+    if test -f /usr/xpg4/bin/id; then
+      ID=/usr/xpg4/bin/id
+    else
+      ID=id
+    fi
     # Use a user and group id different from the current one, to avoid
     # redundant/ambiguous ACLs.
-    myuid=`id -u`
-    mygid=`id -g`
+    myuid=`$ID -u`
+    mygid=`$ID -g`
     auid=1
     if test "$auid" = "$myuid"; then auid=2; fi
     agid=1
