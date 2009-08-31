@@ -703,7 +703,7 @@ if test -z "$have_echo" \
    && test "X$1" != "X--no-reexec" \
    && test -n "$CONFIG_SHELL" \
    && test -f "$CONFIG_SHELL" \
-   && $CONFIG_SHELL -c 'echo '\t' | grep t > /dev/null'; then
+   && $CONFIG_SHELL -c "echo '\\t' | grep t > /dev/null"; then
   exec $CONFIG_SHELL "$0" --no-reexec "$@"
   exit 127
 fi
