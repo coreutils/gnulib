@@ -5,9 +5,12 @@ tests/test-canonicalize-lgpl.c
 Depends-on:
 
 configure.ac:
+AC_CHECK_FUNCS_ONCE([symlink])
+HAVE_SYMLINK=$ac_cv_func_symlink
+AC_SUBST([HAVE_SYMLINK])
 
 Makefile.am:
 TESTS += test-canonicalize-lgpl.sh
-TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
+TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' HAVE_SYMLINK='$(HAVE_SYMLINK)'
 check_PROGRAMS += test-canonicalize-lgpl
 test_canonicalize_lgpl_LDADD = $(LDADD)

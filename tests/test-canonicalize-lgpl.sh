@@ -5,7 +5,8 @@ trap 'rm -fr $tmpfiles' 1 2 3 15
 
 tmpfiles="$tmpfiles t-can-lgpl.tmp ise"
 mkdir t-can-lgpl.tmp
-ln -s t-can-lgpl.tmp/ket ise \
+test "x$HAVE_SYMLINK" = xyes \
+  && ln -s t-can-lgpl.tmp/ket ise \
   || { echo "Skipping test: symbolic links not supported on this filesystem"
        rm -fr $tmpfiles
        exit 77

@@ -1,5 +1,14 @@
 2009-08-31  Eric Blake  <ebb9@byu.net>
 
+	canonicalize: allow cross-testing from cygwin to mingw
+	* modules/canonicalize-tests (configure.ac): Define HAVE_SYMLINK.
+	(Makefile.am): Pass it through TESTS_ENVIRONMENT.
+	* modules/canonicalize-lgpl-tests (configure.ac, Makefile.am):
+	Likewise.
+	* tests/test-canonicalize.sh: Also skip test if 'ln -s' works, but
+	target does not support symlinks.
+	* tests/test-canonicalize-lgpl.sh: Likewise.
+
 	chown: avoid compilation warning on mingw
 	* m4/chown.m4 (gl_FUNC_CHOWN): Recognize missing chown.
 	* lib/chown.c (rpl_chown) [!HAVE_CHOWN]: Always return failure on
