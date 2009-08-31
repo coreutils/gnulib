@@ -248,12 +248,6 @@ extern int fchdir (int /*fd*/);
 #  define dup rpl_dup
 extern int dup (int);
 
-#  if @REPLACE_DUP2@
-#   undef dup2
-#  endif
-#  define dup2 rpl_dup2_fchdir
-extern int dup2 (int, int);
-
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef fchdir
@@ -624,6 +618,8 @@ extern ssize_t write (int fd, const void *buf, size_t count);
 #ifdef FCHDIR_REPLACEMENT
 /* gnulib internal function.  */
 extern void _gl_unregister_fd (int fd);
+/* gnulib internal function.  */
+extern int _gl_register_dup (int oldfd, int newfd);
 #endif
 
 

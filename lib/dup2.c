@@ -70,6 +70,10 @@ rpl_dup2 (int fd, int desired_fd)
   /* Correct a cygwin 1.5.x errno value.  */
   else if (result == -1 && errno == EMFILE)
     errno = EBADF;
+#ifdef FCHDIR_REPLACEMENT
+  if (fd != desired_fd && result == desired_fd)
+    result = _gl_register_dup (fd, desired_fd);
+#endif
   return result;
 }
 
@@ -98,13 +102,19 @@ dupfd (int fd, int desired_fd)
 int
 dup2 (int fd, int desired_fd)
 {
+  int result;
   if (fd == desired_fd)
-    return fd;
+    return fcntl (fd, F_GETFL) < 0 ? -1 : fd;
   close (desired_fd);
 # ifdef F_DUPFD
-  return fcntl (fd, F_DUPFD, desired_fd);
+  result = fcntl (fd, F_DUPFD, desired_fd);
 # else
-  return dupfd (fd, desired_fd);
+  result = dupfd (fd, desired_fd);
 # endif
+#ifdef FCHDIR_REPLACEMENT
+  if (0 <= result)
+    result = _gl_register_dup (fd, desired_fd);
+#endif
+  return result;
 }
 #endif /* !REPLACE_DUP2 */

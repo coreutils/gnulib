@@ -1,4 +1,4 @@
-#serial 7
+#serial 8
 dnl Copyright (C) 2002, 2005, 2007, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -37,10 +37,16 @@ AC_DEFUN([gl_FUNC_DUP2],
 	 esac])
       ])
     if test "$gl_cv_func_dup2_works" = no; then
-      REPLACE_DUP2=1
-      AC_LIBOBJ([dup2])
+      gl_REPLACE_DUP2
     fi
   fi
   AC_DEFINE_UNQUOTED([REPLACE_DUP2], [$REPLACE_DUP2],
     [Define to 1 if dup2 returns 0 instead of the target fd.])
+])
+
+AC_DEFUN([gl_REPLACE_DUP2],
+[
+  AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
+  REPLACE_DUP2=1
+  AC_LIBOBJ([dup2])
 ])

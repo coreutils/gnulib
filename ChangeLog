@@ -1,3 +1,24 @@
+2009-09-02  Eric Blake  <ebb9@byu.net>
+
+	fchdir: simplify error handling, and support dup3
+	* modules/fchdir (Depends-on): Use strdup-posix, not strdup.  Add
+	stdbool, malloc-posix, realloc-posix.
+	* lib/fchdir.c (struct dir_info_t): Delete saved_errno.
+	(ensure_dirs_slot): Return false on allocation failure.
+	(rpl_dup2): Delete.
+	(_gl_register_dup): New function.
+	(_gl_unregister_fd, rpl_opendir, rpl_dup): Update callers.
+	(_gl_register_fd): Close fd on allocation failure.
+	* lib/fcntl.in.h (_gl_register_fd): Update signature.
+	* lib/unistd.in.h (_gl_register_dup) [FCHDIR_REPLACEMENT]: New
+	prototype.
+	(rpl_dup2_fchdir): Delete prototype.
+	* lib/open.c (open): Update caller.
+	* lib/dup2.c (dup2): Track fchdir metadata.
+	* lib/dup3.c (dup3): Likewise.
+	* m4/dup2.m4 (gl_REPLACE_DUP2): New macro.
+	* m4/fchdir.m4 (gl_FUNC_FCHDIR): Use it.
+
 2009-09-02  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* gnulib-tool (func_create_testdir, func_create_megatestdir): Use

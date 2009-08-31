@@ -13,8 +13,11 @@ dirfd
 dup2
 fcntl-h
 include_next
+malloc-posix
 open
-strdup
+realloc-posix
+stdbool
+strdup-posix
 sys_stat
 unistd
 

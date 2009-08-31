@@ -63,6 +63,10 @@ dup3 (int oldfd, int newfd, int flags)
 	if (!(result < 0 && errno == ENOSYS))
 	  {
 	    have_dup3_really = 1;
+#ifdef FCHDIR_REPLACEMENT
+	    if (0 <= result)
+	      result = _gl_register_dup (oldfd, newfd);
+#endif
 	    return result;
 	  }
 	have_dup3_really = -1;
@@ -180,6 +184,10 @@ dup3 (int oldfd, int newfd, int flags)
 	errno = saved_errno;
       }
 
+#ifdef FCHDIR_REPLACEMENT
+      if (result == newfd)
+	result = _gl_register_dup (oldfd, newfd);
+#endif
       return result;
     }
 
@@ -218,5 +226,8 @@ dup3 (int oldfd, int newfd, int flags)
     setmode (newfd, O_TEXT);
 #endif
 
+#ifdef FCHDIR_REPLACEMENT
+  newfd = _gl_register_dup (oldfd, newfd);
+#endif
   return newfd;
 }

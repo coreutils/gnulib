@@ -118,7 +118,7 @@ open (const char *filename, int flags, ...)
           /* Maximum recursion depth of 1.  */
           fd = open ("/dev/null", flags, mode);
           if (0 <= fd)
-            _gl_register_fd (fd, filename);
+            fd = _gl_register_fd (fd, filename);
         }
       else
         errno = EACCES;
@@ -157,7 +157,7 @@ open (const char *filename, int flags, ...)
 
 #ifdef FCHDIR_REPLACEMENT
   if (!REPLACE_OPEN_DIRECTORY && 0 <= fd)
-    _gl_register_fd (fd, filename);
+    fd = _gl_register_fd (fd, filename);
 #endif
 
   return fd;
