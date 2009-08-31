@@ -1,7 +1,7 @@
 /* Provide a stub lchown function for systems that lack it.
 
-   Copyright (C) 1998, 1999, 2002, 2004, 2006, 2007 Free Software
-   Foundation, Inc.
+   Copyright (C) 1998, 1999, 2002, 2004, 2006, 2007, 2009 Free
+   Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -48,7 +48,8 @@
 int
 lchown (const char *file, uid_t uid, gid_t gid)
 {
-#if ! CHOWN_MODIFIES_SYMLINK
+#if HAVE_CHOWN
+# if ! CHOWN_MODIFIES_SYMLINK
   struct stat stats;
 
   if (lstat (file, &stats) == 0 && S_ISLNK (stats.st_mode))
@@ -56,7 +57,12 @@ lchown (const char *file, uid_t uid, gid_t gid)
       errno = EOPNOTSUPP;
       return -1;
     }
-#endif
+# endif
 
   return chown (file, uid, gid);
+
+#else /* !HAVE_CHOWN */
+  errno = EOPNOTSUPP;
+  return -1;
+#endif
 }

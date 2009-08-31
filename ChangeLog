@@ -1,3 +1,12 @@
+2009-08-31  Eric Blake  <ebb9@byu.net>
+
+	chown: avoid compilation warning on mingw
+	* m4/chown.m4 (gl_FUNC_CHOWN): Recognize missing chown.
+	* lib/chown.c (rpl_chown) [!HAVE_CHOWN]: Always return failure on
+	mingw.
+	* lib/lchown.c (lchown) [!HAVE_CHOWN]: Likewise.
+	* modules/chown (Depends-on): Add errno.
+
 2009-08-31  Stefano Lattarini  <stefano.lattarini@gmail.com>  (tiny change)
 
 	* gnulib-tool: Fix test whether $CONFIG_SHELL has a working 'echo'

@@ -1,4 +1,4 @@
-# serial 18
+# serial 19
 # Determine whether we need the chown wrapper.
 
 dnl Copyright (C) 1997-2001, 2003-2005, 2007, 2009
@@ -20,6 +20,7 @@ AC_DEFUN([gl_FUNC_CHOWN],
   AC_REQUIRE([AC_TYPE_UID_T])
   AC_REQUIRE([AC_FUNC_CHOWN])
   AC_REQUIRE([gl_FUNC_CHOWN_FOLLOWS_SYMLINK])
+  AC_CHECK_FUNCS_ONCE([chown])
 
   if test $ac_cv_func_chown_works = no; then
     AC_DEFINE([CHOWN_FAILS_TO_HONOR_ID_OF_NEGATIVE_ONE], [1],
