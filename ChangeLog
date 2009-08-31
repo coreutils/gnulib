@@ -1,5 +1,20 @@
 2009-08-31  Eric Blake  <ebb9@byu.net>
 
+	fchdir: port to mingw
+	* m4/fchdir.m4 (gl_FUNC_FCHDIR): Check for mingw bug.
+	* lib/open.c (open) [FCHDIR_REPLACEMENT]: If directories can't be
+	opened, then use a substitute.
+	* lib/sys_stat.in.h (fstat) [REPLACE_OPEN_DIRECTORY]: Declare
+	replacement.
+	* lib/fchdir.c (fstat) [REPLACE_OPEN_DIRECTORY]: Implement it.
+	(_gl_register_fd): No need to check stat if open already filters
+	all directories.
+	(fchdir): Fix error condition to match POSIX.
+	* modules/fchdir (Depends-on): Add sys_stat.
+	* doc/posix-functions/open.texi (open): Document the limitation.
+	* modules/fchdir-tests: New file.
+	* tests/test-fchdir.c: Likewise.
+
 	canonicalize: allow cross-testing from cygwin to mingw
 	* modules/canonicalize-tests (configure.ac): Define HAVE_SYMLINK.
 	(Makefile.am): Pass it through TESTS_ENVIRONMENT.

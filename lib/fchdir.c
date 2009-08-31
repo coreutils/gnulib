@@ -30,8 +30,17 @@
 
 #include "canonicalize.h"
 
+#ifndef REPLACE_OPEN_DIRECTORY
+# define REPLACE_OPEN_DIRECTORY 0
+#endif
+
 /* This replacement assumes that a directory is not renamed while opened
-   through a file descriptor.  */
+   through a file descriptor.
+
+   FIXME: On mingw, this would be possible to enforce if we were to
+   also open a HANDLE to each directory currently visited by a file
+   descriptor, since mingw refuses to rename any in-use file system
+   object.  */
 
 /* Array of file descriptors opened.  If it points to a directory, it stores
    info about this directory; otherwise it stores an errno value of ENOTDIR.  */
@@ -77,6 +86,8 @@ ensure_dirs_slot (size_t fd)
 /* Hook into the gnulib replacements for open() and close() to keep track
    of the open file descriptors.  */
 
+/* Close FD, cleaning up any fd to name mapping if fd was visiting a
+   directory.  */
 void
 _gl_unregister_fd (int fd)
 {
@@ -89,6 +100,9 @@ _gl_unregister_fd (int fd)
     }
 }
 
+/* Mark FD as visiting FILENAME.  FD must be positive, and refer to an
+   open file descriptor.  If REPLACE_OPEN_DIRECTORY is non-zero, this
+   should only be called if FD is visiting a directory.  */
 void
 _gl_register_fd (int fd, const char *filename)
 {
@@ -96,13 +110,27 @@ _gl_register_fd (int fd, const char *filename)
 
   ensure_dirs_slot (fd);
   if (fd < dirs_allocated
-      && fstat (fd, &statbuf) >= 0 && S_ISDIR (statbuf.st_mode))
+      && (REPLACE_OPEN_DIRECTORY
+          || (fstat (fd, &statbuf) >= 0 && S_ISDIR (statbuf.st_mode))))
     {
       dirs[fd].name = canonicalize_file_name (filename);
       if (dirs[fd].name == NULL)
-	dirs[fd].saved_errno = errno;
+        dirs[fd].saved_errno = errno;
     }
 }
+
+/* Return stat information about FD in STATBUF.  Needed when
+   rpl_open() used a dummy file to work around an open() that can't
+   normally visit directories.  */
+#if REPLACE_OPEN_DIRECTORY
+int
+rpl_fstat (int fd, struct stat *statbuf)
+{
+  if (0 <= fd && fd <= dirs_allocated && dirs[fd].name != NULL)
+    return stat (dirs[fd].name, statbuf);
+  return fstat (fd, statbuf);
+}
+#endif
 
 /* Override opendir() and closedir(), to keep track of the open file
    descriptors.  Needed because there is a function dirfd().  */
@@ -218,27 +246,16 @@ rpl_dup2_fchdir (int oldfd, int newfd)
 int
 fchdir (int fd)
 {
-  if (fd >= 0)
+  if (fd >= 0 && fd < dirs_allocated && dirs[fd].name != NULL)
+    return chdir (dirs[fd].name);
+  /* At this point, fd is either invalid, or open but not a directory.
+     If dup2 fails, errno is correctly EBADF.  */
+  if (0 <= fd)
     {
-      if (fd < dirs_allocated)
-	{
-	  if (dirs[fd].name != NULL)
-	    return chdir (dirs[fd].name);
-	  else
-	    {
-	      errno = dirs[fd].saved_errno;
-	      return -1;
-	    }
-	}
-      else
-	{
-	  errno = ENOMEM;
-	  return -1;
-	}
+      if (dup2 (fd, fd) == fd)
+        errno = ENOTDIR;
     }
   else
-    {
-      errno = EBADF;
-      return -1;
-    }
+    errno = EBADF;
+  return -1;
 }

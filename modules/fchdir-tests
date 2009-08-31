@@ -1,0 +1,11 @@
+Files:
+tests/test-fchdir.c
+
+Depends-on:
+getcwd
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-fchdir
+check_PROGRAMS += test-fchdir

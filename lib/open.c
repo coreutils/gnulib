@@ -39,6 +39,10 @@ orig_open (const char *filename, int flags, mode_t mode)
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#ifndef REPLACE_OPEN_DIRECTORY
+# define REPLACE_OPEN_DIRECTORY 0
+#endif
+
 int
 open (const char *filename, int flags, ...)
 {
@@ -98,6 +102,29 @@ open (const char *filename, int flags, ...)
 
   fd = orig_open (filename, flags, mode);
 
+#ifdef FCHDIR_REPLACEMENT
+  /* Implementing fchdir and fdopendir requires the ability to open a
+     directory file descriptor.  If open doesn't support that (as on
+     mingw), we use a dummy file that behaves the same as directories
+     on Linux (ie. always reports EOF on attempts to read()), and
+     override fstat() in fchdir.c to hide the fact that we have a
+     dummy.  */
+  if (REPLACE_OPEN_DIRECTORY && fd < 0 && errno == EACCES
+      && (mode & O_ACCMODE) == O_RDONLY)
+    {
+      struct stat statbuf;
+      if (stat (filename, &statbuf) == 0 && S_ISDIR (statbuf.st_mode))
+        {
+          /* Maximum recursion depth of 1.  */
+          fd = open ("/dev/null", flags, mode);
+          if (0 <= fd)
+            _gl_register_fd (fd, filename);
+        }
+      else
+        errno = EACCES;
+    }
+#endif
+
 #if OPEN_TRAILING_SLASH_BUG
   /* If the filename ends in a slash and fd does not refer to a directory,
      then fail.
@@ -129,7 +156,7 @@ open (const char *filename, int flags, ...)
 #endif
 
 #ifdef FCHDIR_REPLACEMENT
-  if (fd >= 0)
+  if (!REPLACE_OPEN_DIRECTORY && 0 <= fd)
     _gl_register_fd (fd, filename);
 #endif
 

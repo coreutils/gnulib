@@ -15,6 +15,7 @@ fcntl-h
 include_next
 open
 strdup
+sys_stat
 unistd
 
 configure.ac:
