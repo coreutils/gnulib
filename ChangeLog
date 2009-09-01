@@ -1,5 +1,11 @@
 2009-09-01  Jim Meyering  <meyering@redhat.com>
 
+	fts: help ensure that return values are not ignored
+	* lib/fts_.h (__GNUC_PREREQ): Define.
+	(__attribute_warn_unused_result__): Define.
+	(fts_children, fts_close, fts_open, fts_read): Declare with
+	__attribute_warn_unused_result__.
+
 	fts: fts_close now fails also when closing a dir file descriptor fails
 	* lib/fts.c (fts_close): Detect close failure, not just fchdir failure,
 	and propagate to caller, along with errno.
