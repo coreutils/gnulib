@@ -1,5 +1,9 @@
 2009-09-02  Eric Blake  <ebb9@byu.net>
 
+	fts: make directory fds more robust
+	* lib/fts.c (O_DIRECTORY): Let <fcntl.h> take care of this.
+	(opendirat): Specify O_DIRECTORY, and add fallbacks for safety.
+
 	backupfile, chdir-long, fts, savedir: make safer
 	* lib/backupfile.c (includes): Use "dirent--.h", since
 	numbered_backup can write to stderr during readdir.

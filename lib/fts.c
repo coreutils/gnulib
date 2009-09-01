@@ -228,10 +228,6 @@ static void free_dir (FTS *fts) {}
 # define SIZE_MAX ((size_t) -1)
 #endif
 
-#ifndef O_DIRECTORY
-# define O_DIRECTORY 0
-#endif
-
 #define ISDOT(a)	(a[0] == '.' && (!a[1] || (a[1] == '.' && !a[2])))
 #define STREQ(a, b)	(strcmp ((a), (b)) == 0)
 
@@ -309,7 +305,8 @@ static inline DIR *
 internal_function
 opendirat (int fd, char const *dir)
 {
-  int new_fd = openat (fd, dir, O_RDONLY);
+  int new_fd = openat (fd, dir,
+		       O_RDONLY | O_DIRECTORY | O_NOCTTY | O_NONBLOCK);
   DIR *dirp;
 
   if (new_fd < 0)
