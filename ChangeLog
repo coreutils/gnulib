@@ -1,3 +1,17 @@
+2009-09-01  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/arpa_inet: Use $(MKDIR_P) instead of @MKDIR_P@.
+	* modules/netinet_in: Likewise.
+	* modules/sys_file: Likewise.
+	* modules/sys_ioctl: Likewise.
+	* modules/sys_select: Likewise.
+	* modules/sys_socket: Likewise.
+	* modules/sys_stat: Likewise.
+	* modules/sys_time: Likewise.
+	* modules/sys_times: Likewise.
+	* modules/sys_utsname: Likewise.
+	* modules/sys_wait: Likewise.
+
 2009-09-01  Jim Meyering  <meyering@redhat.com>
 
 	fts: help ensure that return values are not ignored
