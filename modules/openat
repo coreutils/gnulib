@@ -18,6 +18,7 @@ Depends-on:
 dirname
 extensions
 fchdir
+fdopendir
 gettext-h
 intprops
 lchown

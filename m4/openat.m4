@@ -1,4 +1,4 @@
-# serial 18
+# serial 19
 # See if we need to use our replacement for Solaris' openat et al functions.
 
 dnl Copyright (C) 2004-2009 Free Software Foundation, Inc.
@@ -13,7 +13,6 @@ AC_DEFUN([gl_FUNC_OPENAT],
   AC_LIBOBJ([openat-proc])
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_CHECK_FUNCS_ONCE([lchmod])
-  AC_CHECK_FUNCS_ONCE([fdopendir])
   AC_REPLACE_FUNCS([fchmodat mkdirat openat])
   AC_REQUIRE([AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK])
   case $ac_cv_func_openat+$ac_cv_func_lstat_dereferences_slashed_symlink in

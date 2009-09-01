@@ -1,5 +1,25 @@
 2009-09-02  Eric Blake  <ebb9@byu.net>
 
+	fdopendir: split into its own module
+	* lib/openat.c (fdopendir): Move...
+	* lib/fdopendir.c: ...into new file.
+	* modules/fdopendir: New module.
+	* m4/fdopendir.m4 (gl_FUNC_FDOPENDIR): New file.
+	* modules/openat (Depends-on): Add fdopendir.
+	* m4/openat.m4 (gl_FUNC_OPENAT): No longer need to check for
+	fdopendir here.
+	* modules/savedir (Depends-on): Only need fdopendir, not full
+	openat.
+	* lib/savedir.c (include): Use <dirent.h>, not "openat.h".
+	* lib/openat.h (fdopendir): Drop prototype.
+	* lib/dirent.in.h (fdopendir): Provide prototype.
+	* m4/dirent_h.m4 (gl_DIRENT_H_DEFAULTS): Add replacements.
+	* modules/dirent (Makefile.am): Substitute them.
+	* MODULES.html.sh (File system functions): Mention it.
+	* doc/posix-functions/fdopendir.texi (fdopendir): Likewise.
+	* modules/fdopendir-tests: New file.
+	* tests/test-fdopendir.c: Likewise.
+
 	fchdir: use more consistent macro convention
 	* lib/fcntl.in.h (_gl_register_fd): Move declaration to unistd.
 	* lib/sys_stat.in.h (rpl_fstat): Declare via make-time

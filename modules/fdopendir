@@ -1,0 +1,30 @@
+Description:
+Open a directory stream from a file descriptor.
+
+Files:
+lib/fdopendir.c
+lib/openat-priv.h
+lib/openat-proc.c
+m4/fdopendir.m4
+
+Depends-on:
+extensions
+dirent
+fchdir
+openat-die
+save-cwd
+
+configure.ac:
+gl_FUNC_FDOPENDIR
+gl_DIRENT_MODULE_INDICATOR([fdopendir])
+
+Makefile.am:
+
+Include:
+<dirent.h>
+
+License:
+GPL
+
+Maintainer:
+Jim Meyering, Eric Blake

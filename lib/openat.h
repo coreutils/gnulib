@@ -1,5 +1,5 @@
 /* provide a replacement openat function
-   Copyright (C) 2004, 2005, 2006, 2008 Free Software Foundation, Inc.
+   Copyright (C) 2004-2006, 2008-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -66,10 +66,6 @@
 int openat (int fd, char const *file, int flags, /* mode_t mode */ ...);
 int openat_permissive (int fd, char const *file, int flags, mode_t mode,
 		       int *cwd_errno);
-# if ! HAVE_FDOPENDIR
-#  define fdopendir __OPENAT_ID (fdopendir)
-# endif
-DIR *fdopendir (int fd);
 # define fstatat __OPENAT_ID (fstatat)
 int fstatat (int fd, char const *file, struct stat *st, int flag);
 # define unlinkat __OPENAT_ID (unlinkat)
