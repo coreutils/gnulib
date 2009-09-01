@@ -154,6 +154,25 @@ _gl_register_dup (int oldfd, int newfd)
   return newfd;
 }
 
+/* If FD is currently visiting a directory, then return the name of
+   that directory.  Otherwise, return NULL and set errno.  */
+const char *
+_gl_directory_name (int fd)
+{
+  if (0 <= fd && fd < dirs_allocated && dirs[fd].name != NULL)
+    return dirs[fd].name;
+  /* At this point, fd is either invalid, or open but not a directory.
+     If dup2 fails, errno is correctly EBADF.  */
+  if (0 <= fd)
+    {
+      if (dup2 (fd, fd) == fd)
+        errno = ENOTDIR;
+    }
+  else
+    errno = EBADF;
+  return NULL;
+}
+
 /* Return stat information about FD in STATBUF.  Needed when
    rpl_open() used a dummy file to work around an open() that can't
    normally visit directories.  */
@@ -222,16 +241,6 @@ rpl_dup (int oldfd)
 int
 fchdir (int fd)
 {
-  if (fd >= 0 && fd < dirs_allocated && dirs[fd].name != NULL)
-    return chdir (dirs[fd].name);
-  /* At this point, fd is either invalid, or open but not a directory.
-     If dup2 fails, errno is correctly EBADF.  */
-  if (0 <= fd)
-    {
-      if (dup2 (fd, fd) == fd)
-        errno = ENOTDIR;
-    }
-  else
-    errno = EBADF;
-  return -1;
+  const char *name = _gl_directory_name (fd);
+  return name ? chdir (name) : -1;
 }

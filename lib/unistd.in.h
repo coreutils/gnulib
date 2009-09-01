@@ -252,6 +252,7 @@ extern int dup (int);
 extern int _gl_register_fd (int fd, const char *filename);
 extern void _gl_unregister_fd (int fd);
 extern int _gl_register_dup (int oldfd, int newfd);
+extern const char *_gl_directory_name (int fd);
 
 # endif
 #elif defined GNULIB_POSIXCHECK

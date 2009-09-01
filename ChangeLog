@@ -1,5 +1,12 @@
 2009-09-02  Eric Blake  <ebb9@byu.net>
 
+	fdopendir: optimize on mingw
+	* lib/unistd.in.h (_gl_directory_name): New prototype.
+	* lib/fchdir.c (_gl_directory_name): Implement it.
+	(fchdir): Use it to simplify implementation.
+	* lib/fdopendir.c (fdopendir) [REPLACE_FCHDIR]: Use metadata from
+	fchdir, when available, to avoid calling [f]chdir().
+
 	fdopendir: split into its own module
 	* lib/openat.c (fdopendir): Move...
 	* lib/fdopendir.c: ...into new file.

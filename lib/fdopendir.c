@@ -30,7 +30,8 @@
 /* Replacement for Solaris' function by the same name.
    <http://www.google.com/search?q=fdopendir+site:docs.sun.com>
    First, try to simulate it via opendir ("/proc/self/fd/FD").  Failing
-   that, simulate it by doing save_cwd/fchdir/opendir(".")/restore_cwd.
+   that, simulate it by using fchdir metadata, or by doing
+   save_cwd/fchdir/opendir(".")/restore_cwd.
    If either the save_cwd or the restore_cwd fails (relatively unlikely),
    then give a diagnostic and exit nonzero.
    Otherwise, this function works just like Solaris' fdopendir.
@@ -45,7 +46,6 @@
 DIR *
 fdopendir (int fd)
 {
-  struct saved_cwd saved_cwd;
   int saved_errno;
   DIR *dir;
 
@@ -66,6 +66,13 @@ fdopendir (int fd)
      save_cwd/restore_cwd.  */
   if (! dir && EXPECTED_ERRNO (saved_errno))
     {
+#if REPLACE_FCHDIR
+      const char *name = _gl_directory_name (fd);
+      if (name)
+        dir = opendir (name);
+      saved_errno = errno;
+#else /* !REPLACE_FCHDIR */
+      struct saved_cwd saved_cwd;
       if (save_cwd (&saved_cwd) != 0)
 	openat_save_fail (errno);
 
@@ -84,6 +91,7 @@ fdopendir (int fd)
 	}
 
       free_cwd (&saved_cwd);
+#endif /* !REPLACE_FCHDIR */
     }
 
   if (dir)
