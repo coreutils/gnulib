@@ -606,14 +606,20 @@ fts_close (FTS *sp)
 	if (ISSET(FTS_CWDFD))
 	  {
 	    if (0 <= sp->fts_cwd_fd)
-	      close (sp->fts_cwd_fd);
+	      if (close (sp->fts_cwd_fd))
+		saved_errno = errno;
 	  }
 	else if (!ISSET(FTS_NOCHDIR))
 	  {
 	    /* Return to original directory, save errno if necessary. */
 	    if (fchdir(sp->fts_rfd))
 	      saved_errno = errno;
-	    close(sp->fts_rfd);
+
+	    /* If close fails, record errno only if saved_errno is zero,
+	       so that we report the probably-more-meaningful fchdir errno.  */
+	    if (close (sp->fts_rfd))
+	      if (saved_errno == 0)
+		saved_errno = errno;
 	  }
 
 	fd_ring_clear (&sp->fts_fd_ring);

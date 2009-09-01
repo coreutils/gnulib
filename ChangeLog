@@ -1,5 +1,9 @@
 2009-09-01  Jim Meyering  <meyering@redhat.com>
 
+	fts: fts_close now fails also when closing a dir file descriptor fails
+	* lib/fts.c (fts_close): Detect close failure, not just fchdir failure,
+	and propagate to caller, along with errno.
+
 	announce-gen: correct formatting in --help output
 	* build-aux/announce-gen (usage): Move the one-line description in
 	--help output "up", to where it belongs, just after Usage:.
