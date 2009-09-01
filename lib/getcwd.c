@@ -1,4 +1,4 @@
-/* Copyright (C) 1991-1999, 2004-2008 Free Software Foundation, Inc.
+/* Copyright (C) 1991-1999, 2004-2009 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This program is free software: you can redistribute it and/or modify
@@ -103,7 +103,11 @@
 #endif
 
 /* The results of opendir() in this file are not used with dirfd and fchdir,
-   therefore save some unnecessary recursion in fchdir.c.  */
+   and we do not leak fds to any single-threaded code that could use stdio,
+   therefore save some unnecessary recursion in fchdir.c.
+   FIXME - if the kernel ever adds support for multi-thread safety for
+   avoiding standard fds, then we should use opendir_safer and
+   openat_safer.  */
 #undef opendir
 #undef closedir
 

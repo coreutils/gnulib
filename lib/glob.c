@@ -1,4 +1,4 @@
-/* Copyright (C) 1991-2002, 2003, 2004, 2005, 2006, 2007, 2008
+/* Copyright (C) 1991-2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009
    Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
@@ -186,7 +186,10 @@ static const char *next_brace_sub (const char *begin, int flags) __THROW;
 
 #ifndef _LIBC
 /* The results of opendir() in this file are not used with dirfd and fchdir,
-   therefore save some unnecessary work in fchdir.c.  */
+   and we do not leak fds to any single-threaded code that could use stdio,
+   therefore save some unnecessary recursion in fchdir.c and opendir_safer.c.
+   FIXME - if the kernel ever adds support for multi-thread safety for
+   avoiding standard fds, then we should use opendir_safer.  */
 # undef opendir
 # undef closedir
 

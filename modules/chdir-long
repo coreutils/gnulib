@@ -10,7 +10,7 @@ Depends-on:
 atexit
 fchdir
 fcntl-h
-openat
+openat-safer
 memchr
 mempcpy
 memrchr

@@ -11,6 +11,7 @@ m4/backupfile.m4
 Depends-on:
 argmatch
 d-ino
+dirent-safer
 dirname
 memcmp
 stdbool

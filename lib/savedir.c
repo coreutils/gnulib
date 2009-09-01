@@ -26,7 +26,7 @@
 
 #include <errno.h>
 
-#include <dirent.h>
+#include "dirent--.h"
 #ifndef _D_EXACT_NAMLEN
 # define _D_EXACT_NAMLEN(dp)	strlen ((dp)->d_name)
 #endif
@@ -40,11 +40,6 @@
 #ifndef NAME_SIZE_DEFAULT
 # define NAME_SIZE_DEFAULT 512
 #endif
-
-/* The results of opendir() in this file are not used with dirfd and fchdir,
-   therefore save some unnecessary work in fchdir.c.  */
-#undef opendir
-#undef closedir
 
 /* Return a freshly allocated string containing the file names
    in directory DIRP, separated by '\0' characters;

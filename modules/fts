@@ -11,6 +11,7 @@ Depends-on:
 cycle-check
 d-ino
 d-type
+dirent-safer
 dirfd
 fchdir
 fcntl-h
@@ -19,7 +20,7 @@ hash
 i-ring
 lstat
 memmove
-openat
+openat-safer
 stdbool
 unistd-safer
 

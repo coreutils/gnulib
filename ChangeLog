@@ -1,5 +1,21 @@
 2009-09-02  Eric Blake  <ebb9@byu.net>
 
+	backupfile, chdir-long, fts, savedir: make safer
+	* lib/backupfile.c (includes): Use "dirent--.h", since
+	numbered_backup can write to stderr during readdir.
+	* lib/savedir.c (includes): Likewise.
+	* lib/chdir-long.c (includes): Use "fcntl--.h", since openat
+	emulation can write to stderr on failure.
+	* lib/fts.c (includes) [!_LIBC]: Likewise for opendir and openat.
+	* lib/getcwd.c: Document why opendir_safer is unused.
+	* lib/glob.c: Likewise.
+	* lib/scandir.c: Likewise.
+	* lib/openat-proc.c: Likewise, for open_safer.
+	* modules/backupfile (Depends-on): Add dirent-safer.
+	* modules/savedir (Depends-on): Likewise.
+	* modules/fts (Depends-on): Add dirent-safer and openat-safer.
+	* modules/chdir-long (Depends-on): Add openat-safer.
+
 	openat-safer: new module
 	* modules/openat-safer: New file.
 	* lib/openat-safer.c: Likewise.
