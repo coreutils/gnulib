@@ -1,3 +1,9 @@
+2009-09-01  Eric Blake  <ebb9@byu.net>
+
+	fchdir: fix off-by-one bug in previous patch
+	* lib/fchdir.c (rpl_fstat): Use correct bounds.
+	(_gl_unregister_fd): Delete useless if.
+
 2009-09-01  Daniel P. Berrange  <berrange@redhat.com>
 
 	maint.mk: sort the list of syntax-check rules

@@ -93,8 +93,7 @@ _gl_unregister_fd (int fd)
 {
   if (fd >= 0 && fd < dirs_allocated)
     {
-      if (dirs[fd].name != NULL)
-	free (dirs[fd].name);
+      free (dirs[fd].name);
       dirs[fd].name = NULL;
       dirs[fd].saved_errno = ENOTDIR;
     }
@@ -126,7 +125,7 @@ _gl_register_fd (int fd, const char *filename)
 int
 rpl_fstat (int fd, struct stat *statbuf)
 {
-  if (0 <= fd && fd <= dirs_allocated && dirs[fd].name != NULL)
+  if (0 <= fd && fd < dirs_allocated && dirs[fd].name != NULL)
     return stat (dirs[fd].name, statbuf);
   return fstat (fd, statbuf);
 }
