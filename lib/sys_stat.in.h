@@ -302,7 +302,7 @@ extern int rpl_lstat (const char *name, struct stat *buf);
    lstat (p, b))
 #endif
 
-#if defined FCHDIR_REPLACEMENT && REPLACE_OPEN_DIRECTORY
+#if @REPLACE_FCHDIR@
 # define fstat rpl_fstat
 extern int fstat (int fd, struct stat *buf);
 #endif

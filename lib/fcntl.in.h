@@ -58,11 +58,6 @@ extern int open (const char *filename, int flags, ...);
 # endif
 #endif
 
-#ifdef FCHDIR_REPLACEMENT
-/* gnulib internal function.  */
-extern int _gl_register_fd (int fd, const char *filename);
-#endif
-
 #ifdef __cplusplus
 }
 #endif

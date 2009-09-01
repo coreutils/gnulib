@@ -1,5 +1,26 @@
 2009-09-02  Eric Blake  <ebb9@byu.net>
 
+	fchdir: use more consistent macro convention
+	* lib/fcntl.in.h (_gl_register_fd): Move declaration to unistd.
+	* lib/sys_stat.in.h (rpl_fstat): Declare via make-time
+	REPLACE_FCHDIR, rather than relying on config.h macros.
+	* lib/unistd.in.h (fchdir): Move all fchdir internal declarations
+	inside a single make-time REPLACE_FCHDIR block, rather than using
+	the config.h FCHDIR_REPLACEMENT.
+	* m4/fchdir.m4 (gl_FUNC_FCHDIR): REPLACE_FCHDIR was already
+	AC_SUBST'd, also AC_DEFINE it.  Don't define FCHDIR_REPLACEMENT.
+	Manage fstat replacement.
+	* m4/sys_stat_h.m4 (gl_SYS_STAT_H_DEFAULTS): Pick up
+	REPLACE_FCHDIR.
+	* modules/sys_stat (Files): Add m4/unistd_h.m4.
+	(Makefile.am): Substitute REPLACE_FCHDIR.
+	* lib/close.c (rpl_close): Use REPLACE_FCHDIR, not
+	FCHDIR_REPLACEMENT.
+	* lib/dup-safer.c (dup_safer): Likewise.
+	* lib/dup2.c (rpl_dup2): Likewise.
+	* lib/dup3.c (rpl_dup3): Likewise.
+	* lib/open.c (rpl_open): Likewise.
+
 	fchdir: simplify error handling, and support dup3
 	* modules/fchdir (Depends-on): Use strdup-posix, not strdup.  Add
 	stdbool, malloc-posix, realloc-posix.

@@ -70,7 +70,7 @@ rpl_dup2 (int fd, int desired_fd)
   /* Correct a cygwin 1.5.x errno value.  */
   else if (result == -1 && errno == EMFILE)
     errno = EBADF;
-#ifdef FCHDIR_REPLACEMENT
+#if REPLACE_FCHDIR
   if (fd != desired_fd && result == desired_fd)
     result = _gl_register_dup (fd, desired_fd);
 #endif
@@ -111,7 +111,7 @@ dup2 (int fd, int desired_fd)
 # else
   result = dupfd (fd, desired_fd);
 # endif
-#ifdef FCHDIR_REPLACEMENT
+#if REPLACE_FCHDIR
   if (0 <= result)
     result = _gl_register_dup (fd, desired_fd);
 #endif

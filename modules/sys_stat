@@ -4,6 +4,7 @@ A <sys/stat.h> for systems with missing declarations.
 Files:
 lib/sys_stat.in.h
 m4/sys_stat_h.m4
+m4/unistd_h.m4
 
 Depends-on:
 include_next
@@ -31,6 +32,7 @@ sys/stat.h: sys_stat.in.h
 	      -e 's|@''HAVE_LSTAT''@|$(HAVE_LSTAT)|g' \
 	      -e 's|@''REPLACE_LSTAT''@|$(REPLACE_LSTAT)|g' \
 	      -e 's|@''REPLACE_MKDIR''@|$(REPLACE_MKDIR)|g' \
+	      -e 's|@''REPLACE_FCHDIR''@|$(REPLACE_FCHDIR)|g' \
 	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
 	      < $(srcdir)/sys_stat.in.h; \
 	} > $@-t && \

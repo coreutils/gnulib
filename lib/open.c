@@ -38,6 +38,7 @@ orig_open (const char *filename, int flags, mode_t mode)
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <unistd.h>
 
 #ifndef REPLACE_OPEN_DIRECTORY
 # define REPLACE_OPEN_DIRECTORY 0
@@ -102,7 +103,7 @@ open (const char *filename, int flags, ...)
 
   fd = orig_open (filename, flags, mode);
 
-#ifdef FCHDIR_REPLACEMENT
+#if REPLACE_FCHDIR
   /* Implementing fchdir and fdopendir requires the ability to open a
      directory file descriptor.  If open doesn't support that (as on
      mingw), we use a dummy file that behaves the same as directories
@@ -155,7 +156,7 @@ open (const char *filename, int flags, ...)
     }
 #endif
 
-#ifdef FCHDIR_REPLACEMENT
+#if REPLACE_FCHDIR
   if (!REPLACE_OPEN_DIRECTORY && 0 <= fd)
     fd = _gl_register_fd (fd, filename);
 #endif

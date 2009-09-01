@@ -1,5 +1,5 @@
-# sys_stat_h.m4 serial 10   -*- Autoconf -*-
-dnl Copyright (C) 2006-2008 Free Software Foundation, Inc.
+# sys_stat_h.m4 serial 11   -*- Autoconf -*-
+dnl Copyright (C) 2006-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -50,6 +50,7 @@ AC_DEFUN([gl_SYS_STAT_MODULE_INDICATOR],
 
 AC_DEFUN([gl_SYS_STAT_H_DEFAULTS],
 [
+  AC_REQUIRE([gl_UNISTD_H_DEFAULTS]) dnl for REPLACE_FCHDIR
   GNULIB_LCHMOD=0; AC_SUBST([GNULIB_LCHMOD])
   GNULIB_LSTAT=0;  AC_SUBST([GNULIB_LSTAT])
   dnl Assume proper GNU behavior unless another module says otherwise.

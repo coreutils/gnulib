@@ -8,13 +8,15 @@ AC_DEFUN([gl_FUNC_FCHDIR],
 [
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
   AC_REQUIRE([gl_DIRENT_H_DEFAULTS])
+  AC_REQUIRE([gl_SYS_STAT_H_DEFAULTS])
   AC_CHECK_FUNCS_ONCE([fchdir])
   if test $ac_cv_func_fchdir = no; then
     REPLACE_FCHDIR=1
     AC_LIBOBJ([fchdir])
     gl_PREREQ_FCHDIR
-    AC_DEFINE([FCHDIR_REPLACEMENT], [1],
-      [Define if gnulib's fchdir() replacement is used.])
+    AC_DEFINE([REPLACE_FCHDIR], [1],
+      [Define to 1 if gnulib's fchdir() replacement is used.])
+    REPLACE_FSTAT=1
     gl_REPLACE_OPEN
     gl_REPLACE_CLOSE
     gl_REPLACE_DUP2
