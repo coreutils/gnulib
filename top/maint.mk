@@ -74,8 +74,8 @@ export LC_ALL = C
 _cfg_mk := $(shell test -f $(srcdir)/cfg.mk && echo '$(srcdir)/cfg.mk')
 
 # Collect the names of rules starting with `sc_'.
-syntax-check-rules := $(shell sed -n 's/^\(sc_[a-zA-Z0-9_-]*\):.*/\1/p' \
-			$(srcdir)/$(ME) $(_cfg_mk))
+syntax-check-rules := $(sort $(shell sed -n 's/^\(sc_[a-zA-Z0-9_-]*\):.*/\1/p' \
+			$(srcdir)/$(ME) $(_cfg_mk)))
 .PHONY: $(syntax-check-rules)
 
 local-checks-available = \

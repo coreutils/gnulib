@@ -1,3 +1,10 @@
+2009-09-01  Daniel P. Berrange  <berrange@redhat.com>
+
+	maint.mk: sort the list of syntax-check rules
+	* top/maint.mk (syntax-check-rules): Sort syntax-check rules, so it's
+	easier to get a sense of progress when the rules are run sequentially
+	and take a long time.
+
 2009-09-01  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/arpa_inet: Use $(MKDIR_P) instead of @MKDIR_P@.
