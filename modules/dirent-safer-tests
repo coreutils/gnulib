@@ -1,0 +1,11 @@
+Files:
+tests/test-dirent-safer.c
+
+Depends-on:
+dup2
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-dirent-safer
+check_PROGRAMS += test-dirent-safer

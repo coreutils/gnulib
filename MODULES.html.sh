@@ -2394,6 +2394,7 @@ func_all_modules ()
 
   func_begin_table
   func_module chdir-long
+  func_module dirent-safer
   func_module dirname
   func_module getopt
   func_module iconv_open-utf

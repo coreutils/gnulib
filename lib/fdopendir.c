@@ -27,6 +27,10 @@
 #include "openat-priv.h"
 #include "save-cwd.h"
 
+#if GNULIB_DIRENT_SAFER
+# include "dirent--.h"
+#endif
+
 /* Replacement for Solaris' function by the same name.
    <http://www.google.com/search?q=fdopendir+site:docs.sun.com>
    First, try to simulate it via opendir ("/proc/self/fd/FD").  Failing

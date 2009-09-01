@@ -1,5 +1,16 @@
 2009-09-02  Eric Blake  <ebb9@byu.net>
 
+	dirent-safer: new module
+	* modules/dirent-safer: New file.
+	* lib/dirent--.h: Likewise.
+	* lib/dirent-safer.h: Likewise.
+	* lib/opendir-safer.c: Likewise.
+	* m4/dirent-safer.m4: Likewise.
+	* MODULES.html.sh (Enhancements for POSIX:2008): Mention it.
+	* modules/dirent-safer-tests: New test.
+	* tests/test-dirent-safer.c: New file.
+	* lib/fdopendir.c (includes): Ensure fdopendir is also safe.
+
 	fdopendir: optimize on mingw
 	* lib/unistd.in.h (_gl_directory_name): New prototype.
 	* lib/fchdir.c (_gl_directory_name): Implement it.
