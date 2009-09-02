@@ -1,4 +1,4 @@
-# serial 10
+# serial 11
 
 # Copyright (C) 1996, 1999, 2001-2002, 2004, 2006, 2009
 # Free Software Foundation, Inc.
@@ -31,15 +31,15 @@ AC_DEFUN([gl_WINSIZE_IN_PTEM],
      gl_cv_sys_struct_winsize_needs_sys_ptem_h,
      [gl_cv_sys_struct_winsize_needs_sys_ptem_h=yes
       if test $ac_cv_sys_posix_termios = yes; then
-	AC_TRY_COMPILE([#include <termios.h>],
-	  [struct winsize x;
-	   if (sizeof x > 0) return 0;],
+	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <termios.h>]],
+	  [[struct winsize x;
+	    if (sizeof x > 0) return 0;]])],
           [gl_cv_sys_struct_winsize_needs_sys_ptem_h=no])
       fi
       if test $gl_cv_sys_struct_winsize_needs_sys_ptem_h = yes; then
-	AC_TRY_COMPILE([#include <sys/ptem.h>],
-	  [struct winsize x;
-	   if (sizeof x > 0) return 0;],
+	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <sys/ptem.h>]],
+	  [[struct winsize x;
+	    if (sizeof x > 0) return 0;]])],
 	  [], [gl_cv_sys_struct_winsize_needs_sys_ptem_h=no])
       fi])
    if test $gl_cv_sys_struct_winsize_needs_sys_ptem_h = yes; then

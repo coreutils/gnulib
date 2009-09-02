@@ -1,4 +1,4 @@
-# serial 5
+# serial 6
 
 # Copyright (C) 1998, 1999, 2001, 2009 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -9,10 +9,11 @@
 
 AC_DEFUN([AC_STRUCT_ST_DM_MODE],
  [AC_CACHE_CHECK([for st_dm_mode in struct stat], [ac_cv_struct_st_dm_mode],
-   [AC_TRY_COMPILE([#include <sys/types.h>
-#include <sys/stat.h>], [struct stat s; s.st_dm_mode;],
-     ac_cv_struct_st_dm_mode=yes,
-     ac_cv_struct_st_dm_mode=no)])
+   [AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+#include <sys/types.h>
+#include <sys/stat.h>]], [[struct stat s; s.st_dm_mode;]])],
+     [ac_cv_struct_st_dm_mode=yes],
+     [ac_cv_struct_st_dm_mode=no])])
 
   if test $ac_cv_struct_st_dm_mode = yes; then
     AC_DEFINE([HAVE_ST_DM_MODE], [1],

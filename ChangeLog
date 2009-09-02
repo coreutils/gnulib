@@ -1,3 +1,34 @@
+2009-09-02  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	Replace uses of obsolete autoconf macros in Jim's modules.
+	The Autoconf macros AC_TRY_CPP, AC_TRY_COMPILE, AC_TRY_LINK and
+	AC_TRY_RUN have been obsolete since Autoconf 2.55, and each use
+	can evoke a warning from autoconf when run with -Wobsolete
+	enabled.  They were declared obsolete for good reasons (see
+	the `AC_FOO_IFELSE vs AC_TRY_FOO' node in the Autoconf manual,
+	recently renamed to `AC_ACT_IFELSE vs AC_TRY_ACT'), and we
+	should not continue using the deprecated macros.
+	* m4/d-type.m4 (gl_CHECK_TYPE_STRUCT_DIRENT_D_TYPE): Replace
+	obsolete Autoconf macros with modern counterparts.
+	* m4/dirfd.m4 (gl_FUNC_DIRFD): Likewise.
+	* m4/dos.m4 (gl_AC_DOS): Likewise.
+	* m4/fpending.m4 (gl_FUNC_FPENDING): Likewise.
+	* m4/fsusage.m4 (gl_FILE_SYSTEM_USAGE): Likewise.
+	* m4/getloadavg.m4 (gl_PREREQ_GETLOADAVG): Likewise.
+	* m4/jm-winsz1.m4 (gl_WINSIZE_IN_PTEM): Likewise.
+	* m4/link-follow.m4 (gl_AC_FUNC_LINK_FOLLOWS_SYMLINK): Likewise.
+	* m4/ls-mntd-fs.m4 (gl_LIST_MOUNTED_FILE_SYSTEMS): Likewise.
+	* m4/mkdir-slash.m4 (gl_FUNC_MKDIR_TRAILING_SLASH): Likewise.
+	* m4/mode_t.m4 (gl_PROMOTED_TYPE_MODE_T): Likewise.
+	* m4/rename-dest-slash.m4 (gl_FUNC_RENAME_TRAILING_DEST_SLASH):
+	Likewise.
+	* m4/rename.m4 (gl_FUNC_RENAME): Likewise.
+	* m4/rmdir-errno.m4 (gl_FUNC_RMDIR_NOTEMPTY): Likewise.
+	* m4/rpmatch.m4 (gl_PREREQ_RPMATCH): Likewise.
+	* m4/st_dm_mode.m4 (AC_STRUCT_ST_DM_MODE): Likewise.
+	* m4/stat-time.m4 (gl_STAT_TIME): Likewise.
+	* m4/utimes-null.m4 (gl_FUNC_UTIMES_NULL): Likewise.
+
 2009-09-01  Eric Blake  <ebb9@byu.net>
 
 	fchdir: fix off-by-one bug in previous patch

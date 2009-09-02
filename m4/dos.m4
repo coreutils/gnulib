@@ -1,4 +1,4 @@
-#serial 10   -*- autoconf -*-
+#serial 11   -*- autoconf -*-
 
 # Define some macros required for proper operation of code in lib/*.c
 # on MSDOS/Windows systems.
@@ -14,10 +14,10 @@ AC_DEFUN([gl_AC_DOS],
   [
     AC_CACHE_CHECK([whether system is Windows or MSDOS], [ac_cv_win_or_dos],
       [
-	AC_TRY_COMPILE([],
-	[#if !defined _WIN32 && !defined __WIN32__ && !defined __MSDOS__ && !defined __CYGWIN__
+	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([], [[
+#if !defined _WIN32 && !defined __WIN32__ && !defined __MSDOS__ && !defined __CYGWIN__
 neither MSDOS nor Windows
-#endif],
+#endif]])],
 	[ac_cv_win_or_dos=yes],
 	[ac_cv_win_or_dos=no])
       ])
@@ -28,10 +28,10 @@ neither MSDOS nor Windows
       AC_CACHE_CHECK([whether drive letter can start relative path],
 		     [ac_cv_drive_letter_can_be_relative],
 	[
-	  AC_TRY_COMPILE([],
-	  [#if defined __CYGWIN__
+	  AC_COMPILE_IFELSE([AC_LANG_PROGRAM([], [[
+#if defined __CYGWIN__
 drive letters are always absolute
-#endif],
+#endif]])],
 	  [ac_cv_drive_letter_can_be_relative=yes],
 	  [ac_cv_drive_letter_can_be_relative=no])
 	])

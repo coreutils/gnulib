@@ -174,14 +174,14 @@ AC_CHECK_HEADERS([nlist.h],
 			      `n_un' member.  Obsolete, depend on
 			      `HAVE_STRUCT_NLIST_N_UN_N_NAME])], [],
 		  [@%:@include <nlist.h>])
- AC_TRY_LINK([#include <nlist.h>],
-             [struct nlist x;
-              #ifdef HAVE_STRUCT_NLIST_N_UN_N_NAME
-              x.n_un.n_name = "";
-              #else
-              x.n_name = "";
-              #endif],
-             [AC_DEFINE([N_NAME_POINTER], [1],
-                        [Define to 1 if the nlist n_name member is a pointer])])
+ AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <nlist.h>]],
+		   [[struct nlist x;
+		    #ifdef HAVE_STRUCT_NLIST_N_UN_N_NAME
+		    x.n_un.n_name = "";
+		    #else
+		    x.n_name = "";
+		    #endif]])],
+                [AC_DEFINE([N_NAME_POINTER], [1],
+                           [Define to 1 if the nlist n_name member is a pointer])])
 ])dnl
 ])# gl_PREREQ_GETLOADAVG

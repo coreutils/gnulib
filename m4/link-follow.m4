@@ -1,4 +1,4 @@
-# serial 11
+# serial 12
 dnl Run a program to determine whether link(2) follows symlinks.
 dnl Set LINK_FOLLOWS_SYMLINKS accordingly.
 
@@ -14,8 +14,7 @@ AC_DEFUN([gl_AC_FUNC_LINK_FOLLOWS_SYMLINK],
   [
     # Create a regular file.
     echo > conftest.file
-    AC_TRY_RUN(
-      [
+    AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #       include <sys/types.h>
 #       include <sys/stat.h>
 #       include <unistd.h>
@@ -50,10 +49,10 @@ AC_DEFUN([gl_AC_FUNC_LINK_FOLLOWS_SYMLINK],
 	     the link call followed the symlink.  */
 	  return SAME_INODE (sb_hard, sb_file) ? 0 : 1;
 	}
-      ],
-      gl_ac_cv_func_link_follows_symlink=yes,
-      gl_ac_cv_func_link_follows_symlink=no,
-      gl_ac_cv_func_link_follows_symlink=yes dnl We're cross compiling.
+      ]])],
+      [gl_ac_cv_func_link_follows_symlink=yes],
+      [gl_ac_cv_func_link_follows_symlink=no],
+      [gl_ac_cv_func_link_follows_symlink=yes] dnl We're cross compiling.
     )
   ])
   if test $gl_ac_cv_func_link_follows_symlink = yes; then

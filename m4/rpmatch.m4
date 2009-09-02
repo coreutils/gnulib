@@ -1,4 +1,4 @@
-# rpmatch.m4 serial 8
+# rpmatch.m4 serial 9
 dnl Copyright (C) 2002-2003, 2007-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -20,8 +20,8 @@ AC_DEFUN([gl_FUNC_RPMATCH],
 # Prerequisites of lib/rpmatch.c.
 AC_DEFUN([gl_PREREQ_RPMATCH], [
   AC_CACHE_CHECK([for nl_langinfo and YESEXPR], [gl_cv_langinfo_yesexpr],
-    [AC_TRY_LINK([#include <langinfo.h>],
-       [char* cs = nl_langinfo(YESEXPR); return !cs;],
+    [AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <langinfo.h>]],
+       [[char* cs = nl_langinfo(YESEXPR); return !cs;]])],
        [gl_cv_langinfo_yesexpr=yes],
        [gl_cv_langinfo_yesexpr=no])
     ])

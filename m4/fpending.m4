@@ -1,4 +1,4 @@
-# serial 14
+# serial 15
 
 # Copyright (C) 2000-2001, 2004-2009 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -65,11 +65,9 @@ AC_DEFUN([gl_FUNC_FPENDING],
 	  # Skip each embedded comment.
 	  case "$ac_expr" in '#'*) continue;; esac
 
-	  AC_TRY_COMPILE(
-	    [#include <stdio.h>
-	    ],
-	    [FILE *fp = stdin; (void) ($ac_expr);],
-	    fp_done=yes
+	  AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <stdio.h>]],
+	    [[FILE *fp = stdin; (void) ($ac_expr);]])],
+	    [fp_done=yes]
 	  )
 	  test "$fp_done" = yes && break
 	done

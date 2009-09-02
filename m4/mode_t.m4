@@ -1,4 +1,4 @@
-# mode_t.m4 serial 1
+# mode_t.m4 serial 2
 dnl Copyright (C) 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -16,8 +16,8 @@ AC_DEFUN([gl_PROMOTED_TYPE_MODE_T],
     dnl Assume mode_t promotes to 'int' if and only if it is smaller than 'int',
     dnl and to itself otherwise. This assumption is not guaranteed by the ISO C
     dnl standard, but we don't know of any real-world counterexamples.
-    AC_TRY_COMPILE([#include <sys/types.h>],
-      [typedef int array[2 * (sizeof (mode_t) < sizeof (int)) - 1];],
+    AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <sys/types.h>]],
+      [[typedef int array[2 * (sizeof (mode_t) < sizeof (int)) - 1];]])],
       [gl_cv_promoted_mode_t='int'],
       [gl_cv_promoted_mode_t='mode_t'])
   ])

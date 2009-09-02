@@ -1,4 +1,4 @@
-# serial 7
+# serial 8
 
 # Copyright (C) 2001, 2003-2004, 2006, 2008-2009 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -17,7 +17,7 @@ AC_DEFUN([gl_FUNC_MKDIR_TRAILING_SLASH],
     [
       # Arrange for deletion of the temporary directory this test might create.
       ac_clean_files="$ac_clean_files confdir-slash"
-      AC_TRY_RUN([
+      AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #       include <sys/types.h>
 #       include <sys/stat.h>
 #       include <stdlib.h>
@@ -29,10 +29,10 @@ AC_DEFUN([gl_FUNC_MKDIR_TRAILING_SLASH],
 	  rmdir ("confdir-slash");
 	  exit (mkdir ("confdir-slash/", 0700));
 	}
-	],
-      gl_cv_func_mkdir_trailing_slash_bug=no,
-      gl_cv_func_mkdir_trailing_slash_bug=yes,
-      gl_cv_func_mkdir_trailing_slash_bug=yes
+	]])],
+      [gl_cv_func_mkdir_trailing_slash_bug=no],
+      [gl_cv_func_mkdir_trailing_slash_bug=yes],
+      [gl_cv_func_mkdir_trailing_slash_bug=yes]
       )
     ]
   )

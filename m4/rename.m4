@@ -1,4 +1,4 @@
-# serial 13
+# serial 14
 
 # Copyright (C) 2001, 2003, 2005, 2006, 2009 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -22,7 +22,7 @@ AC_DEFUN([gl_FUNC_RENAME],
     rm -rf conftest.d1 conftest.d2
     mkdir conftest.d1 ||
       AC_MSG_ERROR([cannot create temporary directory])
-    AC_TRY_RUN([
+    AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #       include <stdio.h>
 #       include <stdlib.h>
         int
@@ -30,11 +30,11 @@ AC_DEFUN([gl_FUNC_RENAME],
         {
           exit (rename ("conftest.d1/", "conftest.d2") ? 1 : 0);
         }
-      ],
-      gl_cv_func_rename_trailing_slash_bug=no,
-      gl_cv_func_rename_trailing_slash_bug=yes,
+      ]])],
+      [gl_cv_func_rename_trailing_slash_bug=no],
+      [gl_cv_func_rename_trailing_slash_bug=yes],
       dnl When crosscompiling, assume rename is broken.
-      gl_cv_func_rename_trailing_slash_bug=yes)
+      [gl_cv_func_rename_trailing_slash_bug=yes])
 
       rm -rf conftest.d1 conftest.d2
   ])

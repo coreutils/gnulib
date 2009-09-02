@@ -1,4 +1,4 @@
-# serial 16   -*- Autoconf -*-
+# serial 17   -*- Autoconf -*-
 
 dnl Find out how to get the file descriptor associated with an open DIR*.
 
@@ -53,11 +53,11 @@ AC_DEFUN([gl_FUNC_DIRFD],
 	for ac_expr in d_fd dd_fd; do
 
 	  CFLAGS="$CFLAGS -DDIR_FD_MEMBER_NAME=$ac_expr"
-	  AC_TRY_COMPILE(
-	    [#include <sys/types.h>
-	     #include <dirent.h>],
-	    [DIR *dir_p = opendir("."); (void) dir_p->DIR_FD_MEMBER_NAME;],
-	    dir_fd_found=yes
+	  AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+	     #include <sys/types.h>
+	     #include <dirent.h>]],
+	    [[DIR *dir_p = opendir("."); (void) dir_p->DIR_FD_MEMBER_NAME;]])],
+	    [dir_fd_found=yes]
 	  )
 	  CFLAGS=$dirfd_save_CFLAGS
 	  test "$dir_fd_found" = yes && break
