@@ -1,6 +1,6 @@
 /* much like chdir(2), but safer
 
-   Copyright (C) 2005-2006, 2008 Free Software Foundation, Inc.
+   Copyright (C) 2005-2006, 2008-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -29,8 +29,8 @@
 #include <sys/stat.h>
 #include "same-inode.h"
 
-#ifndef ELOOP
-# define ELOOP 0
+#ifndef HAVE_READLINK
+# define HAVE_READLINK 0
 #endif
 
 /* Like chdir, but fail if DIR is a symbolic link to a directory (or
@@ -51,9 +51,9 @@ chdir_no_follow (char const *dir)
      they are the same file; if they are different files, set errno to
      ELOOP (the same value that open uses for symlinks with
      O_NOFOLLOW) so the caller can report a failure.
-     Skip this check if ELOOP == 0, which should be the case
+     Skip this check if HAVE_READLINK == 0, which should be the case
      on any system that lacks symlink support.  */
-  if (ELOOP && ! HAVE_WORKING_O_NOFOLLOW)
+  if (HAVE_READLINK && ! HAVE_WORKING_O_NOFOLLOW)
     {
       struct stat sb1;
       result = lstat (dir, &sb1);

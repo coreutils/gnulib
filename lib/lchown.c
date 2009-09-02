@@ -30,16 +30,6 @@
 #include <errno.h>
 #include <sys/stat.h>
 
-/* Some systems don't have EOPNOTSUPP.  */
-#ifndef EOPNOTSUPP
-# ifdef ENOTSUP
-#  define EOPNOTSUPP ENOTSUP
-# else
-/* Some systems don't have ENOTSUP either.  */
-#  define EOPNOTSUPP EINVAL
-# endif
-#endif
-
 /* Work just like chown, except when FILE is a symbolic link.
    In that case, set errno to EOPNOTSUPP and return -1.
    But if autoconf tests determined that chown modifies

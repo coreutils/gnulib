@@ -8,6 +8,7 @@ m4/savewd.m4
 
 Depends-on:
 dirname
+errno
 exit
 fchdir
 fcntl-safer

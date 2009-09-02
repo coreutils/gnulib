@@ -8,6 +8,7 @@ m4/c-stack.m4
 
 Depends-on:
 gettext-h
+errno
 exitfail
 unistd
 raise

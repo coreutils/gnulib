@@ -8,8 +8,9 @@ lib/openat-proc.c
 m4/fdopendir.m4
 
 Depends-on:
-extensions
 dirent
+errno
+extensions
 fchdir
 openat-die
 save-cwd

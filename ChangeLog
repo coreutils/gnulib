@@ -1,5 +1,31 @@
 2009-09-02  Eric Blake  <ebb9@byu.net>
 
+	errno: use consistently
+	* lib/c-stack.c (ENOTSUP): <errno.h> guarantees a definition.
+	* lib/canonicalize-lgpl.c (ENAMETOOLONG): Likewise.
+	* lib/canonicalize.c (ELOOP): Likewise.
+	* lib/inet_ntop.c (EAFNOSUPPORT): Likewise.
+	* lib/inet_pton.c (EAFNOSUPPORT): Likewise.
+	* lib/lchown.c (EOPNOTSUPP): Likewise.
+	* lib/openat-priv.h (ENOSYS, EOPNOTSUPP): Likewise.
+	* lib/savewd.c (ESTALE): Likewise.
+	* lib/settime.c (ENOSYS): Likewise.
+	* lib/utimens.c (ENOSYS): Likewise.
+	* lib/xgethostname.c (ENAMETOOLONG): Likewise.
+	* lib/chdir-safer.c (ELOOP): Likewise.
+	(chdir_no_follow): Use HAVE_READLINK, not ELOOP, as witness.
+	* modules/c-stack (Depends-on): Add errno.
+	* modules/canonicalize (Depends-on): Likewise.
+	* modules/chdir-safer (Depends-on): Likewise.
+	* modules/fdopendir (Depends-on): Likewise.
+	* modules/inet_ntop (Depends-on): Likewise.
+	* modules/inet_pton (Depends-on): Likewise.
+	* modules/lchown (Depends-on): Likewise.
+	* modules/openat (Depends-on): Likewise.
+	* modules/savewd (Depends-on): Likewise.
+	* modules/settime (Depends-on): Likewise.
+	* m4/chdir-safer.m4 (gl_CHDIR_SAFER): Check for readlink.
+
 	fts: avoid leaking fds
 	* modules/fts (Depends-on): Add cloexec.
 	* lib/fts.c (opendirat, diropen, fts_build): Set close-on-exec

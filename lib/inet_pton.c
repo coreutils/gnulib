@@ -1,6 +1,6 @@
 /* inet_pton.c -- convert IPv4 and IPv6 addresses from text to binary form
 
-   Copyright (C) 2006, 2008 Free Software Foundation, Inc.
+   Copyright (C) 2006, 2008, 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -40,10 +40,6 @@
 #include <c-ctype.h>
 #include <string.h>
 #include <errno.h>
-
-#ifndef EAFNOSUPPORT
-# define EAFNOSUPPORT EINVAL
-#endif
 
 #define NS_INADDRSZ 4
 #define NS_IN6ADDRSZ 16

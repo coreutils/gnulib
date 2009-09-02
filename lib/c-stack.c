@@ -46,9 +46,6 @@
 #define _(msgid) gettext (msgid)
 
 #include <errno.h>
-#ifndef ENOTSUP
-# define ENOTSUP EINVAL
-#endif
 
 #include <signal.h>
 #if ! HAVE_STACK_T && ! defined stack_t

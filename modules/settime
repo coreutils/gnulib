@@ -7,6 +7,7 @@ m4/settime.m4
 
 Depends-on:
 clock-time
+errno
 extensions
 sys_time
 timespec

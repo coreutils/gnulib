@@ -9,6 +9,7 @@ m4/canonicalize.m4
 
 Depends-on:
 areadlink-with-size
+errno
 file-set
 filenamecat
 hash-triple

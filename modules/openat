@@ -16,6 +16,7 @@ m4/mode_t.m4
 
 Depends-on:
 dirname
+errno
 extensions
 fchdir
 fdopendir

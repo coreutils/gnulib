@@ -1,5 +1,5 @@
 /* Return the canonical absolute name of a given file.
-   Copyright (C) 1996-2003, 2005-2008 Free Software Foundation, Inc.
+   Copyright (C) 1996-2003, 2005-2009 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This program is free software: you can redistribute it and/or modify
@@ -50,9 +50,6 @@
 #include <errno.h>
 #ifndef _LIBC
 # define __set_errno(e) errno = (e)
-# ifndef ENAMETOOLONG
-#  define ENAMETOOLONG EINVAL
-# endif
 #endif
 
 #ifdef _LIBC

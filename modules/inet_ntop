@@ -9,6 +9,7 @@ Depends-on:
 socklen
 sys_socket
 arpa_inet
+errno
 netinet_in
 extensions
 
