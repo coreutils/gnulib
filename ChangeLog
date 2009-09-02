@@ -1,3 +1,8 @@
+2009-09-02  Bruno Haible  <bruno@clisp.org>
+
+	* modules/mkdtemp (License): Relicense under LGPLv2+.
+	Reported by Paolo Bonzini.
+
 2009-09-02  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	Replace uses of obsolete autoconf macros in Jim's modules.
