@@ -1,3 +1,9 @@
+2009-09-02  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	* gnulib-tool (func_create_testdir, func_create_megatestdir): Use
+	AC_CONFIG_HEADERS instead of AM_CONFIG_HEADER. Use AC_CONFIG_FILES and
+	don't pass arguments to AC_OUTPUT.
+
 2009-09-02  Bruno Haible  <bruno@clisp.org>
 
 	* modules/mkdtemp (License): Relicense under LGPLv2+.
