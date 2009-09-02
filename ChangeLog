@@ -1,5 +1,10 @@
 2009-09-02  Eric Blake  <ebb9@byu.net>
 
+	fts: avoid leaking fds
+	* modules/fts (Depends-on): Add cloexec.
+	* lib/fts.c (opendirat, diropen, fts_build): Set close-on-exec
+	flag.
+
 	fts: make directory fds more robust
 	* lib/fts.c (O_DIRECTORY): Let <fcntl.h> take care of this.
 	(opendirat): Specify O_DIRECTORY, and add fallbacks for safety.

@@ -71,6 +71,9 @@ static char sccsid[] = "@(#)fts.c	8.6 (Berkeley) 8/14/94";
 # include "fcntl--.h"
 # include "dirent--.h"
 # include "unistd--.h"
+/* FIXME - use fcntl(F_DUPFD_CLOEXEC)/openat(O_CLOEXEC) once they are
+   supported.  */
+# include "cloexec.h"
 # include "same-inode.h"
 #endif
 
@@ -311,6 +314,7 @@ opendirat (int fd, char const *dir)
 
   if (new_fd < 0)
     return NULL;
+  set_cloexec_flag (new_fd, true);
   dirp = fdopendir (new_fd);
   if (dirp == NULL)
     {
@@ -362,9 +366,12 @@ diropen (FTS const *sp, char const *dir)
   int open_flags = (O_RDONLY | O_DIRECTORY | O_NOCTTY | O_NONBLOCK
 		    | (ISSET (FTS_PHYSICAL) ? O_NOFOLLOW : 0));
 
-  return (ISSET (FTS_CWDFD)
-	  ? openat (sp->fts_cwd_fd, dir, open_flags)
-	  : open (dir, open_flags));
+  int fd = (ISSET (FTS_CWDFD)
+            ? openat (sp->fts_cwd_fd, dir, open_flags)
+            : open (dir, open_flags));
+  if (0 <= fd)
+    set_cloexec_flag (fd, true);
+  return fd;
 }
 
 FTS *
@@ -1305,7 +1312,10 @@ fts_build (register FTS *sp, int type)
 	if (nlinks || type == BREAD) {
 		int dir_fd = dirfd(dirp);
 		if (ISSET(FTS_CWDFD) && 0 <= dir_fd)
-		  dir_fd = dup (dir_fd);
+		  {
+		    dir_fd = dup (dir_fd);
+		    set_cloexec_flag (dir_fd, true);
+		  }
 		if (dir_fd < 0 || fts_safe_changedir(sp, cur, dir_fd, NULL)) {
 			if (nlinks && type == BREAD)
 				cur->fts_errno = errno;

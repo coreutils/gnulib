@@ -8,6 +8,7 @@ lib/fts-cycle.c
 m4/fts.m4
 
 Depends-on:
+cloexec
 cycle-check
 d-ino
 d-type
