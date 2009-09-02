@@ -1,3 +1,38 @@
+2009-09-03  Eric Blake  <ebb9@byu.net>
+
+	openat: declare in POSIX headers
+	* NEWS: Mention this.
+	* modules/openat (configure.ac): Declare witnesses.
+	(Depends-on): Add fcntl-h, sys_stat, unistd.
+	(Include): Mention correct headers.
+	* modules/fcntl-h (Depends-on): Add link-warning.
+	(Files): Add openat.m4.
+	(Makefile.am): Substitute witnesses.
+	* modules/sys_stat (Files, Makefile.am): Likewise.
+	* modules/unistd (Files, Makefile.am): Likewise.
+	* m4/openat.m4 (gl_FUNC_OPENAT, gl_FUNC_FCHOWNAT): Set witnesses.
+	(gl_OPENAT_DEFAULTS): New macro.
+	* m4/fcntl_h.m4 (gl_FCNTL_H_DEFAULTS): Use it.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Likewise.
+	* m4/sys_stat_h.m4 (gl_SYS_STAT_H_DEFAULTS): Likewise.
+	(SYS_STAT_H): Remove unused variable.
+	* doc/posix-headers/fcntl.texi (fcntl.h): Update content.
+	* lib/fcntl--.h (includes): Remove unneeded header.
+	* lib/openat-safer.c (includes): Likewise.
+	* lib/openat.h (AT_FDCWD, AT_SYMLINK_NOFOLLOW, AT_REMOVEDIR)
+	(openat, fstatat, unlinkat, mkdirat, fchmodat, fchownat): Move to
+	appropriate headers.
+	(__OPENAT_PREFIX): Delete.
+	* lib/fcntl.in.h (openat): Provide declaration.
+	(AT_FDCWD): Fix Solaris bug.
+	(AT_SYMLINK_NOFOLLOW, AT_REMOVEDIR): Provide macros.
+	* lib/sys_stat.in.h (fstatat, mkdirat): Provide declaration.
+	* lib/fchmodat.c (includes):  Adjust to find declaration.
+	* lib/fchownat.c (includes): Likewise.
+	* lib/mkdirat.c (includes): Likewise.
+	* lib/fstatat.c (includes): Likewise.  Ensure original fstatat is
+	still visible.
+
 2009-09-02  Eric Blake  <ebb9@byu.net>
 
 	errno: use consistently

@@ -1,5 +1,5 @@
 /* Change the protections of file relative to an open directory.
-   Copyright (C) 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006, 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -18,10 +18,12 @@
 
 #include <config.h>
 
-#include "openat.h"
+#include <sys/stat.h>
+
 #include "dirname.h" /* solely for definition of IS_ABSOLUTE_FILE_NAME */
-#include "save-cwd.h"
+#include "openat.h"
 #include "openat-priv.h"
+#include "save-cwd.h"
 
 #ifndef HAVE_LCHMOD
 /* Use a different name, to avoid conflicting with any

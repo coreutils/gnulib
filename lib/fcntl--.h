@@ -27,7 +27,6 @@
 #define creat creat_safer
 
 #if GNULIB_OPENAT_SAFER
-# include "openat.h" /* FIXME - <fcntl.h> should be sufficient.  */
 # undef openat
 # define openat openat_safer
 #endif

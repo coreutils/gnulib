@@ -1,4 +1,4 @@
-# serial 19
+# serial 20
 # See if we need to use our replacement for Solaris' openat et al functions.
 
 dnl Copyright (C) 2004-2009 Free Software Foundation, Inc.
@@ -17,13 +17,24 @@ AC_DEFUN([gl_FUNC_OPENAT],
   AC_REQUIRE([AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK])
   case $ac_cv_func_openat+$ac_cv_func_lstat_dereferences_slashed_symlink in
   yes+yes) ;;
-  yes+*) AC_LIBOBJ([fstatat]);;
+  yes+*)
+    AC_LIBOBJ([fstatat])
+    REPLACE_FSTATAT=1
+    ;;
   *)
-    AC_DEFINE([__OPENAT_PREFIX], [[rpl_]],
-      [Define to rpl_ if the openat replacement function should be used.])
+    HAVE_OPENAT=0
+    HAVE_UNLINKAT=0 # No known system with unlinkat but not openat
+    HAVE_FSTATAT=0 # No known system with fstatat but not openat
     gl_PREREQ_OPENAT;;
   esac
+  if test $ac_cv_func_fchmodat != yes; then
+    HAVE_FCHMODAT=0
+  fi
+  if test $ac_cv_func_mkdirat != yes; then
+    HAVE_MKDIRAT=0
+  fi
   gl_FUNC_FCHOWNAT
+  GNULIB_OPENAT=1
 ])
 
 # gl_FUNC_FCHOWNAT_DEREF_BUG([ACTION-IF-BUGGY[, ACTION-IF-NOT_BUGGY]])
@@ -68,19 +79,11 @@ main ()
 # Also use the replacement function if fchownat is simply not available.
 AC_DEFUN([gl_FUNC_FCHOWNAT],
 [
-  # Assume we'll use the replacement function.
-  # The only case in which we won't is when we have fchownat, and it works.
-  use_replacement_fchownat=yes
-
-  AC_CHECK_FUNC([fchownat], [have_fchownat=yes], [have_fchownat=no])
-  if test $have_fchownat = yes; then
-    gl_FUNC_FCHOWNAT_DEREF_BUG([], [use_replacement_fchownat=no])
-  fi
-
-  if test $use_replacement_fchownat = yes; then
+  AC_CHECK_FUNC([fchownat],
+    [gl_FUNC_FCHOWNAT_DEREF_BUG([REPLACE_FCHOWNAT=1])],
+    [HAVE_FCHOWNAT=0])
+  if test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1; then
     AC_LIBOBJ([fchownat])
-    AC_DEFINE([fchownat], [rpl_fchownat],
-      [Define to rpl_fchownat if the replacement function should be used.])
   fi
 ])
 
@@ -88,4 +91,18 @@ AC_DEFUN([gl_PREREQ_OPENAT],
 [
   AC_REQUIRE([gl_PROMOTED_TYPE_MODE_T])
   :
+])
+
+AC_DEFUN([gl_OPENAT_DEFAULTS],
+[
+  GNULIB_OPENAT=0;            AC_SUBST([GNULIB_OPENAT])
+  dnl Assume proper GNU behavior unless another module says otherwise.
+  HAVE_FCHMODAT=1;            AC_SUBST([HAVE_FCHMODAT])
+  HAVE_FCHOWNAT=1;            AC_SUBST([HAVE_FCHOWNAT])
+  HAVE_FSTATAT=1;             AC_SUBST([HAVE_FSTATAT])
+  HAVE_MKDIRAT=1;             AC_SUBST([HAVE_MKDIRAT])
+  HAVE_OPENAT=1;              AC_SUBST([HAVE_OPENAT])
+  HAVE_UNLINKAT=1;            AC_SUBST([HAVE_UNLINKAT])
+  REPLACE_FCHOWNAT=0;         AC_SUBST([REPLACE_FCHOWNAT])
+  REPLACE_FSTATAT=0;          AC_SUBST([REPLACE_FSTATAT])
 ])

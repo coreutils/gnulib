@@ -22,7 +22,6 @@
 #include "fcntl-safer.h"
 
 #include <fcntl.h>
-#include "openat.h" /* FIXME - <fcntl.h> should be sufficient.  */
 #include <stdarg.h>
 #include "unistd-safer.h"
 

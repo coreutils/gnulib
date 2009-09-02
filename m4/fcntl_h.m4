@@ -1,3 +1,4 @@
+# serial 2
 # Configure fcntl.h.
 dnl Copyright (C) 2006, 2007, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
@@ -90,6 +91,7 @@ AC_DEFUN([gl_FCNTL_MODULE_INDICATOR],
 
 AC_DEFUN([gl_FCNTL_H_DEFAULTS],
 [
+  AC_REQUIRE([gl_OPENAT_DEFAULTS]) dnl for GNULIB_OPENAT
   GNULIB_OPEN=0;  AC_SUBST([GNULIB_OPEN])
   dnl Assume proper GNU behavior unless another module says otherwise.
   REPLACE_OPEN=0; AC_SUBST([REPLACE_OPEN])

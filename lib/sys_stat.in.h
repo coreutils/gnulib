@@ -302,6 +302,41 @@ extern int rpl_lstat (const char *name, struct stat *buf);
    lstat (p, b))
 #endif
 
+#if @GNULIB_OPENAT@
+# if @REPLACE_FSTATAT@
+#  undef fstatat
+#  define fstatat rpl_fstatat
+# endif
+# if !@HAVE_FSTATAT@ || @REPLACE_FSTATAT@
+int fstatat (int fd, char const *name, struct stat *st, int flags);
+# endif
+
+# if !@HAVE_FCHMODAT@
+int fchmodat (int fd, char const *file, mode_t mode, int flag);
+# endif
+
+# if !@HAVE_MKDIRAT@
+int mkdirat (int fd, char const *file, mode_t mode);
+#endif
+
+#elif defined GNULIB_POSIXCHECK
+# undef fchmodat
+# define fchmodat(d,n,m,f)                         \
+    (GL_LINK_WARNING ("fchmodat is not portable - " \
+                      "use gnulib module openat for portability"), \
+     fchmodat (d, n, m, f))
+# undef fstatat
+# define fstatat(d,n,s,f)                         \
+    (GL_LINK_WARNING ("fstatat is not portable - " \
+                      "use gnulib module openat for portability"), \
+     fstatat (d, n, s, f))
+# undef mkdirat
+# define mkdirat(d,n,m)                         \
+    (GL_LINK_WARNING ("mkdirat is not portable - " \
+                      "use gnulib module openat for portability"), \
+     mkdirat (d, n, m))
+#endif /* @GNULIB_OPENAT@ */
+
 #if @REPLACE_FCHDIR@
 # define fstat rpl_fstat
 extern int fstat (int fd, struct stat *buf);

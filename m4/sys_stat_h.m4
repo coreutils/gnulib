@@ -1,4 +1,4 @@
-# sys_stat_h.m4 serial 11   -*- Autoconf -*-
+# sys_stat_h.m4 serial 12   -*- Autoconf -*-
 dnl Copyright (C) 2006-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -28,8 +28,6 @@ AC_DEFUN([gl_HEADER_SYS_STAT_H],
   AC_REQUIRE([AC_HEADER_STAT])
 
   gl_CHECK_NEXT_HEADERS([sys/stat.h])
-  SYS_STAT_H='sys/stat.h'
-  AC_SUBST([SYS_STAT_H])
 
   dnl Define types that are supposed to be defined in <sys/types.h> or
   dnl <sys/stat.h>.
@@ -51,6 +49,7 @@ AC_DEFUN([gl_SYS_STAT_MODULE_INDICATOR],
 AC_DEFUN([gl_SYS_STAT_H_DEFAULTS],
 [
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS]) dnl for REPLACE_FCHDIR
+  AC_REQUIRE([gl_OPENAT_DEFAULTS]) dnl for GNULIB_OPENAT
   GNULIB_LCHMOD=0; AC_SUBST([GNULIB_LCHMOD])
   GNULIB_LSTAT=0;  AC_SUBST([GNULIB_LSTAT])
   dnl Assume proper GNU behavior unless another module says otherwise.

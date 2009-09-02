@@ -27,7 +27,13 @@ on some platforms but not on others.
 mingw
 
 @item
-@samp{AT_FDCWD} and friends are provided by modules like openat.
+@samp{AT_FDCWD} is defined with a value too large for an int on some
+platforms:
+Solaris 10
+
+@item
+@samp{AT_FDCWD}, @samp{AT_SYMLINK_NOFOLLOW}, and @samp{AT_REMOVEDIR}
+are missing on some platforms.
 @end itemize
 
 Portability problems not fixed by Gnulib:
@@ -55,4 +61,7 @@ on some platforms.
 @samp{POSIX_FADV_NORMAL}, @samp{POSIX_FADV_RANDOM},
 @samp{POSIX_FADV_SEQUENTIAL}, and @samp{POSIX_FADV_WILLNEED} are not
 defined on some platforms.
+
+@item
+@samp{AT_EACCESS} and @samp{AT_SYMLINK_FOLLOW} are missing on some platforms.
 @end itemize

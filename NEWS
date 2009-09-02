@@ -6,7 +6,15 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
-2009-09-30  striconveh      The functions mem_cd_iconveh and str_cd_iconveh
+2009-09-03  openat          The include files are standardized to POSIX 2008.
+                            For openat, include <fcntl.h>; for
+                            fchmodat, fstatat, and mkdirat, include
+                            <sys/stat.h>; for fchownat and unlinkat,
+                            include <unistd.h>.  For all other
+                            functions provided by this module,
+                            continue to include "openat.h".
+
+2009-08-30  striconveh      The functions mem_cd_iconveh and str_cd_iconveh
                             now take an 'iconveh_t *' argument instead of three
                             iconv_t arguments.
 

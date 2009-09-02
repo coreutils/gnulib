@@ -37,42 +37,10 @@
 # define ATTRIBUTE_NORETURN __attribute__ ((__noreturn__))
 #endif
 
-/* Work around a bug in Solaris 9 and 10: AT_FDCWD is positive.  Its
-   value exceeds INT_MAX, so its use as an int doesn't conform to the
-   C standard, and GCC and Sun C complain in some cases.  If the bug
-   is present, undef AT_FDCWD here, so it can be redefined below.  */
-#if 0 < AT_FDCWD && AT_FDCWD == 0xffd19553
-# undef AT_FDCWD
-#endif
+#if !HAVE_OPENAT
 
-/* Use the same bit pattern as Solaris 9, but with the proper
-   signedness.  The bit pattern is important, in case this actually is
-   Solaris with the above workaround.  */
-#ifndef AT_FDCWD
-# define AT_FDCWD (-3041965)
-#endif
-
-/* Use the same values as Solaris 9.  This shouldn't matter, but
-   there's no real reason to differ.  */
-#ifndef AT_SYMLINK_NOFOLLOW
-# define AT_SYMLINK_NOFOLLOW 4096
-# define AT_REMOVEDIR 1
-#endif
-
-#ifdef __OPENAT_PREFIX
-
-# undef openat
-# define __OPENAT_CONCAT(x, y) x ## y
-# define __OPENAT_XCONCAT(x, y) __OPENAT_CONCAT (x, y)
-# define __OPENAT_ID(y) __OPENAT_XCONCAT (__OPENAT_PREFIX, y)
-# define openat __OPENAT_ID (openat)
-int openat (int fd, char const *file, int flags, /* mode_t mode */ ...);
 int openat_permissive (int fd, char const *file, int flags, mode_t mode,
 		       int *cwd_errno);
-# define fstatat __OPENAT_ID (fstatat)
-int fstatat (int fd, char const *file, struct stat *st, int flag);
-# define unlinkat __OPENAT_ID (unlinkat)
-int unlinkat (int fd, char const *file, int flag);
 bool openat_needs_fchdir (void);
 
 #else
@@ -83,19 +51,8 @@ bool openat_needs_fchdir (void);
 
 #endif
 
-#if HAVE_OPENAT && ! LSTAT_FOLLOWS_SLASHED_SYMLINK
-int rpl_fstatat (int fd, char const *file, struct stat *st, int flag);
-# if !COMPILING_FSTATAT
-#  undef fstatat
-#  define fstatat rpl_fstatat
-# endif
-#endif
-
-int mkdirat (int fd, char const *file, mode_t mode);
 void openat_restore_fail (int) ATTRIBUTE_NORETURN;
 void openat_save_fail (int) ATTRIBUTE_NORETURN;
-int fchmodat (int fd, char const *file, mode_t mode, int flag);
-int fchownat (int fd, char const *file, uid_t owner, gid_t group, int flag);
 
 /* Using these function names makes application code
    slightly more readable than it would be with
