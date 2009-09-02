@@ -1,4 +1,4 @@
-#serial 6
+#serial 7
 dnl Copyright (C) 2005-2007, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,4 +10,10 @@ AC_DEFUN([gl_FCNTL_SAFER],
   AC_LIBOBJ([creat-safer])
   # Prerequisites of lib/open-safer.c.
   AC_REQUIRE([gl_PROMOTED_TYPE_MODE_T])
+])
+
+AC_DEFUN([gl_OPENAT_SAFER],
+[
+  AC_REQUIRE([gl_FCNTL_SAFER])
+  AC_LIBOBJ([openat-safer])
 ])

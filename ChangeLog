@@ -1,5 +1,18 @@
 2009-09-02  Eric Blake  <ebb9@byu.net>
 
+	openat-safer: new module
+	* modules/openat-safer: New file.
+	* lib/openat-safer.c: Likewise.
+	* m4/fcntl-safer.m4 (gl_OPENAT_SAFER): New macro.
+	* lib/fcntl-safer.h (openat_safer): Declare.
+	* lib/fcntl--.h (openat): Override.
+	* MODULES.html.sh (File descriptor based I/O): Mention it.
+	* lib/openat.h: Add double-inclusion guards.
+	* lib/openat.c (includes): Only include "fcntl-safer.h", not
+	"fcntl--.h", so we can implement openat.
+	* modules/openat-safer-tests: New test.
+	* tests/test-openat-safer.c: New file.
+
 	dirent-safer: new module
 	* modules/dirent-safer: New file.
 	* lib/dirent--.h: Likewise.

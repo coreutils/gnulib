@@ -16,6 +16,9 @@
 
 /* written by Jim Meyering */
 
+#ifndef _GL_HEADER_OPENAT
+#define _GL_HEADER_OPENAT
+
 #include <fcntl.h>
 
 #include <sys/types.h>
@@ -120,3 +123,5 @@ lchmodat (int fd, char const *file, mode_t mode)
 {
   return fchmodat (fd, file, mode, AT_SYMLINK_NOFOLLOW);
 }
+
+#endif /* _GL_HEADER_OPENAT */

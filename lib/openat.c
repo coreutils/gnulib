@@ -25,9 +25,15 @@
 #include <sys/stat.h>
 
 #include "dirname.h" /* solely for definition of IS_ABSOLUTE_FILE_NAME */
-#include "fcntl--.h"
 #include "openat-priv.h"
 #include "save-cwd.h"
+
+/* We can't use "fcntl--.h", so that openat_safer does not interfere.  */
+#if GNULIB_FCNTL_SAFER
+# include "fcntl-safer.h"
+# undef open
+# define open open_safer
+#endif
 
 /* Replacement for Solaris' openat function.
    <http://www.google.com/search?q=openat+site:docs.sun.com>
