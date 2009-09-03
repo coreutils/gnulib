@@ -1,5 +1,9 @@
 2009-09-03  Eric Blake  <ebb9@byu.net>
 
+	euidaccess: prefer POSIX over non-standard implementation
+	* m4/euidaccess.m4 (gl_PREREQ_EUIDACCESS): Check for faccessat.
+	* lib/euidaccess.c (euidaccess): Use it if available.
+
 	openat: make template easier to use
 	* lib/at-func.c (CALL_FUNC): Allow AT_FUNC_USE_F1_COND and
 	AT_FUNC_F2 to be undefined.

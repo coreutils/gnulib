@@ -1,4 +1,4 @@
-# euidaccess.m4 serial 10
+# euidaccess.m4 serial 11
 dnl Copyright (C) 2002-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -31,6 +31,9 @@ AC_DEFUN([gl_FUNC_EUIDACCESS],
 
 # Prerequisites of lib/euidaccess.c.
 AC_DEFUN([gl_PREREQ_EUIDACCESS], [
+  dnl Prefer POSIX faccessat over non-standard euidaccess.
+  AC_CHECK_FUNCS_ONCE([faccessat])
+  dnl Try various other non-standard fallbacks.
   AC_CHECK_HEADERS_ONCE([libgen.h])
   AC_CHECK_DECLS_ONCE([setregid])
   AC_REQUIRE([AC_FUNC_GETGROUPS])
