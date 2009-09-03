@@ -1,5 +1,18 @@
 2009-09-03  Eric Blake  <ebb9@byu.net>
 
+	faccessat: new module
+	* modules/faccessat: New file.
+	* lib/faccessat.m4: Likewise.
+	* m4/faccessat.m4 (gl_FUNC_FACCESSAT): Likewise.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Add witness.
+	* modules/unistd (Makefile.am): Use it.
+	* lib/unistd.in.h (faccessat): Declare it.
+	(F_OK, X_OK, W_OK, R_OK): Provide definitions.
+	* lib/fcntl.in.h (AT_SYMLINK_FOLLOW, AT_EACCESS): Likewise.
+	* MODULES.html.sh (File system functions): Mention it.
+	* doc/posix-functions/faccessat.texi (faccessat): Likewise.
+	* doc/posix-headers/fcntl.texi (fcntl.h): Likewise.
+
 	euidaccess: prefer POSIX over non-standard implementation
 	* m4/euidaccess.m4 (gl_PREREQ_EUIDACCESS): Check for faccessat.
 	* lib/euidaccess.c (euidaccess): Use it if available.

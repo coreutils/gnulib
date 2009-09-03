@@ -2452,6 +2452,7 @@ func_all_modules ()
   func_module dirfd
   func_module double-slash-root
   func_module euidaccess
+  func_module faccessat
   func_module fdopendir
   func_module file-type
   func_module fileblocks

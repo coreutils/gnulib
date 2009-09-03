@@ -192,6 +192,15 @@ int openat (int fd, char const *file, int flags, /* mode_t mode */ ...);
 # define AT_REMOVEDIR 1
 #endif
 
+/* Solaris 9 lacks these two, so just pick unique values.  */
+#ifndef AT_SYMLINK_FOLLOW
+# define AT_SYMLINK_FOLLOW 2
+#endif
+
+#ifndef AT_EACCESS
+# define AT_EACCESS 4
+#endif
+
 
 #endif /* _GL_FCNTL_H */
 #endif /* _GL_FCNTL_H */

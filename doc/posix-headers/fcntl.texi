@@ -32,7 +32,8 @@ platforms:
 Solaris 10
 
 @item
-@samp{AT_FDCWD}, @samp{AT_SYMLINK_NOFOLLOW}, and @samp{AT_REMOVEDIR}
+@samp{AT_FDCWD}, @samp{AT_EACCESS}, @samp{AT_SYMLINK_NOFOLLOW},
+@samp{AT_SYMLINK_FOLLOW}, and @samp{AT_REMOVEDIR}
 are missing on some platforms.
 @end itemize
 
@@ -61,7 +62,4 @@ on some platforms.
 @samp{POSIX_FADV_NORMAL}, @samp{POSIX_FADV_RANDOM},
 @samp{POSIX_FADV_SEQUENTIAL}, and @samp{POSIX_FADV_WILLNEED} are not
 defined on some platforms.
-
-@item
-@samp{AT_EACCESS} and @samp{AT_SYMLINK_FOLLOW} are missing on some platforms.
 @end itemize

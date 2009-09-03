@@ -106,6 +106,15 @@
 # define STDERR_FILENO 2
 #endif
 
+/* Ensure *_OK functions exist.  */
+#ifndef F_OK
+# define F_OK 0
+# define X_OK 1
+# define W_OK 2
+# define R_OK 4
+#endif
+
+
 /* Declare overridden functions.  */
 
 #ifdef __cplusplus
@@ -161,6 +170,19 @@ int unlinkat (int fd, char const *file, int flag);
                       "use gnulib module openat for portability"), \
      unlinkat (d, n, f))
 #endif /* @GNULIB_OPENAT@ */
+
+
+#if @GNULIB_FACCESSAT@
+# if !@HAVE_FACCESSAT@
+int faccessat (int fd, char const *file, int mode, int flag);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef faccessat
+# define faccessat(d,n,m,f)			    \
+    (GL_LINK_WARNING ("faccessat is not portable - " \
+                      "use gnulib module faccessat for portability"), \
+     fchownat (d, n, m, f))
+#endif
 
 
 #if @GNULIB_CLOSE@
