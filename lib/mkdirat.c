@@ -34,8 +34,6 @@
 
 #define AT_FUNC_NAME mkdirat
 #define AT_FUNC_F1 mkdir
-#define AT_FUNC_F2 mkdir
-#define AT_FUNC_USE_F1_COND 1
 #define AT_FUNC_POST_FILE_PARAM_DECLS , mode_t mode
 #define AT_FUNC_POST_FILE_ARGS        , mode
 #include "at-func.c"

@@ -1,5 +1,19 @@
 2009-09-03  Eric Blake  <ebb9@byu.net>
 
+	openat: make template easier to use
+	* lib/at-func.c (CALL_FUNC): Allow AT_FUNC_USE_F1_COND and
+	AT_FUNC_F2 to be undefined.
+	(VALIDATE_FLAG): New macro; use it to reject bad flags.
+	(AT_FUNC_USE_F1_COND): Change sense to just flag bit.
+	* lib/fchmodat.c (AT_FUNC_USE_F1_COND): Adjust.
+	* lib/fchownat.c (AT_FUNC_USE_F1_COND): Likewise.
+	* lib/openat.c (AT_FUNC_USE_F1_COND) [fstatat, unlinkat]:
+	Likewise.
+	* lib/mkdirat.c (AT_FUNC_F2, AT_FUNC_USE_F1_COND): Delete.
+	* lib/selinux-at.c (AT_FUNC_F2, AT_FUNC_USE_F1_COND)
+	[getfileconat, lgetfileconat, setfileconat, lsetfileconat]:
+	Likewise.
+
 	openat: declare in POSIX headers
 	* NEWS: Mention this.
 	* modules/openat (configure.ac): Declare witnesses.

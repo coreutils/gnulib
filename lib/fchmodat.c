@@ -45,7 +45,7 @@ static int lchmod (char const *f, mode_t m) { errno = ENOSYS; return -1; }
 #define AT_FUNC_NAME fchmodat
 #define AT_FUNC_F1 lchmod
 #define AT_FUNC_F2 chmod
-#define AT_FUNC_USE_F1_COND flag == AT_SYMLINK_NOFOLLOW
+#define AT_FUNC_USE_F1_COND AT_SYMLINK_NOFOLLOW
 #define AT_FUNC_POST_FILE_PARAM_DECLS , mode_t mode, int flag
 #define AT_FUNC_POST_FILE_ARGS        , mode
 #include "at-func.c"

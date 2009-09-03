@@ -41,7 +41,7 @@
 #define AT_FUNC_NAME fchownat
 #define AT_FUNC_F1 lchown
 #define AT_FUNC_F2 chown
-#define AT_FUNC_USE_F1_COND flag == AT_SYMLINK_NOFOLLOW
+#define AT_FUNC_USE_F1_COND AT_SYMLINK_NOFOLLOW
 #define AT_FUNC_POST_FILE_PARAM_DECLS , uid_t owner, gid_t group, int flag
 #define AT_FUNC_POST_FILE_ARGS        , owner, group
 #include "at-func.c"

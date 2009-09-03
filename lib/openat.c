@@ -169,7 +169,7 @@ openat_needs_fchdir (void)
 #define AT_FUNC_NAME fstatat
 #define AT_FUNC_F1 lstat
 #define AT_FUNC_F2 stat
-#define AT_FUNC_USE_F1_COND flag == AT_SYMLINK_NOFOLLOW
+#define AT_FUNC_USE_F1_COND AT_SYMLINK_NOFOLLOW
 #define AT_FUNC_POST_FILE_PARAM_DECLS , struct stat *st, int flag
 #define AT_FUNC_POST_FILE_ARGS        , st
 #include "at-func.c"
@@ -191,7 +191,7 @@ openat_needs_fchdir (void)
 #define AT_FUNC_NAME unlinkat
 #define AT_FUNC_F1 rmdir
 #define AT_FUNC_F2 unlink
-#define AT_FUNC_USE_F1_COND flag == AT_REMOVEDIR
+#define AT_FUNC_USE_F1_COND AT_REMOVEDIR
 #define AT_FUNC_POST_FILE_PARAM_DECLS , int flag
 #define AT_FUNC_POST_FILE_ARGS        /* empty */
 #include "at-func.c"
