@@ -1,3 +1,10 @@
+2009-09-06  Akim Demaille  <demaille@gostai.com>
+
+	bootstrap: improve error message
+	* build-aux/bootstrap (find_tool): Upon failure, report the list
+	of candidates.
+	Honor the initial value of the envvar.
+
 2009-09-05  Eric Blake  <ebb9@byu.net>
 
 	symlinkat: new module
