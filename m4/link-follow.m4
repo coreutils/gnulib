@@ -1,4 +1,4 @@
-# serial 12
+# serial 13
 dnl Run a program to determine whether link(2) follows symlinks.
 dnl Set LINK_FOLLOWS_SYMLINKS accordingly.
 
@@ -7,14 +7,27 @@ dnl Set LINK_FOLLOWS_SYMLINKS accordingly.
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
 
-AC_DEFUN([gl_AC_FUNC_LINK_FOLLOWS_SYMLINK],
+dnl This macro can be used to emulate POSIX linkat.  If
+dnl LINK_FOLLOWS_SYMLINKS is 0, link matches linkat(,0), and
+dnl linkat(,AT_SYMLINK_FOLLOW) requires a readlink. If it is 1,
+dnl link matches linkat(,AT_SYMLINK_FOLLOW), and there is no way
+dnl to do linkat(,0) on symlinks (on all other file types,
+dnl link() is sufficient).  If it is -1, use a runtime test.
+AC_DEFUN([gl_FUNC_LINK_FOLLOWS_SYMLINK],
 [dnl
-  AC_CACHE_CHECK([whether link(2) dereferences a symlink],
-		 gl_ac_cv_func_link_follows_symlink,
-  [
-    # Create a regular file.
-    echo > conftest.file
-    AC_RUN_IFELSE([AC_LANG_SOURCE([[
+  AC_CHECK_FUNCS_ONCE([readlink])
+  dnl Mingw lacks link, although gnulib provides a good replacement.
+  dnl However, it also lacks symlink, so there's nothing to test in
+  dnl the first place, and no reason to need to distinguish between
+  dnl linkat variants.  So, we set LINK_FOLLOWS_SYMLINKS to 0.
+  gl_link_follows_symlinks=0 # assume GNU behavior
+  if test $ac_cv_func_readlink = yes; then
+    AC_CACHE_CHECK([whether link(2) dereferences a symlink],
+		    gl_cv_func_link_follows_symlink,
+    [
+      # Create a regular file.
+      echo > conftest.file
+      AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #       include <sys/types.h>
 #       include <sys/stat.h>
 #       include <unistd.h>
@@ -50,13 +63,18 @@ AC_DEFUN([gl_AC_FUNC_LINK_FOLLOWS_SYMLINK],
 	  return SAME_INODE (sb_hard, sb_file) ? 0 : 1;
 	}
       ]])],
-      [gl_ac_cv_func_link_follows_symlink=yes],
-      [gl_ac_cv_func_link_follows_symlink=no],
-      [gl_ac_cv_func_link_follows_symlink=yes] dnl We're cross compiling.
-    )
-  ])
-  if test $gl_ac_cv_func_link_follows_symlink = yes; then
-    AC_DEFINE([LINK_FOLLOWS_SYMLINKS], [1],
-      [Define if `link(2)' dereferences symbolic links.])
+	[gl_cv_func_link_follows_symlink=yes],
+	[gl_cv_func_link_follows_symlink=no],
+	[gl_cv_func_link_follows_symlink=unknown] dnl We're cross compiling.
+      )
+    ])
+    case $gl_cv_func_link_follows_symlink in
+      yes) ;;
+      no) gl_link_follows_symlinks=1 ;;
+      *) gl_link_follows_symlinks=-1 ;;
+    esac
   fi
+  AC_DEFINE_UNQUOTED([LINK_FOLLOWS_SYMLINKS], [$gl_link_follows_symlinks],
+    [Define to 1 if `link(2)' dereferences symbolic links, 0 if it
+     creates hard links to symlinks, and -1 if unknown.])
 ])

@@ -6,6 +6,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2009-09-04  link-follow     The macro LINK_FOLLOWS_SYMLINK is now tri-state,
+                            rather than only defined to 1.
+
 2009-09-03  openat          The include files are standardized to POSIX 2008.
                             For openat, include <fcntl.h>; for
                             fchmodat, fstatat, and mkdirat, include

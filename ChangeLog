@@ -1,3 +1,13 @@
+2009-09-04  Eric Blake  <ebb9@byu.net>
+
+	link-follow: accomodate mingw and cross-compilation
+	* m4/link-follow.m4 (gl_AC_FUNC_LINK_FOLLOWS_SYMLINK): Rename...
+	(gl_FUNC_LINK_FOLLOWS_SYMLINK): ...to this.  Change
+	cross-compilation results to -1, to make linkat easier to
+	implement when cross-compiling.  Trivially support mingw.
+	* modules/link-follow (configure.ac): Call new name.
+	* NEWS: Mention this.
+
 2009-09-03  Eric Blake  <ebb9@byu.net>
 
 	faccessat: compile replacement

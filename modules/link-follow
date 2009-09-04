@@ -7,7 +7,7 @@ m4/link-follow.m4
 Depends-on:
 
 configure.ac:
-gl_AC_FUNC_LINK_FOLLOWS_SYMLINK
+gl_FUNC_LINK_FOLLOWS_SYMLINK
 
 Makefile.am:
 
