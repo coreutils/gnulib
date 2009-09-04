@@ -1,5 +1,10 @@
 2009-09-04  Eric Blake  <ebb9@byu.net>
 
+	link-follow: fix logic bug in prior patch
+	* m4/link-follow.m4 (gl_FUNC_LINK_FOLLOWS_SYMLINK): Fix bug that
+	reversed sense of yes and no in prior patch.  Avoid confusing
+	compilation failure with desired semantics.
+
 	link-follow: accomodate mingw and cross-compilation
 	* m4/link-follow.m4 (gl_AC_FUNC_LINK_FOLLOWS_SYMLINK): Rename...
 	(gl_FUNC_LINK_FOLLOWS_SYMLINK): ...to this.  Change

@@ -1,4 +1,4 @@
-# serial 13
+# serial 14
 dnl Run a program to determine whether link(2) follows symlinks.
 dnl Set LINK_FOLLOWS_SYMLINKS accordingly.
 
@@ -60,17 +60,17 @@ AC_DEFUN([gl_FUNC_LINK_FOLLOWS_SYMLINK],
 
 	  /* If the dev/inode of hard and file are the same, then
 	     the link call followed the symlink.  */
-	  return SAME_INODE (sb_hard, sb_file) ? 0 : 1;
+	  return SAME_INODE (sb_hard, sb_file) ? 1 : 0;
 	}
       ]])],
-	[gl_cv_func_link_follows_symlink=yes],
-	[gl_cv_func_link_follows_symlink=no],
+	[gl_cv_func_link_follows_symlink=no], dnl GNU behavior
+	[gl_cv_func_link_follows_symlink=yes], dnl Followed link/compile failed
 	[gl_cv_func_link_follows_symlink=unknown] dnl We're cross compiling.
       )
     ])
     case $gl_cv_func_link_follows_symlink in
-      yes) ;;
-      no) gl_link_follows_symlinks=1 ;;
+      yes) gl_link_follows_symlinks=1 ;;
+      no) ;; # already defaulted to 0
       *) gl_link_follows_symlinks=-1 ;;
     esac
   fi
