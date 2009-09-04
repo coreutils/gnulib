@@ -1,5 +1,9 @@
 2009-09-03  Eric Blake  <ebb9@byu.net>
 
+	fts: fix compilation error
+	* lib/fts.c (includes): Re-add "openat.h", for
+	openat_needs_fchdir.
+
 	faccessat: new module
 	* modules/faccessat: New file.
 	* lib/faccessat.m4: Likewise.

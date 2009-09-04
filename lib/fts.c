@@ -74,6 +74,7 @@ static char sccsid[] = "@(#)fts.c	8.6 (Berkeley) 8/14/94";
 /* FIXME - use fcntl(F_DUPFD_CLOEXEC)/openat(O_CLOEXEC) once they are
    supported.  */
 # include "cloexec.h"
+# include "openat.h"
 # include "same-inode.h"
 #endif
 
