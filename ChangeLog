@@ -1,5 +1,9 @@
 2009-09-03  Eric Blake  <ebb9@byu.net>
 
+	faccessat: compile replacement
+	* m4/faccessat.m4 (gl_FUNC_FACCESSAT): Build replacement when
+	needed.
+
 	fts: fix compilation error
 	* lib/fts.c (includes): Re-add "openat.h", for
 	openat_needs_fchdir.
