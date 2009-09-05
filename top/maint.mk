@@ -293,6 +293,11 @@ sc_prohibit_root_dev_ino_without_use:
 	re='(\<ROOT_DEV_INO_(CHECK|WARN)\>|\<get_root_dev_ino *\()' \
 	  $(_header_without_use)
 
+sc_prohibit_openat_without_use:
+	@h='"openat.h"' \
+	re='\<(openat_(permissive|needs_fchdir|(save|restore)_fail)|l?ch(own|mod)at)\>' \
+	  $(_header_without_use)
+
 # Prohibit the inclusion of c-ctype.h without an actual use.
 ctype_re = isalnum|isalpha|isascii|isblank|iscntrl|isdigit|isgraph|islower\
 |isprint|ispunct|isspace|isupper|isxdigit|tolower|toupper

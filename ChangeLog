@@ -1,3 +1,8 @@
+2009-09-05  Jim Meyering  <meyering@redhat.com>
+
+	syntax-check: detect unnecessary inclusion of openat.h
+	* top/maint.mk (sc_prohibit_openat_without_use): New rule.
+
 2009-09-05  Bruno Haible  <bruno@clisp.org>
 
 	Support towlower, towupper.
