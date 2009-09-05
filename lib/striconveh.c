@@ -696,7 +696,8 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
 		in1ptr++;
 		in1size--;
 	      }
-	    utf8buf[utf8len++] = '?';
+	    *out1ptr++ = '?';
+	    res1 = 0;
 	  }
 	errno1 = errno;
 	utf8len = out1ptr - utf8buf;

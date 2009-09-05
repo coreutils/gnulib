@@ -66,23 +66,37 @@ main ()
 #if HAVE_ICONV
   /* Assume that iconv() supports at least the encodings ASCII, ISO-8859-1,
      ISO-8859-2, and UTF-8.  */
+  iconv_t cd_ascii_to_88591 = iconv_open ("ISO-8859-1", "ASCII");
   iconv_t cd_88591_to_88592 = iconv_open ("ISO-8859-2", "ISO-8859-1");
   iconv_t cd_88592_to_88591 = iconv_open ("ISO-8859-1", "ISO-8859-2");
+  iconv_t cd_ascii_to_utf8 = iconv_open ("UTF-8", "ASCII");
   iconv_t cd_88591_to_utf8 = iconv_open ("UTF-8", "ISO-8859-1");
   iconv_t cd_utf8_to_88591 = iconv_open ("ISO-8859-1", "UTF-8");
   iconv_t cd_88592_to_utf8 = iconv_open ("UTF-8", "ISO-8859-2");
   iconv_t cd_utf8_to_88592 = iconv_open ("ISO-8859-2", "UTF-8");
   iconv_t cd_utf7_to_utf8 = iconv_open ("UTF-8", "UTF-7");
+  iconveh_t cdeh_ascii_to_88591;
+  iconveh_t cdeh_ascii_to_88591_indirectly;
   iconveh_t cdeh_88592_to_88591;
   iconveh_t cdeh_88592_to_88591_indirectly;
+  iconveh_t cdeh_ascii_to_utf8;
   iconveh_t cdeh_88591_to_utf8;
   iconveh_t cdeh_utf8_to_88591;
   iconveh_t cdeh_utf7_to_utf8;
 
+  ASSERT (cd_ascii_to_utf8 != (iconv_t)(-1));
   ASSERT (cd_88591_to_utf8 != (iconv_t)(-1));
   ASSERT (cd_utf8_to_88591 != (iconv_t)(-1));
   ASSERT (cd_88592_to_utf8 != (iconv_t)(-1));
   ASSERT (cd_utf8_to_88592 != (iconv_t)(-1));
+
+  cdeh_ascii_to_88591.cd = cd_ascii_to_88591;
+  cdeh_ascii_to_88591.cd1 = cd_ascii_to_utf8;
+  cdeh_ascii_to_88591.cd2 = cd_utf8_to_88591;
+
+  cdeh_ascii_to_88591_indirectly.cd = (iconv_t)(-1);
+  cdeh_ascii_to_88591_indirectly.cd1 = cd_ascii_to_utf8;
+  cdeh_ascii_to_88591_indirectly.cd2 = cd_utf8_to_88591;
 
   cdeh_88592_to_88591.cd = cd_88592_to_88591;
   cdeh_88592_to_88591.cd1 = cd_88592_to_utf8;
@@ -91,6 +105,10 @@ main ()
   cdeh_88592_to_88591_indirectly.cd = (iconv_t)(-1);
   cdeh_88592_to_88591_indirectly.cd1 = cd_88592_to_utf8;
   cdeh_88592_to_88591_indirectly.cd2 = cd_utf8_to_88591;
+
+  cdeh_ascii_to_utf8.cd = cd_ascii_to_utf8;
+  cdeh_ascii_to_utf8.cd1 = cd_ascii_to_utf8;
+  cdeh_ascii_to_utf8.cd2 = (iconv_t)(-1);
 
   cdeh_88591_to_utf8.cd = cd_88591_to_utf8;
   cdeh_88591_to_utf8.cd1 = cd_88591_to_utf8;
@@ -137,6 +155,55 @@ main ()
 		  free (offsets);
 		}
 	      free (result);
+	    }
+	}
+    }
+
+  /* Test conversion from ASCII to ISO-8859-1 with invalid input (EILSEQ).  */
+  for (indirect = 0; indirect <= 1; indirect++)
+    {
+      for (h = 0; h < SIZEOF (handlers); h++)
+	{
+	  enum iconv_ilseq_handler handler = handlers[h];
+	  static const char input[] = "Rafa\263 Maszkowski"; /* Rafa? Maszkowski */
+	  for (o = 0; o < 2; o++)
+	    {
+	      size_t *offsets = (o ? new_offsets (strlen (input)) : NULL);
+	      char *result = NULL;
+	      size_t length = 0;
+	      int retval = mem_cd_iconveh (input, strlen (input),
+					   (indirect
+					    ? &cdeh_ascii_to_88591_indirectly
+					    : &cdeh_ascii_to_88591),
+					   handler,
+					   offsets,
+					   &result, &length);
+	      switch (handler)
+		{
+		case iconveh_error:
+		  ASSERT (retval == -1 && errno == EILSEQ);
+		  ASSERT (result == NULL);
+		  if (o)
+		    free (offsets);
+		  break;
+		case iconveh_question_mark:
+		case iconveh_escape_sequence:
+		  {
+		    static const char expected[] = "Rafa? Maszkowski";
+		    ASSERT (retval == 0);
+		    ASSERT (length == strlen (expected));
+		    ASSERT (result != NULL && memcmp (result, expected, strlen (expected)) == 0);
+		    if (o)
+		      {
+			for (i = 0; i < 16; i++)
+			  ASSERT (offsets[i] == i);
+			ASSERT (offsets[16] == MAGIC);
+			free (offsets);
+		      }
+		    free (result);
+		  }
+		  break;
+		}
 	    }
 	}
     }
@@ -273,6 +340,50 @@ main ()
 	      free (offsets);
 	    }
 	  free (result);
+	}
+    }
+
+  /* Test conversion from ASCII to UTF-8 with invalid input (EILSEQ).  */
+  for (h = 0; h < SIZEOF (handlers); h++)
+    {
+      enum iconv_ilseq_handler handler = handlers[h];
+      static const char input[] = "Rafa\263 Maszkowski"; /* Rafa? Maszkowski */
+      for (o = 0; o < 2; o++)
+	{
+	  size_t *offsets = (o ? new_offsets (strlen (input)) : NULL);
+	  char *result = NULL;
+	  size_t length = 0;
+	  int retval = mem_cd_iconveh (input, strlen (input),
+				       &cdeh_ascii_to_utf8,
+				       handler,
+				       offsets,
+				       &result, &length);
+	  switch (handler)
+	    {
+	    case iconveh_error:
+	      ASSERT (retval == -1 && errno == EILSEQ);
+	      ASSERT (result == NULL);
+	      if (o)
+		free (offsets);
+	      break;
+	    case iconveh_question_mark:
+	    case iconveh_escape_sequence:
+	      {
+		static const char expected[] = "Rafa? Maszkowski";
+		ASSERT (retval == 0);
+		ASSERT (length == strlen (expected));
+		ASSERT (result != NULL && memcmp (result, expected, strlen (expected)) == 0);
+		if (o)
+		  {
+		    for (i = 0; i < 16; i++)
+		      ASSERT (offsets[i] == i);
+		    ASSERT (offsets[16] == MAGIC);
+		    free (offsets);
+		  }
+		free (result);
+	      }
+	      break;
+	    }
 	}
     }
 
@@ -468,6 +579,36 @@ main ()
 	}
     }
 
+  /* Test conversion from ASCII to ISO-8859-1 with invalid input (EILSEQ).  */
+  for (indirect = 0; indirect <= 1; indirect++)
+    {
+      for (h = 0; h < SIZEOF (handlers); h++)
+	{
+	  enum iconv_ilseq_handler handler = handlers[h];
+	  static const char input[] = "Rafa\263 Maszkowski"; /* Rafa? Maszkowski */
+	  char *result = str_cd_iconveh (input,
+					 (indirect
+					  ? &cdeh_ascii_to_88591_indirectly
+					  : &cdeh_ascii_to_88591),
+					 handler);
+	  switch (handler)
+	    {
+	    case iconveh_error:
+	      ASSERT (result == NULL && errno == EILSEQ);
+	      break;
+	    case iconveh_question_mark:
+	    case iconveh_escape_sequence:
+	      {
+		static const char expected[] = "Rafa? Maszkowski";
+		ASSERT (result != NULL);
+		ASSERT (strcmp (result, expected) == 0);
+		free (result);
+	      }
+	      break;
+	    }
+	}
+    }
+
   /* Test conversion from ISO-8859-2 to ISO-8859-1 with EILSEQ.  */
   for (indirect = 0; indirect <= 1; indirect++)
     {
@@ -531,6 +672,31 @@ main ()
       ASSERT (result != NULL);
       ASSERT (strcmp (result, expected) == 0);
       free (result);
+    }
+
+  /* Test conversion from ASCII to UTF-8 with invalid input (EILSEQ).  */
+  for (h = 0; h < SIZEOF (handlers); h++)
+    {
+      enum iconv_ilseq_handler handler = handlers[h];
+      static const char input[] = "Rafa\263 Maszkowski"; /* Rafa? Maszkowski */
+      char *result = str_cd_iconveh (input,
+				     &cdeh_ascii_to_utf8,
+				     handler);
+      switch (handler)
+	{
+	case iconveh_error:
+	  ASSERT (result == NULL && errno == EILSEQ);
+	  break;
+	case iconveh_question_mark:
+	case iconveh_escape_sequence:
+	  {
+	    static const char expected[] = "Rafa? Maszkowski";
+	    ASSERT (result != NULL);
+	    ASSERT (strcmp (result, expected) == 0);
+	    free (result);
+	  }
+	  break;
+	}
     }
 
   /* Test conversion from UTF-8 to ISO-8859-1 with EILSEQ.  */

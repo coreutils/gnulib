@@ -1,5 +1,14 @@
 2009-09-05  Bruno Haible  <bruno@clisp.org>
 
+	Fix conversion behaviour when the input is invalid.
+	* lib/striconveh.c (mem_cd_iconveh_internal): Fix storing of question
+	mark occurring in first pass of indirect conversion.
+	* tests/test-striconveh.c (main): Test conversion of invalid ASCII
+	input.
+	Found by clang's static analyzer.
+
+2009-09-05  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-striconveh.c (main): Test indirect conversion on platforms
 	where direct conversion is possible.
 
