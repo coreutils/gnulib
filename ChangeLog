@@ -1,5 +1,9 @@
 2009-09-04  Eric Blake  <ebb9@byu.net>
 
+	openat: fail with ENOENT on empty name
+	* lib/openat-proc.c (openat_proc_name): Special-case the empty
+	buffer.
+
 	link-follow: fix logic bug in prior patch
 	* m4/link-follow.m4 (gl_FUNC_LINK_FOLLOWS_SYMLINK): Fix bug that
 	reversed sense of yes and no in prior patch.  Avoid confusing

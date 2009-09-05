@@ -57,6 +57,13 @@ openat_proc_name (char buf[OPENAT_BUFFER_SIZE], int fd, char const *file)
 {
   static int proc_status = 0;
 
+  /* Make sure the caller gets ENOENT when appropriate.  */
+  if (!*file)
+    {
+      buf[0] = '\0';
+      return buf;
+    }
+
   if (! proc_status)
     {
       /* Set PROC_STATUS to a positive value if /proc/self/fd is
