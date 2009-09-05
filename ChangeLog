@@ -1,3 +1,8 @@
+2009-09-05  Eric Blake  <ebb9@byu.net>
+
+	test-openat-safer: add more checks
+	* tests/test-openat-safer.c (main): Check more code paths.
+
 2009-09-05  Jim Meyering  <meyering@redhat.com>
 
 	syntax-check: detect unnecessary inclusion of openat.h

@@ -92,6 +92,9 @@ main ()
 	  errno = 0;
 	  ASSERT (openat (dfd, "", O_RDONLY) == -1);
 	  ASSERT (errno == ENOENT);
+	  errno = 0;
+	  ASSERT (openat (-1, ".", O_RDONLY) == -1);
+	  ASSERT (errno == EBADF);
 
 	  /* Check for trailing slash and /dev/null handling; the
 	     particular errno might be ambiguous.  */
@@ -102,8 +105,13 @@ main ()
 	  errno = 0;
 	  ASSERT (openat (dfd, "/dev/null/", O_RDONLY) == -1);
 	  /* ASSERT (errno == ENOTDIR); */
-	  fd = openat (dfd, "/dev/null", O_RDONLY);
+	  /* Using a bad directory is okay for absolute paths.  */
+	  fd = openat (-1, "/dev/null", O_WRONLY);
 	  ASSERT (STDERR_FILENO < fd);
+	  /* Using a non-directory is wrong for relative paths.  */
+	  errno = 0;
+	  ASSERT (openat (fd, ".", O_RDONLY) == -1);
+	  ASSERT (errno == EBADF || errno == ENOTDIR);
 	  ASSERT (close (fd) == 0);
 
 	  /* Check for our witness file.  */
