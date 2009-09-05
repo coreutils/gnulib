@@ -32,6 +32,12 @@
 # define VALIDATE_FLAG(F) /* empty */
 #endif
 
+#ifdef AT_FUNC_RESULT
+# define FUNC_RESULT AT_FUNC_RESULT
+#else
+# define FUNC_RESULT int
+#endif
+
 /* Call AT_FUNC_F1 to operate on FILE, which is in the directory
    open on descriptor FD.  If AT_FUNC_USE_F1_COND is defined to a value,
    AT_FUNC_POST_FILE_PARAM_DECLS must inlude a parameter named flag;
@@ -40,12 +46,14 @@
    working directory.  Otherwise, resort to using save_cwd/fchdir,
    then AT_FUNC_F?/restore_cwd.  If either the save_cwd or the restore_cwd
    fails, then give a diagnostic and exit nonzero.  */
-int
+FUNC_RESULT
 AT_FUNC_NAME (int fd, char const *file AT_FUNC_POST_FILE_PARAM_DECLS)
 {
+  /* Be careful to choose names unlikely to conflict with
+     AT_FUNC_POST_FILE_PARAM_DECLS.  */
   struct saved_cwd saved_cwd;
   int saved_errno;
-  int err;
+  FUNC_RESULT err;
 
   VALIDATE_FLAG (flag);
 
@@ -53,13 +61,13 @@ AT_FUNC_NAME (int fd, char const *file AT_FUNC_POST_FILE_PARAM_DECLS)
     return CALL_FUNC (file);
 
   {
-    char buf[OPENAT_BUFFER_SIZE];
-    char *proc_file = openat_proc_name (buf, fd, file);
+    char proc_buf[OPENAT_BUFFER_SIZE];
+    char *proc_file = openat_proc_name (proc_buf, fd, file);
     if (proc_file)
       {
-	int proc_result = CALL_FUNC (proc_file);
+	FUNC_RESULT proc_result = CALL_FUNC (proc_file);
 	int proc_errno = errno;
-	if (proc_file != buf)
+	if (proc_file != proc_buf)
 	  free (proc_file);
 	/* If the syscall succeeds, or if it fails with an unexpected
 	   errno value, then return right away.  Otherwise, fall through
@@ -98,3 +106,4 @@ AT_FUNC_NAME (int fd, char const *file AT_FUNC_POST_FILE_PARAM_DECLS)
   return err;
 }
 #undef CALL_FUNC
+#undef FUNC_RESULT

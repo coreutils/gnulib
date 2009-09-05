@@ -1,5 +1,20 @@
 2009-09-05  Eric Blake  <ebb9@byu.net>
 
+	symlinkat: new module
+	* modules/symlinkat: New file.
+	* lib/symlinkat.c: Likewise.
+	* m4/symlinkat.m4 (gl_FUNC_SYMLINKAT): Likewise.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Add witnesses.
+	* modules/unistd (Makefile.am): Use them.
+	* lib/unistd.in.h (symlinkat, readlinkat): Declare them.
+	(faccessat) [GNULIB_POSIXCHECK]: Fix typo.
+	* lib/at-func.c (FUNC_RESULT): New macro, defaulting to int.
+	* MODULES.html.sh (File system functions): Mention module.
+	* doc/posix-functions/symlinkat.texi (symlinkat): Likewise.
+	* doc/posix-functions/readlinkat.texi (readlinkat): Likewise.
+	* modules/symlinkat-tests: New test.
+	* tests/test-symlinkat.c: Likewise.
+
 	test-openat-safer: add more checks
 	* tests/test-openat-safer.c (main): Check more code paths.
 
@@ -65,7 +80,7 @@
 
 	faccessat: new module
 	* modules/faccessat: New file.
-	* lib/faccessat.m4: Likewise.
+	* lib/faccessat.c: Likewise.
 	* m4/faccessat.m4 (gl_FUNC_FACCESSAT): Likewise.
 	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Add witness.
 	* modules/unistd (Makefile.am): Use it.

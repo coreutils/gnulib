@@ -181,9 +181,28 @@ int faccessat (int fd, char const *file, int mode, int flag);
 # define faccessat(d,n,m,f)			    \
     (GL_LINK_WARNING ("faccessat is not portable - " \
                       "use gnulib module faccessat for portability"), \
-     fchownat (d, n, m, f))
+     faccessat (d, n, m, f))
 #endif
 
+#if @GNULIB_SYMLINKAT@
+# if !@HAVE_SYMLINKAT@
+int symlinkat (char const *contents, int fd, char const *file);
+# endif
+# if !@HAVE_READLINKAT@
+ssize_t readlinkat (int fd, char const *file, char *buf, size_t len);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef symlinkat
+# define symlinkat(c,d,n)			     \
+    (GL_LINK_WARNING ("symlinkat is not portable - " \
+                      "use gnulib module symlinkat for portability"), \
+     symlinkat (c, d, n))
+# undef readlinkat
+# define readlinkat(d,n,b,l)			     \
+    (GL_LINK_WARNING ("faccessat is not portable - " \
+                      "use gnulib module symlinkat for portability"), \
+     readlinkat (d, n, b, l))
+#endif
 
 #if @GNULIB_CLOSE@
 # if @REPLACE_CLOSE@
