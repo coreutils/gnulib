@@ -1,5 +1,17 @@
 2009-09-05  Bruno Haible  <bruno@clisp.org>
 
+	Support towlower, towupper.
+	* doc/posix-functions/towlower.texi: Mention module wctype.
+	* doc/posix-functions/towupper.texi: Likewise.
+	* lib/wctype.in.h (towlower, towupper): New functions.
+	* tests/test-wctype.c: Include stdio.h, stdlib.h.
+	(ASSERT): New macro.
+	(e): New variable.
+	(main): Test also towlower, towupper. Test WEOF argument.
+	Reported by Alan Hourihane <alanh@fairlite.co.uk>.
+
+2009-09-05  Bruno Haible  <bruno@clisp.org>
+
 	Fix conversion behaviour when the input is invalid.
 	* lib/striconveh.c (mem_cd_iconveh_internal): Fix storing of question
 	mark occurring in first pass of indirect conversion.

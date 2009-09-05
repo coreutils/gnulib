@@ -84,6 +84,8 @@
 #  undef iswspace
 #  undef iswupper
 #  undef iswxdigit
+#  undef towlower
+#  undef towupper
 
 /* Linux libc5 has <wctype.h> and the functions but they are broken.  */
 #  if @REPLACE_ISWCNTRL@
@@ -99,6 +101,8 @@
 #   define iswspace rpl_iswspace
 #   define iswupper rpl_iswupper
 #   define iswxdigit rpl_iswxdigit
+#   define towlower rpl_towlower
+#   define towupper rpl_towupper
 #  endif
 
 static inline int
@@ -176,6 +180,18 @@ iswxdigit (wint_t wc)
 {
   return ((wc >= '0' && wc <= '9')
 	  || ((wc & ~0x20) >= 'A' && (wc & ~0x20) <= 'F'));
+}
+
+static inline wint_t
+towlower (wint_t wc)
+{
+  return (wc >= 'A' && wc <= 'Z' ? wc - 'A' + 'a' : wc);
+}
+
+static inline wint_t
+towupper (wint_t wc)
+{
+  return (wc >= 'a' && wc <= 'z' ? wc - 'a' + 'A' : wc);
 }
 
 # endif /* ! HAVE_ISWCNTRL */
