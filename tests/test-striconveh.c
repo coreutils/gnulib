@@ -58,6 +58,7 @@ main ()
 {
   static enum iconv_ilseq_handler handlers[] =
     { iconveh_error, iconveh_question_mark, iconveh_escape_sequence };
+  size_t indirect;
   size_t h;
   size_t o;
   size_t i;
@@ -73,6 +74,7 @@ main ()
   iconv_t cd_utf8_to_88592 = iconv_open ("ISO-8859-2", "UTF-8");
   iconv_t cd_utf7_to_utf8 = iconv_open ("UTF-8", "UTF-7");
   iconveh_t cdeh_88592_to_88591;
+  iconveh_t cdeh_88592_to_88591_indirectly;
   iconveh_t cdeh_88591_to_utf8;
   iconveh_t cdeh_utf8_to_88591;
   iconveh_t cdeh_utf7_to_utf8;
@@ -85,6 +87,10 @@ main ()
   cdeh_88592_to_88591.cd = cd_88592_to_88591;
   cdeh_88592_to_88591.cd1 = cd_88592_to_utf8;
   cdeh_88592_to_88591.cd2 = cd_utf8_to_88591;
+
+  cdeh_88592_to_88591_indirectly.cd = (iconv_t)(-1);
+  cdeh_88592_to_88591_indirectly.cd1 = cd_88592_to_utf8;
+  cdeh_88592_to_88591_indirectly.cd2 = cd_utf8_to_88591;
 
   cdeh_88591_to_utf8.cd = cd_88591_to_utf8;
   cdeh_88591_to_utf8.cd1 = cd_88591_to_utf8;
@@ -101,91 +107,101 @@ main ()
   /* ------------------------ Test mem_cd_iconveh() ------------------------ */
 
   /* Test conversion from ISO-8859-2 to ISO-8859-1 with no errors.  */
-  for (h = 0; h < SIZEOF (handlers); h++)
+  for (indirect = 0; indirect <= 1; indirect++)
     {
-      enum iconv_ilseq_handler handler = handlers[h];
-      static const char input[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
-      static const char expected[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
-      for (o = 0; o < 2; o++)
+      for (h = 0; h < SIZEOF (handlers); h++)
 	{
-	  size_t *offsets = (o ? new_offsets (strlen (input)) : NULL);
-	  char *result = NULL;
-	  size_t length = 0;
-	  int retval = mem_cd_iconveh (input, strlen (input),
-				       &cdeh_88592_to_88591,
-				       handler,
-				       offsets,
-				       &result, &length);
-	  ASSERT (retval == 0);
-	  ASSERT (length == strlen (expected));
-	  ASSERT (result != NULL && memcmp (result, expected, strlen (expected)) == 0);
-	  if (o)
+	  enum iconv_ilseq_handler handler = handlers[h];
+	  static const char input[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
+	  static const char expected[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
+	  for (o = 0; o < 2; o++)
 	    {
-	      for (i = 0; i < 37; i++)
-		ASSERT (offsets[i] == i);
-	      ASSERT (offsets[37] == MAGIC);
-	      free (offsets);
+	      size_t *offsets = (o ? new_offsets (strlen (input)) : NULL);
+	      char *result = NULL;
+	      size_t length = 0;
+	      int retval = mem_cd_iconveh (input, strlen (input),
+					   (indirect
+					    ? &cdeh_88592_to_88591_indirectly
+					    : &cdeh_88592_to_88591),
+					   handler,
+					   offsets,
+					   &result, &length);
+	      ASSERT (retval == 0);
+	      ASSERT (length == strlen (expected));
+	      ASSERT (result != NULL && memcmp (result, expected, strlen (expected)) == 0);
+	      if (o)
+		{
+		  for (i = 0; i < 37; i++)
+		    ASSERT (offsets[i] == i);
+		  ASSERT (offsets[37] == MAGIC);
+		  free (offsets);
+		}
+	      free (result);
 	    }
-	  free (result);
 	}
     }
 
   /* Test conversion from ISO-8859-2 to ISO-8859-1 with EILSEQ.  */
-  for (h = 0; h < SIZEOF (handlers); h++)
+  for (indirect = 0; indirect <= 1; indirect++)
     {
-      enum iconv_ilseq_handler handler = handlers[h];
-      static const char input[] = "Rafa\263 Maszkowski"; /* Rafał Maszkowski */
-      for (o = 0; o < 2; o++)
+      for (h = 0; h < SIZEOF (handlers); h++)
 	{
-	  size_t *offsets = (o ? new_offsets (strlen (input)) : NULL);
-	  char *result = NULL;
-	  size_t length = 0;
-	  int retval = mem_cd_iconveh (input, strlen (input),
-				       &cdeh_88592_to_88591,
-				       handler,
-				       offsets,
-				       &result, &length);
-	  switch (handler)
+	  enum iconv_ilseq_handler handler = handlers[h];
+	  static const char input[] = "Rafa\263 Maszkowski"; /* Rafał Maszkowski */
+	  for (o = 0; o < 2; o++)
 	    {
-	    case iconveh_error:
-	      ASSERT (retval == -1 && errno == EILSEQ);
-	      ASSERT (result == NULL);
-	      if (o)
-		free (offsets);
-	      break;
-	    case iconveh_question_mark:
-	      {
-		static const char expected[] = "Rafa? Maszkowski";
-		ASSERT (retval == 0);
-		ASSERT (length == strlen (expected));
-		ASSERT (result != NULL && memcmp (result, expected, strlen (expected)) == 0);
-		if (o)
-		  {
-		    for (i = 0; i < 16; i++)
-		      ASSERT (offsets[i] == i);
-		    ASSERT (offsets[16] == MAGIC);
+	      size_t *offsets = (o ? new_offsets (strlen (input)) : NULL);
+	      char *result = NULL;
+	      size_t length = 0;
+	      int retval = mem_cd_iconveh (input, strlen (input),
+					   (indirect
+					    ? &cdeh_88592_to_88591_indirectly
+					    : &cdeh_88592_to_88591),
+					   handler,
+					   offsets,
+					   &result, &length);
+	      switch (handler)
+		{
+		case iconveh_error:
+		  ASSERT (retval == -1 && errno == EILSEQ);
+		  ASSERT (result == NULL);
+		  if (o)
 		    free (offsets);
-		  }
-		free (result);
-	      }
-	      break;
-	    case iconveh_escape_sequence:
-	      {
-		static const char expected[] = "Rafa\\u0142 Maszkowski";
-		ASSERT (retval == 0);
-		ASSERT (length == strlen (expected));
-		ASSERT (result != NULL && memcmp (result, expected, strlen (expected)) == 0);
-		if (o)
+		  break;
+		case iconveh_question_mark:
 		  {
-		    for (i = 0; i < 16; i++)
-		      ASSERT (offsets[i] == (i < 5 ? i :
-					     i + 5));
-		    ASSERT (offsets[16] == MAGIC);
-		    free (offsets);
+		    static const char expected[] = "Rafa? Maszkowski";
+		    ASSERT (retval == 0);
+		    ASSERT (length == strlen (expected));
+		    ASSERT (result != NULL && memcmp (result, expected, strlen (expected)) == 0);
+		    if (o)
+		      {
+			for (i = 0; i < 16; i++)
+			  ASSERT (offsets[i] == i);
+			ASSERT (offsets[16] == MAGIC);
+			free (offsets);
+		      }
+		    free (result);
 		  }
-		free (result);
-	      }
-	      break;
+		  break;
+		case iconveh_escape_sequence:
+		  {
+		    static const char expected[] = "Rafa\\u0142 Maszkowski";
+		    ASSERT (retval == 0);
+		    ASSERT (length == strlen (expected));
+		    ASSERT (result != NULL && memcmp (result, expected, strlen (expected)) == 0);
+		    if (o)
+		      {
+			for (i = 0; i < 16; i++)
+			  ASSERT (offsets[i] == (i < 5 ? i :
+						 i + 5));
+			ASSERT (offsets[16] == MAGIC);
+			free (offsets);
+		      }
+		    free (result);
+		  }
+		  break;
+		}
 	    }
 	}
     }
@@ -434,48 +450,58 @@ main ()
   /* ------------------------ Test str_cd_iconveh() ------------------------ */
 
   /* Test conversion from ISO-8859-2 to ISO-8859-1 with no errors.  */
-  for (h = 0; h < SIZEOF (handlers); h++)
+  for (indirect = 0; indirect <= 1; indirect++)
     {
-      enum iconv_ilseq_handler handler = handlers[h];
-      static const char input[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
-      static const char expected[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
-      char *result = str_cd_iconveh (input,
-				     &cdeh_88592_to_88591,
-				     handler);
-      ASSERT (result != NULL);
-      ASSERT (strcmp (result, expected) == 0);
-      free (result);
+      for (h = 0; h < SIZEOF (handlers); h++)
+	{
+	  enum iconv_ilseq_handler handler = handlers[h];
+	  static const char input[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
+	  static const char expected[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
+	  char *result = str_cd_iconveh (input,
+					 (indirect
+					  ? &cdeh_88592_to_88591_indirectly
+					  : &cdeh_88592_to_88591),
+					 handler);
+	  ASSERT (result != NULL);
+	  ASSERT (strcmp (result, expected) == 0);
+	  free (result);
+	}
     }
 
   /* Test conversion from ISO-8859-2 to ISO-8859-1 with EILSEQ.  */
-  for (h = 0; h < SIZEOF (handlers); h++)
+  for (indirect = 0; indirect <= 1; indirect++)
     {
-      enum iconv_ilseq_handler handler = handlers[h];
-      static const char input[] = "Rafa\263 Maszkowski"; /* Rafał Maszkowski */
-      char *result = str_cd_iconveh (input,
-				     &cdeh_88592_to_88591,
-				     handler);
-      switch (handler)
+      for (h = 0; h < SIZEOF (handlers); h++)
 	{
-	case iconveh_error:
-	  ASSERT (result == NULL && errno == EILSEQ);
-	  break;
-	case iconveh_question_mark:
-	  {
-	    static const char expected[] = "Rafa? Maszkowski";
-	    ASSERT (result != NULL);
-	    ASSERT (strcmp (result, expected) == 0);
-	    free (result);
-	  }
-	  break;
-	case iconveh_escape_sequence:
-	  {
-	    static const char expected[] = "Rafa\\u0142 Maszkowski";
-	    ASSERT (result != NULL);
-	    ASSERT (strcmp (result, expected) == 0);
-	    free (result);
-	  }
-	  break;
+	  enum iconv_ilseq_handler handler = handlers[h];
+	  static const char input[] = "Rafa\263 Maszkowski"; /* Rafał Maszkowski */
+	  char *result = str_cd_iconveh (input,
+					 (indirect
+					  ? &cdeh_88592_to_88591_indirectly
+					  : &cdeh_88592_to_88591),
+					 handler);
+	  switch (handler)
+	    {
+	    case iconveh_error:
+	      ASSERT (result == NULL && errno == EILSEQ);
+	      break;
+	    case iconveh_question_mark:
+	      {
+		static const char expected[] = "Rafa? Maszkowski";
+		ASSERT (result != NULL);
+		ASSERT (strcmp (result, expected) == 0);
+		free (result);
+	      }
+	      break;
+	    case iconveh_escape_sequence:
+	      {
+		static const char expected[] = "Rafa\\u0142 Maszkowski";
+		ASSERT (result != NULL);
+		ASSERT (strcmp (result, expected) == 0);
+		free (result);
+	      }
+	      break;
+	    }
 	}
     }
 
