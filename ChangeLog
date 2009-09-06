@@ -1,3 +1,8 @@
+2009-09-06  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	exclude: minor fix
+	* lib/exclude.c: Include wctype.h
+
 2009-09-06  Akim Demaille  <demaille@gostai.com>
 
 	bootstrap: improve error message
