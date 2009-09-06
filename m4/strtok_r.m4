@@ -26,7 +26,7 @@ AC_DEFUN([gl_FUNC_STRTOK_R],
               #endif
               #undef __OPTIMIZE_SIZE__
               #undef __NO_INLINE__
-              #include <stdio.h>
+              #include <stdlib.h>
               #include <string.h>
             ]],
             [[char delimiters[] = "xxxxxxxx";
