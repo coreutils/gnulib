@@ -1,5 +1,9 @@
 2009-09-06  Bruno Haible  <bruno@clisp.org>
 
+	* doc/posix-headers/fcntl.texi (AT_*): Mention affected platforms.
+
+2009-09-06  Bruno Haible  <bruno@clisp.org>
+
 	* lib/sys_stat.in.h: Fix preprocessor command indentation.
 
 2009-09-06  Ben Pfaff  <blp@gnu.org>
