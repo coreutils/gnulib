@@ -317,7 +317,7 @@ int fchmodat (int fd, char const *file, mode_t mode, int flag);
 
 # if !@HAVE_MKDIRAT@
 int mkdirat (int fd, char const *file, mode_t mode);
-#endif
+# endif
 
 #elif defined GNULIB_POSIXCHECK
 # undef fchmodat
