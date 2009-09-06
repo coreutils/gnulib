@@ -103,7 +103,7 @@ rpl_chown (const char *file, uid_t uid, gid_t gid)
   return chown (file, uid, gid);
 
 #else /* !HAVE_CHOWN */
-  errno = EOPNOTSUPP;
+  errno = ENOSYS;
   return -1;
 #endif
 }

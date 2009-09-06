@@ -1,5 +1,13 @@
 2009-09-06  Bruno Haible  <bruno@clisp.org>
 
+	Set errno to ENOSYS when a function is entirely unsupported.
+	* lib/chown.c (rpl_chown) [!HAVE_CHOWN]: Set errno to ENOSYS instead of
+	EOPNOTSUPP.
+	* lib/lchown.c (lchown) [!HAVE_CHOWN]: Likewise.
+	* modules/chown (Depends-on): Remove errno.
+
+2009-09-06  Bruno Haible  <bruno@clisp.org>
+
 	* doc/posix-headers/fcntl.texi (AT_*): Mention affected platforms.
 
 2009-09-06  Bruno Haible  <bruno@clisp.org>
