@@ -1,5 +1,9 @@
 2009-09-06  Bruno Haible  <bruno@clisp.org>
 
+	* modules/openat (configure.ac): Remove unneeded witness.
+
+2009-09-06  Bruno Haible  <bruno@clisp.org>
+
 	Set errno to ENOSYS when a function is entirely unsupported.
 	* lib/chown.c (rpl_chown) [!HAVE_CHOWN]: Set errno to ENOSYS instead of
 	EOPNOTSUPP.

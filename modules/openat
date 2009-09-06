@@ -35,7 +35,6 @@ unistd
 
 configure.ac:
 gl_FUNC_OPENAT
-gl_MODULE_INDICATOR([openat])
 
 Makefile.am:
 
