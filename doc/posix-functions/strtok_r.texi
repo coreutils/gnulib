@@ -11,6 +11,10 @@ Portability problems fixed by Gnulib:
 @item
 This function is missing on some platforms:
 mingw.
+@item
+This function crashes when invoked from code compiled with optimization enabled
+on some platforms:
+glibc 2.7.
 @end itemize
 
 Portability problems not fixed by Gnulib:

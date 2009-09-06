@@ -399,7 +399,13 @@ extern char *strcasestr (const char *haystack, const char *needle)
 
    See also strsep().  */
 #if @GNULIB_STRTOK_R@
-# if ! @HAVE_DECL_STRTOK_R@
+# if @REPLACE_STRTOK_R@
+#  undef strtok_r
+#  define strtok_r rpl_strtok_r
+# elif @UNDEFINE_STRTOK_R@
+#  undef strtok_r
+# endif
+# if ! @HAVE_DECL_STRTOK_R@ || @REPLACE_STRTOK_R@
 extern char *strtok_r (char *restrict s, char const *restrict delim,
 		       char **restrict save_ptr);
 # endif

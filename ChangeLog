@@ -1,3 +1,17 @@
+2009-09-06  Ben Pfaff  <blp@gnu.org>
+	    Bruno Haible  <bruno@clisp.org>
+
+	Work around a glibc bug in strtok_r.
+	* lib/string.in.h (strtok_r): Replace if REPLACE_STRTOK_R is set.
+	Undefine if UNDEFINE_STRTOK_R is set.
+	* lib/strtok_r.c (strtok_r, __strtok_r) [!_LIBC]: Don't undefine.
+	* m4/string_h.m4 (gl_HEADER_STRING_H_DEFAULTS): Initialize
+	REPLACE_STRTOK_R and UNDEFINE_STRTOK_R.
+	* m4/strtok_r.m4 (gl_FUNC_STRTOK_R): Check against the glibc bug.
+	* modules/string (Makefile.am): Substitute REPLACE_STRTOK_R,
+	UNDEFINE_STRTOK_R.
+	* doc/posix-functions/strtok_r.texi: Mention the glibc 2.7 bug.
+
 2009-09-06  Sergey Poznyakoff  <gray@gnu.org.ua>
 
 	exclude: minor fix
