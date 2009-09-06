@@ -1,5 +1,33 @@
 2009-09-06  Bruno Haible  <bruno@clisp.org>
 
+	* lib/sys_stat.in.h (fchmodat): Declare if GNULIB_FCHMODAT is set.
+	(fstatat): Declare if GNULIB_FSTATAT is set.
+	(mkdirat): Declare if GNULIB_MKDIRAT is set.
+	* lib/unistd.in.h (fchownat): Declare if GNULIB_FCHOWNAT is set.
+	(unlinkat): Declare if GNULIB_UNLINKAT is set.
+	* modules/fcntl-h (Files): Remove m4/openat.m4.
+	* modules/sys_stat (Files): Remove m4/openat.m4.
+	(Makefile.am): Substitute GNULIB_FCHMODAT, GNULIB_FSTATAT,
+	GNULIB_MKDIRAT instead of GNULIB_OPENAT.
+	* modules/unistd (Files): Remove m4/openat.m4.
+	(Makefile.am): Substitute GNULIB_FCHOWNAT, GNULIB_UNLINKAT instead of
+	GNULIB_OPENAT.
+	* m4/fcntl_h.m4 (gl_FCNTL_H_DEFAULTS): Initialize GNULIB_OPENAT,
+	HAVE_OPENAT here. Don't require gl_OPENAT_DEFAULTS.
+	* m4/sys_stat_h.m4 (gl_SYS_STAT_H_DEFAULTS): Initialize
+	GNULIB_FCHMODAT, GNULIB_FSTATAT, GNULIB_MKDIRAT, HAVE_FCHMODAT,
+	HAVE_FSTATAT, HAVE_MKDIRAT, REPLACE_FSTATAT here. Don't require
+	gl_OPENAT_DEFAULTS.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize GNULIB_FCHOWNAT,
+	GNULIB_UNLINKAT, HAVE_FCHOWNAT, HAVE_UNLINKAT, REPLACE_FCHOWNAT here.
+	Don't require gl_OPENAT_DEFAULTS.
+	* m4/openat.m4 (gl_FUNC_OPENAT): Require gl_FCNTL_H_DEFAULTS,
+	gl_SYS_STAT_H_DEFAULTS, gl_UNISTD_H_DEFAULTS. Set GNULIB_FCHMODAT,
+	GNULIB_FSTATAT, GNULIB_MKDIRAT, GNULIB_FCHOWNAT, GNULIB_UNLINKAT.
+	(gl_OPENAT_DEFAULTS): Remove macro.
+
+2009-09-06  Bruno Haible  <bruno@clisp.org>
+
 	* modules/openat (configure.ac): Remove unneeded witness.
 
 2009-09-06  Bruno Haible  <bruno@clisp.org>

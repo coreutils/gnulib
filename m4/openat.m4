@@ -1,4 +1,4 @@
-# serial 20
+# serial 21
 # See if we need to use our replacement for Solaris' openat et al functions.
 
 dnl Copyright (C) 2004-2009 Free Software Foundation, Inc.
@@ -10,6 +10,18 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_OPENAT],
 [
+  AC_REQUIRE([gl_FCNTL_H_DEFAULTS])
+  GNULIB_OPENAT=1
+
+  AC_REQUIRE([gl_SYS_STAT_H_DEFAULTS])
+  GNULIB_FCHMODAT=1
+  GNULIB_FSTATAT=1
+  GNULIB_MKDIRAT=1
+
+  AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
+  GNULIB_FCHOWNAT=1
+  GNULIB_UNLINKAT=1
+
   AC_LIBOBJ([openat-proc])
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_CHECK_FUNCS_ONCE([lchmod])
@@ -34,7 +46,6 @@ AC_DEFUN([gl_FUNC_OPENAT],
     HAVE_MKDIRAT=0
   fi
   gl_FUNC_FCHOWNAT
-  GNULIB_OPENAT=1
 ])
 
 # gl_FUNC_FCHOWNAT_DEREF_BUG([ACTION-IF-BUGGY[, ACTION-IF-NOT_BUGGY]])
@@ -91,18 +102,4 @@ AC_DEFUN([gl_PREREQ_OPENAT],
 [
   AC_REQUIRE([gl_PROMOTED_TYPE_MODE_T])
   :
-])
-
-AC_DEFUN([gl_OPENAT_DEFAULTS],
-[
-  GNULIB_OPENAT=0;            AC_SUBST([GNULIB_OPENAT])
-  dnl Assume proper GNU behavior unless another module says otherwise.
-  HAVE_FCHMODAT=1;            AC_SUBST([HAVE_FCHMODAT])
-  HAVE_FCHOWNAT=1;            AC_SUBST([HAVE_FCHOWNAT])
-  HAVE_FSTATAT=1;             AC_SUBST([HAVE_FSTATAT])
-  HAVE_MKDIRAT=1;             AC_SUBST([HAVE_MKDIRAT])
-  HAVE_OPENAT=1;              AC_SUBST([HAVE_OPENAT])
-  HAVE_UNLINKAT=1;            AC_SUBST([HAVE_UNLINKAT])
-  REPLACE_FCHOWNAT=0;         AC_SUBST([REPLACE_FCHOWNAT])
-  REPLACE_FSTATAT=0;          AC_SUBST([REPLACE_FSTATAT])
 ])

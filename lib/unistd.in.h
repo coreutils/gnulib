@@ -147,16 +147,13 @@ extern int chown (const char *file, uid_t uid, gid_t gid);
 #endif
 
 
-#if @GNULIB_OPENAT@
+#if @GNULIB_FCHOWNAT@
 # if @REPLACE_FCHOWNAT@
 #  undef fchownat
 #  define fchownat rpl_fchownat
 # endif
 # if !@HAVE_FCHOWNAT@ || @REPLACE_FCHOWNAT@
-int fchownat (int fd, char const *file, uid_t owner, gid_t group, int flag);
-# endif
-# if !@HAVE_UNLINKAT@
-int unlinkat (int fd, char const *file, int flag);
+extern int fchownat (int fd, char const *file, uid_t owner, gid_t group, int flag);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef fchownat
@@ -164,12 +161,20 @@ int unlinkat (int fd, char const *file, int flag);
     (GL_LINK_WARNING ("fchownat is not portable - " \
                       "use gnulib module openat for portability"), \
      fchownat (d, n, o, g, f))
+#endif
+
+
+#if @GNULIB_UNLINKAT@
+# if !@HAVE_UNLINKAT@
+extern int unlinkat (int fd, char const *file, int flag);
+# endif
+#elif defined GNULIB_POSIXCHECK
 # undef unlinkat
 # define unlinkat(d,n,f)                         \
     (GL_LINK_WARNING ("unlinkat is not portable - " \
                       "use gnulib module openat for portability"), \
      unlinkat (d, n, f))
-#endif /* @GNULIB_OPENAT@ */
+#endif
 
 
 #if @GNULIB_FACCESSAT@

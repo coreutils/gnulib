@@ -4,7 +4,6 @@ Like <fcntl.h>, but with non-working flags defined to 0.
 Files:
 lib/fcntl.in.h
 m4/fcntl_h.m4
-m4/openat.m4
 
 Depends-on:
 include_next
