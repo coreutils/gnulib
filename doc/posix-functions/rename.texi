@@ -9,9 +9,9 @@ Gnulib module: rename
 Portability problems fixed by Gnulib:
 @itemize
 @item
-This function does not work when the source file name ends in a slash on
-some platforms:
-SunOS 4.1.
+This function does not handle trailing slashes correctly on
+some platforms (the full rules for trailing slashes are complex):
+SunOS 4.1, mingw.
 @item
 This function will not replace an existing destination on some
 platforms:
@@ -23,4 +23,8 @@ Portability problems not fixed by Gnulib:
 This function will not replace a destination that is currently opened
 by any process:
 mingw.
+@item
+This function mistakenly allows names ending in @samp{.} or @samp{..}
+on some platforms:
+Cygwin 1.5.x.
 @end itemize

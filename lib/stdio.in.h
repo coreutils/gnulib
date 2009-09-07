@@ -416,6 +416,20 @@ extern int putchar (int c);
 extern int puts (const char *string);
 #endif
 
+#if @GNULIB_RENAME@
+# if @REPLACE_RENAME@
+#  undef rename
+#  define rename rpl_rename
+extern int rename (const char *old, const char *new);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef rename
+# define rename(o,n)					   \
+   (GL_LINK_WARNING ("rename is buggy on some platforms - " \
+                     "use gnulib module rename for more portability"), \
+    rename (o, n))
+#endif
+
 #if @GNULIB_SNPRINTF@
 # if @REPLACE_SNPRINTF@
 #  define snprintf rpl_snprintf

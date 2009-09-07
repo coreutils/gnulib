@@ -1,4 +1,4 @@
-# serial 14
+# serial 15
 
 # Copyright (C) 2001, 2003, 2005, 2006, 2009 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -16,7 +16,8 @@ dnl
 AC_DEFUN([gl_FUNC_RENAME],
 [
   AC_REQUIRE([AC_CANONICAL_HOST])
- AC_CACHE_CHECK([whether rename is broken with a trailing slash],
+  AC_REQUIRE([gl_STDIO_H_DEFAULTS])
+  AC_CACHE_CHECK([whether rename is broken with a trailing slash],
   gl_cv_func_rename_trailing_slash_bug,
   [
     rm -rf conftest.d1 conftest.d2
@@ -49,8 +50,7 @@ AC_DEFUN([gl_FUNC_RENAME],
   if test $gl_cv_func_rename_trailing_slash_bug = yes ||
      test $gl_cv_func_rename_dest_exists_bug = yes; then
     AC_LIBOBJ([rename])
-    AC_DEFINE([rename], [rpl_rename],
-      [Define to rpl_rename if the replacement function should be used.])
+    REPLACE_RENAME=1
     if test $gl_cv_func_rename_trailing_slash_bug = yes; then
       AC_DEFINE([RENAME_TRAILING_SLASH_BUG], [1],
 	[Define if rename does not work for source file names with a trailing

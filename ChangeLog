@@ -1,5 +1,18 @@
 2009-09-07  Eric Blake  <ebb9@byu.net>
 
+	rename: modernize replacement
+	* modules/rename (Depends-on): Add stdio.
+	(configure.ac): Declare witness.
+	* m4/rename.m4 (gl_FUNC_RENAME): Ensure dependency order, and let
+	stdio take care of replacement.
+	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Add new defaults.
+	* modules/stdio (Makefile.am): Substitute them.
+	* lib/stdio.in.h (rename): Declare replacement.
+	* lib/rename.c (includes): Allow cross-compilation to non-windows
+	machines.
+	* doc/posix-functions/rename.texi (rename): Improve
+	documentation.
+
 	stdio: sort witness names
 	* modules/stdio (Makefile.am): Sort replacements.
 	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Likewise.
