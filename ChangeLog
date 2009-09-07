@@ -1,3 +1,13 @@
+2009-09-07  Eric Blake  <ebb9@byu.net>
+
+	openat: provide more convenience names
+	* modules/faccessat (configure.ac): Add C witness.
+	* lib/unistd.in.h (readlinkat): Fix typo.
+	* lib/openat.h (statat, lstatat, accessat, euidaccessat): New
+	convenience wrappers.
+	* top/maint.mk (sc_prohibit_openat_without_use): Allow these
+	wrappers in syntax checks.
+
 2009-09-06  Eric Blake  <ebb9@byu.net>
 
 	doc: fix comments in recent patches

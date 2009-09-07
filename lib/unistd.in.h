@@ -208,7 +208,7 @@ ssize_t readlinkat (int fd, char const *file, char *buf, size_t len);
 #elif defined GNULIB_POSIXCHECK
 # undef readlinkat
 # define readlinkat(d,n,b,l)			     \
-    (GL_LINK_WARNING ("faccessat is not portable - " \
+    (GL_LINK_WARNING ("readlinkat is not portable - " \
                       "use gnulib module symlinkat for portability"), \
      readlinkat (d, n, b, l))
 #endif
