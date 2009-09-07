@@ -2465,6 +2465,7 @@ func_all_modules ()
   func_module lchmod
   func_module lchown
   func_module mkancesdirs
+  func_module mkfifoat
   func_module mkdir-p
   func_module modechange
   func_module mountlist

@@ -345,6 +345,29 @@ extern int mkdirat (int fd, char const *file, mode_t mode);
      mkdirat (d, n, m))
 #endif
 
+#if @GNULIB_MKFIFOAT@
+# if !@HAVE_MKFIFOAT@
+int mkfifoat (int fd, char const *file, mode_t mode);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef mkfifoat
+# define mkfifoat(d,n,m)				     \
+    (GL_LINK_WARNING ("mkfifoat is not portable - " \
+                      "use gnulib module mkfifoat for portability"), \
+     mkfifoat (d, n, m))
+#endif
+
+#if @GNULIB_MKNODAT@
+# if !@HAVE_MKNODAT@
+int mknodat (int fd, char const *file, mode_t mode, dev_t dev);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef mknodat
+# define mknodat(f,n,m,d)			     \
+    (GL_LINK_WARNING ("mknodat is not portable - " \
+                      "use gnulib module mkfifoat for portability"), \
+     mknodat (f, n, m, d))
+#endif
 
 #if @REPLACE_FCHDIR@
 # define fstat rpl_fstat

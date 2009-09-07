@@ -1,5 +1,18 @@
 2009-09-08  Eric Blake  <ebb9@byu.net>
 
+	mkfifoat: new module
+	* modules/mkfifoat: New file.
+	* lib/mkfifoat.c: Likewise.
+	* m4/mkfifoat.m4 (gl_FUNC_MKFIFOAT): Likewise.
+	* m4/sys_stat_h.m4 (gl_SYS_STAT_H_DEFAULTS): Add witnesses.
+	* modules/sys_stat (Makefile.am): Use them.
+	* lib/sys_stat.in.h (mkfifoat, mknodat): Declare them.
+	* MODULES.html.sh (File system functions): Mention module.
+	* doc/posix-functions/mkfifoat.texi (mkfifoat): Likewise.
+	* doc/posix-functions/mknodat.texi (mknodat): Likewise.
+	* modules/mkfifoat-tests: New test.
+	* tests/test-mkfifoat.c: Likewise.
+
 	strchrnul: relax license
 	* modules/strchrnul (License): Derived from glibc, so LGPLv2+ is
 	okay.
