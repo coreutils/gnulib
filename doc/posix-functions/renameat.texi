@@ -4,16 +4,37 @@
 
 POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/renameat.html}
 
-Gnulib module: ---
+Gnulib module: renameat
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This function does not reject trailing slashes on non-directories on
+some platforms, as in @code{renameat(fd,"file",fd,"new/")}:
+Solaris 10.
+@item
+This function ignores trailing slashes on symlinks on some platforms,
+such that @code{renameat(fd,"link/",fd,"new")} corrupts @file{link}:
+Solaris 9.
+@item
+This function is missing on some platforms:
+glibc 2.3.6, MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, AIX
+5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 8, Cygwin 1.5.x, mingw,
+Interix 3.5, BeOS.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-This function is missing on some platforms:
-glibc 2.3.6, MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, AIX
-5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Cygwin 1.5.x, mingw, Interix 3.5, BeOS.
+POSIX requires that @code{renameat(fd,"symlink-to-dir/",fd,"dir2")} rename
+@file{dir} and leave @file{symlink-to-dir} dangling; likewise, it
+requires that @code{renameat(fd,"dir",fd,"dangling/")} rename @file{dir} so
+that @file{dangling} is no longer a dangling symlink.  This behavior
+is counter-intuitive, so on some systems, @code{renameat} fails with
+@code{ENOTDIR} if either argument is a symlink with a trailing slash:
+glibc, OpenBSD, Cygwin 1.7.
+@item
+This function will not rename a source that is currently opened
+by any process:
+mingw.
 @end itemize

@@ -1,5 +1,17 @@
 2009-10-02  Eric Blake  <ebb9@byu.net>
 
+	renameat: new module
+	* modules/renameat: New file.
+	* lib/renameat.c (renameat): Likewise.
+	* m4/renameat.m4 (gl_FUNC_RENAMEAT): Likewise.
+	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Add witnesses.
+	* modules/stdio (Makefile.am): Substitute them.
+	* lib/stdio.in.h (renameat): Declare it.
+	* MODULES.html.sh (systems lacking POSIX:2008): Mention module.
+	* doc/posix-functions/renameat.texi (renameat): Likewise.
+	* modules/renameat-tests: New test.
+	* tests/test-renameat.c: Likewise.
+
 	rename: fix mingw bugs
 	* lib/rename.c (rpl_rename) [W32]: Fix trailing slash and
 	directory overwrite bugs.

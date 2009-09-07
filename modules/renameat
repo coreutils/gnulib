@@ -1,0 +1,33 @@
+Description:
+renameat(): rename a file, relative to two directories
+
+Files:
+lib/at-func2.c
+lib/renameat.c
+m4/renameat.m4
+
+Depends-on:
+extensions
+fcntl-h
+filenamecat
+openat
+rename
+same-inode
+stdio
+stpcpy
+
+configure.ac:
+gl_FUNC_RENAMEAT
+gl_STDIO_MODULE_INDICATOR([renameat])
+
+Makefile.am:
+
+Include:
+<fcntl.h>
+<stdio.h>
+
+License:
+GPL
+
+Maintainer:
+Jim Meyering, Eric Blake

@@ -444,6 +444,18 @@ extern int rename (const char *old, const char *new);
     rename (o, n))
 #endif
 
+#if @GNULIB_RENAMEAT@
+# if !@HAVE_RENAMEAT@
+extern int renameat (int fd1, char const *file1, int fd2, char const *file2);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef renameat
+# define renameat(d1,f1,d2,f2)		   \
+    (GL_LINK_WARNING ("renameat is not portable - " \
+                      "use gnulib module renameat for portability"), \
+     renameat (d1, f1, d2, f2))
+#endif
+
 #if @GNULIB_SNPRINTF@
 # if @REPLACE_SNPRINTF@
 #  define snprintf rpl_snprintf

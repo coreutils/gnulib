@@ -2346,6 +2346,7 @@ func_all_modules ()
   func_module nanosleep
   func_module regex
   func_module rename
+  func_module renameat
   func_module rmdir
   func_module search
   func_module sigaction
