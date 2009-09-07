@@ -37,8 +37,8 @@ static int lchmod (char const *f, mode_t m) { errno = ENOSYS; return -1; }
    Invoke chmod or lchmod on file, FILE, using mode MODE, in the directory
    open on descriptor FD.  If possible, do it without changing the
    working directory.  Otherwise, resort to using save_cwd/fchdir,
-   then mkdir/restore_cwd.  If either the save_cwd or the restore_cwd
-   fails, then give a diagnostic and exit nonzero.
+   then (chmod|lchmod)/restore_cwd.  If either the save_cwd or the
+   restore_cwd fails, then give a diagnostic and exit nonzero.
    Note that an attempt to use a FLAG value of AT_SYMLINK_NOFOLLOW
    on a system without lchmod support causes this function to fail.  */
 

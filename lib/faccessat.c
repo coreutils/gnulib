@@ -34,9 +34,9 @@
 
 /* Invoke access or euidaccess on file, FILE, using mode MODE, in the directory
    open on descriptor FD.  If possible, do it without changing the
-   working directory.  Otherwise, resort to using save_cwd/fchdir,
-   then mkdir/restore_cwd.  If either the save_cwd or the restore_cwd
-   fails, then give a diagnostic and exit nonzero.
+   working directory.  Otherwise, resort to using save_cwd/fchdir, then
+   (access|euidaccess)/restore_cwd.  If either the save_cwd or the
+   restore_cwd fails, then give a diagnostic and exit nonzero.
    Note that this implementation only supports AT_EACCESS, although some
    native versions also support AT_SYMLINK_NOFOLLOW.  */
 

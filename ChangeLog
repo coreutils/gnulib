@@ -1,5 +1,13 @@
 2009-09-06  Eric Blake  <ebb9@byu.net>
 
+	doc: fix comments in recent patches
+	* lib/faccessat.c: Mention correct function.
+	* lib/fchmodat.c: Likewise.
+	* lib/fchownat.c: Likewise.
+	* lib/symlinkat.c: Likewise.
+	* doc/posix-headers/fcntl.texi (fcntl.h): Cygwin 1.7 has AT_*
+	constants.
+
 	faccessat, symlinkat: continue cleanup of previous patch
 	* m4/symlinkat.m4 (gl_FUNC_SYMLINKAT): Ensure dependency order.
 	* m4/faccessat.m4 (gl_FUNC_FACCESSAT): Likewise.

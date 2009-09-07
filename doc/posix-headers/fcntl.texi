@@ -30,7 +30,8 @@ mingw.
 @samp{AT_FDCWD}, @samp{AT_EACCESS}, @samp{AT_SYMLINK_NOFOLLOW},
 @samp{AT_SYMLINK_FOLLOW}, and @samp{AT_REMOVEDIR}
 are not defined on many platforms:
-glibc 2.3.6, MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 8, Cygwin, mingw, Interix 3.5, BeOS.
+glibc 2.3.6, MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, AIX
+5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 8, Cygwin 1.5.x, mingw, Interix 3.5, BeOS.
 
 @item
 @samp{AT_FDCWD} is defined with a value too large for an @code{int} on some

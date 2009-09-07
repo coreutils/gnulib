@@ -68,7 +68,7 @@ symlinkat_reversed (int fd, char const *file, char const *contents);
 /* Create a symlink FILE, in the directory open on descriptor FD,
    holding CONTENTS.  If possible, do it without changing the
    working directory.  Otherwise, resort to using save_cwd/fchdir,
-   then mkdir/restore_cwd.  If either the save_cwd or the restore_cwd
+   then symlink/restore_cwd.  If either the save_cwd or the restore_cwd
    fails, then give a diagnostic and exit nonzero.  */
 
 int
@@ -90,7 +90,7 @@ symlinkat (char const *contents, int fd, char const *file)
 /* Read the contents of symlink FILE into buffer BUF of size LEN, in the
    directory open on descriptor FD.  If possible, do it without changing
    the working directory.  Otherwise, resort to using save_cwd/fchdir,
-   then mkdir/restore_cwd.  If either the save_cwd or the restore_cwd
+   then readlink/restore_cwd.  If either the save_cwd or the restore_cwd
    fails, then give a diagnostic and exit nonzero.  */
 
 #define AT_FUNC_NAME readlinkat
