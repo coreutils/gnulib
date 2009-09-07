@@ -59,20 +59,6 @@
 
 #include <limits.h>
 
-/* Work around a bug in Solaris 9 and 10: AT_FDCWD is positive.  Its
-   value exceeds INT_MAX, so its use as an int doesn't conform to the
-   C standard, and GCC and Sun C complain in some cases.  */
-#if 0 < AT_FDCWD && AT_FDCWD == 0xffd19553
-# undef AT_FDCWD
-# define AT_FDCWD (-3041965)
-#endif
-
-#ifdef ENAMETOOLONG
-# define is_ENAMETOOLONG(x) ((x) == ENAMETOOLONG)
-#else
-# define is_ENAMETOOLONG(x) 0
-#endif
-
 #ifndef MAX
 # define MAX(a, b) ((a) < (b) ? (b) : (a))
 #endif
@@ -164,7 +150,7 @@ __getcwd (char *buf, size_t size)
 
 # undef getcwd
   dir = getcwd (buf, size);
-  if (dir || (errno != ERANGE && !is_ENAMETOOLONG (errno) && errno != ENOENT))
+  if (dir || (errno != ERANGE && errno != ENAMETOOLONG && errno != ENOENT))
     return dir;
 #endif
 

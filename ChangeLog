@@ -1,5 +1,9 @@
 2009-09-07  Eric Blake  <ebb9@byu.net>
 
+	getcwd: minor cleanups
+	* lib/getcwd.c (AT_FDCWD): Delete; rely on <fcntl.h> instead.
+	(is_ENAMETOOLONG): Delete; ENAMETOOLONG is portable.
+
 	openat: provide more convenience names
 	* modules/faccessat (configure.ac): Add C witness.
 	* lib/unistd.in.h (readlinkat): Fix typo.
