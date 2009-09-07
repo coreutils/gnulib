@@ -1,3 +1,14 @@
+2009-09-06  Eric Blake  <ebb9@byu.net>
+
+	faccessat, symlinkat: continue cleanup of previous patch
+	* m4/symlinkat.m4 (gl_FUNC_SYMLINKAT): Ensure dependency order.
+	* m4/faccessat.m4 (gl_FUNC_FACCESSAT): Likewise.
+	* modules/unistd (Makefile.am): Substitute GNULIB_READLINKAT.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Offer GNULIB_READLINKAT.
+	* modules/symlinkat (configure.ac): Set GNULIB_READLINKAT.
+	* lib/unistd.in.h (readlinkat): Declare if GNULIB_READLINKAT is
+	set.
+
 2009-09-06  Bruno Haible  <bruno@clisp.org>
 
 	* lib/sys_stat.in.h (fchmodat): Declare if GNULIB_FCHMODAT is set.

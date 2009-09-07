@@ -1,4 +1,4 @@
-# unistd_h.m4 serial 23
+# unistd_h.m4 serial 24
 dnl Copyright (C) 2006-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -55,6 +55,7 @@ AC_DEFUN([gl_UNISTD_H_DEFAULTS],
   GNULIB_LSEEK=0;            AC_SUBST([GNULIB_LSEEK])
   GNULIB_PIPE2=0;            AC_SUBST([GNULIB_PIPE2])
   GNULIB_READLINK=0;         AC_SUBST([GNULIB_READLINK])
+  GNULIB_READLINKAT=0;       AC_SUBST([GNULIB_READLINKAT])
   GNULIB_SLEEP=0;            AC_SUBST([GNULIB_SLEEP])
   GNULIB_SYMLINKAT=0;        AC_SUBST([GNULIB_SYMLINKAT])
   GNULIB_UNISTD_H_GETOPT=0;  AC_SUBST([GNULIB_UNISTD_H_GETOPT])

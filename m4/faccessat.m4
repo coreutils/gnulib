@@ -1,4 +1,4 @@
-# serial 2
+# serial 3
 # See if we need to provide faccessat replacement.
 
 dnl Copyright (C) 2009 Free Software Foundation, Inc.
@@ -12,6 +12,7 @@ AC_DEFUN([gl_FUNC_FACCESSAT],
 [
   AC_REQUIRE([gl_FUNC_OPENAT])
   AC_REQUIRE([gl_FUNC_EUIDACCESS])
+  AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_CHECK_FUNCS_ONCE([access])
   AC_CHECK_FUNCS_ONCE([faccessat])

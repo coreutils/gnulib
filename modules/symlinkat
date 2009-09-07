@@ -15,6 +15,7 @@ unistd
 configure.ac:
 gl_FUNC_SYMLINKAT
 gl_UNISTD_MODULE_INDICATOR([symlinkat])
+gl_UNISTD_MODULE_INDICATOR([readlinkat])
 
 Makefile.am:
 
