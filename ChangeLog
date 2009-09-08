@@ -1,5 +1,10 @@
 2009-09-08  Eric Blake  <ebb9@byu.net>
 
+	rawmemchr: relax license
+	* modules/rawmemchr (License): Derived from glibc, so LGPLv2+ is
+	okay.
+	Reported by Jim Meyering.
+
 	mkfifoat: new module
 	* modules/mkfifoat: New file.
 	* lib/mkfifoat.c: Likewise.
