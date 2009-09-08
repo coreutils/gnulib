@@ -25,6 +25,7 @@
 # include <config.h>
 #endif
 
+#include <fcntl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
