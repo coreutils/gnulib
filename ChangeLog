@@ -1,3 +1,9 @@
+2009-09-08  Eric Blake  <ebb9@byu.net>
+
+	fstatat: fix compilation on Solaris
+	* lib/fstatat.c (includes): Add fcntl.h.
+	Reported by Pádraig Brady.
+
 2009-09-07  Eric Blake  <ebb9@byu.net>
 
 	rename: modernize replacement
