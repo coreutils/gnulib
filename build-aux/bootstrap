@@ -728,6 +728,10 @@ find "$m4_base" "$source_base" \
 
 # Reconfigure, getting other files.
 
+# Skip autoheader if it's not needed.
+grep '^[	 ]*AC_CONFIG_HEADERS\>' configure.ac >/dev/null ||
+  AUTOHEADER=true
+
 for command in \
   libtool \
   "${ACLOCAL-aclocal} --force -I m4" \

@@ -1,3 +1,9 @@
+2009-09-08  Jim Meyering  <meyering@redhat.com>
+
+	build: don't try to run autoheader if we don't use it
+	* build-aux/bootstrap: Define AUTOHEADER=true when AC_CONFIG_HEADERS
+	is not used in configure.ac.
+
 2009-09-08  Eric Blake  <ebb9@byu.net>
 
 	euidaccess: fix compilation error
