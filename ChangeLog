@@ -1,3 +1,12 @@
+2009-09-08  Bruno Haible  <bruno@clisp.org>
+
+	Work around towlower, towupper bug on mingw.
+	* lib/wctype.in.h (towlower, towupper) [__MINGW32__]: New replacements.
+	* m4/wctype.m4 (gl_WCTYPE_H): Replace <wctype.h> also on mingw.
+	* doc/posix-functions/towlower.texi: Mention the mingw bug.
+	* doc/posix-functions/towupper.texi: Likewise.
+	Reported by Eric Blake.
+
 2009-09-08  Jim Meyering  <meyering@redhat.com>
 
 	build: don't try to run autoheader if we don't use it

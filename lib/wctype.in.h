@@ -196,5 +196,36 @@ towupper (wint_t wc)
 
 # endif /* ! HAVE_ISWCNTRL */
 
+# if defined __MINGW32__
+
+/* On native Windows, wchar_t is uint16_t, and wint_t is uint32_t.
+   The functions towlower and towupper are implemented in the MSVCRT library
+   to take a wchar_t argument and return a wchar_t result.  mingw declares
+   these functions to take a wint_t argument and return a wint_t result.
+   This means that:
+   1. When the user passes an argument outside the range 0x0000..0xFFFF, the
+      function will look only at the lower 16 bits.  This is allowed according
+      to POSIX.
+   2. The return value is returned in the lower 16 bits of the result register.
+      The upper 16 bits are random: whatever happened to be in that part of the
+      result register.  We need to fix this by adding a zero-extend from
+      wchar_t to wint_t after the call.  */
+
+static inline wint_t
+rpl_towlower (wint_t wc)
+{
+  return (wint_t) (wchar_t) towlower (wc);
+}
+#  define towlower rpl_towlower
+
+static inline wint_t
+rpl_towupper (wint_t wc)
+{
+  return (wint_t) (wchar_t) towupper (wc);
+}
+#  define towupper rpl_towupper
+
+# endif
+
 #endif /* _GL_WCTYPE_H */
 #endif /* _GL_WCTYPE_H */

@@ -1,4 +1,4 @@
-# wctype.m4 serial 2
+# wctype.m4 serial 3
 
 dnl A placeholder for ISO C99 <wctype.h>, for platforms that lack it.
 
@@ -12,6 +12,7 @@ dnl Written by Paul Eggert.
 AC_DEFUN([gl_WCTYPE_H],
 [
   AC_REQUIRE([AC_PROG_CC])
+  AC_REQUIRE([AC_CANONICAL_HOST])
   AC_CHECK_FUNCS_ONCE([iswcntrl])
   if test $ac_cv_func_iswcntrl = yes; then
     HAVE_ISWCNTRL=1
@@ -52,7 +53,15 @@ AC_DEFUN([gl_WCTYPE_H],
             ])
         ])
       if test $gl_cv_func_iswcntrl_works = yes; then
-        WCTYPE_H=
+        case "$host_os" in
+          mingw*)
+            dnl On mingw, towlower and towupper return random high 16 bits.
+            ;;
+          *)
+            dnl iswcntrl works. towlower and towupper work as well.
+            WCTYPE_H=
+            ;;
+        esac
       fi
     fi
     dnl Compute NEXT_WCTYPE_H even if WCTYPE_H is empty,

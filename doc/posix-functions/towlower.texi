@@ -11,6 +11,10 @@ Portability problems fixed by Gnulib:
 @item
 This function is missing on some platforms:
 IRIX 5.3, Solaris 2.5.1.
+@item
+This function returns values of which the upper 16 bits are incorrect
+on some platforms:
+mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:
