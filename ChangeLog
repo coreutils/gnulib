@@ -1,5 +1,12 @@
 2009-09-08  Eric Blake  <ebb9@byu.net>
 
+	strchrnul: relax license
+	* modules/strchrnul (License): Derived from glibc, so LGPLv2+ is
+	okay.
+	Reported by Jim Meyering.
+
+2009-09-08  Eric Blake  <ebb9@byu.net>
+
 	fstatat: fix compilation on Solaris
 	* lib/fstatat.c (includes): Add fcntl.h.
 	Reported by Pádraig Brady.
