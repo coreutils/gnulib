@@ -1,6 +1,6 @@
 /*  Take file names apart into directory and base names.
 
-    Copyright (C) 1998, 2001, 2003-2006 Free Software Foundation, Inc.
+    Copyright (C) 1998, 2001, 2003-2006, 2009 Free Software Foundation, Inc.
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -59,6 +59,7 @@
 # define IS_RELATIVE_FILE_NAME(F) (! IS_ABSOLUTE_FILE_NAME (F))
 
 char *base_name (char const *file);
+char *mdir_name (char const *file);
 char *dir_name (char const *file);
 size_t base_len (char const *file);
 size_t dir_len (char const *file);

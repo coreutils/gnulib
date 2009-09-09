@@ -1,5 +1,10 @@
 2009-09-23  Eric Blake  <ebb9@byu.net>
 
+	dirname: add library-safe mdir_name
+	* lib/dirname.h (mdir_name): New prototype.
+	* lib/dirname.c (dir_name): Move guts...
+	(mdir_name): ...to new function that avoids xalloc_die.
+
 	fchdir: another mingw fix
 	* modules/fchdir (Depends-on): Drop canonicalize-lgpl.
 	* lib/fchdir.c (get_name): New helper method; skips canonicalize
