@@ -36,4 +36,9 @@ char *openat_proc_name (char buf[OPENAT_BUFFER_SIZE], int fd, char const *file);
    || (Errno) == ENOSYS /* Solaris 8 */		\
    || (Errno) == EOPNOTSUPP /* FreeBSD */)
 
+/* Wrapper function shared among linkat and renameat.  */
+int at_func2 (int fd1, char const *file1,
+	      int fd2, char const *file2,
+	      int (*func) (char const *file1, char const *file2));
+
 #endif /* _GL_HEADER_OPENAT_PRIV */

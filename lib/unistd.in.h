@@ -581,6 +581,21 @@ extern int link (const char *path1, const char *path2);
      link (path1, path2))
 #endif
 
+#if @GNULIB_LINKAT@
+/* Create a new hard link for an existing file, relative to two
+   directories.  FLAG controls whether symlinks are followed.
+   Return 0 if successful, otherwise -1 and errno set.  */
+# if !@HAVE_LINKAT@
+extern int linkat (int fd1, const char *path1, int fd2, const char *path2,
+		   int flag);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef linkat
+# define link(f1,path1,f2,path2,f)		\
+    (GL_LINK_WARNING ("linkat is unportable - " \
+                      "use gnulib module linkat for portability"), \
+     linkat (f1, path1, f2, path2,f))
+#endif
 
 #if @GNULIB_LSEEK@
 # if @REPLACE_LSEEK@

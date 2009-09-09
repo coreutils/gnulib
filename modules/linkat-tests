@@ -1,0 +1,16 @@
+Files:
+tests/test-linkat.c
+
+Depends-on:
+areadlink-with-size
+filenamecat
+progname
+same-inode
+xgetcwd
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-linkat
+check_PROGRAMS += test-linkat
+test_linkat_LDADD = $(LDADD) @LIBINTL@

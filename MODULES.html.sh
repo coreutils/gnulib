@@ -2276,9 +2276,11 @@ func_all_modules ()
   func_module iconv_open
   func_module inet_ntop
   func_module inet_pton
+  func_module link
+  func_module linkat
+  func_module listen
   func_module locale
   func_module lseek
-  func_module listen
   func_module lstat
   func_module malloc-posix
   func_module mbsnrtowcs

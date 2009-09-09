@@ -1,5 +1,24 @@
 2009-09-23  Eric Blake  <ebb9@byu.net>
 
+	linkat: new module
+	* modules/linkat: New file.
+	* lib/at-func2.c (at_func2): Likewise.
+	* lib/linkat.c (linkat): Likewise.
+	* m4/linkat.m4 (gl_FUNC_LINKAT): Likewise.
+	* lib/openat-priv.h (at_func2): Add declaration.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Add witnesses.
+	* modules/unistd (Makefile.am): Substitute them.
+	* lib/unistd.in.h (linkat): Declare it.
+	* MODULES.html.sh (systems lacking POSIX:2008): Mention module.
+	* doc/posix-functions/linkat.texi (linkat): Likewise.
+	* doc/posix-functions/link.texi (link): Tweak wording.
+	* tests/test-link.c (main): Move guts...
+	* tests/test-link.h (test_link): ...into new file.
+	* modules/linkat-tests: New test.
+	* tests/test-linkat.c: Likewise.
+	* modules/link-tests (Files): Ship new file.
+	(Depends-on): Add stdbool.
+
 	dirname: add library-safe mdir_name
 	* lib/dirname.h (mdir_name): New prototype.
 	* lib/dirname.c (dir_name): Move guts...

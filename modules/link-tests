@@ -1,8 +1,10 @@
 Files:
+tests/test-link.h
 tests/test-link.c
 
 Depends-on:
 errno
+stdbool
 sys_stat
 
 configure.ac:
