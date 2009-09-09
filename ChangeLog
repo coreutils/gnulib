@@ -1,3 +1,13 @@
+2009-09-09  Eric Blake  <ebb9@byu.net>
+
+	test-link: consolidate into single C program, test more cases
+	* tests/test-link.sh: Delete.
+	* tests/test-link.c: Test more error conditions.  Exposes bugs on
+	at least Cygwin and Solaris.
+	* modules/link-tests (Files): Remove unused file.
+	(Depends-on): Add errno, sys_stat.
+	(Makefile.am): Simplify.
+
 2009-09-08  Bruno Haible  <bruno@clisp.org>
 
 	Work around towlower, towupper bug on mingw.
