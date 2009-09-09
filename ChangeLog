@@ -1,5 +1,14 @@
 2009-09-09  Eric Blake  <ebb9@byu.net>
 
+	link: fix platform bugs
+	* m4/link.m4 (gl_FUNC_LINK): Detect Solaris and Cygwin bugs.
+	* lib/link.c (link): Work around them.  Fix related mingw bug.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Add REPLACE_LINK.
+	* modules/unistd (Makefile.am): Substitute it.
+	* lib/unistd.in.h (link): Declare replacement.
+	* doc/posix-functions/link.texi (link): Document this.
+	* modules/link (Depends-on): Add strdup-posix, sys_stat.
+
 	test-link: consolidate into single C program, test more cases
 	* tests/test-link.sh: Delete.
 	* tests/test-link.c: Test more error conditions.  Exposes bugs on

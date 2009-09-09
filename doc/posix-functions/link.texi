@@ -11,6 +11,10 @@ Portability problems fixed by Gnulib:
 @item
 This function is missing on some platforms:
 mingw.
+@item
+This function fails to reject trailing slashes on non-directories on
+some platforms:
+Solaris, Cygwin 1.5.x.
 @end itemize
 
 Portability problems not fixed by Gnulib:
