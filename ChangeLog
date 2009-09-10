@@ -1,5 +1,10 @@
 2009-09-16  Eric Blake  <ebb9@byu.net>
 
+	stdlib: sort witness names
+	* modules/stdlib (Makefile.am): Sort replacements.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Likewise.
+	* lib/stdlib.in.h: Likewise.
+
 	parse-duration-tests: avoid link failure
 	* modules/parse-duration-tests (test_parse_duration_LDADD): Add
 	LIBINTL.
