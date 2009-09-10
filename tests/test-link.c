@@ -139,7 +139,7 @@ main (int argc, char **argv)
   ASSERT (errno == ENOTDIR);
   errno = 0;
   ASSERT (link (BASE "a", BASE "c/") == -1);
-  ASSERT (errno == ENOTDIR);
+  ASSERT (errno == ENOTDIR || errno == ENOENT);
   errno = 0;
   ASSERT (link (BASE "d", BASE "c") == -1);
   ASSERT (errno == EPERM || errno == EACCES);

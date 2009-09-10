@@ -1,5 +1,8 @@
 2009-09-09  Eric Blake  <ebb9@byu.net>
 
+	test-link: allow Linux choice of errno
+	* tests/test-link.c (main): Relax test for alternate error.
+
 	strndup: fix improper m4 caching
 	* m4/strndup.m4 (gl_FUNC_STRNDUP): Rework to avoid side effects
 	inside AC_CACHE_CHECK.  Use REPLACE_STRNDUP, not HAVE_STRNDUP.
