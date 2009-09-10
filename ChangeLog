@@ -1,5 +1,13 @@
 2009-09-09  Eric Blake  <ebb9@byu.net>
 
+	strndup: fix improper m4 caching
+	* m4/strndup.m4 (gl_FUNC_STRNDUP): Rework to avoid side effects
+	inside AC_CACHE_CHECK.  Use REPLACE_STRNDUP, not HAVE_STRNDUP.
+	(gl_PREREQ_STRNDUP): Delete.
+	* m4/string_h.m4 (gl_HEADER_STRING_H_DEFAULTS): Update default.
+	* modules/string (Makefile.am): Substitute it.
+	* lib/string.in.h (strndup): Modernize prototype.
+
 	getcwd: port to mingw
 	* m4/getcwd.m4 (gl_FUNC_GETCWD): Mingw directories are very
 	different from the POSIX assumptions made throughout the getcwd
