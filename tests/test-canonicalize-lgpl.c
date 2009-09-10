@@ -27,6 +27,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+#include "same-inode.h"
+
 #if !HAVE_SYMLINK
 # define symlink(a,b) (-1)
 #endif /* !HAVE_SYMLINK */
@@ -115,6 +117,7 @@ main ()
   ASSERT (symlink ("wum", BASE "/ouk") == 0);
   ASSERT (symlink ("../ise", BASE "/ket") == 0);
   ASSERT (mkdir (BASE "/lum", 0700) == 0);
+  ASSERT (symlink ("//.//../..", BASE "/droot") == 0);
 
   /* Check that the symbolic link to a file can be resolved.  */
   {
@@ -182,7 +185,33 @@ main ()
     ASSERT (errno == ELOOP);
   }
 
+  /* Check that leading // is honored correctly.  */
+  {
+    struct stat st1;
+    struct stat st2;
+    char *result1 = canonicalize_file_name ("//.");
+    char *result2 = canonicalize_file_name (BASE "/droot");
+    ASSERT (result1);
+    ASSERT (result2);
+    ASSERT (stat ("/", &st1) == 0);
+    ASSERT (stat ("//", &st2) == 0);
+    if (SAME_INODE (st1, st2))
+      {
+	ASSERT (strcmp (result1, "/") == 0);
+	ASSERT (strcmp (result2, "/") == 0);
+      }
+    else
+      {
+	ASSERT (strcmp (result1, "//") == 0);
+	ASSERT (strcmp (result2, "//") == 0);
+      }
+    free (result1);
+    free (result2);
+  }
+
+
   /* Cleanup.  */
+  ASSERT (remove (BASE "/droot") == 0);
   ASSERT (remove (BASE "/plo") == 0);
   ASSERT (remove (BASE "/huk") == 0);
   ASSERT (remove (BASE "/bef") == 0);

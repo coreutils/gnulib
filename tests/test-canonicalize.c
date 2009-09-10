@@ -28,6 +28,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+#include "same-inode.h"
+
 #if !HAVE_SYMLINK
 # define symlink(a,b) (-1)
 #endif
@@ -138,6 +140,7 @@ main ()
   ASSERT (mkdir (BASE "/d", 0700) == 0);
   ASSERT (close (creat (BASE "/d/2", 0600)) == 0);
   ASSERT (symlink ("../s/2", BASE "/d/1") == 0);
+  ASSERT (symlink ("//.//../..", BASE "/droot") == 0);
 
   /* Check that the symbolic link to a file can be resolved.  */
   {
@@ -281,7 +284,42 @@ main ()
     free (result2);
   }
 
+  /* Check that leading // is honored correctly.  */
+  {
+    struct stat st1;
+    struct stat st2;
+    char *result1 = canonicalize_file_name ("//.");
+    char *result2 = canonicalize_filename_mode ("//.", CAN_EXISTING);
+    char *result3 = canonicalize_file_name (BASE "/droot");
+    char *result4 = canonicalize_filename_mode (BASE "/droot", CAN_EXISTING);
+    ASSERT (result1);
+    ASSERT (result2);
+    ASSERT (result3);
+    ASSERT (result4);
+    ASSERT (stat ("/", &st1) == 0);
+    ASSERT (stat ("//", &st2) == 0);
+    if (SAME_INODE (st1, st2))
+      {
+        ASSERT (strcmp (result1, "/") == 0);
+        ASSERT (strcmp (result2, "/") == 0);
+        ASSERT (strcmp (result3, "/") == 0);
+        ASSERT (strcmp (result4, "/") == 0);
+      }
+    else
+      {
+        ASSERT (strcmp (result1, "//") == 0);
+        ASSERT (strcmp (result2, "//") == 0);
+        ASSERT (strcmp (result3, "//") == 0);
+        ASSERT (strcmp (result4, "//") == 0);
+      }
+    free (result1);
+    free (result2);
+    free (result3);
+    free (result4);
+  }
+
   /* Cleanup.  */
+  ASSERT (remove (BASE "/droot") == 0);
   ASSERT (remove (BASE "/d/1") == 0);
   ASSERT (remove (BASE "/d/2") == 0);
   ASSERT (remove (BASE "/d") == 0);

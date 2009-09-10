@@ -1,5 +1,20 @@
 2009-09-17  Eric Blake  <ebb9@byu.net>
 
+	canonicalize, canonicalize-lgpl: honor // if distinct from /
+	* modules/canonicalize (Files): Add double-slash-root.m4.
+	* modules/canonicalize-lgpl (Files): Likewise.
+	* m4/canonicalize.m4 (gl_FUNC_CANONICALIZE_FILENAME_MODE)
+	(gl_CANONICALIZE_LGPL_SEPARATE): Add dependency.
+	* lib/canonicalize.c (DOUBLE_SLASH_IS_DISTINCT_ROOT): Provide
+	fallback definition.
+	(canonicalize_filename_mode): Use it to protect //.
+	* lib/canonicalize-lgpl.c (DOUBLE_SLASH_IS_DISTINCT_ROOT)
+	(__realpath): Likewise.
+	* tests/test-canonicalize.c (main): Test this.
+	* tests/test-canonicalize-lgpl.c (main): Likewise.
+	* modules/canonicalize-tests (Depends-on): Add same-inode.
+	* modules/canonicalize-lgpl-tests (Depends-on): Likewise.
+
 	canonicalize-lgpl: fix glibc bug with trailing slash
 	* m4/canonicalize-lgpl.m4: Move contents...
 	* m4/canonicalize.m4: ...here.

@@ -3,6 +3,7 @@ tests/test-canonicalize.c
 
 Depends-on:
 progname
+same-inode
 
 configure.ac:
 AC_CHECK_FUNCS_ONCE([symlink])

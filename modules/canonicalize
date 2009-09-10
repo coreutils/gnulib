@@ -5,6 +5,7 @@ Files:
 lib/canonicalize.h
 lib/canonicalize.c
 m4/canonicalize.m4
+m4/double-slash-root.m4
 
 Depends-on:
 areadlink-with-size

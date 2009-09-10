@@ -67,6 +67,10 @@
 # endif
 #endif
 
+#ifndef DOUBLE_SLASH_IS_DISTINCT_ROOT
+# define DOUBLE_SLASH_IS_DISTINCT_ROOT 0
+#endif
+
 #if !FUNC_REALPATH_WORKS || defined _LIBC
 /* Return the canonical absolute name of file NAME.  A canonical name
    does not contain any `.', `..' components nor any repeated path
@@ -141,6 +145,8 @@ __realpath (const char *name, char *resolved)
     {
       rpath[0] = '/';
       dest = rpath + 1;
+      if (DOUBLE_SLASH_IS_DISTINCT_ROOT && name[1] == '/')
+	*dest++ = '/';
     }
 
   for (start = end = name; *start; start = end)
@@ -169,6 +175,9 @@ __realpath (const char *name, char *resolved)
 	  /* Back up to previous component, ignore if at root already.  */
 	  if (dest > rpath + 1)
 	    while ((--dest)[-1] != '/');
+	  if (DOUBLE_SLASH_IS_DISTINCT_ROOT && dest == rpath + 1
+	      && *dest == '/')
+	    dest++;
 	}
       else
 	{
@@ -276,11 +285,21 @@ __realpath (const char *name, char *resolved)
 	      name = end = memcpy (extra_buf, buf, n);
 
 	      if (buf[0] == '/')
-		dest = rpath + 1;	/* It's an absolute symlink */
+		{
+		  dest = rpath + 1;	/* It's an absolute symlink */
+		  if (DOUBLE_SLASH_IS_DISTINCT_ROOT && buf[1] == '/')
+		    *dest++ = '/';
+		}
 	      else
-		/* Back up to previous component, ignore if at root already: */
-		if (dest > rpath + 1)
-		  while ((--dest)[-1] != '/');
+		{
+		  /* Back up to previous component, ignore if at root
+		     already: */
+		  if (dest > rpath + 1)
+		    while ((--dest)[-1] != '/');
+		  if (DOUBLE_SLASH_IS_DISTINCT_ROOT && dest == rpath + 1
+		      && *dest == '/')
+		    dest++;
+		}
 	    }
 	  else if (!S_ISDIR (st.st_mode) && *end != '\0')
 	    {
@@ -291,6 +310,8 @@ __realpath (const char *name, char *resolved)
     }
   if (dest > rpath + 1 && dest[-1] == '/')
     --dest;
+  if (DOUBLE_SLASH_IS_DISTINCT_ROOT && dest == rpath + 1 && *dest == '/')
+    dest++;
   *dest = '\0';
 
   if (extra_buf)

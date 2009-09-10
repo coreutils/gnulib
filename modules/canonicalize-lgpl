@@ -4,6 +4,7 @@ realpath, canonical_file_name: Provide canonical absolute file name
 Files:
 lib/canonicalize-lgpl.c
 m4/canonicalize.m4
+m4/double-slash-root.m4
 
 Depends-on:
 alloca-opt

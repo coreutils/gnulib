@@ -31,6 +31,10 @@
 #include "xalloc.h"
 #include "xgetcwd.h"
 
+#ifndef DOUBLE_SLASH_IS_DISTINCT_ROOT
+# define DOUBLE_SLASH_IS_DISTINCT_ROOT 0
+#endif
+
 #if !((HAVE_CANONICALIZE_FILE_NAME && FUNC_REALPATH_WORKS)	\
       || GNULIB_CANONICALIZE_LGPL)
 /* Return the canonical absolute name of file NAME.  A canonical name
@@ -122,6 +126,8 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
       rname_limit = rname + PATH_MAX;
       rname[0] = '/';
       dest = rname + 1;
+      if (DOUBLE_SLASH_IS_DISTINCT_ROOT && name[1] == '/')
+	*dest++ = '/';
     }
 
   for (start = name; *start; start = end)
@@ -143,6 +149,9 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
 	  /* Back up to previous component, ignore if at root already.  */
 	  if (dest > rname + 1)
 	    while ((--dest)[-1] != '/');
+	  if (DOUBLE_SLASH_IS_DISTINCT_ROOT && dest == rname + 1
+	      && *dest == '/')
+	    dest++;
 	}
       else
 	{
@@ -226,11 +235,21 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
 	      name = end = memcpy (extra_buf, buf, n);
 
 	      if (buf[0] == '/')
-		dest = rname + 1;	/* It's an absolute symlink */
+		{
+		  dest = rname + 1;	/* It's an absolute symlink */
+		  if (DOUBLE_SLASH_IS_DISTINCT_ROOT && buf[1] == '/')
+		    *dest++ = '/';
+		}
 	      else
-		/* Back up to previous component, ignore if at root already: */
-		if (dest > rname + 1)
-		  while ((--dest)[-1] != '/');
+		{
+		  /* Back up to previous component, ignore if at root
+		     already: */
+		  if (dest > rname + 1)
+		    while ((--dest)[-1] != '/');
+		  if (DOUBLE_SLASH_IS_DISTINCT_ROOT && dest == rname + 1
+		      && *dest == '/')
+		    dest++;
+		}
 
 	      free (buf);
 	    }
@@ -246,6 +265,8 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
     }
   if (dest > rname + 1 && dest[-1] == '/')
     --dest;
+  if (DOUBLE_SLASH_IS_DISTINCT_ROOT && dest == rname + 1 && *dest == '/')
+    dest++;
   *dest = '\0';
 
   free (extra_buf);

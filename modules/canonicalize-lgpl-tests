@@ -2,6 +2,7 @@ Files:
 tests/test-canonicalize-lgpl.c
 
 Depends-on:
+same-inode
 
 configure.ac:
 AC_CHECK_FUNCS_ONCE([symlink])
