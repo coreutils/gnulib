@@ -1,5 +1,13 @@
 2009-09-09  Eric Blake  <ebb9@byu.net>
 
+	getcwd: port to mingw
+	* m4/getcwd.m4 (gl_FUNC_GETCWD): Mingw directories are very
+	different from the POSIX assumptions made throughout the getcwd
+	module; fortunately, the mingw getcwd does not need replacement.
+	(gl_FUNC_GETCWD_NULL): Skip test on mingw.
+	* modules/getcwd-tests: New test.
+	* tests/test-getcwd.c: Likewise.
+
 	link: fix platform bugs
 	* m4/link.m4 (gl_FUNC_LINK): Detect Solaris and Cygwin bugs.
 	* lib/link.c (link): Work around them.  Fix related mingw bug.

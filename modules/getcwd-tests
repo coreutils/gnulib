@@ -1,0 +1,10 @@
+Files:
+tests/test-getcwd.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-getcwd
+check_PROGRAMS += test-getcwd
