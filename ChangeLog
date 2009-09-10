@@ -1,5 +1,15 @@
 2009-09-17  Eric Blake  <ebb9@byu.net>
 
+	canonicalize-lgpl: use native realpath if it works
+	* lib/canonicalize-lgpl.c (realpath): Guard with
+	FUNC_REALPATH_WORKS.
+	* lib/stdlib.in.h (realpath): Make declaration optional based on
+	HAVE_REALPATH.
+	* m4/canonicalize-lgpl.m4 (gl_CANONICALIZE_LGPL): Check whether
+	native realpath works.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Provide default.
+	* modules/stdlib (Makefile.am): Substitute witness.
+
 	canonicalize, canonicalize-lgpl: use <stdlib.h>
 	* modules/canonicalize-lgpl (Files): Drop canonicalize.h.
 	(Include): Mention <stdlib.h>.

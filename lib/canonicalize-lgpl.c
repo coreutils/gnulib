@@ -72,6 +72,7 @@
 # define __readlink readlink
 #endif
 
+#if !FUNC_REALPATH_WORKS || defined _LIBC
 /* Return the canonical absolute name of file NAME.  A canonical name
    does not contain any `.', `..' components nor any repeated path
    separators ('/') or symlinks.  All path components must exist.  If
@@ -310,9 +311,8 @@ error:
   }
   return NULL;
 }
-#ifdef _LIBC
 versioned_symbol (libc, __realpath, realpath, GLIBC_2_3);
-#endif
+#endif /* !FUNC_REALPATH_WORKS || defined _LIBC */
 
 
 #if SHLIB_COMPAT(libc, GLIBC_2_0, GLIBC_2_3)

@@ -307,6 +307,8 @@ extern void * realloc (void *ptr, size_t size);
 #if @GNULIB_REALPATH@
 # if @REPLACE_REALPATH@
 #  define realpath rpl_realpath
+# endif
+# if !@HAVE_REALPATH@ || @REPLACE_REALPATH@
 extern char *realpath (const char *name, char *resolved);
 # endif
 #elif defined GNULIB_POSIXCHECK
