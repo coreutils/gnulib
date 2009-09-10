@@ -1,4 +1,4 @@
-# gethostname.m4 serial 8
+# gethostname.m4 serial 9
 dnl Copyright (C) 2002, 2008, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -22,12 +22,12 @@ AC_DEFUN([gl_FUNC_GETHOSTNAME],
       [gl_cv_w32_gethostname=no
        gl_save_LIBS="$LIBS"
        LIBS="$LIBS -lws2_32"
-       AC_TRY_LINK([
+       AC_LINK_IFELSE([AC_LANG_PROGRAM([[
 #ifdef HAVE_WINSOCK2_H
 #include <winsock2.h>
 #endif
 #include <stddef.h>
-], [gethostname(NULL, 0);], [gl_cv_w32_gethostname=yes])
+]], [[gethostname(NULL, 0);]])], [gl_cv_w32_gethostname=yes])
        LIBS="$gl_save_LIBS"
       ])
     if test "$gl_cv_w32_gethostname" = "yes"; then

@@ -1,5 +1,5 @@
-# round.m4 serial 5
-dnl Copyright (C) 2007 Free Software Foundation, Inc.
+# round.m4 serial 6
+dnl Copyright (C) 2007, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -22,7 +22,7 @@ AC_DEFUN([gl_FUNC_ROUND],
       [
         save_LIBS="$LIBS"
         LIBS="$LIBS $ROUND_LIBM"
-        AC_TRY_RUN([
+        AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <float.h>
 #include <math.h>
 int main()
@@ -39,7 +39,7 @@ int main()
     * (double) (1U << ((DBL_MANT_DIG + 4) / 5));
   volatile double x = 0.5 - 0.5 / TWO_MANT_DIG;
   exit (x < 0.5 && round (x) != 0.0);
-}], [gl_cv_func_round_works=yes], [gl_cv_func_round_works=no],
+}]])], [gl_cv_func_round_works=yes], [gl_cv_func_round_works=no],
         [case "$host_os" in
            netbsd*) gl_cv_func_round_works="guessing no";;
            *)       gl_cv_func_round_works="guessing yes";;

@@ -1,4 +1,4 @@
-# select.m4 serial 1
+# select.m4 serial 2
 dnl Copyright (C) 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,7 +17,7 @@ AC_DEFUN([gl_FUNC_SELECT],
     AC_CACHE_CHECK([whether select supports a 0 argument],
       [gl_cv_func_select_supports0],
       [
-        AC_TRY_RUN([
+        AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <sys/types.h>
 #include <sys/time.h>
 #if HAVE_SYS_SELECT_H
@@ -29,7 +29,7 @@ int main ()
   timeout.tv_sec = 0;
   timeout.tv_usec = 5;
   return select (0, (fd_set *)0, (fd_set *)0, (fd_set *)0, &timeout) < 0;
-}], [gl_cv_func_select_supports0=yes], [gl_cv_func_select_supports0=no],
+}]])], [gl_cv_func_select_supports0=yes], [gl_cv_func_select_supports0=no],
           [
 changequote(,)dnl
            case "$host_os" in

@@ -1,8 +1,8 @@
-# wctype.m4 serial 3
+# wctype.m4 serial 4
 
 dnl A placeholder for ISO C99 <wctype.h>, for platforms that lack it.
 
-dnl Copyright (C) 2006-2008 Free Software Foundation, Inc.
+dnl Copyright (C) 2006-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -38,17 +38,18 @@ AC_DEFUN([gl_WCTYPE_H],
       dnl The other functions are likely broken in the same way.
       AC_CACHE_CHECK([whether iswcntrl works], [gl_cv_func_iswcntrl_works],
         [
-          AC_TRY_RUN([#include <stddef.h>
-                      #include <stdio.h>
-                      #include <time.h>
-                      #include <wchar.h>
-                      #include <wctype.h>
-                      int main () { return iswprint ('x') == 0; }],
+          AC_RUN_IFELSE([AC_LANG_SOURCE([[
+                            #include <stddef.h>
+                            #include <stdio.h>
+                            #include <time.h>
+                            #include <wchar.h>
+                            #include <wctype.h>
+                            int main () { return iswprint ('x') == 0; }]])],
             [gl_cv_func_iswcntrl_works=yes], [gl_cv_func_iswcntrl_works=no],
-            [AC_TRY_COMPILE([#include <stdlib.h>
+            [AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <stdlib.h>
                           #if __GNU_LIBRARY__ == 1
                           Linux libc5 i18n is broken.
-                          #endif], [],
+                          #endif]], [])],
               [gl_cv_func_iswcntrl_works=yes], [gl_cv_func_iswcntrl_works=no])
             ])
         ])

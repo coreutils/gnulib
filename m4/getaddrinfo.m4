@@ -1,4 +1,4 @@
-# getaddrinfo.m4 serial 20
+# getaddrinfo.m4 serial 21
 dnl Copyright (C) 2004-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -25,7 +25,7 @@ AC_DEFUN([gl_GETADDRINFO],
   LIBS="$gai_saved_LIBS $GETADDRINFO_LIB"
 
   AC_CACHE_CHECK([for getaddrinfo], [gl_cv_func_getaddrinfo], [
-    AC_TRY_LINK([
+    AC_LINK_IFELSE([AC_LANG_PROGRAM([[
 #include <sys/types.h>
 #ifdef HAVE_SYS_SOCKET_H
 #include <sys/socket.h>
@@ -34,7 +34,7 @@ AC_DEFUN([gl_GETADDRINFO],
 #include <netdb.h>
 #endif
 #include <stddef.h>
-], [getaddrinfo("", "", NULL, NULL);],
+]], [[getaddrinfo("", "", NULL, NULL);]])],
       [gl_cv_func_getaddrinfo=yes],
       [gl_cv_func_getaddrinfo=no])])
   if test $gl_cv_func_getaddrinfo = no; then
@@ -43,12 +43,12 @@ AC_DEFUN([gl_GETADDRINFO],
       gl_cv_w32_getaddrinfo=no
       am_save_LIBS="$LIBS"
       LIBS="$LIBS -lws2_32"
-      AC_TRY_LINK([
+      AC_LINK_IFELSE([AC_LANG_PROGRAM([[
 #ifdef HAVE_WS2TCPIP_H
 #include <ws2tcpip.h>
 #endif
 #include <stddef.h>
-], [getaddrinfo(NULL, NULL, NULL, NULL);], gl_cv_w32_getaddrinfo=yes)
+]], [[getaddrinfo(NULL, NULL, NULL, NULL);]])], [gl_cv_w32_getaddrinfo=yes])
       LIBS="$am_save_LIBS"
     ])
     if test "$gl_cv_w32_getaddrinfo" = "yes"; then
@@ -64,7 +64,7 @@ AC_DEFUN([gl_GETADDRINFO],
   # header included somehow.
   AC_CACHE_CHECK([for gai_strerror (possibly via ws2tcpip.h)],
     gl_cv_func_gai_strerror, [
-      AC_TRY_LINK([
+      AC_LINK_IFELSE([AC_LANG_PROGRAM([[
 #include <sys/types.h>
 #ifdef HAVE_SYS_SOCKET_H
 #include <sys/socket.h>
@@ -76,7 +76,7 @@ AC_DEFUN([gl_GETADDRINFO],
 #include <ws2tcpip.h>
 #endif
 #include <stddef.h>
-], [gai_strerror (NULL);],
+]], [[gai_strerror (NULL);]])],
         [gl_cv_func_gai_strerror=yes],
         [gl_cv_func_gai_strerror=no])])
   if test $gl_cv_func_gai_strerror = no; then

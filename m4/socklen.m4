@@ -1,5 +1,5 @@
-# socklen.m4 serial 6
-dnl Copyright (C) 2005, 2006, 2007 Free Software Foundation, Inc.
+# socklen.m4 serial 7
+dnl Copyright (C) 2005, 2006, 2007, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -25,13 +25,13 @@ AC_DEFUN([gl_TYPE_SOCKLEN_T],
 	 gl_cv_socklen_t_equiv=
 	 for arg2 in "struct sockaddr" void; do
 	   for t in int size_t "unsigned int" "long int" "unsigned long int"; do
-	     AC_TRY_COMPILE(
-	       [#include <sys/types.h>
-		#include <sys/socket.h>
+	     AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
+                 [[#include <sys/types.h>
+                   #include <sys/socket.h>
 
-		int getpeername (int, $arg2 *, $t *);],
-	       [$t len;
-		getpeername (0, 0, &len);],
+                   int getpeername (int, $arg2 *, $t *);]],
+                 [[$t len;
+                  getpeername (0, 0, &len);]])],
 	       [gl_cv_socklen_t_equiv="$t"])
 	     test "$gl_cv_socklen_t_equiv" != "" && break
 	   done

@@ -1,5 +1,30 @@
 2009-09-10  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
+	Remove obsolete macros from several modules.
+	* m4/c-stack.m4 (AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC): Replace
+	obsolete Autoconf macros with their modern counterparts.
+	* m4/check-math-lib.m4 (gl_CHECK_MATH_LIB): Likewise.
+	* m4/gc-camellia.m4 (gl_GC_CAMELLIA): Likewise.
+	* m4/getaddrinfo.m4 (gl_GETADDRINFO): Likewise.
+	* m4/getdate.m4 (gl_C_COMPOUND_LITERALS): Likewise.
+	* m4/gethostname.m4 (gl_FUNC_GETHOSTNAME): Likewise.
+	* m4/getline.m4 (gl_FUNC_GETLINE): Likewise.
+	* m4/getopt.m4 (gl_GETOPT_CHECK_HEADERS): Likewise.
+	* m4/isfinite.m4 (gl_ISFINITEL_WORKS): Likewise.
+	* m4/poll.m4 (gl_FUNC_POLL): Likewise.
+	* m4/readline.m4 (gl_FUNC_READLINE): Likewise.
+	* m4/round.m4 (gl_FUNC_ROUND): Likewise.
+	* m4/roundf.m4 (gl_FUNC_ROUNDF): Likewise.
+	* m4/select.m4 (gl_FUNC_SELECT): Likewise.
+	* m4/sockets.m4 (gl_SOCKETS): Likewise.
+	* m4/socklen.m4 (gl_TYPE_SOCKLEN_T): Likewise.
+	* m4/sockpfaf.m4 (gl_SOCKET_FAMILIES): Likewise.
+	* m4/sysexits.m4 (gl_SYSEXITS): Likewise.
+	* m4/time_r.m4 (gl_TIME_R): Likewise.
+	* m4/tsearch.m4 (gl_FUNC_TSEARCH): Likewise.
+	* m4/vararrays.m4 (AC_C_VARARRAYS): Likewise.
+	* m4/wctype.m4 (gl_WCTYPE_H): Likewise.
+
 	Fix copyright header in build-aux scripts.
 	* build-aux/git-version-gen: Fix copyright header to match GPLv3
 	recommendation.

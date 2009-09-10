@@ -1,4 +1,4 @@
-# roundf.m4 serial 6
+# roundf.m4 serial 7
 dnl Copyright (C) 2007-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -22,7 +22,7 @@ AC_DEFUN([gl_FUNC_ROUNDF],
       [
         save_LIBS="$LIBS"
         LIBS="$LIBS $ROUNDF_LIBM"
-        AC_TRY_RUN([
+        AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <float.h>
 #include <math.h>
 int main()
@@ -36,7 +36,7 @@ int main()
     * (float) (1U << ((FLT_MANT_DIG + 2) / 3));
   volatile float x = 0.5f - 0.5f / TWO_MANT_DIG;
   exit (x < 0.5f && roundf (x) != 0.0f);
-}], [gl_cv_func_roundf_works=yes], [gl_cv_func_roundf_works=no],
+}]])], [gl_cv_func_roundf_works=yes], [gl_cv_func_roundf_works=no],
         [case "$host_os" in
            mingw*) gl_cv_func_roundf_works="guessing no";;
            *)      gl_cv_func_roundf_works="guessing yes";;

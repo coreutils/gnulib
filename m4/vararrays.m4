@@ -1,6 +1,6 @@
 # Check for variable-length arrays.
 
-# serial 3
+# serial 4
 
 # From Paul Eggert
 
@@ -13,9 +13,9 @@ AC_DEFUN([AC_C_VARARRAYS],
 [
   AC_CACHE_CHECK([for variable-length arrays],
     ac_cv_c_vararrays,
-    [AC_TRY_COMPILE(
-       [],
-       [static int x; char a[++x]; a[sizeof a - 1] = 0; return a[0];],
+    [AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
+	 [],
+	 [[static int x; char a[++x]; a[sizeof a - 1] = 0; return a[0];]])],
        ac_cv_c_vararrays=yes,
        ac_cv_c_vararrays=no)])
   if test $ac_cv_c_vararrays = yes; then

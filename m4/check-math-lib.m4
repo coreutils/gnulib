@@ -1,4 +1,4 @@
-# check-math-lib.m4 serial 2
+# check-math-lib.m4 serial 3
 dnl Copyright (C) 2007 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,13 +17,13 @@ AC_DEFUN([gl_CHECK_MATH_LIB], [
   $1=missing
   for libm in "" "-lm"; do
     LIBS="$save_LIBS $libm"
-    AC_TRY_LINK([
-       #ifndef __NO_MATH_INLINES
-       # define __NO_MATH_INLINES 1 /* for glibc */
-       #endif
-       #include <math.h>
-       double x;],
-      [$2],
+    AC_LINK_IFELSE([AC_LANG_PROGRAM([[
+         #ifndef __NO_MATH_INLINES
+         # define __NO_MATH_INLINES 1 /* for glibc */
+         #endif
+         #include <math.h>
+         double x;]],
+      [$2])],
       [$1=$libm
 break])
   done

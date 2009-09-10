@@ -1,4 +1,4 @@
-# isfinite.m4 serial 5
+# isfinite.m4 serial 6
 dnl Copyright (C) 2007-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -48,7 +48,7 @@ AC_DEFUN([gl_ISFINITEL_WORKS],
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether isfinite(long double) works], [gl_cv_func_isfinitel_works],
     [
-      AC_TRY_RUN([
+      AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <float.h>
 #include <limits.h>
 #include <math.h>
@@ -149,7 +149,7 @@ int main ()
 #endif
 
   return 0;
-}], [gl_cv_func_isfinitel_works=yes], [gl_cv_func_isfinitel_works=no],
+}]])], [gl_cv_func_isfinitel_works=yes], [gl_cv_func_isfinitel_works=no],
       [case "$host_cpu" in
                                # Guess no on ia64, x86_64, i386.
          ia64 | x86_64 | i*86) gl_cv_func_isnanl_works="guessing no";;

@@ -1,4 +1,4 @@
-# sockets.m4 serial 5
+# sockets.m4 serial 6
 dnl Copyright (C) 2008, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -16,14 +16,14 @@ AC_DEFUN([gl_SOCKETS],
                    [gl_cv_func_wsastartup], [
       gl_save_LIBS="$LIBS"
       LIBS="$LIBS -lws2_32"
-      AC_TRY_LINK([
+      AC_LINK_IFELSE([AC_LANG_PROGRAM([[
 #ifdef HAVE_WINSOCK2_H
 # include <winsock2.h>
-#endif], [
-        WORD wVersionRequested = MAKEWORD(1, 1);
-        WSADATA wsaData;
-        int err = WSAStartup(wVersionRequested, &wsaData);
-        WSACleanup ();],
+#endif]], [[
+          WORD wVersionRequested = MAKEWORD(1, 1);
+          WSADATA wsaData;
+          int err = WSAStartup(wVersionRequested, &wsaData);
+          WSACleanup ();]])],
         gl_cv_func_wsastartup=yes, gl_cv_func_wsastartup=no)
       LIBS="$gl_save_LIBS"
     ])
@@ -38,35 +38,35 @@ AC_DEFUN([gl_SOCKETS],
     dnl BeOS has most socket functions in libnet.
     AC_CACHE_CHECK([for library containing setsockopt], [gl_cv_lib_socket], [
       gl_cv_lib_socket=
-      AC_TRY_LINK([extern
+      AC_LINK_IFELSE([AC_LANG_PROGRAM([[extern
 #ifdef __cplusplus
 "C"
 #endif
-char setsockopt();], [setsockopt();],
+char setsockopt();]], [[setsockopt();]])],
         [],
         [gl_save_LIBS="$LIBS"
          LIBS="$gl_save_LIBS -lsocket"
-         AC_TRY_LINK([extern
+         AC_LINK_IFELSE([AC_LANG_PROGRAM([[extern
 #ifdef __cplusplus
 "C"
 #endif
-char setsockopt();], [setsockopt();],
+char setsockopt();]], [[setsockopt();]])],
            [gl_cv_lib_socket="-lsocket"])
          if test -z "$gl_cv_lib_socket"; then
            LIBS="$gl_save_LIBS -lnetwork"
-           AC_TRY_LINK([extern
+           AC_LINK_IFELSE([AC_LANG_PROGRAM([[extern
 #ifdef __cplusplus
 "C"
 #endif
-char setsockopt();], [setsockopt();],
+char setsockopt();]], [[setsockopt();]])],
              [gl_cv_lib_socket="-lnetwork"])
            if test -z "$gl_cv_lib_socket"; then
              LIBS="$gl_save_LIBS -lnet"
-             AC_TRY_LINK([extern
+             AC_LINK_IFELSE([AC_LANG_PROGRAM([[extern
 #ifdef __cplusplus
 "C"
 #endif
-char setsockopt();], [setsockopt();],
+char setsockopt();]], [[setsockopt();]])],
                [gl_cv_lib_socket="-lnet"])
            fi
          fi
