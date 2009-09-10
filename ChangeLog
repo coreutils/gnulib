@@ -1,3 +1,11 @@
+2009-09-10  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	Fix copyright header in build-aux scripts.
+	* build-aux/git-version-gen: Fix copyright header to match GPLv3
+	recommendation.
+	* build-aux/ncftpput-ftp: Likewise.
+	* build-aux/update-copyright: Likewise.
+
 2009-09-09  Eric Blake  <ebb9@byu.net>
 
 	test-link: allow Linux choice of errno
