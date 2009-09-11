@@ -1,5 +1,13 @@
 2009-09-17  Eric Blake  <ebb9@byu.net>
 
+	test-canonicalize: consolidate into single C program
+	* tests/test-canonicalize.sh: Delete; move setup into...
+	* tests/test-canonicalize.c (main): ...the program, making it
+	easier to run in debugger.  Add some tests.
+	* modules/canonicalize-tests (Files): Remove unused file.
+	(Depends-on): Add progname.
+	(configure.ac, Makefile.am): Simplify.
+
 	test-canonicalize-lgpl: consolidate into single C program
 	* tests/test-canonicalize-lgpl.sh: Delete; move setup into...
 	* tests/test-canonicalize-lgpl.c (main): ...the program, making it

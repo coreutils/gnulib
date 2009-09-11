@@ -1,16 +1,13 @@
 Files:
-tests/test-canonicalize.sh
 tests/test-canonicalize.c
 
 Depends-on:
+progname
 
 configure.ac:
 AC_CHECK_FUNCS_ONCE([symlink])
-HAVE_SYMLINK=$ac_cv_func_symlink
-AC_SUBST([HAVE_SYMLINK])
 
 Makefile.am:
-TESTS += test-canonicalize.sh
-TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' HAVE_SYMLINK='$(HAVE_SYMLINK)'
+TESTS += test-canonicalize
 check_PROGRAMS += test-canonicalize
 test_canonicalize_LDADD = $(LDADD) @LIBINTL@
