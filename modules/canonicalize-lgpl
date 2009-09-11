@@ -1,8 +1,7 @@
 Description:
-Canonical absolute file name (LGPLed version).
+realpath, canonical_file_name: Provide canonical absolute file name
 
 Files:
-lib/canonicalize.h
 lib/canonicalize-lgpl.c
 m4/canonicalize-lgpl.m4
 
@@ -21,11 +20,13 @@ sys_stat
 configure.ac:
 gl_CANONICALIZE_LGPL
 gl_MODULE_INDICATOR([canonicalize-lgpl])
+gl_STDLIB_MODULE_INDICATOR([canonicalize_file_name])
+gl_STDLIB_MODULE_INDICATOR([realpath])
 
 Makefile.am:
 
 Include:
-"canonicalize.h"
+<stdlib.h>
 
 License:
 LGPLv2+

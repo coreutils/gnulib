@@ -4,22 +4,27 @@
 
 POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/realpath.html}
 
-Gnulib module: ---
+Gnulib module: canonicalize-lgpl
 
 Portability problems fixed by Gnulib:
-@itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
 mingw, BeOS.
 @item
-This function does not allow to determine the required size of output buffer;
-PATH_MAX --- if it is defined --- is nothing more than a guess.
+This function does not allow for a NULL @samp{resolved} parameter on
+some platforms:
+Solaris.
+@item
+This function does not always return an absolute path on some
+platforms:
+Solaris.
 @end itemize
 
-Extension: Gnulib provides a module @samp{canonicalize-lgpl} that defines a
-function @code{canonicalize_file_name} that is like @code{realpath} but without
-size limitations.
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function does not allow to determine the required size of output buffer;
+the use of a non-NULL @samp{resolved} buffer is non-portable, since
+PATH_MAX --- if it is defined --- is nothing more than a guess.
+@end itemize

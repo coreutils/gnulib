@@ -1,5 +1,23 @@
 2009-09-17  Eric Blake  <ebb9@byu.net>
 
+	canonicalize, canonicalize-lgpl: use <stdlib.h>
+	* modules/canonicalize-lgpl (Files): Drop canonicalize.h.
+	(Include): Mention <stdlib.h>.
+	(configure.ac): Mention functions we provide.
+	* modules/canonicalize (configure.ac): Likewise.
+	* m4/canonicalize-lgpl.m4 (gl_CANONICALIZE_LGPL): Always replace
+	realpath if canonicalize_file_name is missing.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Provide defaults.
+	* modules/stdlib (Makefile.am): Substitute witnesses.
+	* lib/stdlib.in.h (canonicalize_file_name, realpath): Declare.
+	* lib/canonicalize-lgpl.c (includes): Adjust accordingly.
+	* lib/canonicalize.h (canonicalize_file_name): Drop declaration.
+	* NEWS: Document this.
+	* doc/glibc-functions/canonicalize_file_name.texi
+	(canonicalize_file_name): Likewise.
+	* doc/posix-functions/realpath.texi (realpath): Likewise.
+	* tests/test-canonicalize-lgpl.c (includes): Use <stdlib.h>.
+
 	test-canonicalize: consolidate into single C program
 	* tests/test-canonicalize.sh: Delete; move setup into...
 	* tests/test-canonicalize.c (main): ...the program, making it

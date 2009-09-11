@@ -17,19 +17,14 @@
 
 #include <config.h>
 
-/* Avoid a clash of our rpl_realpath() function with the prototype in
-   <stdlib.h> on Solaris 2.5.1.  */
-#undef realpath
-
 #if !HAVE_CANONICALIZE_FILE_NAME || defined _LIBC
 
 #include <alloca.h>
 
 /* Specification.  */
-#include "canonicalize.h"
+#include <stdlib.h>
 
 #include <stddef.h>
-#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
@@ -61,7 +56,7 @@
 # define compat_symbol(lib, local, symbol, version)
 # define weak_alias(local, symbol)
 # define __canonicalize_file_name canonicalize_file_name
-# define __realpath rpl_realpath
+# define __realpath realpath
 # include "pathmax.h"
 # include "malloca.h"
 # if HAVE_GETCWD

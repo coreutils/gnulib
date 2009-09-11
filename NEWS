@@ -6,6 +6,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2009-09-16  canonicalize-lgpl
+                            The include file is changed from "canonicalize.h"
+                            to <stdlib.h>.
+
 2009-09-04  link-follow     The macro LINK_FOLLOWS_SYMLINK is now tri-state,
                             rather than only defined to 1.
 

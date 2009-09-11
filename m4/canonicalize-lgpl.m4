@@ -1,4 +1,4 @@
-# canonicalize-lgpl.m4 serial 6
+# canonicalize-lgpl.m4 serial 7
 dnl Copyright (C) 2003, 2006-2007, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,10 +10,12 @@ AC_DEFUN([gl_CANONICALIZE_LGPL],
   dnl than the function name.
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_CHECK_FUNCS_ONCE([canonicalize_file_name])
+  dnl Assume that all platforms with canonicalize_file_name also have
+  dnl a working realpath; otherwise assume realpath is broken.
   if test $ac_cv_func_canonicalize_file_name = no; then
+    HAVE_CANONICALIZE_FILE_NAME=0
     AC_LIBOBJ([canonicalize-lgpl])
-    AC_DEFINE([realpath], [rpl_realpath],
-      [Define to a replacement function name for realpath().])
+    REPLACE_REALPATH=1
     gl_PREREQ_CANONICALIZE_LGPL
   fi
 ])
