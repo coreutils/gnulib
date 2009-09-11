@@ -90,6 +90,34 @@ main ()
     ASSERT (errno == EINVAL);
   }
 
+  /* Check that a non-directory with trailing slash yields NULL.  */
+  {
+    char *result1;
+    char *result2;
+    errno = 0;
+    result1 = canonicalize_file_name (BASE "/tra/");
+    ASSERT (result1 == NULL);
+    ASSERT (errno == ENOTDIR);
+    errno = 0;
+    result2 = canonicalize_filename_mode (BASE "/tra/", CAN_EXISTING);
+    ASSERT (result2 == NULL);
+    ASSERT (errno == ENOTDIR);
+  }
+
+  /* Check that a missing directory yields NULL.  */
+  {
+    char *result1;
+    char *result2;
+    errno = 0;
+    result1 = canonicalize_file_name (BASE "/zzz/..");
+    ASSERT (result1 == NULL);
+    ASSERT (errno == ENOENT);
+    errno = 0;
+    result2 = canonicalize_filename_mode (BASE "/zzz/..", CAN_EXISTING);
+    ASSERT (result2 == NULL);
+    ASSERT (errno == ENOENT);
+  }
+
   /* From here on out, tests involve symlinks.  */
   if (symlink (BASE "/ket", "ise") != 0)
     {
@@ -159,6 +187,34 @@ main ()
     ASSERT (errno == ENOENT);
     errno = 0;
     result2 = canonicalize_filename_mode (BASE "/ouk", CAN_EXISTING);
+    ASSERT (result2 == NULL);
+    ASSERT (errno == ENOENT);
+  }
+
+  /* Check that a non-directory symlink with trailing slash yields NULL.  */
+  {
+    char *result1;
+    char *result2;
+    errno = 0;
+    result1 = canonicalize_file_name (BASE "/huk/");
+    ASSERT (result1 == NULL);
+    ASSERT (errno == ENOTDIR);
+    errno = 0;
+    result2 = canonicalize_filename_mode (BASE "/huk/", CAN_EXISTING);
+    ASSERT (result2 == NULL);
+    ASSERT (errno == ENOTDIR);
+  }
+
+  /* Check that a missing directory via symlink yields NULL.  */
+  {
+    char *result1;
+    char *result2;
+    errno = 0;
+    result1 = canonicalize_file_name (BASE "/ouk/..");
+    ASSERT (result1 == NULL);
+    ASSERT (errno == ENOENT);
+    errno = 0;
+    result2 = canonicalize_filename_mode (BASE "/ouk/..", CAN_EXISTING);
     ASSERT (result2 == NULL);
     ASSERT (errno == ENOENT);
   }

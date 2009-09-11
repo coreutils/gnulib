@@ -82,6 +82,24 @@ main ()
     ASSERT (errno == EINVAL);
   }
 
+  /* Check that a non-directory with trailing slash yields NULL.  */
+  {
+    char *result;
+    errno = 0;
+    result = canonicalize_file_name (BASE "/tra/");
+    ASSERT (result == NULL);
+    ASSERT (errno == ENOTDIR);
+  }
+
+  /* Check that a missing directory yields NULL.  */
+  {
+    char *result;
+    errno = 0;
+    result = canonicalize_file_name (BASE "/zzz/..");
+    ASSERT (result == NULL);
+    ASSERT (errno == ENOENT);
+  }
+
   /* From here on out, tests involve symlinks.  */
   if (symlink (BASE "/ket", "ise") != 0)
     {
@@ -133,6 +151,24 @@ main ()
     char *result;
     errno = 0;
     result = canonicalize_file_name (BASE "/ouk");
+    ASSERT (result == NULL);
+    ASSERT (errno == ENOENT);
+  }
+
+  /* Check that a non-directory symlink with trailing slash yields NULL.  */
+  {
+    char *result;
+    errno = 0;
+    result = canonicalize_file_name (BASE "/huk/");
+    ASSERT (result == NULL);
+    ASSERT (errno == ENOTDIR);
+  }
+
+  /* Check that a missing directory via symlink yields NULL.  */
+  {
+    char *result;
+    errno = 0;
+    result = canonicalize_file_name (BASE "/ouk/..");
     ASSERT (result == NULL);
     ASSERT (errno == ENOENT);
   }

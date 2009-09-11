@@ -1,5 +1,11 @@
 2009-09-17  Eric Blake  <ebb9@byu.net>
 
+	canonicalize-lgpl: reject non-directory with trailing slash
+	* lib/canonicalize-lgpl.c (__realpath): Synchronize with glibc.
+	* tests/test-canonicalize-lgpl.c (main): Enhance test.  This
+	catches failures in glibc 2.3.5.
+	* tests/test-canonicalize.c (main): Likewise.
+
 	canonicalize-lgpl: use native realpath if it works
 	* lib/canonicalize-lgpl.c (realpath): Guard with
 	FUNC_REALPATH_WORKS.
