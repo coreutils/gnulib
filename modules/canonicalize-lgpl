@@ -8,10 +8,15 @@ m4/canonicalize-lgpl.m4
 
 Depends-on:
 alloca-opt
+errno
+extensions
+lstat
 malloca
 memmove
 pathmax
 readlink
+stdlib
+sys_stat
 
 configure.ac:
 gl_CANONICALIZE_LGPL

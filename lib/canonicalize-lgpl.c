@@ -31,10 +31,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
-
-#if HAVE_UNISTD_H || defined _LIBC
-# include <unistd.h>
-#endif
+#include <unistd.h>
 
 #include <limits.h>
 
@@ -42,7 +39,11 @@
 # include <sys/param.h>
 #endif
 #ifndef MAXSYMLINKS
-# define MAXSYMLINKS 20
+# ifdef SYMLOOP_MAX
+#  define MAXSYMLINKS SYMLOOP_MAX
+# else
+#  define MAXSYMLINKS 20
+# endif
 #endif
 
 #include <sys/stat.h>
@@ -74,10 +75,6 @@
 #  define __getcwd(buf, max) getwd (buf)
 # endif
 # define __readlink readlink
-  /* On systems without symbolic links, call stat() instead of lstat().  */
-# if !defined S_ISLNK && !HAVE_READLINK
-#  define lstat stat
-# endif
 #endif
 
 /* Return the canonical absolute name of file NAME.  A canonical name
@@ -97,9 +94,7 @@ __realpath (const char *name, char *resolved)
   char *rpath, *dest, *extra_buf = NULL;
   const char *start, *end, *rpath_limit;
   long int path_max;
-#if HAVE_READLINK
   int num_links = 0;
-#endif
 
   if (name == NULL)
     {
@@ -237,7 +232,6 @@ __realpath (const char *name, char *resolved)
 #endif
 	    goto error;
 
-#if HAVE_READLINK
 	  if (S_ISLNK (st.st_mode))
 	    {
 	      char *buf;
@@ -297,7 +291,6 @@ __realpath (const char *name, char *resolved)
 		if (dest > rpath + 1)
 		  while ((--dest)[-1] != '/');
 	    }
-#endif
 	}
     }
   if (dest > rpath + 1 && dest[-1] == '/')
