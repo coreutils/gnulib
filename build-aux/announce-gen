@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 # Generate a release announcement message.
 
-my $VERSION = '2009-09-01 06:47'; # UTC
+my $VERSION = '2009-09-11 09:50'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -424,7 +424,7 @@ sub get_tool_versions ($$)
   # mail (or part of a diff), Gnus is not triggered.
   print <<EOF;
 
-Subject: $my_distdir released
+Subject: $my_distdir released [$release_type]
 
 <\#secure method=pgpmime mode=sign>
 

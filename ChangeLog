@@ -1,3 +1,9 @@
+2009-09-11  Jim Meyering  <meyering@redhat.com>
+
+	announce-gen: include [$release_type] in emitted Subject:
+	* build-aux/announce-gen (get_tool_versions): Include [$release_type],
+	e.g., [stable] in the emitted Subject: line.
+
 2009-09-10  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	Remove obsolete macros from several modules.
