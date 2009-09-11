@@ -1,4 +1,4 @@
-# stdlib_h.m4 serial 19
+# stdlib_h.m4 serial 20
 dnl Copyright (C) 2007-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -72,6 +72,7 @@ AC_DEFUN([gl_STDLIB_H_DEFAULTS],
   HAVE_STRUCT_RANDOM_DATA=1; AC_SUBST([HAVE_STRUCT_RANDOM_DATA])
   HAVE_SYS_LOADAVG_H=0;      AC_SUBST([HAVE_SYS_LOADAVG_H])
   HAVE_UNSETENV=1;           AC_SUBST([HAVE_UNSETENV])
+  REPLACE_CANONICALIZE_FILE_NAME=0;  AC_SUBST([REPLACE_CANONICALIZE_FILE_NAME])
   REPLACE_MKSTEMP=0;         AC_SUBST([REPLACE_MKSTEMP])
   REPLACE_PUTENV=0;          AC_SUBST([REPLACE_PUTENV])
   REPLACE_REALPATH=0;        AC_SUBST([REPLACE_REALPATH])

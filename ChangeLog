@@ -1,5 +1,26 @@
 2009-09-17  Eric Blake  <ebb9@byu.net>
 
+	canonicalize-lgpl: fix glibc bug with trailing slash
+	* m4/canonicalize-lgpl.m4: Move contents...
+	* m4/canonicalize.m4: ...here.
+	(gl_CANONICALIZE_LGPL): Factor realpath check...
+	(gl_FUNC_REALPATH_WORKS): ...into new macro.  Enhance to catch
+	glibc 2.3.5 bug, fixed 2005-04-27.
+	(gl_FUNC_CANONICALIZE_FILENAME_MODE): Use it.
+	(gl_PREREQ_CANONICALIZE_LGPL): Inline...
+	(gl_CANONICALIZE_LGPL_SEPARATE): ...into this macro.
+	* modules/canonicalize-lgpl (Files): Manage file rename.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Provide default.
+	* modules/stdlib (Makefile.am): Substitute witness.
+	* lib/stdlib.in.h (canonicalize_file_name): Declare if replacement
+	is needed.
+	* lib/canonicalize-lgpl.c: Also compile if canonicalize_file_name
+	replacement is required.
+	* lib/canonicalize.c (canonicalize_file_name): Likewise.
+	* doc/glibc-functions/canonicalize_file_name.texi
+	(canonicalize_file_name): Document this.
+	* doc/posix-functions/realpath.texi (realpath): Likewise.
+
 	canonicalize-lgpl: reject non-directory with trailing slash
 	* lib/canonicalize-lgpl.c (__realpath): Synchronize with glibc.
 	* tests/test-canonicalize-lgpl.c (main): Enhance test.  This

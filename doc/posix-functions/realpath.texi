@@ -19,6 +19,14 @@ Solaris.
 This function does not always return an absolute path on some
 platforms:
 Solaris.
+@item
+This function fails to detect trailing slashes on non-directories on
+some platforms:
+glibc 2.3.5.
+@item
+This function fails to recognize non-directories followed @samp{..} on
+some platforms:
+cygwin.
 @end itemize
 
 Portability problems not fixed by Gnulib:

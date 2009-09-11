@@ -116,7 +116,10 @@ extern void * calloc (size_t nmemb, size_t size);
 #endif
 
 #if @GNULIB_CANONICALIZE_FILE_NAME@
-# if !@HAVE_CANONICALIZE_FILE_NAME@
+# if @REPLACE_CANONICALIZE_FILE_NAME@
+#  define canonicalize_file_name rpl_canonicalize_file_name
+# endif
+# if !@HAVE_CANONICALIZE_FILE_NAME@ || @REPLACE_CANONICALIZE_FILE_NAME@
 extern char *canonicalize_file_name (const char *name);
 # endif
 #elif defined GNULIB_POSIXCHECK

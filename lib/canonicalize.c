@@ -31,7 +31,8 @@
 #include "xalloc.h"
 #include "xgetcwd.h"
 
-#if !(HAVE_CANONICALIZE_FILE_NAME || GNULIB_CANONICALIZE_LGPL)
+#if !((HAVE_CANONICALIZE_FILE_NAME && FUNC_REALPATH_WORKS)	\
+      || GNULIB_CANONICALIZE_LGPL)
 /* Return the canonical absolute name of file NAME.  A canonical name
    does not contain any `.', `..' components nor any repeated file name
    separators ('/') or symlinks.  All components must exist.

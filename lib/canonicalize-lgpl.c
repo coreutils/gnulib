@@ -19,7 +19,7 @@
 # include <config.h>
 #endif
 
-#if !HAVE_CANONICALIZE_FILE_NAME || defined _LIBC
+#if !HAVE_CANONICALIZE_FILE_NAME || !FUNC_REALPATH_WORKS || defined _LIBC
 
 /* Specification.  */
 #include <stdlib.h>
