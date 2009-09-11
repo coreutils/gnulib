@@ -1,5 +1,12 @@
 2009-09-17  Eric Blake  <ebb9@byu.net>
 
+	canonicalize: avoid resolvepath
+	* m4/canonicalize.m4 (gl_FUNC_CANONICALIZE_FILENAME_MODE): Delete
+	unnecessary checks.
+	* lib/canonicalize.c (includes): Simplify.
+	(canonicalize_file_name): Drop resolvepath implementation.
+	* modules/canonicalize (Depends-on): Drop filenamecat.
+
 	canonicalize: don't lose errno
 	* lib/canonicalize.c (canonicalize_filename_mode): Protect errno
 	over calls to free.

@@ -1,4 +1,4 @@
-#serial 13
+# canonicalize.m4 serial 14
 
 # Copyright (C) 2003, 2004, 2005, 2006, 2007, 2009 Free Software
 # Foundation, Inc.
@@ -14,6 +14,5 @@ AC_DEFUN([gl_FUNC_CANONICALIZE_FILENAME_MODE],
   AC_LIBOBJ([canonicalize])
 
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
-  AC_CHECK_HEADERS_ONCE([sys/param.h])
-  AC_CHECK_FUNCS_ONCE([canonicalize_file_name resolvepath])
+  AC_CHECK_FUNCS_ONCE([canonicalize_file_name])
 ])

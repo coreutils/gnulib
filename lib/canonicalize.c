@@ -18,23 +18,14 @@
 
 #include "canonicalize.h"
 
+#include <errno.h>
 #include <stdlib.h>
 #include <string.h>
-
-#if HAVE_SYS_PARAM_H
-# include <sys/param.h>
-#endif
-
 #include <sys/stat.h>
-
 #include <unistd.h>
-
-#include <errno.h>
-#include <stddef.h>
 
 #include "areadlink.h"
 #include "file-set.h"
-#include "filenamecat.h"
 #include "hash-triple.h"
 #include "pathmax.h"
 #include "xalloc.h"
@@ -49,68 +40,7 @@
 char *
 canonicalize_file_name (const char *name)
 {
-# if HAVE_RESOLVEPATH
-
-  char *resolved, *extra_buf = NULL;
-  size_t resolved_size;
-  ssize_t resolved_len;
-
-  if (name == NULL)
-    {
-      errno = EINVAL;
-      return NULL;
-    }
-
-  if (name[0] == '\0')
-    {
-      errno = ENOENT;
-      return NULL;
-    }
-
-  /* All known hosts with resolvepath (e.g. Solaris 7) don't turn
-     relative names into absolute ones, so prepend the working
-     directory if the file name is not absolute.  */
-  if (name[0] != '/')
-    {
-      char *wd;
-
-      if (!(wd = xgetcwd ()))
-	return NULL;
-
-      extra_buf = file_name_concat (wd, name, NULL);
-      name = extra_buf;
-      free (wd);
-    }
-
-  resolved_size = strlen (name);
-  while (1)
-    {
-      resolved_size = 2 * resolved_size + 1;
-      resolved = xmalloc (resolved_size);
-      resolved_len = resolvepath (name, resolved, resolved_size);
-      if (resolved_len < 0)
-	{
-	  free (resolved);
-	  free (extra_buf);
-	  return NULL;
-	}
-      if (resolved_len < resolved_size)
-	break;
-      free (resolved);
-    }
-
-  free (extra_buf);
-
-  /* NUL-terminate the resulting name.  */
-  resolved[resolved_len] = '\0';
-
-  return resolved;
-
-# else
-
   return canonicalize_filename_mode (name, CAN_EXISTING);
-
-# endif /* !HAVE_RESOLVEPATH */
 }
 #endif /* !HAVE_CANONICALIZE_FILE_NAME */
 
@@ -138,7 +68,8 @@ seen_triple (Hash_table **ht, char const *filename, struct stat const *st)
   return false;
 }
 
-/* Return the canonical absolute name of file NAME.  A canonical name
+/* Return the canonical absolute name of file NAME, while treating
+   missing elements according to CAN_MODE.  A canonical name
    does not contain any `.', `..' components nor any repeated file name
    separators ('/') or symlinks.  Whether components must exist
    or not depends on canonicalize mode.  The result is malloc'd.  */
