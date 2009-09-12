@@ -240,26 +240,42 @@ main ()
   {
     char *result1 = canonicalize_filename_mode (BASE "/zzz", CAN_ALL_BUT_LAST);
     char *result2 = canonicalize_filename_mode (BASE "/zzz", CAN_MISSING);
+    char *result3 = canonicalize_filename_mode (BASE "/zzz/", CAN_ALL_BUT_LAST);
+    char *result4 = canonicalize_filename_mode (BASE "/zzz/", CAN_MISSING);
     ASSERT (result1 != NULL);
     ASSERT (result2 != NULL);
+    ASSERT (result3 != NULL);
+    ASSERT (result4 != NULL);
     ASSERT (strcmp (result1, result2) == 0);
+    ASSERT (strcmp (result2, result3) == 0);
+    ASSERT (strcmp (result3, result4) == 0);
     ASSERT (strcmp (result1 + strlen (result1) - strlen ("/" BASE "/zzz"),
                     "/" BASE "/zzz") == 0);
     free (result1);
     free (result2);
+    free (result3);
+    free (result4);
   }
 
   /* Check that alternate modes can resolve broken symlink basenames.  */
   {
     char *result1 = canonicalize_filename_mode (BASE "/ouk", CAN_ALL_BUT_LAST);
     char *result2 = canonicalize_filename_mode (BASE "/ouk", CAN_MISSING);
+    char *result3 = canonicalize_filename_mode (BASE "/ouk/", CAN_ALL_BUT_LAST);
+    char *result4 = canonicalize_filename_mode (BASE "/ouk/", CAN_MISSING);
     ASSERT (result1 != NULL);
     ASSERT (result2 != NULL);
+    ASSERT (result3 != NULL);
+    ASSERT (result4 != NULL);
     ASSERT (strcmp (result1, result2) == 0);
+    ASSERT (strcmp (result2, result3) == 0);
+    ASSERT (strcmp (result3, result4) == 0);
     ASSERT (strcmp (result1 + strlen (result1) - strlen ("/" BASE "/wum"),
                     "/" BASE "/wum") == 0);
     free (result1);
     free (result2);
+    free (result3);
+    free (result4);
   }
 
   /* Check that alternate modes can handle missing dirnames.  */

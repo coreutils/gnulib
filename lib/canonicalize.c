@@ -184,8 +184,12 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
 	      saved_errno = errno;
 	      if (can_mode == CAN_EXISTING)
 		goto error;
-	      if (can_mode == CAN_ALL_BUT_LAST && *end)
-		goto error;
+	      if (can_mode == CAN_ALL_BUT_LAST)
+		{
+		  if (end[strspn (end, "/")] || saved_errno != ENOENT)
+		    goto error;
+		  continue;
+		}
 	      st.st_mode = 0;
 	    }
 

@@ -1,5 +1,10 @@
 2009-09-17  Eric Blake  <ebb9@byu.net>
 
+	canonicalize: in CAN_ALL_BUT_LAST, allow trailing slash
+	* lib/canonicalize.c (canonicalize_filename_mode): Skip trailing
+	slashes when checking if last component is missing.
+	* tests/test-canonicalize.c (main): Test this.
+
 	canonicalize, canonicalize-lgpl: honor // if distinct from /
 	* modules/canonicalize (Files): Add double-slash-root.m4.
 	* modules/canonicalize-lgpl (Files): Likewise.
