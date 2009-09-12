@@ -1,3 +1,13 @@
+2009-09-13  Jim Meyering  <meyering@redhat.com>
+
+	posixtm: don't reject a time that specify "60" as the number of seconds
+	* lib/posixtm.c (posixtime): The code to reject invalid dates
+	would also reject a time specified with the .60 suffix.
+	But POSIX allows that, in order to accommodate leap seconds.
+	So don't reject it.
+	(main): Adjust tests accordingly.
+	* modules/posixtm (Depends-on): Add stpcpy.
+
 2009-09-11  Jim Meyering  <meyering@redhat.com>
 
 	announce-gen: include [$release_type] in emitted Subject:

@@ -1,7 +1,7 @@
 /* Parse dates for touch and date.
 
    Copyright (C) 1989, 1990, 1991, 1998, 2000, 2001, 2002, 2003, 2004,
-   2005, 2006, 2007 Free Software Foundation Inc.
+   2005, 2006, 2007, 2009 Free Software Foundation Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -207,14 +207,29 @@ posixtime (time_t *p, const char *s, unsigned int syntax_bits)
 	return false;
     }
 
-  /* Reject dates like "September 31" and times like "25:61".  */
+  /* Reject dates like "September 31" and times like "25:61".
+     Do not reject times that specify "60" as the number of seconds.  */
   if ((tm0.tm_year ^ tm->tm_year)
       | (tm0.tm_mon ^ tm->tm_mon)
       | (tm0.tm_mday ^ tm->tm_mday)
       | (tm0.tm_hour ^ tm->tm_hour)
       | (tm0.tm_min ^ tm->tm_min)
       | (tm0.tm_sec ^ tm->tm_sec))
-    return false;
+    {
+      /* Any mismatch without 60 in the tm_sec field is invalid.  */
+      if (tm0.tm_sec != 60)
+        return false;
+
+      {
+        /* Allow times like 01:35:60 or 23:59:60.  */
+        time_t dummy;
+        char buf[16];
+        char *b = stpcpy (buf, s);
+        strcpy (b - 2, "59");
+        if (!posixtime (&dummy, buf, syntax_bits))
+          return false;
+      }
+    }
 
   *p = t;
   return true;
@@ -251,13 +266,13 @@ BEGIN-DATA
 197001010000.00 13            0 Thu Jan  1 00:00:00 1970
 197001010000.01 13            1 Thu Jan  1 00:00:01 1970
 197001010001.00 13           60 Thu Jan  1 00:01:00 1970
+197001010000.60 13           60 Thu Jan  1 00:01:00 1970
 197001010100.00 13         3600 Thu Jan  1 01:00:00 1970
 197001020000.00 13        86400 Fri Jan  2 00:00:00 1970
 197002010000.00 13      2678400 Sun Feb  1 00:00:00 1970
 197101010000.00 13     31536000 Fri Jan  1 00:00:00 1971
 197001000000.00 13            * *
 197000010000.00 13            * *
-197001010000.60 13            * *
 197001010060.00 13            * *
 197001012400.00 13            * *
 197001320000.00 13            * *
