@@ -1,5 +1,17 @@
 2009-09-19  Eric Blake  <ebb9@byu.net>
 
+	remove: new module, for mingw and Solaris 9 bugs
+	* modules/remove: New file.
+	* lib/remove.c: Likewise.
+	* m4/remove.m4 (gl_FUNC_REMOVE): Likewise.
+	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Add witnesses.
+	* modules/stdio (Makefile.am): Use them.
+	* lib/stdio.in.h (remove): Declare replacement.
+	* MODULES.html.sh (systems lacking POSIX:2008): Mention module.
+	* doc/posix-functions/remove.texi (remove): Likewise.
+	* modules/remove-tests: New test.
+	* tests/test-remove.c: Likewise.
+
 	unlink: new module, for Solaris 9 bug
 	* modules/unlink: New file.
 	* lib/unlink.c: Likewise.

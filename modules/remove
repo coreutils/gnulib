@@ -1,0 +1,27 @@
+Description:
+remove(): remove a file or directory
+
+Files:
+lib/remove.c
+m4/dos.m4
+m4/remove.m4
+
+Depends-on:
+rmdir
+stdio
+unlink
+
+configure.ac:
+gl_FUNC_REMOVE
+gl_STDIO_MODULE_INDICATOR([remove])
+
+Makefile.am:
+
+Include:
+<stdio.h>
+
+License:
+LGPL
+
+Maintainer:
+Eric Blake

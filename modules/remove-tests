@@ -1,0 +1,12 @@
+Files:
+tests/test-remove.c
+
+Depends-on:
+sys_stat
+
+configure.ac:
+AC_CHECK_FUNCS_ONCE([symlink])
+
+Makefile.am:
+TESTS += test-remove
+check_PROGRAMS += test-remove

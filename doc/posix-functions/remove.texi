@@ -4,10 +4,21 @@
 
 POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/remove.html}
 
-Gnulib module: ---
+Gnulib module: remove
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This function fails to reject trailing slashes on non-directories on
+some platforms:
+Solaris 9.
+@item
+This function mistakenly removes a directory with
+@code{remove("dir/./")} on some platforms:
+Cygwin 1.5.x.
+@item
+This function does not remove empty directories on some platforms:
+mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:

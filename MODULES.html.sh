@@ -2319,6 +2319,7 @@ func_all_modules ()
   func_module realloc-posix
   func_module recv
   func_module recvfrom
+  func_module remove
   func_module sched
   func_module select
   func_module send

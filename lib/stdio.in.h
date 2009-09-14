@@ -416,6 +416,20 @@ extern int putchar (int c);
 extern int puts (const char *string);
 #endif
 
+#if @GNULIB_REMOVE@
+# if @REPLACE_REMOVE@
+#  undef remove
+#  define remove rpl_remove
+extern int remove (const char *name);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef remove
+# define remove(n)					   \
+   (GL_LINK_WARNING ("remove cannot handle directories on some platforms - " \
+                     "use gnulib module remove for more portability"), \
+    remove (n))
+#endif
+
 #if @GNULIB_RENAME@
 # if @REPLACE_RENAME@
 #  undef rename
