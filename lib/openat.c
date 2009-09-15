@@ -157,6 +157,24 @@ openat_needs_fchdir (void)
   return needs_fchdir;
 }
 
+/* On mingw, the gnulib <sys/stat.h> defines `stat' as a function-like
+   macro; but using it in AT_FUNC_F2 causes compilation failure
+   because the preprocessor sees a use of a macro that requires two
+   arguments but is only given one.  Hence, we need an inline
+   forwarder to get past the preprocessor.  */
+static inline int
+stat_func (char const *name, struct stat *st)
+{
+  return stat (name, st);
+}
+
+/* Likewise, if there is no native `lstat', then the gnulib
+   <sys/stat.h> defined it as stat, which also needs adjustment.  */
+#if !HAVE_LSTAT
+# undef lstat
+# define lstat stat_func
+#endif
+
 /* Replacement for Solaris' function by the same name.
    <http://www.google.com/search?q=fstatat+site:docs.sun.com>
    First, try to simulate it via l?stat ("/proc/self/fd/FD/FILE").
@@ -167,7 +185,7 @@ openat_needs_fchdir (void)
 
 #define AT_FUNC_NAME fstatat
 #define AT_FUNC_F1 lstat
-#define AT_FUNC_F2 stat
+#define AT_FUNC_F2 stat_func
 #define AT_FUNC_USE_F1_COND AT_SYMLINK_NOFOLLOW
 #define AT_FUNC_POST_FILE_PARAM_DECLS , struct stat *st, int flag
 #define AT_FUNC_POST_FILE_ARGS        , st

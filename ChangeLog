@@ -1,3 +1,20 @@
+2009-09-19  Eric Blake  <ebb9@byu.net>
+
+	stat: new module, for mingw bug
+	* modules/stat: New file.
+	* lib/stat.c: Likewise.
+	* m4/stat.m4 (gl_FUNC_STAT): Likewise.
+	* m4/sys_stat_h.m4 (gl_SYS_STAT_H_DEFAULTS): Add witnesses.
+	* modules/sys_stat (Makefile.am): Use them.
+	* lib/sys_stat.in.h (stat): Declare replacement.
+	* lib/openat.c (fstatat): Deal with lstat and stat being function
+	macros.
+	* modules/openat (Depends-on): Add inline.
+	* MODULES.html.sh (systems lacking POSIX:2008): Mention module.
+	* doc/posix-functions/stat.texi (stat): Likewise.
+	* modules/stat-tests: New test.
+	* tests/test-stat.c: Likewise.
+
 2009-09-19  Jim Meyering  <meyering@redhat.com>
 
 	syntax-check: detect unnecessary inclusion of canonicalize.h

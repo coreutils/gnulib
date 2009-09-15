@@ -4,10 +4,14 @@
 
 POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/stat.html}
 
-Gnulib module: ---
+Gnulib module: stat
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+On some platforms, @code{stat(".",buf)} and @code{stat("./",buf)} give
+different results:
+mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:
@@ -19,4 +23,12 @@ use the @code{AC_SYS_LARGEFILE} macro.
 @item
 Cygwin's @code{stat} function sometimes sets @code{errno} to @code{EACCES} when
 @code{ENOENT} would be more appropriate.
+@item
+On Windows platforms (excluding Cygwin), @code{st_ino} is always 0.
+@item
+Because of the definition of @code{struct stat}, it is not possible to
+portably replace @code{stat} via an object-like macro.  Therefore,
+expressions such as @code{(islnk ? lstat : stat) (name, buf)} are not
+portable, and should instead be written @code{islnk ? lstat (name,
+buf) : stat (name, buf)}.
 @end itemize

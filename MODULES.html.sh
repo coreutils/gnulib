@@ -2331,6 +2331,7 @@ func_all_modules ()
   func_module socket
   func_module spawn
   func_module sprintf-posix
+  func_module stat
   func_module strdup-posix
   func_module string
   func_module strings

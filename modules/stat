@@ -1,0 +1,26 @@
+Description:
+stat(): query file information
+
+Files:
+lib/stat.c
+m4/dos.m4
+m4/stat.m4
+
+Depends-on:
+stdbool
+sys_stat
+
+configure.ac:
+gl_FUNC_STAT
+gl_SYS_STAT_MODULE_INDICATOR([stat])
+
+Makefile.am:
+
+Include:
+<sys/stat.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+Eric Blake

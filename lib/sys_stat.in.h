@@ -302,6 +302,22 @@ extern int rpl_lstat (const char *name, struct stat *buf);
    lstat (p, b))
 #endif
 
+#if @GNULIB_STAT@
+# if @REPLACE_STAT@
+/* We can't use the object-like #define stat rpl_stat, because of
+   struct stat.  This means that rpl_stat will not be used if the user
+   does (stat)(a,b).  Oh well.  */
+#  undef stat
+#  define stat(name, st) rpl_stat (name, st)
+extern int stat (const char *name, struct stat *buf);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef stat
+# define stat(p,b)							\
+  (GL_LINK_WARNING ("stat is unportable - "				\
+		    "use gnulib module stat for portability"),		\
+   stat (p, b))
+#endif
 
 #if @GNULIB_FCHMODAT@
 # if !@HAVE_FCHMODAT@
