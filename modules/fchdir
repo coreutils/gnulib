@@ -16,6 +16,7 @@ include_next
 malloc-posix
 open
 realloc-posix
+stat
 stdbool
 strdup-posix
 sys_stat

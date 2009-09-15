@@ -9,6 +9,7 @@ Depends-on:
 unistd
 extensions
 group-member
+stat
 sys_stat
 
 configure.ac:

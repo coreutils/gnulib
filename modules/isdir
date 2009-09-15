@@ -6,6 +6,7 @@ lib/isdir.c
 m4/isdir.m4
 
 Depends-on:
+stat
 
 configure.ac:
 gl_ISDIR
@@ -20,4 +21,3 @@ GPL
 
 Maintainer:
 Jim Meyering
-

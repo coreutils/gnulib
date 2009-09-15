@@ -17,6 +17,7 @@ lchown
 mkancesdirs
 quote
 savewd
+stat
 stat-macros
 stdbool
 sys_stat

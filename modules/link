@@ -6,6 +6,7 @@ lib/link.c
 m4/link.m4
 
 Depends-on:
+stat
 strdup-posix
 sys_stat
 unistd

@@ -1,5 +1,18 @@
 2009-09-19  Eric Blake  <ebb9@byu.net>
 
+	stat: add as dependency to other modules
+	* modules/chown (Depends-on): Add stat.
+	* modules/euidaccess (Depends-on): Likewise.
+	* modules/fchdir (Depends-on): Likewise.
+	* modules/isdir (Depends-on): Likewise.
+	* modules/link (Depends-on): Likewise.
+	* modules/lstat (Depends-on): Likewise.
+	* modules/mkdir-p (Depends-on): Likewise.
+	* modules/modechange (Depends-on): Likewise.
+	* modules/open (Depends-on): Likewise.
+	* modules/readlink (Depends-on): Likewise.
+	* modules/same (Depends-on): Likewise.
+
 	stat: fix Solaris 9 bug
 	* m4/stat.m4 (gl_FUNC_STAT): Detect Solaris 9 bug with trailing
 	slash.

@@ -6,6 +6,7 @@ lib/lstat.c
 m4/lstat.m4
 
 Depends-on:
+stat
 sys_stat
 
 configure.ac:

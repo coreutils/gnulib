@@ -12,6 +12,7 @@ xalloc
 error
 dirname
 same-inode
+stat
 stdbool
 memcmp
 

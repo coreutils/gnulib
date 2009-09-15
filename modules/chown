@@ -9,6 +9,7 @@ m4/chown.m4
 Depends-on:
 open
 unistd
+stat
 sys_stat
 
 configure.ac:

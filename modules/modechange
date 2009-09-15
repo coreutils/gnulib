@@ -8,6 +8,7 @@ lib/modechange.c
 m4/modechange.m4
 
 Depends-on:
+stat
 stat-macros
 stdbool
 sys_stat
