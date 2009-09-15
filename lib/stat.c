@@ -18,6 +18,19 @@
 
 #include <config.h>
 
+/* Get the original definition of stat.  It might be defined as a macro.  */
+#define __need_system_sys_stat_h
+#include <sys/types.h>
+#include <sys/stat.h>
+#undef __need_system_sys_stat_h
+
+static inline int
+orig_stat (const char *filename, struct stat *buf)
+{
+  return stat (filename, buf);
+}
+
+/* Specification.  */
 #include <sys/stat.h>
 
 #include <errno.h>
@@ -25,18 +38,30 @@
 #include <stdbool.h>
 #include <string.h>
 
-#undef stat
-
-/* For now, mingw is the only known platform where stat(".") and
-   stat("./") give different results.  Mingw stat has other bugs (such
-   as st_ino always being 0 on success) which this wrapper does not
-   work around.  But at least this implementation provides the ability
-   to emulate fchdir correctly.  */
+/* Store information about NAME into ST.  Work around bugs with
+   trailing slashes.  Mingw has other bugs (such as st_ino always
+   being 0 on success) which this wrapper does not work around.  But
+   at least this implementation provides the ability to emulate fchdir
+   correctly.  */
 
 int
 rpl_stat (char const *name, struct stat *st)
 {
-  int result = stat (name, st);
+  int result = orig_stat (name, st);
+#if REPLACE_FUNC_STAT_FILE
+  /* Solaris 9 mistakenly succeeds when given a non-directory with a
+     trailing slash.  */
+  if (result == 0 && !S_ISDIR (st->st_mode))
+    {
+      size_t len = strlen (name);
+      if (ISSLASH (name[len - 1]))
+	{
+	  errno = ENOTDIR;
+	  return -1;
+	}
+    }
+#endif /* REPLACE_FUNC_STAT_FILE */
+#if REPLACE_FUNC_STAT_DIR
   if (result == -1 && errno == ENOENT)
     {
       /* Due to mingw's oddities, there are some directories (like
@@ -66,7 +91,7 @@ rpl_stat (char const *name, struct stat *st)
             }
           else
             fixed_name[len++] = '/';
-          result = stat (fixed_name, st);
+          result = orig_stat (fixed_name, st);
           if (result == 0 && check_dir && !S_ISDIR (st->st_mode))
             {
               result = -1;
@@ -74,5 +99,6 @@ rpl_stat (char const *name, struct stat *st)
             }
         }
     }
+#endif /* REPLACE_FUNC_STAT_DIR */
   return result;
 }

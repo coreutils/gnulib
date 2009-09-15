@@ -1,4 +1,4 @@
-# serial 1
+# serial 2
 
 # Copyright (C) 2009 Free Software Foundation, Inc.
 #
@@ -12,20 +12,38 @@ AC_DEFUN([gl_FUNC_STAT],
   AC_REQUIRE([gl_AC_DOS])
   AC_REQUIRE([gl_SYS_STAT_H_DEFAULTS])
   dnl mingw is the only known platform where stat(".") and stat("./") differ
-  AC_CACHE_CHECK([whether stat handles trailing slashes],
-      [gl_cv_func_stat_works],
+  AC_CACHE_CHECK([whether stat handles trailing slashes on directories],
+      [gl_cv_func_stat_dir_slash],
       [AC_RUN_IFELSE(
          [AC_LANG_PROGRAM(
            [[#include <sys/stat.h>
 ]], [[struct stat st; return stat (".", &st) != stat ("./", &st);]])],
-         [gl_cv_func_stat_works=yes], [gl_cv_func_stat_works=no],
+         [gl_cv_func_stat_dir_slash=yes], [gl_cv_func_stat_dir_slash=no],
          [case $host_os in
-            mingw*) gl_cv_func_stat_works="guessing no";;
-            *) gl_cv_func_stat_works="guessing yes";;
+            mingw*) gl_cv_func_stat_dir_slash="guessing no";;
+            *) gl_cv_func_stat_dir_slash="guessing yes";;
           esac])])
-  case $gl_cv_func_stat_works in
-    *yes) ;;
-    *) REPLACE_STAT=1
-       AC_LIBOBJ([stat]);;
+  dnl Solaris 9 mistakenly succeeds on stat("file/")
+  AC_CACHE_CHECK([whether stat handles trailing slashes on files],
+      [gl_cv_func_stat_file_slash],
+      [touch conftest.tmp
+       AC_RUN_IFELSE(
+         [AC_LANG_PROGRAM(
+           [[#include <sys/stat.h>
+]], [[struct stat st; return !stat ("conftest.tmp/", &st);]])],
+         [gl_cv_func_stat_file_slash=yes], [gl_cv_func_stat_file_slash=no],
+         [gl_cv_func_stat_file_slash="guessing no"])])
+  case $gl_cv_func_stat_dir_slash in
+    *no) REPLACE_STAT=1
+      AC_DEFINE([REPLACE_FUNC_STAT_DIR], [1], [Define to 1 if stat needs
+        help when passed a directory name with a trailing slash]);;
   esac
+  case $gl_cv_func_stat_file_slash in
+    *no) REPLACE_STAT=1
+      AC_DEFINE([REPLACE_FUNC_STAT_FILE], [1], [Define to 1 if stat needs
+        help when passed a file name with a trailing slash]);;
+  esac
+  if test $REPLACE_STAT = 1; then
+    AC_LIBOBJ([stat])
+  fi
 ])

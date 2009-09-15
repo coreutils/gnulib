@@ -9,6 +9,10 @@ Gnulib module: stat
 Portability problems fixed by Gnulib:
 @itemize
 @item
+On some platforms, @code{stat("file/",buf)} succeeds instead of
+failing with @code{ENOTDIR}.
+Solaris 9.
+@item
 On some platforms, @code{stat(".",buf)} and @code{stat("./",buf)} give
 different results:
 mingw.

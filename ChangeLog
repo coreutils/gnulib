@@ -1,5 +1,11 @@
 2009-09-19  Eric Blake  <ebb9@byu.net>
 
+	stat: fix Solaris 9 bug
+	* m4/stat.m4 (gl_FUNC_STAT): Detect Solaris 9 bug with trailing
+	slash.
+	* lib/stat.c (rpl_stat): Work around it.
+	* doc/posix-functions/stat.texi (stat): Update documentation.
+
 	stat: new module, for mingw bug
 	* modules/stat: New file.
 	* lib/stat.c: Likewise.
