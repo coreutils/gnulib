@@ -35,14 +35,10 @@ extern "C" {
 
 /* Declare overridden functions.  */
 
-#if @REPLACE_FCHDIR@
-# define opendir rpl_opendir
-extern DIR * opendir (const char *);
+#if @REPLACE_CLOSEDIR@
 # define closedir rpl_closedir
 extern int closedir (DIR *);
 #endif
-
-/* Declare other POSIX functions.  */
 
 #if @GNULIB_DIRFD@
 # if !@HAVE_DECL_DIRFD@ && !defined dirfd
@@ -73,6 +69,11 @@ extern DIR *fdopendir (int fd);
     (GL_LINK_WARNING ("fdopendir is unportable - " \
                       "use gnulib module fdopendir for portability"), \
      fdopendir (f))
+#endif
+
+#if @REPLACE_OPENDIR@
+# define opendir rpl_opendir
+extern DIR * opendir (const char *);
 #endif
 
 #if @GNULIB_SCANDIR@

@@ -1,4 +1,4 @@
-# fchdir.m4 serial 9
+# fchdir.m4 serial 10
 dnl Copyright (C) 2006-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -16,7 +16,13 @@ AC_DEFUN([gl_FUNC_FCHDIR],
     gl_PREREQ_FCHDIR
     AC_DEFINE([REPLACE_FCHDIR], [1],
       [Define to 1 if gnulib's fchdir() replacement is used.])
+    dnl We must also replace anything that can manipulate a directory fd,
+    dnl to keep our bookkeeping up-to-date.  We don't have to replace
+    dnl fstatat, since no platform has fstatat but lacks fchdir.
     REPLACE_FSTAT=1
+    REPLACE_OPENDIR=1
+    REPLACE_CLOSEDIR=1
+    REPLACE_DUP=1
     gl_REPLACE_OPEN
     gl_REPLACE_CLOSE
     gl_REPLACE_DUP2

@@ -1,4 +1,4 @@
-# sys_stat_h.m4 serial 14   -*- Autoconf -*-
+# sys_stat_h.m4 serial 15   -*- Autoconf -*-
 dnl Copyright (C) 2006-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -63,6 +63,7 @@ AC_DEFUN([gl_SYS_STAT_H_DEFAULTS],
   HAVE_MKDIRAT=1;     AC_SUBST([HAVE_MKDIRAT])
   HAVE_MKFIFOAT=1;    AC_SUBST([HAVE_MKFIFOAT])
   HAVE_MKNODAT=1;     AC_SUBST([HAVE_MKNODAT])
+  REPLACE_FSTAT=0;    AC_SUBST([REPLACE_FSTAT])
   REPLACE_FSTATAT=0;  AC_SUBST([REPLACE_FSTATAT])
   REPLACE_LSTAT=0;    AC_SUBST([REPLACE_LSTAT])
   REPLACE_MKDIR=0;    AC_SUBST([REPLACE_MKDIR])

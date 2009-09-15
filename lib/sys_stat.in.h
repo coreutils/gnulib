@@ -369,7 +369,7 @@ int mknodat (int fd, char const *file, mode_t mode, dev_t dev);
      mknodat (f, n, m, d))
 #endif
 
-#if @REPLACE_FCHDIR@
+#if @REPLACE_FSTAT@
 # define fstat rpl_fstat
 extern int fstat (int fd, struct stat *buf);
 #endif

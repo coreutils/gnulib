@@ -1,5 +1,18 @@
 2009-09-15  Eric Blake  <ebb9@byu.net>
 
+	fchdir: improve use of replacement functions
+	* m4/fchdir.m4 (gl_FUNC_FCHDIR): Set appropriate witnesses.
+	* m4/sys_stat_h.m4 (gl_SYS_STAT_H_DEFAULTS): Add REPLACE_FSTAT.
+	* m4/dirent_h.m4 (gl_DIRENT_H_DEFAULTS): Add REPLACE_OPENDIR,
+	REPLACE_CLOSEDIR.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Add REPLACE_DUP.
+	* modules/sys_stat (Makefile.am): Substitute correct witness.
+	* modules/dirent (Makefile.am): Likewise.
+	* modules/unistd (Makefile.am): Likewise.
+	* lib/dirent.in.h (opendir, closedir): Use better witnesses.
+	* lib/unistd.in.h (dup): Likewise.
+	* lib/sys_stat.in.h (fstat): Likewise.
+
 	maint: ignore gnulib-tool temp files
 	* .gitignore: Ignore files created during gnulib-tool --test.
 

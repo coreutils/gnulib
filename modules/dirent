@@ -32,7 +32,8 @@ dirent.h: dirent.in.h
 	      -e 's|@''HAVE_FDOPENDIR''@|$(HAVE_FDOPENDIR)|g' \
 	      -e 's|@''HAVE_SCANDIR''@|$(HAVE_SCANDIR)|g' \
 	      -e 's|@''HAVE_ALPHASORT''@|$(HAVE_ALPHASORT)|g' \
-	      -e 's|@''REPLACE_FCHDIR''@|$(REPLACE_FCHDIR)|g' \
+	      -e 's|@''REPLACE_CLOSEDIR''@|$(REPLACE_CLOSEDIR)|g' \
+	      -e 's|@''REPLACE_OPENDIR''@|$(REPLACE_OPENDIR)|g' \
 	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
 	      < $(srcdir)/dirent.in.h; \
 	} > $@-t && \

@@ -231,6 +231,10 @@ extern int close (int);
      close (f))
 #endif
 
+#if @REPLACE_DUP@
+# define dup rpl_dup
+extern int dup (int);
+#endif
 
 #if @GNULIB_DUP2@
 # if @REPLACE_DUP2@
@@ -312,16 +316,12 @@ extern int euidaccess (const char *filename, int mode);
 
 #if @GNULIB_FCHDIR@
 # if @REPLACE_FCHDIR@
-
 /* Change the process' current working directory to the directory on which
    the given file descriptor is open.
    Return 0 if successful, otherwise -1 and errno set.
    See the POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/fchdir.html>.  */
 extern int fchdir (int /*fd*/);
-
-#  define dup rpl_dup
-extern int dup (int);
 
 /* Gnulib internal hooks needed to maintain the fchdir metadata.  */
 extern int _gl_register_fd (int fd, const char *filename);
