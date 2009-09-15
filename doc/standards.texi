@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate June 7, 2009
+@set lastupdate September 14, 2009
 @c %**end of header
 
 @dircategory GNU organization
@@ -3948,7 +3948,7 @@ is preferable to setting them in environment variables:
 CC=gcc ./configure
 @end example
 as it helps to recreate the same configuration later with
-@file{config.status}.
+@file{config.status}.  However, both methods should be supported.
 @end table
 
 All @code{configure} scripts should accept all of the ``detail''
@@ -4210,5 +4210,5 @@ eval: (add-hook 'write-file-hooks 'time-stamp)
 time-stamp-start: "@set lastupdate "
 time-stamp-end: "$"
 time-stamp-format: "%:b %:d, %:y"
-compile-command: "make just-standards"
+compile-command: "cd work.s && make"
 End:
