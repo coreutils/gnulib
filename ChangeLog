@@ -1,3 +1,8 @@
+2009-09-15  Eric Blake  <ebb9@byu.net>
+
+	maint: ignore gnulib-tool temp files
+	* .gitignore: Ignore files created during gnulib-tool --test.
+
 2009-09-13  Jim Meyering  <meyering@redhat.com>
 
 	posixtm: don't reject a time that specify "60" as the number of seconds
