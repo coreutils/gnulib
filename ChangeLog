@@ -1,5 +1,8 @@
 2009-09-16  Eric Blake  <ebb9@byu.net>
 
+	rmdir-errno: mark obsolete, it is unsafe for cross-compilation
+	* modules/rmdir-errno (Status, Notice): Now obsolete.
+
 	rmdir: work around cygwin 1.5.x and mingw bugs
 	* m4/rmdir.m4 (gl_FUNC_RMDIR): Detect the bugs.
 	* lib/rmdir.c (rmdir): Work around it.

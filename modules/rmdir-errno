@@ -1,6 +1,12 @@
 Description:
 rmdir errno for nonempty directories
 
+Status:
+obsolete
+
+Notice:
+This module is obsolete.
+
 Files:
 m4/rmdir-errno.m4
 
