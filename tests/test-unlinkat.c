@@ -1,4 +1,4 @@
-/* Tests of rmdir.
+/* Tests of unlinkat.
    Copyright (C) 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -42,12 +42,20 @@
     }                                                                        \
   while (0)
 
-#define BASE "test-rmdir.t"
+#define BASE "test-unlinkat.t"
 
 #include "test-rmdir.h"
+
+/* Wrapper around unlinkat to test rmdir behavior.  */
+static int
+rmdirat (char const *name)
+{
+  return unlinkat (AT_FDCWD, name, AT_REMOVEDIR);
+}
 
 int
 main ()
 {
-  return test_rmdir_func (rmdir);
+  /* FIXME: Add tests of unlinkat(,0), and of fd instead of AT_FDCWD.  */
+  return test_rmdir_func (rmdirat);
 }

@@ -1,0 +1,13 @@
+Files:
+tests/test-rmdir.h
+tests/test-unlinkat.c
+
+Depends-on:
+
+configure.ac:
+AC_CHECK_FUNCS_ONCE([symlink])
+
+Makefile.am:
+TESTS += test-unlinkat
+check_PROGRAMS += test-unlinkat
+test_unlinkat_LDADD = $(LDADD) @LIBINTL@

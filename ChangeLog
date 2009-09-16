@@ -1,5 +1,12 @@
 2009-09-16  Eric Blake  <ebb9@byu.net>
 
+	openat-tests: ensure unlinkat behaves like rmdir
+	* tests/test-rmdir.c (main): Factor guts...
+	* tests/test-rmdir.h (test_rmdir_func): ...into new file.
+	* modules/rmdir-tests (Files): Ship new file.
+	* modules/openat-tests: New test.
+	* tests/test-unlinkat.c: Likewise.
+
 	rmdir-errno: mark obsolete, it is unsafe for cross-compilation
 	* modules/rmdir-errno (Status, Notice): Now obsolete.
 
