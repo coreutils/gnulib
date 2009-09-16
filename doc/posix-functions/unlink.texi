@@ -4,14 +4,27 @@
 
 POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/unlink.html}
 
-Gnulib module: ---
+Gnulib module: unlink
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+Some systems mistakenly succeed on @code{unlink("file/")}:
+Solaris 9.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+Some systems allow a superuser to unlink directories, even though this
+can cause file system corruption.  The error given if a process is not
+permitted to unlink directories varies across implementations; it is
+not always the POSIX value of @code{EPERM}.  Meanwhile, if a process
+has the ability to unlink directories, POSIX requires that
+@code{unlink("symlink-to-dir/")} remove @file{dir} and leave
+@file{symlink-to-dir} dangling; this behavior is counter-intuitive.
+The gnulib module unlinkdir can help determine whether code must be
+cautious of unlinking directories.
 @item
 Removing an open file is non-portable: On Unix this allows the programs that
 have the file already open to continue working with it; the file's storage

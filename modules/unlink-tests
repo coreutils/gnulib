@@ -1,0 +1,12 @@
+Files:
+tests/test-unlink.c
+
+Depends-on:
+unlinkdir
+
+configure.ac:
+AC_CHECK_FUNCS_ONCE([symlink])
+
+Makefile.am:
+TESTS += test-unlink
+check_PROGRAMS += test-unlink

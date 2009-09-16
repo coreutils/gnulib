@@ -164,6 +164,21 @@ extern int fchownat (int fd, char const *file, uid_t owner, gid_t group, int fla
 #endif
 
 
+#if @GNULIB_UNLINK@
+# if @REPLACE_UNLINK@
+#  undef unlink
+#  define unlink rpl_unlink
+extern int unlink (char const *file);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef unlink
+# define unlink(n)                         \
+    (GL_LINK_WARNING ("unlink is not portable - " \
+                      "use gnulib module unlink for portability"), \
+     unlink (n))
+#endif
+
+
 #if @GNULIB_UNLINKAT@
 # if !@HAVE_UNLINKAT@
 extern int unlinkat (int fd, char const *file, int flag);

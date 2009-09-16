@@ -1,5 +1,17 @@
 2009-09-19  Eric Blake  <ebb9@byu.net>
 
+	unlink: new module, for Solaris 9 bug
+	* modules/unlink: New file.
+	* lib/unlink.c: Likewise.
+	* m4/unlink.m4 (gl_FUNC_UNLINK): Likewise.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Add witnesses.
+	* modules/unistd (Makefile.am): Use them.
+	* lib/unistd.in.h (stat): Declare replacement.
+	* MODULES.html.sh (systems lacking POSIX:2008): Mention module.
+	* doc/posix-functions/unlink.texi (unlink): Likewise.
+	* modules/unlink-tests: New test.
+	* tests/test-unlink.c: Likewise.
+
 	lstat: fix Solaris 9 bug
 	* lib/lstat.c (lstat): Also check for trailing slash on
 	non-symlink, non-directories.  Use stat module to simplify logic.

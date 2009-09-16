@@ -1,4 +1,4 @@
-# unistd_h.m4 serial 27
+# unistd_h.m4 serial 28
 dnl Copyright (C) 2006-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -61,6 +61,7 @@ AC_DEFUN([gl_UNISTD_H_DEFAULTS],
   GNULIB_SYMLINKAT=0;        AC_SUBST([GNULIB_SYMLINKAT])
   GNULIB_UNISTD_H_GETOPT=0;  AC_SUBST([GNULIB_UNISTD_H_GETOPT])
   GNULIB_UNISTD_H_SIGPIPE=0; AC_SUBST([GNULIB_UNISTD_H_SIGPIPE])
+  GNULIB_UNLINK=0;           AC_SUBST([GNULIB_UNLINK])
   GNULIB_UNLINKAT=0;         AC_SUBST([GNULIB_UNLINKAT])
   GNULIB_WRITE=0;            AC_SUBST([GNULIB_WRITE])
   dnl Assume proper GNU behavior unless another module says otherwise.
@@ -99,6 +100,7 @@ AC_DEFUN([gl_UNISTD_H_DEFAULTS],
   REPLACE_LINK=0;         AC_SUBST([REPLACE_LINK])
   REPLACE_LSEEK=0;        AC_SUBST([REPLACE_LSEEK])
   REPLACE_RMDIR=0;        AC_SUBST([REPLACE_RMDIR])
+  REPLACE_UNLINK=0;       AC_SUBST([REPLACE_UNLINK])
   REPLACE_WRITE=0;        AC_SUBST([REPLACE_WRITE])
   UNISTD_H_HAVE_WINSOCK2_H=0; AC_SUBST([UNISTD_H_HAVE_WINSOCK2_H])
   UNISTD_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS=0;
