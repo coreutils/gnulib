@@ -1,5 +1,9 @@
 2009-09-16  Eric Blake  <ebb9@byu.net>
 
+	unlinkdir: port to mingw
+	* m4/unlinkdir.m4 (gl_UNLINKDIR): Add mingw to list of platforms
+	that refuse anyone to unlink a directory.
+
 	stdlib: sort witness names
 	* modules/stdlib (Makefile.am): Sort replacements.
 	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Likewise.

@@ -16,17 +16,18 @@ AC_DEFUN([gl_UNLINKDIR],
   AC_LIBOBJ([unlinkdir])
 
   # The Hurd, the Linux kernel, the FreeBSD kernel version 2.2 and later,
-  # and Cygwin never let anyone (even root) unlink directories.
+  # Cygwin, and mingw never let anyone (even root) unlink directories.
   # If anyone knows of another system for which unlink can never
   # remove a directory, please report it to <bug-coreutils@gnu.org>.
   # Unfortunately this is difficult to test for, since it requires root access
   # and might create garbage in the file system,
   # so the code below simply relies on the kernel name and version number.
-  case $host in
-  *-*-gnu[[0-9]]* | \
-  *-*-linux-* | *-*-linux | \
-  *-*-freebsd2.2* | *-*-freebsd[[3-9]]* | *-*-freebsd[[1-9]][[0-9]]* | \
-  *-cygwin)
+  case $host_os in
+  gnu[[0-9]]* | \
+  linux-* | linux | \
+  freebsd2.2* | freebsd[[3-9]]* | freebsd[[1-9]][[0-9]]* | \
+  cygwin | \
+  mingw*)
     AC_DEFINE([UNLINK_CANNOT_UNLINK_DIR], [1],
       [Define to 1 if unlink (dir) cannot possibly succeed.]);;
   esac
