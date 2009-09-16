@@ -12,3 +12,4 @@ Makefile.am:
 TESTS += test-parse-duration.sh
 TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
 check_PROGRAMS += test-parse-duration
+test_parse_duration_LDADD = $(LDADD) @LIBINTL@

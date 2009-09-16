@@ -1,5 +1,10 @@
 2009-09-16  Eric Blake  <ebb9@byu.net>
 
+	parse-duration-tests: avoid link failure
+	* modules/parse-duration-tests (test_parse_duration_LDADD): Add
+	LIBINTL.
+	Reported by Tom G. Christensen.
+
 	openat-tests: ensure unlinkat behaves like rmdir
 	* tests/test-rmdir.c (main): Factor guts...
 	* tests/test-rmdir.h (test_rmdir_func): ...into new file.
