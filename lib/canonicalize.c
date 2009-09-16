@@ -152,6 +152,7 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
   char const *rname_limit;
   size_t extra_len = 0;
   Hash_table *ht = NULL;
+  int saved_errno;
 
   if (name == NULL)
     {
@@ -239,6 +240,7 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
 
 	  if (lstat (rname, &st) != 0)
 	    {
+	      saved_errno = errno;
 	      if (can_mode == CAN_EXISTING)
 		goto error;
 	      if (can_mode == CAN_ALL_BUT_LAST && *end)
@@ -259,7 +261,7 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
 		{
 		  if (can_mode == CAN_MISSING)
 		    continue;
-		  errno = ELOOP;
+		  saved_errno = ELOOP;
 		  goto error;
 		}
 
@@ -268,6 +270,7 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
 		{
 		  if (can_mode == CAN_MISSING && errno != ENOMEM)
 		    continue;
+		  saved_errno = errno;
 		  goto error;
 		}
 
@@ -303,7 +306,7 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
 	    {
 	      if (!S_ISDIR (st.st_mode) && *end && (can_mode != CAN_MISSING))
 		{
-		  errno = ENOTDIR;
+		  saved_errno = ENOTDIR;
 		  goto error;
 		}
 	    }
@@ -323,5 +326,6 @@ error:
   free (rname);
   if (ht)
     hash_free (ht);
+  errno = saved_errno;
   return NULL;
 }

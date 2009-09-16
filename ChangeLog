@@ -1,5 +1,9 @@
 2009-09-17  Eric Blake  <ebb9@byu.net>
 
+	canonicalize: don't lose errno
+	* lib/canonicalize.c (canonicalize_filename_mode): Protect errno
+	over calls to free.
+
 	canonicalize: simplify errno handling
 	* lib/canonicalize.c (__set_errno): Delete macro, and use direct
 	assignment.
