@@ -1,5 +1,10 @@
 2009-09-16  Jim Meyering  <meyering@redhat.com>
 
+	posixtm-tests: adjust the sole failing test
+	* tests/test-posixtm.c: Correct 0000-01-01 00:00:00 test so that
+	expected output matches what mktime now produces.  Cross-checked via
+	erlang's calendar:datetime_to_gregorian_seconds({{1970,1,1},{0,0,0}})
+
 	posixtm: move #ifdef'd tests into a new module
 	* lib/posixtm.c (posixtime): Remove #ifdef'd tests.  Move to...
 	* tests/test-posixtm.c: ... this new file.
