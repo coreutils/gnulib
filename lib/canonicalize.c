@@ -32,18 +32,13 @@
 #include <errno.h>
 #include <stddef.h>
 
+#include "areadlink.h"
 #include "file-set.h"
 #include "filenamecat.h"
 #include "hash-triple.h"
+#include "pathmax.h"
 #include "xalloc.h"
 #include "xgetcwd.h"
-
-#ifndef __set_errno
-# define __set_errno(Val) errno = (Val)
-#endif
-
-#include "pathmax.h"
-#include "areadlink.h"
 
 #if !(HAVE_CANONICALIZE_FILE_NAME || GNULIB_CANONICALIZE_LGPL)
 /* Return the canonical absolute name of file NAME.  A canonical name
@@ -62,13 +57,13 @@ canonicalize_file_name (const char *name)
 
   if (name == NULL)
     {
-      __set_errno (EINVAL);
+      errno = EINVAL;
       return NULL;
     }
 
   if (name[0] == '\0')
     {
-      __set_errno (ENOENT);
+      errno = ENOENT;
       return NULL;
     }
 
@@ -160,13 +155,13 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
 
   if (name == NULL)
     {
-      __set_errno (EINVAL);
+      errno = EINVAL;
       return NULL;
     }
 
   if (name[0] == '\0')
     {
-      __set_errno (ENOENT);
+      errno = ENOENT;
       return NULL;
     }
 
@@ -262,11 +257,10 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
 		 the same symlink,NAME pair twice does indicate a loop.  */
 	      if (seen_triple (&ht, name, &st))
 		{
-		  __set_errno (ELOOP);
 		  if (can_mode == CAN_MISSING)
 		    continue;
-		  else
-		    goto error;
+		  errno = ELOOP;
+		  goto error;
 		}
 
 	      buf = areadlink_with_size (rname, st.st_size);
@@ -274,8 +268,7 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
 		{
 		  if (can_mode == CAN_MISSING && errno != ENOMEM)
 		    continue;
-		  else
-		    goto error;
+		  goto error;
 		}
 
 	      n = strlen (buf);
