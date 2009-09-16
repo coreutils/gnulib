@@ -1,0 +1,11 @@
+Files:
+tests/test-rmdir.c
+
+Depends-on:
+
+configure.ac:
+AC_CHECK_FUNCS_ONCE([symlink])
+
+Makefile.am:
+TESTS += test-rmdir
+check_PROGRAMS += test-rmdir

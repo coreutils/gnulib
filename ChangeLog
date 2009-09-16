@@ -1,3 +1,20 @@
+2009-09-16  Eric Blake  <ebb9@byu.net>
+
+	rmdir: work around cygwin 1.5.x and mingw bugs
+	* m4/rmdir.m4 (gl_FUNC_RMDIR): Detect the bugs.
+	* lib/rmdir.c (rmdir): Work around it.
+	* modules/rmdir (Status, Notice): No longer obsolete.
+	(Files): Add dos.m4.
+	(Depends-on): Add unistd.
+	(configure.ac): Set witnesses.
+	(License): Relax to LGPLv2+.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Set defaults.
+	* modules/unistd (Makefile.am): Substitute witnesses.
+	* lib/unistd.in.h (rmdir): Declare replacement.
+	* doc/posix-functions/rmdir.texi (rmdir): Document this.
+	* modules/rmdir-tests: New tests.
+	* tests/test-rmdir.c: Likewise.
+
 2009-09-15  Eric Blake  <ebb9@byu.net>
 
 	fchdir: improve use of replacement functions

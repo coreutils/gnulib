@@ -1,6 +1,6 @@
-/* BSD compatible remove directory function for System V
+/* Work around rmdir bugs.
 
-   Copyright (C) 1988, 1990, 1999, 2003, 2004, 2005, 2006 Free
+   Copyright (C) 1988, 1990, 1999, 2003, 2004, 2005, 2006, 2009 Free
    Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -18,18 +18,43 @@
 
 #include <config.h>
 
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <errno.h>
+#include <unistd.h>
 
-/* rmdir adapted from GNU tar.  */
+#include <errno.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+
+#undef rmdir
 
 /* Remove directory DIR.
    Return 0 if successful, -1 if not.  */
 
 int
-rmdir (char const *dir)
+rpl_rmdir (char const *dir)
 {
+#if HAVE_RMDIR
+  /* Work around cygwin 1.5.x bug where rmdir("dir/./") succeeds.  */
+  size_t len = strlen (dir);
+  int result;
+  while (len && ISSLASH (dir[len - 1]))
+    len--;
+  if (len && dir[len - 1] == '.' && (1 == len || ISSLASH (dir[len - 2])))
+    {
+      errno = EINVAL;
+      return -1;
+    }
+  result = rmdir (dir);
+  /* Work around mingw bug, where rmdir("file/") fails with EINVAL
+     instead of ENOTDIR.  We've already filtered out trailing ., the
+     only reason allowed by POSIX for EINVAL.  */
+  if (result == -1 && errno == EINVAL)
+    errno = ENOTDIR;
+  return result;
+
+#else /* !HAVE_RMDIR */
+  /* rmdir adapted from GNU tar.  FIXME: Delete this implementation in
+     2010 if no one reports a system with missing rmdir.  */
   pid_t cpid;
   int status;
   struct stat statbuf;
@@ -70,4 +95,5 @@ rmdir (char const *dir)
 	}
       return 0;
     }
+#endif /* !HAVE_RMDIR */
 }

@@ -672,6 +672,21 @@ extern int readlink (const char *file, char *buf, size_t bufsize);
 #endif
 
 
+#if @GNULIB_RMDIR@
+# if @REPLACE_RMDIR@
+#  define rmdir rpl_rmdir
+/* Remove the directory DIR.  */
+extern int rmdir (char const *name);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef rmdir
+# define rmdir(n) \
+    (GL_LINK_WARNING ("rmdir is unportable - " \
+                      "use gnulib module rmdir for portability"), \
+     rmdir (n))
+#endif
+
+
 #if @GNULIB_SLEEP@
 /* Pause the execution of the current thread for N seconds.
    Returns the number of seconds left to sleep.
