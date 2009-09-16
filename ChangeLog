@@ -1,3 +1,10 @@
+2009-09-16  Jim Meyering  <meyering@redhat.com>
+
+	posixtm: move #ifdef'd tests into a new module
+	* lib/posixtm.c (posixtime): Remove #ifdef'd tests.  Move to...
+	* tests/test-posixtm.c: ... this new file.
+	* modules/posixtm-tests: New module.
+
 2009-09-19  Eric Blake  <ebb9@byu.net>
 
 	openat: simplify use of at-func.c

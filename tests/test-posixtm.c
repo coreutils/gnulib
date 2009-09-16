@@ -1,0 +1,175 @@
+/* Test that openat_safer leave standard fds alone.
+   Copyright (C) 2009 Free Software Foundation, Inc.
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+
+/* Written by Jim Meyering.  */
+
+#include <config.h>
+
+#include "posixtm.h"
+#include "intprops.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define STREQ(a, b) (strcmp (a, b) == 0)
+
+#define ASSERT(expr) \
+  do									     \
+    {									     \
+      if (!(expr))							     \
+        {								     \
+          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
+          fflush (stderr);						     \
+          abort ();							     \
+        }								     \
+    }									     \
+  while (0)
+
+struct posixtm_test
+{
+  char const *in;
+  unsigned int syntax_bits;
+  char const *expected;
+};
+
+/* Test mainly with syntax_bits == 13
+   (aka: (PDS_LEADING_YEAR | PDS_CENTURY | PDS_SECONDS))  */
+
+static struct posixtm_test T[] =
+  {
+    { "12131415.16",     13, "  1039788916 Fri Dec 13 14:15:16 2002" },
+    { "12131415.16",     13, "  1039788916 Fri Dec 13 14:15:16 2002" },
+    { "000001010000.00", 13, "-62167132800 Sun Jan  1 00:00:00 0000" },
+    { "190112132045.52", 13, " -2147483648 Fri Dec 13 20:45:52 1901" },
+    { "190112132045.53", 13, " -2147483647 Fri Dec 13 20:45:53 1901" },
+    { "190112132046.52", 13, " -2147483588 Fri Dec 13 20:46:52 1901" },
+    { "190112132145.52", 13, " -2147480048 Fri Dec 13 21:45:52 1901" },
+    { "190112142045.52", 13, " -2147397248 Sat Dec 14 20:45:52 1901" },
+    { "190201132045.52", 13, " -2144805248 Mon Jan 13 20:45:52 1902" },
+    { "196912312359.59", 13, "          -1 Wed Dec 31 23:59:59 1969" },
+    { "197001010000.00", 13, "           0 Thu Jan  1 00:00:00 1970" },
+    { "197001010000.01", 13, "           1 Thu Jan  1 00:00:01 1970" },
+    { "197001010001.00", 13, "          60 Thu Jan  1 00:01:00 1970" },
+    { "197001010000.60", 13, "          60 Thu Jan  1 00:01:00 1970" },
+    { "197001010100.00", 13, "        3600 Thu Jan  1 01:00:00 1970" },
+    { "197001020000.00", 13, "       86400 Fri Jan  2 00:00:00 1970" },
+    { "197002010000.00", 13, "     2678400 Sun Feb  1 00:00:00 1970" },
+    { "197101010000.00", 13, "    31536000 Fri Jan  1 00:00:00 1971" },
+    { "197001000000.00", 13, "           * *" },
+    { "197000010000.00", 13, "           * *" },
+    { "197001010060.00", 13, "           * *" },
+    { "197001012400.00", 13, "           * *" },
+    { "197001320000.00", 13, "           * *" },
+    { "197013010000.00", 13, "           * *" },
+    { "203801190314.06", 13, "  2147483646 Tue Jan 19 03:14:06 2038" },
+    { "203801190314.07", 13, "  2147483647 Tue Jan 19 03:14:07 2038" },
+    { "203801190314.08", 13, "  2147483648 Tue Jan 19 03:14:08 2038" },
+    { "999912312359.59", 13, "253402300799 Fri Dec 31 23:59:59 9999" },
+    { "1112131415",      13, "  1323785700 Tue Dec 13 14:15:00 2011" },
+    { "1112131415.16",   13, "  1323785716 Tue Dec 13 14:15:16 2011" },
+    { "201112131415.16", 13, "  1323785716 Tue Dec 13 14:15:16 2011" },
+    { "191112131415.16", 13, " -1831974284 Wed Dec 13 14:15:16 1911" },
+    { "203712131415.16", 13, "  2144326516 Sun Dec 13 14:15:16 2037" },
+    { "3712131415.16",   13, "  2144326516 Sun Dec 13 14:15:16 2037" },
+    { "6812131415.16",   13, "  3122633716 Thu Dec 13 14:15:16 2068" },
+    { "6912131415.16",   13, "    -1590284 Sat Dec 13 14:15:16 1969" },
+    { "7012131415.16",   13, "    29945716 Sun Dec 13 14:15:16 1970" },
+    { "1213141599",       2, "   945094500 Mon Dec 13 14:15:00 1999" },
+    { "1213141500",       2, "   976716900 Wed Dec 13 14:15:00 2000" },
+    { NULL,               0, NULL }
+  };
+
+int
+main (void)
+{
+  unsigned int i;
+  int fail = 0;
+  char curr_year_str[30];
+  struct tm *tm;
+  time_t t_now;
+  int err;
+  size_t n_bytes;
+
+  /* The above test data requires Universal Time, e.g., TZ="UTC0".  */
+  err = setenv ("TZ", "UTC0", 1);
+  ASSERT (err == 0);
+
+  t_now = time (NULL);
+  ASSERT (t_now != (time_t) -1);
+  tm = localtime (&t_now);
+  ASSERT (tm);
+  n_bytes = strftime (curr_year_str, sizeof curr_year_str, "%Y", tm);
+  ASSERT (0 < n_bytes);
+
+  /* This test data also assumes that time_t is signed and is at least
+     39 bits wide, so that it can represent all years from 0000 through
+     9999.  A host with 32-bit signed time_t can represent only time
+     stamps in the range 1901-12-13 20:45:52 through 2038-01-18
+     03:14:07 UTC, assuming POSIX time_t with no leap seconds, so test
+     cases outside this range will not work on such a host.  */
+  if ( ! TYPE_SIGNED (time_t))
+    {
+      fprintf (stderr, "%s: this test requires signed time_t\n");
+      return 77;
+    }
+
+  if (sizeof (time_t) * CHAR_BIT < 39)
+    {
+      fprintf (stderr, "%s: this test requires time_t at least 39 bits wide\n");
+      return 77;
+    }
+
+
+  for (i = 0; T[i].in; i++)
+    {
+      char out_buf[100];
+      time_t t;
+
+      /* The first two tests assume that the current year is 2002.
+         If an input string does not specify the year number, and
+	 the expected output year is not the same as the current year,
+	 then skip the test.  For example:
+	 { "12131415.16", "  1039788916 Fri Dec 13 14:15:16 2002" }, */
+      if (8 <= strlen (T[i].in)
+	  && (T[i].in[8] == '.' || T[i].in[8] == '\0')
+	  && 4 < strlen (T[i].expected)
+	  && ! STREQ (T[i].expected + (strlen (T[i].expected) - 4),
+		      curr_year_str))
+	continue;
+
+      if (posixtime (&t, T[i].in, T[i].syntax_bits))
+        sprintf (out_buf, "%12ld %s", (long int) t, ctime (&t));
+      else
+        sprintf (out_buf, "%12s %s", "*", "*\n");
+
+      out_buf[strlen (out_buf) - 1] = '\0';
+      if (!STREQ (out_buf, T[i].expected))
+        {
+          printf ("mismatch (-: actual; +:expected)\n-%s\n+%s\n",
+                  out_buf, T[i].expected);
+          fail = 1;
+        }
+    }
+
+  return fail;
+}
+
+/*
+Local Variables:
+indent-tabs-mode: nil
+End:
+*/
