@@ -1,5 +1,10 @@
 2009-09-16  Jim Meyering  <meyering@redhat.com>
 
+	posixtm-tests: make T const-correct; add a test case
+	* tests/test-posixtm.c (T): Declare const.
+	Add a test for -(2^31+1).
+	Remove useless can-succeed-only-in-2002 test.
+
 	posixtm-tests: adjust the sole failing test
 	* tests/test-posixtm.c: Correct 0000-01-01 00:00:00 test so that
 	expected output matches what mktime now produces.  Cross-checked via

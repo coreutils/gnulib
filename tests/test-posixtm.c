@@ -49,11 +49,10 @@ struct posixtm_test
 /* Test mainly with syntax_bits == 13
    (aka: (PDS_LEADING_YEAR | PDS_CENTURY | PDS_SECONDS))  */
 
-static struct posixtm_test T[] =
+static struct posixtm_test const T[] =
   {
-    { "12131415.16",     13, "  1039788916 Fri Dec 13 14:15:16 2002" },
-    { "12131415.16",     13, "  1039788916 Fri Dec 13 14:15:16 2002" },
     { "000001010000.00", 13, "-62167219200 Sat Jan  1 00:00:00 0" },
+    { "190112132045.51", 13, " -2147483649 Fri Dec 13 20:45:51 1901" },
     { "190112132045.52", 13, " -2147483648 Fri Dec 13 20:45:52 1901" },
     { "190112132045.53", 13, " -2147483647 Fri Dec 13 20:45:53 1901" },
     { "190112132046.52", 13, " -2147483588 Fri Dec 13 20:46:52 1901" },
