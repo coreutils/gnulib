@@ -3,6 +3,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   Net::CDP        http://search.cpan.org/src/MCHAPMAN/Net-CDP-0.09/libcdp/
   OPeNDAP         http://scm.opendap.org:8090/svn/trunk/
   anubis          http://cvs.sv.gnu.org/viewcvs/anubis/anubis/
+  augeas          http://augeas.net/
   autobuild       http://josefsson.org/autobuild/
   bison           http://git.sv.gnu.org/gitweb/?p=bison.git
   clisp           http://clisp.cvs.sourceforge.net/clisp/clisp/
@@ -46,6 +47,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   man-db          http://www.chiark.greenend.org.uk/~cjwatson/bzr/man-db/trunk/
   miktex          https://svn.sourceforge.net/svnroot/miktex/miktex/trunk
   msmtp           http://msmtp.cvs.sourceforge.net/msmtp/msmtp/
+  netcf           http://fedorahosted.org/netcf/
   newts           http://svn.arete.cc/newts/trunk/
   parted          http://git.debian.org/?p=parted/parted.git;a=summary
   prelude-lml     https://trac.prelude-ids.org/browser/trunk/prelude-lml/
