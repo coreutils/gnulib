@@ -1,5 +1,13 @@
 2009-09-19  Eric Blake  <ebb9@byu.net>
 
+	lstat: fix Solaris 9 bug
+	* lib/lstat.c (lstat): Also check for trailing slash on
+	non-symlink, non-directories.  Use stat module to simplify logic.
+	* doc/posix-functions/lstat.texi (lstat): Document it.
+	* modules/lstat-tests (Depends-on): Add errno, same-inode.
+	(configure.ac): Check for symlink.
+	* tests/test-lstat.c (main): Add more tests.
+
 	stat: add as dependency to other modules
 	* modules/chown (Depends-on): Add stat.
 	* modules/euidaccess (Depends-on): Likewise.

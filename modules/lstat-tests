@@ -2,8 +2,11 @@ Files:
 tests/test-lstat.c
 
 Depends-on:
+errno
+same-inode
 
 configure.ac:
+AC_CHECK_FUNCS_ONCE([symlink])
 
 Makefile.am:
 TESTS += test-lstat

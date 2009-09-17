@@ -9,8 +9,13 @@ Gnulib module: lstat
 Portability problems fixed by Gnulib:
 @itemize
 @item
-When the argument ends in a slash, some platforms don't dereference the
-argument.
+For symlinks, when the argument ends in a slash, some platforms don't
+dereference the argument:
+Solaris 9.
+@item
+On some platforms, @code{lstat("file/",buf)} succeeds instead of
+failing with @code{ENOTDIR}.
+Solaris 9.
 @item
 On Windows platforms (excluding Cygwin), symlinks are not supported, so
 @code{lstat} does not exist.
@@ -22,4 +27,12 @@ Portability problems not fixed by Gnulib:
 On platforms where @code{off_t} is a 32-bit type, @code{lstat} may not
 correctly report the size of files or block devices larger than 2 GB.  The fix
 is to use the @code{AC_SYS_LARGEFILE} macro.
+@item
+On Windows platforms (excluding Cygwin), @code{st_ino} is always 0.
+@item
+Because of the definition of @code{struct stat}, it is not possible to
+portably replace @code{stat} via an object-like macro.  Therefore,
+expressions such as @code{(islnk ? lstat : stat) (name, buf)} are not
+portable, and should instead be written @code{islnk ? lstat (name,
+buf) : stat (name, buf)}.
 @end itemize
