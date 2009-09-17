@@ -1,5 +1,5 @@
 /* Convert a `struct tm' to a time_t value.
-   Copyright (C) 1993-1999, 2002-2005, 2006, 2007 Free Software Foundation, Inc.
+   Copyright (C) 1993-1999, 2002-2007, 2009 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
    Contributed by Paul Eggert <eggert@twinsun.com>.
 
@@ -165,8 +165,11 @@ ydhms_diff (long int year1, long int yday1, int hour1, int min1, int sec1,
 	    int year0, int yday0, int hour0, int min0, int sec0)
 {
   verify (C99_integer_division, -1 / 2 == 0);
+#if 0 /* This assertion fails on 32-bit systems with 64-bit time_t, such as
+         NetBSD 5 on i386.  */
   verify (long_int_year_and_yday_are_wide_enough,
 	  INT_MAX <= LONG_MAX / 2 || TIME_T_MAX <= UINT_MAX);
+#endif
 
   /* Compute intervening leap days correctly even if year is negative.
      Take care to avoid integer overflow here.  */
