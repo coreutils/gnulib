@@ -13,7 +13,8 @@ The following packages appear to be using gnulib and gnulib-tool:
   diffutils       http://cvs.sv.gnu.org/viewcvs/diffutils/diffutils/
   findutils       http://cvs.sv.gnu.org/viewcvs/findutils/findutils/
   gettext         http://cvs.sv.gnu.org/viewcvs/gettext/gettext/
-  gnuit           http://ftp.gnu.org/gnu/gnuit/gnuit-4.9.2.tar.gz
+  gnuit           http://www.gnu.org/software/gnuit/
+                  http://git.savannah.gnu.org/gitweb/?p=gnuit.git
   gnutls          http://cvs.gnupg.org/cgi-bin/viewcvs.cgi/gnutls/?root=GNU+TLS+Library
                   http://git.sv.gnu.org/gitweb/?p=gnutls.git
                   http://repo.or.cz/w/gnutls.git
