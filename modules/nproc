@@ -14,7 +14,7 @@ AC_LIBOBJ([nproc])
 Makefile.am:
 
 Include:
-#include "nproc.h"
+"nproc.h"
 
 License:
 GPL

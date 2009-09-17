@@ -23,7 +23,7 @@ License:
 LGPLv2+
 
 Include:
-#include <arpa/inet.h>
+<arpa/inet.h>
 
 Maintainer:
 Yoann Vandoorselaere, glibc

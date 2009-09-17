@@ -14,7 +14,7 @@ Makefile.am:
 lib_SOURCES += size_max.h
 
 Include:
-#include "size_max.h"
+"size_max.h"
 
 License:
 LGPLv2+

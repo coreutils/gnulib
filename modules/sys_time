@@ -33,7 +33,7 @@ sys/time.h: sys_time.in.h
 MOSTLYCLEANFILES += sys/time.h sys/time.h-t
 
 Include:
-#include <sys/time.h>
+<sys/time.h>
 
 License:
 LGPLv2+

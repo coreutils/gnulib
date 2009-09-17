@@ -72,7 +72,7 @@ stdlib.h: stdlib.in.h
 MOSTLYCLEANFILES += stdlib.h stdlib.h-t
 
 Include:
-#include <stdlib.h>
+<stdlib.h>
 
 License:
 LGPLv2+

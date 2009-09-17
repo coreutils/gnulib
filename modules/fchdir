@@ -28,7 +28,7 @@ gl_UNISTD_MODULE_INDICATOR([fchdir])
 Makefile.am:
 
 Include:
-#include <unistd.h>
+<unistd.h>
 
 License:
 LGPL

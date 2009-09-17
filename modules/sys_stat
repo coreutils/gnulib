@@ -52,7 +52,7 @@ MOSTLYCLEANFILES += sys/stat.h sys/stat.h-t
 MOSTLYCLEANDIRS += sys
 
 Include:
-#include <sys/stat.h>
+<sys/stat.h>
 
 License:
 LGPLv2+

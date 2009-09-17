@@ -12,7 +12,7 @@ configure.ac:
 Makefile.am:
 
 Include:
-#include <alloca.h>
+<alloca.h>
 
 License:
 public domain

@@ -11,7 +11,7 @@ configure.ac:
 Makefile.am:
 
 Include:
-#include <fcntl.h>
+<fcntl.h>
 
 License:
 LGPL

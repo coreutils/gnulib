@@ -101,7 +101,7 @@ unistd.h: unistd.in.h
 MOSTLYCLEANFILES += unistd.h unistd.h-t
 
 Include:
-#include <unistd.h>
+<unistd.h>
 
 License:
 LGPLv2+

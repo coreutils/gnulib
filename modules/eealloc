@@ -13,7 +13,7 @@ gl_EEALLOC
 Makefile.am:
 
 Include:
-#include <eealloc.h>
+<eealloc.h>
 
 License:
 GPL

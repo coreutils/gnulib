@@ -39,7 +39,7 @@ MOSTLYCLEANFILES += arpa/inet.h arpa/inet.h-t
 MOSTLYCLEANDIRS += arpa
 
 Include:
-#include <arpa/inet.h>
+<arpa/inet.h>
 
 License:
 LGPLv2+

@@ -20,7 +20,7 @@ gl_GETHRXTIME
 Makefile.am:
 
 Include:
-#include "xtime.h"
+"xtime.h"
 
 License:
 GPL

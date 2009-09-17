@@ -31,7 +31,7 @@ MOSTLYCLEANFILES += sys/utsname.h sys/utsname.h-t
 MOSTLYCLEANDIRS += sys
 
 Include:
-#include <sys/utsname.h>
+<sys/utsname.h>
 
 License:
 LGPLv2+

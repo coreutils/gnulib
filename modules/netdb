@@ -36,7 +36,7 @@ netdb.h: netdb.in.h
 MOSTLYCLEANFILES += netdb.h netdb.h-t
 
 Include:
-#include <netdb.h>
+<netdb.h>
 
 License:
 LGPLv2+

@@ -51,7 +51,7 @@ inttypes.h: inttypes.in.h
 MOSTLYCLEANFILES += inttypes.h inttypes.h-t
 
 Include:
-#include <inttypes.h>
+<inttypes.h>
 
 License:
 LGPL

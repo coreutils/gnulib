@@ -29,7 +29,7 @@ sysexits.h: sysexits.in.h
 MOSTLYCLEANFILES += sysexits.h sysexits.h-t
 
 Include:
-#include <sysexits.h>
+<sysexits.h>
 
 License:
 LGPL

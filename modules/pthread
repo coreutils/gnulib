@@ -20,7 +20,7 @@ pthread.h: pthread.in.h
 MOSTLYCLEANFILES += pthread.h
 
 Include:
-#include <pthread.h>
+<pthread.h>
 
 License:
 LGPLv2+

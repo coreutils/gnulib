@@ -12,7 +12,7 @@ gt_TYPE_SSIZE_T
 Makefile.am:
 
 Include:
-#include <sys/types.h>
+<sys/types.h>
 
 License:
 unlimited

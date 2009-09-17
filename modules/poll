@@ -30,7 +30,7 @@ poll.h: poll.in.h
 MOSTLYCLEANFILES += poll.h poll.h-t
 
 Include:
-#include <poll.h>
+<poll.h>
 
 License:
 LGPLv2+

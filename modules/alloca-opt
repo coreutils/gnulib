@@ -26,7 +26,7 @@ alloca.h: alloca.in.h
 MOSTLYCLEANFILES += alloca.h alloca.h-t
 
 Include:
-#include <alloca.h>
+<alloca.h>
 
 License:
 LGPLv2+

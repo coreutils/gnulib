@@ -31,7 +31,7 @@ stddef.h: stddef.in.h
 MOSTLYCLEANFILES += stddef.h stddef.h-t
 
 Include:
-#include <stddef.h>
+<stddef.h>
 
 License:
 LGPLv2+

@@ -33,7 +33,7 @@ wctype.h: wctype.in.h
 MOSTLYCLEANFILES += wctype.h wctype.h-t
 
 Include:
-#include <wctype.h>
+<wctype.h>
 
 License:
 LGPLv2+

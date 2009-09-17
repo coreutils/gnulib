@@ -38,7 +38,7 @@ MOSTLYCLEANFILES += sys/ioctl.h sys/ioctl.h-t
 MOSTLYCLEANDIRS += sys
 
 Include:
-#include <sys/ioctl.h>
+<sys/ioctl.h>
 
 License:
 LGPLv2+

@@ -68,7 +68,7 @@ wchar.h: wchar.in.h
 MOSTLYCLEANFILES += wchar.h wchar.h-t
 
 Include:
-#include <wchar.h>
+<wchar.h>
 
 License:
 LGPLv2+

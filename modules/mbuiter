@@ -21,7 +21,7 @@ Makefile.am:
 lib_SOURCES += mbuiter.h
 
 Include:
-#include "mbuiter.h"
+"mbuiter.h"
 
 License:
 LGPL

@@ -21,7 +21,7 @@ Makefile.am:
 lib_SOURCES += mbchar.c
 
 Include:
-#include "mbchar.h"
+"mbchar.h"
 
 License:
 LGPL

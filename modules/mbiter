@@ -20,7 +20,7 @@ Makefile.am:
 lib_SOURCES += mbiter.h
 
 Include:
-#include "mbiter.h"
+"mbiter.h"
 
 License:
 LGPL

@@ -30,7 +30,7 @@ MOSTLYCLEANFILES += sys/times.h sys/times.h-t
 MOSTLYCLEANDIRS += sys
 
 Include:
-#include <sys/times.h>
+<sys/times.h>
 
 License:
 LGPLv2+

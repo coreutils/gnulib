@@ -39,7 +39,7 @@ signal.h: signal.in.h
 MOSTLYCLEANFILES += signal.h signal.h-t
 
 Include:
-#include <signal.h>
+<signal.h>
 
 License:
 LGPLv2+

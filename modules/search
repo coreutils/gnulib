@@ -34,7 +34,7 @@ search.h: search.in.h
 MOSTLYCLEANFILES += search.h search.h-t
 
 Include:
-#include <search.h>
+<search.h>
 
 License:
 LGPL

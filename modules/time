@@ -37,7 +37,7 @@ time.h: time.in.h
 MOSTLYCLEANFILES += time.h time.h-t
 
 Include:
-#include <time.h>
+<time.h>
 
 License:
 LGPLv2+

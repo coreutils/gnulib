@@ -58,7 +58,7 @@ MOSTLYCLEANFILES += sys/socket.h sys/socket.h-t
 MOSTLYCLEANDIRS += sys
 
 Include:
-#include <sys/socket.h>
+<sys/socket.h>
 
 License:
 LGPLv2+

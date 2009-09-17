@@ -39,7 +39,7 @@ MOSTLYCLEANFILES += sys/select.h sys/select.h-t
 MOSTLYCLEANDIRS += sys
 
 Include:
-#include <sys/select.h>
+<sys/select.h>
 
 License:
 LGPLv2+

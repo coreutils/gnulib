@@ -17,7 +17,7 @@ gl_CANON_HOST
 Makefile.am:
 
 Include:
-#include "canon-host.h"
+"canon-host.h"
 
 Link:
 $(GETADDRINFO_LIB)

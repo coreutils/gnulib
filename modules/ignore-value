@@ -13,7 +13,7 @@ Makefile.am:
 lib_SOURCES += ignore-value.h
 
 Include:
-#include <ignore-value.h>
+<ignore-value.h>
 
 License:
 LGPL

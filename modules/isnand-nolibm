@@ -19,7 +19,7 @@ gl_FUNC_ISNAND_NO_LIBM
 Makefile.am:
 
 Include:
-#include "isnand-nolibm.h"
+"isnand-nolibm.h"
 
 License:
 LGPL

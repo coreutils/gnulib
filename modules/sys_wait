@@ -33,7 +33,7 @@ MOSTLYCLEANFILES += sys/wait.h sys/wait.h-t
 MOSTLYCLEANDIRS += sys
 
 Include:
-#include <sys/wait.h>
+<sys/wait.h>
 
 License:
 LGPLv2+

@@ -22,7 +22,7 @@ gl_PAGEALIGN_ALLOC
 Makefile.am:
 
 Include:
-#include "pagealign_alloc.h"
+"pagealign_alloc.h"
 
 License:
 GPL

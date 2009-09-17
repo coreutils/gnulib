@@ -20,7 +20,7 @@ Makefile.am:
 lib_SOURCES += mbfile.h
 
 Include:
-#include "mbfile.h"
+"mbfile.h"
 
 License:
 LGPL

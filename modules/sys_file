@@ -35,7 +35,7 @@ MOSTLYCLEANFILES += sys/file.h sys/file.h-t
 MOSTLYCLEANDIRS += sys
 
 Include:
-#include <sys/file.h>
+<sys/file.h>
 
 License:
 LGPLv2+

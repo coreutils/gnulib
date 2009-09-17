@@ -17,7 +17,7 @@ Makefile.am:
 lib_SOURCES += printf-frexp.c
 
 Include:
-#include "printf-frexp.h"
+"printf-frexp.h"
 
 License:
 LGPL

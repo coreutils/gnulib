@@ -38,8 +38,8 @@ MOSTLYCLEANFILES += selinux/context.h selinux/context.h-t
 MOSTLYCLEANDIRS += selinux
 
 Include:
-#include <selinux/selinux.h>
-#include <selinux/context.h>
+<selinux/selinux.h>
+<selinux/context.h>
 
 Link:
 $(LIB_SELINUX)

@@ -17,7 +17,7 @@ gl_SYS_TIMES_MODULE_INDICATOR([times])
 Makefile.am:
 
 Include:
-#include <sys/times.h>
+<sys/times.h>
 
 License:
 LGPLv2+

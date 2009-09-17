@@ -57,7 +57,7 @@ stdint.h: stdint.in.h
 MOSTLYCLEANFILES += stdint.h stdint.h-t
 
 Include:
-#include <stdint.h>
+<stdint.h>
 
 License:
 LGPLv2+

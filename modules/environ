@@ -15,7 +15,7 @@ gl_UNISTD_MODULE_INDICATOR([environ])
 Makefile.am:
 
 Include:
-#include <unistd.h>
+<unistd.h>
 
 License:
 LGPLv2+

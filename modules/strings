@@ -32,7 +32,7 @@ strings.h: strings.in.h
 MOSTLYCLEANFILES += strings.h strings.h-t
 
 Include:
-#include <strings.h>
+<strings.h>
 
 License:
 LGPLv2+

@@ -31,8 +31,8 @@ Makefile.am:
 DEFS += -DEXEEXT=\"@EXEEXT@\"
 
 Include:
-#include "relocatable.h"
-#include "progname.h"
+"relocatable.h"
+"progname.h"
 
 License:
 GPL

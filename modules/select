@@ -16,7 +16,7 @@ gl_SYS_SELECT_MODULE_INDICATOR([select])
 Makefile.am:
 
 Include:
-#include <sys/select.h>
+<sys/select.h>
 
 License:
 LGPLv2+

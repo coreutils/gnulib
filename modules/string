@@ -92,7 +92,7 @@ string.h: string.in.h
 MOSTLYCLEANFILES += string.h string.h-t
 
 Include:
-#include <string.h>
+<string.h>
 
 License:
 LGPLv2+

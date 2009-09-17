@@ -16,7 +16,7 @@ gl_TMPFILE
 Makefile.am:
 
 Include:
-#include <stdio.h>
+<stdio.h>
 
 License:
 GPL

@@ -18,7 +18,7 @@ gl_GETTIME
 Makefile.am:
 
 Include:
-#include "timespec.h"
+"timespec.h"
 
 License:
 GPL

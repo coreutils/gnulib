@@ -106,7 +106,7 @@ stdio.h: stdio.in.h
 MOSTLYCLEANFILES += stdio.h stdio.h-t
 
 Include:
-#include <stdio.h>
+<stdio.h>
 
 License:
 LGPLv2+

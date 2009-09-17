@@ -16,7 +16,7 @@ gl_STDLIB_MODULE_INDICATOR([random_r])
 Makefile.am:
 
 Include:
-#include <stdlib.h>
+<stdlib.h>
 
 License:
 LGPLv2+

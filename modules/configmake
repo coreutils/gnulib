@@ -67,7 +67,7 @@ CLEANFILES += configmake.h configmake.h-t
 
 Include:
 /* Include only after all system include files.  */
-#include "configmake.h"
+"configmake.h"
 
 License:
 LGPLv2+

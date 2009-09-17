@@ -33,7 +33,7 @@ MOSTLYCLEANFILES += netinet/in.h netinet/in.h-t
 MOSTLYCLEANDIRS += netinet
 
 Include:
-#include <netinet/in.h>
+<netinet/in.h>
 
 License:
 LGPLv2+

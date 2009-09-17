@@ -35,7 +35,7 @@ stdarg.h: stdarg.in.h
 MOSTLYCLEANFILES += stdarg.h stdarg.h-t
 
 Include:
-#include <stdarg.h>
+<stdarg.h>
 
 License:
 LGPL

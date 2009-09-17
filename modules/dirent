@@ -41,7 +41,7 @@ dirent.h: dirent.in.h
 MOSTLYCLEANFILES += dirent.h dirent.h-t
 
 Include:
-#include <dirent.h>
+<dirent.h>
 
 License:
 LGPLv2+
