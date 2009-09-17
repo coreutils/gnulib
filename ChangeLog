@@ -1,8 +1,15 @@
-2009-09-17  Ian Beckwith <ianb@erislabs.net>  (tiny change)
+2009-09-17  Bruno Haible  <bruno@clisp.org>
+
+	* modules/COPYING: Update copyright years.
+	* modules/README: Likeiwse.
+	* doc/gnulib-intro.texi (Copyright): Use a wildcard year.
+	Reported by Ian Beckwith <ianb@erislabs.net>.
+
+2009-09-17  Ian Beckwith  <ianb@erislabs.net>  (tiny change)
 
 	* users.txt: Update references for gnuit package.
 
-2009-09-17  Ian Beckwith <ianb@erislabs.net>  (tiny change)
+2009-09-17  Ian Beckwith  <ianb@erislabs.net>  (tiny change)
 
 	* m4/getdelim.m4: Fix typo in copyright line.
 
