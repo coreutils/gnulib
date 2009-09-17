@@ -19,11 +19,14 @@
 #include <config.h>
 
 #include "posixtm.h"
-#include "intprops.h"
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <stdint.h>
 #include <time.h>
+
+#include "intprops.h"
 
 #define STREQ(a, b) (strcmp (a, b) == 0)
 
@@ -43,7 +46,8 @@ struct posixtm_test
 {
   char const *in;
   unsigned int syntax_bits;
-  char const *expected;
+  bool valid;
+  int64_t t_expected;
 };
 
 /* Test mainly with syntax_bits == 13
@@ -51,49 +55,53 @@ struct posixtm_test
 
 static struct posixtm_test const T[] =
   {
-    { "000001010000.00", 13, "-62167219200 Sat Jan  1 00:00:00 0" },
-    { "190112132045.51", 13, " -2147483649 Fri Dec 13 20:45:51 1901" },
-    { "190112132045.52", 13, " -2147483648 Fri Dec 13 20:45:52 1901" },
-    { "190112132045.53", 13, " -2147483647 Fri Dec 13 20:45:53 1901" },
-    { "190112132046.52", 13, " -2147483588 Fri Dec 13 20:46:52 1901" },
-    { "190112132145.52", 13, " -2147480048 Fri Dec 13 21:45:52 1901" },
-    { "190112142045.52", 13, " -2147397248 Sat Dec 14 20:45:52 1901" },
-    { "190201132045.52", 13, " -2144805248 Mon Jan 13 20:45:52 1902" },
-    { "196912312359.59", 13, "          -1 Wed Dec 31 23:59:59 1969" },
-    { "197001010000.00", 13, "           0 Thu Jan  1 00:00:00 1970" },
-    { "197001010000.01", 13, "           1 Thu Jan  1 00:00:01 1970" },
-    { "197001010001.00", 13, "          60 Thu Jan  1 00:01:00 1970" },
-    { "197001010000.60", 13, "          60 Thu Jan  1 00:01:00 1970" },
-    { "197001010100.00", 13, "        3600 Thu Jan  1 01:00:00 1970" },
-    { "197001020000.00", 13, "       86400 Fri Jan  2 00:00:00 1970" },
-    { "197002010000.00", 13, "     2678400 Sun Feb  1 00:00:00 1970" },
-    { "197101010000.00", 13, "    31536000 Fri Jan  1 00:00:00 1971" },
-    { "197001000000.00", 13, "           * *" },
-    { "197000010000.00", 13, "           * *" },
-    { "197001010060.00", 13, "           * *" },
-    { "197001012400.00", 13, "           * *" },
-    { "197001320000.00", 13, "           * *" },
-    { "197013010000.00", 13, "           * *" },
-    { "203801190314.06", 13, "  2147483646 Tue Jan 19 03:14:06 2038" },
-    { "203801190314.07", 13, "  2147483647 Tue Jan 19 03:14:07 2038" },
-    { "203801190314.08", 13, "  2147483648 Tue Jan 19 03:14:08 2038" },
-    { "999912312359.59", 13, "253402300799 Fri Dec 31 23:59:59 9999" },
-    { "1112131415",      13, "  1323785700 Tue Dec 13 14:15:00 2011" },
-    { "1112131415.16",   13, "  1323785716 Tue Dec 13 14:15:16 2011" },
-    { "201112131415.16", 13, "  1323785716 Tue Dec 13 14:15:16 2011" },
-    { "191112131415.16", 13, " -1831974284 Wed Dec 13 14:15:16 1911" },
-    { "203712131415.16", 13, "  2144326516 Sun Dec 13 14:15:16 2037" },
-    { "3712131415.16",   13, "  2144326516 Sun Dec 13 14:15:16 2037" },
-    { "6812131415.16",   13, "  3122633716 Thu Dec 13 14:15:16 2068" },
-    { "6912131415.16",   13, "    -1590284 Sat Dec 13 14:15:16 1969" },
-    { "7012131415.16",   13, "    29945716 Sun Dec 13 14:15:16 1970" },
-    { "1213141599",       2, "   945094500 Mon Dec 13 14:15:00 1999" },
-    { "1213141500",       2, "   976716900 Wed Dec 13 14:15:00 2000" },
-    { NULL,               0, NULL }
+    /* no year specified; cross-check via another posixtime call */
+    { "12131415.16",     13, 1,            0}, /* ??? Dec 13 14:15:16 ???? */
+    { "12131415",        13, 1,            0}, /* ??? Dec 13 14:15:00 ???? */
+
+    { "000001010000.00", 13, 1, -62167219200}, /* Sat Jan  1 00:00:00 0    */
+    { "190112132045.51", 13, 1,  -2147483649}, /* Fri Dec 13 20:45:51 1901 */
+    { "190112132045.52", 13, 1,  -2147483648}, /* Fri Dec 13 20:45:52 1901 */
+    { "190112132045.53", 13, 1,  -2147483647}, /* Fri Dec 13 20:45:53 1901 */
+    { "190112132046.52", 13, 1,  -2147483588}, /* Fri Dec 13 20:46:52 1901 */
+    { "190112132145.52", 13, 1,  -2147480048}, /* Fri Dec 13 21:45:52 1901 */
+    { "190112142045.52", 13, 1,  -2147397248}, /* Sat Dec 14 20:45:52 1901 */
+    { "190201132045.52", 13, 1,  -2144805248}, /* Mon Jan 13 20:45:52 1902 */
+    { "196912312359.59", 13, 1,           -1}, /* Wed Dec 31 23:59:59 1969 */
+    { "197001010000.00", 13, 1,            0}, /* Thu Jan  1 00:00:00 1970 */
+    { "197001010000.01", 13, 1,            1}, /* Thu Jan  1 00:00:01 1970 */
+    { "197001010001.00", 13, 1,           60}, /* Thu Jan  1 00:01:00 1970 */
+    { "197001010000.60", 13, 1,           60}, /* Thu Jan  1 00:01:00 1970 */
+    { "197001010100.00", 13, 1,         3600}, /* Thu Jan  1 01:00:00 1970 */
+    { "197001020000.00", 13, 1,        86400}, /* Fri Jan  2 00:00:00 1970 */
+    { "197002010000.00", 13, 1,      2678400}, /* Sun Feb  1 00:00:00 1970 */
+    { "197101010000.00", 13, 1,     31536000}, /* Fri Jan  1 00:00:00 1971 */
+    { "197001000000.00", 13, 0,            0}, /* -- */
+    { "197000010000.00", 13, 0,            0}, /* -- */
+    { "197001010060.00", 13, 0,            0}, /* -- */
+    { "197001012400.00", 13, 0,            0}, /* -- */
+    { "197001320000.00", 13, 0,            0}, /* -- */
+    { "197013010000.00", 13, 0,            0}, /* -- */
+    { "203801190314.06", 13, 1,   2147483646}, /* Tue Jan 19 03:14:06 2038 */
+    { "203801190314.07", 13, 1,   2147483647}, /* Tue Jan 19 03:14:07 2038 */
+    { "203801190314.08", 13, 1,   2147483648}, /* Tue Jan 19 03:14:08 2038 */
+    { "999912312359.59", 13, 1, 253402300799}, /* Fri Dec 31 23:59:59 9999 */
+    { "1112131415",      13, 1,   1323785700}, /* Tue Dec 13 14:15:00 2011 */
+    { "1112131415.16",   13, 1,   1323785716}, /* Tue Dec 13 14:15:16 2011 */
+    { "201112131415.16", 13, 1,   1323785716}, /* Tue Dec 13 14:15:16 2011 */
+    { "191112131415.16", 13, 1,  -1831974284}, /* Wed Dec 13 14:15:16 1911 */
+    { "203712131415.16", 13, 1,   2144326516}, /* Sun Dec 13 14:15:16 2037 */
+    { "3712131415.16",   13, 1,   2144326516}, /* Sun Dec 13 14:15:16 2037 */
+    { "6812131415.16",   13, 1,   3122633716}, /* Thu Dec 13 14:15:16 2068 */
+    { "6912131415.16",   13, 1,     -1590284}, /* Sat Dec 13 14:15:16 1969 */
+    { "7012131415.16",   13, 1,     29945716}, /* Sun Dec 13 14:15:16 1970 */
+    { "1213141599",       2, 1,    945094500}, /* Mon Dec 13 14:15:00 1999 */
+    { "1213141500",       2, 1,    976716900}, /* Wed Dec 13 14:15:00 2000 */
+    { NULL,               0, 0,            0}
   };
 
 int
-main (void)
+main (int argc, char **argv)
 {
   unsigned int i;
   int fail = 0;
@@ -114,52 +122,55 @@ main (void)
   n_bytes = strftime (curr_year_str, sizeof curr_year_str, "%Y", tm);
   ASSERT (0 < n_bytes);
 
-  /* This test data also assumes that time_t is signed and is at least
-     39 bits wide, so that it can represent all years from 0000 through
-     9999.  A host with 32-bit signed time_t can represent only time
-     stamps in the range 1901-12-13 20:45:52 through 2038-01-18
-     03:14:07 UTC, assuming POSIX time_t with no leap seconds, so test
-     cases outside this range will not work on such a host.  */
-  if ( ! TYPE_SIGNED (time_t))
-    {
-      fprintf (stderr, "%s: this test requires signed time_t\n");
-      return 77;
-    }
-
-  if (sizeof (time_t) * CHAR_BIT < 39)
-    {
-      fprintf (stderr, "%s: this test requires time_t at least 39 bits wide\n");
-      return 77;
-    }
-
-
   for (i = 0; T[i].in; i++)
     {
-      char out_buf[100];
-      time_t t;
+      time_t t_out;
+      time_t t_exp = T[i].t_expected;
+      bool ok;
 
-      /* The first two tests assume that the current year is 2002.
-         If an input string does not specify the year number, and
-	 the expected output year is not the same as the current year,
-	 then skip the test.  For example:
-	 { "12131415.16", "  1039788916 Fri Dec 13 14:15:16 2002" }, */
-      if (8 <= strlen (T[i].in)
-	  && (T[i].in[8] == '.' || T[i].in[8] == '\0')
-	  && 4 < strlen (T[i].expected)
-	  && ! STREQ (T[i].expected + (strlen (T[i].expected) - 4),
-		      curr_year_str))
-	continue;
-
-      if (posixtime (&t, T[i].in, T[i].syntax_bits))
-        sprintf (out_buf, "%12ld %s", (long int) t, ctime (&t));
-      else
-        sprintf (out_buf, "%12s %s", "*", "*\n");
-
-      out_buf[strlen (out_buf) - 1] = '\0';
-      if (!STREQ (out_buf, T[i].expected))
+      /* Some tests assume that time_t is signed.
+         If it is unsigned and the result is negative, skip the test. */
+      if (T[i].t_expected < 0 && ! TYPE_SIGNED (time_t))
         {
-          printf ("mismatch (-: actual; +:expected)\n-%s\n+%s\n",
-                  out_buf, T[i].expected);
+          printf ("skipping %s: result is negative, "
+                  "but your time_t is unsigned\n", T[i].in);
+          continue;
+        }
+
+      if (T[i].valid && t_exp != T[i].t_expected)
+        {
+          printf ("skipping %s: result is out of range of your time_t\n",
+                  T[i].in);
+          continue;
+        }
+
+      /* If an input string does not specify the year number, determine
+         the expected output by calling posixtime with an otherwise
+         equivalent string that starts with the current year.  */
+      if (8 <= strlen (T[i].in)
+          && (T[i].in[8] == '.' || T[i].in[8] == '\0'))
+        {
+          char tmp_buf[20];
+          stpcpy (stpcpy (tmp_buf, curr_year_str), T[i].in);
+          ASSERT (posixtime (&t_exp, tmp_buf, T[i].syntax_bits));
+        }
+
+      ok = posixtime (&t_out, T[i].in, T[i].syntax_bits);
+      if (ok != !!T[i].valid)
+        {
+          printf ("%s return value mismatch: got %d, expected %d\n",
+                  T[i].in, !!ok, T[i].valid);
+          fail = 1;
+          continue;
+        }
+
+      if (!ok)
+        continue;
+
+      if (t_out != t_exp)
+        {
+          printf ("%s mismatch (-: actual; +:expected)\n-%12ld\n+%12ld\n",
+                  T[i].in, t_out, t_exp);
           fail = 1;
         }
     }
