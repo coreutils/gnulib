@@ -1,5 +1,17 @@
 2009-09-17  Bruno Haible  <bruno@clisp.org>
 
+	Make getdate.y compile on QNX and NetBSD 5 / i386.
+	* m4/getdate.m4 (gl_GETDATE): Conditionally define
+	TIME_T_FITS_IN_LONG_INT.
+	* lib/getdate.y (long_time_t): New type.
+	(relative_time): Change type of 'seconds' field to long_time_t.
+	(get_date): Update types of local variables. Check against overflow
+	during conversion from long_time_t to time_t.
+	Reported by Matt Kraai <kraai@ftbfs.org>
+	and Hasso Tepper <hasso@netbsd.org>.
+
+2009-09-17  Bruno Haible  <bruno@clisp.org>
+
 	* modules/COPYING: Update copyright years.
 	* modules/README: Likeiwse.
 	* doc/gnulib-intro.texi (Copyright): Use a wildcard year.

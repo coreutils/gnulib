@@ -108,12 +108,21 @@
 
 #define HOUR(x) ((x) * 60)
 
-/* Lots of this code assumes time_t and time_t-like values fit into
-   long int.  It also assumes that signed integer overflow silently
-   wraps around, but there's no portable way to check for that at
-   compile-time.  */
+/* long_time_t is a signed integer type that contains all time_t values.  */
 verify (TYPE_IS_INTEGER (time_t));
-verify (LONG_MIN <= TYPE_MINIMUM (time_t) && TYPE_MAXIMUM (time_t) <= LONG_MAX);
+#if TIME_T_FITS_IN_LONG_INT
+typedef long int long_time_t;
+#else
+typedef time_t long_time_t;
+#endif
+
+/* Lots of this code assumes time_t and time_t-like values fit into
+   long_time_t.  */
+verify (TYPE_MINIMUM (long_time_t) <= TYPE_MINIMUM (time_t)
+        && TYPE_MAXIMUM (time_t) <= TYPE_MAXIMUM (long_time_t));
+
+/* FIXME: It also assumes that signed integer overflow silently wraps around,
+   but this is not true any more with recent versions of GCC 4.  */
 
 /* An integer value, and the number of digits in its textual
    representation.  */
@@ -146,7 +155,7 @@ typedef struct
   long int day;
   long int hour;
   long int minutes;
-  long int seconds;
+  long_time_t seconds;
   long int ns;
 } relative_time;
 
@@ -1502,20 +1511,22 @@ get_date (struct timespec *result, char const *p, struct timespec const *now)
 	time_t t1 = t0 + d1;
 	long int d2 = 60 * pc.rel.minutes;
 	time_t t2 = t1 + d2;
-	long int d3 = pc.rel.seconds;
-	time_t t3 = t2 + d3;
+	long_time_t d3 = pc.rel.seconds;
+	long_time_t t3 = t2 + d3;
 	long int d4 = (sum_ns - normalized_ns) / BILLION;
-	time_t t4 = t3 + d4;
+	long_time_t t4 = t3 + d4;
+	time_t t5 = t4;
 
 	if ((d1 / (60 * 60) ^ pc.rel.hour)
 	    | (d2 / 60 ^ pc.rel.minutes)
 	    | ((t1 < t0) ^ (d1 < 0))
 	    | ((t2 < t1) ^ (d2 < 0))
 	    | ((t3 < t2) ^ (d3 < 0))
-	    | ((t4 < t3) ^ (d4 < 0)))
+	    | ((t4 < t3) ^ (d4 < 0))
+	    | (t5 != t4))
 	  goto fail;
 
-	result->tv_sec = t4;
+	result->tv_sec = t5;
 	result->tv_nsec = normalized_ns;
       }
     }
