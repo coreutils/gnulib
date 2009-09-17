@@ -1,3 +1,7 @@
+2009-09-17  Ian Beckwith <ianb@erislabs.net>  (tiny change)
+
+	* m4/getdelim.m4: Fix typo in copyright line.
+
 2009-09-17  Bruno Haible  <bruno@clisp.org>
 
 	* lib/atoll.c: Use the standard header with GPL copyright.
