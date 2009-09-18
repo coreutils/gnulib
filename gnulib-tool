@@ -4420,7 +4420,7 @@ case $mode in
       if test -f "$destdir"/configure.in; then
         configure_ac="$destdir/configure.in"
       else
-        func_fatal_error "cannot find $destdir/configure.ac"
+        func_fatal_error "cannot find $destdir/configure.ac - make sure you run gnulib-tool from within your package's directory"
       fi
     fi
 

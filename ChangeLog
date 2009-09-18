@@ -1,3 +1,8 @@
+2009-09-18  Bruno Haible  <bruno@clisp.org>
+
+	* gnulib-tool: Add advice to "cannot find configure.ac" error message.
+	Reported by <erobles@sensacd.com.mx>.
+
 2009-09-17  Eric Blake  <ebb9@byu.net>
 
 	canonicalize: in CAN_ALL_BUT_LAST, allow trailing slash
