@@ -3,6 +3,7 @@ tests/test-rmdir.h
 tests/test-rmdir.c
 
 Depends-on:
+stdbool
 
 configure.ac:
 AC_CHECK_FUNCS_ONCE([symlink])

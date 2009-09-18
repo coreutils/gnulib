@@ -22,9 +22,12 @@
 
 #include <fcntl.h>
 #include <errno.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
+
+#include "unlinkdir.h"
 
 #if !HAVE_SYMLINK
 # define symlink(a,b) (-1)
@@ -45,17 +48,42 @@
 #define BASE "test-unlinkat.t"
 
 #include "test-rmdir.h"
+#include "test-unlink.h"
+
+static int dfd = AT_FDCWD;
 
 /* Wrapper around unlinkat to test rmdir behavior.  */
 static int
 rmdirat (char const *name)
 {
-  return unlinkat (AT_FDCWD, name, AT_REMOVEDIR);
+  return unlinkat (dfd, name, AT_REMOVEDIR);
+}
+
+/* Wrapper around unlinkat to test unlink behavior.  */
+static int
+unlinker (char const *name)
+{
+  return unlinkat (dfd, name, 0);
 }
 
 int
 main ()
 {
-  /* FIXME: Add tests of unlinkat(,0), and of fd instead of AT_FDCWD.  */
-  return test_rmdir_func (rmdirat);
+  /* FIXME: Add tests of fd other than ".".  */
+  int result1;
+  int result2;
+  result1 = test_rmdir_func (rmdirat, false);
+  result2 = test_unlink_func (unlinker, false);
+  ASSERT (result1 == result2);
+  dfd = open (".", O_RDONLY);
+  ASSERT (0 <= dfd);
+  result2 = test_rmdir_func (rmdirat, false);
+  ASSERT (result1 == result2);
+  result2 = test_unlink_func (unlinker, false);
+  ASSERT (result1 == result2);
+  ASSERT (close (dfd) == 0);
+  if (result1 == 77)
+    fputs ("skipping test: symlinks not supported on this filesystem\n",
+	   stderr);
+  return result1;
 }

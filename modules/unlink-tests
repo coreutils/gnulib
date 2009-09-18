@@ -1,7 +1,9 @@
 Files:
+tests/test-unlink.h
 tests/test-unlink.c
 
 Depends-on:
+stdbool
 unlinkdir
 
 configure.ac:

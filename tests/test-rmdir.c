@@ -22,6 +22,7 @@
 
 #include <fcntl.h>
 #include <errno.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
@@ -49,5 +50,5 @@
 int
 main ()
 {
-  return test_rmdir_func (rmdir);
+  return test_rmdir_func (rmdir, true);
 }

@@ -1,5 +1,19 @@
 2009-09-19  Eric Blake  <ebb9@byu.net>
 
+	test-unlinkat: enhance test, to expose Solaris 9 bug
+	* tests/test-unlink.c (main): Factor guts...
+	* tests/test-unlink.h (test_rmdir_func): ...into new file.
+	* tests/test-rmdir.h (test_rmdir_func): Add parameter.
+	* tests/test-rmdir.c (main): Adjust caller.
+	* tests/test-unlinkat.c (main): Likewise.  Add unlink tests.
+	(unlinker): New helper function.
+	(rmdirat): Enhance check.
+	* modules/rmdir-tests (Depends-on): Add stdbool.
+	* modules/unlink-tests (Depends-on): Likewise.
+	(Files): Add test-unlink.h.
+	* modules/openat-tests (Files): Likewise.
+	(Depends-on): Add unlinkdir.
+
 	test-fstatat: new test, to expose Solaris 9 bugs
 	* tests/test-stat.c (main): Factor guts...
 	* tests/test-stat.h (test_stat_func): ...into new file.

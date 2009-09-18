@@ -19,10 +19,11 @@
 /* This file is designed to test both rmdir(n) and
    unlinkat(AT_FDCWD,n,AT_REMOVEDIR).  FUNC is the function to test.
    Assumes that BASE and ASSERT are already defined, and that
-   appropriate headers are already included.  */
+   appropriate headers are already included.  If PRINT, then warn
+   before returning status 77 when symlinks are unsupported.  */
 
 static int
-test_rmdir_func (int (*func) (char const *name))
+test_rmdir_func (int (*func) (char const *name), bool print)
 {
   /* Remove any leftovers from a previous partial run.  */
   ASSERT (system ("rm -rf " BASE "*") == 0);
@@ -78,8 +79,9 @@ test_rmdir_func (int (*func) (char const *name))
      but not enough to penalize POSIX systems with an rpl_rmdir.  */
   if (symlink (BASE "dir", BASE "link") != 0)
     {
-      fputs ("skipping test: symlinks not supported on this filesystem\n",
-             stderr);
+      if (print)
+	fputs ("skipping test: symlinks not supported on this filesystem\n",
+	       stderr);
       return 77;
     }
   ASSERT (mkdir (BASE "dir", 0700) == 0);
