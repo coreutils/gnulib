@@ -1,5 +1,10 @@
 2009-09-19  Eric Blake  <ebb9@byu.net>
 
+	openat: fix fstatat bugs on Solaris 9
+	* lib/fstatat.c (rpl_fstatat): Copy recent fixes from lstat and
+	stat.
+	* doc/posix-functions/fstatat.texi (fstatat): Document this.
+
 	test-unlinkat: enhance test, to expose Solaris 9 bug
 	* tests/test-unlink.c (main): Factor guts...
 	* tests/test-unlink.h (test_rmdir_func): ...into new file.

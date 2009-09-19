@@ -28,31 +28,37 @@
 #undef fstatat
 
 /* fstatat should always follow symbolic links that end in /, but on
-   Solaris 9 it doesn't if AT_SYMLINK_NOFOLLOW is specified.  This is
-   the same problem that lstat.c addresses, so solve it in a similar
-   way.  */
+   Solaris 9 it doesn't if AT_SYMLINK_NOFOLLOW is specified.
+   Likewise, trailing slash on a non-directory should be an error.
+   These are the same problems that lstat.c and stat.c address, so
+   solve it in a similar way.  */
 
 int
 rpl_fstatat (int fd, char const *file, struct stat *st, int flag)
 {
   int result = fstatat (fd, file, st, flag);
+  size_t len;
 
-  if (result == 0 && (flag & AT_SYMLINK_NOFOLLOW) && S_ISLNK (st->st_mode)
-      && file[strlen (file) - 1] == '/')
+  if (result != 0)
+    return result;
+  len = strlen (file);
+  if (flag & AT_SYMLINK_NOFOLLOW)
     {
-      /* FILE refers to a symbolic link and the name ends with a slash.
-	 Get info about the link's referent.  */
-      result = fstatat (fd, file, st, flag & ~AT_SYMLINK_NOFOLLOW);
-      if (result == 0 && ! S_ISDIR (st->st_mode))
+      /* Fix lstat behavior.  */
+      if (file[len - 1] != '/' || S_ISDIR (st->st_mode))
+	return 0;
+      if (!S_ISLNK (st->st_mode))
 	{
-	  /* fstatat succeeded and FILE references a non-directory.
-	     But it was specified via a name including a trailing
-	     slash.  Fail with errno set to ENOTDIR to indicate the
-	     contradiction.  */
 	  errno = ENOTDIR;
 	  return -1;
 	}
+      result = fstatat (fd, file, st, flag & ~AT_SYMLINK_NOFOLLOW);
     }
-
+  /* Fix stat behavior.  */
+  if (result == 0 && !S_ISDIR (st->st_mode) && file[len - 1] == '/')
+    {
+      errno = ENOTDIR;
+      return -1;
+    }
   return result;
 }
