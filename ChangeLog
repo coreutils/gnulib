@@ -1,5 +1,23 @@
 2009-09-19  Eric Blake  <ebb9@byu.net>
 
+	openat: allow return of fd 0
+	* modules/chdir-long (Depends-on): Relax openat-safer to openat.
+	* modules/save-cwd (Depends-on): Replace fcntl-safer with
+	unistd-safer.
+	* lib/chdir-long.c (includes): Replace "fcntl--.h" with
+	<fcntl.h>; this module does not leak fds.
+	* lib/openat.c (includes): Do not use "fcntl_safer"; plain openat
+	must be allowed to return 0, leaving openat_safer to add the
+	safety.
+	(openat_permissive): Avoid writing to just-opened fd 2 if
+	restoring the current directory fails.
+	* lib/openat-die.c (openat_restore_fail): Add comment.
+	* lib/save-cwd.c (includes): Make "fcntl--.h" conditional.
+	(save_cwd): Guarantee safe fd, but without use of open_safer.
+	* tests/test-openat.c: New test.
+	* modules/openat-tests (Files, Makefile.am): Distribute and build
+	new file.
+
 	relocatable-prog-wrapper: fix build
 	* modules/relocatable-prog-wrapper (Files): Update name of
 	canonicalize m4 file, broken on 2009-09-17.

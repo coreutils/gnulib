@@ -1,5 +1,6 @@
 Files:
 tests/test-rmdir.h
+tests/test-openat.c
 tests/test-unlinkat.c
 
 Depends-on:
@@ -8,6 +9,7 @@ configure.ac:
 AC_CHECK_FUNCS_ONCE([symlink])
 
 Makefile.am:
-TESTS += test-unlinkat
-check_PROGRAMS += test-unlinkat
+TESTS += test-openat test-unlinkat
+check_PROGRAMS += test-openat test-unlinkat
+test_openat_LDADD = $(LDADD) @LIBINTL@
 test_unlinkat_LDADD = $(LDADD) @LIBINTL@

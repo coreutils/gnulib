@@ -8,9 +8,9 @@ m4/save-cwd.m4
 
 Depends-on:
 chdir-long
-fcntl-safer
-xgetcwd
 stdbool
+unistd-safer
+xgetcwd
 
 configure.ac:
 gl_SAVE_CWD

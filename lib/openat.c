@@ -28,13 +28,6 @@
 #include "openat-priv.h"
 #include "save-cwd.h"
 
-/* We can't use "fcntl--.h", so that openat_safer does not interfere.  */
-#if GNULIB_FCNTL_SAFER
-# include "fcntl-safer.h"
-# undef open
-# define open open_safer
-#endif
-
 /* Replacement for Solaris' openat function.
    <http://www.google.com/search?q=openat+site:docs.sun.com>
    First, try to simulate it via open ("/proc/self/fd/FD/FILE").
@@ -124,7 +117,13 @@ openat_permissive (int fd, char const *file, int flags, mode_t mode,
       if (save_ok && restore_cwd (&saved_cwd) != 0)
 	{
 	  if (! cwd_errno)
-	    openat_restore_fail (errno);
+	    {
+	      /* Don't write a message to just-created fd 2.  */
+	      saved_errno = errno;
+	      if (err == STDERR_FILENO)
+		close (err);
+	      openat_restore_fail (saved_errno);
+	    }
 	  *cwd_errno = errno;
 	}
     }

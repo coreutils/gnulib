@@ -40,6 +40,11 @@ openat_save_fail (int errnum)
   abort ();
 }
 
+
+/* Exit with an error about failure to restore the working directory
+   during an openat emulation.  The caller must ensure that fd 2 is
+   not a just-opened fd, even when openat_safer is not in use.  */
+
 void
 openat_restore_fail (int errnum)
 {

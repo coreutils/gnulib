@@ -20,18 +20,22 @@
 
 #include "chdir-long.h"
 
+#include <assert.h>
+#include <errno.h>
+#include <fcntl.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-#include <errno.h>
 #include <stdio.h>
-#include <assert.h>
-
-#include "fcntl--.h"
 
 #ifndef PATH_MAX
 # error "compile this file only if your system defines PATH_MAX"
 #endif
+
+/* The results of openat() in this file are not leaked to any
+   single-threaded code that could use stdio.
+   FIXME - if the kernel ever adds support for multi-thread safety for
+   avoiding standard fds, then we should use openat_safer.  */
 
 struct cd_buf
 {
