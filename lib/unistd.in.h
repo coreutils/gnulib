@@ -180,7 +180,11 @@ extern int unlink (char const *file);
 
 
 #if @GNULIB_UNLINKAT@
-# if !@HAVE_UNLINKAT@
+# if @REPLACE_UNLINKAT@
+#  undef unlinkat
+#  define unlinkat rpl_unlinkat
+# endif
+# if !@HAVE_UNLINKAT@ || @REPLACE_UNLINKAT@
 extern int unlinkat (int fd, char const *file, int flag);
 # endif
 #elif defined GNULIB_POSIXCHECK

@@ -13,8 +13,35 @@ This function is missing on some platforms:
 glibc 2.3.6, MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, AIX
 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Cygwin 1.5.x, mingw, Interix 3.5, BeOS.
 But the replacement function is not safe to be used in libraries and is not multithread-safe.
+@item
+Some systems mistakenly succeed on @code{unlinkat(fd,"file/",flag)}:
+Solaris 9.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+When @code{unlinkat(fd,name,AT_REMOVEDIR)} fails because the specified
+directory is not empty, the @code{errno} value is system dependent.
+@item
+POSIX requires that @code{unlinkdir(fd,"link-to-empty/",AT_REMOVEDIR)}
+remove @file{empty} and leave @file{link-to-empty} as a dangling
+symlink.  This is counter-intuitive, so some systems fail with
+@code{ENOTDIR} instead:
+glibc
+@item
+Some systems allow a superuser to unlink directories, even though this
+can cause file system corruption.  The error given if a process is not
+permitted to unlink directories varies across implementations; it is
+not always the POSIX value of @code{EPERM}.  Meanwhile, if a process
+has the ability to unlink directories, POSIX requires that
+@code{unlinkat(fd,"symlink-to-dir/",0)} remove @file{dir} and leave
+@file{symlink-to-dir} dangling; this behavior is counter-intuitive.
+The gnulib module unlinkdir can help determine whether code must be
+cautious of unlinking directories.
+@item
+Removing an open file is non-portable: On Unix this allows the programs that
+have the file already open to continue working with it; the file's storage
+is only freed when the no process has the file open any more.  On Windows,
+the attempt to remove an open file fails.
 @end itemize

@@ -1,5 +1,16 @@
 2009-09-19  Eric Blake  <ebb9@byu.net>
 
+	openat: fix unlinkat bugs on Solaris 9
+	* lib/unlinkat.c (unlinkat): New file.
+	* modules/openat (Depends-on): Add unlink.
+	(Files): Distribute it.
+	* m4/openat.m4 (gl_FUNC_OPENAT): Mark unlinkat for replacement if
+	trailing slash behavior is broken.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Add witness.
+	* modules/unistd (Makefile.am): Substitute it.
+	* lib/unistd.in.h (unlinkat): Declare replacement.
+	* doc/posix-functions/unlinkat.texi (unlinkat): Document this.
+
 	openat: fix fstatat bugs on Solaris 9
 	* lib/fstatat.c (rpl_fstatat): Copy recent fixes from lstat and
 	stat.
