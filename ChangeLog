@@ -1,3 +1,9 @@
+2009-09-19  Bruno Haible  <bruno@clisp.org>
+
+	* lib/safe-alloc.h: Use the standard header with LGPL copyright.
+	* lib/safe-alloc.c: Likewise.
+	Reported by Ian Beckwith <ianb@erislabs.net>.
+
 2009-09-18  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool: Add advice to "cannot find configure.ac" error message.
