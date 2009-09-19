@@ -1,3 +1,10 @@
+2009-09-19  Eric Blake  <ebb9@byu.net>
+
+	relocatable-prog-wrapper: fix build
+	* modules/relocatable-prog-wrapper (Files): Update name of
+	canonicalize m4 file, broken on 2009-09-17.
+	Reported by emad hajjar <aleppos@hotmail.com>.
+
 2009-09-19  Bruno Haible  <bruno@clisp.org>
 
 	* lib/safe-alloc.h: Use the standard header with GPL copyright.
