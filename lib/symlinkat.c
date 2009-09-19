@@ -20,11 +20,6 @@
 
 #include <unistd.h>
 
-#include "dirname.h" /* solely for definition of IS_ABSOLUTE_FILE_NAME */
-#include "openat.h"
-#include "openat-priv.h"
-#include "save-cwd.h"
-
 #if !HAVE_SYMLINK
 /* Mingw lacks symlink, so this wrapper is trivial.  */
 

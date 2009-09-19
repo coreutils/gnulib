@@ -1,5 +1,16 @@
 2009-09-19  Eric Blake  <ebb9@byu.net>
 
+	openat: simplify use of at-func.c
+	* lib/at-func.c (includes): Include prerequisites here, to
+	simplify requirements on client files.
+	* lib/openat-priv.h: Add double-inclusion guard.
+	* lib/faccessat.c (includes): Simplify.
+	* lib/fchmodat.c (includes): Likewise.
+	* lib/fchownat.c (includes): Likewise.
+	* lib/mkdirat.c (includes): Likewise.
+	* lib/mkfifoat.c (includes): Likewise.
+	* lib/symlinkat.c (includes): Likewise.
+
 	openat: allow return of fd 0
 	* modules/chdir-long (Depends-on): Relax openat-safer to openat.
 	* modules/save-cwd (Depends-on): Replace fcntl-safer with

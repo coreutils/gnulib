@@ -20,11 +20,6 @@
 
 #include <sys/stat.h>
 
-#include "dirname.h" /* solely for definition of IS_ABSOLUTE_FILE_NAME */
-#include "openat.h"
-#include "openat-priv.h"
-#include "save-cwd.h"
-
 #ifndef HAVE_MKFIFO
 # define HAVE_MKFIFO 0
 #endif

@@ -20,11 +20,6 @@
 
 #include <unistd.h>
 
-#include "dirname.h" /* solely for definition of IS_ABSOLUTE_FILE_NAME */
-#include "openat.h"
-#include "openat-priv.h"
-#include "save-cwd.h"
-
 /* Solaris 10 has no function like this.
    Create a subdirectory, FILE, with mode MODE, in the directory
    open on descriptor FD.  If possible, do it without changing the

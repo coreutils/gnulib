@@ -20,11 +20,6 @@
 
 #include <unistd.h>
 
-#include "dirname.h" /* solely for definition of IS_ABSOLUTE_FILE_NAME */
-#include "openat.h"
-#include "openat-priv.h"
-#include "save-cwd.h"
-
 #ifndef HAVE_ACCESS
 /* Mingw lacks access, but it also lacks real vs. effective ids, so
    the gnulib euidaccess module is good enough.  */

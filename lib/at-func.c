@@ -16,6 +16,11 @@
 
 /* written by Jim Meyering */
 
+#include "dirname.h" /* solely for definition of IS_ABSOLUTE_FILE_NAME */
+#include "openat.h"
+#include "openat-priv.h"
+#include "save-cwd.h"
+
 #ifdef AT_FUNC_USE_F1_COND
 # define CALL_FUNC(F)				\
   (flag == AT_FUNC_USE_F1_COND			\

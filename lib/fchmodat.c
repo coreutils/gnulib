@@ -20,10 +20,7 @@
 
 #include <sys/stat.h>
 
-#include "dirname.h" /* solely for definition of IS_ABSOLUTE_FILE_NAME */
-#include "openat.h"
-#include "openat-priv.h"
-#include "save-cwd.h"
+#include <errno.h>
 
 #ifndef HAVE_LCHMOD
 /* Use a different name, to avoid conflicting with any

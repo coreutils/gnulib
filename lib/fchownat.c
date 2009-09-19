@@ -25,11 +25,6 @@
 
 #include <unistd.h>
 
-#include "dirname.h" /* solely for definition of IS_ABSOLUTE_FILE_NAME */
-#include "openat.h"
-#include "openat-priv.h"
-#include "save-cwd.h"
-
 /* Replacement for Solaris' function by the same name.
    Invoke chown or lchown on file, FILE, using OWNER and GROUP, in the
    directory open on descriptor FD.  If FLAG is AT_SYMLINK_NOFOLLOW, then

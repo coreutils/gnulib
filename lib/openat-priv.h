@@ -17,6 +17,9 @@
 
 /* written by Jim Meyering */
 
+#ifndef _GL_HEADER_OPENAT_PRIV
+#define _GL_HEADER_OPENAT_PRIV
+
 #include <errno.h>
 #include <stdlib.h>
 
@@ -32,3 +35,5 @@ char *openat_proc_name (char buf[OPENAT_BUFFER_SIZE], int fd, char const *file);
    || (Errno) == EPERM || (Errno) == EACCES	\
    || (Errno) == ENOSYS /* Solaris 8 */		\
    || (Errno) == EOPNOTSUPP /* FreeBSD */)
+
+#endif /* _GL_HEADER_OPENAT_PRIV */
