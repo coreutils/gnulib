@@ -1,5 +1,12 @@
 2009-09-19  Eric Blake  <ebb9@byu.net>
 
+	openat: move fstatat and unlinkat into correct files
+	* m4/openat.m4 (gl_FUNC_OPENAT): Adjust which files will be
+	compiled.
+	* lib/openat.c (fstatat, unlinkat): Move...
+	* lib/fstatat.c (fstatat): ...into correct files.
+	* lib/unlinkat.c (unlinkat): Likewise.
+
 	openat: fix unlinkat bugs on Solaris 9
 	* lib/unlinkat.c (unlinkat): New file.
 	* modules/openat (Depends-on): Add unlink.

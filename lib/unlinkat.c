@@ -28,7 +28,9 @@
 
 #include "openat.h"
 
-#undef unlinkat
+#if HAVE_UNLINKAT
+
+# undef unlinkat
 
 /* unlinkat without AT_REMOVEDIR does not honor trailing / on Solaris
    9.  Solve it in a similar manner to unlink.  */
@@ -75,3 +77,29 @@ rpl_unlinkat (int fd, char const *name, int flag)
     result = unlinkat (fd, name, flag);
   return result;
 }
+
+#else /* !HAVE_UNLINKAT */
+
+/* Replacement for Solaris' function by the same name.
+   <http://www.google.com/search?q=unlinkat+site:docs.sun.com>
+   First, try to simulate it via (unlink|rmdir) ("/proc/self/fd/FD/FILE").
+   Failing that, simulate it via save_cwd/fchdir/(unlink|rmdir)/restore_cwd.
+   If either the save_cwd or the restore_cwd fails (relatively unlikely),
+   then give a diagnostic and exit nonzero.
+   Otherwise, this function works just like Solaris' unlinkat.  */
+
+# define AT_FUNC_NAME unlinkat
+# define AT_FUNC_F1 rmdir
+# define AT_FUNC_F2 unlink
+# define AT_FUNC_USE_F1_COND AT_REMOVEDIR
+# define AT_FUNC_POST_FILE_PARAM_DECLS , int flag
+# define AT_FUNC_POST_FILE_ARGS        /* empty */
+# include "at-func.c"
+# undef AT_FUNC_NAME
+# undef AT_FUNC_F1
+# undef AT_FUNC_F2
+# undef AT_FUNC_USE_F1_COND
+# undef AT_FUNC_POST_FILE_PARAM_DECLS
+# undef AT_FUNC_POST_FILE_ARGS
+
+#endif /* !HAVE_UNLINKAT */
