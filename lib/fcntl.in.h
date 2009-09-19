@@ -62,9 +62,11 @@ extern int open (const char *filename, int flags, ...);
 #endif
 
 #if @GNULIB_OPENAT@
-# if !@HAVE_OPENAT@
+# if @REPLACE_OPENAT@
 #  undef openat
 #  define openat rpl_openat
+# endif
+# if !@HAVE_OPENAT@ || @REPLACE_OPENAT@
 int openat (int fd, char const *file, int flags, /* mode_t mode */ ...);
 # endif
 #elif defined GNULIB_POSIXCHECK

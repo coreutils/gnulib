@@ -27,6 +27,7 @@ inline
 intprops
 lchown
 lstat
+open
 openat-die
 rmdir
 same-inode

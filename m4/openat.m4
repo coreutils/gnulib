@@ -1,4 +1,4 @@
-# serial 23
+# serial 24
 # See if we need to use our replacement for Solaris' openat et al functions.
 
 dnl Copyright (C) 2004-2009 Free Software Foundation, Inc.
@@ -32,6 +32,8 @@ AC_DEFUN([gl_FUNC_OPENAT],
   yes+*)
     # Solaris 9 has *at functions, but uniformly mishandles trailing
     # slash in all of them.
+    AC_LIBOBJ([openat])
+    REPLACE_OPENAT=1
     AC_LIBOBJ([fstatat])
     REPLACE_FSTATAT=1
     AC_LIBOBJ([unlinkat])
