@@ -29,8 +29,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#include "canonicalize.h"
-
 #ifndef REPLACE_OPEN_DIRECTORY
 # define REPLACE_OPEN_DIRECTORY 0
 #endif

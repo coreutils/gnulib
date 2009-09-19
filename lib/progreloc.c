@@ -43,7 +43,6 @@
 # include <windows.h>
 #endif
 
-#include "canonicalize.h"
 #include "relocatable.h"
 
 #ifdef NO_XMALLOC

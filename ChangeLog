@@ -1,3 +1,12 @@
+2009-09-19  Eric Blake  <ebb9@byu.net>
+
+	canonicalize-lgpl: adjust clients to use correct header
+	* m4/canonicalize.m4 (gl_FUNC_CANONICALIZE_FILENAME_MODE)
+	(gl_CANONICALIZE_LGPL): Use correct shell quoting.
+	* modules/relocatable-prog-wrapper (Files): Drop canonicalize.h.
+	* lib/fchdir.c (includes): Use <stdlib.h>, not "canonicalize.h".
+	* lib/progreloc.c (includes): Likewise.
+
 2009-09-19  Jim Meyering  <meyering@redhat.com>
 
 	test-posixtm.c: correct a comment

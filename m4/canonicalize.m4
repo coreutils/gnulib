@@ -18,7 +18,7 @@ AC_DEFUN([gl_FUNC_CANONICALIZE_FILENAME_MODE],
   AC_REQUIRE([gl_FUNC_REALPATH_WORKS])
   if test $ac_cv_func_canonicalize_file_name = no; then
     HAVE_CANONICALIZE_FILE_NAME=0
-  elif test $gl_cv_func_realpath_works != yes; then
+  elif test "$gl_cv_func_realpath_works" != yes; then
     REPLACE_CANONICALIZE_FILE_NAME=1
   fi
 ])
@@ -32,10 +32,10 @@ AC_DEFUN([gl_CANONICALIZE_LGPL],
     AC_LIBOBJ([canonicalize-lgpl])
     if test $ac_cv_func_realpath = no; then
       HAVE_REALPATH=0
-    elif test $gl_cv_func_realpath_works != yes; then
+    elif test "$gl_cv_func_realpath_works" != yes; then
       REPLACE_REALPATH=1
     fi
-  elif test $gl_cv_func_realpath_works != yes; then
+  elif test "$gl_cv_func_realpath_works" != yes; then
     AC_LIBOBJ([canonicalize-lgpl])
     REPLACE_REALPATH=1
     REPLACE_CANONICALIZE_FILE_NAME=1
@@ -73,7 +73,7 @@ AC_DEFUN([gl_FUNC_REALPATH_WORKS],
     ], [gl_cv_func_realpath_works=yes], [gl_cv_func_realpath_works=no],
        [gl_cv_func_realpath_works="guessing no"])
   ])
-  if test $gl_cv_func_realpath_works = yes; then
+  if test "$gl_cv_func_realpath_works" = yes; then
     AC_DEFINE([FUNC_REALPATH_WORKS], [1], [Define to 1 if realpath()
       can malloc memory, always gives an absolute path, and handles
       trailing slash correctly.])
