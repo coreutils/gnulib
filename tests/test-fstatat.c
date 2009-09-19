@@ -1,5 +1,5 @@
-/* Test of lstat() function.
-   Copyright (C) 2008, 2009 Free Software Foundation, Inc.
+/* Tests of fstatat.
+   Copyright (C) 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-/* Written by Simon Josefsson, 2008; and Eric Blake, 2009.  */
+/* Written by Eric Blake <ebb9@byu.net>, 2009.  */
 
 #include <config.h>
 
@@ -27,6 +27,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#include "openat.h"
+#include "pathmax.h"
 #include "same-inode.h"
 
 #if !HAVE_SYMLINK
@@ -45,20 +47,43 @@
     }                                                                        \
   while (0)
 
-#define BASE "test-lstat.t"
+#define BASE "test-fstatat.t"
 
 #include "test-lstat.h"
+#include "test-stat.h"
 
-/* Wrapper around lstat, which works even if lstat is a function-like
-   macro, where test_lstat_func(lstat) would do the wrong thing.  */
+static int dfd = AT_FDCWD;
+
+/* Wrapper around fstatat to test stat behavior.  */
+static int
+do_stat (char const *name, struct stat *st)
+{
+  return statat (dfd, name, st);
+}
+
+/* Wrapper around fstatat to test lstat behavior.  */
 static int
 do_lstat (char const *name, struct stat *st)
 {
-  return lstat (name, st);
+  return lstatat (dfd, name, st);
 }
 
 int
 main ()
 {
-  return test_lstat_func (do_lstat, true);
+  int result;
+  ASSERT (test_stat_func (do_stat) == 0);
+  result = test_lstat_func (do_lstat, false);
+  dfd = open (".", O_RDONLY);
+  ASSERT (0 <= dfd);
+  ASSERT (test_stat_func (do_stat) == 0);
+  ASSERT (test_lstat_func (do_lstat, false) == result);
+  ASSERT (close (dfd) == 0);
+
+  /* FIXME - add additional tests of dfd not at current directory.  */
+
+  if (result == 77)
+    fputs ("skipping test: symlinks not supported on this filesystem\n",
+	   stderr);
+  return result;
 }

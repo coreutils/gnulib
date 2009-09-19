@@ -43,39 +43,18 @@
 
 #define BASE "test-stat.t"
 
+#include "test-stat.h"
+
+/* Wrapper around stat, which works even if stat is a function-like
+   macro, where test_stat_func(stat) would do the wrong thing.  */
+static int
+do_stat (char const *name, struct stat *st)
+{
+  return stat (name, st);
+}
+
 int
 main ()
 {
-  struct stat st1;
-  struct stat st2;
-  char cwd[PATH_MAX];
-
-  ASSERT (getcwd (cwd, PATH_MAX) == cwd);
-  ASSERT (stat (".", &st1) == 0);
-  ASSERT (stat ("./", &st2) == 0);
-  ASSERT (SAME_INODE (st1, st2));
-  ASSERT (stat (cwd, &st2) == 0);
-  ASSERT (SAME_INODE (st1, st2));
-  ASSERT (stat ("/", &st1) == 0);
-  ASSERT (stat ("///", &st2) == 0);
-  ASSERT (SAME_INODE (st1, st2));
-
-  errno = 0;
-  ASSERT (stat ("", &st1) == -1);
-  ASSERT (errno == ENOENT);
-  errno = 0;
-  ASSERT (stat ("nosuch", &st1) == -1);
-  ASSERT (errno == ENOENT);
-  errno = 0;
-  ASSERT (stat ("nosuch/", &st1) == -1);
-  ASSERT (errno == ENOENT);
-
-  ASSERT (close (creat (BASE "file", 0600)) == 0);
-  ASSERT (stat (BASE "file", &st1) == 0);
-  errno = 0;
-  ASSERT (stat (BASE "file/", &st1) == -1);
-  ASSERT (errno == ENOTDIR);
-  ASSERT (unlink (BASE "file") == 0);
-
-  return 0;
+  return test_stat_func (do_stat);
 }

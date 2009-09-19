@@ -1,9 +1,11 @@
 Files:
+tests/test-lstat.h
 tests/test-lstat.c
 
 Depends-on:
 errno
 same-inode
+stdbool
 
 configure.ac:
 AC_CHECK_FUNCS_ONCE([symlink])

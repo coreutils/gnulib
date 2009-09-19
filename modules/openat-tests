@@ -1,15 +1,20 @@
 Files:
+tests/test-lstat.h
 tests/test-rmdir.h
+tests/test-stat.h
+tests/test-fstatat.c
 tests/test-openat.c
 tests/test-unlinkat.c
 
 Depends-on:
+pathmax
 
 configure.ac:
 AC_CHECK_FUNCS_ONCE([symlink])
 
 Makefile.am:
-TESTS += test-openat test-unlinkat
-check_PROGRAMS += test-openat test-unlinkat
+TESTS += test-fstatat test-openat test-unlinkat
+check_PROGRAMS += test-fstatat test-openat test-unlinkat
+test_fstatat_LDADD = $(LDADD) @LIBINTL@
 test_openat_LDADD = $(LDADD) @LIBINTL@
 test_unlinkat_LDADD = $(LDADD) @LIBINTL@

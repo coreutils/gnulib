@@ -1,5 +1,18 @@
 2009-09-19  Eric Blake  <ebb9@byu.net>
 
+	test-fstatat: new test, to expose Solaris 9 bugs
+	* tests/test-stat.c (main): Factor guts...
+	* tests/test-stat.h (test_stat_func): ...into new file.
+	* tests/test-lstat.c (main): Factor guts...
+	* tests/test-lstat.h (test_lstat_func): ...into new file.
+	* tests/test-fstatat.c: New file.
+	* modules/stat-tests (Files): Add test-stat.h.
+	* modules/lstat-tests (Files): Add test-lstat.h.
+	(Depends-on): Add stdbool.
+	* modules/openat-tests (Depends-on): Add pathmax.
+	(Files): Add test-lstat.h, test-stat.h, test-fstatat.c.
+	(Makefile.am): Run new test.
+
 	remove: new module, for mingw and Solaris 9 bugs
 	* modules/remove: New file.
 	* lib/remove.c: Likewise.
