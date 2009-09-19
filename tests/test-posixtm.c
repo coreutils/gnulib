@@ -1,4 +1,4 @@
-/* Test that openat_safer leave standard fds alone.
+/* Test that posixtime works as required.
    Copyright (C) 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify

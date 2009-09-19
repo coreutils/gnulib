@@ -1,3 +1,9 @@
+2009-09-19  Jim Meyering  <meyering@redhat.com>
+
+	test-posixtm.c: correct a comment
+	* tests/test-posixtm.c: Correct first-line comment.
+	Spotted by Eric Blake.
+
 2009-09-16  Jim Meyering  <meyering@redhat.com>
 
 	posixtm-tests: make T const-correct; add a test case
