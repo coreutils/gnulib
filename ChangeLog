@@ -1,3 +1,8 @@
+2009-09-19  Jim Meyering  <meyering@redhat.com>
+
+	syntax-check: detect unnecessary inclusion of canonicalize.h
+	* top/maint.mk (sc_prohibit_canonicalize_without_use): New rule.
+
 2009-09-19  Eric Blake  <ebb9@byu.net>
 
 	canonicalize-lgpl: adjust clients to use correct header
