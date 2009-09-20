@@ -9,10 +9,10 @@ tests/test-unlinkat.c
 
 Depends-on:
 pathmax
+symlink
 unlinkdir
 
 configure.ac:
-AC_CHECK_FUNCS_ONCE([symlink])
 
 Makefile.am:
 TESTS += test-fstatat test-openat test-unlinkat

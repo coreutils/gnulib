@@ -4,9 +4,9 @@ tests/test-rmdir.c
 
 Depends-on:
 stdbool
+symlink
 
 configure.ac:
-AC_CHECK_FUNCS_ONCE([symlink])
 
 Makefile.am:
 TESTS += test-rmdir

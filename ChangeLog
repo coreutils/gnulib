@@ -1,5 +1,26 @@
 2009-09-23  Eric Blake  <ebb9@byu.net>
 
+	symlink: use throughout gnulib
+	* m4/symlinkat.m4 (gl_FUNC_SYMLINKAT): Omit symlink check.
+	* lib/symlinkat.c (symlinkat) [!HAVE_SYMLINK]: Document why
+	symlink is not used.
+	* modules/symlinkat (Depends-on): Add symlink.
+	* modules/canonicalize-lgpl-tests (Depends-on): Likewise.
+	* modules/canonicalize-tests (Depends-on): Likewise.
+	* modules/lstat-tests (Depends-on): Likewise.
+	* modules/openat-tests (Depends-on): Likewise.
+	* modules/remove-tests (Depends-on): Likewise.
+	* modules/rmdir-tests (Depends-on): Likewise.
+	* modules/unlink-tests (Depends-on): Likewise.
+	* tests/test-canonicalize-lgpl.c (symlink): Delete stub.
+	* tests/test-canonicalize.c (symlink): Likewise.
+	* tests/test-fstatat.c (symlink): Likewise.
+	* tests/test-lstat.c (symlink): Likewise.
+	* tests/test-remove.c (symlink): Likewise.
+	* tests/test-rmdir.c (symlink): Likewise.
+	* tests/test-unlink.c (symlink): Likewise.
+	* tests/test-unlinkat.c (symlink): Likewise.
+
 	symlink: new module, for Solaris 9 bug
 	* modules/symlink: New file.
 	* m4/symlink.m4 (gl_FUNC_SYMLINK): Likewise.

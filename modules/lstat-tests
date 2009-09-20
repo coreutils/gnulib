@@ -6,9 +6,9 @@ Depends-on:
 errno
 same-inode
 stdbool
+symlink
 
 configure.ac:
-AC_CHECK_FUNCS_ONCE([symlink])
 
 Makefile.am:
 TESTS += test-lstat

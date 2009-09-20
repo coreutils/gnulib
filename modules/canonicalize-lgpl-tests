@@ -3,9 +3,9 @@ tests/test-canonicalize-lgpl.c
 
 Depends-on:
 same-inode
+symlink
 
 configure.ac:
-AC_CHECK_FUNCS_ONCE([symlink])
 
 Makefile.am:
 TESTS += test-canonicalize-lgpl

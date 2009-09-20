@@ -29,10 +29,6 @@
 
 #include "same-inode.h"
 
-#if !HAVE_SYMLINK
-# define symlink(a,b) (-1)
-#endif
-
 #define ASSERT(expr) \
   do                                                                         \
     {                                                                        \

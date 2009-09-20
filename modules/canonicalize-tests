@@ -4,9 +4,9 @@ tests/test-canonicalize.c
 Depends-on:
 progname
 same-inode
+symlink
 
 configure.ac:
-AC_CHECK_FUNCS_ONCE([symlink])
 
 Makefile.am:
 TESTS += test-canonicalize

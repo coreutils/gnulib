@@ -4,10 +4,10 @@ tests/test-unlink.c
 
 Depends-on:
 stdbool
+symlink
 unlinkdir
 
 configure.ac:
-AC_CHECK_FUNCS_ONCE([symlink])
 
 Makefile.am:
 TESTS += test-unlink
