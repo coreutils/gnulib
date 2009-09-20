@@ -1,0 +1,25 @@
+Description:
+symlink(): create a symlink, if possible
+
+Files:
+lib/symlink.c
+m4/symlink.m4
+
+Depends-on:
+lstat
+unistd
+
+configure.ac:
+gl_FUNC_SYMLINK
+gl_UNISTD_MODULE_INDICATOR([symlink])
+
+Makefile.am:
+
+Include:
+<unistd.h>
+
+License:
+LGPL
+
+Maintainer:
+Eric Blake

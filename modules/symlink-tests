@@ -1,0 +1,10 @@
+Files:
+tests/test-symlink.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-symlink
+check_PROGRAMS += test-symlink

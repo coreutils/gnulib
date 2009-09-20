@@ -683,6 +683,23 @@ extern unsigned int sleep (unsigned int n);
 #endif
 
 
+#if @GNULIB_SYMLINK@
+# if @REPLACE_SYMLINK@
+#  undef symlink
+#  define symlink rpl_symlink
+# endif
+# if !@HAVE_SYMLINK@ || @REPLACE_SYMLINK@
+int symlink (char const *contents, char const *file);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef symlink
+# define symlink(c,n)			     \
+    (GL_LINK_WARNING ("symlink is not portable - " \
+                      "use gnulib module symlink for portability"), \
+     symlink (c, n))
+#endif
+
+
 #if @GNULIB_SYMLINKAT@
 # if !@HAVE_SYMLINKAT@
 int symlinkat (char const *contents, int fd, char const *file);

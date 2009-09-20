@@ -2482,6 +2482,7 @@ func_all_modules ()
   func_module savewd
   func_module stat-macros
   func_module stat-time
+  func_module symlink
   func_module symlinkat
   func_module tmpdir
   func_module unlinkdir

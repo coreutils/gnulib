@@ -1,3 +1,17 @@
+2009-09-23  Eric Blake  <ebb9@byu.net>
+
+	symlink: new module, for Solaris 9 bug
+	* modules/symlink: New file.
+	* m4/symlink.m4 (gl_FUNC_SYMLINK): Likewise.
+	* lib/symlink.c: Likewise.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Add defaults.
+	* modules/unistd (Makefile.am): Substitute them.
+	* lib/unistd.in.h (symlink): Declare replacement.
+	* MODULES.html.sh (File system functions): Mention it.
+	* doc/posix-functions/symlink.texi (symlink): Likewise.
+	* modules/symlink-tests: New test.
+	* tests/test-symlink.c: Likewise.
+
 2009-09-23  Bruno Haible  <bruno@clisp.org>
 
 	* gnulib-tool (func_import): Add 'link-warning' to testsrelated_modules
