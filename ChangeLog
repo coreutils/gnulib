@@ -1,5 +1,8 @@
 2009-09-19  Eric Blake  <ebb9@byu.net>
 
+	link: fix quoting
+	* m4/link.m4 (gl_FUNC_LINK): Fix shell quoting.
+
 	openat: fix openat bugs on Solaris 9
 	* lib/openat.c (rpl_openat): Work around Solaris 9 bug.
 	* m4/openat.m4 (gl_FUNC_OPENAT): Also replace openat on Solaris.

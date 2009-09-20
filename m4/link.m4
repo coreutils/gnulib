@@ -1,4 +1,4 @@
-# link.m4 serial 2
+# link.m4 serial 3
 dnl Copyright (C) 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -22,7 +22,7 @@ AC_DEFUN([gl_FUNC_LINK],
          [gl_cv_func_link_works=yes], [gl_cv_func_link_works=no],
          [gl_cv_func_link_works="guessing no"])
        rm -f conftest.a conftest.b])
-    if test $gl_cv_func_link_works != yes; then
+    if test "$gl_cv_func_link_works" != yes; then
       REPLACE_LINK=1
       AC_LIBOBJ([link])
     fi
