@@ -59,6 +59,11 @@
 # include "xalloc.h"
 #endif
 
+/* Declare canonicalize_file_name.
+   The <stdlib.h> included above may be the system's one, not the gnulib
+   one.  */
+extern char * canonicalize_file_name (const char *name);
+
 /* Pathname support.
    ISSLASH(C)           tests whether C is a directory separator character.
    IS_PATH_WITH_DIR(P)  tests whether P contains a directory specification.
