@@ -97,10 +97,21 @@ main ()
   {
     size_t len = strlen (BASE "dir");
     /* When passing too small of a buffer, expect the truncated
-       length.  However, a size of 0 is not portable enough to
-       test.  */
-    ASSERT (readlink (BASE "link", buf, 1) == 1);
-    ASSERT (buf[0] == BASE[0]);
+       length, or an ERANGE failure.  However, a size of 0 is not
+       portable enough to test.  */
+    ssize_t result;
+    errno = 0;
+    result = readlink (BASE "link", buf, 1);
+    if (result == -1)
+      {
+	ASSERT (errno == ERANGE);
+	ASSERT (buf[0] == (char) 0xff);
+      }
+    else
+      {
+	ASSERT (result == 1);
+	ASSERT (buf[0] == BASE[0]);
+      }
     ASSERT (buf[1] == (char) 0xff);
     ASSERT (readlink (BASE "link", buf, len) == len);
     ASSERT (strncmp (buf, BASE "dir", len) == 0);

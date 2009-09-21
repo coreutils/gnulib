@@ -31,4 +31,12 @@ directories, Cygwin sets @code{errno} to @code{ENOENT} or @code{EIO} instead of
 When @code{readlink} is called on a file that is not a symbolic link:
 Irix may set @code{errno} to @code{ENXIO} instead of @code{EINVAL}.  Cygwin
 may set errno to @code{EACCES} instead of @code{EINVAL}.
+@item
+Symlink contents do not always have a trailing null byte, and there is
+no indication if symlink contents were truncated if the return value
+matches the length.  Furthermore, AIX 5.1 and HP-UX 11 set
+@code{errno} to @code{ERANGE} rather than returning truncated
+contents, and Linux sets @code{errno} to @code{EINVAL} if the
+requested length is zero.  Use the gnulib module areadlink for
+improved ability to read symlink contents.
 @end itemize

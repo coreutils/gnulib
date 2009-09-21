@@ -1,5 +1,15 @@
 2009-09-23  Eric Blake  <ebb9@byu.net>
 
+	readlink: document portability issue with symlink length
+	* doc/posix-functions/lstat.texi (lstat): Mention that some file
+	systems have bogus st_size on symlinks, and mention the
+	areadlink-with-size module.
+	* doc/posix-functions/fstatat.texi (fstatat): Likewise.
+	* doc/posix-functions/readlink.texi (readlink): Mention the
+	areadlink module, and ERANGE failure.
+	* doc/posix-functions/readlinkat.texi (readlinkat): Likewise.
+	* tests/test-readlink.c (main): Relax test for AIX, HP-UX.
+
 	readlink: fix Solaris 9 bug with trailing slash
 	* lib/readlink.c (rpl_readlink): Work around trailing slash bug.
 	* m4/readlink.m4 (gl_FUNC_READLINK): Detect the bug.
