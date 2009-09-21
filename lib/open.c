@@ -141,8 +141,9 @@ open (const char *filename, int flags, ...)
      with ENOTDIR.  */
   if (fd >= 0)
     {
+      /* We know len is positive, since open did not fail with ENOENT.  */
       size_t len = strlen (filename);
-      if (len > 0 && filename[len - 1] == '/')
+      if (filename[len - 1] == '/')
 	{
 	  struct stat statbuf;
 

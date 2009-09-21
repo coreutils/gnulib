@@ -1,5 +1,9 @@
 2009-09-22  Eric Blake  <ebb9@byu.net>
 
+	open, openat: minor optimization
+	* lib/open.c (open): If open succeeded, len is non-zero.
+	* lib/openat.c (rpl_openat): Likewise.
+
 	link-follow: ensure correct result
 	* m4/fcntl_h.m4 (gl_FCNTL_H): Clean up temporary file.
 	* m4/link-follow.m4 (gl_FUNC_LINK_FOLLOWS_SYMLINK): Likewise, and
