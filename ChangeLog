@@ -1,5 +1,21 @@
 2009-09-23  Eric Blake  <ebb9@byu.net>
 
+	test-symlinkat: enhance test
+	* tests/test-readlink.c (main): Move guts...
+	* tests/test-readlink.h (test_readlink): ...into new file.
+	* tests/test-symlink.c (main): Move guts...
+	* tests/test-symlink.h (test_symlink): ...into new file.
+	* tests/test-symlinkat.c (main): Use new files for further
+	coverage.
+	(do_symlink, do_readlink): New helper functions.
+	* modules/symlink-tests (Files): Ship new file.
+	(Depends-on): Add stdbool.
+	* modules/readlink-tests (Files): Ship new file.
+	(Depends-on): Add stdbool.
+	* modules/symlinkat-tests (Files): Use new files.
+
+2009-09-23  Eric Blake  <ebb9@byu.net>
+
 	readlink: document portability issue with symlink length
 	* doc/posix-functions/lstat.texi (lstat): Mention that some file
 	systems have bogus st_size on symlinks, and mention the

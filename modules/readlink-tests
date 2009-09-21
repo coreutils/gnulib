@@ -1,7 +1,9 @@
 Files:
+tests/test-readlink.h
 tests/test-readlink.c
 
 Depends-on:
+stdbool
 symlink
 
 configure.ac:

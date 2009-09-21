@@ -22,6 +22,7 @@
 
 #include <fcntl.h>
 #include <errno.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -43,78 +44,80 @@
     }                                                                        \
   while (0)
 
+#define BASE "test-symlinkat.t"
+
+#include "test-readlink.h"
+#include "test-symlink.h"
+
+static int dfd = AT_FDCWD;
+
+static int
+do_symlink (char const *contents, char const *name)
+{
+  return symlinkat (contents, dfd, name);
+}
+
+static ssize_t
+do_readlink (char const *name, char *buf, size_t len)
+{
+  return readlinkat (dfd, name, buf, len);
+}
+
 int
 main ()
 {
   char buf[80];
+  int result;
 
-  /* Create handle for future use.  */
-  int dfd = openat (AT_FDCWD, ".", O_RDONLY);
+  /* Remove any leftovers from a previous partial run.  */
+  ASSERT (system ("rm -rf " BASE "*") == 0);
+
+  /* Perform same checks as counterpart functions.  */
+  result = test_readlink (do_readlink, false);
+  ASSERT (test_symlink (do_symlink, false) == result);
+  dfd = openat (AT_FDCWD, ".", O_RDONLY);
   ASSERT (0 <= dfd);
+  ASSERT (test_readlink (do_readlink, false) == result);
+  ASSERT (test_symlink (do_symlink, false) == result);
 
-  /* Sanity checks of failures.  Mingw lacks symlinkat, but readlinkat
-     can still distinguish between various errors.  */
-  errno = 0;
-  ASSERT (readlinkat (AT_FDCWD, "no_such", buf, sizeof buf) == -1);
-  ASSERT (errno == ENOENT);
-  errno = 0;
-  ASSERT (readlinkat (dfd, "no_such", buf, sizeof buf) == -1);
-  ASSERT (errno == ENOENT);
-  errno = 0;
-  ASSERT (readlinkat (AT_FDCWD, "", buf, sizeof buf) == -1);
-  ASSERT (errno == ENOENT);
-  errno = 0;
-  ASSERT (readlinkat (dfd, "", buf, sizeof buf) == -1);
-  ASSERT (errno == ENOENT);
-  errno = 0;
-  ASSERT (readlinkat (AT_FDCWD, ".", buf, sizeof buf) == -1);
-  ASSERT (errno == EINVAL);
-  errno = 0;
-  ASSERT (readlinkat (dfd, ".", buf, sizeof buf) == -1);
-  ASSERT (errno == EINVAL);
-  errno = 0;
-  ASSERT (symlinkat ("who cares", AT_FDCWD, "") == -1);
-  ASSERT (errno == ENOENT || errno == ENOSYS);
-  errno = 0;
-  ASSERT (symlinkat ("who cares", dfd, "") == -1);
-  ASSERT (errno == ENOENT || errno == ENOSYS);
-
-  /* Skip everything else on mingw.  */
+  /* Now perform some cross-directory checks.  Skip everything else on
+     mingw.  */
   if (HAVE_SYMLINK)
     {
-      const char *linkname = "test-symlinkat.link";
       const char *contents = "don't matter!";
-      int exp = strlen (contents);
+      ssize_t exp = strlen (contents);
 
       /* Create link while cwd is '.', then read it in '..'.  */
-      ASSERT (symlinkat (contents, AT_FDCWD, linkname) == 0);
+      ASSERT (symlinkat (contents, AT_FDCWD, BASE "link") == 0);
       errno = 0;
-      ASSERT (symlinkat (contents, dfd, linkname) == -1);
+      ASSERT (symlinkat (contents, dfd, BASE "link") == -1);
       ASSERT (errno == EEXIST);
       ASSERT (chdir ("..") == 0);
       errno = 0;
-      ASSERT (readlinkat (AT_FDCWD, linkname, buf, sizeof buf) == -1);
+      ASSERT (readlinkat (AT_FDCWD, BASE "link", buf, sizeof buf) == -1);
       ASSERT (errno == ENOENT);
-      ASSERT (readlinkat (dfd, linkname, buf, sizeof buf) == exp);
+      ASSERT (readlinkat (dfd, BASE "link", buf, sizeof buf) == exp);
       ASSERT (strncmp (contents, buf, exp) == 0);
-      ASSERT (unlinkat (dfd, linkname, 0) == 0);
+      ASSERT (unlinkat (dfd, BASE "link", 0) == 0);
 
       /* Create link while cwd is '..', then read it in '.'.  */
-      ASSERT (symlinkat (contents, dfd, linkname) == 0);
+      ASSERT (symlinkat (contents, dfd, BASE "link") == 0);
       ASSERT (fchdir (dfd) == 0);
       errno = 0;
-      ASSERT (symlinkat (contents, AT_FDCWD, linkname) == -1);
+      ASSERT (symlinkat (contents, AT_FDCWD, BASE "link") == -1);
       ASSERT (errno == EEXIST);
       buf[0] = '\0';
-      ASSERT (readlinkat (AT_FDCWD, linkname, buf, sizeof buf) == exp);
+      ASSERT (readlinkat (AT_FDCWD, BASE "link", buf, sizeof buf) == exp);
       ASSERT (strncmp (contents, buf, exp) == 0);
       buf[0] = '\0';
-      ASSERT (readlinkat (dfd, linkname, buf, sizeof buf) == exp);
+      ASSERT (readlinkat (dfd, BASE "link", buf, sizeof buf) == exp);
       ASSERT (strncmp (contents, buf, exp) == 0);
-      ASSERT (unlink (linkname) == 0);
+      ASSERT (unlink (BASE "link") == 0);
     }
 
   ASSERT (close (dfd) == 0);
-
-  return 0;
+  if (result == 77)
+    fputs ("skipping test: symlinks not supported on this filesystem\n",
+	   stderr);
+  return result;
 }

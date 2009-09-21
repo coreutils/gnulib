@@ -22,6 +22,7 @@
 
 #include <fcntl.h>
 #include <errno.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
@@ -40,58 +41,13 @@
 
 #define BASE "test-symlink.t"
 
+#include "test-symlink.h"
+
 int
 main ()
 {
   /* Remove any leftovers from a previous partial run.  */
   ASSERT (system ("rm -rf " BASE "*") == 0);
 
-  if (symlink ("nowhere", BASE "link1"))
-    {
-      fputs ("skipping test: symlinks not supported on this filesystem\n",
-	     stderr);
-      return 77;
-    }
-
-  /* Some systems allow the creation of 0-length symlinks as a synonym
-     for "."; but most reject it.  */
-  errno = 0;
-  if (symlink ("", BASE "link2") == -1)
-    ASSERT (errno == ENOENT || errno == EINVAL);
-  else
-    ASSERT (unlink (BASE "link2") == 0);
-
-  /* Sanity checks of failures.  */
-  errno = 0;
-  ASSERT (symlink ("nowhere", "") == -1);
-  ASSERT (errno == ENOENT);
-  errno = 0;
-  ASSERT (symlink ("nowhere", ".") == -1);
-  ASSERT (errno == EEXIST || errno == EINVAL);
-  errno = 0;
-  ASSERT (symlink ("somewhere", BASE "link1") == -1);
-  ASSERT (errno == EEXIST);
-  errno = 0;
-  ASSERT (symlink ("nowhere", BASE "link2/") == -1);
-  ASSERT (errno == ENOTDIR || errno == ENOENT);
-  ASSERT (mkdir (BASE "dir", 0700) == 0);
-  errno = 0;
-  ASSERT (symlink ("nowhere", BASE "dir") == -1);
-  ASSERT (errno == EEXIST);
-  errno = 0;
-  ASSERT (symlink ("nowhere", BASE "dir/") == -1);
-  ASSERT (errno == EEXIST);
-  ASSERT (close (creat (BASE "file", 0600)) == 0);
-  errno = 0;
-  ASSERT (symlink ("nowhere", BASE "file") == -1);
-  ASSERT (errno == EEXIST);
-  errno = 0;
-  ASSERT (symlink ("nowhere", BASE "file/") == -1);
-  ASSERT (errno == EEXIST || errno == ENOTDIR);
-
-  ASSERT (rmdir (BASE "dir") == 0);
-  ASSERT (unlink (BASE "file") == 0);
-  ASSERT (unlink (BASE "link1") == 0);
-
-  return 0;
+  return test_symlink (symlink, true);
 }
