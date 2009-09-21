@@ -726,8 +726,10 @@ leaf_optimization_applies (int dir_fd)
 }
 
 #else
-static bool dirent_inode_sort_may_be_useful (int dir_fd) { return true; }
-static bool leaf_optimization_applies (int dir_fd) { return false; }
+static bool
+dirent_inode_sort_may_be_useful (int dir_fd ATTRIBUTE_UNUSED) { return true; }
+static bool
+leaf_optimization_applies (int dir_fd ATTRIBUTE_UNUSED) { return false; }
 #endif
 
 #if GNULIB_FTS

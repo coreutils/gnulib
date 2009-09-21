@@ -1,3 +1,9 @@
+2009-09-21  Eric Blake  <ebb9@byu.net>
+
+	fts: avoid compiler warning
+	* lib/fts.c (dirent_inode_sort_may_be_useful)
+	(leaf_optimization_applies) [!__linux__]: Mark unused parameters.
+
 2009-09-19  Bruno Haible  <bruno@clisp.org>
 
 	* lib/progreloc.c (canonicalize_file_name): New declaration.
