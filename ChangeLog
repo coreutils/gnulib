@@ -1,3 +1,10 @@
+2009-09-22  Eric Blake  <ebb9@byu.net>
+
+	link-follow: ensure correct result
+	* m4/fcntl_h.m4 (gl_FCNTL_H): Clean up temporary file.
+	* m4/link-follow.m4 (gl_FUNC_LINK_FOLLOWS_SYMLINK): Likewise, and
+	distinguish between possible failures.
+
 2009-09-21  Eric Blake  <ebb9@byu.net>
 
 	fts: avoid compiler warning

@@ -1,4 +1,4 @@
-# serial 4
+# serial 5
 # Configure fcntl.h.
 dnl Copyright (C) 2006, 2007, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
@@ -38,6 +38,7 @@ AC_DEFUN([gl_FCNTL_H],
 	      if (symlink (".", sym) != 0
 		  || close (open (sym, O_RDONLY | O_NOFOLLOW)) == 0)
 		status |= 32;
+	      unlink (sym);
 	    }
 	    {
 	      static char const file[] = "confdefs.h";
