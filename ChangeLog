@@ -1,5 +1,14 @@
 2009-09-23  Eric Blake  <ebb9@byu.net>
 
+	readlink: fix cygwin 1.5.x bug with return type
+	* m4/readlink.m4 (gl_FUNC_READLINK): Require correct signature.
+	* lib/unistd.in.h (readlink): Use ssize_t.
+	* lib/readlink.c (readlink): Likewise.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Add witness.
+	* modules/unistd (Makefile.am): Substitute it.
+	* lib/unistd.in.h (readlink): Declare replacement.
+	* doc/posix-functions/readlink.texi (readlink): Document this.
+
 	symlink: use throughout gnulib
 	* m4/symlinkat.m4 (gl_FUNC_SYMLINKAT): Omit symlink check.
 	* lib/symlinkat.c (symlinkat) [!HAVE_SYMLINK]: Document why

@@ -9,6 +9,10 @@ Gnulib module: readlink
 Portability problems fixed by Gnulib:
 @itemize
 @item
+On some platforms, @code{readlink} returns @code{int} instead of
+@code{ssize_t}:
+FreeBSD 6.0, OpenBSD 3.8, Cygwin 1.5.x.
+@item
 This function is missing on some platforms:
 mingw.
 @end itemize

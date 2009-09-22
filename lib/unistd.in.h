@@ -41,7 +41,9 @@
 /* mingw, BeOS, Haiku declare environ in <stdlib.h>, not in <unistd.h>.  */
 #include <stdlib.h>
 
-#if @GNULIB_WRITE@ && @REPLACE_WRITE@ && @GNULIB_UNISTD_H_SIGPIPE@
+#if ((@GNULIB_WRITE@ && @REPLACE_WRITE@ && @GNULIB_UNISTD_H_SIGPIPE@)   \
+     || (@GNULIB_READLINK@ && (!@HAVE_READLINK@ || @REPLACE_READLINK@)) \
+     || (@GNULIB_READLINKAT@ && !@HAVE_READLINKAT@))
 /* Get ssize_t.  */
 # include <sys/types.h>
 #endif
@@ -621,13 +623,16 @@ extern int pipe2 (int fd[2], int flags);
 
 
 #if @GNULIB_READLINK@
+# if @REPLACE_READLINK@
+#  define readlink rpl_readlink
+# endif
 /* Read the contents of the symbolic link FILE and place the first BUFSIZE
    bytes of it into BUF.  Return the number of bytes placed into BUF if
    successful, otherwise -1 and errno set.
    See the POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/readlink.html>.  */
-# if !@HAVE_READLINK@
-extern int readlink (const char *file, char *buf, size_t bufsize);
+# if !@HAVE_READLINK@ || @REPLACE_READLINK@
+extern ssize_t readlink (const char *file, char *buf, size_t bufsize);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef readlink
