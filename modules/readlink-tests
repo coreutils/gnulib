@@ -1,0 +1,11 @@
+Files:
+tests/test-readlink.c
+
+Depends-on:
+symlink
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-readlink
+check_PROGRAMS += test-readlink

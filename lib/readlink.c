@@ -47,11 +47,27 @@ readlink (const char *name, char *buf _UNUSED_PARAMETER_,
 # undef readlink
 
 /* readlink() wrapper that uses correct types, for systems like cygwin
-   1.5.x where readlink returns int.  */
+   1.5.x where readlink returns int, and which rejects trailing slash,
+   for Solaris 9.  */
 
 ssize_t
 rpl_readlink (const char *name, char *buf, size_t bufsize)
 {
+# if READLINK_TRAILING_SLASH_BUG
+  size_t len = strlen (name);
+  if (len && name[len - 1] == '/')
+    {
+      /* Even if name without the slash is a symlink to a directory,
+         both lstat() and stat() must resolve the trailing slash to
+         the directory rather than the symlink.  We can therefore
+         safely use stat() to distinguish between EINVAL and
+         ENOTDIR/ENOENT, avoiding extra overhead of rpl_lstat().  */
+      struct stat st;
+      if (stat (name, &st) == 0)
+        errno = EINVAL;
+      return -1;
+    }
+# endif /* READLINK_TRAILING_SLASH_BUG */
   return readlink (name, buf, bufsize);
 }
 

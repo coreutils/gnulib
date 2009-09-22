@@ -1,4 +1,4 @@
-# readlink.m4 serial 6
+# readlink.m4 serial 7
 dnl Copyright (C) 2003, 2007, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -21,7 +21,24 @@ AC_DEFUN([gl_FUNC_READLINK],
       /* Cause compilation failure if original declaration has wrong type.  */
       ssize_t readlink (const char *, char *, size_t);]])],
          [gl_cv_decl_readlink_works=yes], [gl_cv_decl_readlink_works=no])])
-    if test "$gl_cv_decl_readlink_works" != yes; then
+    AC_CACHE_CHECK([whether readlink handles trailing slash correctly],
+      [gl_cv_func_readlink_works],
+      [# We have readlink, so assume ln -s works.
+       ln -s conftest.no-such conftest.link
+       AC_RUN_IFELSE(
+         [AC_LANG_PROGRAM(
+           [[#include <unistd.h>
+]], [[char buf[20];
+      return readlink ("conftest.link/", buf, sizeof buf) != -1;]])],
+         [gl_cv_func_readlink_works=yes], [gl_cv_func_readlink_works=no],
+         [gl_cv_func_readlink_works="guessing no"])
+      rm -f conftest.link])
+    if test "$gl_cv_func_readlink_works" != yes; then
+      AC_DEFINE([READLINK_TRAILING_SLASH_BUG], [1], [Define to 1 if readlink
+        fails to recognize a trailing slash.])
+      REPLACE_READLINK=1
+      AC_LIBOBJ([readlink])
+    elif test "$gl_cv_decl_readlink_works" != yes; then
       REPLACE_READLINK=1
       AC_LIBOBJ([readlink])
     fi

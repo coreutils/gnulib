@@ -1,5 +1,12 @@
 2009-09-23  Eric Blake  <ebb9@byu.net>
 
+	readlink: fix Solaris 9 bug with trailing slash
+	* lib/readlink.c (rpl_readlink): Work around trailing slash bug.
+	* m4/readlink.m4 (gl_FUNC_READLINK): Detect the bug.
+	* doc/posix-functions/readlink.texi (readlink): Document this.
+	* modules/readlink-tests: New test.
+	* tests/test-readlink.c: Likewise.
+
 	readlink: fix cygwin 1.5.x bug with return type
 	* m4/readlink.m4 (gl_FUNC_READLINK): Require correct signature.
 	* lib/unistd.in.h (readlink): Use ssize_t.
