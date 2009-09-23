@@ -2743,9 +2743,10 @@ func_import ()
   # ignoring tests modules. Its lib/* sources go into $sourcebase/. If --lgpl
   # is specified, it will consist only of LGPLed source.
   # The tests-related module list is the transitive closure of the specified
-  # modules, including tests modules, minus the main module list. Its lib/*
-  # sources (brought in through dependencies of *-tests modules) go into
-  # $testsbase/. It may contain GPLed source, even if --lgpl is specified.
+  # modules, including tests modules, minus the main module list excluding
+  # 'link-warning'. Its lib/* sources (brought in through dependencies of
+  # *-tests modules) go into $testsbase/. It may contain GPLed source, even if
+  # --lgpl is specified.
   # Determine main module list.
   saved_inctests="$inctests"
   inctests=""
@@ -2759,7 +2760,8 @@ func_import ()
   fi
   # Determine tests-related module list.
   echo "$final_modules" | LC_ALL=C sort -u > "$tmp"/final-modules
-  testsrelated_modules=`func_reset_sigpipe; echo "$main_modules" | LC_ALL=C sort -u | LC_ALL=C join -v 2 - "$tmp"/final-modules`
+  sed_remove_link_warning='/^link-warning$/d'
+  testsrelated_modules=`func_reset_sigpipe; echo "$main_modules" | LC_ALL=C sort -u | sed -e "$sed_remove_link_warning" | LC_ALL=C join -v 2 - "$tmp"/final-modules`
   if test $verbose -ge 1; then
     echo "Tests-related module list:"
     echo "$testsrelated_modules" | sed -e 's/^/  /'
