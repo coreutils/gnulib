@@ -1,5 +1,9 @@
 2009-09-23  Eric Blake  <ebb9@byu.net>
 
+	link: fix test failure on Solaris 9
+	* lib/link.c (rpl_link): Don't assume link will catch bogus
+	trailing slash on source.
+
 	test-symlinkat: enhance test
 	* tests/test-readlink.c (main): Move guts...
 	* tests/test-readlink.h (test_readlink): ...into new file.

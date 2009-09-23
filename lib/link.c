@@ -162,11 +162,13 @@ rpl_link (char const *file1, char const *file2)
       || (len2 && file2[len2 - 1] == '/'))
     {
       /* Let link() decide whether hard-linking directories is legal.
-         If stat() fails, link() will probably fail for the same
-         reason; so we only have to worry about successful stat() and
-         non-directory.  */
+         If stat() fails, then link() should fail for the same reason
+         (although on Solaris 9, link("file/","oops") mistakenly
+         succeeds); if stat() succeeds, require a directory.  */
       struct stat st;
-      if (stat (file1, &st) == 0 && !S_ISDIR (st.st_mode))
+      if (stat (file1, &st))
+        return -1;
+      if (!S_ISDIR (st.st_mode))
         {
           errno = ENOTDIR;
           return -1;
