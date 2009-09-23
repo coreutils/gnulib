@@ -20,11 +20,18 @@
 
 #include <config.h>
 
+#if !HAVE_LSTAT
+/* On systems that lack symlinks, our replacement <sys/stat.h> already
+   defined lstat as stat, so there is nothing further to do other than
+   avoid an empty file.  */
+typedef int dummy;
+#else /* HAVE_LSTAT */
+
 /* Get the original definition of lstat.  It might be defined as a macro.  */
-#define __need_system_sys_stat_h
-#include <sys/types.h>
-#include <sys/stat.h>
-#undef __need_system_sys_stat_h
+# define __need_system_sys_stat_h
+# include <sys/types.h>
+# include <sys/stat.h>
+# undef __need_system_sys_stat_h
 
 static inline int
 orig_lstat (const char *filename, struct stat *buf)
@@ -33,10 +40,10 @@ orig_lstat (const char *filename, struct stat *buf)
 }
 
 /* Specification.  */
-#include <sys/stat.h>
+# include <sys/stat.h>
 
-#include <string.h>
-#include <errno.h>
+# include <string.h>
+# include <errno.h>
 
 /* lstat works differently on Linux and Solaris systems.  POSIX (see
    `pathname resolution' in the glossary) requires that programs like
@@ -81,3 +88,5 @@ rpl_lstat (const char *file, struct stat *sbuf)
     }
   return stat (file, sbuf);
 }
+
+#endif /* HAVE_LSTAT */

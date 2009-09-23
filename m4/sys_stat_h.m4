@@ -1,4 +1,4 @@
-# sys_stat_h.m4 serial 16   -*- Autoconf -*-
+# sys_stat_h.m4 serial 17   -*- Autoconf -*-
 dnl Copyright (C) 2006-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,16 +10,6 @@ dnl Provide a GNU-like <sys/stat.h>.
 AC_DEFUN([gl_HEADER_SYS_STAT_H],
 [
   AC_REQUIRE([gl_SYS_STAT_H_DEFAULTS])
-
-  dnl Check for lstat.  Systems that lack it (mingw) also lack symlinks, so
-  dnl stat is a good replacement.
-  AC_CHECK_FUNCS_ONCE([lstat])
-  if test $ac_cv_func_lstat = yes; then
-    HAVE_LSTAT=1
-  else
-    HAVE_LSTAT=0
-  fi
-  AC_SUBST([HAVE_LSTAT])
 
   dnl For the mkdir substitute.
   AC_REQUIRE([AC_C_INLINE])
@@ -61,6 +51,7 @@ AC_DEFUN([gl_SYS_STAT_H_DEFAULTS],
   HAVE_FCHMODAT=1;    AC_SUBST([HAVE_FCHMODAT])
   HAVE_FSTATAT=1;     AC_SUBST([HAVE_FSTATAT])
   HAVE_LCHMOD=1;      AC_SUBST([HAVE_LCHMOD])
+  HAVE_LSTAT=1;       AC_SUBST([HAVE_LSTAT])
   HAVE_MKDIRAT=1;     AC_SUBST([HAVE_MKDIRAT])
   HAVE_MKFIFOAT=1;    AC_SUBST([HAVE_MKFIFOAT])
   HAVE_MKNODAT=1;     AC_SUBST([HAVE_MKNODAT])

@@ -1,4 +1,4 @@
-# serial 19
+# serial 20
 
 # Copyright (C) 1997-2001, 2003-2009 Free Software Foundation, Inc.
 #
@@ -12,15 +12,17 @@ AC_DEFUN([gl_FUNC_LSTAT],
 [
   AC_REQUIRE([gl_SYS_STAT_H_DEFAULTS])
   dnl If lstat does not exist, the replacement <sys/stat.h> does
-  dnl "#define lstat stat", and lstat.c does not need to be compiled.
+  dnl "#define lstat stat", and lstat.c is a no-op.
   AC_CHECK_FUNCS_ONCE([lstat])
   if test $ac_cv_func_lstat = yes; then
-    AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK
-    dnl Note: AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK does AC_LIBOBJ([lstat]).
+    AC_REQUIRE([AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK])
     if test $ac_cv_func_lstat_dereferences_slashed_symlink = no; then
+      dnl Note: AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK does AC_LIBOBJ([lstat]).
       REPLACE_LSTAT=1
     fi
     # Prerequisites of lib/lstat.c.
     AC_REQUIRE([AC_C_INLINE])
+  else
+    HAVE_LSTAT=0
   fi
 ])
