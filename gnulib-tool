@@ -2216,7 +2216,7 @@ func_emit_tests_Makefile_am ()
   func_emit_copyright_notice
   echo
   uses_subdirs=
-  (
+  {
     for module in $modules; do
       if $for_test; then
         func_verify_tests_module
@@ -2258,7 +2258,7 @@ func_emit_tests_Makefile_am ()
         done
       fi
     done
-  ) > allsnippets.tmp
+  } > allsnippets.tmp
   # Generate dependencies here, since it eases the debugging of test failures.
   # If there are source files in subdirectories, prevent collision of the
   # object files (example: hash.c and libxml/hash.c).
