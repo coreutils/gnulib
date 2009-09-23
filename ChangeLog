@@ -1,5 +1,13 @@
 2009-09-23  Eric Blake  <ebb9@byu.net>
 
+	same-inode: make SAME_INODE tri-state, to port to mingw
+	* NEWS: Mention this change.
+	* lib/same-inode.h (same-inode.h): Recognize mingw limitation of
+	st_ino always being 0.
+	* lib/cycle-check.h (CYCLE_CHECK_REFLECT_CHDIR_UP): Update caller.
+	* lib/cycle-check.c (cycle_check): Likewise.
+	* lib/same.c (same_name): Likewise.
+
 	lstat: avoid mingw compilation error
 	* m4/lstat.m4 (gl_FUNC_LSTAT): Avoid duplicate calls to
 	AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK, and deal with missing
