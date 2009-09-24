@@ -302,6 +302,7 @@ main ()
   errno = 0;
   ASSERT (areadlink (BASE "file") == NULL);
   ASSERT (errno == EINVAL);
+  ASSERT (unlink (BASE "file") == 0);
   ASSERT (unlink (BASE "link5") == 0);
   ASSERT (symlink (BASE "link3", BASE "link5") == 0);
   errno = 0;
@@ -346,7 +347,6 @@ main ()
   ASSERT (unlink (BASE "link3") == 0);
   ASSERT (unlink (BASE "link4") == 0);
   ASSERT (unlink (BASE "link5") == 0);
-  ASSERT (unlink (BASE "file") == 0);
   free (cwd);
   return result;
 }

@@ -1,5 +1,8 @@
 2009-09-24  Eric Blake  <ebb9@byu.net>
 
+	test-linkat: make test more robust
+	* tests/test-linkat.c (main): Avoid collision with EEXIST.
+
 	getopt: fix inclusion guards for cygwin
 	* modules/getopt-posix (Depends-on): Add include-next.
 	(Makefile.am): Substitute more items in replacement header.
