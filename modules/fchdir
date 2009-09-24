@@ -6,7 +6,6 @@ lib/fchdir.c
 m4/fchdir.m4
 
 Depends-on:
-canonicalize-lgpl
 close
 dirent
 dirfd

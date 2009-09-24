@@ -33,6 +33,14 @@
 # define REPLACE_OPEN_DIRECTORY 0
 #endif
 
+#ifndef HAVE_CANONICALIZE_FILE_NAME
+# if GNULIB_CANONICALIZE || GNULIB_CANONICALIZE_LGPL
+#  define HAVE_CANONICALIZE_FILE_NAME 1
+# else
+#  define HAVE_CANONICALIZE_FILE_NAME 0
+# endif
+#endif
+
 /* This replacement assumes that a directory is not renamed while opened
    through a file descriptor.
 
@@ -78,6 +86,38 @@ ensure_dirs_slot (size_t fd)
   return true;
 }
 
+/* Return the canonical name of DIR in malloc'd storage.  */
+static char *
+get_name (char const *dir)
+{
+  char *result;
+  if (REPLACE_OPEN_DIRECTORY || !HAVE_CANONICALIZE_FILE_NAME)
+    {
+      /* The function canonicalize_file_name has not yet been ported
+	 to mingw, with all its drive letter and backslash quirks.
+	 Fortunately, getcwd is reliable in this case, but we ensure
+	 we can get back to where we started before using it.  Treat
+	 "." as a special case, as it is frequently encountered.  */
+      char *cwd = getcwd (NULL, 0);
+      int saved_errno;
+      if (dir[0] == '.' && dir[1] == '\0')
+	return cwd;
+      if (chdir (cwd))
+	return NULL;
+      result = chdir (dir) ? NULL : getcwd (NULL, 0);
+      saved_errno = errno;
+      chdir (cwd);
+      free (cwd);
+      errno = saved_errno;
+    }
+  else
+    {
+      /* Avoid changing the directory.  */
+      result = canonicalize_file_name (dir);
+    }
+  return result;
+}
+
 /* Hook into the gnulib replacements for open() and close() to keep track
    of the open file descriptors.  */
 
@@ -108,7 +148,7 @@ _gl_register_fd (int fd, const char *filename)
       || (fstat (fd, &statbuf) == 0 && S_ISDIR (statbuf.st_mode)))
     {
       if (!ensure_dirs_slot (fd)
-          || (dirs[fd].name = canonicalize_file_name (filename)) == NULL)
+          || (dirs[fd].name = get_name (filename)) == NULL)
         {
           int saved_errno = errno;
           close (fd);

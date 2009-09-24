@@ -1,5 +1,12 @@
 2009-09-23  Eric Blake  <ebb9@byu.net>
 
+	fchdir: another mingw fix
+	* modules/fchdir (Depends-on): Drop canonicalize-lgpl.
+	* lib/fchdir.c (get_name): New helper method; skips canonicalize
+	on mingw (where it has not yet been ported), and make it optional
+	elsewhere.
+	(_gl_register_fd): Use it.
+
 	same-inode: make SAME_INODE tri-state, to port to mingw
 	* NEWS: Mention this change.
 	* lib/same-inode.h (same-inode.h): Recognize mingw limitation of
