@@ -1,7 +1,6 @@
 /* help detect directory cycles efficiently
 
-   Copyright (C) 2003, 2004, 2005, 2006, 2009 Free Software
-   Foundation, Inc.
+   Copyright (C) 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -63,7 +62,7 @@ cycle_check (struct cycle_check_state *state, struct stat const *sb)
   /* If the current directory ever happens to be the same
      as the one we last recorded for the cycle detection,
      then it's obviously part of a cycle.  */
-  if (state->chdir_counter && SAME_INODE (*sb, state->dev_ino) == 1)
+  if (state->chdir_counter && SAME_INODE (*sb, state->dev_ino))
     return true;
 
   /* If the number of `descending' chdir calls is a power of two,

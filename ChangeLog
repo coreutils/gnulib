@@ -1,3 +1,13 @@
+2009-09-24  Eric Blake  <ebb9@byu.net>
+
+	same-inode: revert prior change; it is not yet ready
+	* NEWS: Undo mention of this change.
+	* lib/same-inode.h (same-inode.h): Undo tri-state change.
+	* lib/cycle-check.h (CYCLE_CHECK_REFLECT_CHDIR_UP): Update caller.
+	* lib/cycle-check.c (cycle_check): Likewise.
+	* lib/same.c (same_name): Likewise.
+	* lib/at-func2.c (at_func2): Likewise.
+
 2009-09-23  Eric Blake  <ebb9@byu.net>
 
 	linkat: new module

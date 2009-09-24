@@ -1,6 +1,6 @@
 /* help detect directory cycles efficiently
 
-   Copyright (C) 2003, 2004, 2006, 2009 Free Software Foundation, Inc.
+   Copyright (C) 2003, 2004, 2006 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ bool cycle_check (struct cycle_check_state *state, struct stat const *sb);
       /* You must call cycle_check at least once before using this macro.  */ \
       if ((State)->chdir_counter == 0)				\
         abort ();						\
-      if (SAME_INODE ((State)->dev_ino, SB_subdir) == 1)	\
+      if (SAME_INODE ((State)->dev_ino, SB_subdir))		\
 	{							\
 	  (State)->dev_ino.st_dev = (SB_dir).st_dev;		\
 	  (State)->dev_ino.st_ino = (SB_dir).st_ino;		\

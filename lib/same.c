@@ -1,7 +1,7 @@
 /* Determine whether two file names refer to the same file.
 
-   Copyright (C) 1997, 1998, 1999, 2000, 2002, 2003, 2004, 2005, 2006,
-   2009 Free Software Foundation, Inc.
+   Copyright (C) 1997, 1998, 1999, 2000, 2002, 2003, 2004, 2005, 2006 Free
+   Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -97,9 +97,6 @@ same_name (const char *source, const char *dest)
 	}
 
       same = SAME_INODE (source_dir_stats, dest_dir_stats);
-      if (same < 0)
-	same = (identical_basenames
-		&& strcmp (source_basename, dest_basename) == 0);
 
 #if ! _POSIX_NO_TRUNC && HAVE_PATHCONF && defined _PC_NAME_MAX
       if (same && ! identical_basenames)

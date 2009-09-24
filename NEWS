@@ -6,9 +6,6 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
-2009-09-23  same-inode      The macro SAME_INODE is now tri-state, adding -1
-                            for unknown.
-
 2009-09-16  canonicalize-lgpl
                             The include file is changed from "canonicalize.h"
                             to <stdlib.h>.
