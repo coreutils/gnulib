@@ -1,5 +1,14 @@
 2009-09-24  Eric Blake  <ebb9@byu.net>
 
+	getopt: fix inclusion guards for cygwin
+	* modules/getopt-posix (Depends-on): Add include-next.
+	(Makefile.am): Substitute more items in replacement header.
+	* m4/getopt.m4 (gl_GETOPT_CHECK_HEADERS): Also check for native
+	<getopt.h>.
+	* lib/getopt.in.h (includes): Use split inclusion guard, and
+	prefer <getopt.h> over include <unistd.h> when one is present.
+	(option): Also override name of 'struct option'.
+
 	same-inode: revert prior change; it is not yet ready
 	* NEWS: Undo mention of this change.
 	* lib/same-inode.h (same-inode.h): Undo tri-state change.

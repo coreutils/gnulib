@@ -1,5 +1,5 @@
 /* Declarations for getopt.
-   Copyright (C) 1989-1994,1996-1999,2001,2003,2004,2005,2006,2007
+   Copyright (C) 1989-1994,1996-1999,2001,2003,2004,2005,2006,2007,2009
    Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
@@ -18,6 +18,17 @@
 
 #ifndef _GETOPT_H
 
+#if __GNUC__ >= 3
+@PRAGMA_SYSTEM_HEADER@
+#endif
+
+/* The include_next requires a split double-inclusion guard.  */
+#if @HAVE_GETOPT_H@
+# @INCLUDE_NEXT@ @NEXT_GETOPT_H@
+#endif
+
+#ifndef _GETOPT_H
+
 #ifndef __need_getopt
 # define _GETOPT_H 1
 #endif
@@ -26,14 +37,17 @@
    identifier that prefixes the external functions and variables
    defined in this header.  When this happens, include the
    headers that might declare getopt so that they will not cause
-   confusion if included after this file.  Then systematically rename
+   confusion if included after this file (if the system had <getopt.h>,
+   we have already included it).  Then systematically rename
    identifiers so that they do not collide with the system functions
    and variables.  Renaming avoids problems with some compilers and
    linkers.  */
 #if defined __GETOPT_PREFIX && !defined __need_getopt
-# include <stdlib.h>
-# include <stdio.h>
-# include <unistd.h>
+# if !@HAVE_GETOPT_H@
+#  include <stdlib.h>
+#  include <stdio.h>
+#  include <unistd.h>
+# endif
 # undef __need_getopt
 # undef getopt
 # undef getopt_long
@@ -42,6 +56,7 @@
 # undef opterr
 # undef optind
 # undef optopt
+# undef option
 # define __GETOPT_CONCAT(x, y) x ## y
 # define __GETOPT_XCONCAT(x, y) __GETOPT_CONCAT (x, y)
 # define __GETOPT_ID(y) __GETOPT_XCONCAT (__GETOPT_PREFIX, y)
@@ -52,6 +67,7 @@
 # define opterr __GETOPT_ID (opterr)
 # define optind __GETOPT_ID (optind)
 # define optopt __GETOPT_ID (optopt)
+# define option __GETOPT_ID (option)
 #endif
 
 /* Standalone applications get correct prototypes for getopt_long and
@@ -222,4 +238,5 @@ extern int getopt_long_only (int ___argc, char *__getopt_argv_const *___argv,
 /* Make sure we later can get all the definitions and declarations.  */
 #undef __need_getopt
 
+#endif /* getopt.h */
 #endif /* getopt.h */

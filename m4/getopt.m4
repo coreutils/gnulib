@@ -54,6 +54,15 @@ AC_DEFUN([gl_GETOPT_CHECK_HEADERS],
   dnl Persuade Solaris <unistd.h> to declare optarg, optind, opterr, optopt.
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
+  gl_CHECK_NEXT_HEADERS([getopt.h])
+  AC_CHECK_HEADERS_ONCE([getopt.h])
+  if test $ac_cv_header_getopt_h = yes; then
+    HAVE_GETOPT_H=1
+  else
+    HAVE_GETOPT_H=0
+  fi
+  AC_SUBST([HAVE_GETOPT_H])
+
   gl_replace_getopt=
 
   dnl Test whether <getopt.h> is available.
