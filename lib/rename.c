@@ -228,8 +228,10 @@ rpl_rename (char const *src, char const *dst)
      already covered that situation.  But if there is any problem with
      a trailing slash on an existing source or destination, as in
      Solaris 9, or if a directory can overwrite a symlink, as on
-     Cygwin 1.5, then we must strip the offending slash and check that
-     we have not encountered a symlink instead of a directory.
+     Cygwin 1.5, or if directories cannot be created with trailing
+     slash, as on NetBSD 1.6, then we must strip the offending slash
+     and check that we have not encountered a symlink instead of a
+     directory.
 
      Stripping a trailing slash interferes with POSIX semantics, where
      rename behavior on a symlink with a trailing slash operates on

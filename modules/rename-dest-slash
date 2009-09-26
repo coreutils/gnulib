@@ -1,17 +1,18 @@
 Description:
 rename() function: change the name or location of a file.
 
+Status:
+obsolete
+
+Notice:
+This module is obsolete; use the rename module instead.
+
 Files:
-lib/rename-dest-slash.c
-m4/rename-dest-slash.m4
 
 Depends-on:
-dirname
-same-inode
-xalloc
+rename
 
 configure.ac:
-gl_FUNC_RENAME_TRAILING_DEST_SLASH
 
 Makefile.am:
 

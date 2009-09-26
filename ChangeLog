@@ -1,5 +1,15 @@
 2009-10-02  Eric Blake  <ebb9@byu.net>
 
+	rename-dest-slash: merge into rename module
+	* modules/rename-dest-slash (Status): Mark obsolete.
+	(Depends-on): Add rename.
+	(Files): Let rename do it all.
+	* m4/rename.m4 (gl_FUNC_RENAME): Also test for NetBSD bugs,
+	subsuming the test from gl_FUNC_RENAME_TRAILING_DEST_SLASH...
+	* m4/rename-dest-slash.m4: ...so this file can be deleted.
+	* lib/rename-dest-slash.c (rpl_rename_dest_slash): Delete.
+	* lib/rename.c (rpl_rename): Update comments.
+
 	rename: fix cygwin 1.5.x bugs
 	* m4/rename.m4 (gl_FUNC_RENAME): Detect cygwin bugs.
 	* lib/rename.c (rpl_rename): Work around them.
