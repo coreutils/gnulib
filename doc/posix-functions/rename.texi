@@ -9,22 +9,51 @@ Gnulib module: rename
 Portability problems fixed by Gnulib:
 @itemize
 @item
-This function does not handle trailing slashes correctly on
-some platforms (the full rules for trailing slashes are complex):
-SunOS 4.1, mingw.
+This function does not allow trailing slashes when creating a
+destination directory, as in @code{rename("dir","new/")}:
+NetBSD 1.6.
 @item
-This function will not replace an existing destination on some
+This function does not reject trailing slashes on non-directories on
+some platforms, as in @code{rename("file","new/")}:
+Solaris 10, Cygwin 1.5.x, mingw.
+@item
+This function ignores trailing slashes on symlinks on some platforms,
+such that @code{rename("link/","new")} corrupts @file{link}:
+Solaris 9.
+@item
+This function incorrectly reduces the link count when comparing two
+spellings of a hard link on some platforms:
+NetBSD 1.6, Cygwin 1.5.x.
+@item
+This function will not always replace an existing destination on some
 platforms:
-mingw.
-@end itemize
-
-Portability problems not fixed by Gnulib:
-@itemize
-This function will not replace a destination that is currently opened
-by any process:
 mingw.
 @item
 This function mistakenly allows names ending in @samp{.} or @samp{..}
 on some platforms:
-Cygwin 1.5.x.
+Cygwin 1.5.x, mingw.
+@item
+This function does not reject attempts to rename existing directories
+and non-directories onto one another on some platforms:
+Cygwin 1.5.x, mingw.
+@item
+This function does not allow trailing slashes on source directories on
+older platforms, as in @samp{rename("dir/","new")}:
+SunOS 4.1.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+POSIX requires that @code{rename("symlink-to-dir/","dir2")} rename
+@file{dir} and leave @file{symlink-to-dir} dangling; likewise, it
+requires that @code{rename("dir","dangling/")} rename @file{dir} so
+that @file{dangling} is no longer a dangling symlink.  This behavior
+is counter-intuitive, so on some systems, @code{rename} fails with
+@code{ENOTDIR} if either argument is a symlink with a trailing slash:
+glibc, OpenBSD, Cygwin 1.7.
+@item
+This function will not rename a source that is currently opened
+by any process:
+mingw.
 @end itemize

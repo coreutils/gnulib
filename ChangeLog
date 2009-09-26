@@ -1,3 +1,12 @@
+2009-10-02  Eric Blake  <ebb9@byu.net>
+
+	rename-tests: new test, exposes several platform bugs
+	* modules/rename-tests: New file.
+	* tests/test-rename.h: Likewise.
+	* tests/test-rename.c: Likewise.
+	* doc/posix-functions/rename.texi (rename): Improve documentation,
+	including bugs that will eventually be fixed in gnulib.
+
 2009-10-02  Paolo Bonzini  <bonzini@gnu.org>
 
 	* lib/uname.c: Include <stdlib.h>
