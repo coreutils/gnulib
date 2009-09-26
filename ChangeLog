@@ -1,5 +1,9 @@
 2009-09-26  Eric Blake  <ebb9@byu.net>
 
+	argp: fix compilation of getopt
+	* lib/getopt.in.h (includes): Use different guard than glibc.
+	Reported by Sergey Poznyakoff.
+
 	doc: mention more cygwin 1.7 status
 	* doc/posix-functions/access.texi (access): Mention cygwin 1.5
 	bug.
