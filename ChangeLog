@@ -1,3 +1,20 @@
+2009-09-26  Eric Blake  <ebb9@byu.net>
+
+	doc: mention more cygwin 1.7 status
+	* doc/posix-functions/access.texi (access): Mention cygwin 1.5
+	bug.
+	* doc/posix-functions/execl.texi (execl): Likewise.
+	* doc/posix-functions/execle.texi (execle): Likewise.
+	* doc/posix-functions/execlp.texi (execlp): Likewise.
+	* doc/posix-functions/execv.texi (execv): Likewise.
+	* doc/posix-functions/execve.texi (execve): Likewise.
+	* doc/posix-functions/execvp.texi (execvp): Likewise.
+	* doc/glibc-functions/canonicalize_file_name.texi
+	(canonicalize_file_name): Cygwin 1.7 now provides this.
+	* doc/glibc-functions/euidaccess.texi (euidaccess): Likewise.
+	* doc/posix-functions/fchmodat.texi (fchmodat): Mention limitation
+	on AT_SYMLINK_NOFOLLOW.
+
 2009-09-24  Eric Blake  <ebb9@byu.net>
 
 	test-linkat: make test more robust

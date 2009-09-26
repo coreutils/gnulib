@@ -12,4 +12,7 @@ Portability problems fixed by Gnulib:
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+On some platforms, a script without executable permission is still run:
+Cygwin 1.5.x.
 @end itemize

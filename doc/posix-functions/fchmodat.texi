@@ -17,4 +17,11 @@ But the replacement function is not safe to be used in libraries and is not mult
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+Some platforms do not allow changing the access bits on symbolic
+links.  POSIX states that @code{fchmodat(@dots{},AT_SYMLINK_NOFOLLOW)}
+may fail with @code{EOPNOTSUPP} when called on a symlink, but some
+platforms, as well as the gnulib replacement, fail for any use of
+AT_SYMLINK_NOFOLLOW even if the target was not a symlink:
+glibc, Cygwin.
 @end itemize

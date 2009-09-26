@@ -12,4 +12,12 @@ Portability problems fixed by Gnulib:
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This function uses the effective id instead of the real id on some
+platforms:
+Cygwin 1.5.x.
+@item
+There is an inherent race between calling this function and performing
+some action based on the results; you should think twice before
+trusting this function in a set-uid or set-gid program.
 @end itemize
