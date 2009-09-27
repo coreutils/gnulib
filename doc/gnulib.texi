@@ -5662,6 +5662,7 @@ This list of functions is sorted according to the header that declares them.
 * dup3::
 * endusershell::
 * euidaccess::
+* execvpe::
 * get_current_dir_name::
 * getdomainname::
 * getdtablesize::

@@ -1,5 +1,11 @@
 2009-09-28  Eric Blake  <ebb9@byu.net>
 
+	doc: mention yet more cygwin 1.7 status
+	* doc/posix-functions/fexecve.texi (fexecve): Now implemented in
+	cygwin.
+	* doc/glibc-functions/execvpe.texi (execvpe): New file.
+	* doc/gnulib.texi (Glibc unistd.h): Mention it.
+
 	argp: fix test failure
 	* lib/argp-help.c (hol_entry_cmp): Don't use _tolower on values
 	that are not upper-case.  Pass correct range to tolower.
