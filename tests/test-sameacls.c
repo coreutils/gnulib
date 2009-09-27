@@ -463,7 +463,7 @@ main (int argc, char *argv[])
       abort ();
     }
 
-  /* The docs say that type1 being 0 is equivalent to ACL_ANY, but it is not
+  /* The docs say that type2 being 0 is equivalent to ACL_ANY, but it is not
      true, in AIX 5.3.  */
   type2.u64 = ACL_ANY;
   if (aclx_get (file2, 0, &type2, acl2, &aclsize2, &mode2) < 0)
