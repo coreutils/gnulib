@@ -1,3 +1,12 @@
+2009-09-27  Jim Meyering  <meyering@redhat.com>
+
+	test-yesno: work around sparc-dash here-document infelicity
+	Without this change, the literal \177 byte in a here document
+	would make dash 0.5.5.1-3 access uninitialized memory.
+	* tests/test-yesno.sh: Don't put the \177 byte in the here document.
+	Instead, use a marker, "@", and filter through tr to create the desired
+	contents.  Reported as <http://bugs.debian.org/548493> by Kurt Roeckx.
+
 2009-09-27  Bruno Haible  <bruno@clisp.org>
 
 	Disable untested support for new flavours of ACLs on AIX.

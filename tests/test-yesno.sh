@@ -19,9 +19,9 @@ else
 fi
 
 # Test with seekable stdin; the followon process must see remaining data.
-cat <<EOF > ${p}in.tmp
+tr @ '\177' <<EOF > ${p}in.tmp
 nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn - entire line consumed
-yn - backspace does not change result
+y@n - backspace does not change result
 y
 does not match either yesexpr or noexpr
 n
