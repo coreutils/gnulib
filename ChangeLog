@@ -1,3 +1,9 @@
+2009-09-28  Eric Blake  <ebb9@byu.net>
+
+	argp: fix test failure
+	* lib/argp-help.c (hol_entry_cmp): Don't use _tolower on values
+	that are not upper-case.  Pass correct range to tolower.
+
 2009-09-27  Jim Meyering  <meyering@redhat.com>
 
 	test-yesno: work around sparc-dash here-document infelicity
