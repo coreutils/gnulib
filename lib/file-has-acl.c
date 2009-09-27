@@ -260,7 +260,7 @@ acl_nontrivial (struct acl *a)
   return (acl_last (a) != a->acl_ext ? 1 : 0);
 }
 
-# if HAVE_ACLX_GET /* newer AIX */
+# if HAVE_ACLX_GET && defined ACL_AIX_WIP /* newer AIX */
 
 /* Return 1 if the given ACL is non-trivial.
    Return 0 if it is trivial, i.e. equivalent to a simple stat() mode.  */
@@ -529,7 +529,7 @@ file_has_acl (char const *name, struct stat const *sb)
 	     Repeat.  */
 	}
 
-# elif HAVE_ACLX_GET /* AIX */
+# elif HAVE_ACLX_GET && defined ACL_AIX_WIP /* AIX */
 
       acl_type_t type;
       char aclbuf[1024];

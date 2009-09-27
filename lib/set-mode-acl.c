@@ -445,7 +445,7 @@ qset_acl (char const *name, int desc, mode_t mode)
     }
   return 0;
 
-# elif HAVE_ACLX_GET /* AIX */
+# elif HAVE_ACLX_GET && defined ACL_AIX_WIP /* AIX */
 
   acl_type_list_t types;
   size_t types_size = sizeof (types);
@@ -551,6 +551,7 @@ qset_acl (char const *name, int desc, mode_t mode)
     }
 
   return chmod_or_fchmod (name, desc, mode);
+
 # elif HAVE_STATACL /* older AIX */
 
   union { struct acl a; char room[128]; } u;
