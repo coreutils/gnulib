@@ -445,10 +445,112 @@ qset_acl (char const *name, int desc, mode_t mode)
     }
   return 0;
 
-# elif HAVE_ACLX_GET && 0 /* AIX */
+# elif HAVE_ACLX_GET /* AIX */
 
-  /* TODO: use aclx_fput or aclx_put, respectively */
+  acl_type_list_t types;
+  size_t types_size = sizeof (types);
+  acl_type_t type;
 
+  if (aclx_gettypes (name, &types, &types_size) < 0
+      || types.num_entries == 0)
+    return chmod_or_fchmod (name, desc, mode);
+
+  /* XXX Do we need to clear all types of ACLs for the given file, or is it
+     sufficient to clear the first one?  */
+  type = types.entries[0];
+  if (type.u64 == ACL_AIXC)
+    {
+      union { struct acl a; char room[128]; } u;
+      int ret;
+
+      u.a.acl_len = (char *) &u.a.acl_ext[0] - (char *) &u.a; /* no entries */
+      u.a.acl_mode = mode & ~(S_IXACL | 0777);
+      u.a.u_access = (mode >> 6) & 7;
+      u.a.g_access = (mode >> 3) & 7;
+      u.a.o_access = mode & 7;
+
+      if (desc != -1)
+	ret = aclx_fput (desc, SET_ACL | SET_MODE_S_BITS,
+			 type, &u.a, u.a.acl_len, mode);
+      else
+	ret = aclx_put (name, SET_ACL | SET_MODE_S_BITS,
+			type, &u.a, u.a.acl_len, mode);
+      if (!(ret < 0 && errno == ENOSYS))
+	return ret;
+    }
+  else if (type.u64 == ACL_NFS4)
+    {
+      union { nfs4_acl_int_t a; char room[128]; } u;
+      nfs4_ace_int_t *ace;
+      int ret;
+
+      u.a.aclVersion = NFS4_ACL_INT_STRUCT_VERSION;
+      u.a.aclEntryN = 0;
+      ace = &u.a.aclEntry[0];
+      {
+	ace->flags = ACE4_ID_SPECIAL;
+	ace->aceWho.special_whoid = ACE4_WHO_OWNER;
+	ace->aceType = ACE4_ACCESS_ALLOWED_ACE_TYPE;
+	ace->aceFlags = 0;
+	ace->aceMask =
+	  (mode & 0400 ? ACE4_READ_DATA | ACE4_LIST_DIRECTORY : 0)
+	  | (mode & 0200
+	     ? ACE4_WRITE_DATA | ACE4_ADD_FILE | ACE4_APPEND_DATA
+	       | ACE4_ADD_SUBDIRECTORY
+	     : 0)
+	  | (mode & 0100 ? ACE4_EXECUTE : 0);
+	ace->aceWhoString[0] = '\0';
+	ace->entryLen = (char *) &ace->aceWhoString[4] - (char *) ace;
+	ace = (nfs4_ace_int_t *) (char *) &ace->aceWhoString[4];
+	u.a.aclEntryN++;
+      }
+      {
+	ace->flags = ACE4_ID_SPECIAL;
+	ace->aceWho.special_whoid = ACE4_WHO_GROUP;
+	ace->aceType = ACE4_ACCESS_ALLOWED_ACE_TYPE;
+	ace->aceFlags = 0;
+	ace->aceMask =
+	  (mode & 0040 ? ACE4_READ_DATA | ACE4_LIST_DIRECTORY : 0)
+	  | (mode & 0020
+	     ? ACE4_WRITE_DATA | ACE4_ADD_FILE | ACE4_APPEND_DATA
+	       | ACE4_ADD_SUBDIRECTORY
+	     : 0)
+	  | (mode & 0010 ? ACE4_EXECUTE : 0);
+	ace->aceWhoString[0] = '\0';
+	ace->entryLen = (char *) &ace->aceWhoString[4] - (char *) ace;
+	ace = (nfs4_ace_int_t *) (char *) &ace->aceWhoString[4];
+	u.a.aclEntryN++;
+      }
+      {
+	ace->flags = ACE4_ID_SPECIAL;
+	ace->aceWho.special_whoid = ACE4_WHO_EVERYONE;
+	ace->aceType = ACE4_ACCESS_ALLOWED_ACE_TYPE;
+	ace->aceFlags = 0;
+	ace->aceMask =
+	  (mode & 0004 ? ACE4_READ_DATA | ACE4_LIST_DIRECTORY : 0)
+	  | (mode & 0002
+	     ? ACE4_WRITE_DATA | ACE4_ADD_FILE | ACE4_APPEND_DATA
+	       | ACE4_ADD_SUBDIRECTORY
+	     : 0)
+	  | (mode & 0001 ? ACE4_EXECUTE : 0);
+	ace->aceWhoString[0] = '\0';
+	ace->entryLen = (char *) &ace->aceWhoString[4] - (char *) ace;
+	ace = (nfs4_ace_int_t *) (char *) &ace->aceWhoString[4];
+	u.a.aclEntryN++;
+      }
+      u.a.aclLength = (char *) ace - (char *) &u.a;
+
+      if (desc != -1)
+	ret = aclx_fput (desc, SET_ACL | SET_MODE_S_BITS,
+			 type, &u.a, u.a.aclLength, mode);
+      else
+	ret = aclx_put (name, SET_ACL | SET_MODE_S_BITS,
+			type, &u.a, u.a.aclLength, mode);
+      if (!(ret < 0 && errno == ENOSYS))
+	return ret;
+    }
+
+  return chmod_or_fchmod (name, desc, mode);
 # elif HAVE_STATACL /* older AIX */
 
   union { struct acl a; char room[128]; } u;

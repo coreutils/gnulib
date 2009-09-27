@@ -234,11 +234,7 @@ acl_nontrivial (int count, struct acl_entry *entries, struct stat *sb)
   return 0;
 }
 
-#elif USE_ACL && HAVE_ACLX_GET && 0 /* AIX */
-
-/* TODO */
-
-#elif USE_ACL && HAVE_STATACL /* older AIX */
+#elif USE_ACL && (HAVE_ACLX_GET || HAVE_STATACL) /* AIX */
 
 /* Return 1 if the given ACL is non-trivial.
    Return 0 if it is trivial, i.e. equivalent to a simple stat() mode.  */
@@ -263,6 +259,40 @@ acl_nontrivial (struct acl *a)
    */
   return (acl_last (a) != a->acl_ext ? 1 : 0);
 }
+
+# if HAVE_ACLX_GET /* newer AIX */
+
+/* Return 1 if the given ACL is non-trivial.
+   Return 0 if it is trivial, i.e. equivalent to a simple stat() mode.  */
+int
+acl_nfs4_nontrivial (nfs4_acl_int_t *a)
+{
+#  if 1 /* let's try this first */
+  return (a->aclEntryN > 0 ? 1 : 0);
+#  else
+  int count = a->aclEntryN;
+  int i;
+
+  for (i = 0; i < count; i++)
+    {
+      nfs4_ace_int_t *ace = &a->aclEntry[i];
+
+      if (!((ace->flags & ACE4_ID_SPECIAL) != 0
+	    && (ace->aceWho.special_whoid == ACE4_WHO_OWNER
+		|| ace->aceWho.special_whoid == ACE4_WHO_GROUP
+		|| ace->aceWho.special_whoid == ACE4_WHO_EVERYONE)
+	    && ace->aceType == ACE4_ACCESS_ALLOWED_ACE_TYPE
+	    && ace->aceFlags == 0
+	    && (ace->aceMask & ~(ACE4_READ_DATA | ACE4_LIST_DIRECTORY
+				 | ACE4_WRITE_DATA | ACE4_ADD_FILE
+				 | ACE4_EXECUTE)) == 0))
+	return 1;
+    }
+  return 0;
+#  endif
+}
+
+# endif
 
 #endif
 
@@ -499,9 +529,65 @@ file_has_acl (char const *name, struct stat const *sb)
 	     Repeat.  */
 	}
 
-# elif HAVE_ACLX_GET && 0 /* AIX */
+# elif HAVE_ACLX_GET /* AIX */
 
-      /* TODO: use aclx_get(), and then?  */
+      acl_type_t type;
+      char aclbuf[1024];
+      void *acl = aclbuf;
+      size_t aclsize = sizeof (aclbuf);
+      mode_t mode;
+
+      for (;;)
+	{
+	  /* The docs say that type being 0 is equivalent to ACL_ANY, but it
+	     is not true, in AIX 5.3.  */
+	  type.u64 = ACL_ANY;
+	  if (aclx_get (name, 0, &type, aclbuf, &aclsize, &mode) >= 0)
+	    break;
+	  if (errno != ENOSPC)
+	    {
+	      if (acl != aclbuf)
+		{
+		  int saved_errno = errno;
+		  free (acl);
+		  errno = saved_errno;
+		}
+	      return -1;
+	    }
+	  aclsize = 2 * aclsize;
+	  if (acl != aclbuf)
+	    free (acl);
+	  acl = malloc (aclsize);
+	  if (acl == NULL)
+	    {
+	      errno = ENOMEM;
+	      return -1;
+	    }
+	}
+
+      if (type.u64 == ACL_AIXC)
+	{
+	  int result = acl_nontrivial ((struct acl *) acl);
+	  if (acl != aclbuf)
+	    free (acl);
+	  return result;
+	}
+      else if (type.u64 == ACL_NFS4)
+	{
+	  int result = acl_nfs4_nontrivial ((nfs4_acl_int_t *) acl);
+	  if (acl != aclbuf)
+	    free (acl);
+	  return result;
+	}
+      else
+	{
+	  /* A newer type of ACL has been introduced in the system.
+	     We should better support it.  */
+	  if (acl != aclbuf)
+	    free (acl);
+	  errno = EINVAL;
+	  return -1;
+	}
 
 # elif HAVE_STATACL /* older AIX */
 
