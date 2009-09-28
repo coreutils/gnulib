@@ -1,5 +1,5 @@
 /* Abstract ordered set data type.
-   Copyright (C) 2006-2007 Free Software Foundation, Inc.
+   Copyright (C) 2006-2007, 2009 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify
@@ -64,7 +64,8 @@ gl_oset_add (gl_oset_t set, const void *elt)
 bool
 gl_oset_remove (gl_oset_t set, const void *elt)
 {
-  return ((const struct gl_oset_impl_base *) set)->vtable->remove (set, elt);
+  return ((const struct gl_oset_impl_base *) set)->vtable
+	 ->remove_elt (set, elt);
 }
 
 void

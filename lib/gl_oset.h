@@ -1,5 +1,5 @@
 /* Abstract ordered set data type.
-   Copyright (C) 2006-2007 Free Software Foundation, Inc.
+   Copyright (C) 2006-2007, 2009 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify
@@ -168,7 +168,7 @@ struct gl_oset_implementation
 			  gl_setelement_threshold_fn threshold_fn,
 			  const void *threshold, const void **eltp);
   bool (*add) (gl_oset_t set, const void *elt);
-  bool (*remove) (gl_oset_t set, const void *elt);
+  bool (*remove_elt) (gl_oset_t set, const void *elt);
   void (*oset_free) (gl_oset_t set);
   /* gl_oset_iterator_t functions.  */
   gl_oset_iterator_t (*iterator) (gl_oset_t set);
@@ -233,7 +233,8 @@ gl_oset_add (gl_oset_t set, const void *elt)
 static inline bool
 gl_oset_remove (gl_oset_t set, const void *elt)
 {
-  return ((const struct gl_oset_impl_base *) set)->vtable->remove (set, elt);
+  return ((const struct gl_oset_impl_base *) set)->vtable
+	 ->remove_elt (set, elt);
 }
 
 # define gl_oset_free gl_oset_free_inline

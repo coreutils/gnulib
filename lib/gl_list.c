@@ -1,5 +1,5 @@
 /* Abstract sequential list data type.
-   Copyright (C) 2006-2008 Free Software Foundation, Inc.
+   Copyright (C) 2006-2009 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify
@@ -197,7 +197,7 @@ bool
 gl_list_remove (gl_list_t list, const void *elt)
 {
   return ((const struct gl_list_impl_base *) list)->vtable
-	 ->remove (list, elt);
+	 ->remove_elt (list, elt);
 }
 
 void

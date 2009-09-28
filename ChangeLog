@@ -1,3 +1,16 @@
+2009-09-28  Bruno Haible  <bruno@clisp.org>
+
+	Avoid identifier clash with POSIX function 'remove' defined as a macro.
+	* lib/gl_list.h (struct gl_list_implementation): Rename field 'remove'
+	to 'remove_elt'.
+	(gl_list_remove): Update.
+	* lib/gl_list.c (gl_list_remove): Update.
+	* lib/gl_oset.h (struct gl_oset_implementation): Rename field 'remove'
+	to 'remove_elt'.
+	(gl_oset_remove): Update.
+	* lib/gl_list.c (gl_oset_remove): Update.
+	Reported by Eric Blake.
+
 2009-09-28  Eric Blake  <ebb9@byu.net>
 
 	doc: mention yet more cygwin 1.7 status
