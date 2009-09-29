@@ -14,13 +14,12 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-#include <config.h>
-
 /* This file is designed to test both link(a,b) and
-   linkat(AT_FDCWD,a,AT_FDCWD,b).  FUNC is the function to test.
+   linkat(AT_FDCWD,a,AT_FDCWD,b,0).  FUNC is the function to test.
    Assumes that BASE and ASSERT are already defined, and that
    appropriate headers are already included.  If PRINT, warn before
-   skipping symlink tests with status 77.  */
+   skipping tests with status 77.  This test does not exercise link on
+   symlinks.  */
 
 static int
 test_link (int (*func) (char const *, char const *), bool print)
@@ -93,8 +92,7 @@ test_link (int (*func) (char const *, char const *), bool print)
     ASSERT (close (fd) == 0);
   }
 
-  /* Test for various error conditions.  Assumes hard links to
-     directories are not permitted.  */
+  /* Test for various error conditions.  */
   ASSERT (mkdir (BASE "d", 0700) == 0);
   errno = 0;
   ASSERT (func (BASE "a", ".") == -1);
@@ -121,9 +119,32 @@ test_link (int (*func) (char const *, char const *), bool print)
   errno = 0;
   ASSERT (func (BASE "a", BASE "c/") == -1);
   ASSERT (errno == ENOTDIR || errno == ENOENT);
-  errno = 0;
-  ASSERT (func (BASE "d", BASE "c") == -1);
-  ASSERT (errno == EPERM || errno == EACCES);
+
+  /* Most platforms reject hard links to directories, and even on
+     those that do permit it, most users can't create them.  We assume
+     that if this test is run as root and we managed to create a hard
+     link, then unlink better be able to clean it up.  */
+  {
+    int result;
+    errno = 0;
+    result = func (BASE "d", BASE "c");
+    if (result == 0)
+      {
+        /* Probably root on Solaris.  */
+        ASSERT (unlink (BASE "c") == 0);
+      }
+    else
+      {
+        /* Most everyone else.  */
+        ASSERT (errno == EPERM || errno == EACCES);
+        errno = 0;
+        ASSERT (func (BASE "d/.", BASE "c") == -1);
+        ASSERT (errno == EPERM || errno == EACCES || errno == EINVAL);
+        errno = 0;
+        ASSERT (func (BASE "d/.//", BASE "c") == -1);
+        ASSERT (errno == EPERM || errno == EACCES || errno == EINVAL);
+      }
+  }
 
   /* Clean up.  */
   ASSERT (unlink (BASE "a") == 0);

@@ -92,32 +92,28 @@ main ()
   ASSERT (system ("rm -rf " BASE "*") == 0);
 
   /* Test basic link functionality, without mentioning symlinks.  */
-  {
-    result = test_link (do_link, false);
-    dfd1 = open (".", O_RDONLY);
-    ASSERT (0 <= dfd1);
-    ASSERT (test_link (do_link, false) == result);
-    dfd2 = dfd1;
-    ASSERT (test_link (do_link, false) == result);
-    dfd1 = AT_FDCWD;
-    ASSERT (test_link (do_link, false) == result);
-    flag = 0;
-    ASSERT (test_link (do_link, false) == result);
-    dfd1 = dfd2;
-    ASSERT (test_link (do_link, false) == result);
-    dfd2 = AT_FDCWD;
-    ASSERT (test_link (do_link, false) == result);
-    ASSERT (close (dfd1) == 0);
-    dfd1 = AT_FDCWD;
-    ASSERT (test_link (do_link, false) == result);
-  }
+  result = test_link (do_link, false);
+  dfd1 = open (".", O_RDONLY);
+  ASSERT (0 <= dfd1);
+  ASSERT (test_link (do_link, false) == result);
+  dfd2 = dfd1;
+  ASSERT (test_link (do_link, false) == result);
+  dfd1 = AT_FDCWD;
+  ASSERT (test_link (do_link, false) == result);
+  flag = 0;
+  ASSERT (test_link (do_link, false) == result);
+  dfd1 = dfd2;
+  ASSERT (test_link (do_link, false) == result);
+  dfd2 = AT_FDCWD;
+  ASSERT (test_link (do_link, false) == result);
+  ASSERT (close (dfd1) == 0);
+  dfd1 = AT_FDCWD;
+  ASSERT (test_link (do_link, false) == result);
 
   /* Create locations to manipulate.  */
   ASSERT (mkdir (BASE "sub1", 0700) == 0);
   ASSERT (mkdir (BASE "sub2", 0700) == 0);
-  dfd = creat (BASE "00", 0600);
-  ASSERT (0 <= dfd);
-  ASSERT (close (dfd) == 0);
+  ASSERT (close (creat (BASE "00", 0600)) == 0);
   cwd = xgetcwd ();
 
   dfd = open (BASE "sub1", O_RDONLY);

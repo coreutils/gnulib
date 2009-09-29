@@ -83,7 +83,7 @@ main ()
 
   /* Empty directory.  */
   errno = 0;
-  ASSERT (remove (BASE "dir/./") == -1);
+  ASSERT (remove (BASE "dir/.//") == -1);
   ASSERT (errno == EINVAL || errno == EBUSY);
   ASSERT (remove (BASE "dir") == 0);
 

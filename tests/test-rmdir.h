@@ -68,7 +68,7 @@ test_rmdir_func (int (*func) (char const *name), bool print)
   /* Empty directory.  */
   ASSERT (unlink (BASE "dir/file") == 0);
   errno = 0;
-  ASSERT (func (BASE "dir/./") == -1);
+  ASSERT (func (BASE "dir/.//") == -1);
   ASSERT (errno == EINVAL || errno == EBUSY);
   ASSERT (func (BASE "dir") == 0);
 
