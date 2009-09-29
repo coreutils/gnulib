@@ -8,6 +8,7 @@ m4/rename.m4
 Depends-on:
 dirname
 lstat
+same-inode
 stdbool
 stdio
 strdup

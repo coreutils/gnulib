@@ -134,17 +134,14 @@ rpl_rename (char const *src, char const *dst)
 
 #else /* ! W32 platform */
 
-# if RENAME_DEST_EXISTS_BUG
-#  error Please report your platform and this message to bug-gnulib@gnu.org.
-# elif RENAME_TRAILING_SLASH_SOURCE_BUG || RENAME_TRAILING_SLASH_DEST_BUG
+# include <errno.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <sys/stat.h>
 
-#  include <errno.h>
-#  include <stdio.h>
-#  include <stdlib.h>
-#  include <string.h>
-#  include <sys/stat.h>
-
-#  include "dirname.h"
+# include "dirname.h"
+# include "same-inode.h"
 
 /* Rename the file SRC to DST, fixing any trailing slash bugs.  */
 
@@ -165,10 +162,41 @@ rpl_rename (char const *src, char const *dst)
   if (!src_len || !dst_len)
     return rename (src, dst); /* Let strace see the ENOENT failure.  */
 
+# if RENAME_DEST_EXISTS_BUG
+  {
+    char *src_base = last_component (src);
+    char *dst_base = last_component (dst);
+    if (*src_base == '.')
+      {
+        size_t len = base_len (src_base);
+        if (len == 1 || (len == 2 && src_base[1] == '.'))
+          {
+            errno = EINVAL;
+            return -1;
+          }
+      }
+    if (*dst_base == '.')
+      {
+        size_t len = base_len (dst_base);
+        if (len == 1 || (len == 2 && dst_base[1] == '.'))
+          {
+            errno = EINVAL;
+            return -1;
+          }
+      }
+  }
+# endif /* RENAME_DEST_EXISTS_BUG */
+
   src_slash = src[src_len - 1] == '/';
   dst_slash = dst[dst_len - 1] == '/';
+
+# if !RENAME_DEST_EXISTS_BUG
+  /* If there are no trailing slashes, then trust the native
+     implementation unless we also suspect issues with hard link
+     detection.  */
   if (!src_slash && !dst_slash)
     return rename (src, dst);
+# endif /* !RENAME_DEST_EXISTS_BUG */
 
   /* Presence of a trailing slash requires directory semantics.  If
      the source does not exist, or if the destination cannot be turned
@@ -178,26 +206,29 @@ rpl_rename (char const *src, char const *dst)
     return -1;
   if (lstat (dst, &dst_st))
     {
-      if (errno != ENOENT || !S_ISDIR (src_st.st_mode))
+      if (errno != ENOENT || (!S_ISDIR (src_st.st_mode) && dst_slash))
         return -1;
     }
-  else if (!S_ISDIR (dst_st.st_mode))
+  else
     {
-      errno = ENOTDIR;
-      return -1;
-    }
-  else if (!S_ISDIR (src_st.st_mode))
-    {
-      errno = EISDIR;
-      return -1;
+      if (S_ISDIR (dst_st.st_mode) != S_ISDIR (src_st.st_mode))
+	{
+	  errno = S_ISDIR (dst_st.st_mode) ? EISDIR : ENOTDIR;
+	  return -1;
+	}
+# if RENAME_DEST_EXISTS_BUG
+      if (SAME_INODE (src_st, dst_st))
+	return 0;
+# endif /* RENAME_DEST_EXISTS_BUG */
     }
 
-#  if RENAME_TRAILING_SLASH_SOURCE_BUG
+# if RENAME_TRAILING_SLASH_SOURCE_BUG || RENAME_DEST_EXISTS_BUG
   /* If the only bug was that a trailing slash was allowed on a
      non-existing file destination, as in Solaris 10, then we've
      already covered that situation.  But if there is any problem with
      a trailing slash on an existing source or destination, as in
-     Solaris 9, then we must strip the offending slash and check that
+     Solaris 9, or if a directory can overwrite a symlink, as on
+     Cygwin 1.5, then we must strip the offending slash and check that
      we have not encountered a symlink instead of a directory.
 
      Stripping a trailing slash interferes with POSIX semantics, where
@@ -248,7 +279,7 @@ rpl_rename (char const *src, char const *dst)
       else if (S_ISLNK (dst_st.st_mode))
         goto out;
     }
-#  endif /* RENAME_TRAILING_SLASH_SOURCE_BUG */
+# endif /* RENAME_TRAILING_SLASH_SOURCE_BUG || RENAME_DEST_EXISTS_BUG */
 
   ret_val = rename (src_temp, dst_temp);
   rename_errno = errno;
@@ -260,5 +291,4 @@ rpl_rename (char const *src, char const *dst)
   errno = rename_errno;
   return ret_val;
 }
-# endif /* RENAME_TRAILING_SLASH_*_BUG */
 #endif /* ! W32 platform */

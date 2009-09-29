@@ -1,4 +1,4 @@
-# serial 17
+# serial 18
 
 # Copyright (C) 2001, 2003, 2005, 2006, 2009 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -72,14 +72,27 @@ AC_DEFUN([gl_FUNC_RENAME],
        argument, such as on Solaris 9 or cygwin 1.5.])
   fi
 
-  AC_CACHE_CHECK([whether rename is broken when the destination exists],
-    [gl_cv_func_rename_dest_exists_bug],
-    [case "$host_os" in
-      mingw*) gl_cv_func_rename_dest_exists_bug=yes ;;
-      *) gl_cv_func_rename_dest_exists_bug=no ;;
-    esac
+  dnl Cygwin 1.5.x mistakenly allows rename("dir","file").
+  dnl mingw mistakenly forbids rename("dir1","dir2").
+  dnl These bugs require stripping trailing slash to avoid corrupting
+  dnl symlinks with a trailing slash.
+  AC_CACHE_CHECK([whether rename manages existing destinations correctly],
+    [gl_cv_func_rename_dest_works],
+    [rm -rf conftest.f conftest.d1 conftest.d2
+    touch conftest.f && mkdir conftest.d1 conftest.d2 ||
+      AC_MSG_ERROR([cannot create temporary files])
+    AC_RUN_IFELSE([AC_LANG_PROGRAM([[
+#       include <stdio.h>
+#       include <stdlib.h>
+]], [if (rename ("conftest.d1", "conftest.d2") != 0) return 1;
+     if (rename ("conftest.d2", "conftest.f") == 0) return 2;])],
+      [gl_cv_func_rename_dest_works=yes],
+      [gl_cv_func_rename_dest_works=no],
+      dnl When crosscompiling, assume rename is broken.
+      [gl_cv_func_rename_dest_works="guessing no"])
+    rm -rf conftest.f conftest.f1 conftest.d1 conftest.d2
   ])
-  if test $gl_cv_func_rename_dest_exists_bug = yes; then
+  if test "x$gl_cv_func_rename_dest_works" != xyes; then
     AC_LIBOBJ([rename])
     REPLACE_RENAME=1
     AC_DEFINE([RENAME_DEST_EXISTS_BUG], [1],
