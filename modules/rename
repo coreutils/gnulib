@@ -6,9 +6,11 @@ lib/rename.c
 m4/rename.m4
 
 Depends-on:
-xalloc
 dirname
+lstat
+stdbool
 stdio
+strdup
 
 configure.ac:
 gl_FUNC_RENAME

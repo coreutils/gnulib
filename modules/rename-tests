@@ -5,7 +5,6 @@ tests/test-rename.c
 Depends-on:
 errno
 link
-lstat
 progname
 stdbool
 symlink

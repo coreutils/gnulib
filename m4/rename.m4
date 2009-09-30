@@ -1,4 +1,4 @@
-# serial 15
+# serial 16
 
 # Copyright (C) 2001, 2003, 2005, 2006, 2009 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -17,53 +17,45 @@ AC_DEFUN([gl_FUNC_RENAME],
 [
   AC_REQUIRE([AC_CANONICAL_HOST])
   AC_REQUIRE([gl_STDIO_H_DEFAULTS])
-  AC_CACHE_CHECK([whether rename is broken with a trailing slash],
-  gl_cv_func_rename_trailing_slash_bug,
-  [
-    rm -rf conftest.d1 conftest.d2
-    mkdir conftest.d1 ||
-      AC_MSG_ERROR([cannot create temporary directory])
-    AC_RUN_IFELSE([AC_LANG_SOURCE([[
+
+  dnl SunOS 4.1.1_U1 mistakenly forbids rename("dir/","name").
+  dnl Solaris 9 mistakenly allows rename("file/","name").
+  AC_CACHE_CHECK([whether rename honors trailing slash on source],
+    [gl_cv_func_rename_slash_src_works],
+    [rm -rf conftest.f conftest.d1 conftest.d2
+    touch conftest.f && mkdir conftest.d1 ||
+      AC_MSG_ERROR([cannot create temporary files])
+    AC_RUN_IFELSE([AC_LANG_PROGRAM([[
 #       include <stdio.h>
 #       include <stdlib.h>
-        int
-        main ()
-        {
-          exit (rename ("conftest.d1/", "conftest.d2") ? 1 : 0);
-        }
-      ]])],
-      [gl_cv_func_rename_trailing_slash_bug=no],
-      [gl_cv_func_rename_trailing_slash_bug=yes],
+]], [if (rename ("conftest.f/", "conftest.d2") == 0) return 1;
+     if (rename ("conftest.d1/", "conftest.d2") != 0) return 2;])],
+      [gl_cv_func_rename_slash_src_works=yes],
+      [gl_cv_func_rename_slash_src_works=no],
       dnl When crosscompiling, assume rename is broken.
-      [gl_cv_func_rename_trailing_slash_bug=yes])
-
-      rm -rf conftest.d1 conftest.d2
+      [gl_cv_func_rename_slash_src_works="guessing no"])
+    rm -rf conftest.f conftest.d1 conftest.d2
   ])
- AC_CACHE_CHECK([whether rename is broken when the destination exists],
-  gl_cv_func_rename_dest_exists_bug,
-  [
-    case "$host_os" in
+  if test "x$gl_cv_func_rename_slash_src_works" != xyes; then
+    AC_LIBOBJ([rename])
+    REPLACE_RENAME=1
+    AC_DEFINE([RENAME_TRAILING_SLASH_BUG], [1],
+      [Define if rename does not correctly handle slashes on the source
+       argument, such as on Solaris 9 or cygwin 1.5.])
+  fi
+
+  AC_CACHE_CHECK([whether rename is broken when the destination exists],
+    [gl_cv_func_rename_dest_exists_bug],
+    [case "$host_os" in
       mingw*) gl_cv_func_rename_dest_exists_bug=yes ;;
       *) gl_cv_func_rename_dest_exists_bug=no ;;
     esac
   ])
-  if test $gl_cv_func_rename_trailing_slash_bug = yes ||
-     test $gl_cv_func_rename_dest_exists_bug = yes; then
+  if test $gl_cv_func_rename_dest_exists_bug = yes; then
     AC_LIBOBJ([rename])
     REPLACE_RENAME=1
-    if test $gl_cv_func_rename_trailing_slash_bug = yes; then
-      AC_DEFINE([RENAME_TRAILING_SLASH_BUG], [1],
-	[Define if rename does not work for source file names with a trailing
-	 slash, like the one from SunOS 4.1.1_U1.])
-    fi
-    if test $gl_cv_func_rename_dest_exists_bug = yes; then
-      AC_DEFINE([RENAME_DEST_EXISTS_BUG], [1],
-	[Define if rename does not work when the destination file exists,
-	 as on Windows.])
-    fi
-    gl_PREREQ_RENAME
+    AC_DEFINE([RENAME_DEST_EXISTS_BUG], [1],
+      [Define if rename does not work when the destination file exists,
+       as on Windows.])
   fi
 ])
-
-# Prerequisites of lib/rename.c.
-AC_DEFUN([gl_PREREQ_RENAME], [:])

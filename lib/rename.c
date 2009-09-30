@@ -1,7 +1,4 @@
-/* Work around rename bugs in some systems.  On SunOS 4.1.1_U1
-   and mips-dec-ultrix4.4, rename fails when the source file has
-   a trailing slash.  On mingw, rename fails when the destination
-   exists.
+/* Work around rename bugs in some systems.
 
    Copyright (C) 2001, 2002, 2003, 2005, 2006, 2009 Free Software
    Foundation, Inc.
@@ -19,7 +16,7 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-/* written by Volker Borchert */
+/* Written by Volker Borchert, Eric Blake.  */
 
 #include <config.h>
 
@@ -140,36 +137,111 @@ rpl_rename (char const *src, char const *dst)
 # if RENAME_DEST_EXISTS_BUG
 #  error Please report your platform and this message to bug-gnulib@gnu.org.
 # elif RENAME_TRAILING_SLASH_BUG
+
+#  include <errno.h>
 #  include <stdio.h>
 #  include <stdlib.h>
 #  include <string.h>
+#  include <sys/stat.h>
 
 #  include "dirname.h"
-#  include "xalloc.h"
 
-/* Rename the file SRC to DST, removing any trailing
-   slashes from SRC.  Needed for SunOS 4.1.1_U1.  */
+/* Rename the file SRC to DST, fixing any trailing slash bugs.  */
 
 int
 rpl_rename (char const *src, char const *dst)
 {
-  char *src_temp;
-  int ret_val;
-  size_t s_len = strlen (src);
+  size_t src_len = strlen (src);
+  size_t dst_len = strlen (dst);
+  char *src_temp = (char *) src;
+  char *dst_temp = (char *) dst;
+  bool src_slash;
+  bool dst_slash;
+  int ret_val = -1;
+  int rename_errno = ENOTDIR;
+  struct stat src_st;
+  struct stat dst_st;
 
-  if (s_len && src[s_len - 1] == '/')
+  if (!src_len || !dst_len)
+    return rename (src, dst); /* Let strace see the ENOENT failure.  */
+
+  src_slash = src[src_len - 1] == '/';
+  dst_slash = dst[dst_len - 1] == '/';
+  if (!src_slash && !dst_slash)
+    return rename (src, dst);
+
+  /* Presence of a trailing slash requires directory semantics.  If
+     the source does not exist, or if the destination cannot be turned
+     into a directory, give up now.  Otherwise, strip trailing slashes
+     before calling rename.  */
+  if (lstat (src, &src_st))
+    return -1;
+  if (lstat (dst, &dst_st))
     {
-      src_temp = xstrdup (src);
-      strip_trailing_slashes (src_temp);
+      if (errno != ENOENT || !S_ISDIR (src_st.st_mode))
+        return -1;
     }
-  else
-    src_temp = (char *) src;
+  else if (!S_ISDIR (dst_st.st_mode))
+    {
+      errno = ENOTDIR;
+      return -1;
+    }
+  else if (!S_ISDIR (src_st.st_mode))
+    {
+      errno = EISDIR;
+      return -1;
+    }
 
-  ret_val = rename (src_temp, dst);
-
+  /* If stripping the trailing slashes changes from a directory to a
+     symlink, follow the GNU behavior of rejecting the rename.
+     Technically, we could follow the POSIX behavior by chasing a
+     readlink trail, but that is counter-intuitive and harder.  */
+  if (src_slash)
+    {
+      src_temp = strdup (src);
+      if (!src_temp)
+        {
+          /* Rather than rely on strdup-posix, we set errno ourselves.  */
+          rename_errno = ENOMEM;
+          goto out;
+        }
+      strip_trailing_slashes (src_temp);
+      if (lstat (src_temp, &src_st))
+        {
+          rename_errno = errno;
+          goto out;
+        }
+      if (S_ISLNK (src_st.st_mode))
+        goto out;
+    }
+  if (dst_slash)
+    {
+      dst_temp = strdup (dst);
+      if (!dst_temp)
+        {
+          rename_errno = ENOMEM;
+          goto out;
+        }
+      strip_trailing_slashes (dst_temp);
+      if (lstat (dst_temp, &dst_st))
+        {
+          if (errno != ENOENT)
+            {
+              rename_errno = errno;
+              goto out;
+            }
+        }
+      else if (S_ISLNK (dst_st.st_mode))
+        goto out;
+    }
+  ret_val = rename (src_temp, dst_temp);
+  rename_errno = errno;
+ out:
   if (src_temp != src)
     free (src_temp);
-
+  if (dst_temp != dst)
+    free (dst_temp);
+  errno = rename_errno;
   return ret_val;
 }
 # endif /* RENAME_TRAILING_SLASH_BUG */
