@@ -6,7 +6,7 @@
    (namely mv) relying on the rename syscall have more consistent
    semantics.
 
-   Copyright (C) 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006, 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -35,6 +35,7 @@
 #include <stdlib.h>
 
 #include "dirname.h"
+#include "same-inode.h"
 #include "xalloc.h"
 
 static bool
@@ -63,14 +64,22 @@ has_trailing_slash (char const *file)
 int
 rpl_rename_dest_slash (char const *src, char const *dst)
 {
-  int ret_val = rename (src, dst);
+  struct stat sb;
+  struct stat db;
+  int ret_val;
+
+  if (lstat (src, &sb))
+    return -1;
+  if (lstat (dst, &db) == 0 && SAME_INODE (sb, db))
+    return 0;
+
+  ret_val = rename (src, dst);
 
   if (ret_val != 0 && errno == ENOENT && has_trailing_slash (dst))
     {
       int rename_errno = ENOENT;
 
       /* Fail now, unless SRC is a directory.  */
-      struct stat sb;
       if (lstat (src, &sb) == 0 && S_ISDIR (sb.st_mode))
 	{
 	  char *dst_temp = xstrdup (dst);

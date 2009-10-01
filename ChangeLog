@@ -1,5 +1,10 @@
 2009-10-02  Eric Blake  <ebb9@byu.net>
 
+	rename-dest-slash: fix NetBSD bug
+	* lib/rename-dest-slash.c (rpl_rename_dest_slash): Detect hard
+	links.
+	* modules/rename-dest-slash (Depends-on): Add same-inode.
+
 	rename-tests: new test, exposes several platform bugs
 	* modules/rename-tests: New file.
 	* tests/test-rename.h: Likewise.
