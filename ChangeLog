@@ -1,5 +1,9 @@
 2009-10-02  Eric Blake  <ebb9@byu.net>
 
+	rename: fix mingw bugs
+	* lib/rename.c (rpl_rename) [W32]: Fix trailing slash and
+	directory overwrite bugs.
+
 	rename: fix another cygwin 1.5 bug
 	* m4/rename.m4 (gl_FUNC_RENAME): Split cygwin bugs into two
 	checks.

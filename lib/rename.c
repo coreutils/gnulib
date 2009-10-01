@@ -30,9 +30,15 @@
    existing files.  */
 
 # include <errno.h>
+# include <stdbool.h>
+# include <stdlib.h>
+# include <sys/stat.h>
+# include <unistd.h>
 
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>
+
+# include "dirname.h"
 
 /* Rename the file SRC to DST.  This replacement is necessary on
    Windows, on which the system rename function will not replace
@@ -41,15 +47,136 @@ int
 rpl_rename (char const *src, char const *dst)
 {
   int error;
+  size_t src_len = strlen (src);
+  size_t dst_len = strlen (dst);
+  char *src_base = last_component (src);
+  char *dst_base = last_component (dst);
+  bool src_slash;
+  bool dst_slash;
+  bool dst_exists;
+  struct stat src_st;
+  struct stat dst_st;
 
-  /* MoveFileEx works if SRC is a directory without any flags,
-     but fails with MOVEFILE_REPLACE_EXISTING, so try without
-     flags first. */
+  /* Filter out dot as last component.  */
+  if (!src_len || !dst_len)
+    {
+      errno = ENOENT;
+      return -1;
+    }
+  if (*src_base == '.')
+    {
+      size_t len = base_len (src_base);
+      if (len == 1 || (len == 2 && src_base[1] == '.'))
+        {
+          errno = EINVAL;
+          return -1;
+        }
+    }
+  if (*dst_base == '.')
+    {
+      size_t len = base_len (dst_base);
+      if (len == 1 || (len == 2 && dst_base[1] == '.'))
+        {
+          errno = EINVAL;
+          return -1;
+        }
+    }
+
+  /* Presence of a trailing slash requires directory semantics.  If
+     the source does not exist, or if the destination cannot be turned
+     into a directory, give up now.  Otherwise, strip trailing slashes
+     before calling rename.  There are no symlinks on mingw, so stat
+     works instead of lstat.  */
+  src_slash = ISSLASH (src[src_len - 1]);
+  dst_slash = ISSLASH (dst[dst_len - 1]);
+  if (stat (src, &src_st))
+    return -1;
+  if (stat (dst, &dst_st))
+    {
+      if (errno != ENOENT || (!S_ISDIR (src_st.st_mode) && dst_slash))
+        return -1;
+      dst_exists = false;
+    }
+  else
+    {
+      if (S_ISDIR (dst_st.st_mode) != S_ISDIR (src_st.st_mode))
+	{
+	  errno = S_ISDIR (dst_st.st_mode) ? EISDIR : ENOTDIR;
+	  return -1;
+	}
+      dst_exists = true;
+    }
+
+  /* There are no symlinks, so if a file existed with a trailing
+     slash, it must be a directory, and we don't have to worry about
+     stripping strip trailing slash.  However, mingw refuses to
+     replace an existing empty directory, so we have to help it out.
+     And canonicalize_file_name is not yet ported to mingw; however,
+     for directories, getcwd works as a viable alternative.  Ensure
+     that we can get back to where we started before using it.  */
+  if (dst_exists && S_ISDIR (dst_st.st_mode))
+    {
+      char *cwd = getcwd (NULL, 0);
+      char *src_temp;
+      char *dst_temp;
+      if (chdir (cwd))
+        return -1;
+      if (IS_ABSOLUTE_FILE_NAME (src))
+        {
+          dst_temp = chdir (dst) ? NULL : getcwd (NULL, 0);
+          src_temp = chdir (src) ? NULL : getcwd (NULL, 0);
+        }
+      else
+        {
+          src_temp = chdir (src) ? NULL : getcwd (NULL, 0);
+          if (!IS_ABSOLUTE_FILE_NAME (dst))
+            chdir (cwd);
+          dst_temp = chdir (dst) ? NULL : getcwd (NULL, 0);
+        }
+      chdir (cwd);
+      free (cwd);
+      if (!src_temp || !dst_temp)
+        {
+          free (src_temp);
+          free (dst_temp);
+          errno = ENOMEM;
+          return -1;
+        }
+      src_len = strlen (src_temp);
+      if (strncmp (src_temp, dst_temp, src_len) == 0
+          && (ISSLASH (dst_temp[src_len]) || dst_temp[src_len] == '\0'))
+        {
+          error = dst_temp[src_len];
+          free (src_temp);
+          free (dst_temp);
+          if (error)
+            {
+              errno = EINVAL;
+              return -1;
+            }
+          return 0;
+        }
+      if (rmdir (dst))
+        {
+          error = errno;
+          free (src_temp);
+          free (dst_temp);
+          errno = error;
+          return -1;
+        }
+      free (src_temp);
+      free (dst_temp);
+    }
+
+  /* MoveFileEx works if SRC is a directory without any flags, but
+     fails with MOVEFILE_REPLACE_EXISTING, so try without flags first.
+     Thankfully, MoveFileEx handles hard links correctly, even though
+     rename() does not.  */
   if (MoveFileEx (src, dst, 0))
     return 0;
 
   /* Retry with MOVEFILE_REPLACE_EXISTING if the move failed
-   * due to the destination already existing. */
+     due to the destination already existing.  */
   error = GetLastError ();
   if (error == ERROR_FILE_EXISTS || error == ERROR_ALREADY_EXISTS)
     {
@@ -117,7 +244,7 @@ rpl_rename (char const *src, char const *dst)
       break;
 
 # ifndef ERROR_FILE_TOO_LARGE
-/* This value is documented but not defined in all versions of windows.h. */
+/* This value is documented but not defined in all versions of windows.h.  */
 #  define ERROR_FILE_TOO_LARGE 223
 # endif
     case ERROR_FILE_TOO_LARGE:
