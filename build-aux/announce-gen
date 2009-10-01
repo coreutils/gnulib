@@ -33,7 +33,7 @@ use POSIX qw(strftime);
 
 (my $ME = $0) =~ s|.*/||;
 
-my %valid_release_types = map {$_ => 1} qw (alpha beta major);
+my %valid_release_types = map {$_ => 1} qw (alpha beta stable);
 my @archive_suffixes = ('tar.gz', 'tar.bz2', 'tar.lzma', 'tar.xz');
 
 sub usage ($)
@@ -468,7 +468,7 @@ EOF
   print_news_deltas ($_, $prev_version, $curr_version)
     foreach @news_file;
 
-  $release_type eq 'major'
+  $release_type eq 'stable'
     or print_changelog_deltas ($package_name, $prev_version);
 
   exit 0;

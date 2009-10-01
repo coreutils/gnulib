@@ -696,11 +696,11 @@ no-submodule-changes:
 	  : ;								\
 	fi
 
-.PHONY: alpha beta major
-ALL_RECURSIVE_TARGETS += alpha beta major
-alpha beta major: $(local-check) writable-files no-submodule-changes
-	test $@ = major						\
-	  && { echo $(VERSION) | grep -E '^[0-9]+(\.[0-9]+)+$$'	\
+.PHONY: alpha beta stable
+ALL_RECURSIVE_TARGETS += alpha beta stable
+alpha beta stable: $(local-check) writable-files no-submodule-changes
+	test $@ = stable						\
+	  && { echo $(VERSION) | grep -E '^[0-9]+(\.[0-9]+)+$$'		\
 	       || { echo "invalid version string: $(VERSION)" 1>&2; exit 1;};}\
 	  || :
 	$(MAKE) vc-diff-check

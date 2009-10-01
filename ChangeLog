@@ -1,3 +1,12 @@
+2009-10-01  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: requiring "make major" was annoying, for a "minor" release.
+	What is intended is "stable", to contrast with alpha and beta,
+	so require "make stable", not "make major".
+	* build-aux/announce-gen (%valid_release_types): s/major/stable/.
+	(get_tool_versions): Likewise.
+	* top/maint.mk (ALL_RECURSIVE_TARGETS): s/major/stable/
+
 2009-09-30  Ben Pfaff  <blp@gnu.org>
 
 	Fix broken build of replacement for Windows tmpfile().
