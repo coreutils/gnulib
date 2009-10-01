@@ -1,3 +1,9 @@
+2009-09-30  Ben Pfaff  <blp@gnu.org>
+
+	Fix broken build of replacement for Windows tmpfile().
+	* lib/tmpfile.c (tmpfile): Fix call to gen_tempname() to provide
+	flags argument added along with the 'mkostemp' module.
+
 2009-09-28  Bruno Haible  <bruno@clisp.org>
 
 	Avoid identifier clash with POSIX function 'remove' defined as a macro.

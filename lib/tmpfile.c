@@ -1,5 +1,5 @@
 /* Create a temporary file.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007, 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -83,7 +83,7 @@ tmpfile (void)
 	  do
 	    {
 	      memcpy (&xtemplate[len - 6], "XXXXXX", 6);
-	      if (gen_tempname (xtemplate, GT_NOCREATE) < 0)
+	      if (gen_tempname (xtemplate, 0, GT_NOCREATE) < 0)
 		{
 		  fd = -1;
 		  break;
