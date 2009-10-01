@@ -445,7 +445,11 @@ extern int rename (const char *old, const char *new);
 #endif
 
 #if @GNULIB_RENAMEAT@
-# if !@HAVE_RENAMEAT@
+# if @REPLACE_RENAMEAT@
+#  undef renameat
+#  define renameat rpl_renameat
+# endif
+# if !@HAVE_RENAMEAT@ || @REPLACE_RENAMEAT@
 extern int renameat (int fd1, char const *file1, int fd2, char const *file2);
 # endif
 #elif defined GNULIB_POSIXCHECK

@@ -1,5 +1,13 @@
 2009-10-02  Eric Blake  <ebb9@byu.net>
 
+	renameat: fix Solaris bugs
+	* m4/renameat.m4 (gl_FUNC_RENAMEAT): Replace renameat if rename
+	needed fixing.
+	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): New witness.
+	* modules/stdio (Makefile.am): Substitute it.
+	* lib/stdio.in.h (renameat): Declare replacement.
+	* lib/renameat.c (rpl_renameat): Implement fix.
+
 	renameat: new module
 	* modules/renameat: New file.
 	* lib/renameat.c (renameat): Likewise.

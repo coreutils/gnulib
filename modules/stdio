@@ -94,6 +94,7 @@ stdio.h: stdio.in.h
 	      -e 's|@''REPLACE_PRINTF''@|$(REPLACE_PRINTF)|g' \
 	      -e 's|@''REPLACE_REMOVE''@|$(REPLACE_REMOVE)|g' \
 	      -e 's|@''REPLACE_RENAME''@|$(REPLACE_RENAME)|g' \
+	      -e 's|@''REPLACE_RENAMEAT''@|$(REPLACE_RENAMEAT)|g' \
 	      -e 's|@''REPLACE_SNPRINTF''@|$(REPLACE_SNPRINTF)|g' \
 	      -e 's|@''REPLACE_SPRINTF''@|$(REPLACE_SPRINTF)|g' \
 	      -e 's|@''REPLACE_STDIO_WRITE_FUNCS''@|$(REPLACE_STDIO_WRITE_FUNCS)|g' \
