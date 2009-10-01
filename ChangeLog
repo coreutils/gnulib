@@ -1,5 +1,9 @@
 2009-10-01  Eric Blake  <ebb9@byu.net>
 
+	getopt: bump serial number
+	* m4/getopt.m4: Increment serial number, to account for 2009-09-24
+	change.
+
 	tests: tighten link, rmdir, and remove tests
 	* tests/test-link.h (includes): No need to use <config.h> here.
 	Clean up if directory hard link was created, otherwise test for
