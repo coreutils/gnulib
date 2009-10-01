@@ -1,4 +1,4 @@
-# serial 19
+# serial 20
 
 # Copyright (C) 2001, 2003, 2005, 2006, 2009 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -76,7 +76,39 @@ AC_DEFUN([gl_FUNC_RENAME],
        argument, such as on Solaris 9 or cygwin 1.5.])
   fi
 
-  dnl NetBSD 1.6 mistakenly reduces hard link count on rename("h1","h2").
+  dnl NetBSD 1.6 and cygwin 1.5.x mistakenly reduce hard link count
+  dnl on rename("h1","h2").
+  dnl This bug requires stat'ting targets prior to attempting rename.
+  AC_CACHE_CHECK([whether rename manages hard links correctly],
+    [gl_cv_func_rename_link_works],
+    [rm -rf conftest.f conftest.f1
+    if touch conftest.f && ln conftest.f conftest.f1 &&
+        set x `ls -i conftest.f conftest.f1` && test "$2" = "$4"; then
+      AC_RUN_IFELSE([AC_LANG_PROGRAM([[
+#       include <stdio.h>
+#       include <stdlib.h>
+#       include <unistd.h>
+]], [if (rename ("conftest.f", "conftest.f1")) return 1;
+     if (unlink ("conftest.f1")) return 2;
+     if (rename ("conftest.f", "conftest.f")) return 3;
+     if (rename ("conftest.f1", "conftest.f1") == 0) return 4;])],
+        [gl_cv_func_rename_link_works=yes],
+        [gl_cv_func_rename_link_works=no],
+        dnl When crosscompiling, assume rename is broken.
+        [gl_cv_func_rename_link_works="guessing no"])
+    else
+      gl_cv_func_rename_link_works="guessing no"
+    fi
+    rm -rf conftest.f conftest.f1
+  ])
+  if test "x$gl_cv_func_rename_link_works" != xyes; then
+    AC_LIBOBJ([rename])
+    REPLACE_RENAME=1
+    AC_DEFINE([RENAME_HARD_LINK_BUG], [1],
+      [Define if rename fails to leave hard links alone, as on NetBSD 1.6
+       or Cygwin 1.5.])
+  fi
+
   dnl Cygwin 1.5.x mistakenly allows rename("dir","file").
   dnl mingw mistakenly forbids rename("dir1","dir2").
   dnl These bugs require stripping trailing slash to avoid corrupting
@@ -86,29 +118,22 @@ AC_DEFUN([gl_FUNC_RENAME],
     [rm -rf conftest.f conftest.d1 conftest.d2
     touch conftest.f && mkdir conftest.d1 conftest.d2 ||
       AC_MSG_ERROR([cannot create temporary files])
-    if ln conftest.f conftest.f1 && set x `ls -i conftest.f conftest.f1` &&
-        test "$2" = "$4"; then
-      AC_RUN_IFELSE([AC_LANG_PROGRAM([[
+    AC_RUN_IFELSE([AC_LANG_PROGRAM([[
 #       include <stdio.h>
 #       include <stdlib.h>
 ]], [if (rename ("conftest.d1", "conftest.d2") != 0) return 1;
-     if (rename ("conftest.d2", "conftest.f") == 0) return 2;
-     if (rename ("conftest.f", "conftest.f1")
-         || rename ("conftest.f", "conftest.f")) return 3;])],
-        [gl_cv_func_rename_dest_works=yes],
-        [gl_cv_func_rename_dest_works=no],
-        dnl When crosscompiling, assume rename is broken.
-        [gl_cv_func_rename_dest_works="guessing no"])
-    else
-      gl_cv_func_rename_dest_works="guessing no"
-    fi
-    rm -rf conftest.f conftest.f1 conftest.d1 conftest.d2
+     if (rename ("conftest.d2", "conftest.f") == 0) return 2;])],
+      [gl_cv_func_rename_dest_works=yes],
+      [gl_cv_func_rename_dest_works=no],
+      dnl When crosscompiling, assume rename is broken.
+      [gl_cv_func_rename_dest_works="guessing no"])
+    rm -rf conftest.f conftest.d1 conftest.d2
   ])
   if test "x$gl_cv_func_rename_dest_works" != xyes; then
     AC_LIBOBJ([rename])
     REPLACE_RENAME=1
     AC_DEFINE([RENAME_DEST_EXISTS_BUG], [1],
       [Define if rename does not work when the destination file exists,
-       as with NetBSD 1.6 on hard links, or Windows on directories.])
+       as on Cygwin 1.5 or Windows.])
   fi
 ])

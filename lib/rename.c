@@ -139,6 +139,7 @@ rpl_rename (char const *src, char const *dst)
 # include <stdlib.h>
 # include <string.h>
 # include <sys/stat.h>
+# include <unistd.h>
 
 # include "dirname.h"
 # include "same-inode.h"
@@ -154,6 +155,7 @@ rpl_rename (char const *src, char const *dst)
   char *dst_temp = (char *) dst;
   bool src_slash;
   bool dst_slash;
+  bool dst_exists;
   int ret_val = -1;
   int rename_errno = ENOTDIR;
   struct stat src_st;
@@ -190,13 +192,13 @@ rpl_rename (char const *src, char const *dst)
   src_slash = src[src_len - 1] == '/';
   dst_slash = dst[dst_len - 1] == '/';
 
-# if !RENAME_DEST_EXISTS_BUG
+# if !RENAME_HARD_LINK_BUG && !RENAME_DEST_EXISTS_BUG
   /* If there are no trailing slashes, then trust the native
      implementation unless we also suspect issues with hard link
-     detection.  */
+     detection or file/directory conflicts.  */
   if (!src_slash && !dst_slash)
     return rename (src, dst);
-# endif /* !RENAME_DEST_EXISTS_BUG */
+# endif /* !RENAME_HARD_LINK_BUG && !RENAME_DEST_EXISTS_BUG */
 
   /* Presence of a trailing slash requires directory semantics.  If
      the source does not exist, or if the destination cannot be turned
@@ -208,6 +210,7 @@ rpl_rename (char const *src, char const *dst)
     {
       if (errno != ENOENT || (!S_ISDIR (src_st.st_mode) && dst_slash))
         return -1;
+      dst_exists = false;
     }
   else
     {
@@ -216,13 +219,15 @@ rpl_rename (char const *src, char const *dst)
 	  errno = S_ISDIR (dst_st.st_mode) ? EISDIR : ENOTDIR;
 	  return -1;
 	}
-# if RENAME_DEST_EXISTS_BUG
+# if RENAME_HARD_LINK_BUG
       if (SAME_INODE (src_st, dst_st))
 	return 0;
-# endif /* RENAME_DEST_EXISTS_BUG */
+# endif /* RENAME_HARD_LINK_BUG */
+      dst_exists = true;
     }
 
-# if RENAME_TRAILING_SLASH_SOURCE_BUG || RENAME_DEST_EXISTS_BUG
+# if (RENAME_TRAILING_SLASH_SOURCE_BUG || RENAME_DEST_EXISTS_BUG        \
+      || RENAME_HARD_LINK_BUG)
   /* If the only bug was that a trailing slash was allowed on a
      non-existing file destination, as in Solaris 10, then we've
      already covered that situation.  But if there is any problem with
@@ -281,7 +286,42 @@ rpl_rename (char const *src, char const *dst)
       else if (S_ISLNK (dst_st.st_mode))
         goto out;
     }
-# endif /* RENAME_TRAILING_SLASH_SOURCE_BUG || RENAME_DEST_EXISTS_BUG */
+# endif /* RENAME_TRAILING_SLASH_SOURCE_BUG || RENAME_DEST_EXISTS_BUG
+           || RENAME_HARD_LINK_BUG */
+
+# if RENAME_DEST_EXISTS_BUG
+  /* Cygwin 1.5 sometimes behaves oddly when moving a non-empty
+     directory on top of an empty one (the old directory name can
+     reappear if the new directory tree is removed).  Work around this
+     by removing the target first, but don't remove the target if it
+     is a subdirectory of the source.  */
+  if (dst_exists && S_ISDIR (dst_st.st_mode))
+    {
+      if (src_temp != src)
+        free (src_temp);
+      src_temp = canonicalize_file_name (src);
+      if (dst_temp != dst)
+        free (dst_temp);
+      dst_temp = canonicalize_file_name (dst);
+      if (!src_temp || !dst_temp)
+        {
+          rename_errno = ENOMEM;
+          goto out;
+        }
+      src_len = strlen (src_temp);
+      if (strncmp (src_temp, dst_temp, src_len) == 0
+          && dst_temp[src_len] == '/')
+        {
+          rename_errno = EINVAL;
+          goto out;
+        }
+      if (rmdir (dst))
+        {
+          rename_errno = errno;
+          goto out;
+        }
+    }
+# endif /* RENAME_DEST_EXISTS_BUG */
 
   ret_val = rename (src_temp, dst_temp);
   rename_errno = errno;

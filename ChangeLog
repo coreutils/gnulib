@@ -1,5 +1,13 @@
 2009-10-02  Eric Blake  <ebb9@byu.net>
 
+	rename: fix another cygwin 1.5 bug
+	* m4/rename.m4 (gl_FUNC_RENAME): Split cygwin bugs into two
+	checks.
+	* lib/rename.c (rpl_rename): Don't penalize NetBSD with
+	unnecessary cygwin workarounds.  Also work around bug with moving
+	full directory onto an empty one.
+	* modules/rename (Depends-on): Add canonicalize-lgpl, rmdir.
+
 	rename-dest-slash: merge into rename module
 	* modules/rename-dest-slash (Status): Mark obsolete.
 	(Depends-on): Add rename.

@@ -6,8 +6,10 @@ lib/rename.c
 m4/rename.m4
 
 Depends-on:
+canonicalize-lgpl
 dirname
 lstat
+rmdir
 same-inode
 stdbool
 stdio
