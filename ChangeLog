@@ -1,5 +1,10 @@
 2009-10-02  Eric Blake  <ebb9@byu.net>
 
+	rename: fix Solaris 10 bug
+	* m4/rename.m4 (gl_FUNC_RENAME): Detect Solaris bug.
+	* lib/rename.c (rpl_rename): Don't cripple POSIX behavior if this
+	was the only bug.
+
 	rename: fix Solaris 9 bug
 	* lib/rename.c (rpl_rename): Rewrite to recognize trailing slash
 	on non-directory.  Avoid calling exit.

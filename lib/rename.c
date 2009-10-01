@@ -136,7 +136,7 @@ rpl_rename (char const *src, char const *dst)
 
 # if RENAME_DEST_EXISTS_BUG
 #  error Please report your platform and this message to bug-gnulib@gnu.org.
-# elif RENAME_TRAILING_SLASH_BUG
+# elif RENAME_TRAILING_SLASH_SOURCE_BUG || RENAME_TRAILING_SLASH_DEST_BUG
 
 #  include <errno.h>
 #  include <stdio.h>
@@ -192,10 +192,24 @@ rpl_rename (char const *src, char const *dst)
       return -1;
     }
 
-  /* If stripping the trailing slashes changes from a directory to a
-     symlink, follow the GNU behavior of rejecting the rename.
-     Technically, we could follow the POSIX behavior by chasing a
-     readlink trail, but that is counter-intuitive and harder.  */
+#  if RENAME_TRAILING_SLASH_SOURCE_BUG
+  /* If the only bug was that a trailing slash was allowed on a
+     non-existing file destination, as in Solaris 10, then we've
+     already covered that situation.  But if there is any problem with
+     a trailing slash on an existing source or destination, as in
+     Solaris 9, then we must strip the offending slash and check that
+     we have not encountered a symlink instead of a directory.
+
+     Stripping a trailing slash interferes with POSIX semantics, where
+     rename behavior on a symlink with a trailing slash operates on
+     the corresponding target directory.  We prefer the GNU semantics
+     of rejecting any use of a symlink with trailing slash, but do not
+     enforce them, since Solaris 10 is able to obey POSIX semantics
+     and there might be clients expecting it, as counter-intuitive as
+     those semantics are.
+
+     Technically, we could also follow the POSIX behavior by chasing a
+     readlink trail, but that is harder to implement.  */
   if (src_slash)
     {
       src_temp = strdup (src);
@@ -234,6 +248,8 @@ rpl_rename (char const *src, char const *dst)
       else if (S_ISLNK (dst_st.st_mode))
         goto out;
     }
+#  endif /* RENAME_TRAILING_SLASH_SOURCE_BUG */
+
   ret_val = rename (src_temp, dst_temp);
   rename_errno = errno;
  out:
@@ -244,5 +260,5 @@ rpl_rename (char const *src, char const *dst)
   errno = rename_errno;
   return ret_val;
 }
-# endif /* RENAME_TRAILING_SLASH_BUG */
+# endif /* RENAME_TRAILING_SLASH_*_BUG */
 #endif /* ! W32 platform */

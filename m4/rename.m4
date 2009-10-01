@@ -1,4 +1,4 @@
-# serial 16
+# serial 17
 
 # Copyright (C) 2001, 2003, 2005, 2006, 2009 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -18,8 +18,36 @@ AC_DEFUN([gl_FUNC_RENAME],
   AC_REQUIRE([AC_CANONICAL_HOST])
   AC_REQUIRE([gl_STDIO_H_DEFAULTS])
 
+  dnl Solaris 10 mistakenly allows rename("file","name/").
+  dnl This particular condition can be worked around without stripping
+  dnl trailing slash.
+  AC_CACHE_CHECK([whether rename honors trailing slash on destination],
+    [gl_cv_func_rename_slash_dst_works],
+    [rm -rf conftest.f conftest.f1
+    touch conftest.f ||
+      AC_MSG_ERROR([cannot create temporary files])
+    AC_RUN_IFELSE([AC_LANG_PROGRAM([[
+#       include <stdio.h>
+#       include <stdlib.h>
+]], [return !rename ("conftest.f", "conftest.f1/");])],
+      [gl_cv_func_rename_slash_dst_works=yes],
+      [gl_cv_func_rename_slash_dst_works=no],
+      dnl When crosscompiling, assume rename is broken.
+      [gl_cv_func_rename_slash_dst_works="guessing no"])
+    rm -rf conftest.f conftest.f1
+  ])
+  if test "x$gl_cv_func_rename_slash_dst_works" != xyes; then
+    AC_LIBOBJ([rename])
+    REPLACE_RENAME=1
+    AC_DEFINE([RENAME_TRAILING_SLASH_DEST_BUG], [1],
+      [Define if rename does not correctly handle slashes on the destination
+       argument, such as on Solaris 10.])
+  fi
+
   dnl SunOS 4.1.1_U1 mistakenly forbids rename("dir/","name").
   dnl Solaris 9 mistakenly allows rename("file/","name").
+  dnl These bugs require stripping trailing slash to avoid corrupting
+  dnl symlinks with a trailing slash.
   AC_CACHE_CHECK([whether rename honors trailing slash on source],
     [gl_cv_func_rename_slash_src_works],
     [rm -rf conftest.f conftest.d1 conftest.d2
@@ -39,7 +67,7 @@ AC_DEFUN([gl_FUNC_RENAME],
   if test "x$gl_cv_func_rename_slash_src_works" != xyes; then
     AC_LIBOBJ([rename])
     REPLACE_RENAME=1
-    AC_DEFINE([RENAME_TRAILING_SLASH_BUG], [1],
+    AC_DEFINE([RENAME_TRAILING_SLASH_SOURCE_BUG], [1],
       [Define if rename does not correctly handle slashes on the source
        argument, such as on Solaris 9 or cygwin 1.5.])
   fi
