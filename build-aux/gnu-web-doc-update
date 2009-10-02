@@ -37,8 +37,9 @@ help_version()
     --help) cat <<EOF
 Usage: $ME
 
-Output a list of version-controlled files in DIR (default .), relative to
-SRCDIR (default .).  SRCDIR must be the top directory of a checkout.
+Run this script (no options or arguments) after each non-alpha release,
+to update the web documentation at http://www.gnu.org/software/\$pkg/manual/
+Run it from your project's the top-level directory.
 
 Options:
   --help     print this help, then exit

@@ -1,5 +1,8 @@
 2009-10-02  Jim Meyering  <meyering@redhat.com>
 
+	gnu-web-doc-update: correct --help output
+	* build-aux/gnu-web-doc-update: Make --help output relevant.
+
 	gnu-web-doc-update: add standard options
 	* build-aux/gnu-web-doc-update: Add --help, --version, etc.
 
