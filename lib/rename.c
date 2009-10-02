@@ -100,10 +100,10 @@ rpl_rename (char const *src, char const *dst)
   else
     {
       if (S_ISDIR (dst_st.st_mode) != S_ISDIR (src_st.st_mode))
-	{
-	  errno = S_ISDIR (dst_st.st_mode) ? EISDIR : ENOTDIR;
-	  return -1;
-	}
+        {
+          errno = S_ISDIR (dst_st.st_mode) ? EISDIR : ENOTDIR;
+          return -1;
+        }
       dst_exists = true;
     }
 
@@ -342,13 +342,13 @@ rpl_rename (char const *src, char const *dst)
   else
     {
       if (S_ISDIR (dst_st.st_mode) != S_ISDIR (src_st.st_mode))
-	{
-	  errno = S_ISDIR (dst_st.st_mode) ? EISDIR : ENOTDIR;
-	  return -1;
-	}
+        {
+          errno = S_ISDIR (dst_st.st_mode) ? EISDIR : ENOTDIR;
+          return -1;
+        }
 # if RENAME_HARD_LINK_BUG
       if (SAME_INODE (src_st, dst_st))
-	return 0;
+        return 0;
 # endif /* RENAME_HARD_LINK_BUG */
       dst_exists = true;
     }

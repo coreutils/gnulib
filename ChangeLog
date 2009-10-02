@@ -1,3 +1,10 @@
+2009-10-02  Eric Blake  <ebb9@byu.net>
+
+	maint: cleanup whitespace in recent commits
+	* lib/rename.c (rpl_rename): Remove tabs.
+	* tests/test-link.h (test_link): Likewise.
+	Reported by Jim Meyering.
+
 2009-10-02  Ben Pfaff  <blp@gnu.org>
 
 	relocatable-prog-wrapper: Add missing dependency on

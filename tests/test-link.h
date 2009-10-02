@@ -53,21 +53,21 @@ test_link (int (*func) (char const *, char const *), bool print)
   if (ret == -1)
     {
       /* If the device does not support hard links, errno is
-	 EPERM on Linux, EOPNOTSUPP on FreeBSD.  */
+         EPERM on Linux, EOPNOTSUPP on FreeBSD.  */
       switch (errno)
-	{
-	case EPERM:
-	case EOPNOTSUPP:
+        {
+        case EPERM:
+        case EOPNOTSUPP:
           if (print)
             fputs ("skipping test: "
                    "hard links not supported on this file system\n",
                    stderr);
           ASSERT (unlink (BASE "a") == 0);
-	  return 77;
-	default:
-	  perror ("link");
-	  return 1;
-	}
+          return 77;
+        default:
+          perror ("link");
+          return 1;
+        }
     }
   ASSERT (ret == 0);
 
