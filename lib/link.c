@@ -41,7 +41,7 @@ static BOOL initialized = FALSE;
 static void
 initialize (void)
 {
-  HMODULE kernel32 = LoadLibrary ("kernel32.dll");
+  HMODULE kernel32 = GetModuleHandle ("kernel32.dll");
   if (kernel32 != NULL)
     {
       CreateHardLinkFunc =

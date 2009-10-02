@@ -1,3 +1,8 @@
+2009-10-01  Paolo Bonzini  <bonzini@gnu.org>
+
+	link: LoadLibrary is not needed.
+	* lib/link.c: Use GetModuleHandle.
+
 2009-10-01  Eric Blake  <ebb9@byu.net>
 
 	getopt: bump serial number
