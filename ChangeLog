@@ -1,3 +1,11 @@
+2009-10-02  Jim Meyering  <meyering@redhat.com>
+
+	gnu-web-doc-update: New module.
+	Use this script to automatically update the on-line web documentation
+	for your GNU project at http://www.gnu.org/software/$pkg/manual/
+	* modules/gnu-web-doc-update: New file, from coreutils.
+	* build-aux/gnu-web-doc-update: New script.
+
 2009-10-01  Paolo Bonzini  <bonzini@gnu.org>
 
 	link: LoadLibrary is not needed.
