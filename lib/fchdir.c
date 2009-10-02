@@ -71,11 +71,11 @@ ensure_dirs_slot (size_t fd)
 
       new_allocated = 2 * dirs_allocated + 1;
       if (new_allocated <= fd)
-	new_allocated = fd + 1;
+        new_allocated = fd + 1;
       new_dirs =
-	(dirs != NULL
-	 ? (dir_info_t *) realloc (dirs, new_allocated * sizeof *dirs)
-	 : (dir_info_t *) malloc (new_allocated * sizeof *dirs));
+        (dirs != NULL
+         ? (dir_info_t *) realloc (dirs, new_allocated * sizeof *dirs)
+         : (dir_info_t *) malloc (new_allocated * sizeof *dirs));
       if (new_dirs == NULL)
         return false;
       memset (new_dirs + dirs_allocated, 0,
@@ -94,20 +94,20 @@ get_name (char const *dir)
   if (REPLACE_OPEN_DIRECTORY || !HAVE_CANONICALIZE_FILE_NAME)
     {
       /* The function canonicalize_file_name has not yet been ported
-	 to mingw, with all its drive letter and backslash quirks.
-	 Fortunately, getcwd is reliable in this case, but we ensure
-	 we can get back to where we started before using it.  Treat
-	 "." as a special case, as it is frequently encountered.  */
+         to mingw, with all its drive letter and backslash quirks.
+         Fortunately, getcwd is reliable in this case, but we ensure
+         we can get back to where we started before using it.  Treat
+         "." as a special case, as it is frequently encountered.  */
       char *cwd = getcwd (NULL, 0);
       int saved_errno;
       if (dir[0] == '.' && dir[1] == '\0')
-	return cwd;
+        return cwd;
       if (chdir (cwd))
-	return NULL;
+        return NULL;
       result = chdir (dir) ? NULL : getcwd (NULL, 0);
       saved_errno = errno;
       if (chdir (cwd))
-	abort ();
+        abort ();
       free (cwd);
       errno = saved_errno;
     }
