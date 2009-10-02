@@ -23,6 +23,7 @@
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <windows.h>
 
@@ -35,7 +36,6 @@ int
 uname (struct utsname *buf)
 {
   OSVERSIONINFO version;
-  BOOL have_version;
   const char *super_version;
 
   /* Fill in nodename.  */
@@ -44,35 +44,31 @@ uname (struct utsname *buf)
 
   /* Determine major-major Windows version.  */
   version.dwOSVersionInfoSize = sizeof (OSVERSIONINFO);
-  have_version = GetVersionEx (&version);
-  if (have_version)
+  if (!GetVersionEx (&version))
+    abort ();
+  if (version.dwPlatformId == VER_PLATFORM_WIN32_NT)
     {
-      if (version.dwPlatformId == VER_PLATFORM_WIN32_NT)
+      /* Windows NT or newer.  */
+      super_version = "NT";
+    }
+  else if (version.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS)
+    {
+      /* Windows 95/98/ME.  */
+      switch (version.dwMinorVersion)
 	{
-	  /* Windows NT or newer.  */
-	  super_version = "NT";
+	case 0:
+	  super_version = "95";
+	  break;
+	case 10:
+	  super_version = "98";
+	  break;
+	case 90:
+	  super_version = "ME";
+	  break;
+	default:
+	  super_version = "";
+	  break;
 	}
-      else if (version.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS)
-	{
-	  /* Windows 95/98/ME.  */
-	  switch (version.dwMinorVersion)
-	    {
-	    case 0:
-	      super_version = "95";
-	      break;
-	    case 10:
-	      super_version = "98";
-	      break;
-	    case 90:
-	      super_version = "ME";
-	      break;
-	    default:
-	      super_version = "";
-	      break;
-	    }
-	}
-      else
-	super_version = "";
     }
   else
     super_version = "";
@@ -84,17 +80,11 @@ uname (struct utsname *buf)
      For example,
        $ ./uname.exe -s      => MINGW32_NT-5.1
    */
-  if (have_version)
-    sprintf (buf->sysname, "MINGW32_%s-%u.%u", super_version,
-	     (unsigned int) version.dwMajorVersion,
-	     (unsigned int) version.dwMinorVersion);
-  else
-    strcpy (buf->sysname, "MINGW32");
+  sprintf (buf->sysname, "MINGW32_%s-%u.%u", super_version,
+	   (unsigned int) version.dwMajorVersion,
+	   (unsigned int) version.dwMinorVersion);
 #else
-  if (have_version)
-    sprintf (buf->sysname, "Windows%s", super_version);
-  else
-    strcpy (buf->sysname, "Windows");
+  sprintf (buf->sysname, "Windows%s", super_version);
 #endif
 
   /* Fill in release, version.  */
@@ -102,66 +92,58 @@ uname (struct utsname *buf)
        $ ./uname.exe -r      => 1.0.11(0.46/3/2)
        $ ./uname.exe -v      => 2008-08-25 23:40
      There is no point in imitating this behaviour.  */
-  if (have_version)
+  if (version.dwPlatformId == VER_PLATFORM_WIN32_NT)
     {
-      if (version.dwPlatformId == VER_PLATFORM_WIN32_NT)
+      /* Windows NT or newer.  */
+      if (version.dwMajorVersion <= 4)
+	sprintf (buf->release, "Windows NT %u.%u",
+		 (unsigned int) version.dwMajorVersion,
+		 (unsigned int) version.dwMinorVersion);
+      else if (version.dwMajorVersion == 5)
+	switch (version.dwMinorVersion)
+	  {
+	  case 0:
+	    strcpy (buf->release, "Windows 2000");
+	    break;
+	  case 1:
+	    strcpy (buf->release, "Windows XP");
+	    break;
+	  case 2:
+	    strcpy (buf->release, "Windows Server 2003");
+	    break;
+	  default:
+	    strcpy (buf->release, "Windows");
+	    break;
+	  }
+      else if (version.dwMajorVersion == 6)
 	{
-	  /* Windows NT or newer.  */
-	  if (version.dwMajorVersion <= 4)
-	    sprintf (buf->release, "Windows NT %u.%u",
-		     (unsigned int) version.dwMajorVersion,
-		     (unsigned int) version.dwMinorVersion);
-	  else if (version.dwMajorVersion == 5)
+	  OSVERSIONINFOEX versionex;
+
+	  versionex.dwOSVersionInfoSize = sizeof (OSVERSIONINFOEX);
+	  if (GetVersionEx ((OSVERSIONINFO *) &versionex)
+	      && versionex.wProductType != VER_NT_WORKSTATION)
+	    strcpy (buf->release, "Windows Server 2008");
+	  else
 	    switch (version.dwMinorVersion)
 	      {
 	      case 0:
-		strcpy (buf->release, "Windows 2000");
+		strcpy (buf->release, "Windows Vista");
 		break;
 	      case 1:
-		strcpy (buf->release, "Windows XP");
-		break;
-	      case 2:
-		strcpy (buf->release, "Windows Server 2003");
-		break;
-	      default:
-		strcpy (buf->release, "Windows");
+	      default: /* versions not yet known */
+		strcpy (buf->release, "Windows 7");
 		break;
 	      }
-	  else if (version.dwMajorVersion == 6)
-	    {
-	      OSVERSIONINFOEX versionex;
-
-	      versionex.dwOSVersionInfoSize = sizeof (OSVERSIONINFOEX);
-	      if (GetVersionEx ((OSVERSIONINFO *) &versionex)
-		  && versionex.wProductType != VER_NT_WORKSTATION)
-		strcpy (buf->release, "Windows Server 2008");
-	      else
-		switch (version.dwMinorVersion)
-		  {
-		  case 0:
-		    strcpy (buf->release, "Windows Vista");
-		    break;
-		  case 1:
-		  default: /* versions not yet known */
-		    strcpy (buf->release, "Windows 7");
-		    break;
-		  }
-	    }
-	  else
-	    strcpy (buf->release, "Windows");
 	}
       else
-	{
-	  /* Windows 95/98/ME.  */
-	  sprintf (buf->release, "Windows %s", super_version);
-	}
-      strcpy (buf->version, version.szCSDVersion);
+	strcpy (buf->release, "Windows");
     }
   else
     {
-      strcpy (buf->release, "Windows");
-      strcpy (buf->version, "");
+      /* Windows 95/98/ME.  */
+      sprintf (buf->release, "Windows %s", super_version);
     }
+  strcpy (buf->version, version.szCSDVersion);
 
   /* Fill in machine.  */
   {
@@ -170,7 +152,7 @@ uname (struct utsname *buf)
     GetSystemInfo (&info);
     /* Check for Windows NT, since the info.wProcessorLevel is
        garbage on Windows 95. */
-    if (have_version && version.dwPlatformId == VER_PLATFORM_WIN32_NT)
+    if (version.dwPlatformId == VER_PLATFORM_WIN32_NT)
       {
 	/* Windows NT or newer.  */
 	switch (info.wProcessorArchitecture)

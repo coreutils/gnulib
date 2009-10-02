@@ -1,3 +1,8 @@
+2009-10-02  Paolo Bonzini  <bonzini@gnu.org>
+
+	* lib/uname.c: Include <stdlib.h>
+	(uname): Assume version info is available.
+
 2009-10-02  Jim Meyering  <meyering@redhat.com>
 
 	gnu-web-doc-update: correct --help output
