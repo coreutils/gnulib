@@ -27,7 +27,9 @@ NetBSD 1.6, Cygwin 1.5.x.
 @item
 This function will not always replace an existing destination on some
 platforms:
-mingw.
+Cygwin 1.5.x, mingw.
+However, the replacement is not atomic for directories, and may end up
+losing the empty destination if the source could not be renamed.
 @item
 This function mistakenly allows names ending in @samp{.} or @samp{..}
 on some platforms:

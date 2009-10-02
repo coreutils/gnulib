@@ -113,13 +113,16 @@ rpl_rename (char const *src, char const *dst)
      replace an existing empty directory, so we have to help it out.
      And canonicalize_file_name is not yet ported to mingw; however,
      for directories, getcwd works as a viable alternative.  Ensure
-     that we can get back to where we started before using it.  */
+     that we can get back to where we started before using it; later
+     attempts to return are fatal.  Note that we can end up losing a
+     directory if rename then fails, but it was empty, so not much
+     damage was done.  */
   if (dst_exists && S_ISDIR (dst_st.st_mode))
     {
       char *cwd = getcwd (NULL, 0);
       char *src_temp;
       char *dst_temp;
-      if (chdir (cwd))
+      if (!cwd || chdir (cwd))
         return -1;
       if (IS_ABSOLUTE_FILE_NAME (src))
         {
@@ -129,11 +132,12 @@ rpl_rename (char const *src, char const *dst)
       else
         {
           src_temp = chdir (src) ? NULL : getcwd (NULL, 0);
-          if (!IS_ABSOLUTE_FILE_NAME (dst))
-            chdir (cwd);
+          if (!IS_ABSOLUTE_FILE_NAME (dst) && chdir (cwd))
+            abort ();
           dst_temp = chdir (dst) ? NULL : getcwd (NULL, 0);
         }
-      chdir (cwd);
+      if (chdir (cwd))
+        abort ();
       free (cwd);
       if (!src_temp || !dst_temp)
         {
@@ -421,9 +425,16 @@ rpl_rename (char const *src, char const *dst)
      directory on top of an empty one (the old directory name can
      reappear if the new directory tree is removed).  Work around this
      by removing the target first, but don't remove the target if it
-     is a subdirectory of the source.  */
+     is a subdirectory of the source.  Note that we can end up losing
+     a directory if rename then fails, but it was empty, so not much
+     damage was done.  */
   if (dst_exists && S_ISDIR (dst_st.st_mode))
     {
+      if (src_st.st_dev != dst_st.st_dev)
+        {
+          rename_errno = EXDEV;
+          goto out;
+        }
       if (src_temp != src)
         free (src_temp);
       src_temp = canonicalize_file_name (src);

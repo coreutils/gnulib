@@ -106,7 +106,8 @@ get_name (char const *dir)
 	return NULL;
       result = chdir (dir) ? NULL : getcwd (NULL, 0);
       saved_errno = errno;
-      chdir (cwd);
+      if (chdir (cwd))
+	abort ();
       free (cwd);
       errno = saved_errno;
     }
