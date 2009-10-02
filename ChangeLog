@@ -1,3 +1,10 @@
+2009-10-02  Ben Pfaff  <blp@gnu.org>
+
+	relocatable-prog-wrapper: Add missing dependency on
+	double-slash-root.
+	* modules/relocatable-prog-wrapper: Add dependency.
+	Reported by Ian Beckwith <ianb@erislabs.net>.
+
 2009-10-02  Eric Blake  <ebb9@byu.net>
 
 	renameat: fix Solaris bugs
