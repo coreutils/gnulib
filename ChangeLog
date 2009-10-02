@@ -1,5 +1,8 @@
 2009-10-02  Jim Meyering  <meyering@redhat.com>
 
+	gnu-web-doc-update: add standard options
+	* build-aux/gnu-web-doc-update: Add --help, --version, etc.
+
 	gnu-web-doc-update: New module.
 	Use this script to automatically update the on-line web documentation
 	for your GNU project at http://www.gnu.org/software/$pkg/manual/
