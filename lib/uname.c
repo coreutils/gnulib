@@ -24,6 +24,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 #include <windows.h>
 
@@ -49,16 +50,31 @@ int
 uname (struct utsname *buf)
 {
   OSVERSIONINFO version;
+  OSVERSIONINFOEX versionex;
+  BOOL have_versionex; /* indicates whether versionex is filled */
   const char *super_version;
+
+  /* Preparation: Fill version and, if possible, also versionex.
+     But try to call GetVersionEx only once in the common case.  */
+  versionex.dwOSVersionInfoSize = sizeof (OSVERSIONINFOEX);
+  have_versionex = GetVersionEx (&versionex);
+  if (have_versionex)
+    {
+      /* We know that OSVERSIONINFO is a subset of OSVERSIONINFOEX.  */
+      memcpy (&version, &versionex, sizeof (OSVERSIONINFO));
+    }
+  else
+    {
+      version.dwOSVersionInfoSize = sizeof (OSVERSIONINFO);
+      if (!GetVersionEx (&version))
+	abort ();
+    }
 
   /* Fill in nodename.  */
   if (gethostname (buf->nodename, sizeof (buf->nodename)) < 0)
     strcpy (buf->nodename, "localhost");
 
   /* Determine major-major Windows version.  */
-  version.dwOSVersionInfoSize = sizeof (OSVERSIONINFO);
-  if (!GetVersionEx (&version))
-    abort ();
   if (version.dwPlatformId == VER_PLATFORM_WIN32_NT)
     {
       /* Windows NT or newer.  */
@@ -135,11 +151,7 @@ uname (struct utsname *buf)
 	  }
       else if (version.dwMajorVersion == 6)
 	{
-	  OSVERSIONINFOEX versionex;
-
-	  versionex.dwOSVersionInfoSize = sizeof (OSVERSIONINFOEX);
-	  if (GetVersionEx ((OSVERSIONINFO *) &versionex)
-	      && versionex.wProductType != VER_NT_WORKSTATION)
+	  if (have_versionex && versionex.wProductType != VER_NT_WORKSTATION)
 	    strcpy (buf->release, "Windows Server 2008");
 	  else
 	    switch (version.dwMinorVersion)

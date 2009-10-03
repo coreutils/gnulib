@@ -1,6 +1,12 @@
 2009-10-03  Paolo Bonzini  <bonzini@gnu.org>
 	    Bruno Haible  <bruno@clisp.org>
 
+	* lib/uname.c: Include <string.h>.
+	(uname): Do only one call to GetVersionEx in the common case.
+
+2009-10-03  Paolo Bonzini  <bonzini@gnu.org>
+	    Bruno Haible  <bruno@clisp.org>
+
 	* lib/uname.c (VER_PLATFORM_WIN32_CE, PROCESSOR_ARCHITECTURE_AMD64,
 	PROCESSOR_ARCHITECTURE_IA32_ON_WIN64): Define fallbacks.
 	(uname): Add support for Windows CE and various non-x86 CPU types.
