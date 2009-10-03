@@ -4019,6 +4019,10 @@ func_create_testdir ()
      echo "AC_PROG_MAKE_SET"
      echo "AC_PROG_RANLIB"
      echo
+     if test -n "$uses_subdirs"; then
+       echo "AM_PROG_CC_C_O"
+       echo
+     fi
      for module in $modules; do
        func_verify_module
        if test -n "$module"; then
