@@ -1,5 +1,9 @@
 2009-10-02  Eric Blake  <ebb9@byu.net>
 
+	fchdir: avoid compiler warning
+	* lib/fchdir.c (canonicalize_file_name)
+	[!HAVE_CANONICALIZE_FILE_NAME]: Avoid compiler warning on mingw.
+
 	test-open: support mingw errno values
 	* tests/test-open.h (test_open): Relax test.
 	* tests/test-fopen.h (test_fopen): Likewise.

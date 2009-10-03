@@ -38,6 +38,7 @@
 #  define HAVE_CANONICALIZE_FILE_NAME 1
 # else
 #  define HAVE_CANONICALIZE_FILE_NAME 0
+#  define canonicalize_file_name(name) NULL
 # endif
 #endif
 
