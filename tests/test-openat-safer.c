@@ -45,6 +45,8 @@ static FILE *myerr;
     }                                                                        \
   while (0)
 
+#define witness "test-openat-safer.txt"
+
 int
 main ()
 {
@@ -53,7 +55,6 @@ main ()
   int dfd;
   int fd;
   char buf[2];
-  const char *witness = "test-openat-safer.txt";
 
   /* We close fd 2 later, so save it in fd 10.  */
   if (dup2 (STDERR_FILENO, BACKUP_STDERR_FILENO) != BACKUP_STDERR_FILENO
@@ -96,15 +97,14 @@ main ()
 	  ASSERT (openat (-1, ".", O_RDONLY) == -1);
 	  ASSERT (errno == EBADF);
 
-	  /* Check for trailing slash and /dev/null handling; the
-	     particular errno might be ambiguous.  */
+	  /* Check for trailing slash and /dev/null handling.  */
 	  errno = 0;
 	  ASSERT (openat (dfd, "nonexist.ent/", O_CREAT | O_RDONLY,
 			  S_IRUSR | S_IWUSR) == -1);
-	  /* ASSERT (errno == ENOTDIR); */
+	  ASSERT (errno == ENOTDIR || errno == EISDIR || errno == ENOENT);
 	  errno = 0;
-	  ASSERT (openat (dfd, "/dev/null/", O_RDONLY) == -1);
-	  /* ASSERT (errno == ENOTDIR); */
+	  ASSERT (openat (dfd, witness "/", O_RDONLY) == -1);
+	  ASSERT (errno == ENOTDIR || errno == EISDIR);
 	  /* Using a bad directory is okay for absolute paths.  */
 	  fd = openat (-1, "/dev/null", O_WRONLY);
 	  ASSERT (STDERR_FILENO < fd);

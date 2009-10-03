@@ -20,4 +20,12 @@
 
 #include <fcntl.h>
 
+#define BASE "test-open.t"
+
 #include "test-open.h"
+
+int
+main ()
+{
+  return test_open ();
+}

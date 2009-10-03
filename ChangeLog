@@ -1,5 +1,18 @@
 2009-10-02  Eric Blake  <ebb9@byu.net>
 
+	test-open: on GNU/Hurd, /dev/null is a directory
+	* tests/test-fopen.h (main): Rename...
+	(test_fopen): ...to this.  Use a guaranteed non-directory when
+	confirming open behavior on trailing slash.
+	* tests/test-openat-safer.c (main): Likewise.
+	* tests/test-open.h (main): Likewise....
+	(test_open): ...to this.
+	* tests/test-fopen.c (main): Adjust caller.
+	* tests/test-fopen-safer.c (main): Likewise.
+	* tests/test-open.c (main): Likewise.
+	* tests/test-fcntl-safer.c (main): Likewise.
+	Reported by Samuel Thibault.
+
 	rename, fchdir: don't ignore chdir failure
 	* lib/fchdir.c (get_name): Abort on unexpected chdir failure.
 	* lib/rename.c (rpl_rename) [W32]: Likewise.

@@ -18,8 +18,10 @@
 
 /* Include <config.h> and a form of <fcntl.h> first.  */
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #define ASSERT(expr) \
   do									     \
@@ -33,13 +35,50 @@
     }									     \
   while (0)
 
-int
-main ()
-{
-  ASSERT (open ("nonexist.ent/", O_CREAT | O_RDONLY, 0600) < 0);
-  ASSERT (open ("/dev/null/", O_RDONLY) < 0);
+/* Test fopen.  Assumes BASE is defined.  */
 
-  ASSERT (open ("/dev/null", O_RDONLY) >= 0);
+static int
+test_open (void)
+{
+  int fd;
+  /* Remove anything from prior partial run.  */
+  unlink (BASE "file");
+
+  /* Cannot create directory.  */
+  errno = 0;
+  ASSERT (open ("nonexist.ent/", O_CREAT | O_RDONLY, 0600) == -1);
+  ASSERT (errno == ENOTDIR || errno == EISDIR || errno == ENOENT);
+
+  /* Create a regular file.  */
+  fd = open (BASE "file", O_CREAT | O_RDONLY, 0600);
+  ASSERT (0 <= fd);
+  ASSERT (close (fd) == 0);
+
+  /* Trailing slash handling.  */
+  errno = 0;
+  ASSERT (open (BASE "file/", O_RDONLY) == -1);
+  ASSERT (errno == ENOTDIR || errno == EISDIR);
+
+  /* Directories cannot be opened for writing.  */
+  errno = 0;
+  ASSERT (open (".", O_WRONLY) == -1);
+  ASSERT (errno == EISDIR);
+
+  /* /dev/null must exist, and be writable.  */
+  fd = open ("/dev/null", O_RDONLY);
+  ASSERT (0 <= fd);
+  {
+    char c;
+    ASSERT (read (fd, &c, 1) == 0);
+  }
+  ASSERT (close (fd) == 0);
+  fd = open ("/dev/null", O_WRONLY);
+  ASSERT (0 <= fd);
+  ASSERT (write (fd, "c", 1) == 1);
+  ASSERT (close (fd) == 0);
+
+  /* Cleanup.  */
+  ASSERT (unlink (BASE "file") == 0);
 
   return 0;
 }

@@ -20,4 +20,12 @@
 
 #include "stdio--.h"
 
+#define BASE "test-fopen-safer.t"
+
 #include "test-fopen.h"
+
+int
+main ()
+{
+  return test_fopen ();
+}

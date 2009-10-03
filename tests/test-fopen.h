@@ -18,7 +18,9 @@
 
 /* Include <config.h> and a form of <stdio.h> first.  */
 
+#include <errno.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #define ASSERT(expr) \
   do									     \
@@ -32,13 +34,50 @@
     }									     \
   while (0)
 
-int
-main ()
-{
-  ASSERT (fopen ("nonexist.ent/", "w") == NULL);
-  ASSERT (fopen ("/dev/null/", "r") == NULL);
+/* Test fopen.  Assumes BASE is defined.  */
 
-  ASSERT (fopen ("/dev/null", "r") != NULL);
+static int
+test_fopen (void)
+{
+  FILE *f;
+  /* Remove anything from prior partial run.  */
+  unlink (BASE "file");
+
+  /* Read requires existing file.  */
+  errno = 0;
+  ASSERT (fopen (BASE "file", "r") == NULL);
+  ASSERT (errno == ENOENT);
+
+  /* Write can create a file.  */
+  f = fopen (BASE "file", "w");
+  ASSERT (f);
+  ASSERT (fclose (f) == 0);
+
+  /* Trailing slash is invalid on non-directory.  */
+  errno = 0;
+  ASSERT (fopen (BASE "file/", "r") == NULL);
+  ASSERT (errno == ENOTDIR || errno == EISDIR);
+
+  /* Cannot create a directory.  */
+  errno = 0;
+  ASSERT (fopen ("nonexist.ent/", "w") == NULL);
+  ASSERT (errno == ENOTDIR || errno == EISDIR || errno == ENOENT);
+
+  /* Directories cannot be opened for writing.  */
+  errno = 0;
+  ASSERT (fopen (".", "w") == NULL);
+  ASSERT (errno == EISDIR || errno == EINVAL);
+
+  /* /dev/null must exist, and be writable.  */
+  f = fopen ("/dev/null", "r");
+  ASSERT (f);
+  ASSERT (fclose (f) == 0);
+  f = fopen ("/dev/null", "w");
+  ASSERT (f);
+  ASSERT (fclose (f) == 0);
+
+  /* Cleanup.  */
+  ASSERT (unlink (BASE "file") == 0);
 
   return 0;
 }
