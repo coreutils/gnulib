@@ -27,7 +27,20 @@
 #include <unistd.h>
 #include <windows.h>
 
-/* Mingw headers don't have latest processor codes.  */
+/* Mingw headers don't have all the platform codes.  */
+#ifndef VER_PLATFORM_WIN32_CE
+# define VER_PLATFORM_WIN32_CE 3
+#endif
+
+/* Some headers don't have all the processor architecture codes.  */
+#ifndef PROCESSOR_ARCHITECTURE_AMD64
+# define PROCESSOR_ARCHITECTURE_AMD64 9
+#endif
+#ifndef PROCESSOR_ARCHITECTURE_IA32_ON_WIN64
+# define PROCESSOR_ARCHITECTURE_IA32_ON_WIN64 10
+#endif
+
+/* Mingw headers don't have the latest processor codes.  */
 #ifndef PROCESSOR_AMD_X8664
 # define PROCESSOR_AMD_X8664 8664
 #endif
@@ -50,6 +63,11 @@ uname (struct utsname *buf)
     {
       /* Windows NT or newer.  */
       super_version = "NT";
+    }
+  else if (version.dwPlatformId == VER_PLATFORM_WIN32_CE)
+    {
+      /* Windows CE or Embedded CE.  */
+      super_version = "CE";
     }
   else if (version.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS)
     {
@@ -138,6 +156,13 @@ uname (struct utsname *buf)
       else
 	strcpy (buf->release, "Windows");
     }
+  else if (version.dwPlatformId == VER_PLATFORM_WIN32_CE)
+    {
+      /* Windows CE or Embedded CE.  */
+      sprintf (buf->release, "Windows CE %u.%u",
+	       (unsigned int) version.dwMajorVersion,
+	       (unsigned int) version.dwMinorVersion);
+    }
   else
     {
       /* Windows 95/98/ME.  */
@@ -150,11 +175,12 @@ uname (struct utsname *buf)
     SYSTEM_INFO info;
 
     GetSystemInfo (&info);
-    /* Check for Windows NT, since the info.wProcessorLevel is
+    /* Check for Windows NT or CE, since the info.wProcessorLevel is
        garbage on Windows 95. */
-    if (version.dwPlatformId == VER_PLATFORM_WIN32_NT)
+    if (version.dwPlatformId == VER_PLATFORM_WIN32_NT
+	|| version.dwPlatformId == VER_PLATFORM_WIN32_CE)
       {
-	/* Windows NT or newer.  */
+	/* Windows NT or newer, or Windows CE or Embedded CE.  */
 	switch (info.wProcessorArchitecture)
 	  {
 	  case PROCESSOR_ARCHITECTURE_AMD64:
@@ -168,6 +194,25 @@ uname (struct utsname *buf)
 	    if (info.wProcessorLevel >= 3)
 	      buf->machine[1] =
 		'0' + (info.wProcessorLevel <= 6 ? info.wProcessorLevel : 6);
+	    break;
+	  case PROCESSOR_ARCHITECTURE_IA32_ON_WIN64:
+	    strcpy (buf->machine, "i686");
+	    break;
+	  case PROCESSOR_ARCHITECTURE_MIPS:
+	    strcpy (buf->machine, "mips");
+	    break;
+	  case PROCESSOR_ARCHITECTURE_ALPHA:
+	  case PROCESSOR_ARCHITECTURE_ALPHA64:
+	    strcpy (buf->machine, "alpha");
+	    break;
+	  case PROCESSOR_ARCHITECTURE_PPC:
+	    strcpy (buf->machine, "powerpc");
+	    break;
+	  case PROCESSOR_ARCHITECTURE_SHX:
+	    strcpy (buf->machine, "sh");
+	    break;
+	  case PROCESSOR_ARCHITECTURE_ARM:
+	    strcpy (buf->machine, "arm");
 	    break;
 	  default:
 	    strcpy (buf->machine, "unknown");
