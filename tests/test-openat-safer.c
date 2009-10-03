@@ -101,10 +101,11 @@ main ()
 	  errno = 0;
 	  ASSERT (openat (dfd, "nonexist.ent/", O_CREAT | O_RDONLY,
 			  S_IRUSR | S_IWUSR) == -1);
-	  ASSERT (errno == ENOTDIR || errno == EISDIR || errno == ENOENT);
+	  ASSERT (errno == ENOTDIR || errno == EISDIR || errno == ENOENT
+		  || errno == EINVAL);
 	  errno = 0;
 	  ASSERT (openat (dfd, witness "/", O_RDONLY) == -1);
-	  ASSERT (errno == ENOTDIR || errno == EISDIR);
+	  ASSERT (errno == ENOTDIR || errno == EISDIR || errno == EINVAL);
 	  /* Using a bad directory is okay for absolute paths.  */
 	  fd = openat (-1, "/dev/null", O_WRONLY);
 	  ASSERT (STDERR_FILENO < fd);

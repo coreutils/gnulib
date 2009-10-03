@@ -47,7 +47,8 @@ test_open (void)
   /* Cannot create directory.  */
   errno = 0;
   ASSERT (open ("nonexist.ent/", O_CREAT | O_RDONLY, 0600) == -1);
-  ASSERT (errno == ENOTDIR || errno == EISDIR || errno == ENOENT);
+  ASSERT (errno == ENOTDIR || errno == EISDIR || errno == ENOENT
+          || errno == EINVAL);
 
   /* Create a regular file.  */
   fd = open (BASE "file", O_CREAT | O_RDONLY, 0600);
@@ -57,12 +58,12 @@ test_open (void)
   /* Trailing slash handling.  */
   errno = 0;
   ASSERT (open (BASE "file/", O_RDONLY) == -1);
-  ASSERT (errno == ENOTDIR || errno == EISDIR);
+  ASSERT (errno == ENOTDIR || errno == EISDIR || errno == EINVAL);
 
   /* Directories cannot be opened for writing.  */
   errno = 0;
   ASSERT (open (".", O_WRONLY) == -1);
-  ASSERT (errno == EISDIR);
+  ASSERT (errno == EISDIR || errno == EACCES);
 
   /* /dev/null must exist, and be writable.  */
   fd = open ("/dev/null", O_RDONLY);

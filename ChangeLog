@@ -1,5 +1,10 @@
 2009-10-02  Eric Blake  <ebb9@byu.net>
 
+	test-open: support mingw errno values
+	* tests/test-open.h (test_open): Relax test.
+	* tests/test-fopen.h (test_fopen): Likewise.
+	* tests/test-openat-safer.c (main): Likewise.
+
 	open: fix opening directory on mingw
 	* lib/open.c (open) [REPLACE_OPEN_DIRECTORY]: Correct typo.
 
