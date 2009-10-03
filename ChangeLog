@@ -1,5 +1,8 @@
 2009-10-02  Eric Blake  <ebb9@byu.net>
 
+	open: fix opening directory on mingw
+	* lib/open.c (open) [REPLACE_OPEN_DIRECTORY]: Correct typo.
+
 	test-open: on GNU/Hurd, /dev/null is a directory
 	* tests/test-fopen.h (main): Rename...
 	(test_fopen): ...to this.  Use a guaranteed non-directory when

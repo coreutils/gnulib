@@ -111,7 +111,7 @@ open (const char *filename, int flags, ...)
      override fstat() in fchdir.c to hide the fact that we have a
      dummy.  */
   if (REPLACE_OPEN_DIRECTORY && fd < 0 && errno == EACCES
-      && (mode & O_ACCMODE) == O_RDONLY)
+      && (flags & O_ACCMODE) == O_RDONLY)
     {
       struct stat statbuf;
       if (stat (filename, &statbuf) == 0 && S_ISDIR (statbuf.st_mode))
