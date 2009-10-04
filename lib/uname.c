@@ -57,7 +57,7 @@ uname (struct utsname *buf)
   /* Preparation: Fill version and, if possible, also versionex.
      But try to call GetVersionEx only once in the common case.  */
   versionex.dwOSVersionInfoSize = sizeof (OSVERSIONINFOEX);
-  have_versionex = GetVersionEx (&versionex);
+  have_versionex = GetVersionEx ((OSVERSIONINFO *) &versionex);
   if (have_versionex)
     {
       /* We know that OSVERSIONINFO is a subset of OSVERSIONINFOEX.  */
@@ -129,44 +129,53 @@ uname (struct utsname *buf)
   if (version.dwPlatformId == VER_PLATFORM_WIN32_NT)
     {
       /* Windows NT or newer.  */
-      if (version.dwMajorVersion <= 4)
-	sprintf (buf->release, "Windows NT %u.%u",
+      struct windows_version
+	{
+	  int major;
+	  int minor;
+	  unsigned int server_offset;
+	  const char *name;
+	};
+
+      /* Storing the workstation and server version names in a single
+         stream does not waste memory when they are the same.  These
+         macros abstract the representation.  VERSION1 is used if
+	 version.wProductType does not matter, VERSION2 if it does.  */
+      #define VERSION1(major, minor, name) \
+	{ major, minor, 0, name }
+      #define VERSION2(major, minor, workstation, server) \
+	{ major, minor, sizeof workstation, workstation "\0" server }
+      static const struct windows_version versions[] =
+	{
+	  VERSION2 (3, -1, "Windows NT Workstation", "Windows NT Server"),
+	  VERSION2 (4, -1, "Windows NT Workstation", "Windows NT Server"),
+	  VERSION1 (5, 0, "Windows 2000"),
+	  VERSION1 (5, 1, "Windows XP"),
+	  VERSION1 (5, 2, "Windows Server 2003"),
+	  VERSION2 (6, 0, "Windows Vista", "Windows Server 2008"),
+	  VERSION2 (6, 1, "Windows 7", "Windows Server 2008 R2"),
+	  VERSION2 (-1, -1, "Windows", "Windows Server")
+	};
+      const char *base;
+      const struct windows_version *v = versions;
+
+      /* Find a version that matches ours.  The last element is a
+         wildcard that always ends the loop.  */
+      while ((v->major != version.dwMajorVersion && v->major != -1)
+	     || (v->minor != version.dwMinorVersion && v->minor != -1))
+	v++;
+
+      if (have_versionex && versionex.wProductType != VER_NT_WORKSTATION)
+	base = v->name + v->server_offset;
+      else
+	base = v->name;
+      if (v->major == -1 || v->minor == -1)
+	sprintf (buf->release, "%s %u.%u",
+		 base,
 		 (unsigned int) version.dwMajorVersion,
 		 (unsigned int) version.dwMinorVersion);
-      else if (version.dwMajorVersion == 5)
-	switch (version.dwMinorVersion)
-	  {
-	  case 0:
-	    strcpy (buf->release, "Windows 2000");
-	    break;
-	  case 1:
-	    strcpy (buf->release, "Windows XP");
-	    break;
-	  case 2:
-	    strcpy (buf->release, "Windows Server 2003");
-	    break;
-	  default:
-	    strcpy (buf->release, "Windows");
-	    break;
-	  }
-      else if (version.dwMajorVersion == 6)
-	{
-	  if (have_versionex && versionex.wProductType != VER_NT_WORKSTATION)
-	    strcpy (buf->release, "Windows Server 2008");
-	  else
-	    switch (version.dwMinorVersion)
-	      {
-	      case 0:
-		strcpy (buf->release, "Windows Vista");
-		break;
-	      case 1:
-	      default: /* versions not yet known */
-		strcpy (buf->release, "Windows 7");
-		break;
-	      }
-	}
       else
-	strcpy (buf->release, "Windows");
+	strcpy (buf->release, base);
     }
   else if (version.dwPlatformId == VER_PLATFORM_WIN32_CE)
     {
