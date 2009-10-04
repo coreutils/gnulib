@@ -1,5 +1,13 @@
 2009-10-04  Bruno Haible  <bruno@clisp.org>
 
+	* lib/progname.c (set_program_name): Also remove the "lt-" prefix from
+	program_invocation_short_name.
+	* modules/progname (configure.ac): Test for presence of
+	program_invocation_short_name.
+	Reported by Sergey Poznyakoff <gray@gnu.org.ua>.
+
+2009-10-04  Bruno Haible  <bruno@clisp.org>
+
 	* lib/progname.c (set_program_name): Fix comment.
 	Reported by Jim Meyering.
 
