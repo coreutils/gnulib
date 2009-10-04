@@ -1,3 +1,8 @@
+2009-10-04  Bruno Haible  <bruno@clisp.org>
+
+	* lib/progname.c (set_program_name): Fix comment.
+	Reported by Jim Meyering.
+
 2009-10-03  Paolo Bonzini  <bonzini@gnu.org>
 	    Bruno Haible  <bruno@clisp.org>
 

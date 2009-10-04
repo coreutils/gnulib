@@ -62,9 +62,9 @@ set_program_name (const char *argv0)
 
   program_name = argv0;
 
-  /* On glibc systems, when the gnulib module 'error' is not used, the error()
-     function comes from libc and uses the variable program_invocation_name,
-     not program_name.  So set this variable as well.  */
+  /* On glibc systems, the error() function comes from libc and uses the
+     variable program_invocation_name, not program_name.  So set this variable
+     as well.  */
 #if HAVE_DECL_PROGRAM_INVOCATION_NAME
   program_invocation_name = (char *) argv0;
 #endif
