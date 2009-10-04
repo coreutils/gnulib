@@ -1,3 +1,9 @@
+2009-10-04  Paolo Bonzini  <bonzini@gnu.org>
+	    Bruno Haible  <bruno@clisp.org>
+
+	* lib/uname.c (uname): Use a table-driver algorithm to compute
+	Windows NT versions.
+
 2009-10-04  Bruno Haible  <bruno@clisp.org>
 
 	* lib/progname.c (set_program_name): Also remove the "lt-" prefix from
