@@ -505,6 +505,7 @@ static bool
 check_tuning (Hash_table *table)
 {
   const Hash_tuning *tuning = table->tuning;
+  float epsilon;
   if (tuning == &default_tuning)
     return true;
 
@@ -513,7 +514,7 @@ check_tuning (Hash_table *table)
      fail to grow or shrink as they should.  The smallest allocation
      is 11 (due to next_prime's algorithm), so an epsilon of 0.1
      should be good enough.  */
-  float epsilon = 0.1f;
+  epsilon = 0.1f;
 
   if (epsilon < tuning->growth_threshold
       && tuning->growth_threshold < 1 - epsilon

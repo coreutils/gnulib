@@ -1,3 +1,9 @@
+2009-10-05  Eric Blake  <ebb9@byu.net>
+
+	hash: allow C89 compilation
+	* lib/hash.c (check_tuning): Move declaration before statement.
+	Reported by Reuben Thomas.
+
 2009-10-05  Karl Berry  <karl@gnu.org>
 
 	* doc/gnulib.texi: @include execvpe.texi, missing for several days.
