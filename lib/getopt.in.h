@@ -68,6 +68,7 @@
 # define optind __GETOPT_ID (optind)
 # define optopt __GETOPT_ID (optopt)
 # define option __GETOPT_ID (option)
+# define _getopt_internal __GETOPT_ID (getopt_internal)
 #endif
 
 /* Standalone applications get correct prototypes for getopt_long and

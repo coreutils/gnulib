@@ -1,5 +1,5 @@
 /* Internal declarations for getopt.
-   Copyright (C) 1989-1994,1996-1999,2001,2003,2004
+   Copyright (C) 1989-1994,1996-1999,2001,2003,2004,2009
    Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
@@ -18,6 +18,8 @@
 
 #ifndef _GETOPT_INT_H
 #define _GETOPT_INT_H	1
+
+#include <getopt.h>
 
 extern int _getopt_internal (int ___argc, char **___argv,
 			     const char *__shortopts,

@@ -1,5 +1,10 @@
 2009-10-05  Eric Blake  <ebb9@byu.net>
 
+	getopt: avoid clash with FreeBSD _getopt_internal
+	* lib/getopt.in.h (_getopt_internal): Override the name.
+	* lib/getopt_int.h (includes): Pick up any overrides.
+	Reported by Reuben Thomas.
+
 	hash: allow C89 compilation
 	* lib/hash.c (check_tuning): Move declaration before statement.
 	Reported by Reuben Thomas.
