@@ -1,5 +1,11 @@
 2009-10-05  Eric Blake  <ebb9@byu.net>
 
+	quotearg: port test to systems with C.UTF-8 locale
+	* tests/test-quotearg.c (struct result_strings): Add another
+	member, differentiating between C.ASCII and C.UTF-8 handling.
+	(compare_strings): Add parameter.
+	(main): Adjust all callers.
+
 	getopt: avoid clash with FreeBSD _getopt_internal
 	* lib/getopt.in.h (_getopt_internal): Override the name.
 	* lib/getopt_int.h (includes): Pick up any overrides.
