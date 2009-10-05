@@ -5695,6 +5695,7 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/dup3.texi
 @include glibc-functions/endusershell.texi
 @include glibc-functions/euidaccess.texi
+@include glibc-functions/execvpe.texi
 @include glibc-functions/get_current_dir_name.texi
 @include glibc-functions/getdomainname.texi
 @include glibc-functions/getdtablesize.texi
