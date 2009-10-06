@@ -21,6 +21,7 @@ readlink
 same-inode
 stpcpy
 symlink
+symlinkat
 unistd
 
 configure.ac:

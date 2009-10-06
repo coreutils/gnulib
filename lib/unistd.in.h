@@ -582,10 +582,14 @@ extern int link (const char *path1, const char *path2);
 #endif
 
 #if @GNULIB_LINKAT@
+# if @REPLACE_LINKAT@
+#  undef linkat
+#  define linkat rpl_linkat
+# endif
 /* Create a new hard link for an existing file, relative to two
    directories.  FLAG controls whether symlinks are followed.
    Return 0 if successful, otherwise -1 and errno set.  */
-# if !@HAVE_LINKAT@
+# if !@HAVE_LINKAT@ || @REPLACE_LINKAT@
 extern int linkat (int fd1, const char *path1, int fd2, const char *path2,
 		   int flag);
 # endif

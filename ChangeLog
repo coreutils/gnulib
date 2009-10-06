@@ -1,5 +1,15 @@
 2009-10-05  Eric Blake  <ebb9@byu.net>
 
+	linkat: support Linux 2.6.17
+	* m4/linkat.m4 (gl_FUNC_LINKAT): Default to always replacing
+	linkat on Linux, but allow cache variable override.
+	* lib/linkat.c (rpl_linkat): Define override.
+	* modules/linkat (Depends-on): Add symlinkat.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Add new default.
+	* modules/unistd (Makefile.am): Substitute it.
+	* lib/unistd.in.h (linkat): Declare replacement.
+	Reported by Pádraig Brady.
+
 	quotearg: port test to systems with C.UTF-8 locale
 	* tests/test-quotearg.c (struct result_strings): Add another
 	member, differentiating between C.ASCII and C.UTF-8 handling.

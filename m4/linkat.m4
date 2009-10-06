@@ -1,4 +1,4 @@
-# serial 1
+# serial 2
 # See if we need to provide linkat replacement.
 
 dnl Copyright (C) 2009 Free Software Foundation, Inc.
@@ -21,5 +21,27 @@ AC_DEFUN([gl_FUNC_LINKAT],
     HAVE_LINKAT=0
     AC_LIBOBJ([linkat])
     AC_LIBOBJ([at-func2])
+  else
+    AC_CACHE_CHECK([whether linkat(,AT_SYMLINK_FOLLOW) works],
+      [gl_cv_func_linkat_follow],
+      [rm -rf conftest.f1 conftest.f2
+       touch conftest.f1
+       AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+#include <fcntl.h>
+#include <unistd.h>
+#ifdef __linux__
+/* Linux added linkat in 2.6.16, but did not add AT_SYMLINK_FOLLOW
+   until 2.6.18.  Always replace linkat to support older kernels.  */
+choke me
+#endif
+]], [return linkat (AT_FDCWD, "conftest.f1", AT_FDCWD, "conftest.f2",
+                    AT_SYMLINK_FOLLOW);])],
+         [gl_cv_func_linkat_follow=yes],
+         [gl_cv_func_linkat_follow="need runtime check"])
+       rm -rf conftest.f1 conftest.f2])
+    if test "$gl_cv_func_linkat_follow" != yes; then
+      REPLACE_LINKAT=1
+      AC_LIBOBJ([linkat])
+    fi
   fi
 ])
