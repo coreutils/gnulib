@@ -45,12 +45,13 @@ main ()
   int fd;
 
   /* A non-directory cannot be turned into a directory stream.  */
-  fd = open ("/dev/null", O_RDONLY);
+  fd = open ("test-fdopendir.tmp", O_RDONLY | O_CREAT, 0600);
   ASSERT (0 <= fd);
   errno = 0;
   ASSERT (fdopendir (fd) == NULL);
   ASSERT (errno == ENOTDIR);
   ASSERT (close (fd) == 0);
+  ASSERT (unlink ("test-fdopendir.tmp") == 0);
 
   /* A bad fd cannot be turned into a stream.  */
   errno = 0;

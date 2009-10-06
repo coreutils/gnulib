@@ -16,6 +16,10 @@ But the replacement function is not safe to be used in libraries and
 is not multithread-safe.  Also, the replacement does not guarantee
 that @samp{dirfd(fdopendir(n))==n} (dirfd might fail, or return a
 different file descriptor than n).
+@item
+This function does not reject non-directory file descriptors on some
+platforms:
+GNU/Hurd.
 @end itemize
 
 Portability problems not fixed by Gnulib:

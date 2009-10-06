@@ -55,7 +55,11 @@ extern int dirfd (DIR const *dir);
 #endif
 
 #if @GNULIB_FDOPENDIR@
-# if !@HAVE_FDOPENDIR@
+# if @REPLACE_FDOPENDIR@
+#  undef fdopendir
+#  define fdopendir rpl_fdopendir
+# endif
+# if !@HAVE_FDOPENDIR@ || @REPLACE_FDOPENDIR@
 /* Open a directory stream visiting the given directory file
    descriptor.  Return NULL and set errno if fd is not visiting a
    directory.  On success, this function consumes fd (it will be

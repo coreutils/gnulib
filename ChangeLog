@@ -1,5 +1,16 @@
 2009-10-06  Eric Blake  <ebb9@byu.net>
 
+	fdopendir: fix GNU/Hurd bug
+	* m4/fdopendir.m4 (gl_FUNC_FDOPENDIR): Check for Hurd bug in
+	allowing non-directory fds.
+	* lib/fdopendir.c (rpl_fdopendir): Work around it.
+	* m4/dirent_h.m4 (gl_DIRENT_H_DEFAULTS): New witness.
+	* modules/dirent (Makefile.am): Substitute it.
+	* lib/dirent.in.h (fdopendir): Declare replacement.
+	* doc/posix-functions/fdopendir.texi (fdopendir): Document this.
+	* tests/test-fdopendir.c (main): Test something other than
+	/dev/null, since on Hurd that behaves like a directory.
+
 	test-symlink: port to GNU/Hurd
 	* tests/test-symlink.h (test_symlink): Relax expected errno.
 

@@ -23,13 +23,15 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "openat.h"
-#include "openat-priv.h"
-#include "save-cwd.h"
+#if !HAVE_FDOPENDIR
 
-#if GNULIB_DIRENT_SAFER
-# include "dirent--.h"
-#endif
+# include "openat.h"
+# include "openat-priv.h"
+# include "save-cwd.h"
+
+# if GNULIB_DIRENT_SAFER
+#  include "dirent--.h"
+# endif
 
 /* Replacement for Solaris' function by the same name.
    <http://www.google.com/search?q=fdopendir+site:docs.sun.com>
@@ -70,12 +72,12 @@ fdopendir (int fd)
      save_cwd/restore_cwd.  */
   if (! dir && EXPECTED_ERRNO (saved_errno))
     {
-#if REPLACE_FCHDIR
+# if REPLACE_FCHDIR
       const char *name = _gl_directory_name (fd);
       if (name)
         dir = opendir (name);
       saved_errno = errno;
-#else /* !REPLACE_FCHDIR */
+# else /* !REPLACE_FCHDIR */
       struct saved_cwd saved_cwd;
       if (save_cwd (&saved_cwd) != 0)
 	openat_save_fail (errno);
@@ -95,7 +97,7 @@ fdopendir (int fd)
 	}
 
       free_cwd (&saved_cwd);
-#endif /* !REPLACE_FCHDIR */
+# endif /* !REPLACE_FCHDIR */
     }
 
   if (dir)
@@ -105,3 +107,28 @@ fdopendir (int fd)
   errno = saved_errno;
   return dir;
 }
+
+#else /* HAVE_FDOPENDIR */
+
+# include <errno.h>
+# include <sys/stat.h>
+
+# undef fdopendir
+
+/* Like fdopendir, but work around GNU/Hurd bug by validating FD.  */
+
+DIR *
+rpl_fdopendir (int fd)
+{
+  struct stat st;
+  if (fstat (fd, &st))
+    return NULL;
+  if (!S_ISDIR (st.st_mode))
+    {
+      errno = ENOTDIR;
+      return NULL;
+    }
+  return fdopendir (fd);
+}
+
+#endif /* HAVE_FDOPENDIR */
