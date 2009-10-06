@@ -11,6 +11,10 @@ Portability problems fixed by Gnulib:
 @item
 When the argument ends in a slash, the function call fails on some platforms.
 @item
+This function mistakenly succeeds on @samp{mkdir("d/./",mode)} on
+some platforms:
+Cygwin 1.5.x, mingw.
+@item
 On Windows platforms (excluding Cygwin), this function is called @code{_mkdir}
 and takes only one argument.  The fix (without Gnulib) is to define a macro
 like this:

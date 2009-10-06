@@ -27,6 +27,7 @@ inline
 intprops
 lchown
 lstat
+mkdir
 open
 openat-die
 rmdir

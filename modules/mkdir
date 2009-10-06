@@ -3,7 +3,7 @@ mkdir() function: create a directory.
 
 Files:
 lib/mkdir.c
-m4/mkdir-slash.m4
+m4/mkdir.m4
 
 Depends-on:
 sys_stat
@@ -11,7 +11,7 @@ xalloc
 dirname
 
 configure.ac:
-gl_FUNC_MKDIR_TRAILING_SLASH
+gl_FUNC_MKDIR
 
 Makefile.am:
 

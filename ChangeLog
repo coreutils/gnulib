@@ -1,5 +1,16 @@
 2009-10-07  Eric Blake  <ebb9@byu.net>
 
+	mkdir, mkdirat: fix cygwin 1.5.x bug
+	* lib/mkdir.c (rpl_mkdir) [FUNC_MKDIR_DOT_BUG]: Work around bug.
+	* m4/mkdir-slash.m4 (gl_FUNC_MKDIR_TRAILING_SLASH): Move...
+	* m4/mkdir.m4 (gl_FUNC_MKDIR): ...here, and add check for cygwin
+	bug.
+	(gl_PREREQ_MKDIR): Delete unused macro.
+	* modules/mkdir (Files): Track file rename.
+	(configure.ac): Update macro name.
+	* modules/openat (Depends-on): Add mkdir.
+	* doc/posix-functions/mkdir.texi (mkdir): Document the bug.
+
 	mkdir, mkdirat: add tests
 	* modules/mkdir-tests: New test.
 	* tests/test-mkdir.h: New file.

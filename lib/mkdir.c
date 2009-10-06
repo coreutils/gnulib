@@ -1,7 +1,7 @@
 /* On some systems, mkdir ("foo/", 0700) fails because of the trailing
    slash.  On those systems, this wrapper removes the trailing slash.
 
-   Copyright (C) 2001, 2003, 2006, 2008 Free Software Foundation, Inc.
+   Copyright (C) 2001, 2003, 2006, 2008, 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -21,9 +21,9 @@
 #include <config.h>
 
 /* Specification.  */
-#include <sys/types.h>
 #include <sys/stat.h>
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -63,6 +63,20 @@ rpl_mkdir (char const *dir, mode_t mode maybe_unused)
     {
       tmp_dir = (char *) dir;
     }
+#if FUNC_MKDIR_DOT_BUG
+  /* Additionally, cygwin 1.5 mistakenly creates a directory "d/./".  */
+  {
+    char *last = last_component (tmp_dir);
+    if (*last == '.' && (last[1] == '\0'
+                         || (last[1] == '.' && last[2] == '\0')))
+      {
+        struct stat st;
+        if (stat (tmp_dir, &st) == 0)
+          errno = EEXIST;
+        return -1;
+      }
+  }
+#endif /* FUNC_MKDIR_DOT_BUG */
 
   ret_val = mkdir (tmp_dir, mode);
 
