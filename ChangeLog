@@ -1,5 +1,8 @@
 2009-10-06  Eric Blake  <ebb9@byu.net>
 
+	test-symlink: port to GNU/Hurd
+	* tests/test-symlink.h (test_symlink): Relax expected errno.
+
 	doc: tweak more cygwin information
 	* doc/glibc-headers/getopt.texi (getopt.h): Cygwin 1.7 getopt is
 	now compatible with glibc.

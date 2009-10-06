@@ -60,14 +60,14 @@ test_symlink (int (*func) (char const *, char const *), bool print)
   ASSERT (errno == EEXIST);
   errno = 0;
   ASSERT (func ("nowhere", BASE "dir/") == -1);
-  ASSERT (errno == EEXIST);
+  ASSERT (errno == EEXIST || errno == EINVAL);
   ASSERT (close (creat (BASE "file", 0600)) == 0);
   errno = 0;
   ASSERT (func ("nowhere", BASE "file") == -1);
   ASSERT (errno == EEXIST);
   errno = 0;
   ASSERT (func ("nowhere", BASE "file/") == -1);
-  ASSERT (errno == EEXIST || errno == ENOTDIR);
+  ASSERT (errno == EEXIST || errno == ENOTDIR || errno == ENOENT);
 
   ASSERT (rmdir (BASE "dir") == 0);
   ASSERT (unlink (BASE "file") == 0);
