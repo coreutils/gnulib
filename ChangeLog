@@ -1,5 +1,10 @@
 2009-10-06  Eric Blake  <ebb9@byu.net>
 
+	doc: tweak more cygwin information
+	* doc/glibc-headers/getopt.texi (getopt.h): Cygwin 1.7 getopt is
+	now compatible with glibc.
+	* doc/posix-functions/getopt.texi (getopt): Likewise.
+
 	getopt-gnu: add another test
 	* tests/test-getopt_long.h (test_getopt_long_posix): New test, to
 	guarantee behavior relied on by m4.
