@@ -1,3 +1,8 @@
+2009-10-06  Jim Meyering  <meyering@redhat.com>
+
+	linkat: avoid compilation failure
+	* lib/linkat.c: Include <stdint.h> for use of SIZE_MAX.
+
 2009-10-05  Eric Blake  <ebb9@byu.net>
 
 	linkat: support Linux 2.6.17
