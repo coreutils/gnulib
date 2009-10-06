@@ -1,0 +1,15 @@
+Files:
+tests/test-mkdir.h
+tests/test-mkdir.c
+
+Depends-on:
+progname
+stdbool
+symlink
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-mkdir
+check_PROGRAMS += test-mkdir
+test_mkdir_LDADD = $(LDADD) @LIBINTL@

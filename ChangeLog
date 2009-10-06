@@ -1,3 +1,13 @@
+2009-10-07  Eric Blake  <ebb9@byu.net>
+
+	mkdir, mkdirat: add tests
+	* modules/mkdir-tests: New test.
+	* tests/test-mkdir.h: New file.
+	* tests/test-mkdir.c: Likewise.
+	* tests/test-mkdirat.c: Likewise.
+	* modules/openat-tests (Files): Add new files.
+	(Makefile.am): Run new test.
+
 2009-10-06  Eric Blake  <ebb9@byu.net>
 
 	doc: tweak *at function documentation
