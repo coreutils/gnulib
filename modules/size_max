@@ -1,5 +1,5 @@
 Description:
-Provide SIZE_MAX.
+Provide SIZE_MAX, for cases when the 'stdint' module cannot be used.
 
 Files:
 m4/size_max.m4
