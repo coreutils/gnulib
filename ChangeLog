@@ -1,5 +1,16 @@
 2009-10-06  Eric Blake  <ebb9@byu.net>
 
+	doc: tweak *at function documentation
+	* doc/posix-functions/faccessat.texi (faccessat): Mention
+	known issue with replacement.
+	* doc/posix-functions/fchdir.texi (fchdir): Likewise.
+	* doc/posix-functions/linkat.texi (linkat): Likewise.
+	* doc/posix-functions/mkfifoat.texi (mkfifoat): Likewise.
+	* doc/posix-functions/mknodat.texi (mknodat): Likewise.
+	* doc/posix-functions/readlinkat.texi (readlinkat): Likewise.
+	* doc/posix-functions/renameat.texi (renameat): Likewise.
+	* doc/posix-functions/symlinkat.texi (symlinkat): Likewise.
+
 	openat: fix GNU/Hurd bug in unlinkat
 	* m4/openat.m4 (gl_FUNC_OPENAT): Replace unlinkat if unlink is
 	broken.
