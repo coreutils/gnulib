@@ -55,9 +55,22 @@ struct utimbuf
    Return 0 on success, -1 (setting errno) on failure.  */
 
 int
-gl_futimens (int fd _UNUSED_PARAMETER_,
-             char const *file, struct timespec const timespec[2])
+gl_futimens (int fd, char const *file, struct timespec const timespec[2])
 {
+  /* Require that at least one of FD or FILE are valid.  Works around
+     a Linux bug where futimens (AT_FDCWD, NULL) changes "." rather
+     than failing.  */
+  if (!file)
+    {
+      if (fd < 0)
+        {
+          errno = EBADF;
+          return -1;
+        }
+      if (dup2 (fd, fd) != fd)
+        return -1;
+    }
+
   /* Some Linux-based NFS clients are buggy, and mishandle time stamps
      of files in NFS file systems in some cases.  We have no
      configure-time test for this, but please see
@@ -163,17 +176,6 @@ gl_futimens (int fd _UNUSED_PARAMETER_,
 #if ! (HAVE_FUTIMESAT || (HAVE_WORKING_UTIMES && HAVE_FUTIMES))
         errno = ENOSYS;
 #endif
-
-        /* Prefer EBADF to ENOSYS if both error numbers apply.  */
-        if (errno == ENOSYS)
-          {
-            int fd2 = dup (fd);
-            int dup_errno = errno;
-            if (0 <= fd2)
-              close (fd2);
-            errno = (fd2 < 0 && dup_errno == EBADF ? EBADF : ENOSYS);
-          }
-
         return -1;
       }
 
@@ -182,7 +184,7 @@ gl_futimens (int fd _UNUSED_PARAMETER_,
 #else
     {
       struct utimbuf utimbuf;
-      struct utimbuf const *ut;
+      struct utimbuf *ut;
       if (timespec)
         {
           utimbuf.actime = timespec[0].tv_sec;

@@ -1,5 +1,11 @@
 2009-10-10  Eric Blake  <ebb9@byu.net>
 
+	utimens: validate futimens usage
+	* lib/utimens.c (gl_futimens): Require valid fd up front, using
+	fewer syscalls on failure later on.  Avoid compiler warning on
+	mingw.
+	* modules/utimens (Depends-on): Add dup2.
+
 	utimens: add test
 	* modules/utimens-tests: New test.
 	* tests/test-utimens.h: New file.
