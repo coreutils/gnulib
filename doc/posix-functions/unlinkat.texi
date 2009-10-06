@@ -15,7 +15,7 @@ glibc 2.3.6, MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, AIX
 But the replacement function is not safe to be used in libraries and is not multithread-safe.
 @item
 Some systems mistakenly succeed on @code{unlinkat(fd,"file/",flag)}:
-Solaris 9.
+GNU/Hurd, Solaris 9.
 @end itemize
 
 Portability problems not fixed by Gnulib:

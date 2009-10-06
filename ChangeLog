@@ -1,5 +1,11 @@
 2009-10-06  Eric Blake  <ebb9@byu.net>
 
+	openat: fix GNU/Hurd bug in unlinkat
+	* m4/openat.m4 (gl_FUNC_OPENAT): Replace unlinkat if unlink is
+	broken.
+	* doc/posix-functions/unlink.texi (unlink): Document this.
+	* doc/posix-functions/unlinkat.texi (unlinkat): Likewise.
+
 	fdopendir: fix GNU/Hurd bug
 	* m4/fdopendir.m4 (gl_FUNC_FDOPENDIR): Check for Hurd bug in
 	allowing non-directory fds.

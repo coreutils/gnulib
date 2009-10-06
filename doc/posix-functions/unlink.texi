@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 Some systems mistakenly succeed on @code{unlink("file/")}:
-Solaris 9.
+GNU/Hurd, Solaris 9.
 @end itemize
 
 Portability problems not fixed by Gnulib:
