@@ -935,3 +935,24 @@ test_getopt_long (void)
       ASSERT (optind == 4);
     }
 }
+
+/* Test behavior of getopt_long when POSIXLY_CORRECT is set in the
+   environment.  Options with optional arguments should not change
+   behavior just because of an environment variable.
+   http://lists.gnu.org/archive/html/bug-m4/2006-09/msg00028.html  */
+static void
+test_getopt_long_posix (void)
+{
+  int c = 3;
+  char *v[4] = {"test", "-r", "foo", NULL};
+  struct option l[] = {{NULL}};
+  int start;
+  int result;
+  for (start = OPTIND_MIN; start <= 1; start++)
+    {
+      optind = start;
+      result = getopt_long (c, v, "r::", l, NULL);
+    }
+  ASSERT (result == 'r');
+  ASSERT (optarg == NULL);
+}

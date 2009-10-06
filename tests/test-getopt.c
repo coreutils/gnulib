@@ -60,6 +60,9 @@ main ()
   test_getopt ();
 #if GNULIB_GETOPT_GNU
   test_getopt_long ();
+
+  setenv ("POSIXLY_CORRECT", "1", 0);
+  test_getopt_long_posix ();
 #endif
 
   return 0;
