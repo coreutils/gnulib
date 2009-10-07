@@ -49,7 +49,7 @@
 #endif
 
 /* Get getopt(), optarg, optind, opterr, optopt.  */
-#if @GNULIB_UNISTD_H_GETOPT@
+#if @GNULIB_UNISTD_H_GETOPT@ && !defined _GL_SYSTEM_GETOPT
 # include <getopt.h>
 #endif
 

@@ -22,9 +22,13 @@
 @PRAGMA_SYSTEM_HEADER@
 #endif
 
-/* The include_next requires a split double-inclusion guard.  */
+/* The include_next requires a split double-inclusion guard.  We must
+   also inform the replacement unistd.h to not recursively use
+   <getopt.h>; our definitions will be present soon enough.  */
 #if @HAVE_GETOPT_H@
+# define _GL_SYSTEM_GETOPT
 # @INCLUDE_NEXT@ @NEXT_GETOPT_H@
+# undef _GL_SYSTEM_GETOPT
 #endif
 
 #ifndef _GL_GETOPT_H

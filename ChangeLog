@@ -1,3 +1,11 @@
+2009-10-06  Eric Blake  <ebb9@byu.net>
+
+	getopt: fix compilation on darwin
+	* lib/getopt.in.h (includes): Leave breadcrumbs during system
+	include.
+	* lib/unistd.in.h (getopt): Use them to avoid recursive include.
+	Reported by Ludovic Courtès.
+
 2009-10-06  Bruno Haible  <bruno@clisp.org>
 
 	* modules/size_max (Description): Discourage its use.
