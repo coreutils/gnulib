@@ -1,0 +1,26 @@
+Description:
+Read a symbolic link, without size limitations, relative to fd.
+
+Files:
+lib/areadlink.h
+lib/areadlinkat-with-size.c
+
+Depends-on:
+areadlink-with-size
+stdint
+symlinkat
+
+configure.ac:
+gl_MODULE_INDICATOR([areadlinkat-with-size])
+
+Makefile.am:
+lib_SOURCES += areadlinkat-with-size.c
+
+Include:
+"areadlink.h"
+
+License:
+GPL
+
+Maintainer:
+Jim Meyering, Eric Blake

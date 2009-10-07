@@ -26,3 +26,8 @@ extern char *areadlink_with_size (char const *filename, size_t size_hint);
 #if GNULIB_AREADLINKAT
 extern char *areadlinkat (int fd, char const *filename);
 #endif
+
+#if GNULIB_AREADLINKAT_WITH_SIZE
+extern char *areadlinkat_with_size (int fd, char const *filename,
+                                    size_t size_hint);
+#endif

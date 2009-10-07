@@ -1,5 +1,13 @@
 2009-10-07  Eric Blake  <ebb9@byu.net>
 
+	areadlinkat-with-size: new module
+	* modules/areadlinkat-with-size: New module.
+	* lib/areadlinkat-with-size.c (areadlinkat_with_size): New file.
+	* lib/areadlink.h (areadlinkat): Declare it.
+	* MODULES.html.sh (File system functions): Mention it.
+	* modules/areadlinkat-with-size-tests: New test.
+	* tests/test-areadlinkat-with-size.c: New file.
+
 	xreadlinkat: new module
 	* modules/xreadlinkat: New module.
 	* lib/xreadlinkat.c (xreadlinkat): New file.
