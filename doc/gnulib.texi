@@ -5482,12 +5482,14 @@ This list of functions is sorted according to the header that declares them.
 @menu
 * adjtime::
 * futimes::
+* futimesat::
 * lutimes::
 * settimeofday::
 @end menu
 
 @include glibc-functions/adjtime.texi
 @include glibc-functions/futimes.texi
+@include glibc-functions/futimesat.texi
 @include glibc-functions/lutimes.texi
 @include glibc-functions/settimeofday.texi
 

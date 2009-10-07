@@ -15,4 +15,12 @@ file's timestamp to the current time.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This function cannot set full timestamp resolution.  Use
+@code{utimensat(AT_FDCWD,file,times,0)} instead.
+@item
+On some platforms, the prototype for @code{utime} omits @code{const}
+for the second argument.  Fortunately, the argument is not modified,
+so it is safe to cast away const:
+mingw.
 @end itemize

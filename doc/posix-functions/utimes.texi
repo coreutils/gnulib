@@ -16,6 +16,15 @@ Portability problems not fixed by Gnulib:
 This function is missing on some platforms:
 mingw, Interix 3.5, BeOS.
 @item
-This function is marked as ``legacy'' in POSIX.  Better use @code{utime}
-instead.
+This function cannot set full timestamp resolution.  In particular,
+some platforms incorrectly round rather than truncate.  Use
+@code{utimensat(AT_FDCWD,file,times,0)} instead.
+@item
+On some platforms, @code{utimes (file, NULL)} fails to set the
+file's timestamp to the current time:
+glibc 2.3.3.
+@item
+On some platforms, @code{utimes} failed on read-only files when
+@code{utime} worked fine.
+glibc 2.2.5.
 @end itemize

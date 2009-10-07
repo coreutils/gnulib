@@ -1,5 +1,20 @@
 2009-10-10  Eric Blake  <ebb9@byu.net>
 
+	doc: mention timestamp portability issues
+	* doc/glibc-functions/lutimes.texi (lutimes): Refer to utimensat
+	instead.
+	* doc/posix-functions/utime.texi (utime): Likewise.
+	* doc/posix-functions/utimes.texi (utimes): Likewise.
+	* doc/glibc-functions/futimes.texi (futimes): Refer to futimens
+	instead.
+	* doc/posix-functions/futimens.texi (futimens): Mention utimens
+	module.
+	* doc/posix-functions/utimensat.texi (utimensat): Likewise.
+	Mention weakness with symlink timestamps.
+	* doc/glibc-functions/futimesat.texi (futimesat): New file; refer
+	to utimensat/futimens instead.
+	* doc/gnulib.texi (Glibc sys/time.h): Include new file.
+
 	test-dup2: enhance test
 	* tests/test-dup2.c (main): Also check AT_FDCWD.
 
