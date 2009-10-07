@@ -66,7 +66,7 @@ struct utimbuf
 
 int
 gl_futimens (int fd ATTRIBUTE_UNUSED,
-	     char const *file, struct timespec const timespec[2])
+             char const *file, struct timespec const timespec[2])
 {
   /* Some Linux-based NFS clients are buggy, and mishandle time stamps
      of files in NFS file systems in some cases.  We have no
@@ -131,11 +131,11 @@ gl_futimens (int fd ATTRIBUTE_UNUSED,
     struct timeval const *t;
     if (timespec)
       {
-	timeval[0].tv_sec = timespec[0].tv_sec;
-	timeval[0].tv_usec = timespec[0].tv_nsec / 1000;
-	timeval[1].tv_sec = timespec[1].tv_sec;
-	timeval[1].tv_usec = timespec[1].tv_nsec / 1000;
-	t = timeval;
+        timeval[0].tv_sec = timespec[0].tv_sec;
+        timeval[0].tv_usec = timespec[0].tv_nsec / 1000;
+        timeval[1].tv_sec = timespec[1].tv_sec;
+        timeval[1].tv_usec = timespec[1].tv_nsec / 1000;
+        t = timeval;
       }
     else
       t = NULL;
@@ -143,27 +143,27 @@ gl_futimens (int fd ATTRIBUTE_UNUSED,
     if (fd < 0)
       {
 # if HAVE_FUTIMESAT
-	return futimesat (AT_FDCWD, file, t);
+        return futimesat (AT_FDCWD, file, t);
 # endif
       }
     else
       {
-	/* If futimesat or futimes fails here, don't try to speed things
-	   up by returning right away.  glibc can incorrectly fail with
-	   errno == ENOENT if /proc isn't mounted.  Also, Mandrake 10.0
-	   in high security mode doesn't allow ordinary users to read
-	   /proc/self, so glibc incorrectly fails with errno == EACCES.
-	   If errno == EIO, EPERM, or EROFS, it's probably safe to fail
-	   right away, but these cases are rare enough that they're not
-	   worth optimizing, and who knows what other messed-up systems
-	   are out there?  So play it safe and fall back on the code
-	   below.  */
+        /* If futimesat or futimes fails here, don't try to speed things
+           up by returning right away.  glibc can incorrectly fail with
+           errno == ENOENT if /proc isn't mounted.  Also, Mandrake 10.0
+           in high security mode doesn't allow ordinary users to read
+           /proc/self, so glibc incorrectly fails with errno == EACCES.
+           If errno == EIO, EPERM, or EROFS, it's probably safe to fail
+           right away, but these cases are rare enough that they're not
+           worth optimizing, and who knows what other messed-up systems
+           are out there?  So play it safe and fall back on the code
+           below.  */
 # if HAVE_FUTIMESAT
-	if (futimesat (fd, NULL, t) == 0)
-	  return 0;
+        if (futimesat (fd, NULL, t) == 0)
+          return 0;
 # elif HAVE_FUTIMES
-	if (futimes (fd, t) == 0)
-	  return 0;
+        if (futimes (fd, t) == 0)
+          return 0;
 # endif
       }
 #endif /* HAVE_FUTIMESAT || HAVE_WORKING_UTIMES */
@@ -171,20 +171,20 @@ gl_futimens (int fd ATTRIBUTE_UNUSED,
     if (!file)
       {
 #if ! (HAVE_FUTIMESAT || (HAVE_WORKING_UTIMES && HAVE_FUTIMES))
-	errno = ENOSYS;
+        errno = ENOSYS;
 #endif
 
-	/* Prefer EBADF to ENOSYS if both error numbers apply.  */
-	if (errno == ENOSYS)
-	  {
-	    int fd2 = dup (fd);
-	    int dup_errno = errno;
-	    if (0 <= fd2)
-	      close (fd2);
-	    errno = (fd2 < 0 && dup_errno == EBADF ? EBADF : ENOSYS);
-	  }
+        /* Prefer EBADF to ENOSYS if both error numbers apply.  */
+        if (errno == ENOSYS)
+          {
+            int fd2 = dup (fd);
+            int dup_errno = errno;
+            if (0 <= fd2)
+              close (fd2);
+            errno = (fd2 < 0 && dup_errno == EBADF ? EBADF : ENOSYS);
+          }
 
-	return -1;
+        return -1;
       }
 
 #if HAVE_WORKING_UTIMES
@@ -194,13 +194,13 @@ gl_futimens (int fd ATTRIBUTE_UNUSED,
       struct utimbuf utimbuf;
       struct utimbuf const *ut;
       if (timespec)
-	{
-	  utimbuf.actime = timespec[0].tv_sec;
-	  utimbuf.modtime = timespec[1].tv_sec;
-	  ut = &utimbuf;
-	}
+        {
+          utimbuf.actime = timespec[0].tv_sec;
+          utimbuf.modtime = timespec[1].tv_sec;
+          ut = &utimbuf;
+        }
       else
-	ut = NULL;
+        ut = NULL;
 
       return utime (file, ut);
     }

@@ -70,20 +70,20 @@ AT_FUNC_NAME (int fd, char const *file AT_FUNC_POST_FILE_PARAM_DECLS)
     char *proc_file = openat_proc_name (proc_buf, fd, file);
     if (proc_file)
       {
-	FUNC_RESULT proc_result = CALL_FUNC (proc_file);
-	int proc_errno = errno;
-	if (proc_file != proc_buf)
-	  free (proc_file);
-	/* If the syscall succeeds, or if it fails with an unexpected
-	   errno value, then return right away.  Otherwise, fall through
-	   and resort to using save_cwd/restore_cwd.  */
-	if (0 <= proc_result)
-	  return proc_result;
-	if (! EXPECTED_ERRNO (proc_errno))
-	  {
-	    errno = proc_errno;
-	    return proc_result;
-	  }
+        FUNC_RESULT proc_result = CALL_FUNC (proc_file);
+        int proc_errno = errno;
+        if (proc_file != proc_buf)
+          free (proc_file);
+        /* If the syscall succeeds, or if it fails with an unexpected
+           errno value, then return right away.  Otherwise, fall through
+           and resort to using save_cwd/restore_cwd.  */
+        if (0 <= proc_result)
+          return proc_result;
+        if (! EXPECTED_ERRNO (proc_errno))
+          {
+            errno = proc_errno;
+            return proc_result;
+          }
       }
   }
 

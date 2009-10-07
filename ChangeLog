@@ -1,5 +1,11 @@
 2009-10-07  Eric Blake  <ebb9@byu.net>
 
+	openat, utimens: whitespace cleanup
+	* lib/openat.c: Prefer space throughout, rather than mix of 8
+	spaces vs. tabs.
+	* lib/at-func.c: Likewise.
+	* lib/utimens.c: Likewise.
+
 	openat: avoid using wrong fd
 	* lib/openat.c (openat_permissive): Reject user's fd if saving the
 	working directory chooses same fd.

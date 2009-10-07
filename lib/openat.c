@@ -47,7 +47,7 @@ rpl_openat (int dfd, char const *filename, int flags, ...)
       va_start (arg, flags);
 
       /* We have to use PROMOTED_MODE_T instead of mode_t, otherwise GCC 4
-	 creates crashing code when 'mode_t' is smaller than 'int'.  */
+         creates crashing code when 'mode_t' is smaller than 'int'.  */
       mode = va_arg (arg, PROMOTED_MODE_T);
 
       va_end (arg);
@@ -79,10 +79,10 @@ rpl_openat (int dfd, char const *filename, int flags, ...)
     {
       size_t len = strlen (filename);
       if (len > 0 && filename[len - 1] == '/')
-	{
-	  errno = EISDIR;
-	  return -1;
-	}
+        {
+          errno = EISDIR;
+          return -1;
+        }
     }
 #endif
 
@@ -106,16 +106,16 @@ rpl_openat (int dfd, char const *filename, int flags, ...)
       /* We know len is positive, since open did not fail with ENOENT.  */
       size_t len = strlen (filename);
       if (filename[len - 1] == '/')
-	{
-	  struct stat statbuf;
+        {
+          struct stat statbuf;
 
-	  if (fstat (fd, &statbuf) >= 0 && !S_ISDIR (statbuf.st_mode))
-	    {
-	      close (fd);
-	      errno = ENOTDIR;
-	      return -1;
-	    }
-	}
+          if (fstat (fd, &statbuf) >= 0 && !S_ISDIR (statbuf.st_mode))
+            {
+              close (fd);
+              errno = ENOTDIR;
+              return -1;
+            }
+        }
     }
 #endif
 
@@ -143,7 +143,7 @@ openat (int fd, char const *file, int flags, ...)
       va_start (arg, flags);
 
       /* We have to use PROMOTED_MODE_T instead of mode_t, otherwise GCC 4
-	 creates crashing code when 'mode_t' is smaller than 'int'.  */
+         creates crashing code when 'mode_t' is smaller than 'int'.  */
       mode = va_arg (arg, PROMOTED_MODE_T);
 
       va_end (arg);
@@ -165,7 +165,7 @@ openat (int fd, char const *file, int flags, ...)
 
 int
 openat_permissive (int fd, char const *file, int flags, mode_t mode,
-		   int *cwd_errno)
+                   int *cwd_errno)
 {
   struct saved_cwd saved_cwd;
   int saved_errno;
@@ -180,18 +180,18 @@ openat_permissive (int fd, char const *file, int flags, mode_t mode,
     char *proc_file = openat_proc_name (buf, fd, file);
     if (proc_file)
       {
-	int open_result = open (proc_file, flags, mode);
-	int open_errno = errno;
-	if (proc_file != buf)
-	  free (proc_file);
-	/* If the syscall succeeds, or if it fails with an unexpected
-	   errno value, then return right away.  Otherwise, fall through
-	   and resort to using save_cwd/restore_cwd.  */
-	if (0 <= open_result || ! EXPECTED_ERRNO (open_errno))
-	  {
-	    errno = open_errno;
-	    return open_result;
-	  }
+        int open_result = open (proc_file, flags, mode);
+        int open_errno = errno;
+        if (proc_file != buf)
+          free (proc_file);
+        /* If the syscall succeeds, or if it fails with an unexpected
+           errno value, then return right away.  Otherwise, fall through
+           and resort to using save_cwd/restore_cwd.  */
+        if (0 <= open_result || ! EXPECTED_ERRNO (open_errno))
+          {
+            errno = open_errno;
+            return open_result;
+          }
       }
   }
 
@@ -199,7 +199,7 @@ openat_permissive (int fd, char const *file, int flags, mode_t mode,
   if (! save_ok)
     {
       if (! cwd_errno)
-	openat_save_fail (errno);
+        openat_save_fail (errno);
       *cwd_errno = errno;
     }
   if (0 <= fd && fd == saved_cwd.desc)
@@ -220,17 +220,17 @@ openat_permissive (int fd, char const *file, int flags, mode_t mode,
       err = open (file, flags, mode);
       saved_errno = errno;
       if (save_ok && restore_cwd (&saved_cwd) != 0)
-	{
-	  if (! cwd_errno)
-	    {
-	      /* Don't write a message to just-created fd 2.  */
-	      saved_errno = errno;
-	      if (err == STDERR_FILENO)
-		close (err);
-	      openat_restore_fail (saved_errno);
-	    }
-	  *cwd_errno = errno;
-	}
+        {
+          if (! cwd_errno)
+            {
+              /* Don't write a message to just-created fd 2.  */
+              saved_errno = errno;
+              if (err == STDERR_FILENO)
+                close (err);
+              openat_restore_fail (saved_errno);
+            }
+          *cwd_errno = errno;
+        }
     }
 
   free_cwd (&saved_cwd);
@@ -251,11 +251,11 @@ openat_needs_fchdir (void)
       char buf[OPENAT_BUFFER_SIZE];
       char *proc_file = openat_proc_name (buf, fd, ".");
       if (proc_file)
-	{
-	  needs_fchdir = false;
-	  if (proc_file != buf)
-	    free (proc_file);
-	}
+        {
+          needs_fchdir = false;
+          if (proc_file != buf)
+            free (proc_file);
+        }
       close (fd);
     }
 
