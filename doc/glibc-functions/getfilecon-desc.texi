@@ -1,0 +1,27 @@
+@macro getfileconDesc{fn}
+Gnulib module: selinux-h
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+MacOS X 10.3, OpenBSD 3.8, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw, Interix 3.5, BeOS.
+On those platforms, this module provides a stub that always sets
+@code{errno} to @code{ENOTSUP} and returns @samp{-1}.
+@item
+On systems with SELinux support, this module provides a wrapper for the
+@code{\fn\} function that insulates the caller from API-nonconforming behavior.
+Without this wrapper, @code{\fn\} can return @samp{0} and set
+the @code{context} pointer to NULL, and in another scenario can return
+@samp{10} and set the @code{context} pointer to @samp{unlabeled}.
+This wrapper returns @samp{-1} in each case and sets @code{errno} to
+@code{ENOTSUP} and @code{ENODATA} respectively.
+While the conditions that can provoke such behavior are rare, the
+average caller does not handle them because the possibility of such
+behavior is not documented.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@end itemize
+@end macro

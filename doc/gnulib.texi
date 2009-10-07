@@ -3290,6 +3290,7 @@ This list of functions is sorted according to the header that declares them.
 * Glibc rpcsvc/ypupd.h::
 * Glibc sched.h::
 * Glibc search.h::
+* Glibc selinux/selinux.h::
 * Glibc shadow.h::
 * Glibc signal.h::
 * Glibc stdio.h::
@@ -4905,6 +4906,20 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/hdestroy_r.texi
 @include glibc-functions/hsearch_r.texi
 @include glibc-functions/tdestroy.texi
+
+@node Glibc selinux/selinux.h
+@section Glibc Extensions to @code{<selinux/selinux.h>}
+
+@menu
+* fgetfilecon::
+* getfilecon::
+* lgetfilecon::
+@end menu
+
+@include glibc-functions/getfilecon-desc.texi
+@include glibc-functions/fgetfilecon.texi
+@include glibc-functions/getfilecon.texi
+@include glibc-functions/lgetfilecon.texi
 
 @c @node Glibc semaphore.h
 @c @section Glibc Extensions to @code{<semaphore.h>}

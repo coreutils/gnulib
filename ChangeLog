@@ -1,3 +1,26 @@
+2009-10-09  Jim Meyering  <meyering@redhat.com>
+
+	selinux-h: always use getfilecon wrappers
+	* lib/getfilecon.c: New file.
+	* lib/se-selinux.in.h: Use a better inclusion guard symbol name.
+	[HAVE_SELINUX_SELINUX_H]: Include-next <selinux/selinux.h>.
+	[!HAVE_SELINUX_SELINUX_H]: Use better parameter names.
+	(fgetfilecon): Provide a stub.
+	* m4/selinux-selinux-h.m4 (gl_HEADERS_SELINUX_SELINUX_H): Don't
+	AC_SUBST SELINUX_SELINUX_H, since now we're generating that
+	file unconditionally.
+	When <selinux/selinux.h> is found, arrange to use wrappers.
+	* modules/selinux-h (Files): Add getfilecon.c.
+	(Makefile.am): Substitute include-next-related bits
+	into the now-always-generated selinux/selinux.h file.
+	* doc/glibc-functions/lgetfilecon.texi: New file.
+	* doc/glibc-functions/fgetfilecon.texi: New file.
+	* doc/glibc-functions/getfilecon.texi: New file.
+	* doc/glibc-functions/getfilecon-desc.texi: New file.
+	* doc/gnulib.texi (Glibc selinux/selinux.h): New section, by
+	which to pull in the new files.
+	* MODULES.html.sh (Misc): Add selinux-h.
+
 2009-10-08  Jim Meyering  <meyering@redhat.com>
 
 	unistd: fix comment typo

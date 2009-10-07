@@ -1,0 +1,5 @@
+@node getfilecon
+@subsection @code{getfilecon}
+@findex getfilecon
+
+@getfileconDesc{getfilecon}

@@ -6,14 +6,26 @@
 
 # From Jim Meyering
 # Provide <selinux/selinux.h>, if necessary.
+# If it is already present, provide wrapper functions to guard against
+# misbehavior from getfilecon, lgetfilecon, and fgetfilecon.
 
 AC_DEFUN([gl_HEADERS_SELINUX_SELINUX_H],
 [
   AC_REQUIRE([gl_LIBSELINUX])
-  AC_CHECK_HEADERS([selinux/selinux.h],
-		   [SELINUX_SELINUX_H=],
-		   [SELINUX_SELINUX_H=selinux/selinux.h])
-  AC_SUBST([SELINUX_SELINUX_H])
+  AC_CHECK_HEADERS([selinux/selinux.h])
+
+  if test "$ac_cv_header_selinux_selinux_h" = yes; then
+    # We do have <selinux/selinux.h>, so do compile getfilecon.c
+    # and arrange to use its wrappers.
+    AC_LIBOBJ([getfilecon])
+    gl_CHECK_NEXT_HEADERS([selinux/selinux.h])
+    AC_DEFINE([getfilecon], [rpl_getfilecon],
+	      [Always use our getfilecon wrapper.])
+    AC_DEFINE([lgetfilecon], [rpl_lgetfilecon],
+	      [Always use our lgetfilecon wrapper.])
+    AC_DEFINE([fgetfilecon], [rpl_fgetfilecon],
+	      [Always use our fgetfilecon wrapper.])
+  fi
 
   case "$ac_cv_search_setfilecon:$ac_cv_header_selinux_selinux_h" in
     no:*) # already warned

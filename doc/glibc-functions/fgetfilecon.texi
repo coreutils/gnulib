@@ -1,0 +1,5 @@
+@node fgetfilecon
+@subsection @code{fgetfilecon}
+@findex fgetfilecon
+
+@getfileconDesc{fgetfilecon}
