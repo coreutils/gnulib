@@ -1,5 +1,11 @@
 2009-10-10  Eric Blake  <ebb9@byu.net>
 
+	utimens: add test
+	* modules/utimens-tests: New test.
+	* tests/test-utimens.h: New file.
+	* tests/test-futimens.h: Likewise.
+	* tests/test-utimens.c: Likewise.
+
 	doc: mention timestamp portability issues
 	* doc/glibc-functions/lutimes.texi (lutimes): Refer to utimensat
 	instead.
