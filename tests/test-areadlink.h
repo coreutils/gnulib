@@ -66,7 +66,6 @@ test_areadlink (char * (*func) (char const *, size_t), bool print)
   ASSERT (errno == EINVAL);
   {
     /* Too small a guess is okay.  */
-    size_t len = strlen (BASE "dir");
     char *buf = func (BASE "link", 1);
     ASSERT (buf);
     ASSERT (strcmp (buf, BASE "dir") == 0);

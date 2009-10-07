@@ -1,0 +1,14 @@
+Files:
+tests/test-areadlink.h
+tests/test-areadlinkat.c
+
+Depends-on:
+stdbool
+symlink
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-areadlinkat
+check_PROGRAMS += test-areadlinkat
+test_areadlinkat_LDADD = $(LDADD) @LIBINTL@

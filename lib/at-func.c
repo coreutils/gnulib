@@ -30,7 +30,7 @@
   if (flag & ~AT_FUNC_USE_F1_COND)		\
     {						\
       errno = EINVAL;				\
-      return -1;				\
+      return FUNC_FAIL;				\
     }
 #else
 # define CALL_FUNC(F) (AT_FUNC_F1 (F AT_FUNC_POST_FILE_ARGS))
@@ -43,11 +43,18 @@
 # define FUNC_RESULT int
 #endif
 
+#ifdef AT_FUNC_FAIL
+# define FUNC_FAIL AT_FUNC_FAIL
+#else
+# define FUNC_FAIL -1
+#endif
+
 /* Call AT_FUNC_F1 to operate on FILE, which is in the directory
    open on descriptor FD.  If AT_FUNC_USE_F1_COND is defined to a value,
    AT_FUNC_POST_FILE_PARAM_DECLS must inlude a parameter named flag;
    call AT_FUNC_F2 if FLAG is 0 or fail if FLAG contains more bits than
-   AT_FUNC_USE_F1_COND.  If possible, do it without changing the
+   AT_FUNC_USE_F1_COND.  Return int and fail with -1 unless AT_FUNC_RESULT
+   or AT_FUNC_FAIL are defined.  If possible, do it without changing the
    working directory.  Otherwise, resort to using save_cwd/fchdir,
    then AT_FUNC_F?/restore_cwd.  If either the save_cwd or the restore_cwd
    fails, then give a diagnostic and exit nonzero.  */
@@ -96,7 +103,7 @@ AT_FUNC_NAME (int fd, char const *file AT_FUNC_POST_FILE_PARAM_DECLS)
          begin with.  */
       free_cwd (&saved_cwd);
       errno = EBADF;
-      return -1;
+      return FUNC_FAIL;
     }
 
   if (fchdir (fd) != 0)
@@ -104,7 +111,7 @@ AT_FUNC_NAME (int fd, char const *file AT_FUNC_POST_FILE_PARAM_DECLS)
       saved_errno = errno;
       free_cwd (&saved_cwd);
       errno = saved_errno;
-      return -1;
+      return FUNC_FAIL;
     }
 
   err = CALL_FUNC (file);
@@ -121,3 +128,4 @@ AT_FUNC_NAME (int fd, char const *file AT_FUNC_POST_FILE_PARAM_DECLS)
 }
 #undef CALL_FUNC
 #undef FUNC_RESULT
+#undef FUNC_FAIL

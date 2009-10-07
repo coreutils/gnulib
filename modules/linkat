@@ -8,6 +8,7 @@ m4/linkat.m4
 
 Depends-on:
 areadlink
+areadlinkat
 dirname
 errno
 extensions

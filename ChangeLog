@@ -1,5 +1,17 @@
 2009-10-07  Eric Blake  <ebb9@byu.net>
 
+	areadlinkat: new module
+	* lib/at-func.c (FUNC_FAIL): New define.
+	(AT_FUNC_NAME, VALIDATE_FLAG): Use it rather than raw -1.
+	* modules/areadlinkat: New module.
+	* lib/linkat.c (areadlinkat): Move...
+	* lib/areadlinkat.c (areadlinkat): ...to new file.
+	* lib/areadlink.h (areadlinkat): Declare it.
+	* modules/linkat (Depends-on): Add areadlinkat.
+	* MODULES.html.sh (File system functions): Mention it.
+	* modules/areadlinkat-tests: New test.
+	* tests/test-areadlinkat.c: New file.
+
 	areadlink, areadlink-with-size: add tests
 	* modules/areadlink-tests: New test.
 	* modules/areadlink-with-size-tests: Likewise.
