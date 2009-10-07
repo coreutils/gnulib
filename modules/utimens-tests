@@ -1,15 +1,18 @@
 Files:
 tests/test-futimens.h
+tests/test-lutimens.h
 tests/test-utimens.h
 tests/test-utimens.c
 
 Depends-on:
 stat-time
 stdbool
+symlink
 timespec
 utimecmp
 
 configure.ac:
+AC_CHECK_FUNCS_ONCE([usleep])
 
 Makefile.am:
 TESTS += test-utimens

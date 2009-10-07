@@ -39,6 +39,7 @@
 #define BASE "test-utimens.t"
 
 #include "test-futimens.h"
+#include "test-lutimens.h"
 #include "test-utimens.h"
 
 /* Wrap gl_futimens to behave like futimens.  */
@@ -70,10 +71,20 @@ do_fdutimens (char const *name, struct timespec const times[2])
 int
 main ()
 {
+  int result1;
+  int result2;
+
   /* Clean up any trash from prior testsuite runs.  */
   ASSERT (system ("rm -rf " BASE "*") == 0);
 
   ASSERT (test_utimens (utimens) == 0);
   ASSERT (test_utimens (do_fdutimens) == 0);
-  return test_futimens (do_futimens, true);
+  result1 = test_futimens (do_futimens, true);
+  if (result1)
+    ASSERT (result1 == 77);
+  /* Print only one skip message.  */
+  result2 = test_lutimens (lutimens, result1 == 0);
+  if (result2)
+    ASSERT (result2 == 77);
+  return result1 | result2;
 }

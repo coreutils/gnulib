@@ -1,5 +1,15 @@
 2009-10-10  Eric Blake  <ebb9@byu.net>
 
+	utimens: add lutimens interface
+	* lib/utimens.c (lutimens): New function.
+	* m4/utimens.m4 (gl_UTIMENS): Check for lutimes.
+	* lib/utimens.h (lutimens): Declare new interface.
+	* tests/test-utimens.c (main): Enhance test.
+	* tests/test-lutimens.h (test_lutimens): New file.
+	* modules/utimens-tests (Files): Distribute it.
+	(Depends-on): Add symlink.
+	(configure.ac): Check for usleep.
+
 	utimens: validate futimens usage
 	* lib/utimens.c (gl_futimens): Require valid fd up front, using
 	fewer syscalls on failure later on.  Avoid compiler warning on

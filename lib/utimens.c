@@ -207,3 +207,63 @@ utimens (char const *file, struct timespec const timespec[2])
 {
   return gl_futimens (-1, file, timespec);
 }
+
+/* Set the access and modification time stamps of the symlink FILE to
+   be TIMESPEC[0] and TIMESPEC[1], respectively.  Fail with ENOSYS if
+   the platform does not support changing symlink timestamps.  */
+int
+lutimens (char const *file _UNUSED_PARAMETER_,
+          struct timespec const timespec[2] _UNUSED_PARAMETER_)
+{
+  /* The Linux kernel did not support symlink timestamps until
+     utimensat, in version 2.6.22, so we don't need to mimic
+     gl_futimens' worry about buggy NFS clients.  But we do have to
+     worry about bogus return values.  */
+
+#if HAVE_UTIMENSAT
+  {
+    int result = utimensat (AT_FDCWD, file, timespec, AT_SYMLINK_NOFOLLOW);
+# ifdef __linux__
+    /* Work around a kernel bug:
+       http://bugzilla.redhat.com/442352
+       http://bugzilla.redhat.com/449910
+       It appears that utimensat can mistakenly return 280 rather
+       than -1 upon ENOSYS failure.
+       FIXME: remove in 2010 or whenever the offending kernels
+       are no longer in common use.  */
+    if (0 < result)
+      errno = ENOSYS;
+# endif
+
+    if (result == 0 || errno != ENOSYS)
+      return result;
+  }
+#endif /* HAVE_UTIMENSAT */
+
+  /* The platform lacks an interface to set file timestamps with
+     nanosecond resolution, so do the best we can, discarding any
+     fractional part of the timestamp.  */
+#if HAVE_LUTIMES
+  {
+    struct timeval timeval[2];
+    struct timeval const *t;
+    if (timespec)
+      {
+        timeval[0].tv_sec = timespec[0].tv_sec;
+        timeval[0].tv_usec = timespec[0].tv_nsec / 1000;
+        timeval[1].tv_sec = timespec[1].tv_sec;
+        timeval[1].tv_usec = timespec[1].tv_nsec / 1000;
+        t = timeval;
+      }
+    else
+      t = NULL;
+
+    return lutimes (file, t);
+  }
+#endif /* HAVE_LUTIMES */
+
+  /* Out of luck.  Symlink timestamps can't be changed.  We won't
+     bother changing the timestamps if FILE was not a symlink.  */
+  errno = ENOSYS;
+  return -1;
+}
