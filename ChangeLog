@@ -1,5 +1,12 @@
 2009-10-07  Eric Blake  <ebb9@byu.net>
 
+	maint: minor cleanups
+	* lib/fts.c (ATTRIBUTE_UNUSED): Delete; use gnulib-guaranteed
+	_UNUSED_PARAMETER_ instead.
+	* lib/getdate.y (ATTRIBUTE_UNUSED): Likewise.
+	* lib/utimens.c (ATTRIBUTE_UNUSED): Likewise.
+	* modules/linkat-tests (Files): Distribute test-link.h.
+
 	openat, utimens: whitespace cleanup
 	* lib/openat.c: Prefer space throughout, rather than mix of 8
 	spaces vs. tabs.

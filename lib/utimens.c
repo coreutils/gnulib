@@ -44,16 +44,6 @@ struct utimbuf
 };
 #endif
 
-#ifndef __attribute__
-# if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 8)
-#  define __attribute__(x)
-# endif
-#endif
-
-#ifndef ATTRIBUTE_UNUSED
-# define ATTRIBUTE_UNUSED __attribute__ ((__unused__))
-#endif
-
 /* Set the access and modification time stamps of FD (a.k.a. FILE) to be
    TIMESPEC[0] and TIMESPEC[1], respectively.
    FD must be either negative -- in which case it is ignored --
@@ -65,7 +55,7 @@ struct utimbuf
    Return 0 on success, -1 (setting errno) on failure.  */
 
 int
-gl_futimens (int fd ATTRIBUTE_UNUSED,
+gl_futimens (int fd _UNUSED_PARAMETER_,
              char const *file, struct timespec const timespec[2])
 {
   /* Some Linux-based NFS clients are buggy, and mishandle time stamps

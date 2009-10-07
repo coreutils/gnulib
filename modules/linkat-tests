@@ -1,4 +1,5 @@
 Files:
+tests/test-link.h
 tests/test-linkat.c
 
 Depends-on:

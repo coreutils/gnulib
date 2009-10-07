@@ -173,16 +173,6 @@ enum Fts_stat
 # define __set_errno(Val) errno = (Val)
 #endif
 
-#ifndef __attribute__
-# if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 8)
-#  define __attribute__(x) /* empty */
-# endif
-#endif
-
-#ifndef ATTRIBUTE_UNUSED
-# define ATTRIBUTE_UNUSED __attribute__ ((__unused__))
-#endif
-
 /* If this host provides the openat function, then we can avoid
    attempting to open "." in some initialization code below.  */
 #ifdef HAVE_OPENAT
@@ -727,9 +717,9 @@ leaf_optimization_applies (int dir_fd)
 
 #else
 static bool
-dirent_inode_sort_may_be_useful (int dir_fd ATTRIBUTE_UNUSED) { return true; }
+dirent_inode_sort_may_be_useful (int dir_fd _UNUSED_PARAMETER_) { return true; }
 static bool
-leaf_optimization_applies (int dir_fd ATTRIBUTE_UNUSED) { return false; }
+leaf_optimization_applies (int dir_fd _UNUSED_PARAMETER_) { return false; }
 #endif
 
 #if GNULIB_FTS
@@ -1079,7 +1069,7 @@ check_for_dir:
  */
 /* ARGSUSED */
 int
-fts_set(FTS *sp ATTRIBUTE_UNUSED, FTSENT *p, int instr)
+fts_set(FTS *sp _UNUSED_PARAMETER_, FTSENT *p, int instr)
 {
 	if (instr != 0 && instr != FTS_AGAIN && instr != FTS_FOLLOW &&
 	    instr != FTS_NOINSTR && instr != FTS_SKIP) {

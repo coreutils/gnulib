@@ -78,16 +78,6 @@
    of `digit' even when the host does not conform to POSIX.  */
 #define ISDIGIT(c) ((unsigned int) (c) - '0' <= 9)
 
-#ifndef __attribute__
-# if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 8) || __STRICT_ANSI__
-#  define __attribute__(x)
-# endif
-#endif
-
-#ifndef ATTRIBUTE_UNUSED
-# define ATTRIBUTE_UNUSED __attribute__ ((__unused__))
-#endif
-
 /* Shift A right by B bits portably, by dividing A by 2**B and
    truncating towards minus infinity.  A and B should be free of side
    effects, and B should be in the range 0 <= B <= INT_BITS - 2, where
@@ -1155,8 +1145,8 @@ yylex (YYSTYPE *lvalp, parser_control *pc)
 
 /* Do nothing if the parser reports an error.  */
 static int
-yyerror (parser_control const *pc ATTRIBUTE_UNUSED,
-	 char const *s ATTRIBUTE_UNUSED)
+yyerror (parser_control const *pc _UNUSED_PARAMETER_,
+	 char const *s _UNUSED_PARAMETER_)
 {
   return 0;
 }
