@@ -89,6 +89,15 @@ AT_FUNC_NAME (int fd, char const *file AT_FUNC_POST_FILE_PARAM_DECLS)
 
   if (save_cwd (&saved_cwd) != 0)
     openat_save_fail (errno);
+  if (0 <= fd && fd == saved_cwd.desc)
+    {
+      /* If saving the working directory collides with the user's
+         requested fd, then the user's fd must have been closed to
+         begin with.  */
+      free_cwd (&saved_cwd);
+      errno = EBADF;
+      return -1;
+    }
 
   if (fchdir (fd) != 0)
     {

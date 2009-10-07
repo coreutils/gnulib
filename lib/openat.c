@@ -202,6 +202,15 @@ openat_permissive (int fd, char const *file, int flags, mode_t mode,
 	openat_save_fail (errno);
       *cwd_errno = errno;
     }
+  if (0 <= fd && fd == saved_cwd.desc)
+    {
+      /* If saving the working directory collides with the user's
+         requested fd, then the user's fd must have been closed to
+         begin with.  */
+      free_cwd (&saved_cwd);
+      errno = EBADF;
+      return -1;
+    }
 
   err = fchdir (fd);
   saved_errno = errno;

@@ -1,5 +1,10 @@
 2009-10-07  Eric Blake  <ebb9@byu.net>
 
+	openat: avoid using wrong fd
+	* lib/openat.c (openat_permissive): Reject user's fd if saving the
+	working directory chooses same fd.
+	* lib/at-func.c (AT_FUNC_NAME): Likewise.
+
 	mkdir, mkdirat: fix cygwin 1.5.x bug
 	* lib/mkdir.c (rpl_mkdir) [FUNC_MKDIR_DOT_BUG]: Work around bug.
 	* m4/mkdir-slash.m4 (gl_FUNC_MKDIR_TRAILING_SLASH): Move...
