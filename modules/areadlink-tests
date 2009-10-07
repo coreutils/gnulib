@@ -1,0 +1,13 @@
+Files:
+tests/test-areadlink.h
+tests/test-areadlink.c
+
+Depends-on:
+stdbool
+symlink
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-areadlink
+check_PROGRAMS += test-areadlink
