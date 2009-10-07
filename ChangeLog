@@ -1,5 +1,11 @@
 2009-10-07  Eric Blake  <ebb9@byu.net>
 
+	xreadlinkat: new module
+	* modules/xreadlinkat: New module.
+	* lib/xreadlinkat.c (xreadlinkat): New file.
+	* lib/xreadlink.h (xreadlinkat): Declare it.
+	* MODULES.html.sh (File system functions): Mention it.
+
 	areadlinkat: new module
 	* lib/at-func.c (FUNC_FAIL): New define.
 	(AT_FUNC_NAME, VALIDATE_FLAG): Use it rather than raw -1.

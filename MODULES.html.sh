@@ -2495,6 +2495,7 @@ func_all_modules ()
   func_module write-any-file
   func_module xgetcwd
   func_module xreadlink
+  func_module xreadlinkat
   func_end_table
 
   element="File system as inode set"
