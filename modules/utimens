@@ -11,6 +11,11 @@ m4/utimes.m4
 Depends-on:
 dup2
 errno
+lstat
+gettime
+stat-time
+stdbool
+sys_stat
 sys_time
 time
 
@@ -22,8 +27,11 @@ Makefile.am:
 Include:
 "utimens.h"
 
+Link:
+$(LIB_CLOCK_GETTIME)
+
 License:
 GPL
 
 Maintainer:
-Paul Eggert, Jim Meyering
+Paul Eggert, Jim Meyering, Eric Blake

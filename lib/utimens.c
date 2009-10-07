@@ -24,11 +24,16 @@
 
 #include "utimens.h"
 
+#include <assert.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <stdbool.h>
 #include <sys/stat.h>
 #include <sys/time.h>
 #include <unistd.h>
+
+#include "stat-time.h"
+#include "timespec.h"
 
 #if HAVE_UTIME_H
 # include <utime.h>
@@ -44,6 +49,78 @@ struct utimbuf
 };
 #endif
 
+/* Validate the requested timestamps.  Return 0 if the resulting
+   timespec can be used for utimensat (after possibly modifying it to
+   work around bugs in utimensat).  Return 1 if the timespec needs
+   further adjustment based on stat results for utimes or other less
+   powerful interfaces.  Return -1, with errno set to EINVAL, if
+   timespec is out of range.  */
+static int
+validate_timespec (struct timespec timespec[2])
+{
+  int result = 0;
+  assert (timespec);
+  if ((timespec[0].tv_nsec != UTIME_NOW
+       && timespec[0].tv_nsec != UTIME_OMIT
+       && (timespec[0].tv_nsec < 0 || 1000000000 <= timespec[0].tv_nsec))
+      || (timespec[1].tv_nsec != UTIME_NOW
+          && timespec[1].tv_nsec != UTIME_OMIT
+          && (timespec[1].tv_nsec < 0 || 1000000000 <= timespec[1].tv_nsec)))
+    {
+      errno = EINVAL;
+      return -1;
+    }
+  /* Work around Linux kernel 2.6.25 bug, where utimensat fails with
+     EINVAL if tv_sec is not 0 when using the flag values of
+     tv_nsec.  */
+  if (timespec[0].tv_nsec == UTIME_NOW
+      || timespec[0].tv_nsec == UTIME_OMIT)
+    {
+      timespec[0].tv_sec = 0;
+      result = 1;
+    }
+  if (timespec[1].tv_nsec == UTIME_NOW
+      || timespec[1].tv_nsec == UTIME_OMIT)
+    {
+      timespec[1].tv_sec = 0;
+      result = 1;
+    }
+  return result;
+}
+
+/* Normalize any UTIME_NOW or UTIME_OMIT values in *TS, using stat
+   buffer STATBUF to obtain the current timestamps of the file.  If
+   both times are UTIME_NOW, set *TS to NULL (as this can avoid some
+   permissions issues).  If both times are UTIME_OMIT, return true
+   (nothing further beyond the prior collection of STATBUF is
+   necessary); otherwise return false.  */
+static bool
+update_timespec (struct stat const *statbuf, struct timespec *ts[2])
+{
+  struct timespec *timespec = *ts;
+  if (timespec[0].tv_nsec == UTIME_OMIT
+      && timespec[1].tv_nsec == UTIME_OMIT)
+    return true;
+  if (timespec[0].tv_nsec == UTIME_NOW
+      && timespec[1].tv_nsec == UTIME_NOW)
+    {
+      *ts = NULL;
+      return false;
+    }
+
+  if (timespec[0].tv_nsec == UTIME_OMIT)
+    timespec[0] = get_stat_atime (statbuf);
+  else if (timespec[0].tv_nsec == UTIME_NOW)
+    gettime (&timespec[0]);
+
+  if (timespec[1].tv_nsec == UTIME_OMIT)
+    timespec[1] = get_stat_mtime (statbuf);
+  else if (timespec[1].tv_nsec == UTIME_NOW)
+    gettime (&timespec[1]);
+
+  return false;
+}
+
 /* Set the access and modification time stamps of FD (a.k.a. FILE) to be
    TIMESPEC[0] and TIMESPEC[1], respectively.
    FD must be either negative -- in which case it is ignored --
@@ -57,6 +134,19 @@ struct utimbuf
 int
 gl_futimens (int fd, char const *file, struct timespec const timespec[2])
 {
+  struct timespec adjusted_timespec[2];
+  struct timespec *ts = timespec ? adjusted_timespec : NULL;
+  int adjustment_needed = 0;
+
+  if (ts)
+    {
+      adjusted_timespec[0] = timespec[0];
+      adjusted_timespec[1] = timespec[1];
+      adjustment_needed = validate_timespec (ts);
+    }
+  if (adjustment_needed < 0)
+    return -1;
+
   /* Require that at least one of FD or FILE are valid.  Works around
      a Linux bug where futimens (AT_FDCWD, NULL) changes "." rather
      than failing.  */
@@ -88,16 +178,16 @@ gl_futimens (int fd, char const *file, struct timespec const timespec[2])
     fsync (fd);
 #endif
 
-  /* POSIX 200x added two interfaces to set file timestamps with
+  /* POSIX 2008 added two interfaces to set file timestamps with
      nanosecond resolution.  We provide a fallback for ENOSYS (for
      example, compiling against Linux 2.6.25 kernel headers and glibc
      2.7, but running on Linux 2.6.18 kernel).  */
 #if HAVE_UTIMENSAT
   if (fd < 0)
     {
-      int result = utimensat (AT_FDCWD, file, timespec, 0);
+      int result = utimensat (AT_FDCWD, file, ts, 0);
 # ifdef __linux__
-      /* Work around what might be a kernel bug:
+      /* Work around a kernel bug:
          http://bugzilla.redhat.com/442352
          http://bugzilla.redhat.com/449910
          It appears that utimensat can mistakenly return 280 rather
@@ -128,16 +218,26 @@ gl_futimens (int fd, char const *file, struct timespec const timespec[2])
   /* The platform lacks an interface to set file timestamps with
      nanosecond resolution, so do the best we can, discarding any
      fractional part of the timestamp.  */
+
+  if (adjustment_needed)
+    {
+      struct stat st;
+      if (fd < 0 ? stat (file, &st) : fstat (fd, &st))
+        return -1;
+      if (update_timespec (&st, &ts))
+        return 0;
+    }
+
   {
 #if HAVE_FUTIMESAT || HAVE_WORKING_UTIMES
     struct timeval timeval[2];
     struct timeval const *t;
-    if (timespec)
+    if (ts)
       {
-        timeval[0].tv_sec = timespec[0].tv_sec;
-        timeval[0].tv_usec = timespec[0].tv_nsec / 1000;
-        timeval[1].tv_sec = timespec[1].tv_sec;
-        timeval[1].tv_usec = timespec[1].tv_nsec / 1000;
+        timeval[0].tv_sec = ts[0].tv_sec;
+        timeval[0].tv_usec = ts[0].tv_nsec / 1000;
+        timeval[1].tv_sec = ts[1].tv_sec;
+        timeval[1].tv_usec = ts[1].tv_nsec / 1000;
         t = timeval;
       }
     else
@@ -185,10 +285,10 @@ gl_futimens (int fd, char const *file, struct timespec const timespec[2])
     {
       struct utimbuf utimbuf;
       struct utimbuf *ut;
-      if (timespec)
+      if (ts)
         {
-          utimbuf.actime = timespec[0].tv_sec;
-          utimbuf.modtime = timespec[1].tv_sec;
+          utimbuf.actime = ts[0].tv_sec;
+          utimbuf.modtime = ts[1].tv_sec;
           ut = &utimbuf;
         }
       else
@@ -212,9 +312,21 @@ utimens (char const *file, struct timespec const timespec[2])
    be TIMESPEC[0] and TIMESPEC[1], respectively.  Fail with ENOSYS if
    the platform does not support changing symlink timestamps.  */
 int
-lutimens (char const *file _UNUSED_PARAMETER_,
-          struct timespec const timespec[2] _UNUSED_PARAMETER_)
+lutimens (char const *file, struct timespec const timespec[2])
 {
+  struct timespec adjusted_timespec[2];
+  struct timespec *ts = timespec ? adjusted_timespec : NULL;
+  int adjustment_needed = 0;
+
+  if (ts)
+    {
+      adjusted_timespec[0] = timespec[0];
+      adjusted_timespec[1] = timespec[1];
+      adjustment_needed = validate_timespec (ts);
+    }
+  if (adjustment_needed < 0)
+    return -1;
+
   /* The Linux kernel did not support symlink timestamps until
      utimensat, in version 2.6.22, so we don't need to mimic
      gl_futimens' worry about buggy NFS clients.  But we do have to
@@ -222,7 +334,7 @@ lutimens (char const *file _UNUSED_PARAMETER_,
 
 #if HAVE_UTIMENSAT
   {
-    int result = utimensat (AT_FDCWD, file, timespec, AT_SYMLINK_NOFOLLOW);
+    int result = utimensat (AT_FDCWD, file, ts, AT_SYMLINK_NOFOLLOW);
 # ifdef __linux__
     /* Work around a kernel bug:
        http://bugzilla.redhat.com/442352
@@ -243,16 +355,26 @@ lutimens (char const *file _UNUSED_PARAMETER_,
   /* The platform lacks an interface to set file timestamps with
      nanosecond resolution, so do the best we can, discarding any
      fractional part of the timestamp.  */
+
+  if (adjustment_needed)
+    {
+      struct stat st;
+      if (lstat (file, &st))
+        return -1;
+      if (update_timespec (&st, &ts))
+        return 0;
+    }
+
 #if HAVE_LUTIMES
   {
     struct timeval timeval[2];
     struct timeval const *t;
-    if (timespec)
+    if (ts)
       {
-        timeval[0].tv_sec = timespec[0].tv_sec;
-        timeval[0].tv_usec = timespec[0].tv_nsec / 1000;
-        timeval[1].tv_sec = timespec[1].tv_sec;
-        timeval[1].tv_usec = timespec[1].tv_nsec / 1000;
+        timeval[0].tv_sec = ts[0].tv_sec;
+        timeval[0].tv_usec = ts[0].tv_nsec / 1000;
+        timeval[1].tv_sec = ts[1].tv_sec;
+        timeval[1].tv_usec = ts[1].tv_nsec / 1000;
         t = timeval;
       }
     else

@@ -5,8 +5,6 @@ tests/test-utimens.h
 tests/test-utimens.c
 
 Depends-on:
-stat-time
-stdbool
 symlink
 timespec
 utimecmp
@@ -17,4 +15,4 @@ AC_CHECK_FUNCS_ONCE([usleep])
 Makefile.am:
 TESTS += test-utimens
 check_PROGRAMS += test-utimens
-test_utimens_LDADD = $(LDADD) @LIBINTL@
+test_utimens_LDADD = $(LDADD) $(LIB_CLOCK_GETTIME) @LIBINTL@

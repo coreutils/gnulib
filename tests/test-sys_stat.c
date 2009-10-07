@@ -1,5 +1,5 @@
 /* Test of <sys/stat.h> substitute.
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -251,6 +251,12 @@ verify (!S_ISWHT (S_IFLNK));
 #endif
 #ifdef S_IFSOCK
 verify (!S_ISWHT (S_IFSOCK));
+#endif
+
+#if ((0 <= UTIME_NOW && UTIME_NOW < 1000000000)           \
+     || (0 <= UTIME_OMIT && UTIME_OMIT < 1000000000)      \
+     || UTIME_NOW == UTIME_OMIT)
+invalid UTIME macros
 #endif
 
 /* Check the existence of some types.  */

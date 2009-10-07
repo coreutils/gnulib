@@ -6,6 +6,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2009-10-10  utimens         The use of this module now requires linking with
+                            $(LIB_CLOCK_GETTIME).
+
 2009-09-16  canonicalize-lgpl
                             The include file is changed from "canonicalize.h"
                             to <stdlib.h>.

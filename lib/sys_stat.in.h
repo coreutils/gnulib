@@ -278,6 +278,12 @@
 # define S_IRWXUGO (S_IRWXU | S_IRWXG | S_IRWXO)
 #endif
 
+/* Macros for futimens and utimensat.  */
+#ifndef UTIME_NOW
+# define UTIME_NOW (-1)
+# define UTIME_OMIT (-2)
+#endif
+
 
 #ifdef __cplusplus
 extern "C" {

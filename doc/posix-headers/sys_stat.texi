@@ -17,6 +17,9 @@ Some platforms define macros, such as @code{S_ISDOOR}, that are not defined
 on other platforms.
 @item
 The functions @code{lstat} and @code{mkdir} are not declared on mingw.
+@item
+The macros @code{UTIME_NOW} and @code{UTIME_OMIT} are missing on some
+platforms.
 @end itemize
 
 Portability problems not fixed by Gnulib:

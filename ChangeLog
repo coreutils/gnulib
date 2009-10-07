@@ -1,5 +1,21 @@
 2009-10-10  Eric Blake  <ebb9@byu.net>
 
+	utimens: add UTIME_NOW and UTIME_OMIT support
+	* lib/utimens.c (validate_timespec, update_timespec): New helper
+	functions.
+	(gl_futimens, lutimens): Use them.
+	* modules/utimens (Depends-on): Add gettime, lstat, stat-time,
+	stdbool, sys_stat.
+	(Link): Mention resulting library dependency.
+	* modules/utimecmp (Link): Likewise.
+	* modules/utimens-tests (Depends-on): Drop stat-time, stdbool.
+	(Makefile.am): Pick up library dependency.
+	* lib/sys_stat.in.h (UTIME_NOW, UTIME_OMIT): Guarantee a
+	definition.
+	* tests/test-sys_stat.c: Test the definitions.
+	* doc/posix-headers/sys_stat.texi (sys/stat.h): Document this.
+	* NEWS: Document library dependency.
+
 	utimecmp: support symlink timestamps
 	* lib/utimecmp.c (utimecmp): Use new interface.  Skip effort of
 	hashing when possible.  Use pathconf when available.

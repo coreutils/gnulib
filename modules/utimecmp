@@ -26,6 +26,9 @@ Makefile.am:
 Include:
 "utimecmp.h"
 
+Link:
+$(LIB_CLOCK_GETTIME)
+
 License:
 GPL
 
