@@ -23,10 +23,9 @@
 
 #include "areadlink.h"
 
-#include <stdio.h>
 #include <errno.h>
 #include <limits.h>
-#include <sys/types.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <unistd.h>
 

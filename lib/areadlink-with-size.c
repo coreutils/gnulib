@@ -1,7 +1,7 @@
 /* readlink wrapper to return the link name in malloc'd storage.
    Unlike xreadlink and xreadlink_with_size, don't ever call exit.
 
-   Copyright (C) 2001, 2003-2007 Free Software Foundation, Inc.
+   Copyright (C) 2001, 2003-2007, 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -22,16 +22,12 @@
 
 #include "areadlink.h"
 
-#include <stdio.h>
 #include <errno.h>
 #include <limits.h>
-#include <sys/types.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <unistd.h>
 
-#ifndef SIZE_MAX
-# define SIZE_MAX ((size_t) -1)
-#endif
 #ifndef SSIZE_MAX
 # define SSIZE_MAX ((ssize_t) (SIZE_MAX / 2))
 #endif

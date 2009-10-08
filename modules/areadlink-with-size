@@ -8,6 +8,7 @@ lib/areadlink-with-size.c
 Depends-on:
 readlink
 ssize_t
+stdint
 unistd
 
 configure.ac:

@@ -25,12 +25,11 @@
 /* Specification.  */
 #include "areadlink.h"
 
-#include <string.h>
 #include <errno.h>
 #include <limits.h>
-#include <sys/types.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 
 #ifndef SSIZE_MAX
@@ -38,6 +37,12 @@
 #endif
 
 #if HAVE_READLINKAT
+
+/* The initial buffer size for the link value.  A power of 2
+   detects arithmetic overflow earlier, but is not required.  */
+enum {
+  INITIAL_BUF_SIZE = 1024
+};
 
 /* Call readlinkat to get the symbolic link value of FILENAME relative to FD.
    Return a pointer to that NUL-terminated string in malloc'd storage.
@@ -49,17 +54,13 @@
 char *
 areadlinkat (int fd, char const *filename)
 {
-  /* The initial buffer size for the link value.  A power of 2
-     detects arithmetic overflow earlier, but is not required.  */
-# define INITIAL_BUF_SIZE 1024
-
   /* Allocate the initial buffer on the stack.  This way, in the common
      case of a symlink of small size, we get away with a single small malloc()
      instead of a big malloc() followed by a shrinking realloc().  */
   char initial_buf[INITIAL_BUF_SIZE];
 
   char *buffer = initial_buf;
-  size_t buf_size = sizeof (initial_buf);
+  size_t buf_size = sizeof initial_buf;
 
   while (1)
     {

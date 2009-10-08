@@ -1,7 +1,7 @@
 /* areadlink.c -- readlink wrapper to return the link name in malloc'd storage
    Unlike xreadlink and xreadlink_with_size, don't ever call exit.
 
-   Copyright (C) 2001, 2003-2007 Free Software Foundation, Inc.
+   Copyright (C) 2001, 2003-2007, 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -24,19 +24,22 @@
 /* Specification.  */
 #include "areadlink.h"
 
-#include <string.h>
 #include <errno.h>
 #include <limits.h>
-#include <sys/types.h>
+#include <stdint.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 
-#ifndef SIZE_MAX
-# define SIZE_MAX ((size_t) -1)
-#endif
 #ifndef SSIZE_MAX
 # define SSIZE_MAX ((ssize_t) (SIZE_MAX / 2))
 #endif
+
+/* The initial buffer size for the link value.  A power of 2
+   detects arithmetic overflow earlier, but is not required.  */
+enum {
+  INITIAL_BUF_SIZE = 1024
+};
 
 /* Call readlink to get the symbolic link value of FILENAME.
    Return a pointer to that NUL-terminated string in malloc'd storage.
@@ -47,17 +50,13 @@
 char *
 areadlink (char const *filename)
 {
-  /* The initial buffer size for the link value.  A power of 2
-     detects arithmetic overflow earlier, but is not required.  */
-#define INITIAL_BUF_SIZE 1024
-
   /* Allocate the initial buffer on the stack.  This way, in the common
      case of a symlink of small size, we get away with a single small malloc()
      instead of a big malloc() followed by a shrinking realloc().  */
   char initial_buf[INITIAL_BUF_SIZE];
 
   char *buffer = initial_buf;
-  size_t buf_size = sizeof (initial_buf);
+  size_t buf_size = sizeof initial_buf;
 
   while (1)
     {

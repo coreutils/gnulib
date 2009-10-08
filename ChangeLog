@@ -1,3 +1,19 @@
+2009-10-08  Eric Blake  <ebb9@byu.net>
+
+	areadlink: use SIZE_MAX consistently
+	* modules/areadlink (Depends-on): Add stdint.
+	* modules/areadlink-with-size (Depends-on): Likewise.
+	* lib/areadlink-with-size.c (includes): Drop stdio, since stdlib
+	gives NULL; drop sys/types, since unistd gives size_t; and add
+	stdint for SIZE_MAX.
+	(SIZE_MAX): Rely on headers.
+	* lib/areadlinkat-with-size.c (includes): Drop stdio, sys/types,
+	and add stdint.
+	* lib/areadlink.c (includes): Drop sys/types, and add stdint.
+	(SIZE_MAX): Likewise.
+	(INITIAL_BUF_SIZE): Turn into enum.
+	* lib/areadlinkat.c (INITIAL_BUF_SIZE): Likewise.
+
 2009-10-08  Jim Meyering  <meyering@redhat.com>
 
 	areadlinkat: avoid compilation failure

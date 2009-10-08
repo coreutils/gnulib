@@ -6,10 +6,11 @@ lib/areadlink.h
 lib/areadlink.c
 
 Depends-on:
+malloc-posix
 readlink
 ssize_t
+stdint
 unistd
-malloc-posix
 
 configure.ac:
 
