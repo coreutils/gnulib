@@ -1,3 +1,9 @@
+2009-10-08  Jim Meyering  <meyering@redhat.com>
+
+	areadlinkat: avoid compilation failure
+	* lib/areadlinkat.c: Include <stdint.h> for use of SIZE_MAX.
+	Fix typo in comment.
+
 2009-10-07  Eric Blake  <ebb9@byu.net>
 
 	areadlinkat-with-size: new module

@@ -1,4 +1,4 @@
-/* areadlink.c -- readlink wrapper to return the link name in malloc'd storage
+/* areadlinkat.c -- readlinkat wrapper to return malloc'd link name
    Unlike xreadlinkat, only call exit on failure to change directory.
 
    Copyright (C) 2001, 2003-2007, 2009 Free Software Foundation, Inc.
@@ -29,6 +29,7 @@
 #include <errno.h>
 #include <limits.h>
 #include <sys/types.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <unistd.h>
 
