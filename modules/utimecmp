@@ -13,6 +13,7 @@ time
 utimens
 xalloc
 intprops
+lstat
 stdbool
 stdint
 verify

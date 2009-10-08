@@ -1,5 +1,11 @@
 2009-10-10  Eric Blake  <ebb9@byu.net>
 
+	utimecmp: support symlink timestamps
+	* lib/utimecmp.c (utimecmp): Use new interface.  Skip effort of
+	hashing when possible.  Use pathconf when available.
+	(SYSCALL_RESOLUTION): Recognize tighter resolution.
+	* modules/utimecmp (Depends-on): Add lstat.
+
 	utimens: add lutimens interface
 	* lib/utimens.c (lutimens): New function.
 	* m4/utimens.m4 (gl_UTIMENS): Check for lutimes.

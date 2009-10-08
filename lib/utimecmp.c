@@ -1,6 +1,7 @@
 /* utimecmp.c -- compare file time stamps
 
-   Copyright (C) 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
+   Copyright (C) 2004, 2005, 2006, 2007, 2009 Free Software
+   Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -26,6 +27,8 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <time.h>
+#include <unistd.h>
+
 #include "hash.h"
 #include "intprops.h"
 #include "stat-time.h"
@@ -42,12 +45,14 @@ enum { BILLION = 1000 * 1000 * 1000 };
 /* Best possible resolution that utimens can set and stat can return,
    due to system-call limitations.  It must be a power of 10 that is
    no greater than 1 billion.  */
-#if (HAVE_WORKING_UTIMES					\
-     && (defined HAVE_STRUCT_STAT_ST_ATIM_TV_NSEC		\
-	 || defined HAVE_STRUCT_STAT_ST_ATIMESPEC_TV_NSEC	\
-	 || defined HAVE_STRUCT_STAT_ST_ATIMENSEC		\
-	 || defined HAVE_STRUCT_STAT_ST_ATIM_ST__TIM_TV_NSEC	\
-	 || defined HAVE_STRUCT_STAT_ST_SPARE1))
+#if HAVE_UTIMENSAT
+enum { SYSCALL_RESOLUTION = 1 };
+#elif ((HAVE_FUTIMESAT || HAVE_WORKING_UTIMES)                  \
+       && (defined HAVE_STRUCT_STAT_ST_ATIM_TV_NSEC		\
+	   || defined HAVE_STRUCT_STAT_ST_ATIMESPEC_TV_NSEC	\
+	   || defined HAVE_STRUCT_STAT_ST_ATIMENSEC		\
+	   || defined HAVE_STRUCT_STAT_ST_ATIM_ST__TIM_TV_NSEC	\
+	   || defined HAVE_STRUCT_STAT_ST_SPARE1))
 enum { SYSCALL_RESOLUTION = 1000 };
 #else
 enum { SYSCALL_RESOLUTION = BILLION };
@@ -100,6 +105,8 @@ dev_info_compare (void const *x, void const *y)
    DST_NAME and status DST_STAT) is older than SRC_STAT, the same age
    as SRC_STAT, or newer than SRC_STAT, respectively.
 
+   DST_NAME may be NULL if OPTIONS is 0.
+
    If OPTIONS & UTIMECMP_TRUNCATE_SOURCE, do the comparison after SRC is
    converted to the destination's timestamp resolution as filtered through
    utimens.  In this case, return -2 if the exact answer cannot be
@@ -147,6 +154,16 @@ utimecmp (char const *dst_name,
       /* Time stamp resolution in nanoseconds.  */
       int res;
 
+      /* Quick exit, if possible.  Since the worst resolution is 2
+	 seconds, anything that differs by more than that does not
+	 needs source truncation.  */
+      if (dst_s == src_s && dst_ns == src_ns)
+	return 0;
+      if (dst_s <= src_s - 2)
+	return -1;
+      if (src_s <= dst_s - 2)
+	return 1;
+
       if (! ht)
 	ht = hash_initialize (16, NULL, dev_info_hash, dev_info_compare, free);
       if (! new_dst_res)
@@ -168,6 +185,19 @@ utimecmp (char const *dst_name,
 	}
 
       res = dst_res->resolution;
+
+#ifdef _PC_TIMESTAMP_RESOLUTION
+      /* If the system will tell us the resolution, we're set!	*/
+      if (! dst_res->exact)
+	{
+	  res = pathconf (dst_name, _PC_TIMESTAMP_RESOLUTION);
+	  if (0 < res)
+	    {
+	      dst_res->resolution = res;
+	      dst_res->exact = true;
+	    }
+	}
+#endif
 
       if (! dst_res->exact)
 	{
@@ -258,16 +288,16 @@ utimecmp (char const *dst_name,
 	      /* Set the modification time.  But don't try to set the
 		 modification time of symbolic links; on many hosts this sets
 		 the time of the pointed-to file.  */
-	      if (S_ISLNK (dst_stat->st_mode)
-		  || utimens (dst_name, timespec) != 0)
+	      if ((S_ISLNK (dst_stat->st_mode)
+		   ? lutimens (dst_name, timespec)
+		   : utimens (dst_name, timespec)) != 0)
 		return -2;
 
-	      /* Read the modification time that was set.  It's safe to call
-		 'stat' here instead of worrying about 'lstat'; either the
-		 caller used 'stat', or the caller used 'lstat' and found
-		 something other than a symbolic link.  */
+	      /* Read the modification time that was set.  */
 	      {
-		int stat_result = stat (dst_name, &dst_status);
+		int stat_result = (S_ISLNK (dst_stat->st_mode)
+				   ? lstat (dst_name, &dst_status)
+				   : stat (dst_name, &dst_status));
 
 		if (stat_result
 		    | (dst_status.st_mtime ^ dst_m_s)
@@ -277,7 +307,10 @@ utimecmp (char const *dst_name,
 		       it changed.  Change it back as best we can.  */
 		    timespec[1].tv_sec = dst_m_s;
 		    timespec[1].tv_nsec = dst_m_ns;
-		    utimens (dst_name, timespec);
+		    if (S_ISLNK (dst_stat->st_mode))
+		      lutimens (dst_name, timespec);
+		    else
+		      utimens (dst_name, timespec);
 		  }
 
 		if (stat_result != 0)
