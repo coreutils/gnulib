@@ -1,5 +1,11 @@
 2009-10-10  Eric Blake  <ebb9@byu.net>
 
+	utimens: introduce fdutimens
+	* lib/utimens.h (fdutimens): New prototype.
+	* lib/utimens.c (gl_futimens): Move guts...
+	(fdutimens): ...to new interface.
+	* tests/test-utimens.c (do_fdutimens): Use it.
+
 	utimens: add UTIME_NOW and UTIME_OMIT support
 	* lib/utimens.c (validate_timespec, update_timespec): New helper
 	functions.

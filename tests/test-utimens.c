@@ -58,7 +58,7 @@ do_fdutimens (char const *name, struct timespec const times[2])
   if (fd < 0)
     fd = open (name, O_RDONLY);
   errno = 0;
-  result = gl_futimens (fd, name, times);
+  result = fdutimens (name, fd, times);
   if (0 <= fd)
     {
       int saved_errno = errno;

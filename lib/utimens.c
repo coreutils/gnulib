@@ -132,7 +132,7 @@ update_timespec (struct stat const *statbuf, struct timespec *ts[2])
    Return 0 on success, -1 (setting errno) on failure.  */
 
 int
-gl_futimens (int fd, char const *file, struct timespec const timespec[2])
+fdutimens (char const *file, int fd, struct timespec const timespec[2])
 {
   struct timespec adjusted_timespec[2];
   struct timespec *ts = timespec ? adjusted_timespec : NULL;
@@ -298,6 +298,22 @@ gl_futimens (int fd, char const *file, struct timespec const timespec[2])
     }
 #endif /* !HAVE_WORKING_UTIMES */
   }
+}
+
+/* Set the access and modification time stamps of FD (a.k.a. FILE) to be
+   TIMESPEC[0] and TIMESPEC[1], respectively.
+   FD must be either negative -- in which case it is ignored --
+   or a file descriptor that is open on FILE.
+   If FD is nonnegative, then FILE can be NULL, which means
+   use just futimes (or equivalent) instead of utimes (or equivalent),
+   and fail if on an old system without futimes (or equivalent).
+   If TIMESPEC is null, set the time stamps to the current time.
+   Return 0 on success, -1 (setting errno) on failure.  */
+
+int
+gl_futimens (int fd, char const *file, struct timespec const timespec[2])
+{
+  return fdutimens (file, fd, timespec);
 }
 
 /* Set the access and modification time stamps of FILE to be
