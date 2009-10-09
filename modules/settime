@@ -20,6 +20,9 @@ Makefile.am:
 Include:
 "timespec.h"
 
+Link:
+$(LIB_CLOCK_GETTIME)
+
 License:
 GPL
 

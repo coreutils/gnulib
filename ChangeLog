@@ -1,5 +1,11 @@
 2009-10-09  Eric Blake  <ebb9@byu.net>
 
+	maint: make realtime library usage explicit
+	* modules/gethrxtime (Link): Mention LIB_GETHRXTIME.
+	* modules/gettime (Link): Mention LIB_CLOCK_GETTIME.
+	* modules/settime (Link): Likewise.
+	* modules/xnanosleep (Link): Mention LIB_NANOSLEEP.
+
 	test-stat-time: speed up execution
 	* tests/test-stat-time.c (test_ctime) [!W32]: Avoid compiler
 	warning on mingw.

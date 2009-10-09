@@ -22,6 +22,9 @@ Makefile.am:
 Include:
 "xtime.h"
 
+Link:
+$(LIB_GETHRXTIME)
+
 License:
 GPL
 
