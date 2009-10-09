@@ -1,3 +1,14 @@
+2009-10-09  Eric Blake  <ebb9@byu.net>
+
+	test-stat-time: speed up execution
+	* tests/test-stat-time.c (test_ctime) [!W32]: Avoid compiler
+	warning on mingw.
+	(nap): New helper function.
+	(prepare_test): Use it to reduce sleep time.
+	(test_mtime, test_ctime, test_birthtime): Allow for subsecond
+	execution.
+	* modules/stat-time-tests (configure.ac): Check for usleep.
+
 2009-10-09  Jim Meyering  <meyering@redhat.com>
 
 	selinux-h: always use getfilecon wrappers

@@ -1,5 +1,5 @@
 /* Test of <stat-time.h>.
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -28,15 +28,15 @@
 #include <unistd.h>
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 enum { NFILES = 4 };
@@ -91,19 +91,51 @@ do_stat (const char *filename, struct stat *p)
   ASSERT (stat (filename, p) == 0);
 }
 
+/* Sleep long enough to notice a timestamp difference on the file
+   system in the current directory.  */
+static void
+nap (void)
+{
+#if !HAVE_USLEEP
+  /* Assume the worst case file system of FAT, which has a granularity
+     of 2 seconds.  */
+  sleep (2);
+#else /* HAVE_USLEEP */
+  static long delay;
+  if (!delay)
+    {
+      /* Initialize only once, by sleeping for 1 millisecond.  If that
+         was enough to observe a difference, then we are set;
+         otherwise fall back to 2 seconds.  */
+      struct stat st1;
+      struct stat st2;
+      ASSERT (stat ("t-stt-stamp1", &st1) == 0);
+      ASSERT (unlink ("t-stt-stamp1") == 0);
+      usleep (delay = 1000);
+      create_file ("t-stt-stamp1");
+      ASSERT (stat ("t-stt-stamp1", &st2) == 0);
+      if (! (st1.st_mtime < st2.st_mtime
+             || (st1.st_mtime == st2.st_mtime
+                 && get_stat_mtime_ns (&st1) < get_stat_mtime_ns (&st2))))
+        delay = 2000000;
+    }
+  usleep (delay);
+#endif /* HAVE_USLEEP */
+}
+
 static void
 prepare_test (struct stat *statinfo, struct timespec *modtimes)
 {
   int i;
 
   create_file ("t-stt-stamp1");
-  sleep (2);
+  nap ();
   create_file ("t-stt-testfile");
-  sleep (2);
+  nap ();
   create_file ("t-stt-stamp2");
-  sleep (2);
+  nap ();
   ASSERT (chmod ("t-stt-testfile", 0400) == 0);
-  sleep (2);
+  nap ();
   create_file ("t-stt-stamp3");
 
   do_stat ("t-stt-stamp1",  &statinfo[0]);
@@ -124,12 +156,26 @@ test_mtime (const struct stat *statinfo, struct timespec *modtimes)
   int i;
 
   /* Use the struct stat fields directly. */
-  ASSERT (statinfo[0].st_mtime < statinfo[2].st_mtime); /* mtime(stamp1) < mtime(stamp2) */
-  ASSERT (statinfo[2].st_mtime < statinfo[3].st_mtime); /* mtime(stamp2) < mtime(stamp3) */
+  /* mtime(stamp1) < mtime(stamp2) */
+  ASSERT (statinfo[0].st_mtime < statinfo[2].st_mtime
+          || (statinfo[0].st_mtime == statinfo[2].st_mtime
+              && (get_stat_mtime_ns (&statinfo[0])
+                  < get_stat_mtime_ns (&statinfo[2]))));
+  /* mtime(stamp2) < mtime(stamp3) */
+  ASSERT (statinfo[2].st_mtime < statinfo[3].st_mtime
+          || (statinfo[2].st_mtime == statinfo[3].st_mtime
+              && (get_stat_mtime_ns (&statinfo[2])
+                  < get_stat_mtime_ns (&statinfo[3]))));
 
   /* Now check the result of the access functions. */
-  ASSERT (modtimes[0].tv_sec < modtimes[2].tv_sec); /* mtime(stamp1) < mtime(stamp2) */
-  ASSERT (modtimes[2].tv_sec < modtimes[3].tv_sec); /* mtime(stamp2) < mtime(stamp3) */
+  /* mtime(stamp1) < mtime(stamp2) */
+  ASSERT (modtimes[0].tv_sec < modtimes[2].tv_sec
+          || (modtimes[0].tv_sec == modtimes[2].tv_sec
+              && modtimes[0].tv_nsec < modtimes[2].tv_nsec));
+  /* mtime(stamp2) < mtime(stamp3) */
+  ASSERT (modtimes[2].tv_sec < modtimes[3].tv_sec
+          || (modtimes[2].tv_sec == modtimes[3].tv_sec
+              && modtimes[2].tv_nsec < modtimes[3].tv_nsec));
 
   /* verify equivalence */
   for (i = 0; i < NFILES; ++i)
@@ -140,18 +186,22 @@ test_mtime (const struct stat *statinfo, struct timespec *modtimes)
     }
 }
 
+#if !((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__)
 static void
 test_ctime (const struct stat *statinfo)
 {
-  ASSERT (statinfo[2].st_mtime < statinfo[1].st_ctime); /* mtime(stamp2) < ctime(renamed) */
-
-  ASSERT (statinfo[2].st_mtime < statinfo[1].st_ctime); /* mtime(stamp2) < ctime(renamed) */
+  /* mtime(stamp2) < ctime(renamed) */
+  ASSERT (statinfo[2].st_mtime < statinfo[1].st_ctime
+          || (statinfo[2].st_mtime == statinfo[1].st_ctime
+              && (get_stat_mtime_ns (&statinfo[2])
+                  < get_stat_ctime_ns (&statinfo[1]))));
 }
+#endif
 
 static void
 test_birthtime (const struct stat *statinfo,
-		const struct timespec *modtimes,
-		struct timespec *birthtimes)
+                const struct timespec *modtimes,
+                struct timespec *birthtimes)
 {
   int i;
 
@@ -160,11 +210,17 @@ test_birthtime (const struct stat *statinfo,
     {
       birthtimes[i] = get_stat_birthtime (&statinfo[i]);
       if (birthtimes[i].tv_nsec < 0)
-	return;
+        return;
     }
 
-  ASSERT (modtimes[0].tv_sec < birthtimes[1].tv_sec); /* mtime(stamp1) < birthtime(renamed) */
-  ASSERT (birthtimes[1].tv_sec < modtimes[2].tv_sec); /* birthtime(renamed) < mtime(stamp2) */
+  /* mtime(stamp1) < birthtime(renamed) */
+  ASSERT (modtimes[0].tv_sec < birthtimes[1].tv_sec
+          || (modtimes[0].tv_sec == birthtimes[1].tv_sec
+              && modtimes[0].tv_nsec < birthtimes[1].tv_nsec));
+  /* birthtime(renamed) < mtime(stamp2) */
+  ASSERT (birthtimes[1].tv_sec < modtimes[2].tv_sec
+          || (birthtimes[1].tv_sec == modtimes[2].tv_sec
+              && birthtimes[1].tv_nsec < modtimes[2].tv_nsec));
 }
 
 int
