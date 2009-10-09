@@ -355,6 +355,23 @@ extern int fstatat (int fd, char const *name, struct stat *st, int flags);
 #endif
 
 
+#if @GNULIB_FUTIMENS@
+# if @REPLACE_FUTIMENS@
+#  undef futimens
+#  define futimens rpl_futimens
+# endif
+# if !@HAVE_FUTIMENS@ || @REPLACE_FUTIMENS@
+extern int futimens (int fd, struct timespec const times[2]);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef futimens
+# define futimens(f,t)                         \
+    (GL_LINK_WARNING ("futimens is not portable - " \
+                      "use gnulib module futimens for portability"), \
+     futimens (f, t))
+#endif
+
+
 #if @GNULIB_MKDIRAT@
 # if !@HAVE_MKDIRAT@
 extern int mkdirat (int fd, char const *file, mode_t mode);

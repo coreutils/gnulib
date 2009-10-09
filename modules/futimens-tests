@@ -1,0 +1,15 @@
+Files:
+tests/test-futimens.h
+tests/test-futimens.c
+
+Depends-on:
+timespec
+utimecmp
+
+configure.ac:
+AC_CHECK_FUNCS_ONCE([usleep])
+
+Makefile.am:
+TESTS += test-futimens
+check_PROGRAMS += test-futimens
+test_futimens_LDADD = $(LDADD) $(LIB_CLOCK_GETTIME) @LIBINTL@

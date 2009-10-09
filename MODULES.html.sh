@@ -2262,6 +2262,7 @@ func_all_modules ()
   func_module ftell
   func_module ftello
   func_module ftruncate
+  func_module futimens
   func_module getaddrinfo
   func_module getcwd
   func_module getgroups

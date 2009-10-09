@@ -4,13 +4,9 @@
 
 POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/futimens.html}
 
-Gnulib module: ---
+Gnulib module: futimens
 
 Portability problems fixed by Gnulib:
-@itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
@@ -26,9 +22,12 @@ When using @code{UTIME_OMIT} or @code{UTIME_NOW}, some systems require
 the @code{tv_sec} argument to be 0, and don't necessarily handle all
 file permissions in the manner required by POSIX:
 Linux kernel 2.6.25.
-@item
-Some platforms lack the ability to change the timestamps of a file
-descriptor, so this function can fail with @code{ENOSYS}.
 @end itemize
 
-The gnulib module utimens provides a similar interface.
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+Some platforms lack the ability to change the timestamps of a file
+descriptor, so the replacement can fail with @code{ENOSYS}; the gnulib
+module @samp{utimens} provides a more reliable interface @code{gl_futimens}.
+@end itemize

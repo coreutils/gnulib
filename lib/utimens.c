@@ -49,6 +49,9 @@ struct utimbuf
 };
 #endif
 
+/* Avoid recursion with rpl_futimens.  */
+#undef futimens
+
 /* Validate the requested timestamps.  Return 0 if the resulting
    timespec can be used for utimensat (after possibly modifying it to
    work around bugs in utimensat).  Return 1 if the timespec needs

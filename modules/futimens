@@ -1,0 +1,28 @@
+Description:
+Set file access and modification times of a file descriptor.
+
+Files:
+lib/futimens.c
+m4/futimens.m4
+
+Depends-on:
+sys_stat
+utimens
+
+configure.ac:
+gl_FUNC_FUTIMENS
+gl_SYS_STAT_MODULE_INDICATOR([futimens])
+
+Makefile.am:
+
+Include:
+<sys/stat.h>
+
+Link:
+$(LIB_CLOCK_GETTIME)
+
+License:
+GPL
+
+Maintainer:
+Eric Blake

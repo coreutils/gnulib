@@ -1,5 +1,19 @@
 2009-10-10  Eric Blake  <ebb9@byu.net>
 
+	futimens: new module
+	* modules/futimens: New file.
+	* lib/futimens.c (futimens): Likewise.
+	* m4/futimens.m4 (gl_FUNC_FUTIMENS): Likewise.
+	* lib/utimens.c (futimens): Avoid recursion into rpl_futimens, so
+	we can work around Linux bugs.
+	* m4/sys_stat_h.m4 (gl_SYS_STAT_H_DEFAULTS): Add witnesses.
+	* modules/sys_stat (Makefile.am): Substitute them.
+	* lib/sys_stat.in.h (futimens): Declare it.
+	* MODULES.html.sh (systems lacking POSIX:2008): Mention module.
+	* doc/posix-functions/futimens.texi (futimens): Likewise.
+	* modules/futimens-tests: New test.
+	* tests/test-futimens.c: Likewise.
+
 	utimens: introduce fdutimens
 	* lib/utimens.h (fdutimens): New prototype.
 	* lib/utimens.c (gl_futimens): Move guts...
