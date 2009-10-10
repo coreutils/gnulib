@@ -79,7 +79,7 @@ main ()
   ASSERT (result1 == result2);
   ASSERT (close (dfd) == 0);
   if (result1 == 77)
-    fputs ("skipping test: symlinks not supported on this filesystem\n",
+    fputs ("skipping test: symlinks not supported on this file system\n",
 	   stderr);
   return result1;
 }

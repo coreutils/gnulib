@@ -1,5 +1,29 @@
 2009-10-09  Eric Blake  <ebb9@byu.net>
 
+	maint: prefer 'file system' over 'filesystem'
+	* doc/posix-functions/fstatat.texi (fstatat): Likewise.
+	* doc/posix-functions/lstat.texi (lstat): Likewise.
+	* lib/file-has-acl.c (file_has_acl): Likewise.
+	* lib/fwriteerror.c [TEST]: Likewise.
+	* tests/test-areadlink.h (test_areadlink): Likewise.
+	* tests/test-areadlinkat-with-size.c (main): Likewise.
+	* tests/test-areadlinkat.c (main): Likewise.
+	* tests/test-canonicalize-lgpl.c (main): Likewise.
+	* tests/test-canonicalize.c (main): Likewise.
+	* tests/test-fstatat.c (main): Likewise.
+	* tests/test-linkat.c (main): Likewise.
+	* tests/test-lstat.h (test_lstat_func): Likewise.
+	* tests/test-mkdir.h (test_mkdir): Likewise.
+	* tests/test-readlink.h (test_readlink): Likewise.
+	* tests/test-remove.c (main): Likewise.
+	* tests/test-rename.h (test_rename): Likewise.
+	* tests/test-renameat.c (main): Likewise.
+	* tests/test-rmdir.h (test_rmdir_func): Likewise.
+	* tests/test-symlink.h (test_symlink): Likewise.
+	* tests/test-symlinkat.c (main): Likewise.
+	* tests/test-unlink.h (test_unlink_func): Likewise.
+	* tests/test-unlinkat.c (main): Likewise.
+
 	maint: make realtime library usage explicit
 	* modules/gethrxtime (Link): Mention LIB_GETHRXTIME.
 	* modules/gettime (Link): Mention LIB_CLOCK_GETTIME.

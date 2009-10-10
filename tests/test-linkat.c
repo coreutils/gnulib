@@ -166,7 +166,7 @@ main ()
       ASSERT (rmdir (BASE "sub1") == 0);
       ASSERT (rmdir (BASE "sub2") == 0);
       free (cwd);
-      fputs ("skipping test: symlinks not supported on this filesystem\n",
+      fputs ("skipping test: symlinks not supported on this file system\n",
              stderr);
       return result;
     }

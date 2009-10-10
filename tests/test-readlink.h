@@ -58,7 +58,7 @@ test_readlink (ssize_t (*func) (char const *, char *, size_t), bool print)
   if (symlink (BASE "dir", BASE "link"))
     {
       if (print)
-        fputs ("skipping test: symlinks not supported on this filesystem\n",
+        fputs ("skipping test: symlinks not supported on this file system\n",
                stderr);
       return 77;
     }

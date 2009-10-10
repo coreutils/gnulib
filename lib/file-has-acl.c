@@ -354,7 +354,7 @@ file_has_acl (char const *name, struct stat const *sb)
 	      /* On Linux, FreeBSD, IRIX, acl_get_file (name, ACL_TYPE_ACCESS)
 		 and acl_get_file (name, ACL_TYPE_DEFAULT) on a directory
 		 either both succeed or both fail; it depends on the
-		 filesystem.  Therefore there is no point in making the second
+		 file system.  Therefore there is no point in making the second
 		 call if the first one already failed.  */
 	      if (ret == 0 && S_ISDIR (sb->st_mode))
 		{

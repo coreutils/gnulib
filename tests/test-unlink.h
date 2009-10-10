@@ -68,7 +68,7 @@ test_unlink_func (int (*func) (char const *name), bool print)
       ASSERT (func (BASE "dir/file") == 0);
       ASSERT (rmdir (BASE "dir") == 0);
       if (print)
-	fputs ("skipping test: symlinks not supported on this filesystem\n",
+	fputs ("skipping test: symlinks not supported on this file system\n",
 	       stderr);
       return 77;
     }

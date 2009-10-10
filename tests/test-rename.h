@@ -245,7 +245,7 @@ test_rename (int (*func) (char const *, char const *), bool print)
   if (symlink (BASE "file", BASE "link1"))
     {
       if (print)
-        fputs ("skipping test: symlinks not supported on this filesystem\n",
+        fputs ("skipping test: symlinks not supported on this file system\n",
                stderr);
       ASSERT (unlink (BASE "file") == 0);
       ASSERT (rmdir (BASE "dir") == 0);

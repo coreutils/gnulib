@@ -28,7 +28,7 @@ test_symlink (int (*func) (char const *, char const *), bool print)
   if (func ("nowhere", BASE "link1"))
     {
       if (print)
-        fputs ("skipping test: symlinks not supported on this filesystem\n",
+        fputs ("skipping test: symlinks not supported on this file system\n",
                stderr);
       return 77;
     }

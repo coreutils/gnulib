@@ -70,7 +70,7 @@ main ()
 
   /* Relative tests.  */
   if (result == 77)
-    fputs ("skipping test: symlinks not supported on this filesystem\n",
+    fputs ("skipping test: symlinks not supported on this file system\n",
            stderr);
   else
     {

@@ -92,7 +92,7 @@ main ()
      symlink.  */
   if (symlink (BASE "dir", BASE "link") != 0)
     {
-      fputs ("skipping test: symlinks not supported on this filesystem\n",
+      fputs ("skipping test: symlinks not supported on this file system\n",
              stderr);
       return 77;
     }
