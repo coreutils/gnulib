@@ -6,6 +6,7 @@ time
 sleep
 
 configure.ac:
+AC_CHECK_FUNCS([usleep])
 
 Makefile.am:
 TESTS += test-stat-time

@@ -1,3 +1,8 @@
+2009-10-10  Jim Meyering  <meyering@redhat.com>
+
+	stat-time-tests: check for the usleep function
+	* modules/stat-time-tests (configure.ac): Now that we test HAVE_USLEEP.
+
 2009-10-10  Bruno Haible  <bruno@clisp.org>
 
 	* modules/xnanosleep: Put the Link section after the Include section.
