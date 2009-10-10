@@ -104,19 +104,31 @@ nap (void)
   static long delay;
   if (!delay)
     {
-      /* Initialize only once, by sleeping for 1 millisecond.  If that
-         was enough to observe a difference, then we are set;
-         otherwise fall back to 2 seconds.  */
+      /* Initialize only once, by sleeping for 15 milliseconds (needed
+         since xfs has a quantization of about 10 milliseconds, even
+         though it has a granularity of 1 nanosecond).  If the seconds
+         differ, repeat the test one more time (in case we crossed a
+         quantization boundary on a file system with 1 second
+         resolution).  If we can't observe a difference in only the
+         nanoseconds, then fall back to 2 seconds.  */
       struct stat st1;
       struct stat st2;
       ASSERT (stat ("t-stt-stamp1", &st1) == 0);
       ASSERT (unlink ("t-stt-stamp1") == 0);
-      usleep (delay = 1000);
+      usleep (delay = 15000);
       create_file ("t-stt-stamp1");
       ASSERT (stat ("t-stt-stamp1", &st2) == 0);
-      if (! (st1.st_mtime < st2.st_mtime
-             || (st1.st_mtime == st2.st_mtime
-                 && get_stat_mtime_ns (&st1) < get_stat_mtime_ns (&st2))))
+      if (st1.st_mtime != st2.st_mtime)
+        {
+          /* Seconds differ, give it one more shot.  */
+          st1 = st2;
+          ASSERT (unlink ("t-stt-stamp1") == 0);
+          usleep (delay);
+          create_file ("t-stt-stamp1");
+          ASSERT (stat ("t-stt-stamp1", &st2) == 0);
+        }
+      if (! (st1.st_mtime == st2.st_mtime
+             && get_stat_mtime_ns (&st1) < get_stat_mtime_ns (&st2)))
         delay = 2000000;
     }
   usleep (delay);
