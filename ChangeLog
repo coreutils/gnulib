@@ -1,5 +1,9 @@
 2009-10-09  Eric Blake  <ebb9@byu.net>
 
+	test-stat-time: port to buggy NFS clients
+	* tests/test-stat-time.c (main) [W32]: Reduce ifdefs.
+	(test_ctime): Also skip test if mtime and ctime are skewed.
+
 	maint: prefer 'file system' over 'filesystem'
 	* doc/posix-functions/fstatat.texi (fstatat): Likewise.
 	* doc/posix-functions/lstat.texi (lstat): Likewise.

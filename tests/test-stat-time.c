@@ -186,10 +186,21 @@ test_mtime (const struct stat *statinfo, struct timespec *modtimes)
     }
 }
 
-#if !((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__)
+#if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
+/* Skip the ctime tests on native Windows platforms, because their
+   st_ctime is either the same as st_mtime (plus or minus an offset)
+   or set to the file _creation_ time, and is not influenced by rename
+   or chmod.  */
+# define test_ctime ((void) 0)
+#else
 static void
 test_ctime (const struct stat *statinfo)
 {
+  /* On some buggy NFS clients, mtime and ctime are disproportionately
+     skewed from one another.  Skip this test in that case.  */
+  if (statinfo[0].st_mtime != statinfo[0].st_ctime)
+    return;
+
   /* mtime(stamp2) < ctime(renamed) */
   ASSERT (statinfo[2].st_mtime < statinfo[1].st_ctime
           || (statinfo[2].st_mtime == statinfo[1].st_ctime
@@ -246,12 +257,7 @@ main ()
   cleanup (0);
   prepare_test (statinfo, modtimes);
   test_mtime (statinfo, modtimes);
-  /* Skip the ctime tests on native Windows platforms, because there st_ctime
-     is either the same as st_mtime (plus or minus an offset) or set to the
-     file _creation_ time, and is not influenced by rename or chmod.  */
-#if !((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__)
   test_ctime (statinfo);
-#endif
   test_birthtime (statinfo, modtimes, birthtimes);
 
   cleanup (0);
