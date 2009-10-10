@@ -1,5 +1,5 @@
 /* Provide relocatable packages.
-   Copyright (C) 2003-2006, 2008 Free Software Foundation, Inc.
+   Copyright (C) 2003-2006, 2008-2009 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software; you can redistribute it and/or modify it
@@ -233,11 +233,11 @@ compute_curr_prefix (const char *orig_installprefix,
 		  same = true;
 		break;
 	      }
-	    /* Do case-insensitive comparison if the filesystem is always or
+	    /* Do case-insensitive comparison if the file system is always or
 	       often case-insensitive.  It's better to accept the comparison
 	       if the difference is only in case, rather than to fail.  */
 #if defined _WIN32 || defined __WIN32__ || defined __CYGWIN__ || defined __EMX__ || defined __DJGPP__
-	    /* Win32, Cygwin, OS/2, DOS - case insignificant filesystem */
+	    /* Win32, Cygwin, OS/2, DOS - case insignificant file system */
 	    if ((*rpi >= 'a' && *rpi <= 'z' ? *rpi - 'a' + 'A' : *rpi)
 		!= (*cpi >= 'a' && *cpi <= 'z' ? *cpi - 'a' + 'A' : *cpi))
 	      break;
@@ -450,7 +450,7 @@ relocate (const char *pathname)
 #endif
 
   /* Note: It is not necessary to perform case insensitive comparison here,
-     even for DOS-like filesystems, because the pathname argument was
+     even for DOS-like file systems, because the pathname argument was
      typically created from the same Makefile variable as orig_prefix came
      from.  */
   if (orig_prefix != NULL && curr_prefix != NULL

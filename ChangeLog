@@ -1,3 +1,12 @@
+2009-10-10  Eric Blake  <ebb9@byu.net>
+
+	relocatable: prefer 'file system' over 'filesystem'
+	* m4/relocatable-lib.m4 (gl_RELOCATABLE_NOP): Use AS_HELP_STRING.
+	(gl_RELOCATABLE_LIBRARY_BODY): Fix spelling.
+	* doc/relocatable-maint.texi (Supporting Relocation): Likewise.
+	* doc/relocatable.texi (Enabling Relocatability): Likewise.
+	* lib/relocatable.c (compute_curr_prefix): Likewise.
+
 2009-10-10  Jim Meyering  <meyering@redhat.com>
 
 	stat-time-tests: check for the usleep function

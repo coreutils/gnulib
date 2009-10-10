@@ -1,4 +1,4 @@
-# relocatable-lib.m4 serial 4
+# relocatable-lib.m4 serial 5
 dnl Copyright (C) 2003, 2005-2007, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -27,7 +27,8 @@ AC_DEFUN([gl_RELOCATABLE_LIBRARY_BODY],
     [Define to the value of ${prefix}, as a string.])
   if test $RELOCATABLE = yes; then
     AC_DEFINE([ENABLE_RELOCATABLE], [1],
-      [Define to 1 if the package shall run at any location in the filesystem.])
+      [Define to 1 if the package shall run at any location in the file
+       system.])
   fi
 ])
 
@@ -43,7 +44,8 @@ AC_DEFUN([gl_RELOCATABLE_NOP],
 [
   AC_MSG_CHECKING([whether to activate relocatable installation])
   AC_ARG_ENABLE([relocatable],
-    [  --enable-relocatable    install a package that can be moved in the filesystem],
+    [AS_HELP_STRING([--enable-relocatable],
+      [install a package that can be moved in the file system])],
     [if test "$enableval" != no; then
        RELOCATABLE=yes
      else
