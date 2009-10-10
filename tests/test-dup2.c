@@ -80,6 +80,15 @@ main ()
   ASSERT (dup2 (fd, fd) == fd);
   ASSERT (is_open (fd));
 
+  /* The source must be valid.  */
+  errno = 0;
+  ASSERT (dup2 (-1, fd) == -1);
+  ASSERT (errno == EBADF);
+  errno = 0;
+  ASSERT (dup2 (AT_FDCWD, fd) == -1);
+  ASSERT (errno == EBADF);
+  ASSERT (is_open (fd));
+
   /* If the source is not open, then the destination is unaffected.  */
   errno = 0;
   ASSERT (dup2 (fd + 1, fd + 1) == -1);

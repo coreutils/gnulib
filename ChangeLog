@@ -1,5 +1,8 @@
 2009-10-10  Eric Blake  <ebb9@byu.net>
 
+	test-dup2: enhance test
+	* tests/test-dup2.c (main): Also check AT_FDCWD.
+
 	test-stat-time: avoid more spurious failures
 	* tests/test-stat-time.c (nap): Wait for 15ms rather than 2ms, for
 	xfs; and avoid race if the two timestamps cross quantization edge.
