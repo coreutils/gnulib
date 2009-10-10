@@ -1,5 +1,10 @@
 2009-10-09  Eric Blake  <ebb9@byu.net>
 
+	dup2: work around FreeBSD 6.1 bug
+	* m4/dup2.m4 (gl_FUNC_DUP2): Detect bug.
+	* doc/posix-functions/dup2.texi (dup2): Document it.
+	Reported by Nelson H. F. Beebe and Jim Meyering.
+
 	test-stat-time: port to buggy NFS clients
 	* tests/test-stat-time.c (main) [W32]: Reduce ifdefs.
 	(test_ctime): Also skip test if mtime and ctime are skewed.

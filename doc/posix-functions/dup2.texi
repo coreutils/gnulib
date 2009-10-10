@@ -25,6 +25,12 @@ This function may return @code{-EBADF} instead of @code{-1} on some platforms:
 Linux releases between July 2008 and May 2009 (versions 2.6.27 to 2.6.29).
 
 @item
+This function returns @code{EMFILE} instead of @code{EBADF} for
+extremely large targets, which interferes with using
+@code{dup2(fd,fd)==fd)} as the minimal @code{EBADF} filter:
+FreeBSD 6.1, Cygwin 1.5.
+
+@item
 This function is missing on some older platforms.
 @end itemize
 
