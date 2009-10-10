@@ -17,11 +17,11 @@ gl_XNANOSLEEP
 
 Makefile.am:
 
-Link:
-$(LIB_NANOSLEEP)
-
 Include:
 "xnanosleep.h"
+
+Link:
+$(LIB_NANOSLEEP)
 
 License:
 GPL

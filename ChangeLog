@@ -1,3 +1,7 @@
+2009-10-10  Bruno Haible  <bruno@clisp.org>
+
+	* modules/xnanosleep: Put the Link section after the Include section.
+
 2009-10-09  Eric Blake  <ebb9@byu.net>
 
 	dup2: work around FreeBSD 6.1 bug
