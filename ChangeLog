@@ -1,5 +1,12 @@
 2009-10-12  Eric Blake  <ebb9@byu.net>
 
+	utimens-tests: port to NFS file systems
+	* tests/test-utimens.h (test_utimens): Refactor utimecmp
+	comparisons to avoid spurious failures from timestamp drift
+	between NFS machines.
+
+2009-10-12  Eric Blake  <ebb9@byu.net>
+
 	stat-time-tests: minor cleanups
 	* modules/stat-time-tests (configure.ac): Use AC_CHECK_FUNCS_ONCE.
 	* tests/test-stat-time.c (nap): Separate assignment from call.

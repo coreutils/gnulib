@@ -56,10 +56,28 @@ test_utimens (int (*func) (char const *, struct timespec const *))
 
   ASSERT (close (creat (BASE "file", 0600)) == 0);
   /* If utimens truncates to less resolution than the file system
-     supports, then time can appear to go backwards between now and
-     the follow-up utimens(file,NULL).  Use UTIMECMP_TRUNCATE_SOURCE
-     to compensate, with st1 as the source.  */
+     supports, then time can appear to go backwards between now and a
+     follow-up utimens with UTIME_NOW or a NULL timespec.  Use
+     UTIMECMP_TRUNCATE_SOURCE to compensate, with st1 as the
+     source.  */
   ASSERT (stat (BASE "file", &st1) == 0);
+  ASSERT (func (BASE "file", NULL) == 0);
+  ASSERT (stat (BASE "file", &st2) == 0);
+  ASSERT (0 <= utimecmp (BASE "file", &st2, &st1, UTIMECMP_TRUNCATE_SOURCE));
+  {
+    /* On some NFS systems, the 'now' timestamp of creat or a NULL
+       timespec is determined by the server, but the 'now' timestamp
+       determined by gettime() (as is done when using UTIME_OMIT) is
+       determined by the client; since the two machines are not
+       necessarily on the same clock, this is another case where time
+       can appear to go backwards.  The rest of this test cares about
+       client time, so manually use gettime() to set both times.  */
+    struct timespec ts[2];
+    gettime (&ts[0]);
+    ts[1] = ts[0];
+    ASSERT (func (BASE "file", ts) == 0);
+    ASSERT (stat (BASE "file", &st1) == 0);
+  }
 
   /* Invalid arguments.  */
   errno = 0;
