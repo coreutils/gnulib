@@ -1,5 +1,6 @@
 Files:
 tests/test-futimens.h
+tests/test-utimens-common.h
 tests/test-futimens.c
 
 Depends-on:

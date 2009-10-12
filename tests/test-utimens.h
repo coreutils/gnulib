@@ -14,40 +14,11 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-/* This file assumes that BASE and ASSERT are already defined.  */
+#include "test-utimens-common.h"
 
-#ifndef GL_TEST_UTIMENS
-# define GL_TEST_UTIMENS
-
-#include <fcntl.h>
-#include <errno.h>
-#include <string.h>
-#include <unistd.h>
-
-#include "stat-time.h"
-#include "timespec.h"
-#include "utimecmp.h"
-
-enum {
-  BILLION = 1000 * 1000 * 1000,
-
-  Y2K = 946684800, /* Jan 1, 2000, in seconds since epoch.  */
-
-  /* Bogus positive and negative tv_nsec values closest to valid
-     range, but without colliding with UTIME_NOW or UTIME_OMIT.  */
-  UTIME_BOGUS_POS = BILLION + ((UTIME_NOW == BILLION || UTIME_OMIT == BILLION)
-                               ? (1 + (UTIME_NOW == BILLION + 1)
-                                  + (UTIME_OMIT == BILLION + 1))
-                               : 0),
-  UTIME_BOGUS_NEG = -1 - ((UTIME_NOW == -1 || UTIME_OMIT == -1)
-                          ? (1 + (UTIME_NOW == -2) + (UTIME_OMIT == -2))
-                          : 0)
-};
-
-#endif /* GL_TEST_UTIMENS */
-
-/* This function is designed to test both utimens(a,b) and
-   utimensat(AT_FDCWD,a,b,0).  FUNC is the function to test.  */
+/* This file is designed to test both utimens(a,b) and
+   utimensat(AT_FDCWD,a,b,0).  FUNC is the function to test.  Assumes
+   that BASE and ASSERT are already defined.  */
 static int
 test_utimens (int (*func) (char const *, struct timespec const *))
 {
@@ -61,13 +32,14 @@ test_utimens (int (*func) (char const *, struct timespec const *))
      UTIMECMP_TRUNCATE_SOURCE to compensate, with st1 as the
      source.  */
   ASSERT (stat (BASE "file", &st1) == 0);
+  nap ();
   ASSERT (func (BASE "file", NULL) == 0);
   ASSERT (stat (BASE "file", &st2) == 0);
   ASSERT (0 <= utimecmp (BASE "file", &st2, &st1, UTIMECMP_TRUNCATE_SOURCE));
   {
     /* On some NFS systems, the 'now' timestamp of creat or a NULL
        timespec is determined by the server, but the 'now' timestamp
-       determined by gettime() (as is done when using UTIME_OMIT) is
+       determined by gettime() (as is done when using UTIME_NOW) is
        determined by the client; since the two machines are not
        necessarily on the same clock, this is another case where time
        can appear to go backwards.  The rest of this test cares about
@@ -77,6 +49,7 @@ test_utimens (int (*func) (char const *, struct timespec const *))
     ts[1] = ts[0];
     ASSERT (func (BASE "file", ts) == 0);
     ASSERT (stat (BASE "file", &st1) == 0);
+    nap ();
   }
 
   /* Invalid arguments.  */

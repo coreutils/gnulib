@@ -14,41 +14,12 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-/* This file assumes that BASE and ASSERT are already defined.  */
+#include "test-utimens-common.h"
 
-#ifndef GL_TEST_UTIMENS
-# define GL_TEST_UTIMENS
-
-#include <fcntl.h>
-#include <errno.h>
-#include <string.h>
-#include <unistd.h>
-
-#include "stat-time.h"
-#include "timespec.h"
-#include "utimecmp.h"
-
-enum {
-  BILLION = 1000 * 1000 * 1000,
-
-  Y2K = 946684800, /* Jan 1, 2000, in seconds since epoch.  */
-
-  /* Bogus positive and negative tv_nsec values closest to valid
-     range, but without colliding with UTIME_NOW or UTIME_OMIT.  */
-  UTIME_BOGUS_POS = BILLION + ((UTIME_NOW == BILLION || UTIME_OMIT == BILLION)
-                               ? (1 + (UTIME_NOW == BILLION + 1)
-                                  + (UTIME_OMIT == BILLION + 1))
-                               : 0),
-  UTIME_BOGUS_NEG = -1 - ((UTIME_NOW == -1 || UTIME_OMIT == -1)
-                          ? (1 + (UTIME_NOW == -2) + (UTIME_OMIT == -2))
-                          : 0)
-};
-
-#endif /* GL_TEST_UTIMENS */
-
-/* This function is designed to test both gl_futimens(a,NULL,b) and
-   futimens(a,b).  FUNC is the function to test.  If PRINT, warn
-   before skipping tests with status 77.  */
+/* This file is designed to test both gl_futimens(a,NULL,b) and
+   futimens(a,b).  FUNC is the function to test.  Assumes that BASE
+   and ASSERT are already defined.  If PRINT, warn before skipping
+   tests with status 77.  */
 static int
 test_futimens (int (*func) (int, struct timespec const *),
                bool print)
@@ -60,6 +31,8 @@ test_futimens (int (*func) (int, struct timespec const *),
   ASSERT (0 <= fd);
 
   /* Sanity check.  */
+  ASSERT (fstat (fd, &st1) == 0);
+  nap ();
   errno = 0;
   result = func (fd, NULL);
   if (result == -1 && errno == ENOSYS)
@@ -73,7 +46,28 @@ test_futimens (int (*func) (int, struct timespec const *),
       return 77;
     }
   ASSERT (!result);
-  ASSERT (fstat (fd, &st1) == 0);
+  ASSERT (fstat (fd, &st2) == 0);
+  /* If utimens truncates to less resolution than the file system
+     supports, then time can appear to go backwards between now and a
+     follow-up utimens with UTIME_NOW or a NULL timespec.  Use
+     UTIMECMP_TRUNCATE_SOURCE to compensate, with st1 as the
+     source.  */
+  ASSERT (0 <= utimecmp (BASE "file", &st2, &st1, UTIMECMP_TRUNCATE_SOURCE));
+  {
+    /* On some NFS systems, the 'now' timestamp of creat or a NULL
+       timespec is determined by the server, but the 'now' timestamp
+       determined by gettime() (as is done when using UTIME_NOW) is
+       determined by the client; since the two machines are not
+       necessarily on the same clock, this is another case where time
+       can appear to go backwards.  The rest of this test cares about
+       client time, so manually use gettime() to set both times.  */
+    struct timespec ts[2];
+    gettime (&ts[0]);
+    ts[1] = ts[0];
+    ASSERT (func (fd, ts) == 0);
+    ASSERT (fstat (fd, &st1) == 0);
+    nap ();
+  }
 
   /* Invalid arguments.  */
   errno = 0;

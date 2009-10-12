@@ -1,5 +1,19 @@
 2009-10-16  Eric Blake  <ebb9@byu.net>
 
+	test-stat-time, test-utimens: improve portability
+	* tests/test-stat-time.c (nap): Lengthen delay to 20ms, for
+	ext4 on alpha, and for cygwin.
+	* tests/test-utimens-common.h: New file.
+	(nap): Factor delays into single function.
+	* tests/test-lutimens.h (test_lutimens): Use new header.
+	* tests/test-futimens.h (test_futimens): Likewise.
+	* tests/test-utimens.h (test_utimens): Likewise.  Also, force NFS
+	timestamps to occur from same machine, as was done previously for
+	test_utimens.
+	* modules/utimens-tests (Files): Ship new file.
+	* modules/futimens-tests (Files): Likewise.
+	Reported in part by Jim Meyering.
+
 	sys_stat: sort replacement declarations
 	* lib/sys_stat.in.h: Sort declarations.
 	* lib/futimens.c (futimens): Fix typo.

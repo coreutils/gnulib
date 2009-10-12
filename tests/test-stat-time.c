@@ -104,9 +104,11 @@ nap (void)
   static long delay;
   if (!delay)
     {
-      /* Initialize only once, by sleeping for 15 milliseconds (needed
+      /* Initialize only once, by sleeping for 20 milliseconds (needed
          since xfs has a quantization of about 10 milliseconds, even
-         though it has a granularity of 1 nanosecond).  If the seconds
+         though it has a granularity of 1 nanosecond, and since NTFS
+         has a default quantization of 15.25 milliseconds, even though
+         it has a granularity of 100 nanoseconds).  If the seconds
          differ, repeat the test one more time (in case we crossed a
          quantization boundary on a file system with 1 second
          resolution).  If we can't observe a difference in only the
@@ -116,7 +118,7 @@ nap (void)
       struct stat st2;
       ASSERT (stat ("t-stt-stamp1", &st1) == 0);
       ASSERT (force_unlink ("t-stt-stamp1") == 0);
-      delay = 15000;
+      delay = 20000;
       usleep (delay);
       create_file ("t-stt-stamp1");
       ASSERT (stat ("t-stt-stamp1", &st2) == 0);

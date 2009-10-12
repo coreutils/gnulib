@@ -2,6 +2,7 @@ Files:
 tests/test-futimens.h
 tests/test-lutimens.h
 tests/test-utimens.h
+tests/test-utimens-common.h
 tests/test-utimens.c
 
 Depends-on:

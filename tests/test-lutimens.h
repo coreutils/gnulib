@@ -14,41 +14,12 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-/* This file assumes that BASE and ASSERT are already defined.  */
+#include "test-utimens-common.h"
 
-#ifndef GL_TEST_UTIMENS
-# define GL_TEST_UTIMENS
-
-#include <fcntl.h>
-#include <errno.h>
-#include <string.h>
-#include <unistd.h>
-
-#include "stat-time.h"
-#include "timespec.h"
-#include "utimecmp.h"
-
-enum {
-  BILLION = 1000 * 1000 * 1000,
-
-  Y2K = 946684800, /* Jan 1, 2000, in seconds since epoch.  */
-
-  /* Bogus positive and negative tv_nsec values closest to valid
-     range, but without colliding with UTIME_NOW or UTIME_OMIT.  */
-  UTIME_BOGUS_POS = BILLION + ((UTIME_NOW == BILLION || UTIME_OMIT == BILLION)
-                               ? (1 + (UTIME_NOW == BILLION + 1)
-                                  + (UTIME_OMIT == BILLION + 1))
-                               : 0),
-  UTIME_BOGUS_NEG = -1 - ((UTIME_NOW == -1 || UTIME_OMIT == -1)
-                          ? (1 + (UTIME_NOW == -2) + (UTIME_OMIT == -2))
-                          : 0)
-};
-
-#endif /* GL_TEST_UTIMENS */
-
-/* This function is designed to test both lutimens(a,b) and
+/* This file is designed to test both lutimens(a,b) and
    utimensat(AT_FDCWD,a,b,AT_SYMLINK_NOFOLLOW).  FUNC is the function
-   to test.  If PRINT, warn before skipping tests with status 77.  */
+   to test.  Assumes that BASE and ASSERT are already defined.  If
+   PRINT, warn before skipping tests with status 77.  */
 static int
 test_lutimens (int (*func) (char const *, struct timespec const *), bool print)
 {
@@ -77,17 +48,13 @@ test_lutimens (int (*func) (char const *, struct timespec const *), bool print)
     }
   ASSERT (!result);
   ASSERT (lstat (BASE "link", &st1) == 0);
-#if HAVE_USLEEP
-  /* On Cygwin, the mere act of lstat changes symlink atime, even
-     though POSIX says that only readlink is allowed to do that.
-     Sleeping for one millisecond is enough to expose this.  Platforms
-     without usleep either don't have symlinks, or are immune.  */
-  usleep (1000);
-#endif
+  /* On cygwin, lstat() changes atime of symlinks, so that lutimens
+     can only effectively modify mtime.  */
+  nap ();
   ASSERT (lstat (BASE "link", &st2) == 0);
   if (st1.st_atime != st2.st_atime
       || get_stat_atime_ns (&st1) != get_stat_atime_ns (&st2))
-     atime_supported = false;
+    atime_supported = false;
 
   /* Invalid arguments.  */
   errno = 0;
