@@ -115,7 +115,8 @@ nap (void)
       struct stat st2;
       ASSERT (stat ("t-stt-stamp1", &st1) == 0);
       ASSERT (unlink ("t-stt-stamp1") == 0);
-      usleep (delay = 15000);
+      delay = 15000;
+      usleep (delay);
       create_file ("t-stt-stamp1");
       ASSERT (stat ("t-stt-stamp1", &st2) == 0);
       if (st1.st_mtime != st2.st_mtime)

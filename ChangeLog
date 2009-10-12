@@ -1,5 +1,10 @@
 2009-10-12  Eric Blake  <ebb9@byu.net>
 
+	stat-time-tests: minor cleanups
+	* modules/stat-time-tests (configure.ac): Use AC_CHECK_FUNCS_ONCE.
+	* tests/test-stat-time.c (nap): Separate assignment from call.
+	Suggested by Paolo Bonzini and Bruno Haible.
+
 	sys_stat: guarantee struct timespec
 	* lib/sys_stat.in.h (includes): Always include <time.h>
 	* modules/sys_stat (Depends-on): Add time.
