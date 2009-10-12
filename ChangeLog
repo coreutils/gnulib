@@ -1,3 +1,13 @@
+2009-10-12  Eric Blake  <ebb9@byu.net>
+
+	sys_stat: guarantee struct timespec
+	* lib/sys_stat.in.h (includes): Always include <time.h>
+	* modules/sys_stat (Depends-on): Add time.
+	* tests/test-sys_stat.c: Guarantee struct timespec, as well as
+	mode_t permission values.
+	* doc/posix-headers/sys_stat.texi (sys/stat.h): Document how to
+	get at subsecond timestamps.
+
 2009-10-10  Eric Blake  <ebb9@byu.net>
 
 	futimens: new module

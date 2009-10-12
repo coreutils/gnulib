@@ -20,6 +20,10 @@ The functions @code{lstat} and @code{mkdir} are not declared on mingw.
 @item
 The macros @code{UTIME_NOW} and @code{UTIME_OMIT} are missing on some
 platforms.
+@item
+On some platforms, @code{struct stat} does not include @code{st_atim},
+@code{st_mtim}, or @code{st_ctim} members.  Use the gnulib module
+@samp{stat-time} for accessors to portably get at subsecond resolution.
 @end itemize
 
 Portability problems not fixed by Gnulib:

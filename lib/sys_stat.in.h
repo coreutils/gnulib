@@ -38,6 +38,9 @@
 /* Get nlink_t.  */
 #include <sys/types.h>
 
+/* Get struct timespec.  */
+#include <time.h>
+
 /* The include_next requires a split double-inclusion guard.  */
 #@INCLUDE_NEXT@ @NEXT_SYS_STAT_H@
 

@@ -9,6 +9,7 @@ m4/unistd_h.m4
 Depends-on:
 include_next
 link-warning
+time
 
 configure.ac:
 gl_HEADER_SYS_STAT_H
