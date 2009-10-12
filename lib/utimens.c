@@ -52,6 +52,13 @@ struct utimbuf
 /* Avoid recursion with rpl_futimens.  */
 #undef futimens
 
+#if HAVE_UTIMENSAT || HAVE_FUTIMENS
+/* Cache variable for whether syscall works; used to avoid calling the
+   syscall if we know it will just fail with ENOSYS.  0 = unknown, 1 =
+   yes, -1 = no.  */
+static int utimensat_works_really;
+#endif /* HAVE_UTIMENSAT || HAVE_UTIMENSAT */
+
 /* Validate the requested timestamps.  Return 0 if the resulting
    timespec can be used for utimensat (after possibly modifying it to
    work around bugs in utimensat).  Return 1 if the timespec needs
@@ -182,41 +189,53 @@ fdutimens (char const *file, int fd, struct timespec const timespec[2])
 #endif
 
   /* POSIX 2008 added two interfaces to set file timestamps with
-     nanosecond resolution.  We provide a fallback for ENOSYS (for
-     example, compiling against Linux 2.6.25 kernel headers and glibc
-     2.7, but running on Linux 2.6.18 kernel).  */
-#if HAVE_UTIMENSAT
-  if (fd < 0)
+     nanosecond resolution; newer Linux implements both functions via
+     a single syscall.  We provide a fallback for ENOSYS (for example,
+     compiling against Linux 2.6.25 kernel headers and glibc 2.7, but
+     running on Linux 2.6.18 kernel).  */
+#if HAVE_UTIMENSAT || HAVE_FUTIMENS
+  if (0 <= utimensat_works_really)
     {
-      int result = utimensat (AT_FDCWD, file, ts, 0);
-# ifdef __linux__
-      /* Work around a kernel bug:
-         http://bugzilla.redhat.com/442352
-         http://bugzilla.redhat.com/449910
-         It appears that utimensat can mistakenly return 280 rather
-         than -1 upon failure.
-         FIXME: remove in 2010 or whenever the offending kernels
-         are no longer in common use.  */
-      if (0 < result)
-        errno = ENOSYS;
-# endif
-
-      if (result == 0 || errno != ENOSYS)
-        return result;
+# if HAVE_UTIMENSAT
+      if (fd < 0)
+        {
+          int result = utimensat (AT_FDCWD, file, ts, 0);
+#  ifdef __linux__
+          /* Work around a kernel bug:
+             http://bugzilla.redhat.com/442352
+             http://bugzilla.redhat.com/449910
+             It appears that utimensat can mistakenly return 280 rather
+             than -1 upon ENOSYS failure.
+             FIXME: remove in 2010 or whenever the offending kernels
+             are no longer in common use.  */
+          if (0 < result)
+            errno = ENOSYS;
+#  endif /* __linux__ */
+          if (result == 0 || errno != ENOSYS)
+            {
+              utimensat_works_really = 1;
+              return result;
+            }
+        }
+# endif /* HAVE_UTIMENSAT */
+# if HAVE_FUTIMENS
+      {
+        int result = futimens (fd, timespec);
+#  ifdef __linux__
+        /* Work around the same bug as above.  */
+        if (0 < result)
+          errno = ENOSYS;
+#  endif /* __linux__ */
+        if (result == 0 || errno != ENOSYS)
+          {
+            utimensat_works_really = 1;
+            return result;
+          }
+      }
+# endif /* HAVE_FUTIMENS */
     }
-#endif
-#if HAVE_FUTIMENS
-  {
-    int result = futimens (fd, timespec);
-# ifdef __linux__
-    /* Work around the same bug as above.  */
-    if (0 < result)
-      errno = ENOSYS;
-# endif
-    if (result == 0 || errno != ENOSYS)
-      return result;
-  }
-#endif
+  utimensat_works_really = -1;
+#endif /* HAVE_UTIMENSAT || HAVE_FUTIMENS */
 
   /* The platform lacks an interface to set file timestamps with
      nanosecond resolution, so do the best we can, discarding any
@@ -352,23 +371,27 @@ lutimens (char const *file, struct timespec const timespec[2])
      worry about bogus return values.  */
 
 #if HAVE_UTIMENSAT
-  {
-    int result = utimensat (AT_FDCWD, file, ts, AT_SYMLINK_NOFOLLOW);
+  if (0 <= utimensat_works_really)
+    {
+      int result = utimensat (AT_FDCWD, file, ts, AT_SYMLINK_NOFOLLOW);
 # ifdef __linux__
-    /* Work around a kernel bug:
-       http://bugzilla.redhat.com/442352
-       http://bugzilla.redhat.com/449910
-       It appears that utimensat can mistakenly return 280 rather
-       than -1 upon ENOSYS failure.
-       FIXME: remove in 2010 or whenever the offending kernels
-       are no longer in common use.  */
-    if (0 < result)
-      errno = ENOSYS;
+      /* Work around a kernel bug:
+         http://bugzilla.redhat.com/442352
+         http://bugzilla.redhat.com/449910
+         It appears that utimensat can mistakenly return 280 rather
+         than -1 upon ENOSYS failure.
+         FIXME: remove in 2010 or whenever the offending kernels
+         are no longer in common use.  */
+      if (0 < result)
+        errno = ENOSYS;
 # endif
-
-    if (result == 0 || errno != ENOSYS)
-      return result;
-  }
+      if (result == 0 || errno != ENOSYS)
+        {
+          utimensat_works_really = 1;
+          return result;
+        }
+    }
+  utimensat_works_really = -1;
 #endif /* HAVE_UTIMENSAT */
 
   /* The platform lacks an interface to set file timestamps with

@@ -1,5 +1,9 @@
 2009-10-16  Eric Blake  <ebb9@byu.net>
 
+	utimens: cache whether utimensat syscall works
+	* lib/utimens.c (utimensat_works_really): New cache variable.
+	(fdutimens, lutimens): Use it to avoid failing syscall.
+
 	test-stat-time, test-utimens: improve portability
 	* tests/test-stat-time.c (nap): Lengthen delay to 20ms, for
 	ext4 on alpha, and for cygwin.
