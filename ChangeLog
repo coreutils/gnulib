@@ -1,3 +1,9 @@
+2009-10-16  Eric Blake  <ebb9@byu.net>
+
+	sys_stat: sort replacement declarations
+	* lib/sys_stat.in.h: Sort declarations.
+	* lib/futimens.c (futimens): Fix typo.
+
 2009-10-15  Jim Meyering  <meyering@redhat.com>
 
 	don't let environment settings perturb build

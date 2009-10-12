@@ -25,10 +25,10 @@
 /* Set the access and modification time stamps of FD to be
    TIMESPEC[0] and TIMESPEC[1], respectively.
    Fail with ENOSYS on systems without futimes (or equivalent).
-   If TIMESPEC is null, set theh time stamps to the current time.
+   If TIMESPEC is null, set the time stamps to the current time.
    Return 0 on success, -1 (setting errno) on failure.  */
 int
-futimens (int fd, const struct timespec times[2])
+futimens (int fd, struct timespec const times[2])
 {
   /* fdutimens also works around bugs in native futimens, when running
      with glibc compiled against newer headers but on a Linux kernel
