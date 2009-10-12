@@ -49,8 +49,9 @@ struct utimbuf
 };
 #endif
 
-/* Avoid recursion with rpl_futimens.  */
+/* Avoid recursion with rpl_futimens or rpl_utimensat.  */
 #undef futimens
+#undef utimensat
 
 #if HAVE_UTIMENSAT || HAVE_FUTIMENS
 /* Cache variable for whether syscall works; used to avoid calling the

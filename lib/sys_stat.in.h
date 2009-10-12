@@ -468,6 +468,24 @@ extern int stat (const char *name, struct stat *buf);
 #endif
 
 
+#if @GNULIB_UTIMENSAT@
+# if @REPLACE_UTIMENSAT@
+#  undef utimensat
+#  define utimensat rpl_utimensat
+# endif
+# if !@HAVE_UTIMENSAT@ || @REPLACE_UTIMENSAT@
+   extern int utimensat (int fd, char const *name,
+                         struct timespec const times[2], int flag);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef utimensat
+# define utimensat(d,n,t,f)                          \
+    (GL_LINK_WARNING ("utimensat is not portable - " \
+                      "use gnulib module utimensat for portability"), \
+     utimensat (d, n, t, f))
+#endif
+
+
 #ifdef __cplusplus
 }
 #endif

@@ -1,5 +1,19 @@
 2009-10-16  Eric Blake  <ebb9@byu.net>
 
+	utimensat: new module
+	* modules/utimensat: New file.
+	* lib/utimensat.c (utimensat): Likewise.
+	* m4/utimensat.m4 (gl_FUNC_UTIMENSAT): Likewise.
+	* lib/utimens.c (utimensat): Avoid recursion into rpl_utimensat,
+	so we can work around Linux bugs.
+	* m4/sys_stat_h.m4 (gl_SYS_STAT_H_DEFAULTS): Add witnesses.
+	* modules/sys_stat (Makefile.am): Substitute them.
+	* lib/sys_stat.in.h (utimensat): Declare it.
+	* MODULES.html.sh (systems lacking POSIX:2008): Mention module.
+	* doc/posix-functions/utimensat.texi (utimensat): Likewise.
+	* modules/utimensat-tests: New test.
+	* tests/test-utimensat.c: Likewise.
+
 	utimens: let lutimens work on non-symlinks
 	* lib/utimens.c (lutimens): Fall back to utimens rather than
 	failing with ENOSYS, when file is not a symlink.

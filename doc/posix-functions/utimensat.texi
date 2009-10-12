@@ -4,13 +4,9 @@
 
 POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/utimensat.html}
 
-Gnulib module: ---
+Gnulib module: utimensat
 
 Portability problems fixed by Gnulib:
-@itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
@@ -26,10 +22,14 @@ When using @code{UTIME_OMIT} or @code{UTIME_NOW}, some systems require
 the @code{tv_sec} argument to be 0, and don't necessarily handle all
 file permissions in the manner required by POSIX:
 Linux kernel 2.6.25.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @item
 On some platforms, timestamps of symbolic links cannot be modified, so
-this function fails with @code{ENOSYS} if passed the flag
-@code{AT_SYMLINK_NOFOLLOW}.
+the replacement fails with @code{ENOSYS} if passed the flag
+@code{AT_SYMLINK_NOFOLLOW} on a symlink.
 @item
 The mere act of using @code{lstat} modifies the access time of
 symlinks on some platforms, so @code{utimensat} with
