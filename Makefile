@@ -13,7 +13,12 @@ info html dvi pdf:
 	cd doc && $(MAKE) $@ && $(MAKE) mostlyclean
 
 # Perform some platform independent checks on the gnulib code.
-check:
+check: sc_prefer_ac_check_funcs_once
+
+sc_prefer_ac_check_funcs_once:
+	git grep -w -l AC_CHECK_FUNCS modules && \
+	  { echo use AC_CHECK_FUNCS_ONCE, not AC_CHECK_FUNCS in modules/ 1>&2; \
+	    exit 1; } || :
 
 # Regenerate some files that are stored in the repository.
 regen: MODULES.html

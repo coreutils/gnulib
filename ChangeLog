@@ -1,3 +1,13 @@
+2009-10-13  Jim Meyering  <meyering@redhat.com>
+
+	use AC_CHECK_FUNCS_ONCE, not AC_CHECK_FUNCS in modules/*
+	* modules/pipe-filter-gi: Use AC_CHECK_FUNCS_ONCE, not AC_CHECK_FUNCS.
+	* modules/pipe-filter-ii: Likewise.
+	* modules/sys_socket-tests: Likewise.
+	* modules/tsearch-tests: Likewise.
+	* Makefile (sc_prefer_ac_check_funcs_once): New rule.
+	(check): Depend on it.
+
 2009-10-12  Eric Blake  <ebb9@byu.net>
 
 	utimens-tests: port to NFS file systems

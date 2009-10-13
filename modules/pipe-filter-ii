@@ -19,7 +19,7 @@ unistd
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
-AC_CHECK_FUNCS([select])
+AC_CHECK_FUNCS_ONCE([select])
 
 Makefile.am:
 lib_SOURCES += pipe-filter-ii.c
