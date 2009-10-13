@@ -217,6 +217,7 @@ _gl_directory_name (int fd)
    rpl_open() used a dummy file to work around an open() that can't
    normally visit directories.  */
 #if REPLACE_OPEN_DIRECTORY
+# undef fstat
 int
 rpl_fstat (int fd, struct stat *statbuf)
 {

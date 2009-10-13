@@ -1,5 +1,9 @@
 2009-10-14  Eric Blake  <ebb9@byu.net>
 
+	fchdir: avoid infinite recursion in mingw
+	* lib/fchdir.c (rpl_fstat): Call system fstat, rather than
+	recursing.
+
 	test-stat-time: port to mingw
 	* tests/test-stat-time.c (force_unlink): Return a value.
 	(test_ctime) [W32]: Fix compilation error.
