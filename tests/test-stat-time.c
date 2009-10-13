@@ -41,13 +41,13 @@
 
 enum { NFILES = 4 };
 
-static void
+static int
 force_unlink (const char *filename)
 {
   /* This chmod is necessary on mingw, where unlink() of a read-only file
      fails with EPERM.  */
   chmod (filename, 0600);
-  unlink (filename);
+  return unlink (filename);
 }
 
 static void
@@ -110,11 +110,12 @@ nap (void)
          differ, repeat the test one more time (in case we crossed a
          quantization boundary on a file system with 1 second
          resolution).  If we can't observe a difference in only the
-         nanoseconds, then fall back to 2 seconds.  */
+         nanoseconds, then fall back to 2 seconds.  However, note that
+         usleep (2000000) is allowed to fail with EINVAL.  */
       struct stat st1;
       struct stat st2;
       ASSERT (stat ("t-stt-stamp1", &st1) == 0);
-      ASSERT (unlink ("t-stt-stamp1") == 0);
+      ASSERT (force_unlink ("t-stt-stamp1") == 0);
       delay = 15000;
       usleep (delay);
       create_file ("t-stt-stamp1");
@@ -123,7 +124,7 @@ nap (void)
         {
           /* Seconds differ, give it one more shot.  */
           st1 = st2;
-          ASSERT (unlink ("t-stt-stamp1") == 0);
+          ASSERT (force_unlink ("t-stt-stamp1") == 0);
           usleep (delay);
           create_file ("t-stt-stamp1");
           ASSERT (stat ("t-stt-stamp1", &st2) == 0);
@@ -132,7 +133,10 @@ nap (void)
              && get_stat_mtime_ns (&st1) < get_stat_mtime_ns (&st2)))
         delay = 2000000;
     }
-  usleep (delay);
+  if (delay == 2000000)
+    sleep (2);
+  else
+    usleep (delay);
 #endif /* HAVE_USLEEP */
 }
 
@@ -204,7 +208,7 @@ test_mtime (const struct stat *statinfo, struct timespec *modtimes)
    st_ctime is either the same as st_mtime (plus or minus an offset)
    or set to the file _creation_ time, and is not influenced by rename
    or chmod.  */
-# define test_ctime ((void) 0)
+# define test_ctime(ignored) ((void) 0)
 #else
 static void
 test_ctime (const struct stat *statinfo)
@@ -229,7 +233,7 @@ test_birthtime (const struct stat *statinfo,
 {
   int i;
 
-  /* Collect the birth times.. */
+  /* Collect the birth times.  */
   for (i = 0; i < NFILES; ++i)
     {
       birthtimes[i] = get_stat_birthtime (&statinfo[i]);

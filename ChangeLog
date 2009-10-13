@@ -1,3 +1,13 @@
+2009-10-14  Eric Blake  <ebb9@byu.net>
+
+	test-stat-time: port to mingw
+	* tests/test-stat-time.c (force_unlink): Return a value.
+	(test_ctime) [W32]: Fix compilation error.
+	(nap): Don't call usleep with too large an argument.  Use
+	force_unlink.
+	* doc/pastposix-functions/usleep.texi (usleep): Document the
+	portability issue.
+
 2009-10-13  Jim Meyering  <meyering@redhat.com>
 
 	use AC_CHECK_FUNCS_ONCE, not AC_CHECK_FUNCS in modules/*

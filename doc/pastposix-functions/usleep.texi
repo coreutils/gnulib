@@ -14,9 +14,13 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-IRIX 5.3, Solaris 2.4, mingw, BeOS.
+IRIX 5.3, Solaris 2.4, older mingw, BeOS.
 @item
 According to POSIX, the @code{usleep} function may interfere with the program's
 use of the @code{SIGALRM} signal.  On Linux, it doesn't; on other platforms,
 it may.
+@item
+On some systems, @code{usleep} rejects attempts to sleep longer than 1
+second, as allowed by POSIX:
+mingw.
 @end itemize
