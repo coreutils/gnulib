@@ -24,12 +24,34 @@ static int
 test_lutimens (int (*func) (char const *, struct timespec const *), bool print)
 {
   int result;
+  int saved_errno;
   struct stat st1;
   struct stat st2;
   bool atime_supported = true;
 
-  if (symlink ("nowhere", BASE "link"))
+  /* Non-symlinks should be handled just like utimens.  */
+  errno = 0;
+  ASSERT (func ("no_such", NULL) == -1);
+  ASSERT (errno == ENOENT);
+  errno = 0;
+  ASSERT (func ("", NULL) == -1);
+  ASSERT (errno == ENOENT);
+  ASSERT (close (creat (BASE "file", 0600)) == 0);
+  ASSERT (stat (BASE "file", &st1) == 0);
+  ASSERT (st1.st_atime != Y2K);
+  ASSERT (st1.st_mtime != Y2K);
+  {
+    struct timespec ts[2] = { { Y2K, 0 }, { Y2K, 0 } };
+    ASSERT (func (BASE "file", ts) == 0);
+  }
+  ASSERT (stat (BASE "file", &st1) == 0);
+  ASSERT (st1.st_atime == Y2K);
+  ASSERT (st1.st_mtime == Y2K);
+
+  /* Play with symlink timestamps.  */
+  if (symlink (BASE "file", BASE "link"))
     {
+      ASSERT (unlink (BASE "file") == 0);
       if (print)
         fputs ("skipping test: symlinks not supported on this file system\n",
                stderr);
@@ -37,7 +59,16 @@ test_lutimens (int (*func) (char const *, struct timespec const *), bool print)
     }
   errno = 0;
   result = func (BASE "link", NULL);
-  if (result == -1 && errno == ENOSYS)
+  saved_errno = errno;
+  /* Make sure we did not reference through link by accident.  */
+  ASSERT (stat (BASE "file", &st1) == 0);
+  ASSERT (st1.st_atime == Y2K);
+  ASSERT (st1.st_mtime == Y2K);
+  ASSERT (lstat (BASE "link", &st1) == 0);
+  ASSERT (st1.st_atime != Y2K);
+  ASSERT (st1.st_mtime != Y2K);
+  ASSERT (unlink (BASE "file") == 0);
+  if (result == -1 && saved_errno == ENOSYS)
     {
       ASSERT (unlink (BASE "link") == 0);
       if (print)
@@ -57,12 +88,6 @@ test_lutimens (int (*func) (char const *, struct timespec const *), bool print)
     atime_supported = false;
 
   /* Invalid arguments.  */
-  errno = 0;
-  ASSERT (func ("no_such", NULL) == -1);
-  ASSERT (errno == ENOENT);
-  errno = 0;
-  ASSERT (func ("", NULL) == -1);
-  ASSERT (errno == ENOENT);
   {
     struct timespec ts[2] = { { Y2K, UTIME_BOGUS_POS }, { Y2K, 0 } };
     errno = 0;

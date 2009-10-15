@@ -18,9 +18,10 @@
 
 /* This file is designed to test both utimens(a,b) and
    utimensat(AT_FDCWD,a,b,0).  FUNC is the function to test.  Assumes
-   that BASE and ASSERT are already defined.  */
+   that BASE and ASSERT are already defined.  If PRINT, warn before
+   skipping tests with status 77.  */
 static int
-test_utimens (int (*func) (char const *, struct timespec const *))
+test_utimens (int (*func) (char const *, struct timespec const *), bool print)
 {
   struct stat st1;
   struct stat st2;
@@ -101,7 +102,30 @@ test_utimens (int (*func) (char const *, struct timespec const *))
     ASSERT (0 <= utimecmp (BASE "file", &st2, &st1, UTIMECMP_TRUNCATE_SOURCE));
   }
 
+  /* Make sure this dereferences symlinks.  */
+  if (symlink (BASE "file", BASE "link"))
+    {
+       ASSERT (unlink (BASE "file") == 0);
+      if (print)
+        fputs ("skipping test: symlinks not supported on this file system\n",
+               stderr);
+      return 77;
+    }
+  ASSERT (lstat (BASE "link", &st1) == 0);
+  ASSERT (st1.st_mtime != Y2K);
+  {
+    struct timespec ts[2] = { { Y2K, 0 }, { Y2K, 0 } };
+    ASSERT (func (BASE "link", ts) == 0);
+    ASSERT (lstat (BASE "link", &st2) == 0);
+    /* Can't compare atimes, since lstat() changes symlink atime on cygwin.  */
+    ASSERT (st1.st_mtime == st2.st_mtime);
+    ASSERT (stat (BASE "link", &st2) == 0);
+    ASSERT (st2.st_mtime == Y2K);
+    ASSERT (get_stat_mtime_ns (&st2) == 0);
+  }
+
   /* Cleanup.  */
+  ASSERT (unlink (BASE "link") == 0);
   ASSERT (unlink (BASE "file") == 0);
   return 0;
 }

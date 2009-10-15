@@ -71,20 +71,19 @@ do_fdutimens (char const *name, struct timespec const times[2])
 int
 main ()
 {
-  int result1;
-  int result2;
+  int result1; /* Skip because of no symlink support.  */
+  int result2; /* Skip because of no futimens support.  */
+  int result3; /* Skip because of no lutimens support.  */
 
   /* Clean up any trash from prior testsuite runs.  */
   ASSERT (system ("rm -rf " BASE "*") == 0);
 
-  ASSERT (test_utimens (utimens) == 0);
-  ASSERT (test_utimens (do_fdutimens) == 0);
-  result1 = test_futimens (do_futimens, true);
-  if (result1)
-    ASSERT (result1 == 77);
+  result1 = test_utimens (utimens, true);
+  ASSERT (test_utimens (do_fdutimens, false) == result1);
   /* Print only one skip message.  */
-  result2 = test_lutimens (lutimens, result1 == 0);
-  if (result2)
-    ASSERT (result2 == 77);
-  return result1 | result2;
+  result2 = test_futimens (do_futimens, result1 == 0);
+  result3 = test_lutimens (lutimens, (result1 + result2) == 0);
+  /* We expect 0/0, 0/77, or 77/77, but not 77/0.  */
+  ASSERT (result1 <= result3);
+  return result1 | result2 | result3;
 }

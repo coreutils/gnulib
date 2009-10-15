@@ -1,5 +1,15 @@
 2009-10-16  Eric Blake  <ebb9@byu.net>
 
+	utimens: let lutimens work on non-symlinks
+	* lib/utimens.c (lutimens): Fall back to utimens rather than
+	failing with ENOSYS, when file is not a symlink.
+	(utimens): Reduce redirection.
+	* tests/test-lutimens.h (test_lutimens): Update test to cover
+	non-symlinks.
+	* tests/test-utimens.h (test_utimens): Update test to cover
+	symlinks.
+	* tests/test-utimens.c (main): Update caller.
+
 	utimens: cache whether utimensat syscall works
 	* lib/utimens.c (utimensat_works_really): New cache variable.
 	(fdutimens, lutimens): Use it to avoid failing syscall.

@@ -343,18 +343,20 @@ gl_futimens (int fd, char const *file, struct timespec const timespec[2])
 int
 utimens (char const *file, struct timespec const timespec[2])
 {
-  return gl_futimens (-1, file, timespec);
+  return fdutimens (file, -1, timespec);
 }
 
-/* Set the access and modification time stamps of the symlink FILE to
-   be TIMESPEC[0] and TIMESPEC[1], respectively.  Fail with ENOSYS if
-   the platform does not support changing symlink timestamps.  */
+/* Set the access and modification time stamps of FILE to be
+   TIMESPEC[0] and TIMESPEC[1], respectively, without dereferencing
+   symlinks.  Fail with ENOSYS if the platform does not support
+   changing symlink timestamps, but FILE was a symlink.  */
 int
 lutimens (char const *file, struct timespec const timespec[2])
 {
   struct timespec adjusted_timespec[2];
   struct timespec *ts = timespec ? adjusted_timespec : NULL;
   int adjustment_needed = 0;
+  struct stat st;
 
   if (ts)
     {
@@ -400,7 +402,6 @@ lutimens (char const *file, struct timespec const timespec[2])
 
   if (adjustment_needed)
     {
-      struct stat st;
       if (lstat (file, &st))
         return -1;
       if (update_timespec (&st, &ts))
@@ -426,8 +427,11 @@ lutimens (char const *file, struct timespec const timespec[2])
   }
 #endif /* HAVE_LUTIMES */
 
-  /* Out of luck.  Symlink timestamps can't be changed.  We won't
-     bother changing the timestamps if FILE was not a symlink.  */
+  /* Out of luck for symlinks, but we still handle regular files.  */
+  if (!adjustment_needed && lstat (file, &st))
+    return -1;
+  if (!S_ISLNK (st.st_mode))
+    return fdutimens (file, -1, ts);
   errno = ENOSYS;
   return -1;
 }
