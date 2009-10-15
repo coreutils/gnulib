@@ -20,6 +20,7 @@ AC_DEFUN([gl_CLOCK_TIME],
   # Save and restore LIBS so e.g., -lrt, isn't added to it.  Otherwise, *all*
   # programs in the package would end up linked with that potentially-shared
   # library, inducing unnecessary run-time overhead.
+  LIB_CLOCK_GETTIME=
   gl_saved_libs=$LIBS
     AC_SEARCH_LIBS([clock_gettime], [rt posix4],
                    [test "$ac_cv_search_clock_gettime" = "none required" ||

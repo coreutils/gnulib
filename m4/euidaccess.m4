@@ -42,6 +42,7 @@ AC_DEFUN([gl_PREREQ_EUIDACCESS], [
   # Save and restore LIBS so -lgen isn't added to it.  Otherwise, *all*
   # programs in the package would end up linked with that potentially-shared
   # library, inducing unnecessary run-time overhead.
+  LIB_EACCESS=
   gl_saved_libs=$LIBS
     AC_SEARCH_LIBS([eaccess], [gen],
                    [test "$ac_cv_search_eaccess" = "none required" ||

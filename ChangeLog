@@ -1,3 +1,27 @@
+2009-10-15  Jim Meyering  <meyering@redhat.com>
+
+	don't let environment settings perturb build
+	Setting the envvars, LIB_CLOCK_GETTIME, LIB_EACCESS or LIB_NANOSLEEP
+	could cause a configure-time and/or build-time malfunction.
+	Typically, a configure-time function-in-library test is performed
+	via code like this:
+
+	  LIB_VAR=
+	  AC_SUBST([LIB_VAR])
+	  prefix_saved_LIBS=$LIBS
+	    AC_SEARCH_LIBS([FUNC], [LIB_NAME],
+		       [test "$ac_cv_search_FUNC" = "none required" ||
+			LIB_VAR=$ac_cv_search_FUNC])
+	  LIBS=$prefix_saved_LIBS
+
+	However, in each of the files affected by this change, the LIB_VAR=
+	initialization was omitted.  Thus, when set in the environment, its
+	value would propagate into generated Makefiles when FUNC is not found
+	in LIB_NAME.
+	* m4/clock_time.m4 (gl_CLOCK_TIME): Initialize AC_SUBST'd var.
+	* m4/euidaccess.m4 (gl_PREREQ_EUIDACCESS): Likewise.
+	* m4/nanosleep.m4 (gl_FUNC_NANOSLEEP): Likewise.
+
 2009-10-14  Eric Blake  <ebb9@byu.net>
 
 	fchdir: avoid infinite recursion in mingw
