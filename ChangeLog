@@ -1,3 +1,15 @@
+2009-10-18  Giuseppe Scrivano  <gscrivano@gnu.org>
+            Bruno Haible  <bruno@clisp.org>
+
+	Implement nproc for NetBSD, OpenBSD.
+	* lib/nproc.c: Include <sys/types.h>, <sys/param.h>, <sys/sysctl.h>.
+	(ARRAY_SIZE): New macro.
+	(num_processors): On BSD systems, try sysctl of HW_NCPU.
+	* m4/nproc.m4: New file.
+	* modules/nproc (Files): Add m4/nproc.m4.
+	(configure.ac): Invoke gl_NPROC. Remove AC_LIBOBJ invocation.
+	(Makefile.am): Instead, augment lib_SOURCES.
+
 2009-10-18  Bruno Haible  <bruno@clisp.org>
 
 	Fix recognition of sys/sysctl.h on OpenBSD 4.0.

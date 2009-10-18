@@ -4,14 +4,16 @@ Detect the number of processors
 Files:
 lib/nproc.h
 lib/nproc.c
+m4/nproc.m4
 
 Depends-on:
 unistd
 
 configure.ac:
-AC_LIBOBJ([nproc])
+gl_NPROC
 
 Makefile.am:
+lib_SOURCES += nproc.c
 
 Include:
 "nproc.h"

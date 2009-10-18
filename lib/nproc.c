@@ -23,15 +23,43 @@
 
 #include <unistd.h>
 
+#include <sys/types.h>
+
+#if HAVE_SYS_PARAM_H
+# include <sys/param.h>
+#endif
+
+#if HAVE_SYS_SYSCTL_H
+# include <sys/sysctl.h>
+#endif
+
+#define ARRAY_SIZE(a) (sizeof (a) / sizeof ((a)[0]))
+
 /* Return the total number of processors.  The result is guaranteed to
    be at least 1.  */
 unsigned long int
 num_processors (void)
 {
-#ifdef _SC_NPROCESSORS_ONLN
-  long int nprocs = sysconf (_SC_NPROCESSORS_ONLN);
-  if (0 < nprocs)
-    return nprocs;
+#if defined _SC_NPROCESSORS_ONLN
+  { /* This works on glibc, MacOS X 10.5, FreeBSD, AIX, OSF/1, Solaris, Cygwin,
+       Haiku.  */
+    long int nprocs = sysconf (_SC_NPROCESSORS_ONLN);
+    if (0 < nprocs)
+      return nprocs;
+  }
+#endif
+
+#if HAVE_SYSCTL && defined HW_NCPU
+  { /* This works on MacOS X, FreeBSD, NetBSD, OpenBSD.  */
+    int nprocs;
+    size_t len = sizeof (nprocs);
+    static int mib[2] = { CTL_HW, HW_NCPU };
+
+    if (sysctl (mib, ARRAY_SIZE (mib), &nprocs, &len, NULL, 0) == 0
+	&& len == sizeof (nprocs)
+	&& 0 < nprocs)
+      return nprocs;
+  }
 #endif
 
   return 1;
