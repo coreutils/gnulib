@@ -41,6 +41,11 @@
 # include <sys/sysctl.h>
 #endif
 
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+# define WIN32_LEAN_AND_MEAN
+# include <windows.h>
+#endif
+
 #define ARRAY_SIZE(a) (sizeof (a) / sizeof ((a)[0]))
 
 /* Return the total number of processors.  The result is guaranteed to
@@ -87,6 +92,15 @@ num_processors (void)
 	&& len == sizeof (nprocs)
 	&& 0 < nprocs)
       return nprocs;
+  }
+#endif
+
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+  { /* This works on native Windows platforms.  */
+    SYSTEM_INFO system_info;
+    GetSystemInfo (&system_info);
+    if (0 < system_info.dwNumberOfProcessors)
+      return system_info.dwNumberOfProcessors;
   }
 #endif
 
