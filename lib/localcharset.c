@@ -23,6 +23,7 @@
 /* Specification.  */
 #include "localcharset.h"
 
+#include <fcntl.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <string.h>
@@ -44,6 +45,7 @@
 #endif
 
 #if !defined WIN32_NATIVE
+# include <unistd.h>
 # if HAVE_LANGINFO_CODESET
 #  include <langinfo.h>
 # else
@@ -73,6 +75,11 @@
 /* Get LIBDIR.  */
 #ifndef LIBDIR
 # include "configmake.h"
+#endif
+
+/* Define O_NOFOLLOW to 0 on platforms where it does not exist.  */
+#ifndef O_NOFOLLOW
+# define O_NOFOLLOW 0
 #endif
 
 #if defined _WIN32 || defined __WIN32__ || defined __CYGWIN__ || defined __EMX__ || defined __DJGPP__
@@ -117,7 +124,6 @@ get_charset_aliases (void)
   if (cp == NULL)
     {
 #if !(defined DARWIN7 || defined VMS || defined WIN32_NATIVE || defined __CYGWIN__)
-      FILE *fp;
       const char *dir;
       const char *base = "charset.alias";
       char *file_name;
@@ -143,77 +149,105 @@ get_charset_aliases (void)
 	  }
       }
 
-      if (file_name == NULL || (fp = fopen (file_name, "r")) == NULL)
-	/* Out of memory or file not found, treat it as empty.  */
+      if (file_name == NULL)
+	/* Out of memory.  Treat the file as empty.  */
 	cp = "";
       else
 	{
-	  /* Parse the file's contents.  */
-	  char *res_ptr = NULL;
-	  size_t res_size = 0;
+	  int fd;
 
-	  for (;;)
-	    {
-	      int c;
-	      char buf1[50+1];
-	      char buf2[50+1];
-	      size_t l1, l2;
-	      char *old_res_ptr;
-
-	      c = getc (fp);
-	      if (c == EOF)
-		break;
-	      if (c == '\n' || c == ' ' || c == '\t')
-		continue;
-	      if (c == '#')
-		{
-		  /* Skip comment, to end of line.  */
-		  do
-		    c = getc (fp);
-		  while (!(c == EOF || c == '\n'));
-		  if (c == EOF)
-		    break;
-		  continue;
-		}
-	      ungetc (c, fp);
-	      if (fscanf (fp, "%50s %50s", buf1, buf2) < 2)
-		break;
-	      l1 = strlen (buf1);
-	      l2 = strlen (buf2);
-	      old_res_ptr = res_ptr;
-	      if (res_size == 0)
-		{
-		  res_size = l1 + 1 + l2 + 1;
-		  res_ptr = (char *) malloc (res_size + 1);
-		}
-	      else
-		{
-		  res_size += l1 + 1 + l2 + 1;
-		  res_ptr = (char *) realloc (res_ptr, res_size + 1);
-		}
-	      if (res_ptr == NULL)
-		{
-		  /* Out of memory. */
-		  res_size = 0;
-		  if (old_res_ptr != NULL)
-		    free (old_res_ptr);
-		  break;
-		}
-	      strcpy (res_ptr + res_size - (l2 + 1) - (l1 + 1), buf1);
-	      strcpy (res_ptr + res_size - (l2 + 1), buf2);
-	    }
-	  fclose (fp);
-	  if (res_size == 0)
+	  /* Open the file.  Reject symbolic links on platforms that support
+	     O_NOFOLLOW.  This is a security feature.  Without it, an attacker
+	     could retrieve parts of the contents (namely, the tail of the
+	     first line that starts with "* ") of an arbitrary file by placing
+	     a symbolic link to that file under the name "charset.alias" in
+	     some writable directory and defining the environment variable
+	     CHARSETALIASDIR to point to that directory.  */
+	  fd = open (file_name,
+		     O_RDONLY | (HAVE_WORKING_O_NOFOLLOW ? O_NOFOLLOW : 0));
+	  if (fd < 0)
+	    /* File not found.  Treat it as empty.  */
 	    cp = "";
 	  else
 	    {
-	      *(res_ptr + res_size) = '\0';
-	      cp = res_ptr;
-	    }
-	}
+	      FILE *fp;
 
-      if (file_name != NULL)
-	free (file_name);
+	      fp = fdopen (fd, "r");
+	      if (fp == NULL)
+		{
+		  /* Out of memory.  Treat the file as empty.  */
+		  close (fd);
+		  cp = "";
+		}
+	      else
+		{
+		  /* Parse the file's contents.  */
+		  char *res_ptr = NULL;
+		  size_t res_size = 0;
+
+		  for (;;)
+		    {
+		      int c;
+		      char buf1[50+1];
+		      char buf2[50+1];
+		      size_t l1, l2;
+		      char *old_res_ptr;
+
+		      c = getc (fp);
+		      if (c == EOF)
+			break;
+		      if (c == '\n' || c == ' ' || c == '\t')
+			continue;
+		      if (c == '#')
+			{
+			  /* Skip comment, to end of line.  */
+			  do
+			    c = getc (fp);
+			  while (!(c == EOF || c == '\n'));
+			  if (c == EOF)
+			    break;
+			  continue;
+			}
+		      ungetc (c, fp);
+		      if (fscanf (fp, "%50s %50s", buf1, buf2) < 2)
+			break;
+		      l1 = strlen (buf1);
+		      l2 = strlen (buf2);
+		      old_res_ptr = res_ptr;
+		      if (res_size == 0)
+			{
+			  res_size = l1 + 1 + l2 + 1;
+			  res_ptr = (char *) malloc (res_size + 1);
+			}
+		      else
+			{
+			  res_size += l1 + 1 + l2 + 1;
+			  res_ptr = (char *) realloc (res_ptr, res_size + 1);
+			}
+		      if (res_ptr == NULL)
+			{
+			  /* Out of memory. */
+			  res_size = 0;
+			  if (old_res_ptr != NULL)
+			    free (old_res_ptr);
+			  break;
+			}
+		      strcpy (res_ptr + res_size - (l2 + 1) - (l1 + 1), buf1);
+		      strcpy (res_ptr + res_size - (l2 + 1), buf2);
+		    }
+		  fclose (fp);
+		  if (res_size == 0)
+		    cp = "";
+		  else
+		    {
+		      *(res_ptr + res_size) = '\0';
+		      cp = res_ptr;
+		    }
+		}
+	    }
+
+	  free (file_name);
+	}
 
 #else
 

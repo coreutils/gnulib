@@ -1,5 +1,18 @@
 2009-10-18  Bruno Haible  <bruno@clisp.org>
 
+	Avoid symlink attack in localcharset module.
+	* lib/localcharset.c: Include <fcntl.h>, <unistd.h>.
+	(O_NOFOLLOW): Define fallback.
+	(get_charset_aliases): Don't open the file if it is a symbolic link.
+	* m4/fcntl_h.m4 (gl_FCNTL_O_FLAGS): New macro, extracted from
+	gl_FCNTL_H.
+	(gl_FCNTL_H): Require it.
+	* m4/localcharset.m4 (gl_LOCALCHARSET): Likewise.
+	* modules/localcharset (Files): Add m4/fcntl_h.m4.
+	Reported by Fergal Glynn <fglynn@veracode.com>.
+
+2009-10-18  Bruno Haible  <bruno@clisp.org>
+
 	Implement nproc for mingw.
 	* lib/nproc.c: Include <windows.h>
 	(num_processors): On native Windows platforms, try GetSystemInfo.

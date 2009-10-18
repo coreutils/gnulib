@@ -14,6 +14,7 @@ lib/config.charset
 lib/ref-add.sin
 lib/ref-del.sin
 m4/codeset.m4
+m4/fcntl_h.m4
 m4/glibc21.m4
 m4/localcharset.m4
 

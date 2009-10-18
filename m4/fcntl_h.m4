@@ -1,4 +1,4 @@
-# serial 5
+# serial 6
 # Configure fcntl.h.
 dnl Copyright (C) 2006, 2007, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
@@ -10,6 +10,17 @@ dnl Written by Paul Eggert.
 AC_DEFUN([gl_FCNTL_H],
 [
   AC_REQUIRE([gl_FCNTL_H_DEFAULTS])
+  AC_REQUIRE([gl_FCNTL_O_FLAGS])
+  gl_CHECK_NEXT_HEADERS([fcntl.h])
+  FCNTL_H='fcntl.h'
+  AC_SUBST([FCNTL_H])
+])
+
+# Test whether the flags O_NOATIME and O_NOFOLLOW actually work.
+# Define HAVE_WORKING_O_NOATIME to 1 if O_NOATIME works, or to 0 otherwise.
+# Define HAVE_WORKING_O_NOFOLLOW to 1 if O_NOFOLLOW works, or to 0 otherwise.
+AC_DEFUN([gl_FCNTL_O_FLAGS],
+[
   dnl Persuade glibc <fcntl.h> to define O_NOATIME and O_NOFOLLOW.
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
   AC_CACHE_CHECK([for working fcntl.h], [gl_cv_header_working_fcntl_h],
@@ -77,10 +88,6 @@ AC_DEFUN([gl_FCNTL_H],
   esac
   AC_DEFINE_UNQUOTED([HAVE_WORKING_O_NOFOLLOW], [$ac_val],
     [Define to 1 if O_NOFOLLOW works.])
-
-  gl_CHECK_NEXT_HEADERS([fcntl.h])
-  FCNTL_H='fcntl.h'
-  AC_SUBST([FCNTL_H])
 ])
 
 AC_DEFUN([gl_FCNTL_MODULE_INDICATOR],
