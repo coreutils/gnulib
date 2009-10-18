@@ -13,3 +13,18 @@ Portability problems fixed by Gnulib:
 Portability problems not fixed by Gnulib:
 @itemize
 @end itemize
+
+Note: This function's behaviour depends on the locale, but requires special
+handling for the multibyte characters that occur in strings in locales with
+@code{MB_CUR_MAX > 1} (this includes all the common UTF-8 locales).
+There are two alternative APIs:
+
+@table @code
+@item c_isascii
+This function operates in a locale independent way and returns true only for
+ASCII characters.  It is provided by the Gnulib module @samp{c-ctype}.
+
+@item mb_isascii
+This function operates in a locale dependent way, on multibyte characters.
+It is provided by the Gnulib module @samp{mbchar}.
+@end table
