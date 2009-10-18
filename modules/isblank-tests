@@ -1,0 +1,10 @@
+Files:
+tests/test-isblank.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-isblank
+check_PROGRAMS += test-isblank

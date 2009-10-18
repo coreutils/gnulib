@@ -1,5 +1,9 @@
 2009-10-18  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'isblank'.
+	* modules/isblank-tests: New file.
+	* tests/test-isblank.c: New file.
+
 	New module 'isblank'.
 	* lib/isblank.c: New file.
 	* m4/isblank.m4: New file.
