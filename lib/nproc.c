@@ -25,6 +25,10 @@
 
 #include <sys/types.h>
 
+#if HAVE_SYS_PSTAT_H
+# include <sys/pstat.h>
+#endif
+
 #if HAVE_SYS_PARAM_H
 # include <sys/param.h>
 #endif
@@ -46,6 +50,15 @@ num_processors (void)
     long int nprocs = sysconf (_SC_NPROCESSORS_ONLN);
     if (0 < nprocs)
       return nprocs;
+  }
+#endif
+
+#if HAVE_PSTAT_GETDYNAMIC
+  { /* This works on HP-UX.  */
+    struct pst_dynamic psd;
+    if (0 <= pstat_getdynamic (&psd, sizeof psd, 1, 0)
+	&& 0 < psd.psd_proc_cnt)
+      return psd.psd_proc_cnt;
   }
 #endif
 
