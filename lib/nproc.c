@@ -29,6 +29,10 @@
 # include <sys/pstat.h>
 #endif
 
+#if HAVE_SYS_SYSMP_H
+# include <sys/sysmp.h>
+#endif
+
 #if HAVE_SYS_PARAM_H
 # include <sys/param.h>
 #endif
@@ -59,6 +63,17 @@ num_processors (void)
     if (0 <= pstat_getdynamic (&psd, sizeof psd, 1, 0)
 	&& 0 < psd.psd_proc_cnt)
       return psd.psd_proc_cnt;
+  }
+#endif
+
+#if HAVE_SYSMP && defined MP_NAPROCS
+  { /* This works on IRIX.  */
+    /* MP_NPROCS yields the number of installed processors.
+       MP_NAPROCS yields the number of processors available to unprivileged
+       processes.  We need the latter.  */
+    int nprocs = sysmp (MP_NAPROCS);
+    if (0 < nprocs)
+      return nprocs;
   }
 #endif
 

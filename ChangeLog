@@ -1,5 +1,12 @@
 2009-10-18  Bruno Haible  <bruno@clisp.org>
 
+	Implement nproc for IRIX.
+	* lib/nproc.c: Include <sys/sysmp.h>.
+	(num_processors): On IRIX systems, try sysmp.
+	* m4/nproc.m4 (gl_PREREQ_NPROC): Check for sys/sysmp.h and sysmp.
+
+2009-10-18  Bruno Haible  <bruno@clisp.org>
+
 	Implement nproc for HP-UX.
 	* lib/nproc.c: Include <sys/pstat.h>
 	(num_processors): On HP-UX systems, try pstat_getdynamic.
