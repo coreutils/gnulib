@@ -3,7 +3,7 @@
 
 POSIX specification: @url{http://www.opengroup.org/susv3xbd/ctype.h.html}
 
-Gnulib module: ---
+Gnulib module: ctype
 
 Portability problems fixed by Gnulib:
 @itemize

@@ -1,3 +1,11 @@
+2009-10-18  Bruno Haible  <bruno@clisp.org>
+
+	New module 'ctype'.
+	* lib/ctype.in.h: New file.
+	* m4/ctype.m4: New file.
+	* modules/ctype: New file.
+	* doc/posix-headers/ctype.texi: Mention the new module.
+
 2009-10-18  Jim Meyering  <meyering@redhat.com>
 
 	m4: stylistic-only: hoist AC_SUBST to be adjacent to initialization
