@@ -1,3 +1,9 @@
+2009-10-18  Bruno Haible  <bruno@clisp.org>
+
+	Fix recognition of sys/sysctl.h on OpenBSD 4.0.
+	* m4/physmem.m4 (gl_PHYSMEM): Before including sys/sysctl.h, include
+	sys/param.h.
+
 2009-10-16  Eric Blake  <ebb9@byu.net>
 
 	utimensat: new module
