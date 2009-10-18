@@ -1,5 +1,11 @@
 2009-10-18  Bruno Haible  <bruno@clisp.org>
 
+	Don't let environment variables perturb build.
+	* m4/gethrxtime.m4 (gl_GETHRXTIME): Initialize LIB_GETHRXTIME here...
+	(gl_PREREQ_GETHRXTIME): ... not here.
+
+2009-10-18  Bruno Haible  <bruno@clisp.org>
+
 	Avoid symlink attack in localcharset module.
 	* lib/localcharset.c: Include <fcntl.h>, <unistd.h>.
 	(O_NOFOLLOW): Define fallback.

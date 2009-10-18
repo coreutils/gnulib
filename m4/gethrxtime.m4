@@ -1,4 +1,4 @@
-# gethrxtime.m4 serial 8
+# gethrxtime.m4 serial 9
 dnl Copyright (C) 2005, 2006, 2008, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,12 +12,14 @@ AC_DEFUN([gl_GETHRXTIME],
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_REQUIRE([gl_XTIME])
   AC_CHECK_DECLS([gethrtime], [], [], [#include <time.h>])
+  LIB_GETHRXTIME=
   case $ac_cv_have_decl_gethrtime,$gl_cv_arithmetic_hrtime_t in
   yes,yes) ;;
   *)
     AC_LIBOBJ([gethrxtime])
     gl_PREREQ_GETHRXTIME;;
   esac
+  AC_SUBST([LIB_GETHRXTIME])
 ])
 
 # Test whether hrtime_t is an arithmetic type.
@@ -54,7 +56,6 @@ AC_DEFUN([gl_PREREQ_GETHRXTIME],
   AC_CHECK_FUNCS_ONCE([microuptime nanouptime])
 
   if test $ac_cv_func_nanouptime != yes; then
-    LIB_GETHRXTIME=
     AC_CACHE_CHECK([whether CLOCK_MONOTONIC or CLOCK_REALTIME is defined],
       gl_cv_have_clock_gettime_macro,
       [AC_EGREP_CPP([have_clock_gettime_macro],
@@ -69,6 +70,5 @@ AC_DEFUN([gl_PREREQ_GETHRXTIME],
     if test $gl_cv_have_clock_gettime_macro = yes; then
       LIB_GETHRXTIME=$LIB_CLOCK_GETTIME
     fi
-    AC_SUBST([LIB_GETHRXTIME])
   fi
 ])
