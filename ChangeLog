@@ -1,3 +1,19 @@
+2009-10-18  Jim Meyering  <meyering@redhat.com>
+
+	m4: stylistic-only: hoist AC_SUBST to be adjacent to initialization
+	Declare a variable like LIB_CLOCK_GETTIME to be AC_SUBSTituted
+	right after its initialization, rather than farther down.
+	Keeping these in close proximity makes it easier to ensure
+	that each such variable is initialized.  E.g.,
+
+	    LIB_CLOCK_GETTIME=
+	    AC_SUBST([LIB_CLOCK_GETTIME])
+
+	This change also increments these serial numbers.
+	* m4/clock_time.m4 (gl_CLOCK_TIME): Hoist AC_SUBST use.
+	* m4/euidaccess.m4 (gl_PREREQ_EUIDACCESS): Likewise.
+	* m4/nanosleep.m4 (gl_FUNC_NANOSLEEP): Likewise.
+
 2009-10-18  Bruno Haible  <bruno@clisp.org>
 
 	Don't let environment variables perturb build.
