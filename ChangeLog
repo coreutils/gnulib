@@ -1,5 +1,13 @@
 2009-10-18  Bruno Haible  <bruno@clisp.org>
 
+	New module 'isblank'.
+	* lib/isblank.c: New file.
+	* m4/isblank.m4: New file.
+	* modules/isblank: New file.
+	* doc/posix-functions/isblank.texi: Mention the new module.
+
+2009-10-18  Bruno Haible  <bruno@clisp.org>
+
 	New module 'ctype'.
 	* lib/ctype.in.h: New file.
 	* m4/ctype.m4: New file.
