@@ -1,3 +1,7 @@
+2009-10-19  Giuseppe Scrivano  <gscrivano@gnu.org>
+
+	* lib/nproc.h: Add extern "C" block for C++.
+
 2009-10-18  Reuben Thomas  <rrt@sc3d.org>
             Bruno Haible  <bruno@clisp.org>
 

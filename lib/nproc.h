@@ -18,4 +18,13 @@
 
 /* Written by Glen Lenker.  */
 
+/* Allow the use in C++ code.  */
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 unsigned long int num_processors (void);
+
+#ifdef __cplusplus
+}
+#endif /* C++ */
