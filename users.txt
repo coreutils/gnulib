@@ -48,6 +48,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   man-db          http://www.chiark.greenend.org.uk/~cjwatson/bzr/man-db/trunk/
   miktex          https://svn.sourceforge.net/svnroot/miktex/miktex/trunk
   msmtp           http://msmtp.cvs.sourceforge.net/msmtp/msmtp/
+  myserver        http://git.sv.gnu.org/gitweb/?p=myserver.git;a=summary
   netcf           http://fedorahosted.org/netcf/
   newts           http://svn.arete.cc/newts/trunk/
   parted          http://git.debian.org/?p=parted/parted.git;a=summary
