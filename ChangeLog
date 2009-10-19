@@ -1,3 +1,8 @@
+2009-10-20  Pádraig Brady  <P@draigBrady.com>
+
+	acl: warn if ACL support is not detected
+	* m4/acl.m4 (gl_FUNC_ACL): Output a warning if ACL support is not found.
+
 2009-10-19  Giuseppe Scrivano  <gscrivano@gnu.org>
 
 	* lib/nproc.h: Add extern "C" block for C++.

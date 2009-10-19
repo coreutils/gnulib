@@ -116,6 +116,9 @@ int type = ACL_TYPE_EXTENDED;]],
     fi
     if test "x$enable_acl$use_acl" = "xyes0"; then
       AC_MSG_ERROR([ACLs enabled but support not detected])
+    elif test "x$enable_acl$use_acl" = "xauto0"; then
+      AC_MSG_WARN([libacl development library was not found or not usable.])
+      AC_MSG_WARN([AC_PACKAGE_NAME will be built without ACL support.])
     fi
   fi
   AC_SUBST([LIB_ACL])
