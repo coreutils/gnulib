@@ -84,7 +84,10 @@ and only the @samp{make install} phase executed with root privileges.
 
 @item
 Optionally, type @samp{make installcheck} to repeat any self-tests, but
-this time using the binaries in their final installed location.
+this time using the binaries in their final installed location.  This
+target does not install anything.  Running this target as a regular
+user, particularly if the prior @samp{make install} required root
+privileges, verifies that the installation completed correctly.
 
 @item
 You can remove the program binaries and object files from the source
@@ -169,7 +172,7 @@ By default, @samp{make install} installs the package's commands under
 You can specify an
 installation prefix other than @file{/usr/local} by giving
 @command{configure} the option @option{--prefix=@var{prefix}}, where
-@var{prefix} must be an absolute path.
+@var{prefix} must be an absolute file name.
 
 You can specify separate installation prefixes for architecture-specific
 files and architecture-independent files.  If you pass the option
@@ -184,7 +187,8 @@ particular kinds of files.  Run @samp{configure --help} for a list of
 the directories you can set and what kinds of files go in them.  In
 general, the default for these options is expressed in terms of
 @samp{$@{prefix@}}, so that specifying just @option{--prefix} will
-affect all of the other directory specifications.
+affect all of the other directory specifications that were not
+explicitly provided.
 
 The most portable way to affect installation locations is to pass the
 correct locations to @command{configure}; however, many packages provide
@@ -194,12 +198,12 @@ without having to reconfigure or recompile.
 
 The first method involves providing an override variable for each
 affected directory.  For example, @samp{make install
-prefix=/path/to/alternate} will choose an alternate location, as well as
-influencing all other directory configuration variables that were
-expressed in terms of @samp{$@{prefix@}} (or, put another way, all
-directories specified during @command{configure} but not in terms of the
-common prefix must each be overridden at install time for the entire
-installation to be relocated).  The approach of makefile variable
+prefix=/alternate/directory} will choose an alternate location for all
+directory configuration variables that were expressed in terms of
+@samp{$@{prefix@}}.  Any directories that were specified during
+@command{configure}, but not in terms of @samp{$@{prefix@}}, must each be
+overridden at install time for the entire
+installation to be relocated.  The approach of makefile variable
 overrides for each directory variable is required by the @acronym{GNU}
 Coding Standards, and ideally causes no recompilation.  However, some
 platforms have known limitations with the semantics of shared libraries
@@ -207,16 +211,13 @@ that end up requiring recompilation when using this method, particularly
 noticeable in packages that use @acronym{GNU} Libtool.
 
 The second method involves providing the @samp{DESTDIR} variable.  For
-example, @samp{make install DESTDIR=/path/to/alternate} will prepend
-@samp{/path/to/alternate} before all installation paths.  The approach
+example, @samp{make install DESTDIR=/alternate/directory} will prepend
+@samp{/alternate/directory} before all installation names.  The approach
 of @samp{DESTDIR} overrides is not required by the @acronym{GNU} Coding
 Standards, and does not work on platforms that have drive letters.  On
 the other hand, it does better at avoiding recompilation issues, and
 works well even when some directory options were not specified in terms
-of @samp{$@{prefix@}} at @command{configure} time.  For packages which
-support @samp{DESTDIR}, the variable should remain undefined during
-@command{configure} and @samp{make all}, and only be specified during
-@samp{make install}.
+of @samp{$@{prefix@}} at @command{configure} time.
 
 @node Optional Features
 @section Optional Features
