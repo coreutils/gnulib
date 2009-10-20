@@ -8,7 +8,7 @@
 	* lib/nproc.h: Add extern "C" block for C++.
 
 2009-10-18  Reuben Thomas  <rrt@sc3d.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* doc/posix-functions/isascii.texi: Document the 2 alternative APIs.
 	* doc/posix-functions/isalnum.texi: Document the 4 alternative APIs.
@@ -101,7 +101,7 @@
 	pstat_getdynamic.
 
 2009-10-18  Giuseppe Scrivano  <gscrivano@gnu.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Implement nproc for NetBSD, OpenBSD.
 	* lib/nproc.c: Include <sys/types.h>, <sys/param.h>, <sys/sysctl.h>.
@@ -4211,10 +4211,10 @@
 
 2009-06-25  Sergey Poznyakoff  <gray@gnu.org.ua>
 
-       * lib/argp-version-etc.c (program_authors): Add const
-       qualifier.
-       * lib/version-etc.c: Fix typos in the comments.
-       * modules/argp-version-etc: Depends on version-etc.
+	* lib/argp-version-etc.c (program_authors): Add const
+	qualifier.
+	* lib/version-etc.c: Fix typos in the comments.
+	* modules/argp-version-etc: Depends on version-etc.
 
 2009-06-25  Sergey Poznyakoff  <gray@gnu.org.ua>
 
