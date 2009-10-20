@@ -1,5 +1,13 @@
 2009-10-20  Eric Blake  <ebb9@byu.net>
 
+	fdutimensat: new module
+	* modules/fdutimensat: New file.
+	* lib/fdutimensat.c (fdutimensat): Likewise.
+	* lib/utimens.h (fdutimensat, lutimensat): Declare new functions.
+	* MODULES.html.sh (File system functions): Mention module.
+	* modules/fdutimensat-tests: New test.
+	* tests/test-fdutimensat.c: Likewise.
+
 	doc: regenerate INSTALL
 	* doc/INSTALL: Reflect recent autoconf update.
 	* doc/INSTALL.ISO: Likewise.

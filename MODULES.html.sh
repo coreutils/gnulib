@@ -2464,6 +2464,7 @@ func_all_modules ()
   func_module euidaccess
   func_module faccessat
   func_module fdopendir
+  func_module fdutimensat
   func_module file-type
   func_module fileblocks
   func_module filemode
