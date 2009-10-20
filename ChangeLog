@@ -1,5 +1,17 @@
 2009-10-20  Eric Blake  <ebb9@byu.net>
 
+	utimensat: work around Solaris 9 bug
+	* lib/utimens.c (fdutimens, lutimens): Force a stat if platform
+	has trailing slash bugs.
+	* tests/test-lutimens.h (test_lutimens): Enhance test.
+	* tests/test-utimens.h (test_utimens): Likewise.
+	* doc/posix-functions/utime.texi (utime): Enhance documentation.
+	* doc/posix-functions/utimes.texi (utimes): Likewise.
+	* doc/posix-functions/utimensat.texi (utimensat): Likewise.
+	* doc/glibc-functions/futimesat.texi (futimesat): Likewise.
+	* doc/glibc-functions/lutimes.texi (lutimes): Likewise.
+	* doc/posix-functions/futimens.texi (futimens): Likewise.
+
 	fdutimensat: new module
 	* modules/fdutimensat: New file.
 	* lib/fdutimensat.c (fdutimensat): Likewise.

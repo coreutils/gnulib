@@ -16,8 +16,12 @@ file's timestamp to the current time.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+On some platforms, this function mis-handles trailing slash:
+Solaris 9.
+@item
 This function cannot set full timestamp resolution.  Use
-@code{utimensat(AT_FDCWD,file,times,0)} instead.
+@code{utimensat(AT_FDCWD,file,times,0)}, or the gnulib module utimens,
+instead.
 @item
 On some platforms, the prototype for @code{utime} omits @code{const}
 for the second argument.  Fortunately, the argument is not modified,

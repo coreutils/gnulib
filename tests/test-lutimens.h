@@ -34,12 +34,24 @@ test_lutimens (int (*func) (char const *, struct timespec const *), bool print)
   ASSERT (func ("no_such", NULL) == -1);
   ASSERT (errno == ENOENT);
   errno = 0;
+  ASSERT (func ("no_such/", NULL) == -1);
+  ASSERT (errno == ENOENT || errno == ENOTDIR);
+  errno = 0;
   ASSERT (func ("", NULL) == -1);
   ASSERT (errno == ENOENT);
   ASSERT (close (creat (BASE "file", 0600)) == 0);
   ASSERT (stat (BASE "file", &st1) == 0);
   ASSERT (st1.st_atime != Y2K);
   ASSERT (st1.st_mtime != Y2K);
+  {
+    struct timespec ts[2] = { { Y2K, 0 }, { Y2K, 0 } };
+    errno = 0;
+    ASSERT (func (BASE "file/", ts) == -1);
+    ASSERT (errno == ENOTDIR);
+    ASSERT (stat (BASE "file", &st2) == 0);
+    ASSERT (st1.st_atime == st2.st_atime);
+    ASSERT (st1.st_mtime == st2.st_mtime);
+  }
   {
     struct timespec ts[2] = { { Y2K, 0 }, { Y2K, 0 } };
     ASSERT (func (BASE "file", ts) == 0);
@@ -138,7 +150,30 @@ test_lutimens (int (*func) (char const *, struct timespec const *), bool print)
     ASSERT (utimecmp (BASE "link", &st1, &st2, 0) <= 0);
   }
 
+  /* Symlink to directory.  */
+  ASSERT (unlink (BASE "link") == 0);
+  ASSERT (symlink (BASE "dir", BASE "link") == 0);
+  ASSERT (mkdir (BASE "dir", 0700) == 0);
+  {
+    struct timespec ts[2] = { { Y2K, 0 }, { Y2K, 0 } };
+    ASSERT (func (BASE "link/", ts) == 0);
+  }
+  /* On cygwin 1.5, stat() changes atime of directories, so only check
+     mtime.  */
+  ASSERT (stat (BASE "dir", &st1) == 0);
+  ASSERT (st1.st_mtime == Y2K);
+  ASSERT (lstat (BASE "link", &st1) == 0);
+  ASSERT (st1.st_atime != Y2K);
+  ASSERT (st1.st_mtime != Y2K);
+  ASSERT (func (BASE "link", NULL) == 0);
+  ASSERT (stat (BASE "dir", &st1) == 0);
+  ASSERT (st1.st_mtime == Y2K);
+  ASSERT (lstat (BASE "link", &st1) == 0);
+  ASSERT (st1.st_atime != Y2K);
+  ASSERT (st1.st_mtime != Y2K);
+
   /* Cleanup.  */
+  ASSERT (rmdir (BASE "dir") == 0);
   ASSERT (unlink (BASE "link") == 0);
   return 0;
 }

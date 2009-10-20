@@ -60,6 +60,12 @@ struct utimbuf
 static int utimensat_works_really;
 #endif /* HAVE_UTIMENSAT || HAVE_UTIMENSAT */
 
+/* Solaris 9 mistakenly succeeds when given a non-directory with a
+   trailing slash.  Force the use of rpl_stat for a fix.  */
+#ifndef REPLACE_FUNC_STAT_FILE
+# define REPLACE_FUNC_STAT_FILE 0
+#endif
+
 /* Validate the requested timestamps.  Return 0 if the resulting
    timespec can be used for utimensat (after possibly modifying it to
    work around bugs in utimensat).  Return 1 if the timespec needs
@@ -242,12 +248,12 @@ fdutimens (char const *file, int fd, struct timespec const timespec[2])
      nanosecond resolution, so do the best we can, discarding any
      fractional part of the timestamp.  */
 
-  if (adjustment_needed)
+  if (adjustment_needed || (REPLACE_FUNC_STAT_FILE && fd < 0))
     {
       struct stat st;
       if (fd < 0 ? stat (file, &st) : fstat (fd, &st))
         return -1;
-      if (update_timespec (&st, &ts))
+      if (ts && update_timespec (&st, &ts))
         return 0;
     }
 
@@ -401,11 +407,11 @@ lutimens (char const *file, struct timespec const timespec[2])
      nanosecond resolution, so do the best we can, discarding any
      fractional part of the timestamp.  */
 
-  if (adjustment_needed)
+  if (adjustment_needed || REPLACE_FUNC_STAT_FILE)
     {
       if (lstat (file, &st))
         return -1;
-      if (update_timespec (&st, &ts))
+      if (ts && update_timespec (&st, &ts))
         return 0;
     }
 
@@ -429,7 +435,7 @@ lutimens (char const *file, struct timespec const timespec[2])
 #endif /* HAVE_LUTIMES */
 
   /* Out of luck for symlinks, but we still handle regular files.  */
-  if (!adjustment_needed && lstat (file, &st))
+  if (!(adjustment_needed || REPLACE_FUNC_STAT_FILE) && lstat (file, &st))
     return -1;
   if (!S_ISLNK (st.st_mode))
     return fdutimens (file, -1, ts);

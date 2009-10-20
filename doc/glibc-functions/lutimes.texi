@@ -16,7 +16,8 @@ MacOS X 10.3, OpenBSD 3.8, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1,
 Solaris 10, mingw, Interix 3.5, BeOS.
 @item
 This function cannot set full timestamp resolution.  Use
-@code{utimensat(AT_FDCWD,file,times,AT_SYMLINK_NOFOLLOW)} instead.
+@code{utimensat(AT_FDCWD,file,times,AT_SYMLINK_NOFOLLOW)}, or the
+gnulib module utimens, instead.
 @item
 The mere act of using @code{lstat} modifies the access time of
 symlinks on some platforms, so @code{lutimes} can only effectively

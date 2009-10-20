@@ -58,6 +58,9 @@ test_utimens (int (*func) (char const *, struct timespec const *), bool print)
   ASSERT (func ("no_such", NULL) == -1);
   ASSERT (errno == ENOENT);
   errno = 0;
+  ASSERT (func ("no_such/", NULL) == -1);
+  ASSERT (errno == ENOENT || errno == ENOTDIR);
+  errno = 0;
   ASSERT (func ("", NULL) == -1);
   ASSERT (errno == ENOENT);
   {
@@ -71,6 +74,12 @@ test_utimens (int (*func) (char const *, struct timespec const *), bool print)
     errno = 0;
     ASSERT (func (BASE "file", ts) == -1);
     ASSERT (errno == EINVAL);
+  }
+  {
+    struct timespec ts[2] = { { Y2K, 0 }, { Y2K, 0 } };
+    errno = 0;
+    ASSERT (func (BASE "file/", ts) == -1);
+    ASSERT (errno == ENOTDIR || errno == EINVAL);
   }
   ASSERT (stat (BASE "file", &st2) == 0);
   ASSERT (st1.st_atime == st2.st_atime);
@@ -113,6 +122,9 @@ test_utimens (int (*func) (char const *, struct timespec const *), bool print)
     }
   ASSERT (lstat (BASE "link", &st1) == 0);
   ASSERT (st1.st_mtime != Y2K);
+  errno = 0;
+  ASSERT (func (BASE "link/", NULL) == -1);
+  ASSERT (errno == ENOTDIR);
   {
     struct timespec ts[2] = { { Y2K, 0 }, { Y2K, 0 } };
     ASSERT (func (BASE "link", ts) == 0);
