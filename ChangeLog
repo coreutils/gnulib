@@ -1,3 +1,10 @@
+2009-10-20  Eric Blake  <ebb9@byu.net>
+
+	doc: regenerate INSTALL
+	* doc/INSTALL: Reflect recent autoconf update.
+	* doc/INSTALL.ISO: Likewise.
+	* doc/INSTALL.UTF-8: Likewise.
+
 2009-10-20  Pádraig Brady  <P@draigBrady.com>
 
 	acl: warn if ACL support is not detected
