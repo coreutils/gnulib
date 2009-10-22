@@ -1,3 +1,9 @@
+2009-10-21  Eric Blake  <ebb9@byu.net>
+
+	areadlinkat: avoid failure on older glibc
+	* lib/at-func.c (AT_FUNC_NAME): Check for explicit FUNC_FAIL,
+	rather than mis-comparing 0 against FUNC_RESULT of char*.
+
 2009-10-21  Bruno Haible  <bruno@clisp.org>
 
 	* modules/stpncpy (License): Relicense under LGPLv2+.

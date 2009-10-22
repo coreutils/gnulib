@@ -84,7 +84,7 @@ AT_FUNC_NAME (int fd, char const *file AT_FUNC_POST_FILE_PARAM_DECLS)
         /* If the syscall succeeds, or if it fails with an unexpected
            errno value, then return right away.  Otherwise, fall through
            and resort to using save_cwd/restore_cwd.  */
-        if (0 <= proc_result)
+        if (FUNC_FAIL != proc_result)
           return proc_result;
         if (! EXPECTED_ERRNO (proc_errno))
           {
