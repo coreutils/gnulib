@@ -1,3 +1,8 @@
+2009-10-21  Bruno Haible  <bruno@clisp.org>
+
+	* modules/stpncpy (License): Relicense under LGPLv2+.
+	Reported by David Lutterkort <lutter@redhat.com>.
+
 2009-10-20  Eric Blake  <ebb9@byu.net>
 
 	utimensat: work around Solaris 9 bug
