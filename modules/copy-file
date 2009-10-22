@@ -16,6 +16,7 @@ gettext-h
 open
 safe-read
 unistd
+xalloc
 
 configure.ac:
 gl_COPY_FILE

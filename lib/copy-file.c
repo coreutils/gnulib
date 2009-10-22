@@ -42,6 +42,7 @@
 #include "acl.h"
 #include "binary-io.h"
 #include "gettext.h"
+#include "xalloc.h"
 
 #define _(str) gettext (str)
 
@@ -50,6 +51,7 @@
 #undef open
 #undef close
 
+enum { IO_SIZE = 32 * 1024 };
 
 void
 copy_file_preserving (const char *src_filename, const char *dest_filename)
@@ -58,8 +60,7 @@ copy_file_preserving (const char *src_filename, const char *dest_filename)
   struct stat statbuf;
   int mode;
   int dest_fd;
-  char buf[4096];
-  const size_t buf_size = sizeof (buf);
+  char *buf = xmalloc (IO_SIZE);
 
   src_fd = open (src_filename, O_RDONLY | O_BINARY);
   if (src_fd < 0 || fstat (src_fd, &statbuf) < 0)
@@ -76,7 +77,7 @@ copy_file_preserving (const char *src_filename, const char *dest_filename)
   /* Copy the file contents.  */
   for (;;)
     {
-      size_t n_read = safe_read (src_fd, buf, buf_size);
+      size_t n_read = safe_read (src_fd, buf, IO_SIZE);
       if (n_read == SAFE_READ_ERROR)
 	error (EXIT_FAILURE, errno, _("error reading \"%s\""), src_filename);
       if (n_read == 0)
@@ -85,6 +86,8 @@ copy_file_preserving (const char *src_filename, const char *dest_filename)
       if (full_write (dest_fd, buf, n_read) < n_read)
 	error (EXIT_FAILURE, errno, _("error writing \"%s\""), dest_filename);
     }
+
+  free (buf);
 
 #if !USE_ACL
   if (close (dest_fd) < 0)

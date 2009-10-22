@@ -1,3 +1,14 @@
+2009-10-22  Pádraig Brady  <P@draigBrady.com>
+
+	Use a better IO block size for modern systems
+	* lib/copy-file.c (copy_file_preserving): Used a 32KiB malloced buffer.
+	* lib/md2.c: Likewise.
+	* lib/md4.c: Likewise.
+	* lib/md5.c: Likewise.
+	* lib/sha1.c: Likewise.
+	* lib/sha256.c: Likewise.
+	* lib/sha512.c: Likewise.
+
 2009-10-22  Eric Blake  <ebb9@byu.net>
 
 	tests: avoid several compiler warnings

@@ -24,6 +24,7 @@
 
 #include "md2.h"
 
+#include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
 
@@ -33,7 +34,7 @@
 # include "unlocked-io.h"
 #endif
 
-#define BLOCKSIZE 4096
+#define BLOCKSIZE 32768
 #if BLOCKSIZE % 64 != 0
 # error "invalid BLOCKSIZE"
 #endif
@@ -94,8 +95,11 @@ int
 md2_stream (FILE *stream, void *resblock)
 {
   struct md2_ctx ctx;
-  char buffer[BLOCKSIZE + 72];
   size_t sum;
+
+  char *buffer = malloc (BLOCKSIZE + 72);
+  if (!buffer)
+    return 1;
 
   /* Initialize the computation context.  */
   md2_init_ctx (&ctx);
@@ -125,7 +129,10 @@ md2_stream (FILE *stream, void *resblock)
 	         exit the loop after a partial read due to e.g., EAGAIN
 	         or EWOULDBLOCK.  */
 	      if (ferror (stream))
-		return 1;
+		{
+		  free (buffer);
+		  return 1;
+		}
 	      goto process_partial_block;
 	    }
 
@@ -150,6 +157,7 @@ process_partial_block:;
 
   /* Construct result in desired memory.  */
   md2_finish_ctx (&ctx, resblock);
+  free (buffer);
   return 0;
 }
 

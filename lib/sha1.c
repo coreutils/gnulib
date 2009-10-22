@@ -28,6 +28,7 @@
 #include "sha1.h"
 
 #include <stddef.h>
+#include <stdlib.h>
 #include <string.h>
 
 #if USE_UNLOCKED_IO
@@ -41,7 +42,7 @@
     (((n) << 24) | (((n) & 0xff00) << 8) | (((n) >> 8) & 0xff00) | ((n) >> 24))
 #endif
 
-#define BLOCKSIZE 4096
+#define BLOCKSIZE 32768
 #if BLOCKSIZE % 64 != 0
 # error "invalid BLOCKSIZE"
 #endif
@@ -124,8 +125,11 @@ int
 sha1_stream (FILE *stream, void *resblock)
 {
   struct sha1_ctx ctx;
-  char buffer[BLOCKSIZE + 72];
   size_t sum;
+
+  char *buffer = malloc (BLOCKSIZE + 72);
+  if (!buffer)
+    return 1;
 
   /* Initialize the computation context.  */
   sha1_init_ctx (&ctx);
@@ -155,7 +159,10 @@ sha1_stream (FILE *stream, void *resblock)
 		 exit the loop after a partial read due to e.g., EAGAIN
 		 or EWOULDBLOCK.  */
 	      if (ferror (stream))
-		return 1;
+		{
+		  free (buffer);
+		  return 1;
+		}
 	      goto process_partial_block;
 	    }
 
@@ -180,6 +187,7 @@ sha1_stream (FILE *stream, void *resblock)
 
   /* Construct result in desired memory.  */
   sha1_finish_ctx (&ctx, resblock);
+  free (buffer);
   return 0;
 }
 

@@ -25,6 +25,7 @@
 #include "sha512.h"
 
 #include <stddef.h>
+#include <stdlib.h>
 #include <string.h>
 
 #if USE_UNLOCKED_IO
@@ -45,7 +46,7 @@
 			 u64shr (n, 56))))
 #endif
 
-#define BLOCKSIZE 4096
+#define BLOCKSIZE 32768
 #if BLOCKSIZE % 128 != 0
 # error "invalid BLOCKSIZE"
 #endif
@@ -177,8 +178,11 @@ int
 sha512_stream (FILE *stream, void *resblock)
 {
   struct sha512_ctx ctx;
-  char buffer[BLOCKSIZE + 72];
   size_t sum;
+
+  char *buffer = malloc (BLOCKSIZE + 72);
+  if (!buffer)
+    return 1;
 
   /* Initialize the computation context.  */
   sha512_init_ctx (&ctx);
@@ -208,7 +212,10 @@ sha512_stream (FILE *stream, void *resblock)
 		 exit the loop after a partial read due to e.g., EAGAIN
 		 or EWOULDBLOCK.  */
 	      if (ferror (stream))
-		return 1;
+		{
+		  free (buffer);
+		  return 1;
+		}
 	      goto process_partial_block;
 	    }
 
@@ -233,6 +240,7 @@ sha512_stream (FILE *stream, void *resblock)
 
   /* Construct result in desired memory.  */
   sha512_finish_ctx (&ctx, resblock);
+  free (buffer);
   return 0;
 }
 
@@ -241,8 +249,11 @@ int
 sha384_stream (FILE *stream, void *resblock)
 {
   struct sha512_ctx ctx;
-  char buffer[BLOCKSIZE + 72];
   size_t sum;
+
+  char *buffer = malloc (BLOCKSIZE + 72);
+  if (!buffer)
+    return 1;
 
   /* Initialize the computation context.  */
   sha384_init_ctx (&ctx);
@@ -272,7 +283,10 @@ sha384_stream (FILE *stream, void *resblock)
 		 exit the loop after a partial read due to e.g., EAGAIN
 		 or EWOULDBLOCK.  */
 	      if (ferror (stream))
-		return 1;
+		{
+		  free (buffer);
+		  return 1;
+		}
 	      goto process_partial_block;
 	    }
 
@@ -297,6 +311,7 @@ sha384_stream (FILE *stream, void *resblock)
 
   /* Construct result in desired memory.  */
   sha384_finish_ctx (&ctx, resblock);
+  free (buffer);
   return 0;
 }
 
