@@ -23,7 +23,7 @@
 #include "sha1.h"
 
 int
-main (int argc, char *argv[])
+main (void)
 {
   const char *in1 = "abcdefgh";
   const char *out1 = "\x42\x5a\xf1\x2a\x07\x43\x50\x2b"

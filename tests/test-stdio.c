@@ -30,7 +30,7 @@ int sk[] = { SEEK_CUR, SEEK_END, SEEK_SET };
 verify (sizeof NULL == sizeof (void *));
 
 int
-main ()
+main (void)
 {
   return 0;
 }

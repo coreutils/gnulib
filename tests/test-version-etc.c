@@ -24,7 +24,7 @@
 #define AUTHORS "Sergey Poznyakoff", "Eric Blake"
 
 int
-main (int argc, char **argv)
+main (int argc _UNUSED_PARAMETER_, char **argv)
 {
   set_program_name (argv[0]);
   version_etc (stdout, "test-version-etc", "dummy", "0", AUTHORS,

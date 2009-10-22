@@ -37,7 +37,7 @@
   while (0)
 
 int
-main ()
+main (void)
 {
   /* FIXME - add more tests.  For example, share /dev/null and
      trailing slash tests with test-open, and do more checks for

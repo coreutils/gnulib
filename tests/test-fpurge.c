@@ -38,7 +38,7 @@
 #define TESTFILE "t-fpurge.tmp"
 
 int
-main ()
+main (void)
 {
   int check_filepos;
 

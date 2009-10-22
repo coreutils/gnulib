@@ -86,7 +86,7 @@ do_utimens (const char *name, struct timespec const times[2])
 }
 
 int
-main ()
+main (void)
 {
   int result1; /* Skip because of no symlink support.  */
   int result2; /* Skip because of no futimens support.  */

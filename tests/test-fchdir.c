@@ -39,7 +39,7 @@
   while (0)
 
 int
-main ()
+main (void)
 {
   char *cwd = getcwd (NULL, 0);
   int fd = open (".", O_RDONLY);

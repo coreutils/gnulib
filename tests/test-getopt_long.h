@@ -41,7 +41,7 @@ static const struct option long_options_optional[] =
   };
 
 static void
-getopt_long_loop (int argc, char **argv,
+getopt_long_loop (int argc, const char **argv,
 		  const char *options, const struct option *long_options,
 		  const char **p_value, const char **q_value,
 		  int *non_options_count, const char **non_options,
@@ -51,7 +51,8 @@ getopt_long_loop (int argc, char **argv,
   int c;
 
   opterr = 0;
-  while ((c = getopt_long (argc, argv, options, long_options, &option_index))
+  while ((c = getopt_long (argc, (char **) argv, options, long_options,
+			   &option_index))
 	 != -1)
     {
       switch (c)
@@ -86,6 +87,16 @@ getopt_long_loop (int argc, char **argv,
     }
 }
 
+/* Reduce casting, so we can use string literals elsewhere.
+   getopt_long takes an array of char*, but luckily does not modify
+   those elements, so we can pass const char*.  */
+static int
+do_getopt_long (int argc, const char **argv, const char *shortopts,
+                const struct option *longopts, int *longind)
+{
+  return getopt_long (argc, (char **) argv, shortopts, longopts, longind);
+}
+
 static void
 test_getopt_long (void)
 {
@@ -94,7 +105,7 @@ test_getopt_long (void)
   /* Test disambiguation of options.  */
   {
     int argc = 0;
-    char *argv[10];
+    const char *argv[10];
     int option_index;
     int c;
 
@@ -102,13 +113,13 @@ test_getopt_long (void)
     argv[argc++] = "--x";
     optind = 1;
     opterr = 0;
-    c = getopt_long (argc, argv, "ab", long_options_required, &option_index);
+    c = do_getopt_long (argc, argv, "ab", long_options_required, &option_index);
     ASSERT (c == '?');
     ASSERT (optopt == 0);
   }
   {
     int argc = 0;
-    char *argv[10];
+    const char *argv[10];
     int option_index;
     int c;
 
@@ -116,13 +127,13 @@ test_getopt_long (void)
     argv[argc++] = "--xt";
     optind = 1;
     opterr = 0;
-    c = getopt_long (argc, argv, "ab", long_options_required, &option_index);
+    c = do_getopt_long (argc, argv, "ab", long_options_required, &option_index);
     ASSERT (c == '?');
     ASSERT (optopt == 0);
   }
   {
     int argc = 0;
-    char *argv[10];
+    const char *argv[10];
     int option_index;
     int c;
 
@@ -130,13 +141,13 @@ test_getopt_long (void)
     argv[argc++] = "--xtr";
     optind = 1;
     opterr = 0;
-    c = getopt_long (argc, argv, "ab", long_options_required, &option_index);
+    c = do_getopt_long (argc, argv, "ab", long_options_required, &option_index);
     ASSERT (c == '?');
     ASSERT (optopt == 0);
   }
   {
     int argc = 0;
-    char *argv[10];
+    const char *argv[10];
     int option_index;
     int c;
 
@@ -144,12 +155,12 @@ test_getopt_long (void)
     argv[argc++] = "--xtra";
     optind = 1;
     opterr = 0;
-    c = getopt_long (argc, argv, "ab", long_options_required, &option_index);
+    c = do_getopt_long (argc, argv, "ab", long_options_required, &option_index);
     ASSERT (c == 1001);
   }
   {
     int argc = 0;
-    char *argv[10];
+    const char *argv[10];
     int option_index;
     int c;
 
@@ -157,13 +168,13 @@ test_getopt_long (void)
     argv[argc++] = "--xtre";
     optind = 1;
     opterr = 0;
-    c = getopt_long (argc, argv, "ab", long_options_required, &option_index);
+    c = do_getopt_long (argc, argv, "ab", long_options_required, &option_index);
     ASSERT (c == '?');
     ASSERT (optopt == 0);
   }
   {
     int argc = 0;
-    char *argv[10];
+    const char *argv[10];
     int option_index;
     int c;
 
@@ -171,13 +182,13 @@ test_getopt_long (void)
     argv[argc++] = "--xtrem";
     optind = 1;
     opterr = 0;
-    c = getopt_long (argc, argv, "ab", long_options_required, &option_index);
+    c = do_getopt_long (argc, argv, "ab", long_options_required, &option_index);
     ASSERT (c == '?');
     ASSERT (optopt == 0);
   }
   {
     int argc = 0;
-    char *argv[10];
+    const char *argv[10];
     int option_index;
     int c;
 
@@ -185,12 +196,12 @@ test_getopt_long (void)
     argv[argc++] = "--xtreme";
     optind = 1;
     opterr = 0;
-    c = getopt_long (argc, argv, "ab", long_options_required, &option_index);
+    c = do_getopt_long (argc, argv, "ab", long_options_required, &option_index);
     ASSERT (c == 1002);
   }
   {
     int argc = 0;
-    char *argv[10];
+    const char *argv[10];
     int option_index;
     int c;
 
@@ -198,12 +209,12 @@ test_getopt_long (void)
     argv[argc++] = "--xtremel";
     optind = 1;
     opterr = 0;
-    c = getopt_long (argc, argv, "ab", long_options_required, &option_index);
+    c = do_getopt_long (argc, argv, "ab", long_options_required, &option_index);
     ASSERT (c == 1003);
   }
   {
     int argc = 0;
-    char *argv[10];
+    const char *argv[10];
     int option_index;
     int c;
 
@@ -211,7 +222,7 @@ test_getopt_long (void)
     argv[argc++] = "--xtremely";
     optind = 1;
     opterr = 0;
-    c = getopt_long (argc, argv, "ab", long_options_required, &option_index);
+    c = do_getopt_long (argc, argv, "ab", long_options_required, &option_index);
     ASSERT (c == 1003);
   }
 
@@ -224,7 +235,7 @@ test_getopt_long (void)
       const char *non_options[10];
       int unrecognized = 0;
       int argc = 0;
-      char *argv[10];
+      const char *argv[10];
       a_seen = 0;
       b_seen = 0;
 
@@ -252,7 +263,7 @@ test_getopt_long (void)
       const char *non_options[10];
       int unrecognized = 0;
       int argc = 0;
-      char *argv[10];
+      const char *argv[10];
       a_seen = 0;
       b_seen = 0;
 
@@ -281,7 +292,7 @@ test_getopt_long (void)
       const char *non_options[10];
       int unrecognized = 0;
       int argc = 0;
-      char *argv[10];
+      const char *argv[10];
       a_seen = 0;
       b_seen = 0;
 
@@ -309,7 +320,7 @@ test_getopt_long (void)
       const char *non_options[10];
       int unrecognized = 0;
       int argc = 0;
-      char *argv[10];
+      const char *argv[10];
       a_seen = 0;
       b_seen = 0;
 
@@ -340,7 +351,7 @@ test_getopt_long (void)
       const char *non_options[10];
       int unrecognized = 0;
       int argc = 0;
-      char *argv[10];
+      const char *argv[10];
       a_seen = 0;
       b_seen = 0;
 
@@ -367,7 +378,7 @@ test_getopt_long (void)
       const char *non_options[10];
       int unrecognized = 0;
       int argc = 0;
-      char *argv[10];
+      const char *argv[10];
       a_seen = 0;
       b_seen = 0;
 
@@ -395,7 +406,7 @@ test_getopt_long (void)
       const char *non_options[10];
       int unrecognized = 0;
       int argc = 0;
-      char *argv[10];
+      const char *argv[10];
       a_seen = 0;
       b_seen = 0;
 
@@ -427,7 +438,7 @@ test_getopt_long (void)
       const char *non_options[10];
       int unrecognized = 0;
       int argc = 0;
-      char *argv[10];
+      const char *argv[10];
       a_seen = 0;
       b_seen = 0;
 
@@ -454,7 +465,7 @@ test_getopt_long (void)
       const char *non_options[10];
       int unrecognized = 0;
       int argc = 0;
-      char *argv[10];
+      const char *argv[10];
       a_seen = 0;
       b_seen = 0;
 
@@ -482,7 +493,7 @@ test_getopt_long (void)
       const char *non_options[10];
       int unrecognized = 0;
       int argc = 0;
-      char *argv[10];
+      const char *argv[10];
       a_seen = 0;
       b_seen = 0;
 
@@ -512,7 +523,7 @@ test_getopt_long (void)
       const char *non_options[10];
       int unrecognized = 0;
       int argc = 0;
-      char *argv[10];
+      const char *argv[10];
       a_seen = 0;
       b_seen = 0;
 
@@ -544,7 +555,7 @@ test_getopt_long (void)
       const char *non_options[10];
       int unrecognized = 0;
       int argc = 0;
-      char *argv[10];
+      const char *argv[10];
       a_seen = 0;
       b_seen = 0;
 
@@ -584,7 +595,7 @@ test_getopt_long (void)
       const char *non_options[10];
       int unrecognized = 0;
       int argc = 0;
-      char *argv[20];
+      const char *argv[20];
       a_seen = 0;
       b_seen = 0;
 
@@ -634,7 +645,7 @@ test_getopt_long (void)
       const char *non_options[10];
       int unrecognized = 0;
       int argc = 0;
-      char *argv[10];
+      const char *argv[10];
       a_seen = 0;
       b_seen = 0;
 
@@ -677,7 +688,7 @@ test_getopt_long (void)
       const char *non_options[10];
       int unrecognized = 0;
       int argc = 0;
-      char *argv[20];
+      const char *argv[20];
       a_seen = 0;
       b_seen = 0;
 
@@ -747,7 +758,7 @@ test_getopt_long (void)
       const char *non_options[10];
       int unrecognized = 0;
       int argc = 0;
-      char *argv[10];
+      const char *argv[10];
       a_seen = 0;
       b_seen = 0;
 
@@ -788,7 +799,7 @@ test_getopt_long (void)
       const char *non_options[10];
       int unrecognized = 0;
       int argc = 0;
-      char *argv[10];
+      const char *argv[10];
       a_seen = 0;
       b_seen = 0;
 
@@ -826,7 +837,7 @@ test_getopt_long (void)
       const char *non_options[10];
       int unrecognized = 0;
       int argc = 0;
-      char *argv[10];
+      const char *argv[10];
       a_seen = 0;
       b_seen = 0;
 
@@ -854,7 +865,7 @@ test_getopt_long (void)
       const char *non_options[10];
       int unrecognized = 0;
       int argc = 0;
-      char *argv[20];
+      const char *argv[20];
       a_seen = 0;
       b_seen = 0;
 
@@ -904,7 +915,7 @@ test_getopt_long (void)
       const char *non_options[10];
       int unrecognized = 0;
       int argc = 0;
-      char *argv[10];
+      const char *argv[10];
       a_seen = 0;
       b_seen = 0;
 
@@ -944,14 +955,14 @@ static void
 test_getopt_long_posix (void)
 {
   int c = 3;
-  char *v[4] = {"test", "-r", "foo", NULL};
-  struct option l[] = {{NULL}};
+  const char *v[4] = {"test", "-r", "foo", NULL};
+  struct option l[] = {{NULL, 0, NULL, 0}};
   int start;
   int result;
   for (start = OPTIND_MIN; start <= 1; start++)
     {
       optind = start;
-      result = getopt_long (c, v, "r::", l, NULL);
+      result = do_getopt_long (c, v, "r::", l, NULL);
     }
   ASSERT (result == 'r');
   ASSERT (optarg == NULL);

@@ -27,7 +27,7 @@
 verify (sizeof NULL == sizeof (void *));
 
 int
-main ()
+main (void)
 {
   return 0;
 }

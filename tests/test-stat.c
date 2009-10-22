@@ -54,7 +54,7 @@ do_stat (char const *name, struct stat *st)
 }
 
 int
-main ()
+main (void)
 {
   return test_stat_func (do_stat);
 }

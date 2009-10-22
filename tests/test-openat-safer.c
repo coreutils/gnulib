@@ -48,7 +48,7 @@ static FILE *myerr;
 #define witness "test-openat-safer.txt"
 
 int
-main ()
+main (void)
 {
   int i;
   int j;

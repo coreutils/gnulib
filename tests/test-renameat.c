@@ -57,7 +57,7 @@ do_rename (char const *name1, char const *name2)
 }
 
 int
-main ()
+main (void)
 {
   int i;
   int dfd;

@@ -42,7 +42,7 @@
 #define MEMCHR2 (char *) memchr2
 
 int
-main ()
+main (void)
 {
   size_t n = 0x100000;
   char *input = malloc (n);

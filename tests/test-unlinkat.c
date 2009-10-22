@@ -63,7 +63,7 @@ unlinker (char const *name)
 }
 
 int
-main ()
+main (void)
 {
   /* FIXME: Add tests of fd other than ".".  */
   int result1;

@@ -62,7 +62,7 @@ main (int argc, char **argv)
   free (pwd2);
   {
     size_t len = strlen (pwd1);
-    size_t i = len - 10;
+    ssize_t i = len - 10;
     if (i < 0)
       i = 0;
     pwd2 = malloc (len + 2);

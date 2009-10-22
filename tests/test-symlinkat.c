@@ -64,7 +64,7 @@ do_readlink (char const *name, char *buf, size_t len)
 }
 
 int
-main ()
+main (void)
 {
   char buf[80];
   int result;

@@ -22,7 +22,8 @@
 
 volatile sig_atomic_t s;
 
-int main ()
+int
+main (void)
 {
   return s;
 }

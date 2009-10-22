@@ -53,7 +53,7 @@ do_areadlink (char const *name, size_t ignored _UNUSED_PARAMETER_)
 }
 
 int
-main ()
+main (void)
 {
   /* Remove any leftovers from a previous partial run.  */
   ASSERT (system ("rm -rf " BASE "*") == 0);

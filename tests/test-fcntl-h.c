@@ -32,7 +32,7 @@ int sk[] = { SEEK_CUR, SEEK_END, SEEK_SET };
 int fd = FD_CLOEXEC;
 
 int
-main ()
+main (void)
 {
   return 0;
 }

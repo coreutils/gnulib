@@ -25,7 +25,7 @@
 #include "test-open.h"
 
 int
-main ()
+main (void)
 {
   return test_open ();
 }

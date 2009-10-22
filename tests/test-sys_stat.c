@@ -282,7 +282,7 @@ nlink_t t1;
 struct timespec t2;
 
 int
-main ()
+main (void)
 {
   return 0;
 }

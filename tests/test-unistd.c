@@ -50,7 +50,7 @@ intptr_t t8;
 #endif
 
 int
-main ()
+main (void)
 {
   return 0;
 }

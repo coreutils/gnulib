@@ -54,7 +54,7 @@ do_lstat (char const *name, struct stat *st)
 }
 
 int
-main ()
+main (void)
 {
   return test_lstat_func (do_lstat, true);
 }

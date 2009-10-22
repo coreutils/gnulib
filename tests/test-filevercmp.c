@@ -97,7 +97,7 @@ static const char *const examples[] =
 };
 
 int
-main (int argc, char **argv)
+main (void)
 {
   const char *const *i;
 

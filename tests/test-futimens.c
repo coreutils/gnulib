@@ -49,7 +49,7 @@
 #include "test-futimens.h"
 
 int
-main ()
+main (void)
 {
   /* Clean up any trash from prior testsuite runs.  */
   ASSERT (system ("rm -rf " BASE "*") == 0);

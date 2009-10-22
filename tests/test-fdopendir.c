@@ -39,7 +39,7 @@
   while (0)
 
 int
-main ()
+main (void)
 {
   DIR *d;
   int fd;

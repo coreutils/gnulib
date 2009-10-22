@@ -3,6 +3,7 @@ tests/test-getdate.c
 
 Depends-on:
 progname
+setenv
 
 configure.ac:
 

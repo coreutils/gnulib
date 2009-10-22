@@ -54,14 +54,17 @@ write_nul_delimited_argv (char **argv)
 }
 
 int
-main ()
+main (void)
 {
   /* set_program_name (argv[0]); placate overzealous "syntax-check" test.  */
+  static char one[] = "1";
+  static char two[] = "2";
+  static char three[] = "3";
   static char *av[][4] = {
     {NULL},
-    {"1", NULL},
-    {"1", "2", NULL},
-    {"1", "2", "3", NULL}
+    {one, NULL},
+    {one, two, NULL},
+    {one, two, three, NULL}
   };
 
   int use_stream;

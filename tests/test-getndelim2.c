@@ -1,5 +1,5 @@
 /* Test of getndelim2() function.
-   Copyright (C) 2008 Free Software Foundation, Inc.
+   Copyright (C) 2008, 2009 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@
   while (0)
 
 int
-main (int argc, char **argv)
+main (void)
 {
   FILE *f;
   char *line = NULL;

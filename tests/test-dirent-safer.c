@@ -48,7 +48,7 @@ static FILE *myerr;
   while (0)
 
 int
-main ()
+main (void)
 {
   int i;
   DIR *dp;

@@ -44,7 +44,7 @@
 #include "test-symlink.h"
 
 int
-main ()
+main (void)
 {
   /* Remove any leftovers from a previous partial run.  */
   ASSERT (system ("rm -rf " BASE "*") == 0);

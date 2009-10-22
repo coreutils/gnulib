@@ -25,7 +25,7 @@
 #include "test-fopen.h"
 
 int
-main ()
+main (void)
 {
   return test_fopen ();
 }

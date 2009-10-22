@@ -53,7 +53,7 @@
 #endif
 
 int
-main ()
+main (void)
 {
   unsetenv ("POSIXLY_CORRECT");
 

@@ -45,7 +45,7 @@
 #define BASE "t-can.tmp"
 
 int
-main ()
+main (void)
 {
   /* Setup some hierarchy to be used by this test.  Start by removing
      any leftovers from a previous partial run.  */

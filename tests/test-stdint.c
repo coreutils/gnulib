@@ -1,5 +1,5 @@
 /* Test of <stdint.h> substitute.
-   Copyright (C) 2006-2008 Free Software Foundation, Inc.
+   Copyright (C) 2006-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -354,7 +354,7 @@ verify_same_types (UINTMAX_C (17), (uintmax_t)0 + 0);
 
 
 int
-main ()
+main (void)
 {
   return 0;
 }

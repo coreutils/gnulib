@@ -55,7 +55,7 @@ do_areadlinkat (char const *name, size_t ignored _UNUSED_PARAMETER_)
 }
 
 int
-main ()
+main (void)
 {
   int result;
 

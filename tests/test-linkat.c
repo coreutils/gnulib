@@ -81,7 +81,7 @@ check_same_link (char const *name1, char const *name2)
 }
 
 int
-main ()
+main (void)
 {
   int i;
   int dfd;
@@ -134,11 +134,11 @@ main ()
      do the other variant after the loop.  */
   for (i = 0; i < 32; i++)
     {
-      int flag = (i & 0x10 ? AT_SYMLINK_FOLLOW : 0);
       int fd1 = (i & 8) ? dfd : AT_FDCWD;
       char *file1 = file_name_concat ((i & 4) ? ".." : cwd, BASE "xx", NULL);
       int fd2 = (i & 2) ? dfd : AT_FDCWD;
       char *file2 = file_name_concat ((i & 1) ? ".." : cwd, BASE "xx", NULL);
+      flag = (i & 0x10 ? AT_SYMLINK_FOLLOW : 0);
 
       ASSERT (sprintf (strchr (file1, '\0') - 2, "%02d", i) == 2);
       ASSERT (sprintf (strchr (file2, '\0') - 2, "%02d", i + 1) == 2);

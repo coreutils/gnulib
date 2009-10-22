@@ -61,7 +61,7 @@ is_open (int fd)
 }
 
 int
-main ()
+main (void)
 {
   const char *file = "test-dup2.tmp";
   char buffer[1];

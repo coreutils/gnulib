@@ -41,7 +41,7 @@ wint_t a = 'x';
 wint_t e = WEOF;
 
 int
-main ()
+main (void)
 {
   /* Check that the isw* functions exist as functions or as macros.  */
   (void) iswalnum (0);

@@ -24,7 +24,7 @@
 #define TEMPFILE "t-atexit.tmp"
 
 static void
-clear_temp_file ()
+clear_temp_file (void)
 {
   unlink (TEMPFILE);
 }

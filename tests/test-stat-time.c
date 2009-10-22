@@ -254,7 +254,7 @@ test_birthtime (const struct stat *statinfo,
 }
 
 int
-main ()
+main (void)
 {
   struct stat statinfo[NFILES];
   struct timespec modtimes[NFILES];

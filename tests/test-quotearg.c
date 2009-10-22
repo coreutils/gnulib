@@ -378,7 +378,7 @@ use_quotearg_colon (const char *str, size_t *len)
 }
 
 int
-main (int argc, char *argv[])
+main (int argc _UNUSED_PARAMETER_, char *argv[])
 {
   int i;
   bool ascii_only = MB_CUR_MAX == 1 && !isprint ((unsigned char) LQ[0]);

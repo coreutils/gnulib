@@ -65,7 +65,7 @@ do_lstat (char const *name, struct stat *st)
 }
 
 int
-main ()
+main (void)
 {
   int result;
   ASSERT (test_stat_func (do_stat) == 0);

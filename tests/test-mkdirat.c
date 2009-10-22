@@ -53,7 +53,7 @@ do_mkdir (char const *name, mode_t mode)
 }
 
 int
-main ()
+main (void)
 {
   int result;
 

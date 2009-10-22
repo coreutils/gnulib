@@ -28,8 +28,6 @@
 
 #include "intprops.h"
 
-#define STREQ(a, b) (strcmp (a, b) == 0)
-
 #define ASSERT(expr) \
   do									     \
     {									     \
@@ -101,7 +99,7 @@ static struct posixtm_test const T[] =
   };
 
 int
-main (int argc, char **argv)
+main (void)
 {
   unsigned int i;
   int fail = 0;

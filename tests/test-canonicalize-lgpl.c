@@ -44,7 +44,7 @@
 #define BASE "t-can-lgpl.tmp"
 
 int
-main ()
+main (void)
 {
 #ifdef GNULIB_CANONICALIZE
   /* No need to test canonicalize-lgpl module if canonicalize is also

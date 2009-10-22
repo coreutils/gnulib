@@ -50,7 +50,7 @@ test_mknodat (int fd, char const *name, mode_t mode)
 }
 
 int
-main ()
+main (void)
 {
   int i;
   test_func funcs[2] = { mkfifoat, test_mknodat };

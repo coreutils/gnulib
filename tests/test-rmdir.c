@@ -44,7 +44,7 @@
 #include "test-rmdir.h"
 
 int
-main ()
+main (void)
 {
   return test_rmdir_func (rmdir, true);
 }

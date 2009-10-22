@@ -1,3 +1,104 @@
+2009-10-22  Eric Blake  <ebb9@byu.net>
+
+	tests: avoid several compiler warnings
+	* tests/test-getcwd.c (main): Avoid buffer underflow.
+	* tests/test-getdate.c (main): String literals are not safe with
+	putenv, so use setenv.  Declare unused argument.
+	* modules/getdate-tests (Depends-on): Add setenv.
+	* tests/test-argv-iter.c (main): Declare unused argument.  Avoid
+	problems with string literals in char *.
+	* tests/test-hash.c (main): Avoid shadowing declaration.
+	(insert_new): Treat string literals as char const *.
+	* tests/test-getopt.h (test_getopt): Likewise.
+	(getopt_loop): Alter types to minimize casting elsewhere.
+	* tests/test-getopt_long.h (test_getopt_long, getopt_long_loop)
+	(test_getopt_long_posix): Likewise.
+	(do_getopt_long): Add wrapper to minimize casting.
+	* tests/test-atexit.c (clear_temp_file): Use void.
+	* tests/test-areadlink-with-size.c (main): Declare unused
+	arguments.
+	* tests/test-areadlink.c (main): Likewise.
+	* tests/test-areadlinkat-with-size.c (main): Likewise.
+	* tests/test-areadlinkat.c (main): Likewise.
+	* tests/test-canonicalize-lgpl.c (main): Likewise.
+	* tests/test-canonicalize.c (main): Likewise.
+	* tests/test-dirent-safer.c (main): Likewise.
+	* tests/test-dirname.c (main): Likewise.
+	* tests/test-dup2.c (main): Likewise.
+	* tests/test-fchdir.c (main): Likewise.
+	* tests/test-fcntl-h.c (main): Likewise.
+	* tests/test-fcntl-safer.c (main): Likewise.
+	* tests/test-fdopendir.c (main): Likewise.
+	* tests/test-fdutimensat.c (main): Likewise.
+	* tests/test-fflush.c (main): Likewise.
+	* tests/test-filenamecat.c (main): Likewise.
+	* tests/test-filevercmp.c (main): Likewise.
+	* tests/test-fopen-safer.c (main): Likewise.
+	* tests/test-fopen.c (main): Likewise.
+	* tests/test-fpending.c (main): Likewise.
+	* tests/test-fpurge.c (main): Likewise.
+	* tests/test-freading.c (main): Likewise.
+	* tests/test-fstatat.c (main): Likewise.
+	* tests/test-fsync.c (main): Likewise.
+	* tests/test-futimens.c (main): Likewise.
+	* tests/test-getndelim2.c (main): Likewise.
+	* tests/test-gettimeofday.c (main): Likewise.
+	* tests/test-getopt.c (main): Likewise.
+	* tests/test-i-ring.c (main): Likewise.
+	* tests/test-inttypes.c (main): Likewise.
+	* tests/test-link.c (main): Likewise.
+	* tests/test-lstat.c (main): Likewise.
+	* tests/test-math.c (main): Likewise.
+	* tests/test-md5.c (main): Likewise.
+	* tests/test-memchr2.c (main): Likewise.
+	* tests/test-memrchr.c (main): Likewise.
+	* tests/test-mkdir.c (main): Likewise.
+	* tests/test-mkdirat.c (main): Likewise.
+	* tests/test-mkfifoat.c (main): Likewise.
+	* tests/test-open.c (main): Likewise.
+	* tests/test-openat-safer.c (main): Likewise.
+	* tests/test-openat.c (main): Likewise.
+	* tests/test-quotearg.c (main): Likewise.
+	* tests/test-rawmemchr.c (main): Likewise.
+	* tests/test-readlink.c (main): Likewise.
+	* tests/test-remove.c (main): Likewise.
+	* tests/test-rename.c (main): Likewise.
+	* tests/test-renameat.c (main): Likewise.
+	* tests/test-rmdir.c (main): Likewise.
+	* tests/test-sha1.c (main): Likewise.
+	* tests/test-signal.c (main): Likewise.
+	* tests/test-sigaction.c (main): Likewise.
+	* tests/test-stat.c (main): Likewise.
+	* tests/test-stat-time.c (main): Likewise.
+	* tests/test-stddef.c (main): Likewise.
+	* tests/test-stdint.c (main): Likewise.
+	* tests/test-stdio.c (main): Likewise.
+	* tests/test-stdlib.c (main): Likewise.
+	* tests/test-strchrnul.c (main): Likewise.
+	* tests/test-strerror.c (main): Likewise.
+	* tests/test-string.c (main): Likewise.
+	* tests/test-strtod.c (main): Likewise.
+	* tests/test-strverscmp.c (main): Likewise.
+	* tests/test-symlink.c (main): Likewise.
+	* tests/test-symlinkat.c (main): Likewise.
+	* tests/test-sys_stat.c (main): Likewise.
+	* tests/test-sys_time.c (main): Likewise.
+	* tests/test-time.c (main): Likewise.
+	* tests/test-unistd.c (main): Likewise.
+	* tests/test-unlink.c (main): Likewise.
+	* tests/test-unlinkat.c (main): Likewise.
+	* tests/test-utimens.c (main): Likewise.
+	* tests/test-utimensat.c (main): Likewise.
+	* tests/test-version-etc.c (main): Likewise.
+	* tests/test-wchar.c (main): Likewise.
+	* tests/test-wctype.c (main): Likewise.
+	* tests/test-xprintf-posix.c (main): Likewise.
+	* tests/test-posixtm.c (main): Likewise.
+	(STREQ): Delete unused macro.
+	* tests/test-linkat.c (main): Declare unused arguments.  Avoid
+	shadowed variables.
+	* tests/test-memchr.c (main): Likewise.
+
 2009-10-21  Eric Blake  <ebb9@byu.net>
 
 	areadlinkat: avoid failure on older glibc

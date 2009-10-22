@@ -55,7 +55,7 @@ do_areadlinkat_with_size (char const *name, size_t size)
 }
 
 int
-main ()
+main (void)
 {
   int result;
 

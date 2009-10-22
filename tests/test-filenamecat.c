@@ -29,7 +29,7 @@
 #include "progname.h"
 
 int
-main (int argc, char *argv[])
+main (int argc _UNUSED_PARAMETER_, char *argv[])
 {
   static char const *const tests[][3] =
     {

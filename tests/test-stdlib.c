@@ -29,7 +29,7 @@ int exitcode;
 verify (sizeof NULL == sizeof (void *));
 
 int
-main ()
+main (void)
 {
   /* Check that some macros are defined and different integer constants.  */
   switch (exitcode)

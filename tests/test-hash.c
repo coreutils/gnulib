@@ -57,7 +57,7 @@ hash_freer (void *x)
 }
 
 static void
-insert_new (Hash_table *ht, void *ent)
+insert_new (Hash_table *ht, const void *ent)
 {
   void *e = hash_insert (ht, ent);
   ASSERT (e == ent);
@@ -243,11 +243,11 @@ main (int argc, char **argv)
 		size_t n = hash_get_n_entries (ht);
 		if (n)
 		  {
-		    size_t k = rand () % n;
+		    size_t kk = rand () % n;
 		    void const *p;
 		    void *v;
-		    for (p = hash_get_first (ht); k;
-			 --k, p = hash_get_next (ht, p))
+		    for (p = hash_get_first (ht); kk;
+			 --kk, p = hash_get_next (ht, p))
 		      {
 			/* empty */
 		      }

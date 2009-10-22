@@ -61,7 +61,7 @@ static const char* const day_table[] =
 };
 
 int
-main (int argc, char **argv)
+main (int argc _UNUSED_PARAMETER_, char **argv)
 {
   struct timespec result;
   struct timespec result2;
@@ -225,7 +225,7 @@ main (int argc, char **argv)
 	  && result.tv_nsec == result2.tv_nsec);
 
   /* Check that some "next Monday", "last Wednesday", etc. are correct.  */
-  putenv ("TZ=UTC0");
+  setenv ("TZ", "UTC0", 1);
   for (i = 0; day_table[i]; i++)
     {
       unsigned int thur2 = 7 * 24 * 3600; /* 2nd thursday */
