@@ -115,7 +115,7 @@ AT_FUNC_NAME (int fd, char const *file AT_FUNC_POST_FILE_PARAM_DECLS)
     }
 
   err = CALL_FUNC (file);
-  saved_errno = (err < 0 ? errno : 0);
+  saved_errno = (err == FUNC_FAIL ? errno : 0);
 
   if (restore_cwd (&saved_cwd) != 0)
     openat_restore_fail (errno);

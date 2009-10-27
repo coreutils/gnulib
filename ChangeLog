@@ -1,3 +1,9 @@
+2009-10-26  Eric Blake  <ebb9@byu.net>
+
+	areadlinkat: fix fallback path
+	* lib/at-func.c (AT_FUNC_NAME): Avoid signed comparison between
+	pointer and zero.
+
 2009-10-22  Pádraig Brady  <P@draigBrady.com>
 
 	Use a better IO block size for modern systems
