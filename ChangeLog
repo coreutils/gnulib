@@ -1,3 +1,11 @@
+2009-10-27  Jim Meyering  <jim@meyering.net>
+            Bruno Haible  <bruno@clisp.org>
+
+	Avoid warning despite dropping the return value of fwrite.
+	* lib/unicodeio.c: Include ignore-value.h.
+	(fwrite_success_callback): Explicitly ignore fwrite's return value.
+	* modules/unicodeio (Depends-on): Add ignore-value.
+
 2009-10-26  Eric Blake  <ebb9@byu.net>
 
 	areadlinkat: fix fallback path

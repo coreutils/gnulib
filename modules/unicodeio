@@ -13,6 +13,7 @@ iconv_open
 gettext-h
 localcharset
 error
+ignore-value
 
 configure.ac:
 gl_UNICODEIO
