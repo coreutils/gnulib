@@ -1,5 +1,5 @@
-# fseeko.m4 serial 4
-dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
+# fseeko.m4 serial 5
+dnl Copyright (C) 2007-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -15,7 +15,7 @@ AC_DEFUN([gl_FUNC_FSEEKO],
 
   AC_CACHE_CHECK([for fseeko], [gl_cv_func_fseeko],
     [
-      AC_TRY_LINK([#include <stdio.h>], [fseeko (stdin, 0, 0);],
+      AC_TRY_LINK([[#include <stdio.h>]], [fseeko (stdin, 0, 0);],
 	[gl_cv_func_fseeko=yes], [gl_cv_func_fseeko=no])
     ])
   if test $gl_cv_func_fseeko = no; then
@@ -31,4 +31,6 @@ AC_DEFUN([gl_REPLACE_FSEEKO],
   AC_LIBOBJ([fseeko])
   AC_REQUIRE([gl_STDIO_H_DEFAULTS])
   REPLACE_FSEEKO=1
+  dnl If we are also using the fseek module, then fseek needs replacing, too.
+  m4_ifdef([gl_REPLACE_FSEEK], [gl_REPLACE_FSEEK])
 ])

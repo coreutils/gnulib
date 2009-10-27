@@ -1,10 +1,21 @@
+2009-10-27  Eric Blake  <ebb9@byu.net>
+
+	fseek: avoid compilation failure when fflush is replaced
+	* m4/fseek.m4 (gl_REPLACE_FSEEK): New macro.
+	* m4/fseeko.m4 (gl_REPLACE_FSEEKO): Also replace fseek, if fseek
+	module is in use.
+	* lib/stdio.in.h (GNULIB_FSEEKO): Only poison fseek if fseek
+	module is not in use; since REPLACE_FSEEK worked otherwise.
+	(GNULIB_FTELLO): Likewise for ftell.
+	Reported by Ian Beckwith and others.
+
 2009-10-27  Bruno Haible  <bruno@clisp.org>
 
 	* lib/isnan.c (rpl_isnan[fdl]): Repeat the specification declaration.
 	Reported by Jim Meyering.
 
 2009-10-27  Jim Meyering  <jim@meyering.net>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Avoid warning despite dropping the return value of fwrite.
 	* lib/unicodeio.c: Include ignore-value.h.

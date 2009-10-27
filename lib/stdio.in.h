@@ -227,7 +227,14 @@ extern int rpl_fseek (FILE *fp, long offset, int whence);
    fflush(), and which detect pipes.  */
 #  define fseeko rpl_fseeko
 extern int fseeko (FILE *fp, off_t offset, int whence);
-#  define fseek(fp, offset, whence) fseeko (fp, (off_t)(offset), whence)
+#  if !@GNULIB_FSEEK@
+#   undef fseek
+#   define fseek(f,o,w) \
+     (GL_LINK_WARNING ("fseek cannot handle files larger than 4 GB " \
+                       "on 32-bit platforms - " \
+                       "use fseeko function for handling of large files"), \
+      fseeko (f, o, w))
+#  endif
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef fseeko
@@ -263,7 +270,14 @@ extern long rpl_ftell (FILE *fp);
 # if @REPLACE_FTELLO@
 #  define ftello rpl_ftello
 extern off_t ftello (FILE *fp);
-#  define ftell(fp) ftello (fp)
+#  if !@GNULIB_FTELL@
+#   undef ftell
+#   define ftell(f) \
+     (GL_LINK_WARNING ("ftell cannot handle files larger than 4 GB " \
+                       "on 32-bit platforms - " \
+                       "use ftello function for handling of large files"), \
+      ftello (f))
+#  endif
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef ftello
