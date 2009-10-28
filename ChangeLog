@@ -1,5 +1,12 @@
 2009-10-28  Jim Meyering  <meyering@redhat.com>
 
+	fprintftime: wrap macro code argument in "do {...} while(0)"
+	* lib/strftime.c (cpy) [FPRINTFTIME]: The second argument to the
+	cpy macro must be a statement that can be followed by a semicolon.
+	Now that the else clause contains a comment and is hence longer
+	than one line, I require curly braces.  That in turn requires
+	that we wrap this code block in the standard do...while(0).
+
 	fprintftime: remove stray semicolon from previous change
 	* lib/strftime.c (cpy) [FPRINTFTIME]: Remove trailing semicolon.
 
