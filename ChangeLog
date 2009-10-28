@@ -1,5 +1,8 @@
 2009-10-28  Jim Meyering  <meyering@redhat.com>
 
+	fprintftime: remove stray semicolon from previous change
+	* lib/strftime.c (cpy) [FPRINTFTIME]: Remove trailing semicolon.
+
 	fprintftime: avoid a warning about ignored fwrite return value
 	* lib/strftime.c [FPRINTFTIME]: Include "ignore-value.h".
 	(cpy) [FPRINTFTIME]: Ignore fwrite failure, even though technically,

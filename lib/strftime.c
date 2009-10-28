@@ -211,7 +211,7 @@ extern char *tzname[];
 		is intended to be consistent with the one from ISO C,         \
 		which permits failure due to ENOMEM *without* setting the     \
 		stream's error indicator.  */                                 \
-	     ignore_value (fwrite ((s), _n, 1, p)));			      \
+	     ignore_value (fwrite ((s), _n, 1, p)))			      \
 	   }
 #else
 # define cpy(n, s)							      \
