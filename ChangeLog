@@ -1,3 +1,8 @@
+2009-10-27  Bruno Haible  <bruno@clisp.org>
+
+	* lib/isnan.c (rpl_isnan[fdl]): Repeat the specification declaration.
+	Reported by Jim Meyering.
+
 2009-10-27  Jim Meyering  <jim@meyering.net>
             Bruno Haible  <bruno@clisp.org>
 

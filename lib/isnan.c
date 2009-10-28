@@ -1,5 +1,5 @@
 /* Test for NaN that does not need libm.
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -17,6 +17,18 @@
 /* Written by Bruno Haible <bruno@clisp.org>, 2007.  */
 
 #include <config.h>
+
+/* Specification.  */
+#ifdef USE_LONG_DOUBLE
+/* Specification found in math.h or isnanl-nolibm.h.  */
+extern int rpl_isnanl (long double x);
+#elif ! defined USE_FLOAT
+/* Specification found in math.h or isnand-nolibm.h.  */
+extern int rpl_isnand (double x);
+#else /* defined USE_FLOAT */
+/* Specification found in math.h or isnanf-nolibm.h.  */
+extern int rpl_isnanf (float x);
+#endif
 
 #include <float.h>
 #include <string.h>
