@@ -412,7 +412,9 @@ excluded_file_name (struct exclude const *ex, char const *f)
      excluded to included or vice versa.  */
   for (seg = ex->head; seg; seg = seg->next)
     {
-      bool rc;
+      /* Pacify gcc, so it doesn't issue a spurious
+	 "may be used uninitialized" warning.  */
+      bool rc = excluded;
 
       switch (seg->type)
 	{

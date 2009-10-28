@@ -1,3 +1,8 @@
+2009-10-28  Jim Meyering  <meyering@redhat.com>
+
+	exclude: avoid an unwarranted warning
+	* lib/exclude.c (excluded_file_name): Initialize "rc" before switch.
+
 2009-10-27  Eric Blake  <ebb9@byu.net>
 
 	fseek: avoid compilation failure when fflush is replaced
