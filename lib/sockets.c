@@ -25,12 +25,12 @@
 #if WINDOWS_SOCKETS
 
 /* This includes winsock2.h on MinGW. */
-#include <sys/socket.h>
+# include <sys/socket.h>
 
-#include "close-hook.h"
+# include "close-hook.h"
 
 /* Get set_winsock_errno, FD_TO_SOCKET etc. */
-#include "w32sock.h"
+# include "w32sock.h"
 
 static int
 close_fd_maybe_socket (int fd, const struct close_hook *remaining_list)
@@ -71,10 +71,10 @@ static struct close_hook close_sockets_hook;
 
 static int initialized_sockets_version /* = 0 */;
 
-#endif
+#endif /* WINDOWS_SOCKETS */
 
 int
-gl_sockets_startup (int version)
+gl_sockets_startup (int version _UNUSED_PARAMETER_)
 {
 #if WINDOWS_SOCKETS
   if (version > initialized_sockets_version)

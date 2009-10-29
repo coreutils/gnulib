@@ -1,5 +1,8 @@
 2009-10-29  Eric Blake  <ebb9@byu.net>
 
+	sockets: avoid compiler warning
+	* lib/sockets.c (gl_sockets_startup): Mark unused parameter.
+
 	maint: detect usage(1) and other suspicious exits
 	* top/maint.mk (sc_prohibit_magic_number_exit): New rule.
 
