@@ -7,7 +7,6 @@ m4/mkdir.m4
 
 Depends-on:
 sys_stat
-xalloc
 dirname
 
 configure.ac:

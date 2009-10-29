@@ -56,7 +56,13 @@ rpl_mkdir (char const *dir, mode_t mode maybe_unused)
 
   if (len && dir[len - 1] == '/')
     {
-      tmp_dir = xstrdup (dir);
+      tmp_dir = strdup (dir);
+      if (!tmp_dir)
+        {
+          /* Rather than rely on strdup-posix, we set errno ourselves.  */
+          errno = ENOMEM;
+          return -1;
+        }
       strip_trailing_slashes (tmp_dir);
     }
   else

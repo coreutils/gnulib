@@ -1,5 +1,10 @@
 2009-10-29  Eric Blake  <ebb9@byu.net>
 
+	mkdir: make safe for libraries
+	* modules/mkdir (Depends-on): Drop xalloc.
+	* lib/mkdir.c (rpl_mkdir): Fail with ENOMEM rather than calling
+	exit.
+
 	tests: avoid some compiler warnings
 	* tests/test-getaddrinfo.c (simple): Mark static, and allow string
 	literals.
