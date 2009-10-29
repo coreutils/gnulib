@@ -1,5 +1,5 @@
 /* Name frobnication for compiling argp outside of glibc
-   Copyright (C) 1997, 2003, 2007 Free Software Foundation, Inc.
+   Copyright (C) 1997, 2003, 2007, 2009 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
    Written by Miles Bader <miles@gnu.ai.mit.edu>.
 
@@ -147,7 +147,7 @@
 extern char *__argp_base_name(const char *arg);
 #else
 # include "dirname.h"
-# define __argp_base_name base_name
+# define __argp_base_name last_component
 #endif
 
 #if defined _LIBC || HAVE_DECL_PROGRAM_INVOCATION_SHORT_NAME

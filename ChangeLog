@@ -1,5 +1,11 @@
 2009-10-29  Eric Blake  <ebb9@byu.net>
 
+	argp: avoid memory leak
+	* modules/argp (Depends-on): Use dirname-lgpl, not dirname.
+	* lib/argp-namefrob.h (__argp_base_name): Use last_component, not
+	base_name, since the latter malloc()s and can call exit().
+	Leak introduced 2006-07-03.
+
 	dirname-lgpl: adjust clients that don't need full dirname
 	* modules/backupfile (Depends-on): Use dirname-lgpl, not dirname.
 	* modules/filenamecat (Depends-on): Likewise.
