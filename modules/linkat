@@ -13,7 +13,7 @@ dirname-lgpl
 errno
 extensions
 fcntl-h
-filenamecat
+filenamecat-lgpl
 openat
 link
 link-follow

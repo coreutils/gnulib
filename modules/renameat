@@ -9,7 +9,7 @@ m4/renameat.m4
 Depends-on:
 extensions
 fcntl-h
-filenamecat
+filenamecat-lgpl
 openat
 rename
 same-inode

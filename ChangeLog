@@ -1,5 +1,10 @@
 2009-10-29  Eric Blake  <ebb9@byu.net>
 
+	filenamecat-lgpl: adjust clients
+	* modules/linkat (Depends-on): Use filenamecat-lgpl, not
+	filenamecat.
+	* modules/renameat (Depends-on): Likewise.
+
 	filenamecat: split into filenamecat-lgpl
 	* modules/filenamecat-lgpl: New module.
 	* modules/filenamecat (Files): Move library-safe files into
