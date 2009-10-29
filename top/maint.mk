@@ -156,6 +156,12 @@ sc_prohibit_strcmp:
 	  { echo '$(ME): use STREQ in place of the above uses of str''cmp' \
 		1>&2; exit 1; } || :
 
+# Pass EXIT_*, not number, to usage, exit, and error (when exiting)
+sc_prohibit_magic_number_exit:
+	@re='\<(usage|exit) ?\([0-9]|\<error ?\([1-9][0-9]*,'		\
+	msg='use EXIT_* values rather than magic number'		\
+	  $(_prohibit_regexp)
+
 # Using EXIT_SUCCESS as the first argument to error is misleading,
 # since when that parameter is 0, error does not exit.  Use `0' instead.
 sc_error_exit_success:

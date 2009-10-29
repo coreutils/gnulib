@@ -1,3 +1,8 @@
+2009-10-29  Eric Blake  <ebb9@byu.net>
+
+	maint: detect usage(1) and other suspicious exits
+	* top/maint.mk (sc_prohibit_magic_number_exit): New rule.
+
 2009-10-29  Jim Meyering  <meyering@redhat.com>
 
 	timespec: long-to-int truncation could make timespec_cmp malfunction
