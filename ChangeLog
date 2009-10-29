@@ -1,3 +1,9 @@
+2009-10-29  Jim Meyering  <meyering@redhat.com>
+
+	timespec: long-to-int truncation could make timespec_cmp malfunction
+	* lib/timespec.h (timespec_cmp): Do not interpret a difference of
+	a multiple of 2^32 nanoseconds as no difference.
+
 2009-10-28  Jim Meyering  <meyering@redhat.com>
 
 	fprintftime: wrap macro code argument in "do {...} while(0)"
