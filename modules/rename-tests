@@ -5,7 +5,6 @@ tests/test-rename.c
 Depends-on:
 errno
 link
-progname
 stdbool
 symlink
 sys_stat
@@ -15,4 +14,3 @@ configure.ac:
 Makefile.am:
 TESTS += test-rename
 check_PROGRAMS += test-rename
-test_rename_LDADD = $(LDADD) @LIBINTL@

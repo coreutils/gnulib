@@ -9,7 +9,7 @@ m4/filenamecat.m4
 
 Depends-on:
 xalloc
-dirname
+dirname-lgpl
 
 configure.ac:
 gl_FILE_NAME_CONCAT

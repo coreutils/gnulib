@@ -12,7 +12,7 @@ Depends-on:
 argmatch
 d-ino
 dirent-safer
-dirname
+dirname-lgpl
 memcmp
 stdbool
 

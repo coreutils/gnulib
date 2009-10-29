@@ -1,5 +1,19 @@
 2009-10-29  Eric Blake  <ebb9@byu.net>
 
+	dirname-lgpl: adjust clients that don't need full dirname
+	* modules/backupfile (Depends-on): Use dirname-lgpl, not dirname.
+	* modules/filenamecat (Depends-on): Likewise.
+	* modules/linkat (Depends-on): Likewise.
+	* modules/mkancesdirs (Depends-on): Likewise.
+	* modules/mkdir (Depends-on): Likewise.
+	* modules/openat (Depends-on): Likewise.
+	* modules/savewd (Depends-on): Likewise.
+	* modules/rename (Depends-on): Likewise.
+	(License): Relax license.
+	* modules/mkdir-tests (Depends-on): Drop progname.
+	(Makefile.am): Delete unneeded LDADD.
+	* modules/rename-tests (Depends-on, Makefile.am): Likewise.
+
 	dirname: split into dirname-lgpl
 	* modules/dirname-lgpl: New module.
 	* modules/dirname (Files): Move library-safe files into

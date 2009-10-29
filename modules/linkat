@@ -9,7 +9,7 @@ m4/linkat.m4
 Depends-on:
 areadlink
 areadlinkat
-dirname
+dirname-lgpl
 errno
 extensions
 fcntl-h
