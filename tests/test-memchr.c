@@ -109,7 +109,7 @@ main (void)
 	    ASSERT (MEMCHR (mem, 'U', n) == NULL);
 
 	    {
-	      int i;
+	      size_t i;
 
 	      for (i = 0; i < n; i++)
 		{

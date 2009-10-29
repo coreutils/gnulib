@@ -1,5 +1,5 @@
 /* Test of error-checking xfprintf() function with POSIX compatible formatting.
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@
 #include "test-fprintf-posix.h"
 
 int
-main (int argc, char *argv[])
+main (int argc _UNUSED_PARAMETER_, char *argv[])
 {
   set_program_name (argv[0]);
 

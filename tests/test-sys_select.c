@@ -24,7 +24,7 @@
 struct timeval t1;
 
 int
-main ()
+main (void)
 {
   /* Check that FD_ZERO can be used.  This should not yield a warning
      such as "warning: implicit declaration of function 'memset'".  */

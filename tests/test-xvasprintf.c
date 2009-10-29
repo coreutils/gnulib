@@ -1,5 +1,5 @@
 /* Test of xvasprintf() and xasprintf() functions.
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -52,7 +52,7 @@ my_xasprintf (const char *format, ...)
 }
 
 static void
-test_xvasprintf ()
+test_xvasprintf (void)
 {
   int repeat;
 
@@ -80,7 +80,7 @@ test_xasprintf ()
 }
 
 int
-main (int argc, char *argv[])
+main (int argc _UNUSED_PARAMETER_, char *argv[])
 {
   set_program_name (argv[0]);
 

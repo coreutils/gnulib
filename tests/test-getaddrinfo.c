@@ -44,7 +44,8 @@
 # define EAI_SERVICE 0
 #endif
 
-int simple (char *host, char *service)
+static int
+simple (char const *host, char const *service)
 {
   char buf[BUFSIZ];
   static int skip = 0;

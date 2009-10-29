@@ -1,5 +1,5 @@
 /* Self tests for base64.
-   Copyright (C) 2004, 2008 Free Software Foundation, Inc.
+   Copyright (C) 2004, 2008, 2009 Free Software Foundation, Inc.
    Written by Simon Josefsson.
 
    This program is free software: you can redistribute it and/or modify
@@ -25,7 +25,7 @@
 #include "base64.h"
 
 int
-main (int argc, char *argv[])
+main (void)
 {
   const char *in = "abcdefghijklmnop";
   const char *b64in = "YWJjZGVmZw==";

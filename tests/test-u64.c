@@ -21,7 +21,7 @@
 #include <u64.h>
 
 int
-main ()
+main (void)
 {
   u64 i = u64init (42, 4711);
   u64 j, k, l;
