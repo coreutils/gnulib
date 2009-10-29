@@ -1,5 +1,20 @@
 2009-10-29  Eric Blake  <ebb9@byu.net>
 
+	filenamecat: split into filenamecat-lgpl
+	* modules/filenamecat-lgpl: New module.
+	* modules/filenamecat (Files): Move library-safe files into
+	filenamecat-lgpl.
+	(Depends-on): Add filenamecat-lgpl.
+	(configure.ac): Declare witness.
+	* lib/filenamecat.h (file_name_concat): Only declare when using
+	GPL module.
+	* lib/filenamecat.c (longest_relative_suffix, mfile_name_concat):
+	Move...
+	* lib/filenamecat-lgpl.c: ...into new file.
+	* m4/filenamecat.m4 (gl_FILE_NAME_CONCAT_LGPL): New macro.
+	(gl_FILE_NAME_CONCAT): Use it.
+	* MODULES.html.sh (File system functions): Mention new module.
+
 	argp: avoid memory leak
 	* modules/argp (Depends-on): Use dirname-lgpl, not dirname.
 	* lib/argp-namefrob.h (__argp_base_name): Use last_component, not
