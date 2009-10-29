@@ -23,8 +23,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-const char *program_name = "test-dirname";
-
 struct test {
   const char *name;	/* Name under test.  */
   const char *dir;	/* dir_name (name).  */

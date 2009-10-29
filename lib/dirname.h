@@ -58,9 +58,12 @@
 # endif
 # define IS_RELATIVE_FILE_NAME(F) (! IS_ABSOLUTE_FILE_NAME (F))
 
+# if GNULIB_DIRNAME
 char *base_name (char const *file);
-char *mdir_name (char const *file);
 char *dir_name (char const *file);
+# endif
+
+char *mdir_name (char const *file);
 size_t base_len (char const *file);
 size_t dir_len (char const *file);
 char *last_component (char const *file);

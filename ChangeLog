@@ -1,5 +1,25 @@
 2009-10-29  Eric Blake  <ebb9@byu.net>
 
+	dirname: split into dirname-lgpl
+	* modules/dirname-lgpl: New module.
+	* modules/dirname (Files): Move library-safe files into
+	dirname-lgpl.
+	(Depends-on): Add dirname-lgpl.
+	(configure.ac): Declare witness.
+	* modules/double-slash-root (License): Relax license.
+	* lib/dirname.h (base_name, dir_name): Only declare when using GPL
+	module.
+	* lib/dirname.c (dir_len, mdir_name): Move...
+	* lib/dirname-lgpl.c: ...into new file.
+	* lib/basename.c (last_component, base_len): Move...
+	* lib/basename-lgpl.c: ...into new file.
+	* m4/dirname.m4 (gl_DIRNAME_LGPL): New macro.
+	(gl_DIRNAME): Use it.
+	* MODULES.html.sh (Enhancements for POSIX:2008 functions):
+	Mention new module.
+	* modules/dirname-tests (Depends-on): Add progname.
+	* tests/test-dirname.c (program_name): Delete.
+
 	mkdir: make safe for libraries
 	* modules/mkdir (Depends-on): Drop xalloc.
 	* lib/mkdir.c (rpl_mkdir): Fail with ENOMEM rather than calling

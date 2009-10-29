@@ -2,18 +2,20 @@ Description:
 Extract specific portions of filenames.
 
 Files:
-lib/dirname.c
-lib/basename.c
+lib/dirname.h
+lib/dirname-lgpl.c
+lib/basename-lgpl.c
 lib/stripslash.c
+m4/dirname.m4
+m4/dos.m4
 
 Depends-on:
-dirname-lgpl
-xalloc
-xstrndup
+double-slash-root
+malloc-posix
+stdbool
 
 configure.ac:
-gl_DIRNAME
-gl_MODULE_INDICATOR([dirname])
+gl_DIRNAME_LGPL
 
 Makefile.am:
 
@@ -21,7 +23,7 @@ Include:
 "dirname.h"
 
 License:
-GPL
+LGPLv2+
 
 Maintainer:
 Jim Meyering, Eric Blake
