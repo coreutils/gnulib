@@ -1,7 +1,9 @@
-#!/usr/bin/perl
+eval '(exit $?0)' && eval 'exec perl -wS "$0" ${1+"$@"}'
+  & eval 'exec perl -wS "$0" $argv:q'
+    if 0;
 # Convert git log output to ChangeLog format.
 
-my $VERSION = '2009-08-12 16:49'; # UTC
+my $VERSION = '2009-10-30 13:46'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -179,6 +181,7 @@ sub quoted_cmd(@)
 }
 
 # Local Variables:
+# mode: perl
 # indent-tabs-mode: nil
 # eval: (add-hook 'write-file-hooks 'time-stamp)
 # time-stamp-start: "my $VERSION = '"

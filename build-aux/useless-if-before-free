@@ -1,4 +1,6 @@
-#!/usr/bin/perl -T
+eval '(exit $?0)' && eval 'exec perl -wST "$0" ${1+"$@"}'
+  & eval 'exec perl -wST "$0" $argv:q'
+    if 0;
 # Detect instances of "if (p) free (p);".
 # Likewise for "if (p != NULL) free (p);".  And with braces.
 # Also detect "if (NULL != p) free (p);".
@@ -197,6 +199,7 @@ When modifying files, refuse to process anything other than a regular file.
 EOF
 
 ## Local Variables:
+## mode: perl
 ## indent-tabs-mode: nil
 ## eval: (add-hook 'write-file-hooks 'time-stamp)
 ## time-stamp-start: "my $VERSION = '"

@@ -1,3 +1,17 @@
+2009-10-30  Jim Meyering  <meyering@redhat.com>
+
+	perl scripts: remove #!/usr/bin/perl in favor of more portable...
+	Rather than putting #!/usr/bin/perl on the first line,
+	start with a variant of what's recommended by "man perlrun" that
+	invokes the first "perl" program from your shell's search path.
+	* build-aux/gitlog-to-changelog: Replace #!... as above.
+	Add a "Local Variables" perl mode setting.
+	Prompted by a patch from Ludovic Courtès.
+	Improved by Eric Blake.
+	* build-aux/useless-if-before-free: Likewise.
+	* build-aux/announce-gen: Likewise.
+	* build-aux/update-copyright: Likewise.
+
 2009-10-29  Eric Blake  <ebb9@byu.net>
 
 	filenamecat-lgpl: adjust clients

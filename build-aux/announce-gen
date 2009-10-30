@@ -1,7 +1,9 @@
-#!/usr/bin/perl -w
+eval '(exit $?0)' && eval 'exec perl -wS "$0" ${1+"$@"}'
+  & eval 'exec perl -wS "$0" $argv:q'
+    if 0;
 # Generate a release announcement message.
 
-my $VERSION = '2009-09-11 09:50'; # UTC
+my $VERSION = '2009-10-30 15:59'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -476,19 +478,15 @@ EOF
 
 ### Setup "GNU" style for perl-mode and cperl-mode.
 ## Local Variables:
+## mode: perl
 ## perl-indent-level: 2
 ## perl-continued-statement-offset: 2
 ## perl-continued-brace-offset: 0
 ## perl-brace-offset: 0
 ## perl-brace-imaginary-offset: 0
 ## perl-label-offset: -2
-## cperl-indent-level: 2
-## cperl-brace-offset: 0
-## cperl-continued-brace-offset: 0
-## cperl-label-offset: -2
-## cperl-extra-newline-before-brace: t
-## cperl-merge-trailing-else: nil
-## cperl-continued-statement-offset: 2
+## perl-extra-newline-before-brace: t
+## perl-merge-trailing-else: nil
 ## eval: (add-hook 'write-file-hooks 'time-stamp)
 ## time-stamp-start: "my $VERSION = '"
 ## time-stamp-format: "%:y-%02m-%02d %02H:%02M"
