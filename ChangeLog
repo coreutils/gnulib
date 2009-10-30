@@ -1,3 +1,9 @@
+2009-10-30  Michael Haubenwallner  <michael.haubenwallner@salomon.at>
+
+	stat: fix compilation on AIX
+	* lib/sys_stat.in.h (stat): Work with fact that large files on AIX
+	only see struct stat64.
+
 2009-10-30  Eric Blake  <ebb9@byu.net>
 
 	exclude: make more robust

@@ -456,7 +456,15 @@ int mknodat (int fd, char const *file, mode_t mode, dev_t dev);
    struct stat.  This means that rpl_stat will not be used if the user
    does (stat)(a,b).  Oh well.  */
 #  undef stat
-#  define stat(name, st) rpl_stat (name, st)
+#  ifdef _LARGE_FILES
+    /* With _LARGE_FILES defined, AIX (only) defines stat to stat64,
+       so we have to replace stat64() instead of stat(). */
+#   define stat stat64
+#   undef stat64
+#   define stat64(name, st) rpl_stat (name, st)
+#  else /* !_LARGE_FILES */
+#   define stat(name, st) rpl_stat (name, st)
+#  endif /* !_LARGE_FILES */
 extern int stat (const char *name, struct stat *buf);
 # endif
 #elif defined GNULIB_POSIXCHECK
