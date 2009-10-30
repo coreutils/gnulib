@@ -1,3 +1,10 @@
+2009-11-17  Eric Blake  <ebb9@byu.net>
+
+	vasnprintf: avoid compiler warnings
+	* lib/vasnprintf.c (VASNPRINTF): Avoid shadowing our own local
+	variables.
+	* lib/printf-args.c (PRINTF_FETCHARGS): Avoid type mismatch.
+
 2009-11-17  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/xalloc-die-tests (Makefile.am): Drop XFAIL_TESTS
