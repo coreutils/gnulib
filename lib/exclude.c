@@ -412,9 +412,7 @@ excluded_file_name (struct exclude const *ex, char const *f)
      excluded to included or vice versa.  */
   for (seg = ex->head; seg; seg = seg->next)
     {
-      /* Pacify gcc, so it doesn't issue a spurious
-	 "may be used uninitialized" warning.  */
-      bool rc = excluded;
+      bool rc;
 
       switch (seg->type)
 	{
@@ -427,6 +425,9 @@ excluded_file_name (struct exclude const *ex, char const *f)
 	    filename = xmalloc (strlen (f) + 1);
 	  rc = excluded_file_name_p (seg, f, filename);
 	  break;
+
+	default:
+	  abort ();
 	}
       if (rc != excluded)
 	{

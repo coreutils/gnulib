@@ -1,3 +1,10 @@
+2009-10-30  Eric Blake  <ebb9@byu.net>
+
+	exclude: make more robust
+	* lib/exclude.c (excluded_file_name): Abort on unexpected value,
+	rather than masking a coding bug.
+	Suggested by Bruno Haible.
+
 2009-10-30  Jim Meyering  <meyering@redhat.com>
 
 	perl scripts: remove #!/usr/bin/perl in favor of more portable...
