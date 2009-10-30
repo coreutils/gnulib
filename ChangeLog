@@ -1,3 +1,14 @@
+2009-10-30  Eric Blake  <ebb9@byu.net>
+
+	build: avoid compiler warnings
+	* lib/fchmodat.c (lchmod): Mark unused variables.
+	* lib/getopt.c (_getopt_initialize): Likewise.
+	* lib/mktime.c (__mktime_internal): Provide prototype.
+	* lib/inttostr.c (inttostr): Avoid compiler warning even with
+	older gcc that do not understand #pragma GCC diagnostic.
+	* lib/uinttostr.c (inttype_is_unsigned): Define.
+	* lib/umaxtostr.c (inttype_is_unsigned): Likewise.
+
 2009-10-30  Michael Haubenwallner  <michael.haubenwallner@salomon.at>
 
 	stat: fix compilation on AIX

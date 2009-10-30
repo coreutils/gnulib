@@ -27,7 +27,12 @@
    system-supplied declaration.  */
 # undef lchmod
 # define lchmod lchmod_rpl
-static int lchmod (char const *f, mode_t m) { errno = ENOSYS; return -1; }
+static int
+lchmod (char const *f _UNUSED_PARAMETER_, mode_t m _UNUSED_PARAMETER_)
+{
+  errno = ENOSYS;
+  return -1;
+}
 #endif
 
 /* Solaris 10 has no function like this.

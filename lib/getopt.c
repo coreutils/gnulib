@@ -2,7 +2,7 @@
    NOTE: getopt is now part of the C library, so if you don't know what
    "Keep this file name-space clean" means, talk to drepper@gnu.org
    before changing it!
-   Copyright (C) 1987,88,89,90,91,92,93,94,95,96,98,99,2000,2001,2002,2003,2004,2006,2008
+   Copyright (C) 1987,88,89,90,91,92,93,94,95,96,98,99,2000,2001,2002,2003,2004,2006,2008,2009
 	Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
@@ -225,7 +225,8 @@ exchange (char **argv, struct _getopt_data *d)
 /* Initialize the internal data when the first call is made.  */
 
 static const char *
-_getopt_initialize (int argc, char **argv, const char *optstring,
+_getopt_initialize (int argc _UNUSED_PARAMETER_,
+		    char **argv _UNUSED_PARAMETER_, const char *optstring,
 		    int posixly_correct, struct _getopt_data *d)
 {
   /* Start processing options with ARGV-element 1 (since ARGV-element 0
