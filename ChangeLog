@@ -1,3 +1,10 @@
+2009-10-31  Eric Blake  <ebb9@byu.net>
+
+	fseeko: fix m4 regression
+	* m4/fseeko.m4 (gl_FUNC_FSEEKO): Use modern macro.  Fixes
+	regression from 2009-10-27.
+	Reported by Ralf Wildenhues.
+
 2009-10-31  Jim Meyering  <meyering@redhat.com>
 
 	inttostr: aesthetics and improved (compile-time) safety
