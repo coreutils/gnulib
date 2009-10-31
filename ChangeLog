@@ -1,3 +1,17 @@
+2009-10-31  Jim Meyering  <meyering@redhat.com>
+
+	inttostr: aesthetics and improved (compile-time) safety
+	Define inttype_is_signed rather than inttype_is_unsigned,
+	since the sole use is via "#if inttype_is_signed".
+	* lib/imaxtostr.c (inttype_is_signed): Define this, rather than
+	inttype_is_unsigned.
+	* lib/offtostr.c (inttype_is_signed): Likewise.
+	* lib/uinttostr.c (inttype_is_signed): Likewise.
+	* lib/umaxtostr.c (inttype_is_signed): Likewise.
+	* lib/inttostr.c (inttostr): Use verify to cross-check the
+	inttype_is_signed value and the signedness of the actual type.
+	* modules/inttostr (Depends-on): Add verify.
+
 2009-10-30  Eric Blake  <ebb9@byu.net>
 
 	build: avoid compiler warnings
