@@ -40,9 +40,13 @@
 # define TMP_MAX 238328
 #endif
 #ifndef __GT_FILE
-# define __GT_FILE	1
-# define __GT_DIR	2
-# define __GT_NOCREATE	3
+# define __GT_FILE	0
+# define __GT_DIR	1
+# define __GT_NOCREATE	2
+#endif
+#if !_LIBC && (GT_FILE != __GT_FILE || GT_DIR != __GT_DIR       \
+               || GT_NOCREATE != __GT_NOCREATE)
+# error report this to bug-gnulib@gnu.org
 #endif
 
 #include <stddef.h>
@@ -60,11 +64,12 @@
 # define struct_stat64 struct stat64
 #else
 # define struct_stat64 struct stat
-# define __open open
 # define __gen_tempname gen_tempname
 # define __getpid getpid
 # define __gettimeofday gettimeofday
 # define __mkdir mkdir
+# define __open open
+# define __open64 open
 # define __lxstat64(version, file, buf) lstat (file, buf)
 # define __xstat64(version, file, buf) stat (file, buf)
 #endif
@@ -179,9 +184,9 @@ static const char letters[] =
 "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 /* Generate a temporary file name based on TMPL.  TMPL must match the
-   rules for mk[s]temp (i.e. end in "XXXXXX").  The name constructed
-   does not exist at the time of the call to __gen_tempname.  TMPL is
-   overwritten with the result.
+   rules for mk[s]temp (i.e. end in "XXXXXX", possibly with a suffix).
+   The name constructed does not exist at the time of the call to
+   __gen_tempname.  TMPL is overwritten with the result.
 
    KIND may be one of:
    __GT_NOCREATE:	simply verify that the name does not exist
@@ -192,7 +197,7 @@ static const char letters[] =
 
    We use a clever algorithm to get hard-to-predict names. */
 int
-__gen_tempname (char *tmpl, int flags, int kind)
+__gen_tempname (char *tmpl, int suffixlen, int flags, int kind)
 {
   int len;
   char *XXXXXX;
@@ -220,14 +225,14 @@ __gen_tempname (char *tmpl, int flags, int kind)
 #endif
 
   len = strlen (tmpl);
-  if (len < 6 || strcmp (&tmpl[len - 6], "XXXXXX"))
+  if (len < 6 + suffixlen || memcmp (&tmpl[len - 6 - suffixlen], "XXXXXX", 6))
     {
       __set_errno (EINVAL);
       return -1;
     }
 
   /* This is where the Xs start.  */
-  XXXXXX = &tmpl[len - 6];
+  XXXXXX = &tmpl[len - 6 - suffixlen];
 
   /* Get some more or less random data.  */
 #ifdef RANDOM_BITS
@@ -262,8 +267,8 @@ __gen_tempname (char *tmpl, int flags, int kind)
 	{
 	case __GT_FILE:
 	  fd = __open (tmpl,
-		       (flags & ~0777) | O_RDWR | O_CREAT | O_EXCL,
-		       S_IRUSR | S_IWUSR);
+		       (flags & ~O_ACCMODE)
+		       | O_RDWR | O_CREAT | O_EXCL, S_IRUSR | S_IWUSR);
 	  break;
 
 	case __GT_DIR:
@@ -290,6 +295,7 @@ __gen_tempname (char *tmpl, int flags, int kind)
 
 	default:
 	  assert (! "invalid KIND in __gen_tempname");
+	  abort ();
 	}
 
       if (fd >= 0)

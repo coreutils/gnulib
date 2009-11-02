@@ -1,4 +1,5 @@
-/* Copyright (C) 1998, 1999, 2001, 2005, 2006, 2007, 2009 Free Software Foundation, Inc.
+/* Copyright (C) 1998, 1999, 2001, 2005, 2006, 2007, 2009 Free
+   Software Foundation, Inc.
    This file is derived from the one in the GNU C Library.
 
    This program is free software: you can redistribute it and/or modify
@@ -23,7 +24,9 @@
 #if !_LIBC
 # include "tempname.h"
 # define __gen_tempname gen_tempname
-# define __GT_FILE GT_FILE
+# ifndef __GT_FILE
+#  define __GT_FILE GT_FILE
+# endif
 #endif
 
 #include <stdio.h>
@@ -40,5 +43,5 @@ int
 mkstemp (template)
      char *template;
 {
-  return __gen_tempname (template, 0, __GT_FILE);
+  return __gen_tempname (template, 0, 0, __GT_FILE);
 }

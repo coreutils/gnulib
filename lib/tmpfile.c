@@ -83,7 +83,7 @@ tmpfile (void)
 	  do
 	    {
 	      memcpy (&xtemplate[len - 6], "XXXXXX", 6);
-	      if (gen_tempname (xtemplate, 0, GT_NOCREATE) < 0)
+	      if (gen_tempname (xtemplate, 0, 0, GT_NOCREATE) < 0)
 		{
 		  fd = -1;
 		  break;

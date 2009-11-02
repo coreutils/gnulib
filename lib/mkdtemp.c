@@ -31,7 +31,7 @@
 char *
 mkdtemp (char *template)
 {
-  if (gen_tempname (template, 0, GT_DIR))
+  if (gen_tempname (template, 0, 0, GT_DIR))
     return NULL;
   else
     return template;

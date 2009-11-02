@@ -6,6 +6,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2009-11-04  tempname        The gen_tempname function takes an additional
+                            'suffixlen' argument. You can safely pass 0.
+
 2009-11-04  nproc           The num_processors function now takes an argument.
 
 2009-11-02  inet_pton       The use of this module now requires linking with
