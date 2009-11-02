@@ -25,5 +25,8 @@ LGPLv2+
 Include:
 <arpa/inet.h>
 
+Link:
+$(INET_NTOP_LIB)
+
 Maintainer:
 Yoann Vandoorselaere, glibc

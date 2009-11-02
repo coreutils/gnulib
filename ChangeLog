@@ -1,3 +1,10 @@
+2009-11-02  Simon Josefsson  <simon@josefsson.org>
+            Bruno Haible  <bruno@clisp.org>
+
+	* m4/inet_ntop.m4 (gl_INET_NTOP): Define also INET_NTOP_LIB.
+	* modules/inet_ntop (Link): New section.
+	Reported by Boyan Kasarov <bkasarov@gmail.com>.
+
 2009-11-02  Eric Blake  <ebb9@byu.net>
 
 	maint: avoid compiler warnings in m4 macros
