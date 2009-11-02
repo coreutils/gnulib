@@ -1,5 +1,20 @@
 2009-11-04  Eric Blake  <ebb9@byu.net>
 
+	mkstemps, mkostemps: new modules
+	* modules/mkostemps: New module.
+	* modules/mkstemps: Likewise.
+	* lib/mkostemps.c (mkostemps): New file.
+	* lib/mkstemps.c (mkstemps): Likewise.
+	* m4/mkostemps.m4 (gl_FUNC_MKOSTEMPS): Likewise.
+	* m4/mkstemps.m4 (gl_FUNC_MKSTEMPS): Likewise.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Add witnesses.
+	* modules/stdlib (Makefile.am): Substitute them.
+	* lib/stdlib.in.h (mkostemps, mkstemps): Declare them.
+	* doc/glibc-functions/mkstemps.texi (mkstemps): New file.
+	* doc/glibc-functions/mkostemps.texi (mkostemps): Likewise.
+	* doc/gnulib.texi (Glibc stdlib.h): Include them.
+	* MODULES.html.sh (File system functions): Mention them.
+
 	tempname: resync from glibc
 	* lib/tempname.c (__gen_tempname): Add suffixlen argument.  Use
 	same values for __GT_FILE as glibc.  Abort even when assertions

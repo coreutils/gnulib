@@ -2480,6 +2480,9 @@ func_all_modules ()
   func_module mkancesdirs
   func_module mkfifoat
   func_module mkdir-p
+  func_module mkostemp
+  func_module mkostemps
+  func_module mkstemps
   func_module modechange
   func_module mountlist
   func_module openat

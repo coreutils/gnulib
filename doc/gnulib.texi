@@ -5079,7 +5079,9 @@ This list of functions is sorted according to the header that declares them.
 * lcong48_r::
 * lrand48_r::
 * mkostemp::
+* mkostemps::
 * mrand48_r::
+* mkstemps::
 * nrand48_r::
 * on_exit::
 * ptsname_r::
@@ -5120,7 +5122,9 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/lcong48_r.texi
 @include glibc-functions/lrand48_r.texi
 @include glibc-functions/mkostemp.texi
+@include glibc-functions/mkostemps.texi
 @include glibc-functions/mrand48_r.texi
+@include glibc-functions/mkstemps.texi
 @include glibc-functions/nrand48_r.texi
 @include glibc-functions/on_exit.texi
 @include glibc-functions/ptsname_r.texi
