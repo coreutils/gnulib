@@ -1,3 +1,12 @@
+2009-11-02  Simon Josefsson  <simon@josefsson.org>
+
+	* m4/pmccabe2html.m4: Remove file.
+	* modules/pmccabe2html: Drop pmccabe2html.m4.  Don't call m4
+	function.  Change maintainer.
+	* build-aux/pmccabe2html: Use /bin/sh with magic instead of
+	hard-coding path to awk.  Tiny patch from ludo@gnu.org (Ludovic
+	Courtès).
+
 2009-10-31  Eric Blake  <ebb9@byu.net>
 
 	fseeko: fix m4 regression
