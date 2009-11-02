@@ -32,7 +32,12 @@ trap 'rm -f $TMP_BASE*' 0 1 2 3 15
 
 TMP=$TMP_BASE
 s=$TMP-script
-printf '#!/usr/bin/perl -pi\ns/a/b/\n' > $s
+cat <<\EOF > $s
+eval '(exit $?0)' && eval 'exec perl -wS -0777 -pi "$0" ${1+"$@"}'
+  & eval 'exec perl -wS -0777 -pi "$0" $argv:q'
+    if 0;
+s/a/b/
+EOF
 chmod a+x $s
 echo a > $TMP-in
 ./$s $TMP-in 2>/dev/null && test b = "`cat $TMP-in 2>/dev/null`" ||
@@ -82,6 +87,7 @@ Copyright (C) 1990-2005, 2007-2009 Acme, Inc.
 # Foundation, Inc.
 EOF
 
+rm -f $TMP.*.bak
 UPDATE_COPYRIGHT_YEAR=2009 \
   update-copyright $TMP.* 1> $TMP-stdout 2> $TMP-stderr
 compare /dev/null $TMP-stdout || exit 1
@@ -124,6 +130,7 @@ Copyright (C) 1990-2005, 2007-2009 Acme, Inc.
 # Foundation, Inc.
 EOF
 
+rm -f $TMP.*.bak
 UPDATE_COPYRIGHT_YEAR=2010 UPDATE_COPYRIGHT_USE_INTERVALS=1 \
   update-copyright $TMP.* 1> $TMP-stdout 2> $TMP-stderr
 compare /dev/null $TMP-stdout || exit 1
@@ -162,6 +169,7 @@ Copyright (C) 1990-2005, 2007-2009 Acme, Inc.
 # Copyright (C) 1990-2005, 2007-2010 Free Software Foundation, Inc.
 EOF
 
+rm -f $TMP.*.bak
 UPDATE_COPYRIGHT_YEAR=2010 UPDATE_COPYRIGHT_FORCE=1 \
   update-copyright $TMP.* 1> $TMP-stdout 2> $TMP-stderr
 compare /dev/null $TMP-stdout || exit 1
