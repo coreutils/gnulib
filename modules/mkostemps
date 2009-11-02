@@ -13,6 +13,7 @@ tempname
 
 configure.ac:
 gl_FUNC_MKOSTEMPS
+gl_MODULE_INDICATOR([mkostemps])
 gl_STDLIB_MODULE_INDICATOR([mkostemps])
 
 Makefile.am:

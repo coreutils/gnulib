@@ -1,5 +1,16 @@
 2009-11-04  Eric Blake  <ebb9@byu.net>
 
+	stdlib-safer: wrap all mkstemp variants
+	* modules/mkostemp (configure.ac): Set witness.
+	* modules/mkostemps (configure.ac): Likewise.
+	* modules/mkstemps (configure.ac): Likewise.
+	* lib/stdlib-safer.h (mkostemp_safer, mkostemps_safer)
+	(mkstemps_safer): Wrap more functions.
+	* lib/stdlib--.h (mkostemp, mkostemps, mkstemps): Default the
+	wrapping.
+	* lib/mkstemp-safer.c (mkostemp_safer, mkostemps_safer)
+	(mkstemps_safer): Implement the wrappers.
+
 	mkstemps, mkostemps: new modules
 	* modules/mkostemps: New module.
 	* modules/mkstemps: Likewise.
