@@ -2,6 +2,7 @@ Description:
 Convert calendar time to simple time, inverse of mktime.
 
 Files:
+lib/mktime-internal.h
 lib/timegm.c
 m4/timegm.m4
 

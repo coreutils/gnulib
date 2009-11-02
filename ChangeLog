@@ -1,12 +1,20 @@
 2009-11-02  Eric Blake  <ebb9@byu.net>
 
+	mktime, timegm: share common declaration
+	* lib/mktime-internal.h: New file.
+	* lib/mktime.c: Use it rather than open-coding a declaration.
+	* lib/timegm.c: Likewise.
+	* modules/mktime (Files): Ship it.
+	* modules/timegm (Files): Likewise.
+	Suggested by Bruno Haible.
+
 	test-update-copyright: update test to match script changes
 	* tests/test-update-copyright.sh: Avoid hard-coding perl
 	location.  Don't update *.bak created by earlier runs.
 
 2009-11-02  Paul Eggert  <eggert@cs.ucla.edu>
-            Simon Josefsson  <simon@josefsson.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Simon Josefsson  <simon@josefsson.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Fix link error on Solaris 8.
 	* m4/inet_pton.m4 (gl_INET_PTON): Search for the function inet_pton
@@ -14,7 +22,7 @@
 	* modules/inet_pton (Link): New section.
 
 2009-11-02  Simon Josefsson  <simon@josefsson.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* m4/inet_ntop.m4 (gl_INET_NTOP): Define also INET_NTOP_LIB.
 	* modules/inet_ntop (Link): New section.

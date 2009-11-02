@@ -2,6 +2,7 @@ Description:
 mktime() function: convert broken-down time to linear time.
 
 Files:
+lib/mktime-internal.h
 lib/mktime.c
 m4/mktime.m4
 
