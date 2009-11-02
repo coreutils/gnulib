@@ -1,4 +1,4 @@
-# ungetc.m4 serial 1
+# ungetc.m4 serial 2
 dnl Copyright (C) 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,7 +12,7 @@ AC_DEFUN_ONCE([gl_FUNC_UNGETC_WORKS],
     [gl_cv_func_ungetc_works],
     [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
 #include <stdio.h>
-      ]], [FILE *f; long l;
+      ]], [FILE *f;
 	   if (!(f = fopen ("conftest.tmp", "w+"))) return 1;
 	   if (fputs ("abc", f) < 0) return 2;
 	   rewind (f);
