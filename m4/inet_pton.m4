@@ -1,4 +1,4 @@
-# inet_pton.m4 serial 7
+# inet_pton.m4 serial 8
 dnl Copyright (C) 2006, 2008, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,7 +11,18 @@ AC_DEFUN([gl_INET_PTON],
 
   gl_REPLACE_ARPA_INET_H
 
-  AC_REPLACE_FUNCS([inet_pton])
+  dnl Most platforms that provide inet_pton define it in libc.
+  dnl Solaris 8..10 provide inet_pton in libnsl instead.
+  gl_save_LIBS=$LIBS
+  AC_SEARCH_LIBS([inet_pton], [nsl], [],
+    [AC_REPLACE_FUNCS([inet_pton])])
+  LIBS=$gl_save_LIBS
+  INET_PTON_LIB=
+  if test "$ac_cv_search_inet_pton" != "none needed"; then
+    INET_PTON_LIB="$ac_cv_search_inet_pton"
+  fi
+  AC_SUBST([INET_PTON_LIB])
+
   gl_PREREQ_INET_PTON
 ])
 

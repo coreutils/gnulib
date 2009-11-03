@@ -1,3 +1,12 @@
+2009-11-02  Paul Eggert  <eggert@cs.ucla.edu>
+            Simon Josefsson  <simon@josefsson.org>
+            Bruno Haible  <bruno@clisp.org>
+
+	Fix link error on Solaris 8.
+	* m4/inet_pton.m4 (gl_INET_PTON): Search for the function inet_pton
+	also in libnsl. Define also INET_PTON_LIB.
+	* modules/inet_pton (Link): New section.
+
 2009-11-02  Simon Josefsson  <simon@josefsson.org>
             Bruno Haible  <bruno@clisp.org>
 
