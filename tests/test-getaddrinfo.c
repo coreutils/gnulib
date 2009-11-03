@@ -91,10 +91,12 @@ simple (char const *host, char const *service)
 	 fail the test merely because of this.  */
       if (res == EAI_SERVICE)
 	return 0;
+#ifdef EAI_NODATA
       /* AIX reports EAI_NODATA for "https".  Don't fail the test
 	 merely because of this.  */
       if (res == EAI_NODATA)
 	return 0;
+#endif
       /* Provide details if errno was set.  */
       if (res == EAI_SYSTEM)
 	dbgprintf ("system error: %s\n", strerror (err));
