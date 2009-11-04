@@ -1,3 +1,10 @@
+2009-11-04  Eric Blake  <ebb9@byu.net>
+
+	utimens: fix use of futimens on older Linux
+	* lib/utimens.c (fdutimens): Use updated, rather than original,
+	timespec to avoid bug in older Linux kernel.
+	Reported by Simon Josefsson.
+
 2009-11-04  Bruno Haible  <bruno@clisp.org>
 
 	Make num_processors more flexible and consistent.

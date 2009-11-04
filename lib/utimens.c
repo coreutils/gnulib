@@ -227,7 +227,7 @@ fdutimens (char const *file, int fd, struct timespec const timespec[2])
 # endif /* HAVE_UTIMENSAT */
 # if HAVE_FUTIMENS
       {
-        int result = futimens (fd, timespec);
+        int result = futimens (fd, ts);
 #  ifdef __linux__
         /* Work around the same bug as above.  */
         if (0 < result)
