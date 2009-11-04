@@ -7,6 +7,8 @@ lib/nproc.c
 m4/nproc.m4
 
 Depends-on:
+c-ctype
+extensions
 unistd
 
 configure.ac:

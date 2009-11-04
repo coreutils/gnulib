@@ -16,12 +16,21 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-/* Written by Glen Lenker.  */
+/* Written by Glen Lenker and Bruno Haible.  */
 
 #include <config.h>
 #include "nproc.h"
 
+#include <stdlib.h>
 #include <unistd.h>
+
+#if HAVE_PTHREAD_AFFINITY_NP && 0
+# include <pthread.h>
+# include <sched.h>
+#endif
+#if HAVE_SCHED_GETAFFINITY_LIKE_GLIBC || HAVE_SCHED_GETAFFINITY_NP
+# include <sched.h>
+#endif
 
 #include <sys/types.h>
 
@@ -46,41 +55,234 @@
 # include <windows.h>
 #endif
 
+#include "c-ctype.h"
+
 #define ARRAY_SIZE(a) (sizeof (a) / sizeof ((a)[0]))
 
-/* Return the total number of processors.  The result is guaranteed to
-   be at least 1.  */
 unsigned long int
-num_processors (void)
+num_processors (enum nproc_query query)
 {
-#if defined _SC_NPROCESSORS_ONLN
-  { /* This works on glibc, MacOS X 10.5, FreeBSD, AIX, OSF/1, Solaris, Cygwin,
-       Haiku.  */
-    long int nprocs = sysconf (_SC_NPROCESSORS_ONLN);
-    if (0 < nprocs)
-      return nprocs;
-  }
+  if (query == NPROC_CURRENT_OVERRIDABLE)
+    {
+      /* Test the environment variable OMP_NUM_THREADS, recognized also by all
+	 programs that are based on OpenMP.  The OpenMP spec says that the
+	 value assigned to the environment variable "may have leading and
+	 trailing white space". */
+      const char *envvalue = getenv ("OMP_NUM_THREADS");
+
+      if (envvalue != NULL)
+	{
+	  while (*envvalue != '\0' && c_isspace (*envvalue))
+	    envvalue++;
+	  /* Convert it from decimal to 'unsigned long'.  */
+	  if (c_isdigit (*envvalue))
+	    {
+	      char *endptr = NULL;
+	      unsigned long int value = strtoul (envvalue, &endptr, 10);
+
+	      if (endptr != NULL)
+		{
+		  while (*endptr != '\0' && c_isspace (*endptr))
+		    endptr++;
+		  if (*endptr == '\0')
+		    return (value > 0 ? value : 1);
+		}
+	    }
+	}
+
+      query = NPROC_CURRENT;
+    }
+  /* Here query is one of NPROC_ALL, NPROC_CURRENT.  */
+
+  if (query == NPROC_CURRENT)
+    {
+      /* glibc >= 2.3.3 with NPTL and NetBSD 5 have pthread_getaffinity_np,
+	 but with different APIs.  Also it requires linking with -lpthread.
+	 Therefore this code is not enabled.
+	 glibc >= 2.3.4 has sched_getaffinity whereas NetBSD 5 has
+	 sched_getaffinity_np.  */
+#if HAVE_PTHREAD_AFFINITY_NP && defined __GLIBC__ && 0
+      {
+	cpu_set_t set;
+
+	if (pthread_getaffinity_np (pthread_self (), sizeof (set), &set) == 0)
+	  {
+	    unsigned long count;
+
+# ifdef CPU_COUNT
+	    /* glibc >= 2.6 has the CPU_COUNT macro.  */
+	    count = CPU_COUNT (&set);
+# else
+	    size_t i;
+
+	    count = 0;
+	    for (i = 0; i < CPU_SETSIZE; i++)
+	      if (CPU_ISSET (i, &set))
+		count++;
+# endif
+	    if (count > 0)
+	      return count;
+	  }
+      }
+#elif HAVE_PTHREAD_AFFINITY_NP && defined __NetBSD__ && 0
+      {
+	cpuset_t *set;
+
+	set = cpuset_create ();
+	if (set != NULL)
+	  {
+	    unsigned long count = 0;
+
+	    if (pthread_getaffinity_np (pthread_self (), cpuset_size (set), set)
+		== 0)
+	      {
+		cpuid_t i;
+
+		for (i = 0;; i++)
+		  {
+		    int ret = cpuset_isset (i, set);
+		    if (ret < 0)
+		      break;
+		    if (ret > 0)
+		      count++;
+		  }
+	      }
+	    cpuset_destroy (set);
+	    if (count > 0)
+	      return count;
+	  }
+      }
+#elif HAVE_SCHED_GETAFFINITY_LIKE_GLIBC /* glibc >= 2.3.4 */
+      {
+	cpu_set_t set;
+
+	if (sched_getaffinity (0, sizeof (set), &set) == 0)
+	  {
+	    unsigned long count;
+
+# ifdef CPU_COUNT
+	    /* glibc >= 2.6 has the CPU_COUNT macro.  */
+	    count = CPU_COUNT (&set);
+# else
+	    size_t i;
+
+	    count = 0;
+	    for (i = 0; i < CPU_SETSIZE; i++)
+	      if (CPU_ISSET (i, &set))
+		count++;
+# endif
+	    if (count > 0)
+	      return count;
+	  }
+      }
+#elif HAVE_SCHED_GETAFFINITY_NP /* NetBSD >= 5 */
+      {
+	cpuset_t *set;
+
+	set = cpuset_create ();
+	if (set != NULL)
+	  {
+	    unsigned long count = 0;
+
+	    if (sched_getaffinity_np (getpid (), cpuset_size (set), set) == 0)
+	      {
+		cpuid_t i;
+
+		for (i = 0;; i++)
+		  {
+		    int ret = cpuset_isset (i, set);
+		    if (ret < 0)
+		      break;
+		    if (ret > 0)
+		      count++;
+		  }
+	      }
+	    cpuset_destroy (set);
+	    if (count > 0)
+	      return count;
+	  }
+      }
 #endif
+
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+      { /* This works on native Windows platforms.  */
+	DWORD_PTR process_mask;
+	DWORD_PTR system_mask;
+
+	if (GetProcessAffinityMask (GetCurrentProcess (),
+				    &process_mask, &system_mask))
+	  {
+	    DWORD_PTR mask = process_mask;
+	    unsigned long count = 0;
+
+	    for (; mask != 0; mask = mask >> 1)
+	      if (mask & 1)
+		count++;
+	    if (count > 0)
+	      return count;
+	  }
+      }
+#endif
+
+#if defined _SC_NPROCESSORS_ONLN
+      { /* This works on glibc, MacOS X 10.5, FreeBSD, AIX, OSF/1, Solaris,
+	   Cygwin, Haiku.  */
+	long int nprocs = sysconf (_SC_NPROCESSORS_ONLN);
+	if (nprocs > 0)
+	  return nprocs;
+      }
+#endif
+    }
+  else /* query == NPROC_ALL */
+    {
+#if defined _SC_NPROCESSORS_CONF
+      { /* This works on glibc, MacOS X 10.5, FreeBSD, AIX, OSF/1, Solaris,
+	   Cygwin, Haiku.  */
+	long int nprocs = sysconf (_SC_NPROCESSORS_CONF);
+	if (nprocs > 0)
+	  return nprocs;
+      }
+#endif
+    }
 
 #if HAVE_PSTAT_GETDYNAMIC
   { /* This works on HP-UX.  */
     struct pst_dynamic psd;
-    if (0 <= pstat_getdynamic (&psd, sizeof psd, 1, 0)
-	&& 0 < psd.psd_proc_cnt)
-      return psd.psd_proc_cnt;
+    if (pstat_getdynamic (&psd, sizeof psd, 1, 0) >= 0)
+      {
+	/* The field psd_proc_cnt contains the number of active processors.
+	   In newer releases of HP-UX 11, the field psd_max_proc_cnt includes
+	   deactivated processors.  */
+	if (query == NPROC_CURRENT)
+	  {
+	    if (psd.psd_proc_cnt > 0)
+	      return psd.psd_proc_cnt;
+	  }
+	else
+	  {
+	    if (psd.psd_max_proc_cnt > 0)
+	      return psd.psd_max_proc_cnt;
+	  }
+      }
   }
 #endif
 
-#if HAVE_SYSMP && defined MP_NAPROCS
+#if HAVE_SYSMP && defined MP_NAPROCS && defined MP_NPROCS
   { /* This works on IRIX.  */
     /* MP_NPROCS yields the number of installed processors.
        MP_NAPROCS yields the number of processors available to unprivileged
-       processes.  We need the latter.  */
-    int nprocs = sysmp (MP_NAPROCS);
-    if (0 < nprocs)
+       processes.  */
+    int nprocs =
+      sysmp (query == NPROC_CURRENT && getpid () != 0
+	     ? MP_NAPROCS
+	     : MP_NPROCS);
+    if (nprocs > 0)
       return nprocs;
   }
 #endif
+
+  /* Finally, as fallback, use the APIs that don't distinguish between
+     NPROC_CURRENT and NPROC_ALL.  */
 
 #if HAVE_SYSCTL && defined HW_NCPU
   { /* This works on MacOS X, FreeBSD, NetBSD, OpenBSD.  */

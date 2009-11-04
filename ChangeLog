@@ -1,3 +1,17 @@
+2009-11-04  Bruno Haible  <bruno@clisp.org>
+
+	Make num_processors more flexible and consistent.
+	* lib/nproc.h (enum nproc_query): New type.
+	(num_processors): Add a 'query' argument.
+	* lib/nproc.c: Include <stdlib.h>, <sched.h>, c-ctype.h.
+	(num_processors): Add a 'query' argument. Test the value of the
+	OMP_NUM_THREADS environment variable if requested. On Linux, NetBSD,
+	mingw, count the number of CPUs available for the current process.
+	* m4/nproc.m4 (gl_PREREQ_NPROC): Require AC_USE_SYSTEM_EXTENSIONS.
+	Check for sched_getaffinity and sched_getaffinity_np.
+	* modules/nproc (Depends-on): Add c-ctype, extensions.
+	* NEWS: Mention the change.
+
 2009-11-03  Bruno Haible  <bruno@clisp.org>
 
 	* NEWS: Document the new library dependencies of inet_ntop, inet_pton.
