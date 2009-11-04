@@ -1,3 +1,7 @@
+2009-11-03  Bruno Haible  <bruno@clisp.org>
+
+	* NEWS: Document the new library dependencies of inet_ntop, inet_pton.
+
 2009-11-03  Jim Meyering  <meyering@redhat.com>
 
 	test-getaddrinfo: avoid compilation failure on FreeBSD 7.2

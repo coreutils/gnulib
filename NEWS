@@ -6,6 +6,12 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2009-11-02  inet_pton       The use of this module now requires linking with
+                            $(INET_PTON_LIB).
+
+2009-11-02  inet_ntop       The use of this module now requires linking with
+                            $(INET_NTOP_LIB).
+
 2009-10-10  utimens         The use of this module now requires linking with
                             $(LIB_CLOCK_GETTIME).
 
