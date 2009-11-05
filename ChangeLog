@@ -1,5 +1,9 @@
 2009-11-05  Simon Josefsson  <simon@josefsson.org>
 
+	* modules/pmccabe2html (configure.ac): Check for pmccabe tool.
+
+2009-11-05  Simon Josefsson  <simon@josefsson.org>
+
 	* modules/getaddrinfo (Link): Add $(INET_NTOP_LIB).
 
 2009-11-05  Simon Josefsson  <simon@josefsson.org>

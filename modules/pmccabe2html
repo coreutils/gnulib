@@ -9,6 +9,7 @@ build-aux/pmccabe.css
 Depends-on:
 
 configure.ac:
+AC_PATH_PROG([PMCCABE], [pmccabe], [false])
 
 Makefile.am:
 
