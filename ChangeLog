@@ -1,3 +1,9 @@
+2009-11-05  Bruno Haible  <bruno@clisp.org>
+
+	Tests for module 'inet_ntop'.
+	* modules/inet_ntop-tests: New file.
+	* tests/test-inet_ntop.c: New file.
+
 2009-11-04  Eric Blake  <ebb9@byu.net>
 
 	stdlib-safer: wrap all mkstemp variants
