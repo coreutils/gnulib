@@ -1,5 +1,9 @@
 2009-11-05  Simon Josefsson  <simon@josefsson.org>
 
+	* tests/test-func.c: Also test value of __func__.
+
+2009-11-05  Simon Josefsson  <simon@josefsson.org>
+
 	* tests/test-sys_socket.c: Use smaller constant value, sa_family_t
 	may be an 8-bit type.  Reported by Bruno Haible <bruno@clisp.org>.
 
