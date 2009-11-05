@@ -1,5 +1,11 @@
 2009-11-05  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'inet_pton'.
+	* modules/inet_pton-tests: New file.
+	* tests/test-inet_pton.c: New file.
+
+2009-11-05  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'inet_ntop'.
 	* modules/inet_ntop-tests: New file.
 	* tests/test-inet_ntop.c: New file.
