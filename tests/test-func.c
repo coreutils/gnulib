@@ -45,7 +45,7 @@ main ()
   ASSERT (strlen (__func__) + 1 == sizeof __func__);
 #endif
 
-  assert (strcmp (__func__, "main") == 0
+  ASSERT (strcmp (__func__, "main") == 0
 	  || strcmp (__func__, "<unknown function>") == 0);
 
   return 0;
