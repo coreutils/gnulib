@@ -47,7 +47,7 @@ main (void)
     }
 
   x.ss_family = 42;
-  i = 4711;
+  i = 42;
 
   return 0;
 }
