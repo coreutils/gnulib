@@ -18,7 +18,8 @@ AC_DEFUN([gl_INET_PTON],
     [AC_REPLACE_FUNCS([inet_pton])])
   LIBS=$gl_save_LIBS
   INET_PTON_LIB=
-  if test "$ac_cv_search_inet_pton" != "none required"; then
+  if test "$ac_cv_search_inet_pton" != "no" &&
+     test "$ac_cv_search_inet_pton" != "none required"; then
     INET_PTON_LIB="$ac_cv_search_inet_pton"
   fi
   AC_SUBST([INET_PTON_LIB])

@@ -18,7 +18,8 @@ AC_DEFUN([gl_INET_NTOP],
     [AC_REPLACE_FUNCS([inet_ntop])])
   LIBS=$gl_save_LIBS
   INET_NTOP_LIB=
-  if test "$ac_cv_search_inet_ntop" != "none required"; then
+  if test "$ac_cv_search_inet_ntop" != "no" &&
+     test "$ac_cv_search_inet_ntop" != "none required"; then
     INET_NTOP_LIB="$ac_cv_search_inet_ntop"
   fi
   AC_SUBST([INET_NTOP_LIB])

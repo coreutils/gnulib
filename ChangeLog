@@ -1,5 +1,11 @@
 2009-11-05  Simon Josefsson  <simon@josefsson.org>
 
+	Fix link error.
+	* m4/inet_ntop.m4 (gl_INET_NTOP): Fix test of AC_SEARCH_LIBS result.
+	* m4/inet_pton.m4 (gl_INET_PTON): Likewise.
+
+2009-11-05  Simon Josefsson  <simon@josefsson.org>
+
 	* tests/test-func.c: Also test value of __func__.
 
 2009-11-05  Simon Josefsson  <simon@josefsson.org>
