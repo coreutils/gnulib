@@ -25,6 +25,11 @@
 # define fopen fopen_safer
 #endif
 
+#if GNULIB_FREOPEN_SAFER
+# undef freopen
+# define freopen freopen_safer
+#endif
+
 #if GNULIB_TMPFILE_SAFER
 # undef tmpfile
 # define tmpfile tmpfile_safer

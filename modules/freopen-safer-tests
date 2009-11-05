@@ -1,0 +1,10 @@
+Files:
+tests/test-freopen-safer.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-freopen-safer
+check_PROGRAMS += test-freopen-safer

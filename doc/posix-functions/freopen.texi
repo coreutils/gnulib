@@ -23,4 +23,9 @@ This function does not fail when the file name argument ends in a slash
 and (without the slash) names a nonexistent file or a file that is not a
 directory, on some platforms:
 HP-UX 11.00, Solaris 9, Irix 5.3.
+@item
+Applications should not assume that @code{fileno(f)} will be the same
+before and after a call to @code{freopen(name,mode,f)}.  However, the
+module freopen-safer can at least protect @code{stdin}, @code{stdout},
+and @code{stderr}.
 @end itemize

@@ -1,3 +1,20 @@
+2009-11-05  Eric Blake  <ebb9@byu.net>
+
+	freopen-safer: new module
+	* modules/freopen-safer: New module.
+	* m4/stdio-safer.m4 (gl_FREOPEN_SAFER): New macro.
+	* lib/freopen-safer.c (freopen_safer): New file.
+	* lib/stdio-safer.h (freopen_safer): New declaration.
+	* lib/stdio--.h (freopen): New override.
+	* MODULES.html.sh (File stream based Input/Output): Mention it.
+	* doc/posix-functions/freopen.texi (freopen): Mention pitfalls and
+	freopen-safer module.
+	* doc/posix-functions/stderr.texi (stderr): Likewise.
+	* doc/posix-functions/stdin.texi (stdin): Likewise.
+	* doc/posix-functions/stdout.texi (stdout): Likewise.
+	* modules/freopen-safer-tests: New test.
+	* tests/test-reopen-safer.c: New file.
+
 2009-11-05  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: Prohibit inclusion of "close-stream.h" without use.
