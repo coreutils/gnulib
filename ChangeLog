@@ -1,3 +1,8 @@
+2009-11-05  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: Prohibit inclusion of "close-stream.h" without use.
+	* top/maint.mk (sc_prohibit_close_stream_without_use): New rule.
+
 2009-11-05  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/pmccabe2html (configure.ac): Check for pmccabe tool.

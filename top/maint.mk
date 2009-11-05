@@ -257,6 +257,10 @@ endef
 sc_prohibit_assert_without_use:
 	@h='<assert.h>' re='\<assert *\(' $(_header_without_use)
 
+# Prohibit the inclusion of close-stream.h without an actual use.
+sc_prohibit_close_stream_without_use:
+	@h='"close-stream.h"' re='\<close_stream *\(' $(_header_without_use)
+
 # Prohibit the inclusion of getopt.h without an actual use.
 sc_prohibit_getopt_without_use:
 	@h='<getopt.h>' re='\<getopt(_long)? *\(' $(_header_without_use)
