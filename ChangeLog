@@ -1,5 +1,10 @@
 2009-11-06  Simon Josefsson  <simon@josefsson.org>
 
+	* modules/select-tests (test_select_LDADD): Add $(INET_PTON_LIB)
+	because test-select.c uses inet_pton.
+
+2009-11-06  Simon Josefsson  <simon@josefsson.org>
+
 	* m4/getaddrinfo.m4: Add content of INET_NTOP_LIB to
 	GETADDRINFO_LIB.  Bump serial number.
 	* modules/getaddrinfo (Link): Only mention GETADDRINFO_LIB again.
