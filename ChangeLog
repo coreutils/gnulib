@@ -1,5 +1,9 @@
 2009-11-06  Simon Josefsson  <simon@josefsson.org>
 
+	* modules/memchr (Depends-on): Drop getpagesize dependency.
+
+2009-11-06  Simon Josefsson  <simon@josefsson.org>
+
 	* build-aux/pmccabe2html: Disable execute bit.  Suggested by
 	Reported by Ludovic Courtès.
 	* build-aux/pmccabe2html: Improve example usage.

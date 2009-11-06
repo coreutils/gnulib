@@ -9,7 +9,6 @@ m4/mmap-anon.m4
 
 Depends-on:
 extensions
-getpagesize
 string
 
 configure.ac:
