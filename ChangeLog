@@ -1,3 +1,11 @@
+2009-11-06  Jim Meyering  <meyering@redhat.com>
+
+	do-release-commit-and-tag: New module.
+	Automate the release-commit and tag process.
+	* build-aux/do-release-commit-and-tag: New script, from coreutils.
+	* modules/do-release-commit-and-tag: New file.
+	* MODULES.html.sh (Support for maintaining and releasing): Add it.
+
 2009-11-06  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/select-tests (test_select_LDADD): Add $(INET_PTON_LIB)

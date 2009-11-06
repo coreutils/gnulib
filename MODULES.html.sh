@@ -3212,6 +3212,7 @@ func_all_modules ()
   func_begin_table
   func_module announce-gen
   func_module autobuild
+  func_module do-release-commit-and-tag
   func_module git-version-gen
   func_module gitlog-to-changelog
   func_module gnu-web-doc-update
