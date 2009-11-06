@@ -1,5 +1,9 @@
 2009-11-05  Eric Blake  <ebb9@byu.net>
 
+	strtod: detect darwin bug
+	* m4/strtod.m4 (gl_FUNC_STRTOD): Filter out darwin bug on "nan(".
+	Reported by Leo Davis.
+
 	freopen-safer: new module
 	* modules/freopen-safer: New module.
 	* m4/stdio-safer.m4 (gl_FREOPEN_SAFER): New macro.

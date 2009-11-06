@@ -1,4 +1,4 @@
-# strtod.m4 serial 12
+# strtod.m4 serial 13
 dnl Copyright (C) 2002-2003, 2006-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -62,6 +62,14 @@ numeric_equal (double x, double y)
     char *term;
     double value = strtod (string, &term);
     if (numeric_equal (value, value) || term != (string + 5))
+      return 1;
+  }
+  {
+    /* darwin 10.6.1 misparses "nan(".  */
+    const char *string = "nan(";
+    char *term;
+    double value = strtod (string, &term);
+    if (numeric_equal (value, value) || term != (string + 3))
       return 1;
   }
 ]])],
