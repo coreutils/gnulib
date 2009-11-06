@@ -23,14 +23,14 @@ exec awk -f "$0" "$@"
 
 # Typical Invocation is from a Makefile.am:
 #
-# cyclo-libidn.html:
+# cyclo-$(PROJECT).html:
 #	$(PMCCABE) ${top_srcdir}/lib/*.[ch] \
 #		| sort -nr \
 #		| $(AWK) -f ${top_srcdir}/build-aux/pmccabe2html \
 #			-v lang=html -v name="$(PACKAGE_NAME)" \
-#			-v vcurl="http://git.savannah.gnu.org/gitweb/?p=libidn.git;a=blob;f=%FILENAME%;hb=HEAD" \
-#			-v url="http://www.gnu.org/software/libidn/" \
-#                       -v css=../../build-aux/pmccabe.css \
+#			-v vcurl="http://git.savannah.gnu.org/gitweb/?p=$(PROJECT).git;a=blob;f=%FILENAME%;hb=HEAD" \
+#			-v url="http://www.gnu.org/software/$(PROJECT)/" \
+#                       -v css=${top_srcdir}/build-aux/pmccabe.css \
 #			> tmp
 #	mv tmp $@
 #
