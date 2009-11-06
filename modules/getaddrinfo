@@ -29,7 +29,7 @@ Include:
 <netdb.h>
 
 Link:
-$(GETADDRINFO_LIB) $(INET_NTOP_LIB)
+$(GETADDRINFO_LIB)
 
 License:
 LGPLv2+

@@ -1,4 +1,4 @@
-# getaddrinfo.m4 serial 21
+# getaddrinfo.m4 serial 22
 dnl Copyright (C) 2004-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -96,6 +96,7 @@ AC_DEFUN([gl_PREREQ_GETADDRINFO], [
   AC_REQUIRE([gl_HEADER_SYS_SOCKET])dnl for HAVE_SYS_SOCKET_H, HAVE_WINSOCK2_H
   AC_REQUIRE([gl_HOSTENT]) dnl for HOSTENT_LIB
   AC_REQUIRE([gl_SERVENT]) dnl for SERVENT_LIB
+  AC_REQUIRE([gl_INET_NTOP]) dnl for INET_NTOP_LIB
   AC_REQUIRE([AC_C_RESTRICT])
   AC_REQUIRE([gl_SOCKET_FAMILIES])
   AC_REQUIRE([gl_HEADER_SYS_SOCKET])
@@ -162,5 +163,11 @@ AC_DEFUN([gl_PREREQ_GETADDRINFO], [
   case " $GETADDRINFO_LIB " in
     *" $SERVENT_LIB "*) ;;
     *) GETADDRINFO_LIB="$GETADDRINFO_LIB $SERVENT_LIB" ;;
+  esac
+
+  dnl Append $INET_NTOP_LIB to GETADDRINFO_LIB, avoiding gratuitous duplicates.
+  case " $GETADDRINFO_LIB " in
+    *" $INET_NTOP_LIB "*) ;;
+    *) GETADDRINFO_LIB="$GETADDRINFO_LIB $INET_NTOP_LIB" ;;
   esac
 ])

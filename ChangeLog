@@ -1,3 +1,10 @@
+2009-11-06  Simon Josefsson  <simon@josefsson.org>
+
+	* m4/getaddrinfo.m4: Add content of INET_NTOP_LIB to
+	GETADDRINFO_LIB.  Bump serial number.
+	* modules/getaddrinfo (Link): Only mention GETADDRINFO_LIB again.
+	Suggested by Eric Blake <ebb9@byu.net>.
+
 2009-11-05  Eric Blake  <ebb9@byu.net>
 
 	strtod: detect darwin bug
