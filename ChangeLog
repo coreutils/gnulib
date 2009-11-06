@@ -3,6 +3,7 @@
 	* build-aux/pmccabe2html: Disable execute bit.  Suggested by
 	Reported by Ludovic Courtès.
 	* build-aux/pmccabe2html: Improve example usage.
+	* build-aux/pmccabe2html: Drop #! header.  Doc fix.
 
 2009-11-06  Jim Meyering  <meyering@redhat.com>
 
