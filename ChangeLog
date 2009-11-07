@@ -1,3 +1,15 @@
+2009-11-09  Eric Blake  <ebb9@byu.net>
+
+	stat: detect FreeBSD bug
+	* m4/stat.m4 (gl_FUNC_STAT): Also detect FreeBSD bug with slash on
+	symlink.
+	* doc/posix-functions/stat.texi (stat): Document the bug.
+	* tests/test-stat.h (test_stat_func): Add argument.
+	* tests/test-stat.c (main): Adjust caller.
+	* tests/test-fstatat.c (main): Likewise.
+	* modules/stat-tests (Depends-on): Add stdbool, symlink.
+	Reported by Jim Meyering.
+
 2009-11-09  James Youngman  <jay@gnu.org>
 
 	strftime.c: include ignore-value.h only when FPRINTFTIME is defined

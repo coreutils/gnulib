@@ -19,10 +19,11 @@
 /* This file is designed to test both stat(n,buf) and
    fstatat(AT_FDCWD,n,buf,0).  FUNC is the function to test.  Assumes
    that BASE and ASSERT are already defined, and that appropriate
-   headers are already included.  */
+   headers are already included.  If PRINT, warn before skipping
+   symlink tests with status 77.  */
 
 static int
-test_stat_func (int (*func) (char const *, struct stat *))
+test_stat_func (int (*func) (char const *, struct stat *), bool print)
 {
   struct stat st1;
   struct stat st2;
@@ -53,7 +54,47 @@ test_stat_func (int (*func) (char const *, struct stat *))
   errno = 0;
   ASSERT (func (BASE "file/", &st1) == -1);
   ASSERT (errno == ENOTDIR);
+
+  /* Now for some symlink tests, where supported.  We set up:
+     link1 -> directory
+     link2 -> file
+     link3 -> dangling
+     link4 -> loop
+     then test behavior with trailing slash.
+  */
+  if (symlink (".", BASE "link1") != 0)
+    {
+      ASSERT (unlink (BASE "file") == 0);
+      if (print)
+        fputs ("skipping test: symlinks not supported on this file system\n",
+               stderr);
+      return 77;
+    }
+  ASSERT (symlink (BASE "file", BASE "link2") == 0);
+  ASSERT (symlink (BASE "nosuch", BASE "link3") == 0);
+  ASSERT (symlink (BASE "link4", BASE "link4") == 0);
+
+  ASSERT (func (BASE "link1/", &st1) == 0);
+  ASSERT (S_ISDIR (st1.st_mode));
+
+  errno = 0;
+  ASSERT (func (BASE "link2/", &st1) == -1);
+  ASSERT (errno == ENOTDIR);
+
+  errno = 0;
+  ASSERT (func (BASE "link3/", &st1) == -1);
+  ASSERT (errno == ENOENT);
+
+  errno = 0;
+  ASSERT (func (BASE "link4/", &st1) == -1);
+  ASSERT (errno == ELOOP);
+
+  /* Cleanup.  */
   ASSERT (unlink (BASE "file") == 0);
+  ASSERT (unlink (BASE "link1") == 0);
+  ASSERT (unlink (BASE "link2") == 0);
+  ASSERT (unlink (BASE "link3") == 0);
+  ASSERT (unlink (BASE "link4") == 0);
 
   return 0;
 }

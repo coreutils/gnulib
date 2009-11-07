@@ -5,6 +5,8 @@ tests/test-stat.c
 Depends-on:
 pathmax
 same-inode
+stdbool
+symlink
 
 configure.ac:
 

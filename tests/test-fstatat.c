@@ -35,11 +35,11 @@
   do                                                                         \
     {                                                                        \
       if (!(expr))                                                           \
-	{                                                                    \
-	  fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__);  \
-	  fflush (stderr);                                                   \
-	  abort ();                                                          \
-	}                                                                    \
+        {                                                                    \
+          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__);  \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
     }                                                                        \
   while (0)
 
@@ -68,11 +68,11 @@ int
 main (void)
 {
   int result;
-  ASSERT (test_stat_func (do_stat) == 0);
-  result = test_lstat_func (do_lstat, false);
+  result = test_stat_func (do_stat, false);
+  ASSERT (test_lstat_func (do_lstat, false) == result);
   dfd = open (".", O_RDONLY);
   ASSERT (0 <= dfd);
-  ASSERT (test_stat_func (do_stat) == 0);
+  ASSERT (test_stat_func (do_stat, false) == result);
   ASSERT (test_lstat_func (do_lstat, false) == result);
   ASSERT (close (dfd) == 0);
 
@@ -80,6 +80,6 @@ main (void)
 
   if (result == 77)
     fputs ("skipping test: symlinks not supported on this file system\n",
-	   stderr);
+           stderr);
   return result;
 }
