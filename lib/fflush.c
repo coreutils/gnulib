@@ -39,7 +39,7 @@ clear_ungetc_buffer_preserving_position (FILE *fp)
 {
   if (fp->_flags & _IO_IN_BACKUP)
     /* _IO_free_backup_area is a bit complicated.  Simply call fseek.  */
-    fseek (fp, 0, SEEK_CUR);
+    fseeko (fp, 0, SEEK_CUR);
 }
 
 #else
@@ -63,7 +63,7 @@ clear_ungetc_buffer (FILE *fp)
 # elif defined _IOERR               /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */
   /* Nothing to do.  */
 # else                              /* other implementations */
-  fseek (fp, 0, SEEK_CUR);
+  fseeko (fp, 0, SEEK_CUR);
 # endif
 }
 

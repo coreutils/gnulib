@@ -1,5 +1,5 @@
 /* Test of fwritable() function.
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -22,6 +22,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+
+/* None of the files accessed by this test are large, so disable the
+   fseek link warning if we are not using the gnulib fseek module.  */
+#if !GNULIB_FSEEK
+# undef fseek
+#endif
 
 #define ASSERT(expr) \
   do									     \

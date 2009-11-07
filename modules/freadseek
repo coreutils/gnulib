@@ -9,6 +9,7 @@ lib/stdio-impl.h
 Depends-on:
 freadahead
 freadptr
+fseeko
 lseek
 
 configure.ac:

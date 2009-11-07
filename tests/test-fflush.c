@@ -59,7 +59,7 @@ main (void)
     }
 #endif
   /* POSIX requires fflush-fseek to set file offset of fd.  */
-  if (fflush (f) != 0 || fseek (f, 0, SEEK_CUR) != 0)
+  if (fflush (f) != 0 || fseeko (f, 0, SEEK_CUR) != 0)
     {
       fputs ("Failed to flush-fseek sample file.\n", stderr);
       fclose (f);

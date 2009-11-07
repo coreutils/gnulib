@@ -106,7 +106,7 @@ freadseek (FILE *fp, size_t offset)
   if (fd >= 0 && lseek (fd, 0, SEEK_CUR) >= 0)
     {
       /* FP refers to a regular file.  fseek is most efficient in this case.  */
-      return fseek (fp, offset, SEEK_CUR);
+      return fseeko (fp, offset, SEEK_CUR);
     }
   else
     {

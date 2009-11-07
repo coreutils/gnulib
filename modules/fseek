@@ -11,6 +11,7 @@ stdio
 
 configure.ac:
 gl_FUNC_FSEEK
+gl_MODULE_INDICATOR([fseek])
 gl_STDIO_MODULE_INDICATOR([fseek])
 
 Makefile.am:

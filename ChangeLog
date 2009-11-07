@@ -1,3 +1,21 @@
+2009-11-07  Eric Blake  <ebb9@byu.net>
+
+	fflush, freadseek: use fseeko, not fseek
+	* lib/fflush.c (clear_ungetc_buffer_preserving_position)
+	(clear_ungetc_buffer): Avoid potential problems on large files.
+	* lib/freadseek.c (freadseek): Likewise.
+	* modules/freadseek (Depends-on): Add fseeko.
+	* modules/fseek (configure.ac): Set a witness.
+	* tests/test-fflush.c (main): Use fseeko.
+	* tests/test-fpurge.c (fseek): Disable link warning.
+	* tests/test-freadable.c (fseek): Likewise.
+	* tests/test-freading.c (fseek): Likewise.
+	* tests/test-fseeko.c (fseek): Likewise.
+	* tests/test-ftell.c (fseek): Likewise.
+	* tests/test-ftello.c (fseek): Likewise.
+	* tests/test-fwritable.c (fseek): Likewise.
+	* tests/test-fwriting.c (fseek): Likewise.
+
 2009-11-06  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/memchr (Depends-on): Drop getpagesize dependency.

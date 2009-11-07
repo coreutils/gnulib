@@ -21,6 +21,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/* None of the files accessed by this test are large, so disable the
+   fseek link warning if we are not using the gnulib fseek module.  */
+#if !GNULIB_FSEEK
+# undef fseek
+#endif
+
 #define ASSERT(expr) \
   do									     \
     {									     \
