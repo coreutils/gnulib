@@ -1,3 +1,11 @@
+2009-11-08  Jim Meyering  <meyering@redhat.com>
+
+	utimens: remove invalid futimesat call
+	* lib/utimens.c (fdutimens): Remove invalid futimesat call.
+	It used the file descriptor of the target file as the DIR_FD
+	parameter and NULL as the file name.  That caused failure with
+	errno == EFAULT on FreeBSD-8.0-rc2
+
 2009-11-07  Eric Blake  <ebb9@byu.net>
 
 	fflush, freadseek: use fseeko, not fseek
