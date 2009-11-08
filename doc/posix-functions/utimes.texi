@@ -17,7 +17,7 @@ This function is missing on some platforms:
 mingw, Interix 3.5, BeOS.
 @item
 On some platforms, this function mis-handles trailing slash:
-Solaris 9.
+FreeBSD 7.2, Solaris 9.
 @item
 This function cannot set full timestamp resolution.  In particular,
 some platforms incorrectly round rather than truncate.  Use

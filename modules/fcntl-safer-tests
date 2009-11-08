@@ -3,6 +3,8 @@ tests/test-open.h
 tests/test-fcntl-safer.c
 
 Depends-on:
+stdbool
+symlink
 
 configure.ac:
 

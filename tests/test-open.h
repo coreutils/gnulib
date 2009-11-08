@@ -16,29 +16,14 @@
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2007.  */
 
-/* Include <config.h> and a form of <fcntl.h> first.  */
-
-#include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-
-#define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
-  while (0)
-
-/* Test fopen.  Assumes BASE is defined.  */
+/* This file is designed to test both open(n,buf[,mode]) and
+   openat(AT_FDCWD,n,buf[,mode]).  FUNC is the function to test.
+   Assumes that BASE and ASSERT are already defined, and that
+   appropriate headers are already included.  If PRINT, warn before
+   skipping symlink tests with status 77.  */
 
 static int
-test_open (void)
+test_open (int (*func) (char const *, int, ...), bool print)
 {
   int fd;
   /* Remove anything from prior partial run.  */
@@ -46,40 +31,57 @@ test_open (void)
 
   /* Cannot create directory.  */
   errno = 0;
-  ASSERT (open ("nonexist.ent/", O_CREAT | O_RDONLY, 0600) == -1);
+  ASSERT (func ("nonexist.ent/", O_CREAT | O_RDONLY, 0600) == -1);
   ASSERT (errno == ENOTDIR || errno == EISDIR || errno == ENOENT
           || errno == EINVAL);
 
   /* Create a regular file.  */
-  fd = open (BASE "file", O_CREAT | O_RDONLY, 0600);
+  fd = func (BASE "file", O_CREAT | O_RDONLY, 0600);
   ASSERT (0 <= fd);
   ASSERT (close (fd) == 0);
 
   /* Trailing slash handling.  */
   errno = 0;
-  ASSERT (open (BASE "file/", O_RDONLY) == -1);
+  ASSERT (func (BASE "file/", O_RDONLY) == -1);
   ASSERT (errno == ENOTDIR || errno == EISDIR || errno == EINVAL);
 
   /* Directories cannot be opened for writing.  */
   errno = 0;
-  ASSERT (open (".", O_WRONLY) == -1);
+  ASSERT (func (".", O_WRONLY) == -1);
   ASSERT (errno == EISDIR || errno == EACCES);
 
   /* /dev/null must exist, and be writable.  */
-  fd = open ("/dev/null", O_RDONLY);
+  fd = func ("/dev/null", O_RDONLY);
   ASSERT (0 <= fd);
   {
     char c;
     ASSERT (read (fd, &c, 1) == 0);
   }
   ASSERT (close (fd) == 0);
-  fd = open ("/dev/null", O_WRONLY);
+  fd = func ("/dev/null", O_WRONLY);
   ASSERT (0 <= fd);
   ASSERT (write (fd, "c", 1) == 1);
   ASSERT (close (fd) == 0);
 
+  /* Symlink handling, where supported.  */
+  if (symlink (BASE "file", BASE "link") != 0)
+    {
+      ASSERT (unlink (BASE "file") == 0);
+      if (print)
+        fputs ("skipping test: symlinks not supported on this file system\n",
+               stderr);
+      return 77;
+    }
+  errno = 0;
+  ASSERT (func (BASE "link/", O_RDONLY) == -1);
+  ASSERT (errno == ENOTDIR);
+  fd = func (BASE "link", O_RDONLY);
+  ASSERT (0 <= fd);
+  ASSERT (close (fd) == 0);
+
   /* Cleanup.  */
   ASSERT (unlink (BASE "file") == 0);
+  ASSERT (unlink (BASE "link") == 0);
 
   return 0;
 }

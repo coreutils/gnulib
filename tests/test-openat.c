@@ -20,6 +20,9 @@
 
 #include <fcntl.h>
 
+#include <errno.h>
+#include <stdarg.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -28,20 +31,51 @@
   do                                                                         \
     {                                                                        \
       if (!(expr))                                                           \
-	{                                                                    \
-	  fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-	  fflush (stderr);                                                   \
-	  abort ();                                                          \
-	}                                                                    \
+        {                                                                    \
+          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
     }                                                                        \
   while (0)
+
+#define BASE "test-openat.t"
+
+#include "test-open.h"
+
+static int dfd = AT_FDCWD;
+
+/* Wrapper around openat to test open behavior.  */
+static int
+do_open (char const *name, int flags, ...)
+{
+  if (flags & O_CREAT)
+    {
+      mode_t mode = 0;
+      va_list arg;
+      va_start (arg, flags);
+
+      /* We have to use PROMOTED_MODE_T instead of mode_t, otherwise GCC 4
+         creates crashing code when 'mode_t' is smaller than 'int'.  */
+      mode = va_arg (arg, PROMOTED_MODE_T);
+
+      va_end (arg);
+      return openat (dfd, name, flags, mode);
+    }
+  return openat (dfd, name, flags);
+}
 
 int
 main (void)
 {
-  /* FIXME - add more tests.  For example, share /dev/null and
-     trailing slash tests with test-open, and do more checks for
-     proper fd handling.  */
+  int result;
+
+  /* Basic checks.  */
+  result = test_open (do_open, false);
+  dfd = open (".", O_RDONLY);
+  ASSERT (0 <= dfd);
+  ASSERT (test_open (do_open, false) == result);
+  ASSERT (close (dfd) == 0);
 
   /* Check that even when *-safer modules are in use, plain openat can
      land in fd 0.  Do this test last, since it is destructive to
@@ -49,12 +83,12 @@ main (void)
   ASSERT (close (STDIN_FILENO) == 0);
   ASSERT (openat (AT_FDCWD, ".", O_RDONLY) == STDIN_FILENO);
   {
-    int dfd = open (".", O_RDONLY);
+    dfd = open (".", O_RDONLY);
     ASSERT (STDIN_FILENO < dfd);
     ASSERT (chdir ("..") == 0);
     ASSERT (close (STDIN_FILENO) == 0);
     ASSERT (openat (dfd, ".", O_RDONLY) == STDIN_FILENO);
     ASSERT (close (dfd) == 0);
   }
-  return 0;
+  return result;
 }

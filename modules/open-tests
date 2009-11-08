@@ -3,10 +3,11 @@ tests/test-open.h
 tests/test-open.c
 
 Depends-on:
+stdbool
+symlink
 
 configure.ac:
 
 Makefile.am:
 TESTS += test-open
 check_PROGRAMS += test-open
-

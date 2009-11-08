@@ -1,5 +1,18 @@
 2009-11-09  Eric Blake  <ebb9@byu.net>
 
+	open: detect FreeBSD bug
+	* m4/open.m4 (gl_FUNC_OPEN): Also detect FreeBSD bug with slash on
+	symlink.
+	* doc/posix-functions/open.texi (open): Document the bug.
+	* doc/posix-functions/utimes.texi (utimes): Likewise.
+	* tests/test-open.h (test_open): Add parameters, and test symlink
+	handling.
+	* tests/test-open.c (main): Adjust caller.
+	* tests/test-fcntl-safer.c (main): Likewise.
+	* modules/open-tests (Depends-on): Add stdbool, symlink.
+	* modules/fcntl-safer-tests (Depends-on): Likewise.
+	* tests/test-openat.c (main): Add test-open tests.
+
 	stat: detect FreeBSD bug
 	* m4/stat.m4 (gl_FUNC_STAT): Also detect FreeBSD bug with slash on
 	symlink.
