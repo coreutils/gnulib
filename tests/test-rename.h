@@ -138,7 +138,8 @@ test_rename (int (*func) (char const *, char const *), bool print)
   ASSERT (mkdir (BASE "dir", 0700) == 0);
   errno = 0;
   ASSERT (func (BASE "dir2", BASE "dir/.") == -1);
-  ASSERT (errno == EINVAL || errno == EBUSY || errno == EISDIR);
+  ASSERT (errno == EINVAL || errno == EBUSY || errno == EISDIR
+          || errno == ENOTEMPTY);
   errno = 0;
   ASSERT (func (BASE "dir2/.", BASE "dir") == -1);
   ASSERT (errno == EINVAL || errno == EBUSY);
@@ -149,7 +150,8 @@ test_rename (int (*func) (char const *, char const *), bool print)
   ASSERT (mkdir (BASE "dir", 0700) == 0);
   errno = 0;
   ASSERT (func (BASE "dir2", BASE "dir/.//") == -1);
-  ASSERT (errno == EINVAL || errno == EBUSY || errno == EISDIR);
+  ASSERT (errno == EINVAL || errno == EBUSY || errno == EISDIR
+          || errno == ENOTEMPTY);
   errno = 0;
   ASSERT (func (BASE "dir2/.//", BASE "dir") == -1);
   ASSERT (errno == EINVAL || errno == EBUSY);

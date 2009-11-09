@@ -1,4 +1,4 @@
-# serial 20
+# serial 21
 
 # Copyright (C) 2001, 2003, 2005, 2006, 2009 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -17,28 +17,38 @@ AC_DEFUN([gl_FUNC_RENAME],
 [
   AC_REQUIRE([AC_CANONICAL_HOST])
   AC_REQUIRE([gl_STDIO_H_DEFAULTS])
+  AC_CHECK_FUNCS_ONCE([lstat])
 
   dnl Solaris 10 mistakenly allows rename("file","name/").
   dnl NetBSD 1.6 mistakenly forbids rename("dir","name/").
+  dnl FreeBSD 7.2 mistakenly allows rename("file","link-to-file/").
   dnl The Solaris bug can be worked around without stripping
   dnl trailing slash, while the NetBSD bug requires stripping;
   dnl the two conditions can be distinguished by whether hard
   dnl links are also broken.
   AC_CACHE_CHECK([whether rename honors trailing slash on destination],
     [gl_cv_func_rename_slash_dst_works],
-    [rm -rf conftest.f conftest.f1 conftest.d1 conftest.d2
+    [rm -rf conftest.f conftest.f1 conftest.d1 conftest.d2 conftest.lnk
     touch conftest.f && mkdir conftest.d1 ||
       AC_MSG_ERROR([cannot create temporary files])
+    # Assume that if we have lstat, we can also check symlinks.
+    if test $ac_cv_func_lstat = yes; then
+      ln -s conftest.f conftest.lnk
+    fi
     AC_RUN_IFELSE([AC_LANG_PROGRAM([[
 #       include <stdio.h>
 #       include <stdlib.h>
 ]], [if (rename ("conftest.f", "conftest.f1/") == 0) return 1;
-     if (rename ("conftest.d1", "conftest.d2/") != 0) return 2;])],
+     if (rename ("conftest.d1", "conftest.d2/") != 0) return 2;
+#if HAVE_LSTAT
+     if (rename ("conftest.f", "conftest.lnk/") == 0) return 3;
+#endif
+    ])],
       [gl_cv_func_rename_slash_dst_works=yes],
       [gl_cv_func_rename_slash_dst_works=no],
       dnl When crosscompiling, assume rename is broken.
       [gl_cv_func_rename_slash_dst_works="guessing no"])
-    rm -rf conftest.f conftest.f1 conftest.d1 conftest.d2
+    rm -rf conftest.f conftest.f1 conftest.d1 conftest.d2 conftest.lnk
   ])
   if test "x$gl_cv_func_rename_slash_dst_works" != xyes; then
     AC_LIBOBJ([rename])
@@ -50,23 +60,32 @@ AC_DEFUN([gl_FUNC_RENAME],
 
   dnl SunOS 4.1.1_U1 mistakenly forbids rename("dir/","name").
   dnl Solaris 9 mistakenly allows rename("file/","name").
+  dnl FreeBSD 7.2 mistakenly allows rename("link-to-file/","name").
   dnl These bugs require stripping trailing slash to avoid corrupting
   dnl symlinks with a trailing slash.
   AC_CACHE_CHECK([whether rename honors trailing slash on source],
     [gl_cv_func_rename_slash_src_works],
-    [rm -rf conftest.f conftest.d1 conftest.d2
+    [rm -rf conftest.f conftest.d1 conftest.d2 conftest.lnk
     touch conftest.f && mkdir conftest.d1 ||
       AC_MSG_ERROR([cannot create temporary files])
+    # Assume that if we have lstat, we can also check symlinks.
+    if test $ac_cv_func_lstat = yes; then
+      ln -s conftest.f conftest.lnk
+    fi
     AC_RUN_IFELSE([AC_LANG_PROGRAM([[
 #       include <stdio.h>
 #       include <stdlib.h>
 ]], [if (rename ("conftest.f/", "conftest.d2") == 0) return 1;
-     if (rename ("conftest.d1/", "conftest.d2") != 0) return 2;])],
+     if (rename ("conftest.d1/", "conftest.d2") != 0) return 2;
+#if HAVE_LSTAT
+     if (rename ("conftest.lnk/", "conftest.f") == 0) return 3;
+#endif
+    ])],
       [gl_cv_func_rename_slash_src_works=yes],
       [gl_cv_func_rename_slash_src_works=no],
       dnl When crosscompiling, assume rename is broken.
       [gl_cv_func_rename_slash_src_works="guessing no"])
-    rm -rf conftest.f conftest.d1 conftest.d2
+    rm -rf conftest.f conftest.d1 conftest.d2 conftest.lnk
   ])
   if test "x$gl_cv_func_rename_slash_src_works" != xyes; then
     AC_LIBOBJ([rename])

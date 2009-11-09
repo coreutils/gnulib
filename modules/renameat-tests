@@ -3,6 +3,7 @@ tests/test-rename.h
 tests/test-renameat.c
 
 Depends-on:
+filenamecat
 progname
 xgetcwd
 

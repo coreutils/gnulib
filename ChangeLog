@@ -1,5 +1,13 @@
 2009-11-09  Eric Blake  <ebb9@byu.net>
 
+	rename: detect FreeBSD bug
+	* m4/rename.m4 (gl_FUNC_RENAME): Also detect FreeBSD bug with
+	slash on symlink.
+	* modules/renameat-tests (Depends-on): Add filenamecat.
+	* tests/test-rename.h (test_rename): Allow one more errno.
+	* tests/test-renameat.c (main): Likewise.
+	* doc/posix-functions/rename.texi (rename): Document the bug.
+
 	open: detect FreeBSD bug
 	* m4/open.m4 (gl_FUNC_OPEN): Also detect FreeBSD bug with slash on
 	symlink.

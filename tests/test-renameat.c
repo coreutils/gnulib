@@ -134,7 +134,8 @@ main (void)
   ASSERT (unlink (BASE "sub2/file") == 0);
   errno = 0;
   ASSERT (renameat (dfd, BASE "sub2", dfd, BASE "sub1/.") == -1);
-  ASSERT (errno == EINVAL || errno == EISDIR || errno == EBUSY);
+  ASSERT (errno == EINVAL || errno == EISDIR || errno == EBUSY
+          || errno == ENOTEMPTY);
   errno = 0;
   ASSERT (renameat (dfd, BASE "sub2/.", dfd, BASE "sub1") == -1);
   ASSERT (errno == EINVAL || errno == EBUSY);
