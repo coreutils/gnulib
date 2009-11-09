@@ -1,3 +1,9 @@
+2009-11-12  Eric Blake  <ebb9@byu.net>
+
+	version-etc: match standards.texi style
+	* lib/version-etc.c (emit_bug_reporting_address): Drop periods,
+	and use <> only for URLs.
+
 2009-11-10  Kamil Dudka  <kdudka@redhat.com>
 
 	fts: do not fail on a submount during traversal

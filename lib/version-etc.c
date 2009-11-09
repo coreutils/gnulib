@@ -236,13 +236,17 @@ emit_bug_reporting_address (void)
      for this package.  Please add _another line_ saying
      "Report translation bugs to <...>\n" with the address for translation
      bugs (typically your translation team's web or email address).  */
-  printf (_("\nReport bugs to <%s>.\n"), PACKAGE_BUGREPORT);
+  printf (_("\nReport bugs to: %s\n"), PACKAGE_BUGREPORT);
 #ifdef PACKAGE_PACKAGER_BUG_REPORTS
-  printf (_("Report %s bugs to <%s>.\n"), PACKAGE_PACKAGER,
+  printf (_("Report %s bugs to: %s\n"), PACKAGE_PACKAGER,
 	  PACKAGE_PACKAGER_BUG_REPORTS);
 #endif
-  printf (_("%s home page: <http://www.gnu.org/software/%s/>.\n"),
+#ifdef PACKAGE_URL
+  printf (_("%s home page: <%s>\n"), PACKAGE_NAME, PACKAGE_URL);
+#else
+  printf (_("%s home page: <http://www.gnu.org/software/%s/>\n"),
 	  PACKAGE_NAME, PACKAGE);
-  fputs (_("General help using GNU software: <http://www.gnu.org/gethelp/>.\n"),
+#endif
+  fputs (_("General help using GNU software: <http://www.gnu.org/gethelp/>\n"),
 	 stdout);
 }
