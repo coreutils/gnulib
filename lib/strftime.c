@@ -27,11 +27,11 @@
 #else
 # include <config.h>
 # if FPRINTFTIME
+#  include "ignore-value.h"
 #  include "fprintftime.h"
 # else
 #  include "strftime.h"
 # endif
-# include "ignore-value.h"
 #endif
 
 #include <ctype.h>

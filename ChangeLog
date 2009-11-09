@@ -1,3 +1,8 @@
+2009-11-09  James Youngman  <jay@gnu.org>
+
+	strftime.c: include ignore-value.h only when FPRINTFTIME is defined
+	* lib/strftime.c: Correct placement of #include "ignore-value.h".
+
 2009-11-08  Jim Meyering  <meyering@redhat.com>
 
 	utimens: remove invalid futimesat call
