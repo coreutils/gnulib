@@ -68,14 +68,17 @@ test_unlink_func (int (*func) (char const *name), bool print)
       ASSERT (func (BASE "dir/file") == 0);
       ASSERT (rmdir (BASE "dir") == 0);
       if (print)
-	fputs ("skipping test: symlinks not supported on this file system\n",
-	       stderr);
+        fputs ("skipping test: symlinks not supported on this file system\n",
+               stderr);
       return 77;
     }
   if (cannot_unlink_dir ())
     ASSERT (func (BASE "link/") == -1);
   ASSERT (func (BASE "link") == 0);
   ASSERT (symlink (BASE "dir/file", BASE "link") == 0);
+  errno = 0;
+  ASSERT (func (BASE "link/") == -1);
+  ASSERT (errno == ENOTDIR);
   /* Order here proves unlink of a symlink does not follow through to
      the file.  */
   ASSERT (func (BASE "link") == 0);

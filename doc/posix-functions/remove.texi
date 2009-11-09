@@ -11,7 +11,7 @@ Portability problems fixed by Gnulib:
 @item
 This function fails to reject trailing slashes on non-directories on
 some platforms:
-Solaris 9.
+FreeBSD 7.2, Solaris 9.
 @item
 This function mistakenly removes a directory with
 @code{remove("dir/./")} on some platforms:

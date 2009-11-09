@@ -9,8 +9,8 @@ Gnulib module: unlink
 Portability problems fixed by Gnulib:
 @itemize
 @item
-Some systems mistakenly succeed on @code{unlink("file/")}:
-GNU/Hurd, Solaris 9.
+Some systems mistakenly succeed on @code{unlink("link-to-file/")}:
+GNU/Hurd, FreeBSD 7.2, Solaris 9.
 @end itemize
 
 Portability problems not fixed by Gnulib:

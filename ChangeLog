@@ -1,3 +1,13 @@
+2009-11-10  Eric Blake  <ebb9@byu.net>
+
+	unlink, remove: detect FreeBSD bug
+	* m4/unlink.m4 (gl_FUNC_UNLINK): Also detect FreeBSD bug with
+	slash on symlink.
+	* doc/posix-functions/unlink.texi (unlink): Document the bug.
+	* doc/posix-functions/remove.texi (remove): Likewise.
+	* tests/test-unlink.h (test_unlink): Enhance test.
+	* tests/test-remove.c (main): Likewise.
+
 2009-11-09  Eric Blake  <ebb9@byu.net>
 
 	rename: detect FreeBSD bug

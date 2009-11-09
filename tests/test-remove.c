@@ -113,6 +113,19 @@ main (void)
     ASSERT (S_ISLNK (st.st_mode));
   }
   ASSERT (remove (BASE "link") == 0);
+  /* Trailing slash on symlink to non-directory is an error.  */
+  ASSERT (symlink (BASE "loop", BASE "loop") == 0);
+  errno = 0;
+  ASSERT (remove (BASE "loop/") == -1);
+  ASSERT (errno == ELOOP || errno == ENOTDIR);
+  ASSERT (remove (BASE "loop") == 0);
+  ASSERT (close (creat (BASE "file", 0600)) == 0);
+  ASSERT (symlink (BASE "file", BASE "link") == 0);
+  errno = 0;
+  ASSERT (remove (BASE "link/") == -1);
+  ASSERT (errno == ENOTDIR);
+  ASSERT (remove (BASE "link") == 0);
+  ASSERT (remove (BASE "file") == 0);
 
   return 0;
 }
