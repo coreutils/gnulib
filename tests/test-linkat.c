@@ -36,11 +36,11 @@
   do                                                                         \
     {                                                                        \
       if (!(expr))                                                           \
-	{                                                                    \
-	  fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__);  \
-	  fflush (stderr);                                                   \
-	  abort ();                                                          \
-	}                                                                    \
+        {                                                                    \
+          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__);  \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
     }                                                                        \
   while (0)
 
@@ -92,7 +92,7 @@ main (void)
   ASSERT (system ("rm -rf " BASE "*") == 0);
 
   /* Test basic link functionality, without mentioning symlinks.  */
-  result = test_link (do_link, false);
+  result = test_link (do_link, true);
   dfd1 = open (".", O_RDONLY);
   ASSERT (0 <= dfd1);
   ASSERT (test_link (do_link, false) == result);
@@ -166,8 +166,9 @@ main (void)
       ASSERT (rmdir (BASE "sub1") == 0);
       ASSERT (rmdir (BASE "sub2") == 0);
       free (cwd);
-      fputs ("skipping test: symlinks not supported on this file system\n",
-             stderr);
+      if (!result)
+        fputs ("skipping test: symlinks not supported on this file system\n",
+               stderr);
       return result;
     }
   dfd = open (".", O_RDONLY);

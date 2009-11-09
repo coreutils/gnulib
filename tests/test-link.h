@@ -18,8 +18,8 @@
    linkat(AT_FDCWD,a,AT_FDCWD,b,0).  FUNC is the function to test.
    Assumes that BASE and ASSERT are already defined, and that
    appropriate headers are already included.  If PRINT, warn before
-   skipping tests with status 77.  This test does not exercise link on
-   symlinks.  */
+   skipping tests with status 77.  This test does not try to create
+   hard links to symlinks, but does test other aspects of symlink.  */
 
 static int
 test_link (int (*func) (char const *, char const *), bool print)
@@ -145,14 +145,32 @@ test_link (int (*func) (char const *, char const *), bool print)
         ASSERT (errno == EPERM || errno == EACCES || errno == EINVAL);
       }
   }
-
-  /* Clean up.  */
   ASSERT (unlink (BASE "a") == 0);
-  ASSERT (unlink (BASE "b") == 0);
   errno = 0;
   ASSERT (unlink (BASE "c") == -1);
   ASSERT (errno == ENOENT);
   ASSERT (rmdir (BASE "d") == 0);
+
+  /* Test invalid use of symlink.  */
+  if (symlink (BASE "a", BASE "link") != 0)
+    {
+      ASSERT (unlink (BASE "b") == 0);
+      if (print)
+        fputs ("skipping test: symlinks not supported on this file system\n",
+               stderr);
+      return 77;
+    }
+  errno = 0;
+  ASSERT (func (BASE "b", BASE "link/") == -1);
+  ASSERT (errno == ENOTDIR || errno == ENOENT || errno == EEXIST);
+  ASSERT (rename (BASE "b", BASE "a") == 0);
+  errno = 0;
+  ASSERT (func (BASE "link/", BASE "b") == -1);
+  ASSERT (errno == ENOTDIR || errno == EEXIST);
+
+  /* Clean up.  */
+  ASSERT (unlink (BASE "a") == 0);
+  ASSERT (unlink (BASE "link") == 0);
 
   return 0;
 }

@@ -1,5 +1,12 @@
 2009-11-10  Eric Blake  <ebb9@byu.net>
 
+	link: detect FreeBSD bug
+	* m4/link.m4 (gl_FUNC_LINK): Also detect FreeBSD bug with slash on
+	symlink.
+	* doc/posix-functions/link.texi (link): Document the bug.
+	* tests/test-link.h (test_link): Enhance test.
+	* tests/test-linkat.c (main): Update caller.
+
 	unlink, remove: detect FreeBSD bug
 	* m4/unlink.m4 (gl_FUNC_UNLINK): Also detect FreeBSD bug with
 	slash on symlink.
