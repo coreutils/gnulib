@@ -1268,6 +1268,20 @@ fts_build (register FTS *sp, int type)
 	  opening it.  */
        if (cur->fts_info == FTS_NSOK)
 	 cur->fts_info = fts_stat(sp, cur, false);
+       else if (sp->fts_options & FTS_TIGHT_CYCLE_CHECK) {
+		/* Now read the stat info again after opening a directory to
+		 * reveal eventual changes caused by a submount triggered by
+		 * the traversal.  But do it only for utilities which use
+		 * FTS_TIGHT_CYCLE_CHECK.  Therefore, only find and du
+		 * benefit/suffer from this feature for now.
+		 */
+		LEAVE_DIR (sp, cur, "4");
+		fts_stat (sp, cur, false);
+		if (! enter_dir (sp, cur)) {
+			 __set_errno (ENOMEM);
+			 return NULL;
+		}
+	}
 
 	/*
 	 * Nlinks is the number of possible entries of type directory in the

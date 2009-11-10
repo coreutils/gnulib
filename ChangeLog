@@ -1,3 +1,10 @@
+2009-11-10  Kamil Dudka  <kdudka@redhat.com>
+
+	fts: do not fail on a submount during traversal
+	* lib/fts.c (fts_build): Read the stat info again after opening
+	a directory if the FTS_TIGHT_CYCLE_CHECK flag is set.
+	Original report at http://bugzilla.redhat.com/501848.
+
 2009-11-12  Jim Meyering  <meyering@redhat.com>
 
 	bootstrap: sync from coreutils
