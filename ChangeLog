@@ -1,3 +1,11 @@
+2009-11-11  Eric Blake  <ebb9@byu.net>
+
+	symlink: detect FreeBSD bug
+	* m4/symlink.m4 (gl_FUNC_SYMLINK): Also detect FreeBSD bug with
+	slash on symlink.
+	* doc/posix-functions/symlink.texi (symlink): Document the bug.
+	* tests/test-symlink.h (test_symlink): Enhance test.
+
 2009-11-10  Eric Blake  <ebb9@byu.net>
 
 	link: detect FreeBSD bug
