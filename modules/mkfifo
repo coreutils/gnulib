@@ -1,0 +1,25 @@
+Description:
+mkfifo(): create named FIFO
+
+Files:
+lib/mkfifo.c
+m4/mkfifo.m4
+
+Depends-on:
+stat
+sys_stat
+
+configure.ac:
+gl_FUNC_MKFIFO
+gl_UNISTD_MODULE_INDICATOR([mkfifo])
+
+Makefile.am:
+
+Include:
+<sys/stat.h>
+
+License:
+LGPL
+
+Maintainer:
+Eric Blake

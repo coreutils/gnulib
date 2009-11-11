@@ -424,6 +424,23 @@ extern int mkdirat (int fd, char const *file, mode_t mode);
 #endif
 
 
+#if @GNULIB_MKFIFO@
+# if @REPLACE_MKFIFO@
+#  undef mkfifo
+#  define mkfifo rpl_mkfifo
+# endif
+# if !@HAVE_MKFIFO@ || @REPLACE_MKFIFO@
+int mkfifo (char const *file, mode_t mode);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef mkfifo
+# define mkfifo(n,m)                                                    \
+    (GL_LINK_WARNING ("mkfifo is not portable - "                       \
+                      "use gnulib module mkfifo for portability"),      \
+     mkfifo (n, m))
+#endif
+
+
 #if @GNULIB_MKFIFOAT@
 # if !@HAVE_MKFIFOAT@
 int mkfifoat (int fd, char const *file, mode_t mode);

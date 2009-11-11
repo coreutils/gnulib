@@ -1,5 +1,21 @@
 2009-11-11  Eric Blake  <ebb9@byu.net>
 
+	mkfifo: new module
+	* modules/mkfifo: New file.
+	* m4/mkfifo.m4 (gl_FUNC_MKFIFO): Likewise.
+	* lib/mkfifo.c (mkfifo): Likewise.
+	* m4/sys_stat_h.m4 (gl_SYS_STAT_H_DEFAULTS): Set witness
+	defaults.
+	* modules/sys_stat (Makefile.am): Substitute them.
+	* lib/sys_stat.in.h (mkfifo): Declare replacement.
+	* MODULES.html.sh (Support for systems lacking POSIX:2008):
+	Document it.
+	* doc/posix-functions/mkfifo.texi (mkfifo): Likewise.
+	* modules/mkfifo-tests: New test.
+	* tests/test-mkfifo.h (test_mkfifo): New file, borrowed in part
+	from test-mkfifoat.c.
+	* tests/test-mkfifo.c: New file.
+
 	readlink: detect FreeBSD bug
 	* m4/readlink.m4 (gl_FUNC_READLINK): Also detect FreeBSD bug with
 	slash on symlink.

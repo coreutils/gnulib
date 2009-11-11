@@ -33,6 +33,7 @@ sys/stat.h: sys_stat.in.h
 	      -e 's|@''GNULIB_LCHMOD''@|$(GNULIB_LCHMOD)|g' \
 	      -e 's|@''GNULIB_LSTAT''@|$(GNULIB_LSTAT)|g' \
 	      -e 's|@''GNULIB_MKDIRAT''@|$(GNULIB_MKDIRAT)|g' \
+	      -e 's|@''GNULIB_MKFIFO''@|$(GNULIB_MKFIFO)|g' \
 	      -e 's|@''GNULIB_MKFIFOAT''@|$(GNULIB_MKFIFOAT)|g' \
 	      -e 's|@''GNULIB_MKNODAT''@|$(GNULIB_MKNODAT)|g' \
 	      -e 's|@''GNULIB_STAT''@|$(GNULIB_STAT)|g' \
@@ -43,6 +44,7 @@ sys/stat.h: sys_stat.in.h
 	      -e 's|@''HAVE_LCHMOD''@|$(HAVE_LCHMOD)|g' \
 	      -e 's|@''HAVE_LSTAT''@|$(HAVE_LSTAT)|g' \
 	      -e 's|@''HAVE_MKDIRAT''@|$(HAVE_MKDIRAT)|g' \
+	      -e 's|@''HAVE_MKFIFO''@|$(HAVE_MKFIFO)|g' \
 	      -e 's|@''HAVE_MKFIFOAT''@|$(HAVE_MKFIFOAT)|g' \
 	      -e 's|@''HAVE_MKNODAT''@|$(HAVE_MKNODAT)|g' \
 	      -e 's|@''HAVE_UTIMENSAT''@|$(HAVE_UTIMENSAT)|g' \
@@ -51,6 +53,7 @@ sys/stat.h: sys_stat.in.h
 	      -e 's|@''REPLACE_FUTIMENS''@|$(REPLACE_FUTIMENS)|g' \
 	      -e 's|@''REPLACE_LSTAT''@|$(REPLACE_LSTAT)|g' \
 	      -e 's|@''REPLACE_MKDIR''@|$(REPLACE_MKDIR)|g' \
+	      -e 's|@''REPLACE_MKFIFO''@|$(REPLACE_MKFIFO)|g' \
 	      -e 's|@''REPLACE_STAT''@|$(REPLACE_STAT)|g' \
 	      -e 's|@''REPLACE_UTIMENSAT''@|$(REPLACE_UTIMENSAT)|g' \
 	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
