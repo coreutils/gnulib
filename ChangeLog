@@ -1,5 +1,19 @@
 2009-11-11  Eric Blake  <ebb9@byu.net>
 
+	mknod: new module
+	* modules/mknod: New file.
+	* m4/mknod.m4 (gl_FUNC_MKNOD): Likewise.
+	* lib/mknod.c (mknod): Likewise.
+	* m4/sys_stat_h.m4 (gl_SYS_STAT_H_DEFAULTS): Set witness
+	defaults.
+	* modules/sys_stat (Makefile.am): Substitute them.
+	* lib/sys_stat.in.h (mknod): Declare replacement.
+	* MODULES.html.sh (Support for systems lacking POSIX:2008):
+	Document it.
+	* doc/posix-functions/mknod.texi (mknod): Likewise.
+	* modules/mknod-tests: New test.
+	* tests/test-mknod.c: Likewise.
+
 	mkfifo: new module
 	* modules/mkfifo: New file.
 	* m4/mkfifo.m4 (gl_FUNC_MKFIFO): Likewise.

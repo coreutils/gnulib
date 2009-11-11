@@ -454,6 +454,23 @@ int mkfifoat (int fd, char const *file, mode_t mode);
 #endif
 
 
+#if @GNULIB_MKNOD@
+# if @REPLACE_MKNOD@
+#  undef mknod
+#  define mknod rpl_mknod
+# endif
+# if !@HAVE_MKNOD@ || @REPLACE_MKNOD@
+int mknod (char const *file, mode_t mode, dev_t dev);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef mknod
+# define mknod(n,m,d)                                                   \
+    (GL_LINK_WARNING ("mknod is not portable - "                        \
+                      "use gnulib module mknod for portability"),       \
+     mknod (n, m, d))
+#endif
+
+
 #if @GNULIB_MKNODAT@
 # if !@HAVE_MKNODAT@
 int mknodat (int fd, char const *file, mode_t mode, dev_t dev);

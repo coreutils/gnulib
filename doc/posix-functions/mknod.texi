@@ -4,15 +4,26 @@
 
 POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/mknod.html}
 
-Gnulib module: ---
+Gnulib module: mknod
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This function requires super-user privileges to create a fifo:
+FreeBSD 7.2, OpenBSD 3.8.
+@item
+This function mishandles trailing slash on some platforms:
+FreeBSD 7.2, Solaris 9.
+@item
+This function is missing on some platforms; however, the replacement
+always fails with @code{ENOSYS}:
+mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-This function is missing on some platforms:
-mingw.
+Use of this function for anything except fifos is not portable,
+generally requiring super-user privileges and knowledge of supported
+device numbers.
 @end itemize

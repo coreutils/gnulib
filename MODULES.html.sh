@@ -2288,6 +2288,7 @@ func_all_modules ()
   func_module mkdir
   func_module mkdtemp
   func_module mkfifo
+  func_module mknod
   func_module mkstemp
   func_module netdb
   func_module netinet_in

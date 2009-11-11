@@ -1,0 +1,13 @@
+Files:
+tests/test-mkfifo.h
+tests/test-mknod.c
+
+Depends-on:
+stdbool
+symlink
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-mknod
+check_PROGRAMS += test-mknod

@@ -1,0 +1,26 @@
+Description:
+mknod(): create various special devices
+
+Files:
+lib/mknod.c
+m4/mknod.m4
+
+Depends-on:
+mkfifo
+stat
+sys_stat
+
+configure.ac:
+gl_FUNC_MKNOD
+gl_UNISTD_MODULE_INDICATOR([mknod])
+
+Makefile.am:
+
+Include:
+<sys/stat.h>
+
+License:
+LGPL
+
+Maintainer:
+Eric Blake
