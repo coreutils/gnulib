@@ -22,6 +22,7 @@
 
 #include <fcntl.h>
 #include <errno.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -31,17 +32,23 @@
   do                                                                         \
     {                                                                        \
       if (!(expr))                                                           \
-	{                                                                    \
-	  fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__);  \
-	  fflush (stderr);                                                   \
-	  abort ();                                                          \
-	}                                                                    \
+        {                                                                    \
+          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__);  \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
     }                                                                        \
   while (0)
 
+#define BASE "test-mkfifoat.t"
+
+#include "test-mkfifo.h"
+
 typedef int (*test_func) (int, char const *, mode_t);
 
-/* Wrapper to make testing mknodat easier.  */
+static int dfd = AT_FDCWD;
+
+/* Wrapper to test mknodat like mkfifoat.  */
 static int
 test_mknodat (int fd, char const *name, mode_t mode)
 {
@@ -49,73 +56,71 @@ test_mknodat (int fd, char const *name, mode_t mode)
   return mknodat (fd, name, mode | S_IFIFO, 0);
 }
 
+/* Wrapper to test mkfifoat like mkfifo.  */
+static int
+do_mkfifoat (char const *name, mode_t mode)
+{
+  return mkfifoat (dfd, name, mode);
+}
+
+/* Wrapper to test mknodat like mkfifo.  */
+static int
+do_mknodat (char const *name, mode_t mode)
+{
+  return mknodat (dfd, name, mode | S_IFIFO, 0);
+}
+
 int
 main (void)
 {
   int i;
   test_func funcs[2] = { mkfifoat, test_mknodat };
-  const char *fifo = "test-mkfifoat.fifo";
+  int result;
 
-  /* Create handle for future use.  */
-  int dfd = openat (AT_FDCWD, ".", O_RDONLY);
+  /* Remove any leftovers from a previous partial run.  */
+  ASSERT (system ("rm -rf " BASE "*") == 0);
+
+  /* Basic tests.  */
+  result = test_mkfifo (do_mkfifoat, true);
+  ASSERT (test_mkfifo (do_mknodat, false) == result);
+  dfd = open (".", O_RDONLY);
   ASSERT (0 <= dfd);
+  ASSERT (test_mkfifo (do_mkfifoat, false) == result);
+  ASSERT (test_mkfifo (do_mknodat, false) == result);
 
-#if !HAVE_MKFIFO
-  fputs ("skipping test: no support for named fifos\n", stderr);
-  return 77;
-#endif
-
-  /* Clean up anything from previous incomplete test.  */
-  remove (fifo);
-
-  /* Test both functions.  */
+  /* Test directory-relative handling of both functions.  */
   for (i = 0; i < 2; i++)
     {
       struct stat st;
       test_func func = funcs[i];
 
-      /* Sanity checks of failures.  */
-      errno = 0;
-      ASSERT (func (AT_FDCWD, "", 0600) == -1);
-      ASSERT (errno == ENOENT);
-      errno = 0;
-      ASSERT (func (dfd, "", S_IRUSR | S_IWUSR) == -1);
-      ASSERT (errno == ENOENT);
-      errno = 0;
-      ASSERT (func (AT_FDCWD, ".", 0600) == -1);
-      /* POSIX requires EEXIST, but Solaris gives EINVAL.  */
-      ASSERT (errno == EEXIST || errno == EINVAL);
-      errno = 0;
-      ASSERT (func (dfd, ".", 0600) == -1);
-      ASSERT (errno == EEXIST || errno == EINVAL);
-
       /* Create fifo while cwd is '.', then stat it from '..'.  */
-      ASSERT (func (AT_FDCWD, fifo, 0600) == 0);
+      ASSERT (func (AT_FDCWD, BASE "fifo", 0600) == 0);
       errno = 0;
-      ASSERT (func (dfd, fifo, 0600) == -1);
+      ASSERT (func (dfd, BASE "fifo", 0600) == -1);
       ASSERT (errno == EEXIST);
       ASSERT (chdir ("..") == 0);
       errno = 0;
-      ASSERT (fstatat (AT_FDCWD, fifo, &st, 0) == -1);
+      ASSERT (fstatat (AT_FDCWD, BASE "fifo", &st, 0) == -1);
       ASSERT (errno == ENOENT);
       memset (&st, 0, sizeof st);
-      ASSERT (fstatat (dfd, fifo, &st, 0) == 0);
+      ASSERT (fstatat (dfd, BASE "fifo", &st, 0) == 0);
       ASSERT (S_ISFIFO (st.st_mode));
-      ASSERT (unlinkat (dfd, fifo, 0) == 0);
+      ASSERT (unlinkat (dfd, BASE "fifo", 0) == 0);
 
       /* Create fifo while cwd is '..', then stat it from '.'.  */
-      ASSERT (func (dfd, fifo, 0600) == 0);
+      ASSERT (func (dfd, BASE "fifo", 0600) == 0);
       ASSERT (fchdir (dfd) == 0);
       errno = 0;
-      ASSERT (func (AT_FDCWD, fifo, 0600) == -1);
+      ASSERT (func (AT_FDCWD, BASE "fifo", 0600) == -1);
       ASSERT (errno == EEXIST);
       memset (&st, 0, sizeof st);
-      ASSERT (fstatat (AT_FDCWD, fifo, &st, AT_SYMLINK_NOFOLLOW) == 0);
+      ASSERT (fstatat (AT_FDCWD, BASE "fifo", &st, AT_SYMLINK_NOFOLLOW) == 0);
       ASSERT (S_ISFIFO (st.st_mode));
       memset (&st, 0, sizeof st);
-      ASSERT (fstatat (dfd, fifo, &st, AT_SYMLINK_NOFOLLOW) == 0);
+      ASSERT (fstatat (dfd, BASE "fifo", &st, AT_SYMLINK_NOFOLLOW) == 0);
       ASSERT (S_ISFIFO (st.st_mode));
-      ASSERT (unlink (fifo) == 0);
+      ASSERT (unlink (BASE "fifo") == 0);
     }
 
   ASSERT (close (dfd) == 0);

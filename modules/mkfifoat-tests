@@ -1,7 +1,9 @@
 Files:
+tests/test-mkfifo.h
 tests/test-mkfifoat.c
 
 Depends-on:
+symlink
 
 configure.ac:
 

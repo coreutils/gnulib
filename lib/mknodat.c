@@ -1,4 +1,4 @@
-/* Create a named fifo relative to an open directory.
+/* Create an inode relative to an open directory.
    Copyright (C) 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -20,15 +20,15 @@
 
 #include <sys/stat.h>
 
-#if !HAVE_MKFIFO
+#if !HAVE_MKNOD
 
 # include <errno.h>
 
-/* Mingw lacks mkfifo, so this wrapper is trivial.  */
+/* Mingw lacks mknod, so this wrapper is trivial.  */
 
 int
-mkfifoat (int fd _UNUSED_PARAMETER_, char const *path _UNUSED_PARAMETER_,
-          mode_t mode _UNUSED_PARAMETER_)
+mknodat (int fd _UNUSED_PARAMETER_, char const *path _UNUSED_PARAMETER_,
+         mode_t mode _UNUSED_PARAMETER_, dev_t dev _UNUSED_PARAMETER_)
 {
   errno = ENOSYS;
   return -1;
@@ -36,16 +36,18 @@ mkfifoat (int fd _UNUSED_PARAMETER_, char const *path _UNUSED_PARAMETER_,
 
 #else /* HAVE_MKFIFO */
 
-/* Create a named fifo FILE relative to directory FD, with access
-   permissions in MODE.  If possible, do it without changing the
+/* Create a file system node FILE relative to directory FD, with
+   access permissions and file type in MODE, and device type in DEV.
+   Usually, non-root applications can only create named fifos, with
+   DEV set to 0.  If possible, create the node without changing the
    working directory.  Otherwise, resort to using save_cwd/fchdir,
-   then mkfifo/restore_cwd.  If either the save_cwd or the restore_cwd
+   then mknod/restore_cwd.  If either the save_cwd or the restore_cwd
    fails, then give a diagnostic and exit nonzero.  */
 
-# define AT_FUNC_NAME mkfifoat
-# define AT_FUNC_F1 mkfifo
-# define AT_FUNC_POST_FILE_PARAM_DECLS , mode_t mode
-# define AT_FUNC_POST_FILE_ARGS        , mode
+# define AT_FUNC_NAME mknodat
+# define AT_FUNC_F1 mknod
+# define AT_FUNC_POST_FILE_PARAM_DECLS , mode_t mode, dev_t dev
+# define AT_FUNC_POST_FILE_ARGS        , mode, dev
 # include "at-func.c"
 # undef AT_FUNC_NAME
 # undef AT_FUNC_F1

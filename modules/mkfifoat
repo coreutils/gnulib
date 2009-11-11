@@ -3,11 +3,14 @@ mkfifoat() and mknodat(): create named FIFOs relative to a directory
 
 Files:
 lib/mkfifoat.c
+lib/mknodat.c
 m4/mkfifoat.m4
 
 Depends-on:
 extensions
 fcntl-h
+mkfifo
+mknod
 openat
 sys_stat
 

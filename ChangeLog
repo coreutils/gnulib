@@ -1,5 +1,17 @@
 2009-11-11  Eric Blake  <ebb9@byu.net>
 
+	mkfifoat: use new modules for Solaris and BSD bugs
+	* m4/mkfifoat.m4 (gl_FUNC_MKFIFOAT): Simplify.
+	* lib/mkfifoat.c (mknodat): Split...
+	* lib/mknodat.c (mknodat): ...into new file.
+	* modules/mkfifoat (Files): Ship new file.
+	(Depends-on): Add mkfifo, mknod.
+	* modules/mkfifoat-tests (Files): Reuse mkfifo tests.
+	(Depends-on): Add symlink.
+	* tests/test-mkfifoat.c (main): Enhance test.  Drop portions now
+	redundant with test_mkfifo.h.
+	(do_mkfifoat, do_mknodat): New helpers.
+
 	mknod: new module
 	* modules/mknod: New file.
 	* m4/mknod.m4 (gl_FUNC_MKNOD): Likewise.
