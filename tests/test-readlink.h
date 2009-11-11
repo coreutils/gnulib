@@ -52,11 +52,11 @@ test_readlink (ssize_t (*func) (char const *, char *, size_t), bool print)
   errno = 0;
   ASSERT (func (BASE "file/", buf, sizeof buf) == -1);
   ASSERT (errno == ENOTDIR);
-  ASSERT (unlink (BASE "file") == 0);
 
   /* Now test actual symlinks.  */
   if (symlink (BASE "dir", BASE "link"))
     {
+      ASSERT (unlink (BASE "file") == 0);
       if (print)
         fputs ("skipping test: symlinks not supported on this file system\n",
                stderr);
@@ -66,6 +66,17 @@ test_readlink (ssize_t (*func) (char const *, char *, size_t), bool print)
   errno = 0;
   ASSERT (func (BASE "link/", buf, sizeof buf) == -1);
   ASSERT (errno == EINVAL);
+  ASSERT (symlink (BASE "link", BASE "link2") == 0);
+  errno = 0;
+  ASSERT (func (BASE "link2/", buf, sizeof buf) == -1);
+  ASSERT (errno == EINVAL);
+  ASSERT (unlink (BASE "link2") == 0);
+  ASSERT (symlink (BASE "file", BASE "link2") == 0);
+  errno = 0;
+  ASSERT (func (BASE "link2/", buf, sizeof buf) == -1);
+  ASSERT (errno == ENOTDIR);
+  ASSERT (unlink (BASE "file") == 0);
+  ASSERT (unlink (BASE "link2") == 0);
   {
     /* Up till now, no readlink has been successful, so buf should be
        unchanged.  */

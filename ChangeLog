@@ -1,5 +1,11 @@
 2009-11-11  Eric Blake  <ebb9@byu.net>
 
+	readlink: detect FreeBSD bug
+	* m4/readlink.m4 (gl_FUNC_READLINK): Also detect FreeBSD bug with
+	slash on symlink.
+	* doc/posix-functions/readlink.texi (readlink): Document the bug.
+	* tests/test-readlink.h (test_readlink): Enhance test.
+
 	symlink: detect FreeBSD bug
 	* m4/symlink.m4 (gl_FUNC_SYMLINK): Also detect FreeBSD bug with
 	slash on symlink.

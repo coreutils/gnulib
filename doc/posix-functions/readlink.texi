@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 Some platforms mistakenly succeed on @code{readlink("link/",buf,len)}:
-Solaris 9.
+FreeBSD 7.2, Solaris 9.
 @item
 On some platforms, @code{readlink} returns @code{int} instead of
 @code{ssize_t}:
