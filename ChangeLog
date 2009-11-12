@@ -1,5 +1,10 @@
 2009-11-12  Jim Meyering  <meyering@redhat.com>
 
+	bootstrap: sync from coreutils
+	* build-aux/bootstrap (bootstrap_epilogue): New function.
+	Use git_modules_config in one more place.  This make bootstrap's
+	--gnulib-srcdir option more useful for testing.
+
 	bootstrap: generalize autoheader check
 	* build-aux/bootstrap: Look for AC_CONFIG_HEADER as well as
 	AC_CONFIG_HEADERS.

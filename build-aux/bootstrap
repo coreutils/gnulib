@@ -70,6 +70,10 @@ gnulib_modules=
 # Any gnulib files needed that are not in modules.
 gnulib_files=
 
+# A function to be called after everything else in this script.
+# Override it via your own definition in bootstrap.conf.
+bootstrap_epilogue() { :; }
+
 # The command to download all .po files for a specified domain into
 # a specified directory.  Fill in the first %s is the domain name, and
 # the second with the destination directory.  Use rsync's -L and -r
@@ -413,7 +417,7 @@ case ${GNULIB_SRCDIR--} in
         git_modules_config submodule.gnulib.url >/dev/null; then
     git submodule init
     GNULIB_SRCDIR=`cd $GNULIB_SRCDIR && pwd`
-    git config --replace-all submodule.gnulib.url $GNULIB_SRCDIR
+    git_modules_config --replace-all submodule.gnulib.url $GNULIB_SRCDIR
     echo "$0: getting gnulib files..."
     git submodule update || exit $?
     GNULIB_SRCDIR=gnulib
@@ -799,6 +803,8 @@ if test $with_gettext = yes; then
     (cd po && cp -p Makefile.in.in *-quot *.header *.sed *.sin ../runtime-po)
   fi
 fi
+
+bootstrap_epilogue
 
 echo "$0: done.  Now you can run './configure'."
 
