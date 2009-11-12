@@ -25,7 +25,20 @@
 #include <errno.h>
 #include <stdlib.h>
 
-#undef getgroups
+#if !HAVE_GETGROUPS
+
+/* Provide a stub that fails with ENOSYS, since there is no group
+   information available on mingw.  */
+int
+getgroups (int n _UNUSED_PARAMETER_, GETGROUPS_T *groups _UNUSED_PARAMETER_)
+{
+  errno = ENOSYS;
+  return -1;
+}
+
+#else /* HAVE_GETGROUPS */
+
+# undef getgroups
 
 /* On at least Ultrix 4.3 and NextStep 3.2, getgroups (0, NULL) always
    fails.  On other systems, it returns the number of supplemental
@@ -66,3 +79,5 @@ rpl_getgroups (int n, GETGROUPS_T *group)
 
   return n_groups;
 }
+
+#endif /* HAVE_GETGROUPS */

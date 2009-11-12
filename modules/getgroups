@@ -11,6 +11,7 @@ unistd
 
 configure.ac:
 gl_FUNC_GETGROUPS
+gl_UNISTD_MODULE_INDICATOR([getgroups])
 
 Makefile.am:
 

@@ -406,6 +406,28 @@ extern int getdtablesize (void);
 #endif
 
 
+#if @GNULIB_GETGROUPS@
+# if @REPLACE_GETGROUPS@
+#  undef getgroups
+#  define getgroups rpl_getgroups
+# endif
+# if !@HAVE_GETGROUPS@ || @REPLACE_GETGROUPS@
+/* Return the supplemental groups that the current process belongs to.
+   It is unspecified whether the effective group id is in the list.
+   If N is 0, return the group count; otherwise, N describes how many
+   entries are available in GROUPS.  Return -1 and set errno if N is
+   not 0 and not large enough.  Fails with ENOSYS on some systems.  */
+int getgroups (int n, GETGROUPS_T *groups);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef getgroups
+# define getgroups(n,g)                                                 \
+    (GL_LINK_WARNING ("getgroups is unportable - "                      \
+                      "use gnulib module getgroups for portability"),   \
+     getgroups (n, g))
+#endif
+
+
 #if @GNULIB_GETHOSTNAME@
 /* Return the standard host name of the machine.
    WARNING! The host name may or may not be fully qualified.

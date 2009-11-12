@@ -1,5 +1,17 @@
 2009-11-13  Eric Blake  <ebb9@byu.net>
 
+	getgroups, getugroups: provide stubs for mingw
+	* lib/getgroups.c (getgroups): Provide ENOSYS stub for mingw.
+	* lib/getugroups.c (getugroups): Likewise.
+	* m4/getgroups.m4 (gl_FUNC_GETGROUPS): Check for missing
+	function.  Modernize replacement scheme.
+	(gl_PREREQ_GETGROUPS): Delete.
+	* m4/getugroups.m4 (gl_GETUGROUPS): Check for <grp.h>.
+	* modules/getgroups (configure.ac): Declare witness.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Add default.
+	* modules/unistd (Depends-on): Substitute witness.
+	* lib/unistd.in.h (getgroups): Declare replacement.
+
 	getgroups: avoid calling exit
 	* modules/getgroups (Depends-on): Add malloc-posix and unistd,
 	drop xalloc.

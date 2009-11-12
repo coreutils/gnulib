@@ -21,22 +21,31 @@
 
 #include "getugroups.h"
 
+#include <errno.h>
 #include <limits.h>
 #include <stdio.h> /* grp.h on alpha OSF1 V2.0 uses "FILE *". */
-#include <grp.h>
-
+#include <string.h>
 #include <unistd.h>
 
-#include <errno.h>
+#if !HAVE_GRP_H
 
-/* Some old header files might not declare setgrent, getgrent, and endgrent.
-   If you don't have them at all, we can't implement this function.
-   You lose!  */
-struct group *getgrent (void);
+/* Mingw lacks all things related to group management.  The best we
+   can do is fail with ENOSYS.  */
 
-#include <string.h>
+int
+getugroups (int maxcount _UNUSED_PARAMETER_,
+            gid_t *grouplist _UNUSED_PARAMETER_,
+            char const *username _UNUSED_PARAMETER_,
+            gid_t gid _UNUSED_PARAMETER_)
+{
+  errno = ENOSYS;
+  return -1;
+}
 
-#define STREQ(s1, s2) (strcmp (s1, s2) == 0)
+#else /* HAVE_GRP_H */
+# include <grp.h>
+
+# define STREQ(s1, s2) (strcmp (s1, s2) == 0)
 
 /* Like `getgroups', but for user USERNAME instead of for the current
    process.  Store at most MAXCOUNT group IDs in the GROUPLIST array.
@@ -112,3 +121,5 @@ getugroups (int maxcount, GETGROUPS_T *grouplist, char const *username,
 
   return count;
 }
+
+#endif /* HAVE_GRP_H */
