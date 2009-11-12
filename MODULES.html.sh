@@ -2580,6 +2580,7 @@ func_all_modules ()
   func_module getugroups
   func_module group-member
   func_module idcache
+  func_module mgetgroups
   func_module userspec
   func_end_table
 

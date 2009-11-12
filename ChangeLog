@@ -1,5 +1,12 @@
 2009-11-13  Eric Blake  <ebb9@byu.net>
 
+	mgetgroups: new module, taken from coreutils
+	* modules/mgetgroups: New file.
+	* lib/mgetgroups.h: Likewise.
+	* lib/mgetgroups.c (mgetgroups): Likewise.
+	* m4/mgetgroups.m4 (gl_MGETGROUPS): Likewise.
+	* MODULES.html.sh (Users and groups): Mention it.
+
 	getgroups: don't expose GETGROUPS_T to user
 	* lib/getgroups.c (rpl_getgroups): Change signature.  Copy array
 	an element at a time if GETGROUPS_T is wrong size.
