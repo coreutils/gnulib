@@ -1,3 +1,9 @@
+2009-11-12  Jim Meyering  <meyering@redhat.com>
+
+	bootstrap: generalize autoheader check
+	* build-aux/bootstrap: Look for AC_CONFIG_HEADER as well as
+	AC_CONFIG_HEADERS.
+
 2009-11-11  Eric Blake  <ebb9@byu.net>
 
 	mkfifoat: use new modules for Solaris and BSD bugs
