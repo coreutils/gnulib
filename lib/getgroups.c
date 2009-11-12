@@ -1,7 +1,7 @@
 /* provide consistent interface to getgroups for systems that don't allow N==0
 
-   Copyright (C) 1996, 1999, 2003, 2006, 2007, 2008 Free Software
-   Foundation, Inc.
+   Copyright (C) 1996, 1999, 2003, 2006, 2007, 2008, 2009 Free
+   Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -49,14 +49,14 @@ rpl_getgroups (int n, GETGROUPS_T *group)
   while (1)
     {
       /* No need to worry about address arithmetic overflow here,
-	 since the ancient systems that we're running on have low
-	 limits on the number of secondary groups.  */
+         since the ancient systems that we're running on have low
+         limits on the number of secondary groups.  */
       gbuf = xmalloc (n * sizeof *gbuf);
       n_groups = getgroups (n, gbuf);
-      if (n_groups < n)
-	break;
+      if (n_groups == -1 ? errno != EINVAL : n_groups < n)
+        break;
       free (gbuf);
-      n += 10;
+      n *= 2;
     }
 
   saved_errno = errno;

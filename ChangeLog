@@ -1,3 +1,11 @@
+2009-11-13  Eric Blake  <ebb9@byu.net>
+
+	getgroups: fix logic error
+	* lib/getgroups.c (rpl_getgroups): Don't fail if current process
+	has more than 20 groups.
+	* modules/getgroups-tests: New test.
+	* tests/test-getgroups.c: New file.
+
 2009-11-13  Simon Josefsson  <simon@josefsson.org>
 
 	* tests/test-base64.c: Improve.
