@@ -1,5 +1,13 @@
 2009-11-13  Eric Blake  <ebb9@byu.net>
 
+	getgroups: avoid calling exit
+	* modules/getgroups (Depends-on): Add malloc-posix and unistd,
+	drop xalloc.
+	* modules/getgroups-tests (Depends-on, Makefile.am): Drop unneeded
+	dependencies.
+	* lib/getgroups.c (rpl_getgroups): Fail with ENOMEM rather than
+	exiting, in the rare case of malloc failure.
+
 	getgroups: fix logic error
 	* lib/getgroups.c (rpl_getgroups): Don't fail if current process
 	has more than 20 groups.

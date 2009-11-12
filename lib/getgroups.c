@@ -20,20 +20,19 @@
 
 #include <config.h>
 
-#undef getgroups
-
-#include <stdio.h>
-#include <sys/types.h>
-#include <errno.h>
-#include <stdlib.h>
 #include <unistd.h>
 
-#include "xalloc.h"
+#include <errno.h>
+#include <stdlib.h>
 
-/* On at least Ultrix 4.3 and NextStep 3.2, getgroups (0, 0) always fails.
-   On other systems, it returns the number of supplemental groups for the
-   process.  This function handles that special case and lets the system-
-   provided function handle all others. */
+#undef getgroups
+
+/* On at least Ultrix 4.3 and NextStep 3.2, getgroups (0, NULL) always
+   fails.  On other systems, it returns the number of supplemental
+   groups for the process.  This function handles that special case
+   and lets the system-provided function handle all others.  However,
+   it can fail with ENOMEM if memory is tight.  It is unspecified
+   whether the effective group id is included in the list.  */
 
 int
 rpl_getgroups (int n, GETGROUPS_T *group)
@@ -51,7 +50,9 @@ rpl_getgroups (int n, GETGROUPS_T *group)
       /* No need to worry about address arithmetic overflow here,
          since the ancient systems that we're running on have low
          limits on the number of secondary groups.  */
-      gbuf = xmalloc (n * sizeof *gbuf);
+      gbuf = malloc (n * sizeof *gbuf);
+      if (!gbuf)
+        return -1;
       n_groups = getgroups (n, gbuf);
       if (n_groups == -1 ? errno != EINVAL : n_groups < n)
         break;

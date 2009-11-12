@@ -6,7 +6,8 @@ lib/getgroups.c
 m4/getgroups.m4
 
 Depends-on:
-xalloc
+malloc-posix
+unistd
 
 configure.ac:
 gl_FUNC_GETGROUPS
@@ -20,5 +21,4 @@ License:
 GPL
 
 Maintainer:
-Jim Meyering
-
+Jim Meyering, Eric Blake
