@@ -1,5 +1,25 @@
 2009-11-13  Eric Blake  <ebb9@byu.net>
 
+	getgroups: don't expose GETGROUPS_T to user
+	* lib/getgroups.c (rpl_getgroups): Change signature.  Copy array
+	an element at a time if GETGROUPS_T is wrong size.
+	* lib/getugroups.h (getugroups): Change signature.
+	* lib/unistd.in.h (getgroups): Likewise.
+	* m4/getgroups.m4 (gl_FUNC_GETGROUPS): Use replacement if
+	signature needs fixing.
+	* m4/getugroups.m4 (gl_GETUGROUPS): No longer need
+	AC_TYPE_GETGROUPS.
+	* modules/group-member (Depends-on): Add getgroups.
+	* lib/group-member.c (group_info, get_group_info): Use gid_t.
+	(group_member): Rely on getgroups replacement.
+	* lib/getugroups.c (getugroups): Use gid_t.
+	* tests/test-getgroups.c (main): Likewise.
+	* NEWS: Mention the signature change.
+	* doc/posix-functions/getgroups.texi (getgroups): Mention the
+	problem with signature.
+	* doc/glibc-functions/setgroups.texi (setgroups): Mention that
+	GETGROUPS_T is still useful for setgroups.
+
 	getgroups, getugroups: provide stubs for mingw
 	* lib/getgroups.c (getgroups): Provide ENOSYS stub for mingw.
 	* lib/getugroups.c (getugroups): Likewise.

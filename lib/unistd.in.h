@@ -417,7 +417,7 @@ extern int getdtablesize (void);
    If N is 0, return the group count; otherwise, N describes how many
    entries are available in GROUPS.  Return -1 and set errno if N is
    not 0 and not large enough.  Fails with ENOSYS on some systems.  */
-int getgroups (int n, GETGROUPS_T *groups);
+int getgroups (int n, gid_t *groups);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef getgroups

@@ -55,7 +55,7 @@ getugroups (int maxcount _UNUSED_PARAMETER_,
    Otherwise, return the number of IDs we've written into GROUPLIST.  */
 
 int
-getugroups (int maxcount, GETGROUPS_T *grouplist, char const *username,
+getugroups (int maxcount, gid_t *grouplist, char const *username,
 	    gid_t gid)
 {
   int count = 0;

@@ -8,6 +8,7 @@ m4/group-member.m4
 
 Depends-on:
 extensions
+getgroups
 xalloc
 stdbool
 

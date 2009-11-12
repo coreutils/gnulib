@@ -13,4 +13,10 @@ Portability problems not fixed by Gnulib:
 @item
 This function is missing on some platforms:
 AIX 5.1, mingw, Interix 3.5, BeOS.
+@item
+On very old systems, this function operated on an array of @samp{int},
+even though that was a different size than an array of @samp{gid_t};
+you can use autoconf's AC_TYPE_GETGROUPS to set @code{GETGROUPS_T} to
+the appropriate size (since @code{getgroups} and @code{setgroups}
+share the same bug).
 @end itemize

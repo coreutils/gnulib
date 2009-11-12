@@ -1,4 +1,4 @@
-# serial 13
+# serial 14
 
 dnl From Jim Meyering.
 dnl A wrapper around AC_FUNC_GETGROUPS.
@@ -17,7 +17,8 @@ AC_DEFUN([gl_FUNC_GETGROUPS],
   if test "$ac_cv_func_getgroups" != yes; then
     AC_LIBOBJ([getgroups])
     HAVE_GETGROUPS=0
-  elif test "$ac_cv_func_getgroups_works" != yes; then
+  elif test "$ac_cv_func_getgroups_works.$ac_cv_type_getgroups" != yes.gid_t
+  then
     AC_LIBOBJ([getgroups])
     REPLACE_GETGROUPS=1
   fi

@@ -6,6 +6,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2009-11-12  getgroups       These functions now use a signature of gid_t,
+            getugroups      rather than GETGROUPS_T.  This probably has no
+                            effect except on very old platforms.
+
 2009-11-04  tempname        The gen_tempname function takes an additional
                             'suffixlen' argument. You can safely pass 0.
 

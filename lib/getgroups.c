@@ -48,14 +48,44 @@ getgroups (int n _UNUSED_PARAMETER_, GETGROUPS_T *groups _UNUSED_PARAMETER_)
    whether the effective group id is included in the list.  */
 
 int
-rpl_getgroups (int n, GETGROUPS_T *group)
+rpl_getgroups (int n, gid_t *group)
 {
   int n_groups;
   GETGROUPS_T *gbuf;
   int saved_errno;
 
   if (n != 0)
-    return getgroups (n, group);
+    {
+      int result;
+      int saved_errno;
+      if (sizeof *group == sizeof *gbuf)
+        return getgroups (n, (GETGROUPS_T *) group);
+
+      if (n < 0)
+        {
+          errno = EINVAL;
+          return -1;
+        }
+      if (SIZE_MAX / sizeof *gbuf <= n)
+        {
+          errno = ENOMEM;
+          return -1;
+        }
+      gbuf = malloc (n * sizeof *gbuf);
+      if (!gbuf)
+        return -1;
+      result = getgroups (n, gbuf);
+      if (0 <= result)
+        {
+          n = result;
+          while (n--)
+            group[n] = gbuf[n];
+        }
+      saved_errno = errno;
+      free (gbuf);
+      errno == saved_errno;
+      return result;
+    }
 
   n = 20;
   while (1)

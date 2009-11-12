@@ -1,4 +1,4 @@
-# getugroups.m4 serial 7
+# getugroups.m4 serial 8
 dnl Copyright (C) 2002, 2003, 2005, 2006, 2009 Free Software
 dnl Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
@@ -9,7 +9,4 @@ AC_DEFUN([gl_GETUGROUPS],
 [
   AC_LIBOBJ([getugroups])
   AC_CHECK_HEADERS_ONCE([grp.h])
-
-  dnl Prerequisites of lib/getugroups.c.
-  AC_TYPE_GETGROUPS
 ])

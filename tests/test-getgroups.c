@@ -40,7 +40,7 @@ int
 main (int argc, char **argv _UNUSED_PARAMETER_)
 {
   int result;
-  GETGROUPS_T *groups;
+  gid_t *groups;
 
   errno = 0;
   result = getgroups (0, NULL);
