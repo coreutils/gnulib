@@ -1,3 +1,9 @@
+2009-11-13  Eric Blake  <ebb9@byu.net>
+
+	getgroups: avoid compilation failure
+	* lib/getgroups.c (includes): Include <stdint.h> for SIZE_MAX.
+	* modules/getgroups (Depends-on): Add stdint.
+
 2009-11-13  Jim Meyering  <meyering@redhat.com>
 
 	test-getgroups: avoid compilation failure

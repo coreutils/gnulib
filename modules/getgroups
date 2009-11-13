@@ -7,6 +7,7 @@ m4/getgroups.m4
 
 Depends-on:
 malloc-posix
+stdint
 unistd
 
 configure.ac:
