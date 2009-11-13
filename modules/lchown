@@ -8,6 +8,7 @@ m4/lchown.m4
 Depends-on:
 chown
 errno
+lstat
 sys_stat
 unistd
 

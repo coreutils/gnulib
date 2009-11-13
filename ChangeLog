@@ -1,3 +1,21 @@
+2009-11-14  Eric Blake  <ebb9@byu.net>
+
+	chown: detect Solaris and FreeBSD bug
+	* lib/chown.c (rpl_chown): Work around bug.
+	* m4/chown.m4 (gl_FUNC_CHOWN): Check for trailing slash bugs.
+	(gl_PREREQ_CHOWN): Delete.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Add witness.
+	* modules/unistd (Makefile.am): Populate it.
+	* lib/unistd.in.h (chown): Update declaration.
+	* lib/lchown.c (chown): Update client.
+	* modules/lchown (Depends-on): Add lstat.
+	* doc/posix-functions/chown.texi (chown): Document the bug.
+	* doc/posix-functions/getgroups.texi (getgroups): Document
+	getgroups pitfall.
+	* modules/chown-tests: New file.
+	* tests/test-chown.h (test_chown): Likewise.
+	* tests/test-chown.c (main): Likewise.
+
 2009-11-14  Robert Millan  <rmh.grub@aybabtu.com>  (tiny change)
 
 	gnulib-tool: correctly detect absence of m4 directories

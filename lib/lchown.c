@@ -20,15 +20,16 @@
 
 #include <config.h>
 
-/* If the system chown does not follow symlinks, we don't want it
-   replaced by gnulib's chown, which does follow symlinks.  */
-#if CHOWN_MODIFIES_SYMLINK
-# define REPLACE_CHOWN 0
-#endif
 #include <unistd.h>
 
 #include <errno.h>
 #include <sys/stat.h>
+
+/* If the system chown does not follow symlinks, we don't want it
+   replaced by gnulib's chown, which does follow symlinks.  */
+#if CHOWN_MODIFIES_SYMLINK
+# undef chown
+#endif
 
 /* Work just like chown, except when FILE is a symbolic link.
    In that case, set errno to EOPNOTSUPP and return -1.

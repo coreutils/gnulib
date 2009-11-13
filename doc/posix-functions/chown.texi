@@ -9,17 +9,22 @@ Gnulib module: chown
 Portability problems fixed by Gnulib:
 @itemize
 @item
+Some platforms fail to detect trailing slash on non-directories, as in
+@code{chown("link-to-file/",uid,gid)}:
+FreeBSD 7.2, Solaris 9.
+@item
 When passed an argument of -1, some implementations really set the owner
 user/group id of the file to this value, rather than leaving that id of the
 file alone.
 @item
 When applied to a symbolic link, some implementations don't dereference
 the symlink, i.e.@: they behave like @code{lchown}.
+@item
+This function is missing on some platforms; however, the replacement
+always fails with @code{ENOSYS}:
+mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-This function is missing on some platforms:
-mingw.
 @end itemize

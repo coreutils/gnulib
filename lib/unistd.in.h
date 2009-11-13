@@ -126,18 +126,16 @@ extern "C" {
 
 #if @GNULIB_CHOWN@
 # if @REPLACE_CHOWN@
-#  ifndef REPLACE_CHOWN
-#   define REPLACE_CHOWN 1
-#  endif
-#  if REPLACE_CHOWN
+#  undef chown
+#  define chown rpl_chown
+# endif
+# if !@HAVE_CHOWN@ || @REPLACE_CHOWN@
 /* Change the owner of FILE to UID (if UID is not -1) and the group of FILE
    to GID (if GID is not -1).  Follow symbolic links.
    Return 0 if successful, otherwise -1 and errno set.
    See the POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/chown.html>.  */
-#   define chown rpl_chown
 extern int chown (const char *file, uid_t uid, gid_t gid);
-#  endif
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef chown
