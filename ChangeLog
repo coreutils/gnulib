@@ -1,3 +1,8 @@
+2009-11-13  Jim Meyering  <meyering@redhat.com>
+
+	test-getgroups: avoid compilation failure
+	* tests/test-getgroups.c: Include <stdint.h> for use of SIZE_MAX.
+
 2009-11-13  Eric Blake  <ebb9@byu.net>
 
 	mgetgroups: new module, taken from coreutils
