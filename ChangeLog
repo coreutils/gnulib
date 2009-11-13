@@ -1,5 +1,11 @@
 2009-11-13  Eric Blake  <ebb9@byu.net>
 
+	getgroups: work around FreeBSD bug
+	* lib/getgroups.c (rpl_getgroups): Work around the bug.
+	* m4/getgroups.m4 (gl_FUNC_GETGROUPS): Detect the bug.
+	* doc/posix-functions/getgroups.texi (getgroups): Document it.
+	* tests/test-getgroups.c (main): Fix buffer overrun.
+
 	getgroups: avoid compilation failure
 	* lib/getgroups.c (includes): Include <stdint.h> for SIZE_MAX.
 	* modules/getgroups (Depends-on): Add stdint.

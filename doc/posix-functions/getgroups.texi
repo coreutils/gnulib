@@ -12,7 +12,11 @@ Portability problems fixed by Gnulib:
 This function is missing on some platforms:
 mingw.
 @item
-On Ultrix 4.3, @code{getgroups (0, 0)} always fails.  See macro
+On some platforms, this function fails to reject a negative count,
+even though that is less than the size that would be returned:
+FreeBSD 7.2.
+@item
+On Ultrix 4.3, @code{getgroups (0, NULL)} always fails.  See macro
 @samp{AC_FUNC_GETGROUPS}.
 @item
 On very old systems, this function operated on an array of @samp{int},

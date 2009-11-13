@@ -40,6 +40,9 @@ getgroups (int n _UNUSED_PARAMETER_, GETGROUPS_T *groups _UNUSED_PARAMETER_)
 #else /* HAVE_GETGROUPS */
 
 # undef getgroups
+# ifndef GETGROUPS_ZERO_BUG
+#  define GETGROUPS_ZERO_BUG 0
+# endif
 
 /* On at least Ultrix 4.3 and NextStep 3.2, getgroups (0, NULL) always
    fails.  On other systems, it returns the number of supplemental
@@ -55,18 +58,19 @@ rpl_getgroups (int n, gid_t *group)
   GETGROUPS_T *gbuf;
   int saved_errno;
 
-  if (n != 0)
+  if (n < 0)
+    {
+      errno = EINVAL;
+      return -1;
+    }
+
+  if (n != 0 || !GETGROUPS_ZERO_BUG)
     {
       int result;
       int saved_errno;
       if (sizeof *group == sizeof *gbuf)
         return getgroups (n, (GETGROUPS_T *) group);
 
-      if (n < 0)
-        {
-          errno = EINVAL;
-          return -1;
-        }
       if (SIZE_MAX / sizeof *gbuf <= n)
         {
           errno = ENOMEM;

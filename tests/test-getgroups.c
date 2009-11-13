@@ -52,7 +52,7 @@ main (int argc, char **argv _UNUSED_PARAMETER_)
     }
   ASSERT (0 <= result);
   ASSERT (result + 1 < SIZE_MAX / sizeof *groups);
-  groups = malloc (result + 1 * sizeof *groups);
+  groups = malloc ((result + 1) * sizeof *groups);
   ASSERT (groups);
   groups[result] = -1;
   /* Check for EINVAL handling.  Not all processes have supplemental
