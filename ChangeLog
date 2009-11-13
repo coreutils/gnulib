@@ -1,5 +1,8 @@
 2009-11-13  Eric Blake  <ebb9@byu.net>
 
+	getgroups: avoid compiler warning
+	* lib/getgroups.c (rpl_getgroups): Delete shadowed variable.
+
 	getgroups: work around FreeBSD bug
 	* lib/getgroups.c (rpl_getgroups): Work around the bug.
 	* m4/getgroups.m4 (gl_FUNC_GETGROUPS): Detect the bug.

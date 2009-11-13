@@ -67,7 +67,6 @@ rpl_getgroups (int n, gid_t *group)
   if (n != 0 || !GETGROUPS_ZERO_BUG)
     {
       int result;
-      int saved_errno;
       if (sizeof *group == sizeof *gbuf)
         return getgroups (n, (GETGROUPS_T *) group);
 
