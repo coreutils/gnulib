@@ -1,5 +1,10 @@
 2009-11-13  Simon Josefsson  <simon@josefsson.org>
 
+	* tests/test-xvasprintf.c: Fix memory leak, suggested by Eric
+	Blake <ebb9@byu.net>.
+
+2009-11-13  Simon Josefsson  <simon@josefsson.org>
+
 	* tests/test-xvasprintf.c: Add %s%s related checks.
 
 2009-11-12  Eric Blake  <ebb9@byu.net>
