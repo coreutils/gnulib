@@ -1,3 +1,7 @@
+2009-11-13  Simon Josefsson  <simon@josefsson.org>
+
+	* tests/test-xvasprintf.c: Add %s%s related checks.
+
 2009-11-12  Eric Blake  <ebb9@byu.net>
 
 	version-etc: match standards.texi style

@@ -55,28 +55,62 @@ static void
 test_xvasprintf (void)
 {
   int repeat;
+  char *result;
 
   for (repeat = 0; repeat <= 8; repeat++)
     {
-      char *result = my_xasprintf ("%d", 12345);
+      result = my_xasprintf ("%d", 12345);
       ASSERT (result != NULL);
       ASSERT (strcmp (result, "12345") == 0);
       free (result);
     }
+
+  result = my_xasprintf ("");
+  ASSERT (result != NULL);
+  ASSERT (strcmp (result, "") == 0);
+
+  result = my_xasprintf ("%s", "foo");
+  ASSERT (result != NULL);
+  ASSERT (strcmp (result, "foo") == 0);
+
+  result = my_xasprintf ("%s%s", "foo", "bar");
+  ASSERT (result != NULL);
+  ASSERT (strcmp (result, "foobar") == 0);
+
+  result = my_xasprintf ("%s%sbaz", "foo", "bar");
+  ASSERT (result != NULL);
+  ASSERT (strcmp (result, "foobarbaz") == 0);
 }
 
 static void
 test_xasprintf ()
 {
   int repeat;
+  char *result;
 
   for (repeat = 0; repeat <= 8; repeat++)
     {
-      char *result = xasprintf ("%d", 12345);
+      result = xasprintf ("%d", 12345);
       ASSERT (result != NULL);
       ASSERT (strcmp (result, "12345") == 0);
       free (result);
     }
+
+  result = xasprintf ("");
+  ASSERT (result != NULL);
+  ASSERT (strcmp (result, "") == 0);
+
+  result = xasprintf ("%s", "foo");
+  ASSERT (result != NULL);
+  ASSERT (strcmp (result, "foo") == 0);
+
+  result = xasprintf ("%s%s", "foo", "bar");
+  ASSERT (result != NULL);
+  ASSERT (strcmp (result, "foobar") == 0);
+
+  result = my_xasprintf ("%s%sbaz", "foo", "bar");
+  ASSERT (result != NULL);
+  ASSERT (strcmp (result, "foobarbaz") == 0);
 }
 
 int
