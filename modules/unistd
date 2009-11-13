@@ -74,6 +74,7 @@ unistd.h: unistd.in.h
 	      -e 's|@''HAVE_GETHOSTNAME''@|$(HAVE_GETHOSTNAME)|g' \
 	      -e 's|@''HAVE_GETPAGESIZE''@|$(HAVE_GETPAGESIZE)|g' \
 	      -e 's|@''HAVE_GETUSERSHELL''@|$(HAVE_GETUSERSHELL)|g' \
+	      -e 's|@''HAVE_LCHOWN''@|$(HAVE_LCHOWN)|g' \
 	      -e 's|@''HAVE_LINK''@|$(HAVE_LINK)|g' \
 	      -e 's|@''HAVE_LINKAT''@|$(HAVE_LINKAT)|g' \
 	      -e 's|@''HAVE_PIPE2''@|$(HAVE_PIPE2)|g' \

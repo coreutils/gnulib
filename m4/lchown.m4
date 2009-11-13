@@ -1,14 +1,16 @@
-# serial 13
+# serial 14
 # Determine whether we need the lchown wrapper.
 
-dnl Copyright (C) 1998, 2001, 2003-2007, 2009 Free Software Foundation, Inc.
+dnl Copyright (C) 1998, 2001, 2003-2007, 2009 Free Software
+dnl Foundation, Inc.
 
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
 dnl From Jim Meyering.
-dnl Provide lchown on systems that lack it.
+dnl Provide lchown on systems that lack it, and work around trailing
+dnl slash bugs on systems that have it.
 
 AC_DEFUN([gl_FUNC_LCHOWN],
 [
@@ -16,6 +18,10 @@ AC_DEFUN([gl_FUNC_LCHOWN],
   AC_REQUIRE([gl_FUNC_CHOWN])
   AC_REPLACE_FUNCS([lchown])
   if test $ac_cv_func_lchown = no; then
+    HAVE_LCHOWN=0
+  elif test "$gl_cv_func_chown_slash_works" != yes; then
+    dnl Trailing slash bugs in chown also occur in lchown.
+    AC_LIBOBJ([lchown])
     REPLACE_LCHOWN=1
   fi
 ])

@@ -9,7 +9,13 @@ Gnulib module: lchown
 Portability problems fixed by Gnulib:
 @itemize
 @item
-This function is missing on some platforms:
+Some platforms fail to detect trailing slash on non-directories, as in
+@code{lchown("link-to-file/",uid,gid)}:
+FreeBSD 7.2, Solaris 9.
+@item
+This function is missing on some platforms; however, the replacement
+fails on symlinks if @code{chown} is supported, and fails altogether
+with @code{ENOSYS} otherwise:
 MacOS X 10.3, mingw, BeOS.
 @end itemize
 

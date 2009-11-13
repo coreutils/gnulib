@@ -1,0 +1,19 @@
+Files:
+tests/test-lchown.h
+tests/test-lchown.c
+
+Depends-on:
+mgetgroups
+progname
+sleep
+stat-time
+stdbool
+symlink
+
+configure.ac:
+AC_CHECK_FUNCS_ONCE([getegid usleep])
+
+Makefile.am:
+TESTS += test-lchown
+check_PROGRAMS += test-lchown
+test_lchown_LDADD = $(LDADD) @LIBINTL@

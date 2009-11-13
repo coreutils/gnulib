@@ -1,5 +1,16 @@
 2009-11-14  Eric Blake  <ebb9@byu.net>
 
+	lchown: detect Solaris and FreeBSD bug
+	* lib/lchown.c (rpl_lchown): Work around bug.
+	* m4/lchown.m4 (gl_FUNC_LCHOWN): Check for trailing slash bugs.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Add witness.
+	* modules/unistd (Makefile.am): Populate it.
+	* lib/unistd.in.h (lchown): Update declaration.
+	* doc/posix-functions/lchown.texi (lchown): Document the bug.
+	* modules/lchown-tests: New file.
+	* tests/test-lchown.h (test_lchown): Likewise.
+	* tests/test-lchown.c (main): Likewise.
+
 	chown: detect Solaris and FreeBSD bug
 	* lib/chown.c (rpl_chown): Work around bug.
 	* m4/chown.m4 (gl_FUNC_CHOWN): Check for trailing slash bugs.

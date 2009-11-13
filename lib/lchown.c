@@ -23,13 +23,16 @@
 #include <unistd.h>
 
 #include <errno.h>
+#include <string.h>
 #include <sys/stat.h>
+
+#if !HAVE_LCHOWN
 
 /* If the system chown does not follow symlinks, we don't want it
    replaced by gnulib's chown, which does follow symlinks.  */
-#if CHOWN_MODIFIES_SYMLINK
-# undef chown
-#endif
+# if CHOWN_MODIFIES_SYMLINK
+#  undef chown
+# endif
 
 /* Work just like chown, except when FILE is a symbolic link.
    In that case, set errno to EOPNOTSUPP and return -1.
@@ -39,8 +42,8 @@
 int
 lchown (const char *file, uid_t uid, gid_t gid)
 {
-#if HAVE_CHOWN
-# if ! CHOWN_MODIFIES_SYMLINK
+# if HAVE_CHOWN
+#  if ! CHOWN_MODIFIES_SYMLINK
   struct stat stats;
 
   if (lstat (file, &stats) == 0 && S_ISLNK (stats.st_mode))
@@ -48,12 +51,28 @@ lchown (const char *file, uid_t uid, gid_t gid)
       errno = EOPNOTSUPP;
       return -1;
     }
-# endif
+#  endif
 
   return chown (file, uid, gid);
 
-#else /* !HAVE_CHOWN */
+# else /* !HAVE_CHOWN */
   errno = ENOSYS;
   return -1;
-#endif
+# endif
 }
+
+#else /* HAVE_LCHOWN */
+
+# undef lchown
+
+/* Work around trailing slash bugs in lchown.  */
+int
+rpl_lchown (const char *file, uid_t uid, gid_t gid)
+{
+  size_t len = strlen (file);
+  if (len && file[len - 1] == '/')
+    return chown (file, uid, gid);
+  return lchown (file, uid, gid);
+}
+
+#endif /* HAVE_LCHOWN */

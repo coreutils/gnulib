@@ -565,12 +565,15 @@ extern void endusershell (void);
 
 #if @GNULIB_LCHOWN@
 # if @REPLACE_LCHOWN@
+#  undef lchown
+#  define lchown rpl_lchown
+# endif
+# if !@HAVE_LCHOWN@ || @REPLACE_LCHOWN@
 /* Change the owner of FILE to UID (if UID is not -1) and the group of FILE
    to GID (if GID is not -1).  Do not follow symbolic links.
    Return 0 if successful, otherwise -1 and errno set.
    See the POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/lchown.html>.  */
-#  define lchown rpl_lchown
 extern int lchown (char const *file, uid_t owner, gid_t group);
 # endif
 #elif defined GNULIB_POSIXCHECK

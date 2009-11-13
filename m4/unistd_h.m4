@@ -1,4 +1,4 @@
-# unistd_h.m4 serial 33
+# unistd_h.m4 serial 34
 dnl Copyright (C) 2006-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -82,6 +82,7 @@ AC_DEFUN([gl_UNISTD_H_DEFAULTS],
   HAVE_GETHOSTNAME=1;     AC_SUBST([HAVE_GETHOSTNAME])
   HAVE_GETPAGESIZE=1;     AC_SUBST([HAVE_GETPAGESIZE])
   HAVE_GETUSERSHELL=1;    AC_SUBST([HAVE_GETUSERSHELL])
+  HAVE_LCHOWN=1;          AC_SUBST([HAVE_LCHOWN])
   HAVE_LINK=1;            AC_SUBST([HAVE_LINK])
   HAVE_LINKAT=1;          AC_SUBST([HAVE_LINKAT])
   HAVE_PIPE2=1;           AC_SUBST([HAVE_PIPE2])
