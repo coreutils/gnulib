@@ -1,5 +1,9 @@
 2009-11-13  Simon Josefsson  <simon@josefsson.org>
 
+	* tests/test-base64.c: Improve.
+
+2009-11-13  Simon Josefsson  <simon@josefsson.org>
+
 	* tests/test-xvasprintf.c: Fix memory leak, suggested by Eric
 	Blake <ebb9@byu.net>.
 

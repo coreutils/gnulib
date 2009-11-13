@@ -20,9 +20,24 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include <string.h>
+#include <string.h>
+#include <stdint.h>
 
 #include "base64.h"
+
+#define ASSERT(expr)							\
+  do									\
+    {									\
+      if (!(expr))							\
+	{								\
+	  fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
+	  fflush (stderr);						\
+	  abort ();							\
+	}								\
+    }									\
+  while (0)
 
 int
 main (void)
@@ -32,148 +47,196 @@ main (void)
   char out[255];
   size_t len;
   bool ok;
+  char *p;
 
   memset (out, 0x42, sizeof (out));
   base64_encode (in, 0, out, 0);
-  if (out[0] != '\x42')
-    fprintf (stderr, "failure\n");
+  ASSERT(out[0] == '\x42');
 
   memset (out, 0x42, sizeof (out));
   base64_encode (in, 1, out, 1);
-  if (memcmp (out, "YQ==", 1) != 0)
-    {
-      out[4] = '\0';
-      fprintf (stderr, "failure (%s)\n", out);
-    }
+  ASSERT (memcmp (out, "YQ==", 1) == 0);
 
   memset (out, 0x42, sizeof (out));
   base64_encode (in, 1, out, 2);
-  if (memcmp (out, "YQ==", 2) != 0)
-    {
-      out[4] = '\0';
-      fprintf (stderr, "failure (%s)\n", out);
-    }
+  ASSERT (memcmp (out, "YQ==", 2) == 0);
 
   memset (out, 0x42, sizeof (out));
   base64_encode (in, 1, out, 3);
-  if (memcmp (out, "YQ==", 3) != 0)
-    {
-      out[4] = '\0';
-      fprintf (stderr, "failure (%s)\n", out);
-    }
+  ASSERT (memcmp (out, "YQ==", 3) == 0);
 
   memset (out, 0x42, sizeof (out));
   base64_encode (in, 1, out, 4);
-  if (memcmp (out, "YQ==", 4) != 0)
-    {
-      out[4] = '\0';
-      fprintf (stderr, "failure (%s)\n", out);
-    }
+  ASSERT (memcmp (out, "YQ==", 4) == 0);
 
   memset (out, 0x42, sizeof (out));
   base64_encode (in, 1, out, 8);
-  if (memcmp (out, "YQ==", 4) != 0)
-    {
-      out[4] = '\0';
-      fprintf (stderr, "failure (%s)\n", out);
-    }
+  ASSERT (memcmp (out, "YQ==", 4) == 0);
 
   memset (out, 0x42, sizeof (out));
   base64_encode (in, 2, out, 4);
-  if (memcmp (out, "YWI=", 4) != 0)
-    {
-      out[4] = '\0';
-      fprintf (stderr, "failure (%s)\n", out);
-    }
+  ASSERT (memcmp (out, "YWI=", 4) == 0);
 
   memset (out, 0x42, sizeof (out));
   base64_encode (in, 3, out, 4);
-  if (memcmp (out, "YWJj", 4) != 0)
-    {
-      out[4] = '\0';
-      fprintf (stderr, "failure (%s)\n", out);
-    }
+  ASSERT (memcmp (out, "YWJj", 4) == 0);
 
   memset (out, 0x42, sizeof (out));
   base64_encode (in, 4, out, 5);
-  if (memcmp (out, "YWJjZA==", 5) != 0)
-    {
-      out[5] = '\0';
-      fprintf (stderr, "failure (%s)\n", out);
-    }
+  ASSERT (memcmp (out, "YWJjZA==", 5) == 0);
 
   memset (out, 0x42, sizeof (out));
   base64_encode (in, 4, out, 100);
-  if (memcmp (out, "YWJjZA==", 6) != 0)
-    {
-      out[6] = '\0';
-      fprintf (stderr, "failure (%s)\n", out);
-    }
+  ASSERT (memcmp (out, "YWJjZA==", 6) == 0);
 
   /* Decode. */
 
   memset (out, 0x42, sizeof (out));
   len = 0;
   ok = base64_decode (b64in, 4, out, &len);
-  if (!ok)
-    fprintf (stderr, "decode failed\n");
-  if (len != 0)
-    fprintf (stderr, "failure (%lu)\n", (unsigned long) len);
+  ASSERT (ok);
+  ASSERT (len == 0);
 
   memset (out, 0x42, sizeof (out));
   len = 1;
   ok = base64_decode (b64in, 4, out, &len);
-  if (!ok)
-    fprintf (stderr, "decode failed\n");
-  if (len != 1 || memcmp (out, "abcdefg", 1) != 0)
-    {
-      out[2] = '\0';
-      fprintf (stderr, "failure (%lu: %s)\n", (unsigned long) len, out);
-    }
+  ASSERT (ok);
+  ASSERT (len == 1);
+  ASSERT (memcmp (out, "abcdefg", 1) == 0);
 
   memset (out, 0x42, sizeof (out));
   len = 2;
   ok = base64_decode (b64in, 4, out, &len);
-  if (!ok)
-    fprintf (stderr, "decode failed\n");
-  if (len != 2 || memcmp (out, "abcdefg", 2) != 0)
-    {
-      out[3] = '\0';
-      fprintf (stderr, "failure (%lu: %s)\n", (unsigned long) len, out);
-    }
+  ASSERT (ok);
+  ASSERT (len == 2);
+  ASSERT (memcmp (out, "abcdefg", 2) == 0);
 
   memset (out, 0x42, sizeof (out));
   len = 3;
   ok = base64_decode (b64in, 4, out, &len);
-  if (!ok)
-    fprintf (stderr, "decode failed\n");
-  if (len != 3 || memcmp (out, "abcdefg", 3) != 0)
-    {
-      out[4] = '\0';
-      fprintf (stderr, "failure (%lu: %s)\n", (unsigned long) len, out);
-    }
+  ASSERT (ok);
+  ASSERT (len == 3);
+  ASSERT (memcmp (out, "abcdefg", 3) == 0);
 
   memset (out, 0x42, sizeof (out));
   len = 4;
   ok = base64_decode (b64in, 4, out, &len);
-  if (!ok)
-    fprintf (stderr, "decode failed\n");
-  if (len != 3 || memcmp (out, "abcdefg", 3) != 0)
-    {
-      out[3] = '\0';
-      fprintf (stderr, "failure (%lu: %s)\n", (unsigned long) len, out);
-    }
+  ASSERT (ok);
+  ASSERT (len == 3);
+  ASSERT (memcmp (out, "abcdefg", 3) == 0);
 
   memset (out, 0x42, sizeof (out));
   len = 100;
   ok = base64_decode (b64in, strlen (b64in), out, &len);
-  if (!ok)
-    fprintf (stderr, "decode failed\n");
-  if (len != 7 || memcmp (out, "abcdefg", 7) != 0)
-    {
-      out[7] = '\0';
-      fprintf (stderr, "failure (%lu: %s)\n", (unsigned long) len, out);
-    }
+  ASSERT (ok);
+  ASSERT (len == 7);
+  ASSERT (memcmp (out, "abcdefg", 7) == 0);
+
+  /* Allocating encode */
+
+  len = base64_encode_alloc (in, strlen (in), &p);
+  ASSERT (len == 24);
+  ASSERT (strcmp (p, "YWJjZGVmZ2hpamtsbW5vcA==") == 0);
+  free (p);
+
+  len = base64_encode_alloc (in, SIZE_MAX - 5, &p);
+  ASSERT (len == 0);
+
+  /* Decode context function */
+  {
+    struct base64_decode_context ctx;
+
+    base64_decode_ctx_init (&ctx);
+
+    len = sizeof (out);
+    ok = base64_decode_ctx (&ctx, b64in, strlen (b64in), out, &len);
+    ASSERT (ok);
+    ASSERT (len == 7);
+    ASSERT (memcmp (out, "abcdefg", len) == 0);
+  }
+
+  /* Allocating decode context function */
+
+  ok = base64_decode_alloc_ctx (NULL, b64in, strlen (b64in), &p, &len);
+  ASSERT (ok);
+  ASSERT (len == 7);
+  ASSERT (memcmp (out, "abcdefg", len) == 0);
+
+  {
+    struct base64_decode_context ctx;
+    const char *newlineb64 = "YWJjZG\nVmZ2hp\namtsbW5vcA==";
+
+    base64_decode_ctx_init (&ctx);
+
+    ok = base64_decode_alloc_ctx (&ctx, newlineb64, strlen (newlineb64), &p, &len);
+    ASSERT (ok);
+    ASSERT (len == strlen (in));
+    ASSERT (memcmp (p, in, len) == 0);
+  }
+
+  {
+    struct base64_decode_context ctx;
+    base64_decode_ctx_init (&ctx);
+
+    ok = base64_decode_alloc_ctx (&ctx, "YW\nJjZGVmZ2hp", 13, &p, &len);
+    ASSERT (ok);
+    ASSERT (len == 9);
+    ASSERT (memcmp (p, "abcdefghi", len) == 0);
+
+    base64_decode_ctx_init (&ctx);
+
+    ok = base64_decode_alloc_ctx (&ctx, "YW\n", 3, &p, &len);
+    ASSERT (ok);
+    ASSERT (len == 0);
+
+    ok = base64_decode_alloc_ctx (&ctx, "JjZGVmZ2", 8, &p, &len);
+    ASSERT (ok);
+    ASSERT (len == 6);
+    ASSERT (memcmp (p, "abcdef", len) == 0);
+
+    ok = base64_decode_alloc_ctx (&ctx, "hp", 2, &p, &len);
+    ASSERT (ok);
+    ASSERT (len == 2);
+    /* Actually this looks buggy.  Shouldn't output be 'ghi'? */
+    ASSERT (memcmp (p, "gh", len) == 0);
+    ok = base64_decode_alloc_ctx (&ctx, "", 0, &p, &len);
+    ASSERT (ok);
+  }
+
+  {
+    struct base64_decode_context ctx;
+    const char *newlineb64 = "\n\n\n\n\n";
+
+    base64_decode_ctx_init (&ctx);
+
+    ok = base64_decode_alloc_ctx (&ctx, newlineb64, strlen (newlineb64), &p, &len);
+    ASSERT (ok);
+    ASSERT (len == 0);
+  }
+
+  ok = base64_decode_alloc_ctx (NULL, " ! ", 3, &p, &len);
+  ASSERT (!ok);
+
+  ok = base64_decode_alloc_ctx (NULL, "abc\ndef", 7, &p, &len);
+  ASSERT (!ok);
+
+  ok = base64_decode_alloc_ctx (NULL, "aa", 2, &p, &len);
+  ASSERT (!ok);
+
+  ok = base64_decode_alloc_ctx (NULL, "aa=", 3, &p, &len);
+  ASSERT (!ok);
+
+  ok = base64_decode_alloc_ctx (NULL, "aax", 3, &p, &len);
+  ASSERT (!ok);
+
+  ok = base64_decode_alloc_ctx (NULL, "aa=X", 4, &p, &len);
+  ASSERT (!ok);
+
+  ok = base64_decode_alloc_ctx (NULL, "aa=X", 4, &p, &len);
+  ASSERT (!ok);
+
+  ok = base64_decode_alloc_ctx (NULL, "aax=X", 5, &p, &len);
+  ASSERT (!ok);
 
   return 0;
 }
