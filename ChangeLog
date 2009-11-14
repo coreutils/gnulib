@@ -1,5 +1,17 @@
 2009-11-14  Eric Blake  <ebb9@byu.net>
 
+	openat: detect Solaris fchownat bug
+	* lib/fchownat.c (rpl_fchownat): Work around Solaris bug.  Avoid
+	penalizing glibc chownat when only lchownat is broken.
+	* m4/openat.m4 (gl_FUNC_FCHOWNAT): Replace fchownat if there are
+	trailing slash bugs.
+	* doc/posix-functions/fchownat.texi (fchownat): Document the bug.
+	* modules/openat-tests (Files): Include more files.
+	(Depends-on): Add mgetgroups, sleep, stat-time.
+	(configure.ac): Add additional checks.
+	(Makefile.am): Build new test.
+	* tests/test-fchownat.c: New file.
+
 	lchown: detect Solaris and FreeBSD bug
 	* lib/lchown.c (rpl_lchown): Work around bug.
 	* m4/lchown.m4 (gl_FUNC_LCHOWN): Check for trailing slash bugs.

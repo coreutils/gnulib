@@ -1,24 +1,33 @@
 Files:
+tests/test-chown.h
+tests/test-lchown.h
 tests/test-lstat.h
 tests/test-mkdir.h
 tests/test-rmdir.h
 tests/test-stat.h
 tests/test-unlink.h
+tests/test-fchownat.c
 tests/test-fstatat.c
 tests/test-mkdirat.c
 tests/test-openat.c
 tests/test-unlinkat.c
 
 Depends-on:
+mgetgroups
 pathmax
+sleep
+stat-time
 symlink
 unlinkdir
 
 configure.ac:
+AC_CHECK_FUNCS_ONCE([getegid usleep])
 
 Makefile.am:
-TESTS += test-fstatat test-mkdirat test-openat test-unlinkat
-check_PROGRAMS += test-fstatat test-mkdirat test-openat test-unlinkat
+TESTS += test-fchownat test-fstatat test-mkdirat test-openat test-unlinkat
+check_PROGRAMS += test-fchownat test-fstatat test-mkdirat test-openat \
+  test-unlinkat
+test_fchownat_LDADD = $(LDADD) @LIBINTL@
 test_fstatat_LDADD = $(LDADD) @LIBINTL@
 test_mkdirat_LDADD = $(LDADD) @LIBINTL@
 test_openat_LDADD = $(LDADD) @LIBINTL@
