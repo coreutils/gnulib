@@ -1,3 +1,8 @@
+2009-11-14  Robert Millan  <rmh.grub@aybabtu.com>  (tiny change)
+
+	gnulib-tool: correctly detect absence of m4 directories
+	* gnulib-tool: Avoid extra newline on data passed to wc -l.
+
 2009-11-14  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: Prohibit inclusion of "xalloc.h" without use.

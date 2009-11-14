@@ -4500,7 +4500,7 @@ case $mode in
           sedexpr2='s,^[^/]*$,.,'
           sedexpr3='s,/[^/]*$,,'
           m4dirs=`sed -n -e "$sedexpr1" aclocal.m4 | sed -e "$sedexpr2" -e "$sedexpr3" | LC_ALL=C sort -u`
-          m4dirs_count=`echo "$m4dirs" | wc -l`
+          m4dirs_count=`printf %s "$m4dirs" | wc -l`
         fi
       fi
       if test $m4dirs_count = 0; then
