@@ -1,5 +1,9 @@
 2009-11-14  Eric Blake  <ebb9@byu.net>
 
+	intprops: add double-inclusion guard
+	* lib/intprops.h: Allow idempotent includes.
+	Suggested by Bruce Korb.
+
 	openat: detect Solaris fchownat bug
 	* lib/fchownat.c (rpl_fchownat): Work around Solaris bug.  Avoid
 	penalizing glibc chownat when only lchownat is broken.
