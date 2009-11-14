@@ -1,5 +1,10 @@
 2009-11-14  Eric Blake  <ebb9@byu.net>
 
+	fnmatch: avoid compiler warning
+	* lib/fnmatch_loop.c (NEW_PATTERN): Coerce addition to unsigned,
+	to silence compiler warning about mismatch signedness in ?:.
+	Reported by Robert Millan.
+
 	intprops: add double-inclusion guard
 	* lib/intprops.h: Allow idempotent includes.
 	Suggested by Bruce Korb.

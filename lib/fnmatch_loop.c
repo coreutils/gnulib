@@ -1,4 +1,4 @@
-/* Copyright (C) 1991,1992,1993,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006
+/* Copyright (C) 1991,1992,1993,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2009
    Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
@@ -1071,7 +1071,7 @@ EXT (INT opt, const CHAR *pattern, const CHAR *string, const CHAR *string_end,
 									      \
 	    plen = (opt == L_('?') || opt == L_('@')			      \
 		    ? pattern_len					      \
-		    : p - startp + 1);					      \
+		    : p - startp + 1UL);				      \
 	    plensize = plen * sizeof (CHAR);				      \
 	    newpsize = offsetof (struct patternlist, str) + plensize;	      \
 	    if ((size_t) -1 / sizeof (CHAR) < plen			      \
