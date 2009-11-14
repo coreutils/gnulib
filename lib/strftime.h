@@ -17,6 +17,10 @@
 
 #include <time.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* Just like strftime, but with two more arguments:
    POSIX requires that strftime use the local timezone information.
    When __UTC is nonzero and tm->tm_zone is NULL or the empty string,
@@ -24,3 +28,7 @@
    %N directive.  */
 size_t nstrftime (char *, size_t, char const *, struct tm const *,
 		  int __utc, int __ns);
+
+#ifdef __cplusplus
+}
+#endif
