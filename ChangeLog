@@ -1,5 +1,12 @@
 2009-11-15  Simon Josefsson  <simon@josefsson.org>
 
+	* tests/test-xalloc-die.c: New file.
+	* modules/xalloc-die-tests: New file.
+	* gnulib-tool (func_emit_tests_Makefile_am): Also initialize
+	XFAIL_TESTS so it can be appended by modules.
+
+2009-11-15  Simon Josefsson  <simon@josefsson.org>
+
 	* lib/gc-pbkdf2-sha1.c: Remove comments from RFC 2898.  Reported
 	by Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>.
 

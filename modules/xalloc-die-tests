@@ -1,0 +1,9 @@
+Files:
+tests/test-xalloc-die.c
+
+Depends-on:
+
+Makefile.am:
+TESTS += test-xalloc-die
+XFAIL_TESTS += test-xalloc-die
+check_PROGRAMS += test-xalloc-die
