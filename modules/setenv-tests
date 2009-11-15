@@ -1,0 +1,10 @@
+Files:
+tests/test-setenv.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-setenv
+check_PROGRAMS += test-setenv

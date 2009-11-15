@@ -1,0 +1,11 @@
+Files:
+tests/test-unsetenv.c
+
+Depends-on:
+putenv
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-unsetenv
+check_PROGRAMS += test-unsetenv

@@ -384,11 +384,21 @@ extern int rpmatch (const char *response);
 #endif
 
 #if @GNULIB_SETENV@
-# if !@HAVE_SETENV@
+# if @REPLACE_SETENV@
+#  undef setenv
+#  define setenv rpl_setenv
+# endif
+# if !@HAVE_SETENV@ || @REPLACE_SETENV@
 /* Set NAME to VALUE in the environment.
    If REPLACE is nonzero, overwrite an existing value.  */
 extern int setenv (const char *name, const char *value, int replace);
 # endif
+#elif defined GNULIB_POSIXCHECK
+# undef setenv
+# define setenv(n,v,o)                                                  \
+    (GL_LINK_WARNING ("setenv is unportable - "                         \
+                      "use gnulib module setenv for portability"),      \
+     setenv (n, v, o))
 #endif
 
 #if @GNULIB_STRTOD@
@@ -448,16 +458,20 @@ extern unsigned long long strtoull (const char *string, char **endptr, int base)
 #endif
 
 #if @GNULIB_UNSETENV@
-# if @HAVE_UNSETENV@
-#  if @VOID_UNSETENV@
-/* On some systems, unsetenv() returns void.
-   This is the case for MacOS X 10.3, FreeBSD 4.8, NetBSD 1.6, OpenBSD 3.4.  */
-#   define unsetenv(name) ((unsetenv)(name), 0)
-#  endif
-# else
+# if @REPLACE_UNSETENV@
+#  undef unsetenv
+#  define unsetenv rpl_unsetenv
+# endif
+# if !@HAVE_UNSETENV@ || @REPLACE_UNSETENV@
 /* Remove the variable NAME from the environment.  */
 extern int unsetenv (const char *name);
 # endif
+#elif defined GNULIB_POSIXCHECK
+# undef unsetenv
+# define unsetenv(n)                                                    \
+    (GL_LINK_WARNING ("unsetenv is unportable - "                       \
+                      "use gnulib module unsetenv for portability"),    \
+     unsetenv (n))
 #endif
 
 #ifdef __cplusplus

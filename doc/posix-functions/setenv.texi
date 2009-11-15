@@ -11,11 +11,16 @@ Portability problems fixed by Gnulib:
 @item
 This function is missing on some platforms:
 AIX 4.3.2, HP-UX 11, IRIX 6.5, Solaris 9, mingw, BeOS.
+@item
+On some platforms, this function does not fail with @samp{EINVAL} when
+passed a null pointer, an empty string, or a string containing @samp{=}:
+FreeBSD 6.0, NetBSD 1.6, OpenBSD 3.8, Cygwin 1.5.x.
+@item
+On some platforms, this function removes a leading @samp{=} from the
+value argument:
+Cygwin 1.5.x.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-In some versions of glibc (e.g.@: 2.3.3), @code{setenv} doesn't fail if the
-first argument contains a @samp{=} character.
 @end itemize

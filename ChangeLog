@@ -1,3 +1,23 @@
+2009-11-16  Eric Blake  <ebb9@byu.net>
+
+	setenv, unsetenv: work around various bugs
+	* lib/setenv.c (setenv) [!HAVE_SETENV]: Resync from glibc.
+	(setenv) [HAVE_SETENV]: Work around bugs.
+	* lib/unsetenv.c (unsetenv) [HAVE_UNSETENV]: Work around bugs.
+	* m4/setenv.m4 (gl_FUNC_SETENV_SEPARATE, gl_FUNC_UNSETENV): Check
+	for bugs.
+	(gl_FUNC_SETENV): Write in terms of gl_FUNC_SETENV_SEPARATE.
+	* m4/environ.m4 (gl_ENVIRON): Avoid expand-before-require.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Update defaults.
+	* modules/stdlib (Makefile.am): Update substitutions.
+	* lib/stdlib.in.h (setenv, unsetenv): Update prototypes.
+	* doc/posix-functions/setenv.texi (setenv): Document the bugs.
+	* doc/posix-functions/unsetenv.texi (unsetenv): Likewise.
+	* modules/setenv-tests: New test.
+	* modules/unsetenv-tests: Likewise.
+	* tests/test-setenv.c: New file.
+	* tests/test-unsetenv.c: Likewise.
+
 2009-11-16  Jim Meyering  <meyering@redhat.com>
 
 	version-etc: relax license to LGPLv3+

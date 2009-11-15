@@ -1,4 +1,4 @@
-# setenv.m4 serial 11
+# setenv.m4 serial 12
 dnl Copyright (C) 2001-2004, 2006-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -6,12 +6,9 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_SETENV],
 [
-  AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
-  AC_CHECK_FUNCS_ONCE([setenv])
-  if test $ac_cv_func_setenv = no; then
-    HAVE_SETENV=0
+  AC_REQUIRE([gl_FUNC_SETENV_SEPARATE])
+  if test $HAVE_SETENV$REPLACE_SETENV != 10; then
     AC_LIBOBJ([setenv])
-    gl_PREREQ_SETENV
   fi
 ])
 
@@ -22,6 +19,24 @@ AC_DEFUN([gl_FUNC_SETENV_SEPARATE],
   AC_CHECK_FUNCS_ONCE([setenv])
   if test $ac_cv_func_setenv = no; then
     HAVE_SETENV=0
+  else
+    AC_CACHE_CHECK([whether setenv validates arguments],
+      [gl_cv_func_setenv_works],
+      [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
+       #include <stdlib.h>
+       #include <errno.h>
+      ]], [[
+       if (setenv (NULL, "", 0) != -1) return 1;
+       if (errno != EINVAL) return 2;
+       if (setenv ("a", "=", 1) != 0) return 3;
+       if (strcmp (getenv ("a"), "=") != 0) return 4;
+      ]])],
+      [gl_cv_func_setenv_works=yes], [gl_cv_func_setenv_works=no],
+      [gl_cv_func_setenv_works="guessing no"])])
+    if test "$gl_cv_func_setenv_works" != yes; then
+      REPLACE_SETENV=1
+      AC_LIBOBJ([setenv])
+    fi
   fi
   gl_PREREQ_SETENV
 ])
@@ -48,7 +63,10 @@ int unsetenv();
 #endif
 ], , gt_cv_func_unsetenv_ret='int', gt_cv_func_unsetenv_ret='void')])
     if test $gt_cv_func_unsetenv_ret = 'void'; then
-      VOID_UNSETENV=1
+      AC_DEFINE([VOID_UNSETENV], [1], [Define to 1 if unsetenv returns void
+       instead of int.])
+      REPLACE_UNSETENV=1
+      AC_LIBOBJ([unsetenv])
     fi
   fi
 ])

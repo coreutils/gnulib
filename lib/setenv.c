@@ -1,4 +1,4 @@
-/* Copyright (C) 1992,1995-1999,2000-2003,2005-2008 Free Software Foundation, Inc.
+/* Copyright (C) 1992,1995-1999,2000-2003,2005-2009 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This program is free software: you can redistribute it and/or modify
@@ -32,11 +32,11 @@
 # include <unistd.h>
 #endif
 
-#if _LIBC || !HAVE_SETENV
-
 #if !_LIBC
 # include "malloca.h"
 #endif
+
+#if _LIBC || !HAVE_SETENV
 
 #if !_LIBC
 # define __environ	environ
@@ -281,6 +281,12 @@ __add_to_environ (const char *name, const char *value, const char *combined,
 int
 setenv (const char *name, const char *value, int replace)
 {
+  if (name == NULL || *name == '\0' || strchr (name, '=') != NULL)
+    {
+      __set_errno (EINVAL);
+      return -1;
+    }
+
   return __add_to_environ (name, value, NULL, replace);
 }
 
@@ -328,3 +334,45 @@ weak_alias (__clearenv, clearenv)
 #endif
 
 #endif /* _LIBC || !HAVE_SETENV */
+
+/* The rest of this file is called into use when replacing an existing
+   but buggy setenv.  Known bugs include failure to diagnose invalid
+   name, and consuming a leading '=' from value.  */
+#if HAVE_SETENV
+
+# undef setenv
+# define STREQ(a, b) (strcmp (a, b) == 0)
+
+int
+rpl_setenv (const char *name, const char *value, int replace)
+{
+  int result;
+  if (!name || !*name || strchr (name, '='))
+    {
+      errno = EINVAL;
+      return -1;
+    }
+  /* Call the real setenv even if replace is 0, in case implementation
+     has underlying data to update, such as when environ changes.  */
+  result = setenv (name, value, replace);
+  if (result == 0 && replace && *value == '=')
+    {
+      char *tmp = getenv (name);
+      if (!STREQ (tmp, value))
+        {
+          int saved_errno;
+          size_t len = strlen (value);
+          tmp = malloca (len + 2);
+          /* Since leading '=' is eaten, double it up.  */
+          *tmp = '=';
+          memcpy (tmp + 1, value, len + 1);
+          result = setenv (name, tmp, replace);
+          saved_errno = errno;
+          freea (tmp);
+          errno = saved_errno;
+        }
+    }
+  return result;
+}
+
+#endif /* HAVE_SETENV */
