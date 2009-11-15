@@ -1,3 +1,8 @@
+2009-11-15  Simon Josefsson  <simon@josefsson.org>
+
+	* lib/gc-pbkdf2-sha1.c: Remove comments from RFC 2898.  Reported
+	by Vladimir 'phcoder' Serbinenko <phcoder@gmail.com>.
+
 2009-11-14  Eric Blake  <ebb9@byu.net>
 
 	fnmatch: avoid compiler warning
