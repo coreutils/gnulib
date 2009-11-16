@@ -1,5 +1,8 @@
 2009-11-16  Jim Meyering  <meyering@redhat.com>
 
+	version-etc: relax license to LGPLv3+
+	* modules/version-etc (License): Relax license.
+
 	better AC_REQUIRE expanded-before-required-warning avoidance
 	* m4/chown.m4 (gl_FUNC_CHOWN, gl_FUNC_CHOWN_FOLLOWS_SYMLINK): Define
 	with AC_DEFUN_ONCE, rather than AC_DEFUN, to avoid AC_REQUIRE warnings.

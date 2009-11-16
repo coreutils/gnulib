@@ -20,8 +20,7 @@ Include:
 "version-etc.h"
 
 License:
-GPL
+LGPLv3+
 
 Maintainer:
 Jim Meyering
-
