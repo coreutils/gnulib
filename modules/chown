@@ -13,7 +13,7 @@ stat
 sys_stat
 
 configure.ac:
-gl_FUNC_CHOWN
+AC_REQUIRE([gl_FUNC_CHOWN])
 gl_UNISTD_MODULE_INDICATOR([chown])
 
 Makefile.am:

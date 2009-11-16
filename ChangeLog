@@ -1,3 +1,11 @@
+2009-11-16  Jim Meyering  <meyering@redhat.com>
+
+	avoid new AC_REQUIRE expanded-before-required warnings
+	* modules/chown (configure.ac): Require gl_FUNC_CHOWN, rather than
+	merely using it.
+	* modules/euidaccess (configure.ac): Likewise for gl_FUNC_EUIDACCESS.
+	* modules/faccessat (configure.ac): Likewise for gl_FUNC_FACCESSAT.
+
 2009-11-15  Simon Josefsson  <simon@josefsson.org>
 
 	* tests/test-xalloc-die.c: New file.
