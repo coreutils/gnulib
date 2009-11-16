@@ -9,6 +9,7 @@ Depends-on:
 chown
 errno
 lstat
+stdbool
 sys_stat
 unistd
 

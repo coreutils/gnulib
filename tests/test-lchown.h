@@ -75,6 +75,14 @@ nap (void)
 # define getegid() (-1)
 #endif
 
+#ifndef HAVE_LCHMOD
+# define HAVE_LCHMOD 0
+#endif
+
+#ifndef CHOWN_CHANGE_TIME_BUG
+# define CHOWN_CHANGE_TIME_BUG 0
+#endif
+
 /* This file is designed to test lchown(n,o,g) and
    chownat(AT_FDCWD,n,o,g,AT_SYMLINK_NOFOLLOW).  FUNC is the function
    to test.  Assumes that BASE and ASSERT are already defined, and
@@ -251,8 +259,10 @@ test_lchown (int (*func) (char const *, uid_t, gid_t), bool print)
       ASSERT (st1.st_uid == st2.st_uid);
       ASSERT (gids[0] == st2.st_gid);
     }
-  else
+  else if (!CHOWN_CHANGE_TIME_BUG || HAVE_LCHMOD)
     {
+      /* If we don't have lchmod, and lchown fails to change ctime,
+         then we can't test this part of lchown.  */
       struct stat l1;
       struct stat l2;
       ASSERT (stat (BASE "dir/file", &st1) == 0);

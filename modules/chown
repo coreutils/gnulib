@@ -8,9 +8,10 @@ m4/chown.m4
 
 Depends-on:
 open
-unistd
 stat
+stdbool
 sys_stat
+unistd
 
 configure.ac:
 gl_FUNC_CHOWN

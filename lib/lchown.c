@@ -23,6 +23,7 @@
 #include <unistd.h>
 
 #include <errno.h>
+#include <stdbool.h>
 #include <string.h>
 #include <sys/stat.h>
 
@@ -69,10 +70,47 @@ lchown (const char *file, uid_t uid, gid_t gid)
 int
 rpl_lchown (const char *file, uid_t uid, gid_t gid)
 {
-  size_t len = strlen (file);
-  if (len && file[len - 1] == '/')
-    return chown (file, uid, gid);
-  return lchown (file, uid, gid);
+  struct stat st;
+  bool stat_valid = false;
+  int result;
+
+# if CHOWN_CHANGE_TIME_BUG
+  if (gid != (gid_t) -1 || uid != (uid_t) -1)
+    {
+      if (lstat (file, &st))
+        return -1;
+      stat_valid = true;
+      if (!S_ISLNK (st.st_mode))
+        return chown (file, uid, gid);
+    }
+# endif
+
+# if CHOWN_TRAILING_SLASH_BUG
+  if (!stat_valid)
+    {
+      size_t len = strlen (file);
+      if (len && file[len - 1] == '/')
+        return chown (file, uid, gid);
+    }
+# endif
+
+  result = lchown (file, uid, gid);
+
+# if CHOWN_CHANGE_TIME_BUG && HAVE_LCHMOD
+  if (result == 0 && stat_valid
+      && (uid == st.st_uid || uid == (uid_t) -1)
+      && (gid == st.st_gid || gid == (gid_t) -1))
+    {
+      /* No change in ownership, but at least one argument was not -1,
+         so we are required to update ctime.  Since lchown succeeded,
+         we assume that lchmod will do likewise.  But if the system
+         lacks lchmod and lutimes, we are out of luck.  Oh well.  */
+      result = lchmod (file, st.st_mode & (S_IRWXU | S_IRWXG | S_IRWXO
+                                           | S_ISUID | S_ISGID | S_ISVTX));
+    }
+# endif
+
+  return result;
 }
 
 #endif /* HAVE_LCHOWN */

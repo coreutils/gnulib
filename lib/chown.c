@@ -59,20 +59,29 @@ chown (const char *file _UNUSED_PARAMETER_, uid_t uid _UNUSED_PARAMETER_,
 int
 rpl_chown (const char *file, uid_t uid, gid_t gid)
 {
+  struct stat st;
+  bool stat_valid = false;
+  int result;
+
+# if CHOWN_CHANGE_TIME_BUG
+  if (gid != (gid_t) -1 || uid != (uid_t) -1)
+    {
+      if (stat (file, &st))
+        return -1;
+      stat_valid = true;
+    }
+# endif
+
 # if CHOWN_FAILS_TO_HONOR_ID_OF_NEGATIVE_ONE
   if (gid == (gid_t) -1 || uid == (uid_t) -1)
     {
-      struct stat file_stats;
-
       /* Stat file to get id(s) that should remain unchanged.  */
-      if (stat (file, &file_stats))
+      if (!stat_valid && stat (file, &st))
         return -1;
-
       if (gid == (gid_t) -1)
-        gid = file_stats.st_gid;
-
+        gid = st.st_gid;
       if (uid == (uid_t) -1)
-        uid = file_stats.st_uid;
+        uid = st.st_uid;
     }
 # endif
 
@@ -89,15 +98,18 @@ rpl_chown (const char *file, uid_t uid, gid_t gid)
         || (errno == EACCES
             && 0 <= (fd = open (file, O_WRONLY | open_flags))))
       {
-        int result = fchown (fd, uid, gid);
-        int saved_errno = errno;
+        int saved_errno;
+        bool fchown_socket_failure;
 
-        /* POSIX says fchown can fail with errno == EINVAL on sockets,
-           so fall back on chown in that case.  */
-        struct stat sb;
-        bool fchown_socket_failure =
+        result = fchown (fd, uid, gid);
+        saved_errno = errno;
+
+        /* POSIX says fchown can fail with errno == EINVAL on sockets
+           and pipes, so fall back on chown in that case.  */
+        fchown_socket_failure =
           (result != 0 && saved_errno == EINVAL
-           && fstat (fd, &sb) == 0 && S_ISFIFO (sb.st_mode));
+           && fstat (fd, &st) == 0
+           && (S_ISFIFO (st.st_mode) || S_ISSOCK (st.st_mode)));
 
         close (fd);
 
@@ -113,15 +125,32 @@ rpl_chown (const char *file, uid_t uid, gid_t gid)
 # endif
 
 # if CHOWN_TRAILING_SLASH_BUG
-  {
-    size_t len = strlen (file);
-    struct stat st;
-    if (len && file[len - 1] == '/' && stat (file, &st))
-      return -1;
-  }
+  if (!stat_valid)
+    {
+      size_t len = strlen (file);
+      if (len && file[len - 1] == '/' && stat (file, &st))
+        return -1;
+    }
 # endif
 
-  return chown (file, uid, gid);
+  result = chown (file, uid, gid);
+
+# if CHOWN_CHANGE_TIME_BUG
+  if (result == 0 && stat_valid
+      && (uid == st.st_uid || uid == (uid_t) -1)
+      && (gid == st.st_gid || gid == (gid_t) -1))
+    {
+      /* No change in ownership, but at least one argument was not -1,
+         so we are required to update ctime.  Since chown succeeded,
+         we assume that chmod will do likewise.  Fortunately, on all
+         known systems where a 'no-op' chown skips the ctime update, a
+         'no-op' chmod still does the trick.  */
+      result = chmod (file, st.st_mode & (S_IRWXU | S_IRWXG | S_IRWXO
+                                          | S_ISUID | S_ISGID | S_ISVTX));
+    }
+# endif
+
+  return result;
 }
 
 #endif /* HAVE_CHOWN */

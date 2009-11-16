@@ -1,5 +1,16 @@
 2009-11-17  Eric Blake  <ebb9@byu.net>
 
+	chown: work around OpenBSD bug
+	* lib/chown.c (rpl_chown): Work around the bug.
+	* lib/lchown.c (rpl_lchown): Attempt to do likewise.
+	* m4/chown.m4 (gl_FUNC_CHOWN): Test for ctime bug.
+	* m4/lchown.m4 (gl_FUNC_LCHOWN): Check for lchmod.
+	* modules/chown (Depends-on): Add stdbool.
+	* modules/lchown (Depends-on): Likewise.
+	* doc/posix-functions/chown.texi (chown): Document the bug.
+	* doc/posix-functions/lchown.texi (lchown): Likewise.
+	* tests/test-lchown.h (test_chown): Relax test.
+
 	mkstemp: avoid conflict with C++ keyword template
 	* lib/mkdtemp.c (mkdtemp): Change spelling of template.
 	* lib/mkostemp.c (mkostemp): Likewise.
