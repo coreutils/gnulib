@@ -1,3 +1,10 @@
+2009-11-16  Eric Blake  <ebb9@byu.net>
+
+	test-freading: clean up temporary file
+	* tests/test-freading.c (main): Remove file on success, and use
+	ASSERT more liberally.
+	Reported by Jim Meyering.
+
 2009-11-16  Jim Meyering  <meyering@redhat.com>
 
 	avoid new AC_REQUIRE expanded-before-required warnings

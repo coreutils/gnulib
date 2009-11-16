@@ -30,15 +30,15 @@
 #endif
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 #define TESTFILE "t-freading.tmp"
@@ -50,39 +50,29 @@ main (void)
 
   /* Create a file with some contents.  Write-only file is never reading.  */
   fp = fopen (TESTFILE, "w");
-  if (fp == NULL)
-    goto skip;
+  ASSERT (fp);
   ASSERT (!freading (fp));
-  if (fwrite ("foobarsh", 1, 8, fp) < 8)
-    goto skip;
+  ASSERT (fwrite ("foobarsh", 1, 8, fp) == 8);
   ASSERT (!freading (fp));
-  if (fclose (fp))
-    goto skip;
+  ASSERT (fclose (fp) == 0);
 
   /* Open it in read-only mode.  Read-only file is always reading.  */
   fp = fopen (TESTFILE, "r");
-  if (fp == NULL)
-    goto skip;
+  ASSERT (fp);
   ASSERT (freading (fp));
-  if (fgetc (fp) != 'f')
-    goto skip;
+  ASSERT (fgetc (fp) == 'f');
   ASSERT (freading (fp));
-  if (fseek (fp, 2, SEEK_CUR))
-    goto skip;
+  ASSERT (fseek (fp, 2, SEEK_CUR) == 0);
   ASSERT (freading (fp));
-  if (fgetc (fp) != 'b')
-    goto skip;
+  ASSERT (fgetc (fp) == 'b');
   ASSERT (freading (fp));
   fflush (fp);
   ASSERT (freading (fp));
-  if (fgetc (fp) != 'a')
-    goto skip;
+  ASSERT (fgetc (fp) == 'a');
   ASSERT (freading (fp));
-  if (fseek (fp, 0, SEEK_END))
-    goto skip;
+  ASSERT (fseek (fp, 0, SEEK_END) == 0);
   ASSERT (freading (fp));
-  if (fclose (fp))
-    goto skip;
+  ASSERT (fclose (fp) == 0);
 
   /* Open it in read-write mode.  POSIX requires a reposition (fseek,
      fsetpos, rewind) or EOF when transitioning from read to write;
@@ -91,33 +81,25 @@ main (void)
      at EOF.  */
   /* First a scenario with only fgetc, fseek, fputc.  */
   fp = fopen (TESTFILE, "r+");
-  if (fp == NULL)
-    goto skip;
+  ASSERT (fp);
   ASSERT (!freading (fp));
-  if (fgetc (fp) != 'f')
-    goto skip;
+  ASSERT (fgetc (fp) == 'f');
   ASSERT (freading (fp));
-  if (fseek (fp, 2, SEEK_CUR))
-    goto skip;
+  ASSERT (fseek (fp, 2, SEEK_CUR) ==  0);
   /* freading (fp) is undefined here, but fwriting (fp) is false.  */
-  if (fgetc (fp) != 'b')
-    goto skip;
+  ASSERT (fgetc (fp) == 'b');
   ASSERT (freading (fp));
   /* This fseek call is necessary when switching from reading to writing.
      See the description of fopen(), ISO C 99 7.19.5.3.(6).  */
-  if (fseek (fp, 0, SEEK_CUR) != 0)
-    goto skip;
+  ASSERT (fseek (fp, 0, SEEK_CUR) == 0);
   /* freading (fp) is undefined here, but fwriting (fp) is false.  */
-  if (fputc ('x', fp) != 'x')
-    goto skip;
+  ASSERT (fputc ('x', fp) == 'x');
   ASSERT (!freading (fp));
-  if (fseek (fp, 0, SEEK_END))
-    goto skip;
+  ASSERT (fseek (fp, 0, SEEK_END) == 0);
   /* freading (fp) is undefined here, because on some implementations (e.g.
      glibc) fseek causes a buffer to be read.
      fwriting (fp) is undefined as well.  */
-  if (fclose (fp))
-    goto skip;
+  ASSERT (fclose (fp) == 0);
 
   /* Open it in read-write mode.  POSIX requires a reposition (fseek,
      fsetpos, rewind) or EOF when transitioning from read to write;
@@ -126,53 +108,37 @@ main (void)
      at EOF.  */
   /* Here a scenario that includes fflush.  */
   fp = fopen (TESTFILE, "r+");
-  if (fp == NULL)
-    goto skip;
+  ASSERT (fp);
   ASSERT (!freading (fp));
-  if (fgetc (fp) != 'f')
-    goto skip;
+  ASSERT (fgetc (fp) == 'f');
   ASSERT (freading (fp));
-  if (fseek (fp, 2, SEEK_CUR))
-    goto skip;
+  ASSERT (fseek (fp, 2, SEEK_CUR) == 0);
   /* freading (fp) is undefined here, but fwriting (fp) is false.  */
-  if (fgetc (fp) != 'b')
-    goto skip;
+  ASSERT (fgetc (fp) == 'b');
   ASSERT (freading (fp));
   fflush (fp);
   /* freading (fp) is undefined here, but fwriting (fp) is false.  */
-  if (fgetc (fp) != 'x')
-    goto skip;
+  ASSERT (fgetc (fp) == 'x');
   ASSERT (freading (fp));
   /* This fseek call is necessary when switching from reading to writing.
      See the description of fopen(), ISO C 99 7.19.5.3.(6).  */
-  if (fseek (fp, 0, SEEK_CUR) != 0)
-    goto skip;
+  ASSERT (fseek (fp, 0, SEEK_CUR) == 0);
   /* freading (fp) is undefined here, but fwriting (fp) is false.  */
-  if (fputc ('z', fp) != 'z')
-    goto skip;
+  ASSERT (fputc ('z', fp) == 'z');
   ASSERT (!freading (fp));
-  if (fseek (fp, 0, SEEK_END))
-    goto skip;
+  ASSERT (fseek (fp, 0, SEEK_END) == 0);
   /* freading (fp) is undefined here, because on some implementations (e.g.
      glibc) fseek causes a buffer to be read.
      fwriting (fp) is undefined as well.  */
-  if (fclose (fp))
-    goto skip;
+  ASSERT (fclose (fp) == 0);
 
   /* Open it in append mode.  Write-only file is never reading.  */
   fp = fopen (TESTFILE, "a");
-  if (fp == NULL)
-    goto skip;
+  ASSERT (fp);
   ASSERT (!freading (fp));
-  if (fwrite ("bla", 1, 3, fp) < 3)
-    goto skip;
+  ASSERT (fwrite ("bla", 1, 3, fp) == 3);
   ASSERT (!freading (fp));
-  if (fclose (fp))
-    goto skip;
-
+  ASSERT (fclose (fp) == 0);
+  ASSERT (remove (TESTFILE) == 0);
   return 0;
-
- skip:
-  fprintf (stderr, "Skipping test: file operations failed.\n");
-  return 77;
 }
