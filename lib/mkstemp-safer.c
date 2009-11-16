@@ -39,7 +39,7 @@ mkstemp_safer (char *templ)
 int
 mkostemp_safer (char *templ, int flags)
 {
-  return fd_safer (mkostemp (templ, flags));
+  return fd_safer_flag (mkostemp (templ, flags), flags);
 }
 #endif
 
@@ -49,7 +49,7 @@ mkostemp_safer (char *templ, int flags)
 int
 mkostemps_safer (char *templ, int suffixlen, int flags)
 {
-  return fd_safer (mkostemps (templ, suffixlen, flags));
+  return fd_safer_flag (mkostemps (templ, suffixlen, flags), flags);
 }
 #endif
 

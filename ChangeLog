@@ -1,5 +1,9 @@
 2009-12-05  Eric Blake  <ebb9@byu.net>
 
+	stdlib-safer: preserve cloexec flag for mkostemp[s]
+	* lib/mkstemp-safer.c (mkostemp_safer, mkostemps_safer): Use new
+	fd_safer_flag.
+
 	unistd-safer: allow preservation of cloexec status via flag
 	* lib/unistd-safer.h (dup_safer_flag, fd_safer_flag): New
 	prototypes.
