@@ -13,7 +13,7 @@ stat
 sys_stat
 
 configure.ac:
-AC_REQUIRE([gl_FUNC_EUIDACCESS])
+gl_FUNC_EUIDACCESS
 gl_UNISTD_MODULE_INDICATOR([euidaccess])
 
 Makefile.am:

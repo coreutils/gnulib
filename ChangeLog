@@ -1,3 +1,11 @@
+2009-11-16  Jim Meyering  <meyering@redhat.com>
+
+	better AC_REQUIRE expanded-before-required-warning avoidance
+	* m4/chown.m4 (gl_FUNC_CHOWN, gl_FUNC_CHOWN_FOLLOWS_SYMLINK): Define
+	with AC_DEFUN_ONCE, rather than AC_DEFUN, to avoid AC_REQUIRE warnings.
+	Suggested by Eric Blake.  This change also reverts commit 1b712ba8,
+	which is no longer needed.
+
 2009-11-16  Eric Blake  <ebb9@byu.net>
 
 	test-freading: clean up temporary file

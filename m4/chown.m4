@@ -1,4 +1,4 @@
-# serial 20
+# serial 21
 # Determine whether we need the chown wrapper.
 
 dnl Copyright (C) 1997-2001, 2003-2005, 2007, 2009
@@ -14,7 +14,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 # From Jim Meyering.
 
-AC_DEFUN([gl_FUNC_CHOWN],
+AC_DEFUN_ONCE([gl_FUNC_CHOWN],
 [
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
   AC_REQUIRE([AC_TYPE_UID_T])
@@ -63,7 +63,7 @@ AC_DEFUN([gl_FUNC_CHOWN],
 ])
 
 # Determine whether chown follows symlinks (it should).
-AC_DEFUN([gl_FUNC_CHOWN_FOLLOWS_SYMLINK],
+AC_DEFUN_ONCE([gl_FUNC_CHOWN_FOLLOWS_SYMLINK],
 [
   AC_CACHE_CHECK(
     [whether chown dereferences symlinks],

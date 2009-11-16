@@ -13,7 +13,7 @@ openat
 unistd
 
 configure.ac:
-AC_REQUIRE([gl_FUNC_FACCESSAT])
+gl_FUNC_FACCESSAT
 gl_MODULE_INDICATOR([faccessat])
 gl_UNISTD_MODULE_INDICATOR([faccessat])
 
