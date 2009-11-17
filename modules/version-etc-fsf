@@ -15,7 +15,7 @@ lib_SOURCES += version-etc-fsf.c
 Include:
 
 License:
-LGPLv3+
+LGPL
 
 Maintainer:
 Jim Meyering

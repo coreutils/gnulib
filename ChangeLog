@@ -1,3 +1,9 @@
+2009-11-17  Jim Meyering  <meyering@redhat.com>
+
+	version-etc: use proper license string
+	* modules/version-etc (License): Use LGPL, not LGPLv3+.
+	* modules/version-etc-fsf: Likewise.
+
 2009-11-17  Simon Josefsson  <simon@josefsson.org>
 
 	* tests/test-xalloc-die.sh: Add license.  Check that nothing is
