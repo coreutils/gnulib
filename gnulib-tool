@@ -2810,7 +2810,7 @@ func_import ()
           case "$lgpl" in
             yes | 3)
               case $license in
-                LGPL | LGPLv2+) ;;
+                LGPL | LGPLv2+ | LGPLv3+) ;;
                 *) func_append license_incompatibilities "$module $license$nl" ;;
               esac
               ;;
