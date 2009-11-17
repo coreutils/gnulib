@@ -35,14 +35,12 @@
 # define __GT_FILE 0
 #endif
 
-/* Generate a unique temporary file name from TEMPLATE.
-   The last six characters of TEMPLATE must be "XXXXXX";
+/* Generate a unique temporary file name from XTEMPLATE.
+   The last six characters of XTEMPLATE must be "XXXXXX";
    they are replaced with a string that makes the file name unique.
    Then open the file and return a fd. */
 int
-mkostemp (template, flags)
-     char *template;
-     int flags;
+mkostemp (char *xtemplate, int flags)
 {
-  return __gen_tempname (template, 0, flags, __GT_FILE);
+  return __gen_tempname (xtemplate, 0, flags, __GT_FILE);
 }

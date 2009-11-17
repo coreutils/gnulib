@@ -1,5 +1,12 @@
 2009-11-17  Eric Blake  <ebb9@byu.net>
 
+	mkstemp: avoid conflict with C++ keyword template
+	* lib/mkdtemp.c (mkdtemp): Change spelling of template.
+	* lib/mkostemp.c (mkostemp): Likewise.
+	* lib/mkostemps.c (mkostemps): Likewise.
+	* lib/mkstemp.c (mkstemp): Likewise.
+	* lib/mkstemps.c (mkstemps): Likewise.
+
 	xalloc-die-tests: optimize
 	* tests/test-xalloc-die.sh: Reduce number of processes.
 

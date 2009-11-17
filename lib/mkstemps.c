@@ -37,14 +37,12 @@
 # define __GT_FILE 0
 #endif
 
-/* Generate a unique temporary file name from TEMPLATE.  The last six
-   characters before a suffix of length SUFFIXLEN of TEMPLATE must be
+/* Generate a unique temporary file name from XTEMPLATE.  The last six
+   characters before a suffix of length SUFFIXLEN of XTEMPLATE must be
    "XXXXXX"; they are replaced with a string that makes the filename
    unique.  Then open the file and return a fd. */
 int
-mkstemps (template, suffixlen)
-     char *template;
-     int suffixlen;
+mkstemps (char *xtemplate, int suffixlen)
 {
   if (suffixlen < 0)
     {
@@ -52,5 +50,5 @@ mkstemps (template, suffixlen)
       return -1;
     }
 
-  return __gen_tempname (template, suffixlen, 0, __GT_FILE);
+  return __gen_tempname (xtemplate, suffixlen, 0, __GT_FILE);
 }
