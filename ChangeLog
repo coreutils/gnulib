@@ -1,5 +1,17 @@
 2009-11-17  Eric Blake  <ebb9@byu.net>
 
+	usleep: new module
+	* modules/usleep: New file.
+	* m4/usleep.m4 (gl_FUNC_USLEEP): Likewise.
+	* lib/usleep.c (usleep): Likewise.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Add defaults.
+	* modules/unistd (Makefile.am): Substitute witnesses.
+	* lib/unistd.in.h (usleep): Add declaration.
+	* doc/pastposix-functions/usleep.texi (usleep): Document this.
+	* MODULES.html.sh (Date and time): Likewise.
+	* modules/usleep-tests (Depends-on): New test.
+	* tests/test-usleep.c: New file.
+
 	chown: work around OpenBSD bug
 	* lib/chown.c (rpl_chown): Work around the bug.
 	* lib/lchown.c (rpl_lchown): Attempt to do likewise.

@@ -1,0 +1,11 @@
+Files:
+tests/test-usleep.c
+
+Depends-on:
+time
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-usleep
+check_PROGRAMS += test-usleep

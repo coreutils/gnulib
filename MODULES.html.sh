@@ -2593,8 +2593,9 @@ func_all_modules ()
   func_begin_table
   func_module gethrxtime
   func_module gettime
-  func_module settime
   func_module posixtm
+  func_module settime
+  func_module usleep
   func_module xnanosleep
   func_end_table
 
