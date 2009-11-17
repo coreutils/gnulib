@@ -1,3 +1,8 @@
+2009-11-17  Jim Meyering  <meyering@redhat.com>
+
+	version-etc-fsf: relax license to LGPLv3+
+	* modules/version-etc-fsf (License): Relax license.
+
 2009-11-16  Eric Blake  <ebb9@byu.net>
 
 	xalloc-die-tests: avoid printing null pointer
