@@ -1,4 +1,20 @@
 #!/bin/sh
+# Test suite for xalloc_die.
+# Copyright (C) 2009 Free Software Foundation, Inc.
+# This file is part of the GNUlib Library.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 tmpfiles=""
 trap '__st=$?; rm -fr $tmpfiles; exit $__st' 0
@@ -12,17 +28,26 @@ else
   compare() { cmp "$@"; }
 fi
 
-tmpfiles="t-xalloc-die.tmp"
+tmpout=t-xalloc-die.tmp-stderr
+tmperr=t-xalloc-die.tmp-stdout
+tmpfiles="$tmpout $tmperr ${tmpout}2 ${tmperr}2"
+
 PATH=".:$PATH"
 export PATH
-test-xalloc-die${EXEEXT} 2> t-xalloc-die.tmp
+test-xalloc-die${EXEEXT} 2> ${tmperr} > ${tmpout}
 case $? in
   1) ;;
   *) (exit 1); exit 1 ;;
 esac
 
-compare - t-xalloc-die.tmp <<\EOF || { (exit 1); exit 1; }
+cat $tmperr | tr -d '\015' > ${tmperr}2
+cat $tmpout | tr -d '\015' > ${tmpout}2
+
+compare - ${tmperr}2 <<\EOF || { (exit 1); exit 1; }
 test-xalloc-die: memory exhausted
+EOF
+
+compare - ${tmpout}2 <<\EOF || { (exit 1); exit 1; }
 EOF
 
 rm -fr $tmpfiles
