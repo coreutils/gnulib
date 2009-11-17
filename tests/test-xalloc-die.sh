@@ -13,7 +13,7 @@ else
 fi
 
 tmpfiles="t-xalloc-die.tmp"
-PATH="$PATH:."
+PATH=".:$PATH"
 export PATH
 test-xalloc-die${EXEEXT} 2> t-xalloc-die.tmp
 case $? in

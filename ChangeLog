@@ -1,5 +1,10 @@
 2009-11-17  Jim Meyering  <meyering@redhat.com>
 
+	test-xalloc-die.sh: make the code agree with the commit log
+	* tests/test-xalloc-die.sh: Put "." at the front of $PATH, not
+	at the end, just in case you happen to have a test-xalloc-die
+	program in some other PATH directory.
+
 	test-xalloc-die.sh: fix a portability bug
 	* tests/test-xalloc-die.sh: Do not invoke via ./test-xalloc-die.
 	Instead, set PATH to start with "." and invoke via "test-xalloc-die".
