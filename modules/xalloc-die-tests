@@ -7,5 +7,4 @@ Depends-on:
 Makefile.am:
 TESTS += test-xalloc-die.sh
 TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
-XFAIL_TESTS += test-xalloc-die
 check_PROGRAMS += test-xalloc-die

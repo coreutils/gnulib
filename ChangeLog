@@ -1,3 +1,9 @@
+2009-11-17  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/xalloc-die-tests (Makefile.am): Drop XFAIL_TESTS
+	settings since xalloc-die is no longer the self test,
+	xalloc-die.sh is.
+
 2009-11-17  Jim Meyering  <meyering@redhat.com>
 
 	test-xalloc-die.sh: make the code agree with the commit log
