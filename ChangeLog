@@ -1,5 +1,11 @@
 2009-11-17  Jim Meyering  <meyering@redhat.com>
 
+	test-xalloc-die.sh: fix a portability bug
+	* tests/test-xalloc-die.sh: Do not invoke via ./test-xalloc-die.
+	Instead, set PATH to start with "." and invoke via "test-xalloc-die".
+	Otherwise, argv[0] (as often seen in diagnostics) would be too
+	system-dependent, sometimes with, and sometimes without the leading "./".
+
 	version-etc-fsf: relax license to LGPLv3+
 	* modules/version-etc-fsf (License): Relax license.
 

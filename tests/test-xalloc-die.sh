@@ -13,7 +13,9 @@ else
 fi
 
 tmpfiles="t-xalloc-die.tmp"
-./test-xalloc-die${EXEEXT} 2> t-xalloc-die.tmp
+PATH="$PATH:."
+export PATH
+test-xalloc-die${EXEEXT} 2> t-xalloc-die.tmp
 case $? in
   1) ;;
   *) (exit 1); exit 1 ;;
