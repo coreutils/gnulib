@@ -1,4 +1,4 @@
-# setenv.m4 serial 12
+# setenv.m4 serial 13
 dnl Copyright (C) 2001-2004, 2006-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -50,6 +50,7 @@ AC_DEFUN([gl_FUNC_UNSETENV],
     AC_LIBOBJ([unsetenv])
     gl_PREREQ_UNSETENV
   else
+    dnl Some BSDs return void, failing to do error checking.
     AC_CACHE_CHECK([for unsetenv() return type], [gt_cv_func_unsetenv_ret],
       [AC_TRY_COMPILE([#include <stdlib.h>
 extern
@@ -65,6 +66,26 @@ int unsetenv();
     if test $gt_cv_func_unsetenv_ret = 'void'; then
       AC_DEFINE([VOID_UNSETENV], [1], [Define to 1 if unsetenv returns void
        instead of int.])
+      REPLACE_UNSETENV=1
+      AC_LIBOBJ([unsetenv])
+    fi
+
+    dnl Solaris 10 unsetenv does not remove all copies of a name.
+    AC_CACHE_CHECK([whether unsetenv works on duplicates],
+      [gl_cv_func_unsetenv_works],
+      [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
+       #include <stdlib.h>
+      ]], [[
+       char entry[] = "b=2";
+       if (putenv ("a=1")) return 1;
+       if (putenv (entry)) return 2;
+       entry[0] = 'a';
+       unsetenv ("a");
+       if (getenv ("a")) return 3;
+      ]])],
+      [gl_cv_func_unsetenv_works=yes], [gl_cv_func_unsetenv_works=no],
+      [gl_cv_func_unsetenv_works="guessing no"])])
+    if test "$gl_cv_func_unsetenv_works" != yes; then
       REPLACE_UNSETENV=1
       AC_LIBOBJ([unsetenv])
     fi

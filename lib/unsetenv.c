@@ -105,10 +105,11 @@ rpl_unsetenv (const char *name)
       errno = EINVAL;
       return -1;
     }
+  while (getenv (name))
 # if !VOID_UNSETENV
-  result =
+    result =
 # endif
-    unsetenv (name);
+      unsetenv (name);
   return result;
 }
 

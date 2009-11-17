@@ -1,5 +1,10 @@
 2009-11-17  Eric Blake  <ebb9@byu.net>
 
+	unsetenv: work around Solaris bug
+	* m4/setenv.m4 (gl_FUNC_UNSETENV): Check for bug.
+	* lib/unsetenv.c (rpl_unsetenv): Work around it.
+	Reported by Jim Meyering.
+
 	vasnprintf: avoid compiler warnings
 	* lib/vasnprintf.c (VASNPRINTF): Avoid shadowing our own local
 	variables.
