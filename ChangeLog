@@ -1,3 +1,8 @@
+2009-11-17  Simon Josefsson  <simon@josefsson.org>
+
+	* gnulib-tool: Support LGPLv3+ licenses in module files.  Tiny
+	patch from ludo@gnu.org (Ludovic Courtès).
+
 2009-11-17  Jim Meyering  <meyering@redhat.com>
 
 	version-etc: use proper license string
