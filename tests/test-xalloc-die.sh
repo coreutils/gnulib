@@ -30,7 +30,7 @@ fi
 
 tmpout=t-xalloc-die.tmp-stderr
 tmperr=t-xalloc-die.tmp-stdout
-tmpfiles="$tmpout $tmperr ${tmpout}2 ${tmperr}2"
+tmpfiles="$tmpout $tmperr ${tmperr}2"
 
 PATH=".:$PATH"
 export PATH
@@ -40,15 +40,13 @@ case $? in
   *) (exit 1); exit 1 ;;
 esac
 
-cat $tmperr | tr -d '\015' > ${tmperr}2
-cat $tmpout | tr -d '\015' > ${tmpout}2
+tr -d '\015' < $tmperr > ${tmperr}2 || { (exit 1); exit 1; }
 
 compare - ${tmperr}2 <<\EOF || { (exit 1); exit 1; }
 test-xalloc-die: memory exhausted
 EOF
 
-compare - ${tmpout}2 <<\EOF || { (exit 1); exit 1; }
-EOF
+test -s $tmpout && { (exit 1); exit 1; }
 
 rm -fr $tmpfiles
 
