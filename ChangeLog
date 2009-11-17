@@ -1,5 +1,11 @@
 2009-11-16  Eric Blake  <ebb9@byu.net>
 
+	xalloc-die-tests: avoid printing null pointer
+	* modules/xalloc-die-tests (Files, Makefile.am): Wrap execution in
+	shell script.
+	* tests/test-xalloc-die.c (program_name): Declare.
+	* tests/test-xalloc-die.sh (tmpfiles): New file.
+
 	setenv, unsetenv: work around various bugs
 	* lib/setenv.c (setenv) [!HAVE_SETENV]: Resync from glibc.
 	(setenv) [HAVE_SETENV]: Work around bugs.

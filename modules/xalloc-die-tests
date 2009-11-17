@@ -1,9 +1,11 @@
 Files:
 tests/test-xalloc-die.c
+tests/test-xalloc-die.sh
 
 Depends-on:
 
 Makefile.am:
-TESTS += test-xalloc-die
+TESTS += test-xalloc-die.sh
+TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
 XFAIL_TESTS += test-xalloc-die
 check_PROGRAMS += test-xalloc-die

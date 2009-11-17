@@ -20,6 +20,8 @@
 
 #include "xalloc.h"
 
+char *program_name = "test-xalloc-die";
+
 int
 main (void)
 {
