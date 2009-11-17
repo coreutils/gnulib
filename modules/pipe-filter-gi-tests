@@ -11,11 +11,10 @@ binary-io
 c-ctype
 read-file
 full-write
-sleep
+usleep
 progname
 
 configure.ac:
-AC_CHECK_FUNCS_ONCE([usleep])
 
 Makefile.am:
 TESTS += test-pipe-filter-gi1.sh test-pipe-filter-gi2.sh

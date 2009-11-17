@@ -8,10 +8,10 @@ tests/test-utimens.c
 Depends-on:
 symlink
 timespec
+usleep
 utimecmp
 
 configure.ac:
-AC_CHECK_FUNCS_ONCE([usleep])
 
 Makefile.am:
 TESTS += test-utimens

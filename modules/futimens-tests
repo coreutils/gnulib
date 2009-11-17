@@ -5,10 +5,10 @@ tests/test-futimens.c
 
 Depends-on:
 timespec
+usleep
 utimecmp
 
 configure.ac:
-AC_CHECK_FUNCS_ONCE([usleep])
 
 Makefile.am:
 TESTS += test-futimens

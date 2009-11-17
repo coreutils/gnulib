@@ -22,11 +22,6 @@
 static void
 nap (void)
 {
-# if !HAVE_USLEEP
-  /* Assume the worst case file system of FAT, which has a granularity
-     of 2 seconds.  */
-  sleep (2);
-# else /* HAVE_USLEEP */
   static long delay;
   if (!delay)
     {
@@ -38,8 +33,8 @@ nap (void)
          differ, repeat the test one more time (in case we crossed a
          quantization boundary on a file system with 1 second
          resolution).  If we can't observe a difference in only the
-         nanoseconds, then fall back to 2 seconds.  However, note that
-         usleep (2000000) is allowed to fail with EINVAL.  */
+         nanoseconds, then fall back to 1 second if the time is odd,
+         and 2 seconds (needed for FAT) if time is even.  */
       struct stat st1;
       struct stat st2;
       ASSERT (close (creat (BASE "tmp", 0600)) == 0);
@@ -61,13 +56,9 @@ nap (void)
         }
       if (! (st1.st_mtime == st2.st_mtime
              && get_stat_mtime_ns (&st1) < get_stat_mtime_ns (&st2)))
-        delay = 2000000;
+        delay = (st1.st_mtime & 1) ? 1000000 : 2000000;
     }
-  if (delay == 2000000)
-    sleep (2);
-  else
-    usleep (delay);
-# endif /* HAVE_USLEEP */
+  usleep (delay);
 }
 #endif /* !TEST_CHOWN_NAP */
 

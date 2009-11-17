@@ -15,13 +15,13 @@ tests/test-unlinkat.c
 Depends-on:
 mgetgroups
 pathmax
-sleep
+usleep
 stat-time
 symlink
 unlinkdir
 
 configure.ac:
-AC_CHECK_FUNCS_ONCE([getegid usleep])
+AC_CHECK_FUNCS_ONCE([getegid])
 
 Makefile.am:
 TESTS += test-fchownat test-fstatat test-mkdirat test-openat test-unlinkat

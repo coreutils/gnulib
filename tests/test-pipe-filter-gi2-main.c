@@ -45,11 +45,7 @@
 static void
 small_nap (void)
 {
-#if HAVE_USLEEP
   usleep (100000);
-#else
-  sleep (1);
-#endif
 }
 
 static char static_buf[5];

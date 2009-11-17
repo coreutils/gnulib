@@ -58,8 +58,10 @@ enum {
 static void
 nap (void)
 {
-  /* Systems that lack usleep also lack subsecond timestamps.  Our
-     usage of utimecmp allows equality, so we don't need to sleep.  */
+  /* Systems that lack usleep also lack subsecond timestamps, and have
+     a quantization boundary equal to the resolution.  Our usage of
+     utimecmp allows equality, so no need to waste 980 milliseconds
+     if the replacement usleep rounds to 1 second.  */
 #if HAVE_USLEEP
   usleep (20 * 1000); /* 20 milliseconds.  */
 #endif

@@ -3,10 +3,9 @@ tests/test-stat-time.c
 
 Depends-on:
 time
-sleep
+usleep
 
 configure.ac:
-AC_CHECK_FUNCS_ONCE([usleep])
 
 Makefile.am:
 TESTS += test-stat-time

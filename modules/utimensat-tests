@@ -7,10 +7,10 @@ tests/test-utimensat.c
 Depends-on:
 progname
 timespec
+usleep
 utimecmp
 
 configure.ac:
-AC_CHECK_FUNCS_ONCE([usleep])
 
 Makefile.am:
 TESTS += test-utimensat

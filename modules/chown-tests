@@ -6,13 +6,13 @@ Depends-on:
 lstat
 mgetgroups
 progname
-sleep
+usleep
 stat-time
 stdbool
 symlink
 
 configure.ac:
-AC_CHECK_FUNCS_ONCE([getegid usleep])
+AC_CHECK_FUNCS_ONCE([getegid])
 
 Makefile.am:
 TESTS += test-chown

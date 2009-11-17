@@ -1,5 +1,23 @@
 2009-11-17  Eric Blake  <ebb9@byu.net>
 
+	usleep: use it to simplify tests
+	* modules/stat-time-tests (Depends-on): Add usleep.
+	(configure.ac): Drop usleep check.
+	* modules/chown-tests (Depends-on, configure.ac): Likewise.
+	* modules/lchown-tests (Depends-on, configure.ac): Likewise.
+	* modules/fdutimensat-tests (Depends-on, configure.ac): Likewise.
+	* modules/futimens-tests (Depends-on, configure.ac): Likewise.
+	* modules/openat-tests (Depends-on, configure.ac): Likewise.
+	* modules/utimens-tests (Depends-on, configure.ac): Likewise.
+	* modules/utimensat-tests (Depends-on, configure.ac): Likewise.
+	* modules/pipe-filter-gi-tests (Depends-on, configure.ac):
+	Likewise.
+	* tests/test-chown.h (nap): Rely on nicer usleep semantics.
+	* tests/test-lchown.h (nap): Likewise.
+	* tests/test-pipe-filter-gi2-main.c (small_nap): Likewise.
+	* tests/test-stat-time.c (nap): Likewise.
+	* tests/test-utimens-common.h (nap): Update comments.
+
 	usleep: new module
 	* modules/usleep: New file.
 	* m4/usleep.m4 (gl_FUNC_USLEEP): Likewise.
