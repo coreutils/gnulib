@@ -280,9 +280,9 @@ fdutimens (char const *file, int fd, struct timespec const timespec[2])
       }
     else
       {
-        /* If futimesat (above) or futimes fails here, don't try to speed
-           things up by returning right away.  glibc can incorrectly fail
-           with errno == ENOENT if /proc isn't mounted.  Also, Mandrake 10.0
+        /* If futimesat or futimes fails here, don't try to speed things
+           up by returning right away.  glibc can incorrectly fail with
+           errno == ENOENT if /proc isn't mounted.  Also, Mandrake 10.0
            in high security mode doesn't allow ordinary users to read
            /proc/self, so glibc incorrectly fails with errno == EACCES.
            If errno == EIO, EPERM, or EROFS, it's probably safe to fail
@@ -290,7 +290,10 @@ fdutimens (char const *file, int fd, struct timespec const timespec[2])
            worth optimizing, and who knows what other messed-up systems
            are out there?  So play it safe and fall back on the code
            below.  */
-# if HAVE_FUTIMES
+# if HAVE_FUTIMESAT && !FUTIMESAT_NULL_BUG
+        if (futimesat (fd, NULL, t) == 0)
+          return 0;
+# elif HAVE_FUTIMES
         if (futimes (fd, t) == 0)
           return 0;
 # endif
@@ -299,7 +302,8 @@ fdutimens (char const *file, int fd, struct timespec const timespec[2])
 
     if (!file)
       {
-#if ! (HAVE_FUTIMESAT || (HAVE_WORKING_UTIMES && HAVE_FUTIMES))
+#if ! ((HAVE_FUTIMESAT && !FUTIMESAT_NULL_BUG)          \
+        || (HAVE_WORKING_UTIMES && HAVE_FUTIMES))
         errno = ENOSYS;
 #endif
         return -1;
