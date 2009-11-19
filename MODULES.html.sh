@@ -2568,6 +2568,7 @@ func_all_modules ()
   func_module popen-safer
   func_module stdlib-safer
   func_module tmpfile-safer
+  func_module xfreopen
   func_end_table
 
   element="Users and groups"

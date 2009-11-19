@@ -1,3 +1,11 @@
+2009-11-19  Jim Meyering  <meyering@redhat.com>
+
+	xfreopen: new module, from coreutils
+	* modules/xfreopen: New module.
+	* lib/xfreopen.c: New file.
+	* lib/xfreopen.h: New file.
+	* MODULES.html.sh (File stream based Input/Output"): Add it.
+
 2009-11-19  Eric Blake  <ebb9@byu.net>
 
 	manywarnings: depend on warnings
