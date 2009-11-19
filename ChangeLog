@@ -1,3 +1,9 @@
+2009-11-19  Eric Blake  <ebb9@byu.net>
+
+	build: avoid compiler warnings
+	* lib/select.c (rpl_select): Delete unused variable.
+	* lib/setsockopt.c (rpl_setsockopt): Avoid incompatible pointer.
+
 2009-11-18  Eric Blake  <ebb9@byu.net>
 
 	tests: avoid false negative with --with-packager

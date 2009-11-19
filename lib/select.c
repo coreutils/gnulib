@@ -322,8 +322,6 @@ rpl_select (int nfds, fd_set *rfds, fd_set *wfds, fd_set *xfds,
   /* Classify handles.  Create fd sets for sockets, poll the others. */
   for (i = 0; i < nfds; i++)
     {
-      WSANETWORKEVENTS ev;
-
       if ((anyfds_in[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1)))) == 0)
 	continue;
 

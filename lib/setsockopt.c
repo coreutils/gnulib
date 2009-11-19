@@ -41,7 +41,8 @@ rpl_setsockopt (int fd, int level, int optname, const void *optval, socklen_t op
     {
       const struct timeval *tv = optval;
       int milliseconds = tv->tv_sec * 1000 + tv->tv_usec / 1000;
-      r = setsockopt (sock, level, optname, &milliseconds, sizeof (int));
+      optval = &milliseconds;
+      r = setsockopt (sock, level, optname, optval, sizeof (int));
     }
   else
     {
