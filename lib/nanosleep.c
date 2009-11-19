@@ -134,6 +134,12 @@ rpl_nanosleep (const struct timespec *requested_delay,
 {
   static bool initialized;
 
+  if (requested_delay->tv_nsec < 0 || BILLION <= requested_delay->tv_nsec)
+    {
+      errno = EINVAL;
+      return -1;
+    }
+
   /* set up sig handler */
   if (! initialized)
     {

@@ -1,5 +1,13 @@
 2009-11-20  Eric Blake  <ebb9@byu.net>
 
+	nanosleep: improve port to mingw
+	* lib/nanosleep.c (rpl_nanosleep): Reject invalid arguments.
+	* m4/nanosleep.m4 (gl_FUNC_NANOSLEEP): Incorporate LIBSOCKET into
+	LIB_NANOSLEEP, but only when needed.
+	* modules/select (Link): Document LIBSOCKET.
+	* m4/select.m4 (gl_FUNC_SELECT): Ensure LIBSOCKET is defined early
+	enough.
+
 	nanosleep: work around cygwin bug
 	* lib/nanosleep.c (rpl_nanosleep) [HAVE_BUG_BIG_NANOSLEEP]:
 	Fix logic bug when nanosleep fails.  Work around cygwin 1.5.x

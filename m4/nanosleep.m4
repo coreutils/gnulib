@@ -1,4 +1,4 @@
-# serial 29
+# serial 30
 
 dnl From Jim Meyering.
 dnl Check for the nanosleep function.
@@ -18,6 +18,7 @@ AC_DEFUN([gl_FUNC_NANOSLEEP],
 
  AC_REQUIRE([gl_HEADER_TIME_H_DEFAULTS])
  AC_CHECK_HEADERS_ONCE([sys/time.h])
+ AC_REQUIRE([gl_FUNC_SELECT])
 
  nanosleep_save_libs=$LIBS
 
@@ -102,6 +103,13 @@ AC_DEFUN([gl_FUNC_NANOSLEEP],
     if test "$gl_cv_func_nanosleep" = 'no (mishandles large arguments)'; then
       AC_DEFINE([HAVE_BUG_BIG_NANOSLEEP], [1],
 	[Define to 1 if nanosleep mishandles large arguments.])
+    else
+      for ac_lib in $LIBSOCKET; do
+        case " $LIB_NANOSLEEP " in
+        *" $ac_lib "*) ;;
+        *) LIB_NANOSLEEP="$LIB_NANOSLEEP $ac_lib";;
+        esac
+      done
     fi
     AC_LIBOBJ([nanosleep])
     gl_PREREQ_NANOSLEEP

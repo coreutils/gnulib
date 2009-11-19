@@ -18,6 +18,9 @@ Makefile.am:
 Include:
 <sys/select.h>
 
+Link:
+$(LIBSOCKET)
+
 License:
 LGPLv2+
 

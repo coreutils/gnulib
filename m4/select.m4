@@ -1,4 +1,4 @@
-# select.m4 serial 2
+# select.m4 serial 3
 dnl Copyright (C) 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,6 +8,7 @@ AC_DEFUN([gl_FUNC_SELECT],
 [
   AC_REQUIRE([gl_HEADER_SYS_SELECT])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  AC_REQUIRE([gl_SOCKETS])
   if test "$ac_cv_header_winsock2_h" = yes; then
     AC_LIBOBJ([select])
   else
