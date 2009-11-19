@@ -1,5 +1,19 @@
 2009-11-20  Eric Blake  <ebb9@byu.net>
 
+	nanosleep: work around cygwin bug
+	* lib/nanosleep.c (rpl_nanosleep) [HAVE_BUG_BIG_NANOSLEEP]:
+	Fix logic bug when nanosleep fails.  Work around cygwin 1.5.x
+	bug.
+	(getnow): Delete, not needed.
+	* m4/nanosleep.m4 (gl_FUNC_NANOSLEEP): No longer require
+	LIB_CLOCK_GETTIME.
+	* modules/nanosleep (Depends-on): Add intprops and verify.  Drop
+	clock-time, gettime.
+	* doc/posix-functions/nanosleep.texi (nanosleep): Document the
+	bug.
+	* modules/nanosleep-tests: New test.
+	* tests/test-nanosleep.c: New file.
+
 	sleep: work around cygwin bug
 	* lib/sleep.c (rpl_sleep): Work around the bug.
 	* m4/sleep.m4 (gl_FUNC_SLEEP): Detect the bug.

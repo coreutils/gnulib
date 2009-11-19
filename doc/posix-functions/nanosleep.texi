@@ -19,6 +19,9 @@ AIX 4.3.2.
 This function mishandles large arguments when interrupted by a signal on some
 platforms:
 Linux 64-bit, Solaris 64-bit.
+@item
+This function cannot sleep longer than 49.7 days on some platforms:
+Cygwin 1.5.x.
 @end itemize
 
 Portability problems not fixed by Gnulib:

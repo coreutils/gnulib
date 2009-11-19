@@ -1,7 +1,7 @@
 /* Provide a replacement for the POSIX nanosleep function.
 
-   Copyright (C) 1999, 2000, 2002, 2004, 2005, 2006, 2007, 2008 Free
-   Software Foundation, Inc.
+   Copyright (C) 1999, 2000, 2002, 2004, 2005, 2006, 2007, 2008, 2009
+   Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -22,8 +22,9 @@
 
 #include <time.h>
 
+#include "intprops.h"
 #include "sig-handler.h"
-#include "timespec.h"
+#include "verify.h"
 
 #include <stdbool.h>
 #include <stdio.h>
@@ -42,56 +43,45 @@ enum { BILLION = 1000 * 1000 * 1000 };
 
 #if HAVE_BUG_BIG_NANOSLEEP
 
-static void
-getnow (struct timespec *t)
-{
-# if defined CLOCK_MONOTONIC && HAVE_CLOCK_GETTIME
-  if (clock_gettime (CLOCK_MONOTONIC, t) == 0)
-    return;
-# endif
-  gettime (t);
-}
-
 int
 rpl_nanosleep (const struct timespec *requested_delay,
 	       struct timespec *remaining_delay)
 {
   /* nanosleep mishandles large sleeps due to internal overflow
-     problems, so check that the proper amount of time has actually
-     elapsed.  */
+     problems.  The worst known case of this is cygwin 1.5.x, which
+     can't sleep more than 49.7 days (2**32 milliseconds).  Solve this
+     by breaking the sleep up into smaller chunks.  Verify that time_t
+     is large enough.  */
+  verify (TYPE_MAXIMUM (time_t) / 49 / 24 / 60 / 60);
+  const time_t limit = 49 * 24 * 60 * 60;
+  time_t seconds = requested_delay->tv_sec;
+  struct timespec intermediate;
+  intermediate.tv_nsec = 0;
 
-  struct timespec delay = *requested_delay;
-  struct timespec t0;
-  getnow (&t0);
-
-  for (;;)
+  while (limit < seconds)
     {
-      int r = nanosleep (&delay, remaining_delay);
-      if (r == 0)
-	{
-	  time_t secs_sofar;
-	  struct timespec now;
-	  getnow (&now);
-
-	  secs_sofar = now.tv_sec - t0.tv_sec;
-	  if (requested_delay->tv_sec < secs_sofar)
-	    return 0;
-	  delay.tv_sec = requested_delay->tv_sec - secs_sofar;
-	  delay.tv_nsec = requested_delay->tv_nsec - (now.tv_nsec - t0.tv_nsec);
-	  if (delay.tv_nsec < 0)
-	    {
-	      if (delay.tv_sec == 0)
-		return 0;
-	      delay.tv_nsec += BILLION;
-	      delay.tv_sec--;
-	    }
-	  else if (BILLION <= delay.tv_nsec)
-	    {
-	      delay.tv_nsec -= BILLION;
-	      delay.tv_sec++;
-	    }
-	}
+      int result;
+      intermediate.tv_sec = limit;
+      result = nanosleep (&intermediate, remaining_delay);
+      seconds -= limit;
+      if (result)
+        {
+          if (remaining_delay)
+            {
+              remaining_delay->tv_sec += seconds;
+              remaining_delay->tv_nsec += requested_delay->tv_nsec;
+              if (BILLION <= requested_delay->tv_nsec)
+                {
+                  remaining_delay->tv_sec++;
+                  remaining_delay->tv_nsec -= BILLION;
+                }
+            }
+          return result;
+        }
     }
+  intermediate.tv_sec = seconds;
+  intermediate.tv_nsec = requested_delay->tv_nsec;
+  return nanosleep (&intermediate, remaining_delay);
 }
 
 #else

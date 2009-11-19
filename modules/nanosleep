@@ -6,9 +6,8 @@ lib/nanosleep.c
 m4/nanosleep.m4
 
 Depends-on:
-clock-time
 extensions
-gettime
+intprops
 multiarch
 select
 sigaction
@@ -16,6 +15,7 @@ stdbool
 sys_select
 sys_time
 time
+verify
 
 configure.ac:
 gl_FUNC_NANOSLEEP
