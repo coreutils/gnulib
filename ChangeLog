@@ -1,5 +1,8 @@
 2009-11-19  Eric Blake  <ebb9@byu.net>
 
+	manywarnings: depend on warnings
+	* modules/manywarnings (Depends-on): Add warnings.
+
 	build: avoid compiler warnings
 	* lib/select.c (rpl_select): Delete unused variable.
 	* lib/setsockopt.c (rpl_setsockopt): Avoid incompatible pointer.

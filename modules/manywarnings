@@ -5,6 +5,7 @@ Files:
 m4/manywarnings.m4
 
 Depends-on:
+warnings
 
 configure.ac:
 
