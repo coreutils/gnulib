@@ -1,3 +1,9 @@
+2009-11-19  Eric Blake  <ebb9@byu.net>
+
+	test-xvasprintf: silence compiler warnings
+	* tests/test-xvasprintf.c (test_xvasprintf, test_xasprintf): Mask
+	empty string from gcc.
+
 2009-11-19  Jim Meyering  <meyering@redhat.com>
 
 	xfreopen: new module, from coreutils
