@@ -1,5 +1,8 @@
 2009-11-19  Eric Blake  <ebb9@byu.net>
 
+	xalloc-die-tests: add missing library
+	* modules/xalloc-die-tests (Makefile.am): Add LDADD line.
+
 	test-xvasprintf: silence compiler warnings
 	* tests/test-xvasprintf.c (test_xvasprintf, test_xasprintf): Mask
 	empty string from gcc.

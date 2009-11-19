@@ -8,3 +8,4 @@ Makefile.am:
 TESTS += test-xalloc-die.sh
 TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
 check_PROGRAMS += test-xalloc-die
+test_xalloc_die_LDADD = $(LDADD) @LIBINTL@
