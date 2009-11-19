@@ -1,5 +1,10 @@
 2009-11-18  Eric Blake  <ebb9@byu.net>
 
+	tests: avoid false negative with --with-packager
+	* tests/test-version-etc.sh: Discard packager information.
+	* tests/test-argp-version-etc-1.sh: Likewise.
+	Reported by Mike Frysinger.
+
 	utimens: fix regression on Solaris
 	* m4/utimens.m4 (gl_UTIMENS): Check for BSD bug.
 	* lib/utimens.c (fdutimens): Revert 2009-11-08 change; Solaris 10
