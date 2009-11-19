@@ -6,7 +6,9 @@ lib/sleep.c
 m4/sleep.m4
 
 Depends-on:
+stdint
 unistd
+verify
 
 configure.ac:
 gl_FUNC_SLEEP

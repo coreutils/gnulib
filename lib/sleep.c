@@ -1,5 +1,5 @@
 /* Pausing execution of the current thread.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007, 2009 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2007.
 
    This program is free software: you can redistribute it and/or modify
@@ -20,6 +20,10 @@
 /* Specification.  */
 #include <unistd.h>
 
+#include <limits.h>
+
+#include "verify.h"
+
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 
 # define WIN32_LEAN_AND_MEAN  /* avoid including junk */
@@ -39,7 +43,32 @@ sleep (unsigned int seconds)
   return remaining;
 }
 
-#else
+#elif HAVE_SLEEP
+
+# undef sleep
+
+/* Guarantee unlimited sleep and a reasonable return value.  Cygwin
+   1.5.x rejects attempts to sleep more than 49.7 days (2**32
+   milliseconds), but uses uninitialized memory which results in a
+   garbage answer.  */
+unsigned int
+rpl_sleep (unsigned int seconds)
+{
+  /* This requires int larger than 16 bits.  */
+  verify (UINT_MAX / 49 / 24 / 60 / 60);
+  const unsigned int limit = 49 * 24 * 60 * 60;
+  while (limit < seconds)
+    {
+      unsigned int result;
+      seconds -= limit;
+      result = sleep (limit);
+      if (result)
+        return seconds + result;
+    }
+  return sleep (seconds);
+}
+
+#else /* !HAVE_SLEEP */
 
  #error "Please port gnulib sleep.c to your platform, possibly using usleep() or select(), then report this to bug-gnulib."
 

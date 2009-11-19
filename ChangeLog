@@ -1,3 +1,17 @@
+2009-11-20  Eric Blake  <ebb9@byu.net>
+
+	sleep: work around cygwin bug
+	* lib/sleep.c (rpl_sleep): Work around the bug.
+	* m4/sleep.m4 (gl_FUNC_SLEEP): Detect the bug.
+	(gl_PREREQ_SLEEP): Delete unused macro.
+	* modules/sleep (Depends-on): Add verify.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Add default.
+	* modules/unistd (Makefile.am): Substitute witness.
+	* lib/unistd.in.h (sleep): Update prototype.
+	* doc/posix-functions/sleep.texi (sleep): Document the bug.
+	* tests/test-sleep.c (main) [HAVE_DECL_ALARM]: Test it.
+	* modules/sleep-tests (Depends-on): Check for alarm.
+
 2009-11-20  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: improve sc_prohibit_magic_number_exit

@@ -714,11 +714,15 @@ extern int rmdir (char const *name);
 
 
 #if @GNULIB_SLEEP@
+# if @REPLACE_SLEEP@
+#  undef sleep
+#  define sleep rpl_sleep
+# endif
 /* Pause the execution of the current thread for N seconds.
    Returns the number of seconds left to sleep.
    See the POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/sleep.html>.  */
-# if !@HAVE_SLEEP@
+# if !@HAVE_SLEEP@ || @REPLACE_SLEEP@
 extern unsigned int sleep (unsigned int n);
 # endif
 #elif defined GNULIB_POSIXCHECK

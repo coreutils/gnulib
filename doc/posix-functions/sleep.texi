@@ -15,6 +15,9 @@ mingw (2005 or newer).
 This function takes milliseconds as argument and returns @code{void} on some
 platforms:
 mingw (2005 and older).
+@item
+This function cannot sleep longer than 49.7 days on some platforms:
+Cygwin 1.5.x.
 @end itemize
 
 Portability problems not fixed by Gnulib:
