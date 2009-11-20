@@ -1,3 +1,10 @@
+2009-11-20  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: improve sc_prohibit_magic_number_exit
+	* top/maint.mk (sc_prohibit_magic_number_exit): Tighten regexp
+	so it does not match uses like System.exit(1).
+	Add comments showing how to correct all offenders.
+
 2009-11-19  Eric Blake  <ebb9@byu.net>
 
 	xalloc-die-tests: add missing library

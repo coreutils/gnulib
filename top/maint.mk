@@ -157,8 +157,17 @@ sc_prohibit_strcmp:
 		1>&2; exit 1; } || :
 
 # Pass EXIT_*, not number, to usage, exit, and error (when exiting)
+# Convert all uses automatically, via these two commands:
+# git grep -l '\<exit *(1)' \
+#  | grep -vEf .x-sc_prohibit_magic_number_exit \
+#  | xargs --no-run-if-empty \
+#      perl -pi -e 's/(^|[^.])\b(exit ?)\(1\)/$1$2(EXIT_FAILURE)/'
+# git grep -l '\<exit *(0)' \
+#  | grep -vEf .x-sc_prohibit_magic_number_exit \
+#  | xargs --no-run-if-empty \
+#      perl -pi -e 's/(^|[^.])\b(exit ?)\(0\)/$1$2(EXIT_SUCCESS)/'
 sc_prohibit_magic_number_exit:
-	@re='\<(usage|exit) ?\([0-9]|\<error ?\([1-9][0-9]*,'		\
+	@re='(^|[^.])\<(usage|exit) ?\([0-9]|\<error ?\([1-9][0-9]*,'	\
 	msg='use EXIT_* values rather than magic number'		\
 	  $(_prohibit_regexp)
 
