@@ -3,7 +3,7 @@ eval '(exit $?0)' && eval 'exec perl -wS "$0" ${1+"$@"}'
     if 0;
 # Generate a release announcement message.
 
-my $VERSION = '2009-10-30 15:59'; # UTC
+my $VERSION = '2009-11-20 13:36'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -442,6 +442,11 @@ EOF
   my @sig_files = map { "$_.sig" } @tarballs;
   print_locations ("GPG detached signatures[*]", @url_dir_list, %size,
 		   @sig_files);
+  if ($url_dir_list[0] =~ "gnu\.org")
+    {
+      print "To reduce load on the main server, use a mirror listed at:\n";
+      print "  http://www.gnu.org/order/ftp.html\n\n";
+    }
 
   $print_checksums_p
     and print_checksums (@sizable);

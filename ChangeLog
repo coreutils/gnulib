@@ -1,5 +1,11 @@
 2009-11-20  Eric Blake  <ebb9@byu.net>
 
+	build: mention ftp redirector in release announcements
+	* top/maint.mk (gnu_rel_host, url_dir_list): Provide defaults for
+	values that used to come from cfg.mk; mention FTP redirect URL.
+	* build-aux/announce-gen: Mention the mirror list.
+	Suggested by Karl Berry.
+
 	nanosleep: improve port to mingw
 	* lib/nanosleep.c (rpl_nanosleep): Reject invalid arguments.
 	* m4/nanosleep.m4 (gl_FUNC_NANOSLEEP): Incorporate LIBSOCKET into
