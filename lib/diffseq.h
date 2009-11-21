@@ -299,7 +299,6 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 	      return;
 	    }
 
-	  best = 0;
 	  for (d = bmax; d >= bmin; d -= 2)
 	    {
 	      OFFSET dd = d - bmid;
