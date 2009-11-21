@@ -10,6 +10,7 @@ Depends-on:
 gettext-h
 errno
 exitfail
+ignore-value
 unistd
 raise
 sigaction
