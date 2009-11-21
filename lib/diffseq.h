@@ -1,6 +1,6 @@
 /* Analyze differences between two vectors.
 
-   Copyright (C) 1988-1989, 1992-1995, 2001-2004, 2006-2008 Free
+   Copyright (C) 1988-1989, 1992-1995, 2001-2004, 2006-2009 Free
    Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -262,77 +262,83 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 
       if (200 < c && big_snake && ctxt->heuristic)
 	{
-	  OFFSET best = 0;
+	  {
+	    OFFSET best = 0;
 
-	  for (d = fmax; d >= fmin; d -= 2)
-	    {
-	      OFFSET dd = d - fmid;
-	      OFFSET x = fd[d];
-	      OFFSET y = x - d;
-	      OFFSET v = (x - xoff) * 2 - dd;
+	    for (d = fmax; d >= fmin; d -= 2)
+	      {
+		OFFSET dd = d - fmid;
+		OFFSET x = fd[d];
+		OFFSET y = x - d;
+		OFFSET v = (x - xoff) * 2 - dd;
 
-	      if (v > 12 * (c + (dd < 0 ? -dd : dd)))
-		{
-		  if (v > best
-		      && xoff + SNAKE_LIMIT <= x && x < xlim
-		      && yoff + SNAKE_LIMIT <= y && y < ylim)
-		    {
-		      /* We have a good enough best diagonal; now insist
-			 that it end with a significant snake.  */
-		      int k;
+		if (v > 12 * (c + (dd < 0 ? -dd : dd)))
+		  {
+		    if (v > best
+			&& xoff + SNAKE_LIMIT <= x && x < xlim
+			&& yoff + SNAKE_LIMIT <= y && y < ylim)
+		      {
+			/* We have a good enough best diagonal; now insist
+			   that it end with a significant snake.  */
+			int k;
 
-		      for (k = 1; EQUAL (xv[x - k], yv[y - k]); k++)
-			if (k == SNAKE_LIMIT)
-			  {
-			    best = v;
-			    part->xmid = x;
-			    part->ymid = y;
-			    break;
-			  }
-		    }
-		}
-	    }
-	  if (best > 0)
-	    {
-	      part->lo_minimal = true;
-	      part->hi_minimal = false;
-	      return;
-	    }
+			for (k = 1; EQUAL (xv[x - k], yv[y - k]); k++)
+			  if (k == SNAKE_LIMIT)
+			    {
+			      best = v;
+			      part->xmid = x;
+			      part->ymid = y;
+			      break;
+			    }
+		      }
+		  }
+	      }
+	    if (best > 0)
+	      {
+		part->lo_minimal = true;
+		part->hi_minimal = false;
+		return;
+	      }
+	  }
 
-	  for (d = bmax; d >= bmin; d -= 2)
-	    {
-	      OFFSET dd = d - bmid;
-	      OFFSET x = bd[d];
-	      OFFSET y = x - d;
-	      OFFSET v = (xlim - x) * 2 + dd;
+	  {
+	    OFFSET best = 0;
 
-	      if (v > 12 * (c + (dd < 0 ? -dd : dd)))
-		{
-		  if (v > best
-		      && xoff < x && x <= xlim - SNAKE_LIMIT
-		      && yoff < y && y <= ylim - SNAKE_LIMIT)
-		    {
-		      /* We have a good enough best diagonal; now insist
-			 that it end with a significant snake.  */
-		      int k;
+	    for (d = bmax; d >= bmin; d -= 2)
+	      {
+		OFFSET dd = d - bmid;
+		OFFSET x = bd[d];
+		OFFSET y = x - d;
+		OFFSET v = (xlim - x) * 2 + dd;
 
-		      for (k = 0; EQUAL (xv[x + k], yv[y + k]); k++)
-			if (k == SNAKE_LIMIT - 1)
-			  {
-			    best = v;
-			    part->xmid = x;
-			    part->ymid = y;
-			    break;
-			  }
-		    }
-		}
-	    }
-	  if (best > 0)
-	    {
-	      part->lo_minimal = false;
-	      part->hi_minimal = true;
-	      return;
-	    }
+		if (v > 12 * (c + (dd < 0 ? -dd : dd)))
+		  {
+		    if (v > best
+			&& xoff < x && x <= xlim - SNAKE_LIMIT
+			&& yoff < y && y <= ylim - SNAKE_LIMIT)
+		      {
+			/* We have a good enough best diagonal; now insist
+			   that it end with a significant snake.  */
+			int k;
+
+			for (k = 0; EQUAL (xv[x + k], yv[y + k]); k++)
+			  if (k == SNAKE_LIMIT - 1)
+			    {
+			      best = v;
+			      part->xmid = x;
+			      part->ymid = y;
+			      break;
+			    }
+		      }
+		  }
+	      }
+	    if (best > 0)
+	      {
+		part->lo_minimal = false;
+		part->hi_minimal = true;
+		return;
+	      }
+	  }
 	}
 #endif /* USE_HEURISTIC */
 

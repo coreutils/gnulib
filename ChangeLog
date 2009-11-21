@@ -1,3 +1,9 @@
+2009-11-21  Bruno Haible  <bruno@clisp.org>
+
+	diffseq: reduce scope of variable 'best'.
+	* lib/diffseq.h (diag) [USE_HEURISTIC]: Reduce scope of 'best'
+	variable, earlier used for two different purposes.
+
 2009-11-21  Jim Meyering  <meyering@redhat.com>
 
 	diffseq: remove useless assignment to "best"
