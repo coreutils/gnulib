@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate September 14, 2009
+@set lastupdate November 20, 2009
 @c %**end of header
 
 @dircategory GNU organization
@@ -81,9 +81,6 @@ programs written in C, but many of the rules and principles are useful
 even if you write in another programming language.  The rules often
 state reasons for writing in a certain way.
 
-This release of the GNU Coding Standards was last updated
-@value{lastupdate}.
-
 @cindex where to obtain @code{standards.texi}
 @cindex downloading this manual
 If you did not obtain this file directly from the GNU project and
@@ -91,6 +88,18 @@ recently, please check for a newer version.  You can get the GNU
 Coding Standards from the GNU web server in many
 different formats, including the Texinfo source, PDF, HTML, DVI, plain
 text, and more, at: @uref{http://www.gnu.org/prep/standards/}.
+
+If you are maintaining an official GNU package, in addition to this
+document, please read and follow the GNU maintainer information
+(@pxref{Top, , Contents, maintain, Information for Maintainers of GNU
+Software}).
+
+@cindex @code{gnustandards-commit@@gnu.org} mailing list
+If you want to receive diffs for every change to these GNU documents,
+join the mailing list @code{gnustandards-commit@@gnu.org}, via the web
+interface at
+@url{http://lists.gnu.org/mailman/listinfo/gnustandards-commit}.
+Archives are also available there.
 
 Corrections or suggestions for this document should be sent to
 @email{bug-standards@@gnu.org}.  If you make a suggestion, please include a
@@ -113,6 +122,10 @@ more maintainable by others.
 The GNU Hello program serves as an example of how to follow the GNU
 coding standards for a trivial program.
 @uref{http://www.gnu.org/software/hello/hello.html}.
+
+This release of the GNU Coding Standards was last updated
+@value{lastupdate}.
+
 
 @node Legal Issues
 @chapter Keeping Free Software Free
