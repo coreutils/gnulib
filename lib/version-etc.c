@@ -32,6 +32,12 @@
 #include "gettext.h"
 #define _(msgid) gettext (msgid)
 
+/* If you use AM_INIT_AUTOMAKE's no-define option,
+   PACKAGE is not defined.  Use PACKAGE_TARNAME instead.  */
+#if ! defined PACKAGE && defined PACKAGE_TARNAME
+# define PACKAGE PACKAGE_TARNAME
+#endif
+
 enum { COPYRIGHT_YEAR = 2009 };
 
 /* The three functions below display the --version information the

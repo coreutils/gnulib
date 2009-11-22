@@ -1,3 +1,8 @@
+2009-11-22  Andy Wingo  <wingo@pobox.com>
+
+	version-etc: work also with AM_INIT_AUTOMAKE's no-define option
+	* lib/version-etc.c [!defined PACKAGE]: Define to PACKAGE_TARNAME.
+
 2009-11-24  Bruno Haible  <bruno@clisp.org>
 
 	doc: Most *_l functions exist in MacOS X 10.5.
