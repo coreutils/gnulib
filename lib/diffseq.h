@@ -77,6 +77,15 @@
 # endif
 #endif
 
+/* As above, but when Code must contain one comma. */
+#ifndef IF_LINT2
+# ifdef lint
+#  define IF_LINT2(Code1, Code2) Code1, Code2
+# else
+#  define IF_LINT2(Code1, Code2) /* empty */
+# endif
+#endif
+
 /*
  * Context of comparison operation.
  */
@@ -464,7 +473,7 @@ compareseq (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim,
       }
   else
     {
-      struct partition part;
+      struct partition part IF_LINT2 (= { .xmid = 0, .ymid = 0 });
 
       /* Find a point of correspondence in the middle of the vectors.  */
       diag (xoff, xlim, yoff, ylim, find_minimal, &part, ctxt);

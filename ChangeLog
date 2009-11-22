@@ -1,3 +1,10 @@
+2009-11-22  Jim Meyering  <meyering@redhat.com>
+
+	diffseq: avoid spurious gcc warnings
+	* lib/diffseq.h (IF_LINT2): Define.
+	(compareseq): Use it to initialize two members of "part".
+	This avoids two used-uninitialized warnings.
+
 2009-11-21  Jim Meyering  <meyering@redhat.com>
 
 	c-stack: avoid "ignoring return value of `write'" warning
