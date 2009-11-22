@@ -13,6 +13,7 @@ m4/error.m4
 
 Depends-on:
 strerror
+unistd
 
 configure.ac:
 gl_ERROR

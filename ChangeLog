@@ -1,5 +1,15 @@
 2009-11-22  Bruno Haible  <bruno@clisp.org>
 
+	error: account for the possibility of freopen (stdout).
+	* lib/error.c: Include <unistd.h>.
+	(flush_stdout): New function, extracted from error and error_at_line.
+	Determine stdout's fd dynamically.
+	(error, error_at_line): Invoke flush_stdout.
+	* m4/error.m4 (gl_PREREQ_ERROR): Require AC_C_INLINE.
+	* modules/error (Depends-on): Add unistd.
+
+2009-11-22  Bruno Haible  <bruno@clisp.org>
+
 	diffseq: Add comment.
 	* lib/diffseq.h (IF_LINT): Add comment about pitfall.
 

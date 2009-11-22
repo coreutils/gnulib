@@ -27,6 +27,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #if !_LIBC && ENABLE_NLS
 # include "gettext.h"
@@ -102,6 +103,31 @@ extern char *program_name;
 #  define __strerror_r strerror_r
 # endif	/* HAVE_STRERROR_R || defined strerror_r */
 #endif	/* not _LIBC */
+
+static inline void
+flush_stdout (void)
+{
+#if !_LIBC && defined F_GETFL
+  int stdout_fd;
+
+# if GNULIB_FREOPEN_SAFER
+  /* Use of gnulib's freopen-safer module normally ensures that
+       fileno (stdout) == 1
+     whenever stdout is open.  */
+  stdout_fd = STDOUT_FILENO;
+# else
+  /* POSIX states that fileno (stdout) after fclose is unspecified.  But in
+     practice it is not a problem, because stdout is statically allocated and
+     the fd of a FILE stream is stored as a field in its allocated memory.  */
+  stdout_fd = fileno (stdout);
+# endif
+  /* POSIX states that fflush (stdout) after fclose is unspecified; it
+     is safe in glibc, but not on all other platforms.  fflush (NULL)
+     is always defined, but too draconian.  */
+  if (0 <= stdout_fd && 0 <= fcntl (stdout_fd, F_GETFL))
+#endif
+    fflush (stdout);
+}
 
 static void
 print_errno_message (int errnum)
@@ -238,13 +264,7 @@ error (int status, int errnum, const char *message, ...)
 		   0);
 #endif
 
-#if !_LIBC && defined F_GETFL
-  /* POSIX states that fflush (stdout) after fclose is unspecified; it
-     is safe in glibc, but not on all other platforms.  fflush (NULL)
-     is always defined, but too draconian.  */
-  if (0 <= fcntl (1, F_GETFL))
-#endif
-  fflush (stdout);
+  flush_stdout ();
 #ifdef _LIBC
   _IO_flockfile (stderr);
 #endif
@@ -303,13 +323,7 @@ error_at_line (int status, int errnum, const char *file_name,
 		   0);
 #endif
 
-#if !_LIBC && defined F_GETFL
-  /* POSIX states that fflush (stdout) after fclose is unspecified; it
-     is safe in glibc, but not on all other platforms.  fflush (NULL)
-     is always defined, but too draconian.  */
-  if (0 <= fcntl (1, F_GETFL))
-#endif
-  fflush (stdout);
+  flush_stdout ();
 #ifdef _LIBC
   _IO_flockfile (stderr);
 #endif
