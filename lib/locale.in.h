@@ -29,6 +29,11 @@
 /* NetBSD 5.0 mis-defines NULL.  */
 #include <stddef.h>
 
+/* MacOS X 10.5 defines the locale_t type in <xlocale.h>.  */
+#if @HAVE_XLOCALE_H@
+# include <xlocale.h>
+#endif
+
 /* The LC_MESSAGES locale category is specified in POSIX, but not in ISO C.
    On systems that don't define it, use the same value as GNU libintl.  */
 #if !defined LC_MESSAGES

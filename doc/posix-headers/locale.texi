@@ -12,6 +12,10 @@ The definition of @samp{LC_MESSAGES} is missing on some platforms:
 mingw.
 
 @item
+The @code{locale_t} type is not defined on some platforms:
+glibc 2.11, MacOS X 10.5.
+
+@item
 Some platforms provide a @code{NULL} macro that cannot be used in arbitrary
 expressions:
 NetBSD 5.0

@@ -1,5 +1,15 @@
 2009-11-22  Bruno Haible  <bruno@clisp.org>
 
+	locale: Make locale_t available when possible.
+	* lib/locale.in.h: Include <xlocale.h> when it exists.
+	* m4/locale_h.m4 (gl_LOCALE_H): Check for <xlocale.h> and arrange to
+	replace <locale.h> if it does not define locale_t but <xlocale.h> does.
+	* modules/locale (Depends-on): Add extensions.
+	(Makefile.am): Also substitute HAVE_XLOCALE_H.
+	* doc/posix-headers/locale.texi: Document the problem with locale_t.
+
+2009-11-22  Bruno Haible  <bruno@clisp.org>
+
 	Add comments.
 	* m4/dirent_h.m4 (gl_DIRENT_H): Add comment about gl_CHECK_NEXT_HEADERS
 	invocation.
