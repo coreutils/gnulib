@@ -1,3 +1,8 @@
+2009-11-22  Bruno Haible  <bruno@clisp.org>
+
+	diffseq: Add comment.
+	* lib/diffseq.h (IF_LINT): Add comment about pitfall.
+
 2009-11-22  Jim Meyering  <meyering@redhat.com>
 
 	c-stack: avoid defining an unused static function
