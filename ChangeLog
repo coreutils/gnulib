@@ -1,5 +1,9 @@
 2009-11-22  Jim Meyering  <meyering@redhat.com>
 
+	c-stack: avoid defining an unused static function
+	* lib/c-stack.c (find_stack_direction): Do not define this function
+	when it will not be used.
+
 	diffseq: avoid spurious gcc warnings
 	* lib/diffseq.h (IF_LINT2): Define.
 	(compareseq): Use it to initialize two members of "part".

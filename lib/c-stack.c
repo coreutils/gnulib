@@ -218,12 +218,14 @@ c_stack_action (void (*action) (int))
 # if STACK_DIRECTION
 #  define find_stack_direction(ptr) STACK_DIRECTION
 # else
+#  if ! SIGACTION_WORKS || HAVE_XSI_STACK_OVERFLOW_HEURISTIC
 static int
 find_stack_direction (char const *addr)
 {
   char dummy;
   return ! addr ? find_stack_direction (&dummy) : addr < &dummy ? 1 : -1;
 }
+#  endif
 # endif
 
 # if SIGACTION_WORKS
