@@ -1,5 +1,9 @@
 2009-11-22  Bruno Haible  <bruno@clisp.org>
 
+	* modules/locale-tests (configure.ac): Test for newlocale function.
+	* tests/test-locale.c: When the system has extended locale functions,
+	verify that <locale.h> defines locale_t and LC_GLOBAL_LOCALE.
+
 	locale: Make locale_t available when possible.
 	* lib/locale.in.h: Include <xlocale.h> when it exists.
 	* m4/locale_h.m4 (gl_LOCALE_H): Check for <xlocale.h> and arrange to

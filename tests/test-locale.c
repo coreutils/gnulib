@@ -33,6 +33,11 @@ int a[] =
     LC_TIME
   };
 
+#if HAVE_NEWLOCALE
+/* Check that the locale_t type and the LC_GLOBAL_LOCALE macro are defined.  */
+locale_t b = LC_GLOBAL_LOCALE;
+#endif
+
 /* Check that NULL can be passed through varargs as a pointer type,
    per POSIX 2008.  */
 verify (sizeof NULL == sizeof (void *));

@@ -5,6 +5,7 @@ Depends-on:
 verify
 
 configure.ac:
+AC_CHECK_FUNCS_ONCE([newlocale])
 
 Makefile.am:
 TESTS += test-locale
