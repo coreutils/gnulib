@@ -27,7 +27,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
 
 #if !_LIBC && ENABLE_NLS
 # include "gettext.h"
@@ -87,6 +86,7 @@ extern void __error_at_line (int status, int errnum, const char *file_name,
 #else /* not _LIBC */
 
 # include <fcntl.h>
+# include <unistd.h>
 
 # if !HAVE_DECL_STRERROR_R && STRERROR_R_CHAR_P
 #  ifndef HAVE_DECL_STRERROR_R
