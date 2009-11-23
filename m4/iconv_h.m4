@@ -1,5 +1,5 @@
-# iconv_h.m4 serial 4
-dnl Copyright (C) 2007-2008 Free Software Foundation, Inc.
+# iconv_h.m4 serial 5
+dnl Copyright (C) 2007-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -7,6 +7,9 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_ICONV_H],
 [
   AC_REQUIRE([gl_ICONV_H_DEFAULTS])
+
+  dnl Execute this unconditionally, because ICONV_H may be set by other
+  dnl modules, after this code is executed.
   gl_CHECK_NEXT_HEADERS([iconv.h])
 ])
 

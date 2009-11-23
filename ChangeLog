@@ -1,5 +1,14 @@
 2009-11-22  Bruno Haible  <bruno@clisp.org>
 
+	Add comments.
+	* m4/dirent_h.m4 (gl_DIRENT_H): Add comment about gl_CHECK_NEXT_HEADERS
+	invocation.
+	* m4/iconv_h.m4 (gl_ICONV_H): Likewise.
+	* m4/spawn_h.m4 (gl_SPAWN_H): Likewise.
+	* m4/wchar.m4 (gl_WCHAR_H): Likewise.
+
+2009-11-22  Bruno Haible  <bruno@clisp.org>
+
 	error: account for the possibility of freopen (stdout).
 	* lib/error.c: Include <unistd.h>.
 	(flush_stdout): New function, extracted from error and error_at_line.

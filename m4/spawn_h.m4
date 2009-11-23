@@ -1,5 +1,5 @@
-# spawn_h.m4 serial 1
-dnl Copyright (C) 2008 Free Software Foundation, Inc.
+# spawn_h.m4 serial 2
+dnl Copyright (C) 2008-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -12,6 +12,8 @@ AC_DEFUN([gl_SPAWN_H],
   dnl once only, before all statements that occur in other macros.
   AC_REQUIRE([gl_SPAWN_H_DEFAULTS])
 
+  dnl Execute this unconditionally, because SPAWN_H may be set by other
+  dnl modules, after this code is executed.
   gl_CHECK_NEXT_HEADERS([spawn.h])
 
   AC_CHECK_HEADERS_ONCE([spawn.h])

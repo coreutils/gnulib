@@ -1,4 +1,4 @@
-# dirent_h.m4 serial 6
+# dirent_h.m4 serial 7
 dnl Copyright (C) 2008-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,6 +12,8 @@ AC_DEFUN([gl_DIRENT_H],
   dnl once only, before all statements that occur in other macros.
   AC_REQUIRE([gl_DIRENT_H_DEFAULTS])
 
+  dnl Execute this unconditionally, because DIRENT_H may be set by other
+  dnl modules, after this code is executed.
   gl_CHECK_NEXT_HEADERS([dirent.h])
 ])
 
