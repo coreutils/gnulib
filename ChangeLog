@@ -1,3 +1,8 @@
+2009-11-23  Bruno Haible  <bruno@clisp.org>
+
+	duplocale: Add support for glibc 2.3.x.
+	* lib/duplocale.c (rpl_duplocale): Add fallback code for glibc 2.3.x.
+
 2009-11-22  Bruno Haible  <bruno@clisp.org>
 
 	vasnprintf: Tiny optimization.

@@ -70,10 +70,16 @@ rpl_duplocale (locale_t locale)
 	  , { LC_IDENTIFICATION, LC_IDENTIFICATION_MASK }
 #endif
 	};
-      const char *base_name = nl_langinfo (_NL_LOCALE_NAME (LC_CTYPE));
-      locale_t base_copy = newlocale (LC_ALL_MASK, base_name, NULL);
+      const char *base_name;
+      locale_t base_copy;
       unsigned int i;
 
+      base_name = nl_langinfo (_NL_LOCALE_NAME (LC_CTYPE));
+      if (base_name[0] == '\0')
+	/* Fallback code for glibc < 2.4, which did not implement
+	   nl_langinfo (_NL_LOCALE_NAME (category)).  */
+	base_name = setlocale (LC_CTYPE, NULL);
+      base_copy = newlocale (LC_ALL_MASK, base_name, NULL);
       if (base_copy == NULL)
 	return NULL;
 
@@ -82,6 +88,10 @@ rpl_duplocale (locale_t locale)
 	  int category = categories[i].cat;
 	  int category_mask = categories[i].mask;
 	  const char *name = nl_langinfo (_NL_LOCALE_NAME (category));
+	  if (name[0] == '\0')
+	    /* Fallback code for glibc < 2.4, which did not implement
+	       nl_langinfo (_NL_LOCALE_NAME (category)).  */
+	    name = setlocale (category, NULL);
 	  if (strcmp (name, base_name) != 0)
 	    {
 	      locale_t copy = newlocale (category_mask, name, base_copy);
