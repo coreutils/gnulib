@@ -1,5 +1,20 @@
 2009-11-22  Bruno Haible  <bruno@clisp.org>
 
+	New module 'duplocale'.
+	* m4/duplocale.m4: New file.
+	* lib/locale.in.h (duplocale): New declaration.
+	* lib/duplocale.c: New file.
+	* m4/locale_h.m4 (gl_REPLACE_LOCALE_H, gl_LOCALE_MODULE_INDICATOR,
+	gl_LOCALE_H_DEFAULTS): New macros.
+	(gl_LOCALE_H): Require gl_LOCALE_H_DEFAULTS. Invoke
+	gl_CHECK_NEXT_HEADERS unconditionally. Invoke gl_REPLACE_LOCALE_H.
+	* modules/locale (Makefile.am): Substitute also GNULIB_DUPLOCALE,
+	REPLACE_DUPLOCALE.
+	* modules/duplocale: New file.
+	* doc/posix-functions/duplocale.texi: Mention the glibc bug.
+
+2009-11-22  Bruno Haible  <bruno@clisp.org>
+
 	* modules/locale-tests (configure.ac): Test for newlocale function.
 	* tests/test-locale.c: When the system has extended locale functions,
 	verify that <locale.h> defines locale_t and LC_GLOBAL_LOCALE.
