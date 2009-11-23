@@ -1,5 +1,11 @@
 2009-11-22  Bruno Haible  <bruno@clisp.org>
 
+	vasnprintf: Tiny optimization.
+	* lib/vasnprintf.c (decimal_point_char): Choose the fast path also on
+	MacOS X.
+
+2009-11-22  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'duplocale'.
 	* modules/duplocale-tests: New file.
 	* tests/test-duplocale.c: New file.
