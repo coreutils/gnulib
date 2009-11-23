@@ -1,5 +1,9 @@
 2009-11-22  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'duplocale'.
+	* modules/duplocale-tests: New file.
+	* tests/test-duplocale.c: New file.
+
 	New module 'duplocale'.
 	* m4/duplocale.m4: New file.
 	* lib/locale.in.h (duplocale): New declaration.
