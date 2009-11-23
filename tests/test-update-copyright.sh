@@ -223,7 +223,7 @@ rm $TMP*
 ## -------------- ##
 
 TMP=$TMP_BASE-current-year
-YEAR=`/usr/bin/perl -e 'print [localtime]->[5] + 1900'`;
+YEAR=`date +%Y`
 cat > $TMP <<EOF
 '\" Copyright (C) 2006
 '\" Free Software Foundation,
