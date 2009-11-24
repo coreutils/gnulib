@@ -1,3 +1,8 @@
+2009-11-25  Eric Blake  <ebb9@byu.net>
+
+	utimes: fix configure grammar
+	* m4/utimes.m4 (gl_FUNC_UTIMES): Delete spurious word.
+
 2009-11-25  Paolo Bonzini  <bonzini@gnu.org>
 
 	regex: Fix fastmap for multibyte character ranges.
