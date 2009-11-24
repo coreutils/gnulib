@@ -1,3 +1,11 @@
+2009-11-24  Bruno Haible  <bruno@clisp.org>
+
+	duplocale: Fix logic bug.
+	* lib/duplocale.c: Don't include <langinfo.h>.
+	(_NL_LOCALE_NAME): Remove macro.
+	(rpl_duplocale): Use setlocale instead of nl_langinfo.
+	* tests/test-duplocale.c (main): Also test duplocale after uselocale.
+
 2009-11-23  Jim Meyering  <meyering@redhat.com>
 
 	test-update-copyright: don't hard-code /usr/bin/perl

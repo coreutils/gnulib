@@ -22,14 +22,7 @@
 #include <locale.h>
 
 #include <errno.h>
-#include <langinfo.h>
 #include <string.h>
-
-/* Work around an incorrect definition of the _NL_LOCALE_NAME macro in
-   glibc < 2.12.
-   See <http://sourceware.org/bugzilla/show_bug.cgi?id=10968>.  */
-#undef _NL_LOCALE_NAME
-#define _NL_LOCALE_NAME(category) _NL_ITEM ((category), _NL_ITEM_INDEX (-1))
 
 #define SIZEOF(a) (sizeof(a) / sizeof(a[0]))
 
@@ -74,11 +67,7 @@ rpl_duplocale (locale_t locale)
       locale_t base_copy;
       unsigned int i;
 
-      base_name = nl_langinfo (_NL_LOCALE_NAME (LC_CTYPE));
-      if (base_name[0] == '\0')
-	/* Fallback code for glibc < 2.4, which did not implement
-	   nl_langinfo (_NL_LOCALE_NAME (category)).  */
-	base_name = setlocale (LC_CTYPE, NULL);
+      base_name = setlocale (LC_CTYPE, NULL);
       base_copy = newlocale (LC_ALL_MASK, base_name, NULL);
       if (base_copy == NULL)
 	return NULL;
@@ -87,11 +76,7 @@ rpl_duplocale (locale_t locale)
 	{
 	  int category = categories[i].cat;
 	  int category_mask = categories[i].mask;
-	  const char *name = nl_langinfo (_NL_LOCALE_NAME (category));
-	  if (name[0] == '\0')
-	    /* Fallback code for glibc < 2.4, which did not implement
-	       nl_langinfo (_NL_LOCALE_NAME (category)).  */
-	    name = setlocale (category, NULL);
+	  const char *name = setlocale (category, NULL);
 	  if (strcmp (name, base_name) != 0)
 	    {
 	      locale_t copy = newlocale (category_mask, name, base_copy);

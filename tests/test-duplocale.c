@@ -64,7 +64,8 @@ int
 main ()
 {
   struct locale_dependent_values expected_results;
-  locale_t mixed;
+  locale_t mixed1;
+  locale_t mixed2;
 
   /* Set up a locale which is a mix between different system locales.  */
   setlocale (LC_ALL, "en_US.UTF-8");
@@ -73,18 +74,40 @@ main ()
   get_locale_dependent_values (&expected_results);
 
   /* Save the locale in a locale_t object.  */
-  mixed = duplocale (LC_GLOBAL_LOCALE);
-  ASSERT (mixed != NULL);
+  mixed1 = duplocale (LC_GLOBAL_LOCALE);
+  ASSERT (mixed1 != NULL);
+
+  /* Use a per-thread locale.  */
+  uselocale (newlocale (LC_ALL_MASK, "es_ES.UTF-8", NULL));
+
+  /* Save the locale in a locale_t object again.  */
+  mixed2 = duplocale (LC_GLOBAL_LOCALE);
+  ASSERT (mixed2 != NULL);
 
   /* Set up a default locale.  */
   setlocale (LC_ALL, "C");
+  uselocale (LC_GLOBAL_LOCALE);
   {
     struct locale_dependent_values c_results;
     get_locale_dependent_values (&c_results);
   }
 
-  /* Now use the saved locale again.  */
-  uselocale (mixed);
+  /* Now use the saved locale mixed1 again.  */
+  setlocale (LC_ALL, "C");
+  uselocale (LC_GLOBAL_LOCALE);
+  uselocale (mixed1);
+  {
+    struct locale_dependent_values results;
+    get_locale_dependent_values (&results);
+    ASSERT (strcmp (results.monetary, expected_results.monetary) == 0);
+    ASSERT (strcmp (results.numeric, expected_results.numeric) == 0);
+    ASSERT (strcmp (results.time, expected_results.time) == 0);
+  }
+
+  /* Now use the saved locale mixed2 again.  */
+  setlocale (LC_ALL, "C");
+  uselocale (LC_GLOBAL_LOCALE);
+  uselocale (mixed2);
   {
     struct locale_dependent_values results;
     get_locale_dependent_values (&results);
