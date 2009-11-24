@@ -54,10 +54,12 @@ struct utimbuf
 #undef utimensat
 
 #if HAVE_UTIMENSAT || HAVE_FUTIMENS
-/* Cache variable for whether syscall works; used to avoid calling the
-   syscall if we know it will just fail with ENOSYS.  0 = unknown, 1 =
-   yes, -1 = no.  */
+/* Cache variables for whether the utimensat syscall works; used to
+   avoid calling the syscall if we know it will just fail with ENOSYS.
+   There are some Linux kernel versions where a flag of 0 passes, but
+   not AT_SYMLINK_NOFOLLOW.  0 = unknown, 1 = yes, -1 = no.  */
 static int utimensat_works_really;
+static int lutimensat_works_really;
 #endif /* HAVE_UTIMENSAT || HAVE_UTIMENSAT */
 
 /* Solaris 9 mistakenly succeeds when given a non-directory with a
@@ -242,6 +244,7 @@ fdutimens (char const *file, int fd, struct timespec const timespec[2])
 # endif /* HAVE_FUTIMENS */
     }
   utimensat_works_really = -1;
+  lutimensat_works_really = -1;
 #endif /* HAVE_UTIMENSAT || HAVE_FUTIMENS */
 
   /* The platform lacks an interface to set file timestamps with
@@ -381,7 +384,7 @@ lutimens (char const *file, struct timespec const timespec[2])
      worry about bogus return values.  */
 
 #if HAVE_UTIMENSAT
-  if (0 <= utimensat_works_really)
+  if (0 <= lutimensat_works_really)
     {
       int result = utimensat (AT_FDCWD, file, ts, AT_SYMLINK_NOFOLLOW);
 # ifdef __linux__
@@ -398,10 +401,11 @@ lutimens (char const *file, struct timespec const timespec[2])
       if (result == 0 || errno != ENOSYS)
         {
           utimensat_works_really = 1;
+          lutimensat_works_really = 1;
           return result;
         }
     }
-  utimensat_works_really = -1;
+  lutimensat_works_really = -1;
 #endif /* HAVE_UTIMENSAT */
 
   /* The platform lacks an interface to set file timestamps with
@@ -416,7 +420,9 @@ lutimens (char const *file, struct timespec const timespec[2])
         return 0;
     }
 
-#if HAVE_LUTIMES
+  /* On Linux, lutimes is a thin wrapper around utimensat, so there is
+     no point trying lutimes if utimensat failed with ENOSYS.  */
+#if HAVE_LUTIMES && !HAVE_UTIMENSAT
   {
     struct timeval timeval[2];
     struct timeval const *t;
@@ -431,9 +437,11 @@ lutimens (char const *file, struct timespec const timespec[2])
     else
       t = NULL;
 
-    return lutimes (file, t);
+    result = lutimes (file, t);
+    if (result == 0 || errno != ENOSYS)
+      return result;
   }
-#endif /* HAVE_LUTIMES */
+#endif /* HAVE_LUTIMES && !HAVE_UTIMENSAT */
 
   /* Out of luck for symlinks, but we still handle regular files.  */
   if (!(adjustment_needed || REPLACE_FUNC_STAT_FILE) && lstat (file, &st))

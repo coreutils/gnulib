@@ -1,5 +1,11 @@
 2009-11-25  Eric Blake  <ebb9@byu.net>
 
+	utimens: work around older Linux failure with symlinks
+	* lib/utimens.c (lutimensat_works_really): New variable.
+	(fdutimens, lutimens): Use it to manage kernels that support
+	nanosecond times on files, but not on symlinks.
+	Reported by Ondřej Vašík.
+
 	utimes: fix configure grammar
 	* m4/utimes.m4 (gl_FUNC_UTIMES): Delete spurious word.
 
