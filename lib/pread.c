@@ -23,6 +23,7 @@
 
 #define __libc_lseek(f,o,w) lseek (f, o, w)
 #define __set_errno(Val) errno = (Val)
+#define __libc_read(f,b,n) read (f, b, n)
 
 /* pread substitute for systems that the function, such as mingw32 and BeOS.  */
 /* The following is identical to the function from glibc's

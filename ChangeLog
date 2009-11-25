@@ -1,5 +1,10 @@
 2009-11-25  Jim Meyering  <meyering@redhat.com>
 
+	pread: improvement and fix
+	* modules/pread (Depends-on): Depend on lseek, for portability to
+	e.g., mingw.  Suggested by Eric Blake.
+	* lib/pread.c (__libc_read): Define.  Reported by Richard W.M. Jones.
+
 	unistd.in.h: correct declaration of pread
 	* lib/unistd.in.h: Correct type of "buf" parameter: void*, not char*
 	Reported by Richard W.M. Jones.
