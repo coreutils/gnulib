@@ -1,7 +1,11 @@
 2009-11-24  Bruno Haible  <bruno@clisp.org>
 
 	doc: Most *_l functions exist in MacOS X 10.5.
-	* doc/posix-functions/isalnum_l.texi: Update platforms list.
+	* doc/posix-functions/duplocale.texi: Update platforms list.
+	* doc/posix-functions/freelocale.texi: Likewise.
+	* doc/posix-functions/newlocale.texi: Likewise.
+	* doc/posix-functions/uselocale.texi: Likewise.
+	* doc/posix-functions/isalnum_l.texi: Likewise.
 	* doc/posix-functions/isalpha_l.texi: Likewise.
 	* doc/posix-functions/isblank_l.texi: Likewise.
 	* doc/posix-functions/iscntrl_l.texi: Likewise.
