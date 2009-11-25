@@ -1345,6 +1345,7 @@ h_errno
 index
 makecontext
 mktemp
+pread
 pthread_attr_getstackaddr
 pthread_attr_setstackaddr
 rindex

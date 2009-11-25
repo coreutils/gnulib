@@ -1,0 +1,24 @@
+Description:
+pread() function: read without changing file offset
+
+Files:
+lib/pread.c
+m4/pread.m4
+
+Depends-on:
+unistd
+
+configure.ac:
+gl_FUNC_PREAD
+gl_UNISTD_MODULE_INDICATOR([pread])
+
+Makefile.am:
+
+Include:
+<unistd.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+Jim Meyering

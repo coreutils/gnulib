@@ -1,5 +1,16 @@
 2009-11-25  Jim Meyering  <meyering@redhat.com>
 
+	pread: new module
+	* modules/pread: New file.
+	* lib/unistd.in.h (pread): Define/declare.
+	* lib/pread.c (pread): New file.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Define defaults.
+	* modules/unistd (Makefile.am): Substitute witnesses.
+	* doc/posix-functions/pread.texi (pread): Update.
+	* MODULES.html.sh: Add pread.
+
+2009-11-25  Jim Meyering  <meyering@redhat.com>
+
 	tests/init.sh: new file to be used via most *.sh tests
 	* tests/init.sh: New file.
 
