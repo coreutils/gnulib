@@ -1,5 +1,8 @@
 2009-11-25  Jim Meyering  <meyering@redhat.com>
 
+	correct typo in test-pread.sh
+	* tests/test-pread.sh: Add #! line.
+
 	test pread
 	* tests/test-pread.c: New file.
 	* tests/test-pread.sh: Likewise.

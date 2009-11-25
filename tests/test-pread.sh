@@ -1,3 +1,4 @@
+#!/bin/sh
 : ${srcdir=.} ${builddir=.}
 . $srcdir/init.sh --set-path=$builddir
 
