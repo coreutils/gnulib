@@ -24,6 +24,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <fcntl.h>
+#include <errno.h>
 
 #define ASSERT(expr) \
   do                                                                         \
@@ -72,7 +73,22 @@ main (void)
 	}
     }
 
+  {
+    /* Invalid offset must evoke failure with EINVAL.  */
+    char byte;
+    ASSERT (pread (fd, &byte, 1, (off_t) -1) == -1);
+    ASSERT (errno == EINVAL);
+  }
+
   ASSERT (close (fd) == 0);
+
+  {
+    char byte;
+    /* Trying to operate on a pipe must evoke failure with ESPIPE.
+       This assumes that stdin is a pipe, and hence not seekable.  */
+    ASSERT (pread (STDIN_FILENO, &byte, 1, 1) == -1);
+    ASSERT (errno == ESPIPE);
+  }
 
   return 0;
 }

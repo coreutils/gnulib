@@ -1,5 +1,10 @@
 2009-11-25  Jim Meyering  <meyering@redhat.com>
 
+	test-pread: cover failure with ESPIPE and EINVAL
+	* tests/test-pread.c (main): Test for failure, too.
+	* tests/test-pread.sh: Invoke with stdin on a pipe.
+	Suggested by Eric Blake.
+
 	pread: improvement and fix
 	* modules/pread (Depends-on): Depend on lseek, for portability to
 	e.g., mingw.  Suggested by Eric Blake.
