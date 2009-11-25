@@ -1,5 +1,66 @@
 2009-11-24  Bruno Haible  <bruno@clisp.org>
 
+	doc: Most *_l functions exist in MacOS X 10.5.
+	* doc/posix-functions/isalnum_l.texi: Update platforms list.
+	* doc/posix-functions/isalpha_l.texi: Likewise.
+	* doc/posix-functions/isblank_l.texi: Likewise.
+	* doc/posix-functions/iscntrl_l.texi: Likewise.
+	* doc/posix-functions/isdigit_l.texi: Likewise.
+	* doc/posix-functions/isgraph_l.texi: Likewise.
+	* doc/posix-functions/islower_l.texi: Likewise.
+	* doc/posix-functions/isprint_l.texi: Likewise.
+	* doc/posix-functions/ispunct_l.texi: Likewise.
+	* doc/posix-functions/isspace_l.texi: Likewise.
+	* doc/posix-functions/isupper_l.texi: Likewise.
+	* doc/posix-functions/iswalnum_l.texi: Likewise.
+	* doc/posix-functions/iswalpha_l.texi: Likewise.
+	* doc/posix-functions/iswblank_l.texi: Likewise.
+	* doc/posix-functions/iswcntrl_l.texi: Likewise.
+	* doc/posix-functions/iswctype_l.texi: Likewise.
+	* doc/posix-functions/iswdigit_l.texi: Likewise.
+	* doc/posix-functions/iswgraph_l.texi: Likewise.
+	* doc/posix-functions/iswlower_l.texi: Likewise.
+	* doc/posix-functions/iswprint_l.texi: Likewise.
+	* doc/posix-functions/iswpunct_l.texi: Likewise.
+	* doc/posix-functions/iswspace_l.texi: Likewise.
+	* doc/posix-functions/iswupper_l.texi: Likewise.
+	* doc/posix-functions/iswxdigit_l.texi: Likewise.
+	* doc/posix-functions/isxdigit_l.texi: Likewise.
+	* doc/posix-functions/nl_langinfo_l.texi: Likewise.
+	* doc/posix-functions/strcasecmp_l.texi: Likewise.
+	* doc/posix-functions/strcoll_l.texi: Likewise.
+	* doc/posix-functions/strfmon_l.texi: Likewise.
+	* doc/posix-functions/strftime_l.texi: Likewise.
+	* doc/posix-functions/strncasecmp_l.texi: Likewise.
+	* doc/posix-functions/strxfrm_l.texi: Likewise.
+	* doc/posix-functions/tolower_l.texi: Likewise.
+	* doc/posix-functions/toupper_l.texi: Likewise.
+	* doc/posix-functions/towctrans_l.texi: Likewise.
+	* doc/posix-functions/towlower_l.texi: Likewise.
+	* doc/posix-functions/towupper_l.texi: Likewise.
+	* doc/posix-functions/wcscoll_l.texi: Likewise.
+	* doc/posix-functions/wcsxfrm_l.texi: Likewise.
+	* doc/posix-functions/wctrans_l.texi: Likewise.
+	* doc/posix-functions/wctype_l.texi: Likewise.
+	* doc/glibc-functions/strptime_l.texi: Likewise.
+	* doc/glibc-functions/strtod_l.texi: Likewise.
+	* doc/glibc-functions/strtof_l.texi: Likewise.
+	* doc/glibc-functions/strtol_l.texi: Likewise.
+	* doc/glibc-functions/strtold_l.texi: Likewise.
+	* doc/glibc-functions/strtoll_l.texi: Likewise.
+	* doc/glibc-functions/strtoul_l.texi: Likewise.
+	* doc/glibc-functions/strtoull_l.texi: Likewise.
+	* doc/glibc-functions/wcsftime_l.texi: Likewise.
+	* doc/glibc-functions/wcstod_l.texi: Likewise.
+	* doc/glibc-functions/wcstof_l.texi: Likewise.
+	* doc/glibc-functions/wcstol_l.texi: Likewise.
+	* doc/glibc-functions/wcstold_l.texi: Likewise.
+	* doc/glibc-functions/wcstoll_l.texi: Likewise.
+	* doc/glibc-functions/wcstoul_l.texi: Likewise.
+	* doc/glibc-functions/wcstoull_l.texi: Likewise.
+
+2009-11-24  Bruno Haible  <bruno@clisp.org>
+
 	duplocale: Fix logic bug.
 	* lib/duplocale.c: Don't include <langinfo.h>.
 	(_NL_LOCALE_NAME): Remove macro.
