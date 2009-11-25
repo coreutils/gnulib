@@ -1,5 +1,10 @@
 2009-11-25  Jim Meyering  <meyering@redhat.com>
 
+	test pread
+	* tests/test-pread.c: New file.
+	* tests/test-pread.sh: Likewise.
+	* modules/pread-tests: Likewise.
+
 	pread: new module
 	* modules/pread: New file.
 	* lib/unistd.in.h (pread): Define/declare.
