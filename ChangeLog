@@ -1,3 +1,9 @@
+2009-11-25  Paolo Bonzini  <bonzini@gnu.org>
+
+	regex: Fix fastmap for multibyte character ranges.
+	* lib/regcomp.c (re_compute_fastmap_iter): Add all multibyte lead
+	characters when a multibyte character range is included.
+
 2009-11-22  Andy Wingo  <wingo@pobox.com>
 
 	version-etc: work also with AM_INIT_AUTOMAKE's no-define option
