@@ -1,3 +1,8 @@
+2009-11-25  Jim Meyering  <meyering@redhat.com>
+
+	tests/init.sh: new file to be used via most *.sh tests
+	* tests/init.sh: New file.
+
 2009-11-25  Eric Blake  <ebb9@byu.net>
 
 	utimens: work around older Linux failure with symlinks
