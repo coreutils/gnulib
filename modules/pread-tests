@@ -1,5 +1,6 @@
 Files:
 tests/test-pread.c
+tests/test-pread.sh
 tests/init.sh
 
 Depends-on:
