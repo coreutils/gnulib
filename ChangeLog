@@ -1,5 +1,9 @@
 2009-11-25  Jim Meyering  <meyering@redhat.com>
 
+	unistd.in.h: correct declaration of pread
+	* lib/unistd.in.h: Correct type of "buf" parameter: void*, not char*
+	Reported by Richard W.M. Jones.
+
 	test-pread.sh: distribute the test script
 	* modules/pread-tests (Files): Include test-pread.sh.
 

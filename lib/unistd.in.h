@@ -673,7 +673,7 @@ extern int pipe2 (int fd[2], int flags);
    set errno and return -1.  0 indicates EOF.  See the POSIX:2001
    specification <http://www.opengroup.org/susv3xsh/pread.html>.  */
 # if !@HAVE_PREAD@ || @REPLACE_PREAD@
-  extern ssize_t pread (int fd, char *buf, size_t bufsize, off_t offset);
+  extern ssize_t pread (int fd, void *buf, size_t bufsize, off_t offset);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef pread
