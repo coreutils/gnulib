@@ -1,5 +1,11 @@
 2009-11-25  Jim Meyering  <meyering@redhat.com>
 
+	test-pread.sh: clean up
+	* tests/test-pread.sh: Don't refer to $builddir. Just use equivalent ".".
+	* modules/pread-tests (TESTS_ENVIRONMENT): Don't export builddir.
+	That is unnecessary, since it's always ".".
+	Suggestion from Eric Blake.
+
 	test-pread.sh: make executable
 	* tests/test-pread.sh: Set executable bit.
 	Reported by Eric Blake.
