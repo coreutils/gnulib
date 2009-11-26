@@ -1,3 +1,8 @@
+2009-11-26  Richard Jones  <rjones@redhat.com>
+
+	w32sock: leave win32 error in place.
+	* lib/w32sock.h (set_winsock_errno): Do not call WSASetLastError.
+
 2009-11-26  Eric Blake  <ebb9@byu.net>
 
 	init.sh: suggest to use skip_ and fail_ functions in comments
