@@ -27,6 +27,7 @@
 #   Note that these commands are executed in a subdirectory, therefore you
 #   need to prepend "../" to relative filenames in the build directory.
 #   Set the exit code 0 for success, 77 for skipped, or 1 or other for failure.
+#   Use the skip_ and fail_ functions to print a diagnostic and then exit
 #   with the corresponding exit code.
 #   Exit $?
 
