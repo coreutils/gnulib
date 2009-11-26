@@ -210,7 +210,7 @@ mktempd_()
 
 # If you want to override the testdir_prefix_ function,
 # or to add more utility functions, use this file.
-test -f $srcdir/init.cfg \
-  && . $srcdir/init.cfg
+test -f "$srcdir/init.cfg" \
+  && . "$srcdir/init.cfg"
 
 setup_ "$@"

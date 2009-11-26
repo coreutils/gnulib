@@ -1,5 +1,15 @@
 2009-11-26  Jim Meyering  <meyering@redhat.com>
 
+	init.sh: accommodate even those who specify bogus srcdir manually
+	* tests/init.sh: Normally, srcdir is guaranteed by automake and
+	configure-time tests to be sanitized, so that there is no need to
+	use "$srcdir" in Makefile rules and shell scripts.  Using $srcdir
+	(with no double quotes) suffices.  However, since tests may be
+	invoked manually, and since you may explicitly set srcdir to the
+	name of a directory containing spaces, do quote its uses here.
+	* tests/test-pread.sh: Likewise.
+	Suggested by Bruno Haible.
+
 	test-pread.sh: avoid diagnostics for those who ignore SIGPIPE
 	* tests/test-pread.sh: Write no data into the pipe, because
 	test-pread actually reads none.  This avoids a diagnostic,
