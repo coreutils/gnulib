@@ -15,6 +15,42 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# Using this file in a test
+# =========================
+#
+# The typical skeleton of a test looks like this:
+#
+#   #!/bin/sh
+#   : ${srcdir=.}
+#   . "$srcdir/init.sh" --set-path=.
+#   Execute some commands.
+#   Note that these commands are executed in a subdirectory, therefore you
+#   need to prepend "../" to relative filenames in the build directory.
+#   Set the exit code 0 for success, 77 for skipped, or 1 or other for failure.
+#   with the corresponding exit code.
+#   Exit $?
+
+# Executing a test that uses this file
+# ====================================
+#
+# Running a single test:
+#   $ make check TESTS=test-foo.sh
+#
+# Running a single test, with verbose output:
+#   $ make check TESTS=test-foo.sh VERBOSE=yes
+#
+# Running a single test, with single-stepping:
+#   1. Go into a sub-shell:
+#   $ bash
+#   2. Set relevant environment variables from TESTS_ENVIRONMENT in the
+#      Makefile:
+#   $ export srcdir=../../tests # this is an example
+#   3. Execute the commands from the test, copy&pasting them one by one:
+#   $ . "$srcdir/init.sh" --set-path=.
+#   ...
+#   4. Finally
+#   $ exit
+
 # We use a trap below for cleanup.  This requires us to go through
 # hoops to get the right exit status transported through the handler.
 # So use `Exit STATUS' instead of `exit STATUS' inside of the tests.

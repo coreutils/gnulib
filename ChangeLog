@@ -1,3 +1,8 @@
+2009-11-25  Bruno Haible  <bruno@clisp.org>
+
+	init.sh: add documentation in comments
+	* tests/init.sh: Add some developer and user documentation.
+
 2009-11-26  Jim Meyering  <meyering@redhat.com>
 
 	init.sh: accommodate even those who specify bogus srcdir manually
