@@ -1,3 +1,7 @@
+2009-11-27  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/idpriv-droptemp-tests (Notice): Fix text.
+
 2009-11-27  Jim Meyering  <meyering@redhat.com>
 
 	test-xalloc-die: avoid spurious failure due to libtool argv difference
