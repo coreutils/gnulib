@@ -1,3 +1,17 @@
+2009-11-27  Jim Meyering  <meyering@redhat.com>
+
+	test-xalloc-die: avoid spurious failure due to libtool argv difference
+	In a libtool-enabled project, this test would fail due to a difference
+	in the emitted program name, e.g.,
+	-test-xalloc-die: memory exhausted
+	+/tmp/.../tests/.libs/lt-test-xalloc-die: memory exhausted
+	Use program to avoid that.
+	* modules/xalloc-die-tests (Depends-on): Add progname.
+	* tests/test-xalloc-die.c: Include progname.h".
+	(program_name): Remove decl.
+	(main): Call set_program_name.
+	* tests/test-xalloc-die.sh (compare): Remove unnecessary ${EXE}.
+
 2009-11-26  Richard Jones  <rjones@redhat.com>
 
 	w32sock: leave win32 error in place.

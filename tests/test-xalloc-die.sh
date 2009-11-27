@@ -34,7 +34,7 @@ tmpfiles="$tmpout $tmperr ${tmperr}2"
 
 PATH=".:$PATH"
 export PATH
-test-xalloc-die${EXEEXT} 2> ${tmperr} > ${tmpout}
+test-xalloc-die 2> ${tmperr} > ${tmpout}
 case $? in
   1) ;;
   *) (exit 1); exit 1 ;;

@@ -3,6 +3,7 @@ tests/test-xalloc-die.c
 tests/test-xalloc-die.sh
 
 Depends-on:
+progname
 
 Makefile.am:
 TESTS += test-xalloc-die.sh

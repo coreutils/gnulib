@@ -19,12 +19,12 @@
 #include <config.h>
 
 #include "xalloc.h"
-
-char *program_name = "test-xalloc-die";
+#include "progname.h"
 
 int
-main (void)
+main (int argc, char **argv)
 {
+  set_program_name (argv[0]);
   xalloc_die ();
   return 0;
 }
