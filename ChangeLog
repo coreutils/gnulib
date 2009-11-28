@@ -1,3 +1,9 @@
+2010-01-22  Jim Meyering  <meyering@redhat.com>
+
+	userspec: add unit tests
+	* tests/test-userspec.c: New file.
+	* modules/userspec-tests: Likewise.
+
 2010-01-21  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: handle source file names containing "." robustly
