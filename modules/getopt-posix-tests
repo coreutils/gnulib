@@ -5,6 +5,7 @@ tests/test-getopt_long.h
 
 Depends-on:
 setenv
+stdbool
 unistd
 unsetenv
 

@@ -25,6 +25,10 @@ The function @code{getopt} does not support the @samp{+} flag in the options
 string on some platforms:
 MacOS X 10.5, AIX 5.2, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10.
 @item
+The function @code{getopt} does not obey the @samp{-} flag in the options
+string when @env{POSIXLY_CORRECT} is set on some platforms:
+Cygwin 1.7.0.
+@item
 The function @code{getopt} does not support options with optional arguments
 on some platforms:
 MacOS X 10.5, OpenBSD 4.0, AIX 5.2, HP-UX 11, IRIX 6.5, OSF/1 5.1,
@@ -32,6 +36,10 @@ Solaris 10, Cygwin 1.5.x.
 @item
 The function @code{getopt_long} is missing on some platforms:
 AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 9, Interix 3.5.
+@item
+The function @code{getopt_long_only} is missing on some platforms:
+MacOS X 10.3, FreeBSD 5.2.1, NetBSD 3.0, AIX 5.1, HP-UX 11, IRIX 6.5,
+OSF/1 5.1, Solaris 9, mingw, Interix 3.5.
 @end itemize
 
 Portability problems not fixed by Gnulib:
@@ -41,8 +49,12 @@ The default behavior of the glibc implementation of @code{getopt} allows
 mixing option and non-option arguments on the command line in any order.
 Other implementations, such as the one in Cygwin, enforce strict POSIX
 compliance: they require that the option arguments precede the non-option
-arguments.  This is something to watch out in your program's testsuite.
+arguments.  This is something to watch out in your program's
+testsuite.
 @item
-The function @code{getopt_long_only} is missing on some platforms:
-MacOS X 10.3, FreeBSD 5.2.1, NetBSD 3.0, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 9, mingw, Interix 3.5.
+The glibc implementation allows a complete reset of the environment,
+including re-checking for @env{POSIXLY_CORRECT}, by setting
+@code{optind} to 0.  Other implementations provide @code{optreset},
+causing a reset by setting it non-zero, although it does not
+necessarily re-read @env{POSIXLY_CORRECT}.
 @end itemize

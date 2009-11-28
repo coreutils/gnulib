@@ -1,3 +1,18 @@
+2009-11-27  Eric Blake  <ebb9@byu.net>
+
+	getopt-gnu: flush out another BSD bug
+	* m4/getopt.m4 (gl_GETOPT_CHECK_HEADERS): Test for the bug.
+	* tests/test-getopt.c (main): Check POSIXLY_CORRECT first, to
+	flush out BSD bug.
+	* tests/test-getopt.h (test_getopt): End lists with NULL.
+	* tests/test-getopt_long.h (test_getopt_long): Likewise.
+	(test_getopt_long_posix): Enhance test.
+	* modules/getopt-posix-tests (Depends-on): Add stdbool.
+	* doc/glibc-functions/getopt_long.texi (getopt_long): Mention
+	getopt-gnu.
+	* doc/glibc-functions/getopt_long_only.texi (getopt_long_only):
+	Likewise.
+
 2009-11-27  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/idpriv-droptemp-tests (Notice): Fix text.

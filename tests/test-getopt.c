@@ -55,14 +55,18 @@
 int
 main (void)
 {
-  unsetenv ("POSIXLY_CORRECT");
-
+  setenv ("POSIXLY_CORRECT", "1", 1);
   test_getopt ();
+
+#if GNULIB_GETOPT_GNU
+  test_getopt_long_posix ();
+#endif
+
+  unsetenv ("POSIXLY_CORRECT");
+  test_getopt ();
+
 #if GNULIB_GETOPT_GNU
   test_getopt_long ();
-
-  setenv ("POSIXLY_CORRECT", "1", 0);
-  test_getopt_long_posix ();
 #endif
 
   return 0;

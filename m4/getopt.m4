@@ -1,4 +1,4 @@
-# getopt.m4 serial 23
+# getopt.m4 serial 24
 dnl Copyright (C) 2002-2006, 2008-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -75,11 +75,13 @@ AC_DEFUN([gl_GETOPT_CHECK_HEADERS],
     AC_CHECK_FUNCS([getopt_long_only], [], [gl_replace_getopt=yes])
   fi
 
-  dnl BSD getopt_long uses an incompatible method to reset option processing,
-  dnl but the testsuite does not show a need to use this 'optreset' variable.
-  if false && test -z "$gl_replace_getopt" && test $gl_getopt_required = GNU; then
-    AC_CHECK_DECL([optreset], [gl_replace_getopt=yes], [],
-      [#include <getopt.h>])
+  dnl BSD getopt_long uses an incompatible method to reset option processing.
+  dnl Existence of the variable, in and of itself, is not a reason to replace
+  dnl getopt, but knowledge of the variable is needed to determine how to
+  dnl reset and whether a reset reparses the environment.
+  if test -z "$gl_replace_getopt" && test $gl_getopt_required = GNU; then
+    AC_CHECK_DECLS([optreset], [], [],
+      [[#include <getopt.h>]])
   fi
 
   dnl mingw's getopt (in libmingwex.a) does weird things when the options
@@ -96,9 +98,7 @@ AC_DEFUN([gl_GETOPT_CHECK_HEADERS],
 #include <stdlib.h>
 #include <string.h>
 
-/* The glibc implementation of getopt supports setting optind = 0 as a means
-   of clearing the internal state, but other implementations don't.  */
-#if (__GLIBC__ >= 2)
+#if !HAVE_DECL_OPTRESET
 # define OPTIND_MIN 0
 #else
 # define OPTIND_MIN 1
@@ -116,6 +116,7 @@ main ()
     argv[argc++] = "-a";
     argv[argc++] = "foo";
     argv[argc++] = "bar";
+    argv[argc] = NULL;
     optind = OPTIND_MIN;
     opterr = 0;
 
@@ -141,6 +142,7 @@ main ()
     argv[argc++] = "duck";
     argv[argc++] = "-a";
     argv[argc++] = "bar";
+    argv[argc] = NULL;
     optind = OPTIND_MIN;
     opterr = 0;
 
@@ -182,11 +184,22 @@ main ()
 
   if test -z "$gl_replace_getopt" && test $gl_getopt_required = GNU; then
     AC_CACHE_CHECK([for working GNU getopt function], [gl_cv_func_getopt_gnu],
-      [AC_RUN_IFELSE(
+      [# Even with POSIXLY_CORRECT, the GNU extension of leading '-' in the
+       # optstring is necessary for programs like m4 that have POSIX-mandated
+       # semantics for supporting options interspersed with files.
+       gl_had_POSIXLY_CORRECT=${POSIXLY_CORRECT:+yes}
+       POSIXLY_CORRECT=1
+       export POSIXLY_CORRECT
+       AC_RUN_IFELSE(
 	[AC_LANG_PROGRAM([[#include <getopt.h>
 			   #include <stddef.h>
-			   #include <string.h>]],
-	   [[
+			   #include <string.h>
+#if !HAVE_DECL_OPTRESET
+# define OPTIND_MIN 0
+#else
+# define OPTIND_MIN (optreset = 1)
+#endif
+           ]], [[
              /* This code succeeds on glibc 2.8, OpenBSD 4.0, Cygwin, mingw,
                 and fails on MacOS X 10.5, AIX 5.2, HP-UX 11, IRIX 6.5,
                 OSF/1 5.1, Solaris 10.  */
@@ -201,9 +214,9 @@ main ()
              }
              /* This code succeeds on glibc 2.8, mingw,
                 and fails on MacOS X 10.5, OpenBSD 4.0, AIX 5.2, HP-UX 11,
-                IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin.  */
+                IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin 1.5.x.  */
              {
-               char *argv[] = { "program", "-p", "foo", "bar" };
+               char *argv[] = { "program", "-p", "foo", "bar", NULL };
 
                optind = 1;
                if (getopt (4, argv, "p::") != 'p')
@@ -215,16 +228,29 @@ main ()
                if (optind != 2)
                  return 5;
              }
+             /* This code succeeds on glibc 2.8 and fails on Cygwin 1.7.0.  */
+             {
+               char *argv[] = { "program", "foo", "-p", NULL };
+               optind = OPTIND_MIN;
+               if (getopt (3, argv, "-p") != 1)
+                 return 6;
+               if (getopt (3, argv, "-p") != 'p')
+                 return 7;
+             }
              return 0;
 	   ]])],
 	[gl_cv_func_getopt_gnu=yes],
 	[gl_cv_func_getopt_gnu=no],
 	[dnl Cross compiling. Guess based on host and declarations.
-         case "$host_os" in
-           *-gnu* | mingw*) gl_cv_func_getopt_gnu=no;;
-           *)               gl_cv_func_getopt_gnu=yes;;
+         case $host_os:$ac_cv_have_decl_optreset in
+           *-gnu*:* | mingw*:*) gl_cv_func_getopt_gnu=no;;
+           *:yes)               gl_cv_func_getopt_gnu=no;;
+           *)                   gl_cv_func_getopt_gnu=yes;;
          esac
         ])
+       if test "$gl_had_POSIXLY_CORRECT" != yes; then
+         AS_UNSET([POSIXLY_CORRECT])
+       fi
       ])
     if test "$gl_cv_func_getopt_gnu" = "no"; then
       gl_replace_getopt=yes
