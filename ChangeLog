@@ -1,5 +1,8 @@
 2009-11-28  Jim Meyering  <meyering@redhat.com>
 
+	userspec: depend on the inttostr module, too
+	* modules/userspec (Depends-on): Add inttostr.
+
 	userspec: disallow an ID that maps to (uid_t)-1 or (gid_t)-1
 	* lib/userspec.c (parse_with_separator): Do not accept a user ID
 	number of MAXUID when it evaluates to (uid_t) -1.

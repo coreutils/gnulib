@@ -14,6 +14,7 @@ xstrtol
 strdup
 gettext-h
 intprops
+inttostr
 stdbool
 
 configure.ac:
