@@ -1,5 +1,11 @@
 2009-11-28  Jim Meyering  <meyering@redhat.com>
 
+	userspec: disallow an ID that maps to (uid_t)-1 or (gid_t)-1
+	* lib/userspec.c (parse_with_separator): Do not accept a user ID
+	number of MAXUID when it evaluates to (uid_t) -1.
+	Likewise for group ID.  Reported by Matt McCutchen in
+	<http://savannah.gnu.org/bugs/?28113>
+
 	userspec: reformat to use spaces, not TABs
 	* lib/userspec.c: Expand TABs to spaces.
 	Add Emacs' "indent-tabs-mode: nil" hint.

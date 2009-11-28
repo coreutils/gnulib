@@ -169,7 +169,7 @@ parse_with_separator (char const *spec, char const *separator,
             {
               unsigned long int tmp;
               if (xstrtoul (u, NULL, 10, &tmp, "") == LONGINT_OK
-                  && tmp <= MAXUID)
+                  && tmp <= MAXUID && (uid_t) tmp != (uid_t) -1)
                 unum = tmp;
               else
                 error_msg = E_invalid_user;
@@ -200,7 +200,8 @@ parse_with_separator (char const *spec, char const *separator,
       if (grp == NULL)
         {
           unsigned long int tmp;
-          if (xstrtoul (g, NULL, 10, &tmp, "") == LONGINT_OK && tmp <= MAXGID)
+          if (xstrtoul (g, NULL, 10, &tmp, "") == LONGINT_OK
+              && tmp <= MAXGID && (gid_t) tmp != (gid_t) -1)
             gnum = tmp;
           else
             error_msg = E_invalid_group;
