@@ -1,3 +1,9 @@
+2009-11-28  Jim Meyering  <meyering@redhat.com>
+
+	userspec: reformat to use spaces, not TABs
+	* lib/userspec.c: Expand TABs to spaces.
+	Add Emacs' "indent-tabs-mode: nil" hint.
+
 2009-11-27  Eric Blake  <ebb9@byu.net>
 
 	getopt-gnu: flush out another BSD bug
