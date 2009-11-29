@@ -1,3 +1,9 @@
+2009-11-29  Jim Meyering  <meyering@redhat.com>
+
+	bootstrap: handle perl-5.11's changed --version output
+	* build-aux/bootstrap (get_version): Handle perl separately,
+	since perl-5.11's --version output is different.
+
 2009-11-28  Jim Meyering  <meyering@redhat.com>
 
 	userspec: depend on the inttostr module, too
