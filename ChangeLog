@@ -1,3 +1,9 @@
+2009-11-30  Eric Blake  <ebb9@byu.net>
+
+	utimens: fix compilation error
+	* lib/utimens.c (lutimens) [!HAVE_UTIMENSAT && HAVE_LUTIMES]:
+	Declare variable at right scope.
+
 2009-11-29  Jim Meyering  <meyering@redhat.com>
 
 	bootstrap: handle perl-5.11's changed --version output
