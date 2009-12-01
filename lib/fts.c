@@ -375,7 +375,6 @@ fts_open (char * const *argv,
 	register size_t nitems;
 	FTSENT *parent = NULL;
 	FTSENT *tmp = NULL;	/* pacify gcc */
-	size_t len;
 	bool defer_stat;
 
 	/* Options check. */
@@ -474,12 +473,8 @@ fts_open (char * const *argv,
 
 	/* Allocate/initialize root(s). */
 	for (root = NULL, nitems = 0; *argv != NULL; ++argv, ++nitems) {
-		/* Don't allow zero-length file names. */
-		if ((len = strlen(*argv)) == 0) {
-			__set_errno (ENOENT);
-			goto mem3;
-		}
-
+		/* *Do* allow zero-length file names. */
+		size_t len = strlen(*argv);
 		if ((p = fts_alloc(sp, *argv, len)) == NULL)
 			goto mem3;
 		p->fts_level = FTS_ROOTLEVEL;

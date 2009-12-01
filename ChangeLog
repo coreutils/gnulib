@@ -1,3 +1,14 @@
+2009-12-01  Jim Meyering  <meyering@redhat.com>
+
+	fts: fts_open: do not let an empty string cause immediate failure
+	This is required in support of GNU rm, for which the command
+	"rm A '' B" must process and remove both A and B, in spite of
+	the empty string argument.
+	* lib/fts.c (fts_open): Do not let the presence of an empty string
+	cause fts_open to fail immediately.  Most fts-using tools must be
+	able to process all arguments, in order, and can be expected to
+	diagnose such arguments themselves.
+
 2009-11-30  Eric Blake  <ebb9@byu.net>
 
 	utimens: fix compilation error
