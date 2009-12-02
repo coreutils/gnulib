@@ -1,3 +1,19 @@
+2009-12-22  Eric Blake  <ebb9@byu.net>
+
+	test-getopt: enhance test
+	* m4/getopt.m4 (gl_GETOPT_CHECK_HEADERS): Require that getopt_long
+	supports optind=0.
+	* tests/test-getopt.c (OPTIND_MIN): Move...
+	* tests/test-getopt.h (OPTIND_MIN): ...here.
+	* tests/test-getopt_long.h (test_getopt_long): Add more coverage.
+	Require that optind=0 works, since modern BSD supports it in
+	addition to optreset, and since coreutils expects it.
+	(test_getopt_long_only): New test.
+	* doc/glibc-functions/getopt_long.texi (getopt_long): Document
+	glibc shortcomings with 'W;', and enforcement of optind=0.
+	* doc/glibc-functions/getopt_long_only.texi (getopt_long_only):
+	Likewise.
+
 2009-12-21  Bruno Haible  <bruno@clisp.org>
 
 	localename: Improvements for MacOS X and Cygwin.

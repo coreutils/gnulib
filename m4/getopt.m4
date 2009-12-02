@@ -88,6 +88,7 @@ AC_DEFUN([gl_GETOPT_CHECK_HEADERS],
   dnl strings starts with '+' and it's not the first call.  Some internal state
   dnl is left over from earlier calls, and neither setting optind = 0 nor
   dnl setting optreset = 1 get rid of this internal state.
+  dnl POSIX is silent on optind vs. optreset, so we allow either behavior.
   if test -z "$gl_replace_getopt"; then
     AC_CACHE_CHECK([whether getopt is POSIX compatible],
       [gl_cv_func_getopt_posix],
@@ -187,6 +188,7 @@ main ()
       [# Even with POSIXLY_CORRECT, the GNU extension of leading '-' in the
        # optstring is necessary for programs like m4 that have POSIX-mandated
        # semantics for supporting options interspersed with files.
+       # Also, since getopt_long is a GNU extension, we require optind=0.
        gl_had_POSIXLY_CORRECT=${POSIXLY_CORRECT:+yes}
        POSIXLY_CORRECT=1
        export POSIXLY_CORRECT
@@ -194,11 +196,6 @@ main ()
         [AC_LANG_PROGRAM([[#include <getopt.h>
                            #include <stddef.h>
                            #include <string.h>
-#if !HAVE_DECL_OPTRESET
-# define OPTIND_MIN 0
-#else
-# define OPTIND_MIN (optreset = 1)
-#endif
            ]], [[
              /* This code succeeds on glibc 2.8, OpenBSD 4.0, Cygwin, mingw,
                 and fails on MacOS X 10.5, AIX 5.2, HP-UX 11, IRIX 6.5,
@@ -231,7 +228,7 @@ main ()
              /* This code succeeds on glibc 2.8 and fails on Cygwin 1.7.0.  */
              {
                char *argv[] = { "program", "foo", "-p", NULL };
-               optind = OPTIND_MIN;
+               optind = 0;
                if (getopt (3, argv, "-p") != 1)
                  return 6;
                if (getopt (3, argv, "-p") != 'p')

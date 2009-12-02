@@ -18,6 +18,17 @@
 
 #include <stdbool.h>
 
+/* The glibc/gnulib implementation of getopt supports setting optind =
+   0, but not all other implementations do.  This matters for getopt.
+   But for getopt_long, we require GNU compatibility.  */
+#if defined __GETOPT_PREFIX || (__GLIBC__ >= 2)
+# define OPTIND_MIN 0
+#elif HAVE_DECL_OPTRESET
+# define OPTIND_MIN (optreset = 1)
+#else
+# define OPTIND_MIN 1
+#endif
+
 static void
 getopt_loop (int argc, const char **argv,
              const char *options,

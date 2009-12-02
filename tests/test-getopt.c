@@ -39,14 +39,6 @@
     }                                                                        \
   while (0)
 
-/* The glibc/gnulib implementation of getopt supports setting optind = 0,
-   but other implementations don't.  */
-#if defined __GETOPT_PREFIX || (__GLIBC__ >= 2)
-# define OPTIND_MIN 0
-#else
-# define OPTIND_MIN 1
-#endif
-
 #include "test-getopt.h"
 #if GNULIB_GETOPT_GNU
 # include "test-getopt_long.h"
@@ -55,6 +47,10 @@
 int
 main (void)
 {
+  /* These default values are required by POSIX.  */
+  ASSERT (optind == 1);
+  ASSERT (opterr != 0);
+
   setenv ("POSIXLY_CORRECT", "1", 1);
   test_getopt ();
 
@@ -67,6 +63,7 @@ main (void)
 
 #if GNULIB_GETOPT_GNU
   test_getopt_long ();
+  test_getopt_long_only ();
 #endif
 
   return 0;
