@@ -57,4 +57,7 @@ including re-checking for @env{POSIXLY_CORRECT}, by setting
 @code{optind} to 0.  Other implementations provide @code{optreset},
 causing a reset by setting it non-zero, although it does not
 necessarily re-read @env{POSIXLY_CORRECT}.
+@item
+Mixing a leading @samp{-} or @samp{+} with a leading @samp{:} in the
+optstring argument has inconsistent effects across platforms.
 @end itemize

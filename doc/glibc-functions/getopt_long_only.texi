@@ -38,4 +38,7 @@ very reliable.
 Some implementations return success instead of reporting an ambiguity
 if user's option is a prefix of two long options with the same flag:
 FreeBSD.
+@item
+Mixing a leading @samp{-} or @samp{+} with a leading @samp{:} in the
+optstring argument has inconsistent effects across platforms.
 @end itemize

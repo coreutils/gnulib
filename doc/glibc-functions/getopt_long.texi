@@ -33,4 +33,7 @@ Portability problems not fixed by Gnulib:
 The glibc extension of using @samp{W;} in the optstring argument to
 allow @code{-W foo} to behave synonymously with @code{--foo} is not
 very reliable, even in glibc.
+@item
+Mixing a leading @samp{-} or @samp{+} with a leading @samp{:} in the
+optstring argument has inconsistent effects across platforms.
 @end itemize

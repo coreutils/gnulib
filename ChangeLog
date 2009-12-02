@@ -1,5 +1,19 @@
 2009-12-22  Eric Blake  <ebb9@byu.net>
 
+	test-getopt: test stderr behavior
+	* modules/getopt-posix-tests (Depends-on): Add dup2.
+	* tests/test-getopt.c (ASSERT): Avoid stderr.
+	(main): Move stderr to a temporary file.
+	* tests/test-getopt.h (getopt_loop): No longer manipulate opterr.
+	Instead, add parameter to inform caller if output occurred.
+	(test_getopt): Adjust all existing tests to expect silence, and
+	add new tests of leading ":".
+	* doc/glibc-functions/getopt_long.texi (getopt_long): Document
+	glibc shortcomings with leading "-:" or "+:" in optstring.
+	* doc/glibc-functions/getopt_long_only.texi (getopt_long_only):
+	Likewise.
+	* doc/posix-functions/getopt.texi (getopt): Likewise.
+
 	test-getopt: enhance test
 	* m4/getopt.m4 (gl_GETOPT_CHECK_HEADERS): Require that getopt_long
 	supports optind=0.
