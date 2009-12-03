@@ -1,3 +1,8 @@
+2009-12-03  Paolo Bonzini  <bonzini@gnu.org>
+
+	exclude: Fix header file problems.
+	* lib/exclude.h: Add multiple inclusion guards and include stdbool.h.
+
 2009-12-01  Jim Meyering  <meyering@redhat.com>
 
 	fts: fts_open: do not let an empty string cause immediate failure
