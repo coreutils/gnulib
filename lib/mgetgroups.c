@@ -53,7 +53,8 @@ realloc_groupbuf (gid_t *g, size_t num)
    NULL, store the supplementary groups of the current process, and GID
    should be -1 or the effective group ID (getegid).  Upon failure,
    don't modify *GROUPS, set errno, and return -1.  Otherwise, return
-   the number of groups.  */
+   the number of groups.  The resulting list may contain duplicates,
+   but adjacent members will be distinct.  */
 
 int
 mgetgroups (char const *username, gid_t gid, gid_t **groups)
@@ -157,6 +158,37 @@ mgetgroups (char const *username, gid_t gid, gid_t **groups)
       ng++;
     }
   *groups = g;
+
+  /* Reduce the number of duplicates.  On some systems, getgroups
+     returns the effective gid twice: once as the first element, and
+     once in its position within the supplementary groups.  On other
+     systems, getgroups does not return the effective gid at all,
+     which is why we provide a GID argument.  Meanwhile, the GID
+     argument, if provided, is typically any member of the
+     supplementary groups, and not necessarily the effective gid.  So,
+     the most likely duplicates are the first element with an
+     arbitrary other element, or pair-wise duplication between the
+     first and second elements returned by getgroups.  It is possible
+     that this O(n) pass will not remove all duplicates, but it is not
+     worth the effort to slow down to an O(n log n) algorithm that
+     sorts the array in place, nor the extra memory needed for
+     duplicate removal via an O(n) hash-table.  Hence, this function
+     is only documented as guaranteeing no pair-wise duplicates,
+     rather than returning the minimal set.  */
+  {
+    gid_t first = *g;
+    gid_t *next;
+    gid_t *sentinel = g + ng;
+
+    for (next = g + 1; next < sentinel; next++)
+      {
+        if (*next == first || *next == *g)
+          ng--;
+        else
+          *++g = *next;
+      }
+  }
+
   return ng;
 }
 

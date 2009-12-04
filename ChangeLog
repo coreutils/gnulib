@@ -1,3 +1,11 @@
+2009-12-07  Eric Blake  <ebb9@byu.net>
+
+	mgetgroups: reduce duplicate listings
+	* lib/mgetgroups.c (mgetgroups): Reduce duplicates from the
+	resulting array.
+	* tests/test-chown.h (test_chown): Simplify client.
+	* tests/test-lchown.h (test_lchown): Likewise.
+
 2009-12-06  Bruno Haible  <bruno@clisp.org>
 
 	* lib/cloexec.c (dup_cloexec): Fix handling of _gl_register_dup return
