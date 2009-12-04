@@ -116,13 +116,24 @@ mgetgroups (char const *username, gid_t gid, gid_t **groups)
 
   max_n_groups = (username
                   ? getugroups (0, NULL, username, gid)
-                  : getgroups (0, NULL) + (gid != (gid_t) -1));
+                  : getgroups (0, NULL));
 
-  /* If we failed to count groups with NULL for a buffer,
-     try again with a non-NULL one, just in case.  */
+  /* If we failed to count groups because there is no supplemental
+     group support, then return an array containing just GID.
+     Otherwise, we fail for the same reason.  */
   if (max_n_groups < 0)
-      max_n_groups = 5;
+    {
+      if (errno == ENOSYS && (g = realloc_groupbuf (NULL, 1)))
+        {
+          *groups = g;
+          *g = gid;
+          return gid != (gid_t) -1;
+        }
+      return -1;
+    }
 
+  if (!username && gid != (gid_t) -1)
+    max_n_groups++;
   g = realloc_groupbuf (NULL, max_n_groups);
   if (g == NULL)
     return -1;
@@ -133,6 +144,7 @@ mgetgroups (char const *username, gid_t gid, gid_t **groups)
 
   if (ng < 0)
     {
+      /* Failure is unexpected, but handle it anyway.  */
       int saved_errno = errno;
       free (g);
       errno = saved_errno;
@@ -146,4 +158,15 @@ mgetgroups (char const *username, gid_t gid, gid_t **groups)
     }
   *groups = g;
   return ng;
+}
+
+/* Like mgetgroups, but call xalloc_die on allocation failure.  */
+
+int
+xgetgroups (char const *username, gid_t gid, gid_t **groups)
+{
+  int result = mgetgroups (username, gid, groups);
+  if (result == -1 && errno == ENOMEM)
+    xalloc_die ();
+  return result;
 }

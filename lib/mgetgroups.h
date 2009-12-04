@@ -17,3 +17,4 @@
 #include <sys/types.h>
 
 int mgetgroups (const char *username, gid_t gid, gid_t **groups);
+int xgetgroups (const char *username, gid_t gid, gid_t **groups);

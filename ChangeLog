@@ -1,5 +1,12 @@
 2009-12-04  Eric Blake  <ebb9@byu.net>
 
+	mgetgroups: add xgetgroups, and avoid ENOSYS failures
+	* lib/mgetgroups.h (xgetgroups): New prototype.
+	* lib/mgetgroups.c (xgetgroups): New wrapper.
+	(mgetgroups): Handle ENOSYS.
+	* modules/mgetgroups (Depends-on): Add realloc.
+	Reported by Scott Harrison <scott.gnu.2009@scottrix.co.uk>.
+
 	mgetgroups: avoid argument promotion issues with -1
 	* lib/mgetgroups.c (mgetgroups): A cast is required when checking
 	for invalid gid_t.
