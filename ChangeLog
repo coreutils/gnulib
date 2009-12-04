@@ -1,3 +1,11 @@
+2009-12-04  Eric Blake  <ebb9@byu.net>
+
+	mgetgroups: avoid argument promotion issues with -1
+	* lib/mgetgroups.c (mgetgroups): A cast is required when checking
+	for invalid gid_t.
+	* tests/test-chown.h (getegid, test_chown): Likewise.
+	* tests/test-lchown.h (getegid, test_lchown): Likewise.
+
 2009-12-03  Paolo Bonzini  <bonzini@gnu.org>
 
 	exclude: Fix header file problems.

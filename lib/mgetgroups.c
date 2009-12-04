@@ -116,7 +116,7 @@ mgetgroups (char const *username, gid_t gid, gid_t **groups)
 
   max_n_groups = (username
                   ? getugroups (0, NULL, username, gid)
-                  : getgroups (0, NULL) + (gid != -1));
+                  : getgroups (0, NULL) + (gid != (gid_t) -1));
 
   /* If we failed to count groups with NULL for a buffer,
      try again with a non-NULL one, just in case.  */
@@ -129,7 +129,7 @@ mgetgroups (char const *username, gid_t gid, gid_t **groups)
 
   ng = (username
         ? getugroups (max_n_groups, g, username, gid)
-        : getgroups (max_n_groups, g + (gid != -1)));
+        : getgroups (max_n_groups, g + (gid != (gid_t) -1)));
 
   if (ng < 0)
     {
@@ -139,7 +139,7 @@ mgetgroups (char const *username, gid_t gid, gid_t **groups)
       return -1;
     }
 
-  if (!username && gid != -1)
+  if (!username && gid != (gid_t) -1)
     {
       *g = gid;
       ng++;

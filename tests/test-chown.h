@@ -62,7 +62,7 @@ nap (void)
 }
 
 #if !HAVE_GETEGID
-# define getegid() (-1)
+# define getegid() ((gid_t) -1)
 #endif
 
 /* This file is designed to test chown(n,o,g) and
@@ -113,8 +113,8 @@ test_chown (int (*func) (char const *, uid_t, gid_t), bool print)
 
   ASSERT (close (creat (BASE "dir/file", 0600)) == 0);
   ASSERT (stat (BASE "dir/file", &st1) == 0);
-  ASSERT (st1.st_uid != -1);
-  ASSERT (st1.st_gid != -1);
+  ASSERT (st1.st_uid != (uid_t) -1);
+  ASSERT (st1.st_gid != (uid_t) -1);
   ASSERT (st1.st_gid == getegid ());
 
   /* Sanity check of error cases.  */
@@ -134,6 +134,7 @@ test_chown (int (*func) (char const *, uid_t, gid_t), bool print)
   /* Check that -1 does not alter ownership.  */
   ASSERT (func (BASE "dir/file", -1, st1.st_gid) == 0);
   ASSERT (func (BASE "dir/file", st1.st_uid, -1) == 0);
+  ASSERT (func (BASE "dir/file", (uid_t) -1, (gid_t) -1) == 0);
   ASSERT (stat (BASE "dir/file", &st2) == 0);
   ASSERT (st1.st_uid == st2.st_uid);
   ASSERT (st1.st_gid == st2.st_gid);
@@ -183,7 +184,7 @@ test_chown (int (*func) (char const *, uid_t, gid_t), bool print)
           gids[0] = gids[1];
         }
       ASSERT (gids[0] != st1.st_gid);
-      ASSERT (gids[0] != -1);
+      ASSERT (gids[0] != (gid_t) -1);
       ASSERT (lstat (BASE "dir/link", &st2) == 0);
       ASSERT (st1.st_uid == st2.st_uid);
       ASSERT (st1.st_gid == st2.st_gid);
