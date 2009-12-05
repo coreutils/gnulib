@@ -1,5 +1,5 @@
 /* Invoke pipe, but avoid some glitches.
-   Copyright (C) 2005, 2006 Free Software Foundation, Inc.
+   Copyright (C) 2005, 2006, 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -35,16 +35,16 @@ pipe_safer (int fd[2])
     {
       int i;
       for (i = 0; i < 2; i++)
-	{
-	  fd[i] = fd_safer (fd[i]);
-	  if (fd[i] < 0)
-	    {
-	      int e = errno;
-	      close (fd[1 - i]);
-	      errno = e;
-	      return -1;
-	    }
-	}
+        {
+          fd[i] = fd_safer (fd[i]);
+          if (fd[i] < 0)
+            {
+              int e = errno;
+              close (fd[1 - i]);
+              errno = e;
+              return -1;
+            }
+        }
 
       return 0;
     }
@@ -54,3 +54,31 @@ pipe_safer (int fd[2])
 
   return -1;
 }
+
+#if GNULIB_PIPE2_SAFER
+/* Like pipe2, but ensure that neither of the file descriptors is
+   STDIN_FILENO, STDOUT_FILENO, or STDERR_FILENO.  */
+
+int
+pipe2_safer (int fd[2], int flags)
+{
+  if (pipe2 (fd, flags) == 0)
+    {
+      int i;
+      for (i = 0; i < 2; i++)
+        {
+          fd[i] = fd_safer_flag (fd[i], flags);
+          if (fd[i] < 0)
+            {
+              int e = errno;
+              close (fd[1 - i]);
+              errno = e;
+              return -1;
+            }
+        }
+
+      return 0;
+    }
+  return -1;
+}
+#endif /* GNULIB_PIPE2 */

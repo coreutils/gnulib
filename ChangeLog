@@ -1,5 +1,13 @@
 2009-12-05  Eric Blake  <ebb9@byu.net>
 
+	pipe2-safer: new module
+	* modules/pipe2-safer: New file.
+	* lib/unistd-safer.h (pipe2_safer): New prototype.
+	* lib/unistd--.h (pipe2): New wrapper.
+	* lib/pipe-safer.c (pipe2_safer): New function.
+	* modules/pipe (Depends-on): Add pipe2-safer.
+	* lib/pipe.c (create_pipe) [WIN32]: Let pipe2_safer do the work.
+
 	stdlib-safer: preserve cloexec flag for mkostemp[s]
 	* lib/mkstemp-safer.c (mkostemp_safer, mkostemps_safer): Use new
 	fd_safer_flag.

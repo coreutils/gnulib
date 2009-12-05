@@ -1,0 +1,24 @@
+Description:
+pipe2_safer() function: create a pipe, with specific opening flags,
+without clobbering std{in,out,err}.
+
+Files:
+
+Depends-on:
+cloexec
+pipe2
+unistd-safer
+
+configure.ac:
+gl_MODULE_INDICATOR([pipe2-safer])
+
+Makefile.am:
+
+Include:
+"unistd-safer.h"
+
+License:
+GPL
+
+Maintainer:
+Eric Blake
