@@ -25,6 +25,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "cloexec.h"
+
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 /* Get declarations of the Win32 API functions.  */
 # define WIN32_LEAN_AND_MEAN
@@ -32,15 +34,15 @@
 #endif
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 /* Return non-zero if FD is open.  */
@@ -57,6 +59,28 @@ is_open (int fd)
 #  error Please port fcntl to your platform
 # endif
   return 0 <= fcntl (fd, F_GETFL);
+#endif
+}
+
+/* Return non-zero if FD is open and inheritable across exec/spawn.  */
+static int
+is_inheritable (int fd)
+{
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+  /* On Win32, the initial state of unassigned standard file
+     descriptors is that they are open but point to an
+     INVALID_HANDLE_VALUE, and there is no fcntl.  */
+  HANDLE h = (HANDLE) _get_osfhandle (fd);
+  DWORD flags;
+  if (h == INVALID_HANDLE_VALUE || GetHandleInformation (h, &flags) == 0)
+    return 0;
+  return (flags & HANDLE_FLAG_INHERIT) != 0;
+#else
+# ifndef F_GETFD
+#  error Please port fcntl to your platform
+# endif
+  int i = fcntl (fd, F_GETFD);
+  return 0 <= i && (i & FD_CLOEXEC) == 0;
 #endif
 }
 
@@ -125,8 +149,18 @@ main (void)
   ASSERT (read (fd, buffer, 1) == 1);
   ASSERT (*buffer == '2');
 
+  /* Any new fd created by dup2 must not be cloexec.  */
+  ASSERT (close (fd + 2) == 0);
+  ASSERT (dup_cloexec (fd) == fd + 1);
+  ASSERT (!is_inheritable (fd + 1));
+  ASSERT (dup2 (fd + 1, fd + 1) == fd + 1);
+  ASSERT (!is_inheritable (fd + 1));
+  ASSERT (dup2 (fd + 1, fd + 2) == fd + 2);
+  ASSERT (is_inheritable (fd + 2));
+
   /* Clean up.  */
   ASSERT (close (fd + 2) == 0);
+  ASSERT (close (fd + 1) == 0);
   ASSERT (close (fd) == 0);
   ASSERT (unlink (file) == 0);
 

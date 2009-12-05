@@ -1,5 +1,9 @@
 2009-12-05  Eric Blake  <ebb9@byu.net>
 
+	test-dup2: enhance test
+	* modules/dup2-tests (Depends-on): Add cloexec.
+	* tests/test-dup2.c (main): Enhance test.
+
 	cloexec: add dup_cloexec
 	* lib/cloexec.h (dup_cloexec): New prototype.  Add copyright
 	header and comments.
