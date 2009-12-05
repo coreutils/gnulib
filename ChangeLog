@@ -1,5 +1,12 @@
 2009-12-05  Eric Blake  <ebb9@byu.net>
 
+	unistd-safer: allow preservation of cloexec status via flag
+	* lib/unistd-safer.h (dup_safer_flag, fd_safer_flag): New
+	prototypes.
+	* lib/dup-safer.c (dup_safer_flag): New function.
+	* lib/fd-safer.c (fd_safer_flag): Likewise.
+	* modules/cloexec (configure.ac): Set witness.
+
 	test-dup2: enhance test
 	* modules/dup2-tests (Depends-on): Add cloexec.
 	* tests/test-dup2.c (main): Enhance test.
