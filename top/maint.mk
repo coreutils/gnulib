@@ -77,6 +77,10 @@ else
 url_dir_list ?= ftp://$(gnu_rel_host)/gnu/$(PACKAGE)
 endif
 
+# Override this in cfg.mk if you are using a different format in your
+# NEWS file.
+news-date-regexp ?= '^\*.* $(VERSION_REGEXP) ('$$today')'
+
 # Prevent programs like 'sort' from considering distinct strings to be equal.
 # Doing it here saves us from having to set LC_ALL elsewhere in this file.
 export LC_ALL = C
@@ -570,7 +574,7 @@ sc_makefile_check:
 
 news-date-check: NEWS
 	today=`date +%Y-%m-%d`;						\
-	if head $(srcdir)/NEWS | grep '^\*.* $(VERSION_REGEXP) ('$$today')' \
+	if head $(srcdir)/NEWS | grep $(news-date-regexp)		\
 	    >/dev/null; then						\
 	  :;								\
 	else								\

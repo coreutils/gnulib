@@ -1,3 +1,9 @@
+2009-12-04  Alfred M. Szmidt  <ams@gnu.org>
+
+	maintainer-makefile: allow customization of NEWS entry format
+	* top/maint.mk (news-date-regexp): New overridable variable.
+	(news-date-check): Use it.
+
 2009-12-04  Eric Blake  <ebb9@byu.net>
 
 	mgetgroups: add xgetgroups, and avoid ENOSYS failures
