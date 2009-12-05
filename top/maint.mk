@@ -80,7 +80,7 @@ endif
 # Override this in cfg.mk if you are using a different format in your
 # NEWS file.
 today = $(shell date +%Y-%m-%d)
-news-check-regexp ?= '^\*.* $(VERSION_REGEXP) ($(today))'
+news-check-regexp ?= '^\*.* $(VERSION_REGEXP) \($(today)\)'
 
 # Prevent programs like 'sort' from considering distinct strings to be equal.
 # Doing it here saves us from having to set LC_ALL elsewhere in this file.

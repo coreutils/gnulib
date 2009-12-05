@@ -1,5 +1,9 @@
 2009-12-05  Jim Meyering  <meyering@redhat.com>
 
+	maint.mk: backslash-escape parens in default regexp
+	* top/maint.mk (news-check-regexp): Now that we're using grep -E,
+	backslash-escape the literal parentheses.
+
 	maint.mk: news-date-check: use grep -E
 	* top/maint.mk (today): Define a Make variable, not a...
 	(news-date-check): ...shell variable.
