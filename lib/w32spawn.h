@@ -27,6 +27,7 @@
 #include <unistd.h>
 #include <errno.h>
 
+#include "cloexec.h"
 #include "xalloc.h"
 
 /* Duplicates a file handle, making the copy uninheritable.
@@ -34,32 +35,11 @@
 static int
 dup_noinherit (int fd)
 {
-  HANDLE curr_process = GetCurrentProcess ();
-  HANDLE old_handle = (HANDLE) _get_osfhandle (fd);
-  HANDLE new_handle;
-  int nfd;
-
-  if (old_handle == INVALID_HANDLE_VALUE)
-    /* fd is closed, or is open to no handle at all.
-       We cannot duplicate fd in this case, because _open_osfhandle fails for
-       an INVALID_HANDLE_VALUE argument.  */
-    return -1;
-
-  if (!DuplicateHandle (curr_process,		    /* SourceProcessHandle */
-			old_handle,		    /* SourceHandle */
-			curr_process,		    /* TargetProcessHandle */
-			(PHANDLE) &new_handle,	    /* TargetHandle */
-			(DWORD) 0,		    /* DesiredAccess */
-			FALSE,			    /* InheritHandle */
-			DUPLICATE_SAME_ACCESS))	    /* Options */
-    error (EXIT_FAILURE, 0, _("DuplicateHandle failed with error code 0x%08x"),
-	   (unsigned int) GetLastError ());
-
-  nfd = _open_osfhandle ((long) new_handle, O_BINARY | O_NOINHERIT);
-  if (nfd < 0)
+  fd = dup_cloexec (fd);
+  if (fd < 0 && errno == EMFILE)
     error (EXIT_FAILURE, errno, _("_open_osfhandle failed"));
 
-  return nfd;
+  return fd;
 }
 
 /* Returns a file descriptor equivalent to FD, except that the resulting file

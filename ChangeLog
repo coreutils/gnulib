@@ -1,5 +1,18 @@
 2009-12-05  Eric Blake  <ebb9@byu.net>
 
+	cloexec: add dup_cloexec
+	* lib/cloexec.h (dup_cloexec): New prototype.  Add copyright
+	header and comments.
+	* lib/cloexec.c (set_cloexec_flag): Add comments.
+	(dup_cloexec): New function, with mingw implementation borrowed
+	from...
+	* lib/w32spawn.h (dup_noinherit): ...here.
+	* modules/execute (Depends-on): Add cloexec.
+	* modules/pipe (Depends-on): Likewise.
+	* modules/cloexec (Depends-on): Add dup2.
+	* modules/cloexec-tests (Files): New file.
+	* tests/test-cloexec.c: Likewise.
+
 	test-xalloc-die: fix test for mingw
 	* modules/xalloc-die-tests (Files): Add tests/init.sh.
 	* tests/test-xalloc-die.sh: Rewrite to use init.sh.  Strip

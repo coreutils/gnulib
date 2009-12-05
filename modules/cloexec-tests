@@ -1,0 +1,10 @@
+Files:
+tests/test-cloexec.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-cloexec
+check_PROGRAMS += test-cloexec

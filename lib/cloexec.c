@@ -1,6 +1,7 @@
 /* closexec.c - set or clear the close-on-exec descriptor flag
 
-   Copyright (C) 1991, 2004, 2005, 2006 Free Software Foundation, Inc.
+   Copyright (C) 1991, 2004, 2005, 2006, 2009 Free Software
+   Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -21,12 +22,27 @@
 
 #include "cloexec.h"
 
-#include <unistd.h>
+#include <errno.h>
 #include <fcntl.h>
+#include <unistd.h>
+
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+/* Native Woe32 API.  */
+# define WIN32_LEAN_AND_MEAN
+# include <windows.h>
+# include <io.h>
+#endif
+
 
 /* Set the `FD_CLOEXEC' flag of DESC if VALUE is true,
    or clear the flag if VALUE is false.
-   Return 0 on success, or -1 on error with `errno' set. */
+   Return 0 on success, or -1 on error with `errno' set.
+
+   Note that on MingW, this function does NOT protect DESC from being
+   inherited into spawned children.  Instead, either use dup_cloexec
+   followed by closing the original DESC, or use interfaces such as
+   open or pipe2 that accept flags like O_CLOEXEC to create DESC
+   non-inheritable in the first place.  */
 
 int
 set_cloexec_flag (int desc, bool value)
@@ -40,15 +56,98 @@ set_cloexec_flag (int desc, bool value)
       int newflags = (value ? flags | FD_CLOEXEC : flags & ~FD_CLOEXEC);
 
       if (flags == newflags
-	  || fcntl (desc, F_SETFD, newflags) != -1)
-	return 0;
+          || fcntl (desc, F_SETFD, newflags) != -1)
+        return 0;
     }
 
   return -1;
 
 #else
 
-  return 0;
+  if (desc < 0)
+    {
+      errno = EBADF;
+      return -1;
+    }
+  return dup2 (desc, desc) == desc ? 0 : -1;
 
 #endif
+}
+
+
+/* Duplicates a file handle FD, while marking the copy to be closed
+   prior to exec or spawn.  Returns -1 and sets errno if FD could not
+   be duplicated.  */
+
+int dup_cloexec (int fd)
+{
+  int nfd;
+
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+
+  /* Native Woe32 API.  */
+  HANDLE curr_process = GetCurrentProcess ();
+  HANDLE old_handle = (HANDLE) _get_osfhandle (fd);
+  HANDLE new_handle;
+
+  if (old_handle == INVALID_HANDLE_VALUE)
+    {
+      /* fd is closed, or is open to no handle at all.
+         We cannot duplicate fd in this case, because _open_osfhandle
+         fails for an INVALID_HANDLE_VALUE argument.  */
+      errno = EBADF;
+      return -1;
+    }
+
+  if (!DuplicateHandle (curr_process,               /* SourceProcessHandle */
+                        old_handle,                 /* SourceHandle */
+                        curr_process,               /* TargetProcessHandle */
+                        (PHANDLE) &new_handle,      /* TargetHandle */
+                        (DWORD) 0,                  /* DesiredAccess */
+                        FALSE,                      /* InheritHandle */
+                        DUPLICATE_SAME_ACCESS))     /* Options */
+    {
+      errno = EMFILE;
+      return -1;
+    }
+
+  nfd = _open_osfhandle ((long) new_handle, O_BINARY | O_NOINHERIT);
+  if (nfd < 0)
+    {
+      CloseHandle (new_handle);
+      errno = EMFILE;
+      return -1;
+    }
+
+#  if REPLACE_FCHDIR
+  if (0 <= nfd)
+    result = _gl_register_dup (fd, nfd);
+#  endif
+  return nfd;
+
+#else /* !_WIN32 */
+
+  /* Unix API.  */
+
+# ifdef F_DUPFD_CLOEXEC
+  nfd = fcntl (fd, F_DUPFD_CLOEXEC, 0);
+#  if REPLACE_FCHDIR
+  if (0 <= nfd)
+    result = _gl_register_dup (fd, nfd);
+#  endif
+
+# else /* !F_DUPFD_CLOEXEC */
+  nfd = dup (fd);
+  if (0 <= nfd && set_cloexec_flag (nfd, true))
+    {
+      int saved_errno = errno;
+      close (nfd);
+      nfd = -1;
+      errno = saved_errno;
+    }
+# endif /* !F_DUPFD_CLOEXEC */
+
+  return nfd;
+
+#endif /* !_WIN32 */
 }

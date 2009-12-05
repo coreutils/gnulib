@@ -7,6 +7,7 @@ lib/cloexec.h
 m4/cloexec.m4
 
 Depends-on:
+dup2
 stdbool
 
 configure.ac:
