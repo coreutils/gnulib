@@ -18,25 +18,26 @@
 
 #include <config.h>
 
-#include <stdio.h>
-#include <stdlib.h>
-
 /* None of the files accessed by this test are large, so disable the
    fseek link warning if we are not using the gnulib fseek module.  */
 #if !GNULIB_FSEEK
-# undef fseek
+# undef GL_LINK_WARNING
+# define GL_LINK_WARNING(ignored) ((void) 0)
 #endif
 
+#include <stdio.h>
+#include <stdlib.h>
+
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 #ifndef FUNC_UNGETC_BROKEN

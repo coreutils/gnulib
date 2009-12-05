@@ -1,3 +1,9 @@
+2009-12-05  Eric Blake  <ebb9@byu.net>
+
+	test-fseeko: fix test for mingw
+	* tests/test-fseeko.c (fseek): Redefine GL_LINK_WARNING, rather
+	than undefining fseek, so test will pass on mingw.
+
 2009-12-05  Bruno Haible  <bruno@clisp.org>
 
 	* lib/progname.h (set_program_name): Clarify specification.
