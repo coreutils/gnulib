@@ -79,7 +79,8 @@ endif
 
 # Override this in cfg.mk if you are using a different format in your
 # NEWS file.
-news-date-regexp ?= '^\*.* $(VERSION_REGEXP) ('$$today')'
+today = $(shell date +%Y-%m-%d)
+news-check-regexp ?= '^\*.* $(VERSION_REGEXP) ($(today))'
 
 # Prevent programs like 'sort' from considering distinct strings to be equal.
 # Doing it here saves us from having to set LC_ALL elsewhere in this file.
@@ -572,13 +573,12 @@ sc_makefile_check:
 	    $$($(VC_LIST_EXCEPT) | grep -E '(^|/)Makefile\.am$$')	\
 	  && { echo '$(ME): use $$(...), not @...@' 1>&2; exit 1; } || :
 
-news-date-check: NEWS
-	today=`date +%Y-%m-%d`;						\
-	if head $(srcdir)/NEWS | grep $(news-date-regexp)		\
+news-check: NEWS
+	if head $(srcdir)/NEWS | grep -E $(news-check-regexp)		\
 	    >/dev/null; then						\
 	  :;								\
 	else								\
-	  echo "version or today's date is not in NEWS" 1>&2;		\
+	  echo 'NEWS: $$(news-check-regexp) failed to match' 1>&2;	\
 	  exit 1;							\
 	fi
 
@@ -758,7 +758,7 @@ alpha beta stable: $(local-check) writable-files no-submodule-changes
 	       || { echo "invalid version string: $(VERSION)" 1>&2; exit 1;};}\
 	  || :
 	$(MAKE) vc-diff-check
-	$(MAKE) news-date-check
+	$(MAKE) news-check
 	$(MAKE) distcheck
 	$(MAKE) dist XZ_OPT=-9ev
 	$(MAKE) -s announcement RELEASE_TYPE=$@ > /tmp/announce-$(my_distdir)

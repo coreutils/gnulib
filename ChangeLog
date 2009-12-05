@@ -1,3 +1,12 @@
+2009-12-05  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: news-date-check: use grep -E
+	* top/maint.mk (today): Define a Make variable, not a...
+	(news-date-check): ...shell variable.
+	(news-date-regexp): Use the Make variable.
+	Use grep's -E option.  Change the failing diagnostic to mention
+	the variable, $(news-date-regexp).
+
 2009-12-04  Alfred M. Szmidt  <ams@gnu.org>
 
 	maintainer-makefile: allow customization of NEWS entry format
