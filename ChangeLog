@@ -1,5 +1,10 @@
 2009-12-05  Eric Blake  <ebb9@byu.net>
 
+	test-xalloc-die: fix test for mingw
+	* modules/xalloc-die-tests (Files): Add tests/init.sh.
+	* tests/test-xalloc-die.sh: Rewrite to use init.sh.  Strip
+	directory and .exe suffix off argv[0] output.
+
 	test-fseeko: fix test for mingw
 	* tests/test-fseeko.c (fseek): Redefine GL_LINK_WARNING, rather
 	than undefining fseek, so test will pass on mingw.

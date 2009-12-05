@@ -16,38 +16,21 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-tmpfiles=""
-trap '__st=$?; rm -fr $tmpfiles; exit $__st' 0
-trap '__st=$?; (exit $__st); exit $__st' 1 2 3 15
+. "${srcdir=.}/init.sh" --set-path=.
 
-if ( diff --version < /dev/null 2>&1 | grep GNU ) 2>&1 > /dev/null; then
-  compare() { diff -u "$@"; }
-elif ( cmp --version < /dev/null 2>&1 | grep GNU ) 2>&1 > /dev/null; then
-  compare() { cmp -s "$@"; }
-else
-  compare() { cmp "$@"; }
-fi
-
-tmpout=t-xalloc-die.tmp-stderr
-tmperr=t-xalloc-die.tmp-stdout
-tmpfiles="$tmpout $tmperr ${tmperr}2"
-
-PATH=".:$PATH"
-export PATH
-test-xalloc-die 2> ${tmperr} > ${tmpout}
+test-xalloc-die 2> err > out
 case $? in
   1) ;;
-  *) (exit 1); exit 1 ;;
+  *) Exit 1;;
 esac
 
-tr -d '\015' < $tmperr > ${tmperr}2 || { (exit 1); exit 1; }
+tr -d '\015' < err \
+  | sed 's,.*test-xalloc-die[.ex]*:,test-xalloc-die:,' > err2 || Exit 1
 
-compare - ${tmperr}2 <<\EOF || { (exit 1); exit 1; }
+compare - err2 <<\EOF || Exit 1
 test-xalloc-die: memory exhausted
 EOF
 
-test -s $tmpout && { (exit 1); exit 1; }
+test -s out && Exit 1
 
-rm -fr $tmpfiles
-
-exit 0
+Exit $fail
