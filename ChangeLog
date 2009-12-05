@@ -1,3 +1,9 @@
+2009-12-05  Bruno Haible  <bruno@clisp.org>
+
+	* lib/progname.h (set_program_name): Clarify specification.
+	* lib/progname.c (set_program_name): Likewise.
+	Reported by Jim Meyering.
+
 2009-12-05  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: backslash-escape parens in default regexp

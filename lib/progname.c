@@ -1,6 +1,6 @@
 /* Program name management.
    Copyright (C) 2001-2003, 2005-2009 Free Software Foundation, Inc.
-   Written by Bruno Haible <haible@clisp.cons.org>, 2001.
+   Written by Bruno Haible <bruno@clisp.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -30,7 +30,9 @@
    To be initialized by main().  */
 const char *program_name = NULL;
 
-/* Set program_name, based on argv[0].  */
+/* Set program_name, based on argv[0].
+   argv0 must be a string allocated with indefinite extent, and must not be
+   modified after this call.  */
 void
 set_program_name (const char *argv0)
 {
