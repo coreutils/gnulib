@@ -23,6 +23,8 @@
 #include "progname.h"
 
 #include <errno.h> /* get program_invocation_name declaration */
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 
@@ -43,6 +45,16 @@ set_program_name (const char *argv0)
      Remove this "<dirname>/.libs/" or "<dirname>/.libs/lt-" prefix here.  */
   const char *slash;
   const char *base;
+
+  /* Sanity check.  POSIX requires the invoking process to pass a non-NULL
+     argv[0].  */
+  if (argv0 == NULL)
+    {
+      /* It's a bug in the invoking program.  Help diagnosing it.  */
+      fputs ("A NULL argv[0] was passed through an exec system call.\n",
+	     stderr);
+      abort ();
+    }
 
   slash = strrchr (argv0, '/');
   base = (slash != NULL ? slash + 1 : argv0);

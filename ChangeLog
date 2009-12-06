@@ -1,3 +1,8 @@
+2009-12-06  Bruno Haible  <bruno@clisp.org>
+
+	* lib/progname.c: Include stdio.h, stdlib.h.
+	(set_program_name): Reject a NULL argument.
+
 2009-12-05  Eric Blake  <ebb9@byu.net>
 
 	pipe2-safer: new module
