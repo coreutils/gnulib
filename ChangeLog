@@ -1,5 +1,15 @@
 2009-12-07  Eric Blake  <ebb9@byu.net>
 
+	cloexec: preserve text vs. binary across dup_cloexec
+	* lib/cloexec.c (dup_cloexec) [W32]: Query and use translation
+	mode.
+	* modules/dup2-tests (Depends-on): Add binary-io.
+	* modules/cloexec-tests (Depends-on): Likewise.
+	* tests/test-dup2.c (setmode, is_mode): New helpers.
+	(main): Add tests that translation mode is preserved.
+	* tests/test-cloexec.c (setmode, is_mode, main): Likewise.
+	Reported by Bruno Haible.
+
 	mgetgroups: reduce duplicate listings
 	* lib/mgetgroups.c (mgetgroups): Reduce duplicates from the
 	resulting array.

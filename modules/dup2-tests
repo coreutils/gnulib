@@ -2,6 +2,7 @@ Files:
 tests/test-dup2.c
 
 Depends-on:
+binary-io
 cloexec
 open
 

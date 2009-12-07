@@ -32,6 +32,8 @@
 # include <windows.h>
 #endif
 
+#include "binary-io.h"
+
 #define ASSERT(expr) \
   do                                                                         \
     {                                                                        \
@@ -66,6 +68,20 @@ is_inheritable (int fd)
 #endif
 }
 
+#if !O_BINARY
+# define setmode(f,m) 0
+#endif
+
+/* Return non-zero if FD is open in the given MODE, which is either
+   O_TEXT or O_BINARY.  */
+static int
+is_mode (int fd, int mode)
+{
+  int value = setmode (fd, O_BINARY);
+  setmode (fd, value);
+  return mode == value;
+}
+
 int
 main (void)
 {
@@ -92,6 +108,21 @@ main (void)
   ASSERT (close (fd) == 0);
   ASSERT (dup_cloexec (fd2) == fd);
   ASSERT (!is_inheritable (fd));
+  ASSERT (close (fd2) == 0);
+
+  /* On systems that distinguish between text and binary mode,
+     dup_cloexec reuses the mode of the source.  */
+  setmode (fd, O_BINARY);
+  ASSERT (is_mode (fd, O_BINARY));
+  fd2 = dup_cloexec (fd);
+  ASSERT (fd < fd2);
+  ASSERT (is_mode (fd2, O_BINARY));
+  ASSERT (close (fd2) == 0);
+  setmode (fd, O_TEXT);
+  ASSERT (is_mode (fd, O_TEXT));
+  fd2 = dup_cloexec (fd);
+  ASSERT (fd < fd2);
+  ASSERT (is_mode (fd2, O_TEXT));
   ASSERT (close (fd2) == 0);
 
   /* Test error handling.  */

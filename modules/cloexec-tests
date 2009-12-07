@@ -2,6 +2,7 @@ Files:
 tests/test-cloexec.c
 
 Depends-on:
+binary-io
 
 configure.ac:
 

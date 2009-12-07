@@ -25,6 +25,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "binary-io.h"
 #include "cloexec.h"
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
@@ -82,6 +83,20 @@ is_inheritable (int fd)
   int i = fcntl (fd, F_GETFD);
   return 0 <= i && (i & FD_CLOEXEC) == 0;
 #endif
+}
+
+#if !O_BINARY
+# define setmode(f,m) 0
+#endif
+
+/* Return non-zero if FD is open in the given MODE, which is either
+   O_TEXT or O_BINARY.  */
+static int
+is_mode (int fd, int mode)
+{
+  int value = setmode (fd, O_BINARY);
+  setmode (fd, value);
+  return mode == value;
 }
 
 int
@@ -157,6 +172,17 @@ main (void)
   ASSERT (!is_inheritable (fd + 1));
   ASSERT (dup2 (fd + 1, fd + 2) == fd + 2);
   ASSERT (is_inheritable (fd + 2));
+
+  /* On systems that distinguish between text and binary mode, dup2
+     reuses the mode of the source.  */
+  setmode (fd, O_BINARY);
+  ASSERT (is_mode (fd, O_BINARY));
+  ASSERT (dup2 (fd, fd + 1) == fd + 1);
+  ASSERT (is_mode (fd + 1, O_BINARY));
+  setmode (fd, O_TEXT);
+  ASSERT (is_mode (fd, O_TEXT));
+  ASSERT (dup2 (fd, fd + 1) == fd + 1);
+  ASSERT (is_mode (fd + 1, O_TEXT));
 
   /* Clean up.  */
   ASSERT (close (fd + 2) == 0);

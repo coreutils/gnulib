@@ -64,6 +64,8 @@ set_cloexec_flag (int desc, bool value)
 
 #else
 
+  /* Use dup2 to reject invalid file descriptors; the cloexec flag
+     will be unaffected.  */
   if (desc < 0)
     {
       errno = EBADF;
@@ -90,8 +92,10 @@ dup_cloexec (int fd)
   HANDLE curr_process = GetCurrentProcess ();
   HANDLE old_handle = (HANDLE) _get_osfhandle (fd);
   HANDLE new_handle;
+  int mode;
 
-  if (old_handle == INVALID_HANDLE_VALUE)
+  if (old_handle == INVALID_HANDLE_VALUE
+      || (mode = setmode (fd, O_BINARY)) == -1)
     {
       /* fd is closed, or is open to no handle at all.
          We cannot duplicate fd in this case, because _open_osfhandle
@@ -99,6 +103,7 @@ dup_cloexec (int fd)
       errno = EBADF;
       return -1;
     }
+  setmode (fd, mode);
 
   if (!DuplicateHandle (curr_process,               /* SourceProcessHandle */
                         old_handle,                 /* SourceHandle */
@@ -113,7 +118,7 @@ dup_cloexec (int fd)
       return -1;
     }
 
-  nfd = _open_osfhandle ((long) new_handle, O_BINARY | O_NOINHERIT);
+  nfd = _open_osfhandle ((long) new_handle, mode | O_NOINHERIT);
   if (nfd < 0)
     {
       CloseHandle (new_handle);
