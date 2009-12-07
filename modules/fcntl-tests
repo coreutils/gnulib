@@ -1,0 +1,13 @@
+Files:
+tests/test-fcntl.c
+
+Depends-on:
+binary-io
+getdtablesize
+stdbool
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-fcntl
+check_PROGRAMS += test-fcntl

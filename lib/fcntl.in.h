@@ -55,6 +55,20 @@
 extern "C" {
 #endif
 
+#if @GNULIB_FCNTL@
+# if @REPLACE_FCNTL@
+#  undef fcntl
+#  define fcntl rpl_fcntl
+extern int fcntl (int fd, int action, ...);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef fcntl
+# define fcntl \
+    (GL_LINK_WARNING ("fcntl is not always POSIX compliant - " \
+                      "use gnulib module fcntl for portability"), \
+     fcntl)
+#endif
+
 #if @GNULIB_OPEN@
 # if @REPLACE_OPEN@
 #  undef open
@@ -94,6 +108,17 @@ extern int openat (int fd, char const *file, int flags, /* mode_t mode */ ...)
 
 #ifndef FD_CLOEXEC
 # define FD_CLOEXEC 1
+#endif
+
+/* Fix up the supported F_* macros.  Intentionally leave other F_*
+   macros undefined.  */
+
+#ifndef F_DUPFD_CLOEXEC
+# define F_DUPFD_CLOEXEC 0x40000000
+/* Witness variable: 1 if gnulib defined F_DUPFD_CLOEXEC, 0 otherwise.  */
+# define GNULIB_defined_F_DUPFD_CLOEXEC 1
+#else
+# define GNULIB_defined_F_DUPFD_CLOEXEC 0
 #endif
 
 /* Fix up the O_* macros.  */

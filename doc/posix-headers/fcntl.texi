@@ -27,6 +27,12 @@ on some platforms but not on others.
 mingw.
 
 @item
+@samp{F_DUPFD_CLOEXEC} is not defined on some platforms:
+MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, AIX 5.1, HP-UX 11,
+IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin 1.7.1, mingw, Interix 3.5,
+BeOS.
+
+@item
 @samp{AT_FDCWD}, @samp{AT_EACCESS}, @samp{AT_SYMLINK_NOFOLLOW},
 @samp{AT_SYMLINK_FOLLOW}, and @samp{AT_REMOVEDIR}
 are not defined on many platforms:
@@ -50,14 +56,14 @@ replacement is not atomic on these platforms.
 on some platforms.
 
 @item
-@samp{F_DUPFD}, @samp{F_DUPFD_CLOEXEC}, @samp{F_GETFD}, and
-@samp{F_SETFD} are not defined on some platforms:
-mingw
+@samp{F_DUPFD} and @samp{F_GETFD} are not defined on some platforms:
+mingw.
 
 @item
-@samp{F_GETFL}, @samp{F_SETFL}, @samp{F_GETLK}, @samp{F_SETLK},
-@samp{F_SETLOKW}, @samp{F_GETOWN}, and @samp{F_SETOWN} are not defined
-on some platforms.
+@samp{F_SETFD}, @samp{F_GETFL}, @samp{F_SETFL}, @samp{F_GETLK},
+@samp{F_SETLK}, @samp{F_SETLOKW}, @samp{F_GETOWN}, and @samp{F_SETOWN}
+are not defined on some platforms:
+mingw.
 
 @item
 @samp{POSIX_FADV_DONTNEED}, @samp{POSIX_FADV_NOREUSE},

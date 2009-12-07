@@ -1,5 +1,21 @@
 2009-12-16  Eric Blake  <ebb9@byu.net>
 
+	fcntl: support F_DUPFD_CLOEXEC on systems with fcntl
+	* modules/fcntl (Files): List new files.
+	(configure.ac): Run a test.
+	* m4/fcntl.m4 (gl_FUNC_FCNTL): New file.
+	* lib/fcntl.c (rpl_fcntl): Likewise.
+	* m4/fcntl_h.m4 (gl_FCNTL_H_DEFAULTS): Add witness defaults.
+	(gl_FCNTL_H): Always replace fcntl.h.
+	* modules/fcntl-h (Makefile.am): Substitute witnesses.
+	* lib/fcntl.in.h (fcntl): Declare replacement.
+	(F_DUPFD_CLOEXEC, GNULIB_defined_F_DUPFD_CLOEXEC): New macro when
+	needed, plus a witness.
+	* doc/posix-functions/fcntl.texi (fcntl): Document this.
+	* doc/posix-headers/fcntl.texi (fcntl.h): Likewise.
+	* tests/test-fcntl.c: New file.
+	* modules/fcntl-tests: Likewise.
+
 	binary-io: avoid potential compilation warning
 	* lib/binary-io.h [__DJGPP__]: Avoid null preprocessor
 	directives.
