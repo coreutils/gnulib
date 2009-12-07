@@ -1,5 +1,10 @@
 2009-12-06  Bruno Haible  <bruno@clisp.org>
 
+	* lib/cloexec.c (dup_cloexec): Fix handling of _gl_register_dup return
+	value.
+
+2009-12-06  Bruno Haible  <bruno@clisp.org>
+
 	* lib/progname.c: Include stdio.h, stdlib.h.
 	(set_program_name): Reject a NULL argument.
 

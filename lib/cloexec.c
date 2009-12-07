@@ -79,7 +79,8 @@ set_cloexec_flag (int desc, bool value)
    prior to exec or spawn.  Returns -1 and sets errno if FD could not
    be duplicated.  */
 
-int dup_cloexec (int fd)
+int
+dup_cloexec (int fd)
 {
   int nfd;
 
@@ -107,6 +108,7 @@ int dup_cloexec (int fd)
                         FALSE,                      /* InheritHandle */
                         DUPLICATE_SAME_ACCESS))     /* Options */
     {
+      /* TODO: Translate GetLastError () into errno.  */
       errno = EMFILE;
       return -1;
     }
@@ -133,12 +135,12 @@ int dup_cloexec (int fd)
   nfd = fcntl (fd, F_DUPFD_CLOEXEC, 0);
 #  if REPLACE_FCHDIR
   if (0 <= nfd)
-    result = _gl_register_dup (fd, nfd);
+    nfd = _gl_register_dup (fd, nfd);
 #  endif
 
 # else /* !F_DUPFD_CLOEXEC */
   nfd = dup (fd);
-  if (0 <= nfd && set_cloexec_flag (nfd, true))
+  if (0 <= nfd && set_cloexec_flag (nfd, true) < 0)
     {
       int saved_errno = errno;
       close (nfd);
