@@ -128,7 +128,7 @@ dup_cloexec (int fd)
 
 #  if REPLACE_FCHDIR
   if (0 <= nfd)
-    result = _gl_register_dup (fd, nfd);
+    nfd = _gl_register_dup (fd, nfd);
 #  endif
   return nfd;
 

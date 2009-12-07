@@ -1,5 +1,12 @@
 2009-12-07  Eric Blake  <ebb9@byu.net>
 
+	unistd-safer: add unit test
+	* modules/unistd-safer-tests: New file.
+	* tests/test-dup-safer.c: Likewise.
+	* tests/test-cloexec.c (setmode): Avoid compiler warning.
+	* tests/test-dup2.c (setmode): Likewise.
+	* lib/cloexec.c (dup_cloexec): Fix mingw compile error.
+
 	cloexec: preserve text vs. binary across dup_cloexec
 	* lib/cloexec.c (dup_cloexec) [W32]: Query and use translation
 	mode.

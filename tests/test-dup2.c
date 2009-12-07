@@ -86,7 +86,8 @@ is_inheritable (int fd)
 }
 
 #if !O_BINARY
-# define setmode(f,m) 0
+# define setmode(f,m) zero ()
+static int zero (void) { return 0; }
 #endif
 
 /* Return non-zero if FD is open in the given MODE, which is either

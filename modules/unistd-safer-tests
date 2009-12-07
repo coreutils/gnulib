@@ -1,0 +1,13 @@
+Files:
+tests/test-dup-safer.c
+
+Depends-on:
+binary-io
+cloexec
+stdbool
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-dup-safer
+check_PROGRAMS += test-dup-safer
