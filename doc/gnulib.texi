@@ -3265,6 +3265,7 @@ This list of functions is sorted according to the header that declares them.
 * Glibc obstack.h::
 * Glibc printf.h::
 * Glibc pthread.h::
+* Glibc pty.h::
 * Glibc pwd.h::
 * Glibc regex.h::
 * Glibc regexp.h::
@@ -4171,8 +4172,16 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/pthread_rwlockattr_setkind_np.texi
 @include glibc-functions/pthread_yield.texi
 
-@c @node Glibc pty.h
-@c @section Glibc @code{<pty.h>}
+@node Glibc pty.h
+@section Glibc @code{<pty.h>}
+
+@menu
+* forkpty::
+* openpty::
+@end menu
+
+@include glibc-functions/forkpty.texi
+@include glibc-functions/openpty.texi
 
 @node Glibc pwd.h
 @section Glibc Extensions to @code{<pwd.h>}
