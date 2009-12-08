@@ -35,6 +35,10 @@
    handles the following actions, and forwards all others on to the
    native fcntl.
 
+   F_DUPFD - duplicate FD, with int ARG being the minimum target fd.
+   If successful, return the duplicate, which will be inheritable;
+   otherwise return -1 and set errno.
+
    F_DUPFD_CLOEXEC - duplicate FD, with int ARG being the minimum
    target fd.  If successful, return the duplicate, which will not be
    inheritable; otherwise return -1 and set errno.  */
@@ -47,6 +51,26 @@ rpl_fcntl (int fd, int action, /* arg */...)
   va_start (arg, action);
   switch (action)
     {
+
+#if FCNTL_DUPFD_BUGGY || REPLACE_FCHDIR
+    case F_DUPFD:
+      {
+        int target = va_arg (arg, int);
+        /* Detect invalid target; needed for cygwin 1.5.x.  */
+        if (target < 0 || getdtablesize () <= target)
+          errno = EINVAL;
+        else
+          {
+            result = fcntl (fd, action, target);
+# if REPLACE_FCHDIR
+            if (0 <= result)
+              result = _gl_register_dup (fd, result);
+# endif
+          }
+        break;
+      } /* F_DUPFD */
+#endif /* FCNTL_DUPFD_BUGGY || REPLACE_FCHDIR */
+
     case F_DUPFD_CLOEXEC:
       {
         int target = va_arg (arg, int);
@@ -63,17 +87,23 @@ rpl_fcntl (int fd, int action, /* arg */...)
           {
             result = fcntl (fd, action, target);
             if (0 <= result || errno != EINVAL)
-              have_dupfd_cloexec = 1;
+              {
+                have_dupfd_cloexec = 1;
+#if REPLACE_FCHDIR
+                if (0 <= result)
+                  result = _gl_register_dup (fd, result);
+#endif
+              }
             else
               {
-                result = fcntl (fd, F_DUPFD, target);
+                result = rpl_fcntl (fd, F_DUPFD, target);
                 if (result < 0)
                   break;
                 have_dupfd_cloexec = -1;
               }
           }
         else
-          result = fcntl (fd, F_DUPFD, target);
+          result = rpl_fcntl (fd, F_DUPFD, target);
         if (0 <= result && have_dupfd_cloexec == -1)
           {
             int flags = fcntl (result, F_GETFD);
@@ -85,10 +115,6 @@ rpl_fcntl (int fd, int action, /* arg */...)
                 result = -1;
               }
           }
-#if REPLACE_FCHDIR
-        if (0 <= result)
-          result = _gl_register_dup (fd, result);
-#endif
         break;
       } /* F_DUPFD_CLOEXEC */
 

@@ -1,5 +1,12 @@
 2009-12-16  Eric Blake  <ebb9@byu.net>
 
+	fcntl: work around cygwin bug in F_DUPFD
+	* m4/fcntl.m4 (gl_REPLACE_FCNTL): New macro.
+	(gl_FUNC_FCNTL): Use it.  Test for F_DUPFD bug.
+	* lib/fcntl.c (rpl_fcntl) <F_DUPFD>: Work around it.
+	<F_DUPFD_CLOEXEC>: Reduce calls to _gl_register_dup.
+	* doc/posix-functions/fcntl.texi (fcntl): Document it.
+
 	fcntl: support F_DUPFD_CLOEXEC on systems with fcntl
 	* modules/fcntl (Files): List new files.
 	(configure.ac): Run a test.

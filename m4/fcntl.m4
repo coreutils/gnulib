@@ -1,13 +1,12 @@
-# fcntl.m4 serial 1
+# fcntl.m4 serial 2
 dnl Copyright (C) 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
 # For now, this module ensures that fcntl()
-# - supports or emulates F_DUPFD_CLOEXEC
-# Still to be ported to various platforms:
 # - supports F_DUPFD correctly
+# - supports or emulates F_DUPFD_CLOEXEC
 # Still to be ported to mingw:
 # - F_GETFD, F_SETFD, F_DUPFD
 # - F_DUPFD_CLOEXEC
@@ -19,10 +18,33 @@ AC_DEFUN([gl_FUNC_FCNTL],
   dnl Persuade glibc to expose F_DUPFD_CLOEXEC.
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_REQUIRE([gl_FCNTL_H_DEFAULTS])
+  AC_REQUIRE([AC_CANONICAL_HOST])
   AC_CHECK_FUNCS_ONCE([fcntl])
   if test $ac_cv_func_fcntl = no; then
     HAVE_FCNTL=0
   else
+    dnl cygwin 1.5.x F_DUPFD has wrong errno, and allows negative target
+    AC_CACHE_CHECK([whether fcntl handles F_DUPFD correctly],
+      [gl_cv_func_fcntl_f_dupfd_works],
+      [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
+#include <fcntl.h>
+]], [[return fcntl (0, F_DUPFD, -1) != -1;
+         ]])],
+         [gl_cv_func_fcntl_f_dupfd_works=yes],
+         [gl_cv_func_fcntl_f_dupfd_works=no],
+         [# Guess that it works on glibc systems
+          case $host_os in #((
+            *-gnu*) gl_cv_func_fcntl_f_dupfd_works="guessing yes";;
+            *)      gl_cv_func_fcntl_f_dupfd_works="guessing no";;
+          esac])])
+    case $gl_cv_func_fcntl_f_dupfd_works in
+      *yes) ;;
+      *) gl_REPLACE_FCNTL
+        AC_DEFINE([FCNTL_DUPFD_BUGGY], [1], [Define this to 1 if F_DUPFD
+          behavior does not match POSIX]) ;;
+    esac
+
+    dnl Many systems lack F_DUPFD_CLOEXEC
     AC_CACHE_CHECK([whether fcntl understands F_DUPFD_CLOEXEC],
       [gl_cv_func_fcntl_f_dupfd_cloexec],
       [AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
@@ -42,8 +64,18 @@ choke me
            [gl_cv_func_fcntl_f_dupfd_cloexec="needs runtime check"])],
          [gl_cv_func_fcntl_f_dupfd_cloexec=no])])
     if test "$gl_cv_func_fcntl_f_dupfd_cloexec" != yes; then
-      REPLACE_FCNTL=1
-      AC_LIBOBJ([fcntl])
+      gl_REPLACE_FCNTL
+      dnl No witness macro needed for this bug.
     fi
+  fi
+])
+
+AC_DEFUN([gl_REPLACE_FCNTL],
+[
+  AC_REQUIRE([gl_FCNTL_H_DEFAULTS])
+  AC_CHECK_FUNCS_ONCE([fcntl])
+  if test $ac_cv_func_fcntl = yes; then
+    REPLACE_FCNTL=1
+    AC_LIBOBJ([fcntl])
   fi
 ])

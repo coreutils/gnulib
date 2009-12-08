@@ -15,6 +15,11 @@ MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, AIX 5.1, HP-UX 11,
 IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin 1.7.1, mingw, Interix 3.5,
 BeOS.
 Note that the gnulib replacement code is functional but not atomic.
+
+@item
+The @code{F_DUPFD} action of this function does not reject
+out-of-range targets properly on some platforms:
+Cygwin 1.5.x.
 @end itemize
 
 Portability problems not fixed by Gnulib:
