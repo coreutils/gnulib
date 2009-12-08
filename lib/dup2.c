@@ -32,7 +32,7 @@
 # include <windows.h>
 #endif
 
-#if REPLACE_DUP2
+#if HAVE_DUP2
 
 # undef dup2
 
@@ -70,14 +70,14 @@ rpl_dup2 (int fd, int desired_fd)
   /* Correct a cygwin 1.5.x errno value.  */
   else if (result == -1 && errno == EMFILE)
     errno = EBADF;
-#if REPLACE_FCHDIR
-  if (fd != desired_fd && result == desired_fd)
-    result = _gl_register_dup (fd, desired_fd);
-#endif
+# if REPLACE_FCHDIR
+  if (fd != desired_fd && result != -1)
+    result = _gl_register_dup (fd, result);
+# endif
   return result;
 }
 
-#else /* !REPLACE_DUP2 */
+#else /* !HAVE_DUP2 */
 
 /* On older platforms, dup2 did not exist.  */
 
@@ -102,19 +102,21 @@ dupfd (int fd, int desired_fd)
 int
 dup2 (int fd, int desired_fd)
 {
-  int result;
-  if (fd == desired_fd)
-    return fcntl (fd, F_GETFL) < 0 ? -1 : fd;
+  int result = fcntl (fd, F_GETFL) < 0 ? -1 : fd;
+  if (result == -1 || fd == desired_fd)
+    return result;
   close (desired_fd);
 # ifdef F_DUPFD
   result = fcntl (fd, F_DUPFD, desired_fd);
+#  if REPLACE_FCHDIR
+  if (0 <= result)
+    result = _gl_register_dup (fd, result);
+#  endif
 # else
   result = dupfd (fd, desired_fd);
 # endif
-#if REPLACE_FCHDIR
-  if (0 <= result)
-    result = _gl_register_dup (fd, desired_fd);
-#endif
+  if (result == -1 && (errno == EMFILE || errno == EINVAL))
+    errno = EBADF;
   return result;
 }
-#endif /* !REPLACE_DUP2 */
+#endif /* !HAVE_DUP2 */

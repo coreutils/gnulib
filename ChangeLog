@@ -1,3 +1,12 @@
+2009-12-08  Eric Blake  <ebb9@byu.net>
+
+	dup2: fix logic bugs
+	* lib/dup2.c (dup2): Fix logic bugs.  Use HAVE_DUP2 rather than
+	REPLACE_DUP2 to decide when rpl_dup2 is needed.
+	* m4/dup2.m4 (gl_REPLACE_DUP2): Only define REPLACE_DUP2 when dup2
+	exists.
+	(gl_FUNC_DUP2): Drop unneeded AC_SUBST.
+
 2009-12-07  Eric Blake  <ebb9@byu.net>
 
 	unlink: fix m4 detection
