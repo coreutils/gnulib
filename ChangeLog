@@ -1,5 +1,8 @@
 2009-12-07  Eric Blake  <ebb9@byu.net>
 
+	unlink: fix m4 detection
+	* m4/unlink.m4 (gl_FUNC_UNLINK): Include correct header.
+
 	unistd-safer: add unit test
 	* modules/unistd-safer-tests: New file.
 	* tests/test-dup-safer.c: Likewise.
