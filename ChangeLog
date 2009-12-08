@@ -1,3 +1,20 @@
+2009-12-08  Jim Meyering  <meyering@redhat.com>
+
+	init.sh: avoid Solaris 10 /bin/sh portability problem
+	Solaris 10's /bin/sh does not pass '.' arguments 2.. to the
+	sourced script:
+	  $ printf 'echo "$@"\n' > f; /bin/sh -c '. ./f bar'
+	  $ printf 'echo "$@"\n' > f; /bin/bash -c '. ./f bar'
+	  bar
+	tests/init.sh relied on that, accepting a --set-path=DIR argument,
+	and two tests used that idiom.
+	* tests/init.sh: Update suggested usage comments.
+	(path_prepend_): New function, to be used in place
+	of the --src-path=DIR option.
+	(setup_): Move PATH-prepending code into path_prepend_.
+	* tests/test-pread.sh: Adapt to new usage.
+	* tests/test-xalloc-die.sh: Likewise.
+
 2009-12-08  Simon Josefsson  <simon@josefsson.org>
 
 	* doc/gnulib.texi (Glibc pty.h): Add.

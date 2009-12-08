@@ -22,7 +22,7 @@
 #
 #   #!/bin/sh
 #   : ${srcdir=.}
-#   . "$srcdir/init.sh" --set-path=.
+#   . "$srcdir/init.sh"; path_prepend_ .
 #   Execute some commands.
 #   Note that these commands are executed in a subdirectory, therefore you
 #   need to prepend "../" to relative filenames in the build directory.
@@ -47,7 +47,7 @@
 #      Makefile:
 #   $ export srcdir=../../tests # this is an example
 #   3. Execute the commands from the test, copy&pasting them one by one:
-#   $ . "$srcdir/init.sh" --set-path=.
+#   $ . "$srcdir/init.sh"; path_prepend_ .
 #   ...
 #   4. Finally
 #   $ exit
@@ -92,28 +92,30 @@ remove_tmp_()
   exit $__st
 }
 
+# Use this function to prepend to PATH an absolute name for each
+# specified, possibly-$initial_cwd_relative, directory.
+path_prepend_()
+{
+  while test $# != 0; do
+    path_dir_=$1
+    case $path_dir_ in
+      '') fail_ "invalid path dir: '$1'";;
+      /*) abs_path_dir_=$path_dir_;;
+      *) abs_path_dir_=`cd "$initial_cwd_/$path_dir_" && echo "$PWD"` \
+           || fail_ "invalid path dir: $path_dir_";;
+    esac
+    case $abs_path_dir_ in
+      *:*) fail_ "invalid path dir: '$abs_path_dir_'";;
+    esac
+    PATH="$abs_path_dir_:$PATH"
+    shift
+  done
+  export PATH
+}
+
 setup_()
 {
   test "$VERBOSE" = yes && set -x
-
-  # Honor one or more --set-path=. options (i.e., or --set-path=../src).
-  # Use this option to prepend to PATH an absolute name for the
-  # specified, possibly-relative, directory.
-  while test $# != 0; do
-    case $1 in
-      --set-path=*)
-        path_dir_=${1#--set-path=}
-        test -z "$path_dir_" && fail_ "missing argument to --set-path="
-        abs_path_dir_=`cd "$path_dir_" && echo "$PWD" || exit 1` \
-            || fail_ "invalid path dir: $path_dir"
-        PATH="$abs_path_dir_:$PATH"
-        export PATH
-        shift
-        ;;
-      *) fail_ "unrecognized option: $1"
-        ;;
-    esac
-  done
 
   initial_cwd_=$PWD
   ME_=`expr "./$0" : '.*/\(.*\)$'`
