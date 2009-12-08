@@ -1,3 +1,8 @@
+2009-12-08  Eric Blake  <ebb9@byu.net>
+
+	fchdir: avoid memory leak on re-registration.
+	* lib/fchdir.c (ensure_dirs_slot): Avoid memory leak.
+
 2009-12-08  Jim Meyering  <meyering@redhat.com>
 
 	init.sh: avoid Solaris 10 /bin/sh portability problem

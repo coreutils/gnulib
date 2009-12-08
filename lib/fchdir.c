@@ -60,12 +60,15 @@ typedef struct
 static dir_info_t *dirs;
 static size_t dirs_allocated;
 
-/* Try to ensure dirs has enough room for a slot at index fd.  Return
-   false and set errno to ENOMEM on allocation failure.  */
+/* Try to ensure dirs has enough room for a slot at index fd; free any
+   contents already in that slot.  Return false and set errno to
+   ENOMEM on allocation failure.  */
 static bool
 ensure_dirs_slot (size_t fd)
 {
-  if (fd >= dirs_allocated)
+  if (fd < dirs_allocated)
+    free (dirs[fd].name);
+  else
     {
       size_t new_allocated;
       dir_info_t *new_dirs;
