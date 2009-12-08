@@ -216,16 +216,15 @@ _gl_directory_name (int fd)
 /* Return stat information about FD in STATBUF.  Needed when
    rpl_open() used a dummy file to work around an open() that can't
    normally visit directories.  */
-#if REPLACE_OPEN_DIRECTORY
-# undef fstat
+#undef fstat
 int
 rpl_fstat (int fd, struct stat *statbuf)
 {
-  if (0 <= fd && fd < dirs_allocated && dirs[fd].name != NULL)
+  if (REPLACE_OPEN_DIRECTORY
+      && 0 <= fd && fd < dirs_allocated && dirs[fd].name != NULL)
     return stat (dirs[fd].name, statbuf);
   return fstat (fd, statbuf);
 }
-#endif
 
 /* Override opendir() and closedir(), to keep track of the open file
    descriptors.  Needed because there is a function dirfd().  */

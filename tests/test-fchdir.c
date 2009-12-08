@@ -26,6 +26,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "cloexec.h"
+
 #define ASSERT(expr) \
   do									     \
     {									     \
@@ -82,7 +84,11 @@ main (void)
 	  int new_fd = dup (fd);
 	  ASSERT (0 <= new_fd);
 	  ASSERT (close (fd) == 0);
-	  fd = new_fd;
+	  ASSERT (dup2 (new_fd, fd) == fd);
+	  ASSERT (close (new_fd) == 0);
+	  ASSERT (dup_cloexec (fd) == new_fd);
+	  ASSERT (dup2 (new_fd, fd) == fd);
+	  ASSERT (close (new_fd) == 0);
 	}
     }
 

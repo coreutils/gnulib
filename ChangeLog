@@ -1,5 +1,11 @@
 2009-12-08  Eric Blake  <ebb9@byu.net>
 
+	fchdir: fix logic bugs
+	* m4/fchdir.m4 (gl_FUNC_FCHDIR): Fix logic bug.
+	* tests/test-fchdir.c (main): Enhance test.
+	* lib/fchdir.c (rpl_fstat): Always provide if fchdir replacement
+	is in use.
+
 	dup2: fix logic bugs
 	* lib/dup2.c (dup2): Fix logic bugs.  Use HAVE_DUP2 rather than
 	REPLACE_DUP2 to decide when rpl_dup2 is needed.
