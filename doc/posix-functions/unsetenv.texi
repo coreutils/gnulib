@@ -19,6 +19,10 @@ MacOS X 10.3, FreeBSD 6.0, NetBSD 1.6, OpenBSD 3.8, OSF/1 5.1.
 On some platforms, this function does not fail with @samp{EINVAL} when
 passed a null pointer, an empty string, or a string containing @samp{=}:
 FreeBSD 6.0, NetBSD 1.6, OpenBSD 3.8.
+@item
+This function removes only the first value association for the given
+environment variable, not all of them, on some platforms:
+Solaris 10.
 @end itemize
 
 Portability problems not fixed by Gnulib:

@@ -1,3 +1,8 @@
+2009-12-09  Bruno Haible  <bruno@clisp.org>
+
+	* doc/posix-functions/unsetenv.texi: Mention Solaris 10 bug for which a
+	workaround was added on 2009-11-17.
+
 2009-12-09  Jim Meyering  <meyering@redhat.com>
             Bruno Haible  <bruno@clisp.org>
 
