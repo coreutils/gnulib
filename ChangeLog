@@ -1,5 +1,12 @@
 2009-12-09  Bruno Haible  <bruno@clisp.org>
 
+	fchdir: Optimize away rpl_fstat when possible.
+	* m4/fchdir.m4 (gl_FUNC_FCHDIR): Set REPLACE_FSTAT only together with
+	REPLACE_OPEN_DIRECTORY.
+	* lib/fchdir.c (rpl_fstat): Define only when REPLACE_OPEN_DIRECTORY.
+
+2009-12-09  Bruno Haible  <bruno@clisp.org>
+
 	* lib/fchdir.c: Update comment.
 
 2009-12-09  Bruno Haible  <bruno@clisp.org>
