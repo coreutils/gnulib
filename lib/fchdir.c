@@ -50,8 +50,8 @@
    descriptor, since mingw refuses to rename any in-use file system
    object.  */
 
-/* Array of file descriptors opened.  If it points to a directory, it stores
-   info about this directory.  */
+/* Array of file descriptors opened.  If REPLACE_OPEN_DIRECTORY or if it points
+   to a directory, it stores info about this directory.  */
 typedef struct
 {
   char *name;       /* Absolute name of the directory, or NULL.  */

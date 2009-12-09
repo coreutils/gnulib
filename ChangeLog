@@ -1,5 +1,9 @@
 2009-12-09  Bruno Haible  <bruno@clisp.org>
 
+	* lib/fchdir.c: Update comment.
+
+2009-12-09  Bruno Haible  <bruno@clisp.org>
+
 	* lib/cloexec.c (set_cloexec_flag): Clarify intent of dup2 call.
 
 2009-12-08  Eric Blake  <ebb9@byu.net>
