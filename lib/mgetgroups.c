@@ -175,19 +175,20 @@ mgetgroups (char const *username, gid_t gid, gid_t **groups)
      duplicate removal via an O(n) hash-table.  Hence, this function
      is only documented as guaranteeing no pair-wise duplicates,
      rather than returning the minimal set.  */
-  {
-    gid_t first = *g;
-    gid_t *next;
-    gid_t *sentinel = g + ng;
+  if (1 < ng)
+    {
+      gid_t first = *g;
+      gid_t *next;
+      gid_t *groups_end = g + ng;
 
-    for (next = g + 1; next < sentinel; next++)
-      {
-        if (*next == first || *next == *g)
-          ng--;
-        else
-          *++g = *next;
-      }
-  }
+      for (next = g + 1; next < groups_end; next++)
+        {
+          if (*next == first || *next == *g)
+            ng--;
+          else
+            *++g = *next;
+        }
+    }
 
   return ng;
 }
