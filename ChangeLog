@@ -1,3 +1,33 @@
+2009-12-09  Simon Josefsson <simon@josefsson.org>
+            Bruno Haible  <bruno@clisp.org>
+
+	* build-aux/link-warning.h: Add copyright notice.
+	* modules/link-warning (Makefile.am): Generate link-warning.h from
+	build-aux/link-warning.h. Update LINK_WARNING_H accordingly.
+	* NEWS: Mention change in link-warning module.
+	* modules/arpa_inet (Makefile.am): Add dependency to arpa/inet.h.
+	* modules/dirent (Makefile.am): Add dependency to dirent.h.
+	* modules/fcntl-h (Makefile.am): Add dependency to fcntl.h.
+	* modules/getopt-posix (Makefile.am): Add dependency to getopt.h.
+	* modules/inttypes (Makefile.am): Add dependency to inttypes.h.
+	* modules/math (Makefile.am): Add dependency to math.h.
+	* modules/search (Makefile.am): Add dependency to search.h.
+	* modules/signal (Makefile.am): Add dependency to signal.h.
+	* modules/spawn (Makefile.am): Add dependency to spawn.h.
+	* modules/stdio (Makefile.am): Add dependency to stdio.h.
+	* modules/stdlib (Makefile.am): Add dependency to stdlib.h.
+	* modules/string (Makefile.am): Add dependency to string.h.
+	* modules/strings (Makefile.am): Add dependency to strings.h.
+	* modules/sys_ioctl (Makefile.am): Add dependency to sys/ioctl.h.
+	* modules/sys_select (Makefile.am): Add dependency to sys/select.h.
+	* modules/sys_socket (Makefile.am): Add dependency to sys/socket.h.
+	* modules/sys_stat (Makefile.am): Add dependency to sys/stat.h.
+	* modules/sys_times (Makefile.am): Add dependency to sys/times.h.
+	* modules/sys_utsname (Makefile.am): Add dependency to sys/utsname.h.
+	* modules/sys_wait (Makefile.am): Add dependency to sys/wait.h.
+	* modules/unistd (Makefile.am): Add dependency to unistd.h.
+	* modules/wchar (Makefile.am): Add dependency to wchar.h.
+
 2009-12-09  Bruno Haible  <bruno@clisp.org>
 
 	fchdir: Optimize away rpl_fstat when possible.

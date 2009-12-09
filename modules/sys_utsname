@@ -17,7 +17,7 @@ BUILT_SOURCES += $(SYS_UTSNAME_H)
 
 # We need the following in order to create <sys/utsname.h> when the system
 # does not have one.
-sys/utsname.h: sys_utsname.in.h
+sys/utsname.h: sys_utsname.in.h $(LINK_WARNING_H)
 	$(AM_V_at)$(MKDIR_P) sys
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \

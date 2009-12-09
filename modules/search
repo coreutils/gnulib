@@ -17,7 +17,7 @@ BUILT_SOURCES += search.h
 
 # We need the following in order to create <search.h> when the system
 # doesn't have one that works with the given compiler.
-search.h: search.in.h
+search.h: search.in.h $(LINK_WARNING_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's|@''HAVE_SEARCH_H''@|$(HAVE_SEARCH_H)|g' \

@@ -18,7 +18,7 @@ BUILT_SOURCES += $(SYS_WAIT_H)
 
 # We need the following in order to create <sys/wait.h> when the system
 # has one that is incomplete.
-sys/wait.h: sys_wait.in.h
+sys/wait.h: sys_wait.in.h $(LINK_WARNING_H)
 	$(AM_V_at)$(MKDIR_P) sys
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
