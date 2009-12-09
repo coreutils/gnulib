@@ -1,3 +1,10 @@
+2009-12-09  Jim Meyering  <meyering@redhat.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	link-warning: Allow extra lines at the top of build-aux/link-warning.h.
+	* modules/link-warning (Makefile.am): Make the comment-removing sed
+	command more robust in the face of bootstrap-prepended comment lines.
+
 2009-12-09  Bruno Haible  <bruno@clisp.org>
 
 	* lib/mgetgroups.c (mgetgroups): Don't remove duplicates if there is at
