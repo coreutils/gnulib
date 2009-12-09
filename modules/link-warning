@@ -14,9 +14,8 @@ BUILT_SOURCES += link-warning.h
 # build-aux/link-warning.h, except that it has the copyright header cut off.
 link-warning.h: $(top_srcdir)/build-aux/link-warning.h
 	$(AM_V_GEN)rm -f $@-t $@ && \
-	cat $(top_srcdir)/build-aux/link-warning.h \
-	  | sed -e '1,/www\.gnu\.org\/licenses/d' | sed -e '1d' \
-	  > $@-t && \
+	sed -n '/GL_LINK_WARNING/,$$p' \
+	  $(top_srcdir)/build-aux/link-warning.h > $@-t && \
 	mv $@-t $@
 MOSTLYCLEANFILES += link-warning.h link-warning.h-t
 

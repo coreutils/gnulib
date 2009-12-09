@@ -1,10 +1,15 @@
+2009-12-09  Eric Blake  <ebb9@byu.net>
+
+	link-warning: optimize generation
+	* modules/link-warning (Makefile.am): Reduce process usage.
+
 2009-12-09  Bruno Haible  <bruno@clisp.org>
 
 	* doc/posix-functions/unsetenv.texi: Mention Solaris 10 bug for which a
 	workaround was added on 2009-11-17.
 
 2009-12-09  Jim Meyering  <meyering@redhat.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	link-warning: Allow extra lines at the top of build-aux/link-warning.h.
 	* modules/link-warning (Makefile.am): Make the comment-removing sed
@@ -16,7 +21,7 @@
 	most one group.
 
 2009-12-09  Simon Josefsson <simon@josefsson.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	* build-aux/link-warning.h: Add copyright notice.
 	* modules/link-warning (Makefile.am): Generate link-warning.h from
