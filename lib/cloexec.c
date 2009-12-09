@@ -71,8 +71,12 @@ set_cloexec_flag (int desc, bool value)
       errno = EBADF;
       return -1;
     }
-  return dup2 (desc, desc) == desc ? 0 : -1;
+  if (dup2 (desc, desc) < 0)
+    /* errno is EBADF here.  */
+    return -1;
 
+  /* There is nothing we can do on this kind of platform.  Punt.  */
+  return 0;
 #endif
 }
 
