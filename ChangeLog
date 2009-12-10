@@ -1,5 +1,10 @@
 2009-12-09  Bruno Haible  <bruno@clisp.org>
 
+	Avoid syntax error in C++ mode.
+	* lib/stdio.in.h (rename): Don't use parameter name 'new'.
+
+2009-12-09  Bruno Haible  <bruno@clisp.org>
+
 	Use sed with option -e.
 	* gnulib-tool (func_version, func_emit_copyright_notice,
 	func_emit_initmacro_end, func_import, func_create_testdir): Pass

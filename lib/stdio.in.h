@@ -448,7 +448,7 @@ extern int remove (const char *name);
 # if @REPLACE_RENAME@
 #  undef rename
 #  define rename rpl_rename
-extern int rename (const char *old, const char *new);
+extern int rename (const char *old_filename, const char *new_filename);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef rename
