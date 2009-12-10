@@ -1,0 +1,33 @@
+Description:
+A <pty.h> for systems that lacks it.
+
+Files:
+m4/pty.m4
+
+configure.ac:
+gl_PTY
+
+Makefile.am:
+BUILT_SOURCES += $(PTY_H)
+
+# We need the following in order to create <pty.h> when the system
+# doesn't have one that works with the given compiler.
+pty.h:
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  echo '#include <'$(PTY_HEADER)'>'; \
+	} > $@-t && \
+	mv -f $@-t $@
+MOSTLYCLEANFILES += pty.h pty.h-t
+
+Include:
+<pty.h>
+
+Link:
+$(PTY_LIB)
+
+License:
+LGPL
+
+Maintainer:
+Simon Josefsson

@@ -2,13 +2,9 @@
 @subsection @code{forkpty}
 @findex forkpty
 
-Gnulib module: ---
+Gnulib module: pty
 
 Portability problems fixed by Gnulib:
-@itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
 @itemize
 @item
 One some systems (at least including Cygwin, Interix, OSF/1 4 and 5,
@@ -20,4 +16,10 @@ required.
 The function is declared in pty.h on Cygwin, Interix, OSF/1 4 and 5,
 and glibc.  It is declared in util.h on Mac OS X, OpenBSD and NetBSD.
 It is declared in libutil.h on FreeBSD.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+On some systems (at least including Solaris and HP-UX) the function is
+missing.
 @end itemize

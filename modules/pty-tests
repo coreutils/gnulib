@@ -1,0 +1,7 @@
+Files:
+tests/test-pty.c
+
+Makefile.am:
+TESTS += test-pty
+check_PROGRAMS += test-pty
+test_pty_LDADD = $(PTY_LIB)

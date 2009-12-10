@@ -16,15 +16,20 @@ Documentation:
 @uref{http://www.kernel.org/doc/man-pages/online/pages/man3/openpty.3.html,,man openpty}.
 @end itemize
 
-Gnulib module: ---
+Gnulib module: pty
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This header file is missing on some platforms that declare the
+@code{forkpty} and @code{openpty} functions in @code{util.h} or
+@code{libutil.h} instead: MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0,
+OpenBSD 3.8.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
 @item
 This header file is missing on some platforms:
-MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 10, mingw, BeOS.
+AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 10, mingw, BeOS.
 @end itemize

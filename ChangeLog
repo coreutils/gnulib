@@ -1,3 +1,13 @@
+2009-12-07  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/pty: New file.
+	* modules/pty-tests: New file.
+	* m4/pty.m4: New file.
+	* tests/test-pty.c: New file.
+	* doc/glibc-headers/pty.texi: Modified.
+	* doc/glibc-functions/forkpty.texi: Modified.
+	* doc/glibc-functions/openpty.texi: Modified.
+
 2009-12-09  Bruno Haible  <bruno@clisp.org>
 
 	Avoid syntax error in C++ mode.
