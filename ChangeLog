@@ -1,3 +1,9 @@
+2009-12-10  Bruno Haible  <bruno@clisp.org>
+
+	pty test: Fix link error.
+	* modules/pty-tests (Makefile.am): Add the default LDADD value to
+	test_pty_LDADD.
+
 2009-12-07  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/pty: New file.
@@ -8,12 +14,12 @@
 	* doc/glibc-functions/forkpty.texi: Modified.
 	* doc/glibc-functions/openpty.texi: Modified.
 
-2009-12-09  Bruno Haible  <bruno@clisp.org>
+2009-12-10  Bruno Haible  <bruno@clisp.org>
 
 	Avoid syntax error in C++ mode.
 	* lib/stdio.in.h (rename): Don't use parameter name 'new'.
 
-2009-12-09  Bruno Haible  <bruno@clisp.org>
+2009-12-10  Bruno Haible  <bruno@clisp.org>
 
 	Use sed with option -e.
 	* gnulib-tool (func_version, func_emit_copyright_notice,
