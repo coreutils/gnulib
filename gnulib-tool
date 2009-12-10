@@ -252,7 +252,7 @@ q
     fi
     version=
   fi
-  year=`"$gnulib_dir"/build-aux/mdate-sh "$self_abspathname" | sed 's,^.* ,,'`
+  year=`"$gnulib_dir"/build-aux/mdate-sh "$self_abspathname" | sed -e 's,^.* ,,'`
   echo "\
 gnulib-tool (GNU $package $date)$version
 Copyright (C) $year Free Software Foundation, Inc.
@@ -267,10 +267,10 @@ Written by" "Bruno Haible" "and" "Simon Josefsson"
 # outputs to stdout a header for a generated file.
 func_emit_copyright_notice ()
 {
-  sed -n '/Copyright/ {
-            p
-            q
-          }' < "$self_abspathname"
+  sed -n -e '/Copyright/ {
+               p
+               q
+             }' < "$self_abspathname"
   echo "#"
   echo "# This file is free software, distributed under the terms of the GNU"
   echo "# General Public License.  As a special exception to the GNU General"
@@ -1177,7 +1177,7 @@ fi
     if test -n "$prereqs"; then
       autoconf_minversion=`
         for version in $prereqs; do echo $version; done |
-        LC_ALL=C sort -nru | sed 1q
+        LC_ALL=C sort -nru | sed -e 1q
       `
     fi
   fi
@@ -2433,7 +2433,7 @@ func_emit_initmacro_end ()
   echo "    if test -n \"\$${macro_prefix_arg}_LIBOBJS\"; then"
   echo "      # Remove the extension."
   echo "      sed_drop_objext='s/\\.o\$//;s/\\.obj\$//'"
-  echo "      for i in \`for i in \$${macro_prefix_arg}_LIBOBJS; do echo \"\$i\"; done | sed \"\$sed_drop_objext\" | sort | uniq\`; do"
+  echo "      for i in \`for i in \$${macro_prefix_arg}_LIBOBJS; do echo \"\$i\"; done | sed -e \"\$sed_drop_objext\" | sort | uniq\`; do"
   echo "        ${macro_prefix_arg}_libobjs=\"\$${macro_prefix_arg}_libobjs \$i.\$ac_objext\""
   echo "        ${macro_prefix_arg}_ltlibobjs=\"\$${macro_prefix_arg}_ltlibobjs \$i.lo\""
   echo "      done"
@@ -3399,7 +3399,7 @@ s,//*$,/,'
     esac
     echo "gl_LOCAL_DIR([$relative_local_gnulib_dir])"
     echo "gl_MODULES(["
-    echo "$specified_modules" | sed 's/^/  /g'
+    echo "$specified_modules" | sed -e 's/^/  /g'
     echo "])"
     test -z "$incobsolete" || echo "gl_WITH_OBSOLETE"
     echo "gl_AVOID([$avoidlist])"
@@ -3524,7 +3524,7 @@ s,//*$,/,'
                 -e "$sed_replace_build_aux"
         if test "$module" = 'alloca' && test "$libtool" = true; then
           echo 'changequote(,)dnl'
-          echo 'LTALLOCA=`echo "$ALLOCA" | sed '"'"'s/\.[^.]* /.lo /g;s/\.[^.]*$/.lo/'"'"'`'
+          echo 'LTALLOCA=`echo "$ALLOCA" | sed -e '"'"'s/\.[^.]* /.lo /g;s/\.[^.]*$/.lo/'"'"'`'
           echo 'changequote([, ])dnl'
           echo 'AC_SUBST([LTALLOCA])'
         fi
@@ -4001,7 +4001,7 @@ func_create_testdir ()
     test -d "$testdir/$testsbase" || mkdir "$testdir/$testsbase"
     # Viewed from the $testsbase subdirectory, $auxdir is different.
     saved_auxdir="$auxdir"
-    auxdir=`echo "$testsbase/"|sed 's%[^/][^/]*//*%../%g'`"$auxdir"
+    auxdir=`echo "$testsbase/" | sed -e 's%[^/][^/]*//*%../%g'`"$auxdir"
     # Create $testsbase/Makefile.am.
     use_libtests=false
     destfile="$testsbase/Makefile.am"
@@ -4471,7 +4471,7 @@ case $mode in
       m4dirs=
       m4dirs_count=0
       if test -f "$destdir"/Makefile.am; then
-        aclocal_amflags=`sed -n 's/^ACLOCAL_AMFLAGS[	 ]*=\(.*\)$/\1/p' "$destdir"/Makefile.am`
+        aclocal_amflags=`sed -n -e 's/^ACLOCAL_AMFLAGS[	 ]*=\(.*\)$/\1/p' "$destdir"/Makefile.am`
         m4dir_is_next=
         for arg in $aclocal_amflags; do
           if test -n "$m4dir_is_next"; then
