@@ -1,3 +1,13 @@
+2009-12-11  Eric Blake  <ebb9@byu.net>
+
+	setenv: relax requirement in light of POSIX ruling
+	* m4/setenv.m4 (gl_FUNC_SETENV_SEPARATE): Test handling of "" but
+	not NULL.
+	* tests/test-setenv.c (main): Relax test.
+	* tests/test-unsetenv.c (main): Likewise.
+	* doc/posix-functions/setenv.texi (setenv): Document this.
+	* doc/posix-functions/unsetenv.texi (unsetenv): Likewise.
+
 2009-12-11  Bruno Haible  <bruno@clisp.org>
 
 	New module 'fd-safer-flag'.

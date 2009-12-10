@@ -13,7 +13,7 @@ This function is missing on some platforms:
 AIX 4.3.2, HP-UX 11, IRIX 6.5, Solaris 9, mingw, BeOS.
 @item
 On some platforms, this function does not fail with @samp{EINVAL} when
-passed a null pointer, an empty string, or a string containing @samp{=}:
+passed an empty string or a string containing @samp{=}:
 FreeBSD 6.0, NetBSD 1.6, OpenBSD 3.8, Cygwin 1.5.x.
 @item
 On some platforms, this function removes a leading @samp{=} from the
@@ -23,4 +23,8 @@ Cygwin 1.5.x.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+Older versions of POSIX required that @code{setenv(NULL,"",0)} gracefully
+fail with @code{EINVAL}, but not all implementations guarantee this,
+and the requirement was removed.
 @end itemize
