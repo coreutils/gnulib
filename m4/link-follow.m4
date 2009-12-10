@@ -23,7 +23,7 @@ AC_DEFUN([gl_FUNC_LINK_FOLLOWS_SYMLINK],
   gl_link_follows_symlinks=0 # assume GNU behavior
   if test $ac_cv_func_readlink = yes; then
     AC_CACHE_CHECK([whether link(2) dereferences a symlink],
-		    gl_cv_func_link_follows_symlink,
+                    gl_cv_func_link_follows_symlink,
     [
       # Create a regular file.
       echo > conftest.file
@@ -34,38 +34,38 @@ AC_DEFUN([gl_FUNC_LINK_FOLLOWS_SYMLINK],
 #       include <stdlib.h>
 
 #       define SAME_INODE(Stat_buf_1, Stat_buf_2) \
-	  ((Stat_buf_1).st_ino == (Stat_buf_2).st_ino \
-	   && (Stat_buf_1).st_dev == (Stat_buf_2).st_dev)
+          ((Stat_buf_1).st_ino == (Stat_buf_2).st_ino \
+           && (Stat_buf_1).st_dev == (Stat_buf_2).st_dev)
 
-	int
-	main ()
-	{
-	  const char *file = "conftest.file";
-	  const char *sym = "conftest.sym";
-	  const char *hard = "conftest.hard";
-	  struct stat sb_file, sb_hard;
+        int
+        main ()
+        {
+          const char *file = "conftest.file";
+          const char *sym = "conftest.sym";
+          const char *hard = "conftest.hard";
+          struct stat sb_file, sb_hard;
 
-	  /* Create a symlink to the regular file. */
-	  if (symlink (file, sym))
-	    return 2;
+          /* Create a symlink to the regular file. */
+          if (symlink (file, sym))
+            return 2;
 
-	  /* Create a hard link to that symlink.  */
-	  if (link (sym, hard))
-	    return 3;
+          /* Create a hard link to that symlink.  */
+          if (link (sym, hard))
+            return 3;
 
-	  if (lstat (hard, &sb_hard))
-	    return 4;
-	  if (lstat (file, &sb_file))
-	    return 5;
+          if (lstat (hard, &sb_hard))
+            return 4;
+          if (lstat (file, &sb_file))
+            return 5;
 
-	  /* If the dev/inode of hard and file are the same, then
-	     the link call followed the symlink.  */
-	  return SAME_INODE (sb_hard, sb_file) ? 1 : 0;
-	}
+          /* If the dev/inode of hard and file are the same, then
+             the link call followed the symlink.  */
+          return SAME_INODE (sb_hard, sb_file) ? 1 : 0;
+        }
       ]])],
-	[gl_cv_func_link_follows_symlink=no], dnl GNU behavior
-	[gl_cv_func_link_follows_symlink=yes], dnl Followed link/compile failed
-	[gl_cv_func_link_follows_symlink=unknown] dnl We're cross compiling.
+        [gl_cv_func_link_follows_symlink=no], dnl GNU behavior
+        [gl_cv_func_link_follows_symlink=yes], dnl Followed link/compile failed
+        [gl_cv_func_link_follows_symlink=unknown] dnl We're cross compiling.
       )
       rm -f conftest.file conftest.sym conftest.hard
     ])

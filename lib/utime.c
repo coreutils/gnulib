@@ -74,8 +74,8 @@ utime_null (const char *file)
       || lseek (fd, (off_t) 0, SEEK_SET) < 0
       || full_write (fd, &c, sizeof c) != sizeof c
       /* Maybe do this -- it's necessary on SunOS 4.1.3 with some combination
-	 of patches, but that system doesn't use this code: it has utimes.
-	 || fsync (fd) < 0
+         of patches, but that system doesn't use this code: it has utimes.
+         || fsync (fd) < 0
       */
       || (st.st_size == 0 && ftruncate (fd, st.st_size) < 0))
     {
@@ -86,12 +86,12 @@ utime_null (const char *file)
   if (0 <= fd)
     {
       if (close (fd) < 0)
-	status = -1;
+        status = -1;
 
       /* If there was a prior failure, use the saved errno value.
-	 But if the only failure was in the close, don't change errno.  */
+         But if the only failure was in the close, don't change errno.  */
       if (saved_errno)
-	errno = saved_errno;
+        errno = saved_errno;
     }
 
   return status;

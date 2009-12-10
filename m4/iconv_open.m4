@@ -90,8 +90,8 @@ int main ()
     outptr = buf;
     outbytesleft = sizeof (buf);
     res = iconv (cd,
-		 (ICONV_CONST char **) &inptr, &inbytesleft,
-		 &outptr, &outbytesleft);
+                 (ICONV_CONST char **) &inptr, &inbytesleft,
+                 &outptr, &outbytesleft);
     ASSERT (res == 0 && inbytesleft == 0);
     ASSERT (outptr == buf + (sizeof (expected) - 1));
     ASSERT (memcmp (buf, expected, sizeof (expected) - 1) == 0);
@@ -117,8 +117,8 @@ int main ()
     outptr = buf;
     outbytesleft = sizeof (buf);
     res = iconv (cd,
-		 (ICONV_CONST char **) &inptr, &inbytesleft,
-		 &outptr, &outbytesleft);
+                 (ICONV_CONST char **) &inptr, &inbytesleft,
+                 &outptr, &outbytesleft);
     ASSERT (res == 0 && inbytesleft == 0);
     ASSERT (outptr == buf + (sizeof (expected) - 1));
     ASSERT (memcmp (buf, expected, sizeof (expected) - 1) == 0);
@@ -144,8 +144,8 @@ int main ()
     outptr = buf;
     outbytesleft = sizeof (buf);
     res = iconv (cd,
-		 (ICONV_CONST char **) &inptr, &inbytesleft,
-		 &outptr, &outbytesleft);
+                 (ICONV_CONST char **) &inptr, &inbytesleft,
+                 &outptr, &outbytesleft);
     ASSERT (res == 0 && inbytesleft == 0);
     ASSERT (outptr == buf + (sizeof (expected) - 1));
     ASSERT (memcmp (buf, expected, sizeof (expected) - 1) == 0);
@@ -171,8 +171,8 @@ int main ()
     outptr = buf;
     outbytesleft = sizeof (buf);
     res = iconv (cd,
-		 (ICONV_CONST char **) &inptr, &inbytesleft,
-		 &outptr, &outbytesleft);
+                 (ICONV_CONST char **) &inptr, &inbytesleft,
+                 &outptr, &outbytesleft);
     ASSERT (res == 0 && inbytesleft == 0);
     ASSERT (outptr == buf + (sizeof (expected) - 1));
     ASSERT (memcmp (buf, expected, sizeof (expected) - 1) == 0);
@@ -199,8 +199,8 @@ int main ()
     outptr = buf;
     outbytesleft = sizeof (buf);
     res = iconv (cd,
-		 (ICONV_CONST char **) &inptr, &inbytesleft,
-		 &outptr, &outbytesleft);
+                 (ICONV_CONST char **) &inptr, &inbytesleft,
+                 &outptr, &outbytesleft);
     ASSERT (res == 0 && inbytesleft == 0);
     ASSERT (outptr == buf + (sizeof (expected) - 1));
     ASSERT (memcmp (buf, expected, sizeof (expected) - 1) == 0);

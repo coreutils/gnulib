@@ -43,7 +43,7 @@ main (int argc, char **argv)
   if (1 < argc)
     {
       if (chdir (argv[1]) == 0)
-	printf ("changed to directory %s\n", argv[1]);
+        printf ("changed to directory %s\n", argv[1]);
     }
 
   pwd1 = getcwd (NULL, 0);

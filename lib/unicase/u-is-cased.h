@@ -39,30 +39,30 @@ FUNC (const UNIT *s, size_t n, const char *iso639_language,
 
   /* Apply toupper mapping.  */
   mapped_toupper = U_TOUPPER (norms, norms_length, iso639_language, NULL,
-			      mappedbuf, &mapped_length);
+                              mappedbuf, &mapped_length);
   if (mapped_toupper == NULL)
     goto fail;
 
   /* Compare.  */
   if (!(mapped_length == norms_length
-	&& U_CMP (mapped_toupper, norms, norms_length) == 0))
+        && U_CMP (mapped_toupper, norms, norms_length) == 0))
     {
       if (mapped_toupper != mappedbuf)
-	free (mapped_toupper);
+        free (mapped_toupper);
       goto yes;
     }
 
   /* Apply tolower mapping.  */
   mapped_tolower = U_TOLOWER (norms, norms_length, iso639_language, NULL,
-			      mapped_toupper, &mapped_length);
+                              mapped_toupper, &mapped_length);
   if (mapped_tolower == NULL)
     {
       if (mapped_toupper != mappedbuf)
-	{
-	  int saved_errno = errno;
-	  free (mapped_toupper);
-	  errno = saved_errno;
-	}
+        {
+          int saved_errno = errno;
+          free (mapped_toupper);
+          errno = saved_errno;
+        }
       goto fail;
     }
 
@@ -71,24 +71,24 @@ FUNC (const UNIT *s, size_t n, const char *iso639_language,
 
   /* Compare.  */
   if (!(mapped_length == norms_length
-	&& U_CMP (mapped_tolower, norms, norms_length) == 0))
+        && U_CMP (mapped_tolower, norms, norms_length) == 0))
     {
       if (mapped_tolower != mappedbuf)
-	free (mapped_tolower);
+        free (mapped_tolower);
       goto yes;
     }
 
   /* Apply totitle mapping.  */
   mapped_totitle = U_TOTITLE (norms, norms_length, iso639_language, NULL,
-			      mapped_tolower, &mapped_length);
+                              mapped_tolower, &mapped_length);
   if (mapped_totitle == NULL)
     {
       if (mapped_tolower != mappedbuf)
-	{
-	  int saved_errno = errno;
-	  free (mapped_tolower);
-	  errno = saved_errno;
-	}
+        {
+          int saved_errno = errno;
+          free (mapped_tolower);
+          errno = saved_errno;
+        }
       goto fail;
     }
 
@@ -97,10 +97,10 @@ FUNC (const UNIT *s, size_t n, const char *iso639_language,
 
   /* Compare.  */
   if (!(mapped_length == norms_length
-	&& U_CMP (mapped_totitle, norms, norms_length) == 0))
+        && U_CMP (mapped_totitle, norms, norms_length) == 0))
     {
       if (mapped_totitle != mappedbuf)
-	free (mapped_totitle);
+        free (mapped_totitle);
       goto yes;
     }
 

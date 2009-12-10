@@ -32,54 +32,54 @@ uc_composition (ucs4_t uc1, ucs4_t uc2)
   if (uc1 < 0x10000 && uc2 < 0x10000)
     {
       if (uc2 >= 0x1161 && uc2 < 0x1161 + 21
-	  && uc1 >= 0x1100 && uc1 < 0x1100 + 19)
-	{
-	  /* Hangul: Combine single letter L and single letter V to form
-	     two-letter syllable LV.  */
-	  return 0xAC00 + ((uc1 - 0x1100) * 21 + (uc2 - 0x1161)) * 28;
-	}
+          && uc1 >= 0x1100 && uc1 < 0x1100 + 19)
+        {
+          /* Hangul: Combine single letter L and single letter V to form
+             two-letter syllable LV.  */
+          return 0xAC00 + ((uc1 - 0x1100) * 21 + (uc2 - 0x1161)) * 28;
+        }
       else if (uc2 > 0x11A7 && uc2 < 0x11A7 + 28
-	       && uc1 >= 0xAC00 && uc1 < 0xD7A4 && ((uc1 - 0xAC00) % 28) == 0)
-	{
-	  /* Hangul: Combine two-letter syllable LV with single-letter T
-	     to form three-letter syllable LVT.  */
-	  return uc1 + (uc2 - 0x11A7);
-	}
+               && uc1 >= 0xAC00 && uc1 < 0xD7A4 && ((uc1 - 0xAC00) % 28) == 0)
+        {
+          /* Hangul: Combine two-letter syllable LV with single-letter T
+             to form three-letter syllable LVT.  */
+          return uc1 + (uc2 - 0x11A7);
+        }
       else
-	{
+        {
 #if 0
-	  unsigned int uc = MUL1 * uc1 * MUL2 * uc2;
-	  unsigned int index1 = uc >> composition_header_0;
-	  if (index1 < composition_header_1)
-	    {
-	      int lookup1 = u_composition.level1[index1];
-	      if (lookup1 >= 0)
-		{
-		  unsigned int index2 = (uc >> composition_header_2) & composition_header_3;
-		  int lookup2 = u_composition.level2[lookup1 + index2];
-		  if (lookup2 >= 0)
-		    {
-		      unsigned int index3 = (uc & composition_header_4);
-		      unsigned int lookup3 = u_composition.level3[lookup2 + index3];
-		      if ((lookup3 >> 16) == uc2)
-			return lookup3 & ((1U << 16) - 1);
-		    }
-		}
-	    }
+          unsigned int uc = MUL1 * uc1 * MUL2 * uc2;
+          unsigned int index1 = uc >> composition_header_0;
+          if (index1 < composition_header_1)
+            {
+              int lookup1 = u_composition.level1[index1];
+              if (lookup1 >= 0)
+                {
+                  unsigned int index2 = (uc >> composition_header_2) & composition_header_3;
+                  int lookup2 = u_composition.level2[lookup1 + index2];
+                  if (lookup2 >= 0)
+                    {
+                      unsigned int index3 = (uc & composition_header_4);
+                      unsigned int lookup3 = u_composition.level3[lookup2 + index3];
+                      if ((lookup3 >> 16) == uc2)
+                        return lookup3 & ((1U << 16) - 1);
+                    }
+                }
+            }
 #else
-	  char codes[4];
-	  const struct composition_rule *rule;
+          char codes[4];
+          const struct composition_rule *rule;
 
-	  codes[0] = (uc1 >> 8) & 0xff;
-	  codes[1] = uc1 & 0xff;
-	  codes[2] = (uc2 >> 8) & 0xff;
-	  codes[3] = uc2 & 0xff;
+          codes[0] = (uc1 >> 8) & 0xff;
+          codes[1] = uc1 & 0xff;
+          codes[2] = (uc2 >> 8) & 0xff;
+          codes[3] = uc2 & 0xff;
 
-	  rule = gl_uninorm_compose_lookup (codes, 4);
-	  if (rule != NULL)
-	    return rule->combined;
+          rule = gl_uninorm_compose_lookup (codes, 4);
+          if (rule != NULL)
+            return rule->combined;
 #endif
-	}
+        }
     }
   return 0;
 }

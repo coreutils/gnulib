@@ -60,9 +60,9 @@ enum { COPYRIGHT_YEAR = 2009 };
    number of elements in the array. */
 void
 version_etc_arn (FILE *stream,
-		 const char *command_name, const char *package,
-		 const char *version,
-		 const char * const * authors, size_t n_authors)
+                 const char *command_name, const char *package,
+                 const char *version,
+                 const char * const * authors, size_t n_authors)
 {
   if (command_name)
     fprintf (stream, "%s (%s) %s\n", command_name, package, version);
@@ -72,7 +72,7 @@ version_etc_arn (FILE *stream,
 #ifdef PACKAGE_PACKAGER
 # ifdef PACKAGE_PACKAGER_VERSION
   fprintf (stream, _("Packaged by %s (%s)\n"), PACKAGE_PACKAGER,
-	   PACKAGE_PACKAGER_VERSION);
+           PACKAGE_PACKAGER_VERSION);
 # else
   fprintf (stream, _("Packaged by %s\n"), PACKAGE_PACKAGER);
 # endif
@@ -90,7 +90,7 @@ This is free software: you are free to change and redistribute it.\n\
 There is NO WARRANTY, to the extent permitted by law.\n\
 \n\
 "),
-	 stream);
+         stream);
 
   switch (n_authors)
     {
@@ -108,66 +108,66 @@ There is NO WARRANTY, to the extent permitted by law.\n\
     case 3:
       /* TRANSLATORS: Each %s denotes an author name.  */
       fprintf (stream, _("Written by %s, %s, and %s.\n"),
-	       authors[0], authors[1], authors[2]);
+               authors[0], authors[1], authors[2]);
       break;
     case 4:
       /* TRANSLATORS: Each %s denotes an author name.
-	 You can use line breaks, estimating that each author name occupies
-	 ca. 16 screen columns and that a screen line has ca. 80 columns.  */
+         You can use line breaks, estimating that each author name occupies
+         ca. 16 screen columns and that a screen line has ca. 80 columns.  */
       fprintf (stream, _("Written by %s, %s, %s,\nand %s.\n"),
-	       authors[0], authors[1], authors[2], authors[3]);
+               authors[0], authors[1], authors[2], authors[3]);
       break;
     case 5:
       /* TRANSLATORS: Each %s denotes an author name.
-	 You can use line breaks, estimating that each author name occupies
-	 ca. 16 screen columns and that a screen line has ca. 80 columns.  */
+         You can use line breaks, estimating that each author name occupies
+         ca. 16 screen columns and that a screen line has ca. 80 columns.  */
       fprintf (stream, _("Written by %s, %s, %s,\n%s, and %s.\n"),
-	       authors[0], authors[1], authors[2], authors[3], authors[4]);
+               authors[0], authors[1], authors[2], authors[3], authors[4]);
       break;
     case 6:
       /* TRANSLATORS: Each %s denotes an author name.
-	 You can use line breaks, estimating that each author name occupies
-	 ca. 16 screen columns and that a screen line has ca. 80 columns.  */
+         You can use line breaks, estimating that each author name occupies
+         ca. 16 screen columns and that a screen line has ca. 80 columns.  */
       fprintf (stream, _("Written by %s, %s, %s,\n%s, %s, and %s.\n"),
-	       authors[0], authors[1], authors[2], authors[3], authors[4],
-	       authors[5]);
+               authors[0], authors[1], authors[2], authors[3], authors[4],
+               authors[5]);
       break;
     case 7:
       /* TRANSLATORS: Each %s denotes an author name.
-	 You can use line breaks, estimating that each author name occupies
-	 ca. 16 screen columns and that a screen line has ca. 80 columns.  */
+         You can use line breaks, estimating that each author name occupies
+         ca. 16 screen columns and that a screen line has ca. 80 columns.  */
       fprintf (stream, _("Written by %s, %s, %s,\n%s, %s, %s, and %s.\n"),
-	       authors[0], authors[1], authors[2], authors[3], authors[4],
-	       authors[5], authors[6]);
+               authors[0], authors[1], authors[2], authors[3], authors[4],
+               authors[5], authors[6]);
       break;
     case 8:
       /* TRANSLATORS: Each %s denotes an author name.
-	 You can use line breaks, estimating that each author name occupies
-	 ca. 16 screen columns and that a screen line has ca. 80 columns.  */
+         You can use line breaks, estimating that each author name occupies
+         ca. 16 screen columns and that a screen line has ca. 80 columns.  */
       fprintf (stream, _("\
 Written by %s, %s, %s,\n%s, %s, %s, %s,\nand %s.\n"),
-		authors[0], authors[1], authors[2], authors[3], authors[4],
-		authors[5], authors[6], authors[7]);
+                authors[0], authors[1], authors[2], authors[3], authors[4],
+                authors[5], authors[6], authors[7]);
       break;
     case 9:
       /* TRANSLATORS: Each %s denotes an author name.
-	 You can use line breaks, estimating that each author name occupies
-	 ca. 16 screen columns and that a screen line has ca. 80 columns.  */
+         You can use line breaks, estimating that each author name occupies
+         ca. 16 screen columns and that a screen line has ca. 80 columns.  */
       fprintf (stream, _("\
 Written by %s, %s, %s,\n%s, %s, %s, %s,\n%s, and %s.\n"),
-	       authors[0], authors[1], authors[2], authors[3], authors[4],
-	       authors[5], authors[6], authors[7], authors[8]);
+               authors[0], authors[1], authors[2], authors[3], authors[4],
+               authors[5], authors[6], authors[7], authors[8]);
       break;
     default:
       /* 10 or more authors.  Use an abbreviation, since the human reader
-	 will probably not want to read the entire list anyway.  */
+         will probably not want to read the entire list anyway.  */
       /* TRANSLATORS: Each %s denotes an author name.
-	 You can use line breaks, estimating that each author name occupies
-	 ca. 16 screen columns and that a screen line has ca. 80 columns.  */
+         You can use line breaks, estimating that each author name occupies
+         ca. 16 screen columns and that a screen line has ca. 80 columns.  */
       fprintf (stream, _("\
 Written by %s, %s, %s,\n%s, %s, %s, %s,\n%s, %s, and others.\n"),
-		authors[0], authors[1], authors[2], authors[3], authors[4],
-		authors[5], authors[6], authors[7], authors[8]);
+                authors[0], authors[1], authors[2], authors[3], authors[4],
+                authors[5], authors[6], authors[7], authors[8]);
       break;
     }
 }
@@ -178,8 +178,8 @@ Written by %s, %s, %s,\n%s, %s, %s, %s,\n%s, %s, and others.\n"),
    Author names are given in the NULL-terminated array AUTHORS. */
 void
 version_etc_ar (FILE *stream,
-		const char *command_name, const char *package,
-		const char *version, const char * const * authors)
+                const char *command_name, const char *package,
+                const char *version, const char * const * authors)
 {
   size_t n_authors;
 
@@ -194,19 +194,19 @@ version_etc_ar (FILE *stream,
    Author names are given in the NULL-terminated va_list AUTHORS. */
 void
 version_etc_va (FILE *stream,
-		const char *command_name, const char *package,
-		const char *version, va_list authors)
+                const char *command_name, const char *package,
+                const char *version, va_list authors)
 {
   size_t n_authors;
   const char *authtab[10];
 
   for (n_authors = 0;
        n_authors < 10
-	 && (authtab[n_authors] = va_arg (authors, const char *)) != NULL;
+         && (authtab[n_authors] = va_arg (authors, const char *)) != NULL;
        n_authors++)
     ;
   version_etc_arn (stream, command_name, package, version,
-		   authtab, n_authors);
+                   authtab, n_authors);
 }
 
 
@@ -225,8 +225,8 @@ version_etc_va (FILE *stream,
    NULL argument at the end.  */
 void
 version_etc (FILE *stream,
-	     const char *command_name, const char *package,
-	     const char *version, /* const char *author1, ...*/ ...)
+             const char *command_name, const char *package,
+             const char *version, /* const char *author1, ...*/ ...)
 {
   va_list authors;
 
@@ -245,14 +245,14 @@ emit_bug_reporting_address (void)
   printf (_("\nReport bugs to: %s\n"), PACKAGE_BUGREPORT);
 #ifdef PACKAGE_PACKAGER_BUG_REPORTS
   printf (_("Report %s bugs to: %s\n"), PACKAGE_PACKAGER,
-	  PACKAGE_PACKAGER_BUG_REPORTS);
+          PACKAGE_PACKAGER_BUG_REPORTS);
 #endif
 #ifdef PACKAGE_URL
   printf (_("%s home page: <%s>\n"), PACKAGE_NAME, PACKAGE_URL);
 #else
   printf (_("%s home page: <http://www.gnu.org/software/%s/>\n"),
-	  PACKAGE_NAME, PACKAGE);
+          PACKAGE_NAME, PACKAGE);
 #endif
   fputs (_("General help using GNU software: <http://www.gnu.org/gethelp/>\n"),
-	 stdout);
+         stdout);
 }

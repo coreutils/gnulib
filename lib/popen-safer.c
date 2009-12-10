@@ -41,9 +41,9 @@ open_noinherit (char const *name, int flags)
     {
       fd = open (name, flags | O_CLOEXEC);
       if (have_cloexec == 0 && (0 <= fd || errno == EINVAL))
-	have_cloexec = (0 <= fd ? 1 : -1);
+        have_cloexec = (0 <= fd ? 1 : -1);
       if (have_cloexec == 1)
-	return fd;
+        return fd;
     }
 #endif
 
@@ -85,7 +85,7 @@ popen_safer (char const *cmd, char const *mode)
   else
     {
       /* Either all fd's are tied up, or fd is safe and the real popen
-	 will reuse it.  */
+         will reuse it.  */
       close (fd);
       fp = popen (cmd, mode);
     }

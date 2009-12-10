@@ -25,8 +25,8 @@
 
 struct linebuffer
 {
-  size_t size;			/* Allocated. */
-  size_t length;		/* Used. */
+  size_t size;                  /* Allocated. */
+  size_t length;                /* Used. */
   char *buffer;
 };
 
@@ -39,7 +39,7 @@ void initbuffer (struct linebuffer *linebuffer);
    the last character in the file.  Do not NUL-terminate.
    Return LINEBUFFER, except at end of file return NULL.  */
 struct linebuffer *readlinebuffer_delim (struct linebuffer *linebuffer,
-					 FILE *stream, char delimiter);
+                                         FILE *stream, char delimiter);
 
 /* Read an arbitrarily long line of text from STREAM into LINEBUFFER.
    Keep the newline; append a newline if it's the last line of a file

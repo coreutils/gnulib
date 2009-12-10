@@ -27,15 +27,15 @@
 
 #define SIZEOF(array) (sizeof (array) / sizeof (array[0]))
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 int
@@ -54,11 +54,11 @@ main ()
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const uint16_t input[] = /* Ärger mit bösen Bübchen ohne Augenmaß */
-	{
-	  0xC4, 'r', 'g', 'e', 'r', ' ', 'm', 'i', 't', ' ', 'b', 0xF6, 's',
-	  'e', 'n', ' ', 'B', 0xFC, 'b', 'c', 'h', 'e', 'n', ' ', 'o', 'h',
-	  'n', 'e', ' ', 'A', 'u', 'g', 'e', 'n', 'm', 'a', 0xDF, 0
-	};
+        {
+          0xC4, 'r', 'g', 'e', 'r', ' ', 'm', 'i', 't', ' ', 'b', 0xF6, 's',
+          'e', 'n', ' ', 'B', 0xFC, 'b', 'c', 'h', 'e', 'n', ' ', 'o', 'h',
+          'n', 'e', ' ', 'A', 'u', 'g', 'e', 'n', 'm', 'a', 0xDF, 0
+        };
       static const char expected[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
       char *result = u16_strconv_to_encoding (input, "ISO-8859-1", handler);
       ASSERT (result != NULL);
@@ -71,35 +71,35 @@ main ()
     {
       enum iconv_ilseq_handler handler = handlers[h];
       static const uint16_t input[] = /* Rafał Maszkowski */
-	{
-	  'R', 'a', 'f', 'a', 0x0142, ' ', 'M', 'a', 's', 'z', 'k', 'o', 'w',
-	  's', 'k', 'i', 0
-	};
+        {
+          'R', 'a', 'f', 'a', 0x0142, ' ', 'M', 'a', 's', 'z', 'k', 'o', 'w',
+          's', 'k', 'i', 0
+        };
       char *result = u16_strconv_to_encoding (input, "ISO-8859-1", handler);
       switch (handler)
-	{
-	case iconveh_error:
-	  ASSERT (result == NULL && errno == EILSEQ);
-	  break;
-	case iconveh_question_mark:
-	  {
-	    static const char expected[] = "Rafa? Maszkowski";
-	    static const char expected_translit[] = "Rafal Maszkowski";
-	    ASSERT (result != NULL);
-	    ASSERT (strcmp (result, expected) == 0
-		    || strcmp (result, expected_translit) == 0);
-	    free (result);
-	  }
-	  break;
-	case iconveh_escape_sequence:
-	  {
-	    static const char expected[] = "Rafa\\u0142 Maszkowski";
-	    ASSERT (result != NULL);
-	    ASSERT (strcmp (result, expected) == 0);
-	    free (result);
-	  }
-	  break;
-	}
+        {
+        case iconveh_error:
+          ASSERT (result == NULL && errno == EILSEQ);
+          break;
+        case iconveh_question_mark:
+          {
+            static const char expected[] = "Rafa? Maszkowski";
+            static const char expected_translit[] = "Rafal Maszkowski";
+            ASSERT (result != NULL);
+            ASSERT (strcmp (result, expected) == 0
+                    || strcmp (result, expected_translit) == 0);
+            free (result);
+          }
+          break;
+        case iconveh_escape_sequence:
+          {
+            static const char expected[] = "Rafa\\u0142 Maszkowski";
+            ASSERT (result != NULL);
+            ASSERT (strcmp (result, expected) == 0);
+            free (result);
+          }
+          break;
+        }
     }
 
 # if 0

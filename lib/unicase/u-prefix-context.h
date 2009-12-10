@@ -35,12 +35,12 @@ FUNC2 (const UNIT *s, size_t n, casing_prefix_context_t a_context)
       int count = U_MBTOUC_UNSAFE (&uc, s, s_end - s);
 
       if (!uc_is_case_ignorable (uc))
-	context.last_char_except_ignorable = uc;
+        context.last_char_except_ignorable = uc;
 
       {
-	int ccc = uc_combining_class (uc);
-	if (ccc == UC_CCC_A || ccc == UC_CCC_NR)
-	  context.last_char_normal_or_above = uc;
+        int ccc = uc_combining_class (uc);
+        if (ccc == UC_CCC_A || ccc == UC_CCC_NR)
+          context.last_char_normal_or_above = uc;
       }
 
       s += count;
@@ -59,24 +59,24 @@ FUNC2 (const UNIT *s, size_t n, casing_prefix_context_t a_context)
       ucs4_t uc;
       p = U_PREV (&uc, p, s);
       if (p == NULL)
-	break;
+        break;
 
       if (last_char_except_ignorable == (ucs4_t)(-1))
-	{
-	  if (!uc_is_case_ignorable (uc))
-	    last_char_except_ignorable = uc;
-	}
+        {
+          if (!uc_is_case_ignorable (uc))
+            last_char_except_ignorable = uc;
+        }
 
       if (last_char_normal_or_above == (ucs4_t)(-1))
-	{
-	  int ccc = uc_combining_class (uc);
-	  if (ccc == UC_CCC_A || ccc == UC_CCC_NR)
-	    last_char_normal_or_above = uc;
-	}
+        {
+          int ccc = uc_combining_class (uc);
+          if (ccc == UC_CCC_A || ccc == UC_CCC_NR)
+            last_char_normal_or_above = uc;
+        }
 
       if (last_char_except_ignorable != (ucs4_t)(-1)
-	  && last_char_normal_or_above != (ucs4_t)(-1))
-	break;
+          && last_char_normal_or_above != (ucs4_t)(-1))
+        break;
     }
   context.last_char_except_ignorable =
     (last_char_except_ignorable != (ucs4_t)(-1)

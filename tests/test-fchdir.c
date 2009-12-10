@@ -29,15 +29,15 @@
 #include "cloexec.h"
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 int
@@ -69,27 +69,27 @@ main (void)
       ASSERT (chdir (".." + 1 - i) == 0);
       ASSERT (fchdir (fd) == 0);
       {
-	size_t len = strlen (cwd) + 1;
-	char *new_dir = malloc (len);
-	ASSERT (new_dir);
-	ASSERT (getcwd (new_dir, len) == new_dir);
-	ASSERT (strcmp (cwd, new_dir) == 0);
-	free (new_dir);
+        size_t len = strlen (cwd) + 1;
+        char *new_dir = malloc (len);
+        ASSERT (new_dir);
+        ASSERT (getcwd (new_dir, len) == new_dir);
+        ASSERT (strcmp (cwd, new_dir) == 0);
+        free (new_dir);
       }
 
       /* For second iteration, use a cloned fd, to ensure that dup
-	 remembers whether an fd was associated with a directory.  */
+         remembers whether an fd was associated with a directory.  */
       if (!i)
-	{
-	  int new_fd = dup (fd);
-	  ASSERT (0 <= new_fd);
-	  ASSERT (close (fd) == 0);
-	  ASSERT (dup2 (new_fd, fd) == fd);
-	  ASSERT (close (new_fd) == 0);
-	  ASSERT (dup_cloexec (fd) == new_fd);
-	  ASSERT (dup2 (new_fd, fd) == fd);
-	  ASSERT (close (new_fd) == 0);
-	}
+        {
+          int new_fd = dup (fd);
+          ASSERT (0 <= new_fd);
+          ASSERT (close (fd) == 0);
+          ASSERT (dup2 (new_fd, fd) == fd);
+          ASSERT (close (new_fd) == 0);
+          ASSERT (dup_cloexec (fd) == new_fd);
+          ASSERT (dup2 (new_fd, fd) == fd);
+          ASSERT (close (new_fd) == 0);
+        }
     }
 
   free (cwd);

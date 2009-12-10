@@ -25,15 +25,15 @@
 #include <unistd.h>
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 int
@@ -47,9 +47,9 @@ main (int argc, char **argv)
   if (argc > 1)
     {
       if (*argv[1] == 'r') /* Parent is reading, so we write.  */
-	ASSERT (putchar ('c') == 'c');
+        ASSERT (putchar ('c') == 'c');
       else /* Parent is writing, so we read.  */
-	ASSERT (getchar () == 'p');
+        ASSERT (getchar () == 'p');
       /* Test that parent can read non-zero status.  */
       return 42;
     }
@@ -69,10 +69,10 @@ main (int argc, char **argv)
       int status;
 
       if (i)
-	{
-	  ASSERT (fclose (stdin) == 0);
-	  ASSERT (fclose (stdout) == 0);
-	}
+        {
+          ASSERT (fclose (stdin) == 0);
+          ASSERT (fclose (stdout) == 0);
+        }
 
       cmd[len + 1] = 'r';
       ASSERT (child = popen (cmd, "r"));
@@ -81,10 +81,10 @@ main (int argc, char **argv)
       ASSERT (WIFEXITED (status));
       ASSERT (WEXITSTATUS (status) == 42);
       if (i)
-	{
-	  ASSERT (dup2 (STDIN_FILENO, STDIN_FILENO) == -1);
-	  ASSERT (dup2 (STDOUT_FILENO, STDOUT_FILENO) == -1);
-	}
+        {
+          ASSERT (dup2 (STDIN_FILENO, STDIN_FILENO) == -1);
+          ASSERT (dup2 (STDOUT_FILENO, STDOUT_FILENO) == -1);
+        }
 
       cmd[len + 1] = 'w';
       ASSERT (child = popen (cmd, "w"));
@@ -93,10 +93,10 @@ main (int argc, char **argv)
       ASSERT (WIFEXITED (status));
       ASSERT (WEXITSTATUS (status) == 42);
       if (i)
-	{
-	  ASSERT (dup2 (STDIN_FILENO, STDIN_FILENO) == -1);
-	  ASSERT (dup2 (STDOUT_FILENO, STDOUT_FILENO) == -1);
-	}
+        {
+          ASSERT (dup2 (STDIN_FILENO, STDIN_FILENO) == -1);
+          ASSERT (dup2 (STDOUT_FILENO, STDOUT_FILENO) == -1);
+        }
     }
   free (cmd);
   return 0;

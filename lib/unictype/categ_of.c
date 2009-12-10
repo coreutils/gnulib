@@ -31,22 +31,22 @@ lookup_withtable (ucs4_t uc)
     {
       int lookup1 = u_category.level1[index1];
       if (lookup1 >= 0)
-	{
-	  unsigned int index2 = (uc >> category_header_2) & category_header_3;
-	  int lookup2 = u_category.level2[lookup1 + index2];
-	  if (lookup2 >= 0)
-	    {
-	      unsigned int index3 = ((uc & category_header_4) + lookup2) * 5;
-	      /* level3 contains 5-bit values, packed into 16-bit words.  */
-	      unsigned int lookup3 =
-		((u_category.level3[index3>>4]
-		  | (u_category.level3[(index3>>4)+1] << 16))
-		 >> (index3 % 16))
-		& 0x1f;
+        {
+          unsigned int index2 = (uc >> category_header_2) & category_header_3;
+          int lookup2 = u_category.level2[lookup1 + index2];
+          if (lookup2 >= 0)
+            {
+              unsigned int index3 = ((uc & category_header_4) + lookup2) * 5;
+              /* level3 contains 5-bit values, packed into 16-bit words.  */
+              unsigned int lookup3 =
+                ((u_category.level3[index3>>4]
+                  | (u_category.level3[(index3>>4)+1] << 16))
+                 >> (index3 % 16))
+                & 0x1f;
 
-	      return lookup3;
-	    }
-	}
+              return lookup3;
+            }
+        }
       return 29; /* = log2(UC_CATEGORY_MASK_Cn) */
     }
   return -1;

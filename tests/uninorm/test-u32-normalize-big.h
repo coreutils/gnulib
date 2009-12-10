@@ -54,16 +54,16 @@ struct normalization_test_file
 /* Read the NormalizationTest.txt file and return its contents.  */
 extern void
        read_normalization_test_file (const char *filename,
-				     struct normalization_test_file *file);
+                                     struct normalization_test_file *file);
 
 /* Perform the first compliance test.  */
 extern void
        test_specific (const struct normalization_test_file *file,
-		      int (*check) (const uint32_t *c1, size_t c1_length,
-				    const uint32_t *c2, size_t c2_length,
-				    const uint32_t *c3, size_t c3_length,
-				    const uint32_t *c4, size_t c4_length,
-				    const uint32_t *c5, size_t c5_length));
+                      int (*check) (const uint32_t *c1, size_t c1_length,
+                                    const uint32_t *c2, size_t c2_length,
+                                    const uint32_t *c3, size_t c3_length,
+                                    const uint32_t *c4, size_t c4_length,
+                                    const uint32_t *c5, size_t c5_length));
 
 /* Perform the second compliance test.  */
 extern void

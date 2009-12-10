@@ -33,9 +33,9 @@ u8_uctomb_aux (uint8_t *s, ucs4_t uc, int n)
   else if (uc < 0x10000)
     {
       if (uc < 0xd800 || uc >= 0xe000)
-	count = 3;
+        count = 3;
       else
-	return -1;
+        return -1;
     }
 #if 0
   else if (uc < 0x200000)

@@ -27,15 +27,15 @@
 
 #define SIZEOF(array) (sizeof (array) / sizeof (array[0]))
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 int
@@ -55,11 +55,11 @@ main ()
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
       static const uint32_t expected[] = /* Ärger mit bösen Bübchen ohne Augenmaß */
-	{
-	  0xC4, 'r', 'g', 'e', 'r', ' ', 'm', 'i', 't', ' ', 'b', 0xF6, 's',
-	  'e', 'n', ' ', 'B', 0xFC, 'b', 'c', 'h', 'e', 'n', ' ', 'o', 'h',
-	  'n', 'e', ' ', 'A', 'u', 'g', 'e', 'n', 'm', 'a', 0xDF, 0
-	};
+        {
+          0xC4, 'r', 'g', 'e', 'r', ' ', 'm', 'i', 't', ' ', 'b', 0xF6, 's',
+          'e', 'n', ' ', 'B', 0xFC, 'b', 'c', 'h', 'e', 'n', ' ', 'o', 'h',
+          'n', 'e', ' ', 'A', 'u', 'g', 'e', 'n', 'm', 'a', 0xDF, 0
+        };
       uint32_t *result = u32_strconv_from_encoding (input, "ISO-8859-1", handler);
       ASSERT (result != NULL);
       ASSERT (u32_strcmp (result, expected) == 0);
@@ -72,10 +72,10 @@ main ()
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "Rafa\263 Maszkowski"; /* Rafał Maszkowski */
       static const uint32_t expected[] =
-	{
-	  'R', 'a', 'f', 'a', 0x0142, ' ', 'M', 'a', 's', 'z', 'k', 'o', 'w',
-	  's', 'k', 'i', 0
-	};
+        {
+          'R', 'a', 'f', 'a', 0x0142, ' ', 'M', 'a', 's', 'z', 'k', 'o', 'w',
+          's', 'k', 'i', 0
+        };
       uint32_t *result = u32_strconv_from_encoding (input, "ISO-8859-2", handler);
       ASSERT (result != NULL);
       ASSERT (u32_strcmp (result, expected) == 0);
@@ -90,9 +90,9 @@ main ()
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "\244\263\244\363\244\313\244\301\244\317"; /* こんにちは in EUC-JP */
       static const uint32_t expected[] = /* こんにちは */
-	{
-	  0x3053, 0x3093, 0x306B, 0x3061, 0x306F, 0
-	};
+        {
+          0x3053, 0x3093, 0x306B, 0x3061, 0x306F, 0
+        };
       uint32_t *result = u32_strconv_from_encoding (input, "autodetect_jp", handler);
       ASSERT (result != NULL);
       ASSERT (u32_strcmp (result, expected) == 0);
@@ -103,9 +103,9 @@ main ()
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "\202\261\202\361\202\311\202\277\202\315"; /* こんにちは in Shift_JIS */
       static const uint32_t expected[] = /* こんにちは */
-	{
-	  0x3053, 0x3093, 0x306B, 0x3061, 0x306F, 0
-	};
+        {
+          0x3053, 0x3093, 0x306B, 0x3061, 0x306F, 0
+        };
       uint32_t *result = u32_strconv_from_encoding (input, "autodetect_jp", handler);
       ASSERT (result != NULL);
       ASSERT (u32_strcmp (result, expected) == 0);
@@ -116,9 +116,9 @@ main ()
       enum iconv_ilseq_handler handler = handlers[h];
       static const char input[] = "\033$B$3$s$K$A$O\033(B"; /* こんにちは in ISO-2022-JP-2 */
       static const uint32_t expected[] = /* こんにちは */
-	{
-	  0x3053, 0x3093, 0x306B, 0x3061, 0x306F, 0
-	};
+        {
+          0x3053, 0x3093, 0x306B, 0x3061, 0x306F, 0
+        };
       uint32_t *result = u32_strconv_from_encoding (input, "autodetect_jp", handler);
       ASSERT (result != NULL);
       ASSERT (u32_strcmp (result, expected) == 0);

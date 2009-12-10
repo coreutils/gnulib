@@ -74,7 +74,7 @@ AC_DEFUN([gl_FUNC_FCHOWNAT_DEREF_BUG],
      ln -s conftest.no-such $gl_dangle
      AC_RUN_IFELSE(
        [AC_LANG_SOURCE(
-	  [[
+          [[
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -84,10 +84,10 @@ int
 main ()
 {
   return (fchownat (AT_FDCWD, "$gl_dangle", -1, getgid (),
-		    AT_SYMLINK_NOFOLLOW) != 0
-	  && errno == ENOENT);
+                    AT_SYMLINK_NOFOLLOW) != 0
+          && errno == ENOENT);
 }
-	  ]])],
+          ]])],
     [gl_cv_func_fchownat_nofollow_works=yes],
     [gl_cv_func_fchownat_nofollow_works=no],
     [gl_cv_func_fchownat_nofollow_works=no],

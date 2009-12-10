@@ -35,10 +35,10 @@
    It is recommended that no signal is blocked or ignored while execute()
    is called.  See pipe.h for the reason.  */
 extern int execute (const char *progname,
-		    const char *prog_path, char **prog_argv,
-		    bool ignore_sigpipe,
-		    bool null_stdin, bool null_stdout, bool null_stderr,
-		    bool slave_process, bool exit_on_error,
-		    int *termsigp);
+                    const char *prog_path, char **prog_argv,
+                    bool ignore_sigpipe,
+                    bool null_stdin, bool null_stdout, bool null_stderr,
+                    bool slave_process, bool exit_on_error,
+                    int *termsigp);
 
 #endif /* _EXECUTE_H */

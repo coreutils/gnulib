@@ -21,17 +21,17 @@
 
 /* asin(x)
  * Method :
- *	Since  asin(x) = x + x^3/6 + x^5*3/40 + x^7*15/336 + ...
- *	we approximate asin(x) on [0,0.5] by
- *		asin(x) = x + x*x^2*R(x^2)
+ *      Since  asin(x) = x + x^3/6 + x^5*3/40 + x^7*15/336 + ...
+ *      we approximate asin(x) on [0,0.5] by
+ *              asin(x) = x + x*x^2*R(x^2)
  *      Between .5 and .625 the approximation is
  *              asin(0.5625 + x) = asin(0.5625) + x rS(x) / sS(x)
- *	For x in [0.625,1]
- *		asin(x) = pi/2-2*asin(sqrt((1-x)/2))
+ *      For x in [0.625,1]
+ *              asin(x) = pi/2-2*asin(sqrt((1-x)/2))
  *
  * Special cases:
- *	if x is NaN, return x itself;
- *	if |x|>1, return NaN with invalid signal.
+ *      if x is NaN, return x itself;
+ *      if |x|>1, return NaN with invalid signal.
  *
  */
 
@@ -44,7 +44,7 @@ static const long double
   pio2_lo = 4.3359050650618905123985220130216759843812E-35L,
   pio4_hi = 7.8539816339744830961566084581987569936977E-1L,
 
-	/* coefficient for R(x^2) */
+        /* coefficient for R(x^2) */
 
   /* asin(x) = x + x^3 pS(x^2) / qS(x^2)
      0 <= x <= 0.5
@@ -113,19 +113,19 @@ acosl (long double x)
         return t;
     }
 
-  if (x >= 1.0L)	/* |x|>= 1 */
+  if (x >= 1.0L)        /* |x|>= 1 */
     {
       if (x == 1.0L)
-	return 0.0L;   /* return zero */
+        return 0.0L;   /* return zero */
 
-      return (x - x) / (x - x);	/* asin(|x|>1) is NaN */
+      return (x - x) / (x - x); /* asin(|x|>1) is NaN */
     }
 
   else if (x < 0.5L) /* |x| < 0.5 */
     {
       if (x < 0.000000000000000006938893903907228377647697925567626953125L) /* |x| < 2**-57 */
-	/* acos(0)=+-pi/2 with inexact */
-	return x * pio2_hi + x * pio2_lo;
+        /* acos(0)=+-pi/2 with inexact */
+        return x * pio2_hi + x * pio2_lo;
 
       t = x * x;
       p = (((((((((pS9 * t
@@ -157,28 +157,28 @@ acosl (long double x)
     {
       t = x - 0.5625;
       p = ((((((((((rS10 * t
-		    + rS9) * t
-		   + rS8) * t
-		  + rS7) * t
-		 + rS6) * t
-		+ rS5) * t
-	       + rS4) * t
-	      + rS3) * t
-	     + rS2) * t
-	    + rS1) * t
-	   + rS0) * t;
+                    + rS9) * t
+                   + rS8) * t
+                  + rS7) * t
+                 + rS6) * t
+                + rS5) * t
+               + rS4) * t
+              + rS3) * t
+             + rS2) * t
+            + rS1) * t
+           + rS0) * t;
 
       q = ((((((((( t
-		    + sS9) * t
-		  + sS8) * t
-		 + sS7) * t
-		+ sS6) * t
-	       + sS5) * t
-	      + sS4) * t
-	     + sS3) * t
-	    + sS2) * t
-	   + sS1) * t
-	+ sS0;
+                    + sS9) * t
+                  + sS8) * t
+                 + sS7) * t
+                + sS6) * t
+               + sS5) * t
+              + sS4) * t
+             + sS3) * t
+            + sS2) * t
+           + sS1) * t
+        + sS0;
 
       return (pio2_hi - asinr5625) - (p / q - pio2_lo);
     }

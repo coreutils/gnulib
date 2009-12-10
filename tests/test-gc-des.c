@@ -49,35 +49,35 @@ main (int argc, char *argv[])
     for (i = 0; i < 64; ++i)
       {
 
-	rc = gc_cipher_open (GC_DES, GC_ECB, &ctx);
-	if (rc != GC_OK)
-	  return 1;
+        rc = gc_cipher_open (GC_DES, GC_ECB, &ctx);
+        if (rc != GC_OK)
+          return 1;
 
-	rc = gc_cipher_setkey (ctx, 8, key);
-	if (rc != GC_OK)
-	  return 1;
+        rc = gc_cipher_setkey (ctx, 8, key);
+        if (rc != GC_OK)
+          return 1;
 
-	memcpy (temp1, input, 8);
-	rc = gc_cipher_encrypt_inline (ctx, 8, temp1);
-	if (rc != GC_OK)
-	  return 1;
+        memcpy (temp1, input, 8);
+        rc = gc_cipher_encrypt_inline (ctx, 8, temp1);
+        if (rc != GC_OK)
+          return 1;
 
-	memcpy (temp2, temp1, 8);
-	rc = gc_cipher_encrypt_inline (ctx, 8, temp2);
-	if (rc != GC_OK)
-	  return 1;
+        memcpy (temp2, temp1, 8);
+        rc = gc_cipher_encrypt_inline (ctx, 8, temp2);
+        if (rc != GC_OK)
+          return 1;
 
-	rc = gc_cipher_setkey (ctx, 8, temp2);
-	if (rc != GC_OK)
-	  return 1;
+        rc = gc_cipher_setkey (ctx, 8, temp2);
+        if (rc != GC_OK)
+          return 1;
 
-	memcpy (temp3, temp1, 8);
-	rc = gc_cipher_decrypt_inline (ctx, 8, temp3);
-	if (rc != GC_OK)
-	  return 1;
+        memcpy (temp3, temp1, 8);
+        rc = gc_cipher_decrypt_inline (ctx, 8, temp3);
+        if (rc != GC_OK)
+          return 1;
 
-	memcpy (key, temp3, 8);
-	memcpy (input, temp1, 8);
+        memcpy (key, temp3, 8);
+        memcpy (input, temp1, 8);
       }
     if (memcmp (temp3, result, 8))
       return 1;

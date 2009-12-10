@@ -60,60 +60,60 @@ FUNC (const SRC_UNIT *s, size_t n, DST_UNIT *resultbuf, size_t *lengthp)
       /* Fetch a Unicode character from the input string.  */
       uc = *s++;
       /* No need to call the safe variant u32_mbtouc, because
-	 u16_uctomb will verify uc anyway.  */
+         u16_uctomb will verify uc anyway.  */
 
       /* Store it in the output string.  */
       count = u16_uctomb (result + length, uc, allocated - length);
       if (count == -1)
-	{
-	  if (!(result == resultbuf || result == NULL))
-	    free (result);
-	  errno = EILSEQ;
-	  return NULL;
-	}
+        {
+          if (!(result == resultbuf || result == NULL))
+            free (result);
+          errno = EILSEQ;
+          return NULL;
+        }
       if (count == -2)
-	{
-	  DST_UNIT *memory;
+        {
+          DST_UNIT *memory;
 
-	  allocated = (allocated > 0 ? 2 * allocated : 12);
-	  if (length + 2 > allocated)
-	    allocated = length + 2;
-	  if (result == resultbuf || result == NULL)
-	    memory = (DST_UNIT *) malloc (allocated * sizeof (DST_UNIT));
-	  else
-	    memory =
-	      (DST_UNIT *) realloc (result, allocated * sizeof (DST_UNIT));
+          allocated = (allocated > 0 ? 2 * allocated : 12);
+          if (length + 2 > allocated)
+            allocated = length + 2;
+          if (result == resultbuf || result == NULL)
+            memory = (DST_UNIT *) malloc (allocated * sizeof (DST_UNIT));
+          else
+            memory =
+              (DST_UNIT *) realloc (result, allocated * sizeof (DST_UNIT));
 
-	  if (memory == NULL)
-	    {
-	      if (!(result == resultbuf || result == NULL))
-		free (result);
-	      errno = ENOMEM;
-	      return NULL;
-	    }
-	  if (result == resultbuf && length > 0)
-	    memcpy ((char *) memory, (char *) result,
-		    length * sizeof (DST_UNIT));
-	  result = memory;
-	  count = u16_uctomb (result + length, uc, allocated - length);
-	  if (count < 0)
-	    abort ();
-	}
+          if (memory == NULL)
+            {
+              if (!(result == resultbuf || result == NULL))
+                free (result);
+              errno = ENOMEM;
+              return NULL;
+            }
+          if (result == resultbuf && length > 0)
+            memcpy ((char *) memory, (char *) result,
+                    length * sizeof (DST_UNIT));
+          result = memory;
+          count = u16_uctomb (result + length, uc, allocated - length);
+          if (count < 0)
+            abort ();
+        }
       length += count;
     }
 
   if (length == 0)
     {
       if (result == NULL)
-	{
-	  /* Return a non-NULL value.  NULL means error.  */
-	  result = (DST_UNIT *) malloc (1);
-	  if (result == NULL)
-	    {
-	      errno = ENOMEM;
-	      return NULL;
-	    }
-	}
+        {
+          /* Return a non-NULL value.  NULL means error.  */
+          result = (DST_UNIT *) malloc (1);
+          if (result == NULL)
+            {
+              errno = ENOMEM;
+              return NULL;
+            }
+        }
     }
   else if (result != resultbuf && length < allocated)
     {
@@ -122,7 +122,7 @@ FUNC (const SRC_UNIT *s, size_t n, DST_UNIT *resultbuf, size_t *lengthp)
 
       memory = (DST_UNIT *) realloc (result, length * sizeof (DST_UNIT));
       if (memory != NULL)
-	result = memory;
+        result = memory;
     }
 
   *lengthp = length;

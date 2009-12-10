@@ -62,192 +62,192 @@ extern "C" {
 /* ASCII format string, result in locale dependent encoded 'char *'.  */
 extern int
        ulc_sprintf (char *buf,
-		    const char *format, ...);
+                    const char *format, ...);
 extern int
        ulc_snprintf (char *buf, size_t size,
-		     const char *format, ...);
+                     const char *format, ...);
 extern int
        ulc_asprintf (char **resultp,
-		     const char *format, ...);
+                     const char *format, ...);
 extern char *
        ulc_asnprintf (char *resultbuf, size_t *lengthp,
-		      const char *format, ...);
+                      const char *format, ...);
 extern int
        ulc_vsprintf (char *buf,
-		     const char *format, va_list ap);
+                     const char *format, va_list ap);
 extern int
        ulc_vsnprintf (char *buf, size_t size,
-		      const char *format, va_list ap);
+                      const char *format, va_list ap);
 extern int
        ulc_vasprintf (char **resultp,
-		      const char *format, va_list ap);
+                      const char *format, va_list ap);
 extern char *
        ulc_vasnprintf (char *resultbuf, size_t *lengthp,
-		       const char *format, va_list ap);
+                       const char *format, va_list ap);
 
 /* ASCII format string, result in UTF-8 format.  */
 extern int
        u8_sprintf (uint8_t *buf,
-		   const char *format, ...);
+                   const char *format, ...);
 extern int
        u8_snprintf (uint8_t *buf, size_t size,
-		    const char *format, ...);
+                    const char *format, ...);
 extern int
        u8_asprintf (uint8_t **resultp,
-		    const char *format, ...);
+                    const char *format, ...);
 extern uint8_t *
        u8_asnprintf (uint8_t *resultbuf, size_t *lengthp,
-		     const char *format, ...);
+                     const char *format, ...);
 extern int
        u8_vsprintf (uint8_t *buf,
-		    const char *format, va_list ap);
+                    const char *format, va_list ap);
 extern int
        u8_vsnprintf (uint8_t *buf, size_t size,
-		     const char *format, va_list ap);
+                     const char *format, va_list ap);
 extern int
        u8_vasprintf (uint8_t **resultp,
-		     const char *format, va_list ap);
+                     const char *format, va_list ap);
 extern uint8_t *
        u8_vasnprintf (uint8_t *resultbuf, size_t *lengthp,
-		      const char *format, va_list ap);
+                      const char *format, va_list ap);
 
 /* UTF-8 format string, result in UTF-8 format.  */
 extern int
        u8_u8_sprintf (uint8_t *buf,
-		      const uint8_t *format, ...);
+                      const uint8_t *format, ...);
 extern int
        u8_u8_snprintf (uint8_t *buf, size_t size,
-		       const uint8_t *format, ...);
+                       const uint8_t *format, ...);
 extern int
        u8_u8_asprintf (uint8_t **resultp,
-		       const uint8_t *format, ...);
+                       const uint8_t *format, ...);
 extern uint8_t *
        u8_u8_asnprintf (uint8_t *resultbuf, size_t *lengthp,
-			const uint8_t *format, ...);
+                        const uint8_t *format, ...);
 extern int
        u8_u8_vsprintf (uint8_t *buf,
-		       const uint8_t *format, va_list ap);
+                       const uint8_t *format, va_list ap);
 extern int
        u8_u8_vsnprintf (uint8_t *buf, size_t size,
-			const uint8_t *format, va_list ap);
+                        const uint8_t *format, va_list ap);
 extern int
        u8_u8_vasprintf (uint8_t **resultp,
-			const uint8_t *format, va_list ap);
+                        const uint8_t *format, va_list ap);
 extern uint8_t *
        u8_u8_vasnprintf (uint8_t *resultbuf, size_t *lengthp,
-			 const uint8_t *format, va_list ap);
+                         const uint8_t *format, va_list ap);
 
 /* ASCII format string, result in UTF-16 format.  */
 extern int
        u16_sprintf (uint16_t *buf,
-		    const char *format, ...);
+                    const char *format, ...);
 extern int
        u16_snprintf (uint16_t *buf, size_t size,
-		     const char *format, ...);
+                     const char *format, ...);
 extern int
        u16_asprintf (uint16_t **resultp,
-		     const char *format, ...);
+                     const char *format, ...);
 extern uint16_t *
        u16_asnprintf (uint16_t *resultbuf, size_t *lengthp,
-		      const char *format, ...);
+                      const char *format, ...);
 extern int
        u16_vsprintf (uint16_t *buf,
-		     const char *format, va_list ap);
+                     const char *format, va_list ap);
 extern int
        u16_vsnprintf (uint16_t *buf, size_t size,
-		      const char *format, va_list ap);
+                      const char *format, va_list ap);
 extern int
        u16_vasprintf (uint16_t **resultp,
-		      const char *format, va_list ap);
+                      const char *format, va_list ap);
 extern uint16_t *
        u16_vasnprintf (uint16_t *resultbuf, size_t *lengthp,
-		       const char *format, va_list ap);
+                       const char *format, va_list ap);
 
 /* UTF-16 format string, result in UTF-16 format.  */
 extern int
        u16_u16_sprintf (uint16_t *buf,
-			const uint16_t *format, ...);
+                        const uint16_t *format, ...);
 extern int
        u16_u16_snprintf (uint16_t *buf, size_t size,
-			 const uint16_t *format, ...);
+                         const uint16_t *format, ...);
 extern int
        u16_u16_asprintf (uint16_t **resultp,
-			 const uint16_t *format, ...);
+                         const uint16_t *format, ...);
 extern uint16_t *
        u16_u16_asnprintf (uint16_t *resultbuf, size_t *lengthp,
-			  const uint16_t *format, ...);
+                          const uint16_t *format, ...);
 extern int
        u16_u16_vsprintf (uint16_t *buf,
-			 const uint16_t *format, va_list ap);
+                         const uint16_t *format, va_list ap);
 extern int
        u16_u16_vsnprintf (uint16_t *buf, size_t size,
-			  const uint16_t *format, va_list ap);
+                          const uint16_t *format, va_list ap);
 extern int
        u16_u16_vasprintf (uint16_t **resultp,
-			  const uint16_t *format, va_list ap);
+                          const uint16_t *format, va_list ap);
 extern uint16_t *
        u16_u16_vasnprintf (uint16_t *resultbuf, size_t *lengthp,
-			   const uint16_t *format, va_list ap);
+                           const uint16_t *format, va_list ap);
 
 /* ASCII format string, result in UTF-32 format.  */
 extern int
        u32_sprintf (uint32_t *buf,
-		    const char *format, ...);
+                    const char *format, ...);
 extern int
        u32_snprintf (uint32_t *buf, size_t size,
-		     const char *format, ...);
+                     const char *format, ...);
 extern int
        u32_asprintf (uint32_t **resultp,
-		     const char *format, ...);
+                     const char *format, ...);
 extern uint32_t *
        u32_asnprintf (uint32_t *resultbuf, size_t *lengthp,
-		      const char *format, ...);
+                      const char *format, ...);
 extern int
        u32_vsprintf (uint32_t *buf,
-		     const char *format, va_list ap);
+                     const char *format, va_list ap);
 extern int
        u32_vsnprintf (uint32_t *buf, size_t size,
-		      const char *format, va_list ap);
+                      const char *format, va_list ap);
 extern int
        u32_vasprintf (uint32_t **resultp,
-		      const char *format, va_list ap);
+                      const char *format, va_list ap);
 extern uint32_t *
        u32_vasnprintf (uint32_t *resultbuf, size_t *lengthp,
-		       const char *format, va_list ap);
+                       const char *format, va_list ap);
 
 /* UTF-32 format string, result in UTF-32 format.  */
 extern int
        u32_u32_sprintf (uint32_t *buf,
-			const uint32_t *format, ...);
+                        const uint32_t *format, ...);
 extern int
        u32_u32_snprintf (uint32_t *buf, size_t size,
-			 const uint32_t *format, ...);
+                         const uint32_t *format, ...);
 extern int
        u32_u32_asprintf (uint32_t **resultp,
-			 const uint32_t *format, ...);
+                         const uint32_t *format, ...);
 extern uint32_t *
        u32_u32_asnprintf (uint32_t *resultbuf, size_t *lengthp,
-			  const uint32_t *format, ...);
+                          const uint32_t *format, ...);
 extern int
        u32_u32_vsprintf (uint32_t *buf,
-			 const uint32_t *format, va_list ap);
+                         const uint32_t *format, va_list ap);
 extern int
        u32_u32_vsnprintf (uint32_t *buf, size_t size,
-			  const uint32_t *format, va_list ap);
+                          const uint32_t *format, va_list ap);
 extern int
        u32_u32_vasprintf (uint32_t **resultp,
-			  const uint32_t *format, va_list ap);
+                          const uint32_t *format, va_list ap);
 extern uint32_t *
        u32_u32_vasnprintf (uint32_t *resultbuf, size_t *lengthp,
-			   const uint32_t *format, va_list ap);
+                           const uint32_t *format, va_list ap);
 
 /* ASCII format string, output to FILE in locale dependent encoding.  */
 extern int
        ulc_fprintf (FILE *stream,
-		    const char *format, ...);
+                    const char *format, ...);
 extern int
        ulc_vfprintf (FILE *stream,
-		     const char *format, va_list ap);
+                     const char *format, va_list ap);
 
 #ifdef __cplusplus
 }

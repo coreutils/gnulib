@@ -30,15 +30,15 @@
 #include <string.h>
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 int
@@ -62,7 +62,7 @@ main ()
     char *result = NULL;
     size_t length = 0;
     int retval = mem_cd_iconv (input, strlen (input), cd_88591_to_utf8,
-			       &result, &length);
+                               &result, &length);
     ASSERT (retval == 0);
     ASSERT (length == strlen (expected));
     ASSERT (result != NULL && memcmp (result, expected, strlen (expected)) == 0);
@@ -76,7 +76,7 @@ main ()
     char *result = NULL;
     size_t length = 0;
     int retval = mem_cd_iconv (input, strlen (input), cd_utf8_to_88591,
-			       &result, &length);
+                               &result, &length);
     ASSERT (retval == 0);
     ASSERT (length == strlen (expected));
     ASSERT (result != NULL && memcmp (result, expected, strlen (expected)) == 0);
@@ -89,7 +89,7 @@ main ()
     char *result = NULL;
     size_t length = 0;
     int retval = mem_cd_iconv (input, strlen (input), cd_utf8_to_88591,
-			       &result, &length);
+                               &result, &length);
     ASSERT (retval == -1 && errno == EILSEQ);
     ASSERT (result == NULL);
   }
@@ -100,7 +100,7 @@ main ()
     char *result = NULL;
     size_t length = 0;
     int retval = mem_cd_iconv (input, strlen (input), cd_utf8_to_88591,
-			       &result, &length);
+                               &result, &length);
     ASSERT (retval == 0);
     ASSERT (length == 0);
     free (result);

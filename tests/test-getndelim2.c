@@ -26,15 +26,15 @@
 #include "getndelim2.h"
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 int
@@ -144,13 +144,13 @@ main (void)
     ASSERT (strcmp (buffer, line + 501 * 13) == 0);
 
     result = getndelim2 (&line, &len, 501 * 14 - 1, GETNLINE_NO_LIMIT,
-			 EOF, EOF, f);
+                         EOF, EOF, f);
     ASSERT (result == 1);
     buffer[500] = '\n';
     ASSERT (strcmp (buffer, line + 501 * 13) == 0);
 
     result = getndelim2 (&line, &len, 501 * 14 - 1, GETNLINE_NO_LIMIT,
-			 EOF, EOF, f);
+                         EOF, EOF, f);
     buffer[500] = '\0';
     ASSERT (strcmp (buffer, line + 501 * 13) == 0);
     ASSERT (result == -1);

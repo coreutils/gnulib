@@ -27,9 +27,9 @@ extern "C" {
 /* Handling of unconvertible characters.  */
 enum iconv_ilseq_handler
 {
-  iconveh_error,		/* return and set errno = EILSEQ */
-  iconveh_question_mark,	/* use one '?' per unconvertible character */
-  iconveh_escape_sequence	/* use escape sequence \uxxxx or \Uxxxxxxxx */
+  iconveh_error,                /* return and set errno = EILSEQ */
+  iconveh_question_mark,        /* use one '?' per unconvertible character */
+  iconveh_escape_sequence       /* use escape sequence \uxxxx or \Uxxxxxxxx */
 };
 
 

@@ -25,15 +25,15 @@
 #include "zerosize-ptr.h"
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-	{								     \
-	  fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-	  fflush (stderr);						     \
-	  abort ();							     \
-	}								     \
-    }									     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
+          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 /* Calculating void * + int is not portable, so this wrapper converts
@@ -76,7 +76,7 @@ main (void)
     size_t repeat = 10000;
     for (; repeat > 0; repeat--)
       {
-	ASSERT (MEMRCHR (input, 'c', n) == input + n - 3);
+        ASSERT (MEMRCHR (input, 'c', n) == input + n - 3);
       }
   }
 
@@ -85,12 +85,12 @@ main (void)
     int i, j;
     for (i = 0; i < 32; i++)
       {
-	for (j = 0; j < 256; j++)
-	  input[i + j] = j;
-	for (j = 0; j < 256; j++)
-	  {
-	    ASSERT (MEMRCHR (input + i, j, 256) == input + i + j);
-	  }
+        for (j = 0; j < 256; j++)
+          input[i + j] = j;
+        for (j = 0; j < 256; j++)
+          {
+            ASSERT (MEMRCHR (input + i, j, 256) == input + i + j);
+          }
       }
   }
 

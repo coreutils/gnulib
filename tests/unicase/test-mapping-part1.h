@@ -23,16 +23,16 @@
 #include <string.h>
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
-          fprintf (stderr, "%s:%d: assertion failed for c = 0x%04X\n",	     \
-		   __FILE__, __LINE__, c);				     \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
+          fprintf (stderr, "%s:%d: assertion failed for c = 0x%04X\n",       \
+                   __FILE__, __LINE__, c);                                   \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 #define SIZEOF(a) (sizeof(a) / sizeof(a[0]))
 

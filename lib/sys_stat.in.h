@@ -383,9 +383,9 @@ extern int rpl_lstat (const char *name, struct stat *buf);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef lstat
-# define lstat(p,b)							\
-  (GL_LINK_WARNING ("lstat is unportable - "				\
-		    "use gnulib module lstat for portability"),		\
+# define lstat(p,b)                                                     \
+  (GL_LINK_WARNING ("lstat is unportable - "                            \
+                    "use gnulib module lstat for portability"),         \
    lstat (p, b))
 #endif
 
@@ -447,7 +447,7 @@ int mkfifoat (int fd, char const *file, mode_t mode);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef mkfifoat
-# define mkfifoat(d,n,m)				     \
+# define mkfifoat(d,n,m)                                     \
     (GL_LINK_WARNING ("mkfifoat is not portable - " \
                       "use gnulib module mkfifoat for portability"), \
      mkfifoat (d, n, m))
@@ -477,7 +477,7 @@ int mknodat (int fd, char const *file, mode_t mode, dev_t dev);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef mknodat
-# define mknodat(f,n,m,d)			     \
+# define mknodat(f,n,m,d)                            \
     (GL_LINK_WARNING ("mknodat is not portable - " \
                       "use gnulib module mkfifoat for portability"), \
      mknodat (f, n, m, d))
@@ -503,9 +503,9 @@ extern int stat (const char *name, struct stat *buf);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef stat
-# define stat(p,b)							\
-  (GL_LINK_WARNING ("stat is unportable - "				\
-		    "use gnulib module stat for portability"),		\
+# define stat(p,b)                                                      \
+  (GL_LINK_WARNING ("stat is unportable - "                             \
+                    "use gnulib module stat for portability"),          \
    stat (p, b))
 #endif
 

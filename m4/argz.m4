@@ -43,30 +43,30 @@ AS_IF([test -z "$ARGZ_H"],
         [if argz actually works],
         [lt_cv_sys_argz_works],
         [[case $host_os in #(
-	 *cygwin*)
-	   lt_cv_sys_argz_works=no
-	   if test "$cross_compiling" != no; then
-	     lt_cv_sys_argz_works="guessing no"
-	   else
-	     lt_sed_extract_leading_digits='s/^\([0-9\.]*\).*/\1/'
-	     save_IFS=$IFS
-	     IFS=-.
-	     set x `uname -r | sed -e "$lt_sed_extract_leading_digits"`
-	     IFS=$save_IFS
-	     lt_os_major=${2-0}
-	     lt_os_minor=${3-0}
-	     lt_os_micro=${4-0}
-	     if test "$lt_os_major" -gt 1 \
-		|| { test "$lt_os_major" -eq 1 \
-		  && { test "$lt_os_minor" -gt 5 \
-		    || { test "$lt_os_minor" -eq 5 \
-		      && test "$lt_os_micro" -gt 24; }; }; }; then
-	       lt_cv_sys_argz_works=yes
-	     fi
-	   fi
-	   ;; #(
-	 *) lt_cv_sys_argz_works=yes ;;
-	 esac]])
+         *cygwin*)
+           lt_cv_sys_argz_works=no
+           if test "$cross_compiling" != no; then
+             lt_cv_sys_argz_works="guessing no"
+           else
+             lt_sed_extract_leading_digits='s/^\([0-9\.]*\).*/\1/'
+             save_IFS=$IFS
+             IFS=-.
+             set x `uname -r | sed -e "$lt_sed_extract_leading_digits"`
+             IFS=$save_IFS
+             lt_os_major=${2-0}
+             lt_os_minor=${3-0}
+             lt_os_micro=${4-0}
+             if test "$lt_os_major" -gt 1 \
+                || { test "$lt_os_major" -eq 1 \
+                  && { test "$lt_os_minor" -gt 5 \
+                    || { test "$lt_os_minor" -eq 5 \
+                      && test "$lt_os_micro" -gt 24; }; }; }; then
+               lt_cv_sys_argz_works=yes
+             fi
+           fi
+           ;; #(
+         *) lt_cv_sys_argz_works=yes ;;
+         esac]])
      AS_IF([test $lt_cv_sys_argz_works = yes],
         [AC_DEFINE([HAVE_WORKING_ARGZ], [1],
                    [This value is set to 1 to indicate that the system argz facility works])],

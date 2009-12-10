@@ -17,13 +17,13 @@ AC_DEFUN([gl_ARGP],
   AC_CHECK_DECL([program_invocation_name],
                 [AC_DEFINE([HAVE_DECL_PROGRAM_INVOCATION_NAME], [1],
                            [Define if program_invocation_name is declared])],
-	        [AC_DEFINE([GNULIB_PROGRAM_INVOCATION_NAME], [1],
+                [AC_DEFINE([GNULIB_PROGRAM_INVOCATION_NAME], [1],
                            [Define to 1 to add extern declaration of program_invocation_name to argp.h])],
                 [#include <errno.h>])
   AC_CHECK_DECL([program_invocation_short_name],
                 [AC_DEFINE([HAVE_DECL_PROGRAM_INVOCATION_SHORT_NAME], [1],
                            [Define if program_invocation_short_name is declared])],
-	        [AC_DEFINE([GNULIB_PROGRAM_INVOCATION_SHORT_NAME], [1],
+                [AC_DEFINE([GNULIB_PROGRAM_INVOCATION_SHORT_NAME], [1],
                            [Define to 1 to add extern declaration of program_invocation_short_name to argp.h])],
                 [#include <errno.h>])
 

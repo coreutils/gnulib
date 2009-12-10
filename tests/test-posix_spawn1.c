@@ -96,9 +96,9 @@ main ()
           || (err = posix_spawnp (&child, "/bin/sh", &actions, &attrs, argv, environ)) != 0))
     {
       if (actions_allocated)
-	posix_spawn_file_actions_destroy (&actions);
+        posix_spawn_file_actions_destroy (&actions);
       if (attrs_allocated)
-	posix_spawnattr_destroy (&attrs);
+        posix_spawnattr_destroy (&attrs);
       sigprocmask (SIG_UNBLOCK, &fatal_signal_set, NULL);
       errno = err;
       perror ("subprocess failed");

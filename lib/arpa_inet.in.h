@@ -60,7 +60,7 @@ extern "C" {
    For more details, see the POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/inet_ntop.html>.  */
 extern const char *inet_ntop (int af, const void *restrict src,
-			      char *restrict dst, socklen_t cnt);
+                              char *restrict dst, socklen_t cnt);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef inet_ntop
@@ -78,7 +78,7 @@ extern int inet_pton (int af, const char *restrict src, void *restrict dst);
 # undef inet_pton
 # define inet_pton(af,src,dst) \
   (GL_LINK_WARNING ("inet_pton is unportable - " \
-		    "use gnulib module inet_pton for portability"), \
+                    "use gnulib module inet_pton for portability"), \
    inet_pton (af, src, dst))
 #endif
 

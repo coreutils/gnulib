@@ -36,9 +36,9 @@ rpl_connect (int fd, struct sockaddr *sockaddr, int len)
   if (r < 0)
     {
       /* EINPROGRESS is not returned by WinSock 2.0; for backwards
-	 compatibility, connect(2) uses EWOULDBLOCK.  */
+         compatibility, connect(2) uses EWOULDBLOCK.  */
       if (WSAGetLastError () == WSAEWOULDBLOCK)
-	WSASetLastError (WSAEINPROGRESS);
+        WSASetLastError (WSAEINPROGRESS);
 
       set_winsock_errno ();
     }

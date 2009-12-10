@@ -23,21 +23,21 @@
  * Return tangent function of x.
  *
  * kernel function:
- *	__kernel_tanl		... tangent function on [-pi/4,pi/4]
- *	__ieee754_rem_pio2l	... argument reduction routine
+ *      __kernel_tanl           ... tangent function on [-pi/4,pi/4]
+ *      __ieee754_rem_pio2l     ... argument reduction routine
  *
  * Method.
  *      Let S,C and T denote the sin, cos and tan respectively on
- *	[-PI/4, +PI/4]. Reduce the argument x to y1+y2 = x-k*pi/2
- *	in [-pi/4 , +pi/4], and let n = k mod 4.
- *	We have
+ *      [-PI/4, +PI/4]. Reduce the argument x to y1+y2 = x-k*pi/2
+ *      in [-pi/4 , +pi/4], and let n = k mod 4.
+ *      We have
  *
  *          n        sin(x)      cos(x)        tan(x)
  *     ----------------------------------------------------------
- *	    0	       S	   C		 T
- *	    1	       C	  -S		-1/T
- *	    2	      -S	  -C		 T
- *	    3	      -C	   S		-1/T
+ *          0          S           C             T
+ *          1          C          -S            -1/T
+ *          2         -S          -C             T
+ *          3         -C           S            -1/T
  *     ----------------------------------------------------------
  *
  * Special cases:
@@ -46,7 +46,7 @@
  *      trig(NaN)    is that NaN;
  *
  * Accuracy:
- *	TRIG(x) returns trig(x) nearly rounded
+ *      TRIG(x) returns trig(x) nearly rounded
  */
 
 #include "trigl.h"
@@ -80,21 +80,21 @@
  * -1/tan (if k= -1) is returned.
  *
  * Algorithm
- *	1. Since tan(-x) = -tan(x), we need only to consider positive x.
- *	2. if x < 2^-57, return x with inexact if x!=0.
- *	3. tan(x) is approximated by a rational form x + x^3 / 3 + x^5 R(x^2)
+ *      1. Since tan(-x) = -tan(x), we need only to consider positive x.
+ *      2. if x < 2^-57, return x with inexact if x!=0.
+ *      3. tan(x) is approximated by a rational form x + x^3 / 3 + x^5 R(x^2)
  *          on [0,0.67433].
  *
- *	   Note: tan(x+y) = tan(x) + tan'(x)*y
- *		          ~ tan(x) + (1+x*x)*y
- *	   Therefore, for better accuracy in computing tan(x+y), let
- *		r = x^3 * R(x^2)
- *	   then
- *		tan(x+y) = x + (x^3 / 3 + (x^2 *(r+y)+y))
+ *         Note: tan(x+y) = tan(x) + tan'(x)*y
+ *                        ~ tan(x) + (1+x*x)*y
+ *         Therefore, for better accuracy in computing tan(x+y), let
+ *              r = x^3 * R(x^2)
+ *         then
+ *              tan(x+y) = x + (x^3 / 3 + (x^2 *(r+y)+y))
  *
  *      4. For x in [0.67433,pi/4],  let y = pi/4 - x, then
- *		tan(x) = tan(pi/4-y) = (1-tan(y))/(1+tan(y))
- *		       = 1 - 2*(tan(y) - (tan(y)^2)/(1+tan(y)))
+ *              tan(x) = tan(pi/4-y) = (1-tan(y))/(1+tan(y))
+ *                     = 1 - 2*(tan(y) - (tan(y)^2)/(1+tan(y)))
  */
 
 
@@ -137,12 +137,12 @@ kernel_tanl (long double x, long double y, int iy)
   if (x < 0.000000000000000006938893903907228377647697925567626953125L) /* x < 2**-57 */
     {
       if ((int) x == 0)
-	{			/* generate inexact */
-	  if (iy == -1 && x == 0.0)
-	    return 1.0L / fabs (x);
-	  else
-	    return (iy == 1) ? x : -1.0L / x;
-	}
+        {                       /* generate inexact */
+          if (iy == -1 && x == 0.0)
+            return 1.0L / fabs (x);
+          else
+            return (iy == 1) ? x : -1.0L / x;
+        }
     }
   if (x >= 0.6743316650390625) /* |x| >= 0.6743316650390625 */
     {
@@ -167,14 +167,14 @@ kernel_tanl (long double x, long double y, int iy)
       v = (long double) iy;
       w = (v - 2.0 * (x - (w * w / (w + v) - r)));
       if (sign < 0)
-	w = -w;
+        w = -w;
       return w;
     }
   if (iy == 1)
     return w;
   else
-    {				/* if allow error up to 2 ulp,
-				   simply return -1.0/(x+r) here */
+    {                           /* if allow error up to 2 ulp,
+                                   simply return -1.0/(x+r) here */
       /*  compute -1.0/(x+r) accurately */
       u1 = (double) w;
       v = r - (u1 - x);
@@ -202,7 +202,7 @@ tanl (long double x)
 
   /* tanl(Inf) is NaN, tanl(0) is 0 */
   else if (x + x == x)
-    return x - x;		/* NaN */
+    return x - x;               /* NaN */
 
   /* argument reduction needed */
   else

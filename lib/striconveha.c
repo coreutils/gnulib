@@ -82,7 +82,7 @@ static struct autodetect_alias **autodetect_list_end =
 
 int
 uniconv_register_autodetect (const char *name,
-			     const char * const *try_in_order)
+                             const char * const *try_in_order)
 {
   size_t namelen;
   size_t listlen;
@@ -122,12 +122,12 @@ uniconv_register_autodetect (const char *name,
       memory += namelen;
 
       for (i = 0; i < listlen; i++)
-	{
-	  size_t len = strlen (try_in_order[i]) + 1;
-	  memcpy (memory, try_in_order[i], len);
-	  new_try_in_order[i] = (const char *) memory;
-	  memory += len;
-	}
+        {
+          size_t len = strlen (try_in_order[i]) + 1;
+          memcpy (memory, try_in_order[i], len);
+          new_try_in_order[i] = (const char *) memory;
+          memory += len;
+        }
       new_try_in_order[i] = NULL;
 
       /* Now insert the new alias.  */
@@ -149,13 +149,13 @@ uniconv_register_autodetect (const char *name,
 /* Like mem_iconveha, except no handling of transliteration.  */
 static int
 mem_iconveha_notranslit (const char *src, size_t srclen,
-			 const char *from_codeset, const char *to_codeset,
-			 enum iconv_ilseq_handler handler,
-			 size_t *offsets,
-			 char **resultp, size_t *lengthp)
+                         const char *from_codeset, const char *to_codeset,
+                         enum iconv_ilseq_handler handler,
+                         size_t *offsets,
+                         char **resultp, size_t *lengthp)
 {
   int retval = mem_iconveh (src, srclen, from_codeset, to_codeset, handler,
-			    offsets, resultp, lengthp);
+                            offsets, resultp, lengthp);
   if (retval >= 0 || errno != EINVAL)
     return retval;
   else
@@ -163,45 +163,45 @@ mem_iconveha_notranslit (const char *src, size_t srclen,
       struct autodetect_alias *alias;
 
       /* Unsupported from_codeset or to_codeset. Check whether the caller
-	 requested autodetection.  */
+         requested autodetection.  */
       for (alias = autodetect_list; alias != NULL; alias = alias->next)
-	if (strcmp (from_codeset, alias->name) == 0)
-	  {
-	    const char * const *encodings;
+        if (strcmp (from_codeset, alias->name) == 0)
+          {
+            const char * const *encodings;
 
-	    if (handler != iconveh_error)
-	      {
-		/* First try all encodings without any forgiving.  */
-		encodings = alias->encodings_to_try;
-		do
-		  {
-		    retval = mem_iconveha_notranslit (src, srclen,
-						      *encodings, to_codeset,
-						      iconveh_error, offsets,
-						      resultp, lengthp);
-		    if (!(retval < 0 && errno == EILSEQ))
-		      return retval;
-		    encodings++;
-		  }
-		while (*encodings != NULL);
-	      }
+            if (handler != iconveh_error)
+              {
+                /* First try all encodings without any forgiving.  */
+                encodings = alias->encodings_to_try;
+                do
+                  {
+                    retval = mem_iconveha_notranslit (src, srclen,
+                                                      *encodings, to_codeset,
+                                                      iconveh_error, offsets,
+                                                      resultp, lengthp);
+                    if (!(retval < 0 && errno == EILSEQ))
+                      return retval;
+                    encodings++;
+                  }
+                while (*encodings != NULL);
+              }
 
-	    encodings = alias->encodings_to_try;
-	    do
-	      {
-		retval = mem_iconveha_notranslit (src, srclen,
-						  *encodings, to_codeset,
-						  handler, offsets,
-						  resultp, lengthp);
-		if (!(retval < 0 && errno == EILSEQ))
-		  return retval;
-		encodings++;
-	      }
-	    while (*encodings != NULL);
+            encodings = alias->encodings_to_try;
+            do
+              {
+                retval = mem_iconveha_notranslit (src, srclen,
+                                                  *encodings, to_codeset,
+                                                  handler, offsets,
+                                                  resultp, lengthp);
+                if (!(retval < 0 && errno == EILSEQ))
+                  return retval;
+                encodings++;
+              }
+            while (*encodings != NULL);
 
-	    /* Return the last call's result.  */
-	    return -1;
-	  }
+            /* Return the last call's result.  */
+            return -1;
+          }
 
       /* It wasn't an autodetection name.  */
       errno = EINVAL;
@@ -211,11 +211,11 @@ mem_iconveha_notranslit (const char *src, size_t srclen,
 
 int
 mem_iconveha (const char *src, size_t srclen,
-	      const char *from_codeset, const char *to_codeset,
-	      bool transliterate,
-	      enum iconv_ilseq_handler handler,
-	      size_t *offsets,
-	      char **resultp, size_t *lengthp)
+              const char *from_codeset, const char *to_codeset,
+              bool transliterate,
+              enum iconv_ilseq_handler handler,
+              size_t *offsets,
+              char **resultp, size_t *lengthp)
 {
   if (srclen == 0)
     {
@@ -236,8 +236,8 @@ mem_iconveha (const char *src, size_t srclen,
       memcpy (to_codeset_suffixed + len, "//TRANSLIT", 10 + 1);
 
       retval = mem_iconveha_notranslit (src, srclen,
-					from_codeset, to_codeset_suffixed,
-					handler, offsets, resultp, lengthp);
+                                        from_codeset, to_codeset_suffixed,
+                                        handler, offsets, resultp, lengthp);
 
       freea (to_codeset_suffixed);
 
@@ -246,15 +246,15 @@ mem_iconveha (const char *src, size_t srclen,
   else
 #endif
     return mem_iconveha_notranslit (src, srclen,
-				    from_codeset, to_codeset,
-				    handler, offsets, resultp, lengthp);
+                                    from_codeset, to_codeset,
+                                    handler, offsets, resultp, lengthp);
 }
 
 /* Like str_iconveha, except no handling of transliteration.  */
 static char *
 str_iconveha_notranslit (const char *src,
-			 const char *from_codeset, const char *to_codeset,
-			 enum iconv_ilseq_handler handler)
+                         const char *from_codeset, const char *to_codeset,
+                         enum iconv_ilseq_handler handler)
 {
   char *result = str_iconveh (src, from_codeset, to_codeset, handler);
 
@@ -265,43 +265,43 @@ str_iconveha_notranslit (const char *src,
       struct autodetect_alias *alias;
 
       /* Unsupported from_codeset or to_codeset. Check whether the caller
-	 requested autodetection.  */
+         requested autodetection.  */
       for (alias = autodetect_list; alias != NULL; alias = alias->next)
-	if (strcmp (from_codeset, alias->name) == 0)
-	  {
-	    const char * const *encodings;
+        if (strcmp (from_codeset, alias->name) == 0)
+          {
+            const char * const *encodings;
 
-	    if (handler != iconveh_error)
-	      {
-		/* First try all encodings without any forgiving.  */
-		encodings = alias->encodings_to_try;
-		do
-		  {
-		    result = str_iconveha_notranslit (src,
-						      *encodings, to_codeset,
-						      iconveh_error);
-		    if (!(result == NULL && errno == EILSEQ))
-		      return result;
-		    encodings++;
-		  }
-		while (*encodings != NULL);
-	      }
+            if (handler != iconveh_error)
+              {
+                /* First try all encodings without any forgiving.  */
+                encodings = alias->encodings_to_try;
+                do
+                  {
+                    result = str_iconveha_notranslit (src,
+                                                      *encodings, to_codeset,
+                                                      iconveh_error);
+                    if (!(result == NULL && errno == EILSEQ))
+                      return result;
+                    encodings++;
+                  }
+                while (*encodings != NULL);
+              }
 
-	    encodings = alias->encodings_to_try;
-	    do
-	      {
-		result = str_iconveha_notranslit (src,
-						  *encodings, to_codeset,
-						  handler);
-		if (!(result == NULL && errno == EILSEQ))
-		  return result;
-		encodings++;
-	      }
-	    while (*encodings != NULL);
+            encodings = alias->encodings_to_try;
+            do
+              {
+                result = str_iconveha_notranslit (src,
+                                                  *encodings, to_codeset,
+                                                  handler);
+                if (!(result == NULL && errno == EILSEQ))
+                  return result;
+                encodings++;
+              }
+            while (*encodings != NULL);
 
-	    /* Return the last call's result.  */
-	    return NULL;
-	  }
+            /* Return the last call's result.  */
+            return NULL;
+          }
 
       /* It wasn't an autodetection name.  */
       errno = EINVAL;
@@ -311,16 +311,16 @@ str_iconveha_notranslit (const char *src,
 
 char *
 str_iconveha (const char *src,
-	      const char *from_codeset, const char *to_codeset,
-	      bool transliterate,
-	      enum iconv_ilseq_handler handler)
+              const char *from_codeset, const char *to_codeset,
+              bool transliterate,
+              enum iconv_ilseq_handler handler)
 {
   if (*src == '\0' || c_strcasecmp (from_codeset, to_codeset) == 0)
     {
       char *result = strdup (src);
 
       if (result == NULL)
-	errno = ENOMEM;
+        errno = ENOMEM;
       return result;
     }
 
@@ -336,7 +336,7 @@ str_iconveha (const char *src,
       memcpy (to_codeset_suffixed + len, "//TRANSLIT", 10 + 1);
 
       result = str_iconveha_notranslit (src, from_codeset, to_codeset_suffixed,
-					handler);
+                                        handler);
 
       freea (to_codeset_suffixed);
 

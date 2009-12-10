@@ -25,6 +25,6 @@
 struct mode_change *mode_compile (const char *);
 struct mode_change *mode_create_from_ref (const char *);
 mode_t mode_adjust (mode_t, bool, mode_t, struct mode_change const *,
-		    mode_t *);
+                    mode_t *);
 
 #endif

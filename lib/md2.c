@@ -115,33 +115,33 @@ md2_stream (FILE *stream, void *resblock)
 
       /* Read block.  Take care for partial reads.  */
       while (1)
-	{
-	  n = fread (buffer + sum, 1, BLOCKSIZE - sum, stream);
+        {
+          n = fread (buffer + sum, 1, BLOCKSIZE - sum, stream);
 
-	  sum += n;
+          sum += n;
 
-	  if (sum == BLOCKSIZE)
-	    break;
+          if (sum == BLOCKSIZE)
+            break;
 
-	  if (n == 0)
-	    {
-	      /* Check for the error flag IFF N == 0, so that we don't
-	         exit the loop after a partial read due to e.g., EAGAIN
-	         or EWOULDBLOCK.  */
-	      if (ferror (stream))
-		{
-		  free (buffer);
-		  return 1;
-		}
-	      goto process_partial_block;
-	    }
+          if (n == 0)
+            {
+              /* Check for the error flag IFF N == 0, so that we don't
+                 exit the loop after a partial read due to e.g., EAGAIN
+                 or EWOULDBLOCK.  */
+              if (ferror (stream))
+                {
+                  free (buffer);
+                  return 1;
+                }
+              goto process_partial_block;
+            }
 
-	  /* We've read at least one byte, so ignore errors.  But always
-	     check for EOF, since feof may be true even though N > 0.
-	     Otherwise, we could end up calling fread after EOF.  */
-	  if (feof (stream))
-	    goto process_partial_block;
-	}
+          /* We've read at least one byte, so ignore errors.  But always
+             check for EOF, since feof may be true even though N > 0.
+             Otherwise, we could end up calling fread after EOF.  */
+          if (feof (stream))
+            goto process_partial_block;
+        }
 
       /* Process buffer with BLOCKSIZE bytes.  Note that
          BLOCKSIZE % 64 == 0
@@ -196,11 +196,11 @@ md2_process_bytes (const void *buffer, size_t len, struct md2_ctx *ctx)
 
       /* is 16 bytes full? */
       if (ctx->curlen == 16)
-	{
-	  md2_compress (ctx);
-	  md2_update_chksum (ctx);
-	  ctx->curlen = 0;
-	}
+        {
+          md2_compress (ctx);
+          md2_update_chksum (ctx);
+          ctx->curlen = 0;
+        }
     }
 }
 
@@ -260,9 +260,9 @@ md2_compress (struct md2_ctx *ctx)
   for (j = 0; j < 18; j++)
     {
       for (k = 0; k < 48; k++)
-	{
-	  t = (ctx->X[k] ^= PI_SUBST[(int) (t & 255)]);
-	}
+        {
+          t = (ctx->X[k] ^= PI_SUBST[(int) (t & 255)]);
+        }
       t = (t + (unsigned char) j) & 255;
     }
 }

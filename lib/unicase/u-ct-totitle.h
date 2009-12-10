@@ -55,10 +55,10 @@ FUNC (const UNIT *s, size_t n,
     {
       wordbreaks = (char *) malloc (n);
       if (wordbreaks == NULL)
-	{
-	  errno = ENOMEM;
-	  goto fail2;
-	}
+        {
+          errno = ENOMEM;
+          goto fail2;
+        }
       U_WORDBREAKS (s, n, wordbreaks);
     }
   else
@@ -70,12 +70,12 @@ FUNC (const UNIT *s, size_t n,
 
     /* When considering the string as segmented by word boundaries: For each
        such segment:
-	- In the first part, we are searching for the first cased character.
-	  In this state, in_word_first_part = true, and no conversion takes
-	  place.
-	- In the second part, we are converting every character: the first
-	  among these characters to title case, the other ones to lower case.
-	  In this state, in_word_first_part = false.  */
+        - In the first part, we are searching for the first cased character.
+          In this state, in_word_first_part = true, and no conversion takes
+          place.
+        - In the second part, we are converting every character: the first
+          among these characters to title case, the other ones to lower case.
+          In this state, in_word_first_part = false.  */
     bool in_word_first_part = true;
 
     /* Helper for evaluating the FINAL_SIGMA condition:
@@ -90,356 +90,356 @@ FUNC (const UNIT *s, size_t n,
 
     while (s < s_end)
       {
-	/* Fetch the next character.  */
-	ucs4_t uc;
-	int count = U_MBTOUC_UNSAFE (&uc, s, s_end - s);
+        /* Fetch the next character.  */
+        ucs4_t uc;
+        int count = U_MBTOUC_UNSAFE (&uc, s, s_end - s);
 
-	ucs4_t (*single_character_map) (ucs4_t);
-	size_t offset_in_rule; /* offset in 'struct special_casing_rule' */
+        ucs4_t (*single_character_map) (ucs4_t);
+        size_t offset_in_rule; /* offset in 'struct special_casing_rule' */
 
-	ucs4_t mapped_uc[3];
-	unsigned int mapped_count;
+        ucs4_t mapped_uc[3];
+        unsigned int mapped_count;
 
-	if (*wp)
-	  /* Crossing a word boundary.  */
-	  in_word_first_part = true;
+        if (*wp)
+          /* Crossing a word boundary.  */
+          in_word_first_part = true;
 
-	/* Determine single_character_map, offset_in_rule.
-	   There are three possibilities:
-	     - uc should not be converted.
-	     - uc should be titlecased.
-	     - uc should be lowercased.  */
-	if (in_word_first_part)
-	  {
-	    if (uc_is_cased (uc))
-	      {
-		/* uc is to be titlecased.  */
-		single_character_map = uc_totitle;
-		offset_in_rule = offsetof (struct special_casing_rule, title[0]);
-		in_word_first_part = false;
-	      }
-	    else
-	      {
-		/* uc is not converted.  */
-		single_character_map = NULL;
-		offset_in_rule = 0;
-	      }
-	  }
-	else
-	  {
-	    /* uc is to be lowercased.  */
-	    single_character_map = uc_tolower;
-	    offset_in_rule = offsetof (struct special_casing_rule, lower[0]);
-	  }
+        /* Determine single_character_map, offset_in_rule.
+           There are three possibilities:
+             - uc should not be converted.
+             - uc should be titlecased.
+             - uc should be lowercased.  */
+        if (in_word_first_part)
+          {
+            if (uc_is_cased (uc))
+              {
+                /* uc is to be titlecased.  */
+                single_character_map = uc_totitle;
+                offset_in_rule = offsetof (struct special_casing_rule, title[0]);
+                in_word_first_part = false;
+              }
+            else
+              {
+                /* uc is not converted.  */
+                single_character_map = NULL;
+                offset_in_rule = 0;
+              }
+          }
+        else
+          {
+            /* uc is to be lowercased.  */
+            single_character_map = uc_tolower;
+            offset_in_rule = offsetof (struct special_casing_rule, lower[0]);
+          }
 
-	/* Actually map uc.  */
-	if (single_character_map == NULL)
-	  {
-	    mapped_uc[0] = uc;
-	    mapped_count = 1;
-	    goto found_mapping;
-	  }
+        /* Actually map uc.  */
+        if (single_character_map == NULL)
+          {
+            mapped_uc[0] = uc;
+            mapped_count = 1;
+            goto found_mapping;
+          }
 
-	if (uc < 0x10000)
-	  {
-	    /* Look first in the special-casing table.  */
-	    char code[3];
+        if (uc < 0x10000)
+          {
+            /* Look first in the special-casing table.  */
+            char code[3];
 
-	    code[0] = (uc >> 8) & 0xff;
-	    code[1] = uc & 0xff;
+            code[0] = (uc >> 8) & 0xff;
+            code[1] = uc & 0xff;
 
-	    for (code[2] = 0; ; code[2]++)
-	      {
-		const struct special_casing_rule *rule =
-		  gl_unicase_special_lookup (code, 3);
+            for (code[2] = 0; ; code[2]++)
+              {
+                const struct special_casing_rule *rule =
+                  gl_unicase_special_lookup (code, 3);
 
-		if (rule == NULL)
-		  break;
+                if (rule == NULL)
+                  break;
 
-		/* Test if the condition applies.  */
-		/* Does the language apply?  */
-		if (rule->language[0] == '\0'
-		    || (iso639_language != NULL
-			&& iso639_language[0] == rule->language[0]
-			&& iso639_language[1] == rule->language[1]))
-		  {
-		    /* Does the context apply?  */
-		    int context = rule->context;
-		    bool applies;
+                /* Test if the condition applies.  */
+                /* Does the language apply?  */
+                if (rule->language[0] == '\0'
+                    || (iso639_language != NULL
+                        && iso639_language[0] == rule->language[0]
+                        && iso639_language[1] == rule->language[1]))
+                  {
+                    /* Does the context apply?  */
+                    int context = rule->context;
+                    bool applies;
 
-		    if (context < 0)
-		      context = - context;
-		    switch (context)
-		      {
-		      case SCC_ALWAYS:
-			applies = true;
-			break;
+                    if (context < 0)
+                      context = - context;
+                    switch (context)
+                      {
+                      case SCC_ALWAYS:
+                        applies = true;
+                        break;
 
-		      case SCC_FINAL_SIGMA:
-			/* "Before" condition: preceded by a sequence
-			   consisting of a cased letter and a case-ignorable
-			   sequence.
-			   "After" condition: not followed by a sequence
-			   consisting of a case-ignorable sequence and then a
-			   cased letter.  */
-			/* Test the "before" condition.  */
-			applies = uc_is_cased (last_char_except_ignorable);
-			/* Test the "after" condition.  */
-			if (applies)
-			  {
-			    const UNIT *s2 = s + count;
-			    for (;;)
-			      {
-				if (s2 < s_end)
-				  {
-				    ucs4_t uc2;
-				    int count2 = U_MBTOUC_UNSAFE (&uc2, s2, s_end - s2);
-				    /* Our uc_is_case_ignorable function is
-				       known to return false for all cased
-				       characters.  So we can call
-				       uc_is_case_ignorable first.  */
-				    if (!uc_is_case_ignorable (uc2))
-				      {
-					applies = ! uc_is_cased (uc2);
-					break;
-				      }
-				    s2 += count2;
-				  }
-				else
-				  {
-				    applies = ! uc_is_cased (suffix_context.first_char_except_ignorable);
-				    break;
-				  }
-			      }
-			  }
-			break;
+                      case SCC_FINAL_SIGMA:
+                        /* "Before" condition: preceded by a sequence
+                           consisting of a cased letter and a case-ignorable
+                           sequence.
+                           "After" condition: not followed by a sequence
+                           consisting of a case-ignorable sequence and then a
+                           cased letter.  */
+                        /* Test the "before" condition.  */
+                        applies = uc_is_cased (last_char_except_ignorable);
+                        /* Test the "after" condition.  */
+                        if (applies)
+                          {
+                            const UNIT *s2 = s + count;
+                            for (;;)
+                              {
+                                if (s2 < s_end)
+                                  {
+                                    ucs4_t uc2;
+                                    int count2 = U_MBTOUC_UNSAFE (&uc2, s2, s_end - s2);
+                                    /* Our uc_is_case_ignorable function is
+                                       known to return false for all cased
+                                       characters.  So we can call
+                                       uc_is_case_ignorable first.  */
+                                    if (!uc_is_case_ignorable (uc2))
+                                      {
+                                        applies = ! uc_is_cased (uc2);
+                                        break;
+                                      }
+                                    s2 += count2;
+                                  }
+                                else
+                                  {
+                                    applies = ! uc_is_cased (suffix_context.first_char_except_ignorable);
+                                    break;
+                                  }
+                              }
+                          }
+                        break;
 
-		      case SCC_AFTER_SOFT_DOTTED:
-			/* "Before" condition: There is a Soft_Dotted character
-			   before it, with no intervening character of
-			   combining class 0 or 230 (Above).  */
-			/* Test the "before" condition.  */
-			applies = uc_is_property_soft_dotted (last_char_normal_or_above);
-			break;
+                      case SCC_AFTER_SOFT_DOTTED:
+                        /* "Before" condition: There is a Soft_Dotted character
+                           before it, with no intervening character of
+                           combining class 0 or 230 (Above).  */
+                        /* Test the "before" condition.  */
+                        applies = uc_is_property_soft_dotted (last_char_normal_or_above);
+                        break;
 
-		      case SCC_MORE_ABOVE:
-			/* "After" condition: followed by a character of
-			   combining class 230 (Above) with no intervening
-			   character of combining class 0 or 230 (Above).  */
-			/* Test the "after" condition.  */
-			{
-			  const UNIT *s2 = s + count;
-			  applies = false;
-			  for (;;)
-			    {
-			      if (s2 < s_end)
-				{
-				  ucs4_t uc2;
-				  int count2 = U_MBTOUC_UNSAFE (&uc2, s2, s_end - s2);
-				  int ccc = uc_combining_class (uc2);
-				  if (ccc == UC_CCC_A)
-				    {
-				      applies = true;
-				      break;
-				    }
-				  if (ccc == UC_CCC_NR)
-				    break;
-				  s2 += count2;
-				}
-			      else
-				{
-				  applies = ((suffix_context.bits & SCC_MORE_ABOVE_MASK) != 0);
-				  break;
-				}
-			    }
-			}
-			break;
+                      case SCC_MORE_ABOVE:
+                        /* "After" condition: followed by a character of
+                           combining class 230 (Above) with no intervening
+                           character of combining class 0 or 230 (Above).  */
+                        /* Test the "after" condition.  */
+                        {
+                          const UNIT *s2 = s + count;
+                          applies = false;
+                          for (;;)
+                            {
+                              if (s2 < s_end)
+                                {
+                                  ucs4_t uc2;
+                                  int count2 = U_MBTOUC_UNSAFE (&uc2, s2, s_end - s2);
+                                  int ccc = uc_combining_class (uc2);
+                                  if (ccc == UC_CCC_A)
+                                    {
+                                      applies = true;
+                                      break;
+                                    }
+                                  if (ccc == UC_CCC_NR)
+                                    break;
+                                  s2 += count2;
+                                }
+                              else
+                                {
+                                  applies = ((suffix_context.bits & SCC_MORE_ABOVE_MASK) != 0);
+                                  break;
+                                }
+                            }
+                        }
+                        break;
 
-		      case SCC_BEFORE_DOT:
-			/* "After" condition: followed by COMBINING DOT ABOVE
-			   (U+0307). Any sequence of characters with a
-			   combining class that is neither 0 nor 230 may
-			   intervene between the current character and the
-			   combining dot above.  */
-			/* Test the "after" condition.  */
-			{
-			  const UNIT *s2 = s + count;
-			  applies = false;
-			  for (;;)
-			    {
-			      if (s2 < s_end)
-				{
-				  ucs4_t uc2;
-				  int count2 = U_MBTOUC_UNSAFE (&uc2, s2, s_end - s2);
-				  if (uc2 == 0x0307) /* COMBINING DOT ABOVE */
-				    {
-				      applies = true;
-				      break;
-				    }
-				  {
-				    int ccc = uc_combining_class (uc2);
-				    if (ccc == UC_CCC_A || ccc == UC_CCC_NR)
-				      break;
-				  }
-				  s2 += count2;
-				}
-			      else
-				{
-				  applies = ((suffix_context.bits & SCC_BEFORE_DOT_MASK) != 0);
-				  break;
-				}
-			    }
-			}
-			break;
+                      case SCC_BEFORE_DOT:
+                        /* "After" condition: followed by COMBINING DOT ABOVE
+                           (U+0307). Any sequence of characters with a
+                           combining class that is neither 0 nor 230 may
+                           intervene between the current character and the
+                           combining dot above.  */
+                        /* Test the "after" condition.  */
+                        {
+                          const UNIT *s2 = s + count;
+                          applies = false;
+                          for (;;)
+                            {
+                              if (s2 < s_end)
+                                {
+                                  ucs4_t uc2;
+                                  int count2 = U_MBTOUC_UNSAFE (&uc2, s2, s_end - s2);
+                                  if (uc2 == 0x0307) /* COMBINING DOT ABOVE */
+                                    {
+                                      applies = true;
+                                      break;
+                                    }
+                                  {
+                                    int ccc = uc_combining_class (uc2);
+                                    if (ccc == UC_CCC_A || ccc == UC_CCC_NR)
+                                      break;
+                                  }
+                                  s2 += count2;
+                                }
+                              else
+                                {
+                                  applies = ((suffix_context.bits & SCC_BEFORE_DOT_MASK) != 0);
+                                  break;
+                                }
+                            }
+                        }
+                        break;
 
-		      case SCC_AFTER_I:
-			/* "Before" condition: There is an uppercase I before
-			   it, and there is no intervening character of
-			   combining class 0 or 230 (Above).  */
-			/* Test the "before" condition.  */
-			applies = (last_char_normal_or_above == 'I');
-			break;
+                      case SCC_AFTER_I:
+                        /* "Before" condition: There is an uppercase I before
+                           it, and there is no intervening character of
+                           combining class 0 or 230 (Above).  */
+                        /* Test the "before" condition.  */
+                        applies = (last_char_normal_or_above == 'I');
+                        break;
 
-		      default:
-			abort ();
-		      }
-		    if (rule->context < 0)
-		      applies = !applies;
+                      default:
+                        abort ();
+                      }
+                    if (rule->context < 0)
+                      applies = !applies;
 
-		    if (applies)
-		      {
-			/* The rule applies.
-			   Look up the mapping (0 to 3 characters).  */
-			const unsigned short *mapped_in_rule =
-			  (const unsigned short *)((const char *)rule + offset_in_rule);
+                    if (applies)
+                      {
+                        /* The rule applies.
+                           Look up the mapping (0 to 3 characters).  */
+                        const unsigned short *mapped_in_rule =
+                          (const unsigned short *)((const char *)rule + offset_in_rule);
 
-			if (mapped_in_rule[0] == 0)
-			  mapped_count = 0;
-			else
-			  {
-			    mapped_uc[0] = mapped_in_rule[0];
-			    if (mapped_in_rule[1] == 0)
-			      mapped_count = 1;
-			    else
-			      {
-				mapped_uc[1] = mapped_in_rule[1];
-				if (mapped_in_rule[2] == 0)
-				  mapped_count = 2;
-				else
-				  {
-				    mapped_uc[2] = mapped_in_rule[2];
-				    mapped_count = 3;
-				  }
-			      }
-			  }
-			goto found_mapping;
-		      }
-		  }
+                        if (mapped_in_rule[0] == 0)
+                          mapped_count = 0;
+                        else
+                          {
+                            mapped_uc[0] = mapped_in_rule[0];
+                            if (mapped_in_rule[1] == 0)
+                              mapped_count = 1;
+                            else
+                              {
+                                mapped_uc[1] = mapped_in_rule[1];
+                                if (mapped_in_rule[2] == 0)
+                                  mapped_count = 2;
+                                else
+                                  {
+                                    mapped_uc[2] = mapped_in_rule[2];
+                                    mapped_count = 3;
+                                  }
+                              }
+                          }
+                        goto found_mapping;
+                      }
+                  }
 
-		/* Optimization: Save a hash table lookup in the next round.  */
-		if (!rule->has_next)
-		  break;
-	      }
-	  }
+                /* Optimization: Save a hash table lookup in the next round.  */
+                if (!rule->has_next)
+                  break;
+              }
+          }
 
-	/* No special-cased mapping.  So use the locale and context independent
-	   mapping.  */
-	mapped_uc[0] = single_character_map (uc);
-	mapped_count = 1;
+        /* No special-cased mapping.  So use the locale and context independent
+           mapping.  */
+        mapped_uc[0] = single_character_map (uc);
+        mapped_count = 1;
 
        found_mapping:
-	/* Found the mapping: uc maps to mapped_uc[0..mapped_count-1].  */
-	{
-	  unsigned int i;
+        /* Found the mapping: uc maps to mapped_uc[0..mapped_count-1].  */
+        {
+          unsigned int i;
 
-	  for (i = 0; i < mapped_count; i++)
-	    {
-	      ucs4_t muc = mapped_uc[i];
+          for (i = 0; i < mapped_count; i++)
+            {
+              ucs4_t muc = mapped_uc[i];
 
-	      /* Append muc to the result accumulator.  */
-	      if (length < allocated)
-		{
-		  int ret = U_UCTOMB (result + length, muc, allocated - length);
-		  if (ret == -1)
-		    {
-		      errno = EINVAL;
-		      goto fail1;
-		    }
-		  if (ret >= 0)
-		    {
-		      length += ret;
-		      goto done_appending;
-		    }
-		}
-	      {
-		size_t old_allocated = allocated;
-		size_t new_allocated = 2 * old_allocated;
-		if (new_allocated < 64)
-		  new_allocated = 64;
-		if (new_allocated < old_allocated) /* integer overflow? */
-		  abort ();
-		{
-		  UNIT *larger_result;
-		  if (result == NULL)
-		    {
-		      larger_result = (UNIT *) malloc (new_allocated * sizeof (UNIT));
-		      if (larger_result == NULL)
-			{
-			  errno = ENOMEM;
-			  goto fail1;
-			}
-		    }
-		  else if (result == resultbuf)
-		    {
-		      larger_result = (UNIT *) malloc (new_allocated * sizeof (UNIT));
-		      if (larger_result == NULL)
-			{
-			  errno = ENOMEM;
-			  goto fail1;
-			}
-		      U_CPY (larger_result, resultbuf, length);
-		    }
-		  else
-		    {
-		      larger_result =
-			(UNIT *) realloc (result, new_allocated * sizeof (UNIT));
-		      if (larger_result == NULL)
-			{
-			  errno = ENOMEM;
-			  goto fail1;
-			}
-		    }
-		  result = larger_result;
-		  allocated = new_allocated;
-		  {
-		    int ret = U_UCTOMB (result + length, muc, allocated - length);
-		    if (ret == -1)
-		      {
-			errno = EINVAL;
-			goto fail1;
-		      }
-		    if (ret < 0)
-		      abort ();
-		    length += ret;
-		    goto done_appending;
-		  }
-		}
-	      }
-	     done_appending: ;
-	    }
-	}
+              /* Append muc to the result accumulator.  */
+              if (length < allocated)
+                {
+                  int ret = U_UCTOMB (result + length, muc, allocated - length);
+                  if (ret == -1)
+                    {
+                      errno = EINVAL;
+                      goto fail1;
+                    }
+                  if (ret >= 0)
+                    {
+                      length += ret;
+                      goto done_appending;
+                    }
+                }
+              {
+                size_t old_allocated = allocated;
+                size_t new_allocated = 2 * old_allocated;
+                if (new_allocated < 64)
+                  new_allocated = 64;
+                if (new_allocated < old_allocated) /* integer overflow? */
+                  abort ();
+                {
+                  UNIT *larger_result;
+                  if (result == NULL)
+                    {
+                      larger_result = (UNIT *) malloc (new_allocated * sizeof (UNIT));
+                      if (larger_result == NULL)
+                        {
+                          errno = ENOMEM;
+                          goto fail1;
+                        }
+                    }
+                  else if (result == resultbuf)
+                    {
+                      larger_result = (UNIT *) malloc (new_allocated * sizeof (UNIT));
+                      if (larger_result == NULL)
+                        {
+                          errno = ENOMEM;
+                          goto fail1;
+                        }
+                      U_CPY (larger_result, resultbuf, length);
+                    }
+                  else
+                    {
+                      larger_result =
+                        (UNIT *) realloc (result, new_allocated * sizeof (UNIT));
+                      if (larger_result == NULL)
+                        {
+                          errno = ENOMEM;
+                          goto fail1;
+                        }
+                    }
+                  result = larger_result;
+                  allocated = new_allocated;
+                  {
+                    int ret = U_UCTOMB (result + length, muc, allocated - length);
+                    if (ret == -1)
+                      {
+                        errno = EINVAL;
+                        goto fail1;
+                      }
+                    if (ret < 0)
+                      abort ();
+                    length += ret;
+                    goto done_appending;
+                  }
+                }
+              }
+             done_appending: ;
+            }
+        }
 
-	if (!uc_is_case_ignorable (uc))
-	  last_char_except_ignorable = uc;
+        if (!uc_is_case_ignorable (uc))
+          last_char_except_ignorable = uc;
 
-	{
-	  int ccc = uc_combining_class (uc);
-	  if (ccc == UC_CCC_A || ccc == UC_CCC_NR)
-	    last_char_normal_or_above = uc;
-	}
+        {
+          int ccc = uc_combining_class (uc);
+          if (ccc == UC_CCC_A || ccc == UC_CCC_NR)
+            last_char_normal_or_above = uc;
+        }
 
-	s += count;
-	wp += count;
+        s += count;
+        wp += count;
       }
   }
 
@@ -452,7 +452,7 @@ FUNC (const UNIT *s, size_t n,
 
       normalized_result = U_NORMALIZE (nf, result, length, resultbuf, lengthp);
       if (normalized_result == NULL)
-	goto fail2;
+        goto fail2;
 
       free (result);
       return normalized_result;
@@ -461,15 +461,15 @@ FUNC (const UNIT *s, size_t n,
   if (length == 0)
     {
       if (result == NULL)
-	{
-	  /* Return a non-NULL value.  NULL means error.  */
-	  result = (UNIT *) malloc (1);
-	  if (result == NULL)
-	    {
-	      errno = ENOMEM;
-	      goto fail2;
-	    }
-	}
+        {
+          /* Return a non-NULL value.  NULL means error.  */
+          result = (UNIT *) malloc (1);
+          if (result == NULL)
+            {
+              errno = ENOMEM;
+              goto fail2;
+            }
+        }
     }
   else if (result != resultbuf && length < allocated)
     {
@@ -478,7 +478,7 @@ FUNC (const UNIT *s, size_t n,
 
       memory = (UNIT *) realloc (result, length * sizeof (UNIT));
       if (memory != NULL)
-	result = memory;
+        result = memory;
     }
 
   *lengthp = length;

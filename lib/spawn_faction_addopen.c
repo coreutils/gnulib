@@ -32,8 +32,8 @@
    `open' for the given file during the `spawn' call.  */
 int
 posix_spawn_file_actions_addopen (posix_spawn_file_actions_t *file_actions,
-				  int fd, const char *path, int oflag,
-				  mode_t mode)
+                                  int fd, const char *path, int oflag,
+                                  mode_t mode)
 {
   int maxfd = __sysconf (_SC_OPEN_MAX);
   struct __spawn_action *rec;

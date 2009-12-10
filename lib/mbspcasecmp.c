@@ -54,21 +54,21 @@ mbspcasecmp (const char *string, const char *prefix)
       mbui_init (iter2, prefix);
 
       while (mbui_avail (iter1) && mbui_avail (iter2))
-	{
-	  int cmp = mb_casecmp (mbui_cur (iter1), mbui_cur (iter2));
+        {
+          int cmp = mb_casecmp (mbui_cur (iter1), mbui_cur (iter2));
 
-	  if (cmp != 0)
-	    return NULL;
+          if (cmp != 0)
+            return NULL;
 
-	  mbui_advance (iter1);
-	  mbui_advance (iter2);
-	}
+          mbui_advance (iter1);
+          mbui_advance (iter2);
+        }
       if (!mbui_avail (iter2))
-	/* PREFIX equals STRING or is terminated before STRING.  */
-	return (char *) mbui_cur_ptr (iter1);
+        /* PREFIX equals STRING or is terminated before STRING.  */
+        return (char *) mbui_cur_ptr (iter1);
       else
-	/* STRING terminated before PREFIX.  */
-	return NULL;
+        /* STRING terminated before PREFIX.  */
+        return NULL;
     }
   else
     {
@@ -77,19 +77,19 @@ mbspcasecmp (const char *string, const char *prefix)
       unsigned char c1, c2;
 
       for (; ; p1++, p2++)
-	{
-	  c1 = TOLOWER (*p1);
-	  c2 = TOLOWER (*p2);
+        {
+          c1 = TOLOWER (*p1);
+          c2 = TOLOWER (*p2);
 
-	  if (c2 == '\0' || c1 != c2)
-	    break;
-	}
+          if (c2 == '\0' || c1 != c2)
+            break;
+        }
 
       if (c2 == '\0')
-	/* PREFIX equals STRING or is terminated before STRING.  */
-	return (char *) p1;
+        /* PREFIX equals STRING or is terminated before STRING.  */
+        return (char *) p1;
       else
-	/* STRING terminated before PREFIX.  */
-	return NULL;
+        /* STRING terminated before PREFIX.  */
+        return NULL;
     }
 }

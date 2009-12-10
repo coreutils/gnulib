@@ -61,14 +61,14 @@ xgetdomainname (void)
       domainname[k] = '\0';
       err = getdomainname (domainname, size);
       if (err >= 0 && domainname[k] == '\0')
-	break;
+        break;
       else if (err < 0 && errno != EINVAL)
-	{
-	  int saved_errno = errno;
-	  free (domainname);
-	  errno = saved_errno;
-	  return NULL;
-	}
+        {
+          int saved_errno = errno;
+          free (domainname);
+          errno = saved_errno;
+          return NULL;
+        }
       size *= 2;
       domainname = xrealloc (domainname, size);
     }

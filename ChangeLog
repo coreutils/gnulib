@@ -1,5 +1,16 @@
 2009-12-10  Bruno Haible  <bruno@clisp.org>
 
+	Use spaces for indentation, not tabs.
+	* lib/**/*.[hcy] except lib/reg*.[hc]: Untabify.
+	* m4/*.m4: Untabify.
+	* build-aux/*.h: Untabify.
+	* tests/**/*.[hc]: Untabify.
+	* README: New section "Indent with spaces, not TABs", based on
+	coreutils/HACKING and comments by Pádraig Brady and Paolo Bonzini.
+	* NEWS: Mention the change.
+
+2009-12-10  Bruno Haible  <bruno@clisp.org>
+
 	pty test: Fix link error.
 	* modules/pty-tests (Makefile.am): Add the default LDADD value to
 	test_pty_LDADD.

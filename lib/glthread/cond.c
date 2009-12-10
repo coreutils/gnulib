@@ -30,8 +30,8 @@
 
 int
 glthread_cond_timedwait_multithreaded (gl_cond_t *cond,
-				       gl_lock_t *lock,
-				       struct timespec *abstime)
+                                       gl_lock_t *lock,
+                                       struct timespec *abstime)
 {
   int ret, status;
   pth_event_t ev;
@@ -58,8 +58,8 @@ glthread_cond_timedwait_multithreaded (gl_cond_t *cond,
 
 int
 glthread_cond_timedwait_multithreaded (gl_cond_t *cond,
-				       gl_lock_t *lock,
-				       struct timespec *abstime)
+                                       gl_lock_t *lock,
+                                       struct timespec *abstime)
 {
   int ret;
 
@@ -160,7 +160,7 @@ gl_waitqueue_notify_first (gl_waitqueue_t *wq)
   if (wq->wq_list.wql_next != &wq->wq_list)
     {
       struct gl_waitqueue_element *elt =
-	(struct gl_waitqueue_element *) wq->wq_list.wql_next;
+        (struct gl_waitqueue_element *) wq->wq_list.wql_next;
       struct gl_waitqueue_link *prev;
       struct gl_waitqueue_link *next;
 
@@ -174,7 +174,7 @@ gl_waitqueue_notify_first (gl_waitqueue_t *wq)
 
       SetEvent (elt->event);
       /* After the SetEvent, this thread cannot access *elt any more, because
-	 the woken-up thread will quickly call  free (elt).  */
+         the woken-up thread will quickly call  free (elt).  */
     }
 }
 
@@ -200,7 +200,7 @@ gl_waitqueue_notify_all (gl_waitqueue_t *wq)
 
       SetEvent (elt->event);
       /* After the SetEvent, this thread cannot access *elt any more, because
-	 the woken-up thread will quickly call  free (elt).  */
+         the woken-up thread will quickly call  free (elt).  */
 
       l = next;
     }
@@ -225,14 +225,14 @@ glthread_cond_wait_func (gl_cond_t *cond, gl_lock_t *lock)
   if (!cond->guard.done)
     {
       if (InterlockedIncrement (&cond->guard.started) == 0)
-	/* This thread is the first one to need this condition variable.
-	   Initialize it.  */
-	glthread_cond_init (cond);
+        /* This thread is the first one to need this condition variable.
+           Initialize it.  */
+        glthread_cond_init (cond);
       else
-	/* Yield the CPU while waiting for another thread to finish
-	   initializing this condition variable.  */
-	while (!cond->guard.done)
-	  Sleep (0);
+        /* Yield the CPU while waiting for another thread to finish
+           initializing this condition variable.  */
+        while (!cond->guard.done)
+          Sleep (0);
     }
 
   EnterCriticalSection (&cond->lock);
@@ -241,43 +241,43 @@ glthread_cond_wait_func (gl_cond_t *cond, gl_lock_t *lock)
     LeaveCriticalSection (&cond->lock);
     if (elt == NULL)
       {
-	/* Allocation failure.  Weird.  */
-	return EAGAIN;
+        /* Allocation failure.  Weird.  */
+        return EAGAIN;
       }
     else
       {
-	HANDLE event = elt->event;
-	int err;
-	DWORD result;
+        HANDLE event = elt->event;
+        int err;
+        DWORD result;
 
-	/* Now release the lock and let any other thread take it.  */
-	err = glthread_lock_unlock (lock);
-	if (err != 0)
-	  {
-	    EnterCriticalSection (&cond->lock);
-	    gl_waitqueue_remove (&cond->waiters, elt);
-	    LeaveCriticalSection (&cond->lock);
-	    CloseHandle (event);
-	    free (elt);
-	    return err;
-	  }
-	/* POSIX says:
-	    "If another thread is able to acquire the mutex after the
-	     about-to-block thread has released it, then a subsequent call to
-	     pthread_cond_broadcast() or pthread_cond_signal() in that thread
-	     shall behave as if it were issued after the about-to-block thread
-	     has blocked."
-	   This is fulfilled here, because the thread signalling is done
-	   through SetEvent, not PulseEvent.  */
-	/* Wait until another thread signals this event.  */
-	result = WaitForSingleObject (event, INFINITE);
-	if (result == WAIT_FAILED || result == WAIT_TIMEOUT)
-	  abort ();
-	CloseHandle (event);
-	free (elt);
-	/* The thread which signalled the event already did the bookkeeping:
-	   removed us from the waiters.  */
-	return glthread_lock_lock (lock);
+        /* Now release the lock and let any other thread take it.  */
+        err = glthread_lock_unlock (lock);
+        if (err != 0)
+          {
+            EnterCriticalSection (&cond->lock);
+            gl_waitqueue_remove (&cond->waiters, elt);
+            LeaveCriticalSection (&cond->lock);
+            CloseHandle (event);
+            free (elt);
+            return err;
+          }
+        /* POSIX says:
+            "If another thread is able to acquire the mutex after the
+             about-to-block thread has released it, then a subsequent call to
+             pthread_cond_broadcast() or pthread_cond_signal() in that thread
+             shall behave as if it were issued after the about-to-block thread
+             has blocked."
+           This is fulfilled here, because the thread signalling is done
+           through SetEvent, not PulseEvent.  */
+        /* Wait until another thread signals this event.  */
+        result = WaitForSingleObject (event, INFINITE);
+        if (result == WAIT_FAILED || result == WAIT_TIMEOUT)
+          abort ();
+        CloseHandle (event);
+        free (elt);
+        /* The thread which signalled the event already did the bookkeeping:
+           removed us from the waiters.  */
+        return glthread_lock_lock (lock);
       }
   }
 }
@@ -290,20 +290,20 @@ glthread_cond_timedwait_func (gl_cond_t *cond, gl_lock_t *lock, struct timespec 
   gettimeofday (&currtime, NULL);
   if (currtime.tv_sec > abstime->tv_sec
       || (currtime.tv_sec == abstime->tv_sec
-	  && currtime.tv_usec * 1000 >= abstime->tv_nsec))
+          && currtime.tv_usec * 1000 >= abstime->tv_nsec))
     return ETIMEDOUT;
 
   if (!cond->guard.done)
     {
       if (InterlockedIncrement (&cond->guard.started) == 0)
-	/* This thread is the first one to need this condition variable.
-	   Initialize it.  */
-	glthread_cond_init (cond);
+        /* This thread is the first one to need this condition variable.
+           Initialize it.  */
+        glthread_cond_init (cond);
       else
-	/* Yield the CPU while waiting for another thread to finish
-	   initializing this condition variable.  */
-	while (!cond->guard.done)
-	  Sleep (0);
+        /* Yield the CPU while waiting for another thread to finish
+           initializing this condition variable.  */
+        while (!cond->guard.done)
+          Sleep (0);
     }
 
   EnterCriticalSection (&cond->lock);
@@ -312,103 +312,103 @@ glthread_cond_timedwait_func (gl_cond_t *cond, gl_lock_t *lock, struct timespec 
     LeaveCriticalSection (&cond->lock);
     if (elt == NULL)
       {
-	/* Allocation failure.  Weird.  */
-	return EAGAIN;
+        /* Allocation failure.  Weird.  */
+        return EAGAIN;
       }
     else
       {
-	HANDLE event = elt->event;
-	int err;
-	DWORD timeout;
-	DWORD result;
+        HANDLE event = elt->event;
+        int err;
+        DWORD timeout;
+        DWORD result;
 
-	/* Now release the lock and let any other thread take it.  */
-	err = glthread_lock_unlock (lock);
-	if (err != 0)
-	  {
-	    EnterCriticalSection (&cond->lock);
-	    gl_waitqueue_remove (&cond->waiters, elt);
-	    LeaveCriticalSection (&cond->lock);
-	    CloseHandle (event);
-	    free (elt);
-	    return err;
-	  }
-	/* POSIX says:
-	    "If another thread is able to acquire the mutex after the
-	     about-to-block thread has released it, then a subsequent call to
-	     pthread_cond_broadcast() or pthread_cond_signal() in that thread
-	     shall behave as if it were issued after the about-to-block thread
-	     has blocked."
-	   This is fulfilled here, because the thread signalling is done
-	   through SetEvent, not PulseEvent.  */
-	/* Wait until another thread signals this event or until the abstime
-	   passes.  */
-	gettimeofday (&currtime, NULL);
-	if (currtime.tv_sec > abstime->tv_sec)
-	  timeout = 0;
-	else
-	  {
-	    unsigned long seconds = abstime->tv_sec - currtime.tv_sec;
-	    timeout = seconds * 1000;
-	    if (timeout / 1000 != seconds) /* overflow? */
-	      timeout = INFINITE;
-	    else
-	      {
-		long milliseconds =
-		  abstime->tv_nsec / 1000000 - currtime.tv_usec / 1000;
-		if (milliseconds >= 0)
-		  {
-		    timeout += milliseconds;
-		    if (timeout < milliseconds) /* overflow? */
-		      timeout = INFINITE;
-		  }
-		else
-		  {
-		    if (timeout >= - milliseconds)
-		      timeout -= (- milliseconds);
-		    else
-		      timeout = 0;
-		  }
-	      }
-	  }
-	result = WaitForSingleObject (event, timeout);
-	if (result == WAIT_FAILED)
-	  abort ();
-	if (result == WAIT_TIMEOUT)
-	  {
-	    EnterCriticalSection (&cond->lock);
-	    if (gl_waitqueue_remove (&cond->waiters, elt))
-	      {
-		/* The event was not signaled between the WaitForSingleObject
-		   call and the EnterCriticalSection call.  */
-		if (!(WaitForSingleObject (event, 0) == WAIT_TIMEOUT))
-		  abort ();
-	      }
-	    else
-	      {
-		/* The event was signaled between the WaitForSingleObject
-		   call and the EnterCriticalSection call.  */
-		if (!(WaitForSingleObject (event, 0) == WAIT_OBJECT_0))
-		  abort ();
-		/* Produce the right return value.  */
-		result = WAIT_OBJECT_0;
-	      }
-	    LeaveCriticalSection (&cond->lock);
-	  }
-	else
-	  {
-	    /* The thread which signalled the event already did the
-	       bookkeeping: removed us from the waiters.  */
-	  }
-	CloseHandle (event);
-	free (elt);
-	/* Take the lock again.  It does not matter whether this is done
-	   before or after the bookkeeping for WAIT_TIMEOUT.  */
-	err = glthread_lock_lock (lock);
-	return (err ? err :
-		result == WAIT_OBJECT_0 ? 0 :
-		result == WAIT_TIMEOUT ? ETIMEDOUT :
-		/* WAIT_FAILED shouldn't happen */ EAGAIN);
+        /* Now release the lock and let any other thread take it.  */
+        err = glthread_lock_unlock (lock);
+        if (err != 0)
+          {
+            EnterCriticalSection (&cond->lock);
+            gl_waitqueue_remove (&cond->waiters, elt);
+            LeaveCriticalSection (&cond->lock);
+            CloseHandle (event);
+            free (elt);
+            return err;
+          }
+        /* POSIX says:
+            "If another thread is able to acquire the mutex after the
+             about-to-block thread has released it, then a subsequent call to
+             pthread_cond_broadcast() or pthread_cond_signal() in that thread
+             shall behave as if it were issued after the about-to-block thread
+             has blocked."
+           This is fulfilled here, because the thread signalling is done
+           through SetEvent, not PulseEvent.  */
+        /* Wait until another thread signals this event or until the abstime
+           passes.  */
+        gettimeofday (&currtime, NULL);
+        if (currtime.tv_sec > abstime->tv_sec)
+          timeout = 0;
+        else
+          {
+            unsigned long seconds = abstime->tv_sec - currtime.tv_sec;
+            timeout = seconds * 1000;
+            if (timeout / 1000 != seconds) /* overflow? */
+              timeout = INFINITE;
+            else
+              {
+                long milliseconds =
+                  abstime->tv_nsec / 1000000 - currtime.tv_usec / 1000;
+                if (milliseconds >= 0)
+                  {
+                    timeout += milliseconds;
+                    if (timeout < milliseconds) /* overflow? */
+                      timeout = INFINITE;
+                  }
+                else
+                  {
+                    if (timeout >= - milliseconds)
+                      timeout -= (- milliseconds);
+                    else
+                      timeout = 0;
+                  }
+              }
+          }
+        result = WaitForSingleObject (event, timeout);
+        if (result == WAIT_FAILED)
+          abort ();
+        if (result == WAIT_TIMEOUT)
+          {
+            EnterCriticalSection (&cond->lock);
+            if (gl_waitqueue_remove (&cond->waiters, elt))
+              {
+                /* The event was not signaled between the WaitForSingleObject
+                   call and the EnterCriticalSection call.  */
+                if (!(WaitForSingleObject (event, 0) == WAIT_TIMEOUT))
+                  abort ();
+              }
+            else
+              {
+                /* The event was signaled between the WaitForSingleObject
+                   call and the EnterCriticalSection call.  */
+                if (!(WaitForSingleObject (event, 0) == WAIT_OBJECT_0))
+                  abort ();
+                /* Produce the right return value.  */
+                result = WAIT_OBJECT_0;
+              }
+            LeaveCriticalSection (&cond->lock);
+          }
+        else
+          {
+            /* The thread which signalled the event already did the
+               bookkeeping: removed us from the waiters.  */
+          }
+        CloseHandle (event);
+        free (elt);
+        /* Take the lock again.  It does not matter whether this is done
+           before or after the bookkeeping for WAIT_TIMEOUT.  */
+        err = glthread_lock_lock (lock);
+        return (err ? err :
+                result == WAIT_OBJECT_0 ? 0 :
+                result == WAIT_TIMEOUT ? ETIMEDOUT :
+                /* WAIT_FAILED shouldn't happen */ EAGAIN);
       }
   }
 }

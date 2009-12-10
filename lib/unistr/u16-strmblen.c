@@ -32,7 +32,7 @@ u16_strmblen (const uint16_t *s)
   if (c < 0xdc00)
     {
       if (s[1] >= 0xdc00 && s[1] < 0xe000)
-	return 2;
+        return 2;
     }
 #else
   if (s[1] != 0)

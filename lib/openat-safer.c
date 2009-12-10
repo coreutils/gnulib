@@ -36,7 +36,7 @@ openat_safer (int fd, char const *file, int flags, ...)
       va_start (ap, flags);
 
       /* We have to use PROMOTED_MODE_T instead of mode_t, otherwise GCC 4
-	 creates crashing code when 'mode_t' is smaller than 'int'.  */
+         creates crashing code when 'mode_t' is smaller than 'int'.  */
       mode = va_arg (ap, PROMOTED_MODE_T);
 
       va_end (ap);

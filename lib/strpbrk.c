@@ -33,8 +33,8 @@ strpbrk (const char *s, const char *accept)
     {
       const char *a = accept;
       while (*a != '\0')
-	if (*a++ == *s)
-	  return (char *) s;
+        if (*a++ == *s)
+          return (char *) s;
       ++s;
     }
 

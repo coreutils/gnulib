@@ -13,10 +13,10 @@ AC_DEFUN([gl_FUNC_MEMCMP],
     AC_CACHE_CHECK([whether cross-compiling target has memcmp],
                    [ac_cv_func_memcmp_working],
                    [AC_LINK_IFELSE([
-			AC_LANG_PROGRAM([[#include <string.h>
-				]], [[int ret = memcmp ("foo", "bar", 0);]])],
-			[ac_cv_func_memcmp_working=yes],
-			[ac_cv_func_memcmp_working=no])])
+                        AC_LANG_PROGRAM([[#include <string.h>
+                                ]], [[int ret = memcmp ("foo", "bar", 0);]])],
+                        [ac_cv_func_memcmp_working=yes],
+                        [ac_cv_func_memcmp_working=no])])
   fi
   AC_FUNC_MEMCMP
   dnl Note: AC_FUNC_MEMCMP does AC_LIBOBJ([memcmp]).

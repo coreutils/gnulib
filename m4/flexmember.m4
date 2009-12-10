@@ -14,15 +14,15 @@ AC_DEFUN([AC_C_FLEXIBLE_ARRAY_MEMBER],
     ac_cv_c_flexmember,
     [AC_COMPILE_IFELSE(
        [AC_LANG_PROGRAM(
-	  [[#include <stdlib.h>
-	    #include <stdio.h>
-	    #include <stddef.h>
-	    struct s { int n; double d[]; };]],
-	  [[int m = getchar ();
-	    struct s *p = malloc (offsetof (struct s, d)
-				  + m * sizeof (double));
-	    p->d[0] = 0.0;
-	    return p->d != (double *) NULL;]])],
+          [[#include <stdlib.h>
+            #include <stdio.h>
+            #include <stddef.h>
+            struct s { int n; double d[]; };]],
+          [[int m = getchar ();
+            struct s *p = malloc (offsetof (struct s, d)
+                                  + m * sizeof (double));
+            p->d[0] = 0.0;
+            return p->d != (double *) NULL;]])],
        [ac_cv_c_flexmember=yes],
        [ac_cv_c_flexmember=no])])
   if test $ac_cv_c_flexmember = yes; then

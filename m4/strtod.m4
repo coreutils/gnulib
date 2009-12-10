@@ -73,9 +73,9 @@ numeric_equal (double x, double y)
       return 1;
   }
 ]])],
-	[gl_cv_func_strtod_works=yes],
-	[gl_cv_func_strtod_works=no],
-	[gl_cv_func_strtod_works="guessing no"])])
+        [gl_cv_func_strtod_works=yes],
+        [gl_cv_func_strtod_works=no],
+        [gl_cv_func_strtod_works="guessing no"])])
     if test "$gl_cv_func_strtod_works" != yes; then
       REPLACE_STRTOD=1
       gl_PREREQ_STRTOD

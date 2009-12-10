@@ -24,7 +24,7 @@
 
 ssize_t
 getndelim (char **lineptr, size_t *linesize, size_t nmax,
-	   int delimiter, FILE *stream)
+           int delimiter, FILE *stream)
 {
   return getndelim2 (lineptr, linesize, 0, nmax, delimiter, EOF, stream);
 }

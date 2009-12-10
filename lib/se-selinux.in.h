@@ -28,26 +28,26 @@ static inline int getfscreatecon (security_context_t *con _UNUSED_PARAMETER_)
 static inline int setfscreatecon (security_context_t con _UNUSED_PARAMETER_)
   { errno = ENOTSUP; return -1; }
 static inline int matchpathcon (char const *file _UNUSED_PARAMETER_,
-				mode_t m _UNUSED_PARAMETER_,
-				security_context_t *con _UNUSED_PARAMETER_)
+                                mode_t m _UNUSED_PARAMETER_,
+                                security_context_t *con _UNUSED_PARAMETER_)
   { errno = ENOTSUP; return -1; }
 static inline int getfilecon (char const *file _UNUSED_PARAMETER_,
-			      security_context_t *con _UNUSED_PARAMETER_)
+                              security_context_t *con _UNUSED_PARAMETER_)
   { errno = ENOTSUP; return -1; }
 static inline int lgetfilecon (char const *file _UNUSED_PARAMETER_,
-			       security_context_t *con _UNUSED_PARAMETER_)
+                               security_context_t *con _UNUSED_PARAMETER_)
   { errno = ENOTSUP; return -1; }
 static inline int fgetfilecon (int fd,
-			       security_context_t *con _UNUSED_PARAMETER_)
+                               security_context_t *con _UNUSED_PARAMETER_)
   { errno = ENOTSUP; return -1; }
 static inline int setfilecon (char const *file _UNUSED_PARAMETER_,
-			      security_context_t con _UNUSED_PARAMETER_)
+                              security_context_t con _UNUSED_PARAMETER_)
   { errno = ENOTSUP; return -1; }
 static inline int lsetfilecon (char const *file _UNUSED_PARAMETER_,
-			       security_context_t con _UNUSED_PARAMETER_)
+                               security_context_t con _UNUSED_PARAMETER_)
   { errno = ENOTSUP; return -1; }
 static inline int fsetfilecon (int fd _UNUSED_PARAMETER_,
-			       security_context_t con _UNUSED_PARAMETER_)
+                               security_context_t con _UNUSED_PARAMETER_)
   { errno = ENOTSUP; return -1; }
 
 static inline int security_check_context

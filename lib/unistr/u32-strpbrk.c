@@ -35,8 +35,8 @@ FUNC (const UNIT *str, const UNIT *accept)
       ucs4_t uc = accept[0];
       const UNIT *ptr = str;
       for (; *ptr != 0; ptr++)
-	if (*ptr == uc)
-	  return (UNIT *) ptr;
+        if (*ptr == uc)
+          return (UNIT *) ptr;
       return NULL;
     }
   /* General case.  */
@@ -44,7 +44,7 @@ FUNC (const UNIT *str, const UNIT *accept)
     const UNIT *ptr = str;
     for (; *ptr != 0; ptr++)
       if (U_STRCHR (accept, *ptr))
-	return (UNIT *) ptr;
+        return (UNIT *) ptr;
     return NULL;
   }
 }

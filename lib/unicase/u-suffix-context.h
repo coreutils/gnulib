@@ -39,36 +39,36 @@ FUNC2 (const UNIT *s, size_t n, casing_suffix_context_t a_context)
       int count = U_MBTOUC_UNSAFE (&uc, s, s_end - s);
 
       if (first_char_except_ignorable == (ucs4_t)(-1))
-	{
-	  if (!uc_is_case_ignorable (uc))
-	    first_char_except_ignorable = uc;
-	}
+        {
+          if (!uc_is_case_ignorable (uc))
+            first_char_except_ignorable = uc;
+        }
 
       if (scc_MORE_ABOVE < 0)
-	{
-	  int ccc = uc_combining_class (uc);
-	  if (ccc == UC_CCC_A)
-	    scc_MORE_ABOVE = SCC_MORE_ABOVE_MASK;
-	  else if (ccc == UC_CCC_NR)
-	    scc_MORE_ABOVE = 0;
-	}
+        {
+          int ccc = uc_combining_class (uc);
+          if (ccc == UC_CCC_A)
+            scc_MORE_ABOVE = SCC_MORE_ABOVE_MASK;
+          else if (ccc == UC_CCC_NR)
+            scc_MORE_ABOVE = 0;
+        }
 
       if (scc_BEFORE_DOT < 0)
-	{
-	  if (uc == 0x0307) /* COMBINING DOT ABOVE */
-	    scc_BEFORE_DOT = SCC_BEFORE_DOT_MASK;
-	  else
-	    {
-	      int ccc = uc_combining_class (uc);
-	      if (ccc == UC_CCC_A || ccc == UC_CCC_NR)
-		scc_BEFORE_DOT = 0;
-	    }
-	}
+        {
+          if (uc == 0x0307) /* COMBINING DOT ABOVE */
+            scc_BEFORE_DOT = SCC_BEFORE_DOT_MASK;
+          else
+            {
+              int ccc = uc_combining_class (uc);
+              if (ccc == UC_CCC_A || ccc == UC_CCC_NR)
+                scc_BEFORE_DOT = 0;
+            }
+        }
 
       if (first_char_except_ignorable != (ucs4_t)(-1)
-	  && (scc_MORE_ABOVE | scc_BEFORE_DOT) >= 0)
-	/* All conditions have been determined.  */
-	break;
+          && (scc_MORE_ABOVE | scc_BEFORE_DOT) >= 0)
+        /* All conditions have been determined.  */
+        break;
 
       s += count;
     }

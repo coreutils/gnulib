@@ -23,15 +23,15 @@
 #include "binary-io.h"
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 int
@@ -47,74 +47,74 @@ main (int argc, char **argv)
     switch (argv[1][0])
       {
       case '1':
-	/* Check fflush after a backup ungetc() call.  This is case 1a in
-	   terms of
-	   <http://lists.gnu.org/archive/html/bug-gnulib/2008-03/msg00131.html>,
-	   according to the Austin Group's resolution on 2009-01-08.  */
+        /* Check fflush after a backup ungetc() call.  This is case 1a in
+           terms of
+           <http://lists.gnu.org/archive/html/bug-gnulib/2008-03/msg00131.html>,
+           according to the Austin Group's resolution on 2009-01-08.  */
 
-	c = fgetc (stdin);
-	ASSERT (c == '#');
+        c = fgetc (stdin);
+        ASSERT (c == '#');
 
-	c = fgetc (stdin);
-	ASSERT (c == '!');
+        c = fgetc (stdin);
+        ASSERT (c == '!');
 
-	/* Here the file-position indicator must be 2.  */
+        /* Here the file-position indicator must be 2.  */
 
-	c = ungetc ('!', stdin);
-	ASSERT (c == '!');
+        c = ungetc ('!', stdin);
+        ASSERT (c == '!');
 
-	fflush (stdin);
+        fflush (stdin);
 
-	/* Here the file-position indicator must be 1.  */
+        /* Here the file-position indicator must be 1.  */
 
-	c = fgetc (stdin);
-	ASSERT (c == '!');
+        c = fgetc (stdin);
+        ASSERT (c == '!');
 
-	c = fgetc (stdin);
-	ASSERT (c == '/');
+        c = fgetc (stdin);
+        ASSERT (c == '/');
 
-	return 0;
+        return 0;
 
       case '2':
-	/* Check fflush after a non-backup ungetc() call.  This is case 2a in
-	   terms of
-	   <http://lists.gnu.org/archive/html/bug-gnulib/2008-03/msg00131.html>,
-	   according to the Austin Group's resolution on 2009-01-08.  */
-	/* Check that fflush after a non-backup ungetc() call discards the
-	   ungetc buffer.  This is mandated by POSIX
-	   <http://www.opengroup.org/susv3/functions/ungetc.html>:
-	     "The value of the file-position indicator for the stream after
-	      reading or discarding all pushed-back bytes shall be the same
-	      as it was before the bytes were pushed back."
-	   <http://www.opengroup.org/austin/aardvark/latest/xshbug3.txt>
-	     "[After fflush(),] the file offset of the underlying open file
-	      description shall be set to the file position of the stream, and
-	      any characters pushed back onto the stream by ungetc() or
-	      ungetwc() that have not subsequently been read from the stream
-	      shall be discarded."  */
+        /* Check fflush after a non-backup ungetc() call.  This is case 2a in
+           terms of
+           <http://lists.gnu.org/archive/html/bug-gnulib/2008-03/msg00131.html>,
+           according to the Austin Group's resolution on 2009-01-08.  */
+        /* Check that fflush after a non-backup ungetc() call discards the
+           ungetc buffer.  This is mandated by POSIX
+           <http://www.opengroup.org/susv3/functions/ungetc.html>:
+             "The value of the file-position indicator for the stream after
+              reading or discarding all pushed-back bytes shall be the same
+              as it was before the bytes were pushed back."
+           <http://www.opengroup.org/austin/aardvark/latest/xshbug3.txt>
+             "[After fflush(),] the file offset of the underlying open file
+              description shall be set to the file position of the stream, and
+              any characters pushed back onto the stream by ungetc() or
+              ungetwc() that have not subsequently been read from the stream
+              shall be discarded."  */
 
-	c = fgetc (stdin);
-	ASSERT (c == '#');
+        c = fgetc (stdin);
+        ASSERT (c == '#');
 
-	c = fgetc (stdin);
-	ASSERT (c == '!');
+        c = fgetc (stdin);
+        ASSERT (c == '!');
 
-	/* Here the file-position indicator must be 2.  */
+        /* Here the file-position indicator must be 2.  */
 
-	c = ungetc ('@', stdin);
-	ASSERT (c == '@');
+        c = ungetc ('@', stdin);
+        ASSERT (c == '@');
 
-	fflush (stdin);
+        fflush (stdin);
 
-	/* Here the file-position indicator must be 1.  */
+        /* Here the file-position indicator must be 1.  */
 
-	c = fgetc (stdin);
-	ASSERT (c == '!');
+        c = fgetc (stdin);
+        ASSERT (c == '!');
 
-	c = fgetc (stdin);
-	ASSERT (c == '/');
+        c = fgetc (stdin);
+        ASSERT (c == '/');
 
-	return 0;
+        return 0;
       }
 
   return 1;

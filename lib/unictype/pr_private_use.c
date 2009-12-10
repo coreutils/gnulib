@@ -39,8 +39,8 @@ bool
 uc_is_property_private_use (ucs4_t uc)
 {
   return (uc >= 0xE000 && uc <= 0xF8FF)
-	 || (uc >= 0xF0000 && uc <= 0xFFFFD)
-	 || (uc >= 0x100000 && uc <= 0x10FFFD);
+         || (uc >= 0xF0000 && uc <= 0xFFFFD)
+         || (uc >= 0x100000 && uc <= 0x10FFFD);
 }
 
 #endif

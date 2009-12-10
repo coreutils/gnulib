@@ -25,7 +25,7 @@
 #endif
 
 #ifndef __USE_EXTERN_INLINES
-# define __USE_EXTERN_INLINES	1
+# define __USE_EXTERN_INLINES   1
 #endif
 #define ARGP_EI
 #undef __OPTIMIZE__

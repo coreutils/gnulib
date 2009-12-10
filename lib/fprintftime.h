@@ -26,4 +26,4 @@
    nstrftime format string, FMT) the time data, *TM, and the UTC
    and NANOSECONDS values.  */
 size_t fprintftime (FILE *fp, char const *fmt, struct tm const *tm,
-		    int utc, int nanoseconds);
+                    int utc, int nanoseconds);

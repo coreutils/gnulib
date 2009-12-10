@@ -73,23 +73,23 @@ writer_thread_func (void *thread_arg)
       size_t bufsize;
       const void *buf = l->prepare_write (&bufsize, l->private_data);
       if (buf != NULL)
-	{
-	  ssize_t nwritten =
-	    write (l->fd[1], buf, bufsize > SSIZE_MAX ? SSIZE_MAX : bufsize);
-	  if (nwritten < 0)
-	    {
-	      /* Don't assume that the gnulib modules 'write' and 'sigpipe' are
-		 used.  */
-	      if (GetLastError () == ERROR_NO_DATA)
-		errno = EPIPE;
-	      l->writer_errno = errno;
-	      break;
-	    }
-	  else if (nwritten > 0)
-	    l->done_write ((void *) buf, nwritten, l->private_data);
-	}
+        {
+          ssize_t nwritten =
+            write (l->fd[1], buf, bufsize > SSIZE_MAX ? SSIZE_MAX : bufsize);
+          if (nwritten < 0)
+            {
+              /* Don't assume that the gnulib modules 'write' and 'sigpipe' are
+                 used.  */
+              if (GetLastError () == ERROR_NO_DATA)
+                errno = EPIPE;
+              l->writer_errno = errno;
+              break;
+            }
+          else if (nwritten > 0)
+            l->done_write ((void *) buf, nwritten, l->private_data);
+        }
       else
-	break;
+        break;
     }
 
   l->writer_terminated = true;
@@ -107,20 +107,20 @@ reader_thread_func (void *thread_arg)
       size_t bufsize;
       void *buf = l->prepare_read (&bufsize, l->private_data);
       if (!(buf != NULL && bufsize > 0))
-	/* prepare_read returned wrong values.  */
-	abort ();
+        /* prepare_read returned wrong values.  */
+        abort ();
       {
-	ssize_t nread =
-	  read (l->fd[0], buf, bufsize > SSIZE_MAX ? SSIZE_MAX : bufsize);
-	if (nread < 0)
-	  {
-	    l->reader_errno = errno;
-	    break;
-	  }
-	else if (nread > 0)
-	  l->done_read (buf, nread, l->private_data);
-	else /* nread == 0 */
-	  break;
+        ssize_t nread =
+          read (l->fd[0], buf, bufsize > SSIZE_MAX ? SSIZE_MAX : bufsize);
+        if (nread < 0)
+          {
+            l->reader_errno = errno;
+            break;
+          }
+        else if (nread > 0)
+          l->done_read (buf, nread, l->private_data);
+        else /* nread == 0 */
+          break;
       }
     }
 
@@ -133,13 +133,13 @@ reader_thread_func (void *thread_arg)
 
 int
 pipe_filter_ii_execute (const char *progname,
-			const char *prog_path, const char **prog_argv,
-			bool null_stderr, bool exit_on_error,
-			prepare_write_fn prepare_write,
-			done_write_fn done_write,
-			prepare_read_fn prepare_read,
-			done_read_fn done_read,
-			void *private_data)
+                        const char *prog_path, const char **prog_argv,
+                        bool null_stderr, bool exit_on_error,
+                        prepare_write_fn prepare_write,
+                        done_write_fn done_write,
+                        prepare_read_fn prepare_read,
+                        done_read_fn done_read,
+                        void *private_data)
 {
   pid_t child;
   int fd[2];
@@ -149,8 +149,8 @@ pipe_filter_ii_execute (const char *progname,
 
   /* Open a bidirectional pipe to a subprocess.  */
   child = create_pipe_bidi (progname, prog_path, (char **) prog_argv,
-			    null_stderr, true, exit_on_error,
-			    fd);
+                            null_stderr, true, exit_on_error,
+                            fd);
   if (child == -1)
     return -1;
 
@@ -188,72 +188,72 @@ pipe_filter_ii_execute (const char *progname,
       (HANDLE) _beginthreadex (NULL, 100000, reader_thread_func, &l, 0, NULL);
     if (writer_thread_handle == NULL || reader_thread_handle == NULL)
       {
-	if (exit_on_error)
-	  error (EXIT_FAILURE, 0, _("creation of threads failed"));
-	if (reader_thread_handle != NULL)
-	  CloseHandle (reader_thread_handle);
-	if (writer_thread_handle != NULL)
-	  CloseHandle (writer_thread_handle);
-	goto fail;
+        if (exit_on_error)
+          error (EXIT_FAILURE, 0, _("creation of threads failed"));
+        if (reader_thread_handle != NULL)
+          CloseHandle (reader_thread_handle);
+        if (writer_thread_handle != NULL)
+          CloseHandle (writer_thread_handle);
+        goto fail;
       }
     writer_cleaned_up = false;
     reader_cleaned_up = false;
     for (;;)
       {
-	DWORD ret;
+        DWORD ret;
 
-	/* Here !(writer_cleaned_up && reader_cleaned_up).  */
-	if (writer_cleaned_up)
-	  ret = WaitForSingleObject (reader_thread_handle, INFINITE);
-	else if (reader_cleaned_up)
-	  ret = WaitForSingleObject (writer_thread_handle, INFINITE);
-	else
-	  ret = WaitForMultipleObjects (2, handles, FALSE, INFINITE);
-	if (!(ret == WAIT_OBJECT_0 + 0 || ret == WAIT_OBJECT_0 + 1))
-	  abort ();
+        /* Here !(writer_cleaned_up && reader_cleaned_up).  */
+        if (writer_cleaned_up)
+          ret = WaitForSingleObject (reader_thread_handle, INFINITE);
+        else if (reader_cleaned_up)
+          ret = WaitForSingleObject (writer_thread_handle, INFINITE);
+        else
+          ret = WaitForMultipleObjects (2, handles, FALSE, INFINITE);
+        if (!(ret == WAIT_OBJECT_0 + 0 || ret == WAIT_OBJECT_0 + 1))
+          abort ();
 
-	if (l.writer_terminated)
-	  {
-	    /* The writer thread has just terminated.  */
-	    l.writer_terminated = false;
-	    CloseHandle (writer_thread_handle);
-	    if (l.writer_errno)
-	      {
-		if (exit_on_error)
-		  error (EXIT_FAILURE, l.writer_errno,
-			 _("write to %s subprocess failed"), progname);
-		if (!reader_cleaned_up)
-		  {
-		    TerminateThread (reader_thread_handle, 1);
-		    CloseHandle (reader_thread_handle);
-		  }
-		goto fail;
-	      }
-	    /* Tell the child there is nothing more the parent will send.  */
-	    close (fd[1]);
-	    writer_cleaned_up = true;
-	  }
-	if (l.reader_terminated)
-	  {
-	    /* The reader thread has just terminated.  */
-	    l.reader_terminated = false;
-	    CloseHandle (reader_thread_handle);
-	    if (l.reader_errno)
-	      {
-		if (exit_on_error)
-		  error (EXIT_FAILURE, l.reader_errno,
-			 _("read from %s subprocess failed"), progname);
-		if (!writer_cleaned_up)
-		  {
-		    TerminateThread (writer_thread_handle, 1);
-		    CloseHandle (writer_thread_handle);
-		  }
-		goto fail;
-	      }
-	    reader_cleaned_up = true;
-	  }
-	if (writer_cleaned_up && reader_cleaned_up)
-	  break;
+        if (l.writer_terminated)
+          {
+            /* The writer thread has just terminated.  */
+            l.writer_terminated = false;
+            CloseHandle (writer_thread_handle);
+            if (l.writer_errno)
+              {
+                if (exit_on_error)
+                  error (EXIT_FAILURE, l.writer_errno,
+                         _("write to %s subprocess failed"), progname);
+                if (!reader_cleaned_up)
+                  {
+                    TerminateThread (reader_thread_handle, 1);
+                    CloseHandle (reader_thread_handle);
+                  }
+                goto fail;
+              }
+            /* Tell the child there is nothing more the parent will send.  */
+            close (fd[1]);
+            writer_cleaned_up = true;
+          }
+        if (l.reader_terminated)
+          {
+            /* The reader thread has just terminated.  */
+            l.reader_terminated = false;
+            CloseHandle (reader_thread_handle);
+            if (l.reader_errno)
+              {
+                if (exit_on_error)
+                  error (EXIT_FAILURE, l.reader_errno,
+                         _("read from %s subprocess failed"), progname);
+                if (!writer_cleaned_up)
+                  {
+                    TerminateThread (writer_thread_handle, 1);
+                    CloseHandle (writer_thread_handle);
+                  }
+                goto fail;
+              }
+            reader_cleaned_up = true;
+          }
+        if (writer_cleaned_up && reader_cleaned_up)
+          break;
       }
   }
 #else
@@ -289,16 +289,16 @@ pipe_filter_ii_execute (const char *progname,
       int fcntl_flags;
 
       if ((fcntl_flags = fcntl (fd[1], F_GETFL, 0)) < 0
-	  || fcntl (fd[1], F_SETFL, fcntl_flags | O_NONBLOCK) == -1
-	  || (fcntl_flags = fcntl (fd[0], F_GETFL, 0)) < 0
-	  || fcntl (fd[0], F_SETFL, fcntl_flags | O_NONBLOCK) == -1)
-	{
-	  if (exit_on_error)
-	    error (EXIT_FAILURE, errno,
-		   _("cannot set up nonblocking I/O to %s subprocess"),
-		   progname);
-	  goto fail;
-	}
+          || fcntl (fd[1], F_SETFL, fcntl_flags | O_NONBLOCK) == -1
+          || (fcntl_flags = fcntl (fd[0], F_GETFL, 0)) < 0
+          || fcntl (fd[0], F_SETFL, fcntl_flags | O_NONBLOCK) == -1)
+        {
+          if (exit_on_error)
+            error (EXIT_FAILURE, errno,
+                   _("cannot set up nonblocking I/O to %s subprocess"),
+                   progname);
+          goto fail;
+        }
     }
 
 # if HAVE_SELECT
@@ -309,105 +309,105 @@ pipe_filter_ii_execute (const char *progname,
     for (;;)
       {
 # if HAVE_SELECT
-	int n;
+        int n;
 
-	FD_SET (fd[0], &readfds);
-	n = fd[0] + 1;
-	if (!done_writing)
-	  {
-	    FD_SET (fd[1], &writefds);
-	    if (n <= fd[1])
-	      n = fd[1] + 1;
-	  }
+        FD_SET (fd[0], &readfds);
+        n = fd[0] + 1;
+        if (!done_writing)
+          {
+            FD_SET (fd[1], &writefds);
+            if (n <= fd[1])
+              n = fd[1] + 1;
+          }
 
-	n = select (n, &readfds, (!done_writing ? &writefds : NULL), NULL,
-		    NULL);
-	if (n < 0)
-	  {
-	    if (exit_on_error)
-	      error (EXIT_FAILURE, errno,
-		     _("communication with %s subprocess failed"), progname);
-	    goto fail;
-	  }
-	if (!done_writing && FD_ISSET (fd[1], &writefds))
-	  goto try_write;
-	if (FD_ISSET (fd[0], &readfds))
-	  goto try_read;
-	/* How could select() return if none of the two descriptors is ready?  */
-	abort ();
+        n = select (n, &readfds, (!done_writing ? &writefds : NULL), NULL,
+                    NULL);
+        if (n < 0)
+          {
+            if (exit_on_error)
+              error (EXIT_FAILURE, errno,
+                     _("communication with %s subprocess failed"), progname);
+            goto fail;
+          }
+        if (!done_writing && FD_ISSET (fd[1], &writefds))
+          goto try_write;
+        if (FD_ISSET (fd[0], &readfds))
+          goto try_read;
+        /* How could select() return if none of the two descriptors is ready?  */
+        abort ();
 # endif
 
-	/* Attempt to write.  */
+        /* Attempt to write.  */
 # if HAVE_SELECT
       try_write:
 # endif
-	if (!done_writing)
-	  {
-	    size_t bufsize;
-	    const void *buf = prepare_write (&bufsize, private_data);
-	    if (buf != NULL)
-	      {
-		ssize_t nwritten =
-		  write (fd[1], buf,
-			 bufsize > SSIZE_MAX ? SSIZE_MAX : bufsize);
-		if (nwritten < 0)
-		  {
-		    if (!IS_EAGAIN (errno))
-		      {
-			if (exit_on_error)
-			  error (EXIT_FAILURE, errno,
-				 _("write to %s subprocess failed"), progname);
-			goto fail;
-		      }
-		  }
-		else if (nwritten > 0)
-		  done_write ((void *) buf, nwritten, private_data);
-	      }
-	    else
-	      {
-		/* Tell the child there is nothing more the parent will send.  */
-		close (fd[1]);
-		done_writing = true;
-	      }
-	  }
+        if (!done_writing)
+          {
+            size_t bufsize;
+            const void *buf = prepare_write (&bufsize, private_data);
+            if (buf != NULL)
+              {
+                ssize_t nwritten =
+                  write (fd[1], buf,
+                         bufsize > SSIZE_MAX ? SSIZE_MAX : bufsize);
+                if (nwritten < 0)
+                  {
+                    if (!IS_EAGAIN (errno))
+                      {
+                        if (exit_on_error)
+                          error (EXIT_FAILURE, errno,
+                                 _("write to %s subprocess failed"), progname);
+                        goto fail;
+                      }
+                  }
+                else if (nwritten > 0)
+                  done_write ((void *) buf, nwritten, private_data);
+              }
+            else
+              {
+                /* Tell the child there is nothing more the parent will send.  */
+                close (fd[1]);
+                done_writing = true;
+              }
+          }
 # if HAVE_SELECT
-	continue;
+        continue;
 # endif
 
-	/* Attempt to read.  */
+        /* Attempt to read.  */
 # if HAVE_SELECT
       try_read:
 # endif
-	{
-	  size_t bufsize;
-	  void *buf = prepare_read (&bufsize, private_data);
-	  if (!(buf != NULL && bufsize > 0))
-	    /* prepare_read returned wrong values.  */
-	    abort ();
-	  {
-	    ssize_t nread =
-	      read (fd[0], buf, bufsize > SSIZE_MAX ? SSIZE_MAX : bufsize);
-	    if (nread < 0)
-	      {
-		if (!IS_EAGAIN (errno))
-		  {
-		    if (exit_on_error)
-		      error (EXIT_FAILURE, errno,
-			     _("read from %s subprocess failed"), progname);
-		    goto fail;
-		  }
-	      }
-	    else if (nread > 0)
-	      done_read (buf, nread, private_data);
-	    else /* nread == 0 */
-	      {
-		if (done_writing)
-		  break;
-	      }
-	  }
-	}
+        {
+          size_t bufsize;
+          void *buf = prepare_read (&bufsize, private_data);
+          if (!(buf != NULL && bufsize > 0))
+            /* prepare_read returned wrong values.  */
+            abort ();
+          {
+            ssize_t nread =
+              read (fd[0], buf, bufsize > SSIZE_MAX ? SSIZE_MAX : bufsize);
+            if (nread < 0)
+              {
+                if (!IS_EAGAIN (errno))
+                  {
+                    if (exit_on_error)
+                      error (EXIT_FAILURE, errno,
+                             _("read from %s subprocess failed"), progname);
+                    goto fail;
+                  }
+              }
+            else if (nread > 0)
+              done_read (buf, nread, private_data);
+            else /* nread == 0 */
+              {
+                if (done_writing)
+                  break;
+              }
+          }
+        }
 # if HAVE_SELECT
-	continue;
+        continue;
 # endif
       }
   }
@@ -423,10 +423,10 @@ pipe_filter_ii_execute (const char *progname,
   {
     int exitstatus =
       wait_subprocess (child, progname, false, null_stderr,
-		       true, exit_on_error, NULL);
+                       true, exit_on_error, NULL);
     if (exitstatus != 0 && exit_on_error)
       error (EXIT_FAILURE, 0, _("%s subprocess terminated with exit code %d"),
-	     progname, exitstatus);
+             progname, exitstatus);
     return exitstatus;
   }
 

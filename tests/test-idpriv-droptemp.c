@@ -25,15 +25,15 @@
 #include <unistd.h>
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 static void
@@ -45,13 +45,13 @@ show_uids ()
   uid_t saved;
   ASSERT (getresuid (&real, &effective, &saved) >= 0);
   printf ("uids: real=%d effective=%d saved=%d",
-	  (int) real, (int) effective, (int) saved);
+          (int) real, (int) effective, (int) saved);
 #elif HAVE_GETEUID
   printf ("uids: real=%d effective=%d",
-	  (int) getuid (), (int) geteuid());
+          (int) getuid (), (int) geteuid());
 #elif HAVE_GETUID
   printf ("uids: real=%d",
-	  (int) getuid ());
+          (int) getuid ());
 #endif
 }
 
@@ -64,13 +64,13 @@ show_gids ()
   gid_t saved;
   ASSERT (getresgid (&real, &effective, &saved) >= 0);
   printf ("gids: real=%d effective=%d saved=%d",
-	  (int) real, (int) effective, (int) saved);
+          (int) real, (int) effective, (int) saved);
 #elif HAVE_GETEGID
   printf ("gids: real=%d effective=%d",
-	  (int) getgid (), (int) getegid());
+          (int) getgid (), (int) getegid());
 #elif HAVE_GETGID
   printf ("gids: real=%d",
-	  (int) getgid ());
+          (int) getgid ());
 #endif
 }
 
@@ -110,58 +110,58 @@ main (int argc, char *argv[])
     {
       const char *arg = argv[i];
       if (strcmp (arg, "-v") == 0)
-	verbose = true;
+        verbose = true;
     }
 
   for (i = 0; i < 3; i++)
     {
       if (verbose)
-	show ("before droptemp:");
+        show ("before droptemp:");
 
       ASSERT (idpriv_temp_drop () == 0);
 
       if (verbose)
-	show ("privileged:     ");
+        show ("privileged:     ");
 
       /* Verify that the privileges have really been dropped.  */
 #if HAVE_GETEUID
       if (geteuid () != uid)
-	abort ();
+        abort ();
 #endif
 #if HAVE_GETUID
       if (getuid () != uid)
-	abort ();
+        abort ();
 #endif
 #if HAVE_GETEGID
       if (getegid () != gid)
-	abort ();
+        abort ();
 #endif
 #if HAVE_GETGID
       if (getgid () != gid)
-	abort ();
+        abort ();
 #endif
 
       ASSERT (idpriv_temp_restore () == 0);
 
       if (verbose)
-	show ("unprivileged:   ");
+        show ("unprivileged:   ");
 
       /* Verify that the privileges have really been acquired again.  */
 #if HAVE_GETEUID
       if (geteuid () != privileged_uid)
-	abort ();
+        abort ();
 #endif
 #if HAVE_GETUID
       if (getuid () != uid)
-	abort ();
+        abort ();
 #endif
 #if HAVE_GETEGID
       if (getegid () != privileged_gid)
-	abort ();
+        abort ();
 #endif
 #if HAVE_GETGID
       if (getgid () != gid)
-	abort ();
+        abort ();
 #endif
     }
 

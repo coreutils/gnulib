@@ -31,10 +31,10 @@
 
 char *
 u8_conv_to_encoding (const char *tocode,
-		     enum iconv_ilseq_handler handler,
-		     const uint8_t *src, size_t srclen,
-		     size_t *offsets,
-		     char *resultbuf, size_t *lengthp)
+                     enum iconv_ilseq_handler handler,
+                     const uint8_t *src, size_t srclen,
+                     size_t *offsets,
+                     char *resultbuf, size_t *lengthp)
 {
   if (STRCASEEQ (tocode, "UTF-8", 'U','T','F','-','8',0,0,0,0))
     {
@@ -43,24 +43,24 @@ u8_conv_to_encoding (const char *tocode,
       /* Conversion from UTF-8 to UTF-8.  No need to go through iconv().  */
 #if CONFIG_UNICODE_SAFETY
       if (u8_check (src, srclen))
-	{
-	  errno = EILSEQ;
-	  return NULL;
-	}
+        {
+          errno = EILSEQ;
+          return NULL;
+        }
 #endif
 
       /* Memory allocation.  */
       if (resultbuf != NULL && *lengthp >= srclen)
-	result = resultbuf;
+        result = resultbuf;
       else
-	{
-	  result = (char *) malloc (srclen > 0 ? srclen : 1);
-	  if (result == NULL)
-	    {
-	      errno = ENOMEM;
-	      return NULL;
-	    }
-	}
+        {
+          result = (char *) malloc (srclen > 0 ? srclen : 1);
+          if (result == NULL)
+            {
+              errno = ENOMEM;
+              return NULL;
+            }
+        }
 
       memcpy (result, (const char *) src, srclen);
       *lengthp = srclen;
@@ -72,20 +72,20 @@ u8_conv_to_encoding (const char *tocode,
       size_t length = *lengthp;
 
       if (mem_iconveha ((const char *) src, srclen,
-			"UTF-8", tocode,
-			handler == iconveh_question_mark, handler,
-			offsets, &result, &length) < 0)
-	return NULL;
+                        "UTF-8", tocode,
+                        handler == iconveh_question_mark, handler,
+                        offsets, &result, &length) < 0)
+        return NULL;
 
       if (result == NULL) /* when (resultbuf == NULL && length == 0)  */
-	{
-	  result = (char *) malloc (1);
-	  if (result == NULL)
-	    {
-	      errno = ENOMEM;
-	      return NULL;
-	    }
-	}
+        {
+          result = (char *) malloc (1);
+          if (result == NULL)
+            {
+              errno = ENOMEM;
+              return NULL;
+            }
+        }
       *lengthp = length;
       return result;
     }

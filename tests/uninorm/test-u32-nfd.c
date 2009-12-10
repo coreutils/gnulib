@@ -31,15 +31,15 @@
 
 #define SIZEOF(array) (sizeof (array) / sizeof (array[0]))
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 static int
@@ -68,13 +68,13 @@ check (const uint32_t *input, size_t input_length,
       preallocated = (uint32_t *) malloc (length * sizeof (uint32_t));
       result = u32_normalize (UNINORM_NFD, input, input_length, preallocated, &length);
       if (!(result != NULL))
-	return 4;
+        return 4;
       if (!(result != preallocated))
-	return 5;
+        return 5;
       if (!(length == expected_length))
-	return 6;
+        return 6;
       if (!(u32_cmp (result, expected, expected_length) == 0))
-	return 7;
+        return 7;
       free (result);
       free (preallocated);
     }
@@ -229,20 +229,20 @@ test_u32_nfd (void)
   { /* "Grüß Gott. Здравствуйте! x=(-b±sqrt(b²-4ac))/(2a)  日本語,中文,한글" */
     static const uint32_t input[] =
       { 'G', 'r', 0x00FC, 0x00DF, ' ', 'G', 'o', 't', 't', '.', ' ',
-	0x0417, 0x0434, 0x0440, 0x0430, 0x0432, 0x0441, 0x0442, 0x0432, 0x0443,
-	0x0439, 0x0442, 0x0435, '!', ' ',
-	'x', '=', '(', '-', 'b', 0x00B1, 's', 'q', 'r', 't', '(', 'b', 0x00B2,
-	'-', '4', 'a', 'c', ')', ')', '/', '(', '2', 'a', ')', ' ', ' ',
-	0x65E5, 0x672C, 0x8A9E, ',', 0x4E2D, 0x6587, ',', 0xD55C, 0xAE00, '\n'
+        0x0417, 0x0434, 0x0440, 0x0430, 0x0432, 0x0441, 0x0442, 0x0432, 0x0443,
+        0x0439, 0x0442, 0x0435, '!', ' ',
+        'x', '=', '(', '-', 'b', 0x00B1, 's', 'q', 'r', 't', '(', 'b', 0x00B2,
+        '-', '4', 'a', 'c', ')', ')', '/', '(', '2', 'a', ')', ' ', ' ',
+        0x65E5, 0x672C, 0x8A9E, ',', 0x4E2D, 0x6587, ',', 0xD55C, 0xAE00, '\n'
       };
     static const uint32_t expected[] =
       { 'G', 'r', 0x0075, 0x0308, 0x00DF, ' ', 'G', 'o', 't', 't', '.', ' ',
-	0x0417, 0x0434, 0x0440, 0x0430, 0x0432, 0x0441, 0x0442, 0x0432, 0x0443,
-	0x0438, 0x0306, 0x0442, 0x0435, '!', ' ',
-	'x', '=', '(', '-', 'b', 0x00B1, 's', 'q', 'r', 't', '(', 'b', 0x00B2,
-	'-', '4', 'a', 'c', ')', ')', '/', '(', '2', 'a', ')', ' ', ' ',
-	0x65E5, 0x672C, 0x8A9E, ',', 0x4E2D, 0x6587, ',',
-	0x1112, 0x1161, 0x11AB, 0x1100, 0x1173, 0x11AF, '\n'
+        0x0417, 0x0434, 0x0440, 0x0430, 0x0432, 0x0441, 0x0442, 0x0432, 0x0443,
+        0x0438, 0x0306, 0x0442, 0x0435, '!', ' ',
+        'x', '=', '(', '-', 'b', 0x00B1, 's', 'q', 'r', 't', '(', 'b', 0x00B2,
+        '-', '4', 'a', 'c', ')', ')', '/', '(', '2', 'a', ')', ' ', ' ',
+        0x65E5, 0x672C, 0x8A9E, ',', 0x4E2D, 0x6587, ',',
+        0x1112, 0x1161, 0x11AB, 0x1100, 0x1173, 0x11AF, '\n'
       };
     ASSERT (check (input, SIZEOF (input), expected, SIZEOF (expected)) == 0);
   }
@@ -259,62 +259,62 @@ test_u32_nfd (void)
     int pass;
     for (pass = 0; pass < 3; pass++)
       {
-	size_t repeat = 1;
-	size_t m = 100000;
-	uint32_t *input = (uint32_t *) malloc (2 * m * sizeof (uint32_t));
-	if (input != NULL)
-	  {
-	    uint32_t *expected = input + m;
-	    size_t m1 = m / 2;
-	    size_t m2 = (m - 1) / 2;
-	    /* NB: m1 + m2 == m - 1.  */
-	    uint32_t *p;
-	    size_t i;
+        size_t repeat = 1;
+        size_t m = 100000;
+        uint32_t *input = (uint32_t *) malloc (2 * m * sizeof (uint32_t));
+        if (input != NULL)
+          {
+            uint32_t *expected = input + m;
+            size_t m1 = m / 2;
+            size_t m2 = (m - 1) / 2;
+            /* NB: m1 + m2 == m - 1.  */
+            uint32_t *p;
+            size_t i;
 
-	    input[0] = 0x0041;
-	    p = input + 1;
-	    switch (pass)
-	      {
-	      case 0:
-		for (i = 0; i < m1; i++)
-		  *p++ = 0x0319;
-		for (i = 0; i < m2; i++)
-		  *p++ = 0x0300;
-		break;
+            input[0] = 0x0041;
+            p = input + 1;
+            switch (pass)
+              {
+              case 0:
+                for (i = 0; i < m1; i++)
+                  *p++ = 0x0319;
+                for (i = 0; i < m2; i++)
+                  *p++ = 0x0300;
+                break;
 
-	      case 1:
-		for (i = 0; i < m2; i++)
-		  *p++ = 0x0300;
-		for (i = 0; i < m1; i++)
-		  *p++ = 0x0319;
-		break;
+              case 1:
+                for (i = 0; i < m2; i++)
+                  *p++ = 0x0300;
+                for (i = 0; i < m1; i++)
+                  *p++ = 0x0319;
+                break;
 
-	      case 2:
-		for (i = 0; i < m2; i++)
-		  {
-		    *p++ = 0x0319;
-		    *p++ = 0x0300;
-		  }
-		for (; i < m1; i++)
-		  *p++ = 0x0319;
-		break;
+              case 2:
+                for (i = 0; i < m2; i++)
+                  {
+                    *p++ = 0x0319;
+                    *p++ = 0x0300;
+                  }
+                for (; i < m1; i++)
+                  *p++ = 0x0319;
+                break;
 
-	      default:
-		abort ();
-	      }
+              default:
+                abort ();
+              }
 
-	    expected[0] = 0x0041;
-	    p = expected + 1;
-	    for (i = 0; i < m1; i++)
-	      *p++ = 0x0319;
-	    for (i = 0; i < m2; i++)
-	      *p++ = 0x0300;
+            expected[0] = 0x0041;
+            p = expected + 1;
+            for (i = 0; i < m1; i++)
+              *p++ = 0x0319;
+            for (i = 0; i < m2; i++)
+              *p++ = 0x0300;
 
-	    for (; repeat > 0; repeat--)
-	      ASSERT (check (input, m, expected, m) == 0);
+            for (; repeat > 0; repeat--)
+              ASSERT (check (input, m, expected, m) == 0);
 
-	    free (input);
-	  }
+            free (input);
+          }
       }
   }
 }

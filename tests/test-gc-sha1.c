@@ -46,53 +46,53 @@ main (int argc, char *argv[])
 
     if (gc_sha1 (in, inlen, out) != 0)
       {
-	printf ("gc_sha1 call failed\n");
-	return 1;
+        printf ("gc_sha1 call failed\n");
+        return 1;
       }
 
     if (memcmp (out, expect, 20) != 0)
       {
-	size_t i;
-	printf ("sha1 mismatch. expected:\n");
-	for (i = 0; i < 16; i++)
-	  printf ("%02x ", expect[i] & 0xFF);
-	printf ("\ncomputed:\n");
-	for (i = 0; i < 16; i++)
-	  printf ("%02x ", out[i] & 0xFF);
-	printf ("\n");
-	return 1;
+        size_t i;
+        printf ("sha1 mismatch. expected:\n");
+        for (i = 0; i < 16; i++)
+          printf ("%02x ", expect[i] & 0xFF);
+        printf ("\ncomputed:\n");
+        for (i = 0; i < 16; i++)
+          printf ("%02x ", out[i] & 0xFF);
+        printf ("\n");
+        return 1;
       }
 
     rc = gc_hash_buffer (GC_SHA1, "abcdefgh", 8, out);
     if (rc != GC_OK)
       {
-	printf ("gc_hash_buffer(sha1) call failed: %d\n", rc);
-	return 1;
+        printf ("gc_hash_buffer(sha1) call failed: %d\n", rc);
+        return 1;
       }
 
     if (memcmp (out, expect, 20) != 0)
       {
-	size_t i;
-	printf ("sha1' mismatch. expected:\n");
-	for (i = 0; i < 16; i++)
-	  printf ("%02x ", expect[i] & 0xFF);
-	printf ("\ncomputed:\n");
-	for (i = 0; i < 16; i++)
-	  printf ("%02x ", out[i] & 0xFF);
-	printf ("\n");
-	return 1;
+        size_t i;
+        printf ("sha1' mismatch. expected:\n");
+        for (i = 0; i < 16; i++)
+          printf ("%02x ", expect[i] & 0xFF);
+        printf ("\ncomputed:\n");
+        for (i = 0; i < 16; i++)
+          printf ("%02x ", out[i] & 0xFF);
+        printf ("\n");
+        return 1;
       }
 
     if (gc_hash_digest_length (GC_SHA1) != 20)
       {
-	printf ("gc_hash_digest_length (GC_SHA1) failed\n");
-	return 1;
+        printf ("gc_hash_digest_length (GC_SHA1) failed\n");
+        return 1;
       }
 
     if ((rc = gc_hash_open (GC_SHA1, 0, &h)) != GC_OK)
       {
-	printf ("gc_hash_open(GC_SHA1) failed (%d)\n", rc);
-	return 1;
+        printf ("gc_hash_open(GC_SHA1) failed (%d)\n", rc);
+        return 1;
       }
 
     gc_hash_write (h, inlen, in);
@@ -101,21 +101,21 @@ main (int argc, char *argv[])
 
     if (!p)
       {
-	printf ("gc_hash_read failed\n");
-	return 1;
+        printf ("gc_hash_read failed\n");
+        return 1;
       }
 
     if (memcmp (p, expect, 20) != 0)
       {
-	size_t i;
-	printf ("sha1 1 mismatch. expected:\n");
-	for (i = 0; i < 20; i++)
-	  printf ("%02x ", expect[i] & 0xFF);
-	printf ("\ncomputed:\n");
-	for (i = 0; i < 20; i++)
-	  printf ("%02x ", p[i] & 0xFF);
-	printf ("\n");
-	return 1;
+        size_t i;
+        printf ("sha1 1 mismatch. expected:\n");
+        for (i = 0; i < 20; i++)
+          printf ("%02x ", expect[i] & 0xFF);
+        printf ("\ncomputed:\n");
+        for (i = 0; i < 20; i++)
+          printf ("%02x ", p[i] & 0xFF);
+        printf ("\n");
+        return 1;
       }
 
     gc_hash_close (h);

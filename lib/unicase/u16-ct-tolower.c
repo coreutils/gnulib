@@ -27,14 +27,14 @@
 
 uint16_t *
 u16_ct_tolower (const uint16_t *s, size_t n,
-		casing_prefix_context_t prefix_context,
-		casing_suffix_context_t suffix_context,
-		const char *iso639_language,
-		uninorm_t nf,
-		uint16_t *resultbuf, size_t *lengthp)
+                casing_prefix_context_t prefix_context,
+                casing_suffix_context_t suffix_context,
+                const char *iso639_language,
+                uninorm_t nf,
+                uint16_t *resultbuf, size_t *lengthp)
 {
   return u16_casemap (s, n, prefix_context, suffix_context, iso639_language,
-		      uc_tolower, offsetof (struct special_casing_rule, lower[0]),
-		      nf,
-		      resultbuf, lengthp);
+                      uc_tolower, offsetof (struct special_casing_rule, lower[0]),
+                      nf,
+                      resultbuf, lengthp);
 }

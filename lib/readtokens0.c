@@ -70,23 +70,23 @@ readtokens0 (FILE *in, struct Tokens *t)
     {
       int c = fgetc (in);
       if (c == EOF)
-	{
-	  size_t len = obstack_object_size (&t->o_data);
-	  /* If the current object has nonzero length, then there
-	     was no NUL byte at EOF -- or maybe there was an error,
-	     in which case, we need to append a NUL byte to our buffer.  */
-	  if (len)
-	    {
-	      obstack_1grow (&t->o_data, '\0');
-	      save_token (t);
-	    }
+        {
+          size_t len = obstack_object_size (&t->o_data);
+          /* If the current object has nonzero length, then there
+             was no NUL byte at EOF -- or maybe there was an error,
+             in which case, we need to append a NUL byte to our buffer.  */
+          if (len)
+            {
+              obstack_1grow (&t->o_data, '\0');
+              save_token (t);
+            }
 
-	  break;
-	}
+          break;
+        }
 
       obstack_1grow (&t->o_data, c);
       if (c == '\0')
-	save_token (t);
+        save_token (t);
     }
 
   /* Add a NULL pointer at the end, in case the caller (like du)

@@ -47,39 +47,39 @@ GCD (WORD_T a, WORD_T b)
   if (a & c)
     {
       if (b & c)
-	goto odd_odd;
+        goto odd_odd;
       else
-	goto odd_even;
+        goto odd_even;
     }
   else
     {
       if (b & c)
-	goto even_odd;
+        goto even_odd;
       else
-	abort ();
+        abort ();
     }
 
   for (;;)
     {
     odd_odd: /* a/c and b/c both odd */
       if (a == b)
-	break;
+        break;
       if (a > b)
-	{
-	  a = a - b;
-	even_odd: /* a/c even, b/c odd */
-	  do
-	    a = a >> 1;
-	  while ((a & c) == 0);
-	}
+        {
+          a = a - b;
+        even_odd: /* a/c even, b/c odd */
+          do
+            a = a >> 1;
+          while ((a & c) == 0);
+        }
       else
-	{
-	  b = b - a;
-	odd_even: /* a/c odd, b/c even */
-	  do
-	    b = b >> 1;
-	  while ((b & c) == 0);
-	}
+        {
+          b = b - a;
+        odd_even: /* a/c odd, b/c even */
+          do
+            b = b >> 1;
+          while ((b & c) == 0);
+        }
     }
 
   /* a = b */

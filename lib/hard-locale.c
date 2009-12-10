@@ -41,29 +41,29 @@ hard_locale (int category)
   if (p)
     {
       if (2 <= GLIBC_VERSION)
-	{
-	  if (strcmp (p, "C") == 0 || strcmp (p, "POSIX") == 0)
-	    hard = false;
-	}
+        {
+          if (strcmp (p, "C") == 0 || strcmp (p, "POSIX") == 0)
+            hard = false;
+        }
       else
-	{
-	  char *locale = strdup (p);
-	  if (locale)
-	    {
-	      /* Temporarily set the locale to the "C" and "POSIX" locales
-		 to find their names, so that we can determine whether one
-		 or the other is the caller's locale.  */
-	      if (((p = setlocale (category, "C"))
-		   && strcmp (p, locale) == 0)
-		  || ((p = setlocale (category, "POSIX"))
-		      && strcmp (p, locale) == 0))
-		hard = false;
+        {
+          char *locale = strdup (p);
+          if (locale)
+            {
+              /* Temporarily set the locale to the "C" and "POSIX" locales
+                 to find their names, so that we can determine whether one
+                 or the other is the caller's locale.  */
+              if (((p = setlocale (category, "C"))
+                   && strcmp (p, locale) == 0)
+                  || ((p = setlocale (category, "POSIX"))
+                      && strcmp (p, locale) == 0))
+                hard = false;
 
-	      /* Restore the caller's locale.  */
-	      setlocale (category, locale);
-	      free (locale);
-	    }
-	}
+              /* Restore the caller's locale.  */
+              setlocale (category, locale);
+              free (locale);
+            }
+        }
     }
 
   return hard;

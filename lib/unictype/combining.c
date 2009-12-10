@@ -31,17 +31,17 @@ uc_combining_class (ucs4_t uc)
     {
       int lookup1 = u_combclass.level1[index1];
       if (lookup1 >= 0)
-	{
-	  unsigned int index2 = (uc >> combclass_header_2) & combclass_header_3;
-	  int lookup2 = u_combclass.level2[lookup1 + index2];
-	  if (lookup2 >= 0)
-	    {
-	      unsigned int index3 = (uc & combclass_header_4);
-	      unsigned int lookup3 = u_combclass.level3[lookup2 + index3];
+        {
+          unsigned int index2 = (uc >> combclass_header_2) & combclass_header_3;
+          int lookup2 = u_combclass.level2[lookup1 + index2];
+          if (lookup2 >= 0)
+            {
+              unsigned int index3 = (uc & combclass_header_4);
+              unsigned int lookup3 = u_combclass.level3[lookup2 + index3];
 
-	      return lookup3;
-	    }
-	}
+              return lookup3;
+            }
+        }
     }
   return 0;
 }

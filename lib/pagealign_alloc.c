@@ -129,14 +129,14 @@ pagealign_alloc (size_t size)
   const int flags = MAP_ANONYMOUS | MAP_PRIVATE;
 # else /* !HAVE_MAP_ANONYMOUS */
   static int fd = -1;  /* Only open /dev/zero once in order to avoid limiting
-			  the amount of memory we may allocate based on the
-			  number of open file descriptors.  */
+                          the amount of memory we may allocate based on the
+                          number of open file descriptors.  */
   const int flags = MAP_FILE | MAP_PRIVATE;
   if (fd == -1)
     {
       fd = open ("/dev/zero", O_RDONLY, 0666);
       if (fd < 0)
-	error (EXIT_FAILURE, errno, _("Failed to open /dev/zero for read"));
+        error (EXIT_FAILURE, errno, _("Failed to open /dev/zero for read"));
     }
 # endif /* HAVE_MAP_ANONYMOUS */
   ret = mmap (NULL, size, PROT_READ | PROT_WRITE, flags, fd, 0);
@@ -156,7 +156,7 @@ pagealign_alloc (size_t size)
   if (unaligned_ptr == NULL)
     {
       /* Set errno.  We don't know whether malloc already set errno: some
-	 implementations of malloc do, some don't.  */
+         implementations of malloc do, some don't.  */
       errno = ENOMEM;
       return NULL;
     }

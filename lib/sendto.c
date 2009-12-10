@@ -30,7 +30,7 @@
 
 int
 rpl_sendto (int fd, const void *buf, int len, int flags,
-	    struct sockaddr *to, int tolen)
+            struct sockaddr *to, int tolen)
 {
   SOCKET sock = FD_TO_SOCKET (fd);
   int r = sendto (sock, buf, len, flags, to, tolen);

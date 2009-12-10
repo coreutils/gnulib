@@ -30,10 +30,10 @@
 
 int
 xmem_cd_iconveh (const char *src, size_t srclen,
-		 const iconveh_t *cd,
-		 enum iconv_ilseq_handler handler,
-		 size_t *offsets,
-		 char **resultp, size_t *lengthp)
+                 const iconveh_t *cd,
+                 enum iconv_ilseq_handler handler,
+                 size_t *offsets,
+                 char **resultp, size_t *lengthp)
 {
   int retval =
     mem_cd_iconveh (src, srclen, cd, handler, offsets, resultp, lengthp);
@@ -45,8 +45,8 @@ xmem_cd_iconveh (const char *src, size_t srclen,
 
 char *
 xstr_cd_iconveh (const char *src,
-		 const iconveh_t *cd,
-		 enum iconv_ilseq_handler handler)
+                 const iconveh_t *cd,
+                 enum iconv_ilseq_handler handler)
 {
   char *result = str_cd_iconveh (src, cd, handler);
 
@@ -59,14 +59,14 @@ xstr_cd_iconveh (const char *src,
 
 int
 xmem_iconveh (const char *src, size_t srclen,
-	      const char *from_codeset, const char *to_codeset,
-	      enum iconv_ilseq_handler handler,
-	      size_t *offsets,
-	      char **resultp, size_t *lengthp)
+              const char *from_codeset, const char *to_codeset,
+              enum iconv_ilseq_handler handler,
+              size_t *offsets,
+              char **resultp, size_t *lengthp)
 {
   int retval =
     mem_iconveh (src, srclen, from_codeset, to_codeset, handler, offsets,
-		 resultp, lengthp);
+                 resultp, lengthp);
 
   if (retval < 0 && errno == ENOMEM)
     xalloc_die ();
@@ -75,8 +75,8 @@ xmem_iconveh (const char *src, size_t srclen,
 
 char *
 xstr_iconveh (const char *src,
-	      const char *from_codeset, const char *to_codeset,
-	      enum iconv_ilseq_handler handler)
+              const char *from_codeset, const char *to_codeset,
+              enum iconv_ilseq_handler handler)
 {
   char *result = str_iconveh (src, from_codeset, to_codeset, handler);
 

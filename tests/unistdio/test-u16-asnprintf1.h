@@ -29,7 +29,7 @@ test_function (uint16_t * (*my_asnprintf) (uint16_t *, size_t *, const char *, .
       size_t length = size;
       uint16_t *result = my_asnprintf (NULL, &length, "%d", 12345);
       static const uint16_t expected[] =
-	{ '1', '2', '3', '4', '5', 0 };
+        { '1', '2', '3', '4', '5', 0 };
       ASSERT (result != NULL);
       ASSERT (u16_strcmp (result, expected) == 0);
       ASSERT (length == 5);
@@ -39,9 +39,9 @@ test_function (uint16_t * (*my_asnprintf) (uint16_t *, size_t *, const char *, .
   for (size = 0; size <= 8; size++)
     {
       static const uint16_t initializer[] =
-	{ 'D', 'E', 'A', 'D', 'B', 'E', 'E', 'F', 0 };
+        { 'D', 'E', 'A', 'D', 'B', 'E', 'E', 'F', 0 };
       static const uint16_t expected[] =
-	{ '1', '2', '3', '4', '5', 0 };
+        { '1', '2', '3', '4', '5', 0 };
       size_t length;
       uint16_t *result;
 
@@ -52,9 +52,9 @@ test_function (uint16_t * (*my_asnprintf) (uint16_t *, size_t *, const char *, .
       ASSERT (u16_strcmp (result, expected) == 0);
       ASSERT (length == 5);
       if (size < 6)
-	ASSERT (result != buf);
+        ASSERT (result != buf);
       ASSERT (u16_cmp (buf + size, initializer + size, 8 - size) == 0);
       if (result != buf)
-	free (result);
+        free (result);
     }
 }

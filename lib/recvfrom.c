@@ -30,7 +30,7 @@
 
 int
 rpl_recvfrom (int fd, void *buf, int len, int flags, struct sockaddr *from,
-	      int *fromlen)
+              int *fromlen)
 {
   int frombufsize = *fromlen;
   SOCKET sock = FD_TO_SOCKET (fd);

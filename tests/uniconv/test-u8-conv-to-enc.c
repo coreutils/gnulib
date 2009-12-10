@@ -29,15 +29,15 @@
 
 #define SIZEOF(array) (sizeof (array) / sizeof (array[0]))
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 /* Magic number for detecting bounds violations.  */
@@ -71,33 +71,33 @@ main ()
       static const uint8_t input[] = "\303\204rger mit b\303\266sen B\303\274bchen ohne Augenma\303\237";
       static const char expected[] = "\304rger mit b\366sen B\374bchen ohne Augenma\337";
       for (o = 0; o < 2; o++)
-	{
-	  size_t *offsets = (o ? new_offsets (u8_strlen (input)) : NULL);
-	  size_t length;
-	  char *result = u8_conv_to_encoding ("ISO-8859-1", handler,
-					      input, u8_strlen (input),
-					      offsets,
-					      NULL, &length);
-	  ASSERT (result != NULL);
-	  ASSERT (length == strlen (expected));
-	  ASSERT (memcmp (result, expected, length) == 0);
-	  if (o)
-	    {
-	      for (i = 0; i < 41; i++)
-		ASSERT (offsets[i] == (i < 1 ? i :
-				       i == 1 ? (size_t)(-1) :
-				       i < 13 ? i - 1 :
-				       i == 13 ? (size_t)(-1) :
-				       i < 20 ? i - 2 :
-				       i == 20 ? (size_t)(-1) :
-				       i < 40 ? i - 3 :
-				       i == 40 ? (size_t)(-1) :
-				       i - 4));
-	      ASSERT (offsets[41] == MAGIC);
-	      free (offsets);
-	    }
-	  free (result);
-	}
+        {
+          size_t *offsets = (o ? new_offsets (u8_strlen (input)) : NULL);
+          size_t length;
+          char *result = u8_conv_to_encoding ("ISO-8859-1", handler,
+                                              input, u8_strlen (input),
+                                              offsets,
+                                              NULL, &length);
+          ASSERT (result != NULL);
+          ASSERT (length == strlen (expected));
+          ASSERT (memcmp (result, expected, length) == 0);
+          if (o)
+            {
+              for (i = 0; i < 41; i++)
+                ASSERT (offsets[i] == (i < 1 ? i :
+                                       i == 1 ? (size_t)(-1) :
+                                       i < 13 ? i - 1 :
+                                       i == 13 ? (size_t)(-1) :
+                                       i < 20 ? i - 2 :
+                                       i == 20 ? (size_t)(-1) :
+                                       i < 40 ? i - 3 :
+                                       i == 40 ? (size_t)(-1) :
+                                       i - 4));
+              ASSERT (offsets[41] == MAGIC);
+              free (offsets);
+            }
+          free (result);
+        }
     }
 
   /* Test conversion from UTF-8 to ISO-8859-1 with EILSEQ.  */
@@ -106,60 +106,60 @@ main ()
       enum iconv_ilseq_handler handler = handlers[h];
       static const uint8_t input[] = "Rafa\305\202 Maszkowski"; /* Rafał Maszkowski */
       for (o = 0; o < 2; o++)
-	{
-	  size_t *offsets = (o ? new_offsets (u8_strlen (input)) : NULL);
-	  size_t length = 0xdead;
-	  char *result = u8_conv_to_encoding ("ISO-8859-1", handler,
-					      input, u8_strlen (input),
-					      offsets,
-					      NULL, &length);
-	  switch (handler)
-	    {
-	    case iconveh_error:
-	      ASSERT (result == NULL);
-	      ASSERT (errno == EILSEQ);
-	      ASSERT (length == 0xdead);
-	      break;
-	    case iconveh_question_mark:
-	      {
-		static const char expected[] = "Rafa? Maszkowski";
-		static const char expected_translit[] = "Rafal Maszkowski";
-		ASSERT (result != NULL);
-		ASSERT (length == strlen (expected));
-		ASSERT (memcmp (result, expected, length) == 0
-			|| memcmp (result, expected_translit, length) == 0);
-		if (o)
-		  {
-		    for (i = 0; i < 17; i++)
-		      ASSERT (offsets[i] == (i < 5 ? i :
-					     i == 5 ? (size_t)(-1) :
-					     i - 1));
-		    ASSERT (offsets[17] == MAGIC);
-		    free (offsets);
-		  }
-		free (result);
-	      }
-	      break;
-	    case iconveh_escape_sequence:
-	      {
-		static const char expected[] = "Rafa\\u0142 Maszkowski";
-		ASSERT (result != NULL);
-		ASSERT (length == strlen (expected));
-		ASSERT (memcmp (result, expected, length) == 0);
-		if (o)
-		  {
-		    for (i = 0; i < 17; i++)
-		      ASSERT (offsets[i] == (i < 5 ? i :
-					     i == 5 ? (size_t)(-1) :
-					     i + 4));
-		    ASSERT (offsets[17] == MAGIC);
-		    free (offsets);
-		  }
-		free (result);
-	      }
-	      break;
-	    }
-	}
+        {
+          size_t *offsets = (o ? new_offsets (u8_strlen (input)) : NULL);
+          size_t length = 0xdead;
+          char *result = u8_conv_to_encoding ("ISO-8859-1", handler,
+                                              input, u8_strlen (input),
+                                              offsets,
+                                              NULL, &length);
+          switch (handler)
+            {
+            case iconveh_error:
+              ASSERT (result == NULL);
+              ASSERT (errno == EILSEQ);
+              ASSERT (length == 0xdead);
+              break;
+            case iconveh_question_mark:
+              {
+                static const char expected[] = "Rafa? Maszkowski";
+                static const char expected_translit[] = "Rafal Maszkowski";
+                ASSERT (result != NULL);
+                ASSERT (length == strlen (expected));
+                ASSERT (memcmp (result, expected, length) == 0
+                        || memcmp (result, expected_translit, length) == 0);
+                if (o)
+                  {
+                    for (i = 0; i < 17; i++)
+                      ASSERT (offsets[i] == (i < 5 ? i :
+                                             i == 5 ? (size_t)(-1) :
+                                             i - 1));
+                    ASSERT (offsets[17] == MAGIC);
+                    free (offsets);
+                  }
+                free (result);
+              }
+              break;
+            case iconveh_escape_sequence:
+              {
+                static const char expected[] = "Rafa\\u0142 Maszkowski";
+                ASSERT (result != NULL);
+                ASSERT (length == strlen (expected));
+                ASSERT (memcmp (result, expected, length) == 0);
+                if (o)
+                  {
+                    for (i = 0; i < 17; i++)
+                      ASSERT (offsets[i] == (i < 5 ? i :
+                                             i == 5 ? (size_t)(-1) :
+                                             i + 4));
+                    ASSERT (offsets[17] == MAGIC);
+                    free (offsets);
+                  }
+                free (result);
+              }
+              break;
+            }
+        }
     }
 
   /* Test conversion from UTF-8 to ISO-8859-1 with EINVAL.  */
@@ -168,23 +168,23 @@ main ()
       enum iconv_ilseq_handler handler = handlers[h];
       static const uint8_t input[] = "\342";
       for (o = 0; o < 2; o++)
-	{
-	  size_t *offsets = (o ? new_offsets (u8_strlen (input)) : NULL);
-	  size_t length;
-	  char *result = u8_conv_to_encoding ("ISO-8859-1", handler,
-					      input, u8_strlen (input),
-					      offsets,
-					      NULL, &length);
-	  ASSERT (result != NULL);
-	  ASSERT (length == strlen (""));
-	  if (o)
-	    {
-	      ASSERT (offsets[0] == 0);
-	      ASSERT (offsets[1] == MAGIC);
-	      free (offsets);
-	    }
-	  free (result);
-	}
+        {
+          size_t *offsets = (o ? new_offsets (u8_strlen (input)) : NULL);
+          size_t length;
+          char *result = u8_conv_to_encoding ("ISO-8859-1", handler,
+                                              input, u8_strlen (input),
+                                              offsets,
+                                              NULL, &length);
+          ASSERT (result != NULL);
+          ASSERT (length == strlen (""));
+          if (o)
+            {
+              ASSERT (offsets[0] == 0);
+              ASSERT (offsets[1] == MAGIC);
+              free (offsets);
+            }
+          free (result);
+        }
     }
 
 #endif

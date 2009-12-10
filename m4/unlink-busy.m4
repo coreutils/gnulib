@@ -17,11 +17,11 @@ AC_DEFUN([gl_FUNC_UNLINK_BUSY_TEXT],
       AC_RUN_IFELSE(
         [AC_LANG_SOURCE(
            [AC_INCLUDES_DEFAULT[
-	    int
-	    main (int argc, char **argv)
-	    {
-	      return !argc || unlink (argv[0]) != 0;
-	    }]])],
+            int
+            main (int argc, char **argv)
+            {
+              return !argc || unlink (argv[0]) != 0;
+            }]])],
       gl_cv_func_unlink_busy_text=yes,
       gl_cv_func_unlink_busy_text=no,
       gl_cv_func_unlink_busy_text=no

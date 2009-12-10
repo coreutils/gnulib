@@ -183,14 +183,14 @@ extern const uc_general_category_t _UC_CATEGORY_NONE;
    This corresponds to the unions of the two sets of characters.  */
 extern uc_general_category_t
        uc_general_category_or (uc_general_category_t category1,
-			       uc_general_category_t category2);
+                               uc_general_category_t category2);
 
 /* Return the intersection of two general categories as bit masks.
    This *does*not* correspond to the intersection of the two sets of
    characters.  */
 extern uc_general_category_t
        uc_general_category_and (uc_general_category_t category1,
-				uc_general_category_t category2);
+                                uc_general_category_t category2);
 
 /* Return the intersection of a general category with the complement of a
    second general category, as bit masks.
@@ -198,7 +198,7 @@ extern uc_general_category_t
    viewing the categories as sets of characters.  */
 extern uc_general_category_t
        uc_general_category_and_not (uc_general_category_t category1,
-				    uc_general_category_t category2);
+                                    uc_general_category_t category2);
 
 /* Return the name of a general category.  */
 extern const char *

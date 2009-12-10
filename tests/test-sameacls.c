@@ -34,15 +34,15 @@
 #include "xalloc.h"
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 int
@@ -68,31 +68,31 @@ main (int argc, char *argv[])
     contents1 = read_file (file1, &size1);
     if (contents1 == NULL)
       {
-	fprintf (stderr, "error reading file %s: errno = %d\n", file1, errno);
-	fflush (stderr);
-	abort ();
+        fprintf (stderr, "error reading file %s: errno = %d\n", file1, errno);
+        fflush (stderr);
+        abort ();
       }
     contents2 = read_file (file2, &size2);
     if (contents2 == NULL)
       {
-	fprintf (stderr, "error reading file %s: errno = %d\n", file2, errno);
-	fflush (stderr);
-	abort ();
+        fprintf (stderr, "error reading file %s: errno = %d\n", file2, errno);
+        fflush (stderr);
+        abort ();
       }
 
     if (size2 != size1)
       {
-	fprintf (stderr, "files %s and %s have different sizes\n",
-		 file1, file2);
-	fflush (stderr);
-	abort ();
+        fprintf (stderr, "files %s and %s have different sizes\n",
+                 file1, file2);
+        fflush (stderr);
+        abort ();
       }
     if (memcmp (contents1, contents2, size1) != 0)
       {
-	fprintf (stderr, "files %s and %s have different contents\n",
-		 file1, file2);
-	fflush (stderr);
-	abort ();
+        fprintf (stderr, "files %s and %s have different contents\n",
+                 file1, file2);
+        fflush (stderr);
+        abort ();
       }
   }
 
@@ -103,131 +103,131 @@ main (int argc, char *argv[])
 
     if (stat (file1, &statbuf1) < 0)
       {
-	fprintf (stderr, "error accessing file %s: errno = %d\n", file1, errno);
-	fflush (stderr);
-	abort ();
+        fprintf (stderr, "error accessing file %s: errno = %d\n", file1, errno);
+        fflush (stderr);
+        abort ();
       }
     if (stat (file2, &statbuf2) < 0)
       {
-	fprintf (stderr, "error accessing file %s: errno = %d\n", file2, errno);
-	fflush (stderr);
-	abort ();
+        fprintf (stderr, "error accessing file %s: errno = %d\n", file2, errno);
+        fflush (stderr);
+        abort ();
       }
     if (statbuf1.st_mode != statbuf2.st_mode)
       {
-	fprintf (stderr, "files %s and %s have different access modes: %03o and %03o\n",
-		 file1, file2,
-		(unsigned int) statbuf1.st_mode, (unsigned int) statbuf2.st_mode);
-	return 1;
+        fprintf (stderr, "files %s and %s have different access modes: %03o and %03o\n",
+                 file1, file2,
+                (unsigned int) statbuf1.st_mode, (unsigned int) statbuf2.st_mode);
+        return 1;
       }
   }
   {
 #if HAVE_ACL_GET_FILE /* Linux, FreeBSD, MacOS X, IRIX, Tru64 */
     static const int types[] =
       {
-	ACL_TYPE_ACCESS
+        ACL_TYPE_ACCESS
 # if HAVE_ACL_TYPE_EXTENDED /* MacOS X */
-	, ACL_TYPE_EXTENDED
+        , ACL_TYPE_EXTENDED
 # endif
       };
     int t;
 
     for (t = 0; t < sizeof (types) / sizeof (types[0]); t++)
       {
-	int type = types[t];
-	acl_t acl1;
-	char *text1;
-	int errno1;
-	acl_t acl2;
-	char *text2;
-	int errno2;
+        int type = types[t];
+        acl_t acl1;
+        char *text1;
+        int errno1;
+        acl_t acl2;
+        char *text2;
+        int errno2;
 
-	acl1 = acl_get_file (file1, type);
-	if (acl1 == (acl_t)NULL)
-	  {
-	    text1 = NULL;
-	    errno1 = errno;
-	  }
-	else
-	  {
-	    text1 = acl_to_text (acl1, NULL);
-	    if (text1 == NULL)
-	      errno1 = errno;
-	    else
-	      errno1 = 0;
-	  }
-	acl2 = acl_get_file (file2, type);
-	if (acl2 == (acl_t)NULL)
-	  {
-	    text2 = NULL;
-	    errno2 = errno;
-	  }
-	else
-	  {
-	    text2 = acl_to_text (acl2, NULL);
-	    if (text2 == NULL)
-	      errno2 = errno;
-	    else
-	      errno2 = 0;
-	  }
+        acl1 = acl_get_file (file1, type);
+        if (acl1 == (acl_t)NULL)
+          {
+            text1 = NULL;
+            errno1 = errno;
+          }
+        else
+          {
+            text1 = acl_to_text (acl1, NULL);
+            if (text1 == NULL)
+              errno1 = errno;
+            else
+              errno1 = 0;
+          }
+        acl2 = acl_get_file (file2, type);
+        if (acl2 == (acl_t)NULL)
+          {
+            text2 = NULL;
+            errno2 = errno;
+          }
+        else
+          {
+            text2 = acl_to_text (acl2, NULL);
+            if (text2 == NULL)
+              errno2 = errno;
+            else
+              errno2 = 0;
+          }
 
-	if (acl1 != (acl_t)NULL)
-	  {
-	    if (acl2 != (acl_t)NULL)
-	      {
-		if (text1 != NULL)
-		  {
-		    if (text2 != NULL)
-		      {
-			if (strcmp (text1, text2) != 0)
-			  {
-			    fprintf (stderr, "files %s and %s have different ACLs:\n%s\n%s\n",
-				     file1, file2, text1, text2);
-			    return 1;
-			  }
-		      }
-		    else
-		      {
-			fprintf (stderr, "file %s has a valid ACL, but file %s has an invalid ACL\n",
-				 file1, file2);
-			return 1;
-		      }
-		  }
-		else
-		  {
-		    if (text2 != NULL)
-		      {
-			fprintf (stderr, "file %s has an invalid ACL, but file %s has a valid ACL\n",
-				 file1, file2);
-			return 1;
-		      }
-		    else
-		      {
-			if (errno1 != errno2)
-			  {
-			    fprintf (stderr, "files %s and %s have differently invalid ACLs, errno = %d vs. %d\n",
-				     file1, file2, errno1, errno2);
-			    return 1;
-			  }
-		      }
-		  }
-	      }
-	    else
-	      {
-		fprintf (stderr, "file %s has an ACL, but file %s has no ACL\n",
-			 file1, file2);
-		return 1;
-	      }
-	  }
-	else
-	  {
-	    if (acl2 != (acl_t)NULL)
-	      {
-		fprintf (stderr, "file %s has no ACL, but file %s has an ACL\n",
-			 file1, file2);
-		return 1;
-	      }
-	  }
+        if (acl1 != (acl_t)NULL)
+          {
+            if (acl2 != (acl_t)NULL)
+              {
+                if (text1 != NULL)
+                  {
+                    if (text2 != NULL)
+                      {
+                        if (strcmp (text1, text2) != 0)
+                          {
+                            fprintf (stderr, "files %s and %s have different ACLs:\n%s\n%s\n",
+                                     file1, file2, text1, text2);
+                            return 1;
+                          }
+                      }
+                    else
+                      {
+                        fprintf (stderr, "file %s has a valid ACL, but file %s has an invalid ACL\n",
+                                 file1, file2);
+                        return 1;
+                      }
+                  }
+                else
+                  {
+                    if (text2 != NULL)
+                      {
+                        fprintf (stderr, "file %s has an invalid ACL, but file %s has a valid ACL\n",
+                                 file1, file2);
+                        return 1;
+                      }
+                    else
+                      {
+                        if (errno1 != errno2)
+                          {
+                            fprintf (stderr, "files %s and %s have differently invalid ACLs, errno = %d vs. %d\n",
+                                     file1, file2, errno1, errno2);
+                            return 1;
+                          }
+                      }
+                  }
+              }
+            else
+              {
+                fprintf (stderr, "file %s has an ACL, but file %s has no ACL\n",
+                         file1, file2);
+                return 1;
+              }
+          }
+        else
+          {
+            if (acl2 != (acl_t)NULL)
+              {
+                fprintf (stderr, "file %s has no ACL, but file %s has an ACL\n",
+                         file1, file2);
+                return 1;
+              }
+          }
       }
 #elif HAVE_ACL && defined GETACL /* Solaris, Cygwin, not HP-UX */
   int count1;
@@ -251,7 +251,7 @@ main (int argc, char *argv[])
   if (count1 != count2)
     {
       fprintf (stderr, "files %s and %s have different number of ACLs: %d and %d\n",
-	       file1, file2, count1, count2);
+               file1, file2, count1, count2);
       return 1;
     }
   else
@@ -261,38 +261,38 @@ main (int argc, char *argv[])
       int i;
 
       if (acl (file1, GETACL, count1, entries1) < count1)
-	{
-	  fprintf (stderr, "error retrieving the ACLs of file %s\n", file1);
-	  fflush (stderr);
-	  abort ();
-	}
+        {
+          fprintf (stderr, "error retrieving the ACLs of file %s\n", file1);
+          fflush (stderr);
+          abort ();
+        }
       if (acl (file2, GETACL, count2, entries2) < count1)
-	{
-	  fprintf (stderr, "error retrieving the ACLs of file %s\n", file2);
-	  fflush (stderr);
-	  abort ();
-	}
+        {
+          fprintf (stderr, "error retrieving the ACLs of file %s\n", file2);
+          fflush (stderr);
+          abort ();
+        }
       for (i = 0; i < count1; i++)
-	{
-	  if (entries1[i].a_type != entries2[i].a_type)
-	    {
-	      fprintf (stderr, "files %s and %s: different ACL entry #%d: different types %d and %d\n",
-		       file1, file2, i, entries1[i].a_type, entries2[i].a_type);
-	      return 1;
-	    }
-	  if (entries1[i].a_id != entries2[i].a_id)
-	    {
-	      fprintf (stderr, "files %s and %s: different ACL entry #%d: different ids %d and %d\n",
-		       file1, file2, i, (int)entries1[i].a_id, (int)entries2[i].a_id);
-	      return 1;
-	    }
-	  if (entries1[i].a_perm != entries2[i].a_perm)
-	    {
-	      fprintf (stderr, "files %s and %s: different ACL entry #%d: different permissions %03o and %03o\n",
-		       file1, file2, i, (unsigned int) entries1[i].a_perm, (unsigned int) entries2[i].a_perm);
-	      return 1;
-	    }
-	}
+        {
+          if (entries1[i].a_type != entries2[i].a_type)
+            {
+              fprintf (stderr, "files %s and %s: different ACL entry #%d: different types %d and %d\n",
+                       file1, file2, i, entries1[i].a_type, entries2[i].a_type);
+              return 1;
+            }
+          if (entries1[i].a_id != entries2[i].a_id)
+            {
+              fprintf (stderr, "files %s and %s: different ACL entry #%d: different ids %d and %d\n",
+                       file1, file2, i, (int)entries1[i].a_id, (int)entries2[i].a_id);
+              return 1;
+            }
+          if (entries1[i].a_perm != entries2[i].a_perm)
+            {
+              fprintf (stderr, "files %s and %s: different ACL entry #%d: different permissions %03o and %03o\n",
+                       file1, file2, i, (unsigned int) entries1[i].a_perm, (unsigned int) entries2[i].a_perm);
+              return 1;
+            }
+        }
     }
 # ifdef ACE_GETACL
   count1 = acl (file1, ACE_GETACLCNT, 0, NULL);
@@ -316,7 +316,7 @@ main (int argc, char *argv[])
   if (count1 != count2)
     {
       fprintf (stderr, "files %s and %s have different number of ACE-ACLs: %d and %d\n",
-	       file1, file2, count1, count2);
+               file1, file2, count1, count2);
       return 1;
     }
   else if (count1 > 0)
@@ -326,44 +326,44 @@ main (int argc, char *argv[])
       int i;
 
       if (acl (file1, ACE_GETACL, count1, entries1) < count1)
-	{
-	  fprintf (stderr, "error retrieving the ACE-ACLs of file %s\n", file1);
-	  fflush (stderr);
-	  abort ();
-	}
+        {
+          fprintf (stderr, "error retrieving the ACE-ACLs of file %s\n", file1);
+          fflush (stderr);
+          abort ();
+        }
       if (acl (file2, ACE_GETACL, count2, entries2) < count1)
-	{
-	  fprintf (stderr, "error retrieving the ACE-ACLs of file %s\n", file2);
-	  fflush (stderr);
-	  abort ();
-	}
+        {
+          fprintf (stderr, "error retrieving the ACE-ACLs of file %s\n", file2);
+          fflush (stderr);
+          abort ();
+        }
       for (i = 0; i < count1; i++)
-	{
-	  if (entries1[i].a_type != entries2[i].a_type)
-	    {
-	      fprintf (stderr, "files %s and %s: different ACE-ACL entry #%d: different types %d and %d\n",
-		       file1, file2, i, entries1[i].a_type, entries2[i].a_type);
-	      return 1;
-	    }
-	  if (entries1[i].a_who != entries2[i].a_who)
-	    {
-	      fprintf (stderr, "files %s and %s: different ACE-ACL entry #%d: different ids %d and %d\n",
-		       file1, file2, i, (int)entries1[i].a_who, (int)entries2[i].a_who);
-	      return 1;
-	    }
-	  if (entries1[i].a_access_mask != entries2[i].a_access_mask)
-	    {
-	      fprintf (stderr, "files %s and %s: different ACE-ACL entry #%d: different access masks %03o and %03o\n",
-		       file1, file2, i, (unsigned int) entries1[i].a_access_mask, (unsigned int) entries2[i].a_access_mask);
-	      return 1;
-	    }
-	  if (entries1[i].a_flags != entries2[i].a_flags)
-	    {
-	      fprintf (stderr, "files %s and %s: different ACE-ACL entry #%d: different flags 0x%x and 0x%x\n",
-		       file1, file2, i, (unsigned int) entries1[i].a_flags, (unsigned int) entries2[i].a_flags);
-	      return 1;
-	    }
-	}
+        {
+          if (entries1[i].a_type != entries2[i].a_type)
+            {
+              fprintf (stderr, "files %s and %s: different ACE-ACL entry #%d: different types %d and %d\n",
+                       file1, file2, i, entries1[i].a_type, entries2[i].a_type);
+              return 1;
+            }
+          if (entries1[i].a_who != entries2[i].a_who)
+            {
+              fprintf (stderr, "files %s and %s: different ACE-ACL entry #%d: different ids %d and %d\n",
+                       file1, file2, i, (int)entries1[i].a_who, (int)entries2[i].a_who);
+              return 1;
+            }
+          if (entries1[i].a_access_mask != entries2[i].a_access_mask)
+            {
+              fprintf (stderr, "files %s and %s: different ACE-ACL entry #%d: different access masks %03o and %03o\n",
+                       file1, file2, i, (unsigned int) entries1[i].a_access_mask, (unsigned int) entries2[i].a_access_mask);
+              return 1;
+            }
+          if (entries1[i].a_flags != entries2[i].a_flags)
+            {
+              fprintf (stderr, "files %s and %s: different ACE-ACL entry #%d: different flags 0x%x and 0x%x\n",
+                       file1, file2, i, (unsigned int) entries1[i].a_flags, (unsigned int) entries2[i].a_flags);
+              return 1;
+            }
+        }
     }
 # endif
 #elif HAVE_GETACL /* HP-UX */
@@ -392,7 +392,7 @@ main (int argc, char *argv[])
   if (count1 != count2)
     {
       fprintf (stderr, "files %s and %s have different number of ACLs: %d and %d\n",
-	       file1, file2, count1, count2);
+               file1, file2, count1, count2);
       return 1;
     }
   else if (count1 > 0)
@@ -402,38 +402,38 @@ main (int argc, char *argv[])
       int i;
 
       if (getacl (file1, count1, entries1) < count1)
-	{
-	  fprintf (stderr, "error retrieving the ACLs of file %s\n", file1);
-	  fflush (stderr);
-	  abort ();
-	}
+        {
+          fprintf (stderr, "error retrieving the ACLs of file %s\n", file1);
+          fflush (stderr);
+          abort ();
+        }
       if (getacl (file2, count2, entries2) < count1)
-	{
-	  fprintf (stderr, "error retrieving the ACLs of file %s\n", file2);
-	  fflush (stderr);
-	  abort ();
-	}
+        {
+          fprintf (stderr, "error retrieving the ACLs of file %s\n", file2);
+          fflush (stderr);
+          abort ();
+        }
       for (i = 0; i < count1; i++)
-	{
-	  if (entries1[i].uid != entries2[i].uid)
-	    {
-	      fprintf (stderr, "files %s and %s: different ACL entry #%d: different uids %d and %d\n",
-		       file1, file2, i, (int)entries1[i].uid, (int)entries2[i].uid);
-	      return 1;
-	    }
-	  if (entries1[i].gid != entries2[i].gid)
-	    {
-	      fprintf (stderr, "files %s and %s: different ACL entry #%d: different gids %d and %d\n",
-		       file1, file2, i, (int)entries1[i].gid, (int)entries2[i].gid);
-	      return 1;
-	    }
-	  if (entries1[i].mode != entries2[i].mode)
-	    {
-	      fprintf (stderr, "files %s and %s: different ACL entry #%d: different permissions %03o and %03o\n",
-		       file1, file2, i, (unsigned int) entries1[i].mode, (unsigned int) entries2[i].mode);
-	      return 1;
-	    }
-	}
+        {
+          if (entries1[i].uid != entries2[i].uid)
+            {
+              fprintf (stderr, "files %s and %s: different ACL entry #%d: different uids %d and %d\n",
+                       file1, file2, i, (int)entries1[i].uid, (int)entries2[i].uid);
+              return 1;
+            }
+          if (entries1[i].gid != entries2[i].gid)
+            {
+              fprintf (stderr, "files %s and %s: different ACL entry #%d: different gids %d and %d\n",
+                       file1, file2, i, (int)entries1[i].gid, (int)entries2[i].gid);
+              return 1;
+            }
+          if (entries1[i].mode != entries2[i].mode)
+            {
+              fprintf (stderr, "files %s and %s: different ACL entry #%d: different permissions %03o and %03o\n",
+                       file1, file2, i, (unsigned int) entries1[i].mode, (unsigned int) entries2[i].mode);
+              return 1;
+            }
+        }
     }
 #elif HAVE_ACLX_GET /* AIX */
   acl_type_t type1;
@@ -482,7 +482,7 @@ main (int argc, char *argv[])
   if (strcmp (text1, text2) != 0)
     {
       fprintf (stderr, "files %s and %s have different ACLs:\n%s\n%s\n",
-	       file1, file2, text1, text2);
+               file1, file2, text1, text2);
       return 1;
     }
 #elif HAVE_STATACL /* older AIX */
@@ -506,13 +506,13 @@ main (int argc, char *argv[])
   if (acl1.a.acl_len != acl2.a.acl_len)
     {
       fprintf (stderr, "files %s and %s have different ACL lengths: %u and %u\n",
-	       file1, file2, acl1.a.acl_len, acl2.a.acl_len);
+               file1, file2, acl1.a.acl_len, acl2.a.acl_len);
       return 1;
     }
   if (acl1.a.acl_mode != acl2.a.acl_mode)
     {
       fprintf (stderr, "files %s and %s have different ACL modes: %03o and %03o\n",
-	       file1, file2, acl1.a.acl_mode, acl2.a.acl_mode);
+               file1, file2, acl1.a.acl_mode, acl2.a.acl_mode);
       return 1;
     }
   if (acl1.a.u_access != acl2.a.u_access
@@ -520,15 +520,15 @@ main (int argc, char *argv[])
       || acl1.a.o_access != acl2.a.o_access)
     {
       fprintf (stderr, "files %s and %s have different ACL access masks: %03o %03o %03o and %03o %03o %03o\n",
-	       file1, file2,
-	       acl1.a.u_access, acl1.a.g_access, acl1.a.o_access,
-	       acl2.a.u_access, acl2.a.g_access, acl2.a.o_access);
+               file1, file2,
+               acl1.a.u_access, acl1.a.g_access, acl1.a.o_access,
+               acl2.a.u_access, acl2.a.g_access, acl2.a.o_access);
       return 1;
     }
   if (memcmp (acl1.a.acl_ext, acl2.a.acl_ext, acl1.a.acl_len) != 0)
     {
       fprintf (stderr, "files %s and %s have different ACL entries\n",
-	       file1, file2);
+               file1, file2);
       return 1;
     }
 #endif

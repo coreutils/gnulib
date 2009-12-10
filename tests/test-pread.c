@@ -65,12 +65,12 @@ main (void)
       ASSERT (init_pos == pos);
 
       for (i = 0; i < N; i++)
-	{
-	  char byte_buf;
-	  ASSERT (pread (fd, &byte_buf, 1, i) == 1);
-	  ASSERT (byte_buf == buf[i]);
-	  ASSERT (lseek (fd, 0, SEEK_CUR) == init_pos);
-	}
+        {
+          char byte_buf;
+          ASSERT (pread (fd, &byte_buf, 1, i) == 1);
+          ASSERT (byte_buf == buf[i]);
+          ASSERT (lseek (fd, 0, SEEK_CUR) == init_pos);
+        }
     }
 
   {

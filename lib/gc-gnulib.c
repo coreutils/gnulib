@@ -102,12 +102,12 @@ gc_init (void)
 
   /* We first try to use the Intel PIII RNG if drivers are present */
   if (!CryptAcquireContext (&g_hProv, NULL, NULL,
-			    PROV_INTEL_SEC, CRYPT_VERIFY_CONTEXT))
+                            PROV_INTEL_SEC, CRYPT_VERIFY_CONTEXT))
     {
       /* not a PIII or no drivers available, use default RSA CSP */
       if (!CryptAcquireContext (&g_hProv, NULL, NULL,
-				PROV_RSA_FULL, CRYPT_VERIFY_CONTEXT))
-	return GC_RANDOM_ERROR;
+                                PROV_RSA_FULL, CRYPT_VERIFY_CONTEXT))
+        return GC_RANDOM_ERROR;
     }
 # endif
 #endif
@@ -177,12 +177,12 @@ randomize (int level, char *data, size_t datalen)
       tmp = read (fd, data, datalen);
 
       if (tmp < 0)
-	{
-	  int save_errno = errno;
-	  close (fd);
-	  errno = save_errno;
-	  return GC_RANDOM_ERROR;
-	}
+        {
+          int save_errno = errno;
+          close (fd);
+          errno = save_errno;
+          return GC_RANDOM_ERROR;
+        }
 
       len += tmp;
     }
@@ -220,9 +220,9 @@ gc_random (char *data, size_t datalen)
 
 void
 gc_set_allocators (gc_malloc_t func_malloc,
-		   gc_malloc_t secure_malloc,
-		   gc_secure_check_t secure_check,
-		   gc_realloc_t func_realloc, gc_free_t func_free)
+                   gc_malloc_t secure_malloc,
+                   gc_secure_check_t secure_check,
+                   gc_realloc_t func_realloc, gc_free_t func_free)
 {
   return;
 }
@@ -252,7 +252,7 @@ typedef struct _gc_cipher_ctx
 
 Gc_rc
 gc_cipher_open (Gc_cipher alg, Gc_cipher_mode mode,
-		gc_cipher_handle * outhandle)
+                gc_cipher_handle * outhandle)
 {
   _gc_cipher_ctx *ctx;
   Gc_rc rc = GC_OK;
@@ -269,14 +269,14 @@ gc_cipher_open (Gc_cipher alg, Gc_cipher_mode mode,
 #ifdef GNULIB_GC_ARCTWO
     case GC_ARCTWO40:
       switch (mode)
-	{
-	case GC_ECB:
-	case GC_CBC:
-	  break;
+        {
+        case GC_ECB:
+        case GC_CBC:
+          break;
 
-	default:
-	  rc = GC_INVALID_CIPHER;
-	}
+        default:
+          rc = GC_INVALID_CIPHER;
+        }
       break;
 #endif
 
@@ -284,26 +284,26 @@ gc_cipher_open (Gc_cipher alg, Gc_cipher_mode mode,
     case GC_ARCFOUR128:
     case GC_ARCFOUR40:
       switch (mode)
-	{
-	case GC_STREAM:
-	  break;
+        {
+        case GC_STREAM:
+          break;
 
-	default:
-	  rc = GC_INVALID_CIPHER;
-	}
+        default:
+          rc = GC_INVALID_CIPHER;
+        }
       break;
 #endif
 
 #ifdef GNULIB_GC_DES
     case GC_DES:
       switch (mode)
-	{
-	case GC_ECB:
-	  break;
+        {
+        case GC_ECB:
+          break;
 
-	default:
-	  rc = GC_INVALID_CIPHER;
-	}
+        default:
+          rc = GC_INVALID_CIPHER;
+        }
       break;
 #endif
 
@@ -312,14 +312,14 @@ gc_cipher_open (Gc_cipher alg, Gc_cipher_mode mode,
     case GC_AES192:
     case GC_AES256:
       switch (mode)
-	{
-	case GC_ECB:
-	case GC_CBC:
-	  break;
+        {
+        case GC_ECB:
+        case GC_CBC:
+          break;
 
-	default:
-	  rc = GC_INVALID_CIPHER;
-	}
+        default:
+          rc = GC_INVALID_CIPHER;
+        }
       break;
 #endif
 
@@ -358,7 +358,7 @@ gc_cipher_setkey (gc_cipher_handle handle, size_t keylen, const char *key)
 #ifdef GNULIB_GC_DES
     case GC_DES:
       if (keylen != 8)
-	return GC_INVALID_CIPHER;
+        return GC_INVALID_CIPHER;
       gl_des_setkey (&ctx->desContext, key);
       break;
 #endif
@@ -368,26 +368,26 @@ gc_cipher_setkey (gc_cipher_handle handle, size_t keylen, const char *key)
     case GC_AES192:
     case GC_AES256:
       {
-	rijndael_rc rc;
-	size_t i;
-	char keyMaterial[RIJNDAEL_MAX_KEY_SIZE + 1];
+        rijndael_rc rc;
+        size_t i;
+        char keyMaterial[RIJNDAEL_MAX_KEY_SIZE + 1];
 
-	for (i = 0; i < keylen; i++)
-	  sprintf (&keyMaterial[2 * i], "%02x", key[i] & 0xFF);
+        for (i = 0; i < keylen; i++)
+          sprintf (&keyMaterial[2 * i], "%02x", key[i] & 0xFF);
 
-	rc = rijndaelMakeKey (&ctx->aesEncKey, RIJNDAEL_DIR_ENCRYPT,
-			      keylen * 8, keyMaterial);
-	if (rc < 0)
-	  return GC_INVALID_CIPHER;
+        rc = rijndaelMakeKey (&ctx->aesEncKey, RIJNDAEL_DIR_ENCRYPT,
+                              keylen * 8, keyMaterial);
+        if (rc < 0)
+          return GC_INVALID_CIPHER;
 
-	rc = rijndaelMakeKey (&ctx->aesDecKey, RIJNDAEL_DIR_DECRYPT,
-			      keylen * 8, keyMaterial);
-	if (rc < 0)
-	  return GC_INVALID_CIPHER;
+        rc = rijndaelMakeKey (&ctx->aesDecKey, RIJNDAEL_DIR_DECRYPT,
+                              keylen * 8, keyMaterial);
+        if (rc < 0)
+          return GC_INVALID_CIPHER;
 
-	rc = rijndaelCipherInit (&ctx->aesContext, RIJNDAEL_MODE_ECB, NULL);
-	if (rc < 0)
-	  return GC_INVALID_CIPHER;
+        rc = rijndaelCipherInit (&ctx->aesContext, RIJNDAEL_MODE_ECB, NULL);
+        if (rc < 0)
+          return GC_INVALID_CIPHER;
       }
       break;
 #endif
@@ -409,7 +409,7 @@ gc_cipher_setiv (gc_cipher_handle handle, size_t ivlen, const char *iv)
 #ifdef GNULIB_GC_ARCTWO
     case GC_ARCTWO40:
       if (ivlen != ARCTWO_BLOCK_SIZE)
-	return GC_INVALID_CIPHER;
+        return GC_INVALID_CIPHER;
       memcpy (ctx->arctwoIV, iv, ivlen);
       break;
 #endif
@@ -419,30 +419,30 @@ gc_cipher_setiv (gc_cipher_handle handle, size_t ivlen, const char *iv)
     case GC_AES192:
     case GC_AES256:
       switch (ctx->mode)
-	{
-	case GC_ECB:
-	  /* Doesn't use IV. */
-	  break;
+        {
+        case GC_ECB:
+          /* Doesn't use IV. */
+          break;
 
-	case GC_CBC:
-	  {
-	    rijndael_rc rc;
-	    size_t i;
-	    char ivMaterial[2 * RIJNDAEL_MAX_IV_SIZE + 1];
+        case GC_CBC:
+          {
+            rijndael_rc rc;
+            size_t i;
+            char ivMaterial[2 * RIJNDAEL_MAX_IV_SIZE + 1];
 
-	    for (i = 0; i < ivlen; i++)
-	      sprintf (&ivMaterial[2 * i], "%02x", iv[i] & 0xFF);
+            for (i = 0; i < ivlen; i++)
+              sprintf (&ivMaterial[2 * i], "%02x", iv[i] & 0xFF);
 
-	    rc = rijndaelCipherInit (&ctx->aesContext, RIJNDAEL_MODE_CBC,
-				     ivMaterial);
-	    if (rc < 0)
-	      return GC_INVALID_CIPHER;
-	  }
-	  break;
+            rc = rijndaelCipherInit (&ctx->aesContext, RIJNDAEL_MODE_CBC,
+                                     ivMaterial);
+            if (rc < 0)
+              return GC_INVALID_CIPHER;
+          }
+          break;
 
-	default:
-	  return GC_INVALID_CIPHER;
-	}
+        default:
+          return GC_INVALID_CIPHER;
+        }
       break;
 #endif
 
@@ -463,27 +463,27 @@ gc_cipher_encrypt_inline (gc_cipher_handle handle, size_t len, char *data)
 #ifdef GNULIB_GC_ARCTWO
     case GC_ARCTWO40:
       switch (ctx->mode)
-	{
-	case GC_ECB:
-	  arctwo_encrypt (&ctx->arctwoContext, data, data, len);
-	  break;
+        {
+        case GC_ECB:
+          arctwo_encrypt (&ctx->arctwoContext, data, data, len);
+          break;
 
-	case GC_CBC:
-	  for (; len >= ARCTWO_BLOCK_SIZE; len -= ARCTWO_BLOCK_SIZE,
-	       data += ARCTWO_BLOCK_SIZE)
-	    {
-	      size_t i;
-	      for (i = 0; i < ARCTWO_BLOCK_SIZE; i++)
-		data[i] ^= ctx->arctwoIV[i];
-	      arctwo_encrypt (&ctx->arctwoContext, data, data,
-			      ARCTWO_BLOCK_SIZE);
-	      memcpy (ctx->arctwoIV, data, ARCTWO_BLOCK_SIZE);
-	    }
-	  break;
+        case GC_CBC:
+          for (; len >= ARCTWO_BLOCK_SIZE; len -= ARCTWO_BLOCK_SIZE,
+               data += ARCTWO_BLOCK_SIZE)
+            {
+              size_t i;
+              for (i = 0; i < ARCTWO_BLOCK_SIZE; i++)
+                data[i] ^= ctx->arctwoIV[i];
+              arctwo_encrypt (&ctx->arctwoContext, data, data,
+                              ARCTWO_BLOCK_SIZE);
+              memcpy (ctx->arctwoIV, data, ARCTWO_BLOCK_SIZE);
+            }
+          break;
 
-	default:
-	  return GC_INVALID_CIPHER;
-	}
+        default:
+          return GC_INVALID_CIPHER;
+        }
       break;
 #endif
 
@@ -497,7 +497,7 @@ gc_cipher_encrypt_inline (gc_cipher_handle handle, size_t len, char *data)
 #ifdef GNULIB_GC_DES
     case GC_DES:
       for (; len >= 8; len -= 8, data += 8)
-	gl_des_ecb_encrypt (&ctx->desContext, data, data);
+        gl_des_ecb_encrypt (&ctx->desContext, data, data);
       break;
 #endif
 
@@ -506,12 +506,12 @@ gc_cipher_encrypt_inline (gc_cipher_handle handle, size_t len, char *data)
     case GC_AES192:
     case GC_AES256:
       {
-	int nblocks;
+        int nblocks;
 
-	nblocks = rijndaelBlockEncrypt (&ctx->aesContext, &ctx->aesEncKey,
-					data, 8 * len, data);
-	if (nblocks < 0)
-	  return GC_INVALID_CIPHER;
+        nblocks = rijndaelBlockEncrypt (&ctx->aesContext, &ctx->aesEncKey,
+                                        data, 8 * len, data);
+        if (nblocks < 0)
+          return GC_INVALID_CIPHER;
       }
       break;
 #endif
@@ -533,29 +533,29 @@ gc_cipher_decrypt_inline (gc_cipher_handle handle, size_t len, char *data)
 #ifdef GNULIB_GC_ARCTWO
     case GC_ARCTWO40:
       switch (ctx->mode)
-	{
-	case GC_ECB:
-	  arctwo_decrypt (&ctx->arctwoContext, data, data, len);
-	  break;
+        {
+        case GC_ECB:
+          arctwo_decrypt (&ctx->arctwoContext, data, data, len);
+          break;
 
-	case GC_CBC:
-	  for (; len >= ARCTWO_BLOCK_SIZE; len -= ARCTWO_BLOCK_SIZE,
-	       data += ARCTWO_BLOCK_SIZE)
-	    {
-	      char tmpIV[ARCTWO_BLOCK_SIZE];
-	      size_t i;
-	      memcpy (tmpIV, data, ARCTWO_BLOCK_SIZE);
-	      arctwo_decrypt (&ctx->arctwoContext, data, data,
-			      ARCTWO_BLOCK_SIZE);
-	      for (i = 0; i < ARCTWO_BLOCK_SIZE; i++)
-		data[i] ^= ctx->arctwoIV[i];
-	      memcpy (ctx->arctwoIV, tmpIV, ARCTWO_BLOCK_SIZE);
-	    }
-	  break;
+        case GC_CBC:
+          for (; len >= ARCTWO_BLOCK_SIZE; len -= ARCTWO_BLOCK_SIZE,
+               data += ARCTWO_BLOCK_SIZE)
+            {
+              char tmpIV[ARCTWO_BLOCK_SIZE];
+              size_t i;
+              memcpy (tmpIV, data, ARCTWO_BLOCK_SIZE);
+              arctwo_decrypt (&ctx->arctwoContext, data, data,
+                              ARCTWO_BLOCK_SIZE);
+              for (i = 0; i < ARCTWO_BLOCK_SIZE; i++)
+                data[i] ^= ctx->arctwoIV[i];
+              memcpy (ctx->arctwoIV, tmpIV, ARCTWO_BLOCK_SIZE);
+            }
+          break;
 
-	default:
-	  return GC_INVALID_CIPHER;
-	}
+        default:
+          return GC_INVALID_CIPHER;
+        }
       break;
 #endif
 
@@ -569,7 +569,7 @@ gc_cipher_decrypt_inline (gc_cipher_handle handle, size_t len, char *data)
 #ifdef GNULIB_GC_DES
     case GC_DES:
       for (; len >= 8; len -= 8, data += 8)
-	gl_des_ecb_decrypt (&ctx->desContext, data, data);
+        gl_des_ecb_decrypt (&ctx->desContext, data, data);
       break;
 #endif
 
@@ -578,12 +578,12 @@ gc_cipher_decrypt_inline (gc_cipher_handle handle, size_t len, char *data)
     case GC_AES192:
     case GC_AES256:
       {
-	int nblocks;
+        int nblocks;
 
-	nblocks = rijndaelBlockDecrypt (&ctx->aesContext, &ctx->aesDecKey,
-					data, 8 * len, data);
-	if (nblocks < 0)
-	  return GC_INVALID_CIPHER;
+        nblocks = rijndaelBlockDecrypt (&ctx->aesContext, &ctx->aesDecKey,
+                                        data, 8 * len, data);
+        if (nblocks < 0)
+          return GC_INVALID_CIPHER;
       }
       break;
 #endif
@@ -901,7 +901,7 @@ gc_sha1 (const void *in, size_t inlen, void *resbuf)
 #ifdef GNULIB_GC_HMAC_MD5
 Gc_rc
 gc_hmac_md5 (const void *key, size_t keylen,
-	     const void *in, size_t inlen, char *resbuf)
+             const void *in, size_t inlen, char *resbuf)
 {
   hmac_md5 (key, keylen, in, inlen, resbuf);
   return GC_OK;
@@ -911,7 +911,7 @@ gc_hmac_md5 (const void *key, size_t keylen,
 #ifdef GNULIB_GC_HMAC_SHA1
 Gc_rc
 gc_hmac_sha1 (const void *key, size_t keylen,
-	      const void *in, size_t inlen, char *resbuf)
+              const void *in, size_t inlen, char *resbuf)
 {
   hmac_sha1 (key, keylen, in, inlen, resbuf);
   return GC_OK;

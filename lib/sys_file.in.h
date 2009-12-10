@@ -49,7 +49,7 @@ extern int flock (int fd, int operation);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef flock
-# define flock(fd,op)			       \
+# define flock(fd,op)                          \
     (GL_LINK_WARNING ("flock is unportable - " \
                       "use gnulib module flock for portability"), \
      flock ((fd), (op)))

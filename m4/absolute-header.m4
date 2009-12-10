@@ -49,10 +49,10 @@ m4_foreach_w([gl_HEADER_NAME], [$1],
       AS_VAR_SET(gl_absolute_header,
 [`(eval "$gl_absname_cpp conftest.$ac_ext") 2>&AS_MESSAGE_LOG_FD |
 sed -n '\#/]m4_defn([gl_HEADER_NAME])[#{
-	s#.*"\(.*/]m4_defn([gl_HEADER_NAME])[\)".*#\1#
-	s#^/[^/]#//&#
-	p
-	q
+        s#.*"\(.*/]m4_defn([gl_HEADER_NAME])[\)".*#\1#
+        s#^/[^/]#//&#
+        p
+        q
 }'`])
     fi
     AS_VAR_POPDEF([ac_header_exists])dnl

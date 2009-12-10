@@ -33,7 +33,7 @@ AC_CACHE_CHECK([whether compiler handles $1], [gl_Warn], [
   CPPFLAGS="${CPPFLAGS} $1"
   AC_PREPROC_IFELSE([AC_LANG_PROGRAM([])],
                     [AS_VAR_SET([gl_Warn], [yes])],
-		    [AS_VAR_SET([gl_Warn], [no])])
+                    [AS_VAR_SET([gl_Warn], [no])])
   CPPFLAGS="$save_CPPFLAGS"
 ])
 AS_VAR_PUSHDEF([gl_Flags], m4_if([$2], [], [[WARN_CFLAGS]], [[$2]]))dnl

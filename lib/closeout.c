@@ -111,10 +111,10 @@ close_stdout (void)
     {
       char const *write_error = _("write error");
       if (file_name)
-	error (0, errno, "%s: %s", quotearg_colon (file_name),
-	       write_error);
+        error (0, errno, "%s: %s", quotearg_colon (file_name),
+               write_error);
       else
-	error (0, errno, "%s", write_error);
+        error (0, errno, "%s", write_error);
 
       _exit (exit_failure);
     }

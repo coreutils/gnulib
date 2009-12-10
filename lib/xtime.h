@@ -60,10 +60,10 @@ static inline xtime_t
 xtime_sec (xtime_t t)
 {
   return (XTIME_PRECISION == 1
-	  ? t
-	  : t < 0
-	  ? (t + XTIME_PRECISION - 1) / XTIME_PRECISION - 1
-	  : xtime_nonnegative_sec (t));
+          ? t
+          : t < 0
+          ? (t + XTIME_PRECISION - 1) / XTIME_PRECISION - 1
+          : xtime_nonnegative_sec (t));
 }
 
 /* Return the number of nanoseconds in T, which must be nonnegative.  */

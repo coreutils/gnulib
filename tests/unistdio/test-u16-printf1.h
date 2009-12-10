@@ -67,36 +67,36 @@ test_xfunction (uint16_t * (*my_xasprintf) (const char *, ...))
     static const uint8_t unicode_string[] = "Hello";
     {
       uint16_t *result =
-	my_xasprintf ("%U %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%U %d", unicode_string, 33, 44, 55);
       static const uint16_t expected[] =
-	{ 'H', 'e', 'l', 'l', 'o', ' ', '3', '3', 0 };
+        { 'H', 'e', 'l', 'l', 'o', ' ', '3', '3', 0 };
       ASSERT (result != NULL);
       ASSERT (u16_strcmp (result, expected) == 0);
       free (result);
     }
     { /* Width.  */
       uint16_t *result =
-	my_xasprintf ("%10U %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%10U %d", unicode_string, 33, 44, 55);
       static const uint16_t expected[] =
-	{ ' ', ' ', ' ', ' ', ' ', 'H', 'e', 'l', 'l', 'o', ' ', '3', '3', 0 };
+        { ' ', ' ', ' ', ' ', ' ', 'H', 'e', 'l', 'l', 'o', ' ', '3', '3', 0 };
       ASSERT (result != NULL);
       ASSERT (u16_strcmp (result, expected) == 0);
       free (result);
     }
     { /* FLAG_LEFT.  */
       uint16_t *result =
-	my_xasprintf ("%-10U %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%-10U %d", unicode_string, 33, 44, 55);
       static const uint16_t expected[] =
-	{ 'H', 'e', 'l', 'l', 'o', ' ', ' ', ' ', ' ', ' ', ' ', '3', '3', 0 };
+        { 'H', 'e', 'l', 'l', 'o', ' ', ' ', ' ', ' ', ' ', ' ', '3', '3', 0 };
       ASSERT (result != NULL);
       ASSERT (u16_strcmp (result, expected) == 0);
       free (result);
     }
     { /* FLAG_ZERO: no effect.  */
       uint16_t *result =
-	my_xasprintf ("%010U %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%010U %d", unicode_string, 33, 44, 55);
       static const uint16_t expected[] =
-	{ ' ', ' ', ' ', ' ', ' ', 'H', 'e', 'l', 'l', 'o', ' ', '3', '3', 0 };
+        { ' ', ' ', ' ', ' ', ' ', 'H', 'e', 'l', 'l', 'o', ' ', '3', '3', 0 };
       ASSERT (result != NULL);
       ASSERT (u16_strcmp (result, expected) == 0);
       free (result);
@@ -107,36 +107,36 @@ test_xfunction (uint16_t * (*my_xasprintf) (const char *, ...))
     static const uint16_t unicode_string[] = { 'H', 'e', 'l', 'l', 'o', 0 };
     {
       uint16_t *result =
-	my_xasprintf ("%lU %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%lU %d", unicode_string, 33, 44, 55);
       static const uint16_t expected[] =
-	{ 'H', 'e', 'l', 'l', 'o', ' ', '3', '3', 0 };
+        { 'H', 'e', 'l', 'l', 'o', ' ', '3', '3', 0 };
       ASSERT (result != NULL);
       ASSERT (u16_strcmp (result, expected) == 0);
       free (result);
     }
     { /* Width.  */
       uint16_t *result =
-	my_xasprintf ("%10lU %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%10lU %d", unicode_string, 33, 44, 55);
       static const uint16_t expected[] =
-	{ ' ', ' ', ' ', ' ', ' ', 'H', 'e', 'l', 'l', 'o', ' ', '3', '3', 0 };
+        { ' ', ' ', ' ', ' ', ' ', 'H', 'e', 'l', 'l', 'o', ' ', '3', '3', 0 };
       ASSERT (result != NULL);
       ASSERT (u16_strcmp (result, expected) == 0);
       free (result);
     }
     { /* FLAG_LEFT.  */
       uint16_t *result =
-	my_xasprintf ("%-10lU %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%-10lU %d", unicode_string, 33, 44, 55);
       static const uint16_t expected[] =
-	{ 'H', 'e', 'l', 'l', 'o', ' ', ' ', ' ', ' ', ' ', ' ', '3', '3', 0 };
+        { 'H', 'e', 'l', 'l', 'o', ' ', ' ', ' ', ' ', ' ', ' ', '3', '3', 0 };
       ASSERT (result != NULL);
       ASSERT (u16_strcmp (result, expected) == 0);
       free (result);
     }
     { /* FLAG_ZERO: no effect.  */
       uint16_t *result =
-	my_xasprintf ("%010lU %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%010lU %d", unicode_string, 33, 44, 55);
       static const uint16_t expected[] =
-	{ ' ', ' ', ' ', ' ', ' ', 'H', 'e', 'l', 'l', 'o', ' ', '3', '3', 0 };
+        { ' ', ' ', ' ', ' ', ' ', 'H', 'e', 'l', 'l', 'o', ' ', '3', '3', 0 };
       ASSERT (result != NULL);
       ASSERT (u16_strcmp (result, expected) == 0);
       free (result);
@@ -147,36 +147,36 @@ test_xfunction (uint16_t * (*my_xasprintf) (const char *, ...))
     static const uint32_t unicode_string[] = { 'H', 'e', 'l', 'l', 'o', 0 };
     {
       uint16_t *result =
-	my_xasprintf ("%llU %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%llU %d", unicode_string, 33, 44, 55);
       static const uint16_t expected[] =
-	{ 'H', 'e', 'l', 'l', 'o', ' ', '3', '3', 0 };
+        { 'H', 'e', 'l', 'l', 'o', ' ', '3', '3', 0 };
       ASSERT (result != NULL);
       ASSERT (u16_strcmp (result, expected) == 0);
       free (result);
     }
     { /* Width.  */
       uint16_t *result =
-	my_xasprintf ("%10llU %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%10llU %d", unicode_string, 33, 44, 55);
       static const uint16_t expected[] =
-	{ ' ', ' ', ' ', ' ', ' ', 'H', 'e', 'l', 'l', 'o', ' ', '3', '3', 0 };
+        { ' ', ' ', ' ', ' ', ' ', 'H', 'e', 'l', 'l', 'o', ' ', '3', '3', 0 };
       ASSERT (result != NULL);
       ASSERT (u16_strcmp (result, expected) == 0);
       free (result);
     }
     { /* FLAG_LEFT.  */
       uint16_t *result =
-	my_xasprintf ("%-10llU %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%-10llU %d", unicode_string, 33, 44, 55);
       static const uint16_t expected[] =
-	{ 'H', 'e', 'l', 'l', 'o', ' ', ' ', ' ', ' ', ' ', ' ', '3', '3', 0 };
+        { 'H', 'e', 'l', 'l', 'o', ' ', ' ', ' ', ' ', ' ', ' ', '3', '3', 0 };
       ASSERT (result != NULL);
       ASSERT (u16_strcmp (result, expected) == 0);
       free (result);
     }
     { /* FLAG_ZERO: no effect.  */
       uint16_t *result =
-	my_xasprintf ("%010llU %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%010llU %d", unicode_string, 33, 44, 55);
       static const uint16_t expected[] =
-	{ ' ', ' ', ' ', ' ', ' ', 'H', 'e', 'l', 'l', 'o', ' ', '3', '3', 0 };
+        { ' ', ' ', ' ', ' ', ' ', 'H', 'e', 'l', 'l', 'o', ' ', '3', '3', 0 };
       ASSERT (result != NULL);
       ASSERT (u16_strcmp (result, expected) == 0);
       free (result);
@@ -190,8 +190,8 @@ test_xfunction (uint16_t * (*my_xasprintf) (const char *, ...))
       my_xasprintf ("Mr. %s %d", "Ronald Reagan", 33, 44, 55);
     static const uint16_t expected[] =
       { 'M', 'r', '.', ' ', 'R', 'o', 'n', 'a', 'l', 'd',
-	' ', 'R', 'e', 'a', 'g', 'a', 'n', ' ', '3', '3',
-	0
+        ' ', 'R', 'e', 'a', 'g', 'a', 'n', ' ', '3', '3',
+        0
       };
     ASSERT (result != NULL);
     ASSERT (u16_strcmp (result, expected) == 0);
@@ -203,8 +203,8 @@ test_xfunction (uint16_t * (*my_xasprintf) (const char *, ...))
       my_xasprintf ("Mr. %20s %d", "Ronald Reagan", 33, 44, 55);
     static const uint16_t expected[] =
       { 'M', 'r', '.', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-	' ', 'R', 'o', 'n', 'a', 'l', 'd', ' ', 'R', 'e',
-	'a', 'g', 'a', 'n', ' ', '3', '3', 0
+        ' ', 'R', 'o', 'n', 'a', 'l', 'd', ' ', 'R', 'e',
+        'a', 'g', 'a', 'n', ' ', '3', '3', 0
       };
     ASSERT (result != NULL);
     ASSERT (u16_strcmp (result, expected) == 0);
@@ -216,8 +216,8 @@ test_xfunction (uint16_t * (*my_xasprintf) (const char *, ...))
       my_xasprintf ("Mr. %-20s %d", "Ronald Reagan", 33, 44, 55);
     static const uint16_t expected[] =
       { 'M', 'r', '.', ' ', 'R', 'o', 'n', 'a', 'l', 'd',
-	' ', 'R', 'e', 'a', 'g', 'a', 'n', ' ', ' ', ' ',
-	' ', ' ', ' ', ' ', ' ', '3', '3', 0
+        ' ', 'R', 'e', 'a', 'g', 'a', 'n', ' ', ' ', ' ',
+        ' ', ' ', ' ', ' ', ' ', '3', '3', 0
       };
     ASSERT (result != NULL);
     ASSERT (u16_strcmp (result, expected) == 0);
@@ -229,8 +229,8 @@ test_xfunction (uint16_t * (*my_xasprintf) (const char *, ...))
       my_xasprintf ("Mr. %020s %d", "Ronald Reagan", 33, 44, 55);
     static const uint16_t expected[] =
       { 'M', 'r', '.', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-	' ', 'R', 'o', 'n', 'a', 'l', 'd', ' ', 'R', 'e',
-	'a', 'g', 'a', 'n', ' ', '3', '3', 0
+        ' ', 'R', 'o', 'n', 'a', 'l', 'd', ' ', 'R', 'e',
+        'a', 'g', 'a', 'n', ' ', '3', '3', 0
       };
     ASSERT (result != NULL);
     ASSERT (u16_strcmp (result, expected) == 0);
@@ -253,9 +253,9 @@ test_xfunction (uint16_t * (*my_xasprintf) (const char *, ...))
       { '0', 'x', 'c', '.', '9', '1', 'p', '-', '2', ' ', '3', '3', 0 };
     ASSERT (result != NULL);
     ASSERT (u16_strcmp (result, expected1) == 0
-	    || u16_strcmp (result, expected2) == 0
-	    || u16_strcmp (result, expected3) == 0
-	    || u16_strcmp (result, expected4) == 0);
+            || u16_strcmp (result, expected2) == 0
+            || u16_strcmp (result, expected3) == 0
+            || u16_strcmp (result, expected4) == 0);
     free (result);
   }
 
@@ -272,9 +272,9 @@ test_xfunction (uint16_t * (*my_xasprintf) (const char *, ...))
       { ' ', ' ', ' ', ' ', '0', 'x', 'e', 'p', '-', '3', ' ', '3', '3', 0 };
     ASSERT (result != NULL);
     ASSERT (u16_strcmp (result, expected1) == 0
-	    || u16_strcmp (result, expected2) == 0
-	    || u16_strcmp (result, expected3) == 0
-	    || u16_strcmp (result, expected4) == 0);
+            || u16_strcmp (result, expected2) == 0
+            || u16_strcmp (result, expected3) == 0
+            || u16_strcmp (result, expected4) == 0);
     free (result);
   }
 
@@ -283,29 +283,29 @@ test_xfunction (uint16_t * (*my_xasprintf) (const char *, ...))
       my_xasprintf ("%.10a %d", 1.75, 33, 44, 55);
     static const uint16_t expected1[] =
       { '0', 'x', '1', '.', 'c', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', 'p', '+', '0', ' ', '3', '3',
-	0
+        '0', '0', '0', '0', 'p', '+', '0', ' ', '3', '3',
+        0
       };
     static const uint16_t expected2[] =
       { '0', 'x', '3', '.', '8', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', 'p', '-', '1', ' ', '3', '3',
-	0
+        '0', '0', '0', '0', 'p', '-', '1', ' ', '3', '3',
+        0
       };
     static const uint16_t expected3[] =
       { '0', 'x', '7', '.', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', 'p', '-', '2', ' ', '3', '3',
-	0
+        '0', '0', '0', '0', 'p', '-', '2', ' ', '3', '3',
+        0
       };
     static const uint16_t expected4[] =
       { '0', 'x', 'e', '.', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', 'p', '-', '3', ' ', '3', '3',
-	0
+        '0', '0', '0', '0', 'p', '-', '3', ' ', '3', '3',
+        0
       };
     ASSERT (result != NULL);
     ASSERT (u16_strcmp (result, expected1) == 0
-	    || u16_strcmp (result, expected2) == 0
-	    || u16_strcmp (result, expected3) == 0
-	    || u16_strcmp (result, expected4) == 0);
+            || u16_strcmp (result, expected2) == 0
+            || u16_strcmp (result, expected3) == 0
+            || u16_strcmp (result, expected4) == 0);
     free (result);
   }
 
@@ -314,45 +314,45 @@ test_xfunction (uint16_t * (*my_xasprintf) (const char *, ...))
       my_xasprintf ("%.50a %d", 1.75, 33, 44, 55);
     static const uint16_t expected1[] =
       { '0', 'x', '1', '.', 'c', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', 'p', '+', '0', ' ', '3', '3',
-	0
+        '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+        '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+        '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+        '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+        '0', '0', '0', '0', 'p', '+', '0', ' ', '3', '3',
+        0
       };
     static const uint16_t expected2[] =
       { '0', 'x', '3', '.', '8', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', 'p', '-', '1', ' ', '3', '3',
-	0
+        '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+        '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+        '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+        '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+        '0', '0', '0', '0', 'p', '-', '1', ' ', '3', '3',
+        0
       };
     static const uint16_t expected3[] =
       { '0', 'x', '7', '.', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', 'p', '-', '2', ' ', '3', '3',
-	0
+        '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+        '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+        '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+        '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+        '0', '0', '0', '0', 'p', '-', '2', ' ', '3', '3',
+        0
       };
     static const uint16_t expected4[] =
       { '0', 'x', 'e', '.', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', 'p', '-', '3', ' ', '3', '3',
-	0
+        '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+        '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+        '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+        '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+        '0', '0', '0', '0', 'p', '-', '3', ' ', '3', '3',
+        0
       };
     ASSERT (result != NULL);
     ASSERT (u16_strcmp (result, expected1) == 0
-	    || u16_strcmp (result, expected2) == 0
-	    || u16_strcmp (result, expected3) == 0
-	    || u16_strcmp (result, expected4) == 0);
+            || u16_strcmp (result, expected2) == 0
+            || u16_strcmp (result, expected3) == 0
+            || u16_strcmp (result, expected4) == 0);
     free (result);
   }
 
@@ -361,25 +361,25 @@ test_xfunction (uint16_t * (*my_xasprintf) (const char *, ...))
       my_xasprintf ("%La %d", 3.1416015625L, 33, 44, 55);
     static const uint16_t expected1[] =
       { '0', 'x', '1', '.', '9', '2', '2', 'p', '+', '1',
-	' ', '3', '3', 0
+        ' ', '3', '3', 0
       };
     static const uint16_t expected2[] =
       { '0', 'x', '3', '.', '2', '4', '4', 'p', '+', '0',
-	' ', '3', '3', 0
+        ' ', '3', '3', 0
       };
     static const uint16_t expected3[] =
       { '0', 'x', '6', '.', '4', '8', '8', 'p', '-', '1',
-	' ', '3', '3', 0
+        ' ', '3', '3', 0
       };
     static const uint16_t expected4[] =
       { '0', 'x', 'c', '.', '9', '1', 'p', '-', '2', ' ',
-	'3', '3', 0
+        '3', '3', 0
       };
     ASSERT (result != NULL);
     ASSERT (u16_strcmp (result, expected1) == 0
-	    || u16_strcmp (result, expected2) == 0
-	    || u16_strcmp (result, expected3) == 0
-	    || u16_strcmp (result, expected4) == 0);
+            || u16_strcmp (result, expected2) == 0
+            || u16_strcmp (result, expected3) == 0
+            || u16_strcmp (result, expected4) == 0);
     free (result);
   }
 
@@ -396,9 +396,9 @@ test_xfunction (uint16_t * (*my_xasprintf) (const char *, ...))
       { ' ', ' ', ' ', ' ', '0', 'x', 'e', 'p', '-', '3', ' ', '3', '3', 0 };
     ASSERT (result != NULL);
     ASSERT (u16_strcmp (result, expected1) == 0
-	    || u16_strcmp (result, expected2) == 0
-	    || u16_strcmp (result, expected3) == 0
-	    || u16_strcmp (result, expected4) == 0);
+            || u16_strcmp (result, expected2) == 0
+            || u16_strcmp (result, expected3) == 0
+            || u16_strcmp (result, expected4) == 0);
     free (result);
   }
 
@@ -407,29 +407,29 @@ test_xfunction (uint16_t * (*my_xasprintf) (const char *, ...))
       my_xasprintf ("%.10La %d", 1.75L, 33, 44, 55);
     static const uint16_t expected1[] =
       { '0', 'x', '1', '.', 'c', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', 'p', '+', '0', ' ', '3', '3',
-	0
+        '0', '0', '0', '0', 'p', '+', '0', ' ', '3', '3',
+        0
       };
     static const uint16_t expected2[] =
       { '0', 'x', '3', '.', '8', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', 'p', '-', '1', ' ', '3', '3',
-	0
+        '0', '0', '0', '0', 'p', '-', '1', ' ', '3', '3',
+        0
       };
     static const uint16_t expected3[] =
       { '0', 'x', '7', '.', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', 'p', '-', '2', ' ', '3', '3',
-	0
+        '0', '0', '0', '0', 'p', '-', '2', ' ', '3', '3',
+        0
       };
     static const uint16_t expected4[] =
       { '0', 'x', 'e', '.', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', 'p', '-', '3', ' ', '3', '3',
-	0
+        '0', '0', '0', '0', 'p', '-', '3', ' ', '3', '3',
+        0
       };
     ASSERT (result != NULL);
     ASSERT (u16_strcmp (result, expected1) == 0
-	    || u16_strcmp (result, expected2) == 0
-	    || u16_strcmp (result, expected3) == 0
-	    || u16_strcmp (result, expected4) == 0);
+            || u16_strcmp (result, expected2) == 0
+            || u16_strcmp (result, expected3) == 0
+            || u16_strcmp (result, expected4) == 0);
     free (result);
   }
 
@@ -438,45 +438,45 @@ test_xfunction (uint16_t * (*my_xasprintf) (const char *, ...))
       my_xasprintf ("%.50La %d", 1.75L, 33, 44, 55);
     static const uint16_t expected1[] =
       { '0', 'x', '1', '.', 'c', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', 'p', '+', '0', ' ', '3', '3',
-	0
+        '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+        '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+        '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+        '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+        '0', '0', '0', '0', 'p', '+', '0', ' ', '3', '3',
+        0
       };
     static const uint16_t expected2[] =
       { '0', 'x', '3', '.', '8', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', 'p', '-', '1', ' ', '3', '3',
-	0
+        '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+        '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+        '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+        '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+        '0', '0', '0', '0', 'p', '-', '1', ' ', '3', '3',
+        0
       };
     static const uint16_t expected3[] =
       { '0', 'x', '7', '.', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', 'p', '-', '2', ' ', '3', '3',
-	0
+        '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+        '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+        '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+        '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+        '0', '0', '0', '0', 'p', '-', '2', ' ', '3', '3',
+        0
       };
     static const uint16_t expected4[] =
       { '0', 'x', 'e', '.', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-	'0', '0', '0', '0', 'p', '-', '3', ' ', '3', '3',
-	0
+        '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+        '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+        '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+        '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+        '0', '0', '0', '0', 'p', '-', '3', ' ', '3', '3',
+        0
       };
     ASSERT (result != NULL);
     ASSERT (u16_strcmp (result, expected1) == 0
-	    || u16_strcmp (result, expected2) == 0
-	    || u16_strcmp (result, expected3) == 0
-	    || u16_strcmp (result, expected4) == 0);
+            || u16_strcmp (result, expected2) == 0
+            || u16_strcmp (result, expected3) == 0
+            || u16_strcmp (result, expected4) == 0);
     free (result);
   }
 
@@ -591,15 +591,15 @@ test_xfunction (uint16_t * (*my_xasprintf) (const char *, ...))
       my_xasprintf ("%e %d", 12.75, 33, 44, 55);
     static const uint16_t expected1[] =
       { '1', '.', '2', '7', '5', '0', '0', '0', 'e', '+',
-	'0', '1', ' ', '3', '3', 0
+        '0', '1', ' ', '3', '3', 0
       };
     static const uint16_t expected2[] =
       { '1', '.', '2', '7', '5', '0', '0', '0', 'e', '+',
-	'0', '0', '1', ' ', '3', '3', 0
+        '0', '0', '1', ' ', '3', '3', 0
       };
     ASSERT (result != NULL);
     ASSERT (u16_strcmp (result, expected1) == 0
-	    || u16_strcmp (result, expected2) == 0);
+            || u16_strcmp (result, expected2) == 0);
     free (result);
   }
 
@@ -608,15 +608,15 @@ test_xfunction (uint16_t * (*my_xasprintf) (const char *, ...))
       my_xasprintf ("%15e %d", 1.75, 33, 44, 55);
     static const uint16_t expected1[] =
       { ' ', ' ', ' ', '1', '.', '7', '5', '0', '0', '0',
-	'0', 'e', '+', '0', '0', ' ', '3', '3', 0
+        '0', 'e', '+', '0', '0', ' ', '3', '3', 0
       };
     static const uint16_t expected2[] =
       { ' ', ' ', '1', '.', '7', '5', '0', '0', '0', '0',
-	'e', '+', '0', '0', '0', ' ', '3', '3', 0
+        'e', '+', '0', '0', '0', ' ', '3', '3', 0
       };
     ASSERT (result != NULL);
     ASSERT (u16_strcmp (result, expected1) == 0
-	    || u16_strcmp (result, expected2) == 0);
+            || u16_strcmp (result, expected2) == 0);
     free (result);
   }
 
@@ -629,7 +629,7 @@ test_xfunction (uint16_t * (*my_xasprintf) (const char *, ...))
       { '1', 'e', '+', '0', '0', '3', ' ', '3', '3', 0 };
     ASSERT (result != NULL);
     ASSERT (u16_strcmp (result, expected1) == 0
-	    || u16_strcmp (result, expected2) == 0);
+            || u16_strcmp (result, expected2) == 0);
     free (result);
   }
 
@@ -638,7 +638,7 @@ test_xfunction (uint16_t * (*my_xasprintf) (const char *, ...))
       my_xasprintf ("%Le %d", 12.75L, 33, 44, 55);
     static const uint16_t expected[] =
       { '1', '.', '2', '7', '5', '0', '0', '0', 'e', '+',
-	'0', '1', ' ', '3', '3', 0
+        '0', '1', ' ', '3', '3', 0
       };
     ASSERT (result != NULL);
     ASSERT (u16_strcmp (result, expected) == 0);
@@ -650,7 +650,7 @@ test_xfunction (uint16_t * (*my_xasprintf) (const char *, ...))
       my_xasprintf ("%15Le %d", 1.75L, 33, 44, 55);
     static const uint16_t expected[] =
       { ' ', ' ', ' ', '1', '.', '7', '5', '0', '0', '0',
-	'0', 'e', '+', '0', '0', ' ', '3', '3', 0
+        '0', 'e', '+', '0', '0', ' ', '3', '3', 0
       };
     ASSERT (result != NULL);
     ASSERT (u16_strcmp (result, expected) == 0);
@@ -698,7 +698,7 @@ test_xfunction (uint16_t * (*my_xasprintf) (const char *, ...))
       { '1', 'e', '+', '0', '0', '3', ' ', '3', '3', 0 };
     ASSERT (result != NULL);
     ASSERT (u16_strcmp (result, expected1) == 0
-	    || u16_strcmp (result, expected2) == 0);
+            || u16_strcmp (result, expected2) == 0);
     free (result);
   }
 
@@ -774,47 +774,47 @@ test_xfunction (uint16_t * (*my_xasprintf) (const char *, ...))
     static const uint8_t unicode_string[] = "Rafa\305\202 Maszkowski"; /* Rafał Maszkowski */
     {
       uint16_t *result =
-	my_xasprintf ("%U %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%U %d", unicode_string, 33, 44, 55);
       static const uint16_t expected[] =
-	{ 'R', 'a', 'f', 'a', 0x0142, ' ', 'M', 'a', 's', 'z',
-	  'k', 'o', 'w', 's', 'k', 'i', ' ', '3', '3', 0
-	};
+        { 'R', 'a', 'f', 'a', 0x0142, ' ', 'M', 'a', 's', 'z',
+          'k', 'o', 'w', 's', 'k', 'i', ' ', '3', '3', 0
+        };
       ASSERT (result != NULL);
       ASSERT (u16_strcmp (result, expected) == 0);
       free (result);
     }
     { /* Width.  */
       uint16_t *result =
-	my_xasprintf ("%20U %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%20U %d", unicode_string, 33, 44, 55);
       static const uint16_t expected[] =
-	{ ' ', ' ', ' ', ' ', 'R', 'a', 'f', 'a', 0x0142, ' ',
-	  'M', 'a', 's', 'z', 'k', 'o', 'w', 's', 'k', 'i',
-	  ' ', '3', '3', 0
-	};
+        { ' ', ' ', ' ', ' ', 'R', 'a', 'f', 'a', 0x0142, ' ',
+          'M', 'a', 's', 'z', 'k', 'o', 'w', 's', 'k', 'i',
+          ' ', '3', '3', 0
+        };
       ASSERT (result != NULL);
       ASSERT (u16_strcmp (result, expected) == 0);
       free (result);
     }
     { /* FLAG_LEFT.  */
       uint16_t *result =
-	my_xasprintf ("%-20U %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%-20U %d", unicode_string, 33, 44, 55);
       static const uint16_t expected[] =
-	{ 'R', 'a', 'f', 'a', 0x0142, ' ', 'M', 'a', 's', 'z',
-	  'k', 'o', 'w', 's', 'k', 'i', ' ', ' ', ' ', ' ',
-	  ' ', '3', '3', 0
-	};
+        { 'R', 'a', 'f', 'a', 0x0142, ' ', 'M', 'a', 's', 'z',
+          'k', 'o', 'w', 's', 'k', 'i', ' ', ' ', ' ', ' ',
+          ' ', '3', '3', 0
+        };
       ASSERT (result != NULL);
       ASSERT (u16_strcmp (result, expected) == 0);
       free (result);
     }
     { /* FLAG_ZERO: no effect.  */
       uint16_t *result =
-	my_xasprintf ("%020U %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%020U %d", unicode_string, 33, 44, 55);
       static const uint16_t expected[] =
-	{ ' ', ' ', ' ', ' ', 'R', 'a', 'f', 'a', 0x0142, ' ',
-	  'M', 'a', 's', 'z', 'k', 'o', 'w', 's', 'k', 'i',
-	  ' ', '3', '3', 0
-	};
+        { ' ', ' ', ' ', ' ', 'R', 'a', 'f', 'a', 0x0142, ' ',
+          'M', 'a', 's', 'z', 'k', 'o', 'w', 's', 'k', 'i',
+          ' ', '3', '3', 0
+        };
       ASSERT (result != NULL);
       ASSERT (u16_strcmp (result, expected) == 0);
       free (result);
@@ -824,52 +824,52 @@ test_xfunction (uint16_t * (*my_xasprintf) (const char *, ...))
   {
     static const uint16_t unicode_string[] = /* Rafał Maszkowski */
       {
-	'R', 'a', 'f', 'a', 0x0142, ' ', 'M', 'a', 's', 'z', 'k', 'o', 'w',
-	's', 'k', 'i', 0
+        'R', 'a', 'f', 'a', 0x0142, ' ', 'M', 'a', 's', 'z', 'k', 'o', 'w',
+        's', 'k', 'i', 0
       };
     {
       uint16_t *result =
-	my_xasprintf ("%lU %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%lU %d", unicode_string, 33, 44, 55);
       static const uint16_t expected[] =
-	{ 'R', 'a', 'f', 'a', 0x0142, ' ', 'M', 'a', 's', 'z',
-	  'k', 'o', 'w', 's', 'k', 'i', ' ', '3', '3', 0
-	};
+        { 'R', 'a', 'f', 'a', 0x0142, ' ', 'M', 'a', 's', 'z',
+          'k', 'o', 'w', 's', 'k', 'i', ' ', '3', '3', 0
+        };
       ASSERT (result != NULL);
       ASSERT (u16_strcmp (result, expected) == 0);
       free (result);
     }
     { /* Width.  */
       uint16_t *result =
-	my_xasprintf ("%20lU %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%20lU %d", unicode_string, 33, 44, 55);
       static const uint16_t expected[] =
-	{ ' ', ' ', ' ', ' ', 'R', 'a', 'f', 'a', 0x0142, ' ',
-	  'M', 'a', 's', 'z', 'k', 'o', 'w', 's', 'k', 'i',
-	  ' ', '3', '3', 0
-	};
+        { ' ', ' ', ' ', ' ', 'R', 'a', 'f', 'a', 0x0142, ' ',
+          'M', 'a', 's', 'z', 'k', 'o', 'w', 's', 'k', 'i',
+          ' ', '3', '3', 0
+        };
       ASSERT (result != NULL);
       ASSERT (u16_strcmp (result, expected) == 0);
       free (result);
     }
     { /* FLAG_LEFT.  */
       uint16_t *result =
-	my_xasprintf ("%-20lU %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%-20lU %d", unicode_string, 33, 44, 55);
       static const uint16_t expected[] =
-	{ 'R', 'a', 'f', 'a', 0x0142, ' ', 'M', 'a', 's', 'z',
-	  'k', 'o', 'w', 's', 'k', 'i', ' ', ' ', ' ', ' ',
-	  ' ', '3', '3', 0
-	};
+        { 'R', 'a', 'f', 'a', 0x0142, ' ', 'M', 'a', 's', 'z',
+          'k', 'o', 'w', 's', 'k', 'i', ' ', ' ', ' ', ' ',
+          ' ', '3', '3', 0
+        };
       ASSERT (result != NULL);
       ASSERT (u16_strcmp (result, expected) == 0);
       free (result);
     }
     { /* FLAG_ZERO: no effect.  */
       uint16_t *result =
-	my_xasprintf ("%020lU %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%020lU %d", unicode_string, 33, 44, 55);
       static const uint16_t expected[] =
-	{ ' ', ' ', ' ', ' ', 'R', 'a', 'f', 'a', 0x0142, ' ',
-	  'M', 'a', 's', 'z', 'k', 'o', 'w', 's', 'k', 'i',
-	  ' ', '3', '3', 0
-	};
+        { ' ', ' ', ' ', ' ', 'R', 'a', 'f', 'a', 0x0142, ' ',
+          'M', 'a', 's', 'z', 'k', 'o', 'w', 's', 'k', 'i',
+          ' ', '3', '3', 0
+        };
       ASSERT (result != NULL);
       ASSERT (u16_strcmp (result, expected) == 0);
       free (result);
@@ -879,52 +879,52 @@ test_xfunction (uint16_t * (*my_xasprintf) (const char *, ...))
   {
     static const uint32_t unicode_string[] = /* Rafał Maszkowski */
       {
-	'R', 'a', 'f', 'a', 0x0142, ' ', 'M', 'a', 's', 'z', 'k', 'o', 'w',
-	's', 'k', 'i', 0
+        'R', 'a', 'f', 'a', 0x0142, ' ', 'M', 'a', 's', 'z', 'k', 'o', 'w',
+        's', 'k', 'i', 0
       };
     {
       uint16_t *result =
-	my_xasprintf ("%llU %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%llU %d", unicode_string, 33, 44, 55);
       static const uint16_t expected[] =
-	{ 'R', 'a', 'f', 'a', 0x0142, ' ', 'M', 'a', 's', 'z',
-	  'k', 'o', 'w', 's', 'k', 'i', ' ', '3', '3', 0
-	};
+        { 'R', 'a', 'f', 'a', 0x0142, ' ', 'M', 'a', 's', 'z',
+          'k', 'o', 'w', 's', 'k', 'i', ' ', '3', '3', 0
+        };
       ASSERT (result != NULL);
       ASSERT (u16_strcmp (result, expected) == 0);
       free (result);
     }
     { /* Width.  */
       uint16_t *result =
-	my_xasprintf ("%20llU %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%20llU %d", unicode_string, 33, 44, 55);
       static const uint16_t expected[] =
-	{ ' ', ' ', ' ', ' ', 'R', 'a', 'f', 'a', 0x0142, ' ',
-	  'M', 'a', 's', 'z', 'k', 'o', 'w', 's', 'k', 'i',
-	  ' ', '3', '3', 0
-	};
+        { ' ', ' ', ' ', ' ', 'R', 'a', 'f', 'a', 0x0142, ' ',
+          'M', 'a', 's', 'z', 'k', 'o', 'w', 's', 'k', 'i',
+          ' ', '3', '3', 0
+        };
       ASSERT (result != NULL);
       ASSERT (u16_strcmp (result, expected) == 0);
       free (result);
     }
     { /* FLAG_LEFT.  */
       uint16_t *result =
-	my_xasprintf ("%-20llU %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%-20llU %d", unicode_string, 33, 44, 55);
       static const uint16_t expected[] =
-	{ 'R', 'a', 'f', 'a', 0x0142, ' ', 'M', 'a', 's', 'z',
-	  'k', 'o', 'w', 's', 'k', 'i', ' ', ' ', ' ', ' ',
-	  ' ', '3', '3', 0
-	};
+        { 'R', 'a', 'f', 'a', 0x0142, ' ', 'M', 'a', 's', 'z',
+          'k', 'o', 'w', 's', 'k', 'i', ' ', ' ', ' ', ' ',
+          ' ', '3', '3', 0
+        };
       ASSERT (result != NULL);
       ASSERT (u16_strcmp (result, expected) == 0);
       free (result);
     }
     { /* FLAG_ZERO: no effect.  */
       uint16_t *result =
-	my_xasprintf ("%020llU %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%020llU %d", unicode_string, 33, 44, 55);
       static const uint16_t expected[] =
-	{ ' ', ' ', ' ', ' ', 'R', 'a', 'f', 'a', 0x0142, ' ',
-	  'M', 'a', 's', 'z', 'k', 'o', 'w', 's', 'k', 'i',
-	  ' ', '3', '3', 0
-	};
+        { ' ', ' ', ' ', ' ', 'R', 'a', 'f', 'a', 0x0142, ' ',
+          'M', 'a', 's', 'z', 'k', 'o', 'w', 's', 'k', 'i',
+          ' ', '3', '3', 0
+        };
       ASSERT (result != NULL);
       ASSERT (u16_strcmp (result, expected) == 0);
       free (result);

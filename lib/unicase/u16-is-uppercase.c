@@ -24,7 +24,7 @@
 
 int
 u16_is_uppercase (const uint16_t *s, size_t n, const char *iso639_language,
-		  bool *resultp)
+                  bool *resultp)
 {
   return u16_is_invariant (s, n, u16_toupper, iso639_language, resultp);
 }

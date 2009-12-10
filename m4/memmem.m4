@@ -42,19 +42,19 @@ AC_DEFUN([gl_FUNC_MEMMEM],
     /* Check for quadratic performance.  */
     if (haystack && needle)
       {
-	memset (haystack, 'A', 2 * m);
-	haystack[2 * m] = 'B';
-	memset (needle, 'A', m);
-	needle[m] = 'B';
-	result = memmem (haystack, 2 * m + 1, needle, m + 1);
+        memset (haystack, 'A', 2 * m);
+        haystack[2 * m] = 'B';
+        memset (needle, 'A', m);
+        needle[m] = 'B';
+        result = memmem (haystack, 2 * m + 1, needle, m + 1);
       }
     /* Check for empty needle behavior.  */
     return !result || !memmem ("a", 1, 0, 0);]])],
-	[gl_cv_func_memmem_works=yes], [gl_cv_func_memmem_works=no],
-	[dnl Only glibc >= 2.9 and cygwin >= 1.7.0 are known to have a
-	 dnl memmem that works in linear time.
-	 AC_EGREP_CPP([Lucky user],
-	   [
+        [gl_cv_func_memmem_works=yes], [gl_cv_func_memmem_works=no],
+        [dnl Only glibc >= 2.9 and cygwin >= 1.7.0 are known to have a
+         dnl memmem that works in linear time.
+         AC_EGREP_CPP([Lucky user],
+           [
 #include <features.h>
 #ifdef __GNU_LIBRARY__
  #if (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 9) || (__GLIBC__ > 2)
@@ -67,10 +67,10 @@ AC_DEFUN([gl_FUNC_MEMMEM],
   Lucky user
  #endif
 #endif
-	   ],
-	   [gl_cv_func_memmem_works=yes],
-	   [gl_cv_func_memmem_works="guessing no"])
-	])
+           ],
+           [gl_cv_func_memmem_works=yes],
+           [gl_cv_func_memmem_works="guessing no"])
+        ])
       ])
     if test "$gl_cv_func_memmem_works" != yes; then
       REPLACE_MEMMEM=1

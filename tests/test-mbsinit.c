@@ -25,15 +25,15 @@
 #include <stdlib.h>
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 int
@@ -51,7 +51,7 @@ main (int argc, char *argv[])
 
       /* configure should already have checked that the locale is supported.  */
       if (setlocale (LC_ALL, "") == NULL)
-	return 1;
+        return 1;
 
       ret = mbrtowc (&wc, input, 1, &state);
       ASSERT (ret == (size_t)(-2));

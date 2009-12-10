@@ -27,15 +27,15 @@
 
 #define SIZEOF(array) (sizeof (array) / sizeof (array[0]))
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 /* A stream of Unicode characters that simply accumulates the contents.  */
@@ -99,20 +99,20 @@ main ()
   { /* "Grüß Gott. Здравствуйте! x=(-b±sqrt(b²-4ac))/(2a)  日本語,中文,한글" */
     static const uint32_t input[] =
       { 'G', 'r', 0x00FC, 0x00DF, ' ', 'G', 'o', 't', 't', '.', ' ',
-	0x0417, 0x0434, 0x0440, 0x0430, 0x0432, 0x0441, 0x0442, 0x0432, 0x0443,
-	0x0439, 0x0442, 0x0435, '!', ' ',
-	'x', '=', '(', '-', 'b', 0x00B1, 's', 'q', 'r', 't', '(', 'b', 0x00B2,
-	'-', '4', 'a', 'c', ')', ')', '/', '(', '2', 'a', ')', ' ', ' ',
-	0x65E5, 0x672C, 0x8A9E, ',', 0x4E2D, 0x6587, ',', 0xD55C, 0xAE00, '\n'
+        0x0417, 0x0434, 0x0440, 0x0430, 0x0432, 0x0441, 0x0442, 0x0432, 0x0443,
+        0x0439, 0x0442, 0x0435, '!', ' ',
+        'x', '=', '(', '-', 'b', 0x00B1, 's', 'q', 'r', 't', '(', 'b', 0x00B2,
+        '-', '4', 'a', 'c', ')', ')', '/', '(', '2', 'a', ')', ' ', ' ',
+        0x65E5, 0x672C, 0x8A9E, ',', 0x4E2D, 0x6587, ',', 0xD55C, 0xAE00, '\n'
       };
     static const uint32_t decomposed[] =
       { 'G', 'r', 0x0075, 0x0308, 0x00DF, ' ', 'G', 'o', 't', 't', '.', ' ',
-	0x0417, 0x0434, 0x0440, 0x0430, 0x0432, 0x0441, 0x0442, 0x0432, 0x0443,
-	0x0438, 0x0306, 0x0442, 0x0435, '!', ' ',
-	'x', '=', '(', '-', 'b', 0x00B1, 's', 'q', 'r', 't', '(', 'b', 0x00B2,
-	'-', '4', 'a', 'c', ')', ')', '/', '(', '2', 'a', ')', ' ', ' ',
-	0x65E5, 0x672C, 0x8A9E, ',', 0x4E2D, 0x6587, ',',
-	0x1112, 0x1161, 0x11AB, 0x1100, 0x1173, 0x11AF, '\n'
+        0x0417, 0x0434, 0x0440, 0x0430, 0x0432, 0x0441, 0x0442, 0x0432, 0x0443,
+        0x0438, 0x0306, 0x0442, 0x0435, '!', ' ',
+        'x', '=', '(', '-', 'b', 0x00B1, 's', 'q', 'r', 't', '(', 'b', 0x00B2,
+        '-', '4', 'a', 'c', ')', ')', '/', '(', '2', 'a', ')', ' ', ' ',
+        0x65E5, 0x672C, 0x8A9E, ',', 0x4E2D, 0x6587, ',',
+        0x1112, 0x1161, 0x11AB, 0x1100, 0x1173, 0x11AF, '\n'
       };
     ASSERT (check (input, SIZEOF (input),           input, SIZEOF (input)) == 0);
     ASSERT (check (decomposed, SIZEOF (decomposed), input, SIZEOF (input)) == 0);

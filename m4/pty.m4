@@ -22,7 +22,7 @@ AC_DEFUN([gl_PTY],
         AC_MSG_WARN([[Cannot find forkpty, build will likely fail]])
       else
         PTY_H='pty.h'
-	PTY_HEADER='libutil.h'
+        PTY_HEADER='libutil.h'
       fi
     else
       PTY_H='pty.h'

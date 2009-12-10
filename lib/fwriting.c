@@ -39,7 +39,7 @@ fwriting (FILE *fp)
   return (fp->__modeflags & __FLAG_WRITING) != 0;
 #elif defined __QNX__               /* QNX */
   return ((fp->_Mode & 0x1 /* _MOPENR */) == 0
-	  || (fp->_Mode & 0x2000 /* _MWRITE */) != 0);
+          || (fp->_Mode & 0x2000 /* _MWRITE */) != 0);
 #elif defined __MINT__              /* Atari FreeMiNT */
   if (!fp->__mode.__read)
     return 1;

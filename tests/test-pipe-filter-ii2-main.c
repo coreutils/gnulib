@@ -30,15 +30,15 @@
 #include "progname.h"
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 struct locals
@@ -113,9 +113,9 @@ main (int argc, char **argv)
     l.nread = 0;
     path[0] = "/nonexistent/blah";
     rc = pipe_filter_ii_execute ("pipe-filter-test", path[0], path, true, false,
-				 prepare_write, done_write,
-				 prepare_read, ignore_done_read,
-				 &l);
+                                 prepare_write, done_write,
+                                 prepare_read, ignore_done_read,
+                                 &l);
     ASSERT (rc == 127 || rc == -1);
     printf ("Test 1 passed.\n");
     fflush (stdout);
@@ -132,9 +132,9 @@ main (int argc, char **argv)
     l.nread = 0;
     path[0] = argv[1];
     rc = pipe_filter_ii_execute ("pipe-filter-test", path[0], path, false, false,
-				 prepare_write, done_write,
-				 prepare_read, ignore_done_read,
-				 &l);
+                                 prepare_write, done_write,
+                                 prepare_read, ignore_done_read,
+                                 &l);
     ASSERT (rc == 1);
     printf ("Test 2 passed.\n");
     fflush (stdout);
@@ -151,9 +151,9 @@ main (int argc, char **argv)
     l.nread = 0;
     path[0] = argv[1];
     rc = pipe_filter_ii_execute ("pipe-filter-test", path[0], path, false, true,
-				 prepare_write, done_write,
-				 prepare_read, output_done_read,
-				 &l);
+                                 prepare_write, done_write,
+                                 prepare_read, output_done_read,
+                                 &l);
     ASSERT (rc == 0);
     printf ("Test 3 passed.\n");
     fflush (stdout);

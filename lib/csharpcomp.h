@@ -28,13 +28,13 @@
    If verbose, the command to be executed will be printed.
    Return false if OK, true on error.  */
 extern bool compile_csharp_class (const char * const *sources,
-				  unsigned int sources_count,
-				  const char * const *libdirs,
-				  unsigned int libdirs_count,
-				  const char * const *libraries,
-				  unsigned int libraries_count,
-				  const char *output_file,
-				  bool optimize, bool debug,
-				  bool verbose);
+                                  unsigned int sources_count,
+                                  const char * const *libdirs,
+                                  unsigned int libdirs_count,
+                                  const char * const *libraries,
+                                  unsigned int libraries_count,
+                                  const char *output_file,
+                                  bool optimize, bool debug,
+                                  bool verbose);
 
 #endif /* _CSHARPCOMP_H */

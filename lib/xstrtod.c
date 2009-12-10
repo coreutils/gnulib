@@ -43,7 +43,7 @@
 
 bool
 XSTRTOD (char const *str, char const **ptr, DOUBLE *result,
-	 DOUBLE (*convert) (char const *, char **))
+         DOUBLE (*convert) (char const *, char **))
 {
   DOUBLE val;
   char *terminator;
@@ -58,9 +58,9 @@ XSTRTOD (char const *str, char const **ptr, DOUBLE *result,
   else
     {
       /* Allow underflow (in which case CONVERT returns zero),
-	 but flag overflow as an error. */
+         but flag overflow as an error. */
       if (val != 0 && errno == ERANGE)
-	ok = false;
+        ok = false;
     }
 
   if (ptr != NULL)

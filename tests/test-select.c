@@ -51,7 +51,7 @@ enum { SEL_IN = 1, SEL_OUT = 2, SEL_EXC = 4 };
 #define SO_REUSEPORT    SO_REUSEADDR
 #endif
 
-#define TEST_PORT	12345
+#define TEST_PORT       12345
 
 
 /* Minimal testing infrastructure.  */

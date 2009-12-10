@@ -57,7 +57,7 @@ open (const char *filename, int flags, ...)
       va_start (arg, flags);
 
       /* We have to use PROMOTED_MODE_T instead of mode_t, otherwise GCC 4
-	 creates crashing code when 'mode_t' is smaller than 'int'.  */
+         creates crashing code when 'mode_t' is smaller than 'int'.  */
       mode = va_arg (arg, PROMOTED_MODE_T);
 
       va_end (arg);
@@ -94,10 +94,10 @@ open (const char *filename, int flags, ...)
     {
       size_t len = strlen (filename);
       if (len > 0 && filename[len - 1] == '/')
-	{
-	  errno = EISDIR;
-	  return -1;
-	}
+        {
+          errno = EISDIR;
+          return -1;
+        }
     }
 #endif
 
@@ -144,16 +144,16 @@ open (const char *filename, int flags, ...)
       /* We know len is positive, since open did not fail with ENOENT.  */
       size_t len = strlen (filename);
       if (filename[len - 1] == '/')
-	{
-	  struct stat statbuf;
+        {
+          struct stat statbuf;
 
-	  if (fstat (fd, &statbuf) >= 0 && !S_ISDIR (statbuf.st_mode))
-	    {
-	      close (fd);
-	      errno = ENOTDIR;
-	      return -1;
-	    }
-	}
+          if (fstat (fd, &statbuf) >= 0 && !S_ISDIR (statbuf.st_mode))
+            {
+              close (fd);
+              errno = ENOTDIR;
+              return -1;
+            }
+        }
     }
 #endif
 

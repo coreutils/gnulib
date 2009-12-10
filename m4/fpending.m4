@@ -26,53 +26,53 @@ AC_DEFUN([gl_FUNC_FPENDING],
   AC_CHECK_DECLS([__fpending], , , $fp_headers)
   if test $ac_cv_func___fpending = no; then
     AC_CACHE_CHECK(
-	      [how to determine the number of pending output bytes on a stream],
-		   ac_cv_sys_pending_output_n_bytes,
+              [how to determine the number of pending output bytes on a stream],
+                   ac_cv_sys_pending_output_n_bytes,
       [
-	for ac_expr in							  \
-									  \
-	    '# glibc2'							  \
-	    'fp->_IO_write_ptr - fp->_IO_write_base'			  \
-									  \
-	    '# traditional Unix'					  \
-	    'fp->_ptr - fp->_base'					  \
-									  \
-	    '# BSD'							  \
-	    'fp->_p - fp->_bf._base'					  \
-									  \
-	    '# SCO, Unixware'						  \
-	    '(fp->__ptr ? fp->__ptr - fp->__base : 0)'			  \
-									  \
-	    '# QNX'							  \
-	    '(fp->_Mode & 0x2000 /*_MWRITE*/ ? fp->_Next - fp->_Buf : 0)' \
-									  \
-	    '# old glibc?'						  \
-	    'fp->__bufp - fp->__buffer'					  \
-									  \
-	    '# old glibc iostream?'					  \
-	    'fp->_pptr - fp->_pbase'					  \
-									  \
-	    '# emx+gcc'							  \
-	    'fp->_ptr - fp->_buffer'					  \
-									  \
-	    '# VMS'							  \
-	    '(*fp)->_ptr - (*fp)->_base'				  \
-									  \
-	    '# e.g., DGUX R4.11; the info is not available'		  \
-	    1								  \
-	    ; do
+        for ac_expr in                                                    \
+                                                                          \
+            '# glibc2'                                                    \
+            'fp->_IO_write_ptr - fp->_IO_write_base'                      \
+                                                                          \
+            '# traditional Unix'                                          \
+            'fp->_ptr - fp->_base'                                        \
+                                                                          \
+            '# BSD'                                                       \
+            'fp->_p - fp->_bf._base'                                      \
+                                                                          \
+            '# SCO, Unixware'                                             \
+            '(fp->__ptr ? fp->__ptr - fp->__base : 0)'                    \
+                                                                          \
+            '# QNX'                                                       \
+            '(fp->_Mode & 0x2000 /*_MWRITE*/ ? fp->_Next - fp->_Buf : 0)' \
+                                                                          \
+            '# old glibc?'                                                \
+            'fp->__bufp - fp->__buffer'                                   \
+                                                                          \
+            '# old glibc iostream?'                                       \
+            'fp->_pptr - fp->_pbase'                                      \
+                                                                          \
+            '# emx+gcc'                                                   \
+            'fp->_ptr - fp->_buffer'                                      \
+                                                                          \
+            '# VMS'                                                       \
+            '(*fp)->_ptr - (*fp)->_base'                                  \
+                                                                          \
+            '# e.g., DGUX R4.11; the info is not available'               \
+            1                                                             \
+            ; do
 
-	  # Skip each embedded comment.
-	  case "$ac_expr" in '#'*) continue;; esac
+          # Skip each embedded comment.
+          case "$ac_expr" in '#'*) continue;; esac
 
-	  AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <stdio.h>]],
-	    [[FILE *fp = stdin; (void) ($ac_expr);]])],
-	    [fp_done=yes]
-	  )
-	  test "$fp_done" = yes && break
-	done
+          AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <stdio.h>]],
+            [[FILE *fp = stdin; (void) ($ac_expr);]])],
+            [fp_done=yes]
+          )
+          test "$fp_done" = yes && break
+        done
 
-	ac_cv_sys_pending_output_n_bytes=$ac_expr
+        ac_cv_sys_pending_output_n_bytes=$ac_expr
       ]
     )
     AC_DEFINE_UNQUOTED([PENDING_OUTPUT_N_BYTES],

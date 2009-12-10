@@ -21,8 +21,8 @@ FUNC (const UNIT *s, size_t n, const char *iso639_language,
       UNIT *resultbuf, size_t *lengthp)
 {
   return U_CT_CASEFOLD (s, n,
-			unicase_empty_prefix_context, unicase_empty_suffix_context,
-			iso639_language,
-			nf,
-			resultbuf, lengthp);
+                        unicase_empty_prefix_context, unicase_empty_suffix_context,
+                        iso639_language,
+                        nf,
+                        resultbuf, lengthp);
 }

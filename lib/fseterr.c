@@ -63,8 +63,8 @@ fseterr (FILE *fp)
       fputc ('\0', fp); /* This should set the error indicator.  */
       fflush (fp);      /* Or this.  */
       if (dup2 (fd2, fd) < 0)
-	/* Whee... we botched the stream and now cannot restore it!  */
-	abort ();
+        /* Whee... we botched the stream and now cannot restore it!  */
+        abort ();
       close (fd2);
     }
   errno = saved_errno;

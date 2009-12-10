@@ -53,24 +53,24 @@ mbsncasecmp (const char *s1, const char *s2, size_t n)
       mbui_init (iter2, s2);
 
       while (mbui_avail (iter1) && mbui_avail (iter2))
-	{
-	  int cmp = mb_casecmp (mbui_cur (iter1), mbui_cur (iter2));
+        {
+          int cmp = mb_casecmp (mbui_cur (iter1), mbui_cur (iter2));
 
-	  if (cmp != 0)
-	    return cmp;
+          if (cmp != 0)
+            return cmp;
 
-	  if (--n == 0)
-	    return 0;
+          if (--n == 0)
+            return 0;
 
-	  mbui_advance (iter1);
-	  mbui_advance (iter2);
-	}
+          mbui_advance (iter1);
+          mbui_advance (iter2);
+        }
       if (mbui_avail (iter1))
-	/* s2 terminated before s1 and n.  */
-	return 1;
+        /* s2 terminated before s1 and n.  */
+        return 1;
       if (mbui_avail (iter2))
-	/* s1 terminated before s2 and n.  */
-	return -1;
+        /* s1 terminated before s2 and n.  */
+        return -1;
       return 0;
     }
   else
@@ -80,20 +80,20 @@ mbsncasecmp (const char *s1, const char *s2, size_t n)
       unsigned char c1, c2;
 
       for (; ; p1++, p2++)
-	{
-	  c1 = TOLOWER (*p1);
-	  c2 = TOLOWER (*p2);
+        {
+          c1 = TOLOWER (*p1);
+          c2 = TOLOWER (*p2);
 
-	  if (--n == 0 || c1 == '\0' || c1 != c2)
-	    break;
-	}
+          if (--n == 0 || c1 == '\0' || c1 != c2)
+            break;
+        }
 
       if (UCHAR_MAX <= INT_MAX)
-	return c1 - c2;
+        return c1 - c2;
       else
-	/* On machines where 'char' and 'int' are types of the same size, the
-	   difference of two 'unsigned char' values - including the sign bit -
-	   doesn't fit in an 'int'.  */
-	return (c1 > c2 ? 1 : c1 < c2 ? -1 : 0);
+        /* On machines where 'char' and 'int' are types of the same size, the
+           difference of two 'unsigned char' values - including the sign bit -
+           doesn't fit in an 'int'.  */
+        return (c1 > c2 ? 1 : c1 < c2 ? -1 : 0);
     }
 }

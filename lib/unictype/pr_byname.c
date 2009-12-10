@@ -40,16 +40,16 @@ uc_property_byname (const char *property_name)
     {
       unsigned char c = (unsigned char) *cp;
       if (c >= 0x80)
-	goto invalid;
+        goto invalid;
       if (c >= 'A' && c <= 'Z')
-	c += 'a' - 'A';
+        c += 'a' - 'A';
       else if (c == ' ' || c == '-')
-	c = '_';
+        c = '_';
       *bp = c;
       if (c == '\0')
-	break;
+        break;
       if (--count == 0)
-	goto invalid;
+        goto invalid;
     }
   found = uc_property_lookup (buf, bp - buf);
   if (found != NULL)

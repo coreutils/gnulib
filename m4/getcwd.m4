@@ -14,26 +14,26 @@ AC_DEFUN([gl_FUNC_GETCWD_NULL],
    AC_CACHE_CHECK([whether getcwd (NULL, 0) allocates memory for result],
      [gl_cv_func_getcwd_null],
      [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
-#	 include <unistd.h>
-#	 ifndef getcwd
-	 char *getcwd ();
-#	 endif
+#        include <unistd.h>
+#        ifndef getcwd
+         char *getcwd ();
+#        endif
 ]], [[
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 /* mingw cwd does not start with '/', but getcwd does allocate.  */
 #else
-	   if (chdir ("/") != 0)
-	     return 1;
-	   else
-	     {
-	       char *f = getcwd (NULL, 0);
-	       return ! (f && f[0] == '/' && !f[1]);
-	     }
+           if (chdir ("/") != 0)
+             return 1;
+           else
+             {
+               char *f = getcwd (NULL, 0);
+               return ! (f && f[0] == '/' && !f[1]);
+             }
 #endif
-	 ]])],
-	[gl_cv_func_getcwd_null=yes],
-	[gl_cv_func_getcwd_null=no],
-	[[
+         ]])],
+        [gl_cv_func_getcwd_null=yes],
+        [gl_cv_func_getcwd_null=no],
+        [[
        case "$host_os" in
                                # Guess yes on glibc systems.
          *-gnu*)               gl_cv_func_getcwd_null="guessing yes";;
@@ -44,7 +44,7 @@ AC_DEFUN([gl_FUNC_GETCWD_NULL],
                                # If we don't know, assume the worst.
          *)                    gl_cv_func_getcwd_null="guessing no";;
        esac
-	]])])
+        ]])])
 ])
 
 AC_DEFUN([gl_FUNC_GETCWD],

@@ -86,23 +86,23 @@ xvasprintf (const char *format, va_list args)
 
     for (f = format;;)
       {
-	if (*f == '\0')
-	  /* Recognized the special case of string concatenation.  */
-	  return xstrcat (argcount, args);
-	if (*f != '%')
-	  break;
-	f++;
-	if (*f != 's')
-	  break;
-	f++;
-	argcount++;
+        if (*f == '\0')
+          /* Recognized the special case of string concatenation.  */
+          return xstrcat (argcount, args);
+        if (*f != '%')
+          break;
+        f++;
+        if (*f != 's')
+          break;
+        f++;
+        argcount++;
       }
   }
 
   if (vasprintf (&result, format, args) < 0)
     {
       if (errno == ENOMEM)
-	xalloc_die ();
+        xalloc_die ();
       return NULL;
     }
 

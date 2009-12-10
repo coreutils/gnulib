@@ -43,23 +43,23 @@ mbscspn (const char *string, const char *accept)
       mbui_iterator_t iter;
 
       for (mbui_init (iter, string); mbui_avail (iter); mbui_advance (iter))
-	{
-	  if (mb_len (mbui_cur (iter)) == 1)
-	    {
-	      if (mbschr (accept, * mbui_cur_ptr (iter)))
-		goto found;
-	    }
-	  else
-	    {
-	      mbui_iterator_t aiter;
+        {
+          if (mb_len (mbui_cur (iter)) == 1)
+            {
+              if (mbschr (accept, * mbui_cur_ptr (iter)))
+                goto found;
+            }
+          else
+            {
+              mbui_iterator_t aiter;
 
-	      for (mbui_init (aiter, accept);
-		   mbui_avail (aiter);
-		   mbui_advance (aiter))
-		if (mb_equal (mbui_cur (aiter), mbui_cur (iter)))
-		  goto found;
-	    }
-	}
+              for (mbui_init (aiter, accept);
+                   mbui_avail (aiter);
+                   mbui_advance (aiter))
+                if (mb_equal (mbui_cur (aiter), mbui_cur (iter)))
+                  goto found;
+            }
+        }
      found:
       return mbui_cur_ptr (iter) - string;
     }

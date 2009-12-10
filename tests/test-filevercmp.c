@@ -23,15 +23,15 @@
 #include <stdlib.h>
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 /* set of well sorted examples */
@@ -117,15 +117,15 @@ main (void)
     {
       const char *const *j;
       for (j = examples; *j; j++)
-	{
-	  int result = filevercmp (*i, *j);
-	  if (result < 0)
-	    ASSERT (i < j);
-	  else if (0 < result)
-	    ASSERT (j < i);
-	  else
-	    ASSERT (i == j);
-	}
+        {
+          int result = filevercmp (*i, *j);
+          if (result < 0)
+            ASSERT (i < j);
+          else if (0 < result)
+            ASSERT (j < i);
+          else
+            ASSERT (i == j);
+        }
     }
 
   return 0;

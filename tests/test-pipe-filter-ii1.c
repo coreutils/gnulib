@@ -28,15 +28,15 @@
 #include "progname.h"
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 
@@ -92,12 +92,12 @@ done_read (void *data_read, size_t num_bytes_read, void *private_data)
     {
       /* Handle conversion NL -> CRLF possibly done by the child process.  */
       if (!(O_BINARY && *q == '\r'))
-	{
-	  char orig = *p;
-	  char expected = c_toupper (orig);
-	  ASSERT (*q == expected);
-	  p++;
-	}
+        {
+          char orig = *p;
+          char expected = c_toupper (orig);
+          ASSERT (*q == expected);
+          p++;
+        }
     }
   l->nread = p - l->input;
 }
@@ -138,9 +138,9 @@ main (int argc, char *argv[])
     argv[3] = NULL;
 
     result = pipe_filter_ii_execute ("tr", tr_program, argv, false, true,
-				     prepare_write, done_write,
-				     prepare_read, done_read,
-				     &l);
+                                     prepare_write, done_write,
+                                     prepare_read, done_read,
+                                     &l);
     ASSERT (result == 0);
     ASSERT (l.nwritten == input_size);
     ASSERT (l.nread == input_size);

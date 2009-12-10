@@ -49,13 +49,13 @@ rpl_calloc (size_t n, size_t s)
   else
     {
       /* Defend against buggy calloc implementations that mishandle
-	 size_t overflow.  */
+         size_t overflow.  */
       size_t bytes = n * s;
       if (bytes / s != n)
-	{
-	  errno = ENOMEM;
-	  return NULL;
-	}
+        {
+          errno = ENOMEM;
+          return NULL;
+        }
     }
 #endif
 

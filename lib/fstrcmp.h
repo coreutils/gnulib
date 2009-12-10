@@ -33,7 +33,7 @@ extern double fstrcmp (const char *s1, const char *s2);
 /* Like fstrcmp (S1, S2), except that if the result is < LOWER_BOUND, an
    arbitrary other value < LOWER_BOUND can be returned.  */
 extern double fstrcmp_bounded (const char *s1, const char *s2,
-			       double lower_bound);
+                               double lower_bound);
 
 /* A shortcut for fstrcmp.  Avoids a function call.  */
 #define fstrcmp(s1,s2) fstrcmp_bounded (s1, s2, 0.0)

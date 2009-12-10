@@ -22,7 +22,7 @@
 /* Get scheduling parameters from the attribute structure.  */
 int
 posix_spawnattr_getschedparam (const posix_spawnattr_t *attr,
-			       struct sched_param *schedparam)
+                               struct sched_param *schedparam)
 {
   /* Copy the scheduling parameters.  */
   *schedparam = attr->_sp;

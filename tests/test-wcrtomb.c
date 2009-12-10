@@ -26,15 +26,15 @@
 #include <string.h>
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 /* Check the multibyte character s[0..n-1].  */
@@ -83,79 +83,79 @@ main (int argc, char *argv[])
 
     for (c = 0; c < 0x100; c++)
       switch (c)
-	{
-	case '\t': case '\v': case '\f':
-	case ' ': case '!': case '"': case '#': case '%':
-	case '&': case '\'': case '(': case ')': case '*':
-	case '+': case ',': case '-': case '.': case '/':
-	case '0': case '1': case '2': case '3': case '4':
-	case '5': case '6': case '7': case '8': case '9':
-	case ':': case ';': case '<': case '=': case '>':
-	case '?':
-	case 'A': case 'B': case 'C': case 'D': case 'E':
-	case 'F': case 'G': case 'H': case 'I': case 'J':
-	case 'K': case 'L': case 'M': case 'N': case 'O':
-	case 'P': case 'Q': case 'R': case 'S': case 'T':
-	case 'U': case 'V': case 'W': case 'X': case 'Y':
-	case 'Z':
-	case '[': case '\\': case ']': case '^': case '_':
-	case 'a': case 'b': case 'c': case 'd': case 'e':
-	case 'f': case 'g': case 'h': case 'i': case 'j':
-	case 'k': case 'l': case 'm': case 'n': case 'o':
-	case 'p': case 'q': case 'r': case 's': case 't':
-	case 'u': case 'v': case 'w': case 'x': case 'y':
-	case 'z': case '{': case '|': case '}': case '~':
-	  /* c is in the ISO C "basic character set".  */
-	  ret = wcrtomb (buf, btowc (c), NULL);
-	  ASSERT (ret == 1);
-	  ASSERT (buf[0] == (char) c);
-	  break;
-	}
+        {
+        case '\t': case '\v': case '\f':
+        case ' ': case '!': case '"': case '#': case '%':
+        case '&': case '\'': case '(': case ')': case '*':
+        case '+': case ',': case '-': case '.': case '/':
+        case '0': case '1': case '2': case '3': case '4':
+        case '5': case '6': case '7': case '8': case '9':
+        case ':': case ';': case '<': case '=': case '>':
+        case '?':
+        case 'A': case 'B': case 'C': case 'D': case 'E':
+        case 'F': case 'G': case 'H': case 'I': case 'J':
+        case 'K': case 'L': case 'M': case 'N': case 'O':
+        case 'P': case 'Q': case 'R': case 'S': case 'T':
+        case 'U': case 'V': case 'W': case 'X': case 'Y':
+        case 'Z':
+        case '[': case '\\': case ']': case '^': case '_':
+        case 'a': case 'b': case 'c': case 'd': case 'e':
+        case 'f': case 'g': case 'h': case 'i': case 'j':
+        case 'k': case 'l': case 'm': case 'n': case 'o':
+        case 'p': case 'q': case 'r': case 's': case 't':
+        case 'u': case 'v': case 'w': case 'x': case 'y':
+        case 'z': case '{': case '|': case '}': case '~':
+          /* c is in the ISO C "basic character set".  */
+          ret = wcrtomb (buf, btowc (c), NULL);
+          ASSERT (ret == 1);
+          ASSERT (buf[0] == (char) c);
+          break;
+        }
   }
 
   if (argc > 1)
     switch (argv[1][0])
       {
       case '1':
-	/* Locale encoding is ISO-8859-1 or ISO-8859-15.  */
-	{
-	  const char input[] = "B\374\337er"; /* "Büßer" */
+        /* Locale encoding is ISO-8859-1 or ISO-8859-15.  */
+        {
+          const char input[] = "B\374\337er"; /* "Büßer" */
 
-	  check_character (input + 1, 1);
-	  check_character (input + 2, 1);
-	}
-	return 0;
+          check_character (input + 1, 1);
+          check_character (input + 2, 1);
+        }
+        return 0;
 
       case '2':
-	/* Locale encoding is UTF-8.  */
-	{
-	  const char input[] = "B\303\274\303\237er"; /* "Büßer" */
+        /* Locale encoding is UTF-8.  */
+        {
+          const char input[] = "B\303\274\303\237er"; /* "Büßer" */
 
-	  check_character (input + 1, 2);
-	  check_character (input + 3, 2);
-	}
-	return 0;
+          check_character (input + 1, 2);
+          check_character (input + 3, 2);
+        }
+        return 0;
 
       case '3':
-	/* Locale encoding is EUC-JP.  */
-	{
-	  const char input[] = "<\306\374\313\334\270\354>"; /* "<日本語>" */
+        /* Locale encoding is EUC-JP.  */
+        {
+          const char input[] = "<\306\374\313\334\270\354>"; /* "<日本語>" */
 
-	  check_character (input + 1, 2);
-	  check_character (input + 3, 2);
-	  check_character (input + 5, 2);
-	}
-	return 0;
+          check_character (input + 1, 2);
+          check_character (input + 3, 2);
+          check_character (input + 5, 2);
+        }
+        return 0;
 
       case '4':
-	/* Locale encoding is GB18030.  */
-	{
-	  const char input[] = "B\250\271\201\060\211\070er"; /* "Büßer" */
+        /* Locale encoding is GB18030.  */
+        {
+          const char input[] = "B\250\271\201\060\211\070er"; /* "Büßer" */
 
-	  check_character (input + 1, 2);
-	  check_character (input + 3, 4);
-	}
-	return 0;
+          check_character (input + 1, 2);
+          check_character (input + 3, 4);
+        }
+        return 0;
       }
 
   return 1;

@@ -26,7 +26,7 @@ FUNC (const char *fromcode,
   size_t length = *lengthp * sizeof (UNIT);
 
   if (mem_iconveha (src, srclen, fromcode, UTF_NAME, true, handler,
-		    offsets, &result, &length) < 0)
+                    offsets, &result, &length) < 0)
     return NULL;
   if (offsets != NULL)
     {
@@ -35,8 +35,8 @@ FUNC (const char *fromcode,
       size_t *o;
 
       for (o = offsets; o < offsets_end; o++)
-	if (*o != (size_t)(-1))
-	  *o = *o / sizeof (UNIT);
+        if (*o != (size_t)(-1))
+          *o = *o / sizeof (UNIT);
     }
   if ((length % sizeof (UNIT)) != 0)
     abort ();
@@ -49,7 +49,7 @@ FUNC (const char *fromcode,
 
   utf8_string =
     u8_conv_from_encoding (fromcode, handler, src, srclen, offsets,
-			   NULL, &utf8_length);
+                           NULL, &utf8_length);
   if (utf8_string == NULL)
     return NULL;
   result = U8_TO_U (utf8_string, utf8_length, resultbuf, lengthp);
@@ -65,25 +65,25 @@ FUNC (const char *fromcode,
       size_t length = *lengthp;
       size_t *offsets_end = offsets + srclen;
       size_t *o;
-      size_t off8 = 0;	/* offset into utf8_string */
-      size_t offunit = 0;	/* offset into result */
+      size_t off8 = 0;  /* offset into utf8_string */
+      size_t offunit = 0;       /* offset into result */
 
       for (o = offsets; o < offsets_end; o++)
-	if (*o != (size_t)(-1))
-	  {
-	    while (off8 < *o)
-	      {
-		int count8 = u8_mblen (utf8_string + off8, utf8_length - off8);
-		int countunit = U_MBLEN (result + offunit, length - offunit);
-		if (count8 < 0 || countunit < 0)
-		  abort ();
-		off8 += count8;
-		offunit += countunit;
-	      }
-	    if (*o != off8)
-	      abort ();
-	    *o = offunit;
-	  }
+        if (*o != (size_t)(-1))
+          {
+            while (off8 < *o)
+              {
+                int count8 = u8_mblen (utf8_string + off8, utf8_length - off8);
+                int countunit = U_MBLEN (result + offunit, length - offunit);
+                if (count8 < 0 || countunit < 0)
+                  abort ();
+                off8 += count8;
+                offunit += countunit;
+              }
+            if (*o != off8)
+              abort ();
+            *o = offunit;
+          }
     }
   free (utf8_string);
   return result;

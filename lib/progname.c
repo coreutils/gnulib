@@ -52,7 +52,7 @@ set_program_name (const char *argv0)
     {
       /* It's a bug in the invoking program.  Help diagnosing it.  */
       fputs ("A NULL argv[0] was passed through an exec system call.\n",
-	     stderr);
+             stderr);
       abort ();
     }
 
@@ -62,14 +62,14 @@ set_program_name (const char *argv0)
     {
       argv0 = base;
       if (strncmp (base, "lt-", 3) == 0)
-	{
-	  argv0 = base + 3;
-	  /* On glibc systems, remove the "lt-" prefix from the variable
-	     program_invocation_short_name.  */
+        {
+          argv0 = base + 3;
+          /* On glibc systems, remove the "lt-" prefix from the variable
+             program_invocation_short_name.  */
 #if HAVE_DECL_PROGRAM_INVOCATION_SHORT_NAME
-	  program_invocation_short_name = (char *) argv0;
+          program_invocation_short_name = (char *) argv0;
 #endif
-	}
+        }
     }
 
   /* But don't strip off a leading <dirname>/ in general, because when the user

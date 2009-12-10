@@ -27,15 +27,15 @@
 
 #define SIZEOF(array) (sizeof (array) / sizeof (array[0]))
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 int
@@ -68,29 +68,29 @@ main ()
       static const uint8_t input[] = "Rafa\305\202 Maszkowski"; /* Rafał Maszkowski */
       char *result = u8_strconv_to_encoding (input, "ISO-8859-1", handler);
       switch (handler)
-	{
-	case iconveh_error:
-	  ASSERT (result == NULL && errno == EILSEQ);
-	  break;
-	case iconveh_question_mark:
-	  {
-	    static const char expected[] = "Rafa? Maszkowski";
-	    static const char expected_translit[] = "Rafal Maszkowski";
-	    ASSERT (result != NULL);
-	    ASSERT (strcmp (result, expected) == 0
-		    || strcmp (result, expected_translit) == 0);
-	    free (result);
-	  }
-	  break;
-	case iconveh_escape_sequence:
-	  {
-	    static const char expected[] = "Rafa\\u0142 Maszkowski";
-	    ASSERT (result != NULL);
-	    ASSERT (strcmp (result, expected) == 0);
-	    free (result);
-	  }
-	  break;
-	}
+        {
+        case iconveh_error:
+          ASSERT (result == NULL && errno == EILSEQ);
+          break;
+        case iconveh_question_mark:
+          {
+            static const char expected[] = "Rafa? Maszkowski";
+            static const char expected_translit[] = "Rafal Maszkowski";
+            ASSERT (result != NULL);
+            ASSERT (strcmp (result, expected) == 0
+                    || strcmp (result, expected_translit) == 0);
+            free (result);
+          }
+          break;
+        case iconveh_escape_sequence:
+          {
+            static const char expected[] = "Rafa\\u0142 Maszkowski";
+            ASSERT (result != NULL);
+            ASSERT (strcmp (result, expected) == 0);
+            free (result);
+          }
+          break;
+        }
     }
 
 # if 0

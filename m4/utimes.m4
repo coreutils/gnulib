@@ -21,7 +21,7 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_UTIMES],
 [
   AC_CACHE_CHECK([whether the utimes function works],
-		 [gl_cv_func_working_utimes],
+                 [gl_cv_func_working_utimes],
   [
   AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <sys/types.h>
@@ -45,11 +45,11 @@ main ()
   int fd;
 
   int ok = ((f = fopen (file, "w"))
-	    && fclose (f) == 0
-	    && utimes (file, timeval) == 0
-	    && lstat (file, &sbuf) == 0
-	    && sbuf.st_atime == timeval[0].tv_sec
-	    && sbuf.st_mtime == timeval[1].tv_sec);
+            && fclose (f) == 0
+            && utimes (file, timeval) == 0
+            && lstat (file, &sbuf) == 0
+            && sbuf.st_atime == timeval[0].tv_sec
+            && sbuf.st_mtime == timeval[1].tv_sec);
   unlink (file);
   if (!ok)
     exit (1);
@@ -67,8 +67,8 @@ main ()
     exit (1);
 
   ok = (0 <= (fd = open (file, O_WRONLY|O_CREAT, 0444))
-	      && close (fd) == 0
-	      && utimes (file, NULL) == 0);
+              && close (fd) == 0
+              && utimes (file, NULL) == 0);
   unlink (file);
 
   exit (!ok);

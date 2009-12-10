@@ -48,30 +48,30 @@ rpl_unlinkat (int fd, char const *name, int flag)
   if (len && ISSLASH (name[len - 1]))
     {
       /* See the lengthy comment in unlink.c why we disobey the POSIX
-	 rule of letting unlink("link-to-dir/") attempt to unlink a
-	 directory.  */
+         rule of letting unlink("link-to-dir/") attempt to unlink a
+         directory.  */
       struct stat st;
       result = lstatat (fd, name, &st);
       if (result == 0)
-	{
-	  /* Trailing NUL will overwrite the trailing slash.  */
-	  char *short_name = malloc (len);
-	  if (!short_name)
-	    {
-	      errno = EPERM;
-	      return -1;
-	    }
-	  memcpy (short_name, name, len);
-	  while (len && ISSLASH (short_name[len - 1]))
-	    short_name[--len] = '\0';
-	  if (len && (lstatat (fd, short_name, &st) || S_ISLNK (st.st_mode)))
-	    {
-	      free (short_name);
-	      errno = EPERM;
-	      return -1;
-	    }
-	  free (short_name);
-	}
+        {
+          /* Trailing NUL will overwrite the trailing slash.  */
+          char *short_name = malloc (len);
+          if (!short_name)
+            {
+              errno = EPERM;
+              return -1;
+            }
+          memcpy (short_name, name, len);
+          while (len && ISSLASH (short_name[len - 1]))
+            short_name[--len] = '\0';
+          if (len && (lstatat (fd, short_name, &st) || S_ISLNK (st.st_mode)))
+            {
+              free (short_name);
+              errno = EPERM;
+              return -1;
+            }
+          free (short_name);
+        }
     }
   if (!result)
     result = unlinkat (fd, name, flag);

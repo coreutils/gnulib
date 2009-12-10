@@ -28,15 +28,15 @@ struct foo { double x; double index; };
 #include <stdlib.h>
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 #define NMAX 257
@@ -305,8 +305,8 @@ static int
 cmp_double (const void *a, const void *b)
 {
   return (*(const double *)a < *(const double *)b ? -1 :
-	  *(const double *)a > *(const double *)b ? 1 :
-	  0);
+          *(const double *)a > *(const double *)b ? 1 :
+          0);
 }
 
 int
@@ -336,15 +336,15 @@ main ()
       /* Verify the result.  */
       qsort_result = (double *) malloc (n * sizeof (double));
       for (i = 0; i < n; i++)
-	qsort_result[i] = data[i].x;
+        qsort_result[i] = data[i].x;
       qsort (qsort_result, n, sizeof (double), cmp_double);
       for (i = 0; i < n; i++)
-	ASSERT (dst[i].x == qsort_result[i]);
+        ASSERT (dst[i].x == qsort_result[i]);
 
       /* Verify the stability.  */
       for (i = 0; i < n; i++)
-	if (i > 0 && dst[i - 1].x == dst[i].x)
-	  ASSERT (dst[i - 1].index < dst[i].index);
+        if (i > 0 && dst[i - 1].x == dst[i].x)
+          ASSERT (dst[i - 1].index < dst[i].index);
 
       free (qsort_result);
       free (tmp);
@@ -365,7 +365,7 @@ main ()
       tmp[n].x = 0x587EF149; /* canary */
 
       for (i = 0; i < n; i++)
-	src[i] = data[i];
+        src[i] = data[i];
 
       merge_sort_inplace (src, n, tmp);
 
@@ -376,15 +376,15 @@ main ()
       /* Verify the result.  */
       qsort_result = (double *) malloc (n * sizeof (double));
       for (i = 0; i < n; i++)
-	qsort_result[i] = data[i].x;
+        qsort_result[i] = data[i].x;
       qsort (qsort_result, n, sizeof (double), cmp_double);
       for (i = 0; i < n; i++)
-	ASSERT (src[i].x == qsort_result[i]);
+        ASSERT (src[i].x == qsort_result[i]);
 
       /* Verify the stability.  */
       for (i = 0; i < n; i++)
-	if (i > 0 && src[i - 1].x == src[i].x)
-	  ASSERT (src[i - 1].index < src[i].index);
+        if (i > 0 && src[i - 1].x == src[i].x)
+          ASSERT (src[i - 1].index < src[i].index);
 
       free (qsort_result);
       free (tmp);

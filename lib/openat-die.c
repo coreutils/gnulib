@@ -31,7 +31,7 @@ void
 openat_save_fail (int errnum)
 {
   error (exit_failure, errnum,
-	 _("unable to record current working directory"));
+         _("unable to record current working directory"));
 
   /* The `noreturn' attribute cannot be applied to error, since it returns
      when its first argument is 0.  To help compilers understand that this
@@ -49,7 +49,7 @@ void
 openat_restore_fail (int errnum)
 {
   error (exit_failure, errnum,
-	 _("failed to return to initial working directory"));
+         _("failed to return to initial working directory"));
 
   /* As above.  */
   abort ();

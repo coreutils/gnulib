@@ -87,8 +87,8 @@ extern DIR * opendir (const char *);
    *NAMELIST.  Returns the number of entries selected, or -1 on error.  */
 # if !@HAVE_SCANDIR@
 extern int scandir (const char *dir, struct dirent ***namelist,
-		    int (*filter) (const struct dirent *),
-		    int (*cmp) (const struct dirent **, const struct dirent **));
+                    int (*filter) (const struct dirent *),
+                    int (*cmp) (const struct dirent **, const struct dirent **));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef scandir

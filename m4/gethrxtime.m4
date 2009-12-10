@@ -31,7 +31,7 @@ AC_DEFUN([gl_ARITHMETIC_HRTIME_T],
   AC_CACHE_CHECK([for arithmetic hrtime_t], [gl_cv_arithmetic_hrtime_t],
     [AC_COMPILE_IFELSE(
        [AC_LANG_PROGRAM([[#include <time.h>]],
-	  [[hrtime_t x = 0; return x/x;]])],
+          [[hrtime_t x = 0; return x/x;]])],
        [gl_cv_arithmetic_hrtime_t=yes],
        [gl_cv_arithmetic_hrtime_t=no])])
   if test $gl_cv_arithmetic_hrtime_t = yes; then
@@ -59,14 +59,14 @@ AC_DEFUN([gl_PREREQ_GETHRXTIME],
     AC_CACHE_CHECK([whether CLOCK_MONOTONIC or CLOCK_REALTIME is defined],
       gl_cv_have_clock_gettime_macro,
       [AC_EGREP_CPP([have_clock_gettime_macro],
-	[
+        [
 #        include <time.h>
 #        if defined CLOCK_MONOTONIC || defined CLOCK_REALTIME
-	  have_clock_gettime_macro
+          have_clock_gettime_macro
 #        endif
-	],
-	gl_cv_have_clock_gettime_macro=yes,
-	gl_cv_have_clock_gettime_macro=no)])
+        ],
+        gl_cv_have_clock_gettime_macro=yes,
+        gl_cv_have_clock_gettime_macro=no)])
     if test $gl_cv_have_clock_gettime_macro = yes; then
       LIB_GETHRXTIME=$LIB_CLOCK_GETTIME
     fi

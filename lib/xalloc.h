@@ -161,9 +161,9 @@ xnrealloc (void *p, size_t n, size_t s)
      void
      append_int (int value)
        {
-	 if (used == allocated)
-	   p = x2nrealloc (p, &allocated, sizeof *p);
-	 p[used++] = value;
+         if (used == allocated)
+           p = x2nrealloc (p, &allocated, sizeof *p);
+         p[used++] = value;
        }
 
    This causes x2nrealloc to allocate a block of some nonzero size the
@@ -181,12 +181,12 @@ xnrealloc (void *p, size_t n, size_t s)
      void
      append_int (int value)
        {
-	 if (used == allocated)
-	   {
-	     p = x2nrealloc (p, &allocated1, sizeof *p);
-	     allocated = allocated1;
-	   }
-	 p[used++] = value;
+         if (used == allocated)
+           {
+             p = x2nrealloc (p, &allocated1, sizeof *p);
+             allocated = allocated1;
+           }
+         p[used++] = value;
        }
 
    */
@@ -199,25 +199,25 @@ x2nrealloc (void *p, size_t *pn, size_t s)
   if (! p)
     {
       if (! n)
-	{
-	  /* The approximate size to use for initial small allocation
-	     requests, when the invoking code specifies an old size of
-	     zero.  64 bytes is the largest "small" request for the
-	     GNU C library malloc.  */
-	  enum { DEFAULT_MXFAST = 64 };
+        {
+          /* The approximate size to use for initial small allocation
+             requests, when the invoking code specifies an old size of
+             zero.  64 bytes is the largest "small" request for the
+             GNU C library malloc.  */
+          enum { DEFAULT_MXFAST = 64 };
 
-	  n = DEFAULT_MXFAST / s;
-	  n += !n;
-	}
+          n = DEFAULT_MXFAST / s;
+          n += !n;
+        }
     }
   else
     {
       /* Set N = ceil (1.5 * N) so that progress is made if N == 1.
-	 Check for overflow, so that N * S stays in size_t range.
-	 The check is slightly conservative, but an exact check isn't
-	 worth the trouble.  */
+         Check for overflow, so that N * S stays in size_t range.
+         The check is slightly conservative, but an exact check isn't
+         worth the trouble.  */
       if ((size_t) -1 / 3 * 2 / s <= n)
-	xalloc_die ();
+        xalloc_die ();
       n += (n + 1) / 2;
     }
 

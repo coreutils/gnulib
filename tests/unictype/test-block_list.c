@@ -23,15 +23,15 @@
 #include <string.h>
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 int
@@ -49,10 +49,10 @@ main ()
 
     for (i = 0; i < nblocks; i++)
       {
-	if (strcmp (blocks[i].name, "Latin") == 0)
-	  latin_block = &blocks[i];
-	if (strcmp (blocks[i].name, "Hebrew") == 0)
-	  hebrew_block = &blocks[i];
+        if (strcmp (blocks[i].name, "Latin") == 0)
+          latin_block = &blocks[i];
+        if (strcmp (blocks[i].name, "Hebrew") == 0)
+          hebrew_block = &blocks[i];
       }
     ASSERT (latin_block == NULL);
     ASSERT (hebrew_block != NULL);

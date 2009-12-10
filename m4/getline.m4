@@ -23,9 +23,9 @@ AC_DEFUN([gl_FUNC_GETLINE],
 
   gl_getline_needs_run_time_check=no
   AC_CHECK_FUNC([getline],
-		dnl Found it in some library.  Verify that it works.
-		gl_getline_needs_run_time_check=yes,
-		am_cv_func_working_getline=no)
+                dnl Found it in some library.  Verify that it works.
+                gl_getline_needs_run_time_check=yes,
+                am_cv_func_working_getline=no)
   if test $gl_getline_needs_run_time_check = yes; then
     AC_CACHE_CHECK([for working getline function], [am_cv_func_working_getline],
     [echo fooN |tr -d '\012'|tr N '\012' > conftest.data
@@ -40,7 +40,7 @@ AC_DEFUN([gl_FUNC_GETLINE],
       int len;
       FILE *in = fopen ("./conftest.data", "r");
       if (!in)
-	return 1;
+        return 1;
       len = getline (&line, &siz, in);
       exit ((len == 4 && line && strcmp (line, "foo\n") == 0) ? 0 : 1);
     }

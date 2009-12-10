@@ -60,7 +60,7 @@ rpl_rmdir (char const *dir)
   struct stat statbuf;
 
   if (stat (dir, &statbuf) != 0)
-    return -1;			/* errno already set */
+    return -1;                  /* errno already set */
 
   if (!S_ISDIR (statbuf.st_mode))
     {
@@ -71,28 +71,28 @@ rpl_rmdir (char const *dir)
   cpid = fork ();
   switch (cpid)
     {
-    case -1:			/* cannot fork */
-      return -1;		/* errno already set */
+    case -1:                    /* cannot fork */
+      return -1;                /* errno already set */
 
-    case 0:			/* child process */
+    case 0:                     /* child process */
       execl ("/bin/rmdir", "rmdir", dir, (char *) 0);
       _exit (1);
 
-    default:			/* parent process */
+    default:                    /* parent process */
 
       /* Wait for kid to finish.  */
 
       while (wait (&status) != cpid)
-	/* Do nothing.  */ ;
+        /* Do nothing.  */ ;
 
       if (status)
-	{
+        {
 
-	  /* /bin/rmdir failed.  */
+          /* /bin/rmdir failed.  */
 
-	  errno = EIO;
-	  return -1;
-	}
+          errno = EIO;
+          return -1;
+        }
       return 0;
     }
 #endif /* !HAVE_RMDIR */

@@ -23,7 +23,7 @@ AC_DEFUN([gl_FUNC_GETCWD_ABORT_BUG],
      ac_clean_files="$ac_clean_files confdir-14B---"
      AC_RUN_IFELSE(
        [AC_LANG_SOURCE(
-	  [[
+          [[
 #include <stdlib.h>
 #include <unistd.h>
 #include <limits.h>
@@ -69,14 +69,14 @@ main ()
   initial_cwd_len = strlen (cwd);
   free (cwd);
   desired_depth = ((TARGET_LEN - 1 - initial_cwd_len)
-		   / (1 + strlen (dir_name)));
+                   / (1 + strlen (dir_name)));
   for (d = 0; d < desired_depth; d++)
     {
       if (mkdir (dir_name, S_IRWXU) < 0 || chdir (dir_name) < 0)
-	{
-	  fail = 3; /* Unable to construct deep hierarchy.  */
-	  break;
-	}
+        {
+          fail = 3; /* Unable to construct deep hierarchy.  */
+          break;
+        }
     }
 
   /* If libc has the bug in question, this invocation of getcwd
@@ -91,7 +91,7 @@ main ()
   while (0 < d--)
     {
       if (chdir ("..") < 0)
-	break;
+        break;
       rmdir (dir_name);
     }
 

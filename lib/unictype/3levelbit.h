@@ -88,20 +88,20 @@ CONCAT(TABLE,_get) (struct TABLE *t, uint32_t wc)
     {
       uint32_t lookup1 = t->level1[index1];
       if (lookup1 != EMPTY)
-	{
-	  uint32_t index2 = ((wc >> (t->p + 5)) & ((1 << t->q) - 1))
-			    + (lookup1 << t->q);
-	  uint32_t lookup2 = t->level2[index2];
-	  if (lookup2 != EMPTY)
-	    {
-	      uint32_t index3 = ((wc >> 5) & ((1 << t->p) - 1))
-				+ (lookup2 << t->p);
-	      uint32_t lookup3 = t->level3[index3];
-	      uint32_t index4 = wc & 0x1f;
+        {
+          uint32_t index2 = ((wc >> (t->p + 5)) & ((1 << t->q) - 1))
+                            + (lookup1 << t->q);
+          uint32_t lookup2 = t->level2[index2];
+          if (lookup2 != EMPTY)
+            {
+              uint32_t index3 = ((wc >> 5) & ((1 << t->p) - 1))
+                                + (lookup2 << t->p);
+              uint32_t lookup3 = t->level3[index3];
+              uint32_t index4 = wc & 0x1f;
 
-	      return (lookup3 >> index4) & 1;
-	    }
-	}
+              return (lookup3 >> index4) & 1;
+            }
+        }
     }
   return 0;
 }
@@ -119,31 +119,31 @@ CONCAT(TABLE,_add) (struct TABLE *t, uint32_t wc)
   if (index1 >= t->level1_size)
     {
       if (index1 >= t->level1_alloc)
-	{
-	  size_t alloc = 2 * t->level1_alloc;
-	  if (alloc <= index1)
-	    alloc = index1 + 1;
-	  t->level1 = (uint32_t *) xrealloc ((char *) t->level1,
-					     alloc * sizeof (uint32_t));
-	  t->level1_alloc = alloc;
-	}
+        {
+          size_t alloc = 2 * t->level1_alloc;
+          if (alloc <= index1)
+            alloc = index1 + 1;
+          t->level1 = (uint32_t *) xrealloc ((char *) t->level1,
+                                             alloc * sizeof (uint32_t));
+          t->level1_alloc = alloc;
+        }
       while (index1 >= t->level1_size)
-	t->level1[t->level1_size++] = EMPTY;
+        t->level1[t->level1_size++] = EMPTY;
     }
 
   if (t->level1[index1] == EMPTY)
     {
       if (t->level2_size == t->level2_alloc)
-	{
-	  size_t alloc = 2 * t->level2_alloc + 1;
-	  t->level2 = (uint32_t *) xrealloc ((char *) t->level2,
-					     (alloc << t->q) * sizeof (uint32_t));
-	  t->level2_alloc = alloc;
-	}
+        {
+          size_t alloc = 2 * t->level2_alloc + 1;
+          t->level2 = (uint32_t *) xrealloc ((char *) t->level2,
+                                             (alloc << t->q) * sizeof (uint32_t));
+          t->level2_alloc = alloc;
+        }
       i1 = t->level2_size << t->q;
       i2 = (t->level2_size + 1) << t->q;
       for (i = i1; i < i2; i++)
-	t->level2[i] = EMPTY;
+        t->level2[i] = EMPTY;
       t->level1[index1] = t->level2_size++;
     }
 
@@ -152,16 +152,16 @@ CONCAT(TABLE,_add) (struct TABLE *t, uint32_t wc)
   if (t->level2[index2] == EMPTY)
     {
       if (t->level3_size == t->level3_alloc)
-	{
-	  size_t alloc = 2 * t->level3_alloc + 1;
-	  t->level3 = (uint32_t *) xrealloc ((char *) t->level3,
-					    (alloc << t->p) * sizeof (uint32_t));
-	  t->level3_alloc = alloc;
-	}
+        {
+          size_t alloc = 2 * t->level3_alloc + 1;
+          t->level3 = (uint32_t *) xrealloc ((char *) t->level3,
+                                            (alloc << t->p) * sizeof (uint32_t));
+          t->level3_alloc = alloc;
+        }
       i1 = t->level3_size << t->p;
       i2 = (t->level3_size + 1) << t->p;
       for (i = i1; i < i2; i++)
-	t->level3[i] = 0;
+        t->level3[i] = 0;
       t->level2[index2] = t->level3_size++;
     }
 
@@ -180,27 +180,27 @@ CONCAT(TABLE,_iterate) (struct TABLE *t, void (*fn) (uint32_t wc))
     {
       uint32_t lookup1 = t->level1[index1];
       if (lookup1 != EMPTY)
-	{
-	  uint32_t lookup1_shifted = lookup1 << t->q;
-	  uint32_t index2;
-	  for (index2 = 0; index2 < (1 << t->q); index2++)
-	    {
-	      uint32_t lookup2 = t->level2[index2 + lookup1_shifted];
-	      if (lookup2 != EMPTY)
-		{
-		  uint32_t lookup2_shifted = lookup2 << t->p;
-		  uint32_t index3;
-		  for (index3 = 0; index3 < (1 << t->p); index3++)
-		    {
-		      uint32_t lookup3 = t->level3[index3 + lookup2_shifted];
-		      uint32_t index4;
-		      for (index4 = 0; index4 < 32; index4++)
-			if ((lookup3 >> index4) & 1)
-			  fn ((((((index1 << t->q) + index2) << t->p) + index3) << 5) + index4);
-		    }
-		}
-	    }
-	}
+        {
+          uint32_t lookup1_shifted = lookup1 << t->q;
+          uint32_t index2;
+          for (index2 = 0; index2 < (1 << t->q); index2++)
+            {
+              uint32_t lookup2 = t->level2[index2 + lookup1_shifted];
+              if (lookup2 != EMPTY)
+                {
+                  uint32_t lookup2_shifted = lookup2 << t->p;
+                  uint32_t index3;
+                  for (index3 = 0; index3 < (1 << t->p); index3++)
+                    {
+                      uint32_t lookup3 = t->level3[index3 + lookup2_shifted];
+                      uint32_t index4;
+                      for (index4 = 0; index4 < 32; index4++)
+                        if ((lookup3 >> index4) & 1)
+                          fn ((((((index1 << t->q) + index2) << t->p) + index3) << 5) + index4);
+                    }
+                }
+            }
+        }
     }
 }
 #endif
@@ -220,18 +220,18 @@ CONCAT(TABLE,_finalize) (struct TABLE *t)
   for (j = 0; j < t->level3_size; j++)
     {
       for (i = 0; i < k; i++)
-	if (memcmp (&t->level3[i << t->p], &t->level3[j << t->p],
-		    (1 << t->p) * sizeof (uint32_t)) == 0)
-	  break;
+        if (memcmp (&t->level3[i << t->p], &t->level3[j << t->p],
+                    (1 << t->p) * sizeof (uint32_t)) == 0)
+          break;
       /* Relocate block j to block i.  */
       reorder3[j] = i;
       if (i == k)
-	{
-	  if (i != j)
-	    memcpy (&t->level3[i << t->p], &t->level3[j << t->p],
-		    (1 << t->p) * sizeof (uint32_t));
-	  k++;
-	}
+        {
+          if (i != j)
+            memcpy (&t->level3[i << t->p], &t->level3[j << t->p],
+                    (1 << t->p) * sizeof (uint32_t));
+          k++;
+        }
     }
   t->level3_size = k;
 
@@ -244,18 +244,18 @@ CONCAT(TABLE,_finalize) (struct TABLE *t)
   for (j = 0; j < t->level2_size; j++)
     {
       for (i = 0; i < k; i++)
-	if (memcmp (&t->level2[i << t->q], &t->level2[j << t->q],
-		    (1 << t->q) * sizeof (uint32_t)) == 0)
-	  break;
+        if (memcmp (&t->level2[i << t->q], &t->level2[j << t->q],
+                    (1 << t->q) * sizeof (uint32_t)) == 0)
+          break;
       /* Relocate block j to block i.  */
       reorder2[j] = i;
       if (i == k)
-	{
-	  if (i != j)
-	    memcpy (&t->level2[i << t->q], &t->level2[j << t->q],
-		    (1 << t->q) * sizeof (uint32_t));
-	  k++;
-	}
+        {
+          if (i != j)
+            memcpy (&t->level2[i << t->q], &t->level2[j << t->q],
+                    (1 << t->q) * sizeof (uint32_t));
+          k++;
+        }
     }
   t->level2_size = k;
 

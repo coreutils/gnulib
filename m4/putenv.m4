@@ -28,11 +28,11 @@ AC_DEFUN([gl_FUNC_PUTENV],
       return 1;
 
     return 0;
-	      ]])],
-	     gl_cv_func_svid_putenv=yes,
-	     gl_cv_func_svid_putenv=no,
-	     dnl When crosscompiling, assume putenv is broken.
-	     gl_cv_func_svid_putenv=no)
+              ]])],
+             gl_cv_func_svid_putenv=yes,
+             gl_cv_func_svid_putenv=no,
+             dnl When crosscompiling, assume putenv is broken.
+             gl_cv_func_svid_putenv=no)
    ])
   if test $gl_cv_func_svid_putenv = no; then
     REPLACE_PUTENV=1

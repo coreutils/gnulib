@@ -45,11 +45,11 @@ uc_block (ucs4_t uc)
     {
       unsigned int mid_index = (first_index + last_index) / 2;
       if (blocks[mid_index].end < uc)
-	first_index = mid_index + 1;
+        first_index = mid_index + 1;
       else if (uc < blocks[mid_index].start)
-	last_index = mid_index;
+        last_index = mid_index;
       else
-	return &blocks[mid_index];
+        return &blocks[mid_index];
     }
   return NULL;
 }

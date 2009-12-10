@@ -120,10 +120,10 @@ walk_action (const void *nodep, const VISIT which, const int depth)
   else
     {
       if (depths[key] != depth)
-	{
-	  fputs ("Depth for one element is not constant during tree walk.\n",
-		 stdout);
-	}
+        {
+          fputs ("Depth for one element is not constant during tree walk.\n",
+                 stdout);
+        }
     }
 }
 
@@ -139,8 +139,8 @@ walk_tree (void *root, int expected_count)
   for (i = 0; i < expected_count; ++i)
     if (z[i] != 1)
       {
-	fputs ("Node was not visited.\n", stdout);
-	error = 1;
+        fputs ("Node was not visited.\n", stdout);
+        error = 1;
       }
 
 #if BALANCED
@@ -163,7 +163,7 @@ mangle_tree (enum order how, enum action what, void **root, int lag)
   if (how == randomorder)
     {
       for (i = 0; i < SIZE; ++i)
-	y[i] = i;
+        y[i] = i;
       memfry (y);
     }
 
@@ -173,77 +173,77 @@ mangle_tree (enum order how, enum action what, void **root, int lag)
       int j, k;
 
       switch (how)
-	{
-	case randomorder:
-	  if (i >= lag)
-	    k = y[i - lag];
-	  else
-	    /* Ensure that the array index is within bounds.  */
-	    k = y[(SIZE - i - 1 + lag) % SIZE];
-	  j = y[i % SIZE];
-	  break;
+        {
+        case randomorder:
+          if (i >= lag)
+            k = y[i - lag];
+          else
+            /* Ensure that the array index is within bounds.  */
+            k = y[(SIZE - i - 1 + lag) % SIZE];
+          j = y[i % SIZE];
+          break;
 
-	case ascending:
-	  k = i - lag;
-	  j = i;
-	  break;
+        case ascending:
+          k = i - lag;
+          j = i;
+          break;
 
-	case descending:
-	  k = SIZE - i - 1 + lag;
-	  j = SIZE - i - 1;
-	  break;
+        case descending:
+          k = SIZE - i - 1 + lag;
+          j = SIZE - i - 1;
+          break;
 
-	default:
-	  /* This never should happen, but gcc isn't smart enough to
-	     recognize it.  */
-	  abort ();
-	}
+        default:
+          /* This never should happen, but gcc isn't smart enough to
+             recognize it.  */
+          abort ();
+        }
 
       switch (what)
-	{
-	case build_and_del:
-	case build:
-	  if (i < SIZE)
-	    {
-	      if (tfind (x + j, (void *const *) root, cmp_fn) != NULL)
-		{
-		  fputs ("Found element which is not in tree yet.\n", stdout);
-		  error = 1;
-		}
-	      elem = tsearch (x + j, root, cmp_fn);
-	      if (elem == 0
-		  || tfind (x + j, (void *const *) root, cmp_fn) == NULL)
-		{
-		  fputs ("Couldn't find element after it was added.\n",
-			 stdout);
-		  error = 1;
-		}
-	    }
+        {
+        case build_and_del:
+        case build:
+          if (i < SIZE)
+            {
+              if (tfind (x + j, (void *const *) root, cmp_fn) != NULL)
+                {
+                  fputs ("Found element which is not in tree yet.\n", stdout);
+                  error = 1;
+                }
+              elem = tsearch (x + j, root, cmp_fn);
+              if (elem == 0
+                  || tfind (x + j, (void *const *) root, cmp_fn) == NULL)
+                {
+                  fputs ("Couldn't find element after it was added.\n",
+                         stdout);
+                  error = 1;
+                }
+            }
 
-	  if (what == build || i < lag)
-	    break;
+          if (what == build || i < lag)
+            break;
 
-	  j = k;
-	  /* fall through */
+          j = k;
+          /* fall through */
 
-	case delete:
-	  elem = tfind (x + j, (void *const *) root, cmp_fn);
-	  if (elem == NULL || tdelete (x + j, root, cmp_fn) == NULL)
-	    {
-	      fputs ("Error deleting element.\n", stdout);
-	      error = 1;
-	    }
-	  break;
+        case delete:
+          elem = tfind (x + j, (void *const *) root, cmp_fn);
+          if (elem == NULL || tdelete (x + j, root, cmp_fn) == NULL)
+            {
+              fputs ("Error deleting element.\n", stdout);
+              error = 1;
+            }
+          break;
 
-	case find:
-	  if (tfind (x + j, (void *const *) root, cmp_fn) == NULL)
-	    {
-	      fputs ("Couldn't find element after it was added.\n", stdout);
-	      error = 1;
-	    }
-	  break;
+        case find:
+          if (tfind (x + j, (void *const *) root, cmp_fn) == NULL)
+            {
+              fputs ("Couldn't find element after it was added.\n", stdout);
+              error = 1;
+            }
+          break;
 
-	}
+        }
     }
 }
 
@@ -310,9 +310,9 @@ main (int argc, char **argv)
       mangle_tree (randomorder, delete, &root, 0);
 
       for (j = 1; j < SIZE; j *= 2)
-	{
-	  mangle_tree (randomorder, build_and_del, &root, j);
-	}
+        {
+          mangle_tree (randomorder, build_and_del, &root, j);
+        }
 
       fputs (error ? " failed!\n" : " ok.\n", stdout);
       total_error |= error;

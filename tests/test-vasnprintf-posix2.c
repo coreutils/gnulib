@@ -26,15 +26,15 @@
 #include <string.h>
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 int
@@ -50,9 +50,9 @@ main (int argc, char *argv[])
     char *result = asnprintf (NULL, &length, "%.1a", 1.0);
     ASSERT (result != NULL);
     ASSERT (strcmp (result, "0x1,0p+0") == 0
-	    || strcmp (result, "0x2,0p-1") == 0
-	    || strcmp (result, "0x4,0p-2") == 0
-	    || strcmp (result, "0x8,0p-3") == 0);
+            || strcmp (result, "0x2,0p-1") == 0
+            || strcmp (result, "0x4,0p-2") == 0
+            || strcmp (result, "0x8,0p-3") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }
@@ -63,9 +63,9 @@ main (int argc, char *argv[])
     char *result = asnprintf (NULL, &length, "%.1La", 1.0L);
     ASSERT (result != NULL);
     ASSERT (strcmp (result, "0x1,0p+0") == 0
-	    || strcmp (result, "0x2,0p-1") == 0
-	    || strcmp (result, "0x4,0p-2") == 0
-	    || strcmp (result, "0x8,0p-3") == 0);
+            || strcmp (result, "0x2,0p-1") == 0
+            || strcmp (result, "0x4,0p-2") == 0
+            || strcmp (result, "0x8,0p-3") == 0);
     ASSERT (length == strlen (result));
     free (result);
   }

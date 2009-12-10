@@ -26,15 +26,15 @@
 
 
 /* Flags */
-#define FLAG_GROUP	 1	/* ' flag */
-#define FLAG_LEFT	 2	/* - flag */
-#define FLAG_SHOWSIGN	 4	/* + flag */
-#define FLAG_SPACE	 8	/* space flag */
-#define FLAG_ALT	16	/* # flag */
-#define FLAG_ZERO	32
+#define FLAG_GROUP       1      /* ' flag */
+#define FLAG_LEFT        2      /* - flag */
+#define FLAG_SHOWSIGN    4      /* + flag */
+#define FLAG_SPACE       8      /* space flag */
+#define FLAG_ALT        16      /* # flag */
+#define FLAG_ZERO       32
 
 /* arg_index value indicating that no argument is consumed.  */
-#define ARG_NONE	(~(size_t)0)
+#define ARG_NONE        (~(size_t)0)
 
 /* xxx_directive: A parsed directive.
    xxx_directives: A parsed format string.  */
@@ -163,10 +163,10 @@ extern int
        u8_printf_parse (const uint8_t *format, u8_directives *d, arguments *a);
 extern int
        u16_printf_parse (const uint16_t *format, u16_directives *d,
-			 arguments *a);
+                         arguments *a);
 extern int
        u32_printf_parse (const uint32_t *format, u32_directives *d,
-			 arguments *a);
+                         arguments *a);
 #else
 # ifdef STATIC
 STATIC

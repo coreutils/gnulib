@@ -42,7 +42,7 @@ AC_DEFUN([gl_FUNC_READLINE],
           [[readline((char*)0);]])],
         [gl_cv_lib_readline=" -l$extra_lib"])
       if test "$gl_cv_lib_readline" != no; then
-	break
+        break
       fi
     done
     LIBS="$am_save_LIBS"

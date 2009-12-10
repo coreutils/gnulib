@@ -46,117 +46,117 @@ u16_possible_linebreaks (const uint16_t *s, size_t n, const char *encoding, char
       int prop = unilbrkprop_lookup (uc);
 
       if (prop == LBP_BK)
-	{
-	  /* Mandatory break.  */
-	  *p = UC_BREAK_MANDATORY;
-	  last_prop = LBP_BK;
-	  seen_space = NULL;
-	  seen_space2 = NULL;
-	}
+        {
+          /* Mandatory break.  */
+          *p = UC_BREAK_MANDATORY;
+          last_prop = LBP_BK;
+          seen_space = NULL;
+          seen_space2 = NULL;
+        }
       else
-	{
-	  char *q;
+        {
+          char *q;
 
-	  /* Resolve property values whose behaviour is not fixed.  */
-	  switch (prop)
-	    {
-	    case LBP_AI:
-	      /* Resolve ambiguous.  */
-	      prop = LBP_AI_REPLACEMENT;
-	      break;
-	    case LBP_CB:
-	      /* This is arbitrary.  */
-	      prop = LBP_ID;
-	      break;
-	    case LBP_SA:
-	      /* We don't handle complex scripts yet.
-		 Treat LBP_SA like LBP_XX.  */
-	    case LBP_XX:
-	      /* This is arbitrary.  */
-	      prop = LBP_AL;
-	      break;
-	    }
+          /* Resolve property values whose behaviour is not fixed.  */
+          switch (prop)
+            {
+            case LBP_AI:
+              /* Resolve ambiguous.  */
+              prop = LBP_AI_REPLACEMENT;
+              break;
+            case LBP_CB:
+              /* This is arbitrary.  */
+              prop = LBP_ID;
+              break;
+            case LBP_SA:
+              /* We don't handle complex scripts yet.
+                 Treat LBP_SA like LBP_XX.  */
+            case LBP_XX:
+              /* This is arbitrary.  */
+              prop = LBP_AL;
+              break;
+            }
 
-	  /* Deal with spaces and combining characters.  */
-	  q = p;
-	  if (prop == LBP_SP)
-	    {
-	      /* Don't break just before a space.  */
-	      *p = UC_BREAK_PROHIBITED;
-	      seen_space2 = seen_space;
-	      seen_space = p;
-	    }
-	  else if (prop == LBP_ZW)
-	    {
-	      /* Don't break just before a zero-width space.  */
-	      *p = UC_BREAK_PROHIBITED;
-	      last_prop = LBP_ZW;
-	      seen_space = NULL;
-	      seen_space2 = NULL;
-	    }
-	  else if (prop == LBP_CM)
-	    {
-	      /* Don't break just before a combining character, except immediately after a
-		 zero-width space.  */
-	      if (last_prop == LBP_ZW)
-		{
-		  /* Break after zero-width space.  */
-		  *p = UC_BREAK_POSSIBLE;
-		  /* A combining character turns a preceding space into LBP_ID.  */
-		  last_prop = LBP_ID;
-		}
-	      else
-		{
-		  *p = UC_BREAK_PROHIBITED;
-		  /* A combining character turns a preceding space into LBP_ID.  */
-		  if (seen_space != NULL)
-		    {
-		      q = seen_space;
-		      seen_space = seen_space2;
-		      prop = LBP_ID;
-		      goto lookup_via_table;
-		    }
-		}
-	    }
-	  else
-	    {
-	     lookup_via_table:
-	      /* prop must be usable as an index for table 7.3 of UTR #14.  */
-	      if (!(prop >= 0 && prop < sizeof (unilbrk_table) / sizeof (unilbrk_table[0])))
-		abort ();
+          /* Deal with spaces and combining characters.  */
+          q = p;
+          if (prop == LBP_SP)
+            {
+              /* Don't break just before a space.  */
+              *p = UC_BREAK_PROHIBITED;
+              seen_space2 = seen_space;
+              seen_space = p;
+            }
+          else if (prop == LBP_ZW)
+            {
+              /* Don't break just before a zero-width space.  */
+              *p = UC_BREAK_PROHIBITED;
+              last_prop = LBP_ZW;
+              seen_space = NULL;
+              seen_space2 = NULL;
+            }
+          else if (prop == LBP_CM)
+            {
+              /* Don't break just before a combining character, except immediately after a
+                 zero-width space.  */
+              if (last_prop == LBP_ZW)
+                {
+                  /* Break after zero-width space.  */
+                  *p = UC_BREAK_POSSIBLE;
+                  /* A combining character turns a preceding space into LBP_ID.  */
+                  last_prop = LBP_ID;
+                }
+              else
+                {
+                  *p = UC_BREAK_PROHIBITED;
+                  /* A combining character turns a preceding space into LBP_ID.  */
+                  if (seen_space != NULL)
+                    {
+                      q = seen_space;
+                      seen_space = seen_space2;
+                      prop = LBP_ID;
+                      goto lookup_via_table;
+                    }
+                }
+            }
+          else
+            {
+             lookup_via_table:
+              /* prop must be usable as an index for table 7.3 of UTR #14.  */
+              if (!(prop >= 0 && prop < sizeof (unilbrk_table) / sizeof (unilbrk_table[0])))
+                abort ();
 
-	      if (last_prop == LBP_BK)
-		{
-		  /* Don't break at the beginning of a line.  */
-		  *q = UC_BREAK_PROHIBITED;
-		}
-	      else if (last_prop == LBP_ZW)
-		{
-		  /* Break after zero-width space.  */
-		  *q = UC_BREAK_POSSIBLE;
-		}
-	      else
-		{
-		  switch (unilbrk_table [last_prop] [prop])
-		    {
-		    case D:
-		      *q = UC_BREAK_POSSIBLE;
-		      break;
-		    case I:
-		      *q = (seen_space != NULL ? UC_BREAK_POSSIBLE : UC_BREAK_PROHIBITED);
-		      break;
-		    case P:
-		      *q = UC_BREAK_PROHIBITED;
-		      break;
-		    default:
-		      abort ();
-		    }
-		}
-	      last_prop = prop;
-	      seen_space = NULL;
-	      seen_space2 = NULL;
-	    }
-	}
+              if (last_prop == LBP_BK)
+                {
+                  /* Don't break at the beginning of a line.  */
+                  *q = UC_BREAK_PROHIBITED;
+                }
+              else if (last_prop == LBP_ZW)
+                {
+                  /* Break after zero-width space.  */
+                  *q = UC_BREAK_POSSIBLE;
+                }
+              else
+                {
+                  switch (unilbrk_table [last_prop] [prop])
+                    {
+                    case D:
+                      *q = UC_BREAK_POSSIBLE;
+                      break;
+                    case I:
+                      *q = (seen_space != NULL ? UC_BREAK_POSSIBLE : UC_BREAK_PROHIBITED);
+                      break;
+                    case P:
+                      *q = UC_BREAK_PROHIBITED;
+                      break;
+                    default:
+                      abort ();
+                    }
+                }
+              last_prop = prop;
+              seen_space = NULL;
+              seen_space2 = NULL;
+            }
+        }
 
       s += count;
       p += count;

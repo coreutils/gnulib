@@ -37,18 +37,18 @@ FUNC (const UNIT *s, size_t n, uninorm_t nf,
   /* Convert it to locale encoding.  */
   convs_length = sizeof (convsbuf) - 1;
   convs = U_CONV_TO_ENCODING (locale_charset (),
-			      iconveh_error,
-			      norms, norms_length,
-			      NULL,
-			      convsbuf, &convs_length);
+                              iconveh_error,
+                              norms, norms_length,
+                              NULL,
+                              convsbuf, &convs_length);
   if (convs == NULL)
     {
       if (norms != normsbuf)
-	{
-	  int saved_errno = errno;
-	  free (norms);
-	  errno = saved_errno;
-	}
+        {
+          int saved_errno = errno;
+          free (norms);
+          errno = saved_errno;
+        }
       return NULL;
     }
 
@@ -60,11 +60,11 @@ FUNC (const UNIT *s, size_t n, uninorm_t nf,
     {
       char *memory = (char *) realloc (convs, convs_length + 1);
       if (memory == NULL)
-	{
-	  free (convs);
-	  errno = ENOMEM;
-	  return NULL;
-	}
+        {
+          free (convs);
+          errno = ENOMEM;
+          return NULL;
+        }
       convs = memory;
     }
 
@@ -73,11 +73,11 @@ FUNC (const UNIT *s, size_t n, uninorm_t nf,
   if (result == NULL)
     {
       if (convs != convsbuf)
-	{
-	  int saved_errno = errno;
-	  free (convs);
-	  errno = saved_errno;
-	}
+        {
+          int saved_errno = errno;
+          free (convs);
+          errno = saved_errno;
+        }
       return NULL;
     }
 

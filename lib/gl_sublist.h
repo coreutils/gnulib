@@ -34,7 +34,7 @@ extern "C" {
      - The sublist must not be passed to the gl_list_sortedlist_add() function.
  */
 extern gl_list_t gl_sublist_create (gl_list_t whole_list,
-				    size_t start_index, size_t end_index);
+                                    size_t start_index, size_t end_index);
 
 
 #ifdef __cplusplus

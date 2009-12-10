@@ -32,12 +32,12 @@
 #  define GL_LINK_WARNING2(file, line, message) \
      GL_LINK_WARNING3 (file ":" #line ": warning: " message)
 #  define GL_LINK_WARNING3(message) \
-     ({ static const char warning[sizeof (message)]		\
-          __attribute__ ((__unused__,				\
-                          __section__ (".gnu.warning"),		\
-                          __aligned__ (1)))			\
-          = message "\n";					\
-        (void)0;						\
+     ({ static const char warning[sizeof (message)]             \
+          __attribute__ ((__unused__,                           \
+                          __section__ (".gnu.warning"),         \
+                          __aligned__ (1)))                     \
+          = message "\n";                                       \
+        (void)0;                                                \
      })
 # else
 #  define GL_LINK_WARNING(message) ((void) 0)

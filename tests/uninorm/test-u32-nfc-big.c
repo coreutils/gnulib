@@ -45,8 +45,8 @@ check (const uint32_t *c1, size_t c1_length,
 
     result = u32_normalize (UNINORM_NFC, c1, c1_length, NULL, &length);
     if (!(result != NULL
-	  && length == c2_length
-	  && u32_cmp (result, c2, c2_length) == 0))
+          && length == c2_length
+          && u32_cmp (result, c2, c2_length) == 0))
       return 1;
     free (result);
   }
@@ -56,8 +56,8 @@ check (const uint32_t *c1, size_t c1_length,
 
     result = u32_normalize (UNINORM_NFC, c2, c2_length, NULL, &length);
     if (!(result != NULL
-	  && length == c2_length
-	  && u32_cmp (result, c2, c2_length) == 0))
+          && length == c2_length
+          && u32_cmp (result, c2, c2_length) == 0))
       return 2;
     free (result);
   }
@@ -67,8 +67,8 @@ check (const uint32_t *c1, size_t c1_length,
 
     result = u32_normalize (UNINORM_NFC, c3, c3_length, NULL, &length);
     if (!(result != NULL
-	  && length == c2_length
-	  && u32_cmp (result, c2, c2_length) == 0))
+          && length == c2_length
+          && u32_cmp (result, c2, c2_length) == 0))
       return 3;
     free (result);
   }
@@ -78,8 +78,8 @@ check (const uint32_t *c1, size_t c1_length,
 
     result = u32_normalize (UNINORM_NFC, c4, c4_length, NULL, &length);
     if (!(result != NULL
-	  && length == c4_length
-	  && u32_cmp (result, c4, c4_length) == 0))
+          && length == c4_length
+          && u32_cmp (result, c4, c4_length) == 0))
       return 4;
     free (result);
   }
@@ -89,8 +89,8 @@ check (const uint32_t *c1, size_t c1_length,
 
     result = u32_normalize (UNINORM_NFC, c5, c5_length, NULL, &length);
     if (!(result != NULL
-	  && length == c4_length
-	  && u32_cmp (result, c4, c4_length) == 0))
+          && length == c4_length
+          && u32_cmp (result, c4, c4_length) == 0))
       return 5;
     free (result);
   }

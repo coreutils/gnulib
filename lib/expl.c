@@ -72,16 +72,16 @@ expl (long double x)
       x -= exponent / 8.0L;
 
       if (x > 0.0625)
-	{
-	  exponent++;
-	  x -= 0.125L;
-	}
+        {
+          exponent++;
+          x -= 0.125L;
+        }
 
       if (exponent < 0)
         {
           t = 0.8824969025845954028648921432290507362220L; /* e^-0.25 */
-	  exponent = -exponent;
-	}
+          exponent = -exponent;
+        }
       else
         t = 1.1331484530668263168290072278117938725655L; /* e^0.25 */
 
@@ -97,8 +97,8 @@ expl (long double x)
         }
 
       /* Approximate (e^x - 1)/x, using a seventh-degree polynomial,
-	 with maximum error in [-2^-16-2^-53,2^-16+2^-53]
-	 less than 4.8e-39.  */
+         with maximum error in [-2^-16-2^-53,2^-16+2^-53]
+         less than 4.8e-39.  */
       x22 = x + x*x*(P1+x*(P2+x*(P3+x*(P4+x*(P5+x*P6)))));
 
       return result + result * x22;
@@ -107,11 +107,11 @@ expl (long double x)
   else if (x < himark)
     {
       if (x + x == x)
-	/* e^-inf == 0, with no error.  */
-	return 0;
+        /* e^-inf == 0, with no error.  */
+        return 0;
       else
-	/* Underflow */
-	return TINY * TINY;
+        /* Underflow */
+        return TINY * TINY;
     }
   else
     /* Return x, if x is a NaN or Inf; or overflow, otherwise.  */

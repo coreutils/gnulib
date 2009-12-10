@@ -64,56 +64,56 @@ areadlink (char const *filename)
       ssize_t link_length = readlink (filename, buffer, buf_size);
 
       /* On AIX 5L v5.3 and HP-UX 11i v2 04/09, readlink returns -1
-	 with errno == ERANGE if the buffer is too small.  */
+         with errno == ERANGE if the buffer is too small.  */
       if (link_length < 0 && errno != ERANGE)
-	{
-	  if (buffer != initial_buf)
-	    {
-	      int saved_errno = errno;
-	      free (buffer);
-	      errno = saved_errno;
-	    }
-	  return NULL;
-	}
+        {
+          if (buffer != initial_buf)
+            {
+              int saved_errno = errno;
+              free (buffer);
+              errno = saved_errno;
+            }
+          return NULL;
+        }
 
       if ((size_t) link_length < buf_size)
-	{
-	  buffer[link_length++] = '\0';
+        {
+          buffer[link_length++] = '\0';
 
-	  /* Return it in a chunk of memory as small as possible.  */
-	  if (buffer == initial_buf)
-	    {
-	      buffer = (char *) malloc (link_length);
-	      if (buffer == NULL)
-		/* errno is ENOMEM.  */
-		return NULL;
-	      memcpy (buffer, initial_buf, link_length);
-	    }
-	  else
-	    {
-	      /* Shrink buffer before returning it.  */
-	      if ((size_t) link_length < buf_size)
-		{
-		  char *smaller_buffer = (char *) realloc (buffer, link_length);
+          /* Return it in a chunk of memory as small as possible.  */
+          if (buffer == initial_buf)
+            {
+              buffer = (char *) malloc (link_length);
+              if (buffer == NULL)
+                /* errno is ENOMEM.  */
+                return NULL;
+              memcpy (buffer, initial_buf, link_length);
+            }
+          else
+            {
+              /* Shrink buffer before returning it.  */
+              if ((size_t) link_length < buf_size)
+                {
+                  char *smaller_buffer = (char *) realloc (buffer, link_length);
 
-		  if (smaller_buffer != NULL)
-		    buffer = smaller_buffer;
-		}
-	    }
-	  return buffer;
-	}
+                  if (smaller_buffer != NULL)
+                    buffer = smaller_buffer;
+                }
+            }
+          return buffer;
+        }
 
       if (buffer != initial_buf)
-	free (buffer);
+        free (buffer);
       buf_size *= 2;
       if (SSIZE_MAX < buf_size || (SIZE_MAX / 2 < SSIZE_MAX && buf_size == 0))
-	{
-	  errno = ENOMEM;
-	  return NULL;
-	}
+        {
+          errno = ENOMEM;
+          return NULL;
+        }
       buffer = (char *) malloc (buf_size);
       if (buffer == NULL)
-	/* errno is ENOMEM.  */
-	return NULL;
+        /* errno is ENOMEM.  */
+        return NULL;
     }
 }

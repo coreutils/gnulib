@@ -33,27 +33,27 @@ getdtablesize (void)
   if (dtablesize == 0)
     {
       /* We are looking for the number N such that the valid file descriptors
-	 are 0..N-1.  It can be obtained through a loop as follows:
-	   {
-	     int fd;
-	     for (fd = 3; fd < 65536; fd++)
-	       if (dup2 (0, fd) == -1)
-	         break;
-	     return fd;
-	   }
-	 On Windows XP, the result is 2048.
-	 The drawback of this loop is that it allocates memory for a libc
-	 internal array that is never freed.
+         are 0..N-1.  It can be obtained through a loop as follows:
+           {
+             int fd;
+             for (fd = 3; fd < 65536; fd++)
+               if (dup2 (0, fd) == -1)
+                 break;
+             return fd;
+           }
+         On Windows XP, the result is 2048.
+         The drawback of this loop is that it allocates memory for a libc
+         internal array that is never freed.
 
-	 The number N can also be obtained as the upper bound for
-	 _getmaxstdio ().  _getmaxstdio () returns the maximum number of open
-	 FILE objects.  The sanity check in _setmaxstdio reveals the maximum
-	 number of file descriptors.  This too allocates memory, but it is
-	 freed when we call _setmaxstdio with the original value.  */
+         The number N can also be obtained as the upper bound for
+         _getmaxstdio ().  _getmaxstdio () returns the maximum number of open
+         FILE objects.  The sanity check in _setmaxstdio reveals the maximum
+         number of file descriptors.  This too allocates memory, but it is
+         freed when we call _setmaxstdio with the original value.  */
       int orig_max_stdio = _getmaxstdio ();
       unsigned int bound;
       for (bound = 0x10000; _setmaxstdio (bound) < 0; bound = bound / 2)
-	;
+        ;
       _setmaxstdio (orig_max_stdio);
       dtablesize = bound;
     }

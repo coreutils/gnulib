@@ -43,7 +43,7 @@ chdir_no_follow (char const *dir)
   int result = 0;
   int saved_errno;
   int fd = open (dir,
-		 O_RDONLY | O_DIRECTORY | O_NOCTTY | O_NOFOLLOW | O_NONBLOCK);
+                 O_RDONLY | O_DIRECTORY | O_NOCTTY | O_NOFOLLOW | O_NONBLOCK);
   if (fd < 0)
     return -1;
 
@@ -58,15 +58,15 @@ chdir_no_follow (char const *dir)
       struct stat sb1;
       result = lstat (dir, &sb1);
       if (result == 0)
-	{
-	  struct stat sb2;
-	  result = fstat (fd, &sb2);
-	  if (result == 0 && ! SAME_INODE (sb1, sb2))
-	    {
-	      errno = ELOOP;
-	      result = -1;
-	    }
-	}
+        {
+          struct stat sb2;
+          result = fstat (fd, &sb2);
+          if (result == 0 && ! SAME_INODE (sb1, sb2))
+            {
+              errno = ELOOP;
+              result = -1;
+            }
+        }
     }
 
   if (result == 0)

@@ -25,15 +25,15 @@
 
 #define SIZEOF(array) (sizeof (array) / sizeof (array[0]))
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 int
@@ -46,11 +46,11 @@ main ()
     static const uint16_t input[61] =
       /* "Grüß Gott. Здравствуйте! x=(-b±sqrt(b²-4ac))/(2a)  日本語,中文,한글" */
       { 'G', 'r', 0x00FC, 0x00DF, ' ', 'G', 'o', 't', 't', '.', ' ',
-	0x0417, 0x0434, 0x0440, 0x0430, 0x0432, 0x0441, 0x0442, 0x0432, 0x0443,
-	0x0439, 0x0442, 0x0435, '!', ' ',
-	'x', '=', '(', '-', 'b', 0x00B1, 's', 'q', 'r', 't', '(', 'b', 0x00B2,
-	'-', '4', 'a', 'c', ')', ')', '/', '(', '2', 'a', ')', ' ', ' ',
-	0x65E5, 0x672C, 0x8A9E, ',', 0x4E2D, 0x6587, ',', 0xD55C, 0xAE00, '\n'
+        0x0417, 0x0434, 0x0440, 0x0430, 0x0432, 0x0441, 0x0442, 0x0432, 0x0443,
+        0x0439, 0x0442, 0x0435, '!', ' ',
+        'x', '=', '(', '-', 'b', 0x00B1, 's', 'q', 'r', 't', '(', 'b', 0x00B2,
+        '-', '4', 'a', 'c', ')', ')', '/', '(', '2', 'a', ')', ' ', ' ',
+        0x65E5, 0x672C, 0x8A9E, ',', 0x4E2D, 0x6587, ',', 0xD55C, 0xAE00, '\n'
       };
 
     {
@@ -59,16 +59,16 @@ main ()
 
       u16_possible_linebreaks (input, SIZEOF (input), "GB18030", p);
       for (i = 0; i < 61; i++)
-	{
-	  ASSERT (p[i] == (i == 60 ? UC_BREAK_MANDATORY :
-			   i == 5
-			   || i == 11 || i == 25
-			   || i == 27 || i == 29 || i == 30 || i == 35
-			   || i == 45 || i == 51
-			   || i == 52 || i == 53 || i == 55 || i == 56
-			   || i == 58 || i == 59 ? UC_BREAK_POSSIBLE :
-			   UC_BREAK_PROHIBITED));
-	}
+        {
+          ASSERT (p[i] == (i == 60 ? UC_BREAK_MANDATORY :
+                           i == 5
+                           || i == 11 || i == 25
+                           || i == 27 || i == 29 || i == 30 || i == 35
+                           || i == 45 || i == 51
+                           || i == 52 || i == 53 || i == 55 || i == 56
+                           || i == 58 || i == 59 ? UC_BREAK_POSSIBLE :
+                           UC_BREAK_PROHIBITED));
+        }
       free (p);
     }
 
@@ -78,16 +78,16 @@ main ()
 
       u16_possible_linebreaks (input, SIZEOF (input), "GB2312", p);
       for (i = 0; i < 61; i++)
-	{
-	  ASSERT (p[i] == (i == 60 ? UC_BREAK_MANDATORY :
-			   i == 5
-			   || i == 11 || i == 25
-			   || i == 27 || i == 29 || i == 30 || i == 35
-			   || i == 37 || i == 45 || i == 51
-			   || i == 52 || i == 53 || i == 55 || i == 56
-			   || i == 58 || i == 59 ? UC_BREAK_POSSIBLE :
-			   UC_BREAK_PROHIBITED));
-	}
+        {
+          ASSERT (p[i] == (i == 60 ? UC_BREAK_MANDATORY :
+                           i == 5
+                           || i == 11 || i == 25
+                           || i == 27 || i == 29 || i == 30 || i == 35
+                           || i == 37 || i == 45 || i == 51
+                           || i == 52 || i == 53 || i == 55 || i == 56
+                           || i == 58 || i == 59 ? UC_BREAK_POSSIBLE :
+                           UC_BREAK_PROHIBITED));
+        }
       free (p);
     }
   }

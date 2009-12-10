@@ -39,7 +39,7 @@ typedef struct
    EFFECTIVE_KEYLEN of 0, but see RFC 2268 for more information. */
 void
 arctwo_setkey_ekb (arctwo_context *context,
-		   size_t keylen, const char *key, size_t effective_keylen);
+                   size_t keylen, const char *key, size_t effective_keylen);
 
 #define arctwo_setkey(context,keylen,key) \
   arctwo_setkey_ekb (context, keylen, key, 8 * (keylen))
@@ -50,7 +50,7 @@ arctwo_setkey_ekb (arctwo_context *context,
    arctwo_setkey_ekb. */
 extern void
 arctwo_encrypt (arctwo_context *context, const char *inbuf,
-		char *outbuf, size_t length);
+                char *outbuf, size_t length);
 
 /* Decrypt INBUF of size LENGTH into OUTBUF.  LENGTH must be a
    multiple of ARCTWO_BLOCK_SIZE.  CONTEXT hold the decryption key,
@@ -58,6 +58,6 @@ arctwo_encrypt (arctwo_context *context, const char *inbuf,
    arctwo_setkey_ekb. */
 extern void
 arctwo_decrypt (arctwo_context *context, const char *inbuf,
-		char *outbuf, size_t length);
+                char *outbuf, size_t length);
 
 #endif /* ARCTWO_H */

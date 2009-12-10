@@ -6,6 +6,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2009-12-10  *               Most source code files have been converted to
+                            indentation by spaces (rather than tabs). Patches
+                            of gnulib source code needs to be updated.
+
 2009-12-09  link-warning    The Makefile rules that use $(LINK_WARNING_H) now
                             must contain an explicit dependency on
                             $(LINK_WARNING_H).

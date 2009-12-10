@@ -74,8 +74,8 @@ AC_BEFORE([$0], [AC_RUN_IFELSE])dnl
     [ac_cv_safe_to_define___extensions__],
     [AC_COMPILE_IFELSE(
        [AC_LANG_PROGRAM([[
-#	  define __EXTENSIONS__ 1
-	  ]AC_INCLUDES_DEFAULT])],
+#         define __EXTENSIONS__ 1
+          ]AC_INCLUDES_DEFAULT])],
        [ac_cv_safe_to_define___extensions__=yes],
        [ac_cv_safe_to_define___extensions__=no])])
   test $ac_cv_safe_to_define___extensions__ = yes &&

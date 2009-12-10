@@ -20,15 +20,15 @@
 #include <time.h>
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 int
@@ -48,7 +48,7 @@ main ()
       ASSERT (random_r (&rand_state, &r) == 0);
       ASSERT (0 <= r);
       if (RAND_MAX / 2 < r)
-	++n_big;
+        ++n_big;
     }
 
   /* Fail if none of the numbers were larger than RAND_MAX / 2.  */

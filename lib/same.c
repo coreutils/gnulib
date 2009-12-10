@@ -85,36 +85,36 @@ same_name (const char *source, const char *dest)
       dest_dirname = dir_name (dest);
 
       if (stat (source_dirname, &source_dir_stats))
-	{
-	  /* Shouldn't happen.  */
-	  error (1, errno, "%s", source_dirname);
-	}
+        {
+          /* Shouldn't happen.  */
+          error (1, errno, "%s", source_dirname);
+        }
 
       if (stat (dest_dirname, &dest_dir_stats))
-	{
-	  /* Shouldn't happen.  */
-	  error (1, errno, "%s", dest_dirname);
-	}
+        {
+          /* Shouldn't happen.  */
+          error (1, errno, "%s", dest_dirname);
+        }
 
       same = SAME_INODE (source_dir_stats, dest_dir_stats);
 
 #if ! _POSIX_NO_TRUNC && HAVE_PATHCONF && defined _PC_NAME_MAX
       if (same && ! identical_basenames)
-	{
-	  long name_max = (errno = 0, pathconf (dest_dirname, _PC_NAME_MAX));
-	  if (name_max < 0)
-	    {
-	      if (errno)
-		{
-		  /* Shouldn't happen.  */
-		  error (1, errno, "%s", dest_dirname);
-		}
-	      same = false;
-	    }
-	  else
-	    same = (name_max <= min_baselen
-		    && memcmp (source_basename, dest_basename, name_max) == 0);
-	}
+        {
+          long name_max = (errno = 0, pathconf (dest_dirname, _PC_NAME_MAX));
+          if (name_max < 0)
+            {
+              if (errno)
+                {
+                  /* Shouldn't happen.  */
+                  error (1, errno, "%s", dest_dirname);
+                }
+              same = false;
+            }
+          else
+            same = (name_max <= min_baselen
+                    && memcmp (source_basename, dest_basename, name_max) == 0);
+        }
 #endif
 
       free (source_dirname);

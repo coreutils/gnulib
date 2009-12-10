@@ -29,19 +29,19 @@ mbsrchr (const char *string, int c)
 {
   if (MB_CUR_MAX > 1
       /* Optimization: We know that ASCII characters < 0x30 don't occur as
-	 part of multibyte characters longer than 1 byte.  Hence, if c < 0x30,
-	 the faster unibyte loop can be used.  */
+         part of multibyte characters longer than 1 byte.  Hence, if c < 0x30,
+         the faster unibyte loop can be used.  */
       && (unsigned char) c >= 0x30)
     {
       const char *result = NULL;
       mbui_iterator_t iter;
 
       for (mbui_init (iter, string); mbui_avail (iter); mbui_advance (iter))
-	{
-	  if (mb_len (mbui_cur (iter)) == 1
-	      && (unsigned char) * mbui_cur_ptr (iter) == (unsigned char) c)
-	    result = mbui_cur_ptr (iter);
-	}
+        {
+          if (mb_len (mbui_cur (iter)) == 1
+              && (unsigned char) * mbui_cur_ptr (iter) == (unsigned char) c)
+            result = mbui_cur_ptr (iter);
+        }
       return (char *) result;
     }
   else

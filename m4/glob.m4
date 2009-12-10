@@ -27,8 +27,8 @@ AC_DEFUN([gl_GLOB],
 [     AC_COMPILE_IFELSE(
 [[#include <gnu-versions.h>
 char a[_GNU_GLOB_INTERFACE_VERSION == 1 ? 1 : -1];]],
-	[gl_cv_gnu_glob_interface_version_1=yes],
-	[gl_cv_gnu_glob_interface_version_1=no])])
+        [gl_cv_gnu_glob_interface_version_1=yes],
+        [gl_cv_gnu_glob_interface_version_1=no])])
 
     if test "$gl_cv_gnu_glob_interface_version_1" = "no"; then
       GLOB_H=glob.h

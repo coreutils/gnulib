@@ -53,10 +53,10 @@ struct gl_list_impl
 
 static gl_list_t
 gl_array_create_empty (gl_list_implementation_t implementation,
-		       gl_listelement_equals_fn equals_fn,
-		       gl_listelement_hashcode_fn hashcode_fn,
-		       gl_listelement_dispose_fn dispose_fn,
-		       bool allow_duplicates)
+                       gl_listelement_equals_fn equals_fn,
+                       gl_listelement_hashcode_fn hashcode_fn,
+                       gl_listelement_dispose_fn dispose_fn,
+                       bool allow_duplicates)
 {
   struct gl_list_impl *list = XMALLOC (struct gl_list_impl);
 
@@ -74,11 +74,11 @@ gl_array_create_empty (gl_list_implementation_t implementation,
 
 static gl_list_t
 gl_array_create (gl_list_implementation_t implementation,
-		 gl_listelement_equals_fn equals_fn,
-		 gl_listelement_hashcode_fn hashcode_fn,
-		 gl_listelement_dispose_fn dispose_fn,
-		 bool allow_duplicates,
-		 size_t count, const void **contents)
+                 gl_listelement_equals_fn equals_fn,
+                 gl_listelement_hashcode_fn hashcode_fn,
+                 gl_listelement_dispose_fn dispose_fn,
+                 bool allow_duplicates,
+                 size_t count, const void **contents)
 {
   struct gl_list_impl *list = XMALLOC (struct gl_list_impl);
 
@@ -178,7 +178,7 @@ gl_array_set_at (gl_list_t list, size_t position, const void *elt)
 
 static size_t
 gl_array_indexof_from_to (gl_list_t list, size_t start_index, size_t end_index,
-			  const void *elt)
+                          const void *elt)
 {
   size_t count = list->count;
 
@@ -190,38 +190,38 @@ gl_array_indexof_from_to (gl_list_t list, size_t start_index, size_t end_index,
     {
       gl_listelement_equals_fn equals = list->base.equals_fn;
       if (equals != NULL)
-	{
-	  size_t i;
+        {
+          size_t i;
 
-	  for (i = start_index;;)
-	    {
-	      if (equals (elt, list->elements[i]))
-		return i;
-	      i++;
-	      if (i == end_index)
-		break;
-	    }
-	}
+          for (i = start_index;;)
+            {
+              if (equals (elt, list->elements[i]))
+                return i;
+              i++;
+              if (i == end_index)
+                break;
+            }
+        }
       else
-	{
-	  size_t i;
+        {
+          size_t i;
 
-	  for (i = start_index;;)
-	    {
-	      if (elt == list->elements[i])
-		return i;
-	      i++;
-	      if (i == end_index)
-		break;
-	    }
-	}
+          for (i = start_index;;)
+            {
+              if (elt == list->elements[i])
+                return i;
+              i++;
+              if (i == end_index)
+                break;
+            }
+        }
     }
   return (size_t)(-1);
 }
 
 static gl_list_node_t
 gl_array_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
-			 const void *elt)
+                         const void *elt)
 {
   size_t index = gl_array_indexof_from_to (list, start_index, end_index, elt);
   return INDEX_TO_NODE (index);
@@ -401,19 +401,19 @@ gl_array_list_free (gl_list_t list)
   if (list->elements != NULL)
     {
       if (list->base.dispose_fn != NULL)
-	{
-	  size_t count = list->count;
+        {
+          size_t count = list->count;
 
-	  if (count > 0)
-	    {
-	      gl_listelement_dispose_fn dispose = list->base.dispose_fn;
-	      const void **elements = list->elements;
+          if (count > 0)
+            {
+              gl_listelement_dispose_fn dispose = list->base.dispose_fn;
+              const void **elements = list->elements;
 
-	      do
-		dispose (*elements++);
-	      while (--count > 0);
-	    }
-	}
+              do
+                dispose (*elements++);
+              while (--count > 0);
+            }
+        }
       free (list->elements);
     }
   free (list);
@@ -462,14 +462,14 @@ gl_array_iterator_from_to (gl_list_t list, size_t start_index, size_t end_index)
 
 static bool
 gl_array_iterator_next (gl_list_iterator_t *iterator,
-			const void **eltp, gl_list_node_t *nodep)
+                        const void **eltp, gl_list_node_t *nodep)
 {
   gl_list_t list = iterator->list;
   if (iterator->count != list->count)
     {
       if (iterator->count != list->count + 1)
-	/* Concurrent modifications were done on the list.  */
-	abort ();
+        /* Concurrent modifications were done on the list.  */
+        abort ();
       /* The last returned element was removed.  */
       iterator->count--;
       iterator->p = (const void **) iterator->p - 1;
@@ -480,7 +480,7 @@ gl_array_iterator_next (gl_list_iterator_t *iterator,
       const void **p = (const void **) iterator->p;
       *eltp = *p;
       if (nodep != NULL)
-	*nodep = INDEX_TO_NODE (p - list->elements);
+        *nodep = INDEX_TO_NODE (p - list->elements);
       iterator->p = p + 1;
       return true;
     }
@@ -497,9 +497,9 @@ gl_array_iterator_free (gl_list_iterator_t *iterator)
 
 static size_t
 gl_array_sortedlist_indexof_from_to (gl_list_t list,
-				     gl_listelement_compar_fn compar,
-				     size_t low, size_t high,
-				     const void *elt)
+                                     gl_listelement_compar_fn compar,
+                                     size_t low, size_t high,
+                                     const void *elt)
 {
   if (!(low <= high && high <= list->count))
     /* Invalid arguments.  */
@@ -507,47 +507,47 @@ gl_array_sortedlist_indexof_from_to (gl_list_t list,
   if (low < high)
     {
       /* At each loop iteration, low < high; for indices < low the values
-	 are smaller than ELT; for indices >= high the values are greater
-	 than ELT.  So, if the element occurs in the list, it is at
-	 low <= position < high.  */
+         are smaller than ELT; for indices >= high the values are greater
+         than ELT.  So, if the element occurs in the list, it is at
+         low <= position < high.  */
       do
-	{
-	  size_t mid = low + (high - low) / 2; /* low <= mid < high */
-	  int cmp = compar (list->elements[mid], elt);
+        {
+          size_t mid = low + (high - low) / 2; /* low <= mid < high */
+          int cmp = compar (list->elements[mid], elt);
 
-	  if (cmp < 0)
-	    low = mid + 1;
-	  else if (cmp > 0)
-	    high = mid;
-	  else /* cmp == 0 */
-	    {
-	      /* We have an element equal to ELT at index MID.  But we need
-		 the minimal such index.  */
-	      high = mid;
-	      /* At each loop iteration, low <= high and
-		   compar (list->elements[high], elt) == 0,
-		 and we know that the first occurrence of the element is at
-		 low <= position <= high.  */
-	      while (low < high)
-		{
-		  size_t mid2 = low + (high - low) / 2; /* low <= mid2 < high */
-		  int cmp2 = compar (list->elements[mid2], elt);
+          if (cmp < 0)
+            low = mid + 1;
+          else if (cmp > 0)
+            high = mid;
+          else /* cmp == 0 */
+            {
+              /* We have an element equal to ELT at index MID.  But we need
+                 the minimal such index.  */
+              high = mid;
+              /* At each loop iteration, low <= high and
+                   compar (list->elements[high], elt) == 0,
+                 and we know that the first occurrence of the element is at
+                 low <= position <= high.  */
+              while (low < high)
+                {
+                  size_t mid2 = low + (high - low) / 2; /* low <= mid2 < high */
+                  int cmp2 = compar (list->elements[mid2], elt);
 
-		  if (cmp2 < 0)
-		    low = mid2 + 1;
-		  else if (cmp2 > 0)
-		    /* The list was not sorted.  */
-		    abort ();
-		  else /* cmp2 == 0 */
-		    {
-		      if (mid2 == low)
-			break;
-		      high = mid2 - 1;
-		    }
-		}
-	      return low;
-	    }
-	}
+                  if (cmp2 < 0)
+                    low = mid2 + 1;
+                  else if (cmp2 > 0)
+                    /* The list was not sorted.  */
+                    abort ();
+                  else /* cmp2 == 0 */
+                    {
+                      if (mid2 == low)
+                        break;
+                      high = mid2 - 1;
+                    }
+                }
+              return low;
+            }
+        }
       while (low < high);
       /* Here low == high.  */
     }
@@ -556,17 +556,17 @@ gl_array_sortedlist_indexof_from_to (gl_list_t list,
 
 static size_t
 gl_array_sortedlist_indexof (gl_list_t list, gl_listelement_compar_fn compar,
-			     const void *elt)
+                             const void *elt)
 {
   return gl_array_sortedlist_indexof_from_to (list, compar, 0, list->count,
-					      elt);
+                                              elt);
 }
 
 static gl_list_node_t
 gl_array_sortedlist_search_from_to (gl_list_t list,
-				    gl_listelement_compar_fn compar,
-				    size_t low, size_t high,
-				    const void *elt)
+                                    gl_listelement_compar_fn compar,
+                                    size_t low, size_t high,
+                                    const void *elt)
 {
   size_t index =
     gl_array_sortedlist_indexof_from_to (list, compar, low, high, elt);
@@ -575,7 +575,7 @@ gl_array_sortedlist_search_from_to (gl_list_t list,
 
 static gl_list_node_t
 gl_array_sortedlist_search (gl_list_t list, gl_listelement_compar_fn compar,
-			    const void *elt)
+                            const void *elt)
 {
   size_t index =
     gl_array_sortedlist_indexof_from_to (list, compar, 0, list->count, elt);
@@ -584,7 +584,7 @@ gl_array_sortedlist_search (gl_list_t list, gl_listelement_compar_fn compar,
 
 static gl_list_node_t
 gl_array_sortedlist_add (gl_list_t list, gl_listelement_compar_fn compar,
-			 const void *elt)
+                         const void *elt)
 {
   size_t count = list->count;
   size_t low = 0;
@@ -598,21 +598,21 @@ gl_array_sortedlist_add (gl_list_t list, gl_listelement_compar_fn compar,
       int cmp = compar (list->elements[mid], elt);
 
       if (cmp < 0)
-	low = mid + 1;
+        low = mid + 1;
       else if (cmp > 0)
-	high = mid;
+        high = mid;
       else /* cmp == 0 */
-	{
-	  low = mid;
-	  break;
-	}
+        {
+          low = mid;
+          break;
+        }
     }
   return gl_array_add_at (list, low, elt);
 }
 
 static bool
 gl_array_sortedlist_remove (gl_list_t list, gl_listelement_compar_fn compar,
-			    const void *elt)
+                            const void *elt)
 {
   size_t index = gl_array_sortedlist_indexof (list, compar, elt);
   if (index == (size_t)(-1))

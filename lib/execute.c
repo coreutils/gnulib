@@ -98,11 +98,11 @@ nonintr_open (const char *pathname, int oflag, mode_t mode)
    creator receives a catchable fatal signal.  */
 int
 execute (const char *progname,
-	 const char *prog_path, char **prog_argv,
-	 bool ignore_sigpipe,
-	 bool null_stdin, bool null_stdout, bool null_stderr,
-	 bool slave_process, bool exit_on_error,
-	 int *termsigp)
+         const char *prog_path, char **prog_argv,
+         bool ignore_sigpipe,
+         bool null_stdin, bool null_stdout, bool null_stderr,
+         bool slave_process, bool exit_on_error,
+         int *termsigp)
 {
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 
@@ -131,20 +131,20 @@ execute (const char *progname,
   nulloutfd = -1;
   if ((!null_stdin
        || ((nullinfd = open ("NUL", O_RDONLY, 0)) >= 0
-	   && (nullinfd == STDIN_FILENO
-	       || (dup2 (nullinfd, STDIN_FILENO) >= 0
-		   && close (nullinfd) >= 0))))
+           && (nullinfd == STDIN_FILENO
+               || (dup2 (nullinfd, STDIN_FILENO) >= 0
+                   && close (nullinfd) >= 0))))
       && (!(null_stdout || null_stderr)
-	  || ((nulloutfd = open ("NUL", O_RDWR, 0)) >= 0
-	      && (!null_stdout
-		  || nulloutfd == STDOUT_FILENO
-		  || dup2 (nulloutfd, STDOUT_FILENO) >= 0)
-	      && (!null_stderr
-		  || nulloutfd == STDERR_FILENO
-		  || dup2 (nulloutfd, STDERR_FILENO) >= 0)
-	      && ((null_stdout && nulloutfd == STDOUT_FILENO)
-		  || (null_stderr && nulloutfd == STDERR_FILENO)
-		  || close (nulloutfd) >= 0))))
+          || ((nulloutfd = open ("NUL", O_RDWR, 0)) >= 0
+              && (!null_stdout
+                  || nulloutfd == STDOUT_FILENO
+                  || dup2 (nulloutfd, STDOUT_FILENO) >= 0)
+              && (!null_stderr
+                  || nulloutfd == STDERR_FILENO
+                  || dup2 (nulloutfd, STDERR_FILENO) >= 0)
+              && ((null_stdout && nulloutfd == STDOUT_FILENO)
+                  || (null_stderr && nulloutfd == STDERR_FILENO)
+                  || close (nulloutfd) >= 0))))
     /* Use spawnvpe and pass the environment explicitly.  This is needed if
        the program has modified the environment using putenv() or [un]setenv().
        On Windows, programs have two environments, one in the "environment
@@ -155,16 +155,16 @@ execute (const char *progname,
        [un]setenv().  */
     {
       exitcode = spawnvpe (P_WAIT, prog_path, (const char **) prog_argv,
-			   (const char **) environ);
+                           (const char **) environ);
       if (exitcode < 0 && errno == ENOEXEC)
-	{
-	  /* prog is not an native executable.  Try to execute it as a
-	     shell script.  Note that prepare_spawn() has already prepended
-	     a hidden element "sh.exe" to prog_argv.  */
-	  --prog_argv;
-	  exitcode = spawnvpe (P_WAIT, prog_argv[0], (const char **) prog_argv,
-			       (const char **) environ);
-	}
+        {
+          /* prog is not an native executable.  Try to execute it as a
+             shell script.  Note that prepare_spawn() has already prepended
+             a hidden element "sh.exe" to prog_argv.  */
+          --prog_argv;
+          exitcode = spawnvpe (P_WAIT, prog_argv[0], (const char **) prog_argv,
+                               (const char **) environ);
+        }
     }
   if (nulloutfd >= 0)
     close (nulloutfd);
@@ -185,8 +185,8 @@ execute (const char *progname,
   if (exitcode == -1)
     {
       if (exit_on_error || !null_stderr)
-	error (exit_on_error ? EXIT_FAILURE : 0, errno,
-	       _("%s subprocess failed"), progname);
+        error (exit_on_error ? EXIT_FAILURE : 0, errno,
+               _("%s subprocess failed"), progname);
       return 127;
     }
 
@@ -217,49 +217,49 @@ execute (const char *progname,
   attrs_allocated = false;
   if ((err = posix_spawn_file_actions_init (&actions)) != 0
       || (actions_allocated = true,
-	  (null_stdin
-	    && (err = posix_spawn_file_actions_addopen (&actions,
-							STDIN_FILENO,
-							"/dev/null", O_RDONLY,
-							0))
-	       != 0)
-	  || (null_stdout
-	      && (err = posix_spawn_file_actions_addopen (&actions,
-							  STDOUT_FILENO,
-							  "/dev/null", O_RDWR,
-							  0))
-		 != 0)
-	  || (null_stderr
-	      && (err = posix_spawn_file_actions_addopen (&actions,
-							  STDERR_FILENO,
-							  "/dev/null", O_RDWR,
-							  0))
-		 != 0)
-	  || (slave_process
-	      && ((err = posix_spawnattr_init (&attrs)) != 0
-		  || (attrs_allocated = true,
-		      (err = posix_spawnattr_setsigmask (&attrs,
-							 &blocked_signals))
-		      != 0
-		      || (err = posix_spawnattr_setflags (&attrs,
-							POSIX_SPAWN_SETSIGMASK))
-			 != 0)))
-	  || (err = posix_spawnp (&child, prog_path, &actions,
-				  attrs_allocated ? &attrs : NULL, prog_argv,
-				  environ))
-	     != 0))
+          (null_stdin
+            && (err = posix_spawn_file_actions_addopen (&actions,
+                                                        STDIN_FILENO,
+                                                        "/dev/null", O_RDONLY,
+                                                        0))
+               != 0)
+          || (null_stdout
+              && (err = posix_spawn_file_actions_addopen (&actions,
+                                                          STDOUT_FILENO,
+                                                          "/dev/null", O_RDWR,
+                                                          0))
+                 != 0)
+          || (null_stderr
+              && (err = posix_spawn_file_actions_addopen (&actions,
+                                                          STDERR_FILENO,
+                                                          "/dev/null", O_RDWR,
+                                                          0))
+                 != 0)
+          || (slave_process
+              && ((err = posix_spawnattr_init (&attrs)) != 0
+                  || (attrs_allocated = true,
+                      (err = posix_spawnattr_setsigmask (&attrs,
+                                                         &blocked_signals))
+                      != 0
+                      || (err = posix_spawnattr_setflags (&attrs,
+                                                        POSIX_SPAWN_SETSIGMASK))
+                         != 0)))
+          || (err = posix_spawnp (&child, prog_path, &actions,
+                                  attrs_allocated ? &attrs : NULL, prog_argv,
+                                  environ))
+             != 0))
     {
       if (actions_allocated)
-	posix_spawn_file_actions_destroy (&actions);
+        posix_spawn_file_actions_destroy (&actions);
       if (attrs_allocated)
-	posix_spawnattr_destroy (&attrs);
+        posix_spawnattr_destroy (&attrs);
       if (slave_process)
-	unblock_fatal_signals ();
+        unblock_fatal_signals ();
       if (termsigp != NULL)
-	*termsigp = 0;
+        *termsigp = 0;
       if (exit_on_error || !null_stderr)
-	error (exit_on_error ? EXIT_FAILURE : 0, err,
-	       _("%s subprocess failed"), progname);
+        error (exit_on_error ? EXIT_FAILURE : 0, err,
+               _("%s subprocess failed"), progname);
       return 127;
     }
   posix_spawn_file_actions_destroy (&actions);
@@ -272,7 +272,7 @@ execute (const char *progname,
     }
 
   return wait_subprocess (child, progname, ignore_sigpipe, null_stderr,
-			  slave_process, exit_on_error, termsigp);
+                          slave_process, exit_on_error, termsigp);
 
 #endif
 }

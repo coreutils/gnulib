@@ -50,8 +50,8 @@ struct uninorm_filter
 
 struct uninorm_filter *
 uninorm_filter_create (uninorm_t nf,
-		       int (*stream_func) (void *stream_data, ucs4_t uc),
-		       void *stream_data)
+                       int (*stream_func) (void *stream_data, ucs4_t uc),
+                       void *stream_data)
 {
   struct uninorm_filter *filter =
     (struct uninorm_filter *) malloc (sizeof (struct uninorm_filter));
@@ -92,40 +92,40 @@ uninorm_filter_write (struct uninorm_filter *filter, ucs4_t uc_arg)
 
     for (curr = 0; curr < decomposed_count; )
       {
-	/* Invariant: decomposed[0..curr-1] is fully decomposed, i.e.
-	   all elements are atomic.  */
-	ucs4_t curr_decomposed[UC_DECOMPOSITION_MAX_LENGTH];
-	int curr_decomposed_count;
+        /* Invariant: decomposed[0..curr-1] is fully decomposed, i.e.
+           all elements are atomic.  */
+        ucs4_t curr_decomposed[UC_DECOMPOSITION_MAX_LENGTH];
+        int curr_decomposed_count;
 
-	curr_decomposed_count =
-	  filter->decomposer (decomposed[curr], curr_decomposed);
-	if (curr_decomposed_count >= 0)
-	  {
-	    /* Move curr_decomposed[0..curr_decomposed_count-1] over
-	       decomposed[curr], making room.  It's not worth using
-	       memcpy() here, since the counts are so small.  */
-	    int shift = curr_decomposed_count - 1;
+        curr_decomposed_count =
+          filter->decomposer (decomposed[curr], curr_decomposed);
+        if (curr_decomposed_count >= 0)
+          {
+            /* Move curr_decomposed[0..curr_decomposed_count-1] over
+               decomposed[curr], making room.  It's not worth using
+               memcpy() here, since the counts are so small.  */
+            int shift = curr_decomposed_count - 1;
 
-	    if (shift < 0)
-	      abort ();
-	    if (shift > 0)
-	      {
-		int j;
+            if (shift < 0)
+              abort ();
+            if (shift > 0)
+              {
+                int j;
 
-		decomposed_count += shift;
-		if (decomposed_count > UC_DECOMPOSITION_MAX_LENGTH)
-		  abort ();
-		for (j = decomposed_count - 1 - shift; j > curr; j--)
-		  decomposed[j + shift] = decomposed[j];
-	      }
-	    for (; shift >= 0; shift--)
-	      decomposed[curr + shift] = curr_decomposed[shift];
-	  }
-	else
-	  {
-	    /* decomposed[curr] is atomic.  */
-	    curr++;
-	  }
+                decomposed_count += shift;
+                if (decomposed_count > UC_DECOMPOSITION_MAX_LENGTH)
+                  abort ();
+                for (j = decomposed_count - 1 - shift; j > curr; j--)
+                  decomposed[j + shift] = decomposed[j];
+              }
+            for (; shift >= 0; shift--)
+              decomposed[curr + shift] = curr_decomposed[shift];
+          }
+        else
+          {
+            /* decomposed[curr] is atomic.  */
+            curr++;
+          }
       }
   }
 
@@ -137,119 +137,119 @@ uninorm_filter_write (struct uninorm_filter *filter, ucs4_t uc_arg)
 
     for (i = 0; i < decomposed_count; i++)
       {
-	/* Fetch the next character from the decomposition.  */
-	ucs4_t uc = decomposed[i];
-	int ccc = uc_combining_class (uc);
+        /* Fetch the next character from the decomposition.  */
+        ucs4_t uc = decomposed[i];
+        int ccc = uc_combining_class (uc);
 
-	if (ccc == 0)
-	  {
-	    size_t j;
+        if (ccc == 0)
+          {
+            size_t j;
 
-	    /* Apply the canonical ordering algorithm to the accumulated
-	       sequence of characters.  */
-	    if (sortbuf_count > 1)
-	      gl_uninorm_decompose_merge_sort_inplace (sortbuf, sortbuf_count,
-						       sortbuf + sortbuf_count);
+            /* Apply the canonical ordering algorithm to the accumulated
+               sequence of characters.  */
+            if (sortbuf_count > 1)
+              gl_uninorm_decompose_merge_sort_inplace (sortbuf, sortbuf_count,
+                                                       sortbuf + sortbuf_count);
 
-	    if (filter->composer != NULL)
-	      {
-		/* Attempt to combine decomposed characters, as specified
-		   in the Unicode Standard Annex #15 "Unicode Normalization
-		   Forms".  We need to check
-		     1. whether the first accumulated character is a
-			"starter" (i.e. has ccc = 0).  This is usually the
-			case.  But when the string starts with a
-			non-starter, the sortbuf also starts with a
-			non-starter.  Btw, this check could also be
-			omitted, because the composition table has only
-			entries (code1, code2) for which code1 is a
-			starter; if the first accumulated character is not
-			a starter, no lookup will succeed.
-		     2. If the sortbuf has more than one character, check
-			for each of these characters that are not "blocked"
-			from the starter (i.e. have a ccc that is higher
-			than the ccc of the previous character) whether it
-			can be combined with the first character.
-		     3. If only one character is left in sortbuf, check
-			whether it can be combined with the next character
-			(also a starter).  */
-		if (sortbuf_count > 0 && sortbuf[0].ccc == 0)
-		  {
-		    for (j = 1; j < sortbuf_count; )
-		      {
-			if (sortbuf[j].ccc > sortbuf[j - 1].ccc)
-			  {
-			    ucs4_t combined =
-			      filter->composer (sortbuf[0].code, sortbuf[j].code);
-			    if (combined)
-			      {
-				size_t k;
+            if (filter->composer != NULL)
+              {
+                /* Attempt to combine decomposed characters, as specified
+                   in the Unicode Standard Annex #15 "Unicode Normalization
+                   Forms".  We need to check
+                     1. whether the first accumulated character is a
+                        "starter" (i.e. has ccc = 0).  This is usually the
+                        case.  But when the string starts with a
+                        non-starter, the sortbuf also starts with a
+                        non-starter.  Btw, this check could also be
+                        omitted, because the composition table has only
+                        entries (code1, code2) for which code1 is a
+                        starter; if the first accumulated character is not
+                        a starter, no lookup will succeed.
+                     2. If the sortbuf has more than one character, check
+                        for each of these characters that are not "blocked"
+                        from the starter (i.e. have a ccc that is higher
+                        than the ccc of the previous character) whether it
+                        can be combined with the first character.
+                     3. If only one character is left in sortbuf, check
+                        whether it can be combined with the next character
+                        (also a starter).  */
+                if (sortbuf_count > 0 && sortbuf[0].ccc == 0)
+                  {
+                    for (j = 1; j < sortbuf_count; )
+                      {
+                        if (sortbuf[j].ccc > sortbuf[j - 1].ccc)
+                          {
+                            ucs4_t combined =
+                              filter->composer (sortbuf[0].code, sortbuf[j].code);
+                            if (combined)
+                              {
+                                size_t k;
 
-				sortbuf[0].code = combined;
-				/* sortbuf[0].ccc = 0, still valid.  */
-				for (k = j + 1; k < sortbuf_count; k++)
-				  sortbuf[k - 1] = sortbuf[k];
-				sortbuf_count--;
-				continue;
-			      }
-			  }
-			j++;
-		      }
-		    if (sortbuf_count == 1)
-		      {
-			ucs4_t combined =
-			  filter->composer (sortbuf[0].code, uc);
-			if (combined)
-			  {
-			    uc = combined;
-			    ccc = 0;
-			    /* uc could be further combined with subsequent
-			       characters.  So don't put it into sortbuf[0] in
-			       this round, only in the next round.  */
-			    sortbuf_count = 0;
-			  }
-		      }
-		  }
-	      }
+                                sortbuf[0].code = combined;
+                                /* sortbuf[0].ccc = 0, still valid.  */
+                                for (k = j + 1; k < sortbuf_count; k++)
+                                  sortbuf[k - 1] = sortbuf[k];
+                                sortbuf_count--;
+                                continue;
+                              }
+                          }
+                        j++;
+                      }
+                    if (sortbuf_count == 1)
+                      {
+                        ucs4_t combined =
+                          filter->composer (sortbuf[0].code, uc);
+                        if (combined)
+                          {
+                            uc = combined;
+                            ccc = 0;
+                            /* uc could be further combined with subsequent
+                               characters.  So don't put it into sortbuf[0] in
+                               this round, only in the next round.  */
+                            sortbuf_count = 0;
+                          }
+                      }
+                  }
+              }
 
-	    for (j = 0; j < sortbuf_count; j++)
-	      {
-		ucs4_t muc = sortbuf[j].code;
+            for (j = 0; j < sortbuf_count; j++)
+              {
+                ucs4_t muc = sortbuf[j].code;
 
-		/* Output muc to the encapsulated stream.  */
-		int ret = filter->stream_func (filter->stream_data, muc);
-		if (ret < 0)
-		  {
-		    /* errno is set here.  */
-		    filter->sortbuf_count = 0;
-		    return -1;
-		  }
-	      }
+                /* Output muc to the encapsulated stream.  */
+                int ret = filter->stream_func (filter->stream_data, muc);
+                if (ret < 0)
+                  {
+                    /* errno is set here.  */
+                    filter->sortbuf_count = 0;
+                    return -1;
+                  }
+              }
 
-	    /* sortbuf is now empty.  */
-	    sortbuf_count = 0;
-	  }
+            /* sortbuf is now empty.  */
+            sortbuf_count = 0;
+          }
 
-	/* Append (uc, ccc) to sortbuf.  */
-	if (sortbuf_count == filter->sortbuf_allocated)
-	  {
-	    struct ucs4_with_ccc *new_sortbuf;
+        /* Append (uc, ccc) to sortbuf.  */
+        if (sortbuf_count == filter->sortbuf_allocated)
+          {
+            struct ucs4_with_ccc *new_sortbuf;
 
-	    filter->sortbuf_allocated = 2 * filter->sortbuf_allocated;
-	    if (filter->sortbuf_allocated < sortbuf_count) /* integer overflow? */
-	      abort ();
-	    new_sortbuf =
-	      (struct ucs4_with_ccc *)
-	      malloc (2 * filter->sortbuf_allocated * sizeof (struct ucs4_with_ccc));
-	    memcpy (new_sortbuf, filter->sortbuf,
-		    sortbuf_count * sizeof (struct ucs4_with_ccc));
-	    if (filter->sortbuf != filter->sortbuf_preallocated)
-	      free (filter->sortbuf);
-	    filter->sortbuf = new_sortbuf;
-	  }
-	filter->sortbuf[sortbuf_count].code = uc;
-	filter->sortbuf[sortbuf_count].ccc = ccc;
-	sortbuf_count++;
+            filter->sortbuf_allocated = 2 * filter->sortbuf_allocated;
+            if (filter->sortbuf_allocated < sortbuf_count) /* integer overflow? */
+              abort ();
+            new_sortbuf =
+              (struct ucs4_with_ccc *)
+              malloc (2 * filter->sortbuf_allocated * sizeof (struct ucs4_with_ccc));
+            memcpy (new_sortbuf, filter->sortbuf,
+                    sortbuf_count * sizeof (struct ucs4_with_ccc));
+            if (filter->sortbuf != filter->sortbuf_preallocated)
+              free (filter->sortbuf);
+            filter->sortbuf = new_sortbuf;
+          }
+        filter->sortbuf[sortbuf_count].code = uc;
+        filter->sortbuf[sortbuf_count].ccc = ccc;
+        sortbuf_count++;
       }
 
     filter->sortbuf_count = sortbuf_count;
@@ -276,53 +276,53 @@ uninorm_filter_flush (struct uninorm_filter *filter)
      sequence of characters.  */
   if (sortbuf_count > 1)
     gl_uninorm_decompose_merge_sort_inplace (sortbuf, sortbuf_count,
-					     sortbuf + sortbuf_count);
+                                             sortbuf + sortbuf_count);
 
   if (filter->composer != NULL)
     {
       /* Attempt to combine decomposed characters, as specified
-	 in the Unicode Standard Annex #15 "Unicode Normalization
-	 Forms".  We need to check
-	   1. whether the first accumulated character is a
-	      "starter" (i.e. has ccc = 0).  This is usually the
-	      case.  But when the string starts with a
-	      non-starter, the sortbuf also starts with a
-	      non-starter.  Btw, this check could also be
-	      omitted, because the composition table has only
-	      entries (code1, code2) for which code1 is a
-	      starter; if the first accumulated character is not
-	      a starter, no lookup will succeed.
-	   2. If the sortbuf has more than one character, check
-	      for each of these characters that are not "blocked"
-	      from the starter (i.e. have a ccc that is higher
-	      than the ccc of the previous character) whether it
-	      can be combined with the first character.
-	   3. If only one character is left in sortbuf, check
-	      whether it can be combined with the next character
-	      (also a starter).  */
+         in the Unicode Standard Annex #15 "Unicode Normalization
+         Forms".  We need to check
+           1. whether the first accumulated character is a
+              "starter" (i.e. has ccc = 0).  This is usually the
+              case.  But when the string starts with a
+              non-starter, the sortbuf also starts with a
+              non-starter.  Btw, this check could also be
+              omitted, because the composition table has only
+              entries (code1, code2) for which code1 is a
+              starter; if the first accumulated character is not
+              a starter, no lookup will succeed.
+           2. If the sortbuf has more than one character, check
+              for each of these characters that are not "blocked"
+              from the starter (i.e. have a ccc that is higher
+              than the ccc of the previous character) whether it
+              can be combined with the first character.
+           3. If only one character is left in sortbuf, check
+              whether it can be combined with the next character
+              (also a starter).  */
       if (sortbuf_count > 0 && sortbuf[0].ccc == 0)
-	{
-	  for (j = 1; j < sortbuf_count; )
-	    {
-	      if (sortbuf[j].ccc > sortbuf[j - 1].ccc)
-		{
-		  ucs4_t combined =
-		    filter->composer (sortbuf[0].code, sortbuf[j].code);
-		  if (combined)
-		    {
-		      size_t k;
+        {
+          for (j = 1; j < sortbuf_count; )
+            {
+              if (sortbuf[j].ccc > sortbuf[j - 1].ccc)
+                {
+                  ucs4_t combined =
+                    filter->composer (sortbuf[0].code, sortbuf[j].code);
+                  if (combined)
+                    {
+                      size_t k;
 
-		      sortbuf[0].code = combined;
-		      /* sortbuf[0].ccc = 0, still valid.  */
-		      for (k = j + 1; k < sortbuf_count; k++)
-			sortbuf[k - 1] = sortbuf[k];
-		      sortbuf_count--;
-		      continue;
-		    }
-		}
-	      j++;
-	    }
-	}
+                      sortbuf[0].code = combined;
+                      /* sortbuf[0].ccc = 0, still valid.  */
+                      for (k = j + 1; k < sortbuf_count; k++)
+                        sortbuf[k - 1] = sortbuf[k];
+                      sortbuf_count--;
+                      continue;
+                    }
+                }
+              j++;
+            }
+        }
     }
 
   for (j = 0; j < sortbuf_count; j++)
@@ -332,11 +332,11 @@ uninorm_filter_flush (struct uninorm_filter *filter)
       /* Output muc to the encapsulated stream.  */
       int ret = filter->stream_func (filter->stream_data, muc);
       if (ret < 0)
-	{
-	  /* errno is set here.  */
-	  filter->sortbuf_count = 0;
-	  return -1;
-	}
+        {
+          /* errno is set here.  */
+          filter->sortbuf_count = 0;
+          return -1;
+        }
     }
 
   /* sortbuf is now empty.  */

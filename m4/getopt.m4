@@ -191,9 +191,9 @@ main ()
        POSIXLY_CORRECT=1
        export POSIXLY_CORRECT
        AC_RUN_IFELSE(
-	[AC_LANG_PROGRAM([[#include <getopt.h>
-			   #include <stddef.h>
-			   #include <string.h>
+        [AC_LANG_PROGRAM([[#include <getopt.h>
+                           #include <stddef.h>
+                           #include <string.h>
 #if !HAVE_DECL_OPTRESET
 # define OPTIND_MIN 0
 #else
@@ -238,10 +238,10 @@ main ()
                  return 7;
              }
              return 0;
-	   ]])],
-	[gl_cv_func_getopt_gnu=yes],
-	[gl_cv_func_getopt_gnu=no],
-	[dnl Cross compiling. Guess based on host and declarations.
+           ]])],
+        [gl_cv_func_getopt_gnu=yes],
+        [gl_cv_func_getopt_gnu=no],
+        [dnl Cross compiling. Guess based on host and declarations.
          case $host_os:$ac_cv_have_decl_optreset in
            *-gnu*:* | mingw*:*) gl_cv_func_getopt_gnu=no;;
            *:yes)               gl_cv_func_getopt_gnu=no;;

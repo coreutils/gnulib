@@ -26,9 +26,9 @@ main ()
   for (i = 0; i < SIZEOF (set); i++)
     {
       for (; c < set[i].start; c++)
-	ASSERT (!PREDICATE (c));
+        ASSERT (!PREDICATE (c));
       for (; c <= set[i].end; c++)
-	ASSERT (PREDICATE (c));
+        ASSERT (PREDICATE (c));
     }
   for (; c < 0x110000; c++)
     ASSERT (!PREDICATE (c));

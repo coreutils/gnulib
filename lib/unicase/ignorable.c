@@ -47,12 +47,12 @@ uc_is_case_ignorable (ucs4_t uc)
   int wbp = uc_wordbreak_property (uc);
 
   return (wbp == WBP_MIDLETTER || wbp == WBP_MIDNUMLET
-	  || uc_is_general_category_withtable (uc, UC_CATEGORY_MASK_Mn
-						   | UC_CATEGORY_MASK_Me
-						   | UC_CATEGORY_MASK_Cf
-						   | UC_CATEGORY_MASK_Lm
-						   | UC_CATEGORY_MASK_Sk))
-	 && !uc_is_cased (uc);
+          || uc_is_general_category_withtable (uc, UC_CATEGORY_MASK_Mn
+                                                   | UC_CATEGORY_MASK_Me
+                                                   | UC_CATEGORY_MASK_Cf
+                                                   | UC_CATEGORY_MASK_Lm
+                                                   | UC_CATEGORY_MASK_Sk))
+         && !uc_is_cased (uc);
 }
 
 #else

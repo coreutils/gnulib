@@ -22,15 +22,15 @@
 #include "save-cwd.h"
 
 #ifdef AT_FUNC_USE_F1_COND
-# define CALL_FUNC(F)				\
-  (flag == AT_FUNC_USE_F1_COND			\
-    ? AT_FUNC_F1 (F AT_FUNC_POST_FILE_ARGS)	\
+# define CALL_FUNC(F)                           \
+  (flag == AT_FUNC_USE_F1_COND                  \
+    ? AT_FUNC_F1 (F AT_FUNC_POST_FILE_ARGS)     \
     : AT_FUNC_F2 (F AT_FUNC_POST_FILE_ARGS))
-# define VALIDATE_FLAG(F)			\
-  if (flag & ~AT_FUNC_USE_F1_COND)		\
-    {						\
-      errno = EINVAL;				\
-      return FUNC_FAIL;				\
+# define VALIDATE_FLAG(F)                       \
+  if (flag & ~AT_FUNC_USE_F1_COND)              \
+    {                                           \
+      errno = EINVAL;                           \
+      return FUNC_FAIL;                         \
     }
 #else
 # define CALL_FUNC(F) (AT_FUNC_F1 (F AT_FUNC_POST_FILE_ARGS))

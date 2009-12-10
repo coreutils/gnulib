@@ -30,15 +30,15 @@ uc_wordbreak_property (ucs4_t uc)
     {
       int lookup1 = uniwbrkprop.level1[index1];
       if (lookup1 >= 0)
-	{
-	  unsigned int index2 = (uc >> wbrkprop_header_2) & wbrkprop_header_3;
-	  int lookup2 = uniwbrkprop.level2[lookup1 + index2];
-	  if (lookup2 >= 0)
-	    {
-	      unsigned int index3 = uc & wbrkprop_header_4;
-	      return uniwbrkprop.level3[lookup2 + index3];
-	    }
-	}
+        {
+          unsigned int index2 = (uc >> wbrkprop_header_2) & wbrkprop_header_3;
+          int lookup2 = uniwbrkprop.level2[lookup1 + index2];
+          if (lookup2 >= 0)
+            {
+              unsigned int index3 = uc & wbrkprop_header_4;
+              return uniwbrkprop.level3[lookup2 + index3];
+            }
+        }
     }
   return WBP_OTHER;
 }

@@ -29,12 +29,12 @@ FUNC (const char *tocode,
   if (offsets != NULL && srclen > 0)
     {
       scaled_offsets =
-	(size_t *) malloc (srclen * sizeof (UNIT) * sizeof (size_t));
+        (size_t *) malloc (srclen * sizeof (UNIT) * sizeof (size_t));
       if (scaled_offsets == NULL)
-	{
-	  errno = ENOMEM;
-	  return NULL;
-	}
+        {
+          errno = ENOMEM;
+          return NULL;
+        }
     }
   else
     scaled_offsets = NULL;
@@ -42,9 +42,9 @@ FUNC (const char *tocode,
   result = resultbuf;
   length = *lengthp;
   if (mem_iconveha ((const char *) src, srclen * sizeof (UNIT),
-		    UTF_NAME, tocode,
-		    handler == iconveh_question_mark, handler,
-		    scaled_offsets, &result, &length) < 0)
+                    UTF_NAME, tocode,
+                    handler == iconveh_question_mark, handler,
+                    scaled_offsets, &result, &length) < 0)
     {
       int saved_errno = errno;
       free (scaled_offsets);
@@ -55,11 +55,11 @@ FUNC (const char *tocode,
   if (offsets != NULL)
     {
       /* Convert scaled_offsets[srclen * sizeof (UNIT)] to
-	 offsets[srclen].  */
+         offsets[srclen].  */
       size_t i;
 
       for (i = 0; i < srclen; i++)
-	offsets[i] = scaled_offsets[i * sizeof (UNIT)];
+        offsets[i] = scaled_offsets[i * sizeof (UNIT)];
       free (scaled_offsets);
     }
 
@@ -67,10 +67,10 @@ FUNC (const char *tocode,
     {
       result = (char *) malloc (1);
       if (result == NULL)
-	{
-	  errno = ENOMEM;
-	  return NULL;
-	}
+        {
+          errno = ENOMEM;
+          return NULL;
+        }
     }
   *lengthp = length;
   return result;
@@ -91,62 +91,62 @@ FUNC (const char *tocode,
     {
       scaled_offsets = (size_t *) malloc (utf8_srclen * sizeof (size_t));
       if (scaled_offsets == NULL)
-	{
-	  if (utf8_src != tmpbuf)
-	    free (utf8_src);
-	  errno = ENOMEM;
-	  return NULL;
-	}
+        {
+          if (utf8_src != tmpbuf)
+            free (utf8_src);
+          errno = ENOMEM;
+          return NULL;
+        }
     }
   else
     scaled_offsets = NULL;
 
   result = u8_conv_to_encoding (tocode, handler, utf8_src, utf8_srclen,
-				scaled_offsets, resultbuf, lengthp);
+                                scaled_offsets, resultbuf, lengthp);
   if (result == NULL)
     {
       int saved_errno = errno;
       free (scaled_offsets);
       if (utf8_src != tmpbuf)
-	free (utf8_src);
+        free (utf8_src);
       errno = saved_errno;
       return NULL;
     }
   if (offsets != NULL)
     {
-      size_t iunit;	/* offset into src */
-      size_t i8;	/* offset into utf8_src */
+      size_t iunit;     /* offset into src */
+      size_t i8;        /* offset into utf8_src */
 
       for (iunit = 0; iunit < srclen; iunit++)
-	offsets[iunit] = (size_t)(-1);
+        offsets[iunit] = (size_t)(-1);
 
       iunit = 0;
       i8 = 0;
       while (iunit < srclen && i8 < utf8_srclen)
-	{
-	  int countunit;
-	  int count8;
+        {
+          int countunit;
+          int count8;
 
-	  offsets[iunit] = scaled_offsets[i8];
+          offsets[iunit] = scaled_offsets[i8];
 
-	  countunit = U_MBLEN (src + iunit, srclen - iunit);
-	  count8 = u8_mblen (utf8_src + i8, utf8_srclen - i8);
-	  if (countunit < 0 || count8 < 0)
-	    abort ();
-	  iunit += countunit;
-	  i8 += count8;
-	}
+          countunit = U_MBLEN (src + iunit, srclen - iunit);
+          count8 = u8_mblen (utf8_src + i8, utf8_srclen - i8);
+          if (countunit < 0 || count8 < 0)
+            abort ();
+          iunit += countunit;
+          i8 += count8;
+        }
       /* Check that utf8_src has been traversed entirely.  */
       if (i8 < utf8_srclen)
-	abort ();
+        abort ();
       /* Check that src has been traversed entirely, except possibly for an
-	 incomplete sequence of units at the end.  */
+         incomplete sequence of units at the end.  */
       if (iunit < srclen)
-	{
-	  offsets[iunit] = *lengthp;
-	  if (!(U_MBLEN (src + iunit, srclen - iunit) < 0))
-	    abort ();
-	}
+        {
+          offsets[iunit] = *lengthp;
+          if (!(U_MBLEN (src + iunit, srclen - iunit) < 0))
+            abort ();
+        }
       free (scaled_offsets);
     }
   if (utf8_src != tmpbuf)

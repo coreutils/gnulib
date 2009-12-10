@@ -26,21 +26,21 @@
 # if defined __DragonFly__          /* DragonFly */
   /* See <http://www.dragonflybsd.org/cvsweb/src/lib/libc/stdio/priv_stdio.h?rev=HEAD&content-type=text/x-cvsweb-markup>.  */
 #  define fp_ ((struct { struct __FILE_public pub; \
-			 struct { unsigned char *_base; int _size; } _bf; \
-			 void *cookie; \
-			 void *_close; \
-			 void *_read; \
-			 void *_seek; \
-			 void *_write; \
-			 struct { unsigned char *_base; int _size; } _ub; \
-			 int _ur; \
-			 unsigned char _ubuf[3]; \
-			 unsigned char _nbuf[1]; \
-			 struct { unsigned char *_base; int _size; } _lb; \
-			 int _blksize; \
-			 fpos_t _offset; \
-			 /* More fields, not relevant here.  */ \
-		       } *) fp)
+                         struct { unsigned char *_base; int _size; } _bf; \
+                         void *cookie; \
+                         void *_close; \
+                         void *_read; \
+                         void *_seek; \
+                         void *_write; \
+                         struct { unsigned char *_base; int _size; } _ub; \
+                         int _ur; \
+                         unsigned char _ubuf[3]; \
+                         unsigned char _nbuf[1]; \
+                         struct { unsigned char *_base; int _size; } _lb; \
+                         int _blksize; \
+                         fpos_t _offset; \
+                         /* More fields, not relevant here.  */ \
+                       } *) fp)
   /* See <http://www.dragonflybsd.org/cvsweb/src/include/stdio.h?rev=HEAD&content-type=text/x-cvsweb-markup>.  */
 #  define _p pub._p
 #  define _flags pub._flags
@@ -74,12 +74,12 @@
 
 # if defined __sun && defined _LP64 /* Solaris/{SPARC,AMD64} 64-bit */
 #  define fp_ ((struct { unsigned char *_ptr; \
-			 unsigned char *_base; \
-			 unsigned char *_end; \
-			 long _cnt; \
-			 int _file; \
-			 unsigned int _flag; \
-		       } *) fp)
+                         unsigned char *_base; \
+                         unsigned char *_end; \
+                         long _cnt; \
+                         int _file; \
+                         unsigned int _flag; \
+                       } *) fp)
 # else
 #  define fp_ fp
 # endif

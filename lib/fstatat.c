@@ -48,12 +48,12 @@ rpl_fstatat (int fd, char const *file, struct stat *st, int flag)
     {
       /* Fix lstat behavior.  */
       if (file[len - 1] != '/' || S_ISDIR (st->st_mode))
-	return 0;
+        return 0;
       if (!S_ISLNK (st->st_mode))
-	{
-	  errno = ENOTDIR;
-	  return -1;
-	}
+        {
+          errno = ENOTDIR;
+          return -1;
+        }
       result = fstatat (fd, file, st, flag & ~AT_SYMLINK_NOFOLLOW);
     }
   /* Fix stat behavior.  */

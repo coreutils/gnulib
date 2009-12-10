@@ -47,14 +47,14 @@ extern void sha224_init_ctx (struct sha256_ctx *ctx);
    starting at BUFFER.
    It is necessary that LEN is a multiple of 64!!! */
 extern void sha256_process_block (const void *buffer, size_t len,
-				  struct sha256_ctx *ctx);
+                                  struct sha256_ctx *ctx);
 
 /* Starting with the result of former calls of this function (or the
    initialization function update the context for the next LEN bytes
    starting at BUFFER.
    It is NOT required that LEN is a multiple of 64.  */
 extern void sha256_process_bytes (const void *buffer, size_t len,
-				  struct sha256_ctx *ctx);
+                                  struct sha256_ctx *ctx);
 
 /* Process the remaining bytes in the buffer and put result from CTX
    in first 32 (28) bytes following RESBUF.  The result is always in little

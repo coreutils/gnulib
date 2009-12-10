@@ -110,24 +110,24 @@ AC_DEFUN_ONCE([gl_FUNC_CHOWN_FOLLOWS_SYMLINK],
 #include <stdlib.h>
 #include <errno.h>
 
-	int
-	main ()
-	{
-	  char const *dangling_symlink = "conftest.dangle";
+        int
+        main ()
+        {
+          char const *dangling_symlink = "conftest.dangle";
 
-	  unlink (dangling_symlink);
-	  if (symlink ("conftest.no-such", dangling_symlink))
-	    abort ();
+          unlink (dangling_symlink);
+          if (symlink ("conftest.no-such", dangling_symlink))
+            abort ();
 
-	  /* Exit successfully on a conforming system,
-	     i.e., where chown must fail with ENOENT.  */
-	  exit ( ! (chown (dangling_symlink, getuid (), getgid ()) != 0
-		    && errno == ENOENT));
-	}
-	]])],
-	[gl_cv_func_chown_follows_symlink=yes],
-	[gl_cv_func_chown_follows_symlink=no],
-	[gl_cv_func_chown_follows_symlink=yes]
+          /* Exit successfully on a conforming system,
+             i.e., where chown must fail with ENOENT.  */
+          exit ( ! (chown (dangling_symlink, getuid (), getgid ()) != 0
+                    && errno == ENOENT));
+        }
+        ]])],
+        [gl_cv_func_chown_follows_symlink=yes],
+        [gl_cv_func_chown_follows_symlink=no],
+        [gl_cv_func_chown_follows_symlink=yes]
       )
     ]
   )

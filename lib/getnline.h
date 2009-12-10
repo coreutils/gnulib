@@ -31,7 +31,7 @@
    Return the number of bytes read and stored at *LINEPTR (not including the
    NUL terminator), or -1 on error or EOF.  */
 extern ssize_t getnline (char **lineptr, size_t *linesize, size_t nmax,
-			 FILE *stream);
+                         FILE *stream);
 
 /* Read a line, up to the next occurrence of DELIMITER, from STREAM, and store
    it in *LINEPTR.
@@ -42,6 +42,6 @@ extern ssize_t getnline (char **lineptr, size_t *linesize, size_t nmax,
    Return the number of bytes read and stored at *LINEPTR (not including the
    NUL terminator), or -1 on error or EOF.  */
 extern ssize_t getndelim (char **lineptr, size_t *linesize, size_t nmax,
-			  int delimiter, FILE *stream);
+                          int delimiter, FILE *stream);
 
 #endif /* GETNLINE_H */

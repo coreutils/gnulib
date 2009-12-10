@@ -302,13 +302,13 @@ extern size_t fwrite (const void *ptr, size_t s, size_t n, FILE *stream);
    Return the number of bytes read and stored at *LINEPTR (not including the
    NUL terminator), or -1 on error or EOF.  */
 extern ssize_t getdelim (char **lineptr, size_t *linesize, int delimiter,
-			 FILE *stream);
+                         FILE *stream);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef getdelim
-# define getdelim(l, s, d, f)					    \
-  (GL_LINK_WARNING ("getdelim is unportable - "			    \
-		    "use gnulib module getdelim for portability"),  \
+# define getdelim(l, s, d, f)                                       \
+  (GL_LINK_WARNING ("getdelim is unportable - "                     \
+                    "use gnulib module getdelim for portability"),  \
    getdelim (l, s, d, f))
 #endif
 
@@ -328,9 +328,9 @@ extern ssize_t getline (char **lineptr, size_t *linesize, FILE *stream);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef getline
-# define getline(l, s, f)						\
-  (GL_LINK_WARNING ("getline is unportable - "				\
-		    "use gnulib module getline for portability"),	\
+# define getline(l, s, f)                                               \
+  (GL_LINK_WARNING ("getline is unportable - "                          \
+                    "use gnulib module getline for portability"),       \
    getline (l, s, f))
 #endif
 
@@ -349,7 +349,7 @@ extern ssize_t getline (char **lineptr, size_t *linesize, FILE *stream);
   extern int obstack_printf (struct obstack *obs, const char *format, ...)
     __attribute__ ((__format__ (__printf__, 2, 3)));
   extern int obstack_vprintf (struct obstack *obs, const char *format,
-			      va_list args)
+                              va_list args)
     __attribute__ ((__format__ (__printf__, 2, 0)));
 # endif
 #endif
@@ -438,7 +438,7 @@ extern int remove (const char *name);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef remove
-# define remove(n)					   \
+# define remove(n)                                         \
    (GL_LINK_WARNING ("remove cannot handle directories on some platforms - " \
                      "use gnulib module remove for more portability"), \
     remove (n))
@@ -452,7 +452,7 @@ extern int rename (const char *old_filename, const char *new_filename);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef rename
-# define rename(o,n)					   \
+# define rename(o,n)                                       \
    (GL_LINK_WARNING ("rename is buggy on some platforms - " \
                      "use gnulib module rename for more portability"), \
     rename (o, n))
@@ -468,7 +468,7 @@ extern int renameat (int fd1, char const *file1, int fd2, char const *file2);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef renameat
-# define renameat(d1,f1,d2,f2)		   \
+# define renameat(d1,f1,d2,f2)             \
     (GL_LINK_WARNING ("renameat is not portable - " \
                       "use gnulib module renameat for portability"), \
      renameat (d1, f1, d2, f2))

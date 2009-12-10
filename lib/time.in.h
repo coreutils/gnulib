@@ -84,9 +84,9 @@ extern time_t mktime (struct tm *__tp);
 #  undef gmtime_r
 #  define gmtime_r rpl_gmtime_r
 struct tm *localtime_r (time_t const *restrict __timer,
-			struct tm *restrict __result);
+                        struct tm *restrict __result);
 struct tm *gmtime_r (time_t const *restrict __timer,
-		     struct tm *restrict __result);
+                     struct tm *restrict __result);
 # endif
 
 /* Parse BUF as a time stamp, assuming FORMAT specifies its layout, and store
@@ -96,7 +96,7 @@ struct tm *gmtime_r (time_t const *restrict __timer,
 #  undef strptime
 #  define strptime rpl_strptime
 char *strptime (char const *restrict __buf, char const *restrict __format,
-		struct tm *restrict __tm);
+                struct tm *restrict __tm);
 # endif
 
 /* Convert TM to a time_t value, assuming UTC.  */

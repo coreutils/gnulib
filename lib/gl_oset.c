@@ -28,8 +28,8 @@
 
 gl_oset_t
 gl_oset_create_empty (gl_oset_implementation_t implementation,
-		      gl_setelement_compar_fn compar_fn,
-		      gl_setelement_dispose_fn dispose_fn)
+                      gl_setelement_compar_fn compar_fn,
+                      gl_setelement_dispose_fn dispose_fn)
 {
   return implementation->create_empty (implementation, compar_fn, dispose_fn);
 }
@@ -48,11 +48,11 @@ gl_oset_search (gl_oset_t set, const void *elt)
 
 bool
 gl_oset_search_atleast (gl_oset_t set,
-			gl_setelement_threshold_fn threshold_fn,
-			const void *threshold, const void **eltp)
+                        gl_setelement_threshold_fn threshold_fn,
+                        const void *threshold, const void **eltp)
 {
   return ((const struct gl_oset_impl_base *) set)->vtable
-	 ->search_atleast (set, threshold_fn, threshold, eltp);
+         ->search_atleast (set, threshold_fn, threshold, eltp);
 }
 
 bool
@@ -65,7 +65,7 @@ bool
 gl_oset_remove (gl_oset_t set, const void *elt)
 {
   return ((const struct gl_oset_impl_base *) set)->vtable
-	 ->remove_elt (set, elt);
+         ->remove_elt (set, elt);
 }
 
 void

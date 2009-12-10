@@ -22,7 +22,7 @@ AC_DEFUN([gl_FUNC_STRNDUP],
     AC_CACHE_CHECK([for working strndup], [gl_cv_func_strndup_works],
       [AC_RUN_IFELSE([
          AC_LANG_PROGRAM([[#include <string.h>
-			   #include <stdlib.h>]], [[
+                           #include <stdlib.h>]], [[
 #ifndef HAVE_DECL_STRNDUP
   extern char *strndup (const char *, size_t);
 #endif

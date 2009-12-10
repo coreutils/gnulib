@@ -15,7 +15,7 @@ AC_DEFUN([gl_ASSERT],
     [AS_HELP_STRING([--disable-assert], [turn off assertions])],
     [AS_IF([test "x$enableval" = xno],
       [AC_DEFINE([NDEBUG], [1],
-	[Define to 1 if assertions should be disabled.])],
+        [Define to 1 if assertions should be disabled.])],
       [test "x$enableval" != xyes],
       [AC_MSG_WARN([invalid argument supplied to --enable-assert])
       enable_assert=yes])],

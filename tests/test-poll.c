@@ -50,7 +50,7 @@
 #define SO_REUSEPORT    SO_REUSEADDR
 #endif
 
-#define TEST_PORT	12345
+#define TEST_PORT       12345
 
 
 /* Minimal testing infrastructure.  */
@@ -268,7 +268,7 @@ test_accept_first (void)
       close (s);
       c = connect_to_socket (true);
       if (poll1_nowait (c, POLLOUT | POLLWRNORM | POLLRDBAND)
-	  != (POLLOUT | POLLWRNORM))
+          != (POLLOUT | POLLWRNORM))
         failed ("cannot write after blocking connect");
       write (c, "foo", 3);
       wait (&pid);

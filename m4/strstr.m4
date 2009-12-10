@@ -38,13 +38,13 @@ AC_DEFUN([gl_FUNC_STRSTR],
     /* Check for quadratic performance.  */
     if (haystack && needle)
       {
-	memset (haystack, 'A', 2 * m);
-	haystack[2 * m] = 'B';
-	haystack[2 * m + 1] = 0;
-	memset (needle, 'A', m);
-	needle[m] = 'B';
-	needle[m + 1] = 0;
-	result = strstr (haystack, needle);
+        memset (haystack, 'A', 2 * m);
+        haystack[2 * m] = 'B';
+        haystack[2 * m + 1] = 0;
+        memset (needle, 'A', m);
+        needle[m] = 'B';
+        needle[m + 1] = 0;
+        result = strstr (haystack, needle);
       }
     return !result;]])],
         [gl_cv_func_strstr_linear=yes], [gl_cv_func_strstr_linear=no],

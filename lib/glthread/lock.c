@@ -56,19 +56,19 @@ glthread_rwlock_rdlock_multithreaded (gl_rwlock_t *lock)
 
       err = pthread_mutex_lock (&lock->guard);
       if (err != 0)
-	return err;
+        return err;
       if (!lock->initialized)
-	{
-	  err = glthread_rwlock_init_multithreaded (lock);
-	  if (err != 0)
-	    {
-	      pthread_mutex_unlock (&lock->guard);
-	      return err;
-	    }
-	}
+        {
+          err = glthread_rwlock_init_multithreaded (lock);
+          if (err != 0)
+            {
+              pthread_mutex_unlock (&lock->guard);
+              return err;
+            }
+        }
       err = pthread_mutex_unlock (&lock->guard);
       if (err != 0)
-	return err;
+        return err;
     }
   return pthread_rwlock_rdlock (&lock->rwlock);
 }
@@ -82,19 +82,19 @@ glthread_rwlock_wrlock_multithreaded (gl_rwlock_t *lock)
 
       err = pthread_mutex_lock (&lock->guard);
       if (err != 0)
-	return err;
+        return err;
       if (!lock->initialized)
-	{
-	  err = glthread_rwlock_init_multithreaded (lock);
-	  if (err != 0)
-	    {
-	      pthread_mutex_unlock (&lock->guard);
-	      return err;
-	    }
-	}
+        {
+          err = glthread_rwlock_init_multithreaded (lock);
+          if (err != 0)
+            {
+              pthread_mutex_unlock (&lock->guard);
+              return err;
+            }
+        }
       err = pthread_mutex_unlock (&lock->guard);
       if (err != 0)
-	return err;
+        return err;
     }
   return pthread_rwlock_wrlock (&lock->rwlock);
 }
@@ -161,13 +161,13 @@ glthread_rwlock_rdlock_multithreaded (gl_rwlock_t *lock)
   while (!(lock->runcount + 1 > 0 && lock->waiting_writers_count == 0))
     {
       /* This thread has to wait for a while.  Enqueue it among the
-	 waiting_readers.  */
+         waiting_readers.  */
       err = pthread_cond_wait (&lock->waiting_readers, &lock->lock);
       if (err != 0)
-	{
-	  pthread_mutex_unlock (&lock->lock);
-	  return err;
-	}
+        {
+          pthread_mutex_unlock (&lock->lock);
+          return err;
+        }
     }
   lock->runcount++;
   return pthread_mutex_unlock (&lock->lock);
@@ -185,15 +185,15 @@ glthread_rwlock_wrlock_multithreaded (gl_rwlock_t *lock)
   while (!(lock->runcount == 0))
     {
       /* This thread has to wait for a while.  Enqueue it among the
-	 waiting_writers.  */
+         waiting_writers.  */
       lock->waiting_writers_count++;
       err = pthread_cond_wait (&lock->waiting_writers, &lock->lock);
       if (err != 0)
-	{
-	  lock->waiting_writers_count--;
-	  pthread_mutex_unlock (&lock->lock);
-	  return err;
-	}
+        {
+          lock->waiting_writers_count--;
+          pthread_mutex_unlock (&lock->lock);
+          return err;
+        }
       lock->waiting_writers_count--;
     }
   lock->runcount--; /* runcount becomes -1 */
@@ -212,46 +212,46 @@ glthread_rwlock_unlock_multithreaded (gl_rwlock_t *lock)
     {
       /* Drop a writer lock.  */
       if (!(lock->runcount == -1))
-	{
-	  pthread_mutex_unlock (&lock->lock);
-	  return EINVAL;
-	}
+        {
+          pthread_mutex_unlock (&lock->lock);
+          return EINVAL;
+        }
       lock->runcount = 0;
     }
   else
     {
       /* Drop a reader lock.  */
       if (!(lock->runcount > 0))
-	{
-	  pthread_mutex_unlock (&lock->lock);
-	  return EINVAL;
-	}
+        {
+          pthread_mutex_unlock (&lock->lock);
+          return EINVAL;
+        }
       lock->runcount--;
     }
   if (lock->runcount == 0)
     {
       /* POSIX recommends that "write locks shall take precedence over read
-	 locks", to avoid "writer starvation".  */
+         locks", to avoid "writer starvation".  */
       if (lock->waiting_writers_count > 0)
-	{
-	  /* Wake up one of the waiting writers.  */
-	  err = pthread_cond_signal (&lock->waiting_writers);
-	  if (err != 0)
-	    {
-	      pthread_mutex_unlock (&lock->lock);
-	      return err;
-	    }
-	}
+        {
+          /* Wake up one of the waiting writers.  */
+          err = pthread_cond_signal (&lock->waiting_writers);
+          if (err != 0)
+            {
+              pthread_mutex_unlock (&lock->lock);
+              return err;
+            }
+        }
       else
-	{
-	  /* Wake up all waiting readers.  */
-	  err = pthread_cond_broadcast (&lock->waiting_readers);
-	  if (err != 0)
-	    {
-	      pthread_mutex_unlock (&lock->lock);
-	      return err;
-	    }
-	}
+        {
+          /* Wake up all waiting readers.  */
+          err = pthread_cond_broadcast (&lock->waiting_readers);
+          if (err != 0)
+            {
+              pthread_mutex_unlock (&lock->lock);
+              return err;
+            }
+        }
     }
   return pthread_mutex_unlock (&lock->lock);
 }
@@ -347,19 +347,19 @@ glthread_recursive_lock_lock_multithreaded (gl_recursive_lock_t *lock)
 
       err = pthread_mutex_lock (&lock->guard);
       if (err != 0)
-	return err;
+        return err;
       if (!lock->initialized)
-	{
-	  err = glthread_recursive_lock_init_multithreaded (lock);
-	  if (err != 0)
-	    {
-	      pthread_mutex_unlock (&lock->guard);
-	      return err;
-	    }
-	}
+        {
+          err = glthread_recursive_lock_init_multithreaded (lock);
+          if (err != 0)
+            {
+              pthread_mutex_unlock (&lock->guard);
+              return err;
+            }
+        }
       err = pthread_mutex_unlock (&lock->guard);
       if (err != 0)
-	return err;
+        return err;
     }
   return pthread_mutex_lock (&lock->recmutex);
 }
@@ -413,7 +413,7 @@ glthread_recursive_lock_lock_multithreaded (gl_recursive_lock_t *lock)
 
       err = pthread_mutex_lock (&lock->mutex);
       if (err != 0)
-	return err;
+        return err;
       lock->owner = self;
     }
   if (++(lock->depth) == 0) /* wraparound? */
@@ -552,7 +552,7 @@ glthread_recursive_lock_lock_multithreaded (gl_recursive_lock_t *lock)
 
       err = mutex_lock (&lock->mutex);
       if (err != 0)
-	return err;
+        return err;
       lock->owner = self;
     }
   if (++(lock->depth) == 0) /* wraparound? */
@@ -597,15 +597,15 @@ glthread_once_multithreaded (gl_once_t *once_control, void (*initfunction) (void
       int err;
 
       /* Use the mutex to guarantee that if another thread is already calling
-	 the initfunction, this thread waits until it's finished.  */
+         the initfunction, this thread waits until it's finished.  */
       err = mutex_lock (&once_control->mutex);
       if (err != 0)
-	return err;
+        return err;
       if (!once_control->inited)
-	{
-	  once_control->inited = 1;
-	  initfunction ();
-	}
+        {
+          once_control->inited = 1;
+          initfunction ();
+        }
       return mutex_unlock (&once_control->mutex);
     }
   else
@@ -647,13 +647,13 @@ glthread_lock_lock_func (gl_lock_t *lock)
   if (!lock->guard.done)
     {
       if (InterlockedIncrement (&lock->guard.started) == 0)
-	/* This thread is the first one to need this lock.  Initialize it.  */
-	glthread_lock_init (lock);
+        /* This thread is the first one to need this lock.  Initialize it.  */
+        glthread_lock_init (lock);
       else
-	/* Yield the CPU while waiting for another thread to finish
-	   initializing this lock.  */
-	while (!lock->guard.done)
-	  Sleep (0);
+        /* Yield the CPU while waiting for another thread to finish
+           initializing this lock.  */
+        while (!lock->guard.done)
+          Sleep (0);
     }
   EnterCriticalSection (&lock->lock);
   return 0;
@@ -704,28 +704,28 @@ gl_waitqueue_add (gl_waitqueue_t *wq)
     {
       unsigned int new_alloc = 2 * wq->alloc + 1;
       HANDLE *new_array =
-	(HANDLE *) realloc (wq->array, new_alloc * sizeof (HANDLE));
+        (HANDLE *) realloc (wq->array, new_alloc * sizeof (HANDLE));
       if (new_array == NULL)
-	/* No more memory.  */
-	return INVALID_HANDLE_VALUE;
+        /* No more memory.  */
+        return INVALID_HANDLE_VALUE;
       /* Now is a good opportunity to rotate the array so that its contents
-	 starts at offset 0.  */
+         starts at offset 0.  */
       if (wq->offset > 0)
-	{
-	  unsigned int old_count = wq->count;
-	  unsigned int old_alloc = wq->alloc;
-	  unsigned int old_offset = wq->offset;
-	  unsigned int i;
-	  if (old_offset + old_count > old_alloc)
-	    {
-	      unsigned int limit = old_offset + old_count - old_alloc;
-	      for (i = 0; i < limit; i++)
-		new_array[old_alloc + i] = new_array[i];
-	    }
-	  for (i = 0; i < old_count; i++)
-	    new_array[i] = new_array[old_offset + i];
-	  wq->offset = 0;
-	}
+        {
+          unsigned int old_count = wq->count;
+          unsigned int old_alloc = wq->alloc;
+          unsigned int old_offset = wq->offset;
+          unsigned int i;
+          if (old_offset + old_count > old_alloc)
+            {
+              unsigned int limit = old_offset + old_count - old_alloc;
+              for (i = 0; i < limit; i++)
+                new_array[old_alloc + i] = new_array[i];
+            }
+          for (i = 0; i < old_count; i++)
+            new_array[i] = new_array[old_offset + i];
+          wq->offset = 0;
+        }
       wq->array = new_array;
       wq->alloc = new_alloc;
     }
@@ -764,7 +764,7 @@ gl_waitqueue_notify_all (gl_waitqueue_t *wq)
     {
       unsigned int index = wq->offset + i;
       if (index >= wq->alloc)
-	index -= wq->alloc;
+        index -= wq->alloc;
       SetEvent (wq->array[index]);
     }
   wq->count = 0;
@@ -787,13 +787,13 @@ glthread_rwlock_rdlock_func (gl_rwlock_t *lock)
   if (!lock->guard.done)
     {
       if (InterlockedIncrement (&lock->guard.started) == 0)
-	/* This thread is the first one to need this lock.  Initialize it.  */
-	glthread_rwlock_init (lock);
+        /* This thread is the first one to need this lock.  Initialize it.  */
+        glthread_rwlock_init (lock);
       else
-	/* Yield the CPU while waiting for another thread to finish
-	   initializing this lock.  */
-	while (!lock->guard.done)
-	  Sleep (0);
+        /* Yield the CPU while waiting for another thread to finish
+           initializing this lock.  */
+        while (!lock->guard.done)
+          Sleep (0);
     }
   EnterCriticalSection (&lock->lock);
   /* Test whether only readers are currently running, and whether the runcount
@@ -801,34 +801,34 @@ glthread_rwlock_rdlock_func (gl_rwlock_t *lock)
   if (!(lock->runcount + 1 > 0))
     {
       /* This thread has to wait for a while.  Enqueue it among the
-	 waiting_readers.  */
+         waiting_readers.  */
       HANDLE event = gl_waitqueue_add (&lock->waiting_readers);
       if (event != INVALID_HANDLE_VALUE)
-	{
-	  DWORD result;
-	  LeaveCriticalSection (&lock->lock);
-	  /* Wait until another thread signals this event.  */
-	  result = WaitForSingleObject (event, INFINITE);
-	  if (result == WAIT_FAILED || result == WAIT_TIMEOUT)
-	    abort ();
-	  CloseHandle (event);
-	  /* The thread which signalled the event already did the bookkeeping:
-	     removed us from the waiting_readers, incremented lock->runcount.  */
-	  if (!(lock->runcount > 0))
-	    abort ();
-	  return 0;
-	}
+        {
+          DWORD result;
+          LeaveCriticalSection (&lock->lock);
+          /* Wait until another thread signals this event.  */
+          result = WaitForSingleObject (event, INFINITE);
+          if (result == WAIT_FAILED || result == WAIT_TIMEOUT)
+            abort ();
+          CloseHandle (event);
+          /* The thread which signalled the event already did the bookkeeping:
+             removed us from the waiting_readers, incremented lock->runcount.  */
+          if (!(lock->runcount > 0))
+            abort ();
+          return 0;
+        }
       else
-	{
-	  /* Allocation failure.  Weird.  */
-	  do
-	    {
-	      LeaveCriticalSection (&lock->lock);
-	      Sleep (1);
-	      EnterCriticalSection (&lock->lock);
-	    }
-	  while (!(lock->runcount + 1 > 0));
-	}
+        {
+          /* Allocation failure.  Weird.  */
+          do
+            {
+              LeaveCriticalSection (&lock->lock);
+              Sleep (1);
+              EnterCriticalSection (&lock->lock);
+            }
+          while (!(lock->runcount + 1 > 0));
+        }
     }
   lock->runcount++;
   LeaveCriticalSection (&lock->lock);
@@ -841,47 +841,47 @@ glthread_rwlock_wrlock_func (gl_rwlock_t *lock)
   if (!lock->guard.done)
     {
       if (InterlockedIncrement (&lock->guard.started) == 0)
-	/* This thread is the first one to need this lock.  Initialize it.  */
-	glthread_rwlock_init (lock);
+        /* This thread is the first one to need this lock.  Initialize it.  */
+        glthread_rwlock_init (lock);
       else
-	/* Yield the CPU while waiting for another thread to finish
-	   initializing this lock.  */
-	while (!lock->guard.done)
-	  Sleep (0);
+        /* Yield the CPU while waiting for another thread to finish
+           initializing this lock.  */
+        while (!lock->guard.done)
+          Sleep (0);
     }
   EnterCriticalSection (&lock->lock);
   /* Test whether no readers or writers are currently running.  */
   if (!(lock->runcount == 0))
     {
       /* This thread has to wait for a while.  Enqueue it among the
-	 waiting_writers.  */
+         waiting_writers.  */
       HANDLE event = gl_waitqueue_add (&lock->waiting_writers);
       if (event != INVALID_HANDLE_VALUE)
-	{
-	  DWORD result;
-	  LeaveCriticalSection (&lock->lock);
-	  /* Wait until another thread signals this event.  */
-	  result = WaitForSingleObject (event, INFINITE);
-	  if (result == WAIT_FAILED || result == WAIT_TIMEOUT)
-	    abort ();
-	  CloseHandle (event);
-	  /* The thread which signalled the event already did the bookkeeping:
-	     removed us from the waiting_writers, set lock->runcount = -1.  */
-	  if (!(lock->runcount == -1))
-	    abort ();
-	  return 0;
-	}
+        {
+          DWORD result;
+          LeaveCriticalSection (&lock->lock);
+          /* Wait until another thread signals this event.  */
+          result = WaitForSingleObject (event, INFINITE);
+          if (result == WAIT_FAILED || result == WAIT_TIMEOUT)
+            abort ();
+          CloseHandle (event);
+          /* The thread which signalled the event already did the bookkeeping:
+             removed us from the waiting_writers, set lock->runcount = -1.  */
+          if (!(lock->runcount == -1))
+            abort ();
+          return 0;
+        }
       else
-	{
-	  /* Allocation failure.  Weird.  */
-	  do
-	    {
-	      LeaveCriticalSection (&lock->lock);
-	      Sleep (1);
-	      EnterCriticalSection (&lock->lock);
-	    }
-	  while (!(lock->runcount == 0));
-	}
+        {
+          /* Allocation failure.  Weird.  */
+          do
+            {
+              LeaveCriticalSection (&lock->lock);
+              Sleep (1);
+              EnterCriticalSection (&lock->lock);
+            }
+          while (!(lock->runcount == 0));
+        }
     }
   lock->runcount--; /* runcount becomes -1 */
   LeaveCriticalSection (&lock->lock);
@@ -898,35 +898,35 @@ glthread_rwlock_unlock_func (gl_rwlock_t *lock)
     {
       /* Drop a writer lock.  */
       if (!(lock->runcount == -1))
-	abort ();
+        abort ();
       lock->runcount = 0;
     }
   else
     {
       /* Drop a reader lock.  */
       if (!(lock->runcount > 0))
-	{
-	  LeaveCriticalSection (&lock->lock);
-	  return EPERM;
-	}
+        {
+          LeaveCriticalSection (&lock->lock);
+          return EPERM;
+        }
       lock->runcount--;
     }
   if (lock->runcount == 0)
     {
       /* POSIX recommends that "write locks shall take precedence over read
-	 locks", to avoid "writer starvation".  */
+         locks", to avoid "writer starvation".  */
       if (lock->waiting_writers.count > 0)
-	{
-	  /* Wake up one of the waiting writers.  */
-	  lock->runcount--;
-	  gl_waitqueue_notify_first (&lock->waiting_writers);
-	}
+        {
+          /* Wake up one of the waiting writers.  */
+          lock->runcount--;
+          gl_waitqueue_notify_first (&lock->waiting_writers);
+        }
       else
-	{
-	  /* Wake up all waiting readers.  */
-	  lock->runcount += lock->waiting_readers.count;
-	  gl_waitqueue_notify_all (&lock->waiting_readers);
-	}
+        {
+          /* Wake up all waiting readers.  */
+          lock->runcount += lock->waiting_readers.count;
+          gl_waitqueue_notify_all (&lock->waiting_readers);
+        }
     }
   LeaveCriticalSection (&lock->lock);
   return 0;
@@ -965,25 +965,25 @@ glthread_recursive_lock_lock_func (gl_recursive_lock_t *lock)
   if (!lock->guard.done)
     {
       if (InterlockedIncrement (&lock->guard.started) == 0)
-	/* This thread is the first one to need this lock.  Initialize it.  */
-	glthread_recursive_lock_init (lock);
+        /* This thread is the first one to need this lock.  Initialize it.  */
+        glthread_recursive_lock_init (lock);
       else
-	/* Yield the CPU while waiting for another thread to finish
-	   initializing this lock.  */
-	while (!lock->guard.done)
-	  Sleep (0);
+        /* Yield the CPU while waiting for another thread to finish
+           initializing this lock.  */
+        while (!lock->guard.done)
+          Sleep (0);
     }
   {
     DWORD self = GetCurrentThreadId ();
     if (lock->owner != self)
       {
-	EnterCriticalSection (&lock->lock);
-	lock->owner = self;
+        EnterCriticalSection (&lock->lock);
+        lock->owner = self;
       }
     if (++(lock->depth) == 0) /* wraparound? */
       {
-	lock->depth--;
-	return EAGAIN;
+        lock->depth--;
+        return EAGAIN;
       }
   }
   return 0;
@@ -1022,34 +1022,34 @@ glthread_once_func (gl_once_t *once_control, void (*initfunction) (void))
   if (once_control->inited <= 0)
     {
       if (InterlockedIncrement (&once_control->started) == 0)
-	{
-	  /* This thread is the first one to come to this once_control.  */
-	  InitializeCriticalSection (&once_control->lock);
-	  EnterCriticalSection (&once_control->lock);
-	  once_control->inited = 0;
-	  initfunction ();
-	  once_control->inited = 1;
-	  LeaveCriticalSection (&once_control->lock);
-	}
+        {
+          /* This thread is the first one to come to this once_control.  */
+          InitializeCriticalSection (&once_control->lock);
+          EnterCriticalSection (&once_control->lock);
+          once_control->inited = 0;
+          initfunction ();
+          once_control->inited = 1;
+          LeaveCriticalSection (&once_control->lock);
+        }
       else
-	{
-	  /* Undo last operation.  */
-	  InterlockedDecrement (&once_control->started);
-	  /* Some other thread has already started the initialization.
-	     Yield the CPU while waiting for the other thread to finish
-	     initializing and taking the lock.  */
-	  while (once_control->inited < 0)
-	    Sleep (0);
-	  if (once_control->inited <= 0)
-	    {
-	      /* Take the lock.  This blocks until the other thread has
-		 finished calling the initfunction.  */
-	      EnterCriticalSection (&once_control->lock);
-	      LeaveCriticalSection (&once_control->lock);
-	      if (!(once_control->inited > 0))
-		abort ();
-	    }
-	}
+        {
+          /* Undo last operation.  */
+          InterlockedDecrement (&once_control->started);
+          /* Some other thread has already started the initialization.
+             Yield the CPU while waiting for the other thread to finish
+             initializing and taking the lock.  */
+          while (once_control->inited < 0)
+            Sleep (0);
+          if (once_control->inited <= 0)
+            {
+              /* Take the lock.  This blocks until the other thread has
+                 finished calling the initfunction.  */
+              EnterCriticalSection (&once_control->lock);
+              LeaveCriticalSection (&once_control->lock);
+              if (!(once_control->inited > 0))
+                abort ();
+            }
+        }
     }
 }
 

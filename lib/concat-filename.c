@@ -34,7 +34,7 @@
    upon memory allocation failure.  */
 char *
 concatenated_filename (const char *directory, const char *filename,
-		       const char *suffix)
+                       const char *suffix)
 {
   char *result;
   char *p;
@@ -43,28 +43,28 @@ concatenated_filename (const char *directory, const char *filename,
     {
       /* No need to prepend the directory.  */
       result = (char *) malloc (strlen (filename)
-				+ (suffix != NULL ? strlen (suffix) : 0)
-				+ 1);
+                                + (suffix != NULL ? strlen (suffix) : 0)
+                                + 1);
       if (result == NULL)
-	return NULL; /* errno is set here */
+        return NULL; /* errno is set here */
       p = result;
     }
   else
     {
       size_t directory_len = strlen (directory);
       int need_slash =
-	(directory_len > FILE_SYSTEM_PREFIX_LEN (directory)
-	 && !ISSLASH (directory[directory_len - 1]));
+        (directory_len > FILE_SYSTEM_PREFIX_LEN (directory)
+         && !ISSLASH (directory[directory_len - 1]));
       result = (char *) malloc (directory_len + need_slash
-				+ strlen (filename)
-				+ (suffix != NULL ? strlen (suffix) : 0)
-				+ 1);
+                                + strlen (filename)
+                                + (suffix != NULL ? strlen (suffix) : 0)
+                                + 1);
       if (result == NULL)
-	return NULL; /* errno is set here */
+        return NULL; /* errno is set here */
       memcpy (result, directory, directory_len);
       p = result + directory_len;
       if (need_slash)
-	*p++ = '/';
+        *p++ = '/';
     }
   p = stpcpy (p, filename);
   if (suffix != NULL)

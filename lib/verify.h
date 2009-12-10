@@ -110,8 +110,8 @@
 
        #if 4 <= __GNUC__
        # define verify(R) \
-	   extern int (* verify_function__ (void)) \
-		      [__builtin_constant_p (R) && (R) ? 1 : -1]
+           extern int (* verify_function__ (void)) \
+                      [__builtin_constant_p (R) && (R) ? 1 : -1]
        #endif
 
    * In C++, any struct definition inside sizeof is invalid.

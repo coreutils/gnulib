@@ -58,48 +58,48 @@ main (int argc, char *argv[])
 
     for (i = 0; i < 10000; i++)
       {
-	rc = gc_cipher_encrypt_inline (ctx, 16, buf);
-	if (rc != GC_OK)
-	  {
-	    printf ("encrypt failed %d\n", rc);
-	    return 1;
-	  }
+        rc = gc_cipher_encrypt_inline (ctx, 16, buf);
+        if (rc != GC_OK)
+          {
+            printf ("encrypt failed %d\n", rc);
+            return 1;
+          }
       }
 
     if (memcmp (buf, ct, 16) != 0)
       {
-	size_t i;
-	printf ("expected:\n");
-	for (i = 0; i < 16; i++)
-	  printf ("%02x ", ct[i] & 0xFF);
-	printf ("\ncomputed:\n");
-	for (i = 0; i < 16; i++)
-	  printf ("%02x ", buf[i] & 0xFF);
-	printf ("\n");
-	return 1;
+        size_t i;
+        printf ("expected:\n");
+        for (i = 0; i < 16; i++)
+          printf ("%02x ", ct[i] & 0xFF);
+        printf ("\ncomputed:\n");
+        for (i = 0; i < 16; i++)
+          printf ("%02x ", buf[i] & 0xFF);
+        printf ("\n");
+        return 1;
       }
 
     for (i = 0; i < 10000; i++)
       {
-	rc = gc_cipher_decrypt_inline (ctx, 16, buf);
-	if (rc != GC_OK)
-	  {
-	    printf ("decrypt failed %d\n", rc);
-	    return 1;
-	  }
+        rc = gc_cipher_decrypt_inline (ctx, 16, buf);
+        if (rc != GC_OK)
+          {
+            printf ("decrypt failed %d\n", rc);
+            return 1;
+          }
       }
 
     if (memcmp (buf, pt, 16) != 0)
       {
-	size_t i;
-	printf ("expected:\n");
-	for (i = 0; i < 16; i++)
-	  printf ("%02x ", pt[i] & 0xFF);
-	printf ("\ncomputed:\n");
-	for (i = 0; i < 16; i++)
-	  printf ("%02x ", buf[i] & 0xFF);
-	printf ("\n");
-	return 1;
+        size_t i;
+        printf ("expected:\n");
+        for (i = 0; i < 16; i++)
+          printf ("%02x ", pt[i] & 0xFF);
+        printf ("\ncomputed:\n");
+        for (i = 0; i < 16; i++)
+          printf ("%02x ", buf[i] & 0xFF);
+        printf ("\n");
+        return 1;
       }
 
     gc_cipher_close (ctx);
@@ -135,25 +135,25 @@ main (int argc, char *argv[])
 
     for (i = 0; i < 10000; i++)
       {
-	rc = gc_cipher_encrypt_inline (ctx, 16, buf);
-	if (rc != GC_OK)
-	  {
-	    printf ("encrypt failed %d\n", rc);
-	    return 1;
-	  }
+        rc = gc_cipher_encrypt_inline (ctx, 16, buf);
+        if (rc != GC_OK)
+          {
+            printf ("encrypt failed %d\n", rc);
+            return 1;
+          }
       }
 
     if (memcmp (buf, ct, 16) != 0)
       {
-	size_t i;
-	printf ("expected:\n");
-	for (i = 0; i < 16; i++)
-	  printf ("%02x ", ct[i] & 0xFF);
-	printf ("\ncomputed:\n");
-	for (i = 0; i < 16; i++)
-	  printf ("%02x ", buf[i] & 0xFF);
-	printf ("\n");
-	return 1;
+        size_t i;
+        printf ("expected:\n");
+        for (i = 0; i < 16; i++)
+          printf ("%02x ", ct[i] & 0xFF);
+        printf ("\ncomputed:\n");
+        for (i = 0; i < 16; i++)
+          printf ("%02x ", buf[i] & 0xFF);
+        printf ("\n");
+        return 1;
       }
 
     gc_cipher_close (ctx);

@@ -17,9 +17,9 @@
 /* Written by Jim Meyering.  */
 
 void parse_long_options (int _argc,
-			 char **_argv,
-			 const char *_command_name,
-			 const char *_package,
-			 const char *_version,
-			 void (*_usage) (int),
-			 /* const char *author1, ...*/ ...);
+                         char **_argv,
+                         const char *_command_name,
+                         const char *_package,
+                         const char *_version,
+                         void (*_usage) (int),
+                         /* const char *author1, ...*/ ...);

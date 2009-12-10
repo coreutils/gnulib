@@ -65,30 +65,30 @@ num_processors (enum nproc_query query)
   if (query == NPROC_CURRENT_OVERRIDABLE)
     {
       /* Test the environment variable OMP_NUM_THREADS, recognized also by all
-	 programs that are based on OpenMP.  The OpenMP spec says that the
-	 value assigned to the environment variable "may have leading and
-	 trailing white space". */
+         programs that are based on OpenMP.  The OpenMP spec says that the
+         value assigned to the environment variable "may have leading and
+         trailing white space". */
       const char *envvalue = getenv ("OMP_NUM_THREADS");
 
       if (envvalue != NULL)
-	{
-	  while (*envvalue != '\0' && c_isspace (*envvalue))
-	    envvalue++;
-	  /* Convert it from decimal to 'unsigned long'.  */
-	  if (c_isdigit (*envvalue))
-	    {
-	      char *endptr = NULL;
-	      unsigned long int value = strtoul (envvalue, &endptr, 10);
+        {
+          while (*envvalue != '\0' && c_isspace (*envvalue))
+            envvalue++;
+          /* Convert it from decimal to 'unsigned long'.  */
+          if (c_isdigit (*envvalue))
+            {
+              char *endptr = NULL;
+              unsigned long int value = strtoul (envvalue, &endptr, 10);
 
-	      if (endptr != NULL)
-		{
-		  while (*endptr != '\0' && c_isspace (*endptr))
-		    endptr++;
-		  if (*endptr == '\0')
-		    return (value > 0 ? value : 1);
-		}
-	    }
-	}
+              if (endptr != NULL)
+                {
+                  while (*endptr != '\0' && c_isspace (*endptr))
+                    endptr++;
+                  if (*endptr == '\0')
+                    return (value > 0 ? value : 1);
+                }
+            }
+        }
 
       query = NPROC_CURRENT;
     }
@@ -97,139 +97,139 @@ num_processors (enum nproc_query query)
   if (query == NPROC_CURRENT)
     {
       /* glibc >= 2.3.3 with NPTL and NetBSD 5 have pthread_getaffinity_np,
-	 but with different APIs.  Also it requires linking with -lpthread.
-	 Therefore this code is not enabled.
-	 glibc >= 2.3.4 has sched_getaffinity whereas NetBSD 5 has
-	 sched_getaffinity_np.  */
+         but with different APIs.  Also it requires linking with -lpthread.
+         Therefore this code is not enabled.
+         glibc >= 2.3.4 has sched_getaffinity whereas NetBSD 5 has
+         sched_getaffinity_np.  */
 #if HAVE_PTHREAD_AFFINITY_NP && defined __GLIBC__ && 0
       {
-	cpu_set_t set;
+        cpu_set_t set;
 
-	if (pthread_getaffinity_np (pthread_self (), sizeof (set), &set) == 0)
-	  {
-	    unsigned long count;
+        if (pthread_getaffinity_np (pthread_self (), sizeof (set), &set) == 0)
+          {
+            unsigned long count;
 
 # ifdef CPU_COUNT
-	    /* glibc >= 2.6 has the CPU_COUNT macro.  */
-	    count = CPU_COUNT (&set);
+            /* glibc >= 2.6 has the CPU_COUNT macro.  */
+            count = CPU_COUNT (&set);
 # else
-	    size_t i;
+            size_t i;
 
-	    count = 0;
-	    for (i = 0; i < CPU_SETSIZE; i++)
-	      if (CPU_ISSET (i, &set))
-		count++;
+            count = 0;
+            for (i = 0; i < CPU_SETSIZE; i++)
+              if (CPU_ISSET (i, &set))
+                count++;
 # endif
-	    if (count > 0)
-	      return count;
-	  }
+            if (count > 0)
+              return count;
+          }
       }
 #elif HAVE_PTHREAD_AFFINITY_NP && defined __NetBSD__ && 0
       {
-	cpuset_t *set;
+        cpuset_t *set;
 
-	set = cpuset_create ();
-	if (set != NULL)
-	  {
-	    unsigned long count = 0;
+        set = cpuset_create ();
+        if (set != NULL)
+          {
+            unsigned long count = 0;
 
-	    if (pthread_getaffinity_np (pthread_self (), cpuset_size (set), set)
-		== 0)
-	      {
-		cpuid_t i;
+            if (pthread_getaffinity_np (pthread_self (), cpuset_size (set), set)
+                == 0)
+              {
+                cpuid_t i;
 
-		for (i = 0;; i++)
-		  {
-		    int ret = cpuset_isset (i, set);
-		    if (ret < 0)
-		      break;
-		    if (ret > 0)
-		      count++;
-		  }
-	      }
-	    cpuset_destroy (set);
-	    if (count > 0)
-	      return count;
-	  }
+                for (i = 0;; i++)
+                  {
+                    int ret = cpuset_isset (i, set);
+                    if (ret < 0)
+                      break;
+                    if (ret > 0)
+                      count++;
+                  }
+              }
+            cpuset_destroy (set);
+            if (count > 0)
+              return count;
+          }
       }
 #elif HAVE_SCHED_GETAFFINITY_LIKE_GLIBC /* glibc >= 2.3.4 */
       {
-	cpu_set_t set;
+        cpu_set_t set;
 
-	if (sched_getaffinity (0, sizeof (set), &set) == 0)
-	  {
-	    unsigned long count;
+        if (sched_getaffinity (0, sizeof (set), &set) == 0)
+          {
+            unsigned long count;
 
 # ifdef CPU_COUNT
-	    /* glibc >= 2.6 has the CPU_COUNT macro.  */
-	    count = CPU_COUNT (&set);
+            /* glibc >= 2.6 has the CPU_COUNT macro.  */
+            count = CPU_COUNT (&set);
 # else
-	    size_t i;
+            size_t i;
 
-	    count = 0;
-	    for (i = 0; i < CPU_SETSIZE; i++)
-	      if (CPU_ISSET (i, &set))
-		count++;
+            count = 0;
+            for (i = 0; i < CPU_SETSIZE; i++)
+              if (CPU_ISSET (i, &set))
+                count++;
 # endif
-	    if (count > 0)
-	      return count;
-	  }
+            if (count > 0)
+              return count;
+          }
       }
 #elif HAVE_SCHED_GETAFFINITY_NP /* NetBSD >= 5 */
       {
-	cpuset_t *set;
+        cpuset_t *set;
 
-	set = cpuset_create ();
-	if (set != NULL)
-	  {
-	    unsigned long count = 0;
+        set = cpuset_create ();
+        if (set != NULL)
+          {
+            unsigned long count = 0;
 
-	    if (sched_getaffinity_np (getpid (), cpuset_size (set), set) == 0)
-	      {
-		cpuid_t i;
+            if (sched_getaffinity_np (getpid (), cpuset_size (set), set) == 0)
+              {
+                cpuid_t i;
 
-		for (i = 0;; i++)
-		  {
-		    int ret = cpuset_isset (i, set);
-		    if (ret < 0)
-		      break;
-		    if (ret > 0)
-		      count++;
-		  }
-	      }
-	    cpuset_destroy (set);
-	    if (count > 0)
-	      return count;
-	  }
+                for (i = 0;; i++)
+                  {
+                    int ret = cpuset_isset (i, set);
+                    if (ret < 0)
+                      break;
+                    if (ret > 0)
+                      count++;
+                  }
+              }
+            cpuset_destroy (set);
+            if (count > 0)
+              return count;
+          }
       }
 #endif
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
       { /* This works on native Windows platforms.  */
-	DWORD_PTR process_mask;
-	DWORD_PTR system_mask;
+        DWORD_PTR process_mask;
+        DWORD_PTR system_mask;
 
-	if (GetProcessAffinityMask (GetCurrentProcess (),
-				    &process_mask, &system_mask))
-	  {
-	    DWORD_PTR mask = process_mask;
-	    unsigned long count = 0;
+        if (GetProcessAffinityMask (GetCurrentProcess (),
+                                    &process_mask, &system_mask))
+          {
+            DWORD_PTR mask = process_mask;
+            unsigned long count = 0;
 
-	    for (; mask != 0; mask = mask >> 1)
-	      if (mask & 1)
-		count++;
-	    if (count > 0)
-	      return count;
-	  }
+            for (; mask != 0; mask = mask >> 1)
+              if (mask & 1)
+                count++;
+            if (count > 0)
+              return count;
+          }
       }
 #endif
 
 #if defined _SC_NPROCESSORS_ONLN
       { /* This works on glibc, MacOS X 10.5, FreeBSD, AIX, OSF/1, Solaris,
-	   Cygwin, Haiku.  */
-	long int nprocs = sysconf (_SC_NPROCESSORS_ONLN);
-	if (nprocs > 0)
-	  return nprocs;
+           Cygwin, Haiku.  */
+        long int nprocs = sysconf (_SC_NPROCESSORS_ONLN);
+        if (nprocs > 0)
+          return nprocs;
       }
 #endif
     }
@@ -237,10 +237,10 @@ num_processors (enum nproc_query query)
     {
 #if defined _SC_NPROCESSORS_CONF
       { /* This works on glibc, MacOS X 10.5, FreeBSD, AIX, OSF/1, Solaris,
-	   Cygwin, Haiku.  */
-	long int nprocs = sysconf (_SC_NPROCESSORS_CONF);
-	if (nprocs > 0)
-	  return nprocs;
+           Cygwin, Haiku.  */
+        long int nprocs = sysconf (_SC_NPROCESSORS_CONF);
+        if (nprocs > 0)
+          return nprocs;
       }
 #endif
     }
@@ -250,19 +250,19 @@ num_processors (enum nproc_query query)
     struct pst_dynamic psd;
     if (pstat_getdynamic (&psd, sizeof psd, 1, 0) >= 0)
       {
-	/* The field psd_proc_cnt contains the number of active processors.
-	   In newer releases of HP-UX 11, the field psd_max_proc_cnt includes
-	   deactivated processors.  */
-	if (query == NPROC_CURRENT)
-	  {
-	    if (psd.psd_proc_cnt > 0)
-	      return psd.psd_proc_cnt;
-	  }
-	else
-	  {
-	    if (psd.psd_max_proc_cnt > 0)
-	      return psd.psd_max_proc_cnt;
-	  }
+        /* The field psd_proc_cnt contains the number of active processors.
+           In newer releases of HP-UX 11, the field psd_max_proc_cnt includes
+           deactivated processors.  */
+        if (query == NPROC_CURRENT)
+          {
+            if (psd.psd_proc_cnt > 0)
+              return psd.psd_proc_cnt;
+          }
+        else
+          {
+            if (psd.psd_max_proc_cnt > 0)
+              return psd.psd_max_proc_cnt;
+          }
       }
   }
 #endif
@@ -274,8 +274,8 @@ num_processors (enum nproc_query query)
        processes.  */
     int nprocs =
       sysmp (query == NPROC_CURRENT && getpid () != 0
-	     ? MP_NAPROCS
-	     : MP_NPROCS);
+             ? MP_NAPROCS
+             : MP_NPROCS);
     if (nprocs > 0)
       return nprocs;
   }
@@ -291,8 +291,8 @@ num_processors (enum nproc_query query)
     static int mib[2] = { CTL_HW, HW_NCPU };
 
     if (sysctl (mib, ARRAY_SIZE (mib), &nprocs, &len, NULL, 0) == 0
-	&& len == sizeof (nprocs)
-	&& 0 < nprocs)
+        && len == sizeof (nprocs)
+        && 0 < nprocs)
       return nprocs;
   }
 #endif

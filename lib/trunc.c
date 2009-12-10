@@ -67,27 +67,27 @@ FUNC (DOUBLE x)
     {
       /* Avoid rounding errors for values near 2^k, where k >= MANT_DIG-1.  */
       if (z < TWO_MANT_DIG)
-	{
-	  /* Round to the next integer (nearest or up or down, doesn't matter).  */
-	  z += TWO_MANT_DIG;
-	  z -= TWO_MANT_DIG;
-	  /* Enforce rounding down.  */
-	  if (z > y)
-	    z -= L_(1.0);
-	}
+        {
+          /* Round to the next integer (nearest or up or down, doesn't matter).  */
+          z += TWO_MANT_DIG;
+          z -= TWO_MANT_DIG;
+          /* Enforce rounding down.  */
+          if (z > y)
+            z -= L_(1.0);
+        }
     }
   else if (z < L_(0.0))
     {
       /* Avoid rounding errors for values near -2^k, where k >= MANT_DIG-1.  */
       if (z > - TWO_MANT_DIG)
-	{
-	  /* Round to the next integer (nearest or up or down, doesn't matter).  */
-	  z -= TWO_MANT_DIG;
-	  z += TWO_MANT_DIG;
-	  /* Enforce rounding up.  */
-	  if (z < y)
-	    z += L_(1.0);
-	}
+        {
+          /* Round to the next integer (nearest or up or down, doesn't matter).  */
+          z -= TWO_MANT_DIG;
+          z += TWO_MANT_DIG;
+          /* Enforce rounding up.  */
+          if (z < y)
+            z += L_(1.0);
+        }
     }
   return z;
 }

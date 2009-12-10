@@ -59,37 +59,37 @@
 #  include <winsock2.h>
 #  if !defined _GL_SYS_SOCKET_H
 #   undef socket
-#   define socket		socket_used_without_including_sys_socket_h
+#   define socket               socket_used_without_including_sys_socket_h
 #   undef connect
-#   define connect		connect_used_without_including_sys_socket_h
+#   define connect              connect_used_without_including_sys_socket_h
 #   undef accept
-#   define accept		accept_used_without_including_sys_socket_h
+#   define accept               accept_used_without_including_sys_socket_h
 #   undef bind
-#   define bind			bind_used_without_including_sys_socket_h
+#   define bind                 bind_used_without_including_sys_socket_h
 #   undef getpeername
-#   define getpeername		getpeername_used_without_including_sys_socket_h
+#   define getpeername          getpeername_used_without_including_sys_socket_h
 #   undef getsockname
-#   define getsockname		getsockname_used_without_including_sys_socket_h
+#   define getsockname          getsockname_used_without_including_sys_socket_h
 #   undef getsockopt
-#   define getsockopt		getsockopt_used_without_including_sys_socket_h
+#   define getsockopt           getsockopt_used_without_including_sys_socket_h
 #   undef listen
-#   define listen		listen_used_without_including_sys_socket_h
+#   define listen               listen_used_without_including_sys_socket_h
 #   undef recv
-#   define recv			recv_used_without_including_sys_socket_h
+#   define recv                 recv_used_without_including_sys_socket_h
 #   undef send
-#   define send			send_used_without_including_sys_socket_h
+#   define send                 send_used_without_including_sys_socket_h
 #   undef recvfrom
-#   define recvfrom		recvfrom_used_without_including_sys_socket_h
+#   define recvfrom             recvfrom_used_without_including_sys_socket_h
 #   undef sendto
-#   define sendto		sendto_used_without_including_sys_socket_h
+#   define sendto               sendto_used_without_including_sys_socket_h
 #   undef setsockopt
-#   define setsockopt		setsockopt_used_without_including_sys_socket_h
+#   define setsockopt           setsockopt_used_without_including_sys_socket_h
 #   undef shutdown
-#   define shutdown		shutdown_used_without_including_sys_socket_h
+#   define shutdown             shutdown_used_without_including_sys_socket_h
 #  endif
 #  if !defined _GL_SYS_SELECT_H
 #   undef select
-#   define select		select_used_without_including_sys_select_h
+#   define select               select_used_without_including_sys_select_h
 #  endif
 # endif
 #endif
@@ -256,7 +256,7 @@ int faccessat (int fd, char const *file, int mode, int flag);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef faccessat
-# define faccessat(d,n,m,f)			    \
+# define faccessat(d,n,m,f)                         \
     (GL_LINK_WARNING ("faccessat is not portable - " \
                       "use gnulib module faccessat for portability"), \
      faccessat (d, n, m, f))
@@ -298,7 +298,7 @@ extern int fchownat (int fd, char const *file, uid_t owner, gid_t group, int fla
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef fchownat
-# define fchownat(d,n,o,g,f)			    \
+# define fchownat(d,n,o,g,f)                        \
     (GL_LINK_WARNING ("fchownat is not portable - " \
                       "use gnulib module openat for portability"), \
      fchownat (d, n, o, g, f))
@@ -614,11 +614,11 @@ extern int link (const char *path1, const char *path2);
    Return 0 if successful, otherwise -1 and errno set.  */
 # if !@HAVE_LINKAT@ || @REPLACE_LINKAT@
 extern int linkat (int fd1, const char *path1, int fd2, const char *path2,
-		   int flag);
+                   int flag);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef linkat
-# define link(f1,path1,f2,path2,f)		\
+# define link(f1,path1,f2,path2,f)              \
     (GL_LINK_WARNING ("linkat is unportable - " \
                       "use gnulib module linkat for portability"), \
      linkat (f1, path1, f2, path2,f))
@@ -677,7 +677,7 @@ extern int pipe2 (int fd[2], int flags);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef pread
-# define pread(f,b,s,o)			       \
+# define pread(f,b,s,o)                        \
     (GL_LINK_WARNING ("pread is unportable - " \
                       "use gnulib module pread for portability"), \
      pread (f, b, s, o))
@@ -711,7 +711,7 @@ ssize_t readlinkat (int fd, char const *file, char *buf, size_t len);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef readlinkat
-# define readlinkat(d,n,b,l)			     \
+# define readlinkat(d,n,b,l)                         \
     (GL_LINK_WARNING ("readlinkat is not portable - " \
                       "use gnulib module symlinkat for portability"), \
      readlinkat (d, n, b, l))
@@ -764,7 +764,7 @@ int symlink (char const *contents, char const *file);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef symlink
-# define symlink(c,n)			     \
+# define symlink(c,n)                        \
     (GL_LINK_WARNING ("symlink is not portable - " \
                       "use gnulib module symlink for portability"), \
      symlink (c, n))
@@ -777,7 +777,7 @@ int symlinkat (char const *contents, int fd, char const *file);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef symlinkat
-# define symlinkat(c,d,n)			     \
+# define symlinkat(c,d,n)                            \
     (GL_LINK_WARNING ("symlinkat is not portable - " \
                       "use gnulib module symlinkat for portability"), \
      symlinkat (c, d, n))

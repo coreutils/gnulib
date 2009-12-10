@@ -24,13 +24,13 @@ FUNC (const char *string,
 
   result =
     U_CONV_FROM_ENCODING (fromcode, handler,
-			  string, strlen (string) + 1, NULL,
-			  NULL, &length);
+                          string, strlen (string) + 1, NULL,
+                          NULL, &length);
   if (result == NULL)
     return NULL;
   /* Verify the result has exactly one NUL unit, at the end.  */
   if (!(length > 0 && result[length-1] == 0
-	&& U_STRLEN (result) == length-1))
+        && U_STRLEN (result) == length-1))
     {
       free (result);
       errno = EILSEQ;

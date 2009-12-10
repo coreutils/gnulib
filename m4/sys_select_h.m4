@@ -17,7 +17,7 @@ AC_DEFUN([gl_HEADER_SYS_SELECT],
       dnl 2. On OSF/1 4.0, <sys/select.h> provides only a forward declaration
       dnl    of 'struct timeval', and no definition of this type.
       AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <sys/select.h>]],
-					 [[struct timeval b;]])],
+                                         [[struct timeval b;]])],
         [gl_cv_header_sys_select_h_selfcontained=yes],
         [gl_cv_header_sys_select_h_selfcontained=no])
       dnl Test against another bug:

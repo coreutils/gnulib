@@ -23,15 +23,15 @@
 #include <string.h>
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 #define SIZEOF(a) (sizeof(a) / sizeof(a[0]))
 
@@ -50,7 +50,7 @@ main ()
   for (i = 0; i < SIZEOF (mapping); i++)
     {
       for (; c < mapping[i].ch; c++)
-	ASSERT (uc_decimal_value (c) == -1);
+        ASSERT (uc_decimal_value (c) == -1);
       /* Here c = mapping[i].ch.  */
       ASSERT (uc_decimal_value (c) == mapping[i].value);
       c++;

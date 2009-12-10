@@ -71,7 +71,7 @@ rpl_realloc (void *p, size_t n)
     {
 #if GNULIB_REALLOC_GNU && !NEED_REALLOC_GNU && !SYSTEM_MALLOC_GLIBC_COMPATIBLE
       if (n == 0)
-	n = 1;
+        n = 1;
 #endif
       result = malloc (n);
     }

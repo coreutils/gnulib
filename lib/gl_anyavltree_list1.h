@@ -19,9 +19,9 @@
 
 /* An AVL tree is a binary tree where
    1. The height of each node is calculated as
-	heightof(node) = 1 + max (heightof(node.left), heightof(node.right)).
+        heightof(node) = 1 + max (heightof(node.left), heightof(node.right)).
    2. The heights of the subtrees of each node differ by at most 1:
-	| heightof(right) - heightof(left) | <= 1.
+        | heightof(right) - heightof(left) | <= 1.
    3. The index of the elements in the node.left subtree are smaller than
       the index of node.
       The index of the elements in the node.right subtree are larger than
@@ -44,9 +44,9 @@ struct gl_list_node_impl
      gl_list_add_before, gl_list_add_after can be implemented.  */
   struct gl_list_node_impl *parent;
   int balance;                      /* heightof(right) - heightof(left),
-				       always = -1 or 0 or 1 */
+                                       always = -1 or 0 or 1 */
   size_t branch_size;               /* number of nodes in this branch,
-				       = branchsize(left)+branchsize(right)+1 */
+                                       = branchsize(left)+branchsize(right)+1 */
   const void *value;
 };
 

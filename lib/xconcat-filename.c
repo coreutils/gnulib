@@ -29,7 +29,7 @@
    Return a freshly allocated filename.  */
 char *
 xconcatenated_filename (const char *directory, const char *filename,
-			const char *suffix)
+                        const char *suffix)
 {
   char *result;
 

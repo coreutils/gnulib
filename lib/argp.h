@@ -112,15 +112,15 @@ struct argp_option
 };
 
 /* The argument associated with this option is optional.  */
-#define OPTION_ARG_OPTIONAL	0x1
+#define OPTION_ARG_OPTIONAL     0x1
 
 /* This option isn't displayed in any help messages.  */
-#define OPTION_HIDDEN	       	0x2
+#define OPTION_HIDDEN           0x2
 
 /* This option is an alias for the closest previous non-alias option.  This
    means that it will be displayed in the same help entry, and will inherit
    fields other than NAME and KEY from the aliased option.  */
-#define OPTION_ALIAS		0x4
+#define OPTION_ALIAS            0x4
 
 /* This option isn't actually an option (and so should be ignored by the
    actual option parser), but rather an arbitrary piece of documentation that
@@ -133,7 +133,7 @@ struct argp_option
    ignored, except that if the first non-whitespace character is not `-', this
    entry is displayed after all options (and OPTION_DOC entries with a leading
    `-') in the same group.  */
-#define OPTION_DOC		0x8
+#define OPTION_DOC              0x8
 
 /* This option shouldn't be included in `long' usage messages (but is still
    included in help messages).  This is mainly intended for options that are
@@ -142,27 +142,27 @@ struct argp_option
    if ARGS_DOC is "FOO BAR\n-x BLAH", and the `-x' option's purpose is to
    distinguish these two cases, -x should probably be marked
    OPTION_NO_USAGE.  */
-#define OPTION_NO_USAGE		0x10
+#define OPTION_NO_USAGE         0x10
 
 /* Valid only in conjunction with OPTION_DOC. This option disables translation
    of option name. */
 #define OPTION_NO_TRANS         0x20
 
 
-struct argp;			/* fwd declare this type */
-struct argp_state;		/* " */
-struct argp_child;		/* " */
+struct argp;                    /* fwd declare this type */
+struct argp_state;              /* " */
+struct argp_child;              /* " */
 
 /* The type of a pointer to an argp parsing function.  */
 typedef error_t (*argp_parser_t) (int key, char *arg,
-				  struct argp_state *state);
+                                  struct argp_state *state);
 
 /* What to return for unrecognized keys.  For special ARGP_KEY_ keys, such
    returns will simply be ignored.  For user keys, this error will be turned
    into EINVAL (if the call to argp_parse is such that errors are propagated
    back to the user instead of exiting); returning EINVAL itself would result
    in an immediate stop to parsing in *all* cases.  */
-#define ARGP_ERR_UNKNOWN	E2BIG /* Hurd should never need E2BIG.  XXX */
+#define ARGP_ERR_UNKNOWN        E2BIG /* Hurd should never need E2BIG.  XXX */
 
 /* Special values for the KEY argument to an argument parsing function.
    ARGP_ERR_UNKNOWN should be returned if they aren't understood.
@@ -190,32 +190,32 @@ typedef error_t (*argp_parser_t) (int key, char *arg,
    passed, the option won't be considered processed; this is to allow you to
    actually modify the argument (perhaps into an option), and have it
    processed again.  */
-#define ARGP_KEY_ARG		0
+#define ARGP_KEY_ARG            0
 /* There are remaining arguments not parsed by any parser, which may be found
    starting at (STATE->argv + STATE->next).  If success is returned, but
    STATE->next left untouched, it's assumed that all arguments were consume,
    otherwise, the parser should adjust STATE->next to reflect any arguments
    consumed.  */
-#define ARGP_KEY_ARGS		0x1000006
+#define ARGP_KEY_ARGS           0x1000006
 /* There are no more command line arguments at all.  */
-#define ARGP_KEY_END		0x1000001
+#define ARGP_KEY_END            0x1000001
 /* Because it's common to want to do some special processing if there aren't
    any non-option args, user parsers are called with this key if they didn't
    successfully process any non-option arguments.  Called just before
    ARGP_KEY_END (where more general validity checks on previously parsed
    arguments can take place).  */
-#define ARGP_KEY_NO_ARGS	0x1000002
+#define ARGP_KEY_NO_ARGS        0x1000002
 /* Passed in before any parsing is done.  Afterwards, the values of each
    element of the CHILD_INPUT field, if any, in the state structure is
    copied to each child's state to be the initial value of the INPUT field.  */
-#define ARGP_KEY_INIT		0x1000003
+#define ARGP_KEY_INIT           0x1000003
 /* Use after all other keys, including SUCCESS & END.  */
-#define ARGP_KEY_FINI		0x1000007
+#define ARGP_KEY_FINI           0x1000007
 /* Passed in when parsing has successfully been completed (even if there are
    still arguments remaining).  */
-#define ARGP_KEY_SUCCESS	0x1000004
+#define ARGP_KEY_SUCCESS        0x1000004
 /* Passed in if an error occurs.  */
-#define ARGP_KEY_ERROR		0x1000005
+#define ARGP_KEY_ERROR          0x1000005
 
 /* An argp structure contains a set of options declarations, a function to
    deal with parsing one, documentation string, a possible vector of child
@@ -279,15 +279,15 @@ struct argp
 };
 
 /* Possible KEY arguments to a help filter function.  */
-#define ARGP_KEY_HELP_PRE_DOC	0x2000001 /* Help text preceeding options. */
-#define ARGP_KEY_HELP_POST_DOC	0x2000002 /* Help text following options. */
-#define ARGP_KEY_HELP_HEADER	0x2000003 /* Option header string. */
-#define ARGP_KEY_HELP_EXTRA	0x2000004 /* After all other documentation;
-					     TEXT is NULL for this key.  */
+#define ARGP_KEY_HELP_PRE_DOC   0x2000001 /* Help text preceeding options. */
+#define ARGP_KEY_HELP_POST_DOC  0x2000002 /* Help text following options. */
+#define ARGP_KEY_HELP_HEADER    0x2000003 /* Option header string. */
+#define ARGP_KEY_HELP_EXTRA     0x2000004 /* After all other documentation;
+                                             TEXT is NULL for this key.  */
 /* Explanatory note emitted when duplicate option arguments have been
    suppressed.  */
 #define ARGP_KEY_HELP_DUP_ARGS_NOTE 0x2000005
-#define ARGP_KEY_HELP_ARGS_DOC	0x2000006 /* Argument doc string.  */
+#define ARGP_KEY_HELP_ARGS_DOC  0x2000006 /* Argument doc string.  */
 
 /* When an argp has a non-zero CHILDREN field, it should point to a vector of
    argp_child structures, each of which describes a subsidiary argp.  */
@@ -356,10 +356,10 @@ struct argp_state
   char *name;
 
   /* Streams used when argp prints something.  */
-  FILE *err_stream;		/* For errors; initialized to stderr. */
-  FILE *out_stream;		/* For information; initialized to stdout. */
+  FILE *err_stream;             /* For errors; initialized to stderr. */
+  FILE *out_stream;             /* For information; initialized to stdout. */
 
-  void *pstate;			/* Private, for use by argp.  */
+  void *pstate;                 /* Private, for use by argp.  */
 };
 
 /* Flags for argp_parse (note that the defaults are those that are
@@ -375,7 +375,7 @@ struct argp_state
    is set, ARGP_PARSE_ARGV0 is ignored, as ARGV[0] is used as the program
    name in the error messages.  This flag implies ARGP_NO_EXIT (on the
    assumption that silent exiting upon errors is bad behaviour).  */
-#define ARGP_NO_ERRS	0x02
+#define ARGP_NO_ERRS    0x02
 
 /* Don't parse any non-option args.  Normally non-option args are parsed by
    calling the parse functions with a key of ARGP_KEY_ARG, and the actual arg
@@ -387,21 +387,21 @@ struct argp_state
    last time with a key of ARGP_KEY_END.  This flag needn't normally be set,
    as the normal behavior is to stop parsing as soon as some argument can't
    be handled.  */
-#define ARGP_NO_ARGS	0x04
+#define ARGP_NO_ARGS    0x04
 
 /* Parse options and arguments in the same order they occur on the command
    line -- normally they're rearranged so that all options come first. */
-#define ARGP_IN_ORDER	0x08
+#define ARGP_IN_ORDER   0x08
 
 /* Don't provide the standard long option --help, which causes usage and
       option help information to be output to stdout, and exit (0) called. */
-#define ARGP_NO_HELP	0x10
+#define ARGP_NO_HELP    0x10
 
 /* Don't exit on errors (they may still result in error messages).  */
-#define ARGP_NO_EXIT	0x20
+#define ARGP_NO_EXIT    0x20
 
 /* Use the gnu getopt `long-only' rules for parsing arguments.  */
-#define ARGP_LONG_ONLY	0x40
+#define ARGP_LONG_ONLY  0x40
 
 /* Turns off any message-printing/exiting options.  */
 #define ARGP_SILENT    (ARGP_NO_EXIT | ARGP_NO_ERRS | ARGP_NO_HELP)
@@ -414,13 +414,13 @@ struct argp_state
    returned.  This function may also call exit unless the ARGP_NO_HELP flag
    is set.  INPUT is a pointer to a value to be passed in to the parser.  */
 extern error_t argp_parse (const struct argp *__restrict __argp,
-			   int /*argc*/, char **__restrict /*argv*/,
-			   unsigned __flags, int *__restrict __arg_index,
-			   void *__restrict __input);
+                           int /*argc*/, char **__restrict /*argv*/,
+                           unsigned __flags, int *__restrict __arg_index,
+                           void *__restrict __input);
 extern error_t __argp_parse (const struct argp *__restrict __argp,
-			     int /*argc*/, char **__restrict /*argv*/,
-			     unsigned __flags, int *__restrict __arg_index,
-			     void *__restrict __input);
+                             int /*argc*/, char **__restrict /*argv*/,
+                             unsigned __flags, int *__restrict __arg_index,
+                             void *__restrict __input);
 
 /* Global variables.  */
 
@@ -450,8 +450,8 @@ extern const char *argp_program_version;
    the current parsing state, and then exits (unless the ARGP_NO_EXIT flag is
    used).  This variable takes precedent over ARGP_PROGRAM_VERSION.  */
 extern void (*argp_program_version_hook) (FILE *__restrict __stream,
-					  struct argp_state *__restrict
-					  __state);
+                                          struct argp_state *__restrict
+                                          __state);
 
 /* If defined or set by the user program, it should point to string that is
    the bug-reporting address for the program.  It will be printed by
@@ -466,20 +466,20 @@ extern const char *argp_program_bug_address;
 extern error_t argp_err_exit_status;
 
 /* Flags for argp_help.  */
-#define ARGP_HELP_USAGE		0x01 /* a Usage: message. */
-#define ARGP_HELP_SHORT_USAGE	0x02 /*  " but don't actually print options. */
-#define ARGP_HELP_SEE		0x04 /* a `Try ... for more help' message. */
-#define ARGP_HELP_LONG		0x08 /* a long help message. */
-#define ARGP_HELP_PRE_DOC	0x10 /* doc string preceding long help.  */
-#define ARGP_HELP_POST_DOC	0x20 /* doc string following long help.  */
-#define ARGP_HELP_DOC		(ARGP_HELP_PRE_DOC | ARGP_HELP_POST_DOC)
-#define ARGP_HELP_BUG_ADDR	0x40 /* bug report address */
-#define ARGP_HELP_LONG_ONLY	0x80 /* modify output appropriately to
-					reflect ARGP_LONG_ONLY mode.  */
+#define ARGP_HELP_USAGE         0x01 /* a Usage: message. */
+#define ARGP_HELP_SHORT_USAGE   0x02 /*  " but don't actually print options. */
+#define ARGP_HELP_SEE           0x04 /* a `Try ... for more help' message. */
+#define ARGP_HELP_LONG          0x08 /* a long help message. */
+#define ARGP_HELP_PRE_DOC       0x10 /* doc string preceding long help.  */
+#define ARGP_HELP_POST_DOC      0x20 /* doc string following long help.  */
+#define ARGP_HELP_DOC           (ARGP_HELP_PRE_DOC | ARGP_HELP_POST_DOC)
+#define ARGP_HELP_BUG_ADDR      0x40 /* bug report address */
+#define ARGP_HELP_LONG_ONLY     0x80 /* modify output appropriately to
+                                        reflect ARGP_LONG_ONLY mode.  */
 
 /* These ARGP_HELP flags are only understood by argp_state_help.  */
-#define ARGP_HELP_EXIT_ERR	0x100 /* Call exit(1) instead of returning.  */
-#define ARGP_HELP_EXIT_OK	0x200 /* Call exit(0) instead of returning.  */
+#define ARGP_HELP_EXIT_ERR      0x100 /* Call exit(1) instead of returning.  */
+#define ARGP_HELP_EXIT_OK       0x200 /* Call exit(0) instead of returning.  */
 
 /* The standard thing to do after a program command line parsing error, if an
    error message has already been printed.  */
@@ -497,11 +497,11 @@ extern error_t argp_err_exit_status;
 /* Output a usage message for ARGP to STREAM.  FLAGS are from the set
    ARGP_HELP_*.  */
 extern void argp_help (const struct argp *__restrict __argp,
-		       FILE *__restrict __stream,
-		       unsigned __flags, char *__restrict __name);
+                       FILE *__restrict __stream,
+                       unsigned __flags, char *__restrict __name);
 extern void __argp_help (const struct argp *__restrict __argp,
-			 FILE *__restrict __stream, unsigned __flags,
-			 char *__name);
+                         FILE *__restrict __stream, unsigned __flags,
+                         char *__name);
 
 /* The following routines are intended to be called from within an argp
    parsing routine (thus taking an argp_state structure as the first
@@ -514,11 +514,11 @@ extern void __argp_help (const struct argp *__restrict __argp,
 /* Output, if appropriate, a usage message for STATE to STREAM.  FLAGS are
    from the set ARGP_HELP_*.  */
 extern void argp_state_help (const struct argp_state *__restrict __state,
-			     FILE *__restrict __stream,
-			     unsigned int __flags);
+                             FILE *__restrict __stream,
+                             unsigned int __flags);
 extern void __argp_state_help (const struct argp_state *__restrict __state,
-			       FILE *__restrict __stream,
-			       unsigned int __flags);
+                               FILE *__restrict __stream,
+                               unsigned int __flags);
 
 #if _LIBC || !defined __USE_EXTERN_INLINES
 /* Possibly output the standard usage message for ARGP to stderr and exit.  */
@@ -530,10 +530,10 @@ extern void __argp_usage (const struct argp_state *__state);
    by the program name and `:', to stderr, and followed by a `Try ... --help'
    message, then exit (1).  */
 extern void argp_error (const struct argp_state *__restrict __state,
-			const char *__restrict __fmt, ...)
+                        const char *__restrict __fmt, ...)
      __attribute__ ((__format__ (__printf__, 2, 3)));
 extern void __argp_error (const struct argp_state *__restrict __state,
-			  const char *__restrict __fmt, ...)
+                          const char *__restrict __fmt, ...)
      __attribute__ ((__format__ (__printf__, 2, 3)));
 
 /* Similar to the standard gnu error-reporting function error(), but will
@@ -545,12 +545,12 @@ extern void __argp_error (const struct argp_state *__restrict __state,
    *parsing errors*, and the former is for other problems that occur during
    parsing but don't reflect a (syntactic) problem with the input.  */
 extern void argp_failure (const struct argp_state *__restrict __state,
-			  int __status, int __errnum,
-			  const char *__restrict __fmt, ...)
+                          int __status, int __errnum,
+                          const char *__restrict __fmt, ...)
      __attribute__ ((__format__ (__printf__, 4, 5)));
 extern void __argp_failure (const struct argp_state *__restrict __state,
-			    int __status, int __errnum,
-			    const char *__restrict __fmt, ...)
+                            int __status, int __errnum,
+                            const char *__restrict __fmt, ...)
      __attribute__ ((__format__ (__printf__, 4, 5)));
 
 #if _LIBC || !defined __USE_EXTERN_INLINES
@@ -567,10 +567,10 @@ extern int __option_is_end (const struct argp_option *__opt) __THROW;
 /* Return the input field for ARGP in the parser corresponding to STATE; used
    by the help routines.  */
 extern void *_argp_input (const struct argp *__restrict __argp,
-			  const struct argp_state *__restrict __state)
+                          const struct argp_state *__restrict __state)
      __THROW;
 extern void *__argp_input (const struct argp *__restrict __argp,
-			   const struct argp_state *__restrict __state)
+                           const struct argp_state *__restrict __state)
      __THROW;
 
 #ifdef __USE_EXTERN_INLINES

@@ -29,25 +29,25 @@ u16_prev (ucs4_t *puc, const uint16_t *s, const uint16_t *start)
       uint16_t c_1 = s[-1];
 
       if (c_1 < 0xd800 || c_1 >= 0xe000)
-	{
-	  *puc = c_1;
-	  return s - 1;
-	}
+        {
+          *puc = c_1;
+          return s - 1;
+        }
 #if CONFIG_UNICODE_SAFETY
       if (c_1 >= 0xdc00)
 #endif
-	if (s - 1 != start)
-	  {
-	    uint16_t c_2 = s[-2];
+        if (s - 1 != start)
+          {
+            uint16_t c_2 = s[-2];
 
 #if CONFIG_UNICODE_SAFETY
-	    if (c_2 >= 0xd800 && c_2 < 0xdc00)
+            if (c_2 >= 0xd800 && c_2 < 0xdc00)
 #endif
-	      {
-		*puc = 0x10000 + ((c_2 - 0xd800) << 10) + (c_1 - 0xdc00);
-		return s - 2;
-	      }
-	  }
+              {
+                *puc = 0x10000 + ((c_2 - 0xd800) << 10) + (c_1 - 0xdc00);
+                return s - 2;
+              }
+          }
     }
   return NULL;
 }

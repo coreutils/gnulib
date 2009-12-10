@@ -47,40 +47,40 @@ merge (const ELEMENT *src1, size_t n1,
   for (;;) /* while (n1 > 0 && n2 > 0) */
     {
       if (COMPARE (src1, src2) <= 0)
-	{
-	  *dst++ = *src1++;
-	  n1--;
-	  if (n1 == 0)
-	    break;
-	}
+        {
+          *dst++ = *src1++;
+          n1--;
+          if (n1 == 0)
+            break;
+        }
       else
-	{
-	  *dst++ = *src2++;
-	  n2--;
-	  if (n2 == 0)
-	    break;
-	}
+        {
+          *dst++ = *src2++;
+          n2--;
+          if (n2 == 0)
+            break;
+        }
     }
   /* Here n1 == 0 || n2 == 0 but also n1 > 0 || n2 > 0.  */
   if (n1 > 0)
     {
       if (dst != src1)
-	do
-	  {
-	    *dst++ = *src1++;
-	    n1--;
-	  }
-	while (n1 > 0);
+        do
+          {
+            *dst++ = *src1++;
+            n1--;
+          }
+        while (n1 > 0);
     }
   else /* n2 > 0 */
     {
       if (dst != src2)
-	do
-	  {
-	    *dst++ = *src2++;
-	    n2--;
-	  }
-	while (n2 > 0);
+        do
+          {
+            *dst++ = *src2++;
+            n2--;
+          }
+        while (n2 > 0);
     }
 }
 
@@ -101,79 +101,79 @@ merge_sort_fromto (const ELEMENT *src, ELEMENT *dst, size_t n, ELEMENT *tmp)
     case 2:
       /* Trivial case.  */
       if (COMPARE (&src[0], &src[1]) <= 0)
-	{
-	  /* src[0] <= src[1] */
-	  dst[0] = src[0];
-	  dst[1] = src[1];
-	}
+        {
+          /* src[0] <= src[1] */
+          dst[0] = src[0];
+          dst[1] = src[1];
+        }
       else
-	{
-	  dst[0] = src[1];
-	  dst[1] = src[0];
-	}
+        {
+          dst[0] = src[1];
+          dst[1] = src[0];
+        }
       break;
     case 3:
       /* Simple case.  */
       if (COMPARE (&src[0], &src[1]) <= 0)
-	{
-	  if (COMPARE (&src[1], &src[2]) <= 0)
-	    {
-	      /* src[0] <= src[1] <= src[2] */
-	      dst[0] = src[0];
-	      dst[1] = src[1];
-	      dst[2] = src[2];
-	    }
-	  else if (COMPARE (&src[0], &src[2]) <= 0)
-	    {
-	      /* src[0] <= src[2] < src[1] */
-	      dst[0] = src[0];
-	      dst[1] = src[2];
-	      dst[2] = src[1];
-	    }
-	  else
-	    {
-	      /* src[2] < src[0] <= src[1] */
-	      dst[0] = src[2];
-	      dst[1] = src[0];
-	      dst[2] = src[1];
-	    }
-	}
+        {
+          if (COMPARE (&src[1], &src[2]) <= 0)
+            {
+              /* src[0] <= src[1] <= src[2] */
+              dst[0] = src[0];
+              dst[1] = src[1];
+              dst[2] = src[2];
+            }
+          else if (COMPARE (&src[0], &src[2]) <= 0)
+            {
+              /* src[0] <= src[2] < src[1] */
+              dst[0] = src[0];
+              dst[1] = src[2];
+              dst[2] = src[1];
+            }
+          else
+            {
+              /* src[2] < src[0] <= src[1] */
+              dst[0] = src[2];
+              dst[1] = src[0];
+              dst[2] = src[1];
+            }
+        }
       else
-	{
-	  if (COMPARE (&src[0], &src[2]) <= 0)
-	    {
-	      /* src[1] < src[0] <= src[2] */
-	      dst[0] = src[1];
-	      dst[1] = src[0];
-	      dst[2] = src[2];
-	    }
-	  else if (COMPARE (&src[1], &src[2]) <= 0)
-	    {
-	      /* src[1] <= src[2] < src[0] */
-	      dst[0] = src[1];
-	      dst[1] = src[2];
-	      dst[2] = src[0];
-	    }
-	  else
-	    {
-	      /* src[2] < src[1] < src[0] */
-	      dst[0] = src[2];
-	      dst[1] = src[1];
-	      dst[2] = src[0];
-	    }
-	}
+        {
+          if (COMPARE (&src[0], &src[2]) <= 0)
+            {
+              /* src[1] < src[0] <= src[2] */
+              dst[0] = src[1];
+              dst[1] = src[0];
+              dst[2] = src[2];
+            }
+          else if (COMPARE (&src[1], &src[2]) <= 0)
+            {
+              /* src[1] <= src[2] < src[0] */
+              dst[0] = src[1];
+              dst[1] = src[2];
+              dst[2] = src[0];
+            }
+          else
+            {
+              /* src[2] < src[1] < src[0] */
+              dst[0] = src[2];
+              dst[1] = src[1];
+              dst[2] = src[0];
+            }
+        }
       break;
     default:
       {
-	size_t n1 = n / 2;
-	size_t n2 = (n + 1) / 2;
-	/* Note: n1 + n2 = n, n1 <= n2.  */
-	/* Sort src[n1..n-1] into dst[n1..n-1], scratching tmp[0..n2/2-1].  */
-	merge_sort_fromto (src + n1, dst + n1, n2, tmp);
-	/* Sort src[0..n1-1] into tmp[0..n1-1], scratching dst[0..n1-1].  */
-	merge_sort_fromto (src, tmp, n1, dst);
-	/* Merge the two half results.  */
-	merge (tmp, n1, dst + n1, n2, dst);
+        size_t n1 = n / 2;
+        size_t n2 = (n + 1) / 2;
+        /* Note: n1 + n2 = n, n1 <= n2.  */
+        /* Sort src[n1..n-1] into dst[n1..n-1], scratching tmp[0..n2/2-1].  */
+        merge_sort_fromto (src + n1, dst + n1, n2, tmp);
+        /* Sort src[0..n1-1] into tmp[0..n1-1], scratching dst[0..n1-1].  */
+        merge_sort_fromto (src, tmp, n1, dst);
+        /* Merge the two half results.  */
+        merge (tmp, n1, dst + n1, n2, dst);
       }
       break;
     }
@@ -193,77 +193,77 @@ merge_sort_inplace (ELEMENT *src, size_t n, ELEMENT *tmp)
     case 2:
       /* Trivial case.  */
       if (COMPARE (&src[0], &src[1]) <= 0)
-	{
-	  /* src[0] <= src[1] */
-	}
+        {
+          /* src[0] <= src[1] */
+        }
       else
-	{
-	  ELEMENT t = src[0];
-	  src[0] = src[1];
-	  src[1] = t;
-	}
+        {
+          ELEMENT t = src[0];
+          src[0] = src[1];
+          src[1] = t;
+        }
       break;
     case 3:
       /* Simple case.  */
       if (COMPARE (&src[0], &src[1]) <= 0)
-	{
-	  if (COMPARE (&src[1], &src[2]) <= 0)
-	    {
-	      /* src[0] <= src[1] <= src[2] */
-	    }
-	  else if (COMPARE (&src[0], &src[2]) <= 0)
-	    {
-	      /* src[0] <= src[2] < src[1] */
-	      ELEMENT t = src[1];
-	      src[1] = src[2];
-	      src[2] = t;
-	    }
-	  else
-	    {
-	      /* src[2] < src[0] <= src[1] */
-	      ELEMENT t = src[0];
-	      src[0] = src[2];
-	      src[2] = src[1];
-	      src[1] = t;
-	    }
-	}
+        {
+          if (COMPARE (&src[1], &src[2]) <= 0)
+            {
+              /* src[0] <= src[1] <= src[2] */
+            }
+          else if (COMPARE (&src[0], &src[2]) <= 0)
+            {
+              /* src[0] <= src[2] < src[1] */
+              ELEMENT t = src[1];
+              src[1] = src[2];
+              src[2] = t;
+            }
+          else
+            {
+              /* src[2] < src[0] <= src[1] */
+              ELEMENT t = src[0];
+              src[0] = src[2];
+              src[2] = src[1];
+              src[1] = t;
+            }
+        }
       else
-	{
-	  if (COMPARE (&src[0], &src[2]) <= 0)
-	    {
-	      /* src[1] < src[0] <= src[2] */
-	      ELEMENT t = src[0];
-	      src[0] = src[1];
-	      src[1] = t;
-	    }
-	  else if (COMPARE (&src[1], &src[2]) <= 0)
-	    {
-	      /* src[1] <= src[2] < src[0] */
-	      ELEMENT t = src[0];
-	      src[0] = src[1];
-	      src[1] = src[2];
-	      src[2] = t;
-	    }
-	  else
-	    {
-	      /* src[2] < src[1] < src[0] */
-	      ELEMENT t = src[0];
-	      src[0] = src[2];
-	      src[2] = t;
-	    }
-	}
+        {
+          if (COMPARE (&src[0], &src[2]) <= 0)
+            {
+              /* src[1] < src[0] <= src[2] */
+              ELEMENT t = src[0];
+              src[0] = src[1];
+              src[1] = t;
+            }
+          else if (COMPARE (&src[1], &src[2]) <= 0)
+            {
+              /* src[1] <= src[2] < src[0] */
+              ELEMENT t = src[0];
+              src[0] = src[1];
+              src[1] = src[2];
+              src[2] = t;
+            }
+          else
+            {
+              /* src[2] < src[1] < src[0] */
+              ELEMENT t = src[0];
+              src[0] = src[2];
+              src[2] = t;
+            }
+        }
       break;
     default:
       {
-	size_t n1 = n / 2;
-	size_t n2 = (n + 1) / 2;
-	/* Note: n1 + n2 = n, n1 <= n2.  */
-	/* Sort src[n1..n-1], scratching tmp[0..n2-1].  */
-	merge_sort_inplace (src + n1, n2, tmp);
-	/* Sort src[0..n1-1] into tmp[0..n1-1], scratching tmp[n1..2*n1-1].  */
-	merge_sort_fromto (src, tmp, n1, tmp + n1);
-	/* Merge the two half results.  */
-	merge (tmp, n1, src + n1, n2, src);
+        size_t n1 = n / 2;
+        size_t n2 = (n + 1) / 2;
+        /* Note: n1 + n2 = n, n1 <= n2.  */
+        /* Sort src[n1..n-1], scratching tmp[0..n2-1].  */
+        merge_sort_inplace (src + n1, n2, tmp);
+        /* Sort src[0..n1-1] into tmp[0..n1-1], scratching tmp[n1..2*n1-1].  */
+        merge_sort_fromto (src, tmp, n1, tmp + n1);
+        /* Merge the two half results.  */
+        merge (tmp, n1, src + n1, n2, src);
       }
       break;
     }

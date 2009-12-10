@@ -28,15 +28,15 @@
 #include <unistd.h>
 
 #if !_LIBC
-# define __environ	environ
+# define __environ      environ
 #endif
 
 #if _LIBC
 /* This lock protects against simultaneous modifications of `environ'.  */
 # include <bits/libc-lock.h>
 __libc_lock_define_initialized (static, envlock)
-# define LOCK	__libc_lock_lock (envlock)
-# define UNLOCK	__libc_lock_unlock (envlock)
+# define LOCK   __libc_lock_lock (envlock)
+# define UNLOCK __libc_lock_unlock (envlock)
 #else
 # define LOCK
 # define UNLOCK
@@ -69,13 +69,13 @@ unsetenv (const char *name)
   while (*ep != NULL)
     if (!strncmp (*ep, name, len) && (*ep)[len] == '=')
       {
-	/* Found it.  Remove this pointer by moving later ones back.  */
-	char **dp = ep;
+        /* Found it.  Remove this pointer by moving later ones back.  */
+        char **dp = ep;
 
-	do
-	  dp[0] = dp[1];
-	while (*dp++);
-	/* Continue the loop in case NAME appears again.  */
+        do
+          dp[0] = dp[1];
+        while (*dp++);
+        /* Continue the loop in case NAME appears again.  */
       }
     else
       ++ep;

@@ -31,15 +31,15 @@
 
 #define SIZEOF(array) (sizeof (array) / sizeof (array[0]))
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 static void
@@ -52,7 +52,7 @@ test_function (uint8_t * (*my_asnprintf) (uint8_t *, size_t *, const char *, ...
     {
       size_t length;
       uint8_t *result =
-	my_asnprintf (NULL, &length, "%s %d", locale_string, 33, 44, 55);
+        my_asnprintf (NULL, &length, "%s %d", locale_string, 33, 44, 55);
       static const uint8_t expected[] = "\303\204rger 33";
       ASSERT (result != NULL);
       ASSERT (u8_strcmp (result, expected) == 0);
@@ -62,7 +62,7 @@ test_function (uint8_t * (*my_asnprintf) (uint8_t *, size_t *, const char *, ...
     { /* Width.  */
       size_t length;
       uint8_t *result =
-	my_asnprintf (NULL, &length, "%10s %d", locale_string, 33, 44, 55);
+        my_asnprintf (NULL, &length, "%10s %d", locale_string, 33, 44, 55);
       static const uint8_t expected[] = "     \303\204rger 33";
       ASSERT (result != NULL);
       ASSERT (u8_strcmp (result, expected) == 0);
@@ -72,7 +72,7 @@ test_function (uint8_t * (*my_asnprintf) (uint8_t *, size_t *, const char *, ...
     { /* FLAG_LEFT.  */
       size_t length;
       uint8_t *result =
-	my_asnprintf (NULL, &length, "%-10s %d", locale_string, 33, 44, 55);
+        my_asnprintf (NULL, &length, "%-10s %d", locale_string, 33, 44, 55);
       static const uint8_t expected[] = "\303\204rger      33";
       ASSERT (result != NULL);
       ASSERT (u8_strcmp (result, expected) == 0);
@@ -82,7 +82,7 @@ test_function (uint8_t * (*my_asnprintf) (uint8_t *, size_t *, const char *, ...
     { /* FLAG_ZERO: no effect.  */
       size_t length;
       uint8_t *result =
-	my_asnprintf (NULL, &length, "%010s %d", locale_string, 33, 44, 55);
+        my_asnprintf (NULL, &length, "%010s %d", locale_string, 33, 44, 55);
       static const uint8_t expected[] = "     \303\204rger 33";
       ASSERT (result != NULL);
       ASSERT (u8_strcmp (result, expected) == 0);

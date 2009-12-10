@@ -20,7 +20,7 @@
 #include <limits.h>
 
 #ifndef PATH_MAX
-# ifdef	MAXPATHLEN
+# ifdef MAXPATHLEN
 #  define PATH_MAX MAXPATHLEN
 # endif
 #endif

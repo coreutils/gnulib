@@ -25,15 +25,15 @@
 #include <unistd.h>
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 static int
@@ -60,12 +60,12 @@ main (int argc, char **argv)
   else
     {
       if (lseek (0, 0, SEEK_CUR) == nbytes)
-	/* An unbuffered stdio, such as BeOS or on uClibc compiled without
-	   __STDIO_BUFFERS.  */
-	ASSERT (freadptrbufsize (stdin) == 0);
+        /* An unbuffered stdio, such as BeOS or on uClibc compiled without
+           __STDIO_BUFFERS.  */
+        ASSERT (freadptrbufsize (stdin) == 0);
       else
-	/* Normal buffered stdio.  */
-	ASSERT (freadptrbufsize (stdin) != 0);
+        /* Normal buffered stdio.  */
+        ASSERT (freadptrbufsize (stdin) != 0);
     }
 
   return 0;

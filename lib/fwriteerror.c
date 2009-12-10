@@ -32,7 +32,7 @@ do_fwriteerror (FILE *fp, bool ignore_ebadf)
   if (fp == stdout)
     {
       if (stdout_closed)
-	return 0;
+        return 0;
 
       /* If we are closing stdout, don't attempt to do it later again.  */
       stdout_closed = true;
@@ -41,14 +41,14 @@ do_fwriteerror (FILE *fp, bool ignore_ebadf)
   /* This function returns an error indication if there was a previous failure
      or if fclose failed, with two exceptions:
        - Ignore an fclose failure if there was no previous error, no data
-	 remains to be flushed, and fclose failed with EBADF.  That can
-	 happen when a program like cp is invoked like this `cp a b >&-'
-	 (i.e., with standard output closed) and doesn't generate any
-	 output (hence no previous error and nothing to be flushed).
+         remains to be flushed, and fclose failed with EBADF.  That can
+         happen when a program like cp is invoked like this `cp a b >&-'
+         (i.e., with standard output closed) and doesn't generate any
+         output (hence no previous error and nothing to be flushed).
        - Ignore an fclose failure due to EPIPE.  That can happen when a
-	 program blocks or ignores SIGPIPE, and the output pipe or socket
-	 has no readers now.  The EPIPE tells us that we should stop writing
-	 to this output.  That's what we are doing anyway here.
+         program blocks or ignores SIGPIPE, and the output pipe or socket
+         has no readers now.  The EPIPE tells us that we should stop writing
+         to this output.  That's what we are doing anyway here.
 
      Need to
      1. test the error indicator of the stream,
@@ -62,15 +62,15 @@ do_fwriteerror (FILE *fp, bool ignore_ebadf)
   if (ferror (fp))
     {
       if (fflush (fp))
-	goto close_preserving_errno; /* errno is set here */
+        goto close_preserving_errno; /* errno is set here */
       /* The stream had an error earlier, but its errno was lost.  If the
-	 error was not temporary, we can get the same errno by writing and
-	 flushing one more byte.  We can do so because at this point the
-	 stream's contents is garbage anyway.  */
+         error was not temporary, we can get the same errno by writing and
+         flushing one more byte.  We can do so because at this point the
+         stream's contents is garbage anyway.  */
       if (fputc ('\0', fp) == EOF)
-	goto close_preserving_errno; /* errno is set here */
+        goto close_preserving_errno; /* errno is set here */
       if (fflush (fp))
-	goto close_preserving_errno; /* errno is set here */
+        goto close_preserving_errno; /* errno is set here */
       /* Give up on errno.  */
       errno = 0;
       goto close_preserving_errno;
@@ -79,16 +79,16 @@ do_fwriteerror (FILE *fp, bool ignore_ebadf)
   if (ignore_ebadf)
     {
       /* We need an explicit fflush to tell whether some output was already
-	 done on FP.  */
+         done on FP.  */
       if (fflush (fp))
-	goto close_preserving_errno; /* errno is set here */
+        goto close_preserving_errno; /* errno is set here */
       if (fclose (fp) && errno != EBADF)
-	goto got_errno; /* errno is set here */
+        goto got_errno; /* errno is set here */
     }
   else
     {
       if (fclose (fp))
-	goto got_errno; /* errno is set here */
+        goto got_errno; /* errno is set here */
     }
 
   return 0;
@@ -147,32 +147,32 @@ main ()
       size_t size = sizes[i];
 
       for (j = 0; j < 2; j++)
-	{
-	  /* Run a test depending on i and j:
-	     Write size bytes and then calls fflush if j==1.  */
-	  FILE *stream = fopen (UNWRITABLE_FILE, "w");
+        {
+          /* Run a test depending on i and j:
+             Write size bytes and then calls fflush if j==1.  */
+          FILE *stream = fopen (UNWRITABLE_FILE, "w");
 
-	  if (stream == NULL)
-	    {
-	      fprintf (stderr, "Test %u:%u: could not open file\n", i, j);
-	      continue;
-	    }
+          if (stream == NULL)
+            {
+              fprintf (stderr, "Test %u:%u: could not open file\n", i, j);
+              continue;
+            }
 
-	  fwrite (dummy, 347, 1, stream);
-	  fwrite (dummy, size - 347, 1, stream);
-	  if (j)
-	    fflush (stream);
+          fwrite (dummy, 347, 1, stream);
+          fwrite (dummy, size - 347, 1, stream);
+          if (j)
+            fflush (stream);
 
-	  if (fwriteerror (stream) == -1)
-	    {
-	      if (errno != ENOSPC)
-		fprintf (stderr, "Test %u:%u: fwriteerror ok, errno = %d\n",
-			 i, j, errno);
-	    }
-	  else
-	    fprintf (stderr, "Test %u:%u: fwriteerror found no error!\n",
-		     i, j);
-	}
+          if (fwriteerror (stream) == -1)
+            {
+              if (errno != ENOSPC)
+                fprintf (stderr, "Test %u:%u: fwriteerror ok, errno = %d\n",
+                         i, j, errno);
+            }
+          else
+            fprintf (stderr, "Test %u:%u: fwriteerror found no error!\n",
+                     i, j);
+        }
     }
 
   return 0;

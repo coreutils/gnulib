@@ -40,17 +40,17 @@ FUNC (const UNIT *s1, size_t n1, const UNIT *s2, size_t n2,
   if (transformed2 == NULL)
     {
       if (transformed1 != buf1)
-	{
-	  int saved_errno = errno;
-	  free (transformed1);
-	  errno = saved_errno;
-	}
+        {
+          int saved_errno = errno;
+          free (transformed1);
+          errno = saved_errno;
+        }
       return -1;
     }
 
   /* Compare the transformed strings.  */
   cmp = memcmp2 (transformed1, transformed1_length,
-		 transformed2, transformed2_length);
+                 transformed2, transformed2_length);
   if (cmp < 0)
     cmp = -1;
   else if (cmp > 0)

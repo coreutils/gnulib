@@ -39,7 +39,7 @@ AC_DEFUN([gl_GETADDRINFO],
       [gl_cv_func_getaddrinfo=no])])
   if test $gl_cv_func_getaddrinfo = no; then
     AC_CACHE_CHECK([for getaddrinfo in ws2tcpip.h and -lws2_32],
-		   gl_cv_w32_getaddrinfo, [
+                   gl_cv_w32_getaddrinfo, [
       gl_cv_w32_getaddrinfo=no
       am_save_LIBS="$LIBS"
       LIBS="$LIBS -lws2_32"

@@ -97,7 +97,7 @@ worker_thread (void *arg)
       values[i] = (((unsigned int) rand() >> 3) % 1000000) * THREAD_COUNT + id;
       /* Hopefully no arithmetic overflow.  */
       if ((values[i] % THREAD_COUNT) != id)
-	abort ();
+        abort ();
     }
   perhaps_yield ();
 
@@ -127,13 +127,13 @@ worker_thread (void *arg)
       i = ((unsigned int) rand() >> 3) % KEYS_COUNT;
       j = ((unsigned int) rand() >> 3) % KEYS_COUNT;
       if (i != j)
-	{
-	  void *vi = gl_tls_get (mykeys[i]);
-	  void *vj = gl_tls_get (mykeys[j]);
+        {
+          void *vi = gl_tls_get (mykeys[i]);
+          void *vj = gl_tls_get (mykeys[j]);
 
-	  gl_tls_set (mykeys[i], vj);
-	  gl_tls_set (mykeys[j], vi);
-	}
+          gl_tls_set (mykeys[i], vj);
+          gl_tls_set (mykeys[j], vi);
+        }
       perhaps_yield ();
     }
 
@@ -159,22 +159,22 @@ test_tls (void)
       gl_thread_t threads[THREAD_COUNT];
 
       if (pass == 0)
-	for (i = 0; i < KEYS_COUNT; i++)
-	  gl_tls_key_init (mykeys[i], free);
+        for (i = 0; i < KEYS_COUNT; i++)
+          gl_tls_key_init (mykeys[i], free);
       else
-	for (i = KEYS_COUNT - 1; i >= 0; i--)
-	  gl_tls_key_init (mykeys[i], free);
+        for (i = KEYS_COUNT - 1; i >= 0; i--)
+          gl_tls_key_init (mykeys[i], free);
 
       /* Spawn the threads.  */
       for (i = 0; i < THREAD_COUNT; i++)
-	threads[i] = gl_thread_create (worker_thread, NULL);
+        threads[i] = gl_thread_create (worker_thread, NULL);
 
       /* Wait for the threads to terminate.  */
       for (i = 0; i < THREAD_COUNT; i++)
-	gl_thread_join (threads[i], NULL);
+        gl_thread_join (threads[i], NULL);
 
       for (i = 0; i < KEYS_COUNT; i++)
-	gl_tls_key_destroy (mykeys[i]);
+        gl_tls_key_destroy (mykeys[i]);
     }
 }
 

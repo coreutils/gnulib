@@ -59,10 +59,10 @@ main (int argc, char *argv[])
       size_t i;
       printf ("expected:\n");
       for (i = 0; i < 5; i++)
-	printf ("%02x ", scratch[i] & 0xFF);
+        printf ("%02x ", scratch[i] & 0xFF);
       printf ("\ncomputed:\n");
       for (i = 0; i < 5; i++)
-	printf ("%02x ", ciphertext[i] & 0xFF);
+        printf ("%02x ", ciphertext[i] & 0xFF);
       printf ("\n");
       return 1;
     }
@@ -82,10 +82,10 @@ main (int argc, char *argv[])
       size_t i;
       printf ("expected:\n");
       for (i = 0; i < 5; i++)
-	printf ("%02x ", plaintext[i] & 0xFF);
+        printf ("%02x ", plaintext[i] & 0xFF);
       printf ("\ncomputed:\n");
       for (i = 0; i < 5; i++)
-	printf ("%02x ", scratch[i] & 0xFF);
+        printf ("%02x ", scratch[i] & 0xFF);
       printf ("\n");
       return 1;
     }

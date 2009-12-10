@@ -55,7 +55,7 @@ times (struct tms * buffer)
   FILETIME creation_time, exit_time, kernel_time, user_time;
 
   if (GetProcessTimes (GetCurrentProcess (), &creation_time, &exit_time,
-		       &kernel_time, &user_time) == 0)
+                       &kernel_time, &user_time) == 0)
     return (clock_t) -1;
 
   buffer->tms_utime = filetime2clock (user_time);

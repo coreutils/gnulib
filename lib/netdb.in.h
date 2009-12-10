@@ -49,26 +49,26 @@
 /* Structure to contain information about address of a service provider.  */
 struct addrinfo
 {
-  int ai_flags;			/* Input flags.  */
-  int ai_family;		/* Protocol family for socket.  */
-  int ai_socktype;		/* Socket type.  */
-  int ai_protocol;		/* Protocol for socket.  */
-  socklen_t ai_addrlen;		/* Length of socket address.  */
-  struct sockaddr *ai_addr;	/* Socket address for socket.  */
-  char *ai_canonname;		/* Canonical name for service location.  */
-  struct addrinfo *ai_next;	/* Pointer to next in list.  */
+  int ai_flags;                 /* Input flags.  */
+  int ai_family;                /* Protocol family for socket.  */
+  int ai_socktype;              /* Socket type.  */
+  int ai_protocol;              /* Protocol for socket.  */
+  socklen_t ai_addrlen;         /* Length of socket address.  */
+  struct sockaddr *ai_addr;     /* Socket address for socket.  */
+  char *ai_canonname;           /* Canonical name for service location.  */
+  struct addrinfo *ai_next;     /* Pointer to next in list.  */
 };
 # endif
 
 /* Possible values for `ai_flags' field in `addrinfo' structure.  */
 # ifndef AI_PASSIVE
-#  define AI_PASSIVE	0x0001	/* Socket address is intended for `bind'.  */
+#  define AI_PASSIVE    0x0001  /* Socket address is intended for `bind'.  */
 # endif
 # ifndef AI_CANONNAME
-#  define AI_CANONNAME	0x0002	/* Request for canonical name.  */
+#  define AI_CANONNAME  0x0002  /* Request for canonical name.  */
 # endif
 # ifndef AI_NUMERICSERV
-#  define AI_NUMERICSERV	0x0400	/* Don't use name resolution.  */
+#  define AI_NUMERICSERV        0x0400  /* Don't use name resolution.  */
 # endif
 
 # if 0
@@ -78,24 +78,24 @@ struct addrinfo
    define them.
 
    If they are restored, be sure to protect the definitions with #ifndef.  */
-#  define AI_NUMERICHOST	0x0004	/* Don't use name resolution.  */
-#  define AI_V4MAPPED	0x0008	/* IPv4 mapped addresses are acceptable.  */
-#  define AI_ALL		0x0010	/* Return IPv4 mapped and IPv6 addresses.  */
-#  define AI_ADDRCONFIG	0x0020	/* Use configuration of this host to choose
-				   returned address type..  */
+#  define AI_NUMERICHOST        0x0004  /* Don't use name resolution.  */
+#  define AI_V4MAPPED   0x0008  /* IPv4 mapped addresses are acceptable.  */
+#  define AI_ALL                0x0010  /* Return IPv4 mapped and IPv6 addresses.  */
+#  define AI_ADDRCONFIG 0x0020  /* Use configuration of this host to choose
+                                   returned address type..  */
 # endif /* 0 */
 
 /* Error values for `getaddrinfo' function.  */
 # ifndef EAI_BADFLAGS
-#  define EAI_BADFLAGS	  -1	/* Invalid value for `ai_flags' field.  */
-#  define EAI_NONAME	  -2	/* NAME or SERVICE is unknown.  */
-#  define EAI_AGAIN	  -3	/* Temporary failure in name resolution.  */
-#  define EAI_FAIL	  -4	/* Non-recoverable failure in name res.  */
-#  define EAI_NODATA	  -5	/* No address associated with NAME.  */
-#  define EAI_FAMILY	  -6	/* `ai_family' not supported.  */
-#  define EAI_SOCKTYPE	  -7	/* `ai_socktype' not supported.  */
-#  define EAI_SERVICE	  -8	/* SERVICE not supported for `ai_socktype'.  */
-#  define EAI_MEMORY	  -10	/* Memory allocation failure.  */
+#  define EAI_BADFLAGS    -1    /* Invalid value for `ai_flags' field.  */
+#  define EAI_NONAME      -2    /* NAME or SERVICE is unknown.  */
+#  define EAI_AGAIN       -3    /* Temporary failure in name resolution.  */
+#  define EAI_FAIL        -4    /* Non-recoverable failure in name res.  */
+#  define EAI_NODATA      -5    /* No address associated with NAME.  */
+#  define EAI_FAMILY      -6    /* `ai_family' not supported.  */
+#  define EAI_SOCKTYPE    -7    /* `ai_socktype' not supported.  */
+#  define EAI_SERVICE     -8    /* SERVICE not supported for `ai_socktype'.  */
+#  define EAI_MEMORY      -10   /* Memory allocation failure.  */
 # endif
 
 /* Since EAI_NODATA is deprecated by RFC3493, some systems (at least
@@ -107,15 +107,15 @@ struct addrinfo
 
 # ifndef EAI_OVERFLOW
 /* Not defined on mingw32 and Haiku. */
-#  define EAI_OVERFLOW	  -12	/* Argument buffer overflow.  */
+#  define EAI_OVERFLOW    -12   /* Argument buffer overflow.  */
 # endif
 # ifndef EAI_ADDRFAMILY
 /* Not defined on mingw32. */
-#  define EAI_ADDRFAMILY  -9	/* Address family for NAME not supported.  */
+#  define EAI_ADDRFAMILY  -9    /* Address family for NAME not supported.  */
 # endif
 # ifndef EAI_SYSTEM
 /* Not defined on mingw32. */
-#  define EAI_SYSTEM	  -11	/* System error returned in `errno'.  */
+#  define EAI_SYSTEM      -11   /* System error returned in `errno'.  */
 # endif
 
 # if 0
@@ -124,12 +124,12 @@ struct addrinfo
 
    If they are restored, be sure to protect the definitions with #ifndef.  */
 #  ifndef EAI_INPROGRESS
-#   define EAI_INPROGRESS	-100	/* Processing request in progress.  */
-#   define EAI_CANCELED		-101	/* Request canceled.  */
-#   define EAI_NOTCANCELED	-102	/* Request not canceled.  */
-#   define EAI_ALLDONE		-103	/* All requests done.  */
-#   define EAI_INTR		-104	/* Interrupted by a signal.  */
-#   define EAI_IDN_ENCODE	-105	/* IDN encoding failed.  */
+#   define EAI_INPROGRESS       -100    /* Processing request in progress.  */
+#   define EAI_CANCELED         -101    /* Request canceled.  */
+#   define EAI_NOTCANCELED      -102    /* Request not canceled.  */
+#   define EAI_ALLDONE          -103    /* All requests done.  */
+#   define EAI_INTR             -104    /* Interrupted by a signal.  */
+#   define EAI_IDN_ENCODE       -105    /* IDN encoding failed.  */
 #  endif
 # endif
 
@@ -139,9 +139,9 @@ struct addrinfo
    For more details, see the POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/getaddrinfo.html>.  */
 extern int getaddrinfo (const char *restrict nodename,
-			const char *restrict servname,
-			const struct addrinfo *restrict hints,
-			struct addrinfo **restrict res);
+                        const char *restrict servname,
+                        const struct addrinfo *restrict hints,
+                        struct addrinfo **restrict res);
 # endif
 
 # if !@HAVE_DECL_FREEADDRINFO@
@@ -163,9 +163,9 @@ extern const char *gai_strerror (int ecode);
    For more details, see the POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/getnameinfo.html>.  */
 extern int getnameinfo(const struct sockaddr *restrict sa, socklen_t salen,
-		       char *restrict node, socklen_t nodelen,
-		       char *restrict service, socklen_t servicelen,
-		       int flags);
+                       char *restrict node, socklen_t nodelen,
+                       char *restrict service, socklen_t servicelen,
+                       int flags);
 # endif
 
 /* Possible flags for getnameinfo.  */

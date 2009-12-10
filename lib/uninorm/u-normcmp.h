@@ -40,11 +40,11 @@ FUNC (const UNIT *s1, size_t n1, const UNIT *s2, size_t n2,
   if (norms2 == NULL)
     {
       if (norms1 != buf1)
-	{
-	  int saved_errno = errno;
-	  free (norms1);
-	  errno = saved_errno;
-	}
+        {
+          int saved_errno = errno;
+          free (norms1);
+          errno = saved_errno;
+        }
       return -1;
     }
 

@@ -61,30 +61,30 @@ AC_DEFUN([AC_OPENMP],
     AC_CACHE_CHECK([for $CC option to support OpenMP],
       [ac_cv_prog_[]_AC_LANG_ABBREV[]_openmp],
       [AC_LINK_IFELSE([_AC_LANG_OPENMP],
-	 [ac_cv_prog_[]_AC_LANG_ABBREV[]_openmp='none needed'],
-	 [ac_cv_prog_[]_AC_LANG_ABBREV[]_openmp='unsupported'
-	  dnl Try these flags:
-	  dnl   GCC >= 4.2           -fopenmp
-	  dnl   SunPRO C             -xopenmp
-	  dnl   Intel C              -openmp
-	  dnl   SGI C, PGI C         -mp
-	  dnl   Tru64 Compaq C       -omp
-	  dnl   IBM C (AIX, Linux)   -qsmp=omp
-	  dnl If in this loop a compiler is passed an option that it doesn't
-	  dnl understand or that it misinterprets, the AC_LINK_IFELSE test
-	  dnl will fail (since we know that it failed without the option),
-	  dnl therefore the loop will continue searching for an option, and
-	  dnl no output file called 'penmp' or 'mp' is created.
-	  for ac_option in -fopenmp -xopenmp -openmp -mp -omp -qsmp=omp; do
-	    ac_save_[]_AC_LANG_PREFIX[]FLAGS=$[]_AC_LANG_PREFIX[]FLAGS
-	    _AC_LANG_PREFIX[]FLAGS="$[]_AC_LANG_PREFIX[]FLAGS $ac_option"
-	    AC_LINK_IFELSE([_AC_LANG_OPENMP],
-	      [ac_cv_prog_[]_AC_LANG_ABBREV[]_openmp=$ac_option])
-	    _AC_LANG_PREFIX[]FLAGS=$ac_save_[]_AC_LANG_PREFIX[]FLAGS
-	    if test "$ac_cv_prog_[]_AC_LANG_ABBREV[]_openmp" != unsupported; then
-	      break
-	    fi
-	  done])])
+         [ac_cv_prog_[]_AC_LANG_ABBREV[]_openmp='none needed'],
+         [ac_cv_prog_[]_AC_LANG_ABBREV[]_openmp='unsupported'
+          dnl Try these flags:
+          dnl   GCC >= 4.2           -fopenmp
+          dnl   SunPRO C             -xopenmp
+          dnl   Intel C              -openmp
+          dnl   SGI C, PGI C         -mp
+          dnl   Tru64 Compaq C       -omp
+          dnl   IBM C (AIX, Linux)   -qsmp=omp
+          dnl If in this loop a compiler is passed an option that it doesn't
+          dnl understand or that it misinterprets, the AC_LINK_IFELSE test
+          dnl will fail (since we know that it failed without the option),
+          dnl therefore the loop will continue searching for an option, and
+          dnl no output file called 'penmp' or 'mp' is created.
+          for ac_option in -fopenmp -xopenmp -openmp -mp -omp -qsmp=omp; do
+            ac_save_[]_AC_LANG_PREFIX[]FLAGS=$[]_AC_LANG_PREFIX[]FLAGS
+            _AC_LANG_PREFIX[]FLAGS="$[]_AC_LANG_PREFIX[]FLAGS $ac_option"
+            AC_LINK_IFELSE([_AC_LANG_OPENMP],
+              [ac_cv_prog_[]_AC_LANG_ABBREV[]_openmp=$ac_option])
+            _AC_LANG_PREFIX[]FLAGS=$ac_save_[]_AC_LANG_PREFIX[]FLAGS
+            if test "$ac_cv_prog_[]_AC_LANG_ABBREV[]_openmp" != unsupported; then
+              break
+            fi
+          done])])
     case $ac_cv_prog_[]_AC_LANG_ABBREV[]_openmp in #(
       "none needed" | unsupported)
         ;; #(

@@ -31,19 +31,19 @@ u16_check (const uint16_t *s, size_t n)
       uint16_t c = *s;
 
       if (c < 0xd800 || c >= 0xe000)
-	{
-	  s++;
-	  continue;
-	}
+        {
+          s++;
+          continue;
+        }
       if (c < 0xdc00)
-	{
-	  if (s + 2 <= s_end
-	      && s[1] >= 0xdc00 && s[1] < 0xe000)
-	    {
-	      s += 2;
-	      continue;
-	    }
-	}
+        {
+          if (s + 2 <= s_end
+              && s[1] >= 0xdc00 && s[1] < 0xe000)
+            {
+              s += 2;
+              continue;
+            }
+        }
       /* invalid or incomplete multibyte character */
       return s;
     }

@@ -80,8 +80,8 @@ get_current_thread_handle (void)
   /* GetCurrentThread() returns a pseudo-handle, i.e. only a symbolic
      identifier, not a real handle.  */
   if (!DuplicateHandle (GetCurrentProcess (), GetCurrentThread (),
-			GetCurrentProcess (), &this_handle,
-			0, FALSE, DUPLICATE_SAME_ACCESS))
+                        GetCurrentProcess (), &this_handle,
+                        0, FALSE, DUPLICATE_SAME_ACCESS))
     abort ();
   return this_handle;
 }
@@ -97,18 +97,18 @@ gl_thread_self_func (void)
   if (thread == NULL)
     {
       /* This happens only in threads that have not been created through
-	 glthread_create(), such as the main thread.  */
+         glthread_create(), such as the main thread.  */
       for (;;)
-	{
-	  thread =
-	    (struct gl_thread_struct *)
-	    malloc (sizeof (struct gl_thread_struct));
-	  if (thread != NULL)
-	    break;
-	  /* Memory allocation failed.  There is not much we can do.  Have to
-	     busy-loop, waiting for the availability of memory.  */
-	  Sleep (1);
-	}
+        {
+          thread =
+            (struct gl_thread_struct *)
+            malloc (sizeof (struct gl_thread_struct));
+          if (thread != NULL)
+            break;
+          /* Memory allocation failed.  There is not much we can do.  Have to
+             busy-loop, waiting for the availability of memory.  */
+          Sleep (1);
+        }
 
       thread->handle = get_current_thread_handle ();
       InitializeCriticalSection (&thread->handle_lock);
@@ -164,9 +164,9 @@ glthread_create_func (gl_thread_t *threadp, void * (*func) (void *), void *arg)
       /* calls CreateThread with the same arguments */
     if (thread_handle == NULL)
       {
-	DeleteCriticalSection (&thread->handle_lock);
-	free (thread);
-	return EAGAIN;
+        DeleteCriticalSection (&thread->handle_lock);
+        free (thread);
+        return EAGAIN;
       }
 
     EnterCriticalSection (&thread->handle_lock);

@@ -26,15 +26,15 @@
 #include <string.h>
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 int
@@ -52,9 +52,9 @@ main ()
   unsetenv ("LANG");
   setlocale (LC_ALL, "");
   ASSERT (strcmp (gl_locale_name (LC_MESSAGES, "LC_MESSAGES"),
-		  gl_locale_name_default ()) == 0);
+                  gl_locale_name_default ()) == 0);
   ASSERT (strcmp (gl_locale_name (LC_NUMERIC, "LC_NUMERIC"),
-		  gl_locale_name_default ()) == 0);
+                  gl_locale_name_default ()) == 0);
 
   /* Check that an empty environment variable is treated like an unset
      environment variable.  */
@@ -65,7 +65,7 @@ main ()
   unsetenv ("LANG");
   setlocale (LC_ALL, "");
   ASSERT (strcmp (gl_locale_name (LC_MESSAGES, "LC_MESSAGES"),
-		  gl_locale_name_default ()) == 0);
+                  gl_locale_name_default ()) == 0);
 
   unsetenv ("LC_ALL");
   setenv ("LC_CTYPE", "", 1);
@@ -73,7 +73,7 @@ main ()
   unsetenv ("LANG");
   setlocale (LC_ALL, "");
   ASSERT (strcmp (gl_locale_name (LC_MESSAGES, "LC_MESSAGES"),
-		  gl_locale_name_default ()) == 0);
+                  gl_locale_name_default ()) == 0);
 
   unsetenv ("LC_ALL");
   unsetenv ("LC_CTYPE");
@@ -81,7 +81,7 @@ main ()
   unsetenv ("LANG");
   setlocale (LC_ALL, "");
   ASSERT (strcmp (gl_locale_name (LC_MESSAGES, "LC_MESSAGES"),
-		  gl_locale_name_default ()) == 0);
+                  gl_locale_name_default ()) == 0);
 
   unsetenv ("LC_ALL");
   unsetenv ("LC_CTYPE");
@@ -89,7 +89,7 @@ main ()
   setenv ("LANG", "", 1);
   setlocale (LC_ALL, "");
   ASSERT (strcmp (gl_locale_name (LC_MESSAGES, "LC_MESSAGES"),
-		  gl_locale_name_default ()) == 0);
+                  gl_locale_name_default ()) == 0);
 
   /* Check that LC_ALL overrides the others, and LANG is overridden by the
      others.  */

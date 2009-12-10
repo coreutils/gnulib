@@ -58,22 +58,22 @@ extern "C" {
    values: EINVAL, EILSEQ, ENOMEM.  */
 extern uint8_t *
        u8_conv_from_encoding (const char *fromcode,
-			      enum iconv_ilseq_handler handler,
-			      const char *src, size_t srclen,
-			      size_t *offsets,
-			      uint8_t *resultbuf, size_t *lengthp);
+                              enum iconv_ilseq_handler handler,
+                              const char *src, size_t srclen,
+                              size_t *offsets,
+                              uint8_t *resultbuf, size_t *lengthp);
 extern uint16_t *
        u16_conv_from_encoding (const char *fromcode,
-			       enum iconv_ilseq_handler handler,
-			       const char *src, size_t srclen,
-			       size_t *offsets,
-			       uint16_t *resultbuf, size_t *lengthp);
+                               enum iconv_ilseq_handler handler,
+                               const char *src, size_t srclen,
+                               size_t *offsets,
+                               uint16_t *resultbuf, size_t *lengthp);
 extern uint32_t *
        u32_conv_from_encoding (const char *fromcode,
-			       enum iconv_ilseq_handler handler,
-			       const char *src, size_t srclen,
-			       size_t *offsets,
-			       uint32_t *resultbuf, size_t *lengthp);
+                               enum iconv_ilseq_handler handler,
+                               const char *src, size_t srclen,
+                               size_t *offsets,
+                               uint32_t *resultbuf, size_t *lengthp);
 
 /* Converts an entire Unicode string, possibly including NUL units, from a
    Unicode encoding to a given encoding.
@@ -95,54 +95,54 @@ extern uint32_t *
    values: EINVAL, EILSEQ, ENOMEM.  */
 extern char *
        u8_conv_to_encoding (const char *tocode,
-			    enum iconv_ilseq_handler handler,
-			    const uint8_t *src, size_t srclen,
-			    size_t *offsets,
-			    char *resultbuf, size_t *lengthp);
+                            enum iconv_ilseq_handler handler,
+                            const uint8_t *src, size_t srclen,
+                            size_t *offsets,
+                            char *resultbuf, size_t *lengthp);
 extern char *
        u16_conv_to_encoding (const char *tocode,
-			     enum iconv_ilseq_handler handler,
-			     const uint16_t *src, size_t srclen,
-			     size_t *offsets,
-			     char *resultbuf, size_t *lengthp);
+                             enum iconv_ilseq_handler handler,
+                             const uint16_t *src, size_t srclen,
+                             size_t *offsets,
+                             char *resultbuf, size_t *lengthp);
 extern char *
        u32_conv_to_encoding (const char *tocode,
-			     enum iconv_ilseq_handler handler,
-			     const uint32_t *src, size_t srclen,
-			     size_t *offsets,
-			     char *resultbuf, size_t *lengthp);
+                             enum iconv_ilseq_handler handler,
+                             const uint32_t *src, size_t srclen,
+                             size_t *offsets,
+                             char *resultbuf, size_t *lengthp);
 
 /* Converts a NUL terminated string from a given encoding.
    The result is malloc allocated, or NULL (with errno set) in case of error.
    Particular errno values: EILSEQ, ENOMEM.  */
 extern uint8_t *
        u8_strconv_from_encoding (const char *string,
-				 const char *fromcode,
-				 enum iconv_ilseq_handler handler);
+                                 const char *fromcode,
+                                 enum iconv_ilseq_handler handler);
 extern uint16_t *
        u16_strconv_from_encoding (const char *string,
-				  const char *fromcode,
-				  enum iconv_ilseq_handler handler);
+                                  const char *fromcode,
+                                  enum iconv_ilseq_handler handler);
 extern uint32_t *
        u32_strconv_from_encoding (const char *string,
-				  const char *fromcode,
-				  enum iconv_ilseq_handler handler);
+                                  const char *fromcode,
+                                  enum iconv_ilseq_handler handler);
 
 /* Converts a NUL terminated string to a given encoding.
    The result is malloc allocated, or NULL (with errno set) in case of error.
    Particular errno values: EILSEQ, ENOMEM.  */
 extern char *
        u8_strconv_to_encoding (const uint8_t *string,
-			       const char *tocode,
-			       enum iconv_ilseq_handler handler);
+                               const char *tocode,
+                               enum iconv_ilseq_handler handler);
 extern char *
        u16_strconv_to_encoding (const uint16_t *string,
-				const char *tocode,
-				enum iconv_ilseq_handler handler);
+                                const char *tocode,
+                                enum iconv_ilseq_handler handler);
 extern char *
        u32_strconv_to_encoding (const uint32_t *string,
-				const char *tocode,
-				enum iconv_ilseq_handler handler);
+                                const char *tocode,
+                                enum iconv_ilseq_handler handler);
 
 /* Converts a NUL terminated string from the locale encoding.
    The result is malloc allocated, or NULL (with errno set) in case of error.

@@ -45,7 +45,7 @@ enum { BILLION = 1000 * 1000 * 1000 };
 
 int
 rpl_nanosleep (const struct timespec *requested_delay,
-	       struct timespec *remaining_delay)
+               struct timespec *remaining_delay)
 {
   /* nanosleep mishandles large sleeps due to internal overflow
      problems.  The worst known case of this is cygwin 1.5.x, which
@@ -115,12 +115,12 @@ my_usleep (const struct timespec *ts_delay)
     {
       time_t t1 = tv_delay.tv_sec + 1;
       if (t1 < tv_delay.tv_sec)
-	tv_delay.tv_usec = 1000000 - 1; /* close enough */
+        tv_delay.tv_usec = 1000000 - 1; /* close enough */
       else
-	{
-	  tv_delay.tv_sec = t1;
-	  tv_delay.tv_usec = 0;
-	}
+        {
+          tv_delay.tv_sec = t1;
+          tv_delay.tv_usec = 0;
+        }
     }
   select (0, NULL, NULL, NULL, &tv_delay);
 }
@@ -130,7 +130,7 @@ my_usleep (const struct timespec *ts_delay)
 
 int
 rpl_nanosleep (const struct timespec *requested_delay,
-	       struct timespec *remaining_delay)
+               struct timespec *remaining_delay)
 {
   static bool initialized;
 
@@ -147,14 +147,14 @@ rpl_nanosleep (const struct timespec *requested_delay,
 
       sigaction (SIGCONT, NULL, &oldact);
       if (get_handler (&oldact) != SIG_IGN)
-	{
-	  struct sigaction newact;
+        {
+          struct sigaction newact;
 
-	  newact.sa_handler = sighandler;
-	  sigemptyset (&newact.sa_mask);
-	  newact.sa_flags = 0;
-	  sigaction (SIGCONT, &newact, NULL);
-	}
+          newact.sa_handler = sighandler;
+          sigemptyset (&newact.sa_mask);
+          newact.sa_flags = 0;
+          sigaction (SIGCONT, &newact, NULL);
+        }
       initialized = true;
     }
 
@@ -166,7 +166,7 @@ rpl_nanosleep (const struct timespec *requested_delay,
     {
       /* Calculate time remaining.  */
       /* FIXME: the code in sleep doesn't use this, so there's no
-	 rush to implement it.  */
+         rush to implement it.  */
 
       errno = EINTR;
     }

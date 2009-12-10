@@ -73,7 +73,7 @@ extern void *memchr (void const *__s, int __c, size_t __n)
 # endif
 # if ! @HAVE_DECL_MEMMEM@ || @REPLACE_MEMMEM@
 extern void *memmem (void const *__haystack, size_t __haystack_len,
-		     void const *__needle, size_t __needle_len)
+                     void const *__needle, size_t __needle_len)
   __attribute__ ((__pure__));
 # endif
 #elif defined GNULIB_POSIXCHECK
@@ -90,7 +90,7 @@ extern void *memmem (void const *__haystack, size_t __haystack_len,
 #if @GNULIB_MEMPCPY@
 # if ! @HAVE_MEMPCPY@
 extern void *mempcpy (void *restrict __dest, void const *restrict __src,
-		      size_t __n);
+                      size_t __n);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef mempcpy
@@ -149,7 +149,7 @@ extern char *stpcpy (char *restrict __dst, char const *restrict __src);
 # if ! @HAVE_STPNCPY@
 #  define stpncpy gnu_stpncpy
 extern char *stpncpy (char *restrict __dst, char const *restrict __src,
-		      size_t __n);
+                      size_t __n);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef stpncpy
@@ -379,12 +379,12 @@ extern char *strcasestr (const char *haystack, const char *needle)
 /* Parse S into tokens separated by characters in DELIM.
    If S is NULL, the saved pointer in SAVE_PTR is used as
    the next starting point.  For example:
-	char s[] = "-abc-=-def";
-	char *sp;
-	x = strtok_r(s, "-", &sp);	// x = "abc", sp = "=-def"
-	x = strtok_r(NULL, "-=", &sp);	// x = "def", sp = NULL
-	x = strtok_r(NULL, "=", &sp);	// x = NULL
-		// s = "abc\0-def\0"
+        char s[] = "-abc-=-def";
+        char *sp;
+        x = strtok_r(s, "-", &sp);      // x = "abc", sp = "=-def"
+        x = strtok_r(NULL, "-=", &sp);  // x = "def", sp = NULL
+        x = strtok_r(NULL, "=", &sp);   // x = NULL
+                // s = "abc\0-def\0"
 
    This is a variant of strtok() that is multithread-safe.
 
@@ -407,7 +407,7 @@ extern char *strcasestr (const char *haystack, const char *needle)
 # endif
 # if ! @HAVE_DECL_STRTOK_R@ || @REPLACE_STRTOK_R@
 extern char *strtok_r (char *restrict s, char const *restrict delim,
-		       char **restrict save_ptr);
+                       char **restrict save_ptr);
 # endif
 # if defined GNULIB_POSIXCHECK
 #  undef strtok_r
@@ -562,12 +562,12 @@ extern char * mbssep (char **stringp, const char *delim);
    the character string DELIM.
    If STRING is NULL, the saved pointer in SAVE_PTR is used as
    the next starting point.  For example:
-	char s[] = "-abc-=-def";
-	char *sp;
-	x = mbstok_r(s, "-", &sp);	// x = "abc", sp = "=-def"
-	x = mbstok_r(NULL, "-=", &sp);	// x = "def", sp = NULL
-	x = mbstok_r(NULL, "=", &sp);	// x = NULL
-		// s = "abc\0-def\0"
+        char s[] = "-abc-=-def";
+        char *sp;
+        x = mbstok_r(s, "-", &sp);      // x = "abc", sp = "=-def"
+        x = mbstok_r(NULL, "-=", &sp);  // x = "def", sp = NULL
+        x = mbstok_r(NULL, "=", &sp);   // x = NULL
+                // s = "abc\0-def\0"
 
    Caveat: It modifies the original string.
    Caveat: These functions cannot be used on constant strings.

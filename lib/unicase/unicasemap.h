@@ -23,30 +23,30 @@
 
 extern uint8_t *
        u8_casemap (const uint8_t *s, size_t n,
-		   casing_prefix_context_t prefix_context,
-		   casing_suffix_context_t suffix_context,
-		   const char *iso639_language,
-		   ucs4_t (*single_character_map) (ucs4_t),
-		   size_t offset_in_rule, /* offset in 'struct special_casing_rule' */
-		   uninorm_t nf,
-		   uint8_t *resultbuf, size_t *lengthp);
+                   casing_prefix_context_t prefix_context,
+                   casing_suffix_context_t suffix_context,
+                   const char *iso639_language,
+                   ucs4_t (*single_character_map) (ucs4_t),
+                   size_t offset_in_rule, /* offset in 'struct special_casing_rule' */
+                   uninorm_t nf,
+                   uint8_t *resultbuf, size_t *lengthp);
 
 extern uint16_t *
        u16_casemap (const uint16_t *s, size_t n,
-		    casing_prefix_context_t prefix_context,
-		    casing_suffix_context_t suffix_context,
-		    const char *iso639_language,
-		    ucs4_t (*single_character_map) (ucs4_t),
-		    size_t offset_in_rule, /* offset in 'struct special_casing_rule' */
-		    uninorm_t nf,
-		    uint16_t *resultbuf, size_t *lengthp);
+                    casing_prefix_context_t prefix_context,
+                    casing_suffix_context_t suffix_context,
+                    const char *iso639_language,
+                    ucs4_t (*single_character_map) (ucs4_t),
+                    size_t offset_in_rule, /* offset in 'struct special_casing_rule' */
+                    uninorm_t nf,
+                    uint16_t *resultbuf, size_t *lengthp);
 
 extern uint32_t *
        u32_casemap (const uint32_t *s, size_t n,
-		    casing_prefix_context_t prefix_context,
-		    casing_suffix_context_t suffix_context,
-		    const char *iso639_language,
-		    ucs4_t (*single_character_map) (ucs4_t),
-		    size_t offset_in_rule, /* offset in 'struct special_casing_rule' */
-		    uninorm_t nf,
-		    uint32_t *resultbuf, size_t *lengthp);
+                    casing_prefix_context_t prefix_context,
+                    casing_suffix_context_t suffix_context,
+                    const char *iso639_language,
+                    ucs4_t (*single_character_map) (ucs4_t),
+                    size_t offset_in_rule, /* offset in 'struct special_casing_rule' */
+                    uninorm_t nf,
+                    uint32_t *resultbuf, size_t *lengthp);

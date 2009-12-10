@@ -55,10 +55,10 @@ rpl_stat (char const *name, struct stat *st)
     {
       size_t len = strlen (name);
       if (ISSLASH (name[len - 1]))
-	{
-	  errno = ENOTDIR;
-	  return -1;
-	}
+        {
+          errno = ENOTDIR;
+          return -1;
+        }
     }
 #endif /* REPLACE_FUNC_STAT_FILE */
 #if REPLACE_FUNC_STAT_DIR

@@ -18,9 +18,9 @@
 /* Specification.  */
 #include <math.h>
 
-/*							s_atanl.c
+/*                                                      s_atanl.c
  *
- *	Inverse circular tangent for 128-bit long double precision
+ *      Inverse circular tangent for 128-bit long double precision
  *      (arctangent)
  *
  *
@@ -185,9 +185,9 @@ atanl (long double x)
     {
       /* Infinity. */
       if (sign)
-	return -atantbl[83];
+        return -atantbl[83];
       else
-	return atantbl[83];
+        return atantbl[83];
     }
 
   if (sign)
@@ -201,7 +201,7 @@ atanl (long double x)
   else
     {
       /* Index of nearest table element.
-	 Roundoff to integer is asymmetrical to avoid cancellation when t < 0
+         Roundoff to integer is asymmetrical to avoid cancellation when t < 0
          (cf. fdlibm). */
       k = 8.0 * x + 0.25;
       u = 0.125 * k;

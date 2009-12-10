@@ -35,7 +35,7 @@
 # define DOUBLE_SLASH_IS_DISTINCT_ROOT 0
 #endif
 
-#if !((HAVE_CANONICALIZE_FILE_NAME && FUNC_REALPATH_WORKS)	\
+#if !((HAVE_CANONICALIZE_FILE_NAME && FUNC_REALPATH_WORKS)      \
       || GNULIB_CANONICALIZE_LGPL)
 /* Return the canonical absolute name of file NAME.  A canonical name
    does not contain any `.', `..' components nor any repeated file name
@@ -58,12 +58,12 @@ seen_triple (Hash_table **ht, char const *filename, struct stat const *st)
     {
       size_t initial_capacity = 7;
       *ht = hash_initialize (initial_capacity,
-			    NULL,
-			    triple_hash,
-			    triple_compare_ino_str,
-			    triple_free);
+                            NULL,
+                            triple_hash,
+                            triple_compare_ino_str,
+                            triple_free);
       if (*ht == NULL)
-	xalloc_die ();
+        xalloc_die ();
     }
 
   if (seen_file (*ht, filename, st))
@@ -106,19 +106,19 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
     {
       rname = xgetcwd ();
       if (!rname)
-	return NULL;
+        return NULL;
       dest = strchr (rname, '\0');
       if (dest - rname < PATH_MAX)
-	{
-	  char *p = xrealloc (rname, PATH_MAX);
-	  dest = p + (dest - rname);
-	  rname = p;
-	  rname_limit = rname + PATH_MAX;
-	}
+        {
+          char *p = xrealloc (rname, PATH_MAX);
+          dest = p + (dest - rname);
+          rname = p;
+          rname_limit = rname + PATH_MAX;
+        }
       else
-	{
-	  rname_limit = dest;
-	}
+        {
+          rname_limit = dest;
+        }
     }
   else
     {
@@ -127,145 +127,145 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
       rname[0] = '/';
       dest = rname + 1;
       if (DOUBLE_SLASH_IS_DISTINCT_ROOT && name[1] == '/')
-	*dest++ = '/';
+        *dest++ = '/';
     }
 
   for (start = name; *start; start = end)
     {
       /* Skip sequence of multiple file name separators.  */
       while (*start == '/')
-	++start;
+        ++start;
 
       /* Find end of component.  */
       for (end = start; *end && *end != '/'; ++end)
-	/* Nothing.  */;
+        /* Nothing.  */;
 
       if (end - start == 0)
-	break;
+        break;
       else if (end - start == 1 && start[0] == '.')
-	/* nothing */;
+        /* nothing */;
       else if (end - start == 2 && start[0] == '.' && start[1] == '.')
-	{
-	  /* Back up to previous component, ignore if at root already.  */
-	  if (dest > rname + 1)
-	    while ((--dest)[-1] != '/');
-	  if (DOUBLE_SLASH_IS_DISTINCT_ROOT && dest == rname + 1
-	      && *dest == '/')
-	    dest++;
-	}
+        {
+          /* Back up to previous component, ignore if at root already.  */
+          if (dest > rname + 1)
+            while ((--dest)[-1] != '/');
+          if (DOUBLE_SLASH_IS_DISTINCT_ROOT && dest == rname + 1
+              && *dest == '/')
+            dest++;
+        }
       else
-	{
-	  struct stat st;
+        {
+          struct stat st;
 
-	  if (dest[-1] != '/')
-	    *dest++ = '/';
+          if (dest[-1] != '/')
+            *dest++ = '/';
 
-	  if (dest + (end - start) >= rname_limit)
-	    {
-	      ptrdiff_t dest_offset = dest - rname;
-	      size_t new_size = rname_limit - rname;
+          if (dest + (end - start) >= rname_limit)
+            {
+              ptrdiff_t dest_offset = dest - rname;
+              size_t new_size = rname_limit - rname;
 
-	      if (end - start + 1 > PATH_MAX)
-		new_size += end - start + 1;
-	      else
-		new_size += PATH_MAX;
-	      rname = xrealloc (rname, new_size);
-	      rname_limit = rname + new_size;
+              if (end - start + 1 > PATH_MAX)
+                new_size += end - start + 1;
+              else
+                new_size += PATH_MAX;
+              rname = xrealloc (rname, new_size);
+              rname_limit = rname + new_size;
 
-	      dest = rname + dest_offset;
-	    }
+              dest = rname + dest_offset;
+            }
 
-	  dest = memcpy (dest, start, end - start);
-	  dest += end - start;
-	  *dest = '\0';
+          dest = memcpy (dest, start, end - start);
+          dest += end - start;
+          *dest = '\0';
 
-	  if (lstat (rname, &st) != 0)
-	    {
-	      saved_errno = errno;
-	      if (can_mode == CAN_EXISTING)
-		goto error;
-	      if (can_mode == CAN_ALL_BUT_LAST)
-		{
-		  if (end[strspn (end, "/")] || saved_errno != ENOENT)
-		    goto error;
-		  continue;
-		}
-	      st.st_mode = 0;
-	    }
+          if (lstat (rname, &st) != 0)
+            {
+              saved_errno = errno;
+              if (can_mode == CAN_EXISTING)
+                goto error;
+              if (can_mode == CAN_ALL_BUT_LAST)
+                {
+                  if (end[strspn (end, "/")] || saved_errno != ENOENT)
+                    goto error;
+                  continue;
+                }
+              st.st_mode = 0;
+            }
 
-	  if (S_ISLNK (st.st_mode))
-	    {
-	      char *buf;
-	      size_t n, len;
+          if (S_ISLNK (st.st_mode))
+            {
+              char *buf;
+              size_t n, len;
 
-	      /* Detect loops.  We cannot use the cycle-check module here,
-		 since it's actually possible to encounter the same symlink
-		 more than once in a given traversal.  However, encountering
-		 the same symlink,NAME pair twice does indicate a loop.  */
-	      if (seen_triple (&ht, name, &st))
-		{
-		  if (can_mode == CAN_MISSING)
-		    continue;
-		  saved_errno = ELOOP;
-		  goto error;
-		}
+              /* Detect loops.  We cannot use the cycle-check module here,
+                 since it's actually possible to encounter the same symlink
+                 more than once in a given traversal.  However, encountering
+                 the same symlink,NAME pair twice does indicate a loop.  */
+              if (seen_triple (&ht, name, &st))
+                {
+                  if (can_mode == CAN_MISSING)
+                    continue;
+                  saved_errno = ELOOP;
+                  goto error;
+                }
 
-	      buf = areadlink_with_size (rname, st.st_size);
-	      if (!buf)
-		{
-		  if (can_mode == CAN_MISSING && errno != ENOMEM)
-		    continue;
-		  saved_errno = errno;
-		  goto error;
-		}
+              buf = areadlink_with_size (rname, st.st_size);
+              if (!buf)
+                {
+                  if (can_mode == CAN_MISSING && errno != ENOMEM)
+                    continue;
+                  saved_errno = errno;
+                  goto error;
+                }
 
-	      n = strlen (buf);
-	      len = strlen (end);
+              n = strlen (buf);
+              len = strlen (end);
 
-	      if (!extra_len)
-		{
-		  extra_len =
-		    ((n + len + 1) > PATH_MAX) ? (n + len + 1) : PATH_MAX;
-		  extra_buf = xmalloc (extra_len);
-		}
-	      else if ((n + len + 1) > extra_len)
-		{
-		  extra_len = n + len + 1;
-		  extra_buf = xrealloc (extra_buf, extra_len);
-		}
+              if (!extra_len)
+                {
+                  extra_len =
+                    ((n + len + 1) > PATH_MAX) ? (n + len + 1) : PATH_MAX;
+                  extra_buf = xmalloc (extra_len);
+                }
+              else if ((n + len + 1) > extra_len)
+                {
+                  extra_len = n + len + 1;
+                  extra_buf = xrealloc (extra_buf, extra_len);
+                }
 
-	      /* Careful here, end may be a pointer into extra_buf... */
-	      memmove (&extra_buf[n], end, len + 1);
-	      name = end = memcpy (extra_buf, buf, n);
+              /* Careful here, end may be a pointer into extra_buf... */
+              memmove (&extra_buf[n], end, len + 1);
+              name = end = memcpy (extra_buf, buf, n);
 
-	      if (buf[0] == '/')
-		{
-		  dest = rname + 1;	/* It's an absolute symlink */
-		  if (DOUBLE_SLASH_IS_DISTINCT_ROOT && buf[1] == '/')
-		    *dest++ = '/';
-		}
-	      else
-		{
-		  /* Back up to previous component, ignore if at root
-		     already: */
-		  if (dest > rname + 1)
-		    while ((--dest)[-1] != '/');
-		  if (DOUBLE_SLASH_IS_DISTINCT_ROOT && dest == rname + 1
-		      && *dest == '/')
-		    dest++;
-		}
+              if (buf[0] == '/')
+                {
+                  dest = rname + 1;     /* It's an absolute symlink */
+                  if (DOUBLE_SLASH_IS_DISTINCT_ROOT && buf[1] == '/')
+                    *dest++ = '/';
+                }
+              else
+                {
+                  /* Back up to previous component, ignore if at root
+                     already: */
+                  if (dest > rname + 1)
+                    while ((--dest)[-1] != '/');
+                  if (DOUBLE_SLASH_IS_DISTINCT_ROOT && dest == rname + 1
+                      && *dest == '/')
+                    dest++;
+                }
 
-	      free (buf);
-	    }
-	  else
-	    {
-	      if (!S_ISDIR (st.st_mode) && *end && (can_mode != CAN_MISSING))
-		{
-		  saved_errno = ENOTDIR;
-		  goto error;
-		}
-	    }
-	}
+              free (buf);
+            }
+          else
+            {
+              if (!S_ISDIR (st.st_mode) && *end && (can_mode != CAN_MISSING))
+                {
+                  saved_errno = ENOTDIR;
+                  goto error;
+                }
+            }
+        }
     }
   if (dest > rname + 1 && dest[-1] == '/')
     --dest;

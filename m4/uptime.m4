@@ -18,6 +18,6 @@ AC_DEFUN([gl_SYS_PROC_UPTIME],
       && gl_cv_have_proc_uptime=yes])
   if test $gl_cv_have_proc_uptime = yes; then
     AC_DEFINE([HAVE_PROC_UPTIME], [1],
-	      [  Define if your system has the /proc/uptime special file.])
+              [  Define if your system has the /proc/uptime special file.])
   fi
 ])

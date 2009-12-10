@@ -31,13 +31,13 @@ VSNPRINTF (DCHAR_T *buf, size_t size, const FCHAR_T *format, va_list args)
   if (result != buf)
     {
       if (size != 0)
-	{
-	  /* The result did not fit into the buffer.  Copy the initial segment
-	     into the buffer, truncating it if necessary.  */
-	  size_t n = (length < size ? length : size - 1);
-	  DCHAR_CPY (buf, result, n);
-	  buf[n] = '\0';
-	}
+        {
+          /* The result did not fit into the buffer.  Copy the initial segment
+             into the buffer, truncating it if necessary.  */
+          size_t n = (length < size ? length : size - 1);
+          DCHAR_CPY (buf, result, n);
+          buf[n] = '\0';
+        }
       free (result);
     }
 

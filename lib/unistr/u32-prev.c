@@ -30,10 +30,10 @@ u32_prev (ucs4_t *puc, const uint32_t *s, const uint32_t *start)
 #if CONFIG_UNICODE_SAFETY
       if (c_1 < 0xd800 || (c_1 >= 0xe000 && c_1 < 0x110000))
 #endif
-	{
-	  *puc = c_1;
-	  return s - 1;
-	}
+        {
+          *puc = c_1;
+          return s - 1;
+        }
     }
   return NULL;
 }

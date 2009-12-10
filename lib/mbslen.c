@@ -35,7 +35,7 @@ mbslen (const char *string)
 
       count = 0;
       for (mbui_init (iter, string); mbui_avail (iter); mbui_advance (iter))
-	count++;
+        count++;
 
       return count;
     }

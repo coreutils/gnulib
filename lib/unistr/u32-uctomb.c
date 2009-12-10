@@ -33,12 +33,12 @@ u32_uctomb (uint32_t *s, ucs4_t uc, int n)
   if (uc < 0xd800 || (uc >= 0xe000 && uc < 0x110000))
     {
       if (n > 0)
-	{
-	  *s = uc;
-	  return 1;
-	}
+        {
+          *s = uc;
+          return 1;
+        }
       else
-	return -2;
+        return -2;
     }
   else
     return -1;

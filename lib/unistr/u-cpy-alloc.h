@@ -30,7 +30,7 @@ FUNC (const UNIT *s, size_t n)
       UNIT *destptr = dest;
 
       for (; n > 0; n--)
-	*destptr++ = *s++;
+        *destptr++ = *s++;
 #else
       memcpy ((char *) dest, (const char *) s, n * sizeof (UNIT));
 #endif

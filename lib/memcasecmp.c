@@ -40,9 +40,9 @@ memcasecmp (const void *vs1, const void *vs2, size_t n)
       int U1 = toupper (u1);
       int U2 = toupper (u2);
       int diff = (UCHAR_MAX <= INT_MAX ? U1 - U2
-		  : U1 < U2 ? -1 : U2 < U1);
+                  : U1 < U2 ? -1 : U2 < U1);
       if (diff)
-	return diff;
+        return diff;
     }
   return 0;
 }

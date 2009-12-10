@@ -26,7 +26,7 @@ static void
 version_etc_hook (FILE *stream, struct argp_state *state)
 {
   version_etc_ar (stream, program_canonical_name, PACKAGE_NAME, VERSION,
-		  program_authors);
+                  program_authors);
 }
 
 void

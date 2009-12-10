@@ -46,21 +46,21 @@ main (int argc, char *argv[])
 
     if (hmac_md5 (key, key_len, data, data_len, out) != 0)
       {
-	printf ("call failure\n");
-	return 1;
+        printf ("call failure\n");
+        return 1;
       }
 
     if (memcmp (digest, out, 16) != 0)
       {
-	size_t i;
-	printf ("hash 1 mismatch. expected:\n");
-	for (i = 0; i < 16; i++)
-	  printf ("%02x ", digest[i] & 0xFF);
-	printf ("\ncomputed:\n");
-	for (i = 0; i < 16; i++)
-	  printf ("%02x ", out[i] & 0xFF);
-	printf ("\n");
-	return 1;
+        size_t i;
+        printf ("hash 1 mismatch. expected:\n");
+        for (i = 0; i < 16; i++)
+          printf ("%02x ", digest[i] & 0xFF);
+        printf ("\ncomputed:\n");
+        for (i = 0; i < 16; i++)
+          printf ("%02x ", out[i] & 0xFF);
+        printf ("\n");
+        return 1;
       }
   }
 
@@ -81,21 +81,21 @@ main (int argc, char *argv[])
 
     if (hmac_md5 (key, key_len, data, data_len, out) != 0)
       {
-	printf ("call failure\n");
-	return 1;
+        printf ("call failure\n");
+        return 1;
       }
 
     if (memcmp (digest, out, 16) != 0)
       {
-	size_t i;
-	printf ("hash 2 mismatch. expected:\n");
-	for (i = 0; i < 16; i++)
-	  printf ("%02x ", digest[i] & 0xFF);
-	printf ("\ncomputed:\n");
-	for (i = 0; i < 16; i++)
-	  printf ("%02x ", out[i] & 0xFF);
-	printf ("\n");
-	return 1;
+        size_t i;
+        printf ("hash 2 mismatch. expected:\n");
+        for (i = 0; i < 16; i++)
+          printf ("%02x ", digest[i] & 0xFF);
+        printf ("\ncomputed:\n");
+        for (i = 0; i < 16; i++)
+          printf ("%02x ", out[i] & 0xFF);
+        printf ("\n");
+        return 1;
       }
   }
 
@@ -125,21 +125,21 @@ main (int argc, char *argv[])
 
     if (hmac_md5 (key, key_len, data, data_len, out) != 0)
       {
-	printf ("call failure\n");
-	return 1;
+        printf ("call failure\n");
+        return 1;
       }
 
     if (memcmp (digest, out, 16) != 0)
       {
-	size_t i;
-	printf ("hash 3 mismatch. expected:\n");
-	for (i = 0; i < 16; i++)
-	  printf ("%02x ", digest[i] & 0xFF);
-	printf ("\ncomputed:\n");
-	for (i = 0; i < 16; i++)
-	  printf ("%02x ", out[i] & 0xFF);
-	printf ("\n");
-	return 1;
+        size_t i;
+        printf ("hash 3 mismatch. expected:\n");
+        for (i = 0; i < 16; i++)
+          printf ("%02x ", digest[i] & 0xFF);
+        printf ("\ncomputed:\n");
+        for (i = 0; i < 16; i++)
+          printf ("%02x ", out[i] & 0xFF);
+        printf ("\n");
+        return 1;
       }
   }
 

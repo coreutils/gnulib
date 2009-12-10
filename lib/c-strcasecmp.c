@@ -40,7 +40,7 @@ c_strcasecmp (const char *s1, const char *s2)
       c2 = c_tolower (*p2);
 
       if (c1 == '\0')
-	break;
+        break;
 
       ++p1;
       ++p2;

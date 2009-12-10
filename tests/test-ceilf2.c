@@ -29,15 +29,15 @@
 #include "isnanf-nolibm.h"
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 
@@ -74,27 +74,27 @@ ceilf_reference (DOUBLE x)
     {
       /* Avoid rounding errors for values near 2^k, where k >= MANT_DIG-1.  */
       if (z < TWO_MANT_DIG)
-	{
-	  /* Round to the next integer (nearest or up or down, doesn't matter).  */
-	  z += TWO_MANT_DIG;
-	  z -= TWO_MANT_DIG;
-	  /* Enforce rounding up.  */
-	  if (z < y)
-	    z += L_(1.0);
-	}
+        {
+          /* Round to the next integer (nearest or up or down, doesn't matter).  */
+          z += TWO_MANT_DIG;
+          z -= TWO_MANT_DIG;
+          /* Enforce rounding up.  */
+          if (z < y)
+            z += L_(1.0);
+        }
     }
   else if (z < L_(0.0))
     {
       /* Avoid rounding errors for values near -2^k, where k >= MANT_DIG-1.  */
       if (z > - TWO_MANT_DIG)
-	{
-	  /* Round to the next integer (nearest or up or down, doesn't matter).  */
-	  z -= TWO_MANT_DIG;
-	  z += TWO_MANT_DIG;
-	  /* Enforce rounding up.  */
-	  if (z < y)
-	    z += L_(1.0);
-	}
+        {
+          /* Round to the next integer (nearest or up or down, doesn't matter).  */
+          z -= TWO_MANT_DIG;
+          z += TWO_MANT_DIG;
+          /* Enforce rounding up.  */
+          if (z < y)
+            z += L_(1.0);
+        }
     }
   return z;
 }
@@ -131,9 +131,9 @@ check (float x)
       return 0;
     else
       {
-	fprintf (stderr, "ceilf %g(%a) = %g(%a) or %g(%a)?\n",
-		 x, x, reference, reference, result, result);
-	return 1;
+        fprintf (stderr, "ceilf %g(%a) = %g(%a) or %g(%a)?\n",
+                 x, x, reference, reference, result, result);
+        return 1;
       }
   }
 }
@@ -150,14 +150,14 @@ main ()
   for (highbits = 0; highbits < (1 << NUM_HIGHBITS); highbits++)
     for (lowbits = 0; lowbits < (1 << NUM_LOWBITS); lowbits++)
       {
-	/* Combine highbits and lowbits into a floating-point number,
-	   sign-extending the lowbits to 32-NUM_HIGHBITS bits.  */
-	union { float f; uint32_t i; } janus;
-	janus.i = ((uint32_t) highbits << (32 - NUM_HIGHBITS))
-		  | ((uint32_t) ((int32_t) ((uint32_t) lowbits << (32 - NUM_LOWBITS))
-				 >> (32 - NUM_LOWBITS - NUM_HIGHBITS))
-		     >> NUM_HIGHBITS);
-	error |= check (janus.f);
+        /* Combine highbits and lowbits into a floating-point number,
+           sign-extending the lowbits to 32-NUM_HIGHBITS bits.  */
+        union { float f; uint32_t i; } janus;
+        janus.i = ((uint32_t) highbits << (32 - NUM_HIGHBITS))
+                  | ((uint32_t) ((int32_t) ((uint32_t) lowbits << (32 - NUM_LOWBITS))
+                                 >> (32 - NUM_LOWBITS - NUM_HIGHBITS))
+                     >> NUM_HIGHBITS);
+        error |= check (janus.f);
       }
   return (error ? 1 : 0);
 }

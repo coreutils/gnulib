@@ -30,58 +30,58 @@ u8_chr (const uint8_t *s, size_t n, ucs4_t uc)
       uint8_t c0 = uc;
 
       for (; n > 0; s++, n--)
-	{
-	  if (*s == c0)
-	    return (uint8_t *) s;
-	}
+        {
+          if (*s == c0)
+            return (uint8_t *) s;
+        }
     }
   else
     switch (u8_uctomb_aux (c, uc, 6))
       {
       case 2:
-	if (n > 1)
-	  {
-	    uint8_t c0 = c[0];
-	    uint8_t c1 = c[1];
+        if (n > 1)
+          {
+            uint8_t c0 = c[0];
+            uint8_t c1 = c[1];
 
-	    for (n--; n > 0; s++, n--)
-	      {
-		if (*s == c0 && s[1] == c1)
-		  return (uint8_t *) s;
-	      }
-	  }
-	break;
+            for (n--; n > 0; s++, n--)
+              {
+                if (*s == c0 && s[1] == c1)
+                  return (uint8_t *) s;
+              }
+          }
+        break;
 
       case 3:
-	if (n > 2)
-	  {
-	    uint8_t c0 = c[0];
-	    uint8_t c1 = c[1];
-	    uint8_t c2 = c[2];
+        if (n > 2)
+          {
+            uint8_t c0 = c[0];
+            uint8_t c1 = c[1];
+            uint8_t c2 = c[2];
 
-	    for (n -= 2; n > 0; s++, n--)
-	      {
-		if (*s == c0 && s[1] == c1 && s[2] == c2)
-		  return (uint8_t *) s;
-	      }
-	  }
-	break;
+            for (n -= 2; n > 0; s++, n--)
+              {
+                if (*s == c0 && s[1] == c1 && s[2] == c2)
+                  return (uint8_t *) s;
+              }
+          }
+        break;
 
       case 4:
-	if (n > 3)
-	  {
-	    uint8_t c0 = c[0];
-	    uint8_t c1 = c[1];
-	    uint8_t c2 = c[2];
-	    uint8_t c3 = c[3];
+        if (n > 3)
+          {
+            uint8_t c0 = c[0];
+            uint8_t c1 = c[1];
+            uint8_t c2 = c[2];
+            uint8_t c3 = c[3];
 
-	    for (n -= 3; n > 0; s++, n--)
-	      {
-		if (*s == c0 && s[1] == c1 && s[2] == c2 && s[3] == c3)
-		  return (uint8_t *) s;
-	      }
-	  }
-	break;
+            for (n -= 3; n > 0; s++, n--)
+              {
+                if (*s == c0 && s[1] == c1 && s[2] == c2 && s[3] == c3)
+                  return (uint8_t *) s;
+              }
+          }
+        break;
       }
   return NULL;
 }

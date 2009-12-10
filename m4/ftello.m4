@@ -16,7 +16,7 @@ AC_DEFUN([gl_FUNC_FTELLO],
   AC_CACHE_CHECK([for ftello], [gl_cv_func_ftello],
     [
       AC_TRY_LINK([#include <stdio.h>], [ftello (stdin);],
-	[gl_cv_func_ftello=yes], [gl_cv_func_ftello=no])
+        [gl_cv_func_ftello=yes], [gl_cv_func_ftello=no])
     ])
   if test $gl_cv_func_ftello = no; then
     HAVE_FTELLO=0

@@ -37,7 +37,7 @@ inttostr (inttype i, char *buf)
   if (i < 0)
     {
       do
-	*--p = '0' - i % 10;
+        *--p = '0' - i % 10;
       while ((i /= 10) != 0);
 
       *--p = '-';
@@ -46,7 +46,7 @@ inttostr (inttype i, char *buf)
 #endif
     {
       do
-	*--p = '0' + i % 10;
+        *--p = '0' + i % 10;
       while ((i /= 10) != 0);
     }
 

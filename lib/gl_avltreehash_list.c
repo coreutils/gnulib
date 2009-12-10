@@ -75,8 +75,8 @@ check_invariants (gl_list_node_t node, gl_list_node_t parent)
   if (!(node->parent == parent))
     abort ();
   if (!(node->branch_size
-	== (node->left != NULL ? node->left->branch_size : 0)
-	   + 1 + (node->right != NULL ? node->right->branch_size : 0)))
+        == (node->left != NULL ? node->left->branch_size : 0)
+           + 1 + (node->right != NULL ? node->right->branch_size : 0)))
     abort ();
   if (!(balance >= -1 && balance <= 1))
     abort ();

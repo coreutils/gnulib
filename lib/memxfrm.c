@@ -45,7 +45,7 @@ memxfrm (char *s, size_t n, char *resultbuf, size_t *lengthp)
       allocated = (n > 0 ? n : 1);
       result = (char *) malloc (allocated);
       if (result == NULL)
-	goto out_of_memory_2;
+        goto out_of_memory_2;
     }
   length = 0;
 
@@ -63,44 +63,44 @@ memxfrm (char *s, size_t n, char *resultbuf, size_t *lengthp)
     p = s;
     for (;;)
       {
-	/* Search next NUL byte.  */
-	const char *q = p + strlen (p);
+        /* Search next NUL byte.  */
+        const char *q = p + strlen (p);
 
-	for (;;)
-	  {
-	    size_t k;
+        for (;;)
+          {
+            size_t k;
 
-	    errno = 0;
-	    k = strxfrm (result + length, p, allocated - length);
-	    if (errno != 0)
-	      goto fail;
-	    if (k >= allocated - length)
-	      {
-		/* Grow the result buffer.  */
-		char *new_result;
+            errno = 0;
+            k = strxfrm (result + length, p, allocated - length);
+            if (errno != 0)
+              goto fail;
+            if (k >= allocated - length)
+              {
+                /* Grow the result buffer.  */
+                char *new_result;
 
-		allocated = 2 * allocated;
-		if (allocated < 64)
-		  allocated = 64;
-		if (result == resultbuf)
-		  new_result = (char *) malloc (allocated);
-		else
-		  new_result = (char *) realloc (result, allocated);
-		if (new_result == NULL)
-		  goto out_of_memory_1;
-		result = new_result;
-	      }
-	    else
-	      {
-		length += k;
-		break;
-	      }
-	  }
+                allocated = 2 * allocated;
+                if (allocated < 64)
+                  allocated = 64;
+                if (result == resultbuf)
+                  new_result = (char *) malloc (allocated);
+                else
+                  new_result = (char *) realloc (result, allocated);
+                if (new_result == NULL)
+                  goto out_of_memory_1;
+                result = new_result;
+              }
+            else
+              {
+                length += k;
+                break;
+              }
+          }
 
-	p = q + 1;
-	if (p == p_end)
-	  break;
-	result[length] = '\0';
+        p = q + 1;
+        if (p == p_end)
+          break;
+        result[length] = '\0';
         length++;
       }
   }
@@ -110,7 +110,7 @@ memxfrm (char *s, size_t n, char *resultbuf, size_t *lengthp)
     {
       char *memory = (char *) realloc (result, length > 0 ? length : 1);
       if (memory != NULL)
-	result = memory;
+        result = memory;
     }
 
   s[n] = orig_sentinel;

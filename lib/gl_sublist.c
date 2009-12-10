@@ -50,10 +50,10 @@ struct gl_list_impl
 
 static gl_list_t
 gl_sublist_create_empty (gl_list_implementation_t implementation,
-			 gl_listelement_equals_fn equals_fn,
-			 gl_listelement_hashcode_fn hashcode_fn,
-			 gl_listelement_dispose_fn dispose_fn,
-			 bool allow_duplicates)
+                         gl_listelement_equals_fn equals_fn,
+                         gl_listelement_hashcode_fn hashcode_fn,
+                         gl_listelement_dispose_fn dispose_fn,
+                         bool allow_duplicates)
 {
   /* Shouldn't be called.  */
   abort ();
@@ -61,11 +61,11 @@ gl_sublist_create_empty (gl_list_implementation_t implementation,
 
 static gl_list_t
 gl_sublist_create_fill (gl_list_implementation_t implementation,
-			gl_listelement_equals_fn equals_fn,
-			gl_listelement_hashcode_fn hashcode_fn,
-			gl_listelement_dispose_fn dispose_fn,
-			bool allow_duplicates,
-			size_t count, const void **contents)
+                        gl_listelement_equals_fn equals_fn,
+                        gl_listelement_hashcode_fn hashcode_fn,
+                        gl_listelement_dispose_fn dispose_fn,
+                        bool allow_duplicates,
+                        size_t count, const void **contents)
 {
   /* Shouldn't be called.  */
   abort ();
@@ -146,7 +146,7 @@ gl_sublist_set_at (gl_list_t list, size_t position, const void *elt)
 
 static gl_list_node_t
 gl_sublist_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
-			   const void *elt)
+                           const void *elt)
 {
   if (!(start_index <= end_index && end_index <= list->end - list->start))
     /* Invalid arguments.  */
@@ -154,9 +154,9 @@ gl_sublist_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
   {
     size_t index =
       gl_list_indexof_from_to (list->whole,
-			       list->start + start_index,
-			       list->start + end_index,
-			       elt);
+                               list->start + start_index,
+                               list->start + end_index,
+                               elt);
     if (index != (size_t)(-1))
       return INDEX_TO_NODE (index - list->start);
     else
@@ -166,8 +166,8 @@ gl_sublist_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
 
 static size_t
 gl_sublist_indexof_from_to (gl_list_t list,
-			    size_t start_index, size_t end_index,
-			    const void *elt)
+                            size_t start_index, size_t end_index,
+                            const void *elt)
 {
   if (!(start_index <= end_index && end_index <= list->end - list->start))
     /* Invalid arguments.  */
@@ -175,9 +175,9 @@ gl_sublist_indexof_from_to (gl_list_t list,
   {
     size_t index =
       gl_list_indexof_from_to (list->whole,
-			       list->start + start_index,
-			       list->start + end_index,
-			       elt);
+                               list->start + start_index,
+                               list->start + end_index,
+                               elt);
     if (index != (size_t)(-1))
       index -= list->start;
     return index;
@@ -282,19 +282,19 @@ gl_sublist_iterator (gl_list_t list)
 
 static gl_list_iterator_t
 gl_sublist_iterator_from_to (gl_list_t list,
-			     size_t start_index, size_t end_index)
+                             size_t start_index, size_t end_index)
 {
   if (!(start_index <= end_index && end_index <= list->end - list->start))
     /* Invalid arguments.  */
     abort ();
   return gl_list_iterator_from_to (list->whole,
-				   list->start + start_index,
-				   list->start + end_index);
+                                   list->start + start_index,
+                                   list->start + end_index);
 }
 
 static bool
 gl_sublist_iterator_next (gl_list_iterator_t *iterator,
-			  const void **eltp, gl_list_node_t *nodep)
+                          const void **eltp, gl_list_node_t *nodep)
 {
   /* Shouldn't be called.  */
   abort ();
@@ -311,12 +311,12 @@ gl_sublist_iterator_free (gl_list_iterator_t *iterator)
 
 static gl_list_node_t
 gl_sublist_sortedlist_search (gl_list_t list,
-			      gl_listelement_compar_fn compar,
-			      const void *elt)
+                              gl_listelement_compar_fn compar,
+                              const void *elt)
 {
   size_t index =
     gl_sortedlist_indexof_from_to (list->whole, compar,
-				   list->start, list->end, elt);
+                                   list->start, list->end, elt);
   if (index != (size_t)(-1))
     return INDEX_TO_NODE (index - list->start);
   else
@@ -325,9 +325,9 @@ gl_sublist_sortedlist_search (gl_list_t list,
 
 static gl_list_node_t
 gl_sublist_sortedlist_search_from_to (gl_list_t list,
-				      gl_listelement_compar_fn compar,
-				      size_t low, size_t high,
-				      const void *elt)
+                                      gl_listelement_compar_fn compar,
+                                      size_t low, size_t high,
+                                      const void *elt)
 {
   size_t index;
 
@@ -337,7 +337,7 @@ gl_sublist_sortedlist_search_from_to (gl_list_t list,
 
   index =
     gl_sortedlist_indexof_from_to (list->whole, compar,
-				   list->start + low, list->start + high, elt);
+                                   list->start + low, list->start + high, elt);
   if (index != (size_t)(-1))
     return INDEX_TO_NODE (index - list->start);
   else
@@ -346,12 +346,12 @@ gl_sublist_sortedlist_search_from_to (gl_list_t list,
 
 static size_t
 gl_sublist_sortedlist_indexof (gl_list_t list,
-			       gl_listelement_compar_fn compar,
-			       const void *elt)
+                               gl_listelement_compar_fn compar,
+                               const void *elt)
 {
   size_t index =
     gl_sortedlist_indexof_from_to (list->whole, compar, list->start, list->end,
-				   elt);
+                                   elt);
   if (index != (size_t)(-1))
     index -= list->start;
   return index;
@@ -359,9 +359,9 @@ gl_sublist_sortedlist_indexof (gl_list_t list,
 
 static size_t
 gl_sublist_sortedlist_indexof_from_to (gl_list_t list,
-				       gl_listelement_compar_fn compar,
-				       size_t low, size_t high,
-				       const void *elt)
+                                       gl_listelement_compar_fn compar,
+                                       size_t low, size_t high,
+                                       const void *elt)
 {
   size_t index;
 
@@ -370,8 +370,8 @@ gl_sublist_sortedlist_indexof_from_to (gl_list_t list,
     abort ();
 
   index = gl_sortedlist_indexof_from_to (list->whole, compar,
-					 list->start + low, list->start + high,
-					 elt);
+                                         list->start + low, list->start + high,
+                                         elt);
   if (index != (size_t)(-1))
     index -= list->start;
   return index;
@@ -379,8 +379,8 @@ gl_sublist_sortedlist_indexof_from_to (gl_list_t list,
 
 static gl_list_node_t
 gl_sublist_sortedlist_add (gl_list_t list,
-			   gl_listelement_compar_fn compar,
-			   const void *elt)
+                           gl_listelement_compar_fn compar,
+                           const void *elt)
 {
   /* It's impossible to implement this method without risking to put the
      whole list into unsorted order (namely, when the given ELT is smaller
@@ -390,8 +390,8 @@ gl_sublist_sortedlist_add (gl_list_t list,
 
 static bool
 gl_sublist_sortedlist_remove (gl_list_t list,
-			      gl_listelement_compar_fn compar,
-			      const void *elt)
+                              gl_listelement_compar_fn compar,
+                              const void *elt)
 {
   size_t index = gl_sublist_sortedlist_indexof (list, compar, elt);
   if (index == (size_t)(-1))
@@ -451,17 +451,17 @@ gl_sublist_create (gl_list_t whole_list, size_t start_index, size_t end_index)
     list->base.allow_duplicates = whole_list->base.allow_duplicates; /* unused */
     if (whole_list->base.vtable == &gl_sublist_list_implementation)
       {
-	/* Optimization of a sublist of a sublist: Collapse the two
-	   indirections into a single indirection.  */
-	list->whole = whole_list->whole;
-	list->start = whole_list->start + start_index;
-	list->end = whole_list->start + end_index;
+        /* Optimization of a sublist of a sublist: Collapse the two
+           indirections into a single indirection.  */
+        list->whole = whole_list->whole;
+        list->start = whole_list->start + start_index;
+        list->end = whole_list->start + end_index;
       }
     else
       {
-	list->whole = whole_list;
-	list->start = start_index;
-	list->end = end_index;
+        list->whole = whole_list;
+        list->start = start_index;
+        list->end = end_index;
       }
 
     return list;

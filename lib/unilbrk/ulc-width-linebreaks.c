@@ -42,94 +42,94 @@
 
 int
 ulc_width_linebreaks (const char *s, size_t n,
-		      int width, int start_column, int at_end_columns,
-		      const char *o, const char *encoding,
-		      char *p)
+                      int width, int start_column, int at_end_columns,
+                      const char *o, const char *encoding,
+                      char *p)
 {
   if (n > 0)
     {
       if (is_utf8_encoding (encoding))
-	return u8_width_linebreaks ((const uint8_t *) s, n, width, start_column, at_end_columns, o, encoding, p);
+        return u8_width_linebreaks ((const uint8_t *) s, n, width, start_column, at_end_columns, o, encoding, p);
       else
-	{
-	  /* Convert the string to UTF-8 and build a translation table
-	     from offsets into s to offsets into the translated string.  */
-	  size_t *offsets = (size_t *) malloc (n * sizeof (size_t));
+        {
+          /* Convert the string to UTF-8 and build a translation table
+             from offsets into s to offsets into the translated string.  */
+          size_t *offsets = (size_t *) malloc (n * sizeof (size_t));
 
-	  if (offsets != NULL)
-	    {
-	      uint8_t *t;
-	      size_t m;
+          if (offsets != NULL)
+            {
+              uint8_t *t;
+              size_t m;
 
-	      t = u8_conv_from_encoding (encoding, iconveh_question_mark,
-					 s, n, offsets, NULL, &m);
-	      if (t != NULL)
-		{
-		  char *memory =
-		    (char *) (m > 0 ? malloc (m + (o != NULL ? m : 0)) : NULL);
+              t = u8_conv_from_encoding (encoding, iconveh_question_mark,
+                                         s, n, offsets, NULL, &m);
+              if (t != NULL)
+                {
+                  char *memory =
+                    (char *) (m > 0 ? malloc (m + (o != NULL ? m : 0)) : NULL);
 
-		  if (m == 0 || memory != NULL)
-		    {
-		      char *q = (char *) memory;
-		      char *o8 = (o != NULL ? (char *) (q + m) : NULL);
-		      int res_column;
-		      size_t i;
+                  if (m == 0 || memory != NULL)
+                    {
+                      char *q = (char *) memory;
+                      char *o8 = (o != NULL ? (char *) (q + m) : NULL);
+                      int res_column;
+                      size_t i;
 
-		      /* Translate the overrides to the UTF-8 string.  */
-		      if (o != NULL)
-			{
-			  memset (o8, UC_BREAK_UNDEFINED, m);
-			  for (i = 0; i < n; i++)
-			    if (offsets[i] != (size_t)(-1))
-			      o8[offsets[i]] = o[i];
-			}
+                      /* Translate the overrides to the UTF-8 string.  */
+                      if (o != NULL)
+                        {
+                          memset (o8, UC_BREAK_UNDEFINED, m);
+                          for (i = 0; i < n; i++)
+                            if (offsets[i] != (size_t)(-1))
+                              o8[offsets[i]] = o[i];
+                        }
 
-		      /* Determine the line breaks of the UTF-8 string.  */
-		      res_column =
-			u8_width_linebreaks (t, m, width, start_column, at_end_columns, o8, encoding, q);
+                      /* Determine the line breaks of the UTF-8 string.  */
+                      res_column =
+                        u8_width_linebreaks (t, m, width, start_column, at_end_columns, o8, encoding, q);
 
-		      /* Translate the result back to the original string.  */
-		      memset (p, UC_BREAK_PROHIBITED, n);
-		      for (i = 0; i < n; i++)
-			if (offsets[i] != (size_t)(-1))
-			  p[i] = q[offsets[i]];
+                      /* Translate the result back to the original string.  */
+                      memset (p, UC_BREAK_PROHIBITED, n);
+                      for (i = 0; i < n; i++)
+                        if (offsets[i] != (size_t)(-1))
+                          p[i] = q[offsets[i]];
 
-		      free (memory);
-		      free (t);
-		      free (offsets);
-		      return res_column;
-		    }
-		  free (t);
-		}
-	      free (offsets);
-	    }
-	  /* Impossible to convert.  */
+                      free (memory);
+                      free (t);
+                      free (offsets);
+                      return res_column;
+                    }
+                  free (t);
+                }
+              free (offsets);
+            }
+          /* Impossible to convert.  */
 #if C_CTYPE_ASCII
-	  if (is_all_ascii (s, n))
-	    {
-	      /* ASCII is a subset of UTF-8.  */
-	      return u8_width_linebreaks ((const uint8_t *) s, n, width, start_column, at_end_columns, o, encoding, p);
-	    }
+          if (is_all_ascii (s, n))
+            {
+              /* ASCII is a subset of UTF-8.  */
+              return u8_width_linebreaks ((const uint8_t *) s, n, width, start_column, at_end_columns, o, encoding, p);
+            }
 #endif
-	  /* We have a non-ASCII string and cannot convert it.
-	     Don't produce line breaks except those already present in the
-	     input string.  All we assume here is that the encoding is
-	     minimally ASCII compatible.  */
-	  {
-	    const char *s_end = s + n;
-	    while (s < s_end)
-	      {
-		*p = ((o != NULL && *o == UC_BREAK_MANDATORY) || *s == '\n'
-		      ? UC_BREAK_MANDATORY
-		      : UC_BREAK_PROHIBITED);
-		s++;
-		p++;
-		if (o != NULL)
-		  o++;
-	      }
-	    /* We cannot compute widths in this case.  */
-	  }
-	}
+          /* We have a non-ASCII string and cannot convert it.
+             Don't produce line breaks except those already present in the
+             input string.  All we assume here is that the encoding is
+             minimally ASCII compatible.  */
+          {
+            const char *s_end = s + n;
+            while (s < s_end)
+              {
+                *p = ((o != NULL && *o == UC_BREAK_MANDATORY) || *s == '\n'
+                      ? UC_BREAK_MANDATORY
+                      : UC_BREAK_PROHIBITED);
+                s++;
+                p++;
+                if (o != NULL)
+                  o++;
+              }
+            /* We cannot compute widths in this case.  */
+          }
+        }
     }
   return start_column;
 }
@@ -154,28 +154,28 @@ read_file (FILE *stream)
   while (! feof (stream))
     {
       if (size + BUFSIZE > alloc)
-	{
-	  alloc = alloc + alloc / 2;
-	  if (alloc < size + BUFSIZE)
-	    alloc = size + BUFSIZE;
-	  buf = realloc (buf, alloc);
-	  if (buf == NULL)
-	    {
-	      fprintf (stderr, "out of memory\n");
-	      exit (1);
-	    }
-	}
+        {
+          alloc = alloc + alloc / 2;
+          if (alloc < size + BUFSIZE)
+            alloc = size + BUFSIZE;
+          buf = realloc (buf, alloc);
+          if (buf == NULL)
+            {
+              fprintf (stderr, "out of memory\n");
+              exit (1);
+            }
+        }
       count = fread (buf + size, 1, BUFSIZE, stream);
       if (count == 0)
-	{
-	  if (ferror (stream))
-	    {
-	      perror ("fread");
-	      exit (1);
-	    }
-	}
+        {
+          if (ferror (stream))
+            {
+              perror ("fread");
+              exit (1);
+            }
+        }
       else
-	size += count;
+        size += count;
     }
   buf = realloc (buf, size + 1);
   if (buf == NULL)
@@ -204,21 +204,21 @@ main (int argc, char * argv[])
       ulc_width_linebreaks (input, length, width, 0, 0, NULL, locale_charset (), breaks);
 
       for (i = 0; i < length; i++)
-	{
-	  switch (breaks[i])
-	    {
-	    case UC_BREAK_POSSIBLE:
-	      putc ('\n', stdout);
-	      break;
-	    case UC_BREAK_MANDATORY:
-	      break;
-	    case UC_BREAK_PROHIBITED:
-	      break;
-	    default:
-	      abort ();
-	    }
-	  putc (input[i], stdout);
-	}
+        {
+          switch (breaks[i])
+            {
+            case UC_BREAK_POSSIBLE:
+              putc ('\n', stdout);
+              break;
+            case UC_BREAK_MANDATORY:
+              break;
+            case UC_BREAK_PROHIBITED:
+              break;
+            default:
+              abort ();
+            }
+          putc (input[i], stdout);
+        }
 
       free (breaks);
 

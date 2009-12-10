@@ -71,7 +71,7 @@ close_stream (FILE *stream)
   if (prev_fail || (fclose_fail && (some_pending || errno != EBADF)))
     {
       if (! fclose_fail)
-	errno = 0;
+        errno = 0;
       return EOF;
     }
 

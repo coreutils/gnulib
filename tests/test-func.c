@@ -22,16 +22,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define ASSERT(expr)							     \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-	{								     \
-	  fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-	  fflush (stderr);						     \
-	  abort ();							     \
-	}								     \
-    }									     \
+#define ASSERT(expr)                                                         \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
+          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 int
@@ -46,7 +46,7 @@ main ()
 #endif
 
   ASSERT (strcmp (__func__, "main") == 0
-	  || strcmp (__func__, "<unknown function>") == 0);
+          || strcmp (__func__, "<unknown function>") == 0);
 
   return 0;
 }

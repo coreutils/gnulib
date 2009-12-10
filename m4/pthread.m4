@@ -13,8 +13,8 @@ AC_DEFUN([gl_PTHREAD_CHECK],
      gl_saved_libs=$LIBS
      AC_SEARCH_LIBS([pthread_create], [pthread],
        [if test "$ac_cv_search_pthread_create" != "none required"; then
-	  LIB_PTHREAD="$ac_cv_search_pthread_create"
-	fi])
+          LIB_PTHREAD="$ac_cv_search_pthread_create"
+        fi])
      LIBS="$gl_saved_libs"
    else
      PTHREAD_H='pthread.h'

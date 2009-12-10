@@ -23,17 +23,17 @@ FUNC (UNIT *s, ucs4_t uc, size_t n)
   if (n > 0)
     {
       if (IS_SINGLE_UNIT (uc))
-	{
-	  UNIT *ptr = s;
+        {
+          UNIT *ptr = s;
 
-	  for (; n > 0; n--)
-	    *ptr++ = uc;
-	}
+          for (; n > 0; n--)
+            *ptr++ = uc;
+        }
       else
-	{
-	  errno = EILSEQ;
-	  return NULL;
-	}
+        {
+          errno = EILSEQ;
+          return NULL;
+        }
     }
   return s;
 }

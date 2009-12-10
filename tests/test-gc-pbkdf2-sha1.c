@@ -89,20 +89,20 @@ main (int argc, char *argv[])
   for (i = 0; i < sizeof (pkcs5) / sizeof (pkcs5[0]); i++)
     {
       rc = gc_pbkdf2_sha1 (pkcs5[i].password, strlen (pkcs5[i].password),
-			   pkcs5[i].salt, strlen (pkcs5[i].salt),
-			   pkcs5[i].iterations, out, pkcs5[i].dklen);
+                           pkcs5[i].salt, strlen (pkcs5[i].salt),
+                           pkcs5[i].iterations, out, pkcs5[i].dklen);
       if (rc != GC_OK)
-	{
-	  printf ("PKCS5 entry %ld failed fatally: %d\n",
-		  (unsigned long) i, rc);
-	  return 1;
-	}
+        {
+          printf ("PKCS5 entry %ld failed fatally: %d\n",
+                  (unsigned long) i, rc);
+          return 1;
+        }
 
       if (memcmp (pkcs5[i].expected, out, pkcs5[i].dklen) != 0)
-	{
-	  printf ("PKCS5 entry %ld failed\n", (unsigned long) i);
-	  return 1;
-	}
+        {
+          printf ("PKCS5 entry %ld failed\n", (unsigned long) i);
+          return 1;
+        }
     }
 
   return 0;

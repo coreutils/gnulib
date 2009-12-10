@@ -36,7 +36,7 @@ main (int argc, char *argv[])
   size_t i;
 
   rc = rijndaelMakeKey (&key, RIJNDAEL_DIR_ENCRYPT,
-			128, "00000000000000000000000000000000");
+                        128, "00000000000000000000000000000000");
   if (rc != 0)
     printf ("makeKey failed %d\n", rc);
 
@@ -50,7 +50,7 @@ main (int argc, char *argv[])
     {
       rc = rijndaelBlockEncrypt (&cipher, &key, in, 128, out);
       if (rc < 0)
-	printf ("blockEncrypt failed %d\n", rc);
+        printf ("blockEncrypt failed %d\n", rc);
 
       memcpy (in, out, RIJNDAEL_BITSPERBLOCK / 8);
     }
@@ -60,16 +60,16 @@ main (int argc, char *argv[])
       size_t i;
       printf ("expected:\n");
       for (i = 0; i < RIJNDAEL_BITSPERBLOCK / 8; i++)
-	printf ("%02x ", ct[i] & 0xFF);
+        printf ("%02x ", ct[i] & 0xFF);
       printf ("\ncomputed:\n");
       for (i = 0; i < RIJNDAEL_BITSPERBLOCK / 8; i++)
-	printf ("%02x ", out[i] & 0xFF);
+        printf ("%02x ", out[i] & 0xFF);
       printf ("\n");
       return 1;
     }
 
   rc = rijndaelMakeKey (&key, RIJNDAEL_DIR_DECRYPT,
-			128, "00000000000000000000000000000000");
+                        128, "00000000000000000000000000000000");
   if (rc != 0)
     printf ("makeKey failed %d\n", rc);
 
@@ -83,7 +83,7 @@ main (int argc, char *argv[])
 
       rc = rijndaelBlockDecrypt (&cipher, &key, in, 128, out);
       if (rc < 0)
-	printf ("blockEncrypt failed %d\n", rc);
+        printf ("blockEncrypt failed %d\n", rc);
     }
 
   if (memcmp (out, pt, RIJNDAEL_BITSPERBLOCK / 8) != 0)
@@ -91,10 +91,10 @@ main (int argc, char *argv[])
       size_t i;
       printf ("expected:\n");
       for (i = 0; i < RIJNDAEL_BITSPERBLOCK / 8; i++)
-	printf ("%02x ", pt[i] & 0xFF);
+        printf ("%02x ", pt[i] & 0xFF);
       printf ("\ncomputed:\n");
       for (i = 0; i < RIJNDAEL_BITSPERBLOCK / 8; i++)
-	printf ("%02x ", out[i] & 0xFF);
+        printf ("%02x ", out[i] & 0xFF);
       printf ("\n");
       return 1;
     }

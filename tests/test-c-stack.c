@@ -30,15 +30,15 @@
 #endif
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-	{								     \
-	  fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-	  fflush (stderr);						     \
-	  abort ();							     \
-	}								     \
-    }									     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
+          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 char *program_name;
@@ -75,10 +75,10 @@ main (int argc, char **argv)
   if (c_stack_action (0) == 0)
     {
       if (1 < argc)
-	{
-	  exit_failure = 77;
-	  ++*argv[argc]; /* Intentionally dereference NULL.  */
-	}
+        {
+          exit_failure = 77;
+          ++*argv[argc]; /* Intentionally dereference NULL.  */
+        }
       return recurse (0);
     }
   fputs ("skipping test: ", stderr);

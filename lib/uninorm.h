@@ -140,13 +140,13 @@ extern uninorm_t uninorm_decomposing_form (uninorm_t nf);
 /* Return the specified normalization form of a string.  */
 extern uint8_t *
        u8_normalize (uninorm_t nf, const uint8_t *s, size_t n,
-		     uint8_t *resultbuf, size_t *lengthp);
+                     uint8_t *resultbuf, size_t *lengthp);
 extern uint16_t *
        u16_normalize (uninorm_t nf, const uint16_t *s, size_t n,
-		      uint16_t *resultbuf, size_t *lengthp);
+                      uint16_t *resultbuf, size_t *lengthp);
 extern uint32_t *
        u32_normalize (uninorm_t nf, const uint32_t *s, size_t n,
-		      uint32_t *resultbuf, size_t *lengthp);
+                      uint32_t *resultbuf, size_t *lengthp);
 
 
 /* Compare S1 and S2, ignoring differences in normalization.
@@ -155,13 +155,13 @@ extern uint32_t *
    return 0.  Upon failure, return -1 with errno set.  */
 extern int
        u8_normcmp (const uint8_t *s1, size_t n1, const uint8_t *s2, size_t n2,
-		   uninorm_t nf, int *resultp);
+                   uninorm_t nf, int *resultp);
 extern int
        u16_normcmp (const uint16_t *s1, size_t n1, const uint16_t *s2, size_t n2,
-		    uninorm_t nf, int *resultp);
+                    uninorm_t nf, int *resultp);
 extern int
        u32_normcmp (const uint32_t *s1, size_t n1, const uint32_t *s2, size_t n2,
-		    uninorm_t nf, int *resultp);
+                    uninorm_t nf, int *resultp);
 
 
 /* Converts the string S of length N to a NUL-terminated byte sequence, in such
@@ -170,13 +170,13 @@ extern int
    NF must be either UNINORM_NFC or UNINORM_NFKC.  */
 extern char *
        u8_normxfrm (const uint8_t *s, size_t n, uninorm_t nf,
-		    char *resultbuf, size_t *lengthp);
+                    char *resultbuf, size_t *lengthp);
 extern char *
        u16_normxfrm (const uint16_t *s, size_t n, uninorm_t nf,
-		     char *resultbuf, size_t *lengthp);
+                     char *resultbuf, size_t *lengthp);
 extern char *
        u32_normxfrm (const uint32_t *s, size_t n, uninorm_t nf,
-		     char *resultbuf, size_t *lengthp);
+                     char *resultbuf, size_t *lengthp);
 
 
 /* Compare S1 and S2, ignoring differences in normalization, using the
@@ -186,13 +186,13 @@ extern char *
    return 0.  Upon failure, return -1 with errno set.  */
 extern int
        u8_normcoll (const uint8_t *s1, size_t n1, const uint8_t *s2, size_t n2,
-		    uninorm_t nf, int *resultp);
+                    uninorm_t nf, int *resultp);
 extern int
        u16_normcoll (const uint16_t *s1, size_t n1, const uint16_t *s2, size_t n2,
-		     uninorm_t nf, int *resultp);
+                     uninorm_t nf, int *resultp);
 extern int
        u32_normcoll (const uint32_t *s1, size_t n1, const uint32_t *s2, size_t n2,
-		     uninorm_t nf, int *resultp);
+                     uninorm_t nf, int *resultp);
 
 
 /* Normalization of a stream of Unicode characters.
@@ -213,8 +213,8 @@ struct uninorm_filter;
    Return the new filter, or NULL with errno set upon failure.  */
 extern struct uninorm_filter *
        uninorm_filter_create (uninorm_t nf,
-			      int (*stream_func) (void *stream_data, ucs4_t uc),
-			      void *stream_data);
+                              int (*stream_func) (void *stream_data, ucs4_t uc),
+                              void *stream_data);
 
 /* Stuff a Unicode character into a normalizing filter.
    Return 0 if successful, or -1 with errno set upon failure.  */

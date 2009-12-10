@@ -42,76 +42,76 @@
 
 void
 ulc_possible_linebreaks (const char *s, size_t n, const char *encoding,
-			 char *p)
+                         char *p)
 {
   if (n > 0)
     {
       if (is_utf8_encoding (encoding))
-	u8_possible_linebreaks ((const uint8_t *) s, n, encoding, p);
+        u8_possible_linebreaks ((const uint8_t *) s, n, encoding, p);
       else
-	{
-	  /* Convert the string to UTF-8 and build a translation table
-	     from offsets into s to offsets into the translated string.  */
-	  size_t *offsets = (size_t *) malloc (n * sizeof (size_t));
+        {
+          /* Convert the string to UTF-8 and build a translation table
+             from offsets into s to offsets into the translated string.  */
+          size_t *offsets = (size_t *) malloc (n * sizeof (size_t));
 
-	  if (offsets != NULL)
-	    {
-	      uint8_t *t;
-	      size_t m;
+          if (offsets != NULL)
+            {
+              uint8_t *t;
+              size_t m;
 
-	      t = u8_conv_from_encoding (encoding, iconveh_question_mark,
-					 s, n, offsets, NULL, &m);
-	      if (t != NULL)
-		{
-		  char *q = (char *) (m > 0 ? malloc (m) : NULL);
+              t = u8_conv_from_encoding (encoding, iconveh_question_mark,
+                                         s, n, offsets, NULL, &m);
+              if (t != NULL)
+                {
+                  char *q = (char *) (m > 0 ? malloc (m) : NULL);
 
-		  if (m == 0 || q != NULL)
-		    {
-		      size_t i;
+                  if (m == 0 || q != NULL)
+                    {
+                      size_t i;
 
-		      /* Determine the possible line breaks of the UTF-8
-			 string.  */
-		      u8_possible_linebreaks (t, m, encoding, q);
+                      /* Determine the possible line breaks of the UTF-8
+                         string.  */
+                      u8_possible_linebreaks (t, m, encoding, q);
 
-		      /* Translate the result back to the original string.  */
-		      memset (p, UC_BREAK_PROHIBITED, n);
-		      for (i = 0; i < n; i++)
-			if (offsets[i] != (size_t)(-1))
-			  p[i] = q[offsets[i]];
+                      /* Translate the result back to the original string.  */
+                      memset (p, UC_BREAK_PROHIBITED, n);
+                      for (i = 0; i < n; i++)
+                        if (offsets[i] != (size_t)(-1))
+                          p[i] = q[offsets[i]];
 
-		      free (q);
-		      free (t);
-		      free (offsets);
-		      return;
-		    }
-		  free (t);
-		}
-	      free (offsets);
-	    }
+                      free (q);
+                      free (t);
+                      free (offsets);
+                      return;
+                    }
+                  free (t);
+                }
+              free (offsets);
+            }
 
-	  /* Impossible to convert.  */
+          /* Impossible to convert.  */
 #if C_CTYPE_ASCII
-	  if (is_all_ascii (s, n))
-	    {
-	      /* ASCII is a subset of UTF-8.  */
-	      u8_possible_linebreaks ((const uint8_t *) s, n, encoding, p);
-	      return;
-	    }
+          if (is_all_ascii (s, n))
+            {
+              /* ASCII is a subset of UTF-8.  */
+              u8_possible_linebreaks ((const uint8_t *) s, n, encoding, p);
+              return;
+            }
 #endif
-	  /* We have a non-ASCII string and cannot convert it.
-	     Don't produce line breaks except those already present in the
-	     input string.  All we assume here is that the encoding is
-	     minimally ASCII compatible.  */
-	  {
-	    const char *s_end = s + n;
-	    while (s < s_end)
-	      {
-		*p = (*s == '\n' ? UC_BREAK_MANDATORY : UC_BREAK_PROHIBITED);
-		s++;
-		p++;
-	      }
-	  }
-	}
+          /* We have a non-ASCII string and cannot convert it.
+             Don't produce line breaks except those already present in the
+             input string.  All we assume here is that the encoding is
+             minimally ASCII compatible.  */
+          {
+            const char *s_end = s + n;
+            while (s < s_end)
+              {
+                *p = (*s == '\n' ? UC_BREAK_MANDATORY : UC_BREAK_PROHIBITED);
+                s++;
+                p++;
+              }
+          }
+        }
     }
 }
 
@@ -136,28 +136,28 @@ read_file (FILE *stream)
   while (! feof (stream))
     {
       if (size + BUFSIZE > alloc)
-	{
-	  alloc = alloc + alloc / 2;
-	  if (alloc < size + BUFSIZE)
-	    alloc = size + BUFSIZE;
-	  buf = realloc (buf, alloc);
-	  if (buf == NULL)
-	    {
-	      fprintf (stderr, "out of memory\n");
-	      exit (1);
-	    }
-	}
+        {
+          alloc = alloc + alloc / 2;
+          if (alloc < size + BUFSIZE)
+            alloc = size + BUFSIZE;
+          buf = realloc (buf, alloc);
+          if (buf == NULL)
+            {
+              fprintf (stderr, "out of memory\n");
+              exit (1);
+            }
+        }
       count = fread (buf + size, 1, BUFSIZE, stream);
       if (count == 0)
-	{
-	  if (ferror (stream))
-	    {
-	      perror ("fread");
-	      exit (1);
-	    }
-	}
+        {
+          if (ferror (stream))
+            {
+              perror ("fread");
+              exit (1);
+            }
+        }
       else
-	size += count;
+        size += count;
     }
   buf = realloc (buf, size + 1);
   if (buf == NULL)
@@ -185,21 +185,21 @@ main (int argc, char * argv[])
       ulc_possible_linebreaks (input, length, locale_charset (), breaks);
 
       for (i = 0; i < length; i++)
-	{
-	  switch (breaks[i])
-	    {
-	    case UC_BREAK_POSSIBLE:
-	      putc ('|', stdout);
-	      break;
-	    case UC_BREAK_MANDATORY:
-	      break;
-	    case UC_BREAK_PROHIBITED:
-	      break;
-	    default:
-	      abort ();
-	    }
-	  putc (input[i], stdout);
-	}
+        {
+          switch (breaks[i])
+            {
+            case UC_BREAK_POSSIBLE:
+              putc ('|', stdout);
+              break;
+            case UC_BREAK_MANDATORY:
+              break;
+            case UC_BREAK_PROHIBITED:
+              break;
+            default:
+              abort ();
+            }
+          putc (input[i], stdout);
+        }
 
       free (breaks);
 

@@ -32,8 +32,8 @@
 #endif
 
 #define RETURN_TYPE char *
-#define AVAILABLE(h, h_l, j, n_l)			\
-  (!memchr ((h) + (h_l), '\0', (j) + (n_l) - (h_l))	\
+#define AVAILABLE(h, h_l, j, n_l)                       \
+  (!memchr ((h) + (h_l), '\0', (j) + (n_l) - (h_l))     \
    && ((h_l) = (j) + (n_l)))
 #include "str-two-way.h"
 
@@ -67,17 +67,17 @@ strstr (const char *haystack_start, const char *needle_start)
     return (char *) haystack;
   needle -= needle_len;
   haystack_len = (haystack > haystack_start + needle_len ? 1
-		  : needle_len + haystack_start - haystack);
+                  : needle_len + haystack_start - haystack);
 
   /* Perform the search.  Abstract memory is considered to be an array
      of 'unsigned char' values, not an array of 'char' values.  See
      ISO C 99 section 6.2.6.1.  */
   if (needle_len < LONG_NEEDLE_THRESHOLD)
     return two_way_short_needle ((const unsigned char *) haystack,
-				 haystack_len,
-				 (const unsigned char *) needle, needle_len);
+                                 haystack_len,
+                                 (const unsigned char *) needle, needle_len);
   return two_way_long_needle ((const unsigned char *) haystack, haystack_len,
-			      (const unsigned char *) needle, needle_len);
+                              (const unsigned char *) needle, needle_len);
 }
 
 #undef LONG_NEEDLE_THRESHOLD

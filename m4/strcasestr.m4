@@ -50,20 +50,20 @@ AC_DEFUN([gl_FUNC_STRCASESTR],
     /* Check for quadratic performance.  */
     if (haystack && needle)
       {
-	memset (haystack, 'A', 2 * m);
-	haystack[2 * m] = 'B';
-	haystack[2 * m + 1] = 0;
-	memset (needle, 'A', m);
-	needle[m] = 'B';
-	needle[m + 1] = 0;
-	result = strcasestr (haystack, needle);
+        memset (haystack, 'A', 2 * m);
+        haystack[2 * m] = 'B';
+        haystack[2 * m + 1] = 0;
+        memset (needle, 'A', m);
+        needle[m] = 'B';
+        needle[m + 1] = 0;
+        result = strcasestr (haystack, needle);
       }
     return !result;]])],
-	[gl_cv_func_strcasestr_linear=yes], [gl_cv_func_strcasestr_linear=no],
+        [gl_cv_func_strcasestr_linear=yes], [gl_cv_func_strcasestr_linear=no],
         [dnl Only glibc >= 2.9 and cygwin >= 1.7.0 are known to have a
          dnl strcasestr that works in linear time.
-	 AC_EGREP_CPP([Lucky user],
-	   [
+         AC_EGREP_CPP([Lucky user],
+           [
 #include <features.h>
 #ifdef __GNU_LIBRARY__
  #if (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 9) || (__GLIBC__ > 2)
@@ -76,10 +76,10 @@ AC_DEFUN([gl_FUNC_STRCASESTR],
   Lucky user
  #endif
 #endif
-	   ],
-	   [gl_cv_func_strcasestr_linear=yes],
-	   [gl_cv_func_strcasestr_linear="guessing no"])
-	])
+           ],
+           [gl_cv_func_strcasestr_linear=yes],
+           [gl_cv_func_strcasestr_linear="guessing no"])
+        ])
       ])
     if test "$gl_cv_func_strcasestr_linear" != yes; then
       REPLACE_STRCASESTR=1

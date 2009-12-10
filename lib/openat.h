@@ -40,7 +40,7 @@
 #if !HAVE_OPENAT
 
 int openat_permissive (int fd, char const *file, int flags, mode_t mode,
-		       int *cwd_errno);
+                       int *cwd_errno);
 bool openat_needs_fchdir (void);
 
 #else

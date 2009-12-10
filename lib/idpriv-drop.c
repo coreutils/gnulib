@@ -88,9 +88,9 @@ idpriv_drop (void)
     uid_t effective;
     uid_t saved;
     if (getresuid (&real, &effective, &saved) < 0
-	|| real != uid
-	|| effective != uid
-	|| saved != uid)
+        || real != uid
+        || effective != uid
+        || saved != uid)
       abort ();
   }
 #else
@@ -109,9 +109,9 @@ idpriv_drop (void)
     gid_t effective;
     gid_t saved;
     if (getresgid (&real, &effective, &saved) < 0
-	|| real != gid
-	|| effective != gid
-	|| saved != gid)
+        || real != gid
+        || effective != gid
+        || saved != gid)
       abort ();
   }
 #else

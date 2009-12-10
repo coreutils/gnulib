@@ -25,12 +25,12 @@
 /* A mount table entry. */
 struct mount_entry
 {
-  char *me_devname;		/* Device node name, including "/dev/". */
-  char *me_mountdir;		/* Mount point directory name. */
-  char *me_type;		/* "nfs", "4.2", etc. */
-  dev_t me_dev;			/* Device number of me_mountdir. */
-  unsigned int me_dummy : 1;	/* Nonzero for dummy file systems. */
-  unsigned int me_remote : 1;	/* Nonzero for remote fileystems. */
+  char *me_devname;             /* Device node name, including "/dev/". */
+  char *me_mountdir;            /* Mount point directory name. */
+  char *me_type;                /* "nfs", "4.2", etc. */
+  dev_t me_dev;                 /* Device number of me_mountdir. */
+  unsigned int me_dummy : 1;    /* Nonzero for dummy file systems. */
+  unsigned int me_remote : 1;   /* Nonzero for remote fileystems. */
   unsigned int me_type_malloced : 1; /* Nonzero if me_type was malloced. */
   struct mount_entry *me_next;
 };

@@ -27,8 +27,8 @@
 
 char *
 ulc_casexfrm (const char *s, size_t n, const char *iso639_language,
-	      uninorm_t nf,
-	      char *resultbuf, size_t *lengthp)
+              uninorm_t nf,
+              char *resultbuf, size_t *lengthp)
 {
   uint8_t convbuf[2048 / sizeof (uint8_t)];
   uint8_t *conv;
@@ -39,22 +39,22 @@ ulc_casexfrm (const char *s, size_t n, const char *iso639_language,
   conv_length = sizeof (convbuf) / sizeof (uint8_t);
   conv =
     u8_conv_from_encoding (locale_charset (), iconveh_error, s, n, NULL,
-			   convbuf, &conv_length);
+                           convbuf, &conv_length);
   if (conv == NULL)
     /* errno is set here.  */
     return NULL;
 
   /* Case-fold and normalize.  */
   result = u8_casexfrm (conv, conv_length, iso639_language, nf,
-			resultbuf, lengthp);
+                        resultbuf, lengthp);
   if (result == NULL)
     {
       if (conv != convbuf)
-	{
-	  int saved_errno = errno;
-	  free (conv);
-	  errno = saved_errno;
-	}
+        {
+          int saved_errno = errno;
+          free (conv);
+          errno = saved_errno;
+        }
       return NULL;
     }
 

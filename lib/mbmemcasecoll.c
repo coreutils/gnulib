@@ -43,7 +43,7 @@
    result as a multibyte character sequence in OUTBUF.  */
 static size_t
 apply_towlower (const char *inbuf, size_t inbufsize,
-		char *outbuf, size_t outbufsize)
+                char *outbuf, size_t outbufsize)
 {
   char *outbuf_orig = outbuf;
   size_t remaining;
@@ -58,37 +58,37 @@ apply_towlower (const char *inbuf, size_t inbufsize,
       memset (&state, '\0', sizeof (mbstate_t));
       n1 = mbrtowc (&wc1, inbuf, remaining, &state);
       if (n1 == (size_t)(-2))
-	break;
+        break;
       if (n1 != (size_t)(-1))
-	{
-	  wint_t wc2 = towlower (wc1);
+        {
+          wint_t wc2 = towlower (wc1);
 
-	  if (wc2 != wc1)
-	    {
-	      size_t n2;
+          if (wc2 != wc1)
+            {
+              size_t n2;
 
-	      memset (&state, '\0', sizeof (mbstate_t));
-	      n2 = wcrtomb (outbuf, wc2, &state);
-	      if (n2 != (size_t)(-1))
-		{
-		  /* Store the translated multibyte character.  */
-		  inbuf += n1;
-		  remaining -= n1;
-		  outbuf += n2;
-		  continue;
-		}
-	    }
+              memset (&state, '\0', sizeof (mbstate_t));
+              n2 = wcrtomb (outbuf, wc2, &state);
+              if (n2 != (size_t)(-1))
+                {
+                  /* Store the translated multibyte character.  */
+                  inbuf += n1;
+                  remaining -= n1;
+                  outbuf += n2;
+                  continue;
+                }
+            }
 
-	  /* Nothing to translate. */
-	  memcpy (outbuf, inbuf, n1);
-	  inbuf += n1;
-	  remaining -= n1;
-	  outbuf += n1;
-	  continue;
-	}
+          /* Nothing to translate. */
+          memcpy (outbuf, inbuf, n1);
+          inbuf += n1;
+          remaining -= n1;
+          outbuf += n1;
+          continue;
+        }
 
       /* Invalid multibyte character on input.
-	 Copy one byte without modification.  */
+         Copy one byte without modification.  */
       *outbuf++ = *inbuf++;
       remaining -= 1;
     }
@@ -123,7 +123,7 @@ apply_tolower (const char *inbuf, char *outbuf, size_t bufsize)
 
 int
 mbmemcasecoll (const char *s1, size_t s1len, const char *s2, size_t s2len,
-	       bool hard_LC_COLLATE)
+               bool hard_LC_COLLATE)
 {
   char *t1;
   size_t t1len;
@@ -135,7 +135,7 @@ mbmemcasecoll (const char *s1, size_t s1len, const char *s2, size_t s2len,
   if (MB_CUR_MAX > 1)
     {
       /* Application of towlower grows each character by a factor 2
-	 at most.  */
+         at most.  */
       t1len = 2 * s1len;
       t2len = 2 * s2len;
     }

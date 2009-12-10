@@ -55,11 +55,11 @@ fprintf (FILE *fp, const char *format, ...)
   if (fwrite (output, 1, len, fp) < len)
     {
       if (output != buf)
-	{
-	  int saved_errno = errno;
-	  free (output);
-	  errno = saved_errno;
-	}
+        {
+          int saved_errno = errno;
+          free (output);
+          errno = saved_errno;
+        }
       return -1;
     }
 

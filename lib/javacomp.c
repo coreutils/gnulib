@@ -81,12 +81,12 @@
 
    We try the Java compilers in the following order:
      1. getenv ("JAVAC"), because the user must be able to override our
-	preferences,
+        preferences,
      2. "gcj -C", because it is a completely free compiler,
      3. "javac", because it is a standard compiler,
      4. "jikes", comes last because it has some deviating interpretation
-	of the Java Language Specification and because it requires a
-	CLASSPATH environment variable.
+        of the Java Language Specification and because it requires a
+        CLASSPATH environment variable.
 
    We unset the JAVA_HOME environment variable, because a wrong setting of
    this variable can confuse the JDK's javac.
@@ -104,10 +104,10 @@ default_target_version (void)
       /* Determine the version from the found JVM.  */
       java_version_cache = javaexec_version ();
       if (java_version_cache == NULL
-	  || !(java_version_cache[0] == '1' && java_version_cache[1] == '.'
-	       && (java_version_cache[2] >= '1' && java_version_cache[2] <= '6')
-	       && java_version_cache[3] == '\0'))
-	java_version_cache = "1.1";
+          || !(java_version_cache[0] == '1' && java_version_cache[1] == '.'
+               && (java_version_cache[2] >= '1' && java_version_cache[2] <= '6')
+               && java_version_cache[3] == '\0'))
+        java_version_cache = "1.1";
     }
   return java_version_cache;
 }
@@ -199,11 +199,11 @@ corresponding_classfile_version (const char *target_version)
    Return a failure indicator (true upon error).  */
 static bool
 compile_using_envjavac (const char *javac,
-			const char * const *java_sources,
-			unsigned int java_sources_count,
-			const char *directory,
-			bool optimize, bool debug,
-			bool verbose, bool null_stderr)
+                        const char * const *java_sources,
+                        unsigned int java_sources_count,
+                        const char *directory,
+                        bool optimize, bool debug,
+                        bool verbose, bool null_stderr)
 {
   /* Because $JAVAC may consist of a command and options, we use the
      shell.  Because $JAVAC has been set by the user, we leave all
@@ -268,7 +268,7 @@ compile_using_envjavac (const char *javac,
   argv[2] = command;
   argv[3] = NULL;
   exitstatus = execute (javac, "/bin/sh", argv, false, false, false,
-			null_stderr, true, true, NULL);
+                        null_stderr, true, true, NULL);
   err = (exitstatus != 0);
 
   freea (command);
@@ -280,13 +280,13 @@ compile_using_envjavac (const char *javac,
    Return a failure indicator (true upon error).  */
 static bool
 compile_using_gcj (const char * const *java_sources,
-		   unsigned int java_sources_count,
-		   bool no_assert_option,
-		   bool fsource_option, const char *source_version,
-		   bool ftarget_option, const char *target_version,
-		   const char *directory,
-		   bool optimize, bool debug,
-		   bool verbose, bool null_stderr)
+                   unsigned int java_sources_count,
+                   bool no_assert_option,
+                   bool fsource_option, const char *source_version,
+                   bool ftarget_option, const char *target_version,
+                   const char *directory,
+                   bool optimize, bool debug,
+                   bool verbose, bool null_stderr)
 {
   bool err;
   unsigned int argc;
@@ -350,7 +350,7 @@ compile_using_gcj (const char * const *java_sources,
     }
 
   exitstatus = execute ("gcj", "gcj", argv, false, false, false, null_stderr,
-			true, true, NULL);
+                        true, true, NULL);
   err = (exitstatus != 0);
 
   if (ftarget_arg != NULL)
@@ -366,12 +366,12 @@ compile_using_gcj (const char * const *java_sources,
    Return a failure indicator (true upon error).  */
 static bool
 compile_using_javac (const char * const *java_sources,
-		     unsigned int java_sources_count,
-		     bool source_option, const char *source_version,
-		     bool target_option, const char *target_version,
-		     const char *directory,
-		     bool optimize, bool debug,
-		     bool verbose, bool null_stderr)
+                     unsigned int java_sources_count,
+                     bool source_option, const char *source_version,
+                     bool target_option, const char *target_version,
+                     const char *directory,
+                     bool optimize, bool debug,
+                     bool verbose, bool null_stderr)
 {
   bool err;
   unsigned int argc;
@@ -421,7 +421,7 @@ compile_using_javac (const char * const *java_sources,
     }
 
   exitstatus = execute ("javac", "javac", argv, false, false, false,
-			null_stderr, true, true, NULL);
+                        null_stderr, true, true, NULL);
   err = (exitstatus != 0);
 
   freea (argv);
@@ -433,10 +433,10 @@ compile_using_javac (const char * const *java_sources,
    Return a failure indicator (true upon error).  */
 static bool
 compile_using_jikes (const char * const *java_sources,
-		     unsigned int java_sources_count,
-		     const char *directory,
-		     bool optimize, bool debug,
-		     bool verbose, bool null_stderr)
+                     unsigned int java_sources_count,
+                     const char *directory,
+                     bool optimize, bool debug,
+                     bool verbose, bool null_stderr)
 {
   bool err;
   unsigned int argc;
@@ -476,7 +476,7 @@ compile_using_jikes (const char * const *java_sources,
     }
 
   exitstatus = execute ("jikes", "jikes", argv, false, false, false,
-			null_stderr, true, true, NULL);
+                        null_stderr, true, true, NULL);
   err = (exitstatus != 0);
 
   freea (argv);
@@ -492,7 +492,7 @@ compile_using_jikes (const char * const *java_sources,
    Return a failure indicator (true upon error).  */
 static bool
 write_temp_file (struct temp_dir *tmpdir, const char *file_name,
-		 const char *contents)
+                 const char *contents)
 {
   FILE *fp;
 
@@ -526,12 +526,12 @@ get_classfile_version (const char *compiled_file_name)
     {
       /* Read its first 8 bytes.  */
       if (safe_read (fd, header, 8) == 8)
-	{
-	  /* Verify the class file signature.  */
-	  if (header[0] == 0xCA && header[1] == 0xFE
-	      && header[2] == 0xBA && header[3] == 0xBE)
-	    return header[7];
-	}
+        {
+          /* Verify the class file signature.  */
+          if (header[0] == 0xCA && header[1] == 0xFE
+              && header[2] == 0xBA && header[3] == 0xBE)
+            return header[7];
+        }
       close (fd);
     }
 
@@ -549,7 +549,7 @@ is_envjavac_gcj (const char *javac)
   if (!envjavac_tested)
     {
       /* Test whether $JAVAC is gcj:
-	 "$JAVAC --version 2>/dev/null | sed -e 1q | grep gcj > /dev/null"  */
+         "$JAVAC --version 2>/dev/null | sed -e 1q | grep gcj > /dev/null"  */
       unsigned int command_length;
       char *command;
       char *argv[4];
@@ -567,14 +567,14 @@ is_envjavac_gcj (const char *javac)
       command = (char *) xmalloca (command_length);
       p = command;
       /* Don't shell_quote $JAVAC, because it may consist of a command
-	 and options.  */
+         and options.  */
       memcpy (p, javac, strlen (javac));
       p += strlen (javac);
       memcpy (p, " --version", 1 + 9 + 1);
       p += 1 + 9 + 1;
       /* Ensure command_length was correctly calculated.  */
       if (p - command > command_length)
-	abort ();
+        abort ();
 
       /* Call $JAVAC --version 2>/dev/null.  */
       argv[0] = "/bin/sh";
@@ -582,33 +582,33 @@ is_envjavac_gcj (const char *javac)
       argv[2] = command;
       argv[3] = NULL;
       child = create_pipe_in (javac, "/bin/sh", argv, DEV_NULL, true, true,
-			      false, fd);
+                              false, fd);
       if (child == -1)
-	goto failed;
+        goto failed;
 
       /* Retrieve its result.  */
       fp = fdopen (fd[0], "r");
       if (fp == NULL)
-	goto failed;
+        goto failed;
 
       line = NULL; linesize = 0;
       linelen = getline (&line, &linesize, fp);
       if (linelen == (size_t)(-1))
-	{
-	  fclose (fp);
-	  goto failed;
-	}
+        {
+          fclose (fp);
+          goto failed;
+        }
       /* It is safe to call c_strstr() instead of strstr() here; see the
-	 comments in c-strstr.h.  */
+         comments in c-strstr.h.  */
       envjavac_gcj = (c_strstr (line, "gcj") != NULL);
 
       fclose (fp);
 
       /* Remove zombie process from process list, and retrieve exit status.  */
       exitstatus =
-	wait_subprocess (child, javac, true, true, true, false, NULL);
+        wait_subprocess (child, javac, true, true, true, false, NULL);
       if (exitstatus != 0)
-	envjavac_gcj = false;
+        envjavac_gcj = false;
 
      failed:
       freea (command);
@@ -630,8 +630,8 @@ is_envjavac_gcj43 (const char *javac)
   if (!envjavac_tested)
     {
       /* Test whether $JAVAC is gcj:
-	 "$JAVAC --version 2>/dev/null | sed -e 's,^[^0-9]*,,' -e 1q \
-	  | sed -e '/^4\.[012]/d' | grep '^[4-9]' >/dev/null"  */
+         "$JAVAC --version 2>/dev/null | sed -e 's,^[^0-9]*,,' -e 1q \
+          | sed -e '/^4\.[012]/d' | grep '^[4-9]' >/dev/null"  */
       unsigned int command_length;
       char *command;
       char *argv[4];
@@ -649,14 +649,14 @@ is_envjavac_gcj43 (const char *javac)
       command = (char *) xmalloca (command_length);
       p = command;
       /* Don't shell_quote $JAVAC, because it may consist of a command
-	 and options.  */
+         and options.  */
       memcpy (p, javac, strlen (javac));
       p += strlen (javac);
       memcpy (p, " --version", 1 + 9 + 1);
       p += 1 + 9 + 1;
       /* Ensure command_length was correctly calculated.  */
       if (p - command > command_length)
-	abort ();
+        abort ();
 
       /* Call $JAVAC --version 2>/dev/null.  */
       argv[0] = "/bin/sh";
@@ -664,36 +664,36 @@ is_envjavac_gcj43 (const char *javac)
       argv[2] = command;
       argv[3] = NULL;
       child = create_pipe_in (javac, "/bin/sh", argv, DEV_NULL, true, true,
-			      false, fd);
+                              false, fd);
       if (child == -1)
-	goto failed;
+        goto failed;
 
       /* Retrieve its result.  */
       fp = fdopen (fd[0], "r");
       if (fp == NULL)
-	goto failed;
+        goto failed;
 
       line = NULL; linesize = 0;
       linelen = getline (&line, &linesize, fp);
       if (linelen == (size_t)(-1))
-	{
-	  fclose (fp);
-	  goto failed;
-	}
+        {
+          fclose (fp);
+          goto failed;
+        }
       p = line;
       while (*p != '\0' && !(*p >= '0' && *p <= '9'))
-	p++;
+        p++;
       envjavac_gcj43 =
         !(*p == '4' && p[1] == '.' && p[2] >= '0' && p[2] <= '2')
-	&& (*p >= '4' && *p <= '9');
+        && (*p >= '4' && *p <= '9');
 
       fclose (fp);
 
       /* Remove zombie process from process list, and retrieve exit status.  */
       exitstatus =
-	wait_subprocess (child, javac, true, true, true, false, NULL);
+        wait_subprocess (child, javac, true, true, true, false, NULL);
       if (exitstatus != 0)
-	envjavac_gcj43 = false;
+        envjavac_gcj43 = false;
 
      failed:
       freea (command);
@@ -709,10 +709,10 @@ is_envjavac_gcj43 (const char *javac)
    Return a failure indicator (true upon error).  */
 static bool
 is_envjavac_gcj43_usable (const char *javac,
-			  const char *source_version,
-			  const char *target_version,
-			  bool *usablep,
-			  bool *fsource_option_p, bool *ftarget_option_p)
+                          const char *source_version,
+                          const char *target_version,
+                          bool *usablep,
+                          bool *fsource_option_p, bool *ftarget_option_p)
 {
   /* The cache depends on the source_version and target_version.  */
   struct result_t
@@ -726,7 +726,7 @@ is_envjavac_gcj43_usable (const char *javac,
   struct result_t *resultp;
 
   resultp = &result_cache[source_version_index (source_version)]
-			 [target_version_index (target_version)];
+                         [target_version_index (target_version)];
   if (!resultp->tested)
     {
       /* Try $JAVAC.  */
@@ -738,122 +738,122 @@ is_envjavac_gcj43_usable (const char *javac,
 
       tmpdir = create_temp_dir ("java", NULL, false);
       if (tmpdir == NULL)
-	return true;
+        return true;
 
       conftest_file_name =
-	xconcatenated_filename (tmpdir->dir_name, "conftest.java", NULL);
+        xconcatenated_filename (tmpdir->dir_name, "conftest.java", NULL);
       if (write_temp_file (tmpdir, conftest_file_name,
-			   get_goodcode_snippet (source_version)))
-	{
-	  free (conftest_file_name);
-	  cleanup_temp_dir (tmpdir);
-	  return true;
-	}
+                           get_goodcode_snippet (source_version)))
+        {
+          free (conftest_file_name);
+          cleanup_temp_dir (tmpdir);
+          return true;
+        }
 
       compiled_file_name =
-	xconcatenated_filename (tmpdir->dir_name, "conftest.class", NULL);
+        xconcatenated_filename (tmpdir->dir_name, "conftest.class", NULL);
       register_temp_file (tmpdir, compiled_file_name);
 
       java_sources[0] = conftest_file_name;
       if (!compile_using_envjavac (javac,
-				   java_sources, 1, tmpdir->dir_name,
-				   false, false, false, true)
-	  && stat (compiled_file_name, &statbuf) >= 0
-	  && get_classfile_version (compiled_file_name)
-	     <= corresponding_classfile_version (target_version))
-	{
-	  /* $JAVAC compiled conftest.java successfully.  */
-	  /* Try adding -fsource option if it is useful.  */
-	  char *javac_source =
-	    xasprintf ("%s -fsource=%s", javac, source_version);
+                                   java_sources, 1, tmpdir->dir_name,
+                                   false, false, false, true)
+          && stat (compiled_file_name, &statbuf) >= 0
+          && get_classfile_version (compiled_file_name)
+             <= corresponding_classfile_version (target_version))
+        {
+          /* $JAVAC compiled conftest.java successfully.  */
+          /* Try adding -fsource option if it is useful.  */
+          char *javac_source =
+            xasprintf ("%s -fsource=%s", javac, source_version);
 
-	  unlink (compiled_file_name);
+          unlink (compiled_file_name);
 
-	  java_sources[0] = conftest_file_name;
-	  if (!compile_using_envjavac (javac_source,
-				       java_sources, 1, tmpdir->dir_name,
-				       false, false, false, true)
-	      && stat (compiled_file_name, &statbuf) >= 0
-	      && get_classfile_version (compiled_file_name)
-		 <= corresponding_classfile_version (target_version))
-	    {
-	      const char *failcode = get_failcode_snippet (source_version);
+          java_sources[0] = conftest_file_name;
+          if (!compile_using_envjavac (javac_source,
+                                       java_sources, 1, tmpdir->dir_name,
+                                       false, false, false, true)
+              && stat (compiled_file_name, &statbuf) >= 0
+              && get_classfile_version (compiled_file_name)
+                 <= corresponding_classfile_version (target_version))
+            {
+              const char *failcode = get_failcode_snippet (source_version);
 
-	      if (failcode != NULL)
-		{
-		  free (compiled_file_name);
-		  free (conftest_file_name);
+              if (failcode != NULL)
+                {
+                  free (compiled_file_name);
+                  free (conftest_file_name);
 
-		  conftest_file_name =
-		    xconcatenated_filename (tmpdir->dir_name,
-					    "conftestfail.java",
-					    NULL);
-		  if (write_temp_file (tmpdir, conftest_file_name, failcode))
-		    {
-		      free (conftest_file_name);
-		      free (javac_source);
-		      cleanup_temp_dir (tmpdir);
-		      return true;
-		    }
+                  conftest_file_name =
+                    xconcatenated_filename (tmpdir->dir_name,
+                                            "conftestfail.java",
+                                            NULL);
+                  if (write_temp_file (tmpdir, conftest_file_name, failcode))
+                    {
+                      free (conftest_file_name);
+                      free (javac_source);
+                      cleanup_temp_dir (tmpdir);
+                      return true;
+                    }
 
-		  compiled_file_name =
-		    xconcatenated_filename (tmpdir->dir_name,
-					    "conftestfail.class",
-					    NULL);
-		  register_temp_file (tmpdir, compiled_file_name);
+                  compiled_file_name =
+                    xconcatenated_filename (tmpdir->dir_name,
+                                            "conftestfail.class",
+                                            NULL);
+                  register_temp_file (tmpdir, compiled_file_name);
 
-		  java_sources[0] = conftest_file_name;
-		  if (!compile_using_envjavac (javac,
-					       java_sources, 1,
-					       tmpdir->dir_name,
-					       false, false, false, true)
-		      && stat (compiled_file_name, &statbuf) >= 0)
-		    {
-		      unlink (compiled_file_name);
+                  java_sources[0] = conftest_file_name;
+                  if (!compile_using_envjavac (javac,
+                                               java_sources, 1,
+                                               tmpdir->dir_name,
+                                               false, false, false, true)
+                      && stat (compiled_file_name, &statbuf) >= 0)
+                    {
+                      unlink (compiled_file_name);
 
-		      java_sources[0] = conftest_file_name;
-		      if (compile_using_envjavac (javac_source,
-						  java_sources, 1,
-						  tmpdir->dir_name,
-						  false, false, false, true))
-			/* $JAVAC compiled conftestfail.java successfully, and
-			   "$JAVAC -fsource=$source_version" rejects it.  So
-			   the -fsource option is useful.  */
-			resultp->fsource_option = true;
-		    }
-		}
-	    }
+                      java_sources[0] = conftest_file_name;
+                      if (compile_using_envjavac (javac_source,
+                                                  java_sources, 1,
+                                                  tmpdir->dir_name,
+                                                  false, false, false, true))
+                        /* $JAVAC compiled conftestfail.java successfully, and
+                           "$JAVAC -fsource=$source_version" rejects it.  So
+                           the -fsource option is useful.  */
+                        resultp->fsource_option = true;
+                    }
+                }
+            }
 
-	  free (javac_source);
+          free (javac_source);
 
-	  resultp->usable = true;
-	}
+          resultp->usable = true;
+        }
       else
-	{
-	  /* Try with -fsource and -ftarget options.  */
-	  char *javac_target =
-	    xasprintf ("%s -fsource=%s -ftarget=%s",
-		       javac, source_version, target_version);
+        {
+          /* Try with -fsource and -ftarget options.  */
+          char *javac_target =
+            xasprintf ("%s -fsource=%s -ftarget=%s",
+                       javac, source_version, target_version);
 
-	  unlink (compiled_file_name);
+          unlink (compiled_file_name);
 
-	  java_sources[0] = conftest_file_name;
-	  if (!compile_using_envjavac (javac_target,
-				       java_sources, 1, tmpdir->dir_name,
-				       false, false, false, true)
-	      && stat (compiled_file_name, &statbuf) >= 0
-	      && get_classfile_version (compiled_file_name)
-		 <= corresponding_classfile_version (target_version))
-	    {
-	      /* "$JAVAC -fsource $source_version -ftarget $target_version"
-		 compiled conftest.java successfully.  */
-	      resultp->fsource_option = true;
-	      resultp->ftarget_option = true;
-	      resultp->usable = true;
-	    }
+          java_sources[0] = conftest_file_name;
+          if (!compile_using_envjavac (javac_target,
+                                       java_sources, 1, tmpdir->dir_name,
+                                       false, false, false, true)
+              && stat (compiled_file_name, &statbuf) >= 0
+              && get_classfile_version (compiled_file_name)
+                 <= corresponding_classfile_version (target_version))
+            {
+              /* "$JAVAC -fsource $source_version -ftarget $target_version"
+                 compiled conftest.java successfully.  */
+              resultp->fsource_option = true;
+              resultp->ftarget_option = true;
+              resultp->usable = true;
+            }
 
-	  free (javac_target);
-	}
+          free (javac_target);
+        }
 
       free (compiled_file_name);
       free (conftest_file_name);
@@ -887,28 +887,28 @@ is_envjavac_oldgcj_14_14_usable (const char *javac, bool *usablep)
 
       tmpdir = create_temp_dir ("java", NULL, false);
       if (tmpdir == NULL)
-	return true;
+        return true;
 
       conftest_file_name =
-	xconcatenated_filename (tmpdir->dir_name, "conftest.java", NULL);
+        xconcatenated_filename (tmpdir->dir_name, "conftest.java", NULL);
       if (write_temp_file (tmpdir, conftest_file_name,
-			   get_goodcode_snippet ("1.4")))
-	{
-	  free (conftest_file_name);
-	  cleanup_temp_dir (tmpdir);
-	  return true;
-	}
+                           get_goodcode_snippet ("1.4")))
+        {
+          free (conftest_file_name);
+          cleanup_temp_dir (tmpdir);
+          return true;
+        }
 
       compiled_file_name =
-	xconcatenated_filename (tmpdir->dir_name, "conftest.class", NULL);
+        xconcatenated_filename (tmpdir->dir_name, "conftest.class", NULL);
       register_temp_file (tmpdir, compiled_file_name);
 
       java_sources[0] = conftest_file_name;
       if (!compile_using_envjavac (javac, java_sources, 1, tmpdir->dir_name,
-				   false, false, false, true)
-	  && stat (compiled_file_name, &statbuf) >= 0)
-	/* Compilation succeeded.  */
-	envjavac_usable = true;
+                                   false, false, false, true)
+          && stat (compiled_file_name, &statbuf) >= 0)
+        /* Compilation succeeded.  */
+        envjavac_usable = true;
 
       free (compiled_file_name);
       free (conftest_file_name);
@@ -927,7 +927,7 @@ is_envjavac_oldgcj_14_14_usable (const char *javac, bool *usablep)
    Return a failure indicator (true upon error).  */
 static bool
 is_envjavac_oldgcj_14_13_usable (const char *javac,
-				 bool *usablep, bool *need_no_assert_option_p)
+                                 bool *usablep, bool *need_no_assert_option_p)
 {
   static bool envjavac_tested;
   static bool envjavac_usable;
@@ -936,7 +936,7 @@ is_envjavac_oldgcj_14_13_usable (const char *javac,
   if (!envjavac_tested)
     {
       /* Try $JAVAC and "$JAVAC -fno-assert".  But add -fno-assert only if
-	 it makes a difference.  (It could already be part of $JAVAC.)  */
+         it makes a difference.  (It could already be part of $JAVAC.)  */
       struct temp_dir *tmpdir;
       char *conftest_file_name;
       char *compiled_file_name;
@@ -948,31 +948,31 @@ is_envjavac_oldgcj_14_13_usable (const char *javac,
 
       tmpdir = create_temp_dir ("java", NULL, false);
       if (tmpdir == NULL)
-	return true;
+        return true;
 
       conftest_file_name =
-	xconcatenated_filename (tmpdir->dir_name, "conftest.java", NULL);
+        xconcatenated_filename (tmpdir->dir_name, "conftest.java", NULL);
       if (write_temp_file (tmpdir, conftest_file_name,
-			   get_goodcode_snippet ("1.3")))
-	{
-	  free (conftest_file_name);
-	  cleanup_temp_dir (tmpdir);
-	  return true;
-	}
+                           get_goodcode_snippet ("1.3")))
+        {
+          free (conftest_file_name);
+          cleanup_temp_dir (tmpdir);
+          return true;
+        }
 
       compiled_file_name =
-	xconcatenated_filename (tmpdir->dir_name, "conftest.class", NULL);
+        xconcatenated_filename (tmpdir->dir_name, "conftest.class", NULL);
       register_temp_file (tmpdir, compiled_file_name);
 
       java_sources[0] = conftest_file_name;
       if (!compile_using_envjavac (javac,
-				   java_sources, 1, tmpdir->dir_name,
-				   false, false, false, true)
-	  && stat (compiled_file_name, &statbuf) >= 0)
-	/* Compilation succeeded.  */
-	javac_works = true;
+                                   java_sources, 1, tmpdir->dir_name,
+                                   false, false, false, true)
+          && stat (compiled_file_name, &statbuf) >= 0)
+        /* Compilation succeeded.  */
+        javac_works = true;
       else
-	javac_works = false;
+        javac_works = false;
 
       unlink (compiled_file_name);
 
@@ -980,71 +980,71 @@ is_envjavac_oldgcj_14_13_usable (const char *javac,
 
       java_sources[0] = conftest_file_name;
       if (!compile_using_envjavac (javac_noassert,
-				   java_sources, 1, tmpdir->dir_name,
-				   false, false, false, true)
-	  && stat (compiled_file_name, &statbuf) >= 0)
-	/* Compilation succeeded.  */
-	javac_noassert_works = true;
+                                   java_sources, 1, tmpdir->dir_name,
+                                   false, false, false, true)
+          && stat (compiled_file_name, &statbuf) >= 0)
+        /* Compilation succeeded.  */
+        javac_noassert_works = true;
       else
-	javac_noassert_works = false;
+        javac_noassert_works = false;
 
       free (compiled_file_name);
       free (conftest_file_name);
 
       if (javac_works && javac_noassert_works)
-	{
-	  conftest_file_name =
-	    xconcatenated_filename (tmpdir->dir_name, "conftestfail.java",
-				    NULL);
-	  if (write_temp_file (tmpdir, conftest_file_name,
-			       get_failcode_snippet ("1.3")))
-	    {
-	      free (conftest_file_name);
-	      free (javac_noassert);
-	      cleanup_temp_dir (tmpdir);
-	      return true;
-	    }
+        {
+          conftest_file_name =
+            xconcatenated_filename (tmpdir->dir_name, "conftestfail.java",
+                                    NULL);
+          if (write_temp_file (tmpdir, conftest_file_name,
+                               get_failcode_snippet ("1.3")))
+            {
+              free (conftest_file_name);
+              free (javac_noassert);
+              cleanup_temp_dir (tmpdir);
+              return true;
+            }
 
-	  compiled_file_name =
-	    xconcatenated_filename (tmpdir->dir_name, "conftestfail.class",
-				    NULL);
-	  register_temp_file (tmpdir, compiled_file_name);
+          compiled_file_name =
+            xconcatenated_filename (tmpdir->dir_name, "conftestfail.class",
+                                    NULL);
+          register_temp_file (tmpdir, compiled_file_name);
 
-	  java_sources[0] = conftest_file_name;
-	  if (!compile_using_envjavac (javac,
-				       java_sources, 1, tmpdir->dir_name,
-				       false, false, false, true)
-	      && stat (compiled_file_name, &statbuf) >= 0)
-	    {
-	      /* Compilation succeeded.  */
-	      unlink (compiled_file_name);
+          java_sources[0] = conftest_file_name;
+          if (!compile_using_envjavac (javac,
+                                       java_sources, 1, tmpdir->dir_name,
+                                       false, false, false, true)
+              && stat (compiled_file_name, &statbuf) >= 0)
+            {
+              /* Compilation succeeded.  */
+              unlink (compiled_file_name);
 
-	      java_sources[0] = conftest_file_name;
-	      if (!(!compile_using_envjavac (javac_noassert,
-					     java_sources, 1, tmpdir->dir_name,
-					     false, false, false, true)
-		    && stat (compiled_file_name, &statbuf) >= 0))
-		/* Compilation failed.  */
-		/* "$JAVAC -fno-assert" works better than $JAVAC.  */
-		javac_works = true;
-	    }
+              java_sources[0] = conftest_file_name;
+              if (!(!compile_using_envjavac (javac_noassert,
+                                             java_sources, 1, tmpdir->dir_name,
+                                             false, false, false, true)
+                    && stat (compiled_file_name, &statbuf) >= 0))
+                /* Compilation failed.  */
+                /* "$JAVAC -fno-assert" works better than $JAVAC.  */
+                javac_works = true;
+            }
 
-	  free (compiled_file_name);
-	  free (conftest_file_name);
-	}
+          free (compiled_file_name);
+          free (conftest_file_name);
+        }
 
       cleanup_temp_dir (tmpdir);
 
       if (javac_works)
-	{
-	  envjavac_usable = true;
-	  envjavac_need_no_assert_option = false;
-	}
+        {
+          envjavac_usable = true;
+          envjavac_need_no_assert_option = false;
+        }
       else if (javac_noassert_works)
-	{
-	  envjavac_usable = true;
-	  envjavac_need_no_assert_option = true;
-	}
+        {
+          envjavac_usable = true;
+          envjavac_need_no_assert_option = true;
+        }
 
       envjavac_tested = true;
     }
@@ -1059,10 +1059,10 @@ is_envjavac_oldgcj_14_13_usable (const char *javac,
    Return a failure indicator (true upon error).  */
 static bool
 is_envjavac_nongcj_usable (const char *javac,
-			   const char *source_version,
-			   const char *target_version,
-			   bool *usablep,
-			   bool *source_option_p, bool *target_option_p)
+                           const char *source_version,
+                           const char *target_version,
+                           bool *usablep,
+                           bool *source_option_p, bool *target_option_p)
 {
   /* The cache depends on the source_version and target_version.  */
   struct result_t
@@ -1076,7 +1076,7 @@ is_envjavac_nongcj_usable (const char *javac,
   struct result_t *resultp;
 
   resultp = &result_cache[source_version_index (source_version)]
-			 [target_version_index (target_version)];
+                         [target_version_index (target_version)];
   if (!resultp->tested)
     {
       /* Try $JAVAC.  */
@@ -1088,215 +1088,215 @@ is_envjavac_nongcj_usable (const char *javac,
 
       tmpdir = create_temp_dir ("java", NULL, false);
       if (tmpdir == NULL)
-	return true;
+        return true;
 
       conftest_file_name =
-	xconcatenated_filename (tmpdir->dir_name, "conftest.java", NULL);
+        xconcatenated_filename (tmpdir->dir_name, "conftest.java", NULL);
       if (write_temp_file (tmpdir, conftest_file_name,
-			   get_goodcode_snippet (source_version)))
-	{
-	  free (conftest_file_name);
-	  cleanup_temp_dir (tmpdir);
-	  return true;
-	}
+                           get_goodcode_snippet (source_version)))
+        {
+          free (conftest_file_name);
+          cleanup_temp_dir (tmpdir);
+          return true;
+        }
 
       compiled_file_name =
-	xconcatenated_filename (tmpdir->dir_name, "conftest.class", NULL);
+        xconcatenated_filename (tmpdir->dir_name, "conftest.class", NULL);
       register_temp_file (tmpdir, compiled_file_name);
 
       java_sources[0] = conftest_file_name;
       if (!compile_using_envjavac (javac,
-				   java_sources, 1, tmpdir->dir_name,
-				   false, false, false, true)
-	  && stat (compiled_file_name, &statbuf) >= 0
-	  && get_classfile_version (compiled_file_name)
-	     <= corresponding_classfile_version (target_version))
-	{
-	  /* $JAVAC compiled conftest.java successfully.  */
-	  /* Try adding -source option if it is useful.  */
-	  char *javac_source =
-	    xasprintf ("%s -source %s", javac, source_version);
+                                   java_sources, 1, tmpdir->dir_name,
+                                   false, false, false, true)
+          && stat (compiled_file_name, &statbuf) >= 0
+          && get_classfile_version (compiled_file_name)
+             <= corresponding_classfile_version (target_version))
+        {
+          /* $JAVAC compiled conftest.java successfully.  */
+          /* Try adding -source option if it is useful.  */
+          char *javac_source =
+            xasprintf ("%s -source %s", javac, source_version);
 
-	  unlink (compiled_file_name);
+          unlink (compiled_file_name);
 
-	  java_sources[0] = conftest_file_name;
-	  if (!compile_using_envjavac (javac_source,
-				       java_sources, 1, tmpdir->dir_name,
-				       false, false, false, true)
-	      && stat (compiled_file_name, &statbuf) >= 0
-	      && get_classfile_version (compiled_file_name)
-		 <= corresponding_classfile_version (target_version))
-	    {
-	      const char *failcode = get_failcode_snippet (source_version);
+          java_sources[0] = conftest_file_name;
+          if (!compile_using_envjavac (javac_source,
+                                       java_sources, 1, tmpdir->dir_name,
+                                       false, false, false, true)
+              && stat (compiled_file_name, &statbuf) >= 0
+              && get_classfile_version (compiled_file_name)
+                 <= corresponding_classfile_version (target_version))
+            {
+              const char *failcode = get_failcode_snippet (source_version);
 
-	      if (failcode != NULL)
-		{
-		  free (compiled_file_name);
-		  free (conftest_file_name);
+              if (failcode != NULL)
+                {
+                  free (compiled_file_name);
+                  free (conftest_file_name);
 
-		  conftest_file_name =
-		    xconcatenated_filename (tmpdir->dir_name,
-					    "conftestfail.java",
-					    NULL);
-		  if (write_temp_file (tmpdir, conftest_file_name, failcode))
-		    {
-		      free (conftest_file_name);
-		      free (javac_source);
-		      cleanup_temp_dir (tmpdir);
-		      return true;
-		    }
+                  conftest_file_name =
+                    xconcatenated_filename (tmpdir->dir_name,
+                                            "conftestfail.java",
+                                            NULL);
+                  if (write_temp_file (tmpdir, conftest_file_name, failcode))
+                    {
+                      free (conftest_file_name);
+                      free (javac_source);
+                      cleanup_temp_dir (tmpdir);
+                      return true;
+                    }
 
-		  compiled_file_name =
-		    xconcatenated_filename (tmpdir->dir_name,
-					    "conftestfail.class",
-					    NULL);
-		  register_temp_file (tmpdir, compiled_file_name);
+                  compiled_file_name =
+                    xconcatenated_filename (tmpdir->dir_name,
+                                            "conftestfail.class",
+                                            NULL);
+                  register_temp_file (tmpdir, compiled_file_name);
 
-		  java_sources[0] = conftest_file_name;
-		  if (!compile_using_envjavac (javac,
-					       java_sources, 1,
-					       tmpdir->dir_name,
-					       false, false, false, true)
-		      && stat (compiled_file_name, &statbuf) >= 0)
-		    {
-		      unlink (compiled_file_name);
+                  java_sources[0] = conftest_file_name;
+                  if (!compile_using_envjavac (javac,
+                                               java_sources, 1,
+                                               tmpdir->dir_name,
+                                               false, false, false, true)
+                      && stat (compiled_file_name, &statbuf) >= 0)
+                    {
+                      unlink (compiled_file_name);
 
-		      java_sources[0] = conftest_file_name;
-		      if (compile_using_envjavac (javac_source,
-						  java_sources, 1,
-						  tmpdir->dir_name,
-						  false, false, false, true))
-			/* $JAVAC compiled conftestfail.java successfully, and
-			   "$JAVAC -source $source_version" rejects it.  So the
-			   -source option is useful.  */
-			resultp->source_option = true;
-		    }
-		}
-	    }
+                      java_sources[0] = conftest_file_name;
+                      if (compile_using_envjavac (javac_source,
+                                                  java_sources, 1,
+                                                  tmpdir->dir_name,
+                                                  false, false, false, true))
+                        /* $JAVAC compiled conftestfail.java successfully, and
+                           "$JAVAC -source $source_version" rejects it.  So the
+                           -source option is useful.  */
+                        resultp->source_option = true;
+                    }
+                }
+            }
 
-	  free (javac_source);
+          free (javac_source);
 
-	  resultp->usable = true;
-	}
+          resultp->usable = true;
+        }
       else
-	{
-	  /* Try with -target option alone. (Sun javac 1.3.1 has the -target
-	     option but no -source option.)  */
-	  char *javac_target =
-	    xasprintf ("%s -target %s", javac, target_version);
+        {
+          /* Try with -target option alone. (Sun javac 1.3.1 has the -target
+             option but no -source option.)  */
+          char *javac_target =
+            xasprintf ("%s -target %s", javac, target_version);
 
-	  unlink (compiled_file_name);
+          unlink (compiled_file_name);
 
-	  java_sources[0] = conftest_file_name;
-	  if (!compile_using_envjavac (javac_target,
-				       java_sources, 1, tmpdir->dir_name,
-				       false, false, false, true)
-	      && stat (compiled_file_name, &statbuf) >= 0
-	      && get_classfile_version (compiled_file_name)
-		 <= corresponding_classfile_version (target_version))
-	    {
-	      /* "$JAVAC -target $target_version" compiled conftest.java
-		 successfully.  */
-	      /* Try adding -source option if it is useful.  */
-	      char *javac_target_source =
-		xasprintf ("%s -source %s", javac_target, source_version);
+          java_sources[0] = conftest_file_name;
+          if (!compile_using_envjavac (javac_target,
+                                       java_sources, 1, tmpdir->dir_name,
+                                       false, false, false, true)
+              && stat (compiled_file_name, &statbuf) >= 0
+              && get_classfile_version (compiled_file_name)
+                 <= corresponding_classfile_version (target_version))
+            {
+              /* "$JAVAC -target $target_version" compiled conftest.java
+                 successfully.  */
+              /* Try adding -source option if it is useful.  */
+              char *javac_target_source =
+                xasprintf ("%s -source %s", javac_target, source_version);
 
-	      unlink (compiled_file_name);
+              unlink (compiled_file_name);
 
-	      java_sources[0] = conftest_file_name;
-	      if (!compile_using_envjavac (javac_target_source,
-					   java_sources, 1, tmpdir->dir_name,
-					   false, false, false, true)
-		  && stat (compiled_file_name, &statbuf) >= 0
-		  && get_classfile_version (compiled_file_name)
-		     <= corresponding_classfile_version (target_version))
-		{
-		  const char *failcode = get_failcode_snippet (source_version);
+              java_sources[0] = conftest_file_name;
+              if (!compile_using_envjavac (javac_target_source,
+                                           java_sources, 1, tmpdir->dir_name,
+                                           false, false, false, true)
+                  && stat (compiled_file_name, &statbuf) >= 0
+                  && get_classfile_version (compiled_file_name)
+                     <= corresponding_classfile_version (target_version))
+                {
+                  const char *failcode = get_failcode_snippet (source_version);
 
-		  if (failcode != NULL)
-		    {
-		      free (compiled_file_name);
-		      free (conftest_file_name);
+                  if (failcode != NULL)
+                    {
+                      free (compiled_file_name);
+                      free (conftest_file_name);
 
-		      conftest_file_name =
-			xconcatenated_filename (tmpdir->dir_name,
-						"conftestfail.java",
-						NULL);
-		      if (write_temp_file (tmpdir, conftest_file_name,
-					   failcode))
-			{
-			  free (conftest_file_name);
-			  free (javac_target_source);
-			  free (javac_target);
-			  cleanup_temp_dir (tmpdir);
-			  return true;
-			}
+                      conftest_file_name =
+                        xconcatenated_filename (tmpdir->dir_name,
+                                                "conftestfail.java",
+                                                NULL);
+                      if (write_temp_file (tmpdir, conftest_file_name,
+                                           failcode))
+                        {
+                          free (conftest_file_name);
+                          free (javac_target_source);
+                          free (javac_target);
+                          cleanup_temp_dir (tmpdir);
+                          return true;
+                        }
 
-		      compiled_file_name =
-			xconcatenated_filename (tmpdir->dir_name,
-						"conftestfail.class",
-						NULL);
-		      register_temp_file (tmpdir, compiled_file_name);
+                      compiled_file_name =
+                        xconcatenated_filename (tmpdir->dir_name,
+                                                "conftestfail.class",
+                                                NULL);
+                      register_temp_file (tmpdir, compiled_file_name);
 
-		      java_sources[0] = conftest_file_name;
-		      if (!compile_using_envjavac (javac_target,
-						   java_sources, 1,
-						   tmpdir->dir_name,
-						   false, false, false, true)
-			  && stat (compiled_file_name, &statbuf) >= 0)
-			{
-			  unlink (compiled_file_name);
+                      java_sources[0] = conftest_file_name;
+                      if (!compile_using_envjavac (javac_target,
+                                                   java_sources, 1,
+                                                   tmpdir->dir_name,
+                                                   false, false, false, true)
+                          && stat (compiled_file_name, &statbuf) >= 0)
+                        {
+                          unlink (compiled_file_name);
 
-			  java_sources[0] = conftest_file_name;
-			  if (compile_using_envjavac (javac_target_source,
-						      java_sources, 1,
-						      tmpdir->dir_name,
-						      false, false, false,
-						      true))
-			    /* "$JAVAC -target $target_version" compiled
-			       conftestfail.java successfully, and
-			       "$JAVAC -target $target_version -source $source_version"
-			       rejects it.  So the -source option is useful.  */
-			    resultp->source_option = true;
-			}
-		    }
-		}
+                          java_sources[0] = conftest_file_name;
+                          if (compile_using_envjavac (javac_target_source,
+                                                      java_sources, 1,
+                                                      tmpdir->dir_name,
+                                                      false, false, false,
+                                                      true))
+                            /* "$JAVAC -target $target_version" compiled
+                               conftestfail.java successfully, and
+                               "$JAVAC -target $target_version -source $source_version"
+                               rejects it.  So the -source option is useful.  */
+                            resultp->source_option = true;
+                        }
+                    }
+                }
 
-	      free (javac_target_source);
+              free (javac_target_source);
 
-	      resultp->target_option = true;
-	      resultp->usable = true;
-	    }
-	  else
-	    {
-	      /* Maybe this -target option requires a -source option? Try with
-		 -target and -source options. (Supported by Sun javac 1.4 and
-		 higher.)  */
-	      char *javac_target_source =
-		xasprintf ("%s -source %s", javac_target, source_version);
+              resultp->target_option = true;
+              resultp->usable = true;
+            }
+          else
+            {
+              /* Maybe this -target option requires a -source option? Try with
+                 -target and -source options. (Supported by Sun javac 1.4 and
+                 higher.)  */
+              char *javac_target_source =
+                xasprintf ("%s -source %s", javac_target, source_version);
 
-	      unlink (compiled_file_name);
+              unlink (compiled_file_name);
 
-	      java_sources[0] = conftest_file_name;
-	      if (!compile_using_envjavac (javac_target_source,
-					   java_sources, 1, tmpdir->dir_name,
-					   false, false, false, true)
-		  && stat (compiled_file_name, &statbuf) >= 0
-		  && get_classfile_version (compiled_file_name)
-		     <= corresponding_classfile_version (target_version))
-		{
-		  /* "$JAVAC -target $target_version -source $source_version"
-		     compiled conftest.java successfully.  */
-		  resultp->source_option = true;
-		  resultp->target_option = true;
-		  resultp->usable = true;
-		}
+              java_sources[0] = conftest_file_name;
+              if (!compile_using_envjavac (javac_target_source,
+                                           java_sources, 1, tmpdir->dir_name,
+                                           false, false, false, true)
+                  && stat (compiled_file_name, &statbuf) >= 0
+                  && get_classfile_version (compiled_file_name)
+                     <= corresponding_classfile_version (target_version))
+                {
+                  /* "$JAVAC -target $target_version -source $source_version"
+                     compiled conftest.java successfully.  */
+                  resultp->source_option = true;
+                  resultp->target_option = true;
+                  resultp->usable = true;
+                }
 
-	      free (javac_target_source);
-	    }
+              free (javac_target_source);
+            }
 
-	  free (javac_target);
-	}
+          free (javac_target);
+        }
 
       free (compiled_file_name);
       free (conftest_file_name);
@@ -1319,9 +1319,9 @@ is_gcj_present (void)
   if (!gcj_tested)
     {
       /* Test for presence of gcj:
-	 "gcj --version 2> /dev/null | \
-	  sed -e 's,^[^0-9]*,,' -e 1q | \
-	  sed -e '/^3\.[01]/d' | grep '^[3-9]' > /dev/null"  */
+         "gcj --version 2> /dev/null | \
+          sed -e 's,^[^0-9]*,,' -e 1q | \
+          sed -e '/^3\.[01]/d' | grep '^[3-9]' > /dev/null"  */
       char *argv[3];
       pid_t child;
       int fd[1];
@@ -1331,94 +1331,94 @@ is_gcj_present (void)
       argv[1] = "--version";
       argv[2] = NULL;
       child = create_pipe_in ("gcj", "gcj", argv, DEV_NULL, true, true,
-			      false, fd);
+                              false, fd);
       gcj_present = false;
       if (child != -1)
-	{
-	  /* Read the subprocess output, drop all lines except the first,
-	     drop all characters before the first digit, and test whether
-	     the remaining string starts with a digit >= 3, but not with
-	     "3.0" or "3.1".  */
-	  char c[3];
-	  size_t count = 0;
+        {
+          /* Read the subprocess output, drop all lines except the first,
+             drop all characters before the first digit, and test whether
+             the remaining string starts with a digit >= 3, but not with
+             "3.0" or "3.1".  */
+          char c[3];
+          size_t count = 0;
 
-	  while (safe_read (fd[0], &c[count], 1) > 0)
-	    {
-	      if (c[count] == '\n')
-		break;
-	      if (count == 0)
-		{
-		  if (!(c[0] >= '0' && c[0] <= '9'))
-		    continue;
-		  gcj_present = (c[0] >= '3');
-		}
-	      count++;
-	      if (count == 3)
-		{
-		  if (c[0] == '3' && c[1] == '.'
-		      && (c[2] == '0' || c[2] == '1'))
-		    gcj_present = false;
-		  break;
-		}
-	    }
-	  while (safe_read (fd[0], &c[0], 1) > 0)
-	    ;
+          while (safe_read (fd[0], &c[count], 1) > 0)
+            {
+              if (c[count] == '\n')
+                break;
+              if (count == 0)
+                {
+                  if (!(c[0] >= '0' && c[0] <= '9'))
+                    continue;
+                  gcj_present = (c[0] >= '3');
+                }
+              count++;
+              if (count == 3)
+                {
+                  if (c[0] == '3' && c[1] == '.'
+                      && (c[2] == '0' || c[2] == '1'))
+                    gcj_present = false;
+                  break;
+                }
+            }
+          while (safe_read (fd[0], &c[0], 1) > 0)
+            ;
 
-	  close (fd[0]);
+          close (fd[0]);
 
-	  /* Remove zombie process from process list, and retrieve exit
-	     status.  */
-	  exitstatus =
-	    wait_subprocess (child, "gcj", false, true, true, false, NULL);
-	  if (exitstatus != 0)
-	    gcj_present = false;
-	}
+          /* Remove zombie process from process list, and retrieve exit
+             status.  */
+          exitstatus =
+            wait_subprocess (child, "gcj", false, true, true, false, NULL);
+          if (exitstatus != 0)
+            gcj_present = false;
+        }
 
       if (gcj_present)
-	{
-	  /* See if libgcj.jar is well installed.  */
-	  struct temp_dir *tmpdir;
+        {
+          /* See if libgcj.jar is well installed.  */
+          struct temp_dir *tmpdir;
 
-	  tmpdir = create_temp_dir ("java", NULL, false);
-	  if (tmpdir == NULL)
-	    gcj_present = false;
-	  else
-	    {
-	      char *conftest_file_name;
+          tmpdir = create_temp_dir ("java", NULL, false);
+          if (tmpdir == NULL)
+            gcj_present = false;
+          else
+            {
+              char *conftest_file_name;
 
-	      conftest_file_name =
-		xconcatenated_filename (tmpdir->dir_name, "conftestlib.java",
-					NULL);
-	      if (write_temp_file (tmpdir, conftest_file_name,
+              conftest_file_name =
+                xconcatenated_filename (tmpdir->dir_name, "conftestlib.java",
+                                        NULL);
+              if (write_temp_file (tmpdir, conftest_file_name,
 "public class conftestlib {\n"
 "  public static void main (String[] args) {\n"
 "  }\n"
 "}\n"))
-		gcj_present = false;
-	      else
-		{
-		  char *compiled_file_name;
-		  const char *java_sources[1];
+                gcj_present = false;
+              else
+                {
+                  char *compiled_file_name;
+                  const char *java_sources[1];
 
-		  compiled_file_name =
-		    xconcatenated_filename (tmpdir->dir_name,
-					    "conftestlib.class",
-					    NULL);
-		  register_temp_file (tmpdir, compiled_file_name);
+                  compiled_file_name =
+                    xconcatenated_filename (tmpdir->dir_name,
+                                            "conftestlib.class",
+                                            NULL);
+                  register_temp_file (tmpdir, compiled_file_name);
 
-		  java_sources[0] = conftest_file_name;
-		  if (compile_using_gcj (java_sources, 1, false,
-					 false, NULL, false, NULL,
-					 tmpdir->dir_name,
-					 false, false, false, true))
-		    gcj_present = false;
+                  java_sources[0] = conftest_file_name;
+                  if (compile_using_gcj (java_sources, 1, false,
+                                         false, NULL, false, NULL,
+                                         tmpdir->dir_name,
+                                         false, false, false, true))
+                    gcj_present = false;
 
-		  free (compiled_file_name);
-		}
-	      free (conftest_file_name);
-	    }
-	  cleanup_temp_dir (tmpdir);
-	}
+                  free (compiled_file_name);
+                }
+              free (conftest_file_name);
+            }
+          cleanup_temp_dir (tmpdir);
+        }
 
       gcj_tested = true;
     }
@@ -1435,9 +1435,9 @@ is_gcj_43 (void)
   if (!gcj_tested)
     {
       /* Test for presence of gcj:
-	 "gcj --version 2> /dev/null | \
-	  sed -e 's,^[^0-9]*,,' -e 1q | \
-	  sed -e '/^4\.[012]/d' | grep '^[4-9]'"  */
+         "gcj --version 2> /dev/null | \
+          sed -e 's,^[^0-9]*,,' -e 1q | \
+          sed -e '/^4\.[012]/d' | grep '^[4-9]'"  */
       char *argv[3];
       pid_t child;
       int fd[1];
@@ -1447,47 +1447,47 @@ is_gcj_43 (void)
       argv[1] = "--version";
       argv[2] = NULL;
       child = create_pipe_in ("gcj", "gcj", argv, DEV_NULL, true, true,
-			      false, fd);
+                              false, fd);
       gcj_43 = false;
       if (child != -1)
-	{
-	  /* Read the subprocess output, drop all lines except the first,
-	     drop all characters before the first digit, and test whether
-	     the remaining string starts with a digit >= 4, but not with
-	     "4.0" or "4.1" or "4.2".  */
-	  char c[3];
-	  size_t count = 0;
+        {
+          /* Read the subprocess output, drop all lines except the first,
+             drop all characters before the first digit, and test whether
+             the remaining string starts with a digit >= 4, but not with
+             "4.0" or "4.1" or "4.2".  */
+          char c[3];
+          size_t count = 0;
 
-	  while (safe_read (fd[0], &c[count], 1) > 0)
-	    {
-	      if (c[count] == '\n')
-		break;
-	      if (count == 0)
-		{
-		  if (!(c[0] >= '0' && c[0] <= '9'))
-		    continue;
-		  gcj_43 = (c[0] >= '4');
-		}
-	      count++;
-	      if (count == 3)
-		{
-		  if (c[0] == '4' && c[1] == '.' && c[2] >= '0' && c[2] <= '2')
-		    gcj_43 = false;
-		  break;
-		}
-	    }
-	  while (safe_read (fd[0], &c[0], 1) > 0)
-	    ;
+          while (safe_read (fd[0], &c[count], 1) > 0)
+            {
+              if (c[count] == '\n')
+                break;
+              if (count == 0)
+                {
+                  if (!(c[0] >= '0' && c[0] <= '9'))
+                    continue;
+                  gcj_43 = (c[0] >= '4');
+                }
+              count++;
+              if (count == 3)
+                {
+                  if (c[0] == '4' && c[1] == '.' && c[2] >= '0' && c[2] <= '2')
+                    gcj_43 = false;
+                  break;
+                }
+            }
+          while (safe_read (fd[0], &c[0], 1) > 0)
+            ;
 
-	  close (fd[0]);
+          close (fd[0]);
 
-	  /* Remove zombie process from process list, and retrieve exit
-	     status.  */
-	  exitstatus =
-	    wait_subprocess (child, "gcj", false, true, true, false, NULL);
-	  if (exitstatus != 0)
-	    gcj_43 = false;
-	}
+          /* Remove zombie process from process list, and retrieve exit
+             status.  */
+          exitstatus =
+            wait_subprocess (child, "gcj", false, true, true, false, NULL);
+          if (exitstatus != 0)
+            gcj_43 = false;
+        }
 
       gcj_tested = true;
     }
@@ -1500,9 +1500,9 @@ is_gcj_43 (void)
    Return a failure indicator (true upon error).  */
 static bool
 is_gcj43_usable (const char *source_version,
-		 const char *target_version,
-		 bool *usablep,
-		 bool *fsource_option_p, bool *ftarget_option_p)
+                 const char *target_version,
+                 bool *usablep,
+                 bool *fsource_option_p, bool *ftarget_option_p)
 {
   /* The cache depends on the source_version and target_version.  */
   struct result_t
@@ -1516,7 +1516,7 @@ is_gcj43_usable (const char *source_version,
   struct result_t *resultp;
 
   resultp = &result_cache[source_version_index (source_version)]
-			 [target_version_index (target_version)];
+                         [target_version_index (target_version)];
   if (!resultp->tested)
     {
       /* Try gcj.  */
@@ -1528,112 +1528,112 @@ is_gcj43_usable (const char *source_version,
 
       tmpdir = create_temp_dir ("java", NULL, false);
       if (tmpdir == NULL)
-	return true;
+        return true;
 
       conftest_file_name =
-	xconcatenated_filename (tmpdir->dir_name, "conftest.java", NULL);
+        xconcatenated_filename (tmpdir->dir_name, "conftest.java", NULL);
       if (write_temp_file (tmpdir, conftest_file_name,
-			   get_goodcode_snippet (source_version)))
-	{
-	  free (conftest_file_name);
-	  cleanup_temp_dir (tmpdir);
-	  return true;
-	}
+                           get_goodcode_snippet (source_version)))
+        {
+          free (conftest_file_name);
+          cleanup_temp_dir (tmpdir);
+          return true;
+        }
 
       compiled_file_name =
-	xconcatenated_filename (tmpdir->dir_name, "conftest.class", NULL);
+        xconcatenated_filename (tmpdir->dir_name, "conftest.class", NULL);
       register_temp_file (tmpdir, compiled_file_name);
 
       java_sources[0] = conftest_file_name;
       if (!compile_using_gcj (java_sources, 1, false, false, NULL, false, NULL,
-			      tmpdir->dir_name, false, false, false, true)
-	  && stat (compiled_file_name, &statbuf) >= 0
-	  && get_classfile_version (compiled_file_name)
-	     <= corresponding_classfile_version (target_version))
-	{
-	  /* gcj compiled conftest.java successfully.  */
-	  /* Try adding -fsource option if it is useful.  */
-	  unlink (compiled_file_name);
+                              tmpdir->dir_name, false, false, false, true)
+          && stat (compiled_file_name, &statbuf) >= 0
+          && get_classfile_version (compiled_file_name)
+             <= corresponding_classfile_version (target_version))
+        {
+          /* gcj compiled conftest.java successfully.  */
+          /* Try adding -fsource option if it is useful.  */
+          unlink (compiled_file_name);
 
-	  java_sources[0] = conftest_file_name;
-	  if (!compile_using_gcj (java_sources, 1,
-				  false, true, source_version, false, NULL,
-				  tmpdir->dir_name, false, false, false, true)
-	      && stat (compiled_file_name, &statbuf) >= 0
-	      && get_classfile_version (compiled_file_name)
-		 <= corresponding_classfile_version (target_version))
-	    {
-	      const char *failcode = get_failcode_snippet (source_version);
+          java_sources[0] = conftest_file_name;
+          if (!compile_using_gcj (java_sources, 1,
+                                  false, true, source_version, false, NULL,
+                                  tmpdir->dir_name, false, false, false, true)
+              && stat (compiled_file_name, &statbuf) >= 0
+              && get_classfile_version (compiled_file_name)
+                 <= corresponding_classfile_version (target_version))
+            {
+              const char *failcode = get_failcode_snippet (source_version);
 
-	      if (failcode != NULL)
-		{
-		  free (compiled_file_name);
-		  free (conftest_file_name);
+              if (failcode != NULL)
+                {
+                  free (compiled_file_name);
+                  free (conftest_file_name);
 
-		  conftest_file_name =
-		    xconcatenated_filename (tmpdir->dir_name,
-					    "conftestfail.java",
-					    NULL);
-		  if (write_temp_file (tmpdir, conftest_file_name, failcode))
-		    {
-		      free (conftest_file_name);
-		      cleanup_temp_dir (tmpdir);
-		      return true;
-		    }
+                  conftest_file_name =
+                    xconcatenated_filename (tmpdir->dir_name,
+                                            "conftestfail.java",
+                                            NULL);
+                  if (write_temp_file (tmpdir, conftest_file_name, failcode))
+                    {
+                      free (conftest_file_name);
+                      cleanup_temp_dir (tmpdir);
+                      return true;
+                    }
 
-		  compiled_file_name =
-		    xconcatenated_filename (tmpdir->dir_name,
-					    "conftestfail.class",
-					    NULL);
-		  register_temp_file (tmpdir, compiled_file_name);
+                  compiled_file_name =
+                    xconcatenated_filename (tmpdir->dir_name,
+                                            "conftestfail.class",
+                                            NULL);
+                  register_temp_file (tmpdir, compiled_file_name);
 
-		  java_sources[0] = conftest_file_name;
-		  if (!compile_using_gcj (java_sources, 1,
-					  false, false, NULL, false, NULL,
-					  tmpdir->dir_name,
-					  false, false, false, true)
-		      && stat (compiled_file_name, &statbuf) >= 0)
-		    {
-		      unlink (compiled_file_name);
+                  java_sources[0] = conftest_file_name;
+                  if (!compile_using_gcj (java_sources, 1,
+                                          false, false, NULL, false, NULL,
+                                          tmpdir->dir_name,
+                                          false, false, false, true)
+                      && stat (compiled_file_name, &statbuf) >= 0)
+                    {
+                      unlink (compiled_file_name);
 
-		      java_sources[0] = conftest_file_name;
-		      if (compile_using_gcj (java_sources, 1,
-					     false, true, source_version,
-					     false, NULL,
-					     tmpdir->dir_name,
-					     false, false, false, true))
-			/* gcj compiled conftestfail.java successfully, and
-			   "gcj -fsource=$source_version" rejects it.  So
-			   the -fsource option is useful.  */
-			resultp->fsource_option = true;
-		    }
-		}
-	    }
+                      java_sources[0] = conftest_file_name;
+                      if (compile_using_gcj (java_sources, 1,
+                                             false, true, source_version,
+                                             false, NULL,
+                                             tmpdir->dir_name,
+                                             false, false, false, true))
+                        /* gcj compiled conftestfail.java successfully, and
+                           "gcj -fsource=$source_version" rejects it.  So
+                           the -fsource option is useful.  */
+                        resultp->fsource_option = true;
+                    }
+                }
+            }
 
-	  resultp->usable = true;
-	}
+          resultp->usable = true;
+        }
       else
-	{
-	  /* Try with -fsource and -ftarget options.  */
-	  unlink (compiled_file_name);
+        {
+          /* Try with -fsource and -ftarget options.  */
+          unlink (compiled_file_name);
 
-	  java_sources[0] = conftest_file_name;
-	  if (!compile_using_gcj (java_sources, 1,
-				  false, true, source_version,
-				  true, target_version,
-				  tmpdir->dir_name,
-				  false, false, false, true)
-	      && stat (compiled_file_name, &statbuf) >= 0
-	      && get_classfile_version (compiled_file_name)
-		 <= corresponding_classfile_version (target_version))
-	    {
-	      /* "gcj -fsource $source_version -ftarget $target_version"
-		 compiled conftest.java successfully.  */
-	      resultp->fsource_option = true;
-	      resultp->ftarget_option = true;
-	      resultp->usable = true;
-	    }
-	}
+          java_sources[0] = conftest_file_name;
+          if (!compile_using_gcj (java_sources, 1,
+                                  false, true, source_version,
+                                  true, target_version,
+                                  tmpdir->dir_name,
+                                  false, false, false, true)
+              && stat (compiled_file_name, &statbuf) >= 0
+              && get_classfile_version (compiled_file_name)
+                 <= corresponding_classfile_version (target_version))
+            {
+              /* "gcj -fsource $source_version -ftarget $target_version"
+                 compiled conftest.java successfully.  */
+              resultp->fsource_option = true;
+              resultp->ftarget_option = true;
+              resultp->usable = true;
+            }
+        }
 
       free (compiled_file_name);
       free (conftest_file_name);
@@ -1667,28 +1667,28 @@ is_oldgcj_14_14_usable (bool *usablep)
 
       tmpdir = create_temp_dir ("java", NULL, false);
       if (tmpdir == NULL)
-	return true;
+        return true;
 
       conftest_file_name =
-	xconcatenated_filename (tmpdir->dir_name, "conftest.java", NULL);
+        xconcatenated_filename (tmpdir->dir_name, "conftest.java", NULL);
       if (write_temp_file (tmpdir, conftest_file_name,
-			   get_goodcode_snippet ("1.4")))
-	{
-	  free (conftest_file_name);
-	  cleanup_temp_dir (tmpdir);
-	  return true;
-	}
+                           get_goodcode_snippet ("1.4")))
+        {
+          free (conftest_file_name);
+          cleanup_temp_dir (tmpdir);
+          return true;
+        }
 
       compiled_file_name =
-	xconcatenated_filename (tmpdir->dir_name, "conftest.class", NULL);
+        xconcatenated_filename (tmpdir->dir_name, "conftest.class", NULL);
       register_temp_file (tmpdir, compiled_file_name);
 
       java_sources[0] = conftest_file_name;
       if (!compile_using_gcj (java_sources, 1, false, false, NULL, false, NULL,
-			      tmpdir->dir_name, false, false, false, true)
-	  && stat (compiled_file_name, &statbuf) >= 0)
-	/* Compilation succeeded.  */
-	gcj_usable = true;
+                              tmpdir->dir_name, false, false, false, true)
+          && stat (compiled_file_name, &statbuf) >= 0)
+        /* Compilation succeeded.  */
+        gcj_usable = true;
 
       free (compiled_file_name);
       free (conftest_file_name);
@@ -1715,7 +1715,7 @@ is_oldgcj_14_13_usable (bool *usablep, bool *need_no_assert_option_p)
   if (!gcj_tested)
     {
       /* Try gcj and "gcj -fno-assert".  But add -fno-assert only if
-	 it works (not gcj < 3.3).  */
+         it works (not gcj < 3.3).  */
       struct temp_dir *tmpdir;
       char *conftest_file_name;
       char *compiled_file_name;
@@ -1724,46 +1724,46 @@ is_oldgcj_14_13_usable (bool *usablep, bool *need_no_assert_option_p)
 
       tmpdir = create_temp_dir ("java", NULL, false);
       if (tmpdir == NULL)
-	return true;
+        return true;
 
       conftest_file_name =
-	xconcatenated_filename (tmpdir->dir_name, "conftest.java", NULL);
+        xconcatenated_filename (tmpdir->dir_name, "conftest.java", NULL);
       if (write_temp_file (tmpdir, conftest_file_name,
-			   get_goodcode_snippet ("1.3")))
-	{
-	  free (conftest_file_name);
-	  cleanup_temp_dir (tmpdir);
-	  return true;
-	}
+                           get_goodcode_snippet ("1.3")))
+        {
+          free (conftest_file_name);
+          cleanup_temp_dir (tmpdir);
+          return true;
+        }
 
       compiled_file_name =
-	xconcatenated_filename (tmpdir->dir_name, "conftest.class", NULL);
+        xconcatenated_filename (tmpdir->dir_name, "conftest.class", NULL);
       register_temp_file (tmpdir, compiled_file_name);
 
       java_sources[0] = conftest_file_name;
       if (!compile_using_gcj (java_sources, 1, true, false, NULL, false, NULL,
-			      tmpdir->dir_name, false, false, false, true)
-	  && stat (compiled_file_name, &statbuf) >= 0)
-	/* Compilation succeeded.  */
-	{
-	  gcj_usable = true;
-	  gcj_need_no_assert_option = true;
-	}
+                              tmpdir->dir_name, false, false, false, true)
+          && stat (compiled_file_name, &statbuf) >= 0)
+        /* Compilation succeeded.  */
+        {
+          gcj_usable = true;
+          gcj_need_no_assert_option = true;
+        }
       else
-	{
-	  unlink (compiled_file_name);
+        {
+          unlink (compiled_file_name);
 
-	  java_sources[0] = conftest_file_name;
-	  if (!compile_using_gcj (java_sources, 1, false,
-				  false, NULL, false, NULL,
-				  tmpdir->dir_name, false, false, false, true)
-	      && stat (compiled_file_name, &statbuf) >= 0)
-	    /* Compilation succeeded.  */
-	    {
-	      gcj_usable = true;
-	      gcj_need_no_assert_option = false;
-	    }
-	}
+          java_sources[0] = conftest_file_name;
+          if (!compile_using_gcj (java_sources, 1, false,
+                                  false, NULL, false, NULL,
+                                  tmpdir->dir_name, false, false, false, true)
+              && stat (compiled_file_name, &statbuf) >= 0)
+            /* Compilation succeeded.  */
+            {
+              gcj_usable = true;
+              gcj_need_no_assert_option = false;
+            }
+        }
 
       free (compiled_file_name);
       free (conftest_file_name);
@@ -1793,7 +1793,7 @@ is_javac_present (void)
       argv[0] = "javac";
       argv[1] = NULL;
       exitstatus = execute ("javac", "javac", argv, false, false, true, true,
-			    true, false, NULL);
+                            true, false, NULL);
       javac_present = (exitstatus == 0 || exitstatus == 1 || exitstatus == 2);
       javac_tested = true;
     }
@@ -1806,7 +1806,7 @@ is_javac_present (void)
    Return a failure indicator (true upon error).  */
 static bool
 is_javac_usable (const char *source_version, const char *target_version,
-		 bool *usablep, bool *source_option_p, bool *target_option_p)
+                 bool *usablep, bool *source_option_p, bool *target_option_p)
 {
   /* The cache depends on the source_version and target_version.  */
   struct result_t
@@ -1820,7 +1820,7 @@ is_javac_usable (const char *source_version, const char *target_version,
   struct result_t *resultp;
 
   resultp = &result_cache[source_version_index (source_version)]
-			 [target_version_index (target_version)];
+                         [target_version_index (target_version)];
   if (!resultp->tested)
     {
       /* Try javac.  */
@@ -1832,203 +1832,203 @@ is_javac_usable (const char *source_version, const char *target_version,
 
       tmpdir = create_temp_dir ("java", NULL, false);
       if (tmpdir == NULL)
-	return true;
+        return true;
 
       conftest_file_name =
-	xconcatenated_filename (tmpdir->dir_name, "conftest.java", NULL);
+        xconcatenated_filename (tmpdir->dir_name, "conftest.java", NULL);
       if (write_temp_file (tmpdir, conftest_file_name,
-			   get_goodcode_snippet (source_version)))
-	{
-	  free (conftest_file_name);
-	  cleanup_temp_dir (tmpdir);
-	  return true;
-	}
+                           get_goodcode_snippet (source_version)))
+        {
+          free (conftest_file_name);
+          cleanup_temp_dir (tmpdir);
+          return true;
+        }
 
       compiled_file_name =
-	xconcatenated_filename (tmpdir->dir_name, "conftest.class", NULL);
+        xconcatenated_filename (tmpdir->dir_name, "conftest.class", NULL);
       register_temp_file (tmpdir, compiled_file_name);
 
       java_sources[0] = conftest_file_name;
       if (!compile_using_javac (java_sources, 1,
-				false, source_version,
-				false, target_version,
-				tmpdir->dir_name, false, false, false, true)
-	  && stat (compiled_file_name, &statbuf) >= 0
-	  && get_classfile_version (compiled_file_name)
-	     <= corresponding_classfile_version (target_version))
-	{
-	  /* javac compiled conftest.java successfully.  */
-	  /* Try adding -source option if it is useful.  */
-	  unlink (compiled_file_name);
+                                false, source_version,
+                                false, target_version,
+                                tmpdir->dir_name, false, false, false, true)
+          && stat (compiled_file_name, &statbuf) >= 0
+          && get_classfile_version (compiled_file_name)
+             <= corresponding_classfile_version (target_version))
+        {
+          /* javac compiled conftest.java successfully.  */
+          /* Try adding -source option if it is useful.  */
+          unlink (compiled_file_name);
 
-	  java_sources[0] = conftest_file_name;
-	  if (!compile_using_javac (java_sources, 1,
-				    true, source_version,
-				    false, target_version,
-				    tmpdir->dir_name, false, false, false, true)
-	      && stat (compiled_file_name, &statbuf) >= 0
-	      && get_classfile_version (compiled_file_name)
-		 <= corresponding_classfile_version (target_version))
-	    {
-	      const char *failcode = get_failcode_snippet (source_version);
+          java_sources[0] = conftest_file_name;
+          if (!compile_using_javac (java_sources, 1,
+                                    true, source_version,
+                                    false, target_version,
+                                    tmpdir->dir_name, false, false, false, true)
+              && stat (compiled_file_name, &statbuf) >= 0
+              && get_classfile_version (compiled_file_name)
+                 <= corresponding_classfile_version (target_version))
+            {
+              const char *failcode = get_failcode_snippet (source_version);
 
-	      if (failcode != NULL)
-		{
-		  free (compiled_file_name);
-		  free (conftest_file_name);
+              if (failcode != NULL)
+                {
+                  free (compiled_file_name);
+                  free (conftest_file_name);
 
-		  conftest_file_name =
-		    xconcatenated_filename (tmpdir->dir_name,
-					    "conftestfail.java",
-					    NULL);
-		  if (write_temp_file (tmpdir, conftest_file_name, failcode))
-		    {
-		      free (conftest_file_name);
-		      cleanup_temp_dir (tmpdir);
-		      return true;
-		    }
+                  conftest_file_name =
+                    xconcatenated_filename (tmpdir->dir_name,
+                                            "conftestfail.java",
+                                            NULL);
+                  if (write_temp_file (tmpdir, conftest_file_name, failcode))
+                    {
+                      free (conftest_file_name);
+                      cleanup_temp_dir (tmpdir);
+                      return true;
+                    }
 
-		  compiled_file_name =
-		    xconcatenated_filename (tmpdir->dir_name,
-					    "conftestfail.class",
-					    NULL);
-		  register_temp_file (tmpdir, compiled_file_name);
+                  compiled_file_name =
+                    xconcatenated_filename (tmpdir->dir_name,
+                                            "conftestfail.class",
+                                            NULL);
+                  register_temp_file (tmpdir, compiled_file_name);
 
-		  java_sources[0] = conftest_file_name;
-		  if (!compile_using_javac (java_sources, 1,
-					    false, source_version,
-					    false, target_version,
-					    tmpdir->dir_name,
-					    false, false, false, true)
-		      && stat (compiled_file_name, &statbuf) >= 0)
-		    {
-		      unlink (compiled_file_name);
+                  java_sources[0] = conftest_file_name;
+                  if (!compile_using_javac (java_sources, 1,
+                                            false, source_version,
+                                            false, target_version,
+                                            tmpdir->dir_name,
+                                            false, false, false, true)
+                      && stat (compiled_file_name, &statbuf) >= 0)
+                    {
+                      unlink (compiled_file_name);
 
-		      java_sources[0] = conftest_file_name;
-		      if (compile_using_javac (java_sources, 1,
-					       true, source_version,
-					       false, target_version,
-					       tmpdir->dir_name,
-					       false, false, false, true))
-			/* javac compiled conftestfail.java successfully, and
-			   "javac -source $source_version" rejects it.  So the
-			   -source option is useful.  */
-			resultp->source_option = true;
-		    }
-		}
-	    }
+                      java_sources[0] = conftest_file_name;
+                      if (compile_using_javac (java_sources, 1,
+                                               true, source_version,
+                                               false, target_version,
+                                               tmpdir->dir_name,
+                                               false, false, false, true))
+                        /* javac compiled conftestfail.java successfully, and
+                           "javac -source $source_version" rejects it.  So the
+                           -source option is useful.  */
+                        resultp->source_option = true;
+                    }
+                }
+            }
 
-	  resultp->usable = true;
-	}
+          resultp->usable = true;
+        }
       else
-	{
-	  /* Try with -target option alone. (Sun javac 1.3.1 has the -target
-	     option but no -source option.)  */
-	  unlink (compiled_file_name);
+        {
+          /* Try with -target option alone. (Sun javac 1.3.1 has the -target
+             option but no -source option.)  */
+          unlink (compiled_file_name);
 
-	  java_sources[0] = conftest_file_name;
-	  if (!compile_using_javac (java_sources, 1,
-				    false, source_version,
-				    true, target_version,
-				    tmpdir->dir_name,
-				    false, false, false, true)
-	      && stat (compiled_file_name, &statbuf) >= 0
-	      && get_classfile_version (compiled_file_name)
-		 <= corresponding_classfile_version (target_version))
-	    {
-	      /* "javac -target $target_version" compiled conftest.java
-		 successfully.  */
-	      /* Try adding -source option if it is useful.  */
-	      unlink (compiled_file_name);
+          java_sources[0] = conftest_file_name;
+          if (!compile_using_javac (java_sources, 1,
+                                    false, source_version,
+                                    true, target_version,
+                                    tmpdir->dir_name,
+                                    false, false, false, true)
+              && stat (compiled_file_name, &statbuf) >= 0
+              && get_classfile_version (compiled_file_name)
+                 <= corresponding_classfile_version (target_version))
+            {
+              /* "javac -target $target_version" compiled conftest.java
+                 successfully.  */
+              /* Try adding -source option if it is useful.  */
+              unlink (compiled_file_name);
 
-	      java_sources[0] = conftest_file_name;
-	      if (!compile_using_javac (java_sources, 1,
-					true, source_version,
-					true, target_version,
-					tmpdir->dir_name,
-					false, false, false, true)
-		  && stat (compiled_file_name, &statbuf) >= 0
-		  && get_classfile_version (compiled_file_name)
-		     <= corresponding_classfile_version (target_version))
-		{
-		  const char *failcode = get_failcode_snippet (source_version);
+              java_sources[0] = conftest_file_name;
+              if (!compile_using_javac (java_sources, 1,
+                                        true, source_version,
+                                        true, target_version,
+                                        tmpdir->dir_name,
+                                        false, false, false, true)
+                  && stat (compiled_file_name, &statbuf) >= 0
+                  && get_classfile_version (compiled_file_name)
+                     <= corresponding_classfile_version (target_version))
+                {
+                  const char *failcode = get_failcode_snippet (source_version);
 
-		  if (failcode != NULL)
-		    {
-		      free (compiled_file_name);
-		      free (conftest_file_name);
+                  if (failcode != NULL)
+                    {
+                      free (compiled_file_name);
+                      free (conftest_file_name);
 
-		      conftest_file_name =
-			xconcatenated_filename (tmpdir->dir_name,
-					        "conftestfail.java",
-					        NULL);
-		      if (write_temp_file (tmpdir, conftest_file_name,
-					   failcode))
-			{
-			  free (conftest_file_name);
-			  cleanup_temp_dir (tmpdir);
-			  return true;
-			}
+                      conftest_file_name =
+                        xconcatenated_filename (tmpdir->dir_name,
+                                                "conftestfail.java",
+                                                NULL);
+                      if (write_temp_file (tmpdir, conftest_file_name,
+                                           failcode))
+                        {
+                          free (conftest_file_name);
+                          cleanup_temp_dir (tmpdir);
+                          return true;
+                        }
 
-		      compiled_file_name =
-			xconcatenated_filename (tmpdir->dir_name,
-					        "conftestfail.class",
-					        NULL);
-		      register_temp_file (tmpdir, compiled_file_name);
+                      compiled_file_name =
+                        xconcatenated_filename (tmpdir->dir_name,
+                                                "conftestfail.class",
+                                                NULL);
+                      register_temp_file (tmpdir, compiled_file_name);
 
-		      java_sources[0] = conftest_file_name;
-		      if (!compile_using_javac (java_sources, 1,
-						false, source_version,
-						true, target_version,
-						tmpdir->dir_name,
-						false, false, false, true)
-			  && stat (compiled_file_name, &statbuf) >= 0)
-			{
-			  unlink (compiled_file_name);
+                      java_sources[0] = conftest_file_name;
+                      if (!compile_using_javac (java_sources, 1,
+                                                false, source_version,
+                                                true, target_version,
+                                                tmpdir->dir_name,
+                                                false, false, false, true)
+                          && stat (compiled_file_name, &statbuf) >= 0)
+                        {
+                          unlink (compiled_file_name);
 
-			  java_sources[0] = conftest_file_name;
-			  if (compile_using_javac (java_sources, 1,
-						   true, source_version,
-						   true, target_version,
-						   tmpdir->dir_name,
-						   false, false, false, true))
-			    /* "javac -target $target_version" compiled
-			       conftestfail.java successfully, and
-			       "javac -target $target_version -source $source_version"
-			       rejects it.  So the -source option is useful.  */
-			    resultp->source_option = true;
-			}
-		    }
-		}
+                          java_sources[0] = conftest_file_name;
+                          if (compile_using_javac (java_sources, 1,
+                                                   true, source_version,
+                                                   true, target_version,
+                                                   tmpdir->dir_name,
+                                                   false, false, false, true))
+                            /* "javac -target $target_version" compiled
+                               conftestfail.java successfully, and
+                               "javac -target $target_version -source $source_version"
+                               rejects it.  So the -source option is useful.  */
+                            resultp->source_option = true;
+                        }
+                    }
+                }
 
-	      resultp->target_option = true;
-	      resultp->usable = true;
-	    }
-	  else
-	    {
-	      /* Maybe this -target option requires a -source option? Try with
-		 -target and -source options. (Supported by Sun javac 1.4 and
-		 higher.)  */
-	      unlink (compiled_file_name);
+              resultp->target_option = true;
+              resultp->usable = true;
+            }
+          else
+            {
+              /* Maybe this -target option requires a -source option? Try with
+                 -target and -source options. (Supported by Sun javac 1.4 and
+                 higher.)  */
+              unlink (compiled_file_name);
 
-	      java_sources[0] = conftest_file_name;
-	      if (!compile_using_javac (java_sources, 1,
-					true, source_version,
-					true, target_version,
-					tmpdir->dir_name,
-					false, false, false, true)
-		  && stat (compiled_file_name, &statbuf) >= 0
-		  && get_classfile_version (compiled_file_name)
-		     <= corresponding_classfile_version (target_version))
-		{
-		  /* "javac -target $target_version -source $source_version"
-		     compiled conftest.java successfully.  */
-		  resultp->source_option = true;
-		  resultp->target_option = true;
-		  resultp->usable = true;
-		}
-	    }
-	}
+              java_sources[0] = conftest_file_name;
+              if (!compile_using_javac (java_sources, 1,
+                                        true, source_version,
+                                        true, target_version,
+                                        tmpdir->dir_name,
+                                        false, false, false, true)
+                  && stat (compiled_file_name, &statbuf) >= 0
+                  && get_classfile_version (compiled_file_name)
+                     <= corresponding_classfile_version (target_version))
+                {
+                  /* "javac -target $target_version -source $source_version"
+                     compiled conftest.java successfully.  */
+                  resultp->source_option = true;
+                  resultp->target_option = true;
+                  resultp->usable = true;
+                }
+            }
+        }
 
       free (compiled_file_name);
       free (conftest_file_name);
@@ -2057,7 +2057,7 @@ is_jikes_present (void)
       argv[0] = "jikes";
       argv[1] = NULL;
       exitstatus = execute ("jikes", "jikes", argv, false, false, true, true,
-			    true, false, NULL);
+                            true, false, NULL);
       jikes_present = (exitstatus == 0 || exitstatus == 1);
       jikes_tested = true;
     }
@@ -2069,15 +2069,15 @@ is_jikes_present (void)
 
 bool
 compile_java_class (const char * const *java_sources,
-		    unsigned int java_sources_count,
-		    const char * const *classpaths,
-		    unsigned int classpaths_count,
-		    const char *source_version,
-		    const char *target_version,
-		    const char *directory,
-		    bool optimize, bool debug,
-		    bool use_minimal_classpath,
-		    bool verbose)
+                    unsigned int java_sources_count,
+                    const char * const *classpaths,
+                    unsigned int classpaths_count,
+                    const char *source_version,
+                    const char *target_version,
+                    const char *directory,
+                    bool optimize, bool debug,
+                    bool use_minimal_classpath,
+                    bool verbose)
 {
   bool err = false;
   char *old_JAVA_HOME;
@@ -2086,106 +2086,106 @@ compile_java_class (const char * const *java_sources,
     const char *javac = getenv ("JAVAC");
     if (javac != NULL && javac[0] != '\0')
       {
-	bool usable = false;
-	bool no_assert_option = false;
-	bool source_option = false;
-	bool target_option = false;
-	bool fsource_option = false;
-	bool ftarget_option = false;
+        bool usable = false;
+        bool no_assert_option = false;
+        bool source_option = false;
+        bool target_option = false;
+        bool fsource_option = false;
+        bool ftarget_option = false;
 
-	if (target_version == NULL)
-	  target_version = default_target_version ();
+        if (target_version == NULL)
+          target_version = default_target_version ();
 
-	if (is_envjavac_gcj (javac))
-	  {
-	    /* It's a version of gcj.  */
-	    if (is_envjavac_gcj43 (javac))
-	      {
-		/* It's a version of gcj >= 4.3.  Assume the classfile versions
-		   are correct.  */
-		if (is_envjavac_gcj43_usable (javac,
-					      source_version, target_version,
-					      &usable,
-					      &fsource_option, &ftarget_option))
-		  {
-		    err = true;
-		    goto done1;
-		  }
-	      }
-	    else
-	      {
-		/* It's a version of gcj < 4.3.  Ignore the version of the
-		   class files that it creates.  */
-		if (strcmp (target_version, "1.4") == 0
-		    && strcmp (source_version, "1.4") == 0)
-		  {
-		    if (is_envjavac_oldgcj_14_14_usable (javac, &usable))
-		      {
-			err = true;
-			goto done1;
-		      }
-		  }
-		else if (strcmp (target_version, "1.4") == 0
-			 && strcmp (source_version, "1.3") == 0)
-		  {
-		    if (is_envjavac_oldgcj_14_13_usable (javac,
-							 &usable,
-							 &no_assert_option))
-		      {
-			err = true;
-			goto done1;
-		      }
-		  }
-	      }
-	  }
-	else
-	  {
-	    /* It's not gcj.  Assume the classfile versions are correct.  */
-	    if (is_envjavac_nongcj_usable (javac,
-					   source_version, target_version,
-					   &usable,
-					   &source_option, &target_option))
-	      {
-		err = true;
-		goto done1;
-	      }
-	  }
+        if (is_envjavac_gcj (javac))
+          {
+            /* It's a version of gcj.  */
+            if (is_envjavac_gcj43 (javac))
+              {
+                /* It's a version of gcj >= 4.3.  Assume the classfile versions
+                   are correct.  */
+                if (is_envjavac_gcj43_usable (javac,
+                                              source_version, target_version,
+                                              &usable,
+                                              &fsource_option, &ftarget_option))
+                  {
+                    err = true;
+                    goto done1;
+                  }
+              }
+            else
+              {
+                /* It's a version of gcj < 4.3.  Ignore the version of the
+                   class files that it creates.  */
+                if (strcmp (target_version, "1.4") == 0
+                    && strcmp (source_version, "1.4") == 0)
+                  {
+                    if (is_envjavac_oldgcj_14_14_usable (javac, &usable))
+                      {
+                        err = true;
+                        goto done1;
+                      }
+                  }
+                else if (strcmp (target_version, "1.4") == 0
+                         && strcmp (source_version, "1.3") == 0)
+                  {
+                    if (is_envjavac_oldgcj_14_13_usable (javac,
+                                                         &usable,
+                                                         &no_assert_option))
+                      {
+                        err = true;
+                        goto done1;
+                      }
+                  }
+              }
+          }
+        else
+          {
+            /* It's not gcj.  Assume the classfile versions are correct.  */
+            if (is_envjavac_nongcj_usable (javac,
+                                           source_version, target_version,
+                                           &usable,
+                                           &source_option, &target_option))
+              {
+                err = true;
+                goto done1;
+              }
+          }
 
-	if (usable)
-	  {
-	    char *old_classpath;
-	    char *javac_with_options;
+        if (usable)
+          {
+            char *old_classpath;
+            char *javac_with_options;
 
-	    /* Set CLASSPATH.  */
-	    old_classpath =
-	      set_classpath (classpaths, classpaths_count, false, verbose);
+            /* Set CLASSPATH.  */
+            old_classpath =
+              set_classpath (classpaths, classpaths_count, false, verbose);
 
-	    javac_with_options =
-	      (no_assert_option
-	       ? xasprintf ("%s -fno-assert", javac)
-	       : xasprintf ("%s%s%s%s%s%s%s%s%s",
-			    javac,
-			    source_option ? " -source " : "",
-			    source_option ? source_version : "",
-			    target_option ? " -target " : "",
-			    target_option ? target_version : "",
-			    fsource_option ? " -fsource=" : "",
-			    fsource_option ? source_version : "",
-			    ftarget_option ? " -ftarget=" : "",
-			    ftarget_option ? target_version : ""));
+            javac_with_options =
+              (no_assert_option
+               ? xasprintf ("%s -fno-assert", javac)
+               : xasprintf ("%s%s%s%s%s%s%s%s%s",
+                            javac,
+                            source_option ? " -source " : "",
+                            source_option ? source_version : "",
+                            target_option ? " -target " : "",
+                            target_option ? target_version : "",
+                            fsource_option ? " -fsource=" : "",
+                            fsource_option ? source_version : "",
+                            ftarget_option ? " -ftarget=" : "",
+                            ftarget_option ? target_version : ""));
 
-	    err = compile_using_envjavac (javac_with_options,
-					  java_sources, java_sources_count,
-					  directory, optimize, debug, verbose,
-					  false);
+            err = compile_using_envjavac (javac_with_options,
+                                          java_sources, java_sources_count,
+                                          directory, optimize, debug, verbose,
+                                          false);
 
-	    free (javac_with_options);
+            free (javac_with_options);
 
-	    /* Reset CLASSPATH.  */
-	    reset_classpath (old_classpath);
+            /* Reset CLASSPATH.  */
+            reset_classpath (old_classpath);
 
-	    goto done1;
-	  }
+            goto done1;
+          }
       }
   }
 
@@ -2206,68 +2206,68 @@ compile_java_class (const char * const *java_sources,
       bool ftarget_option = false;
 
       if (target_version == NULL)
-	target_version = default_target_version ();
+        target_version = default_target_version ();
 
       if (is_gcj_43 ())
-	{
-	  /* It's a version of gcj >= 4.3.  Assume the classfile versions
-	     are correct.  */
-	  if (is_gcj43_usable (source_version, target_version,
-			       &usable, &fsource_option, &ftarget_option))
-	    {
-	      err = true;
-	      goto done1;
-	    }
-	}
+        {
+          /* It's a version of gcj >= 4.3.  Assume the classfile versions
+             are correct.  */
+          if (is_gcj43_usable (source_version, target_version,
+                               &usable, &fsource_option, &ftarget_option))
+            {
+              err = true;
+              goto done1;
+            }
+        }
       else
-	{
-	  /* It's a version of gcj < 4.3.  Ignore the version of the class
-	     files that it creates.
-	     Test whether it supports the desired target-version and
-	     source-version.  */
-	  if (strcmp (target_version, "1.4") == 0
-	      && strcmp (source_version, "1.4") == 0)
-	    {
-	      if (is_oldgcj_14_14_usable (&usable))
-		{
-		  err = true;
-		  goto done1;
-		}
-	    }
-	  else if (strcmp (target_version, "1.4") == 0
-		   && strcmp (source_version, "1.3") == 0)
-	    {
-	      if (is_oldgcj_14_13_usable (&usable, &no_assert_option))
-		{
-		  err = true;
-		  goto done1;
-		}
-	    }
-	}
+        {
+          /* It's a version of gcj < 4.3.  Ignore the version of the class
+             files that it creates.
+             Test whether it supports the desired target-version and
+             source-version.  */
+          if (strcmp (target_version, "1.4") == 0
+              && strcmp (source_version, "1.4") == 0)
+            {
+              if (is_oldgcj_14_14_usable (&usable))
+                {
+                  err = true;
+                  goto done1;
+                }
+            }
+          else if (strcmp (target_version, "1.4") == 0
+                   && strcmp (source_version, "1.3") == 0)
+            {
+              if (is_oldgcj_14_13_usable (&usable, &no_assert_option))
+                {
+                  err = true;
+                  goto done1;
+                }
+            }
+        }
 
       if (usable)
-	{
-	  char *old_classpath;
+        {
+          char *old_classpath;
 
-	  /* Set CLASSPATH.  We could also use the --CLASSPATH=... option
-	     of gcj.  Note that --classpath=... option is different: its
-	     argument should also contain gcj's libgcj.jar, but we don't
-	     know its location.  */
-	  old_classpath =
-	    set_classpath (classpaths, classpaths_count, use_minimal_classpath,
-			   verbose);
+          /* Set CLASSPATH.  We could also use the --CLASSPATH=... option
+             of gcj.  Note that --classpath=... option is different: its
+             argument should also contain gcj's libgcj.jar, but we don't
+             know its location.  */
+          old_classpath =
+            set_classpath (classpaths, classpaths_count, use_minimal_classpath,
+                           verbose);
 
-	  err = compile_using_gcj (java_sources, java_sources_count,
-				   no_assert_option,
-				   fsource_option, source_version,
-				   ftarget_option, target_version,
-				   directory, optimize, debug, verbose, false);
+          err = compile_using_gcj (java_sources, java_sources_count,
+                                   no_assert_option,
+                                   fsource_option, source_version,
+                                   ftarget_option, target_version,
+                                   directory, optimize, debug, verbose, false);
 
-	  /* Reset CLASSPATH.  */
-	  reset_classpath (old_classpath);
+          /* Reset CLASSPATH.  */
+          reset_classpath (old_classpath);
 
-	  goto done2;
-	}
+          goto done2;
+        }
     }
 
   if (is_javac_present ())
@@ -2277,67 +2277,67 @@ compile_java_class (const char * const *java_sources,
       bool target_option = false;
 
       if (target_version == NULL)
-	target_version = default_target_version ();
+        target_version = default_target_version ();
 
       if (is_javac_usable (source_version, target_version,
-			   &usable, &source_option, &target_option))
-	{
-	  err = true;
-	  goto done1;
-	}
+                           &usable, &source_option, &target_option))
+        {
+          err = true;
+          goto done1;
+        }
 
       if (usable)
-	{
-	  char *old_classpath;
+        {
+          char *old_classpath;
 
-	  /* Set CLASSPATH.  We don't use the "-classpath ..." option because
-	     in JDK 1.1.x its argument should also contain the JDK's
-	     classes.zip, but we don't know its location.  (In JDK 1.3.0 it
-	     would work.)  */
-	  old_classpath =
-	    set_classpath (classpaths, classpaths_count, use_minimal_classpath,
-			   verbose);
+          /* Set CLASSPATH.  We don't use the "-classpath ..." option because
+             in JDK 1.1.x its argument should also contain the JDK's
+             classes.zip, but we don't know its location.  (In JDK 1.3.0 it
+             would work.)  */
+          old_classpath =
+            set_classpath (classpaths, classpaths_count, use_minimal_classpath,
+                           verbose);
 
-	  err = compile_using_javac (java_sources, java_sources_count,
-				     source_option, source_version,
-				     target_option, target_version,
-				     directory, optimize, debug, verbose,
-				     false);
+          err = compile_using_javac (java_sources, java_sources_count,
+                                     source_option, source_version,
+                                     target_option, target_version,
+                                     directory, optimize, debug, verbose,
+                                     false);
 
-	  /* Reset CLASSPATH.  */
-	  reset_classpath (old_classpath);
+          /* Reset CLASSPATH.  */
+          reset_classpath (old_classpath);
 
-	  goto done2;
-	}
+          goto done2;
+        }
     }
 
   if (is_jikes_present ())
     {
       /* Test whether it supports the desired target-version and
-	 source-version.  */
+         source-version.  */
       bool usable = (strcmp (source_version, "1.3") == 0);
 
       if (usable)
-	{
-	  char *old_classpath;
+        {
+          char *old_classpath;
 
-	  /* Set CLASSPATH.  We could also use the "-classpath ..." option.
-	     Since jikes doesn't come with its own standard library, it
-	     needs a classes.zip or rt.jar or libgcj.jar in the CLASSPATH.
-	     To increase the chance of success, we reuse the current CLASSPATH
-	     if the user has set it.  */
-	  old_classpath =
-	    set_classpath (classpaths, classpaths_count, false, verbose);
+          /* Set CLASSPATH.  We could also use the "-classpath ..." option.
+             Since jikes doesn't come with its own standard library, it
+             needs a classes.zip or rt.jar or libgcj.jar in the CLASSPATH.
+             To increase the chance of success, we reuse the current CLASSPATH
+             if the user has set it.  */
+          old_classpath =
+            set_classpath (classpaths, classpaths_count, false, verbose);
 
-	  err = compile_using_jikes (java_sources, java_sources_count,
-				     directory, optimize, debug, verbose,
-				     false);
+          err = compile_using_jikes (java_sources, java_sources_count,
+                                     directory, optimize, debug, verbose,
+                                     false);
 
-	  /* Reset CLASSPATH.  */
-	  reset_classpath (old_classpath);
+          /* Reset CLASSPATH.  */
+          reset_classpath (old_classpath);
 
-	  goto done2;
-	}
+          goto done2;
+        }
     }
 
   error (0, 0, _("Java compiler not found, try installing gcj or set $JAVAC"));

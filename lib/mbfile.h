@@ -39,9 +39,9 @@
 
    Here are the function prototypes of the macros.
 
-   extern void		mbf_init (mb_file_t mbf, FILE *stream);
-   extern void		mbf_getc (mbf_char_t mbc, mb_file_t mbf);
-   extern bool		mb_iseof (const mbf_char_t mbc);
+   extern void          mbf_init (mb_file_t mbf, FILE *stream);
+   extern void          mbf_getc (mbf_char_t mbc, mb_file_t mbf);
+   extern bool          mb_iseof (const mbf_char_t mbc);
  */
 
 #ifndef _MBFILE_H
@@ -95,10 +95,10 @@ mbfile_multi_getc (struct mbchar *mbc, struct mbfile_multi *mbf)
     {
       int c = getc (mbf->fp);
       if (c == EOF)
-	{
-	  mbf->eof_seen = true;
-	  goto eof;
-	}
+        {
+          mbf->eof_seen = true;
+          goto eof;
+        }
       mbf->buf[0] = (unsigned char) c;
       mbf->bufcount++;
     }
@@ -107,8 +107,8 @@ mbfile_multi_getc (struct mbchar *mbc, struct mbfile_multi *mbf)
   if (mbf->bufcount == 1 && mbsinit (&mbf->state) && is_basic (mbf->buf[0]))
     {
       /* These characters are part of the basic character set.  ISO C 99
-	 guarantees that their wide character code is identical to their
-	 char code.  */
+         guarantees that their wide character code is identical to their
+         char code.  */
       mbc->wc = mbc->buf[0] = mbf->buf[0];
       mbc->wc_valid = true;
       mbc->ptr = &mbc->buf[0];
@@ -123,67 +123,67 @@ mbfile_multi_getc (struct mbchar *mbc, struct mbfile_multi *mbf)
   for (;;)
     {
       /* We don't know whether the 'mbrtowc' function updates the state when
-	 it returns -2, - this is the ISO C 99 and glibc-2.2 behaviour - or
-	 not - amended ANSI C, glibc-2.1 and Solaris 2.7 behaviour.  We
-	 don't have an autoconf test for this, yet.
-	 The new behaviour would allow us to feed the bytes one by one into
-	 mbrtowc.  But the old behaviour forces us to feed all bytes since
-	 the end of the last character into mbrtowc.  Since we want to retry
-	 with more bytes when mbrtowc returns -2, we must backup the state
-	 before calling mbrtowc, because implementations with the new
-	 behaviour will clobber it.  */
+         it returns -2, - this is the ISO C 99 and glibc-2.2 behaviour - or
+         not - amended ANSI C, glibc-2.1 and Solaris 2.7 behaviour.  We
+         don't have an autoconf test for this, yet.
+         The new behaviour would allow us to feed the bytes one by one into
+         mbrtowc.  But the old behaviour forces us to feed all bytes since
+         the end of the last character into mbrtowc.  Since we want to retry
+         with more bytes when mbrtowc returns -2, we must backup the state
+         before calling mbrtowc, because implementations with the new
+         behaviour will clobber it.  */
       mbstate_t backup_state = mbf->state;
 
       bytes = mbrtowc (&mbc->wc, &mbf->buf[0], mbf->bufcount, &mbf->state);
 
       if (bytes == (size_t) -1)
-	{
-	  /* An invalid multibyte sequence was encountered.  */
-	  /* Return a single byte.  */
-	  bytes = 1;
-	  mbc->wc_valid = false;
-	  break;
-	}
+        {
+          /* An invalid multibyte sequence was encountered.  */
+          /* Return a single byte.  */
+          bytes = 1;
+          mbc->wc_valid = false;
+          break;
+        }
       else if (bytes == (size_t) -2)
-	{
-	  /* An incomplete multibyte character.  */
-	  mbf->state = backup_state;
-	  if (mbf->bufcount == MBCHAR_BUF_SIZE)
-	    {
-	      /* An overlong incomplete multibyte sequence was encountered.  */
-	      /* Return a single byte.  */
-	      bytes = 1;
-	      mbc->wc_valid = false;
-	      break;
-	    }
-	  else
-	    {
-	      /* Read one more byte and retry mbrtowc.  */
-	      int c = getc (mbf->fp);
-	      if (c == EOF)
-		{
-		  /* An incomplete multibyte character at the end.  */
-		  mbf->eof_seen = true;
-		  bytes = mbf->bufcount;
-		  mbc->wc_valid = false;
-		  break;
-		}
-	      mbf->buf[mbf->bufcount] = (unsigned char) c;
-	      mbf->bufcount++;
-	    }
+        {
+          /* An incomplete multibyte character.  */
+          mbf->state = backup_state;
+          if (mbf->bufcount == MBCHAR_BUF_SIZE)
+            {
+              /* An overlong incomplete multibyte sequence was encountered.  */
+              /* Return a single byte.  */
+              bytes = 1;
+              mbc->wc_valid = false;
+              break;
+            }
+          else
+            {
+              /* Read one more byte and retry mbrtowc.  */
+              int c = getc (mbf->fp);
+              if (c == EOF)
+                {
+                  /* An incomplete multibyte character at the end.  */
+                  mbf->eof_seen = true;
+                  bytes = mbf->bufcount;
+                  mbc->wc_valid = false;
+                  break;
+                }
+              mbf->buf[mbf->bufcount] = (unsigned char) c;
+              mbf->bufcount++;
+            }
         }
       else
-	{
-	  if (bytes == 0)
-	    {
-	      /* A null wide character was encountered.  */
-	      bytes = 1;
-	      assert (mbf->buf[0] == '\0');
-	      assert (mbc->wc == 0);
-	    }
-	  mbc->wc_valid = true;
-	  break;
-	}
+        {
+          if (bytes == 0)
+            {
+              /* A null wide character was encountered.  */
+              bytes = 1;
+              assert (mbf->buf[0] == '\0');
+              assert (mbc->wc == 0);
+            }
+          mbc->wc_valid = true;
+          break;
+        }
     }
 
   /* Return the multibyte sequence mbf->buf[0..bytes-1].  */
@@ -199,10 +199,10 @@ mbfile_multi_getc (struct mbchar *mbc, struct mbfile_multi *mbf)
       char *p = &mbf->buf[0];
 
       do
-	{
-	  *p = *(p + bytes);
-	  p++;
-	}
+        {
+          *p = *(p + bytes);
+          p++;
+        }
       while (--count > 0);
     }
   return;
@@ -226,11 +226,11 @@ typedef struct mbfile_multi mb_file_t;
 
 typedef mbchar_t mbf_char_t;
 
-#define mbf_init(mbf, stream)						\
-  ((mbf).fp = (stream),							\
-   (mbf).eof_seen = false,						\
-   (mbf).have_pushback = false,						\
-   memset (&(mbf).state, '\0', sizeof (mbstate_t)),			\
+#define mbf_init(mbf, stream)                                           \
+  ((mbf).fp = (stream),                                                 \
+   (mbf).eof_seen = false,                                              \
+   (mbf).have_pushback = false,                                         \
+   memset (&(mbf).state, '\0', sizeof (mbstate_t)),                     \
    (mbf).bufcount = 0)
 
 #define mbf_getc(mbc, mbf) mbfile_multi_getc (&(mbc), &(mbf))

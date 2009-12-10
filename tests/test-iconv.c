@@ -28,15 +28,15 @@
 #include <string.h>
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 int
@@ -61,8 +61,8 @@ main ()
     char *outptr = buf;
     size_t outbytesleft = sizeof (buf);
     size_t res = iconv (cd_88591_to_utf8,
-			(ICONV_CONST char **) &inptr, &inbytesleft,
-			&outptr, &outbytesleft);
+                        (ICONV_CONST char **) &inptr, &inbytesleft,
+                        &outptr, &outbytesleft);
     ASSERT (res == 0 && inbytesleft == 0);
     ASSERT (outptr == buf + strlen (expected));
     ASSERT (memcmp (buf, expected, strlen (expected)) == 0);
@@ -77,8 +77,8 @@ main ()
     char *outptr = buf;
     size_t outbytesleft = 1;
     size_t res = iconv (cd_88591_to_utf8,
-			(ICONV_CONST char **) &inptr, &inbytesleft,
-			&outptr, &outbytesleft);
+                        (ICONV_CONST char **) &inptr, &inbytesleft,
+                        &outptr, &outbytesleft);
     ASSERT (res == (size_t)(-1) && errno == E2BIG);
     ASSERT (inbytesleft == 1);
     ASSERT (outbytesleft == 1);
@@ -96,8 +96,8 @@ main ()
     char *outptr = buf;
     size_t outbytesleft = sizeof (buf);
     size_t res = iconv (cd_utf8_to_88591,
-			(ICONV_CONST char **) &inptr, &inbytesleft,
-			&outptr, &outbytesleft);
+                        (ICONV_CONST char **) &inptr, &inbytesleft,
+                        &outptr, &outbytesleft);
     ASSERT (res == 0 && inbytesleft == 0);
     ASSERT (outptr == buf + strlen (expected));
     ASSERT (memcmp (buf, expected, strlen (expected)) == 0);
@@ -112,17 +112,17 @@ main ()
     char *outptr = buf;
     size_t outbytesleft = sizeof (buf);
     size_t res = iconv (cd_utf8_to_88591,
-			(ICONV_CONST char **) &inptr, &inbytesleft,
-			&outptr, &outbytesleft);
+                        (ICONV_CONST char **) &inptr, &inbytesleft,
+                        &outptr, &outbytesleft);
     if (res == (size_t)(-1))
       {
         ASSERT (errno == EILSEQ);
-	ASSERT (inbytesleft == strlen (input) && outptr == buf);
+        ASSERT (inbytesleft == strlen (input) && outptr == buf);
       }
     else
       {
-	ASSERT (res == 1);
-	ASSERT (inbytesleft == 0);
+        ASSERT (res == 1);
+        ASSERT (inbytesleft == 0);
       }
   }
 
@@ -135,8 +135,8 @@ main ()
     char *outptr = buf;
     size_t outbytesleft = sizeof (buf);
     size_t res = iconv (cd_utf8_to_88591,
-			(ICONV_CONST char **) &inptr, &inbytesleft,
-			&outptr, &outbytesleft);
+                        (ICONV_CONST char **) &inptr, &inbytesleft,
+                        &outptr, &outbytesleft);
     ASSERT (res == (size_t)(-1) && errno == EINVAL);
     ASSERT (inbytesleft == 1 && outptr == buf);
   }

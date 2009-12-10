@@ -24,15 +24,15 @@
 #include <stdlib.h>
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 /* One of 0, '0', '1', 'A', '2'.  */
@@ -47,10 +47,10 @@ finish_interval (void)
   if (current_width != 0)
     {
       if (current_start == current_end)
-	printf ("%04X\t\t%c\n", (unsigned) current_start, current_width);
+        printf ("%04X\t\t%c\n", (unsigned) current_start, current_width);
       else
-	printf ("%04X..%04X\t%c\n", (unsigned) current_start,
-		(unsigned) current_end, current_width);
+        printf ("%04X..%04X\t%c\n", (unsigned) current_start,
+                (unsigned) current_end, current_width);
       current_width = 0;
     }
 }
@@ -78,18 +78,18 @@ main ()
       int w1 = uc_width (uc, "UTF-8");
       int w2 = uc_width (uc, "GBK");
       char width =
-	(w1 == 0 && w2 == 0 ? '0' :
-	 w1 == 1 && w2 == 1 ? '1' :
-	 w1 == 1 && w2 == 2 ? 'A' :
-	 w1 == 2 && w2 == 2 ? '2' :
-	 0);
+        (w1 == 0 && w2 == 0 ? '0' :
+         w1 == 1 && w2 == 1 ? '1' :
+         w1 == 1 && w2 == 2 ? 'A' :
+         w1 == 2 && w2 == 2 ? '2' :
+         0);
       if (width == 0)
-	{
-	  /* uc must be a control character.  */
-	  ASSERT (w1 < 0 && w2 < 0);
-	}
+        {
+          /* uc must be a control character.  */
+          ASSERT (w1 < 0 && w2 < 0);
+        }
       else
-	add_to_interval (uc, width);
+        add_to_interval (uc, width);
     }
   finish_interval ();
 

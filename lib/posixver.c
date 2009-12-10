@@ -48,7 +48,7 @@ posix2_version (void)
       char *e;
       long int i = strtol (s, &e, 10);
       if (! *e)
-	v = i;
+        v = i;
     }
 
   return v < INT_MIN ? INT_MIN : v < INT_MAX ? v : INT_MAX;

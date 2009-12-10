@@ -31,19 +31,19 @@ uc_decimal_value (ucs4_t uc)
     {
       int lookup1 = u_decdigit.level1[index1];
       if (lookup1 >= 0)
-	{
-	  unsigned int index2 = (uc >> decdigit_header_2) & decdigit_header_3;
-	  int lookup2 = u_decdigit.level2[lookup1 + index2];
-	  if (lookup2 >= 0)
-	    {
-	      unsigned int index3 = (uc & decdigit_header_4) + lookup2;
-	      /* level3 contains 4-bit values.  */
-	      unsigned int lookup3 =
-		(u_decdigit.level3[index3>>1] >> ((index3 % 2) * 4)) & 0x0f;
+        {
+          unsigned int index2 = (uc >> decdigit_header_2) & decdigit_header_3;
+          int lookup2 = u_decdigit.level2[lookup1 + index2];
+          if (lookup2 >= 0)
+            {
+              unsigned int index3 = (uc & decdigit_header_4) + lookup2;
+              /* level3 contains 4-bit values.  */
+              unsigned int lookup3 =
+                (u_decdigit.level3[index3>>1] >> ((index3 % 2) * 4)) & 0x0f;
 
-	      return (int) lookup3 - 1;
-	    }
-	}
+              return (int) lookup3 - 1;
+            }
+        }
     }
   return -1;
 }

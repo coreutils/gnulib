@@ -25,15 +25,15 @@
 #include <stdlib.h>
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 int
@@ -51,20 +51,20 @@ main (int argc, char *argv[])
     switch (argv[1][0])
       {
       case '1':
-	/* Locale encoding is ISO-8859-1 or ISO-8859-15.  */
-	for (c = 0; c < 0x80; c++)
-	  ASSERT (btowc (c) == c);
-	for (c = 0xA0; c < 0x100; c++)
-	  ASSERT (btowc (c) != WEOF);
-	return 0;
+        /* Locale encoding is ISO-8859-1 or ISO-8859-15.  */
+        for (c = 0; c < 0x80; c++)
+          ASSERT (btowc (c) == c);
+        for (c = 0xA0; c < 0x100; c++)
+          ASSERT (btowc (c) != WEOF);
+        return 0;
 
       case '2':
-	/* Locale encoding is UTF-8.  */
-	for (c = 0; c < 0x80; c++)
-	  ASSERT (btowc (c) == c);
-	for (c = 0x80; c < 0x100; c++)
-	  ASSERT (btowc (c) == WEOF);
-	return 0;
+        /* Locale encoding is UTF-8.  */
+        for (c = 0; c < 0x80; c++)
+          ASSERT (btowc (c) == c);
+        for (c = 0x80; c < 0x100; c++)
+          ASSERT (btowc (c) == WEOF);
+        return 0;
       }
 
   return 1;

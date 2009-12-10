@@ -14,17 +14,17 @@ AC_DEFUN([gl_C99_STRTOLD],
     [AC_LINK_IFELSE(
        [AC_LANG_PROGRAM(
           [[/* On HP-UX before 11.23, strtold returns a struct instead of
-		long double.  Reject implementations like that, by requiring
-		compatibility with the C99 prototype.  */
-	     #include <stdlib.h>
-	     static long double (*p) (char const *, char **) = strtold;
-	     static long double
-	     test (char const *nptr, char **endptr)
-	     {
-	       long double r;
-	       r = strtold (nptr, endptr);
-	       return r;
-	     }]],
+                long double.  Reject implementations like that, by requiring
+                compatibility with the C99 prototype.  */
+             #include <stdlib.h>
+             static long double (*p) (char const *, char **) = strtold;
+             static long double
+             test (char const *nptr, char **endptr)
+             {
+               long double r;
+               r = strtold (nptr, endptr);
+               return r;
+             }]],
            [[return test ("1.0", NULL) != 1 || p ("1.0", NULL) != 1;]])],
        [gl_cv_func_c99_strtold=yes],
        [gl_cv_func_c99_strtold=no])])

@@ -27,7 +27,7 @@ extern "C" {
    use UTC instead.  Use __NS as the number of nanoseconds in the
    %N directive.  */
 size_t nstrftime (char *, size_t, char const *, struct tm const *,
-		  int __utc, int __ns);
+                  int __utc, int __ns);
 
 #ifdef __cplusplus
 }

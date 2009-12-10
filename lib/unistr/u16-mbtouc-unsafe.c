@@ -43,20 +43,20 @@ u16_mbtouc_unsafe (ucs4_t *puc, const uint16_t *s, size_t n)
 #endif
     {
       if (n >= 2)
-	{
+        {
 #if CONFIG_UNICODE_SAFETY
-	  if (s[1] >= 0xdc00 && s[1] < 0xe000)
+          if (s[1] >= 0xdc00 && s[1] < 0xe000)
 #endif
-	    {
-	      *puc = 0x10000 + ((c - 0xd800) << 10) + (s[1] - 0xdc00);
-	      return 2;
-	    }
-	  /* invalid multibyte character */
-	}
+            {
+              *puc = 0x10000 + ((c - 0xd800) << 10) + (s[1] - 0xdc00);
+              return 2;
+            }
+          /* invalid multibyte character */
+        }
       else
-	{
-	  /* incomplete multibyte character */
-	}
+        {
+          /* incomplete multibyte character */
+        }
     }
   /* invalid multibyte character */
   *puc = 0xfffd;

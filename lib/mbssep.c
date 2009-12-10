@@ -31,30 +31,30 @@ mbssep (char **stringp, const char *delim)
       char *ptr;
 
       if (start == NULL)
-	return NULL;
+        return NULL;
 
       /* No need to optimize the cases of 0 or 1 delimiters specially,
-	 since mbspbrk already optimizes them.  */
+         since mbspbrk already optimizes them.  */
 
       ptr = mbspbrk (start, delim);
 
       if (ptr == NULL)
-	{
-	  *stringp = NULL;
-	  return start;
-	}
+        {
+          *stringp = NULL;
+          return start;
+        }
       else
-	{
-	  mbui_iterator_t iter;
+        {
+          mbui_iterator_t iter;
 
-	  mbui_init (iter, ptr);
-	  if (!mbui_avail (iter))
-	    abort ();
-	  mbui_advance (iter);
-	  *ptr = '\0';
-	  *stringp = (char *) mbui_cur_ptr (iter);
-	  return start;
-	}
+          mbui_init (iter, ptr);
+          if (!mbui_avail (iter))
+            abort ();
+          mbui_advance (iter);
+          *ptr = '\0';
+          *stringp = (char *) mbui_cur_ptr (iter);
+          return start;
+        }
     }
   else
     return strsep (stringp, delim);

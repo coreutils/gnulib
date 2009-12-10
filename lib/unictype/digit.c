@@ -31,19 +31,19 @@ uc_digit_value (ucs4_t uc)
     {
       int lookup1 = u_digit.level1[index1];
       if (lookup1 >= 0)
-	{
-	  unsigned int index2 = (uc >> digit_header_2) & digit_header_3;
-	  int lookup2 = u_digit.level2[lookup1 + index2];
-	  if (lookup2 >= 0)
-	    {
-	      unsigned int index3 = (uc & digit_header_4) + lookup2;
-	      /* level3 contains 4-bit values.  */
-	      unsigned int lookup3 =
-		(u_digit.level3[index3>>1] >> ((index3 % 2) * 4)) & 0x0f;
+        {
+          unsigned int index2 = (uc >> digit_header_2) & digit_header_3;
+          int lookup2 = u_digit.level2[lookup1 + index2];
+          if (lookup2 >= 0)
+            {
+              unsigned int index3 = (uc & digit_header_4) + lookup2;
+              /* level3 contains 4-bit values.  */
+              unsigned int lookup3 =
+                (u_digit.level3[index3>>1] >> ((index3 % 2) * 4)) & 0x0f;
 
-	      return (int) lookup3 - 1;
-	    }
-	}
+              return (int) lookup3 - 1;
+            }
+        }
     }
   return -1;
 }

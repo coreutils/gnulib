@@ -58,16 +58,16 @@ getsubopt (char **optionp, char *const *tokens, char **valuep)
      one of the TOKENS.  */
   for (cnt = 0; tokens[cnt] != NULL; ++cnt)
     if (strncmp (*optionp, tokens[cnt], vstart - *optionp) == 0
-	&& tokens[cnt][vstart - *optionp] == '\0')
+        && tokens[cnt][vstart - *optionp] == '\0')
       {
-	/* We found the current option in TOKENS.  */
-	*valuep = vstart != endp ? vstart + 1 : NULL;
+        /* We found the current option in TOKENS.  */
+        *valuep = vstart != endp ? vstart + 1 : NULL;
 
-	if (*endp != '\0')
-	  *endp++ = '\0';
-	*optionp = endp;
+        if (*endp != '\0')
+          *endp++ = '\0';
+        *optionp = endp;
 
-	return cnt;
+        return cnt;
       }
 
   /* The current suboption does not match any option.  */

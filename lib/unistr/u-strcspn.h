@@ -26,11 +26,11 @@ FUNC (const UNIT *str, const UNIT *reject)
     int count = U_STRMBTOUC (&uc, reject);
     if (count >= 0 && reject[count] == 0)
       {
-	const UNIT *found = U_STRCHR (str, uc);
-	if (found != NULL)
-	  return found - str;
-	else
-	  return U_STRLEN (str);
+        const UNIT *found = U_STRCHR (str, uc);
+        if (found != NULL)
+          return found - str;
+        else
+          return U_STRLEN (str);
       }
   }
   /* General case.  */
@@ -39,15 +39,15 @@ FUNC (const UNIT *str, const UNIT *reject)
 
     for (;;)
       {
-	ucs4_t uc;
-	int count = U_STRMBTOUC (&uc, ptr);
-	if (count == 0)
-	  return ptr - str;
-	if (count < 0)
-	  break;
-	if (U_STRCHR (reject, uc))
-	  return ptr - str;
-	ptr += count;
+        ucs4_t uc;
+        int count = U_STRMBTOUC (&uc, ptr);
+        if (count == 0)
+          return ptr - str;
+        if (count < 0)
+          break;
+        if (U_STRCHR (reject, uc))
+          return ptr - str;
+        ptr += count;
       }
     return U_STRLEN (str);
   }

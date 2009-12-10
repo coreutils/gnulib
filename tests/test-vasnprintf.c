@@ -26,15 +26,15 @@
 #include <string.h>
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 static char *
@@ -77,10 +77,10 @@ test_vasnprintf ()
       ASSERT (strcmp (result, "12345") == 0);
       ASSERT (length == 5);
       if (size < 6)
-	ASSERT (result != buf);
+        ASSERT (result != buf);
       ASSERT (memcmp (buf + size, "DEADBEEF" + size, 8 - size) == 0);
       if (result != buf)
-	free (result);
+        free (result);
     }
 }
 
@@ -112,10 +112,10 @@ test_asnprintf ()
       ASSERT (strcmp (result, "12345") == 0);
       ASSERT (length == 5);
       if (size < 6)
-	ASSERT (result != buf);
+        ASSERT (result != buf);
       ASSERT (memcmp (buf + size, "DEADBEEF" + size, 8 - size) == 0);
       if (result != buf)
-	free (result);
+        free (result);
     }
 }
 

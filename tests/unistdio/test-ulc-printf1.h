@@ -59,28 +59,28 @@ test_xfunction (char * (*my_xasprintf) (const char *, ...))
     static const uint8_t unicode_string[] = "Hello";
     {
       char *result =
-	my_xasprintf ("%U %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%U %d", unicode_string, 33, 44, 55);
       ASSERT (result != NULL);
       ASSERT (strcmp (result, "Hello 33") == 0);
       free (result);
     }
     { /* Width.  */
       char *result =
-	my_xasprintf ("%10U %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%10U %d", unicode_string, 33, 44, 55);
       ASSERT (result != NULL);
       ASSERT (strcmp (result, "     Hello 33") == 0);
       free (result);
     }
     { /* FLAG_LEFT.  */
       char *result =
-	my_xasprintf ("%-10U %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%-10U %d", unicode_string, 33, 44, 55);
       ASSERT (result != NULL);
       ASSERT (strcmp (result, "Hello      33") == 0);
       free (result);
     }
     { /* FLAG_ZERO: no effect.  */
       char *result =
-	my_xasprintf ("%010U %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%010U %d", unicode_string, 33, 44, 55);
       ASSERT (result != NULL);
       ASSERT (strcmp (result, "     Hello 33") == 0);
       free (result);
@@ -91,28 +91,28 @@ test_xfunction (char * (*my_xasprintf) (const char *, ...))
     static const uint16_t unicode_string[] = { 'H', 'e', 'l', 'l', 'o', 0 };
     {
       char *result =
-	my_xasprintf ("%lU %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%lU %d", unicode_string, 33, 44, 55);
       ASSERT (result != NULL);
       ASSERT (strcmp (result, "Hello 33") == 0);
       free (result);
     }
     { /* Width.  */
       char *result =
-	my_xasprintf ("%10lU %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%10lU %d", unicode_string, 33, 44, 55);
       ASSERT (result != NULL);
       ASSERT (strcmp (result, "     Hello 33") == 0);
       free (result);
     }
     { /* FLAG_LEFT.  */
       char *result =
-	my_xasprintf ("%-10lU %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%-10lU %d", unicode_string, 33, 44, 55);
       ASSERT (result != NULL);
       ASSERT (strcmp (result, "Hello      33") == 0);
       free (result);
     }
     { /* FLAG_ZERO: no effect.  */
       char *result =
-	my_xasprintf ("%010lU %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%010lU %d", unicode_string, 33, 44, 55);
       ASSERT (result != NULL);
       ASSERT (strcmp (result, "     Hello 33") == 0);
       free (result);
@@ -123,28 +123,28 @@ test_xfunction (char * (*my_xasprintf) (const char *, ...))
     static const uint32_t unicode_string[] = { 'H', 'e', 'l', 'l', 'o', 0 };
     {
       char *result =
-	my_xasprintf ("%llU %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%llU %d", unicode_string, 33, 44, 55);
       ASSERT (result != NULL);
       ASSERT (strcmp (result, "Hello 33") == 0);
       free (result);
     }
     { /* Width.  */
       char *result =
-	my_xasprintf ("%10llU %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%10llU %d", unicode_string, 33, 44, 55);
       ASSERT (result != NULL);
       ASSERT (strcmp (result, "     Hello 33") == 0);
       free (result);
     }
     { /* FLAG_LEFT.  */
       char *result =
-	my_xasprintf ("%-10llU %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%-10llU %d", unicode_string, 33, 44, 55);
       ASSERT (result != NULL);
       ASSERT (strcmp (result, "Hello      33") == 0);
       free (result);
     }
     { /* FLAG_ZERO: no effect.  */
       char *result =
-	my_xasprintf ("%010llU %d", unicode_string, 33, 44, 55);
+        my_xasprintf ("%010llU %d", unicode_string, 33, 44, 55);
       ASSERT (result != NULL);
       ASSERT (strcmp (result, "     Hello 33") == 0);
       free (result);
@@ -193,9 +193,9 @@ test_xfunction (char * (*my_xasprintf) (const char *, ...))
       my_xasprintf ("%a %d", 3.1416015625, 33, 44, 55);
     ASSERT (result != NULL);
     ASSERT (strcmp (result, "0x1.922p+1 33") == 0
-	    || strcmp (result, "0x3.244p+0 33") == 0
-	    || strcmp (result, "0x6.488p-1 33") == 0
-	    || strcmp (result, "0xc.91p-2 33") == 0);
+            || strcmp (result, "0x3.244p+0 33") == 0
+            || strcmp (result, "0x6.488p-1 33") == 0
+            || strcmp (result, "0xc.91p-2 33") == 0);
     free (result);
   }
 
@@ -204,9 +204,9 @@ test_xfunction (char * (*my_xasprintf) (const char *, ...))
       my_xasprintf ("%10a %d", 1.75, 33, 44, 55);
     ASSERT (result != NULL);
     ASSERT (strcmp (result, "  0x1.cp+0 33") == 0
-	    || strcmp (result, "  0x3.8p-1 33") == 0
-	    || strcmp (result, "    0x7p-2 33") == 0
-	    || strcmp (result, "    0xep-3 33") == 0);
+            || strcmp (result, "  0x3.8p-1 33") == 0
+            || strcmp (result, "    0x7p-2 33") == 0
+            || strcmp (result, "    0xep-3 33") == 0);
     free (result);
   }
 
@@ -215,9 +215,9 @@ test_xfunction (char * (*my_xasprintf) (const char *, ...))
       my_xasprintf ("%.10a %d", 1.75, 33, 44, 55);
     ASSERT (result != NULL);
     ASSERT (strcmp (result, "0x1.c000000000p+0 33") == 0
-	    || strcmp (result, "0x3.8000000000p-1 33") == 0
-	    || strcmp (result, "0x7.0000000000p-2 33") == 0
-	    || strcmp (result, "0xe.0000000000p-3 33") == 0);
+            || strcmp (result, "0x3.8000000000p-1 33") == 0
+            || strcmp (result, "0x7.0000000000p-2 33") == 0
+            || strcmp (result, "0xe.0000000000p-3 33") == 0);
     free (result);
   }
 
@@ -226,9 +226,9 @@ test_xfunction (char * (*my_xasprintf) (const char *, ...))
       my_xasprintf ("%.50a %d", 1.75, 33, 44, 55);
     ASSERT (result != NULL);
     ASSERT (strcmp (result, "0x1.c0000000000000000000000000000000000000000000000000p+0 33") == 0
-	    || strcmp (result, "0x3.80000000000000000000000000000000000000000000000000p-1 33") == 0
-	    || strcmp (result, "0x7.00000000000000000000000000000000000000000000000000p-2 33") == 0
-	    || strcmp (result, "0xe.00000000000000000000000000000000000000000000000000p-3 33") == 0);
+            || strcmp (result, "0x3.80000000000000000000000000000000000000000000000000p-1 33") == 0
+            || strcmp (result, "0x7.00000000000000000000000000000000000000000000000000p-2 33") == 0
+            || strcmp (result, "0xe.00000000000000000000000000000000000000000000000000p-3 33") == 0);
     free (result);
   }
 
@@ -237,9 +237,9 @@ test_xfunction (char * (*my_xasprintf) (const char *, ...))
       my_xasprintf ("%La %d", 3.1416015625L, 33, 44, 55);
     ASSERT (result != NULL);
     ASSERT (strcmp (result, "0x1.922p+1 33") == 0
-	    || strcmp (result, "0x3.244p+0 33") == 0
-	    || strcmp (result, "0x6.488p-1 33") == 0
-	    || strcmp (result, "0xc.91p-2 33") == 0);
+            || strcmp (result, "0x3.244p+0 33") == 0
+            || strcmp (result, "0x6.488p-1 33") == 0
+            || strcmp (result, "0xc.91p-2 33") == 0);
     free (result);
   }
 
@@ -248,9 +248,9 @@ test_xfunction (char * (*my_xasprintf) (const char *, ...))
       my_xasprintf ("%10La %d", 1.75L, 33, 44, 55);
     ASSERT (result != NULL);
     ASSERT (strcmp (result, "  0x1.cp+0 33") == 0
-	    || strcmp (result, "  0x3.8p-1 33") == 0
-	    || strcmp (result, "    0x7p-2 33") == 0
-	    || strcmp (result, "    0xep-3 33") == 0);
+            || strcmp (result, "  0x3.8p-1 33") == 0
+            || strcmp (result, "    0x7p-2 33") == 0
+            || strcmp (result, "    0xep-3 33") == 0);
     free (result);
   }
 
@@ -259,9 +259,9 @@ test_xfunction (char * (*my_xasprintf) (const char *, ...))
       my_xasprintf ("%.10La %d", 1.75L, 33, 44, 55);
     ASSERT (result != NULL);
     ASSERT (strcmp (result, "0x1.c000000000p+0 33") == 0
-	    || strcmp (result, "0x3.8000000000p-1 33") == 0
-	    || strcmp (result, "0x7.0000000000p-2 33") == 0
-	    || strcmp (result, "0xe.0000000000p-3 33") == 0);
+            || strcmp (result, "0x3.8000000000p-1 33") == 0
+            || strcmp (result, "0x7.0000000000p-2 33") == 0
+            || strcmp (result, "0xe.0000000000p-3 33") == 0);
     free (result);
   }
 
@@ -270,9 +270,9 @@ test_xfunction (char * (*my_xasprintf) (const char *, ...))
       my_xasprintf ("%.50La %d", 1.75L, 33, 44, 55);
     ASSERT (result != NULL);
     ASSERT (strcmp (result, "0x1.c0000000000000000000000000000000000000000000000000p+0 33") == 0
-	    || strcmp (result, "0x3.80000000000000000000000000000000000000000000000000p-1 33") == 0
-	    || strcmp (result, "0x7.00000000000000000000000000000000000000000000000000p-2 33") == 0
-	    || strcmp (result, "0xe.00000000000000000000000000000000000000000000000000p-3 33") == 0);
+            || strcmp (result, "0x3.80000000000000000000000000000000000000000000000000p-1 33") == 0
+            || strcmp (result, "0x7.00000000000000000000000000000000000000000000000000p-2 33") == 0
+            || strcmp (result, "0xe.00000000000000000000000000000000000000000000000000p-3 33") == 0);
     free (result);
   }
 
@@ -367,7 +367,7 @@ test_xfunction (char * (*my_xasprintf) (const char *, ...))
       my_xasprintf ("%e %d", 12.75, 33, 44, 55);
     ASSERT (result != NULL);
     ASSERT (strcmp (result, "1.275000e+01 33") == 0
-	    || strcmp (result, "1.275000e+001 33") == 0);
+            || strcmp (result, "1.275000e+001 33") == 0);
     free (result);
   }
 
@@ -376,7 +376,7 @@ test_xfunction (char * (*my_xasprintf) (const char *, ...))
       my_xasprintf ("%15e %d", 1.75, 33, 44, 55);
     ASSERT (result != NULL);
     ASSERT (strcmp (result, "   1.750000e+00 33") == 0
-	    || strcmp (result, "  1.750000e+000 33") == 0);
+            || strcmp (result, "  1.750000e+000 33") == 0);
     free (result);
   }
 
@@ -385,7 +385,7 @@ test_xfunction (char * (*my_xasprintf) (const char *, ...))
       my_xasprintf ("%.e %d", 1234.0, 33, 44, 55);
     ASSERT (result != NULL);
     ASSERT (strcmp (result, "1e+03 33") == 0
-	    || strcmp (result, "1e+003 33") == 0);
+            || strcmp (result, "1e+003 33") == 0);
     free (result);
   }
 
@@ -436,7 +436,7 @@ test_xfunction (char * (*my_xasprintf) (const char *, ...))
       my_xasprintf ("%.g %d", 1234.0, 33, 44, 55);
     ASSERT (result != NULL);
     ASSERT (strcmp (result, "1e+03 33") == 0
-	    || strcmp (result, "1e+003 33") == 0);
+            || strcmp (result, "1e+003 33") == 0);
     free (result);
   }
 

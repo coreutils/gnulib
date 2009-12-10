@@ -114,39 +114,39 @@ FLOOR_FREE_ROUND (DOUBLE x)
     {
       /* Avoid rounding error for x = 0.5 - 2^(-MANT_DIG-1).  */
       if (z < L_(0.5))
-	z = L_(0.0);
+        z = L_(0.0);
       /* Avoid rounding errors for values near 2^k, where k >= MANT_DIG-1.  */
       else if (z < TWO_MANT_DIG)
-	{
-	  /* Add 0.5 to the absolute value.  */
-	  y = z += L_(0.5);
-	  /* Round to the next integer (nearest or up or down, doesn't
+        {
+          /* Add 0.5 to the absolute value.  */
+          y = z += L_(0.5);
+          /* Round to the next integer (nearest or up or down, doesn't
              matter).  */
-	  z += TWO_MANT_DIG;
-	  z -= TWO_MANT_DIG;
-	  /* Enforce rounding down.  */
-	  if (z > y)
-	    z -= L_(1.0);
-	}
+          z += TWO_MANT_DIG;
+          z -= TWO_MANT_DIG;
+          /* Enforce rounding down.  */
+          if (z > y)
+            z -= L_(1.0);
+        }
     }
   else if (z < L_(0.0))
     {
       /* Avoid rounding error for x = -(0.5 - 2^(-MANT_DIG-1)).  */
       if (z > - L_(0.5))
-	z = L_(0.0);
+        z = L_(0.0);
       /* Avoid rounding errors for values near -2^k, where k >= MANT_DIG-1.  */
       else if (z > -TWO_MANT_DIG)
-	{
-	  /* Add 0.5 to the absolute value.  */
-	  y = z -= L_(0.5);
-	  /* Round to the next integer (nearest or up or down, doesn't
+        {
+          /* Add 0.5 to the absolute value.  */
+          y = z -= L_(0.5);
+          /* Round to the next integer (nearest or up or down, doesn't
              matter).  */
-	  z -= TWO_MANT_DIG;
-	  z += TWO_MANT_DIG;
-	  /* Enforce rounding up.  */
-	  if (z < y)
-	    z += L_(1.0);
-	}
+          z -= TWO_MANT_DIG;
+          z += TWO_MANT_DIG;
+          /* Enforce rounding up.  */
+          if (z < y)
+            z += L_(1.0);
+        }
     }
   return z;
 }

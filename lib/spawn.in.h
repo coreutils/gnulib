@@ -55,9 +55,9 @@
    sys/cdefs.h's definition of __restrict_arr, though, as it
    mishandles gcc -ansi -pedantic.  */
 #ifndef _Restrict_arr_
-# if ((199901L <= __STDC_VERSION__					\
-       || ((3 < __GNUC__ || (3 == __GNUC__ && 1 <= __GNUC_MINOR__))	\
-	   && !__STRICT_ANSI__))					\
+# if ((199901L <= __STDC_VERSION__                                      \
+       || ((3 < __GNUC__ || (3 == __GNUC__ && 1 <= __GNUC_MINOR__))     \
+           && !__STRICT_ANSI__))                                        \
       && !defined __GNUG__)
 #  define _Restrict_arr_ _Restrict_
 # else
@@ -104,27 +104,27 @@ typedef struct
 /* But this implementation does not support AIX extensions.  */
 # undef POSIX_SPAWN_FORK_HANDLERS
 #else
-# define POSIX_SPAWN_RESETIDS		0x01
-# define POSIX_SPAWN_SETPGROUP		0x02
-# define POSIX_SPAWN_SETSIGDEF		0x04
-# define POSIX_SPAWN_SETSIGMASK		0x08
-# define POSIX_SPAWN_SETSCHEDPARAM	0x10
-# define POSIX_SPAWN_SETSCHEDULER	0x20
+# define POSIX_SPAWN_RESETIDS           0x01
+# define POSIX_SPAWN_SETPGROUP          0x02
+# define POSIX_SPAWN_SETSIGDEF          0x04
+# define POSIX_SPAWN_SETSIGMASK         0x08
+# define POSIX_SPAWN_SETSCHEDPARAM      0x10
+# define POSIX_SPAWN_SETSCHEDULER       0x20
 #endif
 /* A GNU extension.  Use the next free bit position.  */
 #define POSIX_SPAWN_USEVFORK \
-  ((POSIX_SPAWN_RESETIDS | (POSIX_SPAWN_RESETIDS - 1)			\
-    | POSIX_SPAWN_SETPGROUP | (POSIX_SPAWN_SETPGROUP - 1)		\
-    | POSIX_SPAWN_SETSIGDEF | (POSIX_SPAWN_SETSIGDEF - 1)		\
-    | POSIX_SPAWN_SETSIGMASK | (POSIX_SPAWN_SETSIGMASK - 1)		\
-    | POSIX_SPAWN_SETSCHEDPARAM | (POSIX_SPAWN_SETSCHEDPARAM - 1)	\
-    | POSIX_SPAWN_SETSCHEDULER | (POSIX_SPAWN_SETSCHEDULER - 1))	\
+  ((POSIX_SPAWN_RESETIDS | (POSIX_SPAWN_RESETIDS - 1)                   \
+    | POSIX_SPAWN_SETPGROUP | (POSIX_SPAWN_SETPGROUP - 1)               \
+    | POSIX_SPAWN_SETSIGDEF | (POSIX_SPAWN_SETSIGDEF - 1)               \
+    | POSIX_SPAWN_SETSIGMASK | (POSIX_SPAWN_SETSIGMASK - 1)             \
+    | POSIX_SPAWN_SETSCHEDPARAM | (POSIX_SPAWN_SETSCHEDPARAM - 1)       \
+    | POSIX_SPAWN_SETSCHEDULER | (POSIX_SPAWN_SETSCHEDULER - 1))        \
    + 1)
 typedef int verify_POSIX_SPAWN_USEVFORK_no_overlap
             [2 * (((POSIX_SPAWN_RESETIDS | POSIX_SPAWN_SETPGROUP
-		    | POSIX_SPAWN_SETSIGDEF | POSIX_SPAWN_SETSIGMASK
-		    | POSIX_SPAWN_SETSCHEDPARAM | POSIX_SPAWN_SETSCHEDULER)
-		   & POSIX_SPAWN_USEVFORK) == 0) - 1];
+                    | POSIX_SPAWN_SETSIGDEF | POSIX_SPAWN_SETSIGMASK
+                    | POSIX_SPAWN_SETSCHEDPARAM | POSIX_SPAWN_SETSCHEDULER)
+                   & POSIX_SPAWN_USEVFORK) == 0) - 1];
 
 
 #ifdef __cplusplus
@@ -143,11 +143,11 @@ extern "C" {
 # endif
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
 extern int posix_spawn (pid_t *_Restrict_ __pid,
-			const char *_Restrict_ __path,
-			const posix_spawn_file_actions_t *_Restrict_ __file_actions,
-			const posix_spawnattr_t *_Restrict_ __attrp,
-			char *const argv[_Restrict_arr_],
-			char *const envp[_Restrict_arr_]);
+                        const char *_Restrict_ __path,
+                        const posix_spawn_file_actions_t *_Restrict_ __file_actions,
+                        const posix_spawnattr_t *_Restrict_ __attrp,
+                        char *const argv[_Restrict_arr_],
+                        char *const envp[_Restrict_arr_]);
 # endif
 #endif
 
@@ -161,9 +161,9 @@ extern int posix_spawn (pid_t *_Restrict_ __pid,
 # endif
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
 extern int posix_spawnp (pid_t *__pid, const char *__file,
-			 const posix_spawn_file_actions_t *__file_actions,
-			 const posix_spawnattr_t *__attrp,
-			 char *const argv[], char *const envp[]);
+                         const posix_spawn_file_actions_t *__file_actions,
+                         const posix_spawnattr_t *__attrp,
+                         char *const argv[], char *const envp[]);
 # endif
 #endif
 
@@ -196,7 +196,7 @@ extern int posix_spawnattr_destroy (posix_spawnattr_t *__attr) __THROW;
 # endif
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
 extern int posix_spawnattr_getsigdefault (const posix_spawnattr_t *_Restrict_ __attr,
-					  sigset_t *_Restrict_ __sigdefault)
+                                          sigset_t *_Restrict_ __sigdefault)
      __THROW;
 # endif
 #endif
@@ -208,7 +208,7 @@ extern int posix_spawnattr_getsigdefault (const posix_spawnattr_t *_Restrict_ __
 # endif
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
 extern int posix_spawnattr_setsigdefault (posix_spawnattr_t *_Restrict_ __attr,
-					  const sigset_t *_Restrict_ __sigdefault)
+                                          const sigset_t *_Restrict_ __sigdefault)
      __THROW;
 # endif
 #endif
@@ -220,7 +220,7 @@ extern int posix_spawnattr_setsigdefault (posix_spawnattr_t *_Restrict_ __attr,
 # endif
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
 extern int posix_spawnattr_getsigmask (const posix_spawnattr_t *_Restrict_ __attr,
-				       sigset_t *_Restrict_ __sigmask) __THROW;
+                                       sigset_t *_Restrict_ __sigmask) __THROW;
 # endif
 #endif
 
@@ -231,7 +231,7 @@ extern int posix_spawnattr_getsigmask (const posix_spawnattr_t *_Restrict_ __att
 # endif
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
 extern int posix_spawnattr_setsigmask (posix_spawnattr_t *_Restrict_ __attr,
-				       const sigset_t *_Restrict_ __sigmask)
+                                       const sigset_t *_Restrict_ __sigmask)
      __THROW;
 # endif
 #endif
@@ -243,7 +243,7 @@ extern int posix_spawnattr_setsigmask (posix_spawnattr_t *_Restrict_ __attr,
 # endif
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
 extern int posix_spawnattr_getflags (const posix_spawnattr_t *_Restrict_ __attr,
-				     short int *_Restrict_ __flags) __THROW;
+                                     short int *_Restrict_ __flags) __THROW;
 # endif
 #endif
 
@@ -254,7 +254,7 @@ extern int posix_spawnattr_getflags (const posix_spawnattr_t *_Restrict_ __attr,
 # endif
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
 extern int posix_spawnattr_setflags (posix_spawnattr_t *__attr,
-				     short int __flags) __THROW;
+                                     short int __flags) __THROW;
 # endif
 #endif
 
@@ -265,7 +265,7 @@ extern int posix_spawnattr_setflags (posix_spawnattr_t *__attr,
 # endif
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
 extern int posix_spawnattr_getpgroup (const posix_spawnattr_t *_Restrict_ __attr,
-				      pid_t *_Restrict_ __pgroup)
+                                      pid_t *_Restrict_ __pgroup)
      __THROW;
 # endif
 #endif
@@ -277,7 +277,7 @@ extern int posix_spawnattr_getpgroup (const posix_spawnattr_t *_Restrict_ __attr
 # endif
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
 extern int posix_spawnattr_setpgroup (posix_spawnattr_t *__attr,
-				      pid_t __pgroup) __THROW;
+                                      pid_t __pgroup) __THROW;
 # endif
 #endif
 
@@ -288,7 +288,7 @@ extern int posix_spawnattr_setpgroup (posix_spawnattr_t *__attr,
 # endif
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
 extern int posix_spawnattr_getschedpolicy (const posix_spawnattr_t *_Restrict_ __attr,
-					   int *_Restrict_ __schedpolicy)
+                                           int *_Restrict_ __schedpolicy)
      __THROW;
 # endif
 #endif
@@ -300,7 +300,7 @@ extern int posix_spawnattr_getschedpolicy (const posix_spawnattr_t *_Restrict_ _
 # endif
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
 extern int posix_spawnattr_setschedpolicy (posix_spawnattr_t *__attr,
-					   int __schedpolicy) __THROW;
+                                           int __schedpolicy) __THROW;
 # endif
 #endif
 
@@ -311,7 +311,7 @@ extern int posix_spawnattr_setschedpolicy (posix_spawnattr_t *__attr,
 # endif
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
 extern int posix_spawnattr_getschedparam (const posix_spawnattr_t *_Restrict_ __attr,
-					  struct sched_param *_Restrict_ __schedparam) __THROW;
+                                          struct sched_param *_Restrict_ __schedparam) __THROW;
 # endif
 #endif
 
@@ -322,7 +322,7 @@ extern int posix_spawnattr_getschedparam (const posix_spawnattr_t *_Restrict_ __
 # endif
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
 extern int posix_spawnattr_setschedparam (posix_spawnattr_t *_Restrict_ __attr,
-					  const struct sched_param *_Restrict_ __schedparam) __THROW;
+                                          const struct sched_param *_Restrict_ __schedparam) __THROW;
 # endif
 #endif
 
@@ -355,9 +355,9 @@ extern int posix_spawn_file_actions_destroy (posix_spawn_file_actions_t *__file_
 # endif
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
 extern int posix_spawn_file_actions_addopen (posix_spawn_file_actions_t *_Restrict_ __file_actions,
-					     int __fd,
-					     const char *_Restrict_ __path,
-					     int __oflag, mode_t __mode)
+                                             int __fd,
+                                             const char *_Restrict_ __path,
+                                             int __oflag, mode_t __mode)
      __THROW;
 # endif
 #endif
@@ -370,7 +370,7 @@ extern int posix_spawn_file_actions_addopen (posix_spawn_file_actions_t *_Restri
 # endif
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
 extern int posix_spawn_file_actions_addclose (posix_spawn_file_actions_t *__file_actions,
-					      int __fd)
+                                              int __fd)
      __THROW;
 # endif
 #endif
@@ -383,7 +383,7 @@ extern int posix_spawn_file_actions_addclose (posix_spawn_file_actions_t *__file
 # endif
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
 extern int posix_spawn_file_actions_adddup2 (posix_spawn_file_actions_t *__file_actions,
-					     int __fd, int __newfd) __THROW;
+                                             int __fd, int __newfd) __THROW;
 # endif
 #endif
 

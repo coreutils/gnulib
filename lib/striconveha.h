@@ -48,11 +48,11 @@ extern "C" {
    unchanged if no dynamic memory allocation was necessary.  */
 extern int
        mem_iconveha (const char *src, size_t srclen,
-		     const char *from_codeset, const char *to_codeset,
-		     bool transliterate,
-		     enum iconv_ilseq_handler handler,
-		     size_t *offsets,
-		     char **resultp, size_t *lengthp);
+                     const char *from_codeset, const char *to_codeset,
+                     bool transliterate,
+                     enum iconv_ilseq_handler handler,
+                     size_t *offsets,
+                     char **resultp, size_t *lengthp);
 
 /* Convert an entire string from one encoding to another, using iconv.
    The original string is the NUL-terminated string starting at SRC.
@@ -67,9 +67,9 @@ extern int
    successful, otherwise NULL and errno set.  */
 extern char *
        str_iconveha (const char *src,
-		     const char *from_codeset, const char *to_codeset,
-		     bool transliterate,
-		     enum iconv_ilseq_handler handler);
+                     const char *from_codeset, const char *to_codeset,
+                     bool transliterate,
+                     enum iconv_ilseq_handler handler);
 
 
 /* In the above, FROM_CODESET can also be one of the following values:
@@ -84,7 +84,7 @@ extern char *
    Particular errno values: ENOMEM.  */
 extern int
        uniconv_register_autodetect (const char *name,
-				    const char * const *try_in_order);
+                                    const char * const *try_in_order);
 
 
 #ifdef __cplusplus

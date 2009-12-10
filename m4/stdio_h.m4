@@ -140,6 +140,6 @@ AC_DEFUN([gl_STDIN_LARGE_OFFSET],
   choke me
 # endif
 #endif]])],
-	[gl_cv_var_stdin_large_offset=yes],
-	[gl_cv_var_stdin_large_offset=no])])
+        [gl_cv_var_stdin_large_offset=yes],
+        [gl_cv_var_stdin_large_offset=no])])
 ])

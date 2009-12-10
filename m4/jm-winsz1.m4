@@ -10,7 +10,7 @@ dnl From Jim Meyering and Paul Eggert.
 AC_DEFUN([gl_HEADER_TIOCGWINSZ_IN_TERMIOS_H],
 [AC_REQUIRE([AC_SYS_POSIX_TERMIOS])
  AC_CACHE_CHECK([whether use of TIOCGWINSZ requires termios.h],
-	        gl_cv_sys_tiocgwinsz_needs_termios_h,
+                gl_cv_sys_tiocgwinsz_needs_termios_h,
   [gl_cv_sys_tiocgwinsz_needs_termios_h=no
 
    if test $ac_cv_sys_posix_termios = yes; then
@@ -31,16 +31,16 @@ AC_DEFUN([gl_WINSIZE_IN_PTEM],
      gl_cv_sys_struct_winsize_needs_sys_ptem_h,
      [gl_cv_sys_struct_winsize_needs_sys_ptem_h=yes
       if test $ac_cv_sys_posix_termios = yes; then
-	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <termios.h>]],
-	  [[struct winsize x;
-	    if (sizeof x > 0) return 0;]])],
+        AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <termios.h>]],
+          [[struct winsize x;
+            if (sizeof x > 0) return 0;]])],
           [gl_cv_sys_struct_winsize_needs_sys_ptem_h=no])
       fi
       if test $gl_cv_sys_struct_winsize_needs_sys_ptem_h = yes; then
-	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <sys/ptem.h>]],
-	  [[struct winsize x;
-	    if (sizeof x > 0) return 0;]])],
-	  [], [gl_cv_sys_struct_winsize_needs_sys_ptem_h=no])
+        AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <sys/ptem.h>]],
+          [[struct winsize x;
+            if (sizeof x > 0) return 0;]])],
+          [], [gl_cv_sys_struct_winsize_needs_sys_ptem_h=no])
       fi])
    if test $gl_cv_sys_struct_winsize_needs_sys_ptem_h = yes; then
      AC_DEFINE([WINSIZE_IN_PTEM], [1],

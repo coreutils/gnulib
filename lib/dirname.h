@@ -34,9 +34,9 @@
     /* This internal macro assumes ASCII, but all hosts that support drive
        letters use ASCII.  */
 #   define _IS_DRIVE_LETTER(c) (((unsigned int) (c) | ('a' - 'A')) - 'a' \
-				<= 'z' - 'a')
+                                <= 'z' - 'a')
 #   define FILE_SYSTEM_PREFIX_LEN(Filename) \
-	   (_IS_DRIVE_LETTER ((Filename)[0]) && (Filename)[1] == ':' ? 2 : 0)
+           (_IS_DRIVE_LETTER ((Filename)[0]) && (Filename)[1] == ':' ? 2 : 0)
 #  else
 #   define FILE_SYSTEM_PREFIX_LEN(Filename) 0
 #  endif
@@ -54,7 +54,7 @@
 #  define IS_ABSOLUTE_FILE_NAME(F) ISSLASH ((F)[FILE_SYSTEM_PREFIX_LEN (F)])
 # else
 #  define IS_ABSOLUTE_FILE_NAME(F) \
-	  (ISSLASH ((F)[0]) || 0 < FILE_SYSTEM_PREFIX_LEN (F))
+          (ISSLASH ((F)[0]) || 0 < FILE_SYSTEM_PREFIX_LEN (F))
 # endif
 # define IS_RELATIVE_FILE_NAME(F) (! IS_ABSOLUTE_FILE_NAME (F))
 

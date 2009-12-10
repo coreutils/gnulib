@@ -28,19 +28,19 @@ AC_DEFUN([gl_FUNC_DUP2],
             return 0;
            ])
         ],
-	[gl_cv_func_dup2_works=yes], [gl_cv_func_dup2_works=no],
-	[case "$host_os" in
-	   mingw*) # on this platform, dup2 always returns 0 for success
-	     gl_cv_func_dup2_works=no;;
-	   cygwin*) # on cygwin 1.5.x, dup2(1,1) returns 0
-	     gl_cv_func_dup2_works=no;;
-	   linux*) # On linux between 2008-07-27 and 2009-05-11, dup2 of a
-	           # closed fd may yield -EBADF instead of -1 / errno=EBADF.
-	     gl_cv_func_dup2_works=no;;
+        [gl_cv_func_dup2_works=yes], [gl_cv_func_dup2_works=no],
+        [case "$host_os" in
+           mingw*) # on this platform, dup2 always returns 0 for success
+             gl_cv_func_dup2_works=no;;
+           cygwin*) # on cygwin 1.5.x, dup2(1,1) returns 0
+             gl_cv_func_dup2_works=no;;
+           linux*) # On linux between 2008-07-27 and 2009-05-11, dup2 of a
+                   # closed fd may yield -EBADF instead of -1 / errno=EBADF.
+             gl_cv_func_dup2_works=no;;
            freebsd*) # on FreeBSD 6.1, dup2(1,1000000) gives EMFILE, not EBADF.
-	     gl_cv_func_dup2_works=no;;
-	   *) gl_cv_func_dup2_works=yes;;
-	 esac])
+             gl_cv_func_dup2_works=no;;
+           *) gl_cv_func_dup2_works=yes;;
+         esac])
       ])
     if test "$gl_cv_func_dup2_works" = no; then
       gl_REPLACE_DUP2

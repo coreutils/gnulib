@@ -27,13 +27,13 @@
 
 uint32_t *
 u32_toupper (const uint32_t *s, size_t n, const char *iso639_language,
-	     uninorm_t nf,
-	     uint32_t *resultbuf, size_t *lengthp)
+             uninorm_t nf,
+             uint32_t *resultbuf, size_t *lengthp)
 {
   return u32_casemap (s, n,
-		      unicase_empty_prefix_context, unicase_empty_suffix_context,
-		      iso639_language,
-		      uc_toupper, offsetof (struct special_casing_rule, upper[0]),
-		      nf,
-		      resultbuf, lengthp);
+                      unicase_empty_prefix_context, unicase_empty_suffix_context,
+                      iso639_language,
+                      uc_toupper, offsetof (struct special_casing_rule, upper[0]),
+                      nf,
+                      resultbuf, lengthp);
 }

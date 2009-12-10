@@ -38,7 +38,7 @@
    HAYSTACK.  */
 void *
 memmem (const void *haystack_start, size_t haystack_len,
-	const void *needle_start, size_t needle_len)
+        const void *needle_start, size_t needle_len)
 {
   /* Abstract memory is considered to be an array of 'unsigned char' values,
      not an array of 'char' values.  See ISO C 99 section 6.2.6.1.  */
@@ -63,10 +63,10 @@ memmem (const void *haystack_start, size_t haystack_len,
     {
       haystack = memchr (haystack, *needle, haystack_len);
       if (!haystack || __builtin_expect (needle_len == 1, 0))
-	return (void *) haystack;
+        return (void *) haystack;
       haystack_len -= haystack - (const unsigned char *) haystack_start;
       if (haystack_len < needle_len)
-	return NULL;
+        return NULL;
       return two_way_short_needle (haystack, haystack_len, needle, needle_len);
     }
   else

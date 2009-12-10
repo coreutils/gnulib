@@ -38,8 +38,8 @@ cannot_unlink_dir (void)
     {
 # if defined PRIV_SYS_LINKDIR
       /* We might be able to unlink directories if we cannot
-	 determine our privileges, or if we have the
-	 PRIV_SYS_LINKDIR privilege.  */
+         determine our privileges, or if we have the
+         PRIV_SYS_LINKDIR privilege.  */
       cannot = (priv_set_ismember (PRIV_SYS_LINKDIR) == 0);
 # else
       /* In traditional Unix, only root can unlink directories.  */

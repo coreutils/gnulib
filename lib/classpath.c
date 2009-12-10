@@ -46,7 +46,7 @@
    CLASSPATH is ignored.  */
 char *
 new_classpath (const char * const *classpaths, unsigned int classpaths_count,
-	       bool use_minimal_classpath)
+               bool use_minimal_classpath)
 {
   const char *old_classpath;
   unsigned int length;
@@ -81,7 +81,7 @@ new_classpath (const char * const *classpaths, unsigned int classpaths_count,
   else
     {
       if (classpaths_count > 0)
-	p--;
+        p--;
     }
   *p = '\0';
 
@@ -91,7 +91,7 @@ new_classpath (const char * const *classpaths, unsigned int classpaths_count,
 /* Set CLASSPATH and returns a safe copy of its old value.  */
 char *
 set_classpath (const char * const *classpaths, unsigned int classpaths_count,
-	       bool use_minimal_classpath, bool verbose)
+               bool use_minimal_classpath, bool verbose)
 {
   const char *old_CLASSPATH = getenv (CLASSPATHVAR);
   char *result = (old_CLASSPATH != NULL ? xstrdup (old_CLASSPATH) : NULL);

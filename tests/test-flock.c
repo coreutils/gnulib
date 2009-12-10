@@ -25,16 +25,16 @@
 #include <sys/file.h>
 
 #define ASSERT(expr) \
-  do									\
-    {									\
-      if (!(expr))							\
-        {								\
-	  fprintf (stderr, "%s:%d: assertion failed, errno = %d\n",	\
-		   __FILE__, __LINE__, errno);				\
-          fflush (stderr);						\
-          abort ();							\
-        }								\
-    }									\
+  do                                                                    \
+    {                                                                   \
+      if (!(expr))                                                      \
+        {                                                               \
+          fprintf (stderr, "%s:%d: assertion failed, errno = %d\n",     \
+                   __FILE__, __LINE__, errno);                          \
+          fflush (stderr);                                              \
+          abort ();                                                     \
+        }                                                               \
+    }                                                                   \
   while (0)
 
 static void
@@ -51,7 +51,7 @@ test_shared (const char *file, int fd)
   ASSERT (fd2 >= 0);
 
   r = flock (fd2, LOCK_SH | LOCK_NB);
-  ASSERT (r == 0);		/* Was able to acquire a second shared lock. */
+  ASSERT (r == 0);              /* Was able to acquire a second shared lock. */
 
   ASSERT (flock (fd, LOCK_UN) == 0);
   ASSERT (close (fd2) == 0);
@@ -69,7 +69,7 @@ test_exclusive (const char *file, int fd)
   ASSERT (fd2 >= 0);
 
   r = flock (fd2, LOCK_SH | LOCK_NB);
-  ASSERT (r == -1);		/* Was unable to acquire a second exclusive lock. */
+  ASSERT (r == -1);             /* Was unable to acquire a second exclusive lock. */
 
   ASSERT (flock (fd, LOCK_UN) == 0);
   ASSERT (close (fd2) == 0);

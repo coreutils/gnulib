@@ -30,29 +30,29 @@ u16_uctomb_aux (uint16_t *s, ucs4_t uc, int n)
   else if (uc < 0x10000)
     {
       if (uc >= 0xe000)
-	{
-	  if (n >= 1)
-	    {
-	      s[0] = uc;
-	      return 1;
-	    }
-	}
+        {
+          if (n >= 1)
+            {
+              s[0] = uc;
+              return 1;
+            }
+        }
       else
-	return -1;
+        return -1;
     }
   else
     {
       if (uc < 0x110000)
-	{
-	  if (n >= 2)
-	    {
-	      s[0] = 0xd800 + ((uc - 0x10000) >> 10);
-	      s[1] = 0xdc00 + ((uc - 0x10000) & 0x3ff);
-	      return 2;
-	    }
-	}
+        {
+          if (n >= 2)
+            {
+              s[0] = 0xd800 + ((uc - 0x10000) >> 10);
+              s[1] = 0xdc00 + ((uc - 0x10000) & 0x3ff);
+              return 2;
+            }
+        }
       else
-	return -1;
+        return -1;
     }
   return -2;
 }

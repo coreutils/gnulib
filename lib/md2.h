@@ -45,14 +45,14 @@ extern void md2_init_ctx (struct md2_ctx *ctx);
    starting at BUFFER.
    It is NOT required that LEN is a multiple of 64.  */
 extern void md2_process_block (const void *buffer, size_t len,
-			       struct md2_ctx *ctx);
+                               struct md2_ctx *ctx);
 
 /* Starting with the result of former calls of this function (or the
    initialization function update the context for the next LEN bytes
    starting at BUFFER.
    It is NOT required that LEN is a multiple of 64.  */
 extern void md2_process_bytes (const void *buffer, size_t len,
-			       struct md2_ctx *ctx);
+                               struct md2_ctx *ctx);
 
 /* Process the remaining bytes in the buffer and put result from CTX
    in first 16 bytes following RESBUF.  The result is always in little

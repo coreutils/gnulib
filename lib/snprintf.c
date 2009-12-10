@@ -53,11 +53,11 @@ snprintf (char *str, size_t size, const char *format, ...)
   if (output != str)
     {
       if (size)
-	{
-	  size_t pruned_len = (len < size ? len : size - 1);
-	  memcpy (str, output, pruned_len);
-	  str[pruned_len] = '\0';
-	}
+        {
+          size_t pruned_len = (len < size ? len : size - 1);
+          memcpy (str, output, pruned_len);
+          str[pruned_len] = '\0';
+        }
 
       free (output);
     }

@@ -524,31 +524,31 @@ extern int gl_signbitl (long double arg);
 #   if defined FLT_SIGNBIT_WORD && defined FLT_SIGNBIT_BIT && !defined gl_signbitf
 #    define gl_signbitf_OPTIMIZED_MACRO
 #    define gl_signbitf(arg) \
-       ({ union { float _value;						\
+       ({ union { float _value;                                         \
                   unsigned int _word[(sizeof (float) + sizeof (unsigned int) - 1) / sizeof (unsigned int)]; \
-                } _m;							\
-          _m._value = (arg);						\
-          (_m._word[FLT_SIGNBIT_WORD] >> FLT_SIGNBIT_BIT) & 1;		\
+                } _m;                                                   \
+          _m._value = (arg);                                            \
+          (_m._word[FLT_SIGNBIT_WORD] >> FLT_SIGNBIT_BIT) & 1;          \
         })
 #   endif
 #   if defined DBL_SIGNBIT_WORD && defined DBL_SIGNBIT_BIT && !defined gl_signbitd
 #    define gl_signbitd_OPTIMIZED_MACRO
 #    define gl_signbitd(arg) \
-       ({ union { double _value;						\
+       ({ union { double _value;                                                \
                   unsigned int _word[(sizeof (double) + sizeof (unsigned int) - 1) / sizeof (unsigned int)]; \
-                } _m;							\
-          _m._value = (arg);						\
-          (_m._word[DBL_SIGNBIT_WORD] >> DBL_SIGNBIT_BIT) & 1;		\
+                } _m;                                                   \
+          _m._value = (arg);                                            \
+          (_m._word[DBL_SIGNBIT_WORD] >> DBL_SIGNBIT_BIT) & 1;          \
         })
 #   endif
 #   if defined LDBL_SIGNBIT_WORD && defined LDBL_SIGNBIT_BIT && !defined gl_signbitl
 #    define gl_signbitl_OPTIMIZED_MACRO
 #    define gl_signbitl(arg) \
-       ({ union { long double _value;					\
+       ({ union { long double _value;                                   \
                   unsigned int _word[(sizeof (long double) + sizeof (unsigned int) - 1) / sizeof (unsigned int)]; \
-                } _m;							\
-          _m._value = (arg);						\
-          (_m._word[LDBL_SIGNBIT_WORD] >> LDBL_SIGNBIT_BIT) & 1;		\
+                } _m;                                                   \
+          _m._value = (arg);                                            \
+          (_m._word[LDBL_SIGNBIT_WORD] >> LDBL_SIGNBIT_BIT) & 1;                \
         })
 #   endif
 #  endif

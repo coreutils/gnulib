@@ -58,16 +58,16 @@ enum
  */
 extern void
        u8_possible_linebreaks (const uint8_t *s, size_t n,
-			       const char *encoding, char *p);
+                               const char *encoding, char *p);
 extern void
        u16_possible_linebreaks (const uint16_t *s, size_t n,
-				const char *encoding, char *p);
+                                const char *encoding, char *p);
 extern void
        u32_possible_linebreaks (const uint32_t *s, size_t n,
-				const char *encoding, char *p);
+                                const char *encoding, char *p);
 extern void
        ulc_possible_linebreaks (const char *s, size_t n,
-				const char *encoding, char *p);
+                                const char *encoding, char *p);
 
 /* Choose the best line breaks, assuming the uc_width function.
    The string is s[0..n-1].  The maximum number of columns per line is given
@@ -82,24 +82,24 @@ extern void
  */
 extern int
        u8_width_linebreaks (const uint8_t *s, size_t n, int width,
-			    int start_column, int at_end_columns,
-			    const char *o, const char *encoding,
-			    char *p);
+                            int start_column, int at_end_columns,
+                            const char *o, const char *encoding,
+                            char *p);
 extern int
        u16_width_linebreaks (const uint16_t *s, size_t n, int width,
-			     int start_column, int at_end_columns,
-			     const char *o, const char *encoding,
-			     char *p);
+                             int start_column, int at_end_columns,
+                             const char *o, const char *encoding,
+                             char *p);
 extern int
        u32_width_linebreaks (const uint32_t *s, size_t n, int width,
-			     int start_column, int at_end_columns,
-			     const char *o, const char *encoding,
-			     char *p);
+                             int start_column, int at_end_columns,
+                             const char *o, const char *encoding,
+                             char *p);
 extern int
        ulc_width_linebreaks (const char *s, size_t n, int width,
-			     int start_column, int at_end_columns,
-			     const char *o, const char *encoding,
-			     char *p);
+                             int start_column, int at_end_columns,
+                             const char *o, const char *encoding,
+                             char *p);
 
 
 #ifdef __cplusplus

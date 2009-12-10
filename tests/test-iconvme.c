@@ -41,9 +41,9 @@ int main (int ac, char *av[])
       size_t len = 0;
       printf ("Enter string to convert:\n\t> ");
       if (getline (&in, &len, stdin) < 0)
-	perror ("getline");
+        perror ("getline");
       if (in[strlen (in) - 1] == '\n')
-	in[strlen (in) - 1] = '\0';
+        in[strlen (in) - 1] = '\0';
     }
 
   if (!to)
@@ -51,9 +51,9 @@ int main (int ac, char *av[])
       size_t len = 0;
       printf ("Enter destination code set:\n\t> ");
       if (getline (&to, &len, stdin) < 0)
-	perror ("getline");
+        perror ("getline");
       if (to[strlen (to) - 1] == '\n')
-	to[strlen (to) - 1] = '\0';
+        to[strlen (to) - 1] = '\0';
     }
 
   if (!from)
@@ -61,15 +61,15 @@ int main (int ac, char *av[])
       size_t len = 0;
       printf ("Enter source code set:\n\t> ");
       if (getline (&from, &len, stdin) < 0)
-	perror ("getline");
+        perror ("getline");
       if (from[strlen (from) - 1] == '\n')
-	from[strlen (from) - 1] = '\0';
+        from[strlen (from) - 1] = '\0';
     }
 
   printf (" Input string: `%s'\n"
-	  "From code set: `%s'\n"
-	  "  To code set: `%s'\n",
-	  in, from, to);
+          "From code set: `%s'\n"
+          "  To code set: `%s'\n",
+          in, from, to);
 
   out = iconv_string (in, from, to);
 

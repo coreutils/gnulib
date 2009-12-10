@@ -25,8 +25,8 @@
 
 const unsigned char unilbrk_table[24][24] =
 {
-				/* after */
-	/* WJ GL B2 BA BB HY CL EX IN NS OP QU IS NU PO PR SY AL H2 H3 ID JL JV JT */
+                                /* after */
+        /* WJ GL B2 BA BB HY CL EX IN NS OP QU IS NU PO PR SY AL H2 H3 ID JL JV JT */
 /* WJ */ { P, I, I, I, I, I, P, P, I, I, I, I, P, I, I, I, P, I, I, I, I, I, I, I, },
 /* GL */ { P, I, I, I, I, I, P, P, I, I, I, I, P, I, I, I, P, I, I, I, I, I, I, I, },
 /* B2 */ { P, I, P, I, D, I, P, P, D, I, D, I, P, D, D, D, P, D, D, D, D, D, D, D, },

@@ -84,9 +84,9 @@ extern "C" {
      num_bytes_written > 0.
    Here p is always the private_data argument passed to the main function.  */
 typedef const void * (*prepare_write_fn) (size_t *num_bytes_p,
-					  void *private_data);
+                                          void *private_data);
 typedef void (*done_write_fn) (void *data_written, size_t num_bytes_written,
-			       void *private_data);
+                               void *private_data);
 
 /* These two functions together describe the side that reads data from the
    subprocess when it has the form of an iterator.
@@ -97,9 +97,9 @@ typedef void (*done_write_fn) (void *data_written, size_t num_bytes_written,
      bytes were read into the buffer.
    Here p is always the private_data argument passed to the main function.  */
 typedef void * (*prepare_read_fn) (size_t *num_bytes_p,
-				   void *private_data);
+                                   void *private_data);
 typedef void (*done_read_fn) (void *data_read, size_t num_bytes_read,
-			      void *private_data);
+                              void *private_data);
 
 
 /* ============================ pipe_filter_ii ============================ */
@@ -133,13 +133,13 @@ typedef void (*done_read_fn) (void *data_read, size_t num_bytes_read,
    - the positive exit code of the subprocess if that failed.  */
 extern int
        pipe_filter_ii_execute (const char *progname,
-			       const char *prog_path, const char **prog_argv,
-			       bool null_stderr, bool exit_on_error,
-			       prepare_write_fn prepare_write,
-			       done_write_fn done_write,
-			       prepare_read_fn prepare_read,
-			       done_read_fn done_read,
-			       void *private_data);
+                               const char *prog_path, const char **prog_argv,
+                               bool null_stderr, bool exit_on_error,
+                               prepare_write_fn prepare_write,
+                               done_write_fn done_write,
+                               prepare_read_fn prepare_read,
+                               done_read_fn done_read,
+                               void *private_data);
 
 
 /* ============================ pipe_filter_ig ============================ */
@@ -179,11 +179,11 @@ struct pipe_filter_gi;
    Return the freshly created 'struct pipe_filter_gi'.  */
 extern struct pipe_filter_gi *
        pipe_filter_gi_create (const char *progname,
-			      const char *prog_path, const char **prog_argv,
-			      bool null_stderr, bool exit_on_error,
-			      prepare_read_fn prepare_read,
-			      done_read_fn done_read,
-			      void *private_data);
+                              const char *prog_path, const char **prog_argv,
+                              bool null_stderr, bool exit_on_error,
+                              prepare_read_fn prepare_read,
+                              done_read_fn done_read,
+                              void *private_data);
 
 /* Write size bytes starting at buf into the pipe and in the meanwhile
    possibly call the prepare_read and done_read functions specified to
@@ -203,7 +203,7 @@ extern struct pipe_filter_gi *
    - the positive exit code of the subprocess if that failed.  */
 extern int
        pipe_filter_gi_write (struct pipe_filter_gi *filter,
-			     const void *buf, size_t size);
+                             const void *buf, size_t size);
 
 /* Finish reading the output via the prepare_read/done_read functions
    specified to pipe_filter_gi_create.

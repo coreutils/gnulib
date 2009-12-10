@@ -36,11 +36,11 @@ u16_width (const uint16_t *s, size_t n, const char *encoding)
       s += u16_mbtouc_unsafe (&uc, s, s_end - s);
 
       if (uc == 0)
-	break; /* end of string reached */
+        break; /* end of string reached */
 
       w = uc_width (uc, encoding);
       if (w >= 0) /* ignore control characters in the string */
-	width += w;
+        width += w;
     }
 
   return width;

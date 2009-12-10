@@ -29,15 +29,15 @@
 #include <string.h>
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 struct locale_dependent_values
@@ -51,10 +51,10 @@ static void
 get_locale_dependent_values (struct locale_dependent_values *result)
 {
   strfmon (result->monetary, sizeof (result->monetary),
-	   "%n", 123.75);
+           "%n", 123.75);
   /* result->monetary is usually "$123.75" */
   snprintf (result->numeric, sizeof (result->numeric),
-	    "%g", 3.5);
+            "%g", 3.5);
   /* result->numeric is usually "3,5" */
   strcpy (result->time, nl_langinfo (MON_1));
   /* result->time is usually "janvier" */

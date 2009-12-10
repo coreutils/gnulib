@@ -76,7 +76,7 @@ direxists (const char *dir)
    enough space in TMPL. */
 int
 path_search (char *tmpl, size_t tmpl_len, const char *dir, const char *pfx,
-	     bool try_tmpdir)
+             bool try_tmpdir)
 {
   const char *d;
   size_t dlen, plen;
@@ -90,35 +90,35 @@ path_search (char *tmpl, size_t tmpl_len, const char *dir, const char *pfx,
     {
       plen = strlen (pfx);
       if (plen > 5)
-	plen = 5;
+        plen = 5;
     }
 
   if (try_tmpdir)
     {
       d = __secure_getenv ("TMPDIR");
       if (d != NULL && direxists (d))
-	dir = d;
+        dir = d;
       else if (dir != NULL && direxists (dir))
-	/* nothing */ ;
+        /* nothing */ ;
       else
-	dir = NULL;
+        dir = NULL;
     }
   if (dir == NULL)
     {
       if (direxists (P_tmpdir))
-	dir = P_tmpdir;
+        dir = P_tmpdir;
       else if (strcmp (P_tmpdir, "/tmp") != 0 && direxists ("/tmp"))
-	dir = "/tmp";
+        dir = "/tmp";
       else
-	{
-	  __set_errno (ENOENT);
-	  return -1;
-	}
+        {
+          __set_errno (ENOENT);
+          return -1;
+        }
     }
 
   dlen = strlen (dir);
   while (dlen >= 1 && ISSLASH (dir[dlen - 1]))
-    dlen--;			/* remove trailing slashes */
+    dlen--;                     /* remove trailing slashes */
 
   /* check we have room for "${dir}/${pfx}XXXXXX\0" */
   if (tmpl_len < dlen + 1 + plen + 6 + 1)

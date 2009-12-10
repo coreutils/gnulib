@@ -30,9 +30,9 @@ u32_strrchr (const uint32_t *s, ucs4_t uc)
   for (;; s++)
     {
       if (*s == uc)
-	result = (uint32_t *) s;
+        result = (uint32_t *) s;
       if (*s == 0)
-	break;
+        break;
     }
   return result;
 }

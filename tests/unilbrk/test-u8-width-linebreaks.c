@@ -25,15 +25,15 @@
 
 #define SIZEOF(array) (sizeof (array) / sizeof (array[0]))
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 int
@@ -53,11 +53,11 @@ main ()
 
       u8_width_linebreaks (input, SIZEOF (input), 25, 0, 0, NULL, "GB18030", p);
       for (i = 0; i < 91; i++)
-	{
-	  ASSERT (p[i] == (i == 90 ? UC_BREAK_MANDATORY :
-			   i == 39 || i == 61 ? UC_BREAK_POSSIBLE :
-			   UC_BREAK_PROHIBITED));
-	}
+        {
+          ASSERT (p[i] == (i == 90 ? UC_BREAK_MANDATORY :
+                           i == 39 || i == 61 ? UC_BREAK_POSSIBLE :
+                           UC_BREAK_PROHIBITED));
+        }
       free (p);
     }
 
@@ -67,11 +67,11 @@ main ()
 
       u8_width_linebreaks (input, SIZEOF (input), 25, 0, 0, NULL, "GB2312", p);
       for (i = 0; i < 91; i++)
-	{
-	  ASSERT (p[i] == (i == 90 ? UC_BREAK_MANDATORY :
-			   i == 13 || i == 39 || i == 61 ? UC_BREAK_POSSIBLE :
-			   UC_BREAK_PROHIBITED));
-	}
+        {
+          ASSERT (p[i] == (i == 90 ? UC_BREAK_MANDATORY :
+                           i == 13 || i == 39 || i == 61 ? UC_BREAK_POSSIBLE :
+                           UC_BREAK_PROHIBITED));
+        }
       free (p);
     }
   }

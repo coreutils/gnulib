@@ -38,26 +38,26 @@ fopen_safer (char const *file, char const *mode)
       int fd = fileno (fp);
 
       if (0 <= fd && fd <= STDERR_FILENO)
-	{
-	  int f = dup_safer (fd);
+        {
+          int f = dup_safer (fd);
 
-	  if (f < 0)
-	    {
-	      int e = errno;
-	      fclose (fp);
-	      errno = e;
-	      return NULL;
-	    }
+          if (f < 0)
+            {
+              int e = errno;
+              fclose (fp);
+              errno = e;
+              return NULL;
+            }
 
-	  if (fclose (fp) != 0
-	      || ! (fp = fdopen (f, mode)))
-	    {
-	      int e = errno;
-	      close (f);
-	      errno = e;
-	      return NULL;
-	    }
-	}
+          if (fclose (fp) != 0
+              || ! (fp = fdopen (f, mode)))
+            {
+              int e = errno;
+              close (f);
+              errno = e;
+              return NULL;
+            }
+        }
     }
 
   return fp;

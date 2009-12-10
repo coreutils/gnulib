@@ -26,9 +26,9 @@ AC_DEFUN([gl_FUNC_FDOPENDIR],
 ]], [int fd = open ("conftest.h", O_RDONLY);
      if (fd < 0) return 2;
      return !!fdopendir (fd);])],
-	 [gl_cv_func_fdopendir_works=yes],
-	 [gl_cv_func_fdopendir_works=no],
-	 [gl_cv_func_fdopendir_works="guessing no"])])
+         [gl_cv_func_fdopendir_works=yes],
+         [gl_cv_func_fdopendir_works=no],
+         [gl_cv_func_fdopendir_works="guessing no"])])
     if test "$gl_cv_func_fdopendir_works" != yes; then
       REPLACE_FDOPENDIR=1
       gl_REPLACE_DIRENT_H

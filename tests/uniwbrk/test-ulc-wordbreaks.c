@@ -26,15 +26,15 @@
 
 #define SIZEOF(array) (sizeof (array) / sizeof (array[0]))
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 int
@@ -59,12 +59,12 @@ main ()
 
     for (i = 0; i < 36; i++)
       {
-	ASSERT (p[i] == ((i >= 4 && i <= 5)
-			 || (i >= 9 && i <= 17)
-			 || (i >= 21 && i <= 25)
-			 || (i >= 28 && i <= 32)
-			 || (i >= 34 && i <= 35)
-			 ? 1 : 0));
+        ASSERT (p[i] == ((i >= 4 && i <= 5)
+                         || (i >= 9 && i <= 17)
+                         || (i >= 21 && i <= 25)
+                         || (i >= 28 && i <= 32)
+                         || (i >= 34 && i <= 35)
+                         ? 1 : 0));
       }
     free (p);
   }

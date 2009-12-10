@@ -44,10 +44,10 @@ getfield (FILE *stream, char *buffer, int delim)
     {
       /* Put c into the buffer.  */
       if (++count >= FIELDLEN - 1)
-	{
-	  fprintf (stderr, "field too long\n");
-	  exit (EXIT_FAILURE);
-	}
+        {
+          fprintf (stderr, "field too long\n");
+          exit (EXIT_FAILURE);
+        }
       *buffer++ = c;
     }
 
@@ -88,21 +88,21 @@ fill_names (const char *unicodedata_filename)
       n = getfield (stream, field0, ';');
       n += getfield (stream, field1, ';');
       if (n == 0)
-	break;
+        break;
       if (n != 2)
-	{
-	  fprintf (stderr, "short line in '%s':%d\n",
-		   unicodedata_filename, lineno);
-	  exit (EXIT_FAILURE);
-	}
+        {
+          fprintf (stderr, "short line in '%s':%d\n",
+                   unicodedata_filename, lineno);
+          exit (EXIT_FAILURE);
+        }
       for (; (c = getc (stream)), (c != EOF && c != '\n'); )
-	;
+        ;
       i = strtoul (field0, NULL, 16);
       if (i >= 0x110000)
-	{
-	  fprintf (stderr, "index too large\n");
-	  exit (EXIT_FAILURE);
-	}
+        {
+          fprintf (stderr, "index too large\n");
+          exit (EXIT_FAILURE);
+        }
       unicode_names[i] = xstrdup (field1);
     }
   if (ferror (stream) || fclose (stream))
@@ -125,28 +125,28 @@ test_name_lookup ()
       char *result = unicode_character_name (i, buf);
 
       if (unicode_names[i] != NULL)
-	{
-	  if (result == NULL)
-	    {
-	      fprintf (stderr, "\\u%04X name lookup failed!\n", i);
-	      error = 1;
-	    }
-	  else if (strcmp (result, unicode_names[i]) != 0)
-	    {
-	      fprintf (stderr, "\\u%04X name lookup returned wrong name: %s\n",
-			       i, result);
-	      error = 1;
-	    }
-	}
+        {
+          if (result == NULL)
+            {
+              fprintf (stderr, "\\u%04X name lookup failed!\n", i);
+              error = 1;
+            }
+          else if (strcmp (result, unicode_names[i]) != 0)
+            {
+              fprintf (stderr, "\\u%04X name lookup returned wrong name: %s\n",
+                               i, result);
+              error = 1;
+            }
+        }
       else
-	{
-	  if (result != NULL)
-	    {
-	      fprintf (stderr, "\\u%04X name lookup returned wrong name: %s\n",
-			       i, result);
-	      error = 1;
-	    }
-	}
+        {
+          if (result != NULL)
+            {
+              fprintf (stderr, "\\u%04X name lookup returned wrong name: %s\n",
+                               i, result);
+              error = 1;
+            }
+        }
     }
 
   for (i = 0x110000; i < 0x1000000; i++)
@@ -154,11 +154,11 @@ test_name_lookup ()
       char *result = unicode_character_name (i, buf);
 
       if (result != NULL)
-	{
-	  fprintf (stderr, "\\u%04X name lookup returned wrong name: %s\n",
-			   i, result);
-	  error = 1;
-	}
+        {
+          fprintf (stderr, "\\u%04X name lookup returned wrong name: %s\n",
+                           i, result);
+          error = 1;
+        }
     }
 
   return error;
@@ -175,18 +175,18 @@ test_inverse_lookup ()
   for (i = 0; i < 0x110000; i++)
     if (unicode_names[i] != NULL)
       {
-	unsigned int result = unicode_name_character (unicode_names[i]);
-	if (result != i)
-	  {
-	    if (result == UNINAME_INVALID)
-	      fprintf (stderr, "inverse name lookup of \"%s\" failed\n",
-		       unicode_names[i]);
-	    else
-	      fprintf (stderr,
-		       "inverse name lookup of \"%s\" returned 0x%04X\n",
-		       unicode_names[i], result);
-	    error = 1;
-	  }
+        unsigned int result = unicode_name_character (unicode_names[i]);
+        if (result != i)
+          {
+            if (result == UNINAME_INVALID)
+              fprintf (stderr, "inverse name lookup of \"%s\" failed\n",
+                       unicode_names[i]);
+            else
+              fprintf (stderr,
+                       "inverse name lookup of \"%s\" returned 0x%04X\n",
+                       unicode_names[i], result);
+            error = 1;
+          }
       }
 
   /* Second, generate random but likely names and verify they are not
@@ -201,13 +201,13 @@ test_inverse_lookup ()
       unsigned int result;
 
       do i1 = ((rand () % 0x11) << 16)
-	      + ((rand () & 0xff) << 8)
-	      + (rand () & 0xff);
+              + ((rand () & 0xff) << 8)
+              + (rand () & 0xff);
       while (unicode_names[i1] == NULL);
 
       do i2 = ((rand () % 0x11) << 16)
-	      + ((rand () & 0xff) << 8)
-	      + (rand () & 0xff);
+              + ((rand () & 0xff) << 8)
+              + (rand () & 0xff);
       while (unicode_names[i2] == NULL);
 
       s1 = unicode_names[i1];
@@ -217,25 +217,25 @@ test_inverse_lookup ()
 
       /* Concatenate a starting piece of s1 with an ending piece of s2.  */
       for (j1 = 1; j1 <= l1; j1++)
-	if (j1 == l1 || s1[j1] == ' ')
-	  for (j2 = 0; j2 < l2; j2++)
-	    if (j2 == 0 || s2[j2-1] == ' ')
-	      {
-		memcpy (buf, s1, j1);
-		buf[j1] = ' ';
-		memcpy (buf + j1 + 1, s2 + j2, l2 - j2 + 1);
+        if (j1 == l1 || s1[j1] == ' ')
+          for (j2 = 0; j2 < l2; j2++)
+            if (j2 == 0 || s2[j2-1] == ' ')
+              {
+                memcpy (buf, s1, j1);
+                buf[j1] = ' ';
+                memcpy (buf + j1 + 1, s2 + j2, l2 - j2 + 1);
 
-		result = unicode_name_character (buf);
-		if (result != UNINAME_INVALID
-		    && !(unicode_names[result] != NULL
-			 && strcmp (unicode_names[result], buf) == 0))
-		  {
-		    fprintf (stderr,
-			     "inverse name lookup of \"%s\" returned 0x%04X\n",
-			     unicode_names[i], result);
-		    error = 1;
-		  }
-	      }
+                result = unicode_name_character (buf);
+                if (result != UNINAME_INVALID
+                    && !(unicode_names[result] != NULL
+                         && strcmp (unicode_names[result], buf) == 0))
+                  {
+                    fprintf (stderr,
+                             "inverse name lookup of \"%s\" returned 0x%04X\n",
+                             unicode_names[i], result);
+                    error = 1;
+                  }
+              }
     }
 
   /* Third, some extreme case that used to loop.  */

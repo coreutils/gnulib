@@ -32,7 +32,7 @@
    `close' for the given file descriptor during the `spawn' call.  */
 int
 posix_spawn_file_actions_addclose (posix_spawn_file_actions_t *file_actions,
-				   int fd)
+                                   int fd)
 {
   int maxfd = __sysconf (_SC_OPEN_MAX);
   struct __spawn_action *rec;

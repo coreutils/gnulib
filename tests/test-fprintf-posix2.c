@@ -73,11 +73,11 @@ main (int argc, char *argv[])
     {
     case 0:
       {
-	void *memory = malloc (5000000);
-	if (memory == NULL)
-	  return 1;
-	memset (memory, 17, 5000000);
-	return 78;
+        void *memory = malloc (5000000);
+        if (memory == NULL)
+          return 1;
+        memset (memory, 17, 5000000);
+        return 78;
       }
     case 1:
       ret = fprintf (stdout, "%.5000000f", 1.0);

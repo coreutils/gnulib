@@ -23,8 +23,8 @@
 # include <stdbool.h>
 
 bool xstrtod (const char *str, const char **ptr, double *result,
-	      double (*convert) (char const *, char **));
+              double (*convert) (char const *, char **));
 bool xstrtold (const char *str, const char **ptr, long double *result,
-	       long double (*convert) (char const *, char **));
+               long double (*convert) (char const *, char **));
 
 #endif /* not XSTRTOD_H */

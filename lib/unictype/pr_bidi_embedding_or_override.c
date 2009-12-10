@@ -40,7 +40,7 @@ uc_is_property_bidi_embedding_or_override (ucs4_t uc)
 {
   int category = uc_bidi_category (uc);
   return (category == UC_BIDI_LRE || category == UC_BIDI_LRO
-	  || category == UC_BIDI_RLE || category == UC_BIDI_RLO);
+          || category == UC_BIDI_RLE || category == UC_BIDI_RLO);
 }
 
 #endif

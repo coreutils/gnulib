@@ -49,9 +49,9 @@ test_function (uint8_t * (*my_asnprintf) (uint8_t *, size_t *, const char *, ...
       ASSERT (u8_strcmp (result, expected) == 0);
       ASSERT (length == 5);
       if (size < 6)
-	ASSERT (result != buf);
+        ASSERT (result != buf);
       ASSERT (u8_cmp (buf + size, initializer + size, 8 - size) == 0);
       if (result != buf)
-	free (result);
+        free (result);
     }
 }

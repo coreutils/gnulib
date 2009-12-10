@@ -33,13 +33,13 @@ FUNC (const UNIT *str, const UNIT *accept)
 
     for (;;)
       {
-	ucs4_t uc;
-	int count = U_STRMBTOUC (&uc, ptr);
-	if (count <= 0)
-	  break;
-	if (U_STRCHR (accept, uc))
-	  return (UNIT *) ptr;
-	ptr += count;
+        ucs4_t uc;
+        int count = U_STRMBTOUC (&uc, ptr);
+        if (count <= 0)
+          break;
+        if (U_STRCHR (accept, uc))
+          return (UNIT *) ptr;
+        ptr += count;
       }
     return NULL;
   }

@@ -37,24 +37,24 @@ mbsspn (const char *string, const char *reject)
       unsigned char uc = (unsigned char) reject[0];
 
       if (MB_CUR_MAX > 1)
-	{
-	  mbui_iterator_t iter;
+        {
+          mbui_iterator_t iter;
 
-	  for (mbui_init (iter, string); mbui_avail (iter); mbui_advance (iter))
-	    if (!(mb_len (mbui_cur (iter)) == 1
-		  && (unsigned char) * mbui_cur_ptr (iter) == uc))
-	      break;
-	  return mbui_cur_ptr (iter) - string;
-	}
+          for (mbui_init (iter, string); mbui_avail (iter); mbui_advance (iter))
+            if (!(mb_len (mbui_cur (iter)) == 1
+                  && (unsigned char) * mbui_cur_ptr (iter) == uc))
+              break;
+          return mbui_cur_ptr (iter) - string;
+        }
       else
-	{
-	  const char *ptr;
+        {
+          const char *ptr;
 
-	  for (ptr = string; *ptr != '\0'; ptr++)
-	    if ((unsigned char) *ptr != uc)
-	      break;
-	  return ptr - string;
-	}
+          for (ptr = string; *ptr != '\0'; ptr++)
+            if ((unsigned char) *ptr != uc)
+              break;
+          return ptr - string;
+        }
     }
   /* General case.  */
   if (MB_CUR_MAX > 1)
@@ -62,25 +62,25 @@ mbsspn (const char *string, const char *reject)
       mbui_iterator_t iter;
 
       for (mbui_init (iter, string); mbui_avail (iter); mbui_advance (iter))
-	{
-	  if (mb_len (mbui_cur (iter)) == 1)
-	    {
-	      if (mbschr (reject, * mbui_cur_ptr (iter)) == NULL)
-		goto found;
-	    }
-	  else
-	    {
-	      mbui_iterator_t aiter;
+        {
+          if (mb_len (mbui_cur (iter)) == 1)
+            {
+              if (mbschr (reject, * mbui_cur_ptr (iter)) == NULL)
+                goto found;
+            }
+          else
+            {
+              mbui_iterator_t aiter;
 
-	      for (mbui_init (aiter, reject);; mbui_advance (aiter))
-		{
-		  if (!mbui_avail (aiter))
-		    goto found;
-		  if (mb_equal (mbui_cur (aiter), mbui_cur (iter)))
-		    break;
-		}
-	    }
-	}
+              for (mbui_init (aiter, reject);; mbui_advance (aiter))
+                {
+                  if (!mbui_avail (aiter))
+                    goto found;
+                  if (mb_equal (mbui_cur (aiter), mbui_cur (iter)))
+                    break;
+                }
+            }
+        }
      found:
       return mbui_cur_ptr (iter) - string;
     }

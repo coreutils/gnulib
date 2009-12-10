@@ -18,7 +18,7 @@
 
 static void
 test_ascii (int (*my_normcmp) (const uint16_t *, size_t, const uint16_t *, size_t, uninorm_t, int *),
-	    uninorm_t nf)
+            uninorm_t nf)
 {
   /* Empty string.  */
   {

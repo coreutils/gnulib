@@ -46,34 +46,34 @@ AC_DEFUN([gl_FUNC_DIRFD],
       = no,no,no; then
     AC_REPLACE_FUNCS([dirfd])
     AC_CACHE_CHECK(
-	      [how to get the file descriptor associated with an open DIR*],
-		   gl_cv_sys_dir_fd_member_name,
+              [how to get the file descriptor associated with an open DIR*],
+                   gl_cv_sys_dir_fd_member_name,
       [
-	dirfd_save_CFLAGS=$CFLAGS
-	for ac_expr in d_fd dd_fd; do
+        dirfd_save_CFLAGS=$CFLAGS
+        for ac_expr in d_fd dd_fd; do
 
-	  CFLAGS="$CFLAGS -DDIR_FD_MEMBER_NAME=$ac_expr"
-	  AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-	     #include <sys/types.h>
-	     #include <dirent.h>]],
-	    [[DIR *dir_p = opendir("."); (void) dir_p->DIR_FD_MEMBER_NAME;]])],
-	    [dir_fd_found=yes]
-	  )
-	  CFLAGS=$dirfd_save_CFLAGS
-	  test "$dir_fd_found" = yes && break
-	done
-	test "$dir_fd_found" = yes || ac_expr=no_such_member
+          CFLAGS="$CFLAGS -DDIR_FD_MEMBER_NAME=$ac_expr"
+          AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+             #include <sys/types.h>
+             #include <dirent.h>]],
+            [[DIR *dir_p = opendir("."); (void) dir_p->DIR_FD_MEMBER_NAME;]])],
+            [dir_fd_found=yes]
+          )
+          CFLAGS=$dirfd_save_CFLAGS
+          test "$dir_fd_found" = yes && break
+        done
+        test "$dir_fd_found" = yes || ac_expr=no_such_member
 
-	gl_cv_sys_dir_fd_member_name=$ac_expr
+        gl_cv_sys_dir_fd_member_name=$ac_expr
       ]
     )
     if test $gl_cv_sys_dir_fd_member_name != no_such_member; then
       AC_DEFINE_UNQUOTED([DIR_FD_MEMBER_NAME],
-	$gl_cv_sys_dir_fd_member_name,
-	[the name of the file descriptor member of DIR])
+        $gl_cv_sys_dir_fd_member_name,
+        [the name of the file descriptor member of DIR])
     fi
     AH_VERBATIM(DIR_TO_FD,
-		[#ifdef DIR_FD_MEMBER_NAME
+                [#ifdef DIR_FD_MEMBER_NAME
 # define DIR_TO_FD(Dir_p) ((Dir_p)->DIR_FD_MEMBER_NAME)
 #else
 # define DIR_TO_FD(Dir_p) -1

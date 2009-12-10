@@ -31,15 +31,15 @@
 
 #define SIZEOF(array) (sizeof (array) / sizeof (array[0]))
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 static void
@@ -52,9 +52,9 @@ test_function (uint32_t * (*my_asnprintf) (uint32_t *, size_t *, const char *, .
     {
       size_t length;
       uint32_t *result =
-	my_asnprintf (NULL, &length, "%s %d", locale_string, 33, 44, 55);
+        my_asnprintf (NULL, &length, "%s %d", locale_string, 33, 44, 55);
       static const uint32_t expected[] =
-	{ 0x00c4, 'r', 'g', 'e', 'r', ' ', '3', '3', 0 };
+        { 0x00c4, 'r', 'g', 'e', 'r', ' ', '3', '3', 0 };
       ASSERT (result != NULL);
       ASSERT (u32_strcmp (result, expected) == 0);
       ASSERT (length == u32_strlen (result));
@@ -63,11 +63,11 @@ test_function (uint32_t * (*my_asnprintf) (uint32_t *, size_t *, const char *, .
     { /* Width.  */
       size_t length;
       uint32_t *result =
-	my_asnprintf (NULL, &length, "%10s %d", locale_string, 33, 44, 55);
+        my_asnprintf (NULL, &length, "%10s %d", locale_string, 33, 44, 55);
       static const uint32_t expected[] =
-	{ ' ', ' ', ' ', ' ', ' ', 0x00c4, 'r', 'g', 'e', 'r',
-	  ' ', '3', '3', 0
-	};
+        { ' ', ' ', ' ', ' ', ' ', 0x00c4, 'r', 'g', 'e', 'r',
+          ' ', '3', '3', 0
+        };
       ASSERT (result != NULL);
       ASSERT (u32_strcmp (result, expected) == 0);
       ASSERT (length == u32_strlen (result));
@@ -76,11 +76,11 @@ test_function (uint32_t * (*my_asnprintf) (uint32_t *, size_t *, const char *, .
     { /* FLAG_LEFT.  */
       size_t length;
       uint32_t *result =
-	my_asnprintf (NULL, &length, "%-10s %d", locale_string, 33, 44, 55);
+        my_asnprintf (NULL, &length, "%-10s %d", locale_string, 33, 44, 55);
       static const uint32_t expected[] =
-	{ 0x00c4, 'r', 'g', 'e', 'r', ' ', ' ', ' ', ' ', ' ',
-	  ' ', '3', '3', 0
-	};
+        { 0x00c4, 'r', 'g', 'e', 'r', ' ', ' ', ' ', ' ', ' ',
+          ' ', '3', '3', 0
+        };
       ASSERT (result != NULL);
       ASSERT (u32_strcmp (result, expected) == 0);
       ASSERT (length == u32_strlen (result));
@@ -89,11 +89,11 @@ test_function (uint32_t * (*my_asnprintf) (uint32_t *, size_t *, const char *, .
     { /* FLAG_ZERO: no effect.  */
       size_t length;
       uint32_t *result =
-	my_asnprintf (NULL, &length, "%010s %d", locale_string, 33, 44, 55);
+        my_asnprintf (NULL, &length, "%010s %d", locale_string, 33, 44, 55);
       static const uint32_t expected[] =
-	{ ' ', ' ', ' ', ' ', ' ', 0x00c4, 'r', 'g', 'e', 'r',
-	  ' ', '3', '3', 0
-	};
+        { ' ', ' ', ' ', ' ', ' ', 0x00c4, 'r', 'g', 'e', 'r',
+          ' ', '3', '3', 0
+        };
       ASSERT (result != NULL);
       ASSERT (u32_strcmp (result, expected) == 0);
       ASSERT (length == u32_strlen (result));

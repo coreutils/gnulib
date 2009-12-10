@@ -26,13 +26,13 @@ AC_DEFUN([gl_INTTYPES_H],
     [gl_cv_header_working_inttypes_h],
     [gl_cv_header_working_inttypes_h=no
      if test "$gl_cv_header_working_stdint_h" = yes \
-	&& test $ac_cv_header_inttypes_h = yes \
-	&& test "$ac_cv_have_decl_imaxabs" = yes \
-	&& test "$ac_cv_have_decl_imaxdiv" = yes \
-	&& test "$ac_cv_have_decl_strtoimax" = yes \
-	&& test "$ac_cv_have_decl_strtoumax" = yes; then
+        && test $ac_cv_header_inttypes_h = yes \
+        && test "$ac_cv_have_decl_imaxabs" = yes \
+        && test "$ac_cv_have_decl_imaxdiv" = yes \
+        && test "$ac_cv_have_decl_strtoimax" = yes \
+        && test "$ac_cv_have_decl_strtoumax" = yes; then
        AC_COMPILE_IFELSE([
-	 AC_LANG_PROGRAM([[
+         AC_LANG_PROGRAM([[
 #include <stddef.h>
 #define __STDC_LIMIT_MACROS 1 /* to make it work also in C++ mode */
 #define __STDC_CONSTANT_MACROS 1 /* to make it work also in C++ mode */
@@ -131,8 +131,8 @@ const char *l = /* implicit string concatenation */
   SCNoPTR SCNuPTR SCNxPTR
 #endif
   ;
-	 ]])],
-	 [gl_cv_header_working_inttypes_h=yes])
+         ]])],
+         [gl_cv_header_working_inttypes_h=yes])
      fi])
 
   dnl Override <inttypes.h> always, so that the portability warnings work.
@@ -255,25 +255,25 @@ AC_DEFUN([gl_INTTYPES_CHECK_LONG_LONG_INT_CONDITION],
     [gl_cv_test_$1],
     [AC_COMPILE_IFELSE(
        [AC_LANG_PROGRAM(
-	  [[/* Work also in C++ mode.  */
-	    #define __STDC_LIMIT_MACROS 1
+          [[/* Work also in C++ mode.  */
+            #define __STDC_LIMIT_MACROS 1
 
-	    /* Work if build is not clean.  */
-	    #define _GL_JUST_INCLUDE_SYSTEM_STDINT_H
+            /* Work if build is not clean.  */
+            #define _GL_JUST_INCLUDE_SYSTEM_STDINT_H
 
-	    #include <limits.h>
-	    #if HAVE_STDINT_H
-	     #include <stdint.h>
-	    #endif
+            #include <limits.h>
+            #if HAVE_STDINT_H
+             #include <stdint.h>
+            #endif
 
-	    #if $2
-	     #define CONDITION ($3)
-	    #elif HAVE_LONG_LONG_INT
-	     #define CONDITION ($4)
-	    #else
-	     #define CONDITION 0
-	    #endif
-	    int test[CONDITION ? 1 : -1];]])],
+            #if $2
+             #define CONDITION ($3)
+            #elif HAVE_LONG_LONG_INT
+             #define CONDITION ($4)
+            #else
+             #define CONDITION 0
+            #endif
+            int test[CONDITION ? 1 : -1];]])],
        [gl_cv_test_$1=yes],
        [gl_cv_test_$1=no])])
   if test $gl_cv_test_$1 = yes; then

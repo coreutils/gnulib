@@ -28,7 +28,7 @@
    RESBUF buffer.  Return 0 on success.  */
 int
 hmac_md5 (const void *key, size_t keylen,
-	  const void *buffer, size_t buflen, void *resbuf);
+          const void *buffer, size_t buflen, void *resbuf);
 
 /* Compute Hashed Message Authentication Code with SHA-1, over BUFFER
    data of BUFLEN bytes using the KEY of KEYLEN bytes, writing the
@@ -36,6 +36,6 @@ hmac_md5 (const void *key, size_t keylen,
    success.  */
 int
 hmac_sha1 (const void *key, size_t keylen,
-	   const void *in, size_t inlen, void *resbuf);
+           const void *in, size_t inlen, void *resbuf);
 
 #endif /* HMAC_H */

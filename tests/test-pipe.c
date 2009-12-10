@@ -199,10 +199,10 @@ main (int argc, char *argv[])
   if (strcmp (argv[1], "child") == 0)
     {
       /* fd 2 might be closed, but fd BACKUP_STDERR_FILENO is the original
-	 stderr.  */
+         stderr.  */
       myerr = fdopen (BACKUP_STDERR_FILENO, "w");
       if (!myerr)
-	return 2;
+        return 2;
       return child_main (argc, argv);
     }
   /* We might close fd 2 later, so save it in fd 10.  */

@@ -25,7 +25,7 @@
    SIGDEFAULT.  */
 int
 posix_spawnattr_getsigdefault (const posix_spawnattr_t *attr,
-			       sigset_t *sigdefault)
+                               sigset_t *sigdefault)
 {
   /* Copy the sigset_t data to the user buffer.  */
   memcpy (sigdefault, &attr->_sd, sizeof (sigset_t));

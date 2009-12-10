@@ -48,14 +48,14 @@ gc_init (void)
   if (err == GPG_ERR_NO_ERROR)
     {
       if (gcry_control (GCRYCTL_DISABLE_SECMEM, NULL, 0))
-	return GC_INIT_ERROR;
+        return GC_INIT_ERROR;
 
       if (gcry_check_version (GCRYPT_VERSION) == NULL)
-	return GC_INIT_ERROR;
+        return GC_INIT_ERROR;
 
       err = gcry_control (GCRYCTL_INITIALIZATION_FINISHED, NULL, 0);
       if (err != GPG_ERR_NO_ERROR)
-	return GC_INIT_ERROR;
+        return GC_INIT_ERROR;
     }
 
   return GC_OK;
@@ -98,19 +98,19 @@ gc_random (char *data, size_t datalen)
 
 void
 gc_set_allocators (gc_malloc_t func_malloc,
-		   gc_malloc_t secure_malloc,
-		   gc_secure_check_t secure_check,
-		   gc_realloc_t func_realloc, gc_free_t func_free)
+                   gc_malloc_t secure_malloc,
+                   gc_secure_check_t secure_check,
+                   gc_realloc_t func_realloc, gc_free_t func_free)
 {
   gcry_set_allocation_handler (func_malloc, secure_malloc, secure_check,
-			       func_realloc, func_free);
+                               func_realloc, func_free);
 }
 
 /* Ciphers. */
 
 Gc_rc
 gc_cipher_open (Gc_cipher alg, Gc_cipher_mode mode,
-		gc_cipher_handle * outhandle)
+                gc_cipher_handle * outhandle)
 {
   int gcryalg, gcrymode;
   gcry_error_t err;
@@ -179,7 +179,7 @@ gc_cipher_open (Gc_cipher alg, Gc_cipher_mode mode,
     }
 
   err = gcry_cipher_open ((gcry_cipher_hd_t *) outhandle,
-			  gcryalg, gcrymode, 0);
+                          gcryalg, gcrymode, 0);
   if (gcry_err_code (err))
     return GC_INVALID_CIPHER;
 
@@ -214,7 +214,7 @@ Gc_rc
 gc_cipher_encrypt_inline (gc_cipher_handle handle, size_t len, char *data)
 {
   if (gcry_cipher_encrypt ((gcry_cipher_hd_t) handle,
-			   data, len, NULL, len) != 0)
+                           data, len, NULL, len) != 0)
     return GC_INVALID_CIPHER;
 
   return GC_OK;
@@ -224,7 +224,7 @@ Gc_rc
 gc_cipher_decrypt_inline (gc_cipher_handle handle, size_t len, char *data)
 {
   if (gcry_cipher_decrypt ((gcry_cipher_hd_t) handle,
-			   data, len, NULL, len) != 0)
+                           data, len, NULL, len) != 0)
     return GC_INVALID_CIPHER;
 
   return GC_OK;
@@ -325,7 +325,7 @@ gc_hash_open (Gc_hash hash, Gc_hash_mode mode, gc_hash_handle * outhandle)
     {
       err = gcry_md_open (&ctx->gch, gcryalg, gcrymode);
       if (gcry_err_code (err))
-	rc = GC_INVALID_HASH;
+        rc = GC_INVALID_HASH;
     }
 
   if (rc == GC_OK)
@@ -648,7 +648,7 @@ gc_sha1 (const void *in, size_t inlen, void *resbuf)
 #ifdef GNULIB_GC_HMAC_MD5
 Gc_rc
 gc_hmac_md5 (const void *key, size_t keylen,
-	     const void *in, size_t inlen, char *resbuf)
+             const void *in, size_t inlen, char *resbuf)
 {
   size_t hlen = gcry_md_get_algo_dlen (GCRY_MD_MD5);
   gcry_md_hd_t mdh;
@@ -688,7 +688,7 @@ gc_hmac_md5 (const void *key, size_t keylen,
 #ifdef GNULIB_GC_HMAC_SHA1
 Gc_rc
 gc_hmac_sha1 (const void *key, size_t keylen,
-	      const void *in, size_t inlen, char *resbuf)
+              const void *in, size_t inlen, char *resbuf)
 {
   size_t hlen = gcry_md_get_algo_dlen (GCRY_MD_SHA1);
   gcry_md_hd_t mdh;

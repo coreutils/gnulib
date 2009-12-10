@@ -73,7 +73,7 @@ obstack_vprintf (struct obstack *obs, const char *format, va_list args)
   if (!str)
     {
       if (errno == ENOMEM)
-	obstack_alloc_failed_handler ();
+        obstack_alloc_failed_handler ();
       return -1;
     }
   if (str == base && str != buf)
@@ -83,10 +83,10 @@ obstack_vprintf (struct obstack *obs, const char *format, va_list args)
   else
     {
       /* The output exceeded available obstack space or we used buf;
-	 copy the resulting string.  */
+         copy the resulting string.  */
       obstack_grow (obs, str, len);
       if (str != buf)
-	free (str);
+        free (str);
     }
   return len;
 }

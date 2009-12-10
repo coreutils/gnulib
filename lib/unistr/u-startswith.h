@@ -23,8 +23,8 @@ FUNC (const UNIT *str, const UNIT *prefix)
       UNIT uc1 = *str++;
       UNIT uc2 = *prefix++;
       if (uc2 == 0)
-	return true;
+        return true;
       if (uc1 != uc2)
-	return false;
+        return false;
     }
 }

@@ -88,17 +88,17 @@ cleanup_slaves (void)
       /* Get the last registered slave.  */
       size_t n = slaves_count;
       if (n == 0)
-	break;
+        break;
       n--;
       slaves_count = n;
       /* Skip unused entries in the slaves array.  */
       if (slaves[n].used)
-	{
-	  pid_t slave = slaves[n].child;
+        {
+          pid_t slave = slaves[n].child;
 
-	  /* Kill the slave.  */
-	  kill (slave, TERMINATOR);
-	}
+          /* Kill the slave.  */
+          kill (slave, TERMINATOR);
+        }
     }
 }
 
@@ -124,42 +124,42 @@ register_slave_subprocess (pid_t child)
 
     for (; s < s_end; s++)
       if (!s->used)
-	{
-	  /* The two uses of 'volatile' in the slaves_entry_t type above
-	     (and ISO C 99 section 5.1.2.3.(5)) ensure that we mark the
-	     entry as used only after the child pid has been written to the
-	     memory location s->child.  */
-	  s->child = child;
-	  s->used = 1;
-	  return;
-	}
+        {
+          /* The two uses of 'volatile' in the slaves_entry_t type above
+             (and ISO C 99 section 5.1.2.3.(5)) ensure that we mark the
+             entry as used only after the child pid has been written to the
+             memory location s->child.  */
+          s->child = child;
+          s->used = 1;
+          return;
+        }
   }
 
   if (slaves_count == slaves_allocated)
     {
       /* Extend the slaves array.  Note that we cannot use xrealloc(),
-	 because then the cleanup_slaves() function could access an already
-	 deallocated array.  */
+         because then the cleanup_slaves() function could access an already
+         deallocated array.  */
       slaves_entry_t *old_slaves = slaves;
       size_t new_slaves_allocated = 2 * slaves_allocated;
       slaves_entry_t *new_slaves =
-	(slaves_entry_t *)
-	malloc (new_slaves_allocated * sizeof (slaves_entry_t));
+        (slaves_entry_t *)
+        malloc (new_slaves_allocated * sizeof (slaves_entry_t));
       if (new_slaves == NULL)
-	{
-	  /* xalloc_die() will call exit() which will invoke cleanup_slaves().
-	     Additionally we need to kill child, because it's not yet among
-	     the slaves list.  */
-	  kill (child, TERMINATOR);
-	  xalloc_die ();
-	}
+        {
+          /* xalloc_die() will call exit() which will invoke cleanup_slaves().
+             Additionally we need to kill child, because it's not yet among
+             the slaves list.  */
+          kill (child, TERMINATOR);
+          xalloc_die ();
+        }
       memcpy (new_slaves, old_slaves,
-	      slaves_allocated * sizeof (slaves_entry_t));
+              slaves_allocated * sizeof (slaves_entry_t));
       slaves = new_slaves;
       slaves_allocated = new_slaves_allocated;
       /* Now we can free the old slaves array.  */
       if (old_slaves != static_slaves)
-	free (old_slaves);
+        free (old_slaves);
     }
   /* The three uses of 'volatile' in the types above (and ISO C 99 section
      5.1.2.3.(5)) ensure that we increment the slaves_count only after the
@@ -191,9 +191,9 @@ unregister_slave_subprocess (pid_t child)
    return 127.  */
 int
 wait_subprocess (pid_t child, const char *progname,
-		 bool ignore_sigpipe, bool null_stderr,
-		 bool slave_process, bool exit_on_error,
-		 int *termsigp)
+                 bool ignore_sigpipe, bool null_stderr,
+                 bool slave_process, bool exit_on_error,
+                 int *termsigp)
 {
 #if HAVE_WAITID && defined WNOWAIT && 0
   /* Commented out because waitid() without WEXITED and with WNOWAIT doesn't
@@ -212,24 +212,24 @@ wait_subprocess (pid_t child, const char *progname,
   for (;;)
     {
       if (waitid (P_PID, child, &info, WEXITED | (slave_process ? WNOWAIT : 0))
-	  < 0)
-	{
+          < 0)
+        {
 # ifdef EINTR
-	  if (errno == EINTR)
-	    continue;
+          if (errno == EINTR)
+            continue;
 # endif
-	  if (exit_on_error || !null_stderr)
-	    error (exit_on_error ? EXIT_FAILURE : 0, errno,
-		   _("%s subprocess"), progname);
-	  return 127;
-	}
+          if (exit_on_error || !null_stderr)
+            error (exit_on_error ? EXIT_FAILURE : 0, errno,
+                   _("%s subprocess"), progname);
+          return 127;
+        }
 
       /* info.si_code is set to one of CLD_EXITED, CLD_KILLED, CLD_DUMPED,
-	 CLD_TRAPPED, CLD_STOPPED, CLD_CONTINUED.  Loop until the program
-	 terminates.  */
+         CLD_TRAPPED, CLD_STOPPED, CLD_CONTINUED.  Loop until the program
+         terminates.  */
       if (info.si_code == CLD_EXITED
-	  || info.si_code == CLD_KILLED || info.si_code == CLD_DUMPED)
-	break;
+          || info.si_code == CLD_KILLED || info.si_code == CLD_DUMPED)
+        break;
     }
 
   /* The child process has exited or was signalled.  */
@@ -237,26 +237,26 @@ wait_subprocess (pid_t child, const char *progname,
   if (slave_process)
     {
       /* Unregister the child from the list of slave subprocesses, so that
-	 later, when we exit, we don't kill a totally unrelated process which
-	 may have acquired the same pid.  */
+         later, when we exit, we don't kill a totally unrelated process which
+         may have acquired the same pid.  */
       unregister_slave_subprocess (child);
 
       /* Now remove the zombie from the process list.  */
       for (;;)
-	{
-	  if (waitid (P_PID, child, &info, WEXITED) < 0)
-	    {
+        {
+          if (waitid (P_PID, child, &info, WEXITED) < 0)
+            {
 # ifdef EINTR
-	      if (errno == EINTR)
-		continue;
+              if (errno == EINTR)
+                continue;
 # endif
-	      if (exit_on_error || !null_stderr)
-		error (exit_on_error ? EXIT_FAILURE : 0, errno,
-		       _("%s subprocess"), progname);
-	      return 127;
-	    }
-	  break;
-	}
+              if (exit_on_error || !null_stderr)
+                error (exit_on_error ? EXIT_FAILURE : 0, errno,
+                       _("%s subprocess"), progname);
+              return 127;
+            }
+          break;
+        }
     }
 
   switch (info.si_code)
@@ -264,24 +264,24 @@ wait_subprocess (pid_t child, const char *progname,
     case CLD_KILLED:
     case CLD_DUMPED:
       if (termsigp != NULL)
-	*termsigp = info.si_status; /* TODO: or info.si_signo? */
+        *termsigp = info.si_status; /* TODO: or info.si_signo? */
 # ifdef SIGPIPE
       if (info.si_status == SIGPIPE && ignore_sigpipe)
-	return 0;
+        return 0;
 # endif
       if (exit_on_error || (!null_stderr && termsigp == NULL))
-	error (exit_on_error ? EXIT_FAILURE : 0, 0,
-	       _("%s subprocess got fatal signal %d"),
-	       progname, info.si_status);
+        error (exit_on_error ? EXIT_FAILURE : 0, 0,
+               _("%s subprocess got fatal signal %d"),
+               progname, info.si_status);
       return 127;
     case CLD_EXITED:
       if (info.si_status == 127)
-	{
-	  if (exit_on_error || !null_stderr)
-	    error (exit_on_error ? EXIT_FAILURE : 0, 0,
-		   _("%s subprocess failed"), progname);
-	  return 127;
-	}
+        {
+          if (exit_on_error || !null_stderr)
+            error (exit_on_error ? EXIT_FAILURE : 0, 0,
+                   _("%s subprocess failed"), progname);
+          return 127;
+        }
       return info.si_status;
     default:
       abort ();
@@ -298,31 +298,31 @@ wait_subprocess (pid_t child, const char *progname,
       int result = waitpid (child, &status, 0);
 
       if (result != child)
-	{
+        {
 # ifdef EINTR
-	  if (errno == EINTR)
-	    continue;
+          if (errno == EINTR)
+            continue;
 # endif
 # if 0 /* defined ECHILD */
-	  if (errno == ECHILD)
-	    {
-	      /* Child process nonexistent?! Assume it terminated
-		 successfully.  */
-	      status = 0;
-	      break;
-	    }
+          if (errno == ECHILD)
+            {
+              /* Child process nonexistent?! Assume it terminated
+                 successfully.  */
+              status = 0;
+              break;
+            }
 # endif
-	  if (exit_on_error || !null_stderr)
-	    error (exit_on_error ? EXIT_FAILURE : 0, errno,
-		   _("%s subprocess"), progname);
-	  return 127;
-	}
+          if (exit_on_error || !null_stderr)
+            error (exit_on_error ? EXIT_FAILURE : 0, errno,
+                   _("%s subprocess"), progname);
+          return 127;
+        }
 
       /* One of WIFSIGNALED (status), WIFEXITED (status), WIFSTOPPED (status)
-	 must always be true, since we did not specify WCONTINUED in the
-	 waitpid() call.  Loop until the program terminates.  */
+         must always be true, since we did not specify WCONTINUED in the
+         waitpid() call.  Loop until the program terminates.  */
       if (!WIFSTOPPED (status))
-	break;
+        break;
     }
 
   /* The child process has exited or was signalled.  */
@@ -336,15 +336,15 @@ wait_subprocess (pid_t child, const char *progname,
   if (WIFSIGNALED (status))
     {
       if (termsigp != NULL)
-	*termsigp = WTERMSIG (status);
+        *termsigp = WTERMSIG (status);
 # ifdef SIGPIPE
       if (WTERMSIG (status) == SIGPIPE && ignore_sigpipe)
-	return 0;
+        return 0;
 # endif
       if (exit_on_error || (!null_stderr && termsigp == NULL))
-	error (exit_on_error ? EXIT_FAILURE : 0, 0,
-	       _("%s subprocess got fatal signal %d"),
-	       progname, (int) WTERMSIG (status));
+        error (exit_on_error ? EXIT_FAILURE : 0, 0,
+               _("%s subprocess got fatal signal %d"),
+               progname, (int) WTERMSIG (status));
       return 127;
     }
   if (!WIFEXITED (status))
@@ -352,8 +352,8 @@ wait_subprocess (pid_t child, const char *progname,
   if (WEXITSTATUS (status) == 127)
     {
       if (exit_on_error || !null_stderr)
-	error (exit_on_error ? EXIT_FAILURE : 0, 0,
-	       _("%s subprocess failed"), progname);
+        error (exit_on_error ? EXIT_FAILURE : 0, 0,
+               _("%s subprocess failed"), progname);
       return 127;
     }
   return WEXITSTATUS (status);

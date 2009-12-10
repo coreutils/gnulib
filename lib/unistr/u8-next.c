@@ -31,7 +31,7 @@ u8_next (ucs4_t *puc, const uint8_t *s)
   else
     {
       if (count < 0)
-	*puc = 0xfffd;
+        *puc = 0xfffd;
       return NULL;
     }
 }

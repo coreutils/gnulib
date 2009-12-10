@@ -56,14 +56,14 @@ getugroups (int maxcount _UNUSED_PARAMETER_,
 
 int
 getugroups (int maxcount, gid_t *grouplist, char const *username,
-	    gid_t gid)
+            gid_t gid)
 {
   int count = 0;
 
   if (gid != (gid_t) -1)
     {
       if (maxcount != 0)
-	grouplist[count] = gid;
+        grouplist[count] = gid;
       ++count;
     }
 
@@ -76,37 +76,37 @@ getugroups (int maxcount, gid_t *grouplist, char const *username,
       errno = 0;
       grp = getgrent ();
       if (grp == NULL)
-	break;
+        break;
 
       for (cp = grp->gr_mem; *cp; ++cp)
-	{
-	  int n;
+        {
+          int n;
 
-	  if ( ! STREQ (username, *cp))
-	    continue;
+          if ( ! STREQ (username, *cp))
+            continue;
 
-	  /* See if this group number is already on the list.  */
-	  for (n = 0; n < count; ++n)
-	    if (grouplist && grouplist[n] == grp->gr_gid)
-	      break;
+          /* See if this group number is already on the list.  */
+          for (n = 0; n < count; ++n)
+            if (grouplist && grouplist[n] == grp->gr_gid)
+              break;
 
-	  /* If it's a new group number, then try to add it to the list.  */
-	  if (n == count)
-	    {
-	      if (maxcount != 0)
-		{
-		  if (count >= maxcount)
-		    goto done;
-		  grouplist[count] = grp->gr_gid;
-		}
-	      if (count == INT_MAX)
-		{
-		  errno = EOVERFLOW;
-		  goto done;
-		}
-	      count++;
-	    }
-	}
+          /* If it's a new group number, then try to add it to the list.  */
+          if (n == count)
+            {
+              if (maxcount != 0)
+                {
+                  if (count >= maxcount)
+                    goto done;
+                  grouplist[count] = grp->gr_gid;
+                }
+              if (count == INT_MAX)
+                {
+                  errno = EOVERFLOW;
+                  goto done;
+                }
+              count++;
+            }
+        }
     }
 
   if (errno != 0)

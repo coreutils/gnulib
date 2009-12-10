@@ -48,7 +48,7 @@ readline (const char *prompt)
     return NULL;
 
   while (*out && (out[strlen (out) - 1] == '\r'
-		  || out[strlen (out) - 1] == '\n'))
+                  || out[strlen (out) - 1] == '\n'))
     out[strlen (out) - 1] = '\0';
 
   return out;

@@ -36,33 +36,33 @@ rpl_duplocale (locale_t locale)
   if (locale == LC_GLOBAL_LOCALE)
     {
       /* Create a copy of the locale by fetching the name of each locale
-	 category, starting with LC_CTYPE.  */
+         category, starting with LC_CTYPE.  */
       static struct { int cat; int mask; } categories[] =
-	{
-	    { LC_NUMERIC,        LC_NUMERIC_MASK },
-	    { LC_TIME,           LC_TIME_MASK },
-	    { LC_COLLATE,        LC_COLLATE_MASK },
-	    { LC_MONETARY,       LC_MONETARY_MASK },
-	    { LC_MESSAGES,       LC_MESSAGES_MASK }
+        {
+            { LC_NUMERIC,        LC_NUMERIC_MASK },
+            { LC_TIME,           LC_TIME_MASK },
+            { LC_COLLATE,        LC_COLLATE_MASK },
+            { LC_MONETARY,       LC_MONETARY_MASK },
+            { LC_MESSAGES,       LC_MESSAGES_MASK }
 #ifdef LC_PAPER
-	  , { LC_PAPER,          LC_PAPER_MASK }
+          , { LC_PAPER,          LC_PAPER_MASK }
 #endif
 #ifdef LC_NAME
-	  , { LC_NAME,           LC_NAME_MASK }
+          , { LC_NAME,           LC_NAME_MASK }
 #endif
 #ifdef LC_ADDRESS
-	  , { LC_ADDRESS,        LC_ADDRESS_MASK }
+          , { LC_ADDRESS,        LC_ADDRESS_MASK }
 #endif
 #ifdef LC_TELEPHONE
-	  , { LC_TELEPHONE,      LC_TELEPHONE_MASK }
+          , { LC_TELEPHONE,      LC_TELEPHONE_MASK }
 #endif
 #ifdef LC_MEASUREMENT
-	  , { LC_MEASUREMENT,    LC_MEASUREMENT_MASK }
+          , { LC_MEASUREMENT,    LC_MEASUREMENT_MASK }
 #endif
 #ifdef LC_IDENTIFICATION
-	  , { LC_IDENTIFICATION, LC_IDENTIFICATION_MASK }
+          , { LC_IDENTIFICATION, LC_IDENTIFICATION_MASK }
 #endif
-	};
+        };
       const char *base_name;
       locale_t base_copy;
       unsigned int i;
@@ -70,28 +70,28 @@ rpl_duplocale (locale_t locale)
       base_name = setlocale (LC_CTYPE, NULL);
       base_copy = newlocale (LC_ALL_MASK, base_name, NULL);
       if (base_copy == NULL)
-	return NULL;
+        return NULL;
 
       for (i = 0; i < SIZEOF (categories); i++)
-	{
-	  int category = categories[i].cat;
-	  int category_mask = categories[i].mask;
-	  const char *name = setlocale (category, NULL);
-	  if (strcmp (name, base_name) != 0)
-	    {
-	      locale_t copy = newlocale (category_mask, name, base_copy);
-	      if (copy == NULL)
-		{
-		  int saved_errno = errno;
-		  freelocale (base_copy);
-		  errno = saved_errno;
-		  return NULL;
-		}
-	      /* No need to call freelocale (base_copy) if copy != base_copy;
-		 the newlocale function already takes care of doing it.  */
-	      base_copy = copy;
-	    }
-	}
+        {
+          int category = categories[i].cat;
+          int category_mask = categories[i].mask;
+          const char *name = setlocale (category, NULL);
+          if (strcmp (name, base_name) != 0)
+            {
+              locale_t copy = newlocale (category_mask, name, base_copy);
+              if (copy == NULL)
+                {
+                  int saved_errno = errno;
+                  freelocale (base_copy);
+                  errno = saved_errno;
+                  return NULL;
+                }
+              /* No need to call freelocale (base_copy) if copy != base_copy;
+                 the newlocale function already takes care of doing it.  */
+              base_copy = copy;
+            }
+        }
 
       return base_copy;
     }

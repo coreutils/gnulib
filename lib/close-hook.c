@@ -66,7 +66,7 @@ register_close_hook (close_hook_fn hook, struct close_hook *link)
     {
       /* The link is already in use.  */
       if (link->private_fn != hook)
-	abort ();
+        abort ();
     }
 }
 

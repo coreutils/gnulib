@@ -70,8 +70,8 @@ unsigned int error_message_count;
 extern void __error (int status, int errnum, const char *message, ...)
      __attribute__ ((__format__ (__printf__, 3, 4)));
 extern void __error_at_line (int status, int errnum, const char *file_name,
-			     unsigned int line_number, const char *message,
-			     ...)
+                             unsigned int line_number, const char *message,
+                             ...)
      __attribute__ ((__format__ (__printf__, 5, 6)));;
 # define error __error
 # define error_at_line __error_at_line
@@ -101,8 +101,8 @@ extern char *program_name;
 
 # if HAVE_STRERROR_R || defined strerror_r
 #  define __strerror_r strerror_r
-# endif	/* HAVE_STRERROR_R || defined strerror_r */
-#endif	/* not _LIBC */
+# endif /* HAVE_STRERROR_R || defined strerror_r */
+#endif  /* not _LIBC */
 
 static inline void
 flush_stdout (void)
@@ -175,58 +175,58 @@ error_tail (int status, int errnum, const char *message, va_list args)
       bool use_malloc = false;
 
       while (1)
-	{
-	  if (__libc_use_alloca (len * sizeof (wchar_t)))
-	    wmessage = (wchar_t *) alloca (len * sizeof (wchar_t));
-	  else
-	    {
-	      if (!use_malloc)
-		wmessage = NULL;
+        {
+          if (__libc_use_alloca (len * sizeof (wchar_t)))
+            wmessage = (wchar_t *) alloca (len * sizeof (wchar_t));
+          else
+            {
+              if (!use_malloc)
+                wmessage = NULL;
 
-	      wchar_t *p = (wchar_t *) realloc (wmessage,
-						len * sizeof (wchar_t));
-	      if (p == NULL)
-		{
-		  free (wmessage);
-		  fputws_unlocked (L"out of memory\n", stderr);
-		  return;
-		}
-	      wmessage = p;
-	      use_malloc = true;
-	    }
+              wchar_t *p = (wchar_t *) realloc (wmessage,
+                                                len * sizeof (wchar_t));
+              if (p == NULL)
+                {
+                  free (wmessage);
+                  fputws_unlocked (L"out of memory\n", stderr);
+                  return;
+                }
+              wmessage = p;
+              use_malloc = true;
+            }
 
-	  memset (&st, '\0', sizeof (st));
-	  tmp = message;
+          memset (&st, '\0', sizeof (st));
+          tmp = message;
 
-	  res = mbsrtowcs (wmessage, &tmp, len, &st);
-	  if (res != len)
-	    break;
+          res = mbsrtowcs (wmessage, &tmp, len, &st);
+          if (res != len)
+            break;
 
-	  if (__builtin_expect (len >= SIZE_MAX / 2, 0))
-	    {
-	      /* This really should not happen if everything is fine.  */
-	      res = (size_t) -1;
-	      break;
-	    }
+          if (__builtin_expect (len >= SIZE_MAX / 2, 0))
+            {
+              /* This really should not happen if everything is fine.  */
+              res = (size_t) -1;
+              break;
+            }
 
-	  len *= 2;
-	}
+          len *= 2;
+        }
 
       if (res == (size_t) -1)
-	{
-	  /* The string cannot be converted.  */
-	  if (use_malloc)
-	    {
-	      free (wmessage);
-	      use_malloc = false;
-	    }
-	  wmessage = (wchar_t *) L"???";
-	}
+        {
+          /* The string cannot be converted.  */
+          if (use_malloc)
+            {
+              free (wmessage);
+              use_malloc = false;
+            }
+          wmessage = (wchar_t *) L"???";
+        }
 
       __vfwprintf (stderr, wmessage, args);
 
       if (use_malloc)
-	free (wmessage);
+        free (wmessage);
     }
   else
 #endif
@@ -261,7 +261,7 @@ error (int status, int errnum, const char *message, ...)
      cancellation.  Therefore disable cancellation for now.  */
   int state = PTHREAD_CANCEL_ENABLE;
   __libc_ptf_call (pthread_setcancelstate, (PTHREAD_CANCEL_DISABLE, &state),
-		   0);
+                   0);
 #endif
 
   flush_stdout ();
@@ -296,7 +296,7 @@ int error_one_per_line;
 
 void
 error_at_line (int status, int errnum, const char *file_name,
-	       unsigned int line_number, const char *message, ...)
+               unsigned int line_number, const char *message, ...)
 {
   va_list args;
 
@@ -306,10 +306,10 @@ error_at_line (int status, int errnum, const char *file_name,
       static unsigned int old_line_number;
 
       if (old_line_number == line_number
-	  && (file_name == old_file_name
-	      || strcmp (old_file_name, file_name) == 0))
-	/* Simply return and print nothing.  */
-	return;
+          && (file_name == old_file_name
+              || strcmp (old_file_name, file_name) == 0))
+        /* Simply return and print nothing.  */
+        return;
 
       old_file_name = file_name;
       old_line_number = line_number;
@@ -320,7 +320,7 @@ error_at_line (int status, int errnum, const char *file_name,
      cancellation.  Therefore disable cancellation for now.  */
   int state = PTHREAD_CANCEL_ENABLE;
   __libc_ptf_call (pthread_setcancelstate, (PTHREAD_CANCEL_DISABLE, &state),
-		   0);
+                   0);
 #endif
 
   flush_stdout ();
@@ -340,10 +340,10 @@ error_at_line (int status, int errnum, const char *file_name,
 
 #if _LIBC
   __fxprintf (NULL, file_name != NULL ? "%s:%d: " : " ",
-	      file_name, line_number);
+              file_name, line_number);
 #else
   fprintf (stderr, file_name != NULL ? "%s:%d: " : " ",
-	   file_name, line_number);
+           file_name, line_number);
 #endif
 
   va_start (args, message);

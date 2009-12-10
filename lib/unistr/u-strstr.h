@@ -32,17 +32,17 @@ FUNC (const UNIT *haystack, const UNIT *needle)
   for (; *haystack != 0; haystack++)
     if (*haystack == first)
       {
-	/* Compare with needle's remaining units.  */
-	const UNIT *hptr = haystack + 1;
-	const UNIT *nptr = needle + 1;
-	for (;;)
-	  {
-	    if (*hptr != *nptr)
-	      break;
-	    hptr++; nptr++;
-	    if (*nptr == 0)
-	      return (UNIT *) haystack;
-	  }
+        /* Compare with needle's remaining units.  */
+        const UNIT *hptr = haystack + 1;
+        const UNIT *nptr = needle + 1;
+        for (;;)
+          {
+            if (*hptr != *nptr)
+              break;
+            hptr++; nptr++;
+            if (*nptr == 0)
+              return (UNIT *) haystack;
+          }
       }
 
   return NULL;

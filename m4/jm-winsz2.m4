@@ -8,7 +8,7 @@
 AC_DEFUN([gl_HEADER_TIOCGWINSZ_NEEDS_SYS_IOCTL],
 [AC_REQUIRE([gl_HEADER_TIOCGWINSZ_IN_TERMIOS_H])
  AC_CACHE_CHECK([whether use of TIOCGWINSZ requires sys/ioctl.h],
-	        gl_cv_sys_tiocgwinsz_needs_sys_ioctl_h,
+                gl_cv_sys_tiocgwinsz_needs_sys_ioctl_h,
   [gl_cv_sys_tiocgwinsz_needs_sys_ioctl_h=no
 
   if test $gl_cv_sys_tiocgwinsz_needs_termios_h = no; then

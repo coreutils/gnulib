@@ -31,15 +31,15 @@
 #include "binary-io.h"
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 /* Return true if FD is open.  */
@@ -106,47 +106,47 @@ main ()
     use_cloexec = 0;
 #endif
       {
-	int o_flags;
-	int fd[2];
+        int o_flags;
+        int fd[2];
 
-	o_flags = 0;
+        o_flags = 0;
 #if !((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)
-	if (use_nonblocking)
-	  o_flags |= O_NONBLOCK;
+        if (use_nonblocking)
+          o_flags |= O_NONBLOCK;
 #endif
 #if defined O_CLOEXEC
-	if (use_cloexec)
-	  o_flags |= O_CLOEXEC;
+        if (use_cloexec)
+          o_flags |= O_CLOEXEC;
 #endif
 
-	fd[0] = -1;
-	fd[1] = -1;
-	ASSERT (pipe2 (fd, o_flags) >= 0);
-	ASSERT (fd[0] >= 0);
-	ASSERT (fd[1] >= 0);
-	ASSERT (fd[0] != fd[1]);
-	ASSERT (is_open (fd[0]) >= 0);
-	ASSERT (is_open (fd[1]) >= 0);
-	if (use_cloexec)
-	  {
-	    ASSERT (is_cloexec (fd[0]));
-	    ASSERT (is_cloexec (fd[1]));
-	  }
-	else
-	  {
-	    ASSERT (!is_cloexec (fd[0]));
-	    ASSERT (!is_cloexec (fd[1]));
-	  }
-	if (use_nonblocking)
-	  {
-	    ASSERT (is_nonblocking (fd[0]));
-	    ASSERT (is_nonblocking (fd[1]));
-	  }
-	else
-	  {
-	    ASSERT (!is_nonblocking (fd[0]));
-	    ASSERT (!is_nonblocking (fd[1]));
-	  }
+        fd[0] = -1;
+        fd[1] = -1;
+        ASSERT (pipe2 (fd, o_flags) >= 0);
+        ASSERT (fd[0] >= 0);
+        ASSERT (fd[1] >= 0);
+        ASSERT (fd[0] != fd[1]);
+        ASSERT (is_open (fd[0]) >= 0);
+        ASSERT (is_open (fd[1]) >= 0);
+        if (use_cloexec)
+          {
+            ASSERT (is_cloexec (fd[0]));
+            ASSERT (is_cloexec (fd[1]));
+          }
+        else
+          {
+            ASSERT (!is_cloexec (fd[0]));
+            ASSERT (!is_cloexec (fd[1]));
+          }
+        if (use_nonblocking)
+          {
+            ASSERT (is_nonblocking (fd[0]));
+            ASSERT (is_nonblocking (fd[1]));
+          }
+        else
+          {
+            ASSERT (!is_nonblocking (fd[0]));
+            ASSERT (!is_nonblocking (fd[1]));
+          }
       }
 
   return 0;

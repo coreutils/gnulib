@@ -76,11 +76,11 @@ struct gl_oset_impl
 
 /* Rotate left a subtree.
 
-			 B                         D
-		       /   \                     /   \
-		     A       D       -->       B       E
-			    / \               / \
-			   C   E             A   C
+                         B                         D
+                       /   \                     /   \
+                     A       D       -->       B       E
+                            / \               / \
+                           C   E             A   C
 
    Change the tree structure, update the branch sizes.
    The caller must update the colors and register D as child of its parent.  */
@@ -102,11 +102,11 @@ rotate_left (gl_oset_node_t b_node, gl_oset_node_t d_node)
 
 /* Rotate right a subtree.
 
-			   D                     B
-			 /   \                 /   \
-		       B       E     -->     A       D
-		      / \                           / \
-		     A   C                         C   E
+                           D                     B
+                         /   \                 /   \
+                       B       E     -->     A       D
+                      / \                           / \
+                     A   C                         C   E
 
    Change the tree structure, update the branch sizes.
    The caller must update the colors and register B as child of its parent.  */
@@ -135,118 +135,118 @@ rebalance_after_add (gl_oset_t set, gl_oset_node_t node, gl_oset_node_t parent)
   for (;;)
     {
       /* At this point, parent = node->parent != NULL.
-	 Think of node->color being RED (although node->color is not yet
-	 assigned.)  */
+         Think of node->color being RED (although node->color is not yet
+         assigned.)  */
       gl_oset_node_t grandparent;
       gl_oset_node_t uncle;
 
       if (parent->color == BLACK)
-	{
-	  /* A RED color for node is acceptable.  */
-	  node->color = RED;
-	  return;
-	}
+        {
+          /* A RED color for node is acceptable.  */
+          node->color = RED;
+          return;
+        }
 
       grandparent = parent->parent;
       /* Since parent is RED, we know that
-	 grandparent is != NULL and colored BLACK.  */
+         grandparent is != NULL and colored BLACK.  */
 
       if (grandparent->left == parent)
-	uncle = grandparent->right;
+        uncle = grandparent->right;
       else if (grandparent->right == parent)
-	uncle = grandparent->left;
+        uncle = grandparent->left;
       else
-	abort ();
+        abort ();
 
       if (uncle != NULL && uncle->color == RED)
-	{
-	  /* Change grandparent from BLACK to RED, and
-	     change parent and uncle from RED to BLACK.
-	     This makes it acceptable for node to be RED.  */
-	  node->color = RED;
-	  parent->color = uncle->color = BLACK;
-	  node = grandparent;
-	}
+        {
+          /* Change grandparent from BLACK to RED, and
+             change parent and uncle from RED to BLACK.
+             This makes it acceptable for node to be RED.  */
+          node->color = RED;
+          parent->color = uncle->color = BLACK;
+          node = grandparent;
+        }
       else
-	{
-	  /* grandparent and uncle are BLACK.  parent is RED.  node wants
-	     to be RED too.
-	     In this case, recoloring is not sufficient.  Need to perform
-	     one or two rotations.  */
-	  gl_oset_node_t *grandparentp;
+        {
+          /* grandparent and uncle are BLACK.  parent is RED.  node wants
+             to be RED too.
+             In this case, recoloring is not sufficient.  Need to perform
+             one or two rotations.  */
+          gl_oset_node_t *grandparentp;
 
-	  if (grandparent->parent == NULL)
-	    grandparentp = &set->root;
-	  else if (grandparent->parent->left == grandparent)
-	    grandparentp = &grandparent->parent->left;
-	  else if (grandparent->parent->right == grandparent)
-	    grandparentp = &grandparent->parent->right;
-	  else
-	    abort ();
+          if (grandparent->parent == NULL)
+            grandparentp = &set->root;
+          else if (grandparent->parent->left == grandparent)
+            grandparentp = &grandparent->parent->left;
+          else if (grandparent->parent->right == grandparent)
+            grandparentp = &grandparent->parent->right;
+          else
+            abort ();
 
-	  if (grandparent->left == parent)
-	    {
-	      if (parent->right == node)
-		{
-		  /* Rotation between node and parent.  */
-		  grandparent->left = rotate_left (parent, node);
-		  node = parent;
-		  parent = grandparent->left;
-		}
-	      /* grandparent and uncle are BLACK.  parent and node want to be
-		 RED.  parent = grandparent->left.  node = parent->left.
+          if (grandparent->left == parent)
+            {
+              if (parent->right == node)
+                {
+                  /* Rotation between node and parent.  */
+                  grandparent->left = rotate_left (parent, node);
+                  node = parent;
+                  parent = grandparent->left;
+                }
+              /* grandparent and uncle are BLACK.  parent and node want to be
+                 RED.  parent = grandparent->left.  node = parent->left.
 
-		      grandparent              parent
-			 bh+1                   bh+1
-			 /   \                 /   \
-		     parent  uncle    -->   node  grandparent
-		      bh      bh             bh      bh
-		      / \                           / \
-		   node  C                         C  uncle
-		    bh   bh                       bh    bh
-	       */
-	      *grandparentp = rotate_right (parent, grandparent);
-	      parent->color = BLACK;
-	      node->color = grandparent->color = RED;
-	    }
-	  else /* grandparent->right == parent */
-	    {
-	      if (parent->left == node)
-		{
-		  /* Rotation between node and parent.  */
-		  grandparent->right = rotate_right (node, parent);
-		  node = parent;
-		  parent = grandparent->right;
-		}
-	      /* grandparent and uncle are BLACK.  parent and node want to be
-		 RED.  parent = grandparent->right.  node = parent->right.
+                      grandparent              parent
+                         bh+1                   bh+1
+                         /   \                 /   \
+                     parent  uncle    -->   node  grandparent
+                      bh      bh             bh      bh
+                      / \                           / \
+                   node  C                         C  uncle
+                    bh   bh                       bh    bh
+               */
+              *grandparentp = rotate_right (parent, grandparent);
+              parent->color = BLACK;
+              node->color = grandparent->color = RED;
+            }
+          else /* grandparent->right == parent */
+            {
+              if (parent->left == node)
+                {
+                  /* Rotation between node and parent.  */
+                  grandparent->right = rotate_right (node, parent);
+                  node = parent;
+                  parent = grandparent->right;
+                }
+              /* grandparent and uncle are BLACK.  parent and node want to be
+                 RED.  parent = grandparent->right.  node = parent->right.
 
-		    grandparent                    parent
-		       bh+1                         bh+1
-		       /   \                       /   \
-		   uncle  parent     -->   grandparent  node
-		     bh     bh                  bh       bh
-			    / \                 / \
-			   C  node          uncle  C
-			  bh   bh            bh    bh
-	       */
-	      *grandparentp = rotate_left (grandparent, parent);
-	      parent->color = BLACK;
-	      node->color = grandparent->color = RED;
-	    }
-	  return;
-	}
+                    grandparent                    parent
+                       bh+1                         bh+1
+                       /   \                       /   \
+                   uncle  parent     -->   grandparent  node
+                     bh     bh                  bh       bh
+                            / \                 / \
+                           C  node          uncle  C
+                          bh   bh            bh    bh
+               */
+              *grandparentp = rotate_left (grandparent, parent);
+              parent->color = BLACK;
+              node->color = grandparent->color = RED;
+            }
+          return;
+        }
 
       /* Start again with a new (node, parent) pair.  */
       parent = node->parent;
 
       if (parent == NULL)
-	{
-	  /* Change node's color from RED to BLACK.  This increases the
-	     tree's black-height.  */
-	  node->color = BLACK;
-	  return;
-	}
+        {
+          /* Change node's color from RED to BLACK.  This increases the
+             tree's black-height.  */
+          node->color = BLACK;
+          return;
+        }
     }
 }
 
@@ -260,280 +260,280 @@ rebalance_after_remove (gl_oset_t set, gl_oset_node_t child, gl_oset_node_t pare
   for (;;)
     {
       /* At this point, we reduced the black-height of the CHILD subtree by 1.
-	 To make up, either look for a possibility to turn a RED to a BLACK
-	 node, or try to reduce the black-height tree of CHILD's sibling
-	 subtree as well.  */
+         To make up, either look for a possibility to turn a RED to a BLACK
+         node, or try to reduce the black-height tree of CHILD's sibling
+         subtree as well.  */
       gl_oset_node_t *parentp;
 
       if (parent->parent == NULL)
-	parentp = &set->root;
+        parentp = &set->root;
       else if (parent->parent->left == parent)
-	parentp = &parent->parent->left;
+        parentp = &parent->parent->left;
       else if (parent->parent->right == parent)
-	parentp = &parent->parent->right;
+        parentp = &parent->parent->right;
       else
-	abort ();
+        abort ();
 
       if (parent->left == child)
-	{
-	  gl_oset_node_t sibling = parent->right;
-	  /* sibling's black-height is >= 1.  In particular,
-	     sibling != NULL.
+        {
+          gl_oset_node_t sibling = parent->right;
+          /* sibling's black-height is >= 1.  In particular,
+             sibling != NULL.
 
-		      parent
-		       /   \
-		   child  sibling
-		     bh    bh+1
-	   */
+                      parent
+                       /   \
+                   child  sibling
+                     bh    bh+1
+           */
 
-	  if (sibling->color == RED)
-	    {
-	      /* sibling is RED, hence parent is BLACK and sibling's children
-		 are non-NULL and BLACK.
+          if (sibling->color == RED)
+            {
+              /* sibling is RED, hence parent is BLACK and sibling's children
+                 are non-NULL and BLACK.
 
-		      parent                       sibling
-		       bh+2                         bh+2
-		       /   \                        /   \
-		   child  sibling     -->       parent    SR
-		     bh    bh+1                  bh+1    bh+1
-			    / \                  / \
-			  SL   SR            child  SL
-			 bh+1 bh+1             bh  bh+1
-	       */
-	      *parentp = rotate_left (parent, sibling);
-	      parent->color = RED;
-	      sibling->color = BLACK;
+                      parent                       sibling
+                       bh+2                         bh+2
+                       /   \                        /   \
+                   child  sibling     -->       parent    SR
+                     bh    bh+1                  bh+1    bh+1
+                            / \                  / \
+                          SL   SR            child  SL
+                         bh+1 bh+1             bh  bh+1
+               */
+              *parentp = rotate_left (parent, sibling);
+              parent->color = RED;
+              sibling->color = BLACK;
 
-	      /* Concentrate on the subtree of parent.  The new sibling is
-		 one of the old sibling's children, and known to be BLACK.  */
-	      parentp = &sibling->left;
-	      sibling = parent->right;
-	    }
-	  /* Now we know that sibling is BLACK.
+              /* Concentrate on the subtree of parent.  The new sibling is
+                 one of the old sibling's children, and known to be BLACK.  */
+              parentp = &sibling->left;
+              sibling = parent->right;
+            }
+          /* Now we know that sibling is BLACK.
 
-		      parent
-		       /   \
-		   child  sibling
-		     bh    bh+1
-	   */
-	  if (sibling->right != NULL && sibling->right->color == RED)
-	    {
-	      /*
-		      parent                     sibling
-		     bh+1|bh+2                  bh+1|bh+2
-		       /   \                      /   \
-		   child  sibling    -->      parent    SR
-		     bh    bh+1                bh+1    bh+1
-			    / \                / \
-			  SL   SR           child  SL
-			  bh   bh             bh   bh
-	       */
-	      *parentp = rotate_left (parent, sibling);
-	      sibling->color = parent->color;
-	      parent->color = BLACK;
-	      sibling->right->color = BLACK;
-	      return;
-	    }
-	  else if (sibling->left != NULL && sibling->left->color == RED)
-	    {
-	      /*
-		      parent                   parent
-		     bh+1|bh+2                bh+1|bh+2
-		       /   \                    /   \
-		   child  sibling    -->    child    SL
-		     bh    bh+1               bh    bh+1
-			    / \                     /  \
-			  SL   SR                 SLL  sibling
-			  bh   bh                 bh     bh
-			 /  \                           /   \
-		       SLL  SLR                       SLR    SR
-		       bh    bh                       bh     bh
+                      parent
+                       /   \
+                   child  sibling
+                     bh    bh+1
+           */
+          if (sibling->right != NULL && sibling->right->color == RED)
+            {
+              /*
+                      parent                     sibling
+                     bh+1|bh+2                  bh+1|bh+2
+                       /   \                      /   \
+                   child  sibling    -->      parent    SR
+                     bh    bh+1                bh+1    bh+1
+                            / \                / \
+                          SL   SR           child  SL
+                          bh   bh             bh   bh
+               */
+              *parentp = rotate_left (parent, sibling);
+              sibling->color = parent->color;
+              parent->color = BLACK;
+              sibling->right->color = BLACK;
+              return;
+            }
+          else if (sibling->left != NULL && sibling->left->color == RED)
+            {
+              /*
+                      parent                   parent
+                     bh+1|bh+2                bh+1|bh+2
+                       /   \                    /   \
+                   child  sibling    -->    child    SL
+                     bh    bh+1               bh    bh+1
+                            / \                     /  \
+                          SL   SR                 SLL  sibling
+                          bh   bh                 bh     bh
+                         /  \                           /   \
+                       SLL  SLR                       SLR    SR
+                       bh    bh                       bh     bh
 
-		 where SLL, SLR, SR are all black.
-	       */
-	      parent->right = rotate_right (sibling->left, sibling);
-	      /* Change sibling from BLACK to RED and SL from RED to BLACK.  */
-	      sibling->color = RED;
-	      sibling = parent->right;
-	      sibling->color = BLACK;
+                 where SLL, SLR, SR are all black.
+               */
+              parent->right = rotate_right (sibling->left, sibling);
+              /* Change sibling from BLACK to RED and SL from RED to BLACK.  */
+              sibling->color = RED;
+              sibling = parent->right;
+              sibling->color = BLACK;
 
-	      /* Now do as in the previous case.  */
-	      *parentp = rotate_left (parent, sibling);
-	      sibling->color = parent->color;
-	      parent->color = BLACK;
-	      sibling->right->color = BLACK;
-	      return;
-	    }
-	  else
-	    {
-	      if (parent->color == BLACK)
-		{
-		  /* Change sibling from BLACK to RED.  Then the entire
-		     subtree at parent has decreased its black-height.
-			      parent                   parent
-			       bh+2                     bh+1
-			       /   \                    /   \
-			   child  sibling    -->    child  sibling
-			     bh    bh+1               bh     bh
-		   */
-		  sibling->color = RED;
+              /* Now do as in the previous case.  */
+              *parentp = rotate_left (parent, sibling);
+              sibling->color = parent->color;
+              parent->color = BLACK;
+              sibling->right->color = BLACK;
+              return;
+            }
+          else
+            {
+              if (parent->color == BLACK)
+                {
+                  /* Change sibling from BLACK to RED.  Then the entire
+                     subtree at parent has decreased its black-height.
+                              parent                   parent
+                               bh+2                     bh+1
+                               /   \                    /   \
+                           child  sibling    -->    child  sibling
+                             bh    bh+1               bh     bh
+                   */
+                  sibling->color = RED;
 
-		  child = parent;
-		}
-	      else
-		{
-		  /* Change parent from RED to BLACK, but compensate by
-		     changing sibling from BLACK to RED.
-			      parent                   parent
-			       bh+1                     bh+1
-			       /   \                    /   \
-			   child  sibling    -->    child  sibling
-			     bh    bh+1               bh     bh
-		   */
-		  parent->color = BLACK;
-		  sibling->color = RED;
-		  return;
-		}
-	    }
-	}
+                  child = parent;
+                }
+              else
+                {
+                  /* Change parent from RED to BLACK, but compensate by
+                     changing sibling from BLACK to RED.
+                              parent                   parent
+                               bh+1                     bh+1
+                               /   \                    /   \
+                           child  sibling    -->    child  sibling
+                             bh    bh+1               bh     bh
+                   */
+                  parent->color = BLACK;
+                  sibling->color = RED;
+                  return;
+                }
+            }
+        }
       else if (parent->right == child)
-	{
-	  gl_oset_node_t sibling = parent->left;
-	  /* sibling's black-height is >= 1.  In particular,
-	     sibling != NULL.
+        {
+          gl_oset_node_t sibling = parent->left;
+          /* sibling's black-height is >= 1.  In particular,
+             sibling != NULL.
 
-		      parent
-		       /   \
-		  sibling  child
-		    bh+1     bh
-	   */
+                      parent
+                       /   \
+                  sibling  child
+                    bh+1     bh
+           */
 
-	  if (sibling->color == RED)
-	    {
-	      /* sibling is RED, hence parent is BLACK and sibling's children
-		 are non-NULL and BLACK.
+          if (sibling->color == RED)
+            {
+              /* sibling is RED, hence parent is BLACK and sibling's children
+                 are non-NULL and BLACK.
 
-		      parent                 sibling
-		       bh+2                    bh+2
-		       /   \                  /   \
-		  sibling  child    -->     SR    parent
-		    bh+1     ch            bh+1    bh+1
-		    / \                            / \
-		  SL   SR                        SL  child
-		 bh+1 bh+1                      bh+1   bh
-	       */
-	      *parentp = rotate_right (sibling, parent);
-	      parent->color = RED;
-	      sibling->color = BLACK;
+                      parent                 sibling
+                       bh+2                    bh+2
+                       /   \                  /   \
+                  sibling  child    -->     SR    parent
+                    bh+1     ch            bh+1    bh+1
+                    / \                            / \
+                  SL   SR                        SL  child
+                 bh+1 bh+1                      bh+1   bh
+               */
+              *parentp = rotate_right (sibling, parent);
+              parent->color = RED;
+              sibling->color = BLACK;
 
-	      /* Concentrate on the subtree of parent.  The new sibling is
-		 one of the old sibling's children, and known to be BLACK.  */
-	      parentp = &sibling->right;
-	      sibling = parent->left;
-	    }
-	  /* Now we know that sibling is BLACK.
+              /* Concentrate on the subtree of parent.  The new sibling is
+                 one of the old sibling's children, and known to be BLACK.  */
+              parentp = &sibling->right;
+              sibling = parent->left;
+            }
+          /* Now we know that sibling is BLACK.
 
-		      parent
-		       /   \
-		  sibling  child
-		    bh+1     bh
-	   */
-	  if (sibling->left != NULL && sibling->left->color == RED)
-	    {
-	      /*
-		       parent                 sibling
-		      bh+1|bh+2              bh+1|bh+2
-			/   \                  /   \
-		   sibling  child    -->     SL   parent
-		     bh+1     bh            bh+1   bh+1
-		     / \                           / \
-		   SL   SR                       SR  child
-		   bh   bh                       bh    bh
-	       */
-	      *parentp = rotate_right (sibling, parent);
-	      sibling->color = parent->color;
-	      parent->color = BLACK;
-	      sibling->left->color = BLACK;
-	      return;
-	    }
-	  else if (sibling->right != NULL && sibling->right->color == RED)
-	    {
-	      /*
-		      parent                       parent
-		     bh+1|bh+2                    bh+1|bh+2
-		       /   \                        /   \
-		   sibling  child    -->          SR    child
-		    bh+1      bh                 bh+1     bh
-		     / \                         /  \
-		   SL   SR                  sibling  SRR
-		   bh   bh                    bh      bh
-		       /  \                  /   \
-		     SRL  SRR               SL   SRL
-		     bh    bh               bh    bh
+                      parent
+                       /   \
+                  sibling  child
+                    bh+1     bh
+           */
+          if (sibling->left != NULL && sibling->left->color == RED)
+            {
+              /*
+                       parent                 sibling
+                      bh+1|bh+2              bh+1|bh+2
+                        /   \                  /   \
+                   sibling  child    -->     SL   parent
+                     bh+1     bh            bh+1   bh+1
+                     / \                           / \
+                   SL   SR                       SR  child
+                   bh   bh                       bh    bh
+               */
+              *parentp = rotate_right (sibling, parent);
+              sibling->color = parent->color;
+              parent->color = BLACK;
+              sibling->left->color = BLACK;
+              return;
+            }
+          else if (sibling->right != NULL && sibling->right->color == RED)
+            {
+              /*
+                      parent                       parent
+                     bh+1|bh+2                    bh+1|bh+2
+                       /   \                        /   \
+                   sibling  child    -->          SR    child
+                    bh+1      bh                 bh+1     bh
+                     / \                         /  \
+                   SL   SR                  sibling  SRR
+                   bh   bh                    bh      bh
+                       /  \                  /   \
+                     SRL  SRR               SL   SRL
+                     bh    bh               bh    bh
 
-		 where SL, SRL, SRR are all black.
-	       */
-	      parent->left = rotate_left (sibling, sibling->right);
-	      /* Change sibling from BLACK to RED and SL from RED to BLACK.  */
-	      sibling->color = RED;
-	      sibling = parent->left;
-	      sibling->color = BLACK;
+                 where SL, SRL, SRR are all black.
+               */
+              parent->left = rotate_left (sibling, sibling->right);
+              /* Change sibling from BLACK to RED and SL from RED to BLACK.  */
+              sibling->color = RED;
+              sibling = parent->left;
+              sibling->color = BLACK;
 
-	      /* Now do as in the previous case.  */
-	      *parentp = rotate_right (sibling, parent);
-	      sibling->color = parent->color;
-	      parent->color = BLACK;
-	      sibling->left->color = BLACK;
-	      return;
-	    }
-	  else
-	    {
-	      if (parent->color == BLACK)
-		{
-		  /* Change sibling from BLACK to RED.  Then the entire
-		     subtree at parent has decreased its black-height.
-			      parent                   parent
-			       bh+2                     bh+1
-			       /   \                    /   \
-			   sibling  child    -->    sibling  child
-			    bh+1      bh              bh       bh
-		   */
-		  sibling->color = RED;
+              /* Now do as in the previous case.  */
+              *parentp = rotate_right (sibling, parent);
+              sibling->color = parent->color;
+              parent->color = BLACK;
+              sibling->left->color = BLACK;
+              return;
+            }
+          else
+            {
+              if (parent->color == BLACK)
+                {
+                  /* Change sibling from BLACK to RED.  Then the entire
+                     subtree at parent has decreased its black-height.
+                              parent                   parent
+                               bh+2                     bh+1
+                               /   \                    /   \
+                           sibling  child    -->    sibling  child
+                            bh+1      bh              bh       bh
+                   */
+                  sibling->color = RED;
 
-		  child = parent;
-		}
-	      else
-		{
-		  /* Change parent from RED to BLACK, but compensate by
-		     changing sibling from BLACK to RED.
-			      parent                   parent
-			       bh+1                     bh+1
-			       /   \                    /   \
-			   sibling  child    -->    sibling  child
-			    bh+1      bh              bh       bh
-		   */
-		  parent->color = BLACK;
-		  sibling->color = RED;
-		  return;
-		}
-	    }
-	}
+                  child = parent;
+                }
+              else
+                {
+                  /* Change parent from RED to BLACK, but compensate by
+                     changing sibling from BLACK to RED.
+                              parent                   parent
+                               bh+1                     bh+1
+                               /   \                    /   \
+                           sibling  child    -->    sibling  child
+                            bh+1      bh              bh       bh
+                   */
+                  parent->color = BLACK;
+                  sibling->color = RED;
+                  return;
+                }
+            }
+        }
       else
-	abort ();
+        abort ();
 
       /* Start again with a new (child, parent) pair.  */
       parent = child->parent;
 
 #if 0 /* Already handled.  */
       if (child != NULL && child->color == RED)
-	{
-	  child->color = BLACK;
-	  return;
-	}
+        {
+          child->color = BLACK;
+          return;
+        }
 #endif
 
       if (parent == NULL)
-	return;
+        return;
     }
 }
 
@@ -559,7 +559,7 @@ gl_tree_add_first (gl_oset_t set, const void *elt)
       gl_oset_node_t node;
 
       for (node = set->root; node->left != NULL; )
-	node = node->left;
+        node = node->left;
 
       node->left = new_node;
       new_node->parent = node;
@@ -588,7 +588,7 @@ gl_tree_add_before (gl_oset_t set, gl_oset_node_t node, const void *elt)
   else
     {
       for (node = node->left; node->right != NULL; )
-	node = node->right;
+        node = node->right;
       node->right = new_node;
     }
   new_node->parent = node;
@@ -616,7 +616,7 @@ gl_tree_add_after (gl_oset_t set, gl_oset_node_t node, const void *elt)
   else
     {
       for (node = node->right; node->left != NULL; )
-	node = node->left;
+        node = node->left;
       node->left = new_node;
     }
   new_node->parent = node;
@@ -639,45 +639,45 @@ gl_tree_remove_node (gl_oset_t set, gl_oset_node_t node)
       gl_oset_node_t child = node->right;
 
       if (child != NULL)
-	{
-	  child->parent = parent;
-	  /* Since node->left == NULL, child must be RED and of height 1,
-	     hence node must have been BLACK.  Recolor the child.  */
-	  child->color = BLACK;
-	}
+        {
+          child->parent = parent;
+          /* Since node->left == NULL, child must be RED and of height 1,
+             hence node must have been BLACK.  Recolor the child.  */
+          child->color = BLACK;
+        }
       if (parent == NULL)
-	set->root = child;
+        set->root = child;
       else
-	{
-	  if (parent->left == node)
-	    parent->left = child;
-	  else /* parent->right == node */
-	    parent->right = child;
+        {
+          if (parent->left == node)
+            parent->left = child;
+          else /* parent->right == node */
+            parent->right = child;
 
-	  if (child == NULL && node->color == BLACK)
-	    rebalance_after_remove (set, child, parent);
-	}
+          if (child == NULL && node->color == BLACK)
+            rebalance_after_remove (set, child, parent);
+        }
     }
   else if (node->right == NULL)
     {
       /* It is not absolutely necessary to treat this case.  But the more
-	 general case below is more complicated, hence slower.  */
+         general case below is more complicated, hence slower.  */
       /* Replace node with node->left.  */
       gl_oset_node_t child = node->left;
 
       child->parent = parent;
       /* Since node->right == NULL, child must be RED and of height 1,
-	 hence node must have been BLACK.  Recolor the child.  */
+         hence node must have been BLACK.  Recolor the child.  */
       child->color = BLACK;
       if (parent == NULL)
-	set->root = child;
+        set->root = child;
       else
-	{
-	  if (parent->left == node)
-	    parent->left = child;
-	  else /* parent->right == node */
-	    parent->right = child;
-	}
+        {
+          if (parent->left == node)
+            parent->left = child;
+          else /* parent->right == node */
+            parent->right = child;
+        }
     }
   else
     {
@@ -688,7 +688,7 @@ gl_tree_remove_node (gl_oset_t set, gl_oset_node_t node)
       color_t removed_color;
 
       for (subst = node->left; subst->right != NULL; )
-	subst = subst->right;
+        subst = subst->right;
 
       subst_parent = subst->parent;
 
@@ -697,54 +697,54 @@ gl_tree_remove_node (gl_oset_t set, gl_oset_node_t node)
       removed_color = subst->color;
 
       /* The case subst_parent == node is special:  If we do nothing special,
-	 we get confusion about node->left, subst->left and child->parent.
-	   subst_parent == node
-	   <==> The 'for' loop above terminated immediately.
-	   <==> subst == subst_parent->left
-		[otherwise subst == subst_parent->right]
-	 In this case, we would need to first set
-	   child->parent = node; node->left = child;
-	 and later - when we copy subst into node's position - again
-	   child->parent = subst; subst->left = child;
-	 Altogether a no-op.  */
+         we get confusion about node->left, subst->left and child->parent.
+           subst_parent == node
+           <==> The 'for' loop above terminated immediately.
+           <==> subst == subst_parent->left
+                [otherwise subst == subst_parent->right]
+         In this case, we would need to first set
+           child->parent = node; node->left = child;
+         and later - when we copy subst into node's position - again
+           child->parent = subst; subst->left = child;
+         Altogether a no-op.  */
       if (subst_parent != node)
-	{
-	  if (child != NULL)
-	    child->parent = subst_parent;
-	  subst_parent->right = child;
-	}
+        {
+          if (child != NULL)
+            child->parent = subst_parent;
+          subst_parent->right = child;
+        }
 
       /* Copy subst into node's position.
-	 (This is safer than to copy subst's value into node, keep node in
-	 place, and free subst.)  */
+         (This is safer than to copy subst's value into node, keep node in
+         place, and free subst.)  */
       if (subst_parent != node)
-	{
-	  subst->left = node->left;
-	  subst->left->parent = subst;
-	}
+        {
+          subst->left = node->left;
+          subst->left->parent = subst;
+        }
       subst->right = node->right;
       subst->right->parent = subst;
       subst->color = node->color;
       subst->parent = parent;
       if (parent == NULL)
-	set->root = subst;
+        set->root = subst;
       else if (parent->left == node)
-	parent->left = subst;
+        parent->left = subst;
       else /* parent->right == node */
-	parent->right = subst;
+        parent->right = subst;
 
       if (removed_color == BLACK)
-	{
-	  if (child != NULL && child->color == RED)
-	    /* Recolor the child.  */
-	    child->color = BLACK;
-	  else
-	    /* Rebalancing starts at child's parent, that is subst_parent -
-	       except when subst_parent == node.  In this case, we need to use
-	       its replacement, subst.  */
-	    rebalance_after_remove (set, child,
-				    subst_parent != node ? subst_parent : subst);
-	}
+        {
+          if (child != NULL && child->color == RED)
+            /* Recolor the child.  */
+            child->color = BLACK;
+          else
+            /* Rebalancing starts at child's parent, that is subst_parent -
+               except when subst_parent == node.  In this case, we need to use
+               its replacement, subst.  */
+            rebalance_after_remove (set, child,
+                                    subst_parent != node ? subst_parent : subst);
+        }
     }
 
   set->count--;

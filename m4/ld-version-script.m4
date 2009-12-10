@@ -27,7 +27,7 @@ AC_DEFUN([gl_LD_VERSION_SCRIPT],
     LDFLAGS="$LDFLAGS -Wl,--version-script=conftest.map"
     cat > conftest.map <<EOF
 VERS_1 {
-	global: sym;
+        global: sym;
 };
 
 VERS_2 {

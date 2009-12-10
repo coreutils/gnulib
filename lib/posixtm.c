@@ -66,33 +66,33 @@ year (struct tm *tm, const int *digit_pair, size_t n, unsigned int syntax_bits)
     case 1:
       tm->tm_year = *digit_pair;
       /* Deduce the century based on the year.
-	 POSIX requires that 00-68 be interpreted as 2000-2068,
-	 and that 69-99 be interpreted as 1969-1999.  */
+         POSIX requires that 00-68 be interpreted as 2000-2068,
+         and that 69-99 be interpreted as 1969-1999.  */
       if (digit_pair[0] <= 68)
-	{
-	  if (syntax_bits & PDS_PRE_2000)
-	    return 1;
-	  tm->tm_year += 100;
-	}
+        {
+          if (syntax_bits & PDS_PRE_2000)
+            return 1;
+          tm->tm_year += 100;
+        }
       break;
 
     case 2:
       if (! (syntax_bits & PDS_CENTURY))
-	return 1;
+        return 1;
       tm->tm_year = digit_pair[0] * 100 + digit_pair[1] - 1900;
       break;
 
     case 0:
       {
-	time_t now;
-	struct tm *tmp;
+        time_t now;
+        struct tm *tmp;
 
-	/* Use current year.  */
-	time (&now);
-	tmp = localtime (&now);
-	if (! tmp)
-	  return 1;
-	tm->tm_year = tmp->tm_year;
+        /* Use current year.  */
+        time (&now);
+        tmp = localtime (&now);
+        if (! tmp)
+          return 1;
+        tm->tm_year = tmp->tm_year;
       }
       break;
 
@@ -113,8 +113,8 @@ posix_time_parse (struct tm *tm, const char *s, unsigned int syntax_bits)
 
   size_t s_len = strlen (s);
   size_t len = (((syntax_bits & PDS_SECONDS) && (dot = strchr (s, '.')))
-		? (size_t) (dot - s)
-		: s_len);
+                ? (size_t) (dot - s)
+                : s_len);
 
   if (len != 8 && len != 10 && len != 12)
     return 1;
@@ -122,10 +122,10 @@ posix_time_parse (struct tm *tm, const char *s, unsigned int syntax_bits)
   if (dot)
     {
       if (!(syntax_bits & PDS_SECONDS))
-	return 1;
+        return 1;
 
       if (s_len - len != 3)
-	return 1;
+        return 1;
     }
 
   for (i = 0; i < len; i++)
@@ -140,7 +140,7 @@ posix_time_parse (struct tm *tm, const char *s, unsigned int syntax_bits)
   if (syntax_bits & PDS_LEADING_YEAR)
     {
       if (year (tm, p, len - 4, syntax_bits))
-	return 1;
+        return 1;
       p += len - 4;
       len = 4;
     }
@@ -156,7 +156,7 @@ posix_time_parse (struct tm *tm, const char *s, unsigned int syntax_bits)
   if (syntax_bits & PDS_TRAILING_YEAR)
     {
       if (year (tm, p, len, syntax_bits))
-	return 1;
+        return 1;
     }
 
   /* Handle seconds.  */
@@ -170,7 +170,7 @@ posix_time_parse (struct tm *tm, const char *s, unsigned int syntax_bits)
 
       ++dot;
       if (!ISDIGIT (dot[0]) || !ISDIGIT (dot[1]))
-	return 1;
+        return 1;
       seconds = 10 * (dot[0] - '0') + dot[1] - '0';
 
       tm->tm_sec = seconds;
@@ -201,10 +201,10 @@ posixtime (time_t *p, const char *s, unsigned int syntax_bits)
   else
     {
       /* mktime returns -1 for errors, but -1 is also a valid time_t
-	 value.  Check whether an error really occurred.  */
+         value.  Check whether an error really occurred.  */
       tm = localtime (&t);
       if (! tm)
-	return false;
+        return false;
     }
 
   /* Reject dates like "September 31" and times like "25:61".

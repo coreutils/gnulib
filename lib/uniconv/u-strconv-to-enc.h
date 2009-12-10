@@ -24,9 +24,9 @@ FUNC (const UNIT *string,
   size_t length = 0;
 
   if (mem_iconveha ((const char *) string, (U_STRLEN (string) + 1) * sizeof (UNIT),
-		    UTF_NAME, tocode,
-		    handler == iconveh_question_mark, handler,
-		    NULL, &result, &length) < 0)
+                    UTF_NAME, tocode,
+                    handler == iconveh_question_mark, handler,
+                    NULL, &result, &length) < 0)
     return NULL;
   /* Verify the result has exactly one NUL byte, at the end.  */
   if (!(length > 0 && result[length-1] == '\0' && strlen (result) == length-1))
@@ -49,11 +49,11 @@ FUNC (const UNIT *string,
   if (result == NULL)
     {
       if (utf8_string != tmpbuf)
-	{
-	  int saved_errno = errno;
-	  free (utf8_string);
-	  errno = saved_errno;
-	}
+        {
+          int saved_errno = errno;
+          free (utf8_string);
+          errno = saved_errno;
+        }
       return NULL;
     }
   if (utf8_string != tmpbuf)

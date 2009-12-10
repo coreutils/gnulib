@@ -26,53 +26,53 @@ AC_DEFUN([gl_FCNTL_O_FLAGS],
   AC_CACHE_CHECK([for working fcntl.h], [gl_cv_header_working_fcntl_h],
     [AC_RUN_IFELSE(
        [AC_LANG_PROGRAM(
-	  [[#include <sys/types.h>
-	   #include <sys/stat.h>
-	   #include <unistd.h>
-	   #include <fcntl.h>
-	   #ifndef O_NOATIME
-	    #define O_NOATIME 0
-	   #endif
-	   #ifndef O_NOFOLLOW
-	    #define O_NOFOLLOW 0
-	   #endif
-	   static int const constants[] =
-	    {
-	      O_CREAT, O_EXCL, O_NOCTTY, O_TRUNC, O_APPEND,
-	      O_NONBLOCK, O_SYNC, O_ACCMODE, O_RDONLY, O_RDWR, O_WRONLY
-	    };
-	  ]],
-	  [[
-	    int status = !constants;
-	    {
-	      static char const sym[] = "conftest.sym";
-	      if (symlink (".", sym) != 0
-		  || close (open (sym, O_RDONLY | O_NOFOLLOW)) == 0)
-		status |= 32;
-	      unlink (sym);
-	    }
-	    {
-	      static char const file[] = "confdefs.h";
-	      int fd = open (file, O_RDONLY | O_NOATIME);
-	      char c;
-	      struct stat st0, st1;
-	      if (fd < 0
-		  || fstat (fd, &st0) != 0
-		  || sleep (1) != 0
-		  || read (fd, &c, 1) != 1
-		  || close (fd) != 0
-		  || stat (file, &st1) != 0
-		  || st0.st_atime != st1.st_atime)
-		status |= 64;
-	    }
-	    return status;]])],
+          [[#include <sys/types.h>
+           #include <sys/stat.h>
+           #include <unistd.h>
+           #include <fcntl.h>
+           #ifndef O_NOATIME
+            #define O_NOATIME 0
+           #endif
+           #ifndef O_NOFOLLOW
+            #define O_NOFOLLOW 0
+           #endif
+           static int const constants[] =
+            {
+              O_CREAT, O_EXCL, O_NOCTTY, O_TRUNC, O_APPEND,
+              O_NONBLOCK, O_SYNC, O_ACCMODE, O_RDONLY, O_RDWR, O_WRONLY
+            };
+          ]],
+          [[
+            int status = !constants;
+            {
+              static char const sym[] = "conftest.sym";
+              if (symlink (".", sym) != 0
+                  || close (open (sym, O_RDONLY | O_NOFOLLOW)) == 0)
+                status |= 32;
+              unlink (sym);
+            }
+            {
+              static char const file[] = "confdefs.h";
+              int fd = open (file, O_RDONLY | O_NOATIME);
+              char c;
+              struct stat st0, st1;
+              if (fd < 0
+                  || fstat (fd, &st0) != 0
+                  || sleep (1) != 0
+                  || read (fd, &c, 1) != 1
+                  || close (fd) != 0
+                  || stat (file, &st1) != 0
+                  || st0.st_atime != st1.st_atime)
+                status |= 64;
+            }
+            return status;]])],
        [gl_cv_header_working_fcntl_h=yes],
        [case $? in #(
-	32) gl_cv_header_working_fcntl_h='no (bad O_NOFOLLOW)';; #(
-	64) gl_cv_header_working_fcntl_h='no (bad O_NOATIME)';; #(
-	96) gl_cv_header_working_fcntl_h='no (bad O_NOATIME, O_NOFOLLOW)';; #(
-	 *) gl_cv_header_working_fcntl_h='no';;
-	esac],
+        32) gl_cv_header_working_fcntl_h='no (bad O_NOFOLLOW)';; #(
+        64) gl_cv_header_working_fcntl_h='no (bad O_NOATIME)';; #(
+        96) gl_cv_header_working_fcntl_h='no (bad O_NOATIME, O_NOFOLLOW)';; #(
+         *) gl_cv_header_working_fcntl_h='no';;
+        esac],
        [gl_cv_header_working_fcntl_h=cross-compiling])])
 
   case $gl_cv_header_working_fcntl_h in #(

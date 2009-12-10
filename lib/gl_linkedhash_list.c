@@ -73,14 +73,14 @@ remove_from_bucket (gl_list_t list, gl_list_node_t node)
   for (p = &list->table[bucket]; ; p = &(*p)->hash_next)
     {
       if (*p == &node->h)
-	{
-	  *p = node->h.hash_next;
-	  break;
-	}
+        {
+          *p = node->h.hash_next;
+          break;
+        }
       if (*p == NULL)
-	/* node is not in the right bucket.  Did the hash codes
-	   change inadvertently?  */
-	abort ();
+        /* node is not in the right bucket.  Did the hash codes
+           change inadvertently?  */
+        abort ();
     }
 }
 

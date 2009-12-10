@@ -34,7 +34,7 @@ void
 sigpipe_die (void)
 {
   error (exit_failure, 0, "%s",
-	 _("error writing to a closed pipe or socket"));
+         _("error writing to a closed pipe or socket"));
 
   /* Ensure that this function really does not return.  */
   abort ();
@@ -68,15 +68,15 @@ install_sigpipe_die_handler (void (*prepare_die) (void))
     sigemptyset (&action.sa_mask);
     if (sigaction (SIGPIPE, &action, NULL) >= 0)
       {
-	/* Unblock the signal (just in case).  This is needed because if the
-	   signal was blocked in the parent process, it is also blocked in
-	   this process: the mask of blocked signals is inherited across
-	   fork/exec (except for SIGCHLD).  */
-	sigset_t sigpipe_set;
+        /* Unblock the signal (just in case).  This is needed because if the
+           signal was blocked in the parent process, it is also blocked in
+           this process: the mask of blocked signals is inherited across
+           fork/exec (except for SIGCHLD).  */
+        sigset_t sigpipe_set;
 
-	sigemptyset (&sigpipe_set);
-	sigaddset (&sigpipe_set, SIGPIPE);
-	sigprocmask (SIG_UNBLOCK, &sigpipe_set, NULL);
+        sigemptyset (&sigpipe_set);
+        sigaddset (&sigpipe_set, SIGPIPE);
+        sigprocmask (SIG_UNBLOCK, &sigpipe_set, NULL);
       }
   }
 }

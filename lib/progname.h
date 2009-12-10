@@ -41,8 +41,8 @@ extern void set_program_name (const char *argv0);
 /* Set program_name, based on argv[0], and original installation prefix and
    directory, for relocatability.  */
 extern void set_program_name_and_installdir (const char *argv0,
-					     const char *orig_installprefix,
-					     const char *orig_installdir);
+                                             const char *orig_installprefix,
+                                             const char *orig_installdir);
 #undef set_program_name
 #define set_program_name(ARG0) \
   set_program_name_and_installdir (ARG0, INSTALLPREFIX, INSTALLDIR)

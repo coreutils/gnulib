@@ -20,10 +20,10 @@
 
 static gl_list_t
 gl_tree_create_empty (gl_list_implementation_t implementation,
-		      gl_listelement_equals_fn equals_fn,
-		      gl_listelement_hashcode_fn hashcode_fn,
-		      gl_listelement_dispose_fn dispose_fn,
-		      bool allow_duplicates)
+                      gl_listelement_equals_fn equals_fn,
+                      gl_listelement_hashcode_fn hashcode_fn,
+                      gl_listelement_dispose_fn dispose_fn,
+                      bool allow_duplicates)
 {
   struct gl_list_impl *list = XMALLOC (struct gl_list_impl);
 
@@ -60,19 +60,19 @@ gl_tree_node_set_value (gl_list_t list, gl_list_node_t node, const void *elt)
   if (elt != node->value)
     {
       size_t new_hashcode =
-	(list->base.hashcode_fn != NULL
-	 ? list->base.hashcode_fn (elt)
-	 : (size_t)(uintptr_t) elt);
+        (list->base.hashcode_fn != NULL
+         ? list->base.hashcode_fn (elt)
+         : (size_t)(uintptr_t) elt);
 
       if (new_hashcode != node->h.hashcode)
-	{
-	  remove_from_bucket (list, node);
-	  node->value = elt;
-	  node->h.hashcode = new_hashcode;
-	  add_to_bucket (list, node);
-	}
+        {
+          remove_from_bucket (list, node);
+          node->value = elt;
+          node->h.hashcode = new_hashcode;
+          add_to_bucket (list, node);
+        }
       else
-	node->value = elt;
+        node->value = elt;
     }
 #else
   node->value = elt;
@@ -86,12 +86,12 @@ gl_tree_next_node (gl_list_t list, gl_list_node_t node)
     {
       node = node->right;
       while (node->left != NULL)
-	node = node->left;
+        node = node->left;
     }
   else
     {
       while (node->parent != NULL && node->parent->right == node)
-	node = node->parent;
+        node = node->parent;
       node = node->parent;
     }
   return node;
@@ -104,12 +104,12 @@ gl_tree_previous_node (gl_list_t list, gl_list_node_t node)
     {
       node = node->left;
       while (node->right != NULL)
-	node = node->right;
+        node = node->right;
     }
   else
     {
       while (node->parent != NULL && node->parent->left == node)
-	node = node->parent;
+        node = node->parent;
       node = node->parent;
     }
   return node;
@@ -125,16 +125,16 @@ node_at (gl_list_node_t root, size_t position)
   for (;;)
     {
       if (node->left != NULL)
-	{
-	  if (position < node->left->branch_size)
-	    {
-	      node = node->left;
-	      continue;
-	    }
-	  position -= node->left->branch_size;
-	}
+        {
+          if (position < node->left->branch_size)
+            {
+              node = node->left;
+              continue;
+            }
+          position -= node->left->branch_size;
+        }
       if (position == 0)
-	break;
+        break;
       position--;
       node = node->right;
     }
@@ -166,19 +166,19 @@ gl_tree_set_at (gl_list_t list, size_t position, const void *elt)
   if (elt != node->value)
     {
       size_t new_hashcode =
-	(list->base.hashcode_fn != NULL
-	 ? list->base.hashcode_fn (elt)
-	 : (size_t)(uintptr_t) elt);
+        (list->base.hashcode_fn != NULL
+         ? list->base.hashcode_fn (elt)
+         : (size_t)(uintptr_t) elt);
 
       if (new_hashcode != node->h.hashcode)
-	{
-	  remove_from_bucket (list, node);
-	  node->value = elt;
-	  node->h.hashcode = new_hashcode;
-	  add_to_bucket (list, node);
-	}
+        {
+          remove_from_bucket (list, node);
+          node->value = elt;
+          node->h.hashcode = new_hashcode;
+          add_to_bucket (list, node);
+        }
       else
-	node->value = elt;
+        node->value = elt;
     }
 #else
   node->value = elt;
@@ -190,10 +190,10 @@ gl_tree_set_at (gl_list_t list, size_t position, const void *elt)
 
 static gl_list_node_t
 gl_tree_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
-			const void *elt)
+                        const void *elt)
 {
   if (!(start_index <= end_index
-	&& end_index <= (list->root != NULL ? list->root->branch_size : 0)))
+        && end_index <= (list->root != NULL ? list->root->branch_size : 0)))
     /* Invalid arguments.  */
     abort ();
   {
@@ -206,105 +206,105 @@ gl_tree_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
 
     if (start_index == 0)
       {
-	/* Consider all elements.  */
-	for (;;)
-	  {
-	    /* Descend on left branch.  */
-	    for (;;)
-	      {
-		if (node == NULL)
-		  break;
-		stack_ptr->node = node;
-		stack_ptr->rightp = 0;
-		node = node->left;
-		stack_ptr++;
-	      }
-	    /* Climb up again.  */
-	    for (;;)
-	      {
-		if (stack_ptr == &stack[0])
-		  return NULL;
-		stack_ptr--;
-		if (!stack_ptr->rightp)
-		  break;
-	      }
-	    node = stack_ptr->node;
-	    /* Test against current element.  */
-	    if (equals != NULL ? equals (elt, node->value) : elt == node->value)
-	      return node;
-	    index++;
-	    if (index >= end_index)
-	      return NULL;
-	    /* Descend on right branch.  */
-	    stack_ptr->rightp = 1;
-	    node = node->right;
-	    stack_ptr++;
-	  }
+        /* Consider all elements.  */
+        for (;;)
+          {
+            /* Descend on left branch.  */
+            for (;;)
+              {
+                if (node == NULL)
+                  break;
+                stack_ptr->node = node;
+                stack_ptr->rightp = 0;
+                node = node->left;
+                stack_ptr++;
+              }
+            /* Climb up again.  */
+            for (;;)
+              {
+                if (stack_ptr == &stack[0])
+                  return NULL;
+                stack_ptr--;
+                if (!stack_ptr->rightp)
+                  break;
+              }
+            node = stack_ptr->node;
+            /* Test against current element.  */
+            if (equals != NULL ? equals (elt, node->value) : elt == node->value)
+              return node;
+            index++;
+            if (index >= end_index)
+              return NULL;
+            /* Descend on right branch.  */
+            stack_ptr->rightp = 1;
+            node = node->right;
+            stack_ptr++;
+          }
       }
     else
       {
-	/* Consider only elements at indices >= start_index.
-	   In this case, rightp contains the difference between the start_index
-	   for the parent node and the one for the child node (0 when the child
-	   node is the parent's left child, > 0 when the child is the parent's
-	   right child).  */
-	for (;;)
-	  {
-	    /* Descend on left branch.  */
-	    for (;;)
-	      {
-		if (node == NULL)
-		  break;
-		if (node->branch_size <= start_index)
-		  break;
-		stack_ptr->node = node;
-		stack_ptr->rightp = 0;
-		node = node->left;
-		stack_ptr++;
-	      }
-	    /* Climb up again.  */
-	    for (;;)
-	      {
-		if (stack_ptr == &stack[0])
-		  return NULL;
-		stack_ptr--;
-		if (!stack_ptr->rightp)
-		  break;
-		start_index += stack_ptr->rightp;
-	      }
-	    node = stack_ptr->node;
-	    {
-	      size_t left_branch_size1 =
-		(node->left != NULL ? node->left->branch_size : 0) + 1;
-	      if (start_index < left_branch_size1)
-		{
-		  /* Test against current element.  */
-		  if (equals != NULL ? equals (elt, node->value) : elt == node->value)
-		    return node;
-		  /* Now that we have considered all indices < left_branch_size1,
-		     we can increment start_index.  */
-		  start_index = left_branch_size1;
-		}
-	      index++;
-	      if (index >= end_index)
-		return NULL;
-	      /* Descend on right branch.  */
-	      start_index -= left_branch_size1;
-	      stack_ptr->rightp = left_branch_size1;
-	    }
-	    node = node->right;
-	    stack_ptr++;
-	  }
+        /* Consider only elements at indices >= start_index.
+           In this case, rightp contains the difference between the start_index
+           for the parent node and the one for the child node (0 when the child
+           node is the parent's left child, > 0 when the child is the parent's
+           right child).  */
+        for (;;)
+          {
+            /* Descend on left branch.  */
+            for (;;)
+              {
+                if (node == NULL)
+                  break;
+                if (node->branch_size <= start_index)
+                  break;
+                stack_ptr->node = node;
+                stack_ptr->rightp = 0;
+                node = node->left;
+                stack_ptr++;
+              }
+            /* Climb up again.  */
+            for (;;)
+              {
+                if (stack_ptr == &stack[0])
+                  return NULL;
+                stack_ptr--;
+                if (!stack_ptr->rightp)
+                  break;
+                start_index += stack_ptr->rightp;
+              }
+            node = stack_ptr->node;
+            {
+              size_t left_branch_size1 =
+                (node->left != NULL ? node->left->branch_size : 0) + 1;
+              if (start_index < left_branch_size1)
+                {
+                  /* Test against current element.  */
+                  if (equals != NULL ? equals (elt, node->value) : elt == node->value)
+                    return node;
+                  /* Now that we have considered all indices < left_branch_size1,
+                     we can increment start_index.  */
+                  start_index = left_branch_size1;
+                }
+              index++;
+              if (index >= end_index)
+                return NULL;
+              /* Descend on right branch.  */
+              start_index -= left_branch_size1;
+              stack_ptr->rightp = left_branch_size1;
+            }
+            node = node->right;
+            stack_ptr++;
+          }
       }
   }
 }
 
 static size_t
 gl_tree_indexof_from_to (gl_list_t list, size_t start_index, size_t end_index,
-			 const void *elt)
+                         const void *elt)
 {
   if (!(start_index <= end_index
-	&& end_index <= (list->root != NULL ? list->root->branch_size : 0)))
+        && end_index <= (list->root != NULL ? list->root->branch_size : 0)))
     /* Invalid arguments.  */
     abort ();
   {
@@ -317,95 +317,95 @@ gl_tree_indexof_from_to (gl_list_t list, size_t start_index, size_t end_index,
 
     if (start_index == 0)
       {
-	/* Consider all elements.  */
-	for (;;)
-	  {
-	    /* Descend on left branch.  */
-	    for (;;)
-	      {
-		if (node == NULL)
-		  break;
-		stack_ptr->node = node;
-		stack_ptr->rightp = 0;
-		node = node->left;
-		stack_ptr++;
-	      }
-	    /* Climb up again.  */
-	    for (;;)
-	      {
-		if (stack_ptr == &stack[0])
-		  return (size_t)(-1);
-		stack_ptr--;
-		if (!stack_ptr->rightp)
-		  break;
-	      }
-	    node = stack_ptr->node;
-	    /* Test against current element.  */
-	    if (equals != NULL ? equals (elt, node->value) : elt == node->value)
-	      return index;
-	    index++;
-	    if (index >= end_index)
-	      return (size_t)(-1);
-	    /* Descend on right branch.  */
-	    stack_ptr->rightp = 1;
-	    node = node->right;
-	    stack_ptr++;
-	  }
+        /* Consider all elements.  */
+        for (;;)
+          {
+            /* Descend on left branch.  */
+            for (;;)
+              {
+                if (node == NULL)
+                  break;
+                stack_ptr->node = node;
+                stack_ptr->rightp = 0;
+                node = node->left;
+                stack_ptr++;
+              }
+            /* Climb up again.  */
+            for (;;)
+              {
+                if (stack_ptr == &stack[0])
+                  return (size_t)(-1);
+                stack_ptr--;
+                if (!stack_ptr->rightp)
+                  break;
+              }
+            node = stack_ptr->node;
+            /* Test against current element.  */
+            if (equals != NULL ? equals (elt, node->value) : elt == node->value)
+              return index;
+            index++;
+            if (index >= end_index)
+              return (size_t)(-1);
+            /* Descend on right branch.  */
+            stack_ptr->rightp = 1;
+            node = node->right;
+            stack_ptr++;
+          }
       }
     else
       {
-	/* Consider only elements at indices >= start_index.
-	   In this case, rightp contains the difference between the start_index
-	   for the parent node and the one for the child node (0 when the child
-	   node is the parent's left child, > 0 when the child is the parent's
-	   right child).  */
-	for (;;)
-	  {
-	    /* Descend on left branch.  */
-	    for (;;)
-	      {
-		if (node == NULL)
-		  break;
-		if (node->branch_size <= start_index)
-		  break;
-		stack_ptr->node = node;
-		stack_ptr->rightp = 0;
-		node = node->left;
-		stack_ptr++;
-	      }
-	    /* Climb up again.  */
-	    for (;;)
-	      {
-		if (stack_ptr == &stack[0])
-		  return (size_t)(-1);
-		stack_ptr--;
-		if (!stack_ptr->rightp)
-		  break;
-		start_index += stack_ptr->rightp;
-	      }
-	    node = stack_ptr->node;
-	    {
-	      size_t left_branch_size1 =
-		(node->left != NULL ? node->left->branch_size : 0) + 1;
-	      if (start_index < left_branch_size1)
-		{
-		  /* Test against current element.  */
-		  if (equals != NULL ? equals (elt, node->value) : elt == node->value)
-		    return index;
-		  /* Now that we have considered all indices < left_branch_size1,
-		     we can increment start_index.  */
-		  start_index = left_branch_size1;
-		}
-	      index++;
-	      if (index >= end_index)
-		return (size_t)(-1);
-	      /* Descend on right branch.  */
-	      start_index -= left_branch_size1;
-	      stack_ptr->rightp = left_branch_size1;
-	    }
-	    node = node->right;
-	    stack_ptr++;
-	  }
+        /* Consider only elements at indices >= start_index.
+           In this case, rightp contains the difference between the start_index
+           for the parent node and the one for the child node (0 when the child
+           node is the parent's left child, > 0 when the child is the parent's
+           right child).  */
+        for (;;)
+          {
+            /* Descend on left branch.  */
+            for (;;)
+              {
+                if (node == NULL)
+                  break;
+                if (node->branch_size <= start_index)
+                  break;
+                stack_ptr->node = node;
+                stack_ptr->rightp = 0;
+                node = node->left;
+                stack_ptr++;
+              }
+            /* Climb up again.  */
+            for (;;)
+              {
+                if (stack_ptr == &stack[0])
+                  return (size_t)(-1);
+                stack_ptr--;
+                if (!stack_ptr->rightp)
+                  break;
+                start_index += stack_ptr->rightp;
+              }
+            node = stack_ptr->node;
+            {
+              size_t left_branch_size1 =
+                (node->left != NULL ? node->left->branch_size : 0) + 1;
+              if (start_index < left_branch_size1)
+                {
+                  /* Test against current element.  */
+                  if (equals != NULL ? equals (elt, node->value) : elt == node->value)
+                    return index;
+                  /* Now that we have considered all indices < left_branch_size1,
+                     we can increment start_index.  */
+                  start_index = left_branch_size1;
+                }
+              index++;
+              if (index >= end_index)
+                return (size_t)(-1);
+              /* Descend on right branch.  */
+              start_index -= left_branch_size1;
+              stack_ptr->rightp = left_branch_size1;
+            }
+            node = node->right;
+            stack_ptr++;
+          }
       }
   }
 }
@@ -444,10 +444,10 @@ gl_tree_remove (gl_list_t list, const void *elt)
   if (list->root != NULL)
     {
       gl_list_node_t node =
-	gl_tree_search_from_to (list, 0, list->root->branch_size, elt);
+        gl_tree_search_from_to (list, 0, list->root->branch_size, elt);
 
       if (node != NULL)
-	return gl_tree_remove_node (list, node);
+        return gl_tree_remove_node (list, node);
     }
   return false;
 }
@@ -466,28 +466,28 @@ gl_tree_list_free (gl_list_t list)
     {
       /* Descend on left branch.  */
       for (;;)
-	{
-	  if (node == NULL)
-	    break;
-	  stack_ptr->node = node;
-	  stack_ptr->rightp = false;
-	  node = node->left;
-	  stack_ptr++;
-	}
+        {
+          if (node == NULL)
+            break;
+          stack_ptr->node = node;
+          stack_ptr->rightp = false;
+          node = node->left;
+          stack_ptr++;
+        }
       /* Climb up again.  */
       for (;;)
-	{
-	  if (stack_ptr == &stack[0])
-	    goto done_iterate;
-	  stack_ptr--;
-	  node = stack_ptr->node;
-	  if (!stack_ptr->rightp)
-	    break;
-	  /* Free the current node.  */
-	  if (list->base.dispose_fn != NULL)
-	    list->base.dispose_fn (node->value);
-	  free (node);
-	}
+        {
+          if (stack_ptr == &stack[0])
+            goto done_iterate;
+          stack_ptr--;
+          node = stack_ptr->node;
+          if (!stack_ptr->rightp)
+            break;
+          /* Free the current node.  */
+          if (list->base.dispose_fn != NULL)
+            list->base.dispose_fn (node->value);
+          free (node);
+        }
       /* Descend on right branch.  */
       stack_ptr->rightp = true;
       node = node->right;
@@ -552,27 +552,27 @@ gl_tree_iterator_from_to (gl_list_t list, size_t start_index, size_t end_index)
 
 static bool
 gl_tree_iterator_next (gl_list_iterator_t *iterator,
-		       const void **eltp, gl_list_node_t *nodep)
+                       const void **eltp, gl_list_node_t *nodep)
 {
   if (iterator->p != iterator->q)
     {
       gl_list_node_t node = (gl_list_node_t) iterator->p;
       *eltp = node->value;
       if (nodep != NULL)
-	*nodep = node;
+        *nodep = node;
       /* Advance to the next node.  */
       if (node->right != NULL)
-	{
-	  node = node->right;
-	  while (node->left != NULL)
-	    node = node->left;
-	}
+        {
+          node = node->right;
+          while (node->left != NULL)
+            node = node->left;
+        }
       else
-	{
-	  while (node->parent != NULL && node->parent->right == node)
-	    node = node->parent;
-	  node = node->parent;
-	}
+        {
+          while (node->parent != NULL && node->parent->right == node)
+            node = node->parent;
+          node = node->parent;
+        }
       iterator->p = node;
       return true;
     }
@@ -589,7 +589,7 @@ gl_tree_iterator_free (gl_list_iterator_t *iterator)
 
 static gl_list_node_t
 gl_tree_sortedlist_search (gl_list_t list, gl_listelement_compar_fn compar,
-			   const void *elt)
+                           const void *elt)
 {
   gl_list_node_t node;
 
@@ -598,121 +598,121 @@ gl_tree_sortedlist_search (gl_list_t list, gl_listelement_compar_fn compar,
       int cmp = compar (node->value, elt);
 
       if (cmp < 0)
-	node = node->right;
+        node = node->right;
       else if (cmp > 0)
-	node = node->left;
+        node = node->left;
       else /* cmp == 0 */
-	{
-	  /* We have an element equal to ELT.  But we need the leftmost such
-	     element.  */
-	  gl_list_node_t found = node;
-	  node = node->left;
-	  for (; node != NULL; )
-	    {
-	      int cmp2 = compar (node->value, elt);
+        {
+          /* We have an element equal to ELT.  But we need the leftmost such
+             element.  */
+          gl_list_node_t found = node;
+          node = node->left;
+          for (; node != NULL; )
+            {
+              int cmp2 = compar (node->value, elt);
 
-	      if (cmp2 < 0)
-		node = node->right;
-	      else if (cmp2 > 0)
-		/* The list was not sorted.  */
-		abort ();
-	      else /* cmp2 == 0 */
-		{
-		  found = node;
-		  node = node->left;
-		}
-	    }
-	  return found;
-	}
+              if (cmp2 < 0)
+                node = node->right;
+              else if (cmp2 > 0)
+                /* The list was not sorted.  */
+                abort ();
+              else /* cmp2 == 0 */
+                {
+                  found = node;
+                  node = node->left;
+                }
+            }
+          return found;
+        }
     }
   return NULL;
 }
 
 static gl_list_node_t
 gl_tree_sortedlist_search_from_to (gl_list_t list,
-				   gl_listelement_compar_fn compar,
-				   size_t low, size_t high,
-				   const void *elt)
+                                   gl_listelement_compar_fn compar,
+                                   size_t low, size_t high,
+                                   const void *elt)
 {
   gl_list_node_t node;
 
   if (!(low <= high
-	&& high <= (list->root != NULL ? list->root->branch_size : 0)))
+        && high <= (list->root != NULL ? list->root->branch_size : 0)))
     /* Invalid arguments.  */
     abort ();
 
   for (node = list->root; node != NULL; )
     {
       size_t left_branch_size =
-	(node->left != NULL ? node->left->branch_size : 0);
+        (node->left != NULL ? node->left->branch_size : 0);
 
       if (low > left_branch_size)
-	{
-	  low -= left_branch_size + 1;
-	  high -= left_branch_size + 1;
-	  node = node->right;
-	}
+        {
+          low -= left_branch_size + 1;
+          high -= left_branch_size + 1;
+          node = node->right;
+        }
       else if (high <= left_branch_size)
-	node = node->left;
+        node = node->left;
       else
-	{
-	  /* Here low <= left_branch_size < high.  */
-	  int cmp = compar (node->value, elt);
+        {
+          /* Here low <= left_branch_size < high.  */
+          int cmp = compar (node->value, elt);
 
-	  if (cmp < 0)
-	    {
-	      low = 0;
-	      high -= left_branch_size + 1;
-	      node = node->right;
-	    }
-	  else if (cmp > 0)
-	    node = node->left;
-	  else /* cmp == 0 */
-	    {
-	      /* We have an element equal to ELT.  But we need the leftmost
-		 such element.  */
-	      gl_list_node_t found = node;
-	      node = node->left;
-	      for (; node != NULL; )
-		{
-		  size_t left_branch_size2 =
-		    (node->left != NULL ? node->left->branch_size : 0);
+          if (cmp < 0)
+            {
+              low = 0;
+              high -= left_branch_size + 1;
+              node = node->right;
+            }
+          else if (cmp > 0)
+            node = node->left;
+          else /* cmp == 0 */
+            {
+              /* We have an element equal to ELT.  But we need the leftmost
+                 such element.  */
+              gl_list_node_t found = node;
+              node = node->left;
+              for (; node != NULL; )
+                {
+                  size_t left_branch_size2 =
+                    (node->left != NULL ? node->left->branch_size : 0);
 
-		  if (low > left_branch_size2)
-		    {
-		      low -= left_branch_size2 + 1;
-		      node = node->right;
-		    }
-		  else
-		    {
-		      /* Here low <= left_branch_size2.  */
-		      int cmp2 = compar (node->value, elt);
+                  if (low > left_branch_size2)
+                    {
+                      low -= left_branch_size2 + 1;
+                      node = node->right;
+                    }
+                  else
+                    {
+                      /* Here low <= left_branch_size2.  */
+                      int cmp2 = compar (node->value, elt);
 
-		      if (cmp2 < 0)
-			{
-			  low = 0;
-			  node = node->right;
-			}
-		      else if (cmp2 > 0)
-			/* The list was not sorted.  */
-			abort ();
-		      else /* cmp2 == 0 */
-			{
-			  found = node;
-			  node = node->left;
-			}
-		    }
-		}
-	      return found;
-	    }
-	}
+                      if (cmp2 < 0)
+                        {
+                          low = 0;
+                          node = node->right;
+                        }
+                      else if (cmp2 > 0)
+                        /* The list was not sorted.  */
+                        abort ();
+                      else /* cmp2 == 0 */
+                        {
+                          found = node;
+                          node = node->left;
+                        }
+                    }
+                }
+              return found;
+            }
+        }
     }
   return NULL;
 }
 
 static size_t
 gl_tree_sortedlist_indexof (gl_list_t list, gl_listelement_compar_fn compar,
-			    const void *elt)
+                            const void *elt)
 {
   gl_list_node_t node;
   size_t position;
@@ -722,138 +722,138 @@ gl_tree_sortedlist_indexof (gl_list_t list, gl_listelement_compar_fn compar,
       int cmp = compar (node->value, elt);
 
       if (cmp < 0)
-	{
-	  if (node->left != NULL)
-	    position += node->left->branch_size;
-	  position++;
-	  node = node->right;
-	}
+        {
+          if (node->left != NULL)
+            position += node->left->branch_size;
+          position++;
+          node = node->right;
+        }
       else if (cmp > 0)
-	node = node->left;
+        node = node->left;
       else /* cmp == 0 */
-	{
-	  /* We have an element equal to ELT.  But we need the leftmost such
-	     element.  */
-	  size_t found_position =
-	    position + (node->left != NULL ? node->left->branch_size : 0);
-	  node = node->left;
-	  for (; node != NULL; )
-	    {
-	      int cmp2 = compar (node->value, elt);
+        {
+          /* We have an element equal to ELT.  But we need the leftmost such
+             element.  */
+          size_t found_position =
+            position + (node->left != NULL ? node->left->branch_size : 0);
+          node = node->left;
+          for (; node != NULL; )
+            {
+              int cmp2 = compar (node->value, elt);
 
-	      if (cmp2 < 0)
-		{
-		  if (node->left != NULL)
-		    position += node->left->branch_size;
-		  position++;
-		  node = node->right;
-		}
-	      else if (cmp2 > 0)
-		/* The list was not sorted.  */
-		abort ();
-	      else /* cmp2 == 0 */
-		{
-		  found_position =
-		    position
-		    + (node->left != NULL ? node->left->branch_size : 0);
-		  node = node->left;
-		}
-	    }
-	  return found_position;
-	}
+              if (cmp2 < 0)
+                {
+                  if (node->left != NULL)
+                    position += node->left->branch_size;
+                  position++;
+                  node = node->right;
+                }
+              else if (cmp2 > 0)
+                /* The list was not sorted.  */
+                abort ();
+              else /* cmp2 == 0 */
+                {
+                  found_position =
+                    position
+                    + (node->left != NULL ? node->left->branch_size : 0);
+                  node = node->left;
+                }
+            }
+          return found_position;
+        }
     }
   return (size_t)(-1);
 }
 
 static size_t
 gl_tree_sortedlist_indexof_from_to (gl_list_t list,
-				    gl_listelement_compar_fn compar,
-				    size_t low, size_t high,
-				    const void *elt)
+                                    gl_listelement_compar_fn compar,
+                                    size_t low, size_t high,
+                                    const void *elt)
 {
   gl_list_node_t node;
   size_t position;
 
   if (!(low <= high
-	&& high <= (list->root != NULL ? list->root->branch_size : 0)))
+        && high <= (list->root != NULL ? list->root->branch_size : 0)))
     /* Invalid arguments.  */
     abort ();
 
   for (node = list->root, position = 0; node != NULL; )
     {
       size_t left_branch_size =
-	(node->left != NULL ? node->left->branch_size : 0);
+        (node->left != NULL ? node->left->branch_size : 0);
 
       if (low > left_branch_size)
-	{
-	  low -= left_branch_size + 1;
-	  high -= left_branch_size + 1;
-	  position += left_branch_size + 1;
-	  node = node->right;
-	}
+        {
+          low -= left_branch_size + 1;
+          high -= left_branch_size + 1;
+          position += left_branch_size + 1;
+          node = node->right;
+        }
       else if (high <= left_branch_size)
-	node = node->left;
+        node = node->left;
       else
-	{
-	  /* Here low <= left_branch_size < high.  */
-	  int cmp = compar (node->value, elt);
+        {
+          /* Here low <= left_branch_size < high.  */
+          int cmp = compar (node->value, elt);
 
-	  if (cmp < 0)
-	    {
-	      low = 0;
-	      high -= left_branch_size + 1;
-	      position += left_branch_size + 1;
-	      node = node->right;
-	    }
-	  else if (cmp > 0)
-	    node = node->left;
-	  else /* cmp == 0 */
-	    {
-	      /* We have an element equal to ELT.  But we need the leftmost
-		 such element.  */
-	      size_t found_position =
-		position + (node->left != NULL ? node->left->branch_size : 0);
-	      node = node->left;
-	      for (; node != NULL; )
-		{
-		  size_t left_branch_size2 =
-		    (node->left != NULL ? node->left->branch_size : 0);
+          if (cmp < 0)
+            {
+              low = 0;
+              high -= left_branch_size + 1;
+              position += left_branch_size + 1;
+              node = node->right;
+            }
+          else if (cmp > 0)
+            node = node->left;
+          else /* cmp == 0 */
+            {
+              /* We have an element equal to ELT.  But we need the leftmost
+                 such element.  */
+              size_t found_position =
+                position + (node->left != NULL ? node->left->branch_size : 0);
+              node = node->left;
+              for (; node != NULL; )
+                {
+                  size_t left_branch_size2 =
+                    (node->left != NULL ? node->left->branch_size : 0);
 
-		  if (low > left_branch_size2)
-		    {
-		      low -= left_branch_size2 + 1;
-		      node = node->right;
-		    }
-		  else
-		    {
-		      /* Here low <= left_branch_size2.  */
-		      int cmp2 = compar (node->value, elt);
+                  if (low > left_branch_size2)
+                    {
+                      low -= left_branch_size2 + 1;
+                      node = node->right;
+                    }
+                  else
+                    {
+                      /* Here low <= left_branch_size2.  */
+                      int cmp2 = compar (node->value, elt);
 
-		      if (cmp2 < 0)
-			{
-			  position += left_branch_size2 + 1;
-			  node = node->right;
-			}
-		      else if (cmp2 > 0)
-			/* The list was not sorted.  */
-			abort ();
-		      else /* cmp2 == 0 */
-			{
-			  found_position = position + left_branch_size2;
-			  node = node->left;
-			}
-		    }
-		}
-	      return found_position;
-	    }
-	}
+                      if (cmp2 < 0)
+                        {
+                          position += left_branch_size2 + 1;
+                          node = node->right;
+                        }
+                      else if (cmp2 > 0)
+                        /* The list was not sorted.  */
+                        abort ();
+                      else /* cmp2 == 0 */
+                        {
+                          found_position = position + left_branch_size2;
+                          node = node->left;
+                        }
+                    }
+                }
+              return found_position;
+            }
+        }
     }
   return (size_t)(-1);
 }
 
 static gl_list_node_t
 gl_tree_sortedlist_add (gl_list_t list, gl_listelement_compar_fn compar,
-			const void *elt)
+                        const void *elt)
 {
   gl_list_node_t node = list->root;
 
@@ -865,25 +865,25 @@ gl_tree_sortedlist_add (gl_list_t list, gl_listelement_compar_fn compar,
       int cmp = compar (node->value, elt);
 
       if (cmp < 0)
-	{
-	  if (node->right == NULL)
-	    return gl_tree_add_after (list, node, elt);
-	  node = node->right;
-	}
+        {
+          if (node->right == NULL)
+            return gl_tree_add_after (list, node, elt);
+          node = node->right;
+        }
       else if (cmp > 0)
-	{
-	  if (node->left == NULL)
-	    return gl_tree_add_before (list, node, elt);
-	  node = node->left;
-	}
+        {
+          if (node->left == NULL)
+            return gl_tree_add_before (list, node, elt);
+          node = node->left;
+        }
       else /* cmp == 0 */
-	return gl_tree_add_before (list, node, elt);
+        return gl_tree_add_before (list, node, elt);
     }
 }
 
 static bool
 gl_tree_sortedlist_remove (gl_list_t list, gl_listelement_compar_fn compar,
-			   const void *elt)
+                           const void *elt)
 {
   gl_list_node_t node = gl_tree_sortedlist_search (list, compar, elt);
   if (node != NULL)

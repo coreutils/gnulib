@@ -52,9 +52,9 @@ supports_delete_on_close ()
       OSVERSIONINFO v;
 
       if (GetVersionEx (&v))
-	known = (v.dwPlatformId == VER_PLATFORM_WIN32_NT ? 1 : -1);
+        known = (v.dwPlatformId == VER_PLATFORM_WIN32_NT ? 1 : -1);
       else
-	known = -1;
+        known = -1;
     }
   return (known > 0);
 }
@@ -75,49 +75,49 @@ tmpfile (void)
       char xtemplate[PATH_MAX];
 
       if (path_search (xtemplate, PATH_MAX, dir, NULL, true) >= 0)
-	{
-	  size_t len = strlen (xtemplate);
-	  int o_temporary = (supports_delete_on_close () ? _O_TEMPORARY : 0);
-	  int fd;
+        {
+          size_t len = strlen (xtemplate);
+          int o_temporary = (supports_delete_on_close () ? _O_TEMPORARY : 0);
+          int fd;
 
-	  do
-	    {
-	      memcpy (&xtemplate[len - 6], "XXXXXX", 6);
-	      if (gen_tempname (xtemplate, 0, 0, GT_NOCREATE) < 0)
-		{
-		  fd = -1;
-		  break;
-		}
+          do
+            {
+              memcpy (&xtemplate[len - 6], "XXXXXX", 6);
+              if (gen_tempname (xtemplate, 0, 0, GT_NOCREATE) < 0)
+                {
+                  fd = -1;
+                  break;
+                }
 
-	      fd = _open (xtemplate,
-			  _O_CREAT | _O_EXCL | o_temporary
-			  | _O_RDWR | _O_BINARY,
-			  _S_IREAD | _S_IWRITE);
-	    }
-	  while (fd < 0 && errno == EEXIST);
+              fd = _open (xtemplate,
+                          _O_CREAT | _O_EXCL | o_temporary
+                          | _O_RDWR | _O_BINARY,
+                          _S_IREAD | _S_IWRITE);
+            }
+          while (fd < 0 && errno == EEXIST);
 
-	  if (fd >= 0)
-	    {
-	      FILE *fp = _fdopen (fd, "w+b");
+          if (fd >= 0)
+            {
+              FILE *fp = _fdopen (fd, "w+b");
 
-	      if (fp != NULL)
-		return fp;
-	      else
-		{
-		  int saved_errno = errno;
-		  _close (fd);
-		  errno = saved_errno;
-		}
-	    }
-	}
+              if (fp != NULL)
+                return fp;
+              else
+                {
+                  int saved_errno = errno;
+                  _close (fd);
+                  errno = saved_errno;
+                }
+            }
+        }
     }
   else
     {
       if (retval > 0)
-	errno = ENAMETOOLONG;
+        errno = ENAMETOOLONG;
       else
-	/* Ideally this should translate GetLastError () to an errno value.  */
-	errno = ENOENT;
+        /* Ideally this should translate GetLastError () to an errno value.  */
+        errno = ENOENT;
     }
 
   return NULL;

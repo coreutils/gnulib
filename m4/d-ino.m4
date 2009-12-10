@@ -14,25 +14,25 @@ dnl
 
 AC_DEFUN([gl_CHECK_TYPE_STRUCT_DIRENT_D_INO],
   [AC_CACHE_CHECK([for d_ino member in directory struct],
-		  gl_cv_struct_dirent_d_ino,
+                  gl_cv_struct_dirent_d_ino,
      [AC_RUN_IFELSE(
-	[AC_LANG_PROGRAM(
-	   [[#include <sys/types.h>
-	     #include <sys/stat.h>
-	     #include <dirent.h>
-	   ]],
-	   [[DIR *dp = opendir (".");
-	     struct dirent *e;
-	     struct stat st;
-	     if (! dp)
-	       return 1;
-	     e = readdir (dp);
-	     return ! (e
-		       && stat (e->d_name, &st) == 0
-		       && e->d_ino == st.st_ino);]])],
-	    [gl_cv_struct_dirent_d_ino=yes],
-	    [gl_cv_struct_dirent_d_ino=no],
-	    [gl_cv_struct_dirent_d_ino=no])])
+        [AC_LANG_PROGRAM(
+           [[#include <sys/types.h>
+             #include <sys/stat.h>
+             #include <dirent.h>
+           ]],
+           [[DIR *dp = opendir (".");
+             struct dirent *e;
+             struct stat st;
+             if (! dp)
+               return 1;
+             e = readdir (dp);
+             return ! (e
+                       && stat (e->d_name, &st) == 0
+                       && e->d_ino == st.st_ino);]])],
+            [gl_cv_struct_dirent_d_ino=yes],
+            [gl_cv_struct_dirent_d_ino=no],
+            [gl_cv_struct_dirent_d_ino=no])])
    if test $gl_cv_struct_dirent_d_ino = yes; then
      AC_DEFINE([D_INO_IN_DIRENT], [1],
        [Define if struct dirent has a member d_ino that actually works.])

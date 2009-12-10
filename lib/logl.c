@@ -18,7 +18,7 @@
 /* Specification.  */
 #include <math.h>
 
-/*							logll.c
+/*                                                      logll.c
  *
  * Natural logarithm for 128-bit long double precision.
  *
@@ -239,17 +239,17 @@ logl(long double x)
   /* Series expansion of log(1+z).  */
   w = z * z;
   y = ((((((((((((l15 * z
-		  + l14) * z
-		 + l13) * z
-		+ l12) * z
-	       + l11) * z
-	      + l10) * z
-	     + l9) * z
-	    + l8) * z
-	   + l7) * z
-	  + l6) * z
-	 + l5) * z
-	+ l4) * z
+                  + l14) * z
+                 + l13) * z
+                + l12) * z
+               + l11) * z
+              + l10) * z
+             + l9) * z
+            + l8) * z
+           + l7) * z
+          + l6) * z
+         + l5) * z
+        + l4) * z
        + l3) * z * w;
   y -= 0.5 * w;
   y += e * ln2b;  /* Base 2 exponent offset times ln(2).  */

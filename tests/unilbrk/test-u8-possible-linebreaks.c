@@ -25,15 +25,15 @@
 
 #define SIZEOF(array) (sizeof (array) / sizeof (array[0]))
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 int
@@ -53,16 +53,16 @@ main ()
 
       u8_possible_linebreaks (input, SIZEOF (input), "GB18030", p);
       for (i = 0; i < 91; i++)
-	{
-	  ASSERT (p[i] == (i == 90 ? UC_BREAK_MANDATORY :
-			   i == 7
-			   || i == 13 || i == 39
-			   || i == 41 || i == 43 || i == 44 || i == 50
-			   || i == 61 || i == 67
-			   || i == 70 || i == 73 || i == 77 || i == 80
-			   || i == 84 || i == 87 ? UC_BREAK_POSSIBLE :
-			   UC_BREAK_PROHIBITED));
-	}
+        {
+          ASSERT (p[i] == (i == 90 ? UC_BREAK_MANDATORY :
+                           i == 7
+                           || i == 13 || i == 39
+                           || i == 41 || i == 43 || i == 44 || i == 50
+                           || i == 61 || i == 67
+                           || i == 70 || i == 73 || i == 77 || i == 80
+                           || i == 84 || i == 87 ? UC_BREAK_POSSIBLE :
+                           UC_BREAK_PROHIBITED));
+        }
       free (p);
     }
 
@@ -72,16 +72,16 @@ main ()
 
       u8_possible_linebreaks (input, SIZEOF (input), "GB2312", p);
       for (i = 0; i < 91; i++)
-	{
-	  ASSERT (p[i] == (i == 90 ? UC_BREAK_MANDATORY :
-			   i == 7
-			   || i == 13 || i == 39
-			   || i == 41 || i == 43 || i == 44 || i == 50
-			   || i == 52 || i == 61 || i == 67
-			   || i == 70 || i == 73 || i == 77 || i == 80
-			   || i == 84 || i == 87 ? UC_BREAK_POSSIBLE :
-			   UC_BREAK_PROHIBITED));
-	}
+        {
+          ASSERT (p[i] == (i == 90 ? UC_BREAK_MANDATORY :
+                           i == 7
+                           || i == 13 || i == 39
+                           || i == 41 || i == 43 || i == 44 || i == 50
+                           || i == 52 || i == 61 || i == 67
+                           || i == 70 || i == 73 || i == 77 || i == 80
+                           || i == 84 || i == 87 ? UC_BREAK_POSSIBLE :
+                           UC_BREAK_PROHIBITED));
+        }
       free (p);
     }
   }

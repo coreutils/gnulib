@@ -31,8 +31,8 @@
 
 char *
 u8_strconv_to_encoding (const uint8_t *string,
-			const char *tocode,
-			enum iconv_ilseq_handler handler)
+                        const char *tocode,
+                        enum iconv_ilseq_handler handler)
 {
   char *result;
   size_t length;
@@ -43,17 +43,17 @@ u8_strconv_to_encoding (const uint8_t *string,
       length = u8_strlen (string) + 1;
 #if CONFIG_UNICODE_SAFETY
       if (u8_check (string, length))
-	{
-	  errno = EILSEQ;
-	  return NULL;
-	}
+        {
+          errno = EILSEQ;
+          return NULL;
+        }
 #endif
       result = (char *) malloc (length);
       if (result == NULL)
-	{
-	  errno = ENOMEM;
-	  return NULL;
-	}
+        {
+          errno = ENOMEM;
+          return NULL;
+        }
       memcpy (result, (const char *) string, length);
       return result;
     }
@@ -62,18 +62,18 @@ u8_strconv_to_encoding (const uint8_t *string,
       result = NULL;
       length = 0;
       if (mem_iconveha ((const char *) string, u8_strlen (string) + 1,
-			"UTF-8", tocode,
-			handler == iconveh_question_mark, handler,
-			NULL, &result, &length) < 0)
-	return NULL;
+                        "UTF-8", tocode,
+                        handler == iconveh_question_mark, handler,
+                        NULL, &result, &length) < 0)
+        return NULL;
       /* Verify the result has exactly one NUL byte, at the end.  */
       if (!(length > 0 && result[length-1] == '\0'
-	    && strlen (result) == length-1))
-	{
-	  free (result);
-	  errno = EILSEQ;
-	  return NULL;
-	}
+            && strlen (result) == length-1))
+        {
+          free (result);
+          errno = EILSEQ;
+          return NULL;
+        }
       return result;
     }
 }

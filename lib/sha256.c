@@ -139,9 +139,9 @@ sha256_conclude_ctx (struct sha256_ctx *ctx)
      Use set_uint32 rather than a simple assignment, to avoid risk of
      unaligned access.  */
   set_uint32 ((char *) &ctx->buffer[size - 2],
-	      SWAP ((ctx->total[1] << 3) | (ctx->total[0] >> 29)));
+              SWAP ((ctx->total[1] << 3) | (ctx->total[0] >> 29)));
   set_uint32 ((char *) &ctx->buffer[size - 1],
-	      SWAP (ctx->total[0] << 3));
+              SWAP (ctx->total[0] << 3));
 
   memcpy (&((char *) ctx->buffer)[bytes], fillbuf, (size - 2) * 4 - bytes);
 
@@ -183,43 +183,43 @@ sha256_stream (FILE *stream, void *resblock)
   while (1)
     {
       /* We read the file in blocks of BLOCKSIZE bytes.  One call of the
-	 computation function processes the whole buffer so that with the
-	 next round of the loop another block can be read.  */
+         computation function processes the whole buffer so that with the
+         next round of the loop another block can be read.  */
       size_t n;
       sum = 0;
 
       /* Read block.  Take care for partial reads.  */
       while (1)
-	{
-	  n = fread (buffer + sum, 1, BLOCKSIZE - sum, stream);
+        {
+          n = fread (buffer + sum, 1, BLOCKSIZE - sum, stream);
 
-	  sum += n;
+          sum += n;
 
-	  if (sum == BLOCKSIZE)
-	    break;
+          if (sum == BLOCKSIZE)
+            break;
 
-	  if (n == 0)
-	    {
-	      /* Check for the error flag IFF N == 0, so that we don't
-		 exit the loop after a partial read due to e.g., EAGAIN
-		 or EWOULDBLOCK.  */
-	      if (ferror (stream))
-		{
-		  free (buffer);
-		  return 1;
-		}
-	      goto process_partial_block;
-	    }
+          if (n == 0)
+            {
+              /* Check for the error flag IFF N == 0, so that we don't
+                 exit the loop after a partial read due to e.g., EAGAIN
+                 or EWOULDBLOCK.  */
+              if (ferror (stream))
+                {
+                  free (buffer);
+                  return 1;
+                }
+              goto process_partial_block;
+            }
 
-	  /* We've read at least one byte, so ignore errors.  But always
-	     check for EOF, since feof may be true even though N > 0.
-	     Otherwise, we could end up calling fread after EOF.  */
-	  if (feof (stream))
-	    goto process_partial_block;
-	}
+          /* We've read at least one byte, so ignore errors.  But always
+             check for EOF, since feof may be true even though N > 0.
+             Otherwise, we could end up calling fread after EOF.  */
+          if (feof (stream))
+            goto process_partial_block;
+        }
 
       /* Process buffer with BLOCKSIZE bytes.  Note that
-			BLOCKSIZE % 64 == 0
+                        BLOCKSIZE % 64 == 0
        */
       sha256_process_block (buffer, BLOCKSIZE, &ctx);
     }
@@ -254,43 +254,43 @@ sha224_stream (FILE *stream, void *resblock)
   while (1)
     {
       /* We read the file in blocks of BLOCKSIZE bytes.  One call of the
-	 computation function processes the whole buffer so that with the
-	 next round of the loop another block can be read.  */
+         computation function processes the whole buffer so that with the
+         next round of the loop another block can be read.  */
       size_t n;
       sum = 0;
 
       /* Read block.  Take care for partial reads.  */
       while (1)
-	{
-	  n = fread (buffer + sum, 1, BLOCKSIZE - sum, stream);
+        {
+          n = fread (buffer + sum, 1, BLOCKSIZE - sum, stream);
 
-	  sum += n;
+          sum += n;
 
-	  if (sum == BLOCKSIZE)
-	    break;
+          if (sum == BLOCKSIZE)
+            break;
 
-	  if (n == 0)
-	    {
-	      /* Check for the error flag IFF N == 0, so that we don't
-		 exit the loop after a partial read due to e.g., EAGAIN
-		 or EWOULDBLOCK.  */
-	      if (ferror (stream))
-		{
-		  free (buffer);
-		  return 1;
-		}
-	      goto process_partial_block;
-	    }
+          if (n == 0)
+            {
+              /* Check for the error flag IFF N == 0, so that we don't
+                 exit the loop after a partial read due to e.g., EAGAIN
+                 or EWOULDBLOCK.  */
+              if (ferror (stream))
+                {
+                  free (buffer);
+                  return 1;
+                }
+              goto process_partial_block;
+            }
 
-	  /* We've read at least one byte, so ignore errors.  But always
-	     check for EOF, since feof may be true even though N > 0.
-	     Otherwise, we could end up calling fread after EOF.  */
-	  if (feof (stream))
-	    goto process_partial_block;
-	}
+          /* We've read at least one byte, so ignore errors.  But always
+             check for EOF, since feof may be true even though N > 0.
+             Otherwise, we could end up calling fread after EOF.  */
+          if (feof (stream))
+            goto process_partial_block;
+        }
 
       /* Process buffer with BLOCKSIZE bytes.  Note that
-			BLOCKSIZE % 64 == 0
+                        BLOCKSIZE % 64 == 0
        */
       sha256_process_block (buffer, BLOCKSIZE, &ctx);
     }
@@ -355,15 +355,15 @@ sha256_process_bytes (const void *buffer, size_t len, struct sha256_ctx *ctx)
       ctx->buflen += add;
 
       if (ctx->buflen > 64)
-	{
-	  sha256_process_block (ctx->buffer, ctx->buflen & ~63, ctx);
+        {
+          sha256_process_block (ctx->buffer, ctx->buflen & ~63, ctx);
 
-	  ctx->buflen &= 63;
-	  /* The regions in the following copy operation cannot overlap.  */
-	  memcpy (ctx->buffer,
-		  &((char *) ctx->buffer)[(left_over + add) & ~63],
-		  ctx->buflen);
-	}
+          ctx->buflen &= 63;
+          /* The regions in the following copy operation cannot overlap.  */
+          memcpy (ctx->buffer,
+                  &((char *) ctx->buffer)[(left_over + add) & ~63],
+                  ctx->buflen);
+        }
 
       buffer = (const char *) buffer + add;
       len -= add;
@@ -376,19 +376,19 @@ sha256_process_bytes (const void *buffer, size_t len, struct sha256_ctx *ctx)
 # define alignof(type) offsetof (struct { char c; type x; }, x)
 # define UNALIGNED_P(p) (((size_t) p) % alignof (uint32_t) != 0)
       if (UNALIGNED_P (buffer))
-	while (len > 64)
-	  {
-	    sha256_process_block (memcpy (ctx->buffer, buffer, 64), 64, ctx);
-	    buffer = (const char *) buffer + 64;
-	    len -= 64;
-	  }
+        while (len > 64)
+          {
+            sha256_process_block (memcpy (ctx->buffer, buffer, 64), 64, ctx);
+            buffer = (const char *) buffer + 64;
+            len -= 64;
+          }
       else
 #endif
-	{
-	  sha256_process_block (buffer, len & ~63, ctx);
-	  buffer = (const char *) buffer + (len & ~63);
-	  len &= 63;
-	}
+        {
+          sha256_process_block (buffer, len & ~63, ctx);
+          buffer = (const char *) buffer + (len & ~63);
+          len &= 63;
+        }
     }
 
   /* Move remaining bytes in internal buffer.  */
@@ -399,11 +399,11 @@ sha256_process_bytes (const void *buffer, size_t len, struct sha256_ctx *ctx)
       memcpy (&((char *) ctx->buffer)[left_over], buffer, len);
       left_over += len;
       if (left_over >= 64)
-	{
-	  sha256_process_block (ctx->buffer, 64, ctx);
-	  left_over -= 64;
-	  memcpy (ctx->buffer, &ctx->buffer[16], left_over);
-	}
+        {
+          sha256_process_block (ctx->buffer, 64, ctx);
+          left_over -= 64;
+          memcpy (ctx->buffer, &ctx->buffer[16], left_over);
+        }
       ctx->buflen = left_over;
     }
 }
@@ -469,16 +469,16 @@ sha256_process_block (const void *buffer, size_t len, struct sha256_ctx *ctx)
 #define SS1(x) (rol(x,26)^rol(x,21)^rol(x,7))
 
 #define M(I) ( tm =   S1(x[(I-2)&0x0f]) + x[(I-7)&0x0f] \
-		    + S0(x[(I-15)&0x0f]) + x[I&0x0f]    \
-	       , x[I&0x0f] = tm )
+                    + S0(x[(I-15)&0x0f]) + x[I&0x0f]    \
+               , x[I&0x0f] = tm )
 
 #define R(A,B,C,D,E,F,G,H,K,M)  do { t0 = SS0(A) + F2(A,B,C); \
                                      t1 = H + SS1(E)  \
                                       + F1(E,F,G)     \
-				      + K	      \
-				      + M;	      \
-				     D += t1;  H = t0 + t1; \
-			       } while(0)
+                                      + K             \
+                                      + M;            \
+                                     D += t1;  H = t0 + t1; \
+                               } while(0)
 
   while (words < endp)
     {
@@ -487,10 +487,10 @@ sha256_process_block (const void *buffer, size_t len, struct sha256_ctx *ctx)
       int t;
       /* FIXME: see sha1.c for a better implementation.  */
       for (t = 0; t < 16; t++)
-	{
-	  x[t] = SWAP (*words);
-	  words++;
-	}
+        {
+          x[t] = SWAP (*words);
+          words++;
+        }
 
       R( a, b, c, d, e, f, g, h, K( 0), x[ 0] );
       R( h, a, b, c, d, e, f, g, K( 1), x[ 1] );

@@ -34,7 +34,7 @@ AC_DEFUN([gl_PREREQ_TIMEGM], [
        # so we need to substitute our own mktime implementation.
        AC_LIBOBJ([mktime])
        AC_DEFINE([mktime], [rpl_mktime],
-	 [Define to rpl_mktime if the replacement function should be used.])
+         [Define to rpl_mktime if the replacement function should be used.])
        gl_PREREQ_MKTIME])
   fi
 ])

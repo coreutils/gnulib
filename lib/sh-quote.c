@@ -43,7 +43,7 @@ shell_quote_length (const char *string)
   if (sh_quoting_options == NULL)
     init_sh_quoting_options ();
   return quotearg_buffer (NULL, 0, string, strlen (string),
-			   sh_quoting_options);
+                           sh_quoting_options);
 }
 
 /* Copies the quoted string to p and returns the incremented p.
@@ -54,7 +54,7 @@ shell_quote_copy (char *p, const char *string)
   if (sh_quoting_options == NULL)
     init_sh_quoting_options ();
   return p + quotearg_buffer (p, (size_t)(-1), string, strlen (string),
-			      sh_quoting_options);
+                              sh_quoting_options);
 }
 
 /* Returns the freshly allocated quoted string.  */
@@ -80,24 +80,24 @@ shell_quote_argv (char **argv)
 
       length = 0;
       for (argp = argv; ; )
-	{
-	  length += shell_quote_length (*argp) + 1;
-	  argp++;
-	  if (*argp == NULL)
-	    break;
-	}
+        {
+          length += shell_quote_length (*argp) + 1;
+          argp++;
+          if (*argp == NULL)
+            break;
+        }
 
       command = XNMALLOC (length, char);
 
       p = command;
       for (argp = argv; ; )
-	{
-	  p = shell_quote_copy (p, *argp);
-	  argp++;
-	  if (*argp == NULL)
-	    break;
-	  *p++ = ' ';
-	}
+        {
+          p = shell_quote_copy (p, *argp);
+          argp++;
+          if (*argp == NULL)
+            break;
+          *p++ = ' ';
+        }
       *p = '\0';
 
       return command;

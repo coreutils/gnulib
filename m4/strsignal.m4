@@ -24,17 +24,17 @@ AC_DEFUN([gl_FUNC_STRSIGNAL],
     AC_CACHE_CHECK([whether strsignal always returns a string],
       [gl_cv_func_working_strsignal],
       [AC_RUN_IFELSE(
-	 [AC_LANG_PROGRAM(
-	    [[#include <string.h>
-	    ]],
-	    [[char *s = strsignal (-1);
-	      return !(s != (char *) 0 && s != (char *) -1);]])],
-	 [gl_cv_func_working_strsignal=yes],
-	 [gl_cv_func_working_strsignal=no],
-	 [case "$host_os" in
-	    solaris* | aix*) gl_cv_func_working_strsignal=no;;
-	    *)               gl_cv_func_working_strsignal="guessing yes";;
-	  esac])])
+         [AC_LANG_PROGRAM(
+            [[#include <string.h>
+            ]],
+            [[char *s = strsignal (-1);
+              return !(s != (char *) 0 && s != (char *) -1);]])],
+         [gl_cv_func_working_strsignal=yes],
+         [gl_cv_func_working_strsignal=no],
+         [case "$host_os" in
+            solaris* | aix*) gl_cv_func_working_strsignal=no;;
+            *)               gl_cv_func_working_strsignal="guessing yes";;
+          esac])])
   else
     gl_cv_func_working_strsignal=no
   fi

@@ -70,12 +70,12 @@ cycle_check (struct cycle_check_state *state, struct stat const *sb)
   if (is_zero_or_power_of_two (++(state->chdir_counter)))
     {
       /* On all architectures that we know about, if the counter
-	 overflows then there is a directory cycle here somewhere,
-	 even if we haven't detected it yet.  Typically this happens
-	 only after the counter is incremented 2**64 times, so it's a
-	 fairly theoretical point.  */
+         overflows then there is a directory cycle here somewhere,
+         even if we haven't detected it yet.  Typically this happens
+         only after the counter is incremented 2**64 times, so it's a
+         fairly theoretical point.  */
       if (state->chdir_counter == 0)
-	return true;
+        return true;
 
       state->dev_ino.st_dev = sb->st_dev;
       state->dev_ino.st_ino = sb->st_ino;

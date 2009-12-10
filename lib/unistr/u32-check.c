@@ -30,10 +30,10 @@ u32_check (const uint32_t *s, size_t n)
       uint32_t c = *s;
 
       if (c < 0xd800 || (c >= 0xe000 && c < 0x110000))
-	s++;
+        s++;
       else
-	/* invalid Unicode character */
-	return s;
+        /* invalid Unicode character */
+        return s;
     }
   return NULL;
 }

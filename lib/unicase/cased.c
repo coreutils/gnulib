@@ -33,8 +33,8 @@ bool
 uc_is_cased (ucs4_t uc)
 {
   return (uc_is_property_lowercase (uc)
-	  || uc_is_property_uppercase (uc)
-	  || uc_is_general_category (uc, UC_TITLECASE_LETTER));
+          || uc_is_property_uppercase (uc)
+          || uc_is_general_category (uc, UC_TITLECASE_LETTER));
 }
 
 #else

@@ -45,9 +45,9 @@
 
 static void
 xstrtol_error (enum strtol_error err,
-	       int opt_idx, char c, struct option const *long_options,
-	       char const *arg,
-	       int exit_status)
+               int opt_idx, char c, struct option const *long_options,
+               char const *arg,
+               int exit_status)
 {
   char const *hyphens = "--";
   char const *msgid;
@@ -90,8 +90,8 @@ xstrtol_error (enum strtol_error err,
 
 void
 xstrtol_fatal (enum strtol_error err,
-	       int opt_idx, char c, struct option const *long_options,
-	       char const *arg)
+               int opt_idx, char c, struct option const *long_options,
+               char const *arg)
 {
   xstrtol_error (err, opt_idx, c, long_options, arg, exit_failure);
   abort ();

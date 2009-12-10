@@ -23,7 +23,7 @@ AC_DEFUN([gl_FUNC_GETCWD_PATH_MAX],
      ac_clean_files="$ac_clean_files confdir3"
      AC_RUN_IFELSE(
        [AC_LANG_SOURCE(
-	  [[
+          [[
 #include <errno.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -77,7 +77,7 @@ main ()
   exit (0);
 #else
   char buf[PATH_MAX * (DIR_NAME_SIZE / DOTDOTSLASH_LEN + 1)
-	   + DIR_NAME_SIZE + BUF_SLOP];
+           + DIR_NAME_SIZE + BUF_SLOP];
   char *cwd = getcwd (buf, PATH_MAX);
   size_t initial_cwd_len;
   size_t cwd_len;
@@ -96,58 +96,58 @@ main ()
 
       cwd_len += DIR_NAME_SIZE;
       /* If mkdir or chdir fails, it could be that this system cannot create
-	 any file with an absolute name longer than PATH_MAX, such as cygwin.
-	 If so, leave fail as 0, because the current working directory can't
-	 be too long for getcwd if it can't even be created.  For other
-	 errors, be pessimistic and consider that as a failure, too.  */
+         any file with an absolute name longer than PATH_MAX, such as cygwin.
+         If so, leave fail as 0, because the current working directory can't
+         be too long for getcwd if it can't even be created.  For other
+         errors, be pessimistic and consider that as a failure, too.  */
       if (mkdir (DIR_NAME, S_IRWXU) < 0 || chdir (DIR_NAME) < 0)
-	{
-	  if (! (errno == ERANGE || is_ENAMETOOLONG (errno)))
-	    fail = 2;
-	  break;
-	}
+        {
+          if (! (errno == ERANGE || is_ENAMETOOLONG (errno)))
+            fail = 2;
+          break;
+        }
 
       if (PATH_MAX <= cwd_len && cwd_len < PATH_MAX + DIR_NAME_SIZE)
-	{
-	  c = getcwd (buf, PATH_MAX);
-	  if (!c && errno == ENOENT)
-	    {
-	      fail = 1;
-	      break;
-	    }
-	  if (c || ! (errno == ERANGE || is_ENAMETOOLONG (errno)))
-	    {
-	      fail = 2;
-	      break;
-	    }
-	}
+        {
+          c = getcwd (buf, PATH_MAX);
+          if (!c && errno == ENOENT)
+            {
+              fail = 1;
+              break;
+            }
+          if (c || ! (errno == ERANGE || is_ENAMETOOLONG (errno)))
+            {
+              fail = 2;
+              break;
+            }
+        }
 
       if (dotdot_max <= cwd_len - initial_cwd_len)
-	{
-	  if (dotdot_max + DIR_NAME_SIZE < cwd_len - initial_cwd_len)
-	    break;
-	  c = getcwd (buf, cwd_len + 1);
-	  if (!c)
-	    {
-	      if (! (errno == ERANGE || errno == ENOENT
-		     || is_ENAMETOOLONG (errno)))
-		{
-		  fail = 2;
-		  break;
-		}
-	      if (AT_FDCWD || errno == ERANGE || errno == ENOENT)
-		{
-		  fail = 1;
-		  break;
-		}
-	    }
-	}
+        {
+          if (dotdot_max + DIR_NAME_SIZE < cwd_len - initial_cwd_len)
+            break;
+          c = getcwd (buf, cwd_len + 1);
+          if (!c)
+            {
+              if (! (errno == ERANGE || errno == ENOENT
+                     || is_ENAMETOOLONG (errno)))
+                {
+                  fail = 2;
+                  break;
+                }
+              if (AT_FDCWD || errno == ERANGE || errno == ENOENT)
+                {
+                  fail = 1;
+                  break;
+                }
+            }
+        }
 
       if (c && strlen (c) != cwd_len)
-	{
-	  fail = 2;
-	  break;
-	}
+        {
+          fail = 2;
+          break;
+        }
       ++n_chdirs;
     }
 
@@ -161,10 +161,10 @@ main ()
     rmdir (DIR_NAME);
     for (i = 0; i <= n_chdirs; i++)
       {
-	if (chdir ("..") < 0)
-	  break;
-	if (rmdir (DIR_NAME) != 0)
-	  break;
+        if (chdir ("..") < 0)
+          break;
+        if (rmdir (DIR_NAME) != 0)
+          break;
       }
   }
 

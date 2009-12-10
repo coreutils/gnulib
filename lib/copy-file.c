@@ -65,26 +65,26 @@ copy_file_preserving (const char *src_filename, const char *dest_filename)
   src_fd = open (src_filename, O_RDONLY | O_BINARY);
   if (src_fd < 0 || fstat (src_fd, &statbuf) < 0)
     error (EXIT_FAILURE, errno, _("error while opening \"%s\" for reading"),
-	   src_filename);
+           src_filename);
 
   mode = statbuf.st_mode & 07777;
 
   dest_fd = open (dest_filename, O_WRONLY | O_CREAT | O_TRUNC | O_BINARY, 0600);
   if (dest_fd < 0)
     error (EXIT_FAILURE, errno, _("cannot open backup file \"%s\" for writing"),
-	   dest_filename);
+           dest_filename);
 
   /* Copy the file contents.  */
   for (;;)
     {
       size_t n_read = safe_read (src_fd, buf, IO_SIZE);
       if (n_read == SAFE_READ_ERROR)
-	error (EXIT_FAILURE, errno, _("error reading \"%s\""), src_filename);
+        error (EXIT_FAILURE, errno, _("error reading \"%s\""), src_filename);
       if (n_read == 0)
-	break;
+        break;
 
       if (full_write (dest_fd, buf, n_read) < n_read)
-	error (EXIT_FAILURE, errno, _("error writing \"%s\""), dest_filename);
+        error (EXIT_FAILURE, errno, _("error writing \"%s\""), dest_filename);
     }
 
   free (buf);

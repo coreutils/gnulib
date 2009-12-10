@@ -46,7 +46,7 @@ ac_fsusage_space=no
 if test $ac_fsusage_space = no; then
   # SVR4
   AC_CACHE_CHECK([for statvfs function (SVR4)], [fu_cv_sys_stat_statvfs],
-		 [AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <sys/types.h>
+                 [AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <sys/types.h>
 #if defined __GLIBC__ && defined __linux__
 Do not use statvfs on systems with GNU libc on Linux, because that function
 stats all preceding entries in /proc/mounts, and that makes df hang if even
@@ -60,13 +60,13 @@ a system call.
 #endif
 
 #include <sys/statvfs.h>]],
-				    [[struct statvfs fsd; statvfs (0, &fsd);]])],
-				 [fu_cv_sys_stat_statvfs=yes],
-			         [fu_cv_sys_stat_statvfs=no])])
+                                    [[struct statvfs fsd; statvfs (0, &fsd);]])],
+                                 [fu_cv_sys_stat_statvfs=yes],
+                                 [fu_cv_sys_stat_statvfs=no])])
   if test $fu_cv_sys_stat_statvfs = yes; then
     ac_fsusage_space=yes
     AC_DEFINE([STAT_STATVFS], [1],
-	      [  Define if there is a function named statvfs.  (SVR4)])
+              [  Define if there is a function named statvfs.  (SVR4)])
   fi
 fi
 
@@ -92,7 +92,7 @@ if test $ac_fsusage_space = no; then
   if test $fu_cv_sys_stat_statfs3_osf1 = yes; then
     ac_fsusage_space=yes
     AC_DEFINE([STAT_STATFS3_OSF1], [1],
-	      [   Define if  statfs takes 3 args.  (DEC Alpha running OSF/1)])
+              [   Define if  statfs takes 3 args.  (DEC Alpha running OSF/1)])
   fi
 fi
 
@@ -150,7 +150,7 @@ if test $ac_fsusage_space = no; then
   if test $fu_cv_sys_stat_statfs4 = yes; then
     ac_fsusage_space=yes
     AC_DEFINE([STAT_STATFS4], [1],
-	      [  Define if statfs takes 4 args.  (SVR3, Dynix, Irix, Dolphin)])
+              [  Define if statfs takes 4 args.  (SVR3, Dynix, Irix, Dolphin)])
   fi
 fi
 

@@ -78,13 +78,13 @@ find_in_path (const char *progname)
       /* Extract next directory in PATH.  */
       dir = path_rest;
       for (cp = path_rest; *cp != '\0' && *cp != ':'; cp++)
-	;
+        ;
       last = (*cp == '\0');
       *cp = '\0';
 
       /* Empty PATH components designate the current directory.  */
       if (dir == cp)
-	dir = ".";
+        dir = ".";
 
       /* Concatenate dir and progname.  */
 # if !IN_FINDPROG_LGPL
@@ -92,41 +92,41 @@ find_in_path (const char *progname)
 # else
       progpathname = concatenated_filename (dir, progname, NULL);
       if (progpathname == NULL)
-	{
-	  /* Out of memory.  */
-	  free (path);
-	  return progname;
-	}
+        {
+          /* Out of memory.  */
+          free (path);
+          return progname;
+        }
 # endif
 
       /* On systems which have the eaccess() system call, let's use it.
-	 On other systems, let's hope that this program is not installed
-	 setuid or setgid, so that it is ok to call access() despite its
-	 design flaw.  */
+         On other systems, let's hope that this program is not installed
+         setuid or setgid, so that it is ok to call access() despite its
+         design flaw.  */
       if (eaccess (progpathname, X_OK) == 0)
-	{
-	  /* Found!  */
-	  if (strcmp (progpathname, progname) == 0)
-	    {
-	      free (progpathname);
+        {
+          /* Found!  */
+          if (strcmp (progpathname, progname) == 0)
+            {
+              free (progpathname);
 
-	      /* Add the "./" prefix for real, that xconcatenated_filename()
-		 optimized away.  This avoids a second PATH search when the
-		 caller uses execlp/execvp.  */
-	      progpathname = XNMALLOC (2 + strlen (progname) + 1, char);
-	      progpathname[0] = '.';
-	      progpathname[1] = '/';
-	      memcpy (progpathname + 2, progname, strlen (progname) + 1);
-	    }
+              /* Add the "./" prefix for real, that xconcatenated_filename()
+                 optimized away.  This avoids a second PATH search when the
+                 caller uses execlp/execvp.  */
+              progpathname = XNMALLOC (2 + strlen (progname) + 1, char);
+              progpathname[0] = '.';
+              progpathname[1] = '/';
+              memcpy (progpathname + 2, progname, strlen (progname) + 1);
+            }
 
-	  free (path);
-	  return progpathname;
-	}
+          free (path);
+          return progpathname;
+        }
 
       free (progpathname);
 
       if (last)
-	break;
+        break;
     }
 
   /* Not found in PATH.  An error will be signalled at the first call.  */

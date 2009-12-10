@@ -26,7 +26,7 @@ main ()
   for (i = 0; i < SIZEOF (mapping); i++)
     {
       for (; c < mapping[i].ch; c++)
-	ASSERT (MAP (c) == c);
+        ASSERT (MAP (c) == c);
       ASSERT (MAP (c) == mapping[i].value);
       c++;
     }

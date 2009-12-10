@@ -29,15 +29,15 @@
 #include "nan.h"
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 /* On HP-UX 10.20, negating 0.0L does not yield -0.0L.
@@ -126,9 +126,9 @@ main ()
       y = ldexpl (x, 0); ASSERT (y == x);
       y = ldexpl (x, 5); ASSERT (y == x * 32.0L);
       if (i - 5 >= LDBL_MIN_EXP)
-	{
-	  y = ldexpl (x, -5); ASSERT (y == x * 0.03125L);
-	}
+        {
+          y = ldexpl (x, -5); ASSERT (y == x * 0.03125L);
+        }
     }
   for (; i >= LDBL_MIN_EXP - 100 && x > 0.0L; i--, x *= 0.5L)
     {

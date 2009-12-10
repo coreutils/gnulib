@@ -43,11 +43,11 @@ wcrtomb (char *s, wchar_t wc, mbstate_t *ps)
       int ret = wctomb (s, wc);
 
       if (ret >= 0)
-	return ret;
+        return ret;
       else
-	{
-	  errno = EILSEQ;
-	  return (size_t)(-1);
-	}
+        {
+          errno = EILSEQ;
+          return (size_t)(-1);
+        }
     }
 }

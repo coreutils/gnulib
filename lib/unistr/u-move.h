@@ -27,7 +27,7 @@ FUNC (UNIT *dest, const UNIT *src, size_t n)
       const UNIT *srcptr = src;
 
       for (; n > 0; n--)
-	*destptr++ = *srcptr++;
+        *destptr++ = *srcptr++;
     }
   else if (dest > src)
     {
@@ -35,7 +35,7 @@ FUNC (UNIT *dest, const UNIT *src, size_t n)
       const UNIT *srcptr = src + n - 1;
 
       for (; n > 0; n--)
-	*destptr-- = *srcptr--;
+        *destptr-- = *srcptr--;
     }
 #else
   memmove ((char *) dest, (const char *) src, n * sizeof (UNIT));

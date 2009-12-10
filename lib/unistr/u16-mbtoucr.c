@@ -33,20 +33,20 @@ u16_mbtoucr (ucs4_t *puc, const uint16_t *s, size_t n)
   if (c < 0xdc00)
     {
       if (n >= 2)
-	{
-	  if (s[1] >= 0xdc00 && s[1] < 0xe000)
-	    {
-	      *puc = 0x10000 + ((c - 0xd800) << 10) + (s[1] - 0xdc00);
-	      return 2;
-	    }
-	  /* invalid multibyte character */
-	}
+        {
+          if (s[1] >= 0xdc00 && s[1] < 0xe000)
+            {
+              *puc = 0x10000 + ((c - 0xd800) << 10) + (s[1] - 0xdc00);
+              return 2;
+            }
+          /* invalid multibyte character */
+        }
       else
-	{
-	  /* incomplete multibyte character */
-	  *puc = 0xfffd;
-	  return -2;
-	}
+        {
+          /* incomplete multibyte character */
+          *puc = 0xfffd;
+          return -2;
+        }
     }
   /* invalid multibyte character */
   *puc = 0xfffd;

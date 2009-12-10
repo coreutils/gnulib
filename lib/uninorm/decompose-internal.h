@@ -27,10 +27,10 @@ extern int
 struct ucs4_with_ccc
 {
   ucs4_t code;
-  int ccc;	/* range 0..255 */
+  int ccc;      /* range 0..255 */
 };
 
 /* Stable-sort an array of 'struct ucs4_with_ccc'.  */
 extern void
        gl_uninorm_decompose_merge_sort_inplace (struct ucs4_with_ccc *src, size_t n,
-						struct ucs4_with_ccc *tmp);
+                                                struct ucs4_with_ccc *tmp);

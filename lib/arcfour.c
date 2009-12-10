@@ -33,7 +33,7 @@
 
 void
 arcfour_stream (arcfour_context * context, const char *inbuf, char *outbuf,
-		size_t length)
+                size_t length)
 {
   uint8_t i = context->idx_i;
   uint8_t j = context->idx_j;
@@ -49,7 +49,7 @@ arcfour_stream (arcfour_context * context, const char *inbuf, char *outbuf,
       sbox[i] = sbox[j];
       sbox[j] = t;
       *outbuf++ = (*inbuf++
-		   ^ sbox[(0U + sbox[i] + sbox[j]) % ARCFOUR_SBOX_SIZE]);
+                   ^ sbox[(0U + sbox[i] + sbox[j]) % ARCFOUR_SBOX_SIZE]);
     }
 
   context->idx_i = i;
@@ -73,6 +73,6 @@ arcfour_setkey (arcfour_context * context, const char *key, size_t keylen)
       sbox[i] = sbox[j];
       sbox[j] = t;
       if (++k == keylen)
-	k = 0;
+        k = 0;
     }
 }

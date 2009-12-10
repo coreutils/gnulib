@@ -82,10 +82,10 @@ extern "C" {
  * signal and the EPIPE error code.
  */
 extern pid_t create_pipe_out (const char *progname,
-			      const char *prog_path, char **prog_argv,
-			      const char *prog_stdout, bool null_stderr,
-			      bool slave_process, bool exit_on_error,
-			      int fd[1]);
+                              const char *prog_path, char **prog_argv,
+                              const char *prog_stdout, bool null_stderr,
+                              bool slave_process, bool exit_on_error,
+                              int fd[1]);
 
 /* Open a pipe for input from a child process.
  * The child's stdin comes from a file.
@@ -95,10 +95,10 @@ extern pid_t create_pipe_out (const char *progname,
  *
  */
 extern pid_t create_pipe_in (const char *progname,
-			     const char *prog_path, char **prog_argv,
-			     const char *prog_stdin, bool null_stderr,
-			     bool slave_process, bool exit_on_error,
-			     int fd[1]);
+                             const char *prog_path, char **prog_argv,
+                             const char *prog_stdin, bool null_stderr,
+                             bool slave_process, bool exit_on_error,
+                             int fd[1]);
 
 /* Open a bidirectional pipe.
  *
@@ -123,10 +123,10 @@ extern pid_t create_pipe_in (const char *progname,
  *    input.  But you are currently busy reading from it.
  */
 extern pid_t create_pipe_bidi (const char *progname,
-			       const char *prog_path, char **prog_argv,
-			       bool null_stderr,
-			       bool slave_process, bool exit_on_error,
-			       int fd[2]);
+                               const char *prog_path, char **prog_argv,
+                               bool null_stderr,
+                               bool slave_process, bool exit_on_error,
+                               int fd[2]);
 
 /* The name of the "always silent" device.  */
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__

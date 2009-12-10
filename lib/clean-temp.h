@@ -60,43 +60,43 @@ struct temp_dir
    Return a fresh 'struct temp_dir' on success.  Upon error, an error message
    is shown and NULL is returned.  */
 extern struct temp_dir * create_temp_dir (const char *prefix,
-					  const char *parentdir,
-					  bool cleanup_verbose);
+                                          const char *parentdir,
+                                          bool cleanup_verbose);
 
 /* Register the given ABSOLUTE_FILE_NAME as being a file inside DIR, that
    needs to be removed before DIR can be removed.
    Should be called before the file ABSOLUTE_FILE_NAME is created.  */
 extern void register_temp_file (struct temp_dir *dir,
-				const char *absolute_file_name);
+                                const char *absolute_file_name);
 
 /* Unregister the given ABSOLUTE_FILE_NAME as being a file inside DIR, that
    needs to be removed before DIR can be removed.
    Should be called when the file ABSOLUTE_FILE_NAME could not be created.  */
 extern void unregister_temp_file (struct temp_dir *dir,
-				  const char *absolute_file_name);
+                                  const char *absolute_file_name);
 
 /* Register the given ABSOLUTE_DIR_NAME as being a subdirectory inside DIR,
    that needs to be removed before DIR can be removed.
    Should be called before the subdirectory ABSOLUTE_DIR_NAME is created.  */
 extern void register_temp_subdir (struct temp_dir *dir,
-				  const char *absolute_dir_name);
+                                  const char *absolute_dir_name);
 
 /* Unregister the given ABSOLUTE_DIR_NAME as being a subdirectory inside DIR,
    that needs to be removed before DIR can be removed.
    Should be called when the subdirectory ABSOLUTE_DIR_NAME could not be
    created.  */
 extern void unregister_temp_subdir (struct temp_dir *dir,
-				    const char *absolute_dir_name);
+                                    const char *absolute_dir_name);
 
 /* Remove the given ABSOLUTE_FILE_NAME and unregister it.
    Return 0 upon success, or -1 if there was some problem.  */
 extern int cleanup_temp_file (struct temp_dir *dir,
-			      const char *absolute_file_name);
+                              const char *absolute_file_name);
 
 /* Remove the given ABSOLUTE_DIR_NAME and unregister it.
    Return 0 upon success, or -1 if there was some problem.  */
 extern int cleanup_temp_subdir (struct temp_dir *dir,
-				const char *absolute_dir_name);
+                                const char *absolute_dir_name);
 
 /* Remove all registered files and subdirectories inside DIR.
    Return 0 upon success, or -1 if there was some problem.  */

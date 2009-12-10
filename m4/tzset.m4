@@ -34,11 +34,11 @@ main ()
   putenv ("TZ=EST+3EDT+2,M10.1.0/00:00:00,M2.3.0/00:00:00");
   tzset ();
   return (p->tm_year != s.tm_year
-	  || p->tm_mon != s.tm_mon
-	  || p->tm_mday != s.tm_mday
-	  || p->tm_hour != s.tm_hour
-	  || p->tm_min != s.tm_min
-	  || p->tm_sec != s.tm_sec);
+          || p->tm_mon != s.tm_mon
+          || p->tm_mday != s.tm_mday
+          || p->tm_hour != s.tm_hour
+          || p->tm_min != s.tm_min
+          || p->tm_sec != s.tm_sec);
 }
   ]])],
        [gl_cv_func_tzset_clobber=no],

@@ -27,15 +27,15 @@
 #include "progname.h"
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 static bool
@@ -67,9 +67,9 @@ check_fstrcmp (const char *string1, const char *string2, double expected)
     double bound = (1 + expected) * 0.5;
     if (expected < bound)
       {
-	volatile double result = fstrcmp_bounded (string1, string2, bound);
-	if (!(result < bound))
-	  return false;
+        volatile double result = fstrcmp_bounded (string1, string2, bound);
+        if (!(result < bound))
+          return false;
       }
   }
 

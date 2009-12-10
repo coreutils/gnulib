@@ -81,30 +81,30 @@ main (int argc, char **argv)
     {
       char *opt = *++argv;
       if (opt[0] == '-')
-	{
-	  int neg = 0;
-	  int flag;
-	  char *s = opt + 1;
+        {
+          int neg = 0;
+          int flag;
+          char *s = opt + 1;
 
-	  if (opt[1] == '-' && opt[2] == 0)
-	    {
-	      argc--;
-	      break;
-	    }
-	  if (strlen (s) > 3 && memcmp (s, "no-", 3) == 0)
-	    {
-	      neg = 1;
-	      s += 3;
-	    }
-	  flag = XARGMATCH (opt, s, exclude_keywords, exclude_flags);
-	  if (neg)
-	    exclude_options &= ~flag;
-	  else
-	    exclude_options |= flag;
-	}
+          if (opt[1] == '-' && opt[2] == 0)
+            {
+              argc--;
+              break;
+            }
+          if (strlen (s) > 3 && memcmp (s, "no-", 3) == 0)
+            {
+              neg = 1;
+              s += 3;
+            }
+          flag = XARGMATCH (opt, s, exclude_keywords, exclude_flags);
+          if (neg)
+            exclude_options &= ~flag;
+          else
+            exclude_options |= flag;
+        }
       else if (add_exclude_file (add_exclude, exclude, opt,
-				 exclude_options, '\n') != 0)
-	error (1, errno, "error loading %s", opt);
+                                 exclude_options, '\n') != 0)
+        error (1, errno, "error loading %s", opt);
     }
 
   for (; argc; --argc)

@@ -53,11 +53,11 @@ AC_DEFUN_ONCE([gl_FUNC_MEMCHR],
     {
       int pagesize = getpagesize ();
       char *two_pages =
-	(char *) mmap (NULL, 2 * pagesize, PROT_READ | PROT_WRITE,
-		       flags, fd, 0);
+        (char *) mmap (NULL, 2 * pagesize, PROT_READ | PROT_WRITE,
+                       flags, fd, 0);
       if (two_pages != (char *)(-1)
-	  && mprotect (two_pages + pagesize, pagesize, PROT_NONE) == 0)
-	fence = two_pages + pagesize;
+          && mprotect (two_pages + pagesize, pagesize, PROT_NONE) == 0)
+        fence = two_pages + pagesize;
     }
 #endif
   if (fence)

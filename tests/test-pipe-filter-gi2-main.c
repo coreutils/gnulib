@@ -30,15 +30,15 @@
 #include "progname.h"
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 /* 0.1 sec pause */
@@ -94,7 +94,7 @@ main (int argc, char **argv)
 
     path[0] = "/nonexistent/blah";
     f = pipe_filter_gi_create ("pipe-filter-test", path[0], path, true, false,
-			       prepare_read, ignore_done_read, NULL);
+                               prepare_read, ignore_done_read, NULL);
     small_nap ();
     rc = pipe_filter_gi_write (f, "", 1);
     ASSERT (rc == 127 || rc == -1);
@@ -108,7 +108,7 @@ main (int argc, char **argv)
   {
     path[0] = argv[1];
     f = pipe_filter_gi_create ("pipe-filter-test", path[0], path, false, false,
-			       prepare_read, ignore_done_read, NULL);
+                               prepare_read, ignore_done_read, NULL);
     pipe_filter_gi_write_string (f, "1 -1");
     ASSERT (pipe_filter_gi_close (f) == 1);
     printf ("Test 2 passed.\n");
@@ -121,7 +121,7 @@ main (int argc, char **argv)
 
     path[0] = argv[1];
     f = pipe_filter_gi_create ("pipe-filter-test", path[0], path, false, false,
-			       prepare_read, ignore_done_read, NULL);
+                               prepare_read, ignore_done_read, NULL);
     pipe_filter_gi_write_string (f, "1 -1\n"); /* tell the child to terminate */
     small_nap (); /* let the child terminate */
     rc = pipe_filter_gi_write (f, " ", 1); /* write to a closed pipe */
@@ -138,7 +138,7 @@ main (int argc, char **argv)
   {
     path[0] = argv[1];
     f = pipe_filter_gi_create ("pipe-filter-test", path[0], path, false, true,
-			       prepare_read, output_done_read, NULL);
+                               prepare_read, output_done_read, NULL);
     pipe_filter_gi_write_string (f, "1 50\n");
     pipe_filter_gi_write_string (f, "51\n");
     pipe_filter_gi_write_string (f, "100");

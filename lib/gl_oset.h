@@ -90,8 +90,8 @@ typedef const struct gl_oset_implementation * gl_oset_implementation_t;
    COMPAR_FN is an element comparison function or NULL.
    DISPOSE_FN is an element disposal function or NULL.  */
 extern gl_oset_t gl_oset_create_empty (gl_oset_implementation_t implementation,
-				       gl_setelement_compar_fn compar_fn,
-				       gl_setelement_dispose_fn dispose_fn);
+                                       gl_setelement_compar_fn compar_fn,
+                                       gl_setelement_dispose_fn dispose_fn);
 
 /* Return the current number of elements in an ordered set.  */
 extern size_t gl_oset_size (gl_oset_t set);
@@ -106,9 +106,9 @@ extern bool gl_oset_search (gl_oset_t set, const void *elt);
    Return true and store the found element in *ELTP if found, otherwise return
    false.  */
 extern bool gl_oset_search_atleast (gl_oset_t set,
-				    gl_setelement_threshold_fn threshold_fn,
-				    const void *threshold,
-				    const void **eltp);
+                                    gl_setelement_threshold_fn threshold_fn,
+                                    const void *threshold,
+                                    const void **eltp);
 
 /* Add an element to an ordered set.
    Return true if it was not already in the set and added.  */
@@ -149,7 +149,7 @@ extern gl_oset_iterator_t gl_oset_iterator (gl_oset_t set);
 /* If there is a next element, store the next element in *ELTP, advance the
    iterator and return true.  Otherwise, return false.  */
 extern bool gl_oset_iterator_next (gl_oset_iterator_t *iterator,
-				   const void **eltp);
+                                   const void **eltp);
 
 /* Free an iterator.  */
 extern void gl_oset_iterator_free (gl_oset_iterator_t *iterator);
@@ -160,13 +160,13 @@ struct gl_oset_implementation
 {
   /* gl_oset_t functions.  */
   gl_oset_t (*create_empty) (gl_oset_implementation_t implementation,
-			     gl_setelement_compar_fn compar_fn,
-			     gl_setelement_dispose_fn dispose_fn);
+                             gl_setelement_compar_fn compar_fn,
+                             gl_setelement_dispose_fn dispose_fn);
   size_t (*size) (gl_oset_t set);
   bool (*search) (gl_oset_t set, const void *elt);
   bool (*search_atleast) (gl_oset_t set,
-			  gl_setelement_threshold_fn threshold_fn,
-			  const void *threshold, const void **eltp);
+                          gl_setelement_threshold_fn threshold_fn,
+                          const void *threshold, const void **eltp);
   bool (*add) (gl_oset_t set, const void *elt);
   bool (*remove_elt) (gl_oset_t set, const void *elt);
   void (*oset_free) (gl_oset_t set);
@@ -192,8 +192,8 @@ struct gl_oset_impl_base
 # define gl_oset_create_empty gl_oset_create_empty_inline
 static inline gl_oset_t
 gl_oset_create_empty (gl_oset_implementation_t implementation,
-		      gl_setelement_compar_fn compar_fn,
-		      gl_setelement_dispose_fn dispose_fn)
+                      gl_setelement_compar_fn compar_fn,
+                      gl_setelement_dispose_fn dispose_fn)
 {
   return implementation->create_empty (implementation, compar_fn, dispose_fn);
 }
@@ -215,11 +215,11 @@ gl_oset_search (gl_oset_t set, const void *elt)
 # define gl_oset_search_atleast gl_oset_search_atleast_inline
 static inline bool
 gl_oset_search_atleast (gl_oset_t set,
-			gl_setelement_threshold_fn threshold_fn,
-			const void *threshold, const void **eltp)
+                        gl_setelement_threshold_fn threshold_fn,
+                        const void *threshold, const void **eltp)
 {
   return ((const struct gl_oset_impl_base *) set)->vtable
-	 ->search_atleast (set, threshold_fn, threshold, eltp);
+         ->search_atleast (set, threshold_fn, threshold, eltp);
 }
 
 # define gl_oset_add gl_oset_add_inline
@@ -234,7 +234,7 @@ static inline bool
 gl_oset_remove (gl_oset_t set, const void *elt)
 {
   return ((const struct gl_oset_impl_base *) set)->vtable
-	 ->remove_elt (set, elt);
+         ->remove_elt (set, elt);
 }
 
 # define gl_oset_free gl_oset_free_inline

@@ -26,9 +26,9 @@
 
 /* An AVL tree is a binary tree where
    1. The height of each node is calculated as
-	heightof(node) = 1 + max (heightof(node.left), heightof(node.right)).
+        heightof(node) = 1 + max (heightof(node.left), heightof(node.right)).
    2. The heights of the subtrees of each node differ by at most 1:
-	| heightof(right) - heightof(left) | <= 1.
+        | heightof(right) - heightof(left) | <= 1.
    3. The index of the elements in the node.left subtree are smaller than
       the index of node.
       The index of the elements in the node.right subtree are larger than
@@ -48,7 +48,7 @@ struct gl_oset_node_impl
      gl_oset_add_before, gl_oset_add_after can be implemented.  */
   struct gl_oset_node_impl *parent;
   int balance;                      /* heightof(right) - heightof(left),
-				       always = -1 or 0 or 1 */
+                                       always = -1 or 0 or 1 */
   const void *value;
 };
 typedef struct gl_oset_node_impl * gl_oset_node_t;
@@ -74,7 +74,7 @@ struct gl_oset_impl
    Rotation operations are performed starting at PARENT (not NODE itself!).  */
 static void
 rebalance (gl_oset_t set,
-	   gl_oset_node_t node, int height_diff, gl_oset_node_t parent)
+           gl_oset_node_t node, int height_diff, gl_oset_node_t parent)
 {
   for (;;)
     {
@@ -90,218 +90,218 @@ rebalance (gl_oset_t set,
       previous_balance = node->balance;
 
       /* The balance of NODE is incremented by BALANCE_DIFF: +1 if the right
-	 branch's height has increased by 1 or the left branch's height has
-	 decreased by 1, -1 if the right branch's height has decreased by 1 or
-	 the left branch's height has increased by 1, 0 if no height change.  */
+         branch's height has increased by 1 or the left branch's height has
+         decreased by 1, -1 if the right branch's height has decreased by 1 or
+         the left branch's height has increased by 1, 0 if no height change.  */
       if (node->left != NULL || node->right != NULL)
-	balance_diff = (child == node->right ? height_diff : -height_diff);
+        balance_diff = (child == node->right ? height_diff : -height_diff);
       else
-	/* Special case where above formula doesn't work, because the caller
-	   didn't tell whether node's left or right branch shrunk from height 1
-	   to NULL.  */
-	balance_diff = - previous_balance;
+        /* Special case where above formula doesn't work, because the caller
+           didn't tell whether node's left or right branch shrunk from height 1
+           to NULL.  */
+        balance_diff = - previous_balance;
 
       node->balance += balance_diff;
       if (balance_diff == previous_balance)
-	{
-	  /* node->balance is outside the range [-1,1].  Must rotate.  */
-	  gl_oset_node_t *nodep;
+        {
+          /* node->balance is outside the range [-1,1].  Must rotate.  */
+          gl_oset_node_t *nodep;
 
-	  if (node->parent == NULL)
-	    /* node == set->root */
-	    nodep = &set->root;
-	  else if (node->parent->left == node)
-	    nodep = &node->parent->left;
-	  else if (node->parent->right == node)
-	    nodep = &node->parent->right;
-	  else
-	    abort ();
+          if (node->parent == NULL)
+            /* node == set->root */
+            nodep = &set->root;
+          else if (node->parent->left == node)
+            nodep = &node->parent->left;
+          else if (node->parent->right == node)
+            nodep = &node->parent->right;
+          else
+            abort ();
 
-	  nodeleft = node->left;
-	  noderight = node->right;
+          nodeleft = node->left;
+          noderight = node->right;
 
-	  if (balance_diff < 0)
-	    {
-	      /* node->balance = -2.  The subtree is heavier on the left side.
-		 Rotate from left to right:
+          if (balance_diff < 0)
+            {
+              /* node->balance = -2.  The subtree is heavier on the left side.
+                 Rotate from left to right:
 
-				  *
-				/   \
-			     h+2      h
-	       */
-	      gl_oset_node_t nodeleftright = nodeleft->right;
-	      if (nodeleft->balance <= 0)
-		{
-		  /*
-			      *                    h+2|h+3
-			    /   \                  /    \
-			 h+2      h      -->      /   h+1|h+2
-			 / \                      |    /    \
-		       h+1 h|h+1                 h+1  h|h+1  h
-		   */
-		  node->left = nodeleftright;
-		  nodeleft->right = node;
+                                  *
+                                /   \
+                             h+2      h
+               */
+              gl_oset_node_t nodeleftright = nodeleft->right;
+              if (nodeleft->balance <= 0)
+                {
+                  /*
+                              *                    h+2|h+3
+                            /   \                  /    \
+                         h+2      h      -->      /   h+1|h+2
+                         / \                      |    /    \
+                       h+1 h|h+1                 h+1  h|h+1  h
+                   */
+                  node->left = nodeleftright;
+                  nodeleft->right = node;
 
-		  nodeleft->parent = node->parent;
-		  node->parent = nodeleft;
-		  if (nodeleftright != NULL)
-		    nodeleftright->parent = node;
+                  nodeleft->parent = node->parent;
+                  node->parent = nodeleft;
+                  if (nodeleftright != NULL)
+                    nodeleftright->parent = node;
 
-		  nodeleft->balance += 1;
-		  node->balance = - nodeleft->balance;
+                  nodeleft->balance += 1;
+                  node->balance = - nodeleft->balance;
 
-		  *nodep = nodeleft;
-		  height_diff = (height_diff < 0
-				 ? /* noderight's height had been decremented from
-				      h+1 to h.  The subtree's height changes from
-				      h+3 to h+2|h+3.  */
-				   nodeleft->balance - 1
-				 : /* nodeleft's height had been incremented from
-				      h+1 to h+2.  The subtree's height changes from
-				      h+2 to h+2|h+3.  */
-				   nodeleft->balance);
-		}
-	      else
-		{
-		  /*
-			    *                     h+2
-			  /   \                 /     \
-		       h+2      h      -->    h+1     h+1
-		       / \                    / \     / \
-		      h  h+1                 h   L   R   h
-			 / \
-			L   R
+                  *nodep = nodeleft;
+                  height_diff = (height_diff < 0
+                                 ? /* noderight's height had been decremented from
+                                      h+1 to h.  The subtree's height changes from
+                                      h+3 to h+2|h+3.  */
+                                   nodeleft->balance - 1
+                                 : /* nodeleft's height had been incremented from
+                                      h+1 to h+2.  The subtree's height changes from
+                                      h+2 to h+2|h+3.  */
+                                   nodeleft->balance);
+                }
+              else
+                {
+                  /*
+                            *                     h+2
+                          /   \                 /     \
+                       h+2      h      -->    h+1     h+1
+                       / \                    / \     / \
+                      h  h+1                 h   L   R   h
+                         / \
+                        L   R
 
-		   */
-		  gl_oset_node_t L = nodeleft->right = nodeleftright->left;
-		  gl_oset_node_t R = node->left = nodeleftright->right;
-		  nodeleftright->left = nodeleft;
-		  nodeleftright->right = node;
+                   */
+                  gl_oset_node_t L = nodeleft->right = nodeleftright->left;
+                  gl_oset_node_t R = node->left = nodeleftright->right;
+                  nodeleftright->left = nodeleft;
+                  nodeleftright->right = node;
 
-		  nodeleftright->parent = node->parent;
-		  if (L != NULL)
-		    L->parent = nodeleft;
-		  if (R != NULL)
-		    R->parent = node;
-		  nodeleft->parent = nodeleftright;
-		  node->parent = nodeleftright;
+                  nodeleftright->parent = node->parent;
+                  if (L != NULL)
+                    L->parent = nodeleft;
+                  if (R != NULL)
+                    R->parent = node;
+                  nodeleft->parent = nodeleftright;
+                  node->parent = nodeleftright;
 
-		  nodeleft->balance = (nodeleftright->balance > 0 ? -1 : 0);
-		  node->balance = (nodeleftright->balance < 0 ? 1 : 0);
-		  nodeleftright->balance = 0;
+                  nodeleft->balance = (nodeleftright->balance > 0 ? -1 : 0);
+                  node->balance = (nodeleftright->balance < 0 ? 1 : 0);
+                  nodeleftright->balance = 0;
 
-		  *nodep = nodeleftright;
-		  height_diff = (height_diff < 0
-				 ? /* noderight's height had been decremented from
-				      h+1 to h.  The subtree's height changes from
-				      h+3 to h+2.  */
-				   -1
-				 : /* nodeleft's height had been incremented from
-				      h+1 to h+2.  The subtree's height changes from
-				      h+2 to h+2.  */
-				   0);
-		}
-	    }
-	  else
-	    {
-	      /* node->balance = 2.  The subtree is heavier on the right side.
-		 Rotate from right to left:
+                  *nodep = nodeleftright;
+                  height_diff = (height_diff < 0
+                                 ? /* noderight's height had been decremented from
+                                      h+1 to h.  The subtree's height changes from
+                                      h+3 to h+2.  */
+                                   -1
+                                 : /* nodeleft's height had been incremented from
+                                      h+1 to h+2.  The subtree's height changes from
+                                      h+2 to h+2.  */
+                                   0);
+                }
+            }
+          else
+            {
+              /* node->balance = 2.  The subtree is heavier on the right side.
+                 Rotate from right to left:
 
-				  *
-				/   \
-			      h      h+2
-	       */
-	      gl_oset_node_t noderightleft = noderight->left;
-	      if (noderight->balance >= 0)
-		{
-		  /*
-			      *                    h+2|h+3
-			    /   \                   /    \
-			  h      h+2     -->    h+1|h+2   \
-				 / \            /    \    |
-			     h|h+1 h+1         h   h|h+1 h+1
-		   */
-		  node->right = noderightleft;
-		  noderight->left = node;
+                                  *
+                                /   \
+                              h      h+2
+               */
+              gl_oset_node_t noderightleft = noderight->left;
+              if (noderight->balance >= 0)
+                {
+                  /*
+                              *                    h+2|h+3
+                            /   \                   /    \
+                          h      h+2     -->    h+1|h+2   \
+                                 / \            /    \    |
+                             h|h+1 h+1         h   h|h+1 h+1
+                   */
+                  node->right = noderightleft;
+                  noderight->left = node;
 
-		  noderight->parent = node->parent;
-		  node->parent = noderight;
-		  if (noderightleft != NULL)
-		    noderightleft->parent = node;
+                  noderight->parent = node->parent;
+                  node->parent = noderight;
+                  if (noderightleft != NULL)
+                    noderightleft->parent = node;
 
-		  noderight->balance -= 1;
-		  node->balance = - noderight->balance;
+                  noderight->balance -= 1;
+                  node->balance = - noderight->balance;
 
-		  *nodep = noderight;
-		  height_diff = (height_diff < 0
-				 ? /* nodeleft's height had been decremented from
-				      h+1 to h.  The subtree's height changes from
-				      h+3 to h+2|h+3.  */
-				   - noderight->balance - 1
-				 : /* noderight's height had been incremented from
-				      h+1 to h+2.  The subtree's height changes from
-				      h+2 to h+2|h+3.  */
-				   - noderight->balance);
-		}
-	      else
-		{
-		  /*
-			    *                    h+2
-			  /   \                /     \
-			h      h+2    -->    h+1     h+1
-			       / \           / \     / \
-			     h+1  h         h   L   R   h
-			     / \
-			    L   R
+                  *nodep = noderight;
+                  height_diff = (height_diff < 0
+                                 ? /* nodeleft's height had been decremented from
+                                      h+1 to h.  The subtree's height changes from
+                                      h+3 to h+2|h+3.  */
+                                   - noderight->balance - 1
+                                 : /* noderight's height had been incremented from
+                                      h+1 to h+2.  The subtree's height changes from
+                                      h+2 to h+2|h+3.  */
+                                   - noderight->balance);
+                }
+              else
+                {
+                  /*
+                            *                    h+2
+                          /   \                /     \
+                        h      h+2    -->    h+1     h+1
+                               / \           / \     / \
+                             h+1  h         h   L   R   h
+                             / \
+                            L   R
 
-		   */
-		  gl_oset_node_t L = node->right = noderightleft->left;
-		  gl_oset_node_t R = noderight->left = noderightleft->right;
-		  noderightleft->left = node;
-		  noderightleft->right = noderight;
+                   */
+                  gl_oset_node_t L = node->right = noderightleft->left;
+                  gl_oset_node_t R = noderight->left = noderightleft->right;
+                  noderightleft->left = node;
+                  noderightleft->right = noderight;
 
-		  noderightleft->parent = node->parent;
-		  if (L != NULL)
-		    L->parent = node;
-		  if (R != NULL)
-		    R->parent = noderight;
-		  node->parent = noderightleft;
-		  noderight->parent = noderightleft;
+                  noderightleft->parent = node->parent;
+                  if (L != NULL)
+                    L->parent = node;
+                  if (R != NULL)
+                    R->parent = noderight;
+                  node->parent = noderightleft;
+                  noderight->parent = noderightleft;
 
-		  node->balance = (noderightleft->balance > 0 ? -1 : 0);
-		  noderight->balance = (noderightleft->balance < 0 ? 1 : 0);
-		  noderightleft->balance = 0;
+                  node->balance = (noderightleft->balance > 0 ? -1 : 0);
+                  noderight->balance = (noderightleft->balance < 0 ? 1 : 0);
+                  noderightleft->balance = 0;
 
-		  *nodep = noderightleft;
-		  height_diff = (height_diff < 0
-				 ? /* nodeleft's height had been decremented from
-				      h+1 to h.  The subtree's height changes from
-				      h+3 to h+2.  */
-				   -1
-				 : /* noderight's height had been incremented from
-				      h+1 to h+2.  The subtree's height changes from
-				      h+2 to h+2.  */
-				   0);
-		}
-	    }
-	  node = *nodep;
-	}
+                  *nodep = noderightleft;
+                  height_diff = (height_diff < 0
+                                 ? /* nodeleft's height had been decremented from
+                                      h+1 to h.  The subtree's height changes from
+                                      h+3 to h+2.  */
+                                   -1
+                                 : /* noderight's height had been incremented from
+                                      h+1 to h+2.  The subtree's height changes from
+                                      h+2 to h+2.  */
+                                   0);
+                }
+            }
+          node = *nodep;
+        }
       else
-	{
-	  /* No rotation needed.  Only propagation of the height change to the
-	     next higher level.  */
-	  if (height_diff < 0)
-	    height_diff = (previous_balance == 0 ? 0 : -1);
-	  else
-	    height_diff = (node->balance == 0 ? 0 : 1);
-	}
+        {
+          /* No rotation needed.  Only propagation of the height change to the
+             next higher level.  */
+          if (height_diff < 0)
+            height_diff = (previous_balance == 0 ? 0 : -1);
+          else
+            height_diff = (node->balance == 0 ? 0 : 1);
+        }
 
       if (height_diff == 0)
-	break;
+        break;
 
       parent = node->parent;
       if (parent == NULL)
-	break;
+        break;
     }
 }
 
@@ -327,7 +327,7 @@ gl_tree_add_first (gl_oset_t set, const void *elt)
       gl_oset_node_t node;
 
       for (node = set->root; node->left != NULL; )
-	node = node->left;
+        node = node->left;
 
       node->left = new_node;
       new_node->parent = node;
@@ -335,7 +335,7 @@ gl_tree_add_first (gl_oset_t set, const void *elt)
 
       /* Rebalance.  */
       if (node->right == NULL && node->parent != NULL)
-	rebalance (set, node, 1, node->parent);
+        rebalance (set, node, 1, node->parent);
     }
 
   set->count++;
@@ -364,7 +364,7 @@ gl_tree_add_before (gl_oset_t set, gl_oset_node_t node, const void *elt)
   else
     {
       for (node = node->left; node->right != NULL; )
-	node = node->right;
+        node = node->right;
       node->right = new_node;
       node->balance++;
       height_inc = (node->left == NULL);
@@ -401,7 +401,7 @@ gl_tree_add_after (gl_oset_t set, gl_oset_node_t node, const void *elt)
   else
     {
       for (node = node->right; node->left != NULL; )
-	node = node->left;
+        node = node->left;
       node->left = new_node;
       node->balance--;
       height_inc = (node->right == NULL);
@@ -427,38 +427,38 @@ gl_tree_remove_node (gl_oset_t set, gl_oset_node_t node)
       gl_oset_node_t child = node->right;
 
       if (child != NULL)
-	child->parent = parent;
+        child->parent = parent;
       if (parent == NULL)
-	set->root = child;
+        set->root = child;
       else
-	{
-	  if (parent->left == node)
-	    parent->left = child;
-	  else /* parent->right == node */
-	    parent->right = child;
+        {
+          if (parent->left == node)
+            parent->left = child;
+          else /* parent->right == node */
+            parent->right = child;
 
-	  rebalance (set, child, -1, parent);
-	}
+          rebalance (set, child, -1, parent);
+        }
     }
   else if (node->right == NULL)
     {
       /* It is not absolutely necessary to treat this case.  But the more
-	 general case below is more complicated, hence slower.  */
+         general case below is more complicated, hence slower.  */
       /* Replace node with node->left.  */
       gl_oset_node_t child = node->left;
 
       child->parent = parent;
       if (parent == NULL)
-	set->root = child;
+        set->root = child;
       else
-	{
-	  if (parent->left == node)
-	    parent->left = child;
-	  else /* parent->right == node */
-	    parent->right = child;
+        {
+          if (parent->left == node)
+            parent->left = child;
+          else /* parent->right == node */
+            parent->right = child;
 
-	  rebalance (set, child, -1, parent);
-	}
+          rebalance (set, child, -1, parent);
+        }
     }
   else
     {
@@ -468,52 +468,52 @@ gl_tree_remove_node (gl_oset_t set, gl_oset_node_t node)
       gl_oset_node_t child;
 
       for (subst = node->left; subst->right != NULL; )
-	subst = subst->right;
+        subst = subst->right;
 
       subst_parent = subst->parent;
 
       child = subst->left;
 
       /* The case subst_parent == node is special:  If we do nothing special,
-	 we get confusion about node->left, subst->left and child->parent.
-	   subst_parent == node
-	   <==> The 'for' loop above terminated immediately.
-	   <==> subst == subst_parent->left
-		[otherwise subst == subst_parent->right]
-	 In this case, we would need to first set
-	   child->parent = node; node->left = child;
-	 and later - when we copy subst into node's position - again
-	   child->parent = subst; subst->left = child;
-	 Altogether a no-op.  */
+         we get confusion about node->left, subst->left and child->parent.
+           subst_parent == node
+           <==> The 'for' loop above terminated immediately.
+           <==> subst == subst_parent->left
+                [otherwise subst == subst_parent->right]
+         In this case, we would need to first set
+           child->parent = node; node->left = child;
+         and later - when we copy subst into node's position - again
+           child->parent = subst; subst->left = child;
+         Altogether a no-op.  */
       if (subst_parent != node)
-	{
-	  if (child != NULL)
-	    child->parent = subst_parent;
-	  subst_parent->right = child;
-	}
+        {
+          if (child != NULL)
+            child->parent = subst_parent;
+          subst_parent->right = child;
+        }
 
       /* Copy subst into node's position.
-	 (This is safer than to copy subst's value into node, keep node in
-	 place, and free subst.)  */
+         (This is safer than to copy subst's value into node, keep node in
+         place, and free subst.)  */
       if (subst_parent != node)
-	{
-	  subst->left = node->left;
-	  subst->left->parent = subst;
-	}
+        {
+          subst->left = node->left;
+          subst->left->parent = subst;
+        }
       subst->right = node->right;
       subst->right->parent = subst;
       subst->balance = node->balance;
       subst->parent = parent;
       if (parent == NULL)
-	set->root = subst;
+        set->root = subst;
       else if (parent->left == node)
-	parent->left = subst;
+        parent->left = subst;
       else /* parent->right == node */
-	parent->right = subst;
+        parent->right = subst;
 
       /* Rebalancing starts at child's parent, that is subst_parent -
-	 except when subst_parent == node.  In this case, we need to use
-	 its replacement, subst.  */
+         except when subst_parent == node.  In this case, we need to use
+         its replacement, subst.  */
       rebalance (set, child, -1, subst_parent != node ? subst_parent : subst);
     }
 

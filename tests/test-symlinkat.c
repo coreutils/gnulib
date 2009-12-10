@@ -36,11 +36,11 @@
   do                                                                         \
     {                                                                        \
       if (!(expr))                                                           \
-	{                                                                    \
-	  fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__);  \
-	  fflush (stderr);                                                   \
-	  abort ();                                                          \
-	}                                                                    \
+        {                                                                    \
+          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__);  \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
     }                                                                        \
   while (0)
 
@@ -118,6 +118,6 @@ main (void)
   ASSERT (close (dfd) == 0);
   if (result == 77)
     fputs ("skipping test: symlinks not supported on this file system\n",
-	   stderr);
+           stderr);
   return result;
 }

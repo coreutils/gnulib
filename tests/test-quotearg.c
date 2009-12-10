@@ -33,15 +33,15 @@
 #include "gettext.h"
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-	{								     \
-	  fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-	  fflush (stderr);						     \
-	  abort ();							     \
-	}								     \
-    }									     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
+          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 struct result_strings {
@@ -302,7 +302,7 @@ compare (char const *a, size_t la, char const *b, size_t lb)
 
 static void
 compare_strings (char *(func) (char const *, size_t *),
-		 struct result_strings *results, bool ascii_only)
+                 struct result_strings *results, bool ascii_only)
 {
   size_t len;
   char *p;
@@ -372,7 +372,7 @@ static char *
 use_quotearg_colon (const char *str, size_t *len)
 {
   char *p = (*len == SIZE_MAX ? quotearg_colon (str)
-	     : quotearg_colon_mem (str, *len));
+             : quotearg_colon_mem (str, *len));
   *len = strlen (p);
   return p;
 }
@@ -416,7 +416,7 @@ main (int argc _UNUSED_PARAMETER_, char *argv[])
 
   set_quoting_style (NULL, c_quoting_style);
   ASSERT (set_quoting_flags (NULL, QA_ELIDE_OUTER_QUOTES)
-	  == QA_ELIDE_NULL_BYTES);
+          == QA_ELIDE_NULL_BYTES);
   compare_strings (use_quotearg_buffer, &flag_results[1].group1, ascii_only);
   compare_strings (use_quotearg, &flag_results[1].group2, ascii_only);
   compare_strings (use_quote_double_quotes, &flag_results[1].group2,
@@ -424,7 +424,7 @@ main (int argc _UNUSED_PARAMETER_, char *argv[])
   compare_strings (use_quotearg_colon, &flag_results[1].group3, ascii_only);
 
   ASSERT (set_quoting_flags (NULL, QA_SPLIT_TRIGRAPHS)
-	  == QA_ELIDE_OUTER_QUOTES);
+          == QA_ELIDE_OUTER_QUOTES);
   compare_strings (use_quotearg_buffer, &flag_results[2].group1, ascii_only);
   compare_strings (use_quotearg, &flag_results[2].group2, ascii_only);
   compare_strings (use_quote_double_quotes, &flag_results[2].group2,
@@ -459,21 +459,21 @@ main (int argc _UNUSED_PARAMETER_, char *argv[])
     const char *locale_name = getenv ("LOCALE");
 
     if (locale_name != NULL && strcmp (locale_name, "none") != 0
-	&& setenv ("LC_ALL", locale_name, 1) == 0
-	&& setlocale (LC_ALL, "") != NULL)
+        && setenv ("LC_ALL", locale_name, 1) == 0
+        && setlocale (LC_ALL, "") != NULL)
       {
-	textdomain ("test-quotearg");
-	bindtextdomain ("test-quotearg", getenv ("LOCALEDIR"));
+        textdomain ("test-quotearg");
+        bindtextdomain ("test-quotearg", getenv ("LOCALEDIR"));
 
-	set_quoting_style (NULL, locale_quoting_style);
-	compare_strings (use_quotearg_buffer, &locale_results[0].group1, false);
-	compare_strings (use_quotearg, &locale_results[0].group2, false);
-	compare_strings (use_quotearg_colon, &locale_results[0].group3, false);
+        set_quoting_style (NULL, locale_quoting_style);
+        compare_strings (use_quotearg_buffer, &locale_results[0].group1, false);
+        compare_strings (use_quotearg, &locale_results[0].group2, false);
+        compare_strings (use_quotearg_colon, &locale_results[0].group3, false);
 
-	set_quoting_style (NULL, clocale_quoting_style);
-	compare_strings (use_quotearg_buffer, &locale_results[1].group1, false);
-	compare_strings (use_quotearg, &locale_results[1].group2, false);
-	compare_strings (use_quotearg_colon, &locale_results[1].group3, false);
+        set_quoting_style (NULL, clocale_quoting_style);
+        compare_strings (use_quotearg_buffer, &locale_results[1].group1, false);
+        compare_strings (use_quotearg, &locale_results[1].group2, false);
+        compare_strings (use_quotearg_colon, &locale_results[1].group3, false);
       }
   }
 #endif /* ENABLE_NLS */

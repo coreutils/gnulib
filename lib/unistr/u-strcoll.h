@@ -32,48 +32,48 @@ FUNC (const UNIT *s1, const UNIT *s2)
     {
       sl2 = U_STRCONV_TO_LOCALE (s2);
       if (sl2 != NULL)
-	{
-	  /* Compare sl1 and sl2.  */
-	  errno = 0;
-	  result = strcoll (sl1, sl2);
-	  if (errno == 0)
-	    {
-	      /* strcoll succeeded.  */
-	      free (sl1);
-	      free (sl2);
-	    }
-	  else
-	    {
-	      /* strcoll failed.  */
-	      final_errno = errno;
-	      free (sl1);
-	      free (sl2);
-	      result = U_STRCMP (s1, s2);
-	    }
-	}
+        {
+          /* Compare sl1 and sl2.  */
+          errno = 0;
+          result = strcoll (sl1, sl2);
+          if (errno == 0)
+            {
+              /* strcoll succeeded.  */
+              free (sl1);
+              free (sl2);
+            }
+          else
+            {
+              /* strcoll failed.  */
+              final_errno = errno;
+              free (sl1);
+              free (sl2);
+              result = U_STRCMP (s1, s2);
+            }
+        }
       else
-	{
-	  /* s1 could be converted to locale encoding, s2 not.  */
-	  final_errno = errno;
-	  free (sl1);
-	  result = -1;
-	}
+        {
+          /* s1 could be converted to locale encoding, s2 not.  */
+          final_errno = errno;
+          free (sl1);
+          result = -1;
+        }
     }
   else
     {
       final_errno = errno;
       sl2 = U_STRCONV_TO_LOCALE (s2);
       if (sl2 != NULL)
-	{
-	  /* s2 could be converted to locale encoding, s1 not.  */
-	  free (sl2);
-	  result = 1;
-	}
+        {
+          /* s2 could be converted to locale encoding, s1 not.  */
+          free (sl2);
+          result = 1;
+        }
       else
-	{
-	  /* Neither s1 nor s2 could be converted to locale encoding.  */
-	  result = U_STRCMP (s1, s2);
-	}
+        {
+          /* Neither s1 nor s2 could be converted to locale encoding.  */
+          result = U_STRCMP (s1, s2);
+        }
     }
 
   errno = final_errno;

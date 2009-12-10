@@ -47,28 +47,28 @@ read_file (FILE *stream)
   while (! feof (stream))
     {
       if (size + BUFSIZE > alloc)
-	{
-	  alloc = alloc + alloc / 2;
-	  if (alloc < size + BUFSIZE)
-	    alloc = size + BUFSIZE;
-	  buf = realloc (buf, alloc);
-	  if (buf == NULL)
-	    {
-	      fprintf (stderr, "out of memory\n");
-	      exit (1);
-	    }
-	}
+        {
+          alloc = alloc + alloc / 2;
+          if (alloc < size + BUFSIZE)
+            alloc = size + BUFSIZE;
+          buf = realloc (buf, alloc);
+          if (buf == NULL)
+            {
+              fprintf (stderr, "out of memory\n");
+              exit (1);
+            }
+        }
       count = fread (buf + size, 1, BUFSIZE, stream);
       if (count == 0)
-	{
-	  if (ferror (stream))
-	    {
-	      perror ("fread");
-	      exit (1);
-	    }
-	}
+        {
+          if (ferror (stream))
+            {
+              perror ("fread");
+              exit (1);
+            }
+        }
       else
-	size += count;
+        size += count;
     }
   buf = realloc (buf, size + 1);
   if (buf == NULL)
@@ -92,9 +92,9 @@ main (int argc, char * argv[])
       int length = strlen (input);
       size_t output_length;
       uint8_t *output =
-	u8_casefold ((uint8_t *) input, length, uc_locale_language (),
-		    NULL,
-		    NULL, &output_length);
+        u8_casefold ((uint8_t *) input, length, uc_locale_language (),
+                    NULL,
+                    NULL, &output_length);
 
       fwrite (output, 1, output_length, stdout);
 

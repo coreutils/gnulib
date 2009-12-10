@@ -32,7 +32,7 @@ btowc (int c)
 
       buf[0] = c;
       if (mbtowc (&wc, buf, 1) >= 0)
-	return wc;
+        return wc;
     }
   return WEOF;
 }

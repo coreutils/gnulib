@@ -70,7 +70,7 @@ main (void)
   if (lseek (fd, 0, SEEK_CUR) != 5)
     {
       fprintf (stderr, "File offset is wrong after fseek: %ld.\n",
-	       (long) lseek (fd, 0, SEEK_CUR));
+               (long) lseek (fd, 0, SEEK_CUR));
       fclose (f);
       unlink ("test-fflush.txt");
       return 1;
@@ -78,7 +78,7 @@ main (void)
   if (ftell (f) != 5)
     {
       fprintf (stderr, "ftell result is wrong after fseek: %ld.\n",
-	       (long) ftell (f));
+               (long) ftell (f));
       fclose (f);
       unlink ("test-fflush.txt");
       return 1;
@@ -111,7 +111,7 @@ main (void)
   if (lseek (fd, 0, SEEK_CUR) != 6)
     {
       fprintf (stderr, "File offset is wrong after fseeko: %ld.\n",
-	       (long) lseek (fd, 0, SEEK_CUR));
+               (long) lseek (fd, 0, SEEK_CUR));
       fclose (f);
       unlink ("test-fflush.txt");
       return 1;
@@ -119,7 +119,7 @@ main (void)
   if (ftell (f) != 6)
     {
       fprintf (stderr, "ftell result is wrong after fseeko: %ld.\n",
-	       (long) ftell (f));
+               (long) ftell (f));
       fclose (f);
       unlink ("test-fflush.txt");
       return 1;

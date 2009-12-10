@@ -116,9 +116,9 @@ AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
               return c_stack_action () || recurse (0);
             }
            ]])],
-	[ac_cv_sys_stack_overflow_works=yes],
-	[ac_cv_sys_stack_overflow_works=no],
-	[ac_cv_sys_stack_overflow_works=cross-compiling])])
+        [ac_cv_sys_stack_overflow_works=yes],
+        [ac_cv_sys_stack_overflow_works=no],
+        [ac_cv_sys_stack_overflow_works=cross-compiling])])
 
   if test $ac_cv_sys_stack_overflow_works = yes; then
    AC_DEFINE([HAVE_STACK_OVERFLOW_HANDLING], [1],
@@ -132,7 +132,7 @@ AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
     AC_CACHE_CHECK([for correct stack_t interpretation],
       [gl_cv_sigaltstack_low_base], [
       AC_RUN_IFELSE([
-	AC_LANG_SOURCE([[
+        AC_LANG_SOURCE([[
 #include <stdlib.h>
 #include <signal.h>
 #if HAVE_SYS_SIGNAL_H
@@ -183,9 +183,9 @@ int main ()
       [gl_cv_sigaltstack_low_base=cross-compiling])])
    if test "$gl_cv_sigaltstack_low_base" = no; then
       AC_DEFINE([SIGALTSTACK_SS_REVERSED], [1],
-	[Define if sigaltstack() interprets the stack_t.ss_sp field
-	 incorrectly, as the highest address of the alternate stack range
-	 rather than as the lowest address.])
+        [Define if sigaltstack() interprets the stack_t.ss_sp field
+         incorrectly, as the highest address of the alternate stack range
+         rather than as the lowest address.])
     fi
 
    AC_CACHE_CHECK([for precise C stack overflow detection],
@@ -302,19 +302,19 @@ int main ()
               return c_stack_action () || recurse (0);
             }
            ]])],
-	[ac_cv_sys_xsi_stack_overflow_heuristic=yes],
-	[ac_cv_sys_xsi_stack_overflow_heuristic=no],
-	[ac_cv_sys_xsi_stack_overflow_heuristic=cross-compiling])])
+        [ac_cv_sys_xsi_stack_overflow_heuristic=yes],
+        [ac_cv_sys_xsi_stack_overflow_heuristic=no],
+        [ac_cv_sys_xsi_stack_overflow_heuristic=cross-compiling])])
 
    if test $ac_cv_sys_xsi_stack_overflow_heuristic = yes; then
      AC_DEFINE([HAVE_XSI_STACK_OVERFLOW_HEURISTIC], [1],
        [Define to 1 if extending the stack slightly past the limit causes
-	a SIGSEGV, and an alternate stack can be established with sigaltstack,
-	and the signal handler is passed a context that specifies the
-	run time stack.  This behavior is defined by POSIX 1003.1-2001
-	with the X/Open System Interface (XSI) option
-	and is a standardized way to implement a SEGV-based stack
-	overflow detection heuristic.])
+        a SIGSEGV, and an alternate stack can be established with sigaltstack,
+        and the signal handler is passed a context that specifies the
+        run time stack.  This behavior is defined by POSIX 1003.1-2001
+        with the X/Open System Interface (XSI) option
+        and is a standardized way to implement a SEGV-based stack
+        overflow detection heuristic.])
    fi
   fi])
 

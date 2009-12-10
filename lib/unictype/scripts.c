@@ -33,18 +33,18 @@ uc_script (ucs4_t uc)
     {
       int lookup1 = u_script.level1[index1];
       if (lookup1 >= 0)
-	{
-	  unsigned int index2 = (uc >> script_header_2) & script_header_3;
-	  int lookup2 = u_script.level2[lookup1 + index2];
-	  if (lookup2 >= 0)
-	    {
-	      unsigned int index3 = (uc & script_header_4);
-	      unsigned char lookup3 = u_script.level3[lookup2 + index3];
+        {
+          unsigned int index2 = (uc >> script_header_2) & script_header_3;
+          int lookup2 = u_script.level2[lookup1 + index2];
+          if (lookup2 >= 0)
+            {
+              unsigned int index3 = (uc & script_header_4);
+              unsigned char lookup3 = u_script.level3[lookup2 + index3];
 
-	      if (lookup3 != 0xff)
-		return &scripts[lookup3];
-	    }
-	}
+              if (lookup3 != 0xff)
+                return &scripts[lookup3];
+            }
+        }
     }
   return NULL;
 }

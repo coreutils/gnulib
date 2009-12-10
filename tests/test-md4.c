@@ -43,10 +43,10 @@ main (int argc, char *argv[])
       size_t i;
       printf ("expected:\n");
       for (i = 0; i < MD4_DIGEST_SIZE; i++)
-	printf ("%02x ", out1[i] & 0xFF);
+        printf ("%02x ", out1[i] & 0xFF);
       printf ("\ncomputed:\n");
       for (i = 0; i < MD4_DIGEST_SIZE; i++)
-	printf ("%02x ", buf[i] & 0xFF);
+        printf ("%02x ", buf[i] & 0xFF);
       printf ("\n");
       return 1;
     }
@@ -57,10 +57,10 @@ main (int argc, char *argv[])
       size_t i;
       printf ("expected:\n");
       for (i = 0; i < MD4_DIGEST_SIZE; i++)
-	printf ("%02x ", out2[i] & 0xFF);
+        printf ("%02x ", out2[i] & 0xFF);
       printf ("\ncomputed:\n");
       for (i = 0; i < MD4_DIGEST_SIZE; i++)
-	printf ("%02x ", buf[i] & 0xFF);
+        printf ("%02x ", buf[i] & 0xFF);
       printf ("\n");
       return 1;
     }

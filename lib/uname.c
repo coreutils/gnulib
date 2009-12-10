@@ -67,7 +67,7 @@ uname (struct utsname *buf)
     {
       version.dwOSVersionInfoSize = sizeof (OSVERSIONINFO);
       if (!GetVersionEx (&version))
-	abort ();
+        abort ();
     }
 
   /* Fill in nodename.  */
@@ -89,20 +89,20 @@ uname (struct utsname *buf)
     {
       /* Windows 95/98/ME.  */
       switch (version.dwMinorVersion)
-	{
-	case 0:
-	  super_version = "95";
-	  break;
-	case 10:
-	  super_version = "98";
-	  break;
-	case 90:
-	  super_version = "ME";
-	  break;
-	default:
-	  super_version = "";
-	  break;
-	}
+        {
+        case 0:
+          super_version = "95";
+          break;
+        case 10:
+          super_version = "98";
+          break;
+        case 90:
+          super_version = "ME";
+          break;
+        default:
+          super_version = "";
+          break;
+        }
     }
   else
     super_version = "";
@@ -115,8 +115,8 @@ uname (struct utsname *buf)
        $ ./uname.exe -s      => MINGW32_NT-5.1
    */
   sprintf (buf->sysname, "MINGW32_%s-%u.%u", super_version,
-	   (unsigned int) version.dwMajorVersion,
-	   (unsigned int) version.dwMinorVersion);
+           (unsigned int) version.dwMajorVersion,
+           (unsigned int) version.dwMinorVersion);
 #else
   sprintf (buf->sysname, "Windows%s", super_version);
 #endif
@@ -130,59 +130,59 @@ uname (struct utsname *buf)
     {
       /* Windows NT or newer.  */
       struct windows_version
-	{
-	  int major;
-	  int minor;
-	  unsigned int server_offset;
-	  const char *name;
-	};
+        {
+          int major;
+          int minor;
+          unsigned int server_offset;
+          const char *name;
+        };
 
       /* Storing the workstation and server version names in a single
          stream does not waste memory when they are the same.  These
          macros abstract the representation.  VERSION1 is used if
-	 version.wProductType does not matter, VERSION2 if it does.  */
+         version.wProductType does not matter, VERSION2 if it does.  */
       #define VERSION1(major, minor, name) \
-	{ major, minor, 0, name }
+        { major, minor, 0, name }
       #define VERSION2(major, minor, workstation, server) \
-	{ major, minor, sizeof workstation, workstation "\0" server }
+        { major, minor, sizeof workstation, workstation "\0" server }
       static const struct windows_version versions[] =
-	{
-	  VERSION2 (3, -1, "Windows NT Workstation", "Windows NT Server"),
-	  VERSION2 (4, -1, "Windows NT Workstation", "Windows NT Server"),
-	  VERSION1 (5, 0, "Windows 2000"),
-	  VERSION1 (5, 1, "Windows XP"),
-	  VERSION1 (5, 2, "Windows Server 2003"),
-	  VERSION2 (6, 0, "Windows Vista", "Windows Server 2008"),
-	  VERSION2 (6, 1, "Windows 7", "Windows Server 2008 R2"),
-	  VERSION2 (-1, -1, "Windows", "Windows Server")
-	};
+        {
+          VERSION2 (3, -1, "Windows NT Workstation", "Windows NT Server"),
+          VERSION2 (4, -1, "Windows NT Workstation", "Windows NT Server"),
+          VERSION1 (5, 0, "Windows 2000"),
+          VERSION1 (5, 1, "Windows XP"),
+          VERSION1 (5, 2, "Windows Server 2003"),
+          VERSION2 (6, 0, "Windows Vista", "Windows Server 2008"),
+          VERSION2 (6, 1, "Windows 7", "Windows Server 2008 R2"),
+          VERSION2 (-1, -1, "Windows", "Windows Server")
+        };
       const char *base;
       const struct windows_version *v = versions;
 
       /* Find a version that matches ours.  The last element is a
          wildcard that always ends the loop.  */
       while ((v->major != version.dwMajorVersion && v->major != -1)
-	     || (v->minor != version.dwMinorVersion && v->minor != -1))
-	v++;
+             || (v->minor != version.dwMinorVersion && v->minor != -1))
+        v++;
 
       if (have_versionex && versionex.wProductType != VER_NT_WORKSTATION)
-	base = v->name + v->server_offset;
+        base = v->name + v->server_offset;
       else
-	base = v->name;
+        base = v->name;
       if (v->major == -1 || v->minor == -1)
-	sprintf (buf->release, "%s %u.%u",
-		 base,
-		 (unsigned int) version.dwMajorVersion,
-		 (unsigned int) version.dwMinorVersion);
+        sprintf (buf->release, "%s %u.%u",
+                 base,
+                 (unsigned int) version.dwMajorVersion,
+                 (unsigned int) version.dwMinorVersion);
       else
-	strcpy (buf->release, base);
+        strcpy (buf->release, base);
     }
   else if (version.dwPlatformId == VER_PLATFORM_WIN32_CE)
     {
       /* Windows CE or Embedded CE.  */
       sprintf (buf->release, "Windows CE %u.%u",
-	       (unsigned int) version.dwMajorVersion,
-	       (unsigned int) version.dwMinorVersion);
+               (unsigned int) version.dwMajorVersion,
+               (unsigned int) version.dwMinorVersion);
     }
   else
     {
@@ -199,66 +199,66 @@ uname (struct utsname *buf)
     /* Check for Windows NT or CE, since the info.wProcessorLevel is
        garbage on Windows 95. */
     if (version.dwPlatformId == VER_PLATFORM_WIN32_NT
-	|| version.dwPlatformId == VER_PLATFORM_WIN32_CE)
+        || version.dwPlatformId == VER_PLATFORM_WIN32_CE)
       {
-	/* Windows NT or newer, or Windows CE or Embedded CE.  */
-	switch (info.wProcessorArchitecture)
-	  {
-	  case PROCESSOR_ARCHITECTURE_AMD64:
-	    strcpy (buf->machine, "x86_64");
-	    break;
-	  case PROCESSOR_ARCHITECTURE_IA64:
-	    strcpy (buf->machine, "ia64");
-	    break;
-	  case PROCESSOR_ARCHITECTURE_INTEL:
-	    strcpy (buf->machine, "i386");
-	    if (info.wProcessorLevel >= 3)
-	      buf->machine[1] =
-		'0' + (info.wProcessorLevel <= 6 ? info.wProcessorLevel : 6);
-	    break;
-	  case PROCESSOR_ARCHITECTURE_IA32_ON_WIN64:
-	    strcpy (buf->machine, "i686");
-	    break;
-	  case PROCESSOR_ARCHITECTURE_MIPS:
-	    strcpy (buf->machine, "mips");
-	    break;
-	  case PROCESSOR_ARCHITECTURE_ALPHA:
-	  case PROCESSOR_ARCHITECTURE_ALPHA64:
-	    strcpy (buf->machine, "alpha");
-	    break;
-	  case PROCESSOR_ARCHITECTURE_PPC:
-	    strcpy (buf->machine, "powerpc");
-	    break;
-	  case PROCESSOR_ARCHITECTURE_SHX:
-	    strcpy (buf->machine, "sh");
-	    break;
-	  case PROCESSOR_ARCHITECTURE_ARM:
-	    strcpy (buf->machine, "arm");
-	    break;
-	  default:
-	    strcpy (buf->machine, "unknown");
-	    break;
-	  }
+        /* Windows NT or newer, or Windows CE or Embedded CE.  */
+        switch (info.wProcessorArchitecture)
+          {
+          case PROCESSOR_ARCHITECTURE_AMD64:
+            strcpy (buf->machine, "x86_64");
+            break;
+          case PROCESSOR_ARCHITECTURE_IA64:
+            strcpy (buf->machine, "ia64");
+            break;
+          case PROCESSOR_ARCHITECTURE_INTEL:
+            strcpy (buf->machine, "i386");
+            if (info.wProcessorLevel >= 3)
+              buf->machine[1] =
+                '0' + (info.wProcessorLevel <= 6 ? info.wProcessorLevel : 6);
+            break;
+          case PROCESSOR_ARCHITECTURE_IA32_ON_WIN64:
+            strcpy (buf->machine, "i686");
+            break;
+          case PROCESSOR_ARCHITECTURE_MIPS:
+            strcpy (buf->machine, "mips");
+            break;
+          case PROCESSOR_ARCHITECTURE_ALPHA:
+          case PROCESSOR_ARCHITECTURE_ALPHA64:
+            strcpy (buf->machine, "alpha");
+            break;
+          case PROCESSOR_ARCHITECTURE_PPC:
+            strcpy (buf->machine, "powerpc");
+            break;
+          case PROCESSOR_ARCHITECTURE_SHX:
+            strcpy (buf->machine, "sh");
+            break;
+          case PROCESSOR_ARCHITECTURE_ARM:
+            strcpy (buf->machine, "arm");
+            break;
+          default:
+            strcpy (buf->machine, "unknown");
+            break;
+          }
       }
     else
       {
-	/* Windows 95/98/ME.  */
-	switch (info.dwProcessorType)
-	  {
-	  case PROCESSOR_AMD_X8664:
-	    strcpy (buf->machine, "x86_64");
-	    break;
-	  case PROCESSOR_INTEL_IA64:
-	    strcpy (buf->machine, "ia64");
-	    break;
-	  default:
-	    if (info.dwProcessorType % 100 == 86)
-	      sprintf (buf->machine, "i%u",
-		       (unsigned int) info.dwProcessorType);
-	    else
-	      strcpy (buf->machine, "unknown");
-	    break;
-	  }
+        /* Windows 95/98/ME.  */
+        switch (info.dwProcessorType)
+          {
+          case PROCESSOR_AMD_X8664:
+            strcpy (buf->machine, "x86_64");
+            break;
+          case PROCESSOR_INTEL_IA64:
+            strcpy (buf->machine, "ia64");
+            break;
+          default:
+            if (info.dwProcessorType % 100 == 86)
+              sprintf (buf->machine, "i%u",
+                       (unsigned int) info.dwProcessorType);
+            else
+              strcpy (buf->machine, "unknown");
+            break;
+          }
       }
   }
 

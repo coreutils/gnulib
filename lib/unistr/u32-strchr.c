@@ -26,9 +26,9 @@ u32_strchr (const uint32_t *s, ucs4_t uc)
   for (;; s++)
     {
       if (*s == uc)
-	break;
+        break;
       if (*s == 0)
-	goto notfound;
+        goto notfound;
     }
   return (uint32_t *) s;
 notfound:

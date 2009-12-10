@@ -33,12 +33,12 @@ FUNC (UNIT *s, ucs4_t uc, size_t n)
   if (n > 0)
     {
       if (IS_SINGLE_UNIT (uc))
-	memset ((char *) s, uc, n);
+        memset ((char *) s, uc, n);
       else
-	{
-	  errno = EILSEQ;
-	  return NULL;
-	}
+        {
+          errno = EILSEQ;
+          return NULL;
+        }
     }
   return s;
 }

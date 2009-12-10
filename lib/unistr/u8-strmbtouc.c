@@ -34,94 +34,94 @@ u8_strmbtouc (ucs4_t *puc, const uint8_t *s)
   if (c >= 0xc2)
     {
       if (c < 0xe0)
-	{
+        {
 #if CONFIG_UNICODE_SAFETY
-	  if ((s[1] ^ 0x80) < 0x40)
+          if ((s[1] ^ 0x80) < 0x40)
 #else
-	  if (s[1] != 0)
+          if (s[1] != 0)
 #endif
-	    {
-	      *puc = ((unsigned int) (c & 0x1f) << 6)
-	             | (unsigned int) (s[1] ^ 0x80);
-	      return 2;
-	    }
-	}
+            {
+              *puc = ((unsigned int) (c & 0x1f) << 6)
+                     | (unsigned int) (s[1] ^ 0x80);
+              return 2;
+            }
+        }
       else if (c < 0xf0)
-	{
+        {
 #if CONFIG_UNICODE_SAFETY
-	  if ((s[1] ^ 0x80) < 0x40 && (s[2] ^ 0x80) < 0x40
-	      && (c >= 0xe1 || s[1] >= 0xa0)
-	      && (c != 0xed || s[1] < 0xa0))
+          if ((s[1] ^ 0x80) < 0x40 && (s[2] ^ 0x80) < 0x40
+              && (c >= 0xe1 || s[1] >= 0xa0)
+              && (c != 0xed || s[1] < 0xa0))
 #else
-	  if (s[1] != 0 && s[2] != 0)
+          if (s[1] != 0 && s[2] != 0)
 #endif
-	    {
-	      *puc = ((unsigned int) (c & 0x0f) << 12)
-	             | ((unsigned int) (s[1] ^ 0x80) << 6)
-	             | (unsigned int) (s[2] ^ 0x80);
-	      return 3;
-	    }
-	}
+            {
+              *puc = ((unsigned int) (c & 0x0f) << 12)
+                     | ((unsigned int) (s[1] ^ 0x80) << 6)
+                     | (unsigned int) (s[2] ^ 0x80);
+              return 3;
+            }
+        }
       else if (c < 0xf8)
-	{
+        {
 #if CONFIG_UNICODE_SAFETY
-	  if ((s[1] ^ 0x80) < 0x40 && (s[2] ^ 0x80) < 0x40
-	      && (s[3] ^ 0x80) < 0x40
-	      && (c >= 0xf1 || s[1] >= 0x90)
+          if ((s[1] ^ 0x80) < 0x40 && (s[2] ^ 0x80) < 0x40
+              && (s[3] ^ 0x80) < 0x40
+              && (c >= 0xf1 || s[1] >= 0x90)
 #if 1
-	      && (c < 0xf4 || (c == 0xf4 && s[1] < 0x90))
+              && (c < 0xf4 || (c == 0xf4 && s[1] < 0x90))
 #endif
-	     )
+             )
 #else
-	  if (s[1] != 0 && s[2] != 0 && s[3] != 0)
+          if (s[1] != 0 && s[2] != 0 && s[3] != 0)
 #endif
-	    {
-	      *puc = ((unsigned int) (c & 0x07) << 18)
-	             | ((unsigned int) (s[1] ^ 0x80) << 12)
-	             | ((unsigned int) (s[2] ^ 0x80) << 6)
-	             | (unsigned int) (s[3] ^ 0x80);
-	      return 4;
-	    }
-	}
+            {
+              *puc = ((unsigned int) (c & 0x07) << 18)
+                     | ((unsigned int) (s[1] ^ 0x80) << 12)
+                     | ((unsigned int) (s[2] ^ 0x80) << 6)
+                     | (unsigned int) (s[3] ^ 0x80);
+              return 4;
+            }
+        }
 #if 0
       else if (c < 0xfc)
-	{
+        {
 #if CONFIG_UNICODE_SAFETY
-	  if ((s[1] ^ 0x80) < 0x40 && (s[2] ^ 0x80) < 0x40
-	      && (s[3] ^ 0x80) < 0x40 && (s[4] ^ 0x80) < 0x40
-	      && (c >= 0xf9 || s[1] >= 0x88))
+          if ((s[1] ^ 0x80) < 0x40 && (s[2] ^ 0x80) < 0x40
+              && (s[3] ^ 0x80) < 0x40 && (s[4] ^ 0x80) < 0x40
+              && (c >= 0xf9 || s[1] >= 0x88))
 #else
-	  if (s[1] != 0 && s[2] != 0 && s[3] != 0 && s[4] != 0)
+          if (s[1] != 0 && s[2] != 0 && s[3] != 0 && s[4] != 0)
 #endif
-	    {
-	      *puc = ((unsigned int) (c & 0x03) << 24)
-	             | ((unsigned int) (s[1] ^ 0x80) << 18)
-	             | ((unsigned int) (s[2] ^ 0x80) << 12)
-	             | ((unsigned int) (s[3] ^ 0x80) << 6)
-	             | (unsigned int) (s[4] ^ 0x80);
-	      return 5;
-	    }
-	}
+            {
+              *puc = ((unsigned int) (c & 0x03) << 24)
+                     | ((unsigned int) (s[1] ^ 0x80) << 18)
+                     | ((unsigned int) (s[2] ^ 0x80) << 12)
+                     | ((unsigned int) (s[3] ^ 0x80) << 6)
+                     | (unsigned int) (s[4] ^ 0x80);
+              return 5;
+            }
+        }
       else if (c < 0xfe)
-	{
+        {
 #if CONFIG_UNICODE_SAFETY
-	  if ((s[1] ^ 0x80) < 0x40 && (s[2] ^ 0x80) < 0x40
-	      && (s[3] ^ 0x80) < 0x40 && (s[4] ^ 0x80) < 0x40
-	      && (s[5] ^ 0x80) < 0x40
-	      && (c >= 0xfd || s[1] >= 0x84))
+          if ((s[1] ^ 0x80) < 0x40 && (s[2] ^ 0x80) < 0x40
+              && (s[3] ^ 0x80) < 0x40 && (s[4] ^ 0x80) < 0x40
+              && (s[5] ^ 0x80) < 0x40
+              && (c >= 0xfd || s[1] >= 0x84))
 #else
-	  if (s[1] != 0 && s[2] != 0 && s[3] != 0 && s[4] != 0 && s[5] != 0)
+          if (s[1] != 0 && s[2] != 0 && s[3] != 0 && s[4] != 0 && s[5] != 0)
 #endif
-	    {
-	      *puc = ((unsigned int) (c & 0x01) << 30)
-	             | ((unsigned int) (s[1] ^ 0x80) << 24)
-	             | ((unsigned int) (s[2] ^ 0x80) << 18)
-	             | ((unsigned int) (s[3] ^ 0x80) << 12)
-	             | ((unsigned int) (s[4] ^ 0x80) << 6)
-	             | (unsigned int) (s[5] ^ 0x80);
-	      return 6;
-	    }
-	}
+            {
+              *puc = ((unsigned int) (c & 0x01) << 30)
+                     | ((unsigned int) (s[1] ^ 0x80) << 24)
+                     | ((unsigned int) (s[2] ^ 0x80) << 18)
+                     | ((unsigned int) (s[3] ^ 0x80) << 12)
+                     | ((unsigned int) (s[4] ^ 0x80) << 6)
+                     | (unsigned int) (s[5] ^ 0x80);
+              return 6;
+            }
+        }
 #endif
     }
   /* invalid or incomplete multibyte character */

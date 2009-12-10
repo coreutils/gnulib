@@ -48,16 +48,16 @@ glthread_in_use (void)
       pthread_t thread;
 
       if (pthread_create (&thread, NULL, dummy_thread_func, NULL) != 0)
-	/* Thread creation failed.  */
-	result = 0;
+        /* Thread creation failed.  */
+        result = 0;
       else
-	{
-	  /* Thread creation works.  */
-	  void *retval;
-	  if (pthread_join (thread, &retval) != 0)
-	    abort ();
-	  result = 1;
-	}
+        {
+          /* Thread creation works.  */
+          void *retval;
+          if (pthread_join (thread, &retval) != 0)
+            abort ();
+          result = 1;
+        }
       tested = 1;
     }
   return result;

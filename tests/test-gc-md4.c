@@ -50,52 +50,52 @@ main (int argc, char *argv[])
 
     if (gc_md4 (in, inlen, out) != 0)
       {
-	printf ("gc_md4 call failed\n");
-	return 1;
+        printf ("gc_md4 call failed\n");
+        return 1;
       }
 
     if (memcmp (out, expect, 16) != 0)
       {
-	size_t i;
-	printf ("md4 1 mismatch. expected:\n");
-	for (i = 0; i < 16; i++)
-	  printf ("%02x ", expect[i] & 0xFF);
-	printf ("\ncomputed:\n");
-	for (i = 0; i < 16; i++)
-	  printf ("%02x ", out[i] & 0xFF);
-	printf ("\n");
-	return 1;
+        size_t i;
+        printf ("md4 1 mismatch. expected:\n");
+        for (i = 0; i < 16; i++)
+          printf ("%02x ", expect[i] & 0xFF);
+        printf ("\ncomputed:\n");
+        for (i = 0; i < 16; i++)
+          printf ("%02x ", out[i] & 0xFF);
+        printf ("\n");
+        return 1;
       }
 
     if (gc_hash_buffer (GC_MD4, in, inlen, out) != 0)
       {
-	printf ("gc_hash_buffer(MD4) call failed\n");
-	return 1;
+        printf ("gc_hash_buffer(MD4) call failed\n");
+        return 1;
       }
 
     if (memcmp (out, expect, 16) != 0)
       {
-	size_t i;
-	printf ("md4 1 mismatch. expected:\n");
-	for (i = 0; i < 16; i++)
-	  printf ("%02x ", expect[i] & 0xFF);
-	printf ("\ncomputed:\n");
-	for (i = 0; i < 16; i++)
-	  printf ("%02x ", out[i] & 0xFF);
-	printf ("\n");
-	return 1;
+        size_t i;
+        printf ("md4 1 mismatch. expected:\n");
+        for (i = 0; i < 16; i++)
+          printf ("%02x ", expect[i] & 0xFF);
+        printf ("\ncomputed:\n");
+        for (i = 0; i < 16; i++)
+          printf ("%02x ", out[i] & 0xFF);
+        printf ("\n");
+        return 1;
       }
 
     if (gc_hash_digest_length (GC_MD4) != 16)
       {
-	printf ("gc_hash_digest_length (GC_MD4) failed\n");
-	return 1;
+        printf ("gc_hash_digest_length (GC_MD4) failed\n");
+        return 1;
       }
 
     if ((rc = gc_hash_open (GC_MD4, 0, &h)) != GC_OK)
       {
-	printf ("gc_hash_open(GC_MD4) failed (%d)\n", rc);
-	return 1;
+        printf ("gc_hash_open(GC_MD4) failed (%d)\n", rc);
+        return 1;
       }
 
     gc_hash_write (h, inlen, in);
@@ -104,21 +104,21 @@ main (int argc, char *argv[])
 
     if (!p)
       {
-	printf ("gc_hash_read failed\n");
-	return 1;
+        printf ("gc_hash_read failed\n");
+        return 1;
       }
 
     if (memcmp (p, expect, 16) != 0)
       {
-	size_t i;
-	printf ("md4 1 mismatch. expected:\n");
-	for (i = 0; i < 16; i++)
-	  printf ("%02x ", expect[i] & 0xFF);
-	printf ("\ncomputed:\n");
-	for (i = 0; i < 16; i++)
-	  printf ("%02x ", p[i] & 0xFF);
-	printf ("\n");
-	return 1;
+        size_t i;
+        printf ("md4 1 mismatch. expected:\n");
+        for (i = 0; i < 16; i++)
+          printf ("%02x ", expect[i] & 0xFF);
+        printf ("\ncomputed:\n");
+        for (i = 0; i < 16; i++)
+          printf ("%02x ", p[i] & 0xFF);
+        printf ("\n");
+        return 1;
       }
 
     gc_hash_close (h);

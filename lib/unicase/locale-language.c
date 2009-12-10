@@ -46,9 +46,9 @@ uc_locale_language (void)
   if (p != locale_name)
     {
       const char *language =
-	uc_locale_languages_lookup (locale_name, p - locale_name);
+        uc_locale_languages_lookup (locale_name, p - locale_name);
       if (language != NULL)
-	return language;
+        return language;
     }
 
   return "";

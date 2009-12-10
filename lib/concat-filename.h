@@ -26,12 +26,12 @@ extern "C" {
    suffix.  Return a freshly allocated filename.  Return NULL and set errno
    upon memory allocation failure.  */
 extern char *concatenated_filename (const char *directory,
-				    const char *filename, const char *suffix);
+                                    const char *filename, const char *suffix);
 
 /* Concatenate a directory filename, a relative filename and an optional
    suffix.  Return a freshly allocated filename.  */
 extern char *xconcatenated_filename (const char *directory,
-				     const char *filename, const char *suffix);
+                                     const char *filename, const char *suffix);
 
 
 #ifdef __cplusplus

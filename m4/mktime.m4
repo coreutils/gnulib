@@ -85,8 +85,8 @@ static int
 mktime_test (time_t now)
 {
   return (mktime_test1 (now)
-	  && mktime_test1 ((time_t) (time_t_max - now))
-	  && mktime_test1 ((time_t) (time_t_min + now)));
+          && mktime_test1 ((time_t) (time_t_max - now))
+          && mktime_test1 ((time_t) (time_t_min + now)));
 }
 
 static int
@@ -116,17 +116,17 @@ bigtime_test (int j)
     {
       struct tm *lt = localtime (&now);
       if (! (lt
-	     && lt->tm_year == tm.tm_year
-	     && lt->tm_mon == tm.tm_mon
-	     && lt->tm_mday == tm.tm_mday
-	     && lt->tm_hour == tm.tm_hour
-	     && lt->tm_min == tm.tm_min
-	     && lt->tm_sec == tm.tm_sec
-	     && lt->tm_yday == tm.tm_yday
-	     && lt->tm_wday == tm.tm_wday
-	     && ((lt->tm_isdst < 0 ? -1 : 0 < lt->tm_isdst)
-		  == (tm.tm_isdst < 0 ? -1 : 0 < tm.tm_isdst))))
-	return 0;
+             && lt->tm_year == tm.tm_year
+             && lt->tm_mon == tm.tm_mon
+             && lt->tm_mday == tm.tm_mday
+             && lt->tm_hour == tm.tm_hour
+             && lt->tm_min == tm.tm_min
+             && lt->tm_sec == tm.tm_sec
+             && lt->tm_yday == tm.tm_yday
+             && lt->tm_wday == tm.tm_wday
+             && ((lt->tm_isdst < 0 ? -1 : 0 < lt->tm_isdst)
+                  == (tm.tm_isdst < 0 ? -1 : 0 < tm.tm_isdst))))
+        return 0;
     }
   return 1;
 }
@@ -158,7 +158,7 @@ year_2050_test ()
      to the correct answer that we can assume the discrepancy is
      due to leap seconds.  */
   return (t == (time_t) -1
-	  || (0 < t && answer - 120 <= t && t <= answer + 120));
+          || (0 < t && answer - 120 <= t && t <= answer + 120));
 }
 
 int
@@ -176,7 +176,7 @@ main ()
     {
       t = (time_t_max << 1) + 1;
       if (t <= time_t_max)
-	break;
+        break;
       time_t_max = t;
     }
   time_t_min = - ((time_t) ~ (time_t) 0 == (time_t) -1) - time_t_max;
@@ -185,29 +185,29 @@ main ()
   for (i = 0; i < N_STRINGS; i++)
     {
       if (tz_strings[i])
-	putenv (tz_strings[i]);
+        putenv (tz_strings[i]);
 
       for (t = 0; t <= time_t_max - delta; t += delta)
-	if (! mktime_test (t))
-	  return 1;
+        if (! mktime_test (t))
+          return 1;
       if (! (mktime_test ((time_t) 1)
-	     && mktime_test ((time_t) (60 * 60))
-	     && mktime_test ((time_t) (60 * 60 * 24))))
-	return 1;
+             && mktime_test ((time_t) (60 * 60))
+             && mktime_test ((time_t) (60 * 60 * 24))))
+        return 1;
 
       for (j = 1; ; j <<= 1)
-	if (! bigtime_test (j))
-	  return 1;
-	else if (INT_MAX / 2 < j)
-	  break;
+        if (! bigtime_test (j))
+          return 1;
+        else if (INT_MAX / 2 < j)
+          break;
       if (! bigtime_test (INT_MAX))
-	return 1;
+        return 1;
     }
   return ! (irix_6_4_bug () && spring_forward_gap () && year_2050_test ());
 }]])],
-	       [ac_cv_func_working_mktime=yes],
-	       [ac_cv_func_working_mktime=no],
-	       [ac_cv_func_working_mktime=no])])
+               [ac_cv_func_working_mktime=yes],
+               [ac_cv_func_working_mktime=no],
+               [ac_cv_func_working_mktime=no])])
 if test $ac_cv_func_working_mktime = no; then
   AC_LIBOBJ([mktime])
 fi

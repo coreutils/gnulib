@@ -28,35 +28,35 @@ mbstok_r (char *string, const char *delim, char **save_ptr)
   if (MB_CUR_MAX > 1)
     {
       if (string == NULL)
-	{
-	  string = *save_ptr;
-	  if (string == NULL)
-	    return NULL; /* reminder that end of token sequence has been
-			    reached */
-	}
+        {
+          string = *save_ptr;
+          if (string == NULL)
+            return NULL; /* reminder that end of token sequence has been
+                            reached */
+        }
 
       /* Skip leading delimiters.  */
       string += mbsspn (string, delim);
 
       /* Found a token?  */
       if (*string == '\0')
-	{
-	  *save_ptr = NULL;
-	  return NULL;
-	}
+        {
+          *save_ptr = NULL;
+          return NULL;
+        }
 
       /* Move past the token.  */
       {
-	char *token_end = mbspbrk (string, delim);
+        char *token_end = mbspbrk (string, delim);
 
-	if (token_end != NULL)
-	  {
-	    /* NUL-terminate the token.  */
-	    *token_end = '\0';
-	    *save_ptr = token_end + 1;
-	  }
-	else
-	  *save_ptr = NULL;
+        if (token_end != NULL)
+          {
+            /* NUL-terminate the token.  */
+            *token_end = '\0';
+            *save_ptr = token_end + 1;
+          }
+        else
+          *save_ptr = NULL;
       }
 
       return string;

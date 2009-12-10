@@ -81,32 +81,32 @@ extern const uint32_t *
 /* Convert an UTF-8 string to an UTF-16 string.  */
 extern uint16_t *
        u8_to_u16 (const uint8_t *s, size_t n, uint16_t *resultbuf,
-		  size_t *lengthp);
+                  size_t *lengthp);
 
 /* Convert an UTF-8 string to an UCS-4 string.  */
 extern uint32_t *
        u8_to_u32 (const uint8_t *s, size_t n, uint32_t *resultbuf,
-		  size_t *lengthp);
+                  size_t *lengthp);
 
 /* Convert an UTF-16 string to an UTF-8 string.  */
 extern uint8_t *
        u16_to_u8 (const uint16_t *s, size_t n, uint8_t *resultbuf,
-		  size_t *lengthp);
+                  size_t *lengthp);
 
 /* Convert an UTF-16 string to an UCS-4 string.  */
 extern uint32_t *
        u16_to_u32 (const uint16_t *s, size_t n, uint32_t *resultbuf,
-		   size_t *lengthp);
+                   size_t *lengthp);
 
 /* Convert an UCS-4 string to an UTF-8 string.  */
 extern uint8_t *
        u32_to_u8 (const uint32_t *s, size_t n, uint8_t *resultbuf,
-		  size_t *lengthp);
+                  size_t *lengthp);
 
 /* Convert an UCS-4 string to an UTF-16 string.  */
 extern uint16_t *
        u32_to_u16 (const uint32_t *s, size_t n, uint16_t *resultbuf,
-		   size_t *lengthp);
+                   size_t *lengthp);
 
 
 /* Elementary string functions.  */
@@ -351,12 +351,12 @@ u32_uctomb (uint32_t *s, ucs4_t uc, int n)
   if (uc < 0xd800 || (uc >= 0xe000 && uc < 0x110000))
     {
       if (n > 0)
-	{
-	  *s = uc;
-	  return 1;
-	}
+        {
+          *s = uc;
+          return 1;
+        }
       else
-	return -2;
+        return -2;
     }
   else
     return -1;

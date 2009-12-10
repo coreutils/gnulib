@@ -38,46 +38,46 @@ rpl_unlink (char const *name)
   if (len && ISSLASH (name[len - 1]))
     {
       /* We can't unlink(2) something if it doesn't exist.  If it does
-	 exist, then it resolved to a directory, due to the trailing
-	 slash, and POSIX requires that the unlink attempt to remove
-	 that directory (which would leave the symlink dangling).
-	 Unfortunately, Solaris 9 is one of the platforms where the
-	 root user can unlink directories, and we don't want to
-	 cripple this behavior on real directories, even if it is
-	 seldom needed (at any rate, it's nicer to let coreutils'
-	 unlink(1) give the correct errno for non-root users).  But we
-	 don't know whether name was an actual directory, or a symlink
-	 to a directory; and due to the bug of ignoring trailing
-	 slash, Solaris 9 would end up successfully unlinking the
-	 symlink instead of the directory.  Technically, we could use
-	 realpath to find the canonical directory name to attempt
-	 deletion on.  But that is a lot of work for a corner case; so
-	 we instead just use an lstat on the shortened name, and
-	 reject symlinks with trailing slashes.  The root user of
-	 unlink(1) will just have to live with the rule that they
-	 can't delete a directory via a symlink.  */
+         exist, then it resolved to a directory, due to the trailing
+         slash, and POSIX requires that the unlink attempt to remove
+         that directory (which would leave the symlink dangling).
+         Unfortunately, Solaris 9 is one of the platforms where the
+         root user can unlink directories, and we don't want to
+         cripple this behavior on real directories, even if it is
+         seldom needed (at any rate, it's nicer to let coreutils'
+         unlink(1) give the correct errno for non-root users).  But we
+         don't know whether name was an actual directory, or a symlink
+         to a directory; and due to the bug of ignoring trailing
+         slash, Solaris 9 would end up successfully unlinking the
+         symlink instead of the directory.  Technically, we could use
+         realpath to find the canonical directory name to attempt
+         deletion on.  But that is a lot of work for a corner case; so
+         we instead just use an lstat on the shortened name, and
+         reject symlinks with trailing slashes.  The root user of
+         unlink(1) will just have to live with the rule that they
+         can't delete a directory via a symlink.  */
       struct stat st;
       result = lstat (name, &st);
       if (result == 0)
-	{
-	  /* Trailing NUL will overwrite the trailing slash.  */
-	  char *short_name = malloc (len);
-	  if (!short_name)
-	    {
-	      errno = EPERM;
-	      return -1;
-	    }
-	  memcpy (short_name, name, len);
-	  while (len && ISSLASH (short_name[len - 1]))
-	    short_name[--len] = '\0';
-	  if (len && (lstat (short_name, &st) || S_ISLNK (st.st_mode)))
-	    {
-	      free (short_name);
-	      errno = EPERM;
-	      return -1;
-	    }
-	  free (short_name);
-	}
+        {
+          /* Trailing NUL will overwrite the trailing slash.  */
+          char *short_name = malloc (len);
+          if (!short_name)
+            {
+              errno = EPERM;
+              return -1;
+            }
+          memcpy (short_name, name, len);
+          while (len && ISSLASH (short_name[len - 1]))
+            short_name[--len] = '\0';
+          if (len && (lstat (short_name, &st) || S_ISLNK (st.st_mode)))
+            {
+              free (short_name);
+              errno = EPERM;
+              return -1;
+            }
+          free (short_name);
+        }
     }
   if (!result)
     result = unlink (name);

@@ -23,15 +23,15 @@
 #include <string.h>
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 int
@@ -57,9 +57,9 @@ main ()
 
     for (c = 0; c < 0x110000; c++)
       {
-	const uc_script_t *script = uc_script (c);
-	if (script != NULL)
-	  ASSERT (uc_is_script (c, script));
+        const uc_script_t *script = uc_script (c);
+        if (script != NULL)
+          ASSERT (uc_is_script (c, script));
       }
   }
 
@@ -75,9 +75,9 @@ main ()
     found = false;
     for (i = 0; i < nscripts; i++)
       {
-	ASSERT (scripts[i].name != NULL);
-	if (strcmp (scripts[i].name, "Hebrew") == 0)
-	  found = true;
+        ASSERT (scripts[i].name != NULL);
+        if (strcmp (scripts[i].name, "Hebrew") == 0)
+          found = true;
       }
     ASSERT (found);
   }

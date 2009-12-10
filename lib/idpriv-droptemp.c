@@ -78,9 +78,9 @@ idpriv_temp_drop (void)
     uid_t effective;
     uid_t saved;
     if (getresuid (&real, &effective, &saved) < 0
-	|| real != uid
-	|| effective != uid
-	|| saved != saved_uid)
+        || real != uid
+        || effective != uid
+        || saved != saved_uid)
       abort ();
   }
 # else
@@ -97,9 +97,9 @@ idpriv_temp_drop (void)
     uid_t effective;
     uid_t saved;
     if (getresgid (&real, &effective, &saved) < 0
-	|| real != gid
-	|| effective != gid
-	|| saved != saved_gid)
+        || real != gid
+        || effective != gid
+        || saved != saved_gid)
       abort ();
   }
 # else
@@ -163,9 +163,9 @@ idpriv_temp_restore (void)
     uid_t effective;
     uid_t saved;
     if (getresuid (&real, &effective, &saved) < 0
-	|| real != uid
-	|| effective != saved_uid
-	|| saved != saved_uid)
+        || real != uid
+        || effective != saved_uid
+        || saved != saved_uid)
       abort ();
   }
 # else
@@ -182,9 +182,9 @@ idpriv_temp_restore (void)
     uid_t effective;
     uid_t saved;
     if (getresgid (&real, &effective, &saved) < 0
-	|| real != gid
-	|| effective != saved_gid
-	|| saved != saved_gid)
+        || real != gid
+        || effective != saved_gid
+        || saved != saved_gid)
       abort ();
   }
 # else

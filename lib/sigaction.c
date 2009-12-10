@@ -91,7 +91,7 @@ sigaction_handler (int sig)
     {
       /* Unexpected situation; be careful to avoid recursive abort.  */
       if (sig == SIGABRT)
-	signal (SIGABRT, SIG_DFL);
+        signal (SIGABRT, SIG_DFL);
       abort ();
     }
 

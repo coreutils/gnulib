@@ -41,7 +41,7 @@ enum backup_type
   numbered_backups
 };
 
-# define VALID_BACKUP_TYPE(Type)	\
+# define VALID_BACKUP_TYPE(Type)        \
   ((unsigned int) (Type) <= numbered_backups)
 
 extern char const *simple_backup_suffix;

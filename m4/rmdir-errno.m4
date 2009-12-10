@@ -25,17 +25,17 @@ AC_DEFUN([gl_FUNC_RMDIR_NOTEMPTY],
 #ifdef HAVE_UNISTD_H
 # include <unistd.h>
 #endif
-	int main ()
-	{
-	  FILE *s;
-	  int val;
-	  rmdir ("confdir2");
-	  val = errno;
-	  s = fopen ("confdir2/errno", "w");
-	  fprintf (s, "%d\n", val);
-	  return 0;
-	}
-	]])],
+        int main ()
+        {
+          FILE *s;
+          int val;
+          rmdir ("confdir2");
+          val = errno;
+          s = fopen ("confdir2/errno", "w");
+          fprintf (s, "%d\n", val);
+          return 0;
+        }
+        ]])],
       [gl_cv_func_rmdir_errno_not_empty=`cat confdir2/errno`],
       [gl_cv_func_rmdir_errno_not_empty='configure error in rmdir-errno.m4'],
       [gl_cv_func_rmdir_errno_not_empty=ENOTEMPTY]

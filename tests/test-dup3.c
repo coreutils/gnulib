@@ -36,15 +36,15 @@
 #include "binary-io.h"
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 /* Return true if FD is open.  */
@@ -99,7 +99,7 @@ main ()
       o_flags = 0;
 #if defined O_CLOEXEC
       if (use_cloexec)
-	o_flags |= O_CLOEXEC;
+        o_flags |= O_CLOEXEC;
 #endif
 
       /* Assume std descriptors were provided by invoker.  */
@@ -141,9 +141,9 @@ main ()
       ASSERT (!is_open (fd + 1));
       ASSERT (is_open (fd + 2));
       if (use_cloexec)
-	ASSERT (is_cloexec (fd + 2));
+        ASSERT (is_cloexec (fd + 2));
       else
-	ASSERT (!is_cloexec (fd + 2));
+        ASSERT (!is_cloexec (fd + 2));
 
       /* Verify that dup3 closes the previous occupant of a fd.  */
       ASSERT (open ("/dev/null", O_WRONLY, 0600) == fd + 1);

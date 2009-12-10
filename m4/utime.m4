@@ -38,23 +38,23 @@ AC_CACHE_CHECK([whether utime accepts a null argument], [ac_cv_func_utime_null],
 [rm -f conftest.data; >conftest.data
 # Sequent interprets utime(file, 0) to mean use start of epoch.  Wrong.
 AC_RUN_IFELSE([AC_LANG_PROGRAM([AC_INCLUDES_DEFAULT
-	       #ifdef HAVE_UTIME_H
-	       # include <utime.h>
-	       #endif],
+               #ifdef HAVE_UTIME_H
+               # include <utime.h>
+               #endif],
 [[struct stat s, t;
   return ! (stat ("conftest.data", &s) == 0
-	    && utime ("conftest.data", 0) == 0
-	    && stat ("conftest.data", &t) == 0
-	    && t.st_mtime >= s.st_mtime
-	    && t.st_mtime - s.st_mtime < 120);]])],
-	      ac_cv_func_utime_null=yes,
-	      ac_cv_func_utime_null=no,
-	      ac_cv_func_utime_null='guessing yes')])
+            && utime ("conftest.data", 0) == 0
+            && stat ("conftest.data", &t) == 0
+            && t.st_mtime >= s.st_mtime
+            && t.st_mtime - s.st_mtime < 120);]])],
+              ac_cv_func_utime_null=yes,
+              ac_cv_func_utime_null=no,
+              ac_cv_func_utime_null='guessing yes')])
 if test "x$ac_cv_func_utime_null" != xno; then
   ac_cv_func_utime_null=yes
   AC_DEFINE([HAVE_UTIME_NULL], [1],
-	    [Define to 1 if `utime(file, NULL)' sets file's timestamp to the
-	     present.])
+            [Define to 1 if `utime(file, NULL)' sets file's timestamp to the
+             present.])
 fi
 rm -f conftest.data
 ])

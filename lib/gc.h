@@ -107,10 +107,10 @@ typedef int (*gc_secure_check_t) (const void *);
 typedef void *(*gc_realloc_t) (void *p, size_t n);
 typedef void (*gc_free_t) (void *);
 extern void gc_set_allocators (gc_malloc_t func_malloc,
-			       gc_malloc_t secure_malloc,
-			       gc_secure_check_t secure_check,
-			       gc_realloc_t func_realloc,
-			       gc_free_t func_free);
+                               gc_malloc_t secure_malloc,
+                               gc_secure_check_t secure_check,
+                               gc_realloc_t func_realloc,
+                               gc_free_t func_free);
 
 /* Randomness. */
 extern Gc_rc gc_nonce (char *data, size_t datalen);
@@ -119,27 +119,27 @@ extern Gc_rc gc_random (char *data, size_t datalen);
 
 /* Ciphers. */
 extern Gc_rc gc_cipher_open (Gc_cipher cipher, Gc_cipher_mode mode,
-			     gc_cipher_handle *outhandle);
+                             gc_cipher_handle *outhandle);
 extern Gc_rc gc_cipher_setkey (gc_cipher_handle handle,
-			       size_t keylen, const char *key);
+                               size_t keylen, const char *key);
 extern Gc_rc gc_cipher_setiv (gc_cipher_handle handle,
-			      size_t ivlen, const char *iv);
+                              size_t ivlen, const char *iv);
 extern Gc_rc gc_cipher_encrypt_inline (gc_cipher_handle handle,
-				       size_t len, char *data);
+                                       size_t len, char *data);
 extern Gc_rc gc_cipher_decrypt_inline (gc_cipher_handle handle,
-				       size_t len, char *data);
+                                       size_t len, char *data);
 extern Gc_rc gc_cipher_close (gc_cipher_handle handle);
 
 /* Hashes. */
 
 extern Gc_rc gc_hash_open (Gc_hash hash, Gc_hash_mode mode,
-			   gc_hash_handle *outhandle);
+                           gc_hash_handle *outhandle);
 extern Gc_rc gc_hash_clone (gc_hash_handle handle, gc_hash_handle *outhandle);
 extern size_t gc_hash_digest_length (Gc_hash hash);
 extern void gc_hash_hmac_setkey (gc_hash_handle handle,
-				 size_t len, const char *key);
+                                 size_t len, const char *key);
 extern void gc_hash_write (gc_hash_handle handle,
-			   size_t len, const char *data);
+                           size_t len, const char *data);
 extern const char *gc_hash_read (gc_hash_handle handle);
 extern void gc_hash_close (gc_hash_handle handle);
 
@@ -158,9 +158,9 @@ extern Gc_rc gc_md4 (const void *in, size_t inlen, void *resbuf);
 extern Gc_rc gc_md5 (const void *in, size_t inlen, void *resbuf);
 extern Gc_rc gc_sha1 (const void *in, size_t inlen, void *resbuf);
 extern Gc_rc gc_hmac_md5 (const void *key, size_t keylen,
-			  const void *in, size_t inlen, char *resbuf);
+                          const void *in, size_t inlen, char *resbuf);
 extern Gc_rc gc_hmac_sha1 (const void *key, size_t keylen,
-			   const void *in, size_t inlen, char *resbuf);
+                           const void *in, size_t inlen, char *resbuf);
 
 /* Derive cryptographic keys from a password P of length PLEN, with
    salt S of length SLEN, placing the result in pre-allocated buffer
@@ -171,8 +171,8 @@ extern Gc_rc gc_hmac_sha1 (const void *key, size_t keylen,
    an Gc_rc error code is returned.  */
 extern Gc_rc
 gc_pbkdf2_sha1 (const char *P, size_t Plen,
-		const char *S, size_t Slen,
-		unsigned int c, char *DK, size_t dkLen);
+                const char *S, size_t Slen,
+                unsigned int c, char *DK, size_t dkLen);
 
 /*
   TODO:

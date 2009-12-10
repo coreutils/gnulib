@@ -70,13 +70,13 @@ AC_DEFUN([AC_C_RESTRICT],
    for ac_kw in __restrict __restrict__ _Restrict restrict; do
      AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
       [[typedef int * int_ptr;
-	int foo (int_ptr $ac_kw ip) {
-	return ip[0];
+        int foo (int_ptr $ac_kw ip) {
+        return ip[0];
        }]],
       [[int s[1];
-	int * $ac_kw t = s;
-	t[0] = 0;
-	return foo(t)]])],
+        int * $ac_kw t = s;
+        t[0] = 0;
+        return foo(t)]])],
       [ac_cv_c_restrict=$ac_kw])
      test "$ac_cv_c_restrict" != no && break
    done

@@ -35,28 +35,28 @@ imaxdiv (intmax_t numer, intmax_t denom)
       often called "truncation toward zero".)  If the quotient a/b is
       representable, the expression (a/b)*b + a%b shall equal a."  */
   if (!(denom == 0
-	|| (INTMAX_MIN + INTMAX_MAX < 0
-	    && denom == -1
-	    && numer < - INTMAX_MAX)))
+        || (INTMAX_MIN + INTMAX_MAX < 0
+            && denom == -1
+            && numer < - INTMAX_MAX)))
     {
       if (!(result.quot * denom + result.rem == numer))
-	/* The compiler's implementation of / and % is broken.  */
-	abort ();
+        /* The compiler's implementation of / and % is broken.  */
+        abort ();
       if (!(numer >= 0
-	    ? result.rem >= 0
-	      && (denom >= 0
-		  ? result.rem < denom
-		  : /* Don't write  result.rem < - denom,
-		       as it gives integer overflow if denom == INTMAX_MIN.  */
-		    - result.rem > denom)
-	    : result.rem <= 0
-	      && (denom >= 0
-		  ? result.rem > - denom
-		  : result.rem > denom)))
-	/* The compiler's implementation of / and % may be ok according to
-	   C89, but not to C99.  Please report this to <bug-gnulib@ngu.org>.
-	   This might be a big portability problem.  */
-	abort ();
+            ? result.rem >= 0
+              && (denom >= 0
+                  ? result.rem < denom
+                  : /* Don't write  result.rem < - denom,
+                       as it gives integer overflow if denom == INTMAX_MIN.  */
+                    - result.rem > denom)
+            : result.rem <= 0
+              && (denom >= 0
+                  ? result.rem > - denom
+                  : result.rem > denom)))
+        /* The compiler's implementation of / and % may be ok according to
+           C89, but not to C99.  Please report this to <bug-gnulib@ngu.org>.
+           This might be a big portability problem.  */
+        abort ();
     }
 
   return result;

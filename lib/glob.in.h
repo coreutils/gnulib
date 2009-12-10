@@ -41,7 +41,7 @@
 #endif
 
 #ifndef __size_t
-# define __size_t	size_t
+# define __size_t       size_t
 #endif
 #ifndef __USE_GNU
 # define __USE_GNU    1

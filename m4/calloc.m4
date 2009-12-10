@@ -19,10 +19,10 @@ AC_DEFUN([_AC_FUNC_CALLOC_IF],
 [AC_REQUIRE([AC_TYPE_SIZE_T])dnl
 AC_CACHE_CHECK([for GNU libc compatible calloc], [ac_cv_func_calloc_0_nonnull],
 [AC_RUN_IFELSE([AC_LANG_PROGRAM([AC_INCLUDES_DEFAULT],
-		  [[exit (!calloc (0, 0) || calloc ((size_t) -1 / 8 + 1, 8));]])],
-	       [ac_cv_func_calloc_0_nonnull=yes],
-	       [ac_cv_func_calloc_0_nonnull=no],
-	       [ac_cv_func_calloc_0_nonnull=no])])
+                  [[exit (!calloc (0, 0) || calloc ((size_t) -1 / 8 + 1, 8));]])],
+               [ac_cv_func_calloc_0_nonnull=yes],
+               [ac_cv_func_calloc_0_nonnull=no],
+               [ac_cv_func_calloc_0_nonnull=no])])
 AS_IF([test $ac_cv_func_calloc_0_nonnull = yes], [$1], [$2])
 ])# AC_FUNC_CALLOC
 
@@ -34,8 +34,8 @@ AS_IF([test $ac_cv_func_calloc_0_nonnull = yes], [$1], [$2])
 AC_DEFUN([AC_FUNC_CALLOC],
 [_AC_FUNC_CALLOC_IF(
   [AC_DEFINE([HAVE_CALLOC], [1],
-	     [Define to 1 if your system has a GNU libc compatible `calloc'
-	      function, and to 0 otherwise.])],
+             [Define to 1 if your system has a GNU libc compatible `calloc'
+              function, and to 0 otherwise.])],
   [AC_DEFINE([HAVE_CALLOC], [0])
    AC_LIBOBJ([calloc])
    AC_DEFINE([calloc], [rpl_calloc],

@@ -95,15 +95,15 @@ typedef enum
 
 typedef enum
 {
-  RIJNDAEL_DIR_ENCRYPT = 0,	/*  Are we encrypting?  */
-  RIJNDAEL_DIR_DECRYPT = 1	/*  Are we decrypting?  */
+  RIJNDAEL_DIR_ENCRYPT = 0,     /*  Are we encrypting?  */
+  RIJNDAEL_DIR_DECRYPT = 1      /*  Are we decrypting?  */
 } rijndael_direction;
 
 typedef enum
 {
-  RIJNDAEL_MODE_ECB = 1,	/*  Are we ciphering in ECB mode?   */
-  RIJNDAEL_MODE_CBC = 2,	/*  Are we ciphering in CBC mode?   */
-  RIJNDAEL_MODE_CFB1 = 3	/*  Are we ciphering in 1-bit CFB mode? */
+  RIJNDAEL_MODE_ECB = 1,        /*  Are we ciphering in ECB mode?   */
+  RIJNDAEL_MODE_CBC = 2,        /*  Are we ciphering in CBC mode?   */
+  RIJNDAEL_MODE_CFB1 = 3        /*  Are we ciphering in 1-bit CFB mode? */
 } rijndael_mode;
 
 /*  The structure for key information */
@@ -125,8 +125,8 @@ typedef struct
 
 /*  The structure for cipher information */
 typedef struct
-{				/* changed order of the components */
-  rijndael_mode mode;		/* MODE_ECB, MODE_CBC, or MODE_CFB1 */
+{                               /* changed order of the components */
+  rijndael_mode mode;           /* MODE_ECB, MODE_CBC, or MODE_CFB1 */
   /* A possible Initialization Vector for ciphering */
   char IV[RIJNDAEL_MAX_IV_SIZE];
 } rijndaelCipherInstance;
@@ -138,7 +138,7 @@ typedef struct
    128, 192 or 256. Returns 0 on success, or an error code. */
 extern rijndael_rc
 rijndaelMakeKey (rijndaelKeyInstance *key, rijndael_direction direction,
-		 size_t keyLen, const char *keyMaterial);
+                 size_t keyLen, const char *keyMaterial);
 
 /* Initialize cipher state CIPHER for encryption MODE (e.g.,
    RIJNDAEL_MODE_CBC) with initialization vector IV, a hex string of
@@ -146,7 +146,7 @@ rijndaelMakeKey (rijndaelKeyInstance *key, rijndael_direction direction,
    not need an IV (i.e., RIJNDAEL_MODE_ECB).  */
 extern rijndael_rc
 rijndaelCipherInit (rijndaelCipherInstance *cipher,
-		    rijndael_mode mode, const char *IV);
+                    rijndael_mode mode, const char *IV);
 
 /* Encrypt data in INPUT, of INPUTLEN/8 bytes length, placing the
    output in the pre-allocated OUTBUFFER which must hold at least
@@ -157,9 +157,9 @@ rijndaelCipherInit (rijndaelCipherInstance *cipher,
    negative rijndael_rc error code. */
 extern int
 rijndaelBlockEncrypt (rijndaelCipherInstance *cipher,
-		      const rijndaelKeyInstance *key,
-		      const char *input, size_t inputLen,
-		      char *outBuffer);
+                      const rijndaelKeyInstance *key,
+                      const char *input, size_t inputLen,
+                      char *outBuffer);
 
 /* Encrypt data in INPUT, of INPUTOCTETS bytes length, placing the
    output in the pre-allocated OUTBUFFER which must hold at least
@@ -172,9 +172,9 @@ rijndaelBlockEncrypt (rijndaelCipherInstance *cipher,
    negative rijndael_rc error code. */
 extern int
 rijndaelPadEncrypt (rijndaelCipherInstance *cipher,
-		    const rijndaelKeyInstance *key,
-		    const char *input, size_t inputOctets,
-		    char *outBuffer);
+                    const rijndaelKeyInstance *key,
+                    const char *input, size_t inputOctets,
+                    char *outBuffer);
 
 /* Decrypt data in INPUT, of INPUTLEN/8 bytes length, placing the
    output in the pre-allocated OUTBUFFER which must hold at least
@@ -185,9 +185,9 @@ rijndaelPadEncrypt (rijndaelCipherInstance *cipher,
    negative rijndael_rc error code. */
 extern int
 rijndaelBlockDecrypt (rijndaelCipherInstance *cipher,
-		      const rijndaelKeyInstance *key,
-		      const char *input, size_t inputLen,
-		      char *outBuffer);
+                      const rijndaelKeyInstance *key,
+                      const char *input, size_t inputLen,
+                      char *outBuffer);
 
 /* Decrypt data in INPUT, of INPUTOCTETS bytes length, placing the
    output in the pre-allocated OUTBUFFER which must hold at least
@@ -200,8 +200,8 @@ rijndaelBlockDecrypt (rijndaelCipherInstance *cipher,
    negative rijndael_rc error code. */
 extern int
 rijndaelPadDecrypt (rijndaelCipherInstance *cipher,
-		    const rijndaelKeyInstance *key,
-		    const char *input, size_t inputOctets,
-		    char *outBuffer);
+                    const rijndaelKeyInstance *key,
+                    const char *input, size_t inputOctets,
+                    char *outBuffer);
 
 #endif /* __RIJNDAEL_API_FST_H */

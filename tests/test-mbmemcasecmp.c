@@ -28,15 +28,15 @@
 
 #define SIZEOF(array) (sizeof (array) / sizeof (array[0]))
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 #include "test-mbmemcasecmp.h"
@@ -54,19 +54,19 @@ main (int argc, char *argv[])
     switch (argv[1][0])
       {
       case '1':
-	/* Locale encoding is ISO-8859-1 or ISO-8859-15.  */
-	test_iso_8859_1 (mbmemcasecmp, true);
-	return 0;
+        /* Locale encoding is ISO-8859-1 or ISO-8859-15.  */
+        test_iso_8859_1 (mbmemcasecmp, true);
+        return 0;
 
       case '2':
-	/* Locale encoding is UTF-8, locale is not Turkish.  */
-	test_utf_8 (mbmemcasecmp, false);
-	return 0;
+        /* Locale encoding is UTF-8, locale is not Turkish.  */
+        test_utf_8 (mbmemcasecmp, false);
+        return 0;
 
       case '3':
-	/* Locale encoding is UTF-8, locale is Turkish.  */
-	test_utf_8 (mbmemcasecmp, true);
-	return 0;
+        /* Locale encoding is UTF-8, locale is Turkish.  */
+        test_utf_8 (mbmemcasecmp, true);
+        return 0;
       }
 
   return 1;

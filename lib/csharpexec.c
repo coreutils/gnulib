@@ -89,11 +89,11 @@
 
 static int
 execute_csharp_using_pnet (const char *assembly_path,
-			   const char * const *libdirs,
-			   unsigned int libdirs_count,
-			   const char * const *args, unsigned int nargs,
-			   bool verbose, bool quiet,
-			   execute_fn *executer, void *private_data)
+                           const char * const *libdirs,
+                           unsigned int libdirs_count,
+                           const char * const *args, unsigned int nargs,
+                           bool verbose, bool quiet,
+                           execute_fn *executer, void *private_data)
 {
   static bool ilrun_tested;
   static bool ilrun_present;
@@ -101,7 +101,7 @@ execute_csharp_using_pnet (const char *assembly_path,
   if (!ilrun_tested)
     {
       /* Test for presence of ilrun:
-	 "ilrun --version >/dev/null 2>/dev/null"  */
+         "ilrun --version >/dev/null 2>/dev/null"  */
       char *argv[3];
       int exitstatus;
 
@@ -109,7 +109,7 @@ execute_csharp_using_pnet (const char *assembly_path,
       argv[1] = "--version";
       argv[2] = NULL;
       exitstatus = execute ("ilrun", "ilrun", argv, false, false, true, true,
-			    true, false, NULL);
+                            true, false, NULL);
       ilrun_present = (exitstatus == 0);
       ilrun_tested = true;
     }
@@ -128,24 +128,24 @@ execute_csharp_using_pnet (const char *assembly_path,
       argp = argv;
       *argp++ = "ilrun";
       for (i = 0; i < libdirs_count; i++)
-	{
-	  *argp++ = "-L";
-	  *argp++ = (char *) libdirs[i];
-	}
+        {
+          *argp++ = "-L";
+          *argp++ = (char *) libdirs[i];
+        }
       *argp++ = (char *) assembly_path;
       for (i = 0; i < nargs; i++)
-	*argp++ = (char *) args[i];
+        *argp++ = (char *) args[i];
       *argp = NULL;
       /* Ensure argv length was correctly calculated.  */
       if (argp - argv != argc)
-	abort ();
+        abort ();
 
       if (verbose)
-	{
-	  char *command = shell_quote_argv (argv);
-	  printf ("%s\n", command);
-	  free (command);
-	}
+        {
+          char *command = shell_quote_argv (argv);
+          printf ("%s\n", command);
+          free (command);
+        }
 
       err = executer ("ilrun", "ilrun", argv, private_data);
 
@@ -159,11 +159,11 @@ execute_csharp_using_pnet (const char *assembly_path,
 
 static int
 execute_csharp_using_mono (const char *assembly_path,
-			   const char * const *libdirs,
-			   unsigned int libdirs_count,
-			   const char * const *args, unsigned int nargs,
-			   bool verbose, bool quiet,
-			   execute_fn *executer, void *private_data)
+                           const char * const *libdirs,
+                           unsigned int libdirs_count,
+                           const char * const *args, unsigned int nargs,
+                           bool verbose, bool quiet,
+                           execute_fn *executer, void *private_data)
 {
   static bool mono_tested;
   static bool mono_present;
@@ -171,7 +171,7 @@ execute_csharp_using_mono (const char *assembly_path,
   if (!mono_tested)
     {
       /* Test for presence of mono:
-	 "mono --version >/dev/null 2>/dev/null"  */
+         "mono --version >/dev/null 2>/dev/null"  */
       char *argv[3];
       int exitstatus;
 
@@ -179,7 +179,7 @@ execute_csharp_using_mono (const char *assembly_path,
       argv[1] = "--version";
       argv[2] = NULL;
       exitstatus = execute ("mono", "mono", argv, false, false, true, true,
-			    true, false, NULL);
+                            true, false, NULL);
       mono_present = (exitstatus == 0);
       mono_tested = true;
     }
@@ -197,14 +197,14 @@ execute_csharp_using_mono (const char *assembly_path,
       argv[0] = "mono";
       argv[1] = (char *) assembly_path;
       for (i = 0; i <= nargs; i++)
-	argv[2 + i] = (char *) args[i];
+        argv[2 + i] = (char *) args[i];
 
       if (verbose)
-	{
-	  char *command = shell_quote_argv (argv);
-	  printf ("%s\n", command);
-	  free (command);
-	}
+        {
+          char *command = shell_quote_argv (argv);
+          printf ("%s\n", command);
+          free (command);
+        }
 
       err = executer ("mono", "mono", argv, private_data);
 
@@ -221,11 +221,11 @@ execute_csharp_using_mono (const char *assembly_path,
 
 static int
 execute_csharp_using_sscli (const char *assembly_path,
-			    const char * const *libdirs,
-			    unsigned int libdirs_count,
-			    const char * const *args, unsigned int nargs,
-			    bool verbose, bool quiet,
-			    execute_fn *executer, void *private_data)
+                            const char * const *libdirs,
+                            unsigned int libdirs_count,
+                            const char * const *args, unsigned int nargs,
+                            bool verbose, bool quiet,
+                            execute_fn *executer, void *private_data)
 {
   static bool clix_tested;
   static bool clix_present;
@@ -233,14 +233,14 @@ execute_csharp_using_sscli (const char *assembly_path,
   if (!clix_tested)
     {
       /* Test for presence of clix:
-	 "clix >/dev/null 2>/dev/null ; test $? = 1"  */
+         "clix >/dev/null 2>/dev/null ; test $? = 1"  */
       char *argv[2];
       int exitstatus;
 
       argv[0] = "clix";
       argv[1] = NULL;
       exitstatus = execute ("clix", "clix", argv, false, false, true, true,
-			    true, false, NULL);
+                            true, false, NULL);
       clix_present = (exitstatus == 0 || exitstatus == 1);
       clix_tested = true;
     }
@@ -258,14 +258,14 @@ execute_csharp_using_sscli (const char *assembly_path,
       argv[0] = "clix";
       argv[1] = (char *) assembly_path;
       for (i = 0; i <= nargs; i++)
-	argv[2 + i] = (char *) args[i];
+        argv[2 + i] = (char *) args[i];
 
       if (verbose)
-	{
-	  char *command = shell_quote_argv (argv);
-	  printf ("%s\n", command);
-	  free (command);
-	}
+        {
+          char *command = shell_quote_argv (argv);
+          printf ("%s\n", command);
+          free (command);
+        }
 
       err = executer ("clix", "clix", argv, private_data);
 
@@ -282,11 +282,11 @@ execute_csharp_using_sscli (const char *assembly_path,
 
 bool
 execute_csharp_program (const char *assembly_path,
-			const char * const *libdirs,
-			unsigned int libdirs_count,
-			const char * const *args,
-			bool verbose, bool quiet,
-			execute_fn *executer, void *private_data)
+                        const char * const *libdirs,
+                        unsigned int libdirs_count,
+                        const char * const *args,
+                        bool verbose, bool quiet,
+                        execute_fn *executer, void *private_data)
 {
   unsigned int nargs;
   int result;
@@ -302,16 +302,16 @@ execute_csharp_program (const char *assembly_path,
   /* First try the C# implementation specified through --enable-csharp.  */
 #if CSHARP_CHOICE_PNET
   result = execute_csharp_using_pnet (assembly_path, libdirs, libdirs_count,
-				      args, nargs, verbose, quiet,
-				      executer, private_data);
+                                      args, nargs, verbose, quiet,
+                                      executer, private_data);
   if (result >= 0)
     return (bool) result;
 #endif
 
 #if CSHARP_CHOICE_MONO
   result = execute_csharp_using_mono (assembly_path, libdirs, libdirs_count,
-				      args, nargs, verbose, quiet,
-				      executer, private_data);
+                                      args, nargs, verbose, quiet,
+                                      executer, private_data);
   if (result >= 0)
     return (bool) result;
 #endif
@@ -319,23 +319,23 @@ execute_csharp_program (const char *assembly_path,
   /* Then try the remaining C# implementations in our standard order.  */
 #if !CSHARP_CHOICE_PNET
   result = execute_csharp_using_pnet (assembly_path, libdirs, libdirs_count,
-				      args, nargs, verbose, quiet,
-				      executer, private_data);
+                                      args, nargs, verbose, quiet,
+                                      executer, private_data);
   if (result >= 0)
     return (bool) result;
 #endif
 
 #if !CSHARP_CHOICE_MONO
   result = execute_csharp_using_mono (assembly_path, libdirs, libdirs_count,
-				      args, nargs, verbose, quiet,
-				      executer, private_data);
+                                      args, nargs, verbose, quiet,
+                                      executer, private_data);
   if (result >= 0)
     return (bool) result;
 #endif
 
   result = execute_csharp_using_sscli (assembly_path, libdirs, libdirs_count,
-				       args, nargs, verbose, quiet,
-				       executer, private_data);
+                                       args, nargs, verbose, quiet,
+                                       executer, private_data);
   if (result >= 0)
     return (bool) result;
 

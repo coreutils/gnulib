@@ -80,24 +80,24 @@ freadseek (FILE *fp, size_t offset)
       size_t buffered;
 
       if (freadptr (fp, &buffered) != NULL && buffered > 0)
-	{
-	  size_t increment = (buffered < offset ? buffered : offset);
+        {
+          size_t increment = (buffered < offset ? buffered : offset);
 
-	  freadptrinc (fp, increment);
-	  offset -= increment;
-	  if (offset == 0)
-	    return 0;
-	  total_buffered -= increment;
-	  if (total_buffered == 0)
-	    break;
-	}
+          freadptrinc (fp, increment);
+          offset -= increment;
+          if (offset == 0)
+            return 0;
+          total_buffered -= increment;
+          if (total_buffered == 0)
+            break;
+        }
       /* Read one byte.  If we were reading from the ungetc buffer, this
-	 switches the stream back to the main buffer.  */
+         switches the stream back to the main buffer.  */
       if (fgetc (fp) == EOF)
-	goto eof;
+        goto eof;
       offset--;
       if (offset == 0)
-	return 0;
+        return 0;
       total_buffered--;
     }
 
@@ -111,16 +111,16 @@ freadseek (FILE *fp, size_t offset)
   else
     {
       /* FP is a non-seekable stream, possibly not even referring to a file
-	 descriptor.  Read OFFSET bytes explicitly and discard them.  */
+         descriptor.  Read OFFSET bytes explicitly and discard them.  */
       char buf[4096];
 
       do
-	{
-	  size_t count = (sizeof (buf) < offset ? sizeof (buf) : offset);
-	  if (fread (buf, 1, count, fp) < count)
-	    goto eof;
-	  offset -= count;
-	}
+        {
+          size_t count = (sizeof (buf) < offset ? sizeof (buf) : offset);
+          if (fread (buf, 1, count, fp) < count)
+            goto eof;
+          offset -= count;
+        }
       while (offset > 0);
 
       return 0;

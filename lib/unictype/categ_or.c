@@ -22,7 +22,7 @@
 
 uc_general_category_t
 uc_general_category_or (uc_general_category_t category1,
-			uc_general_category_t category2)
+                        uc_general_category_t category2)
 {
   uint32_t bitmask;
   uc_general_category_t result;

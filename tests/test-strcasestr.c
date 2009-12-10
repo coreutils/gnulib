@@ -26,15 +26,15 @@
 #include <unistd.h>
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 int
@@ -91,16 +91,16 @@ main ()
     char *haystack = (char *) malloc (m + 1);
     if (haystack != NULL)
       {
-	memset (haystack, 'A', m);
-	haystack[0] = 'B';
-	haystack[m] = '\0';
+        memset (haystack, 'A', m);
+        haystack[0] = 'B';
+        haystack[m] = '\0';
 
-	for (; repeat > 0; repeat--)
-	  {
-	    ASSERT (strcasestr (haystack, needle) == haystack + 1);
-	  }
+        for (; repeat > 0; repeat--)
+          {
+            ASSERT (strcasestr (haystack, needle) == haystack + 1);
+          }
 
-	free (haystack);
+        free (haystack);
       }
   }
 
@@ -115,15 +115,15 @@ main ()
     char *needle = (char *) malloc (m + 1);
     if (needle != NULL)
       {
-	memset (needle, 'A', m);
-	needle[m] = '\0';
+        memset (needle, 'A', m);
+        needle[m] = '\0';
 
-	for (; repeat > 0; repeat--)
-	  {
-	    ASSERT (strcasestr (haystack, needle) == NULL);
-	  }
+        for (; repeat > 0; repeat--)
+          {
+            ASSERT (strcasestr (haystack, needle) == NULL);
+          }
 
-	free (needle);
+        free (needle);
       }
   }
 
@@ -134,18 +134,18 @@ main ()
     char *needle = (char *) malloc (m + 2);
     if (haystack != NULL && needle != NULL)
       {
-	const char *result;
+        const char *result;
 
-	memset (haystack, 'A', 2 * m);
-	haystack[2 * m] = 'B';
-	haystack[2 * m + 1] = '\0';
+        memset (haystack, 'A', 2 * m);
+        haystack[2 * m] = 'B';
+        haystack[2 * m + 1] = '\0';
 
-	memset (needle, 'a', m);
-	needle[m] = 'B';
-	needle[m + 1] = '\0';
+        memset (needle, 'a', m);
+        needle[m] = 'B';
+        needle[m + 1] = '\0';
 
-	result = strcasestr (haystack, needle);
-	ASSERT (result == haystack + m);
+        result = strcasestr (haystack, needle);
+        ASSERT (result == haystack + m);
       }
     free (needle);
     free (haystack);

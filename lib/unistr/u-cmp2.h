@@ -23,9 +23,9 @@ FUNC (const UNIT *s1, size_t n1, const UNIT *s2, size_t n2)
   if (cmp == 0)
     {
       if (n1 < n2)
-	cmp = -1;
+        cmp = -1;
       else if (n1 > n2)
-	cmp = 1;
+        cmp = 1;
     }
 
   return cmp;

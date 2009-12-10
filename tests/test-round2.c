@@ -63,7 +63,7 @@ equal (const char *message, DOUBLE x, DOUBLE y0, DOUBLE y1)
   else
     {
       fprintf (stderr, "%s: "FUNCTION"(%g(%a)) = %g(%a) or %g(%a)?\n",
-	       message, x, x, y0, y0, y1, y1);
+               message, x, x, y0, y0, y1, y1);
       return false;
     }
 }
@@ -92,17 +92,17 @@ main (void)
   for (highbits = 0; highbits < (1 << NUM_HIGHBITS); highbits++)
     for (lowbits = 0; lowbits < (1 << NUM_LOWBITS); lowbits++)
       {
-	/* Combine highbits and lowbits into a floating-point number,
-	   sign-extending the lowbits to DOUBLE_BITS-NUM_HIGHBITS bits.	 */
-	union { DOUBLE f; DOUBLE_UINT i; } janus;
-	verify (sizeof janus.f == sizeof janus.i);
-	janus.i = lowbits | (highbits << (DOUBLE_BITS - NUM_HIGHBITS));
-	if (lowbits >> (NUM_LOWBITS - 1))
-	  janus.i |= ((DOUBLE_UINT) -1
-		      >> (NUM_LOWBITS + NUM_HIGHBITS)
-		      << NUM_LOWBITS);
-	if (!check (janus.f))
-	  error = true;
+        /* Combine highbits and lowbits into a floating-point number,
+           sign-extending the lowbits to DOUBLE_BITS-NUM_HIGHBITS bits.  */
+        union { DOUBLE f; DOUBLE_UINT i; } janus;
+        verify (sizeof janus.f == sizeof janus.i);
+        janus.i = lowbits | (highbits << (DOUBLE_BITS - NUM_HIGHBITS));
+        if (lowbits >> (NUM_LOWBITS - 1))
+          janus.i |= ((DOUBLE_UINT) -1
+                      >> (NUM_LOWBITS + NUM_HIGHBITS)
+                      << NUM_LOWBITS);
+        if (!check (janus.f))
+          error = true;
       }
   return (error ? 1 : 0);
 }

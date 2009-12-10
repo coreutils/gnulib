@@ -30,15 +30,15 @@
 #include "same-inode.h"
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 #define BASE "t-can-lgpl.tmp"
@@ -68,7 +68,7 @@ main (void)
     char *result = canonicalize_file_name (BASE "//./..//" BASE "/tra");
     ASSERT (result != NULL);
     ASSERT (strstr (result, "/" BASE "/tra")
-	    == result + strlen (result) - strlen ("/" BASE "/tra"));
+            == result + strlen (result) - strlen ("/" BASE "/tra"));
     free (result);
     errno = 0;
     result = canonicalize_file_name ("");
@@ -104,7 +104,7 @@ main (void)
       ASSERT (remove (BASE "/tra") == 0);
       ASSERT (rmdir (BASE) == 0);
       fputs ("skipping test: symlinks not supported on this file system\n",
-	     stderr);
+             stderr);
       return 77;
     }
   ASSERT (symlink ("bef", BASE "/plo") == 0);
@@ -123,7 +123,7 @@ main (void)
     ASSERT (result2 != NULL);
     ASSERT (strcmp (result1, result2) == 0);
     ASSERT (strcmp (result1 + strlen (result1) - strlen ("/" BASE "/tra"),
-		    "/" BASE "/tra") == 0);
+                    "/" BASE "/tra") == 0);
     free (result1);
     free (result2);
   }
@@ -139,7 +139,7 @@ main (void)
     ASSERT (strcmp (result1, result2) == 0);
     ASSERT (strcmp (result2, result3) == 0);
     ASSERT (strcmp (result1 + strlen (result1) - strlen ("/" BASE "/lum"),
-		    "/" BASE "/lum") == 0);
+                    "/" BASE "/lum") == 0);
     free (result1);
     free (result2);
     free (result3);
@@ -193,13 +193,13 @@ main (void)
     ASSERT (stat ("//", &st2) == 0);
     if (SAME_INODE (st1, st2))
       {
-	ASSERT (strcmp (result1, "/") == 0);
-	ASSERT (strcmp (result2, "/") == 0);
+        ASSERT (strcmp (result1, "/") == 0);
+        ASSERT (strcmp (result2, "/") == 0);
       }
     else
       {
-	ASSERT (strcmp (result1, "//") == 0);
-	ASSERT (strcmp (result2, "//") == 0);
+        ASSERT (strcmp (result1, "//") == 0);
+        ASSERT (strcmp (result2, "//") == 0);
       }
     free (result1);
     free (result2);

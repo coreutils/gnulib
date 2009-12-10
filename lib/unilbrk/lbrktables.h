@@ -70,15 +70,15 @@ unilbrkprop_lookup (ucs4_t uc)
     {
       int lookup1 = unilbrkprop.level1[index1];
       if (lookup1 >= 0)
-	{
-	  unsigned int index2 = (uc >> lbrkprop_header_2) & lbrkprop_header_3;
-	  int lookup2 = unilbrkprop.level2[lookup1 + index2];
-	  if (lookup2 >= 0)
-	    {
-	      unsigned int index3 = uc & lbrkprop_header_4;
-	      return unilbrkprop.level3[lookup2 + index3];
-	    }
-	}
+        {
+          unsigned int index2 = (uc >> lbrkprop_header_2) & lbrkprop_header_3;
+          int lookup2 = unilbrkprop.level2[lookup1 + index2];
+          if (lookup2 >= 0)
+            {
+              unsigned int index3 = uc & lbrkprop_header_4;
+              return unilbrkprop.level3[lookup2 + index3];
+            }
+        }
     }
   return LBP_XX;
 }

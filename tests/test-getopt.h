@@ -20,11 +20,11 @@
 
 static void
 getopt_loop (int argc, const char **argv,
-	     const char *options,
-	     int *a_seen, int *b_seen,
-	     const char **p_value, const char **q_value,
-	     int *non_options_count, const char **non_options,
-	     int *unrecognized)
+             const char *options,
+             int *a_seen, int *b_seen,
+             const char **p_value, const char **q_value,
+             int *non_options_count, const char **non_options,
+             int *unrecognized)
 {
   int c;
 
@@ -32,31 +32,31 @@ getopt_loop (int argc, const char **argv,
   while ((c = getopt (argc, (char **) argv, options)) != -1)
     {
       switch (c)
-	{
-	case 'a':
-	  (*a_seen)++;
-	  break;
-	case 'b':
-	  (*b_seen)++;
-	  break;
-	case 'p':
-	  *p_value = optarg;
-	  break;
-	case 'q':
-	  *q_value = optarg;
-	  break;
-	case '\1':
-	  /* Must only happen with option '-' at the beginning.  */
-	  ASSERT (options[0] == '-');
-	  non_options[(*non_options_count)++] = optarg;
-	  break;
-	case '?':
-	  *unrecognized = optopt;
-	  break;
-	default:
-	  *unrecognized = c;
-	  break;
-	}
+        {
+        case 'a':
+          (*a_seen)++;
+          break;
+        case 'b':
+          (*b_seen)++;
+          break;
+        case 'p':
+          *p_value = optarg;
+          break;
+        case 'q':
+          *q_value = optarg;
+          break;
+        case '\1':
+          /* Must only happen with option '-' at the beginning.  */
+          ASSERT (options[0] == '-');
+          non_options[(*non_options_count)++] = optarg;
+          break;
+        case '?':
+          *unrecognized = optopt;
+          break;
+        default:
+          *unrecognized = c;
+          break;
+        }
     }
 }
 
@@ -93,8 +93,8 @@ test_getopt (void)
       argv[argc] = NULL;
       optind = start;
       getopt_loop (argc, argv, "ab",
-		   &a_seen, &b_seen, &p_value, &q_value,
-		   &non_options_count, non_options, &unrecognized);
+                   &a_seen, &b_seen, &p_value, &q_value,
+                   &non_options_count, non_options, &unrecognized);
       ASSERT (a_seen == 1);
       ASSERT (b_seen == 0);
       ASSERT (p_value == NULL);
@@ -123,8 +123,8 @@ test_getopt (void)
       argv[argc] = NULL;
       optind = start;
       getopt_loop (argc, argv, "ab",
-		   &a_seen, &b_seen, &p_value, &q_value,
-		   &non_options_count, non_options, &unrecognized);
+                   &a_seen, &b_seen, &p_value, &q_value,
+                   &non_options_count, non_options, &unrecognized);
       ASSERT (a_seen == 1);
       ASSERT (b_seen == 1);
       ASSERT (p_value == NULL);
@@ -152,8 +152,8 @@ test_getopt (void)
       argv[argc] = NULL;
       optind = start;
       getopt_loop (argc, argv, "ab",
-		   &a_seen, &b_seen, &p_value, &q_value,
-		   &non_options_count, non_options, &unrecognized);
+                   &a_seen, &b_seen, &p_value, &q_value,
+                   &non_options_count, non_options, &unrecognized);
       ASSERT (a_seen == 1);
       ASSERT (b_seen == 1);
       ASSERT (p_value == NULL);
@@ -182,8 +182,8 @@ test_getopt (void)
       argv[argc] = NULL;
       optind = start;
       getopt_loop (argc, argv, "ab",
-		   &a_seen, &b_seen, &p_value, &q_value,
-		   &non_options_count, non_options, &unrecognized);
+                   &a_seen, &b_seen, &p_value, &q_value,
+                   &non_options_count, non_options, &unrecognized);
       ASSERT (a_seen == 2);
       ASSERT (b_seen == 1);
       ASSERT (p_value == NULL);
@@ -212,8 +212,8 @@ test_getopt (void)
       argv[argc] = NULL;
       optind = start;
       getopt_loop (argc, argv, "p:q:",
-		   &a_seen, &b_seen, &p_value, &q_value,
-		   &non_options_count, non_options, &unrecognized);
+                   &a_seen, &b_seen, &p_value, &q_value,
+                   &non_options_count, non_options, &unrecognized);
       ASSERT (a_seen == 0);
       ASSERT (b_seen == 0);
       ASSERT (p_value != NULL && strcmp (p_value, "foo") == 0);
@@ -241,8 +241,8 @@ test_getopt (void)
       argv[argc] = NULL;
       optind = start;
       getopt_loop (argc, argv, "p:q:",
-		   &a_seen, &b_seen, &p_value, &q_value,
-		   &non_options_count, non_options, &unrecognized);
+                   &a_seen, &b_seen, &p_value, &q_value,
+                   &non_options_count, non_options, &unrecognized);
       ASSERT (a_seen == 0);
       ASSERT (b_seen == 0);
       ASSERT (p_value != NULL && strcmp (p_value, "foo") == 0);
@@ -272,8 +272,8 @@ test_getopt (void)
       argv[argc] = NULL;
       optind = start;
       getopt_loop (argc, argv, "abp:q:",
-		   &a_seen, &b_seen, &p_value, &q_value,
-		   &non_options_count, non_options, &unrecognized);
+                   &a_seen, &b_seen, &p_value, &q_value,
+                   &non_options_count, non_options, &unrecognized);
       ASSERT (a_seen == 1);
       ASSERT (b_seen == 1);
       ASSERT (p_value != NULL && strcmp (p_value, "foo") == 0);
@@ -303,8 +303,8 @@ test_getopt (void)
       argv[argc] = NULL;
       optind = start;
       getopt_loop (argc, argv, "p::q::",
-		   &a_seen, &b_seen, &p_value, &q_value,
-		   &non_options_count, non_options, &unrecognized);
+                   &a_seen, &b_seen, &p_value, &q_value,
+                   &non_options_count, non_options, &unrecognized);
       ASSERT (a_seen == 0);
       ASSERT (b_seen == 0);
       ASSERT (p_value != NULL && strcmp (p_value, "foo") == 0);
@@ -332,8 +332,8 @@ test_getopt (void)
       argv[argc] = NULL;
       optind = start;
       getopt_loop (argc, argv, "p::q::",
-		   &a_seen, &b_seen, &p_value, &q_value,
-		   &non_options_count, non_options, &unrecognized);
+                   &a_seen, &b_seen, &p_value, &q_value,
+                   &non_options_count, non_options, &unrecognized);
       ASSERT (a_seen == 0);
       ASSERT (b_seen == 0);
       ASSERT (p_value == NULL);
@@ -361,8 +361,8 @@ test_getopt (void)
       argv[argc] = NULL;
       optind = start;
       getopt_loop (argc, argv, "abp::q::",
-		   &a_seen, &b_seen, &p_value, &q_value,
-		   &non_options_count, non_options, &unrecognized);
+                   &a_seen, &b_seen, &p_value, &q_value,
+                   &non_options_count, non_options, &unrecognized);
       ASSERT (a_seen == 1);
       ASSERT (b_seen == 0);
       ASSERT (p_value == NULL);
@@ -395,8 +395,8 @@ test_getopt (void)
       argv[argc] = NULL;
       optind = start;
       getopt_loop (argc, argv, "abp:q:",
-		   &a_seen, &b_seen, &p_value, &q_value,
-		   &non_options_count, non_options, &unrecognized);
+                   &a_seen, &b_seen, &p_value, &q_value,
+                   &non_options_count, non_options, &unrecognized);
       ASSERT (a_seen == 1);
       ASSERT (b_seen == 0);
       ASSERT (p_value != NULL && strcmp (p_value, "foo") == 0);
@@ -429,8 +429,8 @@ test_getopt (void)
       argv[argc] = NULL;
       optind = start;
       getopt_loop (argc, argv, "abp:q:",
-		   &a_seen, &b_seen, &p_value, &q_value,
-		   &non_options_count, non_options, &unrecognized);
+                   &a_seen, &b_seen, &p_value, &q_value,
+                   &non_options_count, non_options, &unrecognized);
       if (posixly)
         {
           ASSERT (strcmp (argv[0], "program") == 0);
@@ -497,8 +497,8 @@ test_getopt (void)
       argv[argc] = NULL;
       optind = start;
       getopt_loop (argc, argv, "abp:q:",
-		   &a_seen, &b_seen, &p_value, &q_value,
-		   &non_options_count, non_options, &unrecognized);
+                   &a_seen, &b_seen, &p_value, &q_value,
+                   &non_options_count, non_options, &unrecognized);
       if (posixly)
         {
           ASSERT (strcmp (argv[0], "program") == 0);
@@ -571,8 +571,8 @@ test_getopt (void)
       argv[argc] = NULL;
       optind = start;
       getopt_loop (argc, argv, "-abp:q:",
-		   &a_seen, &b_seen, &p_value, &q_value,
-		   &non_options_count, non_options, &unrecognized);
+                   &a_seen, &b_seen, &p_value, &q_value,
+                   &non_options_count, non_options, &unrecognized);
       ASSERT (strcmp (argv[0], "program") == 0);
       ASSERT (strcmp (argv[1], "donald") == 0);
       ASSERT (strcmp (argv[2], "-p") == 0);
@@ -621,8 +621,8 @@ test_getopt (void)
       argv[argc] = NULL;
       optind = start;
       getopt_loop (argc, argv, "-abp:q:",
-		   &a_seen, &b_seen, &p_value, &q_value,
-		   &non_options_count, non_options, &unrecognized);
+                   &a_seen, &b_seen, &p_value, &q_value,
+                   &non_options_count, non_options, &unrecognized);
       ASSERT (strcmp (argv[0], "program") == 0);
       ASSERT (strcmp (argv[1], "donald") == 0);
       ASSERT (strcmp (argv[2], "-p") == 0);
@@ -642,26 +642,26 @@ test_getopt (void)
       ASSERT (q_value == NULL);
       if (non_options_count == 2)
         {
-	  /* glibc behaviour.  */
-	  ASSERT (non_options_count == 2);
-	  ASSERT (strcmp (non_options[0], "donald") == 0);
-	  ASSERT (strcmp (non_options[1], "duck") == 0);
-	  ASSERT (unrecognized == 0);
-	  ASSERT (optind == 7);
+          /* glibc behaviour.  */
+          ASSERT (non_options_count == 2);
+          ASSERT (strcmp (non_options[0], "donald") == 0);
+          ASSERT (strcmp (non_options[1], "duck") == 0);
+          ASSERT (unrecognized == 0);
+          ASSERT (optind == 7);
         }
       else
         {
-	  /* Another valid behaviour.  */
-	  ASSERT (non_options_count == 7);
-	  ASSERT (strcmp (non_options[0], "donald") == 0);
-	  ASSERT (strcmp (non_options[1], "duck") == 0);
-	  ASSERT (strcmp (non_options[2], "-b") == 0);
-	  ASSERT (strcmp (non_options[3], "foo") == 0);
-	  ASSERT (strcmp (non_options[4], "-q") == 0);
-	  ASSERT (strcmp (non_options[5], "johnny") == 0);
-	  ASSERT (strcmp (non_options[6], "bar") == 0);
-	  ASSERT (unrecognized == 0);
-	  ASSERT (optind == 12);
+          /* Another valid behaviour.  */
+          ASSERT (non_options_count == 7);
+          ASSERT (strcmp (non_options[0], "donald") == 0);
+          ASSERT (strcmp (non_options[1], "duck") == 0);
+          ASSERT (strcmp (non_options[2], "-b") == 0);
+          ASSERT (strcmp (non_options[3], "foo") == 0);
+          ASSERT (strcmp (non_options[4], "-q") == 0);
+          ASSERT (strcmp (non_options[5], "johnny") == 0);
+          ASSERT (strcmp (non_options[6], "bar") == 0);
+          ASSERT (unrecognized == 0);
+          ASSERT (optind == 12);
         }
     }
 #endif
@@ -689,8 +689,8 @@ test_getopt (void)
       argv[argc] = NULL;
       optind = start;
       getopt_loop (argc, argv, "abp:q:-",
-		   &a_seen, &b_seen, &p_value, &q_value,
-		   &non_options_count, non_options, &unrecognized);
+                   &a_seen, &b_seen, &p_value, &q_value,
+                   &non_options_count, non_options, &unrecognized);
       if (posixly)
         {
           ASSERT (strcmp (argv[0], "program") == 0);
@@ -753,8 +753,8 @@ test_getopt (void)
       argv[argc] = NULL;
       optind = start;
       getopt_loop (argc, argv, "+abp:q:",
-		   &a_seen, &b_seen, &p_value, &q_value,
-		   &non_options_count, non_options, &unrecognized);
+                   &a_seen, &b_seen, &p_value, &q_value,
+                   &non_options_count, non_options, &unrecognized);
       ASSERT (strcmp (argv[0], "program") == 0);
       ASSERT (strcmp (argv[1], "donald") == 0);
       ASSERT (strcmp (argv[2], "-p") == 0);
@@ -788,8 +788,8 @@ test_getopt (void)
       argv[argc] = NULL;
       optind = start;
       getopt_loop (argc, argv, "+abp:q:",
-		   &a_seen, &b_seen, &p_value, &q_value,
-		   &non_options_count, non_options, &unrecognized);
+                   &a_seen, &b_seen, &p_value, &q_value,
+                   &non_options_count, non_options, &unrecognized);
       ASSERT (a_seen == 0);
       ASSERT (b_seen == 0);
       ASSERT (p_value == NULL);
@@ -827,8 +827,8 @@ test_getopt (void)
       argv[argc] = NULL;
       optind = start;
       getopt_loop (argc, argv, "+abp:q:",
-		   &a_seen, &b_seen, &p_value, &q_value,
-		   &non_options_count, non_options, &unrecognized);
+                   &a_seen, &b_seen, &p_value, &q_value,
+                   &non_options_count, non_options, &unrecognized);
       ASSERT (strcmp (argv[0], "program") == 0);
       ASSERT (strcmp (argv[1], "donald") == 0);
       ASSERT (strcmp (argv[2], "-p") == 0);
@@ -874,8 +874,8 @@ test_getopt (void)
       argv[argc] = NULL;
       optind = start;
       getopt_loop (argc, argv, "abp:q:+",
-		   &a_seen, &b_seen, &p_value, &q_value,
-		   &non_options_count, non_options, &unrecognized);
+                   &a_seen, &b_seen, &p_value, &q_value,
+                   &non_options_count, non_options, &unrecognized);
       if (posixly)
         {
           ASSERT (strcmp (argv[0], "program") == 0);

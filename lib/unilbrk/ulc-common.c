@@ -43,7 +43,7 @@ is_all_ascii (const char *s, size_t n)
       unsigned char c = (unsigned char) *s;
 
       if (!(c_isprint (c) || c_isspace (c)))
-	return 0;
+        return 0;
     }
   return 1;
 }

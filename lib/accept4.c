@@ -42,13 +42,13 @@ accept4 (int sockfd, struct sockaddr *addr, socklen_t *addrlen, int flags)
     static int have_accept4_really; /* 0 = unknown, 1 = yes, -1 = no */
     if (have_accept4_really >= 0)
       {
-	int result = accept4 (sockfd, addr, addrlen, flags);
-	if (!(result < 0 && errno == ENOSYS))
-	  {
-	    have_accept4_really = 1;
-	    return result;
-	  }
-	have_accept4_really = -1;
+        int result = accept4 (sockfd, addr, addrlen, flags);
+        if (!(result < 0 && errno == ENOSYS))
+          {
+            have_accept4_really = 1;
+            return result;
+          }
+        have_accept4_really = -1;
       }
   }
 #endif
@@ -74,29 +74,29 @@ accept4 (int sockfd, struct sockaddr *addr, socklen_t *addrlen, int flags)
       HANDLE new_handle;
       int nfd;
 
-      if (!DuplicateHandle (curr_process,	    /* SourceProcessHandle */
-			    old_handle,		    /* SourceHandle */
-			    curr_process,	    /* TargetProcessHandle */
-			    (PHANDLE) &new_handle,  /* TargetHandle */
-			    (DWORD) 0,		    /* DesiredAccess */
-			    FALSE,		    /* InheritHandle */
-			    DUPLICATE_SAME_ACCESS)) /* Options */
-	{
-	  close (fd);
-	  errno = EBADF; /* arbitrary */
-	  return -1;
-	}
+      if (!DuplicateHandle (curr_process,           /* SourceProcessHandle */
+                            old_handle,             /* SourceHandle */
+                            curr_process,           /* TargetProcessHandle */
+                            (PHANDLE) &new_handle,  /* TargetHandle */
+                            (DWORD) 0,              /* DesiredAccess */
+                            FALSE,                  /* InheritHandle */
+                            DUPLICATE_SAME_ACCESS)) /* Options */
+        {
+          close (fd);
+          errno = EBADF; /* arbitrary */
+          return -1;
+        }
 
       /* Closing fd before allocating the new fd ensures that the new fd will
-	 have the minimum possible value.  */
+         have the minimum possible value.  */
       close (fd);
       nfd = _open_osfhandle ((long) new_handle,
-			     O_NOINHERIT | (flags & (O_TEXT | O_BINARY)));
+                             O_NOINHERIT | (flags & (O_TEXT | O_BINARY)));
       if (nfd < 0)
-	{
-	  CloseHandle (new_handle);
-	  return -1;
-	}
+        {
+          CloseHandle (new_handle);
+          return -1;
+        }
       return nfd;
     }
 # else
@@ -106,13 +106,13 @@ accept4 (int sockfd, struct sockaddr *addr, socklen_t *addrlen, int flags)
       int fcntl_flags;
 
       if ((fcntl_flags = fcntl (fd, F_GETFD, 0)) < 0
-	  || fcntl (fd, F_SETFD, fcntl_flags | FD_CLOEXEC) == -1)
-	{
-	  int saved_errno = errno;
-	  close (fd);
-	  errno = saved_errno;
-	  return -1;
-	}
+          || fcntl (fd, F_SETFD, fcntl_flags | FD_CLOEXEC) == -1)
+        {
+          int saved_errno = errno;
+          close (fd);
+          errno = saved_errno;
+          return -1;
+        }
     }
 # endif
 #endif

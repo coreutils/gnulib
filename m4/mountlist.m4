@@ -7,7 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_MOUNTLIST],
 [
   gl_LIST_MOUNTED_FILE_SYSTEMS([gl_cv_list_mounted_fs=yes],
-			       [gl_cv_list_mounted_fs=no])
+                               [gl_cv_list_mounted_fs=no])
   if test $gl_cv_list_mounted_fs = yes; then
     AC_LIBOBJ([mountlist])
     gl_PREREQ_MOUNTLIST_EXTRA

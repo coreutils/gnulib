@@ -24,7 +24,7 @@
 
 int
 u8_is_casefolded (const uint8_t *s, size_t n, const char *iso639_language,
-		  bool *resultp)
+                  bool *resultp)
 {
   return u8_is_invariant (s, n, u8_casefold, iso639_language, resultp);
 }

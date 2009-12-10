@@ -77,10 +77,10 @@ to_uchar (char ch)
 
 void
 arctwo_encrypt (arctwo_context *context, const char *inbuf,
-		char *outbuf, size_t length)
+                char *outbuf, size_t length)
 {
   for (; length >= ARCTWO_BLOCK_SIZE; length -= ARCTWO_BLOCK_SIZE,
-	 inbuf += ARCTWO_BLOCK_SIZE, outbuf += ARCTWO_BLOCK_SIZE)
+         inbuf += ARCTWO_BLOCK_SIZE, outbuf += ARCTWO_BLOCK_SIZE)
     {
       size_t i, j;
       uint16_t word0 = 0, word1 = 0, word2 = 0, word3 = 0;
@@ -95,29 +95,29 @@ arctwo_encrypt (arctwo_context *context, const char *inbuf,
       word3 = (word3 << 8) | to_uchar (inbuf[6]);
 
       for (i = 0; i < 16; i++)
-	{
-	  j = i * 4;
-	  /* For some reason I cannot combine those steps. */
-	  word0 += (word1 & ~word3) + (word2 & word3) + context->S[j];
-	  word0 = rotl16 (word0, 1);
+        {
+          j = i * 4;
+          /* For some reason I cannot combine those steps. */
+          word0 += (word1 & ~word3) + (word2 & word3) + context->S[j];
+          word0 = rotl16 (word0, 1);
 
-	  word1 += (word2 & ~word0) + (word3 & word0) + context->S[j + 1];
-	  word1 = rotl16 (word1, 2);
+          word1 += (word2 & ~word0) + (word3 & word0) + context->S[j + 1];
+          word1 = rotl16 (word1, 2);
 
-	  word2 += (word3 & ~word1) + (word0 & word1) + context->S[j + 2];
-	  word2 = rotl16 (word2, 3);
+          word2 += (word3 & ~word1) + (word0 & word1) + context->S[j + 2];
+          word2 = rotl16 (word2, 3);
 
-	  word3 += (word0 & ~word2) + (word1 & word2) + context->S[j + 3];
-	  word3 = rotl16 (word3, 5);
+          word3 += (word0 & ~word2) + (word1 & word2) + context->S[j + 3];
+          word3 = rotl16 (word3, 5);
 
-	  if (i == 4 || i == 10)
-	    {
-	      word0 += context->S[word3 & 63];
-	      word1 += context->S[word0 & 63];
-	      word2 += context->S[word1 & 63];
-	      word3 += context->S[word2 & 63];
-	    }
-	}
+          if (i == 4 || i == 10)
+            {
+              word0 += context->S[word3 & 63];
+              word1 += context->S[word0 & 63];
+              word2 += context->S[word1 & 63];
+              word3 += context->S[word2 & 63];
+            }
+        }
 
       outbuf[0] = word0 & 255;
       outbuf[1] = word0 >> 8;
@@ -132,10 +132,10 @@ arctwo_encrypt (arctwo_context *context, const char *inbuf,
 
 void
 arctwo_decrypt (arctwo_context *context, const char *inbuf,
-		char *outbuf, size_t length)
+                char *outbuf, size_t length)
 {
   for (; length >= ARCTWO_BLOCK_SIZE; length -= ARCTWO_BLOCK_SIZE,
-	 inbuf += ARCTWO_BLOCK_SIZE, outbuf += ARCTWO_BLOCK_SIZE)
+         inbuf += ARCTWO_BLOCK_SIZE, outbuf += ARCTWO_BLOCK_SIZE)
     {
       size_t i, j;
       uint16_t word0 = 0, word1 = 0, word2 = 0, word3 = 0;
@@ -150,29 +150,29 @@ arctwo_decrypt (arctwo_context *context, const char *inbuf,
       word3 = (word3 << 8) | to_uchar (inbuf[6]);
 
       for (i = 16; i > 0; i--)
-	{
-	  j = (i - 1) * 4;
+        {
+          j = (i - 1) * 4;
 
-	  word3 = rotr16 (word3, 5);
-	  word3 -= (word0 & ~word2) + (word1 & word2) + context->S[j + 3];
+          word3 = rotr16 (word3, 5);
+          word3 -= (word0 & ~word2) + (word1 & word2) + context->S[j + 3];
 
-	  word2 = rotr16 (word2, 3);
-	  word2 -= (word3 & ~word1) + (word0 & word1) + context->S[j + 2];
+          word2 = rotr16 (word2, 3);
+          word2 -= (word3 & ~word1) + (word0 & word1) + context->S[j + 2];
 
-	  word1 = rotr16 (word1, 2);
-	  word1 -= (word2 & ~word0) + (word3 & word0) + context->S[j + 1];
+          word1 = rotr16 (word1, 2);
+          word1 -= (word2 & ~word0) + (word3 & word0) + context->S[j + 1];
 
-	  word0 = rotr16 (word0, 1);
-	  word0 -= (word1 & ~word3) + (word2 & word3) + context->S[j];
+          word0 = rotr16 (word0, 1);
+          word0 -= (word1 & ~word3) + (word2 & word3) + context->S[j];
 
-	  if (i == 6 || i == 12)
-	    {
-	      word3 = word3 - context->S[word2 & 63];
-	      word2 = word2 - context->S[word1 & 63];
-	  word1 = word1 - context->S[word0 & 63];
-	  word0 = word0 - context->S[word3 & 63];
-	    }
-	}
+          if (i == 6 || i == 12)
+            {
+              word3 = word3 - context->S[word2 & 63];
+              word2 = word2 - context->S[word1 & 63];
+          word1 = word1 - context->S[word0 & 63];
+          word0 = word0 - context->S[word3 & 63];
+            }
+        }
 
       outbuf[0] = word0 & 255;
       outbuf[1] = word0 >> 8;
@@ -187,7 +187,7 @@ arctwo_decrypt (arctwo_context *context, const char *inbuf,
 
 void
 arctwo_setkey_ekb (arctwo_context *context,
-		   size_t keylen, const char *key, size_t effective_keylen)
+                   size_t keylen, const char *key, size_t effective_keylen)
 {
   size_t i;
   uint8_t *S, x;
@@ -216,10 +216,10 @@ arctwo_setkey_ekb (arctwo_context *context,
       S[i] = x;
 
       while (i--)
-	{
-	  x = arctwo_sbox[x ^ S[i + len]];
-	  S[i] = x;
-	}
+        {
+          x = arctwo_sbox[x ^ S[i + len]];
+          S[i] = x;
+        }
     }
 
   /* Make the expanded key, endian independent. */

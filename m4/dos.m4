@@ -14,31 +14,31 @@ AC_DEFUN([gl_AC_DOS],
   [
     AC_CACHE_CHECK([whether system is Windows or MSDOS], [ac_cv_win_or_dos],
       [
-	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([], [[
+        AC_COMPILE_IFELSE([AC_LANG_PROGRAM([], [[
 #if !defined _WIN32 && !defined __WIN32__ && !defined __MSDOS__ && !defined __CYGWIN__
 neither MSDOS nor Windows
 #endif]])],
-	[ac_cv_win_or_dos=yes],
-	[ac_cv_win_or_dos=no])
+        [ac_cv_win_or_dos=yes],
+        [ac_cv_win_or_dos=no])
       ])
 
     if test x"$ac_cv_win_or_dos" = xyes; then
       ac_fs_accepts_drive_letter_prefix=1
       ac_fs_backslash_is_file_name_separator=1
       AC_CACHE_CHECK([whether drive letter can start relative path],
-		     [ac_cv_drive_letter_can_be_relative],
-	[
-	  AC_COMPILE_IFELSE([AC_LANG_PROGRAM([], [[
+                     [ac_cv_drive_letter_can_be_relative],
+        [
+          AC_COMPILE_IFELSE([AC_LANG_PROGRAM([], [[
 #if defined __CYGWIN__
 drive letters are always absolute
 #endif]])],
-	  [ac_cv_drive_letter_can_be_relative=yes],
-	  [ac_cv_drive_letter_can_be_relative=no])
-	])
+          [ac_cv_drive_letter_can_be_relative=yes],
+          [ac_cv_drive_letter_can_be_relative=no])
+        ])
       if test x"$ac_cv_drive_letter_can_be_relative" = xyes; then
-	ac_fs_drive_letter_can_be_relative=1
+        ac_fs_drive_letter_can_be_relative=1
       else
-	ac_fs_drive_letter_can_be_relative=0
+        ac_fs_drive_letter_can_be_relative=0
       fi
     else
       ac_fs_accepts_drive_letter_prefix=0

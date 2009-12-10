@@ -30,10 +30,10 @@ AC_DEFUN([gl_FUNC_FTRUNCATE],
         # a bug report to inform us about it.
         if test x"$SKIP_FTRUNCATE_CHECK" != xyes; then
           AC_MSG_FAILURE([Your system lacks the ftruncate function.
-	      Please report this, along with the output of "uname -a", to the
-	      bug-coreutils@gnu.org mailing list.  To continue past this point,
-	      rerun configure with SKIP_FTRUNCATE_CHECK=yes.
-	      E.g., ./configure SKIP_FTRUNCATE_CHECK=yes])
+              Please report this, along with the output of "uname -a", to the
+              bug-coreutils@gnu.org mailing list.  To continue past this point,
+              rerun configure with SKIP_FTRUNCATE_CHECK=yes.
+              E.g., ./configure SKIP_FTRUNCATE_CHECK=yes])
         fi
     esac
   fi

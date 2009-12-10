@@ -20,40 +20,40 @@ AC_DEFUN([gl_FUNC_FFLUSH],
 #include <stdio.h>
 #include <unistd.h>
        ]], [[FILE *f = fopen ("conftest.txt", "r");
-	 char buffer[10];
-	 int fd;
-	 int c;
-	 if (f == NULL)
-	   return 1;
-	 fd = fileno (f);
-	 if (fd < 0 || fread (buffer, 1, 5, f) != 5)
-	   return 2;
-	 /* For deterministic results, ensure f read a bigger buffer.  */
-	 if (lseek (fd, 0, SEEK_CUR) == 5)
-	   return 3;
-	 /* POSIX requires fflush-fseek to set file offset of fd.  This fails
-	    on BSD systems and on mingw.  */
-	 if (fflush (f) != 0 || fseek (f, 0, SEEK_CUR) != 0)
-	   return 4;
-	 if (lseek (fd, 0, SEEK_CUR) != 5)
-	   return 5;
-	 /* Verify behaviour of fflush after ungetc. See
-	    <http://www.opengroup.org/austin/aardvark/latest/xshbug3.txt>  */
-	 /* Verify behaviour of fflush after a backup ungetc.  This fails on
-	    mingw.  */
-	 c = fgetc (f);
-	 ungetc (c, f);
-	 fflush (f);
-	 if (fgetc (f) != c)
-	   return 6;
-	 /* Verify behaviour of fflush after a non-backup ungetc.  This fails
-	    on glibc 2.8 and on BSD systems.  */
-	 c = fgetc (f);
-	 ungetc ('@', f);
-	 fflush (f);
-	 if (fgetc (f) != c)
-	   return 7;
-	 return 0;
+         char buffer[10];
+         int fd;
+         int c;
+         if (f == NULL)
+           return 1;
+         fd = fileno (f);
+         if (fd < 0 || fread (buffer, 1, 5, f) != 5)
+           return 2;
+         /* For deterministic results, ensure f read a bigger buffer.  */
+         if (lseek (fd, 0, SEEK_CUR) == 5)
+           return 3;
+         /* POSIX requires fflush-fseek to set file offset of fd.  This fails
+            on BSD systems and on mingw.  */
+         if (fflush (f) != 0 || fseek (f, 0, SEEK_CUR) != 0)
+           return 4;
+         if (lseek (fd, 0, SEEK_CUR) != 5)
+           return 5;
+         /* Verify behaviour of fflush after ungetc. See
+            <http://www.opengroup.org/austin/aardvark/latest/xshbug3.txt>  */
+         /* Verify behaviour of fflush after a backup ungetc.  This fails on
+            mingw.  */
+         c = fgetc (f);
+         ungetc (c, f);
+         fflush (f);
+         if (fgetc (f) != c)
+           return 6;
+         /* Verify behaviour of fflush after a non-backup ungetc.  This fails
+            on glibc 2.8 and on BSD systems.  */
+         c = fgetc (f);
+         ungetc ('@', f);
+         fflush (f);
+         if (fgetc (f) != c)
+           return 7;
+         return 0;
        ]])], [gl_cv_func_fflush_stdin=yes], [gl_cv_func_fflush_stdin=no],
      [dnl Pessimistically assume fflush is broken.
       gl_cv_func_fflush_stdin=no])

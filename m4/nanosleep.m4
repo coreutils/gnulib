@@ -44,51 +44,51 @@ AC_DEFUN([gl_FUNC_NANOSLEEP],
   [
    AC_RUN_IFELSE(
      [AC_LANG_SOURCE([[
-	#include <errno.h>
-	#include <limits.h>
-	#include <signal.h>
-	#if HAVE_SYS_TIME_H
-	 #include <sys/time.h>
-	#endif
-	#include <time.h>
-	#include <unistd.h>
-	#define TYPE_SIGNED(t) (! ((t) 0 < (t) -1))
-	#define TYPE_MAXIMUM(t) \
-	  ((t) (! TYPE_SIGNED (t) \
-		? (t) -1 \
-		: ~ (~ (t) 0 << (sizeof (t) * CHAR_BIT - 1))))
+        #include <errno.h>
+        #include <limits.h>
+        #include <signal.h>
+        #if HAVE_SYS_TIME_H
+         #include <sys/time.h>
+        #endif
+        #include <time.h>
+        #include <unistd.h>
+        #define TYPE_SIGNED(t) (! ((t) 0 < (t) -1))
+        #define TYPE_MAXIMUM(t) \
+          ((t) (! TYPE_SIGNED (t) \
+                ? (t) -1 \
+                : ~ (~ (t) 0 << (sizeof (t) * CHAR_BIT - 1))))
 
-	static void
-	check_for_SIGALRM (int sig)
-	{
-	  if (sig != SIGALRM)
-	    _exit (1);
-	}
+        static void
+        check_for_SIGALRM (int sig)
+        {
+          if (sig != SIGALRM)
+            _exit (1);
+        }
 
-	int
-	main ()
-	{
-	  static struct timespec ts_sleep;
-	  static struct timespec ts_remaining;
-	  static struct sigaction act;
-	  if (! nanosleep)
-	    return 1;
-	  act.sa_handler = check_for_SIGALRM;
-	  sigemptyset (&act.sa_mask);
-	  sigaction (SIGALRM, &act, NULL);
-	  ts_sleep.tv_sec = 0;
-	  ts_sleep.tv_nsec = 1;
-	  alarm (1);
-	  if (nanosleep (&ts_sleep, NULL) != 0)
-	    return 1;
-	  ts_sleep.tv_sec = TYPE_MAXIMUM (time_t);
-	  ts_sleep.tv_nsec = 999999999;
-	  alarm (1);
-	  if (nanosleep (&ts_sleep, &ts_remaining) == -1 && errno == EINTR
-	      && TYPE_MAXIMUM (time_t) - 10 < ts_remaining.tv_sec)
-	    return 0;
-	  return 119;
-	}]])],
+        int
+        main ()
+        {
+          static struct timespec ts_sleep;
+          static struct timespec ts_remaining;
+          static struct sigaction act;
+          if (! nanosleep)
+            return 1;
+          act.sa_handler = check_for_SIGALRM;
+          sigemptyset (&act.sa_mask);
+          sigaction (SIGALRM, &act, NULL);
+          ts_sleep.tv_sec = 0;
+          ts_sleep.tv_nsec = 1;
+          alarm (1);
+          if (nanosleep (&ts_sleep, NULL) != 0)
+            return 1;
+          ts_sleep.tv_sec = TYPE_MAXIMUM (time_t);
+          ts_sleep.tv_nsec = 999999999;
+          alarm (1);
+          if (nanosleep (&ts_sleep, &ts_remaining) == -1 && errno == EINTR
+              && TYPE_MAXIMUM (time_t) - 10 < ts_remaining.tv_sec)
+            return 0;
+          return 119;
+        }]])],
      [gl_cv_func_nanosleep=yes],
      [case $? in dnl (
       119) gl_cv_func_nanosleep='no (mishandles large arguments)';; dnl (
@@ -102,7 +102,7 @@ AC_DEFUN([gl_FUNC_NANOSLEEP],
     REPLACE_NANOSLEEP=1
     if test "$gl_cv_func_nanosleep" = 'no (mishandles large arguments)'; then
       AC_DEFINE([HAVE_BUG_BIG_NANOSLEEP], [1],
-	[Define to 1 if nanosleep mishandles large arguments.])
+        [Define to 1 if nanosleep mishandles large arguments.])
     else
       for ac_lib in $LIBSOCKET; do
         case " $LIB_NANOSLEEP " in

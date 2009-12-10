@@ -40,10 +40,10 @@ u16_strmbtouc (ucs4_t *puc, const uint16_t *s)
 #else
       if (s[1] != 0)
 #endif
-	{
-	  *puc = 0x10000 + ((c - 0xd800) << 10) + (s[1] - 0xdc00);
-	  return 2;
-	}
+        {
+          *puc = 0x10000 + ((c - 0xd800) << 10) + (s[1] - 0xdc00);
+          return 2;
+        }
     }
   /* invalid or incomplete multibyte character */
   return -1;

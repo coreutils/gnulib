@@ -41,25 +41,25 @@ main (void)
 
       if (!out)
         {
-	  perror ("Could not read file");
-	  err = 1;
-	}
+          perror ("Could not read file");
+          err = 1;
+        }
       else
-	{
-	  if (out[len] != '\0')
-	    {
-	      perror ("BAD: out[len] not zero");
-	      err = 1;
-	    }
+        {
+          if (out[len] != '\0')
+            {
+              perror ("BAD: out[len] not zero");
+              err = 1;
+            }
 
-	  /* Assume FILE1 is a regular file or a symlink to a regular file.  */
-	  if (len != statbuf.st_size)
-	    {
-	      fprintf (stderr, "Read %ld from %s...\n", (unsigned long) len, FILE1);
-	      err = 1;
-	    }
-	  free (out);
-	}
+          /* Assume FILE1 is a regular file or a symlink to a regular file.  */
+          if (len != statbuf.st_size)
+            {
+              fprintf (stderr, "Read %ld from %s...\n", (unsigned long) len, FILE1);
+              err = 1;
+            }
+          free (out);
+        }
     }
 
   /* We can perform the test only if the file exists and is readable.
@@ -71,26 +71,26 @@ main (void)
 
       if (!out)
         {
-	  perror ("Could not read file");
-	  err = 1;
-	}
+          perror ("Could not read file");
+          err = 1;
+        }
       else
-	{
-	  if (out[len] != '\0')
-	    {
-	      perror ("BAD: out[len] not zero");
-	      err = 1;
-	    }
+        {
+          if (out[len] != '\0')
+            {
+              perror ("BAD: out[len] not zero");
+              err = 1;
+            }
 
-	  /* /dev/null should always be empty.  Ignore statbuf.st_size, since it
-	     is not a regular file.  */
-	  if (len != 0)
-	    {
-	      fprintf (stderr, "Read %ld from %s...\n", (unsigned long) len, FILE2);
-	      err = 1;
-	    }
-	  free (out);
-	}
+          /* /dev/null should always be empty.  Ignore statbuf.st_size, since it
+             is not a regular file.  */
+          if (len != 0)
+            {
+              fprintf (stderr, "Read %ld from %s...\n", (unsigned long) len, FILE2);
+              err = 1;
+            }
+          free (out);
+        }
     }
 
   return err;

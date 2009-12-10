@@ -31,18 +31,18 @@ uc_mirror_char (ucs4_t uc, ucs4_t *puc)
     {
       int lookup1 = u_mirror.level1[index1];
       if (lookup1 >= 0)
-	{
-	  unsigned int index2 = (uc >> mirror_header_2) & mirror_header_3;
-	  int lookup2 = u_mirror.level2[lookup1 + index2];
-	  if (lookup2 >= 0)
-	    {
-	      unsigned int index3 = (uc & mirror_header_4);
-	      int lookup3 = u_mirror.level3[lookup2 + index3];
+        {
+          unsigned int index2 = (uc >> mirror_header_2) & mirror_header_3;
+          int lookup2 = u_mirror.level2[lookup1 + index2];
+          if (lookup2 >= 0)
+            {
+              unsigned int index3 = (uc & mirror_header_4);
+              int lookup3 = u_mirror.level3[lookup2 + index3];
 
-	      *puc = uc + lookup3;
-	      return (lookup3 != 0);
-	    }
-	}
+              *puc = uc + lookup3;
+              return (lookup3 != 0);
+            }
+        }
     }
   *puc = uc;
   return false;

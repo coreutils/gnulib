@@ -15,9 +15,9 @@ AC_DEFUN([gl_MATH_H],
         test only needs to fail when NAN is provided but wrong.  */
          float f = 1.0f;
 #ifdef NAN
-	 f = NAN;
+         f = NAN;
 #endif
-	 return f == 0;]])],
+         return f == 0;]])],
       [gl_cv_header_math_nan_works=yes],
       [gl_cv_header_math_nan_works=no])])
   if test $gl_cv_header_math_nan_works = no; then
@@ -26,8 +26,8 @@ AC_DEFUN([gl_MATH_H],
   AC_CACHE_CHECK([whether HUGE_VAL works], [gl_cv_header_math_huge_val_works],
     [AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[@%:@include <math.h>]],
       [[/* Solaris 10 has a broken definition of HUGE_VAL.  */
-	 double d = HUGE_VAL;
-	 return d == 0;]])],
+         double d = HUGE_VAL;
+         return d == 0;]])],
       [gl_cv_header_math_huge_val_works=yes],
       [gl_cv_header_math_huge_val_works=no])])
   if test $gl_cv_header_math_huge_val_works = no; then

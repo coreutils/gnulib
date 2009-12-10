@@ -24,16 +24,16 @@
 #include <stdlib.h>
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          signal (SIGABRT, SIG_DFL);					     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          signal (SIGABRT, SIG_DFL);                                         \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 #ifndef SA_NOCLDSTOP
@@ -53,7 +53,7 @@
    provide other flags as extensions, such as SA_RESTORER, that we
    must ignore in this test.  */
 #define MASK_SA_FLAGS (SA_NOCLDSTOP | SA_ONSTACK | SA_RESETHAND | SA_RESTART \
-		       | SA_SIGINFO | SA_NOCLDWAIT | SA_NODEFER)
+                       | SA_SIGINFO | SA_NOCLDWAIT | SA_NODEFER)
 
 /* This test is unsafe in the presence of an asynchronous SIGABRT,
    because we install a signal-handler that is intentionally not
@@ -77,8 +77,8 @@ handler (int sig)
       break;
     case 1:
       /* This assertion fails on glibc-2.3.6 systems with LinuxThreads,
-	 when this program is linked with -lpthread, due to the sigaction()
-	 override in libpthread.so.  */
+         when this program is linked with -lpthread, due to the sigaction()
+         override in libpthread.so.  */
 #if !defined __GLIBC__
       ASSERT (sa.sa_handler == SIG_DFL);
 #endif

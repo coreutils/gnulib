@@ -28,22 +28,22 @@
 #include "progname.h"
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 int
 main (int argc, char **argv)
 {
   char buffer[10] = { 'a', 'b', 'c', 'd', '\0',
-		      'f', 'g', 'h', 'i', 'j'   };
+                      'f', 'g', 'h', 'i', 'j'   };
 
   set_program_name (argv[0]);
 

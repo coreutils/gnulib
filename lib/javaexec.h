@@ -21,8 +21,8 @@
 #include <stdbool.h>
 
 typedef bool execute_fn (const char *progname,
-			 const char *prog_path, char **prog_argv,
-			 void *private_data);
+                         const char *prog_path, char **prog_argv,
+                         void *private_data);
 
 /* Execute a Java class.
    class_name is the Java class name to be executed.
@@ -39,12 +39,12 @@ typedef bool execute_fn (const char *progname,
    Return false if OK, true on error.
    If quiet, error messages will not be printed.  */
 extern bool execute_java_class (const char *class_name,
-				const char * const *classpaths,
-				unsigned int classpaths_count,
-				bool use_minimal_classpath,
-				const char *exe_dir,
-				const char * const *args,
-				bool verbose, bool quiet,
-				execute_fn *executer, void *private_data);
+                                const char * const *classpaths,
+                                unsigned int classpaths_count,
+                                bool use_minimal_classpath,
+                                const char *exe_dir,
+                                const char * const *args,
+                                bool verbose, bool quiet,
+                                execute_fn *executer, void *private_data);
 
 #endif /* _JAVAEXEC_H */

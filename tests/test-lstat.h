@@ -74,8 +74,8 @@ test_lstat_func (int (*func) (char const *, struct stat *), bool print)
     {
       ASSERT (unlink (BASE "file") == 0);
       if (print)
-	fputs ("skipping test: symlinks not supported on this file system\n",
-	       stderr);
+        fputs ("skipping test: symlinks not supported on this file system\n",
+               stderr);
       return 77;
     }
   ASSERT (symlink (BASE "file", BASE "link2") == 0);

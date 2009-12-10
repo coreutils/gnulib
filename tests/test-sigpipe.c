@@ -52,18 +52,18 @@ main (int argc, char **argv)
       char c[2] = { 'y', '\n' };
       int ret = write (1, c, sizeof (c));
       if (ret <= 0)
-	{
-	  switch (mode)
-	    {
-	    case 'B': /* The write() call should have failed with EPIPE.  */
-	      if (ret < 0 && errno == EPIPE)
-		exit (0);
-	      /*FALLTHROUGH*/
-	    case 'A': /* The process should silently die.  */
-	    case 'C': /* The handler should have been called.  */
-	      fprintf (stderr, "write() returned %d with error %d.\n", ret, errno);
-	      exit (1);
-	    }
-	}
+        {
+          switch (mode)
+            {
+            case 'B': /* The write() call should have failed with EPIPE.  */
+              if (ret < 0 && errno == EPIPE)
+                exit (0);
+              /*FALLTHROUGH*/
+            case 'A': /* The process should silently die.  */
+            case 'C': /* The handler should have been called.  */
+              fprintf (stderr, "write() returned %d with error %d.\n", ret, errno);
+              exit (1);
+            }
+        }
     }
 }

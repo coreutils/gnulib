@@ -39,25 +39,25 @@ ldexpl(long double x, int exp)
   if (!(isnanl (x) || x + x == x))
     {
       if (exp < 0)
-	{
-	  exp = -exp;
-	  factor = 0.5L;
-	}
+        {
+          exp = -exp;
+          factor = 0.5L;
+        }
       else
-	factor = 2.0L;
+        factor = 2.0L;
 
       if (exp > 0)
-	for (bit = 1;;)
-	  {
-	    /* Invariant: Here bit = 2^i, factor = 2^-2^i or = 2^2^i,
-	       and bit <= exp.  */
-	    if (exp & bit)
-	      x *= factor;
-	    bit <<= 1;
-	    if (bit > exp)
-	      break;
-	    factor = factor * factor;
-	  }
+        for (bit = 1;;)
+          {
+            /* Invariant: Here bit = 2^i, factor = 2^-2^i or = 2^2^i,
+               and bit <= exp.  */
+            if (exp & bit)
+              x *= factor;
+            bit <<= 1;
+            if (bit > exp)
+              break;
+            factor = factor * factor;
+          }
     }
 
   END_LONG_DOUBLE_ROUNDING ();

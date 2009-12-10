@@ -30,7 +30,7 @@ u16_mbsnlen (const uint16_t *s, size_t n)
     {
       int count = u16_mblen (s, n);
       if (count <= 0)
-	count = 1;
+        count = 1;
       s += count;
       n -= count;
       characters++;

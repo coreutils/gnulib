@@ -24,22 +24,22 @@
 /* Return true if mapping NFD(S) to via MAPPING is a no-op.  */
 extern int
        u8_is_invariant (const uint8_t *s, size_t n,
-			uint8_t * (*mapping) (const uint8_t *s, size_t n, const char *iso639_language,
-					      uninorm_t nf,
-					      uint8_t *resultbuf, size_t *lengthp),
-			const char *iso639_language,
-			bool *resultp);
+                        uint8_t * (*mapping) (const uint8_t *s, size_t n, const char *iso639_language,
+                                              uninorm_t nf,
+                                              uint8_t *resultbuf, size_t *lengthp),
+                        const char *iso639_language,
+                        bool *resultp);
 extern int
        u16_is_invariant (const uint16_t *s, size_t n,
-			 uint16_t * (*mapping) (const uint16_t *s, size_t n, const char *iso639_language,
-						uninorm_t nf,
-						uint16_t *resultbuf, size_t *lengthp),
-			 const char *iso639_language,
-			 bool *resultp);
+                         uint16_t * (*mapping) (const uint16_t *s, size_t n, const char *iso639_language,
+                                                uninorm_t nf,
+                                                uint16_t *resultbuf, size_t *lengthp),
+                         const char *iso639_language,
+                         bool *resultp);
 extern int
        u32_is_invariant (const uint32_t *s, size_t n,
-			 uint32_t * (*mapping) (const uint32_t *s, size_t n, const char *iso639_language,
-						uninorm_t nf,
-						uint32_t *resultbuf, size_t *lengthp),
-			 const char *iso639_language,
-			 bool *resultp);
+                         uint32_t * (*mapping) (const uint32_t *s, size_t n, const char *iso639_language,
+                                                uninorm_t nf,
+                                                uint32_t *resultbuf, size_t *lengthp),
+                         const char *iso639_language,
+                         bool *resultp);

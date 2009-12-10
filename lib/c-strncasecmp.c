@@ -40,7 +40,7 @@ c_strncasecmp (const char *s1, const char *s2, size_t n)
       c2 = c_tolower (*p2);
 
       if (--n == 0 || c1 == '\0')
-	break;
+        break;
 
       ++p1;
       ++p2;

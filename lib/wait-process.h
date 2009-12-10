@@ -55,9 +55,9 @@ extern "C" {
    Prerequisites: The signal handler for SIGCHLD should not be set to SIG_IGN,
    otherwise this function will not work.  */
 extern int wait_subprocess (pid_t child, const char *progname,
-			    bool ignore_sigpipe, bool null_stderr,
-			    bool slave_process, bool exit_on_error,
-			    int *termsigp);
+                            bool ignore_sigpipe, bool null_stderr,
+                            bool slave_process, bool exit_on_error,
+                            int *termsigp);
 
 /* Register a subprocess as being a slave process.  This means that the
    subprocess will be terminated when its creator receives a catchable fatal

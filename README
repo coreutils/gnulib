@@ -49,6 +49,10 @@ git resources:
             http://www.kernel.org/pub/software/scm/git/docs/tutorial.html
   FAQ:      http://git.or.cz/gitwiki/GitFaq
 
+When you use "git annotate" or "git blame" with gnulib, it's recommended that
+you use the "-w" option, in order to ignore massive whitespace changes that
+happened in 2009.
+
 CVS checkouts are also supported:
   $ cvs -d :pserver:anonymous@pserver.git.sv.gnu.org:/gnulib.git co -d gnulib HEAD
 
@@ -108,6 +112,50 @@ license them under a compatible license, which means that sometimes
 the contribution will have to be LGPL, if the original file is
 available under LGPL via a "License: LGPL" information in the
 projects' modules/ file.
+
+
+Indent with spaces, not TABs
+----------------------------
+We use space-only indentation in nearly all files. This includes all
+*.h, *.c, *.y files, except for the regex module. Makefile and ChangeLog
+files are excluded, since TAB characters are part of their format.
+
+In order to tell your editor to produce space-only indentation, you
+can use these instructions.
+
+  * For Emacs: Add these lines to your Emacs initialization file
+    ($HOME/.emacs or similar):
+
+      ;; In gnulib, indent with spaces everywhere (not TABs).
+      ;; Exceptions: Makefile and ChangeLog modes.
+      (add-hook 'find-file-hook '(lambda ()
+        (if (and buffer-file-name
+                 (string-match "/gnulib\\>" (buffer-file-name))
+                 (not (string-equal mode-name "Change Log"))
+                 (not (string-equal mode-name "Makefile")))
+            (setq indent-tabs-mode nil))))
+
+  * For vi (vim): Add these lines to your $HOME/.vimrc file:
+
+      " Don't use tabs for indentation. Spaces are nicer to work with.
+      set expandtab
+
+    For Makefile and ChangeLog files, compensate this by adding this to
+    your $HOME/.vim/after/indent/make.vim and
+    $HOME/.vim/after/indent/changelog.vim files:
+
+      " Use tabs for indentation, regardless of the global setting.
+      set noexpandtab
+
+  * For Eclipse: In the "Window|Preferences" dialog (or "Eclipse|Preferences"
+    dialog on MacOS),
+    1. Under "General|Editors|Text Editors", select the "Insert spaces for tabs"
+       checkbox.
+    2. Under "C/C++|Code Style", select a code style profile that has the
+       "Indentation|Tab policy" combobox set to "Spaces only", such as the
+       "GNU [built-in]" policy.
+
+If you use the GNU indent program, pass it the option '--no-tabs'.
 
 
 How to add a new module

@@ -38,7 +38,7 @@
 int
 getdomainname (char *name, size_t len)
 {
-  const char *result = "";	/* Hardcode your domain name if you want.  */
+  const char *result = "";      /* Hardcode your domain name if you want.  */
   size_t result_len = strlen (result);
 
   if (result_len > len)

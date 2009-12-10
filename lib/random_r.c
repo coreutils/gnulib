@@ -45,7 +45,7 @@
 
 /*
  * This is derived from the Berkeley source:
- *	@(#)random.c	5.5 (Berkeley) 7/6/88
+ *      @(#)random.c    5.5 (Berkeley) 7/6/88
  * It was reworked for the GNU C Library by Roland McGrath.
  * Rewritten to be reentrant by Ulrich Drepper, 1995
  */
@@ -101,40 +101,40 @@
    separation between the two lower order coefficients of the trinomial.  */
 
 /* Linear congruential.  */
-#define	TYPE_0		0
-#define	BREAK_0		8
-#define	DEG_0		0
-#define	SEP_0		0
+#define TYPE_0          0
+#define BREAK_0         8
+#define DEG_0           0
+#define SEP_0           0
 
 /* x**7 + x**3 + 1.  */
-#define	TYPE_1		1
-#define	BREAK_1		32
-#define	DEG_1		7
-#define	SEP_1		3
+#define TYPE_1          1
+#define BREAK_1         32
+#define DEG_1           7
+#define SEP_1           3
 
 /* x**15 + x + 1.  */
-#define	TYPE_2		2
-#define	BREAK_2		64
-#define	DEG_2		15
-#define	SEP_2		1
+#define TYPE_2          2
+#define BREAK_2         64
+#define DEG_2           15
+#define SEP_2           1
 
 /* x**31 + x**3 + 1.  */
-#define	TYPE_3		3
-#define	BREAK_3		128
-#define	DEG_3		31
-#define	SEP_3		3
+#define TYPE_3          3
+#define BREAK_3         128
+#define DEG_3           31
+#define SEP_3           3
 
 /* x**63 + x + 1.  */
-#define	TYPE_4		4
-#define	BREAK_4		256
-#define	DEG_4		63
-#define	SEP_4		1
+#define TYPE_4          4
+#define BREAK_4         256
+#define DEG_4           63
+#define SEP_4           1
 
 
 /* Array versions of the above information to make code run faster.
    Relies on fact that TYPE_i == i.  */
 
-#define	MAX_TYPES	5	/* Max number of types above.  */
+#define MAX_TYPES       5       /* Max number of types above.  */
 
 struct random_poly_info
 {
@@ -197,13 +197,13 @@ __srandom_r (unsigned int seed, struct random_data *buf)
   for (i = 1; i < kc; ++i)
     {
       /* This does:
-	   state[i] = (16807 * state[i - 1]) % 2147483647;
-	 but avoids overflowing 31 bits.  */
+           state[i] = (16807 * state[i - 1]) % 2147483647;
+         but avoids overflowing 31 bits.  */
       long int hi = word / 127773;
       long int lo = word % 127773;
       word = 16807 * lo - 2836 * hi;
       if (word < 0)
-	word += 2147483647;
+        word += 2147483647;
       *++dst = word;
     }
 
@@ -238,7 +238,7 @@ weak_alias (__srandom_r, srandom_r)
    Returns a pointer to the old state.  */
 int
 __initstate_r (unsigned int seed, char *arg_state, size_t n,
-	       struct random_data *buf)
+               struct random_data *buf)
 {
   int32_t *old_state;
   int32_t *state;
@@ -254,9 +254,9 @@ __initstate_r (unsigned int seed, char *arg_state, size_t n,
     {
       int old_type = buf->rand_type;
       if (old_type == TYPE_0)
-	old_state[-1] = TYPE_0;
+        old_state[-1] = TYPE_0;
       else
-	old_state[-1] = (MAX_TYPES * (buf->rptr - old_state)) + old_type;
+        old_state[-1] = (MAX_TYPES * (buf->rptr - old_state)) + old_type;
     }
 
   if (n >= BREAK_3)
@@ -264,10 +264,10 @@ __initstate_r (unsigned int seed, char *arg_state, size_t n,
   else if (n < BREAK_1)
     {
       if (n < BREAK_0)
-	{
-	  __set_errno (EINVAL);
-	  goto fail;
-	}
+        {
+          __set_errno (EINVAL);
+          goto fail;
+        }
       type = TYPE_0;
     }
   else
@@ -279,7 +279,7 @@ __initstate_r (unsigned int seed, char *arg_state, size_t n,
   buf->rand_type = type;
   buf->rand_sep = separation;
   buf->rand_deg = degree;
-  state = &((int32_t *) arg_state)[1];	/* First location.  */
+  state = &((int32_t *) arg_state)[1];  /* First location.  */
   /* Must set END_PTR before srandom.  */
   buf->end_ptr = &state[degree];
 
@@ -395,16 +395,16 @@ __random_r (struct random_data *buf, int32_t *result)
       *result = (val >> 1) & 0x7fffffff;
       ++fptr;
       if (fptr >= end_ptr)
-	{
-	  fptr = state;
-	  ++rptr;
-	}
+        {
+          fptr = state;
+          ++rptr;
+        }
       else
-	{
-	  ++rptr;
-	  if (rptr >= end_ptr)
-	    rptr = state;
-	}
+        {
+          ++rptr;
+          if (rptr >= end_ptr)
+            rptr = state;
+        }
       buf->fptr = fptr;
       buf->rptr = rptr;
     }

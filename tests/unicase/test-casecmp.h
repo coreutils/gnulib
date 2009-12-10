@@ -18,7 +18,7 @@
 
 static void
 test_ascii (int (*my_casecmp) (const UNIT *, size_t, const UNIT *, size_t, const char *, uninorm_t, int *),
-	    uninorm_t nf)
+            uninorm_t nf)
 {
   /* Empty string.  */
   {

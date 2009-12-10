@@ -35,43 +35,43 @@ uc_general_category_name (uc_general_category_t category)
   if (bitmask != 0)
     {
       if ((bitmask & (bitmask - 1)) == 0)
-	{
-	  int bit;
-	  /* Take log2 using a variant of Robert Harley's method.
-	     Found by Bruno Haible 1996.  */
-	  uint32_t n = bitmask;
-	  static const char ord2_tab[64] =
-	    {
-	      -1,  0,  1, 12,  2,  6, -1, 13,  3, -1,  7, -1, -1, -1, -1, 14,
-	      10,  4, -1, -1,  8, -1, -1, 25, -1, -1, -1, -1, -1, 21, 27, 15,
-	      31, 11,  5, -1, -1, -1, -1, -1,  9, -1, -1, 24, -1, -1, 20, 26,
-	      30, -1, -1, -1, -1, 23, -1, 19, 29, -1, 22, 18, 28, 17, 16, -1
-	    };
-	  n += n << 4;
-	  n += n << 6;
-	  n = (n << 16) - n;
-	  bit = ord2_tab[n >> 26];
+        {
+          int bit;
+          /* Take log2 using a variant of Robert Harley's method.
+             Found by Bruno Haible 1996.  */
+          uint32_t n = bitmask;
+          static const char ord2_tab[64] =
+            {
+              -1,  0,  1, 12,  2,  6, -1, 13,  3, -1,  7, -1, -1, -1, -1, 14,
+              10,  4, -1, -1,  8, -1, -1, 25, -1, -1, -1, -1, -1, 21, 27, 15,
+              31, 11,  5, -1, -1, -1, -1, -1,  9, -1, -1, 24, -1, -1, 20, 26,
+              30, -1, -1, -1, -1, 23, -1, 19, 29, -1, 22, 18, 28, 17, 16, -1
+            };
+          n += n << 4;
+          n += n << 6;
+          n = (n << 16) - n;
+          bit = ord2_tab[n >> 26];
 
-	  if (bit < sizeof (u_category_name) / sizeof (u_category_name[0]))
-	    return u_category_name[bit];
-	}
+          if (bit < sizeof (u_category_name) / sizeof (u_category_name[0]))
+            return u_category_name[bit];
+        }
       else
-	{
-	  if (bitmask == UC_CATEGORY_MASK_L)
-	    return "L";
-	  if (bitmask == UC_CATEGORY_MASK_M)
-	    return "M";
-	  if (bitmask == UC_CATEGORY_MASK_N)
-	    return "N";
-	  if (bitmask == UC_CATEGORY_MASK_P)
-	    return "P";
-	  if (bitmask == UC_CATEGORY_MASK_S)
-	    return "S";
-	  if (bitmask == UC_CATEGORY_MASK_Z)
-	    return "Z";
-	  if (bitmask == UC_CATEGORY_MASK_C)
-	    return "C";
-	}
+        {
+          if (bitmask == UC_CATEGORY_MASK_L)
+            return "L";
+          if (bitmask == UC_CATEGORY_MASK_M)
+            return "M";
+          if (bitmask == UC_CATEGORY_MASK_N)
+            return "N";
+          if (bitmask == UC_CATEGORY_MASK_P)
+            return "P";
+          if (bitmask == UC_CATEGORY_MASK_S)
+            return "S";
+          if (bitmask == UC_CATEGORY_MASK_Z)
+            return "Z";
+          if (bitmask == UC_CATEGORY_MASK_C)
+            return "C";
+        }
     }
   return NULL;
 }

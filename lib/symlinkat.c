@@ -28,7 +28,7 @@
 
 int
 symlinkat (char const *path1 _UNUSED_PARAMETER_, int fd _UNUSED_PARAMETER_,
-	   char const *path2 _UNUSED_PARAMETER_)
+           char const *path2 _UNUSED_PARAMETER_)
 {
   errno = ENOSYS;
   return -1;

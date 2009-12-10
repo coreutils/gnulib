@@ -24,7 +24,7 @@
 /* Get scheduling policy from the attribute structure.  */
 int
 posix_spawnattr_getschedpolicy (const posix_spawnattr_t *attr,
-				int *schedpolicy)
+                                int *schedpolicy)
 {
   /* Copy the scheduling policy.  */
   *schedpolicy = attr->_policy;

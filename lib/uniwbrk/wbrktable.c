@@ -22,22 +22,22 @@
 
 /* This table contains the following rules (see UAX #29):
 
-		       last         current
+                       last         current
 
-			 ALetter × ALetter                         (WB5)
-			 ALetter × Numeric                         (WB9)
-			 Numeric × ALetter                         (WB10)
-			 Numeric × Numeric                         (WB8)
-			Katakana × Katakana                        (WB13)
+                         ALetter × ALetter                         (WB5)
+                         ALetter × Numeric                         (WB9)
+                         Numeric × ALetter                         (WB10)
+                         Numeric × Numeric                         (WB8)
+                        Katakana × Katakana                        (WB13)
   (ALetter | Numeric | Katakana) × ExtendNumLet                    (WB13a)
-		    ExtendNumLet × ExtendNumLet                    (WB13a)
-		    ExtendNumLet × (ALetter | Numeric | Katakana)  (WB13b)
+                    ExtendNumLet × ExtendNumLet                    (WB13a)
+                    ExtendNumLet × (ALetter | Numeric | Katakana)  (WB13b)
  */
 
 const unsigned char uniwbrk_table[10][8] =
 {        /* current:      OTHER            MIDNUMLET         NUMERIC         */
-	 /*                   KATAKANA           MIDLETTER      EXTENDNUMLET */
-	 /*                          ALETTER            MIDNUM               */
+         /*                   KATAKANA           MIDLETTER      EXTENDNUMLET */
+         /*                          ALETTER            MIDNUM               */
   /* last */
   /* WBP_OTHER */        {  1,    1,    1,    1,    1,    1,    1,    1 },
   /* WBP_KATAKANA */     {  1,    0,    1,    1,    1,    1,    1,    0 },

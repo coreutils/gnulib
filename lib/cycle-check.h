@@ -35,18 +35,18 @@ struct cycle_check_state
 void cycle_check_init (struct cycle_check_state *state);
 bool cycle_check (struct cycle_check_state *state, struct stat const *sb);
 
-# define CYCLE_CHECK_REFLECT_CHDIR_UP(State, SB_dir, SB_subdir)	\
-  do								\
-    {								\
+# define CYCLE_CHECK_REFLECT_CHDIR_UP(State, SB_dir, SB_subdir) \
+  do                                                            \
+    {                                                           \
       /* You must call cycle_check at least once before using this macro.  */ \
-      if ((State)->chdir_counter == 0)				\
-        abort ();						\
-      if (SAME_INODE ((State)->dev_ino, SB_subdir))		\
-	{							\
-	  (State)->dev_ino.st_dev = (SB_dir).st_dev;		\
-	  (State)->dev_ino.st_ino = (SB_dir).st_ino;		\
-	}							\
-    }								\
+      if ((State)->chdir_counter == 0)                          \
+        abort ();                                               \
+      if (SAME_INODE ((State)->dev_ino, SB_subdir))             \
+        {                                                       \
+          (State)->dev_ino.st_dev = (SB_dir).st_dev;            \
+          (State)->dev_ino.st_ino = (SB_dir).st_ino;            \
+        }                                                       \
+    }                                                           \
   while (0)
 
 #endif

@@ -23,10 +23,10 @@ int
 main () {
 struct stat s, t;
 return ! (stat ("conftest.data", &s) == 0
-	  && utimes ("conftest.data", 0) == 0
-	  && stat ("conftest.data", &t) == 0
-	  && t.st_mtime >= s.st_mtime
-	  && t.st_mtime - s.st_mtime < 120));
+          && utimes ("conftest.data", 0) == 0
+          && stat ("conftest.data", &t) == 0
+          && t.st_mtime >= s.st_mtime
+          && t.st_mtime - s.st_mtime < 120));
 }]])],
   [ac_cv_func_utimes_null=yes],
   [ac_cv_func_utimes_null=no],
@@ -35,7 +35,7 @@ rm -f core core.* *.core])
 
     if test $ac_cv_func_utimes_null = yes; then
       AC_DEFINE([HAVE_UTIMES_NULL], [1],
-		[Define if utimes accepts a null argument])
+                [Define if utimes accepts a null argument])
     fi
   ]
 )

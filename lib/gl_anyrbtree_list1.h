@@ -51,7 +51,7 @@ struct gl_list_node_impl
   struct gl_list_node_impl *parent;
   color_t color;                    /* node's color */
   size_t branch_size;               /* number of nodes in this branch,
-				       = branchsize(left)+branchsize(right)+1 */
+                                       = branchsize(left)+branchsize(right)+1 */
   const void *value;
 };
 

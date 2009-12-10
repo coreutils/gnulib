@@ -59,16 +59,16 @@ rpl_popen (const char *filename, const char *mode)
   if (cloexec0 < 0)
     {
       if (open ("/dev/null", O_RDONLY) != STDIN_FILENO
-	  || fcntl (STDIN_FILENO, F_SETFD,
-		    fcntl (STDIN_FILENO, F_GETFD) | FD_CLOEXEC) == -1)
-	abort ();
+          || fcntl (STDIN_FILENO, F_SETFD,
+                    fcntl (STDIN_FILENO, F_GETFD) | FD_CLOEXEC) == -1)
+        abort ();
     }
   if (cloexec1 < 0)
     {
       if (open ("/dev/null", O_RDONLY) != STDOUT_FILENO
-	  || fcntl (STDOUT_FILENO, F_SETFD,
-		    fcntl (STDOUT_FILENO, F_GETFD) | FD_CLOEXEC) == -1)
-	abort ();
+          || fcntl (STDOUT_FILENO, F_SETFD,
+                    fcntl (STDOUT_FILENO, F_GETFD) | FD_CLOEXEC) == -1)
+        abort ();
     }
   result = popen (filename, mode);
   /* Now, close any dummy fd's created in the parent.  */

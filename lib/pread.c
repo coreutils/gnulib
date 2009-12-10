@@ -56,7 +56,7 @@ pread (int fd, void *buf, size_t nbyte, off_t offset)
   if (__libc_lseek (fd, old_offset, SEEK_SET) == (off_t) -1)
     {
       if (result == -1)
-	__set_errno (save_errno);
+        __set_errno (save_errno);
       return -1;
     }
   __set_errno (save_errno);

@@ -44,6 +44,6 @@ AC_DEFUN([gl_ISINFL_WORKS],
                                      [[return !!isinf(LDBL_MAX);]])],
                     [gl_cv_func_isinfl_works=yes],
                     [gl_cv_func_isinfl_works=no],
-		    [gl_cv_func_isinfl_works="guessing no"])
+                    [gl_cv_func_isinfl_works="guessing no"])
     ])
 ])

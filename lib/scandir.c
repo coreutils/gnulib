@@ -83,9 +83,9 @@ cancel_handler (void *arg)
 
 int
 SCANDIR (const char *dir,
-	 DIRENT_TYPE ***namelist,
-	 int (*select) (const DIRENT_TYPE *),
-	 int (*cmp) (const DIRENT_TYPE **, const DIRENT_TYPE **))
+         DIRENT_TYPE ***namelist,
+         int (*select) (const DIRENT_TYPE *),
+         int (*cmp) (const DIRENT_TYPE **, const DIRENT_TYPE **))
 {
   DIR *dp = __opendir (dir);
   DIRENT_TYPE **v = NULL;
@@ -112,43 +112,43 @@ SCANDIR (const char *dir,
       int use_it = select == NULL;
 
       if (! use_it)
-	{
-	  use_it = select (d);
-	  /* The select function might have changed errno.  It was
-	     zero before and it need to be again to make the latter
-	     tests work.  */
-	  __set_errno (0);
-	}
+        {
+          use_it = select (d);
+          /* The select function might have changed errno.  It was
+             zero before and it need to be again to make the latter
+             tests work.  */
+          __set_errno (0);
+        }
 
       if (use_it)
-	{
-	  DIRENT_TYPE *vnew;
-	  size_t dsize;
+        {
+          DIRENT_TYPE *vnew;
+          size_t dsize;
 
-	  /* Ignore errors from select or readdir */
-	  __set_errno (0);
+          /* Ignore errors from select or readdir */
+          __set_errno (0);
 
-	  if (__builtin_expect (c.cnt == vsize, 0))
-	    {
-	      DIRENT_TYPE **new;
-	      if (vsize == 0)
-		vsize = 10;
-	      else
-		vsize *= 2;
-	      new = (DIRENT_TYPE **) realloc (v, vsize * sizeof (*v));
-	      if (new == NULL)
-		break;
-	      v = new;
-	      c.v = (void *) v;
-	    }
+          if (__builtin_expect (c.cnt == vsize, 0))
+            {
+              DIRENT_TYPE **new;
+              if (vsize == 0)
+                vsize = 10;
+              else
+                vsize *= 2;
+              new = (DIRENT_TYPE **) realloc (v, vsize * sizeof (*v));
+              if (new == NULL)
+                break;
+              v = new;
+              c.v = (void *) v;
+            }
 
-	  dsize = &d->d_name[_D_ALLOC_NAMLEN (d)] - (char *) d;
-	  vnew = (DIRENT_TYPE *) malloc (dsize);
-	  if (vnew == NULL)
-	    break;
+          dsize = &d->d_name[_D_ALLOC_NAMLEN (d)] - (char *) d;
+          vnew = (DIRENT_TYPE *) malloc (dsize);
+          if (vnew == NULL)
+            break;
 
-	  v[c.cnt++] = (DIRENT_TYPE *) memcpy (vnew, d, dsize);
-	}
+          v[c.cnt++] = (DIRENT_TYPE *) memcpy (vnew, d, dsize);
+        }
     }
 
   if (__builtin_expect (errno, 0) != 0)
@@ -156,7 +156,7 @@ SCANDIR (const char *dir,
       save = errno;
 
       while (c.cnt > 0)
-	free (v[--c.cnt]);
+        free (v[--c.cnt]);
       free (v);
       c.cnt = -1;
     }
@@ -164,7 +164,7 @@ SCANDIR (const char *dir,
     {
       /* Sort the list if we have a comparison function to sort with.  */
       if (cmp != NULL)
-	qsort (v, c.cnt, sizeof (*v), (int (*) (const void *, const void *)) cmp);
+        qsort (v, c.cnt, sizeof (*v), (int (*) (const void *, const void *)) cmp);
 
       *namelist = v;
     }

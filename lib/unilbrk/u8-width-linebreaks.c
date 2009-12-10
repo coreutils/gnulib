@@ -25,9 +25,9 @@
 
 int
 u8_width_linebreaks (const uint8_t *s, size_t n,
-		     int width, int start_column, int at_end_columns,
-		     const char *o, const char *encoding,
-		     char *p)
+                     int width, int start_column, int at_end_columns,
+                     const char *o, const char *encoding,
+                     char *p)
 {
   const uint8_t *s_end;
   char *last_p;
@@ -47,53 +47,53 @@ u8_width_linebreaks (const uint8_t *s, size_t n,
 
       /* Respect the override.  */
       if (o != NULL && *o != UC_BREAK_UNDEFINED)
-	*p = *o;
+        *p = *o;
 
       if (*p == UC_BREAK_POSSIBLE || *p == UC_BREAK_MANDATORY)
-	{
-	  /* An atomic piece of text ends here.  */
-	  if (last_p != NULL && last_column + piece_width > width)
-	    {
-	      /* Insert a line break.  */
-	      *last_p = UC_BREAK_POSSIBLE;
-	      last_column = 0;
-	    }
-	}
+        {
+          /* An atomic piece of text ends here.  */
+          if (last_p != NULL && last_column + piece_width > width)
+            {
+              /* Insert a line break.  */
+              *last_p = UC_BREAK_POSSIBLE;
+              last_column = 0;
+            }
+        }
 
       if (*p == UC_BREAK_MANDATORY)
-	{
-	  /* uc is a line break character.  */
-	  /* Start a new piece at column 0.  */
-	  last_p = NULL;
-	  last_column = 0;
-	  piece_width = 0;
-	}
+        {
+          /* uc is a line break character.  */
+          /* Start a new piece at column 0.  */
+          last_p = NULL;
+          last_column = 0;
+          piece_width = 0;
+        }
       else
-	{
-	  /* uc is not a line break character.  */
-	  int w;
+        {
+          /* uc is not a line break character.  */
+          int w;
 
-	  if (*p == UC_BREAK_POSSIBLE)
-	    {
-	      /* Start a new piece.  */
-	      last_p = p;
-	      last_column += piece_width;
-	      piece_width = 0;
-	      /* No line break for the moment, may be turned into
-		 UC_BREAK_POSSIBLE later, via last_p. */
-	    }
+          if (*p == UC_BREAK_POSSIBLE)
+            {
+              /* Start a new piece.  */
+              last_p = p;
+              last_column += piece_width;
+              piece_width = 0;
+              /* No line break for the moment, may be turned into
+                 UC_BREAK_POSSIBLE later, via last_p. */
+            }
 
-	  *p = UC_BREAK_PROHIBITED;
+          *p = UC_BREAK_PROHIBITED;
 
-	  w = uc_width (uc, encoding);
-	  if (w >= 0) /* ignore control characters in the string */
-	    piece_width += w;
-	}
+          w = uc_width (uc, encoding);
+          if (w >= 0) /* ignore control characters in the string */
+            piece_width += w;
+        }
 
       s += count;
       p += count;
       if (o != NULL)
-	o += count;
+        o += count;
     }
 
   /* The last atomic piece of text ends here.  */
@@ -128,28 +128,28 @@ read_file (FILE *stream)
   while (! feof (stream))
     {
       if (size + BUFSIZE > alloc)
-	{
-	  alloc = alloc + alloc / 2;
-	  if (alloc < size + BUFSIZE)
-	    alloc = size + BUFSIZE;
-	  buf = realloc (buf, alloc);
-	  if (buf == NULL)
-	    {
-	      fprintf (stderr, "out of memory\n");
-	      exit (1);
-	    }
-	}
+        {
+          alloc = alloc + alloc / 2;
+          if (alloc < size + BUFSIZE)
+            alloc = size + BUFSIZE;
+          buf = realloc (buf, alloc);
+          if (buf == NULL)
+            {
+              fprintf (stderr, "out of memory\n");
+              exit (1);
+            }
+        }
       count = fread (buf + size, 1, BUFSIZE, stream);
       if (count == 0)
-	{
-	  if (ferror (stream))
-	    {
-	      perror ("fread");
-	      exit (1);
-	    }
-	}
+        {
+          if (ferror (stream))
+            {
+              perror ("fread");
+              exit (1);
+            }
+        }
       else
-	size += count;
+        size += count;
     }
   buf = realloc (buf, size + 1);
   if (buf == NULL)
@@ -177,21 +177,21 @@ main (int argc, char * argv[])
       u8_width_linebreaks ((uint8_t *) input, length, width, 0, 0, NULL, "UTF-8", breaks);
 
       for (i = 0; i < length; i++)
-	{
-	  switch (breaks[i])
-	    {
-	    case UC_BREAK_POSSIBLE:
-	      putc ('\n', stdout);
-	      break;
-	    case UC_BREAK_MANDATORY:
-	      break;
-	    case UC_BREAK_PROHIBITED:
-	      break;
-	    default:
-	      abort ();
-	    }
-	  putc (input[i], stdout);
-	}
+        {
+          switch (breaks[i])
+            {
+            case UC_BREAK_POSSIBLE:
+              putc ('\n', stdout);
+              break;
+            case UC_BREAK_MANDATORY:
+              break;
+            case UC_BREAK_PROHIBITED:
+              break;
+            default:
+              abort ();
+            }
+          putc (input[i], stdout);
+        }
 
       free (breaks);
 

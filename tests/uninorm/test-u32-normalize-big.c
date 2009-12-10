@@ -30,28 +30,28 @@
 #include "unistr.h"
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 #define ASSERT_WITH_LINE(expr, file, line) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
-          fprintf (stderr, "%s:%d: assertion failed for %s:%u\n",	     \
-                   __FILE__, __LINE__, file, line);			     \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
+          fprintf (stderr, "%s:%d: assertion failed for %s:%u\n",            \
+                   __FILE__, __LINE__, file, line);                          \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 static int
@@ -64,7 +64,7 @@ cmp_ucs4_t (const void *a, const void *b)
 
 void
 read_normalization_test_file (const char *filename,
-			      struct normalization_test_file *file)
+                              struct normalization_test_file *file)
 {
   FILE *stream;
   unsigned int lineno;
@@ -106,103 +106,103 @@ read_normalization_test_file (const char *filename,
       /* Read a line.  */
       ptr = buf;
       do
-	{
-	  c = getc (stream);
-	  if (c == EOF || c == '\n')
-	    break;
-	  *ptr++ = c;
-	}
+        {
+          c = getc (stream);
+          if (c == EOF || c == '\n')
+            break;
+          *ptr++ = c;
+        }
       while (ptr < buf + 1000);
       *ptr = '\0';
       if (c == EOF)
-	break;
+        break;
 
       /* Ignore empty lines and comment lines.  */
       if (buf[0] == '\0' || buf[0] == '#')
-	continue;
+        continue;
 
       /* Handle lines that introduce a new part.  */
       if (buf[0] == '@')
-	{
-	  /* Switch to the next part.  */
-	  if (part_index >= 0)
-	    {
-	      lines =
-		(struct normalization_test_line *)
-		xnrealloc (lines, lines_length, sizeof (struct normalization_test_line));
-	      file->parts[part_index].lines = lines;
-	      file->parts[part_index].lines_length = lines_length;
-	    }
-	  part_index++;
-	  lines = NULL;
-	  lines_length = 0;
-	  lines_allocated = 0;
-	  continue;
-	}
+        {
+          /* Switch to the next part.  */
+          if (part_index >= 0)
+            {
+              lines =
+                (struct normalization_test_line *)
+                xnrealloc (lines, lines_length, sizeof (struct normalization_test_line));
+              file->parts[part_index].lines = lines;
+              file->parts[part_index].lines_length = lines_length;
+            }
+          part_index++;
+          lines = NULL;
+          lines_length = 0;
+          lines_allocated = 0;
+          continue;
+        }
 
       /* It's a line containing 5 sequences of Unicode characters.
-	 Parse it and append it to the current part.  */
+         Parse it and append it to the current part.  */
       if (!(part_index >= 0 && part_index < 4))
-	{
-	  fprintf (stderr, "unexpected structure of '%s'\n", filename);
-	  exit (1);
-	}
+        {
+          fprintf (stderr, "unexpected structure of '%s'\n", filename);
+          exit (1);
+        }
       ptr = buf;
       line.lineno = lineno;
       for (sequence_index = 0; sequence_index < 5; sequence_index++)
-	line.sequences[sequence_index] = NULL;
+        line.sequences[sequence_index] = NULL;
       for (sequence_index = 0; sequence_index < 5; sequence_index++)
-	{
-	  uint32_t *sequence = XNMALLOC (1, uint32_t);
-	  size_t sequence_length = 0;
+        {
+          uint32_t *sequence = XNMALLOC (1, uint32_t);
+          size_t sequence_length = 0;
 
-	  for (;;)
-	    {
-	      char *endptr;
-	      unsigned int uc;
+          for (;;)
+            {
+              char *endptr;
+              unsigned int uc;
 
-	      uc = strtoul (ptr, &endptr, 16);
-	      if (endptr == ptr)
-		break;
-	      ptr = endptr;
+              uc = strtoul (ptr, &endptr, 16);
+              if (endptr == ptr)
+                break;
+              ptr = endptr;
 
-	      /* Append uc to the sequence.  */
-	      sequence =
-		(uint32_t *)
-		xnrealloc (sequence, sequence_length + 2, sizeof (uint32_t));
-	      sequence[sequence_length] = uc;
-	      sequence_length++;
+              /* Append uc to the sequence.  */
+              sequence =
+                (uint32_t *)
+                xnrealloc (sequence, sequence_length + 2, sizeof (uint32_t));
+              sequence[sequence_length] = uc;
+              sequence_length++;
 
-	      if (*ptr == ' ')
-		ptr++;
-	    }
-	  if (sequence_length == 0)
-	    {
-	      fprintf (stderr, "empty character sequence in '%s'\n", filename);
-	      exit (1);
-	    }
-	  sequence[sequence_length] = 0; /* terminator */
+              if (*ptr == ' ')
+                ptr++;
+            }
+          if (sequence_length == 0)
+            {
+              fprintf (stderr, "empty character sequence in '%s'\n", filename);
+              exit (1);
+            }
+          sequence[sequence_length] = 0; /* terminator */
 
-	  line.sequences[sequence_index] = sequence;
+          line.sequences[sequence_index] = sequence;
 
-	  if (*ptr != ';')
-	    {
-	      fprintf (stderr, "error parsing '%s'\n", filename);
-	      exit (1);
-	    }
-	  ptr++;
-	}
+          if (*ptr != ';')
+            {
+              fprintf (stderr, "error parsing '%s'\n", filename);
+              exit (1);
+            }
+          ptr++;
+        }
 
       /* Append the line to the current part.  */
       if (lines_length == lines_allocated)
-	{
-	  lines_allocated = 2 * lines_allocated;
-	  if (lines_allocated < 7)
-	    lines_allocated = 7;
-	  lines =
-	    (struct normalization_test_line *)
-	    xnrealloc (lines, lines_allocated, sizeof (struct normalization_test_line));
-	}
+        {
+          lines_allocated = 2 * lines_allocated;
+          if (lines_allocated < 7)
+            lines_allocated = 7;
+          lines =
+            (struct normalization_test_line *)
+            xnrealloc (lines, lines_allocated, sizeof (struct normalization_test_line));
+        }
       lines[lines_length] = line;
       lines_length++;
     }
@@ -210,8 +210,8 @@ read_normalization_test_file (const char *filename,
   if (part_index >= 0)
     {
       lines =
-	(struct normalization_test_line *)
-	xnrealloc (lines, lines_length, sizeof (struct normalization_test_line));
+        (struct normalization_test_line *)
+        xnrealloc (lines, lines_length, sizeof (struct normalization_test_line));
       file->parts[part_index].lines = lines;
       file->parts[part_index].lines_length = lines_length;
     }
@@ -224,11 +224,11 @@ read_normalization_test_file (const char *filename,
 
     for (line_index = 0; line_index < p->lines_length; line_index++)
       {
-	const uint32_t *sequence = p->lines[line_index].sequences[0];
-	/* In part 1, every sequences[0] consists of a single character.  */
-	if (!(sequence[0] != 0 && sequence[1] == 0))
-	  abort ();
-	c1_array[line_index] = sequence[0];
+        const uint32_t *sequence = p->lines[line_index].sequences[0];
+        /* In part 1, every sequences[0] consists of a single character.  */
+        if (!(sequence[0] != 0 && sequence[1] == 0))
+          abort ();
+        c1_array[line_index] = sequence[0];
       }
 
     /* Sort this array.  */
@@ -251,11 +251,11 @@ read_normalization_test_file (const char *filename,
 
 void
 test_specific (const struct normalization_test_file *file,
-	       int (*check) (const uint32_t *c1, size_t c1_length,
-			     const uint32_t *c2, size_t c2_length,
-			     const uint32_t *c3, size_t c3_length,
-			     const uint32_t *c4, size_t c4_length,
-			     const uint32_t *c5, size_t c5_length))
+               int (*check) (const uint32_t *c1, size_t c1_length,
+                             const uint32_t *c2, size_t c2_length,
+                             const uint32_t *c3, size_t c3_length,
+                             const uint32_t *c4, size_t c4_length,
+                             const uint32_t *c5, size_t c5_length))
 {
   size_t part_index;
 
@@ -265,17 +265,17 @@ test_specific (const struct normalization_test_file *file,
       size_t line_index;
 
       for (line_index = 0; line_index < p->lines_length; line_index++)
-	{
-	  const struct normalization_test_line *l = &p->lines[line_index];
+        {
+          const struct normalization_test_line *l = &p->lines[line_index];
 
-	  ASSERT_WITH_LINE (check (l->sequences[0], u32_strlen (l->sequences[0]),
-				   l->sequences[1], u32_strlen (l->sequences[1]),
-				   l->sequences[2], u32_strlen (l->sequences[2]),
-				   l->sequences[3], u32_strlen (l->sequences[3]),
-				   l->sequences[4], u32_strlen (l->sequences[4]))
-			    == 0,
-			    file->filename, l->lineno);
-	}
+          ASSERT_WITH_LINE (check (l->sequences[0], u32_strlen (l->sequences[0]),
+                                   l->sequences[1], u32_strlen (l->sequences[1]),
+                                   l->sequences[2], u32_strlen (l->sequences[2]),
+                                   l->sequences[3], u32_strlen (l->sequences[3]),
+                                   l->sequences[4], u32_strlen (l->sequences[4]))
+                            == 0,
+                            file->filename, l->lineno);
+        }
     }
 }
 
@@ -291,24 +291,24 @@ test_other (const struct normalization_test_file *file, uninorm_t nf)
   for (uc = 0; uc < 0x110000; uc++)
     {
       if (uc >= 0xD800 && uc < 0xE000)
-	{
-	  /* A surrogate, not a character.  Skip uc.  */
-	}
+        {
+          /* A surrogate, not a character.  Skip uc.  */
+        }
       else if (uc == *p)
-	{
-	  /* Skip uc.  */
-	  p++;
-	}
+        {
+          /* Skip uc.  */
+          p++;
+        }
       else
-	{
-	  uint32_t input[1];
-	  size_t length;
-	  uint32_t *result;
+        {
+          uint32_t input[1];
+          size_t length;
+          uint32_t *result;
 
-	  input[0] = uc;
-	  result = u32_normalize (nf, input, 1, NULL, &length);
-	  ASSERT (result != NULL && length == 1 && result[0] == uc);
-	}
+          input[0] = uc;
+          result = u32_normalize (nf, input, 1, NULL, &length);
+          ASSERT (result != NULL && length == 1 && result[0] == uc);
+        }
     }
 }
 

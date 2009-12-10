@@ -24,7 +24,7 @@
 
 int
 u8_is_lowercase (const uint8_t *s, size_t n, const char *iso639_language,
-		 bool *resultp)
+                 bool *resultp)
 {
   return u8_is_invariant (s, n, u8_tolower, iso639_language, resultp);
 }

@@ -34,7 +34,7 @@
 #  include <stdio_ext.h>
 # endif
 #else
-# define __fsetlocking(stream, type)	/* empty */
+# define __fsetlocking(stream, type)    /* empty */
 #endif
 
 #if HAVE_TERMIOS_H
@@ -145,17 +145,17 @@ getpass (const char *prompt)
   if (buf != NULL)
     {
       if (nread < 0)
-	buf[0] = '\0';
+        buf[0] = '\0';
       else if (buf[nread - 1] == '\n')
-	{
-	  /* Remove the newline.  */
-	  buf[nread - 1] = '\0';
-	  if (tty_changed)
-	    {
-	      /* Write the newline that was not echoed.  */
-	      putc_unlocked ('\n', out);
-	    }
-	}
+        {
+          /* Remove the newline.  */
+          buf[nread - 1] = '\0';
+          if (tty_changed)
+            {
+              /* Write the newline that was not echoed.  */
+              putc_unlocked ('\n', out);
+            }
+        }
     }
 
   /* Restore the original setting.  */
@@ -204,20 +204,20 @@ getpass (const char *prompt)
     {
       c = _getch ();
       if (c == '\r')
-	{
-	  getpassbuf[i] = '\0';
-	  break;
-	}
+        {
+          getpassbuf[i] = '\0';
+          break;
+        }
       else if (i < PASS_MAX)
-	{
-	  getpassbuf[i++] = c;
-	}
+        {
+          getpassbuf[i++] = c;
+        }
 
       if (i >= PASS_MAX)
-	{
-	  getpassbuf[i] = '\0';
-	  break;
-	}
+        {
+          getpassbuf[i] = '\0';
+          break;
+        }
     }
 
   if (prompt)

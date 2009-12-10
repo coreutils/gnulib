@@ -31,13 +31,13 @@ main ()
       int i, j;
 
       if (scanf (" %d", &i) != 1)
-	break;
+        break;
       if (scanf (" %d", &j) != 1)
-	break;
+        break;
       if (j == -1)
-	exit (i);
+        exit (i);
       while (i <= j)
-	printf ("abcdefghijklmnopqrstuvwxyz%d\n", i++);
+        printf ("abcdefghijklmnopqrstuvwxyz%d\n", i++);
     }
   exit (0);
 }

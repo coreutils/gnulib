@@ -36,7 +36,7 @@ mbsnlen (const char *string, size_t len)
 
       count = 0;
       for (mbi_init (iter, string, len); mbi_avail (iter); mbi_advance (iter))
-	count++;
+        count++;
 
       return count;
     }

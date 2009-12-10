@@ -54,13 +54,13 @@ main (int argc, char **argv)
 
       s_err = __xstrtol (argv[i], &p, 0, &val, "bckMw0");
       if (s_err == LONGINT_OK)
-	{
-	  printf ("%s->%" __spec " (%s)\n", argv[i], val, p);
-	}
+        {
+          printf ("%s->%" __spec " (%s)\n", argv[i], val, p);
+        }
       else
-	{
-	  xstrtol_fatal (s_err, -2, 'X', NULL, argv[i]);
-	}
+        {
+          xstrtol_fatal (s_err, -2, 'X', NULL, argv[i]);
+        }
     }
   exit (0);
 }

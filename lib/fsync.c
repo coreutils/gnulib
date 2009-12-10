@@ -56,15 +56,15 @@ fsync (int fd)
        */
       err = GetLastError ();
       switch (err)
-	{
-	  /* eg. Trying to fsync a tty. */
-	case ERROR_INVALID_HANDLE:
-	  errno = EINVAL;
-	  break;
+        {
+          /* eg. Trying to fsync a tty. */
+        case ERROR_INVALID_HANDLE:
+          errno = EINVAL;
+          break;
 
-	default:
-	  errno = EIO;
-	}
+        default:
+          errno = EIO;
+        }
       return -1;
     }
 

@@ -74,13 +74,13 @@ struct unicode_attribute unicode_attributes [0x110000];
 /* Stores in unicode_attributes[i] the values from the given fields.  */
 static void
 fill_attribute (unsigned int i,
-		const char *field1, const char *field2,
-		const char *field3, const char *field4,
-		const char *field5, const char *field6,
-		const char *field7, const char *field8,
-		const char *field9, const char *field10,
-		const char *field11, const char *field12,
-		const char *field13, const char *field14)
+                const char *field1, const char *field2,
+                const char *field3, const char *field4,
+                const char *field5, const char *field6,
+                const char *field7, const char *field8,
+                const char *field9, const char *field10,
+                const char *field11, const char *field12,
+                const char *field13, const char *field14)
 {
   struct unicode_attribute * uni;
 
@@ -125,16 +125,16 @@ getfield (FILE *stream, char *buffer, int delim)
   for (; (c = getc (stream)), (c != EOF && c != delim); )
     {
       /* The original unicode.org UnicodeData.txt file happens to have
-	 CR/LF line terminators.  Silently convert to LF.  */
+         CR/LF line terminators.  Silently convert to LF.  */
       if (c == '\r')
-	continue;
+        continue;
 
       /* Put c into the buffer.  */
       if (++count >= FIELDLEN - 1)
-	{
-	  fprintf (stderr, "field longer than expected, increase FIELDLEN\n");
-	  exit (1);
-	}
+        {
+          fprintf (stderr, "field longer than expected, increase FIELDLEN\n");
+          exit (1);
+        }
       *buffer++ = c;
     }
 
@@ -200,63 +200,63 @@ fill_attributes (const char *unicodedata_filename)
       n += getfield (stream, field13, ';');
       n += getfield (stream, field14, '\n');
       if (n == 0)
-	break;
+        break;
       if (n != 15)
-	{
-	  fprintf (stderr, "short line in '%s':%d\n",
-		   unicodedata_filename, lineno);
-	  exit (1);
-	}
+        {
+          fprintf (stderr, "short line in '%s':%d\n",
+                   unicodedata_filename, lineno);
+          exit (1);
+        }
       i = strtoul (field0, NULL, 16);
       if (field1[0] == '<'
-	  && strlen (field1) >= 9
-	  && strcmp (field1 + strlen(field1) - 8, ", First>") == 0)
-	{
-	  /* Deal with a range. */
-	  lineno++;
-	  n = getfield (stream, field0, ';');
-	  n += getfield (stream, field1, ';');
-	  n += getfield (stream, field2, ';');
-	  n += getfield (stream, field3, ';');
-	  n += getfield (stream, field4, ';');
-	  n += getfield (stream, field5, ';');
-	  n += getfield (stream, field6, ';');
-	  n += getfield (stream, field7, ';');
-	  n += getfield (stream, field8, ';');
-	  n += getfield (stream, field9, ';');
-	  n += getfield (stream, field10, ';');
-	  n += getfield (stream, field11, ';');
-	  n += getfield (stream, field12, ';');
-	  n += getfield (stream, field13, ';');
-	  n += getfield (stream, field14, '\n');
-	  if (n != 15)
-	    {
-	      fprintf (stderr, "missing end range in '%s':%d\n",
-		       unicodedata_filename, lineno);
-	      exit (1);
-	    }
-	  if (!(field1[0] == '<'
-		&& strlen (field1) >= 8
-		&& strcmp (field1 + strlen (field1) - 7, ", Last>") == 0))
-	    {
-	      fprintf (stderr, "missing end range in '%s':%d\n",
-		       unicodedata_filename, lineno);
-	      exit (1);
-	    }
-	  field1[strlen (field1) - 7] = '\0';
-	  j = strtoul (field0, NULL, 16);
-	  for (; i <= j; i++)
-	    fill_attribute (i, field1+1, field2, field3, field4, field5,
-			       field6, field7, field8, field9, field10,
-			       field11, field12, field13, field14);
-	}
+          && strlen (field1) >= 9
+          && strcmp (field1 + strlen(field1) - 8, ", First>") == 0)
+        {
+          /* Deal with a range. */
+          lineno++;
+          n = getfield (stream, field0, ';');
+          n += getfield (stream, field1, ';');
+          n += getfield (stream, field2, ';');
+          n += getfield (stream, field3, ';');
+          n += getfield (stream, field4, ';');
+          n += getfield (stream, field5, ';');
+          n += getfield (stream, field6, ';');
+          n += getfield (stream, field7, ';');
+          n += getfield (stream, field8, ';');
+          n += getfield (stream, field9, ';');
+          n += getfield (stream, field10, ';');
+          n += getfield (stream, field11, ';');
+          n += getfield (stream, field12, ';');
+          n += getfield (stream, field13, ';');
+          n += getfield (stream, field14, '\n');
+          if (n != 15)
+            {
+              fprintf (stderr, "missing end range in '%s':%d\n",
+                       unicodedata_filename, lineno);
+              exit (1);
+            }
+          if (!(field1[0] == '<'
+                && strlen (field1) >= 8
+                && strcmp (field1 + strlen (field1) - 7, ", Last>") == 0))
+            {
+              fprintf (stderr, "missing end range in '%s':%d\n",
+                       unicodedata_filename, lineno);
+              exit (1);
+            }
+          field1[strlen (field1) - 7] = '\0';
+          j = strtoul (field0, NULL, 16);
+          for (; i <= j; i++)
+            fill_attribute (i, field1+1, field2, field3, field4, field5,
+                               field6, field7, field8, field9, field10,
+                               field11, field12, field13, field14);
+        }
       else
-	{
-	  /* Single character line */
-	  fill_attribute (i, field1, field2, field3, field4, field5,
-			     field6, field7, field8, field9, field10,
-			     field11, field12, field13, field14);
-	}
+        {
+          /* Single character line */
+          fill_attribute (i, field1, field2, field3, field4, field5,
+                             field6, field7, field8, field9, field10,
+                             field11, field12, field13, field14);
+        }
     }
   if (ferror (stream) || fclose (stream))
     {
@@ -275,265 +275,265 @@ static bool
 is_category_L (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'L');
+          && unicode_attributes[ch].category[0] == 'L');
 }
 
 static bool
 is_category_Lu (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'L'
-	  && unicode_attributes[ch].category[1] == 'u');
+          && unicode_attributes[ch].category[0] == 'L'
+          && unicode_attributes[ch].category[1] == 'u');
 }
 
 static bool
 is_category_Ll (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'L'
-	  && unicode_attributes[ch].category[1] == 'l');
+          && unicode_attributes[ch].category[0] == 'L'
+          && unicode_attributes[ch].category[1] == 'l');
 }
 
 static bool
 is_category_Lt (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'L'
-	  && unicode_attributes[ch].category[1] == 't');
+          && unicode_attributes[ch].category[0] == 'L'
+          && unicode_attributes[ch].category[1] == 't');
 }
 
 static bool
 is_category_Lm (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'L'
-	  && unicode_attributes[ch].category[1] == 'm');
+          && unicode_attributes[ch].category[0] == 'L'
+          && unicode_attributes[ch].category[1] == 'm');
 }
 
 static bool
 is_category_Lo (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'L'
-	  && unicode_attributes[ch].category[1] == 'o');
+          && unicode_attributes[ch].category[0] == 'L'
+          && unicode_attributes[ch].category[1] == 'o');
 }
 
 static bool
 is_category_M (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'M');
+          && unicode_attributes[ch].category[0] == 'M');
 }
 
 static bool
 is_category_Mn (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'M'
-	  && unicode_attributes[ch].category[1] == 'n');
+          && unicode_attributes[ch].category[0] == 'M'
+          && unicode_attributes[ch].category[1] == 'n');
 }
 
 static bool
 is_category_Mc (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'M'
-	  && unicode_attributes[ch].category[1] == 'c');
+          && unicode_attributes[ch].category[0] == 'M'
+          && unicode_attributes[ch].category[1] == 'c');
 }
 
 static bool
 is_category_Me (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'M'
-	  && unicode_attributes[ch].category[1] == 'e');
+          && unicode_attributes[ch].category[0] == 'M'
+          && unicode_attributes[ch].category[1] == 'e');
 }
 
 static bool
 is_category_N (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'N');
+          && unicode_attributes[ch].category[0] == 'N');
 }
 
 static bool
 is_category_Nd (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'N'
-	  && unicode_attributes[ch].category[1] == 'd');
+          && unicode_attributes[ch].category[0] == 'N'
+          && unicode_attributes[ch].category[1] == 'd');
 }
 
 static bool
 is_category_Nl (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'N'
-	  && unicode_attributes[ch].category[1] == 'l');
+          && unicode_attributes[ch].category[0] == 'N'
+          && unicode_attributes[ch].category[1] == 'l');
 }
 
 static bool
 is_category_No (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'N'
-	  && unicode_attributes[ch].category[1] == 'o');
+          && unicode_attributes[ch].category[0] == 'N'
+          && unicode_attributes[ch].category[1] == 'o');
 }
 
 static bool
 is_category_P (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'P');
+          && unicode_attributes[ch].category[0] == 'P');
 }
 
 static bool
 is_category_Pc (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'P'
-	  && unicode_attributes[ch].category[1] == 'c');
+          && unicode_attributes[ch].category[0] == 'P'
+          && unicode_attributes[ch].category[1] == 'c');
 }
 
 static bool
 is_category_Pd (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'P'
-	  && unicode_attributes[ch].category[1] == 'd');
+          && unicode_attributes[ch].category[0] == 'P'
+          && unicode_attributes[ch].category[1] == 'd');
 }
 
 static bool
 is_category_Ps (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'P'
-	  && unicode_attributes[ch].category[1] == 's');
+          && unicode_attributes[ch].category[0] == 'P'
+          && unicode_attributes[ch].category[1] == 's');
 }
 
 static bool
 is_category_Pe (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'P'
-	  && unicode_attributes[ch].category[1] == 'e');
+          && unicode_attributes[ch].category[0] == 'P'
+          && unicode_attributes[ch].category[1] == 'e');
 }
 
 static bool
 is_category_Pi (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'P'
-	  && unicode_attributes[ch].category[1] == 'i');
+          && unicode_attributes[ch].category[0] == 'P'
+          && unicode_attributes[ch].category[1] == 'i');
 }
 
 static bool
 is_category_Pf (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'P'
-	  && unicode_attributes[ch].category[1] == 'f');
+          && unicode_attributes[ch].category[0] == 'P'
+          && unicode_attributes[ch].category[1] == 'f');
 }
 
 static bool
 is_category_Po (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'P'
-	  && unicode_attributes[ch].category[1] == 'o');
+          && unicode_attributes[ch].category[0] == 'P'
+          && unicode_attributes[ch].category[1] == 'o');
 }
 
 static bool
 is_category_S (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'S');
+          && unicode_attributes[ch].category[0] == 'S');
 }
 
 static bool
 is_category_Sm (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'S'
-	  && unicode_attributes[ch].category[1] == 'm');
+          && unicode_attributes[ch].category[0] == 'S'
+          && unicode_attributes[ch].category[1] == 'm');
 }
 
 static bool
 is_category_Sc (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'S'
-	  && unicode_attributes[ch].category[1] == 'c');
+          && unicode_attributes[ch].category[0] == 'S'
+          && unicode_attributes[ch].category[1] == 'c');
 }
 
 static bool
 is_category_Sk (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'S'
-	  && unicode_attributes[ch].category[1] == 'k');
+          && unicode_attributes[ch].category[0] == 'S'
+          && unicode_attributes[ch].category[1] == 'k');
 }
 
 static bool
 is_category_So (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'S'
-	  && unicode_attributes[ch].category[1] == 'o');
+          && unicode_attributes[ch].category[0] == 'S'
+          && unicode_attributes[ch].category[1] == 'o');
 }
 
 static bool
 is_category_Z (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'Z');
+          && unicode_attributes[ch].category[0] == 'Z');
 }
 
 static bool
 is_category_Zs (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'Z'
-	  && unicode_attributes[ch].category[1] == 's');
+          && unicode_attributes[ch].category[0] == 'Z'
+          && unicode_attributes[ch].category[1] == 's');
 }
 
 static bool
 is_category_Zl (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'Z'
-	  && unicode_attributes[ch].category[1] == 'l');
+          && unicode_attributes[ch].category[0] == 'Z'
+          && unicode_attributes[ch].category[1] == 'l');
 }
 
 static bool
 is_category_Zp (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'Z'
-	  && unicode_attributes[ch].category[1] == 'p');
+          && unicode_attributes[ch].category[0] == 'Z'
+          && unicode_attributes[ch].category[1] == 'p');
 }
 
 static bool
 is_category_C (unsigned int ch)
 {
   return (unicode_attributes[ch].name == NULL
-	  || unicode_attributes[ch].category[0] == 'C');
+          || unicode_attributes[ch].category[0] == 'C');
 }
 
 static bool
 is_category_Cc (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'C'
-	  && unicode_attributes[ch].category[1] == 'c');
+          && unicode_attributes[ch].category[0] == 'C'
+          && unicode_attributes[ch].category[1] == 'c');
 }
 
 static bool
 is_category_Cf (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'C'
-	  && unicode_attributes[ch].category[1] == 'f');
+          && unicode_attributes[ch].category[0] == 'C'
+          && unicode_attributes[ch].category[1] == 'f');
 }
 
 static bool
@@ -546,15 +546,15 @@ static bool
 is_category_Co (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'C'
-	  && unicode_attributes[ch].category[1] == 'o');
+          && unicode_attributes[ch].category[0] == 'C'
+          && unicode_attributes[ch].category[1] == 'o');
 }
 
 static bool
 is_category_Cn (unsigned int ch)
 {
   return (unicode_attributes[ch].name == NULL
-	  && !(ch >= 0xd800 && ch < 0xe000));
+          && !(ch >= 0xd800 && ch < 0xe000));
 }
 
 /* Output a boolean property in a human readable format.  */
@@ -575,22 +575,22 @@ debug_output_predicate (const char *filename, bool (*predicate) (unsigned int))
   for (ch = 0; ch < 0x110000; ch++)
     if (predicate (ch))
       {
-	fprintf (stream, "0x%04X\n", ch);
+        fprintf (stream, "0x%04X\n", ch);
       }
 #else
   for (ch = 0; ch < 0x110000; ch++)
     if (predicate (ch))
       {
-	unsigned int first = ch;
-	unsigned int last;
+        unsigned int first = ch;
+        unsigned int last;
 
-	while (ch + 1 < 0x110000 && predicate (ch + 1))
-	  ch++;
-	last = ch;
-	if (first < last)
-	  fprintf (stream, "0x%04X..0x%04X\n", first, last);
-	else
-	  fprintf (stream, "0x%04X\n", ch);
+        while (ch + 1 < 0x110000 && predicate (ch + 1))
+          ch++;
+        last = ch;
+        if (first < last)
+          fprintf (stream, "0x%04X..0x%04X\n", first, last);
+        else
+          fprintf (stream, "0x%04X\n", ch);
       }
 #endif
 
@@ -640,16 +640,16 @@ output_predicate_test (const char *filename, bool (*predicate) (unsigned int), c
   for (ch = 0; ch < 0x110000; ch++)
     if (predicate (ch))
       {
-	unsigned int first = ch;
-	unsigned int last;
+        unsigned int first = ch;
+        unsigned int last;
 
-	while (ch + 1 < 0x110000 && predicate (ch + 1))
-	  ch++;
-	last = ch;
-	if (need_comma)
-	  fprintf (stream, ",\n");
-	fprintf (stream, "    { 0x%04X, 0x%04X }", first, last);
-	need_comma = true;
+        while (ch + 1 < 0x110000 && predicate (ch + 1))
+          ch++;
+        last = ch;
+        if (need_comma)
+          fprintf (stream, ",\n");
+        fprintf (stream, "    { 0x%04X, 0x%04X }", first, last);
+        need_comma = true;
       }
   if (need_comma)
     fprintf (stream, "\n");
@@ -690,7 +690,7 @@ output_predicate (const char *filename, bool (*predicate) (unsigned int), const 
   fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
   fprintf (stream, "/* %s of Unicode characters.  */\n", comment);
   fprintf (stream, "/* Generated automatically by gen-ctype.c for Unicode %s.  */\n",
-	   version);
+           version);
 
   t.p = 4; /* or: 5 */
   t.q = 7; /* or: 6 */
@@ -716,7 +716,7 @@ output_predicate (const char *filename, bool (*predicate) (unsigned int), const 
   for (i = 0; i < 5; i++)
     if (i != 1)
       fprintf (stream, "#define header_%d %d\n", i,
-	       ((uint32_t *) t.result)[i]);
+               ((uint32_t *) t.result)[i]);
 
   fprintf (stream, "static const\n");
   fprintf (stream, "struct\n");
@@ -736,13 +736,13 @@ output_predicate (const char *filename, bool (*predicate) (unsigned int), const 
     {
       uint32_t offset;
       if (i > 0 && (i % 1) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       offset = ((uint32_t *) (t.result + level1_offset))[i];
       if (offset == 0)
-	fprintf (stream, " %5d", -1);
+        fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zu * sizeof (int) / sizeof (short) + %5zu",
-		 1 + t.level1_size, (offset - level2_offset) / sizeof (uint32_t));
+        fprintf (stream, " %5zu * sizeof (int) / sizeof (short) + %5zu",
+                 1 + t.level1_size, (offset - level2_offset) / sizeof (uint32_t));
       if (i+1 < t.level1_size)
         fprintf (stream, ",");
     }
@@ -756,15 +756,15 @@ output_predicate (const char *filename, bool (*predicate) (unsigned int), const 
     {
       uint32_t offset;
       if (i > 0 && (i % 1) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       offset = ((uint32_t *) (t.result + level2_offset))[i];
       if (offset == 0)
-	fprintf (stream, " %5d", -1);
+        fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zu + %5zu * sizeof (short) / sizeof (int) + %5zu",
-		 1 + t.level1_size, t.level2_size << t.q, (offset - level3_offset) / sizeof (uint32_t));
+        fprintf (stream, " %5zu + %5zu * sizeof (short) / sizeof (int) + %5zu",
+                 1 + t.level1_size, t.level2_size << t.q, (offset - level3_offset) / sizeof (uint32_t));
       if (i+1 < t.level2_size << t.q)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
     }
   if (t.level2_size << t.q > 1)
     fprintf (stream, "\n ");
@@ -775,11 +775,11 @@ output_predicate (const char *filename, bool (*predicate) (unsigned int), const 
   for (i = 0; i < t.level3_size << t.p; i++)
     {
       if (i > 0 && (i % 4) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       fprintf (stream, " 0x%08X",
-	       ((uint32_t *) (t.result + level3_offset))[i]);
+               ((uint32_t *) (t.result + level3_offset))[i]);
       if (i+1 < t.level3_size << t.p)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
     }
   if (t.level3_size << t.p > 4)
     fprintf (stream, "\n ");
@@ -890,77 +890,77 @@ general_category_byname (const char *category_name)
     switch (category_name[0])
       {
       case 'L':
-	switch (category_name[1])
-	  {
-	  case '\0': return UC_CATEGORY_MASK_L;
-	  case 'u': return UC_CATEGORY_MASK_Lu;
-	  case 'l': return UC_CATEGORY_MASK_Ll;
-	  case 't': return UC_CATEGORY_MASK_Lt;
-	  case 'm': return UC_CATEGORY_MASK_Lm;
-	  case 'o': return UC_CATEGORY_MASK_Lo;
-	  }
-	break;
+        switch (category_name[1])
+          {
+          case '\0': return UC_CATEGORY_MASK_L;
+          case 'u': return UC_CATEGORY_MASK_Lu;
+          case 'l': return UC_CATEGORY_MASK_Ll;
+          case 't': return UC_CATEGORY_MASK_Lt;
+          case 'm': return UC_CATEGORY_MASK_Lm;
+          case 'o': return UC_CATEGORY_MASK_Lo;
+          }
+        break;
       case 'M':
-	switch (category_name[1])
-	  {
-	  case '\0': return UC_CATEGORY_MASK_M;
-	  case 'n': return UC_CATEGORY_MASK_Mn;
-	  case 'c': return UC_CATEGORY_MASK_Mc;
-	  case 'e': return UC_CATEGORY_MASK_Me;
-	  }
-	break;
+        switch (category_name[1])
+          {
+          case '\0': return UC_CATEGORY_MASK_M;
+          case 'n': return UC_CATEGORY_MASK_Mn;
+          case 'c': return UC_CATEGORY_MASK_Mc;
+          case 'e': return UC_CATEGORY_MASK_Me;
+          }
+        break;
       case 'N':
-	switch (category_name[1])
-	  {
-	  case '\0': return UC_CATEGORY_MASK_N;
-	  case 'd': return UC_CATEGORY_MASK_Nd;
-	  case 'l': return UC_CATEGORY_MASK_Nl;
-	  case 'o': return UC_CATEGORY_MASK_No;
-	  }
-	break;
+        switch (category_name[1])
+          {
+          case '\0': return UC_CATEGORY_MASK_N;
+          case 'd': return UC_CATEGORY_MASK_Nd;
+          case 'l': return UC_CATEGORY_MASK_Nl;
+          case 'o': return UC_CATEGORY_MASK_No;
+          }
+        break;
       case 'P':
-	switch (category_name[1])
-	  {
-	  case '\0': return UC_CATEGORY_MASK_P;
-	  case 'c': return UC_CATEGORY_MASK_Pc;
-	  case 'd': return UC_CATEGORY_MASK_Pd;
-	  case 's': return UC_CATEGORY_MASK_Ps;
-	  case 'e': return UC_CATEGORY_MASK_Pe;
-	  case 'i': return UC_CATEGORY_MASK_Pi;
-	  case 'f': return UC_CATEGORY_MASK_Pf;
-	  case 'o': return UC_CATEGORY_MASK_Po;
-	  }
-	break;
+        switch (category_name[1])
+          {
+          case '\0': return UC_CATEGORY_MASK_P;
+          case 'c': return UC_CATEGORY_MASK_Pc;
+          case 'd': return UC_CATEGORY_MASK_Pd;
+          case 's': return UC_CATEGORY_MASK_Ps;
+          case 'e': return UC_CATEGORY_MASK_Pe;
+          case 'i': return UC_CATEGORY_MASK_Pi;
+          case 'f': return UC_CATEGORY_MASK_Pf;
+          case 'o': return UC_CATEGORY_MASK_Po;
+          }
+        break;
       case 'S':
-	switch (category_name[1])
-	  {
-	  case '\0': return UC_CATEGORY_MASK_S;
-	  case 'm': return UC_CATEGORY_MASK_Sm;
-	  case 'c': return UC_CATEGORY_MASK_Sc;
-	  case 'k': return UC_CATEGORY_MASK_Sk;
-	  case 'o': return UC_CATEGORY_MASK_So;
-	  }
-	break;
+        switch (category_name[1])
+          {
+          case '\0': return UC_CATEGORY_MASK_S;
+          case 'm': return UC_CATEGORY_MASK_Sm;
+          case 'c': return UC_CATEGORY_MASK_Sc;
+          case 'k': return UC_CATEGORY_MASK_Sk;
+          case 'o': return UC_CATEGORY_MASK_So;
+          }
+        break;
       case 'Z':
-	switch (category_name[1])
-	  {
-	  case '\0': return UC_CATEGORY_MASK_Z;
-	  case 's': return UC_CATEGORY_MASK_Zs;
-	  case 'l': return UC_CATEGORY_MASK_Zl;
-	  case 'p': return UC_CATEGORY_MASK_Zp;
-	  }
-	break;
+        switch (category_name[1])
+          {
+          case '\0': return UC_CATEGORY_MASK_Z;
+          case 's': return UC_CATEGORY_MASK_Zs;
+          case 'l': return UC_CATEGORY_MASK_Zl;
+          case 'p': return UC_CATEGORY_MASK_Zp;
+          }
+        break;
       case 'C':
-	switch (category_name[1])
-	  {
-	  case '\0': return UC_CATEGORY_MASK_C;
-	  case 'c': return UC_CATEGORY_MASK_Cc;
-	  case 'f': return UC_CATEGORY_MASK_Cf;
-	  case 's': return UC_CATEGORY_MASK_Cs;
-	  case 'o': return UC_CATEGORY_MASK_Co;
-	  case 'n': return UC_CATEGORY_MASK_Cn;
-	  }
-	break;
+        switch (category_name[1])
+          {
+          case '\0': return UC_CATEGORY_MASK_C;
+          case 'c': return UC_CATEGORY_MASK_Cc;
+          case 'f': return UC_CATEGORY_MASK_Cf;
+          case 's': return UC_CATEGORY_MASK_Cs;
+          case 'o': return UC_CATEGORY_MASK_Co;
+          case 'n': return UC_CATEGORY_MASK_Cn;
+          }
+        break;
       }
   /* Invalid category name.  */
   abort ();
@@ -994,7 +994,7 @@ output_category (const char *filename, const char *version)
   fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
   fprintf (stream, "/* Categories of Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-ctype.c for Unicode %s.  */\n",
-	   version);
+           version);
 
   t.p = 7;
   t.q = 9;
@@ -1006,15 +1006,15 @@ output_category (const char *filename, const char *version)
       unsigned int log2_value;
 
       if (is_category_Cs (ch))
-	value = UC_CATEGORY_MASK_Cs;
+        value = UC_CATEGORY_MASK_Cs;
       else if (unicode_attributes[ch].name != NULL)
-	value = general_category_byname (unicode_attributes[ch].category);
+        value = general_category_byname (unicode_attributes[ch].category);
       else
-	continue;
+        continue;
 
       /* Now value should contain exactly one bit.  */
       if (value == 0 || ((value & (value - 1)) != 0))
-	abort ();
+        abort ();
 
       for (log2_value = 0; value > 1; value >>= 1, log2_value++);
 
@@ -1036,14 +1036,14 @@ output_category (const char *filename, const char *version)
 
   for (i = 0; i < 5; i++)
     fprintf (stream, "#define category_header_%d %d\n", i,
-	     ((uint32_t *) t.result)[i]);
+             ((uint32_t *) t.result)[i]);
   fprintf (stream, "static const\n");
   fprintf (stream, "struct\n");
   fprintf (stream, "  {\n");
   fprintf (stream, "    int level1[%zu];\n", t.level1_size);
   fprintf (stream, "    short level2[%zu << %d];\n", t.level2_size, t.q);
   fprintf (stream, "    unsigned short level3[%zu * %d + 1];\n", t.level3_size,
-	   (1 << t.p) * 5 / 16);
+           (1 << t.p) * 5 / 16);
   fprintf (stream, "  }\n");
   fprintf (stream, "u_category =\n");
   fprintf (stream, "{\n");
@@ -1054,15 +1054,15 @@ output_category (const char *filename, const char *version)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       offset = ((uint32_t *) (t.result + level1_offset))[i];
       if (offset == 0)
-	fprintf (stream, " %5d", -1);
+        fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zu",
-		 (offset - level2_offset) / sizeof (uint32_t));
+        fprintf (stream, " %5zu",
+                 (offset - level2_offset) / sizeof (uint32_t));
       if (i+1 < t.level1_size)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
     }
   if (t.level1_size > 8)
     fprintf (stream, "\n ");
@@ -1074,15 +1074,15 @@ output_category (const char *filename, const char *version)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       offset = ((uint32_t *) (t.result + level2_offset))[i];
       if (offset == 0)
-	fprintf (stream, " %5d", -1);
+        fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zu",
-		 (offset - level3_offset) / sizeof (uint8_t));
+        fprintf (stream, " %5zu",
+                 (offset - level3_offset) / sizeof (uint8_t));
       if (i+1 < t.level2_size << t.q)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
     }
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n ");
@@ -1107,10 +1107,10 @@ output_category (const char *filename, const char *version)
   for (i = 0; i < (t.level3_size << t.p) * 5 / 16 + 1; i++)
     {
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       fprintf (stream, " 0x%04x", level3_packed[i]);
       if (i+1 < (t.level3_size << t.p) * 5 / 16 + 1)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
     }
   if ((t.level3_size << t.p) * 5 / 16 + 1 > 8)
     fprintf (stream, "\n ");
@@ -1158,7 +1158,7 @@ output_combclass (const char *filename, const char *version)
   fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
   fprintf (stream, "/* Combining class of Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-ctype.c for Unicode %s.  */\n",
-	   version);
+           version);
 
   t.p = 7;
   t.q = 9;
@@ -1167,10 +1167,10 @@ output_combclass (const char *filename, const char *version)
   for (ch = 0; ch < 0x110000; ch++)
     if (unicode_attributes[ch].name != NULL)
       {
-	int value = atoi (unicode_attributes[ch].combining);
+        int value = atoi (unicode_attributes[ch].combining);
         if (!(value >= 0 && value <= 255))
-	  abort ();
-	combclass_table_add (&t, ch, value);
+          abort ();
+        combclass_table_add (&t, ch, value);
       }
 
   combclass_table_finalize (&t);
@@ -1188,7 +1188,7 @@ output_combclass (const char *filename, const char *version)
 
   for (i = 0; i < 5; i++)
     fprintf (stream, "#define combclass_header_%d %d\n", i,
-	     ((uint32_t *) t.result)[i]);
+             ((uint32_t *) t.result)[i]);
   fprintf (stream, "static const\n");
   fprintf (stream, "struct\n");
   fprintf (stream, "  {\n");
@@ -1205,15 +1205,15 @@ output_combclass (const char *filename, const char *version)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       offset = ((uint32_t *) (t.result + level1_offset))[i];
       if (offset == 0)
-	fprintf (stream, " %5d", -1);
+        fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zu",
-		 (offset - level2_offset) / sizeof (uint32_t));
+        fprintf (stream, " %5zu",
+                 (offset - level2_offset) / sizeof (uint32_t));
       if (i+1 < t.level1_size)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
     }
   if (t.level1_size > 8)
     fprintf (stream, "\n ");
@@ -1225,15 +1225,15 @@ output_combclass (const char *filename, const char *version)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       offset = ((uint32_t *) (t.result + level2_offset))[i];
       if (offset == 0)
-	fprintf (stream, " %5d", -1);
+        fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zu",
-		 (offset - level3_offset) / sizeof (uint8_t));
+        fprintf (stream, " %5zu",
+                 (offset - level3_offset) / sizeof (uint8_t));
       if (i+1 < t.level2_size << t.q)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
     }
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n ");
@@ -1244,10 +1244,10 @@ output_combclass (const char *filename, const char *version)
   for (i = 0; i < t.level3_size << t.p; i++)
     {
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       fprintf (stream, " %3d", ((uint8_t *) (t.result + level3_offset))[i]);
       if (i+1 < t.level3_size << t.p)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
     }
   if (t.level3_size << t.p > 8)
     fprintf (stream, "\n ");
@@ -1297,143 +1297,143 @@ bidi_category_byname (const char *category_name)
     {
     case 'A':
       switch (category_name[1])
-	{
-	case 'L':
-	  if (category_name[2] == '\0')
-	    return UC_BIDI_AL;
-	  break;
-	case 'N':
-	  if (category_name[2] == '\0')
-	    return UC_BIDI_AN;
-	  break;
-	}
+        {
+        case 'L':
+          if (category_name[2] == '\0')
+            return UC_BIDI_AL;
+          break;
+        case 'N':
+          if (category_name[2] == '\0')
+            return UC_BIDI_AN;
+          break;
+        }
       break;
     case 'B':
       switch (category_name[1])
-	{
-	case '\0':
-	  return UC_BIDI_B;
-	case 'N':
-	  if (category_name[2] == '\0')
-	    return UC_BIDI_BN;
-	  break;
-	}
+        {
+        case '\0':
+          return UC_BIDI_B;
+        case 'N':
+          if (category_name[2] == '\0')
+            return UC_BIDI_BN;
+          break;
+        }
       break;
     case 'C':
       switch (category_name[1])
-	{
-	case 'S':
-	  if (category_name[2] == '\0')
-	    return UC_BIDI_CS;
-	  break;
-	}
+        {
+        case 'S':
+          if (category_name[2] == '\0')
+            return UC_BIDI_CS;
+          break;
+        }
       break;
     case 'E':
       switch (category_name[1])
-	{
-	case 'N':
-	  if (category_name[2] == '\0')
-	    return UC_BIDI_EN;
-	  break;
-	case 'S':
-	  if (category_name[2] == '\0')
-	    return UC_BIDI_ES;
-	  break;
-	case 'T':
-	  if (category_name[2] == '\0')
-	    return UC_BIDI_ET;
-	  break;
-	}
+        {
+        case 'N':
+          if (category_name[2] == '\0')
+            return UC_BIDI_EN;
+          break;
+        case 'S':
+          if (category_name[2] == '\0')
+            return UC_BIDI_ES;
+          break;
+        case 'T':
+          if (category_name[2] == '\0')
+            return UC_BIDI_ET;
+          break;
+        }
       break;
     case 'L':
       switch (category_name[1])
-	{
-	case '\0':
-	  return UC_BIDI_L;
-	case 'R':
-	  switch (category_name[2])
-	    {
-	    case 'E':
-	      if (category_name[3] == '\0')
-		return UC_BIDI_LRE;
-	      break;
-	    case 'O':
-	      if (category_name[3] == '\0')
-		return UC_BIDI_LRO;
-	      break;
-	    }
-	  break;
-	}
+        {
+        case '\0':
+          return UC_BIDI_L;
+        case 'R':
+          switch (category_name[2])
+            {
+            case 'E':
+              if (category_name[3] == '\0')
+                return UC_BIDI_LRE;
+              break;
+            case 'O':
+              if (category_name[3] == '\0')
+                return UC_BIDI_LRO;
+              break;
+            }
+          break;
+        }
       break;
     case 'N':
       switch (category_name[1])
-	{
-	case 'S':
-	  switch (category_name[2])
-	    {
-	    case 'M':
-	      if (category_name[3] == '\0')
-		return UC_BIDI_NSM;
-	      break;
-	    }
-	  break;
-	}
+        {
+        case 'S':
+          switch (category_name[2])
+            {
+            case 'M':
+              if (category_name[3] == '\0')
+                return UC_BIDI_NSM;
+              break;
+            }
+          break;
+        }
       break;
     case 'O':
       switch (category_name[1])
-	{
-	case 'N':
-	  if (category_name[2] == '\0')
-	    return UC_BIDI_ON;
-	  break;
-	}
+        {
+        case 'N':
+          if (category_name[2] == '\0')
+            return UC_BIDI_ON;
+          break;
+        }
       break;
     case 'P':
       switch (category_name[1])
-	{
-	case 'D':
-	  switch (category_name[2])
-	    {
-	    case 'F':
-	      if (category_name[3] == '\0')
-		return UC_BIDI_PDF;
-	      break;
-	    }
-	  break;
-	}
+        {
+        case 'D':
+          switch (category_name[2])
+            {
+            case 'F':
+              if (category_name[3] == '\0')
+                return UC_BIDI_PDF;
+              break;
+            }
+          break;
+        }
       break;
     case 'R':
       switch (category_name[1])
-	{
-	case '\0':
-	  return UC_BIDI_R;
-	case 'L':
-	  switch (category_name[2])
-	    {
-	    case 'E':
-	      if (category_name[3] == '\0')
-		return UC_BIDI_RLE;
-	      break;
-	    case 'O':
-	      if (category_name[3] == '\0')
-		return UC_BIDI_RLO;
-	      break;
-	    }
-	  break;
-	}
+        {
+        case '\0':
+          return UC_BIDI_R;
+        case 'L':
+          switch (category_name[2])
+            {
+            case 'E':
+              if (category_name[3] == '\0')
+                return UC_BIDI_RLE;
+              break;
+            case 'O':
+              if (category_name[3] == '\0')
+                return UC_BIDI_RLO;
+              break;
+            }
+          break;
+        }
       break;
     case 'S':
       if (category_name[1] == '\0')
-	return UC_BIDI_S;
+        return UC_BIDI_S;
       break;
     case 'W':
       switch (category_name[1])
-	{
-	case 'S':
-	  if (category_name[2] == '\0')
-	    return UC_BIDI_WS;
-	  break;
-	}
+        {
+        case 'S':
+          if (category_name[2] == '\0')
+            return UC_BIDI_WS;
+          break;
+        }
       break;
     }
   /* Invalid bidi category name.  */
@@ -1448,25 +1448,25 @@ get_bidi_category (unsigned int ch)
   else
     {
       /* The bidi category of unassigned characters depends on the range.
-	 See UTR #9 and DerivedBidiClass.txt.  */
+         See UTR #9 and DerivedBidiClass.txt.  */
       if ((ch >= 0x0590 && ch <= 0x05FF)
-	  || (ch >= 0x07FB && ch <= 0x08FF)
-	  || (ch >= 0xFB37 && ch <= 0xFB45)
-	  || (ch >= 0x10800 && ch <= 0x10FFF))
-	return UC_BIDI_R;
+          || (ch >= 0x07FB && ch <= 0x08FF)
+          || (ch >= 0xFB37 && ch <= 0xFB45)
+          || (ch >= 0x10800 && ch <= 0x10FFF))
+        return UC_BIDI_R;
       else if ((ch >= 0x0600 && ch <= 0x07BF)
-	       || (ch >= 0x2064 && ch <= 0x2069)
-	       || (ch >= 0xFBB2 && ch <= 0xFDCF)
-	       || (ch >= 0xFDFE && ch <= 0xFEFE))
-	return UC_BIDI_AL;
+               || (ch >= 0x2064 && ch <= 0x2069)
+               || (ch >= 0xFBB2 && ch <= 0xFDCF)
+               || (ch >= 0xFDFE && ch <= 0xFEFE))
+        return UC_BIDI_AL;
       else if ((ch >= 0xFDD0 && ch <= 0xFDEF)
-	       || (ch >= 0xFFF0 && ch <= 0xFFFF)
-	       || (ch & 0xFFFF) == 0xFFFE
-	       || (ch & 0xFFFF) == 0xFFFF
-	       || (ch >= 0xE0000 && ch <= 0xE0FFF))
-	return UC_BIDI_BN;
+               || (ch >= 0xFFF0 && ch <= 0xFFFF)
+               || (ch & 0xFFFF) == 0xFFFE
+               || (ch & 0xFFFF) == 0xFFFF
+               || (ch >= 0xE0000 && ch <= 0xE0FFF))
+        return UC_BIDI_BN;
       else
-	return UC_BIDI_L;
+        return UC_BIDI_L;
     }
 }
 
@@ -1498,7 +1498,7 @@ output_bidi_category (const char *filename, const char *version)
   fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
   fprintf (stream, "/* Bidi categories of Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-ctype.c for Unicode %s.  */\n",
-	   version);
+           version);
 
   t.p = 7;
   t.q = 9;
@@ -1526,14 +1526,14 @@ output_bidi_category (const char *filename, const char *version)
 
   for (i = 0; i < 5; i++)
     fprintf (stream, "#define bidi_category_header_%d %d\n", i,
-	     ((uint32_t *) t.result)[i]);
+             ((uint32_t *) t.result)[i]);
   fprintf (stream, "static const\n");
   fprintf (stream, "struct\n");
   fprintf (stream, "  {\n");
   fprintf (stream, "    int level1[%zu];\n", t.level1_size);
   fprintf (stream, "    short level2[%zu << %d];\n", t.level2_size, t.q);
   fprintf (stream, "    unsigned short level3[%zu * %d + 1];\n", t.level3_size,
-	   (1 << t.p) * 5 / 16);
+           (1 << t.p) * 5 / 16);
   fprintf (stream, "  }\n");
   fprintf (stream, "u_bidi_category =\n");
   fprintf (stream, "{\n");
@@ -1544,15 +1544,15 @@ output_bidi_category (const char *filename, const char *version)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       offset = ((uint32_t *) (t.result + level1_offset))[i];
       if (offset == 0)
-	fprintf (stream, " %5d", -1);
+        fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zu",
-		 (offset - level2_offset) / sizeof (uint32_t));
+        fprintf (stream, " %5zu",
+                 (offset - level2_offset) / sizeof (uint32_t));
       if (i+1 < t.level1_size)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
     }
   if (t.level1_size > 8)
     fprintf (stream, "\n ");
@@ -1564,15 +1564,15 @@ output_bidi_category (const char *filename, const char *version)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       offset = ((uint32_t *) (t.result + level2_offset))[i];
       if (offset == 0)
-	fprintf (stream, " %5d", -1);
+        fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zu",
-		 (offset - level3_offset) / sizeof (uint8_t));
+        fprintf (stream, " %5zu",
+                 (offset - level3_offset) / sizeof (uint8_t));
       if (i+1 < t.level2_size << t.q)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
     }
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n ");
@@ -1597,10 +1597,10 @@ output_bidi_category (const char *filename, const char *version)
   for (i = 0; i < (t.level3_size << t.p) * 5 / 16 + 1; i++)
     {
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       fprintf (stream, " 0x%04x", level3_packed[i]);
       if (i+1 < (t.level3_size << t.p) * 5 / 16 + 1)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
     }
   if ((t.level3_size << t.p) * 5 / 16 + 1 > 8)
     fprintf (stream, "\n ");
@@ -1655,7 +1655,7 @@ output_decimal_digit_test (const char *filename, const char *version)
   fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
   fprintf (stream, "/* Decimal digit values of Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-ctype.c for Unicode %s.  */\n",
-	   version);
+           version);
 
   need_comma = false;
   for (ch = 0; ch < 0x110000; ch++)
@@ -1663,15 +1663,15 @@ output_decimal_digit_test (const char *filename, const char *version)
       int value = get_decdigit_value (ch);
 
       if (!(value >= -1 && value < 10))
-	abort ();
+        abort ();
 
       if (value >= 0)
-	{
-	  if (need_comma)
-	    fprintf (stream, ",\n");
-	  fprintf (stream, "    { 0x%04X, %d }", ch, value);
-	  need_comma = true;
-	}
+        {
+          if (need_comma)
+            fprintf (stream, ",\n");
+          fprintf (stream, "    { 0x%04X, %d }", ch, value);
+          need_comma = true;
+        }
     }
   if (need_comma)
     fprintf (stream, "\n");
@@ -1702,7 +1702,7 @@ output_decimal_digit (const char *filename, const char *version)
   fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
   fprintf (stream, "/* Decimal digit values of Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-ctype.c for Unicode %s.  */\n",
-	   version);
+           version);
 
   t.p = 7;
   t.q = 9;
@@ -1713,7 +1713,7 @@ output_decimal_digit (const char *filename, const char *version)
       int value = 1 + get_decdigit_value (ch);
 
       if (!(value >= 0 && value <= 10))
-	abort ();
+        abort ();
 
       decdigit_table_add (&t, ch, value);
     }
@@ -1733,14 +1733,14 @@ output_decimal_digit (const char *filename, const char *version)
 
   for (i = 0; i < 5; i++)
     fprintf (stream, "#define decdigit_header_%d %d\n", i,
-	     ((uint32_t *) t.result)[i]);
+             ((uint32_t *) t.result)[i]);
   fprintf (stream, "static const\n");
   fprintf (stream, "struct\n");
   fprintf (stream, "  {\n");
   fprintf (stream, "    int level1[%zu];\n", t.level1_size);
   fprintf (stream, "    short level2[%zu << %d];\n", t.level2_size, t.q);
   fprintf (stream, "    unsigned char level3[%zu << %d];\n", t.level3_size,
-	   t.p - 1);
+           t.p - 1);
   fprintf (stream, "  }\n");
   fprintf (stream, "u_decdigit =\n");
   fprintf (stream, "{\n");
@@ -1751,15 +1751,15 @@ output_decimal_digit (const char *filename, const char *version)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       offset = ((uint32_t *) (t.result + level1_offset))[i];
       if (offset == 0)
-	fprintf (stream, " %5d", -1);
+        fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zu",
-		 (offset - level2_offset) / sizeof (uint32_t));
+        fprintf (stream, " %5zu",
+                 (offset - level2_offset) / sizeof (uint32_t));
       if (i+1 < t.level1_size)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
     }
   if (t.level1_size > 8)
     fprintf (stream, "\n ");
@@ -1771,15 +1771,15 @@ output_decimal_digit (const char *filename, const char *version)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       offset = ((uint32_t *) (t.result + level2_offset))[i];
       if (offset == 0)
-	fprintf (stream, " %5d", -1);
+        fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zu",
-		 (offset - level3_offset) / sizeof (uint8_t));
+        fprintf (stream, " %5zu",
+                 (offset - level3_offset) / sizeof (uint8_t));
       if (i+1 < t.level2_size << t.q)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
     }
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n ");
@@ -1791,12 +1791,12 @@ output_decimal_digit (const char *filename, const char *version)
   for (i = 0; i < t.level3_size << (t.p - 1); i++)
     {
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       fprintf (stream, " 0x%02x",
-	       ((uint8_t *) (t.result + level3_offset))[2*i]
-	       + (((uint8_t *) (t.result + level3_offset))[2*i+1] << 4));
+               ((uint8_t *) (t.result + level3_offset))[2*i]
+               + (((uint8_t *) (t.result + level3_offset))[2*i+1] << 4));
       if (i+1 < t.level3_size << (t.p - 1))
-	fprintf (stream, ",");
+        fprintf (stream, ",");
     }
   if (t.level3_size << (t.p - 1) > 8)
     fprintf (stream, "\n ");
@@ -1842,7 +1842,7 @@ output_digit_test (const char *filename, const char *version)
   fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
   fprintf (stream, "/* Digit values of Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-ctype.c for Unicode %s.  */\n",
-	   version);
+           version);
 
   need_comma = false;
   for (ch = 0; ch < 0x110000; ch++)
@@ -1850,15 +1850,15 @@ output_digit_test (const char *filename, const char *version)
       int value = get_digit_value (ch);
 
       if (!(value >= -1 && value < 10))
-	abort ();
+        abort ();
 
       if (value >= 0)
-	{
-	  if (need_comma)
-	    fprintf (stream, ",\n");
-	  fprintf (stream, "    { 0x%04X, %d }", ch, value);
-	  need_comma = true;
-	}
+        {
+          if (need_comma)
+            fprintf (stream, ",\n");
+          fprintf (stream, "    { 0x%04X, %d }", ch, value);
+          need_comma = true;
+        }
     }
   if (need_comma)
     fprintf (stream, "\n");
@@ -1889,7 +1889,7 @@ output_digit (const char *filename, const char *version)
   fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
   fprintf (stream, "/* Digit values of Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-ctype.c for Unicode %s.  */\n",
-	   version);
+           version);
 
   t.p = 7;
   t.q = 9;
@@ -1900,7 +1900,7 @@ output_digit (const char *filename, const char *version)
       int value = 1 + get_digit_value (ch);
 
       if (!(value >= 0 && value <= 10))
-	abort ();
+        abort ();
 
       decdigit_table_add (&t, ch, value);
     }
@@ -1920,14 +1920,14 @@ output_digit (const char *filename, const char *version)
 
   for (i = 0; i < 5; i++)
     fprintf (stream, "#define digit_header_%d %d\n", i,
-	     ((uint32_t *) t.result)[i]);
+             ((uint32_t *) t.result)[i]);
   fprintf (stream, "static const\n");
   fprintf (stream, "struct\n");
   fprintf (stream, "  {\n");
   fprintf (stream, "    int level1[%zu];\n", t.level1_size);
   fprintf (stream, "    short level2[%zu << %d];\n", t.level2_size, t.q);
   fprintf (stream, "    unsigned char level3[%zu << %d];\n", t.level3_size,
-	   t.p - 1);
+           t.p - 1);
   fprintf (stream, "  }\n");
   fprintf (stream, "u_digit =\n");
   fprintf (stream, "{\n");
@@ -1938,15 +1938,15 @@ output_digit (const char *filename, const char *version)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       offset = ((uint32_t *) (t.result + level1_offset))[i];
       if (offset == 0)
-	fprintf (stream, " %5d", -1);
+        fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zu",
-		 (offset - level2_offset) / sizeof (uint32_t));
+        fprintf (stream, " %5zu",
+                 (offset - level2_offset) / sizeof (uint32_t));
       if (i+1 < t.level1_size)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
     }
   if (t.level1_size > 8)
     fprintf (stream, "\n ");
@@ -1958,15 +1958,15 @@ output_digit (const char *filename, const char *version)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       offset = ((uint32_t *) (t.result + level2_offset))[i];
       if (offset == 0)
-	fprintf (stream, " %5d", -1);
+        fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zu",
-		 (offset - level3_offset) / sizeof (uint8_t));
+        fprintf (stream, " %5zu",
+                 (offset - level3_offset) / sizeof (uint8_t));
       if (i+1 < t.level2_size << t.q)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
     }
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n ");
@@ -1978,12 +1978,12 @@ output_digit (const char *filename, const char *version)
   for (i = 0; i < t.level3_size << (t.p - 1); i++)
     {
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       fprintf (stream, " 0x%02x",
-	       ((uint8_t *) (t.result + level3_offset))[2*i]
-	       + (((uint8_t *) (t.result + level3_offset))[2*i+1] << 4));
+               ((uint8_t *) (t.result + level3_offset))[2*i]
+               + (((uint8_t *) (t.result + level3_offset))[2*i+1] << 4));
       if (i+1 < t.level3_size << (t.p - 1))
-	fprintf (stream, ",");
+        fprintf (stream, ",");
     }
   if (t.level3_size << (t.p - 1) > 8)
     fprintf (stream, "\n ");
@@ -2016,9 +2016,9 @@ get_numeric_value (unsigned int ch)
       /* str is of the form "integer" or "integer/posinteger".  */
       value.numerator = atoi (str);
       if (strchr (str, '/') != NULL)
-	value.denominator = atoi (strchr (str, '/') + 1);
+        value.denominator = atoi (strchr (str, '/') + 1);
       else
-	value.denominator = 1;
+        value.denominator = 1;
     }
   else
     {
@@ -2046,7 +2046,7 @@ output_numeric_test (const char *filename, const char *version)
   fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
   fprintf (stream, "/* Numeric values of Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-ctype.c for Unicode %s.  */\n",
-	   version);
+           version);
 
   need_comma = false;
   for (ch = 0; ch < 0x110000; ch++)
@@ -2054,13 +2054,13 @@ output_numeric_test (const char *filename, const char *version)
       uc_fraction_t value = get_numeric_value (ch);
 
       if (value.numerator != 0 || value.denominator != 0)
-	{
-	  if (need_comma)
-	    fprintf (stream, ",\n");
-	  fprintf (stream, "    { 0x%04X, %d, %d }",
-		   ch, value.numerator, value.denominator);
-	  need_comma = true;
-	}
+        {
+          if (need_comma)
+            fprintf (stream, ",\n");
+          fprintf (stream, "    { 0x%04X, %d, %d }",
+                   ch, value.numerator, value.denominator);
+          need_comma = true;
+        }
     }
   if (need_comma)
     fprintf (stream, "\n");
@@ -2102,7 +2102,7 @@ output_numeric (const char *filename, const char *version)
   fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
   fprintf (stream, "/* Numeric values of Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-ctype.c for Unicode %s.  */\n",
-	   version);
+           version);
 
   /* Create table of occurring fractions.  */
   nfractions = 0;
@@ -2111,34 +2111,34 @@ output_numeric (const char *filename, const char *version)
       uc_fraction_t value = get_numeric_value (ch);
 
       for (i = 0; i < nfractions; i++)
-	if (value.numerator == fractions[i].numerator
-	    && value.denominator == fractions[i].denominator)
-	  break;
+        if (value.numerator == fractions[i].numerator
+            && value.denominator == fractions[i].denominator)
+          break;
       if (i == nfractions)
-	{
-	  if (nfractions == 128)
-	    abort ();
-	  for (i = 0; i < nfractions; i++)
-	    if (value.denominator < fractions[i].denominator
-		|| (value.denominator == fractions[i].denominator
-		    && value.numerator < fractions[i].numerator))
-	      break;
-	  for (j = nfractions; j > i; j--)
-	    fractions[j] = fractions[j - 1];
-	  fractions[i] = value;
-	  nfractions++;
-	}
+        {
+          if (nfractions == 128)
+            abort ();
+          for (i = 0; i < nfractions; i++)
+            if (value.denominator < fractions[i].denominator
+                || (value.denominator == fractions[i].denominator
+                    && value.numerator < fractions[i].numerator))
+              break;
+          for (j = nfractions; j > i; j--)
+            fractions[j] = fractions[j - 1];
+          fractions[i] = value;
+          nfractions++;
+        }
     }
 
   fprintf (stream, "static const uc_fraction_t u_numeric_values[%d] =\n",
-	   nfractions);
+           nfractions);
   fprintf (stream, "{\n");
   for (i = 0; i < nfractions; i++)
     {
       fprintf (stream, "  { %d, %d }", fractions[i].numerator,
-	       fractions[i].denominator);
+               fractions[i].denominator);
       if (i+1 < nfractions)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
       fprintf (stream, "\n");
     }
   fprintf (stream, "};\n");
@@ -2152,11 +2152,11 @@ output_numeric (const char *filename, const char *version)
       uc_fraction_t value = get_numeric_value (ch);
 
       for (i = 0; i < nfractions; i++)
-	if (value.numerator == fractions[i].numerator
-	    && value.denominator == fractions[i].denominator)
-	  break;
+        if (value.numerator == fractions[i].numerator
+            && value.denominator == fractions[i].denominator)
+          break;
       if (i == nfractions)
-	abort ();
+        abort ();
 
       numeric_table_add (&t, ch, i);
     }
@@ -2176,14 +2176,14 @@ output_numeric (const char *filename, const char *version)
 
   for (i = 0; i < 5; i++)
     fprintf (stream, "#define numeric_header_%d %d\n", i,
-	     ((uint32_t *) t.result)[i]);
+             ((uint32_t *) t.result)[i]);
   fprintf (stream, "static const\n");
   fprintf (stream, "struct\n");
   fprintf (stream, "  {\n");
   fprintf (stream, "    int level1[%zu];\n", t.level1_size);
   fprintf (stream, "    short level2[%zu << %d];\n", t.level2_size, t.q);
   fprintf (stream, "    unsigned short level3[%zu * %d + 1];\n", t.level3_size,
-	   (1 << t.p) * 7 / 16);
+           (1 << t.p) * 7 / 16);
   fprintf (stream, "  }\n");
   fprintf (stream, "u_numeric =\n");
   fprintf (stream, "{\n");
@@ -2194,15 +2194,15 @@ output_numeric (const char *filename, const char *version)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       offset = ((uint32_t *) (t.result + level1_offset))[i];
       if (offset == 0)
-	fprintf (stream, " %5d", -1);
+        fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zu",
-		 (offset - level2_offset) / sizeof (uint32_t));
+        fprintf (stream, " %5zu",
+                 (offset - level2_offset) / sizeof (uint32_t));
       if (i+1 < t.level1_size)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
     }
   if (t.level1_size > 8)
     fprintf (stream, "\n ");
@@ -2214,15 +2214,15 @@ output_numeric (const char *filename, const char *version)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       offset = ((uint32_t *) (t.result + level2_offset))[i];
       if (offset == 0)
-	fprintf (stream, " %5d", -1);
+        fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zu",
-		 (offset - level3_offset) / sizeof (uint8_t));
+        fprintf (stream, " %5zu",
+                 (offset - level3_offset) / sizeof (uint8_t));
       if (i+1 < t.level2_size << t.q)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
     }
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n ");
@@ -2247,10 +2247,10 @@ output_numeric (const char *filename, const char *version)
   for (i = 0; i < (t.level3_size << t.p) * 7 / 16 + 1; i++)
     {
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       fprintf (stream, " 0x%04x", level3_packed[i]);
       if (i+1 < (t.level3_size << t.p) * 7 / 16 + 1)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
     }
   if ((t.level3_size << t.p) * 7 / 16 + 1 > 8)
     fprintf (stream, "\n ");
@@ -2337,25 +2337,25 @@ get_mirror_value (unsigned int ch)
   unsigned int i;
 
   mirrored = (unicode_attributes[ch].name != NULL
-	      && unicode_attributes[ch].mirrored);
+              && unicode_attributes[ch].mirrored);
   mirror_char = 0xfffd;
   for (i = 0; i < sizeof (mirror_pairs) / sizeof (mirror_pairs[0]); i++)
     if (ch == mirror_pairs[i][0])
       {
-	mirror_char = mirror_pairs[i][1];
-	break;
+        mirror_char = mirror_pairs[i][1];
+        break;
       }
     else if (ch == mirror_pairs[i][1])
       {
-	mirror_char = mirror_pairs[i][0];
-	break;
+        mirror_char = mirror_pairs[i][0];
+        break;
       }
   if (mirrored)
     return (int) mirror_char - (int) ch;
   else
     {
       if (mirror_char != 0xfffd)
-	abort ();
+        abort ();
       return 0;
     }
 }
@@ -2387,7 +2387,7 @@ output_mirror (const char *filename, const char *version)
   fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
   fprintf (stream, "/* Mirrored Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-ctype.c for Unicode %s.  */\n",
-	   version);
+           version);
 
   t.p = 7;
   t.q = 9;
@@ -2415,7 +2415,7 @@ output_mirror (const char *filename, const char *version)
 
   for (i = 0; i < 5; i++)
     fprintf (stream, "#define mirror_header_%d %d\n", i,
-	     ((uint32_t *) t.result)[i]);
+             ((uint32_t *) t.result)[i]);
   fprintf (stream, "static const\n");
   fprintf (stream, "struct\n");
   fprintf (stream, "  {\n");
@@ -2432,15 +2432,15 @@ output_mirror (const char *filename, const char *version)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       offset = ((uint32_t *) (t.result + level1_offset))[i];
       if (offset == 0)
-	fprintf (stream, " %5d", -1);
+        fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zu",
-		 (offset - level2_offset) / sizeof (uint32_t));
+        fprintf (stream, " %5zu",
+                 (offset - level2_offset) / sizeof (uint32_t));
       if (i+1 < t.level1_size)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
     }
   if (t.level1_size > 8)
     fprintf (stream, "\n ");
@@ -2452,15 +2452,15 @@ output_mirror (const char *filename, const char *version)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       offset = ((uint32_t *) (t.result + level2_offset))[i];
       if (offset == 0)
-	fprintf (stream, " %5d", -1);
+        fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zu",
-		 (offset - level3_offset) / sizeof (int32_t));
+        fprintf (stream, " %5zu",
+                 (offset - level3_offset) / sizeof (int32_t));
       if (i+1 < t.level2_size << t.q)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
     }
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n ");
@@ -2471,10 +2471,10 @@ output_mirror (const char *filename, const char *version)
   for (i = 0; i < t.level3_size << t.p; i++)
     {
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       fprintf (stream, " %5d", ((int32_t *) (t.result + level3_offset))[i]);
       if (i+1 < t.level3_size << t.p)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
     }
   if (t.level3_size << t.p > 8)
     fprintf (stream, "\n ");
@@ -2577,20 +2577,20 @@ fill_properties (const char *proplist_filename)
       unsigned int propvalue;
 
       if (fscanf (stream, "%200[^\n]\n", buf) < 1)
-	break;
+        break;
 
       if (buf[0] == '\0' || buf[0] == '#')
-	continue;
+        continue;
 
       if (sscanf (buf, "%X..%X%[ ;]%[^ ]", &i1, &i2, padding, propname) != 4)
-	{
-	  if (sscanf (buf, "%X%[ ;]%[^ ]", &i1, padding, propname) != 3)
-	    {
-	      fprintf (stderr, "parse error in '%s'\n", proplist_filename);
-	      exit (1);
-	    }
-	  i2 = i1;
-	}
+        {
+          if (sscanf (buf, "%X%[ ;]%[^ ]", &i1, padding, propname) != 3)
+            {
+              fprintf (stderr, "parse error in '%s'\n", proplist_filename);
+              exit (1);
+            }
+          i2 = i1;
+        }
 #define PROP(name,value) \
       if (strcmp (propname, name) == 0) propvalue = value; else
       /* PropList.txt */
@@ -2640,16 +2640,16 @@ fill_properties (const char *proplist_filename)
       PROP ("Grapheme_Base", PROP_GRAPHEME_BASE)
       PROP ("Grapheme_Link", PROP_GRAPHEME_LINK)
 #undef PROP
-	{
-	  fprintf (stderr, "unknown property named '%s' in '%s'\n", propname,
-		   proplist_filename);
-	  exit (1);
-	}
+        {
+          fprintf (stderr, "unknown property named '%s' in '%s'\n", propname,
+                   proplist_filename);
+          exit (1);
+        }
       if (!(i1 <= i2 && i2 < 0x110000))
-	abort ();
+        abort ();
 
       for (i = i1; i <= i2; i++)
-	unicode_properties[i] |= 1ULL << propvalue;
+        unicode_properties[i] |= 1ULL << propvalue;
     }
 
   if (ferror (stream) || fclose (stream))
@@ -2682,10 +2682,10 @@ fill_property30 (char array[0x110000], const char *proplist_filename, const char
   do
     {
       if (fscanf (stream, "%100[^\n]\n", buf) < 1)
-	{
-	  fprintf (stderr, "no property found in '%s'\n", proplist_filename);
-	  exit (1);
-	}
+        {
+          fprintf (stderr, "no property found in '%s'\n", proplist_filename);
+          exit (1);
+        }
     }
   while (strstr (buf, property_name) == NULL);
 
@@ -2694,38 +2694,38 @@ fill_property30 (char array[0x110000], const char *proplist_filename, const char
       unsigned int i1, i2;
 
       if (fscanf (stream, "%100[^\n]\n", buf) < 1)
-	break;
+        break;
       if (buf[0] == '*')
-	break;
+        break;
       if (strlen (buf) >= 10 && buf[4] == '.' && buf[5] == '.')
-	{
-	  if (sscanf (buf, "%4X..%4X", &i1, &i2) < 2)
-	    {
-	      fprintf (stderr, "parse error in property in '%s'\n",
-		       proplist_filename);
-	      exit (1);
-	    }
-	}
+        {
+          if (sscanf (buf, "%4X..%4X", &i1, &i2) < 2)
+            {
+              fprintf (stderr, "parse error in property in '%s'\n",
+                       proplist_filename);
+              exit (1);
+            }
+        }
       else if (strlen (buf) >= 4)
-	{
-	  if (sscanf (buf, "%4X", &i1) < 1)
-	    {
-	      fprintf (stderr, "parse error in property in '%s'\n",
-		       proplist_filename);
-	      exit (1);
-	    }
-	  i2 = i1;
-	}
+        {
+          if (sscanf (buf, "%4X", &i1) < 1)
+            {
+              fprintf (stderr, "parse error in property in '%s'\n",
+                       proplist_filename);
+              exit (1);
+            }
+          i2 = i1;
+        }
       else
-	{
-	  fprintf (stderr, "parse error in property in '%s'\n",
-		   proplist_filename);
-	  exit (1);
-	}
+        {
+          fprintf (stderr, "parse error in property in '%s'\n",
+                   proplist_filename);
+          exit (1);
+        }
       if (!(i1 <= i2 && i2 < 0x110000))
-	abort ();
+        abort ();
       for (i = i1; i <= i2; i++)
-	array[i] = 1;
+        array[i] = 1;
     }
   if (ferror (stream) || fclose (stream))
     {
@@ -2856,8 +2856,8 @@ is_property_private_use (unsigned int ch)
 {
   /* Determined through "grep 'Private Use,' UnicodeData-3.1.0.txt".  */
   return (ch >= 0xE000 && ch <= 0xF8FF)
-	 || (ch >= 0xF0000 && ch <= 0xFFFFD)
-	 || (ch >= 0x100000 && ch <= 0x10FFFD);
+         || (ch >= 0xF0000 && ch <= 0xFFFFD)
+         || (ch >= 0x100000 && ch <= 0x10FFFD);
 }
 
 /* See PropList-3.0.1.txt.  */
@@ -3129,7 +3129,7 @@ is_property_bidi_embedding_or_override (unsigned int ch)
 {
   int category = get_bidi_category (ch);
   return (category == UC_BIDI_LRE || category == UC_BIDI_LRO
-	  || category == UC_BIDI_RLE || category == UC_BIDI_RLO);
+          || category == UC_BIDI_RLE || category == UC_BIDI_RLO);
 }
 
 /* See PropList-3.0.1.txt.  */
@@ -3194,8 +3194,8 @@ static bool
 is_property_zero_width (unsigned int ch)
 {
   return is_category_Cf (ch)
-	 || (unicode_attributes[ch].name != NULL
-	     && strstr (unicode_attributes[ch].name, "ZERO WIDTH") != NULL);
+         || (unicode_attributes[ch].name != NULL
+             && strstr (unicode_attributes[ch].name, "ZERO WIDTH") != NULL);
 }
 
 /* See PropList-3.0.1.txt.  */
@@ -3212,21 +3212,21 @@ is_property_non_break (unsigned int ch)
   /* This is exactly the set of characters having line breaking
      property GL.  */
   return (ch == 0x00A0 /* NO-BREAK SPACE */
-	  || ch == 0x034F /* COMBINING GRAPHEME JOINER */
-	  || ch == 0x035C /* COMBINING DOUBLE BREVE BELOW */
-	  || ch == 0x035D /* COMBINING DOUBLE BREVE */
-	  || ch == 0x035E /* COMBINING DOUBLE MACRON */
-	  || ch == 0x035F /* COMBINING DOUBLE MACRON BELOW */
-	  || ch == 0x0360 /* COMBINING DOUBLE TILDE */
-	  || ch == 0x0361 /* COMBINING DOUBLE INVERTED BREVE */
-	  || ch == 0x0362 /* COMBINING DOUBLE RIGHTWARDS ARROW BELOW */
-	  || ch == 0x0F08 /* TIBETAN MARK SBRUL SHAD */
-	  || ch == 0x0F0C /* TIBETAN MARK DELIMITER TSHEG BSTAR */
-	  || ch == 0x0F12 /* TIBETAN MARK RGYA GRAM SHAD */
-	  || ch == 0x180E /* MONGOLIAN VOWEL SEPARATOR */
-	  || ch == 0x2007 /* FIGURE SPACE */
-	  || ch == 0x2011 /* NON-BREAKING HYPHEN */
-	  || ch == 0x202F /* NARROW NO-BREAK SPACE */);
+          || ch == 0x034F /* COMBINING GRAPHEME JOINER */
+          || ch == 0x035C /* COMBINING DOUBLE BREVE BELOW */
+          || ch == 0x035D /* COMBINING DOUBLE BREVE */
+          || ch == 0x035E /* COMBINING DOUBLE MACRON */
+          || ch == 0x035F /* COMBINING DOUBLE MACRON BELOW */
+          || ch == 0x0360 /* COMBINING DOUBLE TILDE */
+          || ch == 0x0361 /* COMBINING DOUBLE INVERTED BREVE */
+          || ch == 0x0362 /* COMBINING DOUBLE RIGHTWARDS ARROW BELOW */
+          || ch == 0x0F08 /* TIBETAN MARK SBRUL SHAD */
+          || ch == 0x0F0C /* TIBETAN MARK DELIMITER TSHEG BSTAR */
+          || ch == 0x0F12 /* TIBETAN MARK RGYA GRAM SHAD */
+          || ch == 0x180E /* MONGOLIAN VOWEL SEPARATOR */
+          || ch == 0x2007 /* FIGURE SPACE */
+          || ch == 0x2011 /* NON-BREAKING HYPHEN */
+          || ch == 0x202F /* NARROW NO-BREAK SPACE */);
 }
 
 /* See PropList-3.0.1.txt.  */
@@ -3249,9 +3249,9 @@ static bool
 is_property_format_control (unsigned int ch)
 {
   return (is_category_Cf (ch)
-	  && get_bidi_category (ch) == UC_BIDI_BN
-	  && !is_property_join_control (ch)
-	  && ch != 0xFEFF);
+          && get_bidi_category (ch) == UC_BIDI_BN
+          && !is_property_join_control (ch)
+          && ch != 0xFEFF);
 }
 
 /* See PropList.txt, UCD.html.  */
@@ -3360,10 +3360,10 @@ static bool
 is_property_combining (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && (strcmp (unicode_attributes[ch].combining, "0") != 0
-	      || is_category_Mc (ch)
-	      || is_category_Me (ch)
-	      || is_category_Mn (ch)));
+          && (strcmp (unicode_attributes[ch].combining, "0") != 0
+              || is_category_Mc (ch)
+              || is_category_Me (ch)
+              || is_category_Mn (ch)));
 }
 
 #if 0 /* same as is_property_bidi_non_spacing_mark */
@@ -3372,7 +3372,7 @@ static bool
 is_property_non_spacing (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && get_bidi_category (ch) == UC_BIDI_NSM);
+          && get_bidi_category (ch) == UC_BIDI_NSM);
 }
 #endif
 
@@ -3388,14 +3388,14 @@ is_property_composite (unsigned int ch)
       && unicode_attributes[ch].decomposition != NULL)
     {
       /* Test whether the decomposition contains more than one character,
-	 and the first is not a space.  */
+         and the first is not a space.  */
       const char *decomp = unicode_attributes[ch].decomposition;
       if (decomp[0] == '<')
-	{
-	  decomp = strchr (decomp, '>') + 1;
-	  if (decomp[0] == ' ')
-	    decomp++;
-	}
+        {
+          decomp = strchr (decomp, '>') + 1;
+          if (decomp[0] == ' ')
+            decomp++;
+        }
       return strchr (decomp, ' ') != NULL && strncmp (decomp, "0020 ", 5) != 0;
     }
   return false;
@@ -3413,8 +3413,8 @@ static bool
 is_property_numeric (unsigned int ch)
 {
   return ((get_numeric_value (ch)).denominator > 0)
-	 || (ch == 0x09F8) /* BENGALI CURRENCY NUMERATOR ONE LESS THAN THE DENOMINATOR */
-	 || (ch == 0x2183); /* ROMAN NUMERAL REVERSED ONE HUNDRED */
+         || (ch == 0x09F8) /* BENGALI CURRENCY NUMERATOR ONE LESS THAN THE DENOMINATOR */
+         || (ch == 0x2183); /* ROMAN NUMERAL REVERSED ONE HUNDRED */
 }
 
 /* See PropList.txt, UCD.html.  */
@@ -3436,8 +3436,8 @@ static bool
 is_property_ignorable_control (unsigned int ch)
 {
   return ((is_category_Cc (ch) && get_bidi_category (ch) == UC_BIDI_BN)
-	  || is_category_Cf (ch))
-	 && ch != 0x0000;
+          || is_category_Cf (ch))
+         && ch != 0x0000;
 }
 
 /* ------------------------------------------------------------------------- */
@@ -3568,43 +3568,43 @@ fill_scripts (const char *scripts_filename)
       int script;
 
       if (fscanf (stream, "%200[^\n]\n", buf) < 1)
-	break;
+        break;
 
       if (buf[0] == '\0' || buf[0] == '#')
-	continue;
+        continue;
 
       if (sscanf (buf, "%X..%X%[ ;]%[^ ]", &i1, &i2, padding, scriptname) != 4)
-	{
-	  if (sscanf (buf, "%X%[ ;]%[^ ]", &i1, padding, scriptname) != 3)
-	    {
-	      fprintf (stderr, "parse error in '%s'\n", scripts_filename);
-	      exit (1);
-	    }
-	  i2 = i1;
-	}
+        {
+          if (sscanf (buf, "%X%[ ;]%[^ ]", &i1, padding, scriptname) != 3)
+            {
+              fprintf (stderr, "parse error in '%s'\n", scripts_filename);
+              exit (1);
+            }
+          i2 = i1;
+        }
       if (i2 < i1)
-	abort ();
+        abort ();
       if (i2 >= 0x110000)
-	abort ();
+        abort ();
 
       for (script = numscripts - 1; script >= 0; script--)
-	if (strcmp (scripts[script], scriptname) == 0)
-	  break;
+        if (strcmp (scripts[script], scriptname) == 0)
+          break;
       if (script < 0)
-	{
-	  scripts[numscripts] = strdup (scriptname);
-	  script = numscripts;
-	  numscripts++;
-	  if (numscripts == 256)
-	    abort ();
-	}
+        {
+          scripts[numscripts] = strdup (scriptname);
+          script = numscripts;
+          numscripts++;
+          if (numscripts == 256)
+            abort ();
+        }
 
       for (i = i1; i <= i2; i++)
-	{
-	  if (unicode_scripts[i] != (uint8_t)~(uint8_t)0)
-	    fprintf (stderr, "0x%04X belongs to multiple scripts\n", i);
-	  unicode_scripts[i] = script;
-	}
+        {
+          if (unicode_scripts[i] != (uint8_t)~(uint8_t)0)
+            fprintf (stderr, "0x%04X belongs to multiple scripts\n", i);
+          unicode_scripts[i] = script;
+        }
     }
 
   if (ferror (stream) || fclose (stream))
@@ -3648,7 +3648,7 @@ output_scripts (const char *version)
   fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
   fprintf (stream, "/* Unicode scripts.  */\n");
   fprintf (stream, "/* Generated automatically by gen-ctype.c for Unicode %s.  */\n",
-	   version);
+           version);
 
   for (s = 0; s < numscripts; s++)
     {
@@ -3656,8 +3656,8 @@ output_scripts (const char *version)
       char *cp;
 
       for (cp = lcp; *cp != '\0'; cp++)
-	if (*cp >= 'A' && *cp <= 'Z')
-	  *cp += 'a' - 'A';
+        if (*cp >= 'A' && *cp <= 'Z')
+          *cp += 'a' - 'A';
 
       scriptinfo[s].lowercase_name = lcp;
     }
@@ -3665,29 +3665,29 @@ output_scripts (const char *version)
   for (s = 0; s < numscripts; s++)
     {
       fprintf (stream, "static const uc_interval_t script_%s_intervals[] =\n",
-	       scriptinfo[s].lowercase_name);
+               scriptinfo[s].lowercase_name);
       fprintf (stream, "{\n");
       i = 0;
       for (ch = 0; ch < 0x110000; ch++)
-	if (unicode_scripts[ch] == s)
-	  {
-	    unsigned int start;
-	    unsigned int end;
+        if (unicode_scripts[ch] == s)
+          {
+            unsigned int start;
+            unsigned int end;
 
-	    start = ch;
-	    while (ch + 1 < 0x110000 && unicode_scripts[ch + 1] == s)
-	      ch++;
-	    end = ch;
+            start = ch;
+            while (ch + 1 < 0x110000 && unicode_scripts[ch + 1] == s)
+              ch++;
+            end = ch;
 
-	    if (i > 0)
-	      fprintf (stream, ",\n");
-	    if (start == end)
-	      fprintf (stream, "  { 0x%04X, 1, 1 }", start);
-	    else
-	      fprintf (stream, "  { 0x%04X, 1, 0 }, { 0x%04X, 0, 1 }",
-		       start, end);
-	    i++;
-	  }
+            if (i > 0)
+              fprintf (stream, ",\n");
+            if (start == end)
+              fprintf (stream, "  { 0x%04X, 1, 1 }", start);
+            else
+              fprintf (stream, "  { 0x%04X, 1, 0 }, { 0x%04X, 0, 1 }",
+                       start, end);
+            i++;
+          }
       fprintf (stream, "\n");
       fprintf (stream, "};\n");
     }
@@ -3698,13 +3698,13 @@ output_scripts (const char *version)
     {
       fprintf (stream, "  {\n");
       fprintf (stream, "    sizeof (script_%s_intervals) / sizeof (uc_interval_t),\n",
-	       scriptinfo[s].lowercase_name);
+               scriptinfo[s].lowercase_name);
       fprintf (stream, "    script_%s_intervals,\n",
-	       scriptinfo[s].lowercase_name);
+               scriptinfo[s].lowercase_name);
       fprintf (stream, "    \"%s\"\n", scripts[s]);
       fprintf (stream, "  }");
       if (s+1 < numscripts)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
       fprintf (stream, "\n");
     }
   fprintf (stream, "};\n");
@@ -3717,7 +3717,7 @@ output_scripts (const char *version)
     {
       unsigned int s = unicode_scripts[ch];
       if (s != (uint8_t)~(uint8_t)0)
-	script_table_add (&t, ch, s);
+        script_table_add (&t, ch, s);
     }
 
   script_table_finalize (&t);
@@ -3735,7 +3735,7 @@ output_scripts (const char *version)
 
   for (i = 0; i < 5; i++)
     fprintf (stream, "#define script_header_%d %d\n", i,
-	     ((uint32_t *) t.result)[i]);
+             ((uint32_t *) t.result)[i]);
   fprintf (stream, "static const\n");
   fprintf (stream, "struct\n");
   fprintf (stream, "  {\n");
@@ -3752,15 +3752,15 @@ output_scripts (const char *version)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       offset = ((uint32_t *) (t.result + level1_offset))[i];
       if (offset == 0)
-	fprintf (stream, " %5d", -1);
+        fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zu",
-		 (offset - level2_offset) / sizeof (uint32_t));
+        fprintf (stream, " %5zu",
+                 (offset - level2_offset) / sizeof (uint32_t));
       if (i+1 < t.level1_size)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
     }
   if (t.level1_size > 8)
     fprintf (stream, "\n ");
@@ -3772,15 +3772,15 @@ output_scripts (const char *version)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       offset = ((uint32_t *) (t.result + level2_offset))[i];
       if (offset == 0)
-	fprintf (stream, " %5d", -1);
+        fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zu",
-		 (offset - level3_offset) / sizeof (uint8_t));
+        fprintf (stream, " %5zu",
+                 (offset - level3_offset) / sizeof (uint8_t));
       if (i+1 < t.level2_size << t.q)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
     }
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n ");
@@ -3791,10 +3791,10 @@ output_scripts (const char *version)
   for (i = 0; i < t.level3_size << t.p; i++)
     {
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       fprintf (stream, " %3d", ((uint8_t *) (t.result + level3_offset))[i]);
       if (i+1 < t.level3_size << t.p)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
     }
   if (t.level3_size << t.p > 8)
     fprintf (stream, "\n ");
@@ -3825,7 +3825,7 @@ output_scripts_byname (const char *version)
   fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
   fprintf (stream, "/* Unicode scripts.  */\n");
   fprintf (stream, "/* Generated automatically by gen-ctype.c for Unicode %s.  */\n",
-	   version);
+           version);
   fprintf (stream, "struct named_script { const char *name; unsigned int index; };\n");
   fprintf (stream, "%%struct-type\n");
   fprintf (stream, "%%language=ANSI-C\n");
@@ -3874,25 +3874,25 @@ fill_blocks (const char *blocks_filename)
       char blockname[200+1];
 
       if (fscanf (stream, "%200[^\n]\n", buf) < 1)
-	break;
+        break;
 
       if (buf[0] == '\0' || buf[0] == '#')
-	continue;
+        continue;
 
       if (sscanf (buf, "%X..%X%[ ;]%[^\r]", &i1, &i2, padding, blockname) != 4)
-	{
-	  fprintf (stderr, "parse error in '%s'\n", blocks_filename);
-	  exit (1);
-	}
+        {
+          fprintf (stderr, "parse error in '%s'\n", blocks_filename);
+          exit (1);
+        }
       blocks[numblocks].start = i1;
       blocks[numblocks].end = i2;
       blocks[numblocks].name = strdup (blockname);
       /* It must be sorted.  */
       if (numblocks > 0 && !(blocks[numblocks-1].end < blocks[numblocks].start))
-	abort ();
+        abort ();
       numblocks++;
       if (numblocks == 256)
-	abort ();
+        abort ();
     }
 
   if (ferror (stream) || fclose (stream))
@@ -3916,9 +3916,9 @@ block_first_index (unsigned int ch)
     {
       unsigned int mid = (lo + hi) / 2; /* >= lo, < hi */
       if (blocks[mid].end < ch)
-	lo = mid + 1;
+        lo = mid + 1;
       else
-	hi = mid;
+        hi = mid;
     }
   return hi;
 }
@@ -3938,9 +3938,9 @@ block_last_index (unsigned int ch)
     {
       unsigned int mid = (lo + hi) / 2; /* >= lo, < hi */
       if (blocks[mid].start <= ch)
-	lo = mid + 1;
+        lo = mid + 1;
       else
-	hi = mid;
+        hi = mid;
     }
   return hi;
 }
@@ -3965,23 +3965,23 @@ output_blocks (const char *version)
   fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
   fprintf (stream, "/* Unicode blocks.  */\n");
   fprintf (stream, "/* Generated automatically by gen-ctype.c for Unicode %s.  */\n",
-	   version);
+           version);
 
   fprintf (stream, "static const uc_block_t blocks[] =\n");
   fprintf (stream, "{\n");
   for (i = 0; i < numblocks; i++)
     {
       fprintf (stream, "  { 0x%04X, 0x%04X, \"%s\" }", blocks[i].start,
-	       blocks[i].end, blocks[i].name);
+               blocks[i].end, blocks[i].name);
       if (i+1 < numblocks)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
       fprintf (stream, "\n");
     }
   fprintf (stream, "};\n");
   fprintf (stream, "#define blocks_level1_shift %d\n", shift);
   fprintf (stream, "#define blocks_level1_threshold 0x%04X\n", threshold);
   fprintf (stream, "static const uint8_t blocks_level1[%d * 2] =\n",
-	   threshold >> shift);
+           threshold >> shift);
   fprintf (stream, "{\n");
   for (i1 = 0; i1 < (threshold >> shift); i1++)
     {
@@ -3989,14 +3989,14 @@ output_blocks (const char *version)
       unsigned int last_index = block_last_index (((i1 + 1) << shift) - 1);
       fprintf (stream, "  %3d, %3d", first_index, last_index);
       if (i1+1 < (threshold >> shift))
-	fprintf (stream, ",");
+        fprintf (stream, ",");
       fprintf (stream, "\n");
     }
   fprintf (stream, "};\n");
   fprintf (stream, "#define blocks_upper_first_index %d\n",
-	   block_first_index (threshold));
+           block_first_index (threshold));
   fprintf (stream, "#define blocks_upper_last_index %d\n",
-	   block_last_index (0x10FFFF));
+           block_last_index (0x10FFFF));
 
   if (ferror (stream) || fclose (stream))
     {
@@ -4022,10 +4022,10 @@ static bool
 is_c_whitespace (unsigned int ch)
 {
   return (ch == ' ' /* space */
-	  || ch == '\t' /* horizontal tab */
-	  || ch == '\n' || ch == '\r' /* new-line */
-	  || ch == '\v' /* vertical tab */
-	  || ch == '\f'); /* form-feed */
+          || ch == '\t' /* horizontal tab */
+          || ch == '\n' || ch == '\r' /* new-line */
+          || ch == '\v' /* vertical tab */
+          || ch == '\f'); /* form-feed */
 }
 
 /* ISO C 99 section 6.4.2.1 and appendix D.  */
@@ -4325,7 +4325,7 @@ static bool
 is_java_whitespace (unsigned int ch)
 {
   return (ch == ' ' || ch == '\t' || ch == '\f'
-	  || ch == '\n' || ch == '\r');
+          || ch == '\n' || ch == '\r');
 }
 
 /* The Java Language Specification, 3rd edition, §3.8.
@@ -4382,7 +4382,7 @@ output_ident_category (const char *filename, int (*predicate) (unsigned int), co
   fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
   fprintf (stream, "/* Language syntax properties of Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-ctype.c for Unicode %s.  */\n",
-	   version);
+           version);
 
   t.p = 7; /* or 8 */
   t.q = 5; /* or 4 */
@@ -4392,7 +4392,7 @@ output_ident_category (const char *filename, int (*predicate) (unsigned int), co
     {
       int syntaxcode = predicate (ch);
       if (syntaxcode != UC_IDENTIFIER_INVALID)
-	identsyntax_table_add (&t, ch, syntaxcode);
+        identsyntax_table_add (&t, ch, syntaxcode);
     }
 
   identsyntax_table_finalize (&t);
@@ -4410,14 +4410,14 @@ output_ident_category (const char *filename, int (*predicate) (unsigned int), co
 
   for (i = 0; i < 5; i++)
     fprintf (stream, "#define identsyntax_header_%d %d\n", i,
-	     ((uint32_t *) t.result)[i]);
+             ((uint32_t *) t.result)[i]);
   fprintf (stream, "static const\n");
   fprintf (stream, "struct\n");
   fprintf (stream, "  {\n");
   fprintf (stream, "    int level1[%zu];\n", t.level1_size);
   fprintf (stream, "    short level2[%zu << %d];\n", t.level2_size, t.q);
   fprintf (stream, "    unsigned short level3[%zu * %d];\n", t.level3_size,
-	   (1 << t.p) * 2 / 16);
+           (1 << t.p) * 2 / 16);
   fprintf (stream, "  }\n");
   fprintf (stream, "%s =\n", name);
   fprintf (stream, "{\n");
@@ -4428,15 +4428,15 @@ output_ident_category (const char *filename, int (*predicate) (unsigned int), co
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       offset = ((uint32_t *) (t.result + level1_offset))[i];
       if (offset == 0)
-	fprintf (stream, " %5d", -1);
+        fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zu",
-		 (offset - level2_offset) / sizeof (uint32_t));
+        fprintf (stream, " %5zu",
+                 (offset - level2_offset) / sizeof (uint32_t));
       if (i+1 < t.level1_size)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
     }
   if (t.level1_size > 8)
     fprintf (stream, "\n ");
@@ -4448,15 +4448,15 @@ output_ident_category (const char *filename, int (*predicate) (unsigned int), co
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       offset = ((uint32_t *) (t.result + level2_offset))[i];
       if (offset == 0)
-	fprintf (stream, " %5d", -1);
+        fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zu",
-		 (offset - level3_offset) / sizeof (uint8_t));
+        fprintf (stream, " %5zu",
+                 (offset - level3_offset) / sizeof (uint8_t));
       if (i+1 < t.level2_size << t.q)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
     }
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n ");
@@ -4468,18 +4468,18 @@ output_ident_category (const char *filename, int (*predicate) (unsigned int), co
   for (i = 0; i < (t.level3_size << t.p) * 2 / 16; i++)
     {
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       fprintf (stream, " 0x%04x",
-	       (((uint8_t *) (t.result + level3_offset))[8 * i] << 0)
-	       | (((uint8_t *) (t.result + level3_offset))[8 * i + 1] << 2)
-	       | (((uint8_t *) (t.result + level3_offset))[8 * i + 2] << 4)
-	       | (((uint8_t *) (t.result + level3_offset))[8 * i + 3] << 6)
-	       | (((uint8_t *) (t.result + level3_offset))[8 * i + 4] << 8)
-	       | (((uint8_t *) (t.result + level3_offset))[8 * i + 5] << 10)
-	       | (((uint8_t *) (t.result + level3_offset))[8 * i + 6] << 12)
-	       | (((uint8_t *) (t.result + level3_offset))[8 * i + 7] << 14));
+               (((uint8_t *) (t.result + level3_offset))[8 * i] << 0)
+               | (((uint8_t *) (t.result + level3_offset))[8 * i + 1] << 2)
+               | (((uint8_t *) (t.result + level3_offset))[8 * i + 2] << 4)
+               | (((uint8_t *) (t.result + level3_offset))[8 * i + 3] << 6)
+               | (((uint8_t *) (t.result + level3_offset))[8 * i + 4] << 8)
+               | (((uint8_t *) (t.result + level3_offset))[8 * i + 5] << 10)
+               | (((uint8_t *) (t.result + level3_offset))[8 * i + 6] << 12)
+               | (((uint8_t *) (t.result + level3_offset))[8 * i + 7] << 14));
       if (i+1 < (t.level3_size << t.p) * 2 / 16)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
     }
   if ((t.level3_size << t.p) * 2 / 16 > 8)
     fprintf (stream, "\n ");
@@ -4558,39 +4558,39 @@ static bool
 is_lower (unsigned int ch)
 {
   return (to_upper (ch) != ch)
-	 /* <U00DF> is lowercase, but without simple to_upper mapping.  */
-	 || (ch == 0x00DF);
+         /* <U00DF> is lowercase, but without simple to_upper mapping.  */
+         || (ch == 0x00DF);
 }
 
 static bool
 is_alpha (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && ((unicode_attributes[ch].category[0] == 'L'
-	       /* Theppitak Karoonboonyanan <thep@links.nectec.or.th> says
-		  <U0E2F>, <U0E46> should belong to is_punct.  */
-	       && (ch != 0x0E2F) && (ch != 0x0E46))
-	      /* Theppitak Karoonboonyanan <thep@links.nectec.or.th> says
-		 <U0E31>, <U0E34>..<U0E3A>, <U0E47>..<U0E4E> are is_alpha.  */
-	      || (ch == 0x0E31)
-	      || (ch >= 0x0E34 && ch <= 0x0E3A)
-	      || (ch >= 0x0E47 && ch <= 0x0E4E)
-	      /* Avoid warning for <U0345>.  */
-	      || (ch == 0x0345)
-	      /* Avoid warnings for <U2160>..<U217F>.  */
-	      || (unicode_attributes[ch].category[0] == 'N'
-		  && unicode_attributes[ch].category[1] == 'l')
-	      /* Avoid warnings for <U24B6>..<U24E9>.  */
-	      || (unicode_attributes[ch].category[0] == 'S'
-		  && unicode_attributes[ch].category[1] == 'o'
-		  && strstr (unicode_attributes[ch].name, " LETTER ")
-		     != NULL)
-	      /* Consider all the non-ASCII digits as alphabetic.
-		 ISO C 99 forbids us to have them in category "digit",
-		 but we want iswalnum to return true on them.  */
-	      || (unicode_attributes[ch].category[0] == 'N'
-		  && unicode_attributes[ch].category[1] == 'd'
-		  && !(ch >= 0x0030 && ch <= 0x0039))));
+          && ((unicode_attributes[ch].category[0] == 'L'
+               /* Theppitak Karoonboonyanan <thep@links.nectec.or.th> says
+                  <U0E2F>, <U0E46> should belong to is_punct.  */
+               && (ch != 0x0E2F) && (ch != 0x0E46))
+              /* Theppitak Karoonboonyanan <thep@links.nectec.or.th> says
+                 <U0E31>, <U0E34>..<U0E3A>, <U0E47>..<U0E4E> are is_alpha.  */
+              || (ch == 0x0E31)
+              || (ch >= 0x0E34 && ch <= 0x0E3A)
+              || (ch >= 0x0E47 && ch <= 0x0E4E)
+              /* Avoid warning for <U0345>.  */
+              || (ch == 0x0345)
+              /* Avoid warnings for <U2160>..<U217F>.  */
+              || (unicode_attributes[ch].category[0] == 'N'
+                  && unicode_attributes[ch].category[1] == 'l')
+              /* Avoid warnings for <U24B6>..<U24E9>.  */
+              || (unicode_attributes[ch].category[0] == 'S'
+                  && unicode_attributes[ch].category[1] == 'o'
+                  && strstr (unicode_attributes[ch].name, " LETTER ")
+                     != NULL)
+              /* Consider all the non-ASCII digits as alphabetic.
+                 ISO C 99 forbids us to have them in category "digit",
+                 but we want iswalnum to return true on them.  */
+              || (unicode_attributes[ch].category[0] == 'N'
+                  && unicode_attributes[ch].category[1] == 'd'
+                  && !(ch >= 0x0030 && ch <= 0x0039))));
 }
 
 static bool
@@ -4598,8 +4598,8 @@ is_digit (unsigned int ch)
 {
 #if 0
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'N'
-	  && unicode_attributes[ch].category[1] == 'd');
+          && unicode_attributes[ch].category[0] == 'N'
+          && unicode_attributes[ch].category[1] == 'd');
   /* Note: U+0BE7..U+0BEF and U+1369..U+1371 are digit systems without
      a zero.  Must add <0> in front of them by hand.  */
 #else
@@ -4631,11 +4631,11 @@ static bool
 is_blank (unsigned int ch)
 {
   return (ch == 0x0009 /* '\t' */
-	  /* Category Zs without mention of "<noBreak>" */
-	  || (unicode_attributes[ch].name != NULL
-	      && unicode_attributes[ch].category[0] == 'Z'
-	      && unicode_attributes[ch].category[1] == 's'
-	      && !strstr (unicode_attributes[ch].decomposition, "<noBreak>")));
+          /* Category Zs without mention of "<noBreak>" */
+          || (unicode_attributes[ch].name != NULL
+              && unicode_attributes[ch].category[0] == 'Z'
+              && unicode_attributes[ch].category[1] == 's'
+              && !strstr (unicode_attributes[ch].decomposition, "<noBreak>")));
 }
 
 static bool
@@ -4644,30 +4644,30 @@ is_space (unsigned int ch)
   /* Don't make U+00A0 a space. Non-breaking space means that all programs
      should treat it like a punctuation character, not like a space. */
   return (ch == 0x0020 /* ' ' */
-	  || ch == 0x000C /* '\f' */
-	  || ch == 0x000A /* '\n' */
-	  || ch == 0x000D /* '\r' */
-	  || ch == 0x0009 /* '\t' */
-	  || ch == 0x000B /* '\v' */
-	  /* Categories Zl, Zp, and Zs without mention of "<noBreak>" */
-	  || (unicode_attributes[ch].name != NULL
-	      && unicode_attributes[ch].category[0] == 'Z'
-	      && (unicode_attributes[ch].category[1] == 'l'
-		  || unicode_attributes[ch].category[1] == 'p'
-		  || (unicode_attributes[ch].category[1] == 's'
-		      && !strstr (unicode_attributes[ch].decomposition,
-				  "<noBreak>")))));
+          || ch == 0x000C /* '\f' */
+          || ch == 0x000A /* '\n' */
+          || ch == 0x000D /* '\r' */
+          || ch == 0x0009 /* '\t' */
+          || ch == 0x000B /* '\v' */
+          /* Categories Zl, Zp, and Zs without mention of "<noBreak>" */
+          || (unicode_attributes[ch].name != NULL
+              && unicode_attributes[ch].category[0] == 'Z'
+              && (unicode_attributes[ch].category[1] == 'l'
+                  || unicode_attributes[ch].category[1] == 'p'
+                  || (unicode_attributes[ch].category[1] == 's'
+                      && !strstr (unicode_attributes[ch].decomposition,
+                                  "<noBreak>")))));
 }
 
 static bool
 is_cntrl (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && (strcmp (unicode_attributes[ch].name, "<control>") == 0
-	      /* Categories Zl and Zp */
-	      || (unicode_attributes[ch].category[0] == 'Z'
-		  && (unicode_attributes[ch].category[1] == 'l'
-		      || unicode_attributes[ch].category[1] == 'p'))));
+          && (strcmp (unicode_attributes[ch].name, "<control>") == 0
+              /* Categories Zl and Zp */
+              || (unicode_attributes[ch].category[0] == 'Z'
+                  && (unicode_attributes[ch].category[1] == 'l'
+                      || unicode_attributes[ch].category[1] == 'p'))));
 }
 
 static bool
@@ -4675,8 +4675,8 @@ is_xdigit (unsigned int ch)
 {
 #if 0
   return is_digit (ch)
-	 || (ch >= 0x0041 && ch <= 0x0046)
-	 || (ch >= 0x0061 && ch <= 0x0066);
+         || (ch >= 0x0041 && ch <= 0x0046)
+         || (ch >= 0x0061 && ch <= 0x0066);
 #else
   /* SUSV2 gives us some freedom for the "xdigit" category, but ISO C 99
      takes it away:
@@ -4687,8 +4687,8 @@ is_xdigit (unsigned int ch)
         hexadecimal-digit: one of 0 1 2 3 4 5 6 7 8 9 a b c d e f A B C D E F
    */
   return (ch >= 0x0030 && ch <= 0x0039)
-	 || (ch >= 0x0041 && ch <= 0x0046)
-	 || (ch >= 0x0061 && ch <= 0x0066);
+         || (ch >= 0x0041 && ch <= 0x0046)
+         || (ch >= 0x0061 && ch <= 0x0066);
 #endif
 }
 
@@ -4696,20 +4696,20 @@ static bool
 is_graph (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && strcmp (unicode_attributes[ch].name, "<control>")
-	  && !is_space (ch));
+          && strcmp (unicode_attributes[ch].name, "<control>")
+          && !is_space (ch));
 }
 
 static bool
 is_print (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
-	  && strcmp (unicode_attributes[ch].name, "<control>")
-	  /* Categories Zl and Zp */
-	  && !(unicode_attributes[ch].name != NULL
-	       && unicode_attributes[ch].category[0] == 'Z'
-	       && (unicode_attributes[ch].category[1] == 'l'
-		   || unicode_attributes[ch].category[1] == 'p')));
+          && strcmp (unicode_attributes[ch].name, "<control>")
+          /* Categories Zl and Zp */
+          && !(unicode_attributes[ch].name != NULL
+               && unicode_attributes[ch].category[0] == 'Z'
+               && (unicode_attributes[ch].category[1] == 'l'
+                   || unicode_attributes[ch].category[1] == 'p')));
 }
 
 static bool
@@ -4717,7 +4717,7 @@ is_punct (unsigned int ch)
 {
 #if 0
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'P');
+          && unicode_attributes[ch].category[0] == 'P');
 #else
   /* The traditional POSIX definition of punctuation is every graphic,
      non-alphanumeric character.  */
@@ -4758,19 +4758,19 @@ is_combining (unsigned int ch)
      "Mn", "Mc", "Me". In Unicode 3.1 this property has been dropped from the
      PropList.txt file, so we take the latter definition.  */
   return (unicode_attributes[ch].name != NULL
-	  && unicode_attributes[ch].category[0] == 'M'
-	  && (unicode_attributes[ch].category[1] == 'n'
-	      || unicode_attributes[ch].category[1] == 'c'
-	      || unicode_attributes[ch].category[1] == 'e'));
+          && unicode_attributes[ch].category[0] == 'M'
+          && (unicode_attributes[ch].category[1] == 'n'
+              || unicode_attributes[ch].category[1] == 'c'
+              || unicode_attributes[ch].category[1] == 'e'));
 }
 
 static bool
 is_combining_level3 (unsigned int ch)
 {
   return is_combining (ch)
-	 && !(unicode_attributes[ch].combining[0] != '\0'
-	      && unicode_attributes[ch].combining[0] != '0'
-	      && strtoul (unicode_attributes[ch].combining, NULL, 10) >= 200);
+         && !(unicode_attributes[ch].combining[0] != '\0'
+              && unicode_attributes[ch].combining[0] != '0'
+              && strtoul (unicode_attributes[ch].combining, NULL, 10) >= 200);
 }
 
 /* Return the UCS symbol string for a Unicode character.  */
@@ -4799,7 +4799,7 @@ ucs_symbol_range (unsigned int low, unsigned int high)
 
 static void
 output_charclass (FILE *stream, const char *classname,
-		  bool (*func) (unsigned int))
+                  bool (*func) (unsigned int))
 {
   char table[0x110000];
   unsigned int i;
@@ -4816,39 +4816,39 @@ output_charclass (FILE *stream, const char *classname,
   for (i = 0; i < 0x110000; )
     {
       if (!table[i])
-	i++;
+        i++;
       else
-	{
-	  unsigned int low, high;
-	  char buf[25];
+        {
+          unsigned int low, high;
+          char buf[25];
 
-	  low = i;
-	  do
-	    i++;
-	  while (i < 0x110000 && table[i]);
-	  high = i - 1;
+          low = i;
+          do
+            i++;
+          while (i < 0x110000 && table[i]);
+          high = i - 1;
 
-	  if (low == high)
-	    strcpy (buf, ucs_symbol (low));
-	  else
-	    strcpy (buf, ucs_symbol_range (low, high));
+          if (low == high)
+            strcpy (buf, ucs_symbol (low));
+          else
+            strcpy (buf, ucs_symbol_range (low, high));
 
-	  if (need_semicolon)
-	    {
-	      fprintf (stream, ";");
-	      column++;
-	    }
+          if (need_semicolon)
+            {
+              fprintf (stream, ";");
+              column++;
+            }
 
-	  if (column + strlen (buf) > max_column)
-	    {
-	      fprintf (stream, "/\n   ");
-	      column = 3;
-	    }
+          if (column + strlen (buf) > max_column)
+            {
+              fprintf (stream, "/\n   ");
+              column = 3;
+            }
 
-	  fprintf (stream, "%s", buf);
-	  column += strlen (buf);
-	  need_semicolon = true;
-	}
+          fprintf (stream, "%s", buf);
+          column += strlen (buf);
+          need_semicolon = true;
+        }
     }
   fprintf (stream, "\n");
 }
@@ -4857,7 +4857,7 @@ output_charclass (FILE *stream, const char *classname,
 
 static void
 output_charmap (FILE *stream, const char *mapname,
-		unsigned int (*func) (unsigned int))
+                unsigned int (*func) (unsigned int))
 {
   char table[0x110000];
   unsigned int i;
@@ -4874,29 +4874,29 @@ output_charmap (FILE *stream, const char *mapname,
   for (i = 0; i < 0x110000; i++)
     if (table[i])
       {
-	char buf[25+1];
+        char buf[25+1];
 
-	strcpy (buf, "(");
-	strcat (buf, ucs_symbol (i));
-	strcat (buf, ",");
-	strcat (buf, ucs_symbol (func (i)));
-	strcat (buf, ")");
+        strcpy (buf, "(");
+        strcat (buf, ucs_symbol (i));
+        strcat (buf, ",");
+        strcat (buf, ucs_symbol (func (i)));
+        strcat (buf, ")");
 
-	if (need_semicolon)
-	  {
-	    fprintf (stream, ";");
-	    column++;
-	  }
+        if (need_semicolon)
+          {
+            fprintf (stream, ";");
+            column++;
+          }
 
-	if (column + strlen (buf) > max_column)
-	  {
-	    fprintf (stream, "/\n   ");
-	    column = 3;
-	  }
+        if (column + strlen (buf) > max_column)
+          {
+            fprintf (stream, "/\n   ");
+            column = 3;
+          }
 
-	fprintf (stream, "%s", buf);
-	column += strlen (buf);
-	need_semicolon = true;
+        fprintf (stream, "%s", buf);
+        column += strlen (buf);
+        need_semicolon = true;
       }
   fprintf (stream, "\n");
 }
@@ -4927,7 +4927,7 @@ output_tables (const char *filename, const char *version)
   fprintf (stream, "comment_char %%\n");
   fprintf (stream, "\n");
   fprintf (stream, "%% Generated automatically by gen-unicode-ctype for Unicode %s.\n",
-	   version);
+           version);
   fprintf (stream, "\n");
 
   fprintf (stream, "LC_IDENTIFICATION\n");
@@ -4956,85 +4956,85 @@ output_tables (const char *filename, const char *version)
   for (ch = 0; ch < 0x110000; ch++)
     {
       /* toupper restriction: "Only characters specified for the keywords
-	 lower and upper shall be specified.  */
+         lower and upper shall be specified.  */
       if (to_upper (ch) != ch && !(is_lower (ch) || is_upper (ch)))
-	fprintf (stderr,
-		 "%s is not upper|lower but toupper(0x%04X) = 0x%04X\n",
-		 ucs_symbol (ch), ch, to_upper (ch));
+        fprintf (stderr,
+                 "%s is not upper|lower but toupper(0x%04X) = 0x%04X\n",
+                 ucs_symbol (ch), ch, to_upper (ch));
 
       /* tolower restriction: "Only characters specified for the keywords
-	 lower and upper shall be specified.  */
+         lower and upper shall be specified.  */
       if (to_lower (ch) != ch && !(is_lower (ch) || is_upper (ch)))
-	fprintf (stderr,
-		 "%s is not upper|lower but tolower(0x%04X) = 0x%04X\n",
-		 ucs_symbol (ch), ch, to_lower (ch));
+        fprintf (stderr,
+                 "%s is not upper|lower but tolower(0x%04X) = 0x%04X\n",
+                 ucs_symbol (ch), ch, to_lower (ch));
 
       /* alpha restriction: "Characters classified as either upper or lower
-	 shall automatically belong to this class.  */
+         shall automatically belong to this class.  */
       if ((is_lower (ch) || is_upper (ch)) && !is_alpha (ch))
-	fprintf (stderr, "%s is upper|lower but not alpha\n", ucs_symbol (ch));
+        fprintf (stderr, "%s is upper|lower but not alpha\n", ucs_symbol (ch));
 
       /* alpha restriction: "No character specified for the keywords cntrl,
-	 digit, punct or space shall be specified."  */
+         digit, punct or space shall be specified."  */
       if (is_alpha (ch) && is_cntrl (ch))
-	fprintf (stderr, "%s is alpha and cntrl\n", ucs_symbol (ch));
+        fprintf (stderr, "%s is alpha and cntrl\n", ucs_symbol (ch));
       if (is_alpha (ch) && is_digit (ch))
-	fprintf (stderr, "%s is alpha and digit\n", ucs_symbol (ch));
+        fprintf (stderr, "%s is alpha and digit\n", ucs_symbol (ch));
       if (is_alpha (ch) && is_punct (ch))
-	fprintf (stderr, "%s is alpha and punct\n", ucs_symbol (ch));
+        fprintf (stderr, "%s is alpha and punct\n", ucs_symbol (ch));
       if (is_alpha (ch) && is_space (ch))
-	fprintf (stderr, "%s is alpha and space\n", ucs_symbol (ch));
+        fprintf (stderr, "%s is alpha and space\n", ucs_symbol (ch));
 
       /* space restriction: "No character specified for the keywords upper,
-	 lower, alpha, digit, graph or xdigit shall be specified."
-	 upper, lower, alpha already checked above.  */
+         lower, alpha, digit, graph or xdigit shall be specified."
+         upper, lower, alpha already checked above.  */
       if (is_space (ch) && is_digit (ch))
-	fprintf (stderr, "%s is space and digit\n", ucs_symbol (ch));
+        fprintf (stderr, "%s is space and digit\n", ucs_symbol (ch));
       if (is_space (ch) && is_graph (ch))
-	fprintf (stderr, "%s is space and graph\n", ucs_symbol (ch));
+        fprintf (stderr, "%s is space and graph\n", ucs_symbol (ch));
       if (is_space (ch) && is_xdigit (ch))
-	fprintf (stderr, "%s is space and xdigit\n", ucs_symbol (ch));
+        fprintf (stderr, "%s is space and xdigit\n", ucs_symbol (ch));
 
       /* cntrl restriction: "No character specified for the keywords upper,
-	 lower, alpha, digit, punct, graph, print or xdigit shall be
-	 specified."  upper, lower, alpha already checked above.  */
+         lower, alpha, digit, punct, graph, print or xdigit shall be
+         specified."  upper, lower, alpha already checked above.  */
       if (is_cntrl (ch) && is_digit (ch))
-	fprintf (stderr, "%s is cntrl and digit\n", ucs_symbol (ch));
+        fprintf (stderr, "%s is cntrl and digit\n", ucs_symbol (ch));
       if (is_cntrl (ch) && is_punct (ch))
-	fprintf (stderr, "%s is cntrl and punct\n", ucs_symbol (ch));
+        fprintf (stderr, "%s is cntrl and punct\n", ucs_symbol (ch));
       if (is_cntrl (ch) && is_graph (ch))
-	fprintf (stderr, "%s is cntrl and graph\n", ucs_symbol (ch));
+        fprintf (stderr, "%s is cntrl and graph\n", ucs_symbol (ch));
       if (is_cntrl (ch) && is_print (ch))
-	fprintf (stderr, "%s is cntrl and print\n", ucs_symbol (ch));
+        fprintf (stderr, "%s is cntrl and print\n", ucs_symbol (ch));
       if (is_cntrl (ch) && is_xdigit (ch))
-	fprintf (stderr, "%s is cntrl and xdigit\n", ucs_symbol (ch));
+        fprintf (stderr, "%s is cntrl and xdigit\n", ucs_symbol (ch));
 
       /* punct restriction: "No character specified for the keywords upper,
-	 lower, alpha, digit, cntrl, xdigit or as the <space> character shall
-	 be specified."  upper, lower, alpha, cntrl already checked above.  */
+         lower, alpha, digit, cntrl, xdigit or as the <space> character shall
+         be specified."  upper, lower, alpha, cntrl already checked above.  */
       if (is_punct (ch) && is_digit (ch))
-	fprintf (stderr, "%s is punct and digit\n", ucs_symbol (ch));
+        fprintf (stderr, "%s is punct and digit\n", ucs_symbol (ch));
       if (is_punct (ch) && is_xdigit (ch))
-	fprintf (stderr, "%s is punct and xdigit\n", ucs_symbol (ch));
+        fprintf (stderr, "%s is punct and xdigit\n", ucs_symbol (ch));
       if (is_punct (ch) && (ch == 0x0020))
-	fprintf (stderr, "%s is punct\n", ucs_symbol (ch));
+        fprintf (stderr, "%s is punct\n", ucs_symbol (ch));
 
       /* graph restriction: "No character specified for the keyword cntrl
-	 shall be specified."  Already checked above.  */
+         shall be specified."  Already checked above.  */
 
       /* print restriction: "No character specified for the keyword cntrl
-	 shall be specified."  Already checked above.  */
+         shall be specified."  Already checked above.  */
 
       /* graph - print relation: differ only in the <space> character.
-	 How is this possible if there are more than one space character?!
-	 I think susv2/xbd/locale.html should speak of "space characters",
-	 not "space character".  */
+         How is this possible if there are more than one space character?!
+         I think susv2/xbd/locale.html should speak of "space characters",
+         not "space character".  */
       if (is_print (ch) && !(is_graph (ch) || /* ch == 0x0020 */ is_space (ch)))
-	fprintf (stderr,
-		 "%s is print but not graph|<space>\n", ucs_symbol (ch));
+        fprintf (stderr,
+                 "%s is print but not graph|<space>\n", ucs_symbol (ch));
       if (!is_print (ch) && (is_graph (ch) || ch == 0x0020))
-	fprintf (stderr,
-		 "%s is graph|<space> but not print\n", ucs_symbol (ch));
+        fprintf (stderr,
+                 "%s is graph|<space> but not print\n", ucs_symbol (ch));
     }
 
   fprintf (stream, "LC_CTYPE\n");
@@ -5103,36 +5103,36 @@ fill_width (const char *width_filename)
       lineno++;
       c = getc (stream);
       if (c == EOF)
-	break;
+        break;
       if (c == '#')
-	{
-	  do c = getc (stream); while (c != EOF && c != '\n');
-	  continue;
-	}
+        {
+          do c = getc (stream); while (c != EOF && c != '\n');
+          continue;
+        }
       ungetc (c, stream);
       n = getfield (stream, field0, ';');
       n += getfield (stream, field1, ' ');
       n += getfield (stream, field2, '\n');
       if (n == 0)
-	break;
+        break;
       if (n != 3)
-	{
-	  fprintf (stderr, "short line in '%s':%d\n", width_filename, lineno);
-	  exit (1);
-	}
+        {
+          fprintf (stderr, "short line in '%s':%d\n", width_filename, lineno);
+          exit (1);
+        }
       i = strtoul (field0, NULL, 16);
       if (strstr (field0, "..") != NULL)
-	{
-	  /* Deal with a range.  */
-	  j = strtoul (strstr (field0, "..") + 2, NULL, 16);
-	  for (; i <= j; i++)
-	    unicode_width[i] = strdup (field1);
-	}
+        {
+          /* Deal with a range.  */
+          j = strtoul (strstr (field0, "..") + 2, NULL, 16);
+          for (; i <= j; i++)
+            unicode_width[i] = strdup (field1);
+        }
       else
-	{
-	  /* Single character line.  */
-	  unicode_width[i] = strdup (field1);
-	}
+        {
+          /* Single character line.  */
+          unicode_width[i] = strdup (field1);
+        }
     }
   if (ferror (stream) || fclose (stream))
     {
@@ -5194,580 +5194,580 @@ get_lbp (unsigned int ch)
     {
       /* mandatory break */
       if (ch == 0x000A || ch == 0x000D || ch == 0x0085 /* newline */
-	  || ch == 0x000C /* form feed */
-	  || ch == 0x000B /* line tabulation */
-	  || ch == 0x2028 /* LINE SEPARATOR */
-	  || ch == 0x2029 /* PARAGRAPH SEPARATOR */)
-	attr |= 1 << LBP_BK;
+          || ch == 0x000C /* form feed */
+          || ch == 0x000B /* line tabulation */
+          || ch == 0x2028 /* LINE SEPARATOR */
+          || ch == 0x2029 /* PARAGRAPH SEPARATOR */)
+        attr |= 1 << LBP_BK;
 
       if (ch == 0x2060 /* WORD JOINER */
-	  || ch == 0xFEFF /* ZERO WIDTH NO-BREAK SPACE */)
-	attr |= 1 << LBP_WJ;
+          || ch == 0xFEFF /* ZERO WIDTH NO-BREAK SPACE */)
+        attr |= 1 << LBP_WJ;
 
       /* zero width space */
       if (ch == 0x200B /* ZERO WIDTH SPACE */)
-	attr |= 1 << LBP_ZW;
+        attr |= 1 << LBP_ZW;
 
       /* non-breaking (glue) */
       if (ch == 0x00A0 /* NO-BREAK SPACE */
-	  || ch == 0x202F /* NARROW NO-BREAK SPACE */
-	  || ch == 0x180E /* MONGOLIAN VOWEL SEPARATOR */
-	  || ch == 0x034F /* COMBINING GRAPHEME JOINER */
-	  || ch == 0x2007 /* FIGURE SPACE */
-	  || ch == 0x2011 /* NON-BREAKING HYPHEN */
-	  || ch == 0x0F08 /* TIBETAN MARK SBRUL SHAD */
-	  || ch == 0x0F0C /* TIBETAN MARK DELIMITER TSHEG BSTAR */
-	  || ch == 0x0F12 /* TIBETAN MARK RGYA GRAM SHAD */
-	  || (ch >= 0x035C && ch <= 0x0362) /* COMBINING DOUBLE ... */)
-	attr |= 1 << LBP_GL;
+          || ch == 0x202F /* NARROW NO-BREAK SPACE */
+          || ch == 0x180E /* MONGOLIAN VOWEL SEPARATOR */
+          || ch == 0x034F /* COMBINING GRAPHEME JOINER */
+          || ch == 0x2007 /* FIGURE SPACE */
+          || ch == 0x2011 /* NON-BREAKING HYPHEN */
+          || ch == 0x0F08 /* TIBETAN MARK SBRUL SHAD */
+          || ch == 0x0F0C /* TIBETAN MARK DELIMITER TSHEG BSTAR */
+          || ch == 0x0F12 /* TIBETAN MARK RGYA GRAM SHAD */
+          || (ch >= 0x035C && ch <= 0x0362) /* COMBINING DOUBLE ... */)
+        attr |= 1 << LBP_GL;
 
       /* space */
       if (ch == 0x0020 /* SPACE */)
-	attr |= 1 << LBP_SP;
+        attr |= 1 << LBP_SP;
 
       /* break opportunity before and after */
       if (ch == 0x2014 /* EM DASH */)
-	attr |= 1 << LBP_B2;
+        attr |= 1 << LBP_B2;
 
       /* break opportunity after */
       if (ch == 0x1680 /* OGHAM SPACE MARK */
-	  || ch == 0x2000 /* EN QUAD */
-	  || ch == 0x2001 /* EM QUAD */
-	  || ch == 0x2002 /* EN SPACE */
-	  || ch == 0x2003 /* EM SPACE */
-	  || ch == 0x2004 /* THREE-PER-EM SPACE */
-	  || ch == 0x2005 /* FOUR-PER-EM SPACE */
-	  || ch == 0x2006 /* SIX-PER-EM SPACE */
-	  || ch == 0x2008 /* PUNCTUATION SPACE */
-	  || ch == 0x2009 /* THIN SPACE */
-	  || ch == 0x200A /* HAIR SPACE */
-	  || ch == 0x205F /* MEDIUM MATHEMATICAL SPACE */
-	  || ch == 0x0009 /* tab */
-	  || ch == 0x00AD /* SOFT HYPHEN */
-	  || ch == 0x058A /* ARMENIAN HYPHEN */
-	  || ch == 0x2010 /* HYPHEN */
-	  || ch == 0x2012 /* FIGURE DASH */
-	  || ch == 0x2013 /* EN DASH */
-	  || ch == 0x05BE /* HEBREW PUNCTUATION MAQAF */
-	  || ch == 0x0F0B /* TIBETAN MARK INTERSYLLABIC TSHEG */
-	  || ch == 0x1361 /* ETHIOPIC WORDSPACE */
-	  || ch == 0x17D8 /* KHMER SIGN BEYYAL */
-	  || ch == 0x17DA /* KHMER SIGN KOOMUUT */
-	  || ch == 0x2027 /* HYPHENATION POINT */
-	  || ch == 0x007C /* VERTICAL LINE */
-	  || ch == 0x16EB /* RUNIC SINGLE PUNCTUATION */
-	  || ch == 0x16EC /* RUNIC MULTIPLE PUNCTUATION */
-	  || ch == 0x16ED /* RUNIC CROSS PUNCTUATION */
-	  || ch == 0x2056 /* THREE DOT PUNCTUATION */
-	  || ch == 0x2058 /* FOUR DOT PUNCTUATION */
-	  || ch == 0x2059 /* FIVE DOT PUNCTUATION */
-	  || ch == 0x205A /* TWO DOT PUNCTUATION */
-	  || ch == 0x205B /* FOUR DOT MARK */
-	  || ch == 0x205D /* TRICOLON */
-	  || ch == 0x205E /* VERTICAL FOUR DOTS */
-	  || ch == 0x2E19 /* PALM BRANCH */
-	  || ch == 0x2E2A /* TWO DOTS OVER ONE DOT PUNCTUATION */
-	  || ch == 0x2E2B /* ONE DOT OVER TWO DOTS PUNCTUATION */
-	  || ch == 0x2E2C /* SQUARED FOUR DOT PUNCTUATION */
-	  || ch == 0x2E2D /* FIVE DOT PUNCTUATION */
-	  || ch == 0x2E30 /* RING POINT */
-	  || ch == 0x10100 /* AEGEAN WORD SEPARATOR LINE */
-	  || ch == 0x10101 /* AEGEAN WORD SEPARATOR DOT */
-	  || ch == 0x10102 /* AEGEAN CHECK MARK */
-	  || ch == 0x1039F /* UGARITIC WORD DIVIDER */
-	  || ch == 0x103D0 /* OLD PERSIAN WORD DIVIDER */
-	  || ch == 0x1091F /* PHOENICIAN WORD SEPARATOR */
-	  || ch == 0x12470 /* CUNEIFORM PUNCTUATION SIGN OLD ASSYRIAN WORD DIVIDER */
-	  || ch == 0x0964 /* DEVANAGARI DANDA */
-	  || ch == 0x0965 /* DEVANAGARI DOUBLE DANDA */
-	  || ch == 0x0E5A /* THAI CHARACTER ANGKHANKHU */
-	  || ch == 0x0E5B /* THAI CHARACTER KHOMUT */
-	  || ch == 0x104A /* MYANMAR SIGN LITTLE SECTION */
-	  || ch == 0x104B /* MYANMAR SIGN SECTION */
-	  || ch == 0x1735 /* PHILIPPINE SINGLE PUNCTUATION */
-	  || ch == 0x1736 /* PHILIPPINE DOUBLE PUNCTUATION */
-	  || ch == 0x17D4 /* KHMER SIGN KHAN */
-	  || ch == 0x17D5 /* KHMER SIGN BARIYOOSAN */
-	  || ch == 0x1B5E /* BALINESE CARIK SIKI */
-	  || ch == 0x1B5F /* BALINESE CARIK PAREREN */
-	  || ch == 0xA8CE /* SAURASHTRA DANDA */
-	  || ch == 0xA8CF /* SAURASHTRA DOUBLE DANDA */
-	  || ch == 0xAA5D /* CHAM PUNCTUATION DANDA */
-	  || ch == 0xAA5E /* CHAM PUNCTUATION DOUBLE DANDA */
-	  || ch == 0xAA5F /* CHAM PUNCTUATION TRIPLE DANDA */
-	  || ch == 0x10A56 /* KHAROSHTHI PUNCTUATION DANDA */
-	  || ch == 0x10A57 /* KHAROSHTHI PUNCTUATION DOUBLE DANDA */
-	  || ch == 0x0F34 /* TIBETAN MARK BSDUS RTAGS */
-	  || ch == 0x0F7F /* TIBETAN SIGN RNAM BCAD */
-	  || ch == 0x0F85 /* TIBETAN MARK PALUTA */
-	  || ch == 0x0FBE /* TIBETAN KU RU KHA */
-	  || ch == 0x0FBF /* TIBETAN KU RU KHA BZHI MIG CAN */
-	  || ch == 0x0FD2 /* TIBETAN MARK NYIS TSHEG */
-	  || ch == 0x1804 /* MONGOLIAN COLON */
-	  || ch == 0x1805 /* MONGOLIAN FOUR DOTS */
-	  || ch == 0x1B5A /* BALINESE PANTI */
-	  || ch == 0x1B5B /* BALINESE PAMADA */
-	  || ch == 0x1B5C /* BALINESE WINDU */
-	  || ch == 0x1B5D /* BALINESE CARIK PAMUNGKAH */
-	  || ch == 0x1B60 /* BALINESE PAMENENG */
-	  || ch == 0x1C3B /* LEPCHA PUNCTUATION TA-ROL */
-	  || ch == 0x1C3C /* LEPCHA PUNCTUATION NYET THYOOM TA-ROL */
-	  || ch == 0x1C3D /* LEPCHA PUNCTUATION CER-WA */
-	  || ch == 0x1C3E /* LEPCHA PUNCTUATION TSHOOK CER-WA */
-	  || ch == 0x1C3F /* LEPCHA PUNCTUATION TSHOOK */
-	  || ch == 0x1C7E /* OL CHIKI PUNCTUATION MUCAAD */
-	  || ch == 0x1C7F /* OL CHIKI PUNCTUATION DOUBLE MUCAAD */
-	  || ch == 0x2CFA /* COPTIC OLD NUBIAN DIRECT QUESTION MARK */
-	  || ch == 0x2CFB /* COPTIC OLD NUBIAN INDIRECT QUESTION MARK */
-	  || ch == 0x2CFC /* COPTIC OLD NUBIAN VERSE DIVIDER */
-	  || ch == 0x2CFF /* COPTIC MORPHOLOGICAL DIVIDER */
-	  || (ch >= 0x2E0E && ch <= 0x2E15) /* EDITORIAL CORONIS .. UPWARDS ANCORA */
-	  || ch == 0x2E17 /* DOUBLE OBLIQUE HYPHEN */
-	  || ch == 0xA60D /* VAI COMMA */
-	  || ch == 0xA60F /* VAI QUESTION MARK */
-	  || ch == 0xA92E /* KAYAH LI SIGN CWI */
-	  || ch == 0xA92F /* KAYAH LI SIGN SHYA */
-	  || ch == 0x10A50 /* KHAROSHTHI PUNCTUATION DOT */
-	  || ch == 0x10A51 /* KHAROSHTHI PUNCTUATION SMALL CIRCLE */
-	  || ch == 0x10A52 /* KHAROSHTHI PUNCTUATION CIRCLE */
-	  || ch == 0x10A53 /* KHAROSHTHI PUNCTUATION CRESCENT BAR */
-	  || ch == 0x10A54 /* KHAROSHTHI PUNCTUATION MANGALAM */
-	  || ch == 0x10A55 /* KHAROSHTHI PUNCTUATION LOTUS */
-	  /* Extra characters for compatibility with Unicode LineBreak.txt.  */
-	  || ch == 0x12471 /* CUNEIFORM PUNCTUATION SIGN VERTICAL COLON */
-	  || ch == 0x12472 /* CUNEIFORM PUNCTUATION SIGN DIAGONAL COLON */
-	  || ch == 0x12473 /* CUNEIFORM PUNCTUATION SIGN DIAGONAL TRICOLON */)
-	attr |= 1 << LBP_BA;
+          || ch == 0x2000 /* EN QUAD */
+          || ch == 0x2001 /* EM QUAD */
+          || ch == 0x2002 /* EN SPACE */
+          || ch == 0x2003 /* EM SPACE */
+          || ch == 0x2004 /* THREE-PER-EM SPACE */
+          || ch == 0x2005 /* FOUR-PER-EM SPACE */
+          || ch == 0x2006 /* SIX-PER-EM SPACE */
+          || ch == 0x2008 /* PUNCTUATION SPACE */
+          || ch == 0x2009 /* THIN SPACE */
+          || ch == 0x200A /* HAIR SPACE */
+          || ch == 0x205F /* MEDIUM MATHEMATICAL SPACE */
+          || ch == 0x0009 /* tab */
+          || ch == 0x00AD /* SOFT HYPHEN */
+          || ch == 0x058A /* ARMENIAN HYPHEN */
+          || ch == 0x2010 /* HYPHEN */
+          || ch == 0x2012 /* FIGURE DASH */
+          || ch == 0x2013 /* EN DASH */
+          || ch == 0x05BE /* HEBREW PUNCTUATION MAQAF */
+          || ch == 0x0F0B /* TIBETAN MARK INTERSYLLABIC TSHEG */
+          || ch == 0x1361 /* ETHIOPIC WORDSPACE */
+          || ch == 0x17D8 /* KHMER SIGN BEYYAL */
+          || ch == 0x17DA /* KHMER SIGN KOOMUUT */
+          || ch == 0x2027 /* HYPHENATION POINT */
+          || ch == 0x007C /* VERTICAL LINE */
+          || ch == 0x16EB /* RUNIC SINGLE PUNCTUATION */
+          || ch == 0x16EC /* RUNIC MULTIPLE PUNCTUATION */
+          || ch == 0x16ED /* RUNIC CROSS PUNCTUATION */
+          || ch == 0x2056 /* THREE DOT PUNCTUATION */
+          || ch == 0x2058 /* FOUR DOT PUNCTUATION */
+          || ch == 0x2059 /* FIVE DOT PUNCTUATION */
+          || ch == 0x205A /* TWO DOT PUNCTUATION */
+          || ch == 0x205B /* FOUR DOT MARK */
+          || ch == 0x205D /* TRICOLON */
+          || ch == 0x205E /* VERTICAL FOUR DOTS */
+          || ch == 0x2E19 /* PALM BRANCH */
+          || ch == 0x2E2A /* TWO DOTS OVER ONE DOT PUNCTUATION */
+          || ch == 0x2E2B /* ONE DOT OVER TWO DOTS PUNCTUATION */
+          || ch == 0x2E2C /* SQUARED FOUR DOT PUNCTUATION */
+          || ch == 0x2E2D /* FIVE DOT PUNCTUATION */
+          || ch == 0x2E30 /* RING POINT */
+          || ch == 0x10100 /* AEGEAN WORD SEPARATOR LINE */
+          || ch == 0x10101 /* AEGEAN WORD SEPARATOR DOT */
+          || ch == 0x10102 /* AEGEAN CHECK MARK */
+          || ch == 0x1039F /* UGARITIC WORD DIVIDER */
+          || ch == 0x103D0 /* OLD PERSIAN WORD DIVIDER */
+          || ch == 0x1091F /* PHOENICIAN WORD SEPARATOR */
+          || ch == 0x12470 /* CUNEIFORM PUNCTUATION SIGN OLD ASSYRIAN WORD DIVIDER */
+          || ch == 0x0964 /* DEVANAGARI DANDA */
+          || ch == 0x0965 /* DEVANAGARI DOUBLE DANDA */
+          || ch == 0x0E5A /* THAI CHARACTER ANGKHANKHU */
+          || ch == 0x0E5B /* THAI CHARACTER KHOMUT */
+          || ch == 0x104A /* MYANMAR SIGN LITTLE SECTION */
+          || ch == 0x104B /* MYANMAR SIGN SECTION */
+          || ch == 0x1735 /* PHILIPPINE SINGLE PUNCTUATION */
+          || ch == 0x1736 /* PHILIPPINE DOUBLE PUNCTUATION */
+          || ch == 0x17D4 /* KHMER SIGN KHAN */
+          || ch == 0x17D5 /* KHMER SIGN BARIYOOSAN */
+          || ch == 0x1B5E /* BALINESE CARIK SIKI */
+          || ch == 0x1B5F /* BALINESE CARIK PAREREN */
+          || ch == 0xA8CE /* SAURASHTRA DANDA */
+          || ch == 0xA8CF /* SAURASHTRA DOUBLE DANDA */
+          || ch == 0xAA5D /* CHAM PUNCTUATION DANDA */
+          || ch == 0xAA5E /* CHAM PUNCTUATION DOUBLE DANDA */
+          || ch == 0xAA5F /* CHAM PUNCTUATION TRIPLE DANDA */
+          || ch == 0x10A56 /* KHAROSHTHI PUNCTUATION DANDA */
+          || ch == 0x10A57 /* KHAROSHTHI PUNCTUATION DOUBLE DANDA */
+          || ch == 0x0F34 /* TIBETAN MARK BSDUS RTAGS */
+          || ch == 0x0F7F /* TIBETAN SIGN RNAM BCAD */
+          || ch == 0x0F85 /* TIBETAN MARK PALUTA */
+          || ch == 0x0FBE /* TIBETAN KU RU KHA */
+          || ch == 0x0FBF /* TIBETAN KU RU KHA BZHI MIG CAN */
+          || ch == 0x0FD2 /* TIBETAN MARK NYIS TSHEG */
+          || ch == 0x1804 /* MONGOLIAN COLON */
+          || ch == 0x1805 /* MONGOLIAN FOUR DOTS */
+          || ch == 0x1B5A /* BALINESE PANTI */
+          || ch == 0x1B5B /* BALINESE PAMADA */
+          || ch == 0x1B5C /* BALINESE WINDU */
+          || ch == 0x1B5D /* BALINESE CARIK PAMUNGKAH */
+          || ch == 0x1B60 /* BALINESE PAMENENG */
+          || ch == 0x1C3B /* LEPCHA PUNCTUATION TA-ROL */
+          || ch == 0x1C3C /* LEPCHA PUNCTUATION NYET THYOOM TA-ROL */
+          || ch == 0x1C3D /* LEPCHA PUNCTUATION CER-WA */
+          || ch == 0x1C3E /* LEPCHA PUNCTUATION TSHOOK CER-WA */
+          || ch == 0x1C3F /* LEPCHA PUNCTUATION TSHOOK */
+          || ch == 0x1C7E /* OL CHIKI PUNCTUATION MUCAAD */
+          || ch == 0x1C7F /* OL CHIKI PUNCTUATION DOUBLE MUCAAD */
+          || ch == 0x2CFA /* COPTIC OLD NUBIAN DIRECT QUESTION MARK */
+          || ch == 0x2CFB /* COPTIC OLD NUBIAN INDIRECT QUESTION MARK */
+          || ch == 0x2CFC /* COPTIC OLD NUBIAN VERSE DIVIDER */
+          || ch == 0x2CFF /* COPTIC MORPHOLOGICAL DIVIDER */
+          || (ch >= 0x2E0E && ch <= 0x2E15) /* EDITORIAL CORONIS .. UPWARDS ANCORA */
+          || ch == 0x2E17 /* DOUBLE OBLIQUE HYPHEN */
+          || ch == 0xA60D /* VAI COMMA */
+          || ch == 0xA60F /* VAI QUESTION MARK */
+          || ch == 0xA92E /* KAYAH LI SIGN CWI */
+          || ch == 0xA92F /* KAYAH LI SIGN SHYA */
+          || ch == 0x10A50 /* KHAROSHTHI PUNCTUATION DOT */
+          || ch == 0x10A51 /* KHAROSHTHI PUNCTUATION SMALL CIRCLE */
+          || ch == 0x10A52 /* KHAROSHTHI PUNCTUATION CIRCLE */
+          || ch == 0x10A53 /* KHAROSHTHI PUNCTUATION CRESCENT BAR */
+          || ch == 0x10A54 /* KHAROSHTHI PUNCTUATION MANGALAM */
+          || ch == 0x10A55 /* KHAROSHTHI PUNCTUATION LOTUS */
+          /* Extra characters for compatibility with Unicode LineBreak.txt.  */
+          || ch == 0x12471 /* CUNEIFORM PUNCTUATION SIGN VERTICAL COLON */
+          || ch == 0x12472 /* CUNEIFORM PUNCTUATION SIGN DIAGONAL COLON */
+          || ch == 0x12473 /* CUNEIFORM PUNCTUATION SIGN DIAGONAL TRICOLON */)
+        attr |= 1 << LBP_BA;
 
       /* break opportunity before */
       if (ch == 0x00B4 /* ACUTE ACCENT */
-	  || ch == 0x1FFD /* GREEK OXIA */
-	  || ch == 0x02DF /* MODIFIER LETTER CROSS ACCENT */
-	  || ch == 0x02C8 /* MODIFIER LETTER VERTICAL LINE */
-	  || ch == 0x02CC /* MODIFIER LETTER LOW VERTICAL LINE */
-	  || ch == 0x0F01 /* TIBETAN MARK GTER YIG MGO TRUNCATED A */
-	  || ch == 0x0F02 /* TIBETAN MARK GTER YIG MGO -UM RNAM BCAD MA */
-	  || ch == 0x0F03 /* TIBETAN MARK GTER YIG MGO -UM GTER TSHEG MA */
-	  || ch == 0x0F04 /* TIBETAN MARK INITIAL YIG MGO MDUN MA */
-	  || ch == 0x0F06 /* TIBETAN MARK CARET YIG MGO PHUR SHAD MA */
-	  || ch == 0x0F07 /* TIBETAN MARK YIG MGO TSHEG SHAD MA */
-	  || ch == 0x0F09 /* TIBETAN MARK BSKUR YIG MGO */
-	  || ch == 0x0F0A /* TIBETAN MARK BKA- SHOG YIG MGO */
-	  || ch == 0x0FD0 /* TIBETAN MARK BSKA- SHOG GI MGO RGYAN */
-	  || ch == 0x0FD1 /* TIBETAN MARK MNYAM YIG GI MGO RGYAN */
-	  || ch == 0x0FD3 /* TIBETAN MARK INITIAL BRDA RNYING YIG MGO MDUN MA */
-	  || ch == 0xA874 /* PHAGS-PA SINGLE HEAD MARK */
-	  || ch == 0xA875 /* PHAGS-PA DOUBLE HEAD MARK */
-	  || ch == 0x1806 /* MONGOLIAN TODO SOFT HYPHEN */)
-	attr |= 1 << LBP_BB;
+          || ch == 0x1FFD /* GREEK OXIA */
+          || ch == 0x02DF /* MODIFIER LETTER CROSS ACCENT */
+          || ch == 0x02C8 /* MODIFIER LETTER VERTICAL LINE */
+          || ch == 0x02CC /* MODIFIER LETTER LOW VERTICAL LINE */
+          || ch == 0x0F01 /* TIBETAN MARK GTER YIG MGO TRUNCATED A */
+          || ch == 0x0F02 /* TIBETAN MARK GTER YIG MGO -UM RNAM BCAD MA */
+          || ch == 0x0F03 /* TIBETAN MARK GTER YIG MGO -UM GTER TSHEG MA */
+          || ch == 0x0F04 /* TIBETAN MARK INITIAL YIG MGO MDUN MA */
+          || ch == 0x0F06 /* TIBETAN MARK CARET YIG MGO PHUR SHAD MA */
+          || ch == 0x0F07 /* TIBETAN MARK YIG MGO TSHEG SHAD MA */
+          || ch == 0x0F09 /* TIBETAN MARK BSKUR YIG MGO */
+          || ch == 0x0F0A /* TIBETAN MARK BKA- SHOG YIG MGO */
+          || ch == 0x0FD0 /* TIBETAN MARK BSKA- SHOG GI MGO RGYAN */
+          || ch == 0x0FD1 /* TIBETAN MARK MNYAM YIG GI MGO RGYAN */
+          || ch == 0x0FD3 /* TIBETAN MARK INITIAL BRDA RNYING YIG MGO MDUN MA */
+          || ch == 0xA874 /* PHAGS-PA SINGLE HEAD MARK */
+          || ch == 0xA875 /* PHAGS-PA DOUBLE HEAD MARK */
+          || ch == 0x1806 /* MONGOLIAN TODO SOFT HYPHEN */)
+        attr |= 1 << LBP_BB;
 
       /* hyphen */
       if (ch == 0x002D /* HYPHEN-MINUS */)
-	attr |= 1 << LBP_HY;
+        attr |= 1 << LBP_HY;
 
       /* contingent break opportunity */
       if (ch == 0xFFFC /* OBJECT REPLACEMENT CHARACTER */)
-	attr |= 1 << LBP_CB;
+        attr |= 1 << LBP_CB;
 
       /* closing punctuation */
       if ((unicode_attributes[ch].category[0] == 'P'
-	   && unicode_attributes[ch].category[1] == 'e')
-	  || ch == 0x3001 /* IDEOGRAPHIC COMMA */
-	  || ch == 0x3002 /* IDEOGRAPHIC FULL STOP */
-	  || ch == 0xFE11 /* PRESENTATION FORM FOR VERTICAL IDEOGRAPHIC COMMA */
-	  || ch == 0xFE12 /* PRESENTATION FORM FOR VERTICAL IDEOGRAPHIC FULL STOP */
-	  || ch == 0xFE50 /* SMALL COMMA */
-	  || ch == 0xFE52 /* SMALL FULL STOP */
-	  || ch == 0xFF0C /* FULLWIDTH COMMA */
-	  || ch == 0xFF0E /* FULLWIDTH FULL STOP */
-	  || ch == 0xFF61 /* HALFWIDTH IDEOGRAPHIC FULL STOP */
-	  || ch == 0xFF64 /* HALFWIDTH IDEOGRAPHIC COMMA */)
-	attr |= 1 << LBP_CL;
+           && unicode_attributes[ch].category[1] == 'e')
+          || ch == 0x3001 /* IDEOGRAPHIC COMMA */
+          || ch == 0x3002 /* IDEOGRAPHIC FULL STOP */
+          || ch == 0xFE11 /* PRESENTATION FORM FOR VERTICAL IDEOGRAPHIC COMMA */
+          || ch == 0xFE12 /* PRESENTATION FORM FOR VERTICAL IDEOGRAPHIC FULL STOP */
+          || ch == 0xFE50 /* SMALL COMMA */
+          || ch == 0xFE52 /* SMALL FULL STOP */
+          || ch == 0xFF0C /* FULLWIDTH COMMA */
+          || ch == 0xFF0E /* FULLWIDTH FULL STOP */
+          || ch == 0xFF61 /* HALFWIDTH IDEOGRAPHIC FULL STOP */
+          || ch == 0xFF64 /* HALFWIDTH IDEOGRAPHIC COMMA */)
+        attr |= 1 << LBP_CL;
 
       /* exclamation/interrogation */
       if (ch == 0x0021 /* EXCLAMATION MARK */
-	  || ch == 0x003F /* QUESTION MARK */
-	  || ch == 0x05C6 /* HEBREW PUNCTUATION NUN HAFUKHA */
-	  || ch == 0x061B /* ARABIC SEMICOLON */
-	  || ch == 0x061E /* ARABIC TRIPLE DOT PUNCTUATION MARK */
-	  || ch == 0x061F /* ARABIC QUESTION MARK */
-	  || ch == 0x06D4 /* ARABIC FULL STOP */
-	  || ch == 0x07F9 /* NKO EXCLAMATION MARK */
-	  || ch == 0x0F0D /* TIBETAN MARK SHAD */
-	  || ch == 0x0F0E /* TIBETAN MARK NYIS SHAD */
-	  || ch == 0x0F0F /* TIBETAN MARK TSHEG SHAD */
-	  || ch == 0x0F10 /* TIBETAN MARK NYIS TSHEG SHAD */
-	  || ch == 0x0F11 /* TIBETAN MARK RIN CHEN SPUNGS SHAD */
-	  || ch == 0x0F14 /* TIBETAN MARK GTER TSHEG */
-	  || ch == 0x1802 /* MONGOLIAN COMMA */
-	  || ch == 0x1803 /* MONGOLIAN FULL STOP */
-	  || ch == 0x1808 /* MONGOLIAN MANCHU COMMA */
-	  || ch == 0x1809 /* MONGOLIAN MANCHU FULL STOP */
-	  || ch == 0x1944 /* LIMBU EXCLAMATION MARK */
-	  || ch == 0x1945 /* LIMBU QUESTION MARK */
-	  || ch == 0x2762 /* HEAVY EXCLAMATION MARK ORNAMENT */
-	  || ch == 0x2763 /* HEAVY HEART EXCLAMATION MARK ORNAMENT */
-	  || ch == 0x2CF9 /* COPTIC OLD NUBIAN FULL STOP */
-	  || ch == 0x2CFE /* COPTIC FULL STOP */
-	  || ch == 0x2E2E /* REVERSED QUESTION MARK */
+          || ch == 0x003F /* QUESTION MARK */
+          || ch == 0x05C6 /* HEBREW PUNCTUATION NUN HAFUKHA */
+          || ch == 0x061B /* ARABIC SEMICOLON */
+          || ch == 0x061E /* ARABIC TRIPLE DOT PUNCTUATION MARK */
+          || ch == 0x061F /* ARABIC QUESTION MARK */
+          || ch == 0x06D4 /* ARABIC FULL STOP */
+          || ch == 0x07F9 /* NKO EXCLAMATION MARK */
+          || ch == 0x0F0D /* TIBETAN MARK SHAD */
+          || ch == 0x0F0E /* TIBETAN MARK NYIS SHAD */
+          || ch == 0x0F0F /* TIBETAN MARK TSHEG SHAD */
+          || ch == 0x0F10 /* TIBETAN MARK NYIS TSHEG SHAD */
+          || ch == 0x0F11 /* TIBETAN MARK RIN CHEN SPUNGS SHAD */
+          || ch == 0x0F14 /* TIBETAN MARK GTER TSHEG */
+          || ch == 0x1802 /* MONGOLIAN COMMA */
+          || ch == 0x1803 /* MONGOLIAN FULL STOP */
+          || ch == 0x1808 /* MONGOLIAN MANCHU COMMA */
+          || ch == 0x1809 /* MONGOLIAN MANCHU FULL STOP */
+          || ch == 0x1944 /* LIMBU EXCLAMATION MARK */
+          || ch == 0x1945 /* LIMBU QUESTION MARK */
+          || ch == 0x2762 /* HEAVY EXCLAMATION MARK ORNAMENT */
+          || ch == 0x2763 /* HEAVY HEART EXCLAMATION MARK ORNAMENT */
+          || ch == 0x2CF9 /* COPTIC OLD NUBIAN FULL STOP */
+          || ch == 0x2CFE /* COPTIC FULL STOP */
+          || ch == 0x2E2E /* REVERSED QUESTION MARK */
 #if REVISION_22
-	  || ch == 0xA60C /* VAI SYLLABLE LENGTHENER */
+          || ch == 0xA60C /* VAI SYLLABLE LENGTHENER */
 #endif
-	  || ch == 0xA60E /* VAI FULL STOP */
-	  || ch == 0xA876 /* PHAGS-PA MARK SHAD */
-	  || ch == 0xA877 /* PHAGS-PA MARK DOUBLE SHAD */
-	  || ch == 0xFE15 /* PRESENTATION FORM FOR VERTICAL EXCLAMATION MARK */
-	  || ch == 0xFE16 /* PRESENTATION FORM FOR VERTICAL QUESTION MARK */
-	  || ch == 0xFE56 /* SMALL QUESTION MARK */
-	  || ch == 0xFE57 /* SMALL EXCLAMATION MARK */
-	  || ch == 0xFF01 /* FULLWIDTH EXCLAMATION MARK */
-	  || ch == 0xFF1F /* FULLWIDTH QUESTION MARK */)
-	attr |= 1 << LBP_EX;
+          || ch == 0xA60E /* VAI FULL STOP */
+          || ch == 0xA876 /* PHAGS-PA MARK SHAD */
+          || ch == 0xA877 /* PHAGS-PA MARK DOUBLE SHAD */
+          || ch == 0xFE15 /* PRESENTATION FORM FOR VERTICAL EXCLAMATION MARK */
+          || ch == 0xFE16 /* PRESENTATION FORM FOR VERTICAL QUESTION MARK */
+          || ch == 0xFE56 /* SMALL QUESTION MARK */
+          || ch == 0xFE57 /* SMALL EXCLAMATION MARK */
+          || ch == 0xFF01 /* FULLWIDTH EXCLAMATION MARK */
+          || ch == 0xFF1F /* FULLWIDTH QUESTION MARK */)
+        attr |= 1 << LBP_EX;
 
       /* inseparable */
       if (ch == 0x2024 /* ONE DOT LEADER */
-	  || ch == 0x2025 /* TWO DOT LEADER */
-	  || ch == 0x2026 /* HORIZONTAL ELLIPSIS */
-	  || ch == 0xFE19 /* PRESENTATION FORM FOR VERTICAL HORIZONTAL ELLIPSIS */)
-	attr |= 1 << LBP_IN;
+          || ch == 0x2025 /* TWO DOT LEADER */
+          || ch == 0x2026 /* HORIZONTAL ELLIPSIS */
+          || ch == 0xFE19 /* PRESENTATION FORM FOR VERTICAL HORIZONTAL ELLIPSIS */)
+        attr |= 1 << LBP_IN;
 
       /* non starter */
       if (ch == 0x17D6 /* KHMER SIGN CAMNUC PII KUUH */
-	  || ch == 0x203C /* DOUBLE EXCLAMATION MARK */
-	  || ch == 0x203D /* INTERROBANG */
-	  || ch == 0x2047 /* DOUBLE QUESTION MARK */
-	  || ch == 0x2048 /* QUESTION EXCLAMATION MARK */
-	  || ch == 0x2049 /* EXCLAMATION QUESTION MARK */
-	  || ch == 0x3005 /* IDEOGRAPHIC ITERATION MARK */
-	  || ch == 0x301C /* WAVE DASH */
-	  || ch == 0x303C /* MASU MARK */
-	  || ch == 0x303B /* VERTICAL IDEOGRAPHIC ITERATION MARK */
-	  || ch == 0x309B /* KATAKANA-HIRAGANA VOICED SOUND MARK */
-	  || ch == 0x309C /* KATAKANA-HIRAGANA SEMI-VOICED SOUND MARK */
-	  || ch == 0x309D /* HIRAGANA ITERATION MARK */
-	  || ch == 0x309E /* HIRAGANA VOICED ITERATION MARK */
-	  || ch == 0x30A0 /* KATAKANA-HIRAGANA DOUBLE HYPHEN */
-	  || ch == 0x30FB /* KATAKANA MIDDLE DOT */
-	  || ch == 0x30FC /* KATAKANA-HIRAGANA PROLONGED SOUND MARK */
-	  || ch == 0x30FD /* KATAKANA ITERATION MARK */
-	  || ch == 0x30FE /* KATAKANA VOICED ITERATION MARK */
-	  || ch == 0xA015 /* YI SYLLABLE WU */
-	  || ch == 0xFE54 /* SMALL SEMICOLON */
-	  || ch == 0xFE55 /* SMALL COLON */
-	  || ch == 0xFF1A /* FULLWIDTH COLON */
-	  || ch == 0xFF1B /* FULLWIDTH SEMICOLON */
-	  || ch == 0xFF65 /* HALFWIDTH KATAKANA MIDDLE DOT */
-	  || ch == 0xFF70 /* HALFWIDTH KATAKANA-HIRAGANA PROLONGED SOUND MARK */
-	  || ch == 0xFF9E /* HALFWIDTH KATAKANA VOICED SOUND MARK */
-	  || ch == 0xFF9F /* HALFWIDTH KATAKANA SEMI-VOICED SOUND MARK */
-	  || strstr (unicode_attributes[ch].name, "HIRAGANA LETTER SMALL ") != NULL
-	  || strstr (unicode_attributes[ch].name, "KATAKANA LETTER SMALL ") != NULL)
-	attr |= 1 << LBP_NS;
+          || ch == 0x203C /* DOUBLE EXCLAMATION MARK */
+          || ch == 0x203D /* INTERROBANG */
+          || ch == 0x2047 /* DOUBLE QUESTION MARK */
+          || ch == 0x2048 /* QUESTION EXCLAMATION MARK */
+          || ch == 0x2049 /* EXCLAMATION QUESTION MARK */
+          || ch == 0x3005 /* IDEOGRAPHIC ITERATION MARK */
+          || ch == 0x301C /* WAVE DASH */
+          || ch == 0x303C /* MASU MARK */
+          || ch == 0x303B /* VERTICAL IDEOGRAPHIC ITERATION MARK */
+          || ch == 0x309B /* KATAKANA-HIRAGANA VOICED SOUND MARK */
+          || ch == 0x309C /* KATAKANA-HIRAGANA SEMI-VOICED SOUND MARK */
+          || ch == 0x309D /* HIRAGANA ITERATION MARK */
+          || ch == 0x309E /* HIRAGANA VOICED ITERATION MARK */
+          || ch == 0x30A0 /* KATAKANA-HIRAGANA DOUBLE HYPHEN */
+          || ch == 0x30FB /* KATAKANA MIDDLE DOT */
+          || ch == 0x30FC /* KATAKANA-HIRAGANA PROLONGED SOUND MARK */
+          || ch == 0x30FD /* KATAKANA ITERATION MARK */
+          || ch == 0x30FE /* KATAKANA VOICED ITERATION MARK */
+          || ch == 0xA015 /* YI SYLLABLE WU */
+          || ch == 0xFE54 /* SMALL SEMICOLON */
+          || ch == 0xFE55 /* SMALL COLON */
+          || ch == 0xFF1A /* FULLWIDTH COLON */
+          || ch == 0xFF1B /* FULLWIDTH SEMICOLON */
+          || ch == 0xFF65 /* HALFWIDTH KATAKANA MIDDLE DOT */
+          || ch == 0xFF70 /* HALFWIDTH KATAKANA-HIRAGANA PROLONGED SOUND MARK */
+          || ch == 0xFF9E /* HALFWIDTH KATAKANA VOICED SOUND MARK */
+          || ch == 0xFF9F /* HALFWIDTH KATAKANA SEMI-VOICED SOUND MARK */
+          || strstr (unicode_attributes[ch].name, "HIRAGANA LETTER SMALL ") != NULL
+          || strstr (unicode_attributes[ch].name, "KATAKANA LETTER SMALL ") != NULL)
+        attr |= 1 << LBP_NS;
 
       /* opening punctuation */
       if ((unicode_attributes[ch].category[0] == 'P'
-	   && unicode_attributes[ch].category[1] == 's')
-	  || ch == 0x00A1 /* INVERTED EXCLAMATION MARK */
-	  || ch == 0x00BF /* INVERTED QUESTION MARK */
-	  || ch == 0x2E18 /* INVERTED INTERROBANG */)
-	attr |= 1 << LBP_OP;
+           && unicode_attributes[ch].category[1] == 's')
+          || ch == 0x00A1 /* INVERTED EXCLAMATION MARK */
+          || ch == 0x00BF /* INVERTED QUESTION MARK */
+          || ch == 0x2E18 /* INVERTED INTERROBANG */)
+        attr |= 1 << LBP_OP;
 
       /* ambiguous quotation */
       if ((unicode_attributes[ch].category[0] == 'P'
-	   && (unicode_attributes[ch].category[1] == 'f'
-	       || unicode_attributes[ch].category[1] == 'i'))
-	  || ch == 0x0022 /* QUOTATION MARK */
-	  || ch == 0x0027 /* APOSTROPHE */
-	  || ch == 0x275B /* HEAVY SINGLE TURNED COMMA QUOTATION MARK ORNAMENT */
-	  || ch == 0x275C /* HEAVY SINGLE COMMA QUOTATION MARK ORNAMENT */
-	  || ch == 0x275D /* HEAVY DOUBLE TURNED COMMA QUOTATION MARK ORNAMENT */
-	  || ch == 0x275E /* HEAVY DOUBLE COMMA QUOTATION MARK ORNAMENT */
-	  || ch == 0x2E00 /* RIGHT ANGLE SUBSTITUTION MARKER */
-	  || ch == 0x2E01 /* RIGHT ANGLE DOTTED SUBSTITUTION MARKER */
-	  || ch == 0x2E06 /* RAISED INTERPOLATION MARKER */
-	  || ch == 0x2E07 /* RAISED DOTTED INTERPOLATION MARKER */
-	  || ch == 0x2E08 /* DOTTED TRANSPOSITION MARKER */
-	  || ch == 0x2E0B /* RAISED SQUARE */)
-	attr |= 1 << LBP_QU;
+           && (unicode_attributes[ch].category[1] == 'f'
+               || unicode_attributes[ch].category[1] == 'i'))
+          || ch == 0x0022 /* QUOTATION MARK */
+          || ch == 0x0027 /* APOSTROPHE */
+          || ch == 0x275B /* HEAVY SINGLE TURNED COMMA QUOTATION MARK ORNAMENT */
+          || ch == 0x275C /* HEAVY SINGLE COMMA QUOTATION MARK ORNAMENT */
+          || ch == 0x275D /* HEAVY DOUBLE TURNED COMMA QUOTATION MARK ORNAMENT */
+          || ch == 0x275E /* HEAVY DOUBLE COMMA QUOTATION MARK ORNAMENT */
+          || ch == 0x2E00 /* RIGHT ANGLE SUBSTITUTION MARKER */
+          || ch == 0x2E01 /* RIGHT ANGLE DOTTED SUBSTITUTION MARKER */
+          || ch == 0x2E06 /* RAISED INTERPOLATION MARKER */
+          || ch == 0x2E07 /* RAISED DOTTED INTERPOLATION MARKER */
+          || ch == 0x2E08 /* DOTTED TRANSPOSITION MARKER */
+          || ch == 0x2E0B /* RAISED SQUARE */)
+        attr |= 1 << LBP_QU;
 
       /* infix separator (numeric) */
       if (ch == 0x002C /* COMMA */
-	  || ch == 0x002E /* FULL STOP */
-	  || ch == 0x003A /* COLON */
-	  || ch == 0x003B /* SEMICOLON */
-	  || ch == 0x037E /* GREEK QUESTION MARK */
-	  || ch == 0x0589 /* ARMENIAN FULL STOP */
-	  || ch == 0x060C /* ARABIC COMMA */
-	  || ch == 0x060D /* ARABIC DATE SEPARATOR */
-	  || ch == 0x07F8 /* NKO COMMA */
-	  || ch == 0x2044 /* FRACTION SLASH */
-	  || ch == 0xFE10 /* PRESENTATION FORM FOR VERTICAL COMMA */
-	  || ch == 0xFE13 /* PRESENTATION FORM FOR VERTICAL COLON */
-	  || ch == 0xFE14 /* PRESENTATION FORM FOR VERTICAL SEMICOLON */)
-	attr |= 1 << LBP_IS;
+          || ch == 0x002E /* FULL STOP */
+          || ch == 0x003A /* COLON */
+          || ch == 0x003B /* SEMICOLON */
+          || ch == 0x037E /* GREEK QUESTION MARK */
+          || ch == 0x0589 /* ARMENIAN FULL STOP */
+          || ch == 0x060C /* ARABIC COMMA */
+          || ch == 0x060D /* ARABIC DATE SEPARATOR */
+          || ch == 0x07F8 /* NKO COMMA */
+          || ch == 0x2044 /* FRACTION SLASH */
+          || ch == 0xFE10 /* PRESENTATION FORM FOR VERTICAL COMMA */
+          || ch == 0xFE13 /* PRESENTATION FORM FOR VERTICAL COLON */
+          || ch == 0xFE14 /* PRESENTATION FORM FOR VERTICAL SEMICOLON */)
+        attr |= 1 << LBP_IS;
 
       /* numeric */
       if ((unicode_attributes[ch].category[0] == 'N'
-	   && unicode_attributes[ch].category[1] == 'd'
-	   && strstr (unicode_attributes[ch].name, "FULLWIDTH") == NULL)
-	  || ch == 0x066B /* ARABIC DECIMAL SEPARATOR */
-	  || ch == 0x066C /* ARABIC THOUSANDS SEPARATOR */)
-	attr |= 1 << LBP_NU;
+           && unicode_attributes[ch].category[1] == 'd'
+           && strstr (unicode_attributes[ch].name, "FULLWIDTH") == NULL)
+          || ch == 0x066B /* ARABIC DECIMAL SEPARATOR */
+          || ch == 0x066C /* ARABIC THOUSANDS SEPARATOR */)
+        attr |= 1 << LBP_NU;
 
       /* postfix (numeric) */
       if (ch == 0x0025 /* PERCENT SIGN */
-	  || ch == 0x00A2 /* CENT SIGN */
-	  || ch == 0x00B0 /* DEGREE SIGN */
-	  || ch == 0x060B /* AFGHANI SIGN */
-	  || ch == 0x066A /* ARABIC PERCENT SIGN */
-	  || ch == 0x2030 /* PER MILLE SIGN */
-	  || ch == 0x2031 /* PER TEN THOUSAND SIGN */
-	  || ch == 0x2032 /* PRIME */
-	  || ch == 0x2033 /* DOUBLE PRIME */
-	  || ch == 0x2034 /* TRIPLE PRIME */
-	  || ch == 0x2035 /* REVERSED PRIME */
-	  || ch == 0x2036 /* REVERSED DOUBLE PRIME */
-	  || ch == 0x2037 /* REVERSED TRIPLE PRIME */
-	  || ch == 0x20A7 /* PESETA SIGN */
-	  || ch == 0x2103 /* DEGREE CELSIUS */
-	  || ch == 0x2109 /* DEGREE FAHRENHEIT */
-	  || ch == 0xFDFC /* RIAL SIGN */
-	  || ch == 0xFE6A /* SMALL PERCENT SIGN */
-	  || ch == 0xFF05 /* FULLWIDTH PERCENT SIGN */
-	  || ch == 0xFFE0 /* FULLWIDTH DIGIT ZERO */
-	  /* Extra characters for compatibility with Unicode LineBreak.txt.  */
-	  || ch == 0x0609 /* ARABIC-INDIC PER MILLE SIGN */
-	  || ch == 0x060A /* ARABIC-INDIC PER TEN THOUSAND SIGN */
-	  || ch == 0x0D79 /* MALAYALAM DATE MARK */)
-	attr |= 1 << LBP_PO;
+          || ch == 0x00A2 /* CENT SIGN */
+          || ch == 0x00B0 /* DEGREE SIGN */
+          || ch == 0x060B /* AFGHANI SIGN */
+          || ch == 0x066A /* ARABIC PERCENT SIGN */
+          || ch == 0x2030 /* PER MILLE SIGN */
+          || ch == 0x2031 /* PER TEN THOUSAND SIGN */
+          || ch == 0x2032 /* PRIME */
+          || ch == 0x2033 /* DOUBLE PRIME */
+          || ch == 0x2034 /* TRIPLE PRIME */
+          || ch == 0x2035 /* REVERSED PRIME */
+          || ch == 0x2036 /* REVERSED DOUBLE PRIME */
+          || ch == 0x2037 /* REVERSED TRIPLE PRIME */
+          || ch == 0x20A7 /* PESETA SIGN */
+          || ch == 0x2103 /* DEGREE CELSIUS */
+          || ch == 0x2109 /* DEGREE FAHRENHEIT */
+          || ch == 0xFDFC /* RIAL SIGN */
+          || ch == 0xFE6A /* SMALL PERCENT SIGN */
+          || ch == 0xFF05 /* FULLWIDTH PERCENT SIGN */
+          || ch == 0xFFE0 /* FULLWIDTH DIGIT ZERO */
+          /* Extra characters for compatibility with Unicode LineBreak.txt.  */
+          || ch == 0x0609 /* ARABIC-INDIC PER MILLE SIGN */
+          || ch == 0x060A /* ARABIC-INDIC PER TEN THOUSAND SIGN */
+          || ch == 0x0D79 /* MALAYALAM DATE MARK */)
+        attr |= 1 << LBP_PO;
 
       /* prefix (numeric) */
       if ((unicode_attributes[ch].category[0] == 'S'
-	   && unicode_attributes[ch].category[1] == 'c')
-	  || ch == 0x002B /* PLUS SIGN */
-	  || ch == 0x005C /* REVERSE SOLIDUS */
-	  || ch == 0x00B1 /* PLUS-MINUS SIGN */
-	  || ch == 0x2116 /* NUMERO SIGN */
-	  || ch == 0x2212 /* MINUS SIGN */
-	  || ch == 0x2213 /* MINUS-OR-PLUS SIGN */)
-	if (!(attr & (1 << LBP_PO)))
-	  attr |= 1 << LBP_PR;
+           && unicode_attributes[ch].category[1] == 'c')
+          || ch == 0x002B /* PLUS SIGN */
+          || ch == 0x005C /* REVERSE SOLIDUS */
+          || ch == 0x00B1 /* PLUS-MINUS SIGN */
+          || ch == 0x2116 /* NUMERO SIGN */
+          || ch == 0x2212 /* MINUS SIGN */
+          || ch == 0x2213 /* MINUS-OR-PLUS SIGN */)
+        if (!(attr & (1 << LBP_PO)))
+          attr |= 1 << LBP_PR;
 
       /* symbols allowing breaks */
       if (ch == 0x002F /* SOLIDUS */)
-	attr |= 1 << LBP_SY;
+        attr |= 1 << LBP_SY;
 
       if (ch >= 0xAC00 && ch <= 0xD7A3 && ((ch - 0xAC00) % 28) == 0)
-	attr |= 1 << LBP_H2;
+        attr |= 1 << LBP_H2;
 
       if (ch >= 0xAC00 && ch <= 0xD7A3 && ((ch - 0xAC00) % 28) != 0)
-	attr |= 1 << LBP_H3;
+        attr |= 1 << LBP_H3;
 
       if ((ch >= 0x1100 && ch <= 0x1159) || ch == 0x115F)
-	attr |= 1 << LBP_JL;
+        attr |= 1 << LBP_JL;
 
       if (ch >= 0x1160 && ch <= 0x11A2)
-	attr |= 1 << LBP_JV;
+        attr |= 1 << LBP_JV;
 
       if (ch >= 0x11A8 && ch <= 0x11F9)
-	attr |= 1 << LBP_JT;
+        attr |= 1 << LBP_JT;
 
       /* complex context (South East Asian) */
       if (((unicode_attributes[ch].category[0] == 'C'
-	    && unicode_attributes[ch].category[1] == 'f')
-	   || (unicode_attributes[ch].category[0] == 'L'
-	       && (unicode_attributes[ch].category[1] == 'm'
-		   || unicode_attributes[ch].category[1] == 'o'))
-	   || (unicode_attributes[ch].category[0] == 'M'
-	       && (unicode_attributes[ch].category[1] == 'c'
-		   || unicode_attributes[ch].category[1] == 'n'))
-	   /* Extra characters for compatibility with Unicode LineBreak.txt.  */
-	   || ch == 0x109E /* MYANMAR SYMBOL SHAN ONE */
-	   || ch == 0x109F /* MYANMAR SYMBOL SHAN EXCLAMATION */
-	   || ch == 0x19DE /* NEW TAI LUE SIGN LAE */
-	   || ch == 0x19DF /* NEW TAI LUE SIGN LAEV */)
-	  && ((ch >= 0x0E00 && ch <= 0x0EFF)
-	      || (ch >= 0x1000 && ch <= 0x109F)
-	      || (ch >= 0x1780 && ch <= 0x17FF)
-	      || (ch >= 0x1950 && ch <= 0x19DF)))
-	attr |= 1 << LBP_SA;
+            && unicode_attributes[ch].category[1] == 'f')
+           || (unicode_attributes[ch].category[0] == 'L'
+               && (unicode_attributes[ch].category[1] == 'm'
+                   || unicode_attributes[ch].category[1] == 'o'))
+           || (unicode_attributes[ch].category[0] == 'M'
+               && (unicode_attributes[ch].category[1] == 'c'
+                   || unicode_attributes[ch].category[1] == 'n'))
+           /* Extra characters for compatibility with Unicode LineBreak.txt.  */
+           || ch == 0x109E /* MYANMAR SYMBOL SHAN ONE */
+           || ch == 0x109F /* MYANMAR SYMBOL SHAN EXCLAMATION */
+           || ch == 0x19DE /* NEW TAI LUE SIGN LAE */
+           || ch == 0x19DF /* NEW TAI LUE SIGN LAEV */)
+          && ((ch >= 0x0E00 && ch <= 0x0EFF)
+              || (ch >= 0x1000 && ch <= 0x109F)
+              || (ch >= 0x1780 && ch <= 0x17FF)
+              || (ch >= 0x1950 && ch <= 0x19DF)))
+        attr |= 1 << LBP_SA;
 
       /* attached characters and combining marks */
       if ((unicode_attributes[ch].category[0] == 'M'
-	   && (unicode_attributes[ch].category[1] == 'c'
-	       || unicode_attributes[ch].category[1] == 'e'
-	       || unicode_attributes[ch].category[1] == 'n'))
-	  || (unicode_attributes[ch].category[0] == 'C'
-	      && (unicode_attributes[ch].category[1] == 'c'
-		  || unicode_attributes[ch].category[1] == 'f')))
-	if (!(attr & ((1 << LBP_BK) | (1 << LBP_BA) | (1 << LBP_GL) | (1 << LBP_SA) | (1 << LBP_WJ) | (1 << LBP_ZW))))
-	  attr |= 1 << LBP_CM;
+           && (unicode_attributes[ch].category[1] == 'c'
+               || unicode_attributes[ch].category[1] == 'e'
+               || unicode_attributes[ch].category[1] == 'n'))
+          || (unicode_attributes[ch].category[0] == 'C'
+              && (unicode_attributes[ch].category[1] == 'c'
+                  || unicode_attributes[ch].category[1] == 'f')))
+        if (!(attr & ((1 << LBP_BK) | (1 << LBP_BA) | (1 << LBP_GL) | (1 << LBP_SA) | (1 << LBP_WJ) | (1 << LBP_ZW))))
+          attr |= 1 << LBP_CM;
 
       /* ideographic */
       if ((ch >= 0x2E80 && ch <= 0x2FFF) /* CJK RADICAL, KANGXI RADICAL, IDEOGRAPHIC DESCRIPTION */
-	  || ch == 0x3000 /* IDEOGRAPHIC SPACE */
-	  || (ch >= 0x3040 && ch <= 0x309F) /* HIRAGANA */
-	  || (ch >= 0x30A0 && ch <= 0x30FF) /* KATAKANA */
-	  || (ch >= 0x3400 && ch <= 0x4DB5) /* CJK Ideograph Extension A */
-	  || (ch >= 0x4E00 && ch <= 0x9FC3) /* CJK Ideograph */
-	  || (ch >= 0xF900 && ch <= 0xFAD9) /* CJK COMPATIBILITY IDEOGRAPH */
-	  || (ch >= 0xA000 && ch <= 0xA48F) /* YI SYLLABLE */
-	  || (ch >= 0xA490 && ch <= 0xA4CF) /* YI RADICAL */
-	  || ch == 0xFE62 /* SMALL PLUS SIGN */
-	  || ch == 0xFE63 /* SMALL HYPHEN-MINUS */
-	  || ch == 0xFE64 /* SMALL LESS-THAN SIGN */
-	  || ch == 0xFE65 /* SMALL GREATER-THAN SIGN */
-	  || ch == 0xFE66 /* SMALL EQUALS SIGN */
-	  || (ch >= 0xFF10 && ch <= 0xFF19) /* FULLWIDTH DIGIT */
-	  || (ch >= 0x20000 && ch <= 0x2A6D6) /* CJK Ideograph Extension B */
-	  || (ch >= 0x2F800 && ch <= 0x2FA1D) /* CJK COMPATIBILITY IDEOGRAPH */
-	  || strstr (unicode_attributes[ch].name, "FULLWIDTH LATIN ") != NULL
-	  || (ch >= 0x3000 && ch <= 0x33FF
-	      && !(attr & ((1 << LBP_CM) | (1 << LBP_NS) | (1 << LBP_OP) | (1 << LBP_CL))))
-	  /* Extra characters for compatibility with Unicode LineBreak.txt.  */
-	  || ch == 0xFE30 /* PRESENTATION FORM FOR VERTICAL TWO DOT LEADER */
-	  || ch == 0xFE31 /* PRESENTATION FORM FOR VERTICAL EM DASH */
-	  || ch == 0xFE32 /* PRESENTATION FORM FOR VERTICAL EN DASH */
-	  || ch == 0xFE33 /* PRESENTATION FORM FOR VERTICAL LOW LINE */
-	  || ch == 0xFE34 /* PRESENTATION FORM FOR VERTICAL WAVY LOW LINE */
-	  || ch == 0xFE45 /* SESAME DOT */
-	  || ch == 0xFE46 /* WHITE SESAME DOT */
-	  || ch == 0xFE49 /* DASHED OVERLINE */
-	  || ch == 0xFE4A /* CENTRELINE OVERLINE */
-	  || ch == 0xFE4B /* WAVY OVERLINE */
-	  || ch == 0xFE4C /* DOUBLE WAVY OVERLINE */
-	  || ch == 0xFE4D /* DASHED LOW LINE */
-	  || ch == 0xFE4E /* CENTRELINE LOW LINE */
-	  || ch == 0xFE4F /* WAVY LOW LINE */
-	  || ch == 0xFE51 /* SMALL IDEOGRAPHIC COMMA */
-	  || ch == 0xFE58 /* SMALL EM DASH */
-	  || ch == 0xFE5F /* SMALL NUMBER SIGN */
-	  || ch == 0xFE60 /* SMALL AMPERSAND */
-	  || ch == 0xFE61 /* SMALL ASTERISK */
-	  || ch == 0xFE68 /* SMALL REVERSE SOLIDUS */
-	  || ch == 0xFE6B /* SMALL COMMERCIAL AT */
-	  || ch == 0xFF02 /* FULLWIDTH QUOTATION MARK */
-	  || ch == 0xFF03 /* FULLWIDTH NUMBER SIGN */
-	  || ch == 0xFF06 /* FULLWIDTH AMPERSAND */
-	  || ch == 0xFF07 /* FULLWIDTH APOSTROPHE */
-	  || ch == 0xFF0A /* FULLWIDTH ASTERISK */
-	  || ch == 0xFF0B /* FULLWIDTH PLUS SIGN */
-	  || ch == 0xFF0D /* FULLWIDTH HYPHEN-MINUS */
-	  || ch == 0xFF0F /* FULLWIDTH SOLIDUS */
-	  || ch == 0xFF1C /* FULLWIDTH LESS-THAN SIGN */
-	  || ch == 0xFF1D /* FULLWIDTH EQUALS SIGN */
-	  || ch == 0xFF1E /* FULLWIDTH GREATER-THAN SIGN */
-	  || ch == 0xFF20 /* FULLWIDTH COMMERCIAL AT */
-	  || ch == 0xFF3C /* FULLWIDTH REVERSE SOLIDUS */
-	  || ch == 0xFF3E /* FULLWIDTH CIRCUMFLEX ACCENT */
-	  || ch == 0xFF3F /* FULLWIDTH LOW LINE */
-	  || ch == 0xFF40 /* FULLWIDTH GRAVE ACCENT */
-	  || ch == 0xFF5C /* FULLWIDTH VERTICAL LINE */
-	  || ch == 0xFF5E /* FULLWIDTH TILDE */
-	  || ch == 0xFFE2 /* FULLWIDTH NOT SIGN */
-	  || ch == 0xFFE3 /* FULLWIDTH MACRON */
-	  || ch == 0xFFE4 /* FULLWIDTH BROKEN BAR */)
-	if (!(attr & ((1 << LBP_NS) | (1 << LBP_CM))))
-	  {
-	    /* ambiguous (ideograph) ? */
-	    if ((unicode_width[ch] != NULL
-		 && unicode_width[ch][0] == 'A'
-		 && ch >= 0x2000)
-		|| ch == 0x24EA /* CIRCLED DIGIT ZERO */
-		|| (ch >= 0x2780 && ch <= 0x2793) /* DINGBAT ... CIRCLED DIGIT ... */)
-	      attr |= 1 << LBP_AI;
-	    else
-	      attr |= 1 << LBP_ID;
-	  }
+          || ch == 0x3000 /* IDEOGRAPHIC SPACE */
+          || (ch >= 0x3040 && ch <= 0x309F) /* HIRAGANA */
+          || (ch >= 0x30A0 && ch <= 0x30FF) /* KATAKANA */
+          || (ch >= 0x3400 && ch <= 0x4DB5) /* CJK Ideograph Extension A */
+          || (ch >= 0x4E00 && ch <= 0x9FC3) /* CJK Ideograph */
+          || (ch >= 0xF900 && ch <= 0xFAD9) /* CJK COMPATIBILITY IDEOGRAPH */
+          || (ch >= 0xA000 && ch <= 0xA48F) /* YI SYLLABLE */
+          || (ch >= 0xA490 && ch <= 0xA4CF) /* YI RADICAL */
+          || ch == 0xFE62 /* SMALL PLUS SIGN */
+          || ch == 0xFE63 /* SMALL HYPHEN-MINUS */
+          || ch == 0xFE64 /* SMALL LESS-THAN SIGN */
+          || ch == 0xFE65 /* SMALL GREATER-THAN SIGN */
+          || ch == 0xFE66 /* SMALL EQUALS SIGN */
+          || (ch >= 0xFF10 && ch <= 0xFF19) /* FULLWIDTH DIGIT */
+          || (ch >= 0x20000 && ch <= 0x2A6D6) /* CJK Ideograph Extension B */
+          || (ch >= 0x2F800 && ch <= 0x2FA1D) /* CJK COMPATIBILITY IDEOGRAPH */
+          || strstr (unicode_attributes[ch].name, "FULLWIDTH LATIN ") != NULL
+          || (ch >= 0x3000 && ch <= 0x33FF
+              && !(attr & ((1 << LBP_CM) | (1 << LBP_NS) | (1 << LBP_OP) | (1 << LBP_CL))))
+          /* Extra characters for compatibility with Unicode LineBreak.txt.  */
+          || ch == 0xFE30 /* PRESENTATION FORM FOR VERTICAL TWO DOT LEADER */
+          || ch == 0xFE31 /* PRESENTATION FORM FOR VERTICAL EM DASH */
+          || ch == 0xFE32 /* PRESENTATION FORM FOR VERTICAL EN DASH */
+          || ch == 0xFE33 /* PRESENTATION FORM FOR VERTICAL LOW LINE */
+          || ch == 0xFE34 /* PRESENTATION FORM FOR VERTICAL WAVY LOW LINE */
+          || ch == 0xFE45 /* SESAME DOT */
+          || ch == 0xFE46 /* WHITE SESAME DOT */
+          || ch == 0xFE49 /* DASHED OVERLINE */
+          || ch == 0xFE4A /* CENTRELINE OVERLINE */
+          || ch == 0xFE4B /* WAVY OVERLINE */
+          || ch == 0xFE4C /* DOUBLE WAVY OVERLINE */
+          || ch == 0xFE4D /* DASHED LOW LINE */
+          || ch == 0xFE4E /* CENTRELINE LOW LINE */
+          || ch == 0xFE4F /* WAVY LOW LINE */
+          || ch == 0xFE51 /* SMALL IDEOGRAPHIC COMMA */
+          || ch == 0xFE58 /* SMALL EM DASH */
+          || ch == 0xFE5F /* SMALL NUMBER SIGN */
+          || ch == 0xFE60 /* SMALL AMPERSAND */
+          || ch == 0xFE61 /* SMALL ASTERISK */
+          || ch == 0xFE68 /* SMALL REVERSE SOLIDUS */
+          || ch == 0xFE6B /* SMALL COMMERCIAL AT */
+          || ch == 0xFF02 /* FULLWIDTH QUOTATION MARK */
+          || ch == 0xFF03 /* FULLWIDTH NUMBER SIGN */
+          || ch == 0xFF06 /* FULLWIDTH AMPERSAND */
+          || ch == 0xFF07 /* FULLWIDTH APOSTROPHE */
+          || ch == 0xFF0A /* FULLWIDTH ASTERISK */
+          || ch == 0xFF0B /* FULLWIDTH PLUS SIGN */
+          || ch == 0xFF0D /* FULLWIDTH HYPHEN-MINUS */
+          || ch == 0xFF0F /* FULLWIDTH SOLIDUS */
+          || ch == 0xFF1C /* FULLWIDTH LESS-THAN SIGN */
+          || ch == 0xFF1D /* FULLWIDTH EQUALS SIGN */
+          || ch == 0xFF1E /* FULLWIDTH GREATER-THAN SIGN */
+          || ch == 0xFF20 /* FULLWIDTH COMMERCIAL AT */
+          || ch == 0xFF3C /* FULLWIDTH REVERSE SOLIDUS */
+          || ch == 0xFF3E /* FULLWIDTH CIRCUMFLEX ACCENT */
+          || ch == 0xFF3F /* FULLWIDTH LOW LINE */
+          || ch == 0xFF40 /* FULLWIDTH GRAVE ACCENT */
+          || ch == 0xFF5C /* FULLWIDTH VERTICAL LINE */
+          || ch == 0xFF5E /* FULLWIDTH TILDE */
+          || ch == 0xFFE2 /* FULLWIDTH NOT SIGN */
+          || ch == 0xFFE3 /* FULLWIDTH MACRON */
+          || ch == 0xFFE4 /* FULLWIDTH BROKEN BAR */)
+        if (!(attr & ((1 << LBP_NS) | (1 << LBP_CM))))
+          {
+            /* ambiguous (ideograph) ? */
+            if ((unicode_width[ch] != NULL
+                 && unicode_width[ch][0] == 'A'
+                 && ch >= 0x2000)
+                || ch == 0x24EA /* CIRCLED DIGIT ZERO */
+                || (ch >= 0x2780 && ch <= 0x2793) /* DINGBAT ... CIRCLED DIGIT ... */)
+              attr |= 1 << LBP_AI;
+            else
+              attr |= 1 << LBP_ID;
+          }
 
       /* ordinary alphabetic and symbol characters */
       if ((unicode_attributes[ch].category[0] == 'L'
-	   && (unicode_attributes[ch].category[1] == 'u'
-	       || unicode_attributes[ch].category[1] == 'l'
-	       || unicode_attributes[ch].category[1] == 't'
-	       || unicode_attributes[ch].category[1] == 'm'
-	       || unicode_attributes[ch].category[1] == 'o'))
-	  || (unicode_attributes[ch].category[0] == 'S'
-	      && (unicode_attributes[ch].category[1] == 'm'
-		  || unicode_attributes[ch].category[1] == 'k'
-		  || unicode_attributes[ch].category[1] == 'o'))
-	  || (unicode_attributes[ch].category[0] == 'N'
-	      && (unicode_attributes[ch].category[1] == 'l'
-		  || unicode_attributes[ch].category[1] == 'o'))
-	  || (unicode_attributes[ch].category[0] == 'P'
-	      && (unicode_attributes[ch].category[1] == 'c'
-		  || unicode_attributes[ch].category[1] == 'd'
-		  || unicode_attributes[ch].category[1] == 'o'))
-	  || ch == 0x0600 /* ARABIC NUMBER SIGN */
-	  || ch == 0x0601 /* ARABIC SIGN SANAH */
-	  || ch == 0x0602 /* ARABIC FOOTNOTE MARKER */
-	  || ch == 0x0603 /* ARABIC SIGN SAFHA */
-	  || ch == 0x06DD /* ARABIC END OF AYAH */
-	  || ch == 0x070F /* SYRIAC ABBREVIATION MARK */
-	  || ch == 0x2061 /* FUNCTION APPLICATION */
-	  || ch == 0x2062 /* INVISIBLE TIMES */
-	  || ch == 0x2063 /* INVISIBLE SEPARATOR */
-	  || ch == 0x2064 /* INVISIBLE PLUS */)
-	if (!(attr & ((1 << LBP_GL) | (1 << LBP_B2) | (1 << LBP_BA) | (1 << LBP_BB) | (1 << LBP_HY) | (1 << LBP_CB) | (1 << LBP_CL) | (1 << LBP_EX) | (1 << LBP_IN) | (1 << LBP_NS) | (1 << LBP_OP) | (1 << LBP_QU) | (1 << LBP_IS) | (1 << LBP_NU) | (1 << LBP_PO) | (1 << LBP_PR) | (1 << LBP_SY) | (1 << LBP_H2) | (1 << LBP_H3) | (1 << LBP_JL) | (1 << LBP_JV) | (1 << LBP_JT) | (1 << LBP_SA) | (1 << LBP_ID))))
-	  {
-	    /* ambiguous (alphabetic) ? */
-	    if ((unicode_width[ch] != NULL
-		 && unicode_width[ch][0] == 'A'
-		 && ch >= 0x2000
-		 /* Extra exceptions for compatibility with Unicode LineBreak.txt.  */
-		 && ch != 0x2022 /* BULLET */
-		 && ch != 0x203E /* OVERLINE */
-		 && ch != 0x2126 /* OHM SIGN */
-		 && ch != 0x2153 /* VULGAR FRACTION ONE THIRD */
-		 && ch != 0x215C /* VULGAR FRACTION THREE EIGHTHS */
-		 && ch != 0x215D /* VULGAR FRACTION FIVE EIGHTHS */
-		 && ch != 0x21B8 /* NORTH WEST ARROW TO LONG BAR */
-		 && ch != 0x21B9 /* LEFTWARDS ARROW TO BAR OVER RIGHTWARDS ARROW TO BAR */
-		 && ch != 0x21E7 /* UPWARDS WHITE ARROW */
-		 && ch != 0x24FF /* NEGATIVE CIRCLED DIGIT ZERO */
-		 && ch != 0x273D /* HEAVY TEARDROP-SPOKED ASTERISK */)
+           && (unicode_attributes[ch].category[1] == 'u'
+               || unicode_attributes[ch].category[1] == 'l'
+               || unicode_attributes[ch].category[1] == 't'
+               || unicode_attributes[ch].category[1] == 'm'
+               || unicode_attributes[ch].category[1] == 'o'))
+          || (unicode_attributes[ch].category[0] == 'S'
+              && (unicode_attributes[ch].category[1] == 'm'
+                  || unicode_attributes[ch].category[1] == 'k'
+                  || unicode_attributes[ch].category[1] == 'o'))
+          || (unicode_attributes[ch].category[0] == 'N'
+              && (unicode_attributes[ch].category[1] == 'l'
+                  || unicode_attributes[ch].category[1] == 'o'))
+          || (unicode_attributes[ch].category[0] == 'P'
+              && (unicode_attributes[ch].category[1] == 'c'
+                  || unicode_attributes[ch].category[1] == 'd'
+                  || unicode_attributes[ch].category[1] == 'o'))
+          || ch == 0x0600 /* ARABIC NUMBER SIGN */
+          || ch == 0x0601 /* ARABIC SIGN SANAH */
+          || ch == 0x0602 /* ARABIC FOOTNOTE MARKER */
+          || ch == 0x0603 /* ARABIC SIGN SAFHA */
+          || ch == 0x06DD /* ARABIC END OF AYAH */
+          || ch == 0x070F /* SYRIAC ABBREVIATION MARK */
+          || ch == 0x2061 /* FUNCTION APPLICATION */
+          || ch == 0x2062 /* INVISIBLE TIMES */
+          || ch == 0x2063 /* INVISIBLE SEPARATOR */
+          || ch == 0x2064 /* INVISIBLE PLUS */)
+        if (!(attr & ((1 << LBP_GL) | (1 << LBP_B2) | (1 << LBP_BA) | (1 << LBP_BB) | (1 << LBP_HY) | (1 << LBP_CB) | (1 << LBP_CL) | (1 << LBP_EX) | (1 << LBP_IN) | (1 << LBP_NS) | (1 << LBP_OP) | (1 << LBP_QU) | (1 << LBP_IS) | (1 << LBP_NU) | (1 << LBP_PO) | (1 << LBP_PR) | (1 << LBP_SY) | (1 << LBP_H2) | (1 << LBP_H3) | (1 << LBP_JL) | (1 << LBP_JV) | (1 << LBP_JT) | (1 << LBP_SA) | (1 << LBP_ID))))
+          {
+            /* ambiguous (alphabetic) ? */
+            if ((unicode_width[ch] != NULL
+                 && unicode_width[ch][0] == 'A'
+                 && ch >= 0x2000
+                 /* Extra exceptions for compatibility with Unicode LineBreak.txt.  */
+                 && ch != 0x2022 /* BULLET */
+                 && ch != 0x203E /* OVERLINE */
+                 && ch != 0x2126 /* OHM SIGN */
+                 && ch != 0x2153 /* VULGAR FRACTION ONE THIRD */
+                 && ch != 0x215C /* VULGAR FRACTION THREE EIGHTHS */
+                 && ch != 0x215D /* VULGAR FRACTION FIVE EIGHTHS */
+                 && ch != 0x21B8 /* NORTH WEST ARROW TO LONG BAR */
+                 && ch != 0x21B9 /* LEFTWARDS ARROW TO BAR OVER RIGHTWARDS ARROW TO BAR */
+                 && ch != 0x21E7 /* UPWARDS WHITE ARROW */
+                 && ch != 0x24FF /* NEGATIVE CIRCLED DIGIT ZERO */
+                 && ch != 0x273D /* HEAVY TEARDROP-SPOKED ASTERISK */)
 #if !REVISION_22
-		|| ch == 0x00A1 /* INVERTED EXCLAMATION MARK */
-		|| ch == 0x00A7 /* SECTION SIGN */
-		|| ch == 0x00A8 /* DIAERESIS */
-		|| ch == 0x00AA /* FEMININE ORDINAL INDICATOR */
-		|| ch == 0x00B2 /* SUPERSCRIPT TWO */
-		|| ch == 0x00B3 /* SUPERSCRIPT THREE */
-		|| ch == 0x00B6 /* PILCROW SIGN */
-		|| ch == 0x00B7 /* MIDDLE DOT */
-		|| ch == 0x00B8 /* CEDILLA */
-		|| ch == 0x00B9 /* SUPERSCRIPT ONE */
-		|| ch == 0x00BA /* MASCULINE ORDINAL INDICATOR */
-		|| ch == 0x00BC /* VULGAR FRACTION ONE QUARTER */
-		|| ch == 0x00BD /* VULGAR FRACTION ONE HALF */
-		|| ch == 0x00BE /* VULGAR FRACTION THREE QUARTERS */
-		|| ch == 0x00BF /* INVERTED QUESTION MARK */
-		|| ch == 0x00D7 /* MULTIPLICATION SIGN */
-		|| ch == 0x00F7 /* DIVISION SIGN */
-		|| ch == 0x02C7 /* CARON */
-		|| ch == 0x02C9 /* MODIFIER LETTER MACRON */
-		|| ch == 0x02CA /* MODIFIER LETTER ACUTE ACCENT */
-		|| ch == 0x02CB /* MODIFIER LETTER GRAVE ACCENT */
-		|| ch == 0x02CD /* MODIFIER LETTER LOW MACRON */
-		|| ch == 0x02D0 /* MODIFIER LETTER TRIANGULAR COLON */
-		|| ch == 0x02D8 /* BREVE */
-		|| ch == 0x02D9 /* DOT ABOVE */
-		|| ch == 0x02DA /* RING ABOVE */
-		|| ch == 0x02DB /* OGONEK */
-		|| ch == 0x02DD /* DOUBLE ACUTE ACCENT */
+                || ch == 0x00A1 /* INVERTED EXCLAMATION MARK */
+                || ch == 0x00A7 /* SECTION SIGN */
+                || ch == 0x00A8 /* DIAERESIS */
+                || ch == 0x00AA /* FEMININE ORDINAL INDICATOR */
+                || ch == 0x00B2 /* SUPERSCRIPT TWO */
+                || ch == 0x00B3 /* SUPERSCRIPT THREE */
+                || ch == 0x00B6 /* PILCROW SIGN */
+                || ch == 0x00B7 /* MIDDLE DOT */
+                || ch == 0x00B8 /* CEDILLA */
+                || ch == 0x00B9 /* SUPERSCRIPT ONE */
+                || ch == 0x00BA /* MASCULINE ORDINAL INDICATOR */
+                || ch == 0x00BC /* VULGAR FRACTION ONE QUARTER */
+                || ch == 0x00BD /* VULGAR FRACTION ONE HALF */
+                || ch == 0x00BE /* VULGAR FRACTION THREE QUARTERS */
+                || ch == 0x00BF /* INVERTED QUESTION MARK */
+                || ch == 0x00D7 /* MULTIPLICATION SIGN */
+                || ch == 0x00F7 /* DIVISION SIGN */
+                || ch == 0x02C7 /* CARON */
+                || ch == 0x02C9 /* MODIFIER LETTER MACRON */
+                || ch == 0x02CA /* MODIFIER LETTER ACUTE ACCENT */
+                || ch == 0x02CB /* MODIFIER LETTER GRAVE ACCENT */
+                || ch == 0x02CD /* MODIFIER LETTER LOW MACRON */
+                || ch == 0x02D0 /* MODIFIER LETTER TRIANGULAR COLON */
+                || ch == 0x02D8 /* BREVE */
+                || ch == 0x02D9 /* DOT ABOVE */
+                || ch == 0x02DA /* RING ABOVE */
+                || ch == 0x02DB /* OGONEK */
+                || ch == 0x02DD /* DOUBLE ACUTE ACCENT */
 #endif
-		|| ch == 0x24EA /* CIRCLED DIGIT ZERO */
-		|| (ch >= 0x2780 && ch <= 0x2793) /* DINGBAT ... CIRCLED DIGIT ... */
-		/* Extra characters for compatibility with Unicode LineBreak.txt.  */
-		|| ch == 0x2155 /* VULGAR FRACTION ONE FIFTH */
-		|| ch == 0x2574 /* BOX DRAWINGS LIGHT LEFT */
-		|| ch == 0x2616 /* WHITE SHOGI PIECE */
-		|| ch == 0x2617 /* BLACK SHOGI PIECE */)
-	      attr |= 1 << LBP_AI;
-	    else
-	      attr |= 1 << LBP_AL;
-	    attr &= ~(1 << LBP_CM);
-	  }
+                || ch == 0x24EA /* CIRCLED DIGIT ZERO */
+                || (ch >= 0x2780 && ch <= 0x2793) /* DINGBAT ... CIRCLED DIGIT ... */
+                /* Extra characters for compatibility with Unicode LineBreak.txt.  */
+                || ch == 0x2155 /* VULGAR FRACTION ONE FIFTH */
+                || ch == 0x2574 /* BOX DRAWINGS LIGHT LEFT */
+                || ch == 0x2616 /* WHITE SHOGI PIECE */
+                || ch == 0x2617 /* BLACK SHOGI PIECE */)
+              attr |= 1 << LBP_AI;
+            else
+              attr |= 1 << LBP_AL;
+            attr &= ~(1 << LBP_CM);
+          }
     }
 
   if (attr == 0)
@@ -5787,45 +5787,45 @@ debug_output_lbp (FILE *stream)
     {
       int attr = get_lbp (i);
       if (attr != 1 << LBP_XX)
-	{
-	  fprintf (stream, "0x%04X", i);
+        {
+          fprintf (stream, "0x%04X", i);
 #define PRINT_BIT(attr,bit) \
   if (attr & (1 << bit)) fprintf (stream, " " #bit);
-	  PRINT_BIT(attr,LBP_BK);
-	  PRINT_BIT(attr,LBP_CM);
-	  PRINT_BIT(attr,LBP_WJ);
-	  PRINT_BIT(attr,LBP_ZW);
-	  PRINT_BIT(attr,LBP_GL);
-	  PRINT_BIT(attr,LBP_SP);
-	  PRINT_BIT(attr,LBP_B2);
-	  PRINT_BIT(attr,LBP_BA);
-	  PRINT_BIT(attr,LBP_BB);
-	  PRINT_BIT(attr,LBP_HY);
-	  PRINT_BIT(attr,LBP_CB);
-	  PRINT_BIT(attr,LBP_CL);
-	  PRINT_BIT(attr,LBP_EX);
-	  PRINT_BIT(attr,LBP_IN);
-	  PRINT_BIT(attr,LBP_NS);
-	  PRINT_BIT(attr,LBP_OP);
-	  PRINT_BIT(attr,LBP_QU);
-	  PRINT_BIT(attr,LBP_IS);
-	  PRINT_BIT(attr,LBP_NU);
-	  PRINT_BIT(attr,LBP_PO);
-	  PRINT_BIT(attr,LBP_PR);
-	  PRINT_BIT(attr,LBP_SY);
-	  PRINT_BIT(attr,LBP_AI);
-	  PRINT_BIT(attr,LBP_AL);
-	  PRINT_BIT(attr,LBP_H2);
-	  PRINT_BIT(attr,LBP_H3);
-	  PRINT_BIT(attr,LBP_ID);
-	  PRINT_BIT(attr,LBP_JL);
-	  PRINT_BIT(attr,LBP_JV);
-	  PRINT_BIT(attr,LBP_JT);
-	  PRINT_BIT(attr,LBP_SA);
-	  PRINT_BIT(attr,LBP_XX);
+          PRINT_BIT(attr,LBP_BK);
+          PRINT_BIT(attr,LBP_CM);
+          PRINT_BIT(attr,LBP_WJ);
+          PRINT_BIT(attr,LBP_ZW);
+          PRINT_BIT(attr,LBP_GL);
+          PRINT_BIT(attr,LBP_SP);
+          PRINT_BIT(attr,LBP_B2);
+          PRINT_BIT(attr,LBP_BA);
+          PRINT_BIT(attr,LBP_BB);
+          PRINT_BIT(attr,LBP_HY);
+          PRINT_BIT(attr,LBP_CB);
+          PRINT_BIT(attr,LBP_CL);
+          PRINT_BIT(attr,LBP_EX);
+          PRINT_BIT(attr,LBP_IN);
+          PRINT_BIT(attr,LBP_NS);
+          PRINT_BIT(attr,LBP_OP);
+          PRINT_BIT(attr,LBP_QU);
+          PRINT_BIT(attr,LBP_IS);
+          PRINT_BIT(attr,LBP_NU);
+          PRINT_BIT(attr,LBP_PO);
+          PRINT_BIT(attr,LBP_PR);
+          PRINT_BIT(attr,LBP_SY);
+          PRINT_BIT(attr,LBP_AI);
+          PRINT_BIT(attr,LBP_AL);
+          PRINT_BIT(attr,LBP_H2);
+          PRINT_BIT(attr,LBP_H3);
+          PRINT_BIT(attr,LBP_ID);
+          PRINT_BIT(attr,LBP_JL);
+          PRINT_BIT(attr,LBP_JV);
+          PRINT_BIT(attr,LBP_JT);
+          PRINT_BIT(attr,LBP_SA);
+          PRINT_BIT(attr,LBP_XX);
 #undef PRINT_BIT
-	  fprintf (stream, "\n");
-	}
+          fprintf (stream, "\n");
+        }
     }
 }
 
@@ -5884,24 +5884,24 @@ fill_org_lbp (const char *linebreak_filename)
       lineno++;
       c = getc (stream);
       if (c == EOF)
-	break;
+        break;
       if (c == '#')
-	{
-	  do c = getc (stream); while (c != EOF && c != '\n');
-	  continue;
-	}
+        {
+          do c = getc (stream); while (c != EOF && c != '\n');
+          continue;
+        }
       ungetc (c, stream);
       n = getfield (stream, field0, ';');
       n += getfield (stream, field1, ' ');
       n += getfield (stream, field2, '\n');
       if (n == 0)
-	break;
+        break;
       if (n != 3)
-	{
-	  fprintf (stderr, "short line in '%s':%d\n", linebreak_filename,
-		   lineno);
-	  exit (1);
-	}
+        {
+          fprintf (stderr, "short line in '%s':%d\n", linebreak_filename,
+                   lineno);
+          exit (1);
+        }
 #define TRY(bit) else if (strcmp (field1, #bit + 4) == 0) value = bit;
       if (false) {}
       TRY(LBP_BK)
@@ -5942,24 +5942,24 @@ fill_org_lbp (const char *linebreak_filename)
       else if (strcmp (field1, "NL") == 0) value = LBP_BK;
       else if (strcmp (field1, "SG") == 0) value = LBP_XX;
       else
-	{
-	  fprintf (stderr, "unknown property value \"%s\" in '%s':%d\n",
-		   field1, linebreak_filename, lineno);
-	  exit (1);
-	}
+        {
+          fprintf (stderr, "unknown property value \"%s\" in '%s':%d\n",
+                   field1, linebreak_filename, lineno);
+          exit (1);
+        }
       i = strtoul (field0, NULL, 16);
       if (strstr (field0, "..") != NULL)
-	{
-	  /* Deal with a range.  */
-	  j = strtoul (strstr (field0, "..") + 2, NULL, 16);
-	  for (; i <= j; i++)
-	    unicode_org_lbp[i] = value;
-	}
+        {
+          /* Deal with a range.  */
+          j = strtoul (strstr (field0, "..") + 2, NULL, 16);
+          for (; i <= j; i++)
+            unicode_org_lbp[i] = value;
+        }
       else
-	{
-	  /* Single character line.  */
-	  unicode_org_lbp[i] = value;
-	}
+        {
+          /* Single character line.  */
+          unicode_org_lbp[i] = value;
+        }
     }
   if (ferror (stream) || fclose (stream))
     {
@@ -5978,45 +5978,45 @@ debug_output_org_lbp (FILE *stream)
     {
       int attr = unicode_org_lbp[i];
       if (attr != LBP_XX)
-	{
-	  fprintf (stream, "0x%04X", i);
+        {
+          fprintf (stream, "0x%04X", i);
 #define PRINT_BIT(attr,bit) \
   if (attr == bit) fprintf (stream, " " #bit);
-	  PRINT_BIT(attr,LBP_BK);
-	  PRINT_BIT(attr,LBP_CM);
-	  PRINT_BIT(attr,LBP_WJ);
-	  PRINT_BIT(attr,LBP_ZW);
-	  PRINT_BIT(attr,LBP_GL);
-	  PRINT_BIT(attr,LBP_SP);
-	  PRINT_BIT(attr,LBP_B2);
-	  PRINT_BIT(attr,LBP_BA);
-	  PRINT_BIT(attr,LBP_BB);
-	  PRINT_BIT(attr,LBP_HY);
-	  PRINT_BIT(attr,LBP_CB);
-	  PRINT_BIT(attr,LBP_CL);
-	  PRINT_BIT(attr,LBP_EX);
-	  PRINT_BIT(attr,LBP_IN);
-	  PRINT_BIT(attr,LBP_NS);
-	  PRINT_BIT(attr,LBP_OP);
-	  PRINT_BIT(attr,LBP_QU);
-	  PRINT_BIT(attr,LBP_IS);
-	  PRINT_BIT(attr,LBP_NU);
-	  PRINT_BIT(attr,LBP_PO);
-	  PRINT_BIT(attr,LBP_PR);
-	  PRINT_BIT(attr,LBP_SY);
-	  PRINT_BIT(attr,LBP_AI);
-	  PRINT_BIT(attr,LBP_AL);
-	  PRINT_BIT(attr,LBP_H2);
-	  PRINT_BIT(attr,LBP_H3);
-	  PRINT_BIT(attr,LBP_ID);
-	  PRINT_BIT(attr,LBP_JL);
-	  PRINT_BIT(attr,LBP_JV);
-	  PRINT_BIT(attr,LBP_JT);
-	  PRINT_BIT(attr,LBP_SA);
-	  PRINT_BIT(attr,LBP_XX);
+          PRINT_BIT(attr,LBP_BK);
+          PRINT_BIT(attr,LBP_CM);
+          PRINT_BIT(attr,LBP_WJ);
+          PRINT_BIT(attr,LBP_ZW);
+          PRINT_BIT(attr,LBP_GL);
+          PRINT_BIT(attr,LBP_SP);
+          PRINT_BIT(attr,LBP_B2);
+          PRINT_BIT(attr,LBP_BA);
+          PRINT_BIT(attr,LBP_BB);
+          PRINT_BIT(attr,LBP_HY);
+          PRINT_BIT(attr,LBP_CB);
+          PRINT_BIT(attr,LBP_CL);
+          PRINT_BIT(attr,LBP_EX);
+          PRINT_BIT(attr,LBP_IN);
+          PRINT_BIT(attr,LBP_NS);
+          PRINT_BIT(attr,LBP_OP);
+          PRINT_BIT(attr,LBP_QU);
+          PRINT_BIT(attr,LBP_IS);
+          PRINT_BIT(attr,LBP_NU);
+          PRINT_BIT(attr,LBP_PO);
+          PRINT_BIT(attr,LBP_PR);
+          PRINT_BIT(attr,LBP_SY);
+          PRINT_BIT(attr,LBP_AI);
+          PRINT_BIT(attr,LBP_AL);
+          PRINT_BIT(attr,LBP_H2);
+          PRINT_BIT(attr,LBP_H3);
+          PRINT_BIT(attr,LBP_ID);
+          PRINT_BIT(attr,LBP_JL);
+          PRINT_BIT(attr,LBP_JV);
+          PRINT_BIT(attr,LBP_JT);
+          PRINT_BIT(attr,LBP_SA);
+          PRINT_BIT(attr,LBP_XX);
 #undef PRINT_BIT
-	  fprintf (stream, "\n");
-	}
+          fprintf (stream, "\n");
+        }
     }
 }
 
@@ -6066,15 +6066,15 @@ output_lbp (FILE *stream1, FILE *stream2)
 
       /* Now attr should contain exactly one bit.  */
       if (attr == 0 || ((attr & (attr - 1)) != 0))
-	abort ();
+        abort ();
 
       if (attr != 1 << LBP_XX)
-	{
-	  unsigned int log2_attr;
-	  for (log2_attr = 0; attr > 1; attr >>= 1, log2_attr++);
+        {
+          unsigned int log2_attr;
+          for (log2_attr = 0; attr > 1; attr >>= 1, log2_attr++);
 
-	  lbp_table_add (&t, i, log2_attr);
-	}
+          lbp_table_add (&t, i, log2_attr);
+        }
     }
 
   lbp_table_finalize (&t);
@@ -6091,7 +6091,7 @@ output_lbp (FILE *stream1, FILE *stream2)
 
   for (i = 0; i < 5; i++)
     fprintf (stream1, "#define lbrkprop_header_%d %d\n", i,
-	     ((uint32_t *) t.result)[i]);
+             ((uint32_t *) t.result)[i]);
   fprintf (stream1, "\n");
   fprintf (stream1, "typedef struct\n");
   fprintf (stream1, "  {\n");
@@ -6111,15 +6111,15 @@ output_lbp (FILE *stream1, FILE *stream2)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream2, "\n   ");
+        fprintf (stream2, "\n   ");
       offset = ((uint32_t *) (t.result + level1_offset))[i];
       if (offset == 0)
-	fprintf (stream2, " %5d", -1);
+        fprintf (stream2, " %5d", -1);
       else
-	fprintf (stream2, " %5zu",
-		 (offset - level2_offset) / sizeof (uint32_t));
+        fprintf (stream2, " %5zu",
+                 (offset - level2_offset) / sizeof (uint32_t));
       if (i+1 < t.level1_size)
-	fprintf (stream2, ",");
+        fprintf (stream2, ",");
     }
   if (t.level1_size > 8)
     fprintf (stream2, "\n ");
@@ -6131,15 +6131,15 @@ output_lbp (FILE *stream1, FILE *stream2)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream2, "\n   ");
+        fprintf (stream2, "\n   ");
       offset = ((uint32_t *) (t.result + level2_offset))[i];
       if (offset == 0)
-	fprintf (stream2, " %5d", -1);
+        fprintf (stream2, " %5d", -1);
       else
-	fprintf (stream2, " %5zu",
-		 (offset - level3_offset) / sizeof (unsigned char));
+        fprintf (stream2, " %5zu",
+                 (offset - level3_offset) / sizeof (unsigned char));
       if (i+1 < t.level2_size << t.q)
-	fprintf (stream2, ",");
+        fprintf (stream2, ",");
     }
   if (t.level2_size << t.q > 8)
     fprintf (stream2, "\n ");
@@ -6152,48 +6152,48 @@ output_lbp (FILE *stream1, FILE *stream2)
       unsigned char value = ((unsigned char *) (t.result + level3_offset))[i];
       const char *value_string;
       switch (value)
-	{
+        {
 #define CASE(x) case x: value_string = #x; break;
-	  CASE(LBP_BK);
-	  CASE(LBP_CM);
-	  CASE(LBP_WJ);
-	  CASE(LBP_ZW);
-	  CASE(LBP_GL);
-	  CASE(LBP_SP);
-	  CASE(LBP_B2);
-	  CASE(LBP_BA);
-	  CASE(LBP_BB);
-	  CASE(LBP_HY);
-	  CASE(LBP_CB);
-	  CASE(LBP_CL);
-	  CASE(LBP_EX);
-	  CASE(LBP_IN);
-	  CASE(LBP_NS);
-	  CASE(LBP_OP);
-	  CASE(LBP_QU);
-	  CASE(LBP_IS);
-	  CASE(LBP_NU);
-	  CASE(LBP_PO);
-	  CASE(LBP_PR);
-	  CASE(LBP_SY);
-	  CASE(LBP_AI);
-	  CASE(LBP_AL);
-	  CASE(LBP_H2);
-	  CASE(LBP_H3);
-	  CASE(LBP_ID);
-	  CASE(LBP_JL);
-	  CASE(LBP_JV);
-	  CASE(LBP_JT);
-	  CASE(LBP_SA);
-	  CASE(LBP_XX);
+          CASE(LBP_BK);
+          CASE(LBP_CM);
+          CASE(LBP_WJ);
+          CASE(LBP_ZW);
+          CASE(LBP_GL);
+          CASE(LBP_SP);
+          CASE(LBP_B2);
+          CASE(LBP_BA);
+          CASE(LBP_BB);
+          CASE(LBP_HY);
+          CASE(LBP_CB);
+          CASE(LBP_CL);
+          CASE(LBP_EX);
+          CASE(LBP_IN);
+          CASE(LBP_NS);
+          CASE(LBP_OP);
+          CASE(LBP_QU);
+          CASE(LBP_IS);
+          CASE(LBP_NU);
+          CASE(LBP_PO);
+          CASE(LBP_PR);
+          CASE(LBP_SY);
+          CASE(LBP_AI);
+          CASE(LBP_AL);
+          CASE(LBP_H2);
+          CASE(LBP_H3);
+          CASE(LBP_ID);
+          CASE(LBP_JL);
+          CASE(LBP_JV);
+          CASE(LBP_JT);
+          CASE(LBP_SA);
+          CASE(LBP_XX);
 #undef CASE
-	  default:
-	    abort ();
-	}
+          default:
+            abort ();
+        }
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream2, "\n   ");
+        fprintf (stream2, "\n   ");
       fprintf (stream2, " %s%s", value_string,
-	       (i+1 < t.level3_size << t.p ? "," : ""));
+               (i+1 < t.level3_size << t.p ? "," : ""));
     }
   if (t.level3_size << t.p > 8)
     fprintf (stream2, "\n ");
@@ -6215,10 +6215,10 @@ output_lbrk_tables (const char *filename1, const char *filename2, const char *ve
     {
       streams[i] = fopen (filenames[i], "w");
       if (streams[i] == NULL)
-	{
-	  fprintf (stderr, "cannot open '%s' for writing\n", filenames[i]);
-	  exit (1);
-	}
+        {
+          fprintf (stderr, "cannot open '%s' for writing\n", filenames[i]);
+          exit (1);
+        }
     }
 
   for (i = 0; i < 2; i++)
@@ -6228,12 +6228,12 @@ output_lbrk_tables (const char *filename1, const char *filename2, const char *ve
       fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
       fprintf (stream, "/* Line breaking properties of Unicode characters.  */\n");
       fprintf (stream, "/* Generated automatically by gen-lbrk for Unicode %s.  */\n",
-	       version);
+               version);
       fprintf (stream, "\n");
 
       /* Put a GPL header on it.  The gnulib module is under LGPL (although it
-	 still carries the GPL header), and it's gnulib-tool which replaces the
-	 GPL header with an LGPL header.  */
+         still carries the GPL header), and it's gnulib-tool which replaces the
+         GPL header with an LGPL header.  */
       fprintf (stream, "/* Copyright (C) 2000-2002, 2004, 2008 Free Software Foundation, Inc.\n");
       fprintf (stream, "\n");
       fprintf (stream, "   This program is free software: you can redistribute it and/or modify\n");
@@ -6256,10 +6256,10 @@ output_lbrk_tables (const char *filename1, const char *filename2, const char *ve
   for (i = 0; i < 2; i++)
     {
       if (ferror (streams[i]) || fclose (streams[i]))
-	{
-	  fprintf (stderr, "error writing to '%s'\n", filenames[i]);
-	  exit (1);
-	}
+        {
+          fprintf (stderr, "error writing to '%s'\n", filenames[i]);
+          exit (1);
+        }
     }
 }
 
@@ -6294,64 +6294,64 @@ get_wbp (unsigned int ch)
   if (unicode_attributes[ch].name != NULL)
     {
       if (ch == 0x000D)
-	attr |= 1 << WBP_CR;
+        attr |= 1 << WBP_CR;
 
       if (ch == 0x000A)
-	attr |= 1 << WBP_LF;
+        attr |= 1 << WBP_LF;
 
       if (ch == 0x000B || ch == 0x000C
-	  || ch == 0x0085
-	  || ch == 0x2028 || ch == 0x2029)
-	attr |= 1 << WBP_NEWLINE;
+          || ch == 0x0085
+          || ch == 0x2028 || ch == 0x2029)
+        attr |= 1 << WBP_NEWLINE;
 
       if (((unicode_properties[ch] >> PROP_GRAPHEME_EXTEND) & 1) != 0
-	  || (unicode_attributes[ch].category != NULL
-	      && strcmp (unicode_attributes[ch].category, "Mc") == 0))
-	attr |= 1 << WBP_EXTEND;
+          || (unicode_attributes[ch].category != NULL
+              && strcmp (unicode_attributes[ch].category, "Mc") == 0))
+        attr |= 1 << WBP_EXTEND;
 
       if (unicode_attributes[ch].category != NULL
-	  && strcmp (unicode_attributes[ch].category, "Cf") == 0
-	  && ch != 0x200C && ch != 0x200D)
-	attr |= 1 << WBP_FORMAT;
+          && strcmp (unicode_attributes[ch].category, "Cf") == 0
+          && ch != 0x200C && ch != 0x200D)
+        attr |= 1 << WBP_FORMAT;
 
       if ((unicode_scripts[ch] < numscripts
-	   && strcmp (scripts[unicode_scripts[ch]], "Katakana") == 0)
-	  || (ch >= 0x3031 && ch <= 0x3035)
-	  || ch == 0x309B || ch == 0x309C || ch == 0x30A0 || ch == 0x30FC
-	  || ch == 0xFF70)
-	attr |= 1 << WBP_KATAKANA;
+           && strcmp (scripts[unicode_scripts[ch]], "Katakana") == 0)
+          || (ch >= 0x3031 && ch <= 0x3035)
+          || ch == 0x309B || ch == 0x309C || ch == 0x30A0 || ch == 0x30FC
+          || ch == 0xFF70)
+        attr |= 1 << WBP_KATAKANA;
 
       if ((((unicode_properties[ch] >> PROP_ALPHABETIC) & 1) != 0
-	   || ch == 0x05F3)
-	  && ((unicode_properties[ch] >> PROP_IDEOGRAPHIC) & 1) == 0
-	  && (attr & (1 << WBP_KATAKANA)) == 0
-	  && ((get_lbp (ch) >> LBP_SA) & 1) == 0
-	  && !(unicode_scripts[ch] < numscripts
-	       && strcmp (scripts[unicode_scripts[ch]], "Hiragana") == 0)
-	  && (attr & (1 << WBP_EXTEND)) == 0)
-	attr |= 1 << WBP_ALETTER;
+           || ch == 0x05F3)
+          && ((unicode_properties[ch] >> PROP_IDEOGRAPHIC) & 1) == 0
+          && (attr & (1 << WBP_KATAKANA)) == 0
+          && ((get_lbp (ch) >> LBP_SA) & 1) == 0
+          && !(unicode_scripts[ch] < numscripts
+               && strcmp (scripts[unicode_scripts[ch]], "Hiragana") == 0)
+          && (attr & (1 << WBP_EXTEND)) == 0)
+        attr |= 1 << WBP_ALETTER;
 
       if (ch == 0x0027 || ch == 0x002E || ch == 0x2018 || ch == 0x2019
-	  || ch == 0x2024 || ch == 0xFE52 || ch == 0xFF07 || ch == 0xFF0E)
-	attr |= 1 << WBP_MIDNUMLET;
+          || ch == 0x2024 || ch == 0xFE52 || ch == 0xFF07 || ch == 0xFF0E)
+        attr |= 1 << WBP_MIDNUMLET;
 
       if (ch == 0x00B7 || ch == 0x05F4 || ch == 0x2027 || ch == 0x003A
-	  || ch == 0x0387 || ch == 0xFE13 || ch == 0xFE55 || ch == 0xFF1A)
-	attr |= 1 << WBP_MIDLETTER;
+          || ch == 0x0387 || ch == 0xFE13 || ch == 0xFE55 || ch == 0xFF1A)
+        attr |= 1 << WBP_MIDLETTER;
 
       if ((((get_lbp (ch) >> LBP_IS) & 1) != 0
-	   || ch == 0x066C || ch == 0xFE50 || ch == 0xFE54 || ch == 0xFF0C
-	   || ch == 0xFF1B)
-	  && ch != 0x003A && ch != 0xFE13 && ch != 0x002E)
-	attr |= 1 << WBP_MIDNUM;
+           || ch == 0x066C || ch == 0xFE50 || ch == 0xFE54 || ch == 0xFF0C
+           || ch == 0xFF1B)
+          && ch != 0x003A && ch != 0xFE13 && ch != 0x002E)
+        attr |= 1 << WBP_MIDNUM;
 
       if (((get_lbp (ch) >> LBP_NU) & 1) != 0
-	  && ch != 0x066C)
-	attr |= 1 << WBP_NUMERIC;
+          && ch != 0x066C)
+        attr |= 1 << WBP_NUMERIC;
 
       if (unicode_attributes[ch].category != NULL
-	  && strcmp (unicode_attributes[ch].category, "Pc") == 0)
-	attr |= 1 << WBP_EXTENDNUMLET;
+          && strcmp (unicode_attributes[ch].category, "Pc") == 0)
+        attr |= 1 << WBP_EXTENDNUMLET;
     }
 
   if (attr == 0)
@@ -6371,34 +6371,34 @@ debug_output_wbp (FILE *stream)
     {
       int attr = get_wbp (i);
       if (attr != 1 << WBP_OTHER)
-	{
-	  fprintf (stream, "0x%04X", i);
-	  if (attr & (1 << WBP_CR))
-	    fprintf (stream, " CR");
-	  if (attr & (1 << WBP_LF))
-	    fprintf (stream, " LF");
-	  if (attr & (1 << WBP_NEWLINE))
-	    fprintf (stream, " Newline");
-	  if (attr & (1 << WBP_EXTEND))
-	    fprintf (stream, " Extend");
-	  if (attr & (1 << WBP_FORMAT))
-	    fprintf (stream, " Format");
-	  if (attr & (1 << WBP_KATAKANA))
-	    fprintf (stream, " Katakana");
-	  if (attr & (1 << WBP_ALETTER))
-	    fprintf (stream, " ALetter");
-	  if (attr & (1 << WBP_MIDNUMLET))
-	    fprintf (stream, " MidNumLet");
-	  if (attr & (1 << WBP_MIDLETTER))
-	    fprintf (stream, " MidLetter");
-	  if (attr & (1 << WBP_MIDNUM))
-	    fprintf (stream, " MidNum");
-	  if (attr & (1 << WBP_NUMERIC))
-	    fprintf (stream, " Numeric");
-	  if (attr & (1 << WBP_EXTENDNUMLET))
-	    fprintf (stream, " ExtendNumLet");
-	  fprintf (stream, "\n");
-	}
+        {
+          fprintf (stream, "0x%04X", i);
+          if (attr & (1 << WBP_CR))
+            fprintf (stream, " CR");
+          if (attr & (1 << WBP_LF))
+            fprintf (stream, " LF");
+          if (attr & (1 << WBP_NEWLINE))
+            fprintf (stream, " Newline");
+          if (attr & (1 << WBP_EXTEND))
+            fprintf (stream, " Extend");
+          if (attr & (1 << WBP_FORMAT))
+            fprintf (stream, " Format");
+          if (attr & (1 << WBP_KATAKANA))
+            fprintf (stream, " Katakana");
+          if (attr & (1 << WBP_ALETTER))
+            fprintf (stream, " ALetter");
+          if (attr & (1 << WBP_MIDNUMLET))
+            fprintf (stream, " MidNumLet");
+          if (attr & (1 << WBP_MIDLETTER))
+            fprintf (stream, " MidLetter");
+          if (attr & (1 << WBP_MIDNUM))
+            fprintf (stream, " MidNum");
+          if (attr & (1 << WBP_NUMERIC))
+            fprintf (stream, " Numeric");
+          if (attr & (1 << WBP_EXTENDNUMLET))
+            fprintf (stream, " ExtendNumLet");
+          fprintf (stream, "\n");
+        }
     }
 }
 
@@ -6453,21 +6453,21 @@ fill_org_wbp (const char *wordbreakproperty_filename)
       int propvalue;
 
       if (fscanf (stream, "%200[^\n]\n", buf) < 1)
-	break;
+        break;
 
       if (buf[0] == '\0' || buf[0] == '#')
-	continue;
+        continue;
 
       if (sscanf (buf, "%X..%X%[ ;]%[^ ]", &i1, &i2, padding, propname) != 4)
-	{
-	  if (sscanf (buf, "%X%[ ;]%[^ ]", &i1, padding, propname) != 3)
-	    {
-	      fprintf (stderr, "parse error in '%s'\n",
-		       wordbreakproperty_filename);
-	      exit (1);
-	    }
-	  i2 = i1;
-	}
+        {
+          if (sscanf (buf, "%X%[ ;]%[^ ]", &i1, padding, propname) != 3)
+            {
+              fprintf (stderr, "parse error in '%s'\n",
+                       wordbreakproperty_filename);
+              exit (1);
+            }
+          i2 = i1;
+        }
 #define PROP(name,value) \
       if (strcmp (propname, name) == 0) propvalue = value; else
       PROP ("CR", WBP_CR)
@@ -6483,16 +6483,16 @@ fill_org_wbp (const char *wordbreakproperty_filename)
       PROP ("Numeric", WBP_NUMERIC)
       PROP ("ExtendNumLet", WBP_EXTENDNUMLET)
 #undef PROP
-	{
-	  fprintf (stderr, "unknown property value '%s' in '%s'\n", propname,
-		   wordbreakproperty_filename);
-	  exit (1);
-	}
+        {
+          fprintf (stderr, "unknown property value '%s' in '%s'\n", propname,
+                   wordbreakproperty_filename);
+          exit (1);
+        }
       if (!(i1 <= i2 && i2 < 0x110000))
-	abort ();
+        abort ();
 
       for (i = i1; i <= i2; i++)
-	unicode_org_wbp[i] = propvalue;
+        unicode_org_wbp[i] = propvalue;
     }
 
   if (ferror (stream) || fclose (stream))
@@ -6512,26 +6512,26 @@ debug_output_org_wbp (FILE *stream)
     {
       int propvalue = unicode_org_wbp[i];
       if (propvalue != WBP_OTHER)
-	{
-	  fprintf (stream, "0x%04X", i);
+        {
+          fprintf (stream, "0x%04X", i);
 #define PROP(name,value) \
-	  if (propvalue == value) fprintf (stream, " " name); else
-	  PROP ("CR", WBP_CR)
-	  PROP ("LF", WBP_LF)
-	  PROP ("Newline", WBP_NEWLINE)
-	  PROP ("Extend", WBP_EXTEND)
-	  PROP ("Format", WBP_FORMAT)
-	  PROP ("Katakana", WBP_KATAKANA)
-	  PROP ("ALetter", WBP_ALETTER)
-	  PROP ("MidNumLet", WBP_MIDNUMLET)
-	  PROP ("MidLetter", WBP_MIDLETTER)
-	  PROP ("MidNum", WBP_MIDNUM)
-	  PROP ("Numeric", WBP_NUMERIC)
-	  PROP ("ExtendNumLet", WBP_EXTENDNUMLET)
+          if (propvalue == value) fprintf (stream, " " name); else
+          PROP ("CR", WBP_CR)
+          PROP ("LF", WBP_LF)
+          PROP ("Newline", WBP_NEWLINE)
+          PROP ("Extend", WBP_EXTEND)
+          PROP ("Format", WBP_FORMAT)
+          PROP ("Katakana", WBP_KATAKANA)
+          PROP ("ALetter", WBP_ALETTER)
+          PROP ("MidNumLet", WBP_MIDNUMLET)
+          PROP ("MidLetter", WBP_MIDLETTER)
+          PROP ("MidNum", WBP_MIDNUM)
+          PROP ("Numeric", WBP_NUMERIC)
+          PROP ("ExtendNumLet", WBP_EXTENDNUMLET)
 #undef PROP
-	  fprintf (stream, " ??");
-	  fprintf (stream, "\n");
-	}
+          fprintf (stream, " ??");
+          fprintf (stream, "\n");
+        }
     }
 }
 
@@ -6581,15 +6581,15 @@ output_wbp (FILE *stream)
 
       /* Now attr should contain exactly one bit.  */
       if (attr == 0 || ((attr & (attr - 1)) != 0))
-	abort ();
+        abort ();
 
       if (attr != 1 << WBP_OTHER)
-	{
-	  unsigned int log2_attr;
-	  for (log2_attr = 0; attr > 1; attr >>= 1, log2_attr++);
+        {
+          unsigned int log2_attr;
+          for (log2_attr = 0; attr > 1; attr >>= 1, log2_attr++);
 
-	  wbp_table_add (&t, i, log2_attr);
-	}
+          wbp_table_add (&t, i, log2_attr);
+        }
     }
 
   wbp_table_finalize (&t);
@@ -6606,7 +6606,7 @@ output_wbp (FILE *stream)
 
   for (i = 0; i < 5; i++)
     fprintf (stream, "#define wbrkprop_header_%d %d\n", i,
-	     ((uint32_t *) t.result)[i]);
+             ((uint32_t *) t.result)[i]);
   fprintf (stream, "\n");
   fprintf (stream, "typedef struct\n");
   fprintf (stream, "  {\n");
@@ -6624,15 +6624,15 @@ output_wbp (FILE *stream)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       offset = ((uint32_t *) (t.result + level1_offset))[i];
       if (offset == 0)
-	fprintf (stream, " %5d", -1);
+        fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zu",
-		 (offset - level2_offset) / sizeof (uint32_t));
+        fprintf (stream, " %5zu",
+                 (offset - level2_offset) / sizeof (uint32_t));
       if (i+1 < t.level1_size)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
     }
   if (t.level1_size > 8)
     fprintf (stream, "\n ");
@@ -6644,15 +6644,15 @@ output_wbp (FILE *stream)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       offset = ((uint32_t *) (t.result + level2_offset))[i];
       if (offset == 0)
-	fprintf (stream, " %5d", -1);
+        fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zu",
-		 (offset - level3_offset) / sizeof (unsigned char));
+        fprintf (stream, " %5zu",
+                 (offset - level3_offset) / sizeof (unsigned char));
       if (i+1 < t.level2_size << t.q)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
     }
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n ");
@@ -6665,29 +6665,29 @@ output_wbp (FILE *stream)
       unsigned char value = ((unsigned char *) (t.result + level3_offset))[i];
       const char *value_string;
       switch (value)
-	{
+        {
 #define CASE(x) case x: value_string = #x; break;
-	  CASE(WBP_OTHER);
-	  CASE(WBP_CR);
-	  CASE(WBP_LF);
-	  CASE(WBP_NEWLINE);
-	  CASE(WBP_EXTEND);
-	  CASE(WBP_FORMAT);
-	  CASE(WBP_KATAKANA);
-	  CASE(WBP_ALETTER);
-	  CASE(WBP_MIDNUMLET);
-	  CASE(WBP_MIDLETTER);
-	  CASE(WBP_MIDNUM);
-	  CASE(WBP_NUMERIC);
-	  CASE(WBP_EXTENDNUMLET);
+          CASE(WBP_OTHER);
+          CASE(WBP_CR);
+          CASE(WBP_LF);
+          CASE(WBP_NEWLINE);
+          CASE(WBP_EXTEND);
+          CASE(WBP_FORMAT);
+          CASE(WBP_KATAKANA);
+          CASE(WBP_ALETTER);
+          CASE(WBP_MIDNUMLET);
+          CASE(WBP_MIDLETTER);
+          CASE(WBP_MIDNUM);
+          CASE(WBP_NUMERIC);
+          CASE(WBP_EXTENDNUMLET);
 #undef CASE
-	  default:
-	    abort ();
-	}
+          default:
+            abort ();
+        }
       if (i > 0 && (i % 4) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       fprintf (stream, " %s%s", value_string,
-	       (i+1 < t.level3_size << t.p ? "," : ""));
+               (i+1 < t.level3_size << t.p ? "," : ""));
     }
   if (t.level3_size << t.p > 4)
     fprintf (stream, "\n ");
@@ -6710,7 +6710,7 @@ output_wbrk_tables (const char *filename, const char *version)
   fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
   fprintf (stream, "/* Line breaking properties of Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-uni-tables for Unicode %s.  */\n",
-	   version);
+           version);
   fprintf (stream, "\n");
 
   /* Put a GPL header on it.  The gnulib module is under LGPL (although it
@@ -6772,7 +6772,7 @@ enum
    decompositions).  Return the type, or -1 for none.  */
 static int
 get_decomposition (unsigned int ch,
-		   unsigned int *lengthp, unsigned int decomposed[MAX_DECOMP_LENGTH])
+                   unsigned int *lengthp, unsigned int decomposed[MAX_DECOMP_LENGTH])
 {
   const char *decomposition = unicode_attributes[ch].decomposition;
 
@@ -6783,55 +6783,55 @@ get_decomposition (unsigned int ch,
       char *endptr;
 
       if (decomposition[0] == '<')
-	{
-	  const char *rangle;
-	  size_t typelen;
+        {
+          const char *rangle;
+          size_t typelen;
 
-	  rangle = strchr (decomposition + 1, '>');
-	  if (rangle == NULL)
-	    abort ();
-	  typelen = rangle + 1 - decomposition;
+          rangle = strchr (decomposition + 1, '>');
+          if (rangle == NULL)
+            abort ();
+          typelen = rangle + 1 - decomposition;
 #define TYPE(t1,t2) \
-	  if (typelen == (sizeof (t1) - 1) && memcmp (decomposition, t1, typelen) == 0) \
-	    type = t2; \
-	  else
-	  TYPE ("<font>", UC_DECOMP_FONT)
-	  TYPE ("<noBreak>", UC_DECOMP_NOBREAK)
-	  TYPE ("<initial>", UC_DECOMP_INITIAL)
-	  TYPE ("<medial>", UC_DECOMP_MEDIAL)
-	  TYPE ("<final>", UC_DECOMP_FINAL)
-	  TYPE ("<isolated>", UC_DECOMP_ISOLATED)
-	  TYPE ("<circle>", UC_DECOMP_CIRCLE)
-	  TYPE ("<super>", UC_DECOMP_SUPER)
-	  TYPE ("<sub>", UC_DECOMP_SUB)
-	  TYPE ("<vertical>", UC_DECOMP_VERTICAL)
-	  TYPE ("<wide>", UC_DECOMP_WIDE)
-	  TYPE ("<narrow>", UC_DECOMP_NARROW)
-	  TYPE ("<small>", UC_DECOMP_SMALL)
-	  TYPE ("<square>", UC_DECOMP_SQUARE)
-	  TYPE ("<fraction>", UC_DECOMP_FRACTION)
-	  TYPE ("<compat>", UC_DECOMP_COMPAT)
-	    {
-	      fprintf (stderr, "unknown decomposition type %*s\n", (int)typelen, decomposition);
-	      exit (1);
-	    }
+          if (typelen == (sizeof (t1) - 1) && memcmp (decomposition, t1, typelen) == 0) \
+            type = t2; \
+          else
+          TYPE ("<font>", UC_DECOMP_FONT)
+          TYPE ("<noBreak>", UC_DECOMP_NOBREAK)
+          TYPE ("<initial>", UC_DECOMP_INITIAL)
+          TYPE ("<medial>", UC_DECOMP_MEDIAL)
+          TYPE ("<final>", UC_DECOMP_FINAL)
+          TYPE ("<isolated>", UC_DECOMP_ISOLATED)
+          TYPE ("<circle>", UC_DECOMP_CIRCLE)
+          TYPE ("<super>", UC_DECOMP_SUPER)
+          TYPE ("<sub>", UC_DECOMP_SUB)
+          TYPE ("<vertical>", UC_DECOMP_VERTICAL)
+          TYPE ("<wide>", UC_DECOMP_WIDE)
+          TYPE ("<narrow>", UC_DECOMP_NARROW)
+          TYPE ("<small>", UC_DECOMP_SMALL)
+          TYPE ("<square>", UC_DECOMP_SQUARE)
+          TYPE ("<fraction>", UC_DECOMP_FRACTION)
+          TYPE ("<compat>", UC_DECOMP_COMPAT)
+            {
+              fprintf (stderr, "unknown decomposition type %*s\n", (int)typelen, decomposition);
+              exit (1);
+            }
 #undef TYPE
-	  decomposition = rangle + 1;
-	  if (decomposition[0] == ' ')
-	    decomposition++;
-	}
+          decomposition = rangle + 1;
+          if (decomposition[0] == ' ')
+            decomposition++;
+        }
       for (length = 0; length < MAX_DECOMP_LENGTH; length++)
-	{
-	  decomposed[length] = strtoul (decomposition, &endptr, 16);
-	  if (endptr == decomposition)
-	    break;
-	  decomposition = endptr;
-	  if (decomposition[0] == ' ')
-	    decomposition++;
-	}
+        {
+          decomposed[length] = strtoul (decomposition, &endptr, 16);
+          if (endptr == decomposition)
+            break;
+          decomposition = endptr;
+          if (decomposition[0] == ' ')
+            decomposition++;
+        }
       if (*decomposition != '\0')
-	/* MAX_DECOMP_LENGTH is too small.  */
-	abort ();
+        /* MAX_DECOMP_LENGTH is too small.  */
+        abort ();
 
       *lengthp = length;
       return type;
@@ -6873,32 +6873,32 @@ output_decomposition (FILE *stream1, FILE *stream2)
       int type = get_decomposition (ch, &length, decomposed);
 
       if (type >= 0)
-	{
-	  if (!(offset < (1 << 15)))
-	    abort ();
-	  decomp_table_add (&t, ch, ((type == UC_DECOMP_CANONICAL ? 0 : 1) << 15) | offset);
+        {
+          if (!(offset < (1 << 15)))
+            abort ();
+          decomp_table_add (&t, ch, ((type == UC_DECOMP_CANONICAL ? 0 : 1) << 15) | offset);
 
-	  /* Produce length 3-bytes entries.  */
-	  if (length == 0)
-	    /* We would need a special representation of zero-length entries.  */
-	    abort ();
-	  for (i = 0; i < length; i++)
-	    {
-	      if (offset > 0)
-		fprintf (stream2, ",");
-	      if ((offset % 4) == 0)
-		fprintf (stream2, "\n ");
-	      if (!(decomposed[i] < (1 << 18)))
-		abort ();
-	      fprintf (stream2, " 0x%02X, 0x%02X, 0x%02X",
-		       (((i+1 < length ? (1 << 23) : 0)
-			 | (i == 0 ? (type << 18) : 0)
-			 | decomposed[i]) >> 16) & 0xff,
-		       (decomposed[i] >> 8) & 0xff,
-		       decomposed[i] & 0xff);
-	      offset++;
-	    }
-	}
+          /* Produce length 3-bytes entries.  */
+          if (length == 0)
+            /* We would need a special representation of zero-length entries.  */
+            abort ();
+          for (i = 0; i < length; i++)
+            {
+              if (offset > 0)
+                fprintf (stream2, ",");
+              if ((offset % 4) == 0)
+                fprintf (stream2, "\n ");
+              if (!(decomposed[i] < (1 << 18)))
+                abort ();
+              fprintf (stream2, " 0x%02X, 0x%02X, 0x%02X",
+                       (((i+1 < length ? (1 << 23) : 0)
+                         | (i == 0 ? (type << 18) : 0)
+                         | decomposed[i]) >> 16) & 0xff,
+                       (decomposed[i] >> 8) & 0xff,
+                       decomposed[i] & 0xff);
+              offset++;
+            }
+        }
     }
 
   fprintf (stream2, "\n};\n");
@@ -6918,7 +6918,7 @@ output_decomposition (FILE *stream1, FILE *stream2)
 
   for (i = 0; i < 5; i++)
     fprintf (stream1, "#define decomp_header_%d %d\n", i,
-	     ((uint32_t *) t.result)[i]);
+             ((uint32_t *) t.result)[i]);
   fprintf (stream1, "\n");
   fprintf (stream1, "typedef struct\n");
   fprintf (stream1, "  {\n");
@@ -6937,15 +6937,15 @@ output_decomposition (FILE *stream1, FILE *stream2)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream2, "\n   ");
+        fprintf (stream2, "\n   ");
       offset = ((uint32_t *) (t.result + level1_offset))[i];
       if (offset == 0)
-	fprintf (stream2, " %5d", -1);
+        fprintf (stream2, " %5d", -1);
       else
-	fprintf (stream2, " %5zu",
-		 (offset - level2_offset) / sizeof (uint32_t));
+        fprintf (stream2, " %5zu",
+                 (offset - level2_offset) / sizeof (uint32_t));
       if (i+1 < t.level1_size)
-	fprintf (stream2, ",");
+        fprintf (stream2, ",");
     }
   if (t.level1_size > 8)
     fprintf (stream2, "\n ");
@@ -6957,15 +6957,15 @@ output_decomposition (FILE *stream1, FILE *stream2)
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream2, "\n   ");
+        fprintf (stream2, "\n   ");
       offset = ((uint32_t *) (t.result + level2_offset))[i];
       if (offset == 0)
-	fprintf (stream2, " %5d", -1);
+        fprintf (stream2, " %5d", -1);
       else
-	fprintf (stream2, " %5zu",
-		 (offset - level3_offset) / sizeof (uint16_t));
+        fprintf (stream2, " %5zu",
+                 (offset - level3_offset) / sizeof (uint16_t));
       if (i+1 < t.level2_size << t.q)
-	fprintf (stream2, ",");
+        fprintf (stream2, ",");
     }
   if (t.level2_size << t.q > 8)
     fprintf (stream2, "\n ");
@@ -6977,10 +6977,10 @@ output_decomposition (FILE *stream1, FILE *stream2)
     {
       uint16_t value = ((uint16_t *) (t.result + level3_offset))[i];
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream2, "\n   ");
+        fprintf (stream2, "\n   ");
       fprintf (stream2, " %5d", value == (uint16_t)(-1) ? -1 : value);
       if (i+1 < t.level3_size << t.p)
-	fprintf (stream2, ",");
+        fprintf (stream2, ",");
     }
   if (t.level3_size << t.p > 8)
     fprintf (stream2, "\n ");
@@ -7002,10 +7002,10 @@ output_decomposition_tables (const char *filename1, const char *filename2, const
     {
       streams[i] = fopen (filenames[i], "w");
       if (streams[i] == NULL)
-	{
-	  fprintf (stderr, "cannot open '%s' for writing\n", filenames[i]);
-	  exit (1);
-	}
+        {
+          fprintf (stderr, "cannot open '%s' for writing\n", filenames[i]);
+          exit (1);
+        }
     }
 
   for (i = 0; i < 2; i++)
@@ -7015,7 +7015,7 @@ output_decomposition_tables (const char *filename1, const char *filename2, const
       fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
       fprintf (stream, "/* Decomposition of Unicode characters.  */\n");
       fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
-	       version);
+               version);
       fprintf (stream, "\n");
     }
 
@@ -7024,10 +7024,10 @@ output_decomposition_tables (const char *filename1, const char *filename2, const
   for (i = 0; i < 2; i++)
     {
       if (ferror (streams[i]) || fclose (streams[i]))
-	{
-	  fprintf (stderr, "error writing to '%s'\n", filenames[i]);
-	  exit (1);
-	}
+        {
+          fprintf (stderr, "error writing to '%s'\n", filenames[i]);
+          exit (1);
+        }
     }
 }
 
@@ -7056,18 +7056,18 @@ fill_composition_exclusions (const char *compositionexclusions_filename)
       unsigned int i;
 
       if (fscanf (stream, "%200[^\n]\n", buf) < 1)
-	break;
+        break;
 
       if (buf[0] == '\0' || buf[0] == '#')
-	continue;
+        continue;
 
       if (sscanf (buf, "%X", &i) != 1)
-	{
-	  fprintf (stderr, "parse error in '%s'\n", compositionexclusions_filename);
-	  exit (1);
-	}
+        {
+          fprintf (stderr, "parse error in '%s'\n", compositionexclusions_filename);
+          exit (1);
+        }
       if (!(i < 0x110000))
-	abort ();
+        abort ();
 
       unicode_composition_exclusions[i] = 1;
     }
@@ -7099,32 +7099,32 @@ debug_output_composition_tables (const char *filename)
       int type = get_decomposition (ch, &length, decomposed);
 
       if (type == UC_DECOMP_CANONICAL
-	  /* Consider only binary decompositions.
-	     Exclude singleton decompositions.  */
-	  && length == 2)
-	{
-	  unsigned int code1 = decomposed[0];
-	  unsigned int code2 = decomposed[1];
-	  unsigned int combined = ch;
+          /* Consider only binary decompositions.
+             Exclude singleton decompositions.  */
+          && length == 2)
+        {
+          unsigned int code1 = decomposed[0];
+          unsigned int code2 = decomposed[1];
+          unsigned int combined = ch;
 
-	  /* Exclude decompositions where the first part is not a starter,
-	     i.e. is not of canonical combining class 0.  */
-	  if (strcmp (unicode_attributes[code1].combining, "0") == 0
-	      /* Exclude characters listed in CompositionExclusions.txt.  */
-	      && !unicode_composition_exclusions[combined])
-	    {
-	      /* The combined character must now also be a starter.
-		 Verify this.  */
-	      if (strcmp (unicode_attributes[combined].combining, "0") != 0)
-		abort ();
+          /* Exclude decompositions where the first part is not a starter,
+             i.e. is not of canonical combining class 0.  */
+          if (strcmp (unicode_attributes[code1].combining, "0") == 0
+              /* Exclude characters listed in CompositionExclusions.txt.  */
+              && !unicode_composition_exclusions[combined])
+            {
+              /* The combined character must now also be a starter.
+                 Verify this.  */
+              if (strcmp (unicode_attributes[combined].combining, "0") != 0)
+                abort ();
 
-	      fprintf (stream, "0x%04X\t0x%04X\t0x%04X\t%s\n",
-		       code1,
-		       code2,
-		       combined,
-		       unicode_attributes[code2].combining);
-	    }
-	}
+              fprintf (stream, "0x%04X\t0x%04X\t0x%04X\t%s\n",
+                       code1,
+                       code2,
+                       combined,
+                       unicode_attributes[code2].combining);
+            }
+        }
     }
 
   if (ferror (stream) || fclose (stream))
@@ -7150,7 +7150,7 @@ output_composition_tables (const char *filename, const char *version)
   fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
   fprintf (stream, "/* Canonical composition of Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-uni-tables for Unicode %s.  */\n",
-	   version);
+           version);
   fprintf (stream, "\n");
 
   /* Put a GPL header on it.  The gnulib module is under LGPL (although it
@@ -7210,38 +7210,38 @@ output_composition_tables (const char *filename, const char *version)
       int type = get_decomposition (ch, &length, decomposed);
 
       if (type == UC_DECOMP_CANONICAL
-	  /* Consider only binary decompositions.
-	     Exclude singleton decompositions.  */
-	  && length == 2)
-	{
-	  unsigned int code1 = decomposed[0];
-	  unsigned int code2 = decomposed[1];
-	  unsigned int combined = ch;
+          /* Consider only binary decompositions.
+             Exclude singleton decompositions.  */
+          && length == 2)
+        {
+          unsigned int code1 = decomposed[0];
+          unsigned int code2 = decomposed[1];
+          unsigned int combined = ch;
 
-	  /* Exclude decompositions where the first part is not a starter,
-	     i.e. is not of canonical combining class 0.  */
-	  if (strcmp (unicode_attributes[code1].combining, "0") == 0
-	      /* Exclude characters listed in CompositionExclusions.txt.  */
-	      && !unicode_composition_exclusions[combined])
-	    {
-	      /* The combined character must now also be a starter.
-		 Verify this.  */
-	      if (strcmp (unicode_attributes[combined].combining, "0") != 0)
-		abort ();
+          /* Exclude decompositions where the first part is not a starter,
+             i.e. is not of canonical combining class 0.  */
+          if (strcmp (unicode_attributes[code1].combining, "0") == 0
+              /* Exclude characters listed in CompositionExclusions.txt.  */
+              && !unicode_composition_exclusions[combined])
+            {
+              /* The combined character must now also be a starter.
+                 Verify this.  */
+              if (strcmp (unicode_attributes[combined].combining, "0") != 0)
+                abort ();
 
-	      if (!(code1 < 0x10000))
-		abort ();
-	      if (!(code2 < 0x10000))
-		abort ();
-	      if (!(combined < 0x10000))
-		abort ();
+              if (!(code1 < 0x10000))
+                abort ();
+              if (!(code2 < 0x10000))
+                abort ();
+              if (!(combined < 0x10000))
+                abort ();
 
-	      fprintf (stream, "\"\\x%02x\\x%02x\\x%02x\\x%02x\", 0x%04x\n",
-		       (code1 >> 8) & 0xff, code1 & 0xff,
-		       (code2 >> 8) & 0xff, code2 & 0xff,
-		       combined);
-	    }
-	}
+              fprintf (stream, "\"\\x%02x\\x%02x\\x%02x\\x%02x\", 0x%04x\n",
+                       (code1 >> 8) & 0xff, code1 & 0xff,
+                       (code2 >> 8) & 0xff, code2 & 0xff,
+                       combined);
+            }
+        }
     }
 
   if (ferror (stream) || fclose (stream))
@@ -7257,9 +7257,9 @@ output_composition_tables (const char *filename, const char *version)
 
 static void
 output_simple_mapping_test (const char *filename,
-			    const char *function_name,
-			    unsigned int (*func) (unsigned int),
-			    const char *version)
+                            const char *function_name,
+                            unsigned int (*func) (unsigned int),
+                            const char *version)
 {
   FILE *stream;
   bool need_comma;
@@ -7290,7 +7290,7 @@ output_simple_mapping_test (const char *filename,
   fprintf (stream, "   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */\n");
   fprintf (stream, "\n");
   fprintf (stream, "/* Generated automatically by gen-case.c for Unicode %s.  */\n",
-	   version);
+           version);
   fprintf (stream, "\n");
   fprintf (stream, "#include \"test-mapping-part1.h\"\n");
   fprintf (stream, "\n");
@@ -7301,12 +7301,12 @@ output_simple_mapping_test (const char *filename,
       unsigned int value = func (ch);
 
       if (value != ch)
-	{
-	  if (need_comma)
-	    fprintf (stream, ",\n");
-	  fprintf (stream, "    { 0x%04X, 0x%04X }", ch, value);
-	  need_comma = true;
-	}
+        {
+          if (need_comma)
+            fprintf (stream, ",\n");
+          fprintf (stream, "    { 0x%04X, 0x%04X }", ch, value);
+          need_comma = true;
+        }
     }
   if (need_comma)
     fprintf (stream, "\n");
@@ -7334,8 +7334,8 @@ output_simple_mapping_test (const char *filename,
 
 static void
 output_simple_mapping (const char *filename,
-		       unsigned int (*func) (unsigned int),
-		       const char *version)
+                       unsigned int (*func) (unsigned int),
+                       const char *version)
 {
   FILE *stream;
   unsigned int ch, i;
@@ -7352,7 +7352,7 @@ output_simple_mapping (const char *filename,
   fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
   fprintf (stream, "/* Simple character mapping of Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-case.c for Unicode %s.  */\n",
-	   version);
+           version);
 
   t.p = 7;
   t.q = 9;
@@ -7380,7 +7380,7 @@ output_simple_mapping (const char *filename,
 
   for (i = 0; i < 5; i++)
     fprintf (stream, "#define mapping_header_%d %d\n", i,
-	     ((uint32_t *) t.result)[i]);
+             ((uint32_t *) t.result)[i]);
   fprintf (stream, "static const\n");
   fprintf (stream, "struct\n");
   fprintf (stream, "  {\n");
@@ -7397,15 +7397,15 @@ output_simple_mapping (const char *filename,
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       offset = ((uint32_t *) (t.result + level1_offset))[i];
       if (offset == 0)
-	fprintf (stream, " %5d", -1);
+        fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zu",
-		 (offset - level2_offset) / sizeof (uint32_t));
+        fprintf (stream, " %5zu",
+                 (offset - level2_offset) / sizeof (uint32_t));
       if (i+1 < t.level1_size)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
     }
   if (t.level1_size > 8)
     fprintf (stream, "\n ");
@@ -7417,15 +7417,15 @@ output_simple_mapping (const char *filename,
     {
       uint32_t offset;
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       offset = ((uint32_t *) (t.result + level2_offset))[i];
       if (offset == 0)
-	fprintf (stream, " %5d", -1);
+        fprintf (stream, " %5d", -1);
       else
-	fprintf (stream, " %5zu",
-		 (offset - level3_offset) / sizeof (int32_t));
+        fprintf (stream, " %5zu",
+                 (offset - level3_offset) / sizeof (int32_t));
       if (i+1 < t.level2_size << t.q)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
     }
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n ");
@@ -7436,10 +7436,10 @@ output_simple_mapping (const char *filename,
   for (i = 0; i < t.level3_size << t.p; i++)
     {
       if (i > 0 && (i % 8) == 0)
-	fprintf (stream, "\n   ");
+        fprintf (stream, "\n   ");
       fprintf (stream, " %5d", ((int32_t *) (t.result + level3_offset))[i]);
       if (i+1 < t.level3_size << t.p)
-	fprintf (stream, ",");
+        fprintf (stream, ",");
     }
   if (t.level3_size << t.p > 8)
     fprintf (stream, "\n ");
@@ -7491,10 +7491,10 @@ add_casing_rule (struct special_casing_rule *new_rule)
     {
       allocated_casing_rules = 2 * allocated_casing_rules;
       if (allocated_casing_rules < 16)
-	allocated_casing_rules = 16;
+        allocated_casing_rules = 16;
       casing_rules =
-	(struct special_casing_rule **)
-	realloc (casing_rules, allocated_casing_rules * sizeof (struct special_casing_rule *));
+        (struct special_casing_rule **)
+        realloc (casing_rules, allocated_casing_rules * sizeof (struct special_casing_rule *));
     }
   casing_rules[num_casing_rules++] = new_rule;
 }
@@ -7532,179 +7532,179 @@ fill_casing_rules (const char *specialcasing_filename)
       int context;
 
       if (fscanf (stream, "%200[^\n]\n", buf) < 1)
-	break;
+        break;
 
       if (buf[0] == '\0' || buf[0] == '#')
-	continue;
+        continue;
 
       /* Scan code.  */
       scanptr = buf;
       code = strtoul (scanptr, &endptr, 16);
       if (endptr == scanptr)
-	{
-	  fprintf (stderr, "parse error in '%s'\n", specialcasing_filename);
-	  exit (1);
-	}
+        {
+          fprintf (stderr, "parse error in '%s'\n", specialcasing_filename);
+          exit (1);
+        }
       scanptr = endptr;
       if (*scanptr != ';')
-	{
-	  fprintf (stderr, "parse error in '%s'\n", specialcasing_filename);
-	  exit (1);
-	}
+        {
+          fprintf (stderr, "parse error in '%s'\n", specialcasing_filename);
+          exit (1);
+        }
       scanptr++;
 
       /* Scan lower mapping.  */
       for (i = 0; i < 3; i++)
-	lower_mapping[i] = 0;
+        lower_mapping[i] = 0;
       for (i = 0; i < 3; i++)
-	{
-	  while (*scanptr == ' ')
-	    scanptr++;
-	  if (*scanptr == ';')
-	    break;
-	  lower_mapping[i] = strtoul (scanptr, &endptr, 16);
-	  if (endptr == scanptr)
-	    {
-	      fprintf (stderr, "parse error in '%s'\n", specialcasing_filename);
-	      exit (1);
-	    }
-	  scanptr = endptr;
-	}
+        {
+          while (*scanptr == ' ')
+            scanptr++;
+          if (*scanptr == ';')
+            break;
+          lower_mapping[i] = strtoul (scanptr, &endptr, 16);
+          if (endptr == scanptr)
+            {
+              fprintf (stderr, "parse error in '%s'\n", specialcasing_filename);
+              exit (1);
+            }
+          scanptr = endptr;
+        }
       if (*scanptr != ';')
-	{
-	  fprintf (stderr, "parse error in '%s'\n", specialcasing_filename);
-	  exit (1);
-	}
+        {
+          fprintf (stderr, "parse error in '%s'\n", specialcasing_filename);
+          exit (1);
+        }
       scanptr++;
 
       /* Scan title mapping.  */
       for (i = 0; i < 3; i++)
-	title_mapping[i] = 0;
+        title_mapping[i] = 0;
       for (i = 0; i < 3; i++)
-	{
-	  while (*scanptr == ' ')
-	    scanptr++;
-	  if (*scanptr == ';')
-	    break;
-	  title_mapping[i] = strtoul (scanptr, &endptr, 16);
-	  if (endptr == scanptr)
-	    {
-	      fprintf (stderr, "parse error in '%s'\n", specialcasing_filename);
-	      exit (1);
-	    }
-	  scanptr = endptr;
-	}
+        {
+          while (*scanptr == ' ')
+            scanptr++;
+          if (*scanptr == ';')
+            break;
+          title_mapping[i] = strtoul (scanptr, &endptr, 16);
+          if (endptr == scanptr)
+            {
+              fprintf (stderr, "parse error in '%s'\n", specialcasing_filename);
+              exit (1);
+            }
+          scanptr = endptr;
+        }
       if (*scanptr != ';')
-	{
-	  fprintf (stderr, "parse error in '%s'\n", specialcasing_filename);
-	  exit (1);
-	}
+        {
+          fprintf (stderr, "parse error in '%s'\n", specialcasing_filename);
+          exit (1);
+        }
       scanptr++;
 
       /* Scan upper mapping.  */
       for (i = 0; i < 3; i++)
-	upper_mapping[i] = 0;
+        upper_mapping[i] = 0;
       for (i = 0; i < 3; i++)
-	{
-	  while (*scanptr == ' ')
-	    scanptr++;
-	  if (*scanptr == ';')
-	    break;
-	  upper_mapping[i] = strtoul (scanptr, &endptr, 16);
-	  if (endptr == scanptr)
-	    {
-	      fprintf (stderr, "parse error in '%s'\n", specialcasing_filename);
-	      exit (1);
-	    }
-	  scanptr = endptr;
-	}
+        {
+          while (*scanptr == ' ')
+            scanptr++;
+          if (*scanptr == ';')
+            break;
+          upper_mapping[i] = strtoul (scanptr, &endptr, 16);
+          if (endptr == scanptr)
+            {
+              fprintf (stderr, "parse error in '%s'\n", specialcasing_filename);
+              exit (1);
+            }
+          scanptr = endptr;
+        }
       if (*scanptr != ';')
-	{
-	  fprintf (stderr, "parse error in '%s'\n", specialcasing_filename);
-	  exit (1);
-	}
+        {
+          fprintf (stderr, "parse error in '%s'\n", specialcasing_filename);
+          exit (1);
+        }
       scanptr++;
 
       /* Scan language and context.  */
       language = NULL;
       context = SCC_ALWAYS;
       while (*scanptr == ' ')
-	scanptr++;
+        scanptr++;
       if (*scanptr != '\0' && *scanptr != '#')
-	{
-	  const char *word_begin = scanptr;
-	  const char *word_end;
+        {
+          const char *word_begin = scanptr;
+          const char *word_end;
 
-	  while (*scanptr != '\0' && *scanptr != '#' && *scanptr != ';' && *scanptr != ' ')
-	    scanptr++;
-	  word_end = scanptr;
+          while (*scanptr != '\0' && *scanptr != '#' && *scanptr != ';' && *scanptr != ' ')
+            scanptr++;
+          word_end = scanptr;
 
-	  while (*scanptr == ' ')
-	    scanptr++;
+          while (*scanptr == ' ')
+            scanptr++;
 
-	  if (word_end - word_begin == 2)
-	    {
-	      language = (char *) malloc ((word_end - word_begin) + 1);
-	      memcpy (language, word_begin, 2);
-	      language[word_end - word_begin] = '\0';
-	      word_begin = word_end = NULL;
+          if (word_end - word_begin == 2)
+            {
+              language = (char *) malloc ((word_end - word_begin) + 1);
+              memcpy (language, word_begin, 2);
+              language[word_end - word_begin] = '\0';
+              word_begin = word_end = NULL;
 
-	      if (*scanptr != '\0' && *scanptr != '#' &&  *scanptr != ';')
-		{
-		  word_begin = scanptr;
-		  while (*scanptr != '\0' && *scanptr != '#' && *scanptr != ';' && *scanptr != ' ')
-		    scanptr++;
-		  word_end = scanptr;
-		}
-	    }
+              if (*scanptr != '\0' && *scanptr != '#' &&  *scanptr != ';')
+                {
+                  word_begin = scanptr;
+                  while (*scanptr != '\0' && *scanptr != '#' && *scanptr != ';' && *scanptr != ' ')
+                    scanptr++;
+                  word_end = scanptr;
+                }
+            }
 
-	  if (word_end > word_begin)
-	    {
-	      bool negate = false;
+          if (word_end > word_begin)
+            {
+              bool negate = false;
 
-	      if (word_end - word_begin >= 4 && memcmp (word_begin, "Not_", 4) == 0)
-		{
-		  word_begin += 4;
-		  negate = true;
-		}
-	      if (word_end - word_begin == 11 && memcmp (word_begin, "Final_Sigma", 11) == 0)
-		context = SCC_FINAL_SIGMA;
-	      else if (word_end - word_begin == 17 && memcmp (word_begin, "After_Soft_Dotted", 17) == 0)
-		context = SCC_AFTER_SOFT_DOTTED;
-	      else if (word_end - word_begin == 10 && memcmp (word_begin, "More_Above", 10) == 0)
-		context = SCC_MORE_ABOVE;
-	      else if (word_end - word_begin == 10 && memcmp (word_begin, "Before_Dot", 10) == 0)
-		context = SCC_BEFORE_DOT;
-	      else if (word_end - word_begin == 7 && memcmp (word_begin, "After_I", 7) == 0)
-		context = SCC_AFTER_I;
-	      else
-		{
-		  fprintf (stderr, "unknown context type in '%s'\n", specialcasing_filename);
-		  exit (1);
-		}
-	      if (negate)
-		context = - context;
-	    }
+              if (word_end - word_begin >= 4 && memcmp (word_begin, "Not_", 4) == 0)
+                {
+                  word_begin += 4;
+                  negate = true;
+                }
+              if (word_end - word_begin == 11 && memcmp (word_begin, "Final_Sigma", 11) == 0)
+                context = SCC_FINAL_SIGMA;
+              else if (word_end - word_begin == 17 && memcmp (word_begin, "After_Soft_Dotted", 17) == 0)
+                context = SCC_AFTER_SOFT_DOTTED;
+              else if (word_end - word_begin == 10 && memcmp (word_begin, "More_Above", 10) == 0)
+                context = SCC_MORE_ABOVE;
+              else if (word_end - word_begin == 10 && memcmp (word_begin, "Before_Dot", 10) == 0)
+                context = SCC_BEFORE_DOT;
+              else if (word_end - word_begin == 7 && memcmp (word_begin, "After_I", 7) == 0)
+                context = SCC_AFTER_I;
+              else
+                {
+                  fprintf (stderr, "unknown context type in '%s'\n", specialcasing_filename);
+                  exit (1);
+                }
+              if (negate)
+                context = - context;
+            }
 
-	  if (*scanptr != '\0' && *scanptr != '#' &&  *scanptr != ';')
-	    {
-	      fprintf (stderr, "parse error in '%s'\n", specialcasing_filename);
-	      exit (1);
-	    }
-	}
+          if (*scanptr != '\0' && *scanptr != '#' &&  *scanptr != ';')
+            {
+              fprintf (stderr, "parse error in '%s'\n", specialcasing_filename);
+              exit (1);
+            }
+        }
 
       /* Store the rule.  */
       {
-	struct special_casing_rule *new_rule =
-	  (struct special_casing_rule *) malloc (sizeof (struct special_casing_rule));
-	new_rule->code = code;
-	new_rule->language = language;
-	new_rule->context = context;
-	memcpy (new_rule->lower_mapping, lower_mapping, sizeof (new_rule->lower_mapping));
-	memcpy (new_rule->title_mapping, title_mapping, sizeof (new_rule->title_mapping));
-	memcpy (new_rule->upper_mapping, upper_mapping, sizeof (new_rule->upper_mapping));
+        struct special_casing_rule *new_rule =
+          (struct special_casing_rule *) malloc (sizeof (struct special_casing_rule));
+        new_rule->code = code;
+        new_rule->language = language;
+        new_rule->context = context;
+        memcpy (new_rule->lower_mapping, lower_mapping, sizeof (new_rule->lower_mapping));
+        memcpy (new_rule->title_mapping, title_mapping, sizeof (new_rule->title_mapping));
+        memcpy (new_rule->upper_mapping, upper_mapping, sizeof (new_rule->upper_mapping));
 
-	add_casing_rule (new_rule);
+        add_casing_rule (new_rule);
       }
     }
 
@@ -7758,115 +7758,115 @@ fill_casefolding_rules (const char *casefolding_filename)
       unsigned int mapping[3];
 
       if (fscanf (stream, "%200[^\n]\n", buf) < 1)
-	break;
+        break;
 
       if (buf[0] == '\0' || buf[0] == '#')
-	continue;
+        continue;
 
       /* Scan code.  */
       scanptr = buf;
       code = strtoul (scanptr, &endptr, 16);
       if (endptr == scanptr)
-	{
-	  fprintf (stderr, "parse error in '%s'\n", casefolding_filename);
-	  exit (1);
-	}
+        {
+          fprintf (stderr, "parse error in '%s'\n", casefolding_filename);
+          exit (1);
+        }
       scanptr = endptr;
       if (*scanptr != ';')
-	{
-	  fprintf (stderr, "parse error in '%s'\n", casefolding_filename);
-	  exit (1);
-	}
+        {
+          fprintf (stderr, "parse error in '%s'\n", casefolding_filename);
+          exit (1);
+        }
       scanptr++;
 
       /* Scan type.  */
       while (*scanptr == ' ')
-	scanptr++;
+        scanptr++;
 
       switch (*scanptr)
-	{
-	case 'C': case 'F': case 'S': case 'T':
-	  type = *scanptr;
-	  break;
-	default:
-	  fprintf (stderr, "parse error in '%s'\n", casefolding_filename);
-	  exit (1);
-	}
+        {
+        case 'C': case 'F': case 'S': case 'T':
+          type = *scanptr;
+          break;
+        default:
+          fprintf (stderr, "parse error in '%s'\n", casefolding_filename);
+          exit (1);
+        }
       scanptr++;
       if (*scanptr != ';')
-	{
-	  fprintf (stderr, "parse error in '%s'\n", casefolding_filename);
-	  exit (1);
-	}
+        {
+          fprintf (stderr, "parse error in '%s'\n", casefolding_filename);
+          exit (1);
+        }
       scanptr++;
 
       /* Scan casefold mapping.  */
       for (i = 0; i < 3; i++)
-	mapping[i] = 0;
+        mapping[i] = 0;
       for (i = 0; i < 3; i++)
-	{
-	  while (*scanptr == ' ')
-	    scanptr++;
-	  if (*scanptr == ';')
-	    break;
-	  mapping[i] = strtoul (scanptr, &endptr, 16);
-	  if (endptr == scanptr)
-	    {
-	      fprintf (stderr, "parse error in '%s'\n", casefolding_filename);
-	      exit (1);
-	    }
-	  scanptr = endptr;
-	}
+        {
+          while (*scanptr == ' ')
+            scanptr++;
+          if (*scanptr == ';')
+            break;
+          mapping[i] = strtoul (scanptr, &endptr, 16);
+          if (endptr == scanptr)
+            {
+              fprintf (stderr, "parse error in '%s'\n", casefolding_filename);
+              exit (1);
+            }
+          scanptr = endptr;
+        }
       if (*scanptr != ';')
-	{
-	  fprintf (stderr, "parse error in '%s'\n", casefolding_filename);
-	  exit (1);
-	}
+        {
+          fprintf (stderr, "parse error in '%s'\n", casefolding_filename);
+          exit (1);
+        }
       scanptr++;
 
       /* Ignore rules of type 'S'; we use the rules of type 'F' instead.  */
       if (type != 'S')
-	{
-	  const char * const *languages;
-	  unsigned int languages_count;
+        {
+          const char * const *languages;
+          unsigned int languages_count;
 
-	  /* Type 'T' indicates that the rule is applicable to Turkish
-	     languages only.  */
-	  if (type == 'T')
-	    {
-	      static const char * const turkish_languages[] = { "tr", "az" };
-	      languages = turkish_languages;
-	      languages_count = 2;
-	    }
-	  else
-	    {
-	      static const char * const all_languages[] = { NULL };
-	      languages = all_languages;
-	      languages_count = 1;
-	    }
+          /* Type 'T' indicates that the rule is applicable to Turkish
+             languages only.  */
+          if (type == 'T')
+            {
+              static const char * const turkish_languages[] = { "tr", "az" };
+              languages = turkish_languages;
+              languages_count = 2;
+            }
+          else
+            {
+              static const char * const all_languages[] = { NULL };
+              languages = all_languages;
+              languages_count = 1;
+            }
 
-	  for (i = 0; i < languages_count; i++)
-	    {
-	      /* Store a new rule.  */
-	      struct casefold_rule *new_rule =
-		(struct casefold_rule *) malloc (sizeof (struct casefold_rule));
-	      new_rule->code = code;
-	      memcpy (new_rule->mapping, mapping, sizeof (new_rule->mapping));
-	      new_rule->language = languages[i];
+          for (i = 0; i < languages_count; i++)
+            {
+              /* Store a new rule.  */
+              struct casefold_rule *new_rule =
+                (struct casefold_rule *) malloc (sizeof (struct casefold_rule));
+              new_rule->code = code;
+              memcpy (new_rule->mapping, mapping, sizeof (new_rule->mapping));
+              new_rule->language = languages[i];
 
-	      if (num_casefolding_rules == allocated_casefolding_rules)
-		{
-		  allocated_casefolding_rules = 2 * allocated_casefolding_rules;
-		  if (allocated_casefolding_rules < 16)
-		    allocated_casefolding_rules = 16;
-		  casefolding_rules =
-		    (struct casefold_rule **)
-		    realloc (casefolding_rules,
-			     allocated_casefolding_rules * sizeof (struct casefold_rule *));
-		}
-	      casefolding_rules[num_casefolding_rules++] = new_rule;
-	    }
-	}
+              if (num_casefolding_rules == allocated_casefolding_rules)
+                {
+                  allocated_casefolding_rules = 2 * allocated_casefolding_rules;
+                  if (allocated_casefolding_rules < 16)
+                    allocated_casefolding_rules = 16;
+                  casefolding_rules =
+                    (struct casefold_rule **)
+                    realloc (casefolding_rules,
+                             allocated_casefolding_rules * sizeof (struct casefold_rule *));
+                }
+              casefolding_rules[num_casefolding_rules++] = new_rule;
+            }
+        }
     }
 
   if (ferror (stream) || fclose (stream))
@@ -7902,12 +7902,12 @@ redistribute_casefolding_rules (void)
       struct casefold_rule *cfrule = casefolding_rules[i];
 
       if (cfrule->language == NULL && cfrule->mapping[1] == 0)
-	{
-	  ch = cfrule->code;
-	  if (!(ch < 0x110000))
-	    abort ();
-	  unicode_casefold[ch] = cfrule->mapping[0];
-	}
+        {
+          ch = cfrule->code;
+          if (!(ch < 0x110000))
+            abort ();
+          unicode_casefold[ch] = cfrule->mapping[0];
+        }
     }
 
   /* Extend the special casing rules by filling in their casefold_mapping[]
@@ -7919,7 +7919,7 @@ redistribute_casefolding_rules (void)
 
       rule->casefold_mapping[0] = to_casefold (rule->code);
       for (k = 1; k < 3; k++)
-	rule->casefold_mapping[k] = 0;
+        rule->casefold_mapping[k] = 0;
     }
 
   /* Now merge the other casefolding rules into casing_rules.  */
@@ -7928,90 +7928,90 @@ redistribute_casefolding_rules (void)
       struct casefold_rule *cfrule = casefolding_rules[i];
 
       if (!(cfrule->language == NULL && cfrule->mapping[1] == 0))
-	{
-	  /* Find a rule that applies to the same code, same language, and it
-	     has context SCC_ALWAYS.  At the same time, update all rules that
-	     have the same code and same or more specific language.  */
-	  struct special_casing_rule *found_rule = NULL;
+        {
+          /* Find a rule that applies to the same code, same language, and it
+             has context SCC_ALWAYS.  At the same time, update all rules that
+             have the same code and same or more specific language.  */
+          struct special_casing_rule *found_rule = NULL;
 
-	  for (j = 0; j < num_casing_rules; j++)
-	    {
-	      struct special_casing_rule *rule = casing_rules[j];
+          for (j = 0; j < num_casing_rules; j++)
+            {
+              struct special_casing_rule *rule = casing_rules[j];
 
-	      if (rule->code == cfrule->code
-		  && (cfrule->language == NULL
-		      || (rule->language != NULL
-			  && strcmp (rule->language, cfrule->language) == 0)))
-		{
-		  memcpy (rule->casefold_mapping, cfrule->mapping,
-			  sizeof (rule->casefold_mapping));
+              if (rule->code == cfrule->code
+                  && (cfrule->language == NULL
+                      || (rule->language != NULL
+                          && strcmp (rule->language, cfrule->language) == 0)))
+                {
+                  memcpy (rule->casefold_mapping, cfrule->mapping,
+                          sizeof (rule->casefold_mapping));
 
-		  if ((cfrule->language == NULL
-		       ? rule->language == NULL
-		       : rule->language != NULL
-			 && strcmp (rule->language, cfrule->language) == 0)
-		      && rule->context == SCC_ALWAYS)
-		    {
-		      /* Found it.  */
-		      found_rule = rule;
-		    }
-		}
-	    }
+                  if ((cfrule->language == NULL
+                       ? rule->language == NULL
+                       : rule->language != NULL
+                         && strcmp (rule->language, cfrule->language) == 0)
+                      && rule->context == SCC_ALWAYS)
+                    {
+                      /* Found it.  */
+                      found_rule = rule;
+                    }
+                }
+            }
 
-	  if (found_rule == NULL)
-	    {
-	      /* Create a new rule.  */
-	      struct special_casing_rule *new_rule =
-		(struct special_casing_rule *) malloc (sizeof (struct special_casing_rule));
+          if (found_rule == NULL)
+            {
+              /* Create a new rule.  */
+              struct special_casing_rule *new_rule =
+                (struct special_casing_rule *) malloc (sizeof (struct special_casing_rule));
 
-	      /* Try to find a rule that applies to the same code, no language
-		 restriction, and with context SCC_ALWAYS.  */
-	      for (j = 0; j < num_casing_rules; j++)
-		{
-		  struct special_casing_rule *rule = casing_rules[j];
+              /* Try to find a rule that applies to the same code, no language
+                 restriction, and with context SCC_ALWAYS.  */
+              for (j = 0; j < num_casing_rules; j++)
+                {
+                  struct special_casing_rule *rule = casing_rules[j];
 
-		  if (rule->code == cfrule->code
-		      && rule->context == SCC_ALWAYS
-		      && rule->language == NULL)
-		    {
-		      /* Found it.  */
-		      found_rule = rule;
-		      break;
-		    }
-		}
+                  if (rule->code == cfrule->code
+                      && rule->context == SCC_ALWAYS
+                      && rule->language == NULL)
+                    {
+                      /* Found it.  */
+                      found_rule = rule;
+                      break;
+                    }
+                }
 
-	      new_rule->code = cfrule->code;
-	      new_rule->language = cfrule->language;
-	      new_rule->context = SCC_ALWAYS;
-	      if (found_rule != NULL)
-		{
-		  memcpy (new_rule->lower_mapping, found_rule->lower_mapping,
-			  sizeof (new_rule->lower_mapping));
-		  memcpy (new_rule->title_mapping, found_rule->title_mapping,
-			  sizeof (new_rule->title_mapping));
-		  memcpy (new_rule->upper_mapping, found_rule->upper_mapping,
-			  sizeof (new_rule->upper_mapping));
-		}
-	      else
-		{
-		  unsigned int k;
+              new_rule->code = cfrule->code;
+              new_rule->language = cfrule->language;
+              new_rule->context = SCC_ALWAYS;
+              if (found_rule != NULL)
+                {
+                  memcpy (new_rule->lower_mapping, found_rule->lower_mapping,
+                          sizeof (new_rule->lower_mapping));
+                  memcpy (new_rule->title_mapping, found_rule->title_mapping,
+                          sizeof (new_rule->title_mapping));
+                  memcpy (new_rule->upper_mapping, found_rule->upper_mapping,
+                          sizeof (new_rule->upper_mapping));
+                }
+              else
+                {
+                  unsigned int k;
 
-		  new_rule->lower_mapping[0] = to_lower (cfrule->code);
-		  for (k = 1; k < 3; k++)
-		    new_rule->lower_mapping[k] = 0;
-		  new_rule->title_mapping[0] = to_title (cfrule->code);
-		  for (k = 1; k < 3; k++)
-		    new_rule->title_mapping[k] = 0;
-		  new_rule->upper_mapping[0] = to_upper (cfrule->code);
-		  for (k = 1; k < 3; k++)
-		    new_rule->upper_mapping[k] = 0;
-		}
-	      memcpy (new_rule->casefold_mapping, cfrule->mapping,
-		      sizeof (new_rule->casefold_mapping));
+                  new_rule->lower_mapping[0] = to_lower (cfrule->code);
+                  for (k = 1; k < 3; k++)
+                    new_rule->lower_mapping[k] = 0;
+                  new_rule->title_mapping[0] = to_title (cfrule->code);
+                  for (k = 1; k < 3; k++)
+                    new_rule->title_mapping[k] = 0;
+                  new_rule->upper_mapping[0] = to_upper (cfrule->code);
+                  for (k = 1; k < 3; k++)
+                    new_rule->upper_mapping[k] = 0;
+                }
+              memcpy (new_rule->casefold_mapping, cfrule->mapping,
+                      sizeof (new_rule->casefold_mapping));
 
-	      add_casing_rule (new_rule);
-	    }
-	}
+              add_casing_rule (new_rule);
+            }
+        }
     }
 }
 
@@ -8030,7 +8030,7 @@ compare_casing_rules (const void *a, const void *b)
 
   /* Sort the more specific rules before the more general ones.  */
   return (- ((a_rule->language != NULL ? 1 : 0) + (a_rule->context != SCC_ALWAYS ? 1 : 0))
-	  + ((b_rule->language != NULL ? 1 : 0) + (b_rule->context != SCC_ALWAYS ? 1 : 0)));
+          + ((b_rule->language != NULL ? 1 : 0) + (b_rule->context != SCC_ALWAYS ? 1 : 0)));
 }
 
 static void
@@ -8039,7 +8039,7 @@ sort_casing_rules (void)
   /* Sort the rules 1. by code, 2. by specificity.  */
   if (num_casing_rules > 1)
     qsort (casing_rules, num_casing_rules, sizeof (struct special_casing_rule *),
-	   compare_casing_rules);
+           compare_casing_rules);
 }
 
 /* Output the special casing rules.  */
@@ -8060,7 +8060,7 @@ output_casing_rules (const char *filename, const char *version)
   fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
   fprintf (stream, "/* Special casing rules of Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
-	   version);
+           version);
   fprintf (stream, "struct special_casing_rule { char code[3]; };\n");
   fprintf (stream, "%%struct-type\n");
   fprintf (stream, "%%language=ANSI-C\n");
@@ -8080,124 +8080,124 @@ output_casing_rules (const char *filename, const char *version)
       int context;
 
       if (i > 0 && rule->code == casing_rules[i - 1]->code)
-	minor += 1;
+        minor += 1;
       else
-	minor = 0;
+        minor = 0;
 
       if (!(rule->code < 0x10000))
-	{
-	  fprintf (stderr, "special rule #%u: code %u out of range\n", i, rule->code);
-	  exit (1);
-	}
+        {
+          fprintf (stderr, "special rule #%u: code %u out of range\n", i, rule->code);
+          exit (1);
+        }
 
       fprintf (stream, "\"\\x%02x\\x%02x\\x%02x\", ",
-	       (rule->code >> 8) & 0xff, rule->code & 0xff, minor);
+               (rule->code >> 8) & 0xff, rule->code & 0xff, minor);
 
       fprintf (stream, "%d, ",
-	       i + 1 < num_casing_rules && casing_rules[i + 1]->code == rule->code ? 1 : 0);
+               i + 1 < num_casing_rules && casing_rules[i + 1]->code == rule->code ? 1 : 0);
 
       context = rule->context;
       if (context < 0)
-	{
-	  fprintf (stream, "-");
-	  context = - context;
-	}
+        {
+          fprintf (stream, "-");
+          context = - context;
+        }
       else
-	fprintf (stream, " ");
+        fprintf (stream, " ");
       switch (context)
-	{
-	case SCC_ALWAYS:
-	  fprintf (stream, "SCC_ALWAYS           ");
-	  break;
-	case SCC_FINAL_SIGMA:
-	  fprintf (stream, "SCC_FINAL_SIGMA      ");
-	  break;
-	case SCC_AFTER_SOFT_DOTTED:
-	  fprintf (stream, "SCC_AFTER_SOFT_DOTTED");
-	  break;
-	case SCC_MORE_ABOVE:
-	  fprintf (stream, "SCC_MORE_ABOVE       ");
-	  break;
-	case SCC_BEFORE_DOT:
-	  fprintf (stream, "SCC_BEFORE_DOT       ");
-	  break;
-	case SCC_AFTER_I:
-	  fprintf (stream, "SCC_AFTER_I          ");
-	  break;
-	default:
-	  abort ();
-	}
+        {
+        case SCC_ALWAYS:
+          fprintf (stream, "SCC_ALWAYS           ");
+          break;
+        case SCC_FINAL_SIGMA:
+          fprintf (stream, "SCC_FINAL_SIGMA      ");
+          break;
+        case SCC_AFTER_SOFT_DOTTED:
+          fprintf (stream, "SCC_AFTER_SOFT_DOTTED");
+          break;
+        case SCC_MORE_ABOVE:
+          fprintf (stream, "SCC_MORE_ABOVE       ");
+          break;
+        case SCC_BEFORE_DOT:
+          fprintf (stream, "SCC_BEFORE_DOT       ");
+          break;
+        case SCC_AFTER_I:
+          fprintf (stream, "SCC_AFTER_I          ");
+          break;
+        default:
+          abort ();
+        }
       fprintf (stream, ", ");
 
       if (rule->language != NULL)
-	{
-	  if (strlen (rule->language) != 2)
-	    abort ();
-	  fprintf (stream, "{  '%c',  '%c' }, ", rule->language[0], rule->language[1]);
-	}
+        {
+          if (strlen (rule->language) != 2)
+            abort ();
+          fprintf (stream, "{  '%c',  '%c' }, ", rule->language[0], rule->language[1]);
+        }
       else
-	fprintf (stream, "{ '\\0', '\\0' }, ");
+        fprintf (stream, "{ '\\0', '\\0' }, ");
 
       fprintf (stream, "{ ");
       for (j = 0; j < 3; j++)
-	{
-	  if (j > 0)
-	    fprintf (stream, ", ");
-	  if (!(rule->upper_mapping[j] < 0x10000))
-	    {
-	      fprintf (stderr, "special rule #%u: upper mapping of code %u out of range\n", i, rule->code);
-	      exit (1);
-	    }
-	  if (rule->upper_mapping[j] != 0)
-	    fprintf (stream, "0x%04X", rule->upper_mapping[j]);
-	  else
-	    fprintf (stream, "     0");
-	}
+        {
+          if (j > 0)
+            fprintf (stream, ", ");
+          if (!(rule->upper_mapping[j] < 0x10000))
+            {
+              fprintf (stderr, "special rule #%u: upper mapping of code %u out of range\n", i, rule->code);
+              exit (1);
+            }
+          if (rule->upper_mapping[j] != 0)
+            fprintf (stream, "0x%04X", rule->upper_mapping[j]);
+          else
+            fprintf (stream, "     0");
+        }
       fprintf (stream, " }, { ");
       for (j = 0; j < 3; j++)
-	{
-	  if (j > 0)
-	    fprintf (stream, ", ");
-	  if (!(rule->lower_mapping[j] < 0x10000))
-	    {
-	      fprintf (stderr, "special rule #%u: lower mapping of code %u out of range\n", i, rule->code);
-	      exit (1);
-	    }
-	  if (rule->lower_mapping[j] != 0)
-	    fprintf (stream, "0x%04X", rule->lower_mapping[j]);
-	  else
-	    fprintf (stream, "     0");
-	}
+        {
+          if (j > 0)
+            fprintf (stream, ", ");
+          if (!(rule->lower_mapping[j] < 0x10000))
+            {
+              fprintf (stderr, "special rule #%u: lower mapping of code %u out of range\n", i, rule->code);
+              exit (1);
+            }
+          if (rule->lower_mapping[j] != 0)
+            fprintf (stream, "0x%04X", rule->lower_mapping[j]);
+          else
+            fprintf (stream, "     0");
+        }
       fprintf (stream, " }, { ");
       for (j = 0; j < 3; j++)
-	{
-	  if (j > 0)
-	    fprintf (stream, ", ");
-	  if (!(rule->title_mapping[j] < 0x10000))
-	    {
-	      fprintf (stderr, "special rule #%u: title mapping of code %u out of range\n", i, rule->code);
-	      exit (1);
-	    }
-	  if (rule->title_mapping[j] != 0)
-	    fprintf (stream, "0x%04X", rule->title_mapping[j]);
-	  else
-	    fprintf (stream, "     0");
-	}
+        {
+          if (j > 0)
+            fprintf (stream, ", ");
+          if (!(rule->title_mapping[j] < 0x10000))
+            {
+              fprintf (stderr, "special rule #%u: title mapping of code %u out of range\n", i, rule->code);
+              exit (1);
+            }
+          if (rule->title_mapping[j] != 0)
+            fprintf (stream, "0x%04X", rule->title_mapping[j]);
+          else
+            fprintf (stream, "     0");
+        }
       fprintf (stream, " }, { ");
       for (j = 0; j < 3; j++)
-	{
-	  if (j > 0)
-	    fprintf (stream, ", ");
-	  if (!(rule->casefold_mapping[j] < 0x10000))
-	    {
-	      fprintf (stderr, "special rule #%u: casefold mapping of code %u out of range\n", i, rule->code);
-	      exit (1);
-	    }
-	  if (rule->casefold_mapping[j] != 0)
-	    fprintf (stream, "0x%04X", rule->casefold_mapping[j]);
-	  else
-	    fprintf (stream, "     0");
-	}
+        {
+          if (j > 0)
+            fprintf (stream, ", ");
+          if (!(rule->casefold_mapping[j] < 0x10000))
+            {
+              fprintf (stderr, "special rule #%u: casefold mapping of code %u out of range\n", i, rule->code);
+              exit (1);
+            }
+          if (rule->casefold_mapping[j] != 0)
+            fprintf (stream, "0x%04X", rule->casefold_mapping[j]);
+          else
+            fprintf (stream, "     0");
+        }
       fprintf (stream, " }\n");
     }
 
@@ -8218,8 +8218,8 @@ static bool
 is_cased (unsigned int ch)
 {
   return (is_property_lowercase (ch)
-	  || is_property_uppercase (ch)
-	  || is_category_Lt (ch));
+          || is_property_uppercase (ch)
+          || is_category_Lt (ch));
 }
 
 /* Quoting the Unicode standard:
@@ -8241,13 +8241,13 @@ static bool
 is_case_ignorable (unsigned int ch)
 {
   return (unicode_org_wbp[ch] == WBP_MIDLETTER
-	  || unicode_org_wbp[ch] == WBP_MIDNUMLET
-	  || is_category_Mn (ch)
-	  || is_category_Me (ch)
-	  || is_category_Cf (ch)
-	  || is_category_Lm (ch)
-	  || is_category_Sk (ch))
-	 && !is_cased (ch);
+          || unicode_org_wbp[ch] == WBP_MIDNUMLET
+          || is_category_Mn (ch)
+          || is_category_Me (ch)
+          || is_category_Cf (ch)
+          || is_category_Lm (ch)
+          || is_category_Sk (ch))
+         && !is_cased (ch);
 }
 
 /* ------------------------------------------------------------------------- */
@@ -8287,7 +8287,7 @@ main (int argc, char * argv[])
   if (argc != 14)
     {
       fprintf (stderr, "Usage: %s UnicodeData.txt PropList.txt DerivedCoreProperties.txt Scripts.txt Blocks.txt PropList-3.0.1.txt EastAsianWidth.txt LineBreak.txt WordBreakProperty.txt CompositionExclusions.txt SpecialCasing.txt CaseFolding.txt version\n",
-	       argv[0]);
+               argv[0]);
       exit (1);
     }
 

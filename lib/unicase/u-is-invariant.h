@@ -18,8 +18,8 @@
 int
 FUNC (const UNIT *s, size_t n,
       UNIT * (*mapping) (const UNIT *s, size_t n, const char *iso639_language,
-			 uninorm_t nf,
-			 UNIT *resultbuf, size_t *lengthp),
+                         uninorm_t nf,
+                         UNIT *resultbuf, size_t *lengthp),
       const char *iso639_language,
       bool *resultp)
 {
@@ -40,21 +40,21 @@ FUNC (const UNIT *s, size_t n,
   /* Apply mapping.  */
   mapped_length = sizeof (mappedbuf) / sizeof (UNIT);
   mapped = mapping (norms, norms_length, iso639_language, NULL,
-		    mappedbuf, &mapped_length);
+                    mappedbuf, &mapped_length);
   if (mapped == NULL)
     {
       if (norms != normsbuf)
-	{
-	  int saved_errno = errno;
-	  free (norms);
-	  errno = saved_errno;
-	}
+        {
+          int saved_errno = errno;
+          free (norms);
+          errno = saved_errno;
+        }
       return -1;
     }
 
   /* Compare.  */
   *resultp = (mapped_length == norms_length
-	      && U_CMP (mapped, norms, norms_length) == 0);
+              && U_CMP (mapped, norms, norms_length) == 0);
 
   if (mapped != mappedbuf)
     free (mapped);

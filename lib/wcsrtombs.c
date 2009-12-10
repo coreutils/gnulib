@@ -66,55 +66,55 @@ wcsrtombs (char *dest, const wchar_t **srcp, size_t len, mbstate_t *ps)
 
     if (dest != NULL)
       {
-	char *destptr = dest;
+        char *destptr = dest;
 
-	for (; len > 0; src++)
-	  {
-	    wchar_t wc = *src;
-	    size_t ret = wcrtomb (len >= cur_max ? destptr : buf, wc, ps);
+        for (; len > 0; src++)
+          {
+            wchar_t wc = *src;
+            size_t ret = wcrtomb (len >= cur_max ? destptr : buf, wc, ps);
 
-	    if (ret == (size_t)(-1))
-	      goto bad_input;
-	    if (!(ret <= cur_max))
-	      abort ();
-	    if (len < ret)
-	      break;
-	    if (len < cur_max)
-	      memcpy (destptr, buf, ret);
-	    if (wc == 0)
-	      {
-		src = NULL;
-		/* Here mbsinit (ps).  */
-		break;
-	      }
-	    destptr += ret;
-	    len -= ret;
-	  }
-	*srcp = src;
-	return destptr - dest;
+            if (ret == (size_t)(-1))
+              goto bad_input;
+            if (!(ret <= cur_max))
+              abort ();
+            if (len < ret)
+              break;
+            if (len < cur_max)
+              memcpy (destptr, buf, ret);
+            if (wc == 0)
+              {
+                src = NULL;
+                /* Here mbsinit (ps).  */
+                break;
+              }
+            destptr += ret;
+            len -= ret;
+          }
+        *srcp = src;
+        return destptr - dest;
       }
     else
       {
-	/* Ignore dest and len, don't store *srcp at the end, and
-	   don't clobber *ps.  */
-	mbstate_t state = *ps;
-	size_t totalcount = 0;
+        /* Ignore dest and len, don't store *srcp at the end, and
+           don't clobber *ps.  */
+        mbstate_t state = *ps;
+        size_t totalcount = 0;
 
-	for (;; src++)
-	  {
-	    wchar_t wc = *src;
-	    size_t ret = wcrtomb (buf, wc, &state);
+        for (;; src++)
+          {
+            wchar_t wc = *src;
+            size_t ret = wcrtomb (buf, wc, &state);
 
-	    if (ret == (size_t)(-1))
-	      goto bad_input2;
-	    if (wc == 0)
-	      {
-		/* Here mbsinit (&state).  */
-		break;
-	      }
-	    totalcount += ret;
-	  }
-	return totalcount;
+            if (ret == (size_t)(-1))
+              goto bad_input2;
+            if (wc == 0)
+              {
+                /* Here mbsinit (&state).  */
+                break;
+              }
+            totalcount += ret;
+          }
+        return totalcount;
       }
 
    bad_input:

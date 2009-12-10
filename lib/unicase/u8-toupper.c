@@ -27,15 +27,15 @@
 
 uint8_t *
 u8_toupper (const uint8_t *s, size_t n, const char *iso639_language,
-	    uninorm_t nf,
-	    uint8_t *resultbuf, size_t *lengthp)
+            uninorm_t nf,
+            uint8_t *resultbuf, size_t *lengthp)
 {
   return u8_casemap (s, n,
-		     unicase_empty_prefix_context, unicase_empty_suffix_context,
-		     iso639_language,
-		     uc_toupper, offsetof (struct special_casing_rule, upper[0]),
-		     nf,
-		     resultbuf, lengthp);
+                     unicase_empty_prefix_context, unicase_empty_suffix_context,
+                     iso639_language,
+                     uc_toupper, offsetof (struct special_casing_rule, upper[0]),
+                     nf,
+                     resultbuf, lengthp);
 }
 
 
@@ -60,28 +60,28 @@ read_file (FILE *stream)
   while (! feof (stream))
     {
       if (size + BUFSIZE > alloc)
-	{
-	  alloc = alloc + alloc / 2;
-	  if (alloc < size + BUFSIZE)
-	    alloc = size + BUFSIZE;
-	  buf = realloc (buf, alloc);
-	  if (buf == NULL)
-	    {
-	      fprintf (stderr, "out of memory\n");
-	      exit (1);
-	    }
-	}
+        {
+          alloc = alloc + alloc / 2;
+          if (alloc < size + BUFSIZE)
+            alloc = size + BUFSIZE;
+          buf = realloc (buf, alloc);
+          if (buf == NULL)
+            {
+              fprintf (stderr, "out of memory\n");
+              exit (1);
+            }
+        }
       count = fread (buf + size, 1, BUFSIZE, stream);
       if (count == 0)
-	{
-	  if (ferror (stream))
-	    {
-	      perror ("fread");
-	      exit (1);
-	    }
-	}
+        {
+          if (ferror (stream))
+            {
+              perror ("fread");
+              exit (1);
+            }
+        }
       else
-	size += count;
+        size += count;
     }
   buf = realloc (buf, size + 1);
   if (buf == NULL)
@@ -105,9 +105,9 @@ main (int argc, char * argv[])
       int length = strlen (input);
       size_t output_length;
       uint8_t *output =
-	u8_toupper ((uint8_t *) input, length, uc_locale_language (),
-		    NULL,
-		    NULL, &output_length);
+        u8_toupper ((uint8_t *) input, length, uc_locale_language (),
+                    NULL,
+                    NULL, &output_length);
 
       fwrite (output, 1, output_length, stdout);
 

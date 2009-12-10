@@ -40,7 +40,7 @@ typedef struct
    before this function is called. */
 extern void
 arcfour_stream (arcfour_context * context,
-		const char *inbuf, char *outbuf, size_t length);
+                const char *inbuf, char *outbuf, size_t length);
 
 /* Initialize CONTEXT using encryption KEY of KEYLEN bytes.  KEY
    should be 40 bits (5 bytes) or longer.  The KEY cannot be zero

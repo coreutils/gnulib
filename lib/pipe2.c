@@ -51,13 +51,13 @@ pipe2 (int fd[2], int flags)
     static int have_pipe2_really; /* 0 = unknown, 1 = yes, -1 = no */
     if (have_pipe2_really >= 0)
       {
-	int result = pipe2 (fd, flags);
-	if (!(result < 0 && errno == ENOSYS))
-	  {
-	    have_pipe2_really = 1;
-	    return result;
-	  }
-	have_pipe2_really = -1;
+        int result = pipe2 (fd, flags);
+        if (!(result < 0 && errno == ENOSYS))
+          {
+            have_pipe2_really = 1;
+            return result;
+          }
+        have_pipe2_really = -1;
       }
   }
 #endif
@@ -96,10 +96,10 @@ pipe2 (int fd[2], int flags)
       int fcntl_flags;
 
       if ((fcntl_flags = fcntl (fd[1], F_GETFL, 0)) < 0
-	  || fcntl (fd[1], F_SETFL, fcntl_flags | O_NONBLOCK) == -1
-	  || (fcntl_flags = fcntl (fd[0], F_GETFL, 0)) < 0
-	  || fcntl (fd[0], F_SETFL, fcntl_flags | O_NONBLOCK) == -1)
-	goto fail;
+          || fcntl (fd[1], F_SETFL, fcntl_flags | O_NONBLOCK) == -1
+          || (fcntl_flags = fcntl (fd[0], F_GETFL, 0)) < 0
+          || fcntl (fd[0], F_SETFL, fcntl_flags | O_NONBLOCK) == -1)
+        goto fail;
     }
 
   if (flags & O_CLOEXEC)
@@ -107,10 +107,10 @@ pipe2 (int fd[2], int flags)
       int fcntl_flags;
 
       if ((fcntl_flags = fcntl (fd[1], F_GETFD, 0)) < 0
-	  || fcntl (fd[1], F_SETFD, fcntl_flags | FD_CLOEXEC) == -1
-	  || (fcntl_flags = fcntl (fd[0], F_GETFD, 0)) < 0
-	  || fcntl (fd[0], F_SETFD, fcntl_flags | FD_CLOEXEC) == -1)
-	goto fail;
+          || fcntl (fd[1], F_SETFD, fcntl_flags | FD_CLOEXEC) == -1
+          || (fcntl_flags = fcntl (fd[0], F_GETFD, 0)) < 0
+          || fcntl (fd[0], F_SETFD, fcntl_flags | FD_CLOEXEC) == -1)
+        goto fail;
     }
 
 # if O_BINARY

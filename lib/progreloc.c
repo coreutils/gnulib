@@ -113,19 +113,19 @@ maybe_executable (const char *filename)
   if (executable_fd >= 0)
     {
       /* If we already have an executable_fd, check that filename points to
-	 the same inode.  */
+         the same inode.  */
       struct stat statexe;
       struct stat statfile;
 
       if (fstat (executable_fd, &statexe) >= 0)
-	{
-	  if (stat (filename, &statfile) < 0)
-	    return false;
-	  if (!(statfile.st_dev
-		&& statfile.st_dev == statexe.st_dev
-		&& statfile.st_ino == statexe.st_ino))
-	    return false;
-	}
+        {
+          if (stat (filename, &statfile) < 0)
+            return false;
+          if (!(statfile.st_dev
+                && statfile.st_dev == statexe.st_dev
+                && statfile.st_ino == statexe.st_ino))
+            return false;
+        }
     }
 #endif
 #endif
@@ -192,9 +192,9 @@ find_executable (const char *argv0)
       sprintf (buf, "/proc/%d/exe", getpid ());
       link = xreadlink (buf);
       if (link != NULL && link[0] != '[')
-	return link;
+        return link;
       if (executable_fd < 0)
-	executable_fd = open (buf, O_RDONLY, 0);
+        executable_fd = open (buf, O_RDONLY, 0);
     }
   }
 #endif
@@ -216,57 +216,57 @@ find_executable (const char *argv0)
     {
       const char *p;
       for (p = argv0; *p; p++)
-	if (*p == '/')
-	  {
-	    has_slash = true;
-	    break;
-	  }
+        if (*p == '/')
+          {
+            has_slash = true;
+            break;
+          }
     }
     if (!has_slash)
       {
-	/* exec searches paths without slashes in the directory list given
-	   by $PATH.  */
-	const char *path = getenv ("PATH");
+        /* exec searches paths without slashes in the directory list given
+           by $PATH.  */
+        const char *path = getenv ("PATH");
 
-	if (path != NULL)
-	  {
-	    const char *p;
-	    const char *p_next;
+        if (path != NULL)
+          {
+            const char *p;
+            const char *p_next;
 
-	    for (p = path; *p; p = p_next)
-	      {
-		const char *q;
-		size_t p_len;
-		char *concat_name;
+            for (p = path; *p; p = p_next)
+              {
+                const char *q;
+                size_t p_len;
+                char *concat_name;
 
-		for (q = p; *q; q++)
-		  if (*q == ':')
-		    break;
-		p_len = q - p;
-		p_next = (*q == '\0' ? q : q + 1);
+                for (q = p; *q; q++)
+                  if (*q == ':')
+                    break;
+                p_len = q - p;
+                p_next = (*q == '\0' ? q : q + 1);
 
-		/* We have a path item at p, of length p_len.
-		   Now concatenate the path item and argv0.  */
-		concat_name = (char *) xmalloc (p_len + strlen (argv0) + 2);
+                /* We have a path item at p, of length p_len.
+                   Now concatenate the path item and argv0.  */
+                concat_name = (char *) xmalloc (p_len + strlen (argv0) + 2);
 #ifdef NO_XMALLOC
-		if (concat_name == NULL)
-		  return NULL;
+                if (concat_name == NULL)
+                  return NULL;
 #endif
-		if (p_len == 0)
-		  /* An empty PATH element designates the current directory.  */
-		  strcpy (concat_name, argv0);
-		else
-		  {
-		    memcpy (concat_name, p, p_len);
-		    concat_name[p_len] = '/';
-		    strcpy (concat_name + p_len + 1, argv0);
-		  }
-		if (maybe_executable (concat_name))
-		  return canonicalize_file_name (concat_name);
-		free (concat_name);
-	      }
-	  }
-	/* Not found in the PATH, assume the current directory.  */
+                if (p_len == 0)
+                  /* An empty PATH element designates the current directory.  */
+                  strcpy (concat_name, argv0);
+                else
+                  {
+                    memcpy (concat_name, p, p_len);
+                    concat_name[p_len] = '/';
+                    strcpy (concat_name + p_len + 1, argv0);
+                  }
+                if (maybe_executable (concat_name))
+                  return canonicalize_file_name (concat_name);
+                free (concat_name);
+              }
+          }
+        /* Not found in the PATH, assume the current directory.  */
       }
     /* exec treats paths containing slashes as relative to the current
        directory.  */
@@ -283,7 +283,7 @@ static char *executable_fullname;
 
 static void
 prepare_relocate (const char *orig_installprefix, const char *orig_installdir,
-		  const char *argv0)
+                  const char *argv0)
 {
   char *curr_prefix;
 
@@ -292,7 +292,7 @@ prepare_relocate (const char *orig_installprefix, const char *orig_installdir,
 
   /* Determine the current installation prefix from it.  */
   curr_prefix = compute_curr_prefix (orig_installprefix, orig_installdir,
-				     executable_fullname);
+                                     executable_fullname);
   if (curr_prefix != NULL)
     {
       /* Now pass this prefix to all copies of the relocate.c source file.  */
@@ -306,8 +306,8 @@ prepare_relocate (const char *orig_installprefix, const char *orig_installdir,
    directory, for relocatability.  */
 void
 set_program_name_and_installdir (const char *argv0,
-				 const char *orig_installprefix,
-				 const char *orig_installdir)
+                                 const char *orig_installprefix,
+                                 const char *orig_installdir)
 {
   const char *argv0_stripped = argv0;
 
@@ -319,42 +319,42 @@ set_program_name_and_installdir (const char *argv0,
     const size_t exeext_len = sizeof (EXEEXT) - sizeof ("");
     if (argv0_len > 4 + exeext_len)
       if (memcmp (argv0 + argv0_len - exeext_len - 4, ".bin", 4) == 0)
-	{
-	  if (sizeof (EXEEXT) > sizeof (""))
-	    {
-	      /* Compare using an inlined copy of c_strncasecmp(), because
-		 the filenames may have undergone a case conversion since
-		 they were packaged.  In other words, EXEEXT may be ".exe"
-		 on one system and ".EXE" on another.  */
-	      static const char exeext[] = EXEEXT;
-	      const char *s1 = argv0 + argv0_len - exeext_len;
-	      const char *s2 = exeext;
-	      for (; *s1 != '\0'; s1++, s2++)
-		{
-		  unsigned char c1 = *s1;
-		  unsigned char c2 = *s2;
-		  if ((c1 >= 'A' && c1 <= 'Z' ? c1 - 'A' + 'a' : c1)
-		      != (c2 >= 'A' && c2 <= 'Z' ? c2 - 'A' + 'a' : c2))
-		    goto done_stripping;
-		}
-	    }
-	  /* Remove ".bin" before EXEEXT or its equivalent.  */
-	  {
-	    char *shorter = (char *) xmalloc (argv0_len - 4 + 1);
+        {
+          if (sizeof (EXEEXT) > sizeof (""))
+            {
+              /* Compare using an inlined copy of c_strncasecmp(), because
+                 the filenames may have undergone a case conversion since
+                 they were packaged.  In other words, EXEEXT may be ".exe"
+                 on one system and ".EXE" on another.  */
+              static const char exeext[] = EXEEXT;
+              const char *s1 = argv0 + argv0_len - exeext_len;
+              const char *s2 = exeext;
+              for (; *s1 != '\0'; s1++, s2++)
+                {
+                  unsigned char c1 = *s1;
+                  unsigned char c2 = *s2;
+                  if ((c1 >= 'A' && c1 <= 'Z' ? c1 - 'A' + 'a' : c1)
+                      != (c2 >= 'A' && c2 <= 'Z' ? c2 - 'A' + 'a' : c2))
+                    goto done_stripping;
+                }
+            }
+          /* Remove ".bin" before EXEEXT or its equivalent.  */
+          {
+            char *shorter = (char *) xmalloc (argv0_len - 4 + 1);
 #ifdef NO_XMALLOC
-	    if (shorter != NULL)
+            if (shorter != NULL)
 #endif
-	      {
-		memcpy (shorter, argv0, argv0_len - exeext_len - 4);
-		if (sizeof (EXEEXT) > sizeof (""))
-		  memcpy (shorter + argv0_len - exeext_len - 4,
-			  argv0 + argv0_len - exeext_len - 4,
-			  exeext_len);
-		shorter[argv0_len - 4] = '\0';
-		argv0_stripped = shorter;
-	      }
-	  }
-	 done_stripping: ;
+              {
+                memcpy (shorter, argv0, argv0_len - exeext_len - 4);
+                if (sizeof (EXEEXT) > sizeof (""))
+                  memcpy (shorter + argv0_len - exeext_len - 4,
+                          argv0 + argv0_len - exeext_len - 4,
+                          exeext_len);
+                shorter[argv0_len - 4] = '\0';
+                argv0_stripped = shorter;
+              }
+          }
+         done_stripping: ;
       }
   }
 

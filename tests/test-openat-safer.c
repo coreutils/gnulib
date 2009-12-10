@@ -37,11 +37,11 @@ static FILE *myerr;
   do                                                                         \
     {                                                                        \
       if (!(expr))                                                           \
-	{                                                                    \
-	  fprintf (myerr, "%s:%d: assertion failed\n", __FILE__, __LINE__);  \
-	  fflush (myerr);                                                    \
-	  abort ();                                                          \
-	}                                                                    \
+        {                                                                    \
+          fprintf (myerr, "%s:%d: assertion failed\n", __FILE__, __LINE__);  \
+          fflush (myerr);                                                    \
+          abort ();                                                          \
+        }                                                                    \
     }                                                                        \
   while (0)
 
@@ -78,50 +78,50 @@ main (void)
     {
       ASSERT (fchdir (dfd) == 0);
       if (0 <= i)
-	ASSERT (close (i) == 0);
+        ASSERT (close (i) == 0);
 
       /* Execute once in ".", once in "..".  */
       for (j = 0; j <= 1; j++)
-	{
-	  if (j)
-	    ASSERT (chdir ("..") == 0);
+        {
+          if (j)
+            ASSERT (chdir ("..") == 0);
 
-	  /* Check for error detection.  */
-	  errno = 0;
-	  ASSERT (openat (AT_FDCWD, "", O_RDONLY) == -1);
-	  ASSERT (errno == ENOENT);
-	  errno = 0;
-	  ASSERT (openat (dfd, "", O_RDONLY) == -1);
-	  ASSERT (errno == ENOENT);
-	  errno = 0;
-	  ASSERT (openat (-1, ".", O_RDONLY) == -1);
-	  ASSERT (errno == EBADF);
+          /* Check for error detection.  */
+          errno = 0;
+          ASSERT (openat (AT_FDCWD, "", O_RDONLY) == -1);
+          ASSERT (errno == ENOENT);
+          errno = 0;
+          ASSERT (openat (dfd, "", O_RDONLY) == -1);
+          ASSERT (errno == ENOENT);
+          errno = 0;
+          ASSERT (openat (-1, ".", O_RDONLY) == -1);
+          ASSERT (errno == EBADF);
 
-	  /* Check for trailing slash and /dev/null handling.  */
-	  errno = 0;
-	  ASSERT (openat (dfd, "nonexist.ent/", O_CREAT | O_RDONLY,
-			  S_IRUSR | S_IWUSR) == -1);
-	  ASSERT (errno == ENOTDIR || errno == EISDIR || errno == ENOENT
-		  || errno == EINVAL);
-	  errno = 0;
-	  ASSERT (openat (dfd, witness "/", O_RDONLY) == -1);
-	  ASSERT (errno == ENOTDIR || errno == EISDIR || errno == EINVAL);
-	  /* Using a bad directory is okay for absolute paths.  */
-	  fd = openat (-1, "/dev/null", O_WRONLY);
-	  ASSERT (STDERR_FILENO < fd);
-	  /* Using a non-directory is wrong for relative paths.  */
-	  errno = 0;
-	  ASSERT (openat (fd, ".", O_RDONLY) == -1);
-	  ASSERT (errno == EBADF || errno == ENOTDIR);
-	  ASSERT (close (fd) == 0);
+          /* Check for trailing slash and /dev/null handling.  */
+          errno = 0;
+          ASSERT (openat (dfd, "nonexist.ent/", O_CREAT | O_RDONLY,
+                          S_IRUSR | S_IWUSR) == -1);
+          ASSERT (errno == ENOTDIR || errno == EISDIR || errno == ENOENT
+                  || errno == EINVAL);
+          errno = 0;
+          ASSERT (openat (dfd, witness "/", O_RDONLY) == -1);
+          ASSERT (errno == ENOTDIR || errno == EISDIR || errno == EINVAL);
+          /* Using a bad directory is okay for absolute paths.  */
+          fd = openat (-1, "/dev/null", O_WRONLY);
+          ASSERT (STDERR_FILENO < fd);
+          /* Using a non-directory is wrong for relative paths.  */
+          errno = 0;
+          ASSERT (openat (fd, ".", O_RDONLY) == -1);
+          ASSERT (errno == EBADF || errno == ENOTDIR);
+          ASSERT (close (fd) == 0);
 
-	  /* Check for our witness file.  */
-	  fd = openat (dfd, witness, O_RDONLY | O_NOFOLLOW);
-	  ASSERT (STDERR_FILENO < fd);
-	  ASSERT (read (fd, buf, 2) == 2);
-	  ASSERT (buf[0] == 'h' && buf[1] == 'i');
-	  ASSERT (close (fd) == 0);
-	}
+          /* Check for our witness file.  */
+          fd = openat (dfd, witness, O_RDONLY | O_NOFOLLOW);
+          ASSERT (STDERR_FILENO < fd);
+          ASSERT (read (fd, buf, 2) == 2);
+          ASSERT (buf[0] == 'h' && buf[1] == 'i');
+          ASSERT (close (fd) == 0);
+        }
     }
   ASSERT (fchdir (dfd) == 0);
   ASSERT (unlink (witness) == 0);

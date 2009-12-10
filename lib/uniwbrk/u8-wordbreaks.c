@@ -50,28 +50,28 @@ read_file (FILE *stream)
   while (! feof (stream))
     {
       if (size + BUFSIZE > alloc)
-	{
-	  alloc = alloc + alloc / 2;
-	  if (alloc < size + BUFSIZE)
-	    alloc = size + BUFSIZE;
-	  buf = realloc (buf, alloc);
-	  if (buf == NULL)
-	    {
-	      fprintf (stderr, "out of memory\n");
-	      exit (1);
-	    }
-	}
+        {
+          alloc = alloc + alloc / 2;
+          if (alloc < size + BUFSIZE)
+            alloc = size + BUFSIZE;
+          buf = realloc (buf, alloc);
+          if (buf == NULL)
+            {
+              fprintf (stderr, "out of memory\n");
+              exit (1);
+            }
+        }
       count = fread (buf + size, 1, BUFSIZE, stream);
       if (count == 0)
-	{
-	  if (ferror (stream))
-	    {
-	      perror ("fread");
-	      exit (1);
-	    }
-	}
+        {
+          if (ferror (stream))
+            {
+              perror ("fread");
+              exit (1);
+            }
+        }
       else
-	size += count;
+        size += count;
     }
   buf = realloc (buf, size + 1);
   if (buf == NULL)
@@ -98,20 +98,20 @@ main (int argc, char * argv[])
       u8_wordbreaks ((uint8_t *) input, length, breaks);
 
       for (i = 0; i < length; i++)
-	{
-	  switch (breaks[i])
-	    {
-	    case 1:
-	      /* U+2027 in UTF-8 encoding */
-	      putc (0xe2, stdout); putc (0x80, stdout); putc (0xa7, stdout);
-	      break;
-	    case 0:
-	      break;
-	    default:
-	      abort ();
-	    }
-	  putc (input[i], stdout);
-	}
+        {
+          switch (breaks[i])
+            {
+            case 1:
+              /* U+2027 in UTF-8 encoding */
+              putc (0xe2, stdout); putc (0x80, stdout); putc (0xa7, stdout);
+              break;
+            case 0:
+              break;
+            default:
+              abort ();
+            }
+          putc (input[i], stdout);
+        }
 
       free (breaks);
 

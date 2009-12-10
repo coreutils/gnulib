@@ -31,15 +31,15 @@
 
 #define SIZEOF(array) (sizeof (array) / sizeof (array[0]))
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 static int
@@ -68,13 +68,13 @@ check (const uint8_t *input, size_t input_length,
       preallocated = (uint8_t *) malloc (length * sizeof (uint8_t));
       result = u8_normalize (UNINORM_NFD, input, input_length, preallocated, &length);
       if (!(result != NULL))
-	return 4;
+        return 4;
       if (!(result != preallocated))
-	return 5;
+        return 5;
       if (!(length == expected_length))
-	return 6;
+        return 6;
       if (!(u8_cmp (result, expected, expected_length) == 0))
-	return 7;
+        return 7;
       free (result);
       free (preallocated);
     }
@@ -230,25 +230,25 @@ test_u8_nfd (void)
   { /* "Grüß Gott. Здравствуйте! x=(-b±sqrt(b²-4ac))/(2a)  日本語,中文,한글" */
     static const uint8_t input[] =
       { 'G', 'r', 0xC3, 0xBC, 0xC3, 0x9F, ' ', 'G', 'o', 't', 't', '.',
-	' ', 0xD0, 0x97, 0xD0, 0xB4, 0xD1, 0x80, 0xD0, 0xB0, 0xD0, 0xB2, 0xD1,
-	0x81, 0xD1, 0x82, 0xD0, 0xB2, 0xD1, 0x83, 0xD0, 0xB9,
-	0xD1, 0x82, 0xD0, 0xB5, '!', ' ', 'x', '=', '(', '-', 'b', 0xC2, 0xB1,
-	's', 'q', 'r', 't', '(', 'b', 0xC2, 0xB2, '-', '4', 'a', 'c', ')', ')',
-	'/', '(', '2', 'a', ')', ' ', ' ', 0xE6, 0x97, 0xA5, 0xE6, 0x9C, 0xAC,
-	0xE8, 0xAA, 0x9E, ',', 0xE4, 0xB8, 0xAD, 0xE6, 0x96, 0x87, ',',
-	0xED, 0x95, 0x9C,
-	0xEA, 0xB8, 0x80, '\n'
+        ' ', 0xD0, 0x97, 0xD0, 0xB4, 0xD1, 0x80, 0xD0, 0xB0, 0xD0, 0xB2, 0xD1,
+        0x81, 0xD1, 0x82, 0xD0, 0xB2, 0xD1, 0x83, 0xD0, 0xB9,
+        0xD1, 0x82, 0xD0, 0xB5, '!', ' ', 'x', '=', '(', '-', 'b', 0xC2, 0xB1,
+        's', 'q', 'r', 't', '(', 'b', 0xC2, 0xB2, '-', '4', 'a', 'c', ')', ')',
+        '/', '(', '2', 'a', ')', ' ', ' ', 0xE6, 0x97, 0xA5, 0xE6, 0x9C, 0xAC,
+        0xE8, 0xAA, 0x9E, ',', 0xE4, 0xB8, 0xAD, 0xE6, 0x96, 0x87, ',',
+        0xED, 0x95, 0x9C,
+        0xEA, 0xB8, 0x80, '\n'
       };
     static const uint8_t expected[] =
       { 'G', 'r', 0x75, 0xCC, 0x88, 0xC3, 0x9F, ' ', 'G', 'o', 't', 't', '.',
-	' ', 0xD0, 0x97, 0xD0, 0xB4, 0xD1, 0x80, 0xD0, 0xB0, 0xD0, 0xB2, 0xD1,
-	0x81, 0xD1, 0x82, 0xD0, 0xB2, 0xD1, 0x83, 0xD0, 0xB8, 0xCC, 0x86,
-	0xD1, 0x82, 0xD0, 0xB5, '!', ' ', 'x', '=', '(', '-', 'b', 0xC2, 0xB1,
-	's', 'q', 'r', 't', '(', 'b', 0xC2, 0xB2, '-', '4', 'a', 'c', ')', ')',
-	'/', '(', '2', 'a', ')', ' ', ' ', 0xE6, 0x97, 0xA5, 0xE6, 0x9C, 0xAC,
-	0xE8, 0xAA, 0x9E, ',', 0xE4, 0xB8, 0xAD, 0xE6, 0x96, 0x87, ',',
-	0xE1, 0x84, 0x92, 0xE1, 0x85, 0xA1, 0xE1, 0x86, 0xAB,
-	0xE1, 0x84, 0x80, 0xE1, 0x85, 0xB3, 0xE1, 0x86, 0xAF, '\n'
+        ' ', 0xD0, 0x97, 0xD0, 0xB4, 0xD1, 0x80, 0xD0, 0xB0, 0xD0, 0xB2, 0xD1,
+        0x81, 0xD1, 0x82, 0xD0, 0xB2, 0xD1, 0x83, 0xD0, 0xB8, 0xCC, 0x86,
+        0xD1, 0x82, 0xD0, 0xB5, '!', ' ', 'x', '=', '(', '-', 'b', 0xC2, 0xB1,
+        's', 'q', 'r', 't', '(', 'b', 0xC2, 0xB2, '-', '4', 'a', 'c', ')', ')',
+        '/', '(', '2', 'a', ')', ' ', ' ', 0xE6, 0x97, 0xA5, 0xE6, 0x9C, 0xAC,
+        0xE8, 0xAA, 0x9E, ',', 0xE4, 0xB8, 0xAD, 0xE6, 0x96, 0x87, ',',
+        0xE1, 0x84, 0x92, 0xE1, 0x85, 0xA1, 0xE1, 0x86, 0xAB,
+        0xE1, 0x84, 0x80, 0xE1, 0x85, 0xB3, 0xE1, 0x86, 0xAF, '\n'
       };
     ASSERT (check (input, SIZEOF (input), expected, SIZEOF (expected)) == 0);
   }
@@ -265,85 +265,85 @@ test_u8_nfd (void)
     int pass;
     for (pass = 0; pass < 3; pass++)
       {
-	size_t repeat = 1;
-	size_t m = 100000;
-	uint8_t *input = (uint8_t *) malloc (2 * (2 * m - 1) * sizeof (uint8_t));
-	if (input != NULL)
-	  {
-	    uint8_t *expected = input + (2 * m - 1);
-	    size_t m1 = m / 2;
-	    size_t m2 = (m - 1) / 2;
-	    /* NB: m1 + m2 == m - 1.  */
-	    uint8_t *p;
-	    size_t i;
+        size_t repeat = 1;
+        size_t m = 100000;
+        uint8_t *input = (uint8_t *) malloc (2 * (2 * m - 1) * sizeof (uint8_t));
+        if (input != NULL)
+          {
+            uint8_t *expected = input + (2 * m - 1);
+            size_t m1 = m / 2;
+            size_t m2 = (m - 1) / 2;
+            /* NB: m1 + m2 == m - 1.  */
+            uint8_t *p;
+            size_t i;
 
-	    input[0] = 0x41;
-	    p = input + 1;
-	    switch (pass)
-	      {
-	      case 0:
-		for (i = 0; i < m1; i++)
-		  {
-		    *p++ = 0xCC;
-		    *p++ = 0x99;
-		  }
-		for (i = 0; i < m2; i++)
-		  {
-		    *p++ = 0xCC;
-		    *p++ = 0x80;
-		  }
-		break;
+            input[0] = 0x41;
+            p = input + 1;
+            switch (pass)
+              {
+              case 0:
+                for (i = 0; i < m1; i++)
+                  {
+                    *p++ = 0xCC;
+                    *p++ = 0x99;
+                  }
+                for (i = 0; i < m2; i++)
+                  {
+                    *p++ = 0xCC;
+                    *p++ = 0x80;
+                  }
+                break;
 
-	      case 1:
-		for (i = 0; i < m2; i++)
-		  {
-		    *p++ = 0xCC;
-		    *p++ = 0x80;
-		  }
-		for (i = 0; i < m1; i++)
-		  {
-		    *p++ = 0xCC;
-		    *p++ = 0x99;
-		  }
-		break;
+              case 1:
+                for (i = 0; i < m2; i++)
+                  {
+                    *p++ = 0xCC;
+                    *p++ = 0x80;
+                  }
+                for (i = 0; i < m1; i++)
+                  {
+                    *p++ = 0xCC;
+                    *p++ = 0x99;
+                  }
+                break;
 
-	      case 2:
-		for (i = 0; i < m2; i++)
-		  {
-		    *p++ = 0xCC;
-		    *p++ = 0x99;
-		    *p++ = 0xCC;
-		    *p++ = 0x80;
-		  }
-		for (; i < m1; i++)
-		  {
-		    *p++ = 0xCC;
-		    *p++ = 0x99;
-		  }
-		break;
+              case 2:
+                for (i = 0; i < m2; i++)
+                  {
+                    *p++ = 0xCC;
+                    *p++ = 0x99;
+                    *p++ = 0xCC;
+                    *p++ = 0x80;
+                  }
+                for (; i < m1; i++)
+                  {
+                    *p++ = 0xCC;
+                    *p++ = 0x99;
+                  }
+                break;
 
-	      default:
-		abort ();
-	      }
+              default:
+                abort ();
+              }
 
-	    expected[0] = 0x41;
-	    p = expected + 1;
-	    for (i = 0; i < m1; i++)
-	      {
-		*p++ = 0xCC;
-		*p++ = 0x99;
-	      }
-	    for (i = 0; i < m2; i++)
-	      {
-		*p++ = 0xCC;
-		*p++ = 0x80;
-	      }
+            expected[0] = 0x41;
+            p = expected + 1;
+            for (i = 0; i < m1; i++)
+              {
+                *p++ = 0xCC;
+                *p++ = 0x99;
+              }
+            for (i = 0; i < m2; i++)
+              {
+                *p++ = 0xCC;
+                *p++ = 0x80;
+              }
 
-	    for (; repeat > 0; repeat--)
-	      ASSERT (check (input, 2 * m - 1, expected, 2 * m - 1) == 0);
+            for (; repeat > 0; repeat--)
+              ASSERT (check (input, 2 * m - 1, expected, 2 * m - 1) == 0);
 
-	    free (input);
-	  }
+            free (input);
+          }
       }
   }
 }

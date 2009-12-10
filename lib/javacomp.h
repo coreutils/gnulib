@@ -62,14 +62,14 @@
    If verbose, the command to be executed will be printed.
    Return false if OK, true on error.  */
 extern bool compile_java_class (const char * const *java_sources,
-				unsigned int java_sources_count,
-				const char * const *classpaths,
-				unsigned int classpaths_count,
-				const char *source_version,
-				const char *target_version,
-				const char *directory,
-				bool optimize, bool debug,
-				bool use_minimal_classpath,
-				bool verbose);
+                                unsigned int java_sources_count,
+                                const char * const *classpaths,
+                                unsigned int classpaths_count,
+                                const char *source_version,
+                                const char *target_version,
+                                const char *directory,
+                                bool optimize, bool debug,
+                                bool use_minimal_classpath,
+                                bool verbose);
 
 #endif /* _JAVACOMP_H */

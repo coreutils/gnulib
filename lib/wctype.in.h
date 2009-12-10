@@ -109,7 +109,7 @@ static inline int
 iswalnum (wint_t wc)
 {
   return ((wc >= '0' && wc <= '9')
-	  || ((wc & ~0x20) >= 'A' && (wc & ~0x20) <= 'Z'));
+          || ((wc & ~0x20) >= 'A' && (wc & ~0x20) <= 'Z'));
 }
 
 static inline int
@@ -158,15 +158,15 @@ static inline int
 iswpunct (wint_t wc)
 {
   return (wc >= '!' && wc <= '~'
-	  && !((wc >= '0' && wc <= '9')
-	       || ((wc & ~0x20) >= 'A' && (wc & ~0x20) <= 'Z')));
+          && !((wc >= '0' && wc <= '9')
+               || ((wc & ~0x20) >= 'A' && (wc & ~0x20) <= 'Z')));
 }
 
 static inline int
 iswspace (wint_t wc)
 {
   return (wc == ' ' || wc == '\t'
-	  || wc == '\n' || wc == '\v' || wc == '\f' || wc == '\r');
+          || wc == '\n' || wc == '\v' || wc == '\f' || wc == '\r');
 }
 
 static inline int
@@ -179,7 +179,7 @@ static inline int
 iswxdigit (wint_t wc)
 {
   return ((wc >= '0' && wc <= '9')
-	  || ((wc & ~0x20) >= 'A' && (wc & ~0x20) <= 'F'));
+          || ((wc & ~0x20) >= 'A' && (wc & ~0x20) <= 'F'));
 }
 
 static inline wint_t

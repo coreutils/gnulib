@@ -84,7 +84,7 @@ nonintr_write (int fd, const void *buf, size_t count)
 
 static inline int
 nonintr_select (int n, fd_set *readfds, fd_set *writefds, fd_set *exceptfds,
-		struct timeval *timeout)
+                struct timeval *timeout)
 {
   int retval;
 

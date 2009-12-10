@@ -96,7 +96,7 @@ extern const char * proper_name (const char *name);
    escape sequences.  NAME_ASCII is a fallback written only with ASCII
    characters.  */
 extern const char * proper_name_utf8 (const char *name_ascii,
-				      const char *name_utf8);
+                                      const char *name_utf8);
 
 #ifdef __cplusplus
 }

@@ -24,15 +24,15 @@
 #include <stdlib.h>
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 #define TESTFILE "t-fbufmode.tmp"
@@ -64,7 +64,7 @@ main ()
     {
       /* mingw's setvbuf implements _IOLBF the same way as _IOFBF.  */
       ASSERT (fbufmode (fp) == _IOLBF
-	      || fbufmode (fp) == _IOFBF);
+              || fbufmode (fp) == _IOFBF);
     }
 
   /* This setvbuf call can fail, e.g. on HP-UX 11.  */

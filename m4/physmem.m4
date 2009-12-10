@@ -8,19 +8,19 @@ dnl with or without modifications, as long as this notice is preserved.
 # a struct with member `physmem'.
 AC_DEFUN([gl_SYS__SYSTEM_CONFIGURATION],
   [AC_CACHE_CHECK([for external symbol _system_configuration],
-		  gl_cv_var__system_configuration,
+                  gl_cv_var__system_configuration,
     [AC_LINK_IFELSE([AC_LANG_PROGRAM(
-		      [[#include <sys/systemcfg.h>
-		      ]],
-		      [[double x = _system_configuration.physmem;
-		        if (x > 0.0) return 0;]])],
+                      [[#include <sys/systemcfg.h>
+                      ]],
+                      [[double x = _system_configuration.physmem;
+                        if (x > 0.0) return 0;]])],
       [gl_cv_var__system_configuration=yes],
       [gl_cv_var__system_configuration=no])])
 
     if test $gl_cv_var__system_configuration = yes; then
       AC_DEFINE([HAVE__SYSTEM_CONFIGURATION], [1],
-		[Define to 1 if you have the external variable,
-		_system_configuration with a member named physmem.])
+                [Define to 1 if you have the external variable,
+                _system_configuration with a member named physmem.])
     fi
   ]
 )

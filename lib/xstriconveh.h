@@ -50,10 +50,10 @@ extern "C" {
    unchanged if no dynamic memory allocation was necessary.  */
 extern int
        xmem_cd_iconveh (const char *src, size_t srclen,
-			const iconveh_t *cd,
-			enum iconv_ilseq_handler handler,
-			size_t *offsets,
-			char **resultp, size_t *lengthp);
+                        const iconveh_t *cd,
+                        enum iconv_ilseq_handler handler,
+                        size_t *offsets,
+                        char **resultp, size_t *lengthp);
 
 /* Convert an entire string from one encoding to another, using iconv.
    The original string is the NUL-terminated string starting at SRC.
@@ -67,8 +67,8 @@ extern int
    successful, otherwise NULL and errno set.  */
 extern char *
        xstr_cd_iconveh (const char *src,
-			const iconveh_t *cd,
-			enum iconv_ilseq_handler handler);
+                        const iconveh_t *cd,
+                        enum iconv_ilseq_handler handler);
 
 #endif
 
@@ -88,10 +88,10 @@ extern char *
    unchanged if no dynamic memory allocation was necessary.  */
 extern int
        xmem_iconveh (const char *src, size_t srclen,
-		     const char *from_codeset, const char *to_codeset,
-		     enum iconv_ilseq_handler handler,
-		     size_t *offsets,
-		     char **resultp, size_t *lengthp);
+                     const char *from_codeset, const char *to_codeset,
+                     enum iconv_ilseq_handler handler,
+                     size_t *offsets,
+                     char **resultp, size_t *lengthp);
 
 /* Convert an entire string from one encoding to another, using iconv.
    The original string is the NUL-terminated string starting at SRC.
@@ -103,8 +103,8 @@ extern int
    successful, otherwise NULL and errno set.  */
 extern char *
        xstr_iconveh (const char *src,
-		     const char *from_codeset, const char *to_codeset,
-		     enum iconv_ilseq_handler handler);
+                     const char *from_codeset, const char *to_codeset,
+                     enum iconv_ilseq_handler handler);
 
 
 #ifdef __cplusplus

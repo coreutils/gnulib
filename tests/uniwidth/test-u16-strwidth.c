@@ -24,15 +24,15 @@
 #include <stdlib.h>
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 int
@@ -53,8 +53,8 @@ main ()
   {
     static const uint16_t input[] = /* "Данило Шеган" */
       {
-	0x0414, 0x0430, 0x043D, 0x0438, 0x043B, 0x043E, ' ',
-	0x0428, 0x0435, 0x0433, 0x0430, 0x043D, 0
+        0x0414, 0x0430, 0x043D, 0x0438, 0x043B, 0x043E, ' ',
+        0x0428, 0x0435, 0x0433, 0x0430, 0x043D, 0
       };
     ASSERT (u16_strwidth (input, "UTF-8") == 12);
     ASSERT (u16_strwidth (input, "EUC-JP") == 23);

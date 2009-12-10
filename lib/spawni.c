@@ -86,7 +86,7 @@
    was wanted there is no way to signal an error using one of the
    available methods.  The committee chose to signal an error by a
    normal program exit with the exit code 127.  */
-#define SPAWN_ERROR	127
+#define SPAWN_ERROR     127
 
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
@@ -94,9 +94,9 @@
 /* Native Woe32 API.  */
 int
 __spawni (pid_t *pid, const char *file,
-	  const posix_spawn_file_actions_t *file_actions,
-	  const posix_spawnattr_t *attrp, char *const argv[],
-	  char *const envp[], int use_path)
+          const posix_spawn_file_actions_t *file_actions,
+          const posix_spawnattr_t *attrp, char *const argv[],
+          char *const envp[], int use_path)
 {
   /* Not yet implemented.  */
   return ENOSYS;
@@ -123,8 +123,8 @@ script_execute (const char *file, char *const argv[], char *const envp[])
     new_argv[1] = (char *) file;
     while (argc > 1)
       {
-	new_argv[argc] = argv[argc - 1];
-	--argc;
+        new_argv[argc] = argv[argc - 1];
+        --argc;
       }
 
     /* Execute the shell.  */
@@ -137,9 +137,9 @@ script_execute (const char *file, char *const argv[], char *const envp[])
    Before running the process perform the actions described in FILE-ACTIONS. */
 int
 __spawni (pid_t *pid, const char *file,
-	  const posix_spawn_file_actions_t *file_actions,
-	  const posix_spawnattr_t *attrp, char *const argv[],
-	  char *const envp[], int use_path)
+          const posix_spawn_file_actions_t *file_actions,
+          const posix_spawnattr_t *attrp, char *const argv[],
+          char *const envp[], int use_path)
 {
   pid_t new_pid;
   char *path, *p, *name;
@@ -157,13 +157,13 @@ __spawni (pid_t *pid, const char *file,
 #if HAVE_VFORK
   if ((flags & POSIX_SPAWN_USEVFORK) != 0
       /* If no major work is done, allow using vfork.  Note that we
-	 might perform the path searching.  But this would be done by
-	 a call to execvp(), too, and such a call must be OK according
-	 to POSIX.  */
+         might perform the path searching.  But this would be done by
+         a call to execvp(), too, and such a call must be OK according
+         to POSIX.  */
       || ((flags & (POSIX_SPAWN_SETSIGMASK | POSIX_SPAWN_SETSIGDEF
-		    | POSIX_SPAWN_SETSCHEDPARAM | POSIX_SPAWN_SETSCHEDULER
-		    | POSIX_SPAWN_SETPGROUP | POSIX_SPAWN_RESETIDS)) == 0
-	  && file_actions == NULL))
+                    | POSIX_SPAWN_SETSCHEDPARAM | POSIX_SPAWN_SETSCHEDULER
+                    | POSIX_SPAWN_SETPGROUP | POSIX_SPAWN_RESETIDS)) == 0
+          && file_actions == NULL))
     new_pid = vfork ();
   else
 #endif
@@ -172,11 +172,11 @@ __spawni (pid_t *pid, const char *file,
   if (new_pid != 0)
     {
       if (new_pid < 0)
-	return errno;
+        return errno;
 
       /* The call was successful.  Store the PID if necessary.  */
       if (pid != NULL)
-	*pid = new_pid;
+        *pid = new_pid;
 
       return 0;
     }
@@ -190,9 +190,9 @@ __spawni (pid_t *pid, const char *file,
   if ((flags & POSIX_SPAWN_SETSIGDEF) != 0)
     {
       /* We have to iterate over all signals.  This could possibly be
-	 done better but it requires system specific solutions since
-	 the sigset_t data type can be very different on different
-	 architectures.  */
+         done better but it requires system specific solutions since
+         the sigset_t data type can be very different on different
+         architectures.  */
       int sig;
       struct sigaction sa;
 
@@ -200,9 +200,9 @@ __spawni (pid_t *pid, const char *file,
       sa.sa_handler = SIG_DFL;
 
       for (sig = 1; sig <= NSIG; ++sig)
-	if (sigismember (&attrp->_sd, sig) != 0
-	    && sigaction (sig, &sa, NULL) != 0)
-	  _exit (SPAWN_ERROR);
+        if (sigismember (&attrp->_sd, sig) != 0
+            && sigaction (sig, &sa, NULL) != 0)
+          _exit (SPAWN_ERROR);
 
     }
 
@@ -212,14 +212,14 @@ __spawni (pid_t *pid, const char *file,
       == POSIX_SPAWN_SETSCHEDPARAM)
     {
       if (sched_setparam (0, &attrp->_sp) == -1)
-	_exit (SPAWN_ERROR);
+        _exit (SPAWN_ERROR);
     }
   else if ((flags & POSIX_SPAWN_SETSCHEDULER) != 0)
     {
       if (sched_setscheduler (0, attrp->_policy,
-			      (flags & POSIX_SPAWN_SETSCHEDPARAM) != 0
-			      ? &attrp->_sp : NULL) == -1)
-	_exit (SPAWN_ERROR);
+                              (flags & POSIX_SPAWN_SETSCHEDPARAM) != 0
+                              ? &attrp->_sp : NULL) == -1)
+        _exit (SPAWN_ERROR);
     }
 #endif
 
@@ -231,7 +231,7 @@ __spawni (pid_t *pid, const char *file,
   /* Set the effective user and group IDs.  */
   if ((flags & POSIX_SPAWN_RESETIDS) != 0
       && (local_seteuid (getuid ()) != 0
-	  || local_setegid (getgid ()) != 0))
+          || local_setegid (getgid ()) != 0))
     _exit (SPAWN_ERROR);
 
   /* Execute the file actions.  */
@@ -240,52 +240,52 @@ __spawni (pid_t *pid, const char *file,
       int cnt;
 
       for (cnt = 0; cnt < file_actions->_used; ++cnt)
-	{
-	  struct __spawn_action *action = &file_actions->_actions[cnt];
+        {
+          struct __spawn_action *action = &file_actions->_actions[cnt];
 
-	  switch (action->tag)
-	    {
-	    case spawn_do_close:
-	      if (close_not_cancel (action->action.close_action.fd) != 0)
-		/* Signal the error.  */
-		_exit (SPAWN_ERROR);
-	      break;
+          switch (action->tag)
+            {
+            case spawn_do_close:
+              if (close_not_cancel (action->action.close_action.fd) != 0)
+                /* Signal the error.  */
+                _exit (SPAWN_ERROR);
+              break;
 
-	    case spawn_do_open:
-	      {
-		int new_fd = open_not_cancel (action->action.open_action.path,
-					      action->action.open_action.oflag
-					      | O_LARGEFILE,
-					      action->action.open_action.mode);
+            case spawn_do_open:
+              {
+                int new_fd = open_not_cancel (action->action.open_action.path,
+                                              action->action.open_action.oflag
+                                              | O_LARGEFILE,
+                                              action->action.open_action.mode);
 
-		if (new_fd == -1)
-		  /* The `open' call failed.  */
-		  _exit (SPAWN_ERROR);
+                if (new_fd == -1)
+                  /* The `open' call failed.  */
+                  _exit (SPAWN_ERROR);
 
-		/* Make sure the desired file descriptor is used.  */
-		if (new_fd != action->action.open_action.fd)
-		  {
-		    if (dup2 (new_fd, action->action.open_action.fd)
-			!= action->action.open_action.fd)
-		      /* The `dup2' call failed.  */
-		      _exit (SPAWN_ERROR);
+                /* Make sure the desired file descriptor is used.  */
+                if (new_fd != action->action.open_action.fd)
+                  {
+                    if (dup2 (new_fd, action->action.open_action.fd)
+                        != action->action.open_action.fd)
+                      /* The `dup2' call failed.  */
+                      _exit (SPAWN_ERROR);
 
-		    if (close_not_cancel (new_fd) != 0)
-		      /* The `close' call failed.  */
-		      _exit (SPAWN_ERROR);
-		  }
-	      }
-	      break;
+                    if (close_not_cancel (new_fd) != 0)
+                      /* The `close' call failed.  */
+                      _exit (SPAWN_ERROR);
+                  }
+              }
+              break;
 
-	    case spawn_do_dup2:
-	      if (dup2 (action->action.dup2_action.fd,
-			action->action.dup2_action.newfd)
-		  != action->action.dup2_action.newfd)
-		/* The `dup2' call failed.  */
-		_exit (SPAWN_ERROR);
-	      break;
-	    }
-	}
+            case spawn_do_dup2:
+              if (dup2 (action->action.dup2_action.fd,
+                        action->action.dup2_action.newfd)
+                  != action->action.dup2_action.newfd)
+                /* The `dup2' call failed.  */
+                _exit (SPAWN_ERROR);
+              break;
+            }
+        }
     }
 
   if (! use_path || strchr (file, '/') != NULL)
@@ -294,7 +294,7 @@ __spawni (pid_t *pid, const char *file,
       execve (file, argv, envp);
 
       if (errno == ENOEXEC)
-	script_execute (file, argv, envp);
+        script_execute (file, argv, envp);
 
       /* Oh, oh.  `execve' returns.  This is bad.  */
       _exit (SPAWN_ERROR);
@@ -306,8 +306,8 @@ __spawni (pid_t *pid, const char *file,
     {
 #if HAVE_CONFSTR
       /* There is no `PATH' in the environment.
-	 The default search path is the current directory
-	 followed by the path `confstr' returns for `_CS_PATH'.  */
+         The default search path is the current directory
+         followed by the path `confstr' returns for `_CS_PATH'.  */
       len = confstr (_CS_PATH, (char *) NULL, 0);
       path = (char *) alloca (1 + len);
       path[0] = ':';
@@ -335,35 +335,35 @@ __spawni (pid_t *pid, const char *file,
       p = strchrnul (path, ':');
 
       if (p == path)
-	/* Two adjacent colons, or a colon at the beginning or the end
-	   of `PATH' means to search the current directory.  */
-	startp = name + 1;
+        /* Two adjacent colons, or a colon at the beginning or the end
+           of `PATH' means to search the current directory.  */
+        startp = name + 1;
       else
-	startp = (char *) memcpy (name - (p - path), path, p - path);
+        startp = (char *) memcpy (name - (p - path), path, p - path);
 
       /* Try to execute this name.  If it works, execv will not return.  */
       execve (startp, argv, envp);
 
       if (errno == ENOEXEC)
-	script_execute (startp, argv, envp);
+        script_execute (startp, argv, envp);
 
       switch (errno)
-	{
-	case EACCES:
-	case ENOENT:
-	case ESTALE:
-	case ENOTDIR:
-	  /* Those errors indicate the file is missing or not executable
-	     by us, in which case we want to just try the next path
-	     directory.  */
-	  break;
+        {
+        case EACCES:
+        case ENOENT:
+        case ESTALE:
+        case ENOTDIR:
+          /* Those errors indicate the file is missing or not executable
+             by us, in which case we want to just try the next path
+             directory.  */
+          break;
 
-	default:
-	  /* Some other error means we found an executable file, but
-	     something went wrong executing it; return the error to our
-	     caller.  */
-	  _exit (SPAWN_ERROR);
-	}
+        default:
+          /* Some other error means we found an executable file, but
+             something went wrong executing it; return the error to our
+             caller.  */
+          _exit (SPAWN_ERROR);
+        }
     }
   while (*p++ != '\0');
 

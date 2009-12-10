@@ -85,8 +85,8 @@
    already allocated memory, store the allocated memory per thread.  Free
    it only when the thread exits.  */
 
-static gl_tls_key_t buffer_key;	/* TLS key for a 'int *' */
-static gl_tls_key_t bufmax_key;	/* TLS key for a 'size_t' */
+static gl_tls_key_t buffer_key; /* TLS key for a 'int *' */
+static gl_tls_key_t bufmax_key; /* TLS key for a 'size_t' */
 
 static void
 keys_init (void)
@@ -126,76 +126,76 @@ fstrcmp_bounded (const char *string1, const char *string2, double lower_bound)
   if (lower_bound > 0)
     {
       /* Compute a quick upper bound.
-	 Each edit is an insertion or deletion of an element, hence modifies
-	 the length of the sequence by at most 1.
-	 Therefore, when starting from a sequence X and ending at a sequence Y,
-	 with N edits,  | yvec_length - xvec_length | <= N.  (Proof by
-	 induction over N.)
-	 So, at the end, we will have
-	   edit_count >= | xvec_length - yvec_length |.
-	 and hence
-	   result
-	     = (xvec_length + yvec_length - edit_count)
-	       / (xvec_length + yvec_length)
-	     <= (xvec_length + yvec_length - | yvec_length - xvec_length |)
-		/ (xvec_length + yvec_length)
-	     = 2 * min (xvec_length, yvec_length) / (xvec_length + yvec_length).
+         Each edit is an insertion or deletion of an element, hence modifies
+         the length of the sequence by at most 1.
+         Therefore, when starting from a sequence X and ending at a sequence Y,
+         with N edits,  | yvec_length - xvec_length | <= N.  (Proof by
+         induction over N.)
+         So, at the end, we will have
+           edit_count >= | xvec_length - yvec_length |.
+         and hence
+           result
+             = (xvec_length + yvec_length - edit_count)
+               / (xvec_length + yvec_length)
+             <= (xvec_length + yvec_length - | yvec_length - xvec_length |)
+                / (xvec_length + yvec_length)
+             = 2 * min (xvec_length, yvec_length) / (xvec_length + yvec_length).
        */
       volatile double upper_bound =
-	(double) (2 * MIN (xvec_length, yvec_length))
-	/ (xvec_length + yvec_length);
+        (double) (2 * MIN (xvec_length, yvec_length))
+        / (xvec_length + yvec_length);
 
       if (upper_bound < lower_bound) /* Prob: 74% */
-	/* Return an arbitrary value < LOWER_BOUND.  */
-	return 0.0;
+        /* Return an arbitrary value < LOWER_BOUND.  */
+        return 0.0;
 
 #if CHAR_BIT <= 8
       /* When X and Y are both small, avoid the overhead of setting up an
-	 array of size 256.  */
+         array of size 256.  */
       if (xvec_length + yvec_length >= 20) /* Prob: 99% */
-	{
-	  /* Compute a less quick upper bound.
-	     Each edit is an insertion or deletion of a character, hence
-	     modifies the occurrence count of a character by 1 and leaves the
-	     other occurrence counts unchanged.
-	     Therefore, when starting from a sequence X and ending at a
-	     sequence Y, and denoting the occurrence count of C in X with
-	     OCC (X, C), with N edits,
-	       sum_C | OCC (X, C) - OCC (Y, C) | <= N.
-	     (Proof by induction over N.)
-	     So, at the end, we will have
-	       edit_count >= sum_C | OCC (X, C) - OCC (Y, C) |,
-	     and hence
-	       result
-		 = (xvec_length + yvec_length - edit_count)
-		   / (xvec_length + yvec_length)
-		 <= (xvec_length + yvec_length - sum_C | OCC(X,C) - OCC(Y,C) |)
-		    / (xvec_length + yvec_length).
-	   */
-	  int occ_diff[UCHAR_MAX + 1]; /* array C -> OCC(X,C) - OCC(Y,C) */
-	  int sum;
+        {
+          /* Compute a less quick upper bound.
+             Each edit is an insertion or deletion of a character, hence
+             modifies the occurrence count of a character by 1 and leaves the
+             other occurrence counts unchanged.
+             Therefore, when starting from a sequence X and ending at a
+             sequence Y, and denoting the occurrence count of C in X with
+             OCC (X, C), with N edits,
+               sum_C | OCC (X, C) - OCC (Y, C) | <= N.
+             (Proof by induction over N.)
+             So, at the end, we will have
+               edit_count >= sum_C | OCC (X, C) - OCC (Y, C) |,
+             and hence
+               result
+                 = (xvec_length + yvec_length - edit_count)
+                   / (xvec_length + yvec_length)
+                 <= (xvec_length + yvec_length - sum_C | OCC(X,C) - OCC(Y,C) |)
+                    / (xvec_length + yvec_length).
+           */
+          int occ_diff[UCHAR_MAX + 1]; /* array C -> OCC(X,C) - OCC(Y,C) */
+          int sum;
 
-	  /* Determine the occurrence counts in X.  */
-	  memset (occ_diff, 0, sizeof (occ_diff));
-	  for (i = xvec_length - 1; i >= 0; i--)
-	    occ_diff[(unsigned char) string1[i]]++;
-	  /* Subtract the occurrence counts in Y.  */
-	  for (i = yvec_length - 1; i >= 0; i--)
-	    occ_diff[(unsigned char) string2[i]]--;
-	  /* Sum up the absolute values.  */
-	  sum = 0;
-	  for (i = 0; i <= UCHAR_MAX; i++)
-	    {
-	      int d = occ_diff[i];
-	      sum += (d >= 0 ? d : -d);
-	    }
+          /* Determine the occurrence counts in X.  */
+          memset (occ_diff, 0, sizeof (occ_diff));
+          for (i = xvec_length - 1; i >= 0; i--)
+            occ_diff[(unsigned char) string1[i]]++;
+          /* Subtract the occurrence counts in Y.  */
+          for (i = yvec_length - 1; i >= 0; i--)
+            occ_diff[(unsigned char) string2[i]]--;
+          /* Sum up the absolute values.  */
+          sum = 0;
+          for (i = 0; i <= UCHAR_MAX; i++)
+            {
+              int d = occ_diff[i];
+              sum += (d >= 0 ? d : -d);
+            }
 
-	  upper_bound = 1.0 - (double) sum / (xvec_length + yvec_length);
+          upper_bound = 1.0 - (double) sum / (xvec_length + yvec_length);
 
-	  if (upper_bound < lower_bound) /* Prob: 66% */
-	    /* Return an arbitrary value < LOWER_BOUND.  */
-	    return 0.0;
-	}
+          if (upper_bound < lower_bound) /* Prob: 66% */
+            /* Return an arbitrary value < LOWER_BOUND.  */
+            return 0.0;
+        }
 #endif
     }
 
@@ -223,11 +223,11 @@ fstrcmp_bounded (const char *string1, const char *string2, double lower_bound)
       /* Need more memory.  */
       bufmax = 2 * bufmax;
       if (fdiag_len > bufmax)
-	bufmax = fdiag_len;
+        bufmax = fdiag_len;
       /* Calling xrealloc would be a waste: buffer's contents does not need
-	 to be preserved.  */
+         to be preserved.  */
       if (buffer != NULL)
-	free (buffer);
+        free (buffer);
       buffer = (int *) xnmalloc (bufmax, 2 * sizeof (int));
       gl_tls_set (buffer_key, buffer);
       gl_tls_set (bufmax_key, (void *) (uintptr_t) bufmax);
@@ -259,13 +259,13 @@ fstrcmp_bounded (const char *string1, const char *string2, double lower_bound)
   ctxt.edit_count += ctxt.edit_count_limit;
 
   /* The result is
-	((number of chars in common) / (average length of the strings)).
+        ((number of chars in common) / (average length of the strings)).
      The numerator is
-	= xvec_length - (number of calls to NOTE_DELETE)
-	= yvec_length - (number of calls to NOTE_INSERT)
-	= 1/2 * (xvec_length + yvec_length - (number of edits)).
+        = xvec_length - (number of calls to NOTE_DELETE)
+        = yvec_length - (number of calls to NOTE_INSERT)
+        = 1/2 * (xvec_length + yvec_length - (number of edits)).
      This is admittedly biased towards finding that the strings are
      similar, however it does produce meaningful results.  */
   return ((double) (xvec_length + yvec_length - ctxt.edit_count)
-	  / (xvec_length + yvec_length));
+          / (xvec_length + yvec_length));
 }

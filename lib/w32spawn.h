@@ -79,13 +79,13 @@ undup_safer_noinherit (int tempfd, int origfd)
     {
       if (dup2 (tempfd, origfd) < 0)
         error (EXIT_FAILURE, errno, _("cannot restore fd %d: dup2 failed"),
-	       origfd);
+               origfd);
       close (tempfd);
     }
   else
     {
       /* origfd was closed or open to no handle at all.  Set it to a closed
-	 state.  This is (nearly) equivalent to the original state.  */
+         state.  This is (nearly) equivalent to the original state.  */
       close (origfd);
     }
 }
@@ -143,68 +143,68 @@ prepare_spawn (char **argv)
       const char *string = argv[i];
 
       if (string[0] == '\0')
-	new_argv[i] = xstrdup ("\"\"");
+        new_argv[i] = xstrdup ("\"\"");
       else if (strpbrk (string, SHELL_SPECIAL_CHARS) != NULL)
-	{
-	  bool quote_around = (strpbrk (string, SHELL_SPACE_CHARS) != NULL);
-	  size_t length;
-	  unsigned int backslashes;
-	  const char *s;
-	  char *quoted_string;
-	  char *p;
+        {
+          bool quote_around = (strpbrk (string, SHELL_SPACE_CHARS) != NULL);
+          size_t length;
+          unsigned int backslashes;
+          const char *s;
+          char *quoted_string;
+          char *p;
 
-	  length = 0;
-	  backslashes = 0;
-	  if (quote_around)
-	    length++;
-	  for (s = string; *s != '\0'; s++)
-	    {
-	      char c = *s;
-	      if (c == '"')
-		length += backslashes + 1;
-	      length++;
-	      if (c == '\\')
-		backslashes++;
-	      else
-		backslashes = 0;
-	    }
-	  if (quote_around)
-	    length += backslashes + 1;
+          length = 0;
+          backslashes = 0;
+          if (quote_around)
+            length++;
+          for (s = string; *s != '\0'; s++)
+            {
+              char c = *s;
+              if (c == '"')
+                length += backslashes + 1;
+              length++;
+              if (c == '\\')
+                backslashes++;
+              else
+                backslashes = 0;
+            }
+          if (quote_around)
+            length += backslashes + 1;
 
-	  quoted_string = (char *) xmalloc (length + 1);
+          quoted_string = (char *) xmalloc (length + 1);
 
-	  p = quoted_string;
-	  backslashes = 0;
-	  if (quote_around)
-	    *p++ = '"';
-	  for (s = string; *s != '\0'; s++)
-	    {
-	      char c = *s;
-	      if (c == '"')
-		{
-		  unsigned int j;
-		  for (j = backslashes + 1; j > 0; j--)
-		    *p++ = '\\';
-		}
-	      *p++ = c;
-	      if (c == '\\')
-		backslashes++;
-	      else
-		backslashes = 0;
-	    }
-	  if (quote_around)
-	    {
-	      unsigned int j;
-	      for (j = backslashes; j > 0; j--)
-		*p++ = '\\';
-	      *p++ = '"';
-	    }
-	  *p = '\0';
+          p = quoted_string;
+          backslashes = 0;
+          if (quote_around)
+            *p++ = '"';
+          for (s = string; *s != '\0'; s++)
+            {
+              char c = *s;
+              if (c == '"')
+                {
+                  unsigned int j;
+                  for (j = backslashes + 1; j > 0; j--)
+                    *p++ = '\\';
+                }
+              *p++ = c;
+              if (c == '\\')
+                backslashes++;
+              else
+                backslashes = 0;
+            }
+          if (quote_around)
+            {
+              unsigned int j;
+              for (j = backslashes; j > 0; j--)
+                *p++ = '\\';
+              *p++ = '"';
+            }
+          *p = '\0';
 
-	  new_argv[i] = quoted_string;
-	}
+          new_argv[i] = quoted_string;
+        }
       else
-	new_argv[i] = (char *) string;
+        new_argv[i] = (char *) string;
     }
   new_argv[argc] = NULL;
 

@@ -69,11 +69,11 @@ canon_host_r (char const *host, int *cherror)
   if (!status)
     {
       /* http://lists.gnu.org/archive/html/bug-coreutils/2006-09/msg00300.html
-	 says Darwin 7.9.0 getaddrinfo returns 0 but sets
-	 res->ai_canonname to NULL.  */
+         says Darwin 7.9.0 getaddrinfo returns 0 but sets
+         res->ai_canonname to NULL.  */
       retval = strdup (res->ai_canonname ? res->ai_canonname : host);
       if (!retval && cherror)
-	*cherror = EAI_MEMORY;
+        *cherror = EAI_MEMORY;
       freeaddrinfo (res);
     }
   else if (cherror)

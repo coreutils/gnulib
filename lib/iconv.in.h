@@ -56,8 +56,8 @@ extern iconv_t iconv_open (const char *tocode, const char *fromcode);
 #if @REPLACE_ICONV@
 # define iconv rpl_iconv
 extern size_t iconv (iconv_t cd,
-		     @ICONV_CONST@ char **inbuf, size_t *inbytesleft,
-		     char **outbuf, size_t *outbytesleft);
+                     @ICONV_CONST@ char **inbuf, size_t *inbytesleft,
+                     char **outbuf, size_t *outbytesleft);
 # define iconv_close rpl_iconv_close
 extern int iconv_close (iconv_t cd);
 #endif

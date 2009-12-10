@@ -63,7 +63,7 @@ strtoimax (char const *ptr, char **endptr, int base)
 {
 #if Have_long_long
   verify (sizeof (Int) == sizeof (Unsigned long int)
-	  || sizeof (Int) == sizeof (Unsigned long long int));
+          || sizeof (Int) == sizeof (Unsigned long long int));
 
   if (sizeof (Int) != sizeof (Unsigned long int))
     return strtoll (ptr, endptr, base);

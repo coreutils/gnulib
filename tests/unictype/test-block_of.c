@@ -23,15 +23,15 @@
 #include <string.h>
 
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 int
@@ -45,8 +45,8 @@ main ()
 
     for (c = 0; c < 0x110000; c++)
       {
-	const uc_block_t *block = uc_block (c);
-	ASSERT (block == NULL || uc_is_block (c, block));
+        const uc_block_t *block = uc_block (c);
+        ASSERT (block == NULL || uc_is_block (c, block));
       }
   }
 
@@ -59,19 +59,19 @@ main ()
 
     for (i = 0; i < nblocks; i++)
       {
-	if (strcmp (blocks[i].name, "Hebrew") == 0)
-	  {
-	    ASSERT (uc_block (0x05DE) == &blocks[i]);
-	    ASSERT (uc_is_block (0x05DE, &blocks[i]));
-	  }
+        if (strcmp (blocks[i].name, "Hebrew") == 0)
+          {
+            ASSERT (uc_block (0x05DE) == &blocks[i]);
+            ASSERT (uc_is_block (0x05DE, &blocks[i]));
+          }
       }
 
     for (i = 0; i < nblocks; i++)
       {
-	unsigned int c;
+        unsigned int c;
 
-	for (c = blocks[i].start; c <= blocks[i].end; c++)
-	  ASSERT (uc_block (c) == &blocks[i]);
+        for (c = blocks[i].start; c <= blocks[i].end; c++)
+          ASSERT (uc_block (c) == &blocks[i]);
       }
   }
 

@@ -47,8 +47,8 @@ extern "C" {
    different lengths!  */
 
 extern int mbmemcasecoll (const char *s1, size_t s1len,
-			  const char *s2, size_t s2len,
-			  bool hard_LC_COLLATE);
+                          const char *s2, size_t s2len,
+                          bool hard_LC_COLLATE);
 
 
 #ifdef __cplusplus

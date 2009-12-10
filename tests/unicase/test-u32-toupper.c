@@ -28,15 +28,15 @@
 
 #define SIZEOF(array) (sizeof (array) / sizeof (array[0]))
 #define ASSERT(expr) \
-  do									     \
-    {									     \
-      if (!(expr))							     \
-        {								     \
+  do                                                                         \
+    {                                                                        \
+      if (!(expr))                                                           \
+        {                                                                    \
           fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);						     \
-          abort ();							     \
-        }								     \
-    }									     \
+          fflush (stderr);                                                   \
+          abort ();                                                          \
+        }                                                                    \
+    }                                                                        \
   while (0)
 
 static int
@@ -66,13 +66,13 @@ check (const uint32_t *input, size_t input_length,
       preallocated = (uint32_t *) malloc (length * sizeof (uint32_t));
       result = u32_toupper (input, input_length, iso639_language, nf, preallocated, &length);
       if (!(result != NULL))
-	return 4;
+        return 4;
       if (!(result != preallocated))
-	return 5;
+        return 5;
       if (!(length == expected_length))
-	return 6;
+        return 6;
       if (!(u32_cmp (result, expected, expected_length) == 0))
-	return 7;
+        return 7;
       free (result);
       free (preallocated);
     }
@@ -110,19 +110,19 @@ main ()
   { /* "Grüß Gott. Здравствуйте! x=(-b±sqrt(b²-4ac))/(2a)  日本語,中文,한글" */
     static const uint32_t input[] =
       { 'G', 'r', 0x00FC, 0x00DF, ' ', 'G', 'o', 't', 't', '.', ' ',
-	0x0417, 0x0434, 0x0440, 0x0430, 0x0432, 0x0441, 0x0442, 0x0432, 0x0443,
-	0x0439, 0x0442, 0x0435, '!', ' ',
-	'x', '=', '(', '-', 'b', 0x00B1, 's', 'q', 'r', 't', '(', 'b', 0x00B2,
-	'-', '4', 'a', 'c', ')', ')', '/', '(', '2', 'a', ')', ' ', ' ',
-	0x65E5, 0x672C, 0x8A9E, ',', 0x4E2D, 0x6587, ',', 0xD55C, 0xAE00, '\n'
+        0x0417, 0x0434, 0x0440, 0x0430, 0x0432, 0x0441, 0x0442, 0x0432, 0x0443,
+        0x0439, 0x0442, 0x0435, '!', ' ',
+        'x', '=', '(', '-', 'b', 0x00B1, 's', 'q', 'r', 't', '(', 'b', 0x00B2,
+        '-', '4', 'a', 'c', ')', ')', '/', '(', '2', 'a', ')', ' ', ' ',
+        0x65E5, 0x672C, 0x8A9E, ',', 0x4E2D, 0x6587, ',', 0xD55C, 0xAE00, '\n'
       };
     static const uint32_t casemapped[] =
       { 'G', 'R', 0x00DC, 0x0053, 0x0053, ' ', 'G', 'O', 'T', 'T', '.', ' ',
-	0x0417, 0x0414, 0x0420, 0x0410, 0x0412, 0x0421, 0x0422, 0x0412, 0x0423,
-	0x0419, 0x0422, 0x0415, '!', ' ',
-	'X', '=', '(', '-', 'B', 0x00B1, 'S', 'Q', 'R', 'T', '(', 'B', 0x00B2,
-	'-', '4', 'A', 'C', ')', ')', '/', '(', '2', 'A', ')', ' ', ' ',
-	0x65E5, 0x672C, 0x8A9E, ',', 0x4E2D, 0x6587, ',', 0xD55C, 0xAE00, '\n'
+        0x0417, 0x0414, 0x0420, 0x0410, 0x0412, 0x0421, 0x0422, 0x0412, 0x0423,
+        0x0419, 0x0422, 0x0415, '!', ' ',
+        'X', '=', '(', '-', 'B', 0x00B1, 'S', 'Q', 'R', 'T', '(', 'B', 0x00B2,
+        '-', '4', 'A', 'C', ')', ')', '/', '(', '2', 'A', ')', ' ', ' ',
+        0x65E5, 0x672C, 0x8A9E, ',', 0x4E2D, 0x6587, ',', 0xD55C, 0xAE00, '\n'
       };
     ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
   }
@@ -185,15 +185,15 @@ main ()
   { /* "περισσότερες πληροφορίες" */
     static const uint32_t input[] =
       {
-	0x03C0, 0x03B5, 0x03C1, 0x03B9, 0x03C3, 0x03C3, 0x03CC, 0x03C4,
-	0x03B5, 0x03C1, 0x03B5, 0x03C2, 0x0020, 0x03C0, 0x03BB, 0x03B7,
-	0x03C1, 0x03BF, 0x03C6, 0x03BF, 0x03C1, 0x03AF, 0x03B5, 0x03C2
+        0x03C0, 0x03B5, 0x03C1, 0x03B9, 0x03C3, 0x03C3, 0x03CC, 0x03C4,
+        0x03B5, 0x03C1, 0x03B5, 0x03C2, 0x0020, 0x03C0, 0x03BB, 0x03B7,
+        0x03C1, 0x03BF, 0x03C6, 0x03BF, 0x03C1, 0x03AF, 0x03B5, 0x03C2
       };
     static const uint32_t casemapped[] =
       {
-	0x03A0, 0x0395, 0x03A1, 0x0399, 0x03A3, 0x03A3, 0x038C, 0x03A4,
-	0x0395, 0x03A1, 0x0395, 0x03A3, 0x0020, 0x03A0, 0x039B, 0x0397,
-	0x03A1, 0x039F, 0x03A6, 0x039F, 0x03A1, 0x038A, 0x0395, 0x03A3
+        0x03A0, 0x0395, 0x03A1, 0x0399, 0x03A3, 0x03A3, 0x038C, 0x03A4,
+        0x0395, 0x03A1, 0x0395, 0x03A3, 0x0020, 0x03A0, 0x039B, 0x0397,
+        0x03A1, 0x039F, 0x03A6, 0x039F, 0x03A1, 0x038A, 0x0395, 0x03A3
       };
     ASSERT (check (input, SIZEOF (input), NULL, NULL, casemapped, SIZEOF (casemapped)) == 0);
   }

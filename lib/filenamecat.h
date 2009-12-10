@@ -20,8 +20,8 @@
 
 #if GNULIB_FILENAMECAT
 char *file_name_concat (char const *dir, char const *base,
-			char **base_in_result);
+                        char **base_in_result);
 #endif
 
 char *mfile_name_concat (char const *dir, char const *base,
-			 char **base_in_result);
+                         char **base_in_result);

@@ -40,7 +40,7 @@
    to the same values in VALLIST).  */
 
 ptrdiff_t argmatch (char const *arg, char const *const *arglist,
-		    char const *vallist, size_t valsize);
+                    char const *vallist, size_t valsize);
 
 # define ARGMATCH(Arg, Arglist, Vallist) \
   argmatch (Arg, Arglist, (char const *) (Vallist), sizeof *(Vallist))
@@ -54,7 +54,7 @@ extern argmatch_exit_fn argmatch_die;
 /* Report on stderr why argmatch failed.  Report correct values. */
 
 void argmatch_invalid (char const *context, char const *value,
-		       ptrdiff_t problem);
+                       ptrdiff_t problem);
 
 /* Left for compatibility with the old name invalid_arg */
 
@@ -66,7 +66,7 @@ void argmatch_invalid (char const *context, char const *value,
 /* Report on stderr the list of possible arguments.  */
 
 void argmatch_valid (char const *const *arglist,
-		     char const *vallist, size_t valsize);
+                     char const *vallist, size_t valsize);
 
 # define ARGMATCH_VALID(Arglist, Vallist) \
   argmatch_valid (Arglist, (char const *) (Vallist), sizeof *(Vallist))
@@ -77,26 +77,26 @@ void argmatch_valid (char const *const *arglist,
    failure, and exits using the function EXIT_FN. */
 
 ptrdiff_t __xargmatch_internal (char const *context,
-				char const *arg, char const *const *arglist,
-				char const *vallist, size_t valsize,
-				argmatch_exit_fn exit_fn);
+                                char const *arg, char const *const *arglist,
+                                char const *vallist, size_t valsize,
+                                argmatch_exit_fn exit_fn);
 
 /* Programmer friendly interface to __xargmatch_internal. */
 
-# define XARGMATCH(Context, Arg, Arglist, Vallist)		\
-  ((Vallist) [__xargmatch_internal (Context, Arg, Arglist,	\
-				    (char const *) (Vallist),	\
-				    sizeof *(Vallist),		\
-				    argmatch_die)])
+# define XARGMATCH(Context, Arg, Arglist, Vallist)              \
+  ((Vallist) [__xargmatch_internal (Context, Arg, Arglist,      \
+                                    (char const *) (Vallist),   \
+                                    sizeof *(Vallist),          \
+                                    argmatch_die)])
 
 /* Convert a value into a corresponding argument. */
 
 char const *argmatch_to_argument (char const *value,
-				  char const *const *arglist,
-				  char const *vallist, size_t valsize);
+                                  char const *const *arglist,
+                                  char const *vallist, size_t valsize);
 
-# define ARGMATCH_TO_ARGUMENT(Value, Arglist, Vallist)			\
-  argmatch_to_argument (Value, Arglist,					\
-			(char const *) (Vallist), sizeof *(Vallist))
+# define ARGMATCH_TO_ARGUMENT(Value, Arglist, Vallist)                  \
+  argmatch_to_argument (Value, Arglist,                                 \
+                        (char const *) (Vallist), sizeof *(Vallist))
 
 #endif /* ARGMATCH_H_ */

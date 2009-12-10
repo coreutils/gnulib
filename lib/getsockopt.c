@@ -51,7 +51,7 @@ rpl_getsockopt (int fd, int level, int optname, void *optval, socklen_t *optlen)
       tv.tv_usec = (milliseconds - 1000 * tv.tv_sec) * 1000;
       n = sizeof (struct timeval);
       if (n > *optlen)
-	n = *optlen;
+        n = *optlen;
       memcpy (optval, &tv, n);
       *optlen = n;
     }

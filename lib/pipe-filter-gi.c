@@ -86,13 +86,13 @@ static inline int filter_init (struct pipe_filter_gi *filter);
 /* Write count bytes starting at buf, while at the same time invoking the
    read iterator (the functions prepare_read/done_read) when needed.  */
 static void filter_loop (struct pipe_filter_gi *filter,
-			 const char *wbuf, size_t count);
+                         const char *wbuf, size_t count);
 
 /* Perform cleanup actions at the end.
    finish_reading is true if there was no error, or false if some error
    occurred already.  */
 static inline void filter_cleanup (struct pipe_filter_gi *filter,
-				   bool finish_reading);
+                                   bool finish_reading);
 
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
@@ -108,25 +108,25 @@ reader_thread_func (void *thread_arg)
       size_t bufsize;
       void *buf = filter->prepare_read (&bufsize, filter->private_data);
       if (!(buf != NULL && bufsize > 0))
-	/* prepare_read returned wrong values.  */
-	abort ();
+        /* prepare_read returned wrong values.  */
+        abort ();
       {
-	ssize_t nread =
-	  read (filter->fd[0], buf, bufsize > SSIZE_MAX ? SSIZE_MAX : bufsize);
-	EnterCriticalSection (&filter->lock);
-	/* If the writer already encountered an error, terminate.  */
-	if (filter->writer_terminated)
-	  break;
-	if (nread < 0)
-	  {
-	    filter->reader_errno = errno;
-	    break;
-	  }
-	else if (nread > 0)
-	  filter->done_read (buf, nread, filter->private_data);
-	else /* nread == 0 */
-	  break;
-	LeaveCriticalSection (&filter->lock);
+        ssize_t nread =
+          read (filter->fd[0], buf, bufsize > SSIZE_MAX ? SSIZE_MAX : bufsize);
+        EnterCriticalSection (&filter->lock);
+        /* If the writer already encountered an error, terminate.  */
+        if (filter->writer_terminated)
+          break;
+        if (nread < 0)
+          {
+            filter->reader_errno = errno;
+            break;
+          }
+        else if (nread > 0)
+          filter->done_read (buf, nread, filter->private_data);
+        else /* nread == 0 */
+          break;
+        LeaveCriticalSection (&filter->lock);
       }
     }
 
@@ -144,12 +144,12 @@ filter_init (struct pipe_filter_gi *filter)
 
   filter->reader_thread_handle =
     (HANDLE) _beginthreadex (NULL, 100000, reader_thread_func, filter,
-			     0, NULL);
+                             0, NULL);
 
   if (filter->reader_thread_handle == NULL)
     {
       if (filter->exit_on_error)
-	error (EXIT_FAILURE, 0, _("creation of reading thread failed"));
+        error (EXIT_FAILURE, 0, _("creation of reading thread failed"));
       return -1;
     }
   else
@@ -162,41 +162,41 @@ filter_loop (struct pipe_filter_gi *filter, const char *wbuf, size_t count)
   if (!filter->writer_terminated)
     {
       for (;;)
-	{
-	  ssize_t nwritten;
+        {
+          ssize_t nwritten;
 
-	  /* Allow the reader thread to continue.  */
-	  LeaveCriticalSection (&filter->lock);
+          /* Allow the reader thread to continue.  */
+          LeaveCriticalSection (&filter->lock);
 
-	  nwritten =
-	    write (filter->fd[1], wbuf, count > SSIZE_MAX ? SSIZE_MAX : count);
+          nwritten =
+            write (filter->fd[1], wbuf, count > SSIZE_MAX ? SSIZE_MAX : count);
 
-	  /* Get the lock back from the reader thread.  */
-	  EnterCriticalSection (&filter->lock);
+          /* Get the lock back from the reader thread.  */
+          EnterCriticalSection (&filter->lock);
 
-	  if (nwritten < 0)
-	    {
-	      /* Don't assume that the gnulib modules 'write' and 'sigpipe' are
-		 used.  */
-	      if (GetLastError () == ERROR_NO_DATA)
-		errno = EPIPE;
-	      filter->writer_errno = errno;
-	      filter->writer_terminated = true;
-	      break;
-	    }
-	  else if (nwritten > 0)
-	    {
-	      count -= nwritten;
-	      if (count == 0)
-		break;
-	      wbuf += nwritten;
-	    }
-	  else /* nwritten == 0 */
-	    {
-	      filter->writer_terminated = true;
-	      break;
-	    }
-	}
+          if (nwritten < 0)
+            {
+              /* Don't assume that the gnulib modules 'write' and 'sigpipe' are
+                 used.  */
+              if (GetLastError () == ERROR_NO_DATA)
+                errno = EPIPE;
+              filter->writer_errno = errno;
+              filter->writer_terminated = true;
+              break;
+            }
+          else if (nwritten > 0)
+            {
+              count -= nwritten;
+              if (count == 0)
+                break;
+              wbuf += nwritten;
+            }
+          else /* nwritten == 0 */
+            {
+              filter->writer_terminated = true;
+              break;
+            }
+        }
     }
 }
 
@@ -248,15 +248,15 @@ filter_init (struct pipe_filter_gi *filter)
     int fcntl_flags;
 
     if ((fcntl_flags = fcntl (filter->fd[1], F_GETFL, 0)) < 0
-	|| fcntl (filter->fd[1], F_SETFL, fcntl_flags | O_NONBLOCK) == -1
-	|| (fcntl_flags = fcntl (filter->fd[0], F_GETFL, 0)) < 0
-	|| fcntl (filter->fd[0], F_SETFL, fcntl_flags | O_NONBLOCK) == -1)
+        || fcntl (filter->fd[1], F_SETFL, fcntl_flags | O_NONBLOCK) == -1
+        || (fcntl_flags = fcntl (filter->fd[0], F_GETFL, 0)) < 0
+        || fcntl (filter->fd[0], F_SETFL, fcntl_flags | O_NONBLOCK) == -1)
       {
-	if (filter->exit_on_error)
-	  error (EXIT_FAILURE, errno,
-		 _("cannot set up nonblocking I/O to %s subprocess"),
-		 filter->progname);
-	return -1;
+        if (filter->exit_on_error)
+          error (EXIT_FAILURE, errno,
+                 _("cannot set up nonblocking I/O to %s subprocess"),
+                 filter->progname);
+        return -1;
       }
   }
 
@@ -280,13 +280,13 @@ filter_loop (struct pipe_filter_gi *filter, const char *wbuf, size_t count)
   if (!done_writing)
     {
       if (filter->writer_terminated || filter->reader_terminated)
-	/* pipe_filter_gi_write was called when it should not be.  */
-	abort ();
+        /* pipe_filter_gi_write was called when it should not be.  */
+        abort ();
     }
   else
     {
       if (filter->reader_terminated)
-	return;
+        return;
     }
 
   /* Loop, trying to write the given buffer or reading, whichever is
@@ -294,50 +294,50 @@ filter_loop (struct pipe_filter_gi *filter, const char *wbuf, size_t count)
   for (;;)
     {
       /* Here filter->writer_terminated is false.  When it becomes true, this
-	 loop is terminated.  */
+         loop is terminated.  */
       /* Whereas filter->reader_terminated is initially false but may become
-	 true during this loop.  */
+         true during this loop.  */
       /* Here, if !done_writing, count > 0.  When count becomes 0, this loop
-	 is terminated.  */
+         is terminated.  */
       /* Here, if done_writing, filter->reader_terminated is false.  When
-	 filter->reader_terminated becomes true, this loop is terminated.  */
+         filter->reader_terminated becomes true, this loop is terminated.  */
 # if HAVE_SELECT
       int n;
 
       /* See whether reading or writing is possible.  */
       n = 1;
       if (!filter->reader_terminated)
-	{
-	  FD_SET (filter->fd[0], &filter->readfds);
-	  n = filter->fd[0] + 1;
-	}
+        {
+          FD_SET (filter->fd[0], &filter->readfds);
+          n = filter->fd[0] + 1;
+        }
       if (!done_writing)
-	{
-	  FD_SET (filter->fd[1], &filter->writefds);
-	  if (n <= filter->fd[1])
-	    n = filter->fd[1] + 1;
-	}
+        {
+          FD_SET (filter->fd[1], &filter->writefds);
+          if (n <= filter->fd[1])
+            n = filter->fd[1] + 1;
+        }
       n = select (n,
-		  (!filter->reader_terminated ? &filter->readfds : NULL),
-		  (!done_writing ? &filter->writefds : NULL),
-		  NULL, NULL);
+                  (!filter->reader_terminated ? &filter->readfds : NULL),
+                  (!done_writing ? &filter->writefds : NULL),
+                  NULL, NULL);
 
       if (n < 0)
-	{
-	  if (filter->exit_on_error)
-	    error (EXIT_FAILURE, errno,
-		   _("communication with %s subprocess failed"),
-		   filter->progname);
-	  filter->writer_errno = errno;
-	  filter->writer_terminated = true;
-	  break;
-	}
+        {
+          if (filter->exit_on_error)
+            error (EXIT_FAILURE, errno,
+                   _("communication with %s subprocess failed"),
+                   filter->progname);
+          filter->writer_errno = errno;
+          filter->writer_terminated = true;
+          break;
+        }
 
       if (!done_writing && FD_ISSET (filter->fd[1], &filter->writefds))
-	goto try_write;
+        goto try_write;
       if (!filter->reader_terminated
-	  && FD_ISSET (filter->fd[0], &filter->readfds))
-	goto try_read;
+          && FD_ISSET (filter->fd[0], &filter->readfds))
+        goto try_read;
       /* How could select() return if none of the two descriptors is ready?  */
       abort ();
 # endif
@@ -348,29 +348,29 @@ filter_loop (struct pipe_filter_gi *filter, const char *wbuf, size_t count)
 # endif
       if (!done_writing)
         {
-	  ssize_t nwritten =
-	    write (filter->fd[1], wbuf, count > SSIZE_MAX ? SSIZE_MAX : count);
-	  if (nwritten < 0)
-	    {
-	      if (!IS_EAGAIN (errno))
-		{
-		  if (filter->exit_on_error)
-		    error (EXIT_FAILURE, errno,
-			   _("write to %s subprocess failed"),
-			   filter->progname);
-		  filter->writer_errno = errno;
-		  filter->writer_terminated = true;
-		  break;
-		}
-	    }
-	  else if (nwritten > 0)
-	    {
-	      count -= nwritten;
-	      if (count == 0)
-		break;
-	      wbuf += nwritten;
-	    }
-	}
+          ssize_t nwritten =
+            write (filter->fd[1], wbuf, count > SSIZE_MAX ? SSIZE_MAX : count);
+          if (nwritten < 0)
+            {
+              if (!IS_EAGAIN (errno))
+                {
+                  if (filter->exit_on_error)
+                    error (EXIT_FAILURE, errno,
+                           _("write to %s subprocess failed"),
+                           filter->progname);
+                  filter->writer_errno = errno;
+                  filter->writer_terminated = true;
+                  break;
+                }
+            }
+          else if (nwritten > 0)
+            {
+              count -= nwritten;
+              if (count == 0)
+                break;
+              wbuf += nwritten;
+            }
+        }
 # if HAVE_SELECT
       continue;
 # endif
@@ -380,38 +380,38 @@ filter_loop (struct pipe_filter_gi *filter, const char *wbuf, size_t count)
     try_read:
 # endif
       if (!filter->reader_terminated)
-	{
-	  size_t bufsize;
-	  void *buf = filter->prepare_read (&bufsize, filter->private_data);
-	  if (!(buf != NULL && bufsize > 0))
-	    /* prepare_read returned wrong values.  */
-	    abort ();
-	  {
-	    ssize_t nread =
-	      read (filter->fd[0], buf,
-		    bufsize > SSIZE_MAX ? SSIZE_MAX : bufsize);
-	    if (nread < 0)
-	      {
-		if (!IS_EAGAIN (errno))
-		  {
-		    if (filter->exit_on_error)
-		      error (EXIT_FAILURE, errno,
-			     _("read from %s subprocess failed"),
-			     filter->progname);
-		    filter->reader_errno = errno;
-		    filter->reader_terminated = true;
-		    break;
-		  }
-	      }
-	    else if (nread > 0)
-	      filter->done_read (buf, nread, filter->private_data);
-	    else /* nread == 0 */
-	      {
-		filter->reader_terminated = true;
-		if (done_writing)
-		  break;
-	      }
-	  }
+        {
+          size_t bufsize;
+          void *buf = filter->prepare_read (&bufsize, filter->private_data);
+          if (!(buf != NULL && bufsize > 0))
+            /* prepare_read returned wrong values.  */
+            abort ();
+          {
+            ssize_t nread =
+              read (filter->fd[0], buf,
+                    bufsize > SSIZE_MAX ? SSIZE_MAX : bufsize);
+            if (nread < 0)
+              {
+                if (!IS_EAGAIN (errno))
+                  {
+                    if (filter->exit_on_error)
+                      error (EXIT_FAILURE, errno,
+                             _("read from %s subprocess failed"),
+                             filter->progname);
+                    filter->reader_errno = errno;
+                    filter->reader_terminated = true;
+                    break;
+                  }
+              }
+            else if (nread > 0)
+              filter->done_read (buf, nread, filter->private_data);
+            else /* nread == 0 */
+              {
+                filter->reader_terminated = true;
+                if (done_writing)
+                  break;
+              }
+          }
       }
 # if HAVE_SELECT
       continue;
@@ -444,13 +444,13 @@ filter_terminate (struct pipe_filter_gi *filter)
       filter_cleanup (filter, !filter->reader_terminated);
       close (filter->fd[0]);
       filter->exitstatus =
-	wait_subprocess (filter->child, filter->progname, true,
-			 filter->null_stderr, true, filter->exit_on_error,
-			 NULL);
+        wait_subprocess (filter->child, filter->progname, true,
+                         filter->null_stderr, true, filter->exit_on_error,
+                         NULL);
       if (filter->exitstatus != 0 && filter->exit_on_error)
-	error (EXIT_FAILURE, 0,
-	       _("subprocess %s terminated with exit code %d"),
-	       filter->progname, filter->exitstatus);
+        error (EXIT_FAILURE, 0,
+               _("subprocess %s terminated with exit code %d"),
+               filter->progname, filter->exitstatus);
       filter->exited = true;
     }
 }
@@ -478,11 +478,11 @@ filter_retcode (struct pipe_filter_gi *filter)
 
 struct pipe_filter_gi *
 pipe_filter_gi_create (const char *progname,
-		       const char *prog_path, const char **prog_argv,
-		       bool null_stderr, bool exit_on_error,
-		       prepare_read_fn prepare_read,
-		       done_read_fn done_read,
-		       void *private_data)
+                       const char *prog_path, const char **prog_argv,
+                       bool null_stderr, bool exit_on_error,
+                       prepare_read_fn prepare_read,
+                       done_read_fn done_read,
+                       void *private_data)
 {
   struct pipe_filter_gi *filter;
 
@@ -491,8 +491,8 @@ pipe_filter_gi_create (const char *progname,
 
   /* Open a bidirectional pipe to a subprocess.  */
   filter->child = create_pipe_bidi (progname, prog_path, (char **) prog_argv,
-				    null_stderr, true, exit_on_error,
-				    filter->fd);
+                                    null_stderr, true, exit_on_error,
+                                    filter->fd);
   filter->progname = progname;
   filter->null_stderr = null_stderr;
   filter->exit_on_error = exit_on_error;
@@ -509,7 +509,7 @@ pipe_filter_gi_create (const char *progname,
   if (filter->child == -1)
     {
       /* Child process could not be created.
-	 Arrange for filter_retcode (filter) to be the current errno.  */
+         Arrange for filter_retcode (filter) to be the current errno.  */
       filter->writer_errno = errno;
       filter->writer_terminated = true;
       filter->exited = true;
@@ -522,7 +522,7 @@ pipe_filter_gi_create (const char *progname,
 
 int
 pipe_filter_gi_write (struct pipe_filter_gi *filter,
-		      const void *buf, size_t size)
+                      const void *buf, size_t size)
 {
   if (buf == NULL)
     /* Invalid argument.  */
@@ -535,10 +535,10 @@ pipe_filter_gi_write (struct pipe_filter_gi *filter,
     {
       filter_loop (filter, buf, size);
       if (filter->writer_terminated || filter->reader_terminated)
-	{
-	  filter_terminate (filter);
-	  return filter_retcode (filter);
-	}
+        {
+          filter_terminate (filter);
+          return filter_retcode (filter);
+        }
     }
   return 0;
 }

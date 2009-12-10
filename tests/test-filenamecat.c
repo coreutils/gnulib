@@ -57,10 +57,10 @@ main (int argc _UNUSED_PARAMETER_, char *argv[])
       char const *const *t = tests[i];
       char *res = file_name_concat (t[0], t[1], &base_in_result);
       if (strcmp (res, t[2]) != 0)
-	{
-	  fprintf (stderr, "test #%u: got %s, expected %s\n", i, res, t[2]);
-	  fail = true;
-	}
+        {
+          fprintf (stderr, "test #%u: got %s, expected %s\n", i, res, t[2]);
+          fail = true;
+        }
     }
   exit (fail ? EXIT_FAILURE : EXIT_SUCCESS);
 }

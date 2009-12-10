@@ -21,13 +21,13 @@
    the current CLASSPATH value.   If use_minimal_classpath, the current
    CLASSPATH is ignored.  */
 extern char * new_classpath (const char * const *classpaths,
-			     unsigned int classpaths_count,
-			     bool use_minimal_classpath);
+                             unsigned int classpaths_count,
+                             bool use_minimal_classpath);
 
 /* Set CLASSPATH and returns a safe copy of its old value.  */
 extern char * set_classpath (const char * const *classpaths,
-			     unsigned int classpaths_count,
-			     bool use_minimal_classpath, bool verbose);
+                             unsigned int classpaths_count,
+                             bool use_minimal_classpath, bool verbose);
 
 /* Restore CLASSPATH to its previous value.  */
 extern void reset_classpath (char *old_classpath);

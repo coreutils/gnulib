@@ -41,28 +41,28 @@ tmpfile_safer (void)
       int fd = fileno (fp);
 
       if (0 <= fd && fd <= STDERR_FILENO)
-	{
-	  int f = dup_safer (fd);
+        {
+          int f = dup_safer (fd);
 
-	  if (f < 0)
-	    {
-	      int e = errno;
-	      fclose (fp);
-	      errno = e;
-	      return NULL;
-	    }
+          if (f < 0)
+            {
+              int e = errno;
+              fclose (fp);
+              errno = e;
+              return NULL;
+            }
 
-	  /* Keep the temporary file in binary mode, on platforms
-	     where that matters.  */
-	  if (fclose (fp) != 0
-	      || ! (fp = fdopen (f, O_BINARY ? "wb+" : "w+")))
-	    {
-	      int e = errno;
-	      close (f);
-	      errno = e;
-	      return NULL;
-	    }
-	}
+          /* Keep the temporary file in binary mode, on platforms
+             where that matters.  */
+          if (fclose (fp) != 0
+              || ! (fp = fdopen (f, O_BINARY ? "wb+" : "w+")))
+            {
+              int e = errno;
+              close (f);
+              errno = e;
+              return NULL;
+            }
+        }
     }
 
   return fp;

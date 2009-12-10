@@ -66,12 +66,12 @@ safe_rw (int fd, void const *buf, size_t count)
       ssize_t result = rw (fd, buf, count);
 
       if (0 <= result)
-	return result;
+        return result;
       else if (IS_EINTR (errno))
-	continue;
+        continue;
       else if (errno == EINVAL && BUGGY_READ_MAXIMUM < count)
-	count = BUGGY_READ_MAXIMUM;
+        count = BUGGY_READ_MAXIMUM;
       else
-	return result;
+        return result;
     }
 }

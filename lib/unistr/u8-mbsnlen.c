@@ -30,7 +30,7 @@ u8_mbsnlen (const uint8_t *s, size_t n)
     {
       int count = u8_mblen (s, n);
       if (count <= 0)
-	count = 1;
+        count = 1;
       s += count;
       n -= count;
       characters++;

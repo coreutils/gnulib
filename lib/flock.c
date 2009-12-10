@@ -130,27 +130,27 @@ flock (int fd, int operation)
     {
       DWORD err = GetLastError ();
       switch (err)
-	{
-	  /* This means someone else is holding a lock. */
-	case ERROR_LOCK_VIOLATION:
-	  errno = EAGAIN;
-	  break;
+        {
+          /* This means someone else is holding a lock. */
+        case ERROR_LOCK_VIOLATION:
+          errno = EAGAIN;
+          break;
 
-	  /* Out of memory. */
-	case ERROR_NOT_ENOUGH_MEMORY:
-	  errno = ENOMEM;
-	  break;
+          /* Out of memory. */
+        case ERROR_NOT_ENOUGH_MEMORY:
+          errno = ENOMEM;
+          break;
 
-	case ERROR_BAD_COMMAND:
-	  errno = EINVAL;
-	  break;
+        case ERROR_BAD_COMMAND:
+          errno = EINVAL;
+          break;
 
-	  /* Unlikely to be other errors, but at least don't lose the
-	   * error code.
-	   */
-	default:
-	  errno = err;
-	}
+          /* Unlikely to be other errors, but at least don't lose the
+           * error code.
+           */
+        default:
+          errno = err;
+        }
 
       return -1;
     }
