@@ -141,7 +141,8 @@ mgetgroups (char const *username, gid_t gid, gid_t **groups)
 
   ng = (username
         ? getugroups (max_n_groups, g, username, gid)
-        : getgroups (max_n_groups, g + (gid != (gid_t) -1)));
+        : getgroups (max_n_groups - (gid != (gid_t) -1),
+                                g + (gid != (gid_t) -1)));
 
   if (ng < 0)
     {

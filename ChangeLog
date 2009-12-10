@@ -1,3 +1,10 @@
+2009-12-10  Jim Meyering  <meyering@redhat.com>
+
+	mgetgroups: do not write bytes beyond end of malloc'd buffer
+	* lib/mgetgroups.c: Fix an off-by-one error.  When we have no
+	username, we call getgroups with a one-element-shorter buffer,
+	but still told it the length was original, max_n_groups.
+
 2009-12-09  Eric Blake  <ebb9@byu.net>
 
 	cloexec: relax license
