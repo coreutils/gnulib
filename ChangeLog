@@ -1,5 +1,9 @@
 2009-12-09  Eric Blake  <ebb9@byu.net>
 
+	cloexec: relax license
+	* modules/cloexec (Maintainer): Add myself.
+	(License): Use LGPL, not GPL.
+
 	link-warning: optimize generation
 	* modules/link-warning (Makefile.am): Reduce process usage.
 

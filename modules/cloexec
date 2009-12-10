@@ -20,7 +20,7 @@ Include:
 "cloexec.h"
 
 License:
-GPL
+LGPL
 
 Maintainer:
-Jim Meyering
+Jim Meyering, Eric Blake
