@@ -1,5 +1,9 @@
 2009-12-11  Bruno Haible  <bruno@clisp.org>
 
+	* modules/unistd-safer (configure.ac): Drop indicator macro.
+
+2009-12-11  Bruno Haible  <bruno@clisp.org>
+
 	Move pipe2-safer code to its own file.
 	* lib/pipe2-safer.c: New file, extracted from lib/pipe-safer.c.
 	* lib/pipe-safer.c (pipe2_safer): Remove function.
