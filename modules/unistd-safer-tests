@@ -4,6 +4,7 @@ tests/test-dup-safer.c
 Depends-on:
 binary-io
 cloexec
+fd-safer-flag
 stdbool
 
 configure.ac:

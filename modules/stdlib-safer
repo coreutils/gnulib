@@ -8,6 +8,7 @@ lib/mkstemp-safer.c
 m4/stdlib-safer.m4
 
 Depends-on:
+fd-safer-flag
 mkstemp
 stdlib
 unistd-safer

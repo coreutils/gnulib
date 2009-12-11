@@ -1,7 +1,7 @@
-/* Invoke dup, but avoid some glitches.
+/* Duplicate a file descriptor result, avoiding clobbering
+   STD{IN,OUT,ERR}_FILENO, with specific flags.
 
-   Copyright (C) 2001, 2004, 2005, 2006, 2009 Free Software
-   Foundation, Inc.
+   Copyright (C) 2001, 2004-2006, 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -16,26 +16,39 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-/* Written by Paul Eggert.  */
+/* Written by Paul Eggert and Eric Blake.  */
 
 #include <config.h>
 
+/* Specification.  */
 #include "unistd-safer.h"
 
 #include <fcntl.h>
 #include <unistd.h>
 
+#include "cloexec.h"
+
+#ifndef O_CLOEXEC
+# define O_CLOEXEC 0
+#endif
+
 /* Like dup, but do not return STDIN_FILENO, STDOUT_FILENO, or
-   STDERR_FILENO.  */
+   STDERR_FILENO.  If FLAG contains O_CLOEXEC, behave like
+   fcntl(F_DUPFD_CLOEXEC) rather than fcntl(F_DUPFD).  */
 
 int
-dup_safer (int fd)
+dup_safer_flag (int fd, int flag)
 {
-#if defined F_DUPFD && !REPLACE_FCHDIR
-  return fcntl (fd, F_DUPFD, STDERR_FILENO + 1);
+  if (flag & O_CLOEXEC)
+    {
+#if defined F_DUPFD_CLOEXEC && !REPLACE_FCHDIR
+      return fcntl (fd, F_DUPFD_CLOEXEC, STDERR_FILENO + 1);
 #else
-  /* fd_safer calls us back, but eventually the recursion unwinds and
-     does the right thing.  */
-  return fd_safer (dup (fd));
+      /* fd_safer_flag calls us back, but eventually the recursion
+         unwinds and does the right thing.  */
+      fd = dup_cloexec (fd);
+      return fd_safer_flag (fd, flag);
 #endif
+    }
+  return dup_safer (fd);
 }

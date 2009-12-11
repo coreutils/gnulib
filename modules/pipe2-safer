@@ -6,7 +6,7 @@ Files:
 lib/pipe2-safer.c
 
 Depends-on:
-cloexec
+fd-safer-flag
 pipe2
 unistd-safer
 
