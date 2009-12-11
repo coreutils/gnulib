@@ -1,5 +1,13 @@
 2009-12-11  Bruno Haible  <bruno@clisp.org>
 
+	New module 'nl_langinfo'.
+	* lib/nl_langinfo.c: New file.
+	* m4/nl_langinfo.m4: New file.
+	* modules/nl_langinfo: New file.
+	* doc/posix-functions/nl_langinfo.texi: Mention the new module.
+
+2009-12-11  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'langinfo'.
 	* modules/langinfo-tests: New file.
 	* tests/test-langinfo.c: New file.

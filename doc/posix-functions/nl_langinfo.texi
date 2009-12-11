@@ -4,20 +4,24 @@
 
 POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/nl_langinfo.html}
 
-Gnulib module: ---
+Gnulib module: nl_langinfo
 
 Portability problems fixed by Gnulib:
-@itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
 mingw, BeOS.
 @item
-Some older versions of glibc had @code{nl_langinfo} but not the @code{CODESET}
-macro.
+The constant @code{CODESET} is not supported on some platforms:
+glibc 2.0.6, OpenBSD 3.8.
+@item
+The constants @code{ERA}, @code{ERA_D_FMT}, @code{ERA_D_T_FMT},
+@code{ERA_T_FMT}, @code{ALT_DIGITS} are not supported on some platforms:
+OpenBSD 3.8.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @item
 On Cygwin 1.5.x, which doesn't have locales, @code{nl_langinfo(CODESET)} always
 returns @code{"US-ASCII"}.
