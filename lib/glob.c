@@ -19,6 +19,10 @@
 # include <config.h>
 #endif
 
+/* Don't use __attribute__ __nonnull__ in this compilation unit.  Otherwise gcc
+   optimizes away the pattern == NULL || pglob == NULL tests below.  */
+#define _GL_ARG_NONNULL(params)
+
 #include <glob.h>
 
 #include <errno.h>

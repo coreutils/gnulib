@@ -20,6 +20,8 @@
 
 /* The definition of GL_LINK_WARNING is copied here.  */
 
+/* The definition of _GL_ARG_NONNULL is copied here.  */
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -65,7 +67,7 @@ struct utsname
 
 #if @GNULIB_UNAME@
 # if !@HAVE_UNAME@
-extern int uname (struct utsname *buf);
+extern int uname (struct utsname *buf) _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef uname

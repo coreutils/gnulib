@@ -17,6 +17,11 @@
 #if !_LIBC
 # include <config.h>
 #endif
+
+/* Don't use __attribute__ __nonnull__ in this compilation unit.  Otherwise gcc
+   optimizes away the name == NULL test below.  */
+#define _GL_ARG_NONNULL(params)
+
 #include <alloca.h>
 
 /* Specification.  */

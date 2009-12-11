@@ -7,6 +7,7 @@ m4/locale_h.m4
 
 Depends-on:
 include_next
+arg-nonnull
 extensions
 stddef
 
@@ -18,7 +19,7 @@ BUILT_SOURCES += $(LOCALE_H)
 
 # We need the following in order to create <locale.h> when the system
 # doesn't have one that provides all definitions.
-locale.h: locale.in.h
+locale.h: locale.in.h $(ARG_NONNULL_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
@@ -27,6 +28,7 @@ locale.h: locale.in.h
 	      -e 's|@''GNULIB_DUPLOCALE''@|$(GNULIB_DUPLOCALE)|g' \
 	      -e 's|@''HAVE_XLOCALE_H''@|$(HAVE_XLOCALE_H)|g' \
 	      -e 's|@''REPLACE_DUPLOCALE''@|$(REPLACE_DUPLOCALE)|g' \
+	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
 	      < $(srcdir)/locale.in.h; \
 	} > $@-t && \
 	mv $@-t $@

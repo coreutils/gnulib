@@ -47,6 +47,8 @@
 
 /* The definition of GL_LINK_WARNING is copied here.  */
 
+/* The definition of _GL_ARG_NONNULL is copied here.  */
+
 /* 7.8.1 Macros for format specifiers */
 
 #if ! defined __cplusplus || defined __STDC_FORMAT_MACROS
@@ -1066,7 +1068,7 @@ extern imaxdiv_t imaxdiv (intmax_t, intmax_t);
 
 #if @GNULIB_STRTOIMAX@
 # if !@HAVE_DECL_STRTOIMAX@
-extern intmax_t strtoimax (const char *, char **, int);
+extern intmax_t strtoimax (const char *, char **, int) _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef strtoimax
@@ -1078,7 +1080,7 @@ extern intmax_t strtoimax (const char *, char **, int);
 
 #if @GNULIB_STRTOUMAX@
 # if !@HAVE_DECL_STRTOUMAX@
-extern uintmax_t strtoumax (const char *, char **, int);
+extern uintmax_t strtoumax (const char *, char **, int) _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef strtoumax

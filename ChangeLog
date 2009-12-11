@@ -1,5 +1,166 @@
 2009-12-10  Bruno Haible  <bruno@clisp.org>
 
+	Declare which arguments expect non-NULL values, for GCC and clang.
+	* build-aux/arg-nonnull.h: New file.
+	* modules/arg-nonnull: New file.
+	* lib/arpa_inet.in.h (_GL_ARG_NONNULL): New placeholder.
+	(inet_ntop, inet_pton): Use it.
+	* lib/dirent.in.h (_GL_ARG_NONNULL): New placeholder.
+	(closedir, dirfd, opendir, scandir, alphasort): Use it.
+	* lib/fcntl.in.h (_GL_ARG_NONNULL): New placeholder.
+	(open, openat): Use it.
+	* lib/fnmatch.in.h (_GL_ARG_NONNULL): New placeholder.
+	(fnmatch): Use it.
+	* lib/getopt.in.h (_GL_ARG_NONNULL): New placeholder.
+	(getopt, getopt_long, getopt_long_only): Use it.
+	* lib/glob.in.h (_GL_ARG_NONNULL): New placeholder.
+	* lib/glob-libc.h (glob, globfree, glob64, globfree64, glob_pattern_p):
+	Use it.
+	* lib/iconv.in.h (_GL_ARG_NONNULL): New placeholder.
+	(iconv_open): Use it.
+	* lib/inttypes.in.h (_GL_ARG_NONNULL): New placeholder.
+	(strtoimax, strtoumax): Use it.
+	* lib/locale.in.h (_GL_ARG_NONNULL): New placeholder.
+	(duplocale): Use it.
+	* lib/math.in.h (_GL_ARG_NONNULL): New placeholder.
+	(frexp, frexpl): Use it.
+	* lib/netdb.in.h (_GL_ARG_NONNULL): New placeholder.
+	(getaddrinfo, freeaddrinfo, getnameinfo): Use it.
+	* lib/search.in.h (_GL_ARG_NONNULL): New placeholder.
+	(tsearch, tfind, tdelete, twalk): Use it.
+	* lib/signal.in.h (_GL_ARG_NONNULL): New placeholder.
+	(sigismember, sigemptyset, sigaddset, sigdelset, sigfillset,
+	sigpending): Use it.
+	* lib/spawn.in.h (_GL_ARG_NONNULL): New placeholder.
+	(posix_spawn, posix_spawnp, posix_spawnattr_init,
+	posix_spawnattr_destroy, posix_spawnattr_getsigdefault,
+	posix_spawnattr_setsigdefault, posix_spawnattr_getsigmask,
+	posix_spawnattr_setsigmask, posix_spawnattr_getflags,
+	posix_spawnattr_setflags, posix_spawnattr_getpgroup,
+	posix_spawnattr_setpgroup, posix_spawnattr_getschedpolicy,
+	posix_spawnattr_setschedpolicy, posix_spawnattr_getschedparam,
+	posix_spawnattr_setschedparam, posix_spawn_file_actions_init,
+	posix_spawn_file_actions_destroy, posix_spawn_file_actions_addopen,
+	posix_spawn_file_actions_addclose, posix_spawn_file_actions_adddup2):
+	Use it.
+	* lib/stdio.in.h (_GL_ARG_NONNULL): New placeholder.
+	(dprintf, fclose, fopen, fprintf, fpurge, fputc, fputs, freopen,
+	rpl_fseek, fseeko, rpl_ftell, ftello, fwrite, getdelim, getline,
+	obstack_printf, obstack_vprintf, popen, printf, putc, puts, remove,
+	rename, renameat, snprintf, sprintf, asprintf, vasprintf, vdprintf,
+	vfprintf, vprintf, vsnprintf, vsprintf): Use it.
+	* lib/stdlib.in.h (_GL_ARG_NONNULL): New placeholder.
+	(atoll, canonicalize_file_name, getloadavg, getsubopt, mkdtemp,
+	mkostemp, mkostemps, mkstemp, mkstemps, putenv, srandom_r, initstate_r,
+	setstate_r, random_r, realpath, rpmatch, setenv, strtod, strtoll,
+	strtoull, unsetenv): Use it.
+	* lib/string.in.h (_GL_ARG_NONNULL): New placeholder.
+	(memchr, memmem, mempcpy, memrchr, rawmemchr, stpcpy, stpncpy,
+	strchrnul, strdup, strndup, strnlen, strpbrk, strsep, strstr,
+	strcasestr, strtok_r, mbslen, mbsnlen, mbschr, mbsrchr, mbsstr,
+	mbscasecmp, mbsncasecmp, mbspcasecmp, mbscasestr, mbscspn, mbspbrk,
+	mbsspn, mbssep, mbstok_r, strverscmp): Use it.
+	* lib/strings.in.h (_GL_ARG_NONNULL): New placeholder.
+	(strcasecmp, strncasecmp): Use it.
+	* lib/sys_socket.in.h (_GL_ARG_NONNULL): New placeholder.
+	(rpl_connect, rpl_bind, rpl_getpeername, rpl_getsockname,
+	rpl_getsockopt, rpl_recv, rpl_send, rpl_recvfrom, rpl_sendto,
+	rpl_setsockopt): Use it.
+	* lib/sys_stat.in.h (_GL_ARG_NONNULL): New placeholder.
+	(fchmodat, fstat, fstatat, lchmod, rpl_lstat, mkdir, mkdirat, mkfifo,
+	mkfifoat, mknod, mknodat, stat, utimensat): Use it.
+	* lib/sys_time.in.h (_GL_ARG_NONNULL): New placeholder.
+	(gettimeofday): Use it.
+	* lib/sys_times.in.h (_GL_ARG_NONNULL): New placeholder.
+	(times): Use it.
+	* lib/sys_utsname.in.h (_GL_ARG_NONNULL): New placeholder.
+	(uname): Use it.
+	* lib/time.in.h (_GL_ARG_NONNULL): New placeholder.
+	(nanosleep, mktime, localtime_r, gmtime_r, strptime, timegm): Use it.
+	* lib/unistd.in.h (_GL_ARG_NONNULL): New placeholder.
+	(chown, euidaccess, faccessat, _gl_register_fd, fchownat,
+	getdomainname, gethostname, getlogin_r, lchown, link, linkat, pipe2,
+	pread, readlink, readlinkat, rmdir, symlink, symlinkat, unlink,
+	unlinkat, write): Use it.
+	* lib/wchar.in.h (_GL_ARG_NONNULL): New placeholder.
+	(mbsrtowcs, mbsnrtowcs, wcsrtombs, wcsnrtombs): Use it.
+	* lib/argv-iter.h: Include arg-nonnull.h.
+	(_ATTRIBUTE_NONNULL_): Remove macro.
+	(argv_iter_init_argv, argv_iter_init_stream, argv_iter,
+	argv_iter_n_args, argv_iter_free): Use _GL_ARG_NONNULL.
+	* lib/canonicalize-lgpl.c (_GL_ARG_NONNULL): Define, to defeat gcc
+	optimization.
+	* lib/getaddrinfo.c (_GL_ARG_NONNULL): Likewise.
+	* lib/getdelim.c (_GL_ARG_NONNULL): Likewise.
+	* lib/glob.c (_GL_ARG_NONNULL): Likewise.
+	* lib/random_r.c (_GL_ARG_NONNULL): Likewise.
+	* lib/setenv.c (_GL_ARG_NONNULL): Likewise.
+	* lib/strtod.c (_GL_ARG_NONNULL): Likewise.
+	* lib/tsearch.c (_GL_ARG_NONNULL): Likewise.
+	* lib/unsetenv.c (_GL_ARG_NONNULL): Likewise.
+	* modules/arpa_inet (Depends-on): Add arg-nonnull.
+	(Makefile.am): Insert arg-nonnull.h into arpa/inet.h.
+	* modules/dirent (Depends-on): Add arg-nonnull.
+	(Makefile.am): Insert arg-nonnull.h into dirent.h.
+	* modules/fcntl-h (Depends-on): Add arg-nonnull.
+	(Makefile.am): Insert arg-nonnull.h into fcntl.h.
+	* modules/fnmatch (Depends-on): Add arg-nonnull.
+	(Makefile.am): Insert arg-nonnull.h into fnmatch.h.
+	* modules/getopt-posix (Depends-on): Add arg-nonnull.
+	(Makefile.am): Insert arg-nonnull.h into getopt.h.
+	* modules/glob (Depends-on): Add arg-nonnull.
+	(Makefile.am): Insert arg-nonnull.h into glob.h.
+	* modules/iconv_open (Depends-on): Add arg-nonnull.
+	(Makefile.am): Insert arg-nonnull.h into iconv.h.
+	* modules/inttypes (Depends-on): Add arg-nonnull.
+	(Makefile.am): Insert arg-nonnull.h into inttypes.h.
+	* modules/locale (Depends-on): Add arg-nonnull.
+	(Makefile.am): Insert arg-nonnull.h into locale.h.
+	* modules/math (Depends-on): Add arg-nonnull.
+	(Makefile.am): Insert arg-nonnull.h into math.h.
+	* modules/netdb (Depends-on): Add arg-nonnull.
+	(Makefile.am): Insert arg-nonnull.h into netdb.h.
+	* modules/search (Depends-on): Add arg-nonnull.
+	(Makefile.am): Insert arg-nonnull.h into search.h.
+	* modules/signal (Depends-on): Add arg-nonnull.
+	(Makefile.am): Insert arg-nonnull.h into signal.h.
+	* modules/spawn (Depends-on): Add arg-nonnull.
+	(Makefile.am): Insert arg-nonnull.h into spawn.h.
+	* modules/stdio (Depends-on): Add arg-nonnull.
+	(Makefile.am): Insert arg-nonnull.h into stdio.h.
+	* modules/stdlib (Depends-on): Add arg-nonnull.
+	(Makefile.am): Insert arg-nonnull.h into stdlib.h.
+	* modules/string (Depends-on): Add arg-nonnull.
+	(Makefile.am): Insert arg-nonnull.h into string.h.
+	* modules/strings (Depends-on): Add arg-nonnull.
+	(Makefile.am): Insert arg-nonnull.h into strings.h.
+	* modules/sys_socket (Depends-on): Add arg-nonnull.
+	(Makefile.am): Insert arg-nonnull.h into sys/socket.h.
+	* modules/sys_stat (Depends-on): Add arg-nonnull.
+	(Makefile.am): Insert arg-nonnull.h into sys/stat.h.
+	* modules/sys_time (Depends-on): Add arg-nonnull.
+	(Makefile.am): Insert arg-nonnull.h into sys/time.h.
+	* modules/sys_times (Depends-on): Add arg-nonnull.
+	(Makefile.am): Insert arg-nonnull.h into sys/times.h.
+	* modules/sys_utsname (Depends-on): Add arg-nonnull.
+	(Makefile.am): Insert arg-nonnull.h into sys/utsname.h.
+	* modules/time (Depends-on): Add arg-nonnull.
+	(Makefile.am): Insert arg-nonnull.h into time.h.
+	* modules/unistd (Depends-on): Add arg-nonnull.
+	(Makefile.am): Insert arg-nonnull.h into unistd.h.
+	* modules/wchar (Depends-on): Add arg-nonnull.
+	(Makefile.am): Insert arg-nonnull.h into wchar.h.
+	* modules/argv-iter (Depends-on): Add arg-nonnull.
+	* tests/test-canonicalize.c (null_ptr): New function.
+	(main): Use it.
+	* tests/test-canonicalize-lgpl.c (null_ptr): New function.
+	(main): Use it.
+	* tests/test-memmem.c (null_ptr): New function.
+	(main): Use it.
+	Reported by Jim Meyering.
+
+2009-12-10  Bruno Haible  <bruno@clisp.org>
+
 	Use spaces for indentation, not tabs.
 	* lib/**/*.[hcy] except lib/reg*.[hc]: Untabify.
 	* m4/*.m4: Untabify.

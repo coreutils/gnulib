@@ -1,5 +1,5 @@
 /* Copyright (C) 1991, 1992, 1993, 1996, 1997, 1998, 1999, 2001, 2002, 2003,
-   2005, 2007 Free Software Foundation, Inc.
+   2005, 2007, 2009 Free Software Foundation, Inc.
 
    This file is part of the GNU C Library.
 
@@ -19,6 +19,8 @@
 
 #ifndef _FNMATCH_H
 #define _FNMATCH_H      1
+
+/* The definition of _GL_ARG_NONNULL is copied here.  */
 
 #ifdef __cplusplus
 extern "C" {
@@ -56,7 +58,8 @@ extern "C" {
 /* Match NAME against the file name pattern PATTERN,
    returning zero if it matches, FNM_NOMATCH if not.  */
 extern int fnmatch (const char *__pattern, const char *__name,
-                    int __flags);
+                    int __flags)
+     _GL_ARG_NONNULL ((1, 2));
 
 #ifdef __cplusplus
 }

@@ -1,4 +1,4 @@
-/* Copyright (C) 1991,92,95-98,2000,2001,2004-2007 Free Software Foundation, Inc.
+/* Copyright (C) 1991,92,95-98,2000,2001,2004-2007, 2009 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This program is free software: you can redistribute it and/or modify
@@ -173,10 +173,10 @@ typedef struct
 #if !defined __USE_FILE_OFFSET64 || __GNUC__ < 2 || defined __GLOB_GNULIB
 extern int glob (const char *_Restrict_ __pattern, int __flags,
                  int (*__errfunc) (const char *, int),
-                 glob_t *_Restrict_ __pglob) __THROW;
+                 glob_t *_Restrict_ __pglob) __THROW _GL_ARG_NONNULL ((1, 4));
 
 /* Free storage allocated in PGLOB by a previous `glob' call.  */
-extern void globfree (glob_t *__pglob) __THROW;
+extern void globfree (glob_t *__pglob) __THROW _GL_ARG_NONNULL ((1));
 #else
 extern int __REDIRECT_NTH (glob, (const char *_Restrict_ __pattern,
                                   int __flags,
@@ -189,9 +189,10 @@ extern void __REDIRECT_NTH (globfree, (glob_t *__pglob), globfree64);
 #if defined __USE_LARGEFILE64 && !defined __GLOB_GNULIB
 extern int glob64 (const char *_Restrict_ __pattern, int __flags,
                    int (*__errfunc) (const char *, int),
-                   glob64_t *_Restrict_ __pglob) __THROW;
+                   glob64_t *_Restrict_ __pglob)
+     __THROW _GL_ARG_NONNULL ((1, 4));
 
-extern void globfree64 (glob64_t *__pglob) __THROW;
+extern void globfree64 (glob64_t *__pglob) __THROW _GL_ARG_NONNULL ((1));
 #endif
 
 
@@ -201,7 +202,8 @@ extern void globfree64 (glob64_t *__pglob) __THROW;
 
    This function is not part of the interface specified by POSIX.2
    but several programs want to use it.  */
-extern int glob_pattern_p (const char *__pattern, int __quote) __THROW;
+extern int glob_pattern_p (const char *__pattern, int __quote)
+     __THROW _GL_ARG_NONNULL ((1));
 #endif
 
 __END_DECLS

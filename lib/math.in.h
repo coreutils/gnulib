@@ -30,6 +30,8 @@
 
 /* The definition of GL_LINK_WARNING is copied here.  */
 
+/* The definition of _GL_ARG_NONNULL is copied here.  */
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -74,7 +76,7 @@ _NaN ()
 #if @GNULIB_FREXP@
 # if @REPLACE_FREXP@
 #  define frexp rpl_frexp
-extern double frexp (double x, int *expptr);
+extern double frexp (double x, int *expptr) _GL_ARG_NONNULL ((2));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef frexp
@@ -211,7 +213,7 @@ extern long double floorl (long double x);
 # define frexpl rpl_frexpl
 #endif
 #if (@GNULIB_FREXPL@ && @REPLACE_FREXPL@) || !@HAVE_DECL_FREXPL@
-extern long double frexpl (long double x, int *expptr);
+extern long double frexpl (long double x, int *expptr) _GL_ARG_NONNULL ((2));
 #endif
 #if !@GNULIB_FREXPL@ && defined GNULIB_POSIXCHECK
 # undef frexpl

@@ -1,5 +1,5 @@
 /* Provide a netdb.h header file for systems lacking it (read: MinGW).
-   Copyright (C) 2008 Free Software Foundation, Inc.
+   Copyright (C) 2008-2009 Free Software Foundation, Inc.
    Written by Simon Josefsson.
 
    This program is free software; you can redistribute it and/or modify
@@ -38,6 +38,8 @@
 
 /* Get netdb.h definitions such as struct hostent for MinGW.  */
 #include <sys/socket.h>
+
+/* The definition of _GL_ARG_NONNULL is copied here.  */
 
 /* Declarations for a platform that lacks <netdb.h>, or where it is
    incomplete.  */
@@ -141,14 +143,15 @@ struct addrinfo
 extern int getaddrinfo (const char *restrict nodename,
                         const char *restrict servname,
                         const struct addrinfo *restrict hints,
-                        struct addrinfo **restrict res);
+                        struct addrinfo **restrict res)
+     _GL_ARG_NONNULL ((4));
 # endif
 
 # if !@HAVE_DECL_FREEADDRINFO@
 /* Free `addrinfo' structure AI including associated storage.
    For more details, see the POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/getaddrinfo.html>.  */
-extern void freeaddrinfo (struct addrinfo *ai);
+extern void freeaddrinfo (struct addrinfo *ai) _GL_ARG_NONNULL ((1));
 # endif
 
 # if !@HAVE_DECL_GAI_STRERROR@
@@ -165,7 +168,8 @@ extern const char *gai_strerror (int ecode);
 extern int getnameinfo(const struct sockaddr *restrict sa, socklen_t salen,
                        char *restrict node, socklen_t nodelen,
                        char *restrict service, socklen_t servicelen,
-                       int flags);
+                       int flags)
+     _GL_ARG_NONNULL ((1));
 # endif
 
 /* Possible flags for getnameinfo.  */

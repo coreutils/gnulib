@@ -44,6 +44,12 @@
 
 #define BASE "t-can.tmp"
 
+static void *
+null_ptr (void)
+{
+  return NULL;
+}
+
 int
 main (void)
 {
@@ -79,7 +85,7 @@ main (void)
     ASSERT (result2 == NULL);
     ASSERT (errno == ENOENT);
     errno = 0;
-    result1 = canonicalize_file_name (NULL);
+    result1 = canonicalize_file_name (null_ptr ());
     ASSERT (result1 == NULL);
     ASSERT (errno == EINVAL);
     errno = 0;

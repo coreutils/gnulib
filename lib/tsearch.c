@@ -1,4 +1,4 @@
-/* Copyright (C) 1995-1997, 2000, 2006-2007 Free Software Foundation, Inc.
+/* Copyright (C) 1995-1997, 2000, 2006-2007, 2009 Free Software Foundation, Inc.
    Contributed by Bernd Schmidt <crux@Pool.Informatik.RWTH-Aachen.DE>, 1997.
 
    NOTE: The canonical source of this file is maintained with the GNU C
@@ -85,6 +85,10 @@
    binary tree.  */
 
 #include <config.h>
+
+/* Don't use __attribute__ __nonnull__ in this compilation unit.  Otherwise gcc
+   optimizes away the rootp == NULL tests below.  */
+#define _GL_ARG_NONNULL(params)
 
 /* Specification.  */
 #ifdef IN_LIBINTL

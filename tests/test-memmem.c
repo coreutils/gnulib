@@ -38,6 +38,12 @@
     }                                                                        \
   while (0)
 
+static void *
+null_ptr (void)
+{
+  return NULL;
+}
+
 int
 main (int argc, char *argv[])
 {
@@ -88,7 +94,7 @@ main (int argc, char *argv[])
 
   {
     const char input[] = "foo";
-    const char *result = memmem (input, strlen (input), NULL, 0);
+    const char *result = memmem (input, strlen (input), null_ptr (), 0);
     ASSERT (result == input);
   }
 

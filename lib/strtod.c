@@ -1,4 +1,4 @@
-/* Copyright (C) 1991, 1992, 1997, 1999, 2003, 2006, 2008 Free
+/* Copyright (C) 1991-1992, 1997, 1999, 2003, 2006, 2008-2009 Free
    Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -15,6 +15,10 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 #include <config.h>
+
+/* Don't use __attribute__ __nonnull__ in this compilation unit.  Otherwise gcc
+   optimizes away the nptr == NULL test below.  */
+#define _GL_ARG_NONNULL(params)
 
 #include <stdlib.h>
 

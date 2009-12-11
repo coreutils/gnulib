@@ -68,6 +68,8 @@ struct random_data
 
 /* The definition of GL_LINK_WARNING is copied here.  */
 
+/* The definition of _GL_ARG_NONNULL is copied here.  */
+
 
 /* Some systems do not define EXIT_*, despite otherwise supporting C89.  */
 #ifndef EXIT_SUCCESS
@@ -91,7 +93,7 @@ extern "C" {
 # if !@HAVE_ATOLL@
 /* Parse a signed decimal integer.
    Returns the value of the integer.  Errors are not detected.  */
-extern long long atoll (const char *string);
+extern long long atoll (const char *string) _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef atoll
@@ -120,7 +122,7 @@ extern void * calloc (size_t nmemb, size_t size);
 #  define canonicalize_file_name rpl_canonicalize_file_name
 # endif
 # if !@HAVE_CANONICALIZE_FILE_NAME@ || @REPLACE_CANONICALIZE_FILE_NAME@
-extern char *canonicalize_file_name (const char *name);
+extern char *canonicalize_file_name (const char *name) _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef canonicalize_file_name
@@ -136,7 +138,7 @@ extern char *canonicalize_file_name (const char *name);
    The three numbers are the load average of the last 1 minute, the last 5
    minutes, and the last 15 minutes, respectively.
    LOADAVG is an array of NELEM numbers.  */
-extern int getloadavg (double loadavg[], int nelem);
+extern int getloadavg (double loadavg[], int nelem) _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef getloadavg
@@ -159,7 +161,8 @@ extern int getloadavg (double loadavg[], int nelem);
    For more details see the POSIX:2001 specification.
    http://www.opengroup.org/susv3xsh/getsubopt.html */
 # if !@HAVE_GETSUBOPT@
-extern int getsubopt (char **optionp, char *const *tokens, char **valuep);
+extern int getsubopt (char **optionp, char *const *tokens, char **valuep)
+     _GL_ARG_NONNULL ((1, 2, 3));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef getsubopt
@@ -190,7 +193,7 @@ extern void * malloc (size_t size);
    they are replaced with a string that makes the directory name unique.
    Returns TEMPLATE, or a null pointer if it cannot get a unique name.
    The directory is created mode 700.  */
-extern char * mkdtemp (char * /*template*/);
+extern char * mkdtemp (char * /*template*/) _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef mkdtemp
@@ -214,7 +217,7 @@ extern char * mkdtemp (char * /*template*/);
    implementation.
    Returns the open file descriptor if successful, otherwise -1 and errno
    set.  */
-extern int mkostemp (char * /*template*/, int /*flags*/);
+extern int mkostemp (char * /*template*/, int /*flags*/) _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef mkostemp
@@ -239,7 +242,8 @@ extern int mkostemp (char * /*template*/, int /*flags*/);
    implementation.
    Returns the open file descriptor if successful, otherwise -1 and errno
    set.  */
-extern int mkostemps (char * /*template*/, int /*suffixlen*/, int /*flags*/);
+extern int mkostemps (char * /*template*/, int /*suffixlen*/, int /*flags*/)
+     _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef mkostemps
@@ -261,7 +265,7 @@ extern int mkostemps (char * /*template*/, int /*suffixlen*/, int /*flags*/);
    Returns the open file descriptor if successful, otherwise -1 and errno
    set.  */
 #  define mkstemp rpl_mkstemp
-extern int mkstemp (char * /*template*/);
+extern int mkstemp (char * /*template*/) _GL_ARG_NONNULL ((1));
 # else
 /* On MacOS X 10.3, only <unistd.h> declares mkstemp.  */
 #  include <unistd.h>
@@ -286,7 +290,8 @@ extern int mkstemp (char * /*template*/);
    implementation.
    Returns the open file descriptor if successful, otherwise -1 and errno
    set.  */
-extern int mkstemps (char * /*template*/, int /*suffixlen*/);
+extern int mkstemps (char * /*template*/, int /*suffixlen*/)
+     _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef mkstemps
@@ -300,7 +305,7 @@ extern int mkstemps (char * /*template*/, int /*suffixlen*/);
 # if @REPLACE_PUTENV@
 #  undef putenv
 #  define putenv rpl_putenv
-extern int putenv (char *string);
+extern int putenv (char *string) _GL_ARG_NONNULL ((1));
 # endif
 #endif
 
@@ -311,11 +316,15 @@ extern int putenv (char *string);
 #   define RAND_MAX 2147483647
 #  endif
 
-int srandom_r (unsigned int seed, struct random_data *rand_state);
+int srandom_r (unsigned int seed, struct random_data *rand_state)
+     _GL_ARG_NONNULL ((2));
 int initstate_r (unsigned int seed, char *buf, size_t buf_size,
-                 struct random_data *rand_state);
-int setstate_r (char *arg_state, struct random_data *rand_state);
-int random_r (struct random_data *buf, int32_t *result);
+                 struct random_data *rand_state)
+     _GL_ARG_NONNULL ((2, 4));
+int setstate_r (char *arg_state, struct random_data *rand_state)
+     _GL_ARG_NONNULL ((1, 2));
+int random_r (struct random_data *buf, int32_t *result)
+     _GL_ARG_NONNULL ((1, 2));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef random_r
@@ -359,7 +368,7 @@ extern void * realloc (void *ptr, size_t size);
 #  define realpath rpl_realpath
 # endif
 # if !@HAVE_REALPATH@ || @REPLACE_REALPATH@
-extern char *realpath (const char *name, char *resolved);
+extern char *realpath (const char *name, char *resolved) _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef realpath
@@ -373,7 +382,7 @@ extern char *realpath (const char *name, char *resolved);
 # if !@HAVE_RPMATCH@
 /* Test a user response to a question.
    Return 1 if it is affirmative, 0 if it is negative, or -1 if not clear.  */
-extern int rpmatch (const char *response);
+extern int rpmatch (const char *response) _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef rpmatch
@@ -391,7 +400,8 @@ extern int rpmatch (const char *response);
 # if !@HAVE_SETENV@ || @REPLACE_SETENV@
 /* Set NAME to VALUE in the environment.
    If REPLACE is nonzero, overwrite an existing value.  */
-extern int setenv (const char *name, const char *value, int replace);
+extern int setenv (const char *name, const char *value, int replace)
+     _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef setenv
@@ -407,7 +417,7 @@ extern int setenv (const char *name, const char *value, int replace);
 # endif
 # if !@HAVE_STRTOD@ || @REPLACE_STRTOD@
  /* Parse a double from STRING, updating ENDP if appropriate.  */
-extern double strtod (const char *str, char **endp);
+extern double strtod (const char *str, char **endp) _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef strtod
@@ -427,7 +437,8 @@ extern double strtod (const char *str, char **endp);
    stored in *ENDPTR.
    Upon overflow, the return value is LLONG_MAX or LLONG_MIN, and errno is set
    to ERANGE.  */
-extern long long strtoll (const char *string, char **endptr, int base);
+extern long long strtoll (const char *string, char **endptr, int base)
+     _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef strtoll
@@ -447,7 +458,8 @@ extern long long strtoll (const char *string, char **endptr, int base);
    stored in *ENDPTR.
    Upon overflow, the return value is ULLONG_MAX, and errno is set to
    ERANGE.  */
-extern unsigned long long strtoull (const char *string, char **endptr, int base);
+extern unsigned long long strtoull (const char *string, char **endptr, int base)
+     _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef strtoull
@@ -464,7 +476,7 @@ extern unsigned long long strtoull (const char *string, char **endptr, int base)
 # endif
 # if !@HAVE_UNSETENV@ || @REPLACE_UNSETENV@
 /* Remove the variable NAME from the environment.  */
-extern int unsetenv (const char *name);
+extern int unsetenv (const char *name) _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef unsetenv

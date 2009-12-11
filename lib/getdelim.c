@@ -21,6 +21,10 @@
 
 #include <config.h>
 
+/* Don't use __attribute__ __nonnull__ in this compilation unit.  Otherwise gcc
+   optimizes away the lineptr == NULL || n == NULL || fp == NULL tests below.  */
+#define _GL_ARG_NONNULL(params)
+
 #include <stdio.h>
 
 #include <limits.h>

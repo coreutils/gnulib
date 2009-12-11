@@ -1,6 +1,6 @@
 /* Provide a more complete sys/time.h.
 
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -39,6 +39,8 @@
 #  include <time.h>
 # endif
 
+/* The definition of _GL_ARG_NONNULL is copied here.  */
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -54,7 +56,8 @@ struct timeval
 # if @REPLACE_GETTIMEOFDAY@
 #  undef gettimeofday
 #  define gettimeofday rpl_gettimeofday
-int gettimeofday (struct timeval *restrict, void *restrict);
+extern int gettimeofday (struct timeval *restrict, void *restrict)
+     _GL_ARG_NONNULL ((1));
 # endif
 
 #ifdef __cplusplus

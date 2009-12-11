@@ -28,6 +28,8 @@
 
 /* The definition of GL_LINK_WARNING is copied here.  */
 
+/* The definition of _GL_ARG_NONNULL is copied here.  */
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -37,14 +39,14 @@ extern "C" {
 
 #if @REPLACE_CLOSEDIR@
 # define closedir rpl_closedir
-extern int closedir (DIR *);
+extern int closedir (DIR *) _GL_ARG_NONNULL ((1));
 #endif
 
 #if @GNULIB_DIRFD@
 # if !@HAVE_DECL_DIRFD@ && !defined dirfd
 /* Return the file descriptor associated with the given directory stream,
    or -1 if none exists.  */
-extern int dirfd (DIR const *dir);
+extern int dirfd (DIR const *dir) _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef dirfd
@@ -77,7 +79,7 @@ extern DIR *fdopendir (int fd);
 
 #if @REPLACE_OPENDIR@
 # define opendir rpl_opendir
-extern DIR * opendir (const char *);
+extern DIR * opendir (const char *) _GL_ARG_NONNULL ((1));
 #endif
 
 #if @GNULIB_SCANDIR@
@@ -88,7 +90,8 @@ extern DIR * opendir (const char *);
 # if !@HAVE_SCANDIR@
 extern int scandir (const char *dir, struct dirent ***namelist,
                     int (*filter) (const struct dirent *),
-                    int (*cmp) (const struct dirent **, const struct dirent **));
+                    int (*cmp) (const struct dirent **, const struct dirent **))
+     _GL_ARG_NONNULL ((1, 2, 4));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef scandir
@@ -101,7 +104,8 @@ extern int scandir (const char *dir, struct dirent ***namelist,
 #if @GNULIB_ALPHASORT@
 /* Compare two 'struct dirent' entries alphabetically.  */
 # if !@HAVE_ALPHASORT@
-extern int alphasort (const struct dirent **, const struct dirent **);
+extern int alphasort (const struct dirent **, const struct dirent **)
+     _GL_ARG_NONNULL ((1, 2));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef alphasort

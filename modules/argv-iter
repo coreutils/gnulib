@@ -6,6 +6,7 @@ lib/argv-iter.c
 lib/argv-iter.h
 
 Depends-on:
+arg-nonnull
 getdelim
 stdbool
 

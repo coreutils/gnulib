@@ -1,6 +1,6 @@
 /* A GNU-like <arpa/inet.h>.
 
-   Copyright (C) 2005-2006, 2008 Free Software Foundation, Inc.
+   Copyright (C) 2005-2006, 2008-2009 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -38,6 +38,8 @@
 
 /* The definition of GL_LINK_WARNING is copied here.  */
 
+/* The definition of _GL_ARG_NONNULL is copied here.  */
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -60,7 +62,8 @@ extern "C" {
    For more details, see the POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/inet_ntop.html>.  */
 extern const char *inet_ntop (int af, const void *restrict src,
-                              char *restrict dst, socklen_t cnt);
+                              char *restrict dst, socklen_t cnt)
+     _GL_ARG_NONNULL ((2, 3));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef inet_ntop
@@ -72,7 +75,8 @@ extern const char *inet_ntop (int af, const void *restrict src,
 
 #if @GNULIB_INET_PTON@
 # if !@HAVE_DECL_INET_PTON@
-extern int inet_pton (int af, const char *restrict src, void *restrict dst);
+extern int inet_pton (int af, const char *restrict src, void *restrict dst)
+     _GL_ARG_NONNULL ((2, 3));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef inet_pton

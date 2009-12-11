@@ -34,6 +34,8 @@
 # include <xlocale.h>
 #endif
 
+/* The definition of _GL_ARG_NONNULL is copied here.  */
+
 /* The LC_MESSAGES locale category is specified in POSIX, but not in ISO C.
    On systems that don't define it, use the same value as GNU libintl.  */
 #if !defined LC_MESSAGES
@@ -44,7 +46,7 @@
 # if @REPLACE_DUPLOCALE@
 #  undef duplocale
 #  define duplocale rpl_duplocale
-extern locale_t duplocale (locale_t locale);
+extern locale_t duplocale (locale_t locale) _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef duplocale

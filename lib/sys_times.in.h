@@ -1,5 +1,5 @@
 /* Provide a sys/times.h header file.
-   Copyright (C) 2008 Free Software Foundation, Inc.
+   Copyright (C) 2008-2009 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -28,6 +28,8 @@
 
 /* The definition of GL_LINK_WARNING is copied here.  */
 
+/* The definition of _GL_ARG_NONNULL is copied here.  */
+
 # ifdef __cplusplus
 extern "C" {
 # endif
@@ -43,7 +45,7 @@ extern "C" {
   };
 
 # if @GNULIB_TIMES@
-  extern clock_t times (struct tms *buffer);
+  extern clock_t times (struct tms *buffer) _GL_ARG_NONNULL ((1));
 # elif defined GNULIB_POSIXCHECK
 #  undef times
 #  define times(s)                                              \

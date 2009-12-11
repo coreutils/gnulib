@@ -1,6 +1,6 @@
 /* A substitute <strings.h>.
 
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -31,6 +31,8 @@
 
 /* The definition of GL_LINK_WARNING is copied here.  */
 
+/* The definition of _GL_ARG_NONNULL is copied here.  */
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -42,7 +44,8 @@ extern "C" {
    than S2.
    Note: This function does not work in multibyte locales.  */
 #if ! @HAVE_STRCASECMP@
-extern int strcasecmp (char const *s1, char const *s2);
+extern int strcasecmp (char const *s1, char const *s2)
+     _GL_ARG_NONNULL ((1, 2));
 #endif
 #if defined GNULIB_POSIXCHECK
 /* strcasecmp() does not work with multibyte strings:
@@ -64,7 +67,8 @@ extern int strcasecmp (char const *s1, char const *s2);
    lexicographically less than, equal to or greater than S2.
    Note: This function cannot work correctly in multibyte locales.  */
 #if ! @HAVE_DECL_STRNCASECMP@
-extern int strncasecmp (char const *s1, char const *s2, size_t n);
+extern int strncasecmp (char const *s1, char const *s2, size_t n)
+     _GL_ARG_NONNULL ((1, 2));
 #endif
 #if defined GNULIB_POSIXCHECK
 /* strncasecmp() does not work with multibyte strings:

@@ -1,6 +1,6 @@
 /* glob.h -- Find a path matching a pattern.
 
-   Copyright (C) 2005-2007 Free Software Foundation, Inc.
+   Copyright (C) 2005-2007, 2009 Free Software Foundation, Inc.
 
    Written by Derek Price <derek@ximbiot.com> & Paul Eggert <eggert@CS.UCLA.EDU>
 
@@ -39,6 +39,8 @@
 #ifndef __THROW
 # define __THROW
 #endif
+
+/* The definition of _GL_ARG_NONNULL is copied here.  */
 
 #ifndef __size_t
 # define __size_t       size_t

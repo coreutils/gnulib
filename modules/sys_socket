@@ -9,6 +9,7 @@ m4/sockpfaf.m4
 Depends-on:
 include_next
 link-warning
+arg-nonnull
 errno
 alignof
 
@@ -21,7 +22,7 @@ BUILT_SOURCES += $(SYS_SOCKET_H)
 
 # We need the following in order to create <sys/socket.h> when the system
 # doesn't have one that works with the given compiler.
-sys/socket.h: sys_socket.in.h $(LINK_WARNING_H)
+sys/socket.h: sys_socket.in.h $(LINK_WARNING_H) $(ARG_NONNULL_H)
 	$(AM_V_at)$(MKDIR_P) sys
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
@@ -51,6 +52,7 @@ sys/socket.h: sys_socket.in.h $(LINK_WARNING_H)
 	      -e 's|@''HAVE_SA_FAMILY_T''@|$(HAVE_SA_FAMILY_T)|g' \
 	      -e 's|@''HAVE_ACCEPT4''@|$(HAVE_ACCEPT4)|g' \
 	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
+	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
 	      < $(srcdir)/sys_socket.in.h; \
 	} > $@-t && \
 	mv -f $@-t $@

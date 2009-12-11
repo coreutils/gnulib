@@ -1,5 +1,5 @@
 /* Definitions for POSIX spawn interface.
-   Copyright (C) 2000, 2003, 2004, 2008 Free Software Foundation, Inc.
+   Copyright (C) 2000, 2003, 2004, 2008-2009 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This program is free software: you can redistribute it and/or modify
@@ -66,6 +66,8 @@
 #endif
 
 /* The definition of GL_LINK_WARNING is copied here.  */
+
+/* The definition of _GL_ARG_NONNULL is copied here.  */
 
 
 /* Data structure to contain attributes for thread creation.  */
@@ -147,7 +149,8 @@ extern int posix_spawn (pid_t *_Restrict_ __pid,
                         const posix_spawn_file_actions_t *_Restrict_ __file_actions,
                         const posix_spawnattr_t *_Restrict_ __attrp,
                         char *const argv[_Restrict_arr_],
-                        char *const envp[_Restrict_arr_]);
+                        char *const envp[_Restrict_arr_])
+     _GL_ARG_NONNULL ((2, 5, 6));
 # endif
 #endif
 
@@ -163,7 +166,8 @@ extern int posix_spawn (pid_t *_Restrict_ __pid,
 extern int posix_spawnp (pid_t *__pid, const char *__file,
                          const posix_spawn_file_actions_t *__file_actions,
                          const posix_spawnattr_t *__attrp,
-                         char *const argv[], char *const envp[]);
+                         char *const argv[], char *const envp[])
+     _GL_ARG_NONNULL ((2, 5, 6));
 # endif
 #endif
 
@@ -174,7 +178,8 @@ extern int posix_spawnp (pid_t *__pid, const char *__file,
 #  define posix_spawnattr_init rpl_posix_spawnattr_init
 # endif
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
-extern int posix_spawnattr_init (posix_spawnattr_t *__attr) __THROW;
+extern int posix_spawnattr_init (posix_spawnattr_t *__attr)
+     __THROW _GL_ARG_NONNULL ((1));
 # endif
 #endif
 
@@ -184,7 +189,8 @@ extern int posix_spawnattr_init (posix_spawnattr_t *__attr) __THROW;
 #  define posix_spawnattr_destroy rpl_posix_spawnattr_destroy
 # endif
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
-extern int posix_spawnattr_destroy (posix_spawnattr_t *__attr) __THROW;
+extern int posix_spawnattr_destroy (posix_spawnattr_t *__attr)
+     __THROW _GL_ARG_NONNULL ((1));
 # endif
 #endif
 
@@ -197,7 +203,7 @@ extern int posix_spawnattr_destroy (posix_spawnattr_t *__attr) __THROW;
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
 extern int posix_spawnattr_getsigdefault (const posix_spawnattr_t *_Restrict_ __attr,
                                           sigset_t *_Restrict_ __sigdefault)
-     __THROW;
+     __THROW _GL_ARG_NONNULL ((1, 2));
 # endif
 #endif
 
@@ -209,7 +215,7 @@ extern int posix_spawnattr_getsigdefault (const posix_spawnattr_t *_Restrict_ __
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
 extern int posix_spawnattr_setsigdefault (posix_spawnattr_t *_Restrict_ __attr,
                                           const sigset_t *_Restrict_ __sigdefault)
-     __THROW;
+     __THROW _GL_ARG_NONNULL ((1, 2));
 # endif
 #endif
 
@@ -220,7 +226,8 @@ extern int posix_spawnattr_setsigdefault (posix_spawnattr_t *_Restrict_ __attr,
 # endif
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
 extern int posix_spawnattr_getsigmask (const posix_spawnattr_t *_Restrict_ __attr,
-                                       sigset_t *_Restrict_ __sigmask) __THROW;
+                                       sigset_t *_Restrict_ __sigmask)
+     __THROW _GL_ARG_NONNULL ((1, 2));
 # endif
 #endif
 
@@ -232,7 +239,7 @@ extern int posix_spawnattr_getsigmask (const posix_spawnattr_t *_Restrict_ __att
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
 extern int posix_spawnattr_setsigmask (posix_spawnattr_t *_Restrict_ __attr,
                                        const sigset_t *_Restrict_ __sigmask)
-     __THROW;
+     __THROW _GL_ARG_NONNULL ((1, 2));
 # endif
 #endif
 
@@ -243,7 +250,8 @@ extern int posix_spawnattr_setsigmask (posix_spawnattr_t *_Restrict_ __attr,
 # endif
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
 extern int posix_spawnattr_getflags (const posix_spawnattr_t *_Restrict_ __attr,
-                                     short int *_Restrict_ __flags) __THROW;
+                                     short int *_Restrict_ __flags)
+     __THROW _GL_ARG_NONNULL ((1, 2));
 # endif
 #endif
 
@@ -254,7 +262,8 @@ extern int posix_spawnattr_getflags (const posix_spawnattr_t *_Restrict_ __attr,
 # endif
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
 extern int posix_spawnattr_setflags (posix_spawnattr_t *__attr,
-                                     short int __flags) __THROW;
+                                     short int __flags)
+     __THROW _GL_ARG_NONNULL ((1));
 # endif
 #endif
 
@@ -266,7 +275,7 @@ extern int posix_spawnattr_setflags (posix_spawnattr_t *__attr,
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
 extern int posix_spawnattr_getpgroup (const posix_spawnattr_t *_Restrict_ __attr,
                                       pid_t *_Restrict_ __pgroup)
-     __THROW;
+     __THROW _GL_ARG_NONNULL ((1, 2));
 # endif
 #endif
 
@@ -277,7 +286,8 @@ extern int posix_spawnattr_getpgroup (const posix_spawnattr_t *_Restrict_ __attr
 # endif
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
 extern int posix_spawnattr_setpgroup (posix_spawnattr_t *__attr,
-                                      pid_t __pgroup) __THROW;
+                                      pid_t __pgroup)
+     __THROW _GL_ARG_NONNULL ((1));
 # endif
 #endif
 
@@ -289,7 +299,7 @@ extern int posix_spawnattr_setpgroup (posix_spawnattr_t *__attr,
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
 extern int posix_spawnattr_getschedpolicy (const posix_spawnattr_t *_Restrict_ __attr,
                                            int *_Restrict_ __schedpolicy)
-     __THROW;
+     __THROW _GL_ARG_NONNULL ((1, 2));
 # endif
 #endif
 
@@ -300,7 +310,8 @@ extern int posix_spawnattr_getschedpolicy (const posix_spawnattr_t *_Restrict_ _
 # endif
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
 extern int posix_spawnattr_setschedpolicy (posix_spawnattr_t *__attr,
-                                           int __schedpolicy) __THROW;
+                                           int __schedpolicy)
+     __THROW _GL_ARG_NONNULL ((1));
 # endif
 #endif
 
@@ -311,7 +322,8 @@ extern int posix_spawnattr_setschedpolicy (posix_spawnattr_t *__attr,
 # endif
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
 extern int posix_spawnattr_getschedparam (const posix_spawnattr_t *_Restrict_ __attr,
-                                          struct sched_param *_Restrict_ __schedparam) __THROW;
+                                          struct sched_param *_Restrict_ __schedparam)
+     __THROW _GL_ARG_NONNULL ((1, 2));
 # endif
 #endif
 
@@ -322,7 +334,8 @@ extern int posix_spawnattr_getschedparam (const posix_spawnattr_t *_Restrict_ __
 # endif
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
 extern int posix_spawnattr_setschedparam (posix_spawnattr_t *_Restrict_ __attr,
-                                          const struct sched_param *_Restrict_ __schedparam) __THROW;
+                                          const struct sched_param *_Restrict_ __schedparam)
+     __THROW _GL_ARG_NONNULL ((1, 2));
 # endif
 #endif
 
@@ -333,7 +346,8 @@ extern int posix_spawnattr_setschedparam (posix_spawnattr_t *_Restrict_ __attr,
 #  define posix_spawn_file_actions_init rpl_posix_spawn_file_actions_init
 # endif
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
-extern int posix_spawn_file_actions_init (posix_spawn_file_actions_t *__file_actions) __THROW;
+extern int posix_spawn_file_actions_init (posix_spawn_file_actions_t *__file_actions)
+     __THROW _GL_ARG_NONNULL ((1));
 # endif
 #endif
 
@@ -343,7 +357,8 @@ extern int posix_spawn_file_actions_init (posix_spawn_file_actions_t *__file_act
 #  define posix_spawn_file_actions_destroy rpl_posix_spawn_file_actions_destroy
 # endif
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
-extern int posix_spawn_file_actions_destroy (posix_spawn_file_actions_t *__file_actions) __THROW;
+extern int posix_spawn_file_actions_destroy (posix_spawn_file_actions_t *__file_actions)
+     __THROW _GL_ARG_NONNULL ((1));
 # endif
 #endif
 
@@ -358,7 +373,7 @@ extern int posix_spawn_file_actions_addopen (posix_spawn_file_actions_t *_Restri
                                              int __fd,
                                              const char *_Restrict_ __path,
                                              int __oflag, mode_t __mode)
-     __THROW;
+     __THROW _GL_ARG_NONNULL ((1, 3));
 # endif
 #endif
 
@@ -371,7 +386,7 @@ extern int posix_spawn_file_actions_addopen (posix_spawn_file_actions_t *_Restri
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
 extern int posix_spawn_file_actions_addclose (posix_spawn_file_actions_t *__file_actions,
                                               int __fd)
-     __THROW;
+     __THROW _GL_ARG_NONNULL ((1));
 # endif
 #endif
 
@@ -383,7 +398,8 @@ extern int posix_spawn_file_actions_addclose (posix_spawn_file_actions_t *__file
 # endif
 # if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
 extern int posix_spawn_file_actions_adddup2 (posix_spawn_file_actions_t *__file_actions,
-                                             int __fd, int __newfd) __THROW;
+                                             int __fd, int __newfd)
+     __THROW _GL_ARG_NONNULL ((1));
 # endif
 #endif
 

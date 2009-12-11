@@ -46,6 +46,8 @@
 
 /* The definition of GL_LINK_WARNING is copied here.  */
 
+/* The definition of _GL_ARG_NONNULL is copied here.  */
+
 
 /* Declare overridden functions.  */
 
@@ -57,7 +59,7 @@ extern "C" {
 # if @REPLACE_OPEN@
 #  undef open
 #  define open rpl_open
-extern int open (const char *filename, int flags, ...);
+extern int open (const char *filename, int flags, ...) _GL_ARG_NONNULL ((1));
 # endif
 #endif
 
@@ -67,7 +69,8 @@ extern int open (const char *filename, int flags, ...);
 #  define openat rpl_openat
 # endif
 # if !@HAVE_OPENAT@ || @REPLACE_OPENAT@
-int openat (int fd, char const *file, int flags, /* mode_t mode */ ...);
+int openat (int fd, char const *file, int flags, /* mode_t mode */ ...)
+     _GL_ARG_NONNULL ((2));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef openat

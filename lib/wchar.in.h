@@ -74,6 +74,8 @@
 
 /* The definition of GL_LINK_WARNING is copied here.  */
 
+/* The definition of _GL_ARG_NONNULL is copied here.  */
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -197,7 +199,8 @@ extern size_t mbrlen (const char *s, size_t n, mbstate_t *ps);
 #  define mbsrtowcs rpl_mbsrtowcs
 # endif
 # if !@HAVE_MBSRTOWCS@ || @REPLACE_MBSRTOWCS@
-extern size_t mbsrtowcs (wchar_t *dest, const char **srcp, size_t len, mbstate_t *ps);
+extern size_t mbsrtowcs (wchar_t *dest, const char **srcp, size_t len, mbstate_t *ps)
+     _GL_ARG_NONNULL ((2));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef mbsrtowcs
@@ -215,7 +218,8 @@ extern size_t mbsrtowcs (wchar_t *dest, const char **srcp, size_t len, mbstate_t
 #  define mbsnrtowcs rpl_mbsnrtowcs
 # endif
 # if !@HAVE_MBSNRTOWCS@ || @REPLACE_MBSNRTOWCS@
-extern size_t mbsnrtowcs (wchar_t *dest, const char **srcp, size_t srclen, size_t len, mbstate_t *ps);
+extern size_t mbsnrtowcs (wchar_t *dest, const char **srcp, size_t srclen, size_t len, mbstate_t *ps)
+     _GL_ARG_NONNULL ((2));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef mbsnrtowcs
@@ -251,7 +255,8 @@ extern size_t wcrtomb (char *s, wchar_t wc, mbstate_t *ps);
 #  define wcsrtombs rpl_wcsrtombs
 # endif
 # if !@HAVE_WCSRTOMBS@ || @REPLACE_WCSRTOMBS@
-extern size_t wcsrtombs (char *dest, const wchar_t **srcp, size_t len, mbstate_t *ps);
+extern size_t wcsrtombs (char *dest, const wchar_t **srcp, size_t len, mbstate_t *ps)
+     _GL_ARG_NONNULL ((2));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef wcsrtombs
@@ -269,7 +274,8 @@ extern size_t wcsrtombs (char *dest, const wchar_t **srcp, size_t len, mbstate_t
 #  define wcsnrtombs rpl_wcsnrtombs
 # endif
 # if !@HAVE_WCSNRTOMBS@ || @REPLACE_WCSNRTOMBS@
-extern size_t wcsnrtombs (char *dest, const wchar_t **srcp, size_t srclen, size_t len, mbstate_t *ps);
+extern size_t wcsnrtombs (char *dest, const wchar_t **srcp, size_t srclen, size_t len, mbstate_t *ps)
+     _GL_ARG_NONNULL ((2));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef wcsnrtombs

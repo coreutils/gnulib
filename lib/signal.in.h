@@ -37,6 +37,8 @@
 
 /* The definition of GL_LINK_WARNING is copied here.  */
 
+/* The definition of _GL_ARG_NONNULL is copied here.  */
+
 /* Define pid_t, uid_t.
    Also, mingw defines sigset_t not in <signal.h>, but in <sys/types.h>.  */
 #include <sys/types.h>
@@ -82,22 +84,22 @@ typedef unsigned int sigset_t;
 # endif
 
 /* Test whether a given signal is contained in a signal set.  */
-extern int sigismember (const sigset_t *set, int sig);
+extern int sigismember (const sigset_t *set, int sig) _GL_ARG_NONNULL ((1));
 
 /* Initialize a signal set to the empty set.  */
-extern int sigemptyset (sigset_t *set);
+extern int sigemptyset (sigset_t *set) _GL_ARG_NONNULL ((1));
 
 /* Add a signal to a signal set.  */
-extern int sigaddset (sigset_t *set, int sig);
+extern int sigaddset (sigset_t *set, int sig) _GL_ARG_NONNULL ((1));
 
 /* Remove a signal from a signal set.  */
-extern int sigdelset (sigset_t *set, int sig);
+extern int sigdelset (sigset_t *set, int sig) _GL_ARG_NONNULL ((1));
 
 /* Fill a signal set with all possible signals.  */
-extern int sigfillset (sigset_t *set);
+extern int sigfillset (sigset_t *set) _GL_ARG_NONNULL ((1));
 
 /* Return the set of those blocked signals that are pending.  */
-extern int sigpending (sigset_t *set);
+extern int sigpending (sigset_t *set) _GL_ARG_NONNULL ((1));
 
 /* If OLD_SET is not NULL, put the current set of blocked signals in *OLD_SET.
    Then, if SET is not NULL, affect the current set of blocked signals by

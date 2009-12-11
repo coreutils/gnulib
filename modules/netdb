@@ -7,6 +7,7 @@ m4/netdb_h.m4
 
 Depends-on:
 include_next
+arg-nonnull
 sys_socket
 
 configure.ac:
@@ -17,7 +18,7 @@ BUILT_SOURCES += $(NETDB_H)
 
 # We need the following in order to create <netdb.h> when the system
 # doesn't have one that works with the given compiler.
-netdb.h: netdb.in.h
+netdb.h: netdb.in.h $(ARG_NONNULL_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
@@ -30,6 +31,7 @@ netdb.h: netdb.in.h
 	      -e 's|@''HAVE_DECL_GAI_STRERROR''@|$(HAVE_DECL_GAI_STRERROR)|g' \
 	      -e 's|@''HAVE_DECL_GETADDRINFO''@|$(HAVE_DECL_GETADDRINFO)|g' \
 	      -e 's|@''HAVE_DECL_GETNAMEINFO''@|$(HAVE_DECL_GETNAMEINFO)|g' \
+	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
 	      < $(srcdir)/netdb.in.h; \
 	} > $@-t && \
 	mv $@-t $@

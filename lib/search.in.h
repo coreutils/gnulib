@@ -1,6 +1,6 @@
 /* A GNU-like <search.h>.
 
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -30,6 +30,8 @@
 
 
 /* The definition of GL_LINK_WARNING is copied here.  */
+
+/* The definition of _GL_ARG_NONNULL is copied here.  */
 
 
 #ifdef __cplusplus
@@ -65,18 +67,21 @@ VISIT;
    If one is found, it is returned.  Otherwise, a new element equal to KEY
    is inserted in the tree and is returned.  */
 extern void * tsearch (const void *key, void **vrootp,
-                       int (*compar) (const void *, const void *));
+                       int (*compar) (const void *, const void *))
+     _GL_ARG_NONNULL ((1, 2, 3));
 
 /* Searches an element in the tree *VROOTP that compares equal to KEY.
    If one is found, it is returned.  Otherwise, NULL is returned.  */
 extern void * tfind (const void *key, void *const *vrootp,
-                     int (*compar) (const void *, const void *));
+                     int (*compar) (const void *, const void *))
+     _GL_ARG_NONNULL ((1, 2, 3));
 
 /* Searches an element in the tree *VROOTP that compares equal to KEY.
    If one is found, it is removed from the tree, and its parent node is
    returned.  Otherwise, NULL is returned.  */
 extern void * tdelete (const void *key, void **vrootp,
-                       int (*compar) (const void *, const void *));
+                       int (*compar) (const void *, const void *))
+     _GL_ARG_NONNULL ((1, 2, 3));
 
 /* Perform a depth-first, left-to-right traversal of the tree VROOT.
    The ACTION function is called:
@@ -90,7 +95,8 @@ extern void * tdelete (const void *key, void **vrootp,
      2. an indicator which visit of the node this is,
      3. the level of the node in the tree (0 for the root).  */
 extern void twalk (const void *vroot,
-                   void (*action) (const void *, VISIT, int));
+                   void (*action) (const void *, VISIT, int))
+     _GL_ARG_NONNULL ((2));
 
 # endif
 #elif defined GNULIB_POSIXCHECK

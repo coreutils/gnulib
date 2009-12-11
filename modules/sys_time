@@ -7,6 +7,7 @@ m4/sys_time_h.m4
 
 Depends-on:
 include_next
+arg-nonnull
 
 configure.ac:
 gl_HEADER_SYS_TIME_H
@@ -17,7 +18,7 @@ BUILT_SOURCES += $(SYS_TIME_H)
 
 # We need the following in order to create <sys/time.h> when the system
 # doesn't have one that works with the given compiler.
-sys/time.h: sys_time.in.h
+sys/time.h: sys_time.in.h $(ARG_NONNULL_H)
 	$(AM_V_at)$(MKDIR_P) sys
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
@@ -27,6 +28,7 @@ sys/time.h: sys_time.in.h
 	      -e 's|@''NEXT_SYS_TIME_H''@|$(NEXT_SYS_TIME_H)|g' \
 	      -e 's/@''REPLACE_GETTIMEOFDAY''@/$(REPLACE_GETTIMEOFDAY)/g' \
 	      -e 's/@''HAVE_STRUCT_TIMEVAL''@/$(HAVE_STRUCT_TIMEVAL)/g' \
+	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
 	      < $(srcdir)/sys_time.in.h; \
 	} > $@-t && \
 	mv $@-t $@

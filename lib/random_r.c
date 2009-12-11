@@ -1,5 +1,5 @@
 /*
-   Copyright (C) 1995, 2005, 2008 Free Software Foundation, Inc.
+   Copyright (C) 1995, 2005, 2008-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -51,6 +51,11 @@
  */
 
 #include <config.h>
+
+/* Don't use __attribute__ __nonnull__ in this compilation unit.  Otherwise gcc
+   optimizes away the buf == NULL, arg_state == NULL, result == NULL tests
+   below.  */
+#define _GL_ARG_NONNULL(params)
 
 #include <errno.h>
 #include <limits.h>

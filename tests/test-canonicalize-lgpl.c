@@ -43,6 +43,12 @@
 
 #define BASE "t-can-lgpl.tmp"
 
+static void *
+null_ptr (void)
+{
+  return NULL;
+}
+
 int
 main (void)
 {
@@ -75,7 +81,7 @@ main (void)
     ASSERT (result == NULL);
     ASSERT (errno == ENOENT);
     errno = 0;
-    result = canonicalize_file_name (NULL);
+    result = canonicalize_file_name (null_ptr ());
     ASSERT (result == NULL);
     ASSERT (errno == EINVAL);
   }

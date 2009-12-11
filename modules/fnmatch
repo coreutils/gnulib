@@ -9,6 +9,7 @@ m4/mbstate_t.m4
 m4/fnmatch.m4
 
 Depends-on:
+arg-nonnull
 extensions
 alloca
 stdbool
@@ -27,10 +28,11 @@ BUILT_SOURCES += $(FNMATCH_H)
 
 # We need the following in order to create <fnmatch.h> when the system
 # doesn't have one that supports the required API.
-fnmatch.h: fnmatch.in.h
+fnmatch.h: fnmatch.in.h $(ARG_NONNULL_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  cat $(srcdir)/fnmatch.in.h; \
+	  sed -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
+	      < $(srcdir)/fnmatch.in.h; \
 	} > $@-t && \
 	mv -f $@-t $@
 MOSTLYCLEANFILES += fnmatch.h fnmatch.h-t
