@@ -10,7 +10,7 @@
 	* modules/pipe2-safer (Files): Add lib/pipe2-safer.c.
 	(Makefile.am): Add it to lib_SOURCES.
 
-2009-12-10  Bruno Haible  <bruno@clisp.org>
+2009-12-10  Bruno Haible  <bruno@clisp.org>
 
 	* lib/recvfrom.c (rpl_recvfrom): Allow the from argument to be NULL.
 
