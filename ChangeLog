@@ -1,5 +1,10 @@
 2009-12-11  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'nl_langinfo'.
+	* modules/nl_langinfo-tests: New file.
+	* tests/test-nl_langinfo.sh: New file.
+	* tests/test-nl_langinfo.c: New file.
+
 	New module 'nl_langinfo'.
 	* lib/nl_langinfo.c: New file.
 	* m4/nl_langinfo.m4: New file.
