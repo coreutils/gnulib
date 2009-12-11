@@ -1,6 +1,6 @@
 /* recvfrom.c --- wrappers for Windows recvfrom function
 
-   Copyright (C) 2008 Free Software Foundation, Inc.
+   Copyright (C) 2008-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ int
 rpl_recvfrom (int fd, void *buf, int len, int flags, struct sockaddr *from,
               int *fromlen)
 {
-  int frombufsize = *fromlen;
+  int frombufsize = (from != NULL ? *fromlen : 0);
   SOCKET sock = FD_TO_SOCKET (fd);
   int r = recvfrom (sock, buf, len, flags, from, fromlen);
 
@@ -41,7 +41,7 @@ rpl_recvfrom (int fd, void *buf, int len, int flags, struct sockaddr *from,
 
   /* Winsock recvfrom() only returns a valid 'from' when the socket is
      connectionless.  POSIX gives a valid 'from' for all types of sockets.  */
-  else if (*fromlen == frombufsize)
+  else if (from != NULL && *fromlen == frombufsize)
     rpl_getpeername (fd, from, fromlen);
 
   return r;

@@ -1,3 +1,7 @@
+2009-12-10  Bruno Haible  <bruno@clisp.org>
+
+	* lib/recvfrom.c (rpl_recvfrom): Allow the from argument to be NULL.
+
 2009-12-10  Bruno Haible  <bruno@clisp.org>
 
 	Declare which arguments expect non-NULL values, for GCC and clang.
