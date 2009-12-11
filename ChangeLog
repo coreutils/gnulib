@@ -1,5 +1,13 @@
 2009-12-11  Bruno Haible  <bruno@clisp.org>
 
+	New module 'langinfo'.
+	* lib/langinfo.in.h: New file.
+	* m4/langinfo_h.m4: New file.
+	* modules/langinfo: New file.
+	* doc/posix-headers/langinfo.texi: Mention the new module.
+
+2009-12-11  Bruno Haible  <bruno@clisp.org>
+
 	* lib/config.charset: Untabify.
 
 2009-12-11  Bruno Haible  <bruno@clisp.org>

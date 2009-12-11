@@ -3,15 +3,22 @@
 
 POSIX specification: @url{http://www.opengroup.org/susv3xbd/langinfo.h.html}
 
-Gnulib module: ---
+Gnulib module: langinfo
 
 Portability problems fixed by Gnulib:
-@itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
 @itemize
 @item
 This header file is missing on some platforms:
 mingw, BeOS.
+@item
+The constant @code{CODESET} is not defined on some platforms:
+glibc 2.0.6, OpenBSD 3.8.
+@item
+The constants @code{ERA}, @code{ERA_D_FMT}, @code{ERA_D_T_FMT},
+@code{ERA_T_FMT}, @code{ALT_DIGITS} are not defined on some platforms:
+OpenBSD 3.8.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @end itemize
