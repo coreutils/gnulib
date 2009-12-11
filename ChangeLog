@@ -1,5 +1,9 @@
 2009-12-11  Bruno Haible  <bruno@clisp.org>
 
+	* lib/config.charset: Untabify.
+
+2009-12-11  Bruno Haible  <bruno@clisp.org>
+
 	* modules/unistd-safer (configure.ac): Drop indicator macro.
 
 2009-12-11  Bruno Haible  <bruno@clisp.org>
