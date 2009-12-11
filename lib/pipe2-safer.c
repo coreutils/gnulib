@@ -1,4 +1,4 @@
-/* Invoke pipe, but avoid some glitches.
+/* Invoke pipe2, but avoid some glitches.
    Copyright (C) 2005, 2006, 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -14,29 +14,29 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-/* Written by Jim Meyering.  */
+/* Written by Eric Blake.  */
 
 #include <config.h>
 
+/* Specification.  */
 #include "unistd-safer.h"
 
 #include <unistd.h>
 #include <errno.h>
 
-/* Like pipe, but ensure that neither of the file descriptors is
-   STDIN_FILENO, STDOUT_FILENO, or STDERR_FILENO.  Fail with ENOSYS on
-   platforms that lack pipe.  */
+/* Like pipe2, but ensure that neither of the file descriptors is
+   STDIN_FILENO, STDOUT_FILENO, or STDERR_FILENO.  */
 
 int
-pipe_safer (int fd[2])
+pipe2_safer (int fd[2], int flags)
 {
-#if HAVE_PIPE
-  if (pipe (fd) == 0)
+  /* This is a generalization of the pipe_safer implementation.  */
+  if (pipe2 (fd, flags) == 0)
     {
       int i;
       for (i = 0; i < 2; i++)
         {
-          fd[i] = fd_safer (fd[i]);
+          fd[i] = fd_safer_flag (fd[i], flags);
           if (fd[i] < 0)
             {
               int e = errno;
@@ -48,9 +48,5 @@ pipe_safer (int fd[2])
 
       return 0;
     }
-#else
-  errno = ENOSYS;
-#endif
-
   return -1;
 }

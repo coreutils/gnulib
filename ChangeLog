@@ -1,3 +1,11 @@
+2009-12-11  Bruno Haible  <bruno@clisp.org>
+
+	Move pipe2-safer code to its own file.
+	* lib/pipe2-safer.c: New file, extracted from lib/pipe-safer.c.
+	* lib/pipe-safer.c (pipe2_safer): Remove function.
+	* modules/pipe2-safer (Files): Add lib/pipe2-safer.c.
+	(Makefile.am): Add it to lib_SOURCES.
+
 2009-12-10  Bruno Haible  <bruno@clisp.org>
 
 	* lib/recvfrom.c (rpl_recvfrom): Allow the from argument to be NULL.
