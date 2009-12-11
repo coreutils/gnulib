@@ -1,5 +1,9 @@
 2009-12-11  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'langinfo'.
+	* modules/langinfo-tests: New file.
+	* tests/test-langinfo.c: New file.
+
 	New module 'langinfo'.
 	* lib/langinfo.in.h: New file.
 	* m4/langinfo_h.m4: New file.
