@@ -1,5 +1,9 @@
 2009-12-12  Bruno Haible  <bruno@clisp.org>
 
+	* m4/po.m4: Undo incorrect untabification.
+
+2009-12-12  Bruno Haible  <bruno@clisp.org>
+
 	c-strtod, c-strtold: Use multithread-safe implementation on MacOS X.
 	* modules/c-strtod (Depends-on): Add locale.
 	* modules/c-strtold (Depends-on): Likewise.
