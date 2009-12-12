@@ -449,7 +449,19 @@ locale_charset (void)
 
   static char buf[2 + 10 + 1];
 
-  /* Woe32 has a function returning the locale's codepage as a number.  */
+  /* Woe32 has a function returning the locale's codepage as a number.
+     When the output goes to a console window, in Windows 95, it would have
+     been appropriate to use GetOEMCP() instead of GetACP().  But this has
+     been corrected: In Windows XP SP3, consoles accept output in the
+     GetACP() encoding.  The GetConsoleOutputCP() function still returns
+     the same as GetOEMCP() (not GetACP()!), but the font handling in the
+     console actually uses the GetACP() encoding.  If you want to "correct"
+     this by calling SetConsoleOutputCP(GetACP()), then for a TrueType font
+     it has no visible effect on the displayed glyphs, whereas when a raster
+     font is in use, the console performs an extra conversion from GetOEMCP()
+     to GetACP() encoding, thus changing the effective codepage of the
+     console from GetACP() to GetOEMCP()!  In summary, GetConsoleOutputCP()
+     and SetConsoleOutputCP() are now completely broken.  */
   sprintf (buf, "CP%u", GetACP ());
   codeset = buf;
 

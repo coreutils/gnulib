@@ -1,3 +1,7 @@
+2009-12-12  Bruno Haible  <bruno@clisp.org>
+
+	* lib/localcharset.c (locale_charset): Add comment about use of GetACP.
+
 2009-12-11  Eric Blake  <ebb9@byu.net>
 
 	setenv: relax requirement in light of POSIX ruling
