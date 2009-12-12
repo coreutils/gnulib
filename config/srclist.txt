@@ -158,7 +158,7 @@ $GNUORG/disclaim.program			doc/Copyright
 #$LIBCSRC/posix/regexec.c		lib gpl
 #
 # c89 changes $LIBCSRC/string/strdup.c		lib gpl
-$LIBCSRC/stdlib/strtoll.c		lib gpl
+#tab changes $LIBCSRC/stdlib/strtoll.c		lib gpl
 $LIBCSRC/stdlib/strtoul.c		lib gpl
 # (no more strtok_r.h) $LIBCSRC/string/strtok_r.c		lib gpl
 # (gnulib needs config.h?) $LIBCSRC/string/memmem.c		lib gpl
