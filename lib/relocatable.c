@@ -22,7 +22,7 @@
    This must come before <config.h> because <config.h> may include
    <features.h>, and once <features.h> has been included, it's too late.  */
 #ifndef _GNU_SOURCE
-# define _GNU_SOURCE    1
+# define _GNU_SOURCE 1
 #endif
 
 #include <config.h>
