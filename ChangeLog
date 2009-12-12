@@ -1,3 +1,8 @@
+2009-12-12  Bruno Haible  <bruno@clisp.org>
+
+	duplocale: Tweak.
+	* lib/duplocale.c (rpl_duplocale): Mark categories array as 'const'.
+
 2009-12-12  Karl Berry  <karl@gnu.org>
 
 	* config/srclist.txt (strtoll.c): tab changes, no more sync.
