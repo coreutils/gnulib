@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate November 20, 2009
+@set lastupdate December 12, 2009
 @c %**end of header
 
 @dircategory GNU organization
@@ -1311,15 +1311,19 @@ uploaded via ftp to the host @code{ftp-upload.gnu.org}.
 
 @enumerate
 @item
-The file to be distributed (for example, @file{foo.tar.gz}).
+The file to be distributed; for example, @file{foo.tar.gz}.
 
 @item
-Detached GPG binary signature for (1), made using @samp{gpg -b}
-(for example, @file{foo.tar.gz.sig}).
+Detached GPG binary signature file for (1); for example,
+@file{foo.tar.gz.sig}.  Make this with @samp{gpg -b foo.tar.gz}.
+
 
 @item
-A clearsigned @dfn{directive file}, made using @samp{gpg --clearsign}
-(for example, @file{foo.tar.gz.directive.asc}).
+A clearsigned @dfn{directive file}; for example,
+@file{foo.tar.gz.directive.asc}.  Make this by preparing the plain
+text file @file{foo.tar.gz.directive} and then run @samp{gpg
+--clearsign foo.tar.gz.directive}.  @xref{FTP Upload Directive File -
+v1.1}, for the contents of the directive file.
 @end enumerate
 
 The names of the files are important. The signature file must have the
@@ -1351,8 +1355,8 @@ are sent a message if there are any problems processing an upload for your
 package. You also receive a message when your upload has been successfully
 processed.
 
-One relatively easy way to create and transfer the necessary files is
-to use the @code{gnupload} script, which is available from the
+One automated way to create and transfer the necessary files is to use
+the @code{gnupload} script, which is available from the
 @file{build-aux/} directory of the @code{gnulib} project at
 @url{http://savannah.gnu.org/projects/gnulib}.  @code{gnupload} can
 also remove uploaded files.  Run @code{gnupload --help} for a
@@ -1361,10 +1365,10 @@ description and examples.
 @code{gnupload} uses the @code{ncftpput} program to do the actual
 transfers; if you don't happen to have the @code{ncftp} package
 installed, the @code{ncftpput-ftp} script in the @file{build-aux/}
-directory of @code{gnulib}.  serves as a replacement which uses plain
+directory of @code{gnulib} serves as a replacement which uses plain
 command line @code{ftp}.
 
-If you have difficulties processing an upload, email
+If you have difficulties with an upload, email
 @email{ftp-upload@@gnu.org}.
 
 

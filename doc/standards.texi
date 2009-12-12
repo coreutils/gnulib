@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate November 20, 2009
+@set lastupdate December 11, 2009
 @c %**end of header
 
 @dircategory GNU organization
@@ -4064,13 +4064,13 @@ installing the program should @strong{never} be included in the
 distribution.  So if you do distribute non-source files, always make
 sure they are up to date when you make a new distribution.
 
-Make sure that the directory into which the distribution unpacks (as
-well as any subdirectories) are all world-writable (octal mode 777).
-This is so that old versions of @code{tar} which preserve the
-ownership and permissions of the files from the tar archive will be
-able to extract all the files even if the user is unprivileged.
-
-Make sure that all the files in the distribution are world-readable.
+Make sure that all the files in the distribution are world-readable, and
+that directories are world-readable and world-searchable (octal mode 755).
+We used to recommend that all directories in the distribution also be
+world-writable (octal mode 777), because ancient versions of @code{tar}
+would otherwise not cope when extracting the archive as an unprivileged
+user.  That can easily lead to security issues when creating the archive,
+however, so now we recommend against that.
 
 Don't include any symbolic links in the distribution itself.  If the tar
 file contains symbolic links, then people cannot even unpack it on
