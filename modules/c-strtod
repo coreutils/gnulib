@@ -8,6 +8,7 @@ m4/c-strtod.m4
 
 Depends-on:
 extensions
+locale
 strdup-posix
 
 configure.ac:
