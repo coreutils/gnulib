@@ -1,3 +1,8 @@
+2009-12-13  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk (null_AM_MAKEFLAGS, built_programs): remove unused definitions
+	* top/maint.mk (null_AM_MAKEFLAGS, built_programs): Remove definitions.
+
 2009-12-12  Bruno Haible  <bruno@clisp.org>
 
 	duplocale: Tweak.
