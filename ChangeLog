@@ -1,3 +1,7 @@
+2009-12-13  Bruno Haible  <bruno@clisp.org>
+
+	* lib/localcharset.c (locale_charset): Fix comment about use of GetACP.
+
 2009-12-13  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk (null_AM_MAKEFLAGS, built_programs): remove unused definitions

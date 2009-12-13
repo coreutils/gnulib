@@ -369,7 +369,7 @@ locale_charset (void)
   codeset = nl_langinfo (CODESET);
 
 #  ifdef __CYGWIN__
-  /* Cygwin 2006 does not have locales.  nl_langinfo (CODESET) always
+  /* Cygwin 1.5.x does not have locales.  nl_langinfo (CODESET) always
      returns "US-ASCII".  As long as this is not fixed, return the suffix
      of the locale name from the environment variables (if present) or
      the codepage as a number.  */
@@ -409,7 +409,17 @@ locale_charset (void)
             }
         }
 
-      /* Woe32 has a function returning the locale's codepage as a number.  */
+      /* Woe32 has a function returning the locale's codepage as a number:
+         GetACP().  This encoding is used by Cygwin, unless the user has set
+         the environment variable CYGWIN=codepage:oem (which very few people
+         do).
+         Output directed to console windows needs to be converted (to
+         GetOEMCP() if the console is using a raster font, or to
+         GetConsoleOutputCP() if it is using a TrueType font).  Cygwin does
+         this conversion transparently (see winsup/cygwin/fhandler_console.cc),
+         converting to GetConsoleOutputCP().  This leads to correct results,
+         except when SetConsoleOutputCP has been called and a raster font is
+         in use.  */
       sprintf (buf, "CP%u", GetACP ());
       codeset = buf;
     }
@@ -449,19 +459,13 @@ locale_charset (void)
 
   static char buf[2 + 10 + 1];
 
-  /* Woe32 has a function returning the locale's codepage as a number.
-     When the output goes to a console window, in Windows 95, it would have
-     been appropriate to use GetOEMCP() instead of GetACP().  But this has
-     been corrected: In Windows XP SP3, consoles accept output in the
-     GetACP() encoding.  The GetConsoleOutputCP() function still returns
-     the same as GetOEMCP() (not GetACP()!), but the font handling in the
-     console actually uses the GetACP() encoding.  If you want to "correct"
-     this by calling SetConsoleOutputCP(GetACP()), then for a TrueType font
-     it has no visible effect on the displayed glyphs, whereas when a raster
-     font is in use, the console performs an extra conversion from GetOEMCP()
-     to GetACP() encoding, thus changing the effective codepage of the
-     console from GetACP() to GetOEMCP()!  In summary, GetConsoleOutputCP()
-     and SetConsoleOutputCP() are now completely broken.  */
+  /* Woe32 has a function returning the locale's codepage as a number:
+     GetACP().
+     When the output goes to a console window, it needs to be provided in
+     GetOEMCP() encoding if the console is using a raster font, or in
+     GetConsoleOutputCP() encoding if it is using a TrueType font.
+     But in GUI programs and for output sent to files and pipes, GetACP()
+     encoding is the best bet.  */
   sprintf (buf, "CP%u", GetACP ());
   codeset = buf;
 
