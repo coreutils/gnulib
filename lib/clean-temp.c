@@ -1,5 +1,5 @@
 /* Temporary directories and temporary files with automatic cleanup.
-   Copyright (C) 2001, 2003, 2006-2007 Free Software Foundation, Inc.
+   Copyright (C) 2001, 2003, 2006-2007, 2009 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify
@@ -40,6 +40,7 @@
 #include "tmpdir.h"
 #include "xalloc.h"
 #include "xmalloca.h"
+#include "gl_xlist.h"
 #include "gl_linkedhash_list.h"
 #include "gettext.h"
 #if GNULIB_FWRITEERROR

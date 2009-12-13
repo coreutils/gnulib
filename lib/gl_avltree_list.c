@@ -1,5 +1,5 @@
 /* Sequential list data type implemented by a binary tree.
-   Copyright (C) 2006, 2008 Free Software Foundation, Inc.
+   Copyright (C) 2006, 2008-2009 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify
@@ -22,16 +22,18 @@
 
 #include <stdlib.h>
 
-#include "xalloc.h"
-
 /* -------------------------- gl_list_t Data Type -------------------------- */
 
 /* Generic AVL tree code.  */
 #include "gl_anyavltree_list1.h"
-#include "gl_anyavltree_list2.h"
 
 /* Generic binary tree code.  */
 #include "gl_anytree_list1.h"
+
+/* Generic AVL tree code.  */
+#include "gl_anyavltree_list2.h"
+
+/* Generic binary tree code.  */
 #include "gl_anytree_list2.h"
 
 /* For debugging.  */
@@ -66,22 +68,22 @@ gl_avltree_list_check_invariants (gl_list_t list)
 
 const struct gl_list_implementation gl_avltree_list_implementation =
   {
-    gl_tree_create_empty,
-    gl_tree_create,
+    gl_tree_nx_create_empty,
+    gl_tree_nx_create,
     gl_tree_size,
     gl_tree_node_value,
-    gl_tree_node_set_value,
+    gl_tree_node_nx_set_value,
     gl_tree_next_node,
     gl_tree_previous_node,
     gl_tree_get_at,
-    gl_tree_set_at,
+    gl_tree_nx_set_at,
     gl_tree_search_from_to,
     gl_tree_indexof_from_to,
-    gl_tree_add_first,
-    gl_tree_add_last,
-    gl_tree_add_before,
-    gl_tree_add_after,
-    gl_tree_add_at,
+    gl_tree_nx_add_first,
+    gl_tree_nx_add_last,
+    gl_tree_nx_add_before,
+    gl_tree_nx_add_after,
+    gl_tree_nx_add_at,
     gl_tree_remove_node,
     gl_tree_remove_at,
     gl_tree_remove,
@@ -94,6 +96,6 @@ const struct gl_list_implementation gl_avltree_list_implementation =
     gl_tree_sortedlist_search_from_to,
     gl_tree_sortedlist_indexof,
     gl_tree_sortedlist_indexof_from_to,
-    gl_tree_sortedlist_add,
+    gl_tree_sortedlist_nx_add,
     gl_tree_sortedlist_remove
   };

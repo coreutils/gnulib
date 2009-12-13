@@ -1,5 +1,5 @@
 /* Sequential list data type implemented by a binary tree.
-   Copyright (C) 2006-2008 Free Software Foundation, Inc.
+   Copyright (C) 2006-2009 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify
@@ -19,13 +19,16 @@
                   gl_avltreehash_list.c, gl_rbtreehash_list.c.  */
 
 static gl_list_t
-gl_tree_create_empty (gl_list_implementation_t implementation,
-                      gl_listelement_equals_fn equals_fn,
-                      gl_listelement_hashcode_fn hashcode_fn,
-                      gl_listelement_dispose_fn dispose_fn,
-                      bool allow_duplicates)
+gl_tree_nx_create_empty (gl_list_implementation_t implementation,
+                         gl_listelement_equals_fn equals_fn,
+                         gl_listelement_hashcode_fn hashcode_fn,
+                         gl_listelement_dispose_fn dispose_fn,
+                         bool allow_duplicates)
 {
-  struct gl_list_impl *list = XMALLOC (struct gl_list_impl);
+  struct gl_list_impl *list = (struct gl_list_impl *) malloc (sizeof (struct gl_list_impl));
+
+  if (list == NULL)
+    return NULL;
 
   list->base.vtable = implementation;
   list->base.equals_fn = equals_fn;
@@ -34,11 +37,20 @@ gl_tree_create_empty (gl_list_implementation_t implementation,
   list->base.allow_duplicates = allow_duplicates;
 #if WITH_HASHTABLE
   list->table_size = 11;
-  list->table = XCALLOC (list->table_size, gl_hash_entry_t);
+  list->table =
+    (gl_hash_entry_t *) calloc (list->table_size, sizeof (gl_hash_entry_t));
+  if (list->table == NULL)
+    goto fail;
 #endif
   list->root = NULL;
 
   return list;
+
+#if WITH_HASHTABLE
+ fail:
+  free (list);
+  return NULL;
+#endif
 }
 
 static size_t
@@ -53,8 +65,8 @@ gl_tree_node_value (gl_list_t list, gl_list_node_t node)
   return node->value;
 }
 
-static void
-gl_tree_node_set_value (gl_list_t list, gl_list_node_t node, const void *elt)
+static int
+gl_tree_node_nx_set_value (gl_list_t list, gl_list_node_t node, const void *elt)
 {
 #if WITH_HASHTABLE
   if (elt != node->value)
@@ -69,7 +81,15 @@ gl_tree_node_set_value (gl_list_t list, gl_list_node_t node, const void *elt)
           remove_from_bucket (list, node);
           node->value = elt;
           node->h.hashcode = new_hashcode;
-          add_to_bucket (list, node);
+          if (add_to_bucket (list, node) < 0)
+            {
+              /* Out of memory.  We removed node from a bucket but cannot add
+                 it to another bucket.  In order to avoid inconsistencies, we
+                 must remove node entirely from the list.  */
+              gl_tree_remove_node_from_tree (list, node);
+              free (node);
+              return -1;
+            }
         }
       else
         node->value = elt;
@@ -77,6 +97,7 @@ gl_tree_node_set_value (gl_list_t list, gl_list_node_t node, const void *elt)
 #else
   node->value = elt;
 #endif
+  return 0;
 }
 
 static gl_list_node_t
@@ -154,7 +175,7 @@ gl_tree_get_at (gl_list_t list, size_t position)
 }
 
 static gl_list_node_t
-gl_tree_set_at (gl_list_t list, size_t position, const void *elt)
+gl_tree_nx_set_at (gl_list_t list, size_t position, const void *elt)
 {
   gl_list_node_t node = list->root;
 
@@ -175,7 +196,15 @@ gl_tree_set_at (gl_list_t list, size_t position, const void *elt)
           remove_from_bucket (list, node);
           node->value = elt;
           node->h.hashcode = new_hashcode;
-          add_to_bucket (list, node);
+          if (add_to_bucket (list, node) < 0)
+            {
+              /* Out of memory.  We removed node from a bucket but cannot add
+                 it to another bucket.  In order to avoid inconsistencies, we
+                 must remove node entirely from the list.  */
+              gl_tree_remove_node_from_tree (list, node);
+              free (node);
+              return NULL;
+            }
         }
       else
         node->value = elt;
@@ -413,7 +442,7 @@ gl_tree_indexof_from_to (gl_list_t list, size_t start_index, size_t end_index,
 #endif
 
 static gl_list_node_t
-gl_tree_add_at (gl_list_t list, size_t position, const void *elt)
+gl_tree_nx_add_at (gl_list_t list, size_t position, const void *elt)
 {
   size_t count = (list->root != NULL ? list->root->branch_size : 0);
 
@@ -421,9 +450,27 @@ gl_tree_add_at (gl_list_t list, size_t position, const void *elt)
     /* Invalid argument.  */
     abort ();
   if (position == count)
-    return gl_tree_add_last (list, elt);
+    return gl_tree_nx_add_last (list, elt);
   else
-    return gl_tree_add_before (list, node_at (list->root, position), elt);
+    return gl_tree_nx_add_before (list, node_at (list->root, position), elt);
+}
+
+static bool
+gl_tree_remove_node (gl_list_t list, gl_list_node_t node)
+{
+#if WITH_HASHTABLE
+  /* Remove node from the hash table.
+     Note that this is only possible _before_ the node is removed from the
+     tree structure, because remove_from_bucket() uses node_position().  */
+  remove_from_bucket (list, node);
+#endif
+
+  gl_tree_remove_node_from_tree (list, node);
+
+  if (list->base.dispose_fn != NULL)
+    list->base.dispose_fn (node->value);
+  free (node);
+  return true;
 }
 
 static bool
@@ -852,13 +899,13 @@ gl_tree_sortedlist_indexof_from_to (gl_list_t list,
 }
 
 static gl_list_node_t
-gl_tree_sortedlist_add (gl_list_t list, gl_listelement_compar_fn compar,
-                        const void *elt)
+gl_tree_sortedlist_nx_add (gl_list_t list, gl_listelement_compar_fn compar,
+                           const void *elt)
 {
   gl_list_node_t node = list->root;
 
   if (node == NULL)
-    return gl_tree_add_first (list, elt);
+    return gl_tree_nx_add_first (list, elt);
 
   for (;;)
     {
@@ -867,17 +914,17 @@ gl_tree_sortedlist_add (gl_list_t list, gl_listelement_compar_fn compar,
       if (cmp < 0)
         {
           if (node->right == NULL)
-            return gl_tree_add_after (list, node, elt);
+            return gl_tree_nx_add_after (list, node, elt);
           node = node->right;
         }
       else if (cmp > 0)
         {
           if (node->left == NULL)
-            return gl_tree_add_before (list, node, elt);
+            return gl_tree_nx_add_before (list, node, elt);
           node = node->left;
         }
       else /* cmp == 0 */
-        return gl_tree_add_before (list, node, elt);
+        return gl_tree_nx_add_before (list, node, elt);
     }
 }
 

@@ -17,7 +17,6 @@ Depends-on:
 list
 rbtree-oset
 stdint
-xalloc
 xsize
 
 configure.ac:

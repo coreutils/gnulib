@@ -130,7 +130,7 @@
 #include "progname.h"
 #include "error.h"
 #include "read-file.h"
-#include "gl_list.h"
+#include "gl_xlist.h"
 #include "gl_array_list.h"
 #include "gl_linkedhash_list.h"
 #include "gl_rbtreehash_list.h"

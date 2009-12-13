@@ -9,5 +9,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-array_list
 check_PROGRAMS += test-array_list
-test_array_list_LDADD = $(LDADD) @LIBINTL@
 

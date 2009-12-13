@@ -1,5 +1,5 @@
 /* Sequential list data type backed by another list.
-   Copyright (C) 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006, 2009 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify
@@ -33,8 +33,13 @@ extern "C" {
      - The sublist is only valid as long as the whole list is valid.
      - The sublist must not be passed to the gl_list_sortedlist_add() function.
  */
+#if 0 /* declared in gl_xsublist.h */
 extern gl_list_t gl_sublist_create (gl_list_t whole_list,
                                     size_t start_index, size_t end_index);
+#endif
+/* Likewise.  Return NULL upon out-of-memory.  */
+extern gl_list_t gl_sublist_nx_create (gl_list_t whole_list,
+                                       size_t start_index, size_t end_index);
 
 
 #ifdef __cplusplus

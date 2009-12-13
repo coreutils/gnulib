@@ -2,6 +2,7 @@ Files:
 tests/test-array_oset.c
 
 Depends-on:
+xlist
 array-list
 progname
 

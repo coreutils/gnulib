@@ -6,6 +6,16 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2009-12-13  sublist         The module does not define functions any more that
+                            call xalloc_die() in out-of-memory situations. Use
+                            module 'xsublist' and include file "gl_xsublist.h"
+                            instead.
+
+2009-12-13  list            The module does not define functions any more that
+                            call xalloc_die() in out-of-memory situations.
+                            Use module 'xlist' and include file "gl_xlist.h"
+                            instead.
+
 2009-12-13  oset            The module does not define functions any more that
                             call xalloc_die() in out-of-memory situations.
                             Use module 'xoset' and include file "gl_xoset.h"

@@ -1,5 +1,5 @@
 /* Test of sequential list data type implementation.
-   Copyright (C) 2006-2008 Free Software Foundation, Inc.
+   Copyright (C) 2006-2009 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify
@@ -118,19 +118,22 @@ main (int argc, char *argv[])
       contents[i] = RANDOM_OBJECT ();
 
     /* Create list1.  */
-    list1 = gl_list_create (GL_ARRAY_LIST,
-                            string_equals, string_hash, NULL, true,
-                            initial_size, contents);
+    list1 = gl_list_nx_create (GL_ARRAY_LIST,
+                               string_equals, string_hash, NULL, true,
+                               initial_size, contents);
+    ASSERT (list1 != NULL);
     /* Create list2.  */
-    list2 = gl_list_create_empty (GL_RBTREEHASH_LIST,
-                                  string_equals, string_hash, NULL, true);
+    list2 = gl_list_nx_create_empty (GL_RBTREEHASH_LIST,
+                                     string_equals, string_hash, NULL, true);
+    ASSERT (list2 != NULL);
     for (i = 0; i < initial_size; i++)
-      gl_list_add_last (list2, contents[i]);
+      ASSERT (gl_list_nx_add_last (list2, contents[i]) != NULL);
 
     /* Create list3.  */
-    list3 = gl_list_create (GL_RBTREEHASH_LIST,
-                            string_equals, string_hash, NULL, true,
-                            initial_size, contents);
+    list3 = gl_list_nx_create (GL_RBTREEHASH_LIST,
+                               string_equals, string_hash, NULL, true,
+                               initial_size, contents);
+    ASSERT (list3 != NULL);
 
     check_all (list1, list2, list3);
 
@@ -146,15 +149,18 @@ main (int argc, char *argv[])
                 const char *obj = RANDOM_OBJECT ();
                 gl_list_node_t node1, node2, node3;
 
-                node1 = gl_list_set_at (list1, index, obj);
+                node1 = gl_list_nx_set_at (list1, index, obj);
+                ASSERT (node1 != NULL);
                 ASSERT (gl_list_get_at (list1, index) == obj);
                 ASSERT (gl_list_node_value (list1, node1) == obj);
 
-                node2 = gl_list_set_at (list2, index, obj);
+                node2 = gl_list_nx_set_at (list2, index, obj);
+                ASSERT (node2 != NULL);
                 ASSERT (gl_list_get_at (list2, index) == obj);
                 ASSERT (gl_list_node_value (list2, node2) == obj);
 
-                node3 = gl_list_set_at (list3, index, obj);
+                node3 = gl_list_nx_set_at (list3, index, obj);
+                ASSERT (node3 != NULL);
                 ASSERT (gl_list_get_at (list3, index) == obj);
                 ASSERT (gl_list_node_value (list3, node3) == obj);
 
@@ -228,9 +234,12 @@ main (int argc, char *argv[])
             {
               const char *obj = RANDOM_OBJECT ();
               gl_list_node_t node1, node2, node3;
-              node1 = gl_list_add_first (list1, obj);
-              node2 = gl_list_add_first (list2, obj);
-              node3 = gl_list_add_first (list3, obj);
+              node1 = gl_list_nx_add_first (list1, obj);
+              ASSERT (node1 != NULL);
+              node2 = gl_list_nx_add_first (list2, obj);
+              ASSERT (node2 != NULL);
+              node3 = gl_list_nx_add_first (list3, obj);
+              ASSERT (node3 != NULL);
               ASSERT (gl_list_node_value (list1, node1) == obj);
               ASSERT (gl_list_node_value (list2, node2) == obj);
               ASSERT (gl_list_node_value (list3, node3) == obj);
@@ -243,9 +252,12 @@ main (int argc, char *argv[])
             {
               const char *obj = RANDOM_OBJECT ();
               gl_list_node_t node1, node2, node3;
-              node1 = gl_list_add_last (list1, obj);
-              node2 = gl_list_add_last (list2, obj);
-              node3 = gl_list_add_last (list3, obj);
+              node1 = gl_list_nx_add_last (list1, obj);
+              ASSERT (node1 != NULL);
+              node2 = gl_list_nx_add_last (list2, obj);
+              ASSERT (node2 != NULL);
+              node3 = gl_list_nx_add_last (list3, obj);
+              ASSERT (node3 != NULL);
               ASSERT (gl_list_node_value (list1, node1) == obj);
               ASSERT (gl_list_node_value (list2, node2) == obj);
               ASSERT (gl_list_node_value (list3, node3) == obj);
@@ -260,15 +272,24 @@ main (int argc, char *argv[])
               const char *obj1 = RANDOM_OBJECT ();
               const char *obj2 = RANDOM_OBJECT ();
               gl_list_node_t node1, node2, node3;
-              node1 = gl_list_add_first (list1, obj2);
-              node1 = gl_list_add_before (list1, node1, obj0);
-              node1 = gl_list_add_after (list1, node1, obj1);
-              node2 = gl_list_add_first (list2, obj2);
-              node2 = gl_list_add_before (list2, node2, obj0);
-              node2 = gl_list_add_after (list2, node2, obj1);
-              node3 = gl_list_add_first (list3, obj2);
-              node3 = gl_list_add_before (list3, node3, obj0);
-              node3 = gl_list_add_after (list3, node3, obj1);
+              node1 = gl_list_nx_add_first (list1, obj2);
+              ASSERT (node1 != NULL);
+              node1 = gl_list_nx_add_before (list1, node1, obj0);
+              ASSERT (node1 != NULL);
+              node1 = gl_list_nx_add_after (list1, node1, obj1);
+              ASSERT (node1 != NULL);
+              node2 = gl_list_nx_add_first (list2, obj2);
+              ASSERT (node2 != NULL);
+              node2 = gl_list_nx_add_before (list2, node2, obj0);
+              ASSERT (node2 != NULL);
+              node2 = gl_list_nx_add_after (list2, node2, obj1);
+              ASSERT (node2 != NULL);
+              node3 = gl_list_nx_add_first (list3, obj2);
+              ASSERT (node3 != NULL);
+              node3 = gl_list_nx_add_before (list3, node3, obj0);
+              ASSERT (node3 != NULL);
+              node3 = gl_list_nx_add_after (list3, node3, obj1);
+              ASSERT (node3 != NULL);
               ASSERT (gl_list_node_value (list1, node1) == obj1);
               ASSERT (gl_list_node_value (list2, node2) == obj1);
               ASSERT (gl_list_node_value (list3, node3) == obj1);
@@ -288,9 +309,12 @@ main (int argc, char *argv[])
               size_t index = RANDOM (gl_list_size (list1) + 1);
               const char *obj = RANDOM_OBJECT ();
               gl_list_node_t node1, node2, node3;
-              node1 = gl_list_add_at (list1, index, obj);
-              node2 = gl_list_add_at (list2, index, obj);
-              node3 = gl_list_add_at (list3, index, obj);
+              node1 = gl_list_nx_add_at (list1, index, obj);
+              ASSERT (node1 != NULL);
+              node2 = gl_list_nx_add_at (list2, index, obj);
+              ASSERT (node2 != NULL);
+              node3 = gl_list_nx_add_at (list3, index, obj);
+              ASSERT (node3 != NULL);
               ASSERT (gl_list_get_at (list1, index) == obj);
               ASSERT (gl_list_node_value (list1, node1) == obj);
               ASSERT (gl_list_get_at (list2, index) == obj);

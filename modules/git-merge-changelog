@@ -10,7 +10,7 @@ stdbool
 progname
 error
 read-file
-list
+xlist
 array-list
 linkedhash-list
 linked-list

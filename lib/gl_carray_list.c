@@ -1,5 +1,5 @@
 /* Sequential list data type implemented by a circular array.
-   Copyright (C) 2006-2008 Free Software Foundation, Inc.
+   Copyright (C) 2006-2009 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify
@@ -23,8 +23,6 @@
 #include <stdlib.h>
 /* Get memcpy.  */
 #include <string.h>
-
-#include "xalloc.h"
 
 /* Checked size_t computations.  */
 #include "xsize.h"
@@ -55,13 +53,17 @@ struct gl_list_impl
 #define NODE_TO_INDEX(node) ((uintptr_t)(node) - 1)
 
 static gl_list_t
-gl_carray_create_empty (gl_list_implementation_t implementation,
-                        gl_listelement_equals_fn equals_fn,
-                        gl_listelement_hashcode_fn hashcode_fn,
-                        gl_listelement_dispose_fn dispose_fn,
-                        bool allow_duplicates)
+gl_carray_nx_create_empty (gl_list_implementation_t implementation,
+                           gl_listelement_equals_fn equals_fn,
+                           gl_listelement_hashcode_fn hashcode_fn,
+                           gl_listelement_dispose_fn dispose_fn,
+                           bool allow_duplicates)
 {
-  struct gl_list_impl *list = XMALLOC (struct gl_list_impl);
+  struct gl_list_impl *list =
+    (struct gl_list_impl *) malloc (sizeof (struct gl_list_impl));
+
+  if (list == NULL)
+    return NULL;
 
   list->base.vtable = implementation;
   list->base.equals_fn = equals_fn;
@@ -77,14 +79,18 @@ gl_carray_create_empty (gl_list_implementation_t implementation,
 }
 
 static gl_list_t
-gl_carray_create (gl_list_implementation_t implementation,
+gl_carray_nx_create (gl_list_implementation_t implementation,
                   gl_listelement_equals_fn equals_fn,
                   gl_listelement_hashcode_fn hashcode_fn,
                   gl_listelement_dispose_fn dispose_fn,
                   bool allow_duplicates,
                   size_t count, const void **contents)
 {
-  struct gl_list_impl *list = XMALLOC (struct gl_list_impl);
+  struct gl_list_impl *list =
+    (struct gl_list_impl *) malloc (sizeof (struct gl_list_impl));
+
+  if (list == NULL)
+    return NULL;
 
   list->base.vtable = implementation;
   list->base.equals_fn = equals_fn;
@@ -93,7 +99,11 @@ gl_carray_create (gl_list_implementation_t implementation,
   list->base.allow_duplicates = allow_duplicates;
   if (count > 0)
     {
-      list->elements = XNMALLOC (count, const void *);
+      if (size_overflow_p (xtimes (count, sizeof (const void *))))
+        goto fail;
+      list->elements = (const void **) malloc (count * sizeof (const void *));
+      if (list->elements == NULL)
+        goto fail;
       memcpy (list->elements, contents, count * sizeof (const void *));
     }
   else
@@ -103,6 +113,10 @@ gl_carray_create (gl_list_implementation_t implementation,
   list->allocated = count;
 
   return list;
+
+ fail:
+  free (list);
+  return NULL;
 }
 
 static size_t
@@ -126,8 +140,9 @@ gl_carray_node_value (gl_list_t list, gl_list_node_t node)
   return list->elements[i];
 }
 
-static void
-gl_carray_node_set_value (gl_list_t list, gl_list_node_t node, const void *elt)
+static int
+gl_carray_node_nx_set_value (gl_list_t list, gl_list_node_t node,
+                             const void *elt)
 {
   uintptr_t index = NODE_TO_INDEX (node);
   size_t i;
@@ -139,6 +154,7 @@ gl_carray_node_set_value (gl_list_t list, gl_list_node_t node, const void *elt)
   if (i >= list->allocated)
     i -= list->allocated;
   list->elements[i] = elt;
+  return 0;
 }
 
 static gl_list_node_t
@@ -184,7 +200,7 @@ gl_carray_get_at (gl_list_t list, size_t position)
 }
 
 static gl_list_node_t
-gl_carray_set_at (gl_list_t list, size_t position, const void *elt)
+gl_carray_nx_set_at (gl_list_t list, size_t position, const void *elt)
 {
   size_t count = list->count;
   size_t i;
@@ -269,8 +285,9 @@ gl_carray_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
   return INDEX_TO_NODE (index);
 }
 
-/* Ensure that list->allocated > list->count.  */
-static void
+/* Ensure that list->allocated > list->count.
+   Return 0 upon success, -1 upon out-of-memory.  */
+static int
 grow (gl_list_t list)
 {
   size_t new_allocated;
@@ -282,13 +299,13 @@ grow (gl_list_t list)
   memory_size = xtimes (new_allocated, sizeof (const void *));
   if (size_overflow_p (memory_size))
     /* Overflow, would lead to out of memory.  */
-    xalloc_die ();
+    return -1;
   if (list->offset > 0 && list->count > 0)
     {
-      memory = (const void **) xmalloc (memory_size);
+      memory = (const void **) malloc (memory_size);
       if (memory == NULL)
         /* Out of memory.  */
-        xalloc_die ();
+        return -1;
       if (list->offset + list->count > list->allocated)
         {
           memcpy (memory, &list->elements[list->offset],
@@ -306,23 +323,25 @@ grow (gl_list_t list)
     }
   else
     {
-      memory = (const void **) xrealloc (list->elements, memory_size);
+      memory = (const void **) realloc (list->elements, memory_size);
       if (memory == NULL)
         /* Out of memory.  */
-        xalloc_die ();
+        return -1;
     }
   list->elements = memory;
   list->offset = 0;
   list->allocated = new_allocated;
+  return 0;
 }
 
 static gl_list_node_t
-gl_carray_add_first (gl_list_t list, const void *elt)
+gl_carray_nx_add_first (gl_list_t list, const void *elt)
 {
   size_t count = list->count;
 
   if (count == list->allocated)
-    grow (list);
+    if (grow (list) < 0)
+      return NULL;
   list->offset = (list->offset == 0 ? list->allocated : list->offset) - 1;
   list->elements[list->offset] = elt;
   list->count = count + 1;
@@ -330,13 +349,14 @@ gl_carray_add_first (gl_list_t list, const void *elt)
 }
 
 static gl_list_node_t
-gl_carray_add_last (gl_list_t list, const void *elt)
+gl_carray_nx_add_last (gl_list_t list, const void *elt)
 {
   size_t count = list->count;
   size_t i;
 
   if (count == list->allocated)
-    grow (list);
+    if (grow (list) < 0)
+      return NULL;
   i = list->offset + count;
   if (i >= list->allocated)
     i -= list->allocated;
@@ -346,7 +366,7 @@ gl_carray_add_last (gl_list_t list, const void *elt)
 }
 
 static gl_list_node_t
-gl_carray_add_at (gl_list_t list, size_t position, const void *elt)
+gl_carray_nx_add_at (gl_list_t list, size_t position, const void *elt)
 {
   size_t count = list->count;
   const void **elements;
@@ -355,7 +375,8 @@ gl_carray_add_at (gl_list_t list, size_t position, const void *elt)
     /* Invalid argument.  */
     abort ();
   if (count == list->allocated)
-    grow (list);
+    if (grow (list) < 0)
+      return NULL;
   elements = list->elements;
   if (position <= (count / 2))
     {
@@ -420,7 +441,7 @@ gl_carray_add_at (gl_list_t list, size_t position, const void *elt)
 }
 
 static gl_list_node_t
-gl_carray_add_before (gl_list_t list, gl_list_node_t node, const void *elt)
+gl_carray_nx_add_before (gl_list_t list, gl_list_node_t node, const void *elt)
 {
   size_t count = list->count;
   uintptr_t index = NODE_TO_INDEX (node);
@@ -428,11 +449,11 @@ gl_carray_add_before (gl_list_t list, gl_list_node_t node, const void *elt)
   if (!(index < count))
     /* Invalid argument.  */
     abort ();
-  return gl_carray_add_at (list, index, elt);
+  return gl_carray_nx_add_at (list, index, elt);
 }
 
 static gl_list_node_t
-gl_carray_add_after (gl_list_t list, gl_list_node_t node, const void *elt)
+gl_carray_nx_add_after (gl_list_t list, gl_list_node_t node, const void *elt)
 {
   size_t count = list->count;
   uintptr_t index = NODE_TO_INDEX (node);
@@ -440,7 +461,7 @@ gl_carray_add_after (gl_list_t list, gl_list_node_t node, const void *elt)
   if (!(index < count))
     /* Invalid argument.  */
     abort ();
-  return gl_carray_add_at (list, index + 1, elt);
+  return gl_carray_nx_add_at (list, index + 1, elt);
 }
 
 static bool
@@ -771,8 +792,8 @@ gl_carray_sortedlist_search (gl_list_t list, gl_listelement_compar_fn compar,
 }
 
 static gl_list_node_t
-gl_carray_sortedlist_add (gl_list_t list, gl_listelement_compar_fn compar,
-                          const void *elt)
+gl_carray_sortedlist_nx_add (gl_list_t list, gl_listelement_compar_fn compar,
+                             const void *elt)
 {
   size_t count = list->count;
   size_t low = 0;
@@ -802,7 +823,7 @@ gl_carray_sortedlist_add (gl_list_t list, gl_listelement_compar_fn compar,
           break;
         }
     }
-  return gl_carray_add_at (list, low, elt);
+  return gl_carray_nx_add_at (list, low, elt);
 }
 
 static bool
@@ -819,22 +840,22 @@ gl_carray_sortedlist_remove (gl_list_t list, gl_listelement_compar_fn compar,
 
 const struct gl_list_implementation gl_carray_list_implementation =
   {
-    gl_carray_create_empty,
-    gl_carray_create,
+    gl_carray_nx_create_empty,
+    gl_carray_nx_create,
     gl_carray_size,
     gl_carray_node_value,
-    gl_carray_node_set_value,
+    gl_carray_node_nx_set_value,
     gl_carray_next_node,
     gl_carray_previous_node,
     gl_carray_get_at,
-    gl_carray_set_at,
+    gl_carray_nx_set_at,
     gl_carray_search_from_to,
     gl_carray_indexof_from_to,
-    gl_carray_add_first,
-    gl_carray_add_last,
-    gl_carray_add_before,
-    gl_carray_add_after,
-    gl_carray_add_at,
+    gl_carray_nx_add_first,
+    gl_carray_nx_add_last,
+    gl_carray_nx_add_before,
+    gl_carray_nx_add_after,
+    gl_carray_nx_add_at,
     gl_carray_remove_node,
     gl_carray_remove_at,
     gl_carray_remove,
@@ -847,6 +868,6 @@ const struct gl_list_implementation gl_carray_list_implementation =
     gl_carray_sortedlist_search_from_to,
     gl_carray_sortedlist_indexof,
     gl_carray_sortedlist_indexof_from_to,
-    gl_carray_sortedlist_add,
+    gl_carray_sortedlist_nx_add,
     gl_carray_sortedlist_remove
   };

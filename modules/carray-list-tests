@@ -10,5 +10,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-carray_list
 check_PROGRAMS += test-carray_list
-test_carray_list_LDADD = $(LDADD) @LIBINTL@
 

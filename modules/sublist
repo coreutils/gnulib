@@ -7,7 +7,6 @@ lib/gl_sublist.c
 
 Depends-on:
 list
-xalloc
 
 configure.ac:
 

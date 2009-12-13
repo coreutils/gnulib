@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "gl_xlist.h"
 #include "gl_array_list.h"
 #include "progname.h"
 

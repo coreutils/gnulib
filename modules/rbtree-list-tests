@@ -10,4 +10,3 @@ configure.ac:
 Makefile.am:
 TESTS += test-rbtree_list
 check_PROGRAMS += test-rbtree_list
-test_rbtree_list_LDADD = $(LDADD) @LIBINTL@

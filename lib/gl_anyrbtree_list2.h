@@ -1,5 +1,5 @@
 /* Sequential list data type implemented by a binary tree.
-   Copyright (C) 2006-2007 Free Software Foundation, Inc.
+   Copyright (C) 2006-2007, 2009 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,8 @@
 /* Create a subtree for count >= 1 elements.
    Its black-height bh is passed as argument, with
    2^bh - 1 <= count <= 2^(bh+1) - 1.  bh == 0 implies count == 1.
-   Its height is h where 2^(h-1) <= count <= 2^h - 1.  */
+   Its height is h where 2^(h-1) <= count <= 2^h - 1.
+   Return NULL upon out-of-memory.  */
 static gl_list_node_t
 create_subtree_with_contents (unsigned int bh,
                               size_t count, const void **contents)
@@ -30,7 +31,10 @@ create_subtree_with_contents (unsigned int bh,
   size_t half1 = (count - 1) / 2;
   size_t half2 = count / 2;
   /* Note: half1 + half2 = count - 1.  */
-  gl_list_node_t node = XMALLOC (struct gl_list_node_impl);
+  gl_list_node_t node =
+    (struct gl_list_node_impl *) malloc (sizeof (struct gl_list_node_impl));
+  if (node == NULL)
+    return NULL;
 
   if (half1 > 0)
     {
@@ -38,6 +42,8 @@ create_subtree_with_contents (unsigned int bh,
            2^(bh-1) - 1 <= half1 <= 2^bh - 1.  */
       node->left =
         create_subtree_with_contents (bh - 1, half1, contents);
+      if (node->left == NULL)
+        goto fail1;
       node->left->parent = node;
     }
   else
@@ -51,6 +57,8 @@ create_subtree_with_contents (unsigned int bh,
            2^(bh-1) - 1 <= half2 <= 2^bh - 1.  */
       node->right =
        create_subtree_with_contents (bh - 1, half2, contents + half1 + 1);
+      if (node->right == NULL)
+        goto fail2;
       node->right->parent = node;
     }
   else
@@ -61,17 +69,28 @@ create_subtree_with_contents (unsigned int bh,
   node->branch_size = count;
 
   return node;
+
+ fail2:
+  if (node->left != NULL)
+    free_subtree (node->left);
+ fail1:
+  free (node);
+  return NULL;
 }
 
 static gl_list_t
-gl_tree_create (gl_list_implementation_t implementation,
-                gl_listelement_equals_fn equals_fn,
-                gl_listelement_hashcode_fn hashcode_fn,
-                gl_listelement_dispose_fn dispose_fn,
-                bool allow_duplicates,
-                size_t count, const void **contents)
+gl_tree_nx_create (gl_list_implementation_t implementation,
+                   gl_listelement_equals_fn equals_fn,
+                   gl_listelement_hashcode_fn hashcode_fn,
+                   gl_listelement_dispose_fn dispose_fn,
+                   bool allow_duplicates,
+                   size_t count, const void **contents)
 {
-  struct gl_list_impl *list = XMALLOC (struct gl_list_impl);
+  struct gl_list_impl *list =
+    (struct gl_list_impl *) malloc (sizeof (struct gl_list_impl));
+
+  if (list == NULL)
+    return NULL;
 
   list->base.vtable = implementation;
   list->base.equals_fn = equals_fn;
@@ -84,7 +103,12 @@ gl_tree_create (gl_list_implementation_t implementation,
     if (estimate < 10)
       estimate = 10;
     list->table_size = next_prime (estimate);
-    list->table = XCALLOC (list->table_size, gl_hash_entry_t);
+    if (size_overflow_p (xtimes (list->table_size, sizeof (gl_hash_entry_t))))
+      goto fail1;
+    list->table =
+      (gl_hash_entry_t *) calloc (list->table_size, sizeof (gl_hash_entry_t));
+    if (list->table == NULL)
+      goto fail1;
   }
 #endif
   if (count > 0)
@@ -100,18 +124,33 @@ gl_tree_create (gl_list_implementation_t implementation,
       }
 
       list->root = create_subtree_with_contents (bh, count, contents);
+      if (list->root == NULL)
+        goto fail2;
       list->root->parent = NULL;
 
 #if WITH_HASHTABLE
       /* Now that the tree is built, node_position() works.  Now we can
          add the nodes to the hash table.  */
-      add_nodes_to_buckets (list);
+      if (add_nodes_to_buckets (list) < 0)
+        goto fail3;
 #endif
     }
   else
     list->root = NULL;
 
   return list;
+
+#if WITH_HASHTABLE
+ fail3:
+  free_subtree (list->root);
+#endif
+ fail2:
+#if WITH_HASHTABLE
+  free (list->table);
+ fail1:
+#endif
+  free (list);
+  return NULL;
 }
 
 /* Rotate left a subtree.
@@ -593,233 +632,10 @@ rebalance_after_remove (gl_list_t list, gl_list_node_t child, gl_list_node_t par
     }
 }
 
-static gl_list_node_t
-gl_tree_add_first (gl_list_t list, const void *elt)
+static void
+gl_tree_remove_node_from_tree (gl_list_t list, gl_list_node_t node)
 {
-  /* Create new node.  */
-  gl_list_node_t new_node = XMALLOC (struct gl_list_node_impl);
-
-  new_node->left = NULL;
-  new_node->right = NULL;
-  new_node->branch_size = 1;
-  new_node->value = elt;
-#if WITH_HASHTABLE
-  new_node->h.hashcode =
-    (list->base.hashcode_fn != NULL
-     ? list->base.hashcode_fn (new_node->value)
-     : (size_t)(uintptr_t) new_node->value);
-#endif
-
-  /* Add it to the tree.  */
-  if (list->root == NULL)
-    {
-      new_node->color = BLACK;
-      list->root = new_node;
-      new_node->parent = NULL;
-    }
-  else
-    {
-      gl_list_node_t node;
-
-      for (node = list->root; node->left != NULL; )
-        node = node->left;
-
-      node->left = new_node;
-      new_node->parent = node;
-
-      /* Update branch_size fields of the parent nodes.  */
-      {
-        gl_list_node_t p;
-
-        for (p = node; p != NULL; p = p->parent)
-          p->branch_size++;
-      }
-
-      /* Color and rebalance.  */
-      rebalance_after_add (list, new_node, node);
-    }
-
-#if WITH_HASHTABLE
-  /* Add node to the hash table.
-     Note that this is only possible _after_ the node has been added to the
-     tree structure, because add_to_bucket() uses node_position().  */
-  add_to_bucket (list, new_node);
-  hash_resize_after_add (list);
-#endif
-
-  return new_node;
-}
-
-static gl_list_node_t
-gl_tree_add_last (gl_list_t list, const void *elt)
-{
-  /* Create new node.  */
-  gl_list_node_t new_node = XMALLOC (struct gl_list_node_impl);
-
-  new_node->left = NULL;
-  new_node->right = NULL;
-  new_node->branch_size = 1;
-  new_node->value = elt;
-#if WITH_HASHTABLE
-  new_node->h.hashcode =
-    (list->base.hashcode_fn != NULL
-     ? list->base.hashcode_fn (new_node->value)
-     : (size_t)(uintptr_t) new_node->value);
-#endif
-
-  /* Add it to the tree.  */
-  if (list->root == NULL)
-    {
-      new_node->color = BLACK;
-      list->root = new_node;
-      new_node->parent = NULL;
-    }
-  else
-    {
-      gl_list_node_t node;
-
-      for (node = list->root; node->right != NULL; )
-        node = node->right;
-
-      node->right = new_node;
-      new_node->parent = node;
-
-      /* Update branch_size fields of the parent nodes.  */
-      {
-        gl_list_node_t p;
-
-        for (p = node; p != NULL; p = p->parent)
-          p->branch_size++;
-      }
-
-      /* Color and rebalance.  */
-      rebalance_after_add (list, new_node, node);
-    }
-
-#if WITH_HASHTABLE
-  /* Add node to the hash table.
-     Note that this is only possible _after_ the node has been added to the
-     tree structure, because add_to_bucket() uses node_position().  */
-  add_to_bucket (list, new_node);
-  hash_resize_after_add (list);
-#endif
-
-  return new_node;
-}
-
-static gl_list_node_t
-gl_tree_add_before (gl_list_t list, gl_list_node_t node, const void *elt)
-{
-  /* Create new node.  */
-  gl_list_node_t new_node = XMALLOC (struct gl_list_node_impl);
-
-  new_node->left = NULL;
-  new_node->right = NULL;
-  new_node->branch_size = 1;
-  new_node->value = elt;
-#if WITH_HASHTABLE
-  new_node->h.hashcode =
-    (list->base.hashcode_fn != NULL
-     ? list->base.hashcode_fn (new_node->value)
-     : (size_t)(uintptr_t) new_node->value);
-#endif
-
-  /* Add it to the tree.  */
-  if (node->left == NULL)
-    node->left = new_node;
-  else
-    {
-      for (node = node->left; node->right != NULL; )
-        node = node->right;
-      node->right = new_node;
-    }
-  new_node->parent = node;
-
-  /* Update branch_size fields of the parent nodes.  */
-  {
-    gl_list_node_t p;
-
-    for (p = node; p != NULL; p = p->parent)
-      p->branch_size++;
-  }
-
-  /* Color and rebalance.  */
-  rebalance_after_add (list, new_node, node);
-
-#if WITH_HASHTABLE
-  /* Add node to the hash table.
-     Note that this is only possible _after_ the node has been added to the
-     tree structure, because add_to_bucket() uses node_position().  */
-  add_to_bucket (list, new_node);
-  hash_resize_after_add (list);
-#endif
-
-  return new_node;
-}
-
-static gl_list_node_t
-gl_tree_add_after (gl_list_t list, gl_list_node_t node, const void *elt)
-{
-  /* Create new node.  */
-  gl_list_node_t new_node = XMALLOC (struct gl_list_node_impl);
-
-  new_node->left = NULL;
-  new_node->right = NULL;
-  new_node->branch_size = 1;
-  new_node->value = elt;
-#if WITH_HASHTABLE
-  new_node->h.hashcode =
-    (list->base.hashcode_fn != NULL
-     ? list->base.hashcode_fn (new_node->value)
-     : (size_t)(uintptr_t) new_node->value);
-#endif
-
-  /* Add it to the tree.  */
-  if (node->right == NULL)
-    node->right = new_node;
-  else
-    {
-      for (node = node->right; node->left != NULL; )
-        node = node->left;
-      node->left = new_node;
-    }
-  new_node->parent = node;
-
-  /* Update branch_size fields of the parent nodes.  */
-  {
-    gl_list_node_t p;
-
-    for (p = node; p != NULL; p = p->parent)
-      p->branch_size++;
-  }
-
-  /* Color and rebalance.  */
-  rebalance_after_add (list, new_node, node);
-
-#if WITH_HASHTABLE
-  /* Add node to the hash table.
-     Note that this is only possible _after_ the node has been added to the
-     tree structure, because add_to_bucket() uses node_position().  */
-  add_to_bucket (list, new_node);
-  hash_resize_after_add (list);
-#endif
-
-  return new_node;
-}
-
-static bool
-gl_tree_remove_node (gl_list_t list, gl_list_node_t node)
-{
-  gl_list_node_t parent;
-
-#if WITH_HASHTABLE
-  /* Remove node from the hash table.
-     Note that this is only possible _before_ the node is removed from the
-     tree structure, because remove_from_bucket() uses node_position().  */
-  remove_from_bucket (list, node);
-#endif
-
-  parent = node->parent;
+  gl_list_node_t parent = node->parent;
 
   if (node->left == NULL)
     {
@@ -959,9 +775,254 @@ gl_tree_remove_node (gl_list_t list, gl_list_node_t node)
                                     subst_parent != node ? subst_parent : subst);
         }
     }
+}
 
-  if (list->base.dispose_fn != NULL)
-    list->base.dispose_fn (node->value);
-  free (node);
-  return true;
+static gl_list_node_t
+gl_tree_nx_add_first (gl_list_t list, const void *elt)
+{
+  /* Create new node.  */
+  gl_list_node_t new_node =
+    (struct gl_list_node_impl *) malloc (sizeof (struct gl_list_node_impl));
+
+  if (new_node == NULL)
+    return NULL;
+
+  new_node->left = NULL;
+  new_node->right = NULL;
+  new_node->branch_size = 1;
+  new_node->value = elt;
+#if WITH_HASHTABLE
+  new_node->h.hashcode =
+    (list->base.hashcode_fn != NULL
+     ? list->base.hashcode_fn (new_node->value)
+     : (size_t)(uintptr_t) new_node->value);
+#endif
+
+  /* Add it to the tree.  */
+  if (list->root == NULL)
+    {
+      new_node->color = BLACK;
+      list->root = new_node;
+      new_node->parent = NULL;
+    }
+  else
+    {
+      gl_list_node_t node;
+
+      for (node = list->root; node->left != NULL; )
+        node = node->left;
+
+      node->left = new_node;
+      new_node->parent = node;
+
+      /* Update branch_size fields of the parent nodes.  */
+      {
+        gl_list_node_t p;
+
+        for (p = node; p != NULL; p = p->parent)
+          p->branch_size++;
+      }
+
+      /* Color and rebalance.  */
+      rebalance_after_add (list, new_node, node);
+    }
+
+#if WITH_HASHTABLE
+  /* Add node to the hash table.
+     Note that this is only possible _after_ the node has been added to the
+     tree structure, because add_to_bucket() uses node_position().  */
+  if (add_to_bucket (list, new_node) < 0)
+    {
+      gl_tree_remove_node_from_tree (list, new_node);
+      free (new_node);
+      return NULL;
+    }
+  hash_resize_after_add (list);
+#endif
+
+  return new_node;
+}
+
+static gl_list_node_t
+gl_tree_nx_add_last (gl_list_t list, const void *elt)
+{
+  /* Create new node.  */
+  gl_list_node_t new_node =
+    (struct gl_list_node_impl *) malloc (sizeof (struct gl_list_node_impl));
+
+  if (new_node == NULL)
+    return NULL;
+
+  new_node->left = NULL;
+  new_node->right = NULL;
+  new_node->branch_size = 1;
+  new_node->value = elt;
+#if WITH_HASHTABLE
+  new_node->h.hashcode =
+    (list->base.hashcode_fn != NULL
+     ? list->base.hashcode_fn (new_node->value)
+     : (size_t)(uintptr_t) new_node->value);
+#endif
+
+  /* Add it to the tree.  */
+  if (list->root == NULL)
+    {
+      new_node->color = BLACK;
+      list->root = new_node;
+      new_node->parent = NULL;
+    }
+  else
+    {
+      gl_list_node_t node;
+
+      for (node = list->root; node->right != NULL; )
+        node = node->right;
+
+      node->right = new_node;
+      new_node->parent = node;
+
+      /* Update branch_size fields of the parent nodes.  */
+      {
+        gl_list_node_t p;
+
+        for (p = node; p != NULL; p = p->parent)
+          p->branch_size++;
+      }
+
+      /* Color and rebalance.  */
+      rebalance_after_add (list, new_node, node);
+    }
+
+#if WITH_HASHTABLE
+  /* Add node to the hash table.
+     Note that this is only possible _after_ the node has been added to the
+     tree structure, because add_to_bucket() uses node_position().  */
+  if (add_to_bucket (list, new_node) < 0)
+    {
+      gl_tree_remove_node_from_tree (list, new_node);
+      free (new_node);
+      return NULL;
+    }
+  hash_resize_after_add (list);
+#endif
+
+  return new_node;
+}
+
+static gl_list_node_t
+gl_tree_nx_add_before (gl_list_t list, gl_list_node_t node, const void *elt)
+{
+  /* Create new node.  */
+  gl_list_node_t new_node =
+    (struct gl_list_node_impl *) malloc (sizeof (struct gl_list_node_impl));
+
+  if (new_node == NULL)
+    return NULL;
+
+  new_node->left = NULL;
+  new_node->right = NULL;
+  new_node->branch_size = 1;
+  new_node->value = elt;
+#if WITH_HASHTABLE
+  new_node->h.hashcode =
+    (list->base.hashcode_fn != NULL
+     ? list->base.hashcode_fn (new_node->value)
+     : (size_t)(uintptr_t) new_node->value);
+#endif
+
+  /* Add it to the tree.  */
+  if (node->left == NULL)
+    node->left = new_node;
+  else
+    {
+      for (node = node->left; node->right != NULL; )
+        node = node->right;
+      node->right = new_node;
+    }
+  new_node->parent = node;
+
+  /* Update branch_size fields of the parent nodes.  */
+  {
+    gl_list_node_t p;
+
+    for (p = node; p != NULL; p = p->parent)
+      p->branch_size++;
+  }
+
+  /* Color and rebalance.  */
+  rebalance_after_add (list, new_node, node);
+
+#if WITH_HASHTABLE
+  /* Add node to the hash table.
+     Note that this is only possible _after_ the node has been added to the
+     tree structure, because add_to_bucket() uses node_position().  */
+  if (add_to_bucket (list, new_node) < 0)
+    {
+      gl_tree_remove_node_from_tree (list, new_node);
+      free (new_node);
+      return NULL;
+    }
+  hash_resize_after_add (list);
+#endif
+
+  return new_node;
+}
+
+static gl_list_node_t
+gl_tree_nx_add_after (gl_list_t list, gl_list_node_t node, const void *elt)
+{
+  /* Create new node.  */
+  gl_list_node_t new_node =
+    (struct gl_list_node_impl *) malloc (sizeof (struct gl_list_node_impl));
+
+  if (new_node == NULL)
+    return NULL;
+
+  new_node->left = NULL;
+  new_node->right = NULL;
+  new_node->branch_size = 1;
+  new_node->value = elt;
+#if WITH_HASHTABLE
+  new_node->h.hashcode =
+    (list->base.hashcode_fn != NULL
+     ? list->base.hashcode_fn (new_node->value)
+     : (size_t)(uintptr_t) new_node->value);
+#endif
+
+  /* Add it to the tree.  */
+  if (node->right == NULL)
+    node->right = new_node;
+  else
+    {
+      for (node = node->right; node->left != NULL; )
+        node = node->left;
+      node->left = new_node;
+    }
+  new_node->parent = node;
+
+  /* Update branch_size fields of the parent nodes.  */
+  {
+    gl_list_node_t p;
+
+    for (p = node; p != NULL; p = p->parent)
+      p->branch_size++;
+  }
+
+  /* Color and rebalance.  */
+  rebalance_after_add (list, new_node, node);
+
+#if WITH_HASHTABLE
+  /* Add node to the hash table.
+     Note that this is only possible _after_ the node has been added to the
+     tree structure, because add_to_bucket() uses node_position().  */
+  if (add_to_bucket (list, new_node) < 0)
+    {
+      gl_tree_remove_node_from_tree (list, new_node);
+      free (new_node);
+      return NULL;
+    }
+  hash_resize_after_add (list);
+#endif
+
+  return new_node;
 }

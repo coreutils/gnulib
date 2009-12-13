@@ -18,6 +18,7 @@ rmdir
 xalloc
 xmalloca
 linkedhash-list
+xlist
 gettext-h
 
 configure.ac:

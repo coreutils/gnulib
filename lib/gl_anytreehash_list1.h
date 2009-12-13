@@ -104,8 +104,9 @@ gl_oset_first (gl_oset_t set)
    O((log n)^2): gl_oset_nx_add may need to add an element to an ordered set
    of size O(n), needing O(log n) comparison function calls.  The comparison
    function is compare_by_position, which is O(log n) worst-case.
-   If duplicates are forbidden, this function is O(1).  */
-static void
+   If duplicates are forbidden, this function is O(1).
+   Return 0 upon success, -1 upon out-of-memory.  */
+static int
 add_to_bucket (gl_list_t list, gl_list_node_t new_node)
 {
   size_t bucket = new_node->h.hashcode % list->table_size;
@@ -134,9 +135,7 @@ add_to_bucket (gl_list_t list, gl_list_node_t new_node)
                     {
                       /* Found already multiple nodes with the same value.
                          Add the new_node to it.  */
-                      if (gl_oset_nx_add (nodes, new_node) < 0)
-                        xalloc_die ();
-                      return;
+                      return gl_oset_nx_add (nodes, new_node);
                     }
                 }
               else
@@ -154,20 +153,27 @@ add_to_bucket (gl_list_t list, gl_list_node_t new_node)
                         gl_oset_nx_create_empty (OSET_TREE_FLAVOR,
                                                  compare_by_position, NULL);
                       if (nodes == NULL)
-                        xalloc_die ();
+                        return -1;
 
                       if (gl_oset_nx_add (nodes, node) < 0)
-                        xalloc_die ();
+                        goto fail;
                       if (gl_oset_nx_add (nodes, new_node) < 0)
-                        xalloc_die ();
+                        goto fail;
 
-                      multi_entry = XMALLOC (struct gl_multiple_nodes);
+                      multi_entry =
+                       (struct gl_multiple_nodes *) malloc (sizeof (struct gl_multiple_nodes));
+                      if (multi_entry == NULL)
+                        goto fail;
                       multi_entry->h.hash_next = entry->hash_next;
                       multi_entry->h.hashcode = entry->hashcode;
                       multi_entry->magic = MULTIPLE_NODES_MAGIC;
                       multi_entry->nodes = nodes;
                       *entryp = &multi_entry->h;
-                      return;
+                      return 0;
+
+                    fail:
+                      gl_oset_free (nodes);
+                      return -1;
                     }
                 }
             }
@@ -176,7 +182,13 @@ add_to_bucket (gl_list_t list, gl_list_node_t new_node)
   /* If no duplicates are allowed, multiple nodes are not needed.  */
   new_node->h.hash_next = list->table[bucket];
   list->table[bucket] = &new_node->h;
+  return 0;
 }
+/* Tell GCC that the likely return value is 0.  */
+#if __GNUC__ >= 3
+# define add_to_bucket(list,node) \
+    __builtin_expect ((add_to_bucket) (list, node), 0)
+#endif
 
 /* Remove a node from the hash table structure.
    If duplicates are allowed, this function performs in average time
@@ -258,8 +270,9 @@ remove_from_bucket (gl_list_t list, gl_list_node_t old_node)
 }
 
 /* Build up the hash table during initialization: Store all the nodes of
-   list->root in the hash table.  */
-static inline void
+   list->root in the hash table.
+   Return 0 upon success, -1 upon out-of-memory.  */
+static inline int
 add_nodes_to_buckets (gl_list_t list)
 {
   /* Iterate across all nodes.  */
@@ -283,7 +296,7 @@ add_nodes_to_buckets (gl_list_t list)
       for (;;)
         {
           if (stack_ptr == &stack[0])
-            return;
+            goto done;
           stack_ptr--;
           if (!stack_ptr->rightp)
             break;
@@ -294,10 +307,52 @@ add_nodes_to_buckets (gl_list_t list)
         (list->base.hashcode_fn != NULL
          ? list->base.hashcode_fn (node->value)
          : (size_t)(uintptr_t) node->value);
-      add_to_bucket (list, node);
+      if (add_to_bucket (list, node) < 0)
+        goto fail;
       /* Descend on right branch.  */
       stack_ptr->rightp = true;
       node = node->right;
       stack_ptr++;
     }
+ done:
+  return 0;
+
+ fail:
+  /* Undo everything.  */
+  for (;;)
+    {
+      /* Descend on left branch.  */
+      stack_ptr->rightp = false;
+      node = node->left;
+      stack_ptr++;
+      /* Descend on right branch.  */
+      for (;;)
+        {
+          if (node == NULL)
+            break;
+          stack_ptr->node = node;
+          stack_ptr->rightp = true;
+          node = node->right;
+          stack_ptr++;
+        }
+      /* Climb up again.  */
+      for (;;)
+        {
+          if (stack_ptr == &stack[0])
+            goto fail_done;
+          stack_ptr--;
+          if (stack_ptr->rightp)
+            break;
+        }
+      node = stack_ptr->node;
+      /* Remove the current node from the hash table.  */
+      remove_from_bucket (list, node);
+    }
+ fail_done:
+  return -1;
 }
+/* Tell GCC that the likely return value is 0.  */
+#if __GNUC__ >= 3
+# define add_nodes_to_buckets(list) \
+    __builtin_expect ((add_nodes_to_buckets) (list), 0)
+#endif

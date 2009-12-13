@@ -1,5 +1,5 @@
 /* Sequential list data type backed by another list.
-   Copyright (C) 2006-2008 Free Software Foundation, Inc.
+   Copyright (C) 2006-2009 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify
@@ -21,8 +21,6 @@
 #include "gl_sublist.h"
 
 #include <stdlib.h>
-
-#include "xalloc.h"
 
 #ifndef uintptr_t
 # define uintptr_t unsigned long
@@ -49,23 +47,23 @@ struct gl_list_impl
 #define NODE_TO_INDEX(node) ((uintptr_t)(node) - 1)
 
 static gl_list_t
-gl_sublist_create_empty (gl_list_implementation_t implementation,
-                         gl_listelement_equals_fn equals_fn,
-                         gl_listelement_hashcode_fn hashcode_fn,
-                         gl_listelement_dispose_fn dispose_fn,
-                         bool allow_duplicates)
+gl_sublist_nx_create_empty (gl_list_implementation_t implementation,
+                            gl_listelement_equals_fn equals_fn,
+                            gl_listelement_hashcode_fn hashcode_fn,
+                            gl_listelement_dispose_fn dispose_fn,
+                            bool allow_duplicates)
 {
   /* Shouldn't be called.  */
   abort ();
 }
 
 static gl_list_t
-gl_sublist_create_fill (gl_list_implementation_t implementation,
-                        gl_listelement_equals_fn equals_fn,
-                        gl_listelement_hashcode_fn hashcode_fn,
-                        gl_listelement_dispose_fn dispose_fn,
-                        bool allow_duplicates,
-                        size_t count, const void **contents)
+gl_sublist_nx_create_fill (gl_list_implementation_t implementation,
+                           gl_listelement_equals_fn equals_fn,
+                           gl_listelement_hashcode_fn hashcode_fn,
+                           gl_listelement_dispose_fn dispose_fn,
+                           bool allow_duplicates,
+                           size_t count, const void **contents)
 {
   /* Shouldn't be called.  */
   abort ();
@@ -87,14 +85,16 @@ gl_sublist_node_value (gl_list_t list, gl_list_node_t node)
   return gl_list_get_at (list->whole, list->start + index);
 }
 
-static void
-gl_sublist_node_set_value (gl_list_t list, gl_list_node_t node, const void *elt)
+static int
+gl_sublist_node_nx_set_value (gl_list_t list, gl_list_node_t node, const void *elt)
 {
   uintptr_t index = NODE_TO_INDEX (node);
   if (!(index < list->end - list->start))
     /* Invalid argument.  */
     abort ();
-  gl_list_set_at (list->whole, list->start + index, elt);
+  if (gl_list_nx_set_at (list->whole, list->start + index, elt) == NULL)
+    return -1;
+  return 0;
 }
 
 static gl_list_node_t
@@ -135,12 +135,13 @@ gl_sublist_get_at (gl_list_t list, size_t position)
 }
 
 static gl_list_node_t
-gl_sublist_set_at (gl_list_t list, size_t position, const void *elt)
+gl_sublist_nx_set_at (gl_list_t list, size_t position, const void *elt)
 {
   if (!(position < list->end - list->start))
     /* Invalid argument.  */
     abort ();
-  gl_list_set_at (list->whole, list->start + position, elt);
+  if (gl_list_nx_set_at (list->whole, list->start + position, elt) == NULL)
+    return NULL;
   return INDEX_TO_NODE (position);
 }
 
@@ -185,53 +186,58 @@ gl_sublist_indexof_from_to (gl_list_t list,
 }
 
 static gl_list_node_t
-gl_sublist_add_first (gl_list_t list, const void *elt)
+gl_sublist_nx_add_first (gl_list_t list, const void *elt)
 {
-  gl_list_add_at (list->whole, list->start, elt);
+  if (gl_list_nx_add_at (list->whole, list->start, elt) == NULL)
+    return NULL;
   list->end++;
   return INDEX_TO_NODE (0);
 }
 
 static gl_list_node_t
-gl_sublist_add_last (gl_list_t list, const void *elt)
+gl_sublist_nx_add_last (gl_list_t list, const void *elt)
 {
-  gl_list_add_at (list->whole, list->end, elt);
+  if (gl_list_nx_add_at (list->whole, list->end, elt) == NULL)
+    return NULL;
   list->end++;
   return INDEX_TO_NODE (list->end - list->start - 1);
 }
 
 static gl_list_node_t
-gl_sublist_add_before (gl_list_t list, gl_list_node_t node, const void *elt)
+gl_sublist_nx_add_before (gl_list_t list, gl_list_node_t node, const void *elt)
 {
   size_t position = NODE_TO_INDEX (node);
   if (!(position < list->end - list->start))
     /* Invalid argument.  */
     abort ();
-  gl_list_add_at (list->whole, list->start + position, elt);
+  if (gl_list_nx_add_at (list->whole, list->start + position, elt) == NULL)
+    return NULL;
   list->end++;
   return INDEX_TO_NODE (position);
 }
 
 static gl_list_node_t
-gl_sublist_add_after (gl_list_t list, gl_list_node_t node, const void *elt)
+gl_sublist_nx_add_after (gl_list_t list, gl_list_node_t node, const void *elt)
 {
   size_t position = NODE_TO_INDEX (node);
   if (!(position < list->end - list->start))
     /* Invalid argument.  */
     abort ();
   position++;
-  gl_list_add_at (list->whole, list->start + position, elt);
+  if (gl_list_nx_add_at (list->whole, list->start + position, elt) == NULL)
+    return NULL;
   list->end++;
   return INDEX_TO_NODE (position);
 }
 
 static gl_list_node_t
-gl_sublist_add_at (gl_list_t list, size_t position, const void *elt)
+gl_sublist_nx_add_at (gl_list_t list, size_t position, const void *elt)
 {
   if (!(position <= list->end - list->start))
     /* Invalid argument.  */
     abort ();
-  gl_list_add_at (list->whole, list->start + position, elt);
+  if (gl_list_nx_add_at (list->whole, list->start + position, elt) == NULL)
+    return NULL;
   list->end++;
   return INDEX_TO_NODE (position);
 }
@@ -378,9 +384,9 @@ gl_sublist_sortedlist_indexof_from_to (gl_list_t list,
 }
 
 static gl_list_node_t
-gl_sublist_sortedlist_add (gl_list_t list,
-                           gl_listelement_compar_fn compar,
-                           const void *elt)
+gl_sublist_sortedlist_nx_add (gl_list_t list,
+                              gl_listelement_compar_fn compar,
+                              const void *elt)
 {
   /* It's impossible to implement this method without risking to put the
      whole list into unsorted order (namely, when the given ELT is smaller
@@ -403,22 +409,22 @@ gl_sublist_sortedlist_remove (gl_list_t list,
 
 static const struct gl_list_implementation gl_sublist_list_implementation =
   {
-    gl_sublist_create_empty,
-    gl_sublist_create_fill,
+    gl_sublist_nx_create_empty,
+    gl_sublist_nx_create_fill,
     gl_sublist_size,
     gl_sublist_node_value,
-    gl_sublist_node_set_value,
+    gl_sublist_node_nx_set_value,
     gl_sublist_next_node,
     gl_sublist_previous_node,
     gl_sublist_get_at,
-    gl_sublist_set_at,
+    gl_sublist_nx_set_at,
     gl_sublist_search_from_to,
     gl_sublist_indexof_from_to,
-    gl_sublist_add_first,
-    gl_sublist_add_last,
-    gl_sublist_add_before,
-    gl_sublist_add_after,
-    gl_sublist_add_at,
+    gl_sublist_nx_add_first,
+    gl_sublist_nx_add_last,
+    gl_sublist_nx_add_before,
+    gl_sublist_nx_add_after,
+    gl_sublist_nx_add_at,
     gl_sublist_remove_node,
     gl_sublist_remove_at,
     gl_sublist_remove,
@@ -431,18 +437,22 @@ static const struct gl_list_implementation gl_sublist_list_implementation =
     gl_sublist_sortedlist_search_from_to,
     gl_sublist_sortedlist_indexof,
     gl_sublist_sortedlist_indexof_from_to,
-    gl_sublist_sortedlist_add,
+    gl_sublist_sortedlist_nx_add,
     gl_sublist_sortedlist_remove
   };
 
 gl_list_t
-gl_sublist_create (gl_list_t whole_list, size_t start_index, size_t end_index)
+gl_sublist_nx_create (gl_list_t whole_list, size_t start_index, size_t end_index)
 {
   if (!(start_index <= end_index && end_index <= gl_list_size (whole_list)))
     /* Invalid arguments.  */
     abort ();
   {
-    struct gl_list_impl *list = XMALLOC (struct gl_list_impl);
+    struct gl_list_impl *list =
+      (struct gl_list_impl *) malloc (sizeof (struct gl_list_impl));
+
+    if (list == NULL)
+      return NULL;
 
     list->base.vtable = &gl_sublist_list_implementation;
     list->base.equals_fn = whole_list->base.equals_fn; /* actually unused */

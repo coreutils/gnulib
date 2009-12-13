@@ -10,5 +10,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-avltreehash_list
 check_PROGRAMS += test-avltreehash_list
-test_avltreehash_list_LDADD = $(LDADD) @LIBINTL@
 

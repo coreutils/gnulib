@@ -17,7 +17,6 @@ Depends-on:
 list
 avltree-oset
 stdint
-xalloc
 xsize
 
 configure.ac:

@@ -10,4 +10,3 @@ configure.ac:
 Makefile.am:
 TESTS += test-linkedhash_list
 check_PROGRAMS += test-linkedhash_list
-test_linkedhash_list_LDADD = $(LDADD) @LIBINTL@

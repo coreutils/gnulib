@@ -1,5 +1,5 @@
 /* Sequential list data type implemented by a hash table with another list.
-   Copyright (C) 2006 Free Software Foundation, Inc.
+   Copyright (C) 2006, 2009 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify
@@ -99,8 +99,15 @@ hash_resize (gl_list_t list, size_t estimate)
     {
       gl_hash_entry_t *old_table = list->table;
       /* Allocate the new table.  */
-      gl_hash_entry_t *new_table = XCALLOC (new_size, gl_hash_entry_t);
+      gl_hash_entry_t *new_table;
       size_t i;
+
+      if (size_overflow_p (xtimes (new_size, sizeof (gl_hash_entry_t))))
+        goto fail;
+      new_table =
+        (gl_hash_entry_t *) calloc (new_size, sizeof (gl_hash_entry_t));
+      if (new_table == NULL)
+        goto fail;
 
       /* Iterate through the entries of the old table.  */
       for (i = list->table_size; i > 0; )
@@ -123,4 +130,9 @@ hash_resize (gl_list_t list, size_t estimate)
       list->table_size = new_size;
       free (old_table);
     }
+  return;
+
+ fail:
+  /* Just continue without resizing the table.  */
+  return;
 }

@@ -1,5 +1,231 @@
 2009-12-13  Bruno Haible  <bruno@clisp.org>
 
+	Move the malloc checking from module 'list' to new module 'xlist'.
+	* modules/xlist: New file.
+	* lib/gl_xlist.h: New file.
+	* lib/gl_xlist.c: New file.
+	* lib/gl_list.h (gl_list_create_empty, gl_list_create,
+	gl_list_node_set_value, gl_list_set_at, gl_list_add_first,
+	gl_list_add_last, gl_list_add_before, gl_list_add_after,
+	gl_list_nx_add_at, gl_sortedlist_add): Disable declarations.
+	(gl_list_nx_create_empty, gl_list_nx_create, gl_list_node_nx_set_value,
+	gl_list_nx_set_at, gl_list_nx_add_first, gl_list_nx_add_last,
+	gl_list_nx_add_before, gl_list_nx_add_after, gl_list_nx_add_at,
+	gl_sortedlist_nx_add): New declarations.
+	(struct gl_list_implementation): Rename and change methods accordingly.
+	(gl_list_nx_create_empty): Renamed from gl_list_create_empty.
+	(gl_list_nx_create): Renamed from gl_list_create.
+	(gl_list_node_nx_set_value): Renamed from gl_list_node_set_value.
+	(gl_list_nx_set_at): Renamed from gl_list_set_at.
+	(gl_list_nx_add_first): Renamed from gl_list_add_first.
+	(gl_list_nx_add_last): Renamed from gl_list_add_last.
+	(gl_list_nx_add_before): Renamed from gl_list_add_before.
+	(gl_list_nx_add_after): Renamed from gl_list_add_after.
+	(gl_list_nx_add_at): Renamed from gl_list_add_at.
+	(gl_sortedlist_nx_add): Renamed from gl_sortedlist_add.
+	* lib/gl_list.c (gl_list_nx_create_empty): Renamed from
+	gl_list_create_empty.
+	(gl_list_nx_create): Renamed from gl_list_create.
+	(gl_list_node_nx_set_value): Renamed from gl_list_node_set_value.
+	(gl_list_nx_set_at): Renamed from gl_list_set_at.
+	(gl_list_nx_add_first): Renamed from gl_list_add_first.
+	(gl_list_nx_add_last): Renamed from gl_list_add_last.
+	(gl_list_nx_add_before): Renamed from gl_list_add_before.
+	(gl_list_nx_add_after): Renamed from gl_list_add_after.
+	(gl_list_nx_add_at): Renamed from gl_list_add_at.
+	(gl_sortedlist_nx_add): Renamed from gl_sortedlist_add.
+	* lib/gl_array_list.c: Don't include xalloc.h.
+	(gl_array_nx_create_empty): Renamed from gl_array_create_empty. Return
+	NULL upon out-of-memory.
+	(gl_array_nx_create): Renamed from gl_array_create. Return NULL upon
+	out-of-memory.
+	(gl_array_node_nx_set_value): Renamed from gl_array_node_set_value.
+	Change return type to 'int'.
+	(gl_array_nx_set_at): Renamed from gl_array_set_at.
+	(grow): Change return type to 'int'. Return -1 upon out-of-memory.
+	(gl_array_nx_add_first): Renamed from gl_array_add_first. Return NULL
+	upon out-of-memory.
+	(gl_array_nx_add_last): Renamed from gl_array_add_last. Return NULL
+	upon out-of-memory.
+	(gl_array_nx_add_before): Renamed from gl_array_add_before. Return NULL
+	upon out-of-memory.
+	(gl_array_nx_add_after): Renamed from gl_array_add_after. Return NULL
+	upon out-of-memory.
+	(gl_array_nx_add_at): Renamed from gl_array_add_at. Return NULL upon
+	out-of-memory.
+	(gl_array_sortedlist_nx_add): Renamed from gl_array_sortedlist_add.
+	Update.
+	(gl_array_list_implementation): Update.
+	* lib/gl_carray_list.c: Don't include xalloc.h.
+	(gl_carray_nx_create_empty): Renamed from gl_carray_create_empty.
+	Return NULL upon out-of-memory.
+	(gl_carray_nx_create): Renamed from gl_carray_create. Return NULL upon
+	out-of-memory.
+	(gl_carray_node_nx_set_value): Renamed from gl_carray_node_set_value.
+	Change return type to 'int'.
+	(gl_carray_nx_set_at): Renamed from gl_carray_set_at.
+	(grow): Change return type to 'int'. Return -1 upon out-of-memory.
+	(gl_carray_nx_add_first): Renamed from gl_carray_add_first. Return NULL
+	upon out-of-memory.
+	(gl_carray_nx_add_last): Renamed from gl_carray_add_last. Return NULL
+	upon out-of-memory.
+	(gl_carray_nx_add_at): Renamed from gl_carray_add_at. Return NULL upon
+	out-of-memory.
+	(gl_carray_nx_add_before): Renamed from gl_carray_add_before. Update.
+	(gl_carray_nx_add_after): Renamed from gl_carray_add_after. Update.
+	(gl_carray_sortedlist_nx_add): Renamed from gl_carray_sortedlist_add.
+	Update.
+	(gl_carray_list_implementation): Update.
+	* lib/gl_anyhash_list2.h (hash_resize): Do nothing upon out-of-memory.
+	* lib/gl_anylinked_list2.h (gl_linked_nx_create_empty): Renamed from
+	gl_linked_create_empty. Return NULL upon out-of-memory.
+	(gl_linked_nx_create): Renamed from gl_linked_create. Return NULL upon
+	out-of-memory.
+	(gl_linked_node_nx_set_value): Renamed from gl_linked_node_set_value.
+	Change return type to 'int'. Return -1 upon out-of-memory.
+	(gl_linked_nx_set_at): Renamed from gl_linked_set_at. Return NULL upon
+	out-of-memory.
+	(gl_linked_nx_add_first): Renamed from gl_linked_add_first. Return NULL
+	upon out-of-memory.
+	(gl_linked_nx_add_last): Renamed from gl_linked_add_last. Return NULL
+	upon out-of-memory.
+	(gl_linked_nx_add_before): Renamed from gl_linked_add_before. Return
+	NULL upon out-of-memory.
+	(gl_linked_nx_add_after): Renamed from gl_linked_add_after. Return NULL
+	upon out-of-memory.
+	(gl_linked_nx_add_at): Renamed from gl_linked_add_at. Return NULL upon
+	out-of-memory.
+	(gl_linked_sortedlist_nx_add): Renamed from gl_linked_sortedlist_add.
+	Update.
+	* lib/gl_linked_list.c: Don't include xalloc.h.
+	(gl_linked_list_implementation): Update.
+	* lib/gl_linkedhash_list.c: Don't include xalloc.h.
+	(add_to_bucket): Change return type to 'int'.
+	(gl_linkedhash_list_implementation): Update.
+	* lib/gl_anytree_list1.h (free_subtree): New function.
+	* lib/gl_anytree_list2.h (gl_tree_nx_create_empty): Renamed from
+	gl_tree_create_empty. Return NULL upon out-of-memory.
+	(gl_tree_node_nx_set_value): Renamed from gl_tree_node_set_value.
+	Change return type to 'int'. Return -1 upon out-of-memory.
+	(gl_tree_nx_set_at): Renamed from gl_tree_set_at. Return NULL upon
+	out-of-memory.
+	(gl_tree_nx_add_at): Renamed from gl_tree_add_at. Update.
+	(gl_tree_remove_node): New function, moved here from
+	lib/gl_anyavltree_list2.h and lib/gl_anyrbtree_list2.h.
+	(gl_tree_sortedlist_nx_add): Renamed from gl_tree_sortedlist_add.
+	Update.
+	* lib/gl_anyavltree_list2.h (create_subtree_with_contents): Use
+	malloc, not xmalloc. Return NULL upon out-of-memory.
+	(gl_tree_nx_create): Renamed from gl_tree_create. Return NULL upon
+	out-of-memory.
+	(gl_tree_remove_node_from_tree): New function, extracted from
+	gl_tree_remove_node.
+	(gl_tree_nx_add_first): Renamed from gl_tree_add_first. Return NULL
+	upon out-of-memory.
+	(gl_tree_nx_add_last): Renamed from gl_tree_add_last. Return NULL upon
+	out-of-memory.
+	(gl_tree_nx_add_before): Renamed from gl_tree_add_before. Return NULL
+	upon out-of-memory.
+	(gl_tree_nx_add_after): Renamed from gl_tree_add_after. Return NULL
+	upon out-of-memory.
+	(gl_tree_remove_node): Remove function. Moved to gl_anytree_list2.h.
+	* lib/gl_anyrbtree_list2.h (create_subtree_with_contents): Use malloc,
+	not xmalloc. Return NULL upon out-of-memory.
+	(gl_tree_nx_create): Renamed from gl_tree_create. Return NULL upon
+	out-of-memory.
+	(gl_tree_remove_node_from_tree): New function, extracted from
+	gl_tree_remove_node.
+	(gl_tree_nx_add_first): Renamed from gl_tree_add_first. Return NULL
+	upon out-of-memory.
+	(gl_tree_nx_add_last): Renamed from gl_tree_add_last. Return NULL upon
+	out-of-memory.
+	(gl_tree_nx_add_before): Renamed from gl_tree_add_before. Return NULL
+	upon out-of-memory.
+	(gl_tree_nx_add_after): Renamed from gl_tree_add_after. Return NULL
+	upon out-of-memory.
+	(gl_tree_remove_node): Remove function. Moved to gl_anytree_list2.h.
+	* lib/gl_avltree_list.c: Don't include xalloc.h. Include
+	gl_anytree_list1.h before gl_anyavltree_list2.h.
+	(gl_avltree_list_implementation): Update.
+	* lib/gl_rbtree_list.c: Don't include xalloc.h. Include
+	gl_anytree_list1.h before gl_anyavltree_list2.h.
+	(gl_rbtree_list_implementation): Update.
+	* lib/gl_anytreehash_list1.h (add_to_bucket, add_nodes_to_buckets):
+	Change return type to 'int'. Return -1 upon out-of-memory. Use
+	__builtin_expect.
+	* lib/gl_avltreehash_list.c: Don't include xalloc.h.
+	(gl_avltreehash_list_implementation): Update.
+	* lib/gl_rbtreehash_list.c: Don't include xalloc.h.
+	(gl_rbtreehash_list_implementation): Update.
+	* modules/array-list (Depends-on): Remove xalloc.
+	* modules/carray-list (Depends-on): Likewise.
+	* modules/linked-list (Depends-on): Likewise.
+	* modules/linkedhash-list (Depends-on): Likewise.
+	* modules/avltree-list (Depends-on): Likewise.
+	* modules/rbtree-list (Depends-on): Likewise.
+	* modules/avltreehash-list (Depends-on): Likewise.
+	* modules/rbtreehash-list (Depends-on): Likewise.
+
+	* modules/xsublist: New file.
+	* lib/gl_xsublist.h: New file.
+	* lib/gl_xsublist.c: New file.
+	* lib/gl_sublist.h (gl_sublist_create): Disable declaration.
+	(gl_sublist_nx_create): New declaration.
+	* lib/gl_sublist.c: Don't include xalloc.h.
+	(gl_sublist_nx_create_empty): Renamed from gl_sublist_create_empty.
+	(gl_sublist_nx_create_fill): Renamed from gl_sublist_create_fill.
+	(gl_sublist_node_nx_set_value): Renamed from gl_sublist_node_set_value.
+	Change return type to 'int'. Return -1 upon out-of-memory.
+	(gl_sublist_nx_set_at): Renamed from gl_sublist_set_at. Return NULL
+	upon out-of-memory.
+	(gl_sublist_nx_add_first): Renamed from gl_sublist_add_first. Return
+	NULL upon out-of-memory.
+	(gl_sublist_nx_add_last): Renamed from gl_sublist_add_last. Return NULL
+	upon out-of-memory.
+	(gl_sublist_nx_add_before): Renamed from gl_sublist_add_before. Return
+	NULL upon out-of-memory.
+	(gl_sublist_nx_add_after): Renamed from gl_sublist_add_after. Return
+	NULL upon out-of-memory.
+	(gl_sublist_nx_add_at): Renamed from gl_sublist_add_at. Return NULL
+	upon out-of-memory.
+	(gl_sublist_sortedlist_nx_add): Renamed from gl_sublist_sortedlist_add.
+	(gl_sublist_list_implementation): Update.
+	(gl_sublist_nx_create): Renamed from gl_sublist_create. Return NULL
+	upon out-of-memory.
+	* modules/sublist (Depends-on): Remove xalloc.
+
+	* tests/test-array_list.c: Use gl_list_nx_* functions where possible.
+	* tests/test-carray_list.c: Likewise.
+	* tests/test-linked_list.c: Likewise.
+	* tests/test-linkedhash_list.c: Likewise.
+	* tests/test-avltree_list.c: Likewise.
+	* tests/test-rbtree_list.c: Likewise.
+	* tests/test-avltreehash_list.c: Likewise.
+	* tests/test-rbtreehash_list.c: Likewise.
+	* modules/array-list-tests (Makefile.am): Don't link with @LIBINTL@.
+	* modules/carray-list-tests (Makefile.am): Likewise.
+	* modules/linked-list-tests (Makefile.am): Likewise.
+	* modules/linkedhash-list-tests (Makefile.am): Likewise.
+	* modules/avltree-list-tests (Makefile.am): Likewise.
+	* modules/rbtree-list-tests (Makefile.am): Likewise.
+	* modules/avltreehash-list-tests (Makefile.am): Likewise.
+	* modules/rbtreehash-list-tests (Makefile.am): Likewise.
+
+	* NEWS: Mention the changes.
+
+	* lib/clean-temp.c: Include gl_xlist.h.
+	* modules/clean-temp (Depends-on): Add xlist.
+
+	* lib/git-merge-changelog.c: Include gl_xlist.h instead of gl_list.h.
+	* modules/git-merge-changelog (Depends-on): Add xlist. Remove list.
+
+	* tests/test-array_oset.c: Include gl_xlist.h.
+	* modules/array-oset-tests (Depends-on): Add xlist.
+
+	Reported by José E. Marchesi <jemarch@gnu.org>.
+
+2009-12-13  Bruno Haible  <bruno@clisp.org>
+
 	Move the malloc checking from module 'oset' to new module 'xoset'.
 	* modules/xoset: New file.
 	* lib/gl_xoset.h: New file.

@@ -1,5 +1,5 @@
 /* Sequential list data type implemented by a linked list.
-   Copyright (C) 2006, 2008 Free Software Foundation, Inc.
+   Copyright (C) 2006, 2008-2009 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify
@@ -22,8 +22,6 @@
 
 #include <stdlib.h>
 
-#include "xalloc.h"
-
 /* -------------------------- gl_list_t Data Type -------------------------- */
 
 /* Generic linked list code.  */
@@ -33,22 +31,22 @@
 
 const struct gl_list_implementation gl_linked_list_implementation =
   {
-    gl_linked_create_empty,
-    gl_linked_create,
+    gl_linked_nx_create_empty,
+    gl_linked_nx_create,
     gl_linked_size,
     gl_linked_node_value,
-    gl_linked_node_set_value,
+    gl_linked_node_nx_set_value,
     gl_linked_next_node,
     gl_linked_previous_node,
     gl_linked_get_at,
-    gl_linked_set_at,
+    gl_linked_nx_set_at,
     gl_linked_search_from_to,
     gl_linked_indexof_from_to,
-    gl_linked_add_first,
-    gl_linked_add_last,
-    gl_linked_add_before,
-    gl_linked_add_after,
-    gl_linked_add_at,
+    gl_linked_nx_add_first,
+    gl_linked_nx_add_last,
+    gl_linked_nx_add_before,
+    gl_linked_nx_add_after,
+    gl_linked_nx_add_at,
     gl_linked_remove_node,
     gl_linked_remove_at,
     gl_linked_remove,
@@ -61,6 +59,6 @@ const struct gl_list_implementation gl_linked_list_implementation =
     gl_linked_sortedlist_search_from_to,
     gl_linked_sortedlist_indexof,
     gl_linked_sortedlist_indexof_from_to,
-    gl_linked_sortedlist_add,
+    gl_linked_sortedlist_nx_add,
     gl_linked_sortedlist_remove
   };
