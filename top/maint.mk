@@ -750,12 +750,21 @@ alpha beta stable: $(local-check) writable-files no-submodule-changes
 	$(MAKE) news-check
 	$(MAKE) distcheck
 	$(MAKE) dist XZ_OPT=-9ev
-	$(MAKE) -s announcement RELEASE_TYPE=$@ > /tmp/announce-$(my_distdir)
+	$(MAKE) $(release-prep-hook) RELEASE_TYPE=$@
+	$(MAKE) -s emit_upload_commands RELEASE_TYPE=$@
+
+# Override this in cfg.mk if you follow different procedures.
+release-prep-hook ?= release-prep
+
+.PHONY: release-prep
+release-prep:
+	case $$RELEASE_TYPE in alpha|beta|stable) ;; \
+	  *) echo "invalid RELEASE_TYPE: $$RELEASE_TYPE" 1>&2; exit 1;; esac
+	$(MAKE) -s announcement > /tmp/announce-$(my_distdir)
 	if test -d $(release_archive_dir); then			\
 	  ln $(rel-files) $(release_archive_dir);		\
 	  chmod a-w $(rel-files);				\
 	fi
-	$(MAKE) -s emit_upload_commands RELEASE_TYPE=$@
 	echo $(VERSION) > $(prev_version_file)
 	$(MAKE) update-NEWS-hash
 	perl -pi -e '$$. == 3 and print "$(noteworthy)\n\n\n"' NEWS
