@@ -8,7 +8,6 @@ lib/gl_anytree_oset.h
 
 Depends-on:
 oset
-xalloc
 
 configure.ac:
 

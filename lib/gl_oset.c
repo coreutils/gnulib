@@ -27,11 +27,12 @@
    Use #define to avoid a warning because of extern vs. static.  */
 
 gl_oset_t
-gl_oset_create_empty (gl_oset_implementation_t implementation,
-                      gl_setelement_compar_fn compar_fn,
-                      gl_setelement_dispose_fn dispose_fn)
+gl_oset_nx_create_empty (gl_oset_implementation_t implementation,
+                         gl_setelement_compar_fn compar_fn,
+                         gl_setelement_dispose_fn dispose_fn)
 {
-  return implementation->create_empty (implementation, compar_fn, dispose_fn);
+  return implementation->nx_create_empty (implementation, compar_fn,
+                                          dispose_fn);
 }
 
 size_t
@@ -55,10 +56,10 @@ gl_oset_search_atleast (gl_oset_t set,
          ->search_atleast (set, threshold_fn, threshold, eltp);
 }
 
-bool
-gl_oset_add (gl_oset_t set, const void *elt)
+int
+gl_oset_nx_add (gl_oset_t set, const void *elt)
 {
-  return ((const struct gl_oset_impl_base *) set)->vtable->add (set, elt);
+  return ((const struct gl_oset_impl_base *) set)->vtable->nx_add (set, elt);
 }
 
 bool

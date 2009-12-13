@@ -1,5 +1,5 @@
 /* Ordered set data type implemented by a binary tree.
-   Copyright (C) 2006-2007 Free Software Foundation, Inc.
+   Copyright (C) 2006-2007, 2009 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify
@@ -28,11 +28,15 @@ typedef struct
 typedef iterstack_item_t iterstack_t[MAXHEIGHT];
 
 static gl_oset_t
-gl_tree_create_empty (gl_oset_implementation_t implementation,
-                      gl_setelement_compar_fn compar_fn,
-                      gl_setelement_dispose_fn dispose_fn)
+gl_tree_nx_create_empty (gl_oset_implementation_t implementation,
+                         gl_setelement_compar_fn compar_fn,
+                         gl_setelement_dispose_fn dispose_fn)
 {
-  struct gl_oset_impl *set = XMALLOC (struct gl_oset_impl);
+  struct gl_oset_impl *set =
+    (struct gl_oset_impl *) malloc (sizeof (struct gl_oset_impl));
+
+  if (set == NULL)
+    return NULL;
 
   set->base.vtable = implementation;
   set->base.compar_fn = compar_fn;
@@ -132,15 +136,16 @@ gl_tree_search_node (gl_oset_t set, const void *elt)
   return NULL;
 }
 
-static bool
-gl_tree_add (gl_oset_t set, const void *elt)
+static int
+gl_tree_nx_add (gl_oset_t set, const void *elt)
 {
   gl_setelement_compar_fn compar;
   gl_oset_node_t node = set->root;
 
   if (node == NULL)
     {
-      gl_tree_add_first (set, elt);
+      if (gl_tree_nx_add_first (set, elt) == NULL)
+        return -1;
       return true;
     }
 
@@ -157,7 +162,8 @@ gl_tree_add (gl_oset_t set, const void *elt)
         {
           if (node->right == NULL)
             {
-              gl_tree_add_after (set, node, elt);
+              if (gl_tree_nx_add_after (set, node, elt) == NULL)
+                return -1;
               return true;
             }
           node = node->right;
@@ -166,7 +172,8 @@ gl_tree_add (gl_oset_t set, const void *elt)
         {
           if (node->left == NULL)
             {
-              gl_tree_add_before (set, node, elt);
+              if (gl_tree_nx_add_before (set, node, elt) == NULL)
+                return -1;
               return true;
             }
           node = node->left;

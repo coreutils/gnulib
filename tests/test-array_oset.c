@@ -1,5 +1,5 @@
 /* Test of ordered set data type implementation.
-   Copyright (C) 2006-2008 Free Software Foundation, Inc.
+   Copyright (C) 2006-2009 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2007.
 
    This program is free software: you can redistribute it and/or modify
@@ -96,7 +96,8 @@ main (int argc, char *argv[])
     unsigned int repeat;
 
     /* Create set1.  */
-    set1 = gl_oset_create_empty (GL_ARRAY_OSET, (gl_setelement_compar_fn) strcmp, NULL);
+    set1 = gl_oset_nx_create_empty (GL_ARRAY_OSET, (gl_setelement_compar_fn) strcmp, NULL);
+    ASSERT (set1 != NULL);
 
     /* Create set2.  */
     set2 = gl_list_create_empty (GL_ARRAY_LIST, NULL, NULL, NULL, false);
@@ -107,7 +108,7 @@ main (int argc, char *argv[])
     for (i = 0; i < initial_size; i++)
       {
         const char *obj = RANDOM_OBJECT ();
-        ASSERT (gl_oset_add (set1, obj)
+        ASSERT (gl_oset_nx_add (set1, obj)
                 == (gl_sortedlist_search (set2, (gl_listelement_compar_fn)strcmp, obj) != NULL
                     ? false
                     : (gl_sortedlist_add (set2, (gl_listelement_compar_fn)strcmp, obj), true)));
@@ -129,7 +130,7 @@ main (int argc, char *argv[])
           case 1:
             {
               const char *obj = RANDOM_OBJECT ();
-              ASSERT (gl_oset_add (set1, obj)
+              ASSERT (gl_oset_nx_add (set1, obj)
                       == (gl_sortedlist_search (set2, (gl_listelement_compar_fn)strcmp, obj) != NULL
                           ? false
                           : (gl_sortedlist_add (set2, (gl_listelement_compar_fn)strcmp, obj), true)));

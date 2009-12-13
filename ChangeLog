@@ -1,3 +1,60 @@
+2009-12-13  Bruno Haible  <bruno@clisp.org>
+
+	Move the malloc checking from module 'oset' to new module 'xoset'.
+	* modules/xoset: New file.
+	* lib/gl_xoset.h: New file.
+	* lib/gl_xoset.c: New file.
+	* lib/gl_oset.h (gl_oset_create_empty, gl_oset_add): Disable
+	declarations.
+	(gl_oset_nx_create_empty, gl_oset_nx_add): New declarations.
+	(struct gl_oset_implementation): Rename and change methods accordingly.
+	(gl_oset_nx_create_empty): Renamed from gl_oset_create_empty.
+	(gl_oset_nx_add): Renamed from gl_oset_add. Change return type to
+	'int'. Mark as __warn_unused_result__.
+	* lib/gl_oset.c (gl_oset_nx_create_empty): Renamed from
+	gl_oset_create_empty.
+	(gl_oset_nx_add): Renamed from gl_oset_add. Change return type to
+	'int'.
+	* lib/gl_array_oset.c: Don't include xalloc.h.
+	(gl_array_nx_create_empty): Renamed from gl_array_create_empty. Use
+	malloc, not xmalloc.
+	(grow): Change return type to 'int'. Don't call xalloc_die.
+	(gl_array_nx_add_at): Renamed from gl_array_add_at. Change return type
+	to 'int'.
+	(gl_array_nx_add): Renamed from gl_array_add. Change return type to
+	'int'.
+	(gl_array_oset_implementation): Update.
+	* lib/gl_anytree_oset.h (gl_tree_nx_create_empty): Renamed from
+	gl_tree_create_empty.
+	(gl_tree_nx_add): Renamed from gl_tree_add. Change return type to
+	'int'.
+	* lib/gl_avltree_oset.c: Don't include xalloc.h.
+	(gl_tree_nx_add_first): Renamed from gl_tree_add_first. Use malloc, not
+	xmalloc.
+	(gl_tree_nx_add_before): Renamed from gl_tree_add_before. Use malloc,
+	not xmalloc.
+	(gl_tree_nx_add_after): Renamed from gl_tree_add_after. Use malloc, not
+	xmalloc.
+	(gl_avltree_oset_implementation): Update.
+	* lib/gl_rbtree_oset.c: Don't include xalloc.h.
+	(gl_tree_nx_add_first): Renamed from gl_tree_add_first. Use malloc, not
+	xmalloc.
+	(gl_tree_nx_add_before): Renamed from gl_tree_add_before. Use malloc,
+	not xmalloc.
+	(gl_tree_nx_add_after): Renamed from gl_tree_add_after. Use malloc, not
+	xmalloc.
+	(gl_rbtree_oset_implementation): Update.
+	* modules/array-oset (Depends-on): Remove xalloc.
+	* modules/avltree-oset (Depends-on): Likewise.
+	* modules/rbtree-oset (Depends-on): Likewise.
+	* tests/test-array_oset.c: Use gl_oset_nx_* functions where possible.
+	* tests/test-avltree_oset.c: Likewise.
+	* tests/test-rbtree_oset.c: Likewise.
+	* lib/gl_anytreehash_list1.h (add_to_bucket): Likewise.
+	* modules/avltree-oset-tests (Makefile.am): Don't link with @LIBINTL@.
+	* modules/rbtree-oset-tests (Makefile.am): Likewise.
+	* NEWS: Mention the change.
+
 2009-12-05  Alfred M. Szmidt  <ams@gnu.org>
 
 	maint.mk: allow a project to override release-prep commands

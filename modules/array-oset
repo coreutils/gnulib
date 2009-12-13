@@ -7,7 +7,6 @@ lib/gl_array_oset.c
 
 Depends-on:
 oset
-xalloc
 xsize
 
 configure.ac:

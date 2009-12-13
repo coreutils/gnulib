@@ -1,5 +1,5 @@
 /* Ordered set data type implemented by a binary tree.
-   Copyright (C) 2006-2007 Free Software Foundation, Inc.
+   Copyright (C) 2006-2007, 2009 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify
@@ -21,8 +21,6 @@
 #include "gl_avltree_oset.h"
 
 #include <stdlib.h>
-
-#include "xalloc.h"
 
 /* An AVL tree is a binary tree where
    1. The height of each node is calculated as
@@ -306,10 +304,14 @@ rebalance (gl_oset_t set,
 }
 
 static gl_oset_node_t
-gl_tree_add_first (gl_oset_t set, const void *elt)
+gl_tree_nx_add_first (gl_oset_t set, const void *elt)
 {
   /* Create new node.  */
-  gl_oset_node_t new_node = XMALLOC (struct gl_oset_node_impl);
+  gl_oset_node_t new_node =
+    (struct gl_oset_node_impl *) malloc (sizeof (struct gl_oset_node_impl));
+
+  if (new_node == NULL)
+    return NULL;
 
   new_node->left = NULL;
   new_node->right = NULL;
@@ -343,11 +345,15 @@ gl_tree_add_first (gl_oset_t set, const void *elt)
 }
 
 static gl_oset_node_t
-gl_tree_add_before (gl_oset_t set, gl_oset_node_t node, const void *elt)
+gl_tree_nx_add_before (gl_oset_t set, gl_oset_node_t node, const void *elt)
 {
   /* Create new node.  */
-  gl_oset_node_t new_node = XMALLOC (struct gl_oset_node_impl);
+  gl_oset_node_t new_node =
+    (struct gl_oset_node_impl *) malloc (sizeof (struct gl_oset_node_impl));
   bool height_inc;
+
+  if (new_node == NULL)
+    return NULL;
 
   new_node->left = NULL;
   new_node->right = NULL;
@@ -380,11 +386,15 @@ gl_tree_add_before (gl_oset_t set, gl_oset_node_t node, const void *elt)
 }
 
 static gl_oset_node_t
-gl_tree_add_after (gl_oset_t set, gl_oset_node_t node, const void *elt)
+gl_tree_nx_add_after (gl_oset_t set, gl_oset_node_t node, const void *elt)
 {
   /* Create new node.  */
-  gl_oset_node_t new_node = XMALLOC (struct gl_oset_node_impl);
+  gl_oset_node_t new_node =
+    (struct gl_oset_node_impl *) malloc (sizeof (struct gl_oset_node_impl));
   bool height_inc;
+
+  if (new_node == NULL)
+    return NULL;
 
   new_node->left = NULL;
   new_node->right = NULL;
@@ -560,11 +570,11 @@ gl_avltree_oset_check_invariants (gl_oset_t set)
 
 const struct gl_oset_implementation gl_avltree_oset_implementation =
   {
-    gl_tree_create_empty,
+    gl_tree_nx_create_empty,
     gl_tree_size,
     gl_tree_search,
     gl_tree_search_atleast,
-    gl_tree_add,
+    gl_tree_nx_add,
     gl_tree_remove,
     gl_tree_oset_free,
     gl_tree_iterator,

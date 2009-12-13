@@ -10,4 +10,3 @@ configure.ac:
 Makefile.am:
 TESTS += test-avltree_oset
 check_PROGRAMS += test-avltree_oset
-test_avltree_oset_LDADD = $(LDADD) @LIBINTL@

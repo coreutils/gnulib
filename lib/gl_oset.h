@@ -89,9 +89,15 @@ typedef const struct gl_oset_implementation * gl_oset_implementation_t;
    IMPLEMENTATION is one of GL_ARRAY_OSET, GL_AVLTREE_OSET, GL_RBTREE_OSET.
    COMPAR_FN is an element comparison function or NULL.
    DISPOSE_FN is an element disposal function or NULL.  */
+#if 0 /* declared in gl_xoset.h */
 extern gl_oset_t gl_oset_create_empty (gl_oset_implementation_t implementation,
                                        gl_setelement_compar_fn compar_fn,
                                        gl_setelement_dispose_fn dispose_fn);
+#endif
+/* Likewise.  Return NULL upon out-of-memory.  */
+extern gl_oset_t gl_oset_nx_create_empty (gl_oset_implementation_t implementation,
+                                          gl_setelement_compar_fn compar_fn,
+                                          gl_setelement_dispose_fn dispose_fn);
 
 /* Return the current number of elements in an ordered set.  */
 extern size_t gl_oset_size (gl_oset_t set);
@@ -111,8 +117,16 @@ extern bool gl_oset_search_atleast (gl_oset_t set,
                                     const void **eltp);
 
 /* Add an element to an ordered set.
-   Return true if it was not already in the set and added.  */
+   Return true if it was not already in the set and added, false otherwise.  */
+#if 0 /* declared in gl_xoset.h */
 extern bool gl_oset_add (gl_oset_t set, const void *elt);
+#endif
+/* Likewise.  Return -1 upon out-of-memory.  */
+extern int gl_oset_nx_add (gl_oset_t set, const void *elt)
+#if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
+  __attribute__ ((__warn_unused_result__))
+#endif
+  ;
 
 /* Remove an element from an ordered set.
    Return true if it was found and removed.  */
@@ -159,15 +173,15 @@ extern void gl_oset_iterator_free (gl_oset_iterator_t *iterator);
 struct gl_oset_implementation
 {
   /* gl_oset_t functions.  */
-  gl_oset_t (*create_empty) (gl_oset_implementation_t implementation,
-                             gl_setelement_compar_fn compar_fn,
-                             gl_setelement_dispose_fn dispose_fn);
+  gl_oset_t (*nx_create_empty) (gl_oset_implementation_t implementation,
+                                gl_setelement_compar_fn compar_fn,
+                                gl_setelement_dispose_fn dispose_fn);
   size_t (*size) (gl_oset_t set);
   bool (*search) (gl_oset_t set, const void *elt);
   bool (*search_atleast) (gl_oset_t set,
                           gl_setelement_threshold_fn threshold_fn,
                           const void *threshold, const void **eltp);
-  bool (*add) (gl_oset_t set, const void *elt);
+  int (*nx_add) (gl_oset_t set, const void *elt);
   bool (*remove_elt) (gl_oset_t set, const void *elt);
   void (*oset_free) (gl_oset_t set);
   /* gl_oset_iterator_t functions.  */
@@ -189,13 +203,14 @@ struct gl_oset_impl_base
    struct gl_oset_implementation.
    Use #define to avoid a warning because of extern vs. static.  */
 
-# define gl_oset_create_empty gl_oset_create_empty_inline
+# define gl_oset_nx_create_empty gl_oset_nx_create_empty_inline
 static inline gl_oset_t
-gl_oset_create_empty (gl_oset_implementation_t implementation,
-                      gl_setelement_compar_fn compar_fn,
-                      gl_setelement_dispose_fn dispose_fn)
+gl_oset_nx_create_empty (gl_oset_implementation_t implementation,
+                         gl_setelement_compar_fn compar_fn,
+                         gl_setelement_dispose_fn dispose_fn)
 {
-  return implementation->create_empty (implementation, compar_fn, dispose_fn);
+  return implementation->nx_create_empty (implementation, compar_fn,
+                                          dispose_fn);
 }
 
 # define gl_oset_size gl_oset_size_inline
@@ -222,11 +237,11 @@ gl_oset_search_atleast (gl_oset_t set,
          ->search_atleast (set, threshold_fn, threshold, eltp);
 }
 
-# define gl_oset_add gl_oset_add_inline
-static inline bool
-gl_oset_add (gl_oset_t set, const void *elt)
+# define gl_oset_nx_add gl_oset_nx_add_inline
+static inline int
+gl_oset_nx_add (gl_oset_t set, const void *elt)
 {
-  return ((const struct gl_oset_impl_base *) set)->vtable->add (set, elt);
+  return ((const struct gl_oset_impl_base *) set)->vtable->nx_add (set, elt);
 }
 
 # define gl_oset_remove gl_oset_remove_inline

@@ -1,5 +1,5 @@
 /* Sequential list data type implemented by a hash table with a binary tree.
-   Copyright (C) 2006-2007 Free Software Foundation, Inc.
+   Copyright (C) 2006-2007, 2009 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify
@@ -101,8 +101,8 @@ gl_oset_first (gl_oset_t set)
 
 /* Add a node to the hash table structure.
    If duplicates are allowed, this function performs in average time
-   O((log n)^2): gl_oset_add may need to add an element to an ordered set of
-   size O(n), needing O(log n) comparison function calls.  The comparison
+   O((log n)^2): gl_oset_nx_add may need to add an element to an ordered set
+   of size O(n), needing O(log n) comparison function calls.  The comparison
    function is compare_by_position, which is O(log n) worst-case.
    If duplicates are forbidden, this function is O(1).  */
 static void
@@ -134,7 +134,8 @@ add_to_bucket (gl_list_t list, gl_list_node_t new_node)
                     {
                       /* Found already multiple nodes with the same value.
                          Add the new_node to it.  */
-                      gl_oset_add (nodes, new_node);
+                      if (gl_oset_nx_add (nodes, new_node) < 0)
+                        xalloc_die ();
                       return;
                     }
                 }
@@ -150,11 +151,15 @@ add_to_bucket (gl_list_t list, gl_list_node_t new_node)
                       struct gl_multiple_nodes *multi_entry;
 
                       nodes =
-                        gl_oset_create_empty (OSET_TREE_FLAVOR,
-                                              compare_by_position, NULL);
+                        gl_oset_nx_create_empty (OSET_TREE_FLAVOR,
+                                                 compare_by_position, NULL);
+                      if (nodes == NULL)
+                        xalloc_die ();
 
-                      gl_oset_add (nodes, node);
-                      gl_oset_add (nodes, new_node);
+                      if (gl_oset_nx_add (nodes, node) < 0)
+                        xalloc_die ();
+                      if (gl_oset_nx_add (nodes, new_node) < 0)
+                        xalloc_die ();
 
                       multi_entry = XMALLOC (struct gl_multiple_nodes);
                       multi_entry->h.hash_next = entry->hash_next;

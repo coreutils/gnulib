@@ -6,6 +6,11 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2009-12-13  oset            The module does not define functions any more that
+                            call xalloc_die() in out-of-memory situations.
+                            Use module 'xoset' and include file "gl_xoset.h"
+                            instead.
+
 2009-12-10  *               Most source code files have been converted to
                             indentation by spaces (rather than tabs). Patches
                             of gnulib source code needs to be updated.

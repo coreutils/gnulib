@@ -10,4 +10,3 @@ configure.ac:
 Makefile.am:
 TESTS += test-rbtree_oset
 check_PROGRAMS += test-rbtree_oset
-test_rbtree_oset_LDADD = $(LDADD) @LIBINTL@
