@@ -91,7 +91,16 @@ static inline void
 update_fpos_cache (FILE *fp, off_t pos)
 {
 #if defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, MacOS X, Cygwin */
-  fp_->_offset = pos;
+  /* Use a union, since on NetBSD, the compilation flags determine
+     whether fpos_t is typedef'd to off_t or a struct containing a
+     single off_t member.  */
+  union
+    {
+      fpos_t f;
+      off_t o;
+    } u;
+  u.o = pos;
+  fp_->_offset = u.f;
   fp_->_flags |= __SOFF;
 #endif
 }

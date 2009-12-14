@@ -110,7 +110,18 @@ rpl_fseeko (FILE *fp, off_t offset, int whence)
 #if defined _IO_ftrylockfile || __GNU_LIBRARY__ == 1 /* GNU libc, BeOS, Haiku, Linux libc5 */
       fp->_flags &= ~_IO_EOF_SEEN;
 #elif defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, MacOS X, Cygwin */
-      fp_->_offset = pos;
+      {
+        /* Use a union, since on NetBSD, the compilation flags
+           determine whether fpos_t is typedef'd to off_t or a struct
+           containing a single off_t member.  */
+        union
+          {
+            fpos_t f;
+            off_t o;
+          } u;
+        u.o = pos;
+        fp_->_offset = u.f;
+      }
       fp_->_flags |= __SOFF;
       fp_->_flags &= ~__SEOF;
 #elif defined __EMX__               /* emx+gcc */

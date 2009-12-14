@@ -1,3 +1,11 @@
+2009-12-16  Eric Blake  <ebb9@byu.net>
+
+	fflush: avoid compilation error on NetBSD
+	* lib/fflush.c (update_fpos_cache): Use a union to safely convert
+	between off_t and fpos_t, since the latter is sometimes a struct.
+	* lib/fseeko.c (rpl_fseeko): Likewise.
+	Reported by Alexander Nasonov <alnsn@yandex.ru>.
+
 2009-12-15  Eric Blake  <ebb9@byu.net>
 
 	fcntl-h, stdio, sys_ioctl: fix declarations
