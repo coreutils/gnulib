@@ -20,7 +20,7 @@ Include:
 "areadlink.h"
 
 License:
-GPL
+LGPLv2+
 
 Maintainer:
 Jim Meyering
