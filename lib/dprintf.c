@@ -57,6 +57,9 @@ dprintf (int fd, const char *format, ...)
       return -1;
     }
 
+  if (output != buf)
+    free (output);
+
   if (len > INT_MAX)
     {
       errno = EOVERFLOW;

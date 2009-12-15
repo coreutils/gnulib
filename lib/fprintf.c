@@ -1,5 +1,5 @@
 /* Formatted output to a stream.
-   Copyright (C) 2004, 2006-2008 Free Software Foundation, Inc.
+   Copyright (C) 2004, 2006-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -62,6 +62,9 @@ fprintf (FILE *fp, const char *format, ...)
         }
       return -1;
     }
+
+  if (output != buf)
+    free (output);
 
   if (len > INT_MAX)
     {
