@@ -2000,6 +2000,7 @@ func_all_modules ()
   func_module func
   func_module inline
   func_module longlong
+  func_module va-args
   func_module vararrays
   func_end_table
 

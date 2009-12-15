@@ -1,5 +1,10 @@
 2009-12-23  Eric Blake  <ebb9@byu.net>
 
+	va-args: new module
+	* modules/va-args: New file.
+	* m4/va-args.m4 (gl_VA_ARGS): Likewise.
+	* MODULES.html.sh (Core language properties): Mention it.
+
 	gnulib-common: prefer _GL_UNUSED over _UNUSED_PARAMETER_
 	* m4/gnulib-common.m4 (gl_COMMON): Create a more-appropriately
 	named alias for __attribute__((__unused__)).
