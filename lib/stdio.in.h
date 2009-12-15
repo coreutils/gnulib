@@ -80,10 +80,10 @@ extern int dprintf (int fd, const char *format, ...)
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef dprintf
-# define dprintf(d,f,a) \
+# define dprintf \
     (GL_LINK_WARNING ("dprintf is unportable - " \
                       "use gnulib module dprintf for portability"), \
-     dprintf (d, f, a))
+     dprintf)
 #endif
 
 #if @GNULIB_FCLOSE@

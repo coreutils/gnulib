@@ -1,3 +1,12 @@
+2009-12-15  Eric Blake  <ebb9@byu.net>
+
+	fcntl-h, stdio, sys_ioctl: fix declarations
+	* lib/stdio.in.h (dprintf): Use of link warning on a variadic
+	function must not take arguments.
+	* lib/sys_ioctl.in.h (ioctl): Likewise.
+	* lib/fcntl.in.h (openat): Likewise.  Declare extern.
+	(open): Add a link warning.
+
 2009-12-15  Jim Meyering  <meyering@redhat.com>
 
 	areadlink, areadlink-with-size: relax license to LGPLv2+
@@ -5,7 +14,7 @@
 	* modules/areadlink-with-size (License): Likewise.
 
 2009-12-15  Joel E. Denny  <jdenny@clemson.edu>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	*printf: Fix memory leak.
 	* lib/fprintf.c (fprintf): Free memory allocated by vasnprintf.

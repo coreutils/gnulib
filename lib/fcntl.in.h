@@ -61,6 +61,12 @@ extern "C" {
 #  define open rpl_open
 extern int open (const char *filename, int flags, ...) _GL_ARG_NONNULL ((1));
 # endif
+#elif defined GNULIB_POSIXCHECK
+# undef open
+# define open \
+    (GL_LINK_WARNING ("open is not always POSIX compliant - " \
+                      "use gnulib module open for portability"), \
+     open)
 #endif
 
 #if @GNULIB_OPENAT@
@@ -69,12 +75,12 @@ extern int open (const char *filename, int flags, ...) _GL_ARG_NONNULL ((1));
 #  define openat rpl_openat
 # endif
 # if !@HAVE_OPENAT@ || @REPLACE_OPENAT@
-int openat (int fd, char const *file, int flags, /* mode_t mode */ ...)
+extern int openat (int fd, char const *file, int flags, /* mode_t mode */ ...)
      _GL_ARG_NONNULL ((2));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef openat
-# define openat(f,u,g) \
+# define openat \
     (GL_LINK_WARNING ("openat is not portable - " \
                       "use gnulib module openat for portability"), \
      openat)

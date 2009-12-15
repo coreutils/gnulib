@@ -54,10 +54,10 @@ extern int ioctl (int fd, int request, ... /* {void *,char *} arg */);
 # define ioctl ioctl_used_without_requesting_gnulib_module_ioctl
 #elif defined GNULIB_POSIXCHECK
 # undef ioctl
-# define ioctl(f,c,a) \
+# define ioctl \
     (GL_LINK_WARNING ("ioctl does not portably work on sockets - " \
                       "use gnulib module ioctl for portability"), \
-     ioctl (f, c, a))
+     ioctl)
 #endif
 
 
