@@ -368,7 +368,6 @@ lutimens (char const *file, struct timespec const timespec[2])
   struct timespec *ts = timespec ? adjusted_timespec : NULL;
   int adjustment_needed = 0;
   struct stat st;
-  int result;
 
   if (ts)
     {
@@ -387,7 +386,7 @@ lutimens (char const *file, struct timespec const timespec[2])
 #if HAVE_UTIMENSAT
   if (0 <= lutimensat_works_really)
     {
-      result = utimensat (AT_FDCWD, file, ts, AT_SYMLINK_NOFOLLOW);
+      int result = utimensat (AT_FDCWD, file, ts, AT_SYMLINK_NOFOLLOW);
 # ifdef __linux__
       /* Work around a kernel bug:
          http://bugzilla.redhat.com/442352
@@ -427,6 +426,7 @@ lutimens (char const *file, struct timespec const timespec[2])
   {
     struct timeval timeval[2];
     struct timeval const *t;
+    int result;
     if (ts)
       {
         timeval[0].tv_sec = ts[0].tv_sec;

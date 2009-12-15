@@ -1,3 +1,8 @@
+2009-12-14  Eric Blake  <ebb9@byu.net>
+
+	utimens: one more try at avoiding compiler warning
+	* lib/utimens.c (lutimens): Lower scope of result.
+
 2009-12-13  Bruno Haible  <bruno@clisp.org>
 
 	Move the malloc checking from module 'list' to new module 'xlist'.
