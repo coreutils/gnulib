@@ -9,7 +9,7 @@ m4/accept4.m4
 Depends-on:
 sys_socket
 accept
-fcntl
+fcntl-h
 binary-io
 
 configure.ac:

@@ -1,5 +1,8 @@
 2009-12-14  Eric Blake  <ebb9@byu.net>
 
+	accept4: adjust module dependencies
+	* modules/accept4 (Depends-on): Use fcntl-h, not fcntl.
+
 	utimens: one more try at avoiding compiler warning
 	* lib/utimens.c (lutimens): Lower scope of result.
 
