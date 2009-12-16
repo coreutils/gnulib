@@ -1,4 +1,4 @@
-# math_h.m4 serial 16
+# math_h.m4 serial 17
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -35,6 +35,12 @@ AC_DEFUN([gl_MATH_H],
   if test $gl_cv_header_math_huge_val_works = no; then
     REPLACE_HUGE_VAL=1
   fi
+
+  dnl Check for declarations of anything we want to poison if the
+  dnl corresponding gnulib module is not in use.
+  gl_WARN_ON_USE_PREPARE([[#include <math.h>
+    ]], [acosl asinl atanl ceilf ceill cosl expl floorf floorl frexpl
+    ldexpl logl round roundf roundl sinl sqrtl tanl trunc truncf truncl])
 ])
 
 AC_DEFUN([gl_MATH_MODULE_INDICATOR],

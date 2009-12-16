@@ -1,3 +1,83 @@
+2010-01-20  Eric Blake  <ebb9@byu.net>
+
+	warn-on-use: use instead of link-warning
+	* modules/stdio (Depends-on, Makefile.am): Drop link-warning.
+	* modules/unistd (Depends-on, Makefile.am): Likewise.
+	* modules/arpa_inet (Depends-on): Replace link-warning with
+	warn-on-use.
+	(Makefile.am): Update rules accordingly.
+	* modules/ctype (Depends-on, Makefile.am): Likewise.
+	* modules/dirent (Depends-on, Makefile.am): Likewise.
+	* modules/fcntl-h (Depends-on, Makefile.am): Likewise.
+	* modules/inttypes (Depends-on, Makefile.am): Likewise.
+	* modules/langinfo (Depends-on, Makefile.am): Likewise.
+	* modules/locale (Depends-on, Makefile.am): Likewise.
+	* modules/math (Depends-on, Makefile.am): Likewise.
+	* modules/search (Depends-on, Makefile.am): Likewise.
+	* modules/signal (Depends-on, Makefile.am): Likewise.
+	* modules/spawn (Depends-on, Makefile.am): Likewise.
+	* modules/stdlib (Depends-on, Makefile.am): Likewise.
+	* modules/string (Depends-on, Makefile.am): Likewise.
+	* modules/strings (Depends-on, Makefile.am): Likewise.
+	* modules/sys_file (Depends-on, Makefile.am): Likewise.
+	* modules/sys_ioctl (Depends-on, Makefile.am): Likewise.
+	* modules/sys_select (Depends-on, Makefile.am): Likewise.
+	* modules/sys_socket (Depends-on, Makefile.am): Likewise.
+	* modules/sys_stat (Depends-on, Makefile.am): Likewise.
+	* modules/sys_times (Depends-on, Makefile.am): Likewise.
+	* modules/sys_utsname (Depends-on, Makefile.am): Likewise.
+	* modules/wchar (Depends-on, Makefile.am): Likewise.
+	* m4/arpa_inet_h.m4 (gl_HEADER_ARPA_INET): Check which functions
+	should be poisoned.
+	* m4/ctype.m4 (gl_CTYPE_H): Likewise.
+	* m4/dirent_h.m4 (gl_DIRENT_H): Likewise.
+	* m4/fcntl_h.m4 (gl_FCNTL_H): Likewise.
+	* m4/inttypes.m4 (gl_INTTYPES_H): Likewise.
+	* m4/langinfo_h.m4 (gl_LANGINFO_H): Likewise.
+	* m4/locale_h.m4 (gl_LOCALE_H): Likewise.
+	* m4/math_h.m4 (gl_MATH_H): Likewise.
+	* m4/search_h.m4 (gl_SEARCH_H): Likewise.
+	* m4/signal_h.m4 (gl_SIGNAL_H): Likewise.
+	* m4/spawn_h.m4 (gl_SPAWN_H): Likewise.
+	* m4/stdio_h.m4 (gl_STDIO_H): Likewise.
+	* m4/stdlib_h.m4 (gl_STDLIB_H): Likewise.
+	* m4/string_h.m4 (gl_HEADER_STRING_H_BODY): Likewise.
+	* m4/strings_h.m4 (gl_HEADER_STRINGS_H_BODY): Likewise.
+	* m4/sys_file_h.m4 (gl_HEADER_SYS_FILE_H_DEFAULTS): Likewise.
+	* m4/sys_ioctl_h.m4 (gl_SYS_IOCTL_H): Likewise.
+	* m4/sys_select_h.m4 (gl_HEADER_SYS_SELECT): Likewise.
+	* m4/sys_socket_h.m4 (gl_HEADER_SYS_SOCKET): Likewise.
+	* m4/sys_stat_h.m4 (gl_HEADER_SYS_STAT_H): Likewise.
+	* m4/sys_times_h.m4 (gl_SYS_TIMES_H): Likewise.
+	* m4/sys_utsname_h.m4 (gl_SYS_UTSNAME_H): Likewise.
+	* m4/unistd_h.m4 (gl_UNISTD_H): Likewise.
+	* m4/wchar.m4 (gl_WCHAR_H): Likewise.
+	* lib/arpa_inet.in.h: Use _GL_WARN_ON_USE instead of
+	GL_LINK_WARNING.
+	* lib/ctype.in.h: Likewise.
+	* lib/dirent.in.h: Likewise.
+	* lib/fcntl.in.h: Likewise.
+	* lib/inttypes.in.h: Likewise.
+	* lib/langinfo.in.h: Likewise.
+	* lib/locale.in.h: Likewise.
+	* lib/math.in.h: Likewise.
+	* lib/search.in.h: Likewise.
+	* lib/signal.in.h: Likewise.
+	* lib/spawn.in.h: Likewise.
+	* lib/stdio.in.h: Likewise.
+	* lib/stdlib.in.h: Likewise.
+	* lib/string.in.h: Likewise.
+	* lib/strings.in.h: Likewise.
+	* lib/sys_file.in.h: Likewise.
+	* lib/sys_ioctl.in.h: Likewise.
+	* lib/sys_select.in.h: Likewise.
+	* lib/sys_socket.in.h: Likewise.
+	* lib/sys_stat.in.h: Likewise.
+	* lib/sys_times.in.h: Likewise.
+	* lib/sys_utsname.in.h: Likewise.
+	* lib/unistd.in.h: Likewise.
+	* lib/wchar.in.h: Likewise.
+
 2010-01-20  Bruno Haible  <bruno@clisp.org>
 
 	Avoid duplicate -lm.

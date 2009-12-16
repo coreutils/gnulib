@@ -36,7 +36,7 @@
 # include <unistd.h>
 #endif
 
-/* The definition of GL_LINK_WARNING is copied here.  */
+/* The definition of _GL_WARN_ON_USE is copied here.  */
 
 
 /* Declare overridden functions.  */
@@ -57,10 +57,10 @@ extern int ioctl (int fd, int request, ... /* {void *,char *} arg */);
 # define ioctl ioctl_used_without_requesting_gnulib_module_ioctl
 #elif defined GNULIB_POSIXCHECK
 # undef ioctl
-# define ioctl \
-    (GL_LINK_WARNING ("ioctl does not portably work on sockets - " \
-                      "use gnulib module ioctl for portability"), \
-     ioctl)
+# if HAVE_RAW_DECL_IOCTL
+_GL_WARN_ON_USE (ioctl, "ioctl does not portably work on sockets - "
+                 "use gnulib module ioctl for portability");
+# endif
 #endif
 
 

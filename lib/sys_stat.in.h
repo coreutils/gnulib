@@ -47,9 +47,9 @@
 #ifndef _GL_SYS_STAT_H
 #define _GL_SYS_STAT_H
 
-/* The definition of GL_LINK_WARNING is copied here.  */
-
 /* The definition of _GL_ARG_NONNULL is copied here.  */
+
+/* The definition of _GL_WARN_ON_USE is copied here.  */
 
 /* Before doing "#define mkdir rpl_mkdir" below, we need to include all
    headers that may declare mkdir().  */
@@ -302,10 +302,10 @@ extern int fchmodat (int fd, char const *file, mode_t mode, int flag)
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef fchmodat
-# define fchmodat(d,n,m,f)                         \
-    (GL_LINK_WARNING ("fchmodat is not portable - " \
-                      "use gnulib module openat for portability"), \
-     fchmodat (d, n, m, f))
+# if HAVE_RAW_DECL_FCHMODAT
+_GL_WARN_ON_USE (fchmodat, "fchmodat is not portable - "
+                 "use gnulib module openat for portability");
+# endif
 #endif
 
 
@@ -326,10 +326,10 @@ extern int fstatat (int fd, char const *name, struct stat *st, int flags)
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef fstatat
-# define fstatat(d,n,s,f)                         \
-    (GL_LINK_WARNING ("fstatat is not portable - " \
-                      "use gnulib module openat for portability"), \
-     fstatat (d, n, s, f))
+# if HAVE_RAW_DECL_FSTATAT
+_GL_WARN_ON_USE (fstatat, "fstatat is not portable - "
+                 "use gnulib module openat for portability");
+# endif
 #endif
 
 
@@ -343,10 +343,10 @@ extern int futimens (int fd, struct timespec const times[2]);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef futimens
-# define futimens(f,t)                         \
-    (GL_LINK_WARNING ("futimens is not portable - " \
-                      "use gnulib module futimens for portability"), \
-     futimens (f, t))
+# if HAVE_RAW_DECL_FUTIMENS
+_GL_WARN_ON_USE (futimens, "futimens is not portable - "
+                 "use gnulib module futimens for portability");
+# endif
 #endif
 
 
@@ -368,10 +368,10 @@ extern int lchmod (const char *filename, mode_t mode) _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef lchmod
-# define lchmod(f,m) \
-    (GL_LINK_WARNING ("lchmod is unportable - " \
-                      "use gnulib module lchmod for portability"), \
-     lchmod (f, m))
+# if HAVE_RAW_DECL_LCHMOD
+_GL_WARN_ON_USE (lchmod, "lchmod is unportable - "
+                 "use gnulib module lchmod for portability");
+# endif
 #endif
 
 
@@ -388,10 +388,10 @@ extern int rpl_lstat (const char *name, struct stat *buf)
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef lstat
-# define lstat(p,b)                                                     \
-  (GL_LINK_WARNING ("lstat is unportable - "                            \
-                    "use gnulib module lstat for portability"),         \
-   lstat (p, b))
+# if HAVE_RAW_DECL_LSTAT
+_GL_WARN_ON_USE (lstat, "lstat is unportable - "
+                 "use gnulib module lstat for portability");
+# endif
 #endif
 
 
@@ -423,10 +423,10 @@ extern int mkdirat (int fd, char const *file, mode_t mode)
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef mkdirat
-# define mkdirat(d,n,m)                         \
-    (GL_LINK_WARNING ("mkdirat is not portable - " \
-                      "use gnulib module openat for portability"), \
-     mkdirat (d, n, m))
+# if HAVE_RAW_DECL_MKDIRAT
+_GL_WARN_ON_USE (mkdirat, "mkdirat is not portable - "
+                 "use gnulib module openat for portability");
+# endif
 #endif
 
 
@@ -440,10 +440,10 @@ extern int mkfifo (char const *file, mode_t mode) _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef mkfifo
-# define mkfifo(n,m)                                                    \
-    (GL_LINK_WARNING ("mkfifo is not portable - "                       \
-                      "use gnulib module mkfifo for portability"),      \
-     mkfifo (n, m))
+# if HAVE_RAW_DECL_MKFIFO
+_GL_WARN_ON_USE (mkfifo, "mkfifo is not portable - "
+                 "use gnulib module mkfifo for portability");
+# endif
 #endif
 
 
@@ -454,10 +454,10 @@ extern int mkfifoat (int fd, char const *file, mode_t mode)
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef mkfifoat
-# define mkfifoat(d,n,m)                                     \
-    (GL_LINK_WARNING ("mkfifoat is not portable - " \
-                      "use gnulib module mkfifoat for portability"), \
-     mkfifoat (d, n, m))
+# if HAVE_RAW_DECL_MKFIFOAT
+_GL_WARN_ON_USE (mkfifoat, "mkfifoat is not portable - "
+                 "use gnulib module mkfifoat for portability");
+# endif
 #endif
 
 
@@ -472,10 +472,10 @@ extern int mknod (char const *file, mode_t mode, dev_t dev)
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef mknod
-# define mknod(n,m,d)                                                   \
-    (GL_LINK_WARNING ("mknod is not portable - "                        \
-                      "use gnulib module mknod for portability"),       \
-     mknod (n, m, d))
+# if HAVE_RAW_DECL_MKNOD
+_GL_WARN_ON_USE (mknod, "mknod is not portable - "
+                 "use gnulib module mknod for portability");
+# endif
 #endif
 
 
@@ -486,10 +486,10 @@ extern int mknodat (int fd, char const *file, mode_t mode, dev_t dev)
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef mknodat
-# define mknodat(f,n,m,d)                            \
-    (GL_LINK_WARNING ("mknodat is not portable - " \
-                      "use gnulib module mkfifoat for portability"), \
-     mknodat (f, n, m, d))
+# if HAVE_RAW_DECL_MKNODAT
+_GL_WARN_ON_USE (mknodat, "mknodat is not portable - "
+                 "use gnulib module mkfifoat for portability");
+# endif
 #endif
 
 
@@ -512,10 +512,10 @@ extern int stat (const char *name, struct stat *buf) _GL_ARG_NONNULL ((1, 2));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef stat
-# define stat(p,b)                                                      \
-  (GL_LINK_WARNING ("stat is unportable - "                             \
-                    "use gnulib module stat for portability"),          \
-   stat (p, b))
+# if HAVE_RAW_DECL_STAT
+_GL_WARN_ON_USE (stat, "stat is unportable - "
+                 "use gnulib module stat for portability");
+# endif
 #endif
 
 
@@ -531,10 +531,10 @@ extern int stat (const char *name, struct stat *buf) _GL_ARG_NONNULL ((1, 2));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef utimensat
-# define utimensat(d,n,t,f)                          \
-    (GL_LINK_WARNING ("utimensat is not portable - " \
-                      "use gnulib module utimensat for portability"), \
-     utimensat (d, n, t, f))
+# if HAVE_RAW_DECL_UTIMENSAT
+_GL_WARN_ON_USE (utimensat, "utimensat is not portable - "
+                 "use gnulib module utimensat for portability");
+# endif
 #endif
 
 

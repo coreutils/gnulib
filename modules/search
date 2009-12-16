@@ -6,9 +6,9 @@ lib/search.in.h
 m4/search_h.m4
 
 Depends-on:
-include_next
-link-warning
 arg-nonnull
+include_next
+warn-on-use
 
 configure.ac:
 gl_SEARCH_H
@@ -18,7 +18,7 @@ BUILT_SOURCES += search.h
 
 # We need the following in order to create <search.h> when the system
 # doesn't have one that works with the given compiler.
-search.h: search.in.h $(LINK_WARNING_H) $(ARG_NONNULL_H)
+search.h: search.in.h $(WARN_ON_USE_H) $(ARG_NONNULL_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's|@''HAVE_SEARCH_H''@|$(HAVE_SEARCH_H)|g' \
@@ -28,8 +28,8 @@ search.h: search.in.h $(LINK_WARNING_H) $(ARG_NONNULL_H)
 	      -e 's|@''GNULIB_TSEARCH''@|$(GNULIB_TSEARCH)|g' \
 	      -e 's|@''HAVE_TSEARCH''@|$(HAVE_TSEARCH)|g' \
 	      -e 's|@''REPLACE_TSEARCH''@|$(REPLACE_TSEARCH)|g' \
-	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
 	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
+	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
 	      < $(srcdir)/search.in.h; \
 	} > $@-t && \
 	mv $@-t $@

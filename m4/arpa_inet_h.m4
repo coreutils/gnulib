@@ -1,4 +1,4 @@
-# arpa_inet_h.m4 serial 6
+# arpa_inet_h.m4 serial 7
 dnl Copyright (C) 2006, 2008, 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -21,6 +21,16 @@ AC_DEFUN([gl_HEADER_ARPA_INET],
   AC_SUBST([HAVE_ARPA_INET_H])
   dnl <arpa/inet.h> is always overridden, because of GNULIB_POSIXCHECK.
   gl_CHECK_NEXT_HEADERS([arpa/inet.h])
+
+  dnl Check for declarations of anything we want to poison if the
+  dnl corresponding gnulib module is not in use.
+  gl_WARN_ON_USE_PREPARE([[
+/* On some systems, this header is not self-consistent.  */
+#ifndef __GLIBC__
+# include <sys/socket.h>
+#endif
+#include <arpa/inet.h>
+    ]], [inet_ntop inet_pton])
 ])
 
 dnl Unconditionally enables the replacement of <arpa/inet.h>.

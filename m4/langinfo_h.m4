@@ -1,4 +1,4 @@
-# langinfo_h.m4 serial 2
+# langinfo_h.m4 serial 3
 dnl Copyright (C) 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -51,6 +51,11 @@ int a = ERA;
   AC_SUBST([HAVE_LANGINFO_H])
   AC_SUBST([HAVE_LANGINFO_CODESET])
   AC_SUBST([HAVE_LANGINFO_ERA])
+
+  dnl Check for declarations of anything we want to poison if the
+  dnl corresponding gnulib module is not in use.
+  gl_WARN_ON_USE_PREPARE([[#include <langinfo.h>
+    ]], [nl_langinfo])
 ])
 
 AC_DEFUN([gl_LANGINFO_MODULE_INDICATOR],

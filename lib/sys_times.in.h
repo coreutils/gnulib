@@ -38,9 +38,9 @@
 #  include <time.h>
 # endif
 
-/* The definition of GL_LINK_WARNING is copied here.  */
-
 /* The definition of _GL_ARG_NONNULL is copied here.  */
+
+/* The definition of _GL_WARN_ON_USE is copied here.  */
 
 # ifdef __cplusplus
 extern "C" {
@@ -64,10 +64,10 @@ extern "C" {
 #  endif
 # elif defined GNULIB_POSIXCHECK
 #  undef times
-#  define times(s)                                              \
-  (GL_LINK_WARNING ("times is unportable - "                    \
-                    "use gnulib module times for portability"), \
-   times (s))
+#  if HAVE_RAW_DECL_TIMES
+_GL_WARN_ON_USE (times, "times is unportable - "
+                 "use gnulib module times for portability");
+#  endif
 # endif
 
 # ifdef __cplusplus

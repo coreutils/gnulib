@@ -36,7 +36,7 @@
 #ifndef _GL_CTYPE_H
 #define _GL_CTYPE_H
 
-/* The definition of GL_LINK_WARNING is copied here.  */
+/* The definition of _GL_WARN_ON_USE is copied here.  */
 
 /* Return non-zero if c is a blank, i.e. a space or tab character.  */
 #if @GNULIB_ISBLANK@
@@ -45,10 +45,10 @@ extern int isblank (int c);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef isblank
-# define isblank(c) \
-    (GL_LINK_WARNING ("isblank is unportable - " \
-                      "use gnulib module isblank for portability"), \
-     isblank (c))
+# if HAVE_RAW_DECL_ISBLANK
+_GL_WARN_ON_USE (isblank, "isblank is unportable - "
+                 "use gnulib module isblank for portability");
+# endif
 #endif
 
 #endif /* _GL_CTYPE_H */

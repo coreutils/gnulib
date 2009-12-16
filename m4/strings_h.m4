@@ -1,4 +1,5 @@
 # Configure a replacement for <string.h>.
+# serial 2
 
 # Copyright (C) 2007, 2009, 2010 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -16,6 +17,11 @@ AC_DEFUN([gl_HEADER_STRINGS_H_BODY],
 [
   AC_REQUIRE([gl_HEADER_STRINGS_H_DEFAULTS])
   gl_CHECK_NEXT_HEADERS([strings.h])
+
+  dnl Check for declarations of anything we want to poison if the
+  dnl corresponding gnulib module is not in use.
+  gl_WARN_ON_USE_PREPARE([[#include <strings.h>
+    ]], [strcasecmp strncasecmp])
 ])
 
 AC_DEFUN([gl_STRINGS_MODULE_INDICATOR],

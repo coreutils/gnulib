@@ -1,4 +1,4 @@
-# ctype_h.m4 serial 2
+# ctype_h.m4 serial 3
 dnl Copyright (C) 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,6 +10,11 @@ AC_DEFUN([gl_CTYPE_H],
   dnl Execute this unconditionally, because CTYPE_H may be set by other
   dnl modules, after this code is executed.
   gl_CHECK_NEXT_HEADERS([ctype.h])
+
+  dnl Check for declarations of anything we want to poison if the
+  dnl corresponding gnulib module is not in use.
+  gl_WARN_ON_USE_PREPARE([[#include <ctype.h>
+    ]], [isblank])
 ])
 
 AC_DEFUN([gl_CTYPE_MODULE_INDICATOR],

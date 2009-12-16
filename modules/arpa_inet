@@ -6,10 +6,10 @@ lib/arpa_inet.in.h
 m4/arpa_inet_h.m4
 
 Depends-on:
-include_next
-link-warning
 arg-nonnull
+include_next
 sys_socket
+warn-on-use
 
 configure.ac:
 gl_HEADER_ARPA_INET
@@ -20,7 +20,7 @@ BUILT_SOURCES += arpa/inet.h
 
 # We need the following in order to create <arpa/inet.h> when the system
 # doesn't have one.
-arpa/inet.h: arpa_inet.in.h $(LINK_WARNING_H) $(ARG_NONNULL_H)
+arpa/inet.h: arpa_inet.in.h $(WARN_ON_USE_H) $(ARG_NONNULL_H)
 	$(AM_V_at)$(MKDIR_P) arpa
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
@@ -32,8 +32,8 @@ arpa/inet.h: arpa_inet.in.h $(LINK_WARNING_H) $(ARG_NONNULL_H)
 	      -e 's|@''GNULIB_INET_PTON''@|$(GNULIB_INET_PTON)|g' \
 	      -e 's|@''HAVE_DECL_INET_NTOP''@|$(HAVE_DECL_INET_NTOP)|g' \
 	      -e 's|@''HAVE_DECL_INET_PTON''@|$(HAVE_DECL_INET_PTON)|g' \
-	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
 	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
+	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
 	      < $(srcdir)/arpa_inet.in.h; \
 	} > $@-t && \
 	mv $@-t $@

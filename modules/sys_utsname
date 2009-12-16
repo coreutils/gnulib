@@ -8,7 +8,7 @@ m4/sys_utsname_h.m4
 Depends-on:
 arg-nonnull
 include_next
-link-warning
+warn-on-use
 
 configure.ac:
 gl_SYS_UTSNAME_H
@@ -19,7 +19,7 @@ BUILT_SOURCES += sys/utsname.h
 
 # We need the following in order to create <sys/utsname.h> when the system
 # does not have one.
-sys/utsname.h: sys_utsname.in.h $(LINK_WARNING_H) $(ARG_NONNULL_H)
+sys/utsname.h: sys_utsname.in.h $(WARN_ON_USE_H) $(ARG_NONNULL_H)
 	$(AM_V_at)$(MKDIR_P) sys
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
@@ -30,8 +30,8 @@ sys/utsname.h: sys_utsname.in.h $(LINK_WARNING_H) $(ARG_NONNULL_H)
 	      -e 's|@''GNULIB_UNAME''@|$(GNULIB_UNAME)|g' \
 	      -e 's|@''HAVE_STRUCT_UTSNAME''@|$(HAVE_STRUCT_UTSNAME)|g' \
 	      -e 's|@''HAVE_UNAME''@|$(HAVE_UNAME)|g' \
-	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
 	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
+	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
 	      < $(srcdir)/sys_utsname.in.h; \
 	} > $@-t && \
 	mv $@-t $@

@@ -1,5 +1,5 @@
 # Configure a replacement for <sys/times.h>.
-# serial 3
+# serial 4
 
 # Copyright (C) 2008, 2009, 2010 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -24,6 +24,16 @@ AC_DEFUN([gl_SYS_TIMES_H],
     HAVE_STRUCT_TMS=0
   fi
   AC_SUBST([HAVE_SYS_TIMES_H])
+
+  dnl Check for declarations of anything we want to poison if the
+  dnl corresponding gnulib module is not in use.
+  gl_WARN_ON_USE_PREPARE([[
+/* Some systems have incomplete headers.  */
+#ifndef __GLIBC__
+# include <time.h>
+#endif
+#include <sys/times.h>
+    ]], [times])
 ])
 
 AC_DEFUN([gl_SYS_TIMES_MODULE_INDICATOR],

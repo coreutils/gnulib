@@ -1,4 +1,4 @@
-# sys_utsname_h.m4 serial 3
+# sys_utsname_h.m4 serial 4
 dnl Copyright (C) 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -24,6 +24,11 @@ AC_DEFUN([gl_SYS_UTSNAME_H],
       ]])
   fi
   AC_SUBST([HAVE_SYS_UTSNAME_H])
+
+  dnl Check for declarations of anything we want to poison if the
+  dnl corresponding gnulib module is not in use.
+  gl_WARN_ON_USE_PREPARE([[#include <sys/utsname.h>
+    ]], [uname])
 ])
 
 AC_DEFUN([gl_SYS_UTSNAME_MODULE_INDICATOR],

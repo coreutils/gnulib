@@ -29,9 +29,9 @@
 #define _GL_SEARCH_H
 
 
-/* The definition of GL_LINK_WARNING is copied here.  */
-
 /* The definition of _GL_ARG_NONNULL is copied here.  */
+
+/* The definition of _GL_WARN_ON_USE is copied here.  */
 
 
 #ifdef __cplusplus
@@ -101,25 +101,25 @@ extern void twalk (const void *vroot,
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef tsearch
-# define tsearch(k,v,c) \
-    (GL_LINK_WARNING ("tsearch is unportable - " \
-                      "use gnulib module tsearch for portability"), \
-     tsearch (k, v, c))
+# if HAVE_RAW_DECL_TSEARCH
+_GL_WARN_ON_USE (tsearch, "tsearch is unportable - "
+                 "use gnulib module tsearch for portability");
+# endif
 # undef tfind
-# define tfind(k,v,c) \
-    (GL_LINK_WARNING ("tfind is unportable - " \
-                      "use gnulib module tsearch for portability"), \
-     tfind (k, v, c))
+# if HAVE_RAW_DECL_TFIND
+_GL_WARN_ON_USE (tfind, "tfind is unportable - "
+                 "use gnulib module tsearch for portability");
+# endif
 # undef tdelete
-# define tdelete(k,v,c) \
-    (GL_LINK_WARNING ("tdelete is unportable - " \
-                      "use gnulib module tsearch for portability"), \
-     tdelete (k, v, c))
+# if HAVE_RAW_DECL_TDELETE
+_GL_WARN_ON_USE (tdelete, "tdelete is unportable - "
+                 "use gnulib module tsearch for portability");
+# endif
 # undef twalk
-# define twalk(v,a) \
-    (GL_LINK_WARNING ("twalk is unportable - " \
-                      "use gnulib module tsearch for portability"), \
-     twalk (v, a))
+# if HAVE_RAW_DECL_TWALK
+_GL_WARN_ON_USE (twalk, "twalk is unportable - "
+                 "use gnulib module tsearch for portability");
+# endif
 #endif
 
 

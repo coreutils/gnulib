@@ -74,9 +74,9 @@ struct random_data
 # include <unistd.h>
 #endif
 
-/* The definition of GL_LINK_WARNING is copied here.  */
-
 /* The definition of _GL_ARG_NONNULL is copied here.  */
+
+/* The definition of _GL_WARN_ON_USE is copied here.  */
 
 
 /* Some systems do not define EXIT_*, despite otherwise supporting C89.  */
@@ -105,10 +105,10 @@ extern long long atoll (const char *string) _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef atoll
-# define atoll(s) \
-    (GL_LINK_WARNING ("atoll is unportable - " \
-                      "use gnulib module atoll for portability"), \
-     atoll (s))
+# if HAVE_RAW_DECL_ATOLL
+_GL_WARN_ON_USE (atoll, "atoll is unportable - "
+                 "use gnulib module atoll for portability");
+# endif
 #endif
 
 #if @GNULIB_CALLOC_POSIX@
@@ -119,10 +119,9 @@ extern void * calloc (size_t nmemb, size_t size);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef calloc
-# define calloc(n,s) \
-    (GL_LINK_WARNING ("calloc is not POSIX compliant everywhere - " \
-                      "use gnulib module calloc-posix for portability"), \
-     calloc (n, s))
+/* Assume calloc is always declared.  */
+_GL_WARN_ON_USE (calloc, "calloc is not POSIX compliant everywhere - "
+                 "use gnulib module calloc-posix for portability");
 #endif
 
 #if @GNULIB_CANONICALIZE_FILE_NAME@
@@ -134,10 +133,10 @@ extern char *canonicalize_file_name (const char *name) _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef canonicalize_file_name
-# define canonicalize_file_name(n)                        \
-    (GL_LINK_WARNING ("canonicalize_file_name is unportable - " \
-                      "use gnulib module canonicalize-lgpl for portability"), \
-     canonicalize_file_name (n))
+# if HAVE_RAW_DECL_CANONICALIZE_FILE_NAME
+_GL_WARN_ON_USE (canonicalize_file_name, "canonicalize_file_name is unportable - "
+                 "use gnulib module canonicalize-lgpl for portability");
+# endif
 #endif
 
 #if @GNULIB_GETLOADAVG@
@@ -150,10 +149,10 @@ extern int getloadavg (double loadavg[], int nelem) _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef getloadavg
-# define getloadavg(l,n) \
-    (GL_LINK_WARNING ("getloadavg is not portable - " \
-                      "use gnulib module getloadavg for portability"), \
-     getloadavg (l, n))
+# if HAVE_RAW_DECL_GETLOADAVG
+_GL_WARN_ON_USE (getloadavg, "getloadavg is not portable - "
+                 "use gnulib module getloadavg for portability");
+# endif
 #endif
 
 #if @GNULIB_GETSUBOPT@
@@ -174,10 +173,10 @@ extern int getsubopt (char **optionp, char *const *tokens, char **valuep)
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef getsubopt
-# define getsubopt(o,t,v) \
-    (GL_LINK_WARNING ("getsubopt is unportable - " \
-                      "use gnulib module getsubopt for portability"), \
-     getsubopt (o, t, v))
+# if HAVE_RAW_DECL_GETSUBOPT
+_GL_WARN_ON_USE (getsubopt, "getsubopt is unportable - "
+                 "use gnulib module getsubopt for portability");
+# endif
 #endif
 
 #if @GNULIB_MALLOC_POSIX@
@@ -188,10 +187,9 @@ extern void * malloc (size_t size);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef malloc
-# define malloc(s) \
-    (GL_LINK_WARNING ("malloc is not POSIX compliant everywhere - " \
-                      "use gnulib module malloc-posix for portability"), \
-     malloc (s))
+/* Assume malloc is always declared.  */
+_GL_WARN_ON_USE (malloc, "malloc is not POSIX compliant everywhere - "
+                 "use gnulib module malloc-posix for portability");
 #endif
 
 #if @GNULIB_MKDTEMP@
@@ -205,10 +203,10 @@ extern char * mkdtemp (char * /*template*/) _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef mkdtemp
-# define mkdtemp(t) \
-    (GL_LINK_WARNING ("mkdtemp is unportable - " \
-                      "use gnulib module mkdtemp for portability"), \
-     mkdtemp (t))
+# if HAVE_RAW_DECL_MKDTEMP
+_GL_WARN_ON_USE (mkdtemp, "mkdtemp is unportable - "
+                 "use gnulib module mkdtemp for portability");
+# endif
 #endif
 
 #if @GNULIB_MKOSTEMP@
@@ -229,10 +227,10 @@ extern int mkostemp (char * /*template*/, int /*flags*/) _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef mkostemp
-# define mkostemp(t,f) \
-    (GL_LINK_WARNING ("mkostemp is unportable - " \
-                      "use gnulib module mkostemp for portability"), \
-     mkostemp (t, f))
+# if HAVE_RAW_DECL_MKOSTEMP
+_GL_WARN_ON_USE (mkostemp, "mkostemp is unportable - "
+                 "use gnulib module mkostemp for portability");
+# endif
 #endif
 
 #if @GNULIB_MKOSTEMPS@
@@ -255,10 +253,10 @@ extern int mkostemps (char * /*template*/, int /*suffixlen*/, int /*flags*/)
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef mkostemps
-# define mkostemps(t,s,f)                          \
-    (GL_LINK_WARNING ("mkostemps is unportable - " \
-                      "use gnulib module mkostemps for portability"), \
-     mkostemps (t, s, f))
+# if HAVE_RAW_DECL_MKOSTEMPS
+_GL_WARN_ON_USE (mkostemps, "mkostemps is unportable - "
+                 "use gnulib module mkostemps for portability");
+# endif
 #endif
 
 #if @GNULIB_MKSTEMP@
@@ -277,10 +275,10 @@ extern int mkstemp (char * /*template*/) _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef mkstemp
-# define mkstemp(t) \
-    (GL_LINK_WARNING ("mkstemp is unportable - " \
-                      "use gnulib module mkstemp for portability"), \
-     mkstemp (t))
+# if HAVE_RAW_DECL_MKSTEMP
+_GL_WARN_ON_USE (mkstemp, "mkstemp is unportable - "
+                 "use gnulib module mkstemp for portability");
+# endif
 #endif
 
 #if @GNULIB_MKSTEMPS@
@@ -300,10 +298,10 @@ extern int mkstemps (char * /*template*/, int /*suffixlen*/)
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef mkstemps
-# define mkstemps(t,s)                             \
-    (GL_LINK_WARNING ("mkstemps is unportable - " \
-                      "use gnulib module mkstemps for portability"), \
-     mkstemps (t, s))
+# if HAVE_RAW_DECL_MKSTEMPS
+_GL_WARN_ON_USE (mkstemps, "mkstemps is unportable - "
+                 "use gnulib module mkstemps for portability");
+# endif
 #endif
 
 #if @GNULIB_PUTENV@
@@ -333,25 +331,25 @@ int random_r (struct random_data *buf, int32_t *result)
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef random_r
-# define random_r(b,r)                            \
-    (GL_LINK_WARNING ("random_r is unportable - " \
-                      "use gnulib module random_r for portability"), \
-     random_r (b,r))
+# if HAVE_RAW_DECL_RANDOM_R
+_GL_WARN_ON_USE (random_r, "random_r is unportable - "
+                 "use gnulib module random_r for portability");
+# endif
 # undef initstate_r
-# define initstate_r(s,b,sz,r)                       \
-    (GL_LINK_WARNING ("initstate_r is unportable - " \
-                      "use gnulib module random_r for portability"), \
-     initstate_r (s,b,sz,r))
+# if HAVE_RAW_DECL_INITSTATE_R
+_GL_WARN_ON_USE (initstate_r, "initstate_r is unportable - "
+                 "use gnulib module random_r for portability");
+# endif
 # undef srandom_r
-# define srandom_r(s,r)                            \
-    (GL_LINK_WARNING ("srandom_r is unportable - " \
-                      "use gnulib module random_r for portability"), \
-     srandom_r (s,r))
+# if HAVE_RAW_DECL_SRANDOM_R
+_GL_WARN_ON_USE (srandom_r, "srandom_r is unportable - "
+                 "use gnulib module random_r for portability");
+# endif
 # undef setstate_r
-# define setstate_r(a,r)                                    \
-    (GL_LINK_WARNING ("setstate_r is unportable - " \
-                      "use gnulib module random_r for portability"), \
-     setstate_r (a,r))
+# if HAVE_RAW_DECL_SETSTATE_R
+_GL_WARN_ON_USE (setstate_r, "setstate_r is unportable - "
+                 "use gnulib module random_r for portability");
+# endif
 #endif
 
 #if @GNULIB_REALLOC_POSIX@
@@ -362,10 +360,9 @@ extern void * realloc (void *ptr, size_t size);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef realloc
-# define realloc(p,s) \
-    (GL_LINK_WARNING ("realloc is not POSIX compliant everywhere - " \
-                      "use gnulib module realloc-posix for portability"), \
-     realloc (p, s))
+/* Assume realloc is always declared.  */
+_GL_WARN_ON_USE (realloc, "realloc is not POSIX compliant everywhere - "
+                 "use gnulib module realloc-posix for portability");
 #endif
 
 #if @GNULIB_REALPATH@
@@ -377,10 +374,10 @@ extern char *realpath (const char *name, char *resolved) _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef realpath
-# define realpath(n,r)                        \
-    (GL_LINK_WARNING ("realpath is unportable - use gnulib module " \
-                      "canonicalize or canonicalize-lgpl for portability"), \
-     realpath (n, r))
+# if HAVE_RAW_DECL_REALPATH
+_GL_WARN_ON_USE (realpath, "realpath is unportable - use gnulib module "
+                 "canonicalize or canonicalize-lgpl for portability");
+# endif
 #endif
 
 #if @GNULIB_RPMATCH@
@@ -391,10 +388,10 @@ extern int rpmatch (const char *response) _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef rpmatch
-# define rpmatch(r) \
-    (GL_LINK_WARNING ("rpmatch is unportable - " \
-                      "use gnulib module rpmatch for portability"), \
-     rpmatch (r))
+# if HAVE_RAW_DECL_RPMATCH
+_GL_WARN_ON_USE (rpmatch, "rpmatch is unportable - "
+                 "use gnulib module rpmatch for portability");
+# endif
 #endif
 
 #if @GNULIB_SETENV@
@@ -410,10 +407,10 @@ extern int setenv (const char *name, const char *value, int replace)
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef setenv
-# define setenv(n,v,o)                                                  \
-    (GL_LINK_WARNING ("setenv is unportable - "                         \
-                      "use gnulib module setenv for portability"),      \
-     setenv (n, v, o))
+# if HAVE_RAW_DECL_SETENV
+_GL_WARN_ON_USE (setenv, "setenv is unportable - "
+                 "use gnulib module setenv for portability");
+# endif
 #endif
 
 #if @GNULIB_STRTOD@
@@ -426,10 +423,10 @@ extern double strtod (const char *str, char **endp) _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef strtod
-# define strtod(s, e)                           \
-    (GL_LINK_WARNING ("strtod is unportable - " \
-                      "use gnulib module strtod for portability"), \
-     strtod (s, e))
+# if HAVE_RAW_DECL_STRTOD
+_GL_WARN_ON_USE (strtod, "strtod is unportable - "
+                 "use gnulib module strtod for portability");
+# endif
 #endif
 
 #if @GNULIB_STRTOLL@
@@ -447,10 +444,10 @@ extern long long strtoll (const char *string, char **endptr, int base)
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef strtoll
-# define strtoll(s,e,b) \
-    (GL_LINK_WARNING ("strtoll is unportable - " \
-                      "use gnulib module strtoll for portability"), \
-     strtoll (s, e, b))
+# if HAVE_RAW_DECL_STRTOLL
+_GL_WARN_ON_USE (strtoll, "strtoll is unportable - "
+                 "use gnulib module strtoll for portability");
+# endif
 #endif
 
 #if @GNULIB_STRTOULL@
@@ -468,10 +465,10 @@ extern unsigned long long strtoull (const char *string, char **endptr, int base)
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef strtoull
-# define strtoull(s,e,b) \
-    (GL_LINK_WARNING ("strtoull is unportable - " \
-                      "use gnulib module strtoull for portability"), \
-     strtoull (s, e, b))
+# if HAVE_RAW_DECL_STRTOULL
+_GL_WARN_ON_USE (strtoull, "strtoull is unportable - "
+                 "use gnulib module strtoull for portability");
+# endif
 #endif
 
 #if @GNULIB_UNSETENV@
@@ -485,10 +482,10 @@ extern int unsetenv (const char *name) _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef unsetenv
-# define unsetenv(n)                                                    \
-    (GL_LINK_WARNING ("unsetenv is unportable - "                       \
-                      "use gnulib module unsetenv for portability"),    \
-     unsetenv (n))
+# if HAVE_RAW_DECL_UNSETENV
+_GL_WARN_ON_USE (unsetenv, "unsetenv is unportable - "
+                 "use gnulib module unsetenv for portability");
+# endif
 #endif
 
 #ifdef __cplusplus

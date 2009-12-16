@@ -1,4 +1,4 @@
-# unistd_h.m4 serial 38
+# unistd_h.m4 serial 39
 dnl Copyright (C) 2006-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -26,11 +26,20 @@ AC_DEFUN([gl_UNISTD_H],
   dnl Check for declarations of anything we want to poison if the
   dnl corresponding gnulib module is not in use.
   gl_WARN_ON_USE_PREPARE([[#include <unistd.h>
-/* Some systems declare environ in the wrong header.  */
+/* Some systems declare various items in the wrong headers.  */
 #ifndef __GLIBC__
+# include <fcntl.h>
+# include <stdio.h>
 # include <stdlib.h>
+# if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#  include <io.h>
+# endif
 #endif
-    ]], [environ])
+    ]], [chown dup2 dup3 environ euidaccess faccessat fchdir fchownat
+    fsync ftruncate getcwd getdomainname getdtablesize getgroups
+    gethostname getlogin getlogin_r getpagesize getusershell setusershell
+    endusershell lchown link linkat lseek pipe2 pread readlink readlinkat
+    rmdir sleep symlink symlinkat unlink unlinkat usleep])
 ])
 
 AC_DEFUN([gl_UNISTD_MODULE_INDICATOR],

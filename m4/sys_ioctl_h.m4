@@ -1,4 +1,4 @@
-# sys_ioctl_h.m4 serial 4
+# sys_ioctl_h.m4 serial 5
 dnl Copyright (C) 2008-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -33,6 +33,15 @@ AC_DEFUN([gl_SYS_IOCTL_H],
   AC_SUBST([HAVE_SYS_IOCTL_H])
   dnl <sys/ioctl.h> is always overridden, because of GNULIB_POSIXCHECK.
   gl_CHECK_NEXT_HEADERS([sys/ioctl.h])
+
+  dnl Check for declarations of anything we want to poison if the
+  dnl corresponding gnulib module is not in use.
+  gl_WARN_ON_USE_PREPARE([[#include <sys/ioctl.h>
+/* Some platforms declare ioctl in the wrong header.  */
+#ifndef __GLIBC__
+# include <unistd.h>
+#endif
+    ]], [ioctl])
 ])
 
 dnl Unconditionally enables the replacement of <sys/ioctl.h>.

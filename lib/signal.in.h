@@ -35,9 +35,9 @@
 #ifndef _GL_SIGNAL_H
 #define _GL_SIGNAL_H
 
-/* The definition of GL_LINK_WARNING is copied here.  */
-
 /* The definition of _GL_ARG_NONNULL is copied here.  */
+
+/* The definition of _GL_WARN_ON_USE is copied here.  */
 
 /* Define pid_t, uid_t.
    Also, mingw defines sigset_t not in <signal.h>, but in <sys/types.h>.  */
@@ -129,40 +129,40 @@ extern int raise (int sig);
 # endif /* !@HAVE_POSIX_SIGNALBLOCKING@ */
 #elif defined GNULIB_POSIXCHECK
 # undef sigaddset
-# define sigaddset(s,n) \
-  (GL_LINK_WARNING ("sigaddset is unportable - "        \
-                    "use gnulib module sigprocmask for portability"),   \
-   sigaddset (s, n))
+# if HAVE_RAW_DECL_SIGADDSET
+_GL_WARN_ON_USE (sigaddset, "sigaddset is unportable - "
+                 "use the gnulib module sigprocmask for portability");
+# endif
 # undef sigdelset
-# define sigdelset(s,n) \
-  (GL_LINK_WARNING ("sigdelset is unportable - "        \
-                    "use gnulib module sigprocmask for portability"),   \
-   sigdelset (s, n))
+# if HAVE_RAW_DECL_SIGDELSET
+_GL_WARN_ON_USE (sigdelset, "sigdelset is unportable - "
+                 "use the gnulib module sigprocmask for portability");
+# endif
 # undef sigemptyset
-# define sigemptyset(s) \
-  (GL_LINK_WARNING ("sigemptyset is unportable - "        \
-                    "use gnulib module sigprocmask for portability"),   \
-   sigemptyset (s))
+# if HAVE_RAW_DECL_SIGEMPTYSET
+_GL_WARN_ON_USE (sigemptyset, "sigemptyset is unportable - "
+                 "use the gnulib module sigprocmask for portability");
+# endif
 # undef sigfillset
-# define sigfillset(s) \
-  (GL_LINK_WARNING ("sigfillset is unportable - "        \
-                    "use gnulib module sigprocmask for portability"),   \
-   sigfillset (s))
+# if HAVE_RAW_DECL_SIGFILLSET
+_GL_WARN_ON_USE (sigfillset, "sigfillset is unportable - "
+                 "use the gnulib module sigprocmask for portability");
+# endif
 # undef sigismember
-# define sigismember(s,n) \
-  (GL_LINK_WARNING ("sigismember is unportable - "        \
-                    "use gnulib module sigprocmask for portability"),   \
-   sigismember (s, n))
+# if HAVE_RAW_DECL_SIGISMEMBER
+_GL_WARN_ON_USE (sigismember, "sigismember is unportable - "
+                 "use the gnulib module sigprocmask for portability");
+# endif
 # undef sigpending
-# define sigpending(s) \
-  (GL_LINK_WARNING ("sigpending is unportable - "        \
-                    "use gnulib module sigprocmask for portability"),   \
-   sigpending (s))
+# if HAVE_RAW_DECL_SIGPENDING
+_GL_WARN_ON_USE (sigpending, "sigpending is unportable - "
+                 "use the gnulib module sigprocmask for portability");
+# endif
 # undef sigprocmask
-# define sigprocmask(h,s,o)                               \
-  (GL_LINK_WARNING ("sigprocmask is unportable - "        \
-                    "use gnulib module sigprocmask for portability"),   \
-   sigprocmask (h, s, o))
+# if HAVE_RAW_DECL_SIGPROCMASK
+_GL_WARN_ON_USE (sigprocmask, "sigprocmask is unportable - "
+                 "use the gnulib module sigprocmask for portability");
+# endif
 #endif /* @GNULIB_SIGPROCMASK@ */
 
 
@@ -228,10 +228,10 @@ extern int sigaction (int, const struct sigaction *restrict,
 # endif /* !@HAVE_SIGACTION@, !@HAVE_STRUCT_SIGACTION_SA_SIGACTION@ */
 #elif defined GNULIB_POSIXCHECK
 # undef sigaction
-# define sigaction(s,a,o)                               \
-  (GL_LINK_WARNING ("sigaction is unportable - "        \
-                    "use gnulib module sigaction for portability"),   \
-   sigaction (s, a, o))
+# if HAVE_RAW_DECL_SIGACTION
+_GL_WARN_ON_USE (sigaction, "sigaction is unportable - "
+                 "use the gnulib module sigaction for portability");
+# endif
 #endif
 
 /* Some systems don't have SA_NODEFER.  */

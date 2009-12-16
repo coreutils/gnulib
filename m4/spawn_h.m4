@@ -1,4 +1,4 @@
-# spawn_h.m4 serial 5
+# spawn_h.m4 serial 6
 dnl Copyright (C) 2008-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -34,6 +34,20 @@ AC_DEFUN([gl_SPAWN_H],
   AC_SUBST([HAVE_SPAWN_H])
 
   AC_REQUIRE([AC_C_RESTRICT])
+
+  dnl Check for declarations of anything we want to poison if the
+  dnl corresponding gnulib module is not in use.
+  gl_WARN_ON_USE_PREPARE([[#include <spawn.h>
+    ]], [posix_spawn posix_spawnp posix_spawnattr_init posix_spawnattr_destroy
+    posix_spawnattr_getsigdefault posix_spawnattr_setsigdefault
+    posix_spawnattr_getsigmask posix_spawnattr_setsigmask
+    posix_spawnattr_getflags posix_spawnattr_setflags
+    posix_spawnattr_getpgroup posix_spawnattr_setpgroup
+    posix_spawnattr_getschedpolicy posix_spawnattr_setschedpolicy
+    posix_spawnattr_getschedparam posix_spawnattr_setschedparam
+    posix_spawn_file_actions_init posix_spawn_file_actions_destroy
+    posix_spawn_file_actions_addopen posix_spawn_file_actions_addclose
+    posix_spawwn_file_actions_adddup2])
 ])
 
 dnl Unconditionally enables the replacement of <spawn.h>.

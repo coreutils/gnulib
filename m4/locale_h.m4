@@ -1,4 +1,4 @@
-# locale_h.m4 serial 6
+# locale_h.m4 serial 7
 dnl Copyright (C) 2007, 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -56,6 +56,15 @@ locale_t x;], [],
      || test $gl_cv_header_locale_h_needs_xlocale_h = yes; then
     gl_REPLACE_LOCALE_H
   fi
+
+  dnl Check for declarations of anything we want to poison if the
+  dnl corresponding gnulib module is not in use.
+  gl_WARN_ON_USE_PREPARE([[#include <locale.h>
+/* Some systems provide declarations in a non-standard header.  */
+#if HAVE_XLOCALE_H
+# include <xlocale.h>
+#endif
+   ]], [duplocale])
 ])
 
 dnl Unconditionally enables the replacement of <locale.h>.

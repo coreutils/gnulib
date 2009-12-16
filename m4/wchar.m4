@@ -7,7 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 dnl Written by Eric Blake.
 
-# wchar.m4 serial 30
+# wchar.m4 serial 31
 
 AC_DEFUN([gl_WCHAR_H],
 [
@@ -33,6 +33,19 @@ AC_DEFUN([gl_WCHAR_H],
     HAVE_WINT_T=0
   fi
   AC_SUBST([HAVE_WINT_T])
+
+  dnl Check for declarations of anything we want to poison if the
+  dnl corresponding gnulib module is not in use.
+  gl_WARN_ON_USE_PREPARE([[
+/* Some systems require additional headers.  */
+#ifndef __GLIBC__
+# include <stddef.h>
+# include <stdio.h>
+# include <time.h>
+#endif
+#include <wchar.h>
+    ]], [btowc wctob mbsinit mbrtowc mbrlen mbsrtowcs mbsnrtowcs wcrtomb
+    wcsrtombs wcsnrtombs wcwidth])
 ])
 
 dnl Check whether <wchar.h> is usable at all.

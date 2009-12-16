@@ -1,4 +1,4 @@
-# stdlib_h.m4 serial 21
+# stdlib_h.m4 serial 22
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -22,6 +22,20 @@ AC_DEFUN([gl_STDLIB_H],
       # include <random.h>
       #endif
     ]])
+
+  dnl Check for declarations of anything we want to poison if the
+  dnl corresponding gnulib module is not in use, and which is not
+  dnl guaranteed by C89.
+  gl_WARN_ON_USE_PREPARE([[#include <stdlib.h>
+#if HAVE_SYS_LOADAVG_H
+# include <sys/loadavg.h>
+#endif
+#if HAVE_RANDOM_H
+# include <random.h>
+#endif
+    ]], [atoll canonicalize_file_name getloadavg getsubopt mkdtemp
+    mkostemp mkostemps mkstemp mkstemps random_r initstat_r srandom_r
+    setstate_r realpath rpmatch setenv strtod strtoll strtoull unsetenv])
 ])
 
 AC_DEFUN([gl_STDLIB_MODULE_INDICATOR],

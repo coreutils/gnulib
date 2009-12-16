@@ -48,9 +48,9 @@
 #endif
 
 
-/* The definition of GL_LINK_WARNING is copied here.  */
-
 /* The definition of _GL_ARG_NONNULL is copied here.  */
+
+/* The definition of _GL_WARN_ON_USE is copied here.  */
 
 
 #ifdef __cplusplus
@@ -67,10 +67,9 @@ extern void *memchr (void const *__s, int __c, size_t __n)
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef memchr
-# define memchr(s,c,n) \
-    (GL_LINK_WARNING ("memchr has platform-specific bugs - " \
-                      "use gnulib module memchr for portability" ), \
-     memchr (s, c, n))
+/* Assume memchr is always declared.  */
+_GL_WARN_ON_USE (memchr, "memchr has platform-specific bugs - "
+                 "use gnulib module memchr for portability" );
 #endif
 
 /* Return the first occurrence of NEEDLE in HAYSTACK.  */
@@ -85,11 +84,11 @@ extern void *memmem (void const *__haystack, size_t __haystack_len,
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef memmem
-# define memmem(a,al,b,bl) \
-    (GL_LINK_WARNING ("memmem is unportable and often quadratic - " \
-                      "use gnulib module memmem-simple for portability, " \
-                      "and module memmem for speed" ), \
-     memmem (a, al, b, bl))
+# if HAVE_RAW_DECL_MEMMEM
+_GL_WARN_ON_USE (memmem, "memmem is unportable and often quadratic - "
+                 "use gnulib module memmem-simple for portability, "
+                 "and module memmem for speed" );
+# endif
 #endif
 
 /* Copy N bytes of SRC to DEST, return pointer to bytes after the
@@ -102,10 +101,10 @@ extern void *mempcpy (void *restrict __dest, void const *restrict __src,
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef mempcpy
-# define mempcpy(a,b,n) \
-    (GL_LINK_WARNING ("mempcpy is unportable - " \
-                      "use gnulib module mempcpy for portability"), \
-     mempcpy (a, b, n))
+# if HAVE_RAW_DECL_MEMPCPY
+_GL_WARN_ON_USE (mempcpy, "mempcpy is unportable - "
+                 "use gnulib module mempcpy for portability");
+# endif
 #endif
 
 /* Search backwards through a block for a byte (specified as an int).  */
@@ -116,10 +115,10 @@ extern void *memrchr (void const *, int, size_t)
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef memrchr
-# define memrchr(a,b,c) \
-    (GL_LINK_WARNING ("memrchr is unportable - " \
-                      "use gnulib module memrchr for portability"), \
-     memrchr (a, b, c))
+# if HAVE_RAW_DECL_MEMRCHR
+_GL_WARN_ON_USE (memrchr, "memrchr is unportable - "
+                 "use gnulib module memrchr for portability");
+# endif
 #endif
 
 /* Find the first occurrence of C in S.  More efficient than
@@ -132,10 +131,10 @@ extern void *rawmemchr (void const *__s, int __c_in)
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef rawmemchr
-# define rawmemchr(a,b) \
-    (GL_LINK_WARNING ("rawmemchr is unportable - " \
-                      "use gnulib module rawmemchr for portability"), \
-     rawmemchr (a, b))
+# if HAVE_RAW_DECL_RAWMEMCHR
+_GL_WARN_ON_USE (rawmemchr, "rawmemchr is unportable - "
+                 "use gnulib module rawmemchr for portability");
+# endif
 #endif
 
 /* Copy SRC to DST, returning the address of the terminating '\0' in DST.  */
@@ -146,10 +145,10 @@ extern char *stpcpy (char *restrict __dst, char const *restrict __src)
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef stpcpy
-# define stpcpy(a,b) \
-    (GL_LINK_WARNING ("stpcpy is unportable - " \
-                      "use gnulib module stpcpy for portability"), \
-     stpcpy (a, b))
+# if HAVE_RAW_DECL_STPCPY
+_GL_WARN_ON_USE (stpcpy, "stpcpy is unportable - "
+                 "use gnulib module stpcpy for portability");
+# endif
 #endif
 
 /* Copy no more than N bytes of SRC to DST, returning a pointer past the
@@ -163,21 +162,20 @@ extern char *stpncpy (char *restrict __dst, char const *restrict __src,
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef stpncpy
-# define stpncpy(a,b,n) \
-    (GL_LINK_WARNING ("stpncpy is unportable - " \
-                      "use gnulib module stpncpy for portability"), \
-     stpncpy (a, b, n))
+# if HAVE_RAW_DECL_STPNCPY
+_GL_WARN_ON_USE (stpncpy, "stpncpy is unportable - "
+                 "use gnulib module stpncpy for portability");
+# endif
 #endif
 
 #if defined GNULIB_POSIXCHECK
 /* strchr() does not work with multibyte strings if the locale encoding is
    GB18030 and the character to be searched is a digit.  */
 # undef strchr
-# define strchr(s,c) \
-    (GL_LINK_WARNING ("strchr cannot work correctly on character strings " \
-                      "in some multibyte locales - " \
-                      "use mbschr if you care about internationalization"), \
-     strchr (s, c))
+/* Assume strchr is always declared.  */
+_GL_WARN_ON_USE (strchr, "strchr cannot work correctly on character strings "
+                 "in some multibyte locales - "
+                 "use mbschr if you care about internationalization");
 #endif
 
 /* Find the first occurrence of C in S or the final NUL byte.  */
@@ -188,10 +186,10 @@ extern char *strchrnul (char const *__s, int __c_in)
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef strchrnul
-# define strchrnul(a,b) \
-    (GL_LINK_WARNING ("strchrnul is unportable - " \
-                      "use gnulib module strchrnul for portability"), \
-     strchrnul (a, b))
+# if HAVE_RAW_DECL_STRCHRNUL
+_GL_WARN_ON_USE (strchrnul, "strchrnul is unportable - "
+                 "use gnulib module strchrnul for portability");
+# endif
 #endif
 
 /* Duplicate S, returning an identical malloc'd string.  */
@@ -205,10 +203,10 @@ extern char *strdup (char const *__s) _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef strdup
-# define strdup(a) \
-    (GL_LINK_WARNING ("strdup is unportable - " \
-                      "use gnulib module strdup for portability"), \
-     strdup (a))
+# if HAVE_RAW_DECL_STRDUP
+_GL_WARN_ON_USE (strdup, "strdup is unportable - "
+                 "use gnulib module strdup for portability");
+# endif
 #endif
 
 /* Return a newly allocated copy of at most N bytes of STRING.  */
@@ -222,10 +220,10 @@ extern char *strndup (char const *__string, size_t __n) _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef strndup
-# define strndup(a,n) \
-    (GL_LINK_WARNING ("strndup is unportable - " \
-                      "use gnulib module strndup for portability"), \
-     strndup (a, n))
+# if HAVE_RAW_DECL_STRNDUP
+_GL_WARN_ON_USE (strndup, "strndup is unportable - "
+                 "use gnulib module strndup for portability");
+# endif
 #endif
 
 /* Find the length (number of bytes) of STRING, but scan at most
@@ -238,10 +236,10 @@ extern size_t strnlen (char const *__string, size_t __maxlen)
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef strnlen
-# define strnlen(a,n) \
-    (GL_LINK_WARNING ("strnlen is unportable - " \
-                      "use gnulib module strnlen for portability"), \
-     strnlen (a, n))
+# if HAVE_RAW_DECL_STRNLEN
+_GL_WARN_ON_USE (strnlen, "strnlen is unportable - "
+                 "use gnulib module strnlen for portability");
+# endif
 #endif
 
 #if defined GNULIB_POSIXCHECK
@@ -250,11 +248,10 @@ extern size_t strnlen (char const *__string, size_t __maxlen)
    locale encoding is GB18030 and one of the characters to be searched is a
    digit.  */
 # undef strcspn
-# define strcspn(s,a) \
-    (GL_LINK_WARNING ("strcspn cannot work correctly on character strings " \
-                      "in multibyte locales - " \
-                      "use mbscspn if you care about internationalization"), \
-     strcspn (s, a))
+/* Assume strcspn is always declared.  */
+_GL_WARN_ON_USE (strcspn, "strcspn cannot work correctly on character strings "
+                 "in multibyte locales - "
+                 "use mbscspn if you care about internationalization");
 #endif
 
 /* Find the first occurrence in S of any character in ACCEPT.  */
@@ -269,40 +266,36 @@ extern char *strpbrk (char const *__s, char const *__accept)
    locale encoding is GB18030 and one of the characters to be searched is a
    digit.  */
 #  undef strpbrk
-#  define strpbrk(s,a) \
-     (GL_LINK_WARNING ("strpbrk cannot work correctly on character strings " \
-                       "in multibyte locales - " \
-                       "use mbspbrk if you care about internationalization"), \
-      strpbrk (s, a))
+_GL_WARN_ON_USE (strpbrk, "strpbrk cannot work correctly on character strings "
+                 "in multibyte locales - "
+                 "use mbspbrk if you care about internationalization");
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef strpbrk
-# define strpbrk(s,a) \
-    (GL_LINK_WARNING ("strpbrk is unportable - " \
-                      "use gnulib module strpbrk for portability"), \
-     strpbrk (s, a))
+# if HAVE_RAW_DECL_STRPBRK
+_GL_WARN_ON_USE (strpbrk, "strpbrk is unportable - "
+                 "use gnulib module strpbrk for portability");
+# endif
 #endif
 
 #if defined GNULIB_POSIXCHECK
 /* strspn() assumes the second argument is a list of single-byte characters.
    Even in this simple case, it cannot work with multibyte strings.  */
 # undef strspn
-# define strspn(s,a) \
-    (GL_LINK_WARNING ("strspn cannot work correctly on character strings " \
-                      "in multibyte locales - " \
-                      "use mbsspn if you care about internationalization"), \
-     strspn (s, a))
+/* Assume strspn is always declared.  */
+_GL_WARN_ON_USE (strspn, "strspn cannot work correctly on character strings "
+                 "in multibyte locales - "
+                 "use mbsspn if you care about internationalization");
 #endif
 
 #if defined GNULIB_POSIXCHECK
 /* strrchr() does not work with multibyte strings if the locale encoding is
    GB18030 and the character to be searched is a digit.  */
 # undef strrchr
-# define strrchr(s,c) \
-    (GL_LINK_WARNING ("strrchr cannot work correctly on character strings " \
-                      "in some multibyte locales - " \
-                      "use mbsrchr if you care about internationalization"), \
-     strrchr (s, c))
+/* Assume strrchr is always declared.  */
+_GL_WARN_ON_USE (strrchr, "strrchr cannot work correctly on character strings "
+                 "in some multibyte locales - "
+                 "use mbsrchr if you care about internationalization");
 #endif
 
 /* Search the next delimiter (char listed in DELIM) starting at *STRINGP.
@@ -328,18 +321,16 @@ extern char *strsep (char **restrict __stringp, char const *restrict __delim)
 # endif
 # if defined GNULIB_POSIXCHECK
 #  undef strsep
-#  define strsep(s,d) \
-     (GL_LINK_WARNING ("strsep cannot work correctly on character strings " \
-                       "in multibyte locales - " \
-                       "use mbssep if you care about internationalization"), \
-      strsep (s, d))
+_GL_WARN_ON_USE (strsep, "strsep cannot work correctly on character strings "
+                 "in multibyte locales - "
+                 "use mbssep if you care about internationalization");
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef strsep
-# define strsep(s,d) \
-    (GL_LINK_WARNING ("strsep is unportable - " \
-                      "use gnulib module strsep for portability"), \
-     strsep (s, d))
+# if HAVE_RAW_DECL_STRSEP
+_GL_WARN_ON_USE (strsep, "strsep is unportable - "
+                 "use gnulib module strsep for portability");
+# endif
 #endif
 
 #if @GNULIB_STRSTR@
@@ -354,13 +345,12 @@ extern char *strstr (const char *haystack, const char *needle)
    POSIX says that it operates on "strings", and "string" in POSIX is defined
    as a sequence of bytes, not of characters.  */
 # undef strstr
-# define strstr(a,b) \
-    (GL_LINK_WARNING ("strstr is quadratic on many systems, and cannot " \
-                      "work correctly on character strings in most "    \
-                      "multibyte locales - " \
-                      "use mbsstr if you care about internationalization, " \
-                      "or use strstr if you care about speed"), \
-     strstr (a, b))
+/* Assume strstr is always declared.  */
+_GL_WARN_ON_USE (strstr, "strstr is quadratic on many systems, and cannot "
+                 "work correctly on character strings in most "
+                 "multibyte locales - "
+                 "use mbsstr if you care about internationalization, "
+                 "or use strstr if you care about speed");
 #endif
 
 /* Find the first occurrence of NEEDLE in HAYSTACK, using case-insensitive
@@ -378,13 +368,13 @@ extern char *strcasestr (const char *haystack, const char *needle)
    It is a glibc extension, and glibc implements it only for unibyte
    locales.  */
 # undef strcasestr
-# define strcasestr(a,b) \
-    (GL_LINK_WARNING ("strcasestr does work correctly on character strings " \
-                      "in multibyte locales - " \
-                      "use mbscasestr if you care about " \
-                      "internationalization, or use c-strcasestr if you want " \
-                      "a locale independent function"), \
-     strcasestr (a, b))
+# if HAVE_RAW_DECL_STRCASESTR
+_GL_WARN_ON_USE (strcasestr, "strcasestr does work correctly on character "
+                 "strings in multibyte locales - "
+                 "use mbscasestr if you care about "
+                 "internationalization, or use c-strcasestr if you want "
+                 "a locale independent function");
+# endif
 #endif
 
 /* Parse S into tokens separated by characters in DELIM.
@@ -413,7 +403,7 @@ extern char *strcasestr (const char *haystack, const char *needle)
 # if @REPLACE_STRTOK_R@
 #  undef strtok_r
 #  define strtok_r rpl_strtok_r
-# elif @UNDEFINE_STRTOK_R@
+# elif @UNDEFINE_STRTOK_R@ || defined GNULIB_POSIXCHECK
 #  undef strtok_r
 # endif
 # if ! @HAVE_DECL_STRTOK_R@ || @REPLACE_STRTOK_R@
@@ -422,19 +412,16 @@ extern char *strtok_r (char *restrict s, char const *restrict delim,
      _GL_ARG_NONNULL ((2, 3));
 # endif
 # if defined GNULIB_POSIXCHECK
-#  undef strtok_r
-#  define strtok_r(s,d,p) \
-     (GL_LINK_WARNING ("strtok_r cannot work correctly on character strings " \
-                       "in multibyte locales - " \
-                       "use mbstok_r if you care about internationalization"), \
-      strtok_r (s, d, p))
+_GL_WARN_ON_USE (strtok_r, "strtok_r cannot work correctly on character "
+                 "strings in multibyte locales - "
+                 "use mbstok_r if you care about internationalization");
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef strtok_r
-# define strtok_r(s,d,p) \
-    (GL_LINK_WARNING ("strtok_r is unportable - " \
-                      "use gnulib module strtok_r for portability"), \
-     strtok_r (s, d, p))
+# if HAVE_RAW_DECL_STRTOK_R
+_GL_WARN_ON_USE (strtok_r, "strtok_r is unportable - "
+                 "use gnulib module strtok_r for portability");
+# endif
 #endif
 
 
@@ -614,10 +601,9 @@ extern char *strerror (int);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef strerror
-# define strerror(e) \
-    (GL_LINK_WARNING ("strerror is unportable - " \
-                      "use gnulib module strerror to guarantee non-NULL result"), \
-     strerror (e))
+/* Assume strerror is always declared.  */
+_GL_WARN_ON_USE (strerror, "strerror is unportable - "
+                 "use gnulib module strerror to guarantee non-NULL result");
 #endif
 
 #if @GNULIB_STRSIGNAL@
@@ -629,10 +615,10 @@ extern char *strsignal (int __sig);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef strsignal
-# define strsignal(a) \
-    (GL_LINK_WARNING ("strsignal is unportable - " \
-                      "use gnulib module strsignal for portability"), \
-     strsignal (a))
+# if HAVE_RAW_DECL_STRSIGNAL
+_GL_WARN_ON_USE (strsignal, "strsignal is unportable - "
+                 "use gnulib module strsignal for portability");
+# endif
 #endif
 
 #if @GNULIB_STRVERSCMP@
@@ -641,10 +627,10 @@ extern int strverscmp (const char *, const char *) _GL_ARG_NONNULL ((1, 2));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef strverscmp
-# define strverscmp(a, b) \
-    (GL_LINK_WARNING ("strverscmp is unportable - " \
-                      "use gnulib module strverscmp for portability"), \
-     strverscmp (a, b))
+# if HAVE_RAW_DECL_STRVERSCMP
+_GL_WARN_ON_USE (strverscmp, "strverscmp is unportable - "
+                 "use gnulib module strverscmp for portability");
+# endif
 #endif
 
 

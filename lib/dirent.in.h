@@ -29,10 +29,9 @@
 /* Get ino_t.  Needed on some systems, including glibc 2.8.  */
 #include <sys/types.h>
 
-/* The definition of GL_LINK_WARNING is copied here.  */
-
 /* The definition of _GL_ARG_NONNULL is copied here.  */
 
+/* The definition of _GL_WARN_ON_USE is copied here.  */
 
 #ifdef __cplusplus
 extern "C" {
@@ -53,10 +52,10 @@ extern int dirfd (DIR *dir) _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef dirfd
-# define dirfd(d) \
-    (GL_LINK_WARNING ("dirfd is unportable - " \
-                      "use gnulib module dirfd for portability"), \
-     dirfd (d))
+# if HAVE_RAW_DECL_DIRFD
+_GL_WARN_ON_USE (dirfd, "dirfd is unportable - "
+                 "use gnulib module dirfd for portability");
+# endif
 #endif
 
 #if @GNULIB_FDOPENDIR@
@@ -74,10 +73,10 @@ extern DIR *fdopendir (int fd);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef fdopendir
-# define fdopendir(f) \
-    (GL_LINK_WARNING ("fdopendir is unportable - " \
-                      "use gnulib module fdopendir for portability"), \
-     fdopendir (f))
+# if HAVE_RAW_DECL_FDOPENDIR
+_GL_WARN_ON_USE (fdopendir, "fdopendir is unportable - "
+                 "use gnulib module fdopendir for portability");
+# endif
 #endif
 
 #if @REPLACE_OPENDIR@
@@ -98,10 +97,10 @@ extern int scandir (const char *dir, struct dirent ***namelist,
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef scandir
-# define scandir(d,n,f,c) \
-    (GL_LINK_WARNING ("scandir is unportable - " \
-                      "use gnulib module scandir for portability"), \
-     scandir (d, n, f, c))
+# if HAVE_RAW_DECL_SCANDIR
+_GL_WARN_ON_USE (scandir, "scandir is unportable - "
+                 "use gnulib module scandir for portability");
+# endif
 #endif
 
 #if @GNULIB_ALPHASORT@
@@ -112,10 +111,10 @@ extern int alphasort (const struct dirent **, const struct dirent **)
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef alphasort
-# define alphasort(a,b) \
-    (GL_LINK_WARNING ("alphasort is unportable - " \
-                      "use gnulib module alphasort for portability"), \
-     alphasort (a, b))
+# if HAVE_RAW_DECL_ALPHASORT
+_GL_WARN_ON_USE (alphasort, "alphasort is unportable - "
+                 "use gnulib module alphasort for portability");
+# endif
 #endif
 
 #ifdef __cplusplus

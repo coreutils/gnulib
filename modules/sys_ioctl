@@ -7,8 +7,8 @@ m4/sys_ioctl_h.m4
 
 Depends-on:
 include_next
-link-warning
 unistd
+warn-on-use
 
 configure.ac:
 gl_SYS_IOCTL_H
@@ -19,7 +19,7 @@ BUILT_SOURCES += sys/ioctl.h
 
 # We need the following in order to create <sys/ioctl.h> when the system
 # does not have a complete one.
-sys/ioctl.h: sys_ioctl.in.h $(LINK_WARNING_H)
+sys/ioctl.h: sys_ioctl.in.h $(WARN_ON_USE_H)
 	$(AM_V_at)$(MKDIR_P) sys
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
@@ -30,7 +30,7 @@ sys/ioctl.h: sys_ioctl.in.h $(LINK_WARNING_H)
 	      -e 's|@''GNULIB_IOCTL''@|$(GNULIB_IOCTL)|g' \
 	      -e 's|@''SYS_IOCTL_H_HAVE_WINSOCK2_H''@|$(SYS_IOCTL_H_HAVE_WINSOCK2_H)|g' \
 	      -e 's|@''SYS_IOCTL_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS''@|$(SYS_IOCTL_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS)|g' \
-	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
+	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
 	      < $(srcdir)/sys_ioctl.in.h; \
 	} > $@-t && \
 	mv $@-t $@

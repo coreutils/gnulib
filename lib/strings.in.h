@@ -29,10 +29,9 @@
 #define _GL_STRINGS_H
 
 
-/* The definition of GL_LINK_WARNING is copied here.  */
-
 /* The definition of _GL_ARG_NONNULL is copied here.  */
 
+/* The definition of _GL_WARN_ON_USE is copied here.  */
 
 #ifdef __cplusplus
 extern "C" {
@@ -52,14 +51,14 @@ extern int strcasecmp (char const *s1, char const *s2)
    POSIX says that it operates on "strings", and "string" in POSIX is defined
    as a sequence of bytes, not of characters.   */
 # undef strcasecmp
-# define strcasecmp(a,b) \
-    (GL_LINK_WARNING ("strcasecmp cannot work correctly on character strings " \
-                      "in multibyte locales - " \
-                      "use mbscasecmp if you care about " \
-                      "internationalization, or use c_strcasecmp (from " \
-                      "gnulib module c-strcase) if you want a locale " \
-                      "independent function"), \
-     strcasecmp (a, b))
+# if HAVE_RAW_DECL_STRCASECMP
+_GL_WARN_ON_USE (strcasecmp, "strcasecmp cannot work correctly on character "
+                 "strings in multibyte locales - "
+                 "use mbscasecmp if you care about "
+                 "internationalization, or use c_strcasecmp , "
+                 "gnulib module c-strcase) if you want a locale "
+                 "independent function");
+# endif
 #endif
 
 /* Compare no more than N bytes of strings S1 and S2, ignoring case,
@@ -75,14 +74,14 @@ extern int strncasecmp (char const *s1, char const *s2, size_t n)
    POSIX says that it operates on "strings", and "string" in POSIX is defined
    as a sequence of bytes, not of characters.  */
 # undef strncasecmp
-# define strncasecmp(a,b,n) \
-    (GL_LINK_WARNING ("strncasecmp cannot work correctly on character " \
-                      "strings in multibyte locales - " \
-                      "use mbsncasecmp or mbspcasecmp if you care about " \
-                      "internationalization, or use c_strncasecmp (from " \
-                      "gnulib module c-strcase) if you want a locale " \
-                      "independent function"), \
-     strncasecmp (a, b, n))
+# if HAVE_RAW_DECL_STRNCASECMP
+_GL_WARN_ON_USE (strncasecmp, "strncasecmp cannot work correctly on character "
+                 "strings in multibyte locales - "
+                 "use mbsncasecmp or mbspcasecmp if you care about "
+                 "internationalization, or use c_strncasecmp , "
+                 "gnulib module c-strcase) if you want a locale "
+                 "independent function");
+# endif
 #endif
 
 

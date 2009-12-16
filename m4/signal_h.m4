@@ -1,4 +1,4 @@
-# signal_h.m4 serial 8
+# signal_h.m4 serial 9
 dnl Copyright (C) 2007, 2008, 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -15,6 +15,12 @@ AC_DEFUN([gl_SIGNAL_H],
 #include <signal.h>
     ]])
   AC_REQUIRE([AC_TYPE_UID_T])
+
+  dnl Check for declarations of anything we want to poison if the
+  dnl corresponding gnulib module is not in use.
+  gl_WARN_ON_USE_PREPARE([[#include <signal.h>
+    ]], [sigaction sigaddset sigdelset sigemptyset sigfillset sigismember
+    sigpending sigprocmask])
 ])
 
 AC_DEFUN([gl_SIGNAL_MODULE_INDICATOR],

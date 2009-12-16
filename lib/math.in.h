@@ -28,9 +28,9 @@
 #define _GL_MATH_H
 
 
-/* The definition of GL_LINK_WARNING is copied here.  */
-
 /* The definition of _GL_ARG_NONNULL is copied here.  */
+
+/* The definition of _GL_WARN_ON_USE is copied here.  */
 
 /* Helper macros to define a portability warning for the
    classification macro FUNC called with VALUE.  POSIX declares the
@@ -111,10 +111,9 @@ extern double frexp (double x, int *expptr) _GL_ARG_NONNULL ((2));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef frexp
-# define frexp(x,e) \
-    (GL_LINK_WARNING ("frexp is unportable - " \
-                      "use gnulib module frexp for portability"), \
-     frexp (x, e))
+/* Assume frexp is always declared.  */
+_GL_WARN_ON_USE (frexp, "frexp is unportable - "
+                 "use gnulib module frexp for portability");
 #endif
 
 
@@ -124,10 +123,10 @@ extern long double acosl (long double x);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef acosl
-# define acosl(x) \
-    (GL_LINK_WARNING ("acosl is unportable - " \
-                      "use gnulib module mathl for portability"), \
-     acosl (x))
+# if HAVE_RAW_DECL_ACOSL
+_GL_WARN_ON_USE (acosl, "acosl is unportable - "
+                 "use gnulib module mathl for portability");
+# endif
 #endif
 
 
@@ -137,10 +136,10 @@ extern long double asinl (long double x);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef asinl
-# define asinl(x) \
-    (GL_LINK_WARNING ("asinl is unportable - " \
-                      "use gnulib module mathl for portability"), \
-     asinl (x))
+# if HAVE_RAW_DECL_ASINL
+_GL_WARN_ON_USE (asinl, "asinl is unportable - "
+                 "use gnulib module mathl for portability");
+# endif
 #endif
 
 
@@ -150,10 +149,10 @@ extern long double atanl (long double x);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef atanl
-# define atanl(x) \
-    (GL_LINK_WARNING ("atanl is unportable - " \
-                      "use gnulib module mathl for portability"), \
-     atanl (x))
+# if HAVE_RAW_DECL_ATANL
+_GL_WARN_ON_USE (atanl, "atanl is unportable - "
+                 "use gnulib module mathl for portability");
+# endif
 #endif
 
 
@@ -164,10 +163,10 @@ extern float ceilf (float x);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef ceilf
-# define ceilf(x) \
-    (GL_LINK_WARNING ("ceilf is unportable - " \
-                      "use gnulib module ceilf for portability"), \
-     ceilf (x))
+# if HAVE_RAW_DECL_CEILF
+_GL_WARN_ON_USE (ceilf, "ceilf is unportable - "
+                 "use gnulib module ceilf for portability");
+# endif
 #endif
 
 #if @GNULIB_CEILL@
@@ -177,10 +176,10 @@ extern long double ceill (long double x);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef ceill
-# define ceill(x) \
-    (GL_LINK_WARNING ("ceill is unportable - " \
-                      "use gnulib module ceill for portability"), \
-     ceill (x))
+# if HAVE_RAW_DECL_CEILL
+_GL_WARN_ON_USE (ceill, "ceill is unportable - "
+                 "use gnulib module ceill for portability");
+# endif
 #endif
 
 
@@ -194,10 +193,10 @@ extern long double cosl (long double x);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef cosl
-# define cosl(x) \
-    (GL_LINK_WARNING ("cosl is unportable - " \
-                      "use gnulib module mathl for portability"), \
-     cosl (x))
+# if HAVE_RAW_DECL_COSL
+_GL_WARN_ON_USE (cosl, "cosl is unportable - "
+                 "use gnulib module mathl for portability");
+# endif
 #endif
 
 
@@ -207,10 +206,10 @@ extern long double expl (long double x);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef expl
-# define expl(x) \
-    (GL_LINK_WARNING ("expl is unportable - " \
-                      "use gnulib module mathl for portability"), \
-     expl (x))
+# if HAVE_RAW_DECL_EXPL
+_GL_WARN_ON_USE (expl, "expl is unportable - "
+                 "use gnulib module mathl for portability");
+# endif
 #endif
 
 
@@ -221,10 +220,10 @@ extern float floorf (float x);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef floorf
-# define floorf(x) \
-    (GL_LINK_WARNING ("floorf is unportable - " \
-                      "use gnulib module floorf for portability"), \
-     floorf (x))
+# if HAVE_RAW_DECL_FLOORF
+_GL_WARN_ON_USE (floorf, "floorf is unportable - "
+                 "use gnulib module floorf for portability");
+# endif
 #endif
 
 #if @GNULIB_FLOORL@
@@ -234,10 +233,10 @@ extern long double floorl (long double x);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef floorl
-# define floorl(x) \
-    (GL_LINK_WARNING ("floorl is unportable - " \
-                      "use gnulib module floorl for portability"), \
-     floorl (x))
+# if HAVE_RAW_DECL_FLOORL
+_GL_WARN_ON_USE (floorl, "floorl is unportable - "
+                 "use gnulib module floorl for portability");
+# endif
 #endif
 
 
@@ -256,10 +255,10 @@ extern long double frexpl (long double x, int *expptr) _GL_ARG_NONNULL ((2));
 #endif
 #if !@GNULIB_FREXPL@ && defined GNULIB_POSIXCHECK
 # undef frexpl
-# define frexpl(x,e) \
-    (GL_LINK_WARNING ("frexpl is unportable - " \
-                      "use gnulib module frexpl for portability"), \
-     frexpl (x, e))
+# if HAVE_RAW_DECL_FREXPL
+_GL_WARN_ON_USE (frexpl, "frexpl is unportable - "
+                 "use gnulib module frexpl for portability");
+# endif
 #endif
 
 
@@ -272,10 +271,10 @@ extern long double ldexpl (long double x, int exp);
 #endif
 #if !@GNULIB_LDEXPL@ && defined GNULIB_POSIXCHECK
 # undef ldexpl
-# define ldexpl(x,e) \
-    (GL_LINK_WARNING ("ldexpl is unportable - " \
-                      "use gnulib module ldexpl for portability"), \
-     ldexpl (x, e))
+# if HAVE_RAW_DECL_LDEXPL
+_GL_WARN_ON_USE (ldexpl, "ldexpl is unportable - "
+                 "use gnulib module ldexpl for portability");
+# endif
 #endif
 
 
@@ -289,10 +288,10 @@ extern long double logl (long double x);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef logl
-# define logl(x) \
-    (GL_LINK_WARNING ("logl is unportable - " \
-                      "use gnulib module mathl for portability"), \
-     logl (x))
+# if HAVE_RAW_DECL_LOGL
+_GL_WARN_ON_USE (logl, "logl is unportable - "
+                 "use gnulib module mathl for portability");
+# endif
 #endif
 
 
@@ -304,10 +303,10 @@ extern float roundf (float x);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef roundf
-# define roundf(x) \
-    (GL_LINK_WARNING ("roundf is unportable - " \
-                      "use gnulib module roundf for portability"), \
-     roundf (x))
+# if HAVE_RAW_DECL_ROUNDF
+_GL_WARN_ON_USE (roundf, "roundf is unportable - "
+                 "use gnulib module roundf for portability");
+# endif
 #endif
 
 #if @GNULIB_ROUND@
@@ -318,10 +317,10 @@ extern double round (double x);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef round
-# define round(x) \
-    (GL_LINK_WARNING ("round is unportable - " \
-                      "use gnulib module round for portability"), \
-     round (x))
+# if HAVE_RAW_DECL_ROUND
+_GL_WARN_ON_USE (round, "round is unportable - "
+                 "use gnulib module round for portability");
+# endif
 #endif
 
 #if @GNULIB_ROUNDL@
@@ -332,10 +331,10 @@ extern long double roundl (long double x);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef roundl
-# define roundl(x) \
-    (GL_LINK_WARNING ("roundl is unportable - " \
-                      "use gnulib module roundl for portability"), \
-     roundl (x))
+# if HAVE_RAW_DECL_ROUNDL
+_GL_WARN_ON_USE (roundl, "roundl is unportable - "
+                 "use gnulib module roundl for portability");
+# endif
 #endif
 
 
@@ -349,10 +348,10 @@ extern long double sinl (long double x);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef sinl
-# define sinl(x) \
-    (GL_LINK_WARNING ("sinl is unportable - " \
-                      "use gnulib module mathl for portability"), \
-     sinl (x))
+# if HAVE_RAW_DECL_SINL
+_GL_WARN_ON_USE (sinl, "sinl is unportable - "
+                 "use gnulib module mathl for portability");
+# endif
 #endif
 
 
@@ -362,10 +361,10 @@ extern long double sqrtl (long double x);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef sqrtl
-# define sqrtl(x) \
-    (GL_LINK_WARNING ("sqrtl is unportable - " \
-                      "use gnulib module mathl for portability"), \
-     sqrtl (x))
+# if HAVE_RAW_DECL_SQRTL
+_GL_WARN_ON_USE (sqrtl, "sqrtl is unportable - "
+                 "use gnulib module mathl for portability");
+# endif
 #endif
 
 
@@ -375,10 +374,10 @@ extern long double tanl (long double x);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef tanl
-# define tanl(x) \
-    (GL_LINK_WARNING ("tanl is unportable - " \
-                      "use gnulib module mathl for portability"), \
-     tanl (x))
+# if HAVE_RAW_DECL_TANL
+_GL_WARN_ON_USE (tanl, "tanl is unportable - "
+                 "use gnulib module mathl for portability");
+# endif
 #endif
 
 
@@ -389,10 +388,10 @@ extern float truncf (float x);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef truncf
-# define truncf(x) \
-    (GL_LINK_WARNING ("truncf is unportable - " \
-                      "use gnulib module truncf for portability"), \
-     truncf (x))
+# if HAVE_RAW_DECL_TRUNCF
+_GL_WARN_ON_USE (truncf, "truncf is unportable - "
+                 "use gnulib module truncf for portability");
+# endif
 #endif
 
 #if @GNULIB_TRUNC@
@@ -402,10 +401,10 @@ extern double trunc (double x);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef trunc
-# define trunc(x) \
-    (GL_LINK_WARNING ("trunc is unportable - " \
-                      "use gnulib module trunc for portability"), \
-     trunc (x))
+# if HAVE_RAW_DECL_TRUNC
+_GL_WARN_ON_USE (trunc, "trunc is unportable - "
+                 "use gnulib module trunc for portability");
+# endif
 #endif
 
 #if @GNULIB_TRUNCL@
@@ -416,10 +415,10 @@ extern long double truncl (long double x);
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef truncl
-# define truncl(x) \
-    (GL_LINK_WARNING ("truncl is unportable - " \
-                      "use gnulib module truncl for portability"), \
-     truncl (x))
+# if HAVE_RAW_DECL_TRUNCL
+_GL_WARN_ON_USE (truncl, "truncl is unportable - "
+                 "use gnulib module truncl for portability");
+# endif
 #endif
 
 
