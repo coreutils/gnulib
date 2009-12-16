@@ -1,5 +1,14 @@
 2009-12-22  Eric Blake  <ebb9@byu.net>
 
+	getopt: synchronize from glibc
+	* lib/getopt.c (_getopt_initialize, _getopt_internal_r): Swap
+	parameter order.  Adjust all callers.
+	(_getopt_internal_r, main): Adjust quoting in error messages.
+	Drop considerations for outdated POSIX 1003.2 error message.
+	* lib/getopt1.c (_getopt_long_r, _getopt_long_only_r): Adjust
+	callers.
+	* lib/getopt_int.h (_getopt_internal_r): Adjust prototype.
+
 	test-getopt: test stderr behavior
 	* modules/getopt-posix-tests (Depends-on): Add dup2.
 	* tests/test-getopt.c (ASSERT): Avoid stderr.

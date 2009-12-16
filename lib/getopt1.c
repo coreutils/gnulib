@@ -50,7 +50,7 @@ _getopt_long_r (int argc, char **argv, const char *options,
                 struct _getopt_data *d)
 {
   return _getopt_internal_r (argc, argv, options, long_options, opt_index,
-                             0, 0, d);
+                             0, d, 0);
 }
 
 /* Like getopt_long, but '-' as well as '--' can indicate a long option.
@@ -73,7 +73,7 @@ _getopt_long_only_r (int argc, char **argv, const char *options,
                      struct _getopt_data *d)
 {
   return _getopt_internal_r (argc, argv, options, long_options, opt_index,
-                             1, 0, d);
+                             1, d, 0);
 }
 
 
