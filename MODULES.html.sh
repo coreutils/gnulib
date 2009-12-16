@@ -3172,6 +3172,7 @@ func_all_modules ()
 
   func_begin_table
   func_module absolute-header
+  func_module arg-nonnull
   func_module config-h
   func_module configmake
   func_module dummy
@@ -3184,14 +3185,15 @@ func_all_modules ()
   func_module lib-msvc-compat
   func_module lib-symbol-versions
   func_module link-warning
+  func_module manywarnings
   func_module no-c++
   func_module relocatable-lib
   func_module relocatable-lib-lgpl
   func_module relocatable-prog
   func_module relocatable-prog-wrapper
   func_module relocatable-script
+  func_module warn-on-use
   func_module warnings
-  func_module manywarnings
   func_end_table
 
   element="Support for building documentation"
