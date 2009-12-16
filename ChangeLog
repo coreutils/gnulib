@@ -1,5 +1,21 @@
 2009-12-16  Eric Blake  <ebb9@byu.net>
 
+	fcntl: use to simplify other modules
+	* modules/cloexec (Depends-on): Add fcntl.
+	* modules/fchdir (Depends-on): Likewise.
+	* modules/fd-safer-flag (Depends-on): Likewise.
+	* modules/unistd-safer (Depends-on): Likewise.
+	* modules/dup3 (configure.ac): Set module indicator.
+	* m4/fchdir.m4 (gl_FUNC_FCHDIR): Replace fcntl if fchdir is
+	missing.
+	* lib/fchdir.c (_gl_register_dup): Fix comment.
+	* lib/cloexec.c (dup_cloexec): Simplify, by relying on fcntl.
+	* lib/dup-safer.c (dup_safer): Likewise.
+	* lib/dup-safer-flag.c (dup_safer_flag): Likewise.
+	* lib/dup3.c (dup3): Likewise.
+	* tests/test-fchdir.c (main): Enhance test.
+	Fixes a dup_cloexec bug reported by Ondřej Vašík.
+
 	fcntl: port portions of fcntl to mingw
 	* m4/fcntl.m4 (gl_FUNC_FCNTL): Also build fcntl.c on mingw.
 	* lib/fcntl.c (fcntl) <F_DUPFD, F_DUPFD_CLOEXEC, F_GETFD>: Provide

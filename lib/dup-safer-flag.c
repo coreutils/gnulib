@@ -39,16 +39,6 @@
 int
 dup_safer_flag (int fd, int flag)
 {
-  if (flag & O_CLOEXEC)
-    {
-#if defined F_DUPFD_CLOEXEC && !REPLACE_FCHDIR
-      return fcntl (fd, F_DUPFD_CLOEXEC, STDERR_FILENO + 1);
-#else
-      /* fd_safer_flag calls us back, but eventually the recursion
-         unwinds and does the right thing.  */
-      fd = dup_cloexec (fd);
-      return fd_safer_flag (fd, flag);
-#endif
-    }
-  return dup_safer (fd);
+  return fcntl (fd, (flag & O_CLOEXEC) ? F_DUPFD_CLOEXEC : F_DUPFD,
+                STDERR_FILENO + 1);
 }

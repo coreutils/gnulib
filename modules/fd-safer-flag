@@ -7,8 +7,9 @@ lib/fd-safer-flag.c
 lib/dup-safer-flag.c
 
 Depends-on:
-unistd-safer
 cloexec
+fcntl
+unistd-safer
 
 configure.ac:
 gl_MODULE_INDICATOR([fd-safer-flag])

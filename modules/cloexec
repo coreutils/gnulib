@@ -8,6 +8,7 @@ m4/cloexec.m4
 
 Depends-on:
 dup2
+fcntl
 stdbool
 
 configure.ac:

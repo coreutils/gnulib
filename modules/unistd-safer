@@ -10,6 +10,7 @@ lib/unistd-safer.h
 m4/unistd-safer.m4
 
 Depends-on:
+fcntl
 unistd
 
 configure.ac:

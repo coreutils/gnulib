@@ -89,6 +89,15 @@ main (void)
           ASSERT (dup_cloexec (fd) == new_fd);
           ASSERT (dup2 (new_fd, fd) == fd);
           ASSERT (close (new_fd) == 0);
+          ASSERT (fcntl (fd, F_DUPFD_CLOEXEC, new_fd) == new_fd);
+          ASSERT (close (fd) == 0);
+          ASSERT (fcntl (new_fd, F_DUPFD, fd) == fd);
+          ASSERT (close (new_fd) == 0);
+#if GNULIB_DUP3
+          ASSERT (dup3 (fd, new_fd, 0) == new_fd);
+          ASSERT (dup3 (new_fd, fd, 0) == fd);
+          ASSERT (close (new_fd) == 0);
+#endif
         }
     }
 

@@ -74,7 +74,7 @@ dup3 (int oldfd, int newfd, int flags)
   }
 #endif
 
-  if (oldfd < 0 || newfd < 0 || newfd >= getdtablesize ())
+  if (newfd < 0 || newfd >= getdtablesize () || fcntl (oldfd, F_GETFD) == -1)
     {
       errno = EBADF;
       return -1;
@@ -95,129 +95,22 @@ dup3 (int oldfd, int newfd, int flags)
       return -1;
     }
 
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-/* Native Woe32 API.  */
-
   if (flags & O_CLOEXEC)
     {
-      /* Neither dup() nor dup2() can create a file descriptor with
-         O_CLOEXEC = O_NOINHERIT set.  We need to use the low-level function
-         _open_osfhandle for this.  Iterate until all file descriptors less
-         than newfd are filled up.  */
-      HANDLE curr_process = GetCurrentProcess ();
-      HANDLE old_handle = (HANDLE) _get_osfhandle (oldfd);
-      unsigned char fds_to_close[OPEN_MAX_MAX / CHAR_BIT];
-      unsigned int fds_to_close_bound = 0;
       int result;
-
-      if (old_handle == INVALID_HANDLE_VALUE)
-        {
-          /* oldfd is not open, or is an unassigned standard file
-             descriptor.  */
-          errno = EBADF;
-          return -1;
-        }
-
       close (newfd);
-
-      for (;;)
+      result = fcntl (oldfd, F_DUPFD_CLOEXEC, newfd);
+      if (newfd < result)
         {
-          HANDLE new_handle;
-          int duplicated_fd;
-          unsigned int index;
-
-          if (!DuplicateHandle (curr_process,         /* SourceProcessHandle */
-                                old_handle,           /* SourceHandle */
-                                curr_process,         /* TargetProcessHandle */
-                                (PHANDLE) &new_handle, /* TargetHandle */
-                                (DWORD) 0,            /* DesiredAccess */
-                                FALSE,                /* InheritHandle */
-                                DUPLICATE_SAME_ACCESS)) /* Options */
-            {
-              errno = EBADF; /* arbitrary */
-              result = -1;
-              break;
-            }
-          duplicated_fd = _open_osfhandle ((long) new_handle, flags);
-          if (duplicated_fd < 0)
-            {
-              CloseHandle (new_handle);
-              result = -1;
-              break;
-            }
-          if (duplicated_fd > newfd)
-            /* Shouldn't happen, since newfd is still closed.  */
-            abort ();
-          if (duplicated_fd == newfd)
-            {
-              result = newfd;
-              break;
-            }
-
-          /* Set the bit duplicated_fd in fds_to_close[].  */
-          index = (unsigned int) duplicated_fd / CHAR_BIT;
-          if (index >= fds_to_close_bound)
-            {
-              if (index >= sizeof (fds_to_close))
-                /* Need to increase OPEN_MAX_MAX.  */
-                abort ();
-              memset (fds_to_close + fds_to_close_bound, '\0',
-                      index + 1 - fds_to_close_bound);
-              fds_to_close_bound = index + 1;
-            }
-          fds_to_close[index] |= 1 << ((unsigned int) duplicated_fd % CHAR_BIT);
+          close (result);
+          errno = EIO;
+          result = -1;
         }
-
-      /* Close the previous fds that turned out to be too small.  */
-      {
-        int saved_errno = errno;
-        unsigned int duplicated_fd;
-
-        for (duplicated_fd = 0;
-             duplicated_fd < fds_to_close_bound * CHAR_BIT;
-             duplicated_fd++)
-          if ((fds_to_close[duplicated_fd / CHAR_BIT]
-               >> (duplicated_fd % CHAR_BIT))
-              & 1)
-            close (duplicated_fd);
-
-        errno = saved_errno;
-      }
-
-#if REPLACE_FCHDIR
-      if (result == newfd)
-        result = _gl_register_dup (oldfd, newfd);
-#endif
-      return result;
+      if (result < 0)
+        return -1;
     }
-
-  if (dup2 (oldfd, newfd) < 0)
+  else if (dup2 (oldfd, newfd) < 0)
     return -1;
-
-#else
-/* Unix API.  */
-
-  if (dup2 (oldfd, newfd) < 0)
-    return -1;
-
-  /* POSIX <http://www.opengroup.org/onlinepubs/9699919799/functions/dup.html>
-     says that initially, the FD_CLOEXEC flag is cleared on newfd.  */
-
-  if (flags & O_CLOEXEC)
-    {
-      int fcntl_flags;
-
-      if ((fcntl_flags = fcntl (newfd, F_GETFD, 0)) < 0
-          || fcntl (newfd, F_SETFD, fcntl_flags | FD_CLOEXEC) == -1)
-        {
-          int saved_errno = errno;
-          close (newfd);
-          errno = saved_errno;
-          return -1;
-        }
-    }
-
-#endif
 
 #if O_BINARY
   if (flags & O_BINARY)
@@ -226,8 +119,5 @@ dup3 (int oldfd, int newfd, int flags)
     setmode (newfd, O_TEXT);
 #endif
 
-#if REPLACE_FCHDIR
-  newfd = _gl_register_dup (oldfd, newfd);
-#endif
   return newfd;
 }

@@ -26,14 +26,6 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-/* Native Woe32 API.  */
-# define WIN32_LEAN_AND_MEAN
-# include <windows.h>
-# include <io.h>
-#endif
-
-
 /* Set the `FD_CLOEXEC' flag of DESC if VALUE is true,
    or clear the flag if VALUE is false.
    Return 0 on success, or -1 on error with `errno' set.
@@ -47,7 +39,7 @@
 int
 set_cloexec_flag (int desc, bool value)
 {
-#if defined F_GETFD && defined F_SETFD
+#ifdef F_SETFD
 
   int flags = fcntl (desc, F_GETFD, 0);
 
@@ -62,7 +54,7 @@ set_cloexec_flag (int desc, bool value)
 
   return -1;
 
-#else
+#else /* !F_SETFD */
 
   /* Use dup2 to reject invalid file descriptors; the cloexec flag
      will be unaffected.  */
@@ -77,7 +69,7 @@ set_cloexec_flag (int desc, bool value)
 
   /* There is nothing we can do on this kind of platform.  Punt.  */
   return 0;
-#endif
+#endif /* !F_SETFD */
 }
 
 
@@ -88,77 +80,5 @@ set_cloexec_flag (int desc, bool value)
 int
 dup_cloexec (int fd)
 {
-  int nfd;
-
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-
-  /* Native Woe32 API.  */
-  HANDLE curr_process = GetCurrentProcess ();
-  HANDLE old_handle = (HANDLE) _get_osfhandle (fd);
-  HANDLE new_handle;
-  int mode;
-
-  if (old_handle == INVALID_HANDLE_VALUE
-      || (mode = setmode (fd, O_BINARY)) == -1)
-    {
-      /* fd is closed, or is open to no handle at all.
-         We cannot duplicate fd in this case, because _open_osfhandle
-         fails for an INVALID_HANDLE_VALUE argument.  */
-      errno = EBADF;
-      return -1;
-    }
-  setmode (fd, mode);
-
-  if (!DuplicateHandle (curr_process,               /* SourceProcessHandle */
-                        old_handle,                 /* SourceHandle */
-                        curr_process,               /* TargetProcessHandle */
-                        (PHANDLE) &new_handle,      /* TargetHandle */
-                        (DWORD) 0,                  /* DesiredAccess */
-                        FALSE,                      /* InheritHandle */
-                        DUPLICATE_SAME_ACCESS))     /* Options */
-    {
-      /* TODO: Translate GetLastError () into errno.  */
-      errno = EMFILE;
-      return -1;
-    }
-
-  nfd = _open_osfhandle ((long) new_handle, mode | O_NOINHERIT);
-  if (nfd < 0)
-    {
-      CloseHandle (new_handle);
-      errno = EMFILE;
-      return -1;
-    }
-
-#  if REPLACE_FCHDIR
-  if (0 <= nfd)
-    nfd = _gl_register_dup (fd, nfd);
-#  endif
-  return nfd;
-
-#else /* !_WIN32 */
-
-  /* Unix API.  */
-
-# ifdef F_DUPFD_CLOEXEC
-  nfd = fcntl (fd, F_DUPFD_CLOEXEC, 0);
-#  if REPLACE_FCHDIR
-  if (0 <= nfd)
-    nfd = _gl_register_dup (fd, nfd);
-#  endif
-
-# else /* !F_DUPFD_CLOEXEC */
-  nfd = dup (fd);
-  if (0 <= nfd && set_cloexec_flag (nfd, true) < 0)
-    {
-      int saved_errno = errno;
-      close (nfd);
-      nfd = -1;
-      errno = saved_errno;
-    }
-# endif /* !F_DUPFD_CLOEXEC */
-
-  return nfd;
-
-#endif /* !_WIN32 */
+  return fcntl (fd, F_DUPFD_CLOEXEC, 0);
 }
