@@ -1,5 +1,9 @@
 2009-12-16  Eric Blake  <ebb9@byu.net>
 
+	binary-io: avoid potential compilation warning
+	* lib/binary-io.h [__DJGPP__]: Avoid null preprocessor
+	directives.
+
 	fflush: avoid compilation error on NetBSD
 	* lib/fflush.c (update_fpos_cache): Use a union to safely convert
 	between off_t and fpos_t, since the latter is sometimes a struct.

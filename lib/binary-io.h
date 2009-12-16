@@ -1,5 +1,6 @@
 /* Binary mode I/O.
-   Copyright (C) 2001, 2003, 2005, 2008 Free Software Foundation, Inc.
+   Copyright (C) 2001, 2003, 2005, 2008, 2009 Free Software
+   Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -45,9 +46,9 @@
 # endif
 # ifdef __DJGPP__
 #  include <unistd.h> /* declares isatty() */
-#  /* Avoid putting stdin/stdout in binary mode if it is connected to the
-#     console, because that would make it impossible for the user to
-#     interrupt the program through Ctrl-C or Ctrl-Break.  */
+   /* Avoid putting stdin/stdout in binary mode if it is connected to
+      the console, because that would make it impossible for the user
+      to interrupt the program through Ctrl-C or Ctrl-Break.  */
 #  define SET_BINARY(fd) (!isatty (fd) ? (setmode (fd, O_BINARY), 0) : 0)
 # else
 #  define SET_BINARY(fd) setmode (fd, O_BINARY)
