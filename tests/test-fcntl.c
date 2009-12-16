@@ -155,22 +155,16 @@ check_flags (void)
 {
   switch (0)
     {
-#ifdef F_DUPFD
     case F_DUPFD:
-# if F_DUPFD
-# endif
+#if F_DUPFD
 #endif
 
-#ifdef F_DUPFD_CLOEXEC
     case F_DUPFD_CLOEXEC:
-# if F_DUPFD_CLOEXEC
-# endif
+#if F_DUPFD_CLOEXEC
 #endif
 
-#ifdef F_GETFD
     case F_GETFD:
-# if F_GETFD
-# endif
+#if F_GETFD
 #endif
 
 #ifdef F_SETFD
@@ -240,8 +234,6 @@ main (int argc, char **argv)
     ASSERT (func2 (4, &s) == 4);
   }
   check_flags ();
-
-#if HAVE_FCNTL
 
   /* Assume std descriptors were provided by invoker, and ignore fds
      that might have been inherited.  */
@@ -335,11 +327,30 @@ main (int argc, char **argv)
   ASSERT (is_mode (fd + 2, O_TEXT));
   ASSERT (close (fd + 2) == 0);
 
+  /* Test F_GETFD.  */
+  errno = 0;
+  ASSERT (fcntl (-1, F_GETFD) == -1);
+  ASSERT (errno == EBADF);
+  errno = 0;
+  ASSERT (fcntl (fd + 1, F_GETFD) == -1);
+  ASSERT (errno == EBADF);
+  errno = 0;
+  ASSERT (fcntl (10000000, F_GETFD) == -1);
+  ASSERT (errno == EBADF);
+  {
+    int result = fcntl (fd, F_GETFD);
+    ASSERT (0 <= result);
+    ASSERT ((result & FD_CLOEXEC) == FD_CLOEXEC);
+    ASSERT (dup (fd) == fd + 1);
+    result = fcntl (fd + 1, F_GETFD);
+    ASSERT (0 <= result);
+    ASSERT ((result & FD_CLOEXEC) == 0);
+    ASSERT (close (fd + 1) == 0);
+  }
+
   /* Cleanup.  */
   ASSERT (close (fd) == 0);
   ASSERT (unlink (file) == 0);
-
-#endif /* HAVE_FCNTL */
 
   return 0;
 }

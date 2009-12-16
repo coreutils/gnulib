@@ -23,7 +23,8 @@ and @samp{O_NOLINKS} (not specified by POSIX) are defined
 on some platforms but not on others.
 
 @item
-@samp{FD_CLOEXEC} is not defined on some platforms:
+@samp{FD_CLOEXEC}, @samp{F_DUPFD}, and @samp{F_GETFD} are not defined
+on some platforms:
 mingw.
 
 @item
@@ -54,10 +55,6 @@ replacement is not atomic on these platforms.
 @item
 @samp{O_SEARCH} and @samp{O_EXEC} are not defined
 on some platforms.
-
-@item
-@samp{F_DUPFD} and @samp{F_GETFD} are not defined on some platforms:
-mingw.
 
 @item
 @samp{F_SETFD}, @samp{F_GETFL}, @samp{F_SETFL}, @samp{F_GETLK},

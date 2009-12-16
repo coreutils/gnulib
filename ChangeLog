@@ -1,5 +1,20 @@
 2009-12-16  Eric Blake  <ebb9@byu.net>
 
+	fcntl: port portions of fcntl to mingw
+	* m4/fcntl.m4 (gl_FUNC_FCNTL): Also build fcntl.c on mingw.
+	* lib/fcntl.c (fcntl) <F_DUPFD, F_DUPFD_CLOEXEC, F_GETFD>: Provide
+	replacement for mingw.
+	* modules/fcntl (Description): Update.
+	(Depends-on): Add dup2.
+	* m4/fcntl_h.m4 (gl_FCNTL_H_DEFAULTS): Add witness.
+	* modules/fcntl-h (Makefile.am): Substitute it.
+	* lib/fcntl.in.h (fcntl): Update declaration.
+	(F_DUPFD, F_GETFD): New macros, when needed.
+	* doc/posix-headers/fcntl.texi (fcntl.h): Update documentation.
+	* doc/posix-functions/fcntl.texi (fcntl): Likewise.
+	* tests/test-fcntl.c (check_flags, main): Enhance test for items
+	we now guarantee.
+
 	fcntl: work around cygwin bug in F_DUPFD
 	* m4/fcntl.m4 (gl_REPLACE_FCNTL): New macro.
 	(gl_FUNC_FCNTL): Use it.  Test for F_DUPFD bug.

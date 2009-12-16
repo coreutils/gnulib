@@ -59,6 +59,8 @@ extern "C" {
 # if @REPLACE_FCNTL@
 #  undef fcntl
 #  define fcntl rpl_fcntl
+# endif
+# if !@HAVE_FCNTL@ || @REPLACE_FCNTL@
 extern int fcntl (int fd, int action, ...);
 # endif
 #elif defined GNULIB_POSIXCHECK
@@ -104,14 +106,14 @@ extern int openat (int fd, char const *file, int flags, /* mode_t mode */ ...)
 }
 #endif
 
-/* Fix up the FD_* macros.  */
+/* Fix up the FD_* macros, only known to be missing on mingw.  */
 
 #ifndef FD_CLOEXEC
 # define FD_CLOEXEC 1
 #endif
 
 /* Fix up the supported F_* macros.  Intentionally leave other F_*
-   macros undefined.  */
+   macros undefined.  Only known to be missing on mingw.  */
 
 #ifndef F_DUPFD_CLOEXEC
 # define F_DUPFD_CLOEXEC 0x40000000
@@ -119,6 +121,14 @@ extern int openat (int fd, char const *file, int flags, /* mode_t mode */ ...)
 # define GNULIB_defined_F_DUPFD_CLOEXEC 1
 #else
 # define GNULIB_defined_F_DUPFD_CLOEXEC 0
+#endif
+
+#ifndef F_DUPFD
+# define F_DUPFD 1
+#endif
+
+#ifndef F_GETFD
+# define F_GETFD 2
 #endif
 
 /* Fix up the O_* macros.  */

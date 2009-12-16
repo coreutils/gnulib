@@ -1,4 +1,4 @@
-# fcntl.m4 serial 2
+# fcntl.m4 serial 3
 dnl Copyright (C) 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,9 +7,9 @@ dnl with or without modifications, as long as this notice is preserved.
 # For now, this module ensures that fcntl()
 # - supports F_DUPFD correctly
 # - supports or emulates F_DUPFD_CLOEXEC
+# - supports F_GETFD
 # Still to be ported to mingw:
-# - F_GETFD, F_SETFD, F_DUPFD
-# - F_DUPFD_CLOEXEC
+# - F_SETFD
 # - F_GETFL, F_SETFL
 # - F_GETOWN, F_SETOWN
 # - F_GETLK, F_SETLK, F_SETLKW
@@ -21,7 +21,7 @@ AC_DEFUN([gl_FUNC_FCNTL],
   AC_REQUIRE([AC_CANONICAL_HOST])
   AC_CHECK_FUNCS_ONCE([fcntl])
   if test $ac_cv_func_fcntl = no; then
-    HAVE_FCNTL=0
+    gl_REPLACE_FCNTL
   else
     dnl cygwin 1.5.x F_DUPFD has wrong errno, and allows negative target
     AC_CACHE_CHECK([whether fcntl handles F_DUPFD correctly],
@@ -74,8 +74,10 @@ AC_DEFUN([gl_REPLACE_FCNTL],
 [
   AC_REQUIRE([gl_FCNTL_H_DEFAULTS])
   AC_CHECK_FUNCS_ONCE([fcntl])
-  if test $ac_cv_func_fcntl = yes; then
+  if test $ac_cv_func_fcntl = no; then
+    HAVE_FCNTL=0
+  else
     REPLACE_FCNTL=1
-    AC_LIBOBJ([fcntl])
   fi
+  AC_LIBOBJ([fcntl])
 ])

@@ -1,11 +1,12 @@
 Description:
-Support for fcntl() action F_DUPFD_CLOEXEC.
+Support for fcntl() action F_DUPFD, F_DUPFD_CLOEXEC, F_GETFD.
 
 Files:
 m4/fcntl.m4
 lib/fcntl.c
 
 Depends-on:
+dup2
 fcntl-h
 
 configure.ac:
