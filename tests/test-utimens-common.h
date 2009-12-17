@@ -19,14 +19,14 @@
 #ifndef GL_TEST_UTIMENS_COMMON
 # define GL_TEST_UTIMENS_COMMON
 
-#include <fcntl.h>
-#include <errno.h>
-#include <string.h>
-#include <unistd.h>
+# include <fcntl.h>
+# include <errno.h>
+# include <string.h>
+# include <unistd.h>
 
-#include "stat-time.h"
-#include "timespec.h"
-#include "utimecmp.h"
+# include "stat-time.h"
+# include "timespec.h"
+# include "utimecmp.h"
 
 enum {
   BILLION = 1000 * 1000 * 1000,
@@ -62,9 +62,18 @@ nap (void)
      a quantization boundary equal to the resolution.  Our usage of
      utimecmp allows equality, so no need to waste 980 milliseconds
      if the replacement usleep rounds to 1 second.  */
-#if HAVE_USLEEP
+# if HAVE_USLEEP
   usleep (20 * 1000); /* 20 milliseconds.  */
-#endif
+# endif
 }
+
+# if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
+/* Skip ctime tests on native Windows, since it is either a copy of
+   mtime or birth time (depending on the file system), rather than a
+   properly tracked change time.  */
+#  define check_ctime 0
+# else
+#  define check_ctime 1
+# endif
 
 #endif /* GL_TEST_UTIMENS_COMMON */

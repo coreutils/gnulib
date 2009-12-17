@@ -54,11 +54,16 @@ test_lutimens (int (*func) (char const *, struct timespec const *), bool print)
   }
   {
     struct timespec ts[2] = { { Y2K, 0 }, { Y2K, 0 } };
+    nap ();
     ASSERT (func (BASE "file", ts) == 0);
   }
-  ASSERT (stat (BASE "file", &st1) == 0);
-  ASSERT (st1.st_atime == Y2K);
-  ASSERT (st1.st_mtime == Y2K);
+  ASSERT (stat (BASE "file", &st2) == 0);
+  ASSERT (st2.st_atime == Y2K);
+  ASSERT (st2.st_mtime == Y2K);
+  if (check_ctime)
+    ASSERT (st1.st_ctime < st2.st_ctime
+            || (st1.st_ctime == st2.st_ctime
+                && get_stat_ctime_ns (&st1) < get_stat_ctime_ns (&st2)));
 
   /* Play with symlink timestamps.  */
   if (symlink (BASE "file", BASE "link"))
@@ -98,6 +103,8 @@ test_lutimens (int (*func) (char const *, struct timespec const *), bool print)
   if (st1.st_atime != st2.st_atime
       || get_stat_atime_ns (&st1) != get_stat_atime_ns (&st2))
     atime_supported = false;
+  ASSERT (st1.st_ctime == st2.st_ctime);
+  ASSERT (get_stat_ctime_ns (&st1) == get_stat_ctime_ns (&st2));
 
   /* Invalid arguments.  */
   {
@@ -123,6 +130,7 @@ test_lutimens (int (*func) (char const *, struct timespec const *), bool print)
   /* Set both times.  */
   {
     struct timespec ts[2] = { { Y2K, BILLION / 2 - 1 }, { Y2K, BILLION - 1 } };
+    nap ();
     ASSERT (func (BASE "link", ts) == 0);
     ASSERT (lstat (BASE "link", &st2) == 0);
     if (atime_supported)
@@ -134,20 +142,46 @@ test_lutimens (int (*func) (char const *, struct timespec const *), bool print)
     ASSERT (st2.st_mtime == Y2K);
     ASSERT (0 <= get_stat_mtime_ns (&st2));
     ASSERT (get_stat_mtime_ns (&st2) < BILLION);
+    if (check_ctime)
+      ASSERT (st1.st_ctime < st2.st_ctime
+              || (st1.st_ctime == st2.st_ctime
+                  && get_stat_ctime_ns (&st1) < get_stat_ctime_ns (&st2)));
   }
 
   /* Play with UTIME_OMIT, UTIME_NOW.  */
   {
+    struct stat st3;
     struct timespec ts[2] = { { BILLION, UTIME_OMIT }, { 0, UTIME_NOW } };
+    nap ();
+    ASSERT (func (BASE "link", ts) == 0);
+    ASSERT (lstat (BASE "link", &st3) == 0);
+    if (atime_supported)
+      {
+        ASSERT (st3.st_atime == Y2K);
+        ASSERT (0 <= get_stat_atime_ns (&st3));
+        ASSERT (get_stat_atime_ns (&st3) < BILLION / 2);
+      }
+    ASSERT (utimecmp (BASE "link", &st1, &st3, 0) <= 0);
+    if (check_ctime)
+      ASSERT (st2.st_ctime < st3.st_ctime
+              || (st2.st_ctime == st3.st_ctime
+                  && get_stat_ctime_ns (&st2) < get_stat_ctime_ns (&st3)));
+    nap ();
+    ts[0].tv_nsec = 0;
+    ts[1].tv_nsec = UTIME_OMIT;
     ASSERT (func (BASE "link", ts) == 0);
     ASSERT (lstat (BASE "link", &st2) == 0);
     if (atime_supported)
       {
-        ASSERT (st2.st_atime == Y2K);
-        ASSERT (0 <= get_stat_atime_ns (&st2));
-        ASSERT (get_stat_atime_ns (&st2) < BILLION / 2);
+        ASSERT (st2.st_atime == BILLION);
+        ASSERT (get_stat_atime_ns (&st2) == 0);
       }
-    ASSERT (utimecmp (BASE "link", &st1, &st2, 0) <= 0);
+    ASSERT (st3.st_mtime == st2.st_mtime);
+    ASSERT (get_stat_mtime_ns (&st3) == get_stat_mtime_ns (&st2));
+    if (check_ctime)
+      ASSERT (st3.st_ctime < st2.st_ctime
+              || (st3.st_ctime == st2.st_ctime
+                  && get_stat_ctime_ns (&st3) < get_stat_ctime_ns (&st2)));
   }
 
   /* Symlink to directory.  */

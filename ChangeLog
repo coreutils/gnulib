@@ -1,3 +1,13 @@
+2009-12-19  Eric Blake  <ebb9@byu.net>
+
+	utimens: check for ctime update
+	* tests/test-utimens-common.h (check_ctime): Define.
+	* tests/test-utimens.h (test_utimens): Expose the Linux bug.
+	* tests/test-futimens.h (test_futimens): Likewise.
+	* tests/test-lutimens.h (test_lutimens): Likewise.
+	* doc/posix-functions/futimens.texi (futimens): Document the bug.
+	* doc/posix-functions/utimensat.texi (utimensat): Likewise.
+
 2009-12-19  Bruno Haible  <bruno@clisp.org>
 
 	dprintf-posix: Check against memory leak fixed on 2009-12-15.
