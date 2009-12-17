@@ -1,5 +1,11 @@
 2009-12-19  Eric Blake  <ebb9@byu.net>
 
+	futimens, utimensat: work around Linux bug
+	* m4/futimens.m4 (gl_FUNC_FUTIMENS): Detect ctime bug.
+	* m4/utimensat.m4 (gl_FUNC_UTIMENSAT): Likewise.
+	* lib/utimensat.c (rpl_utimensat): Work around it.
+	* lib/futimens.c (rpl_futimens): Adjust comment.
+
 	utimens: work around Linux ctime bug
 	* lib/utimens.c (detect_ctime_bug): New helper function.
 	(update_timespec): Differentiate between workaround needed for

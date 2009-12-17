@@ -23,6 +23,8 @@
 #include <errno.h>
 #include <fcntl.h>
 
+#include "stat-time.h"
+#include "timespec.h"
 #include "utimens.h"
 
 #if HAVE_UTIMENSAT
@@ -31,10 +33,11 @@
 
 /* If we have a native utimensat, but are compiling this file, then
    utimensat was defined to rpl_utimensat by our replacement
-   sys/stat.h.  We assume the native version might fail with ENOSYS
-   (as is the case when using newer glibc but older Linux kernel).  In
-   this scenario, rpl_utimensat checks whether the native version is
-   usable, and local_utimensat provides the fallback manipulation.  */
+   sys/stat.h.  We assume the native version might fail with ENOSYS,
+   or succeed without properly affecting ctime (as is the case when
+   using newer glibc but older Linux kernel).  In this scenario,
+   rpl_utimensat checks whether the native version is usable, and
+   local_utimensat provides the fallback manipulation.  */
 
 static int local_utimensat (int, char const *, struct timespec const[2], int);
 # define AT_FUNC_NAME local_utimensat
@@ -45,10 +48,30 @@ int
 rpl_utimensat (int fd, char const *file, struct timespec const times[2],
                int flag)
 {
+  /* See comments in utimens.c for details.  */
   static int utimensat_works_really; /* 0 = unknown, 1 = yes, -1 = no.  */
+  static int utimensat_ctime_really; /* 0 = unknown, 1 = yes, -1 = no.  */
   if (0 <= utimensat_works_really)
     {
-      int result = utimensat (fd, file, times, flag);
+      int result;
+      struct stat st1;
+      struct stat st2;
+      struct timespec ts[2];
+      /* Linux kernel 2.6.32 has a bug where mtime of UTIME_OMIT fails
+         to change ctime.  */
+      if (utimensat_ctime_really <= 0 && times
+          && times[0].tv_nsec != UTIME_OMIT && times[1].tv_nsec == UTIME_OMIT)
+        {
+          if (fstatat (fd, file, &st1, flag))
+            return -1;
+          if (utimensat_ctime_really < 0)
+            {
+              ts[0] = times[0];
+              ts[1] = get_stat_mtime (&st1);
+              times = ts;
+            }
+        }
+      result = utimensat (fd, file, times, flag);
       /* Linux kernel 2.6.25 has a bug where it returns EINVAL for
          UTIME_NOW or UTIME_OMIT with non-zero tv_sec, which
          local_utimensat works around.  Meanwhile, EINVAL for a bad
@@ -59,6 +82,37 @@ rpl_utimensat (int fd, char const *file, struct timespec const times[2],
       if (result == 0 || (errno != ENOSYS && errno != EINVAL))
         {
           utimensat_works_really = 1;
+          if (result == 0 && utimensat_ctime_really == 0 && times
+              && times[0].tv_nsec != UTIME_OMIT
+              && times[1].tv_nsec == UTIME_OMIT)
+            {
+              /* Perform a followup [l]stat.  See detect_ctime_bug in
+                 utimens.c for more details.  */
+              struct timespec now;
+              if (fstatat (fd, file, &st2, flag))
+                return -1;
+              if (st1.st_ctime != st2.st_ctime
+                  || get_stat_ctime_ns (&st1) != get_stat_ctime_ns (&st2))
+                {
+                  utimensat_ctime_really = 1;
+                  return result;
+                }
+              if (times[0].tv_nsec == UTIME_NOW)
+                now = get_stat_atime (&st2);
+              else
+                gettime (&now);
+              if (now.tv_sec < st2.st_ctime
+                  || 2 < now.tv_sec - st2.st_ctime
+                  || (get_stat_ctime_ns (&st2)
+                      && now.tv_sec - st2.st_ctime < 2
+                      && (20000000 < (1000000000 * (now.tv_sec - st2.st_ctime)
+                                      + now.tv_nsec
+                                      - get_stat_ctime_ns (&st2)))))
+                utimensat_ctime_really = -1;
+              ts[0] = times[0];
+              ts[1] = get_stat_mtime (&st2);
+              result = utimensat (fd, file, ts, flag);
+            }
           return result;
         }
     }

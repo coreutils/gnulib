@@ -32,6 +32,6 @@ futimens (int fd, struct timespec const times[2])
 {
   /* fdutimens also works around bugs in native futimens, when running
      with glibc compiled against newer headers but on a Linux kernel
-     older than 2.6.26.  */
+     older than 2.6.32.  */
   return fdutimens (NULL, fd, times);
 }
