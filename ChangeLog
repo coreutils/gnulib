@@ -1,5 +1,14 @@
 2009-12-19  Bruno Haible  <bruno@clisp.org>
 
+	dprintf-posix: Check against memory leak fixed on 2009-12-15.
+	* tests/test-dprintf-posix2.sh: New file.
+	* tests/test-dprintf-posix2.c: New file.
+	* modules/dprintf-posix-tests (Files): Add them.
+	(configure.ac): Check for getrlimit and setrlimit.
+	(Makefile.am): Augment TESTS and CHECK_PROGRAMS.
+
+2009-12-19  Bruno Haible  <bruno@clisp.org>
+
 	fprintf-posix: Check against memory leak fixed on 2009-12-15.
 	* tests/test-fprintf-posix3.sh: New file.
 	* tests/test-fprintf-posix3.c: New file.
