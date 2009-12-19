@@ -1,3 +1,11 @@
+2009-12-19  Bruno Haible  <bruno@clisp.org>
+
+	fprintf-posix: Check against memory leak fixed on 2009-12-15.
+	* tests/test-fprintf-posix3.sh: New file.
+	* tests/test-fprintf-posix3.c: New file.
+	* modules/fprintf-posix-tests (Files): Add them.
+	(Makefile.am): Augment TESTS and CHECK_PROGRAMS.
+
 2009-12-19  Eric Blake  <ebb9@byu.net>
 
 	dirfd: fix prototype
