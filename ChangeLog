@@ -1,5 +1,9 @@
 2009-12-19  Eric Blake  <ebb9@byu.net>
 
+	dirfd: fix prototype
+	* lib/dirent.in.h (dirfd): Argument is not const, per POSIX.
+	* lib/dirfd.c (dirfd): Likewise.
+
 	canonicalize: reduce memory usage
 	* lib/canonicalize.c (canonicalize_filename_mode): Trim the
 	allocation to size.

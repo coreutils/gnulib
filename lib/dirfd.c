@@ -23,7 +23,7 @@
 #include <errno.h>
 
 int
-dirfd (DIR const *dir_p)
+dirfd (DIR *dir_p)
 {
   int fd = DIR_TO_FD (dir_p);
   if (fd == -1)

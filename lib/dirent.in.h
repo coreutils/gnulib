@@ -46,7 +46,7 @@ extern int closedir (DIR *) _GL_ARG_NONNULL ((1));
 # if !@HAVE_DECL_DIRFD@ && !defined dirfd
 /* Return the file descriptor associated with the given directory stream,
    or -1 if none exists.  */
-extern int dirfd (DIR const *dir) _GL_ARG_NONNULL ((1));
+extern int dirfd (DIR *dir) _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef dirfd
