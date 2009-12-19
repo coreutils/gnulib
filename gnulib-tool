@@ -115,6 +115,7 @@ Usage: gnulib-tool --list
        gnulib-tool --extract-description module
        gnulib-tool --extract-status module
        gnulib-tool --extract-notice module
+       gnulib-tool --extract-applicability module
        gnulib-tool --extract-filelist module
        gnulib-tool --extract-dependencies module
        gnulib-tool --extract-autoconf-snippet module
@@ -1347,6 +1348,7 @@ sed_extract_prog=':[	 ]*$/ {
     s/^Description:[	 ]*$//
     s/^Status:[	 ]*$//
     s/^Notice:[	 ]*$//
+    s/^Applicability:[	 ]*$//
     s/^Files:[	 ]*$//
     s/^Depends-on:[	 ]*$//
     s/^configure\.ac-early:[	 ]*$//
@@ -1387,6 +1389,22 @@ func_get_notice ()
 {
   func_lookup_file "modules/$1"
   sed -n -e "/^Notice$sed_extract_prog" < "$lookedup_file"
+}
+
+# func_get_applicability module
+# Input:
+# - local_gnulib_dir  from --local-dir
+# The expected result (on stdout) is either 'main', or 'tests', or 'all'.
+func_get_applicability ()
+{
+  func_lookup_file "modules/$1"
+  { sed -n -e "/^Applicability$sed_extract_prog" < "$lookedup_file"
+    # The default is 'main' or 'tests', depending on the module's name.
+    case "$1" in
+      *-tests) echo "tests";;
+      *)       echo "main";;
+    esac
+  } | sed -e 's,^ *$,,' | sed -e 1q
 }
 
 # func_get_filelist module
@@ -2745,9 +2763,9 @@ func_import ()
   # is specified, it will consist only of LGPLed source.
   # The tests-related module list is the transitive closure of the specified
   # modules, including tests modules, minus the main module list excluding
-  # 'link-warning'. Its lib/* sources (brought in through dependencies of
-  # *-tests modules) go into $testsbase/. It may contain GPLed source, even if
-  # --lgpl is specified.
+  # modules of applicability 'all'. Its lib/* sources (brought in through
+  # dependencies of *-tests modules) go into $testsbase/. It may contain GPLed
+  # source, even if --lgpl is specified.
   # Determine main module list.
   saved_inctests="$inctests"
   inctests=""
@@ -2761,8 +2779,13 @@ func_import ()
   fi
   # Determine tests-related module list.
   echo "$final_modules" | LC_ALL=C sort -u > "$tmp"/final-modules
-  sed_remove_link_warning='/^link-warning$/d'
-  testsrelated_modules=`func_reset_sigpipe; echo "$main_modules" | LC_ALL=C sort -u | sed -e "$sed_remove_link_warning" | LC_ALL=C join -v 2 - "$tmp"/final-modules`
+  testsrelated_modules=`func_reset_sigpipe
+                        for module in $main_modules; do
+                          if test \`func_get_applicability $module\` = main; then
+                            echo $module
+                          fi
+                        done \
+                        | LC_ALL=C sort -u | LC_ALL=C join -v 2 - "$tmp"/final-modules`
   if test $verbose -ge 1; then
     echo "Tests-related module list:"
     echo "$testsrelated_modules" | sed -e 's/^/  /'
@@ -4635,6 +4658,16 @@ case $mode in
       func_verify_module
       if test -n "$module"; then
         func_get_notice "$module"
+      fi
+    done
+    ;;
+
+  extract-applicability )
+    for module
+    do
+      func_verify_module
+      if test -n "$module"; then
+        func_get_applicability "$module"
       fi
     done
     ;;

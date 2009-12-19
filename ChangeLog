@@ -1,3 +1,15 @@
+2009-12-19  Bruno Haible  <bruno@clisp.org>
+
+	New module attribute 'Applicability'.
+	* modules/TEMPLATE-EXTENDED: New field 'Applicability'.
+	* gnulib-tool: New option --extract-applicability.
+	(func_usage): Document it.
+	(sed_extract_prog): Recognize it.
+	(func_get_applicability): New function.
+	(func_import): Generalize handling of 'link-warning' module.
+	* modules/link-warning (Applicability): New section.
+	* modules/arg-nonnull (Applicability): New section.
+	Repoted by Simon Josefsson <simon@josefsson.org>.
 
 2009-12-19  Bruno Haible  <bruno@clisp.org>
 
