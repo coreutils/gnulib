@@ -1,3 +1,10 @@
+2009-12-19  Eric Blake  <ebb9@byu.net>
+
+	canonicalize: reduce memory usage
+	* lib/canonicalize.c (canonicalize_filename_mode): Trim the
+	allocation to size.
+	Reported by Solar Designer <solar@openwall.com>.
+
 2009-12-19  Bruno Haible  <bruno@clisp.org>
 
 	New module attribute 'Applicability'.

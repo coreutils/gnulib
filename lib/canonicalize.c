@@ -272,6 +272,8 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
   if (DOUBLE_SLASH_IS_DISTINCT_ROOT && dest == rname + 1 && *dest == '/')
     dest++;
   *dest = '\0';
+  if (rname_limit != dest + 1)
+    rname = xrealloc (rname, dest - rname + 1);
 
   free (extra_buf);
   if (ht)
