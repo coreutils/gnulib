@@ -1,3 +1,7 @@
+2009-12-16  José E. Marchesi  <jemarch@gnu.org>  (tiny change)
+
+	* lib/gl_list.h: Fix typo in comment.
+
 2009-12-16  Eric Blake  <ebb9@byu.net>
 
 	fcntl: use to simplify other modules

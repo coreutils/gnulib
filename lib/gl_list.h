@@ -304,7 +304,7 @@ extern gl_list_node_t gl_list_nx_add_after (gl_list_t list, gl_list_node_t node,
 #endif
   ;
 
-/* Add an element add a given position in the list.
+/* Add an element at a given position in the list.
    POSITION must be >= 0 and <= gl_list_size (list).  */
 #if 0 /* declared in gl_xlist.h */
 extern gl_list_node_t gl_list_add_at (gl_list_t list, size_t position,
