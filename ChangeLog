@@ -1,3 +1,10 @@
+
+2009-12-19  Bruno Haible  <bruno@clisp.org>
+
+	fflush: tweak
+	* lib/fflush.c (update_fpos_cache): Don't use fpos_t on Cygwin.
+	* lib/fseeko.c (rpl_fseeko): Likewise.
+
 2009-12-16  José E. Marchesi  <jemarch@gnu.org>  (tiny change)
 
 	* lib/gl_list.h: Fix typo in comment.
