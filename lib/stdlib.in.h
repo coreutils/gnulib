@@ -66,6 +66,12 @@ struct random_data
 };
 #endif
 
+#if @GNULIB_MKSTEMP@ || @GNULIB_GETSUBOPT@ || defined GNULIB_POSIXCHECK
+/* On MacOS X 10.3, only <unistd.h> declares mkstemp.  */
+/* On Cygwin 1.7.1, only <unistd.h> declares getsubopt.  */
+# include <unistd.h>
+#endif
+
 /* The definition of GL_LINK_WARNING is copied here.  */
 
 /* The definition of _GL_ARG_NONNULL is copied here.  */
@@ -266,9 +272,6 @@ extern int mkostemps (char * /*template*/, int /*suffixlen*/, int /*flags*/)
    set.  */
 #  define mkstemp rpl_mkstemp
 extern int mkstemp (char * /*template*/) _GL_ARG_NONNULL ((1));
-# else
-/* On MacOS X 10.3, only <unistd.h> declares mkstemp.  */
-#  include <unistd.h>
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef mkstemp

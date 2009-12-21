@@ -1,5 +1,11 @@
 2009-12-22  Eric Blake  <ebb9@byu.net>
 
+	getsubopt: work around cygwin bug
+	* lib/stdlib.in.h (includes): Move unistd inclusion sooner, to
+	avoid conflicting with system getsubopt.
+	* doc/posix-functions/getsubopt.texi (getsubopt): Document the
+	bug.
+
 	getopt: synchronize from glibc
 	* lib/getopt.c (_getopt_initialize, _getopt_internal_r): Swap
 	parameter order.  Adjust all callers.
