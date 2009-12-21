@@ -1,4 +1,5 @@
 Files:
+tests/nap.h
 tests/test-chown.h
 tests/test-chown.c
 

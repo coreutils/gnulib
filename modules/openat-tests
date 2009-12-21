@@ -1,4 +1,5 @@
 Files:
+tests/nap.h
 tests/test-chown.h
 tests/test-lchown.h
 tests/test-lstat.h

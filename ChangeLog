@@ -1,3 +1,19 @@
+2009-12-21  Eric Blake  <ebb9@byu.net>
+
+	test-utimens: avoid spurious failure
+	* tests/test-chown.h (nap): Factor...
+	* tests/nap.h: ...into new file.
+	* tests/test-lchown.h (nap): Avoid duplication.
+	* tests/test-utimens-common.h (nap): Use shared implementation,
+	necessary on file systems with 1-second resolution.
+	* modules/chown-tests (Files): Include new file.
+	* modules/fdutimensat-tests (Files): Likewise.
+	* modules/futimens-tests (Files): Likewise.
+	* modules/lchown-tests (Files): Likewise.
+	* modules/openat-tests (Files): Likewise.
+	* modules/utimens-tests (Files): Likewise.
+	* modules/utimensat-tests (Files): Likewise.
+
 2009-12-19  Eric Blake  <ebb9@byu.net>
 
 	futimens, utimensat: work around Linux bug
