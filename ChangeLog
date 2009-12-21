@@ -1,5 +1,9 @@
 2009-12-22  Eric Blake  <ebb9@byu.net>
 
+	math, unistd: avoid redundant includes
+	* lib/math.in.h (isnan): No need to re-include <math.h>.
+	* lib/unistd.in.h (getcwd): Likewise, for <stdlib.h>.
+
 	getsubopt: work around cygwin bug
 	* lib/stdlib.in.h (includes): Move unistd inclusion sooner, to
 	avoid conflicting with system getsubopt.

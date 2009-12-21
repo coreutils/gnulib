@@ -411,7 +411,6 @@ extern int gl_isinfl (long double x);
 # if @HAVE_ISNANF@
 /* The original <math.h> included above provides a declaration of isnan macro
    or (older) isnanf function.  */
-#  include <math.h>
 #  if __GNUC__ >= 4
     /* GCC 4.0 and newer provides three built-ins for isnan.  */
 #   undef isnanf
@@ -434,7 +433,6 @@ extern int isnanf (float x);
    to 'double' numbers earlier but now is a type-generic macro.  */
 # if @HAVE_ISNAND@
 /* The original <math.h> included above provides a declaration of isnan macro.  */
-#  include <math.h>
 #  if __GNUC__ >= 4
     /* GCC 4.0 and newer provides three built-ins for isnan.  */
 #   undef isnand
@@ -455,7 +453,6 @@ extern int isnand (double x);
 /* Test for NaN for 'long double' numbers.  */
 # if @HAVE_ISNANL@
 /* The original <math.h> included above provides a declaration of isnan macro or (older) isnanl function.  */
-#  include <math.h>
 #  if __GNUC__ >= 4
     /* GCC 4.0 and newer provides three built-ins for isnan.  */
 #   undef isnanl

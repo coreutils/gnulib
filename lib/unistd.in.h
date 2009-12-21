@@ -346,9 +346,6 @@ extern int ftruncate (int fd, off_t length);
 
 
 #if @GNULIB_GETCWD@
-/* Include the headers that might declare getcwd so that they will not
-   cause confusion if included after this file.  */
-# include <stdlib.h>
 # if @REPLACE_GETCWD@
 /* Get the name of the current working directory, and put it in SIZE bytes
    of BUF.
