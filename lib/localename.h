@@ -54,6 +54,8 @@ extern const char * gl_locale_name_posix (int category, const char *categoryname
 
 /* Determine the default locale's name, as specified by environment
    variables.
+   Return the locale category's name, or NULL if no locale has been specified
+   by environment variables.
    The result must not be freed; it is statically allocated.  */
 extern const char * gl_locale_name_environ (int category, const char *categoryname);
 
