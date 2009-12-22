@@ -1,5 +1,5 @@
 /* Determine name of the currently selected locale.
-   Copyright (C) 2007 Free Software Foundation, Inc.
+   Copyright (C) 2007, 2009 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
    under the terms of the GNU Library General Public License as published
@@ -51,6 +51,11 @@ extern const char * gl_locale_name (int category, const char *categoryname);
    should be used for codeset information instead.
    The result must not be freed; it is statically allocated.  */
 extern const char * gl_locale_name_posix (int category, const char *categoryname);
+
+/* Determine the default locale's name, as specified by environment
+   variables.
+   The result must not be freed; it is statically allocated.  */
+extern const char * gl_locale_name_environ (int category, const char *categoryname);
 
 /* Determine the default locale's name.  This is the current locale's name,
    if not specified by setlocale() calls or by environment variables.  This

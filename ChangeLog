@@ -1,5 +1,15 @@
 2009-12-21  Bruno Haible  <bruno@clisp.org>
 
+	localename: Improvements for MacOS X and Cygwin.
+	* lib/localename.h (gl_locale_name_environ): New declaration.
+	* lib/localename.c (gl_locale_name_environ): New function, extracted from
+	gl_locale_name_posix. Ignore dummy LANG values on MacOS X and Cygwin.
+	(gl_locale_name_posix): Invoke it.
+	(gl_locale_name_default): Add comments. Use Windows native API also on
+	Cygwin.
+
+2009-12-21  Bruno Haible  <bruno@clisp.org>
+
 	Update list of Win32 locale ids.
 	* lib/localename.c (LANG_ROMANSH): Renamed from LANG_RHAETO_ROMANCE.
 	(LANG_SAMI): Renamed from LANG_SAAMI.
