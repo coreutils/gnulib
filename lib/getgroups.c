@@ -31,7 +31,7 @@
 /* Provide a stub that fails with ENOSYS, since there is no group
    information available on mingw.  */
 int
-getgroups (int n _UNUSED_PARAMETER_, GETGROUPS_T *groups _UNUSED_PARAMETER_)
+getgroups (int n _GL_UNUSED, GETGROUPS_T *groups _GL_UNUSED)
 {
   errno = ENOSYS;
   return -1;

@@ -29,8 +29,8 @@
    such as DJGPP 2.03 and mingw32.  */
 
 ssize_t
-readlink (const char *name, char *buf _UNUSED_PARAMETER_,
-          size_t bufsize _UNUSED_PARAMETER_)
+readlink (const char *name, char *buf _GL_UNUSED,
+          size_t bufsize _GL_UNUSED)
 {
   struct stat statbuf;
 

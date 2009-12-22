@@ -1145,8 +1145,8 @@ yylex (YYSTYPE *lvalp, parser_control *pc)
 
 /* Do nothing if the parser reports an error.  */
 static int
-yyerror (parser_control const *pc _UNUSED_PARAMETER_,
-         char const *s _UNUSED_PARAMETER_)
+yyerror (parser_control const *pc _GL_UNUSED,
+         char const *s _GL_UNUSED)
 {
   return 0;
 }

@@ -47,7 +47,7 @@
 
 /* Wrapper for testing areadlink.  */
 static char *
-do_areadlink (char const *name, size_t ignored _UNUSED_PARAMETER_)
+do_areadlink (char const *name, size_t ignored _GL_UNUSED)
 {
   return areadlink (name);
 }

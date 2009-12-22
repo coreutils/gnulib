@@ -27,8 +27,8 @@
 /* Mingw lacks mknod; always fail with ENOSYS.  */
 
 int
-mknod (char const *name _UNUSED_PARAMETER_, mode_t mode _UNUSED_PARAMETER_,
-       dev_t dev _UNUSED_PARAMETER_)
+mknod (char const *name _GL_UNUSED, mode_t mode _GL_UNUSED,
+       dev_t dev _GL_UNUSED)
 {
   errno = ENOSYS;
   return -1;

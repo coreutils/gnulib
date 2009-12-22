@@ -61,7 +61,7 @@ static const char* const day_table[] =
 };
 
 int
-main (int argc _UNUSED_PARAMETER_, char **argv)
+main (int argc _GL_UNUSED, char **argv)
 {
   struct timespec result;
   struct timespec result2;

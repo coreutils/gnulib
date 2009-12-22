@@ -33,8 +33,8 @@
 
 /* Simple stub that always fails with ENOSYS, for mingw.  */
 int
-chown (const char *file _UNUSED_PARAMETER_, uid_t uid _UNUSED_PARAMETER_,
-       gid_t gid _UNUSED_PARAMETER_)
+chown (const char *file _GL_UNUSED, uid_t uid _GL_UNUSED,
+       gid_t gid _GL_UNUSED)
 {
   errno = ENOSYS;
   return -1;

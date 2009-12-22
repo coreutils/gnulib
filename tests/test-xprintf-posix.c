@@ -43,7 +43,7 @@
 #include "test-printf-posix.h"
 
 int
-main (int argc _UNUSED_PARAMETER_, char *argv[])
+main (int argc _GL_UNUSED, char *argv[])
 {
   set_program_name (argv[0]);
 

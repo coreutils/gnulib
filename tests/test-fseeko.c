@@ -45,7 +45,7 @@
 #endif
 
 int
-main (int argc, char **argv _UNUSED_PARAMETER_)
+main (int argc, char **argv _GL_UNUSED)
 {
   /* Assume stdin is non-empty, seekable, and starts with '#!/bin/sh'
      iff argc > 1.  */

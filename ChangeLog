@@ -1,5 +1,43 @@
 2009-12-23  Eric Blake  <ebb9@byu.net>
 
+	gnulib-common: prefer _GL_UNUSED over _UNUSED_PARAMETER_
+	* m4/gnulib-common.m4 (gl_COMMON): Create a more-appropriately
+	named alias for __attribute__((__unused__)).
+	* lib/chown.c: Update client.
+	* lib/fchmodat.c: Likewise.
+	* lib/fts.c: Likewise.
+	* lib/getdate.y: Likewise.
+	* lib/getgroups.c: Likewise.
+	* lib/getopt.c: Likewise.
+	* lib/getugroups.c: Likewise.
+	* lib/mkdir.c: Likewise.
+	* lib/mkfifo.c: Likewise.
+	* lib/mkfifoat.c: Likewise.
+	* lib/mknod.c: Likewise.
+	* lib/mknodat.c: Likewise.
+	* lib/readlink.c: Likewise.
+	* lib/se-context.in.h: Likewise.
+	* lib/se-selinux.in.h: Likewise.
+	* lib/sockets.c: Likewise.
+	* lib/symlink.c: Likewise.
+	* lib/symlinkat.c: Likewise.
+	* lib/unicodeio.c: Likewise.
+	* lib/unistr.h: Likewise.
+	* tests/test-areadlink.c: Likewise.
+	* tests/test-areadlinkat.c: Likewise.
+	* tests/test-filenamecat.c: Likewise.
+	* tests/test-fseeko.c: Likewise.
+	* tests/test-ftello.c: Likewise.
+	* tests/test-getdate.c: Likewise.
+	* tests/test-getgroups.c: Likewise.
+	* tests/test-gethostname.c: Likewise.
+	* tests/test-quotearg.c: Likewise.
+	* tests/test-version-etc.c: Likewise.
+	* tests/test-xalloc-die.c: Likewise.
+	* tests/test-xfprintf-posix.c: Likewise.
+	* tests/test-xprintf-posix.c: Likewise.
+	* tests/test-xvasprintf.c: Likewise.
+
 	tests: avoid compiler warnings
 	* tests/test-fcntl.c (main): Delete unused parameters.
 	* tests/test-freopen-safer.c (main): Likewise.

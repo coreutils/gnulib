@@ -18,55 +18,55 @@ typedef unsigned short security_class_t;
 #  define security_context_t char*
 #  define is_selinux_enabled() 0
 
-static inline int getcon (security_context_t *con _UNUSED_PARAMETER_)
+static inline int getcon (security_context_t *con _GL_UNUSED)
   { errno = ENOTSUP; return -1; }
-static inline void freecon (security_context_t con _UNUSED_PARAMETER_) {}
+static inline void freecon (security_context_t con _GL_UNUSED) {}
 
 
-static inline int getfscreatecon (security_context_t *con _UNUSED_PARAMETER_)
+static inline int getfscreatecon (security_context_t *con _GL_UNUSED)
   { errno = ENOTSUP; return -1; }
-static inline int setfscreatecon (security_context_t con _UNUSED_PARAMETER_)
+static inline int setfscreatecon (security_context_t con _GL_UNUSED)
   { errno = ENOTSUP; return -1; }
-static inline int matchpathcon (char const *file _UNUSED_PARAMETER_,
-                                mode_t m _UNUSED_PARAMETER_,
-                                security_context_t *con _UNUSED_PARAMETER_)
+static inline int matchpathcon (char const *file _GL_UNUSED,
+                                mode_t m _GL_UNUSED,
+                                security_context_t *con _GL_UNUSED)
   { errno = ENOTSUP; return -1; }
-static inline int getfilecon (char const *file _UNUSED_PARAMETER_,
-                              security_context_t *con _UNUSED_PARAMETER_)
+static inline int getfilecon (char const *file _GL_UNUSED,
+                              security_context_t *con _GL_UNUSED)
   { errno = ENOTSUP; return -1; }
-static inline int lgetfilecon (char const *file _UNUSED_PARAMETER_,
-                               security_context_t *con _UNUSED_PARAMETER_)
+static inline int lgetfilecon (char const *file _GL_UNUSED,
+                               security_context_t *con _GL_UNUSED)
   { errno = ENOTSUP; return -1; }
 static inline int fgetfilecon (int fd,
-                               security_context_t *con _UNUSED_PARAMETER_)
+                               security_context_t *con _GL_UNUSED)
   { errno = ENOTSUP; return -1; }
-static inline int setfilecon (char const *file _UNUSED_PARAMETER_,
-                              security_context_t con _UNUSED_PARAMETER_)
+static inline int setfilecon (char const *file _GL_UNUSED,
+                              security_context_t con _GL_UNUSED)
   { errno = ENOTSUP; return -1; }
-static inline int lsetfilecon (char const *file _UNUSED_PARAMETER_,
-                               security_context_t con _UNUSED_PARAMETER_)
+static inline int lsetfilecon (char const *file _GL_UNUSED,
+                               security_context_t con _GL_UNUSED)
   { errno = ENOTSUP; return -1; }
-static inline int fsetfilecon (int fd _UNUSED_PARAMETER_,
-                               security_context_t con _UNUSED_PARAMETER_)
+static inline int fsetfilecon (int fd _GL_UNUSED,
+                               security_context_t con _GL_UNUSED)
   { errno = ENOTSUP; return -1; }
 
 static inline int security_check_context
-    (security_context_t con _UNUSED_PARAMETER_)
+    (security_context_t con _GL_UNUSED)
   { errno = ENOTSUP; return -1; }
 static inline int security_check_context_raw
-    (security_context_t con _UNUSED_PARAMETER_)
+    (security_context_t con _GL_UNUSED)
   { errno = ENOTSUP; return -1; }
-static inline int setexeccon (security_context_t con _UNUSED_PARAMETER_)
+static inline int setexeccon (security_context_t con _GL_UNUSED)
   { errno = ENOTSUP; return -1; }
 static inline int security_compute_create
-    (security_context_t scon _UNUSED_PARAMETER_,
-     security_context_t tcon _UNUSED_PARAMETER_,
-     security_class_t tclass _UNUSED_PARAMETER_,
-     security_context_t *newcon _UNUSED_PARAMETER_)
+    (security_context_t scon _GL_UNUSED,
+     security_context_t tcon _GL_UNUSED,
+     security_class_t tclass _GL_UNUSED,
+     security_context_t *newcon _GL_UNUSED)
   { errno = ENOTSUP; return -1; }
 static inline int matchpathcon_init_prefix
-    (char const *path _UNUSED_PARAMETER_,
-     char const *prefix _UNUSED_PARAMETER_)
+    (char const *path _GL_UNUSED,
+     char const *prefix _GL_UNUSED)
   { errno = ENOTSUP; return -1; }
 
 # endif

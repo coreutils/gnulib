@@ -29,7 +29,7 @@
 #define NOHOSTNAME "magic-gnulib-test-string"
 
 int
-main (int argc, char *argv[] _UNUSED_PARAMETER_)
+main (int argc, char *argv[] _GL_UNUSED)
 {
   char buf[HOST_NAME_MAX];
   int rc;

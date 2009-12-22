@@ -38,7 +38,7 @@
   while (0)
 
 int
-main (int argc, char **argv _UNUSED_PARAMETER_)
+main (int argc, char **argv _GL_UNUSED)
 {
   int result;
   gid_t *groups;

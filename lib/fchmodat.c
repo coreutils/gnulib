@@ -28,7 +28,7 @@
 # undef lchmod
 # define lchmod lchmod_rpl
 static int
-lchmod (char const *f _UNUSED_PARAMETER_, mode_t m _UNUSED_PARAMETER_)
+lchmod (char const *f _GL_UNUSED, mode_t m _GL_UNUSED)
 {
   errno = ENOSYS;
   return -1;

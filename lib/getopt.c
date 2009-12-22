@@ -226,8 +226,8 @@ exchange (char **argv, struct _getopt_data *d)
 /* Initialize the internal data when the first call is made.  */
 
 static const char *
-_getopt_initialize (int argc _UNUSED_PARAMETER_,
-                    char **argv _UNUSED_PARAMETER_, const char *optstring,
+_getopt_initialize (int argc _GL_UNUSED,
+                    char **argv _GL_UNUSED, const char *optstring,
                     struct _getopt_data *d, int posixly_correct)
 {
   /* Start processing options with ARGV-element 1 (since ARGV-element 0

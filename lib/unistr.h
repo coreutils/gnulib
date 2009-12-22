@@ -183,7 +183,7 @@ extern int
        u32_mbtouc_unsafe (ucs4_t *puc, const uint32_t *s, size_t n);
 # else
 static inline int
-u32_mbtouc_unsafe (ucs4_t *puc, const uint32_t *s, size_t n _UNUSED_PARAMETER_)
+u32_mbtouc_unsafe (ucs4_t *puc, const uint32_t *s, size_t n _GL_UNUSED)
 {
   uint32_t c = *s;
 
@@ -253,7 +253,7 @@ extern int
        u32_mbtouc (ucs4_t *puc, const uint32_t *s, size_t n);
 # else
 static inline int
-u32_mbtouc (ucs4_t *puc, const uint32_t *s, size_t n _UNUSED_PARAMETER_)
+u32_mbtouc (ucs4_t *puc, const uint32_t *s, size_t n _GL_UNUSED)
 {
   uint32_t c = *s;
 

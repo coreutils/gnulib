@@ -33,10 +33,10 @@
    can do is fail with ENOSYS.  */
 
 int
-getugroups (int maxcount _UNUSED_PARAMETER_,
-            gid_t *grouplist _UNUSED_PARAMETER_,
-            char const *username _UNUSED_PARAMETER_,
-            gid_t gid _UNUSED_PARAMETER_)
+getugroups (int maxcount _GL_UNUSED,
+            gid_t *grouplist _GL_UNUSED,
+            char const *username _GL_UNUSED,
+            gid_t gid _GL_UNUSED)
 {
   errno = ENOSYS;
   return -1;

@@ -40,7 +40,7 @@
    alias mkdir), only in the nonstandard io.h.  */
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 # define mkdir(name,mode) _mkdir (name)
-# define maybe_unused _UNUSED_PARAMETER_
+# define maybe_unused _GL_UNUSED
 #else
 # define maybe_unused /* empty */
 #endif
