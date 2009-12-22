@@ -46,7 +46,7 @@
 #endif
 
 int
-main (int argc, char **argv)
+main (int argc, char **argv _UNUSED_PARAMETER_)
 {
   int ch;
   /* Assume stdin is seekable iff argc > 1.  */

@@ -220,7 +220,7 @@ check_flags (void)
 }
 
 int
-main (int argc, char **argv)
+main (void)
 {
   const char *file = "test-fcntl.tmp";
   int fd;

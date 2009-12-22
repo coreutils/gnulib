@@ -1,4 +1,4 @@
-# setenv.m4 serial 14
+# setenv.m4 serial 15
 dnl Copyright (C) 2001-2004, 2006-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -77,7 +77,7 @@ int unsetenv();
        #include <stdlib.h>
       ]], [[
        char entry[] = "b=2";
-       if (putenv ("a=1")) return 1;
+       if (putenv ((char *) "a=1")) return 1;
        if (putenv (entry)) return 2;
        entry[0] = 'a';
        unsetenv ("a");

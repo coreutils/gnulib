@@ -50,7 +50,7 @@ handle_alarm (int sig)
 #endif
 
 int
-main()
+main (void)
 {
   struct timespec ts;
 

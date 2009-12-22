@@ -46,7 +46,7 @@ handle_alarm (int sig)
 #endif
 
 int
-main()
+main (void)
 {
   ASSERT (sleep (1) <= 1);
 

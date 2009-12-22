@@ -1,3 +1,17 @@
+2009-12-23  Eric Blake  <ebb9@byu.net>
+
+	tests: avoid compiler warnings
+	* tests/test-fcntl.c (main): Delete unused parameters.
+	* tests/test-freopen-safer.c (main): Likewise.
+	* tests/test-xalloc-die.c (main): Mark unused parameters.
+	* tests/test-fseeko.c (main): Likewise.
+	* tests/test-ftello.c (main): Likewise.
+	* tests/test-nanosleep.c (main): Avoid declaration warning.
+	* tests/test-sleep.c (main): Likewise.
+	* tests/test-unsetenv.c (main): Silence warning about string
+	literal.
+	* m4/setenv.m4 (gl_FUNC_UNSETENV): Likewise.
+
 2009-12-23  Bruno Haible  <bruno@clisp.org>
 
 	* tests/test-localename.c (test_locale_name): New function, extracted
