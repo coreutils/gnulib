@@ -20,6 +20,13 @@
 
 #include <sys/stat.h>
 
+/* Caution: stat may be a function-like macro.  Although this
+   signature check must pass, it may be the signature of the real (and
+   broken) stat rather than rpl_stat.  Most code should not use the
+   address of stat.  */
+#include "signature.h"
+SIGNATURE_CHECK (stat, int, (char const *, struct stat *));
+
 #include <fcntl.h>
 #include <errno.h>
 #include <stdbool.h>

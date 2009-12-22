@@ -20,6 +20,9 @@
 
 #include <fnmatch.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (fnmatch, int, (char const *, char const *, int));
+
 #include <stdio.h>
 #include <stdlib.h>
 

@@ -1,5 +1,5 @@
 /* Test of test for initial conversion state.
-   Copyright (C) 2008 Free Software Foundation, Inc.
+   Copyright (C) 2008, 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -19,6 +19,9 @@
 #include <config.h>
 
 #include <wchar.h>
+
+#include "signature.h"
+SIGNATURE_CHECK (mbsinit, int, (const mbstate_t *));
 
 #include <locale.h>
 #include <stdio.h>

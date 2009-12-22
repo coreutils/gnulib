@@ -20,6 +20,9 @@
 
 #include <sys/utsname.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (uname, int, (struct utsname *));
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

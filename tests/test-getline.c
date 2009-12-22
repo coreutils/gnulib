@@ -20,6 +20,10 @@
 #include <config.h>
 
 #include <stdio.h>
+
+#include "signature.h"
+SIGNATURE_CHECK (getline, ssize_t, (char **, size_t *, FILE *));
+
 #include <stdlib.h>
 #include <string.h>
 

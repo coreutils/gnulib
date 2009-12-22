@@ -20,6 +20,10 @@
 
 #include <arpa/inet.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (inet_ntop, char const *, (int, void const *, char *,
+                                           socklen_t));
+
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <stdio.h>

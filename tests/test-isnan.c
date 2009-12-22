@@ -21,6 +21,11 @@
 
 #include <math.h>
 
+/* isnan must be a macro.  */
+#ifndef isnan
+# error missing declaration
+#endif
+
 #include <float.h>
 #include <limits.h>
 #include <stdio.h>

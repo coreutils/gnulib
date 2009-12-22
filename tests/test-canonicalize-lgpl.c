@@ -20,6 +20,10 @@
 
 #include <stdlib.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (realpath, char *, (const char *, char *));
+SIGNATURE_CHECK (canonicalize_file_name, char *, (const char *));
+
 #include <errno.h>
 #include <fcntl.h>
 #include <stdio.h>

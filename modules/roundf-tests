@@ -1,4 +1,5 @@
 Files:
+tests/signature.h
 tests/test-roundf1.c
 tests/test-round2.c
 tests/test-roundf2.c

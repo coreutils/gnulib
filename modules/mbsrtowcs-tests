@@ -1,4 +1,5 @@
 Files:
+tests/signature.h
 tests/test-mbsrtowcs1.sh
 tests/test-mbsrtowcs2.sh
 tests/test-mbsrtowcs3.sh

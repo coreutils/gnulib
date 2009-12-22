@@ -20,6 +20,9 @@
 
 #include <stdio.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (remove, int, (char const *));
+
 #include <fcntl.h>
 #include <errno.h>
 #include <stdlib.h>

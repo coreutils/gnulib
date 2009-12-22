@@ -18,6 +18,13 @@
 
 #include <stdlib.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (srandom_r, int, (unsigned int, struct random_data *));
+SIGNATURE_CHECK (initstate_r, int, (unsigned int, char *, size_t,
+                                    struct random_data *));
+SIGNATURE_CHECK (setstate_r, int, (char *, struct random_data *));
+SIGNATURE_CHECK (random_r, int, (struct random_data *, int32_t *));
+
 #include <stdio.h>
 #include <time.h>
 

@@ -20,6 +20,9 @@
 
 #include <sys/stat.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (fstatat, int, (int, char const *, struct stat *, int));
+
 #include <fcntl.h>
 #include <errno.h>
 #include <stdbool.h>

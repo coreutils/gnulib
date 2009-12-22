@@ -20,6 +20,11 @@
 
 #include <glob.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (glob, int, (char const *, int, int (*) (char const *, int),
+                             glob_t *));
+SIGNATURE_CHECK (globfree, void, (glob_t *));
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

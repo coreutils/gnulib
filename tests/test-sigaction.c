@@ -20,6 +20,10 @@
 
 #include <signal.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (sigaction, int, (int, struct sigaction const *,
+                                  struct sigaction *));
+
 #include <stdio.h>
 #include <stdlib.h>
 

@@ -18,6 +18,9 @@
 
 #include <sys/file.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (flock, int, (int, int));
+
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>

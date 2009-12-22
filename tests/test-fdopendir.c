@@ -20,6 +20,9 @@
 
 #include <dirent.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (fdopendir, DIR *, (int));
+
 #include <errno.h>
 #include <fcntl.h>
 #include <stdio.h>

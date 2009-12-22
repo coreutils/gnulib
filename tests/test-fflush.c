@@ -19,6 +19,10 @@
 #include <config.h>
 
 #include <stdio.h>
+
+#include "signature.h"
+SIGNATURE_CHECK (fflush, int, (FILE *));
+
 #include <unistd.h>
 
 int

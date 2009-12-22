@@ -1,5 +1,5 @@
 /* Test of POSIX compatible printf() function.
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -19,6 +19,9 @@
 #include <config.h>
 
 #include <stdio.h>
+
+#include "signature.h"
+SIGNATURE_CHECK (printf, int, (char const *, ...));
 
 #include <stddef.h>
 #include <stdint.h>

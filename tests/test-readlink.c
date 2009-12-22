@@ -20,6 +20,9 @@
 
 #include <unistd.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (readlink, ssize_t, (char const *, char *, size_t));
+
 #include <fcntl.h>
 #include <errno.h>
 #include <stdbool.h>

@@ -19,6 +19,10 @@
 #include <config.h>
 
 #include <stdio.h>
+
+#include "signature.h"
+SIGNATURE_CHECK (ftell, long, (FILE *));
+
 #include <stdlib.h>
 
 #include "binary-io.h"

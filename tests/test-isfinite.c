@@ -21,6 +21,11 @@
 
 #include <math.h>
 
+/* isfinite must be a macro.  */
+#ifndef isfinite
+# error missing declaration
+#endif
+
 #include <float.h>
 #include <limits.h>
 #include <stdio.h>

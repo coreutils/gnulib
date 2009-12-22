@@ -20,6 +20,9 @@
 
 #include <stdio.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (vdprintf, int, (int, char const *, va_list));
+
 #include <stdarg.h>
 #include <stddef.h>
 #include <stdint.h>

@@ -19,6 +19,10 @@
 
 /* Get gethostname() declaration.  */
 #include <unistd.h>
+
+#include "signature.h"
+SIGNATURE_CHECK (gethostname, int, (char *, size_t));
+
 /* Get HOST_NAME_MAX definition.  */
 #include <limits.h>
 

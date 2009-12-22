@@ -18,6 +18,10 @@
 #include <config.h>
 
 #include <sys/time.h>
+
+#include "signature.h"
+SIGNATURE_CHECK (gettimeofday, int, (struct timeval *, void *));
+
 #include <time.h>
 
 #include <stdio.h>

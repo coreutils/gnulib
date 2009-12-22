@@ -20,6 +20,12 @@
 
 #include <pty.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (forkpty, int, (int *, char *, struct termios *,
+                                struct winsize *));
+SIGNATURE_CHECK (openpty, int, (int *, int *, char *, struct termios *,
+                                struct winsize *));
+
 #include <stdio.h>
 
 int

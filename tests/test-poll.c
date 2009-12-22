@@ -19,12 +19,16 @@
 
 #include <config.h>
 
+#include <poll.h>
+
+#include "signature.h"
+SIGNATURE_CHECK (poll, int, (struct pollfd[], nfds_t, int));
+
 #include <stdio.h>
 #include <string.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-#include <poll.h>
 #include <fcntl.h>
 #include <stdlib.h>
 #include <stdbool.h>

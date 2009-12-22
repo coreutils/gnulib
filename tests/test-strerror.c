@@ -21,6 +21,9 @@
 
 #include <string.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (strerror, char *, (int));
+
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>

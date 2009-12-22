@@ -18,6 +18,9 @@
 
 #include <unistd.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (getcwd, char *, (char *, size_t));
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

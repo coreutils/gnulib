@@ -20,6 +20,9 @@
 
 #include <ctype.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (isblank, int, (int));
+
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>

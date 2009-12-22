@@ -19,6 +19,9 @@
 
 #include <unistd.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (pipe2, int, (int[2], int));
+
 #include <fcntl.h>
 #include <stdbool.h>
 

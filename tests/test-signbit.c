@@ -20,6 +20,11 @@
 
 #include <math.h>
 
+/* signbit must be a macro.  */
+#ifndef signbit
+# error missing declaration
+#endif
+
 #include <float.h>
 #include <limits.h>
 #include <stdio.h>

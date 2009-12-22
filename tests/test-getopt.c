@@ -27,8 +27,24 @@
 
 #if GNULIB_GETOPT_GNU
 # include <getopt.h>
+
+# ifndef __getopt_argv_const
+#  define __getopt_argv_const const
+# endif
+# include "signature.h"
+SIGNATURE_CHECK (getopt_long, int, (int, char *__getopt_argv_const *,
+                                    char const *, struct option const *,
+                                    int *));
+SIGNATURE_CHECK (getopt_long_only, int, (int, char *__getopt_argv_const *,
+                                         char const *, struct option const *,
+                                         int *));
+
 #endif
+
 #include <unistd.h>
+
+#include "signature.h"
+SIGNATURE_CHECK (getopt, int, (int, char * const[], char const *));
 
 #include <stdio.h>
 #include <stdlib.h>

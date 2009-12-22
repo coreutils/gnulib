@@ -21,6 +21,9 @@
 /* Specification.  */
 #include <fcntl.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (fcntl, int, (int, int, ...));
+
 /* Helpers.  */
 #include <errno.h>
 #include <stdarg.h>

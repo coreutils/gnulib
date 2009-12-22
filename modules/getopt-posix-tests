@@ -1,4 +1,5 @@
 Files:
+tests/signature.h
 tests/test-getopt.c
 tests/test-getopt.h
 tests/test-getopt_long.h

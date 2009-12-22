@@ -20,6 +20,9 @@
 
 #include <sys/stat.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (futimens, int, (int, struct timespec const[2]));
+
 #include <fcntl.h>
 #include <errno.h>
 #include <stdbool.h>

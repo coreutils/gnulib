@@ -20,6 +20,9 @@
 
 #include <unistd.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (sleep, unsigned int, (unsigned int));
+
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>

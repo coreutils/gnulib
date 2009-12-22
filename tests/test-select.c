@@ -20,6 +20,24 @@
 
 #include <sys/select.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (select, int, (int, fd_set *, fd_set *, fd_set *,
+                               struct timeval *));
+/* The following may be macros without underlying functions, so only
+   check signature if they are not macros.  */
+#ifndef FD_CLR
+SIGNATURE_CHECK (FD_CLR, void, (int, fd_set *));
+#endif
+#ifndef FD_ISSET
+SIGNATURE_CHECK (FD_ISSET, void, (int, fd_set *));
+#endif
+#ifndef FD_SET
+SIGNATURE_CHECK (FD_SET, int, (int, fd_set *));
+#endif
+#ifndef FD_ZERO
+SIGNATURE_CHECK (FD_ZERO, void, (fd_set *));
+#endif
+
 #include <stdio.h>
 #include <string.h>
 #include <netinet/in.h>

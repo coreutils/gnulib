@@ -20,6 +20,13 @@
 
 #include <sys/stat.h>
 
+/* Caution: lstat may be a function-like macro.  Although this
+   signature check must pass, it may be the signature of the real (and
+   broken) lstat rather than rpl_lstat.  Most code should not use the
+   address of lstat.  */
+#include "signature.h"
+SIGNATURE_CHECK (lstat, int, (char const *, struct stat *));
+
 #include <fcntl.h>
 #include <errno.h>
 #include <stdbool.h>

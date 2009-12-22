@@ -1,4 +1,5 @@
 Files:
+tests/signature.h
 tests/test-rawmemchr.c
 
 Depends-on:

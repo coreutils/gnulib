@@ -1,4 +1,5 @@
 Files:
+tests/signature.h
 tests/test-dprintf-posix.sh
 tests/test-dprintf-posix.c
 tests/test-printf-posix.output

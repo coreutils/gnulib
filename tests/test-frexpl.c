@@ -20,6 +20,9 @@
 
 #include <math.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (frexpl, long double, (long double, int *));
+
 #include <float.h>
 #include <stdio.h>
 #include <stdlib.h>

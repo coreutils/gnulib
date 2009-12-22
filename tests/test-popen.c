@@ -21,4 +21,8 @@
 /* Specification.  */
 #include <stdio.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (popen, FILE *, (char const *, char const *));
+SIGNATURE_CHECK (pclose, int, (FILE *));
+
 #include "test-popen.h"

@@ -18,6 +18,9 @@
 
 #include <unistd.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (link, int, (char const *, char const *));
+
 #include <errno.h>
 #include <fcntl.h>
 #include <stdbool.h>

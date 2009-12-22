@@ -1,4 +1,5 @@
 Files:
+tests/signature.h
 tests/test-vprintf-posix.sh
 tests/test-vprintf-posix.c
 tests/test-printf-posix.h

@@ -19,6 +19,9 @@
 
 #include <string.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (memmem, void *, (void const *, size_t, void const *, size_t));
+
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>

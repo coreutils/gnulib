@@ -19,6 +19,9 @@
 
 #include <stdlib.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (strtod, double, (char const *, char **));
+
 #include <errno.h>
 #include <float.h>
 #include <math.h>

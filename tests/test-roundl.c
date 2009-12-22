@@ -22,6 +22,9 @@
 
 #include <math.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (roundl, long double, (long double));
+
 #include <float.h>
 #include <stdio.h>
 #include <stdlib.h>

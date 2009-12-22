@@ -18,7 +18,15 @@
 /* Written by Simon Josefsson.  */
 
 #include <config.h>
+
 #include <netdb.h>
+
+#include "signature.h"
+SIGNATURE_CHECK (freeaddrinfo, void, (struct addrinfo *));
+SIGNATURE_CHECK (gai_strerror, char const *, (int));
+SIGNATURE_CHECK (getaddrinfo, int, (char const *, char const *,
+                                    struct addrinfo const *,
+                                    struct addrinfo **));
 
 #include <arpa/inet.h>
 #include <errno.h>

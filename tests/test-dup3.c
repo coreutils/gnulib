@@ -21,6 +21,9 @@
 
 #include <unistd.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (dup3, int, (int, int, int));
+
 #include <errno.h>
 #include <fcntl.h>
 #include <stdbool.h>

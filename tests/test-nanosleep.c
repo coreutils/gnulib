@@ -20,6 +20,9 @@
 
 #include <time.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (nanosleep, int, (struct timespec const *, struct timepec *));
+
 #include <errno.h>
 #include <signal.h>
 #include <stdio.h>

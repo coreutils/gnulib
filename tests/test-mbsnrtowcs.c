@@ -1,5 +1,5 @@
 /* Test of conversion of string to wide string.
-   Copyright (C) 2008 Free Software Foundation, Inc.
+   Copyright (C) 2008, 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -19,6 +19,10 @@
 #include <config.h>
 
 #include <wchar.h>
+
+#include "signature.h"
+SIGNATURE_CHECK (mbsnrtowcs, size_t, (wchar_t *, char const **, size_t, size_t,
+                                      mbstate_t *));
 
 #include <locale.h>
 #include <stdio.h>

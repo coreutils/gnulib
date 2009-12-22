@@ -22,6 +22,9 @@
 
 #if HAVE_DUPLOCALE
 
+#include "signature.h"
+SIGNATURE_CHECK (duplocale, locale_t, (locale_t));
+
 #include <langinfo.h>
 #include <monetary.h>
 #include <stdio.h>

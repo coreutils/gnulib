@@ -26,6 +26,10 @@
 #endif
 
 #include <stdio.h>
+
+#include "signature.h"
+SIGNATURE_CHECK (fseeko, int, (FILE *, off_t, int));
+
 #include <stdlib.h>
 
 #define ASSERT(expr) \

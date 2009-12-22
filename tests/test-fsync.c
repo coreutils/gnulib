@@ -18,6 +18,9 @@
 
 #include <unistd.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (fsync, int, (int));
+
 #include <errno.h>
 #include <stdio.h>
 #include <fcntl.h>

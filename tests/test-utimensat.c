@@ -20,6 +20,10 @@
 
 #include <sys/stat.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (utimensat, int, (int, char const *, struct timespec const[2],
+                                  int));
+
 #include <fcntl.h>
 #include <errno.h>
 #include <stdbool.h>

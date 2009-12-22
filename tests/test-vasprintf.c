@@ -1,5 +1,5 @@
 /* Test of vasprintf() and asprintf() functions.
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -19,6 +19,10 @@
 #include <config.h>
 
 #include <stdio.h>
+
+#include "signature.h"
+SIGNATURE_CHECK (asprintf, int, (char **, char const *, ...));
+SIGNATURE_CHECK (vasprintf, int, (char **, char const *, va_list));
 
 #include <stdarg.h>
 #include <stdlib.h>

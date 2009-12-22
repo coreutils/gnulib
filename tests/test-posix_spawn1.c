@@ -20,6 +20,28 @@
 
 #include <spawn.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (posix_spawnp, int, (pid_t *, char const *,
+                                     posix_spawn_file_actions_t const *,
+                                     posix_spawnattr_t const *,
+                                     char *const[], char *const[]));
+SIGNATURE_CHECK (posix_spawnattr_init, int, (posix_spawnattr_t *));
+SIGNATURE_CHECK (posix_spawnattr_destroy, int, (posix_spawnattr_t *));
+SIGNATURE_CHECK (posix_spawnattr_setsigmask, int, (posix_spawnattr_t *,
+                                                   sigset_t const *));
+SIGNATURE_CHECK (posix_spawnattr_setflags, int, (posix_spawnattr_t *, short));
+SIGNATURE_CHECK (posix_spawn_file_actions_init, int,
+                 (posix_spawn_file_actions_t *));
+SIGNATURE_CHECK (posix_spawn_file_actions_destroy, int,
+                 (posix_spawn_file_actions_t *));
+SIGNATURE_CHECK (posix_spawn_file_actions_addclose, int,
+                 (posix_spawn_file_actions_t *, int));
+SIGNATURE_CHECK (posix_spawn_file_actions_addopen, int,
+                 (posix_spawn_file_actions_t *, int, char const *, int,
+                  mode_t));
+SIGNATURE_CHECK (posix_spawn_file_actions_adddup2, int,
+                 (posix_spawn_file_actions_t *, int, int));
+
 #include <errno.h>
 #include <fcntl.h>
 #include <signal.h>

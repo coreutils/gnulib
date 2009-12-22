@@ -23,6 +23,11 @@
 
 #include <spawn.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (posix_spawn, int, (pid_t *, char const *,
+                                    posix_spawn_file_actions_t const *,
+                                    posix_spawnattr_t const *,
+                                    char *const[], char *const[]));
 #include <errno.h>
 #include <fcntl.h>
 #include <signal.h>

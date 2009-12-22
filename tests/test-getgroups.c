@@ -20,6 +20,9 @@
 
 #include <unistd.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (getgroups, int, (int, gid_t[]));
+
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>

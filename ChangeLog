@@ -1,5 +1,278 @@
 2009-12-24  Eric Blake  <ebb9@byu.net>
 
+	tests: add signature checks
+	* tests/signature.h (SIGNATURE_CHECK): New file.
+	* modules/atexit-tests (Files): Use it.
+	* modules/btowc-tests (Files): Likewise.
+	* modules/canonicalize-lgpl-tests (Files): Likewise.
+	* modules/ceilf-tests (Files): Likewise.
+	* modules/ceill-tests (Files): Likewise.
+	* modules/chown-tests (Files): Likewise.
+	* modules/dprintf-posix-tests (Files): Likewise.
+	* modules/dup2-tests (Files): Likewise.
+	* modules/dup3-tests (Files): Likewise.
+	* modules/duplocale-tests (Files): Likewise.
+	* modules/fchdir-tests (Files): Likewise.
+	* modules/fcntl-tests (Files): Likewise.
+	* modules/fdopendir-tests (Files): Likewise.
+	* modules/fflush-tests (Files): Likewise.
+	* modules/flock-tests (Files): Likewise.
+	* modules/floorf-tests (Files): Likewise.
+	* modules/floorl-tests (Files): Likewise.
+	* modules/fnmatch-tests (Files): Likewise.
+	* modules/fopen-tests (Files): Likewise.
+	* modules/fprintf-posix-tests (Files): Likewise.
+	* modules/freopen-tests (Files): Likewise.
+	* modules/frexp-nolibm-tests (Files): Likewise.
+	* modules/frexp-tests (Files): Likewise.
+	* modules/frexpl-nolibm-tests (Files): Likewise.
+	* modules/frexpl-tests (Files): Likewise.
+	* modules/fseek-tests (Files): Likewise.
+	* modules/fseeko-tests (Files): Likewise.
+	* modules/fsync-tests (Files): Likewise.
+	* modules/ftell-tests (Files): Likewise.
+	* modules/ftello-tests (Files): Likewise.
+	* modules/futimens-tests (Files): Likewise.
+	* modules/getaddrinfo-tests (Files): Likewise.
+	* modules/getcwd-tests (Files): Likewise.
+	* modules/getdelim-tests (Files): Likewise.
+	* modules/getdtablesize-tests (Files): Likewise.
+	* modules/getgroups-tests (Files): Likewise.
+	* modules/gethostname-tests (Files): Likewise.
+	* modules/getline-tests (Files): Likewise.
+	* modules/getopt-posix-tests (Files): Likewise.
+	* modules/gettimeofday-tests (Files): Likewise.
+	* modules/glob-tests (Files): Likewise.
+	* modules/iconv-tests (Files): Likewise.
+	* modules/inet_ntop-tests (Files): Likewise.
+	* modules/inet_pton-tests (Files): Likewise.
+	* modules/isblank-tests (Files): Likewise.
+	* modules/lchown-tests (Files): Likewise.
+	* modules/ldexpl-tests (Files): Likewise.
+	* modules/link-tests (Files): Likewise.
+	* modules/linkat-tests (Files): Likewise.
+	* modules/lseek-tests (Files): Likewise.
+	* modules/lstat-tests (Files): Likewise.
+	* modules/mbrtowc-tests (Files): Likewise.
+	* modules/mbsinit-tests (Files): Likewise.
+	* modules/mbsnrtowcs-tests (Files): Likewise.
+	* modules/mbsrtowcs-tests (Files): Likewise.
+	* modules/memchr-tests (Files): Likewise.
+	* modules/memcmp-tests (Files): Likewise.
+	* modules/memmem-tests (Files): Likewise.
+	* modules/memrchr-tests (Files): Likewise.
+	* modules/mkdir-tests (Files): Likewise.
+	* modules/mkfifo-tests (Files): Likewise.
+	* modules/mkfifoat-tests (Files): Likewise.
+	* modules/mknod-tests (Files): Likewise.
+	* modules/nanosleep-tests (Files): Likewise.
+	* modules/nl_langinfo-tests (Files): Likewise.
+	* modules/obstack-printf-tests (Files): Likewise.
+	* modules/open-tests (Files): Likewise.
+	* modules/openat-tests (Files): Likewise.
+	* modules/perror-tests (Files): Likewise.
+	* modules/pipe2-tests (Files): Likewise.
+	* modules/poll-tests (Files): Likewise.
+	* modules/popen-tests (Files): Likewise.
+	* modules/posix_spawn-tests (Files): Likewise.
+	* modules/posix_spawnp-tests (Files): Likewise.
+	* modules/pread-tests (Files): Likewise.
+	* modules/printf-posix-tests (Files): Likewise.
+	* modules/pty-tests (Files): Likewise.
+	* modules/random_r-tests (Files): Likewise.
+	* modules/rawmemchr-tests (Files): Likewise.
+	* modules/readlink-tests (Files): Likewise.
+	* modules/remove-tests (Files): Likewise.
+	* modules/rename-tests (Files): Likewise.
+	* modules/renameat-tests (Files): Likewise.
+	* modules/rmdir-tests (Files): Likewise.
+	* modules/round-tests (Files): Likewise.
+	* modules/roundf-tests (Files): Likewise.
+	* modules/roundl-tests (Files): Likewise.
+	* modules/select-tests (Files): Likewise.
+	* modules/setenv-tests (Files): Likewise.
+	* modules/sigaction-tests (Files): Likewise.
+	* modules/sleep-tests (Files): Likewise.
+	* modules/snprintf-posix-tests (Files): Likewise.
+	* modules/snprintf-tests (Files): Likewise.
+	* modules/sprintf-posix-tests (Files): Likewise.
+	* modules/stat-tests (Files): Likewise.
+	* modules/strcasestr-tests (Files): Likewise.
+	* modules/strchrnul-tests (Files): Likewise.
+	* modules/strerror-tests (Files): Likewise.
+	* modules/strsignal-tests (Files): Likewise.
+	* modules/strstr-tests (Files): Likewise.
+	* modules/strtod-tests (Files): Likewise.
+	* modules/strverscmp-tests (Files): Likewise.
+	* modules/symlink-tests (Files): Likewise.
+	* modules/symlinkat-tests (Files): Likewise.
+	* modules/times-tests (Files): Likewise.
+	* modules/trunc-tests (Files): Likewise.
+	* modules/truncf-tests (Files): Likewise.
+	* modules/truncl-tests (Files): Likewise.
+	* modules/tsearch-tests (Files): Likewise.
+	* modules/uname-tests (Files): Likewise.
+	* modules/unlink-tests (Files): Likewise.
+	* modules/unsetenv-tests (Files): Likewise.
+	* modules/usleep-tests (Files): Likewise.
+	* modules/utimensat-tests (Files): Likewise.
+	* modules/vasprintf-tests (Files): Likewise.
+	* modules/vdprintf-posix-tests (Files): Likewise.
+	* modules/vfprintf-posix-tests (Files): Likewise.
+	* modules/vprintf-posix-tests (Files): Likewise.
+	* modules/vsnprintf-posix-tests (Files): Likewise.
+	* modules/vsnprintf-tests (Files): Likewise.
+	* modules/vsprintf-posix-tests (Files): Likewise.
+	* modules/wcrtomb-tests (Files): Likewise.
+	* modules/wcsnrtombs-tests (Files): Likewise.
+	* modules/wcsrtombs-tests (Files): Likewise.
+	* modules/wcwidth-tests (Files): Likewise.
+	* tests/test-isfinite.c (isfinite): Ensure macro declaration.
+	* tests/test-isinf.c (isinf): Likewise.
+	* tests/test-isnan.c (isnan): Likewise.
+	* tests/test-signbit.c (signbit): Likewise.
+	* tests/test-select.c (FD_CLR, FD_ISSET, FD_SET, FD_ZERO): Ensure
+	declaration, either as macro or with correct signature.
+	(select): Ensure function under test is declared with correct
+	signature in correct header.
+	* tests/test-atexit.c (atexit): Likewise.
+	* tests/test-btowc.c (btowc): Likewise.
+	* tests/test-canonicalize-lgpl.c (realpath)
+	(canonicalize_file_name): Likewise.
+	* tests/test-ceilf1.c (ceilf): Likewise.
+	* tests/test-ceill.c (ceill): Likewise.
+	* tests/test-chown.c (chown): Likewise.
+	* tests/test-dprintf-posix.c (dprintf): Likewise.
+	* tests/test-dup2.c (dup2): Likewise.
+	* tests/test-dup3.c (dup3): Likewise.
+	* tests/test-duplocale.c (duplocale): Likewise.
+	* tests/test-fchdir.c (fchdir): Likewise.
+	* tests/test-fchownat.c (fchownat): Likewise.
+	* tests/test-fcntl.c (fcntl): Likewise.
+	* tests/test-fdopendir.c (fdopendir): Likewise.
+	* tests/test-fflush.c (fflush): Likewise.
+	* tests/test-flock.c (flock): Likewise.
+	* tests/test-floorf1.c (floorf): Likewise.
+	* tests/test-floorl.c (floorl): Likewise.
+	* tests/test-fnmatch.c (fnmatch): Likewise.
+	* tests/test-fopen.c (fopen): Likewise.
+	* tests/test-fprintf-posix.c (fprintf): Likewise.
+	* tests/test-freopen.c (freopen): Likewise.
+	* tests/test-frexp.c (frexp): Likewise.
+	* tests/test-frexpl.c (frexpl): Likewise.
+	* tests/test-fseek.c (fseek): Likewise.
+	* tests/test-fseeko.c (fseeko): Likewise.
+	* tests/test-fstatat.c (fstatat): Likewise.
+	* tests/test-fsync.c (fsync): Likewise.
+	* tests/test-ftell.c (ftell): Likewise.
+	* tests/test-ftello.c (ftello): Likewise.
+	* tests/test-futimens.c (futimens): Likewise.
+	* tests/test-getaddrinfo.c (getaddrinfo, freeaddrinfo)
+	(gai_strerror): Likewise.
+	* tests/test-getcwd.c (getcwd): Likewise.
+	* tests/test-getdelim.c (getdelim): Likewise.
+	* tests/test-getdtablesize.c (getdtablesize): Likewise.
+	* tests/test-getgroups.c (getgroups): Likewise.
+	* tests/test-gethostname.c (gethostname): Likewise.
+	* tests/test-getline.c (getline): Likewise.
+	* tests/test-getopt.c (getopt, getopt_long, getopt_long_only):
+	Likewise.
+	* tests/test-gettimeofday.c (gettimeofday): Likewise.
+	* tests/test-glob.c (glob, globfree): Likewise.
+	* tests/test-iconv.c (iconv, iconv_open, iconv_close): Likewise.
+	* tests/test-inet_ntop.c (inet_ntop): Likewise.
+	* tests/test-inet_pton.c (inet_pton): Likewise.
+	* tests/test-isblank.c (isblank): Likewise.
+	* tests/test-lchown.c (lchown): Likewise.
+	* tests/test-ldexpl.c (ldexpl): Likewise.
+	* tests/test-link.c (link): Likewise.
+	* tests/test-linkat.c (linkat): Likewise.
+	* tests/test-lseek.c (lseek): Likewise.
+	* tests/test-lstat.c (lstat): Likewise.
+	* tests/test-mbrtowc.c (mbrtowc): Likewise.
+	* tests/test-mbsinit.c (mbsinit): Likewise.
+	* tests/test-mbsnrtowcs.c (mbsnrtowcs): Likewise.
+	* tests/test-mbsrtowcs.c (mbsrtowcs): Likewise.
+	* tests/test-memchr.c (memchr): Likewise.
+	* tests/test-memcmp.c (memcmp): Likewise.
+	* tests/test-memmem.c (memmem): Likewise.
+	* tests/test-memrchr.c (memrchr): Likewise.
+	* tests/test-mkdir.c (mkdir): Likewise.
+	* tests/test-mkdirat.c (mkdirat): Likewise.
+	* tests/test-mkfifo.c (mkfifo): Likewise.
+	* tests/test-mkfifoat.c (mkfifoat, mknodat): Likewise.
+	* tests/test-mknod.c (mknod): Likewise.
+	* tests/test-nanosleep.c (nanosleep): Likewise.
+	* tests/test-nl_langinfo.c (nl_langinfo): Likewise.
+	* tests/test-obstack-printf.c (obstack_printf, obstack_vprintf):
+	Likewise.
+	* tests/test-open.c (open): Likewise.
+	* tests/test-openat.c (openat): Likewise.
+	* tests/test-perror.c (perror): Likewise.
+	* tests/test-pipe2.c (pipe2): Likewise.
+	* tests/test-poll.c (poll): Likewise.
+	* tests/test-popen.c (popen, pclose): Likewise.
+	* tests/test-posix_spawn1.c (posix_spawnp, posix_spawnattr_init)
+	(posix_spawnattr_destroy, posix_spawnattr_setsigmask)
+	(posix_spawnattr_setflags, posix_spawn_file_actions_init)
+	(posix_spawn_file_actions_destroy)
+	(posix_spawn_file_actions_addclose)
+	(posix_spawn_file_actions_addopen)
+	(posix_spawn_file_actions_adddup2): Likewise.
+	* tests/test-posix_spawn3.c (posix_spawn): Likewise.
+	* tests/test-pread.c (pread): Likewise.
+	* tests/test-printf-posix.c (printf): Likewise.
+	* tests/test-pty.c (openpty, forkpty): Likewise.
+	* tests/test-random_r.c (srandom_r, initstate_r, setstate_r)
+	(random_r): Likewise.
+	* tests/test-rawmemchr.c (rawmemchr): Likewise.
+	* tests/test-readlink.c (readlink): Likewise.
+	* tests/test-remove.c (remove): Likewise.
+	* tests/test-rename.c (rename): Likewise.
+	* tests/test-renameat.c (renameat): Likewise.
+	* tests/test-rmdir.c (rmdir): Likewise.
+	* tests/test-round1.c (round): Likewise.
+	* tests/test-roundf1.c (roundf): Likewise.
+	* tests/test-roundl.c (roundl): Likewise.
+	* tests/test-setenv.c (setenv): Likewise.
+	* tests/test-sigaction.c (sigaction): Likewise.
+	* tests/test-sleep.c (sleep): Likewise.
+	* tests/test-snprintf.c (snprintf): Likewise.
+	* tests/test-sprintf-posix.c (sprintf): Likewise.
+	* tests/test-stat.c (stat): Likewise.
+	* tests/test-stpncpy.c (stpncpy): Likewise.
+	* tests/test-strcasestr.c (strcasestr): Likewise.
+	* tests/test-strchrnul.c (strchrnul): Likewise.
+	* tests/test-strerror.c (strerror): Likewise.
+	* tests/test-strsignal.c (strsignal): Likewise.
+	* tests/test-strstr.c (strstr): Likewise.
+	* tests/test-strtod.c (strtod): Likewise.
+	* tests/test-strverscmp.c (strverscmp): Likewise.
+	* tests/test-symlink.c (symlink): Likewise.
+	* tests/test-symlinkat.c (symlinkat, readlinkat): Likewise.
+	* tests/test-times.c (times): Likewise.
+	* tests/test-trunc1.c (trunc): Likewise.
+	* tests/test-truncf1.c (truncf): Likewise.
+	* tests/test-truncl.c (truncl): Likewise.
+	* tests/test-tsearch.c (tdelete, tfind, tsearch, twalk):
+	Likewise.
+	* tests/test-uname.c (uname): Likewise.
+	* tests/test-unlink.c (unlink): Likewise.
+	* tests/test-unlinkat.c (unlinkat): Likewise.
+	* tests/test-unsetenv.c (unsetenv): Likewise.
+	* tests/test-usleep.c (usleep): Likewise.
+	* tests/test-utimensat.c (utimensat): Likewise.
+	* tests/test-vasprintf.c (asprintf, vasprintf): Likewise.
+	* tests/test-vdprintf-posix.c (vdprintf): Likewise.
+	* tests/test-vfprintf-posix.c (vfprintf): Likewise.
+	* tests/test-vprintf-posix.c (vprintf): Likewise.
+	* tests/test-vsnprintf.c (vsnprintf): Likewise.
+	* tests/test-vsprintf-posix.c (vsprintf): Likewise.
+	* tests/test-wcrtomb.c (wcrtomb): Likewise.
+	* tests/test-wcsnrtombs.c (wcsnrtombs): Likewise.
+	* tests/test-wcsrtombs.c (wcsrtombs): Likewise.
+	* tests/test-wcwidth.c (wcwidth): Likewise.
+
 	build: pull in conditional headers during GNULIB_POSIXCHECK
 	* lib/stdio.in.h (includes): Using GNULIB_POSIXCHECK also requires
 	definitions from any conditionally-included headers.

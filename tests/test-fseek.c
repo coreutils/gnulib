@@ -19,6 +19,10 @@
 #include <config.h>
 
 #include <stdio.h>
+
+#include "signature.h"
+SIGNATURE_CHECK (fseek, int, (FILE *, long, int));
+
 #include <stdlib.h>
 
 #define ASSERT(expr) \

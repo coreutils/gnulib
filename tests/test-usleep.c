@@ -20,6 +20,9 @@
 
 #include <unistd.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (usleep, int, (useconds_t));
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>

@@ -21,6 +21,11 @@
 
 #include <math.h>
 
+/* isinf must be a macro.  */
+#ifndef isinf
+# error missing declaration
+#endif
+
 #include <float.h>
 #include <limits.h>
 #include <stdio.h>

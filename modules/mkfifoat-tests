@@ -1,4 +1,5 @@
 Files:
+tests/signature.h
 tests/test-mkfifo.h
 tests/test-mkfifoat.c
 

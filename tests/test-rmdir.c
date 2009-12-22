@@ -20,6 +20,9 @@
 
 #include <unistd.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (rmdir, int, (char const *));
+
 #include <fcntl.h>
 #include <errno.h>
 #include <stdbool.h>

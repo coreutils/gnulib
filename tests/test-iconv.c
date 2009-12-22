@@ -1,5 +1,5 @@
 /* Test of character set conversion.
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -20,6 +20,17 @@
 
 #if HAVE_ICONV
 # include <iconv.h>
+
+# ifndef ICONV_CONST
+#  define ICONV_CONST /* empty */
+# endif
+
+#include "signature.h"
+SIGNATURE_CHECK (iconv, size_t, (iconv_t, ICONV_CONST char **, size_t *,
+                                 char **, size_t *));
+SIGNATURE_CHECK (iconv_close, int, (iconv_t x));
+SIGNATURE_CHECK (iconv_open, iconv_t, (char const *, char const *));
+
 #endif
 
 #include <errno.h>

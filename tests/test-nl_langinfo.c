@@ -20,6 +20,9 @@
 
 #include <langinfo.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (nl_langinfo, char *, (nl_item));
+
 #include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>

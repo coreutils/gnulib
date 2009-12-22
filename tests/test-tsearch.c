@@ -1,5 +1,5 @@
 /* Test program for tsearch et al.
-   Copyright (C) 1997, 2000-2001, 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 1997, 2000-2001, 2007-2009 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    The GNU C Library is free software: you can redistribute it and/or
@@ -18,6 +18,16 @@
 #include <config.h>
 
 #include <search.h>
+
+#include "signature.h"
+SIGNATURE_CHECK (tdelete, void *, (void const *, void **,
+                                   int (*) (void const *, void const *)));
+SIGNATURE_CHECK (tfind, void *, (void const *, void * const *,
+                                 int (*) (void const *, void const *)));
+SIGNATURE_CHECK (tsearch, void *, (void const *, void **,
+                                   int (*) (void const *, void const *)));
+SIGNATURE_CHECK (twalk, void, (void const *,
+                               void (*) (void const *, VISIT, int)));
 
 #include <stdint.h>
 #include <stdio.h>

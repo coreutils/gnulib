@@ -19,6 +19,9 @@
 
 #include <string.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (strchrnul, char *, (char const *, int));
+
 #include <stdio.h>
 #include <stdlib.h>
 

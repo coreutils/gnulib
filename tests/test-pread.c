@@ -20,6 +20,9 @@
 
 #include <unistd.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (pread, ssize_t, (int, void *, size_t, off_t));
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>

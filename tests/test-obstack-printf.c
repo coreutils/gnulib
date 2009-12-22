@@ -20,6 +20,11 @@
 
 #include <stdio.h>
 
+#include "signature.h"
+SIGNATURE_CHECK (obstack_printf, int, (struct obstack *, char const *, ...));
+SIGNATURE_CHECK (obstack_vprintf, int, (struct obstack *, char const *,
+                                        va_list));
+
 #include "obstack.h"
 #include "xalloc.h"
 
