@@ -1,5 +1,5 @@
 /* Determine name of the currently selected locale.
-   Copyright (C) 1995-1999, 2000-2008 Free Software Foundation, Inc.
+   Copyright (C) 1995-1999, 2000-2009 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
    under the terms of the GNU Library General Public License as published
@@ -72,7 +72,7 @@
    0x14 LANG_NORWEGIAN
    0x15 LANG_POLISH
    0x16 LANG_PORTUGUESE
-   0x17 LANG_RHAETO_ROMANCE
+   0x17 LANG_ROMANSH
    0x18 LANG_ROMANIAN
    0x19 LANG_RUSSIAN
    0x1a LANG_CROATIAN == LANG_SERBIAN
@@ -108,7 +108,7 @@
    0x38 LANG_FAEROESE
    0x39 LANG_HINDI
    0x3a LANG_MALTESE
-   0x3b LANG_SAAMI
+   0x3b LANG_SAMI
    0x3c LANG_GAELIC
    0x3d LANG_YIDDISH
    0x3e LANG_MALAY
@@ -156,6 +156,9 @@
    0x68 LANG_HAUSA
    0x69 LANG_IBIBIO
    0x6a LANG_YORUBA
+   0x6d LANG_BASHKIR
+   0x6e LANG_LUXEMBOURGISH
+   0x6f LANG_GREENLANDIC
    0x70 LANG_IGBO
    0x71 LANG_KANURI
    0x72 LANG_OROMO
@@ -166,6 +169,18 @@
    0x77 LANG_SOMALI
    0x78 LANG_YI
    0x79 LANG_PAPIAMENTU
+   0x7a LANG_MAPUDUNGUN
+   0x7c LANG_MOHAWK
+   0x7e LANG_BRETON
+   0x82 LANG_OCCITAN
+   0x83 LANG_CORSICAN
+   0x84 LANG_ALSATIAN
+   0x85 LANG_YAKUT
+   0x86 LANG_KICHE
+   0x87 LANG_KINYARWANDA
+   0x88 LANG_WOLOF
+   0x8c LANG_DARI
+   0x91 LANG_SCOTTISH_GAELIC
 */
 /* Mingw headers don't have latest language and sublanguage codes.  */
 # ifndef LANG_AFRIKAANS
@@ -173,6 +188,9 @@
 # endif
 # ifndef LANG_ALBANIAN
 # define LANG_ALBANIAN 0x1c
+# endif
+# ifndef LANG_ALSATIAN
+# define LANG_ALSATIAN 0x84
 # endif
 # ifndef LANG_AMHARIC
 # define LANG_AMHARIC 0x5e
@@ -189,6 +207,9 @@
 # ifndef LANG_AZERI
 # define LANG_AZERI 0x2c
 # endif
+# ifndef LANG_BASHKIR
+# define LANG_BASHKIR 0x6d
+# endif
 # ifndef LANG_BASQUE
 # define LANG_BASQUE 0x2d
 # endif
@@ -197,6 +218,9 @@
 # endif
 # ifndef LANG_BENGALI
 # define LANG_BENGALI 0x45
+# endif
+# ifndef LANG_BRETON
+# define LANG_BRETON 0x7e
 # endif
 # ifndef LANG_BURMESE
 # define LANG_BURMESE 0x55
@@ -209,6 +233,12 @@
 # endif
 # ifndef LANG_CHEROKEE
 # define LANG_CHEROKEE 0x5c
+# endif
+# ifndef LANG_CORSICAN
+# define LANG_CORSICAN 0x83
+# endif
+# ifndef LANG_DARI
+# define LANG_DARI 0x8c
 # endif
 # ifndef LANG_DIVEHI
 # define LANG_DIVEHI 0x65
@@ -239,6 +269,9 @@
 # endif
 # ifndef LANG_GEORGIAN
 # define LANG_GEORGIAN 0x37
+# endif
+# ifndef LANG_GREENLANDIC
+# define LANG_GREENLANDIC 0x6f
 # endif
 # ifndef LANG_GUARANI
 # define LANG_GUARANI 0x74
@@ -282,6 +315,12 @@
 # ifndef LANG_KAZAK
 # define LANG_KAZAK 0x3f
 # endif
+# ifndef LANG_KICHE
+# define LANG_KICHE 0x86
+# endif
+# ifndef LANG_KINYARWANDA
+# define LANG_KINYARWANDA 0x87
+# endif
 # ifndef LANG_KONKANI
 # define LANG_KONKANI 0x57
 # endif
@@ -299,6 +338,9 @@
 # endif
 # ifndef LANG_LITHUANIAN
 # define LANG_LITHUANIAN 0x27
+# endif
+# ifndef LANG_LUXEMBOURGISH
+# define LANG_LUXEMBOURGISH 0x6e
 # endif
 # ifndef LANG_MACEDONIAN
 # define LANG_MACEDONIAN 0x2f
@@ -318,14 +360,23 @@
 # ifndef LANG_MAORI
 # define LANG_MAORI 0x81
 # endif
+# ifndef LANG_MAPUDUNGUN
+# define LANG_MAPUDUNGUN 0x7a
+# endif
 # ifndef LANG_MARATHI
 # define LANG_MARATHI 0x4e
+# endif
+# ifndef LANG_MOHAWK
+# define LANG_MOHAWK 0x7c
 # endif
 # ifndef LANG_MONGOLIAN
 # define LANG_MONGOLIAN 0x50
 # endif
 # ifndef LANG_NEPALI
 # define LANG_NEPALI 0x61
+# endif
+# ifndef LANG_OCCITAN
+# define LANG_OCCITAN 0x82
 # endif
 # ifndef LANG_ORIYA
 # define LANG_ORIYA 0x48
@@ -345,14 +396,17 @@
 # ifndef LANG_QUECHUA
 # define LANG_QUECHUA 0x6b
 # endif
-# ifndef LANG_RHAETO_ROMANCE
-# define LANG_RHAETO_ROMANCE 0x17
+# ifndef LANG_ROMANSH
+# define LANG_ROMANSH 0x17
 # endif
-# ifndef LANG_SAAMI
-# define LANG_SAAMI 0x3b
+# ifndef LANG_SAMI
+# define LANG_SAMI 0x3b
 # endif
 # ifndef LANG_SANSKRIT
 # define LANG_SANSKRIT 0x4f
+# endif
+# ifndef LANG_SCOTTISH_GAELIC
+# define LANG_SCOTTISH_GAELIC 0x91
 # endif
 # ifndef LANG_SERBIAN
 # define LANG_SERBIAN 0x1a
@@ -441,8 +495,14 @@
 # ifndef LANG_WELSH
 # define LANG_WELSH 0x52
 # endif
+# ifndef LANG_WOLOF
+# define LANG_WOLOF 0x88
+# endif
 # ifndef LANG_XHOSA
 # define LANG_XHOSA 0x34
+# endif
+# ifndef LANG_YAKUT
+# define LANG_YAKUT 0x85
 # endif
 # ifndef LANG_YI
 # define LANG_YI 0x78
@@ -455,6 +515,18 @@
 # endif
 # ifndef LANG_ZULU
 # define LANG_ZULU 0x35
+# endif
+# ifndef SUBLANG_AFRIKAANS_SOUTH_AFRICA
+# define SUBLANG_AFRIKAANS_SOUTH_AFRICA 0x01
+# endif
+# ifndef SUBLANG_ALBANIAN_ALBANIA
+# define SUBLANG_ALBANIAN_ALBANIA 0x01
+# endif
+# ifndef SUBLANG_ALSATIAN_FRANCE
+# define SUBLANG_ALSATIAN_FRANCE 0x01
+# endif
+# ifndef SUBLANG_AMHARIC_ETHIOPIA
+# define SUBLANG_AMHARIC_ETHIOPIA 0x01
 # endif
 # ifndef SUBLANG_ARABIC_SAUDI_ARABIA
 # define SUBLANG_ARABIC_SAUDI_ARABIA 0x01
@@ -504,11 +576,26 @@
 # ifndef SUBLANG_ARABIC_QATAR
 # define SUBLANG_ARABIC_QATAR 0x10
 # endif
+# ifndef SUBLANG_ARMENIAN_ARMENIA
+# define SUBLANG_ARMENIAN_ARMENIA 0x01
+# endif
+# ifndef SUBLANG_ASSAMESE_INDIA
+# define SUBLANG_ASSAMESE_INDIA 0x01
+# endif
 # ifndef SUBLANG_AZERI_LATIN
 # define SUBLANG_AZERI_LATIN 0x01
 # endif
 # ifndef SUBLANG_AZERI_CYRILLIC
 # define SUBLANG_AZERI_CYRILLIC 0x02
+# endif
+# ifndef SUBLANG_BASHKIR_RUSSIA
+# define SUBLANG_BASHKIR_RUSSIA 0x01
+# endif
+# ifndef SUBLANG_BASQUE_BASQUE
+# define SUBLANG_BASQUE_BASQUE 0x01
+# endif
+# ifndef SUBLANG_BELARUSIAN_BELARUS
+# define SUBLANG_BELARUSIAN_BELARUS 0x01
 # endif
 # ifndef SUBLANG_BENGALI_INDIA
 # define SUBLANG_BENGALI_INDIA 0x01
@@ -522,6 +609,21 @@
 # ifndef SUBLANG_BOSNIAN_BOSNIA_HERZEGOVINA_CYRILLIC
 # define SUBLANG_BOSNIAN_BOSNIA_HERZEGOVINA_CYRILLIC 0x08
 # endif
+# ifndef SUBLANG_BRETON_FRANCE
+# define SUBLANG_BRETON_FRANCE 0x01
+# endif
+# ifndef SUBLANG_BULGARIAN_BULGARIA
+# define SUBLANG_BULGARIAN_BULGARIA 0x01
+# endif
+# ifndef SUBLANG_CAMBODIAN_CAMBODIA
+# define SUBLANG_CAMBODIAN_CAMBODIA 0x01
+# endif
+# ifndef SUBLANG_CATALAN_SPAIN
+# define SUBLANG_CATALAN_SPAIN 0x01
+# endif
+# ifndef SUBLANG_CORSICAN_FRANCE
+# define SUBLANG_CORSICAN_FRANCE 0x01
+# endif
 # ifndef SUBLANG_CROATIAN_CROATIA
 # define SUBLANG_CROATIAN_CROATIA 0x01
 # endif
@@ -530,6 +632,21 @@
 # endif
 # ifndef SUBLANG_CHINESE_MACAU
 # define SUBLANG_CHINESE_MACAU 0x05
+# endif
+# ifndef SUBLANG_CZECH_CZECH_REPUBLIC
+# define SUBLANG_CZECH_CZECH_REPUBLIC 0x01
+# endif
+# ifndef SUBLANG_DANISH_DENMARK
+# define SUBLANG_DANISH_DENMARK 0x01
+# endif
+# ifndef SUBLANG_DARI_AFGHANISTAN
+# define SUBLANG_DARI_AFGHANISTAN 0x01
+# endif
+# ifndef SUBLANG_DIVEHI_MALDIVES
+# define SUBLANG_DIVEHI_MALDIVES 0x01
+# endif
+# ifndef SUBLANG_DUTCH_SURINAM
+# define SUBLANG_DUTCH_SURINAM 0x03
 # endif
 # ifndef SUBLANG_ENGLISH_SOUTH_AFRICA
 # define SUBLANG_ENGLISH_SOUTH_AFRICA 0x07
@@ -567,6 +684,18 @@
 # ifndef SUBLANG_ENGLISH_SINGAPORE
 # define SUBLANG_ENGLISH_SINGAPORE 0x12
 # endif
+# ifndef SUBLANG_ESTONIAN_ESTONIA
+# define SUBLANG_ESTONIAN_ESTONIA 0x01
+# endif
+# ifndef SUBLANG_FAEROESE_FAROE_ISLANDS
+# define SUBLANG_FAEROESE_FAROE_ISLANDS 0x01
+# endif
+# ifndef SUBLANG_FARSI_IRAN
+# define SUBLANG_FARSI_IRAN 0x01
+# endif
+# ifndef SUBLANG_FINNISH_FINLAND
+# define SUBLANG_FINNISH_FINLAND 0x01
+# endif
 # ifndef SUBLANG_FRENCH_LUXEMBOURG
 # define SUBLANG_FRENCH_LUXEMBOURG 0x05
 # endif
@@ -600,14 +729,98 @@
 # ifndef SUBLANG_FRENCH_HAITI
 # define SUBLANG_FRENCH_HAITI 0x0f
 # endif
+# ifndef SUBLANG_FRISIAN_NETHERLANDS
+# define SUBLANG_FRISIAN_NETHERLANDS 0x01
+# endif
+# ifndef SUBLANG_GALICIAN_SPAIN
+# define SUBLANG_GALICIAN_SPAIN 0x01
+# endif
+# ifndef SUBLANG_GEORGIAN_GEORGIA
+# define SUBLANG_GEORGIAN_GEORGIA 0x01
+# endif
 # ifndef SUBLANG_GERMAN_LUXEMBOURG
 # define SUBLANG_GERMAN_LUXEMBOURG 0x04
 # endif
 # ifndef SUBLANG_GERMAN_LIECHTENSTEIN
 # define SUBLANG_GERMAN_LIECHTENSTEIN 0x05
 # endif
+# ifndef SUBLANG_GREEK_GREECE
+# define SUBLANG_GREEK_GREECE 0x01
+# endif
+# ifndef SUBLANG_GREENLANDIC_GREENLAND
+# define SUBLANG_GREENLANDIC_GREENLAND 0x01
+# endif
+# ifndef SUBLANG_GUJARATI_INDIA
+# define SUBLANG_GUJARATI_INDIA 0x01
+# endif
+# ifndef SUBLANG_HAUSA_NIGERIA_LATIN
+# define SUBLANG_HAUSA_NIGERIA_LATIN 0x01
+# endif
+# ifndef SUBLANG_HEBREW_ISRAEL
+# define SUBLANG_HEBREW_ISRAEL 0x01
+# endif
+# ifndef SUBLANG_HINDI_INDIA
+# define SUBLANG_HINDI_INDIA 0x01
+# endif
+# ifndef SUBLANG_HUNGARIAN_HUNGARY
+# define SUBLANG_HUNGARIAN_HUNGARY 0x01
+# endif
+# ifndef SUBLANG_ICELANDIC_ICELAND
+# define SUBLANG_ICELANDIC_ICELAND 0x01
+# endif
+# ifndef SUBLANG_IGBO_NIGERIA
+# define SUBLANG_IGBO_NIGERIA 0x01
+# endif
+# ifndef SUBLANG_INDONESIAN_INDONESIA
+# define SUBLANG_INDONESIAN_INDONESIA 0x01
+# endif
+# ifndef SUBLANG_INUKTITUT_CANADA
+# define SUBLANG_INUKTITUT_CANADA 0x01
+# endif
+# undef SUBLANG_INUKTITUT_CANADA_LATIN
+# define SUBLANG_INUKTITUT_CANADA_LATIN 0x02
+# undef SUBLANG_IRISH_IRELAND
+# define SUBLANG_IRISH_IRELAND 0x02
+# ifndef SUBLANG_JAPANESE_JAPAN
+# define SUBLANG_JAPANESE_JAPAN 0x01
+# endif
+# ifndef SUBLANG_KANNADA_INDIA
+# define SUBLANG_KANNADA_INDIA 0x01
+# endif
 # ifndef SUBLANG_KASHMIRI_INDIA
 # define SUBLANG_KASHMIRI_INDIA 0x02
+# endif
+# ifndef SUBLANG_KAZAK_KAZAKHSTAN
+# define SUBLANG_KAZAK_KAZAKHSTAN 0x01
+# endif
+# ifndef SUBLANG_KICHE_GUATEMALA
+# define SUBLANG_KICHE_GUATEMALA 0x01
+# endif
+# ifndef SUBLANG_KINYARWANDA_RWANDA
+# define SUBLANG_KINYARWANDA_RWANDA 0x01
+# endif
+# ifndef SUBLANG_KONKANI_INDIA
+# define SUBLANG_KONKANI_INDIA 0x01
+# endif
+# ifndef SUBLANG_KYRGYZ_KYRGYZSTAN
+# define SUBLANG_KYRGYZ_KYRGYZSTAN 0x01
+# endif
+# ifndef SUBLANG_LAO_LAOS
+# define SUBLANG_LAO_LAOS 0x01
+# endif
+# ifndef SUBLANG_LATVIAN_LATVIA
+# define SUBLANG_LATVIAN_LATVIA 0x01
+# endif
+# ifndef SUBLANG_LITHUANIAN_LITHUANIA
+# define SUBLANG_LITHUANIAN_LITHUANIA 0x01
+# endif
+# undef SUBLANG_LOWER_SORBIAN_GERMANY
+# define SUBLANG_LOWER_SORBIAN_GERMANY 0x02
+# ifndef SUBLANG_LUXEMBOURGISH_LUXEMBOURG
+# define SUBLANG_LUXEMBOURGISH_LUXEMBOURG 0x01
+# endif
+# ifndef SUBLANG_MACEDONIAN_MACEDONIA
+# define SUBLANG_MACEDONIAN_MACEDONIA 0x01
 # endif
 # ifndef SUBLANG_MALAY_MALAYSIA
 # define SUBLANG_MALAY_MALAYSIA 0x01
@@ -615,14 +828,47 @@
 # ifndef SUBLANG_MALAY_BRUNEI_DARUSSALAM
 # define SUBLANG_MALAY_BRUNEI_DARUSSALAM 0x02
 # endif
+# ifndef SUBLANG_MALAYALAM_INDIA
+# define SUBLANG_MALAYALAM_INDIA 0x01
+# endif
+# ifndef SUBLANG_MALTESE_MALTA
+# define SUBLANG_MALTESE_MALTA 0x01
+# endif
+# ifndef SUBLANG_MAORI_NEW_ZEALAND
+# define SUBLANG_MAORI_NEW_ZEALAND 0x01
+# endif
+# ifndef SUBLANG_MAPUDUNGUN_CHILE
+# define SUBLANG_MAPUDUNGUN_CHILE 0x01
+# endif
+# ifndef SUBLANG_MARATHI_INDIA
+# define SUBLANG_MARATHI_INDIA 0x01
+# endif
+# ifndef SUBLANG_MOHAWK_CANADA
+# define SUBLANG_MOHAWK_CANADA 0x01
+# endif
 # ifndef SUBLANG_MONGOLIAN_CYRILLIC_MONGOLIA
 # define SUBLANG_MONGOLIAN_CYRILLIC_MONGOLIA 0x01
 # endif
 # ifndef SUBLANG_MONGOLIAN_PRC
 # define SUBLANG_MONGOLIAN_PRC 0x02
 # endif
+# ifndef SUBLANG_NEPALI_NEPAL
+# define SUBLANG_NEPALI_NEPAL 0x01
+# endif
 # ifndef SUBLANG_NEPALI_INDIA
 # define SUBLANG_NEPALI_INDIA 0x02
+# endif
+# ifndef SUBLANG_OCCITAN_FRANCE
+# define SUBLANG_OCCITAN_FRANCE 0x01
+# endif
+# ifndef SUBLANG_ORIYA_INDIA
+# define SUBLANG_ORIYA_INDIA 0x01
+# endif
+# ifndef SUBLANG_PASHTO_AFGHANISTAN
+# define SUBLANG_PASHTO_AFGHANISTAN 0x01
+# endif
+# ifndef SUBLANG_POLISH_POLAND
+# define SUBLANG_POLISH_POLAND 0x01
 # endif
 # ifndef SUBLANG_PUNJABI_INDIA
 # define SUBLANG_PUNJABI_INDIA 0x01
@@ -645,11 +891,42 @@
 # ifndef SUBLANG_ROMANIAN_MOLDOVA
 # define SUBLANG_ROMANIAN_MOLDOVA 0x02
 # endif
+# ifndef SUBLANG_ROMANSH_SWITZERLAND
+# define SUBLANG_ROMANSH_SWITZERLAND 0x01
+# endif
 # ifndef SUBLANG_RUSSIAN_RUSSIA
 # define SUBLANG_RUSSIAN_RUSSIA 0x01
 # endif
 # ifndef SUBLANG_RUSSIAN_MOLDAVIA
 # define SUBLANG_RUSSIAN_MOLDAVIA 0x02
+# endif
+# ifndef SUBLANG_SAMI_NORTHERN_NORWAY
+# define SUBLANG_SAMI_NORTHERN_NORWAY 0x01
+# endif
+# ifndef SUBLANG_SAMI_NORTHERN_SWEDEN
+# define SUBLANG_SAMI_NORTHERN_SWEDEN 0x02
+# endif
+# ifndef SUBLANG_SAMI_NORTHERN_FINLAND
+# define SUBLANG_SAMI_NORTHERN_FINLAND 0x03
+# endif
+# ifndef SUBLANG_SAMI_LULE_NORWAY
+# define SUBLANG_SAMI_LULE_NORWAY 0x04
+# endif
+# ifndef SUBLANG_SAMI_LULE_SWEDEN
+# define SUBLANG_SAMI_LULE_SWEDEN 0x05
+# endif
+# ifndef SUBLANG_SAMI_SOUTHERN_NORWAY
+# define SUBLANG_SAMI_SOUTHERN_NORWAY 0x06
+# endif
+# ifndef SUBLANG_SAMI_SOUTHERN_SWEDEN
+# define SUBLANG_SAMI_SOUTHERN_SWEDEN 0x07
+# endif
+# undef SUBLANG_SAMI_SKOLT_FINLAND
+# define SUBLANG_SAMI_SKOLT_FINLAND 0x08
+# undef SUBLANG_SAMI_INARI_FINLAND
+# define SUBLANG_SAMI_INARI_FINLAND 0x09
+# ifndef SUBLANG_SANSKRIT_INDIA
+# define SUBLANG_SANSKRIT_INDIA 0x01
 # endif
 # ifndef SUBLANG_SERBIAN_LATIN
 # define SUBLANG_SERBIAN_LATIN 0x02
@@ -664,6 +941,18 @@
 # define SUBLANG_SINDHI_PAKISTAN 0x02
 # ifndef SUBLANG_SINDHI_AFGHANISTAN
 # define SUBLANG_SINDHI_AFGHANISTAN 0x02
+# endif
+# ifndef SUBLANG_SINHALESE_SRI_LANKA
+# define SUBLANG_SINHALESE_SRI_LANKA 0x01
+# endif
+# ifndef SUBLANG_SLOVAK_SLOVAKIA
+# define SUBLANG_SLOVAK_SLOVAKIA 0x01
+# endif
+# ifndef SUBLANG_SLOVENIAN_SLOVENIA
+# define SUBLANG_SLOVENIAN_SLOVENIA 0x01
+# endif
+# ifndef SUBLANG_SOTHO_SOUTH_AFRICA
+# define SUBLANG_SOTHO_SOUTH_AFRICA 0x01
 # endif
 # ifndef SUBLANG_SPANISH_GUATEMALA
 # define SUBLANG_SPANISH_GUATEMALA 0x04
@@ -719,14 +1008,41 @@
 # ifndef SUBLANG_SPANISH_US
 # define SUBLANG_SPANISH_US 0x15
 # endif
+# ifndef SUBLANG_SWAHILI_KENYA
+# define SUBLANG_SWAHILI_KENYA 0x01
+# endif
+# ifndef SUBLANG_SWEDISH_SWEDEN
+# define SUBLANG_SWEDISH_SWEDEN 0x01
+# endif
 # ifndef SUBLANG_SWEDISH_FINLAND
 # define SUBLANG_SWEDISH_FINLAND 0x02
+# endif
+# ifndef SUBLANG_SYRIAC_SYRIA
+# define SUBLANG_SYRIAC_SYRIA 0x01
+# endif
+# ifndef SUBLANG_TAGALOG_PHILIPPINES
+# define SUBLANG_TAGALOG_PHILIPPINES 0x01
+# endif
+# ifndef SUBLANG_TAJIK_TAJIKISTAN
+# define SUBLANG_TAJIK_TAJIKISTAN 0x01
 # endif
 # ifndef SUBLANG_TAMAZIGHT_ARABIC
 # define SUBLANG_TAMAZIGHT_ARABIC 0x01
 # endif
 # ifndef SUBLANG_TAMAZIGHT_ALGERIA_LATIN
 # define SUBLANG_TAMAZIGHT_ALGERIA_LATIN 0x02
+# endif
+# ifndef SUBLANG_TAMIL_INDIA
+# define SUBLANG_TAMIL_INDIA 0x01
+# endif
+# ifndef SUBLANG_TATAR_RUSSIA
+# define SUBLANG_TATAR_RUSSIA 0x01
+# endif
+# ifndef SUBLANG_TELUGU_INDIA
+# define SUBLANG_TELUGU_INDIA 0x01
+# endif
+# ifndef SUBLANG_THAI_THAILAND
+# define SUBLANG_THAI_THAILAND 0x01
 # endif
 # ifndef SUBLANG_TIBETAN_PRC
 # define SUBLANG_TIBETAN_PRC 0x01
@@ -739,8 +1055,23 @@
 # ifndef SUBLANG_TIGRINYA_ERITREA
 # define SUBLANG_TIGRINYA_ERITREA 0x02
 # endif
+# ifndef SUBLANG_TSWANA_SOUTH_AFRICA
+# define SUBLANG_TSWANA_SOUTH_AFRICA 0x01
+# endif
+# ifndef SUBLANG_TURKISH_TURKEY
+# define SUBLANG_TURKISH_TURKEY 0x01
+# endif
+# ifndef SUBLANG_TURKMEN_TURKMENISTAN
+# define SUBLANG_TURKMEN_TURKMENISTAN 0x01
+# endif
 # ifndef SUBLANG_UIGHUR_PRC
 # define SUBLANG_UIGHUR_PRC 0x01
+# endif
+# ifndef SUBLANG_UKRAINIAN_UKRAINE
+# define SUBLANG_UKRAINIAN_UKRAINE 0x01
+# endif
+# ifndef SUBLANG_UPPER_SORBIAN_GERMANY
+# define SUBLANG_UPPER_SORBIAN_GERMANY 0x01
 # endif
 # ifndef SUBLANG_URDU_PAKISTAN
 # define SUBLANG_URDU_PAKISTAN 0x01
@@ -753,6 +1084,30 @@
 # endif
 # ifndef SUBLANG_UZBEK_CYRILLIC
 # define SUBLANG_UZBEK_CYRILLIC 0x02
+# endif
+# ifndef SUBLANG_VIETNAMESE_VIETNAM
+# define SUBLANG_VIETNAMESE_VIETNAM 0x01
+# endif
+# ifndef SUBLANG_WELSH_UNITED_KINGDOM
+# define SUBLANG_WELSH_UNITED_KINGDOM 0x01
+# endif
+# ifndef SUBLANG_WOLOF_SENEGAL
+# define SUBLANG_WOLOF_SENEGAL 0x01
+# endif
+# ifndef SUBLANG_XHOSA_SOUTH_AFRICA
+# define SUBLANG_XHOSA_SOUTH_AFRICA 0x01
+# endif
+# ifndef SUBLANG_YAKUT_RUSSIA
+# define SUBLANG_YAKUT_RUSSIA 0x01
+# endif
+# ifndef SUBLANG_YI_PRC
+# define SUBLANG_YI_PRC 0x01
+# endif
+# ifndef SUBLANG_YORUBA_NIGERIA
+# define SUBLANG_YORUBA_NIGERIA 0x01
+# endif
+# ifndef SUBLANG_ZULU_SOUTH_AFRICA
+# define SUBLANG_ZULU_SOUTH_AFRICA 0x01
 # endif
 /* GetLocaleInfoA operations.  */
 # ifndef LOCALE_SNAME
@@ -1115,9 +1470,30 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
        For details about languages, see http://www.ethnologue.com/ .  */
     switch (primary)
       {
-      case LANG_AFRIKAANS: return "af_ZA";
-      case LANG_ALBANIAN: return "sq_AL";
-      case LANG_AMHARIC: return "am_ET";
+      case LANG_AFRIKAANS:
+        switch (sub)
+          {
+          case SUBLANG_AFRIKAANS_SOUTH_AFRICA: return "af_ZA";
+          }
+        return "af";
+      case LANG_ALBANIAN:
+        switch (sub)
+          {
+          case SUBLANG_ALBANIAN_ALBANIA: return "sq_AL";
+          }
+        return "sq";
+      case LANG_ALSATIAN:
+        switch (sub)
+          {
+          case SUBLANG_ALSATIAN_FRANCE: return "gsw_FR";
+          }
+        return "gsw";
+      case LANG_AMHARIC:
+        switch (sub)
+          {
+          case SUBLANG_AMHARIC_ETHIOPIA: return "am_ET";
+          }
+        return "am";
       case LANG_ARABIC:
         switch (sub)
           {
@@ -1139,23 +1515,46 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
           case SUBLANG_ARABIC_QATAR: return "ar_QA";
           }
         return "ar";
-      case LANG_ARMENIAN: return "hy_AM";
-      case LANG_ASSAMESE: return "as_IN";
+      case LANG_ARMENIAN:
+        switch (sub)
+          {
+          case SUBLANG_ARMENIAN_ARMENIA: return "hy_AM";
+          }
+        return "hy";
+      case LANG_ASSAMESE:
+        switch (sub)
+          {
+          case SUBLANG_ASSAMESE_INDIA: return "as_IN";
+          }
+        return "as";
       case LANG_AZERI:
         switch (sub)
           {
           /* FIXME: Adjust this when Azerbaijani locales appear on Unix.  */
+          case 0x1e: return "az@latin";
           case SUBLANG_AZERI_LATIN: return "az_AZ@latin";
+          case 0x1d: return "az@cyrillic";
           case SUBLANG_AZERI_CYRILLIC: return "az_AZ@cyrillic";
           }
         return "az";
+      case LANG_BASHKIR:
+        switch (sub)
+          {
+          case SUBLANG_BASHKIR_RUSSIA: return "ba_RU";
+          }
+        return "ba";
       case LANG_BASQUE:
         switch (sub)
           {
-          case SUBLANG_DEFAULT: return "eu_ES";
+          case SUBLANG_BASQUE_BASQUE: return "eu_ES";
           }
         return "eu"; /* Ambiguous: could be "eu_ES" or "eu_FR".  */
-      case LANG_BELARUSIAN: return "be_BY";
+      case LANG_BELARUSIAN:
+        switch (sub)
+          {
+          case SUBLANG_BELARUSIAN_BELARUS: return "be_BY";
+          }
+        return "be";
       case LANG_BENGALI:
         switch (sub)
           {
@@ -1163,50 +1562,131 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
           case SUBLANG_BENGALI_BANGLADESH: return "bn_BD";
           }
         return "bn";
-      case LANG_BULGARIAN: return "bg_BG";
-      case LANG_BURMESE: return "my_MM";
-      case LANG_CAMBODIAN: return "km_KH";
-      case LANG_CATALAN: return "ca_ES";
-      case LANG_CHEROKEE: return "chr_US";
+      case LANG_BRETON:
+        switch (sub)
+          {
+          case SUBLANG_BRETON_FRANCE: return "br_FR";
+          }
+        return "br";
+      case LANG_BULGARIAN:
+        switch (sub)
+          {
+          case SUBLANG_BULGARIAN_BULGARIA: return "bg_BG";
+          }
+        return "bg";
+      case LANG_BURMESE:
+        switch (sub)
+          {
+          case SUBLANG_DEFAULT: return "my_MM";
+          }
+        return "my";
+      case LANG_CAMBODIAN:
+        switch (sub)
+          {
+          case SUBLANG_CAMBODIAN_CAMBODIA: return "km_KH";
+          }
+        return "km";
+      case LANG_CATALAN:
+        switch (sub)
+          {
+          case SUBLANG_CATALAN_SPAIN: return "ca_ES";
+          }
+        return "ca";
+      case LANG_CHEROKEE:
+        switch (sub)
+          {
+          case SUBLANG_DEFAULT: return "chr_US";
+          }
+        return "chr";
       case LANG_CHINESE:
         switch (sub)
           {
-          case SUBLANG_CHINESE_TRADITIONAL: return "zh_TW";
-          case SUBLANG_CHINESE_SIMPLIFIED: return "zh_CN";
-          case SUBLANG_CHINESE_HONGKONG: return "zh_HK";
-          case SUBLANG_CHINESE_SINGAPORE: return "zh_SG";
-          case SUBLANG_CHINESE_MACAU: return "zh_MO";
+          case SUBLANG_CHINESE_TRADITIONAL: case 0x1f: return "zh_TW";
+          case SUBLANG_CHINESE_SIMPLIFIED: case 0x00: return "zh_CN";
+          case SUBLANG_CHINESE_HONGKONG: return "zh_HK"; /* traditional */
+          case SUBLANG_CHINESE_SINGAPORE: return "zh_SG"; /* simplified */
+          case SUBLANG_CHINESE_MACAU: return "zh_MO"; /* traditional */
           }
         return "zh";
-      case LANG_CROATIAN:       /* LANG_CROATIAN == LANG_SERBIAN
-                                 * What used to be called Serbo-Croatian
-                                 * should really now be two separate
-                                 * languages because of political reasons.
-                                 * (Says tml, who knows nothing about Serbian
-                                 * or Croatian.)
-                                 * (I can feel those flames coming already.)
-                                 */
+      case LANG_CORSICAN:
         switch (sub)
           {
+          case SUBLANG_CORSICAN_FRANCE: return "co_FR";
+          }
+        return "co";
+      case LANG_CROATIAN:      /* LANG_CROATIAN == LANG_SERBIAN == LANG_BOSNIAN
+                                * What used to be called Serbo-Croatian
+                                * should really now be two separate
+                                * languages because of political reasons.
+                                * (Says tml, who knows nothing about Serbian
+                                * or Croatian.)
+                                * (I can feel those flames coming already.)
+                                */
+        switch (sub)
+          {
+          /* Croatian */
+          case 0x00: return "hr";
           case SUBLANG_CROATIAN_CROATIA: return "hr_HR";
-          case SUBLANG_SERBIAN_LATIN: return "sr_CS";
-          case SUBLANG_SERBIAN_CYRILLIC: return "sr_CS@cyrillic";
           case SUBLANG_CROATIAN_BOSNIA_HERZEGOVINA_LATIN: return "hr_BA";
-          case SUBLANG_BOSNIAN_BOSNIA_HERZEGOVINA_LATIN: return "bs_BA";
+          /* Serbian */
+          case 0x1f: return "sr";
+          case 0x1c: return "sr"; /* latin */
+          case SUBLANG_SERBIAN_LATIN: return "sr_CS"; /* latin */
+          case 0x09: return "sr_RS"; /* latin */
+          case 0x0b: return "sr_ME"; /* latin */
+          case 0x06: return "sr_BA"; /* latin */
+          case 0x1b: return "sr@cyrillic";
+          case SUBLANG_SERBIAN_CYRILLIC: return "sr_CS@cyrillic";
+          case 0x0a: return "sr_RS@cyrillic";
+          case 0x0c: return "sr_ME@cyrillic";
+          case 0x07: return "sr_BA@cyrillic";
+          /* Bosnian */
+          case 0x1e: return "bs";
+          case 0x1a: return "bs"; /* latin */
+          case SUBLANG_BOSNIAN_BOSNIA_HERZEGOVINA_LATIN: return "bs_BA"; /* latin */
+          case 0x19: return "bs@cyrillic";
           case SUBLANG_BOSNIAN_BOSNIA_HERZEGOVINA_CYRILLIC: return "bs_BA@cyrillic";
           }
         return "hr";
-      case LANG_CZECH: return "cs_CZ";
-      case LANG_DANISH: return "da_DK";
-      case LANG_DIVEHI: return "dv_MV";
+      case LANG_CZECH:
+        switch (sub)
+          {
+          case SUBLANG_CZECH_CZECH_REPUBLIC: return "cs_CZ";
+          }
+        return "cs";
+      case LANG_DANISH:
+        switch (sub)
+          {
+          case SUBLANG_DANISH_DENMARK: return "da_DK";
+          }
+        return "da";
+      case LANG_DARI:
+        /* FIXME: Adjust this when such locales appear on Unix.  */
+        switch (sub)
+          {
+          case SUBLANG_DARI_AFGHANISTAN: return "prs_AF";
+          }
+        return "prs";
+      case LANG_DIVEHI:
+        switch (sub)
+          {
+          case SUBLANG_DIVEHI_MALDIVES: return "dv_MV";
+          }
+        return "dv";
       case LANG_DUTCH:
         switch (sub)
           {
           case SUBLANG_DUTCH: return "nl_NL";
           case SUBLANG_DUTCH_BELGIAN: /* FLEMISH, VLAAMS */ return "nl_BE";
+          case SUBLANG_DUTCH_SURINAM: return "nl_SR";
           }
         return "nl";
-      case LANG_EDO: return "bin_NG";
+      case LANG_EDO:
+        switch (sub)
+          {
+          case SUBLANG_DEFAULT: return "bin_NG";
+          }
+        return "bin";
       case LANG_ENGLISH:
         switch (sub)
           {
@@ -1234,10 +1714,30 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
           case SUBLANG_ENGLISH_SINGAPORE: return "en_SG";
           }
         return "en";
-      case LANG_ESTONIAN: return "et_EE";
-      case LANG_FAEROESE: return "fo_FO";
-      case LANG_FARSI: return "fa_IR";
-      case LANG_FINNISH: return "fi_FI";
+      case LANG_ESTONIAN:
+        switch (sub)
+          {
+          case SUBLANG_ESTONIAN_ESTONIA: return "et_EE";
+          }
+        return "et";
+      case LANG_FAEROESE:
+        switch (sub)
+          {
+          case SUBLANG_FAEROESE_FAROE_ISLANDS: return "fo_FO";
+          }
+        return "fo";
+      case LANG_FARSI:
+        switch (sub)
+          {
+          case SUBLANG_FARSI_IRAN: return "fa_IR";
+          }
+        return "fa";
+      case LANG_FINNISH:
+        switch (sub)
+          {
+          case SUBLANG_FINNISH_FINLAND: return "fi_FI";
+          }
+        return "fi";
       case LANG_FRENCH:
         switch (sub)
           {
@@ -1258,19 +1758,40 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
           case SUBLANG_FRENCH_HAITI: return "fr_HT";
           }
         return "fr";
-      case LANG_FRISIAN: return "fy_NL";
+      case LANG_FRISIAN:
+        switch (sub)
+          {
+          case SUBLANG_FRISIAN_NETHERLANDS: return "fy_NL";
+          }
+        return "fy";
       case LANG_FULFULDE:
         /* Spoken in Nigeria, Guinea, Senegal, Mali, Niger, Cameroon, Benin.  */
-        return "ff_NG";
+        switch (sub)
+          {
+          case SUBLANG_DEFAULT: return "ff_NG";
+          }
+        return "ff";
       case LANG_GAELIC:
         switch (sub)
           {
-          case 0x01: /* SCOTTISH */ return "gd_GB";
-          case 0x02: /* IRISH */ return "ga_IE";
+          case 0x01: /* SCOTTISH */
+            /* old, superseded by LANG_SCOTTISH_GAELIC */
+            return "gd_GB";
+          case SUBLANG_IRISH_IRELAND: return "ga_IE";
           }
-        return "C";
-      case LANG_GALICIAN: return "gl_ES";
-      case LANG_GEORGIAN: return "ka_GE";
+        return "ga";
+      case LANG_GALICIAN:
+        switch (sub)
+          {
+          case SUBLANG_GALICIAN_SPAIN: return "gl_ES";
+          }
+        return "gl";
+      case LANG_GEORGIAN:
+        switch (sub)
+          {
+          case SUBLANG_GEORGIAN_GEORGIA: return "ka_GE";
+          }
+        return "ka";
       case LANG_GERMAN:
         switch (sub)
           {
@@ -1281,22 +1802,96 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
           case SUBLANG_GERMAN_LIECHTENSTEIN: return "de_LI";
           }
         return "de";
-      case LANG_GREEK: return "el_GR";
-      case LANG_GUARANI: return "gn_PY";
-      case LANG_GUJARATI: return "gu_IN";
-      case LANG_HAUSA: return "ha_NG";
+      case LANG_GREEK:
+        switch (sub)
+          {
+          case SUBLANG_GREEK_GREECE: return "el_GR";
+          }
+        return "el";
+      case LANG_GREENLANDIC:
+        switch (sub)
+          {
+          case SUBLANG_GREENLANDIC_GREENLAND: return "kl_GL";
+          }
+        return "kl";
+      case LANG_GUARANI:
+        switch (sub)
+          {
+          case SUBLANG_DEFAULT: return "gn_PY";
+          }
+        return "gn";
+      case LANG_GUJARATI:
+        switch (sub)
+          {
+          case SUBLANG_GUJARATI_INDIA: return "gu_IN";
+          }
+        return "gu";
+      case LANG_HAUSA:
+        switch (sub)
+          {
+          case 0x1f: return "ha";
+          case SUBLANG_HAUSA_NIGERIA_LATIN: return "ha_NG";
+          }
+        return "ha";
       case LANG_HAWAIIAN:
         /* FIXME: Do they mean Hawaiian ("haw_US", 1000 speakers)
            or Hawaii Creole English ("cpe_US", 600000 speakers)?  */
-        return "cpe_US";
-      case LANG_HEBREW: return "he_IL";
-      case LANG_HINDI: return "hi_IN";
-      case LANG_HUNGARIAN: return "hu_HU";
-      case LANG_IBIBIO: return "nic_NG";
-      case LANG_ICELANDIC: return "is_IS";
-      case LANG_IGBO: return "ig_NG";
-      case LANG_INDONESIAN: return "id_ID";
-      case LANG_INUKTITUT: return "iu_CA";
+        switch (sub)
+          {
+          case SUBLANG_DEFAULT: return "cpe_US";
+          }
+        return "cpe";
+      case LANG_HEBREW:
+        switch (sub)
+          {
+          case SUBLANG_HEBREW_ISRAEL: return "he_IL";
+          }
+        return "he";
+      case LANG_HINDI:
+        switch (sub)
+          {
+          case SUBLANG_HINDI_INDIA: return "hi_IN";
+          }
+        return "hi";
+      case LANG_HUNGARIAN:
+        switch (sub)
+          {
+          case SUBLANG_HUNGARIAN_HUNGARY: return "hu_HU";
+          }
+        return "hu";
+      case LANG_IBIBIO:
+        switch (sub)
+          {
+          case SUBLANG_DEFAULT: return "nic_NG";
+          }
+        return "nic";
+      case LANG_ICELANDIC:
+        switch (sub)
+          {
+          case SUBLANG_ICELANDIC_ICELAND: return "is_IS";
+          }
+        return "is";
+      case LANG_IGBO:
+        switch (sub)
+          {
+          case SUBLANG_IGBO_NIGERIA: return "ig_NG";
+          }
+        return "ig";
+      case LANG_INDONESIAN:
+        switch (sub)
+          {
+          case SUBLANG_INDONESIAN_INDONESIA: return "id_ID";
+          }
+        return "id";
+      case LANG_INUKTITUT:
+        switch (sub)
+          {
+          case 0x1e: return "iu"; /* syllabic */
+          case SUBLANG_INUKTITUT_CANADA: return "iu_CA"; /* syllabic */
+          case 0x1f: return "iu@latin";
+          case SUBLANG_INUKTITUT_CANADA_LATIN: return "iu_CA@latin";
+          }
+        return "iu";
       case LANG_ITALIAN:
         switch (sub)
           {
@@ -1304,9 +1899,24 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
           case SUBLANG_ITALIAN_SWISS: return "it_CH";
           }
         return "it";
-      case LANG_JAPANESE: return "ja_JP";
-      case LANG_KANNADA: return "kn_IN";
-      case LANG_KANURI: return "kr_NG";
+      case LANG_JAPANESE:
+        switch (sub)
+          {
+          case SUBLANG_JAPANESE_JAPAN: return "ja_JP";
+          }
+        return "ja";
+      case LANG_KANNADA:
+        switch (sub)
+          {
+          case SUBLANG_KANNADA_INDIA: return "kn_IN";
+          }
+        return "kn";
+      case LANG_KANURI:
+        switch (sub)
+          {
+          case SUBLANG_DEFAULT: return "kr_NG";
+          }
+        return "kr";
       case LANG_KASHMIRI:
         switch (sub)
           {
@@ -1314,17 +1924,80 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
           case SUBLANG_KASHMIRI_INDIA: return "ks_IN";
           }
         return "ks";
-      case LANG_KAZAK: return "kk_KZ";
+      case LANG_KAZAK:
+        switch (sub)
+          {
+          case SUBLANG_KAZAK_KAZAKHSTAN: return "kk_KZ";
+          }
+        return "kk";
+      case LANG_KICHE:
+        /* FIXME: Adjust this when such locales appear on Unix.  */
+        switch (sub)
+          {
+          case SUBLANG_KICHE_GUATEMALA: return "qut_GT";
+          }
+        return "qut";
+      case LANG_KINYARWANDA:
+        switch (sub)
+          {
+          case SUBLANG_KINYARWANDA_RWANDA: return "rw_RW";
+          }
+        return "rw";
       case LANG_KONKANI:
         /* FIXME: Adjust this when such locales appear on Unix.  */
-        return "kok_IN";
-      case LANG_KOREAN: return "ko_KR";
-      case LANG_KYRGYZ: return "ky_KG";
-      case LANG_LAO: return "lo_LA";
-      case LANG_LATIN: return "la_VA";
-      case LANG_LATVIAN: return "lv_LV";
-      case LANG_LITHUANIAN: return "lt_LT";
-      case LANG_MACEDONIAN: return "mk_MK";
+        switch (sub)
+          {
+          case SUBLANG_KONKANI_INDIA: return "kok_IN";
+          }
+        return "kok";
+      case LANG_KOREAN:
+        switch (sub)
+          {
+          case SUBLANG_DEFAULT: return "ko_KR";
+          }
+        return "ko";
+      case LANG_KYRGYZ:
+        switch (sub)
+          {
+          case SUBLANG_KYRGYZ_KYRGYZSTAN: return "ky_KG";
+          }
+        return "ky";
+      case LANG_LAO:
+        switch (sub)
+          {
+          case SUBLANG_LAO_LAOS: return "lo_LA";
+          }
+        return "lo";
+      case LANG_LATIN:
+        switch (sub)
+          {
+          case SUBLANG_DEFAULT: return "la_VA";
+          }
+        return "la";
+      case LANG_LATVIAN:
+        switch (sub)
+          {
+          case SUBLANG_LATVIAN_LATVIA: return "lv_LV";
+          }
+        return "lv";
+      case LANG_LITHUANIAN:
+        switch (sub)
+          {
+          case SUBLANG_LITHUANIAN_LITHUANIA: return "lt_LT";
+          }
+        return "lt";
+      case LANG_LUXEMBOURGISH:
+        switch (sub)
+          {
+          case SUBLANG_LUXEMBOURGISH_LUXEMBOURG: return "lb_LU";
+          }
+        return "lb";
+      case LANG_MACEDONIAN:
+        switch (sub)
+          {
+          case SUBLANG_MACEDONIAN_MACEDONIA: return "mk_MK";
+          }
+        return "mk";
       case LANG_MALAY:
         switch (sub)
           {
@@ -1332,47 +2005,115 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
           case SUBLANG_MALAY_BRUNEI_DARUSSALAM: return "ms_BN";
           }
         return "ms";
-      case LANG_MALAYALAM: return "ml_IN";
-      case LANG_MALTESE: return "mt_MT";
+      case LANG_MALAYALAM:
+        switch (sub)
+          {
+          case SUBLANG_MALAYALAM_INDIA: return "ml_IN";
+          }
+        return "ml";
+      case LANG_MALTESE:
+        switch (sub)
+          {
+          case SUBLANG_MALTESE_MALTA: return "mt_MT";
+          }
+        return "mt";
       case LANG_MANIPURI:
         /* FIXME: Adjust this when such locales appear on Unix.  */
-        return "mni_IN";
-      case LANG_MAORI: return "mi_NZ";
-      case LANG_MARATHI: return "mr_IN";
+        switch (sub)
+          {
+          case SUBLANG_DEFAULT: return "mni_IN";
+          }
+        return "mni";
+      case LANG_MAORI:
+        switch (sub)
+          {
+          case SUBLANG_MAORI_NEW_ZEALAND: return "mi_NZ";
+          }
+        return "mi";
+      case LANG_MAPUDUNGUN:
+        switch (sub)
+          {
+          case SUBLANG_MAPUDUNGUN_CHILE: return "arn_CL";
+          }
+        return "arn";
+      case LANG_MARATHI:
+        switch (sub)
+          {
+          case SUBLANG_MARATHI_INDIA: return "mr_IN";
+          }
+        return "mr";
+      case LANG_MOHAWK:
+        switch (sub)
+          {
+          case SUBLANG_MOHAWK_CANADA: return "moh_CA";
+          }
+        return "moh";
       case LANG_MONGOLIAN:
         switch (sub)
           {
-          case SUBLANG_MONGOLIAN_CYRILLIC_MONGOLIA: return "mn_MN";
-          case SUBLANG_MONGOLIAN_PRC: return "mn_CN";
+          case SUBLANG_MONGOLIAN_CYRILLIC_MONGOLIA: case 0x1e: return "mn_MN";
+          case SUBLANG_MONGOLIAN_PRC: case 0x1f: return "mn_CN";
           }
         return "mn"; /* Ambiguous: could be "mn_CN" or "mn_MN".  */
       case LANG_NEPALI:
         switch (sub)
           {
-          case SUBLANG_DEFAULT: return "ne_NP";
+          case SUBLANG_NEPALI_NEPAL: return "ne_NP";
           case SUBLANG_NEPALI_INDIA: return "ne_IN";
           }
         return "ne";
       case LANG_NORWEGIAN:
         switch (sub)
           {
+          case 0x1f: return "nb";
           case SUBLANG_NORWEGIAN_BOKMAL: return "nb_NO";
+          case 0x1e: return "nn";
           case SUBLANG_NORWEGIAN_NYNORSK: return "nn_NO";
           }
         return "no";
-      case LANG_ORIYA: return "or_IN";
-      case LANG_OROMO: return "om_ET";
-      case LANG_PAPIAMENTU: return "pap_AN";
+      case LANG_OCCITAN:
+        switch (sub)
+          {
+          case SUBLANG_OCCITAN_FRANCE: return "oc_FR";
+          }
+        return "oc";
+      case LANG_ORIYA:
+        switch (sub)
+          {
+          case SUBLANG_ORIYA_INDIA: return "or_IN";
+          }
+        return "or";
+      case LANG_OROMO:
+        switch (sub)
+          {
+          case SUBLANG_DEFAULT: return "om_ET";
+          }
+        return "om";
+      case LANG_PAPIAMENTU:
+        switch (sub)
+          {
+          case SUBLANG_DEFAULT: return "pap_AN";
+          }
+        return "pap";
       case LANG_PASHTO:
+        switch (sub)
+          {
+          case SUBLANG_PASHTO_AFGHANISTAN: return "ps_AF";
+          }
         return "ps"; /* Ambiguous: could be "ps_PK" or "ps_AF".  */
-      case LANG_POLISH: return "pl_PL";
+      case LANG_POLISH:
+        switch (sub)
+          {
+          case SUBLANG_POLISH_POLAND: return "pl_PL";
+          }
+        return "pl";
       case LANG_PORTUGUESE:
         switch (sub)
           {
-          case SUBLANG_PORTUGUESE: return "pt_PT";
           /* Hmm. SUBLANG_PORTUGUESE_BRAZILIAN == SUBLANG_DEFAULT.
              Same phenomenon as SUBLANG_ENGLISH_US == SUBLANG_DEFAULT. */
           case SUBLANG_PORTUGUESE_BRAZILIAN: return "pt_BR";
+          case SUBLANG_PORTUGUESE: return "pt_PT";
           }
         return "pt";
       case LANG_PUNJABI:
@@ -1383,6 +2124,7 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
           }
         return "pa";
       case LANG_QUECHUA:
+        /* Note: Microsoft uses the non-ISO language code "quz".  */
         switch (sub)
           {
           case SUBLANG_QUECHUA_BOLIVIA: return "qu_BO";
@@ -1390,7 +2132,6 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
           case SUBLANG_QUECHUA_PERU: return "qu_PE";
           }
         return "qu";
-      case LANG_RHAETO_ROMANCE: return "rm_CH";
       case LANG_ROMANIAN:
         switch (sub)
           {
@@ -1398,6 +2139,12 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
           case SUBLANG_ROMANIAN_MOLDOVA: return "ro_MD";
           }
         return "ro";
+      case LANG_ROMANSH:
+        switch (sub)
+          {
+          case SUBLANG_ROMANSH_SWITZERLAND: return "rm_CH";
+          }
+        return "rm";
       case LANG_RUSSIAN:
         switch (sub)
           {
@@ -1405,8 +2152,42 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
           case SUBLANG_RUSSIAN_MOLDAVIA: return "ru_MD";
           }
         return "ru"; /* Ambiguous: could be "ru_RU" or "ru_UA" or "ru_MD".  */
-      case LANG_SAAMI: /* actually Northern Sami */ return "se_NO";
-      case LANG_SANSKRIT: return "sa_IN";
+      case LANG_SAMI:
+        switch (sub)
+          {
+          /* Northern Sami */
+          case 0x00: return "se";
+          case SUBLANG_SAMI_NORTHERN_NORWAY: return "se_NO";
+          case SUBLANG_SAMI_NORTHERN_SWEDEN: return "se_SE";
+          case SUBLANG_SAMI_NORTHERN_FINLAND: return "se_FI";
+          /* Lule Sami */
+          case 0x1f: return "smj";
+          case SUBLANG_SAMI_LULE_NORWAY: return "smj_NO";
+          case SUBLANG_SAMI_LULE_SWEDEN: return "smj_SE";
+          /* Southern Sami */
+          case 0x1e: return "sma";
+          case SUBLANG_SAMI_SOUTHERN_NORWAY: return "sma_NO";
+          case SUBLANG_SAMI_SOUTHERN_SWEDEN: return "sma_SE";
+          /* Skolt Sami */
+          case 0x1d: return "sms";
+          case SUBLANG_SAMI_SKOLT_FINLAND: return "sms_FI";
+          /* Inari Sami */
+          case 0x1c: return "smn";
+          case SUBLANG_SAMI_INARI_FINLAND: return "smn_FI";
+          }
+        return "se"; /* or "smi"? */
+      case LANG_SANSKRIT:
+        switch (sub)
+          {
+          case SUBLANG_SANSKRIT_INDIA: return "sa_IN";
+          }
+        return "sa";
+      case LANG_SCOTTISH_GAELIC:
+        switch (sub)
+          {
+          case SUBLANG_DEFAULT: return "gd_GB";
+          }
+        return "gd";
       case LANG_SINDHI:
         switch (sub)
           {
@@ -1415,20 +2196,53 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
           /*case SUBLANG_SINDHI_AFGHANISTAN: return "sd_AF";*/
           }
         return "sd";
-      case LANG_SINHALESE: return "si_LK";
-      case LANG_SLOVAK: return "sk_SK";
-      case LANG_SLOVENIAN: return "sl_SI";
-      case LANG_SOMALI: return "so_SO";
+      case LANG_SINHALESE:
+        switch (sub)
+          {
+          case SUBLANG_SINHALESE_SRI_LANKA: return "si_LK";
+          }
+        return "si";
+      case LANG_SLOVAK:
+        switch (sub)
+          {
+          case SUBLANG_SLOVAK_SLOVAKIA: return "sk_SK";
+          }
+        return "sk";
+      case LANG_SLOVENIAN:
+        switch (sub)
+          {
+          case SUBLANG_SLOVENIAN_SLOVENIA: return "sl_SI";
+          }
+        return "sl";
+      case LANG_SOMALI:
+        switch (sub)
+          {
+          case SUBLANG_DEFAULT: return "so_SO";
+          }
+        return "so";
       case LANG_SORBIAN:
         /* FIXME: Adjust this when such locales appear on Unix.  */
-        return "wen_DE";
+        switch (sub)
+          {
+          /* Upper Sorbian */
+          case 0x00: return "hsb";
+          case SUBLANG_UPPER_SORBIAN_GERMANY: return "hsb_DE";
+          /* Lower Sorbian */
+          case 0x1f: return "dsb";
+          case SUBLANG_LOWER_SORBIAN_GERMANY: return "dsb_DE";
+          }
+        return "wen";
       case LANG_SOTHO:
         /* <http://www.microsoft.com/globaldev/reference/lcid-all.mspx> calls
            it "Sepedi"; according to
            <http://www.ethnologue.com/show_language.asp?code=nso>
            <http://www.ethnologue.com/show_language.asp?code=sot>
            it's the same as Northern Sotho.  */
-        return "nso_ZA";
+        switch (sub)
+          {
+          case SUBLANG_SOTHO_SOUTH_AFRICA: return "nso_ZA";
+          }
+        return "nso";
       case LANG_SPANISH:
         switch (sub)
           {
@@ -1456,35 +2270,78 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
           case SUBLANG_SPANISH_US: return "es_US";
           }
         return "es";
-      case LANG_SUTU: return "bnt_TZ"; /* or "st_LS" or "nso_ZA"? */
-      case LANG_SWAHILI: return "sw_KE";
+      case LANG_SUTU:
+        switch (sub)
+          {
+          case SUBLANG_DEFAULT: return "bnt_TZ"; /* or "st_LS" or "nso_ZA"? */
+          }
+        return "bnt";
+      case LANG_SWAHILI:
+        switch (sub)
+          {
+          case SUBLANG_SWAHILI_KENYA: return "sw_KE";
+          }
+        return "sw";
       case LANG_SWEDISH:
         switch (sub)
           {
-          case SUBLANG_DEFAULT: return "sv_SE";
+          case SUBLANG_SWEDISH_SWEDEN: return "sv_SE";
           case SUBLANG_SWEDISH_FINLAND: return "sv_FI";
           }
         return "sv";
-      case LANG_SYRIAC: return "syr_TR"; /* An extinct language.  */
-      case LANG_TAGALOG: return "tl_PH";
-      case LANG_TAJIK: return "tg_TJ";
+      case LANG_SYRIAC:
+        switch (sub)
+          {
+          case SUBLANG_SYRIAC_SYRIA: return "syr_SY"; /* An extinct language.  */
+          }
+        return "syr";
+      case LANG_TAGALOG:
+        switch (sub)
+          {
+          case SUBLANG_TAGALOG_PHILIPPINES: return "tl_PH"; /* or "fil_PH"? */
+          }
+        return "tl"; /* or "fil"? */
+      case LANG_TAJIK:
+        switch (sub)
+          {
+          case 0x1f: return "tg";
+          case SUBLANG_TAJIK_TAJIKISTAN: return "tg_TJ";
+          }
+        return "tg";
       case LANG_TAMAZIGHT:
+        /* Note: Microsoft uses the non-ISO language code "tmz".  */
         switch (sub)
           {
           /* FIXME: Adjust this when Tamazight locales appear on Unix.  */
           case SUBLANG_TAMAZIGHT_ARABIC: return "ber_MA@arabic";
+          case 0x1f: return "ber@latin";
           case SUBLANG_TAMAZIGHT_ALGERIA_LATIN: return "ber_DZ@latin";
           }
-        return "ber_MA";
+        return "ber";
       case LANG_TAMIL:
         switch (sub)
           {
-          case SUBLANG_DEFAULT: return "ta_IN";
+          case SUBLANG_TAMIL_INDIA: return "ta_IN";
           }
         return "ta"; /* Ambiguous: could be "ta_IN" or "ta_LK" or "ta_SG".  */
-      case LANG_TATAR: return "tt_RU";
-      case LANG_TELUGU: return "te_IN";
-      case LANG_THAI: return "th_TH";
+      case LANG_TATAR:
+        switch (sub)
+          {
+          case SUBLANG_TATAR_RUSSIA: return "tt_RU";
+          }
+        return "tt";
+      case LANG_TELUGU:
+        switch (sub)
+          {
+          case SUBLANG_TELUGU_INDIA: return "te_IN";
+          }
+        return "te";
+      case LANG_THAI:
+        switch (sub)
+          {
+          case SUBLANG_THAI_THAILAND: return "th_TH";
+          }
+        return "th";
       case LANG_TIBETAN:
         switch (sub)
           {
@@ -1502,17 +2359,43 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
           case SUBLANG_TIGRINYA_ERITREA: return "ti_ER";
           }
         return "ti";
-      case LANG_TSONGA: return "ts_ZA";
-      case LANG_TSWANA: return "tn_BW";
-      case LANG_TURKISH: return "tr_TR";
-      case LANG_TURKMEN: return "tk_TM";
+      case LANG_TSONGA:
+        switch (sub)
+          {
+          case SUBLANG_DEFAULT: return "ts_ZA";
+          }
+        return "ts";
+      case LANG_TSWANA:
+        /* Spoken in South Africa, Botswana.  */
+        switch (sub)
+          {
+          case SUBLANG_TSWANA_SOUTH_AFRICA: return "tn_ZA";
+          }
+        return "tn";
+      case LANG_TURKISH:
+        switch (sub)
+          {
+          case SUBLANG_TURKISH_TURKEY: return "tr_TR";
+          }
+        return "tr";
+      case LANG_TURKMEN:
+        switch (sub)
+          {
+          case SUBLANG_TURKMEN_TURKMENISTAN: return "tk_TM";
+          }
+        return "tk";
       case LANG_UIGHUR:
         switch (sub)
           {
           case SUBLANG_UIGHUR_PRC: return "ug_CN";
           }
         return "ug";
-      case LANG_UKRAINIAN: return "uk_UA";
+      case LANG_UKRAINIAN:
+        switch (sub)
+          {
+          case SUBLANG_UKRAINIAN_UKRAINE: return "uk_UA";
+          }
+        return "uk";
       case LANG_URDU:
         switch (sub)
           {
@@ -1523,18 +2406,72 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
       case LANG_UZBEK:
         switch (sub)
           {
+          case 0x1f: return "uz";
           case SUBLANG_UZBEK_LATIN: return "uz_UZ";
+          case 0x1e: return "uz@cyrillic";
           case SUBLANG_UZBEK_CYRILLIC: return "uz_UZ@cyrillic";
           }
         return "uz";
-      case LANG_VENDA: return "ve_ZA";
-      case LANG_VIETNAMESE: return "vi_VN";
-      case LANG_WELSH: return "cy_GB";
-      case LANG_XHOSA: return "xh_ZA";
-      case LANG_YI: return "sit_CN";
-      case LANG_YIDDISH: return "yi_IL";
-      case LANG_YORUBA: return "yo_NG";
-      case LANG_ZULU: return "zu_ZA";
+      case LANG_VENDA:
+        switch (sub)
+          {
+          case SUBLANG_DEFAULT: return "ve_ZA";
+          }
+        return "ve";
+      case LANG_VIETNAMESE:
+        switch (sub)
+          {
+          case SUBLANG_VIETNAMESE_VIETNAM: return "vi_VN";
+          }
+        return "vi";
+      case LANG_WELSH:
+        switch (sub)
+          {
+          case SUBLANG_WELSH_UNITED_KINGDOM: return "cy_GB";
+          }
+        return "cy";
+      case LANG_WOLOF:
+        switch (sub)
+          {
+          case SUBLANG_WOLOF_SENEGAL: return "wo_SN";
+          }
+        return "wo";
+      case LANG_XHOSA:
+        switch (sub)
+          {
+          case SUBLANG_XHOSA_SOUTH_AFRICA: return "xh_ZA";
+          }
+        return "xh";
+      case LANG_YAKUT:
+        switch (sub)
+          {
+          case SUBLANG_YAKUT_RUSSIA: return "sah_RU";
+          }
+        return "sah";
+      case LANG_YI:
+        switch (sub)
+          {
+          case SUBLANG_YI_PRC: return "ii_CN";
+          }
+        return "ii";
+      case LANG_YIDDISH:
+        switch (sub)
+          {
+          case SUBLANG_DEFAULT: return "yi_IL";
+          }
+        return "yi";
+      case LANG_YORUBA:
+        switch (sub)
+          {
+          case SUBLANG_YORUBA_NIGERIA: return "yo_NG";
+          }
+        return "yo";
+      case LANG_ZULU:
+        switch (sub)
+          {
+          case SUBLANG_ZULU_SOUTH_AFRICA: return "zu_ZA";
+          }
+        return "zu";
       default: return "C";
       }
   }
