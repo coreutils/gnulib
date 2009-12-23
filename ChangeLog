@@ -1,3 +1,8 @@
+2009-12-23  Bruno Haible  <bruno@clisp.org>
+
+	unistd: Ensure getcwd gets declared before being overridden.
+	* lib/unistd.in.h: Conditionally include <io.h>.
+
 2009-12-22  Bruno Haible  <bruno@clisp.org>
 
 	wchar: Diagnose broken combination of glibc and gcc versions and flags.

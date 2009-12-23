@@ -39,7 +39,13 @@
 
 /* mingw fails to declare _exit in <unistd.h>.  */
 /* mingw, BeOS, Haiku declare environ in <stdlib.h>, not in <unistd.h>.  */
+/* Solaris declares getcwd not only in <unistd.h> but also in <stdlib.h>.  */
 #include <stdlib.h>
+
+/* mingw declares getcwd in <io.h>, not in <unistd.h>.  */
+#if @GNULIB_GETCWD@ && ((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)
+# include <io.h>
+#endif
 
 #if ((@GNULIB_WRITE@ && @REPLACE_WRITE@ && @GNULIB_UNISTD_H_SIGPIPE@)   \
      || (@GNULIB_READLINK@ && (!@HAVE_READLINK@ || @REPLACE_READLINK@)) \
