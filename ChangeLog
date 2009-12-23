@@ -1,5 +1,14 @@
 2009-12-23  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-localename.c (test_locale_name): New function, extracted
+	from main. Also test mixed situations.
+	(test_locale_name_posix, test_locale_name_environ,
+	test_locale_name_default): New functions.
+	(main): Invoke them all.
+	* modules/localename-tests (configure.ac): Test for newlocale.
+
+2009-12-23  Bruno Haible  <bruno@clisp.org>
+
 	unistd: Ensure getcwd gets declared before being overridden.
 	* lib/unistd.in.h: Conditionally include <io.h>.
 
