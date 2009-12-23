@@ -25,9 +25,9 @@ extern "C" {
 
 
 /* Determine the current locale's name.
-   It considers both the POSIX notion of locale name (see function
-   gl_locale_name_posix) and the system notion of locale name (see function
-   gl_locale_name_default).
+   It considers both the POSIX notion of locale name (see functions
+   gl_locale_name_thread and gl_locale_name_posix) and the system notion
+   of locale name (see function gl_locale_name_default).
    CATEGORY is a locale category abbreviation, as defined in <locale.h>,
    but not LC_ALL. E.g. LC_MESSAGES.
    CATEGORYNAME is the name of CATEGORY as a string, e.g. "LC_MESSAGES".
@@ -38,8 +38,21 @@ extern "C" {
    The result must not be freed; it is statically allocated.  */
 extern const char * gl_locale_name (int category, const char *categoryname);
 
-/* Determine the current locale's name, as specified by setlocale() calls
-   or by environment variables.
+/* Determine the current per-thread locale's name, as specified by uselocale()
+   calls.
+   CATEGORY is a locale category abbreviation, as defined in <locale.h>,
+   but not LC_ALL. E.g. LC_MESSAGES.
+   CATEGORYNAME is the name of CATEGORY as a string, e.g. "LC_MESSAGES".
+   Return the locale category's name, canonicalized into XPG syntax
+     language[_territory][.codeset][@modifier]
+   or NULL if no locale has been specified for the current thread.
+   The codeset part in the result is not reliable; the locale_charset()
+   should be used for codeset information instead.
+   The result must not be freed; it is statically allocated.  */
+extern const char * gl_locale_name_thread (int category, const char *categoryname);
+
+/* Determine the thread-independent current locale's name, as specified by
+   setlocale() calls or by environment variables.
    CATEGORY is a locale category abbreviation, as defined in <locale.h>,
    but not LC_ALL. E.g. LC_MESSAGES.
    CATEGORYNAME is the name of CATEGORY as a string, e.g. "LC_MESSAGES".
@@ -60,9 +73,9 @@ extern const char * gl_locale_name_posix (int category, const char *categoryname
 extern const char * gl_locale_name_environ (int category, const char *categoryname);
 
 /* Determine the default locale's name.  This is the current locale's name,
-   if not specified by setlocale() calls or by environment variables.  This
-   locale name is usually determined by systems settings that the user can
-   manipulate through a GUI.
+   if not specified by uselocale() calls, by setlocale() calls, or by
+   environment variables.  This locale name is usually determined by systems
+   settings that the user can manipulate through a GUI.
 
    Quoting POSIX:2001:
      "All implementations shall define a locale as the default locale,

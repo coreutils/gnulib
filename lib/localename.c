@@ -29,9 +29,22 @@
 # include "localename.h"
 #endif
 
+#include <limits.h>
+#include <stddef.h>
 #include <stdlib.h>
 #include <locale.h>
 #include <string.h>
+
+#if HAVE_USELOCALE
+/* MacOS X 10.5 defines the locale_t type in <xlocale.h>.  */
+# if defined __APPLE__ && defined __MACH__
+#  include <xlocale.h>
+# endif
+# include <langinfo.h>
+# if !defined IN_LIBINTL
+#  include "glthread/lock.h"
+# endif
+#endif
 
 #if HAVE_CFLOCALECOPYCURRENT || HAVE_CFPREFERENCESCOPYAPPVALUE
 # include <CoreFoundation/CFString.h>
@@ -2494,6 +2507,216 @@ gl_locale_name_from_win32_LCID (LCID lcid)
 #endif
 
 
+#if defined __APPLE__ && defined __MACH__ && HAVE_USELOCALE /* MacOS X */
+
+/* Simple hash set of strings.  We don't want to drag in lots of hash table
+   code here.  */
+
+# define SIZE_BITS (sizeof (size_t) * CHAR_BIT)
+
+/* A hash function for NUL-terminated char* strings using
+   the method described by Bruno Haible.
+   See http://www.haible.de/bruno/hashfunc.html.  */
+static size_t
+string_hash (const void *x)
+{
+  const char *s = (const char *) x;
+  size_t h = 0;
+
+  for (; *s; s++)
+    h = *s + ((h << 9) | (h >> (SIZE_BITS - 9)));
+
+  return h;
+}
+
+/* A hash table of fixed size.  Multiple threads can access it read-only
+   simultaneously, but only one thread can insert into it at the same time.  */
+
+/* A node in a hash bucket collision list.  */
+struct hash_node
+  {
+    struct hash_node * volatile next;
+    char contents[100]; /* has variable size */
+  };
+
+# define HASH_TABLE_SIZE 257
+static struct hash_node * volatile struniq_hash_table[HASH_TABLE_SIZE]
+  /* = { NULL, ..., NULL } */;
+
+/* This lock protects the struniq_hash_table against multiple simultaneous
+   insertions.  */
+gl_lock_define_initialized(static, struniq_lock)
+
+/* Store a copy of the given string in a string pool with indefinite extent.
+   Return a pointer to this copy.  */
+static const char *
+struniq (const char *string)
+{
+  size_t hashcode = string_hash (string);
+  size_t slot = hashcode % HASH_TABLE_SIZE;
+  size_t size;
+  struct hash_node *new_node;
+  struct hash_node *p;
+  for (p = struniq_hash_table[slot]; p != NULL; p = p->next)
+    if (strcmp (p->contents, string) == 0)
+      return p->contents;
+  size = strlen (string) + 1;
+  new_node =
+    (struct hash_node *)
+    malloc (offsetof (struct hash_node, contents[0]) + size);
+  if (new_node == NULL)
+    /* Out of memory.  Return a statically allocated string.  */
+    return "C";
+  memcpy (new_node->contents, string, size);
+  /* Lock while inserting new_node.  */
+  gl_lock_lock (struniq_lock);
+  /* Check whether another thread already added the string while we were
+     waiting on the lock.  */
+  for (p = struniq_hash_table[slot]; p != NULL; p = p->next)
+    if (strcmp (p->contents, string) == 0)
+      {
+        free (new_node);
+        new_node = p;
+        goto done;
+      }
+  /* Really insert new_node into the hash table.  Fill new_node entirely first,
+     because other threads may be iterating over the linked list.  */
+  new_node->next = struniq_hash_table[slot];
+  struniq_hash_table[slot] = new_node;
+ done:
+  /* Unlock after new_node is inserted.  */
+  gl_lock_unlock (struniq_lock);
+  return new_node->contents;
+}
+
+#endif
+
+
+const char *
+gl_locale_name_thread (int category, const char *categoryname)
+{
+#if HAVE_USELOCALE
+  {
+    locale_t thread_locale = uselocale (NULL);
+    if (thread_locale != LC_GLOBAL_LOCALE)
+      {
+# if __GLIBC__ >= 2
+        /* Work around an incorrect definition of the _NL_LOCALE_NAME macro in
+           glibc < 2.12.
+           See <http://sourceware.org/bugzilla/show_bug.cgi?id=10968>.  */
+        const char *name =
+          nl_langinfo (_NL_ITEM ((category), _NL_ITEM_INDEX (-1)));
+        if (name[0] == '\0')
+          /* Fallback code for glibc < 2.4, which did not implement
+             nl_langinfo (_NL_LOCALE_NAME (category)).  */
+          name = thread_locale->__names[category];
+        return name;
+# endif
+# if defined __APPLE__ && defined __MACH__ /* MacOS X */
+        /* The locale name is found deep in an undocumented data structure.
+           Since it's stored in a buffer of size 32 and newlocale() rejects
+           locale names of length > 31, we can assume that it is NUL terminated
+           in this buffer. But we need to make a copy of the locale name, of
+           indefinite extent.  */
+        struct _xlocale
+          {
+            int32_t __refcount;
+            void (*__free_extra)(void *);
+            __darwin_mbstate_t __mbs[10];
+            int64_t __magic;
+            unsigned char __collate_load_error;
+            unsigned char __collate_substitute_nontrivial;
+            unsigned char _messages_using_locale;
+            unsigned char _monetary_using_locale;
+            unsigned char _numeric_using_locale;
+            unsigned char _time_using_locale;
+            unsigned char __mlocale_changed;
+            unsigned char __nlocale_changed;
+            unsigned char __numeric_fp_cvt;
+            struct __xlocale_st_collate *__lc_collate;
+            struct __xlocale_st_runelocale *__lc_ctype;
+            struct __xlocale_st_messages *__lc_messages;
+            struct __xlocale_st_monetary *__lc_monetary;
+            struct __xlocale_st_numeric *__lc_numeric;
+            struct _xlocale *__lc_numeric_loc;
+            struct __xlocale_st_time *__lc_time;
+            /* more */
+          };
+        struct __xlocale_st_collate
+          {
+            int32_t __refcount;
+            void (*__free_extra)(void *);
+            char __encoding[32];
+            /* more */
+          };
+        struct __xlocale_st_runelocale
+          {
+            int32_t __refcount;
+            void (*__free_extra)(void *);
+            char __ctype_encoding[32];
+            /* more */
+          };
+        struct __xlocale_st_messages
+          {
+            int32_t __refcount;
+            void (*__free_extra)(void *);
+            char *_messages_locale_buf;
+            /* more */
+          };
+        struct __xlocale_st_monetary
+          {
+            int32_t __refcount;
+            void (*__free_extra)(void *);
+            char *_monetary_locale_buf;
+            /* more */
+          };
+        struct __xlocale_st_numeric {
+            int32_t __refcount;
+            void (*__free_extra)(void *);
+            char *_numeric_locale_buf;
+            /* more */
+          };
+        struct __xlocale_st_time {
+            int32_t __refcount;
+            void (*__free_extra)(void *);
+            char *_time_locale_buf;
+            /* more */
+          };
+        struct _xlocale *tlp = (struct _xlocale *) thread_locale;
+        switch (category)
+          {
+          case LC_CTYPE:
+            return struniq (tlp->__lc_ctype->__ctype_encoding);
+          case LC_NUMERIC:
+            return tlp->_numeric_using_locale
+                   ? struniq (tlp->__lc_numeric->_numeric_locale_buf)
+                   : "C";
+          case LC_TIME:
+            return tlp->_time_using_locale
+                   ? struniq (tlp->__lc_time->_time_locale_buf)
+                   : "C";
+          case LC_COLLATE:
+            return !tlp->__collate_load_error
+                   ? struniq (tlp->__lc_collate->__encoding)
+                   : "C";
+          case LC_MONETARY:
+            return tlp->_monetary_using_locale
+                   ? struniq (tlp->__lc_monetary->_monetary_locale_buf)
+                   : "C";
+          case LC_MESSAGES:
+            return tlp->_messages_using_locale
+                   ? struniq (tlp->__lc_messages->_messages_locale_buf)
+                   : "C";
+          default: /* We shouldn't get here.  */
+            return "";
+          }
+# endif
+      }
+  }
+#endif
+  return NULL;
+}
+
 /* XPG3 defines the result of 'setlocale (category, NULL)' as:
    "Directs 'setlocale()' to query 'category' and return the current
     setting of 'local'."
@@ -2503,12 +2726,6 @@ gl_locale_name_from_win32_LCID (LCID lcid)
 #if defined _LIBC || (defined __GLIBC__ && __GLIBC__ >= 2)
 # define HAVE_LOCALE_NULL
 #endif
-
-/* Determine the current locale's name, and canonicalize it into XPG syntax
-     language[_territory][.codeset][@modifier]
-   The codeset part in the result is not reliable; the locale_charset()
-   should be used for codeset information instead.
-   The result must not be freed; it is statically allocated.  */
 
 const char *
 gl_locale_name_posix (int category, const char *categoryname)
@@ -2670,10 +2887,20 @@ gl_locale_name_default (void)
 #endif
 }
 
+/* Determine the current locale's name, and canonicalize it into XPG syntax
+     language[_territory][.codeset][@modifier]
+   The codeset part in the result is not reliable; the locale_charset()
+   should be used for codeset information instead.
+   The result must not be freed; it is statically allocated.  */
+
 const char *
 gl_locale_name (int category, const char *categoryname)
 {
   const char *retval;
+
+  retval = gl_locale_name_thread (category, categoryname);
+  if (retval != NULL)
+    return retval;
 
   retval = gl_locale_name_posix (category, categoryname);
   if (retval != NULL)

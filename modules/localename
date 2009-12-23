@@ -10,6 +10,7 @@ m4/lcmessage.m4
 
 Depends-on:
 strdup
+lock
 
 configure.ac:
 gl_LOCALENAME

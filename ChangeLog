@@ -1,3 +1,23 @@
+2009-12-23  Bruno Haible  <bruno@clisp.org>
+
+	localename: Make aware of thread locale.
+	* lib/localename.h (gl_locale_name_thread): New declaration.
+	(gl_locale_name, gl_locale_name_posix, gl_locale_name_default): Clarify
+	behaviour with respect to thread locale.
+	* lib/localename.c: Include <limits.h>, <stddef.h>, <xlocale.h>,
+	<langinfo.h>, glthread/lock.h.
+	(SIZE_BITS): New macro.
+	(string_hash): New function.
+	(struct hash_node): New type.
+	(HASH_TABLE_SIZE): New macro.
+	(struniq_hash_table, struniq_lock): New variables.
+	(struniq): New function.
+	(gl_locale_name_thread): New function.
+	(gl_locale_name): Invoke it.
+	* m4/localename.m4 (gl_LOCALENAME): Test for uselocale function.
+	* modules/localename (Depends-on): Add lock.
+	Reported by Mike Gran <spk121@yahoo.com>.
+
 2009-12-23  Eric Blake  <ebb9@byu.net>
 
 	va-args: new module
