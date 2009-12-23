@@ -25,6 +25,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define SIZEOF(array) (sizeof (array) / sizeof (array[0]))
 #define ASSERT(expr) \
   do                                                                         \
     {                                                                        \
@@ -36,6 +37,34 @@
         }                                                                    \
     }                                                                        \
   while (0)
+
+static struct { int cat; int mask; const char *string; } const categories[] =
+  {
+      { LC_CTYPE,          LC_CTYPE_MASK },
+      { LC_NUMERIC,        LC_NUMERIC_MASK },
+      { LC_TIME,           LC_TIME_MASK },
+      { LC_COLLATE,        LC_COLLATE_MASK },
+      { LC_MONETARY,       LC_MONETARY_MASK },
+      { LC_MESSAGES,       LC_MESSAGES_MASK }
+# ifdef LC_PAPER
+    , { LC_PAPER,          LC_PAPER_MASK }
+# endif
+# ifdef LC_NAME
+    , { LC_NAME,           LC_NAME_MASK }
+# endif
+# ifdef LC_ADDRESS
+    , { LC_ADDRESS,        LC_ADDRESS_MASK }
+# endif
+# ifdef LC_TELEPHONE
+    , { LC_TELEPHONE,      LC_TELEPHONE_MASK }
+# endif
+# ifdef LC_MEASUREMENT
+    , { LC_MEASUREMENT,    LC_MEASUREMENT_MASK }
+# endif
+# ifdef LC_IDENTIFICATION
+    , { LC_IDENTIFICATION, LC_IDENTIFICATION_MASK }
+# endif
+  };
 
 /* Test the gl_locale_name() function.  */
 static void
@@ -149,6 +178,119 @@ test_locale_name (void)
       name = gl_locale_name (LC_MESSAGES, "LC_MESSAGES");
       ASSERT (strcmp (name, "fr_FR.UTF-8") == 0);
     }
+
+#if HAVE_NEWLOCALE
+  /* Check that gl_locale_name considers the thread locale.  */
+  {
+    locale_t locale = newlocale (LC_ALL_MASK, "fr_FR.UTF-8", NULL);
+    if (locale != NULL)
+      {
+        uselocale (locale);
+        name = gl_locale_name (LC_CTYPE, "LC_CTYPE");
+        ASSERT (strcmp (name, "fr_FR.UTF-8") == 0);
+        name = gl_locale_name (LC_MESSAGES, "LC_MESSAGES");
+        ASSERT (strcmp (name, "fr_FR.UTF-8") == 0);
+      }
+  }
+
+  /* Check that gl_locale_name distinguishes different categories of the
+     thread locale, and that the name is the right one for each.  */
+  {
+    unsigned int i;
+
+    for (i = 0; i < SIZEOF (categories); i++)
+      {
+        int category_mask = categories[i].mask;
+        locale_t locale = newlocale (LC_ALL_MASK, "fr_FR.UTF-8", NULL);
+        if (locale != NULL)
+          {
+            locale = newlocale (category_mask, "de_DE.UTF-8", locale);
+            if (locale != NULL)
+              {
+                unsigned int j;
+
+                uselocale (locale);
+                for (j = 0; j < SIZEOF (categories); j++)
+                  {
+                    const char *name_j =
+                      gl_locale_name (categories[j].cat, categories[j].string);
+                    if (j == i)
+                      ASSERT (strcmp (name_j, "de_DE.UTF-8") == 0);
+                    else
+                      ASSERT (strcmp (name_j, "fr_FR.UTF-8") == 0);
+                  }
+              }
+          }
+      }
+  }
+#endif
+}
+
+/* Test the gl_locale_name_thread() function.  */
+static void
+test_locale_name_thread (void)
+{
+  /* Get into a defined state,  */
+  setlocale (LC_ALL, "en_US.UTF-8");
+
+#if HAVE_NEWLOCALE
+  /* Check that gl_locale_name_thread returns NULL when no thread locale is
+     set.  */
+  uselocale (LC_GLOBAL_LOCALE);
+  ASSERT (gl_locale_name_thread (LC_CTYPE, "LC_CTYPE") == NULL);
+  ASSERT (gl_locale_name_thread (LC_MESSAGES, "LC_MESSAGES") == NULL);
+
+  /* Check that gl_locale_name_thread considers the thread locale.  */
+  {
+    locale_t locale = newlocale (LC_ALL_MASK, "fr_FR.UTF-8", NULL);
+    if (locale != NULL)
+      {
+        const char *name;
+
+        uselocale (locale);
+        name = gl_locale_name_thread (LC_CTYPE, "LC_CTYPE");
+        ASSERT (strcmp (name, "fr_FR.UTF-8") == 0);
+        name = gl_locale_name_thread (LC_MESSAGES, "LC_MESSAGES");
+        ASSERT (strcmp (name, "fr_FR.UTF-8") == 0);
+      }
+  }
+
+  /* Check that gl_locale_name_thread distinguishes different categories of the
+     thread locale, and that the name is the right one for each.  */
+  {
+    unsigned int i;
+
+    for (i = 0; i < SIZEOF (categories); i++)
+      {
+        int category_mask = categories[i].mask;
+        locale_t locale = newlocale (LC_ALL_MASK, "fr_FR.UTF-8", NULL);
+        if (locale != NULL)
+          {
+            locale = newlocale (category_mask, "de_DE.UTF-8", locale);
+            if (locale != NULL)
+              {
+                unsigned int j;
+
+                uselocale (locale);
+                for (j = 0; j < SIZEOF (categories); j++)
+                  {
+                    const char *name_j =
+                      gl_locale_name_thread (categories[j].cat,
+                                             categories[j].string);
+                    if (j == i)
+                      ASSERT (strcmp (name_j, "de_DE.UTF-8") == 0);
+                    else
+                      ASSERT (strcmp (name_j, "fr_FR.UTF-8") == 0);
+                  }
+              }
+          }
+      }
+  }
+#else
+  /* Check that gl_locale_name_thread always returns NULL.  */
+  ASSERT (gl_locale_name_thread (LC_CTYPE, "LC_CTYPE") == NULL);
+  ASSERT (gl_locale_name_thread (LC_MESSAGES, "LC_MESSAGES") == NULL);
+#endif
 }
 
 /* Test the gl_locale_name_posix() function.  */
@@ -263,6 +405,24 @@ test_locale_name_posix (void)
       name = gl_locale_name_posix (LC_MESSAGES, "LC_MESSAGES");
       ASSERT (strcmp (name, "fr_FR.UTF-8") == 0);
     }
+
+#if HAVE_NEWLOCALE
+  /* Check that gl_locale_name_posix ignores the thread locale.  */
+  {
+    locale_t locale = newlocale (LC_ALL_MASK, "fr_FR.UTF-8", NULL);
+    if (locale != NULL)
+      {
+        unsetenv ("LC_ALL");
+        unsetenv ("LC_CTYPE");
+        unsetenv ("LC_MESSAGES");
+        setenv ("LANG", "C", 1);
+        setlocale (LC_ALL, "");
+        uselocale (locale);
+        name = gl_locale_name_posix (LC_MESSAGES, "LC_MESSAGES");
+        ASSERT (strcmp (name, "C") == 0);
+      }
+  }
+#endif
 }
 
 /* Test the gl_locale_name_environ() function.  */
@@ -357,6 +517,24 @@ test_locale_name_environ (void)
   ASSERT (name == NULL);
   name = gl_locale_name_environ (LC_MESSAGES, "LC_MESSAGES");
   ASSERT (strcmp (name, "fr_FR.UTF-8") == 0);
+
+#if HAVE_NEWLOCALE
+  /* Check that gl_locale_name_environ ignores the thread locale.  */
+  {
+    locale_t locale = newlocale (LC_ALL_MASK, "fr_FR.UTF-8", NULL);
+    if (locale != NULL)
+      {
+        unsetenv ("LC_ALL");
+        unsetenv ("LC_CTYPE");
+        unsetenv ("LC_MESSAGES");
+        setenv ("LANG", "C", 1);
+        setlocale (LC_ALL, "");
+        uselocale (locale);
+        name = gl_locale_name_environ (LC_MESSAGES, "LC_MESSAGES");
+        ASSERT (strcmp (name, "C") == 0);
+      }
+  }
+#endif
 }
 
 /* Test the gl_locale_name_default() function.  */
@@ -372,12 +550,25 @@ test_locale_name_default (void)
 #if !((defined __APPLE__ && defined __MACH__) || (defined _WIN32 || defined __WIN32__ || defined __CYGWIN__))
   ASSERT (strcmp (name, "C") == 0);
 #endif
+
+#if HAVE_NEWLOCALE
+  /* Check that gl_locale_name_default ignores the thread locale.  */
+  {
+    locale_t locale = newlocale (LC_ALL_MASK, "fr_FR.UTF-8", NULL);
+    if (locale != NULL)
+      {
+        uselocale (locale);
+        ASSERT (strcmp (gl_locale_name_default (), name) == 0);
+      }
+  }
+#endif
 }
 
 int
 main ()
 {
   test_locale_name ();
+  test_locale_name_thread ();
   test_locale_name_posix ();
   test_locale_name_environ ();
   test_locale_name_default ();

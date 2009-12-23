@@ -1,5 +1,13 @@
 2009-12-23  Bruno Haible  <bruno@clisp.org>
 
+	localename: More tests.
+	* tests/test-localename.c (SIZEOF): New macro.
+	(categories): New variable.
+	(test_locale_name, test_locale_name_posix, test_locale_name_environ,
+	test_locale_name_default): Add test w.r.t. thread locale.
+	(test_locale_name_thread): New function.
+	(main): Invoke it.
+
 	localename: Make aware of thread locale.
 	* lib/localename.h (gl_locale_name_thread): New declaration.
 	(gl_locale_name, gl_locale_name_posix, gl_locale_name_default): Clarify
