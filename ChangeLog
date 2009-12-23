@@ -1,3 +1,12 @@
+2009-12-22  Bruno Haible  <bruno@clisp.org>
+
+	wchar: Diagnose broken combination of glibc and gcc versions and flags.
+	* m4/wchar.m4 (gl_WCHAR_H_INLINE_OK): New macro.
+	(gl_WCHAR_H): Invoke it.
+	* m4/btowc.m4 (gl_FUNC_BTOWC): Require it.
+	* doc/posix-headers/wchar.texi: Mention the interoperability problem.
+	Reported by Karl Berry <karl@freefriends.org>.
+
 2009-12-22  Eric Blake  <ebb9@byu.net>
 
 	math, unistd: avoid redundant includes

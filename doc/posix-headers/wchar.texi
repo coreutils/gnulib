@@ -25,4 +25,9 @@ NetBSD 5.0
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This header file leads to link errors and endless recursions or endless loops
+on some platforms:
+glibc version 2.5 or older, together with gcc version 4.3 or newer and the
+option @samp{-std=c99} or @samp{-std=gnu99}.
 @end itemize

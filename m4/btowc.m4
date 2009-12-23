@@ -1,4 +1,4 @@
-# btowc.m4 serial 4
+# btowc.m4 serial 5
 dnl Copyright (C) 2008-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,6 +7,11 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_BTOWC],
 [
   AC_REQUIRE([gl_WCHAR_H_DEFAULTS])
+
+  dnl Check whether <wchar.h> is usable at all, first. Otherwise the test
+  dnl program below may lead to an endless loop. See
+  dnl <http://gcc.gnu.org/bugzilla/show_bug.cgi?id=42440>.
+  AC_REQUIRE([gl_WCHAR_H_INLINE_OK])
 
   AC_CHECK_FUNCS_ONCE([btowc])
   if test $ac_cv_func_btowc = no; then
