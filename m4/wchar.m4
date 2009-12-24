@@ -7,7 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 dnl Written by Eric Blake.
 
-# wchar.m4 serial 27
+# wchar.m4 serial 28
 
 AC_DEFUN([gl_WCHAR_H],
 [
@@ -30,10 +30,6 @@ wchar_t w;]],
 
   dnl If <stddef.h> is replaced, then <wchar.h> must also be replaced.
   AC_REQUIRE([gl_STDDEF_H])
-
-  if test $gl_cv_header_wchar_h_standalone != yes || test $gt_cv_c_wint_t != yes || test -n "$STDDEF_H"; then
-    WCHAR_H=wchar.h
-  fi
 
   dnl Prepare for creating substitute <wchar.h>.
   dnl Do it always: WCHAR_H may be empty here but can be set later.
@@ -103,7 +99,7 @@ dnl Unconditionally enables the replacement of <wchar.h>.
 AC_DEFUN([gl_REPLACE_WCHAR_H],
 [
   AC_REQUIRE([gl_WCHAR_H_DEFAULTS])
-  WCHAR_H=wchar.h
+  :
 ])
 
 AC_DEFUN([gl_WCHAR_MODULE_INDICATOR],
@@ -150,5 +146,4 @@ AC_DEFUN([gl_WCHAR_H_DEFAULTS],
   REPLACE_WCSRTOMBS=0;  AC_SUBST([REPLACE_WCSRTOMBS])
   REPLACE_WCSNRTOMBS=0; AC_SUBST([REPLACE_WCSNRTOMBS])
   REPLACE_WCWIDTH=0;    AC_SUBST([REPLACE_WCWIDTH])
-  WCHAR_H='';           AC_SUBST([WCHAR_H])
 ])

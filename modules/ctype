@@ -13,7 +13,7 @@ configure.ac:
 gl_CTYPE_H
 
 Makefile.am:
-BUILT_SOURCES += $(CTYPE_H)
+BUILT_SOURCES += ctype.h
 
 # We need the following in order to create <ctype.h> when the system
 # doesn't have one that works with the given compiler.

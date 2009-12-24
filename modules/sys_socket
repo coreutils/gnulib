@@ -18,7 +18,7 @@ gl_HEADER_SYS_SOCKET
 AC_PROG_MKDIR_P
 
 Makefile.am:
-BUILT_SOURCES += $(SYS_SOCKET_H)
+BUILT_SOURCES += sys/socket.h
 
 # We need the following in order to create <sys/socket.h> when the system
 # doesn't have one that works with the given compiler.

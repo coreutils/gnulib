@@ -16,7 +16,7 @@ gl_HEADER_ARPA_INET
 AC_PROG_MKDIR_P
 
 Makefile.am:
-BUILT_SOURCES += $(ARPA_INET_H)
+BUILT_SOURCES += arpa/inet.h
 
 # We need the following in order to create <arpa/inet.h> when the system
 # doesn't have one.

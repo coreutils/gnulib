@@ -16,7 +16,7 @@ configure.ac:
 gl_WCHAR_H
 
 Makefile.am:
-BUILT_SOURCES += $(WCHAR_H)
+BUILT_SOURCES += wchar.h
 
 # We need the following in order to create <wchar.h> when the system
 # version does not work standalone.

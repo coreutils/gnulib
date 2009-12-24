@@ -1,4 +1,4 @@
-# sys_select_h.m4 serial 8
+# sys_select_h.m4 serial 9
 dnl Copyright (C) 2006-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -45,20 +45,16 @@ AC_DEFUN([gl_HEADER_SYS_SELECT],
           ])
       fi
     ])
-  if test $gl_cv_header_sys_select_h_selfcontained = yes; then
-    SYS_SELECT_H=''
+  if test $ac_cv_header_sys_select_h = yes; then
+    HAVE_SYS_SELECT_H=1
   else
-    SYS_SELECT_H='sys/select.h'
-    gl_CHECK_NEXT_HEADERS([sys/select.h])
-    if test $ac_cv_header_sys_select_h = yes; then
-      HAVE_SYS_SELECT_H=1
-    else
-      HAVE_SYS_SELECT_H=0
-    fi
-    AC_SUBST([HAVE_SYS_SELECT_H])
+    HAVE_SYS_SELECT_H=0
+  fi
+  AC_SUBST([HAVE_SYS_SELECT_H])
+  gl_CHECK_NEXT_HEADERS([sys/select.h])
+  if test $gl_cv_header_sys_select_h_selfcontained != yes; then
     gl_PREREQ_SYS_H_WINSOCK2
   fi
-  AC_SUBST([SYS_SELECT_H])
 ])
 
 AC_DEFUN([gl_SYS_SELECT_MODULE_INDICATOR],

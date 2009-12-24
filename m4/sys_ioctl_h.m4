@@ -1,4 +1,4 @@
-# sys_ioctl_h.m4 serial 3
+# sys_ioctl_h.m4 serial 4
 dnl Copyright (C) 2008-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -27,12 +27,8 @@ AC_DEFUN([gl_SYS_IOCTL_H],
          [gl_cv_decl_ioctl_in_sys_ioctl_h=yes],
          [gl_cv_decl_ioctl_in_sys_ioctl_h=no])
       ])
-    if test $gl_cv_decl_ioctl_in_sys_ioctl_h != yes; then
-      SYS_IOCTL_H='sys/ioctl.h'
-    fi
   else
     HAVE_SYS_IOCTL_H=0
-    SYS_IOCTL_H='sys/ioctl.h'
   fi
   AC_SUBST([HAVE_SYS_IOCTL_H])
   dnl Execute this unconditionally, because SYS_IOCTL_H may be set by other
@@ -44,7 +40,7 @@ dnl Unconditionally enables the replacement of <sys/ioctl.h>.
 AC_DEFUN([gl_REPLACE_SYS_IOCTL_H],
 [
   AC_REQUIRE([gl_SYS_IOCTL_H_DEFAULTS])
-  SYS_IOCTL_H='sys/ioctl.h'
+  :
 ])
 
 AC_DEFUN([gl_SYS_IOCTL_MODULE_INDICATOR],
@@ -61,5 +57,4 @@ AC_DEFUN([gl_SYS_IOCTL_H_DEFAULTS],
   SYS_IOCTL_H_HAVE_WINSOCK2_H=0; AC_SUBST([SYS_IOCTL_H_HAVE_WINSOCK2_H])
   SYS_IOCTL_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS=0;
                         AC_SUBST([SYS_IOCTL_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS])
-  SYS_IOCTL_H='';                AC_SUBST([SYS_IOCTL_H])
 ])

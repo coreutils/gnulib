@@ -1,4 +1,4 @@
-# locale_h.m4 serial 5
+# locale_h.m4 serial 6
 dnl Copyright (C) 2007, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -63,7 +63,7 @@ dnl Unconditionally enables the replacement of <locale.h>.
 AC_DEFUN([gl_REPLACE_LOCALE_H],
 [
   AC_REQUIRE([gl_LOCALE_H_DEFAULTS])
-  LOCALE_H=locale.h
+  :
 ])
 
 AC_DEFUN([gl_LOCALE_MODULE_INDICATOR],
@@ -78,5 +78,4 @@ AC_DEFUN([gl_LOCALE_H_DEFAULTS],
   GNULIB_DUPLOCALE=0;  AC_SUBST([GNULIB_DUPLOCALE])
   dnl Assume proper GNU behavior unless another module says otherwise.
   REPLACE_DUPLOCALE=0; AC_SUBST([REPLACE_DUPLOCALE])
-  LOCALE_H='';         AC_SUBST([LOCALE_H])
 ])

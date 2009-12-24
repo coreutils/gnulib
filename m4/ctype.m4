@@ -1,4 +1,4 @@
-# ctype_h.m4 serial 1
+# ctype_h.m4 serial 2
 dnl Copyright (C) 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -24,5 +24,4 @@ AC_DEFUN([gl_CTYPE_H_DEFAULTS],
   GNULIB_ISBLANK=0; AC_SUBST([GNULIB_ISBLANK])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_ISBLANK=1;   AC_SUBST([HAVE_ISBLANK])
-  CTYPE_H='';       AC_SUBST([CTYPE_H])
 ])

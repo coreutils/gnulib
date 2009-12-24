@@ -1,5 +1,5 @@
 # Configure a replacement for <sys/times.h>.
-# serial 2
+# serial 3
 
 # Copyright (C) 2008, 2009 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -15,17 +15,14 @@ AC_DEFUN([gl_SYS_TIMES_H],
   gl_CHECK_NEXT_HEADERS([sys/times.h])
   AC_CHECK_HEADERS_ONCE([sys/times.h])
   if test $ac_cv_header_sys_times_h = yes; then
-    SYS_TIMES_H=
     HAVE_SYS_TIMES_H=1
     AC_CHECK_TYPES([struct tms], [], [HAVE_STRUCT_TMS=0], [[
 #include <sys/times.h>
       ]])
   else
-    SYS_TIMES_H=sys/times.h
     HAVE_SYS_TIMES_H=0
     HAVE_STRUCT_TMS=0
   fi
-  AC_SUBST([SYS_TIMES_H])
   AC_SUBST([HAVE_SYS_TIMES_H])
 ])
 

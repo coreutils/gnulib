@@ -13,7 +13,7 @@ gl_SYS_WAIT_H
 AC_PROG_MKDIR_P
 
 Makefile.am:
-BUILT_SOURCES += $(SYS_WAIT_H)
+BUILT_SOURCES += sys/wait.h
 
 # We need the following in order to create <sys/wait.h> when the system
 # has one that is incomplete.

@@ -16,7 +16,7 @@ configure.ac:
 gl_LOCALE_H
 
 Makefile.am:
-BUILT_SOURCES += $(LOCALE_H)
+BUILT_SOURCES += locale.h
 
 # We need the following in order to create <locale.h> when the system
 # doesn't have one that provides all definitions.

@@ -14,7 +14,7 @@ gl_HEADER_SYS_FILE_H
 AC_PROG_MKDIR_P
 
 Makefile.am:
-BUILT_SOURCES += $(SYS_FILE_H)
+BUILT_SOURCES += sys/file.h
 
 # We need the following in order to create <sys/file.h> when the system
 # has one that is incomplete.

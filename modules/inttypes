@@ -17,7 +17,7 @@ configure.ac:
 gl_INTTYPES_H
 
 Makefile.am:
-BUILT_SOURCES += $(INTTYPES_H)
+BUILT_SOURCES += inttypes.h
 
 # We need the following in order to create <inttypes.h> when the system
 # doesn't have one that works with the given compiler.

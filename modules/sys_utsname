@@ -15,7 +15,7 @@ gl_SYS_UTSNAME_H
 AC_PROG_MKDIR_P
 
 Makefile.am:
-BUILT_SOURCES += $(SYS_UTSNAME_H)
+BUILT_SOURCES += sys/utsname.h
 
 # We need the following in order to create <sys/utsname.h> when the system
 # does not have one.

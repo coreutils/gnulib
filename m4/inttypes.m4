@@ -1,4 +1,4 @@
-# inttypes.m4 serial 14
+# inttypes.m4 serial 15
 dnl Copyright (C) 2006-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -136,25 +136,20 @@ const char *l = /* implicit string concatenation */
      fi])
 
   dnl Override <inttypes.h> always, so that the portability warnings work.
-  if false && test $gl_cv_header_working_inttypes_h = yes; then
-    dnl Use the existing <inttypes.h>.
-    INTTYPES_H=''
-  else
+  AC_REQUIRE([gl_INTTYPES_H_DEFAULTS])
+  gl_CHECK_NEXT_HEADERS([inttypes.h])
 
-    AC_REQUIRE([gl_INTTYPES_H_DEFAULTS])
-    gl_CHECK_NEXT_HEADERS([inttypes.h])
+  AC_REQUIRE([gl_MULTIARCH])
 
-    AC_REQUIRE([gl_MULTIARCH])
-
-    dnl Ensure that <stdint.h> defines the limit macros, since gnulib's
-    dnl <inttypes.h> relies on them.  This macro is only needed when a
-    dnl C++ compiler is in use; it has no effect for a C compiler.
-    dnl Also be careful to define __STDC_LIMIT_MACROS only when gnulib's
-    dnl <inttypes.h> is going to be created, and to avoid redefinition warnings
-    dnl if the __STDC_LIMIT_MACROS is already defined through the CPPFLAGS.
-    AC_DEFINE([GL_TRIGGER_STDC_LIMIT_MACROS], [1],
-      [Define to make the limit macros in <stdint.h> visible.])
-    AH_VERBATIM([__STDC_LIMIT_MACROS_ZZZ],
+  dnl Ensure that <stdint.h> defines the limit macros, since gnulib's
+  dnl <inttypes.h> relies on them.  This macro is only needed when a
+  dnl C++ compiler is in use; it has no effect for a C compiler.
+  dnl Also be careful to define __STDC_LIMIT_MACROS only when gnulib's
+  dnl <inttypes.h> is going to be created, and to avoid redefinition warnings
+  dnl if the __STDC_LIMIT_MACROS is already defined through the CPPFLAGS.
+  AC_DEFINE([GL_TRIGGER_STDC_LIMIT_MACROS], [1],
+    [Define to make the limit macros in <stdint.h> visible.])
+  AH_VERBATIM([__STDC_LIMIT_MACROS_ZZZ],
 [/* Ensure that <stdint.h> defines the limit macros, since gnulib's
    <inttypes.h> relies on them.  */
 #if defined __cplusplus && !defined __STDC_LIMIT_MACROS && GL_TRIGGER_STDC_LIMIT_MACROS
@@ -162,85 +157,81 @@ const char *l = /* implicit string concatenation */
 #endif
 ])
 
-    PRIPTR_PREFIX=
-    if test -n "$STDINT_H"; then
-      dnl Using the gnulib <stdint.h>. It always defines intptr_t to 'long'.
-      PRIPTR_PREFIX='"l"'
-    else
-      dnl Using the system's <stdint.h>.
-      for glpfx in '' l ll I64; do
-        case $glpfx in
-          '')  gltype1='int';;
-          l)   gltype1='long int';;
-          ll)  gltype1='long long int';;
-          I64) gltype1='__int64';;
-        esac
-        AC_COMPILE_IFELSE(
-          [AC_LANG_PROGRAM([[#include <stdint.h>
-             extern intptr_t foo;
-             extern $gltype1 foo;]])],
-          [PRIPTR_PREFIX='"'$glpfx'"'])
-        test -n "$PRIPTR_PREFIX" && break
-      done
-    fi
-    AC_SUBST([PRIPTR_PREFIX])
-
-    if test "$ac_cv_have_decl_imaxabs" = yes; then
-      HAVE_DECL_IMAXABS=1
-    else
-      HAVE_DECL_IMAXABS=0
-    fi
-
-    if test "$ac_cv_have_decl_imaxdiv" = yes; then
-      HAVE_DECL_IMAXDIV=1
-    else
-      HAVE_DECL_IMAXDIV=0
-    fi
-
-    if test "$ac_cv_have_decl_strtoimax" = yes; then
-      HAVE_DECL_STRTOIMAX=1
-    else
-      HAVE_DECL_STRTOIMAX=0
-    fi
-
-    if test "$ac_cv_have_decl_strtoumax" = yes; then
-      HAVE_DECL_STRTOUMAX=1
-    else
-      HAVE_DECL_STRTOUMAX=0
-    fi
-
-    gl_INTTYPES_CHECK_LONG_LONG_INT_CONDITION(
-      [INT32_MAX_LT_INTMAX_MAX],
-      [defined INT32_MAX && defined INTMAX_MAX],
-      [INT32_MAX < INTMAX_MAX],
-      [sizeof (int) < sizeof (long long int)])
-    if test $APPLE_UNIVERSAL_BUILD = 0; then
-      gl_INTTYPES_CHECK_LONG_LONG_INT_CONDITION(
-        [INT64_MAX_EQ_LONG_MAX],
-        [defined INT64_MAX],
-        [INT64_MAX == LONG_MAX],
-        [sizeof (long long int) == sizeof (long int)])
-    else
-      INT64_MAX_EQ_LONG_MAX=-1
-    fi
-    gl_INTTYPES_CHECK_LONG_LONG_INT_CONDITION(
-      [UINT32_MAX_LT_UINTMAX_MAX],
-      [defined UINT32_MAX && defined UINTMAX_MAX],
-      [UINT32_MAX < UINTMAX_MAX],
-      [sizeof (unsigned int) < sizeof (unsigned long long int)])
-    if test $APPLE_UNIVERSAL_BUILD = 0; then
-      gl_INTTYPES_CHECK_LONG_LONG_INT_CONDITION(
-        [UINT64_MAX_EQ_ULONG_MAX],
-        [defined UINT64_MAX],
-        [UINT64_MAX == ULONG_MAX],
-        [sizeof (unsigned long long int) == sizeof (unsigned long int)])
-    else
-      UINT64_MAX_EQ_ULONG_MAX=-1
-    fi
-
-    INTTYPES_H='inttypes.h'
+  PRIPTR_PREFIX=
+  if test -n "$STDINT_H"; then
+    dnl Using the gnulib <stdint.h>. It always defines intptr_t to 'long'.
+    PRIPTR_PREFIX='"l"'
+  else
+    dnl Using the system's <stdint.h>.
+    for glpfx in '' l ll I64; do
+      case $glpfx in
+        '')  gltype1='int';;
+        l)   gltype1='long int';;
+        ll)  gltype1='long long int';;
+        I64) gltype1='__int64';;
+      esac
+      AC_COMPILE_IFELSE(
+        [AC_LANG_PROGRAM([[#include <stdint.h>
+           extern intptr_t foo;
+           extern $gltype1 foo;]])],
+        [PRIPTR_PREFIX='"'$glpfx'"'])
+      test -n "$PRIPTR_PREFIX" && break
+    done
   fi
-  AC_SUBST([INTTYPES_H])
+  AC_SUBST([PRIPTR_PREFIX])
+
+  if test "$ac_cv_have_decl_imaxabs" = yes; then
+    HAVE_DECL_IMAXABS=1
+  else
+    HAVE_DECL_IMAXABS=0
+  fi
+
+  if test "$ac_cv_have_decl_imaxdiv" = yes; then
+    HAVE_DECL_IMAXDIV=1
+  else
+    HAVE_DECL_IMAXDIV=0
+  fi
+
+  if test "$ac_cv_have_decl_strtoimax" = yes; then
+    HAVE_DECL_STRTOIMAX=1
+  else
+    HAVE_DECL_STRTOIMAX=0
+  fi
+
+  if test "$ac_cv_have_decl_strtoumax" = yes; then
+    HAVE_DECL_STRTOUMAX=1
+  else
+    HAVE_DECL_STRTOUMAX=0
+  fi
+
+  gl_INTTYPES_CHECK_LONG_LONG_INT_CONDITION(
+    [INT32_MAX_LT_INTMAX_MAX],
+    [defined INT32_MAX && defined INTMAX_MAX],
+    [INT32_MAX < INTMAX_MAX],
+    [sizeof (int) < sizeof (long long int)])
+  if test $APPLE_UNIVERSAL_BUILD = 0; then
+    gl_INTTYPES_CHECK_LONG_LONG_INT_CONDITION(
+      [INT64_MAX_EQ_LONG_MAX],
+      [defined INT64_MAX],
+      [INT64_MAX == LONG_MAX],
+      [sizeof (long long int) == sizeof (long int)])
+  else
+    INT64_MAX_EQ_LONG_MAX=-1
+  fi
+  gl_INTTYPES_CHECK_LONG_LONG_INT_CONDITION(
+    [UINT32_MAX_LT_UINTMAX_MAX],
+    [defined UINT32_MAX && defined UINTMAX_MAX],
+    [UINT32_MAX < UINTMAX_MAX],
+    [sizeof (unsigned int) < sizeof (unsigned long long int)])
+  if test $APPLE_UNIVERSAL_BUILD = 0; then
+    gl_INTTYPES_CHECK_LONG_LONG_INT_CONDITION(
+      [UINT64_MAX_EQ_ULONG_MAX],
+      [defined UINT64_MAX],
+      [UINT64_MAX == ULONG_MAX],
+      [sizeof (unsigned long long int) == sizeof (unsigned long int)])
+  else
+    UINT64_MAX_EQ_ULONG_MAX=-1
+  fi
 ])
 
 # Define the symbol $1 to be 1 if the condition is true, 0 otherwise.

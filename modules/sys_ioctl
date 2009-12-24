@@ -15,7 +15,7 @@ gl_SYS_IOCTL_H
 AC_PROG_MKDIR_P
 
 Makefile.am:
-BUILT_SOURCES += $(SYS_IOCTL_H)
+BUILT_SOURCES += sys/ioctl.h
 
 # We need the following in order to create <sys/ioctl.h> when the system
 # does not have a complete one.

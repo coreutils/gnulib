@@ -7,6 +7,8 @@
 
 # Written by Richard W.M. Jones.
 
+# serial 2
+
 AC_DEFUN([gl_HEADER_SYS_FILE_H],
 [
   AC_REQUIRE([gl_HEADER_SYS_FILE_H_DEFAULTS])
@@ -16,8 +18,6 @@ AC_DEFUN([gl_HEADER_SYS_FILE_H],
   AC_CHECK_FUNCS_ONCE([flock])
 
   gl_CHECK_NEXT_HEADERS([sys/file.h])
-  SYS_FILE_H='sys/file.h'
-  AC_SUBST([SYS_FILE_H])
 
   AC_CHECK_HEADERS_ONCE([sys/file.h])
   if test $ac_cv_header_sys_file_h = yes; then

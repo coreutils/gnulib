@@ -1,5 +1,46 @@
 2009-12-31  Eric Blake  <ebb9@byu.net>
 
+	link-warning: always build headers with link warnings
+	* modules/arpa_inet (Makefile.am): Always build replacement
+	header.
+	* modules/ctype (Makefile.am): Likewise.
+	* modules/dirent (Makefile.am): Likewise.
+	* modules/inttypes (Makefile.am): Likewise.
+	* modules/langinfo (Makefile.am): Likewise.
+	* modules/locale (Makefile.am): Likewise.
+	* modules/spawn (Makefile.am): Likewise.
+	* modules/sys_file (Makefile.am): Likewise.
+	* modules/sys_ioctl (Makefile.am): Likewise.
+	* modules/sys_select (Makefile.am): Likewise.
+	* modules/sys_socket (Makefile.am): Likewise.
+	* modules/sys_times (Makefile.am): Likewise.
+	* modules/sys_utsname (Makefile.am): Likewise.
+	* modules/sys_wait (Makefile.am): Likewise.
+	* modules/wchar (Makefile.am): Likewise.
+	* m4/arpa_inet_h.m4 (gl_HEADER_ARPA_INET)
+	(gl_ARPA_INET_H_DEFAULTS): Drop unneeded variable.
+	* m4/ctype.m4 (gl_CTYPE_H_DEFAULTS): Likewise.
+	* m4/isblank.m4 (gl_FUNC_ISBLANK): Likewise.
+	* m4/dirent_h.m4 (gl_REPLACE_DIRENT_H, gl_DIRENT_H_DEFAULTS):
+	Likewise.
+	* m4/inttypes.m4 (gl_INTTYPES_H): Likewise.
+	* m4/langinfo_h.m4 (gl_LANGINFO_H): Likewise.
+	* m4/locale_h.m4 (gl_REPLACE_LOCALE_H, gl_LOCALE_H_DEFAULTS):
+	Likewise.
+	* m4/spawn_h.m4 (gl_REPLACE_SPAWN_H, gl_SPAWN_H_DEFAULTS):
+	Likewise.
+	* m4/sys_file_h.m4 (gl_HEADER_SYS_FILE_H): Likewise.
+	* m4/sys_ioctl_h.m4 (gl_SYS_IOCTL_H, gl_REPLACE_SYS_IOCTL_H)
+	(gl_SYS_IOCTL_H_DEFAULTS): Likewise.
+	* m4/sys_select_h.m4 (gl_HEADER_SYS_SELECT): Likewise.
+	* m4/sys_times_h.m4 (gl_SYS_TIMES_H): Likewise.
+	* m4/sys_utsname_h.m4 (gl_SYS_UTSNAME_H)
+	(gl_SYS_UTSNAME_H_DEFAULTS): Likewise.
+	* m4/wchar.m4 (gl_WCHAR_H, gl_REPLACE_WCHAR_H)
+	(gl_WCHAR_H_DEFAULTS): Likewise.
+
+2009-12-31  Eric Blake  <ebb9@byu.net>
+
 	signal, spawn: use link warnings
 	* lib/signal.in.h (sigset_t): Make unconditional.
 	(sigismember, sigemptyset, sigaddset, sigdelset, sigfillset)
@@ -18,8 +59,6 @@
 	(posix_spawwn_file_actions_adddup2): Likewise.
 	* m4/signal_h.m4 (gl_SIGNAL_H): Guarantee uid_t.
 	* tests/test-signal.c (main): Enhance test.
-
-2009-12-31  Eric Blake  <ebb9@byu.net>
 
 	spawn: improve wrapper support
 	* m4/spawn_h.m4 (gl_SPAWN_H): Check for type existence.

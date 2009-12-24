@@ -15,7 +15,7 @@ configure.ac:
 gl_DIRENT_H
 
 Makefile.am:
-BUILT_SOURCES += $(DIRENT_H)
+BUILT_SOURCES += dirent.h
 
 # We need the following in order to create <dirent.h> when the system
 # doesn't have one that works with the given compiler.

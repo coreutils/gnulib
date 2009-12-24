@@ -15,7 +15,7 @@ gl_SYS_TIMES_H
 AC_PROG_MKDIR_P
 
 Makefile.am:
-BUILT_SOURCES += $(SYS_TIMES_H)
+BUILT_SOURCES += sys/times.h
 
 # We need the following in order to create <sys/times.h> when the system
 # doesn't have one that works with the given compiler.
