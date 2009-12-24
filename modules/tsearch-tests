@@ -1,7 +1,7 @@
 Files:
-tests/signature.h
 tests/test-tsearch.sh
 tests/test-tsearch.c
+tests/signature.h
 
 Depends-on:
 stdint
