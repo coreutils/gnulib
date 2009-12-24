@@ -21,7 +21,7 @@
 #include <time.h>
 
 #include "signature.h"
-SIGNATURE_CHECK (nanosleep, int, (struct timespec const *, struct timepec *));
+SIGNATURE_CHECK (nanosleep, int, (struct timespec const *, struct timespec *));
 
 #include <errno.h>
 #include <signal.h>
