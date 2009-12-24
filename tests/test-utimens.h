@@ -141,7 +141,7 @@ test_utimens (int (*func) (char const *, struct timespec const *), bool print)
   /* Make sure this dereferences symlinks.  */
   if (symlink (BASE "file", BASE "link"))
     {
-       ASSERT (unlink (BASE "file") == 0);
+      ASSERT (unlink (BASE "file") == 0);
       if (print)
         fputs ("skipping test: symlinks not supported on this file system\n",
                stderr);
