@@ -1,9 +1,9 @@
 Files:
-tests/signature.h
 tests/test-posix_spawn1.c
 tests/test-posix_spawn1.in.sh
 tests/test-posix_spawn2.c
 tests/test-posix_spawn2.in.sh
+tests/signature.h
 
 Depends-on:
 posix_spawn_file_actions_init

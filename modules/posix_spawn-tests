@@ -1,6 +1,6 @@
 Files:
-tests/signature.h
 tests/test-posix_spawn3.c
+tests/signature.h
 
 Depends-on:
 posix_spawn_file_actions_init
