@@ -33,8 +33,15 @@
 #include <stddef.h>
 
 /* mingw doesn't define the SEEK_* or *_FILENO macros in <unistd.h>.  */
-#if !(defined SEEK_CUR && defined SEEK_END && defined SEEK_SET)
+/* Cygwin 1.7.1 declares symlinkat in <stdio.h>, not in <unistd.h>.  */
+#if (!(defined SEEK_CUR && defined SEEK_END && defined SEEK_SET) \
+     || @GNULIB_SYMLINKAT@)
 # include <stdio.h>
+#endif
+
+/* Cygwin 1.7.1 declares unlinkat in <fcntl.h>, not in <unistd.h>.  */
+#if @GNULIB_UNLINKAT@
+# include <fcntl.h>
 #endif
 
 /* mingw fails to declare _exit in <unistd.h>.  */

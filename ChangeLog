@@ -1,3 +1,10 @@
+2009-12-23  Eric Blake  <ebb9@byu.net>
+
+	unistd: work around cygwin bug
+	* lib/unistd.in.h (includes): Pick up headers needed for cygwin.
+	* doc/posix-functions/unlinkat.texi (unlinkat): Document the bug.
+	* doc/posix-functions/symlinkat.texi (symlinkat): Likewise.
+
 2009-12-23  Bruno Haible  <bruno@clisp.org>
 
 	localename: More tests.

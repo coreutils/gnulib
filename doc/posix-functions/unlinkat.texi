@@ -16,6 +16,10 @@ But the replacement function is not safe to be used in libraries and is not mult
 @item
 Some systems mistakenly succeed on @code{unlinkat(fd,"file/",flag)}:
 GNU/Hurd, Solaris 9.
+@item
+Some platforms declare this function in @code{fcntl.h} instead of
+@code{unistd.h}:
+Cygwin 1.7.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:
