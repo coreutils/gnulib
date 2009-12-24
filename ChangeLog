@@ -1,5 +1,13 @@
 2009-12-24  Bruno Haible  <bruno@clisp.org>
 
+	Avoid future namespace pollution on glibc systems.
+	* lib/arpa_inet.in.h: Don't include <sys/socket.h> on glibc systems.
+	* lib/sys_ioctl.in.h: Don't include <unistd.h> on glibc systems.
+	* lib/sys_select.in.h: Don't include <sys/time.h> and <string.h> on
+	glibc systems.
+
+2009-12-24  Bruno Haible  <bruno@clisp.org>
+
 	Refactor common macros used in tests.
 	* tests/macros.h: New file.
 	* tests/test-areadlink.c: Include macros.h. Don't include <stdio.h>

@@ -30,8 +30,11 @@
 #define _GL_SYS_IOCTL_H
 
 /* AIX 5.1 and Solaris 10 declare ioctl() in <unistd.h> and in <stropts.h>,
-   but not in <sys/ioctl.h>.  */
-#include <unistd.h>
+   but not in <sys/ioctl.h>.
+   But avoid namespace pollution on glibc systems.  */
+#ifndef __GLIBC__
+# include <unistd.h>
+#endif
 
 /* The definition of GL_LINK_WARNING is copied here.  */
 

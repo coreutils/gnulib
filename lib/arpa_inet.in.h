@@ -19,8 +19,11 @@
 #ifndef _GL_ARPA_INET_H
 
 /* Gnulib's sys/socket.h is responsible for pulling in winsock2.h etc
-   under MinGW. */
-#include <sys/socket.h>
+   under MinGW.
+   But avoid namespace pollution on glibc systems.  */
+#ifndef __GLIBC__
+# include <sys/socket.h>
+#endif
 
 #if @HAVE_ARPA_INET_H@
 
