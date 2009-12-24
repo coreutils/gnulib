@@ -1,3 +1,17 @@
+2009-12-24  Bruno Haible  <bruno@clisp.org>
+
+	* tests/test-argv-iter.c: Include header file being tested immediately
+	after config.h.
+	* tests/test-base64.c: Likewise.
+	* tests/test-flock.c: Likewise.
+	* tests/test-fsync.c: Likewise.
+	* tests/test-getdate.c: Likewise.
+	* tests/test-getndelim2.c: Likewise.
+	* tests/test-isfinite.c: Likewise.
+	* tests/test-isinf.c: Likewise.
+	* tests/test-strerror.c: Likewise.
+	* tests/test-strsignal.c: Likewise.
+
 2009-12-23  Eric Blake  <ebb9@byu.net>
 
 	unistd: work around cygwin bug

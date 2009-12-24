@@ -17,14 +17,14 @@
 
 #include <config.h>
 
+#include "base64.h"
+
 #include <stddef.h>
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
-
-#include "base64.h"
 
 #define ASSERT(expr)                                                    \
   do                                                                    \

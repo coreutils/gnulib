@@ -1,5 +1,5 @@
 /* Test of flock() function.
-   Copyright (C) 2008 Free Software Foundation, Inc.
+   Copyright (C) 2008-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -16,13 +16,13 @@
 
 #include <config.h>
 
+#include <sys/file.h>
+
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <errno.h>
-
-#include <sys/file.h>
 
 #define ASSERT(expr) \
   do                                                                    \

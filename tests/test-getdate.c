@@ -19,13 +19,13 @@
 
 #include <config.h>
 
+#include "getdate.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "progname.h"
-
-#include "getdate.h"
 
 #define ASSERT(expr)                                                    \
   do                                                                    \

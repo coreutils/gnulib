@@ -17,6 +17,9 @@
 /* Written by Jim Meyering.  */
 
 #include <config.h>
+
+#include "argv-iter.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -34,8 +37,6 @@
         }                                                                    \
     }                                                                        \
   while (0)
-
-#include "argv-iter.h"
 
 static FILE *
 write_nul_delimited_argv (char **argv)

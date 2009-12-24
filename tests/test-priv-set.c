@@ -17,6 +17,7 @@
 /* Written by David Bartley <dtbartle@csclub.uwaterloo.ca>, 2007.  */
 
 #include <config.h>
+
 #include "priv-set.h"
 
 #if HAVE_GETPPRIV
