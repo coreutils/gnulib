@@ -1,5 +1,11 @@
 2009-12-24  Bruno Haible  <bruno@clisp.org>
 
+	binary-io: Avoid gcc warning due to SET_BINARY.
+	* lib/binary-io.h (SET_BINARY): Cast the result to void.
+	Reported by Jim Meyering <jim@meyering.net>. Suggestion by Eric Blake.
+
+2009-12-24  Bruno Haible  <bruno@clisp.org>
+
 	Avoid future namespace pollution on glibc systems.
 	* lib/arpa_inet.in.h: Don't include <sys/socket.h> on glibc systems.
 	* lib/sys_ioctl.in.h: Don't include <unistd.h> on glibc systems.

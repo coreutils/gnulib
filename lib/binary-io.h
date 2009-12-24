@@ -36,6 +36,9 @@
 # undef O_BINARY
 # undef O_TEXT
 #endif
+
+/* SET_BINARY (fd);
+   changes the file descriptor fd to perform binary I/O.  */
 #if O_BINARY
 # if defined __EMX__ || defined __DJGPP__ || defined __CYGWIN__
 #  include <io.h> /* declares setmode() */
@@ -49,15 +52,15 @@
    /* Avoid putting stdin/stdout in binary mode if it is connected to
       the console, because that would make it impossible for the user
       to interrupt the program through Ctrl-C or Ctrl-Break.  */
-#  define SET_BINARY(fd) (!isatty (fd) ? (setmode (fd, O_BINARY), 0) : 0)
+#  define SET_BINARY(fd) ((void) (!isatty (fd) ? (setmode (fd, O_BINARY), 0) : 0))
 # else
-#  define SET_BINARY(fd) setmode (fd, O_BINARY)
+#  define SET_BINARY(fd) ((void) setmode (fd, O_BINARY))
 # endif
 #else
   /* On reasonable systems, binary I/O is the default.  */
 # undef O_BINARY
 # define O_BINARY 0
-# define SET_BINARY(fd) /* nothing */
+# define SET_BINARY(fd) /* do nothing */ ((void) 0)
 #endif
 
 #endif /* _BINARY_H */
