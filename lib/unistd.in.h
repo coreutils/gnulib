@@ -35,12 +35,12 @@
 /* mingw doesn't define the SEEK_* or *_FILENO macros in <unistd.h>.  */
 /* Cygwin 1.7.1 declares symlinkat in <stdio.h>, not in <unistd.h>.  */
 #if (!(defined SEEK_CUR && defined SEEK_END && defined SEEK_SET) \
-     || @GNULIB_SYMLINKAT@)
+     || @GNULIB_SYMLINKAT@ || defined GNULIB_POSIXCHECK)
 # include <stdio.h>
 #endif
 
 /* Cygwin 1.7.1 declares unlinkat in <fcntl.h>, not in <unistd.h>.  */
-#if @GNULIB_UNLINKAT@
+#if @GNULIB_UNLINKAT@ || defined GNULIB_POSIXCHECK
 # include <fcntl.h>
 #endif
 
@@ -50,13 +50,15 @@
 #include <stdlib.h>
 
 /* mingw declares getcwd in <io.h>, not in <unistd.h>.  */
-#if @GNULIB_GETCWD@ && ((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)
+#if ((@GNULIB_GETCWD@ || defined GNULIB_POSIXCHECK) \
+     && ((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__))
 # include <io.h>
 #endif
 
 #if ((@GNULIB_WRITE@ && @REPLACE_WRITE@ && @GNULIB_UNISTD_H_SIGPIPE@)   \
      || (@GNULIB_READLINK@ && (!@HAVE_READLINK@ || @REPLACE_READLINK@)) \
-     || (@GNULIB_READLINKAT@ && !@HAVE_READLINKAT@))
+     || (@GNULIB_READLINKAT@ && !@HAVE_READLINKAT@) \
+     || defined GNULIB_POSIXCHECK)
 /* Get ssize_t.  */
 # include <sys/types.h>
 #endif

@@ -39,10 +39,11 @@
 #include <stdarg.h>
 #include <stddef.h>
 
-#if (@GNULIB_FSEEKO@ && @REPLACE_FSEEKO@) \
-  || (@GNULIB_FTELLO@ && @REPLACE_FTELLO@) \
-  || (@GNULIB_GETDELIM@ && !@HAVE_DECL_GETDELIM@) \
-  || (@GNULIB_GETLINE@ && (!@HAVE_DECL_GETLINE@ || @REPLACE_GETLINE@))
+#if ((@GNULIB_FSEEKO@ && @REPLACE_FSEEKO@) \
+     || (@GNULIB_FTELLO@ && @REPLACE_FTELLO@) \
+     || (@GNULIB_GETDELIM@ && !@HAVE_DECL_GETDELIM@) \
+     || (@GNULIB_GETLINE@ && (!@HAVE_DECL_GETLINE@ || @REPLACE_GETLINE@)) \
+     || defined GNULIB_POSIXCHECK)
 /* Get off_t and ssize_t.  */
 # include <sys/types.h>
 #endif

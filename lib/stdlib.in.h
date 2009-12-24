@@ -39,7 +39,7 @@
 #include <stddef.h>
 
 /* Solaris declares getloadavg() in <sys/loadavg.h>.  */
-#if @GNULIB_GETLOADAVG@ && @HAVE_SYS_LOADAVG_H@
+#if (@GNULIB_GETLOADAVG@ || defined GNULIB_GETLOADAVG) && @HAVE_SYS_LOADAVG_H@
 # include <sys/loadavg.h>
 #endif
 
@@ -49,7 +49,8 @@
 # include <random.h>
 #endif
 
-#if @GNULIB_RANDOM_R@ || !@HAVE_STRUCT_RANDOM_DATA@
+#if (@GNULIB_RANDOM_R@ || !@HAVE_STRUCT_RANDOM_DATA@ \
+     || defined GNULIB_POSIXCHECK)
 # include <stdint.h>
 #endif
 
