@@ -1,5 +1,17 @@
 2009-12-24  Bruno Haible  <bruno@clisp.org>
 
+	Reduce namespace pollution on glibc systems.
+	* lib/inttypes.in.h: Don't include <stdint.h> on glibc systems.
+	* lib/stdlib.in.h: Don't include <stdint.h>, <unistd.h> on glibc
+	systems.
+	* lib/unistd.in.h: Don't include <stdio.h>, <fcntl.h>, <stdlib.h>,
+	<getopt.h> on glibc systems.
+	* lib/fcntl.in.h: Don't include <sys/stat.h>, <unistd.h> on glibc
+	systems.
+	* lib/fcntl.c: Include <unistd.h> here instead.
+
+2009-12-24  Bruno Haible  <bruno@clisp.org>
+
 	* lib/stdlib.in.h (includes): Fix typo in today's commit.
 
 2009-12-24  Eric Blake  <ebb9@byu.net>

@@ -49,8 +49,8 @@
 # include <random.h>
 #endif
 
-#if (@GNULIB_RANDOM_R@ || !@HAVE_STRUCT_RANDOM_DATA@ \
-     || defined GNULIB_POSIXCHECK)
+#if !@HAVE_STRUCT_RANDOM_DATA@ || (@GNULIB_RANDOM_R@ && !@HAVE_RANDOM_R@) \
+    || defined GNULIB_POSIXCHECK
 # include <stdint.h>
 #endif
 
@@ -67,9 +67,10 @@ struct random_data
 };
 #endif
 
-#if @GNULIB_MKSTEMP@ || @GNULIB_GETSUBOPT@ || defined GNULIB_POSIXCHECK
+#if (@GNULIB_MKSTEMP@ || @GNULIB_GETSUBOPT@ || defined GNULIB_POSIXCHECK) && ! defined __GLIBC__
 /* On MacOS X 10.3, only <unistd.h> declares mkstemp.  */
 /* On Cygwin 1.7.1, only <unistd.h> declares getsubopt.  */
+/* But avoid namespace pollution on glibc systems.  */
 # include <unistd.h>
 #endif
 

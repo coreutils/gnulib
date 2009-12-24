@@ -25,6 +25,7 @@
 #include <errno.h>
 #include <limits.h>
 #include <stdarg.h>
+#include <unistd.h>
 
 #if !HAVE_FCNTL
 # define rpl_fcntl fcntl

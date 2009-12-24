@@ -34,20 +34,26 @@
 
 /* mingw doesn't define the SEEK_* or *_FILENO macros in <unistd.h>.  */
 /* Cygwin 1.7.1 declares symlinkat in <stdio.h>, not in <unistd.h>.  */
+/* But avoid namespace pollution on glibc systems.  */
 #if (!(defined SEEK_CUR && defined SEEK_END && defined SEEK_SET) \
-     || @GNULIB_SYMLINKAT@ || defined GNULIB_POSIXCHECK)
+     || (@GNULIB_SYMLINKAT@ || defined GNULIB_POSIXCHECK)) \
+    && ! defined __GLIBC__
 # include <stdio.h>
 #endif
 
 /* Cygwin 1.7.1 declares unlinkat in <fcntl.h>, not in <unistd.h>.  */
-#if @GNULIB_UNLINKAT@ || defined GNULIB_POSIXCHECK
+/* But avoid namespace pollution on glibc systems.  */
+#if (@GNULIB_UNLINKAT@ || defined GNULIB_POSIXCHECK) && ! defined __GLIBC__
 # include <fcntl.h>
 #endif
 
 /* mingw fails to declare _exit in <unistd.h>.  */
 /* mingw, BeOS, Haiku declare environ in <stdlib.h>, not in <unistd.h>.  */
 /* Solaris declares getcwd not only in <unistd.h> but also in <stdlib.h>.  */
-#include <stdlib.h>
+/* But avoid namespace pollution on glibc systems.  */
+#ifndef __GLIBC__
+# include <stdlib.h>
+#endif
 
 /* mingw declares getcwd in <io.h>, not in <unistd.h>.  */
 #if ((@GNULIB_GETCWD@ || defined GNULIB_POSIXCHECK) \
@@ -63,8 +69,9 @@
 # include <sys/types.h>
 #endif
 
-/* Get getopt(), optarg, optind, opterr, optopt.  */
-#if @GNULIB_UNISTD_H_GETOPT@ && !defined _GL_SYSTEM_GETOPT
+/* Get getopt(), optarg, optind, opterr, optopt.
+   But avoid namespace pollution on glibc systems.  */
+#if @GNULIB_UNISTD_H_GETOPT@ && !defined __GLIBC__ && !defined _GL_SYSTEM_GETOPT
 # include <getopt.h>
 #endif
 

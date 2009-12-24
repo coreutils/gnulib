@@ -25,8 +25,10 @@
 /* Special invocation convention.  */
 
 #include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
+#ifndef __GLIBC__ /* Avoid namespace pollution on glibc systems.  */
+# include <sys/stat.h>
+# include <unistd.h>
+#endif
 #@INCLUDE_NEXT@ @NEXT_FCNTL_H@
 
 #else
@@ -35,8 +37,10 @@
 #ifndef _GL_FCNTL_H
 
 #include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
+#ifndef __GLIBC__ /* Avoid namespace pollution on glibc systems.  */
+# include <sys/stat.h>
+# include <unistd.h>
+#endif
 /* The include_next requires a split double-inclusion guard.  */
 #@INCLUDE_NEXT@ @NEXT_FCNTL_H@
 
