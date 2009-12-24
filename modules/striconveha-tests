@@ -1,5 +1,6 @@
 Files:
 tests/test-striconveha.c
+tests/macros.h
 
 Depends-on:
 

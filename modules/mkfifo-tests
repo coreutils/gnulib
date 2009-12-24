@@ -1,7 +1,8 @@
 Files:
-tests/signature.h
 tests/test-mkfifo.h
 tests/test-mkfifo.c
+tests/signature.h
+tests/macros.h
 
 Depends-on:
 stdbool

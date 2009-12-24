@@ -1,7 +1,8 @@
 Files:
-tests/signature.h
 tests/test-ceill.c
 tests/nan.h
+tests/signature.h
+tests/macros.h
 
 Depends-on:
 fpucw

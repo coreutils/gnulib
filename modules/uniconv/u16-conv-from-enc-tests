@@ -1,5 +1,6 @@
 Files:
 tests/uniconv/test-u16-conv-from-enc.c
+tests/macros.h
 
 Depends-on:
 unistr/u16-cmp

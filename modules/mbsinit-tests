@@ -1,7 +1,8 @@
 Files:
-tests/signature.h
 tests/test-mbsinit.sh
 tests/test-mbsinit.c
+tests/signature.h
+tests/macros.h
 m4/locale-fr.m4
 m4/codeset.m4
 

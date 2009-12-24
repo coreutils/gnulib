@@ -1,6 +1,7 @@
 Files:
 tests/test-quotearg.sh
 tests/test-quotearg.c
+tests/macros.h
 tests/locale/fr/LC_MESSAGES/test-quotearg.po
 tests/locale/fr/LC_MESSAGES/test-quotearg.mo
 m4/locale-fr.m4

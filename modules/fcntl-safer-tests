@@ -1,6 +1,7 @@
 Files:
 tests/test-open.h
 tests/test-fcntl-safer.c
+tests/macros.h
 
 Depends-on:
 stdbool

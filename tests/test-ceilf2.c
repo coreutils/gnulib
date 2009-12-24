@@ -1,5 +1,5 @@
 /* Test of rounding towards positive infinity.
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -24,21 +24,9 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
-#include <stdlib.h>
 
 #include "isnanf-nolibm.h"
-
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);                                                   \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
+#include "macros.h"
 
 
 /* The reference implementation, taken from lib/ceil.c.  */

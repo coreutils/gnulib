@@ -1,6 +1,7 @@
 Files:
 tests/unictype/test-decdigit.c
 tests/unictype/test-decdigit.h
+tests/macros.h
 
 Depends-on:
 

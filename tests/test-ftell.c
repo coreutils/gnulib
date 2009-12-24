@@ -23,27 +23,14 @@
 #include "signature.h"
 SIGNATURE_CHECK (ftell, long, (FILE *));
 
-#include <stdlib.h>
-
 #include "binary-io.h"
+#include "macros.h"
 
 /* None of the files accessed by this test are large, so disable the
    fseek link warning if we are not using the gnulib fseek module.  */
 #if !GNULIB_FSEEK
 # undef fseek
 #endif
-
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);                                                   \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
 
 #ifndef FUNC_UNGETC_BROKEN
 # define FUNC_UNGETC_BROKEN 0

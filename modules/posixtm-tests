@@ -1,5 +1,6 @@
 Files:
 tests/test-posixtm.c
+tests/macros.h
 
 Depends-on:
 intprops

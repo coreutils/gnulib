@@ -8,6 +8,7 @@ tests/uninorm/test-u32-nfkd-big.c
 tests/uninorm/test-u32-normalize-big.h
 tests/uninorm/test-u32-normalize-big.c
 tests/uninorm/NormalizationTest.txt
+tests/macros.h
 
 Depends-on:
 unistr/u8-cmp

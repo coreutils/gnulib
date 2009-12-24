@@ -25,20 +25,8 @@ SIGNATURE_CHECK (inet_pton, int, (int, const char *, void *));
 
 #include <netinet/in.h>
 #include <sys/socket.h>
-#include <stdio.h>
-#include <stdlib.h>
 
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);                                                   \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
+#include "macros.h"
 
 int
 main (void)

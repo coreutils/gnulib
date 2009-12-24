@@ -1,6 +1,7 @@
 Files:
 tests/test-mbschr.sh
 tests/test-mbschr.c
+tests/macros.h
 m4/locale-zh.m4
 m4/codeset.m4
 

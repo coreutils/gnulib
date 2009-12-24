@@ -2,6 +2,7 @@ Files:
 tests/unistdio/test-ulc-asnprintf1.c
 tests/unistdio/test-ulc-asnprintf1.h
 tests/unistdio/test-ulc-printf1.h
+tests/macros.h
 
 Depends-on:
 

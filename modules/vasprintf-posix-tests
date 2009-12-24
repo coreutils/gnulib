@@ -1,6 +1,7 @@
 Files:
 tests/test-vasprintf-posix.c
 tests/nan.h
+tests/macros.h
 
 Depends-on:
 stdint

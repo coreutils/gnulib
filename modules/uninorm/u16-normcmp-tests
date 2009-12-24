@@ -1,6 +1,7 @@
 Files:
 tests/uninorm/test-u16-normcmp.c
 tests/uninorm/test-u16-normcmp.h
+tests/macros.h
 
 Depends-on:
 uninorm/nfd

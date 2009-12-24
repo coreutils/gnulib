@@ -1,9 +1,10 @@
 Files:
-tests/signature.h
 tests/test-vsnprintf-posix.c
 tests/test-snprintf-posix.h
 tests/test-vsnprintf.c
 tests/nan.h
+tests/signature.h
+tests/macros.h
 
 Depends-on:
 stdint

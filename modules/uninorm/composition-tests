@@ -1,5 +1,6 @@
 Files:
 tests/uninorm/test-composition.c
+tests/macros.h
 
 Depends-on:
 

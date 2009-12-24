@@ -1,5 +1,6 @@
 Files:
 tests/test-canonicalize.c
+tests/macros.h
 
 Depends-on:
 progname

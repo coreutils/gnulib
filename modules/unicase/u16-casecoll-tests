@@ -1,6 +1,7 @@
 Files:
 tests/unicase/test-u16-casecoll.c
 tests/unicase/test-casecmp.h
+tests/macros.h
 
 Depends-on:
 uninorm/nfc

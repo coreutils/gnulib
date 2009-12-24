@@ -1,5 +1,6 @@
 Files:
 tests/unictype/test-combining.c
+tests/macros.h
 
 Depends-on:
 

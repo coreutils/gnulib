@@ -1,5 +1,6 @@
 Files:
 tests/test-wctype.c
+tests/macros.h
 
 Depends-on:
 

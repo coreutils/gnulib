@@ -1,5 +1,6 @@
 Files:
 tests/test-array_list.c
+tests/macros.h
 
 Depends-on:
 progname

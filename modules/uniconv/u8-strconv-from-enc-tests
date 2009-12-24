@@ -1,5 +1,6 @@
 Files:
 tests/uniconv/test-u8-strconv-from-enc.c
+tests/macros.h
 
 Depends-on:
 unistr/u8-strcmp

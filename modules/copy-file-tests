@@ -1,6 +1,7 @@
 Files:
 tests/test-copy-file.sh
 tests/test-copy-file.c
+tests/macros.h
 
 Depends-on:
 acl

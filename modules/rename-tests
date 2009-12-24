@@ -1,7 +1,8 @@
 Files:
-tests/signature.h
 tests/test-rename.h
 tests/test-rename.c
+tests/signature.h
+tests/macros.h
 
 Depends-on:
 errno

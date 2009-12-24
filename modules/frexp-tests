@@ -1,7 +1,8 @@
 Files:
-tests/signature.h
 tests/test-frexp.c
 tests/nan.h
+tests/signature.h
+tests/macros.h
 
 Depends-on:
 isnand-nolibm

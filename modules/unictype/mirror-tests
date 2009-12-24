@@ -1,5 +1,6 @@
 Files:
 tests/unictype/test-mirror.c
+tests/macros.h
 
 Depends-on:
 

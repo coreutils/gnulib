@@ -1,8 +1,9 @@
 Files:
-tests/signature.h
 tests/nap.h
 tests/test-chown.h
 tests/test-chown.c
+tests/signature.h
+tests/macros.h
 
 Depends-on:
 lstat

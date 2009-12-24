@@ -20,12 +20,12 @@
 #include "gl_linkedhash_list.h"
 
 #include <limits.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "gl_array_list.h"
 #include "progname.h"
+#include "macros.h"
 
 static const char *objects[15] =
   {
@@ -57,18 +57,6 @@ string_hash (const void *x)
   return h;
 }
 
-#define SIZEOF(array) (sizeof (array) / sizeof (array[0]))
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);                                                   \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
 #define RANDOM(n) (rand () % (n))
 #define RANDOM_OBJECT() objects[RANDOM (SIZEOF (objects))]
 

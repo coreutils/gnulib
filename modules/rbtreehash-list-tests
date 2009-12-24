@@ -1,5 +1,6 @@
 Files:
 tests/test-rbtreehash_list.c
+tests/macros.h
 
 Depends-on:
 array-list

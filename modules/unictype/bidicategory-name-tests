@@ -1,5 +1,6 @@
 Files:
 tests/unictype/test-bidi_name.c
+tests/macros.h
 
 Depends-on:
 

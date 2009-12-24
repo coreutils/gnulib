@@ -1,6 +1,7 @@
 Files:
 tests/test-areadlink.h
 tests/test-areadlink.c
+tests/macros.h
 
 Depends-on:
 stdbool

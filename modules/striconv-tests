@@ -1,5 +1,6 @@
 Files:
 tests/test-striconv.c
+tests/macros.h
 
 Depends-on:
 

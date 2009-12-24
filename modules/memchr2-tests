@@ -1,6 +1,7 @@
 Files:
 tests/test-memchr2.c
 tests/zerosize-ptr.h
+tests/macros.h
 m4/mmap-anon.m4
 
 Depends-on:

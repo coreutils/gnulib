@@ -1,6 +1,7 @@
 Files:
-tests/signature.h
 tests/test-sleep.c
+tests/signature.h
+tests/macros.h
 
 Depends-on:
 

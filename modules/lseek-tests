@@ -1,7 +1,8 @@
 Files:
-tests/signature.h
 tests/test-lseek.c
 tests/test-lseek.sh
+tests/signature.h
+tests/macros.h
 
 Depends-on:
 

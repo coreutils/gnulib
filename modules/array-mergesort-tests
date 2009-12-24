@@ -1,5 +1,6 @@
 Files:
 tests/test-array-mergesort.c
+tests/macros.h
 
 Depends-on:
 

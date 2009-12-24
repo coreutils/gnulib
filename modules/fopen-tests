@@ -1,7 +1,8 @@
 Files:
-tests/signature.h
 tests/test-fopen.h
 tests/test-fopen.c
+tests/signature.h
+tests/macros.h
 
 Depends-on:
 

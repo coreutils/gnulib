@@ -1,5 +1,6 @@
 Files:
 tests/unicase/test-u8-casefold.c
+tests/macros.h
 
 Depends-on:
 unistr/u8-cmp

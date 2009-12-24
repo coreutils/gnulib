@@ -24,19 +24,8 @@
 SIGNATURE_CHECK (lseek, off_t, (int, off_t, int));
 
 #include <errno.h>
-#include <stdio.h>
 
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);                                                   \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
+#include "macros.h"
 
 /* ARGC must be 2; *ARGV[1] is '0' if stdin and stdout are files, '1'
    if they are pipes, and '2' if they are closed.  Check for proper

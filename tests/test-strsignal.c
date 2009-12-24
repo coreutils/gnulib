@@ -25,20 +25,8 @@
 SIGNATURE_CHECK (strsignal, char *, (int));
 
 #include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
 
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);                                                   \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
+#include "macros.h"
 
 #if HAVE_DECL_SYS_SIGLIST
 # define ASSERT_DESCRIPTION(got, expect)

@@ -1,6 +1,7 @@
 Files:
 tests/test-mbsncasecmp.sh
 tests/test-mbsncasecmp.c
+tests/macros.h
 m4/locale-tr.m4
 m4/codeset.m4
 

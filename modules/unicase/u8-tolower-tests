@@ -1,5 +1,6 @@
 Files:
 tests/unicase/test-u8-tolower.c
+tests/macros.h
 
 Depends-on:
 unistr/u8-cmp

@@ -18,21 +18,9 @@
 
 #include "unictype.h"
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);                                                   \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
+#include "macros.h"
 
 int
 main ()

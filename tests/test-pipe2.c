@@ -32,18 +32,7 @@ SIGNATURE_CHECK (pipe2, int, (int[2], int));
 #endif
 
 #include "binary-io.h"
-
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);                                                   \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
+#include "macros.h"
 
 /* Return true if FD is open.  */
 static bool

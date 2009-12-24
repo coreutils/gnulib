@@ -27,20 +27,8 @@
 
 #include <float.h>
 #include <limits.h>
-#include <stdio.h>
-#include <stdlib.h>
 
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);                                                   \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
+#include "macros.h"
 
 float zerof = 0.0f;
 double zerod = 0.0;

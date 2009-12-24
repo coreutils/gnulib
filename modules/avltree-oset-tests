@@ -1,5 +1,6 @@
 Files:
 tests/test-avltree_oset.c
+tests/macros.h
 
 Depends-on:
 array-oset

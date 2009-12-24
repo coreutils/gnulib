@@ -24,28 +24,15 @@
 SIGNATURE_CHECK (frexp, double, (double, int *));
 
 #include <float.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 #include "isnand-nolibm.h"
 #include "nan.h"
+#include "macros.h"
 
 /* Avoid some warnings from "gcc -Wshadow".
    This file doesn't use the exp() function.  */
 #undef exp
 #define exp exponent
-
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);                                                   \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
 
 /* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0.
    So we use -zero instead.  */

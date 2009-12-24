@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2008 Free Software Foundation
+ * Copyright (C) 2007-2009 Free Software Foundation
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,20 +22,8 @@
 
 #include <limits.h>
 #include <stdio.h>
-#include <stdlib.h>
 
-#define ASSERT(expr)                                            \
-  do                                                            \
-    {                                                           \
-      if (!(expr))                                              \
-        {                                                       \
-          fprintf (stderr, "%s:%d: assertion \"%s\" failed\n",  \
-                   __FILE__, __LINE__, #expr);                  \
-          fflush (stderr);                                      \
-          abort ();                                             \
-        }                                                       \
-    }                                                           \
-  while (0)
+#include "macros.h"
 
 #define UINT_BIT (sizeof (unsigned int) * CHAR_BIT)
 #define ULONG_BIT (sizeof (unsigned long int) * CHAR_BIT)

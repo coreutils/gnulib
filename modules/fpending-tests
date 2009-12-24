@@ -1,6 +1,7 @@
 Files:
 tests/test-fpending.c
 tests/test-fpending.sh
+tests/macros.h
 
 Depends-on:
 

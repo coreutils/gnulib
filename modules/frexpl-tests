@@ -1,7 +1,8 @@
 Files:
-tests/signature.h
 tests/test-frexpl.c
 tests/nan.h
+tests/signature.h
+tests/macros.h
 
 Depends-on:
 fpucw

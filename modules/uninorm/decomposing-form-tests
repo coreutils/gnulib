@@ -1,5 +1,6 @@
 Files:
 tests/uninorm/test-decomposing-form.c
+tests/macros.h
 
 Depends-on:
 uninorm/nfc

@@ -1,10 +1,11 @@
 Files:
-tests/signature.h
 tests/test-mbsnrtowcs1.sh
 tests/test-mbsnrtowcs2.sh
 tests/test-mbsnrtowcs3.sh
 tests/test-mbsnrtowcs4.sh
 tests/test-mbsnrtowcs.c
+tests/signature.h
+tests/macros.h
 m4/locale-fr.m4
 m4/locale-ja.m4
 m4/locale-zh.m4

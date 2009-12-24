@@ -1,7 +1,8 @@
 Files:
-tests/signature.h
 tests/test-mkdir.h
 tests/test-mkdir.c
+tests/signature.h
+tests/macros.h
 
 Depends-on:
 stdbool

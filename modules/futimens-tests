@@ -1,9 +1,10 @@
 Files:
-tests/signature.h
 tests/nap.h
 tests/test-futimens.h
 tests/test-utimens-common.h
 tests/test-futimens.c
+tests/signature.h
+tests/macros.h
 
 Depends-on:
 timespec

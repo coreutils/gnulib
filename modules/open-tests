@@ -1,7 +1,8 @@
 Files:
-tests/signature.h
 tests/test-open.h
 tests/test-open.c
+tests/signature.h
+tests/macros.h
 
 Depends-on:
 stdbool

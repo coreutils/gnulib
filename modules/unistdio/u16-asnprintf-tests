@@ -2,6 +2,7 @@ Files:
 tests/unistdio/test-u16-asnprintf1.c
 tests/unistdio/test-u16-asnprintf1.h
 tests/unistdio/test-u16-printf1.h
+tests/macros.h
 
 Depends-on:
 

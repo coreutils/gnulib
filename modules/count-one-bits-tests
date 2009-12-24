@@ -1,5 +1,6 @@
 Files:
 tests/test-count-one-bits.c
+tests/macros.h
 
 Depends-on:
 

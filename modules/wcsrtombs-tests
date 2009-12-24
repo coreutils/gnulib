@@ -1,10 +1,11 @@
 Files:
-tests/signature.h
 tests/test-wcsrtombs1.sh
 tests/test-wcsrtombs2.sh
 tests/test-wcsrtombs3.sh
 tests/test-wcsrtombs4.sh
 tests/test-wcsrtombs.c
+tests/signature.h
+tests/macros.h
 m4/locale-fr.m4
 m4/locale-ja.m4
 m4/locale-zh.m4

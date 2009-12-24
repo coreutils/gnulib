@@ -2,6 +2,7 @@ Files:
 tests/test-isnanl-nolibm.c
 tests/test-isnanl.h
 tests/nan.h
+tests/macros.h
 
 Depends-on:
 float

@@ -1,5 +1,6 @@
 Files:
 tests/unictype/test-pr_byname.c
+tests/macros.h
 
 Depends-on:
 unictype/property-test

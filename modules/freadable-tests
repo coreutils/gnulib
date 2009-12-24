@@ -1,5 +1,6 @@
 Files:
 tests/test-freadable.c
+tests/macros.h
 
 Depends-on:
 fflush

@@ -28,20 +28,10 @@
 #include <string.h>
 #include <unistd.h>
 
+#include "macros.h"
+
 #define STREQ(a, b) (strcmp (a, b) == 0)
 #define ARRAY_CARDINALITY(Array) (sizeof (Array) / sizeof *(Array))
-
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);                                                   \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
 
 static bool
 hash_compare_strings (void const *x, void const *y)

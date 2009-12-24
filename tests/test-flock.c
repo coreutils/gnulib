@@ -22,23 +22,10 @@
 SIGNATURE_CHECK (flock, int, (int, int));
 
 #include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
 #include <errno.h>
 
-#define ASSERT(expr) \
-  do                                                                    \
-    {                                                                   \
-      if (!(expr))                                                      \
-        {                                                               \
-          fprintf (stderr, "%s:%d: assertion failed, errno = %d\n",     \
-                   __FILE__, __LINE__, errno);                          \
-          fflush (stderr);                                              \
-          abort ();                                                     \
-        }                                                               \
-    }                                                                   \
-  while (0)
+#include "macros.h"
 
 static void
 test_shared (const char *file, int fd)

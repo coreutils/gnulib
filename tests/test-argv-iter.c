@@ -20,23 +20,13 @@
 
 #include "argv-iter.h"
 
-#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
+#include "macros.h"
+
 #define ARRAY_CARDINALITY(Array) (sizeof (Array) / sizeof *(Array))
 #define STREQ(s1, s2) (strcmp (s1, s2) == 0)
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);                                                   \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
 
 static FILE *
 write_nul_delimited_argv (char **argv)

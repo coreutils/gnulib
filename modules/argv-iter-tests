@@ -1,5 +1,6 @@
 Files:
 tests/test-argv-iter.c
+tests/macros.h
 
 Depends-on:
 

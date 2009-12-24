@@ -1,5 +1,6 @@
 Files:
 tests/uninorm/test-uninorm-filter-nfc.c
+tests/macros.h
 
 Depends-on:
 unistr/u32-cmp

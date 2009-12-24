@@ -1,6 +1,7 @@
 Files:
 tests/unicase/test-locale-language.sh
 tests/unicase/test-locale-language.c
+tests/macros.h
 m4/locale-fr.m4
 m4/locale-ja.m4
 m4/locale-tr.m4

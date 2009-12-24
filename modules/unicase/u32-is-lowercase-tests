@@ -1,6 +1,7 @@
 Files:
 tests/unicase/test-u32-is-lowercase.c
 tests/unicase/test-is-lowercase.h
+tests/macros.h
 
 Depends-on:
 

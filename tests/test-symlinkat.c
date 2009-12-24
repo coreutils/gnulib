@@ -32,21 +32,11 @@ SIGNATURE_CHECK (readlinkat, ssize_t, (int, char const *, char *, size_t));
 #include <string.h>
 #include <sys/stat.h>
 
+#include "macros.h"
+
 #ifndef HAVE_SYMLINK
 # define HAVE_SYMLINK 0
 #endif
-
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__);  \
-          fflush (stderr);                                                   \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
 
 #define BASE "test-symlinkat.t"
 

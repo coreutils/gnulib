@@ -24,20 +24,9 @@ struct foo { double x; double index; };
 #define STATIC static
 #include "array-mergesort.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);                                                   \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
+#include "macros.h"
 
 #define NMAX 257
 static const struct foo data[NMAX] =

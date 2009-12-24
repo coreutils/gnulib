@@ -24,29 +24,16 @@
 SIGNATURE_CHECK (frexpl, long double, (long double, int *));
 
 #include <float.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 #include "fpucw.h"
 #include "isnanl-nolibm.h"
 #include "nan.h"
+#include "macros.h"
 
 /* Avoid some warnings from "gcc -Wshadow".
    This file doesn't use the exp() function.  */
 #undef exp
 #define exp exponent
-
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);                                                   \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
 
 /* On MIPS IRIX machines, LDBL_MIN_EXP is -1021, but the smallest reliable
    exponent for 'long double' is -964.  Similarly, on PowerPC machines,

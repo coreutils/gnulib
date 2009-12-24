@@ -1,9 +1,10 @@
 Files:
-tests/signature.h
 tests/test-vdprintf-posix.sh
 tests/test-vdprintf-posix.c
 tests/test-fprintf-posix.h
 tests/test-printf-posix.output
+tests/signature.h
+tests/macros.h
 
 Depends-on:
 stdint

@@ -1,6 +1,7 @@
 Files:
-tests/signature.h
 tests/test-glob.c
+tests/signature.h
+tests/macros.h
 
 Makefile.am:
 TESTS += test-glob

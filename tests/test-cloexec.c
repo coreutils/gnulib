@@ -22,8 +22,6 @@
 
 #include <errno.h>
 #include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
@@ -33,18 +31,7 @@
 #endif
 
 #include "binary-io.h"
-
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);                                                   \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
+#include "macros.h"
 
 /* Return non-zero if FD is open and inheritable across exec/spawn.  */
 static int

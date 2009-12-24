@@ -1,3 +1,878 @@
+2009-12-24  Bruno Haible  <bruno@clisp.org>
+
+	Refactor common macros used in tests.
+	* tests/macros.h: New file.
+	* tests/test-areadlink.c: Include macros.h. Don't include <stdio.h>
+	and/or <stdlib.h>, if appropriate.
+	(ASSERT, SIZEOF): Remove macros.
+	* tests/test-areadlink-with-size.c: Likewise.
+	* tests/test-areadlinkat.c: Likewise.
+	* tests/test-areadlinkat-with-size.c: Likewise.
+	* tests/test-argmatch.c: Likewise.
+	* tests/test-argv-iter.c: Likewise.
+	* tests/test-array-mergesort.c: Likewise.
+	* tests/test-array_list.c: Likewise.
+	* tests/test-array_oset.c: Likewise.
+	* tests/test-avltree_list.c: Likewise.
+	* tests/test-avltree_oset.c: Likewise.
+	* tests/test-avltreehash_list.c: Likewise.
+	* tests/test-base64.c: Likewise.
+	* tests/test-binary-io.c: Likewise.
+	* tests/test-bitrotate.c: Likewise.
+	* tests/test-btowc.c: Likewise.
+	* tests/test-byteswap.c: Likewise.
+	* tests/test-c-ctype.c: Likewise.
+	* tests/test-c-stack.c: Likewise.
+	* tests/test-c-strcasecmp.c: Likewise.
+	* tests/test-c-strcasestr.c: Likewise.
+	* tests/test-c-strncasecmp.c: Likewise.
+	* tests/test-c-strstr.c: Likewise.
+	* tests/test-canonicalize-lgpl.c: Likewise.
+	* tests/test-canonicalize.c: Likewise.
+	* tests/test-carray_list.c: Likewise.
+	* tests/test-ceilf1.c: Likewise.
+	* tests/test-ceilf2.c: Likewise.
+	* tests/test-ceill.c: Likewise.
+	* tests/test-chown.c: Likewise.
+	* tests/test-cloexec.c: Likewise.
+	* tests/test-copy-acl.c: Likewise.
+	* tests/test-copy-file.c: Likewise.
+	* tests/test-count-one-bits.c: Likewise.
+	* tests/test-dprintf-posix.c: Likewise.
+	* tests/test-dup2.c: Likewise.
+	* tests/test-dup3.c: Likewise.
+	* tests/test-duplocale.c: Likewise.
+	* tests/test-fbufmode.c: Likewise.
+	* tests/test-fchdir.c: Likewise.
+	* tests/test-fchownat.c: Likewise.
+	* tests/test-fcntl-safer.c: Likewise.
+	* tests/test-fcntl.c: Likewise.
+	* tests/test-fdopendir.c: Likewise.
+	* tests/test-fdutimensat.c: Likewise.
+	* tests/test-fflush2.c: Likewise.
+	* tests/test-file-has-acl.c: Likewise.
+	* tests/test-filevercmp.c: Likewise.
+	* tests/test-flock.c: Likewise.
+	* tests/test-floorf1.c: Likewise.
+	* tests/test-floorf2.c: Likewise.
+	* tests/test-floorl.c: Likewise.
+	* tests/test-fnmatch.c: Likewise.
+	* tests/test-fopen.h: Likewise.
+	* tests/test-fpending.c: Likewise.
+	* tests/test-fprintf-posix.c: Likewise.
+	* tests/test-fpurge.c: Likewise.
+	* tests/test-freadable.c: Likewise.
+	* tests/test-freadahead.c: Likewise.
+	* tests/test-freading.c: Likewise.
+	* tests/test-freadptr.c: Likewise.
+	* tests/test-freadptr2.c: Likewise.
+	* tests/test-freadseek.c: Likewise.
+	* tests/test-freopen.c: Likewise.
+	* tests/test-frexp.c: Likewise.
+	* tests/test-frexpl.c: Likewise.
+	* tests/test-fseek.c: Likewise.
+	* tests/test-fseeko.c: Likewise.
+	* tests/test-fstatat.c: Likewise.
+	* tests/test-fstrcmp.c: Likewise.
+	* tests/test-fsync.c: Likewise.
+	* tests/test-ftell.c: Likewise.
+	* tests/test-ftello.c: Likewise.
+	* tests/test-func.c: Likewise.
+	* tests/test-futimens.c: Likewise.
+	* tests/test-fwritable.c: Likewise.
+	* tests/test-fwriting.c: Likewise.
+	* tests/test-getcwd.c: Likewise.
+	* tests/test-getdate.c: Likewise.
+	* tests/test-getdelim.c: Likewise.
+	* tests/test-getdtablesize.c: Likewise.
+	* tests/test-getgroups.c: Likewise.
+	* tests/test-getline.c: Likewise.
+	* tests/test-getndelim2.c: Likewise.
+	* tests/test-glob.c: Likewise.
+	* tests/test-hash.c: Likewise.
+	* tests/test-i-ring.c: Likewise.
+	* tests/test-iconv-utf.c: Likewise.
+	* tests/test-iconv.c: Likewise.
+	* tests/test-idpriv-drop.c: Likewise.
+	* tests/test-idpriv-droptemp.c: Likewise.
+	* tests/test-inet_ntop.c: Likewise.
+	* tests/test-inet_pton.c: Likewise.
+	* tests/test-isblank.c: Likewise.
+	* tests/test-isfinite.c: Likewise.
+	* tests/test-isinf.c: Likewise.
+	* tests/test-isnan.c: Likewise.
+	* tests/test-isnand.h: Likewise.
+	* tests/test-isnanf.h: Likewise.
+	* tests/test-isnanl.h: Likewise.
+	* tests/test-lchown.c: Likewise.
+	* tests/test-ldexpl.c: Likewise.
+	* tests/test-link.c: Likewise.
+	* tests/test-linkat.c: Likewise.
+	* tests/test-linked_list.c: Likewise.
+	* tests/test-linkedhash_list.c: Likewise.
+	* tests/test-localename.c: Likewise.
+	* tests/test-lseek.c: Likewise.
+	* tests/test-lstat.c: Likewise.
+	* tests/test-mbmemcasecmp.c: Likewise.
+	* tests/test-mbmemcasecoll.c: Likewise.
+	* tests/test-mbrtowc.c: Likewise.
+	* tests/test-mbscasecmp.c: Likewise.
+	* tests/test-mbscasestr1.c: Likewise.
+	* tests/test-mbscasestr2.c: Likewise.
+	* tests/test-mbscasestr3.c: Likewise.
+	* tests/test-mbscasestr4.c: Likewise.
+	* tests/test-mbschr.c: Likewise.
+	* tests/test-mbscspn.c: Likewise.
+	* tests/test-mbsinit.c: Likewise.
+	* tests/test-mbsncasecmp.c: Likewise.
+	* tests/test-mbsnrtowcs.c: Likewise.
+	* tests/test-mbspbrk.c: Likewise.
+	* tests/test-mbspcasecmp.c: Likewise.
+	* tests/test-mbsrchr.c: Likewise.
+	* tests/test-mbsrtowcs.c: Likewise.
+	* tests/test-mbsspn.c: Likewise.
+	* tests/test-mbsstr1.c: Likewise.
+	* tests/test-mbsstr2.c: Likewise.
+	* tests/test-mbsstr3.c: Likewise.
+	* tests/test-memchr.c: Likewise.
+	* tests/test-memchr2.c: Likewise.
+	* tests/test-memcmp.c: Likewise.
+	* tests/test-memmem.c: Likewise.
+	* tests/test-memrchr.c: Likewise.
+	* tests/test-mkdir.c: Likewise.
+	* tests/test-mkdirat.c: Likewise.
+	* tests/test-mkfifo.c: Likewise.
+	* tests/test-mkfifoat.c: Likewise.
+	* tests/test-mknod.c: Likewise.
+	* tests/test-nanosleep.c: Likewise.
+	* tests/test-nl_langinfo.c: Likewise.
+	* tests/test-obstack-printf.c: Likewise.
+	* tests/test-open.c: Likewise.
+	* tests/test-openat.c: Likewise.
+	* tests/test-pipe-filter-gi1.c: Likewise.
+	* tests/test-pipe-filter-gi2-main.c: Likewise.
+	* tests/test-pipe-filter-ii1.c: Likewise.
+	* tests/test-pipe-filter-ii2-main.c: Likewise.
+	* tests/test-pipe2.c: Likewise.
+	* tests/test-popen.h: Likewise.
+	* tests/test-posixtm.c: Likewise.
+	* tests/test-pread.c: Likewise.
+	* tests/test-printf-frexp.c: Likewise.
+	* tests/test-printf-frexpl.c: Likewise.
+	* tests/test-printf-posix.c: Likewise.
+	* tests/test-priv-set.c: Likewise.
+	* tests/test-quotearg.c: Likewise.
+	* tests/test-random_r.c: Likewise.
+	* tests/test-rawmemchr.c: Likewise.
+	* tests/test-rbtree_list.c: Likewise.
+	* tests/test-rbtree_oset.c: Likewise.
+	* tests/test-rbtreehash_list.c: Likewise.
+	* tests/test-readlink.c: Likewise.
+	* tests/test-remove.c: Likewise.
+	* tests/test-rename.c: Likewise.
+	* tests/test-renameat.c: Likewise.
+	* tests/test-rmdir.c: Likewise.
+	* tests/test-round1.c: Likewise.
+	* tests/test-roundf1.c: Likewise.
+	* tests/test-roundl.c: Likewise.
+	* tests/test-safe-alloc.c: Likewise.
+	* tests/test-sameacls.c: Likewise.
+	* tests/test-set-mode-acl.c: Likewise.
+	* tests/test-setenv.c: Likewise.
+	* tests/test-sigaction.c: Likewise.
+	* tests/test-signbit.c: Likewise.
+	* tests/test-sleep.c: Likewise.
+	* tests/test-snprintf-posix.c: Likewise.
+	* tests/test-snprintf.c: Likewise.
+	* tests/test-sprintf-posix.c: Likewise.
+	* tests/test-stat-time.c: Likewise.
+	* tests/test-stat.c: Likewise.
+	* tests/test-strcasestr.c: Likewise.
+	* tests/test-strchrnul.c: Likewise.
+	* tests/test-strerror.c: Likewise.
+	* tests/test-striconv.c: Likewise.
+	* tests/test-striconveh.c: Likewise.
+	* tests/test-striconveha.c: Likewise.
+	* tests/test-strsignal.c: Likewise.
+	* tests/test-strstr.c: Likewise.
+	* tests/test-strtod.c: Likewise.
+	* tests/test-strverscmp.c: Likewise.
+	* tests/test-symlink.c: Likewise.
+	* tests/test-symlinkat.c: Likewise.
+	* tests/test-trunc1.c: Likewise.
+	* tests/test-trunc2.c: Likewise.
+	* tests/test-truncf1.c: Likewise.
+	* tests/test-truncf2.c: Likewise.
+	* tests/test-truncl.c: Likewise.
+	* tests/test-uname.c: Likewise.
+	* tests/test-unlink.c: Likewise.
+	* tests/test-unlinkat.c: Likewise.
+	* tests/test-unsetenv.c: Likewise.
+	* tests/test-usleep.c: Likewise.
+	* tests/test-utimens.c: Likewise.
+	* tests/test-utimensat.c: Likewise.
+	* tests/test-vasnprintf-posix.c: Likewise.
+	* tests/test-vasnprintf-posix2.c: Likewise.
+	* tests/test-vasnprintf.c: Likewise.
+	* tests/test-vasprintf-posix.c: Likewise.
+	* tests/test-vasprintf.c: Likewise.
+	* tests/test-vdprintf-posix.c: Likewise.
+	* tests/test-vfprintf-posix.c: Likewise.
+	* tests/test-vprintf-posix.c: Likewise.
+	* tests/test-vsnprintf-posix.c: Likewise.
+	* tests/test-vsnprintf.c: Likewise.
+	* tests/test-vsprintf-posix.c: Likewise.
+	* tests/test-wcrtomb.c: Likewise.
+	* tests/test-wcsnrtombs.c: Likewise.
+	* tests/test-wcsrtombs.c: Likewise.
+	* tests/test-wctype.c: Likewise.
+	* tests/test-wcwidth.c: Likewise.
+	* tests/test-xfprintf-posix.c: Likewise.
+	* tests/test-xmemdup0.c: Likewise.
+	* tests/test-xprintf-posix.c: Likewise.
+	* tests/test-xvasprintf.c: Likewise.
+	* tests/unicase/test-locale-language.c: Likewise.
+	* tests/unicase/test-mapping-part1.h: Likewise.
+	* tests/unicase/test-predicate-part1.h: Likewise.
+	* tests/unicase/test-u8-casecmp.c: Likewise.
+	* tests/unicase/test-u8-casecoll.c: Likewise.
+	* tests/unicase/test-u8-casefold.c: Likewise.
+	* tests/unicase/test-u8-is-cased.c: Likewise.
+	* tests/unicase/test-u8-is-casefolded.c: Likewise.
+	* tests/unicase/test-u8-is-lowercase.c: Likewise.
+	* tests/unicase/test-u8-is-titlecase.c: Likewise.
+	* tests/unicase/test-u8-is-uppercase.c: Likewise.
+	* tests/unicase/test-u8-tolower.c: Likewise.
+	* tests/unicase/test-u8-totitle.c: Likewise.
+	* tests/unicase/test-u8-toupper.c: Likewise.
+	* tests/unicase/test-u16-casecmp.c: Likewise.
+	* tests/unicase/test-u16-casecoll.c: Likewise.
+	* tests/unicase/test-u16-casefold.c: Likewise.
+	* tests/unicase/test-u16-is-cased.c: Likewise.
+	* tests/unicase/test-u16-is-casefolded.c: Likewise.
+	* tests/unicase/test-u16-is-lowercase.c: Likewise.
+	* tests/unicase/test-u16-is-titlecase.c: Likewise.
+	* tests/unicase/test-u16-is-uppercase.c: Likewise.
+	* tests/unicase/test-u16-tolower.c: Likewise.
+	* tests/unicase/test-u16-totitle.c: Likewise.
+	* tests/unicase/test-u16-toupper.c: Likewise.
+	* tests/unicase/test-u32-casecmp.c: Likewise.
+	* tests/unicase/test-u32-casecoll.c: Likewise.
+	* tests/unicase/test-u32-casefold.c: Likewise.
+	* tests/unicase/test-u32-is-cased.c: Likewise.
+	* tests/unicase/test-u32-is-casefolded.c: Likewise.
+	* tests/unicase/test-u32-is-lowercase.c: Likewise.
+	* tests/unicase/test-u32-is-titlecase.c: Likewise.
+	* tests/unicase/test-u32-is-uppercase.c: Likewise.
+	* tests/unicase/test-u32-tolower.c: Likewise.
+	* tests/unicase/test-u32-totitle.c: Likewise.
+	* tests/unicase/test-u32-toupper.c: Likewise.
+	* tests/unicase/test-ulc-casecmp.c: Likewise.
+	* tests/unicase/test-ulc-casecoll.c: Likewise.
+	* tests/uniconv/test-u8-conv-from-enc.c: Likewise.
+	* tests/uniconv/test-u8-conv-to-enc.c: Likewise.
+	* tests/uniconv/test-u8-strconv-from-enc.c: Likewise.
+	* tests/uniconv/test-u8-strconv-to-enc.c: Likewise.
+	* tests/uniconv/test-u16-conv-from-enc.c: Likewise.
+	* tests/uniconv/test-u16-conv-to-enc.c: Likewise.
+	* tests/uniconv/test-u16-strconv-from-enc.c: Likewise.
+	* tests/uniconv/test-u16-strconv-to-enc.c: Likewise.
+	* tests/uniconv/test-u32-conv-from-enc.c: Likewise.
+	* tests/uniconv/test-u32-conv-to-enc.c: Likewise.
+	* tests/uniconv/test-u32-strconv-from-enc.c: Likewise.
+	* tests/uniconv/test-u32-strconv-to-enc.c: Likewise.
+	* tests/unictype/test-bidi_byname.c: Likewise.
+	* tests/unictype/test-bidi_name.c: Likewise.
+	* tests/unictype/test-bidi_of.c: Likewise.
+	* tests/unictype/test-bidi_test.c: Likewise.
+	* tests/unictype/test-block_list.c: Likewise.
+	* tests/unictype/test-block_of.c: Likewise.
+	* tests/unictype/test-block_test.c: Likewise.
+	* tests/unictype/test-categ_and.c: Likewise.
+	* tests/unictype/test-categ_and_not.c: Likewise.
+	* tests/unictype/test-categ_byname.c: Likewise.
+	* tests/unictype/test-categ_name.c: Likewise.
+	* tests/unictype/test-categ_none.c: Likewise.
+	* tests/unictype/test-categ_of.c: Likewise.
+	* tests/unictype/test-categ_or.c: Likewise.
+	* tests/unictype/test-categ_test_withtable.c: Likewise.
+	* tests/unictype/test-combining.c: Likewise.
+	* tests/unictype/test-decdigit.c: Likewise.
+	* tests/unictype/test-digit.c: Likewise.
+	* tests/unictype/test-mirror.c: Likewise.
+	* tests/unictype/test-numeric.c: Likewise.
+	* tests/unictype/test-pr_byname.c: Likewise.
+	* tests/unictype/test-pr_test.c: Likewise.
+	* tests/unictype/test-predicate-part1.h: Likewise.
+	* tests/unictype/test-scripts.c: Likewise.
+	* tests/unictype/test-sy_c_ident.c: Likewise.
+	* tests/unictype/test-sy_java_ident.c: Likewise.
+	* tests/unilbrk/test-u8-possible-linebreaks.c: Likewise.
+	* tests/unilbrk/test-u8-width-linebreaks.c: Likewise.
+	* tests/unilbrk/test-u16-possible-linebreaks.c: Likewise.
+	* tests/unilbrk/test-u16-width-linebreaks.c: Likewise.
+	* tests/unilbrk/test-u32-possible-linebreaks.c: Likewise.
+	* tests/unilbrk/test-u32-width-linebreaks.c: Likewise.
+	* tests/unilbrk/test-ulc-possible-linebreaks.c: Likewise.
+	* tests/unilbrk/test-ulc-width-linebreaks.c: Likewise.
+	* tests/uninorm/test-canonical-decomposition.c: Likewise.
+	* tests/uninorm/test-compat-decomposition.c: Likewise.
+	* tests/uninorm/test-composition.c: Likewise.
+	* tests/uninorm/test-decomposing-form.c: Likewise.
+	* tests/uninorm/test-decomposition.c: Likewise.
+	* tests/uninorm/test-u8-nfc.c: Likewise.
+	* tests/uninorm/test-u8-nfd.c: Likewise.
+	* tests/uninorm/test-u8-nfkc.c: Likewise.
+	* tests/uninorm/test-u8-nfkd.c: Likewise.
+	* tests/uninorm/test-u8-normcmp.c: Likewise.
+	* tests/uninorm/test-u8-normcoll.c: Likewise.
+	* tests/uninorm/test-u16-nfc.c: Likewise.
+	* tests/uninorm/test-u16-nfd.c: Likewise.
+	* tests/uninorm/test-u16-nfkc.c: Likewise.
+	* tests/uninorm/test-u16-nfkd.c: Likewise.
+	* tests/uninorm/test-u16-normcmp.c: Likewise.
+	* tests/uninorm/test-u16-normcoll.c: Likewise.
+	* tests/uninorm/test-u32-nfc.c: Likewise.
+	* tests/uninorm/test-u32-nfd.c: Likewise.
+	* tests/uninorm/test-u32-nfkc.c: Likewise.
+	* tests/uninorm/test-u32-nfkd.c: Likewise.
+	* tests/uninorm/test-u32-normalize-big.c: Likewise.
+	* tests/uninorm/test-u32-normcmp.c: Likewise.
+	* tests/uninorm/test-u32-normcoll.c: Likewise.
+	* tests/uninorm/test-uninorm-filter-nfc.c: Likewise.
+	* tests/unistdio/test-u8-asnprintf1.c: Likewise.
+	* tests/unistdio/test-u8-vasnprintf1.c: Likewise.
+	* tests/unistdio/test-u8-vasnprintf2.c: Likewise.
+	* tests/unistdio/test-u8-vasnprintf3.c: Likewise.
+	* tests/unistdio/test-u8-vasprintf1.c: Likewise.
+	* tests/unistdio/test-u8-vsnprintf1.c: Likewise.
+	* tests/unistdio/test-u8-vsprintf1.c: Likewise.
+	* tests/unistdio/test-u16-asnprintf1.c: Likewise.
+	* tests/unistdio/test-u16-vasnprintf1.c: Likewise.
+	* tests/unistdio/test-u16-vasnprintf2.c: Likewise.
+	* tests/unistdio/test-u16-vasnprintf3.c: Likewise.
+	* tests/unistdio/test-u16-vasprintf1.c: Likewise.
+	* tests/unistdio/test-u16-vsnprintf1.c: Likewise.
+	* tests/unistdio/test-u16-vsprintf1.c: Likewise.
+	* tests/unistdio/test-u32-asnprintf1.c: Likewise.
+	* tests/unistdio/test-u32-vasnprintf1.c: Likewise.
+	* tests/unistdio/test-u32-vasnprintf2.c: Likewise.
+	* tests/unistdio/test-u32-vasnprintf3.c: Likewise.
+	* tests/unistdio/test-u32-vasprintf1.c: Likewise.
+	* tests/unistdio/test-u32-vsnprintf1.c: Likewise.
+	* tests/unistdio/test-u32-vsprintf1.c: Likewise.
+	* tests/unistdio/test-ulc-asnprintf1.c: Likewise.
+	* tests/unistdio/test-ulc-vasnprintf1.c: Likewise.
+	* tests/unistdio/test-ulc-vasnprintf2.c: Likewise.
+	* tests/unistdio/test-ulc-vasnprintf3.c: Likewise.
+	* tests/unistdio/test-ulc-vasprintf1.c: Likewise.
+	* tests/unistdio/test-ulc-vsnprintf1.c: Likewise.
+	* tests/unistdio/test-ulc-vsprintf1.c: Likewise.
+	* tests/uniwbrk/test-u8-wordbreaks.c: Likewise.
+	* tests/uniwbrk/test-u16-wordbreaks.c: Likewise.
+	* tests/uniwbrk/test-u32-wordbreaks.c: Likewise.
+	* tests/uniwbrk/test-ulc-wordbreaks.c: Likewise.
+	* tests/uniwidth/test-u8-strwidth.c: Likewise.
+	* tests/uniwidth/test-u8-width.c: Likewise.
+	* tests/uniwidth/test-u16-strwidth.c: Likewise.
+	* tests/uniwidth/test-u16-width.c: Likewise.
+	* tests/uniwidth/test-u32-strwidth.c: Likewise.
+	* tests/uniwidth/test-u32-width.c: Likewise.
+	* tests/uniwidth/test-uc_width.c: Likewise.
+	* tests/uniwidth/test-uc_width2.c: Likewise.
+	* modules/acl-tests (Files): Add tests/macros.h.
+	* modules/areadlink-tests (Files): Likewise.
+	* modules/areadlink-with-size-tests (Files): Likewise.
+	* modules/areadlinkat-tests (Files): Likewise.
+	* modules/areadlinkat-with-size-tests (Files): Likewise.
+	* modules/argmatch-tests (Files): Likewise.
+	* modules/argv-iter-tests (Files): Likewise.
+	* modules/array-list-tests (Files): Likewise.
+	* modules/array-mergesort-tests (Files): Likewise.
+	* modules/array-oset-tests (Files): Likewise.
+	* modules/avltree-list-tests (Files): Likewise.
+	* modules/avltree-oset-tests (Files): Likewise.
+	* modules/avltreehash-list-tests (Files): Likewise.
+	* modules/base64-tests (Files): Likewise.
+	* modules/binary-io-tests (Files): Likewise.
+	* modules/bitrotate-tests (Files): Likewise.
+	* modules/btowc-tests (Files): Likewise.
+	* modules/byteswap-tests (Files): Likewise.
+	* modules/c-ctype-tests (Files): Likewise.
+	* modules/c-stack-tests (Files): Likewise.
+	* modules/c-strcase-tests (Files): Likewise.
+	* modules/c-strcasestr-tests (Files): Likewise.
+	* modules/c-strstr-tests (Files): Likewise.
+	* modules/canonicalize-lgpl-tests (Files): Likewise.
+	* modules/canonicalize-tests (Files): Likewise.
+	* modules/carray-list-tests (Files): Likewise.
+	* modules/ceilf-tests (Files): Likewise.
+	* modules/ceill-tests (Files): Likewise.
+	* modules/chown-tests (Files): Likewise.
+	* modules/cloexec-tests (Files): Likewise.
+	* modules/copy-file-tests (Files): Likewise.
+	* modules/count-one-bits-tests (Files): Likewise.
+	* modules/dprintf-posix-tests (Files): Likewise.
+	* modules/dup2-tests (Files): Likewise.
+	* modules/dup3-tests (Files): Likewise.
+	* modules/duplocale-tests (Files): Likewise.
+	* modules/fbufmode-tests (Files): Likewise.
+	* modules/fchdir-tests (Files): Likewise.
+	* modules/fcntl-safer-tests (Files): Likewise.
+	* modules/fcntl-tests (Files): Likewise.
+	* modules/fdopendir-tests (Files): Likewise.
+	* modules/fdutimensat-tests (Files): Likewise.
+	* modules/fflush-tests (Files): Likewise.
+	* modules/filevercmp-tests (Files): Likewise.
+	* modules/flock-tests (Files): Likewise.
+	* modules/floorf-tests (Files): Likewise.
+	* modules/floorl-tests (Files): Likewise.
+	* modules/fnmatch-tests (Files): Likewise.
+	* modules/fopen-safer-tests (Files): Likewise.
+	* modules/fopen-tests (Files): Likewise.
+	* modules/fpending-tests (Files): Likewise.
+	* modules/fprintf-posix-tests (Files): Likewise.
+	* modules/fpurge-tests (Files): Likewise.
+	* modules/freadable-tests (Files): Likewise.
+	* modules/freadahead-tests (Files): Likewise.
+	* modules/freading-tests (Files): Likewise.
+	* modules/freadptr-tests (Files): Likewise.
+	* modules/freadseek-tests (Files): Likewise.
+	* modules/freopen-tests (Files): Likewise.
+	* modules/frexp-nolibm-tests (Files): Likewise.
+	* modules/frexp-tests (Files): Likewise.
+	* modules/frexpl-nolibm-tests (Files): Likewise.
+	* modules/frexpl-tests (Files): Likewise.
+	* modules/fseek-tests (Files): Likewise.
+	* modules/fseeko-tests (Files): Likewise.
+	* modules/fstrcmp-tests (Files): Likewise.
+	* modules/fsync-tests (Files): Likewise.
+	* modules/ftell-tests (Files): Likewise.
+	* modules/ftello-tests (Files): Likewise.
+	* modules/func-tests (Files): Likewise.
+	* modules/futimens-tests (Files): Likewise.
+	* modules/fwritable-tests (Files): Likewise.
+	* modules/fwriting-tests (Files): Likewise.
+	* modules/getcwd-tests (Files): Likewise.
+	* modules/getdate-tests (Files): Likewise.
+	* modules/getdelim-tests (Files): Likewise.
+	* modules/getdtablesize-tests (Files): Likewise.
+	* modules/getgroups-tests (Files): Likewise.
+	* modules/getline-tests (Files): Likewise.
+	* modules/getndelim2-tests (Files): Likewise.
+	* modules/glob-tests (Files): Likewise.
+	* modules/hash-tests (Files): Likewise.
+	* modules/i-ring-tests (Files): Likewise.
+	* modules/iconv-tests (Files): Likewise.
+	* modules/iconv_open-utf-tests (Files): Likewise.
+	* modules/idpriv-drop-tests (Files): Likewise.
+	* modules/idpriv-droptemp-tests (Files): Likewise.
+	* modules/inet_ntop-tests (Files): Likewise.
+	* modules/inet_pton-tests (Files): Likewise.
+	* modules/isblank-tests (Files): Likewise.
+	* modules/isfinite-tests (Files): Likewise.
+	* modules/isinf-tests (Files): Likewise.
+	* modules/isnan-tests (Files): Likewise.
+	* modules/isnand-nolibm-tests (Files): Likewise.
+	* modules/isnand-tests (Files): Likewise.
+	* modules/isnanf-nolibm-tests (Files): Likewise.
+	* modules/isnanf-tests (Files): Likewise.
+	* modules/isnanl-nolibm-tests (Files): Likewise.
+	* modules/isnanl-tests (Files): Likewise.
+	* modules/lchown-tests (Files): Likewise.
+	* modules/ldexpl-tests (Files): Likewise.
+	* modules/link-tests (Files): Likewise.
+	* modules/linkat-tests (Files): Likewise.
+	* modules/linked-list-tests (Files): Likewise.
+	* modules/linkedhash-list-tests (Files): Likewise.
+	* modules/localename-tests (Files): Likewise.
+	* modules/lseek-tests (Files): Likewise.
+	* modules/lstat-tests (Files): Likewise.
+	* modules/mbmemcasecmp-tests (Files): Likewise.
+	* modules/mbmemcasecoll-tests (Files): Likewise.
+	* modules/mbrtowc-tests (Files): Likewise.
+	* modules/mbscasecmp-tests (Files): Likewise.
+	* modules/mbscasestr-tests (Files): Likewise.
+	* modules/mbschr-tests (Files): Likewise.
+	* modules/mbscspn-tests (Files): Likewise.
+	* modules/mbsinit-tests (Files): Likewise.
+	* modules/mbsncasecmp-tests (Files): Likewise.
+	* modules/mbsnrtowcs-tests (Files): Likewise.
+	* modules/mbspbrk-tests (Files): Likewise.
+	* modules/mbspcasecmp-tests (Files): Likewise.
+	* modules/mbsrchr-tests (Files): Likewise.
+	* modules/mbsrtowcs-tests (Files): Likewise.
+	* modules/mbsspn-tests (Files): Likewise.
+	* modules/mbsstr-tests (Files): Likewise.
+	* modules/memchr-tests (Files): Likewise.
+	* modules/memchr2-tests (Files): Likewise.
+	* modules/memcmp-tests (Files): Likewise.
+	* modules/memmem-tests (Files): Likewise.
+	* modules/memrchr-tests (Files): Likewise.
+	* modules/mkdir-tests (Files): Likewise.
+	* modules/mkfifo-tests (Files): Likewise.
+	* modules/mkfifoat-tests (Files): Likewise.
+	* modules/mknod-tests (Files): Likewise.
+	* modules/nanosleep-tests (Files): Likewise.
+	* modules/nl_langinfo-tests (Files): Likewise.
+	* modules/obstack-printf-tests (Files): Likewise.
+	* modules/open-tests (Files): Likewise.
+	* modules/openat-tests (Files): Likewise.
+	* modules/pipe-filter-gi-tests (Files): Likewise.
+	* modules/pipe-filter-ii-tests (Files): Likewise.
+	* modules/pipe2-tests (Files): Likewise.
+	* modules/popen-safer-tests (Files): Likewise.
+	* modules/popen-tests (Files): Likewise.
+	* modules/posixtm-tests (Files): Likewise.
+	* modules/pread-tests (Files): Likewise.
+	* modules/printf-frexp-tests (Files): Likewise.
+	* modules/printf-frexpl-tests (Files): Likewise.
+	* modules/printf-posix-tests (Files): Likewise.
+	* modules/priv-set-tests (Files): Likewise.
+	* modules/quotearg-tests (Files): Likewise.
+	* modules/random_r-tests (Files): Likewise.
+	* modules/rawmemchr-tests (Files): Likewise.
+	* modules/rbtree-list-tests (Files): Likewise.
+	* modules/rbtree-oset-tests (Files): Likewise.
+	* modules/rbtreehash-list-tests (Files): Likewise.
+	* modules/readlink-tests (Files): Likewise.
+	* modules/remove-tests (Files): Likewise.
+	* modules/rename-tests (Files): Likewise.
+	* modules/renameat-tests (Files): Likewise.
+	* modules/rmdir-tests (Files): Likewise.
+	* modules/round-tests (Files): Likewise.
+	* modules/roundf-tests (Files): Likewise.
+	* modules/roundl-tests (Files): Likewise.
+	* modules/safe-alloc-tests (Files): Likewise.
+	* modules/setenv-tests (Files): Likewise.
+	* modules/sigaction-tests (Files): Likewise.
+	* modules/signbit-tests (Files): Likewise.
+	* modules/sleep-tests (Files): Likewise.
+	* modules/snprintf-posix-tests (Files): Likewise.
+	* modules/snprintf-tests (Files): Likewise.
+	* modules/sprintf-posix-tests (Files): Likewise.
+	* modules/stat-tests (Files): Likewise.
+	* modules/stat-time-tests (Files): Likewise.
+	* modules/strcasestr-tests (Files): Likewise.
+	* modules/strchrnul-tests (Files): Likewise.
+	* modules/strerror-tests (Files): Likewise.
+	* modules/striconv-tests (Files): Likewise.
+	* modules/striconveh-tests (Files): Likewise.
+	* modules/striconveha-tests (Files): Likewise.
+	* modules/strsignal-tests (Files): Likewise.
+	* modules/strstr-tests (Files): Likewise.
+	* modules/strtod-tests (Files): Likewise.
+	* modules/strverscmp-tests (Files): Likewise.
+	* modules/symlink-tests (Files): Likewise.
+	* modules/symlinkat-tests (Files): Likewise.
+	* modules/trunc-tests (Files): Likewise.
+	* modules/truncf-tests (Files): Likewise.
+	* modules/truncl-tests (Files): Likewise.
+	* modules/uname-tests (Files): Likewise.
+	* modules/unicase/cased-tests (Files): Likewise.
+	* modules/unicase/ignorable-tests (Files): Likewise.
+	* modules/unicase/locale-language-tests (Files): Likewise.
+	* modules/unicase/tolower-tests (Files): Likewise.
+	* modules/unicase/totitle-tests (Files): Likewise.
+	* modules/unicase/toupper-tests (Files): Likewise.
+	* modules/unicase/u8-casecmp-tests (Files): Likewise.
+	* modules/unicase/u8-casecoll-tests (Files): Likewise.
+	* modules/unicase/u8-casefold-tests (Files): Likewise.
+	* modules/unicase/u8-is-cased-tests (Files): Likewise.
+	* modules/unicase/u8-is-casefolded-tests (Files): Likewise.
+	* modules/unicase/u8-is-lowercase-tests (Files): Likewise.
+	* modules/unicase/u8-is-titlecase-tests (Files): Likewise.
+	* modules/unicase/u8-is-uppercase-tests (Files): Likewise.
+	* modules/unicase/u8-tolower-tests (Files): Likewise.
+	* modules/unicase/u8-totitle-tests (Files): Likewise.
+	* modules/unicase/u8-toupper-tests (Files): Likewise.
+	* modules/unicase/u16-casecmp-tests (Files): Likewise.
+	* modules/unicase/u16-casecoll-tests (Files): Likewise.
+	* modules/unicase/u16-casefold-tests (Files): Likewise.
+	* modules/unicase/u16-is-cased-tests (Files): Likewise.
+	* modules/unicase/u16-is-casefolded-tests (Files): Likewise.
+	* modules/unicase/u16-is-lowercase-tests (Files): Likewise.
+	* modules/unicase/u16-is-titlecase-tests (Files): Likewise.
+	* modules/unicase/u16-is-uppercase-tests (Files): Likewise.
+	* modules/unicase/u16-tolower-tests (Files): Likewise.
+	* modules/unicase/u16-totitle-tests (Files): Likewise.
+	* modules/unicase/u16-toupper-tests (Files): Likewise.
+	* modules/unicase/u32-casecmp-tests (Files): Likewise.
+	* modules/unicase/u32-casecoll-tests (Files): Likewise.
+	* modules/unicase/u32-casefold-tests (Files): Likewise.
+	* modules/unicase/u32-is-cased-tests (Files): Likewise.
+	* modules/unicase/u32-is-casefolded-tests (Files): Likewise.
+	* modules/unicase/u32-is-lowercase-tests (Files): Likewise.
+	* modules/unicase/u32-is-titlecase-tests (Files): Likewise.
+	* modules/unicase/u32-is-uppercase-tests (Files): Likewise.
+	* modules/unicase/u32-tolower-tests (Files): Likewise.
+	* modules/unicase/u32-totitle-tests (Files): Likewise.
+	* modules/unicase/u32-toupper-tests (Files): Likewise.
+	* modules/unicase/ulc-casecmp-tests (Files): Likewise.
+	* modules/unicase/ulc-casecoll-tests (Files): Likewise.
+	* modules/uniconv/u8-conv-from-enc-tests (Files): Likewise.
+	* modules/uniconv/u8-conv-to-enc-tests (Files): Likewise.
+	* modules/uniconv/u8-strconv-from-enc-tests (Files): Likewise.
+	* modules/uniconv/u8-strconv-to-enc-tests (Files): Likewise.
+	* modules/uniconv/u16-conv-from-enc-tests (Files): Likewise.
+	* modules/uniconv/u16-conv-to-enc-tests (Files): Likewise.
+	* modules/uniconv/u16-strconv-from-enc-tests (Files): Likewise.
+	* modules/uniconv/u16-strconv-to-enc-tests (Files): Likewise.
+	* modules/uniconv/u32-conv-from-enc-tests (Files): Likewise.
+	* modules/uniconv/u32-conv-to-enc-tests (Files): Likewise.
+	* modules/uniconv/u32-strconv-from-enc-tests (Files): Likewise.
+	* modules/uniconv/u32-strconv-to-enc-tests (Files): Likewise.
+	* modules/unictype/bidicategory-byname-tests (Files): Likewise.
+	* modules/unictype/bidicategory-name-tests (Files): Likewise.
+	* modules/unictype/bidicategory-of-tests (Files): Likewise.
+	* modules/unictype/bidicategory-test-tests (Files): Likewise.
+	* modules/unictype/block-list-tests (Files): Likewise.
+	* modules/unictype/block-of-tests (Files): Likewise.
+	* modules/unictype/block-test-tests (Files): Likewise.
+	* modules/unictype/category-C-tests (Files): Likewise.
+	* modules/unictype/category-Cc-tests (Files): Likewise.
+	* modules/unictype/category-Cf-tests (Files): Likewise.
+	* modules/unictype/category-Cn-tests (Files): Likewise.
+	* modules/unictype/category-Co-tests (Files): Likewise.
+	* modules/unictype/category-Cs-tests (Files): Likewise.
+	* modules/unictype/category-L-tests (Files): Likewise.
+	* modules/unictype/category-Ll-tests (Files): Likewise.
+	* modules/unictype/category-Lm-tests (Files): Likewise.
+	* modules/unictype/category-Lo-tests (Files): Likewise.
+	* modules/unictype/category-Lt-tests (Files): Likewise.
+	* modules/unictype/category-Lu-tests (Files): Likewise.
+	* modules/unictype/category-M-tests (Files): Likewise.
+	* modules/unictype/category-Mc-tests (Files): Likewise.
+	* modules/unictype/category-Me-tests (Files): Likewise.
+	* modules/unictype/category-Mn-tests (Files): Likewise.
+	* modules/unictype/category-N-tests (Files): Likewise.
+	* modules/unictype/category-Nd-tests (Files): Likewise.
+	* modules/unictype/category-Nl-tests (Files): Likewise.
+	* modules/unictype/category-No-tests (Files): Likewise.
+	* modules/unictype/category-P-tests (Files): Likewise.
+	* modules/unictype/category-Pc-tests (Files): Likewise.
+	* modules/unictype/category-Pd-tests (Files): Likewise.
+	* modules/unictype/category-Pe-tests (Files): Likewise.
+	* modules/unictype/category-Pf-tests (Files): Likewise.
+	* modules/unictype/category-Pi-tests (Files): Likewise.
+	* modules/unictype/category-Po-tests (Files): Likewise.
+	* modules/unictype/category-Ps-tests (Files): Likewise.
+	* modules/unictype/category-S-tests (Files): Likewise.
+	* modules/unictype/category-Sc-tests (Files): Likewise.
+	* modules/unictype/category-Sk-tests (Files): Likewise.
+	* modules/unictype/category-Sm-tests (Files): Likewise.
+	* modules/unictype/category-So-tests (Files): Likewise.
+	* modules/unictype/category-Z-tests (Files): Likewise.
+	* modules/unictype/category-Zl-tests (Files): Likewise.
+	* modules/unictype/category-Zp-tests (Files): Likewise.
+	* modules/unictype/category-Zs-tests (Files): Likewise.
+	* modules/unictype/category-and-not-tests (Files): Likewise.
+	* modules/unictype/category-and-tests (Files): Likewise.
+	* modules/unictype/category-byname-tests (Files): Likewise.
+	* modules/unictype/category-name-tests (Files): Likewise.
+	* modules/unictype/category-none-tests (Files): Likewise.
+	* modules/unictype/category-of-tests (Files): Likewise.
+	* modules/unictype/category-or-tests (Files): Likewise.
+	* modules/unictype/category-test-withtable-tests (Files): Likewise.
+	* modules/unictype/combining-class-tests (Files): Likewise.
+	* modules/unictype/ctype-alnum-tests (Files): Likewise.
+	* modules/unictype/ctype-alpha-tests (Files): Likewise.
+	* modules/unictype/ctype-blank-tests (Files): Likewise.
+	* modules/unictype/ctype-cntrl-tests (Files): Likewise.
+	* modules/unictype/ctype-digit-tests (Files): Likewise.
+	* modules/unictype/ctype-graph-tests (Files): Likewise.
+	* modules/unictype/ctype-lower-tests (Files): Likewise.
+	* modules/unictype/ctype-print-tests (Files): Likewise.
+	* modules/unictype/ctype-punct-tests (Files): Likewise.
+	* modules/unictype/ctype-space-tests (Files): Likewise.
+	* modules/unictype/ctype-upper-tests (Files): Likewise.
+	* modules/unictype/ctype-xdigit-tests (Files): Likewise.
+	* modules/unictype/decimal-digit-tests (Files): Likewise.
+	* modules/unictype/digit-tests (Files): Likewise.
+	* modules/unictype/mirror-tests (Files): Likewise.
+	* modules/unictype/numeric-tests (Files): Likewise.
+	* modules/unictype/property-alphabetic-tests (Files): Likewise.
+	* modules/unictype/property-ascii-hex-digit-tests (Files): Likewise.
+	* modules/unictype/property-bidi-arabic-digit-tests (Files): Likewise.
+	* modules/unictype/property-bidi-arabic-right-to-left-tests (Files):
+	Likewise.
+	* modules/unictype/property-bidi-block-separator-tests (Files):
+	Likewise.
+	* modules/unictype/property-bidi-boundary-neutral-tests (Files):
+	Likewise.
+	* modules/unictype/property-bidi-common-separator-tests (Files):
+	Likewise.
+	* modules/unictype/property-bidi-control-tests (Files): Likewise.
+	* modules/unictype/property-bidi-embedding-or-override-tests (Files):
+	Likewise.
+	* modules/unictype/property-bidi-eur-num-separator-tests (Files):
+	Likewise.
+	* modules/unictype/property-bidi-eur-num-terminator-tests (Files):
+	Likewise.
+	* modules/unictype/property-bidi-european-digit-tests (Files): Likewise.
+	* modules/unictype/property-bidi-hebrew-right-to-left-tests (Files):
+	Likewise.
+	* modules/unictype/property-bidi-left-to-right-tests (Files): Likewise.
+	* modules/unictype/property-bidi-non-spacing-mark-tests (Files):
+	Likewise.
+	* modules/unictype/property-bidi-other-neutral-tests (Files): Likewise.
+	* modules/unictype/property-bidi-pdf-tests (Files): Likewise.
+	* modules/unictype/property-bidi-segment-separator-tests (Files):
+	Likewise.
+	* modules/unictype/property-bidi-whitespace-tests (Files): Likewise.
+	* modules/unictype/property-byname-tests (Files): Likewise.
+	* modules/unictype/property-combining-tests (Files): Likewise.
+	* modules/unictype/property-composite-tests (Files): Likewise.
+	* modules/unictype/property-currency-symbol-tests (Files): Likewise.
+	* modules/unictype/property-dash-tests (Files): Likewise.
+	* modules/unictype/property-decimal-digit-tests (Files): Likewise.
+	* modules/unictype/property-default-ignorable-code-point-tests (Files):
+	Likewise.
+	* modules/unictype/property-deprecated-tests (Files): Likewise.
+	* modules/unictype/property-diacritic-tests (Files): Likewise.
+	* modules/unictype/property-extender-tests (Files): Likewise.
+	* modules/unictype/property-format-control-tests (Files): Likewise.
+	* modules/unictype/property-grapheme-base-tests (Files): Likewise.
+	* modules/unictype/property-grapheme-extend-tests (Files): Likewise.
+	* modules/unictype/property-grapheme-link-tests (Files): Likewise.
+	* modules/unictype/property-hex-digit-tests (Files): Likewise.
+	* modules/unictype/property-hyphen-tests (Files): Likewise.
+	* modules/unictype/property-id-continue-tests (Files): Likewise.
+	* modules/unictype/property-id-start-tests (Files): Likewise.
+	* modules/unictype/property-ideographic-tests (Files): Likewise.
+	* modules/unictype/property-ids-binary-operator-tests (Files): Likewise.
+	* modules/unictype/property-ids-trinary-operator-tests (Files):
+	Likewise.
+	* modules/unictype/property-ignorable-control-tests (Files): Likewise.
+	* modules/unictype/property-iso-control-tests (Files): Likewise.
+	* modules/unictype/property-join-control-tests (Files): Likewise.
+	* modules/unictype/property-left-of-pair-tests (Files): Likewise.
+	* modules/unictype/property-line-separator-tests (Files): Likewise.
+	* modules/unictype/property-logical-order-exception-tests (Files):
+	Likewise.
+	* modules/unictype/property-lowercase-tests (Files): Likewise.
+	* modules/unictype/property-math-tests (Files): Likewise.
+	* modules/unictype/property-non-break-tests (Files): Likewise.
+	* modules/unictype/property-not-a-character-tests (Files): Likewise.
+	* modules/unictype/property-numeric-tests (Files): Likewise.
+	* modules/unictype/property-other-alphabetic-tests (Files): Likewise.
+	* modules/unictype/property-other-default-ignorable-code-point-tests
+	(Files): Likewise.
+	* modules/unictype/property-other-grapheme-extend-tests (Files):
+	Likewise.
+	* modules/unictype/property-other-id-continue-tests (Files): Likewise.
+	* modules/unictype/property-other-id-start-tests (Files): Likewise.
+	* modules/unictype/property-other-lowercase-tests (Files): Likewise.
+	* modules/unictype/property-other-math-tests (Files): Likewise.
+	* modules/unictype/property-other-uppercase-tests (Files): Likewise.
+	* modules/unictype/property-paired-punctuation-tests (Files): Likewise.
+	* modules/unictype/property-paragraph-separator-tests (Files): Likewise.
+	* modules/unictype/property-pattern-syntax-tests (Files): Likewise.
+	* modules/unictype/property-pattern-white-space-tests (Files): Likewise.
+	* modules/unictype/property-private-use-tests (Files): Likewise.
+	* modules/unictype/property-punctuation-tests (Files): Likewise.
+	* modules/unictype/property-quotation-mark-tests (Files): Likewise.
+	* modules/unictype/property-radical-tests (Files): Likewise.
+	* modules/unictype/property-sentence-terminal-tests (Files): Likewise.
+	* modules/unictype/property-soft-dotted-tests (Files): Likewise.
+	* modules/unictype/property-space-tests (Files): Likewise.
+	* modules/unictype/property-terminal-punctuation-tests (Files):
+	Likewise.
+	* modules/unictype/property-test-tests (Files): Likewise.
+	* modules/unictype/property-titlecase-tests (Files): Likewise.
+	* modules/unictype/property-unassigned-code-value-tests (Files):
+	Likewise.
+	* modules/unictype/property-unified-ideograph-tests (Files): Likewise.
+	* modules/unictype/property-uppercase-tests (Files): Likewise.
+	* modules/unictype/property-variation-selector-tests (Files): Likewise.
+	* modules/unictype/property-white-space-tests (Files): Likewise.
+	* modules/unictype/property-xid-continue-tests (Files): Likewise.
+	* modules/unictype/property-xid-start-tests (Files): Likewise.
+	* modules/unictype/property-zero-width-tests (Files): Likewise.
+	* modules/unictype/scripts-tests (Files): Likewise.
+	* modules/unictype/syntax-c-ident-tests (Files): Likewise.
+	* modules/unictype/syntax-c-whitespace-tests (Files): Likewise.
+	* modules/unictype/syntax-java-ident-tests (Files): Likewise.
+	* modules/unictype/syntax-java-whitespace-tests (Files): Likewise.
+	* modules/unilbrk/u8-possible-linebreaks-tests (Files): Likewise.
+	* modules/unilbrk/u8-width-linebreaks-tests (Files): Likewise.
+	* modules/unilbrk/u16-possible-linebreaks-tests (Files): Likewise.
+	* modules/unilbrk/u16-width-linebreaks-tests (Files): Likewise.
+	* modules/unilbrk/u32-possible-linebreaks-tests (Files): Likewise.
+	* modules/unilbrk/u32-width-linebreaks-tests (Files): Likewise.
+	* modules/unilbrk/ulc-possible-linebreaks-tests (Files): Likewise.
+	* modules/unilbrk/ulc-width-linebreaks-tests (Files): Likewise.
+	* modules/uninorm/canonical-decomposition-tests (Files): Likewise.
+	* modules/uninorm/compat-decomposition-tests (Files): Likewise.
+	* modules/uninorm/composition-tests (Files): Likewise.
+	* modules/uninorm/decomposing-form-tests (Files): Likewise.
+	* modules/uninorm/decomposition-tests (Files): Likewise.
+	* modules/uninorm/filter-tests (Files): Likewise.
+	* modules/uninorm/nfc-tests (Files): Likewise.
+	* modules/uninorm/nfd-tests (Files): Likewise.
+	* modules/uninorm/nfkc-tests (Files): Likewise.
+	* modules/uninorm/nfkd-tests (Files): Likewise.
+	* modules/uninorm/u8-normcmp-tests (Files): Likewise.
+	* modules/uninorm/u8-normcoll-tests (Files): Likewise.
+	* modules/uninorm/u16-normcmp-tests (Files): Likewise.
+	* modules/uninorm/u16-normcoll-tests (Files): Likewise.
+	* modules/uninorm/u32-normcmp-tests (Files): Likewise.
+	* modules/uninorm/u32-normcoll-tests (Files): Likewise.
+	* modules/unistdio/u8-asnprintf-tests (Files): Likewise.
+	* modules/unistdio/u8-vasnprintf-tests (Files): Likewise.
+	* modules/unistdio/u8-vasprintf-tests (Files): Likewise.
+	* modules/unistdio/u8-vsnprintf-tests (Files): Likewise.
+	* modules/unistdio/u8-vsprintf-tests (Files): Likewise.
+	* modules/unistdio/u16-asnprintf-tests (Files): Likewise.
+	* modules/unistdio/u16-vasnprintf-tests (Files): Likewise.
+	* modules/unistdio/u16-vasprintf-tests (Files): Likewise.
+	* modules/unistdio/u16-vsnprintf-tests (Files): Likewise.
+	* modules/unistdio/u16-vsprintf-tests (Files): Likewise.
+	* modules/unistdio/u32-asnprintf-tests (Files): Likewise.
+	* modules/unistdio/u32-vasnprintf-tests (Files): Likewise.
+	* modules/unistdio/u32-vasprintf-tests (Files): Likewise.
+	* modules/unistdio/u32-vsnprintf-tests (Files): Likewise.
+	* modules/unistdio/u32-vsprintf-tests (Files): Likewise.
+	* modules/unistdio/ulc-asnprintf-tests (Files): Likewise.
+	* modules/unistdio/ulc-vasnprintf-tests (Files): Likewise.
+	* modules/unistdio/ulc-vasprintf-tests (Files): Likewise.
+	* modules/unistdio/ulc-vsnprintf-tests (Files): Likewise.
+	* modules/unistdio/ulc-vsprintf-tests (Files): Likewise.
+	* modules/uniwbrk/u8-wordbreaks-tests (Files): Likewise.
+	* modules/uniwbrk/u16-wordbreaks-tests (Files): Likewise.
+	* modules/uniwbrk/u32-wordbreaks-tests (Files): Likewise.
+	* modules/uniwbrk/ulc-wordbreaks-tests (Files): Likewise.
+	* modules/uniwidth/u8-strwidth-tests (Files): Likewise.
+	* modules/uniwidth/u8-width-tests (Files): Likewise.
+	* modules/uniwidth/u16-strwidth-tests (Files): Likewise.
+	* modules/uniwidth/u16-width-tests (Files): Likewise.
+	* modules/uniwidth/u32-strwidth-tests (Files): Likewise.
+	* modules/uniwidth/u32-width-tests (Files): Likewise.
+	* modules/uniwidth/width-tests (Files): Likewise.
+	* modules/unlink-tests (Files): Likewise.
+	* modules/unsetenv-tests (Files): Likewise.
+	* modules/usleep-tests (Files): Likewise.
+	* modules/utimens-tests (Files): Likewise.
+	* modules/utimensat-tests (Files): Likewise.
+	* modules/vasnprintf-posix-tests (Files): Likewise.
+	* modules/vasnprintf-tests (Files): Likewise.
+	* modules/vasprintf-posix-tests (Files): Likewise.
+	* modules/vasprintf-tests (Files): Likewise.
+	* modules/vdprintf-posix-tests (Files): Likewise.
+	* modules/vfprintf-posix-tests (Files): Likewise.
+	* modules/vprintf-posix-tests (Files): Likewise.
+	* modules/vsnprintf-posix-tests (Files): Likewise.
+	* modules/vsnprintf-tests (Files): Likewise.
+	* modules/vsprintf-posix-tests (Files): Likewise.
+	* modules/wcrtomb-tests (Files): Likewise.
+	* modules/wcsnrtombs-tests (Files): Likewise.
+	* modules/wcsrtombs-tests (Files): Likewise.
+	* modules/wctype-tests (Files): Likewise.
+	* modules/wcwidth-tests (Files): Likewise.
+	* modules/xmemdup0-tests (Files): Likewise.
+	* modules/xprintf-posix-tests (Files): Likewise.
+	* modules/xvasprintf-tests (Files): Likewise.
+
 2009-12-24  Eric Blake  <ebb9@byu.net>
 
 	test-nanosleep: fix typo

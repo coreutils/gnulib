@@ -1,6 +1,7 @@
 Files:
-tests/signature.h
 tests/test-obstack-printf.c
+tests/signature.h
+tests/macros.h
 
 Depends-on:
 progname

@@ -24,21 +24,9 @@
 SIGNATURE_CHECK (sigaction, int, (int, struct sigaction const *,
                                   struct sigaction *));
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <stddef.h>
 
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);                                                   \
-          signal (SIGABRT, SIG_DFL);                                         \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
+#include "macros.h"
 
 #ifndef SA_NOCLDSTOP
 # define SA_NOCLDSTOP 0

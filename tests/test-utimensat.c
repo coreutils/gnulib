@@ -35,18 +35,7 @@ SIGNATURE_CHECK (utimensat, int, (int, char const *, struct timespec const[2],
 #include "stat-time.h"
 #include "timespec.h"
 #include "utimecmp.h"
-
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__);  \
-          fflush (stderr);                                                   \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
+#include "macros.h"
 
 #define BASE "test-utimensat.t"
 

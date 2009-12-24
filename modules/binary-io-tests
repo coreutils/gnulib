@@ -1,6 +1,7 @@
 Files:
 tests/test-binary-io.sh
 tests/test-binary-io.c
+tests/macros.h
 
 Depends-on:
 

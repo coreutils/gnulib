@@ -19,13 +19,13 @@
 
 #include "gl_array_oset.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "gl_xlist.h"
 #include "gl_array_list.h"
 #include "progname.h"
+#include "macros.h"
 
 static const char *objects[30] =
   {
@@ -33,18 +33,6 @@ static const char *objects[30] =
     "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "<", ">", "[", "]"
   };
 
-#define SIZEOF(array) (sizeof (array) / sizeof (array[0]))
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);                                                   \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
 #define RANDOM(n) (rand () % (n))
 #define RANDOM_OBJECT() objects[RANDOM (SIZEOF (objects))]
 

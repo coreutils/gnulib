@@ -1,5 +1,6 @@
 Files:
 tests/test-i-ring.c
+tests/macros.h
 
 Depends-on:
 

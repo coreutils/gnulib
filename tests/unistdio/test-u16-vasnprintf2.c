@@ -1,5 +1,5 @@
 /* Test of u16_vasnprintf() function in an ISO-8859-1 locale.
-   Copyright (C) 2007-2008 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -22,25 +22,12 @@
 
 #include <locale.h>
 #include <stdarg.h>
-#include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "unistr.h"
-
-#define SIZEOF(array) (sizeof (array) / sizeof (array[0]))
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);                                                   \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
+#include "macros.h"
 
 static void
 test_function (uint16_t * (*my_asnprintf) (uint16_t *, size_t *, const char *, ...))

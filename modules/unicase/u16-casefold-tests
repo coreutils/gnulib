@@ -1,5 +1,6 @@
 Files:
 tests/unicase/test-u16-casefold.c
+tests/macros.h
 
 Depends-on:
 unistr/u16-cmp

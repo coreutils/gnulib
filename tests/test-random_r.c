@@ -25,20 +25,9 @@ SIGNATURE_CHECK (initstate_r, int, (unsigned int, char *, size_t,
 SIGNATURE_CHECK (setstate_r, int, (char *, struct random_data *));
 SIGNATURE_CHECK (random_r, int, (struct random_data *, int32_t *));
 
-#include <stdio.h>
 #include <time.h>
 
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);                                                   \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
+#include "macros.h"
 
 int
 main ()

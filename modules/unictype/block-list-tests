@@ -1,5 +1,6 @@
 Files:
 tests/unictype/test-block_list.c
+tests/macros.h
 
 Depends-on:
 

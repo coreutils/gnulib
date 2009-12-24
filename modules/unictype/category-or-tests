@@ -1,5 +1,6 @@
 Files:
 tests/unictype/test-categ_or.c
+tests/macros.h
 
 Depends-on:
 unictype/category-test

@@ -22,24 +22,11 @@
 
 #include <stdarg.h>
 #include <stddef.h>
-#include <stdio.h>
 #include <stdint.h>
-#include <stdlib.h>
 #include <string.h>
 
 #include "progname.h"
-
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);                                                   \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
+#include "macros.h"
 
 #include "test-fprintf-posix.h"
 

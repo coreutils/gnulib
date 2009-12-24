@@ -4,6 +4,7 @@ tests/test-mbsstr2.sh
 tests/test-mbsstr2.c
 tests/test-mbsstr3.sh
 tests/test-mbsstr3.c
+tests/macros.h
 m4/locale-fr.m4
 m4/locale-zh.m4
 m4/codeset.m4

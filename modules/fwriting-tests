@@ -1,5 +1,6 @@
 Files:
 tests/test-fwriting.c
+tests/macros.h
 
 Depends-on:
 fflush

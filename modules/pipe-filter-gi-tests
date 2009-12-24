@@ -5,6 +5,7 @@ tests/test-vasnprintf-posix.c
 tests/test-pipe-filter-gi2.sh
 tests/test-pipe-filter-gi2-main.c
 tests/test-pipe-filter-gi2-child.c
+tests/macros.h
 
 Depends-on:
 binary-io

@@ -1,6 +1,7 @@
 Files:
 tests/unictype/test-numeric.c
 tests/unictype/test-numeric.h
+tests/macros.h
 
 Depends-on:
 

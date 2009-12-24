@@ -1,5 +1,6 @@
 Files:
 tests/uninorm/test-compat-decomposition.c
+tests/macros.h
 
 Depends-on:
 

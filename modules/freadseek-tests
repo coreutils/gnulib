@@ -1,6 +1,7 @@
 Files:
 tests/test-freadseek.c
 tests/test-freadseek.sh
+tests/macros.h
 
 Depends-on:
 unistd

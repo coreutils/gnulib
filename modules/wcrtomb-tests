@@ -1,7 +1,8 @@
 Files:
-tests/signature.h
 tests/test-wcrtomb.sh
 tests/test-wcrtomb.c
+tests/signature.h
+tests/macros.h
 m4/locale-fr.m4
 m4/locale-ja.m4
 m4/locale-zh.m4

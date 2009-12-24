@@ -1,6 +1,7 @@
 Files:
 tests/test-fopen.h
 tests/test-fopen-safer.c
+tests/macros.h
 
 Depends-on:
 

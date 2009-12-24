@@ -3,6 +3,7 @@ m4/exponentf.m4
 m4/exponentd.m4
 m4/exponentl.m4
 tests/test-isinf.c
+tests/macros.h
 
 Depends-on:
 float

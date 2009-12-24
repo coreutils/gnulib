@@ -1,8 +1,9 @@
 Files:
-tests/signature.h
 tests/test-readlink.h
 tests/test-symlink.h
 tests/test-symlinkat.c
+tests/signature.h
+tests/macros.h
 
 Depends-on:
 

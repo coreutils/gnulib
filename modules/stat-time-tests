@@ -1,5 +1,6 @@
 Files:
 tests/test-stat-time.c
+tests/macros.h
 
 Depends-on:
 time

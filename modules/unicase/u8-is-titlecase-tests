@@ -1,6 +1,7 @@
 Files:
 tests/unicase/test-u8-is-titlecase.c
 tests/unicase/test-is-titlecase.h
+tests/macros.h
 
 Depends-on:
 

@@ -28,8 +28,6 @@ SIGNATURE_CHECK (fcntl, int, (int, int, ...));
 #include <errno.h>
 #include <stdarg.h>
 #include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
@@ -39,6 +37,7 @@ SIGNATURE_CHECK (fcntl, int, (int, int, ...));
 #endif
 
 #include "binary-io.h"
+#include "macros.h"
 
 /* Use O_CLOEXEC if available, but test works without it.  */
 #ifndef O_CLOEXEC
@@ -49,18 +48,6 @@ SIGNATURE_CHECK (fcntl, int, (int, int, ...));
 # define setmode(f,m) zero ()
 static int zero (void) { return 0; }
 #endif
-
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);                                                   \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
 
 /* Return true if FD is open.  */
 static bool

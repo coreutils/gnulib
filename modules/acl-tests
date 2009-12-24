@@ -6,6 +6,7 @@ tests/test-file-has-acl.c
 tests/test-set-mode-acl.c
 tests/test-copy-acl.c
 tests/test-sameacls.c
+tests/macros.h
 
 Depends-on:
 progname

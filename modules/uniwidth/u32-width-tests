@@ -1,5 +1,6 @@
 Files:
 tests/uniwidth/test-u32-width.c
+tests/macros.h
 
 Depends-on:
 

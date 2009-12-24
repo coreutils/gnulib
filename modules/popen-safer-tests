@@ -2,6 +2,7 @@ Files:
 tests/test-popen.h
 tests/test-popen-safer.c
 tests/test-popen-safer2.c
+tests/macros.h
 
 Depends-on:
 dup2

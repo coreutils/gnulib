@@ -1,5 +1,4 @@
 Files:
-tests/signature.h
 tests/test-fprintf-posix.sh
 tests/test-fprintf-posix.c
 tests/test-fprintf-posix.h
@@ -8,6 +7,8 @@ tests/test-fprintf-posix2.sh
 tests/test-fprintf-posix2.c
 tests/test-fprintf-posix3.sh
 tests/test-fprintf-posix3.c
+tests/signature.h
+tests/macros.h
 
 Depends-on:
 stdint

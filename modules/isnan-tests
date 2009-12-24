@@ -1,6 +1,7 @@
 Files:
 tests/test-isnan.c
 tests/nan.h
+tests/macros.h
 
 Depends-on:
 float

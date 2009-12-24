@@ -2,6 +2,7 @@ Files:
 tests/uniwidth/test-uc_width.c
 tests/uniwidth/test-uc_width2.c
 tests/uniwidth/test-uc_width2.sh
+tests/macros.h
 
 Depends-on:
 

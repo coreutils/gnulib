@@ -30,17 +30,7 @@ SIGNATURE_CHECK (mkdir, int, (char const *, mode_t));
 #include <stdlib.h>
 #include <unistd.h>
 
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__);  \
-          fflush (stderr);                                                   \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
+#include "macros.h"
 
 #define BASE "test-mkdir.t"
 

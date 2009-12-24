@@ -23,19 +23,7 @@
 #include "signature.h"
 SIGNATURE_CHECK (fseek, int, (FILE *, long, int));
 
-#include <stdlib.h>
-
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);                                                   \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
+#include "macros.h"
 
 #ifndef FUNC_UNGETC_BROKEN
 # define FUNC_UNGETC_BROKEN 0

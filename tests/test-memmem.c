@@ -23,23 +23,11 @@
 SIGNATURE_CHECK (memmem, void *, (void const *, size_t, void const *, size_t));
 
 #include <signal.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
 #include "zerosize-ptr.h"
-
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);                                                   \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
+#include "macros.h"
 
 static void *
 null_ptr (void)

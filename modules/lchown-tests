@@ -1,8 +1,9 @@
 Files:
-tests/signature.h
 tests/nap.h
 tests/test-lchown.h
 tests/test-lchown.c
+tests/signature.h
+tests/macros.h
 
 Depends-on:
 mgetgroups

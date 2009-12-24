@@ -1,8 +1,9 @@
 Files:
-tests/signature.h
 tests/test-ftell.c
 tests/test-ftell.sh
 tests/test-ftell2.sh
+tests/signature.h
+tests/macros.h
 m4/ungetc.m4
 
 Depends-on:

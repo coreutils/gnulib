@@ -1,5 +1,6 @@
 Files:
 tests/test-priv-set.c
+tests/macros.h
 
 Depends-on:
 

@@ -24,24 +24,11 @@
 SIGNATURE_CHECK (ceill, long double, (long double));
 
 #include <float.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 #include "fpucw.h"
 #include "isnanl-nolibm.h"
 #include "nan.h"
-
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);                                                   \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
+#include "macros.h"
 
 /* On HP-UX 10.20, negating 0.0L does not yield -0.0L.
    So we use minus_zero instead.

@@ -1,6 +1,7 @@
 Files:
 tests/uninorm/test-u16-normcoll.c
 tests/uninorm/test-u16-normcmp.h
+tests/macros.h
 
 Depends-on:
 uninorm/nfc

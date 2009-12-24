@@ -1,6 +1,7 @@
 Files:
 tests/uniwbrk/test-ulc-wordbreaks.sh
 tests/uniwbrk/test-ulc-wordbreaks.c
+tests/macros.h
 m4/locale-fr.m4
 m4/codeset.m4
 

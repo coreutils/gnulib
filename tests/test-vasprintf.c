@@ -28,17 +28,7 @@ SIGNATURE_CHECK (vasprintf, int, (char **, char const *, va_list));
 #include <stdlib.h>
 #include <string.h>
 
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);                                                   \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
+#include "macros.h"
 
 static int
 my_asprintf (char **result, const char *format, ...)

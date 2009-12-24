@@ -4,6 +4,7 @@ tests/test-mbmemcasecoll2.sh
 tests/test-mbmemcasecoll3.sh
 tests/test-mbmemcasecoll.c
 tests/test-mbmemcasecmp.h
+tests/macros.h
 m4/locale-fr.m4
 m4/locale-tr.m4
 m4/codeset.m4

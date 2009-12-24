@@ -1,5 +1,6 @@
 Files:
 tests/unicase/test-u16-tolower.c
+tests/macros.h
 
 Depends-on:
 unistr/u16-cmp

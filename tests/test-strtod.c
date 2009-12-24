@@ -25,22 +25,10 @@ SIGNATURE_CHECK (strtod, double, (char const *, char **));
 #include <errno.h>
 #include <float.h>
 #include <math.h>
-#include <stdio.h>
 #include <string.h>
 
 #include "isnand-nolibm.h"
-
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);                                                   \
-          /* FIXME abort ();*/status = 1;                               \
-        }                                                                    \
-    }                                                                        \
-  while (0)
+#include "macros.h"
 
 /* Avoid requiring -lm just for fabs.  */
 #define FABS(d) ((d) < 0.0 ? -(d) : (d))

@@ -1,5 +1,6 @@
 Files:
 tests/test-cloexec.c
+tests/macros.h
 
 Depends-on:
 binary-io

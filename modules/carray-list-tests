@@ -1,5 +1,6 @@
 Files:
 tests/test-carray_list.c
+tests/macros.h
 
 Depends-on:
 array-list

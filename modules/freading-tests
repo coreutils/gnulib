@@ -1,5 +1,6 @@
 Files:
 tests/test-freading.c
+tests/macros.h
 
 Depends-on:
 fflush

@@ -24,21 +24,10 @@
 SIGNATURE_CHECK (wcrtomb, size_t, (char *, wchar_t, mbstate_t *));
 
 #include <locale.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);                                                   \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
+#include "macros.h"
 
 /* Check the multibyte character s[0..n-1].  */
 static void

@@ -3,6 +3,7 @@ tests/test-freadptr.c
 tests/test-freadptr.sh
 tests/test-freadptr2.c
 tests/test-freadptr2.sh
+tests/macros.h
 
 Depends-on:
 lseek

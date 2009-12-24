@@ -3,6 +3,7 @@ tests/unicase/test-ulc-casecmp1.sh
 tests/unicase/test-ulc-casecmp2.sh
 tests/unicase/test-ulc-casecmp.c
 tests/unicase/test-casecmp.h
+tests/macros.h
 m4/locale-fr.m4
 m4/codeset.m4
 

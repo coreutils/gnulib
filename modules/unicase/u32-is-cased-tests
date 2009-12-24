@@ -1,6 +1,7 @@
 Files:
 tests/unicase/test-u32-is-cased.c
 tests/unicase/test-is-cased.h
+tests/macros.h
 
 Depends-on:
 

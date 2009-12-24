@@ -1,5 +1,6 @@
 Files:
 tests/unictype/test-sy_c_ident.c
+tests/macros.h
 
 Depends-on:
 

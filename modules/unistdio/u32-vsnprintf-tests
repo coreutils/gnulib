@@ -1,6 +1,7 @@
 Files:
 tests/unistdio/test-u32-vsnprintf1.c
 tests/unistdio/test-u32-printf1.h
+tests/macros.h
 
 Depends-on:
 xalloc

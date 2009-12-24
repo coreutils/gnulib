@@ -1,5 +1,6 @@
 Files:
 tests/unictype/test-sy_java_ident.c
+tests/macros.h
 
 Depends-on:
 

@@ -1,6 +1,7 @@
 Files:
 tests/test-mbsspn.sh
 tests/test-mbsspn.c
+tests/macros.h
 m4/locale-fr.m4
 m4/codeset.m4
 

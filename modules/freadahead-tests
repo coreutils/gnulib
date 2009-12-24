@@ -1,6 +1,7 @@
 Files:
 tests/test-freadahead.c
 tests/test-freadahead.sh
+tests/macros.h
 
 Depends-on:
 lseek

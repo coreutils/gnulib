@@ -1,5 +1,6 @@
 Files:
 tests/test-safe-alloc.c
+tests/macros.h
 
 Depends-on:
 

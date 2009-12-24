@@ -1,5 +1,6 @@
 Files:
 tests/test-linked_list.c
+tests/macros.h
 
 Depends-on:
 array-list

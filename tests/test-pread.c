@@ -23,23 +23,11 @@
 #include "signature.h"
 SIGNATURE_CHECK (pread, ssize_t, (int, void *, size_t, off_t));
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <sys/types.h>
 #include <fcntl.h>
 #include <errno.h>
 
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);                                                   \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
+#include "macros.h"
 
 #define N (sizeof buf - 1)
 

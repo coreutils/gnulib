@@ -1,8 +1,9 @@
 Files:
-tests/signature.h
 tests/test-fseek.c
 tests/test-fseek.sh
 tests/test-fseek2.sh
+tests/signature.h
+tests/macros.h
 m4/ungetc.m4
 
 Depends-on:

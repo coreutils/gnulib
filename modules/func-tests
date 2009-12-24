@@ -1,5 +1,6 @@
 Files:
 tests/test-func.c
+tests/macros.h
 
 configure.ac:
 

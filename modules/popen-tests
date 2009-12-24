@@ -1,7 +1,8 @@
 Files:
-tests/signature.h
 tests/test-popen.h
 tests/test-popen.c
+tests/signature.h
+tests/macros.h
 
 Depends-on:
 dup2

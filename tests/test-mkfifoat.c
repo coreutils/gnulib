@@ -32,17 +32,7 @@ SIGNATURE_CHECK (mknodat, int, (int, char const *, mode_t, dev_t));
 #include <string.h>
 #include <unistd.h>
 
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__);  \
-          fflush (stderr);                                                   \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
+#include "macros.h"
 
 #define BASE "test-mkfifoat.t"
 

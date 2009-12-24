@@ -1,7 +1,8 @@
 Files:
-tests/signature.h
 tests/test-strstr.c
 tests/zerosize-ptr.h
+tests/signature.h
+tests/macros.h
 m4/mmap-anon.m4
 
 Depends-on:

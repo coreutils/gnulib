@@ -1,5 +1,6 @@
 Files:
 tests/test-localename.c
+tests/macros.h
 
 Depends-on:
 locale

@@ -1,7 +1,8 @@
 Files:
-tests/signature.h
 tests/test-readlink.h
 tests/test-readlink.c
+tests/signature.h
+tests/macros.h
 
 Depends-on:
 stdbool

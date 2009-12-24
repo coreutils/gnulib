@@ -1,6 +1,7 @@
 Files:
 tests/unicase/test-u32-is-casefolded.c
 tests/unicase/test-is-casefolded.h
+tests/macros.h
 
 Depends-on:
 

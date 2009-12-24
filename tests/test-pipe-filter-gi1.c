@@ -19,25 +19,11 @@
 
 #include "pipe-filter.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-
 #include "binary-io.h"
 #include "c-ctype.h"
 #include "read-file.h"
 #include "progname.h"
-
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);                                                   \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
+#include "macros.h"
 
 
 /* Pipe a text file through 'tr a-z A-Z', which converts ASCII characters from

@@ -1,8 +1,9 @@
 Files:
-tests/signature.h
 tests/test-fflush.c
 tests/test-fflush2.sh
 tests/test-fflush2.c
+tests/signature.h
+tests/macros.h
 
 Depends-on:
 binary-io

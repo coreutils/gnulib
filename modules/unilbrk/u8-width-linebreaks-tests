@@ -1,5 +1,6 @@
 Files:
 tests/unilbrk/test-u8-width-linebreaks.c
+tests/macros.h
 
 Depends-on:
 

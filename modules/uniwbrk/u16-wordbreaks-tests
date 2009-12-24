@@ -1,5 +1,6 @@
 Files:
 tests/uniwbrk/test-u16-wordbreaks.c
+tests/macros.h
 
 Depends-on:
 

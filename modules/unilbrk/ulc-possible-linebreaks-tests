@@ -1,5 +1,6 @@
 Files:
 tests/unilbrk/test-ulc-possible-linebreaks.c
+tests/macros.h
 
 Depends-on:
 
