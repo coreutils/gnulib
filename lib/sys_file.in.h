@@ -41,6 +41,8 @@
 # define LOCK_NB 4       /* Don't block when locking.  */
 #endif
 
+/* The definition of GL_LINK_WARNING is copied here.  */
+
 #if @GNULIB_FLOCK@
 /* Apply or remove advisory locks on an open file.
    Return 0 if successful, otherwise -1 and errno set.  */

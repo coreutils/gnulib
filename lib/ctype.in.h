@@ -36,6 +36,8 @@
 #ifndef _GL_CTYPE_H
 #define _GL_CTYPE_H
 
+/* The definition of GL_LINK_WARNING is copied here.  */
+
 /* Return non-zero if c is a blank, i.e. a space or tab character.  */
 #if @GNULIB_ISBLANK@
 # if !@HAVE_ISBLANK@

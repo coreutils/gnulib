@@ -9,6 +9,7 @@ Depends-on:
 include_next
 arg-nonnull
 extensions
+link-warning
 stddef
 
 configure.ac:
@@ -19,7 +20,7 @@ BUILT_SOURCES += $(LOCALE_H)
 
 # We need the following in order to create <locale.h> when the system
 # doesn't have one that provides all definitions.
-locale.h: locale.in.h $(ARG_NONNULL_H)
+locale.h: locale.in.h $(LINK_WARNING_H) $(ARG_NONNULL_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
@@ -28,6 +29,7 @@ locale.h: locale.in.h $(ARG_NONNULL_H)
 	      -e 's|@''GNULIB_DUPLOCALE''@|$(GNULIB_DUPLOCALE)|g' \
 	      -e 's|@''HAVE_XLOCALE_H''@|$(HAVE_XLOCALE_H)|g' \
 	      -e 's|@''REPLACE_DUPLOCALE''@|$(REPLACE_DUPLOCALE)|g' \
+	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
 	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
 	      < $(srcdir)/locale.in.h; \
 	} > $@-t && \

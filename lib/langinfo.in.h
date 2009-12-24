@@ -123,6 +123,7 @@ typedef int nl_item;
 
 #endif
 
+/* The definition of GL_LINK_WARNING is copied here.  */
 
 /* Declare overridden functions.  */
 

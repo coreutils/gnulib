@@ -1,5 +1,18 @@
 2009-12-29  Eric Blake  <ebb9@byu.net>
 
+	link-warning: make usage consistent
+	* modules/ctype (Depends-on): Add link-warning.
+	(Makefile.am): Update rules accordingly.
+	* modules/langinfo (Depends-on, Makefile.am): Likewise.
+	* modules/locale (Depends-on, Makefile.am): Likewise.
+	* modules/sys_file (Makefile.am): Likewise.
+	* modules/getopt-posix (Makefile.am): Delete unused link warning
+	efforts.
+	* lib/ctype.in.h (GL_LINK_WARNING): Ensure definition before use.
+	* lib/langinfo.in.h (GL_LINK_WARNING): Likewise.
+	* lib/locale.in.h (GL_LINK_WARNING): Likewise.
+	* lib/sys_file.in.h (GL_LINK_WARNING): Likewise.
+
 	stdio: remove unused variables
 	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Remove unused variables.
 	* m4/fseeko.m4 (gl_FUNC_FSEEKO): Likewise.

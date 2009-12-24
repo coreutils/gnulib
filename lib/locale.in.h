@@ -34,6 +34,8 @@
 # include <xlocale.h>
 #endif
 
+/* The definition of GL_LINK_WARNING is copied here.  */
+
 /* The definition of _GL_ARG_NONNULL is copied here.  */
 
 /* The LC_MESSAGES locale category is specified in POSIX, but not in ISO C.

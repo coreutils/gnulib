@@ -6,8 +6,9 @@ lib/langinfo.in.h
 m4/langinfo_h.m4
 
 Depends-on:
-include_next
 extensions
+include_next
+link-warning
 
 configure.ac:
 gl_LANGINFO_H
@@ -17,7 +18,7 @@ BUILT_SOURCES += $(LANGINFO_H)
 
 # We need the following in order to create an empty placeholder for
 # <langinfo.h> when the system doesn't have one.
-langinfo.h: langinfo.in.h
+langinfo.h: langinfo.in.h $(LINK_WARNING_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|@''HAVE_LANGINFO_H''@|$(HAVE_LANGINFO_H)|g' \
@@ -29,6 +30,7 @@ langinfo.h: langinfo.in.h
 	      -e 's|@''HAVE_LANGINFO_ERA''@|$(HAVE_LANGINFO_ERA)|g' \
 	      -e 's|@''HAVE_NL_LANGINFO''@|$(HAVE_NL_LANGINFO)|g' \
 	      -e 's|@''REPLACE_NL_LANGINFO''@|$(REPLACE_NL_LANGINFO)|g' \
+	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
 	      < $(srcdir)/langinfo.in.h; \
 	} > $@-t && \
 	mv $@-t $@

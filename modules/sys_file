@@ -18,7 +18,7 @@ BUILT_SOURCES += $(SYS_FILE_H)
 
 # We need the following in order to create <sys/file.h> when the system
 # has one that is incomplete.
-sys/file.h: sys_file.in.h
+sys/file.h: sys_file.in.h $(LINK_WARNING_H)
 	$(AM_V_at)$(MKDIR_P) sys
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
@@ -28,6 +28,7 @@ sys/file.h: sys_file.in.h
 	      -e 's|@''NEXT_SYS_FILE_H''@|$(NEXT_SYS_FILE_H)|g' \
 	      -e 's/@''HAVE_FLOCK''@/$(HAVE_FLOCK)/g' \
 	      -e 's/@''GNULIB_FLOCK''@/$(GNULIB_FLOCK)/g' \
+	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
 	      < $(srcdir)/sys_file.in.h; \
 	} > $@-t && \
 	mv $@-t $@
