@@ -1,3 +1,7 @@
+2009-12-24  Bruno Haible  <bruno@clisp.org>
+
+	* lib/stdlib.in.h (includes): Fix typo in today's commit.
+
 2009-12-24  Eric Blake  <ebb9@byu.net>
 
 	tests: add signature checks
