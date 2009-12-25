@@ -10,6 +10,7 @@ m4/selinux-selinux-h.m4
 
 Depends-on:
 errno
+unused-parameter
 
 configure.ac:
 gl_HEADERS_SELINUX_SELINUX_H
@@ -27,6 +28,7 @@ selinux/selinux.h: se-selinux.in.h
 	  sed -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
 	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
 	      -e 's|@''NEXT_SELINUX_SELINUX_H''@|$(NEXT_SELINUX_SELINUX_H)|g' \
+	      -e '/definition of _GL_UNUSED_PARAMETER/r $(UNUSED_PARAMETER_H)' \
 	      < $(srcdir)/se-selinux.in.h; \
 	} > $@-t && \
 	chmod a-x $@-t && \
@@ -37,7 +39,10 @@ BUILT_SOURCES += $(SELINUX_CONTEXT_H)
 selinux/context.h: se-context.in.h
 	$(AM_V_at)$(MKDIR_P) selinux
 	$(AM_V_GEN)rm -f $@-t $@ && \
-	cp $(srcdir)/se-context.in.h $@-t && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
+	  sed -e '/definition of _GL_UNUSED_PARAMETER/r $(UNUSED_PARAMETER_H)' \
+	      < $(srcdir)/se-context.in.h; \
+	} > $@-t && \
 	chmod a-x $@-t && \
 	mv $@-t $@
 MOSTLYCLEANFILES += selinux/context.h selinux/context.h-t
