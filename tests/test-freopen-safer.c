@@ -22,7 +22,6 @@
 #include "stdio--.h"
 
 /* Helpers.  */
-#include <stdlib.h>
 #include <unistd.h>
 
 /* This test intentionally closes stderr.  So, we arrange to have fd 10
@@ -30,19 +29,10 @@
    duplicate the original stderr.  */
 
 #define BACKUP_STDERR_FILENO 10
-static FILE *myerr;
+#define ASSERT_STREAM myerr
+#include "macros.h"
 
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (myerr, "%s:%d: assertion failed\n", __FILE__, __LINE__);  \
-          fflush (myerr);                                                    \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
+static FILE *myerr;
 
 int
 main (void)

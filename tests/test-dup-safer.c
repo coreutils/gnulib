@@ -24,8 +24,6 @@
 #include <errno.h>
 #include <stdbool.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include <sys/stat.h>
 
 #include "binary-io.h"
 #include "cloexec.h"
@@ -49,19 +47,10 @@ static int zero (void) { return 0; }
    duplicate the original stderr.  */
 
 #define BACKUP_STDERR_FILENO 10
-static FILE *myerr;
+#define ASSERT_STREAM myerr
+#include "macros.h"
 
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (myerr, "%s:%d: assertion failed\n", __FILE__, __LINE__);  \
-          fflush (myerr);                                                    \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
+static FILE *myerr;
 
 /* Return true if FD is open.  */
 static bool

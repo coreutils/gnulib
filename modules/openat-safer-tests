@@ -1,5 +1,6 @@
 Files:
 tests/test-openat-safer.c
+tests/macros.h
 
 Depends-on:
 

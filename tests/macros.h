@@ -21,9 +21,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/* Define ASSERT_STREAM before including this file if ASSERT must
+   target a stream other than stderr.  */
+#ifndef ASSERT_STREAM
+# define ASSERT_STREAM stderr
+#endif
+
 /* ASSERT (condition);
    verifies that the specified condition is fulfilled.  If not, a message
-   is printed to stderr and the program is terminated with an error code.
+   is printed to ASSERT_STREAM if defined (defaulting to stderr if
+   undefined) and the program is terminated with an error code.
 
    This macro has the following properties:
      - The programmer specifies the expected condition, not the failure
@@ -33,16 +40,17 @@
      - On Unix platforms, the tester can debug the test program with a
        debugger (provided core dumps are enabled: "ulimit -c unlimited").
      - For the sake of platforms where no debugger is available (such as
-       some mingw systems), an error message is printed on stderr that
-       includes the source location of the ASSERT invocation.
+       some mingw systems), an error message is printed on the error
+       stream that includes the source location of the ASSERT invocation.
  */
 #define ASSERT(expr) \
   do                                                                         \
     {                                                                        \
       if (!(expr))                                                           \
         {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);                                                   \
+          fprintf (ASSERT_STREAM, "%s:%d: assertion failed\n",               \
+                   __FILE__, __LINE__);                                      \
+          fflush (ASSERT_STREAM);                                            \
           abort ();                                                          \
         }                                                                    \
     }                                                                        \

@@ -1,5 +1,6 @@
 Files:
 tests/test-freopen-safer.c
+tests/macros.h
 
 Depends-on:
 

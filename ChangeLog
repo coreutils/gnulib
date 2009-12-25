@@ -1,3 +1,23 @@
+2009-12-26  Eric Blake  <ebb9@byu.net>
+
+	tests: use macros.h in more places
+	* tests/macros.h (ASSERT): Depend on ASSERT_STREAM.
+	(ASSERT_STREAM): Provide default of stderr.
+	* tests/test-dirent-safer.c: Include macros.h, using alternate
+	stream for assertions.
+	* tests/test-dup-safer.c: Likewise.
+	* tests/test-freopen-safer.c: Likewise.
+	* tests/test-getopt.c: Likewise.
+	* tests/test-openat-safer.c: Likewise.
+	* tests/test-pipe.c: Likewise.
+	* tests/test-popen-safer.c: Likewise.
+	* modules/dirent-safer-tests (Files): Include macros.h.
+	* modules/unistd-safer-tests (Files): Likewise.
+	* modules/freopen-safer-tests (Files): Likewise.
+	* modules/getopt-posix-tests (Files): Likewise.
+	* modules/openat-safer-tests (Files): Likewise.
+	* modules/pipe-tests (Files): Likewise.
+
 2009-12-26  Bruno Haible  <bruno@clisp.org>
 
 	javacomp: Portability fix.

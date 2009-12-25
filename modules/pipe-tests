@@ -1,6 +1,7 @@
 Files:
 tests/test-pipe.sh
 tests/test-pipe.c
+tests/macros.h
 
 Depends-on:
 progname

@@ -1,5 +1,6 @@
 Files:
 tests/test-dup-safer.c
+tests/macros.h
 
 Depends-on:
 binary-io
