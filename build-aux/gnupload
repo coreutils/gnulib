@@ -1,7 +1,7 @@
 #!/bin/sh
 # Sign files and upload them.
 
-scriptversion=2009-11-29.20; # UTC
+scriptversion=2009-12-21.21; # UTC
 
 # Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009  Free Software Foundation
 #
@@ -95,6 +95,11 @@ Examples:
            --to sources.redhat.com:~ftp/pub/foobar \\
            --delete oopsbar-0.9.91.tar.gz \\
            -- foobar-0.9.91.tar.gz
+
+gnupload uses the ncftpput program to do the transfers; if you don't
+happen to have an ncftp package installed, the ncftpput-ftp script in
+the build-aux/ directory of the gnulib package
+(http://savannah.gnu.org/projects/gnulib) may serve as a replacement.
 
 Report bugs to <bug-automake@gnu.org>.
 Send patches to <automake-patches@gnu.org>."
