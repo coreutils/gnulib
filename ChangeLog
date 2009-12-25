@@ -1,5 +1,16 @@
 2009-12-24  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unused-parameter'.
+	* build-aux/unused-parameter.h: New file, extracted from earlier
+	gnulib-common.m4.
+	* modules/unused-parameter: New file.
+	* lib/unistr.h: Include unused-parameter.h.
+	(u32_mbtouc_unsafe, u32_mbtouc): Use _GL_UNUSED_PARAMETER instead of
+	_GL_UNUSED.
+	* modules/unistr/base (Depends-on): Add unused-parameter.
+
+2009-12-24  Bruno Haible  <bruno@clisp.org>
+
 	Add missing dependencies to 'extensions' module.
 	* m4/extensions.m4: Add comment.
 	* modules/accept4 (Depends-on): Add extensions.

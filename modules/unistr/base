@@ -6,6 +6,7 @@ lib/unistr.h
 
 Depends-on:
 unitypes
+unused-parameter
 stdbool
 inline
 
