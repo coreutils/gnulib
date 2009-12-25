@@ -1,3 +1,11 @@
+2009-12-25  Bruno Haible  <bruno@clisp.org>
+
+	Move gl_FCNTL_O_FLAGS to a separate .m4 file.
+	* m4/fcntl-o.m4: New file, extracted from m4/fcntl_h.m4.
+	* m4/fcntl_h.m4 (gl_FCNTL_O_FLAGS): Remove macro.
+	* modules/fcntl-h (Files): Add m4/fcntl-o.m4.
+	* modules/localcharset (Files): Likewise. Remove m4/fcntl_h.m4.
+
 2009-12-24  Bruno Haible  <bruno@clisp.org>
 
 	openat: Fix warning.
