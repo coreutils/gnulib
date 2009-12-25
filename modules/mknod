@@ -9,6 +9,7 @@ Depends-on:
 mkfifo
 stat
 sys_stat
+extensions
 
 configure.ac:
 gl_FUNC_MKNOD

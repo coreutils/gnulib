@@ -11,6 +11,7 @@ sys_socket
 accept
 fcntl-h
 binary-io
+extensions
 
 configure.ac:
 gl_FUNC_ACCEPT4

@@ -1,4 +1,4 @@
-# serial 8  -*- Autoconf -*-
+# serial 9  -*- Autoconf -*-
 # Enable extensions on systems that normally disable them.
 
 # Copyright (C) 2003, 2006-2009 Free Software Foundation, Inc.
@@ -11,6 +11,20 @@
 # 2.62 or later everywhere, but since CVS Autoconf mutates rapidly
 # enough in this area it's likely we'll need to redefine
 # AC_USE_SYSTEM_EXTENSIONS for quite some time.
+
+# If autoconf reports a warning
+#     warning: AC_COMPILE_IFELSE was called before AC_USE_SYSTEM_EXTENSIONS
+# or  warning: AC_RUN_IFELSE was called before AC_USE_SYSTEM_EXTENSIONS
+# the fix is
+#   1) to ensure that AC_USE_SYSTEM_EXTENSIONS is never directly invoked
+#      but always AC_REQUIREd,
+#   2) to ensure that for each occurrence of
+#        AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
+#      or
+#        AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+#      the corresponding gnulib module description has 'extensions' among
+#      its dependencies. This will ensure that the gl_USE_SYSTEM_EXTENSIONS
+#      invocation occurs in gl_EARLY, not in gl_INIT.
 
 # AC_USE_SYSTEM_EXTENSIONS
 # ------------------------

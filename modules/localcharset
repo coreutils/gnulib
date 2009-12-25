@@ -20,6 +20,7 @@ m4/localcharset.m4
 
 Depends-on:
 configmake
+extensions
 
 configure.ac:
 gl_LOCALCHARSET

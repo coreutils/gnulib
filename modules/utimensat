@@ -9,6 +9,7 @@ Depends-on:
 openat
 sys_stat
 utimens
+extensions
 
 configure.ac:
 gl_FUNC_UTIMENSAT

@@ -8,6 +8,7 @@ m4/futimens.m4
 Depends-on:
 sys_stat
 utimens
+extensions
 
 configure.ac:
 gl_FUNC_FUTIMENS
