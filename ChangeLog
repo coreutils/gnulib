@@ -1,5 +1,10 @@
 2009-12-24  Bruno Haible  <bruno@clisp.org>
 
+	openat: Fix warning.
+	* lib/openat-proc.c: Include <unistd.h>.
+
+2009-12-24  Bruno Haible  <bruno@clisp.org>
+
 	New module 'unused-parameter'.
 	* build-aux/unused-parameter.h: New file, extracted from earlier
 	gnulib-common.m4.
