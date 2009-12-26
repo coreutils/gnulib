@@ -7,7 +7,6 @@ lib/fseterr.c
 lib/stdio-impl.h
 
 Depends-on:
-dup2
 
 configure.ac:
 

@@ -1,3 +1,8 @@
+2009-12-26  Bruno Haible  <bruno@clisp.org>
+
+	Remove an unneeded dependency.
+	* modules/fseterr (Depends-on): Remove dup2.
+
 2009-12-26  Eric Blake  <ebb9@byu.net>
 
 	tests: use macros.h in more places
