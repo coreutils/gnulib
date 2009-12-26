@@ -1,3 +1,12 @@
+2009-12-26  Jim Meyering  <meyering@redhat.com>
+
+	isdir: clean up, since at least grep still uses it
+	* lib/isdir.c: Include "isdir.h".
+	(S_ISDIR): Remove now-unneeded definition.
+	* modules/isdir (Files): Add lib/isdir.h.
+	* lib/isdir.h: New file, with declaration.
+	* m4/isdir.m4: Remove file -- unneeded.
+
 2009-12-25  Bruno Haible  <bruno@clisp.org>
 
 	selinux-h: Make generated .h files standalone.

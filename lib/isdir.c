@@ -1,6 +1,6 @@
 /* isdir.c -- determine whether a directory exists
 
-   Copyright (C) 1990, 1998, 2006 Free Software Foundation, Inc.
+   Copyright (C) 1990, 1998, 2006, 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -17,20 +17,13 @@
 
 #include <config.h>
 
+#include "isdir.h"
+
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#if STAT_MACROS_BROKEN
-# undef S_ISDIR
-#endif
-
-#if !defined S_ISDIR && defined S_IFDIR
-# define S_ISDIR(Mode) (((Mode) & S_IFMT) == S_IFDIR)
-#endif
-
 /* If PATH is an existing directory or symbolic link to a directory,
    return nonzero, else 0.  */
-
 int
 isdir (const char *path)
 {
