@@ -9,7 +9,6 @@ Depends-on:
 stat
 
 configure.ac:
-gl_ISDIR
 
 Makefile.am:
 lib_SOURCES += isdir.c
