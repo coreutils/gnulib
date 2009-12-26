@@ -2507,7 +2507,7 @@ gl_locale_name_from_win32_LCID (LCID lcid)
 #endif
 
 
-#if defined __APPLE__ && defined __MACH__ && HAVE_USELOCALE /* MacOS X */
+#if HAVE_USELOCALE /* glibc or MacOS X */
 
 /* Simple hash set of strings.  We don't want to drag in lots of hash table
    code here.  */
@@ -2592,8 +2592,13 @@ struniq (const char *string)
 #endif
 
 
+/* Like gl_locale_name_thread, except that the result is not in storage of
+   indefinite extent.  */
+#if !defined IN_LIBINTL
+static
+#endif
 const char *
-gl_locale_name_thread (int category, const char *categoryname)
+gl_locale_name_thread_unsafe (int category, const char *categoryname)
 {
 #if HAVE_USELOCALE
   {
@@ -2686,26 +2691,26 @@ gl_locale_name_thread (int category, const char *categoryname)
         switch (category)
           {
           case LC_CTYPE:
-            return struniq (tlp->__lc_ctype->__ctype_encoding);
+            return tlp->__lc_ctype->__ctype_encoding;
           case LC_NUMERIC:
             return tlp->_numeric_using_locale
-                   ? struniq (tlp->__lc_numeric->_numeric_locale_buf)
+                   ? tlp->__lc_numeric->_numeric_locale_buf
                    : "C";
           case LC_TIME:
             return tlp->_time_using_locale
-                   ? struniq (tlp->__lc_time->_time_locale_buf)
+                   ? tlp->__lc_time->_time_locale_buf
                    : "C";
           case LC_COLLATE:
             return !tlp->__collate_load_error
-                   ? struniq (tlp->__lc_collate->__encoding)
+                   ? tlp->__lc_collate->__encoding
                    : "C";
           case LC_MONETARY:
             return tlp->_monetary_using_locale
-                   ? struniq (tlp->__lc_monetary->_monetary_locale_buf)
+                   ? tlp->__lc_monetary->_monetary_locale_buf
                    : "C";
           case LC_MESSAGES:
             return tlp->_messages_using_locale
-                   ? struniq (tlp->__lc_messages->_messages_locale_buf)
+                   ? tlp->__lc_messages->_messages_locale_buf
                    : "C";
           default: /* We shouldn't get here.  */
             return "";
@@ -2713,6 +2718,17 @@ gl_locale_name_thread (int category, const char *categoryname)
 # endif
       }
   }
+#endif
+  return NULL;
+}
+
+const char *
+gl_locale_name_thread (int category, const char *categoryname)
+{
+#if HAVE_USELOCALE
+  const char *name = gl_locale_name_thread_unsafe (category, categoryname);
+  if (name != NULL)
+    return struniq (name);
 #endif
   return NULL;
 }

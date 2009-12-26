@@ -6,6 +6,7 @@ Depends-on:
 locale
 setenv
 unsetenv
+strdup
 
 configure.ac:
 AC_CHECK_FUNCS_ONCE([newlocale])
