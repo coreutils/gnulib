@@ -1,4 +1,4 @@
-# javacomp.m4 serial 11
+# javacomp.m4 serial 12
 dnl Copyright (C) 2001-2003, 2006-2007, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -88,9 +88,9 @@ changequote([,])dnl
        dnl and the long tr command in opposite direction.
        dnl Finally move the position corresponding to \055 to the last position,
        dnl to work around a coreutils-5.x bug.
-       echo 'xyvw!$!H!C,!)!2+!3!4*!5,!3!6,!7!8)!9)!:"!(LdhdmM"!$EFV"!%Ni_a"!1PdhaQngYakUXYfa"!%gXdh"!8EWPeXoXJfXhcJTmkdhcKFV"!,TinkZaOdfa"!2ZihbmalmoakIeXoX.!*!+)!;.!<!="!<eXoXIljaZdbdZXmdihIoakldih.!>!?)!@.!A!B"!-Zihbmalmoak"!2eXoXJfXhcJRYeaZm"!2eXoXJfXhcJTplmag"!$inm"!7PeXoXJdiJSkdhmTmkaXgK"!-camSkijakmp"!DEPeXoXJfXhcJTmkdhcKFPeXoXJfXhcJTmkdhcK"!5eXoXJdiJSkdhmTmkaXg"!)jkdhmfh"!7EPeXoXJfXhcJTmkdhcKFV!C!(!)!!!!!#!"!*!+!"!,!!!?!"!"!!!&Gt!"q!!!"!-!!!(!"!!!"!+!.!/!"!,!!!E!#!"!!!.r!#4$u!%s!&q!!!"!-!!!,!#!!!$!-!%!"!0!!!#!1' \
+       echo 'yzwx!$!I!D,!)!3+!4!5*!6,!4!7,!8!9)!:)!;"!(MeienN"!$FGW"!%Ojab"!2QeibRohZblVYZgb"!%hYei"!9FXQfYpYKgYidKUnleidLGW"!,Ujol_bPegb"!3_jicnbmnpblJfYpY/!*!+)!</!=!>"!=fYpYJmkb_ece_YnejiJpblmeji/!?!@)!A/!B!C"!._jicnbmnpbl"!3fYpYKgYidKSZfb_n"!3fYpYKgYidKUqmnbh"!$jon"!8QfYpYKejKTleinUnlbYhL"!.dbnTljkblnq"!EFQfYpYKgYidKUnleidLGQfYpYKgYidKUnleidL"!6fYpYKejKTleinUnlbYh"!)kleingi"!8FQfYpYKgYidKUnleidLGW!D!(!)!!!!!#!"!*!+!"!,!!!@!"!"!!!&Hu!"r!!!"!.!!!(!"!!!"!+!/!0!"!,!!!F!#!"!!!/s!#5$v!%t!&r!!!"!.!!!,!#!!!$!.!%!"!1!!!#!2' \
          | tr -d '\012\015' \
-         | tr '!"#$%&()*+,-./0123456789:;<=>?@ABCDEFGIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyzH' '\000\001\002\003\004\005\006\007\010\011\012\013\014\015\016\017\020\021\022\023\024\025\026\027\030\031\032\033\034\035\036\037\040\041\046\050\051\052\056\057\073\074\076\103\106\114\116\117\120\123\124\126\133\141\142\143\144\145\146\147\151\152\154\155\156\157\160\162\163\164\165\166\171\261\262\266\267\270\272\276\312\376\055' \
+         | tr '!"#$%&()*+,./0123456789:;<=>?@ABCDEFGHJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyzI' '\000\001\002\003\004\005\006\007\010\011\012\013\014\015\016\017\020\021\022\023\024\025\026\027\030\031\032\033\034\035\036\037\040\041\046\050\051\052\056\057\073\074\076\103\106\114\116\117\120\123\124\126\133\141\142\143\144\145\146\147\151\152\154\155\156\157\160\162\163\164\165\166\171\261\262\266\267\270\272\276\312\376\055' \
          > conftestver.class
        target_version=`{
          unset JAVA_HOME

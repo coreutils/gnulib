@@ -1,5 +1,11 @@
 2009-12-26  Bruno Haible  <bruno@clisp.org>
 
+	javacomp: Portability fix.
+	* m4/javacomp.m4 (gt_JAVACOMP): Fix creation of conftestver.class so
+	that it also works on Solaris.
+
+2009-12-26  Bruno Haible  <bruno@clisp.org>
+
 	localename: Fix storage allocation of gl_locale_name_thread's result.
 	* lib/localename.c (SIZE_BITS, string_hash, struct hash_node,
 	HASH_TABLE_SIZE, struniq_hash_table, struniq_lock, struniq): Define on
