@@ -1,3 +1,7 @@
+2009-12-26  Bruno Haible  <bruno@clisp.org>
+
+	* tests/test-localename.c (categories): Fill in the strings.
+
 2009-12-26  Jim Meyering  <meyering@redhat.com>
 
 	isdir: complete the removal of m4/isdir.m4

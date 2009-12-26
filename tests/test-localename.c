@@ -28,29 +28,29 @@
 
 static struct { int cat; int mask; const char *string; } const categories[] =
   {
-      { LC_CTYPE,          LC_CTYPE_MASK },
-      { LC_NUMERIC,        LC_NUMERIC_MASK },
-      { LC_TIME,           LC_TIME_MASK },
-      { LC_COLLATE,        LC_COLLATE_MASK },
-      { LC_MONETARY,       LC_MONETARY_MASK },
-      { LC_MESSAGES,       LC_MESSAGES_MASK }
+      { LC_CTYPE,          LC_CTYPE_MASK,          "LC_CTYPE" },
+      { LC_NUMERIC,        LC_NUMERIC_MASK,        "LC_NUMERIC" },
+      { LC_TIME,           LC_TIME_MASK,           "LC_TIME" },
+      { LC_COLLATE,        LC_COLLATE_MASK,        "LC_COLLATE" },
+      { LC_MONETARY,       LC_MONETARY_MASK,       "LC_MONETARY" },
+      { LC_MESSAGES,       LC_MESSAGES_MASK,       "LC_MESSAGES" }
 # ifdef LC_PAPER
-    , { LC_PAPER,          LC_PAPER_MASK }
+    , { LC_PAPER,          LC_PAPER_MASK,          "LC_PAPER" }
 # endif
 # ifdef LC_NAME
-    , { LC_NAME,           LC_NAME_MASK }
+    , { LC_NAME,           LC_NAME_MASK,           "LC_NAME" }
 # endif
 # ifdef LC_ADDRESS
-    , { LC_ADDRESS,        LC_ADDRESS_MASK }
+    , { LC_ADDRESS,        LC_ADDRESS_MASK,        "LC_ADDRESS" }
 # endif
 # ifdef LC_TELEPHONE
-    , { LC_TELEPHONE,      LC_TELEPHONE_MASK }
+    , { LC_TELEPHONE,      LC_TELEPHONE_MASK,      "LC_TELEPHONE" }
 # endif
 # ifdef LC_MEASUREMENT
-    , { LC_MEASUREMENT,    LC_MEASUREMENT_MASK }
+    , { LC_MEASUREMENT,    LC_MEASUREMENT_MASK,    "LC_MEASUREMENT" }
 # endif
 # ifdef LC_IDENTIFICATION
-    , { LC_IDENTIFICATION, LC_IDENTIFICATION_MASK }
+    , { LC_IDENTIFICATION, LC_IDENTIFICATION_MASK, "LC_IDENTIFICATION" }
 # endif
   };
 
