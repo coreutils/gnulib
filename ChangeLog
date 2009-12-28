@@ -1,3 +1,9 @@
+2009-12-28  Jim Meyering  <meyering@redhat.com>
+
+	pmccabe2html: emit consistent FSF copyright; remove trailing blanks
+	* build-aux/pmccabe2html: Insert comma before "Inc." in emitted
+	FSF copyright line.  Remove trailing blanks.
+
 2009-12-28  Eric Blake  <ebb9@byu.net>
 
 	test-dup2: reduce dependencies
