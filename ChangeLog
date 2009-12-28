@@ -1,5 +1,8 @@
 2009-12-28  Jim Meyering  <meyering@redhat.com>
 
+	update-copyright: you may specify a max. line length other than 72
+	* build-aux/update-copyright: Honor $UPDATE_COPYRIGHT_MAX_LINE_LENGTH.
+
 	maint: use consistent FSF copyright line syntax
 	* lib/posixtm.c: Add missing comma in FSF copyright line.
 	* lib/posixtm.h: Likewise.

@@ -3,7 +3,7 @@ eval '(exit $?0)' && eval 'exec perl -wS -0777 -pi "$0" ${1+"$@"}'
     if 0;
 # Update an FSF copyright year list to include the current year.
 
-my $VERSION = '2009-10-30.15:57'; # UTC
+my $VERSION = '2009-12-28.11:09'; # UTC
 
 # Copyright (C) 2009 Free Software Foundation, Inc.
 #
@@ -114,6 +114,8 @@ my $VERSION = '2009-10-30.15:57'; # UTC
 #      are expanded instead.
 #   3. For testing purposes, you can set the assumed current year in
 #      UPDATE_COPYRIGHT_YEAR.
+#   4. The default maximum line length for a copyright line is 72.
+#      Set UPDATE_COPYRIGHT_MAX_LINE_LENGTH to use a different length.
 
 use strict;
 use warnings;
@@ -122,7 +124,10 @@ my $copyright_re = 'Copyright';
 my $circle_c_re = '(?:\([cC]\)|@copyright{}|&copy;)';
 my $holder = 'Free Software Foundation, Inc.';
 my $prefix_max = 5;
-my $margin = 72;
+my $margin = $ENV{UPDATE_COPYRIGHT_MAX_LINE_LENGTH};
+!$margin || $margin !~ m/^\d+$/
+  and $margin = 72;
+
 my $tab_width = 8;
 
 my $this_year = $ENV{UPDATE_COPYRIGHT_YEAR};
