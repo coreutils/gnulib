@@ -5,7 +5,6 @@ tests/macros.h
 
 Depends-on:
 binary-io
-cloexec
 open
 
 configure.ac:

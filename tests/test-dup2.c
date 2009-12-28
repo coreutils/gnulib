@@ -27,7 +27,10 @@ SIGNATURE_CHECK (dup2, int, (int, int));
 #include <fcntl.h>
 
 #include "binary-io.h"
-#include "cloexec.h"
+
+#if GNULIB_CLOEXEC
+# include "cloexec.h"
+#endif
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 /* Get declarations of the Win32 API functions.  */
@@ -156,6 +159,7 @@ main (void)
   ASSERT (read (fd, buffer, 1) == 1);
   ASSERT (*buffer == '2');
 
+#if GNULIB_CLOEXEC
   /* Any new fd created by dup2 must not be cloexec.  */
   ASSERT (close (fd + 2) == 0);
   ASSERT (dup_cloexec (fd) == fd + 1);
@@ -164,6 +168,7 @@ main (void)
   ASSERT (!is_inheritable (fd + 1));
   ASSERT (dup2 (fd + 1, fd + 2) == fd + 2);
   ASSERT (is_inheritable (fd + 2));
+#endif
 
   /* On systems that distinguish between text and binary mode, dup2
      reuses the mode of the source.  */
