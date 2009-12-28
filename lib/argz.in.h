@@ -1,5 +1,6 @@
 /* Routines for dealing with '\0' separated arg vectors.
-   Copyright (C) 1995,96,97,98,99,2000,2004,2007 Free Software Foundation, Inc.
+   Copyright (C) 1995, 1996, 1997, 1998, 1999, 2000, 2004, 2007, 2009 Free
+   Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This program is free software: you can redistribute it and/or modify

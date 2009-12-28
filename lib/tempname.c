@@ -1,8 +1,6 @@
 /* tempname.c - generate the name of a temporary file.
 
-   Copyright (C) 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999,
-   2000, 2001, 2002, 2003, 2005, 2006, 2007, 2009 Free Software Foundation,
-   Inc.
+   Copyright (C) 1991-2003, 2005-2007, 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by

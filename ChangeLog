@@ -1,3 +1,19 @@
+2009-12-29  Jim Meyering  <meyering@redhat.com>
+
+	update nearly all FSF copyright year lists to include 2009
+	The files named by the following are exempted:
+	    grep -v '^#' config/srclist.txt|grep -v '^$' | while read src dst; do
+	      test -f "$dst" && { echo "$dst"; continue; }
+	      test -d "$dst" || continue
+	      echo "$dst"/$(basename "$src")
+	    done > exempt
+	    git ls-files tests/unictype >> exempt
+	In the remaining files, convert to all-interval notation if
+	- there is already at least one year interval like 2000-2003
+	- the file is maintained by me
+	- the file is in lib/uni*/, where that style already prevails
+	Otherwise, use update-copyright's default.
+
 2009-12-29  Simon Josefsson  <simon@josefsson.org>
 	and Eric Blake  <ebb9@byu.net>
 

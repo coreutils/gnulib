@@ -11,7 +11,8 @@ argz_files = $(patsubst %, $(glibc_dir)/string/argz-%.c, $(argz_names))
 define print-header
   printf '%s\n'								\
 "/* Functions for dealing with '\0' separated arg vectors."		\
-"   Copyright (C) 1995-1998, 2000-2002, 2006 Free Software Foundation, Inc."\
+"   Copyright (C) 1995-1998, 2000-2002, 2006, 2009 Free Software Foundation,
+"   Inc."\
 "   This file is part of the GNU C Library."				\
 ""									\
 "   This program is free software; you can redistribute it and/or modify"\

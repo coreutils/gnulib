@@ -1,5 +1,5 @@
 /* rijndael-api-fst.h --- Rijndael cipher implementation.
- * Copyright (C) 2005 Free Software Foundation, Inc.
+ * Copyright (C) 2005, 2009 Free Software Foundation, Inc.
  *
  * This file is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published
