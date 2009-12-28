@@ -1,5 +1,10 @@
 2009-12-28  Jim Meyering  <meyering@redhat.com>
 
+	maint: use consistent FSF copyright line syntax
+	* lib/posixtm.c: Add missing comma in FSF copyright line.
+	* lib/posixtm.h: Likewise.
+	* lib/getugroups.c: Add missing ", Inc.".
+
 	pmccabe2html: emit consistent FSF copyright; remove trailing blanks
 	* build-aux/pmccabe2html: Insert comma before "Inc." in emitted
 	FSF copyright line.  Remove trailing blanks.
