@@ -1,5 +1,35 @@
 2009-12-29  Eric Blake  <ebb9@byu.net>
 
+	tests: fix license on several tests
+	* tests/test-des.c: Update to GPLv3+.
+	* tests/test-flock.c: Likewise.
+	* tests/test-fsync.c: Likewise.
+	* tests/test-futimens.h: Likewise.
+	* tests/test-gc-arcfour.c: Likewise.
+	* tests/test-gc-arctwo.c: Likewise.
+	* tests/test-gc-des.c: Likewise.
+	* tests/test-gc-hmac-md5.c: Likewise.
+	* tests/test-gc-hmac-sha1.c: Likewise.
+	* tests/test-gc-md2.c: Likewise.
+	* tests/test-gc-md4.c: Likewise.
+	* tests/test-gc-md5.c: Likewise.
+	* tests/test-gc-pbkdf2-sha1.c: Likewise.
+	* tests/test-gc-rijndael.c: Likewise.
+	* tests/test-gc-sha1.c: Likewise.
+	* tests/test-gc.c: Likewise.
+	* tests/test-getcwd.c: Likewise.
+	* tests/test-link.c: Likewise.
+	* tests/test-link.h: Likewise.
+	* tests/test-lutimens.h: Likewise.
+	* tests/test-md2.c: Likewise.
+	* tests/test-md4.c: Likewise.
+	* tests/test-mkdir.h: Likewise.
+	* tests/test-rename.c: Likewise.
+	* tests/test-rename.h: Likewise.
+	* tests/test-safe-alloc.c: Likewise.
+	* tests/test-utimens-common.h: Likewise.
+	* tests/test-utimens.h: Likewise.
+
 	maint: sync license texts
 	* config/srclist.txt: Add gpl-1.3.texi, lgpl-1.3.texi.
 	* doc/gpl-3.0.texi: Revert copyright year update.
