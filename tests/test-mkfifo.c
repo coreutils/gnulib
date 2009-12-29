@@ -40,7 +40,7 @@ int
 main (void)
 {
   /* Remove any leftovers from a previous partial run.  */
-  ASSERT (system ("rm -rf " BASE "*") == 0);
+  system ("rm -rf " BASE "*");
 
   return test_mkfifo (mkfifo, true);
 }

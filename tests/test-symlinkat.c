@@ -64,7 +64,7 @@ main (void)
   int result;
 
   /* Remove any leftovers from a previous partial run.  */
-  ASSERT (system ("rm -rf " BASE "*") == 0);
+  system ("rm -rf " BASE "*");
 
   /* Perform same checks as counterpart functions.  */
   result = test_readlink (do_readlink, false);

@@ -63,7 +63,7 @@ main (void)
   int result2; /* Skip because of no lchown support.  */
 
   /* Clean up any trash from prior testsuite runs.  */
-  ASSERT (system ("rm -rf " BASE "*") == 0);
+  system ("rm -rf " BASE "*");
 
   /* Basic tests.  */
   result1 = test_chown (do_chown, true);

@@ -57,7 +57,7 @@ main (void)
   int result;
 
   /* Clean up any trash from prior testsuite runs.  */
-  ASSERT (system ("rm -rf " BASE "*") == 0);
+  system ("rm -rf " BASE "*");
 
   /* Test basic rename functionality, using current directory.  */
   result = test_rename (do_rename, false);

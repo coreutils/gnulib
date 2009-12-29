@@ -66,7 +66,7 @@ main (void)
   int fd;
 
   /* Clean up any trash from prior testsuite runs.  */
-  ASSERT (system ("rm -rf " BASE "*") == 0);
+  system ("rm -rf " BASE "*");
 
   /* Basic tests.  */
   result1 = test_utimens (do_utimensat, true);

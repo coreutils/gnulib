@@ -41,5 +41,8 @@ SIGNATURE_CHECK (unlink, int, (char const *));
 int
 main (void)
 {
+  /* Remove any leftovers from a previous partial run.  */
+  system ("rm -rf " BASE "*");
+
   return test_unlink_func (unlink, true);
 }

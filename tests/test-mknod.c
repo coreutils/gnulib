@@ -47,7 +47,7 @@ int
 main (void)
 {
   /* Remove any leftovers from a previous partial run.  */
-  ASSERT (system ("rm -rf " BASE "*") == 0);
+  system ("rm -rf " BASE "*");
 
   /* We can only portably test creation of fifos.  Anything else
      requires root privileges and knowledge of device numbers.  */

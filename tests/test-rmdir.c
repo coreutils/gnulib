@@ -39,5 +39,8 @@ SIGNATURE_CHECK (rmdir, int, (char const *));
 int
 main (void)
 {
+  /* Remove any leftovers from a previous partial run.  */
+  system ("rm -rf " BASE "*");
+
   return test_rmdir_func (rmdir, true);
 }

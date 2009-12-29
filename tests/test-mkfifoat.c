@@ -72,7 +72,7 @@ main (void)
   int result;
 
   /* Remove any leftovers from a previous partial run.  */
-  ASSERT (system ("rm -rf " BASE "*") == 0);
+  system ("rm -rf " BASE "*");
 
   /* Basic tests.  */
   result = test_mkfifo (do_mkfifoat, true);

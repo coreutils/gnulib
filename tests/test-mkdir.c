@@ -40,7 +40,7 @@ int
 main (void)
 {
   /* Clean up any trash from prior testsuite runs.  */
-  ASSERT (system ("rm -rf " BASE "*") == 0);
+  system ("rm -rf " BASE "*");
 
   return test_mkdir (mkdir, true);
 }

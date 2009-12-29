@@ -28,9 +28,6 @@ test_lstat_func (int (*func) (char const *, struct stat *), bool print)
   struct stat st1;
   struct stat st2;
 
-  /* Remove any leftovers from a previous partial run.  */
-  ASSERT (system ("rm -rf " BASE "*") == 0);
-
   /* Test for common directories.  */
   ASSERT (func (".", &st1) == 0);
   ASSERT (func ("./", &st2) == 0);

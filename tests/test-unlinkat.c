@@ -60,6 +60,10 @@ main (void)
   /* FIXME: Add tests of fd other than ".".  */
   int result1;
   int result2;
+
+  /* Remove any leftovers from a previous partial run.  */
+  system ("rm -rf " BASE "*");
+
   result1 = test_rmdir_func (rmdirat, false);
   result2 = test_unlink_func (unlinker, false);
   ASSERT (result1 == result2);

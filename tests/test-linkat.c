@@ -81,7 +81,7 @@ main (void)
   int result;
 
   /* Clean up any trash from prior testsuite runs.  */
-  ASSERT (system ("rm -rf " BASE "*") == 0);
+  system ("rm -rf " BASE "*");
 
   /* Test basic link functionality, without mentioning symlinks.  */
   result = test_link (do_link, true);

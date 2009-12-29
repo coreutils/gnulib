@@ -46,7 +46,7 @@ main (void)
      any leftovers from a previous partial run.  */
   {
     int fd;
-    ASSERT (system ("rm -rf " BASE " ise") == 0);
+    system ("rm -rf " BASE " ise");
     ASSERT (mkdir (BASE, 0700) == 0);
     fd = creat (BASE "/tra", 0600);
     ASSERT (0 <= fd);

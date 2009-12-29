@@ -25,9 +25,6 @@
 static int
 test_unlink_func (int (*func) (char const *name), bool print)
 {
-  /* Remove any leftovers from a previous partial run.  */
-  ASSERT (system ("rm -rf " BASE "*") == 0);
-
   /* Setup.  */
   ASSERT (mkdir (BASE "dir", 0700) == 0);
   ASSERT (close (creat (BASE "dir/file", 0600)) == 0);

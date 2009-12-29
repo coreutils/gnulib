@@ -60,6 +60,10 @@ int
 main (void)
 {
   int result;
+
+  /* Remove any leftovers from a previous partial run.  */
+  system ("rm -rf " BASE "*");
+
   result = test_stat_func (do_stat, false);
   ASSERT (test_lstat_func (do_lstat, false) == result);
   dfd = open (".", O_RDONLY);

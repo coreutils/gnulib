@@ -1,4 +1,44 @@
 2009-12-29  Simon Josefsson  <simon@josefsson.org>
+	and Eric Blake  <ebb9@byu.net>
+
+	tests: don't require debug system() to pass
+	* tests/test-lstat.h (test_lstat_func): Move debug cleanup...
+	* tests/test-rmdir.h (test_rmdir_func): Likewise.
+	* tests/test-unlink.h (test_unlink_func): Likewise.
+	* tests/test-fstatat.c (main): ...into callers.
+	* tests/test-lstat.c (main): Likewise.
+	* tests/test-rmdir.c (main): Likewise.
+	* tests/test-unlink.c (main): Likewise.
+	* tests/test-unlinkat.c (main): Likewise.
+	* tests/test-areadlink-with-size.c (main): Don't require a
+	debug-only system call to pass, aiding cross-testing to mingw.
+	* tests/test-areadlink.c (main): Likewise.
+	* tests/test-areadlinkat-with-size.c (main): Likewise.
+	* tests/test-areadlinkat.c (main): Likewise.
+	* tests/test-canonicalize-lgpl.c (main): Likewise.
+	* tests/test-canonicalize.c (main): Likewise.
+	* tests/test-chown.c (main): Likewise.
+	* tests/test-fchownat.c (main): Likewise.
+	* tests/test-lchown.c (main): Likewise.
+	* tests/test-fdutimensat.c (main): Likewise.
+	* tests/test-futimens.c (main): Likewise.
+	* tests/test-link.c (main): Likewise.
+	* tests/test-linkat.c (main): Likewise.
+	* tests/test-mkdir.c (main): Likewise.
+	* tests/test-mkdirat.c (main): Likewise.
+	* tests/test-mkfifo.c (main): Likewise.
+	* tests/test-mkfifoat.c (main): Likewise.
+	* tests/test-mknod.c (main): Likewise.
+	* tests/test-readlink.c (main): Likewise.
+	* tests/test-remove.c (main): Likewise.
+	* tests/test-rename.c (main): Likewise.
+	* tests/test-renameat.c (main): Likewise.
+	* tests/test-symlink.c (main): Likewise.
+	* tests/test-symlinkat.c (main): Likewise.
+	* tests/test-utimens.c (main): Likewise.
+	* tests/test-utimensat.c (main): Likewise.
+
+2009-12-29  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/selinux-h (selinux/selinux.h, selinux/context.h): Depend
 	on $(UNUSED_PARAMETER_H) to avoid build failure.

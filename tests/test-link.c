@@ -40,7 +40,7 @@ int
 main (void)
 {
   /* Remove any garbage left from previous partial runs.  */
-  ASSERT (system ("rm -rf " BASE "*") == 0);
+  system ("rm -rf " BASE "*");
 
   return test_link (link, true);
 }

@@ -51,7 +51,7 @@ main (void)
   int result;
 
   /* Clean up any trash from prior testsuite runs.  */
-  ASSERT (system ("rm -rf " BASE "*") == 0);
+  system ("rm -rf " BASE "*");
 
   /* Test basic mkdir functionality.  */
   result = test_mkdir (do_mkdir, false);

@@ -52,5 +52,8 @@ do_lstat (char const *name, struct stat *st)
 int
 main (void)
 {
+  /* Remove any leftovers from a previous partial run.  */
+  system ("rm -rf " BASE "*");
+
   return test_lstat_func (do_lstat, true);
 }

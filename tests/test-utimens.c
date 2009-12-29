@@ -66,7 +66,7 @@ main (void)
   int result3; /* Skip because of no lutimens support.  */
 
   /* Clean up any trash from prior testsuite runs.  */
-  ASSERT (system ("rm -rf " BASE "*") == 0);
+  system ("rm -rf " BASE "*");
 
   result1 = test_utimens (utimens, true);
   ASSERT (test_utimens (do_fdutimens, false) == result1);
