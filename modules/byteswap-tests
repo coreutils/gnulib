@@ -9,6 +9,3 @@ configure.ac:
 Makefile.am:
 TESTS += test-byteswap
 check_PROGRAMS += test-byteswap
-
-License:
-LGPL

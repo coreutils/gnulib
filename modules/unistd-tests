@@ -9,6 +9,3 @@ configure.ac:
 Makefile.am:
 TESTS += test-unistd
 check_PROGRAMS += test-unistd
-
-License:
-LGPL

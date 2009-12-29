@@ -19,6 +19,3 @@ TESTS += test-truncf1 test-truncf2
 check_PROGRAMS += test-truncf1 test-truncf2
 test_truncf1_LDADD = $(LDADD) @TRUNCF_LIBM@
 test_truncf2_LDADD = $(LDADD) @TRUNCF_LIBM@
-
-License:
-LGPL

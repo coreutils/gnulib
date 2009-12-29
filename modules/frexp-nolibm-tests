@@ -13,6 +13,3 @@ Makefile.am:
 TESTS += test-frexp-nolibm
 check_PROGRAMS += test-frexp-nolibm
 test_frexp_nolibm_SOURCES = test-frexp.c
-
-License:
-LGPL

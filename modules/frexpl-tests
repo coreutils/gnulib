@@ -16,6 +16,3 @@ Makefile.am:
 TESTS += test-frexpl
 check_PROGRAMS += test-frexpl
 test_frexpl_LDADD = $(LDADD) @FREXPL_LIBM@
-
-License:
-LGPL

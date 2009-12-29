@@ -15,6 +15,3 @@ Makefile.am:
 TESTS += test-truncl
 check_PROGRAMS += test-truncl
 test_truncl_LDADD = $(LDADD) @TRUNCL_LIBM@
-
-License:
-LGPL

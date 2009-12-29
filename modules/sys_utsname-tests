@@ -8,6 +8,3 @@ configure.ac:
 Makefile.am:
 TESTS += test-sys_utsname
 check_PROGRAMS += test-sys_utsname
-
-License:
-LGPL

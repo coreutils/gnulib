@@ -10,6 +10,3 @@ AC_CHECK_FUNCS_ONCE([newlocale])
 Makefile.am:
 TESTS += test-locale
 check_PROGRAMS += test-locale
-
-License:
-LGPL

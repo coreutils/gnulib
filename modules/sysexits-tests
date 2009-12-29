@@ -8,6 +8,3 @@ configure.ac:
 Makefile.am:
 TESTS += test-sysexits
 check_PROGRAMS += test-sysexits
-
-License:
-LGPL

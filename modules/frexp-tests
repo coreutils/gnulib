@@ -14,6 +14,3 @@ Makefile.am:
 TESTS += test-frexp
 check_PROGRAMS += test-frexp
 test_frexp_LDADD = $(LDADD) @FREXP_LIBM@
-
-License:
-LGPL

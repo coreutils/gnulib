@@ -15,6 +15,3 @@ Makefile.am:
 TESTS += test-ceill
 check_PROGRAMS += test-ceill
 test_ceill_LDADD = $(LDADD) @CEILL_LIBM@
-
-License:
-LGPL

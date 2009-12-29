@@ -17,6 +17,3 @@ Makefile.am:
 TESTS += test-isinf
 check_PROGRAMS += test-isinf
 test_isinf_LDADD = $(LDADD) @ISINF_LIBM@
-
-License:
-GPL

@@ -10,6 +10,3 @@ configure.ac:
 Makefile.am:
 TESTS += test-printf-frexpl
 check_PROGRAMS += test-printf-frexpl
-
-License:
-LGPL

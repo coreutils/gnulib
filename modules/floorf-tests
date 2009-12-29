@@ -19,6 +19,3 @@ TESTS += test-floorf1 test-floorf2
 check_PROGRAMS += test-floorf1 test-floorf2
 test_floorf1_LDADD = $(LDADD) @FLOORF_LIBM@
 test_floorf2_LDADD = $(LDADD) @FLOORF_LIBM@
-
-License:
-LGPL

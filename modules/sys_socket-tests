@@ -9,6 +9,3 @@ AC_CHECK_FUNCS_ONCE([shutdown])
 Makefile.am:
 TESTS += test-sys_socket
 check_PROGRAMS += test-sys_socket
-
-License:
-LGPL

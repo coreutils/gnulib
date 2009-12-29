@@ -8,6 +8,3 @@ configure.ac:
 Makefile.am:
 TESTS += test-sys_time
 check_PROGRAMS += test-sys_time
-
-License:
-LGPL

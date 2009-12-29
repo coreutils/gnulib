@@ -8,6 +8,3 @@ configure.ac:
 Makefile.am:
 TESTS += test-netinet_in
 check_PROGRAMS += test-netinet_in
-
-License:
-LGPL

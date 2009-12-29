@@ -15,6 +15,3 @@ configure.ac:
 Makefile.am:
 TESTS += test-ldexpl
 check_PROGRAMS += test-ldexpl
-
-License:
-LGPL

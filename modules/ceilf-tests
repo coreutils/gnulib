@@ -19,6 +19,3 @@ TESTS += test-ceilf1 test-ceilf2
 check_PROGRAMS += test-ceilf1 test-ceilf2
 test_ceilf1_LDADD = $(LDADD) @CEILF_LIBM@
 test_ceilf2_LDADD = $(LDADD) @CEILF_LIBM@
-
-License:
-LGPL

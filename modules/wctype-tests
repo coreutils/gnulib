@@ -9,6 +9,3 @@ configure.ac:
 Makefile.am:
 TESTS += test-wctype
 check_PROGRAMS += test-wctype
-
-License:
-LGPL

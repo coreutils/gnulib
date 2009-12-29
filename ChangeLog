@@ -1,5 +1,73 @@
 2009-12-29  Eric Blake  <ebb9@byu.net>
 
+	tests: remove License section from module
+	* modules/arpa_inet-tests: Remove unneeded section.
+	* modules/byteswap-tests: Likewise.
+	* modules/ceilf-tests: Likewise.
+	* modules/ceill-tests: Likewise.
+	* modules/crypto/des-tests: Likewise.
+	* modules/crypto/gc-arcfour-tests: Likewise.
+	* modules/crypto/gc-arctwo-tests: Likewise.
+	* modules/crypto/gc-des-tests: Likewise.
+	* modules/crypto/gc-hmac-md5-tests: Likewise.
+	* modules/crypto/gc-hmac-sha1-tests: Likewise.
+	* modules/crypto/gc-md2-tests: Likewise.
+	* modules/crypto/gc-md4-tests: Likewise.
+	* modules/crypto/gc-md5-tests: Likewise.
+	* modules/crypto/gc-pbkdf2-sha1-tests: Likewise.
+	* modules/crypto/gc-rijndael-tests: Likewise.
+	* modules/crypto/gc-sha1-tests: Likewise.
+	* modules/crypto/gc-tests: Likewise.
+	* modules/crypto/md2-tests: Likewise.
+	* modules/crypto/md4-tests: Likewise.
+	* modules/fcntl-h-tests: Likewise.
+	* modules/floorf-tests: Likewise.
+	* modules/floorl-tests: Likewise.
+	* modules/frexp-nolibm-tests: Likewise.
+	* modules/frexp-tests: Likewise.
+	* modules/frexpl-nolibm-tests: Likewise.
+	* modules/frexpl-tests: Likewise.
+	* modules/getaddrinfo-tests: Likewise.
+	* modules/inttypes-tests: Likewise.
+	* modules/isfinite-tests: Likewise.
+	* modules/isinf-tests: Likewise.
+	* modules/ldexpl-tests: Likewise.
+	* modules/locale-tests: Likewise.
+	* modules/math-tests: Likewise.
+	* modules/netdb-tests: Likewise.
+	* modules/netinet_in-tests: Likewise.
+	* modules/printf-frexp-tests: Likewise.
+	* modules/printf-frexpl-tests: Likewise.
+	* modules/priv-set-tests: Likewise.
+	* modules/random_r-tests: Likewise.
+	* modules/round-tests: Likewise.
+	* modules/roundf-tests: Likewise.
+	* modules/roundl-tests: Likewise.
+	* modules/search-tests: Likewise.
+	* modules/select-tests: Likewise.
+	* modules/signal-tests: Likewise.
+	* modules/stdbool-tests: Likewise.
+	* modules/stddef-tests: Likewise.
+	* modules/stdint-tests: Likewise.
+	* modules/stdio-tests: Likewise.
+	* modules/stdlib-tests: Likewise.
+	* modules/string-tests: Likewise.
+	* modules/strings-tests: Likewise.
+	* modules/sys_select-tests: Likewise.
+	* modules/sys_socket-tests: Likewise.
+	* modules/sys_stat-tests: Likewise.
+	* modules/sys_time-tests: Likewise.
+	* modules/sys_utsname-tests: Likewise.
+	* modules/sysexits-tests: Likewise.
+	* modules/time-tests: Likewise.
+	* modules/trunc-tests: Likewise.
+	* modules/truncf-tests: Likewise.
+	* modules/truncl-tests: Likewise.
+	* modules/tsearch-tests: Likewise.
+	* modules/unistd-tests: Likewise.
+	* modules/wchar-tests: Likewise.
+	* modules/wctype-tests: Likewise.
+
 	tests: fix license on several tests
 	* tests/test-des.c: Update to GPLv3+.
 	* tests/test-flock.c: Likewise.

@@ -8,6 +8,3 @@ configure.ac:
 Makefile.am:
 TESTS += test-inttypes
 check_PROGRAMS += test-inttypes
-
-License:
-LGPL

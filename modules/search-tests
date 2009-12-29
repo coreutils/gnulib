@@ -8,6 +8,3 @@ configure.ac:
 Makefile.am:
 TESTS += test-search
 check_PROGRAMS += test-search
-
-License:
-LGPL

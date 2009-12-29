@@ -19,6 +19,3 @@ TESTS += test-round1 test-round2
 check_PROGRAMS += test-round1 test-round2
 test_round1_LDADD = $(LDADD) @ROUND_LIBM@
 test_round2_LDADD = $(LDADD) @ROUND_LIBM@
-
-License:
-LGPL

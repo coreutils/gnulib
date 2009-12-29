@@ -9,6 +9,3 @@ configure.ac:
 Makefile.am:
 TESTS += test-sys_stat
 check_PROGRAMS += test-sys_stat
-
-License:
-LGPL

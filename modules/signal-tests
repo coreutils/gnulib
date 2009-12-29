@@ -8,6 +8,3 @@ configure.ac:
 Makefile.am:
 TESTS += test-signal
 check_PROGRAMS += test-signal
-
-License:
-LGPL

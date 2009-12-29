@@ -9,6 +9,3 @@ configure.ac:
 Makefile.am:
 TESTS += test-stdio
 check_PROGRAMS += test-stdio
-
-License:
-LGPL

@@ -8,6 +8,3 @@ configure.ac:
 Makefile.am:
 TESTS += test-gc-rijndael
 check_PROGRAMS += test-gc-rijndael
-
-License:
-LGPLv2+

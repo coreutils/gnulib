@@ -14,6 +14,3 @@ gt_TYPE_WINT_T
 Makefile.am:
 TESTS += test-stdint
 check_PROGRAMS += test-stdint
-
-License:
-LGPL

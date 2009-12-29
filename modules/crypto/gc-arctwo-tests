@@ -8,6 +8,3 @@ configure.ac:
 Makefile.am:
 TESTS += test-gc-arctwo
 check_PROGRAMS += test-gc-arctwo
-
-License:
-LGPLv2+

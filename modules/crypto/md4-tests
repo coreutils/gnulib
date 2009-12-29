@@ -8,6 +8,3 @@ configure.ac:
 Makefile.am:
 TESTS += test-md4
 check_PROGRAMS += test-md4
-
-License:
-LGPLv2+
