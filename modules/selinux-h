@@ -21,7 +21,7 @@ Makefile.am:
 lib_SOURCES += se-context.in.h se-selinux.in.h
 
 BUILT_SOURCES += selinux/selinux.h
-selinux/selinux.h: se-selinux.in.h
+selinux/selinux.h: se-selinux.in.h $(UNUSED_PARAMETER_H)
 	$(AM_V_at)$(MKDIR_P) selinux
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
@@ -36,7 +36,7 @@ selinux/selinux.h: se-selinux.in.h
 MOSTLYCLEANFILES += selinux/selinux.h selinux/selinux.h-t
 
 BUILT_SOURCES += $(SELINUX_CONTEXT_H)
-selinux/context.h: se-context.in.h
+selinux/context.h: se-context.in.h $(UNUSED_PARAMETER_H)
 	$(AM_V_at)$(MKDIR_P) selinux
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \

@@ -1,3 +1,8 @@
+2009-12-29  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/selinux-h (selinux/selinux.h, selinux/context.h): Depend
+	on $(UNUSED_PARAMETER_H) to avoid build failure.
+
 2009-12-28  Jim Meyering  <meyering@redhat.com>
 
 	update-copyright: you may specify a max. line length other than 72
