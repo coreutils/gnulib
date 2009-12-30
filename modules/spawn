@@ -48,6 +48,8 @@ spawn.h: spawn.in.h $(LINK_WARNING_H) $(ARG_NONNULL_H)
 	      -e 's|@''GNULIB_POSIX_SPAWNATTR_SETSIGMASK''@|$(GNULIB_POSIX_SPAWNATTR_SETSIGMASK)|g' \
 	      -e 's|@''GNULIB_POSIX_SPAWNATTR_DESTROY''@|$(GNULIB_POSIX_SPAWNATTR_DESTROY)|g' \
 	      -e 's|@''HAVE_POSIX_SPAWN''@|$(HAVE_POSIX_SPAWN)|g' \
+	      -e 's|@''HAVE_POSIX_SPAWNATTR_T''@|$(HAVE_POSIX_SPAWNATTR_T)|g' \
+	      -e 's|@''HAVE_POSIX_SPAWN_FILE_ACTIONS_T''@|$(HAVE_POSIX_SPAWN_FILE_ACTIONS_T)|g' \
 	      -e 's|@''REPLACE_POSIX_SPAWN''@|$(REPLACE_POSIX_SPAWN)|g' \
 	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
 	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \

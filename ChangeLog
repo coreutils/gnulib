@@ -1,5 +1,12 @@
 2009-12-31  Eric Blake  <ebb9@byu.net>
 
+	spawn: improve wrapper support
+	* m4/spawn_h.m4 (gl_SPAWN_H): Check for type existence.
+	(gl_SPAWN_H_DEFAULTS): New defaults.
+	* modules/spawn (Makefile.am): Substitute them.
+	* lib/spawn.in.h: (posix_spawnattr_t, posix_spawn_file_actions_t):
+	Only declare if missing or broken.
+
 	sys_times, sys_utsname: use include_next
 	* m4/sys_times_h.m4 (gl_SYS_TIMES_H): Support wrapping an existing
 	header.

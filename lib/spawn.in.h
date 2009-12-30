@@ -74,6 +74,7 @@
 #if @REPLACE_POSIX_SPAWN@
 # define posix_spawnattr_t rpl_posix_spawnattr_t
 #endif
+#if @REPLACE_POSIX_SPAWN@ || !@HAVE_POSIX_SPAWNATTR_T@
 typedef struct
 {
   short int _flags;
@@ -84,6 +85,7 @@ typedef struct
   int _policy;
   int __pad[16];
 } posix_spawnattr_t;
+#endif
 
 
 /* Data structure to contain information about the actions to be
@@ -91,6 +93,7 @@ typedef struct
 #if @REPLACE_POSIX_SPAWN@
 # define posix_spawn_file_actions_t rpl_posix_spawn_file_actions_t
 #endif
+#if @REPLACE_POSIX_SPAWN@ || !@HAVE_POSIX_SPAWN_FILE_ACTIONS_T@
 typedef struct
 {
   int _allocated;
@@ -98,6 +101,7 @@ typedef struct
   struct __spawn_action *_actions;
   int __pad[16];
 } posix_spawn_file_actions_t;
+#endif
 
 
 /* Flags to be set in the `posix_spawnattr_t'.  */
