@@ -646,7 +646,7 @@ extern int linkat (int fd1, const char *path1, int fd2, const char *path2,
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef linkat
-# define link(f1,path1,f2,path2,f)              \
+# define linkat(f1,path1,f2,path2,f)              \
     (GL_LINK_WARNING ("linkat is unportable - " \
                       "use gnulib module linkat for portability"), \
      linkat (f1, path1, f2, path2,f))

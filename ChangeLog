@@ -1,3 +1,8 @@
+2009-12-30  Eric Blake  <ebb9@byu.net>
+
+	unistd: fix typo
+	* lib/unistd.in.h (linkat) [GNULIB_POSIXCHECK]: Fix typo.
+
 2009-12-30  Bruno Haible  <bruno@clisp.org>
 
 	Fix compilation error with Solaris cc.
