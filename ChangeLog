@@ -1,5 +1,22 @@
 2009-12-29  Eric Blake  <ebb9@byu.net>
 
+	tests: test more substitute headers
+	* modules/ctype-tests: New file.
+	* modules/dirent-tests: Likewise.
+	* modules/spawn-tests: Likewise.
+	* modules/sys_file-tests: Likewise.
+	* modules/sys_ioctl-tests: Likewise.
+	* modules/sys_wait-tests: Likewise.
+	* tests/test-ctype.c: Likewise.
+	* tests/test-dirent.c: Likewise.
+	* tests/test-spawn.c: Likewise.
+	* tests/test-sys_file.c: Likewise.
+	* tests/test-sys_ioctl.c: Likewise.
+	* tests/test-sys_wait.c: Likewise.
+	* m4/spawn_h.m4 (gl_SPAWN_H): Replace header if it is missing.
+	* lib/sys_file.in.h (LOCK_SH, LOCK_EX, LOCK_UN, LOCK_NB): Provide
+	whether or not flock is in use.
+
 	tests: remove License section from module
 	* modules/arpa_inet-tests: Remove unneeded section.
 	* modules/byteswap-tests: Likewise.

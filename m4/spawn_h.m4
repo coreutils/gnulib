@@ -1,4 +1,4 @@
-# spawn_h.m4 serial 2
+# spawn_h.m4 serial 3
 dnl Copyright (C) 2008-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -21,6 +21,7 @@ AC_DEFUN([gl_SPAWN_H],
     HAVE_SPAWN_H=1
   else
     HAVE_SPAWN_H=0
+    gl_REPLACE_SPAWN_H
   fi
   AC_SUBST([HAVE_SPAWN_H])
 
