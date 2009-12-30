@@ -1,5 +1,8 @@
 2009-12-30  Eric Blake  <ebb9@byu.net>
 
+	fdutimensat: remove bogus dependency
+	* modules/fdutimensat (Depends-on): Drop inline.
+
 	unistd: fix typo
 	* lib/unistd.in.h (linkat) [GNULIB_POSIXCHECK]: Fix typo.
 

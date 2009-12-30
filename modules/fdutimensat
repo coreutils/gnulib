@@ -7,7 +7,6 @@ lib/utimens.h
 
 Depends-on:
 futimens
-inline
 utimensat
 
 configure.ac:
