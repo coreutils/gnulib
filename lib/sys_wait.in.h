@@ -30,8 +30,6 @@
 #ifndef _GL_SYS_WAIT_H
 #define _GL_SYS_WAIT_H
 
-/* The definition of GL_LINK_WARNING is copied here.  */
-
 #if !((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)
 /* Unix API.  */
 

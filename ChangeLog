@@ -1,5 +1,10 @@
 2009-12-30  Eric Blake  <ebb9@byu.net>
 
+	sys_wait: drop link-warning dependency
+	* modules/sys_wait (Depends-on, Makefile.am): Drop unneeded
+	link-warning efforts.
+	* lib/sys_wait.in.h: Likewise.
+
 	fdutimensat: remove bogus dependency
 	* modules/fdutimensat (Depends-on): Drop inline.
 
