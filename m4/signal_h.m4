@@ -1,4 +1,4 @@
-# signal_h.m4 serial 7
+# signal_h.m4 serial 8
 dnl Copyright (C) 2007, 2008, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -14,6 +14,7 @@ AC_DEFUN([gl_SIGNAL_H],
     [HAVE_TYPE_VOLATILE_SIG_ATOMIC_T=0], [[
 #include <signal.h>
     ]])
+  AC_REQUIRE([AC_TYPE_UID_T])
 ])
 
 AC_DEFUN([gl_SIGNAL_MODULE_INDICATOR],

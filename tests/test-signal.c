@@ -20,10 +20,109 @@
 
 #include <signal.h>
 
-volatile sig_atomic_t s;
+/* Check for required types.  */
+struct
+{
+  size_t a;
+  uid_t b;
+  volatile sig_atomic_t c;
+  sigset_t d;
+  pid_t e;
+#if 0
+  /* Not guaranteed by gnulib.  */
+  pthread_t f;
+  struct timespec g;
+#endif
+} s;
 
 int
 main (void)
 {
-  return s;
+  switch (0)
+    {
+      /* The following are guaranteed by C.  */
+    case 0:
+    case SIGABRT:
+    case SIGFPE:
+    case SIGILL:
+    case SIGINT:
+    case SIGSEGV:
+    case SIGTERM:
+      /* The following is guaranteed by gnulib.  */
+#if GNULIB_SIGPIPE || defined SIGPIPE
+    case SIGPIPE:
+#endif
+      /* Ensure no conflict with other standardized names.  */
+#ifdef SIGALRM
+    case SIGALRM:
+#endif
+#ifdef SIGBUS
+    case SIGBUS:
+#endif
+#ifdef SIGCHLD
+    case SIGCHLD:
+#endif
+#ifdef SIGCONT
+    case SIGCONT:
+#endif
+#ifdef SIGHUP
+    case SIGHUP:
+#endif
+#ifdef SIGKILL
+    case SIGKILL:
+#endif
+#ifdef SIGQUIT
+    case SIGQUIT:
+#endif
+#ifdef SIGSTOP
+    case SIGSTOP:
+#endif
+#ifdef SIGTSTP
+    case SIGTSTP:
+#endif
+#ifdef SIGTTIN
+    case SIGTTIN:
+#endif
+#ifdef SIGTTOU
+    case SIGTTOU:
+#endif
+#ifdef SIGUSR1
+    case SIGUSR1:
+#endif
+#ifdef SIGUSR2
+    case SIGUSR2:
+#endif
+#ifdef SIGSYS
+    case SIGSYS:
+#endif
+#ifdef SIGTRAP
+    case SIGTRAP:
+#endif
+#ifdef SIGURG
+    case SIGURG:
+#endif
+#ifdef SIGVTALRM
+    case SIGVTALRM:
+#endif
+#ifdef SIGXCPU
+    case SIGXCPU:
+#endif
+#ifdef SIGXFSZ
+    case SIGXFSZ:
+#endif
+#ifdef SIG
+    case SIG:
+#endif
+      /* SIGRTMIN and SIGRTMAX need not be compile-time constants.  */
+#if 0
+# ifdef SIGRTMIN
+    case SIGRTMIN:
+# endif
+# ifdef SIGRTMAX
+    case SIGRTMAX:
+# endif
+#endif
+      ;
+    }
+  return s.a + s.b + s.c + s.e;
 }
