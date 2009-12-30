@@ -21,6 +21,15 @@
    is missing.  */
 
 #ifndef _GL_SYS_TIMES_H
+
+# if __GNUC__ >= 3
+@PRAGMA_SYSTEM_HEADER@
+# endif
+
+# if @HAVE_SYS_TIMES_H@
+#  @INCLUDE_NEXT@ @NEXT_SYS_TIMES_H@
+# endif
+
 # define _GL_SYS_TIMES_H
 
 /* Get clock_t. */
@@ -34,6 +43,7 @@
 extern "C" {
 # endif
 
+# if !@HAVE_STRUCT_TMS@
   /* Structure describing CPU time used by a process and its children.  */
   struct tms
   {
@@ -43,9 +53,12 @@ extern "C" {
     clock_t tms_cutime;         /* User CPU time of dead children.  */
     clock_t tms_cstime;         /* System CPU time of dead children.  */
   };
+# endif
 
 # if @GNULIB_TIMES@
+#  if !@HAVE_TIMES@
   extern clock_t times (struct tms *buffer) _GL_ARG_NONNULL ((1));
+#  endif
 # elif defined GNULIB_POSIXCHECK
 #  undef times
 #  define times(s)                                              \

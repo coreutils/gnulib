@@ -6,8 +6,9 @@ lib/sys_times.in.h
 m4/sys_times_h.m4
 
 Depends-on:
-link-warning
 arg-nonnull
+include_next
+link-warning
 
 configure.ac:
 gl_SYS_TIMES_H
@@ -22,7 +23,13 @@ sys/times.h: sys_times.in.h $(LINK_WARNING_H) $(ARG_NONNULL_H)
 	$(AM_V_at)$(MKDIR_P) sys
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  sed -e 's|@''GNULIB_TIMES''@|$(GNULIB_TIMES)|g' \
+	  sed -e 's/@''HAVE_SYS_TIMES_H''@/$(HAVE_SYS_TIMES_H)/g' \
+	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
+	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
+	      -e 's|@''NEXT_SYS_TIMES_H''@|$(NEXT_SYS_TIMES_H)|g' \
+	      -e 's|@''GNULIB_TIMES''@|$(GNULIB_TIMES)|g' \
+	      -e 's|@''HAVE_STRUCT_TMS''@|$(HAVE_STRUCT_TMS)|g' \
+	      -e 's|@''HAVE_TIMES''@|$(HAVE_TIMES)|g' \
 	      -e '/definition of GL_LINK_WARNING/r $(LINK_WARNING_H)' \
 	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
 	      < $(srcdir)/sys_times.in.h; \

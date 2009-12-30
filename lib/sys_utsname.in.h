@@ -16,6 +16,15 @@
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
 #ifndef _GL_SYS_UTSNAME_H
+
+#if __GNUC__ >= 3
+@PRAGMA_SYSTEM_HEADER@
+#endif
+
+#if @HAVE_SYS_UTSNAME_H@
+# @INCLUDE_NEXT@ @NEXT_SYS_UTSNAME_H@
+#endif
+
 #define _GL_SYS_UTSNAME_H
 
 /* The definition of GL_LINK_WARNING is copied here.  */
@@ -27,25 +36,25 @@
 extern "C" {
 #endif
 
-
+#if !@HAVE_STRUCT_UTSNAME@
 /* Length of the entries in 'struct utsname' is 256.  */
-#define _UTSNAME_LENGTH 256
+# define _UTSNAME_LENGTH 256
 
-#ifndef _UTSNAME_NODENAME_LENGTH
-# define _UTSNAME_NODENAME_LENGTH _UTSNAME_LENGTH
-#endif
-#ifndef _UTSNAME_SYSNAME_LENGTH
-# define _UTSNAME_SYSNAME_LENGTH _UTSNAME_LENGTH
-#endif
-#ifndef _UTSNAME_RELEASE_LENGTH
-# define _UTSNAME_RELEASE_LENGTH _UTSNAME_LENGTH
-#endif
-#ifndef _UTSNAME_VERSION_LENGTH
-# define _UTSNAME_VERSION_LENGTH _UTSNAME_LENGTH
-#endif
-#ifndef _UTSNAME_MACHINE_LENGTH
-# define _UTSNAME_MACHINE_LENGTH _UTSNAME_LENGTH
-#endif
+# ifndef _UTSNAME_NODENAME_LENGTH
+#  define _UTSNAME_NODENAME_LENGTH _UTSNAME_LENGTH
+# endif
+# ifndef _UTSNAME_SYSNAME_LENGTH
+#  define _UTSNAME_SYSNAME_LENGTH _UTSNAME_LENGTH
+# endif
+# ifndef _UTSNAME_RELEASE_LENGTH
+#  define _UTSNAME_RELEASE_LENGTH _UTSNAME_LENGTH
+# endif
+# ifndef _UTSNAME_VERSION_LENGTH
+#  define _UTSNAME_VERSION_LENGTH _UTSNAME_LENGTH
+# endif
+# ifndef _UTSNAME_MACHINE_LENGTH
+#  define _UTSNAME_MACHINE_LENGTH _UTSNAME_LENGTH
+# endif
 
 /* Structure describing the system and machine.  */
 struct utsname
@@ -63,6 +72,7 @@ struct utsname
     /* Name of the hardware type the system is running on.  */
     char machine[_UTSNAME_MACHINE_LENGTH];
   };
+#endif /* !@HAVE_STRUCT_UTSNAME@ */
 
 
 #if @GNULIB_UNAME@

@@ -20,10 +20,11 @@
 
 #include <sys/times.h>
 
-struct tms tms;
+static struct tms tms;
 
 int
 main (void)
 {
-  return 0;
+  clock_t t = tms.tms_utime + tms.tms_stime + tms.tms_cutime + tms.tms_cstime;
+  return t;
 }

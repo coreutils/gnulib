@@ -1,5 +1,19 @@
 2009-12-31  Eric Blake  <ebb9@byu.net>
 
+	sys_times, sys_utsname: use include_next
+	* m4/sys_times_h.m4 (gl_SYS_TIMES_H): Support wrapping an existing
+	header.
+	(gl_SYS_TIMES_H_DEFAULTS): Add another variable.
+	* m4/sys_utsname_h.m4 (gl_SYS_UTSNAME_H)
+	(gl_SYS_UTSNAME_H_DEFAULTS): Likewise.
+	* modules/sys_times (Depends-on): Add include_next.
+	(Makefile.am): Substitute additional values.
+	* modules/sys_utsname (Depends-on, Makefile.am): Likewise.
+	* lib/sys_times.in.h (includes): Include native header, if
+	available.
+	* lib/sys_utsname.in.h (includes): Likewise.
+	* tests/test-sys_times.c (main): Enhance test.
+
 	fdutimensat: revert prior patch
 	* modules/fdutimensat (Depends-on): Re-add inline; it is needed by
 	utimens.h.

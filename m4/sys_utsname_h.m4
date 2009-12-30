@@ -1,4 +1,4 @@
-# sys_utsname_h.m4 serial 1
+# sys_utsname_h.m4 serial 2
 dnl Copyright (C) 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,10 +12,19 @@ AC_DEFUN([gl_SYS_UTSNAME_H],
   dnl once only, before all statements that occur in other macros.
   AC_REQUIRE([gl_SYS_UTSNAME_H_DEFAULTS])
 
+  gl_CHECK_NEXT_HEADERS([sys/utsname.h])
   AC_CHECK_HEADERS_ONCE([sys/utsname.h])
   if test $ac_cv_header_sys_utsname_h != yes; then
     SYS_UTSNAME_H='sys/utsname.h'
+    HAVE_SYS_UTSNAME_H=0
+    HAVE_STRUCT_UTSNAME=0
+  else
+    HAVE_SYS_UTSNAME_H=1
+    AC_CHECK_TYPES([struct utsname], [], [HAVE_STRUCT_UTSNAME=0], [[
+#include <sys/utsname.h>
+      ]])
   fi
+  AC_SUBST([HAVE_SYS_UTSNAME_H])
 ])
 
 AC_DEFUN([gl_SYS_UTSNAME_MODULE_INDICATOR],
@@ -27,8 +36,9 @@ AC_DEFUN([gl_SYS_UTSNAME_MODULE_INDICATOR],
 
 AC_DEFUN([gl_SYS_UTSNAME_H_DEFAULTS],
 [
-  GNULIB_UNAME=0;   AC_SUBST([GNULIB_UNAME])
+  GNULIB_UNAME=0;         AC_SUBST([GNULIB_UNAME])
   dnl Assume proper GNU behavior unless another module says otherwise.
-  HAVE_UNAME=1;     AC_SUBST([HAVE_UNAME])
-  SYS_UTSNAME_H=''; AC_SUBST([SYS_UTSNAME_H])
+  HAVE_UNAME=1;           AC_SUBST([HAVE_UNAME])
+  HAVE_STRUCT_UTSNAME=1;  AC_SUBST([HAVE_STRUCT_UTSNAME])
+  SYS_UTSNAME_H='';       AC_SUBST([SYS_UTSNAME_H])
 ])
