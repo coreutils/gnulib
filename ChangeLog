@@ -1,3 +1,15 @@
+2009-12-30  Eric Blake  <ebb9@byu.net>
+
+	futimens, utimensat: work around ntfs-3g bug
+	* lib/utimensat.c (rpl_utimensat): Drop attempts to cache whether
+	a ctime bug is present, and expand workaround to cover ntfs-3g.
+	* lib/utimens.c (fdutimens, lutimens): Likewise.
+	(utimensat_ctime_really, detect_ctime_bug): Drop cache mechanism.
+	(validate_timespec): Adjust return value.
+	* m4/futimens.m4 (gl_FUNC_FUTIMENS): Update comment.
+	* m4/utimensat.m4 (gl_FUNC_UTIMENSAT): Likewise.
+	Reported by ctrn3e8 <ctrn3e8@gmail.com>.
+
 2009-12-29  Eric Blake  <ebb9@byu.net>
 
 	link-warning: make usage consistent

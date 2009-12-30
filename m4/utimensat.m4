@@ -1,4 +1,4 @@
-# serial 2
+# serial 3
 # See if we need to provide utimensat replacement.
 
 dnl Copyright (C) 2009 Free Software Foundation, Inc.
@@ -35,10 +35,12 @@ AC_DEFUN([gl_FUNC_UTIMENSAT],
       if (utimensat (AT_FDCWD, f, ts, 0)) return 4;
       if (stat (f, &st)) return 5;
       if (st.st_ctime < st.st_atime) return 6;]])],
+dnl FIXME: simplify this in 2012, when file system bugs are no longer common
          [AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #ifdef __linux__
 /* The Linux kernel added utimensat in 2.6.22, but has bugs with UTIME_OMIT
-   in 2.6.32.  Always replace utimensat to support older kernels.  */
+   in several file systems as recently as 2.6.32.  Always replace utimensat
+   to support older kernels.  */
 choke me
 #endif
       ]])],

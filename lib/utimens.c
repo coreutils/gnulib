@@ -67,65 +67,25 @@ struct utimbuf
    utimensat doesn't exist, or is in glibc but kernel 2.6.18 fails with ENOSYS
    kernel 2.6.22 and earlier rejects AT_SYMLINK_NOFOLLOW
    kernel 2.6.25 and earlier reject UTIME_NOW/UTIME_OMIT with non-zero tv_sec
-   kernel 2.6.32 and earlier fail to bump ctime if mtime is UTIME_OMIT
+   kernel 2.6.32 used with xfs or ntfs-3g fail to honor UTIME_OMIT
    utimensat completely works
    For each cache variable: 0 = unknown, 1 = yes, -1 = no.  */
 static int utimensat_works_really;
 static int lutimensat_works_really;
-static int utimensat_ctime_really;
-
-/* Determine whether the kernel has a ctime bug.  ST1 and ST2
-   correspond to stat data before and after a successful time change.
-   TIMES contains the timestamps that were used during the time change
-   (mtime will be UTIME_OMIT).  Update the cache variable if there is
-   conclusive evidence of the kernel working or being buggy.  Return
-   true if TIMES has been updated and another kernel call is needed,
-   whether or not the kernel is known to have the bug.  */
-static bool
-detect_ctime_bug (struct stat *st1, struct stat *st2, struct timespec times[2])
-{
-  struct timespec now;
-  if (st1->st_ctime != st2->st_ctime
-      || get_stat_ctime_ns (st1) != get_stat_ctime_ns (st2))
-    {
-      utimensat_ctime_really = 1;
-      return false;
-    }
-  /* The results are inconclusive if the ctime in st1 is within a file
-     system quantization window of now.  For FAT, this is 2 seconds,
-     for systems with sub-second resolution, a typical resolution is
-     10 milliseconds; to be safe we declare an inconsistent result if
-     ctime is within a 20 millisecond window.  Avoid an extra gettime
-     call if atime makes sense.  It is unlikely that the original
-     ctime is later than now, but rather than deal with the overflow,
-     we treat that as consistent evidence of the bug.  */
-  if (times[0].tv_nsec == UTIME_NOW)
-    now = get_stat_atime (st2);
-  else
-    gettime (&now);
-  if (now.tv_sec < st2->st_ctime
-      || 2 < now.tv_sec - st2->st_ctime
-      || (get_stat_ctime_ns (st2)
-          && now.tv_sec - st2->st_ctime < 2
-          && (20000000 < (1000000000 * (now.tv_sec - st2->st_ctime)
-                          + now.tv_nsec - get_stat_ctime_ns (st2)))))
-    utimensat_ctime_really = -1;
-  times[1] = get_stat_mtime (st2);
-  return true;
-}
 #endif /* HAVE_UTIMENSAT || HAVE_FUTIMENS */
 
 /* Validate the requested timestamps.  Return 0 if the resulting
    timespec can be used for utimensat (after possibly modifying it to
    work around bugs in utimensat).  Return a positive value if the
    timespec needs further adjustment based on stat results: 1 if any
-   adjustment is needed for utimes, and 2 if mtime was UTIME_OMIT and
-   an adjustment is needed for utimensat.  Return -1, with errno set
-   to EINVAL, if timespec is out of range.  */
+   adjustment is needed for utimes, and 2 if any adjustment is needed
+   for Linux utimensat.  Return -1, with errno set to EINVAL, if
+   timespec is out of range.  */
 static int
 validate_timespec (struct timespec timespec[2])
 {
   int result = 0;
+  int utime_omit_count = 0;
   assert (timespec);
   if ((timespec[0].tv_nsec != UTIME_NOW
        && timespec[0].tv_nsec != UTIME_OMIT
@@ -146,18 +106,18 @@ validate_timespec (struct timespec timespec[2])
     {
       timespec[0].tv_sec = 0;
       result = 1;
+      if (timespec[0].tv_nsec == UTIME_OMIT)
+        utime_omit_count++;
     }
-  if (timespec[1].tv_nsec == UTIME_NOW)
+  if (timespec[1].tv_nsec == UTIME_NOW
+      || timespec[1].tv_nsec == UTIME_OMIT)
     {
       timespec[1].tv_sec = 0;
       result = 1;
+      if (timespec[1].tv_nsec == UTIME_OMIT)
+        utime_omit_count++;
     }
-  else if (timespec[1].tv_nsec == UTIME_OMIT)
-    {
-      timespec[1].tv_sec = 0;
-      result = 2;
-    }
-  return result;
+  return result + (utime_omit_count == 1);
 }
 
 /* Normalize any UTIME_NOW or UTIME_OMIT values in *TS, using stat
@@ -259,20 +219,26 @@ fdutimens (char const *file, int fd, struct timespec const timespec[2])
   if (0 <= utimensat_works_really)
     {
       int result;
-      struct stat st1;
-      struct stat st2;
-      /* Linux kernel 2.6.32 has a bug where it fails to bump ctime if
-         UTIME_OMIT was used for mtime.  It costs time to do an extra
-         [f]stat up front, so we cache whether the function works.  */
-      if (utimensat_ctime_really <= 0 && adjustment_needed == 2)
+# if __linux__
+      struct stat st;
+      /* As recently as Linux kernel 2.6.32 (Dec 2009), several file
+         systems (xfs, ntfs-3g) have bugs with a single UTIME_OMIT,
+         but work if both times are either explicitly specified or
+         UTIME_NOW.  Work around it with a preparatory [f]stat prior
+         to calling futimens/utimensat; fortunately, there is not much
+         timing impact due to the extra syscall even on file systems
+         where UTIME_OMIT would have worked.  FIXME: Simplify this in
+         2012, when file system bugs are no longer common.  */
+      if (adjustment_needed == 2)
         {
-          if (fd < 0 ? stat (file, &st1) : fstat (fd, &st1))
+          if (fd < 0 ? stat (file, &st) : fstat (fd, &st))
             return -1;
           if (ts[0].tv_nsec == UTIME_OMIT)
-            return 0;
-          if (utimensat_ctime_really < 0)
-            ts[1] = get_stat_mtime (&st1);
+            ts[0] = get_stat_atime (&st);
+          else if (ts[1].tv_nsec == UTIME_OMIT)
+            ts[1] = get_stat_mtime (&st);
         }
+# endif /* __linux__ */
 # if HAVE_UTIMENSAT
       if (fd < 0)
         {
@@ -291,16 +257,6 @@ fdutimens (char const *file, int fd, struct timespec const timespec[2])
           if (result == 0 || errno != ENOSYS)
             {
               utimensat_works_really = 1;
-              if (result == 0 && utimensat_ctime_really == 0
-                  && adjustment_needed == 2)
-                {
-                  /* Perform a followup stat to see if the kernel has
-                     a ctime bug.  */
-                  if (stat (file, &st2))
-                    return -1;
-                  if (detect_ctime_bug (&st1, &st2, ts))
-                    result = utimensat (AT_FDCWD, file, ts, 0);
-                }
               return result;
             }
         }
@@ -316,15 +272,6 @@ fdutimens (char const *file, int fd, struct timespec const timespec[2])
         if (result == 0 || errno != ENOSYS)
           {
             utimensat_works_really = 1;
-            /* Work around the same bug as above.  */
-            if (result == 0 && utimensat_ctime_really == 0
-                && adjustment_needed == 2)
-              {
-                if (fstat (fd, &st2))
-                  return -1;
-                if (detect_ctime_bug (&st1, &st2, ts))
-                  result = futimens (fd, ts);
-              }
             return result;
           }
       }
@@ -474,20 +421,26 @@ lutimens (char const *file, struct timespec const timespec[2])
   if (0 <= lutimensat_works_really)
     {
       int result;
-      struct stat st1;
-      struct stat st2;
-      /* Linux kernel 2.6.32 has a bug where it fails to bump ctime if
-         UTIME_OMIT was used for mtime.  It costs time to do an extra
-         lstat up front, so we cache whether the function works.  */
-      if (utimensat_ctime_really <= 0 && adjustment_needed == 2)
+# if __linux__
+      struct stat st;
+      /* As recently as Linux kernel 2.6.32 (Dec 2009), several file
+         systems (xfs, ntfs-3g) have bugs with a single UTIME_OMIT,
+         but work if both times are either explicitly specified or
+         UTIME_NOW.  Work around it with a preparatory lstat prior to
+         calling utimensat; fortunately, there is not much timing
+         impact due to the extra syscall even on file systems where
+         UTIME_OMIT would have worked.  FIXME: Simplify this in 2012,
+         when file system bugs are no longer common.  */
+      if (adjustment_needed == 2)
         {
-          if (lstat (file, &st1))
+          if (lstat (file, &st))
             return -1;
           if (ts[0].tv_nsec == UTIME_OMIT)
-            return 0;
-          if (utimensat_ctime_really < 0)
-            ts[1] = get_stat_mtime (&st1);
+            ts[0] = get_stat_atime (&st);
+          else if (ts[1].tv_nsec == UTIME_OMIT)
+            ts[1] = get_stat_mtime (&st);
         }
+# endif /* __linux__ */
       result = utimensat (AT_FDCWD, file, ts, AT_SYMLINK_NOFOLLOW);
 # ifdef __linux__
       /* Work around a kernel bug:
@@ -504,16 +457,6 @@ lutimens (char const *file, struct timespec const timespec[2])
         {
           utimensat_works_really = 1;
           lutimensat_works_really = 1;
-          if (result == 0 && utimensat_ctime_really == 0
-              && adjustment_needed == 2)
-            {
-              /* Perform a followup stat to see if the kernel has a
-                 ctime bug.  */
-              if (lstat (file, &st2))
-                return -1;
-              if (detect_ctime_bug (&st1, &st2, ts))
-                result = utimensat (AT_FDCWD, file, ts, AT_SYMLINK_NOFOLLOW);
-            }
           return result;
         }
     }

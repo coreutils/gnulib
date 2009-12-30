@@ -50,27 +50,38 @@ rpl_utimensat (int fd, char const *file, struct timespec const times[2],
 {
   /* See comments in utimens.c for details.  */
   static int utimensat_works_really; /* 0 = unknown, 1 = yes, -1 = no.  */
-  static int utimensat_ctime_really; /* 0 = unknown, 1 = yes, -1 = no.  */
   if (0 <= utimensat_works_really)
     {
       int result;
-      struct stat st1;
-      struct stat st2;
+# ifdef __linux__
+      struct stat st;
       struct timespec ts[2];
-      /* Linux kernel 2.6.32 has a bug where mtime of UTIME_OMIT fails
-         to change ctime.  */
-      if (utimensat_ctime_really <= 0 && times
-          && times[0].tv_nsec != UTIME_OMIT && times[1].tv_nsec == UTIME_OMIT)
+      /* As recently as Linux kernel 2.6.32 (Dec 2009), several file
+         systems (xfs, ntfs-3g) have bugs with a single UTIME_OMIT,
+         but work if both times are either explicitly specified or
+         UTIME_NOW.  Work around it with a preparatory [l]stat prior
+         to calling utimensat; fortunately, there is not much timing
+         impact due to the extra syscall even on file systems where
+         UTIME_OMIT would have worked.  FIXME: Simplify this in 2012,
+         when file system bugs are no longer common.  */
+      if (times && (times[0].tv_nsec == UTIME_OMIT
+                    || times[1].tv_nsec == UTIME_OMIT))
         {
-          if (fstatat (fd, file, &st1, flag))
+          if (fstatat (fd, file, &st, flag))
             return -1;
-          if (utimensat_ctime_really < 0)
-            {
-              ts[0] = times[0];
-              ts[1] = get_stat_mtime (&st1);
-              times = ts;
-            }
+          if (times[0].tv_nsec == UTIME_OMIT && times[1].tv_nsec == UTIME_OMIT)
+            return 0;
+          if (times[0].tv_nsec == UTIME_OMIT)
+            ts[0] = get_stat_atime (&st);
+          else
+            ts[0] = times[0];
+          if (times[1].tv_nsec == UTIME_OMIT)
+            ts[1] = get_stat_mtime (&st);
+          else
+            ts[1] = times[1];
+          times = ts;
         }
+# endif /* __linux__ */
       result = utimensat (fd, file, times, flag);
       /* Linux kernel 2.6.25 has a bug where it returns EINVAL for
          UTIME_NOW or UTIME_OMIT with non-zero tv_sec, which
@@ -82,37 +93,6 @@ rpl_utimensat (int fd, char const *file, struct timespec const times[2],
       if (result == 0 || (errno != ENOSYS && errno != EINVAL))
         {
           utimensat_works_really = 1;
-          if (result == 0 && utimensat_ctime_really == 0 && times
-              && times[0].tv_nsec != UTIME_OMIT
-              && times[1].tv_nsec == UTIME_OMIT)
-            {
-              /* Perform a followup [l]stat.  See detect_ctime_bug in
-                 utimens.c for more details.  */
-              struct timespec now;
-              if (fstatat (fd, file, &st2, flag))
-                return -1;
-              if (st1.st_ctime != st2.st_ctime
-                  || get_stat_ctime_ns (&st1) != get_stat_ctime_ns (&st2))
-                {
-                  utimensat_ctime_really = 1;
-                  return result;
-                }
-              if (times[0].tv_nsec == UTIME_NOW)
-                now = get_stat_atime (&st2);
-              else
-                gettime (&now);
-              if (now.tv_sec < st2.st_ctime
-                  || 2 < now.tv_sec - st2.st_ctime
-                  || (get_stat_ctime_ns (&st2)
-                      && now.tv_sec - st2.st_ctime < 2
-                      && (20000000 < (1000000000 * (now.tv_sec - st2.st_ctime)
-                                      + now.tv_nsec
-                                      - get_stat_ctime_ns (&st2)))))
-                utimensat_ctime_really = -1;
-              ts[0] = times[0];
-              ts[1] = get_stat_mtime (&st2);
-              result = utimensat (fd, file, ts, flag);
-            }
           return result;
         }
     }
