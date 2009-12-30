@@ -1,5 +1,10 @@
 2009-12-29  Eric Blake  <ebb9@byu.net>
 
+	stdio: remove unused variables
+	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Remove unused variables.
+	* m4/fseeko.m4 (gl_FUNC_FSEEKO): Likewise.
+	* m4/ftello.m4 (gl_FUNC_FTELLO): Likewise.
+
 	tests: test more substitute headers
 	* modules/ctype-tests: New file.
 	* modules/dirent-tests: Likewise.

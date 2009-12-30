@@ -1,4 +1,4 @@
-# stdio_h.m4 serial 21
+# stdio_h.m4 serial 22
 dnl Copyright (C) 2007-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -89,8 +89,6 @@ AC_DEFUN([gl_STDIO_H_DEFAULTS],
   HAVE_DECL_SNPRINTF=1;          AC_SUBST([HAVE_DECL_SNPRINTF])
   HAVE_DECL_VSNPRINTF=1;         AC_SUBST([HAVE_DECL_VSNPRINTF])
   HAVE_DPRINTF=1;                AC_SUBST([HAVE_DPRINTF])
-  HAVE_FSEEKO=1;                 AC_SUBST([HAVE_FSEEKO])
-  HAVE_FTELLO=1;                 AC_SUBST([HAVE_FTELLO])
   HAVE_RENAMEAT=1;               AC_SUBST([HAVE_RENAMEAT])
   HAVE_VASPRINTF=1;              AC_SUBST([HAVE_VASPRINTF])
   HAVE_VDPRINTF=1;               AC_SUBST([HAVE_VDPRINTF])

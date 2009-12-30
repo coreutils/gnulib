@@ -1,4 +1,4 @@
-# ftello.m4 serial 4
+# ftello.m4 serial 5
 dnl Copyright (C) 2007, 2008, 2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,10 +18,8 @@ AC_DEFUN([gl_FUNC_FTELLO],
       AC_TRY_LINK([#include <stdio.h>], [ftello (stdin);],
         [gl_cv_func_ftello=yes], [gl_cv_func_ftello=no])
     ])
-  if test $gl_cv_func_ftello = no; then
-    HAVE_FTELLO=0
-    gl_REPLACE_FTELLO
-  elif test $gl_cv_var_stdin_large_offset = no; then
+  if test $gl_cv_func_ftello = no \
+      || test $gl_cv_var_stdin_large_offset = no; then
     gl_REPLACE_FTELLO
   fi
 ])
