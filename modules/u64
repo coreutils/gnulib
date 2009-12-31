@@ -7,6 +7,11 @@ lib/u64.h
 Depends-on:
 stdint
 
+configure.ac:
+AC_REQUIRE([AC_C_INLINE])
+
+Makefile.am:
+
 Include:
 "u64.h"
 

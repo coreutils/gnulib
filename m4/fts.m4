@@ -1,4 +1,4 @@
-#serial 16
+#serial 17
 dnl Copyright (C) 2005-2009 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -21,6 +21,7 @@ AC_DEFUN([gl_FUNC_FTS_CORE],
   AC_LIBOBJ([fts])
 
   dnl Prerequisites of lib/fts.c.
+  AC_REQUIRE([AC_C_INLINE])
   gl_FUNC_OPENAT
 
   AC_CHECK_FUNCS_ONCE([fstatfs])

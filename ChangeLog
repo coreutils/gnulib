@@ -1,5 +1,19 @@
 2009-12-31  Bruno Haible  <bruno@clisp.org>
 
+	Use AC_C_INLINE where necessary.
+	* m4/chdir-long.m4 (gl_PREREQ_CHDIR_LONG): Require AC_C_INLINE.
+	* m4/fatal-signal.m4 (gl_FATAL_SIGNAL): Likewise.
+	* m4/fts.m4 (gl_FUNC_FTS_CORE): Likewise.
+	* m4/mbchar.m4 (gl_MBCHAR): Likewise.
+	* m4/mbfile.m4 (gl_MBFILE): Likewise.
+	* m4/mbiter.m4 (gl_MBITER): Likewise.
+	* m4/regex.m4 (gl_PREREQ_REGEX): Likewise.
+	* m4/stat.m4 (gl_FUNC_STAT): Likewise.
+	* m4/wait-process.m4 (gl_WAIT_PROCESS): Likewise.
+	* modules/u64 (configure.ac): Likewise.
+
+2009-12-31  Bruno Haible  <bruno@clisp.org>
+
 	Use AC_C_INLINE instead of module 'inline' where possible.
 	* modules/inline (Description): Clarify purpose.
 	* m4/count-one-bits.m4 (gl_COUNT_ONE_BITS): Require AC_C_INLINE.

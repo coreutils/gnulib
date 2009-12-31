@@ -1,4 +1,4 @@
-#serial 10
+#serial 11
 
 # Use Gnulib's robust chdir function.
 # It can handle arbitrarily long directory names, which means
@@ -34,5 +34,6 @@ have_arbitrary_file_name_length_limit
 
 AC_DEFUN([gl_PREREQ_CHDIR_LONG],
 [
+  AC_REQUIRE([AC_C_INLINE])
   :
 ])

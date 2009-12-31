@@ -1,4 +1,4 @@
-# serial 3
+# serial 4
 
 # Copyright (C) 2009 Free Software Foundation, Inc.
 #
@@ -57,5 +57,7 @@ AC_DEFUN([gl_FUNC_STAT],
   esac
   if test $REPLACE_STAT = 1; then
     AC_LIBOBJ([stat])
+    dnl Prerequisites of lib/stat.c.
+    AC_REQUIRE([AC_C_INLINE])
   fi
 ])
