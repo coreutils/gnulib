@@ -1,4 +1,5 @@
 # Configure a replacement for <sys/time.h>.
+# serial 2
 
 # Copyright (C) 2007, 2009, 2010 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -18,6 +19,7 @@ AC_DEFUN([gl_HEADER_SYS_TIME_H],
 AC_DEFUN([gl_HEADER_SYS_TIME_H_BODY],
 [
   AC_REQUIRE([AC_C_RESTRICT])
+  AC_CHECK_HEADERS_ONCE([sys/time.h])
   gl_CHECK_NEXT_HEADERS([sys/time.h])
 
   if test $ac_cv_header_sys_time_h = yes; then

@@ -1,3 +1,18 @@
+2010-01-01  Eric Blake  <ebb9@byu.net>
+
+	headers: make check of system header explicit
+	* m4/netdb_h.m4 (gl_HEADER_NETDB): Don't exploit knowledge of
+	gl_CHECK_NEXT_HEADER internals, but call AC_CHECK_HEADERS_ONCE
+	ourselves.
+	* m4/search_h.m4 (gl_SEARCH_H): Likewise.
+	* m4/sys_select_h.m4 (gl_HEADER_SYS_SELECT): Likewise.
+	* m4/sys_time_h.m4 (gl_HEADER_SYS_TIME_H_BODY): Likewise.
+	* m4/inttypes.m4 (gl_INTTYPES_H): Likewise, for gt_INTTYPES_PRI
+	internals.
+	* m4/wchar.m4 (gl_WCHAR_H): Skip followup test if header is
+	missing.
+	Suggested by Bruno Haible.
+
 2010-01-01  Jim Meyering  <meyering@redhat.com>
 
 	ChangeLog: tweak to eliminate unnecessary copyright line

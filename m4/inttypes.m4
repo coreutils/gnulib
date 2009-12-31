@@ -1,4 +1,4 @@
-# inttypes.m4 serial 15
+# inttypes.m4 serial 16
 dnl Copyright (C) 2006-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,6 +11,7 @@ AC_DEFUN([gl_INTTYPES_H],
 [
   AC_REQUIRE([gl_STDINT_H])
   AC_REQUIRE([gt_INTTYPES_PRI])
+  AC_CHECK_HEADERS_ONCE([inttypes.h])
   AC_CHECK_DECLS_ONCE([imaxabs])
   AC_CHECK_DECLS_ONCE([imaxdiv])
   AC_CHECK_DECLS_ONCE([strtoimax])
