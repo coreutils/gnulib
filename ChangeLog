@@ -1,5 +1,13 @@
 2009-12-30  Bruno Haible  <bruno@clisp.org>
 
+	Fix compilation error with Solaris cc.
+	* lib/unicase/u8-is-invariant.c: Include <stdbool.h>.
+	* lib/unicase/u16-is-invariant.c: Likewise.
+	* lib/unicase/u32-is-invariant.c: Likewise.
+	Reported by Nelson H. F. Beebe <beebe@math.utah.edu>.
+
+2009-12-30  Bruno Haible  <bruno@clisp.org>
+
 	Fix test crash.
 	* tests/test-localename.c (test_locale_name_thread): Skip unavailable
 	locales.
