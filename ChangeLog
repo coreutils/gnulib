@@ -1,5 +1,191 @@
 2009-12-31  Bruno Haible  <bruno@clisp.org>
 
+	Use AC_C_INLINE instead of module 'inline' where possible.
+	* modules/inline (Description): Clarify purpose.
+	* m4/count-one-bits.m4 (gl_COUNT_ONE_BITS): Require AC_C_INLINE.
+	* modules/count-one-bits (Depends-on): Remove inline.
+	* m4/openat.m4 (gl_PREREQ_OPENAT): Require AC_C_INLINE.
+	* modules/openat (Depends-on): Remove inline.
+	* modules/fdutimensat (Depends-on, configure.ac): Require AC_C_INLINE
+	instead of depending on module 'inline'.
+	* modules/filevercmp (Depends-on, configure.ac): Likewise.
+	* modules/unicase/cased (Depends-on, configure.ac): Likewise.
+	* modules/unicase/ignorable (Depends-on, configure.ac): Likewise.
+	* modules/unictype/category-of (Depends-on, configure.ac): Likewise.
+	* modules/unictype/category-test (Depends-on, configure.ac): Likewise.
+	* modules/unictype/ctype-alnum (Depends-on, configure.ac): Likewise.
+	* modules/unictype/ctype-alpha (Depends-on, configure.ac): Likewise.
+	* modules/unictype/ctype-blank (Depends-on, configure.ac): Likewise.
+	* modules/unictype/ctype-cntrl (Depends-on, configure.ac): Likewise.
+	* modules/unictype/ctype-digit (Depends-on, configure.ac): Likewise.
+	* modules/unictype/ctype-graph (Depends-on, configure.ac): Likewise.
+	* modules/unictype/ctype-lower (Depends-on, configure.ac): Likewise.
+	* modules/unictype/ctype-print (Depends-on, configure.ac): Likewise.
+	* modules/unictype/ctype-punct (Depends-on, configure.ac): Likewise.
+	* modules/unictype/ctype-space (Depends-on, configure.ac): Likewise.
+	* modules/unictype/ctype-upper (Depends-on, configure.ac): Likewise.
+	* modules/unictype/ctype-xdigit (Depends-on, configure.ac): Likewise.
+	* modules/unictype/property-alphabetic (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-ascii-hex-digit (Depends-on,
+	configure.ac): Likewise.
+	* modules/unictype/property-bidi-arabic-digit (Depends-on,
+	configure.ac): Likewise.
+	* modules/unictype/property-bidi-arabic-right-to-left (Depends-on,
+	configure.ac): Likewise.
+	* modules/unictype/property-bidi-block-separator (Depends-on,
+	configure.ac): Likewise.
+	* modules/unictype/property-bidi-boundary-neutral (Depends-on,
+	configure.ac): Likewise.
+	* modules/unictype/property-bidi-common-separator (Depends-on,
+	configure.ac): Likewise.
+	* modules/unictype/property-bidi-control (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-bidi-embedding-or-override (Depends-on,
+	configure.ac): Likewise.
+	* modules/unictype/property-bidi-eur-num-separator (Depends-on,
+	configure.ac): Likewise.
+	* modules/unictype/property-bidi-eur-num-terminator (Depends-on,
+	configure.ac): Likewise.
+	* modules/unictype/property-bidi-european-digit (Depends-on,
+	configure.ac): Likewise.
+	* modules/unictype/property-bidi-hebrew-right-to-left (Depends-on,
+	configure.ac): Likewise.
+	* modules/unictype/property-bidi-left-to-right (Depends-on,
+	configure.ac): Likewise.
+	* modules/unictype/property-bidi-non-spacing-mark (Depends-on,
+	configure.ac): Likewise.
+	* modules/unictype/property-bidi-other-neutral (Depends-on,
+	configure.ac): Likewise.
+	* modules/unictype/property-bidi-pdf (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-bidi-segment-separator (Depends-on,
+	configure.ac): Likewise.
+	* modules/unictype/property-bidi-whitespace (Depends-on,
+	configure.ac): Likewise.
+	* modules/unictype/property-combining (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-composite (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-currency-symbol (Depends-on,
+	configure.ac): Likewise.
+	* modules/unictype/property-dash (Depends-on, configure.ac): Likewise.
+	* modules/unictype/property-decimal-digit (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-default-ignorable-code-point (Depends-on,
+	configure.ac): Likewise.
+	* modules/unictype/property-deprecated (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-diacritic (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-extender (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-format-control (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-grapheme-base (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-grapheme-extend (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-grapheme-link (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-hex-digit (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-hyphen (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-id-continue (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-id-start (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-ideographic (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-ids-binary-operator (Depends-on,
+	configure.ac): Likewise.
+	* modules/unictype/property-ids-trinary-operator (Depends-on,
+	configure.ac): Likewise.
+	* modules/unictype/property-ignorable-control (Depends-on,
+	configure.ac): Likewise.
+	* modules/unictype/property-iso-control (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-join-control (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-left-of-pair (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-line-separator (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-logical-order-exception (Depends-on,
+	configure.ac): Likewise.
+	* modules/unictype/property-lowercase (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-math (Depends-on, configure.ac): Likewise.
+	* modules/unictype/property-non-break (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-not-a-character (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-numeric (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-other-alphabetic (Depends-on,
+	configure.ac): Likewise.
+	* modules/unictype/property-other-default-ignorable-code-point
+	(Depends-on, configure.ac): Likewise.
+	* modules/unictype/property-other-grapheme-extend (Depends-on,
+	configure.ac): Likewise.
+	* modules/unictype/property-other-id-continue (Depends-on,
+	configure.ac): Likewise.
+	* modules/unictype/property-other-id-start (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-other-lowercase (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-other-math (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-other-uppercase (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-paired-punctuation (Depends-on,
+	configure.ac): Likewise.
+	* modules/unictype/property-paragraph-separator (Depends-on,
+	configure.ac): Likewise.
+	* modules/unictype/property-pattern-syntax (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-pattern-white-space (Depends-on,
+	configure.ac): Likewise.
+	* modules/unictype/property-private-use (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-punctuation (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-quotation-mark (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-radical (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-sentence-terminal (Depends-on,
+	configure.ac): Likewise.
+	* modules/unictype/property-soft-dotted (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-space (Depends-on, configure.ac): Likewise.
+	* modules/unictype/property-terminal-punctuation (Depends-on,
+	configure.ac): Likewise.
+	* modules/unictype/property-titlecase (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-unassigned-code-value (Depends-on,
+	configure.ac): Likewise.
+	* modules/unictype/property-unified-ideograph (Depends-on,
+	configure.ac): Likewise.
+	* modules/unictype/property-uppercase (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-variation-selector (Depends-on,
+	configure.ac): Likewise.
+	* modules/unictype/property-white-space (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-xid-continue (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-xid-start (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/property-zero-width (Depends-on, configure.ac):
+	Likewise.
+	* modules/unictype/syntax-c-ident (Depends-on, configure.ac): Likewise.
+	* modules/unictype/syntax-java-ident (Depends-on, configure.ac):
+	Likewise.
+
+2009-12-31  Bruno Haible  <bruno@clisp.org>
+
 	Remove unnecessary AC_C_INLINE invocation.
 	* m4/popen.m4 (gl_PREREQ_POPEN): Don't invoke AC_C_INLINE. Not needed
 	since 2009-08-21.

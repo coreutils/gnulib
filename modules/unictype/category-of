@@ -8,9 +8,9 @@ lib/unictype/categ_of.h
 Depends-on:
 unictype/base
 unictype/category-none
-inline
 
 configure.ac:
+AC_REQUIRE([AC_C_INLINE])
 
 Makefile.am:
 lib_SOURCES += unictype/categ_of.c

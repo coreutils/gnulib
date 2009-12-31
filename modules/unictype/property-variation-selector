@@ -8,9 +8,9 @@ lib/unictype/bitmap.h
 
 Depends-on:
 unictype/base
-inline
 
 configure.ac:
+AC_REQUIRE([AC_C_INLINE])
 
 Makefile.am:
 lib_SOURCES += unictype/pr_variation_selector.c

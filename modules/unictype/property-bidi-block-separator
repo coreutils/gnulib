@@ -9,9 +9,9 @@ lib/unictype/bitmap.h
 Depends-on:
 unictype/base
 unictype/bidicategory-of
-inline
 
 configure.ac:
+AC_REQUIRE([AC_C_INLINE])
 
 Makefile.am:
 lib_SOURCES += unictype/pr_bidi_block_separator.c

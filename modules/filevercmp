@@ -7,11 +7,11 @@ lib/filevercmp.c
 
 Depends-on:
 c-ctype
-inline
 stdbool
 string
 
 configure.ac:
+AC_REQUIRE([AC_C_INLINE])
 
 Makefile.am:
 lib_SOURCES += filevercmp.c

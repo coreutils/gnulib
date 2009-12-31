@@ -1,4 +1,4 @@
-# serial 26
+# serial 27
 # See if we need to use our replacement for Solaris' openat et al functions.
 
 dnl Copyright (C) 2004-2009 Free Software Foundation, Inc.
@@ -118,6 +118,7 @@ AC_DEFUN([gl_FUNC_FCHOWNAT],
 
 AC_DEFUN([gl_PREREQ_OPENAT],
 [
+  AC_REQUIRE([AC_C_INLINE])
   AC_REQUIRE([gl_PROMOTED_TYPE_MODE_T])
   :
 ])

@@ -6,7 +6,6 @@ lib/count-one-bits.h
 m4/count-one-bits.m4
 
 Depends-on:
-inline
 verify
 
 configure.ac:

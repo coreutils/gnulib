@@ -23,7 +23,6 @@ fchdir
 fcntl-h
 fdopendir
 gettext-h
-inline
 intprops
 lchown
 lstat

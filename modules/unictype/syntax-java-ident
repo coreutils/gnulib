@@ -8,9 +8,9 @@ lib/unictype/identsyntaxmap.h
 
 Depends-on:
 unictype/base
-inline
 
 configure.ac:
+AC_REQUIRE([AC_C_INLINE])
 
 Makefile.am:
 lib_SOURCES += unictype/sy_java_ident.c

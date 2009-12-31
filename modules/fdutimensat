@@ -7,10 +7,10 @@ lib/utimens.h
 
 Depends-on:
 futimens
-inline
 utimensat
 
 configure.ac:
+AC_REQUIRE([AC_C_INLINE]) dnl because 'inline' is used in lib/utimens.h
 gl_MODULE_INDICATOR([fdutimensat])
 
 Makefile.am:

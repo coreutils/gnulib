@@ -10,9 +10,9 @@ Depends-on:
 unictype/base
 unictype/category-test
 unictype/category-Cc
-inline
 
 configure.ac:
+AC_REQUIRE([AC_C_INLINE])
 
 Makefile.am:
 lib_SOURCES += unictype/pr_iso_control.c
