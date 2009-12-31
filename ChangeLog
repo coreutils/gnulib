@@ -1,3 +1,8 @@
+2009-12-31  Eric Blake  <ebb9@byu.net>
+
+	test-dup2: avoid compiler warning
+	* tests/test-dup2.c (is_inheritable): Only define if used.
+
 2010-01-01  Bruno Haible  <bruno@clisp.org>
 
 	vasnprintf: Avoid passing an 'rpl_mbstate_t *' to the system's wcrtomb.
