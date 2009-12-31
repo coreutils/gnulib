@@ -30,7 +30,6 @@ gzip_rsyncable := \
   $(shell gzip --help 2>/dev/null|grep rsyncable >/dev/null && echo --rsyncable)
 GZIP_ENV = '--no-name --best $(gzip_rsyncable)'
 
-# cfg.mk must define the gpg_key_ID used by this package.
 GIT = git
 VC = $(GIT)
 VC-tag = git tag -s -m '$(VERSION)' -u '$(gpg_key_ID)'
@@ -687,6 +686,13 @@ rel-files = $(DIST_ARCHIVES)
 gnulib_dir ?= $(srcdir)/gnulib
 gnulib-version = $$(cd $(gnulib_dir) && git describe)
 bootstrap-tools ?= autoconf,automake,gnulib
+
+# If it's not already specified, derive the GPG key ID from
+# the signed tag we've just applied to mark this release.
+gpg_key_ID ?= \
+  $$(git cat-file tag v$(VERSION) > .ann-sig \
+     && gpgv .ann-sig - < /dev/null 2>&1 \
+	  | sed -n '/.*key ID \([0-9A-F]*\)/s//\1/p'; rm -f .ann-sig)
 
 announcement: NEWS ChangeLog $(rel-files)
 	@$(build_aux)/announce-gen					\

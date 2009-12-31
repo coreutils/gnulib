@@ -1,5 +1,10 @@
 2009-12-31  Jim Meyering  <meyering@redhat.com>
 
+	maint.mk: don't require explicit gpg_key_ID in cfg.mk
+	* top/maint.mk (gpg_key_ID): Derive key ID from signed release tag.
+	With this change, we can all remove the gpg_key_ID = ... definition
+	from our respective cfg.mk files.
+
 	maint.mk: create announcement template in ~/, not in /tmp
 	* top/maint.mk (emit_upload_commands): Adjust.
 	(release-prep): Emit into ~/announce-..., not /tmp/announce-...
