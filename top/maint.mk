@@ -714,7 +714,7 @@ emit_upload_commands:
 	@echo "$(build_aux)/gnupload $(GNUPLOADFLAGS) \\"
 	@echo "    --to $(gnu_rel_host):$(PACKAGE) \\"
 	@echo "  $(rel-files)"
-	@echo '# send the /tmp/announcement e-mail'
+	@echo '# send the ~/announce-$(my_distdir) e-mail'
 	@echo =====================================
 	@echo =====================================
 
@@ -760,7 +760,7 @@ release-prep-hook ?= release-prep
 release-prep:
 	case $$RELEASE_TYPE in alpha|beta|stable) ;; \
 	  *) echo "invalid RELEASE_TYPE: $$RELEASE_TYPE" 1>&2; exit 1;; esac
-	$(MAKE) -s announcement > /tmp/announce-$(my_distdir)
+	$(MAKE) -s announcement > ~/announce-$(my_distdir)
 	if test -d $(release_archive_dir); then			\
 	  ln $(rel-files) $(release_archive_dir);		\
 	  chmod a-w $(rel-files);				\
@@ -770,6 +770,7 @@ release-prep:
 	perl -pi -e '$$. == 3 and print "$(noteworthy)\n\n\n"' NEWS
 	$(emit-commit-log) > .ci-msg
 	$(VC) commit -F .ci-msg -a
+	rm .ci-msg
 
 .PHONY: web-manual
 web-manual:

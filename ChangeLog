@@ -1,3 +1,10 @@
+2009-12-31  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: create announcement template in ~/, not in /tmp
+	* top/maint.mk (emit_upload_commands): Adjust.
+	(release-prep): Emit into ~/announce-..., not /tmp/announce-...
+	Remove temporary file, .ci-msg.
+
 2009-12-31  Eric Blake  <ebb9@byu.net>
 
 	link-warning: always build headers with link warnings
