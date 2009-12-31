@@ -45,13 +45,13 @@ AC_DEFUN([gl_HEADER_SYS_SELECT],
           ])
       fi
     ])
+  gl_CHECK_NEXT_HEADERS([sys/select.h])
   if test $ac_cv_header_sys_select_h = yes; then
     HAVE_SYS_SELECT_H=1
   else
     HAVE_SYS_SELECT_H=0
   fi
   AC_SUBST([HAVE_SYS_SELECT_H])
-  gl_CHECK_NEXT_HEADERS([sys/select.h])
   if test $gl_cv_header_sys_select_h_selfcontained != yes; then
     gl_PREREQ_SYS_H_WINSOCK2
   fi

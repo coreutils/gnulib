@@ -1,5 +1,11 @@
 2009-12-31  Bruno Haible  <bruno@clisp.org>
 
+	* m4/sys_select_h.m4 (gl_HEADER_SYS_SELECT): Invoke
+	gl_CHECK_NEXT_HEADERS before testing ac_cv_header_sys_select_h, not
+	afterwards.
+
+2009-12-31  Bruno Haible  <bruno@clisp.org>
+
 	* m4/sys_utsname_h.m4 (gl_SYS_UTSNAME_H_DEFAULTS): Don't set
 	SYS_UTSNAME_H.
 
