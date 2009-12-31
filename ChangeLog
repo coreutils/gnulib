@@ -1,5 +1,8 @@
 2009-12-31  Eric Blake  <ebb9@byu.net>
 
+	openat: update maintainer
+	* modules/openat (Maintainer): Add myself.
+
 	utimens: avoid shadowing warning
 	* lib/utimens.c (fdutimens, lutimens): Consolidate separate stat
 	buffers into one, to avoid shadowing, as well as avoiding a
