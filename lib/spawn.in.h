@@ -306,10 +306,10 @@ extern int posix_spawnattr_getflags (const posix_spawnattr_t *_Restrict_ __attr,
      __THROW _GL_ARG_NONNULL ((1, 2));
 # endif
 #elif defined GNULIB_POSIXCHECK
-# undef posix_spawnattr_getsigdefault
-# define posix_spawnattr_getsigdefault(a, b)                         \
-  (GL_LINK_WARNING ("posix_spawnattr_getsigdefault is unportable - "        \
-                    "use gnulib module posix_spawnattr_getsigdefault for portability"), \
+# undef posix_spawnattr_getflags
+# define posix_spawnattr_getflags(a, b)                         \
+  (GL_LINK_WARNING ("posix_spawnattr_getflags is unportable - "        \
+                    "use gnulib module posix_spawnattr_getflags for portability"), \
    posix_spawnattr_getsigdefault (a, b))
 #endif
 
@@ -324,10 +324,10 @@ extern int posix_spawnattr_setflags (posix_spawnattr_t *__attr,
      __THROW _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
-# undef posix_spawnattr_getflags
-# define posix_spawnattr_getflags(a, b)                         \
-  (GL_LINK_WARNING ("posix_spawnattr_getflags is unportable - "        \
-                    "use gnulib module posix_spawnattr_getflags for portability"), \
+# undef posix_spawnattr_setflags
+# define posix_spawnattr_setflags(a, b)                         \
+  (GL_LINK_WARNING ("posix_spawnattr_setflags is unportable - "        \
+                    "use gnulib module posix_spawnattr_setflags for portability"), \
    posix_spawnattr_getflags (a, b))
 #endif
 
@@ -342,10 +342,10 @@ extern int posix_spawnattr_getpgroup (const posix_spawnattr_t *_Restrict_ __attr
      __THROW _GL_ARG_NONNULL ((1, 2));
 # endif
 #elif defined GNULIB_POSIXCHECK
-# undef posix_spawnattr_setflags
-# define posix_spawnattr_setflags(a, b)                         \
-  (GL_LINK_WARNING ("posix_spawnattr_setflags is unportable - "        \
-                    "use gnulib module posix_spawnattr_setflags for portability"), \
+# undef posix_spawnattr_getpgroup
+# define posix_spawnattr_getpgroup(a, b)                         \
+  (GL_LINK_WARNING ("posix_spawnattr_getpgroup is unportable - "        \
+                    "use gnulib module posix_spawnattr_getpgroup for portability"), \
    posix_spawnattr_setflags (a, b))
 #endif
 
@@ -359,6 +359,12 @@ extern int posix_spawnattr_setpgroup (posix_spawnattr_t *__attr,
                                       pid_t __pgroup)
      __THROW _GL_ARG_NONNULL ((1));
 # endif
+#elif defined GNULIB_POSIXCHECK
+# undef posix_spawnattr_setpgroup
+# define posix_spawnattr_setpgroup(a, b)                         \
+  (GL_LINK_WARNING ("posix_spawnattr_setpgroup is unportable - "        \
+                    "use gnulib module posix_spawnattr_setpgroup for portability"), \
+   posix_spawnattr_setflags (a, b))
 #endif
 
 #if @GNULIB_POSIX_SPAWNATTR_GETSCHEDPOLICY@

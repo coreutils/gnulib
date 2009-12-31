@@ -1,5 +1,12 @@
 2009-12-31  Bruno Haible  <bruno@clisp.org>
 
+	spawn: Fix misapplied patch.
+	* lib/spawn.in.h (posix_spawnattr_getflags, posix_spawnattr_setflags,
+	posix_spawnattr_getpgroup, posix_spawnattr_setpgroup): Correct the link
+	warnings for GNULIB_POSIXCHECK.
+
+2009-12-31  Bruno Haible  <bruno@clisp.org>
+
 	times: Update after sys_times changed.
 	* m4/times.m4: New file, extracted from modules/times. Set HAVE_TIMES.
 	* modules/times (Files): Add it.
