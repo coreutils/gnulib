@@ -39,5 +39,4 @@ AC_DEFUN([gl_SYS_UTSNAME_H_DEFAULTS],
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_UNAME=1;           AC_SUBST([HAVE_UNAME])
   HAVE_STRUCT_UTSNAME=1;  AC_SUBST([HAVE_STRUCT_UTSNAME])
-  SYS_UTSNAME_H='';       AC_SUBST([SYS_UTSNAME_H])
 ])

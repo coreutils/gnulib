@@ -1,5 +1,10 @@
 2009-12-31  Bruno Haible  <bruno@clisp.org>
 
+	* m4/sys_utsname_h.m4 (gl_SYS_UTSNAME_H_DEFAULTS): Don't set
+	SYS_UTSNAME_H.
+
+2009-12-31  Bruno Haible  <bruno@clisp.org>
+
 	spawn: Fix misapplied patch.
 	* lib/spawn.in.h (posix_spawnattr_getflags, posix_spawnattr_setflags,
 	posix_spawnattr_getpgroup, posix_spawnattr_setpgroup): Correct the link
