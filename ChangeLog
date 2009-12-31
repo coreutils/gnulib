@@ -1,5 +1,12 @@
 2009-12-31  Bruno Haible  <bruno@clisp.org>
 
+	times: Update after sys_times changed.
+	* m4/times.m4: New file, extracted from modules/times. Set HAVE_TIMES.
+	* modules/times (Files): Add it.
+	(configure.ac): Invoke gl_FUNC_TIMES.
+
+2009-12-31  Bruno Haible  <bruno@clisp.org>
+
 	Use AC_C_INLINE where necessary.
 	* m4/chdir-long.m4 (gl_PREREQ_CHDIR_LONG): Require AC_C_INLINE.
 	* m4/fatal-signal.m4 (gl_FATAL_SIGNAL): Likewise.

@@ -3,15 +3,13 @@ times() function: get process times
 
 Files:
 lib/times.c
+m4/times.m4
 
 Depends-on:
 sys_times
 
 configure.ac:
-AC_CHECK_FUNCS_ONCE([times])
-if test $ac_cv_func_times = no; then
-  AC_LIBOBJ([times])
-fi
+gl_FUNC_TIMES
 gl_SYS_TIMES_MODULE_INDICATOR([times])
 
 Makefile.am:
