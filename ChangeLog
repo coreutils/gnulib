@@ -1,5 +1,13 @@
 2009-12-31  Bruno Haible  <bruno@clisp.org>
 
+	spawn: Fix incomplete fix.
+	* lib/spawn.in.h (posix_spawnattr_getflags, posix_spawnattr_setflags,
+	posix_spawnattr_getpgroup, posix_spawnattr_setpgroup): Correct the link
+	warnings for GNULIB_POSIXCHECK again.
+	Reported by Eric Blake.
+
+2009-12-31  Bruno Haible  <bruno@clisp.org>
+
 	Avoid namespace pollution on glibc systems.
 	* lib/spawn.in.h: Don't include <sched.h>, <signal.h> on glibc systems.
 	* lib/sys_times.in.h: Don't include <time.h> on glibc systems.
