@@ -32,6 +32,37 @@
 
 /* The definition of _GL_ARG_NONNULL is copied here.  */
 
+/* Helper macros to define a portability warning for the
+   classification macro FUNC called with VALUE.  POSIX declares the
+   classification macros with an argument of real-floating (that is,
+   one of float, double, or long double).  */
+#define _GL_WARN_REAL_FLOATING_DECL(func) \
+static inline int                                                   \
+rpl_ ## func ## f (float f)                                         \
+{                                                                   \
+  return func (f);                                                  \
+}                                                                   \
+static inline int                                                   \
+rpl_ ## func ## d (double d)                                        \
+{                                                                   \
+  return func (d);                                                  \
+}                                                                   \
+static inline int                                                   \
+rpl_ ## func ## l (long double l)                                   \
+{                                                                   \
+  return func (l);                                                  \
+}                                                                   \
+_GL_WARN_ON_USE (rpl_ ## func ## f, #func " is unportable - "       \
+                 "use gnulib module " #func " for portability");    \
+_GL_WARN_ON_USE (rpl_ ## func ## d, #func " is unportable - "       \
+                 "use gnulib module " #func " for portability");    \
+_GL_WARN_ON_USE (rpl_ ## func ## l, #func " is unportable - "       \
+                 "use gnulib module " #func " for portability")
+#define _GL_WARN_REAL_FLOATING_IMPL(func, value) \
+  (sizeof (value) == sizeof (float) ? rpl_ ## func ## f (value)     \
+   : sizeof (value) == sizeof (double) ? rpl_ ## func ## d (value)  \
+   : rpl_ ## func ## l (value))
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -386,7 +417,11 @@ extern int gl_isfinitel (long double x);
     gl_isfinitef (x))
 # endif
 #elif defined GNULIB_POSIXCHECK
-  /* How to override a macro?  */
+# if defined isfinite
+_GL_WARN_REAL_FLOATING_DECL (isfinite);
+#  undef isfinite
+#  define isfinite(x) _GL_WARN_REAL_FLOATING_IMPL (isfinite, x)
+# endif
 #endif
 
 
@@ -402,7 +437,11 @@ extern int gl_isinfl (long double x);
     gl_isinff (x))
 # endif
 #elif defined GNULIB_POSIXCHECK
-  /* How to override a macro?  */
+# if defined isinf
+_GL_WARN_REAL_FLOATING_DECL (isinf);
+#  undef isinf
+#  define isinf(x) _GL_WARN_REAL_FLOATING_IMPL (isinf, x)
+# endif
 #endif
 
 
@@ -501,7 +540,11 @@ extern int rpl_isnanl (long double x);
     gl_isnan_f (x))
 # endif
 #elif defined GNULIB_POSIXCHECK
-  /* How to override a macro?  */
+# if defined isnan
+_GL_WARN_REAL_FLOATING_DECL (isnan);
+#  undef isnan
+#  define isnan(x) _GL_WARN_REAL_FLOATING_IMPL (isnan, x)
+# endif
 #endif
 
 
@@ -557,7 +600,11 @@ extern int gl_signbitl (long double arg);
     gl_signbitf (x))
 # endif
 #elif defined GNULIB_POSIXCHECK
-  /* How to override a macro?  */
+# if defined signbit
+_GL_WARN_REAL_FLOATING_DECL (signbit);
+#  undef signbit
+#  define signbit(x) _GL_WARN_REAL_FLOATING_IMPL (signbit, x)
+# endif
 #endif
 
 

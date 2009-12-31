@@ -1,5 +1,14 @@
 2010-01-11  Eric Blake  <ebb9@byu.net>
 
+	math: add portability warnings for classification macros
+	* modules/math (Depends-on): Add warn-on-use.
+	(Makefile.am): Provide new substitutions.
+	* m4/math_h.m4 (gl_MATH_H): Require inline.
+	* lib/math.in.h (_GL_WARN_REAL_FLOATING_DECL)
+	(_GL_WARN_REAL_FLOATING_IMPL): New helper macros.
+	(isfinite, isinf, isnan, signbit) [GNULIB_POSIXCHECK]: Use them to
+	implement warnings.
+
 	unistd: warn on use of environ without module
 	* modules/unistd (Depends-on): Add warn-on-use.
 	(Makefile.am): Provide new substitutions.
