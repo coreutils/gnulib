@@ -118,6 +118,8 @@
 
 /* The definition of _GL_ARG_NONNULL is copied here.  */
 
+/* The definition of _GL_WARN_ON_USE is copied here.  */
+
 
 /* OS/2 EMX lacks these macros.  */
 #ifndef STDIN_FILENO
@@ -250,11 +252,17 @@ extern char **environ;
 #  endif
 # endif
 #elif defined GNULIB_POSIXCHECK
-# undef environ
-# define environ \
-    (GL_LINK_WARNING ("environ is unportable - " \
-                      "use gnulib module environ for portability"), \
-     environ)
+# if HAVE_RAW_DECL_ENVIRON
+static inline char ***
+rpl_environ (void)
+{
+  return &environ;
+}
+_GL_WARN_ON_USE (rpl_environ, "environ is unportable - "
+                 "use gnulib module environ for portability");
+#  undef environ
+#  define environ (*rpl_environ ())
+# endif
 #endif
 
 

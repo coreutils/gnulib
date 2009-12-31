@@ -1,5 +1,11 @@
 2010-01-11  Eric Blake  <ebb9@byu.net>
 
+	unistd: warn on use of environ without module
+	* modules/unistd (Depends-on): Add warn-on-use.
+	(Makefile.am): Provide new substitutions.
+	* m4/unistd_h.m4 (gl_UNISTD_H): Check for inline and environ.
+	* lib/unistd.in.h (environ): Wrap with a warning helper function.
+
 	stdio: warn on suspicious uses
 	* modules/stdio (Depends-on): Add warn-on-use.
 	(Makefile.am): Provide new substitutions.
