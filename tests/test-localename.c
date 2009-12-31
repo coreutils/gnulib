@@ -419,12 +419,13 @@ test_locale_name_thread (void)
       }
     /* Verify the unsaved_names are still valid.  */
     for (j = 0; j < SIZEOF (choices); j++)
-      {
-        unsigned int i;
+      if (available[j])
+        {
+          unsigned int i;
 
-        for (i = 0; i < SIZEOF (categories); i++)
-          ASSERT (strcmp (unsaved_names[j][i], saved_names[j][i]) == 0);
-      }
+          for (i = 0; i < SIZEOF (categories); i++)
+            ASSERT (strcmp (unsaved_names[j][i], saved_names[j][i]) == 0);
+        }
     /* Allocate many locales, without freeing them.  This is an attempt at
        overwriting as much of the previously allocated memory as possible.  */
     for (j = SIZEOF (choices); j > 0; )
@@ -447,12 +448,13 @@ test_locale_name_thread (void)
       }
     /* Verify the unsaved_names are still valid.  */
     for (j = 0; j < SIZEOF (choices); j++)
-      {
-        unsigned int i;
+      if (available[j])
+        {
+          unsigned int i;
 
-        for (i = 0; i < SIZEOF (categories); i++)
-          ASSERT (strcmp (unsaved_names[j][i], saved_names[j][i]) == 0);
-      }
+          for (i = 0; i < SIZEOF (categories); i++)
+            ASSERT (strcmp (unsaved_names[j][i], saved_names[j][i]) == 0);
+        }
   }
 #else
   /* Check that gl_locale_name_thread always returns NULL.  */

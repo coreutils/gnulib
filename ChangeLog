@@ -1,5 +1,12 @@
 2009-12-30  Bruno Haible  <bruno@clisp.org>
 
+	Fix test crash.
+	* tests/test-localename.c (test_locale_name_thread): Skip unavailable
+	locales.
+	Reported by Simon Josefsson <simon@josefsson.org>.
+
+2009-12-30  Bruno Haible  <bruno@clisp.org>
+
 	Fix compilation error on most platforms.
 	* tests/test-localename.c (categories): Define only if HAVE_NEWLOCALE.
 	Reported by Simon Josefsson <simon@josefsson.org>
