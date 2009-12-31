@@ -1,5 +1,13 @@
 2009-12-31  Eric Blake  <ebb9@byu.net>
 
+	doc: correct availability of cygwin 1.5.x getopt
+	* doc/posix-functions/optarg.texi (optarg): Cygwin supplies getopt
+	variables.
+	* doc/posix-functions/opterr.texi (opterr): Likewise.
+	* doc/posix-functions/optind.texi (optind): Likewise.
+	* doc/posix-functions/optopt.texi (optopt): Likewise.
+	* doc/posix-functions/tzname.texi (tzname): Likewise.
+
 	openat: update maintainer
 	* modules/openat (Maintainer): Add myself.
 
