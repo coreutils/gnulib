@@ -1,3 +1,9 @@
+2009-12-31  Bruno Haible  <bruno@clisp.org>
+
+	Remove unnecessary AC_C_INLINE invocation.
+	* m4/popen.m4 (gl_PREREQ_POPEN): Don't invoke AC_C_INLINE. Not needed
+	since 2009-08-21.
+
 2009-12-31  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: don't require explicit gpg_key_ID in cfg.mk
