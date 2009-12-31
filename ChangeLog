@@ -1,3 +1,10 @@
+2009-12-31  Eric Blake  <ebb9@byu.net>
+
+	fdutimensat: revert prior patch
+	* modules/fdutimensat (Depends-on): Re-add inline; it is needed by
+	utimens.h.
+	Reported by Bruno Haible.
+
 2009-12-30  Eric Blake  <ebb9@byu.net>
 
 	sys_wait: drop link-warning dependency
