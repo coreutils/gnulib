@@ -169,6 +169,7 @@ fdutimens (char const *file, int fd, struct timespec const timespec[2])
   struct timespec adjusted_timespec[2];
   struct timespec *ts = timespec ? adjusted_timespec : NULL;
   int adjustment_needed = 0;
+  struct stat st;
 
   if (ts)
     {
@@ -220,7 +221,6 @@ fdutimens (char const *file, int fd, struct timespec const timespec[2])
     {
       int result;
 # if __linux__
-      struct stat st;
       /* As recently as Linux kernel 2.6.32 (Dec 2009), several file
          systems (xfs, ntfs-3g) have bugs with a single UTIME_OMIT,
          but work if both times are either explicitly specified or
@@ -237,6 +237,8 @@ fdutimens (char const *file, int fd, struct timespec const timespec[2])
             ts[0] = get_stat_atime (&st);
           else if (ts[1].tv_nsec == UTIME_OMIT)
             ts[1] = get_stat_mtime (&st);
+          /* Note that st is good, in case utimensat gives ENOSYS.  */
+          adjustment_needed++;
         }
 # endif /* __linux__ */
 # if HAVE_UTIMENSAT
@@ -287,8 +289,8 @@ fdutimens (char const *file, int fd, struct timespec const timespec[2])
 
   if (adjustment_needed || (REPLACE_FUNC_STAT_FILE && fd < 0))
     {
-      struct stat st;
-      if (fd < 0 ? stat (file, &st) : fstat (fd, &st))
+      if (adjustment_needed != 3
+          && (fd < 0 ? stat (file, &st) : fstat (fd, &st)))
         return -1;
       if (ts && update_timespec (&st, &ts))
         return 0;
@@ -422,7 +424,6 @@ lutimens (char const *file, struct timespec const timespec[2])
     {
       int result;
 # if __linux__
-      struct stat st;
       /* As recently as Linux kernel 2.6.32 (Dec 2009), several file
          systems (xfs, ntfs-3g) have bugs with a single UTIME_OMIT,
          but work if both times are either explicitly specified or
@@ -439,6 +440,8 @@ lutimens (char const *file, struct timespec const timespec[2])
             ts[0] = get_stat_atime (&st);
           else if (ts[1].tv_nsec == UTIME_OMIT)
             ts[1] = get_stat_mtime (&st);
+          /* Note that st is good, in case utimensat gives ENOSYS.  */
+          adjustment_needed++;
         }
 # endif /* __linux__ */
       result = utimensat (AT_FDCWD, file, ts, AT_SYMLINK_NOFOLLOW);
@@ -469,7 +472,7 @@ lutimens (char const *file, struct timespec const timespec[2])
 
   if (adjustment_needed || REPLACE_FUNC_STAT_FILE)
     {
-      if (lstat (file, &st))
+      if (adjustment_needed != 3 && lstat (file, &st))
         return -1;
       if (ts && update_timespec (&st, &ts))
         return 0;

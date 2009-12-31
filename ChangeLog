@@ -1,5 +1,11 @@
 2009-12-31  Eric Blake  <ebb9@byu.net>
 
+	utimens: avoid shadowing warning
+	* lib/utimens.c (fdutimens, lutimens): Consolidate separate stat
+	buffers into one, to avoid shadowing, as well as avoiding a
+	redundant stat.
+	Reported by Jim Meyering.
+
 	test-dup2: avoid compiler warning
 	* tests/test-dup2.c (is_inheritable): Only define if used.
 
