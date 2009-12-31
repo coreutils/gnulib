@@ -20,11 +20,7 @@
 
 /* None of the files accessed by this test are large, so disable the
    fseek link warning if we are not using the gnulib fseek module.  */
-#if !GNULIB_FSEEK
-# undef GL_LINK_WARNING
-# define GL_LINK_WARNING(ignored) ((void) 0)
-#endif
-
+#define _GL_NO_LARGE_FILES
 #include <stdio.h>
 
 #include "signature.h"

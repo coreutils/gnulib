@@ -18,6 +18,9 @@
 
 #include <config.h>
 
+/* None of the files accessed by this test are large, so disable the
+   fseek link warning if we are not using the gnulib fseek module.  */
+#define _GL_NO_LARGE_FILES
 #include <stdio.h>
 
 #include "signature.h"
@@ -25,12 +28,6 @@ SIGNATURE_CHECK (ftello, off_t, (FILE *));
 
 #include "binary-io.h"
 #include "macros.h"
-
-/* None of the files accessed by this test are large, so disable the
-   fseek link warning if we are not using the gnulib fseek module.  */
-#if !GNULIB_FSEEK
-# undef fseek
-#endif
 
 #ifndef FUNC_UNGETC_BROKEN
 # define FUNC_UNGETC_BROKEN 0

@@ -62,6 +62,8 @@
 
 /* The definition of _GL_ARG_NONNULL is copied here.  */
 
+/* The definition of _GL_WARN_ON_USE is copied here.  */
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -117,6 +119,12 @@ extern int fclose (FILE *stream) _GL_ARG_NONNULL ((1));
                      "POSIX compliance"), \
     fflush (f))
 #endif
+
+/* It is very rare that the developer ever has full control of stdin,
+   so any use of gets warrants an unconditional warning.  Assume it is
+   always declared, since it is required by C89.  */
+#undef gets
+_GL_WARN_ON_USE (gets, "gets is a security hole - use fgets instead");
 
 #if @GNULIB_FOPEN@
 # if @REPLACE_FOPEN@
@@ -202,92 +210,136 @@ extern FILE * freopen (const char *filename, const char *mode, FILE *stream)
     freopen (f, m, s))
 #endif
 
-#if @GNULIB_FSEEK@ && @REPLACE_FSEEK@
-extern int rpl_fseek (FILE *fp, long offset, int whence) _GL_ARG_NONNULL ((1));
-# undef fseek
-# if defined GNULIB_POSIXCHECK
-#  define fseek(f,o,w) \
-     (GL_LINK_WARNING ("fseek cannot handle files larger than 4 GB " \
-                       "on 32-bit platforms - " \
-                       "use fseeko function for handling of large files"), \
-      rpl_fseek (f, o, w))
-# else
-#  define fseek rpl_fseek
+/* Set up the following warnings, based on which modules are in use.
+   GNU Coding Standards discourage the use of fseek, since it imposes
+   an arbitrary limitation on some 32-bit hosts.  Remember that the
+   fseek module depends on the fseeko module, so we only have three
+   cases to consider:
+
+   1. The developer is not using either module.  Issue a warning under
+   GNULIB_POSIXCHECK for both functions, to remind them that both
+   functions have bugs on some systems.  _GL_NO_LARGE_FILES has no
+   impact on this warning.
+
+   2. The developer is using both modules.  They may be unaware of the
+   arbitrary limitations of fseek, so issue a warning under
+   GNULIB_POSIXCHECK.  On the other hand, they may be using both
+   modules intentionally, so the developer can define
+   _GL_NO_LARGE_FILES in the compilation units where the use of fseek
+   is safe, to silence the warning.
+
+   3. The developer is using the fseeko module, but not fseek.  Gnulib
+   guarantees that fseek will still work around platform bugs in that
+   case, but we presume that the developer is aware of the pitfalls of
+   fseek and was trying to avoid it, so issue a warning even when
+   GNULIB_POSIXCHECK is undefined.  Again, _GL_NO_LARGE_FILES can be
+   defined to silence the warning in particular compilation units.
+
+   Most gnulib clients that perform stream operations should fall into
+   category three.  */
+
+#if @GNULIB_FSEEK@
+# if defined GNULIB_POSIXCHECK && !defined _GL_NO_LARGE_FILES
+#  define _GL_FSEEK_WARN /* Category 2, above.  */
+#  undef fseek
 # endif
-#elif defined GNULIB_POSIXCHECK
-# ifndef fseek
-#  define fseek(f,o,w) \
-     (GL_LINK_WARNING ("fseek cannot handle files larger than 4 GB " \
-                       "on 32-bit platforms - " \
-                       "use fseeko function for handling of large files"), \
-      fseek (f, o, w))
+# if @REPLACE_FSEEK@
+#  undef fseek
+#  define fseek rpl_fseek
+extern int fseek (FILE *fp, long offset, int whence) _GL_ARG_NONNULL ((1));
 # endif
 #endif
 
 #if @GNULIB_FSEEKO@
+# if !@GNULIB_FSEEK@ && !defined _GL_NO_LARGE_FILES
+#  define _GL_FSEEK_WARN /* Category 3, above.  */
+#  undef fseek
+# endif
 # if @REPLACE_FSEEKO@
 /* Provide fseek, fseeko functions that are aware of a preceding
    fflush(), and which detect pipes.  */
+#  undef fseeko
 #  define fseeko rpl_fseeko
 extern int fseeko (FILE *fp, off_t offset, int whence) _GL_ARG_NONNULL ((1));
 #  if !@GNULIB_FSEEK@
 #   undef fseek
-#   define fseek(f,o,w) \
-     (GL_LINK_WARNING ("fseek cannot handle files larger than 4 GB " \
-                       "on 32-bit platforms - " \
-                       "use fseeko function for handling of large files"), \
-      fseeko (f, o, w))
+#   define fseek rpl_fseek
+static inline int _GL_ARG_NONNULL ((1))
+rpl_fseek (FILE *fp, long offset, int whence)
+{
+  return fseeko (fp, offset, whence);
+}
 #  endif
 # endif
 #elif defined GNULIB_POSIXCHECK
+# define _GL_FSEEK_WARN /* Category 1, above.  */
+# undef fseek
 # undef fseeko
-# define fseeko(f,o,w) \
-   (GL_LINK_WARNING ("fseeko is unportable - " \
-                     "use gnulib module fseeko for portability"), \
-    fseeko (f, o, w))
+# if HAVE_RAW_DECL_FSEEKO
+_GL_WARN_ON_USE (fseeko, "fseeko is unportable - "
+                 "use gnulib module fseeko for portability");
+# endif
 #endif
 
-#if @GNULIB_FTELL@ && @REPLACE_FTELL@
-extern long rpl_ftell (FILE *fp) _GL_ARG_NONNULL ((1));
-# undef ftell
-# if GNULIB_POSIXCHECK
-#  define ftell(f) \
-     (GL_LINK_WARNING ("ftell cannot handle files larger than 4 GB " \
-                       "on 32-bit platforms - " \
-                       "use ftello function for handling of large files"), \
-      rpl_ftell (f))
-# else
-#  define ftell rpl_ftell
+#ifdef _GL_FSEEK_WARN
+# undef _GL_FSEEK_WARN
+/* Here, either fseek is undefined (but C89 guarantees that it is
+   declared), or it is defined as rpl_fseek (declared above).  */
+_GL_WARN_ON_USE (fseek, "fseek cannot handle files larger than 4 GB "
+                 "on 32-bit platforms - "
+                 "use fseeko function for handling of large files");
+#endif
+
+/* See the comments on fseek/fseeko.  */
+
+#if @GNULIB_FTELL@
+# if defined GNULIB_POSIXCHECK && !defined _GL_NO_LARGE_FILES
+#  define _GL_FTELL_WARN /* Category 2, above.  */
+#  undef ftell
 # endif
-#elif defined GNULIB_POSIXCHECK
-# ifndef ftell
-#  define ftell(f) \
-     (GL_LINK_WARNING ("ftell cannot handle files larger than 4 GB " \
-                       "on 32-bit platforms - " \
-                       "use ftello function for handling of large files"), \
-      ftell (f))
+# if && @REPLACE_FTELL@
+#  undef ftell
+#  define ftell rpl_ftell
+extern long ftell (FILE *fp) _GL_ARG_NONNULL ((1));
 # endif
 #endif
 
 #if @GNULIB_FTELLO@
+# if !@GNULIB_FTELL@ && !defined _GL_NO_LARGE_FILES
+#  define _GL_FTELL_WARN /* Category 3, above.  */
+#  undef ftell
+# endif
 # if @REPLACE_FTELLO@
+#  undef ftello
 #  define ftello rpl_ftello
 extern off_t ftello (FILE *fp) _GL_ARG_NONNULL ((1));
 #  if !@GNULIB_FTELL@
 #   undef ftell
-#   define ftell(f) \
-     (GL_LINK_WARNING ("ftell cannot handle files larger than 4 GB " \
-                       "on 32-bit platforms - " \
-                       "use ftello function for handling of large files"), \
-      ftello (f))
+#   define ftell rpl_ftell
+static inline long _GL_ARG_NONNULL ((1))
+rpl_ftell (FILE *f)
+{
+  return ftello (f);
+}
 #  endif
 # endif
 #elif defined GNULIB_POSIXCHECK
+# define _GL_FTELL_WARN /* Category 1, above.  */
+# undef ftell
 # undef ftello
-# define ftello(f) \
-   (GL_LINK_WARNING ("ftello is unportable - " \
-                     "use gnulib module ftello for portability"), \
-    ftello (f))
+# if HAVE_RAW_DECL_FTELLO
+_GL_WARN_ON_USE (ftello, "ftello is unportable - "
+                 "use gnulib module ftello for portability");
+# endif
+#endif
+
+#ifdef _GL_FTELL_WARN
+# undef _GL_FTELL_WARN
+/* Here, either ftell is undefined (but C89 guarantees that it is
+   declared), or it is defined as rpl_ftell (declared above).  */
+_GL_WARN_ON_USE (ftell, "ftell cannot handle files larger than 4 GB "
+                 "on 32-bit platforms - "
+                 "use ftello function for handling of large files");
 #endif
 
 #if @GNULIB_FWRITE@ && @REPLACE_STDIO_WRITE_FUNCS@ && @GNULIB_STDIO_H_SIGPIPE@
@@ -499,6 +551,15 @@ extern int snprintf (char *str, size_t size, const char *format, ...)
                       "use gnulib module snprintf for portability"), \
      snprintf)
 #endif
+
+/* Some people would argue that sprintf should be handled like gets
+   (for example, OpenBSD issues a link warning for both functions),
+   since both can cause security holes due to buffer overruns.
+   However, we believe that sprintf can be used safely, and is more
+   efficient than snprintf in those safe cases; and as proof of our
+   belief, we use sprintf in several gnulib modules.  So this header
+   intentionally avoids adding a warning to sprintf except when
+   GNULIB_POSIXCHECK is defined.  */
 
 #if @GNULIB_SPRINTF_POSIX@
 # if @REPLACE_SPRINTF@

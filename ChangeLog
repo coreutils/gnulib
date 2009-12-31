@@ -1,5 +1,24 @@
 2010-01-11  Eric Blake  <ebb9@byu.net>
 
+	stdio: warn on suspicious uses
+	* modules/stdio (Depends-on): Add warn-on-use.
+	(Makefile.am): Provide new substitutions.
+	* m4/stdio_h.m4 (gl_STDIO_H): Check for inline, ftello, and
+	fseeko.
+	* lib/stdio.in.h (gets): Always warn on use.
+	(fseek, ftell): Adjust when warnings are issued, and honor
+	_GL_NO_LARGE_FILES as a way to silence the warning.
+	* tests/test-fpurge.c [!GNULIB_FSEEK]: Use new means to squelch
+	any warning about large file offsets.
+	* tests/test-freadable.c [!GNULIB_FSEEK]: Likewise.
+	* tests/test-freading.c [!GNULIB_FSEEK]: Likewise.
+	* tests/test-fseeko.c [!GNULIB_FSEEK]: Likewise.
+	* tests/test-ftell.c [!GNULIB_FSEEK]: Likewise.
+	* tests/test-ftello.c [!GNULIB_FSEEK]: Likewise.
+	* tests/test-fwritable.c [!GNULIB_FSEEK]: Likewise.
+	* tests/test-fwriting.c [!GNULIB_FSEEK]: Likewise.
+	* tests/test-getopt.c [!GNULIB_FTELL]: Likewise.
+
 	warn-on-use: new module
 	* modules/warn-on-use: New file.
 	* build-aux/warn-on-use.h: Likewise.

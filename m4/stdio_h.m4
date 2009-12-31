@@ -1,4 +1,4 @@
-# stdio_h.m4 serial 22
+# stdio_h.m4 serial 23
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,6 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_STDIO_H],
 [
   AC_REQUIRE([gl_STDIO_H_DEFAULTS])
+  AC_REQUIRE([AC_C_INLINE])
   gl_CHECK_NEXT_HEADERS([stdio.h])
   dnl No need to create extra modules for these functions. Everyone who uses
   dnl <stdio.h> likely needs them.
@@ -30,6 +31,12 @@ AC_DEFUN([gl_STDIO_H],
       AC_LIBOBJ([stdio-write])
     fi
   ])
+
+  dnl Check for declarations of anything we want to poison if the
+  dnl corresponding gnulib module is not in use, and which is not
+  dnl guaranteed by C89.
+  gl_WARN_ON_USE_PREPARE([[#include <stdio.h>
+    ]], [fseeko ftello])
 ])
 
 AC_DEFUN([gl_STDIO_MODULE_INDICATOR],

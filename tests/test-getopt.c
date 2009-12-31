@@ -20,10 +20,7 @@
 
 /* None of the files accessed by this test are large, so disable the
    ftell link warning if we are not using the gnulib ftell module.  */
-#if !GNULIB_FTELL
-# undef GL_LINK_WARNING
-# define GL_LINK_WARNING(ignored) ((void) 0)
-#endif
+#define _GL_NO_LARGE_FILES
 
 #if GNULIB_GETOPT_GNU
 # include <getopt.h>

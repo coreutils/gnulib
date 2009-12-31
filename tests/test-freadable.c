@@ -18,17 +18,14 @@
 
 #include <config.h>
 
+/* None of the files accessed by this test are large, so disable the
+   fseek link warning if we are not using the gnulib fseek module.  */
+#define _GL_NO_LARGE_FILES
 #include "freadable.h"
 
 #include <stdio.h>
 
 #include "macros.h"
-
-/* None of the files accessed by this test are large, so disable the
-   fseek link warning if we are not using the gnulib fseek module.  */
-#if !GNULIB_FSEEK
-# undef fseek
-#endif
 
 #define TESTFILE "t-freadable.tmp"
 
