@@ -26,6 +26,9 @@
 
 #include "macros.h"
 
+
+#if HAVE_NEWLOCALE
+
 static struct { int cat; int mask; const char *string; } const categories[] =
   {
       { LC_CTYPE,          LC_CTYPE_MASK,          "LC_CTYPE" },
@@ -53,6 +56,8 @@ static struct { int cat; int mask; const char *string; } const categories[] =
     , { LC_IDENTIFICATION, LC_IDENTIFICATION_MASK, "LC_IDENTIFICATION" }
 # endif
   };
+
+#endif
 
 /* Test the gl_locale_name() function.  */
 static void

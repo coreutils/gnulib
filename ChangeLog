@@ -1,3 +1,10 @@
+2009-12-30  Bruno Haible  <bruno@clisp.org>
+
+	Fix compilation error on most platforms.
+	* tests/test-localename.c (categories): Define only if HAVE_NEWLOCALE.
+	Reported by Simon Josefsson <simon@josefsson.org>
+	and Nelson H. F. Beebe <beebe@math.utah.edu>.
+
 2009-12-30  Eric Blake  <ebb9@byu.net>
 
 	futimens, utimensat: work around ntfs-3g bug
