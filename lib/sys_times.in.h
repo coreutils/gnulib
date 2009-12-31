@@ -32,8 +32,11 @@
 
 # define _GL_SYS_TIMES_H
 
-/* Get clock_t. */
-# include <time.h>
+/* Get clock_t.
+   But avoid namespace pollution on glibc systems.  */
+# ifndef __GLIBC__
+#  include <time.h>
+# endif
 
 /* The definition of GL_LINK_WARNING is copied here.  */
 

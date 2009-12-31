@@ -29,8 +29,13 @@
 #ifndef _GL_SPAWN_H
 #define _GL_SPAWN_H
 
-#include <sched.h>
-#include <signal.h>
+/* Get definitions of 'struct sched_param' and 'sigset_t'.
+   But avoid namespace pollution on glibc systems.  */
+#ifndef __GLIBC__
+# include <sched.h>
+# include <signal.h>
+#endif
+
 #include <sys/types.h>
 
 #ifndef __THROW

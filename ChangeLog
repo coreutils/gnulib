@@ -1,5 +1,13 @@
 2009-12-31  Bruno Haible  <bruno@clisp.org>
 
+	Avoid namespace pollution on glibc systems.
+	* lib/spawn.in.h: Don't include <sched.h>, <signal.h> on glibc systems.
+	* lib/sys_times.in.h: Don't include <time.h> on glibc systems.
+	* lib/wchar.in.h: Don't include <stddef.h>, <stdio.h>, <time.h> on
+	glibc systems.
+
+2009-12-31  Bruno Haible  <bruno@clisp.org>
+
 	* m4/wchar.m4 (gl_WCHAR_H): Remove gl_STDDEF_H invocation.
 	(gl_REPLACE_WCHAR_H): Turn into a no-op.
 	* m4/arpa_inet_h.m4 (gl_REPLACE_ARPA_INET_H): Likewise.
