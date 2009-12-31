@@ -19,15 +19,14 @@ AC_DEFUN([gl_HEADER_ARPA_INET],
     HAVE_ARPA_INET_H=0
   fi
   AC_SUBST([HAVE_ARPA_INET_H])
-  dnl Execute this unconditionally, because ARPA_INET_H may be set by other
-  dnl modules, after this code is executed.
+  dnl <arpa/inet.h> is always overridden, because of GNULIB_POSIXCHECK.
   gl_CHECK_NEXT_HEADERS([arpa/inet.h])
 ])
 
 dnl Unconditionally enables the replacement of <arpa/inet.h>.
 AC_DEFUN([gl_REPLACE_ARPA_INET_H],
 [
-  AC_REQUIRE([gl_ARPA_INET_H_DEFAULTS])
+  dnl This is a no-op, because <arpa/inet.h> is always overridden.
   :
 ])
 

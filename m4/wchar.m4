@@ -28,9 +28,6 @@ wchar_t w;]],
   fi
   AC_SUBST([HAVE_WINT_T])
 
-  dnl If <stddef.h> is replaced, then <wchar.h> must also be replaced.
-  AC_REQUIRE([gl_STDDEF_H])
-
   dnl Prepare for creating substitute <wchar.h>.
   dnl Do it always: WCHAR_H may be empty here but can be set later.
   dnl Check for <wchar.h> (missing in Linux uClibc when built without wide
@@ -42,8 +39,7 @@ wchar_t w;]],
     HAVE_WCHAR_H=0
   fi
   AC_SUBST([HAVE_WCHAR_H])
-  dnl Execute this unconditionally, because WCHAR_H may be set by other
-  dnl modules, after this code is executed.
+  dnl <wchar.h> is always overridden, because of GNULIB_POSIXCHECK.
   gl_CHECK_NEXT_HEADERS([wchar.h])
 ])
 
@@ -98,7 +94,7 @@ Configuration aborted.])
 dnl Unconditionally enables the replacement of <wchar.h>.
 AC_DEFUN([gl_REPLACE_WCHAR_H],
 [
-  AC_REQUIRE([gl_WCHAR_H_DEFAULTS])
+  dnl This is a no-op, because <wchar.h> is always overridden.
   :
 ])
 

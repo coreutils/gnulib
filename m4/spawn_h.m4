@@ -12,8 +12,7 @@ AC_DEFUN([gl_SPAWN_H],
   dnl once only, before all statements that occur in other macros.
   AC_REQUIRE([gl_SPAWN_H_DEFAULTS])
 
-  dnl Execute this unconditionally, because SPAWN_H may be set by other
-  dnl modules, after this code is executed.
+  dnl <spawn.h> is always overridden, because of GNULIB_POSIXCHECK.
   gl_CHECK_NEXT_HEADERS([spawn.h])
 
   AC_CHECK_HEADERS_ONCE([spawn.h])
@@ -40,7 +39,7 @@ AC_DEFUN([gl_SPAWN_H],
 dnl Unconditionally enables the replacement of <spawn.h>.
 AC_DEFUN([gl_REPLACE_SPAWN_H],
 [
-  AC_REQUIRE([gl_SPAWN_H_DEFAULTS])
+  dnl This is a no-op, because <spawn.h> is always overridden.
   :
 ])
 

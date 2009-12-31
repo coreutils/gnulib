@@ -48,8 +48,7 @@ locale_t x;], [],
   fi
   AC_SUBST([HAVE_XLOCALE_H])
 
-  dnl Execute this unconditionally, because LOCALE_H may be set by other
-  dnl modules, after this code is executed.
+  dnl <locale.h> is always overridden, because of GNULIB_POSIXCHECK.
   gl_CHECK_NEXT_HEADERS([locale.h])
 
   if test -n "$STDDEF_H" \
@@ -62,7 +61,7 @@ locale_t x;], [],
 dnl Unconditionally enables the replacement of <locale.h>.
 AC_DEFUN([gl_REPLACE_LOCALE_H],
 [
-  AC_REQUIRE([gl_LOCALE_H_DEFAULTS])
+  dnl This is a no-op, because <locale.h> is always overridden.
   :
 ])
 

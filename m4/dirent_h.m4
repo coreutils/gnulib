@@ -12,15 +12,14 @@ AC_DEFUN([gl_DIRENT_H],
   dnl once only, before all statements that occur in other macros.
   AC_REQUIRE([gl_DIRENT_H_DEFAULTS])
 
-  dnl Execute this unconditionally, because DIRENT_H may be set by other
-  dnl modules, after this code is executed.
+  dnl <dirent.h> is always overridden, because of GNULIB_POSIXCHECK.
   gl_CHECK_NEXT_HEADERS([dirent.h])
 ])
 
 dnl Unconditionally enables the replacement of <dirent.h>.
 AC_DEFUN([gl_REPLACE_DIRENT_H],
 [
-  AC_REQUIRE([gl_DIRENT_H_DEFAULTS])
+  dnl This is a no-op, because <dirent.h> is always overridden.
   :
 ])
 

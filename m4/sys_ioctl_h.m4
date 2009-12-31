@@ -31,15 +31,14 @@ AC_DEFUN([gl_SYS_IOCTL_H],
     HAVE_SYS_IOCTL_H=0
   fi
   AC_SUBST([HAVE_SYS_IOCTL_H])
-  dnl Execute this unconditionally, because SYS_IOCTL_H may be set by other
-  dnl modules, after this code is executed.
+  dnl <sys/ioctl.h> is always overridden, because of GNULIB_POSIXCHECK.
   gl_CHECK_NEXT_HEADERS([sys/ioctl.h])
 ])
 
 dnl Unconditionally enables the replacement of <sys/ioctl.h>.
 AC_DEFUN([gl_REPLACE_SYS_IOCTL_H],
 [
-  AC_REQUIRE([gl_SYS_IOCTL_H_DEFAULTS])
+  dnl This is a no-op, because <sys/ioctl.h> is always overridden.
   :
 ])
 
