@@ -1,5 +1,9 @@
 2009-12-31  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-signal.c (main): Remove test of 'SIG'.
+
+2009-12-31  Bruno Haible  <bruno@clisp.org>
+
 	spawn: Fix incomplete fix.
 	* lib/spawn.in.h (posix_spawnattr_getflags, posix_spawnattr_setflags,
 	posix_spawnattr_getpgroup, posix_spawnattr_setpgroup): Correct the link

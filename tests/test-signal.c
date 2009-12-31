@@ -110,9 +110,6 @@ main (void)
 #ifdef SIGXFSZ
     case SIGXFSZ:
 #endif
-#ifdef SIG
-    case SIG:
-#endif
       /* SIGRTMIN and SIGRTMAX need not be compile-time constants.  */
 #if 0
 # ifdef SIGRTMIN
