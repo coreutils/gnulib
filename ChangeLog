@@ -1,3 +1,8 @@
+2010-01-01  Jim Meyering  <meyering@redhat.com>
+
+	test-update-copyright: don't let envvar setting cause test failure
+	* tests/test-update-copyright.sh: Set UPDATE_COPYRIGHT_MAX_LINE_LENGTH.
+
 2010-01-01  Bruno Haible  <bruno@clisp.org>
 
 	localename: Avoid gcc warning.

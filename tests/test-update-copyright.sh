@@ -47,6 +47,10 @@ echo a > $TMP-in
     exit 77
   }
 
+# Do not let a different envvar setting perturb results.
+UPDATE_COPYRIGHT_MAX_LINE_LENGTH=72
+export UPDATE_COPYRIGHT_MAX_LINE_LENGTH
+
 ## ----------------------------- ##
 ## Examples from documentation.  ##
 ## ----------------------------- ##
