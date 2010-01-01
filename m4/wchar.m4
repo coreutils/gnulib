@@ -7,7 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 dnl Written by Eric Blake.
 
-# wchar.m4 serial 29
+# wchar.m4 serial 30
 
 AC_DEFUN([gl_WCHAR_H],
 [
@@ -21,12 +21,6 @@ AC_DEFUN([gl_WCHAR_H],
   gl_CHECK_NEXT_HEADERS([wchar.h])
   if test $ac_cv_header_wchar_h = yes; then
     HAVE_WCHAR_H=1
-    AC_CACHE_CHECK([whether <wchar.h> is standalone],
-      [gl_cv_header_wchar_h_standalone],
-      [AC_COMPILE_IFELSE([[#include <wchar.h>
-wchar_t w;]],
-        [gl_cv_header_wchar_h_standalone=yes],
-        [gl_cv_header_wchar_h_standalone=no])])
   else
     HAVE_WCHAR_H=0
   fi

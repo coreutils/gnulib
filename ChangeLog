@@ -1,3 +1,8 @@
+2010-01-01  Bruno Haible  <bruno@clisp.org>
+
+	wchar: Remove unused configure check.
+	* m4/wchar.m4 (gl_WCHAR_H): Don't test whether <wchar.h> is standalone.
+
 2010-01-01  Eric Blake  <ebb9@byu.net>
 
 	headers: make check of system header explicit
