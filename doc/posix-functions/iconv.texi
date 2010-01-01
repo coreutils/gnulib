@@ -12,7 +12,7 @@ Portability problems fixed by Gnulib:
 GNU libiconv is not found if installed in @file{$PREFIX/lib}.
 @item
 Failures are not distinguishable from successful returns on some platforms:
-AIX 5.1.
+AIX 5.1, Solaris 10.
 @end itemize
 
 Portability problems not fixed by Gnulib:
