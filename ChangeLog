@@ -1,5 +1,9 @@
 2010-01-01  Jim Meyering  <meyering@redhat.com>
 
+	ChangeLog: tweak to eliminate unnecessary copyright line
+	* ChangeLog: Remove a copyright line that was mistakenly updated
+	by today's update-copyright run.  Reported by Eric Blake.
+
 	test-update-copyright: don't let envvar setting cause test failure
 	* tests/test-update-copyright.sh: Set UPDATE_COPYRIGHT_MAX_LINE_LENGTH.
 
@@ -9308,10 +9312,9 @@
 	    --with-packager=Gentoo \
 	    --with-packager-bug-report=http://bugs.gentoo.org/ \
 	    --with-packager-version="patchset 1.6"
-	  $ ./src/ls --version | head -n3
+	  $ ./src/ls --version | head -n2
 	  ls (GNU coreutils) 7.1-dirty
 	  Packaged by Gentoo (patchset 1.6)
-	  Copyright (C) 2009-2010 Free Software Foundation, Inc.
 	Note that the bug reporting info via --help doesn't show up because
 	coreutils uses its own custom emit_bug_reporting_address() implementation
 	in src/system.h.  If it didn't, it'd look like:
