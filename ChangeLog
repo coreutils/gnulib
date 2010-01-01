@@ -1,3 +1,8 @@
+2010-01-01  Jim Meyering  <meyering@redhat.com>
+
+	version-etc: set COPYRIGHT_YEAR to 2010
+	* lib/version-etc.c (COPYRIGHT_YEAR): Manually update the enum.
+
 2009-12-31  Eric Blake  <ebb9@byu.net>
 
 	doc: correct availability of cygwin 1.5.x getopt
