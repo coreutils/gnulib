@@ -1,5 +1,5 @@
 /* gc-libgcrypt.c --- Crypto wrappers around Libgcrypt for GC.
- * Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009 Free
+ * Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010 Free
  * Software Foundation, Inc.
  *
  * This file is free software; you can redistribute it and/or modify

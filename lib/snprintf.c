@@ -1,5 +1,5 @@
 /* Formatted output to strings.
-   Copyright (C) 2004, 2006-2009 Free Software Foundation, Inc.
+   Copyright (C) 2004, 2006-2010 Free Software Foundation, Inc.
    Written by Simon Josefsson and Paul Eggert.
 
    This program is free software; you can redistribute it and/or modify

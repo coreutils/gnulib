@@ -1,6 +1,7 @@
 /* Diacritics processing for a few character codes.
 
-   Copyright (C) 1990-1993, 2000, 2006, 2009 Free Software Foundation, Inc.
+   Copyright (C) 1990-1993, 2000, 2006, 2009-2010 Free Software Foundation,
+   Inc.
 
    François Pinard <pinard@iro.umontreal.ca>, 1988.
 

@@ -1,6 +1,6 @@
 # serial 9
 
-# Copyright (C) 1998-1999, 2001, 2003-2004, 2006, 2009 Free Software
+# Copyright (C) 1998-1999, 2001, 2003-2004, 2006, 2009-2010 Free Software
 # Foundation, Inc.
 
 # This file is free software; the Free Software Foundation

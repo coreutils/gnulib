@@ -1,7 +1,8 @@
 # serial 15
 # Determine whether we need the lchown wrapper.
 
-dnl Copyright (C) 1998, 2001, 2003-2007, 2009 Free Software Foundation, Inc.
+dnl Copyright (C) 1998, 2001, 2003-2007, 2009-2010 Free Software Foundation,
+dnl Inc.
 
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,

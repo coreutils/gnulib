@@ -3,7 +3,8 @@
 dnl From Jim Meyering.
 dnl Find a new-enough version of Perl.
 
-# Copyright (C) 1998-2001, 2003-2004, 2007, 2009 Free Software Foundation, Inc.
+# Copyright (C) 1998-2001, 2003-2004, 2007, 2009-2010 Free Software Foundation,
+# Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
