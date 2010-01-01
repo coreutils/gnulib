@@ -1,5 +1,11 @@
 2010-01-01  Bruno Haible  <bruno@clisp.org>
 
+	vasnprintf: Avoid passing an 'rpl_mbstate_t *' to the system's wcrtomb.
+	* lib/vasnprintf.c (VASNPRINTF): If GNULIB_defined_mbstate_t is
+	defined, use wctomb instead of wcrtomb.
+
+2010-01-01  Bruno Haible  <bruno@clisp.org>
+
 	iconv: Reject native Solaris iconv.
 	* m4/iconv.m4 (AM_ICONV_LINK): Recognize native Solaris iconv() bug.
 	* doc/posix-functions/iconv.texi: Document native Solaris iconv() bug.

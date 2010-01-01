@@ -1,5 +1,5 @@
 /* vsprintf with automatic memory allocation.
-   Copyright (C) 1999, 2002-2009 Free Software Foundation, Inc.
+   Copyright (C) 1999, 2002-2010 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -2367,7 +2367,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     {
                       /* Use only as many wide characters as needed to produce
                          at most PRECISION bytes, from the left.  */
-#  if HAVE_WCRTOMB
+#  if HAVE_WCRTOMB && !defined GNULIB_defined_mbstate_t
                       mbstate_t state;
                       memset (&state, '\0', sizeof (mbstate_t));
 #  endif
@@ -2381,7 +2381,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                           if (*arg_end == 0)
                             /* Found the terminating null wide character.  */
                             break;
-#  if HAVE_WCRTOMB
+#  if HAVE_WCRTOMB && !defined GNULIB_defined_mbstate_t
                           count = wcrtomb (cbuf, *arg_end, &state);
 #  else
                           count = wctomb (cbuf, *arg_end);
@@ -2412,7 +2412,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     {
                       /* Use the entire string, and count the number of
                          bytes.  */
-#  if HAVE_WCRTOMB
+#  if HAVE_WCRTOMB && !defined GNULIB_defined_mbstate_t
                       mbstate_t state;
                       memset (&state, '\0', sizeof (mbstate_t));
 #  endif
@@ -2426,7 +2426,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                           if (*arg_end == 0)
                             /* Found the terminating null wide character.  */
                             break;
-#  if HAVE_WCRTOMB
+#  if HAVE_WCRTOMB && !defined GNULIB_defined_mbstate_t
                           count = wcrtomb (cbuf, *arg_end, &state);
 #  else
                           count = wctomb (cbuf, *arg_end);
@@ -2464,7 +2464,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                   {
                     TCHAR_T *tmpptr = tmpsrc;
                     size_t remaining;
-#   if HAVE_WCRTOMB
+#   if HAVE_WCRTOMB && !defined GNULIB_defined_mbstate_t
                     mbstate_t state;
                     memset (&state, '\0', sizeof (mbstate_t));
 #   endif
@@ -2475,7 +2475,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 
                         if (*arg == 0)
                           abort ();
-#   if HAVE_WCRTOMB
+#   if HAVE_WCRTOMB && !defined GNULIB_defined_mbstate_t
                         count = wcrtomb (cbuf, *arg, &state);
 #   else
                         count = wctomb (cbuf, *arg);
@@ -2545,7 +2545,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     {
                       /* We know the number of bytes in advance.  */
                       size_t remaining;
-#   if HAVE_WCRTOMB
+#   if HAVE_WCRTOMB && !defined GNULIB_defined_mbstate_t
                       mbstate_t state;
                       memset (&state, '\0', sizeof (mbstate_t));
 #   endif
@@ -2557,7 +2557,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 
                           if (*arg == 0)
                             abort ();
-#   if HAVE_WCRTOMB
+#   if HAVE_WCRTOMB && !defined GNULIB_defined_mbstate_t
                           count = wcrtomb (cbuf, *arg, &state);
 #   else
                           count = wctomb (cbuf, *arg);
@@ -2575,7 +2575,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     }
                   else
                     {
-#   if HAVE_WCRTOMB
+#   if HAVE_WCRTOMB && !defined GNULIB_defined_mbstate_t
                       mbstate_t state;
                       memset (&state, '\0', sizeof (mbstate_t));
 #   endif
@@ -2586,7 +2586,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 
                           if (*arg == 0)
                             abort ();
-#   if HAVE_WCRTOMB
+#   if HAVE_WCRTOMB && !defined GNULIB_defined_mbstate_t
                           count = wcrtomb (cbuf, *arg, &state);
 #   else
                           count = wctomb (cbuf, *arg);
