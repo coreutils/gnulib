@@ -1,5 +1,5 @@
 /* Determine name of the currently selected locale.
-   Copyright (C) 1995-1999, 2000-2009 Free Software Foundation, Inc.
+   Copyright (C) 1995-1999, 2000-2010 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
    under the terms of the GNU Library General Public License as published
@@ -2592,20 +2592,22 @@ struniq (const char *string)
 #endif
 
 
+#if defined IN_LIBINTL || HAVE_USELOCALE
+
 /* Like gl_locale_name_thread, except that the result is not in storage of
    indefinite extent.  */
-#if !defined IN_LIBINTL
+# if !defined IN_LIBINTL
 static
-#endif
+# endif
 const char *
 gl_locale_name_thread_unsafe (int category, const char *categoryname)
 {
-#if HAVE_USELOCALE
+# if HAVE_USELOCALE
   {
     locale_t thread_locale = uselocale (NULL);
     if (thread_locale != LC_GLOBAL_LOCALE)
       {
-# if __GLIBC__ >= 2
+#  if __GLIBC__ >= 2
         /* Work around an incorrect definition of the _NL_LOCALE_NAME macro in
            glibc < 2.12.
            See <http://sourceware.org/bugzilla/show_bug.cgi?id=10968>.  */
@@ -2616,8 +2618,8 @@ gl_locale_name_thread_unsafe (int category, const char *categoryname)
              nl_langinfo (_NL_LOCALE_NAME (category)).  */
           name = thread_locale->__names[category];
         return name;
-# endif
-# if defined __APPLE__ && defined __MACH__ /* MacOS X */
+#  endif
+#  if defined __APPLE__ && defined __MACH__ /* MacOS X */
         /* The locale name is found deep in an undocumented data structure.
            Since it's stored in a buffer of size 32 and newlocale() rejects
            locale names of length > 31, we can assume that it is NUL terminated
@@ -2715,12 +2717,14 @@ gl_locale_name_thread_unsafe (int category, const char *categoryname)
           default: /* We shouldn't get here.  */
             return "";
           }
-# endif
+#  endif
       }
   }
-#endif
+# endif
   return NULL;
 }
+
+#endif
 
 const char *
 gl_locale_name_thread (int category, const char *categoryname)

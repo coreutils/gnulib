@@ -1,3 +1,9 @@
+2010-01-01  Bruno Haible  <bruno@clisp.org>
+
+	localename: Avoid gcc warning.
+	* lib/localename.c (gl_locale_name_thread_unsafe): Don't define this
+	function if it is not used.
+
 2010-01-01  Jim Meyering  <meyering@redhat.com>
 
 	version-etc: set COPYRIGHT_YEAR to 2010
