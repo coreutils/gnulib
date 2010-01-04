@@ -1,5 +1,9 @@
 2010-01-04  Jim Meyering  <meyering@redhat.com>
 
+	regcomp: skip collseq lookup when there are no rules
+	* lib/regcomp.c (lookup_collation_sequence_value): From glibc:
+	http://sourceware.org/git/gitweb.cgi?p=glibc.git;a=commitdiff;h=a532a41df58
+
 	regcomp: recognize ill-formed { } expressions
 	* lib/regcomp.c (parse_dup_op): From glibc:
 	http://sourceware.org/git/gitweb.cgi?p=glibc.git;a=commitdiff;h=a87cd2894cb
