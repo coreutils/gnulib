@@ -1,5 +1,9 @@
 2010-01-04  Jim Meyering  <meyering@redhat.com>
 
+	regcomp: sync from glibc: remove dead store
+	* lib/regcomp.c (duplicate_node_closure): Remove useless
+	search_duplicated_node call and dead store.
+
 	regcomp: sync from glibc; always use nl_langinfo
 	* lib/regcomp.c (init_dfa) [!LIBC]: Always use nl_langinfo (CODESET),
 	now that gnulib provides it.  Recognize UTF8 as well as UTF-8.

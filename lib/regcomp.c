@@ -1503,7 +1503,6 @@ duplicate_node_closure (re_dfa_t *dfa, Idx top_org_node, Idx top_clone_node,
 	     destination.  */
 	  org_dest = dfa->edests[org_node].elems[0];
 	  re_node_set_empty (dfa->edests + clone_node);
-	  clone_dest = search_duplicated_node (dfa, org_dest, constraint);
 	  /* If the node is root_node itself, it means the epsilon closure
 	     has a loop.  Then tie it to the destination of the root_node.  */
 	  if (org_node == root_node && clone_node != org_node)
