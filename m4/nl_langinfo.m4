@@ -1,4 +1,4 @@
-# nl_langinfo.m4 serial 1
+# nl_langinfo.m4 serial 2
 dnl Copyright (C) 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,6 +10,7 @@ AC_DEFUN([gl_FUNC_NL_LANGINFO],
   AC_REQUIRE([gl_LANGINFO_H])
   if test $HAVE_LANGINFO_H = 1; then
     AC_CHECK_FUNCS_ONCE([nl_langinfo])
+    : # in case AC_CHECK_FUNCS_ONCE expands to nothing
   else
     ac_cv_func_nl_langinfo=no
   fi

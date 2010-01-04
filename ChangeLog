@@ -1,5 +1,10 @@
 2010-01-04  Jim Meyering  <meyering@redhat.com>
 
+	nl_langinfo: avoid configure-time syntax error
+	* m4/nl_langinfo.m4 (gl_FUNC_NL_LANGINFO): When we've already tested
+	for nl_langinfo.h, AC_CHECK_FUNCS_ONCE([nl_langinfo]) expands to
+	the empty string.  Don't let that provoke a shell syntax error.
+
 	regcomp, regexec, fnmatch: avoid array bounds read error
 	* lib/regcomp.c (build_equiv_class): From glibc:
 	Use only the low 24 bits of a findidx return value as an index
