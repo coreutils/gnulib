@@ -1,5 +1,13 @@
 2010-01-04  Jim Meyering  <meyering@redhat.com>
 
+	regcomp, regexec, fnmatch: avoid array bounds read error
+	* lib/regcomp.c (build_equiv_class): From glibc:
+	Use only the low 24 bits of a findidx return value as an index
+	into the weights array.  Patch by Ulrich Drepper:
+	http://sourceware.org/git/gitweb.cgi?p=glibc.git;a=commit;h=b7d1c5fa30
+	* lib/regexec.c (check_node_accept_bytes): Likewise.
+	* lib/fnmatch_loop.c (FCT): Likewise.
+
 	regcomp: skip collseq lookup when there are no rules
 	* lib/regcomp.c (lookup_collation_sequence_value): From glibc:
 	http://sourceware.org/git/gitweb.cgi?p=glibc.git;a=commitdiff;h=a532a41df58

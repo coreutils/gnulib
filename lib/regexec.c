@@ -3949,15 +3949,20 @@ check_node_accept_bytes (const re_dfa_t *dfa, Idx node_idx,
 		_NL_CURRENT (LC_COLLATE, _NL_COLLATE_EXTRAMB);
 	      indirect = (const int32_t *)
 		_NL_CURRENT (LC_COLLATE, _NL_COLLATE_INDIRECTMB);
-	      idx = findidx (&cp);
+	      int32_t idx = findidx (&cp);
 	      if (idx > 0)
 		for (i = 0; i < cset->nequiv_classes; ++i)
 		  {
 		    int32_t equiv_class_idx = cset->equiv_classes[i];
-		    size_t weight_len = weights[idx];
-		    if (weight_len == weights[equiv_class_idx])
+		    size_t weight_len = weights[idx & 0xffffff];
+		    if (weight_len == weights[equiv_class_idx & 0xffffff]
+			&& (idx >> 24) == (equiv_class_idx >> 24))
 		      {
 			Idx cnt = 0;
+
+			idx &= 0xffffff;
+			equiv_class_idx &= 0xffffff;
+
 			while (cnt <= weight_len
 			       && (weights[equiv_class_idx + 1 + cnt]
 				   == weights[idx + 1 + cnt]))

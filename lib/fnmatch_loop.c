@@ -382,14 +382,19 @@ FCT (const CHAR *pattern, const CHAR *string, const CHAR *string_end,
                             /* We found a table entry.  Now see whether the
                                character we are currently at has the same
                                equivalance class value.  */
-                            int len = weights[idx];
+                            int len = weights[idx & 0xffffff];
                             int32_t idx2;
                             const UCHAR *np = (const UCHAR *) n;
 
                             idx2 = findidx (&np);
-                            if (idx2 != 0 && len == weights[idx2])
+                            if (idx2 != 0
+                                && (idx >> 24) == (idx2 >> 24)
+                                && len == weights[idx2 & 0xffffff])
                               {
                                 int cnt = 0;
+
+                                idx &= 0xffffff;
+                                idx2 &= 0xffffff;
 
                                 while (cnt < len
                                        && (weights[idx + 1 + cnt]
