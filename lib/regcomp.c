@@ -1546,7 +1546,7 @@ duplicate_node_closure (re_dfa_t *dfa, Idx top_org_node, Idx top_clone_node,
 	    }
 	  else
 	    {
-	      /* There is a duplicated node which satisfy the constraint,
+	      /* There is a duplicated node which satisfies the constraint,
 		 use it to avoid infinite loop.  */
 	      ok = re_node_set_insert (dfa->edests + clone_node, clone_dest);
 	      if (BE (! ok, 0))

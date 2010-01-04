@@ -1,5 +1,9 @@
 2010-01-04  Jim Meyering  <meyering@redhat.com>
 
+	regcomp: fix typo in comment
+	* lib/regcomp.c (duplicate_node_closure): Sync from glibc.
+	s/satisfy/satisfies/.
+
 	regcomp: sync from glibc: remove dead store
 	* lib/regcomp.c (duplicate_node_closure): Remove useless
 	search_duplicated_node call and dead store.
