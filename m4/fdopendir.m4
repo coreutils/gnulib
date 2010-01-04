@@ -1,4 +1,4 @@
-# serial 2
+# serial 3
 # See if we need to provide fdopendir.
 
 dnl Copyright (C) 2009-2010 Free Software Foundation, Inc.
@@ -23,7 +23,7 @@ AC_DEFUN([gl_FUNC_FDOPENDIR],
       [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
 #include <dirent.h>
 #include <fcntl.h>
-]], [int fd = open ("conftest.h", O_RDONLY);
+]], [int fd = open ("conftest.c", O_RDONLY);
      if (fd < 0) return 2;
      return !!fdopendir (fd);])],
          [gl_cv_func_fdopendir_works=yes],
