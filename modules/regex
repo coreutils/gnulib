@@ -22,6 +22,7 @@ memcmp
 memmove
 mbrtowc
 mbsinit
+nl_langinfo
 stdbool
 stdint
 ssize_t

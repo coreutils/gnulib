@@ -28,9 +28,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef _LIBC
-# include <langinfo.h>
-#else
+#include <langinfo.h>
+#ifndef _LIBC
 # include "localcharset.h"
 #endif
 #if defined HAVE_LOCALE_H || defined _LIBC
