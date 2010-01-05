@@ -1,3 +1,9 @@
+2010-01-06  Paolo Bonzini  <bonzini@gnu.org>
+
+	nl_langinfo: do not call AC_CHECK_FUNC_ONCE inside if.
+	* m4/nl_langinfo.m4 (gl_FUNC_NL_LANGINFO): Do not call
+	AC_CHECK_FUNC_ONCE inside if, do not adjust ac_cv_func_nl_langinfo.
+
 2010-01-06  Jim Meyering  <meyering@redhat.com>
 
 	readtokens: this module *does* require xalloc.h
