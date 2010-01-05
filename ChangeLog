@@ -1,3 +1,8 @@
+2010-01-05  Jim Meyering  <meyering@redhat.com>
+
+	xalloc.h: use consistent formatting
+	* lib/xalloc.h: Move declarations to start in the first column.
+
 2010-01-05  Eric Blake  <ebb9@byu.net>
 
 	mkdir: avoid xalloc

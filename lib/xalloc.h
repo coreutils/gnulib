@@ -106,10 +106,10 @@ char *xstrdup (char const *str) ATTRIBUTE_MALLOC;
 # if HAVE_INLINE
 #  define static_inline static inline
 # else
-   void *xnmalloc (size_t n, size_t s) ATTRIBUTE_MALLOC;
-   void *xnrealloc (void *p, size_t n, size_t s);
-   void *x2nrealloc (void *p, size_t *pn, size_t s);
-   char *xcharalloc (size_t n) ATTRIBUTE_MALLOC;
+void *xnmalloc (size_t n, size_t s) ATTRIBUTE_MALLOC;
+void *xnrealloc (void *p, size_t n, size_t s);
+void *x2nrealloc (void *p, size_t *pn, size_t s);
+char *xcharalloc (size_t n) ATTRIBUTE_MALLOC;
 # endif
 
 # ifdef static_inline
