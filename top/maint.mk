@@ -324,9 +324,15 @@ sc_prohibit_error_without_use:
 # | sort | perl -MRegexp::Assemble -le \
 #  'print Regexp::Assemble->new(file => "/dev/stdin")->as_string'|sed 's/\?://g'
 # Note this was produced by the above:
-# _xa1 = x(alloc_(oversized|die)|([cz]|2?re)alloc|m(alloc|emdup)|strdup)
-# But we can do better:
-_xa1 = x(alloc_(oversized|die)|([cmz]|2?re)alloc|(mem|str)dup)
+# _xa1 = \
+#x(((2n?)?re|c(har)?|n(re|m)|z)alloc|alloc_(oversized|die)|m(alloc|emdup)|strdup)
+# But we can do better, in at least two ways:
+# 1) take advantage of two "dup"-suffixed strings:
+# x(((2n?)?re|c(har)?|n(re|m)|[mz])alloc|alloc_(oversized|die)|(mem|str)dup)
+# 2) notice that "c(har)?|[mz]" is equivalent to the shorter and more readable
+# "char|[cmz]"
+# x(((2n?)?re|char|n(re|m)|[cmz])alloc|alloc_(oversized|die)|(mem|str)dup)
+_xa1 = x(((2n?)?re|char|n(re|m)|[cmz])alloc|alloc_(oversized|die)|(mem|str)dup)
 _xa2 = X([CZ]|N?M)ALLOC
 sc_prohibit_xalloc_without_use:
 	@h='"xalloc.h"' \

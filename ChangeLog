@@ -1,5 +1,10 @@
 2010-01-05  Jim Meyering  <meyering@redhat.com>
 
+	maint.mk: include 4 more function names in alloca.h-checking regexp
+	* top/maint.mk (sc_prohibit_xalloc_without_use): Use more complete
+	regexp.  Before, we would give a false-positive (saying alloca.h
+	is included unnecessarily) when the only uses involved omitted symbols.
+
 	xalloc.h: use consistent formatting
 	* lib/xalloc.h: Move declarations to start in the first column.
 
