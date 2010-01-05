@@ -1,7 +1,7 @@
 2010-01-05  Jim Meyering  <meyering@redhat.com>
 
-	maint: remove useless inclusions of "alloca.h"
-	* lib/getloadavg.c: Remove useless inclusion of "alloca.h".
+	maint: remove useless inclusions of "xalloc.h"
+	* lib/getloadavg.c: Remove useless inclusion of "xalloc.h".
 	* lib/readtokens.c: Likewise.
 	* lib/same.c: Likewise.
 	* modules/getloadavg (Depends-on): Remove alloca.
