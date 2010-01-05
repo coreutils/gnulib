@@ -39,7 +39,6 @@
 #include "dirname.h"
 #include "error.h"
 #include "same-inode.h"
-#include "xalloc.h"
 
 #ifndef MIN
 # define MIN(a, b) ((a) < (b) ? (a) : (b))

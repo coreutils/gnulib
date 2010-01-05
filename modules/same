@@ -8,7 +8,6 @@ lib/same.c
 m4/same.m4
 
 Depends-on:
-xalloc
 error
 dirname
 same-inode

@@ -1,5 +1,13 @@
 2010-01-05  Jim Meyering  <meyering@redhat.com>
 
+	maint: remove useless inclusions of "alloca.h"
+	* lib/getloadavg.c: Remove useless inclusion of "alloca.h".
+	* lib/readtokens.c: Likewise.
+	* lib/same.c: Likewise.
+	* modules/getloadavg (Depends-on): Remove alloca.
+	* modules/readtokens: Likewise.
+	* modules/same: Likewise.
+
 	maint.mk: include 4 more function names in alloca.h-checking regexp
 	* top/maint.mk (sc_prohibit_xalloc_without_use): Use more complete
 	regexp.  Before, we would give a false-positive (saying alloca.h

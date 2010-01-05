@@ -111,7 +111,6 @@
 # include "c-strtod.h"
 # include "cloexec.h"
 # include "intprops.h"
-# include "xalloc.h"
 
 /* The existing Emacs configuration files define a macro called
    LOAD_AVE_CVT, which accepts a value of type LOAD_AVE_TYPE, and

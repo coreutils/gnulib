@@ -31,8 +31,6 @@
 #include <string.h>
 #include <stdbool.h>
 
-#include "xalloc.h"
-
 #if USE_UNLOCKED_IO
 # include "unlocked-io.h"
 #endif

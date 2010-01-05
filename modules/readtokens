@@ -7,7 +7,6 @@ lib/readtokens.c
 m4/readtokens.m4
 
 Depends-on:
-xalloc
 stdbool
 
 configure.ac:

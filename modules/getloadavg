@@ -6,14 +6,13 @@ lib/getloadavg.c
 m4/getloadavg.m4
 
 Depends-on:
-stdlib
-extensions
-cloexec
-xalloc
 c-strtod
+cloexec
+extensions
+fcntl-safer
 intprops
 stdbool
-fcntl-safer
+stdlib
 
 configure.ac:
 gl_GETLOADAVG([$gl_source_base])
