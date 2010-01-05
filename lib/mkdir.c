@@ -29,7 +29,6 @@
 #include <string.h>
 
 #include "dirname.h"
-#include "xalloc.h"
 
 /* Disable the definition of mkdir to rpl_mkdir (from the <sys/stat.h>
    substitute) in this file.  Otherwise, we'd get an endless recursion.  */

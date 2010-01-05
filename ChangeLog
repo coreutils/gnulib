@@ -1,3 +1,9 @@
+2010-01-05  Eric Blake  <ebb9@byu.net>
+
+	mkdir: avoid xalloc
+	* lib/mkdir.c (includes): Drop unused header.
+	Reported by John W. Eaton.
+
 2010-01-04  Jim Meyering  <meyering@redhat.com>
 
 	nl_langinfo: avoid configure-time syntax error
