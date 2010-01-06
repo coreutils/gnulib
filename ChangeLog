@@ -1,3 +1,11 @@
+2010-01-05  Eric Blake  <ebb9@byu.net>
+
+	strcase: document what it provides
+	* doc/posix-functions/strcasecmp.texi (strcasecmp): Mention the
+	gnulib module.
+	* doc/posix-functions/strncasecmp.texi (strncasecmp): Likewise.
+	Reported by Dilyan Palauzov <Dilyan.Palauzov@aegee.org>.
+
 2010-01-05  Jim Meyering  <meyering@redhat.com>
 
 	maint: remove useless inclusions of "xalloc.h"
