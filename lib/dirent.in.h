@@ -26,6 +26,9 @@
 #ifndef _GL_DIRENT_H
 #define _GL_DIRENT_H
 
+/* Grab ino_t.  */
+#include <sys/types.h>
+
 /* The definition of GL_LINK_WARNING is copied here.  */
 
 /* The definition of _GL_ARG_NONNULL is copied here.  */
