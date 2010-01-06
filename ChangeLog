@@ -1,3 +1,13 @@
+2010-01-05  Aurelien Jarno  <aurelien@aurel32.net>  (tiny change)
+
+	utimens (fdutimens): ignore a negative FD, per contract
+	* lib/utimens.c (fdutimens) [HAVE_FUTIMENS]: Call futimens only
+	when we have a valid file descriptor.  Otherwise, using a brand
+	new glibc (with just-patched futimens that now fails with EBADF)
+	would cause this function to fail with ENOSYS.
+	Reported by Guillaume Ayoub in http://bugs.debian.org/563726.
+	See also http://bugzilla.redhat.com/552320.
+
 2010-01-05  Eric Blake  <ebb9@byu.net>
 
 	strcase: document what it provides

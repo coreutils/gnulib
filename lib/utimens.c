@@ -264,19 +264,20 @@ fdutimens (char const *file, int fd, struct timespec const timespec[2])
         }
 # endif /* HAVE_UTIMENSAT */
 # if HAVE_FUTIMENS
-      {
-        result = futimens (fd, ts);
+      if (0 <= fd)
+        {
+          result = futimens (fd, ts);
 #  ifdef __linux__
-        /* Work around the same bug as above.  */
-        if (0 < result)
-          errno = ENOSYS;
+          /* Work around the same bug as above.  */
+          if (0 < result)
+            errno = ENOSYS;
 #  endif /* __linux__ */
-        if (result == 0 || errno != ENOSYS)
-          {
-            utimensat_works_really = 1;
-            return result;
-          }
-      }
+          if (result == 0 || errno != ENOSYS)
+            {
+              utimensat_works_really = 1;
+              return result;
+            }
+        }
 # endif /* HAVE_FUTIMENS */
     }
   utimensat_works_really = -1;
