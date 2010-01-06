@@ -1,4 +1,4 @@
-# readlink.m4 serial 8
+# readlink.m4 serial 9
 dnl Copyright (C) 2003, 2007, 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -35,7 +35,7 @@ AC_DEFUN([gl_FUNC_READLINK],
       return readlink ("conftest.lnk2/", buf, sizeof buf) != -1;]])],
          [gl_cv_func_readlink_works=yes], [gl_cv_func_readlink_works=no],
          [gl_cv_func_readlink_works="guessing no"])
-      rm -f conftest.link])
+      rm -f conftest.link conftest.lnk2])
     if test "$gl_cv_func_readlink_works" != yes; then
       AC_DEFINE([READLINK_TRAILING_SLASH_BUG], [1], [Define to 1 if readlink
         fails to recognize a trailing slash.])
