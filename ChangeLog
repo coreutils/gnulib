@@ -1,3 +1,8 @@
+2010-01-05  Eric Blake  <ebb9@byu.net>
+
+	maint: support 'make announcement' from a VPATH build
+	* top/maint.mk (announcement): Look for correct NEWS file.
+
 2010-01-05  Aurelien Jarno  <aurelien@aurel32.net>  (tiny change)
 
 	utimens (fdutimens): ignore a negative FD, per contract
