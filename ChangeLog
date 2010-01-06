@@ -1,3 +1,11 @@
+2010-01-06  Jim Meyering  <meyering@redhat.com>
+
+	readtokens: this module *does* require xalloc.h
+	It uses only functions that were omitted by the old syntax-check rule.
+	* lib/readtokens.c: Include "xalloc.h" once again.
+	* modules/readtokens (Depends-on): Add xalloc.
+	This reverts part of 0e0f8f12ec241c0f1c1f21f960bb5cf908a0fa3c.
+
 2010-01-05  Eric Blake  <ebb9@byu.net>
 
 	maint: support 'make announcement' from a VPATH build
