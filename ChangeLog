@@ -1,3 +1,11 @@
+2010-01-06  Eric Blake  <ebb9@byu.net>
+
+	stdio, unistd: guarantee ssize_t
+	* lib/unistd.in.h (includes): Ensure that types required by POSIX
+	2008 are exposed when needed.
+	* lib/stdio.in.h (includes): Likewise.
+	Reported by Ralf Wildenhues.
+
 2010-01-06  Paolo Bonzini  <bonzini@gnu.org>
 
 	nl_langinfo: do not call AC_CHECK_FUNC_ONCE inside if.
