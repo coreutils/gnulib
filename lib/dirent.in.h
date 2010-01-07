@@ -26,7 +26,7 @@
 #ifndef _GL_DIRENT_H
 #define _GL_DIRENT_H
 
-/* Grab ino_t.  */
+/* Get ino_t.  Needed on some systems, including glibc 2.8.  */
 #include <sys/types.h>
 
 /* The definition of GL_LINK_WARNING is copied here.  */

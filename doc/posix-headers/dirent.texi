@@ -7,6 +7,9 @@ Gnulib module: dirent
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+The type @code{ino_t} is missing on some platforms:
+glibc 2.8 and others.
 @end itemize
 
 Portability problems not fixed by Gnulib:

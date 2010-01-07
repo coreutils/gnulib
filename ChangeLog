@@ -1,5 +1,10 @@
 2010-01-07  Bruno Haible  <bruno@clisp.org>
 
+	dirent: Document the last fix.
+	* doc/posix-headers/dirent.texi: Document the bug of missing 'ino_t'.
+
+2010-01-07  Bruno Haible  <bruno@clisp.org>
+
 	stdio: Ensure <stdio.h> defines off_t, ssize_t, va_list.
 	* lib/stdio.in.h: Include <sys/types.h> unconditionally.
 	* tests/test-stdio.c: Verify that fpos_t, off_t, size_t, ssize_t,
