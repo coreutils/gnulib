@@ -76,38 +76,38 @@ extern "C" {
    refer to system functions like _iswctype that are not in the
    standard C library.  Rather than try to get ancient buggy
    implementations like this to work, just disable them.  */
-#  undef iswalnum
-#  undef iswalpha
-#  undef iswblank
-#  undef iswcntrl
-#  undef iswdigit
-#  undef iswgraph
-#  undef iswlower
-#  undef iswprint
-#  undef iswpunct
-#  undef iswspace
-#  undef iswupper
-#  undef iswxdigit
-#  undef towlower
-#  undef towupper
+# undef iswalnum
+# undef iswalpha
+# undef iswblank
+# undef iswcntrl
+# undef iswdigit
+# undef iswgraph
+# undef iswlower
+# undef iswprint
+# undef iswpunct
+# undef iswspace
+# undef iswupper
+# undef iswxdigit
+# undef towlower
+# undef towupper
 
 /* Linux libc5 has <wctype.h> and the functions but they are broken.  */
-#  if @REPLACE_ISWCNTRL@
-#   define iswalnum rpl_iswalnum
-#   define iswalpha rpl_iswalpha
-#   define iswblank rpl_iswblank
-#   define iswcntrl rpl_iswcntrl
-#   define iswdigit rpl_iswdigit
-#   define iswgraph rpl_iswgraph
-#   define iswlower rpl_iswlower
-#   define iswprint rpl_iswprint
-#   define iswpunct rpl_iswpunct
-#   define iswspace rpl_iswspace
-#   define iswupper rpl_iswupper
-#   define iswxdigit rpl_iswxdigit
-#   define towlower rpl_towlower
-#   define towupper rpl_towupper
-#  endif
+# if @REPLACE_ISWCNTRL@
+#  define iswalnum rpl_iswalnum
+#  define iswalpha rpl_iswalpha
+#  define iswblank rpl_iswblank
+#  define iswcntrl rpl_iswcntrl
+#  define iswdigit rpl_iswdigit
+#  define iswgraph rpl_iswgraph
+#  define iswlower rpl_iswlower
+#  define iswprint rpl_iswprint
+#  define iswpunct rpl_iswpunct
+#  define iswspace rpl_iswspace
+#  define iswupper rpl_iswupper
+#  define iswxdigit rpl_iswxdigit
+#  define towlower rpl_towlower
+#  define towupper rpl_towupper
+# endif
 
 static inline int
 iswalnum (wint_t wc)
@@ -198,9 +198,9 @@ towupper (wint_t wc)
   return (wc >= 'a' && wc <= 'z' ? wc - 'a' + 'A' : wc);
 }
 
-# endif /* ! HAVE_ISWCNTRL */
+#endif /* ! HAVE_ISWCNTRL || REPLACE_ISWCNTRL */
 
-# if defined __MINGW32__
+#if defined __MINGW32__
 
 /* On native Windows, wchar_t is uint16_t, and wint_t is uint32_t.
    The functions towlower and towupper are implemented in the MSVCRT library
@@ -220,16 +220,16 @@ rpl_towlower (wint_t wc)
 {
   return (wint_t) (wchar_t) towlower (wc);
 }
-#  define towlower rpl_towlower
+# define towlower rpl_towlower
 
 static inline wint_t
 rpl_towupper (wint_t wc)
 {
   return (wint_t) (wchar_t) towupper (wc);
 }
-#  define towupper rpl_towupper
+# define towupper rpl_towupper
 
-# endif
+#endif /* __MINGW32__ */
 
 #ifdef __cplusplus
 }

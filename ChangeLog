@@ -1,5 +1,10 @@
 2010-01-07  Bruno Haible  <bruno@clisp.org>
 
+	Fix indentation of wctype.in.h, broken since 2007-01-06.
+	* lib/wctype.in.h: Fix indentation of preprocessor directives.
+
+2010-01-07  Bruno Haible  <bruno@clisp.org>
+
 	mbslen: Avoid collision with system function.
 	* lib/string.in.h [MirBSD]: Include <wchar.h>.
 	(mbslen): Undefine first. Alias mbslen to rpl_mbslen.
