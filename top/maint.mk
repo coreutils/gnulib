@@ -495,6 +495,13 @@ sc_GPL_version:
 	@re='either ''version [^3]' msg='GPL vN, N!=3'			\
 	  $(_prohibit_regexp)
 
+# Require the latest GFDL.  Two regexp, since some .texi files end up
+# line wrapping between 'Free Documentation License,' and 'Version'.
+_GFDL_regexp = (Free ''Documentation.*Version 1\.[^3]|Version 1\.[^3] or any)
+sc_GFDL_version:
+	@re='$(_GFDL_regexp)' msg='GFDL vN, N!=3'			\
+	  $(_prohibit_regexp)
+
 cvs_keywords = \
   Author|Date|Header|Id|Name|Locker|Log|RCSfile|Revision|Source|State
 
