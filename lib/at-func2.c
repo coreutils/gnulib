@@ -110,7 +110,7 @@ at_func2 (int fd1, char const *file1,
               }
           }
         else if (proc_file1 != proc_buf1 && proc_file1 != file1)
-          free (proc_buf1);
+          free (proc_file1);
       }
   }
 
