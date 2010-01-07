@@ -7,6 +7,7 @@ lib/gl_xoset.c
 m4/gl_list.m4
 
 Depends-on:
+oset
 inline
 stdbool
 xalloc-die

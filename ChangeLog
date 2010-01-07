@@ -1,5 +1,12 @@
 2010-01-07  Bruno Haible  <bruno@clisp.org>
 
+	xlist, xoset: Fix missing dependency bug, introduced on 2009-12-13.
+	* modules/xlist (Depends-on): Add 'list',
+	* modules/xoset (Depends-on): Add 'oset'.
+	Reported by Ralf Wildenhues <Ralf.Wildenhues@gmx.de>.
+
+2010-01-07  Bruno Haible  <bruno@clisp.org>
+
 	* doc/posix-functions/strcasecmp.texi: Clarify the platforms.
 	* doc/posix-functions/strncasecmp.texi: Likewise.
 

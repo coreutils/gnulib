@@ -7,6 +7,7 @@ lib/gl_xlist.c
 m4/gl_list.m4
 
 Depends-on:
+list
 inline
 stdbool
 xalloc-die
