@@ -1,5 +1,14 @@
 2010-01-07  Bruno Haible  <bruno@clisp.org>
 
+	stdio: Ensure <stdio.h> defines off_t, ssize_t, va_list.
+	* lib/stdio.in.h: Include <sys/types.h> unconditionally.
+	* tests/test-stdio.c: Verify that fpos_t, off_t, size_t, ssize_t,
+	va_list are defined.
+	* doc/posix-headers/stdio.texi: Document the bug of missing types.
+	Reported by Eric Blake.
+
+2010-01-07  Bruno Haible  <bruno@clisp.org>
+
 	xlist, xoset: Fix missing dependency bug, introduced on 2009-12-13.
 	* modules/xlist (Depends-on): Add 'list',
 	* modules/xoset (Depends-on): Add 'oset'.

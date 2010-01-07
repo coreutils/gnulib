@@ -36,14 +36,13 @@
 #ifndef _GL_STDIO_H
 #define _GL_STDIO_H
 
+/* Get va_list.  Needed on many systems, including glibc 2.8.  */
 #include <stdarg.h>
+
 #include <stddef.h>
 
-#if (@GNULIB_FSEEKO@ || @GNULIB_FTELLO@ || @GNULIB_GETDELIM@ \
-     || @GNULIB_GETLINE@ || defined GNULIB_POSIXCHECK)
-/* Get off_t and ssize_t.  */
-# include <sys/types.h>
-#endif
+/* Get off_t and ssize_t.  Needed on many systems, including glibc 2.8.  */
+#include <sys/types.h>
 
 #ifndef __attribute__
 /* This feature is available in gcc versions 2.5 and later.  */

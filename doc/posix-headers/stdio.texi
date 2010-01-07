@@ -8,6 +8,15 @@ Gnulib module: stdio
 Portability problems fixed by Gnulib:
 @itemize
 @item
+The type @code{off_t} is missing on some platforms:
+glibc 2.8 and others.
+@item
+The type @code{ssize_t} is missing on some platforms:
+glibc 2.8, MacOS X 10.5, Solaris 10, and others.
+@item
+The type @code{va_list} is missing on some platforms:
+glibc 2.8, OpenBSD 4.0, Solaris 10, and others.
+@item
 Some platforms provide a @code{NULL} macro that cannot be used in arbitrary
 expressions:
 NetBSD 5.0
