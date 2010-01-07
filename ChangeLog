@@ -1,5 +1,10 @@
 2010-01-07  Bruno Haible  <bruno@clisp.org>
 
+	* doc/posix-functions/strcasecmp.texi: Clarify the platforms.
+	* doc/posix-functions/strncasecmp.texi: Likewise.
+
+2010-01-07  Bruno Haible  <bruno@clisp.org>
+
 	* m4/nl_langinfo.m4 (gl_FUNC_NL_LANGINFO): Simplify logic.
 
 2010-01-07  John W. Eaton  <jwe@octave.org>
