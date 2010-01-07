@@ -1,3 +1,7 @@
+2010-01-07  Bruno Haible  <bruno@clisp.org>
+
+	* m4/nl_langinfo.m4 (gl_FUNC_NL_LANGINFO): Simplify logic.
+
 2010-01-07  John W. Eaton  <jwe@octave.org>
 
 	wctype: allow C++ use
