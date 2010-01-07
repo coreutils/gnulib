@@ -62,6 +62,10 @@
 # endif
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* FreeBSD 4.4 to 4.11 has <wctype.h> but lacks the functions.
    Linux libc5 has <wctype.h> and the functions but they are broken.
    Assume all 12 functions are implemented the same way, or not at all.  */
@@ -226,6 +230,10 @@ rpl_towupper (wint_t wc)
 #  define towupper rpl_towupper
 
 # endif
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _GL_WCTYPE_H */
 #endif /* _GL_WCTYPE_H */

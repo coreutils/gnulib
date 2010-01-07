@@ -1,3 +1,8 @@
+2010-01-07  John W. Eaton  <jwe@octave.org>
+
+	wctype: allow C++ use
+	* lib/wctype.in.h: Add extern "C" block for C++.
+
 2010-01-06  Eric Blake  <ebb9@byu.net>
 
 	maint.mk: detect incorrect GFDL usage
