@@ -1,5 +1,10 @@
 2010-01-08  Eric Blake  <ebb9@byu.net>
 
+	maint.mk: allow packages to add makefile @@ exceptions
+	* top/maint.mk (_makefile_at_at_check_exceptions): New hook.
+	(sc_makefile_check): Rename...
+	(sc_makefile_at_at_check): ...to this, and use hook.
+
 	dup2: work around mingw bug
 	* lib/dup2.c (rpl_dup2): Sanitize return value on mingw.
 	Reported by Simon Josefsson.

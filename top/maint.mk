@@ -580,8 +580,12 @@ update-NEWS-hash: NEWS
 # to emit a definition for each substituted variable.
 # We use perl rather than "grep -nE ..." to exempt a single
 # use of an @...@-delimited variable name in src/Makefile.am.
-sc_makefile_check:
-	@perl -ne '/\@[A-Z_0-9]+\@/ && !/^cu_install_program =/'	\
+# Allow the package to add exceptions via a hook in cfg.mk;
+# for example, @PRAGMA_SYSTEM_HEADER@ can be permitted by
+# setting this to ' && !/PRAGMA_SYSTEM_HEADER/'.
+_makefile_at_at_check_exceptions ?=
+sc_makefile_at_at_check:
+	@perl -ne '/\@[A-Z_0-9]+\@/'$(_makefile_at_at_check_exceptions)	\
 	  -e 'and (print "$$ARGV:$$.: $$_"), $$m=1; END {exit !$$m}'	\
 	    $$($(VC_LIST_EXCEPT) | grep -E '(^|/)Makefile\.am$$')	\
 	  && { echo '$(ME): use $$(...), not @...@' 1>&2; exit 1; } || :
