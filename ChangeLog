@@ -1,5 +1,18 @@
 2010-01-07  Bruno Haible  <bruno@clisp.org>
 
+	mbslen: Avoid collision with system function.
+	* lib/string.in.h [MirBSD]: Include <wchar.h>.
+	(mbslen): Undefine first. Alias mbslen to rpl_mbslen.
+	* m4/mbslen.m4: New file.
+	* modules/mbslen (Files): Add it.
+	(configure.ac): Invoke gl_MBSLEN.
+	* m4/string_h.m4 (gl_HEADER_STRING_H_DEFAULTS): Initialize HAVE_MBSLEN.
+	* modules/string (Makefile.am): Substitute HAVE_MBSLEN.
+	Reported by Nelson H. F. Beebe <beebe@math.utah.edu>
+	via Ian Beckwith <ianb@erislabs.net>.
+
+2010-01-07  Bruno Haible  <bruno@clisp.org>
+
 	dirent: Document the last fix.
 	* doc/posix-headers/dirent.texi: Document the bug of missing 'ino_t'.
 
