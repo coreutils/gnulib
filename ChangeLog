@@ -97,7 +97,7 @@
 	* lib/getloadavg.c: Remove useless inclusion of "xalloc.h".
 	* lib/readtokens.c: Likewise.
 	* lib/same.c: Likewise.
-	* modules/getloadavg (Depends-on): Remove alloca.
+	* modules/getloadavg (Depends-on): Remove xalloc.
 	* modules/readtokens: Likewise.
 	* modules/same: Likewise.
 
