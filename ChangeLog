@@ -1,5 +1,10 @@
 2010-01-06  Eric Blake  <ebb9@byu.net>
 
+	select: add missing dependency
+	* modules/select-tests (Depends-on): Move sockets dependency...
+	* modules/select (Depends-on): ...here.
+	Reported by Ian Beckwith.
+
 	doc: regenerate INSTALL
 	* doc/INSTALL: Reflect recent autoconf update.
 	* doc/INSTALL.ISO: Likewise.

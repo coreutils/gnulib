@@ -7,6 +7,7 @@ m4/select.m4
 
 Depends-on:
 alloca
+sockets
 sys_select
 
 configure.ac:
