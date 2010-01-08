@@ -1,3 +1,7 @@
+2010-01-08  Simon Josefsson  <simon@josefsson.org>
+
+	* lib/dup2.c (rpl_dup2): Improve comment.
+
 2010-01-08  Eric Blake  <ebb9@byu.net>
 
 	maint.mk: allow packages to add makefile @@ exceptions
