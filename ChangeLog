@@ -1,3 +1,9 @@
+2010-01-07  John W. Eaton  <jwe@octave.org>  (tiny change)
+
+	glob: Fix C++ compilation.
+	* lib/glob.in.h [__cplusplus]: Define __BEGIN_DECLS and __END_DECLS for
+	C++.
+
 2010-01-07  Bruno Haible  <bruno@clisp.org>
 
 	Fix indentation of wctype.in.h, broken since 2007-01-06.
