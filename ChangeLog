@@ -1,3 +1,9 @@
+2010-01-08  Eric Blake  <ebb9@byu.net>
+
+	dup2: work around mingw bug
+	* lib/dup2.c (rpl_dup2): Sanitize return value on mingw.
+	Reported by Simon Josefsson.
+
 2010-01-07  John W. Eaton  <jwe@octave.org>  (tiny change)
 
 	glob: Fix C++ compilation.

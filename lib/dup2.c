@@ -52,6 +52,13 @@ rpl_dup2 (int fd, int desired_fd)
         }
       return fd;
     }
+  /* Some mingw versions also return the wrong value if desired_fd is
+     negative but not -1.  */
+  if (desired_fd < 0)
+    {
+      errno = EBADF;
+      return -1;
+    }
 # endif
   result = dup2 (fd, desired_fd);
 # ifdef __linux__
