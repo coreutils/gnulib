@@ -1,5 +1,9 @@
 2010-01-09  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unistr/u8-to-u32'.
+	* modules/unistr/u8-to-u32-tests: New file.
+	* tests/unistr/test-u8-to-u32.c: New file.
+
 	Tests for module 'unistr/u8-to-u16'.
 	* modules/unistr/u8-to-u16-tests: New file.
 	* tests/unistr/test-u8-to-u16.c: New file.
