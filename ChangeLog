@@ -1,3 +1,9 @@
+2010-01-09  Bruno Haible  <bruno@clisp.org>
+
+	Tests for module 'getlogin_r'.
+	* modules/getlogin_r-tests: New file.
+	* tests/test-getlogin_r.c: New file.
+
 2010-01-09  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: extend proper_name_utf8-vs-LIBICONV-checking rule
