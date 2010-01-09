@@ -1,5 +1,15 @@
 2010-01-09  Bruno Haible  <bruno@clisp.org>
 
+	getlogin_r: Small fixes.
+	* lib/getlogin_r.c (getlogin_r): Don't set errno if the function
+	succeeds.
+	* m4/getlogin_r.m4 (gl_GETLOGIN_R): Require gl_USE_SYSTEM_EXTENSIONS
+	before testing whether getlogin_r is declared. No need to set
+	HAVE_DECL_GETLOGIN_R to 1.
+	(gl_PREREQ_GETLOGIN_R): Don't check for the getlogin_r declaration.
+
+2010-01-09  Bruno Haible  <bruno@clisp.org>
+
 	* lib/unistd.in.h (getlogin_r): Add comment.
 
 2010-01-09  Bruno Haible  <bruno@clisp.org>

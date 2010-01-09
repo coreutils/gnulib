@@ -1,6 +1,6 @@
 /* Provide a working getlogin_r for systems which lack it.
 
-   Copyright (C) 2005, 2006, 2007, 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2005-2007, 2009-2010 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -39,15 +39,10 @@ getlogin_r (char *name, size_t size)
 
   errno = 0;
   n = getlogin ();
-
-  /* A system function like getlogin_r is never supposed to set errno
-     to zero, so make sure errno is nonzero here.  ENOENT is a
-     reasonable errno value if getlogin returns NULL.  */
-  if (!errno)
-    errno = ENOENT;
-
   if (!n)
-    return errno;
+    /* ENOENT is a reasonable errno value if getlogin returns NULL.  */
+    return (errno != 0 ? errno : ENOENT);
+
   nlen = strlen (n);
   if (size <= nlen)
     return ERANGE;
