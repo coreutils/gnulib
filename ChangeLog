@@ -1,5 +1,9 @@
 2010-01-09  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unistr/u8-check'.
+	* modules/unistr/u8-check-tests: New file.
+	* tests/unistr/test-u8-check.c: New file.
+
 	* tests/unictype/test-categ_byname.c: Include <stdbool.h>.
 	(category_equals): New function.
 	(main): Add more tests.
