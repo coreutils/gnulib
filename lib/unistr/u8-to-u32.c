@@ -58,7 +58,7 @@ FUNC (const SRC_UNIT *s, size_t n, DST_UNIT *resultbuf, size_t *lengthp)
       int count;
 
       /* Fetch a Unicode character from the input string.  */
-      count = u8_mbtouc (&uc, s, s_end - s);
+      count = u8_mbtoucr (&uc, s, s_end - s);
       if (count < 0)
         {
           if (!(result == resultbuf || result == NULL))

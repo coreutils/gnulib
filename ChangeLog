@@ -1,5 +1,11 @@
 2010-01-09  Bruno Haible  <bruno@clisp.org>
 
+	unistr/u8-to-u32: Reject invalid input.
+	* lib/unistr/u8-to-u32.c (u8_to_u32): Call u8_mbtoucr instead of
+	u8_mbtouc.
+	* modules/unistr/u8-to-u32 (Depends-on): Add unistr/u8-mbtoucr.
+	Remove unistr/u8-mbtouc.
+
 	unistr/u8-to-u16: Reject invalid input.
 	* lib/unistr/u8-to-u16.c (u8_to_u16): Call u8_mbtoucr instead of
 	u8_mbtouc.
