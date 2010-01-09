@@ -1,5 +1,10 @@
 2010-01-09  Bruno Haible  <bruno@clisp.org>
 
+	* tests/unictype/test-categ_byname.c: Include <stdbool.h>.
+	(category_equals): New function.
+	(main): Add more tests.
+	* modules/unictype/category-byname-tests (Depends-on): Add stdbool.
+
 	* tests/unictype/test-bidi_byname.c (main): Add more tests.
 
 2010-01-10  Bruno Haible  <bruno@clisp.org>
