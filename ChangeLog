@@ -1,3 +1,7 @@
+2010-01-09  Bruno Haible  <bruno@clisp.org>
+
+	* tests/unictype/test-bidi_byname.c (main): Add more tests.
+
 2010-01-10  Bruno Haible  <bruno@clisp.org>
 
 	unistr/u*-strcoll: Try harder to distinguish different strings.
