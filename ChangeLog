@@ -1,5 +1,19 @@
 2010-01-09  Bruno Haible  <bruno@clisp.org>
 
+	New module 'getlogin'.
+	* lib/unistd.in.h (getlogin): New declaration.
+	* lib/getlogin.c: New file.
+	* m4/getlogin.m4: New file.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize GNULIB_GETLOGIN,
+	HAVE_GETLOGIN.
+	* modules/unistd (Makefile.am): Substitute GNULIB_GETLOGIN,
+	HAVE_GETLOGIN.
+	* modules/getlogin: New file.
+	* doc/posix-functions/getlogin.texi: Mention the new module.
+	Reported by John W. Eaton <jwe@gnu.org>.
+
+2010-01-09  Bruno Haible  <bruno@clisp.org>
+
 	getlogin_r: Support for native Windows.
 	* lib/getlogin_r.c: Include <windows.h>
 	(getlogin_r): Implement for native Windows.

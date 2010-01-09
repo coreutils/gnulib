@@ -476,6 +476,29 @@ extern int gethostname(char *name, size_t len) _GL_ARG_NONNULL ((1));
 #endif
 
 
+#if @GNULIB_GETLOGIN@
+/* Returns the user's login name, or NULL if it cannot be found.  Upon error,
+   returns NULL with errno set.
+
+   See <http://www.opengroup.org/susv3xsh/getlogin.html>.
+
+   Most programs don't need to use this function, because the information is
+   available through environment variables:
+     ${LOGNAME-$USER}        on Unix platforms,
+     $USERNAME               on native Windows platforms.
+ */
+# if !@HAVE_GETLOGIN@
+extern char *getlogin (void);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef getlogin
+# define getlogin() \
+    (GL_LINK_WARNING ("getlogin is unportable - " \
+                      "use gnulib module getlogin for portability"), \
+     getlogin ())
+#endif
+
+
 #if @GNULIB_GETLOGIN_R@
 /* Copies the user's login name to NAME.
    The array pointed to by NAME has room for SIZE bytes.
