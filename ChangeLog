@@ -1,5 +1,9 @@
 2010-01-09  Bruno Haible  <bruno@clisp.org>
 
+	* lib/unistd.in.h (getlogin_r): Add comment.
+
+2010-01-09  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'getlogin_r'.
 	* modules/getlogin_r-tests: New file.
 	* tests/test-getlogin_r.c: New file.
