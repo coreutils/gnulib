@@ -69,5 +69,13 @@ main (void)
       ASSERT (getlogin_r (smallbuf, i) == ERANGE);
   }
 
+  /* Test with a huge buffer.  */
+  {
+    static char hugebuf[70000];
+
+    ASSERT (getlogin_r (hugebuf, sizeof (hugebuf)) == 0);
+    ASSERT (strcmp (hugebuf, buf) == 0);
+  }
+
   return 0;
 }
