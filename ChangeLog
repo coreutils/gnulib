@@ -1,5 +1,9 @@
 2010-01-09  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unistr/u32-check'.
+	* modules/unistr/u32-check-tests: New file.
+	* tests/unistr/test-u32-check.c: New file.
+
 	Tests for module 'unistr/u16-check'.
 	* modules/unistr/u16-check-tests: New file.
 	* tests/unistr/test-u16-check.c: New file.
