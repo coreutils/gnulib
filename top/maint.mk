@@ -524,14 +524,20 @@ sc_prohibit_S_IS_definition:
 	msg='do not define S_IS* macros; include <sys/stat.h>'		\
 	  $(_prohibit_regexp)
 
-# Each program that uses proper_name_utf8 must link with
-# one of the ICONV libraries.
+# Each program that uses proper_name_utf8 must link with one of the
+# ICONV libraries.  Otherwise, some ICONV library must appear in LDADD.
+# The perl -0777 invocation below extracts the possibly-multi-line
+# definition of LDADD from the appropriate Makefile.am and exits 0
+# when it contains "ICONV".
 sc_proper_name_utf8_requires_ICONV:
 	@progs=$$(grep -l 'proper_name_utf8 ''("' $$($(VC_LIST_EXCEPT)));\
 	if test "x$$progs" != x; then					\
 	  fail=0;							\
 	  for p in $$progs; do						\
 	    dir=$$(dirname "$$p");					\
+	    perl -0777							\
+	      -ne 'exit !(/^LDADD =(.+?[^\\]\n)/ms && $$1 =~ /ICONV/)'	\
+	      $$dir/Makefile.am && continue;				\
 	    base=$$(basename "$$p" .c);					\
 	    grep "$${base}_LDADD.*ICONV)" $$dir/Makefile.am > /dev/null	\
 	      || { fail=1; echo 1>&2 "$(ME): $$p uses proper_name_utf8"; }; \

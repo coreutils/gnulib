@@ -1,3 +1,9 @@
+2010-01-09  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: extend proper_name_utf8-vs-LIBICONV-checking rule
+	* top/maint.mk (sc_proper_name_utf8_requires_ICONV): Adapt to work
+	also when $(LIBICONV) is part of LDADD, rather than ${prog}_LDADD.
+
 2010-01-08  Simon Josefsson  <simon@josefsson.org>
 
 	* lib/dup2.c (rpl_dup2): Improve comment.
