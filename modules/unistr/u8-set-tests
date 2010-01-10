@@ -1,0 +1,13 @@
+Files:
+tests/unistr/test-u8-set.c
+tests/unistr/test-set.h
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-u8-set
+check_PROGRAMS += test-u8-set
+test_u8_set_SOURCES = unistr/test-u8-set.c
