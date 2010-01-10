@@ -1,5 +1,10 @@
 2010-01-10  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unistr/u8-cpy-alloc'.
+	* modules/unistr/u8-cpy-alloc-tests: New file.
+	* tests/unistr/test-u8-cpy-alloc.c: New file.
+	* tests/unistr/test-cpy-alloc.h: New file.
+
 	Tests for module 'unistr/u32-mbsnlen'.
 	* modules/unistr/u32-mbsnlen-tests: New file.
 	* tests/unistr/test-u32-mbsnlen.c: New file.
