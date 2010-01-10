@@ -1,5 +1,9 @@
 2010-01-10  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unistr/u16-chr'.
+	* modules/unistr/u16-chr-tests: New file.
+	* tests/unistr/test-u16-chr.c: New file.
+
 	Tests for module 'unistr/u8-chr'.
 	* modules/unistr/u8-chr-tests: New file.
 	* tests/unistr/test-u8-chr.c: New file.
