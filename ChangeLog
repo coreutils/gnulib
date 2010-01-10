@@ -1,5 +1,12 @@
 2010-01-10  Bruno Haible  <bruno@clisp.org>
 
+	unistr/u*-next: Add missing dependencies.
+	* modules/unistr/u8-next (Depends-on): Add unistr/u8-strmbtouc.
+	* modules/unistr/u16-next (Depends-on): Add unistr/u16-strmbtouc.
+	* modules/unistr/u32-next (Depends-on): Add unistr/u32-strmbtouc.
+
+2010-01-10  Bruno Haible  <bruno@clisp.org>
+
 	unistr/u8-mbsnlen: Fix return value for incomplete character.
 	* lib/unistr/u8-mbsnlen.c (u8_mbsnlen): Use u8_mbtoucr instead of
 	u8_mblen.
