@@ -1,3 +1,11 @@
+2010-01-10  Bruno Haible  <bruno@clisp.org>
+
+	wchar: Fix compilation error when <wchar.h> is used from coreutils.
+	* lib/wchar.in.h: Treat __need_wint_t like __need_mbstate_t.
+	Reported by Brian Gough <bjg@gnu.org> and
+	Chris Clayton <chris2553@googlemail.com> via
+	Mike Frysinger <vapier@gentoo.org> and Jim Meyering <jim@meyering.net>.
+
 2010-01-09  Bruno Haible  <bruno@clisp.org>
 
 	unistr/u16-to-u32: Reject invalid input.
