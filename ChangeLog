@@ -1,5 +1,9 @@
 2010-01-09  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unistr/u16-mblen'.
+	* modules/unistr/u16-mblen-tests: New file.
+	* tests/unistr/test-u16-mblen.c: New file.
+
 	Tests for module 'unistr/u8-mblen'.
 	* modules/unistr/u8-mblen-tests: New file.
 	* tests/unistr/test-u8-mblen.c: New file.
