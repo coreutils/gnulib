@@ -1,5 +1,10 @@
 2010-01-10  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unistr/u8-stpncpy'.
+	* modules/unistr/u8-stpncpy-tests: New file.
+	* tests/unistr/test-u8-stpncpy.c: New file.
+	* tests/unistr/test-stpncpy.h: New file.
+
 	Tests for module 'unistr/u32-strncpy'.
 	* modules/unistr/u32-strncpy-tests: New file.
 	* tests/unistr/test-u32-strncpy.c: New file.
