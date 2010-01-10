@@ -1,0 +1,12 @@
+Files:
+tests/unistr/test-u32-prev.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-u32-prev
+check_PROGRAMS += test-u32-prev
+test_u32_prev_SOURCES = unistr/test-u32-prev.c
