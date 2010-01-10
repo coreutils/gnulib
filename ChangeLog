@@ -1,5 +1,10 @@
 2010-01-09  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unistr/u8-mbtouc-unsafe'.
+	* modules/unistr/u8-mbtouc-unsafe-tests: New file.
+	* tests/unistr/test-u8-mbtouc-unsafe.c: New file.
+	* tests/unistr/test-u8-mbtouc.h: New file.
+
 	Tests for module 'unistr/u32-mblen'.
 	* modules/unistr/u32-mblen-tests: New file.
 	* tests/unistr/test-u32-mblen.c: New file.
