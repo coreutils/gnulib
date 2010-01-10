@@ -48,7 +48,8 @@
 	* lib/getlogin_r.c: Include <windows.h>
 	(getlogin_r): Implement for native Windows.
 	* tests/test-getlogin_r.c (main): Also test with a huge buffer.
-	Reported by <tmacchant5@yahoo.co.jp> via John W. Eaton <jwe@gnu.org>.
+	Reported by Tatsuro MATSUOKA <tmacchant5@yahoo.co.jp>
+	via John W. Eaton <jwe@gnu.org>.
 
 2010-01-09  Bruno Haible  <bruno@clisp.org>
 
