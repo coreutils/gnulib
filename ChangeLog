@@ -1,5 +1,9 @@
 2010-01-10  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unistr/u16-strcoll'.
+	* modules/unistr/u16-strcoll-tests: New file.
+	* tests/unistr/test-u16-strcoll.c: New file.
+
 	Tests for module 'unistr/u8-strcoll'.
 	* modules/unistr/u8-strcoll-tests: New file.
 	* tests/unistr/test-u8-strcoll.c: New file.
