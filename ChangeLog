@@ -1,5 +1,9 @@
 2010-01-10  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unistr/u8-mbsnlen'.
+	* modules/unistr/u8-mbsnlen-tests: New file.
+	* tests/unistr/test-u8-mbsnlen.c: New file.
+
 	Tests for module 'unistr/u32-chr'.
 	* modules/unistr/u32-chr-tests: New file.
 	* tests/unistr/test-u32-chr.c: New file.
