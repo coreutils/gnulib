@@ -1,5 +1,9 @@
 2010-01-10  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unistr/u16-prev'.
+	* modules/unistr/u16-prev-tests: New file.
+	* tests/unistr/test-u16-prev.c: New file.
+
 	Tests for module 'unistr/u8-prev'.
 	* modules/unistr/u8-prev-tests: New file.
 	* tests/unistr/test-u8-prev.c: New file.
