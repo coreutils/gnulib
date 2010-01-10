@@ -23,8 +23,12 @@ FUNC (UNIT *dest, const UNIT *src, size_t n)
 
   /* This behavior is rarely useful, but it is here for consistency with
      strncpy and wcsncpy.  */
-  for (; n > 0; n--)
-    *dest++ = 0;
+  {
+    UNIT *destptr = dest;
 
-  return dest - 1;
+    for (; n > 0; n--)
+      *destptr++ = 0;
+  }
+
+  return dest;
 }

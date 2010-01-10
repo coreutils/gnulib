@@ -1,5 +1,13 @@
 2010-01-10  Bruno Haible  <bruno@clisp.org>
 
+	unistr/u*-stpncpy: Fix the return value.
+	* lib/unistr.h (u8_stpncpy, u16_stpncpy, u32_stpncpy): Make the
+	description of the return value consistent with stpncpy in glibc.
+	* lib/unistr/u-stpncpy.h (FUNC): Return the pointer past the last
+	written non-NUL unit.
+
+2010-01-10  Bruno Haible  <bruno@clisp.org>
+
 	unistr/u*-next: Add missing dependencies.
 	* modules/unistr/u8-next (Depends-on): Add unistr/u8-strmbtouc.
 	* modules/unistr/u16-next (Depends-on): Add unistr/u16-strmbtouc.
