@@ -1,5 +1,9 @@
 2010-01-10  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unistr/u16-strdup'.
+	* modules/unistr/u16-strdup-tests: New file.
+	* tests/unistr/test-u16-strdup.c: New file.
+
 	Tests for module 'unistr/u8-strdup'.
 	* modules/unistr/u8-strdup-tests: New file.
 	* tests/unistr/test-u8-strdup.c: New file.
