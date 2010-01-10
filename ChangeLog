@@ -1,3 +1,10 @@
+2010-01-10  Bruno Haible  <bruno@clisp.org>
+
+	Tests for module 'unistr/u8-cpy'.
+	* modules/unistr/u8-cpy-tests: New file.
+	* tests/unistr/test-u8-cpy.c: New file.
+	* tests/unistr/test-cpy.h: New file.
+
 2010-01-09  Bruno Haible  <bruno@clisp.org>
 
 	Tests for module 'unistr/u32-uctomb'.
