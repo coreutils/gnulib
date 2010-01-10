@@ -1,5 +1,9 @@
 2010-01-10  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unistr/u32-strncat'.
+	* modules/unistr/u32-strncat-tests: New file.
+	* tests/unistr/test-u32-strncat.c: New file.
+
 	Tests for module 'unistr/u16-strncat'.
 	* modules/unistr/u16-strncat-tests: New file.
 	* tests/unistr/test-u16-strncat.c: New file.
