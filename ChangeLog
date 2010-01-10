@@ -1,5 +1,11 @@
 2010-01-10  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unistr/u8-strcmp'.
+	* modules/unistr/u8-strcmp-tests: New file.
+	* tests/unistr/test-u8-strcmp.c: New file.
+	* tests/unistr/test-u8-strcmp.h: New file.
+	* tests/unistr/test-strcmp.h: New file.
+
 	Tests for module 'unistr/u32-strncat'.
 	* modules/unistr/u32-strncat-tests: New file.
 	* tests/unistr/test-u32-strncat.c: New file.
