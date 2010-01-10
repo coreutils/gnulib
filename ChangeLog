@@ -1,5 +1,10 @@
 2010-01-10  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unistr/u8-strnlen'.
+	* modules/unistr/u8-strnlen-tests: New file.
+	* tests/unistr/test-u8-strnlen.c: New file.
+	* tests/unistr/test-strnlen.h: New file.
+
 	Tests for module 'unistr/u32-strlen'.
 	* modules/unistr/u32-strlen-tests: New file.
 	* tests/unistr/test-u32-strlen.c: New file.
