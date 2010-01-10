@@ -1,5 +1,9 @@
 2010-01-10  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unistr/u16-strmbtouc'.
+	* modules/unistr/u16-strmbtouc-tests: New file.
+	* tests/unistr/test-u16-strmbtouc.c: New file.
+
 	Tests for module 'unistr/u8-strmbtouc'.
 	* modules/unistr/u8-strmbtouc-tests: New file.
 	* tests/unistr/test-u8-strmbtouc.c: New file.
