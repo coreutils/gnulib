@@ -1,5 +1,9 @@
 2010-01-10  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unistr/u32-cmp'.
+	* modules/unistr/u32-cmp-tests: New file.
+	* tests/unistr/test-u32-cmp.c: New file.
+
 	Tests for module 'unistr/u16-cmp'.
 	* modules/unistr/u16-cmp-tests: New file.
 	* tests/unistr/test-u16-cmp.c: New file.
