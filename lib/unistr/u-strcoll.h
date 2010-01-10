@@ -41,6 +41,12 @@ FUNC (const UNIT *s1, const UNIT *s2)
               /* strcoll succeeded.  */
               free (sl1);
               free (sl2);
+              /* The conversion to locale encoding can do transliteration or
+                 map some characters to question marks.  Therefore sl1 and sl2
+                 may be equal when s1 and s2 were in fact different.  Return a
+                 nonzero result in this case.  */
+              if (result == 0)
+                result = U_STRCMP (s1, s2);
             }
           else
             {

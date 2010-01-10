@@ -1,5 +1,11 @@
 2010-01-10  Bruno Haible  <bruno@clisp.org>
 
+	unistr/u*-strcoll: Try harder to distinguish different strings.
+	* lib/unistr/u-strcoll.h (FUNC): When sl1 and sl2 are the same,
+	compare s1 and s2 to see if they are different.
+
+2010-01-10  Bruno Haible  <bruno@clisp.org>
+
 	unistr/u*-stpncpy: Fix the return value.
 	* lib/unistr.h (u8_stpncpy, u16_stpncpy, u32_stpncpy): Make the
 	description of the return value consistent with stpncpy in glibc.
