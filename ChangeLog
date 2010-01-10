@@ -1,5 +1,9 @@
 2010-01-10  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unistr/u32-set'.
+	* modules/unistr/u32-set-tests: New file.
+	* tests/unistr/test-u32-set.c: New file.
+
 	Tests for module 'unistr/u16-set'.
 	* modules/unistr/u16-set-tests: New file.
 	* tests/unistr/test-u16-set.c: New file.
