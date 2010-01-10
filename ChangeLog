@@ -1,5 +1,9 @@
 2010-01-10  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unistr/u16-strlen'.
+	* modules/unistr/u16-strlen-tests: New file.
+	* tests/unistr/test-u16-strlen.c: New file.
+
 	Tests for module 'unistr/u8-strlen'.
 	* modules/unistr/u8-strlen-tests: New file.
 	* tests/unistr/test-u8-strlen.c: New file.
