@@ -1,5 +1,17 @@
 2010-01-10  Bruno Haible  <bruno@clisp.org>
 
+	unistr/u8-mbsnlen: Fix return value for incomplete character.
+	* lib/unistr/u8-mbsnlen.c (u8_mbsnlen): Use u8_mbtoucr instead of
+	u8_mblen.
+	* modules/unistr/u8-mbsnlen (Depends-on): Add unistr/u8-mbtoucr.
+	Remove unistr/u8-mblen.
+	* lib/unistr/u16-mbsnlen.c (u16_mbsnlen): Use u16_mbtoucr instead of
+	u16_mblen.
+	* modules/unistr/u16-mbsnlen (Depends-on): Add unistr/u16-mbtoucr.
+	Remove unistr/u16-mblen.
+
+2010-01-10  Bruno Haible  <bruno@clisp.org>
+
 	wchar: Fix compilation error when <wchar.h> is used from coreutils.
 	* lib/wchar.in.h: Treat __need_wint_t like __need_mbstate_t.
 	Reported by Brian Gough <bjg@gnu.org> and

@@ -28,12 +28,15 @@ u8_mbsnlen (const uint8_t *s, size_t n)
   characters = 0;
   while (n > 0)
     {
-      int count = u8_mblen (s, n);
+      ucs4_t uc;
+      int count = u8_mbtoucr (&uc, s, n);
+      characters++;
+      if (count == -2)
+        break;
       if (count <= 0)
         count = 1;
       s += count;
       n -= count;
-      characters++;
     }
   return characters;
 }

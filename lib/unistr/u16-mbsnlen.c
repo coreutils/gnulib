@@ -28,12 +28,15 @@ u16_mbsnlen (const uint16_t *s, size_t n)
   characters = 0;
   while (n > 0)
     {
-      int count = u16_mblen (s, n);
+      ucs4_t uc;
+      int count = u16_mbtoucr (&uc, s, n);
+      characters++;
+      if (count == -2)
+        break;
       if (count <= 0)
         count = 1;
       s += count;
       n -= count;
-      characters++;
     }
   return characters;
 }
