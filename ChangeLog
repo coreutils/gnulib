@@ -1,5 +1,10 @@
 2010-01-10  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unistr/u8-move'.
+	* modules/unistr/u8-move-tests: New file.
+	* tests/unistr/test-u8-move.c: New file.
+	* tests/unistr/test-move.h: New file.
+
 	Tests for module 'unistr/u32-cpy'.
 	* modules/unistr/u32-cpy-tests: New file.
 	* tests/unistr/test-u32-cpy.c: New file.
