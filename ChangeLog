@@ -1,5 +1,10 @@
 2010-01-10  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unistr/u8-cmp2'.
+	* modules/unistr/u8-cmp2-tests: New file.
+	* tests/unistr/test-u8-cmp2.c: New file.
+	* tests/unistr/test-cmp2.h: New file, based on tests/unistr/test-cmp.h.
+
 	Tests for module 'unistr/u32-cmp'.
 	* modules/unistr/u32-cmp-tests: New file.
 	* tests/unistr/test-u32-cmp.c: New file.
