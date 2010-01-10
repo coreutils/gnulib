@@ -1,5 +1,9 @@
 2010-01-09  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unistr/u32-uctomb'.
+	* modules/unistr/u32-uctomb-tests: New file.
+	* tests/unistr/test-u32-uctomb.c: New file.
+
 	Tests for module 'unistr/u16-uctomb'.
 	* modules/unistr/u16-uctomb-tests: New file.
 	* tests/unistr/test-u16-uctomb.c: New file.
