@@ -18,6 +18,9 @@
 
 #include <config.h>
 
+/* None of the files accessed by this test are large, so disable the
+   ftell link warning if we are not using the gnulib ftell module.  */
+#define _GL_NO_LARGE_FILES
 #include <stdio.h>
 
 #include "signature.h"

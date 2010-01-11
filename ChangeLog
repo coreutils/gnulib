@@ -1,3 +1,9 @@
+2010-01-11  Eric Blake  <ebb9@byu.net>
+
+	tests: avoid more large file warnings
+	* tests/test-fflush.c: Avoid warning about ftell use.
+	* tests/test-fseek.c: Avoid warning about fseek use.
+
 2010-01-10  Bruno Haible  <bruno@clisp.org>
 
 	nproc: Work better on Linux when /proc and /sys are not mounted.
