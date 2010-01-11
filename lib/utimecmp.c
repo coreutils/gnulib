@@ -39,7 +39,7 @@
 # define MAX(a, b) ((a) > (b) ? (a) : (b))
 #endif
 
-enum { BILLION = 1000 * 1000 * 1000 };
+#define BILLION (1000 * 1000 * 1000)
 
 /* Best possible resolution that utimens can set and stat can return,
    due to system-call limitations.  It must be a power of 10 that is

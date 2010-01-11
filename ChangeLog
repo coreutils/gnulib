@@ -1,3 +1,9 @@
+2010-01-11  Jim Meyering  <meyering@redhat.com>
+
+	utimecmp: avoid new warning from upcoming gcc-4.5.0
+	* lib/utimecmp.c (BILLION): Define using #define rather than an
+	anonymous enum, to placate upcoming gcc-4.5.0's -Wenum-compare.
+
 2010-01-11  Eric Blake  <ebb9@byu.net>
 
 	math: add portability warnings for classification macros
