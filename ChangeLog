@@ -1,5 +1,12 @@
 2010-01-10  Bruno Haible  <bruno@clisp.org>
 
+	nproc: Work better on Linux when /proc and /sys are not mounted.
+	* lib/nproc.c (num_processors): Use num_processors_via_affinity_mask ()
+	as lower bound when, on glibc/Linux systems,
+	sysconf (_SC_NPROCESSORS_CONF) returns 1.
+	Suggested by Pádraig Brady <P@draigbrady.com>.
+	Reported by Dmitry V. Levin <ldv@altlinux.org>.
+
 	nproc: Refactor.
 	* lib/nproc.c (num_processors_via_affinity_mask): New function,
 	extracted from num_processors.

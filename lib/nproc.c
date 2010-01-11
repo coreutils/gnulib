@@ -239,7 +239,12 @@ num_processors (enum nproc_query query)
      The first number is the number of CPUs configured in the system.
      The second number is the number of CPUs available to the scheduler.
      The third number is the number of CPUs available to the current process.
-   */
+
+     Note! On Linux systems with glibc, the first and second number come from
+     the /sys and /proc file systems (see
+     glibc/sysdeps/unix/sysv/linux/getsysstats.c).
+     In some situations these file systems are not mounted, and the sysconf
+     call returns 1, which does not reflect the reality.  */
 
   if (query == NPROC_CURRENT)
     {
@@ -266,6 +271,22 @@ num_processors (enum nproc_query query)
       { /* This works on glibc, MacOS X 10.5, FreeBSD, AIX, OSF/1, Solaris,
            Cygwin, Haiku.  */
         long int nprocs = sysconf (_SC_NPROCESSORS_CONF);
+
+# if __GLIBC__ >= 2 && defined __linux__
+        /* On Linux systems with glibc, this information comes from the /sys and
+           /proc file systems (see glibc/sysdeps/unix/sysv/linux/getsysstats.c).
+           In some situations these file systems are not mounted, and the
+           sysconf call returns 1.  But we wish to guarantee that
+           num_processors (NPROC_ALL) >= num_processors (NPROC_CURRENT).  */
+        if (nprocs == 1)
+          {
+            unsigned long nprocs_current = num_processors_via_affinity_mask ();
+
+            if (nprocs_current > 0)
+              nprocs = nprocs_current;
+          }
+# endif
+
         if (nprocs > 0)
           return nprocs;
       }
