@@ -1,6 +1,6 @@
 /* Detect the number of processors.
 
-   Copyright (C) 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2009-2010 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -59,6 +59,144 @@
 
 #define ARRAY_SIZE(a) (sizeof (a) / sizeof ((a)[0]))
 
+/* Return the number of processors available to the current process, based
+   on a modern system call that returns the "affinity" between the current
+   process and each CPU.  Return 0 if unknown or if such a system call does
+   not exist.  */
+static unsigned long
+num_processors_via_affinity_mask (void)
+{
+  /* glibc >= 2.3.3 with NPTL and NetBSD 5 have pthread_getaffinity_np,
+     but with different APIs.  Also it requires linking with -lpthread.
+     Therefore this code is not enabled.
+     glibc >= 2.3.4 has sched_getaffinity whereas NetBSD 5 has
+     sched_getaffinity_np.  */
+#if HAVE_PTHREAD_AFFINITY_NP && defined __GLIBC__ && 0
+  {
+    cpu_set_t set;
+
+    if (pthread_getaffinity_np (pthread_self (), sizeof (set), &set) == 0)
+      {
+        unsigned long count;
+
+# ifdef CPU_COUNT
+        /* glibc >= 2.6 has the CPU_COUNT macro.  */
+        count = CPU_COUNT (&set);
+# else
+        size_t i;
+
+        count = 0;
+        for (i = 0; i < CPU_SETSIZE; i++)
+          if (CPU_ISSET (i, &set))
+            count++;
+# endif
+        if (count > 0)
+          return count;
+      }
+  }
+#elif HAVE_PTHREAD_AFFINITY_NP && defined __NetBSD__ && 0
+  {
+    cpuset_t *set;
+
+    set = cpuset_create ();
+    if (set != NULL)
+      {
+        unsigned long count = 0;
+
+        if (pthread_getaffinity_np (pthread_self (), cpuset_size (set), set)
+            == 0)
+          {
+            cpuid_t i;
+
+            for (i = 0;; i++)
+              {
+                int ret = cpuset_isset (i, set);
+                if (ret < 0)
+                  break;
+                if (ret > 0)
+                  count++;
+              }
+          }
+        cpuset_destroy (set);
+        if (count > 0)
+          return count;
+      }
+  }
+#elif HAVE_SCHED_GETAFFINITY_LIKE_GLIBC /* glibc >= 2.3.4 */
+  {
+    cpu_set_t set;
+
+    if (sched_getaffinity (0, sizeof (set), &set) == 0)
+      {
+        unsigned long count;
+
+# ifdef CPU_COUNT
+        /* glibc >= 2.6 has the CPU_COUNT macro.  */
+        count = CPU_COUNT (&set);
+# else
+        size_t i;
+
+        count = 0;
+        for (i = 0; i < CPU_SETSIZE; i++)
+          if (CPU_ISSET (i, &set))
+            count++;
+# endif
+        if (count > 0)
+          return count;
+      }
+  }
+#elif HAVE_SCHED_GETAFFINITY_NP /* NetBSD >= 5 */
+  {
+    cpuset_t *set;
+
+    set = cpuset_create ();
+    if (set != NULL)
+      {
+        unsigned long count = 0;
+
+        if (sched_getaffinity_np (getpid (), cpuset_size (set), set) == 0)
+          {
+            cpuid_t i;
+
+            for (i = 0;; i++)
+              {
+                int ret = cpuset_isset (i, set);
+                if (ret < 0)
+                  break;
+                if (ret > 0)
+                  count++;
+              }
+          }
+        cpuset_destroy (set);
+        if (count > 0)
+          return count;
+      }
+  }
+#endif
+
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+  { /* This works on native Windows platforms.  */
+    DWORD_PTR process_mask;
+    DWORD_PTR system_mask;
+
+    if (GetProcessAffinityMask (GetCurrentProcess (),
+                                &process_mask, &system_mask))
+      {
+        DWORD_PTR mask = process_mask;
+        unsigned long count = 0;
+
+        for (; mask != 0; mask = mask >> 1)
+          if (mask & 1)
+            count++;
+        if (count > 0)
+          return count;
+      }
+  }
+#endif
+
+  return 0;
+}
+
 unsigned long int
 num_processors (enum nproc_query query)
 {
@@ -94,135 +232,24 @@ num_processors (enum nproc_query query)
     }
   /* Here query is one of NPROC_ALL, NPROC_CURRENT.  */
 
+  /* On systems with a modern affinity mask system call, we have
+         sysconf (_SC_NPROCESSORS_CONF)
+            >= sysconf (_SC_NPROCESSORS_ONLN)
+               >= num_processors_via_affinity_mask ()
+     The first number is the number of CPUs configured in the system.
+     The second number is the number of CPUs available to the scheduler.
+     The third number is the number of CPUs available to the current process.
+   */
+
   if (query == NPROC_CURRENT)
     {
-      /* glibc >= 2.3.3 with NPTL and NetBSD 5 have pthread_getaffinity_np,
-         but with different APIs.  Also it requires linking with -lpthread.
-         Therefore this code is not enabled.
-         glibc >= 2.3.4 has sched_getaffinity whereas NetBSD 5 has
-         sched_getaffinity_np.  */
-#if HAVE_PTHREAD_AFFINITY_NP && defined __GLIBC__ && 0
+      /* Try the modern affinity mask system call.  */
       {
-        cpu_set_t set;
+        unsigned long nprocs = num_processors_via_affinity_mask ();
 
-        if (pthread_getaffinity_np (pthread_self (), sizeof (set), &set) == 0)
-          {
-            unsigned long count;
-
-# ifdef CPU_COUNT
-            /* glibc >= 2.6 has the CPU_COUNT macro.  */
-            count = CPU_COUNT (&set);
-# else
-            size_t i;
-
-            count = 0;
-            for (i = 0; i < CPU_SETSIZE; i++)
-              if (CPU_ISSET (i, &set))
-                count++;
-# endif
-            if (count > 0)
-              return count;
-          }
+        if (nprocs > 0)
+          return nprocs;
       }
-#elif HAVE_PTHREAD_AFFINITY_NP && defined __NetBSD__ && 0
-      {
-        cpuset_t *set;
-
-        set = cpuset_create ();
-        if (set != NULL)
-          {
-            unsigned long count = 0;
-
-            if (pthread_getaffinity_np (pthread_self (), cpuset_size (set), set)
-                == 0)
-              {
-                cpuid_t i;
-
-                for (i = 0;; i++)
-                  {
-                    int ret = cpuset_isset (i, set);
-                    if (ret < 0)
-                      break;
-                    if (ret > 0)
-                      count++;
-                  }
-              }
-            cpuset_destroy (set);
-            if (count > 0)
-              return count;
-          }
-      }
-#elif HAVE_SCHED_GETAFFINITY_LIKE_GLIBC /* glibc >= 2.3.4 */
-      {
-        cpu_set_t set;
-
-        if (sched_getaffinity (0, sizeof (set), &set) == 0)
-          {
-            unsigned long count;
-
-# ifdef CPU_COUNT
-            /* glibc >= 2.6 has the CPU_COUNT macro.  */
-            count = CPU_COUNT (&set);
-# else
-            size_t i;
-
-            count = 0;
-            for (i = 0; i < CPU_SETSIZE; i++)
-              if (CPU_ISSET (i, &set))
-                count++;
-# endif
-            if (count > 0)
-              return count;
-          }
-      }
-#elif HAVE_SCHED_GETAFFINITY_NP /* NetBSD >= 5 */
-      {
-        cpuset_t *set;
-
-        set = cpuset_create ();
-        if (set != NULL)
-          {
-            unsigned long count = 0;
-
-            if (sched_getaffinity_np (getpid (), cpuset_size (set), set) == 0)
-              {
-                cpuid_t i;
-
-                for (i = 0;; i++)
-                  {
-                    int ret = cpuset_isset (i, set);
-                    if (ret < 0)
-                      break;
-                    if (ret > 0)
-                      count++;
-                  }
-              }
-            cpuset_destroy (set);
-            if (count > 0)
-              return count;
-          }
-      }
-#endif
-
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-      { /* This works on native Windows platforms.  */
-        DWORD_PTR process_mask;
-        DWORD_PTR system_mask;
-
-        if (GetProcessAffinityMask (GetCurrentProcess (),
-                                    &process_mask, &system_mask))
-          {
-            DWORD_PTR mask = process_mask;
-            unsigned long count = 0;
-
-            for (; mask != 0; mask = mask >> 1)
-              if (mask & 1)
-                count++;
-            if (count > 0)
-              return count;
-          }
-      }
-#endif
 
 #if defined _SC_NPROCESSORS_ONLN
       { /* This works on glibc, MacOS X 10.5, FreeBSD, AIX, OSF/1, Solaris,
