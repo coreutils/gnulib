@@ -1,5 +1,10 @@
 2010-01-12  Simon Josefsson  <simon@josefsson.org>
 
+	* m4/gc.m4: Check if linking to libgcrypt also needs linking to
+	libgpg-error.
+
+2010-01-12  Simon Josefsson  <simon@josefsson.org>
+
 	* tests/test-xalloc-die.sh: Use $EXEEXT.
 
 2010-01-12  Simon Josefsson  <simon@josefsson.org>
