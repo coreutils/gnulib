@@ -1,3 +1,8 @@
+2010-01-12  Simon Josefsson  <simon@josefsson.org>
+
+	* top/maint.mk (VC_LIST_EXCEPT): Filter list through
+	VC_LIST_ALWAYS_EXCLUDE_REGEX.
+
 2010-01-12  Eric Blake  <ebb9@byu.net>
 
 	build: guarantee AS_VAR_IF

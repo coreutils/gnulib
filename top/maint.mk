@@ -36,9 +36,14 @@ VC-tag = git tag -s -m '$(VERSION)' -u '$(gpg_key_ID)'
 
 VC_LIST = $(build_aux)/vc-list-files -C $(srcdir)
 
+# You can override this variable in cfg.mk to set your own regexp
+# matching files to ignore.
+VC_LIST_ALWAYS_EXCLUDE_REGEX ?= ^$$
+
 VC_LIST_EXCEPT = \
   $(VC_LIST) | if test -f $(srcdir)/.x-$@; then grep -vEf $(srcdir)/.x-$@; \
-	       else grep -Ev "$${VC_LIST_EXCEPT_DEFAULT-ChangeLog}"; fi
+	       else grep -Ev -e "$${VC_LIST_EXCEPT_DEFAULT-ChangeLog}"; fi \
+	| grep -Ev -e '$(VC_LIST_ALWAYS_EXCLUDE_REGEX)'
 
 ifeq ($(origin prev_version_file), undefined)
   prev_version_file = $(srcdir)/.prev-version
