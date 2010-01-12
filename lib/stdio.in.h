@@ -297,7 +297,7 @@ _GL_WARN_ON_USE (fseek, "fseek cannot handle files larger than 4 GB "
 #  define _GL_FTELL_WARN /* Category 2, above.  */
 #  undef ftell
 # endif
-# if && @REPLACE_FTELL@
+# if @REPLACE_FTELL@
 #  undef ftell
 #  define ftell rpl_ftell
 extern long ftell (FILE *fp) _GL_ARG_NONNULL ((1));

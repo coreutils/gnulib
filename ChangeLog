@@ -1,5 +1,9 @@
 2010-01-12  Simon Josefsson  <simon@josefsson.org>
 
+	* lib/stdio.in.h: Fix typo.
+
+2010-01-12  Simon Josefsson  <simon@josefsson.org>
+
 	* m4/gc.m4: Check if linking to libgcrypt also needs linking to
 	libgpg-error.
 
