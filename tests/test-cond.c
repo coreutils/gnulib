@@ -201,6 +201,7 @@ main ()
 int
 main ()
 {
+  fputs ("Skipping test: multithreading not enabled\n", stderr);
   return 77;
 }
 

@@ -1,3 +1,7 @@
+2010-01-12  Bruno Haible  <bruno@clisp.org>
+
+	* tests/test-cond.c (main): When skipping the test, show the reason.
+
 2010-01-12  Simon Josefsson  <simon@josefsson.org>
 
 	* lib/striconv.c (str_cd_iconv): Avoid if before free.
