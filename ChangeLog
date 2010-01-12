@@ -1,4 +1,8 @@
 2010-01-12  Simon Josefsson  <simon@josefsson.org>
+
+	* tests/test-xalloc-die.sh: Use $EXEEXT.
+
+2010-01-12  Simon Josefsson  <simon@josefsson.org>
             Bruno Haible  <bruno@clisp.org>
 
 	getlogin, getlogin_r: Avoid test failure.
