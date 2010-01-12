@@ -233,8 +233,7 @@ str_cd_iconv (const char *src, iconv_t cd)
     (result != NULL ? realloc (result, length + 1) : malloc (length + 1));
   if (final_result == NULL)
     {
-      if (result != NULL)
-        free (result);
+      free (result);
       errno = ENOMEM;
       return NULL;
     }

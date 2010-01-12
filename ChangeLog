@@ -1,5 +1,9 @@
 2010-01-12  Simon Josefsson  <simon@josefsson.org>
 
+	* lib/striconv.c (str_cd_iconv): Avoid if before free.
+
+2010-01-12  Simon Josefsson  <simon@josefsson.org>
+
 	* top/maint.mk (VC_LIST_EXCEPT): Filter list through
 	VC_LIST_ALWAYS_EXCLUDE_REGEX.
 
