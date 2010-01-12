@@ -1,5 +1,12 @@
 2010-01-12  Bruno Haible  <bruno@clisp.org>
 
+	posix_spawn: Avoid test failure on Cygwin.
+	* tests/test-posix_spawn3.c (DATA_FILENAME) [CYGWIN]: Use less risky
+	characters.
+	Reported by Simon Josefsson.
+
+2010-01-12  Bruno Haible  <bruno@clisp.org>
+
 	* tests/test-cond.c (main): When skipping the test, show the reason.
 
 2010-01-12  Simon Josefsson  <simon@josefsson.org>
