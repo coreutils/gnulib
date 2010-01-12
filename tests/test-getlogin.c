@@ -23,6 +23,7 @@
 #include "signature.h"
 SIGNATURE_CHECK (getlogin, char *, (void));
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -35,7 +36,13 @@ main (void)
 
   /* Test value.  */
   buf = getlogin ();
-  ASSERT (buf != NULL);
+  if (buf == NULL)
+    {
+      /* getlogin() fails when stdin is not connected to a tty.  */
+      ASSERT (! isatty (0));
+      fprintf (stderr, "Skipping test: stdin is not a tty.\n");
+      return 77;
+    }
 
   /* Compare against the value from the environment.  */
 #if !((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__)

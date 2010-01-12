@@ -24,6 +24,7 @@
 SIGNATURE_CHECK (getlogin_r, int, (char *, size_t));
 
 #include <errno.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -35,7 +36,13 @@ main (void)
   /* Test with a large enough buffer.  */
   char buf[1024];
 
-  ASSERT (getlogin_r (buf, sizeof (buf)) == 0);
+  if (getlogin_r (buf, sizeof (buf)) != 0)
+    {
+      /* getlogin_r() fails when stdin is not connected to a tty.  */
+      ASSERT (! isatty (0));
+      fprintf (stderr, "Skipping test: stdin is not a tty.\n");
+      return 77;
+    }
 
   /* Compare against the value from the environment.  */
 #if !((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__)

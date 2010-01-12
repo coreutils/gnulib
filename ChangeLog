@@ -1,3 +1,14 @@
+2010-01-12  Simon Josefsson  <simon@josefsson.org>
+            Bruno Haible  <bruno@clisp.org>
+
+	getlogin, getlogin_r: Avoid test failure.
+	* tests/test-getlogin.c: Include <stdio.h>.
+	(main): Skip the test when the function fails because stdin is not a
+	tty.
+	* tests/test-getlogin_r.c: Include <stdio.h>.
+	(main): Skip the test when the function fails because stdin is not a
+	tty.
+
 2010-01-11  Eric Blake  <ebb9@byu.net>
 
 	tests: avoid more large file warnings
