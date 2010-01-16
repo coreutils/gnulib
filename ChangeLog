@@ -1,3 +1,9 @@
+2010-01-16  Jim Meyering  <meyering@redhat.com>
+
+	doc: update users.txt
+	* users.txt: Add grep.
+	(diffutils, gzip): Update URLs.
+
 2010-01-12  Bruno Haible  <bruno@clisp.org>
 
 	posix_spawn: Avoid test failure on Cygwin.

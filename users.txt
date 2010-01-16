@@ -10,7 +10,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   coreutils       http://git.sv.gnu.org/gitweb/?p=coreutils.git
   cpio            http://cvs.sv.gnu.org/viewcvs/cpio/cpio/
   cvs             http://cvs.sv.gnu.org/viewcvs/cvs/ccvs/
-  diffutils       http://cvs.sv.gnu.org/viewcvs/diffutils/diffutils/
+  diffutils       http://git.sv.gnu.org/cgit/diffutils.git/
   findutils       http://cvs.sv.gnu.org/viewcvs/findutils/findutils/
   gettext         http://cvs.sv.gnu.org/viewcvs/gettext/gettext/
   gnuit           http://www.gnu.org/software/gnuit/
@@ -22,8 +22,9 @@ The following packages appear to be using gnulib and gnulib-tool:
   gsasl           http://git.sv.gnu.org/gitweb/?p=gsasl.git
   gss             http://git.sv.gnu.org/gitweb/?p=gss.git
   gtk-vnc         http://gtk-vnc.codemonkey.ws/hg/outgoing.hg
+  grep            http://git.sv.gnu.org/cgit/grep.git/
   guile           http://cvs.sv.gnu.org/viewvc/guile/guile/guile-core/
-  gzip            http://cvs.sv.gnu.org/viewcvs/gzip/gzip/
+  gzip            http://git.sv.gnu.org/cgit/gzip.git/
   hello           http://cvs.sv.gnu.org/viewcvs/hello/hello/
   icoutils        http://riva.ucam.org/svn/cjwatson/src/debian/icoutils/trunk/icoutils/
   inetutils       http://cvs.sv.gnu.org/viewcvs/inetutils/inetutils/
