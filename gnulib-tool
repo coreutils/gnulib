@@ -1999,16 +1999,16 @@ func_emit_lib_Makefile_am ()
             echo "${libname}_${libext}_LIBADD += @${perhapsLT}ALLOCA@"
             echo "${libname}_${libext}_DEPENDENCIES += @${perhapsLT}ALLOCA@"
           fi
-        } > amsnippet.tmp
+        } > "$tmp"/amsnippet
         # Skip the contents if it's entirely empty.
-        if grep '[^	 ]' amsnippet.tmp > /dev/null ; then
+        if grep '[^	 ]' "$tmp"/amsnippet > /dev/null ; then
           echo "## begin gnulib module $module"
           echo
-          cat amsnippet.tmp
+          cat "$tmp"/amsnippet
           echo "## end   gnulib module $module"
           echo
         fi
-        rm -f amsnippet.tmp
+        rm -f "$tmp"/amsnippet
         # Test whether there are some source files in subdirectories.
         for f in `func_get_filelist "$module"`; do
           case $f in
@@ -2020,7 +2020,7 @@ func_emit_lib_Makefile_am ()
         done
       fi
     done
-  } > allsnippets.tmp
+  } > "$tmp"/allsnippets
   if test -z "$makefile_name"; then
     # If there are source files in subdirectories, prevent collision of the
     # object files (example: hash.c and libxml/hash.c).
@@ -2038,7 +2038,7 @@ func_emit_lib_Makefile_am ()
     echo "noinst_LTLIBRARIES ="
     # Automake versions < 1.9b create an empty pkgdatadir at installation time
     # if you specify pkgdata_DATA to empty. This is a workaround.
-    if grep '^pkgdata_DATA *+=' allsnippets.tmp > /dev/null; then
+    if grep '^pkgdata_DATA *+=' "$tmp"/allsnippets > /dev/null; then
       echo "pkgdata_DATA ="
     fi
     echo "EXTRA_DIST ="
@@ -2072,7 +2072,7 @@ func_emit_lib_Makefile_am ()
     echo "AM_CFLAGS ="
   fi
   echo
-  if LC_ALL=C grep "^[a-zA-Z0-9_]*_${perhapsLT}LIBRARIES *+\{0,1\}= *$libname\\.$libext\$" allsnippets.tmp > /dev/null \
+  if LC_ALL=C grep "^[a-zA-Z0-9_]*_${perhapsLT}LIBRARIES *+\{0,1\}= *$libname\\.$libext\$" "$tmp"/allsnippets > /dev/null \
      || { test -n "$makefile_name" \
           && test -f "$sourcebase/Makefile.am" \
           && LC_ALL=C grep "^[a-zA-Z0-9_]*_${perhapsLT}LIBRARIES *+\{0,1\}= *$libname\\.$libext\$" "$sourcebase/Makefile.am" > /dev/null; \
@@ -2100,7 +2100,7 @@ func_emit_lib_Makefile_am ()
     echo "AM_CPPFLAGS += -DDEFAULT_TEXT_DOMAIN=\\\"${po_domain}-gnulib\\\""
     echo
   fi
-  cat allsnippets.tmp \
+  cat "$tmp"/allsnippets \
     | sed -e 's|\$(top_srcdir)/build-aux/|$(top_srcdir)/'"$auxdir"'/|g'
   echo
   echo "mostlyclean-local: mostlyclean-generic"
@@ -2110,7 +2110,7 @@ func_emit_lib_Makefile_am ()
   echo "	  fi; \\"
   echo "	done; \\"
   echo "	:"
-  rm -f allsnippets.tmp
+  rm -f "$tmp"/allsnippets
 }
 
 # func_emit_po_Makevars
@@ -2255,16 +2255,16 @@ func_emit_tests_Makefile_am ()
             echo "libtests_a_LIBADD += @${perhapsLT}ALLOCA@"
             echo "libtests_a_DEPENDENCIES += @${perhapsLT}ALLOCA@"
           fi
-        } > amsnippet.tmp
+        } > "$tmp"/amsnippet
         # Skip the contents if it's entirely empty.
-        if grep '[^	 ]' amsnippet.tmp > /dev/null ; then
+        if grep '[^	 ]' "$tmp"/amsnippet > /dev/null ; then
           echo "## begin gnulib module $module"
           echo
-          cat amsnippet.tmp
+          cat "$tmp"/amsnippet
           echo "## end   gnulib module $module"
           echo
         fi
-        rm -f amsnippet.tmp
+        rm -f "$tmp"/amsnippet
         # Test whether there are some source files in subdirectories.
         for f in `func_get_filelist "$module"`; do
           case $f in
@@ -2276,7 +2276,7 @@ func_emit_tests_Makefile_am ()
         done
       fi
     done
-  } > allsnippets.tmp
+  } > "$tmp"/allsnippets
   # Generate dependencies here, since it eases the debugging of test failures.
   # If there are source files in subdirectories, prevent collision of the
   # object files (example: hash.c and libxml/hash.c).
@@ -2312,7 +2312,7 @@ func_emit_tests_Makefile_am ()
   fi
   # Automake versions < 1.9b create an empty pkgdatadir at installation time
   # if you specify pkgdata_DATA to empty. This is a workaround.
-  if grep '^pkgdata_DATA *+=' allsnippets.tmp > /dev/null; then
+  if grep '^pkgdata_DATA *+=' "$tmp"/allsnippets > /dev/null; then
     echo "pkgdata_DATA ="
   fi
   echo "EXTRA_DIST ="
@@ -2370,7 +2370,7 @@ func_emit_tests_Makefile_am ()
     echo "AM_LIBTOOLFLAGS = --preserve-dup-deps"
     echo
   fi
-  cat allsnippets.tmp \
+  cat "$tmp"/allsnippets \
     | sed -e 's|\$(top_srcdir)/build-aux/|$(top_srcdir)/'"$auxdir"'/|g'
   echo "# Clean up after Solaris cc."
   echo "clean-local:"
@@ -2383,7 +2383,7 @@ func_emit_tests_Makefile_am ()
   echo "	  fi; \\"
   echo "	done; \\"
   echo "	:"
-  rm -f allsnippets.tmp
+  rm -f "$tmp"/allsnippets
 }
 
 # func_emit_initmacro_start macro_prefix

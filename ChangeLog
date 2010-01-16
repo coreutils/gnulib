@@ -1,3 +1,11 @@
+2010-01-17  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	gnulib-tool: avoid writing in the current directory.
+	* gnulib-tool (func_emit_lib_Makefile_am)
+	(func_emit_tests_Makefile_am): Put temporary files in $tmp,
+	not in the current directory, so concurrent gnulib-tool
+	instances do not interfere.
+
 2010-01-16  Jim Meyering  <meyering@redhat.com>
 
 	doc: update users.txt
