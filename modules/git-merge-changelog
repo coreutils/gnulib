@@ -28,7 +28,7 @@ configure.ac:
 
 Makefile.am:
 bin_PROGRAMS = git-merge-changelog
-git_merge_changelog_LDADD = libgnu.a @LIBINTL@
+git_merge_changelog_LDADD = libgnu.a @LIBINTL@ $(LIBTHREAD)
 
 Include:
 

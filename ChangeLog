@@ -1,5 +1,10 @@
 2010-01-17  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
+	Fix a couple of missing LIBTHREAD link failures on AIX.
+	* modules/git-merge-changelog (git_merge_changelog_LDADD): Add
+	$(LIBTHREAD).
+	* modules/strsignal-tests (test_strsignal_LDADD): Likewise.
+
 	Link test-poll against INET_PTON_LIB.
 	* modules/poll-tests (test_poll_LDADD): Add $(INET_PTON_LIB),
 	for inet_pton on Solaris 10.

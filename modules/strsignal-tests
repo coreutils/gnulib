@@ -10,4 +10,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-strsignal
 check_PROGRAMS += test-strsignal
-test_strsignal_LDADD = $(LDADD) @LIBINTL@
+test_strsignal_LDADD = $(LDADD) @LIBINTL@ $(LIBTHREAD)
