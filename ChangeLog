@@ -1,3 +1,15 @@
+2010-01-17  Bruno Haible  <bruno@clisp.org>
+
+	unistdio/*-sprintf: Fix typo in module description.
+	* modules/unistdio/u8-sprintf (Depends-on): Fix typo.
+	* modules/unistdio/u8-u8-sprintf (Depends-on): Likewise.
+	* modules/unistdio/u16-sprintf (Depends-on): Likewise.
+	* modules/unistdio/u16-u16-sprintf (Depends-on): Likewise.
+	* modules/unistdio/u32-sprintf (Depends-on): Likewise.
+	* modules/unistdio/u32-u32-sprintf (Depends-on): Likewise.
+	* modules/unistdio/ulc-sprintf (Depends-on): Likewise.
+	Reported by Ralf Wildenhues <Ralf.Wildenhues@gmx.de>.
+
 2010-01-17  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	gnulib-tool: fix filelist for AIX, HP-UX ksh.

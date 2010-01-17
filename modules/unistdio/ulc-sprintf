@@ -7,7 +7,7 @@ lib/unistdio/u-sprintf.h
 
 Depends-on:
 unistdio/base
-unistdio/ulc-sprintf
+unistdio/ulc-vsprintf
 
 configure.ac:
 
