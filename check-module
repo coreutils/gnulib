@@ -228,10 +228,6 @@ my %exempt_header =
    'lib/gc-gnulib.c:rijndael-api-fst.h' => 1,
    'lib/gc-gnulib.c:hmac.h' => 1,
    'lib/gc-libgcrypt.c:md2.h' => 1,
-
-   # The fts-lgpl module doesn't actually use fts-cycle.c and unistd-safer.h.
-   'lib/fts.c:fts-cycle.c' => 1,
-   'lib/fts.c:unistd-safer.h' => 1,
   );
 
 sub check_module ($)

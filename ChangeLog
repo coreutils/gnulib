@@ -1,3 +1,11 @@
+2010-03-02  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	fts-lgpl: remove unused module
+	* modules/fts-lgpl: Remove.
+	* MODULES.html.sh (func_all_modules): Adjust.
+	* check-module (find_included_lib_files): Adjust.
+	* m4/fts.m4 (gl_FUNC_FTS_LGPL): Remove.
+
 2010-03-02  Ben Walton  <bwalton@artsci.utoronto.ca>  (tiny change)
 
 	copy-acl: enhance Solaris ACL error handling

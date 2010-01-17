@@ -2478,7 +2478,6 @@ func_all_modules ()
   func_module filenamecat
   func_module filenamecat-lgpl
   func_module fts
-  func_module fts-lgpl
   func_module isdir
   func_module lchmod
   func_module lchown
