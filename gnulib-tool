@@ -1428,6 +1428,7 @@ func_get_filelist ()
 # elements starting with prefix and ending with suffix are considered.
 # Processing: removed_prefix and removed_suffix are removed from each element,
 # added_prefix and added_suffix are added to each element.
+# prefix, suffix should not contain shell-special characters.
 # removed_prefix, removed_suffix should not contain the characters "$`\{}[]^|.
 # added_prefix, added_suffix should not contain the characters \|&.
 func_filter_filelist ()
@@ -1439,8 +1440,10 @@ func_filter_filelist ()
         }; then
     ffflist=
     for fff in $3; do
+      # Do not quote possibly-empty parameters in case patterns,
+      # AIX and HP-UX ksh won't match them if they are empty.
       case "$fff" in
-        "$4"*"$5")
+        $4*$5)
           if test -n "$6"; then
             func_remove_prefix fff "$6"
           fi
@@ -1460,7 +1463,7 @@ func_filter_filelist ()
     sed_fff_filter="s|^$6\(.*\)$7\$|$8\\1$9|"
     ffflist=`for fff in $3; do
                case "$fff" in
-                 "$4"*"$5") echo "$fff" ;;
+                 $4*$5) echo "$fff" ;;
                esac
              done | sed -e "$sed_fff_filter"`
   fi

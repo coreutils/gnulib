@@ -1,5 +1,9 @@
 2010-01-17  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
+	gnulib-tool: fix filelist for AIX, HP-UX ksh.
+	* gnulib-tool (func_filter_filelist): Do not quote possibly-empty
+	variables in shell case patterns, for AIX and HP-UX ksh.
+
 	Split large sed scripts, for HP-UX sed.
 	* modules/stdio: Split sed scripts around 50 sed commands,
 	to avoid HP-UX limit of 99 commands, in the near future.
