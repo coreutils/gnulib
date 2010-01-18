@@ -197,5 +197,7 @@ readtokens (FILE *stream,
   *tokens_out = tokens;
   if (token_lengths != NULL)
     *token_lengths = lengths;
+  else
+    free (lengths);
   return n_tokens;
 }

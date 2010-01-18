@@ -1,3 +1,9 @@
+2010-01-18  Jim Meyering  <meyering@redhat.com>
+
+	readtokens: do not leak internal token_lengths buffer
+	* lib/readtokens.c (readtokens): Free the local, lengths,
+	when the supplied "token_lengths" parameter is NULL.
+
 2010-01-17  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	Fix a couple of missing LIBTHREAD link failures on AIX.
