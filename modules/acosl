@@ -1,0 +1,30 @@
+Description:
+acosl() function: inverse cosine function with long double argument.
+
+Files:
+lib/acosl.c
+m4/acosl.m4
+
+Depends-on:
+math
+extensions
+asinl
+sqrtl
+
+configure.ac:
+gl_FUNC_ACOSL
+gl_MATH_MODULE_INDICATOR([acosl])
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(ACOSL_LIBM)
+
+License:
+GPL
+
+Maintainer:
+Paolo Bonzini

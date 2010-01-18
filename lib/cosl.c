@@ -50,10 +50,6 @@
  */
 
 #include "trigl.h"
-#ifdef HAVE_SINL
-#include "trigl.c"
-#include "sincosl.c"
-#endif
 
 long double cosl(long double x)
 {

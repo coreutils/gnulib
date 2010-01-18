@@ -1,5 +1,5 @@
 /* Quad-precision floating point trigonometric functions on <-pi/4,pi/4>.
-   Copyright (C) 1999, 2006, 2007, 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 1999, 2006, 2007, 2009-2010 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
    Contributed by Jakub Jelinek <jj@ultra.linux.cz>
 
@@ -19,9 +19,10 @@
 #include <config.h>
 
 /* Specification.  */
-#include <math.h>
+#include "trigl.h"
 
 #include <float.h>
+#include <math.h>
 
 static const long double sin_c[] = {
 #define ONE sin_c[0]

@@ -1,5 +1,52 @@
 2010-01-18  Bruno Haible  <bruno@clisp.org>
 
+	New modules acosl, asinl, atanl, cosl, expl, logl, sinl, sqrtl, tanl.
+	* lib/math.in.h (acosl, asinl, atanl, cosl, expl, logl, sinl, sqrtl,
+	tanl): Use the standard gnulib idiom.
+	* lib/cosl.c: Don't include trigl.c and sincosl.c.
+	* lib/sinl.c: Likewise.
+	* lib/tanl.c: Don't include trigl.c.
+	(kernel_tanl): Make static.
+	* lib/sincosl.c: Include trig.h first.
+	* lib/trigl.c: Likewise.
+	* m4/acosl.m4: New file.
+	* m4/asinl.m4: New file.
+	* m4/atanl.m4: New file.
+	* m4/cosl.m4: New file.
+	* m4/expl.m4: New file.
+	* m4/logl.m4: New file.
+	* m4/sinl.m4: New file.
+	* m4/sqrtl.m4: New file.
+	* m4/tanl.m4: New file.
+	* m4/mathl.m4: Remove file.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize GNULIB_* and HAVE_*
+	variables for acosl, asinl, atanl, cosl, expl, logl, sinl, sqrtl, tanl.
+	Don't initialize GNULIB_MATHL.
+	* modules/acosl: New file.
+	* modules/asinl: New file.
+	* modules/atanl: New file.
+	* modules/cosl: New file.
+	* modules/expl: New file.
+	* modules/logl: New file.
+	* modules/sinl: New file.
+	* modules/sqrtl: New file.
+	* modules/tanl: New file.
+	* modules/math (Makefile.am): Substitute GNULIB_* and HAVE_* variables
+	for acosl, asinl, atanl, cosl, expl, logl, sinl, sqrtl, tanl. Don't
+	substitute GNULIB_MATHL.
+	* modules/mathl: Rewritten.
+	* doc/posix-functions/acosl.texi: Mention the 'acosl' module.
+	* doc/posix-functions/asinl.texi: Mention the 'asinl' module.
+	* doc/posix-functions/atanl.texi: Mention the 'atanl' module.
+	* doc/posix-functions/cosl.texi: Mention the 'cosl' module.
+	* doc/posix-functions/expl.texi: Mention the 'expl' module.
+	* doc/posix-functions/logl.texi: Mention the 'logl' module.
+	* doc/posix-functions/sinl.texi: Mention the 'sinl' module.
+	* doc/posix-functions/sqrtl.texi: Mention the 'sqrtl' module.
+	* doc/posix-functions/tanl.texi: Mention the 'tanl' module.
+
+2010-01-18  Bruno Haible  <bruno@clisp.org>
+
 	sqrt: Make gl_FUNC_SQRT requirable.
 	* m4/sqrt.m4: New file.
 	* modules/sqrt (Files): Add it.

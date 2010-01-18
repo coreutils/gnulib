@@ -1,5 +1,5 @@
 /* Quad-precision floating point argument reduction.
-   Copyright (C) 1999, 2007, 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 1999, 2007, 2009-2010 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
    Contributed by Jakub Jelinek <jj@ultra.linux.cz>
 
@@ -19,9 +19,10 @@
 #include <config.h>
 
 /* Specification.  */
-#include <math.h>
+#include "trigl.h"
 
 #include <float.h>
+#include <math.h>
 
 /* Table of constants for 2/pi, 5628 hexadecimal digits of 2/pi */
 static const int two_over_pi[] = {

@@ -50,11 +50,6 @@
  */
 
 #include "trigl.h"
-#ifdef HAVE_SINL
-#ifdef HAVE_COSL
-#include "trigl.c"
-#endif
-#endif
 
 /*
  * ====================================================
@@ -120,7 +115,7 @@ static const long double
   /* 1.000000000000000000000000000000000000000E0 */
 
 
-long double
+static long double
 kernel_tanl (long double x, long double y, int iy)
 {
   long double z, r, v, w, s, u, u1;

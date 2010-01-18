@@ -1,0 +1,34 @@
+Description:
+tanl() function: tangent function with long double argument.
+
+Files:
+lib/tanl.c
+lib/trigl.h
+lib/trigl.c
+m4/tanl.m4
+
+Depends-on:
+math
+extensions
+float
+isnanl
+floor
+floorl
+
+configure.ac:
+gl_FUNC_TANL
+gl_MATH_MODULE_INDICATOR([tanl])
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(TANL_LIBM)
+
+License:
+GPL
+
+Maintainer:
+Paolo Bonzini

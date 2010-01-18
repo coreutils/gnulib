@@ -50,8 +50,6 @@
  */
 
 #include "trigl.h"
-#include "trigl.c"
-#include "sincosl.c"
 
 long double
 sinl (long double x)

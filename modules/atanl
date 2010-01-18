@@ -1,0 +1,29 @@
+Description:
+atanl() function: inverse tangent function with long double argument.
+
+Files:
+lib/atanl.c
+m4/atanl.m4
+
+Depends-on:
+math
+extensions
+isnanl
+
+configure.ac:
+gl_FUNC_ATANL
+gl_MATH_MODULE_INDICATOR([atanl])
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(ATANL_LIBM)
+
+License:
+GPL
+
+Maintainer:
+Paolo Bonzini

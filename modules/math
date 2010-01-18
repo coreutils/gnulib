@@ -25,8 +25,13 @@ math.h: math.in.h $(LINK_WARNING_H) $(WARN_ON_USE_H) $(ARG_NONNULL_H)
 	  sed -e 's|@''INCLUDE_NEXT_AS_FIRST_DIRECTIVE''@|$(INCLUDE_NEXT_AS_FIRST_DIRECTIVE)|g' \
 	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
 	      -e 's|@''NEXT_AS_FIRST_DIRECTIVE_MATH_H''@|$(NEXT_AS_FIRST_DIRECTIVE_MATH_H)|g' \
+	      -e 's|@''GNULIB_ACOSL''@|$(GNULIB_ACOSL)|g' \
+	      -e 's|@''GNULIB_ASINL''@|$(GNULIB_ASINL)|g' \
+	      -e 's|@''GNULIB_ATANL''@|$(GNULIB_ATANL)|g' \
 	      -e 's|@''GNULIB_CEILF''@|$(GNULIB_CEILF)|g' \
 	      -e 's|@''GNULIB_CEILL''@|$(GNULIB_CEILL)|g' \
+	      -e 's|@''GNULIB_COSL''@|$(GNULIB_COSL)|g' \
+	      -e 's|@''GNULIB_EXPL''@|$(GNULIB_EXPL)|g' \
 	      -e 's|@''GNULIB_FLOORF''@|$(GNULIB_FLOORF)|g' \
 	      -e 's|@''GNULIB_FLOORL''@|$(GNULIB_FLOORL)|g' \
 	      -e 's|@''GNULIB_FREXP''@|$(GNULIB_FREXP)|g' \
@@ -38,17 +43,29 @@ math.h: math.in.h $(LINK_WARNING_H) $(WARN_ON_USE_H) $(ARG_NONNULL_H)
 	      -e 's|@''GNULIB_ISNAND''@|$(GNULIB_ISNAND)|g' \
 	      -e 's|@''GNULIB_ISNANL''@|$(GNULIB_ISNANL)|g' \
 	      -e 's|@''GNULIB_LDEXPL''@|$(GNULIB_LDEXPL)|g' \
-	      -e 's|@''GNULIB_MATHL''@|$(GNULIB_MATHL)|g' \
+	      -e 's|@''GNULIB_LOGL''@|$(GNULIB_LOGL)|g' \
 	      -e 's|@''GNULIB_ROUND''@|$(GNULIB_ROUND)|g' \
 	      -e 's|@''GNULIB_ROUNDF''@|$(GNULIB_ROUNDF)|g' \
 	      -e 's|@''GNULIB_ROUNDL''@|$(GNULIB_ROUNDL)|g' \
 	      -e 's|@''GNULIB_SIGNBIT''@|$(GNULIB_SIGNBIT)|g' \
+	      -e 's|@''GNULIB_SINL''@|$(GNULIB_SINL)|g' \
+	      -e 's|@''GNULIB_SQRTL''@|$(GNULIB_SQRTL)|g' \
+	      -e 's|@''GNULIB_TANL''@|$(GNULIB_TANL)|g' \
 	      -e 's|@''GNULIB_TRUNC''@|$(GNULIB_TRUNC)|g' \
 	      -e 's|@''GNULIB_TRUNCF''@|$(GNULIB_TRUNCF)|g' \
 	      -e 's|@''GNULIB_TRUNCL''@|$(GNULIB_TRUNCL)|g' \
+	      -e 's|@''HAVE_ACOSL''@|$(HAVE_ACOSL)|g' \
+	      -e 's|@''HAVE_ASINL''@|$(HAVE_ASINL)|g' \
+	      -e 's|@''HAVE_ATANL''@|$(HAVE_ATANL)|g' \
+	      -e 's|@''HAVE_COSL''@|$(HAVE_COSL)|g' \
+	      -e 's|@''HAVE_EXPL''@|$(HAVE_EXPL)|g' \
 	      -e 's|@''HAVE_ISNANF''@|$(HAVE_ISNANF)|g' \
 	      -e 's|@''HAVE_ISNAND''@|$(HAVE_ISNAND)|g' \
 	      -e 's|@''HAVE_ISNANL''@|$(HAVE_ISNANL)|g' \
+	      -e 's|@''HAVE_LOGL''@|$(HAVE_LOGL)|g' \
+	      -e 's|@''HAVE_SINL''@|$(HAVE_SINL)|g' \
+	      -e 's|@''HAVE_SQRTL''@|$(HAVE_SQRTL)|g' \
+	      -e 's|@''HAVE_TANL''@|$(HAVE_TANL)|g' \
 	      -e 's|@''HAVE_DECL_ACOSL''@|$(HAVE_DECL_ACOSL)|g' \
 	      -e 's|@''HAVE_DECL_ASINL''@|$(HAVE_DECL_ASINL)|g' \
 	      -e 's|@''HAVE_DECL_ATANL''@|$(HAVE_DECL_ATANL)|g' \

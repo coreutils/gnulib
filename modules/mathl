@@ -2,35 +2,35 @@ Description:
 C99 functions for transcendental functions with long double arguments.
 
 Files:
-lib/acosl.c
-lib/asinl.c
-lib/atanl.c
-lib/cosl.c
-lib/expl.c
-lib/logl.c
-lib/sincosl.c
-lib/sinl.c
-lib/sqrtl.c
-lib/tanl.c
-lib/trigl.c
-lib/trigl.h
-m4/mathl.m4
 
 Depends-on:
-float
-math
-frexpl
-isnanl
-ldexpl
 floorl
 ceill
+acosl
+asinl
+atanl
+cosl
+expl
+logl
+sinl
+sqrtl
+tanl
 
 configure.ac:
-gl_FUNC_LONG_DOUBLE_MATH
-gl_MATH_MODULE_INDICATOR([mathl])
+AC_REQUIRE([gl_FUNC_FLOORL])
+AC_REQUIRE([gl_FUNC_CEILL])
+AC_REQUIRE([gl_FUNC_ACOSL])
+AC_REQUIRE([gl_FUNC_ASINL])
+AC_REQUIRE([gl_FUNC_ATANL])
+AC_REQUIRE([gl_FUNC_COSL])
+AC_REQUIRE([gl_FUNC_EXPL])
+AC_REQUIRE([gl_FUNC_LOGL])
+AC_REQUIRE([gl_FUNC_SINL])
+AC_REQUIRE([gl_FUNC_SQRTL])
+AC_REQUIRE([gl_FUNC_TANL])
+LIBS="$LIBS $FLOORL_LIBM $CEILL_LIBM $ACOSL_LIBM $ASINL_LIBM $ATANL_LIBM $ACOSL_LIBM $EXPL_LIBM $LOGL_LIBM $SINL_LIBM $SQRTL_LIBM $TANL_LIBM"
 
 Makefile.am:
-noinst_HEADERS += trigl.h trigl.c sincosl.c
 
 Include:
 <math.h>

@@ -1,0 +1,35 @@
+Description:
+sinl() function: sine function with long double argument.
+
+Files:
+lib/sinl.c
+lib/trigl.h
+lib/sincosl.c
+lib/trigl.c
+m4/sinl.m4
+
+Depends-on:
+math
+extensions
+float
+isnanl
+floor
+floorl
+
+configure.ac:
+gl_FUNC_SINL
+gl_MATH_MODULE_INDICATOR([sinl])
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(SINL_LIBM)
+
+License:
+GPL
+
+Maintainer:
+Paolo Bonzini

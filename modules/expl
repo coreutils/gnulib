@@ -1,0 +1,30 @@
+Description:
+expl() function: exponential function with long double argument.
+
+Files:
+lib/expl.c
+m4/expl.m4
+
+Depends-on:
+math
+extensions
+float
+floorl
+
+configure.ac:
+gl_FUNC_EXPL
+gl_MATH_MODULE_INDICATOR([expl])
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(EXPL_LIBM)
+
+License:
+GPL
+
+Maintainer:
+Paolo Bonzini

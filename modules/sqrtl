@@ -1,0 +1,33 @@
+Description:
+sqrtl() function: square root with long double argument.
+
+Files:
+lib/sqrtl.c
+m4/sqrtl.m4
+
+Depends-on:
+math
+extensions
+float
+isnanl
+frexpl
+ldexpl
+sqrt
+
+configure.ac:
+gl_FUNC_SQRTL
+gl_MATH_MODULE_INDICATOR([sqrtl])
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(SQRTL_LIBM)
+
+License:
+GPL
+
+Maintainer:
+Paolo Bonzini
