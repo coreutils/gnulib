@@ -1,5 +1,9 @@
 2010-01-18  Jim Meyering  <meyering@redhat.com>
 
+	getdate: don't leak when TZ contains two or more '"'s
+	* lib/getdate.y (get_date): Don't leak a copy of TZ for each
+	double quote in TZ after the first one.
+
 	readtokens: do not leak internal token_lengths buffer
 	* lib/readtokens.c (readtokens): Free the local, lengths,
 	when the supplied "token_lengths" parameter is NULL.

@@ -1252,6 +1252,8 @@ get_date (struct timespec *result, char const *p, struct timespec const *now)
             char tz1buf[TZBUFSIZE];
             bool large_tz = TZBUFSIZE < tzsize;
             bool setenv_ok;
+            /* Free tz0, in case this is the 2nd or subsequent time through. */
+            free (tz0);
             tz0 = get_tz (tz0buf);
             z = tz1 = large_tz ? xmalloc (tzsize) : tz1buf;
             for (s = tzbase; *s != '"'; s++)
