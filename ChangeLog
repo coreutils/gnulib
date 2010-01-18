@@ -1,5 +1,8 @@
 2010-01-18  Jim Meyering  <meyering@redhat.com>
 
+	ignore-value: relax license to LGPLv2+
+	* modules/ignore-value (License): Relax to LGPLv2+.
+
 	getdate: don't leak when TZ contains two or more '"'s
 	* lib/getdate.y (get_date): Don't leak a copy of TZ for each
 	double quote in TZ after the first one.

@@ -16,7 +16,7 @@ Include:
 <ignore-value.h>
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Jim Meyering
