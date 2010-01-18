@@ -92,8 +92,58 @@ remove_tmp_()
   exit $__st
 }
 
+# Given a directory name, DIR, if every entry in it that matches *.exe
+# contains only the specified bytes (see the case stmt below), then print
+# a space-separated list of those names and return 0.  Otherwise, don't
+# print anything and return 1.  Naming constraints apply also to DIR.
+find_exe_basenames_()
+{
+  feb_dir_=$1
+  feb_fail_=0
+  feb_result_=
+  feb_sp_=
+  for feb_file_ in $feb_dir_/*.exe dummy; do
+    case $feb_file_ in
+      dummy) continue;;
+      *[^-a-zA-Z/0-9_.+]*) feb_fail_=1; break;;
+      *) feb_file_=$(echo $feb_file_ | sed "s,^$feb_dir_/,,;"'s/\.exe$//')
+	 feb_result_="$feb_result_$feb_sp_$feb_file_";;
+    esac
+    feb_sp_=' '
+  done
+  test $feb_fail_ = 0 && printf %s "$feb_result_"
+  return $feb_fail_
+}
+
+# Consider the files in directory, $1.
+# For each file name of the form PROG.exe, create a shim function named
+# PROG that simply invokes PROG.exe, then return 0.  If any selected
+# file name or the directory name, $1, contains an unexpected character,
+# define no function and return 1.
+create_exe_shim_functions_()
+{
+  case $EXEEXT in
+    '') return 0 ;;
+    .exe) ;;
+    *) echo "$0: unexpected \$EXEEXT value: $EXEEXT" 1>&2; return 1 ;;
+  esac
+
+  base_names_=$(find_exe_basenames_ $1) \
+    || { echo "$0 (exe-shim): skipping directory: $1" 1>&2; return 1; }
+
+  if test -n "$base_names_"; then
+    for base_ in $base_names_; do
+      # Create a function named $base whose sole job is to invoke
+      # $base_$EXEEXT, assuming its containing dir is already in PATH.
+      eval "$base_() { $base_$EXEEXT"' "$@"; }'
+    done
+  fi
+
+  return 0
+}
+
 # Use this function to prepend to PATH an absolute name for each
-# specified, possibly-$initial_cwd_relative, directory.
+# specified, possibly-$initial_cwd_-relative, directory.
 path_prepend_()
 {
   while test $# != 0; do
@@ -108,6 +158,9 @@ path_prepend_()
       *:*) fail_ "invalid path dir: '$abs_path_dir_'";;
     esac
     PATH="$abs_path_dir_:$PATH"
+
+    # Create a function FOO for each FOO.exe in this directory.
+    create_exe_shim_functions_ "$abs_path_dir_"
     shift
   done
   export PATH
