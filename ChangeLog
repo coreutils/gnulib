@@ -1,5 +1,9 @@
 2010-01-18  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'tanl'.
+	* modules/tanl-tests: New file.
+	* tests/test-tanl.c: New file.
+
 	Tests for module 'sqrtl'.
 	* modules/sqrtl-tests: New file.
 	* tests/test-sqrtl.c: New file.
