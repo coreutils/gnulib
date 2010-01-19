@@ -1,5 +1,12 @@
 2010-01-19  Bruno Haible  <bruno@clisp.org>
 
+	langinfo, nl_langinfo: Relicense under LGPLv2+.
+	* modules/langinfo (License): Change to LGPLv2+.
+	* modules/nl_langinfo (License): Likewise.
+	Patch by David Lutterkort <lutter@redhat.com>.
+
+2010-01-19  Bruno Haible  <bruno@clisp.org>
+
 	Avoid compilation error with cc on OSF/1 5.1.
 	* lib/fcntl.in.h: Include <unistd.h> after the #include_next <fcntl.h>
 	statement, not before.
