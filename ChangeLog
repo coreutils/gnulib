@@ -1,5 +1,9 @@
 2010-01-18  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'acosl'.
+	* modules/acosl-tests: New file.
+	* tests/test-acosl.c: New file.
+
 	New modules acosl, asinl, atanl, cosl, expl, logl, sinl, sqrtl, tanl.
 	* lib/math.in.h (acosl, asinl, atanl, cosl, expl, logl, sinl, sqrtl,
 	tanl): Use the standard gnulib idiom.
@@ -7,7 +11,7 @@
 	* lib/sinl.c: Likewise.
 	* lib/tanl.c: Don't include trigl.c.
 	(kernel_tanl): Make static.
-	* lib/sincosl.c: Include trig.h first.
+	* lib/sincosl.c: Include trigl.h first.
 	* lib/trigl.c: Likewise.
 	* m4/acosl.m4: New file.
 	* m4/asinl.m4: New file.
