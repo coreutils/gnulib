@@ -1,5 +1,12 @@
 2010-01-18  Bruno Haible  <bruno@clisp.org>
 
+	sqrt: Make gl_FUNC_SQRT requirable.
+	* m4/sqrt.m4: New file.
+	* modules/sqrt (Files): Add it.
+	(configure.ac): Invoke gl_FUNC_SQRT.
+
+2010-01-18  Bruno Haible  <bruno@clisp.org>
+
 	New modules for common <math.h> functions.
 	* m4/mathfunc.m4: New file.
 	* modules/acos: New file.

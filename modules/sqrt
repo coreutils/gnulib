@@ -2,12 +2,13 @@ Description:
 sqrt() function: square root.
 
 Files:
+m4/sqrt.m4
 m4/mathfunc.m4
 
 Depends-on:
 
 configure.ac:
-gl_MATHFUNC([sqrt])
+gl_FUNC_SQRT
 
 Makefile.am:
 
