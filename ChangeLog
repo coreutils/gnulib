@@ -1,5 +1,9 @@
 2010-01-18  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'cosl'.
+	* modules/cosl-tests: New file.
+	* tests/test-cosl.c: New file.
+
 	Tests for module 'atanl'.
 	* modules/atanl-tests: New file.
 	* tests/test-atanl.c: New file.
