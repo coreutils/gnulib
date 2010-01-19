@@ -1,5 +1,19 @@
 2010-01-18  Bruno Haible  <bruno@clisp.org>
 
+	Avoid a link error due to the __printf__ symbol.
+	* lib/stdio.in.h (__attribute__): Define to empty also for gcc 2.5.x
+	and 2.6.x.
+	(__format__, __printf__): Remove definitions.
+	* lib/argp-fmtstream.h: Likewise.
+	* lib/argp.h: Likewise.
+	* lib/error.h: Likewise.
+	* lib/vasnprintf.h: Likewise.
+	* lib/xprintf.h: Likewise.
+	* lib/xvasprintf.h: Likewise.
+	Reported by Ralf Wildenhues <Ralf.Wildenhues@gmx.de>.
+
+2010-01-18  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'tanl'.
 	* modules/tanl-tests: New file.
 	* tests/test-tanl.c: New file.
