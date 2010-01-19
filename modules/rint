@@ -1,0 +1,24 @@
+Description:
+rint() function: round to nearest integer.
+
+Files:
+m4/mathfunc.m4
+
+Depends-on:
+
+configure.ac:
+gl_MATHFUNC([rint])
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(RINT_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible

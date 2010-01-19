@@ -1,0 +1,24 @@
+Description:
+modf() function: get signed integer and fractional parts.
+
+Files:
+m4/mathfunc.m4
+
+Depends-on:
+
+configure.ac:
+gl_MATHFUNC([modf])
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(MODF_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible

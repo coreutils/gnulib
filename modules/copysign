@@ -1,0 +1,24 @@
+Description:
+copysign() function: copy sign.
+
+Files:
+m4/mathfunc.m4
+
+Depends-on:
+
+configure.ac:
+gl_MATHFUNC([copysign])
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(COPYSIGN_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible

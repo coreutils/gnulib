@@ -1,0 +1,24 @@
+Description:
+asin() function: inverse sine function.
+
+Files:
+m4/mathfunc.m4
+
+Depends-on:
+
+configure.ac:
+gl_MATHFUNC([asin])
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(ASIN_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible

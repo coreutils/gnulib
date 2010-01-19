@@ -1,0 +1,24 @@
+Description:
+remainder() function: floating-point remainder function.
+
+Files:
+m4/mathfunc.m4
+
+Depends-on:
+
+configure.ac:
+gl_MATHFUNC([remainder])
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(REMAINDER_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible

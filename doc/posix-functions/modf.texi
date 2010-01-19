@@ -4,7 +4,7 @@
 
 POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/modf.html}
 
-Gnulib module: ---
+Gnulib module: modf
 
 Portability problems fixed by Gnulib:
 @itemize

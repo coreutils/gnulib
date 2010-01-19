@@ -1,0 +1,24 @@
+Description:
+sinh() function: hyperbolic sine function.
+
+Files:
+m4/mathfunc.m4
+
+Depends-on:
+
+configure.ac:
+gl_MATHFUNC([sinh])
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(SINH_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible

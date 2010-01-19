@@ -1,0 +1,24 @@
+Description:
+hypot() function: length of a vector in the plane.
+
+Files:
+m4/mathfunc.m4
+
+Depends-on:
+
+configure.ac:
+gl_MATHFUNC([hypot])
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(HYPOT_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible

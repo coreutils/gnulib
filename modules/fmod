@@ -1,0 +1,24 @@
+Description:
+fmod() function: floating-point remainder function.
+
+Files:
+m4/mathfunc.m4
+
+Depends-on:
+
+configure.ac:
+gl_MATHFUNC([fmod])
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(FMOD_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible

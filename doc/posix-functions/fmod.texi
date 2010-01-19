@@ -4,7 +4,7 @@
 
 POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/fmod.html}
 
-Gnulib module: ---
+Gnulib module: fmod
 
 Portability problems fixed by Gnulib:
 @itemize

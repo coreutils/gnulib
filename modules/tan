@@ -1,0 +1,24 @@
+Description:
+tan() function: tangent function.
+
+Files:
+m4/mathfunc.m4
+
+Depends-on:
+
+configure.ac:
+gl_MATHFUNC([tan])
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(TAN_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible

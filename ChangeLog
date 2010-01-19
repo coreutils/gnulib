@@ -1,3 +1,80 @@
+2010-01-18  Bruno Haible  <bruno@clisp.org>
+
+	New modules for common <math.h> functions.
+	* m4/mathfunc.m4: New file.
+	* modules/acos: New file.
+	* modules/asin: New file.
+	* modules/atan: New file.
+	* modules/atan2: New file.
+	* modules/cbrt: New file.
+	* modules/copysign: New file.
+	* modules/cos: New file.
+	* modules/cosh: New file.
+	* modules/erf: New file.
+	* modules/erfc: New file.
+	* modules/exp: New file.
+	* modules/fabs: New file.
+	* modules/fmod: New file.
+	* modules/hypot: New file.
+	* modules/j0: New file.
+	* modules/j1: New file.
+	* modules/jn: New file.
+	* modules/ldexp: New file.
+	* modules/lgamma: New file.
+	* modules/log: New file.
+	* modules/log10: New file.
+	* modules/log1p: New file.
+	* modules/logb: New file.
+	* modules/modf: New file.
+	* modules/nextafter: New file.
+	* modules/pow: New file.
+	* modules/remainder: New file.
+	* modules/rint: New file.
+	* modules/sin: New file.
+	* modules/sinh: New file.
+	* modules/sqrt: New file.
+	* modules/tan: New file.
+	* modules/tanh: New file.
+	* modules/y0: New file.
+	* modules/y1: New file.
+	* modules/yn: New file.
+	* doc/posix-functions/acos.texi: Mention the 'acos' module.
+	* doc/posix-functions/asin.texi: Mention the 'asin' module.
+	* doc/posix-functions/atan.texi: Mention the 'atan' module.
+	* doc/posix-functions/atan2.texi: Mention the 'atan2' module.
+	* doc/posix-functions/cbrt.texi: Mention the 'cbrt' module.
+	* doc/posix-functions/copysign.texi: Mention the 'copysign' module.
+	* doc/posix-functions/cos.texi: Mention the 'cos' module.
+	* doc/posix-functions/cosh.texi: Mention the 'cosh' module.
+	* doc/posix-functions/erf.texi: Mention the 'erf' module.
+	* doc/posix-functions/erfc.texi: Mention the 'erfc' module.
+	* doc/posix-functions/exp.texi: Mention the 'exp' module.
+	* doc/posix-functions/fabs.texi: Mention the 'fabs' module.
+	* doc/posix-functions/fmod.texi: Mention the 'fmod' module.
+	* doc/posix-functions/hypot.texi: Mention the 'hypot' module.
+	* doc/posix-functions/j0.texi: Mention the 'j0' module.
+	* doc/posix-functions/j1.texi: Mention the 'j1' module.
+	* doc/posix-functions/jn.texi: Mention the 'jn' module.
+	* doc/posix-functions/ldexp.texi: Mention the 'ldexp' module.
+	* doc/posix-functions/lgamma.texi: Mention the 'lgamma' module.
+	* doc/posix-functions/log.texi: Mention the 'log' module.
+	* doc/posix-functions/log10.texi: Mention the 'log10' module.
+	* doc/posix-functions/log1p.texi: Mention the 'log1p' module.
+	* doc/posix-functions/logb.texi: Mention the 'logb' module.
+	* doc/posix-functions/modf.texi: Mention the 'modf' module.
+	* doc/posix-functions/nextafter.texi: Mention the 'nextafter' module.
+	* doc/posix-functions/pow.texi: Mention the 'pow' module.
+	* doc/posix-functions/remainder.texi: Mention the 'remainder' module.
+	* doc/posix-functions/rint.texi: Mention the 'rint' module.
+	* doc/posix-functions/sin.texi: Mention the 'sin' module.
+	* doc/posix-functions/sinh.texi: Mention the 'sinh' module.
+	* doc/posix-functions/sqrt.texi: Mention the 'sqrt' module.
+	* doc/posix-functions/tan.texi: Mention the 'tan' module.
+	* doc/posix-functions/tanh.texi: Mention the 'tanh' module.
+	* doc/posix-functions/y0.texi: Mention the 'y0' module.
+	* doc/posix-functions/y1.texi: Mention the 'y1' module.
+	* doc/posix-functions/yn.texi: Mention the 'yn' module.
+
 2010-01-18  Jim Meyering  <meyering@redhat.com>
 
 	ignore-value: relax license to LGPLv2+

@@ -1,0 +1,24 @@
+Description:
+logb() function: get exponent.
+
+Files:
+m4/mathfunc.m4
+
+Depends-on:
+
+configure.ac:
+gl_MATHFUNC([logb])
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(LOGB_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible

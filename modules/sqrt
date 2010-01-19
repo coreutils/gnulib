@@ -1,0 +1,24 @@
+Description:
+sqrt() function: square root.
+
+Files:
+m4/mathfunc.m4
+
+Depends-on:
+
+configure.ac:
+gl_MATHFUNC([sqrt])
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(SQRT_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible

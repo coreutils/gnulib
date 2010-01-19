@@ -1,0 +1,24 @@
+Description:
+cos() function: cosine function.
+
+Files:
+m4/mathfunc.m4
+
+Depends-on:
+
+configure.ac:
+gl_MATHFUNC([cos])
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(COS_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible

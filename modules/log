@@ -1,0 +1,24 @@
+Description:
+log() function: natural logarithmic function.
+
+Files:
+m4/mathfunc.m4
+
+Depends-on:
+
+configure.ac:
+gl_MATHFUNC([log])
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(LOG_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible

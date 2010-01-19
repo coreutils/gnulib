@@ -4,7 +4,7 @@
 
 POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/log1p.html}
 
-Gnulib module: ---
+Gnulib module: log1p
 
 Portability problems fixed by Gnulib:
 @itemize
