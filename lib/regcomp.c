@@ -1682,10 +1682,9 @@ calc_eclosure_iter (re_node_set *new_set, re_dfa_t *dfa, Idx node, bool root)
 {
   reg_errcode_t err;
   Idx i;
-  bool incomplete;
-  bool ok;
   re_node_set eclosure;
-  incomplete = false;
+  bool ok;
+  bool incomplete = false;
   err = re_node_set_alloc (&eclosure, dfa->edests[node].nelem + 1);
   if (BE (err != REG_NOERROR, 0))
     return err;
@@ -1742,7 +1741,7 @@ calc_eclosure_iter (re_node_set *new_set, re_dfa_t *dfa, Idx node, bool root)
 	  }
       }
 
-  /* Epsilon closures include itself.  */
+  /* An epsilon closure includes itself.  */
   ok = re_node_set_insert (&eclosure, node);
   if (BE (! ok, 0))
     return REG_ESPACE;

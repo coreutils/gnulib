@@ -1,5 +1,9 @@
 2010-01-28  Jim Meyering  <meyering@redhat.com>
 
+	regcomp.c: spelling and merge-artifact from glibc
+	* lib/regcomp.c: Merge remainder of glibc's
+	2da42bc06566bc89785e580fa1ac89b4c9f2a63c.
+
 	regcomp.c: sync white-space changes from glibc
 	* lib/regcomp.c: Merge to accommodate white space
 	changes from glibc's 2da42bc06566bc89785e580fa1ac89b4c9f2a63c.
