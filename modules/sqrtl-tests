@@ -1,0 +1,14 @@
+Files:
+tests/test-sqrtl.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+fpucw
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-sqrtl
+check_PROGRAMS += test-sqrtl
+test_sqrtl_LDADD = $(LDADD) @SQRTL_LIBM@

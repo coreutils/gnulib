@@ -1,5 +1,9 @@
 2010-01-18  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'sqrtl'.
+	* modules/sqrtl-tests: New file.
+	* tests/test-sqrtl.c: New file.
+
 	Tests for module 'sinl'.
 	* modules/sinl-tests: New file.
 	* tests/test-sinl.c: New file.
