@@ -1,5 +1,9 @@
 2010-01-18  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'logl'.
+	* modules/logl-tests: New file.
+	* tests/test-logl.c: New file.
+
 	Tests for module 'expl'.
 	* modules/expl-tests: New file.
 	* tests/test-expl.c: New file.
