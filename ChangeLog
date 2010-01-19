@@ -1,5 +1,9 @@
 2010-01-18  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'asinl'.
+	* modules/asinl-tests: New file.
+	* tests/test-asinl.c: New file.
+
 	Tests for module 'acosl'.
 	* modules/acosl-tests: New file.
 	* tests/test-acosl.c: New file.
