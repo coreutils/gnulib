@@ -1,0 +1,14 @@
+Files:
+tests/test-expl.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+fpucw
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-expl
+check_PROGRAMS += test-expl
+test_expl_LDADD = $(LDADD) @EXPL_LIBM@
