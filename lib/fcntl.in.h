@@ -27,7 +27,6 @@
 #include <sys/types.h>
 #ifndef __GLIBC__ /* Avoid namespace pollution on glibc systems.  */
 # include <sys/stat.h>
-# include <unistd.h>
 #endif
 #@INCLUDE_NEXT@ @NEXT_FCNTL_H@
 
@@ -39,13 +38,16 @@
 #include <sys/types.h>
 #ifndef __GLIBC__ /* Avoid namespace pollution on glibc systems.  */
 # include <sys/stat.h>
-# include <unistd.h>
 #endif
 /* The include_next requires a split double-inclusion guard.  */
 #@INCLUDE_NEXT@ @NEXT_FCNTL_H@
 
 #ifndef _GL_FCNTL_H
 #define _GL_FCNTL_H
+
+#ifndef __GLIBC__ /* Avoid namespace pollution on glibc systems.  */
+# include <unistd.h>
+#endif
 
 
 /* The definition of GL_LINK_WARNING is copied here.  */

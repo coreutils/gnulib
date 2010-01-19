@@ -1,3 +1,10 @@
+2010-01-19  Bruno Haible  <bruno@clisp.org>
+
+	Avoid compilation error with cc on OSF/1 5.1.
+	* lib/fcntl.in.h: Include <unistd.h> after the #include_next <fcntl.h>
+	statement, not before.
+	Reported by Ralf Wildenhues <Ralf.Wildenhues@gmx.de>.
+
 2010-01-18  Bruno Haible  <bruno@clisp.org>
 
 	Avoid a link error due to the __printf__ symbol.
