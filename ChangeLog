@@ -1,5 +1,10 @@
 2010-01-28  Jim Meyering  <meyering@redhat.com>
 
+	regex: do not ignore memory allocation failure
+	* lib/regex_internal.c (create_cd_newstate): Detect
+	re_node_set_init_copy failure.   Extracted from glibc commit
+	2da42bc06566bc89785e580fa1ac89b4c9f2a63c.
+
 	regex: sync more white-space changes from libc
 	* lib/regex_internal.c: White-space only changes.
 	* lib/regexec.c: Likewise.

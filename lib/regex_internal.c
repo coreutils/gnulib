@@ -1716,7 +1716,9 @@ create_cd_newstate (const re_dfa_t *dfa, const re_node_set *nodes,
 		  free_state (newstate);
 		  return NULL;
 		}
-	      re_node_set_init_copy (newstate->entrance_nodes, nodes);
+	      if (re_node_set_init_copy (newstate->entrance_nodes, nodes)
+		  != REG_NOERROR)
+		return NULL;
 	      nctx_nodes = 0;
 	      newstate->has_constraint = 1;
 	    }
