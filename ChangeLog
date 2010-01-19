@@ -1,5 +1,10 @@
 2010-01-28  Jim Meyering  <meyering@redhat.com>
 
+	regex: add many uses of __attribute_warn_unused_result__
+	* lib/regex_internal.c: Use __attribute_warn_unused_result__.
+	* lib/regexec.c: Likewise.
+	Extracted from a messy glibc commit.
+
 	regcomp.c: spelling and merge-artifact from glibc
 	* lib/regcomp.c: Merge remainder of glibc's
 	2da42bc06566bc89785e580fa1ac89b4c9f2a63c.

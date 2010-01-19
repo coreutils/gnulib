@@ -637,7 +637,7 @@ re_exec (s)
    (0 <= LAST_START && LAST_START <= LENGTH)  */
 
 static reg_errcode_t
-internal_function
+internal_function __attribute_warn_unused_result__
 re_search_internal (const regex_t *preg,
 		    const char *string, Idx length,
 		    Idx start, Idx last_start, Idx stop,
@@ -972,7 +972,7 @@ re_search_internal (const regex_t *preg,
 }
 
 static reg_errcode_t
-internal_function
+internal_function __attribute_warn_unused_result__
 prune_impossible_nodes (re_match_context_t *mctx)
 {
   const re_dfa_t *const dfa = mctx->dfa;
@@ -1110,7 +1110,7 @@ acquire_init_state_context (reg_errcode_t *err, const re_match_context_t *mctx,
    index of the buffer.  */
 
 static Idx
-internal_function
+internal_function __attribute_warn_unused_result__
 check_matching (re_match_context_t *mctx, bool fl_longest_match,
 		Idx *p_match_first)
 {
@@ -1385,7 +1385,7 @@ proceed_next_node (const re_match_context_t *mctx, Idx nregs, regmatch_t *regs,
 }
 
 static reg_errcode_t
-internal_function
+internal_function __attribute_warn_unused_result__
 push_fail_stack (struct re_fail_stack_t *fs, Idx str_idx, Idx dest_node,
 		 Idx nregs, regmatch_t *regs, re_node_set *eps_via_nodes)
 {
@@ -1432,7 +1432,7 @@ pop_fail_stack (struct re_fail_stack_t *fs, Idx *pidx, Idx nregs,
    pmatch[i].rm_so == pmatch[i].rm_eo == -1 for 0 < i < nmatch.  */
 
 static reg_errcode_t
-internal_function
+internal_function __attribute_warn_unused_result__
 set_regs (const regex_t *preg, const re_match_context_t *mctx, size_t nmatch,
 	  regmatch_t *pmatch, bool fl_backtrack)
 {
@@ -1686,7 +1686,7 @@ sift_states_backward (const re_match_context_t *mctx, re_sift_context_t *sctx)
 }
 
 static reg_errcode_t
-internal_function
+internal_function __attribute_warn_unused_result__
 build_sifted_states (const re_match_context_t *mctx, re_sift_context_t *sctx,
 		     Idx str_idx, re_node_set *cur_dest)
 {
@@ -1848,7 +1848,7 @@ update_cur_sifted_state (const re_match_context_t *mctx,
 }
 
 static reg_errcode_t
-internal_function
+internal_function __attribute_warn_unused_result__
 add_epsilon_src_nodes (const re_dfa_t *dfa, re_node_set *dest_nodes,
 		       const re_node_set *candidates)
 {
@@ -1863,10 +1863,14 @@ add_epsilon_src_nodes (const re_dfa_t *dfa, re_node_set *dest_nodes,
     {
       err = re_node_set_alloc (&state->inveclosure, dest_nodes->nelem);
       if (BE (err != REG_NOERROR, 0))
-        return REG_ESPACE;
+	return REG_ESPACE;
       for (i = 0; i < dest_nodes->nelem; i++)
-        re_node_set_merge (&state->inveclosure,
-			   dfa->inveclosures + dest_nodes->elems[i]);
+	{
+	  err = re_node_set_merge (&state->inveclosure,
+				   dfa->inveclosures + dest_nodes->elems[i]);
+	  if (BE (err != REG_NOERROR, 0))
+	    return REG_ESPACE;
+	}
     }
   return re_node_set_add_intersect (dest_nodes, candidates,
 				    &state->inveclosure);
@@ -2158,7 +2162,7 @@ check_subexp_limits (const re_dfa_t *dfa, re_node_set *dest_nodes,
 }
 
 static reg_errcode_t
-internal_function
+internal_function __attribute_warn_unused_result__
 sift_states_bkref (const re_match_context_t *mctx, re_sift_context_t *sctx,
 		   Idx str_idx, const re_node_set *candidates)
 {
@@ -2288,7 +2292,7 @@ sift_states_iter_mb (const re_match_context_t *mctx, re_sift_context_t *sctx,
    update the destination of STATE_LOG.  */
 
 static re_dfastate_t *
-internal_function
+internal_function __attribute_warn_unused_result__
 transit_state (reg_errcode_t *err, re_match_context_t *mctx,
 	       re_dfastate_t *state)
 {
@@ -2714,7 +2718,7 @@ transit_state_bkref (re_match_context_t *mctx, const re_node_set *nodes)
    delay these checking for prune_impossible_nodes().  */
 
 static reg_errcode_t
-internal_function
+internal_function __attribute_warn_unused_result__
 get_subexp (re_match_context_t *mctx, Idx bkref_node, Idx bkref_str_idx)
 {
   const re_dfa_t *const dfa = mctx->dfa;
@@ -2915,7 +2919,7 @@ find_subexp_node (const re_dfa_t *dfa, const re_node_set *nodes,
    Return REG_NOERROR if it can arrive, or REG_NOMATCH otherwise.  */
 
 static reg_errcode_t
-internal_function
+internal_function __attribute_warn_unused_result__
 check_arrival (re_match_context_t *mctx, state_array_t *path, Idx top_node,
 	       Idx top_str, Idx last_node, Idx last_str, int type)
 {
@@ -3077,7 +3081,7 @@ check_arrival (re_match_context_t *mctx, state_array_t *path, Idx top_node,
 	 Can't we unify them?  */
 
 static reg_errcode_t
-internal_function
+internal_function __attribute_warn_unused_result__
 check_arrival_add_next_nodes (re_match_context_t *mctx, Idx str_idx,
 			      re_node_set *cur_nodes, re_node_set *next_nodes)
 {
@@ -3211,7 +3215,7 @@ check_arrival_expand_ecl (const re_dfa_t *dfa, re_node_set *cur_nodes,
    problematic append it to DST_NODES.  */
 
 static reg_errcode_t
-internal_function
+internal_function __attribute_warn_unused_result__
 check_arrival_expand_ecl_sub (const re_dfa_t *dfa, re_node_set *dst_nodes,
 			      Idx target, Idx ex_subexp, int type)
 {
@@ -3256,7 +3260,7 @@ check_arrival_expand_ecl_sub (const re_dfa_t *dfa, re_node_set *dst_nodes,
    in MCTX->BKREF_ENTS.  */
 
 static reg_errcode_t
-internal_function
+internal_function __attribute_warn_unused_result__
 expand_bkref_cache (re_match_context_t *mctx, re_node_set *cur_nodes,
 		    Idx cur_str, Idx subexp_num, int type)
 {
@@ -4128,7 +4132,7 @@ check_node_accept (const re_match_context_t *mctx, const re_token_t *node,
 /* Extend the buffers, if the buffers have run out.  */
 
 static reg_errcode_t
-internal_function
+internal_function __attribute_warn_unused_result__
 extend_buffers (re_match_context_t *mctx)
 {
   reg_errcode_t ret;
@@ -4191,7 +4195,7 @@ extend_buffers (re_match_context_t *mctx)
 /* Initialize MCTX.  */
 
 static reg_errcode_t
-internal_function
+internal_function __attribute_warn_unused_result__
 match_ctx_init (re_match_context_t *mctx, int eflags, Idx n)
 {
   mctx->eflags = eflags;
@@ -4271,7 +4275,7 @@ match_ctx_free (re_match_context_t *mctx)
 */
 
 static reg_errcode_t
-internal_function
+internal_function __attribute_warn_unused_result__
 match_ctx_add_entry (re_match_context_t *mctx, Idx node, Idx str_idx, Idx from,
 		     Idx to)
 {
@@ -4343,7 +4347,7 @@ search_cur_bkref_entry (const re_match_context_t *mctx, Idx str_idx)
    at STR_IDX.  */
 
 static reg_errcode_t
-internal_function
+internal_function __attribute_warn_unused_result__
 match_ctx_add_subtop (re_match_context_t *mctx, Idx node, Idx str_idx)
 {
 #ifdef DEBUG
