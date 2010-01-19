@@ -1,5 +1,9 @@
 2010-01-28  Jim Meyering  <meyering@redhat.com>
 
+	regex: sync more white-space changes from libc
+	* lib/regex_internal.c: White-space only changes.
+	* lib/regexec.c: Likewise.
+
 	regex: add many uses of __attribute_warn_unused_result__
 	* lib/regex_internal.c: Use __attribute_warn_unused_result__.
 	* lib/regexec.c: Likewise.

@@ -430,8 +430,8 @@ build_wcs_upper_buffer (re_string_t *pstr)
 		    src_idx += mbclen;
 		    continue;
 		  }
-                else
-                  memcpy (pstr->mbs + byte_idx, p, mbclen);
+		else
+		  memcpy (pstr->mbs + byte_idx, p, mbclen);
 	      }
 	    else
 	      memcpy (pstr->mbs + byte_idx, p, mbclen);
@@ -1062,7 +1062,7 @@ re_node_set_add_intersect (re_node_set *dest, const re_node_set *src1,
       Idx new_alloc = src1->nelem + src2->nelem + dest->alloc;
       Idx *new_elems = re_realloc (dest->elems, Idx, new_alloc);
       if (BE (new_elems == NULL, 0))
-        return REG_ESPACE;
+	return REG_ESPACE;
       dest->elems = new_elems;
       dest->alloc = new_alloc;
     }
@@ -1112,20 +1112,20 @@ re_node_set_add_intersect (re_node_set *dest, const re_node_set *src1,
   if (delta > 0 && REG_VALID_INDEX (id))
     for (;;)
       {
-        if (dest->elems[is] > dest->elems[id])
-          {
-            /* Copy from the top.  */
-            dest->elems[id + delta--] = dest->elems[is--];
-            if (delta == 0)
-              break;
-          }
-        else
-          {
-            /* Slide from the bottom.  */
-            dest->elems[id + delta] = dest->elems[id];
-            if (! REG_VALID_INDEX (--id))
-              break;
-          }
+	if (dest->elems[is] > dest->elems[id])
+	  {
+	    /* Copy from the top.  */
+	    dest->elems[id + delta--] = dest->elems[is--];
+	    if (delta == 0)
+	      break;
+	  }
+	else
+	  {
+	    /* Slide from the bottom.  */
+	    dest->elems[id + delta] = dest->elems[id];
+	    if (! REG_VALID_INDEX (--id))
+	      break;
+	  }
       }
 
   /* Copy remaining SRC elements.  */
@@ -1221,11 +1221,11 @@ re_node_set_merge (re_node_set *dest, const re_node_set *src)
        REG_VALID_INDEX (is) && REG_VALID_INDEX (id); )
     {
       if (dest->elems[id] == src->elems[is])
-        is--, id--;
+	is--, id--;
       else if (dest->elems[id] < src->elems[is])
-        dest->elems[--sbase] = src->elems[is--];
+	dest->elems[--sbase] = src->elems[is--];
       else /* if (dest->elems[id] > src->elems[is]) */
-        --id;
+	--id;
     }
 
   if (REG_VALID_INDEX (is))
@@ -1247,21 +1247,21 @@ re_node_set_merge (re_node_set *dest, const re_node_set *src)
   for (;;)
     {
       if (dest->elems[is] > dest->elems[id])
-        {
+	{
 	  /* Copy from the top.  */
-          dest->elems[id + delta--] = dest->elems[is--];
+	  dest->elems[id + delta--] = dest->elems[is--];
 	  if (delta == 0)
 	    break;
 	}
       else
-        {
-          /* Slide from the bottom.  */
-          dest->elems[id + delta] = dest->elems[id];
+	{
+	  /* Slide from the bottom.  */
+	  dest->elems[id + delta] = dest->elems[id];
 	  if (! REG_VALID_INDEX (--id))
 	    {
 	      /* Copy remaining SRC elements.  */
 	      memcpy (dest->elems, dest->elems + sbase,
-	              delta * sizeof (Idx));
+		      delta * sizeof (Idx));
 	      break;
 	    }
 	}
@@ -1308,12 +1308,12 @@ re_node_set_insert (re_node_set *set, Idx elem)
     {
       idx = 0;
       for (idx = set->nelem; idx > 0; idx--)
-        set->elems[idx] = set->elems[idx - 1];
+	set->elems[idx] = set->elems[idx - 1];
     }
   else
     {
       for (idx = set->nelem; set->elems[idx - 1] > elem; idx--)
-        set->elems[idx] = set->elems[idx - 1];
+	set->elems[idx] = set->elems[idx - 1];
     }
 
   /* Insert the new element.  */

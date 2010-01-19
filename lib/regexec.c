@@ -833,10 +833,10 @@ re_search_internal (const regex_t *preg,
 		break;
 	      match_first += incr;
 	      if (match_first < left_lim || match_first > right_lim)
-	        {
-	          err = REG_NOMATCH;
-	          goto free_return;
-	        }
+		{
+		  err = REG_NOMATCH;
+		  goto free_return;
+		}
 	    }
 	  break;
 	}
@@ -953,14 +953,14 @@ re_search_internal (const regex_t *preg,
 	}
 
       if (dfa->subexp_map)
-        for (reg_idx = 0; reg_idx + 1 < nmatch; reg_idx++)
-          if (dfa->subexp_map[reg_idx] != reg_idx)
-            {
-              pmatch[reg_idx + 1].rm_so
-                = pmatch[dfa->subexp_map[reg_idx] + 1].rm_so;
-              pmatch[reg_idx + 1].rm_eo
-                = pmatch[dfa->subexp_map[reg_idx] + 1].rm_eo;
-            }
+	for (reg_idx = 0; reg_idx + 1 < nmatch; reg_idx++)
+	  if (dfa->subexp_map[reg_idx] != reg_idx)
+	    {
+	      pmatch[reg_idx + 1].rm_so
+		= pmatch[dfa->subexp_map[reg_idx] + 1].rm_so;
+	      pmatch[reg_idx + 1].rm_eo
+		= pmatch[dfa->subexp_map[reg_idx] + 1].rm_eo;
+	    }
     }
 
  free_return:
@@ -1149,7 +1149,7 @@ check_matching (re_match_context_t *mctx, bool fl_longest_match,
 	    {
 	      err = transit_state_bkref (mctx, &cur_state->nodes);
 	      if (BE (err != REG_NOERROR, 0))
-	        return err;
+		return err;
 	    }
 	}
     }
@@ -1176,16 +1176,16 @@ check_matching (re_match_context_t *mctx, bool fl_longest_match,
       Idx next_char_idx = re_string_cur_idx (&mctx->input) + 1;
 
       if (BE (next_char_idx >= mctx->input.bufs_len, 0)
-          || (BE (next_char_idx >= mctx->input.valid_len, 0)
-              && mctx->input.valid_len < mctx->input.len))
-        {
-          err = extend_buffers (mctx);
-          if (BE (err != REG_NOERROR, 0))
+	  || (BE (next_char_idx >= mctx->input.valid_len, 0)
+	      && mctx->input.valid_len < mctx->input.len))
+	{
+	  err = extend_buffers (mctx);
+	  if (BE (err != REG_NOERROR, 0))
 	    {
 	      assert (err == REG_ESPACE);
 	      return REG_ERROR;
 	    }
-        }
+	}
 
       cur_state = transit_state (&err, mctx, cur_state);
       if (mctx->state_log != NULL)
@@ -1309,17 +1309,17 @@ proceed_next_node (const re_match_context_t *mctx, Idx nregs, regmatch_t *regs,
           if (dest_node == REG_MISSING)
 	    dest_node = candidate;
 
-          else
+	  else
 	    {
 	      /* In order to avoid infinite loop like "(a*)*", return the second
-	         epsilon-transition if the first was already considered.  */
+		 epsilon-transition if the first was already considered.  */
 	      if (re_node_set_contains (eps_via_nodes, dest_node))
-	        return candidate;
+		return candidate;
 
 	      /* Otherwise, push the second epsilon-transition on the fail stack.  */
 	      else if (fs != NULL
 		       && push_fail_stack (fs, *pidx, candidate, nregs, regs,
-				           eps_via_nodes))
+					   eps_via_nodes))
 		return REG_ERROR;
 
 	      /* We know we are going to exit.  */
@@ -1667,7 +1667,7 @@ sift_states_backward (const re_match_context_t *mctx, re_sift_context_t *sctx)
       if (mctx->state_log[str_idx])
 	{
 	  err = build_sifted_states (mctx, sctx, str_idx, &cur_dest);
-          if (BE (err != REG_NOERROR, 0))
+	  if (BE (err != REG_NOERROR, 0))
 	    goto free_return;
 	}
 
@@ -1982,7 +1982,7 @@ check_dst_limits_calc_pos_1 (const re_match_context_t *mctx, int boundaries,
 	    {
 	      struct re_backref_cache_entry *ent = mctx->bkref_ents + bkref_idx;
 	      do
-	        {
+		{
 		  Idx dst;
 		  int cpos;
 
@@ -2004,9 +2004,9 @@ check_dst_limits_calc_pos_1 (const re_match_context_t *mctx, int boundaries,
 		  if (dst == from_node)
 		    {
 		      if (boundaries & 1)
-		        return -1;
+			return -1;
 		      else /* if (boundaries & 2) */
-		        return 0;
+			return 0;
 		    }
 
 		  cpos =
@@ -2020,7 +2020,7 @@ check_dst_limits_calc_pos_1 (const re_match_context_t *mctx, int boundaries,
 		  if (subexp_idx < BITSET_WORD_BITS)
 		    ent->eps_reachable_subexps_map
 		      &= ~((bitset_word_t) 1 << subexp_idx);
-	        }
+		}
 	      while (ent++->more);
 	    }
 	  break;
@@ -2245,7 +2245,7 @@ sift_states_bkref (const re_match_context_t *mctx, re_sift_context_t *sctx,
 	  re_node_set_remove (&local_sctx.limits, enabled_idx);
 
 	  /* mctx->bkref_ents may have changed, reload the pointer.  */
-          entry = mctx->bkref_ents + enabled_idx;
+	  entry = mctx->bkref_ents + enabled_idx;
 	}
       while (enabled_idx++, entry++->more);
     }
@@ -2326,7 +2326,7 @@ transit_state (reg_errcode_t *err, re_match_context_t *mctx,
 
       trtable = state->word_trtable;
       if (BE (trtable != NULL, 1))
-        {
+	{
 	  unsigned int context;
 	  context
 	    = re_string_context_at (&mctx->input,
@@ -2372,21 +2372,21 @@ merge_state_with_log (reg_errcode_t *err, re_match_context_t *mctx,
       unsigned int context;
       re_node_set next_nodes, *log_nodes, *table_nodes = NULL;
       /* If (state_log[cur_idx] != 0), it implies that cur_idx is
-         the destination of a multibyte char/collating element/
-         back reference.  Then the next state is the union set of
-         these destinations and the results of the transition table.  */
+	 the destination of a multibyte char/collating element/
+	 back reference.  Then the next state is the union set of
+	 these destinations and the results of the transition table.  */
       pstate = mctx->state_log[cur_idx];
       log_nodes = pstate->entrance_nodes;
       if (next_state != NULL)
-        {
-          table_nodes = next_state->entrance_nodes;
-          *err = re_node_set_init_union (&next_nodes, table_nodes,
+	{
+	  table_nodes = next_state->entrance_nodes;
+	  *err = re_node_set_init_union (&next_nodes, table_nodes,
 					     log_nodes);
-          if (BE (*err != REG_NOERROR, 0))
+	  if (BE (*err != REG_NOERROR, 0))
 	    return NULL;
-        }
+	}
       else
-        next_nodes = *log_nodes;
+	next_nodes = *log_nodes;
       /* Note: We already add the nodes of the initial state,
 	 then we don't need to add them here.  */
 
@@ -2394,12 +2394,12 @@ merge_state_with_log (reg_errcode_t *err, re_match_context_t *mctx,
 				      re_string_cur_idx (&mctx->input) - 1,
 				      mctx->eflags);
       next_state = mctx->state_log[cur_idx]
-        = re_acquire_state_context (err, dfa, &next_nodes, context);
+	= re_acquire_state_context (err, dfa, &next_nodes, context);
       /* We don't need to check errors here, since the return value of
-         this function is next_state and ERR is already set.  */
+	 this function is next_state and ERR is already set.  */
 
       if (table_nodes != NULL)
-        re_node_set_free (&next_nodes);
+	re_node_set_free (&next_nodes);
     }
 
   if (BE (dfa->nbackref, 0) && next_state != NULL)
@@ -2440,9 +2440,9 @@ find_recover_state (reg_errcode_t *err, re_match_context_t *mctx)
 
       do
 	{
-          if (++cur_str_idx > max)
-            return NULL;
-          re_string_skip_bytes (&mctx->input, 1);
+	  if (++cur_str_idx > max)
+	    return NULL;
+	  re_string_skip_bytes (&mctx->input, 1);
 	}
       while (mctx->state_log[cur_str_idx] == NULL);
 
@@ -2550,7 +2550,7 @@ transit_state_mb (re_match_context_t *mctx, re_dfastate_t *pstate)
       re_dfastate_t *dest_state;
 
       if (!dfa->nodes[cur_node_idx].accept_mb)
-        continue;
+	continue;
 
       if (dfa->nodes[cur_node_idx].constraint)
 	{
@@ -2731,7 +2731,7 @@ get_subexp (re_match_context_t *mctx, Idx bkref_node, Idx bkref_str_idx)
       const struct re_backref_cache_entry *entry
 	= mctx->bkref_ents + cache_idx;
       do
-        if (entry->node == bkref_node)
+	if (entry->node == bkref_node)
 	  return REG_NOERROR; /* We already checked it.  */
       while (entry++->more);
     }
@@ -3626,7 +3626,7 @@ group_nodes_into_DFAstates (const re_dfa_t *dfa, const re_dfastate_t *state,
 	}
 #ifdef RE_ENABLE_I18N
       else if (type == OP_UTF8_PERIOD)
-        {
+	{
 	  if (ASCII_CHARS % BITSET_WORD_BITS == 0)
 	    memset (accepts, -1, ASCII_CHARS / CHAR_BIT);
 	  else
@@ -3635,7 +3635,7 @@ group_nodes_into_DFAstates (const re_dfa_t *dfa, const re_dfastate_t *state,
 	    bitset_clear (accepts, '\n');
 	  if (dfa->syntax & RE_DOT_NOT_NULL)
 	    bitset_clear (accepts, '\0');
-        }
+	}
 #endif
       else
 	continue;
@@ -3840,7 +3840,7 @@ check_node_accept_bytes (const re_dfa_t *dfa, Idx node_idx,
   if (node->type == OP_PERIOD)
     {
       if (char_len <= 1)
-        return 0;
+	return 0;
       /* FIXME: I don't think this if is needed, as both '\n'
 	 and '\0' are char_len == 1.  */
       /* '.' accepts any one character except the following two cases.  */
