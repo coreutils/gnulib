@@ -96,6 +96,13 @@ AC_DEFUN([gl_REGEX],
             if (!s)
               return 1;
 
+            /* Ensure that [b-a] is diagnosed as invalid. */
+            re_set_syntax (RE_SYNTAX_POSIX_EGREP);
+            memset (&regex, 0, sizeof regex);
+            s = re_compile_pattern ("a[b-a]", 6, &regex);
+            if (s == 0)
+              return 1;
+
             /* This should succeed, but does not for glibc-2.1.3.  */
             memset (&regex, 0, sizeof regex);
             s = re_compile_pattern ("{1", 2, &regex);
