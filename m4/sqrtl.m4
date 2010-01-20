@@ -1,4 +1,4 @@
-# sqrtl.m4 serial 1
+# sqrtl.m4 serial 2
 dnl Copyright (C) 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -56,7 +56,26 @@ AC_DEFUN([gl_FUNC_SQRTL],
     AC_REQUIRE([gl_FUNC_FREXPL])
     AC_REQUIRE([gl_FUNC_LDEXPL])
     AC_REQUIRE([gl_FUNC_SQRT])
-    SQRTL_LIBM="$ISNANL_LIBM $FREXPL_LIBM $LDEXPL_LIBM $SQRT_LIBM"
+    dnl Append $ISNANL_LIBM to SQRTL_LIBM, avoiding gratuitous duplicates.
+    case " $SQRTL_LIBM " in
+      *" $ISNANL_LIBM "*) ;;
+      *) SQRTL_LIBM="$SQRTL_LIBM $ISNANL_LIBM" ;;
+    esac
+    dnl Append $FREXPL_LIBM to SQRTL_LIBM, avoiding gratuitous duplicates.
+    case " $SQRTL_LIBM " in
+      *" $FREXPL_LIBM "*) ;;
+      *) SQRTL_LIBM="$SQRTL_LIBM $FREXPL_LIBM" ;;
+    esac
+    dnl Append $LDEXPL_LIBM to SQRTL_LIBM, avoiding gratuitous duplicates.
+    case " $SQRTL_LIBM " in
+      *" $LDEXPL_LIBM "*) ;;
+      *) SQRTL_LIBM="$SQRTL_LIBM $LDEXPL_LIBM" ;;
+    esac
+    dnl Append $SQRT_LIBM to SQRTL_LIBM, avoiding gratuitous duplicates.
+    case " $SQRTL_LIBM " in
+      *" $SQRT_LIBM "*) ;;
+      *) SQRTL_LIBM="$SQRTL_LIBM $SQRT_LIBM" ;;
+    esac
   fi
   AC_SUBST([SQRTL_LIBM])
 ])

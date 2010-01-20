@@ -1,4 +1,4 @@
-# asinl.m4 serial 1
+# asinl.m4 serial 2
 dnl Copyright (C) 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -53,7 +53,11 @@ AC_DEFUN([gl_FUNC_ASINL],
     HAVE_ASINL=0
     AC_LIBOBJ([asinl])
     AC_REQUIRE([gl_FUNC_SQRTL])
-    ASINL_LIBM="$SQRTL_LIBM"
+    dnl Append $SQRTL_LIBM to ASINL_LIBM, avoiding gratuitous duplicates.
+    case " $ASINL_LIBM " in
+      *" $SQRTL_LIBM "*) ;;
+      *) ASINL_LIBM="$ASINL_LIBM $SQRTL_LIBM" ;;
+    esac
   fi
   AC_SUBST([ASINL_LIBM])
 ])

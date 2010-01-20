@@ -1,4 +1,4 @@
-# logl.m4 serial 1
+# logl.m4 serial 2
 dnl Copyright (C) 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -55,7 +55,21 @@ AC_DEFUN([gl_FUNC_LOGL],
     AC_REQUIRE([gl_FUNC_FREXPL])
     AC_REQUIRE([gl_FUNC_ISNANL])
     AC_REQUIRE([gl_FUNC_FLOORL])
-    LOGL_LIBM="$FREXPL_LIBM $ISNANL_LIBM $FLOORL_LIBM"
+    dnl Append $FREXPL_LIBM to LOGL_LIBM, avoiding gratuitous duplicates.
+    case " $LOGL_LIBM " in
+      *" $FREXPL_LIBM "*) ;;
+      *) LOGL_LIBM="$LOGL_LIBM $FREXPL_LIBM" ;;
+    esac
+    dnl Append $ISNANL_LIBM to LOGL_LIBM, avoiding gratuitous duplicates.
+    case " $LOGL_LIBM " in
+      *" $ISNANL_LIBM "*) ;;
+      *) LOGL_LIBM="$LOGL_LIBM $ISNANL_LIBM" ;;
+    esac
+    dnl Append $FLOORL_LIBM to LOGL_LIBM, avoiding gratuitous duplicates.
+    case " $LOGL_LIBM " in
+      *" $FLOORL_LIBM "*) ;;
+      *) LOGL_LIBM="$LOGL_LIBM $FLOORL_LIBM" ;;
+    esac
   fi
   AC_SUBST([LOGL_LIBM])
 ])

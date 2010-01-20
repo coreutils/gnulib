@@ -1,4 +1,4 @@
-# sinl.m4 serial 1
+# sinl.m4 serial 2
 dnl Copyright (C) 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -57,7 +57,21 @@ AC_DEFUN([gl_FUNC_SINL],
     AC_REQUIRE([gl_FUNC_ISNANL])
     AC_REQUIRE([gl_FUNC_FLOOR])
     AC_REQUIRE([gl_FUNC_FLOORL])
-    SINL_LIBM="$ISNANL_LIBM $FLOOR_LIBM $FLOORL_LIBM"
+    dnl Append $ISNANL_LIBM to SINL_LIBM, avoiding gratuitous duplicates.
+    case " $SINL_LIBM " in
+      *" $ISNANL_LIBM "*) ;;
+      *) SINL_LIBM="$SINL_LIBM $ISNANL_LIBM" ;;
+    esac
+    dnl Append $FLOOR_LIBM to SINL_LIBM, avoiding gratuitous duplicates.
+    case " $SINL_LIBM " in
+      *" $FLOOR_LIBM "*) ;;
+      *) SINL_LIBM="$SINL_LIBM $FLOOR_LIBM" ;;
+    esac
+    dnl Append $FLOORL_LIBM to SINL_LIBM, avoiding gratuitous duplicates.
+    case " $SINL_LIBM " in
+      *" $FLOORL_LIBM "*) ;;
+      *) SINL_LIBM="$SINL_LIBM $FLOORL_LIBM" ;;
+    esac
   fi
   AC_SUBST([SINL_LIBM])
 ])

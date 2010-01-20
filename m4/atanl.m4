@@ -1,4 +1,4 @@
-# atanl.m4 serial 1
+# atanl.m4 serial 2
 dnl Copyright (C) 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -53,7 +53,11 @@ AC_DEFUN([gl_FUNC_ATANL],
     HAVE_ATANL=0
     AC_LIBOBJ([atanl])
     AC_REQUIRE([gl_FUNC_ISNANL])
-    ATANL_LIBM="$ISNANL_LIBM"
+    dnl Append $ISNANL_LIBM to ATANL_LIBM, avoiding gratuitous duplicates.
+    case " $ATANL_LIBM " in
+      *" $ISNANL_LIBM "*) ;;
+      *) ATANL_LIBM="$ATANL_LIBM $ISNANL_LIBM" ;;
+    esac
   fi
   AC_SUBST([ATANL_LIBM])
 ])

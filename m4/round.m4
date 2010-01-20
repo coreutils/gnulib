@@ -1,5 +1,5 @@
-# round.m4 serial 6
-dnl Copyright (C) 2007, 2009, 2010 Free Software Foundation, Inc.
+# round.m4 serial 7
+dnl Copyright (C) 2007, 2009-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -56,7 +56,17 @@ int main()
     AC_LIBOBJ([round])
     gl_FUNC_FLOOR_LIBS
     gl_FUNC_CEIL_LIBS
-    ROUND_LIBM="$FLOOR_LIBM $CEIL_LIBM"
+    ROUND_LIBM=
+    dnl Append $FLOOR_LIBM to ROUND_LIBM, avoiding gratuitous duplicates.
+    case " $ROUND_LIBM " in
+      *" $FLOOR_LIBM "*) ;;
+      *) ROUND_LIBM="$ROUND_LIBM $FLOOR_LIBM" ;;
+    esac
+    dnl Append $CEIL_LIBM to ROUND_LIBM, avoiding gratuitous duplicates.
+    case " $ROUND_LIBM " in
+      *" $CEIL_LIBM "*) ;;
+      *) ROUND_LIBM="$ROUND_LIBM $CEIL_LIBM" ;;
+    esac
   fi
   AC_SUBST([ROUND_LIBM])
 ])

@@ -1,3 +1,20 @@
+2010-01-20  Bruno Haible  <bruno@clisp.org>
+
+	Avoid duplicate -lm.
+	* m4/isnan.m4 (gl_ISNAN): Avoid duplicate -lm in $ISNAN_LIBM.
+	* m4/round.m4 (gl_FUNC_ROUND): Avoid duplicate -lm in $ROUND_LIBM.
+	* m4/roundf.m4 (gl_FUNC_ROUNDF): Avoid duplicate -lm in $ROUNDF_LIBM.
+	* m4/roundl.m4 (gl_FUNC_ROUNDL): Avoid duplicate -lm in $ROUNDL_LIBM.
+	* m4/acosl.m4 (gl_FUNC_ACOSL): Avoid duplicate -lm in $ACOSL_LIBM.
+	* m4/cosl.m4 (gl_FUNC_COSL): Avoid duplicate -lm in $COSL_LIBM.
+	* m4/logl.m4 (gl_FUNC_LOGL): Avoid duplicate -lm in $LOGL_LIBM.
+	* m4/sinl.m4 (gl_FUNC_SINL): Avoid duplicate -lm in $SINL_LIBM.
+	* m4/sqrtl.m4 (gl_FUNC_SQRTL): Avoid duplicate -lm in $SQRTL_LIBM.
+	* m4/tanl.m4 (gl_FUNC_TANL): Avoid duplicate -lm in $TANL_LIBM.
+	* m4/asinl.m4 (gl_FUNC_ASINL): Same change, for consistency.
+	* m4/atanl.m4 (gl_FUNC_ATANL): Likewise.
+	Reported by Paolo Bonzini.
+
 2010-01-19  Bruno Haible  <bruno@clisp.org>
 
 	langinfo, nl_langinfo: Relicense under LGPLv2+.

@@ -1,4 +1,4 @@
-# roundf.m4 serial 7
+# roundf.m4 serial 8
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -59,7 +59,17 @@ int main()
       if test "$FLOORF_LIBM" != '?' && test "$CEILF_LIBM" != '?'; then
         AC_DEFINE([HAVE_FLOORF_AND_CEILF], [1],
           [Define if the both the floorf() and ceilf() functions exist.])
-        ROUNDF_LIBM="$FLOORF_LIBM $CEILF_LIBM"
+        ROUNDF_LIBM=
+        dnl Append $FLOORF_LIBM to ROUNDF_LIBM, avoiding gratuitous duplicates.
+        case " $ROUNDF_LIBM " in
+          *" $FLOORF_LIBM "*) ;;
+          *) ROUNDF_LIBM="$ROUNDF_LIBM $FLOORF_LIBM" ;;
+        esac
+        dnl Append $CEILF_LIBM to ROUNDF_LIBM, avoiding gratuitous duplicates.
+        case " $ROUNDF_LIBM " in
+          *" $CEILF_LIBM "*) ;;
+          *) ROUNDF_LIBM="$ROUNDF_LIBM $CEILF_LIBM" ;;
+        esac
       else
         ROUNDF_LIBM=
       fi

@@ -1,4 +1,4 @@
-# isnan.m4 serial 2
+# isnan.m4 serial 3
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,7 +18,22 @@ AC_DEFUN([gl_ISNAN],
      && test $gl_func_isnand = yes \
      && test $gl_func_isnanl = yes; then
     AC_MSG_RESULT([yes])
-    ISNAN_LIBM="$ISNANF_LIBM $ISNAND_LIBM $ISNANL_LIBM"
+    ISNAN_LIBM=
+    dnl Append $ISNANF_LIBM to ISNAN_LIBM, avoiding gratuitous duplicates.
+    case " $ISNAN_LIBM " in
+      *" $ISNANF_LIBM "*) ;;
+      *) ISNAN_LIBM="$ISNAN_LIBM $ISNANF_LIBM" ;;
+    esac
+    dnl Append $ISNAND_LIBM to ISNAN_LIBM, avoiding gratuitous duplicates.
+    case " $ISNAN_LIBM " in
+      *" $ISNAND_LIBM "*) ;;
+      *) ISNAN_LIBM="$ISNAN_LIBM $ISNAND_LIBM" ;;
+    esac
+    dnl Append $ISNANL_LIBM to ISNAN_LIBM, avoiding gratuitous duplicates.
+    case " $ISNAN_LIBM " in
+      *" $ISNANL_LIBM "*) ;;
+      *) ISNAN_LIBM="$ISNAN_LIBM $ISNANL_LIBM" ;;
+    esac
   else
     AC_MSG_RESULT([no])
     REPLACE_ISNAN=1

@@ -1,4 +1,4 @@
-# acosl.m4 serial 1
+# acosl.m4 serial 2
 dnl Copyright (C) 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -54,7 +54,16 @@ AC_DEFUN([gl_FUNC_ACOSL],
     AC_LIBOBJ([acosl])
     AC_REQUIRE([gl_FUNC_ASINL])
     AC_REQUIRE([gl_FUNC_SQRTL])
-    ACOSL_LIBM="$ASINL_LIBM $SQRTL_LIBM"
+    dnl Append $ASINL_LIBM to ACOSL_LIBM, avoiding gratuitous duplicates.
+    case " $ACOSL_LIBM " in
+      *" $ASINL_LIBM "*) ;;
+      *) ACOSL_LIBM="$ACOSL_LIBM $ASINL_LIBM" ;;
+    esac
+    dnl Append $SQRTL_LIBM to ACOSL_LIBM, avoiding gratuitous duplicates.
+    case " $ACOSL_LIBM " in
+      *" $SQRTL_LIBM "*) ;;
+      *) ACOSL_LIBM="$ACOSL_LIBM $SQRTL_LIBM" ;;
+    esac
   fi
   AC_SUBST([ACOSL_LIBM])
 ])

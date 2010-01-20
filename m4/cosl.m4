@@ -1,4 +1,4 @@
-# cosl.m4 serial 1
+# cosl.m4 serial 2
 dnl Copyright (C) 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -57,7 +57,21 @@ AC_DEFUN([gl_FUNC_COSL],
     AC_REQUIRE([gl_FUNC_ISNANL])
     AC_REQUIRE([gl_FUNC_FLOOR])
     AC_REQUIRE([gl_FUNC_FLOORL])
-    COSL_LIBM="$ISNANL_LIBM $FLOOR_LIBM $FLOORL_LIBM"
+    dnl Append $ISNANL_LIBM to COSL_LIBM, avoiding gratuitous duplicates.
+    case " $COSL_LIBM " in
+      *" $ISNANL_LIBM "*) ;;
+      *) COSL_LIBM="$COSL_LIBM $ISNANL_LIBM" ;;
+    esac
+    dnl Append $FLOOR_LIBM to COSL_LIBM, avoiding gratuitous duplicates.
+    case " $COSL_LIBM " in
+      *" $FLOOR_LIBM "*) ;;
+      *) COSL_LIBM="$COSL_LIBM $FLOOR_LIBM" ;;
+    esac
+    dnl Append $FLOORL_LIBM to COSL_LIBM, avoiding gratuitous duplicates.
+    case " $COSL_LIBM " in
+      *" $FLOORL_LIBM "*) ;;
+      *) COSL_LIBM="$COSL_LIBM $FLOORL_LIBM" ;;
+    esac
   fi
   AC_SUBST([COSL_LIBM])
 ])
