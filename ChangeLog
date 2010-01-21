@@ -1,3 +1,9 @@
+2010-01-21  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: handle source file names containing "." robustly
+	* top/maint.mk (_dot_escaped_srcdir): Define.
+	(VC_LIST): Use it in LHS of sed substitution.
+
 2010-01-21  Jiri Denemark  <jdenemar@redhat.com>
 
 	maint.mk: fix VC_LIST_EXCEPT for srcdir != builddir
