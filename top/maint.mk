@@ -41,9 +41,11 @@ VC_LIST = $(build_aux)/vc-list-files -C $(srcdir)
 VC_LIST_ALWAYS_EXCLUDE_REGEX ?= ^$$
 
 VC_LIST_EXCEPT = \
-  $(VC_LIST) | if test -f $(srcdir)/.x-$@; then grep -vEf $(srcdir)/.x-$@; \
-	       else grep -Ev -e "$${VC_LIST_EXCEPT_DEFAULT-ChangeLog}"; fi \
-	| grep -Ev -e '$(VC_LIST_ALWAYS_EXCLUDE_REGEX)'
+  $(VC_LIST) | sed 's|^$(srcdir)/||' \
+	| if test -f $(srcdir)/.x-$@; then grep -vEf $(srcdir)/.x-$@; \
+	  else grep -Ev -e "$${VC_LIST_EXCEPT_DEFAULT-ChangeLog}"; fi \
+	| grep -Ev -e '$(VC_LIST_ALWAYS_EXCLUDE_REGEX)' \
+	| sed 's|^|$(srcdir)/|'
 
 ifeq ($(origin prev_version_file), undefined)
   prev_version_file = $(srcdir)/.prev-version

@@ -1,3 +1,10 @@
+2010-01-21  Jiri Denemark  <jdenemar@redhat.com>
+
+	maint.mk: fix VC_LIST_EXCEPT for srcdir != builddir
+	* top/maint.mk (VC_LIST_EXCEPT): Preprocess the output of
+	$(VC_LIST) to remove a prefix of '$(srcdir)/', so that it works
+	from a non-srcdir build.
+
 2010-01-20  Eric Blake  <ebb9@byu.net>
 
 	warn-on-use: use instead of link-warning
