@@ -1,3 +1,16 @@
+2010-01-23  Jim Meyering  <meyering@redhat.com>
+
+	xstrtoll: new module
+	* modules/xstrtoll: New file.
+	* MODULES.html.sh (Numeric conversion functions): Add xstrtoll.
+	* lib/xstrtol.h [HAVE_LONG_LONG_INT]: Declare xstrtoll and xstrtoull.
+	* lib/xstrtoll.c, lib/xstrtoull.c: New files.
+	./configure fails if you use this module and lack "long long".
+	* modules/xstrtoll-tests: New module.
+	* tests/test-xstrtoll.c, tests/test-xstrtoull.c: New files.
+	* tests/test-xstrtoll.sh: Like test-xstrtol.c, but use the
+	new init.sh-based test framework.
+
 2010-01-24  Bruno Haible  <bruno@clisp.org>
 
 	Tests for module 'yn'.

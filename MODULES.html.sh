@@ -1820,6 +1820,7 @@ func_all_modules ()
   func_module c-strtold
   func_module xstrtod
   func_module xstrtol
+  func_module xstrtoll
   func_module xstrtold
   func_end_table
 

@@ -1,0 +1,30 @@
+Description:
+Convert string to 'long long' or 'unsigned long long', with error checking.
+
+Files:
+lib/xstrtoll.c
+lib/xstrtoull.c
+
+Depends-on:
+strtoll
+strtoull
+xstrtol
+
+configure.ac:
+AC_LIBOBJ([xstrtoll])
+AC_LIBOBJ([xstrtoull])
+AC_TYPE_LONG_LONG_INT
+test $ac_cv_type_long_long_int = no \
+  && AC_MSG_ERROR(
+      [you lack long long support; required by gnulib's xstrtoll module])
+
+Makefile.am:
+
+Include:
+"xstrtol.h"
+
+License:
+GPL
+
+Maintainer:
+Jim Meyering

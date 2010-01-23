@@ -46,6 +46,11 @@ _DECLARE_XSTRTOL (xstrtoul, unsigned long int)
 _DECLARE_XSTRTOL (xstrtoimax, intmax_t)
 _DECLARE_XSTRTOL (xstrtoumax, uintmax_t)
 
+#if HAVE_LONG_LONG_INT
+_DECLARE_XSTRTOL (xstrtoll, long long int)
+_DECLARE_XSTRTOL (xstrtoull, unsigned long long int)
+#endif
+
 #ifndef __attribute__
 # if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 8)
 #  define __attribute__(x)
