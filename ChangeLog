@@ -1,3 +1,9 @@
+2010-01-23  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: fix syntax-check in a non-srcdir build directory
+	* top/maint.mk (_dot_escaped_srcdir): Remove erroneous backslash,
+	introduced in my 2010-01-21 commit, a6da6c45.  Reported by Eric Blake.
+
 2010-01-22  Jim Meyering  <meyering@redhat.com>
 
 	userspec: add unit tests

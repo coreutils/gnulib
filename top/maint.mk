@@ -43,7 +43,7 @@ VC_LIST_ALWAYS_EXCLUDE_REGEX ?= ^$$
 # This is to preprocess robustly the output of $(VC_LIST), so that even
 # when $(srcdir) is a pathological name like "....", the leading sed command
 # removes only the intended prefix.
-_dot_escaped_srcdir = $(subst .,\\.,$(srcdir))
+_dot_escaped_srcdir = $(subst .,\.,$(srcdir))
 
 VC_LIST_EXCEPT = \
   $(VC_LIST) | sed 's|^$(_dot_escaped_srcdir)/||' \
