@@ -8,6 +8,5 @@ configure.ac:
 
 Makefile.am:
 TESTS += test-xstrtoimax.sh
-TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
 check_PROGRAMS += test-xstrtoimax
 test_xstrtoimax_LDADD = $(LDADD) @LIBINTL@

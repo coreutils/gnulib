@@ -1,5 +1,93 @@
 2010-01-24  Bruno Haible  <bruno@clisp.org>
 
+	Provide EXEEXT and srcdir in TESTS_ENVIRONMENT by default.
+	* gnulib-tool (func_emit_tests_Makefile_am): Add EXEEXT and srcdir
+	assignments to the initial TESTS_ENVIRONMENT.
+	* doc/gnulib.texi (Unit test modules): Document it.
+	* modules/acl-tests (Makefile.am): Drop EXEEXT assignment from
+	TESTS_ENVIRONMENT.
+	* modules/btowc-tests (Makefile.am): Likewise.
+	* modules/c-stack-tests (Makefile.am): Likewise.
+	* modules/c-strcase-tests (Makefile.am): Likewise.
+	* modules/copy-file-tests (Makefile.am): Likewise.
+	* modules/mbmemcasecmp-tests (Makefile.am): Likewise.
+	* modules/mbmemcasecoll-tests (Makefile.am): Likewise.
+	* modules/mbrtowc-tests (Makefile.am): Likewise.
+	* modules/mbscasecmp-tests (Makefile.am): Likewise.
+	* modules/mbscasestr-tests (Makefile.am): Likewise.
+	* modules/mbschr-tests (Makefile.am): Likewise.
+	* modules/mbscspn-tests (Makefile.am): Likewise.
+	* modules/mbsinit-tests (Makefile.am): Likewise.
+	* modules/mbsncasecmp-tests (Makefile.am): Likewise.
+	* modules/mbsnrtowcs-tests (Makefile.am): Likewise.
+	* modules/mbspbrk-tests (Makefile.am): Likewise.
+	* modules/mbspcasecmp-tests (Makefile.am): Likewise.
+	* modules/mbsrchr-tests (Makefile.am): Likewise.
+	* modules/mbsrtowcs-tests (Makefile.am): Likewise.
+	* modules/mbsspn-tests (Makefile.am): Likewise.
+	* modules/mbsstr-tests (Makefile.am): Likewise.
+	* modules/nl_langinfo-tests (Makefile.am): Likewise.
+	* modules/unicase/locale-language-tests (Makefile.am): Likewise.
+	* modules/unistdio/u16-vasnprintf-tests (Makefile.am): Likewise.
+	* modules/unistdio/u32-vasnprintf-tests (Makefile.am): Likewise.
+	* modules/unistdio/u8-vasnprintf-tests (Makefile.am): Likewise.
+	* modules/unistdio/ulc-vasnprintf-tests (Makefile.am): Likewise.
+	* modules/uniwbrk/ulc-wordbreaks-tests (Makefile.am): Likewise.
+	* modules/vasnprintf-posix-tests (Makefile.am): Likewise.
+	* modules/wcrtomb-tests (Makefile.am): Likewise.
+	* modules/wcsnrtombs-tests (Makefile.am): Likewise.
+	* modules/wcsrtombs-tests (Makefile.am): Likewise.
+	* modules/quotearg-tests (Makefile.am): Drop EXEEXT and srcdir
+	assignments from TESTS_ENVIRONMENT.
+	* modules/argp-tests (Makefile.am): Drop TESTS_ENVIRONMENT
+	augmentation.
+	* modules/argp-version-etc-tests (Makefile.am): Likewise.
+	* modules/atexit-tests (Makefile.am): Likewise.
+	* modules/binary-io-tests (Makefile.am): Likewise.
+	* modules/closein-tests (Makefile.am): Likewise.
+	* modules/dprintf-posix-tests (Makefile.am): Likewise.
+	* modules/exclude-tests (Makefile.am): Likewise.
+	* modules/fflush-tests (Makefile.am): Likewise.
+	* modules/fpending-tests (Makefile.am): Likewise.
+	* modules/fprintf-posix-tests (Makefile.am): Likewise.
+	* modules/freadahead-tests (Makefile.am): Likewise.
+	* modules/freadptr-tests (Makefile.am): Likewise.
+	* modules/freadseek-tests (Makefile.am): Likewise.
+	* modules/fseek-tests (Makefile.am): Likewise.
+	* modules/fseeko-tests (Makefile.am): Likewise.
+	* modules/ftell-tests (Makefile.am): Likewise.
+	* modules/ftello-tests (Makefile.am): Likewise.
+	* modules/idpriv-drop-tests (Makefile.am): Likewise.
+	* modules/idpriv-droptemp-tests (Makefile.am): Likewise.
+	* modules/lseek-tests (Makefile.am): Likewise.
+	* modules/parse-duration-tests (Makefile.am): Likewise.
+	* modules/perror-tests (Makefile.am): Likewise.
+	* modules/pipe-filter-gi-tests (Makefile.am): Likewise.
+	* modules/pipe-filter-ii-tests (Makefile.am): Likewise.
+	* modules/pipe-tests (Makefile.am): Likewise.
+	* modules/pread-tests (Makefile.am): Likewise.
+	* modules/printf-posix-tests (Makefile.am): Likewise.
+	* modules/select-tests (Makefile.am): Likewise.
+	* modules/sigpipe-tests (Makefile.am): Likewise.
+	* modules/tsearch-tests (Makefile.am): Likewise.
+	* modules/unicase/ulc-casecmp-tests (Makefile.am): Likewise.
+	* modules/unicase/ulc-casecoll-tests (Makefile.am): Likewise.
+	* modules/uniname/uniname-tests (Makefile.am): Likewise.
+	* modules/uniwidth/width-tests (Makefile.am): Likewise.
+	* modules/vdprintf-posix-tests (Makefile.am): Likewise.
+	* modules/version-etc-tests (Makefile.am): Likewise.
+	* modules/vfprintf-posix-tests (Makefile.am): Likewise.
+	* modules/vprintf-posix-tests (Makefile.am): Likewise.
+	* modules/xalloc-die-tests (Makefile.am): Likewise.
+	* modules/xprintf-posix-tests (Makefile.am): Likewise.
+	* modules/xstrtoimax-tests (Makefile.am): Likewise.
+	* modules/xstrtol-tests (Makefile.am): Likewise.
+	* modules/xstrtoumax-tests (Makefile.am): Likewise.
+	* modules/yesno-tests (Makefile.am): Likewise.
+	Suggested by Jim Meyering.
+
+2010-01-24  Bruno Haible  <bruno@clisp.org>
+
 	More documentation.
 	* doc/gnulib.texi (Writing modules): New chapter.
 	(Miscellaneous Notes): Move sections "Comments" and "Header files" to

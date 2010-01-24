@@ -9,6 +9,5 @@ configure.ac:
 
 Makefile.am:
 TESTS += test-closein.sh
-TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
 check_PROGRAMS += test-closein
 test_closein_LDADD = $(LDADD) @LIBINTL@

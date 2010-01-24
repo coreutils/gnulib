@@ -9,6 +9,5 @@ configure.ac:
 
 Makefile.am:
 TESTS += test-binary-io.sh
-TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
 check_PROGRAMS += test-binary-io
 

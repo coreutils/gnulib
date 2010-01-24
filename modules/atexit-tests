@@ -10,5 +10,4 @@ configure.ac:
 
 Makefile.am:
 TESTS += test-atexit.sh
-TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
 check_PROGRAMS += test-atexit

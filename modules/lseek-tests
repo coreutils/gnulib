@@ -10,5 +10,4 @@ configure.ac:
 
 Makefile.am:
 TESTS += test-lseek.sh
-TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' srcdir='$(srcdir)'
 check_PROGRAMS += test-lseek

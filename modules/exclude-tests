@@ -23,6 +23,5 @@ TESTS += \
  test-exclude6.sh\
  test-exclude7.sh
 
-TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
 check_PROGRAMS += test-exclude
 test_exclude_LDADD = $(LDADD) @LIBINTL@

@@ -9,6 +9,5 @@ configure.ac:
 
 Makefile.am:
 TESTS += test-fpending.sh
-TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
 check_PROGRAMS += test-fpending
 MOSTLYCLEANFILES += test-fpending.t

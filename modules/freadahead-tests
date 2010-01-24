@@ -11,5 +11,4 @@ configure.ac:
 
 Makefile.am:
 TESTS += test-freadahead.sh
-TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' srcdir='$(srcdir)'
 check_PROGRAMS += test-freadahead

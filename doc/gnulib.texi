@@ -559,7 +559,10 @@ check_PROGRAMS += test-foo
 
 Here, the @code{TESTS_ENVIRONMENT} variable can be used to pass values
 determined by @code{configure} or by the @code{Makefile} to the shell
-script, as environment variables.
+script, as environment variables.  The values of @code{EXEEXT} and of
+@code{srcdir}, from Autoconf and Automake, are already provided as
+environment variables, through an initial value of @code{TESTS_ENVIRONMENT}
+that @code{gnulib-tool} puts in place.
 
 Regardless of the specific form of the unit test, the following guidelines
 should be respected:

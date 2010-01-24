@@ -14,6 +14,6 @@ configure.ac:
 
 Makefile.am:
 TESTS += test-copy-file.sh
-TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' USE_ACL=$(USE_ACL)
+TESTS_ENVIRONMENT += USE_ACL=$(USE_ACL)
 check_PROGRAMS += test-copy-file
 test_copy_file_LDADD = $(LDADD) $(LIB_ACL) @LIBINTL@

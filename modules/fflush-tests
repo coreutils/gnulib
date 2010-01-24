@@ -13,6 +13,5 @@ configure.ac:
 
 Makefile.am:
 TESTS += test-fflush test-fflush2.sh
-TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' srcdir='$(srcdir)'
 check_PROGRAMS += test-fflush test-fflush2
 MOSTLYCLEANFILES += test-fflush.txt

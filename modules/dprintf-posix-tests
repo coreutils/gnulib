@@ -15,5 +15,4 @@ AC_CHECK_FUNCS_ONCE([getrlimit setrlimit])
 
 Makefile.am:
 TESTS += test-dprintf-posix.sh test-dprintf-posix2.sh
-TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' srcdir='$(srcdir)'
 check_PROGRAMS += test-dprintf-posix test-dprintf-posix2

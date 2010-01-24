@@ -14,5 +14,4 @@ gl_FUNC_UNGETC_WORKS
 
 Makefile.am:
 TESTS += test-ftell.sh test-ftell2.sh
-TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' srcdir='$(srcdir)'
 check_PROGRAMS += test-ftell

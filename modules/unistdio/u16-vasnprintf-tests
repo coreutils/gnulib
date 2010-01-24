@@ -22,7 +22,7 @@ gt_LOCALE_FR_UTF8
 
 Makefile.am:
 TESTS += test-u16-vasnprintf1 unistdio/test-u16-vasnprintf2.sh unistdio/test-u16-vasnprintf3.sh
-TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' LOCALE_FR='@LOCALE_FR@' LOCALE_FR_UTF8='@LOCALE_FR_UTF8@'
+TESTS_ENVIRONMENT += LOCALE_FR='@LOCALE_FR@' LOCALE_FR_UTF8='@LOCALE_FR_UTF8@'
 check_PROGRAMS += test-u16-vasnprintf1 test-u16-vasnprintf2 test-u16-vasnprintf3
 test_u16_vasnprintf1_SOURCES = unistdio/test-u16-vasnprintf1.c
 test_u16_vasnprintf1_LDADD = $(LDADD) @LIBICONV@

@@ -9,7 +9,6 @@ configure.ac:
 
 Makefile.am:
 TESTS += test-xstrtol.sh
-TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
 check_PROGRAMS += test-xstrtol test-xstrtoul
 test_xstrtol_LDADD = $(LDADD) @LIBINTL@
 test_xstrtoul_LDADD = $(LDADD) @LIBINTL@

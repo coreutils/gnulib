@@ -15,7 +15,6 @@ configure.ac:
 
 Makefile.am:
 TESTS += test-xprintf-posix.sh
-TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' srcdir='$(srcdir)'
 check_PROGRAMS += test-xfprintf-posix test-xprintf-posix
 test_xfprintf_posix_LDADD = $(LDADD) @LIBINTL@
 test_xprintf_posix_LDADD = $(LDADD) @LIBINTL@

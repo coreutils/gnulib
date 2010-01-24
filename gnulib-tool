@@ -2373,6 +2373,11 @@ func_emit_tests_Makefile_am ()
     echo "AM_LIBTOOLFLAGS = --preserve-dup-deps"
     echo
   fi
+  # Many test scripts use ${EXEEXT} or ${srcdir}.
+  # EXEEXT is defined by AC_PROG_CC through autoconf.
+  # srcdir is defined by autoconf and automake.
+  echo "TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' srcdir='\$(srcdir)'"
+  echo
   cat "$tmp"/allsnippets \
     | sed -e 's|\$(top_srcdir)/build-aux/|$(top_srcdir)/'"$auxdir"'/|g'
   echo "# Clean up after Solaris cc."

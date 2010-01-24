@@ -7,6 +7,5 @@ progname
 
 Makefile.am:
 TESTS += test-argp test-argp-2.sh
-TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@'
 check_PROGRAMS += test-argp
 test_argp_LDADD = $(LDADD) @LIBINTL@

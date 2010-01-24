@@ -12,5 +12,3 @@ configure.ac:
 Makefile.am:
 TESTS += test-pread.sh
 check_PROGRAMS += test-pread
-TESTS_ENVIRONMENT +=	\
-  srcdir='$(srcdir)'
