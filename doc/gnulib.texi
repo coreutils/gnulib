@@ -53,6 +53,7 @@ Documentation License''.
 @menu
 * Introduction::
 * Invoking gnulib-tool::
+* Writing modules::
 * Miscellaneous Notes::
 * POSIX Substitutes Library::       Building as a separate substitutes library.
 * Header File Substitutes::         Overriding system headers.
@@ -113,37 +114,52 @@ Resources:
 @include gnulib-tool.texi
 
 
-@node Miscellaneous Notes
-@chapter Miscellaneous Notes
+@node Writing modules
+@chapter Writing modules
+
+This chapter explains how to write modules of your own, either for your own
+package (to be used with gnulib-tool's @samp{--local-dir} option), or for
+inclusion in gnulib proper.
+
+The guidelines in this chapter do not necessarily need to be followed for
+using @code{gnulib-tool}.  They merely represent a set of good practices.
+Following them will result in a good structure of your modules and in
+consistency with gnulib.
 
 @menu
-* Comments::
+* Source code files::
 * Header files::
-* Out of memory handling::
-* Obsolete modules::
-* Library version handling::
-* Windows sockets::
-* Libtool and Windows::
-* License Texinfo sources::
-* Build robot for gnulib::
+* Implementation files::
+* Specification::
+* Module description::
+* Autoconf macros::
+* Unit test modules::
+* Incompatible changes::
 @end menu
 
 
-@node Comments
-@section Comments
+@node Source code files
+@section Source code files
 
-@cindex comments describing functions
-@cindex describing functions, locating
-Where to put comments describing functions: Because of risk of
-divergence, we prefer to keep most function describing comments in
-only one place: just above the actual function definition.  Some
-people prefer to put that documentation in the .h file.  In any case,
-it should appear in just one place unless you can ensure that the
-multiple copies will always remain identical.
+Every API (C functions or variables) provided should be declared in a header
+file (.h file) and implemented in one or more implementation files (.c files).
+The separation has the effect that users of your module need to read only
+the contents of the .h file and the module description in order to understand
+what the module is about and how to use it - not the entire implementation.
+Furthermore, users of your module don't need to repeat the declarations of
+the functions in their code, and are likely to receive notification through
+compiler errors if you make incompatible changes to the API (like, adding a
+parameter or changing the return type of a function).
 
 
 @node Header files
 @section Header files
+
+The .h file should declare the C functions and variables that the module
+provides.
+
+The .h file should be stand-alone.  That is, it does not require other .h files
+to be included before.  Rather, it includes all necessary .h files by itself.
 
 @cindex double inclusion of header files
 @cindex header file include protection
@@ -207,18 +223,400 @@ systems with g++ v3.3 to v4.2, AIX, OSF/1, IRIX).  For this reason, it
 is recommended to place the @code{#include} before the @code{extern
 "C"} block.
 
+@node Implementation files
+@section Implementation files
+
+The .c file or files implement the functions and variables declared in the
+.h file.
+
 @subheading Include ordering
 
-When writing a gnulib module, or even in general, a good way to order
-the @samp{#include} directives is the following.
+Every implementation file must start with @samp{#include <config.h>}.
+This is necessary for activating the preprocessor macros that are defined
+on behalf of the Autoconf macros.  Some of these preprocessor macros,
+such as @code{_GNU_SOURCE}, would have no effect if defined after a system
+header file has already been included.
+
+Then comes the @samp{#include "..."} specifying the header file that is
+being implemented.  Putting this right after @samp{#include <config.h>}
+has the effect that it verifies that the header file is self-contained.
+
+Then come the system and application headers. It is customary to put all the
+system headers before all application headers, so as to minimize the risk
+that a preprocessor macro defined in an application header confuses the system
+headers on some platforms.
+
+In summary:
 
 @itemize
-@item First comes the #include "..." specifying the module being implemented.
-@item Then come all the #include <...> of system or system-replacement headers,
+@item
+First comes #include <config.h>.
+@item
+Second comes the #include "..." specifying the module being implemented.
+@item
+Then come all the #include <...> of system or system-replacement headers,
 in arbitrary order.
-@item Then come all the #include "..." of gnulib and private headers, in
+@item
+Then come all the #include "..." of gnulib and application headers, in
 arbitrary order.
 @end itemize
+
+
+@node Specification
+@section Specification
+
+The specification of a function should answer at least the following
+questions:
+@itemize
+@item
+What is the purpose of the function?
+@item
+What are the arguments?
+@item
+What is the return value?
+@item
+What happens in case of failure? (Exit? A specific return value? Errno set?)
+@item
+Memory allocation policy: If pointers to memory are returned, are they freshly
+allocated and supposed to be freed by the caller?
+@end itemize
+
+@cindex specification
+@cindex comments describing functions
+@cindex describing functions, locating
+Where to put the specification describing exported functions? Three practices
+are used in gnulib:
+
+@itemize
+@item
+The specification can be as comments in the header file, just above the
+function declaration.
+@item
+The specification can be as comments in the implementation file, just above
+the function definition.
+@item
+The specification can be in texinfo format, so that it gets included in the
+gnulib manual.
+@end itemize
+
+In any case, the specification should appear in just one place, unless you can
+ensure that the multiple copies will always remain identical.
+
+The advantage of putting it in the header file is that the user only has to
+read the include file normally never needs to peek into the implementation
+file(s).
+
+The advantage of putting it in the implementation file is that when reviewing
+or changing the implementation, you have both elements side by side.
+
+The advantage of texinfo formatted documentation is that it is easily
+published in HTML or Info format.
+
+Currently (as of 2010), half of gnulib uses the first practice, nearly half
+of gnulib uses the second practice, and a small minority uses the texinfo
+practice.
+
+
+@node Module description
+@section Module description
+
+For the module description, you can start from an existing module's
+description, or from a blank one: @file{module/TEMPLATE} for a normal module,
+or @file{module/TEMPLATE-TESTS} for a unit test module.  Some more fields
+are possible but rarely used.  Use @file{module/TEMPLATE-EXTENDED} if you
+want to use one of them.
+
+Module descriptions have the following fields.  Absent fields are equivalent
+to fields with empty contents.
+
+@table @asis
+@item Description
+This field should contain a concise description of the module's functionality.
+One sentence is enough.  For example, if it defines a single function
+@samp{frob}, the description can be @samp{frob() function: frobnication.}
+Gnulib's documentation generator will automatically convert the first part
+to a hyperlink when it has this form.
+
+@item Status
+This field is either empty/absent, or contains the word @samp{obsolete}.  In
+the latter case, @command{gnulib-tool} will, unless the option
+@code{--with-obsolete} is given, omit it when it used as a dependency.  It is
+good practice to also notify the user about an obsolete module.  This is done
+by putting into the @samp{Notice} section (see below) text like
+@samp{This module is obsolete.}
+
+@item Notice
+This field contains text that @command{gnulib-tool} will show to the user
+when the module is used.  This can be a status indicator like
+@samp{This module is obsolete.} or additional advice.  Do not abuse this
+field.
+
+@item Applicability
+This field is either empty/absent, or contains the word @samp{all}.  It
+describes to which @code{Makefile.am} the module is applied.  By default,
+a normal module is applied to @code{@var{source_base}/Makefile.am}
+(normally @code{lib/Makefile.am}), whereas a module ending in @code{-tests}
+is applied to @code{@var{tests_base}/Makefile.am} (normally
+@code{tests/Makefile.am}).  If this field is @samp{all}, it is applied to
+both @code{Makefile.am}s.  This is useful for modules which provide
+Makefile.am macros rather than compiled source code.
+
+@item Files
+This field contains a newline separated list of the files that are part of
+the module.  @code{gnulib-tool} copies these files into the package that
+uses the module.
+
+This list is typically ordered by importance: First comes the header file,
+then the implementation files, then other files.
+
+It is possible to have the same file mentioned in multiple modules.  That is,
+if the maintainers of that module agree on the purpose and future of said
+file.
+
+@item Depends-on
+This field contains a newline separated list of the modules that are required
+for the proper working of this module.  @code{gnulib-tool} includes each
+required module automatically, unless it is specified with option
+@code{--avoid} or it is marked as obsolete and the option
+@code{--with-obsolete} is not given.
+
+A test modules @code{foo-tests} implicity depends on the corresponding non-test
+module @code{foo}.  @code{foo} implicitly depends on @code{foo-tests} if the
+latter exists and if the option @code{--with-tests} has been given.
+
+Tests modules can depend on non-tests modules.  Non-tests modules should not
+depend on tests modules. (Recall that tests modules are built in a separate
+directory.)
+
+@item configure.ac-early
+This field contains @file{configure.ac} stuff (Autoconf macro invocations and
+shell statements) that are logically placed early in the @file{configure.ac}
+file: right after the @code{AC_PROG_CC} invocation.  This section is adequate
+for statements that modify @code{CPPFLAGS}, as these can affect the results of
+other Autoconf macros.
+
+@item configure.ac
+This field contains @file{configure.ac} stuff (Autoconf macro invocations and
+shell statements).
+
+It is forbidden to add items to the @code{CPPFLAGS} variable here, other than
+temporarily, as these could affect the results of other Autoconf macros.
+
+We avoid adding items to the @code{LIBS} variable, other than temporarily.
+Instead, the module can export an Autoconf-substituted variable that contains
+link options.  The user of the module can then decide to which executables
+to apply which link options.  Recall that a package can build executables of
+different kinds and purposes; having all executables link against all
+libraries is inappropriate.
+
+If the statements in this section grow larger than a couple of lines, we
+recommend moving them to a @code{.m4} file of their own.
+
+@item Makefile.am
+This field contains @code{Makefile.am} statements.  Variables like
+@code{lib_SOURCES} are transformed to match the name of the library
+being built in that directory.  For example, @code{lib_SOURCES} may become
+@code{libgnu_a_SOURCES} (for a plain library) or @code{libgnu_la_SOURCES}
+(for a libtool library).  Therefore, the normal way of having an
+implementation file @code{lib/foo.c} compiled unconditionally is to write
+@smallexample
+lib_SOURCES += foo.c
+@end smallexample
+
+@item Include
+This field contains the preprocessor statements that users of the module
+need to add to their source code files.  Typically it's a single include
+statement.  A shorthand is allowed: You don't need to write the word
+``#include'', just the name of the include file in the way it will appear
+in an include statement.  Example:
+@smallexample
+"foo.h"
+@end smallexample
+
+@item Link
+This field contains the set of libraries that are needed when linking
+libraries or executables that use this module.  Often this will be
+written as a reference to a Makefile variable.  Please write them
+one per line, so that @command{gnulib-tool} can remove duplicates
+when presenting a summary to the user.
+Example:
+@smallexample
+$(POW_LIBM)
+$(LTLIBICONV) when linking with libtool, $(LIBICONV) otherwise
+@end smallexample
+
+@item License
+This field specifies the license that governs the source code parts of
+this module.  See @ref{Copyright} for details.
+
+@item Maintainer
+This field specifies the persons who have a definitive say about proposed
+changes to this module.  You don't need to mention email addresses here:
+they can be inferred from the @code{ChangeLog} file.
+
+Please put at least one person here.  We don't like unmaintained modules.
+@end table
+
+
+@node Autoconf macros
+@section Autoconf macros
+
+For a module @code{foo}, an Autoconf macro file @file{m4/foo.m4} is typically
+created when the Autoconf macro invocations for the module are longer than
+one or two lines.
+
+The name of the main entry point into this Autoconf macro file is typically
+@code{gl_FOO}.  For modules outside Gnulib that are not likely to be moved
+into Gnulib, please use a prefix specific to your package: @code{gt_} for
+GNU gettext, @code{cu_} for GNU coreutils, etc.
+
+For modules that define a function @code{foo}, the entry point is called
+@code{gl_FUNC_FOO} instead of @code{gl_FOO}.  For modules that provide a
+header file with multiple functions, say @code{foo.h}, the entry point is
+called @code{gl_FOO_H} or @code{gl_HEADER_FOO_H}.  This convention is useful
+because sometimes a header and a function name coincide (for example,
+@code{fcntl} and @code{fcntl.h}).
+
+For modules that provide a replacement, it is useful to split the Autoconf
+macro into two macro definitions: one that detects whether the replacement
+is needed and requests the replacement using @code{AC_LIBOBJ} (this is the
+entry point, say @code{gl_FUNC_FOO}), and one that arranges for the macros
+needed by the replacement code @code{lib/foo.c} (typically called
+@code{gl_PREREQ_FOO}).  The reason of this separation is
+@enumerate
+@item
+to make it easy to update the Autoconf macros when you have modified the
+source code file: after changing @code{lib/foo.c}, all you have to review
+is the @code{Depends-on} section of the module description and the
+@code{gl_PREREQ_FOO} macro in the Autoconf macro file.
+@item
+The Autoconf macros are often large enough that splitting them eases
+maintenance.
+@end enumerate
+
+
+@node Unit test modules
+@section Unit test modules
+
+A unit test that is a simple C program usually has a module description as
+simple as this:
+
+@smallexample
+Files:
+tests/test-foo.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-foo
+check_PROGRAMS += test-foo
+@end smallexample
+
+The test program @file{tests/test-foo.c} often has the following structure:
+
+@itemize
+@item
+First comes the obligatory @samp{#include <config.h>}.
+
+@item
+Second comes the include of the header file that declares the API being tested.
+Including it here verifies that said header file is self-contained.
+
+@item
+Then come other includes.  In particular, the file @file{macros.h} is often
+used here.  It contains a convenient @code{ASSERT} macro.
+@end itemize
+
+The body of the test, then, contains many @code{ASSERT} invocations.  When
+a test fails, the @code{ASSERT} macro prints the line number of the failing
+statement, thus giving you as a developer a idea which part of the test
+failed, even when you don't have access to the machine where the test failed
+and the reporting user cannot run a debugger.
+
+Sometimes it is convenient to write part of the test as a shell script.
+(For example, in areas related to process control or interprocess
+communication, or when different locales should be tried.) In these cases,
+the typical module description is like this:
+
+@smallexample
+Files:
+tests/test-foo.sh
+tests/test-foo.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-foo.sh
+TESTS_ENVIRONMENT += FOO_BAR='@@FOO_BAR@@'
+check_PROGRAMS += test-foo
+@end smallexample
+
+Here, the @code{TESTS_ENVIRONMENT} variable can be used to pass values
+determined by @code{configure} or by the @code{Makefile} to the shell
+script, as environment variables.
+
+Regardless of the specific form of the unit test, the following guidelines
+should be respected:
+
+@itemize
+@item
+A test indicates success by exiting with exit code 0.  It should normally
+not produce output in this case.  (Output to temporary files that are
+cleaned up at the end of the test are possible, of course.)
+@item
+A test indicates failure by exiting with an exit code different from 0 and 77,
+typically 1.  It is useful to print a message about the failure in this case.
+The @code{ASSERT} macro already does so.
+@item
+A test indicates "skip", that is, that most of its interesting functionality
+could not be performed, through a return code of 77.  A test should also
+print a message to stdout or stderr about the reason for skipping.
+For example:
+@smallexample
+  fputs ("Skipping test: multithreading not enabled\n", stderr);
+  return 77;
+@end smallexample
+Such a message helps detecting bugs in the autoconf macros: A simple message
+@samp{SKIP: test-foo} does not sufficiently catch the attention of the user.
+@end itemize
+
+
+@node Incompatible changes
+@section Incompatible changes
+
+Incompatible changes to Gnulib modules should be mentioned in Gnulib's
+@file{NEWS} file.  Incompatible changes here mean that existing source code
+may not compile or work any more.
+
+We don't mean changes in the binary interface (ABI), since
+@enumerate
+@item
+Gnulib code is used in source-code form.
+@item
+The user who distributes libraries that contain Gnulib code is supposed to
+bump the version number in the way described in the Libtool documentation
+before every release.
+@end enumerate
+
+
+@node Miscellaneous Notes
+@chapter Miscellaneous Notes
+
+@menu
+* Out of memory handling::
+* Obsolete modules::
+* Library version handling::
+* Windows sockets::
+* Libtool and Windows::
+* License Texinfo sources::
+* Build robot for gnulib::
+@end menu
 
 
 @node Out of memory handling

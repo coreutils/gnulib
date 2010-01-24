@@ -1,3 +1,10 @@
+2010-01-24  Bruno Haible  <bruno@clisp.org>
+
+	More documentation.
+	* doc/gnulib.texi (Writing modules): New chapter.
+	(Miscellaneous Notes): Move sections "Comments" and "Header files" to
+	the new chapter.
+
 2010-01-24  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: do not prepend "./" after filtering
