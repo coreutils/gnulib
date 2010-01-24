@@ -45,12 +45,23 @@ VC_LIST_ALWAYS_EXCLUDE_REGEX ?= ^$$
 # removes only the intended prefix.
 _dot_escaped_srcdir = $(subst .,\.,$(srcdir))
 
+# Post-process $(VC_LIST) output, prepending $(srcdir)/, but only
+# when $(srcdir) is not ".".
+ifeq ($(srcdir),.)
+_prepend_srcdir_prefix =
+else
+_prepend_srcdir_prefix = | sed 's|^|$(srcdir)/|'
+endif
+
+# In order to be able to consistently filter "."-relative names,
+# (i.e., with no $(srcdir) prefix), this definition is careful to
+# remove any $(srcdir) prefix, and to restore what it removes.
 VC_LIST_EXCEPT = \
   $(VC_LIST) | sed 's|^$(_dot_escaped_srcdir)/||' \
 	| if test -f $(srcdir)/.x-$@; then grep -vEf $(srcdir)/.x-$@; \
 	  else grep -Ev -e "$${VC_LIST_EXCEPT_DEFAULT-ChangeLog}"; fi \
 	| grep -Ev -e '$(VC_LIST_ALWAYS_EXCLUDE_REGEX)' \
-	| sed 's|^|$(srcdir)/|'
+	$(_prepend_srcdir_prefix)
 
 ifeq ($(origin prev_version_file), undefined)
   prev_version_file = $(srcdir)/.prev-version

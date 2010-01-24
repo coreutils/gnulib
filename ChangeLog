@@ -1,5 +1,10 @@
 2010-01-24  Jim Meyering  <meyering@redhat.com>
 
+	maint.mk: do not prepend "./" after filtering
+	* top/maint.mk (_prepend_srcdir_prefix): New variable
+	(VC_LIST_EXCEPT): Use it to avoid prepending (post-filter)
+	"./" when $(srcdir) is ".".
+
 	define STREQ(a,b) consistently, removing useless parentheses
 	#define STREQ(a, b) (strcmp ((a), (b)) == 0) is over-parenthesized,
 	since the only risk is that "a" or "b" contains an unparenthesized
