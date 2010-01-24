@@ -1,5 +1,27 @@
 2010-01-24  Bruno Haible  <bruno@clisp.org>
 
+	Tests: Defeat inlining of math functions by GCC >= 4.3.0.
+	* tests/test-acosl.c (x): New variable.
+	(main): Store argument in x and fetch it from x.
+	* tests/test-asinl.c (x): New variable.
+	(main): Store argument in x and fetch it from x.
+	* tests/test-atanl.c (x): New variable.
+	(main): Store argument in x and fetch it from x.
+	* tests/test-cosl.c (x): New variable.
+	(main): Store argument in x and fetch it from x.
+	* tests/test-expl.c (x): New variable.
+	(main): Store argument in x and fetch it from x.
+	* tests/test-logl.c (x): New variable.
+	(main): Store argument in x and fetch it from x.
+	* tests/test-sinl.c (x): New variable.
+	(main): Store argument in x and fetch it from x.
+	* tests/test-sqrtl.c (x): New variable.
+	(main): Store argument in x and fetch it from x.
+	* tests/test-tanl.c (x): New variable.
+	(main): Store argument in x and fetch it from x.
+
+2010-01-24  Bruno Haible  <bruno@clisp.org>
+
 	Provide EXEEXT and srcdir in TESTS_ENVIRONMENT by default.
 	* gnulib-tool (func_emit_tests_Makefile_am): Add EXEEXT and srcdir
 	assignments to the initial TESTS_ENVIRONMENT.

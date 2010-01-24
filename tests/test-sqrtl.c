@@ -26,6 +26,7 @@ SIGNATURE_CHECK (sqrtl, long double, (long double));
 #include "fpucw.h"
 #include "macros.h"
 
+volatile long double x;
 long double y;
 
 int
@@ -36,7 +37,8 @@ main ()
   BEGIN_LONG_DOUBLE_ROUNDING ();
 
   /* A particular value.  */
-  y = sqrtl (0.6L);
+  x = 0.6L;
+  y = sqrtl (x);
   ASSERT (y >= 0.7745966692L && y <= 0.7745966693L);
 
   return 0;
