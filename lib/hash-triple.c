@@ -27,7 +27,7 @@
 #include "same.h"
 #include "same-inode.h"
 
-#define STREQ(a, b) (strcmp ((a), (b)) == 0)
+#define STREQ(a, b) (strcmp (a, b) == 0)
 
 /* Hash an F_triple, and *do* consider the file name.  */
 size_t

@@ -1,3 +1,15 @@
+2010-01-24  Jim Meyering  <meyering@redhat.com>
+
+	define STREQ(a,b) consistently, removing useless parentheses
+	#define STREQ(a, b) (strcmp ((a), (b)) == 0) is over-parenthesized,
+	since the only risk is that "a" or "b" contains an unparenthesized
+	comma, but if either did that, STREQ would have 3 or more arguments.
+	Hence, #define STREQ(a, b) (strcmp (a, b) == 0) is better.
+	* lib/fts.c (STREQ): Remove unnecessary parentheses.
+	* lib/hash-triple.c (STREQ): Likewise.
+	* tests/test-argv-iter.c (STREQ): Use a and b, not s1 and s2.
+	* lib/getugroups.c (STREQ): Likewise.
+
 2010-01-23  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: fix syntax-check in a non-srcdir build directory

@@ -223,7 +223,7 @@ static void free_dir (FTS *fts) {}
 #endif
 
 #define ISDOT(a)        (a[0] == '.' && (!a[1] || (a[1] == '.' && !a[2])))
-#define STREQ(a, b)     (strcmp ((a), (b)) == 0)
+#define STREQ(a, b)     (strcmp (a, b) == 0)
 
 #define CLR(opt)        (sp->fts_options &= ~(opt))
 #define ISSET(opt)      (sp->fts_options & (opt))

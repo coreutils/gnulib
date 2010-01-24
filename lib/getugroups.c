@@ -45,7 +45,7 @@ getugroups (int maxcount _GL_UNUSED,
 #else /* HAVE_GRP_H */
 # include <grp.h>
 
-# define STREQ(s1, s2) (strcmp (s1, s2) == 0)
+# define STREQ(a, b) (strcmp (a, b) == 0)
 
 /* Like `getgroups', but for user USERNAME instead of for the current
    process.  Store at most MAXCOUNT group IDs in the GROUPLIST array.

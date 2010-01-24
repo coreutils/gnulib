@@ -26,7 +26,7 @@
 #include "macros.h"
 
 #define ARRAY_CARDINALITY(Array) (sizeof (Array) / sizeof *(Array))
-#define STREQ(s1, s2) (strcmp (s1, s2) == 0)
+#define STREQ(a, b) (strcmp (a, b) == 0)
 
 static FILE *
 write_nul_delimited_argv (char **argv)
