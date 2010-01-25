@@ -1,5 +1,9 @@
 2010-01-24  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'fabs'.
+	* modules/fabs-tests: New file.
+	* tests/test-fabs.c: New file.
+
 	Tests for module 'exp'.
 	* modules/exp-tests: New file.
 	* tests/test-exp.c: New file.
