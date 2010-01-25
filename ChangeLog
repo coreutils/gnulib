@@ -1,5 +1,9 @@
 2010-01-24  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'cosh'.
+	* modules/cosh-tests: New file.
+	* tests/test-cosh.c: New file.
+
 	Tests for module 'cos'.
 	* modules/cos-tests: New file.
 	* tests/test-cos.c: New file.
