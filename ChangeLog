@@ -1,5 +1,9 @@
 2010-01-24  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'pow'.
+	* modules/pow-tests: New file.
+	* tests/test-pow.c: New file.
+
 	Tests for module 'nextafter'.
 	* modules/nextafter-tests: New file.
 	* tests/test-nextafter.c: New file.
