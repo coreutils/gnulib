@@ -1,5 +1,9 @@
 2010-01-24  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'tanh'.
+	* modules/tanh-tests: New file.
+	* tests/test-tanh.c: New file.
+
 	Tests for module 'tan'.
 	* modules/tan-tests: New file.
 	* tests/test-tan.c: New file.
