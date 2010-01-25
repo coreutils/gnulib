@@ -4,6 +4,7 @@ tests/test-xstrtoul.c
 tests/test-xstrtol.sh
 
 Depends-on:
+inttypes
 
 configure.ac:
 

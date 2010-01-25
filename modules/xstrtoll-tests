@@ -6,7 +6,7 @@ tests/test-xstrtoull.c
 tests/test-xstrtoll.sh
 
 Depends-on:
-xstrtoll
+inttypes
 
 configure.ac:
 

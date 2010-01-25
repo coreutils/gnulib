@@ -1,3 +1,9 @@
+2010-01-25  Bruno Haible  <bruno@clisp.org>
+
+	Fix test dependencies.
+	* modules/xstrtol-tests (Depends-on): Add inttypes.
+	* modules/xstrtoll-tests (Depends-on): Likewise. Remove xstrtoll.
+
 2010-01-25 Pádraig Brady <P@draigBrady.com>
 
 	syntax-check: detect incorrect boolean macro values in config.h
