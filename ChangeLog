@@ -1,5 +1,9 @@
 2010-01-24  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'j1'.
+	* modules/j1-tests: New file.
+	* tests/test-j1.c: New file.
+
 	Tests for module 'j0'.
 	* modules/j0-tests: New file.
 	* tests/test-j0.c: New file.
