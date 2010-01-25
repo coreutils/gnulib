@@ -1,0 +1,13 @@
+Files:
+tests/test-log.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-log
+check_PROGRAMS += test-log
+test_log_LDADD = $(LDADD) @LOG_LIBM@
