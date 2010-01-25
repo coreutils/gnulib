@@ -1,0 +1,13 @@
+Files:
+tests/test-rint.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-rint
+check_PROGRAMS += test-rint
+test_rint_LDADD = $(LDADD) @RINT_LIBM@
