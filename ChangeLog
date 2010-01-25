@@ -1,5 +1,9 @@
 2010-01-24  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'sin'.
+	* modules/sin-tests: New file.
+	* tests/test-sin.c: New file.
+
 	Tests for module 'rint'.
 	* modules/rint-tests: New file.
 	* tests/test-rint.c: New file.
