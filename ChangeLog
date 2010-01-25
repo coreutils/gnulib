@@ -1,5 +1,9 @@
 2010-01-24  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'yn'.
+	* modules/yn-tests: New file.
+	* tests/test-yn.c: New file.
+
 	Tests for module 'y1'.
 	* modules/y1-tests: New file.
 	* tests/test-y1.c: New file.
