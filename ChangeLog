@@ -1,5 +1,9 @@
 2010-01-24  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'sqrt'.
+	* modules/sqrt-tests: New file.
+	* tests/test-sqrt.c: New file.
+
 	Tests for module 'sinh'.
 	* modules/sinh-tests: New file.
 	* tests/test-sinh.c: New file.
