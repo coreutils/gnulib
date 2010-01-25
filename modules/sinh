@@ -7,7 +7,7 @@ m4/mathfunc.m4
 Depends-on:
 
 configure.ac:
-gl_MATHFUNC([sinh])
+gl_MATHFUNC([sinh], [double], [(double)])
 
 Makefile.am:
 

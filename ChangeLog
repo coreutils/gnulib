@@ -1,5 +1,48 @@
 2010-01-24  Bruno Haible  <bruno@clisp.org>
 
+	Fix tests for common <math.h> functions.
+	* m4/mathfunc.m4 (gl_MATHFUNC): Take two additional parameters. Use a
+	code snippet that references the function pointer, rather than merely
+	calling the function. Substitute the FUNC_LIBM variable.
+	* m4/sqrt.m4 (gl_FUNC_SQRT): Update gl_MATHFUNC invocation.
+	* modules/acos (configure.ac): Likewise.
+	* modules/asin (configure.ac): Likewise.
+	* modules/atan (configure.ac): Likewise.
+	* modules/atan2 (configure.ac): Likewise.
+	* modules/cbrt (configure.ac): Likewise.
+	* modules/copysign (configure.ac): Likewise.
+	* modules/cos (configure.ac): Likewise.
+	* modules/cosh (configure.ac): Likewise.
+	* modules/erf (configure.ac): Likewise.
+	* modules/erfc (configure.ac): Likewise.
+	* modules/exp (configure.ac): Likewise.
+	* modules/fabs (configure.ac): Likewise.
+	* modules/fmod (configure.ac): Likewise.
+	* modules/hypot (configure.ac): Likewise.
+	* modules/j0 (configure.ac): Likewise.
+	* modules/j1 (configure.ac): Likewise.
+	* modules/jn (configure.ac): Likewise.
+	* modules/ldexp (configure.ac): Likewise.
+	* modules/lgamma (configure.ac): Likewise.
+	* modules/log (configure.ac): Likewise.
+	* modules/log10 (configure.ac): Likewise.
+	* modules/log1p (configure.ac): Likewise.
+	* modules/logb (configure.ac): Likewise.
+	* modules/modf (configure.ac): Likewise.
+	* modules/nextafter (configure.ac): Likewise.
+	* modules/pow (configure.ac): Likewise.
+	* modules/remainder (configure.ac): Likewise.
+	* modules/rint (configure.ac): Likewise.
+	* modules/sin (configure.ac): Likewise.
+	* modules/sinh (configure.ac): Likewise.
+	* modules/tan (configure.ac): Likewise.
+	* modules/tanh (configure.ac): Likewise.
+	* modules/y0 (configure.ac): Likewise.
+	* modules/y1 (configure.ac): Likewise.
+	* modules/yn (configure.ac): Likewise.
+
+2010-01-24  Bruno Haible  <bruno@clisp.org>
+
 	Tests: Defeat inlining of math functions by GCC >= 4.3.0.
 	* tests/test-acosl.c (x): New variable.
 	(main): Store argument in x and fetch it from x.
