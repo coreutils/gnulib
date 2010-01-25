@@ -1,5 +1,9 @@
 2010-01-24  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'cbrt'.
+	* modules/cbrt-tests: New file.
+	* tests/test-cbrt.c: New file.
+
 	Tests for module 'atan2'.
 	* modules/atan2-tests: New file.
 	* tests/test-atan2.c: New file.
