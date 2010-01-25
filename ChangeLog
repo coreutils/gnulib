@@ -1,5 +1,9 @@
 2010-01-24  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'logb'.
+	* modules/logb-tests: New file.
+	* tests/test-logb.c: New file.
+
 	Tests for module 'log1p'.
 	* modules/log1p-tests: New file.
 	* tests/test-log1p.c: New file.
