@@ -1,5 +1,11 @@
 2010-01-24  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'acos'.
+	* modules/acos-tests: New file.
+	* tests/test-acos.c: New file.
+
+2010-01-24  Bruno Haible  <bruno@clisp.org>
+
 	Fix tests for common <math.h> functions.
 	* m4/mathfunc.m4 (gl_MATHFUNC): Take two additional parameters. Use a
 	code snippet that references the function pointer, rather than merely
