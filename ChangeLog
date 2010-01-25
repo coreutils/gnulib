@@ -1,5 +1,9 @@
 2010-01-24  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'erf'.
+	* modules/erf-tests: New file.
+	* tests/test-erf.c: New file.
+
 	Tests for module 'cosh'.
 	* modules/cosh-tests: New file.
 	* tests/test-cosh.c: New file.
