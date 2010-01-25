@@ -1,3 +1,9 @@
+2010-01-25  Jim Meyering  <meyering@redhat.com>
+
+	bootstrap: detect MacOS 10.6's shasum, too
+	* build-aux/bootstrap: Also recognize MacOS 10.6's shasum.
+	Suggested by Thomas Treichl <Thomas.Treichl@gmx.net>.
+
 2010-01-23  Jim Meyering  <meyering@redhat.com>
 
 	xstrtoll: new module

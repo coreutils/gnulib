@@ -188,8 +188,8 @@ find_tool ()
   eval "export $find_tool_envvar"
 }
 
-# Find sha1sum, named gsha1sum on MacPorts.
-find_tool SHA1SUM sha1sum gsha1sum
+# Find sha1sum, named gsha1sum on MacPorts, and shasum on MacOS 10.6.
+find_tool SHA1SUM sha1sum gsha1sum shasum
 
 # Override the default configuration, if necessary.
 # Make sure that bootstrap.conf is sourced from the current directory
