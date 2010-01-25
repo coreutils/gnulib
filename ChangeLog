@@ -1,3 +1,13 @@
+2010-01-25 Pádraig Brady <P@draigBrady.com>
+
+	syntax-check: detect incorrect boolean macro values in config.h
+	* modules/maintainer-makefile (configure.ac): Parameterize the location
+	of config.h which will be available to makefiles as $(CONFIG_INCLUDE).
+	The logic is from Eric Blake and the location indicated by Jim Meyering.
+	Note the more natural CONFIG_HEADER name is prohibited by automake
+	for backwards compatibility reasons.
+	* top/maint.mk (sc_Wundef_boolean): New rule.
+
 2010-01-25  Jim Meyering  <meyering@redhat.com>
 
 	bootstrap: detect MacOS 10.6's shasum, too

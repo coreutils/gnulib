@@ -718,6 +718,14 @@ sc_copyright_check:
 	       exit 1; };						\
 	fi
 
+# #if HAVE_... will evaluate to false for any non numeric string.
+# That would be flagged by using -Wundef, however gnulib currently
+# tests many undefined macros, and so we can't enable that option.
+# So at least preclude common boolean strings as macro values.
+sc_Wundef_boolean:
+	@grep -Ei '^#define.*(yes|no|true|false)$$' '$(CONFIG_INCLUDE)' && \
+	  { echo 'Use 0 or 1 for macro values' 1>&2; exit 1; } || :
+
 vc-diff-check:
 	(unset CDPATH; cd $(srcdir) && $(VC) diff) > vc-diffs || :
 	if test -s vc-diffs; then				\
