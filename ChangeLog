@@ -1,5 +1,9 @@
 2010-01-24  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'asin'.
+	* modules/asin-tests: New file.
+	* tests/test-asin.c: New file.
+
 	Tests for module 'acos'.
 	* modules/acos-tests: New file.
 	* tests/test-acos.c: New file.
