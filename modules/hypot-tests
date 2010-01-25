@@ -1,0 +1,13 @@
+Files:
+tests/test-hypot.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-hypot
+check_PROGRAMS += test-hypot
+test_hypot_LDADD = $(LDADD) @HYPOT_LIBM@

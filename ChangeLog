@@ -1,5 +1,9 @@
 2010-01-24  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'hypot'.
+	* modules/hypot-tests: New file.
+	* tests/test-hypot.c: New file.
+
 	Tests for module 'fmod'.
 	* modules/fmod-tests: New file.
 	* tests/test-fmod.c: New file.
