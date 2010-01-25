@@ -1,5 +1,9 @@
 2010-01-24  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'log10'.
+	* modules/log10-tests: New file.
+	* tests/test-log10.c: New file.
+
 	Tests for module 'log'.
 	* modules/log-tests: New file.
 	* tests/test-log.c: New file.
