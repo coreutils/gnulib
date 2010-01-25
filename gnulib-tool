@@ -490,6 +490,13 @@ func_fatal_error ()
   func_exit 1
 }
 
+# func_warning message
+# Outputs to stderr a warning message,
+func_warning ()
+{
+  echo "gnulib-tool: warning: $1" 1>&2
+}
+
 # func_readlink SYMLINK
 # outputs the target of the given symlink.
 if (type -p readlink) > /dev/null 2>&1; then
@@ -1135,7 +1142,7 @@ fi
     func_exit 1
   fi
   if test -z "$pobase" && test -n "$po_domain"; then
-    echo "gnulib-tool: warning: --po-domain has no effect without a --po-base option" 1>&2
+    func_warning "--po-domain has no effect without a --po-base option"
   fi
 
   # Determine the minimum supported autoconf version from the project's
@@ -1311,7 +1318,7 @@ func_verify_module ()
     # Verify that building the module description with 'patch' succeeds.
     func_lookup_file "modules/$module"
   else
-    echo "gnulib-tool: module $module doesn't exist" 1>&2
+    func_warning "module $module doesn't exist"
     module=
   fi
 }
@@ -1689,7 +1696,7 @@ func_modules_transitive_closure ()
           # Duplicate dependencies are harmless, but Jim wants a warning.
           duplicated_deps=`echo "$deps" | LC_ALL=C sort | LC_ALL=C uniq -d`
           if test -n "$duplicated_deps"; then
-            echo "warning: module $module has duplicated dependencies: "`echo $duplicated_deps` 1>&2
+            func_warning "module $module has duplicated dependencies: "`echo $duplicated_deps`
           fi
           for dep in $deps; do
             if test -n "$incobsolete" \
@@ -3885,19 +3892,19 @@ func_create_testdir ()
               GPLv2+)
                 case "$license" in
                   GPLv2+ | LGPLv2+) ;;
-                  *) echo "warning: module $requested_module depends on a module with an incompatible license: $module" 1>&2 ;;
+                  *) func_warning "module $requested_module depends on a module with an incompatible license: $module" ;;
                 esac
                 ;;
               LGPL)
                 case "$license" in
                   LGPL | LGPLv2+) ;;
-                  *) echo "warning: module $requested_module depends on a module with an incompatible license: $module" 1>&2 ;;
+                  *) func_warning "module $requested_module depends on a module with an incompatible license: $module" ;;
                 esac
                 ;;
               LGPLv2+)
                 case "$license" in
                   LGPLv2+) ;;
-                  *) echo "warning: module $requested_module depends on a module with an incompatible license: $module" 1>&2 ;;
+                  *) func_warning "module $requested_module depends on a module with an incompatible license: $module" ;;
                 esac
                 ;;
             esac

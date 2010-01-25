@@ -1,5 +1,12 @@
 2010-01-25  Bruno Haible  <bruno@clisp.org>
 
+	gnulib-tool: Make warning diagnostics consistent.
+	* gnulib-tool (func_warning): New function.
+	Use it everywhere where gnulib-tool produces output to stderr and it is
+	not a fatal error.
+
+2010-01-25  Bruno Haible  <bruno@clisp.org>
+
 	Fix test dependencies.
 	* modules/xstrtol-tests (Depends-on): Add inttypes.
 	* modules/xstrtoll-tests (Depends-on): Likewise. Remove xstrtoll.
