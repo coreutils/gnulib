@@ -1,0 +1,13 @@
+Files:
+tests/test-exp.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-exp
+check_PROGRAMS += test-exp
+test_exp_LDADD = $(LDADD) @EXP_LIBM@
