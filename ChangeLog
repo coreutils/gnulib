@@ -1,3 +1,10 @@
+2010-01-26  Jim Meyering  <meyering@redhat.com>
+
+	test-userspec.c: avoid compiler warnings
+	* tests/test-userspec.c (main): Avoid shadowing ("uid"),
+	and "initialization discards qualifiers..." warnings.
+	Put the first "uid" in its own scope, and make char* members "const".
+
 2010-01-25  Bruno Haible  <bruno@clisp.org>
 
 	gnulib-tool: Make warning diagnostics consistent.

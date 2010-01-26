@@ -35,12 +35,12 @@
 
 struct test
 {
-  char *in;
+  const char *in;
   uid_t uid;
   gid_t gid;
-  char *user_name;
-  char *group_name;
-  char *result;
+  const char *user_name;
+  const char *group_name;
+  const char *result;
 };
 
 static struct test T[] =
@@ -101,36 +101,41 @@ main (void)
 {
   unsigned int i;
   int fail = 0;
-  uid_t uid;
 
   /* Find a UID that has both a user name and login group name,
      but skip UID 0.  */
-  for (uid = 1200; 0 < uid; uid--)
-    {
-      struct group *gr;
-      struct passwd *pw = getpwuid (uid);
-      unsigned int j;
-      size_t len;
-      if (!pw || !pw->pw_name || !(gr = getgrgid (pw->pw_gid)) || !gr->gr_name)
-        continue;
-      j = ARRAY_CARDINALITY (T) - 2;
-      assert (T[j].in == NULL);
-      assert (T[j+1].in == NULL);
-      len = strlen (pw->pw_name);
+  {
+    uid_t uid;
+    for (uid = 1200; 0 < uid; uid--)
+      {
+        struct group *gr;
+        struct passwd *pw = getpwuid (uid);
+        unsigned int j;
+        size_t len;
+        if (!pw || !pw->pw_name || !(gr = getgrgid (pw->pw_gid)) || !gr->gr_name)
+          continue;
+        j = ARRAY_CARDINALITY (T) - 2;
+        assert (T[j].in == NULL);
+        assert (T[j+1].in == NULL);
+        len = strlen (pw->pw_name);
 
-      /* Store "username:" in T[j].in.  */
-      T[j].in = xmalloc (len + 1 + 1);
-      memcpy (T[j].in, pw->pw_name, len);
-      T[j].in[len] = ':';
-      T[j].in[len+1] = '\0';
+        /* Store "username:" in T[j].in.  */
+        {
+          char *t = xmalloc (len + 1 + 1);
+          memcpy (t, pw->pw_name, len);
+          t[len] = ':';
+          t[len+1] = '\0';
+          T[j].in = t;
+        }
 
-      T[j].uid = uid;
-      T[j].gid = gr->gr_gid;
-      T[j].user_name = xstrdup (pw->pw_name);
-      T[j].group_name = xstrdup (gr->gr_name);
-      T[j].result = NULL;
-      break;
-    }
+        T[j].uid = uid;
+        T[j].gid = gr->gr_gid;
+        T[j].user_name = xstrdup (pw->pw_name);
+        T[j].group_name = xstrdup (gr->gr_name);
+        T[j].result = NULL;
+        break;
+      }
+  }
 
   for (i = 0; T[i].in; i++)
     {
