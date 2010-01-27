@@ -1,3 +1,45 @@
+2010-01-27  Simon Josefsson  <simon@josefsson.org>
+
+	* build-aux/git-version-gen: Fix copyright statement.
+	* build-aux/gnupload: Likewise.
+	* tests/test-arcfour.c: Likewise.
+	* tests/test-arctwo.c: Likewise.
+	* tests/test-count-one-bits.c: Likewise.
+	* tests/test-crc.c: Likewise.
+	* tests/test-des.c: Likewise.
+	* tests/test-gc-arcfour.c: Likewise.
+	* tests/test-gc-arctwo.c: Likewise.
+	* tests/test-gc-des.c: Likewise.
+	* tests/test-gc-hmac-md5.c: Likewise.
+	* tests/test-gc-hmac-sha1.c: Likewise.
+	* tests/test-gc-md2.c: Likewise.
+	* tests/test-gc-md4.c: Likewise.
+	* tests/test-gc-md5.c: Likewise.
+	* tests/test-gc-pbkdf2-sha1.c: Likewise.
+	* tests/test-gc-rijndael.c: Likewise.
+	* tests/test-gc-sha1.c: Likewise.
+	* tests/test-gc.c: Likewise.
+	* tests/test-gethostname.c: Likewise.
+	* tests/test-gettimeofday.c: Likewise.
+	* tests/test-hash.c: Likewise.
+	* tests/test-hmac-md5.c: Likewise.
+	* tests/test-hmac-sha1.c: Likewise.
+	* tests/test-md2.c: Likewise.
+	* tests/test-md4.c: Likewise.
+	* tests/test-md5.c: Likewise.
+	* tests/test-memchr.c: Likewise.
+	* tests/test-memchr2.c: Likewise.
+	* tests/test-memcmp.c: Likewise.
+	* tests/test-memmem.c: Likewise.
+	* tests/test-memrchr.c: Likewise.
+	* tests/test-rawmemchr.c: Likewise.
+	* tests/test-read-file.c: Likewise.
+	* tests/test-rijndael.c: Likewise.
+	* tests/test-sockets.c: Likewise.
+	* tests/test-strchrnul.c: Likewise.
+	* tests/test-strstr.c: Likewise.
+	* tests/test-strtod.c: Likewise.
+
 2010-01-26  Eric Blake  <ebb9@byu.net>
 
 	ignore-value: update recommended header name
