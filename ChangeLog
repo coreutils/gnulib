@@ -1,3 +1,9 @@
+2010-01-27  Jim Meyering  <meyering@redhat.com>
+
+	ncftpput-ftp: clean up spaces
+	* build-aux/ncftpput-ftp: Make Copyright line consistent.
+	Remove trailing blanks.
+
 2010-01-27  Simon Josefsson  <simon@josefsson.org>
 
 	* build-aux/git-version-gen: Fix copyright statement.
