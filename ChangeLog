@@ -39,6 +39,7 @@
 	* tests/test-strchrnul.c: Likewise.
 	* tests/test-strstr.c: Likewise.
 	* tests/test-strtod.c: Likewise.
+	* build-aux/ncftpput-ftp: Likewise.
 
 2010-01-26  Eric Blake  <ebb9@byu.net>
 
