@@ -851,6 +851,15 @@ re_string_elem_size_at (const re_string_t *pstr, Idx idx)
 }
 #endif /* RE_ENABLE_I18N */
 
+#ifndef __GNUC_PREREQ
+# if defined __GNUC__ && defined __GNUC_MINOR__
+#  define __GNUC_PREREQ(maj, min) \
+         ((__GNUC__ << 16) + __GNUC_MINOR__ >= ((maj) << 16) + (min))
+# else
+#  define __GNUC_PREREQ(maj, min) 0
+# endif
+#endif
+
 #if __GNUC_PREREQ (3,4)
 # undef __attribute_warn_unused_result__
 # define __attribute_warn_unused_result__ \

@@ -1,3 +1,9 @@
+2010-01-28  Eric Blake  <ebb9@byu.net>
+
+	regex: fix build failure
+	* lib/regex_internal.h (__GNUC_PREREQ): Define for non-glibc
+	platforms.
+
 2010-01-28  Jim Meyering  <meyering@redhat.com>
 
 	regex: do not ignore memory allocation failure
