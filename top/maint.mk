@@ -726,6 +726,19 @@ sc_Wundef_boolean:
 	@grep -Ei '^#define.*(yes|no|true|false)$$' '$(CONFIG_INCLUDE)' && \
 	  { echo 'Use 0 or 1 for macro values' 1>&2; exit 1; } || :
 
+sc_vulnerable_makefile_CVE-2009-4029:
+	@files=$$(find $(srcdir) -name Makefile.in);			\
+	if test -n "$$files"; then					\
+	  grep -E							\
+	    'perm -777 -exec chmod a\+rwx|chmod 777 \$$\(distdir\)'	\
+	    $$files &&							\
+	  { echo '$(ME): the above files are vulnerable; beware of'	\
+	    'running "make dist*" rules, and upgrade to fixed automake'	\
+	    'see http://bugzilla.redhat.com/542609 for details'		\
+		1>&2; exit 1; } || :;					\
+	else :;								\
+	fi
+
 vc-diff-check:
 	(unset CDPATH; cd $(srcdir) && $(VC) diff) > vc-diffs || :
 	if test -s vc-diffs; then				\

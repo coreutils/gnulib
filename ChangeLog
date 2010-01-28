@@ -1,3 +1,8 @@
+2010-01-28  Jim Meyering  <meyering@redhat.com>
+
+	maint: add a syntax-check rule to check for vulnerable Makefile.in
+	* top/maint.mk (sc_vulnerable_makefile_CVE-2009-4029): New rule.
+
 2010-01-27  Jim Meyering  <meyering@redhat.com>
 
 	ncftpput-ftp: clean up spaces
