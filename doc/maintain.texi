@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate December 12, 2009
+@set lastupdate January 27, 2010
 @c %**end of header
 
 @dircategory GNU organization
@@ -23,7 +23,7 @@
 Information for maintainers of GNU software, last updated @value{lastupdate}.
 
 Copyright @copyright{} 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999,
-2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009 Free Software
+2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010 Free Software
 Foundation, Inc.
 
 @quotation
@@ -558,8 +558,11 @@ which file it is generated from.
 A copyright notice looks like this:
 
 @example
-Copyright (C) @var{year1}, @var{year2}, @var{year3}  @var{copyright-holder}
+Copyright (C) @var{year1}, @var{year2}, @var{year3} @var{copyright-holder}
 @end example
+
+The word @samp{Copyright} must always be in English, by international
+convention.
 
 The @var{copyright-holder} may be the Free Software Foundation, Inc., or
 someone else; you should know who is the copyright holder for your
@@ -571,7 +574,8 @@ stick with parenthesized @samp{C} unless you know that C-in-a-circle
 will work.  For example, a program's standard @option{--version}
 message should use parenthesized @samp{C} by default, though message
 translations may use C-in-a-circle in locales where that symbol is
-known to work.
+known to work.  Alternatively, the @samp{(C)} or C-in-a-circle can be
+omitted entirely; the word @samp{Copyright} suffices.
 
 To update the list of year numbers, add each year in which you have
 made nontrivial changes to the package.  (Here we assume you're using
