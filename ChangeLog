@@ -1,5 +1,19 @@
 2010-02-01  Eric Blake  <ebb9@byu.net>
 
+	sys_time: use link-warning
+	* m4/sys_time_h.m4 (gl_HEADER_SYS_TIME_H_BODY): Split defaults...
+	(gl_HEADER_SYS_TIME_H_DEFAULTS): ...into new macro.
+	(gl_SYS_TIME_MODULE_INDICATOR): New macro.
+	* modules/sys_time (Depends-on): Add warn-on-use.
+	(Makefile.am): Always build replacement.
+	(configure.ac): Update substitutions.
+	* m4/gettimeofday.m4 (gl_FUNC_GETTIMEOFDAY)
+	(gl_FUNC_GETTIMEOFDAY_CLOBBER): Include defaults, and no longer
+	bother with SYS_TIME_H.
+	* modules/gettimeofday (configure.ac): Declare indicator.
+	* lib/sys_time.in.h (gettimeofday): Warn if gnulib module is not
+	in use.
+
 	closein-tests: silence compiler warning
 	* tests/test-closein.c (main): Ignore fread result.
 	* modules/closein-tests (Depends-on): Add ignore-value.

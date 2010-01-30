@@ -1,5 +1,5 @@
 # Configure a replacement for <sys/time.h>.
-# serial 2
+# serial 3
 
 # Copyright (C) 2007, 2009, 2010 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -19,15 +19,13 @@ AC_DEFUN([gl_HEADER_SYS_TIME_H],
 AC_DEFUN([gl_HEADER_SYS_TIME_H_BODY],
 [
   AC_REQUIRE([AC_C_RESTRICT])
+  AC_REQUIRE([gl_HEADER_SYS_TIME_H_DEFAULTS])
   AC_CHECK_HEADERS_ONCE([sys/time.h])
   gl_CHECK_NEXT_HEADERS([sys/time.h])
 
-  if test $ac_cv_header_sys_time_h = yes; then
-    HAVE_SYS_TIME_H=1
-  else
+  if test $ac_cv_header_sys_time_h != yes; then
     HAVE_SYS_TIME_H=0
   fi
-  AC_SUBST([HAVE_SYS_TIME_H])
 
   AC_CACHE_CHECK([for struct timeval], [gl_cv_sys_struct_timeval],
     [AC_COMPILE_IFELSE(
@@ -40,20 +38,32 @@ AC_DEFUN([gl_HEADER_SYS_TIME_H_BODY],
           [[static struct timeval x; x.tv_sec = x.tv_usec;]])],
        [gl_cv_sys_struct_timeval=yes],
        [gl_cv_sys_struct_timeval=no])])
-  if test $gl_cv_sys_struct_timeval = yes; then
-    HAVE_STRUCT_TIMEVAL=1
-  else
+  if test $gl_cv_sys_struct_timeval != yes; then
     HAVE_STRUCT_TIMEVAL=0
   fi
-  AC_SUBST([HAVE_STRUCT_TIMEVAL])
 
+  dnl Check for declarations of anything we want to poison if the
+  dnl corresponding gnulib module is not in use.
+  gl_WARN_ON_USE_PREPARE([[
+#if HAVE_SYS_TIME_H
+# include <sys/time.h>
+#endif
+#include <time.h>
+    ]], [gettimeofday])
+])
+
+AC_DEFUN([gl_SYS_TIME_MODULE_INDICATOR],
+[
+  dnl Use AC_REQUIRE here, so that the default settings are expanded once only.
+  AC_REQUIRE([gl_HEADER_SYS_TIME_H_DEFAULTS])
+  GNULIB_[]m4_translit([$1],[abcdefghijklmnopqrstuvwxyz./-],[ABCDEFGHIJKLMNOPQRSTUVWXYZ___])=1
+])
+
+AC_DEFUN([gl_HEADER_SYS_TIME_H_DEFAULTS],
+[
+  GNULIB_GETTIMEOFDAY=0;     AC_SUBST([GNULIB_GETTIMEOFDAY])
   dnl Assume POSIX behavior unless another module says otherwise.
-  REPLACE_GETTIMEOFDAY=0
-  AC_SUBST([REPLACE_GETTIMEOFDAY])
-  if test $HAVE_SYS_TIME_H = 0 || test $HAVE_STRUCT_TIMEVAL = 0; then
-    SYS_TIME_H=sys/time.h
-  else
-    SYS_TIME_H=
-  fi
-  AC_SUBST([SYS_TIME_H])
+  HAVE_STRUCT_TIMEVAL=1;     AC_SUBST([HAVE_STRUCT_TIMEVAL])
+  HAVE_SYS_TIME_H=1;         AC_SUBST([HAVE_SYS_TIME_H])
+  REPLACE_GETTIMEOFDAY=0;    AC_SUBST([REPLACE_GETTIMEOFDAY])
 ])

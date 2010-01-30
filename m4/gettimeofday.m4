@@ -1,4 +1,4 @@
-# serial 12
+# serial 13
 
 # Copyright (C) 2001-2003, 2005, 2007, 2009-2010 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -11,6 +11,7 @@ AC_DEFUN([gl_FUNC_GETTIMEOFDAY],
 [
   AC_REQUIRE([AC_C_RESTRICT])
   AC_REQUIRE([gl_HEADER_SYS_TIME_H])
+  AC_REQUIRE([gl_HEADER_SYS_TIME_H_DEFAULTS])
   AC_CHECK_FUNCS_ONCE([gettimeofday])
 
   AC_CACHE_CHECK([for gettimeofday with POSIX signature],
@@ -32,7 +33,6 @@ AC_DEFUN([gl_FUNC_GETTIMEOFDAY],
 
   if test $gl_cv_func_gettimeofday_posix_signature != yes; then
     REPLACE_GETTIMEOFDAY=1
-    SYS_TIME_H=sys/time.h
     if test $gl_cv_func_gettimeofday_clobber != yes; then
       AC_LIBOBJ([gettimeofday])
       gl_PREREQ_GETTIMEOFDAY
@@ -78,7 +78,6 @@ AC_DEFUN([gl_FUNC_GETTIMEOFDAY_CLOBBER],
 
  if test $gl_cv_func_gettimeofday_clobber = yes; then
    REPLACE_GETTIMEOFDAY=1
-   SYS_TIME_H=sys/time.h
    gl_GETTIMEOFDAY_REPLACE_LOCALTIME
    AC_DEFINE([GETTIMEOFDAY_CLOBBERS_LOCALTIME], [1],
      [Define if gettimeofday clobbers the localtime buffer.])
