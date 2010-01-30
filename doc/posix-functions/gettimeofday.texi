@@ -15,6 +15,15 @@ mingw.
 This function is declared with a nonstandard function prototype (only one
 argument, or ``...'' after the first argument) on some platforms.
 @item
+On some platforms, the second argument has type @code{struct
+timezone*} rather than @code{void *}, making it an error to redeclare
+the function with the POSIX signature:
+glibc.
+However, rather than penalize these systems with a replacement
+function, gnulib defines @code{GETTIMEOFDAY_TIMEZONE} to the
+appropriate type for use in avoiding a compiler warning if assigning
+@code{gettimeofday} to a function pointer.
+@item
 On some platforms, @code{gettimeofday} clobbers the buffer in which
 @code{localtime} returns its result:
 MacOS X 10.0.
@@ -22,4 +31,7 @@ MacOS X 10.0.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+Behavior is non-portable if the second argument to @code{gettimeofday}
+is not @code{NULL}.
 @end itemize

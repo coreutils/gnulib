@@ -1,3 +1,12 @@
+2010-02-04  Eric Blake  <ebb9@byu.net>
+
+	gettimeofday: expose type of second argument
+	* m4/gettimeofday.m4 (gl_FUNC_GETTIMEOFDAY): Do better detection
+	of glibc extension signature, and define GETTIMEOFDAY_TIMEZONE.
+	* tests/test-gettimeofday.c: Use it to silence warning.
+	* doc/posix-functions/gettimeofday.texi (gettimeofday): Document
+	the issue.
+
 2010-02-03  Jim Meyering  <meyering@redhat.com>
 
 	regcomp.c: avoid the sole warning from gcc's -Wtype-limits
