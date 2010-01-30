@@ -4,6 +4,7 @@ tests/test-areadlink.c
 tests/macros.h
 
 Depends-on:
+ignore-value
 stdbool
 symlink
 

@@ -34,6 +34,7 @@ SIGNATURE_CHECK (linkat, int, (int, char const *, int, char const *, int));
 #include "filenamecat.h"
 #include "same-inode.h"
 #include "xgetcwd.h"
+#include "ignore-value.h"
 #include "macros.h"
 
 #define BASE "test-linkat.t"
@@ -81,7 +82,7 @@ main (void)
   int result;
 
   /* Clean up any trash from prior testsuite runs.  */
-  system ("rm -rf " BASE "*");
+  ignore_value (system ("rm -rf " BASE "*"));
 
   /* Test basic link functionality, without mentioning symlinks.  */
   result = test_link (do_link, true);

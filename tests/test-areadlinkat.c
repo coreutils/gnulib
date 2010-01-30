@@ -29,6 +29,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+#include "ignore-value.h"
 #include "macros.h"
 
 #define BASE "test-areadlinkat.t"
@@ -50,7 +51,7 @@ main (void)
   int result;
 
   /* Remove any leftovers from a previous partial run.  */
-  system ("rm -rf " BASE "*");
+  ignore_value (system ("rm -rf " BASE "*"));
 
   /* Basic tests.  */
   result = test_areadlink (do_areadlinkat, false);

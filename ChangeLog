@@ -1,3 +1,66 @@
+2010-02-01  Eric Blake  <ebb9@byu.net>
+
+	tests: silence warning about system return
+	* tests/test-areadlink-with-size.c (main): Ignore system result.
+	* tests/test-areadlink.c (main): Likewise.
+	* tests/test-areadlinkat-with-size.c (main): Likewise.
+	* tests/test-areadlinkat.c (main): Likewise.
+	* tests/test-canonicalize-lgpl.c (main): Likewise.
+	* tests/test-canonicalize.c (main): Likewise.
+	* tests/test-chown.c (main): Likewise.
+	* tests/test-fchownat.c (main): Likewise.
+	* tests/test-fdutimensat.c (main): Likewise.
+	* tests/test-fstatat.c (main): Likewise.
+	* tests/test-futimens.c (main): Likewise.
+	* tests/test-lchown.c (main): Likewise.
+	* tests/test-link.c (main): Likewise.
+	* tests/test-linkat.c (main): Likewise.
+	* tests/test-lstat.c (main): Likewise.
+	* tests/test-mkdir.c (main): Likewise.
+	* tests/test-mkdirat.c (main): Likewise.
+	* tests/test-mkfifo.c (main): Likewise.
+	* tests/test-mkfifoat.c (main): Likewise.
+	* tests/test-mknod.c (main): Likewise.
+	* tests/test-readlink.c (main): Likewise.
+	* tests/test-remove.c (main): Likewise.
+	* tests/test-rename.c (main): Likewise.
+	* tests/test-renameat.c (main): Likewise.
+	* tests/test-rmdir.c (main): Likewise.
+	* tests/test-symlink.c (main): Likewise.
+	* tests/test-symlinkat.c (main): Likewise.
+	* tests/test-unlink.c (main): Likewise.
+	* tests/test-unlinkat.c (main): Likewise.
+	* tests/test-utimens.c (main): Likewise.
+	* tests/test-utimensat.c (main): Likewise.
+	* modules/areadlink-tests (Depends-on): Add ignore-value.
+	* modules/areadlink-with-size-tests (Depends-on): Likewise.
+	* modules/areadlinkat-tests (Depends-on): Likewise.
+	* modules/areadlinkat-with-size-tests (Depends-on): Likewise.
+	* modules/canonicalize-lgpl-tests (Depends-on): Likewise.
+	* modules/canonicalize-tests (Depends-on): Likewise.
+	* modules/chown-tests (Depends-on): Likewise.
+	* modules/fdutimensat-tests (Depends-on): Likewise.
+	* modules/futimens-tests (Depends-on): Likewise.
+	* modules/lchown-tests (Depends-on): Likewise.
+	* modules/link-tests (Depends-on): Likewise.
+	* modules/linkat-tests (Depends-on): Likewise.
+	* modules/lstat-tests (Depends-on): Likewise.
+	* modules/mkdir-tests (Depends-on): Likewise.
+	* modules/mkfifo-tests (Depends-on): Likewise.
+	* modules/mkfifoat-tests (Depends-on): Likewise.
+	* modules/mknod-tests (Depends-on): Likewise.
+	* modules/openat-tests (Depends-on): Likewise.
+	* modules/readlink-tests (Depends-on): Likewise.
+	* modules/remove-tests (Depends-on): Likewise.
+	* modules/rename-tests (Depends-on): Likewise.
+	* modules/renameat-tests (Depends-on): Likewise.
+	* modules/rmdir-tests (Depends-on): Likewise.
+	* modules/symlink-tests (Depends-on): Likewise.
+	* modules/symlinkat-tests (Depends-on): Likewise.
+	* modules/unlink-tests (Depends-on): Likewise.
+	* modules/utimens-tests (Depends-on): Likewise.
+	* modules/utimensat-tests (Depends-on): Likewise.
+
 2010-01-31  Bruno Haible  <bruno@clisp.org>
 
 	Perform the same test for many <math.h> functions.

@@ -32,6 +32,7 @@ SIGNATURE_CHECK (mknodat, int, (int, char const *, mode_t, dev_t));
 #include <string.h>
 #include <unistd.h>
 
+#include "ignore-value.h"
 #include "macros.h"
 
 #define BASE "test-mkfifoat.t"
@@ -72,7 +73,7 @@ main (void)
   int result;
 
   /* Remove any leftovers from a previous partial run.  */
-  system ("rm -rf " BASE "*");
+  ignore_value (system ("rm -rf " BASE "*"));
 
   /* Basic tests.  */
   result = test_mkfifo (do_mkfifoat, true);

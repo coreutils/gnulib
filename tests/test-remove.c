@@ -30,6 +30,7 @@ SIGNATURE_CHECK (remove, int, (char const *));
 #include <sys/stat.h>
 #include <unistd.h>
 
+#include "ignore-value.h"
 #include "macros.h"
 
 #define BASE "test-remove.t"
@@ -38,7 +39,7 @@ int
 main (void)
 {
   /* Remove any leftovers from a previous partial run.  */
-  system ("rm -rf " BASE "*");
+  ignore_value (system ("rm -rf " BASE "*"));
 
   /* Setup.  */
   ASSERT (mkdir (BASE "dir", 0700) == 0);

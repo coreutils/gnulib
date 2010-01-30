@@ -24,6 +24,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "ignore-value.h"
 #include "macros.h"
 
 #define BASE "test-utimens.t"
@@ -66,7 +67,7 @@ main (void)
   int result3; /* Skip because of no lutimens support.  */
 
   /* Clean up any trash from prior testsuite runs.  */
-  system ("rm -rf " BASE "*");
+  ignore_value (system ("rm -rf " BASE "*"));
 
   result1 = test_utimens (utimens, true);
   ASSERT (test_utimens (do_fdutimens, false) == result1);

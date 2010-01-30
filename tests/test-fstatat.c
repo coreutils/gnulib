@@ -33,6 +33,7 @@ SIGNATURE_CHECK (fstatat, int, (int, char const *, struct stat *, int));
 #include "openat.h"
 #include "pathmax.h"
 #include "same-inode.h"
+#include "ignore-value.h"
 #include "macros.h"
 
 #define BASE "test-fstatat.t"
@@ -62,7 +63,7 @@ main (void)
   int result;
 
   /* Remove any leftovers from a previous partial run.  */
-  system ("rm -rf " BASE "*");
+  ignore_value (system ("rm -rf " BASE "*"));
 
   result = test_stat_func (do_stat, false);
   ASSERT (test_lstat_func (do_lstat, false) == result);

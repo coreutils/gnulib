@@ -29,6 +29,7 @@
 #include <unistd.h>
 
 #include "same-inode.h"
+#include "ignore-value.h"
 #include "macros.h"
 
 #define BASE "t-can.tmp"
@@ -46,7 +47,7 @@ main (void)
      any leftovers from a previous partial run.  */
   {
     int fd;
-    system ("rm -rf " BASE " ise");
+    ignore_value (system ("rm -rf " BASE " ise"));
     ASSERT (mkdir (BASE, 0700) == 0);
     fd = creat (BASE "/tra", 0600);
     ASSERT (0 <= fd);

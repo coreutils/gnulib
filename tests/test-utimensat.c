@@ -35,6 +35,7 @@ SIGNATURE_CHECK (utimensat, int, (int, char const *, struct timespec const[2],
 #include "stat-time.h"
 #include "timespec.h"
 #include "utimecmp.h"
+#include "ignore-value.h"
 #include "macros.h"
 
 #define BASE "test-utimensat.t"
@@ -66,7 +67,7 @@ main (void)
   int fd;
 
   /* Clean up any trash from prior testsuite runs.  */
-  system ("rm -rf " BASE "*");
+  ignore_value (system ("rm -rf " BASE "*"));
 
   /* Basic tests.  */
   result1 = test_utimens (do_utimensat, true);

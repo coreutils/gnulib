@@ -33,6 +33,7 @@ SIGNATURE_CHECK (fchownat, int, (int, char const *, uid_t, gid_t, int));
 #include "mgetgroups.h"
 #include "openat.h"
 #include "stat-time.h"
+#include "ignore-value.h"
 #include "macros.h"
 
 #define BASE "test-fchownat.t"
@@ -63,7 +64,7 @@ main (void)
   int result2; /* Skip because of no lchown support.  */
 
   /* Clean up any trash from prior testsuite runs.  */
-  system ("rm -rf " BASE "*");
+  ignore_value (system ("rm -rf " BASE "*"));
 
   /* Basic tests.  */
   result1 = test_chown (do_chown, true);

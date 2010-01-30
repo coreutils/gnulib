@@ -30,6 +30,7 @@ SIGNATURE_CHECK (mkfifo, int, (char const *, mode_t));
 #include <stdlib.h>
 #include <unistd.h>
 
+#include "ignore-value.h"
 #include "macros.h"
 
 #define BASE "test-mkfifo.t"
@@ -40,7 +41,7 @@ int
 main (void)
 {
   /* Remove any leftovers from a previous partial run.  */
-  system ("rm -rf " BASE "*");
+  ignore_value (system ("rm -rf " BASE "*"));
 
   return test_mkfifo (mkfifo, true);
 }

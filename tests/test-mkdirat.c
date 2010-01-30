@@ -30,6 +30,7 @@ SIGNATURE_CHECK (mkdirat, int, (int, char const *, mode_t));
 #include <stdlib.h>
 #include <unistd.h>
 
+#include "ignore-value.h"
 #include "macros.h"
 
 #define BASE "test-mkdirat.t"
@@ -51,7 +52,7 @@ main (void)
   int result;
 
   /* Clean up any trash from prior testsuite runs.  */
-  system ("rm -rf " BASE "*");
+  ignore_value (system ("rm -rf " BASE "*"));
 
   /* Test basic mkdir functionality.  */
   result = test_mkdir (do_mkdir, false);

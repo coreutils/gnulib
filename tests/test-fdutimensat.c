@@ -25,6 +25,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "ignore-value.h"
 #include "macros.h"
 
 #define BASE "test-fdutimensat.t"
@@ -84,7 +85,7 @@ main (void)
   int fd;
 
   /* Clean up any trash from prior testsuite runs.  */
-  system ("rm -rf " BASE "*");
+  ignore_value (system ("rm -rf " BASE "*"));
 
   /* Basic tests.  */
   result1 = test_utimens (do_utimens, true);

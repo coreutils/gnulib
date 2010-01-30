@@ -3,6 +3,7 @@ tests/test-canonicalize.c
 tests/macros.h
 
 Depends-on:
+ignore-value
 progname
 same-inode
 symlink

@@ -32,6 +32,7 @@ SIGNATURE_CHECK (readlinkat, ssize_t, (int, char const *, char *, size_t));
 #include <string.h>
 #include <sys/stat.h>
 
+#include "ignore-value.h"
 #include "macros.h"
 
 #ifndef HAVE_SYMLINK
@@ -64,7 +65,7 @@ main (void)
   int result;
 
   /* Remove any leftovers from a previous partial run.  */
-  system ("rm -rf " BASE "*");
+  ignore_value (system ("rm -rf " BASE "*"));
 
   /* Perform same checks as counterpart functions.  */
   result = test_readlink (do_readlink, false);

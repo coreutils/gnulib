@@ -32,6 +32,7 @@ SIGNATURE_CHECK (renameat, int, (int, char const *, int, char const *));
 
 #include "filenamecat.h"
 #include "xgetcwd.h"
+#include "ignore-value.h"
 #include "macros.h"
 
 #define BASE "test-renameat.t"
@@ -57,7 +58,7 @@ main (void)
   int result;
 
   /* Clean up any trash from prior testsuite runs.  */
-  system ("rm -rf " BASE "*");
+  ignore_value (system ("rm -rf " BASE "*"));
 
   /* Test basic rename functionality, using current directory.  */
   result = test_rename (do_rename, false);

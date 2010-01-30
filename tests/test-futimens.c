@@ -34,6 +34,7 @@ SIGNATURE_CHECK (futimens, int, (int, struct timespec const[2]));
 #include "stat-time.h"
 #include "timespec.h"
 #include "utimecmp.h"
+#include "ignore-value.h"
 #include "macros.h"
 
 #define BASE "test-futimens.t"
@@ -44,7 +45,7 @@ int
 main (void)
 {
   /* Clean up any trash from prior testsuite runs.  */
-  system ("rm -rf " BASE "*");
+  ignore_value (system ("rm -rf " BASE "*"));
 
   return test_futimens (futimens, true);
 }

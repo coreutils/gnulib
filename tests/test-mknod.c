@@ -30,6 +30,7 @@ SIGNATURE_CHECK (mknod, int, (char const *, mode_t, dev_t));
 #include <stdlib.h>
 #include <unistd.h>
 
+#include "ignore-value.h"
 #include "macros.h"
 
 #define BASE "test-mknod.t"
@@ -47,7 +48,7 @@ int
 main (void)
 {
   /* Remove any leftovers from a previous partial run.  */
-  system ("rm -rf " BASE "*");
+  ignore_value (system ("rm -rf " BASE "*"));
 
   /* We can only portably test creation of fifos.  Anything else
      requires root privileges and knowledge of device numbers.  */

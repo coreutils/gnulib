@@ -32,6 +32,7 @@ SIGNATURE_CHECK (chown, int, (char const *, uid_t, gid_t));
 
 #include "mgetgroups.h"
 #include "stat-time.h"
+#include "ignore-value.h"
 #include "macros.h"
 
 #define BASE "test-chown.t"
@@ -42,7 +43,7 @@ int
 main (void)
 {
   /* Remove any leftovers from a previous partial run.  */
-  system ("rm -rf " BASE "*");
+  ignore_value (system ("rm -rf " BASE "*"));
 
   return test_chown (chown, true);
 }
