@@ -1,5 +1,9 @@
 2010-02-01  Eric Blake  <ebb9@byu.net>
 
+	closein-tests: silence compiler warning
+	* tests/test-closein.c (main): Ignore fread result.
+	* modules/closein-tests (Depends-on): Add ignore-value.
+
 	tests: silence warning about system return
 	* tests/test-areadlink-with-size.c (main): Ignore system result.
 	* tests/test-areadlink.c (main): Likewise.
