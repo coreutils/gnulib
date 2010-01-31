@@ -1,3 +1,12 @@
+2010-01-31  Bruno Haible  <bruno@clisp.org>
+
+	Work around getline() bug on FreeBSD 8.0.
+	* m4/getline.m4 (gl_FUNC_GETLINE): Also test result for a NULL buffer
+	and a non-zero size.
+	* tests/test-getline.c (main): Likewise.
+	* doc/posix-functions/getline.texi: Mention the FreeBSD bug.
+	Reported by Dennis <noordsij@cs.helsinki.fi> via Eric Blake.
+
 2010-01-28  Eric Blake  <ebb9@byu.net>
 
 	regex: fix build failure

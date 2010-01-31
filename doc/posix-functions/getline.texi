@@ -17,6 +17,10 @@ BeOS.
 @item
 Some platforms provide a function by this name but with the wrong
 signature, for example in -linet.
+@item
+This function crashes when passed a pointer to a NULL buffer together with a
+pointer to a non-zero buffer size on some platforms:
+FreeBSD 8.0.
 @end itemize
 
 Portability problems not fixed by Gnulib:

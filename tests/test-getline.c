@@ -33,13 +33,13 @@ int
 main (void)
 {
   FILE *f;
-  char *line = NULL;
-  size_t len = 0;
+  char *line;
+  size_t len;
   ssize_t result;
 
   /* Create test file.  */
   f = fopen ("test-getline.txt", "wb");
-  if (!f || fwrite ("a\nbc\nd\0f", 1, 8, f) != 8 || fclose (f) != 0)
+  if (!f || fwrite ("a\nA\nbc\nd\0f", 1, 10, f) != 10 || fclose (f) != 0)
     {
       fputs ("Failed to create sample file.\n", stderr);
       remove ("test-getline.txt");
@@ -54,13 +54,24 @@ main (void)
     }
 
   /* Test initial allocation, which must include trailing NUL.  */
+  line = NULL;
+  len = 0;
   result = getline (&line, &len, f);
   ASSERT (result == 2);
   ASSERT (strcmp (line, "a\n") == 0);
   ASSERT (2 < len);
+  free (line);
+
+  /* Test initial allocation again, with line = NULL and len != 0.  */
+  line = NULL;
+  len = (size_t)(~0) / 4;
+  result = getline (&line, &len, f);
+  ASSERT (result == 2);
+  ASSERT (strcmp (line, "A\n") == 0);
+  ASSERT (2 < len);
+  free (line);
 
   /* Test growth of buffer, must not leak.  */
-  free (line);
   line = malloc (1);
   len = 0;
   result = getline (&line, &len, f);
