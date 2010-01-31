@@ -340,7 +340,11 @@ extern size_t fwrite (const void *ptr, size_t s, size_t n, FILE *stream)
 #endif
 
 #if @GNULIB_GETDELIM@
-# if !@HAVE_DECL_GETDELIM@
+# if @REPLACE_GETDELIM@
+#  undef getdelim
+#  define getdelim rpl_getdelim
+# endif
+# if !@HAVE_DECL_GETDELIM@ || @REPLACE_GETDELIM@
 /* Read input, up to (and including) the next occurrence of DELIMITER, from
    STREAM, store it in *LINEPTR (and NUL-terminate it).
    *LINEPTR is a pointer returned from malloc (or NULL), pointing to *LINESIZE

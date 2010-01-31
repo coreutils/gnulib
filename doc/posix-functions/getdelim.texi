@@ -14,6 +14,10 @@ MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, AIX 5.1, HP-UX 11, IRIX 6.5,
 @item
 This function is missing a declaration on some platforms:
 BeOS.
+@item
+This function crashes when passed a pointer to a NULL buffer together with a
+pointer to a non-zero buffer size on some platforms:
+FreeBSD 8.0.
 @end itemize
 
 Portability problems not fixed by Gnulib:

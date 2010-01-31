@@ -1,5 +1,19 @@
 2010-01-31  Bruno Haible  <bruno@clisp.org>
 
+	Work around getdelim() bug on FreeBSD 8.0.
+	* m4/getdelim.m4 (gl_FUNC_GETDELIM): Test whether getdelim supports an
+	initially NULL line. Set REPLACE_GETDELIM if getdelim exists but does
+	not work.
+	* lib/stdio.in.h (getdelim): Define as an alias if REPLACE_GETDELIM
+	is 1.
+	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Initialize REPLACE_GETDELIM.
+	* modules/stdio (Makefile.am): Also substitute REPLACE_GETDELIM.
+	* tests/test-getdelim.c (main): Also test result for a NULL buffer and
+	a non-zero size.
+	* doc/posix-functions/getdelim.texi: Mention the FreeBSD bug.
+
+2010-01-31  Bruno Haible  <bruno@clisp.org>
+
 	Avoid redundant symbol replacement.
 	* m4/getline.m4 (gl_FUNC_GETLINE): Set REPLACE_GETLINE only when the
 	function was found.
