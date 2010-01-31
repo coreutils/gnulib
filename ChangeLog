@@ -1,3 +1,20 @@
+2010-01-18  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	gnulib-tool: Make caching optional.
+	* gnulib-tool: Accept option --no-cache, turning off $do_cache.
+	Update matching short versions of --no-changelog.
+	(func_usage): Update.
+	(sed_extract_cache_prog): Renamed from ...
+	(sed_extract_prog): ... this; revert to old extraction script.
+	(func_get_description, func_get_status)
+	(func_get_notice, func_get_applicability, func_get_filelist)
+	(func_get_dependencies, func_get_autoconf_early_snippet)
+	(func_get_autoconf_snippet, func_get_automake_snippet)
+	(func_get_include_directive, func_get_link_directive)
+	(func_get_license, func_get_maintainer): If $do_cache is false,
+	use old, non-caching extraction scripts.
+	Suggestion by Bruno Haible.
+
 2010-01-17  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	gnulib-tool: cache module metainformation.
