@@ -1,3 +1,19 @@
+2010-01-17  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	gnulib-tool: cache module metainformation.
+	* gnulib-tool (sed_extract_prog): Match newline before each
+	header, and rewrite header to a shell variable suffix.
+	(func_cache_var, func_cache_lookup_module): New functions,
+	to turn a module name into a cache variable prefix, and to
+	look up and cache module metainformation.
+	(func_get_description, func_get_status)
+	(func_get_notice, func_get_applicability, func_get_filelist)
+	(func_get_dependencies, func_get_autoconf_early_snippet)
+	(func_get_autoconf_snippet, func_get_automake_snippet)
+	(func_get_include_directive, func_get_link_directive)
+	(func_get_license, func_get_maintainer): Use
+	func_cache_lookup_module.
+
 2010-02-07  Bruno Haible  <bruno@clisp.org>
 
 	fnctl: Fix missing dependency.

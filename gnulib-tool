@@ -1349,35 +1349,141 @@ func_verify_tests_module ()
   esac
 }
 
-sed_extract_prog=':[	 ]*$/ {
-  :a
-    n
-    s/^Description:[	 ]*$//
-    s/^Status:[	 ]*$//
-    s/^Notice:[	 ]*$//
-    s/^Applicability:[	 ]*$//
-    s/^Files:[	 ]*$//
-    s/^Depends-on:[	 ]*$//
-    s/^configure\.ac-early:[	 ]*$//
-    s/^configure\.ac:[	 ]*$//
-    s/^Makefile\.am:[	 ]*$//
-    s/^Include:[	 ]*$//
-    s/^Link:[	 ]*$//
-    s/^License:[	 ]*$//
-    s/^Maintainer:[	 ]*$//
-    tb
-    p
-    ba
-  :b
-}'
+# func_cache_var file
+#
+# return the cache variable name corresponding to $file.
+# Output:
+# - cachevar
+if test -n "$BASH_VERSION"; then
+  func_cache_var ()
+  {
+    cachevar=c_${1//[!a-zA-Z0-9_]/_}
+  }
+else
+  func_cache_var ()
+  {
+    case $1 in
+      *[!a-zA-Z0-9_]*)
+        cachevar=c_`echo "$1" | LC_ALL=C sed 's/[^a-zA-Z0-9_]/_/g'` ;;
+      *)
+        cachevar=c_$1 ;;
+    esac
+  }
+fi
+
+# Extract headers from module descriptions.
+sed_extract_prog="
+  s/^Description:[	 ]*$/desc/
+  s/^Status:[	 ]*$/status/
+  s/^Notice:[	 ]*$/notice/
+  s/^Applicability:[	 ]*$/applicability/
+  s/^Files:[	 ]*$/files/
+  s/^Depends-on:[	 ]*$/deps/
+  s/^configure\.ac-early:[	 ]*$/config_early/
+  s/^configure\.ac:[	 ]*$/config/
+  s/^Makefile\.am:[	 ]*$/makefile/
+  s/^Include:[	 ]*$/include/
+  s/^Link:[	 ]*$/link/
+  s/^License:[	 ]*$/license/
+  s/^Maintainer:[	 ]*$/maint/"
+
+# func_cache_lookup_module file
+#
+# look up a module, like 'func_lookup_file modules/$file', and store all of its
+# relevant data in a cache.  If already cached, do not look it up again.
+# Input:
+# - file
+# Output:
+# - cachevar
+# - ${cachevar}_cached
+# - ${cachevar}_desc
+# - ${cachevar}_status
+# - ...
+func_cache_lookup_module ()
+{
+  func_cache_var "$1"
+  if eval test -z \"\$${cachevar}_cached\"; then
+    func_lookup_file "modules/$1"
+    # Turn module descriptions into shell script assignments,
+    # suitable to be eval'ed.  All active characters are escaped.
+    # This script turns
+    #   Description:
+    #   Some module's description
+    #
+    #   Files:
+    #   lib/file.h
+    # into:
+    #   c_MODULE_cached='yes
+    #   '
+    #   c_MODULE_desc=\
+    #   'Some module'\''s description
+    #
+    #   '
+    #   c_MODULE_files=\
+    #   'lib/file.h'
+    # The script consists of four parts:
+    # 1) Insert the "c_MODULE_cached='yes" line,
+    # 2) The 'match' loop, treating non-header lines by escaping single
+    #    quotes and adding a closing quote in the last line,
+    # 3) The 'header' treatment, closing the last quote and inserting
+    #    the "c_MODULE_HEADER=" assignment line as well starting the
+    #    following line with an opening quote, if any.
+    # 4) Special treatment if two headers are only separated by one newline.
+    sed_cache_module='
+      1i\'$nl$cachevar'_cached='\''yes\'$nl'
+
+      :match
+      t match
+      '"$sed_extract_prog"'
+      t hdr
+      s/'\''/&"'\''"&/g
+      :more
+      $s/$/'\''/
+      n
+      b match
+
+      :hdr
+      s/\([a-zA-Z0-9_]\{1,\}\)[	 ]*$/'\'\\$nl${cachevar}_'\1=/
+      $!s/$/\\/
+      n
+      t clear
+      :clear
+      '"$sed_extract_prog"'
+      t hdr2
+      s/'\''/&"'\''"&/g
+      s/^/'\''/
+      b more
+
+      :hdr2
+      s/^/'\'\\$nl'/
+      b hdr
+      '
+    # Strip trailing newlines from quoted variable assignment strings.
+    sed_strip_trailing_nl='
+      :more
+      $b cut
+      /\\$/{
+        p
+        d
+      }
+      N
+      /\n$/b more
+      :cut
+      s/\n\n*\('\''\)$/\1/
+      '
+    cache_script=`sed "$sed_cache_module" < "$lookedup_file" \
+                    | sed "$sed_strip_trailing_nl"`
+    eval "$cache_script"
+  fi
+}
 
 # func_get_description module
 # Input:
 # - local_gnulib_dir  from --local-dir
 func_get_description ()
 {
-  func_lookup_file "modules/$1"
-  sed -n -e "/^Description$sed_extract_prog" < "$lookedup_file"
+  func_cache_lookup_module "$1"
+  eval "echo \"\$${cachevar}_desc\""
 }
 
 # func_get_status module
@@ -1385,8 +1491,8 @@ func_get_description ()
 # - local_gnulib_dir  from --local-dir
 func_get_status ()
 {
-  func_lookup_file "modules/$1"
-  sed -n -e "/^Status$sed_extract_prog" < "$lookedup_file"
+  func_cache_lookup_module "$1"
+  eval "echo \"\$${cachevar}_status\""
 }
 
 # func_get_notice module
@@ -1394,8 +1500,8 @@ func_get_status ()
 # - local_gnulib_dir  from --local-dir
 func_get_notice ()
 {
-  func_lookup_file "modules/$1"
-  sed -n -e "/^Notice$sed_extract_prog" < "$lookedup_file"
+  func_cache_lookup_module "$1"
+  eval "echo \"\$${cachevar}_notice\""
 }
 
 # func_get_applicability module
@@ -1404,14 +1510,17 @@ func_get_notice ()
 # The expected result (on stdout) is either 'main', or 'tests', or 'all'.
 func_get_applicability ()
 {
-  func_lookup_file "modules/$1"
-  { sed -n -e "/^Applicability$sed_extract_prog" < "$lookedup_file"
+  func_cache_lookup_module "$1"
+  eval my_applicability=\$${cachevar}_applicability
+  if test -n "$my_applicability"; then
+    echo $my_applicability
+  else
     # The default is 'main' or 'tests', depending on the module's name.
-    case "$1" in
-      *-tests) echo "tests";;
-      *)       echo "main";;
+    case $1 in
+      *-tests) echo tests;;
+      *)       echo main;;
     esac
-  } | sed -e 's,^ *$,,' | sed -e 1q
+  fi
 }
 
 # func_get_filelist module
@@ -1419,8 +1528,8 @@ func_get_applicability ()
 # - local_gnulib_dir  from --local-dir
 func_get_filelist ()
 {
-  func_lookup_file "modules/$1"
-  sed -n -e "/^Files$sed_extract_prog" < "$lookedup_file"
+  func_cache_lookup_module "$1"
+  eval "echo \"\$${cachevar}_files\""
   echo m4/00gnulib.m4
   echo m4/gnulib-common.m4
   case "$autoconf_minversion" in
@@ -1487,12 +1596,12 @@ func_get_dependencies ()
     *-tests)
       fgd1="$1"
       func_remove_suffix fgd1 '-tests'
-      echo "$fgd1"
+      module_deps=$fgd1
       ;;
   esac
   # Then the explicit dependencies listed in the module description.
-  func_lookup_file "modules/$1"
-  sed -n -e "/^Depends-on$sed_extract_prog" < "$lookedup_file"
+  func_cache_lookup_module "$1"
+  eval "echo \"\$${cachevar}_deps\""
 }
 
 # func_get_autoconf_early_snippet module
@@ -1500,8 +1609,8 @@ func_get_dependencies ()
 # - local_gnulib_dir  from --local-dir
 func_get_autoconf_early_snippet ()
 {
-  func_lookup_file "modules/$1"
-  sed -n -e "/^configure\.ac-early$sed_extract_prog" < "$lookedup_file"
+  func_cache_lookup_module "$1"
+  eval "echo \"\$${cachevar}_config_early\""
 }
 
 # func_get_autoconf_snippet module
@@ -1509,8 +1618,8 @@ func_get_autoconf_early_snippet ()
 # - local_gnulib_dir  from --local-dir
 func_get_autoconf_snippet ()
 {
-  func_lookup_file "modules/$1"
-  sed -n -e "/^configure\.ac$sed_extract_prog" < "$lookedup_file"
+  func_cache_lookup_module "$1"
+  eval "echo \"\$${cachevar}_config\""
 }
 
 # func_get_automake_snippet module
@@ -1518,8 +1627,8 @@ func_get_autoconf_snippet ()
 # - local_gnulib_dir  from --local-dir
 func_get_automake_snippet ()
 {
-  func_lookup_file "modules/$1"
-  sed -n -e "/^Makefile\.am$sed_extract_prog" < "$lookedup_file"
+  func_cache_lookup_module "$1"
+  eval "echo \"\$${cachevar}_makefile\""
   case "$1" in
     *-tests)
       # *-tests module live in tests/, not lib/.
@@ -1543,7 +1652,7 @@ func_get_automake_snippet ()
       }'
       sed_extract_mentioned_files='s/^lib_SOURCES[	 ]*+=[	 ]*//p'
       already_mentioned_files=` \
-        sed -n -e "/^Makefile\.am$sed_extract_prog" < "$lookedup_file" \
+        { eval 'echo "$'${cachevar}'_makefile"'; echo; } \
         | sed -e "$sed_combine_lines" \
         | sed -n -e "$sed_extract_mentioned_files" | sed -e 's/#.*//'`
       all_files=`func_get_filelist $1`
@@ -1601,8 +1710,8 @@ func_get_automake_snippet ()
 # - local_gnulib_dir  from --local-dir
 func_get_include_directive ()
 {
-  func_lookup_file "modules/$1"
-  sed -n -e "/^Include$sed_extract_prog" < "$lookedup_file" | \
+  func_cache_lookup_module "$1"
+  eval "echo \"\$${cachevar}_include\"" | \
   sed -e 's/^\(["<]\)/#include \1/'
 }
 
@@ -1611,8 +1720,8 @@ func_get_include_directive ()
 # - local_gnulib_dir  from --local-dir
 func_get_link_directive ()
 {
-  func_lookup_file "modules/$1"
-  sed -n -e "/^Link$sed_extract_prog" < "$lookedup_file"
+  func_cache_lookup_module "$1"
+  eval "echo \"\$${cachevar}_link\""
 }
 
 # func_get_license module
@@ -1620,8 +1729,9 @@ func_get_link_directive ()
 # - local_gnulib_dir  from --local-dir
 func_get_license ()
 {
-  func_lookup_file "modules/$1"
-  { sed -n -e "/^License$sed_extract_prog" < "$lookedup_file"
+  func_cache_lookup_module "$1"
+  {
+    eval "echo \"\$${cachevar}_license\""
     # The default is GPL.
     echo "GPL"
   } | sed -e 's,^ *$,,' | sed -e 1q
@@ -1632,8 +1742,8 @@ func_get_license ()
 # - local_gnulib_dir  from --local-dir
 func_get_maintainer ()
 {
-  func_lookup_file "modules/$1"
-  sed -n -e "/^Maintainer$sed_extract_prog" < "$lookedup_file"
+  func_cache_lookup_module "$1"
+  eval "echo \"\$${cachevar}_maint\""
 }
 
 # func_get_tests_module module
