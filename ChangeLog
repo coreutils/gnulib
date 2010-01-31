@@ -1,5 +1,43 @@
 2010-01-31  Bruno Haible  <bruno@clisp.org>
 
+	Perform the same test for many <math.h> functions.
+	* m4/mathfunc.m4 (gl_COMMON_DOUBLE_MATHFUNC,
+	gl_COMMON_DOUBLE_MATHFUNC_TEST): New macros.
+	* m4/sqrt.m4 (gl_FUNC_SQRT): Invoke gl_COMMON_DOUBLE_MATHFUNC instead
+	of gl_MATHFUNC.
+	* modules/acos (configure.ac): Likewise.
+	* modules/asin (configure.ac): Likewise.
+	* modules/atan (configure.ac): Likewise.
+	* modules/atan2 (configure.ac): Likewise.
+	* modules/cbrt (configure.ac): Likewise.
+	* modules/copysign (configure.ac): Likewise.
+	* modules/cos (configure.ac): Likewise.
+	* modules/cosh (configure.ac): Likewise.
+	* modules/erf (configure.ac): Likewise.
+	* modules/erfc (configure.ac): Likewise.
+	* modules/exp (configure.ac): Likewise.
+	* modules/fmod (configure.ac): Likewise.
+	* modules/hypot (configure.ac): Likewise.
+	* modules/j0 (configure.ac): Likewise.
+	* modules/j1 (configure.ac): Likewise.
+	* modules/jn (configure.ac): Likewise.
+	* modules/lgamma (configure.ac): Likewise.
+	* modules/log (configure.ac): Likewise.
+	* modules/log10 (configure.ac): Likewise.
+	* modules/log1p (configure.ac): Likewise.
+	* modules/pow (configure.ac): Likewise.
+	* modules/remainder (configure.ac): Likewise.
+	* modules/sin (configure.ac): Likewise.
+	* modules/sinh (configure.ac): Likewise.
+	* modules/tan (configure.ac): Likewise.
+	* modules/tanh (configure.ac): Likewise.
+	* modules/y0 (configure.ac): Likewise.
+	* modules/y1 (configure.ac): Likewise.
+	* modules/yn (configure.ac): Likewise.
+	Suggested by Paolo Bonzini.
+
+2010-01-31  Bruno Haible  <bruno@clisp.org>
+
 	* m4/getline.m4 (gl_FUNC_GETLINE): Add comment about REPLACE_GETLINE.
 
 2010-01-31  Bruno Haible  <bruno@clisp.org>

@@ -1,4 +1,4 @@
-# mathfunc.m4 serial 2
+# mathfunc.m4 serial 3
 dnl Copyright (C) 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -57,4 +57,59 @@ AC_DEFUN([gl_MATHFUNC],
   AC_SUBST(FUNC[_LIBM])
   m4_popdef([FUNC])
   m4_popdef([func])
+])
+
+# gl_COMMON_DOUBLE_MATHFUNC(FUNC)
+# -------------------------------
+# tests whether the function FUNC is available in libc or libm.
+# It sets FUNC_LIBM to empty or "-lm" accordingly.
+# FUNC must be one of the following functions, that are present on all systems
+# and provided by libm on all systems except MacOS X, BeOS, Haiku:
+#   acos asin atan atan2 cbrt copysign cos cosh erf erfc exp fmod hypot j0 j1
+#   jn lgamma log log10 log1p pow remainder sin sinh sqrt tan tanh y0 y1 yn
+
+AC_DEFUN([gl_COMMON_DOUBLE_MATHFUNC],
+[
+  AC_REQUIRE([gl_COMMON_DOUBLE_MATHFUNC_TEST])
+  m4_pushdef([FUNC], [translit([$1],[abcdefghijklmnopqrstuvwxyz],
+                                    [ABCDEFGHIJKLMNOPQRSTUVWXYZ])])
+  FUNC[]_LIBM="$POW_LIBM"
+  AC_SUBST(FUNC[_LIBM])
+  m4_popdef([FUNC])
+])
+
+AC_DEFUN([gl_COMMON_DOUBLE_MATHFUNC_TEST],
+[
+  dnl We could use any of the following:
+  dnl gl_MATHFUNC([acos], [double], [(double)])
+  dnl gl_MATHFUNC([asin], [double], [(double)])
+  dnl gl_MATHFUNC([atan], [double], [(double)])
+  dnl gl_MATHFUNC([atan2], [double], [(double, double)])
+  dnl gl_MATHFUNC([cbrt], [double], [(double)])
+  dnl gl_MATHFUNC([copysign], [double], [(double, double)])
+  dnl gl_MATHFUNC([cos], [double], [(double)])
+  dnl gl_MATHFUNC([cosh], [double], [(double)])
+  dnl gl_MATHFUNC([erf], [double], [(double)])
+  dnl gl_MATHFUNC([erfc], [double], [(double)])
+  dnl gl_MATHFUNC([exp], [double], [(double)])
+  dnl gl_MATHFUNC([fmod], [double], [(double, double)])
+  dnl gl_MATHFUNC([hypot], [double], [(double, double)])
+  dnl gl_MATHFUNC([j0], [double], [(double)])
+  dnl gl_MATHFUNC([j1], [double], [(double)])
+  dnl gl_MATHFUNC([jn], [double], [(int, double)])
+  dnl gl_MATHFUNC([lgamma], [double], [(double)])
+  dnl gl_MATHFUNC([log], [double], [(double)])
+  dnl gl_MATHFUNC([log10], [double], [(double)])
+  dnl gl_MATHFUNC([log1p], [double], [(double)])
+  dnl gl_MATHFUNC([pow], [double], [(double, double)])
+  dnl gl_MATHFUNC([remainder], [double], [(double, double)])
+  dnl gl_MATHFUNC([sin], [double], [(double)])
+  dnl gl_MATHFUNC([sinh], [double], [(double)])
+  dnl gl_MATHFUNC([sqrt], [double], [(double)])
+  dnl gl_MATHFUNC([tan], [double], [(double)])
+  dnl gl_MATHFUNC([tanh], [double], [(double)])
+  dnl gl_MATHFUNC([y0], [double], [(double)])
+  dnl gl_MATHFUNC([y1], [double], [(double)])
+  dnl gl_MATHFUNC([yn], [double], [(int, double)])
+  gl_MATHFUNC([pow], [double], [(double, double)])
 ])
