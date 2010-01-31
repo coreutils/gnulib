@@ -1,5 +1,9 @@
 2010-01-31  Bruno Haible  <bruno@clisp.org>
 
+	* m4/getline.m4 (gl_FUNC_GETLINE): Add comment about REPLACE_GETLINE.
+
+2010-01-31  Bruno Haible  <bruno@clisp.org>
+
 	Work around getdelim() bug on FreeBSD 8.0.
 	* m4/getdelim.m4 (gl_FUNC_GETDELIM): Test whether getdelim supports an
 	initially NULL line. Set REPLACE_GETDELIM if getdelim exists but does
@@ -11,12 +15,6 @@
 	* tests/test-getdelim.c (main): Also test result for a NULL buffer and
 	a non-zero size.
 	* doc/posix-functions/getdelim.texi: Mention the FreeBSD bug.
-
-2010-01-31  Bruno Haible  <bruno@clisp.org>
-
-	Avoid redundant symbol replacement.
-	* m4/getline.m4 (gl_FUNC_GETLINE): Set REPLACE_GETLINE only when the
-	function was found.
 
 2010-01-31  Bruno Haible  <bruno@clisp.org>
 

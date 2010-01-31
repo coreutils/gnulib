@@ -80,9 +80,10 @@ AC_DEFUN([gl_FUNC_GETLINE],
   fi
 
   if test $am_cv_func_working_getline = no; then
-    if test $gl_getline_needs_run_time_check = yes; then
-      REPLACE_GETLINE=1
-    fi
+    dnl Set REPLACE_GETLINE always: Even if we have not found the broken
+    dnl getline function among $LIBS, it may exist in libinet and the
+    dnl executable may be linked with -linet.
+    REPLACE_GETLINE=1
     AC_LIBOBJ([getline])
 
     gl_PREREQ_GETLINE
