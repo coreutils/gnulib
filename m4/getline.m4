@@ -80,7 +80,9 @@ AC_DEFUN([gl_FUNC_GETLINE],
   fi
 
   if test $am_cv_func_working_getline = no; then
-    REPLACE_GETLINE=1
+    if test $gl_getline_needs_run_time_check = yes; then
+      REPLACE_GETLINE=1
+    fi
     AC_LIBOBJ([getline])
 
     gl_PREREQ_GETLINE

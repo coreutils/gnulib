@@ -1,5 +1,11 @@
 2010-01-31  Bruno Haible  <bruno@clisp.org>
 
+	Avoid redundant symbol replacement.
+	* m4/getline.m4 (gl_FUNC_GETLINE): Set REPLACE_GETLINE only when the
+	function was found.
+
+2010-01-31  Bruno Haible  <bruno@clisp.org>
+
 	Work around getline() bug on FreeBSD 8.0.
 	* m4/getline.m4 (gl_FUNC_GETLINE): Also test result for a NULL buffer
 	and a non-zero size.
