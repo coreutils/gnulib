@@ -1436,7 +1436,7 @@ func_cache_lookup_module ()
     #    following line with an opening quote, if any.
     # 4) Special treatment if two headers are only separated by one newline.
     sed_cache_module='
-      1i\'$nl$cachevar'_cached='\''yes\'$nl'
+      1i\'$nl$cachevar'_name='\'$1\'\\$nl$cachevar'_cached='\''yes\'$nl'
 
       :match
       t match
@@ -1480,6 +1480,10 @@ func_cache_lookup_module ()
     cache_script=`sed "$sed_cache_module" < "$lookedup_file" \
                     | sed "$sed_strip_trailing_nl"`
     eval "$cache_script"
+  else
+    if eval test "$1" != \"\$${cachevar}_name\"; then
+      eval 'func_fatal_error "cache variable collision: $1 and $'${cachevar}'_name"'
+    fi
   fi
 }
 

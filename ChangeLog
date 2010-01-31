@@ -1,5 +1,11 @@
 2010-01-18  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
+	* gnulib-tool (func_cache_lookup_module): Store the module name
+	belonging to the cache variable; error out if two different
+	module names map to the same cache variable name.
+
+2010-01-18  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
 	gnulib-tool: Make caching optional.
 	* gnulib-tool: Accept option --no-cache, turning off $do_cache.
 	Update matching short versions of --no-changelog.
