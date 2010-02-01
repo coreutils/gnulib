@@ -65,7 +65,7 @@ typedef unsigned char byte;
 #ifdef WORDS_BIGENDIAN
 # define CMP_LT_OR_GT(a, b) ((a) > (b) ? 1 : -1)
 #else
-# define CMP_LT_OR_GT(a, b) memcmp_bytes ((a), (b))
+# define CMP_LT_OR_GT(a, b) memcmp_bytes (a, b)
 #endif
 
 /* BE VERY CAREFUL IF YOU CHANGE THIS CODE!  */

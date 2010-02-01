@@ -125,7 +125,7 @@
 
 #undef MNT_IGNORE
 #if defined MNTOPT_IGNORE && defined HAVE_HASMNTOPT
-# define MNT_IGNORE(M) hasmntopt ((M), MNTOPT_IGNORE)
+# define MNT_IGNORE(M) hasmntopt (M, MNTOPT_IGNORE)
 #else
 # define MNT_IGNORE(M) 0
 #endif

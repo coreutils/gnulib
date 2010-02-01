@@ -22,13 +22,12 @@
 #define TRIM_BOTH 2
 
 /* Removes trailing and leading whitespaces. */
-#define trim(s) trim2((s), TRIM_BOTH)
+#define trim(s) trim2(s, TRIM_BOTH)
 
 /* Removes trailing whitespaces. */
-#define trim_trailing(s) trim2((s), TRIM_TRAILING)
+#define trim_trailing(s) trim2(s, TRIM_TRAILING)
 
 /* Removes leading whitespaces. */
-#define trim_leading(s) trim2((s), TRIM_LEADING)
+#define trim_leading(s) trim2(s, TRIM_LEADING)
 
 char *trim2(const char *, int);
-

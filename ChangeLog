@@ -1,3 +1,12 @@
+2010-02-01  Jim Meyering  <meyering@redhat.com>
+
+	removing useless parentheses in cpp #define directives
+	For motivation, see commit c0221df4, "define STREQ(a,b)
+	consistently, removing useless parentheses"
+	* lib/memcmp.c (CMP_LT_OR_GT): Remove useless parentheses.
+	* lib/mountlist.c (MNT_IGNORE): Likewise.
+	* lib/trim.h (trim, trim_trailing, trim_leading): Likewise.
+
 2010-02-01  Eric Blake  <ebb9@byu.net>
 
 	sys_time: use link-warning
