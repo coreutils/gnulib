@@ -1,3 +1,8 @@
+2010-02-03  Jim Meyering  <meyering@redhat.com>
+
+	regcomp.c: avoid a new -Wshadow warning
+	* lib/regcomp.c (create_initial_state): Do not shadow local "err".
+
 2010-02-01  Jim Meyering  <meyering@redhat.com>
 
 	removing useless parentheses in cpp #define directives
