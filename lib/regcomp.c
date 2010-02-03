@@ -2577,10 +2577,14 @@ parse_dup_op (bin_tree_t *elem, re_string_t *regexp, re_dfa_t *dfa,
   if (BE (tree == NULL, 0))
     goto parse_dup_op_espace;
 
+/* From gnulib's "intprops.h":
+   True if the arithmetic type T is signed.  */
+#define TYPE_SIGNED(t) (! ((t) 0 < (t) -1))
+
   /* This loop is actually executed only when end != REG_MISSING,
      to rewrite <re>{0,n} as (<re>(<re>...<re>?)?)?...  We have
      already created the start+1-th copy.  */
-  if ((Idx) -1 < 0 || end != REG_MISSING)
+  if (TYPE_SIGNED (Idx) || end != REG_MISSING)
     for (i = start + 2; i <= end; ++i)
       {
 	elem = duplicate_tree (elem, dfa);
