@@ -1,3 +1,7 @@
+2010-02-05  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* tests/test-argp.c: Fix indentation.
+
 2010-02-04  Eric Blake  <ebb9@byu.net>
 
 	gettimeofday: expose type of second argument

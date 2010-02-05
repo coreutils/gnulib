@@ -42,9 +42,8 @@ struct test_args
   int group_1_1_option;
 };
 
-static struct argp_option group1_option[] =
-{
-  { NULL, 0, NULL, 0, "Option Group 1", 0},
+static struct argp_option group1_option[] = {
+  { NULL, 0, NULL, 0, "Option Group 1", 0 },
   { "verbose", 'v', NULL, 0, "Simple option without arguments", 1 },
   { "file", 'f', "FILE", 0, "Option with a mandatory argument", 1 },
   { "input", 0, NULL, OPTION_ALIAS, NULL, 1 },
@@ -88,11 +87,10 @@ struct argp_child group1_child = {
   "",
   1
 };
-
 
-static struct argp_option group1_1_option[] =
-{
-  { NULL, 0, NULL, 0, "Option Group 1.1", 0},
+
+static struct argp_option group1_1_option[] = {
+  { NULL, 0, NULL, 0, "Option Group 1.1", 0 },
   { "cantiga", 'C', NULL, 0, "create a cantiga" },
   { "sonet", 'S', NULL, 0, "create a sonet" },
   { NULL, 0, NULL, 0, NULL, 0 }
@@ -125,17 +123,16 @@ struct argp_child group1_1_child = {
   "",
   2
 };
-
 
-static struct argp_option group2_option[] =
-{
-  { NULL, 0, NULL, 0, "Option Group 2", 0},
+
+static struct argp_option group2_option[] = {
+  { NULL, 0, NULL, 0, "Option Group 2", 0 },
   { "option", 'O', NULL, 0, "An option", 1 },
   { "optional", 'o', "ARG", OPTION_ARG_OPTIONAL,
     "Option with an optional argument. ARG is one of the following:", 2 },
-  { "one", 0, NULL, OPTION_DOC|OPTION_NO_TRANS, "one unit", 3 },
-  { "two", 0, NULL, OPTION_DOC|OPTION_NO_TRANS, "two units", 3 },
-  { "many", 0, NULL, OPTION_DOC|OPTION_NO_TRANS, "many units", 3 },
+  { "one", 0, NULL, OPTION_DOC | OPTION_NO_TRANS, "one unit", 3 },
+  { "two", 0, NULL, OPTION_DOC | OPTION_NO_TRANS, "two units", 3 },
+  { "many", 0, NULL, OPTION_DOC | OPTION_NO_TRANS, "many units", 3 },
   { NULL, 0, NULL, 0, NULL, 0 }
 };
 
@@ -172,11 +169,10 @@ struct argp_child group2_child = {
   "",
   2
 };
-
 
-static struct argp_option group2_1_option[] =
-{
-  { NULL, 0, NULL, 0, "Option Group 2.1", 0},
+
+static struct argp_option group2_1_option[] = {
+  { NULL, 0, NULL, 0, "Option Group 2.1", 0 },
   { "poem", 'p', NULL, 0, "create a poem" },
   { "limerick", 'l', NULL, 0, "create a limerick" },
   { NULL, 0, NULL, 0, NULL, 0 }
@@ -209,14 +205,13 @@ struct argp_child group2_1_child = {
   "",
   2
 };
-
 
-static struct argp_option main_options[] =
-  {
-    { NULL, 0, NULL, 0, "Main options", 0},
-    { "test", 't', NULL, 0, NULL, 1 },
-    { NULL, 0, NULL, 0, NULL, 0 }
-  };
+
+static struct argp_option main_options[] = {
+  { NULL, 0, NULL, 0, "Main options", 0 },
+  { "test", 't', NULL, 0, NULL, 1 },
+  { NULL, 0, NULL, 0, NULL, 0 }
+};
 
 static error_t
 parse_opt (int key, char *arg, struct argp_state *state)
@@ -228,7 +223,7 @@ parse_opt (int key, char *arg, struct argp_state *state)
     {
     case ARGP_KEY_INIT:
       for (i = 0; state->root_argp->children[i].argp; i++)
-        state->child_inputs[i] = args;
+	state->child_inputs[i] = args;
       break;
 
     case 't':
@@ -281,158 +276,158 @@ int test_number;
 unsigned failure_count = 0;
 
 void
-fail(const char *msg)
+fail (const char *msg)
 {
-  fprintf(stderr, "Test %d: %s\n", test_number, msg);
+  fprintf (stderr, "Test %d: %s\n", test_number, msg);
   failure_count++;
 }
 
 void
-test1(struct argp *argp)
+test1 (struct argp *argp)
 {
   INIT_TEST1 (1, "--test");
   if (argp_parse (argp, argc, argv, 0, NULL, &test_args))
-    fail("argp_parse failed");
+    fail ("argp_parse failed");
   else if (test_args.test != 1)
-    fail("option not processed");
+    fail ("option not processed");
 }
 
 void
-test2(struct argp *argp)
+test2 (struct argp *argp)
 {
   INIT_TEST1 (2, "-t");
   if (argp_parse (argp, argc, argv, 0, NULL, &test_args))
-    fail("argp_parse failed");
+    fail ("argp_parse failed");
   else if (test_args.test != 1)
-    fail("option not processed");
+    fail ("option not processed");
 }
 
 void
-test_file(struct argp *argp, int argc, char **argv, struct test_args *args)
+test_file (struct argp *argp, int argc, char **argv, struct test_args *args)
 {
   if (argp_parse (argp, argc, argv, 0, NULL, args))
-    fail("argp_parse failed");
+    fail ("argp_parse failed");
   else if (!args->file)
-    fail("option not processed");
+    fail ("option not processed");
   else if (strcmp (args->file, "FILE"))
-    fail("option processed incorrectly");
+    fail ("option processed incorrectly");
 }
 
 void
-test3(struct argp *argp)
+test3 (struct argp *argp)
 {
   INIT_TEST1 (3, "--file=FILE");
   test_file (argp, argc, argv, &test_args);
 }
 
 void
-test4(struct argp *argp)
+test4 (struct argp *argp)
 {
   INIT_TEST2 (4, "--file", "FILE");
   test_file (argp, argc, argv, &test_args);
 }
 
 void
-test5(struct argp *argp)
+test5 (struct argp *argp)
 {
   INIT_TEST1 (5, "--input=FILE");
   test_file (argp, argc, argv, &test_args);
 }
 
 void
-test6(struct argp *argp)
+test6 (struct argp *argp)
 {
   INIT_TEST2 (6, "--input", "FILE");
   test_file (argp, argc, argv, &test_args);
 }
 
 void
-test_optional(struct argp *argp, int argc, char **argv,
-              struct test_args *args, char *val, char *a)
+test_optional (struct argp *argp, int argc, char **argv,
+	       struct test_args *args, char *val, char *a)
 {
   int index;
   if (argp_parse (argp, argc, argv, 0, &index, args))
-    fail("argp_parse failed");
+    fail ("argp_parse failed");
   else if (!args->optional_set)
-    fail("option not processed");
+    fail ("option not processed");
 
   if (!val)
     {
       if (args->optional)
-        fail("option processed incorrectly");
+	fail ("option processed incorrectly");
     }
   else if (strcmp (args->optional, val))
-    fail("option processed incorrectly");
+    fail ("option processed incorrectly");
 
   if (a)
     {
       if (index == argc)
-        fail("expected command line argument not found");
-      else if (strcmp(argv[index], a))
-        fail("expected command line argument does not match");
+	fail ("expected command line argument not found");
+      else if (strcmp (argv[index], a))
+	fail ("expected command line argument does not match");
     }
 }
 
 void
-test7(struct argp *argp)
+test7 (struct argp *argp)
 {
   INIT_TEST1 (7, "-oARG");
-  test_optional(argp, argc, argv, &test_args, "ARG", NULL);
+  test_optional (argp, argc, argv, &test_args, "ARG", NULL);
 }
 
 void
-test8(struct argp *argp)
+test8 (struct argp *argp)
 {
   INIT_TEST2 (8, "-o", "ARG");
-  test_optional(argp, argc, argv, &test_args, NULL, "ARG");
+  test_optional (argp, argc, argv, &test_args, NULL, "ARG");
 }
 
 void
-test9(struct argp *argp)
+test9 (struct argp *argp)
 {
   INIT_TEST1 (9, "--optional=ARG");
-  test_optional(argp, argc, argv, &test_args, "ARG", NULL);
+  test_optional (argp, argc, argv, &test_args, "ARG", NULL);
 }
 
 void
-test10(struct argp *argp)
+test10 (struct argp *argp)
 {
   INIT_TEST2 (10, "--optional", "ARG");
-  test_optional(argp, argc, argv, &test_args, NULL, "ARG");
+  test_optional (argp, argc, argv, &test_args, NULL, "ARG");
 }
 
 void
-test11(struct argp *argp)
+test11 (struct argp *argp)
 {
   INIT_TEST1 (11, "--optiona=ARG");
-  test_optional(argp, argc, argv, &test_args, "ARG", NULL);
+  test_optional (argp, argc, argv, &test_args, "ARG", NULL);
 }
 
 void
-test12(struct argp *argp)
+test12 (struct argp *argp)
 {
   INIT_TEST3 (12, "--option", "--optional=OPT", "FILE");
-  test_optional(argp, argc, argv, &test_args, "OPT", "FILE");
+  test_optional (argp, argc, argv, &test_args, "OPT", "FILE");
 }
 
 void
-test13(struct argp *argp)
+test13 (struct argp *argp)
 {
   INIT_TEST1 (1, "--cantiga");
   if (argp_parse (argp, argc, argv, 0, NULL, &test_args))
-    fail("argp_parse failed");
+    fail ("argp_parse failed");
   else if (test_args.group_1_1_option != 'C')
-    fail("option not processed");
+    fail ("option not processed");
 }
 
 void
-test14(struct argp *argp)
+test14 (struct argp *argp)
 {
   INIT_TEST1 (1, "--limerick");
   if (argp_parse (argp, argc, argv, 0, NULL, &test_args))
-    fail("argp_parse failed");
+    fail ("argp_parse failed");
   else if (test_args.group_2_1_option != 'l')
-    fail("option not processed");
+    fail ("option not processed");
 }
 
 
@@ -471,7 +466,7 @@ main (int argc, char **argv)
   if (argc > 0)
     {
       struct test_args test_args;
-      init_args(test_args);
+      init_args (test_args);
       return argp_parse (&test_argp, argc, argv, 0, NULL, &test_args);
     }
 
