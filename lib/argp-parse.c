@@ -339,7 +339,7 @@ convert_options (const struct argp *argp,
                        values (the sign of the lower bits is preserved
                        however)...  */
                     cvt->long_end->val =
-                      ((opt->key | real->key) & USER_MASK)
+                      ((opt->key ? opt->key : real->key) & USER_MASK)
                       + (((group - cvt->parser->groups) + 1) << USER_BITS);
 
                     /* Keep the LONG_OPTS list terminated.  */

@@ -34,6 +34,7 @@ struct test_args
   int test;
   int verbose;
   char *file;
+  int read;
   char *hidden;
   int opt;
   char *optional;
@@ -47,6 +48,7 @@ static struct argp_option group1_option[] = {
   { "verbose", 'v', NULL, 0, "Simple option without arguments", 1 },
   { "file", 'f', "FILE", 0, "Option with a mandatory argument", 1 },
   { "input", 0, NULL, OPTION_ALIAS, NULL, 1 },
+  { "read", 'r', NULL, OPTION_ALIAS, NULL, 1 },
   { "hidden", 'H', "FILE", OPTION_HIDDEN, "Hidden option", 1 },
   { NULL, 0, NULL, 0, NULL, 0 }
 };
@@ -62,6 +64,9 @@ group1_parser (int key, char *arg, struct argp_state *state)
       args->verbose++;
       break;
 
+    case 'r':
+      args->read = 1;
+      /* fall through */
     case 'f':
       args->file = arg;
       break;
@@ -430,6 +435,14 @@ test14 (struct argp *argp)
     fail ("option not processed");
 }
 
+void
+test15 (struct argp *argp)
+{
+  INIT_TEST2 (1, "-r", "FILE");
+  test_file (argp, argc, argv, &test_args);
+  if (!test_args.read)
+    fail ("short alias not recognized properly");
+}
 
 
 typedef void (*test_fp) (struct argp *argp);
@@ -438,7 +451,7 @@ test_fp test_fun[] = {
   test1,  test2,  test3,  test4,
   test5,  test6,  test7,  test8,
   test9,  test10, test11, test12,
-  test13, test14,
+  test13, test14, test15,
   NULL
 };
 

@@ -33,10 +33,10 @@ func_compare() {
 ####
 # Test --usage output
 cat > $TMP <<EOT
-Usage: test-argp [-tvCSOlp?V] [-f FILE] [-o[ARG]] [--test] [--file=FILE]
-            [--input=FILE] [--verbose] [--cantiga] [--sonet] [--option]
-            [--optional[=ARG]] [--limerick] [--poem] [--help] [--usage]
-            [--version] ARGS...
+Usage: test-argp [-tvCSOlp?V] [-f FILE] [-r FILE] [-o[ARG]] [--test]
+            [--file=FILE] [--input=FILE] [--read=FILE] [--verbose] [--cantiga]
+            [--sonet] [--option] [--optional[=ARG]] [--limerick] [--poem]
+            [--help] [--usage] [--version] ARGS...
 EOT
 
 ./test-argp$EXEEXT --usage | func_compare || ERR=1
@@ -45,9 +45,10 @@ EOT
 # Test working usage-indent format
 
 cat > $TMP <<EOT
-Usage: test-argp [-tvCSOlp?V] [-f FILE] [-o[ARG]] [--test] [--file=FILE]
-[--input=FILE] [--verbose] [--cantiga] [--sonet] [--option] [--optional[=ARG]]
-[--limerick] [--poem] [--help] [--usage] [--version] ARGS...
+Usage: test-argp [-tvCSOlp?V] [-f FILE] [-r FILE] [-o[ARG]] [--test]
+[--file=FILE] [--input=FILE] [--read=FILE] [--verbose] [--cantiga] [--sonet]
+[--option] [--optional[=ARG]] [--limerick] [--poem] [--help] [--usage]
+[--version] ARGS...
 EOT
 
 ARGP_HELP_FMT='usage-indent=0' ./test-argp$EXEEXT --usage | func_compare || ERR=1
@@ -62,7 +63,8 @@ documentation string
   -t, --test
 
  Option Group 1
-  -f, --file=FILE, --input=FILE   Option with a mandatory argument
+  -f, -r, --file=FILE, --input=FILE, --read=FILE
+                             Option with a mandatory argument
   -v, --verbose              Simple option without arguments
 
  Option Group 1.1
