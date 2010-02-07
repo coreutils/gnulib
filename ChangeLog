@@ -1,3 +1,9 @@
+2010-02-07  Bruno Haible  <bruno@clisp.org>
+
+	fnctl: Fix missing dependency.
+	* modules/fcntl (Depends-on): Add getdtablesize.
+	Reported by John W. Eaton <jwe@gnu.org>.
+
 2010-02-05  Sergey Poznyakoff  <gray@gnu.org.ua>
 
 	Argp: fix recognition of short alias options.
