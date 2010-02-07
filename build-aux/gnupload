@@ -1,9 +1,10 @@
 #!/bin/sh
 # Sign files and upload them.
 
-scriptversion=2010-01-27.15; # UTC
+scriptversion=2010-02-06.18; # UTC
 
-# Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010 Free Software Foundation, Inc.
+# Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010 Free Software
+# Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -32,10 +33,11 @@ delete_symlinks=
 collect_var=
 dbg=
 
-usage="Usage: $0 [OPTIONS]... [COMMAND] FILES... [[COMMAND] FILES...]
+usage="Usage: $0 [OPTION]... [CMD] FILE... [[CMD] FILE...]
 
-Sign all FILES, and upload them to selected destinations, according to
-<http://www.gnu.org/prep/maintain/html_node/Automated-FTP-Uploads.html>.
+Sign all FILES, and process them at selected destinations according to CMD.
+<http://www.gnu.org/prep/maintain/html_node/Automated-FTP-Uploads.html>
+explains further.
 
 Commands:
   --delete                 delete FILES from destination
