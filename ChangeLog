@@ -1,3 +1,37 @@
+2010-01-31  Bruno Haible  <bruno@clisp.org>
+
+	gnulib-tool: Fix up caching patches.
+	* gnulib-tool: New options --cache-modules, --no-cache-modules. Remove
+	option --no-cache. Use associative arrays when supported by the shell.
+	(sed_comments): New variable.
+	(modcache): Renamed from do_cache.
+	(sed_extract_field_header): Renamed from sed_extract_cache_prog. Don't
+	abbreviate unnecessarily.
+	(have_associative): New variable.
+	(func_cache_var): Define correctly for bash 1.x. Define in an optimized
+	way also for ksh and zsh.
+	(func_init_sed_convert_to_cache_statements): New function, extracted
+	from func_cache_lookup_module. Add support for associative arrays.
+	Don't set the c_MODULE_cached variable here. Ignore all lines before
+	the first field header. Remove only the final newline, not all trailing
+	newlines. Support empty fields correctly. Limit the use of 'eval' to
+	assignments.
+	(func_get_description, func_get_status, func_get_notice,
+	func_get_applicability, func_get_filelist, func_get_dependencies,
+	func_get_autoconf_early_snippet, func_get_autoconf_snippet,
+	func_get_automake_snippet, func_get_include_directive,
+	func_get_link_directive, func_get_license, func_get_maintainer):
+	Update documentation. List the unoptimized code first. Add support for
+	associative arrays. Limit the use of 'eval' to assignments.
+	(func_get_applicability): Undo stylistic pessimisations.
+	(func_get_automake_snippet, func_get_include_directive): Reduce code
+	duplication.
+	(func_modules_transitive_closure, func_modules_add_dummy,
+	func_modules_notice, func_modules_to_filelist, func_add_file,
+	func_update_file, func_emit_lib_Makefile_am, func_emit_po_Makevars,
+	func_emit_po_POTFILES_in, func_emit_tests_Makefile_am, func_import,
+	func_create_testdir, func_create_megatestdir): Update documentation.
+
 2010-01-18  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	* gnulib-tool (func_cache_lookup_module): Store the module name
