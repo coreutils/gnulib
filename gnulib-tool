@@ -1870,7 +1870,7 @@ func_get_dependencies ()
     *-tests)
       fgd1="$1"
       func_remove_suffix fgd1 '-tests'
-      echo "$fgdl"
+      echo "$fgd1"
       ;;
   esac
   # Then the explicit dependencies listed in the module description.

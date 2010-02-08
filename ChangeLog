@@ -1,4 +1,10 @@
-2010-01-31  Bruno Haible  <bruno@clisp.org>
+2010-02-08  Bruno Haible  <bruno@clisp.org>
+
+	gnulib-tool: Fix typo in 2010-02-07 commit.
+	* gnulib-tool (func_get_dependencies): Fix typo in last commit.
+	Reported by Eric Blake.
+
+2010-02-07  Bruno Haible  <bruno@clisp.org>
 
 	gnulib-tool: Fix up caching patches.
 	* gnulib-tool: New options --cache-modules, --no-cache-modules. Remove
