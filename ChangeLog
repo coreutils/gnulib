@@ -1,3 +1,16 @@
+2010-02-09  Eric Blake  <ebb9@byu.net>
+	and Bruno Haible  <bruno@clisp.org>
+
+	obstack-printf-posix: ensure declaration
+	* m4/obstack-printf.m4 (gl_DECL_OBSTACK_PRINTF): New macro,
+	extracted from gl_FUNC_OBSTACK_PRINTF.
+	(gl_FUNC_OBSTACK_PRINTF): Invoke it.
+	* m4/obstack-printf-posix.m4 (gl_FUNC_OBSTACK_PRINTF_POSIX):
+	Likewise.
+	* lib/stdio.in.h (obstack_printf, obstack_vprintf): Declare also
+	if GNULIB_OBSTACK_PRINTF_POSIX is 1 and GNULIB_OBSTACK_PRINTF is
+	0.
+
 2010-02-08  Bruno Haible  <bruno@clisp.org>
 
 	gnulib-tool: Fix typo in 2010-02-07 commit.

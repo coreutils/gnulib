@@ -1,4 +1,4 @@
-# obstack-printf-posix.m4 serial 3
+# obstack-printf-posix.m4 serial 4
 dnl Copyright (C) 2008-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -101,4 +101,5 @@ AC_DEFUN([gl_FUNC_OBSTACK_PRINTF_POSIX],
     gl_REPLACE_VASNPRINTF
     gl_REPLACE_OBSTACK_PRINTF
   fi
+  gl_DECL_OBSTACK_PRINTF
 ])

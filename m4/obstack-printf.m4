@@ -1,4 +1,4 @@
-# obstack-printf.m4 serial 2
+# obstack-printf.m4 serial 3
 dnl Copyright (C) 2008, 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,10 +19,7 @@ AC_DEFUN([gl_FUNC_OBSTACK_PRINTF],
     gl_REPLACE_OBSTACK_PRINTF
   fi
 
-  AC_CHECK_DECLS_ONCE([obstack_printf])
-  if test $ac_cv_have_decl_obstack_printf = no; then
-    HAVE_DECL_OBSTACK_PRINTF=0
-  fi
+  gl_DECL_OBSTACK_PRINTF
 ])
 
 AC_DEFUN([gl_REPLACE_OBSTACK_PRINTF],
@@ -31,5 +28,15 @@ AC_DEFUN([gl_REPLACE_OBSTACK_PRINTF],
   AC_LIBOBJ([obstack_printf])
   if test $ac_cv_func_obstack_printf = yes; then
     REPLACE_OBSTACK_PRINTF=1
+  fi
+])
+
+dnl Ensure obstack_printf() and obstack_vprintf() are declared
+dnl (whether or not they are being replaced).
+AC_DEFUN([gl_DECL_OBSTACK_PRINTF],
+[
+  AC_CHECK_DECLS_ONCE([obstack_printf])
+  if test $ac_cv_have_decl_obstack_printf = no; then
+    HAVE_DECL_OBSTACK_PRINTF=0
   fi
 ])
