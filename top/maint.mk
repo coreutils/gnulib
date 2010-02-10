@@ -334,6 +334,11 @@ sc_prohibit_inttostr_without_use:
 	  $(_header_without_use)
 
 # Don't include this header unless you use one of its functions.
+sc_prohibit_ignore_value_without_use:
+	@h='"ignore-value.h"' re='\<ignore_(value|ptr) *\(' \
+	  $(_header_without_use)
+
+# Don't include this header unless you use one of its functions.
 sc_prohibit_error_without_use:
 	@h='"error.h"' \
 	re='\<error(_at_line|_print_progname|_one_per_line|_message_count)? *\('\
