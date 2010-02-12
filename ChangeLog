@@ -1,3 +1,9 @@
+2010-03-02  Ben Walton  <bwalton@artsci.utoronto.ca>  (tiny change)
+
+	copy-acl: enhance Solaris ACL error handling
+	* lib/copy-acl.c (qcopy_acl): Also ignore EOPNOTSUPP.
+	* lib/set-mode-acl.c (qset_acl): Likewise.
+
 2010-03-02  Bruno Haible  <bruno@clisp.org>
 
 	spawn: Don't override the system defined values on FreeBSD 8.

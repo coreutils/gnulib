@@ -294,7 +294,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
 
       if (count < 0)
         {
-          if (errno == ENOSYS || errno == ENOTSUP)
+          if (errno == ENOSYS || errno == ENOTSUP || errno == EOPNOTSUPP)
             {
               count = 0;
               entries = NULL;
@@ -358,7 +358,8 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
       if (ret < 0 && saved_errno == 0)
         {
           saved_errno = errno;
-          if (errno == ENOSYS && !acl_nontrivial (count, entries))
+          if ((errno == ENOSYS || errno == EOPNOTSUPP)
+              && !acl_nontrivial (count, entries))
             saved_errno = 0;
         }
       else
