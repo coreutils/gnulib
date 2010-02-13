@@ -102,12 +102,13 @@ find_exe_basenames_()
   feb_fail_=0
   feb_result_=
   feb_sp_=
-  for feb_file_ in $feb_dir_/*.exe dummy; do
+  for feb_file_ in $feb_dir_/*.exe; do
     case $feb_file_ in
-      dummy) continue;;
-      *[^-a-zA-Z/0-9_.+]*) feb_fail_=1; break;;
-      *) feb_file_=$(echo $feb_file_ | sed "s,^$feb_dir_/,,;"'s/\.exe$//')
-	 feb_result_="$feb_result_$feb_sp_$feb_file_";;
+      *[!-a-zA-Z/0-9_.+]*) feb_fail_=1; break;;
+      *) # Remove leading file name components as well as the .exe suffix.
+         feb_file_=${feb_file_##*/}
+         feb_file_=${feb_file_%.exe}
+         feb_result_="$feb_result_$feb_sp_$feb_file_";;
     esac
     feb_sp_=' '
   done
@@ -129,7 +130,7 @@ create_exe_shim_functions_()
   esac
 
   base_names_=$(find_exe_basenames_ $1) \
-    || { echo "$0 (exe-shim): skipping directory: $1" 1>&2; return 1; }
+    || { echo "$0 (exe_shim): skipping directory: $1" 1>&2; return 1; }
 
   if test -n "$base_names_"; then
     for base_ in $base_names_; do
