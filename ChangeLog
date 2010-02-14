@@ -1,3 +1,8 @@
+2010-02-14  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: prohibit inclusion of "hash.h" without_use
+	* top/maint.mk (sc_prohibit_hash_without_use): New rule.
+
 2010-02-10  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: prohibit inclusion of "ignore-value.h" without_use
