@@ -1,5 +1,11 @@
 2010-02-14  Jim Meyering  <meyering@redhat.com>
 
+	maint.mk: allow the default upload destination dir to be overridden
+	* top/maint.mk (upload_dest_dir_): Define with a default that
+	preserves the status quo.
+	(emit_upload_commands): Use it, rather than hard-coding $(PACKAGE).
+	Reported by Peter Simons.
+
 	maint.mk: prohibit inclusion of "hash.h" without_use
 	* top/maint.mk (sc_prohibit_hash_without_use): New rule.
 

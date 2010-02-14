@@ -798,11 +798,12 @@ announcement: NEWS ChangeLog $(rel-files)
 ftp-gnu = ftp://ftp.gnu.org/gnu
 www-gnu = http://www.gnu.org
 
+upload_dest_dir_ ?= $(PACKAGE)
 emit_upload_commands:
 	@echo =====================================
 	@echo =====================================
 	@echo "$(build_aux)/gnupload $(GNUPLOADFLAGS) \\"
-	@echo "    --to $(gnu_rel_host):$(PACKAGE) \\"
+	@echo "    --to $(gnu_rel_host):$(upload_dest_dir_) \\"
 	@echo "  $(rel-files)"
 	@echo '# send the ~/announce-$(my_distdir) e-mail'
 	@echo =====================================
