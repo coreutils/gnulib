@@ -374,8 +374,13 @@ clear|delete|free|get_(first|next)|insert|lookup|print_statistics|reset_tuning
 _hash_fn = \<($(_hash_re)) *\(
 _hash_struct = (struct )?\<[Hh]ash_(table|tuning)\>
 sc_prohibit_hash_without_use:
-	h='"hash.h"' \
+	@h='"hash.h"' \
 	re='$(_hash_fn)|$(_hash_struct)'\
+	  $(_header_without_use)
+
+sc_prohibit_hash_pjw_without_use:
+	@h='"hash-pjw.h"' \
+	re='\<hash_pjw *\(' \
 	  $(_header_without_use)
 
 sc_prohibit_safe_read_without_use:
