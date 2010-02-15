@@ -1,3 +1,9 @@
+2010-02-15  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: mark syntax-check sc_*.m rules as .PHONY
+	* top/maint.mk ($(syntax-check-rules)): Add .PHONY, so that
+	"make -t syntax-check" doesn't create a ton of sc_*.m files.
+
 2010-02-14  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: prohibit inclusion of "hash-pjw.h" without_use

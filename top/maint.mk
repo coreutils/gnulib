@@ -125,7 +125,9 @@ local-checks-available = \
 
 # Arrange to print the name of each syntax-checking rule just before running it.
 $(syntax-check-rules): %: %.m
-$(patsubst %, %.m, $(syntax-check-rules)):
+sc_m_rules_ = $(patsubst %, %.m, $(syntax-check-rules))
+.PHONY: $(sc_m_rules_)
+$(sc_m_rules_):
 	@echo $(patsubst sc_%.m, %, $@)
 
 local-check := $(filter-out $(local-checks-to-skip), $(local-checks-available))
