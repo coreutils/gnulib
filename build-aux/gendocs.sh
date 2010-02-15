@@ -2,7 +2,7 @@
 # gendocs.sh -- generate a GNU manual in many formats.  This script is
 #   mentioned in maintain.texi.  See the help message below for usage details.
 
-scriptversion=2010-01-02.16
+scriptversion=2010-02-13.20
 
 # Copyright 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010
 # Free Software Foundation, Inc.
@@ -56,6 +56,7 @@ See the GNU Maintainers document for a more extensive discussion:
   http://www.gnu.org/prep/maintain_toc.html
 
 Options:
+  -s SRCFILE  read Texinfo from SRCFILE, instead of PACKAGE.{texinfo|texi|txi}
   -o OUTDIR   write files into OUTDIR, instead of manual/.
   --email ADR use ADR as contact in generated web pages.
   --docbook   convert to DocBook too (xml, txt, html, pdf and ps).
@@ -119,12 +120,14 @@ PACKAGE=
 EMAIL=webmasters@gnu.org  # please override with --email
 htmlarg=
 outdir=manual
+srcfile=
 
 while test $# -gt 0; do
   case $1 in
     --email) shift; EMAIL=$1;;
     --help) echo "$usage"; exit 0;;
     --version) echo "$version"; exit 0;;
+    -s) shift; srcfile=$1;;
     -o) shift; outdir=$1;;
     --docbook) docbook=yes;;
     --html) shift; htmlarg=$1;;
@@ -146,7 +149,9 @@ while test $# -gt 0; do
   shift
 done
 
-if test -s "$srcdir/$PACKAGE.texinfo"; then
+if test -n "$srcfile"; then
+  :
+elif test -s "$srcdir/$PACKAGE.texinfo"; then
   srcfile=$srcdir/$PACKAGE.texinfo
 elif test -s "$srcdir/$PACKAGE.texi"; then
   srcfile=$srcdir/$PACKAGE.texi
@@ -268,13 +273,14 @@ else
 fi
 
 echo Making .tar.gz for sources...
-srcfiles=`ls *.texinfo *.texi *.txi *.eps 2>/dev/null` || true
+d=`dirname $srcfile`
+srcfiles=`ls $d/*.texinfo $d/*.texi $d/*.txi $d/*.eps 2>/dev/null` || true
 tar cvzfh $outdir/$PACKAGE.texi.tar.gz $srcfiles
 texi_tgz_size=`calcsize $outdir/$PACKAGE.texi.tar.gz`
 
 if test -n "$docbook"; then
   cmd="$SETLANG $MAKEINFO -o - --docbook \"$srcfile\" > ${srcdir}/$PACKAGE-db.xml"
-  echo "Generating docbook XML... $(cmd)"
+  echo "Generating docbook XML... ($cmd)"
   eval "$cmd"
   docbook_xml_size=`calcsize $PACKAGE-db.xml`
   gzip -f -9 -c $PACKAGE-db.xml >$outdir/$PACKAGE-db.xml.gz
@@ -302,7 +308,7 @@ if test -n "$docbook"; then
   mv $PACKAGE-db.txt $outdir/
 
   cmd="${DOCBOOK2PS} ${outdir}/$PACKAGE-db.xml"
-  echo "Generating docbook PS... $(cmd)"
+  echo "Generating docbook PS... ($cmd)"
   eval "$cmd"
   gzip -f -9 -c $PACKAGE-db.ps >$outdir/$PACKAGE-db.ps.gz
   docbook_ps_gz_size=`calcsize $outdir/$PACKAGE-db.ps.gz`
