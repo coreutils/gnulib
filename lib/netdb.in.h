@@ -90,7 +90,7 @@ struct addrinfo
 # endif
 # ifndef AI_ADDRCONFIG
 #  define AI_ADDRCONFIG  0 /* 0x0020: Use configuration of this host to choose
-                                      returned address type..  */
+                                      returned address type.  */
 # endif
 
 /* Error values for `getaddrinfo' function.  */
