@@ -1,3 +1,8 @@
+2010-02-16  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/userspec-tests (test_userspec_LDADD): Add variable, for
+	linking with -lintl.
+
 2010-02-17  Simon Josefsson  <simon@josefsson.org>
 
 	* lib/netdb.in.h (AI_V4MAPPED, AI_ALL, AI_ADDRCONFIG): Define to 0
