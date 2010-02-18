@@ -63,7 +63,7 @@
 #ifndef _GL_SYS_SELECT_H
 #define _GL_SYS_SELECT_H
 
-#if !@HAVE_SYS_SELECT_H@
+#if !@HAVE_SYS_SELECT_H@ || @REPLACE_SELECT@
 
 /* A platform that lacks <sys/select.h>.  */
 

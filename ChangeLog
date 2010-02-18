@@ -1,3 +1,8 @@
+2010-02-18  Markus Duft <mduft@gentoo.org>  (tiny change)
+
+	* lib/sys_select.in.h: Provide select replacement even if
+	sys/select.h exists on a system, for Interix.
+
 2010-02-18  Jim Meyering  <meyering@redhat.com>
 
 	init.sh: don't use $(...) just yet
