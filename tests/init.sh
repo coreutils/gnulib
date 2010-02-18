@@ -129,7 +129,7 @@ create_exe_shim_functions_()
     *) echo "$0: unexpected \$EXEEXT value: $EXEEXT" 1>&2; return 1 ;;
   esac
 
-  base_names_=$(find_exe_basenames_ $1) \
+  base_names_=`find_exe_basenames_ $1` \
     || { echo "$0 (exe_shim): skipping directory: $1" 1>&2; return 1; }
 
   if test -n "$base_names_"; then
