@@ -5022,19 +5022,20 @@ s/\([.*$]\)/[\1]/g'
     do
       if test -f "$gnulib_dir/$filename" \
          || { test -n "$local_gnulib_dir" && test -f "$local_gnulib_dir/$filename"; }; then
-        filenameregex='^'`echo "$filename" | sed -e "$sed_literal_to_basic_regex"`'$'
+        filename_anywhere_regex=`echo "$filename" | sed -e "$sed_literal_to_basic_regex"`
+        filename_line_regex='^'"$filename_anywhere_regex"'$'
         module_candidates=`
           {
-            (cd "$gnulib_dir" && find modules -type f -print | xargs -n 100 grep -l "$filenameregex" /dev/null | sed -e 's,^modules/,,')
+            (cd "$gnulib_dir" && find modules -type f -print | xargs -n 100 grep -l "$filename_line_regex" /dev/null | sed -e 's,^modules/,,')
             if test -n "$local_gnulib_dir" && test -d "$local_gnulib_dir/modules"; then
-              (cd "$local_gnulib_dir" && find modules -type f -print | sed -e 's,^modules/,,' -e 's,\.diff$,,')
+              (cd "$local_gnulib_dir" && find modules -type f -print | xargs -n 100 grep -l "$filename_anywhere_regex" /dev/null | sed -e 's,^modules/,,' -e 's,\.diff$,,')
             fi
           } \
             | func_sanitize_modulelist \
             | LC_ALL=C sort -u
           `
         for module in $module_candidates; do
-          if func_get_filelist $module | grep "$filenameregex" > /dev/null; then
+          if func_get_filelist $module | grep "$filename_line_regex" > /dev/null; then
             echo $module
           fi
         done
