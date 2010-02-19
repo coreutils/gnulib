@@ -39,6 +39,7 @@ some commands with the option @samp{--dry-run}; then
 a real run without changing anything.
 
 @menu
+* Which modules?::              Determining the needed set of Gnulib modules
 * Initial import::              First import of Gnulib modules.
 * Modified imports::            Changing the import specification.
 * Simple update::               Tracking Gnulib development.
@@ -48,6 +49,32 @@ a real run without changing anything.
 * VCS Issues::                  Integration with Version Control Systems.
 * Unit tests::                  Bundling the unit tests of the Gnulib modules.
 @end menu
+
+
+@node Which modules?
+@section Finding modules
+@cindex Finding modules
+
+There are three ways of finding the names of Gnulib modules that you can use
+in your package:
+
+@itemize
+@item
+You have the complete module list, sorted according to categories, in
+@url{http://www.gnu.org/software/gnulib/MODULES.html}.
+
+@item
+If you are looking for a particular POSIX header or function replacement,
+look in the chapters @ref{Header File Substitutes} and
+@ref{Function Substitutes}.  For headers and functions that are provided by
+Glibc but not standardized by POSIX, look in the chapters
+@ref{Glibc Header File Substitutes} and @ref{Glibc Function Substitutes}.
+
+@item
+If you have already found the source file in Gnulib and are looking for the
+module that contains this source file, you can use the command
+@samp{gnulib-tool --find @var{filename}}.
+@end itemize
 
 
 @node Initial import

@@ -1,3 +1,13 @@
+2010-02-19  Bruno Haible  <bruno@clisp.org>
+
+	Make it easier to find modules. New gnulib-tool option '--find'.
+	* gnulib-tool: New option --find.
+	(func_usage): Document it.
+	(func_sanitize_modulelist): New function, extracted from
+	func_all_modules.
+	(func_all_modules): Invoke it.
+	* doc/gnulib-tool.texi (Which modules?): New node.
+
 2010-02-18  Markus Duft <mduft@gentoo.org>  (tiny change)
 
 	* lib/sys_select.in.h: Provide select replacement even if
