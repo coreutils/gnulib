@@ -200,6 +200,7 @@ _GL_WARN_ON_USE (freopen, "freopen on Win32 platforms is not POSIX compatible - 
                  "use gnulib module freopen for portability");
 #endif
 
+
 /* Set up the following warnings, based on which modules are in use.
    GNU Coding Standards discourage the use of fseek, since it imposes
    an arbitrary limitation on some 32-bit hosts.  Remember that the
@@ -226,7 +227,7 @@ _GL_WARN_ON_USE (freopen, "freopen on Win32 platforms is not POSIX compatible - 
    defined to silence the warning in particular compilation units.
 
    Most gnulib clients that perform stream operations should fall into
-   category three.  */
+   category 3.  */
 
 #if @GNULIB_FSEEK@
 # if defined GNULIB_POSIXCHECK && !defined _GL_NO_LARGE_FILES
@@ -280,7 +281,8 @@ _GL_WARN_ON_USE (fseek, "fseek cannot handle files larger than 4 GB "
                  "use fseeko function for handling of large files");
 #endif
 
-/* See the comments on fseek/fseeko.  */
+
+/* ftell, ftello.  See the comments on fseek/fseeko.  */
 
 #if @GNULIB_FTELL@
 # if defined GNULIB_POSIXCHECK && !defined _GL_NO_LARGE_FILES
@@ -331,6 +333,7 @@ _GL_WARN_ON_USE (ftell, "ftell cannot handle files larger than 4 GB "
                  "on 32-bit platforms - "
                  "use ftello function for handling of large files");
 #endif
+
 
 #if @GNULIB_FWRITE@ && @REPLACE_STDIO_WRITE_FUNCS@ && @GNULIB_STDIO_H_SIGPIPE@
 # undef fwrite
