@@ -52,6 +52,43 @@
 #   4. Finally
 #   $ exit
 
+# We require $(...) support unconditionally.
+# We require a few additional shell features only when $EXEEXT is nonempty,
+# in order to support automatic $EXEEXT emulation:
+# - hyphen-containing alias names
+# - we prefer to use ${var#...} substitution, rather than having
+#   to work around lack of support for that feature.
+# The following code attempts to find a shell with support for these features
+# and re-exec's it.  If not, it skips the current test.
+
+gl_shell_test_script_='
+test $(echo y) = y || exit 1
+test -z "$EXEEXT" && exit 0
+shopt -s expand_aliases
+alias a-b="echo zoo"
+v=abx
+     test ${v%x} = ab \
+  && test ${v#a} = bx \
+  && test $(a-b) = zoo
+'
+
+if test "x$1" = "x--no-reexec"; then
+  shift
+else
+  for re_shell_ in "${CONFIG_SHELL:-no_shell}" /bin/sh bash dash zsh pdksh fail
+  do
+    test "$re_shell_" = no_shell && continue
+    test "$re_shell_" = fail && skip_ failed to find an adequate shell
+    if "$re_shell_" -c "$gl_shell_test_script_" 2>/dev/null; then
+      exec "$re_shell_" "$0" --no-reexec "$@"
+      echo "$ME_: exec failed" 1>&2
+      exit 127
+    fi
+  done
+fi
+
+test -n "$EXEEXT" && shopt -s expand_aliases
+
 # We use a trap below for cleanup.  This requires us to go through
 # hoops to get the right exit status transported through the handler.
 # So use `Exit STATUS' instead of `exit STATUS' inside of the tests.
@@ -117,11 +154,11 @@ find_exe_basenames_()
 }
 
 # Consider the files in directory, $1.
-# For each file name of the form PROG.exe, create a shim function named
+# For each file name of the form PROG.exe, create an alias named
 # PROG that simply invokes PROG.exe, then return 0.  If any selected
 # file name or the directory name, $1, contains an unexpected character,
 # define no function and return 1.
-create_exe_shim_functions_()
+create_exe_shims_()
 {
   case $EXEEXT in
     '') return 0 ;;
@@ -134,9 +171,7 @@ create_exe_shim_functions_()
 
   if test -n "$base_names_"; then
     for base_ in $base_names_; do
-      # Create a function named $base whose sole job is to invoke
-      # $base_$EXEEXT, assuming its containing dir is already in PATH.
-      eval "$base_() { $base_$EXEEXT"' "$@"; }'
+      alias "$base_"="$base_$EXEEXT"
     done
   fi
 
@@ -160,8 +195,9 @@ path_prepend_()
     esac
     PATH="$abs_path_dir_:$PATH"
 
-    # Create a function FOO for each FOO.exe in this directory.
-    create_exe_shim_functions_ "$abs_path_dir_"
+    # Create an alias, FOO, for each FOO.exe in this directory.
+    create_exe_shims_ "$abs_path_dir_" \
+      || fail_ "something failed (above): $abs_path_dir_"
     shift
   done
   export PATH

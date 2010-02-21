@@ -1,3 +1,13 @@
+2010-02-21  Jim Meyering  <meyering@redhat.com>
+
+	init.sh: fix EXEEXT shims to work also for names like test-prog
+	* tests/init.sh: Re-exec a better shell, when needed.
+	If the current shell lacks support for posix $(...), an init.sh-using
+	test will now try to find a shell that supports that.  If EXEEXT is
+	nonempty, we also require support for hyphen-in-alias-name and shell
+	substitutions like ${var#glob}.  Failure to find such a shell results
+	in a skipped test.
+
 2010-02-21  Bruno Haible  <bruno@clisp.org>
 
 	Really work around around "broken pipe" error message from bash 3.2.
