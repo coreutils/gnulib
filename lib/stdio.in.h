@@ -133,20 +133,20 @@ _GL_WARN_ON_USE (fopen, "fopen on Win32 platforms is not POSIX compatible - "
                  "use gnulib module fopen for portability");
 #endif
 
-#if @GNULIB_FPRINTF_POSIX@
-# if @REPLACE_FPRINTF@
+#if @GNULIB_FPRINTF_POSIX@ || @GNULIB_FPRINTF@
+# if (@GNULIB_FPRINTF_POSIX@ && @REPLACE_FPRINTF@) \
+     || (@GNULIB_FPRINTF@ && @REPLACE_STDIO_WRITE_FUNCS@ && @GNULIB_STDIO_H_SIGPIPE@)
 #  define fprintf rpl_fprintf
+#  define GNULIB_overrides_fprintf 1
 extern int fprintf (FILE *fp, const char *format, ...)
        __attribute__ ((__format__ (__printf__, 2, 3)))
        _GL_ARG_NONNULL ((1, 2));
 # endif
-#elif @GNULIB_FPRINTF@ && @REPLACE_STDIO_WRITE_FUNCS@ && @GNULIB_STDIO_H_SIGPIPE@
-# define fprintf rpl_fprintf
-extern int fprintf (FILE *fp, const char *format, ...)
-       __attribute__ ((__format__ (__printf__, 2, 3)))
-       _GL_ARG_NONNULL ((1, 2));
-#elif defined GNULIB_POSIXCHECK
-# undef fprintf
+#endif
+#if !@GNULIB_FPRINTF_POSIX@ && defined GNULIB_POSIXCHECK
+# if !GNULIB_overrides_fprintf
+#  undef fprintf
+# endif
 /* Assume fprintf is always declared.  */
 _GL_WARN_ON_USE (fprintf, "fprintf is not always POSIX compliant - "
                  "use gnulib module fprintf-posix for portable "
@@ -439,20 +439,20 @@ _GL_WARN_ON_USE (popen, "popen is buggy on some platforms - "
 # endif
 #endif
 
-#if @GNULIB_PRINTF_POSIX@
-# if @REPLACE_PRINTF@
+#if @GNULIB_PRINTF_POSIX@ || @GNULIB_PRINTF@
+# if (@GNULIB_PRINTF_POSIX@ && @REPLACE_PRINTF@) \
+     || (@GNULIB_PRINTF@ && @REPLACE_STDIO_WRITE_FUNCS@ && @GNULIB_STDIO_H_SIGPIPE@)
 /* Don't break __attribute__((format(printf,M,N))).  */
 #  define printf __printf__
+#  define GNULIB_overrides_printf 1
 extern int printf (const char *format, ...)
        __attribute__ ((__format__ (__printf__, 1, 2))) _GL_ARG_NONNULL ((1));
 # endif
-#elif @GNULIB_PRINTF@ && @REPLACE_STDIO_WRITE_FUNCS@ && @GNULIB_STDIO_H_SIGPIPE@
-/* Don't break __attribute__((format(printf,M,N))).  */
-# define printf __printf__
-extern int printf (const char *format, ...)
-       __attribute__ ((__format__ (__printf__, 1, 2))) _GL_ARG_NONNULL ((1));
-#elif defined GNULIB_POSIXCHECK
-# undef printf
+#endif
+#if !@GNULIB_PRINTF_POSIX@ && defined GNULIB_POSIXCHECK
+# if !GNULIB_overrides_printf
+#  undef printf
+# endif
 /* Assume printf is always declared.  */
 _GL_WARN_ON_USE (printf, "printf is not always POSIX compliant - "
                  "use gnulib module printf-posix for portable "
@@ -595,38 +595,39 @@ _GL_WARN_ON_USE (vdprintf, "vdprintf is unportable - "
 # endif
 #endif
 
-#if @GNULIB_VFPRINTF_POSIX@
-# if @REPLACE_VFPRINTF@
+#if @GNULIB_VFPRINTF_POSIX@ || @GNULIB_VFPRINTF@
+# if (@GNULIB_VFPRINTF_POSIX@ && @REPLACE_VFPRINTF@) \
+     || (@GNULIB_VFPRINTF@ && @REPLACE_STDIO_WRITE_FUNCS@ && @GNULIB_STDIO_H_SIGPIPE@)
 #  define vfprintf rpl_vfprintf
+#  define GNULIB_overrides_vfprintf 1
 extern int vfprintf (FILE *fp, const char *format, va_list args)
        __attribute__ ((__format__ (__printf__, 2, 0)))
        _GL_ARG_NONNULL ((1, 2));
 # endif
-#elif @GNULIB_VFPRINTF@ && @REPLACE_STDIO_WRITE_FUNCS@ && @GNULIB_STDIO_H_SIGPIPE@
-# define vfprintf rpl_vfprintf
-extern int vfprintf (FILE *fp, const char *format, va_list args)
-       __attribute__ ((__format__ (__printf__, 2, 0)))
-       _GL_ARG_NONNULL ((1, 2));
-#elif defined GNULIB_POSIXCHECK
-# undef vfprintf
+#endif
+#if !@GNULIB_VFPRINTF_POSIX@ && defined GNULIB_POSIXCHECK
+# if !GNULIB_overrides_vfprintf
+#  undef vfprintf
+# endif
 /* Assume vfprintf is always declared.  */
 _GL_WARN_ON_USE (vfprintf, "vfprintf is not always POSIX compliant - "
                  "use gnulib module vfprintf-posix for portable "
                       "POSIX compliance");
 #endif
 
-#if @GNULIB_VPRINTF_POSIX@
-# if @REPLACE_VPRINTF@
+#if @GNULIB_VPRINTF_POSIX@ || @GNULIB_VPRINTF@
+# if (@GNULIB_VPRINTF_POSIX@ && @REPLACE_VPRINTF@) \
+     || (@GNULIB_VPRINTF@ && @REPLACE_STDIO_WRITE_FUNCS@ && @GNULIB_STDIO_H_SIGPIPE@)
 #  define vprintf rpl_vprintf
+#  define GNULIB_overrides_vprintf 1
 extern int vprintf (const char *format, va_list args)
        __attribute__ ((__format__ (__printf__, 1, 0))) _GL_ARG_NONNULL ((1));
 # endif
-#elif @GNULIB_VPRINTF@ && @REPLACE_STDIO_WRITE_FUNCS@ && @GNULIB_STDIO_H_SIGPIPE@
-# define vprintf rpl_vprintf
-extern int vprintf (const char *format, va_list args)
-       __attribute__ ((__format__ (__printf__, 1, 0))) _GL_ARG_NONNULL ((1));
-#elif defined GNULIB_POSIXCHECK
-# undef vprintf
+#endif
+#if !@GNULIB_VPRINTF_POSIX@ && defined GNULIB_POSIXCHECK
+# if !GNULIB_overrides_vprintf
+#  undef vprintf
+# endif
 /* Assume vprintf is always declared.  */
 _GL_WARN_ON_USE (vprintf, "vprintf is not always POSIX compliant - "
                  "use gnulib module vprintf-posix for portable "
