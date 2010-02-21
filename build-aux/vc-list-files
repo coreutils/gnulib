@@ -2,7 +2,7 @@
 # List version-controlled file names.
 
 # Print a version string.
-scriptversion=2009-07-21.16; # UTC
+scriptversion=2010-02-21.13; # UTC
 
 # Copyright (C) 2006-2010 Free Software Foundation, Inc.
 
@@ -85,7 +85,7 @@ elif test -d .hg; then
   eval exec hg locate '"$dir/*"' $postprocess
 elif test -d .bzr; then
   test "$postprocess" = '' && postprocess="| sed 's|^\./||'"
-  eval exec bzr ls --versioned '"$dir"' $postprocess
+  eval exec bzr ls -R --versioned '"$dir"' $postprocess
 elif test -d CVS; then
   test "$postprocess" = '' && postprocess="| sed 's|^\./||'"
   if test -x build-aux/cvsu; then

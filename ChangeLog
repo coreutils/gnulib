@@ -1,3 +1,9 @@
+2010-02-21  Jose E. Marchesi  <jemarch@gnu.org>
+
+	vc-list-files: use bzr ls's -R option
+	* build-aux/vc-list-files: Invoke bazaar to generate a recursive
+	list of versioned files based on 'dir' (usage of -R in 'bzr ls').
+
 2010-02-21  Jim Meyering  <meyering@redhat.com>
 
 	init.sh: fix EXEEXT shims to work also for names like test-prog
