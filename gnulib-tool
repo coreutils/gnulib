@@ -661,7 +661,7 @@ func_ln_if_changed ()
   fi
 }
 
-# Ensure an 'echo' command
+# Ensure an 'echo' command that
 #   1. does not interpret backslashes and
 #   2. does not print an error message "broken pipe" when writing into a pipe
 #      with no writers.
