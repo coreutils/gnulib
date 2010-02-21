@@ -1,4 +1,4 @@
-# gnulib-common.m4 serial 12
+# gnulib-common.m4 serial 13
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -61,9 +61,16 @@ m4_ifndef([AS_VAR_IF],
 [AS_IF([test x"AS_VAR_GET([$1])" = x""$2], [$3], [$4])])])
 
 # AC_PROG_MKDIR_P
-# is a backport of autoconf-2.60's AC_PROG_MKDIR_P.
-# Remove this macro when we can assume autoconf >= 2.60.
-m4_ifdef([AC_PROG_MKDIR_P], [], [
+# is a backport of autoconf-2.60's AC_PROG_MKDIR_P, with a fix
+# for interoperability with automake-1.9.6 from autoconf-2.62.
+# Remove this macro when we can assume autoconf >= 2.62 or
+# autoconf >= 2.60 && automake >= 1.10.
+m4_ifdef([AC_PROG_MKDIR_P], [
+  dnl For automake-1.9.6 && autoconf < 2.62: Ensure MKDIR_P is AC_SUBSTed.
+  m4_define([AC_PROG_MKDIR_P],
+    m4_defn([AC_PROG_MKDIR_P])[
+    AC_SUBST([MKDIR_P])])], [
+  dnl For autoconf < 2.60: Backport of AC_PROG_MKDIR_P.
   AC_DEFUN_ONCE([AC_PROG_MKDIR_P],
     [AC_REQUIRE([AM_PROG_MKDIR_P])dnl defined by automake
      MKDIR_P='$(mkdir_p)'
