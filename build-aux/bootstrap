@@ -43,7 +43,7 @@ Options:
                           sources reside.  Use this if you already
                           have gnulib sources on your machine, and
                           do not want to waste your bandwidth downloading
-                          them again.
+                          them again.  Defaults to \$GNULIB_SRCDIR.
  --copy                   Copy files instead of creating symbolic links.
  --force                  Attempt to bootstrap even if the sources seem
                           not to have been checked out.
@@ -421,15 +421,11 @@ case ${GNULIB_SRCDIR--} in
   GNULIB_SRCDIR=gnulib
   ;;
 *)
-  # Redirect the gnulib submodule to the directory on the command line
-  # if possible.
+  # Use GNULIB_SRCDIR as a reference.  Assumes git 1.6.4 or newer.
   if test -d "$GNULIB_SRCDIR"/.git && \
         git_modules_config submodule.gnulib.url >/dev/null; then
-    git submodule init
-    GNULIB_SRCDIR=`cd $GNULIB_SRCDIR && pwd`
-    git_modules_config --replace-all submodule.gnulib.url $GNULIB_SRCDIR
     echo "$0: getting gnulib files..."
-    git submodule update || exit $?
+    git submodule update --init --reference "$GNULIB_SRCDIR" gnulib || exit $?
     GNULIB_SRCDIR=gnulib
   fi
   ;;

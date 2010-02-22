@@ -1,5 +1,9 @@
 2010-02-22  Eric Blake  <eblake@redhat.com>
 
+	bootstrap: use GNULIB_SRCDIR to reduce disk usage
+	* build-aux/bootstrap (GNULIB_SRCDIR): If set, use as a reference,
+	rather than reconfiguring where the submodule points.
+
 	gettimeofday: restore support for platforms that lack function
 	* m4/gettimeofday.m4 (gl_FUNC_GETTIMEOFDAY): Also compile
 	replacement if function is missing.
