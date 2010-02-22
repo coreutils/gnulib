@@ -1,5 +1,8 @@
 2010-02-22  Eric Blake  <eblake@redhat.com>
 
+	bootstrap: interoperate with gettext 0.14.1
+	* build-aux/bootstrap (slurp): Fix typo when using older gettext.
+
 	bootstrap: allow for alternate submodule location
 	* build-aux/bootstrap (gnulib_path): New variable; use instead of
 	hardcoding submodule location.

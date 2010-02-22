@@ -653,7 +653,7 @@ slurp() {
           rm -f $dir/$file
           sed '
             /^AC_DEFUN(\[AM_INTL_SUBDIR],/,/^]/c\
-              AC_DEFUN([AM_INTL_SUBDIR], [
+              AC_DEFUN([AM_INTL_SUBDIR], [])
             /^AC_DEFUN(\[gt_INTL_SUBDIR_CORE],/,/^]/c\
               AC_DEFUN([gt_INTL_SUBDIR_CORE], [])
             $a\
