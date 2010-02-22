@@ -1,5 +1,10 @@
 2010-02-22  Eric Blake  <eblake@redhat.com>
 
+	lseek: avoid bash 3.2 broken pipe bug
+	* m4/lseek.m4 (gl_FUNC_LSEEK): Drain pipe, to avoid spurious
+	warning from bash 3.2.
+	Reported by Ben Pfaff, with analysis from Bruno Haible.
+
 	bootstrap: support non-FSF copyright holder
 	* build-aux/bootstrap (COPYRIGHT_HOLDER, with_gettext): Allow
 	bootstrap.conf override of COPYRIGHT_HOLDER.

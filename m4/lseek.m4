@@ -1,4 +1,4 @@
-# lseek.m4 serial 4
+# lseek.m4 serial 5
 dnl Copyright (C) 2007, 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -21,7 +21,8 @@ int main ()
 }],
          [if test -s conftest$ac_exeext \
              && ./conftest$ac_exeext < conftest.$ac_ext \
-             && { echo hi | ./conftest$ac_exeext; test $? = 1; }; then
+             && test 1 = "`echo hi \
+               | { ./conftest$ac_exeext; echo $?; cat >/dev/null; }`"; then
             gl_cv_func_lseek_pipe=yes
           else
             gl_cv_func_lseek_pipe=no
