@@ -391,7 +391,7 @@ _GL_WARN_ON_USE (getline, "getline is unportable - "
 
 #if @GNULIB_OBSTACK_PRINTF@ || @GNULIB_OBSTACK_PRINTF_POSIX@
 # if @REPLACE_OBSTACK_PRINTF@
-#  define obstack_printf rpl_osbtack_printf
+#  define obstack_printf rpl_obstack_printf
 #  define obstack_vprintf rpl_obstack_vprintf
 # endif
 # if @REPLACE_OBSTACK_PRINTF@ || !@HAVE_DECL_OBSTACK_PRINTF@

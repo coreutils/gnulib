@@ -1,3 +1,7 @@
+2010-02-21  Bruno Haible  <bruno@clisp.org>
+
+	* lib/stdio.in.h (obstack_printf): Fix typo.
+
 2010-02-21  Jose E. Marchesi  <jemarch@gnu.org>
 
 	vc-list-files: use bzr ls's -R option
