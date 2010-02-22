@@ -81,6 +81,14 @@
 
 2010-02-15  Jim Meyering  <meyering@redhat.com>
 
+	init.sh: improve portability and efficiency
+	* tests/init.sh (find_exe_basenames_): Remove unnecessary use of
+	"dummy" in a for loop.
+	Use '!', not '^' to select the complement of a character set used
+	in a "case" statement.
+	Use shell variable manipulation, a la ${...%.exe}, rather than sed.
+	Suggestions from Eric Blake.
+
 	maint.mk: mark syntax-check sc_*.m rules as .PHONY
 	* top/maint.mk ($(syntax-check-rules)): Add .PHONY, so that
 	"make -t syntax-check" doesn't create a ton of sc_*.m files.
