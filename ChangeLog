@@ -1,5 +1,10 @@
 2010-02-22  Eric Blake  <eblake@redhat.com>
 
+	bootstrap: allow for alternate submodule location
+	* build-aux/bootstrap (gnulib_path): New variable; use instead of
+	hardcoding submodule location.
+	(gnulib_mk): Allow direct use of Makefile.am.
+
 	bootstrap: use GNULIB_SRCDIR to reduce disk usage
 	* build-aux/bootstrap (GNULIB_SRCDIR): If set, use as a reference,
 	rather than reconfiguring where the submodule points.
