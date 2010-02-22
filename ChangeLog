@@ -1,3 +1,13 @@
+2010-02-22  Eric Blake  <eblake@redhat.com>
+
+	gettimeofday: restore support for platforms that lack function
+	* m4/gettimeofday.m4 (gl_FUNC_GETTIMEOFDAY): Also compile
+	replacement if function is missing.
+	* m4/sys_time_h.m4 (gl_HEADER_SYS_TIME_H_DEFAULTS): New witness.
+	* modules/sys_time (Makefile.am): Substitute it.
+	* lib/sys_time.in.h (gettimeofday): Check it.
+	Reported by Michael Goffioul.
+
 2010-02-21  Bruno Haible  <bruno@clisp.org>
 
 	* lib/stdio.in.h (obstack_printf): Fix typo.

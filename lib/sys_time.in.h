@@ -59,6 +59,8 @@ struct timeval
 #  if @REPLACE_GETTIMEOFDAY@
 #   undef gettimeofday
 #   define gettimeofday rpl_gettimeofday
+#  endif
+#  if @REPLACE_GETTIMEOFDAY@ || !@HAVE_GETTIMEOFDAY@
 extern int gettimeofday (struct timeval *restrict, void *restrict)
      _GL_ARG_NONNULL ((1));
 #  endif

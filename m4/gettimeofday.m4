@@ -1,4 +1,4 @@
-# serial 14
+# serial 15
 
 # Copyright (C) 2001-2003, 2005, 2007, 2009-2010 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -15,7 +15,11 @@ AC_DEFUN([gl_FUNC_GETTIMEOFDAY],
   AC_CHECK_FUNCS_ONCE([gettimeofday])
 
   gl_gettimeofday_timezone=void
-  if test $ac_cv_func_gettimeofday = yes; then
+  if test $ac_cv_func_gettimeofday != yes; then
+    HAVE_GETTIMEOFDAY=0
+    AC_LIBOBJ([gettimeofday])
+    gl_PREREQ_GETTIMEOFDAY
+  else
     gl_FUNC_GETTIMEOFDAY_CLOBBER
     AC_CACHE_CHECK([for gettimeofday with POSIX signature],
       [gl_cv_func_gettimeofday_posix_signature],
