@@ -133,7 +133,8 @@ XGETTEXT_OPTIONS='\\\
  --flag=error:3:c-format --flag=error_at_line:5:c-format\\\
 '
 
-# Package bug report address for gettext files
+# Package bug report address and copyright holder for gettext files
+COPYRIGHT_HOLDER='Free Software Foundation, Inc.'
 MSGID_BUGS_ADDRESS=bug-$package@gnu.org
 
 # Files we don't want to import.
@@ -786,7 +787,8 @@ if test $with_gettext = yes; then
   rm -f po/Makevars
   sed '
     /^EXTRA_LOCALE_CATEGORIES *=/s/=.*/= '"$EXTRA_LOCALE_CATEGORIES"'/
-    /^MSGID_BUGS_ADDRESS *=/s/=.*/= '"$MSGID_BUGS_ADDRESS"'/
+    /^COPYRIGHT_HOLDER *=/s/=.*/= '"$COPYRIGHT_HOLDER"'/
+    /^MSGID_BUGS_ADDRESS *=/s|=.*|= '"$MSGID_BUGS_ADDRESS"'|
     /^XGETTEXT_OPTIONS *=/{
       s/$/ \\/
       a\

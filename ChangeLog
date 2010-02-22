@@ -1,5 +1,10 @@
 2010-02-22  Eric Blake  <eblake@redhat.com>
 
+	bootstrap: support non-FSF copyright holder
+	* build-aux/bootstrap (COPYRIGHT_HOLDER, with_gettext): Allow
+	bootstrap.conf override of COPYRIGHT_HOLDER.
+	(MSGID_BUGS_ADDRESS): Allow URL rather than email.
+
 	bootstrap: interoperate with gettext 0.14.1
 	* build-aux/bootstrap (slurp): Fix typo when using older gettext.
 
