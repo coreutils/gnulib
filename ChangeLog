@@ -1,3 +1,10 @@
+2010-02-23  Eric Blake  <eblake@redhat.com>
+
+	gettimeofday: provide correct function
+	* lib/gettimeofday.c (gettimeofday): Provide rpl_gettimeofday only
+	when replacement is declared, otherwise provide gettimeofday.
+	Reported by Michael Goffioul.
+
 2010-02-23  Jim Meyering  <meyering@redhat.com>
 
 	lib-ignore: relax license to "unlimited", not LGPLv2+
