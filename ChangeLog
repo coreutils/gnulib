@@ -1,5 +1,10 @@
 2010-02-23  Jim Meyering  <meyering@redhat.com>
 
+	lib-ignore: relax license to "unlimited", not LGPLv2+
+	* modules/lib-ignore (License): Relax to "unlimited".
+
+2010-02-23  Jim Meyering  <meyering@redhat.com>
+
 	lib-ignore: relax license to LGPLv2+
 	* modules/lib-ignore (License): Relax to LGPLv2+.
 
