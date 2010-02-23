@@ -3,7 +3,6 @@
 
 @node Makefile Conventions
 @chapter Makefile Conventions
-@comment standards.texi does not print an index, but make.texinfo does.
 @cindex makefile, conventions for
 @cindex conventions for makefiles
 @cindex standards for makefiles
@@ -294,7 +293,7 @@ $(INSTALL_PROGRAM) foo bar baz $(bindir)
 
 
 @node DESTDIR
-@section @code{DESTDIR}: support for staged installs
+@section @code{DESTDIR}: Support for Staged Installs
 
 @vindex DESTDIR
 @cindex staged installs
@@ -367,6 +366,11 @@ packages should not try to guess which value should be appropriate for
 these variables on the system they are being installed onto: use the
 default settings specified here so that all GNU packages behave
 identically, allowing the installer to achieve any desired layout.
+
+@cindex directories, creating installation
+@cindex installation directories, creating
+All installation directories, and their parent directories, should be
+created (if necessary) before they are installed into.
 
 These first two variables set the root for the installation.  All the
 other installation directories should be subdirectories of one of
@@ -743,26 +747,31 @@ with @code{$(INSTALL_DATA)} (@pxref{Command Variables}), and then run
 the @code{install-info} program if it is present.  @code{install-info}
 is a program that edits the Info @file{dir} file to add or update the
 menu entry for the given Info file; it is part of the Texinfo package.
-Here is a sample rule to install an Info file:
+
+Here is a sample rule to install an Info file that also tries to
+handle some additional situations, such as @code{install-info} not
+being present.
 
 @comment This example has been carefully formatted for the Make manual.
 @comment Please do not reformat it without talking to bug-make@gnu.org.
 @smallexample
-$(DESTDIR)$(infodir)/foo.info: foo.info
-        $(POST_INSTALL)
-# There may be a newer info file in . than in srcdir.
-        -if test -f foo.info; then d=.; \
-         else d=$(srcdir); fi; \
-        $(INSTALL_DATA) $$d/foo.info $(DESTDIR)$@@; \
+do-install-info: foo.info installdirs
+        $(NORMAL_INSTALL)
+# Prefer an info file in . to one in srcdir.
+        if test -f foo.info; then d=.; \
+         else d="$(srcdir)"; fi; \
+        $(INSTALL_DATA) $$d/foo.info \
+          "$(DESTDIR)$(infodir)/foo.info"
 # Run install-info only if it exists.
 # Use `if' instead of just prepending `-' to the
 # line so we notice real errors from install-info.
-# We use `$(SHELL) -c' because some shells do not
+# Use `$(SHELL) -c' because some shells do not
 # fail gracefully when there is an unknown command.
+        $(POST_INSTALL)
         if $(SHELL) -c 'install-info --version' \
            >/dev/null 2>&1; then \
-          install-info --dir-file=$(DESTDIR)$(infodir)/dir \
-                       $(DESTDIR)$(infodir)/foo.info; \
+          install-info --dir-file="$(DESTDIR)$(infodir)/dir" \
+                       "$(DESTDIR)$(infodir)/foo.info"; \
         else true; fi
 @end smallexample
 
@@ -1000,8 +1009,7 @@ the program before running the tests.  You should not assume that
 It's useful to add a target named @samp{installdirs} to create the
 directories where files are installed, and their parent directories.
 There is a script called @file{mkinstalldirs} which is convenient for
-this; you can find it in the Texinfo package.
-@c It's in /gd/gnu/lib/mkinstalldirs.
+this; you can find it in the Gnulib package.
 You can use a rule like this:
 
 @comment This has been carefully formatted to look decent in the Make manual.
@@ -1016,7 +1024,7 @@ installdirs: mkinstalldirs
 @end smallexample
 
 @noindent
-or, if you wish to support @env{DESTDIR},
+or, if you wish to support @env{DESTDIR} (strongly encouraged),
 
 @smallexample
 # Make sure all installation directories (e.g. $(bindir))

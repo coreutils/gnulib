@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate December 11, 2009
+@set lastupdate February 17, 2010
 @c %**end of header
 
 @dircategory GNU organization
@@ -27,7 +27,7 @@
 The GNU coding standards, last updated @value{lastupdate}.
 
 Copyright @copyright{} 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999,
-2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009 Free Software
+2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010 Free Software
 Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
@@ -509,7 +509,7 @@ and is not always appropriate, following this policy would have saved
 GCC developers many hours, or even days, per year.
 
 In the case of function-like macros like @code{REVERSIBLE_CC_MODE} in
-GCC which cannot be simply used in @code{if( ...)} statements, there is
+GCC which cannot be simply used in @code{if (...)} statements, there is
 an easy workaround.  Simply introduce another macro
 @code{HAS_REVERSIBLE_CC_MODE} as in the following example:
 
@@ -690,7 +690,7 @@ creating temporary files in world-writable directories.  In C, you can
 avoid this problem by creating temporary files in this manner:
 
 @example
-fd = open(filename, O_WRONLY | O_CREAT | O_EXCL, 0600);
+fd = open (filename, O_WRONLY | O_CREAT | O_EXCL, 0600);
 @end example
 
 @noindent
@@ -3531,7 +3531,7 @@ clear explanation of how the earlier version differed.
 
 The change log file is normally called @file{ChangeLog} and covers an
 entire directory.  Each directory can have its own change log, or a
-directory can use the change log of its parent directory--it's up to
+directory can use the change log of its parent directory---it's up to
 you.
 
 Another alternative is to record change log information with a version
@@ -3539,21 +3539,20 @@ control system such as RCS or CVS.  This can be converted automatically
 to a @file{ChangeLog} file using @code{rcs2log}; in Emacs, the command
 @kbd{C-x v a} (@code{vc-update-change-log}) does the job.
 
-There's no need to describe the full purpose of the changes or how they
-work together.  If you think that a change calls for explanation, you're
-probably right.  Please do explain it---but please put the explanation
-in comments in the code, where people will see it whenever they see the
-code.  For example, ``New function'' is enough for the change log when
-you add a function, because there should be a comment before the
-function definition to explain what it does.
+There's no need to describe the full purpose of the changes or how
+they work together.  However, sometimes it is useful to write one line
+to describe the overall purpose of a change or a batch of changes.  If
+you think that a change calls for explanation, you're probably right.
+Please do explain it---but please put the full explanation in comments
+in the code, where people will see it whenever they see the code.  For
+example, ``New function'' is enough for the change log when you add a
+function, because there should be a comment before the function
+definition to explain what it does.
 
 In the past, we recommended not mentioning changes in non-software
 files (manuals, help files, etc.) in change logs.  However, we've been
 advised that it is a good idea to include them, for the sake of
 copyright records.
-
-However, sometimes it is useful to write one line to describe the
-overall purpose of a batch of changes.
 
 The easiest way to add an entry to @file{ChangeLog} is with the Emacs
 command @kbd{M-x add-change-log-entry}.  An entry should have an
