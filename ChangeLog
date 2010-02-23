@@ -1,5 +1,9 @@
 2010-02-23  Eric Blake  <eblake@redhat.com>
 
+	bootstrap: improve some comments
+	* build-aux/bootstrap: Drop unneeded emacs hint.  Add some
+	clarification comments.
+
 	gettimeofday: provide correct function
 	* lib/gettimeofday.c (gettimeofday): Provide rpl_gettimeofday only
 	when replacement is declared, otherwise provide gettimeofday.

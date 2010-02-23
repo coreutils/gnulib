@@ -17,7 +17,15 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Written by Paul Eggert.
+# Originally written by Paul Eggert.  The canonical version of this
+# script is maintained as build-aux/bootstrap in gnulib, however, to
+# be useful to your project, you should place a copy of it under
+# version control in the top-level directory of your project.  The
+# intent is that all customization can be done with a bootstrap.conf
+# file also maintained in your version control; gnulib comes with a
+# template build-aux/bootstrap.conf to get you started.
+
+# Please report bugs or propose patches to bug-gnulib@gnu.org.
 
 nl='
 '
@@ -161,7 +169,6 @@ vc_ignore=auto
 # die otherwise.
 find_tool ()
 {
-  # Find sha1sum, named gsha1sum on MacPorts.
   find_tool_envvar=$1
   shift
   find_tool_names=$@
@@ -818,7 +825,3 @@ fi
 bootstrap_epilogue
 
 echo "$0: done.  Now you can run './configure'."
-
-# Local Variables:
-# indent-tabs-mode: nil
-# End:
