@@ -121,6 +121,17 @@
 	Use shell variable manipulation, a la ${...%.exe}, rather than sed.
 	Suggestions from Eric Blake.
 
+	init.sh: automatically accommodate programs with the .exe suffix
+	Automatically arrange for an invocation of "prog" to execute the
+	program named "prog$EXEEXT" (usually prog.exe).  Thus, all invocations
+	may use the simpler "prog", yet still work when built on a system
+	that requires specifying the added suffix.
+	Do this by constructing a function named "prog" that invokes
+	"prog.exe" for each .exe file in selected directories.
+	* tests/init.sh (find_exe_basenames_): New function.
+	(create_exe_shim_functions_): New function.
+	(path_prepend_): Use it.
+
 	maint.mk: mark syntax-check sc_*.m rules as .PHONY
 	* top/maint.mk ($(syntax-check-rules)): Add .PHONY, so that
 	"make -t syntax-check" doesn't create a ton of sc_*.m files.
