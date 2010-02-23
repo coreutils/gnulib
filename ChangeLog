@@ -1,3 +1,8 @@
+2010-02-23  Jim Meyering  <meyering@redhat.com>
+
+	lib-ignore: relax license to LGPLv2+
+	* modules/lib-ignore (License): Relax to LGPLv2+.
+
 2010-02-22  Eric Blake  <eblake@redhat.com>
 
 	lseek: avoid bash 3.2 broken pipe bug
