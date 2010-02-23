@@ -1,5 +1,10 @@
 2010-02-23  Eric Blake  <eblake@redhat.com>
 
+	warn-on-use: work with old autoconf
+	* m4/warn-on-use.m4 (gl_WARN_ON_USE_PREPARE): Accomodate older
+	AS_VAR semantics of autoconf 2.60.
+	Reported by Bruno Haible.
+
 	bootstrap: improve some comments
 	* build-aux/bootstrap: Drop unneeded emacs hint.  Add some
 	clarification comments.
