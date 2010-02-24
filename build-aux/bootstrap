@@ -431,12 +431,28 @@ case ${GNULIB_SRCDIR--} in
   GNULIB_SRCDIR=$gnulib_path
   ;;
 *)
-  # Use GNULIB_SRCDIR as a reference.  Assumes git 1.6.4 or newer.
+  # Use GNULIB_SRCDIR as a reference.
   if test -d "$GNULIB_SRCDIR"/.git && \
         git_modules_config submodule.gnulib.url >/dev/null; then
     echo "$0: getting gnulib files..."
-    git submodule update --init --reference "$GNULIB_SRCDIR" \
+    if git submodule --help|grep reference > /dev/null; then
+      # Prefer the one-liner available in git 1.6.4 or newer.
+      git submodule update --init --reference "$GNULIB_SRCDIR" \
         "$gnulib_path" || exit $?
+    else
+      # This fallback allows at least git 1.5.5.
+      if test -f "$gnulib_path"/gnulib-tool; then
+        # Since file already exists, assume submodule init already complete.
+        git submodule update || exit $?
+      else
+        # Older git can't clone into an empty directory.
+        rmdir "$gnulib_path" 2>/dev/null
+        git clone --reference "$GNULIB_SRCDIR" \
+          "$(git_modules_config submodule.gnulib.url)" "$gnulib_path" \
+          && git submodule init && git submodule update \
+          || exit $?
+      fi
+    fi
     GNULIB_SRCDIR=$gnulib_path
   fi
   ;;

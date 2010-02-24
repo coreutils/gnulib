@@ -1,3 +1,9 @@
+2010-02-24  Eric Blake  <eblake@redhat.com>
+
+	bootstrap: allow older git
+	* build-aux/bootstrap (GNULIB_SRCDIR): Add fallback if git is
+	older than 1.6.4.  Requested by the libvirt project.
+
 2010-02-23  Eric Blake  <eblake@redhat.com>
 
 	warn-on-use: work with old autoconf
