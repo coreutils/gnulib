@@ -727,7 +727,10 @@ fi
 # For bash >= 2.0: define echo to a function that uses the printf built-in.
 # For bash < 2.0: define echo to a function that uses cat of a here document.
 # (There is no win in using 'printf' over 'cat' if it is not a shell built-in.)
-if test -z "$have_echo" \
+# Also handle problem 2, specific to bash 3.2, here.
+if { test -z "$have_echo" \
+     || case "$BASH_VERSION" in 3.2*) true;; *) false;; esac; \
+   } \
    && test -n "$BASH_VERSION"; then \
   if type printf 2>/dev/null | grep / > /dev/null; then
     # 'printf' is not a shell built-in.
@@ -810,15 +813,6 @@ if test -z "$have_echo" \
   exec /bin/sh "$0" --no-reexec "$@"
   exit 127
 fi
-# Now handle problem 2, specific to bash 3.2.
-case "$BASH_VERSION" in
-  3.2*)
-    echo ()
-    {
-      printf '%s\n' "$*"
-    }
-    ;;
-esac
 if test -z "$have_echo"; then
   func_fatal_error "Shell does not support 'echo' correctly. Please install GNU bash and set the environment variable CONFIG_SHELL to point to it."
 fi

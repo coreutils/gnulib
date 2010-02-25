@@ -1,3 +1,10 @@
+2010-02-25  Bruno Haible  <bruno@clisp.org>
+
+	Fix breakage of gnulib-tool with ksh, introduced on 2010-02-21.
+	* gnulib-tool: Define 'echo' as a function only before the ksh alias
+	setting, not afterwards.
+	Reported by Ben Walton <bwalton@artsci.utoronto.ca>.
+
 2010-02-24  Eric Blake  <eblake@redhat.com>
 
 	bootstrap, git-version-gen: use timestamp
