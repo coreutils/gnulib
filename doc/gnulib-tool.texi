@@ -81,8 +81,14 @@ module that contains this source file, you can use the command
 @section Initial import
 @cindex initial import
 
-Gnulib assumes your project uses Autoconf and Automake.  Invoking
-@samp{gnulib-tool --import} will copy source files, create a
+Gnulib assumes that your project uses Autoconf.  When using Gnulib, you
+will need to have Autoconf and Automake among your build tools.  Note that
+while the use of Automake in your project's top level directory is an
+easy way to fulfil the Makefile conventions of the GNU coding standards,
+Gnulib does not require it.  But when you use Gnulib, Automake will be
+used at least in a subdirectory of your project.
+
+Invoking @samp{gnulib-tool --import} will copy source files, create a
 @file{Makefile.am} to build them, generate a file @file{gnulib-comp.m4} with
 Autoconf M4 macro declarations used by @file{configure.ac}, and generate
 a file @file{gnulib-cache.m4} containing the cached specification of how
