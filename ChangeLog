@@ -1,3 +1,12 @@
+2010-03-02  Bruno Haible  <bruno@clisp.org>
+
+	spawn: Don't override the system defined values on FreeBSD 8.
+	* lib/spawn.in.h (POSIX_SPAWN_RESETIDS, POSIX_SPAWN_SETPGROUP,
+	POSIX_SPAWN_SETSIGDEF, POSIX_SPAWN_SETSIGMASK,
+	POSIX_SPAWN_SETSCHEDPARAM, POSIX_SPAWN_SETSCHEDULER): Don't redefine
+	if HAVE_POSIX_SPAWN is 1.
+	Reported by Johan van Selst <johans@stack.nl> via Eric Blake.
+
 2010-03-01  Bruno Haible  <bruno@clisp.org>
 
 	* doc/gnulib-tool.texi (Initial import): Clarify the requirements

@@ -110,17 +110,19 @@ typedef struct
 
 
 /* Flags to be set in the `posix_spawnattr_t'.  */
-#if @REPLACE_POSIX_SPAWN@
+#if !@HAVE_POSIX_SPAWN@
+# if @REPLACE_POSIX_SPAWN@
 /* Use the values from the system, for better compatibility.  */
 /* But this implementation does not support AIX extensions.  */
-# undef POSIX_SPAWN_FORK_HANDLERS
-#else
-# define POSIX_SPAWN_RESETIDS           0x01
-# define POSIX_SPAWN_SETPGROUP          0x02
-# define POSIX_SPAWN_SETSIGDEF          0x04
-# define POSIX_SPAWN_SETSIGMASK         0x08
-# define POSIX_SPAWN_SETSCHEDPARAM      0x10
-# define POSIX_SPAWN_SETSCHEDULER       0x20
+#  undef POSIX_SPAWN_FORK_HANDLERS
+# else
+#  define POSIX_SPAWN_RESETIDS           0x01
+#  define POSIX_SPAWN_SETPGROUP          0x02
+#  define POSIX_SPAWN_SETSIGDEF          0x04
+#  define POSIX_SPAWN_SETSIGMASK         0x08
+#  define POSIX_SPAWN_SETSCHEDPARAM      0x10
+#  define POSIX_SPAWN_SETSCHEDULER       0x20
+# endif
 #endif
 /* A GNU extension.  Use the next free bit position.  */
 #define POSIX_SPAWN_USEVFORK \
