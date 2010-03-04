@@ -2370,7 +2370,6 @@ func_all_modules ()
   func_module tsearch
   func_module unistd
   func_module unlink
-  func_module utime
   func_module utimensat
   func_module vasnprintf-posix
   func_module vasprintf-posix

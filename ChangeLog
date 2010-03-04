@@ -1,3 +1,17 @@
+2010-03-04  Jim Meyering  <meyering@redhat.com>
+
+	utime: remove obsolete module
+	This module, like autoconf's AC_FUNC_UTIME_NULL macro, has been
+	unnecessary for years, and has been marked as obsolete for 10 months.
+	* modules/utime: Remove file.
+	* lib/utime.c: Remove file.
+	* m4/utime.m4: Remove file.
+	* m4/utimes-null.m4: Remove file.
+	* doc/posix-functions/utime.texi (utime): Remove reference to
+	the module.  Move the sole "fixed by gnulib" item into the
+	"problems not fixed by Gnulib" list.
+	* MODULES.html.sh (func_all_modules): Remove reference to "utime".
+
 2010-03-05  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/exit (License): Relax license to LGPLv2+.

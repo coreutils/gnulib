@@ -4,17 +4,17 @@
 
 POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/utime.html}
 
-Gnulib module: utime
+Gnulib module: ---
 
 Portability problems fixed by Gnulib:
 @itemize
-@item
-On some old platforms (Sequent), @code{utime (file, NULL)} fails to set the
-file's timestamp to the current time.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+On some old platforms (Sequent), @code{utime (file, NULL)} fails to set the
+file's timestamp to the current time.
 @item
 On some platforms, this function mis-handles trailing slash:
 Solaris 9.
