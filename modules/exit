@@ -1,6 +1,12 @@
 Description:
 exit() function: program termination.
 
+Status:
+obsolete
+
+Notice:
+This module is obsolete. It will be removed on 2011-01-01.  Use 'stdlib'.
+
 Files:
 
 Depends-on:
@@ -14,8 +20,7 @@ Include:
 <stdlib.h>
 
 License:
-GPL
+LGPLv2+
 
 Maintainer:
 Bruno Haible
-

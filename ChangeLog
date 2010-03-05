@@ -1,3 +1,11 @@
+2010-03-05  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/exit (License): Relax license to LGPLv2+.
+	(Status): Mark as obsolete.
+	* NEWS: Mention deprecated 'exit' module.
+	* doc/posix-functions/exit.texi: Recommend 'stdlib' module instead
+	of now obsolete 'exit'.
+
 2010-03-02  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	fts-lgpl: remove unused module
