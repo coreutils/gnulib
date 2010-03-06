@@ -1,4 +1,4 @@
-# wctype.m4 serial 4
+# wctype_h.m4 serial 4
 
 dnl A placeholder for ISO C99 <wctype.h>, for platforms that lack it.
 
