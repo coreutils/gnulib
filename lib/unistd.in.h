@@ -146,6 +146,13 @@ extern "C" {
 #endif
 
 
+#if defined GNULIB_POSIXCHECK
+/* The access() function is a security risk.  */
+_GL_WARN_ON_USE (access, "the access function is a security risk - "
+                 "use the gnulib module faccessat instead");
+#endif
+
+
 #if @GNULIB_CHOWN@
 # if @REPLACE_CHOWN@
 #  undef chown
@@ -268,6 +275,11 @@ _GL_WARN_ON_USE (rpl_environ, "environ is unportable - "
 /* Like access(), except that it uses the effective user id and group id of
    the current process.  */
 extern int euidaccess (const char *filename, int mode) _GL_ARG_NONNULL ((1));
+# endif
+# if defined GNULIB_POSIXCHECK
+/* Like access(), this function is a security risk.  */
+_GL_WARN_ON_USE (euidaccess, "the euidaccess function is a security risk - "
+                 "use the gnulib module faccessat instead");
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef euidaccess

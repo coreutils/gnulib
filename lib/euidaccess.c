@@ -78,15 +78,15 @@
 int
 euidaccess (const char *file, int mode)
 {
-#if HAVE_FACCESSAT
+#if HAVE_FACCESSAT                      /* glibc */
   return faccessat (AT_FDCWD, file, mode, AT_EACCESS);
-#elif defined EFF_ONLY_OK
+#elif defined EFF_ONLY_OK               /* IRIX, OSF/1, Interix */
   return access (file, mode | EFF_ONLY_OK);
-#elif defined ACC_SELF
+#elif defined ACC_SELF                  /* AIX */
   return accessx (file, mode, ACC_SELF);
-#elif HAVE_EACCESS
+#elif HAVE_EACCESS                      /* FreeBSD */
   return eaccess (file, mode);
-#else
+#else       /* MacOS X, NetBSD, OpenBSD, HP-UX, Solaris, Cygwin, mingw, BeOS */
 
   uid_t uid = getuid ();
   gid_t gid = getgid ();

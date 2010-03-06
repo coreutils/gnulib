@@ -19,8 +19,12 @@ it is not safe to be used in libraries and is not multithread-safe.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@end itemize
+
+Other problems of this function:
+@itemize
 @item
 There is an inherent race between calling this function and performing
-some action based on the results; you should think twice before
-trusting this function in a set-uid or set-gid program.
+some action based on the results; you should think twice before trusting
+this function, especially in a set-uid or set-gid program.
 @end itemize

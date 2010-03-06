@@ -15,3 +15,15 @@ IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin 1.5.x, mingw, Interix 3.5, BeOS.
 Portability problems not fixed by Gnulib:
 @itemize
 @end itemize
+
+Other problems of this function:
+@itemize
+@item
+There is an inherent race between calling this function and performing
+some action based on the results; you should think twice before trusting
+this function, especially in a set-uid or set-gid program.
+@item
+This function does not have an option for not following symbolic links
+(like @code{stat} versus @code{lstat}).  If you need this option, use
+the Gnulib module @code{faccessat} with the @code{AT_EACCESS} flag.
+@end itemize
