@@ -1,5 +1,9 @@
 2010-03-06  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'iconv-h'.
+	* modules/iconv-h-tests: New file.
+	* tests/test-iconv-h.c: New file.
+
 	New module 'iconv-h'.
 	* modules/iconv-h: New file.
 	* modules/iconv_open (Files): Remove lib/iconv.in.h, m4/iconv_h.m4.
