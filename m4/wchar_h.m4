@@ -7,7 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 dnl Written by Eric Blake.
 
-# wchar.m4 serial 31
+# wchar_h.m4 serial 31
 
 AC_DEFUN([gl_WCHAR_H],
 [

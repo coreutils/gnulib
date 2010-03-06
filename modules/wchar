@@ -3,7 +3,7 @@ A <wchar.h> that works around platform issues.
 
 Files:
 lib/wchar.in.h
-m4/wchar.m4
+m4/wchar_h.m4
 m4/wint_t.m4
 
 Depends-on:

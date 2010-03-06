@@ -1,3 +1,9 @@
+2010-03-06  Bruno Haible  <bruno@clisp.org>
+
+	More consistent naming of *.m4 files.
+	* m4/wchar_h.m4: Renamed from m4/wchar.m4.
+	* modules/wchar (Files): Update.
+
 2010-03-06  Jim Meyering  <meyering@redhat.com>
 
 	euidaccess: relax license to LGPLv2+
