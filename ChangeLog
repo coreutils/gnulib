@@ -1,3 +1,8 @@
+2010-03-06  Jim Meyering  <meyering@redhat.com>
+
+	euidaccess: relax license to LGPLv2+
+	* modules/euidaccess (License): Relax to LGPLv2+.
+
 2010-03-06  Bruno Haible  <bruno@clisp.org>
 
 	Prefer lib_SOURCES over unconditional AC_LIBOBJ.
