@@ -9,9 +9,9 @@ Depends-on:
 exit
 
 configure.ac:
-AC_LIBOBJ([exitfail])
 
 Makefile.am:
+lib_SOURCES += exitfail.c
 
 Include:
 "exitfail.h"

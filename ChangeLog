@@ -1,3 +1,9 @@
+2010-03-06  Bruno Haible  <bruno@clisp.org>
+
+	Prefer lib_SOURCES over unconditional AC_LIBOBJ.
+	* modules/exitfail (configure.ac): Remove AC_LIBOBJ invocation.
+	(Makefile.am): Augment lib_SOURCES instead.
+
 2010-03-04  Jim Meyering  <meyering@redhat.com>
 
 	utime: remove obsolete module
