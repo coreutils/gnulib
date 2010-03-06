@@ -1,5 +1,14 @@
 2010-03-06  Bruno Haible  <bruno@clisp.org>
 
+	New module 'iconv-h'.
+	* modules/iconv-h: New file.
+	* modules/iconv_open (Files): Remove lib/iconv.in.h, m4/iconv_h.m4.
+	(Depends-on): Add iconv-h. Remove include_next, arg-nonnull.
+	(configure.ac): Remove gl_ICONV_H.
+	(Makefile.am): Remove rule for iconv.h.
+
+2010-03-06  Bruno Haible  <bruno@clisp.org>
+
 	More consistent naming of *.m4 files.
 	* m4/wctype_h.m4: Renamed from m4/wctype.m4.
 	* modules/wctype (Files): Update.
