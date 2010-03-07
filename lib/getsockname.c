@@ -1,6 +1,6 @@
 /* getsockname.c --- wrappers for Windows getsockname function
 
-   Copyright (C) 2008, 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2008-2010 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
 #undef getsockname
 
 int
-rpl_getsockname (int fd, struct sockaddr *addr, int *addrlen)
+rpl_getsockname (int fd, struct sockaddr *addr, socklen_t *addrlen)
 {
   SOCKET sock = FD_TO_SOCKET (fd);
   int r = getsockname (sock, addr, addrlen);

@@ -28,9 +28,9 @@
 
 #undef recvfrom
 
-int
-rpl_recvfrom (int fd, void *buf, int len, int flags, struct sockaddr *from,
-              int *fromlen)
+ssize_t
+rpl_recvfrom (int fd, void *buf, size_t len, int flags, struct sockaddr *from,
+              socklen_t *fromlen)
 {
   int frombufsize = (from != NULL ? *fromlen : 0);
   SOCKET sock = FD_TO_SOCKET (fd);

@@ -1,3 +1,19 @@
+2010-03-07  Bruno Haible  <bruno@clisp.org>
+
+	Use POSIX declarations for socket functions.
+	* lib/sys_socket.in.h (rpl_connect, rpl_accept, rpl_bind,
+	rpl_getpeername, rpl_getsockname, rpl_recv, rpl_send, rpl_recvfrom,
+	rpl_sendto): Change declaration to match POSIX.
+	* lib/connect.c (rpl_connect): Likewise.
+	* lib/accept.c (rpl_accept): Likewise.
+	* lib/bind.c (rpl_bind): Likewise.
+	* lib/getpeername.c (rpl_getpeername): Likewise.
+	* lib/getsockname.c (rpl_getsockname): Likewise.
+	* lib/recv.c (rpl_recv): Likewise.
+	* lib/send.c (rpl_send): Likewise.
+	* lib/recvfrom.c (rpl_recvfrom): Likewise.
+	* lib/sendto.c (rpl_sendto): Likewise.
+
 2010-03-06  Bruno Haible  <bruno@clisp.org>
 
 	Clarify access, euidaccess, faccessat.

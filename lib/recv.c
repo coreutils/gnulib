@@ -1,6 +1,6 @@
 /* recv.c --- wrappers for Windows recv function
 
-   Copyright (C) 2008, 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2008-2010 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -28,8 +28,8 @@
 
 #undef recv
 
-int
-rpl_recv (int fd, void *buf, int len, int flags)
+ssize_t
+rpl_recv (int fd, void *buf, size_t len, int flags)
 {
   SOCKET sock = FD_TO_SOCKET (fd);
   int r = recv (sock, buf, len, flags);

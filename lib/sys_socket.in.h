@@ -197,7 +197,8 @@ _GL_WARN_ON_USE (socket, "socket is not always POSIX compliant - "
 #  if @HAVE_WINSOCK2_H@
 #   undef connect
 #   define connect              rpl_connect
-extern int rpl_connect (int, struct sockaddr *, int) _GL_ARG_NONNULL ((2));
+extern int rpl_connect (int, const struct sockaddr *, socklen_t)
+     _GL_ARG_NONNULL ((2));
 #  endif
 # elif @HAVE_WINSOCK2_H@
 #  undef connect
@@ -214,7 +215,7 @@ _GL_WARN_ON_USE (connect, "connect is not always POSIX compliant - "
 #  if @HAVE_WINSOCK2_H@
 #   undef accept
 #   define accept               rpl_accept
-extern int rpl_accept (int, struct sockaddr *, int *);
+extern int rpl_accept (int, struct sockaddr *, socklen_t *);
 #  endif
 # elif @HAVE_WINSOCK2_H@
 #  undef accept
@@ -231,7 +232,8 @@ _GL_WARN_ON_USE (accept, "accept is not always POSIX compliant - "
 #  if @HAVE_WINSOCK2_H@
 #   undef bind
 #   define bind                 rpl_bind
-extern int rpl_bind (int, struct sockaddr *, int) _GL_ARG_NONNULL ((2));
+extern int rpl_bind (int, const struct sockaddr *, socklen_t)
+     _GL_ARG_NONNULL ((2));
 #  endif
 # elif @HAVE_WINSOCK2_H@
 #  undef bind
@@ -248,7 +250,7 @@ _GL_WARN_ON_USE (bind, "bind is not always POSIX compliant - "
 #  if @HAVE_WINSOCK2_H@
 #   undef getpeername
 #   define getpeername          rpl_getpeername
-extern int rpl_getpeername (int, struct sockaddr *, int *)
+extern int rpl_getpeername (int, struct sockaddr *, socklen_t *)
      _GL_ARG_NONNULL ((2, 3));
 #  endif
 # elif @HAVE_WINSOCK2_H@
@@ -266,7 +268,7 @@ _GL_WARN_ON_USE (getpeername, "getpeername is not always POSIX compliant - "
 #  if @HAVE_WINSOCK2_H@
 #   undef getsockname
 #   define getsockname          rpl_getsockname
-extern int rpl_getsockname (int, struct sockaddr *, int *)
+extern int rpl_getsockname (int, struct sockaddr *, socklen_t *)
      _GL_ARG_NONNULL ((2, 3));
 #  endif
 # elif @HAVE_WINSOCK2_H@
@@ -319,7 +321,7 @@ _GL_WARN_ON_USE (listen, "listen is not always POSIX compliant - "
 #  if @HAVE_WINSOCK2_H@
 #   undef recv
 #   define recv                 rpl_recv
-extern int rpl_recv (int, void *, int, int) _GL_ARG_NONNULL ((2));
+extern ssize_t rpl_recv (int, void *, size_t, int) _GL_ARG_NONNULL ((2));
 #  endif
 # elif @HAVE_WINSOCK2_H@
 #  undef recv
@@ -336,7 +338,7 @@ _GL_WARN_ON_USE (recv, "recv is not always POSIX compliant - "
 #  if @HAVE_WINSOCK2_H@
 #   undef send
 #   define send                 rpl_send
-extern int rpl_send (int, const void *, int, int) _GL_ARG_NONNULL ((2));
+extern ssize_t rpl_send (int, const void *, size_t, int) _GL_ARG_NONNULL ((2));
 #  endif
 # elif @HAVE_WINSOCK2_H@
 #  undef send
@@ -353,7 +355,8 @@ _GL_WARN_ON_USE (send, "send is not always POSIX compliant - "
 #  if @HAVE_WINSOCK2_H@
 #   undef recvfrom
 #   define recvfrom             rpl_recvfrom
-extern int rpl_recvfrom (int, void *, int, int, struct sockaddr *, int *)
+extern ssize_t rpl_recvfrom (int, void *, size_t, int,
+                             struct sockaddr *, socklen_t *)
      _GL_ARG_NONNULL ((2));
 #  endif
 # elif @HAVE_WINSOCK2_H@
@@ -371,7 +374,8 @@ _GL_WARN_ON_USE (recvfrom, "recvfrom is not always POSIX compliant - "
 #  if @HAVE_WINSOCK2_H@
 #   undef sendto
 #   define sendto               rpl_sendto
-extern int rpl_sendto (int, const void *, int, int, struct sockaddr *, int)
+extern ssize_t rpl_sendto (int, const void *, size_t, int,
+                           const struct sockaddr *, socklen_t)
      _GL_ARG_NONNULL ((2));
 #  endif
 # elif @HAVE_WINSOCK2_H@
