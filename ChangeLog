@@ -1,5 +1,11 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	ctype: Make it usable in C++ code.
+	* lib/ctype.in.h: Include c++defs.h.
+	(isblank): Declare as extern "C".
+	* modules/ctype (Depends-on): Add c++defs.
+	(Makefile.am): Update ctype.h rule.
+
 	New module 'c++defs'.
 	* modules/c++defs: New file.
 	* build-aux/c++defs.h: New file.
