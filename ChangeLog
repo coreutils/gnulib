@@ -1,7 +1,8 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
-	Fix test-dirent link error.
-	* modules/dirent-tests (Makefile.am): Define test_dirent_LDADD.
+	Fix test-dirent-safer link error.
+	* modules/dirent-safer-tests (Makefile.am): Define
+	test_dirent_safer_LDADD.
 
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 

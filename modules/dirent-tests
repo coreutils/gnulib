@@ -8,4 +8,3 @@ configure.ac:
 Makefile.am:
 TESTS += test-dirent
 check_PROGRAMS += test-dirent
-test_dirent_LDADD = $(LDADD) @LIBINTL@
