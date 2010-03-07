@@ -1,5 +1,12 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	New module 'c++defs'.
+	* modules/c++defs: New file.
+	* build-aux/c++defs.h: New file.
+	Reported by John W. Eaton <jwe@gnu.org>.
+
+2010-03-07  Bruno Haible  <bruno@clisp.org>
+
 	logb: Provide missing declaration for Cygwin.
 	* lib/math.in.h (logb): New declaration.
 	* m4/logb.m4: New file.
