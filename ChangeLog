@@ -1,5 +1,10 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	Fix test-dirent link error.
+	* modules/dirent-tests (Makefile.am): Define test_dirent_LDADD.
+
+2010-03-07  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_create_testdir): Don't use 'lib-ignore' module
 	among default module list.
 
