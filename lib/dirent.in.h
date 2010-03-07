@@ -29,26 +29,31 @@
 /* Get ino_t.  Needed on some systems, including glibc 2.8.  */
 #include <sys/types.h>
 
+/* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
+
 /* The definition of _GL_ARG_NONNULL is copied here.  */
 
 /* The definition of _GL_WARN_ON_USE is copied here.  */
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /* Declare overridden functions.  */
 
 #if @REPLACE_CLOSEDIR@
-# define closedir rpl_closedir
-extern int closedir (DIR *) _GL_ARG_NONNULL ((1));
+# if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#  define closedir rpl_closedir
+# endif
+_GL_FUNCDECL_RPL (closedir, int, (DIR *) _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (closedir, int, (DIR *));
+#else
+_GL_CXXALIAS_SYS (closedir, int, (DIR *));
 #endif
+_GL_CXXALIASWARN (closedir);
 
 #if @GNULIB_DIRFD@
 # if !@HAVE_DECL_DIRFD@ && !defined dirfd
 /* Return the file descriptor associated with the given directory stream,
    or -1 if none exists.  */
-extern int dirfd (DIR *dir) _GL_ARG_NONNULL ((1));
+_GL_EXTERN_C int dirfd (DIR *dir) _GL_ARG_NONNULL ((1));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef dirfd
@@ -59,18 +64,25 @@ _GL_WARN_ON_USE (dirfd, "dirfd is unportable - "
 #endif
 
 #if @GNULIB_FDOPENDIR@
-# if @REPLACE_FDOPENDIR@
-#  undef fdopendir
-#  define fdopendir rpl_fdopendir
-# endif
-# if !@HAVE_FDOPENDIR@ || @REPLACE_FDOPENDIR@
 /* Open a directory stream visiting the given directory file
    descriptor.  Return NULL and set errno if fd is not visiting a
    directory.  On success, this function consumes fd (it will be
    implicitly closed either by this function or by a subsequent
    closedir).  */
-extern DIR *fdopendir (int fd);
+# if @REPLACE_FDOPENDIR@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef fdopendir
+#   define fdopendir rpl_fdopendir
+#  endif
+_GL_FUNCDECL_RPL (fdopendir, DIR *, (int fd));
+_GL_CXXALIAS_RPL (fdopendir, DIR *, (int fd));
+# else
+#  if !@HAVE_FDOPENDIR@
+_GL_FUNCDECL_SYS (fdopendir, DIR *, (int fd));
+#  endif
+_GL_CXXALIAS_SYS (fdopendir, DIR *, (int fd));
 # endif
+_GL_CXXALIASWARN (fdopendir);
 #elif defined GNULIB_POSIXCHECK
 # undef fdopendir
 # if HAVE_RAW_DECL_FDOPENDIR
@@ -80,9 +92,15 @@ _GL_WARN_ON_USE (fdopendir, "fdopendir is unportable - "
 #endif
 
 #if @REPLACE_OPENDIR@
-# define opendir rpl_opendir
-extern DIR * opendir (const char *) _GL_ARG_NONNULL ((1));
+# if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#  define opendir rpl_opendir
+# endif
+_GL_FUNCDECL_RPL (opendir, DIR *, (const char *) _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (opendir, DIR *, (const char *));
+#else
+_GL_CXXALIAS_SYS (opendir, DIR *, (const char *));
 #endif
+_GL_CXXALIASWARN (opendir);
 
 #if @GNULIB_SCANDIR@
 /* Scan the directory DIR, calling FILTER on each directory entry.
@@ -90,11 +108,19 @@ extern DIR * opendir (const char *) _GL_ARG_NONNULL ((1));
    sorted using qsort with CMP, and collected in a malloc'd array in
    *NAMELIST.  Returns the number of entries selected, or -1 on error.  */
 # if !@HAVE_SCANDIR@
-extern int scandir (const char *dir, struct dirent ***namelist,
-                    int (*filter) (const struct dirent *),
-                    int (*cmp) (const struct dirent **, const struct dirent **))
-     _GL_ARG_NONNULL ((1, 2, 4));
+_GL_FUNCDECL_SYS (scandir, int,
+                  (const char *dir, struct dirent ***namelist,
+                   int (*filter) (const struct dirent *),
+                   int (*cmp) (const struct dirent **, const struct dirent **))
+                  _GL_ARG_NONNULL ((1, 2, 4)));
 # endif
+/* Need to cast, because on glibc systems, the fourth parameter is
+                        int (*cmp) (const void *, const void *).  */
+_GL_CXXALIAS_SYS_CAST (scandir, int,
+                       (const char *dir, struct dirent ***namelist,
+                        int (*filter) (const struct dirent *),
+                        int (*cmp) (const struct dirent **, const struct dirent **)));
+_GL_CXXALIASWARN (scandir);
 #elif defined GNULIB_POSIXCHECK
 # undef scandir
 # if HAVE_RAW_DECL_SCANDIR
@@ -106,19 +132,21 @@ _GL_WARN_ON_USE (scandir, "scandir is unportable - "
 #if @GNULIB_ALPHASORT@
 /* Compare two 'struct dirent' entries alphabetically.  */
 # if !@HAVE_ALPHASORT@
-extern int alphasort (const struct dirent **, const struct dirent **)
-     _GL_ARG_NONNULL ((1, 2));
+_GL_FUNCDECL_SYS (alphasort, int,
+                  (const struct dirent **, const struct dirent **)
+                  _GL_ARG_NONNULL ((1, 2)));
 # endif
+/* Need to cast, because on glibc systems, the parameters are
+                       (const void *, const void *).  */
+_GL_CXXALIAS_SYS_CAST (alphasort, int,
+                       (const struct dirent **, const struct dirent **));
+_GL_CXXALIASWARN (alphasort);
 #elif defined GNULIB_POSIXCHECK
 # undef alphasort
 # if HAVE_RAW_DECL_ALPHASORT
 _GL_WARN_ON_USE (alphasort, "alphasort is unportable - "
                  "use gnulib module alphasort for portability");
 # endif
-#endif
-
-#ifdef __cplusplus
-}
 #endif
 
 
