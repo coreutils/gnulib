@@ -1,5 +1,15 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	Fix link error on platforms with GNU libiconv.
+	* modules/unistr/u8-strcoll-tests (Makefile): Define
+	test_u8_strcoll_LDADD.
+	* modules/unistr/u16-strcoll-tests (Makefile): Define
+	test_u16_strcoll_LDADD.
+	* modules/unistr/u32-strcoll-tests (Makefile): Define
+	test_u32_strcoll_LDADD.
+
+2010-03-07  Bruno Haible  <bruno@clisp.org>
+
 	Use POSIX declarations for socket functions.
 	* lib/sys_socket.in.h (rpl_connect, rpl_accept, rpl_bind,
 	rpl_getpeername, rpl_getsockname, rpl_recv, rpl_send, rpl_recvfrom,
