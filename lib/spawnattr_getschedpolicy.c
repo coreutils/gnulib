@@ -1,4 +1,4 @@
-/* Copyright (C) 2000, 2009, 2010 Free Software Foundation, Inc.
+/* Copyright (C) 2000, 2009-2010 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This program is free software: you can redistribute it and/or modify
@@ -26,8 +26,11 @@ int
 posix_spawnattr_getschedpolicy (const posix_spawnattr_t *attr,
                                 int *schedpolicy)
 {
+  /* Do nothing if POSIX_SPAWN_SETSCHEDULER is unsupported.  */
+#if POSIX_SPAWN_SETSCHEDULER != 0
   /* Copy the scheduling policy.  */
   *schedpolicy = attr->_policy;
+#endif
 
   return 0;
 }

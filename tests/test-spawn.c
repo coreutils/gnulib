@@ -1,5 +1,5 @@
 /* Test of <spawn.h> substitute.
-   Copyright (C) 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2009-2010 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -46,8 +46,8 @@ main (void)
     case POSIX_SPAWN_SETPGROUP:
     case POSIX_SPAWN_SETSIGDEF:
     case POSIX_SPAWN_SETSIGMASK:
-    case POSIX_SPAWN_SETSCHEDPARAM:
-    case POSIX_SPAWN_SETSCHEDULER:
+    case (POSIX_SPAWN_SETSCHEDPARAM != 0 ? POSIX_SPAWN_SETSCHEDPARAM : -1):
+    case (POSIX_SPAWN_SETSCHEDULER != 0 ? POSIX_SPAWN_SETSCHEDULER : -2):
       ;
     }
   return s.c + s.d;

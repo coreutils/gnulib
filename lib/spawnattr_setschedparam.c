@@ -1,4 +1,4 @@
-/* Copyright (C) 2000, 2009, 2010 Free Software Foundation, Inc.
+/* Copyright (C) 2000, 2009-2010 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This program is free software: you can redistribute it and/or modify
@@ -24,8 +24,11 @@ int
 posix_spawnattr_setschedparam (posix_spawnattr_t *attr,
                                const struct sched_param *schedparam)
 {
+  /* Do nothing if POSIX_SPAWN_SETSCHEDPARAM is unsupported.  */
+#if POSIX_SPAWN_SETSCHEDPARAM != 0
   /* Store the scheduling parameters.  */
   attr->_sp = *schedparam;
+#endif
 
   return 0;
 }

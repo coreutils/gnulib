@@ -110,7 +110,15 @@ typedef struct
 
 
 /* Flags to be set in the `posix_spawnattr_t'.  */
-#if !@HAVE_POSIX_SPAWN@
+#if @HAVE_POSIX_SPAWN@
+/* Use the values from the system, but provide the missing ones.  */
+# ifndef POSIX_SPAWN_SETSCHEDPARAM
+#  define POSIX_SPAWN_SETSCHEDPARAM 0
+# endif
+# ifndef POSIX_SPAWN_SETSCHEDULER
+#  define POSIX_SPAWN_SETSCHEDULER 0
+# endif
+#else
 # if @REPLACE_POSIX_SPAWN@
 /* Use the values from the system, for better compatibility.  */
 /* But this implementation does not support AIX extensions.  */
@@ -126,12 +134,14 @@ typedef struct
 #endif
 /* A GNU extension.  Use the next free bit position.  */
 #define POSIX_SPAWN_USEVFORK \
-  ((POSIX_SPAWN_RESETIDS | (POSIX_SPAWN_RESETIDS - 1)                   \
-    | POSIX_SPAWN_SETPGROUP | (POSIX_SPAWN_SETPGROUP - 1)               \
-    | POSIX_SPAWN_SETSIGDEF | (POSIX_SPAWN_SETSIGDEF - 1)               \
-    | POSIX_SPAWN_SETSIGMASK | (POSIX_SPAWN_SETSIGMASK - 1)             \
-    | POSIX_SPAWN_SETSCHEDPARAM | (POSIX_SPAWN_SETSCHEDPARAM - 1)       \
-    | POSIX_SPAWN_SETSCHEDULER | (POSIX_SPAWN_SETSCHEDULER - 1))        \
+  ((POSIX_SPAWN_RESETIDS | (POSIX_SPAWN_RESETIDS - 1)                     \
+    | POSIX_SPAWN_SETPGROUP | (POSIX_SPAWN_SETPGROUP - 1)                 \
+    | POSIX_SPAWN_SETSIGDEF | (POSIX_SPAWN_SETSIGDEF - 1)                 \
+    | POSIX_SPAWN_SETSIGMASK | (POSIX_SPAWN_SETSIGMASK - 1)               \
+    | POSIX_SPAWN_SETSCHEDPARAM                                           \
+    | (POSIX_SPAWN_SETSCHEDPARAM > 0 ? POSIX_SPAWN_SETSCHEDPARAM - 1 : 0) \
+    | POSIX_SPAWN_SETSCHEDULER                                            \
+    | (POSIX_SPAWN_SETSCHEDULER > 0 ? POSIX_SPAWN_SETSCHEDULER - 1 : 0))  \
    + 1)
 typedef int verify_POSIX_SPAWN_USEVFORK_no_overlap
             [2 * (((POSIX_SPAWN_RESETIDS | POSIX_SPAWN_SETPGROUP
@@ -379,7 +389,7 @@ _GL_WARN_ON_USE (posix_spawnattr_setpgroup, "posix_spawnattr_setpgroup is unport
 # if @REPLACE_POSIX_SPAWN@
 #  define posix_spawnattr_getschedpolicy rpl_posix_spawnattr_getschedpolicy
 # endif
-# if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
+# if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@ || POSIX_SPAWN_SETSCHEDULER == 0
 extern int posix_spawnattr_getschedpolicy (const posix_spawnattr_t *_Restrict_ __attr,
                                            int *_Restrict_ __schedpolicy)
      __THROW _GL_ARG_NONNULL ((1, 2));
@@ -397,7 +407,7 @@ _GL_WARN_ON_USE (posix_spawnattr_getschedpolicy, "posix_spawnattr_getschedpolicy
 # if @REPLACE_POSIX_SPAWN@
 #  define posix_spawnattr_setschedpolicy rpl_posix_spawnattr_setschedpolicy
 # endif
-# if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
+# if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@ || POSIX_SPAWN_SETSCHEDULER == 0
 extern int posix_spawnattr_setschedpolicy (posix_spawnattr_t *__attr,
                                            int __schedpolicy)
      __THROW _GL_ARG_NONNULL ((1));
@@ -415,7 +425,7 @@ _GL_WARN_ON_USE (posix_spawnattr_setschedpolicy, "posix_spawnattr_setschedpolicy
 # if @REPLACE_POSIX_SPAWN@
 #  define posix_spawnattr_getschedparam rpl_posix_spawnattr_getschedparam
 # endif
-# if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
+# if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@ || POSIX_SPAWN_SETSCHEDPARAM == 0
 extern int posix_spawnattr_getschedparam (const posix_spawnattr_t *_Restrict_ __attr,
                                           struct sched_param *_Restrict_ __schedparam)
      __THROW _GL_ARG_NONNULL ((1, 2));
@@ -433,7 +443,7 @@ _GL_WARN_ON_USE (posix_spawnattr_getschedparam, "posix_spawnattr_getschedparam i
 # if @REPLACE_POSIX_SPAWN@
 #  define posix_spawnattr_setschedparam rpl_posix_spawnattr_setschedparam
 # endif
-# if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
+# if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@ || POSIX_SPAWN_SETSCHEDPARAM == 0
 extern int posix_spawnattr_setschedparam (posix_spawnattr_t *_Restrict_ __attr,
                                           const struct sched_param *_Restrict_ __schedparam)
      __THROW _GL_ARG_NONNULL ((1, 2));

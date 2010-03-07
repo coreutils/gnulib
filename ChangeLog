@@ -1,5 +1,35 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	Ensure posix_spawnattr_{get,set}sched{policy,param} are defined.
+	* lib/spawn.in.h (POSIX_SPAWN_SETSCHEDPARAM): Define fallback.
+	(POSIX_SPAWN_SETSCHEDULER): Likewise.
+	(POSIX_SPAWN_USEVFORK): Define in a way that works when
+	POSIX_SPAWN_SETSCHEDPARAM and POSIX_SPAWN_SETSCHEDULER are zero.
+	(posix_spawnattr_getschedpolicy, posix_spawnattr_setschedpolicy): Also
+	declare when POSIX_SPAWN_SETSCHEDULER is zero.
+	(posix_spawnattr_getschedparam, posix_spawnattr_setschedparam): Also
+	declare when POSIX_SPAWN_SETSCHEDPARAM is zero.
+	* m4/posix_spawn.m4 (gl_POSIX_SPAWN_BODY): Test whether
+	POSIX_SPAWN_SETSCHEDULER or POSIX_SPAWN_SETSCHEDPARAM are zero.
+	* modules/posix_spawnattr_getschedparam (configure.ac): Enable the
+	replacement also when POSIX_SPAWN_SETSCHEDPARAM is zero.
+	* modules/posix_spawnattr_setschedparam (configure.ac): Likewise.
+	* modules/posix_spawnattr_getschedpolicy (configure.ac): Enable the
+	replacement also when POSIX_SPAWN_SETSCHEDULER is zero.
+	* modules/posix_spawnattr_setschedpolicy (configure.ac): Likewise.
+	* lib/spawnattr_getschedparam.c (posix_spawnattr_getschedparam): Do
+	nothing if POSIX_SPAWN_SETSCHEDPARAM is zero.
+	* lib/spawnattr_setschedparam.c (posix_spawnattr_setschedparam):
+	Likewise.
+	* lib/spawnattr_getschedpolicy.c (posix_spawnattr_getschedpolicy): Do
+	nothing if POSIX_SPAWN_SETSCHEDULER is zero.
+	* lib/spawnattr_setschedpolicy.c (posix_spawnattr_setschedpolicy):
+	Likewise.
+	* tests/test-spawn.c (main): Make it work when
+	POSIX_SPAWN_SETSCHEDPARAM and POSIX_SPAWN_SETSCHEDULER are zero.
+
+2010-03-07  Bruno Haible  <bruno@clisp.org>
+
 	Fix incorrect Makefile.am generation in German locale.
 	* gnulib-tool (func_emit_lib_Makefile_am, func_emit_tests_Makefile_am):
 	Execute sed command with character range in C locale.

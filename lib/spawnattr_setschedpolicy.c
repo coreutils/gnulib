@@ -1,4 +1,4 @@
-/* Copyright (C) 2000, 2009, 2010 Free Software Foundation, Inc.
+/* Copyright (C) 2000, 2009-2010 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This program is free software: you can redistribute it and/or modify
@@ -25,12 +25,15 @@
 int
 posix_spawnattr_setschedpolicy (posix_spawnattr_t *attr, int schedpolicy)
 {
+  /* Do nothing if POSIX_SPAWN_SETSCHEDULER is unsupported.  */
+#if POSIX_SPAWN_SETSCHEDULER != 0
   if (schedpolicy != SCHED_OTHER && schedpolicy != SCHED_FIFO
       && schedpolicy != SCHED_RR)
     return EINVAL;
 
   /* Store the policy.  */
   attr->_policy = schedpolicy;
+#endif
 
   return 0;
 }
