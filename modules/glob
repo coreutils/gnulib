@@ -11,6 +11,7 @@ m4/glob.m4
 Depends-on:
 alloca
 arg-nonnull
+c++defs
 d-type
 dirfd
 extensions
@@ -22,6 +23,7 @@ stdbool
 strdup
 sys_stat
 unistd
+warn-on-use
 malloc-posix
 
 configure.ac:
@@ -32,11 +34,13 @@ BUILT_SOURCES += $(GLOB_H)
 
 # We need the following in order to create <glob.h> when the system
 # doesn't have one that works with the given compiler.
-glob.h: glob.in.h $(ARG_NONNULL_H)
+glob.h: glob.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|@''HAVE_SYS_CDEFS_H''@|$(HAVE_SYS_CDEFS_H)|g' \
+	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
 	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
+	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
 	      < $(srcdir)/glob.in.h; \
 	} > $@-t && \
 	mv -f $@-t $@

@@ -1,5 +1,13 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	glob: Avoid #define replacements in C++ mode.
+	* lib/glob.in.h: Include c++defs.h, warn-on-use.h.
+	(_gl_glob_errfunc_fn): New type.
+	(glob, globfree, glob_pattern_p): In C++, define a namespaced alias
+	symbol.
+	* modules/glob (Depends-on): Add c++defs, warn-on-use.
+	(Makefile.am): Update glob.h rule.
+
 	fcntl-h: Avoid #define replacements in C++ mode.
 	* lib/fcntl.in.h: Include c++defs.h.
 	(fcntl, open, openat): In C++, define a namespaced alias symbol.
