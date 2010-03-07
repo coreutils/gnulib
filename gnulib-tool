@@ -4410,8 +4410,9 @@ func_create_testdir ()
     # All modules together.
     # Except config-h, which breaks all modules which use HAVE_CONFIG_H.
     # Except ftruncate, mountlist, which abort the configuration on mingw. FIXME.
+    # Except lib-ignore, which leads to link errors when Sun C++ is used. FIXME.
     modules=`func_all_modules`
-    modules=`for m in $modules; do case $m in config-h | ftruncate | mountlist) ;; *) echo $m;; esac; done`
+    modules=`for m in $modules; do case $m in config-h | ftruncate | mountlist | lib-ignore) ;; *) echo $m;; esac; done`
   fi
   modules=`for m in $modules; do echo $m; done | LC_ALL=C sort -u`
 

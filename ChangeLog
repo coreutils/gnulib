@@ -1,5 +1,10 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_create_testdir): Don't use 'lib-ignore' module
+	among default module list.
+
+2010-03-07  Bruno Haible  <bruno@clisp.org>
+
 	Fix link error on platforms with GNU libiconv.
 	* modules/unistr/u8-strcoll-tests (Makefile): Define
 	test_u8_strcoll_LDADD.
