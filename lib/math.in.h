@@ -97,6 +97,7 @@ _NaN ()
 # define HUGE_VAL (1.0 / 0.0)
 #endif
 
+
 /* Write x as
      x = mantissa * 2^exp
    where
@@ -114,6 +115,19 @@ extern double frexp (double x, int *expptr) _GL_ARG_NONNULL ((2));
 /* Assume frexp is always declared.  */
 _GL_WARN_ON_USE (frexp, "frexp is unportable - "
                  "use gnulib module frexp for portability");
+#endif
+
+
+#if @GNULIB_LOGB@
+# if !@HAVE_DECL_LOGB@
+extern double logb (double x);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef logb
+# if HAVE_RAW_DECL_LOGB
+_GL_WARN_ON_USE (logb, "logb is unportable - "
+                 "use gnulib module logb for portability");
+# endif
 #endif
 
 

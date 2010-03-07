@@ -1,5 +1,18 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	logb: Provide missing declaration for Cygwin.
+	* lib/math.in.h (logb): New declaration.
+	* m4/logb.m4: New file.
+	* modules/logb (Files): Add m4/logb.m4.
+	(Depends-on): Add math.
+	(configure.ac): Invoke gl_FUNC_LOGB, gl_MATH_MODULE_INDICATOR.
+	* m4/math_h.m4 (gl_MATH_H): Check also for logb declaration.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_LOGB, HAVE_DECL_LOGB.
+	* modules/math (Makefile.am): Substitute GNULIB_LOGB, HAVE_DECL_LOGB.
+	* doc/posix-functions/logb.texi: Mention the Cygwin bug.
+
+2010-03-07  Bruno Haible  <bruno@clisp.org>
+
 	Fix test-cond link error.
 	* tests/test-cond.c: Include <stdio.h>.
 

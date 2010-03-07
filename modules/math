@@ -42,6 +42,7 @@ math.h: math.in.h $(WARN_ON_USE_H) $(ARG_NONNULL_H)
 	      -e 's|@''GNULIB_ISNAND''@|$(GNULIB_ISNAND)|g' \
 	      -e 's|@''GNULIB_ISNANL''@|$(GNULIB_ISNANL)|g' \
 	      -e 's|@''GNULIB_LDEXPL''@|$(GNULIB_LDEXPL)|g' \
+	      -e 's|@''GNULIB_LOGB''@|$(GNULIB_LOGB)|g' \
 	      -e 's|@''GNULIB_LOGL''@|$(GNULIB_LOGL)|g' \
 	      -e 's|@''GNULIB_ROUND''@|$(GNULIB_ROUND)|g' \
 	      -e 's|@''GNULIB_ROUNDF''@|$(GNULIB_ROUNDF)|g' \
@@ -72,6 +73,7 @@ math.h: math.in.h $(WARN_ON_USE_H) $(ARG_NONNULL_H)
 	      -e 's|@''HAVE_DECL_EXPL''@|$(HAVE_DECL_EXPL)|g' \
 	      -e 's|@''HAVE_DECL_FREXPL''@|$(HAVE_DECL_FREXPL)|g' \
 	      -e 's|@''HAVE_DECL_LDEXPL''@|$(HAVE_DECL_LDEXPL)|g' \
+	      -e 's|@''HAVE_DECL_LOGB''@|$(HAVE_DECL_LOGB)|g' \
 	      -e 's|@''HAVE_DECL_LOGL''@|$(HAVE_DECL_LOGL)|g' \
 	      -e 's|@''HAVE_DECL_SINL''@|$(HAVE_DECL_SINL)|g' \
 	      -e 's|@''HAVE_DECL_SQRTL''@|$(HAVE_DECL_SQRTL)|g' \
