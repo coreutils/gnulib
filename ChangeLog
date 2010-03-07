@@ -1,3 +1,9 @@
+2010-03-07  Bruno Haible  <bruno@clisp.org>
+
+	Fix incorrect Makefile.am generation in German locale.
+	* gnulib-tool (func_emit_lib_Makefile_am, func_emit_tests_Makefile_am):
+	Execute sed command with character range in C locale.
+
 2010-03-06  Bruno Haible  <bruno@clisp.org>
 
 	Tests for module 'iconv-h'.

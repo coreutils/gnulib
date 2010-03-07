@@ -2543,6 +2543,7 @@ func_emit_lib_Makefile_am ()
       if test -n "$module"; then
         {
           func_get_automake_snippet "$module" |
+            LC_ALL=C \
             sed -e 's,lib_LIBRARIES,lib%_LIBRARIES,g' \
                 -e 's,lib_LTLIBRARIES,lib%_LTLIBRARIES,g' \
                 -e "$sed_eliminate_LDFLAGS" \
@@ -2802,6 +2803,7 @@ func_emit_tests_Makefile_am ()
       if test -n "$module"; then
         {
           func_get_automake_snippet "$module" |
+            LC_ALL=C \
             sed -e 's,lib_LIBRARIES,lib%_LIBRARIES,g' \
                 -e 's,lib_LTLIBRARIES,lib%_LTLIBRARIES,g' \
                 -e "$sed_eliminate_LDFLAGS" \
