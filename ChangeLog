@@ -1,5 +1,11 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	fcntl-h: Avoid #define replacements in C++ mode.
+	* lib/fcntl.in.h: Include c++defs.h.
+	(fcntl, open, openat): In C++, define a namespaced alias symbol.
+	* modules/fcntl-h (Depends-on): Add c++defs.
+	(Makefile.am): Update fcntl.h rule.
+
 	dirent: Avoid #define replacements in C++ mode.
 	* lib/dirent.in.h: Include c++defs.h.
 	(closedir, fdopendir, opendir, scandir, alphasort): In C++, define a
