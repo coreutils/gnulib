@@ -1,5 +1,10 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	Fix test-cond link error.
+	* tests/test-cond.c: Include <stdio.h>.
+
+2010-03-07  Bruno Haible  <bruno@clisp.org>
+
 	Fix test-dirent-safer link error.
 	* modules/dirent-safer-tests (Makefile.am): Define
 	test_dirent_safer_LDADD.

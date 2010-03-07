@@ -1,5 +1,5 @@
 /* Test of condition variables in multithreaded situations.
-   Copyright (C) 2008, 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2008-2010 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -197,6 +197,8 @@ main ()
 #else
 
 /* No multithreading available.  */
+
+#include <stdio.h>
 
 int
 main ()
