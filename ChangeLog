@@ -1,5 +1,13 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	math: Avoid #define replacements in C++ mode.
+	* lib/math.in.h: Include c++defs.h.
+	(frexp, acosl, asinl, atanl, ceilf, ceill, cosl, expl, floorf, floorl,
+	frexpl, ldexpl, logl, roundf, round, roundl, sinl, sqrtl, tanl, truncf,
+	trunc, truncl): In C++, define a namespaced alias symbol.
+	* modules/math (Depends-on): Add c++defs.
+	(Makefile.am): Update math.h rule.
+
 	locale: Avoid #define replacements in C++ mode.
 	* lib/locale.in.h: Include c++defs.h.
 	(duplocale): In C++, define a namespaced alias symbol.
