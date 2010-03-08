@@ -1,5 +1,9 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	New module 'ansi-c++-opt'.
+	* modules/ansi-c++-opt: New file.
+	* m4/ansi-c++.m4: New file, from GNU gettext with modifications.
+
 	Document C++ namespace mode.
 	* doc/gnulib.texi (A C++ namespace for gnulib): New section.
 
