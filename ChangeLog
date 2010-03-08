@@ -1,5 +1,13 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	signal: Avoid #define replacements in C++ mode.
+	* lib/signal.in.h: Include c++defs.h.
+	(sigismember, sigemptyset, sigaddset, sigdelset, sigfillset,
+	sigpending, sigprocmask, signal, raise, sigaction): In C++, define a
+	namespaced alias symbol.
+	* modules/signal (Depends-on): Add c++defs.
+	(Makefile.am): Update signal.h rule.
+
 	search: Avoid #define replacements in C++ mode.
 	* lib/search.in.h: Include c++defs.h.
 	(_gl_search_compar_fn, _gl_search_action_fn): New types.

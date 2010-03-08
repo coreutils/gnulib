@@ -35,6 +35,8 @@
 #ifndef _GL_SIGNAL_H
 #define _GL_SIGNAL_H
 
+/* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
+
 /* The definition of _GL_ARG_NONNULL is copied here.  */
 
 /* The definition of _GL_WARN_ON_USE is copied here.  */
@@ -55,10 +57,6 @@ typedef int rpl_sig_atomic_t;
 /* A set or mask of signals.  */
 #if !@HAVE_SIGSET_T@
 typedef unsigned int sigset_t;
-#endif
-
-#ifdef __cplusplus
-extern "C" {
 #endif
 
 
@@ -84,49 +82,105 @@ extern "C" {
 /* This code supports only 32 signals.  */
 typedef int verify_NSIG_constraint[2 * (NSIG <= 32) - 1];
 
+# endif
+
 /* Test whether a given signal is contained in a signal set.  */
-extern int sigismember (const sigset_t *set, int sig) _GL_ARG_NONNULL ((1));
+# if !@HAVE_POSIX_SIGNALBLOCKING@
+_GL_FUNCDECL_SYS (sigismember, int, (const sigset_t *set, int sig)
+                                    _GL_ARG_NONNULL ((1)));
+# endif
+_GL_CXXALIAS_SYS (sigismember, int, (const sigset_t *set, int sig));
+_GL_CXXALIASWARN (sigismember);
 
 /* Initialize a signal set to the empty set.  */
-extern int sigemptyset (sigset_t *set) _GL_ARG_NONNULL ((1));
+# if !@HAVE_POSIX_SIGNALBLOCKING@
+_GL_FUNCDECL_SYS (sigemptyset, int, (sigset_t *set) _GL_ARG_NONNULL ((1)));
+# endif
+_GL_CXXALIAS_SYS (sigemptyset, int, (sigset_t *set));
+_GL_CXXALIASWARN (sigemptyset);
 
 /* Add a signal to a signal set.  */
-extern int sigaddset (sigset_t *set, int sig) _GL_ARG_NONNULL ((1));
+# if !@HAVE_POSIX_SIGNALBLOCKING@
+_GL_FUNCDECL_SYS (sigaddset, int, (sigset_t *set, int sig)
+                                  _GL_ARG_NONNULL ((1)));
+# endif
+_GL_CXXALIAS_SYS (sigaddset, int, (sigset_t *set, int sig));
+_GL_CXXALIASWARN (sigaddset);
 
 /* Remove a signal from a signal set.  */
-extern int sigdelset (sigset_t *set, int sig) _GL_ARG_NONNULL ((1));
+# if !@HAVE_POSIX_SIGNALBLOCKING@
+_GL_FUNCDECL_SYS (sigdelset, int, (sigset_t *set, int sig)
+                                  _GL_ARG_NONNULL ((1)));
+# endif
+_GL_CXXALIAS_SYS (sigdelset, int, (sigset_t *set, int sig));
+_GL_CXXALIASWARN (sigdelset);
 
 /* Fill a signal set with all possible signals.  */
-extern int sigfillset (sigset_t *set) _GL_ARG_NONNULL ((1));
+# if !@HAVE_POSIX_SIGNALBLOCKING@
+_GL_FUNCDECL_SYS (sigfillset, int, (sigset_t *set) _GL_ARG_NONNULL ((1)));
+# endif
+_GL_CXXALIAS_SYS (sigfillset, int, (sigset_t *set));
+_GL_CXXALIASWARN (sigfillset);
 
 /* Return the set of those blocked signals that are pending.  */
-extern int sigpending (sigset_t *set) _GL_ARG_NONNULL ((1));
+# if !@HAVE_POSIX_SIGNALBLOCKING@
+_GL_FUNCDECL_SYS (sigpending, int, (sigset_t *set) _GL_ARG_NONNULL ((1)));
+# endif
+_GL_CXXALIAS_SYS (sigpending, int, (sigset_t *set));
+_GL_CXXALIASWARN (sigpending);
 
 /* If OLD_SET is not NULL, put the current set of blocked signals in *OLD_SET.
    Then, if SET is not NULL, affect the current set of blocked signals by
    combining it with *SET as indicated in OPERATION.
    In this implementation, you are not allowed to change a signal handler
    while the signal is blocked.  */
+# if !@HAVE_POSIX_SIGNALBLOCKING@
 #  define SIG_BLOCK   0  /* blocked_set = blocked_set | *set; */
 #  define SIG_SETMASK 1  /* blocked_set = *set; */
 #  define SIG_UNBLOCK 2  /* blocked_set = blocked_set & ~*set; */
-extern int sigprocmask (int operation, const sigset_t *set, sigset_t *old_set);
+_GL_FUNCDECL_SYS (sigprocmask, int,
+                  (int operation, const sigset_t *set, sigset_t *old_set));
+# endif
+_GL_CXXALIAS_SYS (sigprocmask, int,
+                  (int operation, const sigset_t *set, sigset_t *old_set));
+_GL_CXXALIASWARN (sigprocmask);
 
-#  define signal rpl_signal
 /* Install the handler FUNC for signal SIG, and return the previous
    handler.  */
-extern void (*signal (int sig, void (*func) (int))) (int);
-
-#  if GNULIB_defined_SIGPIPE
+# ifdef __cplusplus
+extern "C" {
+# endif
+typedef void (*_gl_function_taking_int_returning_void_t) (int);
+# ifdef __cplusplus
+}
+# endif
+# if !@HAVE_POSIX_SIGNALBLOCKING@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define signal rpl_signal
+#  endif
+_GL_FUNCDECL_RPL (signal, _gl_function_taking_int_returning_void_t,
+                  (int sig, _gl_function_taking_int_returning_void_t func));
+_GL_CXXALIAS_RPL (signal, _gl_function_taking_int_returning_void_t,
+                  (int sig, _gl_function_taking_int_returning_void_t func));
+# else
+_GL_CXXALIAS_SYS (signal, _gl_function_taking_int_returning_void_t,
+                  (int sig, _gl_function_taking_int_returning_void_t func));
+# endif
+_GL_CXXALIASWARN (signal);
 
 /* Raise signal SIG.  */
+# if !@HAVE_POSIX_SIGNALBLOCKING@ && GNULIB_defined_SIGPIPE
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef raise
 #   define raise rpl_raise
-extern int raise (int sig);
-
 #  endif
+_GL_FUNCDECL_RPL (raise, int, (int sig));
+_GL_CXXALIAS_RPL (raise, int, (int sig));
+# else
+_GL_CXXALIAS_SYS (raise, int, (int sig));
+# endif
+_GL_CXXALIASWARN (raise);
 
-# endif /* !@HAVE_POSIX_SIGNALBLOCKING@ */
 #elif defined GNULIB_POSIXCHECK
 # undef sigaddset
 # if HAVE_RAW_DECL_SIGADDSET
@@ -218,14 +272,19 @@ struct sigaction
 #  define SA_NODEFER 2
 #  define SA_RESTART 4
 
-extern int sigaction (int, const struct sigaction *restrict,
-                      struct sigaction *restrict);
+_GL_FUNCDECL_SYS (sigaction, int, (int, const struct sigaction *restrict,
+                                   struct sigaction *restrict));
 
 # elif !@HAVE_STRUCT_SIGACTION_SA_SIGACTION@
 
 #  define sa_sigaction sa_handler
 
 # endif /* !@HAVE_SIGACTION@, !@HAVE_STRUCT_SIGACTION_SA_SIGACTION@ */
+
+_GL_CXXALIAS_SYS (sigaction, int, (int, const struct sigaction *restrict,
+                                   struct sigaction *restrict));
+_GL_CXXALIASWARN (sigaction);
+
 #elif defined GNULIB_POSIXCHECK
 # undef sigaction
 # if HAVE_RAW_DECL_SIGACTION
@@ -239,10 +298,6 @@ _GL_WARN_ON_USE (sigaction, "sigaction is unportable - "
 # define SA_NODEFER 0
 #endif
 
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* _GL_SIGNAL_H */
 #endif /* _GL_SIGNAL_H */
