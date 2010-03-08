@@ -1,5 +1,14 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	sys_stat: Avoid #define replacements in C++ mode.
+	* lib/sys_stat.in.h: Include c++defs.h.
+	(fchmodat, fstat, fstatat, futimens, lchmod, lstat, mkdir, mkdirat,
+	mkfifo, mkfifoat, mknod, mknodat, utimensat): In C++, define a
+	namespaced alias symbol.
+	In C++, define a namespaced alias symbol.
+	* modules/sys_stat (Depends-on): Add c++defs.
+	(Makefile.am): Update sys/stat.h rule.
+
 	sys_socket: Avoid #define replacements in C++ mode.
 	* lib/sys_socket.in.h: Handle the case of recursive include on Cygwin.
 	Include c++defs.h. Include warn-on-use.h earlier. Enable the function
