@@ -1,5 +1,8 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	Document C++ namespace mode.
+	* doc/gnulib.texi (A C++ namespace for gnulib): New section.
+
 	wctype: Avoid #define replacements in C++ mode.
 	* lib/wctype.in.h: Include c++defs.h, warn-on-use.h.
 	(iswalnum, iswalpha, iswblank, iswcntrl, iswdigit, iswgraph, iswlower,
