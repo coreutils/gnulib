@@ -7,7 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 dnl Written by Eric Blake.
 
-# wchar_h.m4 serial 31
+# wchar_h.m4 serial 32
 
 AC_DEFUN([gl_WCHAR_H],
 [
@@ -108,6 +108,8 @@ AC_DEFUN([gl_WCHAR_MODULE_INDICATOR],
   dnl Use AC_REQUIRE here, so that the default settings are expanded once only.
   AC_REQUIRE([gl_WCHAR_H_DEFAULTS])
   GNULIB_[]m4_translit([$1],[abcdefghijklmnopqrstuvwxyz./-],[ABCDEFGHIJKLMNOPQRSTUVWXYZ___])=1
+  dnl Define it also as a C macro, for the benefit of the unit tests.
+  gl_MODULE_INDICATOR([$1])
 ])
 
 AC_DEFUN([gl_WCHAR_H_DEFAULTS],

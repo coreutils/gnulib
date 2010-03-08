@@ -1,5 +1,13 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	Tests of module 'wchar' in C++ mode.
+	* tests/test-wchar-c++.cc: New file.
+	* modules/wchar-tests (Files): Add it and tests/signature.h.
+	(Depends-on): Add ansi-c++-opt.
+	(Makefile.am): Arrange to compile and run test-wchar-c++.
+	* m4/wchar_h.m4 (gl_WCHAR_MODULE_INDICATOR): Invoke
+	gl_MODULE_INDICATOR.
+
 	Tests of module 'unistd' in C++ mode.
 	* tests/test-unistd-c++.cc: New file.
 	* modules/unistd-tests (Files): Add it and tests/signature.h.
