@@ -40,6 +40,9 @@ AUTOMAKEPATH=
 # You can set GETTEXTPATH to empty if autopoint 0.15 is already in your PATH.
 GETTEXTPATH=
 
+# You can set LIBTOOLPATH to empty if libtoolize 2.x is already in your PATH.
+LIBTOOLPATH=
+
 # If you didn't set AUTOCONFPATH and AUTOMAKEPATH, you can also set the
 # variables AUTOCONF, AUTOHEADER, ACLOCAL, AUTOMAKE, AUTORECONF individually.
 if test -z "${AUTOCONF}" || test -n "${AUTOCONFPATH}"; then
@@ -61,6 +64,11 @@ fi
 # If you didn't set GETTEXTPATH, you can also set the variable AUTOPOINT.
 if test -z "${AUTOPOINT}" || test -n "${GETTEXTPATH}"; then
   AUTOPOINT="${GETTEXTPATH}autopoint"
+fi
+
+# If you didn't set LIBTOOLPATH, you can also set the variable LIBTOOLIZE.
+if test -z "${LIBTOOLIZE}" || test -n "${LIBTOOLPATH}"; then
+  LIBTOOLIZE="${LIBTOOLPATH}autopoint"
 fi
 
 # You can set MAKE.
@@ -4628,6 +4636,7 @@ func_create_testdir ()
      done \
        | sed -e '/^$/d;' -e 's/AC_REQUIRE(\[\([^()]*\)\])/\1/'
      if test "$libtool" = true; then
+       echo "LT_INIT([win32-dll])"
        echo "AM_CONDITIONAL([GL_COND_LIBTOOL], [true])"
        echo "gl_cond_libtool=true"
      else
@@ -4751,6 +4760,7 @@ func_create_testdir ()
    done \
      | sed -e '/^$/d;' -e 's/AC_REQUIRE(\[\([^()]*\)\])/\1/'
    if test "$libtool" = true; then
+     echo "LT_INIT([win32-dll])"
      echo "AM_CONDITIONAL([GL_COND_LIBTOOL], [true])"
      echo "gl_cond_libtool=true"
    else
@@ -4828,6 +4838,9 @@ func_create_testdir ()
          mv -f $f `echo $f | sed -e 's,~$,,'` || func_exit 1
        fi
      done
+   fi
+   if test "$libtool" = true; then
+     func_execute_command ${LIBTOOLIZE} --copy || func_exit 1
    fi
    func_execute_command ${ACLOCAL} -I $m4base || func_exit 1
    if ! test -d build-aux; then
