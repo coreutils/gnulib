@@ -1,5 +1,13 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	Tests of module 'string' in C++ mode.
+	* tests/test-string-c++.cc: New file.
+	* modules/string-tests (Files): Add it and tests/signature.h.
+	(Depends-on): Add ansi-c++-opt.
+	(Makefile.am): Arrange to compile and run test-string-c++.
+	* m4/string_h.m4 (gl_STRING_MODULE_INDICATOR): Invoke
+	gl_MODULE_INDICATOR.
+
 	Tests of module 'stdlib' in C++ mode.
 	* tests/test-stdlib-c++.cc: New file.
 	* modules/stdlib-tests (Files): Add it and tests/signature.h.
