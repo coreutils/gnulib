@@ -1,10 +1,19 @@
 Files:
 tests/test-spawn.c
+tests/test-spawn-c++.cc
+tests/signature.h
 
 Depends-on:
+ansi-c++-opt
 
 configure.ac:
 
 Makefile.am:
 TESTS += test-spawn
 check_PROGRAMS += test-spawn
+if ANSICXX
+TESTS += test-spawn-c++
+check_PROGRAMS += test-spawn-c++
+test_spawn_c___SOURCES = test-spawn-c++.cc
+test_spawn_c___LDADD = $(LDADD) $(LIBINTL)
+endif
