@@ -1,5 +1,13 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	Tests of module 'stdlib' in C++ mode.
+	* tests/test-stdlib-c++.cc: New file.
+	* modules/stdlib-tests (Files): Add it and tests/signature.h.
+	(Depends-on): Add ansi-c++-opt.
+	(Makefile.am): Arrange to compile and run test-stdlib-c++.
+	* m4/stdlib_h.m4 (gl_STDLIB_MODULE_INDICATOR): Invoke
+	gl_MODULE_INDICATOR.
+
 	Tests of module 'stdio' in C++ mode.
 	* tests/test-stdio-c++.cc: New file.
 	* modules/stdio-tests (Files): Add it and tests/signature.h.

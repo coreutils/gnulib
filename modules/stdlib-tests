@@ -1,11 +1,20 @@
 Files:
 tests/test-stdlib.c
+tests/test-stdlib-c++.cc
+tests/signature.h
 
 Depends-on:
 verify
+ansi-c++-opt
 
 configure.ac:
 
 Makefile.am:
 TESTS += test-stdlib
 check_PROGRAMS += test-stdlib
+if ANSICXX
+TESTS += test-stdlib-c++
+check_PROGRAMS += test-stdlib-c++
+test_stdlib_c___SOURCES = test-stdlib-c++.cc
+test_stdlib_c___LDADD = $(LDADD) $(LIBINTL) $(LIB_CLOCK_GETTIME)
+endif
