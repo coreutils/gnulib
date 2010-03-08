@@ -578,7 +578,7 @@ generated from other source files, none of these files and directories
 are added into the VCS.  The only file that must be added to the VCS
 is @file{gnulib-cache.m4} in the M4 macros directory.  Also, the
 script for restoring files not in the VCS, customarily called
-@file{autogen.sh} or @file{bootstrap.sh}, will typically contain the
+@file{autogen.sh} or @file{bootstrap}, will typically contain the
 statement for restoring the omitted files:
 
 @smallexample
@@ -589,6 +589,39 @@ The @samp{--update} option operates much like the @samp{--import} option,
 but it does not offer the possibility to change the way Gnulib is used.
 Also it does not report in the ChangeLogs the files that it had to add
 because they were missing.
+
+Gnulib includes the file @file{build-aux/bootstrap} to aid a developer
+in using this setup.  Furthermore, in projects that use git for
+version control, it is possible to use a git submodule containing the
+precise commit of the gnulib repository, so that each developer
+running @file{bootstrap} will get the same version of all
+gnulib-provided files.  The location of the submodule can be chosen to
+fit the package's needs; here's how to initially create the submodule
+in the directory @file{.gnulib}:
+
+@smallexample
+$ dir=.gnulib
+$ git submodule add -- git://git.sv.gnu.org/gnulib.git $dir
+$ git config alias.syncsub "submodule foreach git pull origin master"
+@end smallexample
+
+@noindent
+Thereafter, @file{bootstrap} can run this command to update the
+submodule to the recorded checkout level:
+
+@smallexample
+git submodule update --init $dir
+@end smallexample
+
+@noindent
+and a developer can use this sequence to update to a newer version of
+gnulib:
+
+@smallexample
+$ git syncsub
+$ git add $dir
+$ ./bootstrap
+@end smallexample
 
 @item
 Some projects take a ``middle road'': they do commit Gnulib source

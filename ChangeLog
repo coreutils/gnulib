@@ -1,3 +1,10 @@
+2010-03-08  Eric Blake  <eblake@redhat.com>
+
+	gnulib-tool.texi: mention possibility of git submodule
+	* doc/gnulib-tool.texi (VCS Issues): Add details about using git
+	submodules.
+	* doc/.gitignore: Ignore another generated file.
+
 2010-03-08  Karl Berry  <karl@gnu.org>
 
 	* doc/gnulib-tool.texi (VCS Issues): Mention third option
