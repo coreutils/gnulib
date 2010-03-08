@@ -1,5 +1,18 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	unistd: Avoid #define replacements in C++ mode.
+	* lib/unistd.in.h: Include c++defs.h.
+	(chown, close, dup, dup2, dup3, euidaccess, faccessat, fchdir,
+	fchownat, fsync, ftruncate, getcwd, getdomainname, getdtablesize,
+	getgroups, gethostname, getlogin, getlogin_r, getpagesize,
+	getusershell, setusershell, endusershell, lchown, link, linkat, lseek,
+	pipe2, pread, readlink, readlinkat, rmdir, sleep, symlink, symlinkat,
+	unlink, unlinkat, usleep, write): In C++, define a namespaced alias
+	symbol.
+	(environ): Update.
+	* modules/unistd (Depends-on): Add c++defs.
+	(Makefile.am): Update unistd.h rule.
+
 	time: Avoid #define replacements in C++ mode.
 	* lib/time.in.h: Include c++defs.h, warn-on-use.h.
 	(nanosleep, mktime, localtime_r, gmtime_r, strptime, timegm): In C++,

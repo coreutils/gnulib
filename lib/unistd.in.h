@@ -114,6 +114,8 @@
 # endif
 #endif
 
+/* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
+
 /* The definition of _GL_ARG_NONNULL is copied here.  */
 
 /* The definition of _GL_WARN_ON_USE is copied here.  */
@@ -141,10 +143,6 @@
 
 /* Declare overridden functions.  */
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 
 #if defined GNULIB_POSIXCHECK
 /* The access() function is a security risk.  */
@@ -154,19 +152,27 @@ _GL_WARN_ON_USE (access, "the access function is a security risk - "
 
 
 #if @GNULIB_CHOWN@
-# if @REPLACE_CHOWN@
-#  undef chown
-#  define chown rpl_chown
-# endif
-# if !@HAVE_CHOWN@ || @REPLACE_CHOWN@
 /* Change the owner of FILE to UID (if UID is not -1) and the group of FILE
    to GID (if GID is not -1).  Follow symbolic links.
    Return 0 if successful, otherwise -1 and errno set.
    See the POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/chown.html>.  */
-extern int chown (const char *file, uid_t uid, gid_t gid)
-     _GL_ARG_NONNULL ((1));
+# if @REPLACE_CHOWN@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef chown
+#   define chown rpl_chown
+#  endif
+_GL_FUNCDECL_RPL (chown, int, (const char *file, uid_t uid, gid_t gid)
+                              _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (chown, int, (const char *file, uid_t uid, gid_t gid));
+# else
+#  if !@HAVE_CHOWN@
+_GL_FUNCDECL_SYS (chown, int, (const char *file, uid_t uid, gid_t gid)
+                              _GL_ARG_NONNULL ((1)));
+#  endif
+_GL_CXXALIAS_SYS (chown, int, (const char *file, uid_t uid, gid_t gid));
 # endif
+_GL_CXXALIASWARN (chown);
 #elif defined GNULIB_POSIXCHECK
 # undef chown
 # if HAVE_RAW_DECL_CHOWN
@@ -180,10 +186,16 @@ _GL_WARN_ON_USE (chown, "chown fails to follow symlinks on some systems and "
 #if @GNULIB_CLOSE@
 # if @REPLACE_CLOSE@
 /* Automatically included by modules that need a replacement for close.  */
-#  undef close
-#  define close rpl_close
-extern int close (int);
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef close
+#   define close rpl_close
+#  endif
+_GL_FUNCDECL_RPL (close, int, (int fd));
+_GL_CXXALIAS_RPL (close, int, (int fd));
+# else
+_GL_CXXALIAS_SYS (close, int, (int fd));
 # endif
+_GL_CXXALIASWARN (close);
 #elif @UNISTD_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS@
 # undef close
 # define close close_used_without_requesting_gnulib_module_close
@@ -196,23 +208,36 @@ _GL_WARN_ON_USE (close, "close does not portably work on sockets - "
 
 
 #if @REPLACE_DUP@
-# define dup rpl_dup
-extern int dup (int);
+# if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#  define dup rpl_dup
+# endif
+_GL_FUNCDECL_RPL (dup, int, (int oldfd));
+_GL_CXXALIAS_RPL (dup, int, (int oldfd));
+#else
+_GL_CXXALIAS_SYS (dup, int, (int oldfd));
 #endif
+_GL_CXXALIASWARN (dup);
 
 
 #if @GNULIB_DUP2@
-# if @REPLACE_DUP2@
-#  define dup2 rpl_dup2
-# endif
-# if !@HAVE_DUP2@ || @REPLACE_DUP2@
 /* Copy the file descriptor OLDFD into file descriptor NEWFD.  Do nothing if
    NEWFD = OLDFD, otherwise close NEWFD first if it is open.
    Return newfd if successful, otherwise -1 and errno set.
    See the POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/dup2.html>.  */
-extern int dup2 (int oldfd, int newfd);
+# if @REPLACE_DUP2@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define dup2 rpl_dup2
+#  endif
+_GL_FUNCDECL_RPL (dup2, int, (int oldfd, int newfd));
+_GL_CXXALIAS_RPL (dup2, int, (int oldfd, int newfd));
+# else
+#  if !@HAVE_DUP2@
+_GL_FUNCDECL_SYS (dup2, int, (int oldfd, int newfd));
+#  endif
+_GL_CXXALIAS_SYS (dup2, int, (int oldfd, int newfd));
 # endif
+_GL_CXXALIASWARN (dup2);
 #elif defined GNULIB_POSIXCHECK
 # undef dup2
 # if HAVE_RAW_DECL_DUP2
@@ -232,9 +257,16 @@ _GL_WARN_ON_USE (dup2, "dup2 is unportable - "
    See the Linux man page at
    <http://www.kernel.org/doc/man-pages/online/pages/man2/dup3.2.html>.  */
 # if @HAVE_DUP3@
-#  define dup3 rpl_dup3
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define dup3 rpl_dup3
+#  endif
+_GL_FUNCDECL_RPL (dup3, int, (int oldfd, int newfd, int flags));
+_GL_CXXALIAS_RPL (dup3, int, (int oldfd, int newfd, int flags));
+# else
+_GL_FUNCDECL_SYS (dup3, int, (int oldfd, int newfd, int flags));
+_GL_CXXALIAS_SYS (dup3, int, (int oldfd, int newfd, int flags));
 # endif
-extern int dup3 (int oldfd, int newfd, int flags);
+_GL_CXXALIASWARN (dup3);
 #elif defined GNULIB_POSIXCHECK
 # undef dup3
 # if HAVE_RAW_DECL_DUP3
@@ -252,7 +284,13 @@ _GL_WARN_ON_USE (dup3, "dup3 is unportable - "
 #   include <crt_externs.h>
 #   define environ (*_NSGetEnviron ())
 #  else
+#   ifdef __cplusplus
+extern "C" {
+#   endif
 extern char **environ;
+#   ifdef __cplusplus
+}
+#   endif
 #  endif
 # endif
 #elif defined GNULIB_POSIXCHECK
@@ -271,11 +309,14 @@ _GL_WARN_ON_USE (rpl_environ, "environ is unportable - "
 
 
 #if @GNULIB_EUIDACCESS@
-# if !@HAVE_EUIDACCESS@
 /* Like access(), except that it uses the effective user id and group id of
    the current process.  */
-extern int euidaccess (const char *filename, int mode) _GL_ARG_NONNULL ((1));
+# if !@HAVE_EUIDACCESS@
+_GL_FUNCDECL_SYS (euidaccess, int, (const char *filename, int mode)
+                                   _GL_ARG_NONNULL ((1)));
 # endif
+_GL_CXXALIAS_SYS (euidaccess, int, (const char *filename, int mode));
+_GL_CXXALIASWARN (euidaccess);
 # if defined GNULIB_POSIXCHECK
 /* Like access(), this function is a security risk.  */
 _GL_WARN_ON_USE (euidaccess, "the euidaccess function is a security risk - "
@@ -292,9 +333,13 @@ _GL_WARN_ON_USE (euidaccess, "euidaccess is unportable - "
 
 #if @GNULIB_FACCESSAT@
 # if !@HAVE_FACCESSAT@
-extern int faccessat (int fd, char const *file, int mode, int flag)
-     _GL_ARG_NONNULL ((2));
+_GL_FUNCDECL_SYS (faccessat, int,
+                  (int fd, char const *file, int mode, int flag)
+                  _GL_ARG_NONNULL ((2)));
 # endif
+_GL_CXXALIAS_SYS (faccessat, int,
+                  (int fd, char const *file, int mode, int flag));
+_GL_CXXALIASWARN (faccessat);
 #elif defined GNULIB_POSIXCHECK
 # undef faccessat
 # if HAVE_RAW_DECL_FACCESSAT
@@ -305,22 +350,26 @@ _GL_WARN_ON_USE (faccessat, "faccessat is not portable - "
 
 
 #if @GNULIB_FCHDIR@
-# if @REPLACE_FCHDIR@
 /* Change the process' current working directory to the directory on which
    the given file descriptor is open.
    Return 0 if successful, otherwise -1 and errno set.
    See the POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/fchdir.html>.  */
-extern int fchdir (int /*fd*/);
+# if @REPLACE_FCHDIR@
+_GL_FUNCDECL_RPL (fchdir, int, (int /*fd*/));
+_GL_CXXALIAS_RPL (fchdir, int, (int /*fd*/));
 
 /* Gnulib internal hooks needed to maintain the fchdir metadata.  */
-extern int _gl_register_fd (int fd, const char *filename)
+_GL_EXTERN_C int _gl_register_fd (int fd, const char *filename)
      _GL_ARG_NONNULL ((2));
-extern void _gl_unregister_fd (int fd);
-extern int _gl_register_dup (int oldfd, int newfd);
-extern const char *_gl_directory_name (int fd);
+_GL_EXTERN_C void _gl_unregister_fd (int fd);
+_GL_EXTERN_C int _gl_register_dup (int oldfd, int newfd);
+_GL_EXTERN_C const char *_gl_directory_name (int fd);
 
+# else
+_GL_CXXALIAS_SYS (fchdir, int, (int /*fd*/));
 # endif
+_GL_CXXALIASWARN (fchdir);
 #elif defined GNULIB_POSIXCHECK
 # undef fchdir
 # if HAVE_RAW_DECL_FCHDIR
@@ -332,13 +381,25 @@ _GL_WARN_ON_USE (fchdir, "fchdir is unportable - "
 
 #if @GNULIB_FCHOWNAT@
 # if @REPLACE_FCHOWNAT@
-#  undef fchownat
-#  define fchownat rpl_fchownat
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef fchownat
+#   define fchownat rpl_fchownat
+#  endif
+_GL_FUNCDECL_RPL (fchownat, int, (int fd, char const *file,
+                                  uid_t owner, gid_t group, int flag)
+                                 _GL_ARG_NONNULL ((2)));
+_GL_CXXALIAS_RPL (fchownat, int, (int fd, char const *file,
+                                  uid_t owner, gid_t group, int flag));
+# else
+#  if !@HAVE_FCHOWNAT@
+_GL_FUNCDECL_SYS (fchownat, int, (int fd, char const *file,
+                                  uid_t owner, gid_t group, int flag)
+                                 _GL_ARG_NONNULL ((2)));
+#  endif
+_GL_CXXALIAS_SYS (fchownat, int, (int fd, char const *file,
+                                  uid_t owner, gid_t group, int flag));
 # endif
-# if !@HAVE_FCHOWNAT@ || @REPLACE_FCHOWNAT@
-extern int fchownat (int fd, char const *file, uid_t owner, gid_t group, int flag)
-     _GL_ARG_NONNULL ((2));
-# endif
+_GL_CXXALIASWARN (fchownat);
 #elif defined GNULIB_POSIXCHECK
 # undef fchownat
 # if HAVE_RAW_DECL_FCHOWNAT
@@ -354,8 +415,10 @@ _GL_WARN_ON_USE (fchownat, "fchownat is not portable - "
    See POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/fsync.html>.  */
 # if !@HAVE_FSYNC@
-extern int fsync (int fd);
+_GL_FUNCDECL_SYS (fsync, int, (int fd));
 # endif
+_GL_CXXALIAS_SYS (fsync, int, (int fd));
+_GL_CXXALIASWARN (fsync);
 #elif defined GNULIB_POSIXCHECK
 # undef fsync
 # if HAVE_RAW_DECL_FSYNC
@@ -366,13 +429,15 @@ _GL_WARN_ON_USE (fsync, "fsync is unportable - "
 
 
 #if @GNULIB_FTRUNCATE@
-# if !@HAVE_FTRUNCATE@
 /* Change the size of the file to which FD is opened to become equal to LENGTH.
    Return 0 if successful, otherwise -1 and errno set.
    See the POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/ftruncate.html>.  */
-extern int ftruncate (int fd, off_t length);
+# if !@HAVE_FTRUNCATE@
+_GL_FUNCDECL_SYS (ftruncate, int, (int fd, off_t length));
 # endif
+_GL_CXXALIAS_SYS (ftruncate, int, (int fd, off_t length));
+_GL_CXXALIASWARN (ftruncate);
 #elif defined GNULIB_POSIXCHECK
 # undef ftruncate
 # if HAVE_RAW_DECL_FTRUNCATE
@@ -383,7 +448,6 @@ _GL_WARN_ON_USE (ftruncate, "ftruncate is unportable - "
 
 
 #if @GNULIB_GETCWD@
-# if @REPLACE_GETCWD@
 /* Get the name of the current working directory, and put it in SIZE bytes
    of BUF.
    Return BUF if successful, or NULL if the directory couldn't be determined
@@ -394,9 +458,16 @@ _GL_WARN_ON_USE (ftruncate, "ftruncate is unportable - "
    extension: If BUF is NULL, an array is allocated with 'malloc'; the array
    is SIZE bytes long, unless SIZE == 0, in which case it is as big as
    necessary.  */
-#  define getcwd rpl_getcwd
-extern char * getcwd (char *buf, size_t size);
+# if @REPLACE_GETCWD@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define getcwd rpl_getcwd
+#  endif
+_GL_FUNCDECL_RPL (getcwd, char *, (char *buf, size_t size));
+_GL_CXXALIAS_RPL (getcwd, char *, (char *buf, size_t size));
+# else
+_GL_CXXALIAS_SYS (getcwd, char *, (char *buf, size_t size));
 # endif
+_GL_CXXALIASWARN (getcwd);
 #elif defined GNULIB_POSIXCHECK
 # undef getcwd
 # if HAVE_RAW_DECL_GETCWD
@@ -418,8 +489,13 @@ _GL_WARN_ON_USE (getcwd, "getcwd is unportable - "
    If the NIS domain name is longer than LEN, set errno = EINVAL and return -1.
    Return 0 if successful, otherwise set errno and return -1.  */
 # if !@HAVE_GETDOMAINNAME@
-extern int getdomainname(char *name, size_t len) _GL_ARG_NONNULL ((1));
+_GL_FUNCDECL_SYS (getdomainname, int, (char *name, size_t len)
+                                      _GL_ARG_NONNULL ((1)));
 # endif
+/* Need to cast, because on MacOS X 10.5 systems, the second parameter is
+                                                        int len.  */
+_GL_CXXALIAS_SYS_CAST (getdomainname, int, (char *name, size_t len));
+_GL_CXXALIASWARN (getdomainname);
 #elif defined GNULIB_POSIXCHECK
 # undef getdomainname
 # if HAVE_RAW_DECL_GETDOMAINNAME
@@ -430,11 +506,13 @@ _GL_WARN_ON_USE (getdomainname, "getdomainname is unportable - "
 
 
 #if @GNULIB_GETDTABLESIZE@
-# if !@HAVE_GETDTABLESIZE@
 /* Return the maximum number of file descriptors in the current process.
    In POSIX, this is same as sysconf (_SC_OPEN_MAX).  */
-extern int getdtablesize (void);
+# if !@HAVE_GETDTABLESIZE@
+_GL_FUNCDECL_SYS (getdtablesize, int, (void));
 # endif
+_GL_CXXALIAS_SYS (getdtablesize, int, (void));
+_GL_CXXALIASWARN (getdtablesize);
 #elif defined GNULIB_POSIXCHECK
 # undef getdtablesize
 # if HAVE_RAW_DECL_GETDTABLESIZE
@@ -445,18 +523,25 @@ _GL_WARN_ON_USE (getdtablesize, "getdtablesize is unportable - "
 
 
 #if @GNULIB_GETGROUPS@
-# if @REPLACE_GETGROUPS@
-#  undef getgroups
-#  define getgroups rpl_getgroups
-# endif
-# if !@HAVE_GETGROUPS@ || @REPLACE_GETGROUPS@
 /* Return the supplemental groups that the current process belongs to.
    It is unspecified whether the effective group id is in the list.
    If N is 0, return the group count; otherwise, N describes how many
    entries are available in GROUPS.  Return -1 and set errno if N is
    not 0 and not large enough.  Fails with ENOSYS on some systems.  */
-int getgroups (int n, gid_t *groups);
+# if @REPLACE_GETGROUPS@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef getgroups
+#   define getgroups rpl_getgroups
+#  endif
+_GL_FUNCDECL_RPL (getgroups, int, (int n, gid_t *groups));
+_GL_CXXALIAS_RPL (getgroups, int, (int n, gid_t *groups));
+# else
+#  if !@HAVE_GETGROUPS@
+_GL_FUNCDECL_SYS (getgroups, int, (int n, gid_t *groups));
+#  endif
+_GL_CXXALIAS_SYS (getgroups, int, (int n, gid_t *groups));
 # endif
+_GL_CXXALIASWARN (getgroups);
 #elif defined GNULIB_POSIXCHECK
 # undef getgroups
 # if HAVE_RAW_DECL_GETGROUPS
@@ -475,12 +560,23 @@ _GL_WARN_ON_USE (getgroups, "getgroups is unportable - "
    If the host name is longer than LEN, set errno = EINVAL and return -1.
    Return 0 if successful, otherwise set errno and return -1.  */
 # if @UNISTD_H_HAVE_WINSOCK2_H@
-#  undef gethostname
-#  define gethostname rpl_gethostname
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef gethostname
+#   define gethostname rpl_gethostname
+#  endif
+_GL_FUNCDECL_RPL (gethostname, int, (char *name, size_t len)
+                                    _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (gethostname, int, (char *name, size_t len));
+# else
+#  if !@HAVE_GETHOSTNAME@
+_GL_FUNCDECL_SYS (gethostname, int, (char *name, size_t len)
+                                    _GL_ARG_NONNULL ((1)));
+#  endif
+/* Need to cast, because on Solaris 10 systems, the second parameter is
+                                                      int len.  */
+_GL_CXXALIAS_SYS_CAST (gethostname, int, (char *name, size_t len));
 # endif
-# if @UNISTD_H_HAVE_WINSOCK2_H@ || !@HAVE_GETHOSTNAME@
-extern int gethostname(char *name, size_t len) _GL_ARG_NONNULL ((1));
-# endif
+_GL_CXXALIASWARN (gethostname);
 #elif @UNISTD_H_HAVE_WINSOCK2_H@
 # undef gethostname
 # define gethostname gethostname_used_without_requesting_gnulib_module_gethostname
@@ -505,8 +601,10 @@ _GL_WARN_ON_USE (gethostname, "gethostname is unportable - "
      $USERNAME               on native Windows platforms.
  */
 # if !@HAVE_GETLOGIN@
-extern char *getlogin (void);
+_GL_FUNCDECL_SYS (getlogin, char *, (void));
 # endif
+_GL_CXXALIAS_SYS (getlogin, char *, (void));
+_GL_CXXALIASWARN (getlogin);
 #elif defined GNULIB_POSIXCHECK
 # undef getlogin
 # if HAVE_RAW_DECL_GETLOGIN
@@ -532,8 +630,13 @@ _GL_WARN_ON_USE (getlogin, "getlogin is unportable - "
      $USERNAME               on native Windows platforms.
  */
 # if !@HAVE_DECL_GETLOGIN_R@
-extern int getlogin_r (char *name, size_t size) _GL_ARG_NONNULL ((1));
+_GL_FUNCDECL_SYS (getlogin_r, int, (char *name, size_t size)
+                                   _GL_ARG_NONNULL ((1)));
 # endif
+/* Need to cast, because on Solaris 10 systems, the second argument is
+                                                     int size.  */
+_GL_CXXALIAS_SYS_CAST (getlogin_r, int, (char *name, size_t size));
+_GL_CXXALIASWARN (getlogin_r);
 #elif defined GNULIB_POSIXCHECK
 # undef getlogin_r
 # if HAVE_RAW_DECL_GETLOGIN_R
@@ -545,53 +648,72 @@ _GL_WARN_ON_USE (getlogin_r, "getlogin_r is unportable - "
 
 #if @GNULIB_GETPAGESIZE@
 # if @REPLACE_GETPAGESIZE@
-#  define getpagesize rpl_getpagesize
-extern int getpagesize (void);
-# elif !@HAVE_GETPAGESIZE@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define getpagesize rpl_getpagesize
+#  endif
+_GL_FUNCDECL_RPL (getpagesize, int, (void));
+_GL_CXXALIAS_RPL (getpagesize, int, (void));
+# else
+#  if !@HAVE_GETPAGESIZE@
+#   if !defined getpagesize
 /* This is for POSIX systems.  */
-#  if !defined getpagesize && defined _SC_PAGESIZE
-#   if ! (defined __VMS && __VMS_VER < 70000000)
-#    define getpagesize() sysconf (_SC_PAGESIZE)
-#   endif
-#  endif
+#    if !defined _gl_getpagesize && defined _SC_PAGESIZE
+#     if ! (defined __VMS && __VMS_VER < 70000000)
+#      define _gl_getpagesize() sysconf (_SC_PAGESIZE)
+#     endif
+#    endif
 /* This is for older VMS.  */
-#  if !defined getpagesize && defined __VMS
-#   ifdef __ALPHA
-#    define getpagesize() 8192
-#   else
-#    define getpagesize() 512
-#   endif
-#  endif
+#    if !defined _gl_getpagesize && defined __VMS
+#     ifdef __ALPHA
+#      define _gl_getpagesize() 8192
+#     else
+#      define _gl_getpagesize() 512
+#     endif
+#    endif
 /* This is for BeOS.  */
-#  if !defined getpagesize && @HAVE_OS_H@
-#   include <OS.h>
-#   if defined B_PAGE_SIZE
-#    define getpagesize() B_PAGE_SIZE
-#   endif
-#  endif
+#    if !defined _gl_getpagesize && @HAVE_OS_H@
+#     include <OS.h>
+#     if defined B_PAGE_SIZE
+#      define _gl_getpagesize() B_PAGE_SIZE
+#     endif
+#    endif
 /* This is for AmigaOS4.0.  */
-#  if !defined getpagesize && defined __amigaos4__
-#   define getpagesize() 2048
-#  endif
+#    if !defined _gl_getpagesize && defined __amigaos4__
+#     define _gl_getpagesize() 2048
+#    endif
 /* This is for older Unix systems.  */
-#  if !defined getpagesize && @HAVE_SYS_PARAM_H@
-#   include <sys/param.h>
-#   ifdef EXEC_PAGESIZE
-#    define getpagesize() EXEC_PAGESIZE
-#   else
-#    ifdef NBPG
-#     ifndef CLSIZE
-#      define CLSIZE 1
+#    if !defined _gl_getpagesize && @HAVE_SYS_PARAM_H@
+#     include <sys/param.h>
+#     ifdef EXEC_PAGESIZE
+#      define _gl_getpagesize() EXEC_PAGESIZE
+#     else
+#      ifdef NBPG
+#       ifndef CLSIZE
+#        define CLSIZE 1
+#       endif
+#       define _gl_getpagesize() (NBPG * CLSIZE)
+#      else
+#       ifdef NBPC
+#        define _gl_getpagesize() NBPC
+#       endif
+#      endif
 #     endif
-#     define getpagesize() (NBPG * CLSIZE)
+#    endif
+#    if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#     define getpagesize() _gl_getpagesize ()
 #    else
-#     ifdef NBPC
-#      define getpagesize() NBPC
-#     endif
+static inline int
+getpagesize ()
+{
+  return _gl_getpagesize ();
+}
 #    endif
 #   endif
 #  endif
+/* Need to cast, because on Cygwin 1.5.x systems, the return type is size_t.  */
+_GL_CXXALIAS_SYS_CAST (getpagesize, int, (void));
 # endif
+_GL_CXXALIASWARN (getpagesize);
 #elif defined GNULIB_POSIXCHECK
 # undef getpagesize
 # if HAVE_RAW_DECL_GETPAGESIZE
@@ -602,27 +724,45 @@ _GL_WARN_ON_USE (getpagesize, "getpagesize is unportable - "
 
 
 #if @GNULIB_GETUSERSHELL@
-# if !@HAVE_GETUSERSHELL@
 /* Return the next valid login shell on the system, or NULL when the end of
    the list has been reached.  */
-extern char *getusershell (void);
-/* Rewind to pointer that is advanced at each getusershell() call.  */
-extern void setusershell (void);
-/* Free the pointer that is advanced at each getusershell() call and
-   associated resources.  */
-extern void endusershell (void);
+# if !@HAVE_GETUSERSHELL@
+_GL_FUNCDECL_SYS (getusershell, char *, (void));
 # endif
+_GL_CXXALIAS_SYS (getusershell, char *, (void));
+_GL_CXXALIASWARN (getusershell);
 #elif defined GNULIB_POSIXCHECK
 # undef getusershell
 # if HAVE_RAW_DECL_GETUSERSHELL
 _GL_WARN_ON_USE (getusershell, "getusershell is unportable - "
                  "use gnulib module getusershell for portability");
 # endif
+#endif
+
+#if @GNULIB_GETUSERSHELL@
+/* Rewind to pointer that is advanced at each getusershell() call.  */
+# if !@HAVE_GETUSERSHELL@
+_GL_FUNCDECL_SYS (setusershell, void, (void));
+# endif
+_GL_CXXALIAS_SYS (setusershell, void, (void));
+_GL_CXXALIASWARN (setusershell);
+#elif defined GNULIB_POSIXCHECK
 # undef setusershell
 # if HAVE_RAW_DECL_SETUSERSHELL
 _GL_WARN_ON_USE (setusershell, "setusershell is unportable - "
                  "use gnulib module getusershell for portability");
 # endif
+#endif
+
+#if @GNULIB_GETUSERSHELL@
+/* Free the pointer that is advanced at each getusershell() call and
+   associated resources.  */
+# if !@HAVE_GETUSERSHELL@
+_GL_FUNCDECL_SYS (endusershell, void, (void));
+# endif
+_GL_CXXALIAS_SYS (endusershell, void, (void));
+_GL_CXXALIASWARN (endusershell);
+#elif defined GNULIB_POSIXCHECK
 # undef endusershell
 # if HAVE_RAW_DECL_ENDUSERSHELL
 _GL_WARN_ON_USE (endusershell, "endusershell is unportable - "
@@ -632,19 +772,27 @@ _GL_WARN_ON_USE (endusershell, "endusershell is unportable - "
 
 
 #if @GNULIB_LCHOWN@
-# if @REPLACE_LCHOWN@
-#  undef lchown
-#  define lchown rpl_lchown
-# endif
-# if !@HAVE_LCHOWN@ || @REPLACE_LCHOWN@
 /* Change the owner of FILE to UID (if UID is not -1) and the group of FILE
    to GID (if GID is not -1).  Do not follow symbolic links.
    Return 0 if successful, otherwise -1 and errno set.
    See the POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/lchown.html>.  */
-extern int lchown (char const *file, uid_t owner, gid_t group)
-     _GL_ARG_NONNULL ((1));
+# if @REPLACE_LCHOWN@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef lchown
+#   define lchown rpl_lchown
+#  endif
+_GL_FUNCDECL_RPL (lchown, int, (char const *file, uid_t owner, gid_t group)
+                               _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (lchown, int, (char const *file, uid_t owner, gid_t group));
+# else
+#  if !@HAVE_LCHOWN@
+_GL_FUNCDECL_SYS (lchown, int, (char const *file, uid_t owner, gid_t group)
+                               _GL_ARG_NONNULL ((1)));
+#  endif
+_GL_CXXALIAS_SYS (lchown, int, (char const *file, uid_t owner, gid_t group));
 # endif
+_GL_CXXALIASWARN (lchown);
 #elif defined GNULIB_POSIXCHECK
 # undef lchown
 # if HAVE_RAW_DECL_LCHOWN
@@ -655,17 +803,25 @@ _GL_WARN_ON_USE (lchown, "lchown is unportable to pre-POSIX.1-2001 systems - "
 
 
 #if @GNULIB_LINK@
-# if @REPLACE_LINK@
-#  define link rpl_link
-# endif
 /* Create a new hard link for an existing file.
    Return 0 if successful, otherwise -1 and errno set.
    See POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/link.html>.  */
-# if !@HAVE_LINK@ || @REPLACE_LINK@
-extern int link (const char *path1, const char *path2)
-     _GL_ARG_NONNULL ((1, 2));
+# if @REPLACE_LINK@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define link rpl_link
+#  endif
+_GL_FUNCDECL_RPL (link, int, (const char *path1, const char *path2)
+                             _GL_ARG_NONNULL ((1, 2)));
+_GL_CXXALIAS_RPL (link, int, (const char *path1, const char *path2));
+# else
+#  if !@HAVE_LINK@
+_GL_FUNCDECL_SYS (link, int, (const char *path1, const char *path2)
+                             _GL_ARG_NONNULL ((1, 2)));
+#  endif
+_GL_CXXALIAS_SYS (link, int, (const char *path1, const char *path2));
 # endif
+_GL_CXXALIASWARN (link);
 #elif defined GNULIB_POSIXCHECK
 # undef link
 # if HAVE_RAW_DECL_LINK
@@ -674,19 +830,35 @@ _GL_WARN_ON_USE (link, "link is unportable - "
 # endif
 #endif
 
+
 #if @GNULIB_LINKAT@
-# if @REPLACE_LINKAT@
-#  undef linkat
-#  define linkat rpl_linkat
-# endif
 /* Create a new hard link for an existing file, relative to two
    directories.  FLAG controls whether symlinks are followed.
    Return 0 if successful, otherwise -1 and errno set.  */
-# if !@HAVE_LINKAT@ || @REPLACE_LINKAT@
-extern int linkat (int fd1, const char *path1, int fd2, const char *path2,
+# if @REPLACE_LINKAT@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef linkat
+#   define linkat rpl_linkat
+#  endif
+_GL_FUNCDECL_RPL (linkat, int,
+                  (int fd1, const char *path1, int fd2, const char *path2,
                    int flag)
-     _GL_ARG_NONNULL ((2, 4));
+                  _GL_ARG_NONNULL ((2, 4)));
+_GL_CXXALIAS_RPL (linkat, int,
+                  (int fd1, const char *path1, int fd2, const char *path2,
+                   int flag));
+# else
+#  if !@HAVE_LINKAT@
+_GL_FUNCDECL_SYS (linkat, int,
+                  (int fd1, const char *path1, int fd2, const char *path2,
+                   int flag)
+                  _GL_ARG_NONNULL ((2, 4)));
+#  endif
+_GL_CXXALIAS_SYS (linkat, int,
+                  (int fd1, const char *path1, int fd2, const char *path2,
+                   int flag));
 # endif
+_GL_CXXALIASWARN (linkat);
 #elif defined GNULIB_POSIXCHECK
 # undef linkat
 # if HAVE_RAW_DECL_LINKAT
@@ -695,15 +867,22 @@ _GL_WARN_ON_USE (linkat, "linkat is unportable - "
 # endif
 #endif
 
+
 #if @GNULIB_LSEEK@
-# if @REPLACE_LSEEK@
 /* Set the offset of FD relative to SEEK_SET, SEEK_CUR, or SEEK_END.
    Return the new offset if successful, otherwise -1 and errno set.
    See the POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/lseek.html>.  */
-#  define lseek rpl_lseek
-   extern off_t lseek (int fd, off_t offset, int whence);
+# if @REPLACE_LSEEK@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define lseek rpl_lseek
+#  endif
+_GL_FUNCDECL_RPL (lseek, off_t, (int fd, off_t offset, int whence));
+_GL_CXXALIAS_RPL (lseek, off_t, (int fd, off_t offset, int whence));
+# else
+_GL_CXXALIAS_SYS (lseek, off_t, (int fd, off_t offset, int whence));
 # endif
+_GL_CXXALIASWARN (lseek);
 #elif defined GNULIB_POSIXCHECK
 # undef lseek
 # if HAVE_RAW_DECL_LSEEK
@@ -723,9 +902,16 @@ _GL_WARN_ON_USE (lseek, "lseek does not fail with ESPIPE on pipes on some "
    See also the Linux man page at
    <http://www.kernel.org/doc/man-pages/online/pages/man2/pipe2.2.html>.  */
 # if @HAVE_PIPE2@
-#  define pipe2 rpl_pipe2
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define pipe2 rpl_pipe2
+#  endif
+_GL_FUNCDECL_RPL (pipe2, int, (int fd[2], int flags) _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (pipe2, int, (int fd[2], int flags));
+# else
+_GL_FUNCDECL_SYS (pipe2, int, (int fd[2], int flags) _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_SYS (pipe2, int, (int fd[2], int flags));
 # endif
-extern int pipe2 (int fd[2], int flags) _GL_ARG_NONNULL ((1));
+_GL_CXXALIASWARN (pipe2);
 #elif defined GNULIB_POSIXCHECK
 # undef pipe2
 # if HAVE_RAW_DECL_PIPE2
@@ -736,17 +922,29 @@ _GL_WARN_ON_USE (pipe2, "pipe2 is unportable - "
 
 
 #if @GNULIB_PREAD@
-# if @REPLACE_PREAD@
-#  define pread rpl_pread
-# endif
 /* Read at most BUFSIZE bytes from FD into BUF, starting at OFFSET.
    Return the number of bytes placed into BUF if successful, otherwise
    set errno and return -1.  0 indicates EOF.  See the POSIX:2001
    specification <http://www.opengroup.org/susv3xsh/pread.html>.  */
-# if !@HAVE_PREAD@ || @REPLACE_PREAD@
-  extern ssize_t pread (int fd, void *buf, size_t bufsize, off_t offset)
-       _GL_ARG_NONNULL ((2));
+# if @REPLACE_PREAD@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define pread rpl_pread
+#  endif
+_GL_FUNCDECL_RPL (pread, ssize_t,
+                  (int fd, void *buf, size_t bufsize, off_t offset)
+                  _GL_ARG_NONNULL ((2)));
+_GL_CXXALIAS_RPL (pread, ssize_t,
+                  (int fd, void *buf, size_t bufsize, off_t offset));
+# else
+#  if !@HAVE_PREAD@
+_GL_FUNCDECL_SYS (pread, ssize_t,
+                  (int fd, void *buf, size_t bufsize, off_t offset)
+                  _GL_ARG_NONNULL ((2)));
+#  endif
+_GL_CXXALIAS_SYS (pread, ssize_t,
+                  (int fd, void *buf, size_t bufsize, off_t offset));
 # endif
+_GL_CXXALIASWARN (pread);
 #elif defined GNULIB_POSIXCHECK
 # undef pread
 # if HAVE_RAW_DECL_PREAD
@@ -757,18 +955,30 @@ _GL_WARN_ON_USE (pread, "pread is unportable - "
 
 
 #if @GNULIB_READLINK@
-# if @REPLACE_READLINK@
-#  define readlink rpl_readlink
-# endif
 /* Read the contents of the symbolic link FILE and place the first BUFSIZE
    bytes of it into BUF.  Return the number of bytes placed into BUF if
    successful, otherwise -1 and errno set.
    See the POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/readlink.html>.  */
-# if !@HAVE_READLINK@ || @REPLACE_READLINK@
-extern ssize_t readlink (const char *file, char *buf, size_t bufsize)
-     _GL_ARG_NONNULL ((1, 2));
+# if @REPLACE_READLINK@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define readlink rpl_readlink
+#  endif
+_GL_FUNCDECL_RPL (readlink, ssize_t,
+                  (const char *file, char *buf, size_t bufsize)
+                  _GL_ARG_NONNULL ((1, 2)));
+_GL_CXXALIAS_RPL (readlink, ssize_t,
+                  (const char *file, char *buf, size_t bufsize));
+# else
+#  if !@HAVE_READLINK@
+_GL_FUNCDECL_SYS (readlink, ssize_t,
+                  (const char *file, char *buf, size_t bufsize)
+                  _GL_ARG_NONNULL ((1, 2)));
+#  endif
+_GL_CXXALIAS_SYS (readlink, ssize_t,
+                  (const char *file, char *buf, size_t bufsize));
 # endif
+_GL_CXXALIASWARN (readlink);
 #elif defined GNULIB_POSIXCHECK
 # undef readlink
 # if HAVE_RAW_DECL_READLINK
@@ -780,9 +990,13 @@ _GL_WARN_ON_USE (readlink, "readlink is unportable - "
 
 #if @GNULIB_READLINKAT@
 # if !@HAVE_READLINKAT@
-extern ssize_t readlinkat (int fd, char const *file, char *buf, size_t len)
-     _GL_ARG_NONNULL ((2, 3));
+_GL_FUNCDECL_SYS (readlinkat, ssize_t,
+                  (int fd, char const *file, char *buf, size_t len)
+                  _GL_ARG_NONNULL ((2, 3)));
 # endif
+_GL_CXXALIAS_SYS (readlinkat, ssize_t,
+                  (int fd, char const *file, char *buf, size_t len));
+_GL_CXXALIASWARN (readlinkat);
 #elif defined GNULIB_POSIXCHECK
 # undef readlinkat
 # if HAVE_RAW_DECL_READLINKAT
@@ -793,11 +1007,17 @@ _GL_WARN_ON_USE (readlinkat, "readlinkat is not portable - "
 
 
 #if @GNULIB_RMDIR@
-# if @REPLACE_RMDIR@
-#  define rmdir rpl_rmdir
 /* Remove the directory DIR.  */
-extern int rmdir (char const *name) _GL_ARG_NONNULL ((1));
+# if @REPLACE_RMDIR@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define rmdir rpl_rmdir
+#  endif
+_GL_FUNCDECL_RPL (rmdir, int, (char const *name) _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (rmdir, int, (char const *name));
+# else
+_GL_CXXALIAS_SYS (rmdir, int, (char const *name));
 # endif
+_GL_CXXALIASWARN (rmdir);
 #elif defined GNULIB_POSIXCHECK
 # undef rmdir
 # if HAVE_RAW_DECL_RMDIR
@@ -808,17 +1028,24 @@ _GL_WARN_ON_USE (rmdir, "rmdir is unportable - "
 
 
 #if @GNULIB_SLEEP@
-# if @REPLACE_SLEEP@
-#  undef sleep
-#  define sleep rpl_sleep
-# endif
 /* Pause the execution of the current thread for N seconds.
    Returns the number of seconds left to sleep.
    See the POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/sleep.html>.  */
-# if !@HAVE_SLEEP@ || @REPLACE_SLEEP@
-extern unsigned int sleep (unsigned int n);
+# if @REPLACE_SLEEP@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef sleep
+#   define sleep rpl_sleep
+#  endif
+_GL_FUNCDECL_RPL (sleep, unsigned int, (unsigned int n));
+_GL_CXXALIAS_RPL (sleep, unsigned int, (unsigned int n));
+# else
+#  if !@HAVE_SLEEP@
+_GL_FUNCDECL_SYS (sleep, unsigned int, (unsigned int n));
+#  endif
+_GL_CXXALIAS_SYS (sleep, unsigned int, (unsigned int n));
 # endif
+_GL_CXXALIASWARN (sleep);
 #elif defined GNULIB_POSIXCHECK
 # undef sleep
 # if HAVE_RAW_DECL_SLEEP
@@ -830,13 +1057,21 @@ _GL_WARN_ON_USE (sleep, "sleep is unportable - "
 
 #if @GNULIB_SYMLINK@
 # if @REPLACE_SYMLINK@
-#  undef symlink
-#  define symlink rpl_symlink
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef symlink
+#   define symlink rpl_symlink
+#  endif
+_GL_FUNCDECL_RPL (symlink, int, (char const *contents, char const *file)
+                                _GL_ARG_NONNULL ((1, 2)));
+_GL_CXXALIAS_RPL (symlink, int, (char const *contents, char const *file));
+# else
+#  if !@HAVE_SYMLINK@
+_GL_FUNCDECL_SYS (symlink, int, (char const *contents, char const *file)
+                                _GL_ARG_NONNULL ((1, 2)));
+#  endif
+_GL_CXXALIAS_SYS (symlink, int, (char const *contents, char const *file));
 # endif
-# if !@HAVE_SYMLINK@ || @REPLACE_SYMLINK@
-extern int symlink (char const *contents, char const *file)
-     _GL_ARG_NONNULL ((1, 2));
-# endif
+_GL_CXXALIASWARN (symlink);
 #elif defined GNULIB_POSIXCHECK
 # undef symlink
 # if HAVE_RAW_DECL_SYMLINK
@@ -848,9 +1083,13 @@ _GL_WARN_ON_USE (symlink, "symlink is not portable - "
 
 #if @GNULIB_SYMLINKAT@
 # if !@HAVE_SYMLINKAT@
-extern int symlinkat (char const *contents, int fd, char const *file)
-     _GL_ARG_NONNULL ((1, 3));
+_GL_FUNCDECL_SYS (symlinkat, int,
+                  (char const *contents, int fd, char const *file)
+                  _GL_ARG_NONNULL ((1, 3)));
 # endif
+_GL_CXXALIAS_SYS (symlinkat, int,
+                  (char const *contents, int fd, char const *file));
+_GL_CXXALIASWARN (symlinkat);
 #elif defined GNULIB_POSIXCHECK
 # undef symlinkat
 # if HAVE_RAW_DECL_SYMLINKAT
@@ -862,10 +1101,16 @@ _GL_WARN_ON_USE (symlinkat, "symlinkat is not portable - "
 
 #if @GNULIB_UNLINK@
 # if @REPLACE_UNLINK@
-#  undef unlink
-#  define unlink rpl_unlink
-extern int unlink (char const *file) _GL_ARG_NONNULL ((1));
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef unlink
+#   define unlink rpl_unlink
+#  endif
+_GL_FUNCDECL_RPL (unlink, int, (char const *file) _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (unlink, int, (char const *file));
+# else
+_GL_CXXALIAS_SYS (unlink, int, (char const *file));
 # endif
+_GL_CXXALIASWARN (unlink);
 #elif defined GNULIB_POSIXCHECK
 # undef unlink
 # if HAVE_RAW_DECL_UNLINK
@@ -877,12 +1122,21 @@ _GL_WARN_ON_USE (unlink, "unlink is not portable - "
 
 #if @GNULIB_UNLINKAT@
 # if @REPLACE_UNLINKAT@
-#  undef unlinkat
-#  define unlinkat rpl_unlinkat
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef unlinkat
+#   define unlinkat rpl_unlinkat
+#  endif
+_GL_FUNCDECL_RPL (unlinkat, int, (int fd, char const *file, int flag)
+                                 _GL_ARG_NONNULL ((2)));
+_GL_CXXALIAS_RPL (unlinkat, int, (int fd, char const *file, int flag));
+# else
+#  if !@HAVE_UNLINKAT@
+_GL_FUNCDECL_SYS (unlinkat, int, (int fd, char const *file, int flag)
+                                 _GL_ARG_NONNULL ((2)));
+#  endif
+_GL_CXXALIAS_SYS (unlinkat, int, (int fd, char const *file, int flag));
 # endif
-# if !@HAVE_UNLINKAT@ || @REPLACE_UNLINKAT@
-extern int unlinkat (int fd, char const *file, int flag) _GL_ARG_NONNULL ((2));
-# endif
+_GL_CXXALIASWARN (unlinkat);
 #elif defined GNULIB_POSIXCHECK
 # undef unlinkat
 # if HAVE_RAW_DECL_UNLINKAT
@@ -893,17 +1147,24 @@ _GL_WARN_ON_USE (unlinkat, "unlinkat is not portable - "
 
 
 #if @GNULIB_USLEEP@
-# if @REPLACE_USLEEP@
-#  undef usleep
-#  define usleep rpl_usleep
-# endif
-# if !@HAVE_USLEEP@ || @REPLACE_USLEEP@
 /* Pause the execution of the current thread for N microseconds.
    Returns 0 on completion, or -1 on range error.
    See the POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/sleep.html>.  */
-extern int usleep (useconds_t n);
+# if @REPLACE_USLEEP@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef usleep
+#   define usleep rpl_usleep
+#  endif
+_GL_FUNCDECL_RPL (usleep, int, (useconds_t n));
+_GL_CXXALIAS_RPL (usleep, int, (useconds_t n));
+# else
+#  if !@HAVE_USLEEP@
+_GL_FUNCDECL_SYS (usleep, int, (useconds_t n));
+#  endif
+_GL_CXXALIAS_SYS (usleep, int, (useconds_t n));
 # endif
+_GL_CXXALIASWARN (usleep);
 #elif defined GNULIB_POSIXCHECK
 # undef usleep
 # if HAVE_RAW_DECL_USLEEP
@@ -913,19 +1174,22 @@ _GL_WARN_ON_USE (usleep, "usleep is unportable - "
 #endif
 
 
-#if @GNULIB_WRITE@ && @REPLACE_WRITE@ && @GNULIB_UNISTD_H_SIGPIPE@
+#if @GNULIB_WRITE@
 /* Write up to COUNT bytes starting at BUF to file descriptor FD.
    See the POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/write.html>.  */
-# undef write
-# define write rpl_write
-extern ssize_t write (int fd, const void *buf, size_t count)
-     _GL_ARG_NONNULL ((2));
-#endif
-
-
-#ifdef __cplusplus
-}
+# if @REPLACE_WRITE@ && @GNULIB_UNISTD_H_SIGPIPE@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef write
+#   define write rpl_write
+#  endif
+_GL_FUNCDECL_RPL (write, ssize_t, (int fd, const void *buf, size_t count)
+                                  _GL_ARG_NONNULL ((2)));
+_GL_CXXALIAS_RPL (write, ssize_t, (int fd, const void *buf, size_t count));
+# else
+_GL_CXXALIAS_SYS (write, ssize_t, (int fd, const void *buf, size_t count));
+# endif
+_GL_CXXALIASWARN (write);
 #endif
 
 
