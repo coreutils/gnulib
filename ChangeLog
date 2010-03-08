@@ -1,5 +1,11 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	sys_ioctl: Avoid #define replacements in C++ mode.
+	* lib/sys_ioctl.in.h: Include c++defs.h.
+	(ioctl): In C++, define a namespaced alias symbol.
+	* modules/sys_ioctl (Depends-on): Add c++defs.
+	(Makefile.am): Update sys/ioctl.h rule.
+
 	string: Avoid #define replacements in C++ mode.
 	* lib/string.in.h: Include c++defs.h.
 	(stpncpy): Define to rpl_stpncpy, not gnu_stpncpy.
