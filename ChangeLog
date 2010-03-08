@@ -1,5 +1,16 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	stdio: Avoid #define replacements in C++ mode.
+	* lib/stdio.in.h: Include c++defs.h.
+	(dprintf, fclose, fflush, fopen, fprintf, fpurge, fputc, fputs,
+	freopen, fseek, fseeko, ftell, ftello, fwrite, getdelim, getline,
+	obstack_printf, obstack_vprintf, perror, popen, printf, fputc, putchar,
+	puts, remove, rename, renameat, snprintf, sprintf, asprintf, vasprintf,
+	vdprintf, vfprintf, vprintf, vsnprintf, vsprintf): In C++, define a
+	namespaced alias symbol.
+	* modules/stdio (Depends-on): Add c++defs.
+	(Makefile.am): Update stdio.h rule.
+
 	spawn: Avoid #define replacements in C++ mode.
 	* lib/spawn.in.h: Include c++defs.h.
 	(posix_spawn, posix_spawnp, posix_spawnattr_init,
