@@ -1,7 +1,10 @@
 Files:
 tests/test-sys_socket.c
+tests/test-sys_socket-c++.cc
+tests/signature.h
 
 Depends-on:
+ansi-c++-opt
 
 configure.ac:
 AC_CHECK_FUNCS_ONCE([shutdown])
@@ -9,3 +12,9 @@ AC_CHECK_FUNCS_ONCE([shutdown])
 Makefile.am:
 TESTS += test-sys_socket
 check_PROGRAMS += test-sys_socket
+if ANSICXX
+TESTS += test-sys_socket-c++
+check_PROGRAMS += test-sys_socket-c++
+test_sys_socket_c___SOURCES = test-sys_socket-c++.cc
+test_sys_socket_c___LDADD = $(LDADD) $(LIBINTL) $(LIBSOCKET)
+endif
