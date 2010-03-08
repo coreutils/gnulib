@@ -1,5 +1,14 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	iconv-h: Avoid #define replacements in C++ mode.
+	* lib/iconv.in.h: Include c++defs.h, warn-on-use.h.
+	(iconv_open, iconv, iconv_close): In C++, define a namespaced alias
+	symbol.
+	* m4/iconv_open.m4 (gl_FUNC_ICONV_OPEN): Invoke gl_REPLACE_ICONV_H
+	whenever iconv is present.
+	* modules/iconv-h (Depends-on): Add c++defs, warn-on-use.
+	(Makefile.am): Update iconv.h rule.
+
 	glob: Avoid #define replacements in C++ mode.
 	* lib/glob.in.h: Include c++defs.h, warn-on-use.h.
 	(_gl_glob_errfunc_fn): New type.
