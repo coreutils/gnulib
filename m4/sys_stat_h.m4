@@ -1,4 +1,4 @@
-# sys_stat_h.m4 serial 22   -*- Autoconf -*-
+# sys_stat_h.m4 serial 23   -*- Autoconf -*-
 dnl Copyright (C) 2006-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -39,6 +39,8 @@ AC_DEFUN([gl_SYS_STAT_MODULE_INDICATOR],
   dnl Use AC_REQUIRE here, so that the default settings are expanded once only.
   AC_REQUIRE([gl_SYS_STAT_H_DEFAULTS])
   GNULIB_[]m4_translit([$1],[abcdefghijklmnopqrstuvwxyz./-],[ABCDEFGHIJKLMNOPQRSTUVWXYZ___])=1
+  dnl Define it also as a C macro, for the benefit of the unit tests.
+  gl_MODULE_INDICATOR([$1])
 ])
 
 AC_DEFUN([gl_SYS_STAT_H_DEFAULTS],
