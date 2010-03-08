@@ -1,5 +1,15 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	stdlib: Avoid #define replacements in C++ mode.
+	* lib/stdlib.in.h: Include c++defs.h.
+	(atoll, calloc, canonicalize_file_name, getloadavg, getsubopt, malloc,
+	mkdtemp, mkostemp, mkostemps, mkstemp, mkstemps, putenv, random_r,
+	srandom_r, initstate_r, setstate_r, realloc, realpath, rpmatch, setenv,
+	strtod, strtoll, strtoull, unsetenv): In C++, define a namespaced alias
+	symbol.
+	* modules/stdlib (Depends-on): Add c++defs.
+	(Makefile.am): Update stdlib.h rule.
+
 	stdio: Avoid #define replacements in C++ mode.
 	* lib/stdio.in.h: Include c++defs.h.
 	(dprintf, fclose, fflush, fopen, fprintf, fpurge, fputc, fputs,
