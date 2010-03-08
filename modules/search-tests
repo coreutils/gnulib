@@ -1,10 +1,19 @@
 Files:
 tests/test-search.c
+tests/test-search-c++.cc
+tests/signature.h
 
 Depends-on:
+ansi-c++-opt
 
 configure.ac:
 
 Makefile.am:
 TESTS += test-search
 check_PROGRAMS += test-search
+if ANSICXX
+TESTS += test-search-c++
+check_PROGRAMS += test-search-c++
+test_search_c___SOURCES = test-search-c++.cc
+test_search_c___LDADD = $(LDADD) $(LIBINTL)
+endif

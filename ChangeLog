@@ -1,5 +1,13 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	Tests of module 'search' in C++ mode.
+	* tests/test-search-c++.cc: New file.
+	* modules/search-tests (Files): Add it and tests/signature.h.
+	(Depends-on): Add ansi-c++-opt.
+	(Makefile.am): Arrange to compile and run test-search-c++.
+	* m4/search_h.m4 (gl_SEARCH_MODULE_INDICATOR): Invoke
+	gl_MODULE_INDICATOR.
+
 	Tests of module 'math' in C++ mode.
 	* tests/test-math-c++.cc: New file.
 	* modules/math-tests (Files): Add it and tests/signature.h.
