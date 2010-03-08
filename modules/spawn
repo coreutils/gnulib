@@ -7,6 +7,7 @@ m4/spawn_h.m4
 
 Depends-on:
 arg-nonnull
+c++defs
 include_next
 sched
 warn-on-use
@@ -19,7 +20,7 @@ BUILT_SOURCES += spawn.h
 
 # We need the following in order to create a replacement for <spawn.h> when
 # the system doesn't have one.
-spawn.h: spawn.in.h $(WARN_ON_USE_H) $(ARG_NONNULL_H)
+spawn.h: spawn.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|@''HAVE_SPAWN_H''@|$(HAVE_SPAWN_H)|g' \
@@ -51,6 +52,7 @@ spawn.h: spawn.in.h $(WARN_ON_USE_H) $(ARG_NONNULL_H)
 	      -e 's|@''HAVE_POSIX_SPAWNATTR_T''@|$(HAVE_POSIX_SPAWNATTR_T)|g' \
 	      -e 's|@''HAVE_POSIX_SPAWN_FILE_ACTIONS_T''@|$(HAVE_POSIX_SPAWN_FILE_ACTIONS_T)|g' \
 	      -e 's|@''REPLACE_POSIX_SPAWN''@|$(REPLACE_POSIX_SPAWN)|g' \
+	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
 	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
 	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
 	      < $(srcdir)/spawn.in.h; \

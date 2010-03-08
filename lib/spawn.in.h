@@ -70,6 +70,8 @@
 # endif
 #endif
 
+/* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
+
 /* The definition of _GL_ARG_NONNULL is copied here.  */
 
 /* The definition of _GL_WARN_ON_USE is copied here.  */
@@ -150,11 +152,6 @@ typedef int verify_POSIX_SPAWN_USEVFORK_no_overlap
                    & POSIX_SPAWN_USEVFORK) == 0) - 1];
 
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-
 #if @GNULIB_POSIX_SPAWN@
 /* Spawn a new process executing PATH with the attributes describes in *ATTRP.
    Before running the process perform the actions described in FILE-ACTIONS.
@@ -162,17 +159,44 @@ extern "C" {
    This function is a possible cancellation points and therefore not
    marked with __THROW. */
 # if @REPLACE_POSIX_SPAWN@
-#  define posix_spawn rpl_posix_spawn
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define posix_spawn rpl_posix_spawn
+#  endif
+_GL_FUNCDECL_RPL (posix_spawn, int,
+                  (pid_t *_Restrict_ __pid,
+                   const char *_Restrict_ __path,
+                   const posix_spawn_file_actions_t *_Restrict_ __file_actions,
+                   const posix_spawnattr_t *_Restrict_ __attrp,
+                   char *const argv[_Restrict_arr_],
+                   char *const envp[_Restrict_arr_])
+                  _GL_ARG_NONNULL ((2, 5, 6)));
+_GL_CXXALIAS_RPL (posix_spawn, int,
+                  (pid_t *_Restrict_ __pid,
+                   const char *_Restrict_ __path,
+                   const posix_spawn_file_actions_t *_Restrict_ __file_actions,
+                   const posix_spawnattr_t *_Restrict_ __attrp,
+                   char *const argv[_Restrict_arr_],
+                   char *const envp[_Restrict_arr_]));
+# else
+#  if !@HAVE_POSIX_SPAWN@
+_GL_FUNCDECL_SYS (posix_spawn, int,
+                  (pid_t *_Restrict_ __pid,
+                   const char *_Restrict_ __path,
+                   const posix_spawn_file_actions_t *_Restrict_ __file_actions,
+                   const posix_spawnattr_t *_Restrict_ __attrp,
+                   char *const argv[_Restrict_arr_],
+                   char *const envp[_Restrict_arr_])
+                  _GL_ARG_NONNULL ((2, 5, 6)));
+#  endif
+_GL_CXXALIAS_SYS (posix_spawn, int,
+                  (pid_t *_Restrict_ __pid,
+                   const char *_Restrict_ __path,
+                   const posix_spawn_file_actions_t *_Restrict_ __file_actions,
+                   const posix_spawnattr_t *_Restrict_ __attrp,
+                   char *const argv[_Restrict_arr_],
+                   char *const envp[_Restrict_arr_]));
 # endif
-# if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
-extern int posix_spawn (pid_t *_Restrict_ __pid,
-                        const char *_Restrict_ __path,
-                        const posix_spawn_file_actions_t *_Restrict_ __file_actions,
-                        const posix_spawnattr_t *_Restrict_ __attrp,
-                        char *const argv[_Restrict_arr_],
-                        char *const envp[_Restrict_arr_])
-     _GL_ARG_NONNULL ((2, 5, 6));
-# endif
+_GL_CXXALIASWARN (posix_spawn);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawn
 # if HAVE_RAW_DECL_POSIX_SPAWN
@@ -187,15 +211,36 @@ _GL_WARN_ON_USE (posix_spawn, "posix_spawn is unportable - "
    This function is a possible cancellation points and therefore not
    marked with __THROW.  */
 # if @REPLACE_POSIX_SPAWN@
-#  define posix_spawnp rpl_posix_spawnp
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define posix_spawnp rpl_posix_spawnp
+#  endif
+_GL_FUNCDECL_RPL (posix_spawnp, int,
+                  (pid_t *__pid, const char *__file,
+                   const posix_spawn_file_actions_t *__file_actions,
+                   const posix_spawnattr_t *__attrp,
+                   char *const argv[], char *const envp[])
+                  _GL_ARG_NONNULL ((2, 5, 6)));
+_GL_CXXALIAS_RPL (posix_spawnp, int,
+                  (pid_t *__pid, const char *__file,
+                   const posix_spawn_file_actions_t *__file_actions,
+                   const posix_spawnattr_t *__attrp,
+                   char *const argv[], char *const envp[]));
+# else
+#  if !@HAVE_POSIX_SPAWN@
+_GL_FUNCDECL_SYS (posix_spawnp, int,
+                  (pid_t *__pid, const char *__file,
+                   const posix_spawn_file_actions_t *__file_actions,
+                   const posix_spawnattr_t *__attrp,
+                   char *const argv[], char *const envp[])
+                  _GL_ARG_NONNULL ((2, 5, 6)));
+#  endif
+_GL_CXXALIAS_SYS (posix_spawnp, int,
+                  (pid_t *__pid, const char *__file,
+                   const posix_spawn_file_actions_t *__file_actions,
+                   const posix_spawnattr_t *__attrp,
+                   char *const argv[], char *const envp[]));
 # endif
-# if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
-extern int posix_spawnp (pid_t *__pid, const char *__file,
-                         const posix_spawn_file_actions_t *__file_actions,
-                         const posix_spawnattr_t *__attrp,
-                         char *const argv[], char *const envp[])
-     _GL_ARG_NONNULL ((2, 5, 6));
-# endif
+_GL_CXXALIASWARN (posix_spawnp);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawnp
 # if HAVE_RAW_DECL_POSIX_SPAWNP
@@ -208,12 +253,20 @@ _GL_WARN_ON_USE (posix_spawnp, "posix_spawnp is unportable - "
 #if @GNULIB_POSIX_SPAWNATTR_INIT@
 /* Initialize data structure with attributes for `spawn' to default values.  */
 # if @REPLACE_POSIX_SPAWN@
-#  define posix_spawnattr_init rpl_posix_spawnattr_init
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define posix_spawnattr_init rpl_posix_spawnattr_init
+#  endif
+_GL_FUNCDECL_RPL (posix_spawnattr_init, int, (posix_spawnattr_t *__attr)
+                                             __THROW _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (posix_spawnattr_init, int, (posix_spawnattr_t *__attr));
+# else
+#  if !@HAVE_POSIX_SPAWN@
+_GL_FUNCDECL_SYS (posix_spawnattr_init, int, (posix_spawnattr_t *__attr)
+                                             __THROW _GL_ARG_NONNULL ((1)));
+#  endif
+_GL_CXXALIAS_SYS (posix_spawnattr_init, int, (posix_spawnattr_t *__attr));
 # endif
-# if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
-extern int posix_spawnattr_init (posix_spawnattr_t *__attr)
-     __THROW _GL_ARG_NONNULL ((1));
-# endif
+_GL_CXXALIASWARN (posix_spawnattr_init);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawnattr_init
 # if HAVE_RAW_DECL_POSIX_SPAWNATTR_INIT
@@ -225,12 +278,20 @@ _GL_WARN_ON_USE (posix_spawnattr_init, "posix_spawnattr_init is unportable - "
 #if @GNULIB_POSIX_SPAWNATTR_DESTROY@
 /* Free resources associated with ATTR.  */
 # if @REPLACE_POSIX_SPAWN@
-#  define posix_spawnattr_destroy rpl_posix_spawnattr_destroy
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define posix_spawnattr_destroy rpl_posix_spawnattr_destroy
+#  endif
+_GL_FUNCDECL_RPL (posix_spawnattr_destroy, int, (posix_spawnattr_t *__attr)
+                                                __THROW _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (posix_spawnattr_destroy, int, (posix_spawnattr_t *__attr));
+# else
+#  if !@HAVE_POSIX_SPAWN@
+_GL_FUNCDECL_SYS (posix_spawnattr_destroy, int, (posix_spawnattr_t *__attr)
+                                                __THROW _GL_ARG_NONNULL ((1)));
+#  endif
+_GL_CXXALIAS_SYS (posix_spawnattr_destroy, int, (posix_spawnattr_t *__attr));
 # endif
-# if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
-extern int posix_spawnattr_destroy (posix_spawnattr_t *__attr)
-     __THROW _GL_ARG_NONNULL ((1));
-# endif
+_GL_CXXALIASWARN (posix_spawnattr_destroy);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawnattr_destroy
 # if HAVE_RAW_DECL_POSIX_SPAWNATTR_DESTROY
@@ -243,13 +304,28 @@ _GL_WARN_ON_USE (posix_spawnattr_destroy, "posix_spawnattr_destroy is unportable
 /* Store signal mask for signals with default handling from ATTR in
    SIGDEFAULT.  */
 # if @REPLACE_POSIX_SPAWN@
-#  define posix_spawnattr_getsigdefault rpl_posix_spawnattr_getsigdefault
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define posix_spawnattr_getsigdefault rpl_posix_spawnattr_getsigdefault
+#  endif
+_GL_FUNCDECL_RPL (posix_spawnattr_getsigdefault, int,
+                  (const posix_spawnattr_t *_Restrict_ __attr,
+                   sigset_t *_Restrict_ __sigdefault)
+                  __THROW _GL_ARG_NONNULL ((1, 2)));
+_GL_CXXALIAS_RPL (posix_spawnattr_getsigdefault, int,
+                  (const posix_spawnattr_t *_Restrict_ __attr,
+                   sigset_t *_Restrict_ __sigdefault));
+# else
+#  if !@HAVE_POSIX_SPAWN@
+_GL_FUNCDECL_SYS (posix_spawnattr_getsigdefault, int,
+                  (const posix_spawnattr_t *_Restrict_ __attr,
+                   sigset_t *_Restrict_ __sigdefault)
+                  __THROW _GL_ARG_NONNULL ((1, 2)));
+#  endif
+_GL_CXXALIAS_SYS (posix_spawnattr_getsigdefault, int,
+                  (const posix_spawnattr_t *_Restrict_ __attr,
+                   sigset_t *_Restrict_ __sigdefault));
 # endif
-# if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
-extern int posix_spawnattr_getsigdefault (const posix_spawnattr_t *_Restrict_ __attr,
-                                          sigset_t *_Restrict_ __sigdefault)
-     __THROW _GL_ARG_NONNULL ((1, 2));
-# endif
+_GL_CXXALIASWARN (posix_spawnattr_getsigdefault);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawnattr_getsigdefault
 # if HAVE_RAW_DECL_POSIX_SPAWNATTR_GETSIGDEFAULT
@@ -261,13 +337,28 @@ _GL_WARN_ON_USE (posix_spawnattr_getsigdefault, "posix_spawnattr_getsigdefault i
 #if @GNULIB_POSIX_SPAWNATTR_SETSIGDEFAULT@
 /* Set signal mask for signals with default handling in ATTR to SIGDEFAULT.  */
 # if @REPLACE_POSIX_SPAWN@
-#  define posix_spawnattr_setsigdefault rpl_posix_spawnattr_setsigdefault
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define posix_spawnattr_setsigdefault rpl_posix_spawnattr_setsigdefault
+#  endif
+_GL_FUNCDECL_RPL (posix_spawnattr_setsigdefault, int,
+                  (posix_spawnattr_t *_Restrict_ __attr,
+                   const sigset_t *_Restrict_ __sigdefault)
+                  __THROW _GL_ARG_NONNULL ((1, 2)));
+_GL_CXXALIAS_RPL (posix_spawnattr_setsigdefault, int,
+                  (posix_spawnattr_t *_Restrict_ __attr,
+                   const sigset_t *_Restrict_ __sigdefault));
+# else
+#  if !@HAVE_POSIX_SPAWN@
+_GL_FUNCDECL_SYS (posix_spawnattr_setsigdefault, int,
+                  (posix_spawnattr_t *_Restrict_ __attr,
+                   const sigset_t *_Restrict_ __sigdefault)
+                  __THROW _GL_ARG_NONNULL ((1, 2)));
+#  endif
+_GL_CXXALIAS_SYS (posix_spawnattr_setsigdefault, int,
+                  (posix_spawnattr_t *_Restrict_ __attr,
+                   const sigset_t *_Restrict_ __sigdefault));
 # endif
-# if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
-extern int posix_spawnattr_setsigdefault (posix_spawnattr_t *_Restrict_ __attr,
-                                          const sigset_t *_Restrict_ __sigdefault)
-     __THROW _GL_ARG_NONNULL ((1, 2));
-# endif
+_GL_CXXALIASWARN (posix_spawnattr_setsigdefault);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawnattr_setsigdefault
 # if HAVE_RAW_DECL_POSIX_SPAWNATTR_SETSIGDEFAULT
@@ -279,13 +370,28 @@ _GL_WARN_ON_USE (posix_spawnattr_setsigdefault, "posix_spawnattr_setsigdefault i
 #if @GNULIB_POSIX_SPAWNATTR_GETSIGMASK@
 /* Store signal mask for the new process from ATTR in SIGMASK.  */
 # if @REPLACE_POSIX_SPAWN@
-#  define posix_spawnattr_getsigmask rpl_posix_spawnattr_getsigmask
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define posix_spawnattr_getsigmask rpl_posix_spawnattr_getsigmask
+#  endif
+_GL_FUNCDECL_RPL (posix_spawnattr_getsigmask, int,
+                  (const posix_spawnattr_t *_Restrict_ __attr,
+                   sigset_t *_Restrict_ __sigmask)
+                  __THROW _GL_ARG_NONNULL ((1, 2)));
+_GL_CXXALIAS_RPL (posix_spawnattr_getsigmask, int,
+                  (const posix_spawnattr_t *_Restrict_ __attr,
+                   sigset_t *_Restrict_ __sigmask));
+# else
+#  if !@HAVE_POSIX_SPAWN@
+_GL_FUNCDECL_SYS (posix_spawnattr_getsigmask, int,
+                  (const posix_spawnattr_t *_Restrict_ __attr,
+                   sigset_t *_Restrict_ __sigmask)
+                  __THROW _GL_ARG_NONNULL ((1, 2)));
+#  endif
+_GL_CXXALIAS_SYS (posix_spawnattr_getsigmask, int,
+                  (const posix_spawnattr_t *_Restrict_ __attr,
+                   sigset_t *_Restrict_ __sigmask));
 # endif
-# if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
-extern int posix_spawnattr_getsigmask (const posix_spawnattr_t *_Restrict_ __attr,
-                                       sigset_t *_Restrict_ __sigmask)
-     __THROW _GL_ARG_NONNULL ((1, 2));
-# endif
+_GL_CXXALIASWARN (posix_spawnattr_getsigmask);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawnattr_getsigmask
 # if HAVE_RAW_DECL_POSIX_SPAWNATTR_GETSIGMASK
@@ -297,13 +403,28 @@ _GL_WARN_ON_USE (posix_spawnattr_getsigmask, "posix_spawnattr_getsigmask is unpo
 #if @GNULIB_POSIX_SPAWNATTR_SETSIGMASK@
 /* Set signal mask for the new process in ATTR to SIGMASK.  */
 # if @REPLACE_POSIX_SPAWN@
-#  define posix_spawnattr_setsigmask rpl_posix_spawnattr_setsigmask
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define posix_spawnattr_setsigmask rpl_posix_spawnattr_setsigmask
+#  endif
+_GL_FUNCDECL_RPL (posix_spawnattr_setsigmask, int,
+                  (posix_spawnattr_t *_Restrict_ __attr,
+                   const sigset_t *_Restrict_ __sigmask)
+                  __THROW _GL_ARG_NONNULL ((1, 2)));
+_GL_CXXALIAS_RPL (posix_spawnattr_setsigmask, int,
+                  (posix_spawnattr_t *_Restrict_ __attr,
+                   const sigset_t *_Restrict_ __sigmask));
+# else
+#  if !@HAVE_POSIX_SPAWN@
+_GL_FUNCDECL_SYS (posix_spawnattr_setsigmask, int,
+                  (posix_spawnattr_t *_Restrict_ __attr,
+                   const sigset_t *_Restrict_ __sigmask)
+                  __THROW _GL_ARG_NONNULL ((1, 2)));
+#  endif
+_GL_CXXALIAS_SYS (posix_spawnattr_setsigmask, int,
+                  (posix_spawnattr_t *_Restrict_ __attr,
+                   const sigset_t *_Restrict_ __sigmask));
 # endif
-# if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
-extern int posix_spawnattr_setsigmask (posix_spawnattr_t *_Restrict_ __attr,
-                                       const sigset_t *_Restrict_ __sigmask)
-     __THROW _GL_ARG_NONNULL ((1, 2));
-# endif
+_GL_CXXALIASWARN (posix_spawnattr_setsigmask);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawnattr_setsigmask
 # if HAVE_RAW_DECL_POSIX_SPAWNATTR_SETSIGMASK
@@ -315,13 +436,28 @@ _GL_WARN_ON_USE (posix_spawnattr_setsigmask, "posix_spawnattr_setsigmask is unpo
 #if @GNULIB_POSIX_SPAWNATTR_GETFLAGS@
 /* Get flag word from the attribute structure.  */
 # if @REPLACE_POSIX_SPAWN@
-#  define posix_spawnattr_getflags rpl_posix_spawnattr_getflags
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define posix_spawnattr_getflags rpl_posix_spawnattr_getflags
+#  endif
+_GL_FUNCDECL_RPL (posix_spawnattr_getflags, int,
+                  (const posix_spawnattr_t *_Restrict_ __attr,
+                   short int *_Restrict_ __flags)
+                  __THROW _GL_ARG_NONNULL ((1, 2)));
+_GL_CXXALIAS_RPL (posix_spawnattr_getflags, int,
+                  (const posix_spawnattr_t *_Restrict_ __attr,
+                   short int *_Restrict_ __flags));
+# else
+#  if !@HAVE_POSIX_SPAWN@
+_GL_FUNCDECL_SYS (posix_spawnattr_getflags, int,
+                  (const posix_spawnattr_t *_Restrict_ __attr,
+                   short int *_Restrict_ __flags)
+                  __THROW _GL_ARG_NONNULL ((1, 2)));
+#  endif
+_GL_CXXALIAS_SYS (posix_spawnattr_getflags, int,
+                  (const posix_spawnattr_t *_Restrict_ __attr,
+                   short int *_Restrict_ __flags));
 # endif
-# if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
-extern int posix_spawnattr_getflags (const posix_spawnattr_t *_Restrict_ __attr,
-                                     short int *_Restrict_ __flags)
-     __THROW _GL_ARG_NONNULL ((1, 2));
-# endif
+_GL_CXXALIASWARN (posix_spawnattr_getflags);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawnattr_getflags
 # if HAVE_RAW_DECL_POSIX_SPAWNATTR_GETFLAGS
@@ -333,13 +469,24 @@ _GL_WARN_ON_USE (posix_spawnattr_getflags, "posix_spawnattr_getflags is unportab
 #if @GNULIB_POSIX_SPAWNATTR_SETFLAGS@
 /* Store flags in the attribute structure.  */
 # if @REPLACE_POSIX_SPAWN@
-#  define posix_spawnattr_setflags rpl_posix_spawnattr_setflags
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define posix_spawnattr_setflags rpl_posix_spawnattr_setflags
+#  endif
+_GL_FUNCDECL_RPL (posix_spawnattr_setflags, int,
+                  (posix_spawnattr_t *__attr, short int __flags)
+                  __THROW _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (posix_spawnattr_setflags, int,
+                  (posix_spawnattr_t *__attr, short int __flags));
+# else
+#  if !@HAVE_POSIX_SPAWN@
+_GL_FUNCDECL_SYS (posix_spawnattr_setflags, int,
+                  (posix_spawnattr_t *__attr, short int __flags)
+                  __THROW _GL_ARG_NONNULL ((1)));
+#  endif
+_GL_CXXALIAS_SYS (posix_spawnattr_setflags, int,
+                  (posix_spawnattr_t *__attr, short int __flags));
 # endif
-# if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
-extern int posix_spawnattr_setflags (posix_spawnattr_t *__attr,
-                                     short int __flags)
-     __THROW _GL_ARG_NONNULL ((1));
-# endif
+_GL_CXXALIASWARN (posix_spawnattr_setflags);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawnattr_setflags
 # if HAVE_RAW_DECL_POSIX_SPAWNATTR_SETFLAGS
@@ -351,13 +498,28 @@ _GL_WARN_ON_USE (posix_spawnattr_setflags, "posix_spawnattr_setflags is unportab
 #if @GNULIB_POSIX_SPAWNATTR_GETPGROUP@
 /* Get process group ID from the attribute structure.  */
 # if @REPLACE_POSIX_SPAWN@
-#  define posix_spawnattr_getpgroup rpl_posix_spawnattr_getpgroup
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define posix_spawnattr_getpgroup rpl_posix_spawnattr_getpgroup
+#  endif
+_GL_FUNCDECL_RPL (posix_spawnattr_getpgroup, int,
+                  (const posix_spawnattr_t *_Restrict_ __attr,
+                   pid_t *_Restrict_ __pgroup)
+                  __THROW _GL_ARG_NONNULL ((1, 2)));
+_GL_CXXALIAS_RPL (posix_spawnattr_getpgroup, int,
+                  (const posix_spawnattr_t *_Restrict_ __attr,
+                   pid_t *_Restrict_ __pgroup));
+# else
+#  if !@HAVE_POSIX_SPAWN@
+_GL_FUNCDECL_SYS (posix_spawnattr_getpgroup, int,
+                  (const posix_spawnattr_t *_Restrict_ __attr,
+                   pid_t *_Restrict_ __pgroup)
+                  __THROW _GL_ARG_NONNULL ((1, 2)));
+#  endif
+_GL_CXXALIAS_SYS (posix_spawnattr_getpgroup, int,
+                  (const posix_spawnattr_t *_Restrict_ __attr,
+                   pid_t *_Restrict_ __pgroup));
 # endif
-# if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
-extern int posix_spawnattr_getpgroup (const posix_spawnattr_t *_Restrict_ __attr,
-                                      pid_t *_Restrict_ __pgroup)
-     __THROW _GL_ARG_NONNULL ((1, 2));
-# endif
+_GL_CXXALIASWARN (posix_spawnattr_getpgroup);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawnattr_getpgroup
 # if HAVE_RAW_DECL_POSIX_SPAWNATTR_GETPGROUP
@@ -369,13 +531,24 @@ _GL_WARN_ON_USE (posix_spawnattr_getpgroup, "posix_spawnattr_getpgroup is unport
 #if @GNULIB_POSIX_SPAWNATTR_SETPGROUP@
 /* Store process group ID in the attribute structure.  */
 # if @REPLACE_POSIX_SPAWN@
-#  define posix_spawnattr_setpgroup rpl_posix_spawnattr_setpgroup
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define posix_spawnattr_setpgroup rpl_posix_spawnattr_setpgroup
+#  endif
+_GL_FUNCDECL_RPL (posix_spawnattr_setpgroup, int,
+                  (posix_spawnattr_t *__attr, pid_t __pgroup)
+                  __THROW _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (posix_spawnattr_setpgroup, int,
+                  (posix_spawnattr_t *__attr, pid_t __pgroup));
+# else
+#  if !@HAVE_POSIX_SPAWN@
+_GL_FUNCDECL_SYS (posix_spawnattr_setpgroup, int,
+                  (posix_spawnattr_t *__attr, pid_t __pgroup)
+                  __THROW _GL_ARG_NONNULL ((1)));
+#  endif
+_GL_CXXALIAS_SYS (posix_spawnattr_setpgroup, int,
+                  (posix_spawnattr_t *__attr, pid_t __pgroup));
 # endif
-# if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
-extern int posix_spawnattr_setpgroup (posix_spawnattr_t *__attr,
-                                      pid_t __pgroup)
-     __THROW _GL_ARG_NONNULL ((1));
-# endif
+_GL_CXXALIASWARN (posix_spawnattr_setpgroup);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawnattr_setpgroup
 # if HAVE_RAW_DECL_POSIX_SPAWNATTR_SETPGROUP
@@ -387,13 +560,28 @@ _GL_WARN_ON_USE (posix_spawnattr_setpgroup, "posix_spawnattr_setpgroup is unport
 #if @GNULIB_POSIX_SPAWNATTR_GETSCHEDPOLICY@
 /* Get scheduling policy from the attribute structure.  */
 # if @REPLACE_POSIX_SPAWN@
-#  define posix_spawnattr_getschedpolicy rpl_posix_spawnattr_getschedpolicy
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define posix_spawnattr_getschedpolicy rpl_posix_spawnattr_getschedpolicy
+#  endif
+_GL_FUNCDECL_RPL (posix_spawnattr_getschedpolicy, int,
+                  (const posix_spawnattr_t *_Restrict_ __attr,
+                   int *_Restrict_ __schedpolicy)
+                  __THROW _GL_ARG_NONNULL ((1, 2)));
+_GL_CXXALIAS_RPL (posix_spawnattr_getschedpolicy, int,
+                  (const posix_spawnattr_t *_Restrict_ __attr,
+                   int *_Restrict_ __schedpolicy));
+# else
+#  if !@HAVE_POSIX_SPAWN@ || POSIX_SPAWN_SETSCHEDULER == 0
+_GL_FUNCDECL_SYS (posix_spawnattr_getschedpolicy, int,
+                  (const posix_spawnattr_t *_Restrict_ __attr,
+                   int *_Restrict_ __schedpolicy)
+                  __THROW _GL_ARG_NONNULL ((1, 2)));
+#  endif
+_GL_CXXALIAS_SYS (posix_spawnattr_getschedpolicy, int,
+                  (const posix_spawnattr_t *_Restrict_ __attr,
+                   int *_Restrict_ __schedpolicy));
 # endif
-# if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@ || POSIX_SPAWN_SETSCHEDULER == 0
-extern int posix_spawnattr_getschedpolicy (const posix_spawnattr_t *_Restrict_ __attr,
-                                           int *_Restrict_ __schedpolicy)
-     __THROW _GL_ARG_NONNULL ((1, 2));
-# endif
+_GL_CXXALIASWARN (posix_spawnattr_getschedpolicy);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawnattr_getschedpolicy
 # if HAVE_RAW_DECL_POSIX_SPAWNATTR_GETSCHEDPOLICY
@@ -405,13 +593,24 @@ _GL_WARN_ON_USE (posix_spawnattr_getschedpolicy, "posix_spawnattr_getschedpolicy
 #if @GNULIB_POSIX_SPAWNATTR_SETSCHEDPOLICY@
 /* Store scheduling policy in the attribute structure.  */
 # if @REPLACE_POSIX_SPAWN@
-#  define posix_spawnattr_setschedpolicy rpl_posix_spawnattr_setschedpolicy
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define posix_spawnattr_setschedpolicy rpl_posix_spawnattr_setschedpolicy
+#  endif
+_GL_FUNCDECL_RPL (posix_spawnattr_setschedpolicy, int,
+                  (posix_spawnattr_t *__attr, int __schedpolicy)
+                  __THROW _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (posix_spawnattr_setschedpolicy, int,
+                  (posix_spawnattr_t *__attr, int __schedpolicy));
+# else
+#  if !@HAVE_POSIX_SPAWN@ || POSIX_SPAWN_SETSCHEDULER == 0
+_GL_FUNCDECL_SYS (posix_spawnattr_setschedpolicy, int,
+                  (posix_spawnattr_t *__attr, int __schedpolicy)
+                  __THROW _GL_ARG_NONNULL ((1)));
+#  endif
+_GL_CXXALIAS_SYS (posix_spawnattr_setschedpolicy, int,
+                  (posix_spawnattr_t *__attr, int __schedpolicy));
 # endif
-# if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@ || POSIX_SPAWN_SETSCHEDULER == 0
-extern int posix_spawnattr_setschedpolicy (posix_spawnattr_t *__attr,
-                                           int __schedpolicy)
-     __THROW _GL_ARG_NONNULL ((1));
-# endif
+_GL_CXXALIASWARN (posix_spawnattr_setschedpolicy);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawnattr_setschedpolicy
 # if HAVE_RAW_DECL_POSIX_SPAWNATTR_SETSCHEDPOLICY
@@ -423,13 +622,28 @@ _GL_WARN_ON_USE (posix_spawnattr_setschedpolicy, "posix_spawnattr_setschedpolicy
 #if @GNULIB_POSIX_SPAWNATTR_GETSCHEDPARAM@
 /* Get scheduling parameters from the attribute structure.  */
 # if @REPLACE_POSIX_SPAWN@
-#  define posix_spawnattr_getschedparam rpl_posix_spawnattr_getschedparam
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define posix_spawnattr_getschedparam rpl_posix_spawnattr_getschedparam
+#  endif
+_GL_FUNCDECL_RPL (posix_spawnattr_getschedparam, int,
+                  (const posix_spawnattr_t *_Restrict_ __attr,
+                   struct sched_param *_Restrict_ __schedparam)
+                  __THROW _GL_ARG_NONNULL ((1, 2)));
+_GL_CXXALIAS_RPL (posix_spawnattr_getschedparam, int,
+                  (const posix_spawnattr_t *_Restrict_ __attr,
+                   struct sched_param *_Restrict_ __schedparam));
+# else
+#  if !@HAVE_POSIX_SPAWN@ || POSIX_SPAWN_SETSCHEDPARAM == 0
+_GL_FUNCDECL_SYS (posix_spawnattr_getschedparam, int,
+                  (const posix_spawnattr_t *_Restrict_ __attr,
+                   struct sched_param *_Restrict_ __schedparam)
+                  __THROW _GL_ARG_NONNULL ((1, 2)));
+#  endif
+_GL_CXXALIAS_SYS (posix_spawnattr_getschedparam, int,
+                  (const posix_spawnattr_t *_Restrict_ __attr,
+                   struct sched_param *_Restrict_ __schedparam));
 # endif
-# if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@ || POSIX_SPAWN_SETSCHEDPARAM == 0
-extern int posix_spawnattr_getschedparam (const posix_spawnattr_t *_Restrict_ __attr,
-                                          struct sched_param *_Restrict_ __schedparam)
-     __THROW _GL_ARG_NONNULL ((1, 2));
-# endif
+_GL_CXXALIASWARN (posix_spawnattr_getschedparam);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawnattr_getschedparam
 # if HAVE_RAW_DECL_POSIX_SPAWNATTR_GETSCHEDPARAM
@@ -441,13 +655,28 @@ _GL_WARN_ON_USE (posix_spawnattr_getschedparam, "posix_spawnattr_getschedparam i
 #if @GNULIB_POSIX_SPAWNATTR_SETSCHEDPARAM@
 /* Store scheduling parameters in the attribute structure.  */
 # if @REPLACE_POSIX_SPAWN@
-#  define posix_spawnattr_setschedparam rpl_posix_spawnattr_setschedparam
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define posix_spawnattr_setschedparam rpl_posix_spawnattr_setschedparam
+#  endif
+_GL_FUNCDECL_RPL (posix_spawnattr_setschedparam, int,
+                  (posix_spawnattr_t *_Restrict_ __attr,
+                   const struct sched_param *_Restrict_ __schedparam)
+                  __THROW _GL_ARG_NONNULL ((1, 2)));
+_GL_CXXALIAS_RPL (posix_spawnattr_setschedparam, int,
+                  (posix_spawnattr_t *_Restrict_ __attr,
+                   const struct sched_param *_Restrict_ __schedparam));
+# else
+#  if !@HAVE_POSIX_SPAWN@ || POSIX_SPAWN_SETSCHEDPARAM == 0
+_GL_FUNCDECL_SYS (posix_spawnattr_setschedparam, int,
+                  (posix_spawnattr_t *_Restrict_ __attr,
+                   const struct sched_param *_Restrict_ __schedparam)
+                  __THROW _GL_ARG_NONNULL ((1, 2)));
+#  endif
+_GL_CXXALIAS_SYS (posix_spawnattr_setschedparam, int,
+                  (posix_spawnattr_t *_Restrict_ __attr,
+                   const struct sched_param *_Restrict_ __schedparam));
 # endif
-# if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@ || POSIX_SPAWN_SETSCHEDPARAM == 0
-extern int posix_spawnattr_setschedparam (posix_spawnattr_t *_Restrict_ __attr,
-                                          const struct sched_param *_Restrict_ __schedparam)
-     __THROW _GL_ARG_NONNULL ((1, 2));
-# endif
+_GL_CXXALIASWARN (posix_spawnattr_setschedparam);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawnattr_setschedparam
 # if HAVE_RAW_DECL_POSIX_SPAWNATTR_SETSCHEDPARAM
@@ -460,12 +689,24 @@ _GL_WARN_ON_USE (posix_spawnattr_setschedparam, "posix_spawnattr_setschedparam i
 #if @GNULIB_POSIX_SPAWN_FILE_ACTIONS_INIT@
 /* Initialize data structure for file attribute for `spawn' call.  */
 # if @REPLACE_POSIX_SPAWN@
-#  define posix_spawn_file_actions_init rpl_posix_spawn_file_actions_init
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define posix_spawn_file_actions_init rpl_posix_spawn_file_actions_init
+#  endif
+_GL_FUNCDECL_RPL (posix_spawn_file_actions_init, int,
+                  (posix_spawn_file_actions_t *__file_actions)
+                  __THROW _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (posix_spawn_file_actions_init, int,
+                  (posix_spawn_file_actions_t *__file_actions));
+# else
+#  if !@HAVE_POSIX_SPAWN@
+_GL_FUNCDECL_SYS (posix_spawn_file_actions_init, int,
+                  (posix_spawn_file_actions_t *__file_actions)
+                  __THROW _GL_ARG_NONNULL ((1)));
+#  endif
+_GL_CXXALIAS_SYS (posix_spawn_file_actions_init, int,
+                  (posix_spawn_file_actions_t *__file_actions));
 # endif
-# if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
-extern int posix_spawn_file_actions_init (posix_spawn_file_actions_t *__file_actions)
-     __THROW _GL_ARG_NONNULL ((1));
-# endif
+_GL_CXXALIASWARN (posix_spawn_file_actions_init);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawn_file_actions_init
 # if HAVE_RAW_DECL_POSIX_SPAWN_FILE_ACTIONS_INIT
@@ -477,12 +718,24 @@ _GL_WARN_ON_USE (posix_spawn_file_actions_init, "posix_spawn_file_actions_init i
 #if @GNULIB_POSIX_SPAWN_FILE_ACTIONS_DESTROY@
 /* Free resources associated with FILE-ACTIONS.  */
 # if @REPLACE_POSIX_SPAWN@
-#  define posix_spawn_file_actions_destroy rpl_posix_spawn_file_actions_destroy
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define posix_spawn_file_actions_destroy rpl_posix_spawn_file_actions_destroy
+#  endif
+_GL_FUNCDECL_RPL (posix_spawn_file_actions_destroy, int,
+                  (posix_spawn_file_actions_t *__file_actions)
+                  __THROW _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (posix_spawn_file_actions_destroy, int,
+                  (posix_spawn_file_actions_t *__file_actions));
+# else
+#  if !@HAVE_POSIX_SPAWN@
+_GL_FUNCDECL_SYS (posix_spawn_file_actions_destroy, int,
+                  (posix_spawn_file_actions_t *__file_actions)
+                  __THROW _GL_ARG_NONNULL ((1)));
+#  endif
+_GL_CXXALIAS_SYS (posix_spawn_file_actions_destroy, int,
+                  (posix_spawn_file_actions_t *__file_actions));
 # endif
-# if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
-extern int posix_spawn_file_actions_destroy (posix_spawn_file_actions_t *__file_actions)
-     __THROW _GL_ARG_NONNULL ((1));
-# endif
+_GL_CXXALIASWARN (posix_spawn_file_actions_destroy);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawn_file_actions_destroy
 # if HAVE_RAW_DECL_POSIX_SPAWN_FILE_ACTIONS_DESTROY
@@ -495,15 +748,32 @@ _GL_WARN_ON_USE (posix_spawn_file_actions_destroy, "posix_spawn_file_actions_des
 /* Add an action to FILE-ACTIONS which tells the implementation to call
    `open' for the given file during the `spawn' call.  */
 # if @REPLACE_POSIX_SPAWN@
-#  define posix_spawn_file_actions_addopen rpl_posix_spawn_file_actions_addopen
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define posix_spawn_file_actions_addopen rpl_posix_spawn_file_actions_addopen
+#  endif
+_GL_FUNCDECL_RPL (posix_spawn_file_actions_addopen, int,
+                  (posix_spawn_file_actions_t *_Restrict_ __file_actions,
+                   int __fd,
+                   const char *_Restrict_ __path, int __oflag, mode_t __mode)
+                  __THROW _GL_ARG_NONNULL ((1, 3)));
+_GL_CXXALIAS_RPL (posix_spawn_file_actions_addopen, int,
+                  (posix_spawn_file_actions_t *_Restrict_ __file_actions,
+                   int __fd,
+                   const char *_Restrict_ __path, int __oflag, mode_t __mode));
+# else
+#  if !@HAVE_POSIX_SPAWN@
+_GL_FUNCDECL_SYS (posix_spawn_file_actions_addopen, int,
+                  (posix_spawn_file_actions_t *_Restrict_ __file_actions,
+                   int __fd,
+                   const char *_Restrict_ __path, int __oflag, mode_t __mode)
+                  __THROW _GL_ARG_NONNULL ((1, 3)));
+#  endif
+_GL_CXXALIAS_SYS (posix_spawn_file_actions_addopen, int,
+                  (posix_spawn_file_actions_t *_Restrict_ __file_actions,
+                   int __fd,
+                   const char *_Restrict_ __path, int __oflag, mode_t __mode));
 # endif
-# if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
-extern int posix_spawn_file_actions_addopen (posix_spawn_file_actions_t *_Restrict_ __file_actions,
-                                             int __fd,
-                                             const char *_Restrict_ __path,
-                                             int __oflag, mode_t __mode)
-     __THROW _GL_ARG_NONNULL ((1, 3));
-# endif
+_GL_CXXALIASWARN (posix_spawn_file_actions_addopen);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawn_file_actions_addopen
 # if HAVE_RAW_DECL_POSIX_SPAWN_FILE_ACTIONS_ADDOPEN
@@ -516,13 +786,24 @@ _GL_WARN_ON_USE (posix_spawn_file_actions_addopen, "posix_spawn_file_actions_add
 /* Add an action to FILE-ACTIONS which tells the implementation to call
    `close' for the given file descriptor during the `spawn' call.  */
 # if @REPLACE_POSIX_SPAWN@
-#  define posix_spawn_file_actions_addclose rpl_posix_spawn_file_actions_addclose
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define posix_spawn_file_actions_addclose rpl_posix_spawn_file_actions_addclose
+#  endif
+_GL_FUNCDECL_RPL (posix_spawn_file_actions_addclose, int,
+                  (posix_spawn_file_actions_t *__file_actions, int __fd)
+                  __THROW _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (posix_spawn_file_actions_addclose, int,
+                  (posix_spawn_file_actions_t *__file_actions, int __fd));
+# else
+#  if !@HAVE_POSIX_SPAWN@
+_GL_FUNCDECL_SYS (posix_spawn_file_actions_addclose, int,
+                  (posix_spawn_file_actions_t *__file_actions, int __fd)
+                  __THROW _GL_ARG_NONNULL ((1)));
+#  endif
+_GL_CXXALIAS_SYS (posix_spawn_file_actions_addclose, int,
+                  (posix_spawn_file_actions_t *__file_actions, int __fd));
 # endif
-# if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
-extern int posix_spawn_file_actions_addclose (posix_spawn_file_actions_t *__file_actions,
-                                              int __fd)
-     __THROW _GL_ARG_NONNULL ((1));
-# endif
+_GL_CXXALIASWARN (posix_spawn_file_actions_addclose);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawn_file_actions_addclose
 # if HAVE_RAW_DECL_POSIX_SPAWN_FILE_ACTIONS_ADDCLOSE
@@ -535,24 +816,34 @@ _GL_WARN_ON_USE (posix_spawn_file_actions_addclose, "posix_spawn_file_actions_ad
 /* Add an action to FILE-ACTIONS which tells the implementation to call
    `dup2' for the given file descriptors during the `spawn' call.  */
 # if @REPLACE_POSIX_SPAWN@
-#  define posix_spawn_file_actions_adddup2 rpl_posix_spawn_file_actions_adddup2
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define posix_spawn_file_actions_adddup2 rpl_posix_spawn_file_actions_adddup2
+#  endif
+_GL_FUNCDECL_RPL (posix_spawn_file_actions_adddup2, int,
+                  (posix_spawn_file_actions_t *__file_actions,
+                   int __fd, int __newfd)
+                  __THROW _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (posix_spawn_file_actions_adddup2, int,
+                  (posix_spawn_file_actions_t *__file_actions,
+                   int __fd, int __newfd));
+# else
+#  if !@HAVE_POSIX_SPAWN@
+_GL_FUNCDECL_SYS (posix_spawn_file_actions_adddup2, int,
+                  (posix_spawn_file_actions_t *__file_actions,
+                   int __fd, int __newfd)
+                  __THROW _GL_ARG_NONNULL ((1)));
+#  endif
+_GL_CXXALIAS_SYS (posix_spawn_file_actions_adddup2, int,
+                  (posix_spawn_file_actions_t *__file_actions,
+                   int __fd, int __newfd));
 # endif
-# if !@HAVE_POSIX_SPAWN@ || @REPLACE_POSIX_SPAWN@
-extern int posix_spawn_file_actions_adddup2 (posix_spawn_file_actions_t *__file_actions,
-                                             int __fd, int __newfd)
-     __THROW _GL_ARG_NONNULL ((1));
-# endif
+_GL_CXXALIASWARN (posix_spawn_file_actions_adddup2);
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawn_file_actions_adddup2
 # if HAVE_RAW_DECL_POSIX_SPAWN_FILE_ACTIONS_ADDDUP2
 _GL_WARN_ON_USE (posix_spawn_file_actions_adddup2, "posix_spawn_file_actions_adddup2 is unportable - "
                  "use gnulib module posix_spawn_file_actions_adddup2 for portability");
 # endif
-#endif
-
-
-#ifdef __cplusplus
-}
 #endif
 
 
