@@ -1,10 +1,18 @@
 Files:
 tests/test-langinfo.c
+tests/test-langinfo-c++.cc
+tests/signature.h
 
 Depends-on:
+ansi-c++-opt
 
 configure.ac:
 
 Makefile.am:
 TESTS += test-langinfo
 check_PROGRAMS += test-langinfo
+if ANSICXX
+TESTS += test-langinfo-c++
+check_PROGRAMS += test-langinfo-c++
+test_langinfo_c___SOURCES = test-langinfo-c++.cc
+endif
