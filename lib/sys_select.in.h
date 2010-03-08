@@ -64,39 +64,41 @@
 #define _GL_SYS_SELECT_H
 
 #if !@HAVE_SYS_SELECT_H@ || @REPLACE_SELECT@
-
 /* A platform that lacks <sys/select.h>.  */
-
 # include <sys/socket.h>
+#endif
+
+/* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
 /* The definition of _GL_WARN_ON_USE is copied here.  */
 
-# ifdef __cplusplus
-extern "C" {
-# endif
 
-# if @GNULIB_SELECT@
-#  if @HAVE_WINSOCK2_H@ || @REPLACE_SELECT@
+#if @GNULIB_SELECT@
+# if @HAVE_WINSOCK2_H@ || @REPLACE_SELECT@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef select
 #   define select rpl_select
-extern int rpl_select (int, fd_set *, fd_set *, fd_set *, struct timeval *);
 #  endif
-# elif @HAVE_WINSOCK2_H@
-#  undef select
-#  define select select_used_without_requesting_gnulib_module_select
-# elif defined GNULIB_POSIXCHECK
-#  undef select
-#  if HAVE_RAW_DECL_SELECT
+_GL_FUNCDECL_RPL (select, int,
+                  (int, fd_set *, fd_set *, fd_set *, struct timeval *));
+_GL_CXXALIAS_RPL (select, int,
+                  (int, fd_set *, fd_set *, fd_set *, struct timeval *));
+# else
+_GL_CXXALIAS_SYS (select, int,
+                  (int, fd_set *, fd_set *, fd_set *, struct timeval *));
+# endif
+_GL_CXXALIASWARN (select);
+#elif @HAVE_WINSOCK2_H@
+# undef select
+# define select select_used_without_requesting_gnulib_module_select
+#elif defined GNULIB_POSIXCHECK
+# undef select
+# if HAVE_RAW_DECL_SELECT
 _GL_WARN_ON_USE (select, "select is not always POSIX compliant - "
                  "use gnulib module select for portability");
-#  endif
 # endif
-
-# ifdef __cplusplus
-}
-# endif
-
 #endif
+
 
 #endif /* _GL_SYS_SELECT_H */
 #endif /* _GL_SYS_SELECT_H */
