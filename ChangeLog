@@ -1,3 +1,8 @@
+2010-03-08  Karl Berry  <karl@gnu.org>
+
+	* doc/gnulib-tool.texi (VCS Issues): Mention third option
+	of committing gnulib files while skipping others.
+
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
 	Tests of module 'wctype' in C++ mode.
