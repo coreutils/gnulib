@@ -1,5 +1,11 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	langinfo: Avoid #define replacements in C++ mode.
+	* lib/langinfo.in.h: Include c++defs.h.
+	(nl_langinfo): In C++, define a namespaced alias symbol.
+	* modules/langinfo (Depends-on): Add c++defs.
+	(Makefile.am): Update langinfo.h rule.
+
 	iconv-h: Avoid #define replacements in C++ mode.
 	* lib/iconv.in.h: Include c++defs.h, warn-on-use.h.
 	(iconv_open, iconv, iconv_close): In C++, define a namespaced alias

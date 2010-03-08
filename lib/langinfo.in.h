@@ -123,13 +123,11 @@ typedef int nl_item;
 
 #endif
 
+/* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
+
 /* The definition of _GL_WARN_ON_USE is copied here.  */
 
 /* Declare overridden functions.  */
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 
 /* Return a piece of locale dependent information.
@@ -138,23 +136,25 @@ extern "C" {
 
 #if @GNULIB_NL_LANGINFO@
 # if @REPLACE_NL_LANGINFO@
-#  undef nl_langinfo
-#  define nl_langinfo rpl_nl_langinfo
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef nl_langinfo
+#   define nl_langinfo rpl_nl_langinfo
+#  endif
+_GL_FUNCDECL_RPL (nl_langinfo, char *, (nl_item item));
+_GL_CXXALIAS_RPL (nl_langinfo, char *, (nl_item item));
+# else
+#  if !@HAVE_NL_LANGINFO@
+_GL_FUNCDECL_SYS (nl_langinfo, char *, (nl_item item));
+#  endif
+_GL_CXXALIAS_SYS (nl_langinfo, char *, (nl_item item));
 # endif
-# if !@HAVE_NL_LANGINFO@ || @REPLACE_NL_LANGINFO@
-extern char *nl_langinfo (nl_item item);
-# endif
+_GL_CXXALIASWARN (nl_langinfo);
 #elif defined GNULIB_POSIXCHECK
 # undef nl_langinfo
 # if HAVE_RAW_DECL_NL_LANGINFO
 _GL_WARN_ON_USE (nl_langinfo, "nl_langinfo is not portable - "
                  "use gnulib module nl_langinfo for portability");
 # endif
-#endif
-
-
-#ifdef __cplusplus
-}
 #endif
 
 
