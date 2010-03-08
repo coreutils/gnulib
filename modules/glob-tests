@@ -1,8 +1,20 @@
 Files:
 tests/test-glob.c
+tests/test-glob-c++.cc
 tests/signature.h
 tests/macros.h
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
 
 Makefile.am:
 TESTS += test-glob
 check_PROGRAMS += test-glob
+if ANSICXX
+TESTS += test-glob-c++
+check_PROGRAMS += test-glob-c++
+test_glob_c___SOURCES = test-glob-c++.cc
+test_glob_c___LDADD = $(LDADD) $(LIBINTL) $(LIB_CLOCK_GETTIME)
+endif

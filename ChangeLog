@@ -1,5 +1,11 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	Tests of module 'glob' in C++ mode.
+	* tests/test-glob-c++.cc: New file.
+	* modules/glob-tests (Files): Add it.
+	(Depends-on): Add ansi-c++-opt.
+	(Makefile.am): Arrange to compile and run test-glob-c++.
+
 	Tests of module 'fcntl-h' in C++ mode.
 	* tests/test-fcntl-h-c++.cc: New file.
 	* modules/fcntl-h-tests (Files): Add it and tests/signature.h.
