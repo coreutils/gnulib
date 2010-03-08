@@ -1,8 +1,11 @@
 Files:
 tests/test-locale.c
+tests/test-locale-c++.cc
+tests/signature.h
 
 Depends-on:
 verify
+ansi-c++-opt
 
 configure.ac:
 AC_CHECK_FUNCS_ONCE([newlocale])
@@ -10,3 +13,8 @@ AC_CHECK_FUNCS_ONCE([newlocale])
 Makefile.am:
 TESTS += test-locale
 check_PROGRAMS += test-locale
+if ANSICXX
+TESTS += test-locale-c++
+check_PROGRAMS += test-locale-c++
+test_locale_c___SOURCES = test-locale-c++.cc
+endif
