@@ -1,5 +1,13 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	locale: Avoid #define replacements in C++ mode.
+	* lib/locale.in.h: Include c++defs.h.
+	(duplocale): In C++, define a namespaced alias symbol.
+	* m4/locale_h.m4 (gl_LOCALE_H_DEFAULTS): Initialize HAVE_DUPLOCALE.
+	* m4/duplocale.m4 (gl_FUNC_DUPLOCALE): Set HAVE_DUPLOCALE.
+	* modules/locale (Depends-on): Add c++defs.
+	(Makefile.am): Update locale.h rule. Substitute HAVE_DUPLOCALE.
+
 	langinfo: Avoid #define replacements in C++ mode.
 	* lib/langinfo.in.h: Include c++defs.h.
 	(nl_langinfo): In C++, define a namespaced alias symbol.

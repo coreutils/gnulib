@@ -34,6 +34,8 @@
 # include <xlocale.h>
 #endif
 
+/* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
+
 /* The definition of _GL_ARG_NONNULL is copied here.  */
 
 /* The definition of _GL_WARN_ON_USE is copied here.  */
@@ -46,10 +48,18 @@
 
 #if @GNULIB_DUPLOCALE@
 # if @REPLACE_DUPLOCALE@
-#  undef duplocale
-#  define duplocale rpl_duplocale
-extern locale_t duplocale (locale_t locale) _GL_ARG_NONNULL ((1));
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef duplocale
+#   define duplocale rpl_duplocale
+#  endif
+_GL_FUNCDECL_RPL (duplocale, locale_t, (locale_t locale) _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (duplocale, locale_t, (locale_t locale));
+# else
+#  if @HAVE_DUPLOCALE@
+_GL_CXXALIAS_SYS (duplocale, locale_t, (locale_t locale));
+#  endif
 # endif
+_GL_CXXALIASWARN (duplocale);
 #elif defined GNULIB_POSIXCHECK
 # undef duplocale
 # if HAVE_RAW_DECL_DUPLOCALE
