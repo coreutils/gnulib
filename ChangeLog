@@ -1,5 +1,13 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	Tests of module 'dirent' in C++ mode.
+	* tests/test-dirent-c++.cc: New file.
+	* modules/dirent-tests (Files): Add it and tests/signature.h.
+	(Depends-on): Add ansi-c++-opt.
+	(Makefile.am): Arrange to compile and run test-dirent-c++.
+	* m4/dirent_h.m4 (gl_DIRENT_MODULE_INDICATOR): Invoke
+	gl_MODULE_INDICATOR.
+
 	New module 'ansi-c++-opt'.
 	* modules/ansi-c++-opt: New file.
 	* m4/ansi-c++.m4: New file, from GNU gettext with modifications.

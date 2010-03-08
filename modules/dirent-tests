@@ -1,10 +1,19 @@
 Files:
 tests/test-dirent.c
+tests/test-dirent-c++.cc
+tests/signature.h
 
 Depends-on:
+ansi-c++-opt
 
 configure.ac:
 
 Makefile.am:
 TESTS += test-dirent
 check_PROGRAMS += test-dirent
+if ANSICXX
+TESTS += test-dirent-c++
+check_PROGRAMS += test-dirent-c++
+test_dirent_c___SOURCES = test-dirent-c++.cc
+test_dirent_c___LDADD = $(LDADD) $(LIBINTL)
+endif
