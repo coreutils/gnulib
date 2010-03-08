@@ -1,5 +1,14 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	wchar: Avoid #define replacements in C++ mode.
+	* lib/wchar.in.h: Include c++defs.h.
+	(btowc, wctob, mbsinit, mbrtowc, mbrlen, mbsrtowcs, mbsnrtowcs,
+	wcrtomb, wcsrtombs, wcsnrtombs): In C++, define a namespaced alias
+	symbol.
+	(wcwidth): Likewise. Fix prototype to be POSIX compliant.
+	* modules/wchar (Depends-on): Add c++defs.
+	(Makefile.am): Update wchar.h rule.
+
 	unistd: Avoid #define replacements in C++ mode.
 	* lib/unistd.in.h: Include c++defs.h.
 	(chown, close, dup, dup2, dup3, euidaccess, faccessat, fchdir,
