@@ -1,5 +1,15 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	sys_socket: Avoid #define replacements in C++ mode.
+	* lib/sys_socket.in.h: Handle the case of recursive include on Cygwin.
+	Include c++defs.h. Include warn-on-use.h earlier. Enable the function
+	definitions also when the system has a <sys/socket.h>.
+	(socket, connect, accept, bind, getpeername, getsockname, getsockopt,
+	listen, recv, send, recvfrom, sendto, setsockopt, shutdown, accept4):
+	In C++, define a namespaced alias symbol.
+	* modules/sys_socket (Depends-on): Add c++defs.
+	(Makefile.am): Update sys/socket.h rule.
+
 	sys_select: Avoid #define replacements in C++ mode.
 	* lib/sys_select.in.h: Include c++defs.h. Enable the function
 	definitions also when the system has a <sys/select.h>.

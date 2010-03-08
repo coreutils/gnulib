@@ -9,6 +9,7 @@ m4/sockpfaf.m4
 Depends-on:
 alignof
 arg-nonnull
+c++defs
 errno
 include_next
 warn-on-use
@@ -22,7 +23,7 @@ BUILT_SOURCES += sys/socket.h
 
 # We need the following in order to create <sys/socket.h> when the system
 # doesn't have one that works with the given compiler.
-sys/socket.h: sys_socket.in.h $(WARN_ON_USE_H) $(ARG_NONNULL_H)
+sys/socket.h: sys_socket.in.h $(CXXDEFS_H) $(WARN_ON_USE_H) $(ARG_NONNULL_H)
 	$(AM_V_at)$(MKDIR_P) sys
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
@@ -51,6 +52,7 @@ sys/socket.h: sys_socket.in.h $(WARN_ON_USE_H) $(ARG_NONNULL_H)
 	      -e 's|@''HAVE_STRUCT_SOCKADDR_STORAGE''@|$(HAVE_STRUCT_SOCKADDR_STORAGE)|g' \
 	      -e 's|@''HAVE_SA_FAMILY_T''@|$(HAVE_SA_FAMILY_T)|g' \
 	      -e 's|@''HAVE_ACCEPT4''@|$(HAVE_ACCEPT4)|g' \
+	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
 	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
 	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
 	      < $(srcdir)/sys_socket.in.h; \
