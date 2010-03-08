@@ -1,5 +1,15 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	wctype: Avoid #define replacements in C++ mode.
+	* lib/wctype.in.h: Include c++defs.h, warn-on-use.h.
+	(iswalnum, iswalpha, iswblank, iswcntrl, iswdigit, iswgraph, iswlower,
+	iswprint, iswpunct, iswspace, iswupper, iswxdigit, towlower, towupper):
+	In C++, define a namespaced alias symbol.
+	* m4/wctype_h.m4 (gl_WCTYPE_H): Don't set WCTYPE_H.
+	* modules/wctype (Depends-on): Add c++defs, warn-on-use.
+	(Makefile.am): Provide a wctype.h replacement always. Update wctype.h
+	rule.
+
 	wchar: Avoid #define replacements in C++ mode.
 	* lib/wchar.in.h: Include c++defs.h.
 	(btowc, wctob, mbsinit, mbrtowc, mbrlen, mbsrtowcs, mbsnrtowcs,

@@ -54,6 +54,10 @@
 #ifndef _GL_WCTYPE_H
 #define _GL_WCTYPE_H
 
+/* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
+
+/* The definition of _GL_WARN_ON_USE is copied here.  */
+
 /* Define wint_t.  (Also done in wchar.in.h.)  */
 #if !@HAVE_WINT_T@ && !defined wint_t
 # define wint_t int
@@ -62,9 +66,6 @@
 # endif
 #endif
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /* FreeBSD 4.4 to 4.11 has <wctype.h> but lacks the functions.
    Linux libc5 has <wctype.h> and the functions but they are broken.
@@ -93,73 +94,120 @@ extern "C" {
 
 /* Linux libc5 has <wctype.h> and the functions but they are broken.  */
 # if @REPLACE_ISWCNTRL@
-#  define iswalnum rpl_iswalnum
-#  define iswalpha rpl_iswalpha
-#  define iswblank rpl_iswblank
-#  define iswcntrl rpl_iswcntrl
-#  define iswdigit rpl_iswdigit
-#  define iswgraph rpl_iswgraph
-#  define iswlower rpl_iswlower
-#  define iswprint rpl_iswprint
-#  define iswpunct rpl_iswpunct
-#  define iswspace rpl_iswspace
-#  define iswupper rpl_iswupper
-#  define iswxdigit rpl_iswxdigit
-#  define towlower rpl_towlower
-#  define towupper rpl_towupper
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define iswalnum rpl_iswalnum
+#   define iswalpha rpl_iswalpha
+#   define iswblank rpl_iswblank
+#   define iswcntrl rpl_iswcntrl
+#   define iswdigit rpl_iswdigit
+#   define iswgraph rpl_iswgraph
+#   define iswlower rpl_iswlower
+#   define iswprint rpl_iswprint
+#   define iswpunct rpl_iswpunct
+#   define iswspace rpl_iswspace
+#   define iswupper rpl_iswupper
+#   define iswxdigit rpl_iswxdigit
+#   define towlower rpl_towlower
+#   define towupper rpl_towupper
+#  endif
 # endif
 
 static inline int
-iswalnum (wint_t wc)
+# if @REPLACE_ISWCNTRL@
+rpl_iswalnum
+# else
+iswalnum
+# endif
+         (wint_t wc)
 {
   return ((wc >= '0' && wc <= '9')
           || ((wc & ~0x20) >= 'A' && (wc & ~0x20) <= 'Z'));
 }
 
 static inline int
-iswalpha (wint_t wc)
+# if @REPLACE_ISWCNTRL@
+rpl_iswalpha
+# else
+iswalpha
+# endif
+         (wint_t wc)
 {
   return (wc & ~0x20) >= 'A' && (wc & ~0x20) <= 'Z';
 }
 
 static inline int
-iswblank (wint_t wc)
+# if @REPLACE_ISWCNTRL@
+rpl_iswblank
+# else
+iswblank
+# endif
+         (wint_t wc)
 {
   return wc == ' ' || wc == '\t';
 }
 
 static inline int
-iswcntrl (wint_t wc)
+# if @REPLACE_ISWCNTRL@
+rpl_iswcntrl
+# else
+iswcntrl
+# endif
+        (wint_t wc)
 {
   return (wc & ~0x1f) == 0 || wc == 0x7f;
 }
 
 static inline int
-iswdigit (wint_t wc)
+# if @REPLACE_ISWCNTRL@
+rpl_iswdigit
+# else
+iswdigit
+# endif
+         (wint_t wc)
 {
   return wc >= '0' && wc <= '9';
 }
 
 static inline int
-iswgraph (wint_t wc)
+# if @REPLACE_ISWCNTRL@
+rpl_iswgraph
+# else
+iswgraph
+# endif
+         (wint_t wc)
 {
   return wc >= '!' && wc <= '~';
 }
 
 static inline int
-iswlower (wint_t wc)
+# if @REPLACE_ISWCNTRL@
+rpl_iswlower
+# else
+iswlower
+# endif
+         (wint_t wc)
 {
   return wc >= 'a' && wc <= 'z';
 }
 
 static inline int
-iswprint (wint_t wc)
+# if @REPLACE_ISWCNTRL@
+rpl_iswprint
+# else
+iswprint
+# endif
+         (wint_t wc)
 {
   return wc >= ' ' && wc <= '~';
 }
 
 static inline int
-iswpunct (wint_t wc)
+# if @REPLACE_ISWCNTRL@
+rpl_iswpunct
+# else
+iswpunct
+# endif
+         (wint_t wc)
 {
   return (wc >= '!' && wc <= '~'
           && !((wc >= '0' && wc <= '9')
@@ -167,33 +215,58 @@ iswpunct (wint_t wc)
 }
 
 static inline int
-iswspace (wint_t wc)
+# if @REPLACE_ISWCNTRL@
+rpl_iswspace
+# else
+iswspace
+# endif
+         (wint_t wc)
 {
   return (wc == ' ' || wc == '\t'
           || wc == '\n' || wc == '\v' || wc == '\f' || wc == '\r');
 }
 
 static inline int
-iswupper (wint_t wc)
+# if @REPLACE_ISWCNTRL@
+rpl_iswupper
+# else
+iswupper
+# endif
+         (wint_t wc)
 {
   return wc >= 'A' && wc <= 'Z';
 }
 
 static inline int
-iswxdigit (wint_t wc)
+# if @REPLACE_ISWCNTRL@
+rpl_iswxdigit
+# else
+iswxdigit
+# endif
+          (wint_t wc)
 {
   return ((wc >= '0' && wc <= '9')
           || ((wc & ~0x20) >= 'A' && (wc & ~0x20) <= 'F'));
 }
 
 static inline wint_t
-towlower (wint_t wc)
+# if @REPLACE_ISWCNTRL@
+rpl_towlower
+# else
+towlower
+# endif
+         (wint_t wc)
 {
   return (wc >= 'A' && wc <= 'Z' ? wc - 'A' + 'a' : wc);
 }
 
 static inline wint_t
-towupper (wint_t wc)
+# if @REPLACE_ISWCNTRL@
+rpl_towupper
+# else
+towupper
+# endif
+         (wint_t wc)
 {
   return (wc >= 'a' && wc <= 'z' ? wc - 'a' + 'A' : wc);
 }
@@ -220,20 +293,71 @@ rpl_towlower (wint_t wc)
 {
   return (wint_t) (wchar_t) towlower (wc);
 }
-# define towlower rpl_towlower
+# if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#  define towlower rpl_towlower
+# endif
 
 static inline wint_t
 rpl_towupper (wint_t wc)
 {
   return (wint_t) (wchar_t) towupper (wc);
 }
-# define towupper rpl_towupper
+# if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#  define towupper rpl_towupper
+# endif
 
 #endif /* __MINGW32__ */
 
-#ifdef __cplusplus
-}
+#if @REPLACE_ISWCNTRL@
+_GL_CXXALIAS_RPL (iswalnum, int, (wint_t wc));
+_GL_CXXALIAS_RPL (iswalpha, int, (wint_t wc));
+_GL_CXXALIAS_RPL (iswblank, int, (wint_t wc));
+_GL_CXXALIAS_RPL (iswcntrl, int, (wint_t wc));
+_GL_CXXALIAS_RPL (iswdigit, int, (wint_t wc));
+_GL_CXXALIAS_RPL (iswgraph, int, (wint_t wc));
+_GL_CXXALIAS_RPL (iswlower, int, (wint_t wc));
+_GL_CXXALIAS_RPL (iswprint, int, (wint_t wc));
+_GL_CXXALIAS_RPL (iswpunct, int, (wint_t wc));
+_GL_CXXALIAS_RPL (iswspace, int, (wint_t wc));
+_GL_CXXALIAS_RPL (iswupper, int, (wint_t wc));
+_GL_CXXALIAS_RPL (iswxdigit, int, (wint_t wc));
+#else
+_GL_CXXALIAS_SYS (iswalnum, int, (wint_t wc));
+_GL_CXXALIAS_SYS (iswalpha, int, (wint_t wc));
+_GL_CXXALIAS_SYS (iswblank, int, (wint_t wc));
+_GL_CXXALIAS_SYS (iswcntrl, int, (wint_t wc));
+_GL_CXXALIAS_SYS (iswdigit, int, (wint_t wc));
+_GL_CXXALIAS_SYS (iswgraph, int, (wint_t wc));
+_GL_CXXALIAS_SYS (iswlower, int, (wint_t wc));
+_GL_CXXALIAS_SYS (iswprint, int, (wint_t wc));
+_GL_CXXALIAS_SYS (iswpunct, int, (wint_t wc));
+_GL_CXXALIAS_SYS (iswspace, int, (wint_t wc));
+_GL_CXXALIAS_SYS (iswupper, int, (wint_t wc));
+_GL_CXXALIAS_SYS (iswxdigit, int, (wint_t wc));
 #endif
+_GL_CXXALIASWARN (iswalnum);
+_GL_CXXALIASWARN (iswalpha);
+_GL_CXXALIASWARN (iswblank);
+_GL_CXXALIASWARN (iswcntrl);
+_GL_CXXALIASWARN (iswdigit);
+_GL_CXXALIASWARN (iswgraph);
+_GL_CXXALIASWARN (iswlower);
+_GL_CXXALIASWARN (iswprint);
+_GL_CXXALIASWARN (iswpunct);
+_GL_CXXALIASWARN (iswspace);
+_GL_CXXALIASWARN (iswupper);
+_GL_CXXALIASWARN (iswxdigit);
+
+#if @REPLACE_ISWCNTRL@ || defined __MINGW32__
+_GL_CXXALIAS_RPL (towlower, wint_t, (wint_t wc));
+_GL_CXXALIAS_RPL (towupper, wint_t, (wint_t wc));
+#else
+_GL_CXXALIAS_SYS (towlower, wint_t, (wint_t wc));
+_GL_CXXALIAS_SYS (towupper, wint_t, (wint_t wc));
+#endif
+_GL_CXXALIASWARN (towlower);
+_GL_CXXALIASWARN (towupper);
+
 
 #endif /* _GL_WCTYPE_H */
 #endif /* _GL_WCTYPE_H */
