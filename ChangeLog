@@ -1,5 +1,15 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	string: Avoid #define replacements in C++ mode.
+	* lib/string.in.h: Include c++defs.h.
+	(stpncpy): Define to rpl_stpncpy, not gnu_stpncpy.
+	(memchr, memmem, mempcpy, memrchr, rawmemchr, stpcpy, stpncpy,
+	strchrnul, strdup, strndup, strnlen, strpbrk, strsep, strstr,
+	strcasestr, strtok_r, mbslen, mbschr, mbsrchr, mbspbrk, strerror,
+	strsignal, strverscmp): In C++, define a namespaced alias symbol.
+	* modules/string (Depends-on): Add c++defs.
+	(Makefile.am): Update string.h rule.
+
 	stdlib: Avoid #define replacements in C++ mode.
 	* lib/stdlib.in.h: Include c++defs.h.
 	(atoll, calloc, canonicalize_file_name, getloadavg, getsubopt, malloc,
