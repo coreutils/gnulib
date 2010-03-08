@@ -1,5 +1,13 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	Tests of module 'unistd' in C++ mode.
+	* tests/test-unistd-c++.cc: New file.
+	* modules/unistd-tests (Files): Add it and tests/signature.h.
+	(Depends-on): Add ansi-c++-opt.
+	(Makefile.am): Arrange to compile and run test-unistd-c++.
+	* m4/unistd_h.m4 (gl_UNISTD_MODULE_INDICATOR): Invoke
+	gl_MODULE_INDICATOR.
+
 	Tests of module 'time' in C++ mode.
 	* tests/test-time-c++.cc: New file.
 	* modules/time-tests (Files): Add it and tests/signature.h.
