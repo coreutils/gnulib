@@ -19,6 +19,7 @@ verify
 
 configure.ac:
 gl_FUNC_NANOSLEEP
+gl_TIME_MODULE_INDICATOR([nanosleep])
 
 Makefile.am:
 

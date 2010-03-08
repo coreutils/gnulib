@@ -17,6 +17,7 @@ time_r
 
 configure.ac:
 gl_FUNC_STRPTIME
+gl_TIME_MODULE_INDICATOR([strptime])
 
 Makefile.am:
 

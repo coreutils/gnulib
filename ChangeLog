@@ -1,5 +1,19 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	time: Avoid #define replacements in C++ mode.
+	* lib/time.in.h: Include c++defs.h, warn-on-use.h.
+	(nanosleep, mktime, localtime_r, gmtime_r, strptime, timegm): In C++,
+	define a namespaced alias symbol.
+	* m4/time_h.m4 (gl_TIME_MODULE_INDICATOR): New macro.
+	(gl_HEADER_TIME_H_DEFAULTS): Initialize also GNULIB_MKTIME,
+	GNULIB_NANOSLEEP, GNULIB_STRPTIME, GNULIB_TIMEGM.
+	* modules/time (Depends-on): Add c++defs, warn-on-use.
+	(Makefile.am): Update time.h rule.
+	* modules/mktime (configure.ac): Invoke gl_TIME_MODULE_INDICATOR.
+	* modules/nanosleep (configure.ac): Likewise.
+	* modules/strptime (configure.ac): Likewise.
+	* modules/timegm (configure.ac): Likewise.
+
 	sys_time: Avoid #define replacements in C++ mode.
 	* lib/sys_time.in.h: Include c++defs.h.
 	(gettimeofday): In C++, define a namespaced alias symbol.

@@ -40,7 +40,11 @@
 /* NetBSD 5.0 mis-defines NULL.  */
 #include <stddef.h>
 
+/* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
+
 /* The definition of _GL_ARG_NONNULL is copied here.  */
+
+/* The definition of _GL_WARN_ON_USE is copied here.  */
 
 # ifdef __cplusplus
 extern "C" {
@@ -63,54 +67,115 @@ struct timespec
 #  endif
 # endif
 
+# ifdef __cplusplus
+}
+# endif
+
 /* Sleep for at least RQTP seconds unless interrupted,  If interrupted,
    return -1 and store the remaining time into RMTP.  See
    <http://www.opengroup.org/susv3xsh/nanosleep.html>.  */
-# if @REPLACE_NANOSLEEP@
-#  define nanosleep rpl_nanosleep
-extern int nanosleep (struct timespec const *__rqtp, struct timespec *__rmtp)
-     _GL_ARG_NONNULL ((1));
+# if @GNULIB_NANOSLEEP@
+#  if @REPLACE_NANOSLEEP@
+#   if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#    define nanosleep rpl_nanosleep
+#   endif
+_GL_FUNCDECL_RPL (nanosleep, int,
+                  (struct timespec const *__rqtp, struct timespec *__rmtp)
+                  _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (nanosleep, int,
+                  (struct timespec const *__rqtp, struct timespec *__rmtp));
+#  else
+_GL_CXXALIAS_SYS (nanosleep, int,
+                  (struct timespec const *__rqtp, struct timespec *__rmtp));
+#  endif
+_GL_CXXALIASWARN (nanosleep);
 # endif
 
 /* Return the 'time_t' representation of TP and normalize TP.  */
-# if @REPLACE_MKTIME@
-#  define mktime rpl_mktime
-extern time_t mktime (struct tm *__tp) _GL_ARG_NONNULL ((1));
+# if @GNULIB_MKTIME@
+#  if @REPLACE_MKTIME@
+#   if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#    define mktime rpl_mktime
+#   endif
+_GL_FUNCDECL_RPL (mktime, time_t, (struct tm *__tp) _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (mktime, time_t, (struct tm *__tp));
+#  else
+_GL_CXXALIAS_SYS (mktime, time_t, (struct tm *__tp));
+#  endif
+_GL_CXXALIASWARN (mktime);
 # endif
 
 /* Convert TIMER to RESULT, assuming local time and UTC respectively.  See
    <http://www.opengroup.org/susv3xsh/localtime_r.html> and
    <http://www.opengroup.org/susv3xsh/gmtime_r.html>.  */
 # if @REPLACE_LOCALTIME_R@
-#  undef localtime_r
-#  define localtime_r rpl_localtime_r
-#  undef gmtime_r
-#  define gmtime_r rpl_gmtime_r
-extern struct tm *localtime_r (time_t const *restrict __timer,
-                               struct tm *restrict __result)
-     _GL_ARG_NONNULL ((1, 2));
-extern struct tm *gmtime_r (time_t const *restrict __timer,
-                            struct tm *restrict __result)
-     _GL_ARG_NONNULL ((1, 2));
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef localtime_r
+#   define localtime_r rpl_localtime_r
+#  endif
+_GL_FUNCDECL_RPL (localtime_r, struct tm *, (time_t const *restrict __timer,
+                                             struct tm *restrict __result)
+                                            _GL_ARG_NONNULL ((1, 2)));
+_GL_CXXALIAS_RPL (localtime_r, struct tm *, (time_t const *restrict __timer,
+                                             struct tm *restrict __result));
+# else
+_GL_CXXALIAS_SYS (localtime_r, struct tm *, (time_t const *restrict __timer,
+                                             struct tm *restrict __result));
 # endif
+_GL_CXXALIASWARN (localtime_r);
+# if @REPLACE_LOCALTIME_R@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef gmtime_r
+#   define gmtime_r rpl_gmtime_r
+#  endif
+_GL_FUNCDECL_RPL (gmtime_r, struct tm *, (time_t const *restrict __timer,
+                                          struct tm *restrict __result)
+                                         _GL_ARG_NONNULL ((1, 2)));
+_GL_CXXALIAS_RPL (gmtime_r, struct tm *, (time_t const *restrict __timer,
+                                          struct tm *restrict __result));
+# else
+_GL_CXXALIAS_SYS (gmtime_r, struct tm *, (time_t const *restrict __timer,
+                                          struct tm *restrict __result));
+# endif
+_GL_CXXALIASWARN (gmtime_r);
 
 /* Parse BUF as a time stamp, assuming FORMAT specifies its layout, and store
    the resulting broken-down time into TM.  See
    <http://www.opengroup.org/susv3xsh/strptime.html>.  */
-# if @REPLACE_STRPTIME@
-#  undef strptime
-#  define strptime rpl_strptime
-extern char *strptime (char const *restrict __buf,
-                       char const *restrict __format,
-                       struct tm *restrict __tm)
-     _GL_ARG_NONNULL ((1, 2, 3));
+# if @GNULIB_STRPTIME@
+#  if @REPLACE_STRPTIME@
+#   if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#    undef strptime
+#    define strptime rpl_strptime
+#   endif
+_GL_FUNCDECL_RPL (strptime, char *, (char const *restrict __buf,
+                                     char const *restrict __format,
+                                     struct tm *restrict __tm)
+                                    _GL_ARG_NONNULL ((1, 2, 3)));
+_GL_CXXALIAS_RPL (strptime, char *, (char const *restrict __buf,
+                                     char const *restrict __format,
+                                     struct tm *restrict __tm));
+#  else
+_GL_CXXALIAS_SYS (strptime, char *, (char const *restrict __buf,
+                                     char const *restrict __format,
+                                     struct tm *restrict __tm));
+#  endif
+_GL_CXXALIASWARN (strptime);
 # endif
 
 /* Convert TM to a time_t value, assuming UTC.  */
-# if @REPLACE_TIMEGM@
-#  undef timegm
-#  define timegm rpl_timegm
-extern time_t timegm (struct tm *__tm) _GL_ARG_NONNULL ((1));
+# if @GNULIB_TIMEGM@
+#  if @REPLACE_TIMEGM@
+#   if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#    undef timegm
+#    define timegm rpl_timegm
+#   endif
+_GL_FUNCDECL_RPL (timegm, time_t, (struct tm *__tm) _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (timegm, time_t, (struct tm *__tm));
+#  else
+_GL_CXXALIAS_SYS (timegm, time_t, (struct tm *__tm));
+#  endif
+_GL_CXXALIASWARN (timegm);
 # endif
 
 /* Encourage applications to avoid unsafe functions that can overrun
@@ -125,10 +190,6 @@ extern time_t timegm (struct tm *__tm) _GL_ARG_NONNULL ((1));
 #  define ctime eschew_ctime
 #  undef ctime_r
 #  define ctime_r eschew_ctime_r
-# endif
-
-# ifdef __cplusplus
-}
 # endif
 
 #endif
