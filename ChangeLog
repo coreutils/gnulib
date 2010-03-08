@@ -1,5 +1,11 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	sys_time: Avoid #define replacements in C++ mode.
+	* lib/sys_time.in.h: Include c++defs.h.
+	(gettimeofday): In C++, define a namespaced alias symbol.
+	* modules/sys_time (Depends-on): Add c++defs.
+	(Makefile.am): Update sys/time.h rule.
+
 	sys_stat: Avoid #define replacements in C++ mode.
 	* lib/sys_stat.in.h: Include c++defs.h.
 	(fchmodat, fstat, fstatat, futimens, lchmod, lstat, mkdir, mkdirat,
