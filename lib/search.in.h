@@ -29,30 +29,28 @@
 #define _GL_SEARCH_H
 
 
+/* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
+
 /* The definition of _GL_ARG_NONNULL is copied here.  */
 
 /* The definition of _GL_WARN_ON_USE is copied here.  */
 
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-
 #if @GNULIB_TSEARCH@
 # if @REPLACE_TSEARCH@
-#  define tsearch rpl_tsearch
-#  define tfind rpl_tfind
-#  define tdelete rpl_tdelete
-#  define twalk rpl_twalk
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define tsearch rpl_tsearch
+#   define tfind rpl_tfind
+#   define tdelete rpl_tdelete
+#   define twalk rpl_twalk
+#  endif
 # endif
-# if !@HAVE_TSEARCH@ || @REPLACE_TSEARCH@
 
 /* See <http://www.opengroup.org/susv3xbd/search.h.html>,
        <http://www.opengroup.org/susv3xsh/tsearch.html>
    for details.  */
 
-#  if !@HAVE_TSEARCH@
+# if !@HAVE_TSEARCH@
 typedef enum
 {
   preorder,
@@ -61,27 +59,89 @@ typedef enum
   leaf
 }
 VISIT;
-#  endif
+# endif
+
+# ifdef __cplusplus
+extern "C" {
+# endif
+typedef int (*_gl_search_compar_fn) (const void *, const void *);
+typedef void (*_gl_search_action_fn) (const void *, VISIT, int);
+# ifdef __cplusplus
+}
+# endif
 
 /* Searches an element in the tree *VROOTP that compares equal to KEY.
    If one is found, it is returned.  Otherwise, a new element equal to KEY
    is inserted in the tree and is returned.  */
-extern void * tsearch (const void *key, void **vrootp,
-                       int (*compar) (const void *, const void *))
-     _GL_ARG_NONNULL ((1, 2, 3));
+# if @REPLACE_TSEARCH@
+_GL_FUNCDECL_RPL (tsearch, void *,
+                  (const void *key, void **vrootp,
+                   _gl_search_compar_fn compar)
+                  _GL_ARG_NONNULL ((1, 2, 3)));
+_GL_CXXALIAS_RPL (tsearch, void *,
+                  (const void *key, void **vrootp,
+                   _gl_search_compar_fn compar));
+# else
+#  if !@HAVE_TSEARCH@
+_GL_FUNCDECL_SYS (tsearch, void *,
+                  (const void *key, void **vrootp,
+                   _gl_search_compar_fn compar)
+                  _GL_ARG_NONNULL ((1, 2, 3)));
+#  endif
+_GL_CXXALIAS_SYS (tsearch, void *,
+                  (const void *key, void **vrootp,
+                   _gl_search_compar_fn compar));
+# endif
+_GL_CXXALIASWARN (tsearch);
 
 /* Searches an element in the tree *VROOTP that compares equal to KEY.
    If one is found, it is returned.  Otherwise, NULL is returned.  */
-extern void * tfind (const void *key, void *const *vrootp,
-                     int (*compar) (const void *, const void *))
-     _GL_ARG_NONNULL ((1, 2, 3));
+# if @REPLACE_TSEARCH@
+_GL_FUNCDECL_RPL (tfind, void *,
+                  (const void *key, void *const *vrootp,
+                   _gl_search_compar_fn compar)
+                  _GL_ARG_NONNULL ((1, 2, 3)));
+_GL_CXXALIAS_RPL (tfind, void *,
+                  (const void *key, void *const *vrootp,
+                   _gl_search_compar_fn compar));
+# else
+#  if !@HAVE_TSEARCH@
+_GL_FUNCDECL_SYS (tfind, void *,
+                  (const void *key, void *const *vrootp,
+                   _gl_search_compar_fn compar)
+                  _GL_ARG_NONNULL ((1, 2, 3)));
+#  endif
+/* Need to cast, because on Cygwin 1.5.x systems, the second parameter is
+                                         void **vrootp.  */
+_GL_CXXALIAS_SYS_CAST (tfind, void *,
+                       (const void *key, void *const *vrootp,
+                        _gl_search_compar_fn compar));
+# endif
+_GL_CXXALIASWARN (tfind);
 
 /* Searches an element in the tree *VROOTP that compares equal to KEY.
    If one is found, it is removed from the tree, and its parent node is
    returned.  Otherwise, NULL is returned.  */
-extern void * tdelete (const void *key, void **vrootp,
-                       int (*compar) (const void *, const void *))
-     _GL_ARG_NONNULL ((1, 2, 3));
+# if @REPLACE_TSEARCH@
+_GL_FUNCDECL_RPL (tdelete, void *,
+                  (const void *key, void **vrootp,
+                   _gl_search_compar_fn compar)
+                  _GL_ARG_NONNULL ((1, 2, 3)));
+_GL_CXXALIAS_RPL (tdelete, void *,
+                  (const void *key, void **vrootp,
+                   _gl_search_compar_fn compar));
+# else
+#  if !@HAVE_TSEARCH@
+_GL_FUNCDECL_SYS (tdelete, void *,
+                  (const void *key, void **vrootp,
+                   _gl_search_compar_fn compar)
+                  _GL_ARG_NONNULL ((1, 2, 3)));
+#  endif
+_GL_CXXALIAS_SYS (tdelete, void *,
+                  (const void *key, void **vrootp,
+                   _gl_search_compar_fn compar));
+# endif
+_GL_CXXALIASWARN (tdelete);
 
 /* Perform a depth-first, left-to-right traversal of the tree VROOT.
    The ACTION function is called:
@@ -94,11 +154,23 @@ extern void * tdelete (const void *key, void **vrootp,
         pointer to the key,
      2. an indicator which visit of the node this is,
      3. the level of the node in the tree (0 for the root).  */
-extern void twalk (const void *vroot,
-                   void (*action) (const void *, VISIT, int))
-     _GL_ARG_NONNULL ((2));
-
+# if @REPLACE_TSEARCH@
+_GL_FUNCDECL_RPL (twalk, void,
+                  (const void *vroot, _gl_search_action_fn action)
+                  _GL_ARG_NONNULL ((2)));
+_GL_CXXALIAS_RPL (twalk, void,
+                  (const void *vroot, _gl_search_action_fn action));
+# else
+#  if !@HAVE_TSEARCH@
+_GL_FUNCDECL_SYS (twalk, void,
+                  (const void *vroot, _gl_search_action_fn action)
+                  _GL_ARG_NONNULL ((2)));
+#  endif
+_GL_CXXALIAS_SYS (twalk, void,
+                  (const void *vroot, _gl_search_action_fn action));
 # endif
+_GL_CXXALIASWARN (twalk);
+
 #elif defined GNULIB_POSIXCHECK
 # undef tsearch
 # if HAVE_RAW_DECL_TSEARCH
@@ -122,10 +194,6 @@ _GL_WARN_ON_USE (twalk, "twalk is unportable - "
 # endif
 #endif
 
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* _GL_SEARCH_H */
 #endif /* _GL_SEARCH_H */

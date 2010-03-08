@@ -1,5 +1,13 @@
 2010-03-07  Bruno Haible  <bruno@clisp.org>
 
+	search: Avoid #define replacements in C++ mode.
+	* lib/search.in.h: Include c++defs.h.
+	(_gl_search_compar_fn, _gl_search_action_fn): New types.
+	(tsearch, tfind, tdelete, twalk): In C++, define a namespaced alias
+	symbol.
+	* modules/search (Depends-on): Add c++defs.
+	(Makefile.am): Update search.h rule.
+
 	math: Avoid #define replacements in C++ mode.
 	* lib/math.in.h: Include c++defs.h.
 	(frexp, acosl, asinl, atanl, ceilf, ceill, cosl, expl, floorf, floorl,

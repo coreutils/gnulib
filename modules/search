@@ -7,6 +7,7 @@ m4/search_h.m4
 
 Depends-on:
 arg-nonnull
+c++defs
 include_next
 warn-on-use
 
@@ -18,7 +19,7 @@ BUILT_SOURCES += search.h
 
 # We need the following in order to create <search.h> when the system
 # doesn't have one that works with the given compiler.
-search.h: search.in.h $(WARN_ON_USE_H) $(ARG_NONNULL_H)
+search.h: search.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's|@''HAVE_SEARCH_H''@|$(HAVE_SEARCH_H)|g' \
@@ -28,6 +29,7 @@ search.h: search.in.h $(WARN_ON_USE_H) $(ARG_NONNULL_H)
 	      -e 's|@''GNULIB_TSEARCH''@|$(GNULIB_TSEARCH)|g' \
 	      -e 's|@''HAVE_TSEARCH''@|$(HAVE_TSEARCH)|g' \
 	      -e 's|@''REPLACE_TSEARCH''@|$(REPLACE_TSEARCH)|g' \
+	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
 	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
 	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
 	      < $(srcdir)/search.in.h; \
