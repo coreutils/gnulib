@@ -1,3 +1,7 @@
+2010-03-09  Simon Josefsson  <simon@josefsson.org>
+
+	* gnulib-tool (LIBTOOLPATH): Fix cut'n'paste bug.
+
 2010-03-08  Bruno Haible  <bruno@clisp.org>
 
 	gnulib-tool: Add support for --libtool in --create-testdir.

@@ -68,7 +68,7 @@ fi
 
 # If you didn't set LIBTOOLPATH, you can also set the variable LIBTOOLIZE.
 if test -z "${LIBTOOLIZE}" || test -n "${LIBTOOLPATH}"; then
-  LIBTOOLIZE="${LIBTOOLPATH}autopoint"
+  LIBTOOLIZE="${LIBTOOLPATH}libtoolize"
 fi
 
 # You can set MAKE.
