@@ -66,19 +66,12 @@ _GL_FUNCDECL_RPL (memchr, void *, (void const *__s, int __c, size_t __n)
                                   _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (memchr, void *, (void const *__s, int __c, size_t __n));
 # else
-#  if defined __SUNPRO_CC
-  /* This compiler defines an overloaded function
+  /* On some systems, this function is defined as an overloaded function:
        extern "C" { const void * std::memchr (const void *, int, size_t); }
-       extern "C++" { inline void * std::memchr (void *, int, size_t); }
-     and diagnoses an error
-     "Error: Could not find a match for std::memchr(const void*, int, unsigned)"
-   */
+       extern "C++" { void * std::memchr (void *, int, size_t); }  */
 _GL_CXXALIAS_SYS_CAST2 (memchr,
                         void *, (void const *__s, int __c, size_t __n),
                         void const *, (void const *__s, int __c, size_t __n));
-#  else
-_GL_CXXALIAS_SYS (memchr, void *, (void const *__s, int __c, size_t __n));
-#  endif
 # endif
 _GL_CXXALIASWARN (memchr);
 #elif defined GNULIB_POSIXCHECK
@@ -150,7 +143,12 @@ _GL_FUNCDECL_SYS (memrchr, void *, (void const *, int, size_t)
                                    __attribute__ ((__pure__))
                                    _GL_ARG_NONNULL ((1)));
 # endif
-_GL_CXXALIAS_SYS (memrchr, void *, (void const *, int, size_t));
+  /* On some systems, this function is defined as an overloaded function:
+       extern "C++" { const void * std::memrchr (const void *, int, size_t); }
+       extern "C++" { void * std::memrchr (void *, int, size_t); }  */
+_GL_CXXALIAS_SYS_CAST2 (memrchr,
+                        void *, (void const *, int, size_t),
+                        void const *, (void const *, int, size_t));
 _GL_CXXALIASWARN (memrchr);
 #elif defined GNULIB_POSIXCHECK
 # undef memrchr
@@ -169,7 +167,12 @@ _GL_FUNCDECL_SYS (rawmemchr, void *, (void const *__s, int __c_in)
                                      __attribute__ ((__pure__))
                                      _GL_ARG_NONNULL ((1)));
 # endif
-_GL_CXXALIAS_SYS (rawmemchr, void *, (void const *__s, int __c_in));
+  /* On some systems, this function is defined as an overloaded function:
+       extern "C++" { const void * std::rawmemchr (const void *, int); }
+       extern "C++" { void * std::rawmemchr (void *, int); }  */
+_GL_CXXALIAS_SYS_CAST2 (rawmemchr,
+                        void *, (void const *__s, int __c_in),
+                        void const *, (void const *__s, int __c_in));
 _GL_CXXALIASWARN (rawmemchr);
 #elif defined GNULIB_POSIXCHECK
 # undef rawmemchr
@@ -242,7 +245,12 @@ _GL_FUNCDECL_SYS (strchrnul, char *, (char const *__s, int __c_in)
                                      __attribute__ ((__pure__))
                                      _GL_ARG_NONNULL ((1)));
 # endif
-_GL_CXXALIAS_SYS (strchrnul, char *, (char const *__s, int __c_in));
+  /* On some systems, this function is defined as an overloaded function:
+       extern "C++" { const char * std::strchrnul (const char *, int); }
+       extern "C++" { char * std::strchrnul (char *, int); }  */
+_GL_CXXALIAS_SYS_CAST2 (strchrnul,
+                        char *, (char const *__s, int __c_in),
+                        char const *, (char const *__s, int __c_in));
 _GL_CXXALIASWARN (strchrnul);
 #elif defined GNULIB_POSIXCHECK
 # undef strchrnul
@@ -340,19 +348,12 @@ _GL_FUNCDECL_SYS (strpbrk, char *, (char const *__s, char const *__accept)
                                    __attribute__ ((__pure__))
                                    _GL_ARG_NONNULL ((1, 2)));
 # endif
-# if defined __SUNPRO_CC
-  /* This compiler defines an overloaded function
+  /* On some systems, this function is defined as an overloaded function:
        extern "C" { const char * strpbrk (const char *, const char *); }
-       extern "C++" { inline char * strpbrk (char *, const char *); }
-     and diagnoses an error
-     "Error: Could not find a match for std::strpbrk(const char*, const char*)"
-   */
+       extern "C++" { char * strpbrk (char *, const char *); }  */
 _GL_CXXALIAS_SYS_CAST2 (strpbrk,
                         char *, (char const *__s, char const *__accept),
                         const char *, (char const *__s, char const *__accept));
-# else
-_GL_CXXALIAS_SYS (strpbrk, char *, (char const *__s, char const *__accept));
-# endif
 _GL_CXXALIASWARN (strpbrk);
 # if defined GNULIB_POSIXCHECK
 /* strpbrk() assumes the second argument is a list of single-byte characters.
@@ -441,7 +442,12 @@ _GL_FUNCDECL_RPL (strstr, char *, (const char *haystack, const char *needle)
                                   _GL_ARG_NONNULL ((1, 2)));
 _GL_CXXALIAS_RPL (strstr, char *, (const char *haystack, const char *needle));
 # else
-_GL_CXXALIAS_SYS (strstr, char *, (const char *haystack, const char *needle));
+  /* On some systems, this function is defined as an overloaded function:
+       extern "C++" { const char * strstr (const char *, const char *); }
+       extern "C++" { char * strstr (char *, const char *); }  */
+_GL_CXXALIAS_SYS_CAST2 (strstr,
+                        char *, (const char *haystack, const char *needle),
+                        const char *, (const char *haystack, const char *needle));
 # endif
 _GL_CXXALIASWARN (strstr);
 #elif defined GNULIB_POSIXCHECK
@@ -476,8 +482,12 @@ _GL_FUNCDECL_SYS (strcasestr, char *,
                   (const char *haystack, const char *needle)
                   __attribute__ ((__pure__)) _GL_ARG_NONNULL ((1, 2)));
 #  endif
-_GL_CXXALIAS_SYS (strcasestr, char *,
-                  (const char *haystack, const char *needle));
+  /* On some systems, this function is defined as an overloaded function:
+       extern "C++" { const char * strcasestr (const char *, const char *); }
+       extern "C++" { char * strcasestr (char *, const char *); }  */
+_GL_CXXALIAS_SYS_CAST2 (strcasestr,
+                        char *, (const char *haystack, const char *needle),
+                        const char *, (const char *haystack, const char *needle));
 # endif
 _GL_CXXALIASWARN (strcasestr);
 #elif defined GNULIB_POSIXCHECK

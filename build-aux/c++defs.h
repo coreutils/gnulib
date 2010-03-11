@@ -176,16 +176,21 @@
    are used to silence the "cannot find a match" and "invalid conversion"
    errors that would otherwise occur.  */
 #if defined __cplusplus && defined GNULIB_NAMESPACE
+  /* The outer cast must be a reinterpret_cast.
+     The inner cast: When the function is defined as a set of overloaded
+     functions, it works as a static_cast<>, choosing the designated variant.
+     When the function is defined as a single variant, it works as a
+     reinterpret_cast<>. The parenthesized cast syntax works both ways.  */
 # define _GL_CXXALIAS_SYS_CAST2(func,rettype,parameters,rettype2,parameters2) \
     namespace GNULIB_NAMESPACE                                                \
     {                                                                         \
       static rettype (*func) parameters =                                     \
         reinterpret_cast<rettype(*)parameters>(                               \
-          reinterpret_cast<rettype2(*)parameters2>(::func));                  \
+          (rettype2(*)parameters2)(::func));                                  \
     }                                                                         \
     _GL_EXTERN_C int _gl_cxxalias_dummy
 #else
-# define _GL_CXXALIAS_SYS_CAST(func,rettype,parameters) \
+# define _GL_CXXALIAS_SYS_CAST2(func,rettype,parameters,rettype2,parameters2) \
     _GL_EXTERN_C int _gl_cxxalias_dummy
 #endif
 

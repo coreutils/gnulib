@@ -1,3 +1,15 @@
+2010-03-11  Bruno Haible  <bruno@clisp.org>
+
+	Fix problems with overloaded C++ definitions of memchr, strpbrk, etc.
+	* build-aux/c++defs.h (_GL_CXXALIAS_SYS_CAST2): Make it work regardless
+	whether the system provides one variant or multiple variants of the
+	function.
+	* lib/string.in.h (memchr, strpbrk): Use _GL_CXXALIAS_SYS_CAST2 for all
+	C++ compilers.
+	(memrchr, rawmemchr, strchrnul, strstr, strcasestr): Use
+	_GL_CXXALIAS_SYS_CAST2 instead of _GL_CXXALIAS_SYS.
+	Reported by Jim Meyering.
+
 2010-03-09  Simon Josefsson  <simon@josefsson.org>
 
 	* gnulib-tool (LIBTOOLPATH): Fix cut'n'paste bug.
