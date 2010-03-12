@@ -4080,6 +4080,7 @@ s,//*$,/,'
     for module in $final_modules; do
       func_verify_module
       if test -n "$module"; then
+        echo "# Code from module $module:"
         func_get_autoconf_early_snippet "$module"
       fi
     done \
@@ -4114,6 +4115,7 @@ s,//*$,/,'
     for module in $main_modules; do
       func_verify_module
       if test -n "$module"; then
+        echo "  # Code from module $module:"
         func_get_autoconf_snippet "$module" \
           | sed -e '/^$/d;' -e 's/^/  /' \
                 -e 's/AM_GNU_GETTEXT(\[external\])/dnl you must add AM_GNU_GETTEXT([external]) or similar to configure.ac./' \
@@ -4126,6 +4128,7 @@ s,//*$,/,'
         fi
       fi
     done
+    echo "  # End of code from modules"
     func_emit_initmacro_end $macro_prefix
     echo "  gltests_libdeps="
     echo "  gltests_ltlibdeps="
