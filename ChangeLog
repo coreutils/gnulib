@@ -1,3 +1,8 @@
+2010-03-12  Bruno Haible  <bruno@clisp.org>
+
+	* doc/gnulib-intro.texi (Steady Development): Mention Ian Beckwith's
+	stable releases.
+
 2010-03-11  Bruno Haible  <bruno@clisp.org>
 
 	Fix problems with overloaded C++ definitions of memchr, strpbrk, etc.

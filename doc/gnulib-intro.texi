@@ -312,10 +312,23 @@ information in the corresponding module description.
 
 Gnulib modules are continually adapted, to match new practices, to be
 consistent with newly added modules, or simply as a response to build
-failure reports.  We don't make releases, but instead recommend to use the
-newest version of Gnulib from the Git repository, except in periods of major
-changes.  The source tree can also be fetched from a read-only CVS that
-mirrors the Git repository.
+failure reports.  Gnulib is available in two qualities:
+
+@itemize
+@item
+There is the newest version of Gnulib from the Git repository.  The
+source tree can also be fetched from a read-only CVS that mirrors the Git
+repository.
+
+@item
+We also make stable releases every two months, at
+@url{http://erislabs.net/ianb/projects/gnulib/}.
+@end itemize
+
+If you are willing to report an occasional regression, we recommend to
+use the newest version always, except in periods of major changes.  Most
+Gnulib users do this.  If you prefer stable releases, please use the
+newest stable release.
 
 @node Openness
 @section Openness
