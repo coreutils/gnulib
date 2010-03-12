@@ -1,5 +1,11 @@
 2010-03-12  Bruno Haible  <bruno@clisp.org>
 
+	Fix problem with automake's definition of CXXLINK.
+	* gnulib-tool (func_create_testdir): After LT_INIT, also use LT_LANG.
+	Reported by Simon Josefsson and Ludovic Courtès.
+
+2010-03-12  Bruno Haible  <bruno@clisp.org>
+
 	* doc/gnulib-intro.texi (Steady Development): Mention Ian Beckwith's
 	stable releases.
 

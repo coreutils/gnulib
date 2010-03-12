@@ -4637,6 +4637,7 @@ func_create_testdir ()
        | sed -e '/^$/d;' -e 's/AC_REQUIRE(\[\([^()]*\)\])/\1/'
      if test "$libtool" = true; then
        echo "LT_INIT([win32-dll])"
+       echo "LT_LANG([C++])"
        echo "AM_CONDITIONAL([GL_COND_LIBTOOL], [true])"
        echo "gl_cond_libtool=true"
      else
@@ -4761,6 +4762,7 @@ func_create_testdir ()
      | sed -e '/^$/d;' -e 's/AC_REQUIRE(\[\([^()]*\)\])/\1/'
    if test "$libtool" = true; then
      echo "LT_INIT([win32-dll])"
+     echo "LT_LANG([C++])"
      echo "AM_CONDITIONAL([GL_COND_LIBTOOL], [true])"
      echo "gl_cond_libtool=true"
    else
