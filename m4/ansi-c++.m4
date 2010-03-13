@@ -1,10 +1,25 @@
-# ansi-c++.m4 serial 2
-dnl Copyright (C) 2002-2003, 2010 Free Software Foundation, Inc.
+# ansi-c++.m4 serial 3
+dnl Copyright (C) 2002-2003, 2005, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
 dnl From Bruno Haible.
+
+# Sets CXX_CHOICE to 'yes' or 'no', depending on the preferred use of C++.
+
+AC_DEFUN([gl_CXX_CHOICE],
+[
+  AC_MSG_CHECKING([whether to use C++])
+  dnl It would be so nice if plus signs were supported in AC_ARG_ENABLE.
+  dnl Feature request submitted on 2010-03-13.
+  AC_ARG_ENABLE([cxx],
+    [  --disable-cxx           do not build C++ sources],
+    [CXX_CHOICE="$enableval"],
+    [CXX_CHOICE=yes])
+  AC_MSG_RESULT([$CXX_CHOICE])
+  AC_SUBST([CXX_CHOICE])
+])
 
 # gl_PROG_ANSI_CXX([ANSICXX_VARIABLE], [ANSICXX_CONDITIONAL])
 # Sets ANSICXX_VARIABLE to the name of a sufficiently ANSI C++ compliant
@@ -14,8 +29,12 @@ dnl From Bruno Haible.
 
 AC_DEFUN([gl_PROG_ANSI_CXX],
 [
+  AC_REQUIRE([gl_CXX_CHOICE])
   m4_if([$1], [CXX], [],
     [gl_save_CXX="$CXX"])
+  if test "$CXX_CHOICE" = no; then
+    CXX=":"
+  fi
   if test -z "$CXX"; then
     if test -n "$CCC"; then
       CXX="$CCC"

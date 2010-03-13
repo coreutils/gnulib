@@ -1,5 +1,11 @@
 2010-03-13  Bruno Haible  <bruno@clisp.org>
 
+	Allow the user to disable C++ code and tests.
+	* m4/ansi-c++.m4 (gl_CXX_CHOICE): New macro.
+	(gl_PROG_ANSI_CXX): Require it.
+
+2010-03-13  Bruno Haible  <bruno@clisp.org>
+
 	* DEPENDENCIES (libtool): Mention libtool 2.2.x requirement in special
 	cases.
 
