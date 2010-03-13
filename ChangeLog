@@ -1,5 +1,10 @@
 2010-03-13  Bruno Haible  <bruno@clisp.org>
 
+	* DEPENDENCIES (libtool): Mention libtool 2.2.x requirement in special
+	cases.
+
+2010-03-13  Bruno Haible  <bruno@clisp.org>
+
 	Test that gnulib does not break the standard C++ headers.
 	* tests/test-locale-c++2.cc: New file.
 	* modules/locale-tests (Files): Add it.

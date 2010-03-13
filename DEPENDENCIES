@@ -138,6 +138,8 @@ at any time.
 * GNU libtool 1.5.22 or newer.
   + Optional.
     Needed if you want to invoke gnulib-tool with option --libtool.
+    libtool 2.2.x or newer is needed if you want to invoke gnulib-tool
+    with options --create-testdir/--test  and --libtool.
   + Homepage:
     http://www.gnu.org/software/libtool/
   + Download:
