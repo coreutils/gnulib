@@ -217,7 +217,7 @@
    is used but not when GNULIB_NAMESPACE::func is used.  */
 #if defined __cplusplus && defined GNULIB_NAMESPACE
 # define _GL_CXXALIASWARN1(func,rettype,parameters_and_attributes) \
-#  _GL_CXXALIASWARN1_1 (func, rettype, parameters_and_attributes, \
+   _GL_CXXALIASWARN1_1 (func, rettype, parameters_and_attributes, \
                         GNULIB_NAMESPACE)
 # define _GL_CXXALIASWARN1_1(func,rettype,parameters_and_attributes,namespace) \
    _GL_CXXALIASWARN1_2 (func, rettype, parameters_and_attributes, namespace)
