@@ -189,6 +189,20 @@ General options:
       --verbose             Increase verbosity. May be repeated.
       --quiet               Decrease verbosity. May be repeated.
 
+Options for --import, --update:
+      --dry-run             Only print what would have been done.
+
+Options for --import, --create-[mega]testdir, --[mega]test:
+      --with-tests          Include unit tests for the included modules.
+      --with-obsolete       Include obsolete modules when they occur among the
+                            dependencies. By default, dependencies to obsolete
+                            modules are ignored.
+      --avoid=MODULE        Avoid including the given MODULE. Useful if you
+                            have code that provides equivalent functionality.
+                            This option can be repeated.
+      --libtool             Use libtool rules.
+      --no-libtool          Don't use libtool rules.
+
 Options for --import:
       --lib=LIBRARY         Specify the library name.  Defaults to 'libgnu'.
       --source-base=DIRECTORY
@@ -205,13 +219,6 @@ Options for --import:
                             placed (default \"tests\").
       --aux-dir=DIRECTORY   Directory relative to --dir where auxiliary build
                             tools are placed (default \"build-aux\").
-      --with-tests          Include unit tests for the included modules.
-      --with-obsolete       Include obsolete modules when they occur among the
-                            dependencies. By default, dependencies to obsolete
-                            modules are ignored.
-      --avoid=MODULE        Avoid including the given MODULE. Useful if you
-                            have code that provides equivalent functionality.
-                            This option can be repeated.
       --lgpl[=2|=3]         Abort if modules aren't available under the LGPL.
                             Also modify license template from GPL to LGPL.
                             The version number of the LGPL can be specified;
@@ -219,8 +226,6 @@ Options for --import:
       --makefile-name=NAME  Name of makefile in automake syntax in the
                             source-base and tests-base directories
                             (default \"Makefile.am\").
-      --libtool             Use libtool rules.
-      --no-libtool          Don't use libtool rules.
       --macro-prefix=PREFIX  Specify the prefix of the macros 'gl_EARLY' and
                             'gl_INIT'. Default is 'gl'.
       --po-domain=NAME      Specify the prefix of the i18n domain. Usually use
@@ -230,11 +235,12 @@ Options for --import:
                             (.gitignore and/or .cvsignore).
       --no-changelog        Don't update or create ChangeLog files.
 
-Options for --import and --update:
-      --dry-run             For --import, only print what would have been done.
+Options for --import, --update, --create-[mega]testdir, --[mega]test:
   -s, --symbolic, --symlink Make symbolic links instead of copying files.
       --local-symlink       Make symbolic links instead of copying files, only
                             for files from the local override directory.
+
+Options for --import, --update:
   -S, --more-symlinks       Make symbolic links instead of copying files, and
                             don't replace copyright notices.
 
@@ -4413,6 +4419,15 @@ s,//*$,/,'
 # - local_gnulib_dir  from --local-dir
 # - modcache        true or false, from --cache-modules/--no-cache-modules
 # - auxdir          directory relative to destdir where to place build aux files
+# - inctests        true if tests should be included, blank otherwise
+# - incobsolete     true if obsolete modules among dependencies should be
+#                   included, blank otherwise
+# - avoidlist       list of modules to avoid
+# - libtool         true if --libtool was given, false if --no-libtool was
+#                   given, blank otherwise
+# - symbolic        true if files should be symlinked, copied otherwise
+# - lsymbolic       true if files from local_gnulib_dir should be symlinked,
+#                   copied otherwise
 func_create_testdir ()
 {
   testdir="$1"

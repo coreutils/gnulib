@@ -1,5 +1,10 @@
 2010-03-13  Bruno Haible  <bruno@clisp.org>
 
+	* gnulib-tool (func_usage): Clarify which options are available for
+	--create-testdir and --create-megatestdir.
+
+2010-03-13  Bruno Haible  <bruno@clisp.org>
+
 	Fix compilation error with glibc >= 2.10 and g++ >= 4.4.
 	* build-aux/warn-on-use.h (_GL_WARN_ON_USE_CXX): New macro.
 	* build-aux/c++defs.h (_GL_CXXALIASWARN1): New macro.
