@@ -1,6 +1,7 @@
 Files:
 tests/test-stdio.c
 tests/test-stdio-c++.cc
+tests/test-stdio-c++2.cc
 tests/signature.h
 
 Depends-on:
@@ -15,6 +16,6 @@ check_PROGRAMS += test-stdio
 if ANSICXX
 TESTS += test-stdio-c++
 check_PROGRAMS += test-stdio-c++
-test_stdio_c___SOURCES = test-stdio-c++.cc
+test_stdio_c___SOURCES = test-stdio-c++.cc test-stdio-c++2.cc
 test_stdio_c___LDADD = $(LDADD) $(LIBINTL)
 endif

@@ -1,5 +1,31 @@
 2010-03-13  Bruno Haible  <bruno@clisp.org>
 
+	Test that gnulib does not break the standard C++ headers.
+	* tests/test-locale-c++2.cc: New file.
+	* modules/locale-tests (Files): Add it.
+	(Makefile.am): Compile it for test-locale-c++.
+	* tests/test-math-c++2.cc: New file.
+	* modules/math-tests (Files): Add it.
+	(Makefile.am): Compile it for test-math-c++.
+	* tests/test-signal-c++2.cc: New file.
+	* modules/signal-tests (Files): Add it.
+	(Makefile.am): Compile it for test-signal-c++.
+	* tests/test-stdio-c++2.cc: New file.
+	* modules/stdio-tests (Files): Add it.
+	(Makefile.am): Compile it for test-stdio-c++.
+	* tests/test-stdlib-c++2.cc: New file.
+	* modules/stdlib-tests (Files): Add it.
+	(Makefile.am): Compile it for test-stdlib-c++.
+	* tests/test-string-c++2.cc: New file.
+	* modules/string-tests (Files): Add it.
+	(Makefile.am): Compile it for test-string-c++.
+	* tests/test-time-c++2.cc: New file.
+	* modules/time-tests (Files): Add it.
+	(Makefile.am): Compile it for test-time-c++.
+	Reported by John W. Eaton <jwe@gnu.org>.
+
+2010-03-13  Bruno Haible  <bruno@clisp.org>
+
 	* gnulib-tool (func_usage): Clarify which options are available for
 	--create-testdir and --create-megatestdir.
 

@@ -1,6 +1,7 @@
 Files:
 tests/test-signal.c
 tests/test-signal-c++.cc
+tests/test-signal-c++2.cc
 tests/signature.h
 
 Depends-on:
@@ -14,6 +15,6 @@ check_PROGRAMS += test-signal
 if ANSICXX
 TESTS += test-signal-c++
 check_PROGRAMS += test-signal-c++
-test_signal_c___SOURCES = test-signal-c++.cc
+test_signal_c___SOURCES = test-signal-c++.cc test-signal-c++2.cc
 test_signal_c___LDADD = $(LDADD) $(LIBINTL)
 endif
