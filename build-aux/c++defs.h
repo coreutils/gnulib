@@ -196,18 +196,37 @@
 
 /* _GL_CXXALIASWARN (func);
    causes a warning to be emitted when ::func is used but not when
-   GNULIB_NAMESPACE::func is used.  */
+   GNULIB_NAMESPACE::func is used.  func must be defined without overloaded
+   variants.  */
 #if defined __cplusplus && defined GNULIB_NAMESPACE
 # define _GL_CXXALIASWARN(func) \
-   _GL_CXXALIASWARN1 (func, GNULIB_NAMESPACE)
-# define _GL_CXXALIASWARN1(func,namespace) \
-   _GL_CXXALIASWARN2 (func, namespace)
-# define _GL_CXXALIASWARN2(func,namespace) \
+   _GL_CXXALIASWARN_1 (func, GNULIB_NAMESPACE)
+# define _GL_CXXALIASWARN_1(func,namespace) \
+   _GL_CXXALIASWARN_2 (func, namespace)
+# define _GL_CXXALIASWARN_2(func,namespace) \
    _GL_WARN_ON_USE (func, \
                     "The symbol ::" #func " refers to the system function. " \
                     "Use " #namespace "::" #func " instead.")
 #else
 # define _GL_CXXALIASWARN(func) \
+    _GL_EXTERN_C int _gl_cxxalias_dummy
+#endif
+
+/* _GL_CXXALIASWARN1 (func, rettype, parameters_and_attributes);
+   causes a warning to be emitted when the given overloaded variant of ::func
+   is used but not when GNULIB_NAMESPACE::func is used.  */
+#if defined __cplusplus && defined GNULIB_NAMESPACE
+# define _GL_CXXALIASWARN1(func,rettype,parameters_and_attributes) \
+#  _GL_CXXALIASWARN1_1 (func, rettype, parameters_and_attributes, \
+                        GNULIB_NAMESPACE)
+# define _GL_CXXALIASWARN1_1(func,rettype,parameters_and_attributes,namespace) \
+   _GL_CXXALIASWARN1_2 (func, rettype, parameters_and_attributes, namespace)
+# define _GL_CXXALIASWARN1_2(func,rettype,parameters_and_attributes,namespace) \
+   _GL_WARN_ON_USE_CXX (func, rettype, parameters_and_attributes, \
+                        "The symbol ::" #func " refers to the system function. " \
+                        "Use " #namespace "::" #func " instead.")
+#else
+# define _GL_CXXALIASWARN1(func,rettype,parameters_and_attributes) \
     _GL_EXTERN_C int _gl_cxxalias_dummy
 #endif
 

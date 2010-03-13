@@ -14,7 +14,7 @@
    You should have received a copy of the GNU Lesser General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-/* _GL_WARN_ON_USE(function, "literal string") issues a declaration
+/* _GL_WARN_ON_USE (function, "literal string") issues a declaration
    for FUNCTION which will then trigger a compiler warning containing
    the text of "literal string" anywhere that function is called, if
    supported by the compiler.  If the compiler does not support this
@@ -70,6 +70,23 @@ extern __typeof__ (function) function __attribute__ ((__warning__ (message)))
 
 # else /* Unsupported.  */
 #  define _GL_WARN_ON_USE(function, message) \
+extern int _gl_warn_on_use
+# endif
+#endif
+
+/* _GL_WARN_ON_USE_CXX (function, rettype, parameters_and_attributes, "string")
+   is like _GL_WARN_ON_USE (function, "string"), except that the function is
+   declared with the given prototype, consisting of return type, parameters,
+   and attributes.
+   This variant is useful for overloaded functions in C++. _GL_WARN_ON_USE does
+   not work in this case.  */
+#ifndef _GL_WARN_ON_USE_CXX
+# if 4 < __GNUC__ || (__GNUC__ == 4 && 3 <= __GNUC_MINOR__)
+#  define _GL_WARN_ON_USE_CXX(function,rettype,parameters_and_attributes,msg) \
+extern rettype function parameters_and_attributes \
+     __attribute__ ((__warning__ (msg)))
+# else /* Unsupported.  */
+#  define _GL_WARN_ON_USE_CXX(function,rettype,parameters_and_attributes,msg) \
 extern int _gl_warn_on_use
 # endif
 #endif

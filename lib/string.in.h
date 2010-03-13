@@ -73,7 +73,14 @@ _GL_CXXALIAS_SYS_CAST2 (memchr,
                         void *, (void const *__s, int __c, size_t __n),
                         void const *, (void const *__s, int __c, size_t __n));
 # endif
+# if __GLIBC__ == 2 && __GLIBC_MINOR__ >= 10 \
+     && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
+_GL_CXXALIASWARN1 (memchr, void *, (void *__s, int __c, size_t __n));
+_GL_CXXALIASWARN1 (memchr, void const *,
+                   (void const *__s, int __c, size_t __n));
+# else
 _GL_CXXALIASWARN (memchr);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef memchr
 /* Assume memchr is always declared.  */
@@ -149,7 +156,13 @@ _GL_FUNCDECL_SYS (memrchr, void *, (void const *, int, size_t)
 _GL_CXXALIAS_SYS_CAST2 (memrchr,
                         void *, (void const *, int, size_t),
                         void const *, (void const *, int, size_t));
+# if __GLIBC__ == 2 && __GLIBC_MINOR__ >= 10 \
+     && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
+_GL_CXXALIASWARN1 (memrchr, void *, (void *, int, size_t));
+_GL_CXXALIASWARN1 (memrchr, void const *, (void const *, int, size_t));
+# else
 _GL_CXXALIASWARN (memrchr);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef memrchr
 # if HAVE_RAW_DECL_MEMRCHR
@@ -173,7 +186,13 @@ _GL_FUNCDECL_SYS (rawmemchr, void *, (void const *__s, int __c_in)
 _GL_CXXALIAS_SYS_CAST2 (rawmemchr,
                         void *, (void const *__s, int __c_in),
                         void const *, (void const *__s, int __c_in));
+# if __GLIBC__ == 2 && __GLIBC_MINOR__ >= 10 \
+     && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
+_GL_CXXALIASWARN1 (rawmemchr, void *, (void *__s, int __c_in));
+_GL_CXXALIASWARN1 (rawmemchr, void const *, (void const *__s, int __c_in));
+# else
 _GL_CXXALIASWARN (rawmemchr);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef rawmemchr
 # if HAVE_RAW_DECL_RAWMEMCHR
@@ -251,7 +270,13 @@ _GL_FUNCDECL_SYS (strchrnul, char *, (char const *__s, int __c_in)
 _GL_CXXALIAS_SYS_CAST2 (strchrnul,
                         char *, (char const *__s, int __c_in),
                         char const *, (char const *__s, int __c_in));
+# if __GLIBC__ == 2 && __GLIBC_MINOR__ >= 10 \
+     && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
+_GL_CXXALIASWARN1 (strchrnul, char *, (char *__s, int __c_in));
+_GL_CXXALIASWARN1 (strchrnul, char const *, (char const *__s, int __c_in));
+# else
 _GL_CXXALIASWARN (strchrnul);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef strchrnul
 # if HAVE_RAW_DECL_STRCHRNUL
@@ -354,7 +379,14 @@ _GL_FUNCDECL_SYS (strpbrk, char *, (char const *__s, char const *__accept)
 _GL_CXXALIAS_SYS_CAST2 (strpbrk,
                         char *, (char const *__s, char const *__accept),
                         const char *, (char const *__s, char const *__accept));
+# if __GLIBC__ == 2 && __GLIBC_MINOR__ >= 10 \
+     && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
+_GL_CXXALIASWARN1 (strpbrk, char *, (char *__s, char const *__accept));
+_GL_CXXALIASWARN1 (strpbrk, char const *,
+                   (char const *__s, char const *__accept));
+# else
 _GL_CXXALIASWARN (strpbrk);
+# endif
 # if defined GNULIB_POSIXCHECK
 /* strpbrk() assumes the second argument is a list of single-byte characters.
    Even in this simple case, it does not work with multibyte strings if the
@@ -449,7 +481,14 @@ _GL_CXXALIAS_SYS_CAST2 (strstr,
                         char *, (const char *haystack, const char *needle),
                         const char *, (const char *haystack, const char *needle));
 # endif
+# if __GLIBC__ == 2 && __GLIBC_MINOR__ >= 10 \
+     && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
+_GL_CXXALIASWARN1 (strstr, char *, (char *haystack, const char *needle));
+_GL_CXXALIASWARN1 (strstr, const char *,
+                   (const char *haystack, const char *needle));
+# else
 _GL_CXXALIASWARN (strstr);
+# endif
 #elif defined GNULIB_POSIXCHECK
 /* strstr() does not work with multibyte strings if the locale encoding is
    different from UTF-8:
@@ -489,7 +528,14 @@ _GL_CXXALIAS_SYS_CAST2 (strcasestr,
                         char *, (const char *haystack, const char *needle),
                         const char *, (const char *haystack, const char *needle));
 # endif
+# if __GLIBC__ == 2 && __GLIBC_MINOR__ >= 10 \
+     && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
+_GL_CXXALIASWARN1 (strcasestr, char *, (char *haystack, const char *needle));
+_GL_CXXALIASWARN1 (strcasestr, const char *,
+                   (const char *haystack, const char *needle));
+# else
 _GL_CXXALIASWARN (strcasestr);
+# endif
 #elif defined GNULIB_POSIXCHECK
 /* strcasestr() does not work with multibyte strings:
    It is a glibc extension, and glibc implements it only for unibyte
