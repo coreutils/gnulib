@@ -136,11 +136,12 @@ kernel_sinl (long double x, long double y, int iy)
   else
     {
       /* So that we don't have to use too large polynomial,  we find
-         l and h such that x = l + h,  where fabsl(l) <= 1.0/256 with 83
-         possible values for h.  We look up cosl(h) and sinl(h) in
+         k and l such that x = k + l,  where fabsl(l) <= 1.0/256 with 83
+         possible values for k.  We look up cosl(k) and sinl(k) in
          pre-computed tables,  compute cosl(l) and sinl(l) using a
          Chebyshev polynomial of degree 10(11) and compute
-         sinl(h+l) = sinl(h)cosl(l) + cosl(h)sinl(l).  */
+         sinl(k+l) = sinl(k)cosl(l) + cosl(k)sinl(l).
+         Furthermore write k = 0.1484375 + h.  */
       x -= 0.1484375L;
       index = (int) (x * 128L + 0.5L);
       h = index / 128.0L;
@@ -158,11 +159,14 @@ kernel_sinl (long double x, long double y, int iy)
         z * (SCOS1 + z * (SCOS2 + z * (SCOS3 + z * (SCOS4 + z * SCOS5))));
 
       index *= 4;
+      /* We rely on this expression not being "contracted" by the compiler
+         (cf. ISO C 99 section 6.5 paragraph 8).  */
       z =
-        sincosl_table[index + SINCOSL_SIN_HI] +
-        (sincosl_table[index + SINCOSL_SIN_LO] +
-         (sincosl_table[index + SINCOSL_SIN_HI] * cos_l_m1) +
-         (sincosl_table[index + SINCOSL_COS_HI] * sin_l));
+        sincosl_table[index + SINCOSL_SIN_HI]
+        + (sincosl_table[index + SINCOSL_COS_HI] * sin_l
+           + (sincosl_table[index + SINCOSL_SIN_HI] * cos_l_m1
+              + (sincosl_table[index + SINCOSL_SIN_LO] * (1 + cos_l_m1)
+                 + sincosl_table[index + SINCOSL_COS_LO] * sin_l)));
       return z * sign;
     }
 }
@@ -195,11 +199,12 @@ kernel_cosl (long double x, long double y)
   else
     {
       /* So that we don't have to use too large polynomial,  we find
-         l and h such that x = l + h,  where fabsl(l) <= 1.0/256 with 83
-         possible values for h.  We look up cosl(h) and sinl(h) in
+         k and l such that x = k + l,  where fabsl(l) <= 1.0/256 with 83
+         possible values for k.  We look up cosl(k) and sinl(k) in
          pre-computed tables,  compute cosl(l) and sinl(l) using a
          Chebyshev polynomial of degree 10(11) and compute
-         sinl(h+l) = sinl(h)cosl(l) + cosl(h)sinl(l).  */
+         cosl(k+l) = cosl(k)cosl(l) - sinl(k)sinl(l).
+         Furthermore write k = 0.1484375 + h.  */
       x -= 0.1484375L;
       index = (int) (x * 128L + 0.5L);
       h = index / 128.0L;
@@ -213,10 +218,14 @@ kernel_cosl (long double x, long double y)
         z * (SCOS1 + z * (SCOS2 + z * (SCOS3 + z * (SCOS4 + z * SCOS5))));
 
       index *= 4;
-      z = sincosl_table [index + SINCOSL_COS_HI]
-          + (sincosl_table [index + SINCOSL_COS_LO]
-             - (sincosl_table [index + SINCOSL_SIN_HI] * sin_l)
-             - (sincosl_table [index + SINCOSL_COS_HI] * cos_l_m1));
+      /* We rely on this expression not being "contracted" by the compiler
+         (cf. ISO C 99 section 6.5 paragraph 8).  */
+      z =
+        sincosl_table [index + SINCOSL_COS_HI]
+        - (sincosl_table [index + SINCOSL_SIN_HI] * sin_l
+           - (sincosl_table [index + SINCOSL_COS_HI] * cos_l_m1
+              + (sincosl_table [index + SINCOSL_COS_LO] * (1 + cos_l_m1)
+                 - sincosl_table [index + SINCOSL_SIN_LO] * sin_l)));
       return z;
     }
 }

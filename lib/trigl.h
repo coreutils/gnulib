@@ -18,7 +18,18 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
+/* Decompose x into x = k * π/2 + r
+   where k is an integer and abs(r) <= π/4.
+   Store r in y[0] and y[1] (main part in y[0], small additional part in
+   y[1], r = y[0] + y[1]).
+   Return k.  */
 extern int ieee754_rem_pio2l (long double x, long double *y);
-extern long double kernel_sinl (long double x, long double y, int iy);
-extern long double kernel_cosl (long double x, long double y);
 
+/* Compute and return sinl (x + y), where x is the main part and y is the
+   small additional part of a floating-point number.
+   iy is 0 when y is known to be 0.0, otherwise iy is 1.  */
+extern long double kernel_sinl (long double x, long double y, int iy);
+
+/* Compute and return cosl (x + y), where x is the main part and y is the
+   small additional part of a floating-point number.  */
+extern long double kernel_cosl (long double x, long double y);

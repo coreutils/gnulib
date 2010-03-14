@@ -1,5 +1,13 @@
 2010-03-14  Bruno Haible  <bruno@clisp.org>
 
+	Fix values returned by sinl, cosl.
+	* lib/trigl.h: Add specification comments.
+	* lib/sincosl.c (kernel_sinl, kernel_cosl): Fix comments and formula
+	that combines the values from the precomputed table with the values of
+	the Chebyshev polynomials.
+
+2010-03-14  Bruno Haible  <bruno@clisp.org>
+
 	Fix compilation error when modules 'posix_spawn[p]' are not used.
 	* m4/spawn_h.m4 (gl_SPAWN_H): Set HAVE_POSIX_SPAWN here.
 	* m4/posix_spawn.m4 (gl_POSIX_SPAWN_BODY): ... not here.
