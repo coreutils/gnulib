@@ -114,9 +114,9 @@
    operating on `long long int's.  */
 #ifdef QUAD
 # define LONG long long
-# define STRTOL_LONG_MIN LONG_LONG_MIN
-# define STRTOL_LONG_MAX LONG_LONG_MAX
-# define STRTOL_ULONG_MAX ULONG_LONG_MAX
+# define STRTOL_LONG_MIN LLONG_MIN
+# define STRTOL_LONG_MAX LLONG_MAX
+# define STRTOL_ULONG_MAX ULLONG_MAX
 
 /* The extra casts in the following macros work around compiler bugs,
    e.g., in Cray C 5.0.3.0.  */
@@ -147,19 +147,19 @@
          ? (t) -1 \
          : ~ (~ (t) 0 << (sizeof (t) * CHAR_BIT - 1))))
 
-# ifndef ULONG_LONG_MAX
-#  define ULONG_LONG_MAX TYPE_MAXIMUM (unsigned long long)
+# ifndef ULLONG_MAX
+#  define ULLONG_MAX TYPE_MAXIMUM (unsigned long long)
 # endif
-# ifndef LONG_LONG_MAX
-#  define LONG_LONG_MAX TYPE_MAXIMUM (long long int)
+# ifndef LLONG_MAX
+#  define LLONG_MAX TYPE_MAXIMUM (long long int)
 # endif
-# ifndef LONG_LONG_MIN
-#  define LONG_LONG_MIN TYPE_MINIMUM (long long int)
+# ifndef LLONG_MIN
+#  define LLONG_MIN TYPE_MINIMUM (long long int)
 # endif
 
 # if __GNUC__ == 2 && __GNUC_MINOR__ < 7
    /* Work around gcc bug with using this constant.  */
-   static const unsigned long long int maxquad = ULONG_LONG_MAX;
+   static const unsigned long long int maxquad = ULLONG_MAX;
 #  undef STRTOL_ULONG_MAX
 #  define STRTOL_ULONG_MAX maxquad
 # endif

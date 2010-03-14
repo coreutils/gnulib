@@ -1,3 +1,12 @@
+2010-03-14  Bruno Haible  <bruno@clisp.org>
+
+	Fix compilation error with Sun C.
+	* lib/strtol.c: Use LLONG_MIN instead of GCC specific LONG_LONG_MIN.
+	Use LLONG_MAX instead of GCC specific LONG_LONG_MAX. Use ULLONG_MAX
+	instead of GCC specific ULONG_LONG_MAX.
+	* lib/xstrtoll.c: Likewise.
+	* lib/xstrtoull.c: Likewise.
+
 2010-03-13  Bruno Haible  <bruno@clisp.org>
 
 	Allow the user to disable C++ code and tests.
