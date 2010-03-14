@@ -108,36 +108,38 @@ _GL_CXXALIASWARN (mktime);
 /* Convert TIMER to RESULT, assuming local time and UTC respectively.  See
    <http://www.opengroup.org/susv3xsh/localtime_r.html> and
    <http://www.opengroup.org/susv3xsh/gmtime_r.html>.  */
-# if @REPLACE_LOCALTIME_R@
-#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
-#   undef localtime_r
-#   define localtime_r rpl_localtime_r
-#  endif
+# if @GNULIB_TIME_R@
+#  if @REPLACE_LOCALTIME_R@
+#   if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#    undef localtime_r
+#    define localtime_r rpl_localtime_r
+#   endif
 _GL_FUNCDECL_RPL (localtime_r, struct tm *, (time_t const *restrict __timer,
                                              struct tm *restrict __result)
                                             _GL_ARG_NONNULL ((1, 2)));
 _GL_CXXALIAS_RPL (localtime_r, struct tm *, (time_t const *restrict __timer,
                                              struct tm *restrict __result));
-# else
+#  else
 _GL_CXXALIAS_SYS (localtime_r, struct tm *, (time_t const *restrict __timer,
                                              struct tm *restrict __result));
-# endif
-_GL_CXXALIASWARN (localtime_r);
-# if @REPLACE_LOCALTIME_R@
-#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
-#   undef gmtime_r
-#   define gmtime_r rpl_gmtime_r
 #  endif
+_GL_CXXALIASWARN (localtime_r);
+#  if @REPLACE_LOCALTIME_R@
+#   if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#    undef gmtime_r
+#    define gmtime_r rpl_gmtime_r
+#   endif
 _GL_FUNCDECL_RPL (gmtime_r, struct tm *, (time_t const *restrict __timer,
                                           struct tm *restrict __result)
                                          _GL_ARG_NONNULL ((1, 2)));
 _GL_CXXALIAS_RPL (gmtime_r, struct tm *, (time_t const *restrict __timer,
                                           struct tm *restrict __result));
-# else
+#  else
 _GL_CXXALIAS_SYS (gmtime_r, struct tm *, (time_t const *restrict __timer,
                                           struct tm *restrict __result));
-# endif
+#  endif
 _GL_CXXALIASWARN (gmtime_r);
+# endif
 
 /* Parse BUF as a time stamp, assuming FORMAT specifies its layout, and store
    the resulting broken-down time into TM.  See

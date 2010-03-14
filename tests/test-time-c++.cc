@@ -33,11 +33,13 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::nanosleep, int,
 SIGNATURE_CHECK (GNULIB_NAMESPACE::mktime, time_t, (struct tm *));
 #endif
 
+#if GNULIB_TIME_R
 SIGNATURE_CHECK (GNULIB_NAMESPACE::localtime_r, struct tm *,
                  (time_t const *, struct tm *));
 
 SIGNATURE_CHECK (GNULIB_NAMESPACE::gmtime_r, struct tm *,
                  (time_t const *, struct tm *));
+#endif
 
 #if GNULIB_STRPTIME
 SIGNATURE_CHECK (GNULIB_NAMESPACE::strptime, char *,

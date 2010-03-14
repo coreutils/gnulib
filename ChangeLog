@@ -1,5 +1,15 @@
 2010-03-14  Bruno Haible  <bruno@clisp.org>
 
+	Fix compilation error on mingw when module 'time_r' is not used.
+	* lib/time.in.h (localtime_r, gmtime_r): Declare only if GNULIB_TIME_R
+	is 1.
+	* tests/test-time-c++.cc (localtime_r, gmtime_r): Likewise.
+	* modules/time_r (configure.ac): Invoke gl_TIME_MODULE_INDICATOR.
+	* modules/time (Makefile.am): Substitute GNULIB_TIME_R.
+	* m4/time_h.m4 (gl_HEADER_TIME_H_DEFAULTS): Initialize GNULIB_TIME_R.
+
+2010-03-14  Bruno Haible  <bruno@clisp.org>
+
 	Fix compilation error with Sun C.
 	* lib/strtol.c: Use LLONG_MIN instead of GCC specific LONG_LONG_MIN.
 	Use LLONG_MAX instead of GCC specific LONG_LONG_MAX. Use ULLONG_MAX
