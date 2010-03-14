@@ -1,4 +1,4 @@
-# sys_select_h.m4 serial 12
+# sys_select_h.m4 serial 13
 dnl Copyright (C) 2006-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -46,6 +46,7 @@ AC_DEFUN([gl_HEADER_SYS_SELECT],
       fi
     ])
   AC_CHECK_HEADERS_ONCE([sys/select.h])
+  dnl <sys/select.h> is always overridden, because of GNULIB_POSIXCHECK.
   gl_CHECK_NEXT_HEADERS([sys/select.h])
   if test $ac_cv_header_sys_select_h = yes; then
     HAVE_SYS_SELECT_H=1
@@ -53,9 +54,7 @@ AC_DEFUN([gl_HEADER_SYS_SELECT],
     HAVE_SYS_SELECT_H=0
   fi
   AC_SUBST([HAVE_SYS_SELECT_H])
-  if test $gl_cv_header_sys_select_h_selfcontained != yes; then
-    gl_PREREQ_SYS_H_WINSOCK2
-  fi
+  gl_PREREQ_SYS_H_WINSOCK2
 
   dnl Check for declarations of anything we want to poison if the
   dnl corresponding gnulib module is not in use.

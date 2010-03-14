@@ -1,5 +1,20 @@
 2010-03-14  Bruno Haible  <bruno@clisp.org>
 
+	Fix bug introduced on 2009-12-31.
+	* m4/sys_select_h.m4 (gl_HEADER_SYS_SELECT): Invoke
+	gl_PREREQ_SYS_H_WINSOCK2 always.
+	* m4/sys_socket_h.m4 (gl_HEADER_SYS_SOCKET): Likewise. Remove
+	SYS_SOCKET_H variable.
+	* m4/sys_file_h.m4 (gl_HEADER_SYS_FILE_H): Remove test for flock.
+	Update comments.
+	* m4/ctype.m4 (gl_CTYPE_H): Update comments.
+	* m4/langinfo_h.m4 (gl_LANGINFO_H): Likewise.
+	* m4/sys_times_h.m4 (gl_SYS_TIMES_H): Likewise.
+	* m4/sys_utsname_h.m4 (gl_SYS_UTSNAME_H): Likewise.
+	* m4/sys_wait_h.m4 (gl_SYS_WAIT_H): Likewise.
+
+2010-03-14  Bruno Haible  <bruno@clisp.org>
+
 	Fix values returned by sinl, cosl.
 	* lib/trigl.h: Add specification comments.
 	* lib/sincosl.c (kernel_sinl, kernel_cosl): Fix comments and formula

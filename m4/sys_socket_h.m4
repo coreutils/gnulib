@@ -1,4 +1,4 @@
-# sys_socket_h.m4 serial 15
+# sys_socket_h.m4 serial 16
 dnl Copyright (C) 2005-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,7 +19,6 @@ AC_DEFUN([gl_HEADER_SYS_SOCKET],
         [gl_cv_header_sys_socket_h_selfcontained=no])
     ])
   if test $gl_cv_header_sys_socket_h_selfcontained = yes; then
-    SYS_SOCKET_H=''
     dnl If the shutdown function exists, <sys/socket.h> should define
     dnl SHUT_RD, SHUT_WR, SHUT_RDWR.
     AC_CHECK_FUNCS([shutdown])
@@ -37,8 +36,6 @@ AC_DEFUN([gl_HEADER_SYS_SOCKET],
         SYS_SOCKET_H='sys/socket.h'
       fi
     fi
-  else
-    SYS_SOCKET_H='sys/socket.h'
   fi
   # We need to check for ws2tcpip.h now.
   gl_PREREQ_SYS_H_SOCKET
@@ -56,16 +53,11 @@ AC_DEFUN([gl_HEADER_SYS_SOCKET],
 ])
   if test $ac_cv_type_struct_sockaddr_storage = no; then
     HAVE_STRUCT_SOCKADDR_STORAGE=0
-    SYS_SOCKET_H='sys/socket.h'
   fi
   if test $ac_cv_type_sa_family_t = no; then
     HAVE_SA_FAMILY_T=0
-    SYS_SOCKET_H='sys/socket.h'
   fi
-  if test -n "$SYS_SOCKET_H"; then
-    gl_PREREQ_SYS_H_WINSOCK2
-  fi
-  AC_SUBST([SYS_SOCKET_H])
+  gl_PREREQ_SYS_H_WINSOCK2
 
   dnl Check for declarations of anything we want to poison if the
   dnl corresponding gnulib module is not in use.

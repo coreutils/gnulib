@@ -1,7 +1,7 @@
 # Configure a replacement for <sys/file.h>.
-# serial 3
+# serial 4
 
-# Copyright (C) 2008, 2009, 2010 Free Software Foundation, Inc.
+# Copyright (C) 2008-2010 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
@@ -12,10 +12,7 @@ AC_DEFUN([gl_HEADER_SYS_FILE_H],
 [
   AC_REQUIRE([gl_HEADER_SYS_FILE_H_DEFAULTS])
 
-  dnl Only flock is defined in a working <sys/file.h>.  If that
-  dnl function is already there, we don't want to do any substitution.
-  AC_CHECK_FUNCS_ONCE([flock])
-
+  dnl <sys/file.h> is always overridden, because of GNULIB_POSIXCHECK.
   gl_CHECK_NEXT_HEADERS([sys/file.h])
 
   AC_CHECK_HEADERS_ONCE([sys/file.h])

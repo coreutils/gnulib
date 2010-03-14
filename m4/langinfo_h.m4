@@ -1,4 +1,4 @@
-# langinfo_h.m4 serial 4
+# langinfo_h.m4 serial 5
 dnl Copyright (C) 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,6 +11,7 @@ AC_DEFUN([gl_LANGINFO_H],
   dnl Persuade glibc-2.0.6 <langinfo.h> to define CODESET.
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
+  dnl <langinfo.h> is always overridden, because of GNULIB_POSIXCHECK.
   gl_CHECK_NEXT_HEADERS([langinfo.h])
 
   dnl Determine whether <langinfo.h> exists. It is missing on mingw and BeOS.

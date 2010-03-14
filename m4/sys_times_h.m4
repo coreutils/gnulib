@@ -1,5 +1,5 @@
 # Configure a replacement for <sys/times.h>.
-# serial 4
+# serial 5
 
 # Copyright (C) 2008, 2009, 2010 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -12,6 +12,7 @@ AC_DEFUN([gl_SYS_TIMES_H],
 [
   AC_REQUIRE([gl_SYS_TIMES_H_DEFAULTS])
 
+  dnl <sys/times.h> is always overridden, because of GNULIB_POSIXCHECK.
   gl_CHECK_NEXT_HEADERS([sys/times.h])
   AC_CHECK_HEADERS_ONCE([sys/times.h])
   if test $ac_cv_header_sys_times_h = yes; then
