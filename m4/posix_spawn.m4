@@ -1,4 +1,4 @@
-# posix_spawn.m4 serial 5
+# posix_spawn.m4 serial 6
 dnl Copyright (C) 2008-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -69,8 +69,6 @@ AC_DEFUN([gl_POSIX_SPAWN_BODY],
         ;;
       *) REPLACE_POSIX_SPAWN=1 ;;
     esac
-  else
-    HAVE_POSIX_SPAWN=0
   fi
 ])
 

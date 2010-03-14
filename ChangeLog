@@ -1,5 +1,11 @@
 2010-03-14  Bruno Haible  <bruno@clisp.org>
 
+	Fix compilation error when modules 'posix_spawn[p]' are not used.
+	* m4/spawn_h.m4 (gl_SPAWN_H): Set HAVE_POSIX_SPAWN here.
+	* m4/posix_spawn.m4 (gl_POSIX_SPAWN_BODY): ... not here.
+
+2010-03-14  Bruno Haible  <bruno@clisp.org>
+
 	Fix compilation error on mingw when module 'time_r' is not used.
 	* lib/time.in.h (localtime_r, gmtime_r): Declare only if GNULIB_TIME_R
 	is 1.
