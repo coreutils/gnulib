@@ -58,8 +58,30 @@ test_exclusive (const char *file, int fd)
   fd2 = open (file, O_RDWR, 0644);
   ASSERT (fd2 >= 0);
 
-  r = flock (fd2, LOCK_SH | LOCK_NB);
+  r = flock (fd2, LOCK_EX | LOCK_NB);
   ASSERT (r == -1);             /* Was unable to acquire a second exclusive lock. */
+
+#if 0
+  /* The Linux manual page of flock(2) says:
+       "A process may only hold one type of lock (shared or exclusive) on a
+       file. Subsequent flock() calls on an already locked file will convert
+       an existing lock to the new lock mode."
+     So, the call below should convert the exclusive lock for fd to a shared
+     and thus succeeds.  The fact that it doesn't but instead fails is
+     apparently a bug.  */
+  /* The Solaris manual page of flock(2) says:
+       "More than one process may hold a shared lock for a file at any given
+        time, but multiple exclusive, or both shared and exclusive, locks may
+        not exist simultaneously on a file. ...
+        Requesting a lock on an object that is already locked normally causes
+        the caller to block until the lock may be acquired. If LOCK_NB is
+        included in operation, then this will not happen; instead, the call
+        will fail and the error EWOULDBLOCK will be returned."
+     So, the call below should fail and set errno to EWOULDBLOCK.  The fact
+     that it succeeds is apparently a bug.  */
+  r = flock (fd2, LOCK_SH | LOCK_NB);
+  ASSERT (r == -1);
+#endif
 
   ASSERT (flock (fd, LOCK_UN) == 0);
   ASSERT (close (fd2) == 0);
@@ -76,7 +98,9 @@ main (int argc, char *argv[])
   ASSERT (fd >= 0);
   ASSERT (write (fd, "hello", 5) == 5);
 
-  /* Some impossible operation codes which should never be accepted. */
+#if defined __linux__
+  /* Invalid operation codes are rejected by the Linux implementation and by
+     the gnulib replacement,  but not by the MacOS X implementation.  */
   ASSERT (flock (fd, LOCK_SH | LOCK_EX) == -1);
   ASSERT (errno == EINVAL);
   ASSERT (flock (fd, LOCK_SH | LOCK_UN) == -1);
@@ -85,6 +109,7 @@ main (int argc, char *argv[])
   ASSERT (errno == EINVAL);
   ASSERT (flock (fd, 0) == -1);
   ASSERT (errno == EINVAL);
+#endif
 
   test_shared (file, fd);
   test_exclusive (file, fd);

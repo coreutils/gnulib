@@ -1,5 +1,11 @@
 2010-03-14  Bruno Haible  <bruno@clisp.org>
 
+	* tests/test-flock.c (test_exclusive): Comment out a test that causes
+	portability problems. Instead use a simpler test.
+	(main): Check that invalid arguments are rejected only on Linux.
+
+2010-03-14  Bruno Haible  <bruno@clisp.org>
+
 	Fix bug introduced on 2009-12-31.
 	* m4/sys_select_h.m4 (gl_HEADER_SYS_SELECT): Invoke
 	gl_PREREQ_SYS_H_WINSOCK2 always.
