@@ -1,3 +1,9 @@
+2010-03-15  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	* lib/inttostr.c (inttostr): Make sure the invocation of verify
+	appears before executable statements. Suggested by Petr Sumbera
+	<Petr.Sumbera@Sun.COM>.
+
 2010-03-14  Bruno Haible  <bruno@clisp.org>
 
 	* tests/test-flock.c (test_exclusive): Comment out a test that causes

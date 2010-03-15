@@ -29,10 +29,10 @@
 char *
 inttostr (inttype i, char *buf)
 {
+  verify (TYPE_SIGNED (inttype) == inttype_is_signed);
   char *p = buf + INT_STRLEN_BOUND (inttype);
   *p = 0;
 
-  verify (TYPE_SIGNED (inttype) == inttype_is_signed);
 #if inttype_is_signed
   if (i < 0)
     {
