@@ -28,6 +28,8 @@ tmpdir=vc-git-$$
 trap 'st=$?; cd '"`pwd`"' && rm -rf $tmpdir; exit $st' 0
 trap '(exit $?); exit $?' 1 2 13 15
 
+GIT_DIR= GIT_WORK_TREE=; unset GIT_DIR GIT_WORK_TREE
+
 fail=1
 mkdir $tmpdir && cd $tmpdir &&
   # without git, skip the test
@@ -36,8 +38,8 @@ mkdir $tmpdir && cd $tmpdir &&
     || { echo "Skipping test: git not found in PATH"; (exit 77); exit 77; }; } &&
   mkdir d &&
   touch d/a b c &&
-  git config user.email "you@example.com"
-  git config user.name "Your Name"
+  git config user.email "you@example.com" &&
+  git config user.name "Your Name" &&
   git add . > /dev/null &&
   git commit -q -a -m log &&
   printf '%s\n' b c d/a > expected &&

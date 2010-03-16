@@ -1,3 +1,10 @@
+2010-03-17  Bert Wesarg  <bert.wesarg@googlemail.com>  (tiny change)
+	and Eric Blake  <eblake@redhat.com>
+
+	test-vc-list-files-git: make more robust
+	* tests/test-vc-list-files-git.sh: Unset problematic environment
+	variables.  Chain commands together.
+
 2010-03-17  Ludovic Courtès <ludo@gnu.org>  (tiny change)
 
 	* m4/pty.m4: Unset $ac_cv_have_decl_forkpty before the second
