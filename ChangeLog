@@ -1,3 +1,8 @@
+2010-03-17  Ludovic Courtès <ludo@gnu.org>  (tiny change)
+
+	* m4/pty.m4: Unset $ac_cv_have_decl_forkpty before the second
+	`AC_CHECK_DECL' invocation.
+
 2010-03-15  Sergey Poznyakoff  <gray@gnu.org.ua>
 
 	* lib/inttostr.c (inttostr): Make sure the invocation of verify

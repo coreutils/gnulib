@@ -17,6 +17,7 @@ AC_DEFUN([gl_PTY],
   if test $ac_cv_header_pty_h != yes; then
     AC_CHECK_DECL([forkpty],,, [[#include <util.h>]])
     if test $ac_cv_have_decl_forkpty = no; then
+      unset ac_cv_have_decl_forkpty
       AC_CHECK_DECL([forkpty],,, [[#include <libutil.h>]])
       if test $ac_cv_have_decl_forkpty = no; then
         AC_MSG_WARN([[Cannot find forkpty, build will likely fail]])
