@@ -2,6 +2,7 @@ Description:
 Provide the openpty() function.
 
 Files:
+lib/openpty.c
 m4/pty.m4
 
 Depends-on:

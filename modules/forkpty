@@ -2,6 +2,7 @@ Description:
 Provide the forkpty() function.
 
 Files:
+lib/forkpty.c
 m4/pty.m4
 
 Depends-on:

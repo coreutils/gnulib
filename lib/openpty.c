@@ -1,5 +1,5 @@
-/* Test of pty.h and openpty function.
-   Copyright (C) 2009, 2010 Free Software Foundation, Inc.
+/* Open a pseudo-terminal descriptor.
+   Copyright (C) 2010 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -14,31 +14,22 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-/* Written by Simon Josefsson <simon@josefsson.org>, 2009.  */
-
 #include <config.h>
 
+/* Specification.  */
 #include <pty.h>
 
-#include "signature.h"
-SIGNATURE_CHECK (openpty, int, (int *, int *, char *, struct termios const *,
-                                struct winsize const *));
-
-#include <stdio.h>
-
+#if HAVE_DECL_OPENPTY
+# undef openpty
 int
-main ()
+rpl_openpty (int *amaster, int *aslave, char *name, struct termios const *termp,
+         struct winsize const *winp)
 {
-  int res;
-  int amaster;
-  int aslave;
-
-  res = openpty (&amaster, &aslave, NULL, NULL, NULL);
-  if (res != 0)
-    {
-      printf ("openpty returned %d\n", res);
-      return 1;
-    }
-
-  return 0;
+  /* Cast away const, for implementations with weaker prototypes.  */
+  return openpty (amaster, aslave, name, (struct termios *) termp,
+                  (struct winsize *) winp);
 }
+#else
+# error openpty has not been ported to your system; \
+  report this to bug-gnulib@gnu.org for help
+#endif

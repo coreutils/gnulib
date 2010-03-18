@@ -1,4 +1,4 @@
-# pty_h.m4 serial 3
+# pty_h.m4 serial 4
 dnl Copyright (C) 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -21,18 +21,6 @@ AC_DEFUN_ONCE([gl_PTY],
     fi
     if test $ac_cv_header_libutil_h = yes; then
       HAVE_LIBUTIL_H=1
-    fi
-    dnl FIXME - move this into forkpty module, when replacement is provided
-    AC_CHECK_DECLS([forkpty],,, [[
-#if HAVE_UTIL_H
-# include <util.h>
-#endif
-#if HAVE_LIBUTIL_H
-# include <libutil.h>
-#endif
-]])
-    if test $ac_cv_have_decl_forkpty = no; then
-      AC_MSG_WARN([[Cannot find forkpty, build will likely fail]])
     fi
   else # Have <pty.h>, assume forkpty is declared there.
     HAVE_PTY_H=1
@@ -70,4 +58,6 @@ AC_DEFUN([gl_PTY_H_DEFAULTS],
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_UTIL_H=0;        AC_SUBST([HAVE_UTIL_H])
   HAVE_LIBUTIL_H=0;     AC_SUBST([HAVE_LIBUTIL_H])
+  REPLACE_FORKPTY=0;    AC_SUBST([REPLACE_FORKPTY])
+  REPLACE_OPENPTY=0;    AC_SUBST([REPLACE_OPENPTY])
 ])

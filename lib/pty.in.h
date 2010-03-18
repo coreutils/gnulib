@@ -45,6 +45,23 @@
 /* Declare overridden functions.  */
 
 #if @GNULIB_FORKPTY@
+# if @REPLACE_FORKPTY@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef forkpty
+#   define forkpty rpl_forkpty
+#  endif
+_GL_FUNCDECL_RPL (forkpty, int,
+                  (int *, char *, struct termios const *,
+                   struct winsize const *));
+_GL_CXXALIAS_RPL (forkpty, int,
+                  (int *, char *, struct termios const *,
+                   struct winsize const *));
+# else
+_GL_CXXALIAS_SYS (forkpty, int,
+                  (int *, char *, struct termios const *,
+                   struct winsize const *));
+# endif
+_GL_CXXALIASWARN (forkpty);
 #elif defined GNULIB_POSIXCHECK
 # undef forkpty
 # if HAVE_RAW_DECL_FORKPTY
@@ -54,6 +71,23 @@ _GL_WARN_ON_USE (forkpty, "forkpty is not declared consistently - "
 #endif
 
 #if @GNULIB_OPENPTY@
+# if @REPLACE_OPENPTY@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef openpty
+#   define openpty rpl_openpty
+#  endif
+_GL_FUNCDECL_RPL (openpty, int,
+                  (int *, int *, char *, struct termios const *,
+                   struct winsize const *));
+_GL_CXXALIAS_RPL (openpty, int,
+                  (int *, int *, char *, struct termios const *,
+                   struct winsize const *));
+# else
+_GL_CXXALIAS_SYS (openpty, int,
+                  (int *, int *, char *, struct termios const *,
+                   struct winsize const *));
+# endif
+_GL_CXXALIASWARN (openpty);
 #elif defined GNULIB_POSIXCHECK
 # undef openpty
 # if HAVE_RAW_DECL_OPENPTY

@@ -1,4 +1,4 @@
-# pty.m4 serial 1
+# pty.m4 serial 2
 dnl Copyright (C) 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -23,9 +23,89 @@ AC_DEFUN([gl_PTY_LIB],
 AC_DEFUN([gl_FORKPTY],
 [
   AC_REQUIRE([gl_PTY_LIB])
+  AC_REQUIRE([gl_PTY])
+
+  AC_CHECK_DECLS([forkpty],,, [[
+#if HAVE_PTY_H
+# include <pty.h>
+#endif
+#if HAVE_UTIL_H
+# include <util.h>
+#endif
+#if HAVE_LIBUTIL_H
+# include <libutil.h>
+#endif
+]])
+  if test $ac_cv_have_decl_forkpty = no; then
+    AC_MSG_WARN([[Cannot find forkpty, build will likely fail]])
+  fi
+
+  dnl Prefer glibc's const-safe prototype, if available.
+  AC_CACHE_CHECK([for const-safe forkpty signature],
+    [gl_cv_func_forkpty_const],
+    [AC_COMPILE_IFELSE(
+      [AC_LANG_PROGRAM([[
+#if HAVE_PTY_H
+# include <pty.h>
+#endif
+#if HAVE_UTIL_H
+# include <util.h>
+#endif
+#if HAVE_LIBUTIL_H
+# include <libutil.h>
+#endif
+      ]], [[
+        int forkpty (int *, char *, struct termios const *,
+                     struct winsize const *);
+      ]])],
+      [gl_cv_func_forkpty_const=yes], [gl_cv_func_forkpty_const=no])])
+  if test $gl_cv_func_forkpty_const != yes; then
+    REPLACE_FORKPTY=1
+    AC_LIBOBJ([forkpty])
+  fi
 ])
 
 AC_DEFUN([gl_OPENPTY],
 [
   AC_REQUIRE([gl_PTY_LIB])
+  AC_REQUIRE([gl_PTY])
+
+  AC_CHECK_DECLS([openpty],,, [[
+#if HAVE_PTY_H
+# include <pty.h>
+#endif
+#if HAVE_UTIL_H
+# include <util.h>
+#endif
+#if HAVE_LIBUTIL_H
+# include <libutil.h>
+#endif
+]])
+  if test $ac_cv_have_decl_openpty = no; then
+    AC_MSG_WARN([[Cannot find openpty, build will likely fail]])
+  fi
+
+  dnl Prefer glibc's const-safe prototype, if available.
+  AC_CACHE_CHECK([for const-safe openpty signature],
+    [gl_cv_func_openpty_const],
+    [AC_COMPILE_IFELSE(
+      [AC_LANG_PROGRAM([[
+#if HAVE_PTY_H
+# include <pty.h>
+#endif
+#if HAVE_UTIL_H
+# include <util.h>
+#endif
+#if HAVE_LIBUTIL_H
+# include <libutil.h>
+#endif
+      ]], [[
+        int openpty (int *, int *, char *, struct termios const *,
+                     struct winsize const *);
+      ]])],
+      [gl_cv_func_openpty_const=yes], [gl_cv_func_openpty_const=no])])
+  if test $gl_cv_func_openpty_const != yes; then
+    REPLACE_OPENPTY=1
+    AC_LIBOBJ([openpty])
+  fi
 ])

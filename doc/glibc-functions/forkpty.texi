@@ -16,6 +16,10 @@ required.
 The function is declared in pty.h on Cygwin, Interix, OSF/1 4 and 5,
 and glibc.  It is declared in util.h on Mac OS X, OpenBSD and NetBSD.
 It is declared in libutil.h on FreeBSD.
+@item
+Some platforms declare the function without marking the last two
+parameters @code{const}.
+FreeBSD, Cygwin 1.7.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:

@@ -1,5 +1,21 @@
 2010-03-19  Eric Blake  <eblake@redhat.com>
 
+	forkpty, openpty: prefer glibc's const-safe prototype
+	* lib/forkpty.c (rpl_forkpty): New file.
+	* lib/openpty.c (rpl_openpty): Likewise.
+	* modules/forkpty (Files): Distribute it.
+	* modules/openpty (Files): Likewise.
+	* m4/pty_h.m4 (gl_PTY_H_DEFAULTS): Add new witnesses.  Move decl
+	check...
+	* m4/pty.m4 (gl_FORKPTY, gl_OPENPTY): ...here.  Request
+	replacement for for non-const BSD signature.
+	* modules/pty (Makefile.am): Substitute witnesses.
+	* lib/pty.in.h (forkpty, openpty): Declare replacements.
+	* tests/test-forkpty.c: Update signature check.
+	* tests/test-openpty.c: Likewise.
+	* doc/glibc-functions/forkpty.texi (forkpty): Document the fix.
+	* doc/glibc-functions/openpty.texi (openpty): Likewise.
+
 	forkpty, openpty: split functions into new modules
 	* modules/pty (Makefile.am): Substitute new witnesses.
 	(Libraries): Move library detection...

@@ -29,6 +29,8 @@ pty.h: pty.in.h $(CXXDEFS_H) $(WARN_ON_USE_H)
 	      -e 's|@''GNULIB_OPENPTY''@|$(GNULIB_OPENPTY)|g' \
 	      -e 's|@''HAVE_UTIL_H''@|$(HAVE_UTIL_H)|g' \
 	      -e 's|@''HAVE_LIBUTIL_H''@|$(HAVE_LIBUTIL_H)|g' \
+	      -e 's|@''REPLACE_FORKPTY''@|$(REPLACE_FORKPTY)|g' \
+	      -e 's|@''REPLACE_OPENPTY''@|$(REPLACE_OPENPTY)|g' \
 	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
 	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
 	      < $(srcdir)/pty.in.h; \
