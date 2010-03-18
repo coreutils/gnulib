@@ -1,5 +1,15 @@
 2010-03-19  Eric Blake  <eblake@redhat.com>
 
+	pty: improve replacement header
+	* lib/pty.in.h: New file.
+	* modules/pty (Files): Ship it.
+	(Makefile.am): Always build replacement.
+	* m4/pty.m4: Rename...
+	* m4/pty_h.m4: ...to this.
+	(gl_PTY): Modernize setting of witness macros; update check of
+	forkpty to take proper advantage of cache.
+	(gl_PTY_MODULE_INDICATOR, gl_PTY_H_DEFAULTS): New macros.
+
 	getopt: avoid compiler warning
 	* lib/getopt.c (attribute_hidden): Remove unused macro.
 
