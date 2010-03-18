@@ -1,5 +1,26 @@
 2010-03-19  Eric Blake  <eblake@redhat.com>
 
+	forkpty, openpty: split functions into new modules
+	* modules/pty (Makefile.am): Substitute new witnesses.
+	(Libraries): Move library detection...
+	* modules/forkpty: ...into new module.
+	* modules/openpty: Another new module.
+	* modules/pty-tests: Rename and split...
+	* modules/forkpty-tests: ...to this...
+	* modules/openpty-tests: ...and this.
+	* tests/test-pty.c: Rename and split...
+	* tests/test-forkpty.c: ...to this...
+	* tests/test-openpty.c: ...and this.
+	* m4/pty_h.m4 (gl_PTY_H_DEFAULTS): Add new witnesses.
+	(gl_PTY): Split library searching...
+	* m4/pty.m4 (gl_PTY_LIB): ...into new file.
+	(gl_FORKPTY, gl_OPENPTY): New macros.
+	* lib/pty.in.h (forkpty, openpty): Honor new witnesses.
+	* NEWS: Mention the split.
+	* MODULES.html.sh (Misc): Document the modules.
+	* doc/glibc-functions/forkpty.texi (forkpty): Likewise.
+	* doc/glibc-functions/openpty.texi (openpty): Likewise.
+
 	pty: improve replacement header
 	* lib/pty.in.h: New file.
 	* modules/pty (Files): Ship it.

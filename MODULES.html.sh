@@ -3143,6 +3143,7 @@ func_all_modules ()
   func_module exitfail
   func_module error
   func_module extensions
+  func_module forkpty
   func_module getdomainname
   func_module xgetdomainname
   func_module getloadavg
@@ -3150,9 +3151,11 @@ func_all_modules ()
   func_module getusershell
   func_module lib-symbol-visibility
   func_module nproc
+  func_module openpty
   func_module physmem
   func_module posixver
   func_module progname
+  func_module pty
   func_module quotearg
   func_module quote
   func_module readutmp

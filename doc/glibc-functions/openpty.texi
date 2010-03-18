@@ -2,7 +2,7 @@
 @subsection @code{openpty}
 @findex openpty
 
-Gnulib module: pty
+Gnulib module: openpty
 
 Portability problems fixed by Gnulib:
 @itemize

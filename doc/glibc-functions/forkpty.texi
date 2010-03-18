@@ -2,7 +2,7 @@
 @subsection @code{forkpty}
 @findex forkpty
 
-Gnulib module: pty
+Gnulib module: forkpty
 
 Portability problems fixed by Gnulib:
 @itemize

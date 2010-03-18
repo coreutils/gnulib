@@ -1,4 +1,4 @@
-/* Test of pty.h and openpty/forkpty functions.
+/* Test of pty.h and openpty function.
    Copyright (C) 2009, 2010 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -21,8 +21,6 @@
 #include <pty.h>
 
 #include "signature.h"
-SIGNATURE_CHECK (forkpty, int, (int *, char *, struct termios *,
-                                struct winsize *));
 SIGNATURE_CHECK (openpty, int, (int *, int *, char *, struct termios *,
                                 struct winsize *));
 
@@ -39,21 +37,6 @@ main ()
   if (res != 0)
     {
       printf ("openpty returned %d\n", res);
-      return 1;
-    }
-
-  res = forkpty (&amaster, NULL, NULL, NULL);
-  if (res == 0)
-    {
-      /* child process */
-    }
-  else if (res > 0)
-    {
-      /* parent */
-    }
-  else
-    {
-      printf ("forkpty returned %d\n", res);
       return 1;
     }
 

@@ -1,8 +1,0 @@
-Files:
-tests/signature.h
-tests/test-pty.c
-
-Makefile.am:
-TESTS += test-pty
-check_PROGRAMS += test-pty
-test_pty_LDADD = $(LDADD) $(PTY_LIB)

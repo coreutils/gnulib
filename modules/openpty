@@ -1,0 +1,26 @@
+Description:
+Provide the openpty() function.
+
+Files:
+m4/pty.m4
+
+Depends-on:
+pty
+
+configure.ac:
+gl_OPENPTY
+gl_PTY_MODULE_INDICATOR([openpty])
+
+Makefile.am:
+
+Include:
+<pty.h>
+
+Link:
+$(PTY_LIB)
+
+License:
+LGPL
+
+Maintainer:
+Simon Josefsson

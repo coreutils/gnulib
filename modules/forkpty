@@ -1,0 +1,26 @@
+Description:
+Provide the forkpty() function.
+
+Files:
+m4/pty.m4
+
+Depends-on:
+pty
+
+configure.ac:
+gl_FORKPTY
+gl_PTY_MODULE_INDICATOR([forkpty])
+
+Makefile.am:
+
+Include:
+<pty.h>
+
+Link:
+$(PTY_LIB)
+
+License:
+LGPL
+
+Maintainer:
+Simon Josefsson

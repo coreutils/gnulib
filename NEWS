@@ -6,6 +6,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2010-03-18  pty             This module now only declares the pty.h header.
+                            Use the new modules 'forkpty' or 'openpty' to
+                            get the functions that were previously provided.
+
 2010-03-05  exit            This module is deprecated, use 'stdlib' directly
                             instead.  It will be removed 2011-01-01.
 
