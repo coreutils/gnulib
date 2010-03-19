@@ -1,5 +1,16 @@
 2010-03-19  Jim Meyering  <meyering@redhat.com>
 
+	regcomp.c: make non-_LIBC implementation of build_range_exp consistent
+	The _LIBC implementation of build_range_exp correctly honors the
+	RE_NO_EMPTY_RANGES flag when checking for reversed range endpoints.
+	However, the non-_LIBC implementation would ignore that syntax-bit
+	flag and return REG_ERANGE unconditionally.
+	This change makes it honor that flag.
+	* lib/regcomp.c (build_range_exp) [!_LIBC]: Add a parameter: "syntax".
+	Make two pointer parameters "const".
+	Use "syntax" bits in order to honor RE_NO_EMPTY_RANGES.
+	(parse_bracket_exp): Update caller.
+
 	regex.m4: correct the reversed range endpoint ([b-a]) test
 	* m4/regex.m4: When requiring that [b-a] evoke failure,
 	use RE_NO_EMPTY_RANGES.  This makes this entire configure-time
