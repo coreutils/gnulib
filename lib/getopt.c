@@ -41,10 +41,6 @@
 # include <wchar.h>
 #endif
 
-#ifndef attribute_hidden
-# define attribute_hidden
-#endif
-
 /* This version of `getopt' appears to the caller like standard Unix `getopt'
    but it behaves differently for the user, since it allows the user
    to intersperse the options with the other arguments.

@@ -1,3 +1,8 @@
+2010-03-19  Eric Blake  <eblake@redhat.com>
+
+	getopt: avoid compiler warning
+	* lib/getopt.c (attribute_hidden): Remove unused macro.
+
 2010-03-18  Bruno Haible  <bruno@clisp.org>
 
 	Fix link errors on Solaris 8.
