@@ -17,5 +17,5 @@ if ANSICXX
 TESTS += test-stdio-c++
 check_PROGRAMS += test-stdio-c++
 test_stdio_c___SOURCES = test-stdio-c++.cc test-stdio-c++2.cc
-test_stdio_c___LDADD = $(LDADD) $(LIBINTL)
+test_stdio_c___LDADD = $(LDADD) $(LIBINTL) $(LIB_NANOSLEEP)
 endif

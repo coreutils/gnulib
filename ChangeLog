@@ -1,5 +1,18 @@
 2010-03-18  Bruno Haible  <bruno@clisp.org>
 
+	Fix link errors on Solaris 8.
+	* modules/iconv-h-tests (test_iconv_h_c___LDADD): Add LIB_NANOSLEEP.
+	* modules/search-tests (test_search_c___LDADD): Likewise.
+	* modules/signal-tests (test_signal_c___LDADD): Likewise.
+	* modules/spawn-tests (test_spawn_c___LDADD): Likewise.
+	* modules/stdio-tests (test_stdio_c___LDADD): Likewise.
+	* modules/sys_select-tests (test_sys_select_c___LDADD): Likewise.
+	* modules/sys_socket-tests (test_sys_socket_c___LDADD): Likewise.
+	* modules/sys_time-tests (test_sys_time_c___LDADD): Likewise.
+	* modules/wchar-tests (test_wchar_c___LDADD): Likewise.
+
+2010-03-18  Bruno Haible  <bruno@clisp.org>
+
 	Fix bug introduced on 2010-03-14.
 	* m4/spawn_h.m4 (gl_HAVE_POSIX_SPAWN): New macro.
 	(gl_SPAWN_H): Require it.
