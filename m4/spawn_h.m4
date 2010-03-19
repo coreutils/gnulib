@@ -1,4 +1,4 @@
-# spawn_h.m4 serial 9
+# spawn_h.m4 serial 10
 dnl Copyright (C) 2008-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -33,10 +33,7 @@ AC_DEFUN([gl_SPAWN_H],
   fi
   AC_SUBST([HAVE_SPAWN_H])
 
-  AC_CHECK_FUNCS_ONCE([posix_spawn])
-  if test $ac_cv_func_posix_spawn != yes; then
-    HAVE_POSIX_SPAWN=0
-  fi
+  AC_REQUIRE([gl_HAVE_POSIX_SPAWN])
 
   AC_REQUIRE([AC_C_RESTRICT])
 
@@ -53,6 +50,20 @@ AC_DEFUN([gl_SPAWN_H],
     posix_spawn_file_actions_init posix_spawn_file_actions_destroy
     posix_spawn_file_actions_addopen posix_spawn_file_actions_addclose
     posix_spawn_file_actions_adddup2])
+])
+
+dnl Checks whether the system has the functions posix_spawn.
+dnl Sets ac_cv_func_posix_spawn and HAVE_POSIX_SPAWN.
+AC_DEFUN([gl_HAVE_POSIX_SPAWN],
+[
+  dnl Use AC_REQUIRE here, so that the default behavior below is expanded
+  dnl once only, before all statements that occur in other macros.
+  AC_REQUIRE([gl_SPAWN_H_DEFAULTS])
+
+  AC_CHECK_FUNCS_ONCE([posix_spawn])
+  if test $ac_cv_func_posix_spawn != yes; then
+    HAVE_POSIX_SPAWN=0
+  fi
 ])
 
 dnl Unconditionally enables the replacement of <spawn.h>.

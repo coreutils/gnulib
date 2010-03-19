@@ -1,5 +1,13 @@
 2010-03-18  Bruno Haible  <bruno@clisp.org>
 
+	Fix bug introduced on 2010-03-14.
+	* m4/spawn_h.m4 (gl_HAVE_POSIX_SPAWN): New macro.
+	(gl_SPAWN_H): Require it.
+	* m4/posix_spawn.m4 (gl_POSIX_SPAWN_BODY): Likewise.
+	Reported by Simon Josefsson.
+
+2010-03-18  Bruno Haible  <bruno@clisp.org>
+
 	Fix typo introduced on 2009-12-31.
 	* m4/spawn_h.m4 (gl_SPAWN_H): Check for the declaration of
 	posix_spawn_file_actions_adddup2.

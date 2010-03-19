@@ -1,4 +1,4 @@
-# posix_spawn.m4 serial 6
+# posix_spawn.m4 serial 7
 dnl Copyright (C) 2008-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,7 +13,7 @@ AC_DEFUN([gl_POSIX_SPAWN],
 AC_DEFUN([gl_POSIX_SPAWN_BODY],
 [
   AC_REQUIRE([gl_SPAWN_H_DEFAULTS])
-  AC_CHECK_FUNCS_ONCE([posix_spawn])
+  AC_REQUIRE([gl_HAVE_POSIX_SPAWN])
   dnl Assume that when the main function exists, all the others,
   dnl except posix_spawnattr_{get,set}sched*, are available as well.
   dnl AC_CHECK_FUNCS_ONCE([posix_spawnp])
