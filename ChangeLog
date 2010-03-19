@@ -1,5 +1,18 @@
 2010-03-19  Bruno Haible  <bruno@clisp.org>
 
+	getusershell: Provide declaration, missing on Solaris 9.
+	* lib/unistd.in.h (getusershell, setusershell, endusershell): Declare
+	also if HAVE_GETUSERSHELL && !HAVE_DECL_GETUSERSHELL.
+	* m4/getusershell.m4 (gl_FUNC_GETUSERSHELL): When the function exists,
+	check whether it is declared. Set HAVE_DECL_GETUSERSHELL.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize
+	HAVE_DECL_GETUSERSHELL, not HAVE_GETUSERSHELL.
+	* modules/unistd (Makefile.am): Substitute HAVE_DECL_GETUSERSHELL, not
+	HAVE_GETUSERSHELL.
+	* doc/glibc-functions/getusershell.texi: Mention the Solaris problem.
+
+2010-03-19  Bruno Haible  <bruno@clisp.org>
+
 	wctype: Provide iswblank function.
 	* lib/wctype.in.h (iswblank): Provide a replacement also when iswcntrl
 	exists and is fine.

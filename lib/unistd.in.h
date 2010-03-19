@@ -726,7 +726,7 @@ _GL_WARN_ON_USE (getpagesize, "getpagesize is unportable - "
 #if @GNULIB_GETUSERSHELL@
 /* Return the next valid login shell on the system, or NULL when the end of
    the list has been reached.  */
-# if !@HAVE_GETUSERSHELL@
+# if !@HAVE_DECL_GETUSERSHELL@
 _GL_FUNCDECL_SYS (getusershell, char *, (void));
 # endif
 _GL_CXXALIAS_SYS (getusershell, char *, (void));
@@ -741,7 +741,7 @@ _GL_WARN_ON_USE (getusershell, "getusershell is unportable - "
 
 #if @GNULIB_GETUSERSHELL@
 /* Rewind to pointer that is advanced at each getusershell() call.  */
-# if !@HAVE_GETUSERSHELL@
+# if !@HAVE_DECL_GETUSERSHELL@
 _GL_FUNCDECL_SYS (setusershell, void, (void));
 # endif
 _GL_CXXALIAS_SYS (setusershell, void, (void));
@@ -757,7 +757,7 @@ _GL_WARN_ON_USE (setusershell, "setusershell is unportable - "
 #if @GNULIB_GETUSERSHELL@
 /* Free the pointer that is advanced at each getusershell() call and
    associated resources.  */
-# if !@HAVE_GETUSERSHELL@
+# if !@HAVE_DECL_GETUSERSHELL@
 _GL_FUNCDECL_SYS (endusershell, void, (void));
 # endif
 _GL_CXXALIAS_SYS (endusershell, void, (void));

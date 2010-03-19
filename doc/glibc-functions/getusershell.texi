@@ -9,6 +9,9 @@ Portability problems fixed by Gnulib:
 @item
 This function is missing on some platforms:
 AIX 4.3.2, IRIX 6.5, mingw, Interix 3.5, BeOS.
+@item
+This function is missing a declaration on some platforms:
+Solaris 9.
 @end itemize
 
 Portability problems not fixed by Gnulib:
