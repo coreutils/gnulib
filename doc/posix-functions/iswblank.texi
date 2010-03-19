@@ -9,15 +9,15 @@ Gnulib module: wctype
 Portability problems fixed by Gnulib:
 @itemize
 @item
+This function is missing on some platforms:
+AIX 4.3.2, IRIX 6.5, OSF/1 5.1, Solaris 9, mingw.
+@item
 This function returns 0 for all possible arguments on some platforms:
 Linux libc5.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-This function is missing on some platforms:
-AIX 4.3.2, IRIX 6.5, OSF/1 5.1, Solaris 9, mingw.
 @item
 On AIX and Windows platforms, @code{wchar_t} is a 16-bit type and therefore cannot
 accommodate all Unicode characters.

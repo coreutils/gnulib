@@ -1,5 +1,15 @@
 2010-03-19  Bruno Haible  <bruno@clisp.org>
 
+	wctype: Provide iswblank function.
+	* lib/wctype.in.h (iswblank): Provide a replacement also when iswcntrl
+	exists and is fine.
+	* m4/wctype_h.m4 (gl_WCTYPE_H): Also check whether iswcntrl exists.
+	* modules/wctype (Makefile.am): Substitute HAVE_ISWBLANK.
+	* tests/test-wctype.c (main): Re-enable the iswblank tests.
+	* doc/posix-functions/iswblank.texi: Update.
+
+2010-03-19  Bruno Haible  <bruno@clisp.org>
+
 	Tests of module 'pty' in C++ mode.
 	* modules/pty-tests: New file.
 	* tests/test-pty-c++.cc: New file.

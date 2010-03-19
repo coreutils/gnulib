@@ -69,7 +69,8 @@
 
 /* FreeBSD 4.4 to 4.11 has <wctype.h> but lacks the functions.
    Linux libc5 has <wctype.h> and the functions but they are broken.
-   Assume all 12 functions are implemented the same way, or not at all.  */
+   Assume all 11 functions (all isw* except iswblank) are implemented the
+   same way, or not at all.  */
 #if ! @HAVE_ISWCNTRL@ || @REPLACE_ISWCNTRL@
 
 /* IRIX 5.3 has macros but no functions, its isw* macros refer to an
@@ -271,7 +272,16 @@ towupper
   return (wc >= 'a' && wc <= 'z' ? wc - 'a' + 'A' : wc);
 }
 
-#endif /* ! HAVE_ISWCNTRL || REPLACE_ISWCNTRL */
+#elif ! @HAVE_ISWBLANK@
+/* Only the iswblank function is missing.  */
+
+static inline int
+iswblank (wint_t wc)
+{
+  return wc == ' ' || wc == '\t';
+}
+
+#endif
 
 #if defined __MINGW32__
 

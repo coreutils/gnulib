@@ -1,4 +1,4 @@
-# wctype_h.m4 serial 5
+# wctype_h.m4 serial 6
 
 dnl A placeholder for ISO C99 <wctype.h>, for platforms that lack it.
 
@@ -20,6 +20,13 @@ AC_DEFUN([gl_WCTYPE_H],
     HAVE_ISWCNTRL=0
   fi
   AC_SUBST([HAVE_ISWCNTRL])
+  AC_CHECK_FUNCS_ONCE([iswblank])
+  if test $ac_cv_func_iswblank = yes; then
+    HAVE_ISWBLANK=1
+  else
+    HAVE_ISWBLANK=0
+  fi
+  AC_SUBST([HAVE_ISWBLANK])
   AC_CHECK_HEADERS_ONCE([wctype.h])
   AC_REQUIRE([AC_C_INLINE])
 
