@@ -1,3 +1,10 @@
+2010-03-19  Jim Meyering  <meyering@redhat.com>
+
+	regex.m4: correct the reversed range endpoint ([b-a]) test
+	* m4/regex.m4: When requiring that [b-a] evoke failure,
+	use RE_NO_EMPTY_RANGES.  This makes this entire configure-time
+	test pass once again for x86-based systems.
+
 2010-03-19  Bruno Haible  <bruno@clisp.org>
 
 	scandir: Fix link error on Solaris 8.
