@@ -1,5 +1,11 @@
 2010-03-19  Bruno Haible  <bruno@clisp.org>
 
+	scandir: Fix link error on Solaris 8.
+	* lib/scandir.c (_D_EXACT_NAMLEN, _D_ALLOC_NAMLEN): New fallback
+	macros.
+
+2010-03-19  Bruno Haible  <bruno@clisp.org>
+
 	getusershell: Fix documentation.
 	* doc/glibc-functions/endusershell.texi: Refer to the getusershell
 	module.

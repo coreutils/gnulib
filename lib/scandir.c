@@ -33,6 +33,13 @@
 
 #undef select
 
+#ifndef _D_EXACT_NAMLEN
+# define _D_EXACT_NAMLEN(d) strlen ((d)->d_name)
+#endif
+#ifndef _D_ALLOC_NAMLEN
+# define _D_ALLOC_NAMLEN(d) (_D_EXACT_NAMLEN (d) + 1)
+#endif
+
 #if _LIBC
 # ifndef SCANDIR
 #  define SCANDIR scandir
