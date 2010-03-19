@@ -1,3 +1,11 @@
+2010-03-22  Eric Blake  <eblake@redhat.com>
+
+	gethostname: fix build on mingw
+	* lib/unistd.in.h (includes): Work around fact that mingw
+	<winsock2.h> re-includes <unistd.h>, by avoiding any
+	redeclarations if we are being included by <winsock2.h>.
+	Reported by Matthias Bolte.
+
 2010-03-21  Bruno Haible  <bruno@clisp.org>
 
 	forkpty: Provide replacement on AIX, HP-UX, IRIX, Solaris.

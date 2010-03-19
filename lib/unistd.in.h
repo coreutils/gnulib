@@ -15,7 +15,23 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#ifndef _GL_UNISTD_H
+/* Special invocation convention:
+   - On mingw, several headers, including <winsock2.h>, include <unistd.h>,
+     but we need to ensure that both the system <unistd.h> and <winsock2.h>
+     are completely included before we replace gethostname.  */
+#if @UNISTD_H_HAVE_WINSOCK2_H@ && !defined _GL_WINSOCK2_H_WITNESS \
+  && defined _WINSOCK2_H
+/* <unistd.h> is being indirectly included for the first time from
+   <winsock2.h>; avoid declaring any overrides.  */
+# if @HAVE_UNISTD_H@
+#  @INCLUDE_NEXT@ @NEXT_UNISTD_H@
+# else
+#  error unexpected; report this to bug-gnulib@gnu.org
+# endif
+# define _GL_WINSOCK2_H_WITNESS
+
+/* Normal invocation.  */
+#elif !defined _GL_UNISTD_H
 
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
@@ -26,7 +42,14 @@
 # @INCLUDE_NEXT@ @NEXT_UNISTD_H@
 #endif
 
-#ifndef _GL_UNISTD_H
+/* Get all possible declarations of gethostname().  */
+#if @UNISTD_H_HAVE_WINSOCK2_H@ && !defined _GL_INCLUDING_WINSOCK2_H
+# define _GL_INCLUDING_WINSOCK2_H
+# include <winsock2.h>
+# undef _GL_INCLUDING_WINSOCK2_H
+#endif
+
+#if !defined _GL_UNISTD_H && !defined _GL_INCLUDING_WINSOCK2_H
 #define _GL_UNISTD_H
 
 /* NetBSD 5.0 mis-defines NULL.  Also get size_t.  */
@@ -76,7 +99,6 @@
 #if @GNULIB_GETHOSTNAME@
 /* Get all possible declarations of gethostname().  */
 # if @UNISTD_H_HAVE_WINSOCK2_H@
-#  include <winsock2.h>
 #  if !defined _GL_SYS_SOCKET_H
 #   undef socket
 #   define socket               socket_used_without_including_sys_socket_h
