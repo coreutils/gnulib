@@ -1,0 +1,15 @@
+Files:
+tests/test-pty-c++.cc
+tests/signature.h
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-pty-c++
+check_PROGRAMS += test-pty-c++
+test_pty_c___SOURCES = test-pty-c++.cc
+endif

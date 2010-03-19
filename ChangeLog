@@ -1,3 +1,10 @@
+2010-03-19  Bruno Haible  <bruno@clisp.org>
+
+	Tests of module 'pty' in C++ mode.
+	* modules/pty-tests: New file.
+	* tests/test-pty-c++.cc: New file.
+	* m4/pty_h.m4 (gl_PTY_MODULE_INDICATOR): Invoke gl_MODULE_INDICATOR.
+
 2010-03-19  Eric Blake  <eblake@redhat.com>
 
 	logb: fix documentation
