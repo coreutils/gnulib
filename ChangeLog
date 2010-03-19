@@ -1,3 +1,9 @@
+2010-03-18  Bruno Haible  <bruno@clisp.org>
+
+	Fix typo introduced on 2009-12-31.
+	* m4/spawn_h.m4 (gl_SPAWN_H): Check for the declaration of
+	posix_spawn_file_actions_adddup2.
+
 2010-03-17  Bert Wesarg  <bert.wesarg@googlemail.com>  (tiny change)
 	and Eric Blake  <eblake@redhat.com>
 
@@ -3374,7 +3380,7 @@
 	(posix_spawn_file_actions_destroy)
 	(posix_spawn_file_actions_addopen)
 	(posix_spawn_file_actions_addclose)
-	(posix_spawwn_file_actions_adddup2): Likewise.
+	(posix_spawn_file_actions_adddup2): Likewise.
 	* m4/signal_h.m4 (gl_SIGNAL_H): Guarantee uid_t.
 	* tests/test-signal.c (main): Enhance test.
 

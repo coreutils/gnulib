@@ -1,4 +1,4 @@
-# spawn_h.m4 serial 8
+# spawn_h.m4 serial 9
 dnl Copyright (C) 2008-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -52,7 +52,7 @@ AC_DEFUN([gl_SPAWN_H],
     posix_spawnattr_getschedparam posix_spawnattr_setschedparam
     posix_spawn_file_actions_init posix_spawn_file_actions_destroy
     posix_spawn_file_actions_addopen posix_spawn_file_actions_addclose
-    posix_spawwn_file_actions_adddup2])
+    posix_spawn_file_actions_adddup2])
 ])
 
 dnl Unconditionally enables the replacement of <spawn.h>.
