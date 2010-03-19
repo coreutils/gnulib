@@ -8,11 +8,11 @@ Gnulib module: logb
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This function is missing a declaration on some platforms:
+Cygwin 1.5.x.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-This function is missing a declaration on some platforms:
-Cygwin 1.5.x.
 @end itemize

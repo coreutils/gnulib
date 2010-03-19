@@ -1,5 +1,9 @@
 2010-03-19  Eric Blake  <eblake@redhat.com>
 
+	logb: fix documentation
+	* doc/posix-functions/logb.texi (logb): Gnulib fixes the cygwin
+	1.5 declaration bug.
+
 	forkpty, openpty: prefer glibc's const-safe prototype
 	* lib/forkpty.c (rpl_forkpty): New file.
 	* lib/openpty.c (rpl_openpty): Likewise.
