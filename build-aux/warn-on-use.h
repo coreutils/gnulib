@@ -70,7 +70,7 @@ extern __typeof__ (function) function __attribute__ ((__warning__ (message)))
 
 # else /* Unsupported.  */
 #  define _GL_WARN_ON_USE(function, message) \
-extern int _gl_warn_on_use
+_GL_WARN_EXTERN_C int _gl_warn_on_use
 # endif
 #endif
 
@@ -87,6 +87,16 @@ extern rettype function parameters_and_attributes \
      __attribute__ ((__warning__ (msg)))
 # else /* Unsupported.  */
 #  define _GL_WARN_ON_USE_CXX(function,rettype,parameters_and_attributes,msg) \
-extern int _gl_warn_on_use
+_GL_WARN_EXTERN_C int _gl_warn_on_use
+# endif
+#endif
+
+/* _GL_WARN_EXTERN_C declaration;
+   performs the declaration with C linkage.  */
+#ifndef _GL_WARN_EXTERN_C
+# if defined __cplusplus
+#  define _GL_WARN_EXTERN_C extern "C"
+# else
+#  define _GL_WARN_EXTERN_C extern
 # endif
 #endif
