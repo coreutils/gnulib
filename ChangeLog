@@ -1,4 +1,10 @@
 2010-03-20  Bruno Haible  <bruno@clisp.org>
+            Jim Meyering  <meyering@redhat.com>
+
+	lchown: Avoid "unused variable" warning.
+	* lib/lchown.c (rpl_lchown): Move variable 'st' into #if block.
+
+2010-03-20  Bruno Haible  <bruno@clisp.org>
 
 	Work around unlink() bug on MacOS X 10.5.6.
 	* lib/unlink.c (rpl_unlink): If UNLINK_PARENT_BUG is defined, fail when

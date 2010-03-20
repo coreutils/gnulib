@@ -70,11 +70,12 @@ lchown (const char *file, uid_t uid, gid_t gid)
 int
 rpl_lchown (const char *file, uid_t uid, gid_t gid)
 {
-  struct stat st;
   bool stat_valid = false;
   int result;
 
 # if CHOWN_CHANGE_TIME_BUG
+  struct stat st;
+
   if (gid != (gid_t) -1 || uid != (uid_t) -1)
     {
       if (lstat (file, &st))
