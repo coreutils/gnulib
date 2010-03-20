@@ -1,5 +1,15 @@
 2010-03-20  Bruno Haible  <bruno@clisp.org>
 
+	Work around unlink() bug on MacOS X 10.5.6.
+	* lib/unlink.c (rpl_unlink): If UNLINK_PARENT_BUG is defined, fail when
+	attempting to unlink a parent directory.
+	* m4/unlink.m4 (gl_FUNC_UNLINK): Require AC_CANONICAL_HOST. Test for
+	MacOS X 10.5 bug. If the bug is present, define UNLINK_PARENT_BUG and
+	activate for the replacement function.
+	* doc/posix-functions/unlink.texi: Mention the MacOS X 10.5 bug.
+
+2010-03-20  Bruno Haible  <bruno@clisp.org>
+
 	Fix link errors on Solaris 8.
 	* modules/dirent-tests (test_dirent_c___LDADD): Add LIB_NANOSLEEP.
 	* modules/wctype-tests (test_wctype_c___LDADD): Likewise.

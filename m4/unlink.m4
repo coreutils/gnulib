@@ -1,4 +1,4 @@
-# unlink.m4 serial 3
+# unlink.m4 serial 4
 dnl Copyright (C) 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,9 +8,10 @@ AC_DEFUN([gl_FUNC_UNLINK],
 [
   AC_REQUIRE([gl_AC_DOS])
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
+  AC_REQUIRE([AC_CANONICAL_HOST])
   dnl Detect Solaris 9 and FreeBSD 7.2 bug.
   AC_CACHE_CHECK([whether unlink honors trailing slashes],
-    [gl_cv_func_unlink_works],
+    [gl_cv_func_unlink_honors_slashes],
     [touch conftest.file
      # Assume that if we have lstat, we can also check symlinks.
      if test $ac_cv_func_lstat = yes; then
@@ -25,10 +26,70 @@ AC_DEFUN([gl_FUNC_UNLINK],
       if (!unlink ("conftest.lnk/") || errno != ENOTDIR) return 2;
 #endif
       ]])],
-      [gl_cv_func_unlink_works=yes], [gl_cv_func_unlink_works=no],
-      [gl_cv_func_unlink_works="guessing no"])
+      [gl_cv_func_unlink_honors_slashes=yes],
+      [gl_cv_func_unlink_honors_slashes=no],
+      [gl_cv_func_unlink_honors_slashes="guessing no"])
      rm -f conftest.file conftest.lnk])
-  if test x"$gl_cv_func_unlink_works" != xyes; then
+  dnl Detect MacOS X 10.5.6 bug: On read-write HFS mounts, unlink("..") or
+  dnl unlink("../..") succeeds without doing anything.
+  AC_CACHE_CHECK([whether unlink of a parent directory fails is it should],
+    [gl_cv_func_unlink_parent_fails],
+    [case "$host_os" in
+       darwin*)
+         if {
+              # Use the mktemp program if available. If not available, hide the error
+              # message.
+              tmp=`(umask 077 && mktemp -d /tmp/gtXXXXXX) 2>/dev/null` &&
+              test -n "$tmp" && test -d "$tmp"
+            } ||
+            {
+              # Use a simple mkdir command. It is guaranteed to fail if the directory
+              # already exists.  $RANDOM is bash specific and expands to empty in shells
+              # other than bash, ksh and zsh.  Its use does not increase security;
+              # rather, it minimizes the probability of failure in a very cluttered /tmp
+              # directory.
+              tmp=/tmp/gt$$-$RANDOM
+              (umask 077 && mkdir "$tmp")
+            }; then
+           mkdir "$tmp/subdir"
+           export tmp
+           AC_RUN_IFELSE(
+             [AC_LANG_SOURCE([[
+                #include <stdlib.h>
+                #include <unistd.h>
+                int main ()
+                {
+                  if (chdir (getenv ("tmp")) != 0)
+                    return 1;
+                  return unlink ("..") == 0;
+                }
+              ]])],
+             [gl_cv_func_unlink_parent_fails=yes],
+             [gl_cv_func_unlink_parent_fails=no],
+             [gl_cv_func_unlink_parent_fails="guessing no"])
+           rm -rf "$tmp"
+           unset tmp
+         else
+           gl_cv_func_unlink_parent_fails="guessing no"
+         fi
+         ;;
+       *)
+         gl_cv_func_unlink_parent_fails="guessing yes"
+         ;;
+     esac
+    ])
+  case "$gl_cv_func_unlink_parent_fails" in
+    *no)
+      AC_DEFINE([UNLINK_PARENT_BUG], [1],
+        [Define to 1 if unlink() on a parent directory may succeed])
+      ;;
+  esac
+  if test "$gl_cv_func_unlink_honors_slashes" != yes \
+     || { case "$gl_cv_func_unlink_parent_fails" in
+            *yes) false;;
+            *no) true;;
+          esac
+        }; then
     REPLACE_UNLINK=1
     AC_LIBOBJ([unlink])
   fi

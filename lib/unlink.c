@@ -80,6 +80,16 @@ rpl_unlink (char const *name)
         }
     }
   if (!result)
-    result = unlink (name);
+    {
+#if UNLINK_PARENT_BUG
+      if (len >= 2 && name[len - 1] == '.' && name[len - 2] == '.'
+          && (len == 2 || ISSLASH (name[len - 3])))
+        {
+          errno = EISDIR; /* could also use EPERM */
+          return -1;
+        }
+#endif
+      result = unlink (name);
+    }
   return result;
 }
