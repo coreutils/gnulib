@@ -1,5 +1,10 @@
 2010-03-20  Bruno Haible  <bruno@clisp.org>
 
+	* m4/unlink.m4 (gl_FUNC_UNLINK): Fix last commit.
+	Reported by Jim Meyering.
+
+2010-03-20  Bruno Haible  <bruno@clisp.org>
+
 	pipe: Set errno upon failure.
 	* lib/pipe.h: Specify that when -1 is returned, errno is set.
 	* lib/pipe.c (create_pipe): Set errno when returning -1. Use the right

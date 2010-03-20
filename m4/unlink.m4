@@ -36,6 +36,11 @@ AC_DEFUN([gl_FUNC_UNLINK],
     [gl_cv_func_unlink_parent_fails],
     [case "$host_os" in
        darwin*)
+         dnl Try to unlink a subdirectory of /tmp, because /tmp is usually on a
+         dnl HFS mount on MacOS X. Use a subdirectory, owned by the current
+         dnl user, because otherwise unlink() may fail due to permissions
+         dnl reasons, and because when running as root we don't want to risk
+         dnl destroying the entire /tmp.
          if {
               # Use the mktemp program if available. If not available, hide the error
               # message.
@@ -52,14 +57,15 @@ AC_DEFUN([gl_FUNC_UNLINK],
               (umask 077 && mkdir "$tmp")
             }; then
            mkdir "$tmp/subdir"
-           export tmp
+           GL_SUBDIR_FOR_UNLINK="$tmp/subdir"
+           export GL_SUBDIR_FOR_UNLINK
            AC_RUN_IFELSE(
              [AC_LANG_SOURCE([[
                 #include <stdlib.h>
                 #include <unistd.h>
                 int main ()
                 {
-                  if (chdir (getenv ("tmp")) != 0)
+                  if (chdir (getenv ("GL_SUBDIR_FOR_UNLINK")) != 0)
                     return 1;
                   return unlink ("..") == 0;
                 }
@@ -67,8 +73,8 @@ AC_DEFUN([gl_FUNC_UNLINK],
              [gl_cv_func_unlink_parent_fails=yes],
              [gl_cv_func_unlink_parent_fails=no],
              [gl_cv_func_unlink_parent_fails="guessing no"])
+           unset GL_SUBDIR_FOR_UNLINK
            rm -rf "$tmp"
-           unset tmp
          else
            gl_cv_func_unlink_parent_fails="guessing no"
          fi
