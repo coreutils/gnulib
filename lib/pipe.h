@@ -36,7 +36,8 @@ extern "C" {
    one or two file descriptors for communication with the subprocess.
    If the subprocess creation fails: if exit_on_error is true, the main
    process exits with an error message; otherwise, an error message is given
-   if null_stderr is false, then -1 is returned and fd[] remain uninitialized.
+   if null_stderr is false, then -1 is returned, with errno set, and fd[]
+   remain uninitialized.
 
    After finishing communication, the caller should call wait_subprocess()
    to get rid of the subprocess in the process table.

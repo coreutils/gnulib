@@ -128,6 +128,7 @@ create_pipe (const char *progname,
   int nulloutfd;
   int stdinfd;
   int stdoutfd;
+  int saved_errno;
 
   /* FIXME: Need to free memory allocated by prepare_spawn.  */
   prog_argv = prepare_spawn (prog_argv);
@@ -203,6 +204,8 @@ create_pipe (const char *progname,
                             (const char **) environ);
         }
     }
+  if (child == -1)
+    saved_errno = errno;
   if (stdinfd >= 0)
     close (stdinfd);
   if (stdoutfd >= 0)
@@ -225,12 +228,13 @@ create_pipe (const char *progname,
   if (child == -1)
     {
       if (exit_on_error || !null_stderr)
-        error (exit_on_error ? EXIT_FAILURE : 0, errno,
+        error (exit_on_error ? EXIT_FAILURE : 0, saved_errno,
                _("%s subprocess failed"), progname);
       if (pipe_stdout)
         close (ifd[0]);
       if (pipe_stdin)
         close (ofd[1]);
+      errno = saved_errno;
       return -1;
     }
 
@@ -350,6 +354,7 @@ create_pipe (const char *progname,
           close (ofd[0]);
           close (ofd[1]);
         }
+      errno = err;
       return -1;
     }
   posix_spawn_file_actions_destroy (&actions);
