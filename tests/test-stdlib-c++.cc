@@ -135,6 +135,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::strtoull, unsigned long long,
                  (const char *, char **, int));
 #endif
 
+#if GNULIB_UNLOCKPT
+SIGNATURE_CHECK (GNULIB_NAMESPACE::unlockpt, int, (int));
+#endif
+
 #if GNULIB_UNSETENV
 SIGNATURE_CHECK (GNULIB_NAMESPACE::unsetenv, int, (const char *));
 #endif

@@ -1,3 +1,18 @@
+2010-03-21  Bruno Haible  <bruno@clisp.org>
+
+	New module 'unlockpt'.
+	* lib/unlockpt.c: New file, from glibc with modifications.
+	* m4/unlockpt.m4: New file.
+	* modules/unlockpt: New file.
+	* lib/stdlib.in.h (unlockpt): New declaration.
+	* m4/stdlib_h.m4 (gl_STDLIB_H): Check whether unlockpt is declared.
+	(gl_STDLIB_H_DEFAULTS): Initialize GNULIB_UNLOCKPT, HAVE_UNLOCKPT.
+	* modules/stdlib (Makefile.am): Substitute GNULIB_UNLOCKPT,
+	HAVE_UNLOCKPT.
+	* doc/posix-functions/unlockpt.texi: Mention the new module.
+	* tests/test-stdlib-c++.cc: Check GNULIB_NAMESPACE::unlockpt.
+	* config/srclist.txt: Add unlockpt.c (commented).
+
 2010-03-21  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: prohibit inclusion of "intprops.h" without use

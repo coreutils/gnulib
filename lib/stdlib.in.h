@@ -638,6 +638,22 @@ _GL_WARN_ON_USE (strtoull, "strtoull is unportable - "
 # endif
 #endif
 
+#if @GNULIB_UNLOCKPT@
+/* Unlock the slave side of the pseudo-terminal whose master side is specified
+   by FD, so that it can be opened.  */
+# if !@HAVE_UNLOCKPT@
+_GL_FUNCDECL_SYS (unlockpt, int, (int fd));
+# endif
+_GL_CXXALIAS_SYS (unlockpt, int, (int fd));
+_GL_CXXALIASWARN (unlockpt);
+#elif defined GNULIB_POSIXCHECK
+# undef unlockpt
+# if HAVE_RAW_DECL_UNLOCKPT
+_GL_WARN_ON_USE (ptsname, "unlockpt is not portable - "
+                 "use gnulib module unlockpt for portability");
+# endif
+#endif
+
 #if @GNULIB_UNSETENV@
 /* Remove the variable NAME from the environment.  */
 # if @REPLACE_UNSETENV@

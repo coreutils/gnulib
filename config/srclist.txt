@@ -217,6 +217,7 @@ $LIBCSRC/stdlib/strtoul.c		lib gpl
 #$LIBCSRC/sysdeps/posix/tempname.c	lib gpl
 #$LIBCSRC/sysdeps/unix/bsd/poll.c	lib gpl
 #$LIBCSRC/sysdeps/unix/bsd/ptsname.c	lib gpl
+#$LIBCSRC/sysdeps/unix/bsd/unlockpt.c	lib gpl
 #$LIBCSRC/sysdeps/unix/dirfd.c		lib gpl
 #$LIBCSRC/sysdeps/unix/grantpt.c	lib gpl
 #$LIBCSRC/sysdeps/unix/rmdir.c		lib gpl
