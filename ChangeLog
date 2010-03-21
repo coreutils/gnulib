@@ -1,5 +1,20 @@
 2010-03-21  Bruno Haible  <bruno@clisp.org>
 
+	openpty: Provide replacement on AIX, HP-UX, IRIX, Solaris.
+	* lib/openpty.c (openpty): New replacement function.
+	* lib/pty.in.h: Include <termios.h>.
+	(openpty): Update declaration. Add comments.
+	* m4/pty.m4 (gl_OPENPTY): Require AC_USE_SYSTEM_EXTENSIONS. If openpty
+	is not declared, arrange to provide the replacement. Check for _getpty
+	and posix_openpt.
+	* modules/openpty (Depends-on): Add extensions, fcntl-h, ioctl.
+	* m4/pty_h.m4 (gl_PTY_H_DEFAULTS): Initialize HAVE_OPENPTY.
+	* modules/pty (Makefile.am): Substitute HAVE_OPENPTY.
+	* modules/pty-tests (test_pty_c___LDADD): New variable.
+	* doc/glibc-functions/openpty.texi: More supported platforms.
+
+2010-03-21  Bruno Haible  <bruno@clisp.org>
+
 	setenv: Tweaks.
 	* m4/setenv.m4 (gl_FUNC_SETENV_SEPARATE): Include necessary headers in
 	the test program.

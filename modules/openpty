@@ -1,5 +1,5 @@
 Description:
-Provide the openpty() function.
+openpty() function: Open a pseudo-terminal.
 
 Files:
 lib/openpty.c
@@ -7,6 +7,9 @@ m4/pty.m4
 
 Depends-on:
 pty
+extensions
+fcntl-h
+ioctl
 
 configure.ac:
 gl_OPENPTY

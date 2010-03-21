@@ -70,6 +70,11 @@ AC_DEFUN([gl_OPENPTY],
   AC_REQUIRE([gl_PTY_LIB])
   AC_REQUIRE([gl_PTY])
 
+  dnl Persuade Solaris <stdlib.h> to declare posix_openpt().
+  AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
+
+  dnl We assume that openpty exists (possibly in libc, possibly in libutil)
+  dnl if and only if it is declared.
   AC_CHECK_DECLS([openpty],,, [[
 #if HAVE_PTY_H
 # include <pty.h>
@@ -81,15 +86,13 @@ AC_DEFUN([gl_OPENPTY],
 # include <libutil.h>
 #endif
 ]])
-  if test $ac_cv_have_decl_openpty = no; then
-    AC_MSG_WARN([[Cannot find openpty, build will likely fail]])
-  fi
-
-  dnl Prefer glibc's const-safe prototype, if available.
-  AC_CACHE_CHECK([for const-safe openpty signature],
-    [gl_cv_func_openpty_const],
-    [AC_COMPILE_IFELSE(
-      [AC_LANG_PROGRAM([[
+  if test $ac_cv_have_decl_openpty = yes; then
+    dnl The system has openpty.
+    dnl Prefer glibc's const-safe prototype, if available.
+    AC_CACHE_CHECK([for const-safe openpty signature],
+      [gl_cv_func_openpty_const],
+      [AC_COMPILE_IFELSE(
+        [AC_LANG_PROGRAM([[
 #if HAVE_PTY_H
 # include <pty.h>
 #endif
@@ -99,13 +102,21 @@ AC_DEFUN([gl_OPENPTY],
 #if HAVE_LIBUTIL_H
 # include <libutil.h>
 #endif
-      ]], [[
-        int openpty (int *, int *, char *, struct termios const *,
-                     struct winsize const *);
-      ]])],
-      [gl_cv_func_openpty_const=yes], [gl_cv_func_openpty_const=no])])
-  if test $gl_cv_func_openpty_const != yes; then
-    REPLACE_OPENPTY=1
+          ]], [[
+            int openpty (int *, int *, char *, struct termios const *,
+                       struct winsize const *);
+          ]])
+        ],
+        [gl_cv_func_openpty_const=yes], [gl_cv_func_openpty_const=no])
+      ])
+    if test $gl_cv_func_openpty_const != yes; then
+      REPLACE_OPENPTY=1
+      AC_LIBOBJ([openpty])
+    fi
+  else
+    dnl The system does not have openpty.
+    HAVE_OPENPTY=0
     AC_LIBOBJ([openpty])
+    AC_CHECK_FUNCS([_getpty posix_openpt])
   fi
 ])

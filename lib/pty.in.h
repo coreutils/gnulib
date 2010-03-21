@@ -37,6 +37,9 @@
 # include <libutil.h>
 #endif
 
+/* Get 'struct termios' and 'struct winsize'.  */
+#include <termios.h>
+
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
 /* The definition of _GL_WARN_ON_USE is copied here.  */
@@ -71,21 +74,29 @@ _GL_WARN_ON_USE (forkpty, "forkpty is not declared consistently - "
 #endif
 
 #if @GNULIB_OPENPTY@
+/* Create pseudo tty master slave pair and set terminal attributes
+   according to TERMP and WINP.  Return handles for both ends in
+   *AMASTER and *ASLAVE, and return the name of the slave end in NAME.  */
 # if @REPLACE_OPENPTY@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef openpty
 #   define openpty rpl_openpty
 #  endif
 _GL_FUNCDECL_RPL (openpty, int,
-                  (int *, int *, char *, struct termios const *,
-                   struct winsize const *));
+                  (int *amaster, int *aslave, char *name,
+                   struct termios const *termp, struct winsize const *winp));
 _GL_CXXALIAS_RPL (openpty, int,
-                  (int *, int *, char *, struct termios const *,
-                   struct winsize const *));
+                  (int *amaster, int *aslave, char *name,
+                   struct termios const *termp, struct winsize const *winp));
 # else
+#  if !@HAVE_OPENPTY@
+_GL_FUNCDECL_SYS (openpty, int,
+                  (int *amaster, int *aslave, char *name,
+                   struct termios const *termp, struct winsize const *winp));
+#  endif
 _GL_CXXALIAS_SYS (openpty, int,
-                  (int *, int *, char *, struct termios const *,
-                   struct winsize const *));
+                  (int *amaster, int *aslave, char *name,
+                   struct termios const *termp, struct winsize const *winp));
 # endif
 _GL_CXXALIASWARN (openpty);
 #elif defined GNULIB_POSIXCHECK

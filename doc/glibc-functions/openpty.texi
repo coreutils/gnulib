@@ -7,6 +7,9 @@ Gnulib module: openpty
 Portability problems fixed by Gnulib:
 @itemize
 @item
+This function is missing on some platforms:
+AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 10, mingw.
+@item
 One some systems (at least including Cygwin, Interix, OSF/1 4 and 5,
 and Mac OS X) linking with @code{-lutil} is not required.
 @item
@@ -24,7 +27,4 @@ FreeBSD, Cygwin 1.7.1.
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-On some systems (at least including Solaris and HP-UX) the function is
-missing.
 @end itemize
