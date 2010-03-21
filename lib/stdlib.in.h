@@ -201,6 +201,22 @@ _GL_WARN_ON_USE (getsubopt, "getsubopt is unportable - "
 # endif
 #endif
 
+#if @GNULIB_GRANTPT@
+/* Change the ownership and access permission of the slave side of the
+   pseudo-terminal whose master side is specified by FD.  */
+# if !@HAVE_GRANTPT@
+_GL_FUNCDECL_SYS (grantpt, int, (int fd));
+# endif
+_GL_CXXALIAS_SYS (grantpt, int, (int fd));
+_GL_CXXALIASWARN (grantpt);
+#elif defined GNULIB_POSIXCHECK
+# undef grantpt
+# if HAVE_RAW_DECL_GRANTPT
+_GL_WARN_ON_USE (ptsname, "grantpt is not portable - "
+                 "use gnulib module grantpt for portability");
+# endif
+#endif
+
 #if @GNULIB_MALLOC_POSIX@
 # if !@HAVE_MALLOC_POSIX@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)

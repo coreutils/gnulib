@@ -1,5 +1,20 @@
 2010-03-21  Bruno Haible  <bruno@clisp.org>
 
+	New module 'grantpt'.
+	* lib/grantpt.c: New file, from glibc with modifications.
+	* m4/grantpt.m4: New file.
+	* modules/grantpt: New file.
+	* lib/stdlib.in.h (grantpt): New declaration.
+	* m4/stdlib_h.m4 (gl_STDLIB_H): Check whether grantpt is declared.
+	(gl_STDLIB_H_DEFAULTS): Initialize GNULIB_GRANTPT, HAVE_GRANTPT.
+	* modules/stdlib (Makefile.am): Substitute GNULIB_GRANTPT,
+	HAVE_GRANTPT.
+	* doc/posix-functions/grantpt.texi: Mention the new module.
+	* tests/test-stdlib-c++.cc: Check GNULIB_NAMESPACE::grantpt.
+	* config/srclist.txt: Add grantpt.c (commented).
+
+2010-03-21  Bruno Haible  <bruno@clisp.org>
+
 	New module 'pt_chown'.
 	* lib/pt_chown.c: New file, from glibc with modifications.
 	* lib/pty-private.h: New file, from glibc with modifications.

@@ -1,0 +1,27 @@
+Description:
+grantpt() function: Acquire ownership of the slave side of a pseudo-terminal.
+
+Files:
+lib/grantpt.c
+m4/grantpt.m4
+
+Depends-on:
+stdlib
+extensions
+pt_chown
+configmake
+
+configure.ac:
+gl_FUNC_GRANTPT
+gl_STDLIB_MODULE_INDICATOR([grantpt])
+
+Makefile.am:
+
+Include:
+<stdlib.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible

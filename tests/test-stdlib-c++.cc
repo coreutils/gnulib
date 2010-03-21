@@ -48,6 +48,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::getsubopt, int,
                  (char **, char *const *, char **));
 #endif
 
+#if GNULIB_GRANTPT
+SIGNATURE_CHECK (GNULIB_NAMESPACE::grantpt, int, (int));
+#endif
+
 #if GNULIB_MALLOC_POSIX
 SIGNATURE_CHECK (GNULIB_NAMESPACE::malloc, void *, (size_t));
 #endif
