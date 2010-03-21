@@ -85,7 +85,12 @@ typedef int verify_NSIG_constraint[2 * (NSIG <= 32) - 1];
 # endif
 
 /* Test whether a given signal is contained in a signal set.  */
-# if !@HAVE_POSIX_SIGNALBLOCKING@
+# if @HAVE_POSIX_SIGNALBLOCKING@
+/* This function is defined as a macro on MacOS X.  */
+#  if defined __cplusplus && defined GNULIB_NAMESPACE
+#   undef sigismember
+#  endif
+# else
 _GL_FUNCDECL_SYS (sigismember, int, (const sigset_t *set, int sig)
                                     _GL_ARG_NONNULL ((1)));
 # endif
@@ -93,14 +98,24 @@ _GL_CXXALIAS_SYS (sigismember, int, (const sigset_t *set, int sig));
 _GL_CXXALIASWARN (sigismember);
 
 /* Initialize a signal set to the empty set.  */
-# if !@HAVE_POSIX_SIGNALBLOCKING@
+# if @HAVE_POSIX_SIGNALBLOCKING@
+/* This function is defined as a macro on MacOS X.  */
+#  if defined __cplusplus && defined GNULIB_NAMESPACE
+#   undef sigemptyset
+#  endif
+# else
 _GL_FUNCDECL_SYS (sigemptyset, int, (sigset_t *set) _GL_ARG_NONNULL ((1)));
 # endif
 _GL_CXXALIAS_SYS (sigemptyset, int, (sigset_t *set));
 _GL_CXXALIASWARN (sigemptyset);
 
 /* Add a signal to a signal set.  */
-# if !@HAVE_POSIX_SIGNALBLOCKING@
+# if @HAVE_POSIX_SIGNALBLOCKING@
+/* This function is defined as a macro on MacOS X.  */
+#  if defined __cplusplus && defined GNULIB_NAMESPACE
+#   undef sigaddset
+#  endif
+# else
 _GL_FUNCDECL_SYS (sigaddset, int, (sigset_t *set, int sig)
                                   _GL_ARG_NONNULL ((1)));
 # endif
@@ -108,7 +123,12 @@ _GL_CXXALIAS_SYS (sigaddset, int, (sigset_t *set, int sig));
 _GL_CXXALIASWARN (sigaddset);
 
 /* Remove a signal from a signal set.  */
-# if !@HAVE_POSIX_SIGNALBLOCKING@
+# if @HAVE_POSIX_SIGNALBLOCKING@
+/* This function is defined as a macro on MacOS X.  */
+#  if defined __cplusplus && defined GNULIB_NAMESPACE
+#   undef sigdelset
+#  endif
+# else
 _GL_FUNCDECL_SYS (sigdelset, int, (sigset_t *set, int sig)
                                   _GL_ARG_NONNULL ((1)));
 # endif
@@ -116,7 +136,12 @@ _GL_CXXALIAS_SYS (sigdelset, int, (sigset_t *set, int sig));
 _GL_CXXALIASWARN (sigdelset);
 
 /* Fill a signal set with all possible signals.  */
-# if !@HAVE_POSIX_SIGNALBLOCKING@
+# if @HAVE_POSIX_SIGNALBLOCKING@
+/* This function is defined as a macro on MacOS X.  */
+#  if defined __cplusplus && defined GNULIB_NAMESPACE
+#   undef sigfillset
+#  endif
+# else
 _GL_FUNCDECL_SYS (sigfillset, int, (sigset_t *set) _GL_ARG_NONNULL ((1)));
 # endif
 _GL_CXXALIAS_SYS (sigfillset, int, (sigset_t *set));
