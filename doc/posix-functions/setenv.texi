@@ -14,7 +14,7 @@ AIX 4.3.2, HP-UX 11, IRIX 6.5, Solaris 9, mingw, BeOS.
 @item
 On some platforms, this function does not fail with @samp{EINVAL} when
 passed an empty string or a string containing @samp{=}:
-FreeBSD 6.0, NetBSD 1.6, OpenBSD 3.8, Cygwin 1.5.x.
+MacOS X 10.5, FreeBSD 6.0, NetBSD 1.6, OpenBSD 3.8, Cygwin 1.5.x.
 @item
 On some platforms, this function removes a leading @samp{=} from the
 value argument:

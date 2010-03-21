@@ -1,5 +1,12 @@
 2010-03-21  Bruno Haible  <bruno@clisp.org>
 
+	setenv: Tweaks.
+	* m4/setenv.m4 (gl_FUNC_SETENV_SEPARATE): Include necessary headers in
+	the test program.
+	* doc/posix-functions/setenv.texi: Update platforms list.
+
+2010-03-21  Bruno Haible  <bruno@clisp.org>
+
 	New module 'unlockpt'.
 	* lib/unlockpt.c: New file, from glibc with modifications.
 	* m4/unlockpt.m4: New file.

@@ -1,4 +1,4 @@
-# setenv.m4 serial 15
+# setenv.m4 serial 16
 dnl Copyright (C) 2001-2004, 2006-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -25,6 +25,7 @@ AC_DEFUN([gl_FUNC_SETENV_SEPARATE],
       [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
        #include <stdlib.h>
        #include <errno.h>
+       #include <string.h>
       ]], [[
        if (setenv ("", "", 0) != -1) return 1;
        if (errno != EINVAL) return 2;
