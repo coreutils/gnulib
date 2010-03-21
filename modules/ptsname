@@ -1,0 +1,26 @@
+Description:
+ptsname() function: Determine name of the slave side of a pseudo-terminal.
+
+Files:
+lib/ptsname.c
+m4/ptsname.m4
+
+Depends-on:
+stdlib
+extensions
+ttyname_r
+
+configure.ac:
+gl_FUNC_PTSNAME
+gl_STDLIB_MODULE_INDICATOR([ptsname])
+
+Makefile.am:
+
+Include:
+<stdlib.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible

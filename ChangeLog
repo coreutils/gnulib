@@ -1,5 +1,20 @@
 2010-03-21  Bruno Haible  <bruno@clisp.org>
 
+	New module 'ptsname'.
+	* lib/ptsname.c: New file, from glibc with modifications.
+	* m4/ptsname.m4: New file.
+	* modules/ptsname: New file.
+	* lib/stdlib.in.h (ptsname): New declaration.
+	* m4/stdlib_h.m4 (gl_STDLIB_H): Check whether ptsname is declared.
+	(gl_STDLIB_H_DEFAULTS): Initialize GNULIB_PTSNAME, HAVE_PTSNAME.
+	* modules/stdlib (Makefile.am): Substitute GNULIB_PTSNAME,
+	HAVE_PTSNAME.
+	* doc/posix-functions/ptsname.texi: Mention the new module.
+	* tests/test-stdlib-c++.cc: Check GNULIB_NAMESPACE::ptsname.
+	* config/srclist.txt: Add ptsname.c (commented).
+
+2010-03-21  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'ttyname_r'.
 	* modules/ttyname_r-tests: New file.
 	* tests/test-ttyname_r.c: New file.

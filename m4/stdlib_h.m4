@@ -1,4 +1,4 @@
-# stdlib_h.m4 serial 23
+# stdlib_h.m4 serial 24
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -34,7 +34,7 @@ AC_DEFUN([gl_STDLIB_H],
 # include <random.h>
 #endif
     ]], [atoll canonicalize_file_name getloadavg getsubopt mkdtemp
-    mkostemp mkostemps mkstemp mkstemps random_r initstat_r srandom_r
+    mkostemp mkostemps mkstemp mkstemps ptsname random_r initstat_r srandom_r
     setstate_r realpath rpmatch setenv strtod strtoll strtoull unsetenv])
 ])
 
@@ -60,6 +60,7 @@ AC_DEFUN([gl_STDLIB_H_DEFAULTS],
   GNULIB_MKOSTEMPS=0;     AC_SUBST([GNULIB_MKOSTEMPS])
   GNULIB_MKSTEMP=0;       AC_SUBST([GNULIB_MKSTEMP])
   GNULIB_MKSTEMPS=0;      AC_SUBST([GNULIB_MKSTEMPS])
+  GNULIB_PTSNAME=0;       AC_SUBST([GNULIB_PTSNAME])
   GNULIB_PUTENV=0;        AC_SUBST([GNULIB_PUTENV])
   GNULIB_RANDOM_R=0;      AC_SUBST([GNULIB_RANDOM_R])
   GNULIB_REALLOC_POSIX=0; AC_SUBST([GNULIB_REALLOC_POSIX])
@@ -81,6 +82,7 @@ AC_DEFUN([gl_STDLIB_H_DEFAULTS],
   HAVE_MKOSTEMP=1;           AC_SUBST([HAVE_MKOSTEMP])
   HAVE_MKOSTEMPS=1;          AC_SUBST([HAVE_MKOSTEMPS])
   HAVE_MKSTEMPS=1;           AC_SUBST([HAVE_MKSTEMPS])
+  HAVE_PTSNAME=1;            AC_SUBST([HAVE_PTSNAME])
   HAVE_RANDOM_R=1;           AC_SUBST([HAVE_RANDOM_R])
   HAVE_REALLOC_POSIX=1;      AC_SUBST([HAVE_REALLOC_POSIX])
   HAVE_REALPATH=1;           AC_SUBST([HAVE_REALPATH])

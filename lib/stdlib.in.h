@@ -349,6 +349,22 @@ _GL_WARN_ON_USE (mkstemps, "mkstemps is unportable - "
 # endif
 #endif
 
+#if @GNULIB_PTSNAME@
+/* Return the pathname of the pseudo-terminal slave associated with
+   the master FD is open on, or NULL on errors.  */
+# if !@HAVE_PTSNAME@
+_GL_FUNCDECL_SYS (ptsname, char *, (int fd));
+# endif
+_GL_CXXALIAS_SYS (ptsname, char *, (int fd));
+_GL_CXXALIASWARN (ptsname);
+#elif defined GNULIB_POSIXCHECK
+# undef ptsname
+# if HAVE_RAW_DECL_PTSNAME
+_GL_WARN_ON_USE (ptsname, "ptsname is not portable - "
+                 "use gnulib module ptsname for portability");
+# endif
+#endif
+
 #if @GNULIB_PUTENV@
 # if @REPLACE_PUTENV@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)

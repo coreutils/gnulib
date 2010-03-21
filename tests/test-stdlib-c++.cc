@@ -72,6 +72,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::mkstemp, int, (char *));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::mkstemps, int, (char *, int));
 #endif
 
+#if GNULIB_PTSNAME
+SIGNATURE_CHECK (GNULIB_NAMESPACE::ptsname, char *, (int));
+#endif
+
 #if GNULIB_PUTENV
 SIGNATURE_CHECK (GNULIB_NAMESPACE::putenv, int, (char *));
 #endif

@@ -213,6 +213,7 @@ $LIBCSRC/stdlib/strtoul.c		lib gpl
 #$LIBCSRC/sysdeps/posix/euidaccess.c	lib gpl
 #$LIBCSRC/sysdeps/posix/tempname.c	lib gpl
 #$LIBCSRC/sysdeps/unix/bsd/poll.c	lib gpl
+#$LIBCSRC/sysdeps/unix/bsd/ptsname.c	lib gpl
 #$LIBCSRC/sysdeps/unix/dirfd.c		lib gpl
 #$LIBCSRC/sysdeps/unix/rmdir.c		lib gpl
 #$LIBCSRC/time/strftime.c		lib gpl
