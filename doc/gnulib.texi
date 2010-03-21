@@ -6236,6 +6236,7 @@ This list of functions is sorted according to the header that declares them.
 * setutent::
 * updwtmp::
 * utmpname::
+* login_tty::
 @end menu
 
 @include glibc-functions/endutent.texi
@@ -6249,6 +6250,7 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/setutent.texi
 @include glibc-functions/updwtmp.texi
 @include glibc-functions/utmpname.texi
+@include glibc-functions/login_tty.texi
 
 @node Glibc utmpx.h
 @section Glibc Extensions to @code{<utmpx.h>}

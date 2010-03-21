@@ -1,5 +1,11 @@
 2010-03-21  Bruno Haible  <bruno@clisp.org>
 
+	login_tty: Documentation.
+	* doc/glibc-functions/login_tty.texi: New file.
+	* doc/gnulib.texi (Glibc <utmp.h>): Include it.
+
+2010-03-21  Bruno Haible  <bruno@clisp.org>
+
 	pty: Consistent macro naming.
 	* m4/pty_h.m4 (gl_PTY_H): Renamed from gl_PTY.
 	* m4/pty.m4 (gl_FORKPTY, gl_OPENPTY): Update.
