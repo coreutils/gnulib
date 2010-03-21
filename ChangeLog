@@ -1,5 +1,9 @@
 2010-03-21  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'ptsname'.
+	* modules/ptsname-tests: New file.
+	* tests/test-ptsname.c: New file.
+
 	New module 'ptsname'.
 	* lib/ptsname.c: New file, from glibc with modifications.
 	* m4/ptsname.m4: New file.
