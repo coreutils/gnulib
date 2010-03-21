@@ -1,3 +1,8 @@
+2010-03-21  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: prohibit inclusion of "intprops.h" without use
+	* top/maint.mk (sc_prohibit_intprops_without_use): New rule.
+
 2010-03-21  Bruno Haible  <bruno@clisp.org>
 
 	New module 'grantpt'.

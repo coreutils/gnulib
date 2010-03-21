@@ -452,6 +452,19 @@ sc_prohibit_signal_without_use:
 	re='\<($(_sig_function_re)) *\(|\<($(_sig_syms_re))\>'		\
 	  $(_header_without_use)
 
+# Get the list of symbol names with this:
+# perl -lne '/^# *define (\w+)\(/ and print $1' lib/intprops.h|grep -v '^s'|fmt
+_intprops_names =							\
+  TYPE_IS_INTEGER TYPE_TWOS_COMPLEMENT TYPE_ONES_COMPLEMENT		\
+  TYPE_SIGNED_MAGNITUDE TYPE_SIGNED TYPE_MINIMUM TYPE_MAXIMUM		\
+  INT_STRLEN_BOUND INT_BUFSIZE_BOUND
+_intprops_syms_re = $(subst $(_sp),|,$(strip $(_intprops_names)))
+# Prohibit the inclusion of intprops.h without an actual use.
+sc_prohibit_intprops_without_use:
+	@h='"intprops.h"'						\
+	re='\<($(_intprops_syms_re)) *\('				\
+	  $(_header_without_use)
+
 sc_obsolete_symbols:
 	@re='\<(HAVE''_FCNTL_H|O''_NDELAY)\>'				\
 	msg='do not use HAVE''_FCNTL_H or O'_NDELAY			\
