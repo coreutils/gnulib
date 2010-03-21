@@ -165,6 +165,11 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::symlinkat, int,
                  (char const *, int, char const *));
 #endif
 
+#if GNULIB_TTYNAME_R
+SIGNATURE_CHECK (GNULIB_NAMESPACE::ttyname_r, int,
+                 (int fd, char *buf, size_t buflen));
+#endif
+
 #if GNULIB_UNLINK
 SIGNATURE_CHECK (GNULIB_NAMESPACE::unlink, int, (char const *));
 #endif

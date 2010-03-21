@@ -1,3 +1,17 @@
+2010-03-21  Bruno Haible  <bruno@clisp.org>
+
+	New module 'ttyname_r'.
+	* lib/ttyname_r.c: New file.
+	* m4/ttyname_r.m4: New file.
+	* modules/ttyname_r: New file.
+	* lib/unistd.in.h (ttyname_r): New declaration.
+	* m4/unistd_h.m4 (gl_UNISTD_H): Check whether ttyname_r is declared.
+	(gl_UNISTD_H_DEFAULTS): Initialize GNULIB_TTYNAME_R, HAVE_TTYNAME_R.
+	* modules/unistd (Makefile.am): Substitute GNULIB_TTYNAME_R,
+	HAVE_TTYNAME_R.
+	* tests/test-unistd-c++.cc: Check GNULIB_NAMESPACE::ttyname_r.
+	* doc/posix-functions/ttyname_r.texi: Mention the new module.
+
 2010-03-20  Bruno Haible  <bruno@clisp.org>
 
 	signal: Undefine macro definitions in C++ mode.

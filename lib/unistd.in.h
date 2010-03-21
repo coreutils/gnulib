@@ -1099,6 +1099,25 @@ _GL_WARN_ON_USE (symlinkat, "symlinkat is not portable - "
 #endif
 
 
+#if @GNULIB_TTYNAME_R@
+/* Store at most BUFLEN characters of the pathname of the terminal FD is
+   open on in BUF.  Return 0 on success, otherwise an error number.  */
+# if !@HAVE_TTYNAME_R@
+_GL_FUNCDECL_SYS (ttyname_r, int,
+                  (int fd, char *buf, size_t buflen) _GL_ARG_NONNULL ((2)));
+# endif
+_GL_CXXALIAS_SYS (ttyname_r, int,
+                  (int fd, char *buf, size_t buflen));
+_GL_CXXALIASWARN (ttyname_r);
+#elif defined GNULIB_POSIXCHECK
+# undef ttyname_r
+# if HAVE_RAW_DECL_TTYNAME_R
+_GL_WARN_ON_USE (ttyname_r, "ttyname_r is not portable - "
+                 "use gnulib module ttyname_r for portability");
+# endif
+#endif
+
+
 #if @GNULIB_UNLINK@
 # if @REPLACE_UNLINK@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)

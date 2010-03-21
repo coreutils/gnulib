@@ -1,4 +1,4 @@
-# unistd_h.m4 serial 41
+# unistd_h.m4 serial 42
 dnl Copyright (C) 2006-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -39,7 +39,7 @@ AC_DEFUN([gl_UNISTD_H],
     fsync ftruncate getcwd getdomainname getdtablesize getgroups
     gethostname getlogin getlogin_r getpagesize getusershell setusershell
     endusershell lchown link linkat lseek pipe2 pread readlink readlinkat
-    rmdir sleep symlink symlinkat unlink unlinkat usleep])
+    rmdir sleep symlink symlinkat ttyname_r unlink unlinkat usleep])
 ])
 
 AC_DEFUN([gl_UNISTD_MODULE_INDICATOR],
@@ -85,6 +85,7 @@ AC_DEFUN([gl_UNISTD_H_DEFAULTS],
   GNULIB_SLEEP=0;            AC_SUBST([GNULIB_SLEEP])
   GNULIB_SYMLINK=0;          AC_SUBST([GNULIB_SYMLINK])
   GNULIB_SYMLINKAT=0;        AC_SUBST([GNULIB_SYMLINKAT])
+  GNULIB_TTYNAME_R=0;        AC_SUBST([GNULIB_TTYNAME_R])
   GNULIB_UNISTD_H_GETOPT=0;  AC_SUBST([GNULIB_UNISTD_H_GETOPT])
   GNULIB_UNISTD_H_SIGPIPE=0; AC_SUBST([GNULIB_UNISTD_H_SIGPIPE])
   GNULIB_UNLINK=0;           AC_SUBST([GNULIB_UNLINK])
@@ -116,13 +117,14 @@ AC_DEFUN([gl_UNISTD_H_DEFAULTS],
   HAVE_SLEEP=1;           AC_SUBST([HAVE_SLEEP])
   HAVE_SYMLINK=1;         AC_SUBST([HAVE_SYMLINK])
   HAVE_SYMLINKAT=1;       AC_SUBST([HAVE_SYMLINKAT])
+  HAVE_TTYNAME_R=1;       AC_SUBST([HAVE_TTYNAME_R])
+  HAVE_UNLINKAT=1;        AC_SUBST([HAVE_UNLINKAT])
+  HAVE_USLEEP=1;          AC_SUBST([HAVE_USLEEP])
   HAVE_DECL_ENVIRON=1;    AC_SUBST([HAVE_DECL_ENVIRON])
   HAVE_DECL_GETLOGIN_R=1; AC_SUBST([HAVE_DECL_GETLOGIN_R])
   HAVE_DECL_GETUSERSHELL=1; AC_SUBST([HAVE_DECL_GETUSERSHELL])
   HAVE_OS_H=0;            AC_SUBST([HAVE_OS_H])
   HAVE_SYS_PARAM_H=0;     AC_SUBST([HAVE_SYS_PARAM_H])
-  HAVE_UNLINKAT=1;        AC_SUBST([HAVE_UNLINKAT])
-  HAVE_USLEEP=1;          AC_SUBST([HAVE_USLEEP])
   REPLACE_CHOWN=0;        AC_SUBST([REPLACE_CHOWN])
   REPLACE_CLOSE=0;        AC_SUBST([REPLACE_CLOSE])
   REPLACE_DUP=0;          AC_SUBST([REPLACE_DUP])

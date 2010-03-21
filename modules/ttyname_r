@@ -1,0 +1,24 @@
+Description:
+ttyname_r() function: Determine name of a terminal.
+
+Files:
+lib/ttyname_r.c
+m4/ttyname_r.m4
+
+Depends-on:
+unistd
+
+configure.ac:
+gl_FUNC_TTYNAME_R
+gl_UNISTD_MODULE_INDICATOR([ttyname_r])
+
+Makefile.am:
+
+Include:
+<unistd.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
