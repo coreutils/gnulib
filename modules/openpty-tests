@@ -5,4 +5,4 @@ tests/test-openpty.c
 Makefile.am:
 TESTS += test-openpty
 check_PROGRAMS += test-openpty
-test_openpty_LDADD = $(LDADD) $(PTY_LIB)
+test_openpty_LDADD = $(LDADD) @PTY_LIB@

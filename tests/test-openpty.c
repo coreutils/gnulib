@@ -14,7 +14,8 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-/* Written by Simon Josefsson <simon@josefsson.org>, 2009.  */
+/* Written by Simon Josefsson <simon@josefsson.org>, 2009
+   and Bruno Haible <bruno@clisp.org>, 2010.  */
 
 #include <config.h>
 
@@ -25,20 +26,80 @@ SIGNATURE_CHECK (openpty, int, (int *, int *, char *, struct termios const *,
                                 struct winsize const *));
 
 #include <stdio.h>
+#include <string.h>
+#include <termios.h>
+#include <unistd.h>
 
 int
 main ()
 {
-  int res;
-  int amaster;
-  int aslave;
+  {
+    int master;
+    int slave;
 
-  res = openpty (&amaster, &aslave, NULL, NULL, NULL);
-  if (res != 0)
+    /* Open a pseudo-terminal, as a master-slave pair.  */
     {
-      printf ("openpty returned %d\n", res);
-      return 1;
+      int res = openpty (&master, &slave, NULL, NULL, NULL);
+      if (res != 0)
+        {
+          fprintf (stderr, "openpty returned %d\n", res);
+          return 1;
+        }
     }
+
+    /* Set the terminal characteristics.
+       On Linux or MacOS X, they can be set on either the master or the slave;
+       the effect is the same.  But on Solaris, they have to be set on the
+       master; tcgetattr on the slave fails.  */
+    {
+      int tcfd = slave; /* You can try  tcfd = master;  here.  */
+      struct termios attributes;
+
+      if (tcgetattr (tcfd, &attributes) < 0)
+        {
+          fprintf (stderr, "tcgetattr failed\n");
+          return 1;
+        }
+      /* Enable canonical processing, including erase.  */
+      attributes.c_lflag |= ECHO | ICANON | ECHOE;
+      attributes.c_cc[VERASE] = '\177';
+      if (tcsetattr (tcfd, TCSANOW, &attributes) < 0)
+        {
+          fprintf (stderr, "tcsetattr failed\n");
+          return 1;
+        }
+    }
+
+    /* Write into the master side.  */
+    {
+      static const char input[] = "Hello worst\177\177ld!\n";
+
+      if (write (master, input, strlen (input)) < (int) strlen (input))
+        {
+          fprintf (stderr, "write failed\n");
+          return 1;
+        }
+    }
+
+    /* Read from the slave side.  */
+    {
+      char buf[100];
+      int res = read (slave, buf, sizeof (buf));
+      static const char expected[] = "Hello world!\n";
+
+      if (res < 0)
+        {
+          fprintf (stderr, "read failed\n");
+          return 1;
+        }
+      if (!(res == strlen (expected)
+            && memcmp (buf, expected, strlen (expected)) == 0))
+        {
+          fprintf (stderr, "read result unexpected\n");
+          return 1;
+        }
+    }
+  }
 
   return 0;
 }
