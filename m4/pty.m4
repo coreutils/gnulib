@@ -1,4 +1,4 @@
-# pty.m4 serial 2
+# pty.m4 serial 3
 dnl Copyright (C) 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -23,7 +23,7 @@ AC_DEFUN([gl_PTY_LIB],
 AC_DEFUN([gl_FORKPTY],
 [
   AC_REQUIRE([gl_PTY_LIB])
-  AC_REQUIRE([gl_PTY])
+  AC_REQUIRE([gl_PTY_H])
 
   AC_CHECK_DECLS([forkpty],,, [[
 #if HAVE_PTY_H
@@ -68,7 +68,7 @@ AC_DEFUN([gl_FORKPTY],
 AC_DEFUN([gl_OPENPTY],
 [
   AC_REQUIRE([gl_PTY_LIB])
-  AC_REQUIRE([gl_PTY])
+  AC_REQUIRE([gl_PTY_H])
 
   dnl Persuade Solaris <stdlib.h> to declare posix_openpt().
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])

@@ -11,7 +11,7 @@ include_next
 warn-on-use
 
 configure.ac:
-gl_PTY
+gl_PTY_H
 
 Makefile.am:
 BUILT_SOURCES += pty.h

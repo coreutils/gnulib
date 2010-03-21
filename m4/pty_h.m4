@@ -1,13 +1,13 @@
-# pty_h.m4 serial 6
+# pty_h.m4 serial 7
 dnl Copyright (C) 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
-# gl_PTY
-# ------
-# Make sure that pty.h provides forkpty, or sets up a replacement header.
-AC_DEFUN_ONCE([gl_PTY],
+# gl_PTY_H
+# --------
+# Set up the GNU-like <pty.h> replacement header.
+AC_DEFUN_ONCE([gl_PTY_H],
 [
   AC_REQUIRE([gl_PTY_H_DEFAULTS])
 
