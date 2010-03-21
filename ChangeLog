@@ -1,5 +1,9 @@
 2010-03-21  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'ttyname_r'.
+	* modules/ttyname_r-tests: New file.
+	* tests/test-ttyname_r.c: New file.
+
 	New module 'ttyname_r'.
 	* lib/ttyname_r.c: New file.
 	* m4/ttyname_r.m4: New file.
