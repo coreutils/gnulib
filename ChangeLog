@@ -1,5 +1,13 @@
 2010-03-21  Bruno Haible  <bruno@clisp.org>
 
+	New module 'pt_chown'.
+	* lib/pt_chown.c: New file, from glibc with modifications.
+	* lib/pty-private.h: New file, from glibc with modifications.
+	* modules/pt_chown: New file.
+	* config/srclist.txt: Add pt_chown.c, pty-private.h (commented).
+
+2010-03-21  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'ptsname'.
 	* modules/ptsname-tests: New file.
 	* tests/test-ptsname.c: New file.

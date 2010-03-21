@@ -174,6 +174,8 @@ $LIBCSRC/stdlib/strtoul.c		lib gpl
 #$LIBCSRC/locale/programs/xmalloc.c	lib gpl
 #$LIBCSRC/locale/programs/xstrdup.c	lib gpl
 #
+#$LIBCSRC/login/programs/pt_chown.c	lib gpl
+#
 # http://sources.redhat.com/bugzilla/show_bug.cgi?id=321
 #$LIBCSRC/malloc/obstack.c		lib gpl
 #
@@ -209,6 +211,7 @@ $LIBCSRC/stdlib/strtoul.c		lib gpl
 #$LIBCSRC/string/strcspn.c		lib gpl
 #$LIBCSRC/string/strpbrk.c		lib gpl
 #$LIBCSRC/string/strstr.c		lib gpl
+#$LIBCSRC/sysdeps/generic/pty-private.h	lib gpl
 #$LIBCSRC/sysdeps/posix/dup2.c		lib gpl
 #$LIBCSRC/sysdeps/posix/euidaccess.c	lib gpl
 #$LIBCSRC/sysdeps/posix/tempname.c	lib gpl
