@@ -1,5 +1,12 @@
 2010-03-20  Bruno Haible  <bruno@clisp.org>
 
+	Ensure no #include statements inside extern "C" { ... }.
+	* lib/obstack.h: Shrink extern "C" { ... } region so that it does not
+	contain #include statements.
+	* lib/time.in.h: Likewise.
+
+2010-03-20  Bruno Haible  <bruno@clisp.org>
+
 	Make _GL_WARN_ON_USE usable in C++ and C mode in the same compilation.
 	* build-aux/warn-on-use.h (_GL_WARN_EXTERN_C): New macro.
 	(_GL_WARN_ON_USE, _GL_WARN_ON_USE_CXX): Likewise.

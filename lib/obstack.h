@@ -103,10 +103,6 @@ Summary:
 
 #ifndef _OBSTACK_H
 #define _OBSTACK_H 1
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /* We need the type of a pointer subtraction.  If __PTRDIFF_TYPE__ is
    defined, as with GNU C, use that; that way we don't pollute the
@@ -138,6 +134,10 @@ extern "C" {
                 P, A)
 
 #include <string.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 struct _obstack_chunk           /* Lives at front of each chunk. */
 {

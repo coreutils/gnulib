@@ -46,10 +46,6 @@
 
 /* The definition of _GL_WARN_ON_USE is copied here.  */
 
-# ifdef __cplusplus
-extern "C" {
-# endif
-
 /* Some systems don't define struct timespec (e.g., AIX 4.1, Ultrix 4.3).
    Or they define it with the wrong member names or define it in <sys/time.h>
    (e.g., FreeBSD circa 1997).  */
@@ -57,6 +53,11 @@ extern "C" {
 #  if @SYS_TIME_H_DEFINES_STRUCT_TIMESPEC@
 #   include <sys/time.h>
 #  else
+
+#   ifdef __cplusplus
+extern "C" {
+#   endif
+
 #   undef timespec
 #   define timespec rpl_timespec
 struct timespec
@@ -64,11 +65,12 @@ struct timespec
   time_t tv_sec;
   long int tv_nsec;
 };
-#  endif
-# endif
 
-# ifdef __cplusplus
+#   ifdef __cplusplus
 }
+#   endif
+
+#  endif
 # endif
 
 /* Sleep for at least RQTP seconds unless interrupted,  If interrupted,
