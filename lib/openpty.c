@@ -21,7 +21,7 @@
 
 #if HAVE_OPENPTY
 
-/* Provider a wrapper with the precise POSIX prototype.  */
+/* Provide a wrapper with the prototype of glibc-2.8 and newer.  */
 # undef openpty
 int
 rpl_openpty (int *amaster, int *aslave, char *name,

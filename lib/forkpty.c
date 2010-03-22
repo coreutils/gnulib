@@ -21,7 +21,7 @@
 
 #if HAVE_FORKPTY
 
-/* Provider a wrapper with the precise POSIX prototype.  */
+/* Provide a wrapper with the prototype of glibc-2.8 and newer.  */
 # undef forkpty
 int
 rpl_forkpty (int *amaster, char *name, struct termios const *termp,
