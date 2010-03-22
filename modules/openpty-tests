@@ -1,6 +1,10 @@
 Files:
-tests/signature.h
 tests/test-openpty.c
+tests/signature.h
+
+Depends-on:
+
+configure.ac:
 
 Makefile.am:
 TESTS += test-openpty

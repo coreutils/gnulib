@@ -1,5 +1,9 @@
 2010-03-21  Bruno Haible  <bruno@clisp.org>
 
+	* modules/openpty-tests: Use the common TEMPLATE-TESTS.
+
+2010-03-21  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'login_tty'.
 	* modules/login_tty-tests: New file.
 	* tests/test-login_tty.c: New file.
