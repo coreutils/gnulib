@@ -19,8 +19,8 @@
    - On mingw, several headers, including <winsock2.h>, include <unistd.h>,
      but we need to ensure that both the system <unistd.h> and <winsock2.h>
      are completely included before we replace gethostname.  */
-#if @UNISTD_H_HAVE_WINSOCK2_H@ && !defined _GL_WINSOCK2_H_WITNESS \
-  && defined _WINSOCK2_H
+#if @GNULIB_GETHOSTNAME@ && @UNISTD_H_HAVE_WINSOCK2_H@ \
+  && !defined _GL_WINSOCK2_H_WITNESS && defined _WINSOCK2_H
 /* <unistd.h> is being indirectly included for the first time from
    <winsock2.h>; avoid declaring any overrides.  */
 # if @HAVE_UNISTD_H@
@@ -43,7 +43,8 @@
 #endif
 
 /* Get all possible declarations of gethostname().  */
-#if @UNISTD_H_HAVE_WINSOCK2_H@ && !defined _GL_INCLUDING_WINSOCK2_H
+#if @GNULIB_GETHOSTNAME@ && @UNISTD_H_HAVE_WINSOCK2_H@ \
+  && !defined _GL_INCLUDING_WINSOCK2_H
 # define _GL_INCLUDING_WINSOCK2_H
 # include <winsock2.h>
 # undef _GL_INCLUDING_WINSOCK2_H
