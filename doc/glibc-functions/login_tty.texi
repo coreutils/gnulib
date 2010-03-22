@@ -2,13 +2,9 @@
 @subsection @code{login_tty}
 @findex login_tty
 
-Gnulib module: ---
+Gnulib module: login_tty
 
 Portability problems fixed by Gnulib:
-@itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
@@ -18,6 +14,10 @@ This function requires linking with @code{-lutil} on some platforms:
 glibc 2.3.6, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8.
 It is available without link options on other platforms:
 MacOS X 10.3, OSF/1 5.1, Cygwin, Interix 3.5.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @item
 This function is declared in @code{<utmp.h>} on glibc, Cygwin,
 in @code{<util.h>} on MacOS X 10.3, NetBSD 3.0, OpenBSD 3.8,

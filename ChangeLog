@@ -1,5 +1,13 @@
 2010-03-21  Bruno Haible  <bruno@clisp.org>
 
+	New module 'login_tty'.
+	* lib/login_tty.c: New file.
+	* m4/pty.m4 (gl_FUNC_LOGIN_TTY): New macro.
+	* modules/login_tty: New file.
+	* doc/glibc-functions/login_tty.texi: Mention the new module.
+
+2010-03-21  Bruno Haible  <bruno@clisp.org>
+
 	login_tty: Documentation.
 	* doc/glibc-functions/login_tty.texi: New file.
 	* doc/gnulib.texi (Glibc <utmp.h>): Include it.
