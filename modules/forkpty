@@ -1,5 +1,6 @@
 Description:
-Provide the forkpty() function.
+forkpty() function: Open a pseudo-terminal, fork, and connect the child process
+to the pseudo-terminal's slave.
 
 Files:
 lib/forkpty.c
@@ -7,6 +8,8 @@ m4/pty.m4
 
 Depends-on:
 pty
+openpty
+login_tty
 
 configure.ac:
 gl_FORKPTY

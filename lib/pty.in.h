@@ -48,21 +48,30 @@
 /* Declare overridden functions.  */
 
 #if @GNULIB_FORKPTY@
+/* Create pseudo tty master slave pair and set terminal attributes
+   according to TERMP and WINP.  Fork a child process attached to the
+   slave end.  Return a handle for the master end in *AMASTER, and
+   return the name of the slave end in NAME.  */
 # if @REPLACE_FORKPTY@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef forkpty
 #   define forkpty rpl_forkpty
 #  endif
 _GL_FUNCDECL_RPL (forkpty, int,
-                  (int *, char *, struct termios const *,
-                   struct winsize const *));
+                  (int *amaster, char *name,
+                   struct termios const *termp, struct winsize const *winp));
 _GL_CXXALIAS_RPL (forkpty, int,
-                  (int *, char *, struct termios const *,
-                   struct winsize const *));
+                  (int *amaster, char *name,
+                   struct termios const *termp, struct winsize const *winp));
 # else
+#  if !@HAVE_FORKPTY@
+_GL_FUNCDECL_SYS (forkpty, int,
+                  (int *amaster, char *name,
+                   struct termios const *termp, struct winsize const *winp));
+#  endif
 _GL_CXXALIAS_SYS (forkpty, int,
-                  (int *, char *, struct termios const *,
-                   struct winsize const *));
+                  (int *amaster, char *name,
+                   struct termios const *termp, struct winsize const *winp));
 # endif
 _GL_CXXALIASWARN (forkpty);
 #elif defined GNULIB_POSIXCHECK

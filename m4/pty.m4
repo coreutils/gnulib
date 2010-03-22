@@ -1,4 +1,4 @@
-# pty.m4 serial 4
+# pty.m4 serial 5
 dnl Copyright (C) 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -25,6 +25,8 @@ AC_DEFUN([gl_FORKPTY],
   AC_REQUIRE([gl_PTY_LIB])
   AC_REQUIRE([gl_PTY_H])
 
+  dnl We assume that forkpty exists (possibly in libc, possibly in libutil)
+  dnl if and only if it is declared.
   AC_CHECK_DECLS([forkpty],,, [[
 #if HAVE_PTY_H
 # include <pty.h>
@@ -36,15 +38,13 @@ AC_DEFUN([gl_FORKPTY],
 # include <libutil.h>
 #endif
 ]])
-  if test $ac_cv_have_decl_forkpty = no; then
-    AC_MSG_WARN([[Cannot find forkpty, build will likely fail]])
-  fi
-
-  dnl Prefer glibc's const-safe prototype, if available.
-  AC_CACHE_CHECK([for const-safe forkpty signature],
-    [gl_cv_func_forkpty_const],
-    [AC_COMPILE_IFELSE(
-      [AC_LANG_PROGRAM([[
+  if test $ac_cv_have_decl_forkpty = yes; then
+    dnl The system has forkpty.
+    dnl Prefer glibc's const-safe prototype, if available.
+    AC_CACHE_CHECK([for const-safe forkpty signature],
+      [gl_cv_func_forkpty_const],
+      [AC_COMPILE_IFELSE(
+        [AC_LANG_PROGRAM([[
 #if HAVE_PTY_H
 # include <pty.h>
 #endif
@@ -54,13 +54,20 @@ AC_DEFUN([gl_FORKPTY],
 #if HAVE_LIBUTIL_H
 # include <libutil.h>
 #endif
-      ]], [[
-        int forkpty (int *, char *, struct termios const *,
-                     struct winsize const *);
-      ]])],
-      [gl_cv_func_forkpty_const=yes], [gl_cv_func_forkpty_const=no])])
-  if test $gl_cv_func_forkpty_const != yes; then
-    REPLACE_FORKPTY=1
+          ]], [[
+            int forkpty (int *, char *, struct termios const *,
+                         struct winsize const *);
+          ]])
+        ],
+        [gl_cv_func_forkpty_const=yes], [gl_cv_func_forkpty_const=no])
+      ])
+    if test $gl_cv_func_forkpty_const != yes; then
+      REPLACE_FORKPTY=1
+      AC_LIBOBJ([forkpty])
+    fi
+  else
+    dnl The system does not have forkpty.
+    HAVE_FORKPTY=0
     AC_LIBOBJ([forkpty])
   fi
 ])

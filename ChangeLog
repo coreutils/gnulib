@@ -1,5 +1,19 @@
 2010-03-21  Bruno Haible  <bruno@clisp.org>
 
+	forkpty: Provide replacement on AIX, HP-UX, IRIX, Solaris.
+	* lib/forkpty.c (forkpty): New replacement function, from glibc with
+	modifications.
+	* lib/pty.in.h (forkpty): Update declaration. Add comments.
+	* m4/pty.m4 (gl_FORKPTY): If forkpty is not declared, arrange to
+	provide the replacement.
+	* modules/forkpty (Depends-on): Add openpty, login_tty.
+	* m4/pty_h.m4 (gl_PTY_H_DEFAULTS): Initialize HAVE_FORKPTY.
+	* modules/pty (Makefile.am): Substitute HAVE_FORKPTY.
+	* doc/glibc-functions/forkpty.texi: More supported platforms.
+	* config/srclist.txt: Add forkpty.c (commented).
+
+2010-03-21  Bruno Haible  <bruno@clisp.org>
+
 	* modules/forkpty-tests: Use the common TEMPLATE-TESTS.
 	(Makefile.am): Verify that PTY_LIB is defined.
 

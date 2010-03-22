@@ -1,4 +1,4 @@
-# pty_h.m4 serial 7
+# pty_h.m4 serial 8
 dnl Copyright (C) 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -60,6 +60,7 @@ AC_DEFUN([gl_PTY_H_DEFAULTS],
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_UTIL_H=0;        AC_SUBST([HAVE_UTIL_H])
   HAVE_LIBUTIL_H=0;     AC_SUBST([HAVE_LIBUTIL_H])
+  HAVE_FORKPTY=1;       AC_SUBST([HAVE_FORKPTY])
   HAVE_OPENPTY=1;       AC_SUBST([HAVE_OPENPTY])
   REPLACE_FORKPTY=0;    AC_SUBST([REPLACE_FORKPTY])
   REPLACE_OPENPTY=0;    AC_SUBST([REPLACE_OPENPTY])

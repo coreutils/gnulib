@@ -1,4 +1,4 @@
-/* Fork a child attached to a pseudo-terminal descriptor.
+/* Fork a child process attached to the slave of a pseudo-terminal.
    Copyright (C) 2010 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,9 @@
 /* Specification.  */
 #include <pty.h>
 
-#if HAVE_DECL_FORKPTY
+#if HAVE_FORKPTY
+
+/* Provider a wrapper with the precise POSIX prototype.  */
 # undef forkpty
 int
 rpl_forkpty (int *amaster, char *name, struct termios const *termp,
@@ -29,7 +31,43 @@ rpl_forkpty (int *amaster, char *name, struct termios const *termp,
   return forkpty (amaster, name, (struct termios *) termp,
                   (struct winsize *) winp);
 }
-#else
-# error forkpty has not been ported to your system; \
-  report this to bug-gnulib@gnu.org for help
+
+#else /* AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 10, mingw */
+
+# include <pty.h>
+# include <unistd.h>
+
+extern int login_tty (int slave_fd);
+
+int
+forkpty (int *amaster, char *name,
+         const struct termios *termp, const struct winsize *winp)
+{
+  int master, slave, pid;
+
+  if (openpty (&master, &slave, name, termp, winp) == -1)
+    return -1;
+
+  switch (pid = fork ())
+    {
+    case -1:
+      close (master);
+      close (slave);
+      return -1;
+
+    case 0:
+      /* Child.  */
+      close (master);
+      if (login_tty (slave))
+        _exit (1);
+      return 0;
+
+    default:
+      /* Parent.  */
+      *amaster = master;
+      close (slave);
+      return pid;
+    }
+}
+
 #endif
