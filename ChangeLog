@@ -1,5 +1,9 @@
 2010-03-21  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'login_tty'.
+	* modules/login_tty-tests: New file.
+	* tests/test-login_tty.c: New file.
+
 	New module 'login_tty'.
 	* lib/login_tty.c: New file.
 	* m4/pty.m4 (gl_FUNC_LOGIN_TTY): New macro.
