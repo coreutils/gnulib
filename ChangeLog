@@ -1,5 +1,8 @@
 2010-03-21  Bruno Haible  <bruno@clisp.org>
 
+	* modules/forkpty-tests: Use the common TEMPLATE-TESTS.
+	(Makefile.am): Verify that PTY_LIB is defined.
+
 	* modules/openpty-tests: Use the common TEMPLATE-TESTS.
 
 2010-03-21  Bruno Haible  <bruno@clisp.org>
@@ -32,8 +35,7 @@
 	Tests for openpty: Make stricter.
 	* tests/test-openpty.c (main): Add test of canonical processing and
 	erase.
-	* modules/openpty-tests (test_openpty_LDADD): Verify that PTY_LIB is
-	defined.
+	* modules/openpty-tests (Makefile.am): Verify that PTY_LIB is defined.
 
 	openpty: Provide replacement on AIX, HP-UX, IRIX, Solaris.
 	* lib/openpty.c (openpty): New replacement function.
