@@ -1,3 +1,9 @@
+2010-03-23  Pádraig Brady <P@draigBrady.com>  (tiny change)
+
+	* maint.mk (sc_Wundef_boolean): Check for the presence of the
+	config header before grepping, as it's not present before
+	autoreconf/configure are run.  Reported by Simon Josefsson.
+
 2010-03-23  Bruno Haible  <bruno@clisp.org>
 
 	pt_chown: Make it work with automake < 1.11.

@@ -766,8 +766,9 @@ sc_copyright_check:
 # tests many undefined macros, and so we can't enable that option.
 # So at least preclude common boolean strings as macro values.
 sc_Wundef_boolean:
-	@grep -Ei '^#define.*(yes|no|true|false)$$' '$(CONFIG_INCLUDE)' && \
-	  { echo 'Use 0 or 1 for macro values' 1>&2; exit 1; } || :
+	@test -e '$(CONFIG_INCLUDE)' &&                                 \
+	   grep -Ei '^#define.*(yes|no|true|false)$$' '$(CONFIG_INCLUDE)' && \
+	     { echo 'Use 0 or 1 for macro values' 1>&2; exit 1; } || :
 
 sc_vulnerable_makefile_CVE-2009-4029:
 	@files=$$(find $(srcdir) -name Makefile.in);			\
