@@ -12,6 +12,8 @@ configure.ac:
 
 Makefile.am:
 # TODO: Add rules for installing as setuid root (chown root, chmod a=rx,u+s).
+# The next line can be removed once we assume automake >= 1.11.
+pkglibexecdir = $(libexecdir)/@PACKAGE@
 pkglibexec_PROGRAMS = pt_chown
 pt_chown_LDADD = libgnu.a
 

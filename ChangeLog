@@ -1,5 +1,11 @@
 2010-03-23  Bruno Haible  <bruno@clisp.org>
 
+	pt_chown: Make it work with automake < 1.11.
+	* modules/pt_chown (Makefile.am): Define pkglibexecdir.
+	Reported by Simon Josefsson.
+
+2010-03-23  Bruno Haible  <bruno@clisp.org>
+
 	pt_chown: Don't depend on GPLed modules.
 	* lib/pt_chown.c: Don't include idpriv.h.
 	(main): Don't drop privileges.
