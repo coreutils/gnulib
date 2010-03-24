@@ -6,7 +6,6 @@ lib/pt_chown.c
 lib/pty-private.h
 
 Depends-on:
-idpriv-drop
 ptsname
 
 configure.ac:

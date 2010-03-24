@@ -1,3 +1,11 @@
+2010-03-23  Bruno Haible  <bruno@clisp.org>
+
+	pt_chown: Don't depend on GPLed modules.
+	* lib/pt_chown.c: Don't include idpriv.h.
+	(main): Don't drop privileges.
+	* modules/pt_chown (Depends-on): Remove idpriv-drop.
+	Reported by Simon Josefsson.
+
 2010-03-24  Simon Josefsson  <simon@josefsson.org>
 
 	* top/maint.mk (sc_texinfo_acronym): Add rule, based on

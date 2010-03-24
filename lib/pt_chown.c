@@ -25,7 +25,6 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include "idpriv.h"
 #include "pty-private.h"
 
 /* For security reasons, we try to minimize the dependencies on libraries
@@ -83,9 +82,8 @@ main (int argc, char *argv[])
       return do_pt_chown ();
     }
 
-  /* We aren't going to be using privileges, so drop them right now. */
-  if (idpriv_drop () < 0)
-    return EXIT_FAILURE;
+  /* It would be possible to drop setuid/setgid privileges here.  But it is not
+     really needed, since the code below only calls strcmp and [f]printf.  */
 
   {
     int do_help = 0;
