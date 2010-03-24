@@ -1,3 +1,8 @@
+2010-03-24  Simon Josefsson  <simon@josefsson.org>
+
+	* top/maint.mk (sc_texinfo_acronym): Add rule, based on
+	suggestions from karl@freefriends.org (Karl Berry).
+
 2010-03-22  Eric Blake  <eblake@redhat.com>
 
 	gethostname: further tweaks

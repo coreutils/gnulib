@@ -561,6 +561,13 @@ sc_GFDL_version:
 	@re='$(_GFDL_regexp)' msg='GFDL vN, N!=3'			\
 	  $(_prohibit_regexp)
 
+# Don't use Texinfo @acronym{} as it is not a good idea.
+sc_texinfo_acronym:
+	@grep -nE '@acronym{'						\
+	    $$($(VC_LIST_EXCEPT) | grep -E '\.texi$$') &&		\
+	  { echo '$(ME): found use of Texinfo @acronym{}' 1>&2;		\
+	    exit 1; } || :
+
 cvs_keywords = \
   Author|Date|Header|Id|Name|Locker|Log|RCSfile|Revision|Source|State
 
