@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate January 27, 2010
+@set lastupdate March 23, 2010
 @c %**end of header
 
 @dircategory GNU organization
@@ -100,10 +100,12 @@ Archives are also available there.
 Please send corrections or suggestions for this document to
 @email{bug-standards@@gnu.org}.  If you make a suggestion, please
 include a suggested new wording for it, to help us consider the
-suggestion efficiently.  We prefer a context diff to the
-@file{maintain.texi} file, but if you don't have that file, you can
+suggestion efficiently.  We prefer a context diff to the Texinfo
+source, but if that's difficult for you, you can make a context diff
 make a context diff for some other version of this document, or
-propose it in any way that makes it clear.
+propose it in any way that makes it clear.  The source repository for
+this document can be found at
+@url{http://savannah.gnu.org/projects/gnustandards}.
 
 @cindex @code{mentors@@gnu.org} mailing list
 If you have general questions or encounter a situation where it isn't

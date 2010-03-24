@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate February 17, 2010
+@set lastupdate March 23, 2010
 @c %**end of header
 
 @dircategory GNU organization
@@ -101,11 +101,15 @@ interface at
 @url{http://lists.gnu.org/mailman/listinfo/gnustandards-commit}.
 Archives are also available there.
 
-Corrections or suggestions for this document should be sent to
-@email{bug-standards@@gnu.org}.  If you make a suggestion, please include a
-suggested new wording for it; our time is limited.  We prefer a context
-diff to the @file{standards.texi} or @file{make-stds.texi} files, but if
-you don't have those files, please mail your suggestion anyway.
+@cindex @code{maintainers@@gnu.org} email address
+Please send corrections or suggestions for this document to
+@email{bug-standards@@gnu.org}.  If you make a suggestion, please
+include a suggested new wording for it, to help us consider the
+suggestion efficiently.  We prefer a context diff to the Texinfo
+source, but if that's difficult for you, you can make a context diff
+for some other version of this document, or propose it in any way that
+makes it clear.  The source repository for this document can be found
+at @url{http://savannah.gnu.org/projects/gnustandards}.
 
 These standards cover the minimum of what is important when writing a
 GNU package.  Likely, the need for additional standards will come up.
@@ -852,9 +856,9 @@ multi-column format.
 
 @cindex gtk+
 When you write a program that provides a graphical user interface,
-please make it work with X Windows and the GTK+ toolkit unless the
-functionality specifically requires some alternative (for example,
-``displaying jpeg images while in console mode'').
+please make it work with the X Window System and the GTK+ toolkit
+unless the functionality specifically requires some alternative (for
+example, ``displaying jpeg images while in console mode'').
 
 In addition, please provide a command-line interface to control the
 functionality.  (In many cases, the graphical user interface can be a
@@ -1075,7 +1079,7 @@ The revised (3-clause) BSD, compatible with the GNU GPL,
 
 @item X11
 The simple non-copyleft license used for most versions of the X Window
-system, @url{http://www.xfree86.org/@/3.3.6/@/COPYRIGHT2.html#3}.
+System, @url{http://www.xfree86.org/@/3.3.6/@/COPYRIGHT2.html#3}.
 
 @item Zlib
 The license for Zlib, @url{http://www.gzip.org/@/zlib/@/zlib_license.html}.
