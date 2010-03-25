@@ -98,7 +98,7 @@ Archives are also available there.
 
 @cindex @code{bug-standards@@gnu.org} email address
 @cindex Savannah repository for gnustandards
-@cindex gnustandards project repository 
+@cindex gnustandards project repository
 Please send corrections or suggestions for this document to
 @email{bug-standards@@gnu.org}.  If you make a suggestion, please
 include a suggested new wording for it, to help us consider the
