@@ -1,5 +1,5 @@
 /* Formatted output to a stream.
-   Copyright (C) 2007, 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2007, 2010 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -23,6 +23,8 @@
 
 #include <stdarg.h>
 
+#if !DEPENDS_ON_LIBINTL /* avoid collision with intl/printf.c */
+
 /* Print formatted output to standard output.
    Return string length of formatted string.  On error, return a negative
    value.  */
@@ -38,3 +40,5 @@ printf (const char *format, ...)
 
   return retval;
 }
+
+#endif

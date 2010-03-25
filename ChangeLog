@@ -1,5 +1,12 @@
 2010-03-25  Bruno Haible  <bruno@clisp.org>
 
+	Avoid collision between gnulib wrapper and libintl wrapper.
+	* lib/printf.c (printf): Don't define if a printf wrapper is already
+	defined in intl/printf.c.
+	Reported by Michel Boaventura <michel@michelboaventura.com>.
+
+2010-03-25  Bruno Haible  <bruno@clisp.org>
+
 	Use ANSI C.
 	* lib/readutmp.h (getutent): Provide ANSI C prototype.
 
