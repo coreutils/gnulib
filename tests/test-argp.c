@@ -262,20 +262,20 @@ struct argp test_argp = {
 #define INIT_TEST_COMMON(n)     \
  int argc = NARGS (argv);       \
  struct test_args test_args;    \
- init_args(test_args);          \
+ init_args (test_args);         \
  test_number = n;
 
 #define INIT_TEST1(n, arg1)            \
  char *argv[] = { ARGV0, arg1, NULL }; \
- INIT_TEST_COMMON(n)
+ INIT_TEST_COMMON (n)
 
 #define INIT_TEST2(n, arg1, arg2)            \
  char *argv[] = { ARGV0, arg1, arg2, NULL }; \
- INIT_TEST_COMMON(n)
+ INIT_TEST_COMMON (n)
 
 #define INIT_TEST3(n, arg1, arg2, arg3)            \
  char *argv[] = { ARGV0, arg1, arg2, arg3, NULL }; \
- INIT_TEST_COMMON(n)
+ INIT_TEST_COMMON (n)
 
 int test_number;
 unsigned failure_count = 0;

@@ -259,28 +259,28 @@ memcmp_not_common_alignment (uintptr_t srcp1, uintptr_t srcp2, size_t len)
     {
       a0 = ((op_t *) srcp1)[0];
       b0 = ((op_t *) srcp2)[0];
-      x = MERGE(a2, shl, a3, shr);
+      x = MERGE (a2, shl, a3, shr);
       if (x != b3)
         return CMP_LT_OR_GT (x, b3);
 
     do3:
       a1 = ((op_t *) srcp1)[1];
       b1 = ((op_t *) srcp2)[1];
-      x = MERGE(a3, shl, a0, shr);
+      x = MERGE (a3, shl, a0, shr);
       if (x != b0)
         return CMP_LT_OR_GT (x, b0);
 
     do2:
       a2 = ((op_t *) srcp1)[2];
       b2 = ((op_t *) srcp2)[2];
-      x = MERGE(a0, shl, a1, shr);
+      x = MERGE (a0, shl, a1, shr);
       if (x != b1)
         return CMP_LT_OR_GT (x, b1);
 
     do1:
       a3 = ((op_t *) srcp1)[3];
       b3 = ((op_t *) srcp2)[3];
-      x = MERGE(a1, shl, a2, shr);
+      x = MERGE (a1, shl, a2, shr);
       if (x != b2)
         return CMP_LT_OR_GT (x, b2);
 
@@ -293,7 +293,7 @@ memcmp_not_common_alignment (uintptr_t srcp1, uintptr_t srcp2, size_t len)
   /* This is the right position for do0.  Please don't move
      it into the loop.  */
  do0:
-  x = MERGE(a2, shl, a3, shr);
+  x = MERGE (a2, shl, a3, shr);
   if (x != b3)
     return CMP_LT_OR_GT (x, b3);
   return 0;

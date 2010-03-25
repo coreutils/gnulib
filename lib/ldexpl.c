@@ -27,7 +27,7 @@
 #include "fpucw.h"
 
 long double
-ldexpl(long double x, int exp)
+ldexpl (long double x, int exp)
 {
   long double factor;
   int bit;
@@ -72,6 +72,6 @@ main (void)
   long double x;
   int y;
   for (y = 0; y < 29; y++)
-    printf ("%5d %.16Lg %.16Lg\n", y, ldexpl(0.8L, y), ldexpl(0.8L, -y) * ldexpl(0.8L, y));
+    printf ("%5d %.16Lg %.16Lg\n", y, ldexpl (0.8L, y), ldexpl (0.8L, -y) * ldexpl (0.8L, y));
 }
 #endif

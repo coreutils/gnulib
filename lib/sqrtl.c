@@ -27,7 +27,7 @@
 
 /* A simple Newton-Raphson method. */
 long double
-sqrtl(long double x)
+sqrtl (long double x)
 {
   long double delta, y;
   int exponent;
@@ -38,7 +38,7 @@ sqrtl(long double x)
 
   /* Check for negative numbers */
   if (x < 0.0L)
-    return (long double) sqrt(-1);
+    return (long double) sqrt (-1);
 
   /* Check for zero and infinites */
   if (x + x == x)

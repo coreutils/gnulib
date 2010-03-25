@@ -81,7 +81,7 @@
     ((void) (Domainname), ngettext (Msgid1, Msgid2, N))
 # undef dcngettext
 # define dcngettext(Domainname, Msgid1, Msgid2, N, Category) \
-    ((void) (Category), dngettext(Domainname, Msgid1, Msgid2, N))
+    ((void) (Category), dngettext (Domainname, Msgid1, Msgid2, N))
 # undef textdomain
 # define textdomain(Domainname) ((const char *) (Domainname))
 # undef bindtextdomain

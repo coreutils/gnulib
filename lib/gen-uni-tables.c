@@ -210,7 +210,7 @@ fill_attributes (const char *unicodedata_filename)
       i = strtoul (field0, NULL, 16);
       if (field1[0] == '<'
           && strlen (field1) >= 9
-          && strcmp (field1 + strlen(field1) - 8, ", First>") == 0)
+          && strcmp (field1 + strlen (field1) - 8, ", First>") == 0)
         {
           /* Deal with a range. */
           lineno++;

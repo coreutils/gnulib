@@ -2866,7 +2866,7 @@ gl_locale_name_default (void)
         CFLocaleRef locale = CFLocaleCopyCurrent ();
         CFStringRef name = CFLocaleGetIdentifier (locale);
 
-        if (CFStringGetCString (name, namebuf, sizeof(namebuf),
+        if (CFStringGetCString (name, namebuf, sizeof (namebuf),
                                 kCFStringEncodingASCII))
           {
             gl_locale_name_canonicalize (namebuf);
@@ -2879,7 +2879,8 @@ gl_locale_name_default (void)
                                      kCFPreferencesCurrentApplication);
         if (value != NULL
             && CFGetTypeID (value) == CFStringGetTypeID ()
-            && CFStringGetCString ((CFStringRef)value, namebuf, sizeof(namebuf),
+            && CFStringGetCString ((CFStringRef)value,
+                                   namebuf, sizeof (namebuf),
                                    kCFStringEncodingASCII))
           {
             gl_locale_name_canonicalize (namebuf);

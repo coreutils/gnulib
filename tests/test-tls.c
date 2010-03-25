@@ -1,5 +1,5 @@
 /* Test of thread-local storage in multithreaded situations.
-   Copyright (C) 2005, 2008, 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2005, 2008-2010 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -94,7 +94,7 @@ worker_thread (void *arg)
   /* Initialize the per-thread storage.  */
   for (i = 0; i < KEYS_COUNT; i++)
     {
-      values[i] = (((unsigned int) rand() >> 3) % 1000000) * THREAD_COUNT + id;
+      values[i] = (((unsigned int) rand () >> 3) % 1000000) * THREAD_COUNT + id;
       /* Hopefully no arithmetic overflow.  */
       if ((values[i] % THREAD_COUNT) != id)
         abort ();
@@ -124,8 +124,8 @@ worker_thread (void *arg)
   for (repeat = REPEAT_COUNT; repeat > 0; repeat--)
     {
       dbgprintf ("Worker %p doing value swapping\n", gl_thread_self ());
-      i = ((unsigned int) rand() >> 3) % KEYS_COUNT;
-      j = ((unsigned int) rand() >> 3) % KEYS_COUNT;
+      i = ((unsigned int) rand () >> 3) % KEYS_COUNT;
+      j = ((unsigned int) rand () >> 3) % KEYS_COUNT;
       if (i != j)
         {
           void *vi = gl_tls_get (mykeys[i]);

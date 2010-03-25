@@ -162,7 +162,7 @@ check_tree (node root)
   if (root == NULL)
     return;
   root->red = 0;
-  for(p = root->left; p; p = p->left)
+  for (p = root->left; p; p = p->left)
     cnt += !p->red;
   check_tree_recurse (root, 0, cnt);
 }

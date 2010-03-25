@@ -51,48 +51,54 @@
 
 #include "trigl.h"
 
-long double cosl(long double x)
+long double
+cosl (long double x)
 {
-        long double y[2],z=0.0L;
-        int n;
+  long double y[2],z=0.0L;
+  int n;
 
-    /* cosl(NaN) is NaN */
-        if (isnanl (x))
-          return x;
+  /* cosl(NaN) is NaN */
+  if (isnanl (x))
+    return x;
 
-    /* |x| ~< pi/4 */
-        if(x >= -0.7853981633974483096156608458198757210492 &&
-           x <= 0.7853981633974483096156608458198757210492)
-          return kernel_cosl(x, z);
+  /* |x| ~< pi/4 */
+  if (x >= -0.7853981633974483096156608458198757210492
+      && x <= 0.7853981633974483096156608458198757210492)
+    return kernel_cosl(x, z);
 
-    /* cosl(Inf) is NaN, cosl(0) is 1 */
-        else if (x + x == x && x != 0.0)
-          return x-x;           /* NaN */
+  /* cosl(Inf) is NaN, cosl(0) is 1 */
+  else if (x + x == x && x != 0.0)
+    return x - x;           /* NaN */
 
-    /* argument reduction needed */
-        else {
-            n = ieee754_rem_pio2l(x,y);
-            switch(n&3) {
-                case 0: return  kernel_cosl(y[0],y[1]);
-                case 1: return -kernel_sinl(y[0],y[1],1);
-                case 2: return -kernel_cosl(y[0],y[1]);
-                default:
-                        return  kernel_sinl(y[0],y[1],1);
-            }
+  /* argument reduction needed */
+  else
+    {
+      n = ieee754_rem_pio2l (x, y);
+      switch (n & 3)
+        {
+        case 0:
+          return  kernel_cosl (y[0], y[1]);
+        case 1:
+          return -kernel_sinl (y[0], y[1], 1);
+        case 2:
+          return -kernel_cosl (y[0], y[1]);
+        default:
+          return  kernel_sinl (y[0], y[1], 1);
         }
+    }
 }
 
 #if 0
 int
 main (void)
 {
-  printf ("%.16Lg\n", cosl(0.7853981633974483096156608458198757210492));
-  printf ("%.16Lg\n", cosl(0.7853981633974483096156608458198757210492 *29));
-  printf ("%.16Lg\n", cosl(0.7853981633974483096156608458198757210492 *2));
-  printf ("%.16Lg\n", cosl(0.7853981633974483096156608458198757210492 *30));
-  printf ("%.16Lg\n", cosl(0.7853981633974483096156608458198757210492 *4));
-  printf ("%.16Lg\n", cosl(0.7853981633974483096156608458198757210492 *32));
-  printf ("%.16Lg\n", cosl(0.7853981633974483096156608458198757210492 *2/3));
-  printf ("%.16Lg\n", cosl(0.7853981633974483096156608458198757210492 *4/3));
+  printf ("%.16Lg\n", cosl (0.7853981633974483096156608458198757210492));
+  printf ("%.16Lg\n", cosl (0.7853981633974483096156608458198757210492 *29));
+  printf ("%.16Lg\n", cosl (0.7853981633974483096156608458198757210492 *2));
+  printf ("%.16Lg\n", cosl (0.7853981633974483096156608458198757210492 *30));
+  printf ("%.16Lg\n", cosl (0.7853981633974483096156608458198757210492 *4));
+  printf ("%.16Lg\n", cosl (0.7853981633974483096156608458198757210492 *32));
+  printf ("%.16Lg\n", cosl (0.7853981633974483096156608458198757210492 *2/3));
+  printf ("%.16Lg\n", cosl (0.7853981633974483096156608458198757210492 *4/3));
 }
 #endif

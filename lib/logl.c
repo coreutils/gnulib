@@ -185,7 +185,7 @@ static const long double
   ln2b = 1.4286068203094172321214581765680755001344E-6L;
 
 long double
-logl(long double x)
+logl (long double x)
 {
   long double z, y, w;
   long double t;
@@ -215,7 +215,7 @@ logl(long double x)
     }
 
   /* Extract exponent and reduce domain to 0.703125 <= u < 1.40625  */
-  x = frexpl(x, &e);
+  x = frexpl (x, &e);
   if (x < 0.703125L)
     {
       x += x;

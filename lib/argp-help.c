@@ -764,7 +764,7 @@ hol_entry_cmp (const struct hol_entry *entry1,
       else
         /* Both entries are in clusters, we can just compare the clusters.  */
         return (rc = hol_cluster_cmp (entry1->cluster, entry2->cluster)) ?
-                rc : HOL_ENTRY_PTRCMP(entry1, entry2);
+               rc : HOL_ENTRY_PTRCMP (entry1, entry2);
     }
   else if (group1 == group2)
     /* The entries are both in the same cluster and group, so compare them
@@ -789,7 +789,7 @@ hol_entry_cmp (const struct hol_entry *entry1,
       else if (!short1 && !short2 && long1 && long2)
         /* Only long options.  */
         return (rc = __strcasecmp (long1, long2)) ?
-                 rc : HOL_ENTRY_PTRCMP(entry1, entry2);
+               rc : HOL_ENTRY_PTRCMP (entry1, entry2);
       else
         /* Compare short/short, long/short, short/long, using the first
            character of long options.  Entries without *any* valid
@@ -805,14 +805,14 @@ hol_entry_cmp (const struct hol_entry *entry1,
           /* Compare ignoring case, except when the options are both the
              same letter, in which case lower-case always comes first.  */
           return lower_cmp ? lower_cmp :
-                    (rc = first2 - first1) ?
-                     rc : HOL_ENTRY_PTRCMP(entry1, entry2);
+                 (rc = first2 - first1) ?
+                 rc : HOL_ENTRY_PTRCMP (entry1, entry2);
         }
     }
   else
     /* Within the same cluster, but not the same group, so just compare
        groups.  */
-    return group_cmp (group1, group2, HOL_ENTRY_PTRCMP(entry1, entry2));
+    return group_cmp (group1, group2, HOL_ENTRY_PTRCMP (entry1, entry2));
 }
 
 /* Version of hol_entry_cmp with correct signature for qsort.  */

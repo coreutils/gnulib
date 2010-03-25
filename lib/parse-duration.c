@@ -452,7 +452,7 @@ parse_period (cch_t * in_pz)
 }
 
 static time_t
-parse_non_iso8601(cch_t * pz)
+parse_non_iso8601 (cch_t * pz)
 {
   whats_done_t whatd_we_do = NOTHING_IS_DONE;
 

@@ -28,7 +28,7 @@ SIGNATURE_CHECK (usleep, int, (useconds_t));
 #include "macros.h"
 
 int
-main(void)
+main (void)
 {
   time_t start = time (NULL);
   ASSERT (usleep (1000000) == 0);

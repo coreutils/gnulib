@@ -1,3 +1,47 @@
+2010-03-25  Bruno Haible  <bruno@clisp.org>
+
+	Minor formatting changes.
+	* lib/acosl.c: Insert space before function argument list.
+	* lib/argz.c: Likewise.
+	* lib/asinl.c: Likewise.
+	* lib/expl.c: Likewise.
+	* lib/gen-uni-tables.c: Likewise.
+	* lib/gettext.h: Likewise.
+	* lib/glthread/lock.h: Likewise.
+	* lib/tanl.c: Likewise.
+	* lib/uniname/uniname.c: Likewise.
+	* tests/test-idpriv-drop.c: Likewise.
+	* tests/test-idpriv-droptemp.c: Likewise.
+	* tests/test-lock.c: Likewise.
+	* tests/test-tls.c: Likewise.
+	* lib/argp-help.c: Insert space before function-like macro argument
+	list.
+	* lib/memcmp.c: Likewise.
+	* tests/test-base64.c: Likewise.
+	* lib/localename.c: Insert space before sizeof's argument list.
+	* lib/safe-alloc.h: Likewise.
+	* lib/file-set.h: Insert space before macro argument list.
+	* tests/test-argp.c: Likewise.
+	* lib/argp-namefrob.h: Insert space before function parameter list.
+	* lib/getaddrinfo.c: Likewise.
+	* lib/netdb.in.h: Likewise.
+	* lib/parse-duration.h: Likewise.
+	* lib/parse-duration.c: Likewise.
+	* lib/poll.c: Likewise.
+	* lib/select.c: Likewise.
+	* lib/trim.h: Likewise.
+	* tests/test-usleep.c: Likewise.
+	* lib/ldexpl.c: Insert space before function parameter list and before
+	function argument list.
+	* lib/logl.c: Likewise.
+	* lib/sqrtl.c: Likewise.
+	* lib/trim.c: Likewise.
+	* lib/cosl.c: Use GNU style indentation. Insert space before function
+	argument list.
+	* lib/sinl.c: Likewise.
+	* lib/tsearch.c: Insert space after 'for'.
+	Reported by Jim Meyering.
+
 2010-03-23  Pádraig Brady  <P@draigBrady.com>  (tiny change)
 
 	* maint.mk (sc_Wundef_boolean): Check for the presence of the

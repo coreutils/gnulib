@@ -388,19 +388,19 @@ unicode_name_character (const char *name)
                             unsigned int index1;
 
                             for (index1 = 0; index1 < 19; index1++)
-                              if (memcmp(jamo_initial_short_name[index1], p1, n1) == 0
+                              if (memcmp (jamo_initial_short_name[index1], p1, n1) == 0
                                   && jamo_initial_short_name[index1][n1] == '\0')
                                 {
                                   unsigned int index2;
 
                                   for (index2 = 0; index2 < 21; index2++)
-                                    if (memcmp(jamo_medial_short_name[index2], p2, n2) == 0
+                                    if (memcmp (jamo_medial_short_name[index2], p2, n2) == 0
                                         && jamo_medial_short_name[index2][n2] == '\0')
                                       {
                                         unsigned int index3;
 
                                         for (index3 = 0; index3 < 28; index3++)
-                                          if (memcmp(jamo_final_short_name[index3], p3, n3) == 0
+                                          if (memcmp (jamo_final_short_name[index3], p3, n3) == 0
                                               && jamo_final_short_name[index3][n3] == '\0')
                                             {
                                               return 0xAC00 + (index1 * 21 + index2) * 28 + index3;

@@ -59,7 +59,7 @@ safe_alloc_realloc_n (void *ptrptr, size_t size, size_t count)
  * Return -1 on failure to allocate, zero on success
  */
 # define ALLOC(ptr)                                     \
-  safe_alloc_alloc_n (&(ptr), sizeof(*(ptr)), 1, 1)
+  safe_alloc_alloc_n (&(ptr), sizeof (*(ptr)), 1, 1)
 
 /**
  * ALLOC_N:
@@ -73,7 +73,7 @@ safe_alloc_realloc_n (void *ptrptr, size_t size, size_t count)
  * Return -1 on failure, 0 on success
  */
 # define ALLOC_N(ptr, count)                                    \
-  safe_alloc_alloc_n (&(ptr), sizeof(*(ptr)), (count), 1)
+  safe_alloc_alloc_n (&(ptr), sizeof (*(ptr)), (count), 1)
 
 /**
  * ALLOC_N_UNINITIALIZED:
@@ -87,7 +87,7 @@ safe_alloc_realloc_n (void *ptrptr, size_t size, size_t count)
  * Return -1 on failure to allocate, zero on success
  */
 # define ALLOC_N_UNINITIALIZED(ptr, count)                      \
-  safe_alloc_alloc_n (&(ptr), sizeof(*(ptr)), (count), 0)
+  safe_alloc_alloc_n (&(ptr), sizeof (*(ptr)), (count), 0)
 
 /**
  * REALLOC_N:
@@ -101,7 +101,7 @@ safe_alloc_realloc_n (void *ptrptr, size_t size, size_t count)
  * Return -1 on failure to reallocate, zero on success
  */
 # define REALLOC_N(ptr, count)                                  \
-  safe_alloc_realloc_n (&(ptr), sizeof(*(ptr)), (count))
+  safe_alloc_realloc_n (&(ptr), sizeof (*(ptr)), (count))
 
 /**
  * FREE:
@@ -116,6 +116,6 @@ safe_alloc_realloc_n (void *ptrptr, size_t size, size_t count)
       free (ptr);                               \
       (ptr) = NULL;                             \
     }                                           \
-  while(0)
+  while (0)
 
 #endif /* SAFE_ALLOC_H_ */

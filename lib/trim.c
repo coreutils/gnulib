@@ -38,14 +38,14 @@
 #endif
 
 char *
-trim2(const char *s, int how)
+trim2 (const char *s, int how)
 {
   char *d;
 
-  d = strdup(s);
+  d = strdup (s);
 
   if (!d)
-    xalloc_die();
+    xalloc_die ();
 
   if (MB_CUR_MAX > 1)
     {

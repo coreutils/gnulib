@@ -144,7 +144,7 @@
 #if defined GNULIB_ARGP_DISABLE_DIRNAME
 # define __argp_base_name(arg) arg
 #elif defined GNULIB_ARGP_EXTERN_BASENAME
-extern char *__argp_base_name(const char *arg);
+extern char *__argp_base_name (const char *arg);
 #else
 # include "dirname.h"
 # define __argp_base_name last_component

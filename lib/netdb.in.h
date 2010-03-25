@@ -171,10 +171,10 @@ extern const char *gai_strerror (int ecode);
 /* Convert socket address to printable node and service names.
    For more details, see the POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/getnameinfo.html>.  */
-extern int getnameinfo(const struct sockaddr *restrict sa, socklen_t salen,
-                       char *restrict node, socklen_t nodelen,
-                       char *restrict service, socklen_t servicelen,
-                       int flags)
+extern int getnameinfo (const struct sockaddr *restrict sa, socklen_t salen,
+                        char *restrict node, socklen_t nodelen,
+                        char *restrict service, socklen_t servicelen,
+                        int flags)
      _GL_ARG_NONNULL ((1));
 # endif
 

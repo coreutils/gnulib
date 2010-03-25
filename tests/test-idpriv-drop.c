@@ -38,7 +38,7 @@ show_uids ()
           (int) real, (int) effective, (int) saved);
 #elif HAVE_GETEUID
   printf ("uids: real=%d effective=%d",
-          (int) getuid (), (int) geteuid());
+          (int) getuid (), (int) geteuid ());
 #elif HAVE_GETUID
   printf ("uids: real=%d",
           (int) getuid ());
@@ -57,7 +57,7 @@ show_gids ()
           (int) real, (int) effective, (int) saved);
 #elif HAVE_GETEGID
   printf ("gids: real=%d effective=%d",
-          (int) getgid (), (int) getegid());
+          (int) getgid (), (int) getegid ());
 #elif HAVE_GETGID
   printf ("gids: real=%d",
           (int) getgid ());

@@ -85,6 +85,6 @@
 /* Parses the given string.  If it has the syntax of a valid duration,
    this duration is returned.  Otherwise, the return value is BAD_TIME,
    and errno is set to either EINVAL (bad syntax) or ERANGE (out of range).  */
-extern time_t parse_duration(char const * in_pz);
+extern time_t parse_duration (char const * in_pz);
 
 #endif /* GNULIB_PARSE_DURATION_H */

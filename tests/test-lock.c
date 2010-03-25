@@ -1,5 +1,5 @@
 /* Test of locking in multithreaded situations.
-   Copyright (C) 2005, 2008, 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2005, 2008-2010 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -110,7 +110,7 @@ static int account[ACCOUNT_COUNT];
 static int
 random_account (void)
 {
-  return ((unsigned int) rand() >> 3) % ACCOUNT_COUNT;
+  return ((unsigned int) rand () >> 3) % ACCOUNT_COUNT;
 }
 
 static void
@@ -149,7 +149,7 @@ lock_mutator_thread (void *arg)
 
       i1 = random_account ();
       i2 = random_account ();
-      value = ((unsigned int) rand() >> 3) % 10;
+      value = ((unsigned int) rand () >> 3) % 10;
       account[i1] += value;
       account[i2] -= value;
 
@@ -239,7 +239,7 @@ rwlock_mutator_thread (void *arg)
 
       i1 = random_account ();
       i2 = random_account ();
-      value = ((unsigned int) rand() >> 3) % 10;
+      value = ((unsigned int) rand () >> 3) % 10;
       account[i1] += value;
       account[i2] -= value;
 
@@ -321,12 +321,12 @@ recshuffle (void)
 
   i1 = random_account ();
   i2 = random_account ();
-  value = ((unsigned int) rand() >> 3) % 10;
+  value = ((unsigned int) rand () >> 3) % 10;
   account[i1] += value;
   account[i2] -= value;
 
   /* Recursive with probability 0.5.  */
-  if (((unsigned int) rand() >> 3) % 2)
+  if (((unsigned int) rand () >> 3) % 2)
     recshuffle ();
 
   dbgprintf ("Mutator %p before unlock\n", gl_thread_self ());

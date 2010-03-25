@@ -122,14 +122,14 @@ expl (long double x)
 int
 main (void)
 {
-  printf ("%.16Lg\n", expl(1.0L));
-  printf ("%.16Lg\n", expl(-1.0L));
-  printf ("%.16Lg\n", expl(2.0L));
-  printf ("%.16Lg\n", expl(4.0L));
-  printf ("%.16Lg\n", expl(-2.0L));
-  printf ("%.16Lg\n", expl(-4.0L));
-  printf ("%.16Lg\n", expl(0.0625L));
-  printf ("%.16Lg\n", expl(0.3L));
-  printf ("%.16Lg\n", expl(0.6L));
+  printf ("%.16Lg\n", expl (1.0L));
+  printf ("%.16Lg\n", expl (-1.0L));
+  printf ("%.16Lg\n", expl (2.0L));
+  printf ("%.16Lg\n", expl (4.0L));
+  printf ("%.16Lg\n", expl (-2.0L));
+  printf ("%.16Lg\n", expl (-4.0L));
+  printf ("%.16Lg\n", expl (0.0625L));
+  printf ("%.16Lg\n", expl (0.3L));
+  printf ("%.16Lg\n", expl (0.6L));
 }
 #endif

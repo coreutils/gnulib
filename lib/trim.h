@@ -30,4 +30,4 @@
 /* Removes leading whitespaces. */
 #define trim_leading(s) trim2(s, TRIM_LEADING)
 
-char *trim2(const char *, int);
+char *trim2 (const char *, int);

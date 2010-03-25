@@ -351,10 +351,11 @@ freeaddrinfo (struct addrinfo *ai)
     }
 }
 
-int getnameinfo(const struct sockaddr *restrict sa, socklen_t salen,
-                char *restrict node, socklen_t nodelen,
-                char *restrict service, socklen_t servicelen,
-                int flags)
+int
+getnameinfo (const struct sockaddr *restrict sa, socklen_t salen,
+             char *restrict node, socklen_t nodelen,
+             char *restrict service, socklen_t servicelen,
+             int flags)
 {
 #ifdef WIN32_NATIVE
   if (use_win32_p ())
