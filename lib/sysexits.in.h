@@ -16,13 +16,13 @@
 
 /* Written by Simon Josefsson based on sysexits(3) man page */
 
+#if __GNUC__ >= 3
+@PRAGMA_SYSTEM_HEADER@
+#endif
+
 #ifndef _GL_SYSEXITS_H
 
 #if @HAVE_SYSEXITS_H@
-
-# if __GNUC__ >= 3
-@PRAGMA_SYSTEM_HEADER@
-# endif
 
 /* IRIX 6.5 has an <unistd.h> that defines a macro EX_OK with a nonzero
    value.  Override it.  See

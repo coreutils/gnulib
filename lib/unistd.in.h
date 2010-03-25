@@ -15,6 +15,10 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
+#if __GNUC__ >= 3
+@PRAGMA_SYSTEM_HEADER@
+#endif
+
 /* Special invocation convention:
    - On mingw, several headers, including <winsock2.h>, include <unistd.h>,
      but we need to ensure that both the system <unistd.h> and <winsock2.h>
@@ -32,10 +36,6 @@
 
 /* Normal invocation.  */
 #elif !defined _GL_UNISTD_H
-
-#if __GNUC__ >= 3
-@PRAGMA_SYSTEM_HEADER@
-#endif
 
 /* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_UNISTD_H@

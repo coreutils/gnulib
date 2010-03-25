@@ -15,11 +15,11 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#ifndef _GL_SYS_UTSNAME_H
-
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
+
+#ifndef _GL_SYS_UTSNAME_H
 
 #if @HAVE_SYS_UTSNAME_H@
 # @INCLUDE_NEXT@ @NEXT_SYS_UTSNAME_H@

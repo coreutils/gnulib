@@ -1,5 +1,37 @@
 2010-03-25  Eric Blake  <eblake@redhat.com>
 
+	maint: use pragma consistently across replacement headers
+	* lib/ctype.in.h (system_header): Hoist for consistent placement.
+	* lib/dirent.in.h (system_header): Likewise.
+	* lib/errno.in.h (system_header): Likewise.
+	* lib/float.in.h (system_header): Likewise.
+	* lib/getopt.in.h (system_header): Likewise.
+	* lib/iconv.in.h (system_header): Likewise.
+	* lib/inttypes.in.h (system_header): Likewise.
+	* lib/langinfo.in.h (system_header): Likewise.
+	* lib/locale.in.h (system_header): Likewise.
+	* lib/math.in.h (system_header): Likewise.
+	* lib/netdb.in.h (system_header): Likewise.
+	* lib/netinet_in.in.h (system_header): Likewise.
+	* lib/pty.in.h (system_header): Likewise.
+	* lib/sched.in.h (system_header): Likewise.
+	* lib/se-selinux.in.h (system_header): Likewise.
+	* lib/search.in.h (system_header): Likewise.
+	* lib/spawn.in.h (system_header): Likewise.
+	* lib/stdarg.in.h (system_header): Likewise.
+	* lib/stdint.in.h (system_header): Likewise.
+	* lib/string.in.h (system_header): Likewise.
+	* lib/strings.in.h (system_header): Likewise.
+	* lib/sys_file.in.h (system_header): Likewise.
+	* lib/sys_ioctl.in.h (system_header): Likewise.
+	* lib/sys_socket.in.h (system_header): Likewise.
+	* lib/sys_times.in.h (system_header): Likewise.
+	* lib/sys_utsname.in.h (system_header): Likewise.
+	* lib/sys_wait.in.h (system_header): Likewise.
+	* lib/sysexits.in.h (system_header): Likewise.
+	* lib/unistd.in.h (system_header): Likewise.
+	* lib/wctype.in.h (system_header): Likewise.
+
 	arpa/inet: fix mingw compilation warning
 	* lib/arpa_inet.in.h (system_header): Hoist to be unconditional.
 	Reported by Matthew Bolte.
@@ -295,7 +327,7 @@
 	errno value in error message.
 
 2010-03-20  Bruno Haible  <bruno@clisp.org>
-            Jim Meyering  <meyering@redhat.com>
+	    Jim Meyering  <meyering@redhat.com>
 
 	lchown: Avoid "unused variable" warning.
 	* lib/lchown.c (rpl_lchown): Move variable 'st' into #if block.

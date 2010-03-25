@@ -20,11 +20,11 @@
 /* This file is supposed to be used on platforms where <sys/times.h>
    is missing.  */
 
-#ifndef _GL_SYS_TIMES_H
-
 # if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 # endif
+
+#ifndef _GL_SYS_TIMES_H
 
 # if @HAVE_SYS_TIMES_H@
 #  @INCLUDE_NEXT@ @NEXT_SYS_TIMES_H@

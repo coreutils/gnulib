@@ -20,13 +20,13 @@
    It is intended to provide definitions and prototypes needed by an
    application.  */
 
-#ifndef _GL_NETDB_H
-
-#if @HAVE_NETDB_H@
-
 # if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 # endif
+
+#ifndef _GL_NETDB_H
+
+#if @HAVE_NETDB_H@
 
 /* The include_next requires a split double-inclusion guard.  */
 # @INCLUDE_NEXT@ @NEXT_NETDB_H@

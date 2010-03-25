@@ -23,6 +23,10 @@
    It is intended to provide definitions and prototypes needed by an
    application.  */
 
+#if __GNUC__ >= 3
+@PRAGMA_SYSTEM_HEADER@
+#endif
+
 #if defined _GL_ALREADY_INCLUDING_SYS_SOCKET_H
 /* Special invocation convention:
    - On Cygwin 1.5.x we have a sequence of nested includes
@@ -40,10 +44,6 @@
 #if @HAVE_SYS_SOCKET_H@
 
 # define _GL_ALREADY_INCLUDING_SYS_SOCKET_H
-
-# if __GNUC__ >= 3
-@PRAGMA_SYSTEM_HEADER@
-# endif
 
 /* On many platforms, <sys/socket.h> assumes prior inclusion of
    <sys/types.h>.  */

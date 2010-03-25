@@ -15,13 +15,13 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#ifndef _GL_NETINET_IN_H
-
-#if @HAVE_NETINET_IN_H@
-
 # if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 # endif
+
+#ifndef _GL_NETINET_IN_H
+
+#if @HAVE_NETINET_IN_H@
 
 /* On many platforms, <netinet/in.h> assumes prior inclusion of
    <sys/types.h>.  */

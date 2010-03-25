@@ -15,13 +15,14 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
+#if __GNUC__ >= 3
+@PRAGMA_SYSTEM_HEADER@
+#endif
+
 #ifndef _GL_SEARCH_H
 
 /* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_SEARCH_H@
-# if __GNUC__ >= 3
-@PRAGMA_SYSTEM_HEADER@
-# endif
 # @INCLUDE_NEXT@ @NEXT_SEARCH_H@
 #endif
 

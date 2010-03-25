@@ -21,6 +21,10 @@
  * <http://www.opengroup.org/susv3xbd/stdint.h.html>
  */
 
+# if __GNUC__ >= 3
+@PRAGMA_SYSTEM_HEADER@
+# endif
+
 #ifndef _GL_STDINT_H
 
 /* When including a system file that in turn includes <inttypes.h>,
@@ -49,9 +53,6 @@
      in <inttypes.h> would reinclude us, skipping our contents because
      _GL_STDINT_H is defined.
      The include_next requires a split double-inclusion guard.  */
-# if __GNUC__ >= 3
-@PRAGMA_SYSTEM_HEADER@
-# endif
 # @INCLUDE_NEXT@ @NEXT_STDINT_H@
 #endif
 
