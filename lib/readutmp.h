@@ -73,7 +73,7 @@
 
 #  include <utmp.h>
 #  if !HAVE_DECL_GETUTENT
-    struct utmp *getutent();
+    struct utmp *getutent (void);
 #  endif
 #  define UTMP_STRUCT_NAME utmp
 #  define UT_TIME_MEMBER(UT_PTR) ((UT_PTR)->ut_time)
