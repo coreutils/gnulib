@@ -1,3 +1,8 @@
+2010-03-26  Simon Josefsson  <simon@josefsson.org>
+
+	* top/maint.mk (sc_texinfo_acronym): Don't infloop if there is
+	no *.texi files.  Reported by Eric Blake <eblake@redhat.com>.
+
 2010-03-25  Eric Blake  <eblake@redhat.com>
 
 	maint: use pragma consistently across replacement headers

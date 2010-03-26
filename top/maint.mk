@@ -563,10 +563,13 @@ sc_GFDL_version:
 
 # Don't use Texinfo @acronym{} as it is not a good idea.
 sc_texinfo_acronym:
-	@grep -nE '@acronym{'						\
-	    $$($(VC_LIST_EXCEPT) | grep -E '\.texi$$') &&		\
+	@if $(VC_LIST_EXCEPT) | grep -lE '\.texi$$' >/dev/null; then	\
+		grep -nE '@acronym{'					\
+			$$($(VC_LIST_EXCEPT) | grep -E '\.texi$$') &&	\
 	  { echo '$(ME): found use of Texinfo @acronym{}' 1>&2;		\
-	    exit 1; } || :
+	    exit 1; } || :;						\
+	else :;								\
+	fi
 
 cvs_keywords = \
   Author|Date|Header|Id|Name|Locker|Log|RCSfile|Revision|Source|State
