@@ -15,7 +15,7 @@ unictype/combining-class
 uninorm/decompose-internal
 
 configure.ac:
-gl_MODULE_INDICATOR([uninorm/u16-normalize])
+gl_MODULE_INDICATOR_FOR_TESTS([uninorm/u16-normalize])
 
 Makefile.am:
 lib_SOURCES += uninorm/u16-normalize.c

@@ -1,5 +1,39 @@
 2010-03-27  Bruno Haible  <bruno@clisp.org>
 
+	Distinguish two kinds of module indicators.
+	* m4/gnulib-common.m4 (gl_MODULE_INDICATOR_FOR_TESTS): Renamed from
+	gl_MODULE_INDICATOR.
+	(gl_MODULE_INDICATOR): New macro.
+	* m4/dirent_h.m4 (gl_DIRENT_MODULE_INDICATOR): Invoke
+	gl_MODULE_INDICATOR_FOR_TESTS instead of gl_MODULE_INDICATOR.
+	* m4/fcntl_h.m4 (gl_FCNTL_MODULE_INDICATOR): Likewise.
+	* m4/langinfo_h.m4 (gl_LANGINFO_MODULE_INDICATOR): Likewise.
+	* m4/locale_h.m4 (gl_LOCALE_MODULE_INDICATOR): Likewise.
+	* m4/math_h.m4 (gl_MATH_MODULE_INDICATOR): Likewise.
+	* m4/pty_h.m4 (gl_PTY_MODULE_INDICATOR): Likewise.
+	* m4/search_h.m4 (gl_SEARCH_MODULE_INDICATOR): Likewise.
+	* m4/signal_h.m4 (gl_SIGNAL_MODULE_INDICATOR): Likewise.
+	* m4/spawn_h.m4 (gl_SPAWN_MODULE_INDICATOR): Likewise.
+	* m4/stdio_h.m4 (gl_STDIO_MODULE_INDICATOR): Likewise.
+	* m4/stdlib_h.m4 (gl_STDLIB_MODULE_INDICATOR): Likewise.
+	* m4/string_h.m4 (gl_STRING_MODULE_INDICATOR): Likewise.
+	* m4/sys_ioctl_h.m4 (gl_SYS_IOCTL_MODULE_INDICATOR): Likewise.
+	* m4/sys_select_h.m4 (gl_SYS_SELECT_MODULE_INDICATOR): Likewise.
+	* m4/sys_socket_h.m4 (gl_SYS_SOCKET_MODULE_INDICATOR): Likewise.
+	* m4/sys_stat_h.m4 (gl_SYS_STAT_MODULE_INDICATOR): Likewise.
+	* m4/sys_time_h.m4 (gl_SYS_TIME_MODULE_INDICATOR): Likewise.
+	* m4/time_h.m4 (gl_TIME_MODULE_INDICATOR): Likewise.
+	* m4/unistd_h.m4 (gl_UNISTD_MODULE_INDICATOR): Likewise.
+	* m4/wchar_h.m4 (gl_WCHAR_MODULE_INDICATOR): Likewise.
+	* modules/cloexec (configure.ac): Likewise.
+	* modules/getopt-gnu (configure.ac): Likewise.
+	* modules/uninorm/u8-normalize (configure.ac): Likewise.
+	* modules/uninorm/u16-normalize (configure.ac): Likewise.
+	* modules/uninorm/u32-normalize (configure.ac): Likewise.
+	* modules/fdopendir (configure.ac): Invoke gl_MODULE_INDICATOR.
+
+2010-03-27  Bruno Haible  <bruno@clisp.org>
+
 	New module description field 'Comment'.
 	* gnulib-tool: New option --extract-comment.
 	(func_usage): Document it.

@@ -40,7 +40,7 @@ AC_DEFUN([gl_SYS_STAT_MODULE_INDICATOR],
   AC_REQUIRE([gl_SYS_STAT_H_DEFAULTS])
   gl_MODULE_INDICATOR_SET_VARIABLE([$1])
   dnl Define it also as a C macro, for the benefit of the unit tests.
-  gl_MODULE_INDICATOR([$1])
+  gl_MODULE_INDICATOR_FOR_TESTS([$1])
 ])
 
 AC_DEFUN([gl_SYS_STAT_H_DEFAULTS],

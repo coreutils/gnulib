@@ -18,6 +18,7 @@ save-cwd
 configure.ac:
 gl_FUNC_FDOPENDIR
 gl_DIRENT_MODULE_INDICATOR([fdopendir])
+gl_MODULE_INDICATOR([fdopendir])
 
 Makefile.am:
 

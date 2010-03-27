@@ -1,4 +1,4 @@
-# gnulib-common.m4 serial 15
+# gnulib-common.m4 serial 16
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -52,8 +52,38 @@ AC_DEFUN([gl_MODULE_INDICATOR_SET_VARIABLE],
 ])
 
 # gl_MODULE_INDICATOR([modulename])
-# defines a C macro indicating the presence of the given module.
+# defines a C macro indicating the presence of the given module
+# in a location where it can be used.
+#                                             |  Value  |   Value   |
+#                                             | in lib/ | in tests/ |
+# --------------------------------------------+---------+-----------+
+# Module present among main modules:          |    1    |     1     |
+# --------------------------------------------+---------+-----------+
+# Module present among tests-related modules: |    0    |     1     |
+# --------------------------------------------+---------+-----------+
+# Module not present at all:                  |    0    |     0     |
+# --------------------------------------------+---------+-----------+
 AC_DEFUN([gl_MODULE_INDICATOR],
+[
+  AC_DEFINE_UNQUOTED([GNULIB_]translit([$1],[abcdefghijklmnopqrstuvwxyz./-],[ABCDEFGHIJKLMNOPQRSTUVWXYZ___]),
+    [gl_MODULE_INDICATOR_CONDITION],
+    [Define to a C preprocessor expression that evaluates to 1 or 0, depending whether the gnulib module ]$1[ shall be considered present.])
+])
+
+# gl_MODULE_INDICATOR_FOR_TESTS([modulename])
+# defines a C macro indicating the presence of the given module
+# in lib or tests. This is useful to determine whether the module
+# should be tested.
+#                                             |  Value  |   Value   |
+#                                             | in lib/ | in tests/ |
+# --------------------------------------------+---------+-----------+
+# Module present among main modules:          |    1    |     1     |
+# --------------------------------------------+---------+-----------+
+# Module present among tests-related modules: |    1    |     1     |
+# --------------------------------------------+---------+-----------+
+# Module not present at all:                  |    0    |     0     |
+# --------------------------------------------+---------+-----------+
+AC_DEFUN([gl_MODULE_INDICATOR_FOR_TESTS],
 [
   AC_DEFINE([GNULIB_]translit([$1],[abcdefghijklmnopqrstuvwxyz./-],[ABCDEFGHIJKLMNOPQRSTUVWXYZ___]), [1],
     [Define to 1 when using the gnulib module ]$1[.])

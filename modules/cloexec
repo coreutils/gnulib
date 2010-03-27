@@ -13,7 +13,7 @@ stdbool
 
 configure.ac:
 gl_CLOEXEC
-gl_MODULE_INDICATOR([cloexec])
+gl_MODULE_INDICATOR_FOR_TESTS([cloexec])
 
 Makefile.am:
 

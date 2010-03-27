@@ -9,7 +9,7 @@ getopt-posix
 
 configure.ac:
 gl_FUNC_GETOPT_GNU
-gl_MODULE_INDICATOR([getopt-gnu])
+gl_MODULE_INDICATOR_FOR_TESTS([getopt-gnu])
 
 Makefile.am:
 
