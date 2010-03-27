@@ -1,5 +1,14 @@
 2010-03-27  Bruno Haible  <bruno@clisp.org>
 
+	Fix a compilation error on Cygwin with g++ >= 4.3.
+	* lib/sys_stat.in.h (lchmod): Don't warn about the use of this function
+	if it is undefined or if we alias it to chmod.
+	(lstat): Don't warn about the use of this function if it is undefined
+	or if we alias it to stat.
+	Reported by Simon Josefsson.
+
+2010-03-27  Bruno Haible  <bruno@clisp.org>
+
 	* m4/getlogin.m4 (gl_FUNC_GETLOGIN): Renamed from gl_GETLOGIN.
 	* modules/getlogin (configure.ac): Update.
 

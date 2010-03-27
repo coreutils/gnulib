@@ -398,7 +398,9 @@ _GL_FUNCDECL_SYS (lchmod, int, (const char *filename, mode_t mode)
 #  endif
 _GL_CXXALIAS_SYS (lchmod, int, (const char *filename, mode_t mode));
 # endif
+# if @HAVE_LCHMOD@
 _GL_CXXALIASWARN (lchmod);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef lchmod
 # if HAVE_RAW_DECL_LCHMOD
@@ -427,7 +429,9 @@ _GL_CXXALIAS_RPL (lstat, int, (const char *name, struct stat *buf));
 # else
 _GL_CXXALIAS_SYS (lstat, int, (const char *name, struct stat *buf));
 # endif
+# if @HAVE_LSTAT@
 _GL_CXXALIASWARN (lstat);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef lstat
 # if HAVE_RAW_DECL_LSTAT
