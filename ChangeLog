@@ -1,5 +1,8 @@
 2010-03-27  Bruno Haible  <bruno@clisp.org>
 
+	* m4/mbslen.m4 (gl_FUNC_MBSLEN): Renamed from gl_MBSLEN.
+	* modules/mbslen (configure.ac): Update.
+
 	* m4/pty.m4 (gl_FUNC_FORKPTY): Renamed from gl_FORKPTY.
 	(gl_FUNC_OPENPTY): Renamed from gl_OPENPTY.
 	* modules/forkpty (configure.ac): Update.
