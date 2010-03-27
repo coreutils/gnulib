@@ -165,6 +165,7 @@ Operation modes:
       --extract-description        extract the description
       --extract-status             extract the status (obsolete or not)
       --extract-notice             extract the notice or banner
+      --extract-applicability      extract the applicability
       --extract-filelist           extract the list of files
       --extract-dependencies       extract the dependencies
       --extract-autoconf-snippet   extract the snippet for configure.ac

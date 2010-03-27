@@ -1,5 +1,10 @@
 2010-03-27  Bruno Haible  <bruno@clisp.org>
 
+	Addendum to 2010-02-07 commit.
+	* gnulib-tool (func_usage): Document --extract-applicability option.
+
+2010-03-27  Bruno Haible  <bruno@clisp.org>
+
 	Use GNULIB_POSIXCHECK instead of GNULIB_PORTCHECK.
 	* lib/time.in.h (asctime, asctime_r, ctime, ctime_r): Test
 	GNULIB_POSIXCHECK, not GNULIB_PORTCHECK. Provide compile-time warnings
