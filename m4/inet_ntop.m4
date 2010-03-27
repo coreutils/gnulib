@@ -1,10 +1,10 @@
-# inet_ntop.m4 serial 11
+# inet_ntop.m4 serial 12
 dnl Copyright (C) 2005, 2006, 2008, 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
-AC_DEFUN([gl_INET_NTOP],
+AC_DEFUN([gl_FUNC_INET_NTOP],
 [
   dnl Persuade Solaris <arpa/inet.h> to declare inet_ntop.
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
