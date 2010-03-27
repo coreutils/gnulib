@@ -15,7 +15,7 @@ netinet_in
 extensions
 
 configure.ac:
-gl_INET_PTON
+gl_FUNC_INET_PTON
 gl_ARPA_INET_MODULE_INDICATOR([inet_pton])
 
 Makefile.am:

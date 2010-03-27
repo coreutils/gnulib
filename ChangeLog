@@ -1,5 +1,8 @@
 2010-03-27  Bruno Haible  <bruno@clisp.org>
 
+	* m4/inet_pton.m4 (gl_FUNC_INET_PTON): Renamed from gl_INET_PTON.
+	* modules/inet_pton (configure.ac): Update.
+
 	* m4/mbslen.m4 (gl_FUNC_MBSLEN): Renamed from gl_MBSLEN.
 	* modules/mbslen (configure.ac): Update.
 
