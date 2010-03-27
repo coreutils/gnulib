@@ -133,6 +133,7 @@ Usage: gnulib-tool --list
        gnulib-tool --test --dir=directory module1 ... moduleN
        gnulib-tool --megatest --dir=directory [module1 ... moduleN]
        gnulib-tool --extract-description module
+       gnulib-tool --extract-comment module
        gnulib-tool --extract-status module
        gnulib-tool --extract-notice module
        gnulib-tool --extract-applicability module
@@ -163,6 +164,7 @@ Operation modes:
       --megatest            test the given modules one by one and all together
                             (recommended to use CC=\"gcc -Wall\" here)
       --extract-description        extract the description
+      --extract-comment            extract the comment
       --extract-status             extract the status (obsolete or not)
       --extract-notice             extract the notice or banner
       --extract-applicability      extract the applicability
@@ -1401,6 +1403,7 @@ sed_extract_prog=':[	 ]*$/ {
   :a
     n
     s/^Description:[	 ]*$//
+    s/^Comment:[	 ]*$//
     s/^Status:[	 ]*$//
     s/^Notice:[	 ]*$//
     s/^Applicability:[	 ]*$//
@@ -1424,6 +1427,7 @@ sed_extract_prog=':[	 ]*$/ {
 # NOTE: Keep this in sync with sed_extract_prog above!
 sed_extract_field_header='
   s/^Description:[	 ]*$/description/
+  s/^Comment:[	 ]*$/comment/
   s/^Status:[	 ]*$/status/
   s/^Notice:[	 ]*$/notice/
   s/^Applicability:[	 ]*$/applicability/
@@ -1710,6 +1714,32 @@ func_get_description ()
       eval "field_set=\"\$${cachevar}_description_set\""
       if test -n "$field_set"; then
         eval "field_value=\"\$${cachevar}_description\""
+        echo "${field_value}"
+      fi
+    fi
+  fi
+}
+
+# func_get_comment module
+# Input:
+# - local_gnulib_dir  from --local-dir
+# - modcache          true or false, from --cache-modules/--no-cache-modules
+func_get_comment ()
+{
+  if ! $modcache; then
+    func_lookup_file "modules/$1"
+    sed -n -e "/^Comment$sed_extract_prog" < "$lookedup_file"
+  else
+    func_cache_lookup_module "$1"
+    # Output the field's value, including the final newline (if any).
+    if $have_associative; then
+      if test -n "${modcache_comment[$1]+set}"; then
+        echo "${modcache_comment[$1]}"
+      fi
+    else
+      eval "field_set=\"\$${cachevar}_comment_set\""
+      if test -n "$field_set"; then
+        eval "field_value=\"\$${cachevar}_comment\""
         echo "${field_value}"
       fi
     fi
@@ -5285,6 +5315,16 @@ s/\([.*$]\)/[\1]/g'
       func_verify_module
       if test -n "$module"; then
         func_get_description "$module"
+      fi
+    done
+    ;;
+
+  extract-comment )
+    for module
+    do
+      func_verify_module
+      if test -n "$module"; then
+        func_get_comment "$module"
       fi
     done
     ;;

@@ -1,5 +1,14 @@
 2010-03-27  Bruno Haible  <bruno@clisp.org>
 
+	New module description field 'Comment'.
+	* gnulib-tool: New option --extract-comment.
+	(func_usage): Document it.
+	(sed_extract_prog, sed_extract_field_header): Support 'Comment' field.
+	(func_get_comment): New function.
+	* modules/TEMPLATE-EXTENDED: Add a blank Comment field.
+
+2010-03-27  Bruno Haible  <bruno@clisp.org>
+
 	Addendum to 2010-02-07 commit.
 	* gnulib-tool (func_usage): Document --extract-applicability option.
 
