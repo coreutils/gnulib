@@ -1,4 +1,4 @@
-# pty.m4 serial 5
+# pty.m4 serial 6
 dnl Copyright (C) 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -20,7 +20,7 @@ AC_DEFUN([gl_PTY_LIB],
   AC_SUBST([PTY_LIB])
 ])
 
-AC_DEFUN([gl_FORKPTY],
+AC_DEFUN([gl_FUNC_FORKPTY],
 [
   AC_REQUIRE([gl_PTY_LIB])
   AC_REQUIRE([gl_PTY_H])
@@ -72,7 +72,7 @@ AC_DEFUN([gl_FORKPTY],
   fi
 ])
 
-AC_DEFUN([gl_OPENPTY],
+AC_DEFUN([gl_FUNC_OPENPTY],
 [
   AC_REQUIRE([gl_PTY_LIB])
   AC_REQUIRE([gl_PTY_H])

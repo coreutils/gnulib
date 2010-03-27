@@ -12,7 +12,7 @@ openpty
 login_tty
 
 configure.ac:
-gl_FORKPTY
+gl_FUNC_FORKPTY
 gl_PTY_MODULE_INDICATOR([forkpty])
 
 Makefile.am:

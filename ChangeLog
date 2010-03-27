@@ -1,3 +1,10 @@
+2010-03-27  Bruno Haible  <bruno@clisp.org>
+
+	* m4/pty.m4 (gl_FUNC_FORKPTY): Renamed from gl_FORKPTY.
+	(gl_FUNC_OPENPTY): Renamed from gl_OPENPTY.
+	* modules/forkpty (configure.ac): Update.
+	* modules/openpty (configure.ac): Update.
+
 2010-03-26  Simon Josefsson  <simon@josefsson.org>
 
 	* top/maint.mk (sc_texinfo_acronym): Don't infloop if there is

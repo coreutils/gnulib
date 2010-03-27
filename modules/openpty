@@ -12,7 +12,7 @@ fcntl-h
 ioctl
 
 configure.ac:
-gl_OPENPTY
+gl_FUNC_OPENPTY
 gl_PTY_MODULE_INDICATOR([openpty])
 
 Makefile.am:
