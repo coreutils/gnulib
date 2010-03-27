@@ -1,4 +1,4 @@
-#serial 5
+#serial 6
 
 # Copyright (C) 2005-2007, 2009-2010 Free Software Foundation, Inc.
 #
@@ -11,7 +11,7 @@ dnl
 dnl Provide getlogin_r when the system lacks it.
 dnl
 
-AC_DEFUN([gl_GETLOGIN_R],
+AC_DEFUN([gl_FUNC_GETLOGIN_R],
 [
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
 

@@ -1,5 +1,8 @@
 2010-03-27  Bruno Haible  <bruno@clisp.org>
 
+	* m4/getlogin_r.m4 (gl_FUNC_GETLOGIN_R): Renamed from gl_GETLOGIN_R.
+	* modules/getlogin_r (configure.ac): Update.
+
 	* m4/inet_ntop.m4 (gl_FUNC_INET_NTOP): Renamed from gl_INET_NTOP.
 	* m4/getaddrinfo.m4 (gl_GETADDRINFO): Update.
 	* modules/inet_ntop (configure.ac): Update.

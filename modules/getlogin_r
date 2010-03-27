@@ -10,7 +10,7 @@ extensions
 unistd
 
 configure.ac:
-gl_GETLOGIN_R
+gl_FUNC_GETLOGIN_R
 gl_UNISTD_MODULE_INDICATOR([getlogin_r])
 
 Makefile.am:
