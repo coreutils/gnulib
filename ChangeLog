@@ -1,5 +1,12 @@
 2010-03-27  Bruno Haible  <bruno@clisp.org>
 
+	Use GNULIB_POSIXCHECK instead of GNULIB_PORTCHECK.
+	* lib/time.in.h (asctime, asctime_r, ctime, ctime_r): Test
+	GNULIB_POSIXCHECK, not GNULIB_PORTCHECK. Provide compile-time warnings
+	rather than link errors.
+
+2010-03-27  Bruno Haible  <bruno@clisp.org>
+
 	Avoid side effects from tests-related modules on the compilation of lib.
 	* m4/gnulib-common.m4 (gl_MODULE_INDICATOR_CONDITION): New macro.
 	(gl_MODULE_INDICATOR_SET_VARIABLE): Use its expansion as a value.

@@ -185,15 +185,25 @@ _GL_CXXALIASWARN (timegm);
 /* Encourage applications to avoid unsafe functions that can overrun
    buffers when given outlandish struct tm values.  Portable
    applications should use strftime (or even sprintf) instead.  */
-# if GNULIB_PORTCHECK
+# if defined GNULIB_POSIXCHECK
 #  undef asctime
-#  define asctime eschew_asctime
+_GL_WARN_ON_USE (asctime, "asctime can overrun buffers in some cases - "
+                 "better use strftime (or even sprintf) instead");
+# endif
+# if defined GNULIB_POSIXCHECK
 #  undef asctime_r
-#  define asctime_r eschew_asctime_r
+_GL_WARN_ON_USE (asctime, "asctime_r can overrun buffers in some cases - "
+                 "better use strftime (or even sprintf) instead");
+# endif
+# if defined GNULIB_POSIXCHECK
 #  undef ctime
-#  define ctime eschew_ctime
+_GL_WARN_ON_USE (asctime, "ctime can overrun buffers in some cases - "
+                 "better use strftime (or even sprintf) instead");
+# endif
+# if defined GNULIB_POSIXCHECK
 #  undef ctime_r
-#  define ctime_r eschew_ctime_r
+_GL_WARN_ON_USE (asctime, "ctime_r can overrun buffers in some cases - "
+                 "better use strftime (or even sprintf) instead");
 # endif
 
 #endif
