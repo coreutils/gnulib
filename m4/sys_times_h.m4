@@ -1,5 +1,5 @@
 # Configure a replacement for <sys/times.h>.
-# serial 5
+# serial 6
 
 # Copyright (C) 2008, 2009, 2010 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -41,7 +41,7 @@ AC_DEFUN([gl_SYS_TIMES_MODULE_INDICATOR],
 [
   dnl Use AC_REQUIRE here, so that the default settings are expanded once only.
   AC_REQUIRE([gl_SYS_TIMES_H_DEFAULTS])
-  GNULIB_[]m4_translit([$1],[abcdefghijklmnopqrstuvwxyz./-],[ABCDEFGHIJKLMNOPQRSTUVWXYZ___])=1
+  gl_MODULE_INDICATOR_SET_VARIABLE([$1])
 ])
 
 AC_DEFUN([gl_SYS_TIMES_H_DEFAULTS],

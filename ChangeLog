@@ -1,5 +1,41 @@
 2010-03-27  Bruno Haible  <bruno@clisp.org>
 
+	Factorize common .m4 code.
+	* m4/gnulib-common.m4 (gl_MODULE_INDICATOR_SET_VARIABLE): New macro.
+	* m4/arpa_inet_h.m4 (gl_ARPA_INET_MODULE_INDICATOR): Use it.
+	* m4/ctype.m4 (gl_CTYPE_MODULE_INDICATOR): Likewise.
+	* m4/dirent_h.m4 (gl_DIRENT_MODULE_INDICATOR): Likewise.
+	* m4/fcntl_h.m4 (gl_FCNTL_MODULE_INDICATOR): Likewise.
+	* m4/iconv_h.m4 (gl_ICONV_MODULE_INDICATOR): Likewise.
+	* m4/inttypes.m4 (gl_INTTYPES_MODULE_INDICATOR): Likewise.
+	* m4/langinfo_h.m4 (gl_LANGINFO_MODULE_INDICATOR): Likewise.
+	* m4/locale_h.m4 (gl_LOCALE_MODULE_INDICATOR): Likewise.
+	* m4/math_h.m4 (gl_MATH_MODULE_INDICATOR): Likewise.
+	* m4/netdb_h.m4 (gl_NETDB_MODULE_INDICATOR): Likewise.
+	* m4/pty_h.m4 (gl_PTY_MODULE_INDICATOR): Likewise.
+	* m4/search_h.m4 (gl_SEARCH_MODULE_INDICATOR): Likewise.
+	* m4/signal_h.m4 (gl_SIGNAL_MODULE_INDICATOR): Likewise.
+	* m4/spawn_h.m4 (gl_SPAWN_MODULE_INDICATOR): Likewise.
+	* m4/stddef_h.m4 (gl_STDDEF_MODULE_INDICATOR): Likewise.
+	* m4/stdio_h.m4 (gl_STDIO_MODULE_INDICATOR): Likewise.
+	* m4/stdlib_h.m4 (gl_STDLIB_MODULE_INDICATOR): Likewise.
+	* m4/string_h.m4 (gl_STRING_MODULE_INDICATOR): Likewise.
+	* m4/strings_h.m4 (gl_STRINGS_MODULE_INDICATOR): Likewise.
+	* m4/sys_file_h.m4 (gl_HEADER_SYS_FILE_MODULE_INDICATOR): Likewise.
+	* m4/sys_ioctl_h.m4 (gl_SYS_IOCTL_MODULE_INDICATOR): Likewise.
+	* m4/sys_select_h.m4 (gl_SYS_SELECT_MODULE_INDICATOR): Likewise.
+	* m4/sys_socket_h.m4 (gl_SYS_SOCKET_MODULE_INDICATOR): Likewise.
+	* m4/sys_stat_h.m4 (gl_SYS_STAT_MODULE_INDICATOR): Likewise.
+	* m4/sys_time_h.m4 (gl_SYS_TIME_MODULE_INDICATOR): Likewise.
+	* m4/sys_times_h.m4 (gl_SYS_TIMES_MODULE_INDICATOR): Likewise.
+	* m4/sys_utsname_h.m4 (gl_SYS_UTSNAME_MODULE_INDICATOR): Likewise.
+	* m4/sys_wait_h.m4 (gl_SYS_WAIT_MODULE_INDICATOR): Likewise.
+	* m4/time_h.m4 (gl_TIME_MODULE_INDICATOR): Likewise.
+	* m4/unistd_h.m4 (gl_UNISTD_MODULE_INDICATOR): Likewise.
+	* m4/wchar_h.m4 (gl_WCHAR_MODULE_INDICATOR): Likewise.
+
+2010-03-27  Bruno Haible  <bruno@clisp.org>
+
 	Fix a compilation error on Cygwin with g++ >= 4.3.
 	* lib/sys_stat.in.h (lchmod): Don't warn about the use of this function
 	if it is undefined or if we alias it to chmod.

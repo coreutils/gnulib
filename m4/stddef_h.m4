@@ -1,5 +1,5 @@
 dnl A placeholder for POSIX 2008 <stddef.h>, for platforms that have issues.
-# stddef_h.m4 serial 1
+# stddef_h.m4 serial 2
 dnl Copyright (C) 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -33,7 +33,7 @@ AC_DEFUN([gl_STDDEF_MODULE_INDICATOR],
 [
   dnl Use AC_REQUIRE here, so that the default settings are expanded once only.
   AC_REQUIRE([gl_STDDEF_H_DEFAULTS])
-  GNULIB_[]m4_translit([$1],[abcdefghijklmnopqrstuvwxyz./-],[ABCDEFGHIJKLMNOPQRSTUVWXYZ___])=1
+  gl_MODULE_INDICATOR_SET_VARIABLE([$1])
 ])
 
 AC_DEFUN([gl_STDDEF_H_DEFAULTS],

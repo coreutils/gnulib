@@ -1,5 +1,5 @@
 # Configure a replacement for <sys/file.h>.
-# serial 4
+# serial 5
 
 # Copyright (C) 2008-2010 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -32,7 +32,7 @@ AC_DEFUN([gl_HEADER_SYS_FILE_H],
 AC_DEFUN([gl_HEADER_SYS_FILE_MODULE_INDICATOR],
 [
   AC_REQUIRE([gl_HEADER_SYS_FILE_H_DEFAULTS])
-  GNULIB_[]m4_translit([$1],[abcdefghijklmnopqrstuvwxyz./-],[ABCDEFGHIJKLMNOPQRSTUVWXYZ___])=1
+  gl_MODULE_INDICATOR_SET_VARIABLE([$1])
 ])
 
 AC_DEFUN([gl_HEADER_SYS_FILE_H_DEFAULTS],
