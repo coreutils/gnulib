@@ -9,7 +9,7 @@ Depends-on:
 unistd
 
 configure.ac:
-gl_GETLOGIN
+gl_FUNC_GETLOGIN
 gl_UNISTD_MODULE_INDICATOR([getlogin])
 
 Makefile.am:

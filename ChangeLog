@@ -1,5 +1,8 @@
 2010-03-27  Bruno Haible  <bruno@clisp.org>
 
+	* m4/getlogin.m4 (gl_FUNC_GETLOGIN): Renamed from gl_GETLOGIN.
+	* modules/getlogin (configure.ac): Update.
+
 	* m4/getlogin_r.m4 (gl_FUNC_GETLOGIN_R): Renamed from gl_GETLOGIN_R.
 	* modules/getlogin_r (configure.ac): Update.
 
