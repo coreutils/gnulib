@@ -2761,7 +2761,7 @@ func_emit_po_POTFILES_in ()
   echo "$files" | sed -n -e "s,^lib/,$sourcebase/,p"
 }
 
-# func_emit_tests_Makefile_am
+# func_emit_tests_Makefile_am witness_macro
 # emits the contents of tests makefile to standard output.
 # Input:
 # - local_gnulib_dir  from --local-dir
@@ -2785,6 +2785,7 @@ func_emit_po_POTFILES_in ()
 # - uses_subdirs    nonempty if object files in subdirs exist
 func_emit_tests_Makefile_am ()
 {
+  witness_macro="$1"
   if test "$libtool" = true; then
     libext=la
     sed_eliminate_LDFLAGS="$sed_noop"
@@ -2913,6 +2914,9 @@ func_emit_tests_Makefile_am ()
   done
   echo
   echo "AM_CPPFLAGS = \\"
+  if test -n "${witness_macro}"; then
+    echo "  -D@${witness_macro}@=1 \\"
+  fi
   echo "  -I. -I\$(srcdir) \\"
   echo "  -I${testsbase_inverse} -I\$(srcdir)/${testsbase_inverse} \\"
   echo "  -I${testsbase_inverse}/${sourcebase-lib} -I\$(srcdir)/${testsbase_inverse}/${sourcebase-lib}"
@@ -4140,6 +4144,13 @@ s,//*$,/,'
     echo "  gltests_ltlibdeps="
     func_emit_initmacro_start ${macro_prefix}tests
     echo "  gl_source_base='$testsbase'"
+    # Define a tests witness macro that depends on the package.
+    # PACKAGE is defined by AM_INIT_AUTOMAKE, PACKAGE_TARNAME is defined by AC_INIT.
+    # See <http://lists.gnu.org/archive/html/automake/2009-05/msg00145.html>.
+    echo "  ${macro_prefix}tests_WITNESS=IN_\`echo \"\${PACKAGE-\$PACKAGE_TARNAME}\" | LC_ALL=C tr 'a-z' 'A-Z' | LC_ALL=C sed -e 's/[^A-Z0-9_]/_/g'\`_GNULIB_TESTS"
+    echo "  AC_SUBST([${macro_prefix}tests_WITNESS])"
+    echo "  gl_module_indicator_condition=\$${macro_prefix}tests_WITNESS"
+    echo "  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [\$gl_module_indicator_condition])"
     for module in $testsrelated_modules; do
       func_verify_module
       if test -n "$module"; then
@@ -4152,6 +4163,7 @@ s,//*$,/,'
                 -e 's/gl_ltlibdeps/gltests_ltlibdeps/g'
       fi
     done
+    echo "  m4_popdef([gl_MODULE_INDICATOR_CONDITION])"
     func_emit_initmacro_end ${macro_prefix}tests
     # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
     # created using libtool, because libtool already handles the dependencies.
@@ -4210,7 +4222,7 @@ s,//*$,/,'
     func_dest_tmpfilename $testsbase/$makefile_am
     destfile="$testsbase/$makefile_am"
     modules="$testsrelated_modules"
-    func_emit_tests_Makefile_am > "$tmpfile"
+    func_emit_tests_Makefile_am "${macro_prefix}tests_WITNESS" > "$tmpfile"
     if test -f "$destdir"/$testsbase/$makefile_am; then
       if cmp "$destdir"/$testsbase/$makefile_am "$tmpfile" > /dev/null; then
         rm -f "$tmpfile"
@@ -4620,7 +4632,7 @@ func_create_testdir ()
     # Create $testsbase/Makefile.am.
     use_libtests=false
     destfile="$testsbase/Makefile.am"
-    func_emit_tests_Makefile_am > "$testdir/$testsbase/Makefile.am"
+    func_emit_tests_Makefile_am "" > "$testdir/$testsbase/Makefile.am"
     any_uses_subdirs="$any_uses_subdirs$uses_subdirs"
     # Create $testsbase/configure.ac.
     (echo "# Process this file with autoconf to produce a configure script."

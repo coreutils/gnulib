@@ -1,5 +1,19 @@
 2010-03-27  Bruno Haible  <bruno@clisp.org>
 
+	Avoid side effects from tests-related modules on the compilation of lib.
+	* m4/gnulib-common.m4 (gl_MODULE_INDICATOR_CONDITION): New macro.
+	(gl_MODULE_INDICATOR_SET_VARIABLE): Use its expansion as a value.
+	* gnulib-tool (func_emit_tests_Makefile_am): Accept a witness_macro
+	parameter. Emit into AM_CPPFLAGS a definition of the designated C
+	macro.
+	(func_import): Define a witness macro. Assign it a value that depends
+	on the current package. Override gl_MODULE_INDICATOR_CONDITION for the
+	tests-related modules.
+	(func_create_testdir): Update func_emit_tests_Makefile_am invocation.
+	Reported by Jim Meyering.
+
+2010-03-27  Bruno Haible  <bruno@clisp.org>
+
 	Factorize common .m4 code.
 	* m4/gnulib-common.m4 (gl_MODULE_INDICATOR_SET_VARIABLE): New macro.
 	* m4/arpa_inet_h.m4 (gl_ARPA_INET_MODULE_INDICATOR): Use it.

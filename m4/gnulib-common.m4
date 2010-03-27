@@ -1,4 +1,4 @@
-# gnulib-common.m4 serial 14
+# gnulib-common.m4 serial 15
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -37,12 +37,18 @@ AC_DEFUN([gl_COMMON_BODY], [
 ])
 ])
 
+# gl_MODULE_INDICATOR_CONDITION
+# expands to a C preprocessor expression that evaluates to 1 or 0, depending
+# whether a gnulib module that has been requested shall be considered present
+# or not.
+AC_DEFUN([gl_MODULE_INDICATOR_CONDITION], [1])
+
 # gl_MODULE_INDICATOR_SET_VARIABLE([modulename])
 # sets the shell variable that indicates the presence of the given module to
 # a C preprocessor expression that will evaluate to 1.
 AC_DEFUN([gl_MODULE_INDICATOR_SET_VARIABLE],
 [
-  GNULIB_[]m4_translit([$1],[abcdefghijklmnopqrstuvwxyz./-],[ABCDEFGHIJKLMNOPQRSTUVWXYZ___])=1
+  GNULIB_[]m4_translit([$1],[abcdefghijklmnopqrstuvwxyz./-],[ABCDEFGHIJKLMNOPQRSTUVWXYZ___])=gl_MODULE_INDICATOR_CONDITION
 ])
 
 # gl_MODULE_INDICATOR([modulename])
