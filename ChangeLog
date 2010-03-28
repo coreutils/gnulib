@@ -1,5 +1,14 @@
 2010-03-27  Bruno Haible  <bruno@clisp.org>
 
+	Remove unused GNULIB_XYZ macro definitions.
+	* modules/dup3 (configure.ac): Remove gl_MODULE_INDICATOR invocation.
+	* modules/fseek (configure.ac): Likewise.
+	* modules/ioctl (configure.ac): Likewise.
+	* modules/open (configure.ac): Likewise.
+	* modules/stdlib-safer (configure.ac): Likewise.
+
+2010-03-27  Bruno Haible  <bruno@clisp.org>
+
 	Add a remark about certain modules.
 	* modules/malloc (Comment): New section.
 	* modules/realloc (Comment): Likewise.

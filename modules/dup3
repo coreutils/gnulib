@@ -14,7 +14,6 @@ extensions
 
 configure.ac:
 gl_FUNC_DUP3
-gl_MODULE_INDICATOR([dup3])
 gl_UNISTD_MODULE_INDICATOR([dup3])
 
 Makefile.am:

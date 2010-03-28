@@ -12,7 +12,6 @@ stat
 
 configure.ac:
 gl_FUNC_OPEN
-gl_MODULE_INDICATOR([open])
 gl_FCNTL_MODULE_INDICATOR([open])
 
 Makefile.am:

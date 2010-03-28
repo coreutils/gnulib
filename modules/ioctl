@@ -20,7 +20,6 @@ if test "$ac_cv_header_winsock2_h" = yes; then
   gl_REPLACE_SYS_IOCTL_H
 fi
 gl_SYS_IOCTL_MODULE_INDICATOR([ioctl])
-gl_MODULE_INDICATOR([ioctl])
 
 Makefile.am:
 
