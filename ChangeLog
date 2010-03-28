@@ -1,5 +1,16 @@
 2010-03-28  Bruno Haible  <bruno@clisp.org>
 
+	gnulib-tool: Allow 'foo-tests' module even if there is no module 'foo'.
+	* gnulib-tool (func_exists_module): New function, extracted from
+	func_verify_module.
+	(func_verify_module): Use it.
+	(func_get_dependencies): Synthetize a dependency from 'foo-tests' to
+	'foo' only if 'foo' exists.
+	* doc/gnulib.texi (Extra tests modules): Explain how to split a tests
+	module.
+
+2010-03-28  Bruno Haible  <bruno@clisp.org>
+
 	gnulib-tool: Add support for special categories of tests.
 	* gnulib-tool: New options --with-c++-tests, --with-longrunning-tests,
 	--with-privileged-tests, --with-unportable-tests, --with-all-tests.

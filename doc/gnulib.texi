@@ -750,6 +750,12 @@ Status:
 longrunning-test
 @end example
 
+If only a part of a test deserves a particular status attribute, you
+can split the module into a primary and a secondary test module,
+say @code{foo-tests} and @code{foo-extra-tests}.  Then add a dependency
+from @code{foo-tests} to @code{foo-extra-tests}, and mark the
+@code{foo-extra-tests} with the particular status attribute.
+
 
 @node A C++ namespace for gnulib
 @section A C++ namespace for gnulib

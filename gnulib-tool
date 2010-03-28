@@ -1379,6 +1379,24 @@ func_all_modules ()
       | LC_ALL=C sort -u
 }
 
+# func_exists_module module
+# tests whether a module, given by name, exists
+# Input:
+# - local_gnulib_dir  from --local-dir
+func_exists_module ()
+{
+  { test -f "$gnulib_dir/modules/$1" \
+    || { test -n "$local_gnulib_dir" && test -d "$local_gnulib_dir/modules" \
+         && test -f "$local_gnulib_dir/modules/$1"; }; } \
+  && test "CVS" != "$1" \
+  && test "ChangeLog" != "$1" \
+  && test "COPYING" != "$1" \
+  && test "README" != "$1" \
+  && test "TEMPLATE" != "$1" \
+  && test "TEMPLATE-EXTENDED" != "$1" \
+  && test "TEMPLATE-TESTS" != "$1"
+}
+
 # func_verify_module
 # verifies a module name
 # Input:
@@ -1386,16 +1404,7 @@ func_all_modules ()
 # - module          module name argument
 func_verify_module ()
 {
-  if { test -f "$gnulib_dir/modules/$module" \
-       || { test -n "$local_gnulib_dir" && test -d "$local_gnulib_dir/modules" \
-            && test -f "$local_gnulib_dir/modules/$module"; }; } \
-     && test "CVS" != "$module" \
-     && test "ChangeLog" != "$module" \
-     && test "COPYING" != "$module" \
-     && test "README" != "$module" \
-     && test "TEMPLATE" != "$module" \
-     && test "TEMPLATE-EXTENDED" != "$module" \
-     && test "TEMPLATE-TESTS" != "$module"; then
+  if func_exists_module "$module"; then
     # OK, $module is a correct module name.
     # Verify that building the module description with 'patch' succeeds.
     func_lookup_file "modules/$module"
@@ -1954,12 +1963,14 @@ func_filter_filelist ()
 # - modcache          true or false, from --cache-modules/--no-cache-modules
 func_get_dependencies ()
 {
-  # ${module}-tests always implicitly depends on ${module}.
+  # ${module}-tests implicitly depends on ${module}, if that module exists.
   case "$1" in
     *-tests)
       fgd1="$1"
       func_remove_suffix fgd1 '-tests'
-      echo "$fgd1"
+      if func_exists_module "$fgd1"; then
+        echo "$fgd1"
+      fi
       ;;
   esac
   # Then the explicit dependencies listed in the module description.
