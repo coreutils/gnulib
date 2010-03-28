@@ -1,3 +1,28 @@
+2010-03-28  Jose E. Marchesi  <jemarch@gnu.org>
+
+	maint.mk: s/_header_without_use/_sc_header_without_use/
+	* top/maint.mk (_sc_header_without_use): Rename from _header_without_use.
+	(sc_prohibit_assert_without_use): Use the new name.
+	(sc_prohibit_close_stream_without_use): Likewise.
+	(sc_prohibit_getopt_without_use): Likewise.
+	(sc_prohibit_quotearg_without_use): Likewise.
+	(sc_prohibit_quote_without_use): Likewise.
+	(sc_prohibit_long_options_without_use): Likewise.
+	(sc_prohibit_inttostr_without_use): Likewise.
+	(sc_prohibit_ignore_value_without_use): Likewise.
+	(sc_prohibit_error_without_use): Likewise.
+	(sc_prohibit_xalloc_without_use): Likewise.
+	(sc_prohibit_hash_without_use): Likewise.
+	(sc_prohibit_hash_pjw_without_use): Likewise.
+	(sc_prohibit_safe_read_without_use): Likewise.
+	(sc_prohibit_argmatch_without_use): Likewise.
+	(sc_prohibit_canonicalize_without_use): Likewise.
+	(sc_prohibit_root_dev_ino_without_use): Likewise.
+	(sc_prohibit_openat_without_use): Likewise.
+	(sc_prohibit_c_ctype_without_use): Likewise.
+	(sc_prohibit_signal_without_use): Likewise.
+	(sc_prohibit_intprops_without_use): Likewise.
+
 2010-03-30  Eric Blake  <eblake@redhat.com>
 
 	maint: improve module indicators
