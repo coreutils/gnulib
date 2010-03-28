@@ -1,3 +1,13 @@
+2010-03-28  Bruno Haible  <bruno@clisp.org>
+            Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	lib-ignore: Determine different options for different compilers.
+	* m4/lib-ignore.m4 (gl_IGNORE_UNUSED_LIBRARIES): Set a variable which
+	depends on the current language (C/C++/Fortran). Don't set LDFLAGS.
+	Add comments.
+	(_gl_IGNORE_UNUSED_LIBRARIES_OPTIONS): New macro.
+	* NEWS: Mention the change.
+
 2010-03-27  Bruno Haible  <bruno@clisp.org>
 
 	Remove unused GNULIB_XYZ macro definitions.
