@@ -1,4 +1,13 @@
 2010-03-28  Bruno Haible  <bruno@clisp.org>
+
+	Fix link errors on mingw.
+	* lib/sys_ioctl.in.h (ioctl): Fix declaration idiom.
+	* modules/sys_ioctl-tests (Makefile.am): Link test-sys_ioctl-c++ with
+	$(LIBSOCKET).
+	* modules/sys_select-tests (Makefile.am): Link test-sys_select-c++ with
+	$(LIBSOCKET).
+
+2010-03-28  Bruno Haible  <bruno@clisp.org>
             Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	lib-ignore: Determine different options for different compilers.
