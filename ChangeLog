@@ -1,5 +1,14 @@
 2010-03-28  Bruno Haible  <bruno@clisp.org>
 
+	unistd: Avoid #define replacements in C++ mode.
+	* lib/unistd.in.h (socket, connect, accept, bind, getpeername,
+	getsockname, getsockopt, listen, recv, send, recvfrom, sendto,
+	setsockopt, shutdown, select): In C++, attach a warning to the function
+	if possible, rather than #defining the symbol to a dysfunctional alias.
+	Reported by John W. Eaton <jwe@gnu.org>.
+
+2010-03-28  Bruno Haible  <bruno@clisp.org>
+
 	Fix link errors on mingw.
 	* lib/sys_ioctl.in.h (ioctl): Fix declaration idiom.
 	* modules/sys_ioctl-tests (Makefile.am): Link test-sys_ioctl-c++ with
