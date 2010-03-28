@@ -1,3 +1,9 @@
+2010-03-28  Javier Villavicencio  <the_paya@gentoo.org>
+
+	exclude: fix the case of globs vs. EXCLUDE_INCLUDE
+	* lib/exclude.c (excluded_file_pattern_p): Fix logic error that
+	made it so grep -r --include=GLOB* ... did not work.
+
 2010-03-26  Jim Meyering  <meyering@redhat.com>
 	    Eric Blake  <eblake@redhat.com>
 

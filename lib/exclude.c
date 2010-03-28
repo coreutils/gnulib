@@ -342,7 +342,7 @@ excluded_file_pattern_p (struct exclude_segment const *seg, char const *f)
     {
       char const *pattern = exclude[i].pattern;
       int options = exclude[i].options;
-      if (excluded != exclude_fnmatch (pattern, f, options))
+      if (exclude_fnmatch (pattern, f, options))
         return !excluded;
     }
   return excluded;
