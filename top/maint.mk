@@ -217,21 +217,21 @@ sc_prohibit_magic_number_exit:
 # Using EXIT_SUCCESS as the first argument to error is misleading,
 # since when that parameter is 0, error does not exit.  Use `0' instead.
 sc_error_exit_success:
-	@grep -nE 'error \(EXIT_SUCCESS,'				\
+	@grep -nE 'error *\(EXIT_SUCCESS,'				\
 	    $$($(VC_LIST_EXCEPT) | grep -E '\.[chly]$$') &&		\
 	  { echo '$(ME): found error (EXIT_SUCCESS' 1>&2; exit 1; } || :
 
 # `FATAL:' should be fully upper-cased in error messages
 # `WARNING:' should be fully upper-cased, or fully lower-cased
 sc_error_message_warn_fatal:
-	@grep -nEA2 '[^rp]error \(' $$($(VC_LIST_EXCEPT))		\
+	@grep -nEA2 '[^rp]error *\(' $$($(VC_LIST_EXCEPT))		\
 	    | grep -E '"Warning|"Fatal|"fatal' &&			\
 	  { echo '$(ME): use FATAL, WARNING or warning'	1>&2;		\
 	    exit 1; } || :
 
 # Error messages should not start with a capital letter
 sc_error_message_uppercase:
-	@grep -nEA2 '[^rp]error \(' $$($(VC_LIST_EXCEPT))		\
+	@grep -nEA2 '[^rp]error *\(' $$($(VC_LIST_EXCEPT))		\
 	    | grep -E '"[A-Z]'						\
 	    | grep -vE '"FATAL|"WARNING|"Java|"C#|PRIuMAX' &&		\
 	  { echo '$(ME): found capitalized error message' 1>&2;		\
@@ -239,7 +239,7 @@ sc_error_message_uppercase:
 
 # Error messages should not end with a period
 sc_error_message_period:
-	@grep -nEA2 '[^rp]error \(' $$($(VC_LIST_EXCEPT))		\
+	@grep -nEA2 '[^rp]error *\(' $$($(VC_LIST_EXCEPT))		\
 	    | grep -E '[^."]\."' &&					\
 	  { echo '$(ME): found error message ending in period' 1>&2;	\
 	    exit 1; } || :

@@ -16,6 +16,14 @@
 
 2010-03-28  Jose E. Marchesi  <jemarch@gnu.org>
 
+	maint.mk: match 0 or more whitespace-before-function-call '('
+	* top/maint.mk (sc_error_exit_success): Relax regexp to match uses
+	that have zero or two-and-more spaces between the function name
+	and the open parenthesis.
+	(sc_error_message_warn_fatal): Likewise.
+	(sc_error_message_uppercase): Likewise.
+	(sc_error_message_period): Likewise.
+
 	maint.mk: s/_header_without_use/_sc_header_without_use/
 	* top/maint.mk (_sc_header_without_use): Rename from _header_without_use.
 	(sc_prohibit_assert_without_use): Use the new name.
