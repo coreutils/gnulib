@@ -1,5 +1,12 @@
 2010-03-27  Bruno Haible  <bruno@clisp.org>
 
+	Add a remark about certain modules.
+	* modules/malloc (Comment): New section.
+	* modules/realloc (Comment): Likewise.
+	* modules/sigpipe (Comment): Likewise.
+
+2010-03-27  Bruno Haible  <bruno@clisp.org>
+
 	Resolve conflict between the two kinds of module indicators.
 	* m4/gnulib-common.m4 (gl_MODULE_INDICATOR_FOR_TESTS): Define
 	GNULIB_TEST_XYZ instead of GNULIB_XYZ.
