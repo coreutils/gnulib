@@ -1,5 +1,11 @@
 2010-03-28  Bruno Haible  <bruno@clisp.org>
 
+	Remove unused GNULIB_XYZ macro definitions.
+	* modules/crypto/gc-camellia (configure.ac): Remove gl_MODULE_INDICATOR
+	invocation.
+
+2010-03-28  Bruno Haible  <bruno@clisp.org>
+
 	Mark privileged tests modules.
 	* modules/idpriv-drop-tests (Status): New section.
 	* modules/idpriv-droptemp-tests (Status): New section.

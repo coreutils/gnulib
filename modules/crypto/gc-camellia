@@ -9,7 +9,6 @@ crypto/gc
 
 configure.ac:
 gl_GC_CAMELLIA
-gl_MODULE_INDICATOR([gc-camellia])
 
 Makefile.am:
 
