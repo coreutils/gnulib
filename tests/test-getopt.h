@@ -323,7 +323,7 @@ test_getopt (void)
       ASSERT (!output);
     }
 
-#if GNULIB_GETOPT_GNU
+#if GNULIB_TEST_GETOPT_GNU
   /* Test processing of options with optional arguments.  */
   for (start = OPTIND_MIN; start <= 1; start++)
     {
@@ -870,7 +870,7 @@ test_getopt (void)
         }
     }
 
-#if GNULIB_GETOPT_GNU
+#if GNULIB_TEST_GETOPT_GNU
   /* Check that the '-' flag causes non-options to be returned in order.  */
   for (start = OPTIND_MIN; start <= 1; start++)
     {

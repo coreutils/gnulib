@@ -24,7 +24,7 @@
 #include "signature.h"
 
 
-#if GNULIB_IOCTL
+#if GNULIB_TEST_IOCTL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::ioctl, int, (int, int, ...));
 #endif
 

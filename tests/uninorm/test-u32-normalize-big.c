@@ -21,7 +21,7 @@
 /* Specification.  */
 #include "test-u32-normalize-big.h"
 
-#if GNULIB_UNINORM_U32_NORMALIZE
+#if GNULIB_TEST_UNINORM_U32_NORMALIZE
 
 #include <stdio.h>
 #include <stdlib.h>

@@ -24,15 +24,15 @@
 #include "signature.h"
 
 
-#if GNULIB_FCNTL
+#if GNULIB_TEST_FCNTL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::fcntl, int, (int, int, ...));
 #endif
 
-#if GNULIB_OPEN
+#if GNULIB_TEST_OPEN
 SIGNATURE_CHECK (GNULIB_NAMESPACE::open, int, (const char *, int, ...));
 #endif
 
-#if GNULIB_OPENAT
+#if GNULIB_TEST_OPENAT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::openat, int, (int, char const *, int, ...));
 #endif
 

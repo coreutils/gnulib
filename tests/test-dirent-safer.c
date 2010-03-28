@@ -48,7 +48,7 @@ main (void)
      gnulib version of fdopendir is unable to guarantee that
      dirfd(fdopendir(fd))==fd, but we can at least guarantee that if
      they are not equal, the fd returned by dirfd is safe.  */
-#if HAVE_FDOPENDIR || GNULIB_FDOPENDIR
+#if HAVE_FDOPENDIR || GNULIB_TEST_FDOPENDIR
   int dfd;
 #endif
 
@@ -57,7 +57,7 @@ main (void)
       || (myerr = fdopen (BACKUP_STDERR_FILENO, "w")) == NULL)
     return 2;
 
-#if HAVE_FDOPENDIR || GNULIB_FDOPENDIR
+#if HAVE_FDOPENDIR || GNULIB_TEST_FDOPENDIR
   dfd = open (".", O_RDONLY);
   ASSERT (STDERR_FILENO < dfd);
 #endif
@@ -73,7 +73,7 @@ main (void)
       ASSERT (dirfd (dp) == -1 || STDERR_FILENO < dirfd (dp));
       ASSERT (closedir (dp) == 0);
 
-#if HAVE_FDOPENDIR || GNULIB_FDOPENDIR
+#if HAVE_FDOPENDIR || GNULIB_TEST_FDOPENDIR
       {
         int fd = dup_safer (dfd);
         ASSERT (STDERR_FILENO < fd);
@@ -88,7 +88,7 @@ main (void)
 #endif
     }
 
-#if HAVE_FDOPENDIR || GNULIB_FDOPENDIR
+#if HAVE_FDOPENDIR || GNULIB_TEST_FDOPENDIR
   ASSERT (close (dfd) == 0);
 #endif
 

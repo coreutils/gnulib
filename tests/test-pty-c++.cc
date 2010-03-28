@@ -24,13 +24,13 @@
 #include "signature.h"
 
 
-#if GNULIB_FORKPTY
+#if GNULIB_TEST_FORKPTY
 SIGNATURE_CHECK (GNULIB_NAMESPACE::forkpty, int,
                  (int *, char *, struct termios const *,
                   struct winsize const *));
 #endif
 
-#if GNULIB_OPENPTY
+#if GNULIB_TEST_OPENPTY
 SIGNATURE_CHECK (GNULIB_NAMESPACE::openpty, int,
                  (int *, int *, char *, struct termios const *,
                   struct winsize const *));

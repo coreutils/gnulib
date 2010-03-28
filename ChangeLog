@@ -1,5 +1,57 @@
 2010-03-27  Bruno Haible  <bruno@clisp.org>
 
+	Resolve conflict between the two kinds of module indicators.
+	* m4/gnulib-common.m4 (gl_MODULE_INDICATOR_FOR_TESTS): Define
+	GNULIB_TEST_XYZ instead of GNULIB_XYZ.
+	* modules/canonicalize (configure.ac): Invoke
+	gl_MODULE_INDICATOR_FOR_TESTS.
+	* tests/test-canonicalize-lgpl.c: Test GNULIB_TEST_XYZ instead of
+	GNULIB_XYZ.
+	* tests/test-dirent-c++.cc: Likewise.
+	* tests/test-dirent-safer.c: Likewise.
+	* tests/test-dup2.c: Likewise.
+	* tests/test-fchdir.c: Likewise.
+	* tests/test-fcntl-h-c++.cc: Likewise.
+	* tests/test-getopt.c: Likewise.
+	* tests/test-getopt.h: Likewise.
+	* tests/test-langinfo-c++.cc: Likewise.
+	* tests/test-locale-c++.cc: Likewise.
+	* tests/test-math-c++.cc: Likewise.
+	* tests/test-pty-c++.cc: Likewise.
+	* tests/test-search-c++.cc: Likewise.
+	* tests/test-signal-c++.cc: Likewise.
+	* tests/test-spawn-c++.cc: Likewise.
+	* tests/test-stdio-c++.cc: Likewise.
+	* tests/test-stdlib-c++.cc: Likewise.
+	* tests/test-string-c++.cc: Likewise.
+	* tests/test-sys_ioctl-c++.cc: Likewise.
+	* tests/test-sys_select-c++.cc: Likewise.
+	* tests/test-sys_socket-c++.cc: Likewise.
+	* tests/test-sys_stat-c++.cc: Likewise.
+	* tests/test-sys_time-c++.cc: Likewise.
+	* tests/test-time-c++.cc: Likewise.
+	* tests/test-unistd-c++.cc: Likewise.
+	* tests/test-wchar-c++.cc: Likewise.
+	* tests/uninorm/test-u8-nfc.c: Likewise.
+	* tests/uninorm/test-u8-nfd.c: Likewise.
+	* tests/uninorm/test-u8-nfkc.c: Likewise.
+	* tests/uninorm/test-u8-nfkd.c: Likewise.
+	* tests/uninorm/test-u16-nfc.c: Likewise.
+	* tests/uninorm/test-u16-nfd.c: Likewise.
+	* tests/uninorm/test-u16-nfkc.c: Likewise.
+	* tests/uninorm/test-u16-nfkd.c: Likewise.
+	* tests/uninorm/test-u32-nfc.c: Likewise.
+	* tests/uninorm/test-u32-nfc-big.c: Likewise.
+	* tests/uninorm/test-u32-nfd.c: Likewise.
+	* tests/uninorm/test-u32-nfd-big.c: Likewise.
+	* tests/uninorm/test-u32-nfkc.c: Likewise.
+	* tests/uninorm/test-u32-nfkc-big.c: Likewise.
+	* tests/uninorm/test-u32-nfkd.c: Likewise.
+	* tests/uninorm/test-u32-nfkd-big.c: Likewise.
+	* tests/uninorm/test-u32-normalize-big.c: Likewise.
+
+2010-03-27  Bruno Haible  <bruno@clisp.org>
+
 	Distinguish two kinds of module indicators.
 	* m4/gnulib-common.m4 (gl_MODULE_INDICATOR_FOR_TESTS): Renamed from
 	gl_MODULE_INDICATOR.

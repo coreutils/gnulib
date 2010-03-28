@@ -37,7 +37,7 @@
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::exp, double, (double));
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::fabs, double, (double));
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::fmod, double, (double, double));
-#if GNULIB_FREXP
+#if GNULIB_TEST_FREXP
 SIGNATURE_CHECK (GNULIB_NAMESPACE::frexp, double, (double, int *));
 #endif
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::hypot, double, (double, double));
@@ -64,87 +64,87 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::frexp, double, (double, int *));
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::y1, double, (double));
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::yn, double, (int, double));
 
-#if GNULIB_ACOSL
+#if GNULIB_TEST_ACOSL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::acosl, long double, (long double));
 #endif
 
-#if GNULIB_ASINL
+#if GNULIB_TEST_ASINL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::asinl, long double, (long double));
 #endif
 
-#if GNULIB_ATANL
+#if GNULIB_TEST_ATANL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::atanl, long double, (long double));
 #endif
 
-#if GNULIB_CEILF
+#if GNULIB_TEST_CEILF
 SIGNATURE_CHECK (GNULIB_NAMESPACE::ceilf, float, (float));
 #endif
 
-#if GNULIB_CEILL
+#if GNULIB_TEST_CEILL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::ceill, long double, (long double));
 #endif
 
-#if GNULIB_COSL
+#if GNULIB_TEST_COSL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::cosl, long double, (long double));
 #endif
 
-#if GNULIB_EXPL
+#if GNULIB_TEST_EXPL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::expl, long double, (long double));
 #endif
 
-#if GNULIB_FLOORF
+#if GNULIB_TEST_FLOORF
 SIGNATURE_CHECK (GNULIB_NAMESPACE::floorf, float, (float));
 #endif
 
-#if GNULIB_FLOORL
+#if GNULIB_TEST_FLOORL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::floorl, long double, (long double));
 #endif
 
-#if GNULIB_FREXPL
+#if GNULIB_TEST_FREXPL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::frexpl, long double, (long double, int *));
 #endif
 
-#if GNULIB_LDEXPL
+#if GNULIB_TEST_LDEXPL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::ldexpl, long double, (long double, int));
 #endif
 
-#if GNULIB_LOGL
+#if GNULIB_TEST_LOGL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::logl, long double, (long double));
 #endif
 
-#if GNULIB_ROUNDF
+#if GNULIB_TEST_ROUNDF
 SIGNATURE_CHECK (GNULIB_NAMESPACE::roundf, float, (float));
 #endif
 
-#if GNULIB_ROUND
+#if GNULIB_TEST_ROUND
 SIGNATURE_CHECK (GNULIB_NAMESPACE::round, double, (double));
 #endif
 
-#if GNULIB_ROUNDL
+#if GNULIB_TEST_ROUNDL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::roundl, long double, (long double));
 #endif
 
-#if GNULIB_SINL
+#if GNULIB_TEST_SINL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::sinl, long double, (long double));
 #endif
 
-#if GNULIB_SQRTL
+#if GNULIB_TEST_SQRTL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::sqrtl, long double, (long double));
 #endif
 
-#if GNULIB_TANL
+#if GNULIB_TEST_TANL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::tanl, long double, (long double));
 #endif
 
-#if GNULIB_TRUNCF
+#if GNULIB_TEST_TRUNCF
 SIGNATURE_CHECK (GNULIB_NAMESPACE::truncf, float, (float));
 #endif
 
-#if GNULIB_TRUNC
+#if GNULIB_TEST_TRUNC
 SIGNATURE_CHECK (GNULIB_NAMESPACE::trunc, double, (double));
 #endif
 
-#if GNULIB_TRUNCL
+#if GNULIB_TEST_TRUNCL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::truncl, long double, (long double));
 #endif
 

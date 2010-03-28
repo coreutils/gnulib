@@ -26,20 +26,20 @@
 
 SIGNATURE_CHECK (GNULIB_NAMESPACE::closedir, int, (DIR *));
 
-#if GNULIB_FDOPENDIR
+#if GNULIB_TEST_FDOPENDIR
 SIGNATURE_CHECK (GNULIB_NAMESPACE::fdopendir, DIR *, (int));
 #endif
 
 SIGNATURE_CHECK (GNULIB_NAMESPACE::opendir, DIR *, (const char *));
 
-#if GNULIB_SCANDIR
+#if GNULIB_TEST_SCANDIR
 SIGNATURE_CHECK (GNULIB_NAMESPACE::scandir, int,
                  (const char *, struct dirent ***,
                   int (*) (const struct dirent *),
                   int (*) (const struct dirent **, const struct dirent **)));
 #endif
 
-#if GNULIB_ALPHASORT
+#if GNULIB_TEST_ALPHASORT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::alphasort, int,
                  (const struct dirent **, const struct dirent **));
 #endif

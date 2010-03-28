@@ -18,7 +18,7 @@
 
 #include <config.h>
 
-#if GNULIB_UNINORM_U8_NORMALIZE
+#if GNULIB_TEST_UNINORM_U8_NORMALIZE
 
 #include "uninorm.h"
 

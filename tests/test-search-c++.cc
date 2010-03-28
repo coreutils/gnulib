@@ -24,7 +24,7 @@
 #include "signature.h"
 
 
-#if GNULIB_TSEARCH
+#if GNULIB_TEST_TSEARCH
 SIGNATURE_CHECK (GNULIB_NAMESPACE::tsearch, void *,
                  (const void *, void **, _gl_search_compar_fn));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::tfind, void *,

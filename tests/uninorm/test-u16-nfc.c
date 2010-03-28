@@ -18,7 +18,7 @@
 
 #include <config.h>
 
-#if GNULIB_UNINORM_U16_NORMALIZE
+#if GNULIB_TEST_UNINORM_U16_NORMALIZE
 
 #include "uninorm.h"
 

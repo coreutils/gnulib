@@ -23,6 +23,7 @@ xgetcwd
 configure.ac:
 gl_FUNC_CANONICALIZE_FILENAME_MODE
 gl_MODULE_INDICATOR([canonicalize])
+gl_MODULE_INDICATOR_FOR_TESTS([canonicalize])
 gl_STDLIB_MODULE_INDICATOR([canonicalize_file_name])
 
 Makefile.am:

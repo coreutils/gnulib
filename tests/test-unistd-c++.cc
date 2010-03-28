@@ -24,165 +24,165 @@
 #include "signature.h"
 
 
-#if GNULIB_CHOWN
+#if GNULIB_TEST_CHOWN
 SIGNATURE_CHECK (GNULIB_NAMESPACE::chown, int, (const char *, uid_t, gid_t));
 #endif
 
-#if GNULIB_CLOSE
+#if GNULIB_TEST_CLOSE
 SIGNATURE_CHECK (GNULIB_NAMESPACE::close, int, (int));
 #endif
 
 SIGNATURE_CHECK (GNULIB_NAMESPACE::dup, int, (int));
 
-#if GNULIB_DUP2
+#if GNULIB_TEST_DUP2
 SIGNATURE_CHECK (GNULIB_NAMESPACE::dup2, int, (int, int));
 #endif
 
-#if GNULIB_DUP3
+#if GNULIB_TEST_DUP3
 SIGNATURE_CHECK (GNULIB_NAMESPACE::dup3, int, (int, int, int));
 #endif
 
-#if GNULIB_EUIDACCESS
+#if GNULIB_TEST_EUIDACCESS
 SIGNATURE_CHECK (GNULIB_NAMESPACE::euidaccess, int, (const char *, int));
 #endif
 
-#if GNULIB_FACCESSAT
+#if GNULIB_TEST_FACCESSAT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::faccessat, int,
                  (int, char const *, int, int));
 #endif
 
-#if GNULIB_FCHDIR
+#if GNULIB_TEST_FCHDIR
 SIGNATURE_CHECK (GNULIB_NAMESPACE::fchdir, int, (int));
 #endif
 
-#if GNULIB_FCHOWNAT
+#if GNULIB_TEST_FCHOWNAT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::fchownat, int,
                  (int, char const *, uid_t, gid_t, int));
 #endif
 
-#if GNULIB_FSYNC
+#if GNULIB_TEST_FSYNC
 SIGNATURE_CHECK (GNULIB_NAMESPACE::fsync, int, (int));
 #endif
 
-#if GNULIB_FTRUNCATE
+#if GNULIB_TEST_FTRUNCATE
 SIGNATURE_CHECK (GNULIB_NAMESPACE::ftruncate, int, (int, off_t));
 #endif
 
-#if GNULIB_GETCWD
+#if GNULIB_TEST_GETCWD
 SIGNATURE_CHECK (GNULIB_NAMESPACE::getcwd, char *, (char *, size_t));
 #endif
 
-#if GNULIB_GETDOMAINNAME
+#if GNULIB_TEST_GETDOMAINNAME
 SIGNATURE_CHECK (GNULIB_NAMESPACE::getdomainname, int, (char *, size_t));
 #endif
 
-#if GNULIB_GETDTABLESIZE
+#if GNULIB_TEST_GETDTABLESIZE
 SIGNATURE_CHECK (GNULIB_NAMESPACE::getdtablesize, int, (void));
 #endif
 
-#if GNULIB_GETGROUPS
+#if GNULIB_TEST_GETGROUPS
 SIGNATURE_CHECK (GNULIB_NAMESPACE::getgroups, int, (int, gid_t *));
 #endif
 
-#if GNULIB_GETHOSTNAME
+#if GNULIB_TEST_GETHOSTNAME
 SIGNATURE_CHECK (GNULIB_NAMESPACE::gethostname, int, (char *, size_t));
 #endif
 
-#if GNULIB_GETLOGIN
+#if GNULIB_TEST_GETLOGIN
 SIGNATURE_CHECK (GNULIB_NAMESPACE::getlogin, char *, (void));
 #endif
 
-#if GNULIB_GETLOGIN_R
+#if GNULIB_TEST_GETLOGIN_R
 SIGNATURE_CHECK (GNULIB_NAMESPACE::getlogin_r, int, (char *, size_t));
 #endif
 
-#if GNULIB_GETPAGESIZE
+#if GNULIB_TEST_GETPAGESIZE
 SIGNATURE_CHECK (GNULIB_NAMESPACE::getpagesize, int, (void));
 #endif
 
-#if GNULIB_GETUSERSHELL
+#if GNULIB_TEST_GETUSERSHELL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::getusershell, char *, (void));
 #endif
 
-#if GNULIB_GETUSERSHELL
+#if GNULIB_TEST_GETUSERSHELL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::setusershell, void, (void));
 #endif
 
-#if GNULIB_GETUSERSHELL
+#if GNULIB_TEST_GETUSERSHELL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::endusershell, void, (void));
 #endif
 
-#if GNULIB_LCHOWN
+#if GNULIB_TEST_LCHOWN
 SIGNATURE_CHECK (GNULIB_NAMESPACE::lchown, int, (char const *, uid_t, gid_t));
 #endif
 
-#if GNULIB_LINK
+#if GNULIB_TEST_LINK
 SIGNATURE_CHECK (GNULIB_NAMESPACE::link, int, (const char *, const char *));
 #endif
 
-#if GNULIB_LINKAT
+#if GNULIB_TEST_LINKAT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::linkat, int,
                  (int, const char *, int, const char *, int));
 #endif
 
-#if GNULIB_LSEEK
+#if GNULIB_TEST_LSEEK
 SIGNATURE_CHECK (GNULIB_NAMESPACE::lseek, off_t, (int, off_t, int));
 #endif
 
-#if GNULIB_PIPE2
+#if GNULIB_TEST_PIPE2
 SIGNATURE_CHECK (GNULIB_NAMESPACE::pipe2, int, (int[2], int));
 #endif
 
-#if GNULIB_PREAD
+#if GNULIB_TEST_PREAD
 SIGNATURE_CHECK (GNULIB_NAMESPACE::pread, ssize_t,
                  (int, void *, size_t, off_t));
 #endif
 
-#if GNULIB_READLINK
+#if GNULIB_TEST_READLINK
 SIGNATURE_CHECK (GNULIB_NAMESPACE::readlink, ssize_t,
                  (const char *, char *, size_t));
 #endif
 
-#if GNULIB_READLINKAT
+#if GNULIB_TEST_READLINKAT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::readlinkat, ssize_t,
                  (int, char const *, char *, size_t));
 #endif
 
-#if GNULIB_RMDIR
+#if GNULIB_TEST_RMDIR
 SIGNATURE_CHECK (GNULIB_NAMESPACE::rmdir, int, (char const *));
 #endif
 
-#if GNULIB_SLEEP
+#if GNULIB_TEST_SLEEP
 SIGNATURE_CHECK (GNULIB_NAMESPACE::sleep, unsigned int, (unsigned int));
 #endif
 
-#if GNULIB_SYMLINK
+#if GNULIB_TEST_SYMLINK
 SIGNATURE_CHECK (GNULIB_NAMESPACE::symlink, int, (char const *, char const *));
 #endif
 
-#if GNULIB_SYMLINKAT
+#if GNULIB_TEST_SYMLINKAT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::symlinkat, int,
                  (char const *, int, char const *));
 #endif
 
-#if GNULIB_TTYNAME_R
+#if GNULIB_TEST_TTYNAME_R
 SIGNATURE_CHECK (GNULIB_NAMESPACE::ttyname_r, int,
                  (int fd, char *buf, size_t buflen));
 #endif
 
-#if GNULIB_UNLINK
+#if GNULIB_TEST_UNLINK
 SIGNATURE_CHECK (GNULIB_NAMESPACE::unlink, int, (char const *));
 #endif
 
-#if GNULIB_UNLINKAT
+#if GNULIB_TEST_UNLINKAT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::unlinkat, int, (int, char const *, int));
 #endif
 
-#if GNULIB_USLEEP
+#if GNULIB_TEST_USLEEP
 SIGNATURE_CHECK (GNULIB_NAMESPACE::usleep, int, (useconds_t));
 #endif
 
-#if GNULIB_WRITE
+#if GNULIB_TEST_WRITE
 SIGNATURE_CHECK (GNULIB_NAMESPACE::write, ssize_t,
                  (int, const void *, size_t));
 #endif

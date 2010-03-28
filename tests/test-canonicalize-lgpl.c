@@ -46,7 +46,7 @@ null_ptr (void)
 int
 main (void)
 {
-#ifdef GNULIB_CANONICALIZE
+#if GNULIB_TEST_CANONICALIZE
   /* No need to test canonicalize-lgpl module if canonicalize is also
      in use.  */
   return 0;

@@ -24,7 +24,7 @@
 #include "signature.h"
 
 
-#if GNULIB_DUPLOCALE && HAVE_DUPLOCALE
+#if GNULIB_TEST_DUPLOCALE && HAVE_DUPLOCALE
 SIGNATURE_CHECK (GNULIB_NAMESPACE::duplocale, locale_t, (locale_t));
 #endif
 

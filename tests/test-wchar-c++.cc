@@ -24,54 +24,54 @@
 #include "signature.h"
 
 
-#if GNULIB_BTOWC
+#if GNULIB_TEST_BTOWC
 SIGNATURE_CHECK (GNULIB_NAMESPACE::btowc, wint_t, (int));
 #endif
 
-#if GNULIB_WCTOB
+#if GNULIB_TEST_WCTOB
 SIGNATURE_CHECK (GNULIB_NAMESPACE::wctob, int, (wint_t));
 #endif
 
-#if GNULIB_MBSINIT
+#if GNULIB_TEST_MBSINIT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::mbsinit, int, (const mbstate_t *));
 #endif
 
-#if GNULIB_MBRTOWC
+#if GNULIB_TEST_MBRTOWC
 SIGNATURE_CHECK (GNULIB_NAMESPACE::mbrtowc, size_t,
                  (wchar_t *, const char *, size_t, mbstate_t *));
 #endif
 
-#if GNULIB_MBRLEN
+#if GNULIB_TEST_MBRLEN
 SIGNATURE_CHECK (GNULIB_NAMESPACE::mbrlen, size_t,
                  (const char *, size_t, mbstate_t *));
 #endif
 
-#if GNULIB_MBSRTOWCS
+#if GNULIB_TEST_MBSRTOWCS
 SIGNATURE_CHECK (GNULIB_NAMESPACE::mbsrtowcs, size_t,
                  (wchar_t *, const char **, size_t, mbstate_t *));
 #endif
 
-#if GNULIB_MBSNRTOWCS
+#if GNULIB_TEST_MBSNRTOWCS
 SIGNATURE_CHECK (GNULIB_NAMESPACE::mbsnrtowcs, size_t,
                  (wchar_t *, const char **, size_t, size_t, mbstate_t *));
 #endif
 
-#if GNULIB_WCRTOMB
+#if GNULIB_TEST_WCRTOMB
 SIGNATURE_CHECK (GNULIB_NAMESPACE::wcrtomb, size_t,
                  (char *, wchar_t, mbstate_t *));
 #endif
 
-#if GNULIB_WCSRTOMBS
+#if GNULIB_TEST_WCSRTOMBS
 SIGNATURE_CHECK (GNULIB_NAMESPACE::wcsrtombs, size_t,
                  (char *, const wchar_t **, size_t, mbstate_t *));
 #endif
 
-#if GNULIB_WCSNRTOMBS
+#if GNULIB_TEST_WCSNRTOMBS
 SIGNATURE_CHECK (GNULIB_NAMESPACE::wcsnrtombs, size_t,
                  (char *, const wchar_t **, size_t, size_t, mbstate_t *));
 #endif
 
-#if GNULIB_WCWIDTH
+#if GNULIB_TEST_WCWIDTH
 SIGNATURE_CHECK (GNULIB_NAMESPACE::wcwidth, int, (wchar_t));
 #endif
 

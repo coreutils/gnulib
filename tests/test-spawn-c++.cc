@@ -24,110 +24,110 @@
 #include "signature.h"
 
 
-#if GNULIB_POSIX_SPAWN
+#if GNULIB_TEST_POSIX_SPAWN
 SIGNATURE_CHECK (GNULIB_NAMESPACE::posix_spawn, int,
                  (pid_t *, const char *, const posix_spawn_file_actions_t *,
                   const posix_spawnattr_t *, char *const[], char *const[]));
 #endif
 
-#if GNULIB_POSIX_SPAWNP
+#if GNULIB_TEST_POSIX_SPAWNP
 SIGNATURE_CHECK (GNULIB_NAMESPACE::posix_spawnp, int,
                  (pid_t *, const char *, const posix_spawn_file_actions_t *,
                   const posix_spawnattr_t *, char *const[], char *const[]));
 #endif
 
-#if GNULIB_POSIX_SPAWNATTR_INIT
+#if GNULIB_TEST_POSIX_SPAWNATTR_INIT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::posix_spawnattr_init, int,
                  (posix_spawnattr_t *));
 #endif
 
-#if GNULIB_POSIX_SPAWNATTR_DESTROY
+#if GNULIB_TEST_POSIX_SPAWNATTR_DESTROY
 SIGNATURE_CHECK (GNULIB_NAMESPACE::posix_spawnattr_destroy, int,
                  (posix_spawnattr_t *));
 #endif
 
-#if GNULIB_POSIX_SPAWNATTR_GETSIGDEFAULT
+#if GNULIB_TEST_POSIX_SPAWNATTR_GETSIGDEFAULT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::posix_spawnattr_getsigdefault, int,
                  (const posix_spawnattr_t *, sigset_t *));
 #endif
 
-#if GNULIB_POSIX_SPAWNATTR_SETSIGDEFAULT
+#if GNULIB_TEST_POSIX_SPAWNATTR_SETSIGDEFAULT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::posix_spawnattr_setsigdefault, int,
                  (posix_spawnattr_t *, const sigset_t *));
 #endif
 
-#if GNULIB_POSIX_SPAWNATTR_GETSIGMASK
+#if GNULIB_TEST_POSIX_SPAWNATTR_GETSIGMASK
 SIGNATURE_CHECK (GNULIB_NAMESPACE::posix_spawnattr_getsigmask, int,
                  (const posix_spawnattr_t *, sigset_t *));
 #endif
 
-#if GNULIB_POSIX_SPAWNATTR_SETSIGMASK
+#if GNULIB_TEST_POSIX_SPAWNATTR_SETSIGMASK
 SIGNATURE_CHECK (GNULIB_NAMESPACE::posix_spawnattr_setsigmask, int,
                  (posix_spawnattr_t *, const sigset_t *));
 #endif
 
-#if GNULIB_POSIX_SPAWNATTR_GETFLAGS
+#if GNULIB_TEST_POSIX_SPAWNATTR_GETFLAGS
 SIGNATURE_CHECK (GNULIB_NAMESPACE::posix_spawnattr_getflags, int,
                  (const posix_spawnattr_t *, short int *));
 #endif
 
-#if GNULIB_POSIX_SPAWNATTR_SETFLAGS
+#if GNULIB_TEST_POSIX_SPAWNATTR_SETFLAGS
 SIGNATURE_CHECK (GNULIB_NAMESPACE::posix_spawnattr_setflags, int,
                  (posix_spawnattr_t *, short int));
 #endif
 
-#if GNULIB_POSIX_SPAWNATTR_GETPGROUP
+#if GNULIB_TEST_POSIX_SPAWNATTR_GETPGROUP
 SIGNATURE_CHECK (GNULIB_NAMESPACE::posix_spawnattr_getpgroup, int,
                  (const posix_spawnattr_t *, pid_t *));
 #endif
 
-#if GNULIB_POSIX_SPAWNATTR_SETPGROUP
+#if GNULIB_TEST_POSIX_SPAWNATTR_SETPGROUP
 SIGNATURE_CHECK (GNULIB_NAMESPACE::posix_spawnattr_setpgroup, int,
                  (posix_spawnattr_t *, pid_t));
 #endif
 
-#if GNULIB_POSIX_SPAWNATTR_GETSCHEDPOLICY
+#if GNULIB_TEST_POSIX_SPAWNATTR_GETSCHEDPOLICY
 SIGNATURE_CHECK (GNULIB_NAMESPACE::posix_spawnattr_getschedpolicy, int,
                  (const posix_spawnattr_t *, int *));
 #endif
 
-#if GNULIB_POSIX_SPAWNATTR_SETSCHEDPOLICY
+#if GNULIB_TEST_POSIX_SPAWNATTR_SETSCHEDPOLICY
 SIGNATURE_CHECK (GNULIB_NAMESPACE::posix_spawnattr_setschedpolicy, int,
                  (posix_spawnattr_t *, int));
 #endif
 
-#if GNULIB_POSIX_SPAWNATTR_GETSCHEDPARAM
+#if GNULIB_TEST_POSIX_SPAWNATTR_GETSCHEDPARAM
 SIGNATURE_CHECK (GNULIB_NAMESPACE::posix_spawnattr_getschedparam, int,
                  (const posix_spawnattr_t *, struct sched_param *));
 #endif
 
-#if GNULIB_POSIX_SPAWNATTR_SETSCHEDPARAM
+#if GNULIB_TEST_POSIX_SPAWNATTR_SETSCHEDPARAM
 SIGNATURE_CHECK (GNULIB_NAMESPACE::posix_spawnattr_setschedparam, int,
                  (posix_spawnattr_t *, const struct sched_param *));
 #endif
 
-#if GNULIB_POSIX_SPAWN_FILE_ACTIONS_INIT
+#if GNULIB_TEST_POSIX_SPAWN_FILE_ACTIONS_INIT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::posix_spawn_file_actions_init, int,
                  (posix_spawn_file_actions_t *));
 #endif
 
-#if GNULIB_POSIX_SPAWN_FILE_ACTIONS_DESTROY
+#if GNULIB_TEST_POSIX_SPAWN_FILE_ACTIONS_DESTROY
 SIGNATURE_CHECK (GNULIB_NAMESPACE::posix_spawn_file_actions_destroy, int,
                  (posix_spawn_file_actions_t *));
 #endif
 
-#if GNULIB_POSIX_SPAWN_FILE_ACTIONS_ADDOPEN
+#if GNULIB_TEST_POSIX_SPAWN_FILE_ACTIONS_ADDOPEN
 SIGNATURE_CHECK (GNULIB_NAMESPACE::posix_spawn_file_actions_addopen, int,
                  (posix_spawn_file_actions_t *, int, const char *, int,
                   mode_t));
 #endif
 
-#if GNULIB_POSIX_SPAWN_FILE_ACTIONS_ADDCLOSE
+#if GNULIB_TEST_POSIX_SPAWN_FILE_ACTIONS_ADDCLOSE
 SIGNATURE_CHECK (GNULIB_NAMESPACE::posix_spawn_file_actions_addclose, int,
                  (posix_spawn_file_actions_t *, int));
 #endif
 
-#if GNULIB_POSIX_SPAWN_FILE_ACTIONS_ADDDUP2
+#if GNULIB_TEST_POSIX_SPAWN_FILE_ACTIONS_ADDDUP2
 SIGNATURE_CHECK (GNULIB_NAMESPACE::posix_spawn_file_actions_adddup2, int,
                  (posix_spawn_file_actions_t *, int, int));
 #endif

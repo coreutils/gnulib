@@ -24,7 +24,7 @@
 #include "signature.h"
 
 
-#if GNULIB_SIGPROCMASK
+#if GNULIB_TEST_SIGPROCMASK
 SIGNATURE_CHECK (GNULIB_NAMESPACE::sigismember, int, (const sigset_t *, int));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::sigemptyset, int, (sigset_t *));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::sigaddset, int, (sigset_t *, int));
@@ -39,7 +39,7 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::signal,
 SIGNATURE_CHECK (GNULIB_NAMESPACE::raise, int, (int));
 #endif
 
-#if GNULIB_SIGACTION
+#if GNULIB_TEST_SIGACTION
 SIGNATURE_CHECK (GNULIB_NAMESPACE::sigaction, int,
                  (int, const struct sigaction *, struct sigaction *));
 #endif

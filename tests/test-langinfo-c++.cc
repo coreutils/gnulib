@@ -24,7 +24,7 @@
 #include "signature.h"
 
 
-#if GNULIB_NL_LANGINFO
+#if GNULIB_TEST_NL_LANGINFO
 SIGNATURE_CHECK (GNULIB_NAMESPACE::nl_langinfo, char *, (nl_item));
 #endif
 

@@ -24,16 +24,16 @@
 #include "signature.h"
 
 
-#if GNULIB_NANOSLEEP
+#if GNULIB_TEST_NANOSLEEP
 SIGNATURE_CHECK (GNULIB_NAMESPACE::nanosleep, int,
                  (struct timespec const *, struct timespec *));
 #endif
 
-#if GNULIB_MKTIME
+#if GNULIB_TEST_MKTIME
 SIGNATURE_CHECK (GNULIB_NAMESPACE::mktime, time_t, (struct tm *));
 #endif
 
-#if GNULIB_TIME_R
+#if GNULIB_TEST_TIME_R
 SIGNATURE_CHECK (GNULIB_NAMESPACE::localtime_r, struct tm *,
                  (time_t const *, struct tm *));
 
@@ -41,12 +41,12 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::gmtime_r, struct tm *,
                  (time_t const *, struct tm *));
 #endif
 
-#if GNULIB_STRPTIME
+#if GNULIB_TEST_STRPTIME
 SIGNATURE_CHECK (GNULIB_NAMESPACE::strptime, char *,
                  (char const *, char const *, struct tm *));
 #endif
 
-#if GNULIB_TIMEGM
+#if GNULIB_TEST_TIMEGM
 SIGNATURE_CHECK (GNULIB_NAMESPACE::timegm, time_t, (struct tm *));
 #endif
 

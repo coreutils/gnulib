@@ -24,74 +24,74 @@
 #include "signature.h"
 
 
-#if GNULIB_SOCKET
+#if GNULIB_TEST_SOCKET
 SIGNATURE_CHECK (GNULIB_NAMESPACE::socket, int, (int, int, int));
 #endif
 
-#if GNULIB_CONNECT
+#if GNULIB_TEST_CONNECT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::connect, int,
                  (int, const struct sockaddr *, socklen_t));
 #endif
 
-#if GNULIB_ACCEPT
+#if GNULIB_TEST_ACCEPT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::accept, int,
                  (int, struct sockaddr *, socklen_t *));
 #endif
 
-#if GNULIB_BIND
+#if GNULIB_TEST_BIND
 SIGNATURE_CHECK (GNULIB_NAMESPACE::bind, int,
                  (int, const struct sockaddr *, socklen_t));
 #endif
 
-#if GNULIB_GETPEERNAME
+#if GNULIB_TEST_GETPEERNAME
 SIGNATURE_CHECK (GNULIB_NAMESPACE::getpeername, int,
                  (int, struct sockaddr *, socklen_t *));
 #endif
 
-#if GNULIB_GETSOCKNAME
+#if GNULIB_TEST_GETSOCKNAME
 SIGNATURE_CHECK (GNULIB_NAMESPACE::getsockname, int,
                  (int, struct sockaddr *, socklen_t *));
 #endif
 
-#if GNULIB_GETSOCKOPT
+#if GNULIB_TEST_GETSOCKOPT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::getsockopt, int,
                  (int, int, int, void *, socklen_t *));
 #endif
 
-#if GNULIB_LISTEN
+#if GNULIB_TEST_LISTEN
 SIGNATURE_CHECK (GNULIB_NAMESPACE::listen, int, (int, int));
 #endif
 
-#if GNULIB_RECV
+#if GNULIB_TEST_RECV
 SIGNATURE_CHECK (GNULIB_NAMESPACE::recv, ssize_t, (int, void *, size_t, int));
 #endif
 
-#if GNULIB_SEND
+#if GNULIB_TEST_SEND
 SIGNATURE_CHECK (GNULIB_NAMESPACE::send, ssize_t,
                  (int, const void *, size_t, int));
 #endif
 
-#if GNULIB_RECVFROM
+#if GNULIB_TEST_RECVFROM
 SIGNATURE_CHECK (GNULIB_NAMESPACE::recvfrom, ssize_t,
                  (int, void *, size_t, int, struct sockaddr *, socklen_t *));
 #endif
 
-#if GNULIB_SENDTO
+#if GNULIB_TEST_SENDTO
 SIGNATURE_CHECK (GNULIB_NAMESPACE::sendto, ssize_t,
                  (int, const void *, size_t, int,
                   const struct sockaddr *, socklen_t));
 #endif
 
-#if GNULIB_SETSOCKOPT
+#if GNULIB_TEST_SETSOCKOPT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::setsockopt, int,
                  (int, int, int, const void *, socklen_t));
 #endif
 
-#if GNULIB_SHUTDOWN
+#if GNULIB_TEST_SHUTDOWN
 SIGNATURE_CHECK (GNULIB_NAMESPACE::shutdown, int, (int, int));
 #endif
 
-#if GNULIB_ACCEPT4
+#if GNULIB_TEST_ACCEPT4
 SIGNATURE_CHECK (GNULIB_NAMESPACE::accept4, int,
                  (int, struct sockaddr *, socklen_t *, int));
 #endif

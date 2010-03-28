@@ -24,7 +24,7 @@
 #include "signature.h"
 
 
-#if GNULIB_GETTIMEOFDAY
+#if GNULIB_TEST_GETTIMEOFDAY
 SIGNATURE_CHECK (GNULIB_NAMESPACE::gettimeofday, int,
                  (struct timeval *, void *));
 #endif

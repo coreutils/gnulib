@@ -1,4 +1,4 @@
-# gnulib-common.m4 serial 16
+# gnulib-common.m4 serial 17
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -85,8 +85,8 @@ AC_DEFUN([gl_MODULE_INDICATOR],
 # --------------------------------------------+---------+-----------+
 AC_DEFUN([gl_MODULE_INDICATOR_FOR_TESTS],
 [
-  AC_DEFINE([GNULIB_]translit([$1],[abcdefghijklmnopqrstuvwxyz./-],[ABCDEFGHIJKLMNOPQRSTUVWXYZ___]), [1],
-    [Define to 1 when using the gnulib module ]$1[.])
+  AC_DEFINE([GNULIB_TEST_]translit([$1],[abcdefghijklmnopqrstuvwxyz./-],[ABCDEFGHIJKLMNOPQRSTUVWXYZ___]), [1],
+    [Define to 1 when the gnulib module ]$1[ should be tested.])
 ])
 
 # m4_foreach_w

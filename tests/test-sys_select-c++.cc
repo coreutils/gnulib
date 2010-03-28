@@ -24,7 +24,7 @@
 #include "signature.h"
 
 
-#if GNULIB_SELECT
+#if GNULIB_TEST_SELECT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::select, int,
                  (int, fd_set *, fd_set *, fd_set *, struct timeval *));
 #endif

@@ -26,120 +26,120 @@
 
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::atexit, int, (void (*) (void)));
 
-#if GNULIB_ATOLL
+#if GNULIB_TEST_ATOLL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::atoll, long long, (const char *));
 #endif
 
-#if GNULIB_CALLOC_POSIX
+#if GNULIB_TEST_CALLOC_POSIX
 SIGNATURE_CHECK (GNULIB_NAMESPACE::calloc, void *, (size_t, size_t));
 #endif
 
-#if GNULIB_CANONICALIZE_FILE_NAME
+#if GNULIB_TEST_CANONICALIZE_FILE_NAME
 SIGNATURE_CHECK (GNULIB_NAMESPACE::canonicalize_file_name, char *,
                  (const char *));
 #endif
 
-#if GNULIB_GETLOADAVG
+#if GNULIB_TEST_GETLOADAVG
 SIGNATURE_CHECK (GNULIB_NAMESPACE::getloadavg, int, (double[], int));
 #endif
 
-#if GNULIB_GETSUBOPT
+#if GNULIB_TEST_GETSUBOPT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::getsubopt, int,
                  (char **, char *const *, char **));
 #endif
 
-#if GNULIB_GRANTPT
+#if GNULIB_TEST_GRANTPT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::grantpt, int, (int));
 #endif
 
-#if GNULIB_MALLOC_POSIX
+#if GNULIB_TEST_MALLOC_POSIX
 SIGNATURE_CHECK (GNULIB_NAMESPACE::malloc, void *, (size_t));
 #endif
 
-#if GNULIB_MKDTEMP
+#if GNULIB_TEST_MKDTEMP
 SIGNATURE_CHECK (GNULIB_NAMESPACE::mkdtemp, char *, (char *));
 #endif
 
-#if GNULIB_MKOSTEMP
+#if GNULIB_TEST_MKOSTEMP
 SIGNATURE_CHECK (GNULIB_NAMESPACE::mkostemp, int, (char *, int));
 #endif
 
-#if GNULIB_MKOSTEMPS
+#if GNULIB_TEST_MKOSTEMPS
 SIGNATURE_CHECK (GNULIB_NAMESPACE::mkostemps, int, (char *, int, int));
 #endif
 
-#if GNULIB_MKSTEMP
+#if GNULIB_TEST_MKSTEMP
 SIGNATURE_CHECK (GNULIB_NAMESPACE::mkstemp, int, (char *));
 #endif
 
-#if GNULIB_MKSTEMPS
+#if GNULIB_TEST_MKSTEMPS
 SIGNATURE_CHECK (GNULIB_NAMESPACE::mkstemps, int, (char *, int));
 #endif
 
-#if GNULIB_PTSNAME
+#if GNULIB_TEST_PTSNAME
 SIGNATURE_CHECK (GNULIB_NAMESPACE::ptsname, char *, (int));
 #endif
 
-#if GNULIB_PUTENV
+#if GNULIB_TEST_PUTENV
 SIGNATURE_CHECK (GNULIB_NAMESPACE::putenv, int, (char *));
 #endif
 
-#if GNULIB_RANDOM_R
+#if GNULIB_TEST_RANDOM_R
 SIGNATURE_CHECK (GNULIB_NAMESPACE::random_r, int,
                  (struct random_data *, int32_t *));
 #endif
 
-#if GNULIB_RANDOM_R
+#if GNULIB_TEST_RANDOM_R
 SIGNATURE_CHECK (GNULIB_NAMESPACE::srandom_r, int,
                  (unsigned int, struct random_data *));
 #endif
 
-#if GNULIB_RANDOM_R
+#if GNULIB_TEST_RANDOM_R
 SIGNATURE_CHECK (GNULIB_NAMESPACE::initstate_r, int,
                  (unsigned int, char *, size_t, struct random_data *));
 #endif
 
-#if GNULIB_RANDOM_R
+#if GNULIB_TEST_RANDOM_R
 SIGNATURE_CHECK (GNULIB_NAMESPACE::setstate_r, int,
                  (char *, struct random_data *));
 #endif
 
-#if GNULIB_REALLOC_POSIX
+#if GNULIB_TEST_REALLOC_POSIX
 SIGNATURE_CHECK (GNULIB_NAMESPACE::realloc, void *, (void *, size_t));
 #endif
 
-#if GNULIB_REALPATH
+#if GNULIB_TEST_REALPATH
 SIGNATURE_CHECK (GNULIB_NAMESPACE::realpath, char *, (const char *, char *));
 #endif
 
-#if GNULIB_RPMATCH
+#if GNULIB_TEST_RPMATCH
 SIGNATURE_CHECK (GNULIB_NAMESPACE::rpmatch, int, (const char *));
 #endif
 
-#if GNULIB_SETENV
+#if GNULIB_TEST_SETENV
 SIGNATURE_CHECK (GNULIB_NAMESPACE::setenv, int,
                  (const char *, const char *, int));
 #endif
 
-#if GNULIB_STRTOD
+#if GNULIB_TEST_STRTOD
 SIGNATURE_CHECK (GNULIB_NAMESPACE::strtod, double, (const char *, char **));
 #endif
 
-#if GNULIB_STRTOLL
+#if GNULIB_TEST_STRTOLL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::strtoll, long long,
                  (const char *, char **, int));
 #endif
 
-#if GNULIB_STRTOULL
+#if GNULIB_TEST_STRTOULL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::strtoull, unsigned long long,
                  (const char *, char **, int));
 #endif
 
-#if GNULIB_UNLOCKPT
+#if GNULIB_TEST_UNLOCKPT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::unlockpt, int, (int));
 #endif
 
-#if GNULIB_UNSETENV
+#if GNULIB_TEST_UNSETENV
 SIGNATURE_CHECK (GNULIB_NAMESPACE::unsetenv, int, (const char *));
 #endif
 

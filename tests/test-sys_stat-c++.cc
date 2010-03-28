@@ -24,59 +24,59 @@
 #include "signature.h"
 
 
-#if GNULIB_FCHMODAT
+#if GNULIB_TEST_FCHMODAT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::fchmodat, int,
                  (int, char const *, mode_t, int));
 #endif
 
 SIGNATURE_CHECK (GNULIB_NAMESPACE::fstat, int, (int, struct stat *));
 
-#if GNULIB_FSTATAT
+#if GNULIB_TEST_FSTATAT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::fstatat, int,
                  (int, char const *, struct stat *, int));
 #endif
 
-#if GNULIB_FUTIMENS
+#if GNULIB_TEST_FUTIMENS
 SIGNATURE_CHECK (GNULIB_NAMESPACE::futimens, int,
                  (int, struct timespec const[2]));
 #endif
 
-#if GNULIB_LCHMOD
+#if GNULIB_TEST_LCHMOD
 SIGNATURE_CHECK (GNULIB_NAMESPACE::lchmod, int, (const char *, mode_t));
 #endif
 
-#if GNULIB_LSTAT
+#if GNULIB_TEST_LSTAT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::lstat, int, (const char *, struct stat *));
 #endif
 
 SIGNATURE_CHECK (GNULIB_NAMESPACE::mkdir, int, (char const *, mode_t));
 
-#if GNULIB_MKDIRAT
+#if GNULIB_TEST_MKDIRAT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::mkdirat, int, (int, char const *, mode_t));
 #endif
 
-#if GNULIB_MKFIFO
+#if GNULIB_TEST_MKFIFO
 SIGNATURE_CHECK (GNULIB_NAMESPACE::mkfifo, int, (char const *, mode_t));
 #endif
 
-#if GNULIB_MKFIFOAT
+#if GNULIB_TEST_MKFIFOAT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::mkfifoat, int, (int, char const *, mode_t));
 #endif
 
-#if GNULIB_MKNOD
+#if GNULIB_TEST_MKNOD
 SIGNATURE_CHECK (GNULIB_NAMESPACE::mknod, int, (char const *, mode_t, dev_t));
 #endif
 
-#if GNULIB_MKNODAT
+#if GNULIB_TEST_MKNODAT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::mknodat, int,
                  (int, char const *, mode_t, dev_t));
 #endif
 
-#if GNULIB_STAT
+#if GNULIB_TEST_STAT
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::stat, int, (const char *, struct stat *));
 #endif
 
-#if GNULIB_UTIMENSAT
+#if GNULIB_TEST_UTIMENSAT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::utimensat, int,
                  (int, char const *, struct timespec const[2], int));
 #endif
