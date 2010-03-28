@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate March 25, 2010
+@set lastupdate March 26, 2010
 @c %**end of header
 
 @dircategory GNU organization
@@ -855,8 +855,10 @@ multi-column format.
 @node Graphical Interfaces
 @section Standards for Graphical Interfaces
 @cindex graphical user interface
+@cindex interface styles
+@cindex user interface styles
 
-@cindex gtk+
+@cindex GTK+
 When you write a program that provides a graphical user interface,
 please make it work with the X Window System and the GTK+ toolkit
 unless the functionality specifically requires some alternative (for
@@ -867,13 +869,18 @@ functionality.  (In many cases, the graphical user interface can be a
 separate program which invokes the command-line program.)  This is
 so that the same jobs can be done from scripts.
 
-@cindex corba
-@cindex gnome
-Please also consider providing a CORBA interface (for use from GNOME), a
-library interface (for use from C), and perhaps a keyboard-driven
-console interface (for use by users from console mode).  Once you are
-doing the work to provide the functionality and the graphical interface,
-these won't be much extra work.
+@cindex CORBA
+@cindex GNOME
+@cindex D-bus
+@cindex keyboard interface
+@cindex library interface
+Please also consider providing a D-bus interface for use from other
+running programs, such as within GNOME.  (GNOME used to use CORBA
+for this, but that is being phased out.)  In addition, consider
+providing a library interface (for use from C), and perhaps a
+keyboard-driven console interface (for use by users from console
+mode).  Once you are doing the work to provide the functionality and
+the graphical interface, these won't be much extra work.
 
 
 @node Command-Line Interfaces
