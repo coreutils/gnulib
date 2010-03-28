@@ -1,3 +1,6 @@
+Status:
+privileged-test
+
 Notice:
 The 'idpriv-droptemp-tests' module asks the user for the root password.  It is
 therefore not suitable for all environments. To disable it, pass option
