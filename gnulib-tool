@@ -165,7 +165,7 @@ Operation modes:
                             (recommended to use CC=\"gcc -Wall\" here)
       --extract-description        extract the description
       --extract-comment            extract the comment
-      --extract-status             extract the status (obsolete or not)
+      --extract-status             extract the status (obsolete etc.)
       --extract-notice             extract the notice or banner
       --extract-applicability      extract the applicability
       --extract-filelist           extract the list of files
@@ -233,6 +233,15 @@ Options for --import:
                             'gl_INIT'. Default is 'gl'.
       --po-domain=NAME      Specify the prefix of the i18n domain. Usually use
                             the package name. A suffix '-gnulib' is appended.
+      --with-c++-tests      Include even unit tests for C++ interoperability.
+      --with-longrunning-tests
+                            Include even unit tests that are long-runners.
+      --with-privileged-tests
+                            Include even unit tests that require root
+                            privileges.
+      --with-unportable-tests
+                            Include even unit tests that fail on some platforms.
+      --with-all-tests      Include all kinds of problematic unit tests.
       --vc-files            Update version control related files.
       --no-vc-files         Don't update version control related files
                             (.gitignore and/or .cvsignore).
@@ -858,6 +867,14 @@ fi
 # - auxdir          from --aux-dir
 # - inctests        true if --with-tests was given, blank otherwise
 # - incobsolete     true if --with-obsolete was given, blank otherwise
+# - inc_cxx_tests   true if --with-c++-tests was given, blank otherwise
+# - inc_longrunning_tests  true if --with-longrunning-tests was given, blank
+#                          otherwise
+# - inc_privileged_tests  true if --with-privileged-tests was given, blank
+#                         otherwise
+# - inc_unportable_tests  true if --with-unportable-tests was given, blank
+#                         otherwise
+# - inc_all_tests   true if --with-all-tests was given, blank otherwise
 # - avoidlist       list of modules to avoid, from --avoid
 # - lgpl            yes or a number if --lgpl was given, blank otherwise
 # - makefile_name   from --makefile-name
@@ -890,6 +907,11 @@ fi
   auxdir=
   inctests=
   incobsolete=
+  inc_cxx_tests=
+  inc_longrunning_tests=
+  inc_privileged_tests=
+  inc_unportable_tests=
+  inc_all_tests=
   avoidlist=
   lgpl=
   makefile_name=
@@ -1041,11 +1063,26 @@ fi
       --aux-dir=* )
         auxdir=`echo "X$1" | sed -e 's/^X--aux-dir=//'`
         shift ;;
-      --with-tests )
+      --with-tests | --with-test | --with-tes | --with-te | --with-t)
         inctests=true
         shift ;;
-      --with-obsolete )
+      --with-obsolete | --with-obsolet | --with-obsole | --with-obsol | --with-obso | --with-obs | --with-ob | --with-o)
         incobsolete=true
+        shift ;;
+      --with-c++-tests | --with-c++-test | --with-c++-tes | --with-c++-te | --with-c++-t | --with-c++- | --with-c++ | --with-c+ | --with-c)
+        inc_cxx_tests=true
+        shift ;;
+      --with-longrunning-tests | --with-longrunning-test | --with-longrunning-tes | --with-longrunning-te | --with-longrunning-t | --with-longrunning- | --with-longrunning | --with-longrunnin | --with-longrunni | --with-longrunn | --with-longrun | --with-longru | --with-longr | --with-long | --with-lon | --with-lo | --with-l)
+        inc_longrunning_tests=true
+        shift ;;
+      --with-privileged-tests | --with-privileged-test | --with-privileged-tes | --with-privileged-te | --with-privileged-t | --with-privileged- | --with-privileged | --with-privilege | --with-privileg | --with-privile | --with-privil | --with-privi | --with-priv | --with-pri | --with-pr | --with-p)
+        inc_privileged_tests=true
+        shift ;;
+      --with-unportable-tests | --with-unportable-test | --with-unportable-tes | --with-unportable-te | --with-unportable-t | --with-unportable- | --with-unportable | --with-unportabl | --with-unportab | --with-unporta | --with-unport | --with-unpor | --with-unpo | --with-unp | --with-un | --with-u)
+        inc_unportable_tests=true
+        shift ;;
+      --with-all-tests | --with-all-test | --with-all-tes | --with-all-te | --with-all-t | --with-all- | --with-all | --with-al | --with-a)
+        inc_all_tests=true
         shift ;;
       --avoid )
         shift
@@ -1158,6 +1195,9 @@ fi
        || test -n "$sourcebase" || test -n "$m4base" || test -n "$pobase" \
        || test -n "$docbase" || test -n "$testsbase" || test -n "$auxdir" \
        || test -n "$inctests" || test -n "$incobsolete" \
+       || test -n "$inc_cxx_tests" || test -n "$inc_longrunning_tests" \
+       || test -n "$inc_privileged_tests" || test -n "$inc_unportable_tests" \
+       || test -n "$inc_all_tests" \
        || test -n "$avoidlist" || test -n "$lgpl" || test -n "$makefile_name" \
        || test -n "$macro_prefix" || test -n "$po_domain" \
        || test -n "$vc_files"; then
@@ -2235,6 +2275,16 @@ func_get_tests_module ()
 # func_acceptable module
 # tests whether a module is acceptable.
 # Input:
+# - inc_cxx_tests   true if C++ interoperability tests should be included,
+#                   blank otherwise
+# - inc_longrunning_tests  true if long-runnings tests should be included,
+#                          blank otherwise
+# - inc_privileged_tests  true if tests that require root privileges should be
+#                         included, blank otherwise
+# - inc_unportable_tests  true if tests that fail on some platforms should be
+#                         included, blank otherwise
+# - inc_all_tests   true if all kinds of problematic unit tests should be
+#                   included, blank otherwise
 # - avoidlist       list of modules to avoid
 func_acceptable ()
 {
@@ -2243,6 +2293,38 @@ func_acceptable ()
       return 1
     fi
   done
+  case "$1" in
+    *-tests)
+      inc=true
+      for word in `func_get_status "$1"`; do
+        case "$word" in
+          c++-test)
+            test -n "$inc_all_tests" || test -n "$inc_cxx_tests" \
+              || inc=false
+            ;;
+          longrunning-test)
+            test -n "$inc_all_tests" || test -n "$inc_longrunning_tests" \
+              || inc=false
+            ;;
+          privileged-test)
+            test -n "$inc_all_tests" || test -n "$inc_privileged_tests" \
+              || inc=false
+            ;;
+          unportable-test)
+            test -n "$inc_all_tests" || test -n "$inc_unportable_tests" \
+              || inc=false
+            ;;
+          *-test)
+            test -n "$inc_all_tests" \
+              || inc=false
+            ;;
+        esac
+      done
+      if ! $inc; then
+        return 1
+      fi
+      ;;
+  esac
   return 0
 }
 
@@ -2253,6 +2335,16 @@ func_acceptable ()
 # - modules         list of specified modules
 # - inctests        true if tests should be included, blank otherwise
 # - incobsolete     true if obsolete modules among dependencies should be
+#                   included, blank otherwise
+# - inc_cxx_tests   true if C++ interoperability tests should be included,
+#                   blank otherwise
+# - inc_longrunning_tests  true if long-runnings tests should be included,
+#                          blank otherwise
+# - inc_privileged_tests  true if tests that require root privileges should be
+#                         included, blank otherwise
+# - inc_unportable_tests  true if tests that fail on some platforms should be
+#                         included, blank otherwise
+# - inc_all_tests   true if all kinds of problematic unit tests should be
 #                   included, blank otherwise
 # - avoidlist       list of modules to avoid
 # - tmp             pathname of a temporary directory
@@ -2284,7 +2376,16 @@ func_modules_transitive_closure ()
           fi
           for dep in $deps; do
             if test -n "$incobsolete" \
-               || { status=`func_get_status $dep`; test "$status" != obsolete; }; then
+               || { inc=true
+                    for word in `func_get_status $dep`; do
+                      case "$word" in
+                        obsolete)
+                          inc=false
+                          ;;
+                      esac
+                    done
+                    $inc
+                  }; then
               func_append inmodules " $dep"
             fi
           done
@@ -3127,6 +3228,14 @@ func_emit_initmacro_done ()
 # - auxdir          directory relative to destdir where to place build aux files
 # - inctests        true if --with-tests was given, blank otherwise
 # - incobsolete     true if --with-obsolete was given, blank otherwise
+# - inc_cxx_tests   true if --with-c++-tests was given, blank otherwise
+# - inc_longrunning_tests  true if --with-longrunning-tests was given, blank
+#                          otherwise
+# - inc_privileged_tests  true if --with-privileged-tests was given, blank
+#                         otherwise
+# - inc_unportable_tests  true if --with-unportable-tests was given, blank
+#                         otherwise
+# - inc_all_tests   true if --with-all-tests was given, blank otherwise
 # - avoidlist       list of modules to avoid, from --avoid
 # - lgpl            yes or a number if library's license shall be LGPL,
 #                   blank otherwise
@@ -3151,6 +3260,11 @@ func_import ()
   cached_local_gnulib_dir=
   cached_specified_modules=
   cached_incobsolete=
+  cached_inc_cxx_tests=
+  cached_inc_longrunning_tests=
+  cached_inc_privileged_tests=
+  cached_inc_unportable_tests=
+  cached_inc_all_tests=
   cached_avoidlist=
   cached_sourcebase=
   cached_m4base=
@@ -3187,6 +3301,21 @@ func_import ()
       }
       /gl_WITH_OBSOLETE/ {
         s,^.*$,cached_incobsolete=true,p
+      }
+      /gl_WITH_CXX_TESTS/ {
+        s,^.*$,cached_inc_cxx_tests=true,p
+      }
+      /gl_WITH_LONGRUNNING_TESTS/ {
+        s,^.*$,cached_inc_longrunning_tests=true,p
+      }
+      /gl_WITH_PRIVILEGED_TESTS/ {
+        s,^.*$,cached_inc_privileged_tests=true,p
+      }
+      /gl_WITH_UNPORTABLE_TESTS/ {
+        s,^.*$,cached_inc_unportable_tests=true,p
+      }
+      /gl_WITH_ALL_TESTS/ {
+        s,^.*$,cached_inc_all_tests=true,p
       }
       /gl_AVOID(/ {
         s,^.*gl_AVOID([[ ]*\([^]"$`\\)]*\).*$,cached_avoidlist="\1",p
@@ -3286,6 +3415,23 @@ func_import ()
   # Included obsolete modules among the dependencies if specified either way.
   if test -z "$incobsolete"; then
     incobsolete="$cached_incobsolete"
+  fi
+  # Included special kinds of tests modules among the dependencies if specified
+  # either way.
+  if test -z "$inc_cxx_tests"; then
+    inc_cxx_tests="$cached_inc_cxx_tests"
+  fi
+  if test -z "$inc_longrunning_tests"; then
+    inc_longrunning_tests="$cached_inc_longrunning_tests"
+  fi
+  if test -z "$inc_privileged_tests"; then
+    inc_privileged_tests="$cached_inc_privileged_tests"
+  fi
+  if test -z "$inc_unportable_tests"; then
+    inc_unportable_tests="$cached_inc_unportable_tests"
+  fi
+  if test -z "$inc_all_tests"; then
+    inc_all_tests="$cached_inc_all_tests"
   fi
   # Append the cached and the specified avoidlist. This is probably better
   # than dropping the cached one when --avoid is specified at least once.
@@ -3753,6 +3899,21 @@ s,^\(.................................................[^ ]*\) *,                
   if test -n "$incobsolete"; then
     func_append actioncmd " --with-obsolete"
   fi
+  if test -n "$inc_cxx_tests"; then
+    func_append actioncmd " --with-c++-tests"
+  fi
+  if test -n "$inc_longrunning_tests"; then
+    func_append actioncmd " --with-longrunning-tests"
+  fi
+  if test -n "$inc_privileged_tests"; then
+    func_append actioncmd " --with-privileged-tests"
+  fi
+  if test -n "$inc_unportable_tests"; then
+    func_append actioncmd " --with-unportable-tests"
+  fi
+  if test -n "$inc_all_tests"; then
+    func_append actioncmd " --with-all-tests"
+  fi
   for module in $avoidlist; do
     func_append actioncmd " --avoid=$module"
   done
@@ -4039,6 +4200,11 @@ s,//*$,/,'
     echo "$specified_modules" | sed -e 's/^/  /g'
     echo "])"
     test -z "$incobsolete" || echo "gl_WITH_OBSOLETE"
+    test -z "$inc_cxx_tests" || echo "gl_WITH_CXX_TESTS"
+    test -z "$inc_longrunning_tests" || echo "gl_WITH_LONGRUNNING_TESTS"
+    test -z "$inc_privileged_tests" || echo "gl_WITH_PRIVILEGED_TESTS"
+    test -z "$inc_unportable_tests" || echo "gl_WITH_UNPORTABLE_TESTS"
+    test -z "$inc_all_tests" || echo "gl_WITH_ALL_TESTS"
     echo "gl_AVOID([$avoidlist])"
     echo "gl_SOURCE_BASE([$sourcebase])"
     echo "gl_M4_BASE([$m4base])"
@@ -4484,6 +4650,9 @@ func_create_testdir ()
     modules=`for m in $modules; do case $m in config-h | ftruncate | mountlist | lib-ignore) ;; *) echo $m;; esac; done`
   fi
   modules=`for m in $modules; do echo $m; done | LC_ALL=C sort -u`
+
+  # Unlike in func_import, here we want to include all kinds of tests.
+  inc_all_tests=true
 
   # Check that the license of every module is consistent with the license of
   # its dependencies.
@@ -5228,8 +5397,10 @@ s/\([.*$]\)/[\1]/g'
             for m4base in $m4dirs; do
               # Perform func_import in a subshell, so that variable values
               # such as
-              #   local_gnulib_dir, incobsolete, avoidlist, sourcebase, m4base,
-              #   pobase, docbase, testsbase, inctests, libname, lgpl,
+              #   local_gnulib_dir, incobsolete, inc_cxx_tests,
+              #   inc_longrunning_tests, inc_privileged_tests,
+              #   inc_unportable_tests, inc_all_tests, avoidlist, sourcebase,
+              #   m4base, pobase, docbase, testsbase, inctests, libname, lgpl,
               #   makefile_name, libtool, macro_prefix, po_domain, vc_files
               # don't propagate from one directory to another.
               (func_import) || func_exit 1

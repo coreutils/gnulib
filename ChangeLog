@@ -1,5 +1,23 @@
 2010-03-28  Bruno Haible  <bruno@clisp.org>
 
+	gnulib-tool: Add support for special categories of tests.
+	* gnulib-tool: New options --with-c++-tests, --with-longrunning-tests,
+	--with-privileged-tests, --with-unportable-tests, --with-all-tests.
+	(func_usage): Document them.
+	(inc_cxx_tests, inc_longrunning_tests, inc_privileged_tests,
+	inc_unportable_tests, inc_all_tests): New variables.
+	(func_acceptable): Consider these variables.
+	(func_modules_transitive_closure): Make it work when the 'Status' field
+	consists of multiple words.
+	(func_import): Store and restore the values of inc_cxx_tests,
+	inc_longrunning_tests, inc_privileged_tests, inc_unportable_tests,
+	inc_all_tests in gnulib-comp.m4.
+	(func_create_testdir): Set inc_all_tests to true.
+	* doc/gnulib.texi (Extra tests modules): New section.
+	Suggested by Jim Meyering.
+
+2010-03-28  Bruno Haible  <bruno@clisp.org>
+
 	ansi-c++-opt: Allow turning off the C++ build by default.
 	* m4/ansi-c++.m4 (gl_CXX_CHOICE): Let CXX_CHOICE default to 'no' if
 	gl_CXX_CHOICE_DEFAULT_NO is defined.
