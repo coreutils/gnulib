@@ -1,5 +1,12 @@
 2010-03-28  Bruno Haible  <bruno@clisp.org>
 
+	ansi-c++-opt: Allow turning off the C++ build by default.
+	* m4/ansi-c++.m4 (gl_CXX_CHOICE): Let CXX_CHOICE default to 'no' if
+	gl_CXX_CHOICE_DEFAULT_NO is defined.
+	Requested by Eric Blake.
+
+2010-03-28  Bruno Haible  <bruno@clisp.org>
+
 	unistd: Avoid #define replacements in C++ mode.
 	* lib/unistd.in.h (socket, connect, accept, bind, getpeername,
 	getsockname, getsockopt, listen, recv, send, recvfrom, sendto,

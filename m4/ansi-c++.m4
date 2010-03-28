@@ -1,4 +1,4 @@
-# ansi-c++.m4 serial 3
+# ansi-c++.m4 serial 4
 dnl Copyright (C) 2002-2003, 2005, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,16 +7,25 @@ dnl with or without modifications, as long as this notice is preserved.
 dnl From Bruno Haible.
 
 # Sets CXX_CHOICE to 'yes' or 'no', depending on the preferred use of C++.
+# The default is 'yes'. If the configure.ac contains a definition of the
+# macro gl_CXX_CHOICE_DEFAULT_NO, then the default is 'no'. In both cases,
+# the user can change the value by passing the option --disable-cxx or
+# --enable-cxx, respectively.
 
 AC_DEFUN([gl_CXX_CHOICE],
 [
   AC_MSG_CHECKING([whether to use C++])
   dnl It would be so nice if plus signs were supported in AC_ARG_ENABLE.
   dnl Feature request submitted on 2010-03-13.
-  AC_ARG_ENABLE([cxx],
-    [  --disable-cxx           do not build C++ sources],
-    [CXX_CHOICE="$enableval"],
-    [CXX_CHOICE=yes])
+  m4_ifdef([gl_CXX_CHOICE_DEFAULT_NO],
+    [AC_ARG_ENABLE([cxx],
+       [  --enable-cxx            also build C++ sources],
+       [CXX_CHOICE="$enableval"],
+       [CXX_CHOICE=no])],
+    [AC_ARG_ENABLE([cxx],
+       [  --disable-cxx           do not build C++ sources],
+       [CXX_CHOICE="$enableval"],
+       [CXX_CHOICE=yes])])
   AC_MSG_RESULT([$CXX_CHOICE])
   AC_SUBST([CXX_CHOICE])
 ])
