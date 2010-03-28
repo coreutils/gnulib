@@ -1,21 +1,12 @@
 Files:
 tests/test-string.c
-tests/test-string-c++.cc
-tests/test-string-c++2.cc
-tests/signature.h
 
 Depends-on:
 verify
-ansi-c++-opt
+string-c++-tests
 
 configure.ac:
 
 Makefile.am:
 TESTS += test-string
 check_PROGRAMS += test-string
-if ANSICXX
-TESTS += test-string-c++
-check_PROGRAMS += test-string-c++
-test_string_c___SOURCES = test-string-c++.cc test-string-c++2.cc
-test_string_c___LDADD = $(LDADD) $(LIBINTL)
-endif

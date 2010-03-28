@@ -1,19 +1,11 @@
 Files:
 tests/test-math.c
-tests/test-math-c++.cc
-tests/test-math-c++2.cc
-tests/signature.h
 
 Depends-on:
-ansi-c++-opt
+math-c++-tests
 
 configure.ac:
 
 Makefile.am:
 TESTS += test-math
 check_PROGRAMS += test-math
-if ANSICXX
-TESTS += test-math-c++
-check_PROGRAMS += test-math-c++
-test_math_c___SOURCES = test-math-c++.cc test-math-c++2.cc
-endif

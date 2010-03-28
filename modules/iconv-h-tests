@@ -1,19 +1,11 @@
 Files:
 tests/test-iconv-h.c
-tests/test-iconv-h-c++.cc
-tests/signature.h
 
 Depends-on:
-ansi-c++-opt
+iconv-h-c++-tests
 
 configure.ac:
 
 Makefile.am:
 TESTS += test-iconv-h
 check_PROGRAMS += test-iconv-h
-if ANSICXX
-TESTS += test-iconv-h-c++
-check_PROGRAMS += test-iconv-h-c++
-test_iconv_h_c___SOURCES = test-iconv-h-c++.cc
-test_iconv_h_c___LDADD = $(LDADD) $(LIBINTL) $(LIBICONV) $(LIB_NANOSLEEP)
-endif

@@ -1,0 +1,19 @@
+Files:
+tests/test-glob-c++.cc
+tests/signature.h
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-glob-c++
+check_PROGRAMS += test-glob-c++
+test_glob_c___SOURCES = test-glob-c++.cc
+test_glob_c___LDADD = $(LDADD) $(LIBINTL) $(LIB_CLOCK_GETTIME)
+endif

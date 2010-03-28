@@ -1,19 +1,11 @@
 Files:
 tests/test-sys_time.c
-tests/test-sys_time-c++.cc
-tests/signature.h
 
 Depends-on:
-ansi-c++-opt
+sys_time-c++-tests
 
 configure.ac:
 
 Makefile.am:
 TESTS += test-sys_time
 check_PROGRAMS += test-sys_time
-if ANSICXX
-TESTS += test-sys_time-c++
-check_PROGRAMS += test-sys_time-c++
-test_sys_time_c___SOURCES = test-sys_time-c++.cc
-test_sys_time_c___LDADD = $(LDADD) $(LIBINTL) $(LIB_NANOSLEEP)
-endif

@@ -1,0 +1,19 @@
+Files:
+tests/test-wctype-c++.cc
+tests/signature.h
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-wctype-c++
+check_PROGRAMS += test-wctype-c++
+test_wctype_c___SOURCES = test-wctype-c++.cc
+test_wctype_c___LDADD = $(LDADD) $(LIBINTL) $(LIB_NANOSLEEP)
+endif

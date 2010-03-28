@@ -1,20 +1,12 @@
 Files:
 tests/test-unistd.c
-tests/test-unistd-c++.cc
-tests/signature.h
 
 Depends-on:
 verify
-ansi-c++-opt
+unistd-c++-tests
 
 configure.ac:
 
 Makefile.am:
 TESTS += test-unistd
 check_PROGRAMS += test-unistd
-if ANSICXX
-TESTS += test-unistd-c++
-check_PROGRAMS += test-unistd-c++
-test_unistd_c___SOURCES = test-unistd-c++.cc
-test_unistd_c___LDADD = $(LDADD) $(LIBINTL) $(LIB_CLOCK_GETTIME)
-endif

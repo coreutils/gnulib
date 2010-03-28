@@ -1,19 +1,11 @@
 Files:
 tests/test-sys_select.c
-tests/test-sys_select-c++.cc
-tests/signature.h
 
 Depends-on:
-ansi-c++-opt
+sys_select-c++-tests
 
 configure.ac:
 
 Makefile.am:
 TESTS += test-sys_select
 check_PROGRAMS += test-sys_select
-if ANSICXX
-TESTS += test-sys_select-c++
-check_PROGRAMS += test-sys_select-c++
-test_sys_select_c___SOURCES = test-sys_select-c++.cc
-test_sys_select_c___LDADD = $(LDADD) $(LIBINTL) $(LIBSOCKET) $(LIB_NANOSLEEP)
-endif

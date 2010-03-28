@@ -1,5 +1,75 @@
 2010-03-28  Bruno Haible  <bruno@clisp.org>
 
+	Split C++ tests into separate tests modules.
+	* modules/dirent-c++-tests: New file, extracted from
+	modules/dirent-tests.
+	* modules/dirent-tests: Depend on it.
+	* modules/fcntl-h-c++-tests: New file, extracted from
+	modules/fcntl-h-tests.
+	* modules/fcntl-h-tests: Depend on it.
+	* modules/glob-c++-tests: New file, extracted from modules/glob-tests.
+	* modules/glob-tests: Depend on it.
+	* modules/iconv-h-c++-tests: New file, extracted from
+	modules/iconv-h-tests.
+	* modules/iconv-h-tests: Depend on it.
+	* modules/langinfo-c++-tests: New file, extracted from
+	modules/langinfo-tests.
+	* modules/langinfo-tests: Depend on it.
+	* modules/locale-c++-tests: New file, extracted from
+	modules/locale-tests.
+	* modules/locale-tests: Depend on it.
+	* modules/math-c++-tests: New file, extracted from modules/math-tests.
+	* modules/math-tests: Depend on it.
+	* modules/pty-c++-tests: New file, extracted from modules/pty-tests.
+	* modules/pty-tests: Depend on it.
+	* modules/search-c++-tests: New file, extracted from
+	modules/search-tests.
+	* modules/search-tests: Depend on it.
+	* modules/signal-c++-tests: New file, extracted from
+	modules/signal-tests.
+	* modules/signal-tests: Depend on it.
+	* modules/spawn-c++-tests: New file, extracted from
+	modules/spawn-tests.
+	* modules/spawn-tests: Depend on it.
+	* modules/stdio-c++-tests: New file, extracted from
+	modules/stdio-tests.
+	* modules/stdio-tests: Depend on it.
+	* modules/stdlib-c++-tests: New file, extracted from
+	modules/stdlib-tests.
+	* modules/stdlib-tests: Depend on it.
+	* modules/string-c++-tests: New file, extracted from
+	modules/string-tests.
+	* modules/string-tests: Depend on it.
+	* modules/sys_ioctl-c++-tests: New file, extracted from
+	modules/sys_ioctl-tests.
+	* modules/sys_ioctl-tests: Depend on it.
+	* modules/sys_select-c++-tests: New file, extracted from
+	modules/sys_select-tests.
+	* modules/sys_select-tests: Depend on it.
+	* modules/sys_socket-c++-tests: New file, extracted from
+	modules/sys_socket-tests.
+	* modules/sys_socket-tests: Depend on it.
+	* modules/sys_stat-c++-tests: New file, extracted from
+	modules/sys_stat-tests.
+	* modules/sys_stat-tests: Depend on it.
+	* modules/sys_time-c++-tests: New file, extracted from
+	modules/sys_time-tests.
+	* modules/sys_time-tests: Depend on it.
+	* modules/time-c++-tests: New file, extracted from modules/time-tests.
+	* modules/time-tests: Depend on it.
+	* modules/unistd-c++-tests: New file, extracted from
+	modules/unistd-tests.
+	* modules/unistd-tests: Depend on it.
+	* modules/wchar-c++-tests: New file, extracted from
+	modules/wchar-tests.
+	* modules/wchar-tests: Depend on it.
+	* modules/wctype-c++-tests: New file, extracted from
+	modules/wctype-tests.
+	* modules/wctype-tests: Depend on it.
+	Reported by Simon Josefsson.
+
+2010-03-28  Bruno Haible  <bruno@clisp.org>
+
 	gnulib-tool: Allow 'foo-tests' module even if there is no module 'foo'.
 	* gnulib-tool (func_exists_module): New function, extracted from
 	func_verify_module.
