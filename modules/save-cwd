@@ -8,6 +8,7 @@ m4/save-cwd.m4
 
 Depends-on:
 chdir-long
+cloexec
 stdbool
 unistd-safer
 xgetcwd

@@ -1,3 +1,10 @@
+2010-03-28  James Youngman  <jay@gnu.org>
+
+	save-cwd: don't leak a file descriptor when the caller execs.
+	* lib/save-cwd.c (save_cwd): set the close-on-exec flag for the
+	saved file descriptor.
+	* modules/save-cwd (Depends-on): Depend on cloexec.
+
 2010-03-29  Bruno Haible  <bruno@clisp.org>
 
 	Remove vestiges of fts-lgpl module.
