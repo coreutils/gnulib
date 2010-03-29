@@ -16,6 +16,40 @@
 
 2010-03-28  Jose E. Marchesi  <jemarch@gnu.org>
 
+	maint.mk: _sc_search_regexp: generalize and rename from _prohibit_regexp
+	* top/maint.mk (_sc_search_regexp): Rename from _prohibit_regexp.
+	(sc_cast_of_argument_to_free): Adapt to use _sc_search_regexp.
+	(sc_cast_of_x_alloc_return_value): Likewise.
+	(sc_cast_of_alloca_return_value): Likewise.
+	(sc_space_tab): Likewise.
+	(sc_prohibit_atoi_atof): Likewise.
+	(sc_prohibit_magic_number_exit): Likewise.
+	(sc_error_exit_success): Likewise.
+	(sc_file_system): Likewise.
+	(sc_prohibit_have_config_h): Likewise.
+	(sc_require_config_h): Likewise.
+	(sc_prohibit_HAVE_MBRTOWC): Likewise.
+	(sc_obsolete_symbols): Likewise.
+	(sc_changelog): Likewise.
+	(sc_program_name): Likewise.
+	(sc_the_the): Likewise.
+	(sc_trailing_blank): Likewise.
+	(sc_two_space_separator_in_usage): Likewise.
+	(sc_useless_cpp_parens): Likewise.
+	(sc_GPL_version): Likewise.
+	(sc_GFDL_version): Likewise.
+	(sc_texinfo_acronym): Likewise.
+	(sc_prohibit_cvs_keyword): Likewise.
+	(sc_prohibit_stat_st_blocks): Likewise.
+	(sc_prohibit_S_IS_definition): Likewise.
+	(sc_redundant_const): Likewise.
+	(sc_makefile_TAB_only_indentation): Likewise.
+	(sc_m4_quote_check): Likewise.
+	(sc_makefile_path_separator_check): Likewise.
+	(sc_copyright_check): Likewise.
+	(sc_Wundef_boolean): Likewise.
+	(sc_vulnerable_makefile_CVE-2009-4029): Likewise.
+
 	maint.mk: match 0 or more whitespace-before-function-call '('
 	* top/maint.mk (sc_error_exit_success): Relax regexp to match uses
 	that have zero or two-and-more spaces between the function name
