@@ -205,14 +205,7 @@ static unsigned short int fts_stat (FTS *, FTSENT *, bool) internal_function;
 static int      fts_safe_changedir (FTS *, FTSENT *, int, const char *)
      internal_function;
 
-#if GNULIB_FTS
-# include "fts-cycle.c"
-#else
-static bool enter_dir (FTS *fts, FTSENT *ent) { return true; }
-static void leave_dir (FTS *fts, FTSENT *ent) {}
-static bool setup_dir (FTS *fts) { return true; }
-static void free_dir (FTS *fts) {}
-#endif
+#include "fts-cycle.c"
 
 #ifndef MAX
 # define MAX(a,b) ((a) > (b) ? (a) : (b))
@@ -614,10 +607,8 @@ fts_close (FTS *sp)
 
         fd_ring_clear (&sp->fts_fd_ring);
 
-#if GNULIB_FTS
         if (sp->fts_leaf_optimization_works_ht)
           hash_free (sp->fts_leaf_optimization_works_ht);
-#endif
 
         free_dir (sp);
 
@@ -717,7 +708,6 @@ static bool
 leaf_optimization_applies (int dir_fd _GL_UNUSED) { return false; }
 #endif
 
-#if GNULIB_FTS
 /* link-count-optimization entry:
    map an stat.st_dev number to a boolean: leaf_optimization_works */
 struct LCO_ent
@@ -799,7 +789,6 @@ link_count_optimize_ok (FTSENT const *p)
 
   return opt_ok;
 }
-#endif
 
 /*
  * Special case of "/" at the end of the file name so that slashes aren't
@@ -1730,27 +1719,6 @@ err:            memset(sbp, 0, sizeof(struct stat));
                         /* Command-line "." and ".." are real directories. */
                         return (p->fts_level == FTS_ROOTLEVEL ? FTS_D : FTS_DOT);
                 }
-
-#if !GNULIB_FTS
-                {
-                  /*
-                   * Cycle detection is done by brute force when the directory
-                   * is first encountered.  If the tree gets deep enough or the
-                   * number of symbolic links to directories is high enough,
-                   * something faster might be worthwhile.
-                   */
-                  FTSENT *t;
-
-                  for (t = p->fts_parent;
-                       t->fts_level >= FTS_ROOTLEVEL; t = t->fts_parent)
-                    if (sbp->st_ino == t->fts_statp->st_ino
-                        && sbp->st_dev == t->fts_statp->st_dev)
-                      {
-                        p->fts_cycle = t;
-                        return (FTS_DC);
-                      }
-                }
-#endif
 
                 return (FTS_D);
         }

@@ -143,7 +143,6 @@ typedef struct {
 # define FTS_STOP       0x2000          /* (private) unrecoverable error */
         int fts_options;                /* fts_open options, global flags */
 
-# if GNULIB_FTS
         /* Map a directory's device number to a boolean.  The boolean is
            true if for that file system (type determined by a single fstatfs
            call per FS) st_nlink can be used to calculate the number of
@@ -175,7 +174,6 @@ typedef struct {
                 struct cycle_check_state *state;
         } fts_cycle;
 
-# endif
         /* A stack of the file descriptors corresponding to the
            most-recently traversed parent directories.
            Currently used only in FTS_CWDFD mode.  */

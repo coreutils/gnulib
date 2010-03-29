@@ -1,3 +1,10 @@
+2010-03-29  Bruno Haible  <bruno@clisp.org>
+
+	Remove vestiges of fts-lgpl module.
+	* lib/fts_.h: Assume GNULIB_FTS is 1.
+	* lib/fts.c: Likewise.
+	* modules/fts (configure.ac): Remove gl_MODULE_INDICATOR invocation.
+
 2010-03-28  Bruno Haible  <bruno@clisp.org>
 
 	Fix definition of tests witness macro.

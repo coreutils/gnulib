@@ -27,7 +27,6 @@ unistd-safer
 
 configure.ac:
 gl_FUNC_FTS
-gl_MODULE_INDICATOR([fts])
 
 Makefile.am:
 
