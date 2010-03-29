@@ -1,4 +1,4 @@
-# serial 3
+# serial 4
 # See if we need to provide fdopendir.
 
 dnl Copyright (C) 2009-2010 Free Software Foundation, Inc.
@@ -11,6 +11,10 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_FDOPENDIR],
 [
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+  dnl FreeBSD 7.3 has the function, but failed to declare it.
+  AC_CHECK_DECLS([fdopendir], [], [HAVE_DECL_FDOPENDIR=0], [[
+#include <dirent.h>
+    ]])
   AC_CHECK_FUNCS_ONCE([fdopendir])
   if test $ac_cv_func_fdopendir = no; then
     AC_LIBOBJ([openat-proc])
@@ -23,6 +27,9 @@ AC_DEFUN([gl_FUNC_FDOPENDIR],
       [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
 #include <dirent.h>
 #include <fcntl.h>
+#if !HAVE_DECL_FDOPENDIR
+extern DIR *fdopendir (int);
+#endif
 ]], [int fd = open ("conftest.c", O_RDONLY);
      if (fd < 0) return 2;
      return !!fdopendir (fd);])],

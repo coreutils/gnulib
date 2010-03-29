@@ -1,3 +1,15 @@
+2010-03-30  Eric Blake  <eblake@redhat.com>
+
+	fdopendir: work around FreeBSD bug
+	* m4/dirent_h.m4 (gl_DIRENT_H_DEFAULTS): New witness.
+	* m4/fdopendir.m4 (gl_FUNC_FDOPENDIR): Set it.
+	* modules/dirent (Makefile.am): Substitute it.
+	* lib/dirent.in.h (fdopendir): Supply missing FreeBSD
+	declaration.
+	* doc/posix-functions/fdopendir.texi (fdopendir): Document the
+	fix.
+	Reported by Christian Weisgerber <naddy@mips.inka.de>.
+
 2010-03-29  Bruno Haible  <bruno@clisp.org>
 
 	Emit #pragma system_header after the inclusion guard, not before.

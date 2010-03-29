@@ -77,7 +77,7 @@ _GL_WARN_ON_USE (dirfd, "dirfd is unportable - "
 _GL_FUNCDECL_RPL (fdopendir, DIR *, (int fd));
 _GL_CXXALIAS_RPL (fdopendir, DIR *, (int fd));
 # else
-#  if !@HAVE_FDOPENDIR@
+#  if !@HAVE_FDOPENDIR@ || !@HAVE_DECL_FDOPENDIR@
 _GL_FUNCDECL_SYS (fdopendir, DIR *, (int fd));
 #  endif
 _GL_CXXALIAS_SYS (fdopendir, DIR *, (int fd));
