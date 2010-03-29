@@ -1,5 +1,10 @@
 2010-03-28  Bruno Haible  <bruno@clisp.org>
 
+	Fix definition of tests witness macro.
+	* gnulib-tool (func_import): Fix definition of witness macro.
+
+2010-03-28  Bruno Haible  <bruno@clisp.org>
+
 	Fix ioctl's protoype on glibc systems.
 	* lib/sys_ioctl.in.h (ioctl): If REPLACE_IOCTL is 1, use a wrapper. Use
 	_GL_CXXALIAS_SYS, not _GL_CXXALIAS_SYS_CAST.
