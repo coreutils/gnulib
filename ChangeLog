@@ -1,3 +1,17 @@
+2010-03-28  Bruno Haible  <bruno@clisp.org>
+
+	Fix ioctl's protoype on glibc systems.
+	* lib/sys_ioctl.in.h (ioctl): If REPLACE_IOCTL is 1, use a wrapper. Use
+	_GL_CXXALIAS_SYS, not _GL_CXXALIAS_SYS_CAST.
+	* lib/ioctl.c (rpl_ioctl) [HAVE_IOCTL]: New wrapper.
+	* modules/ioctl (configure.ac): Test whether ioctl has the POSIX
+	signature. If not, arrange to replace the ioctl function.
+	* m4/sys_ioctl_h.m4 (gl_SYS_IOCTL_H_DEFAULTS): Initialize
+	REPLACE_IOCTL.
+	* modules/sys_ioctl (Makefile.am): Substitute REPLACE_IOCTL.
+	* doc/posix-functions/ioctl.texi: Mention the glibc problem.
+	Reported by Ludovic Courtès <ludo@gnu.org>.
+
 2010-03-28  Javier Villavicencio  <the_paya@gentoo.org>
 
 	exclude: fix the case of globs vs. EXCLUDE_INCLUDE

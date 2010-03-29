@@ -23,12 +23,31 @@
 
 #include <stdarg.h>
 
-#define WIN32_LEAN_AND_MEAN
+#if HAVE_IOCTL
+
+/* Provide a wrapper with the POSIX prototype.  */
+# undef ioctl
+int
+rpl_ioctl (int fd, int request, ... /* {void *,char *} arg */)
+{
+  void *buf;
+  va_list args;
+
+  va_start (args, request);
+  buf = va_arg (args, void *);
+  va_end (args);
+
+  return ioctl (fd, request, buf);
+}
+
+#else /* mingw */
+
+# define WIN32_LEAN_AND_MEAN
 /* Get winsock2.h. */
-#include <sys/socket.h>
+# include <sys/socket.h>
 
 /* Get set_winsock_errno, FD_TO_SOCKET etc. */
-#include "w32sock.h"
+# include "w32sock.h"
 
 int
 rpl_ioctl (int fd, int req, ...)
@@ -49,3 +68,5 @@ rpl_ioctl (int fd, int req, ...)
 
   return r;
 }
+
+#endif

@@ -44,7 +44,7 @@
 /* Declare overridden functions.  */
 
 #if @GNULIB_IOCTL@
-# if @SYS_IOCTL_H_HAVE_WINSOCK2_H@
+# if @SYS_IOCTL_H_HAVE_WINSOCK2_H@ || @REPLACE_IOCTL@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef ioctl
 #   define ioctl rpl_ioctl
@@ -56,10 +56,8 @@ _GL_CXXALIAS_RPL (ioctl, int,
 # else
 _GL_FUNCDECL_SYS (ioctl, int,
                   (int fd, int request, ... /* {void *,char *} arg */));
-/* Need to cast, because on glibc systems, the second parameter is
-                                unsigned long int request.  */
-_GL_CXXALIAS_SYS_CAST (ioctl, int,
-                       (int fd, int request, ... /* {void *,char *} arg */));
+_GL_CXXALIAS_SYS (ioctl, int,
+                  (int fd, int request, ... /* {void *,char *} arg */));
 # endif
 _GL_CXXALIASWARN (ioctl);
 #elif @SYS_IOCTL_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS@

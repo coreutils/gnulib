@@ -1,4 +1,4 @@
-# sys_ioctl_h.m4 serial 7
+# sys_ioctl_h.m4 serial 8
 dnl Copyright (C) 2008-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -67,4 +67,5 @@ AC_DEFUN([gl_SYS_IOCTL_H_DEFAULTS],
   SYS_IOCTL_H_HAVE_WINSOCK2_H=0; AC_SUBST([SYS_IOCTL_H_HAVE_WINSOCK2_H])
   SYS_IOCTL_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS=0;
                         AC_SUBST([SYS_IOCTL_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS])
+  REPLACE_IOCTL=0;      AC_SUBST([REPLACE_IOCTL])
 ])

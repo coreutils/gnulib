@@ -31,6 +31,7 @@ sys/ioctl.h: sys_ioctl.in.h $(CXXDEFS_H) $(WARN_ON_USE_H)
 	      -e 's|@''GNULIB_IOCTL''@|$(GNULIB_IOCTL)|g' \
 	      -e 's|@''SYS_IOCTL_H_HAVE_WINSOCK2_H''@|$(SYS_IOCTL_H_HAVE_WINSOCK2_H)|g' \
 	      -e 's|@''SYS_IOCTL_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS''@|$(SYS_IOCTL_H_HAVE_WINSOCK2_H_AND_USE_SOCKETS)|g' \
+	      -e 's|@''REPLACE_IOCTL''@|$(REPLACE_IOCTL)|g' \
 	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
 	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
 	      < $(srcdir)/sys_ioctl.in.h; \
