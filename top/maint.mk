@@ -413,7 +413,8 @@ sc_prohibit_openat_without_use:
 ctype_re = isalnum|isalpha|isascii|isblank|iscntrl|isdigit|isgraph|islower\
 |isprint|ispunct|isspace|isupper|isxdigit|tolower|toupper
 sc_prohibit_c_ctype_without_use:
-	@h='[<"]c-ctype.h[">]' re='\<c_($(ctype_re)) *\(' $(_sc_header_without_use)
+	@h='[<"]c-ctype.h[">]' re='\<c_($(ctype_re)) *\(' \
+	  $(_sc_header_without_use)
 
 _empty =
 _sp = $(_empty) $(_empty)
