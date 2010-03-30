@@ -38,7 +38,7 @@
 # @INCLUDE_NEXT@ @NEXT_TIME_H@
 
 /* NetBSD 5.0 mis-defines NULL.  */
-#include <stddef.h>
+# include <stddef.h>
 
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
