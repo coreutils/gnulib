@@ -16,11 +16,11 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-# if __GNUC__ >= 3
-@PRAGMA_SYSTEM_HEADER@
-# endif
-
 #ifndef _GL_ARPA_INET_H
+
+#if __GNUC__ >= 3
+@PRAGMA_SYSTEM_HEADER@
+#endif
 
 /* Gnulib's sys/socket.h is responsible for pulling in winsock2.h etc
    under MinGW.

@@ -16,11 +16,11 @@
 
 /* Written by Simon Josefsson based on sysexits(3) man page */
 
+#ifndef _GL_SYSEXITS_H
+
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
-
-#ifndef _GL_SYSEXITS_H
 
 #if @HAVE_SYSEXITS_H@
 

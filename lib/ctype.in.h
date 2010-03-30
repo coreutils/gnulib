@@ -23,11 +23,11 @@
  * <http://www.opengroup.org/onlinepubs/9699919799/basedefs/ctype.h.html>
  */
 
+#ifndef _GL_CTYPE_H
+
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
-
-#ifndef _GL_CTYPE_H
 
 /* Include the original <ctype.h>.  */
 /* The include_next requires a split double-inclusion guard.  */

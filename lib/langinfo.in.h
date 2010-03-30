@@ -20,11 +20,11 @@
  * <http://www.opengroup.org/onlinepubs/9699919799/basedefs/langinfo.h.html>
  */
 
+#ifndef _GL_LANGINFO_H
+
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
-
-#ifndef _GL_LANGINFO_H
 
 /* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_LANGINFO_H@

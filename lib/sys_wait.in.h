@@ -16,11 +16,11 @@
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
 
+#ifndef _GL_SYS_WAIT_H
+
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
-
-#ifndef _GL_SYS_WAIT_H
 
 /* The include_next requires a split double-inclusion guard.  */
 #if !((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)

@@ -26,11 +26,11 @@
  * wctrans_t, and wctype_t are not yet implemented.
  */
 
+#ifndef _GL_WCTYPE_H
+
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
-
-#ifndef _GL_WCTYPE_H
 
 #if @HAVE_WINT_T@
 /* Solaris 2.5 has a bug: <wchar.h> must be included before <wctype.h>.

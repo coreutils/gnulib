@@ -21,11 +21,11 @@
  * <http://www.opengroup.org/susv3xbd/stdint.h.html>
  */
 
-# if __GNUC__ >= 3
-@PRAGMA_SYSTEM_HEADER@
-# endif
-
 #ifndef _GL_STDINT_H
+
+#if __GNUC__ >= 3
+@PRAGMA_SYSTEM_HEADER@
+#endif
 
 /* When including a system file that in turn includes <inttypes.h>,
    use the system <inttypes.h>, not our substitute.  This avoids

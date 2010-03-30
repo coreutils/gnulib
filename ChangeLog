@@ -1,3 +1,38 @@
+2010-03-29  Bruno Haible  <bruno@clisp.org>
+
+	Emit #pragma system_header after the inclusion guard, not before.
+	* lib/arpa_inet.in.h: Emit #pragma system_header after the inclusion
+	guard that spans the entire file, not before. This enables an
+	optimization in GCC's preprocessor.
+	* lib/ctype.in.h: Likewise.
+	* lib/dirent.in.h: Likewise.
+	* lib/errno.in.h: Likewise.
+	* lib/float.in.h: Likewise.
+	* lib/getopt.in.h: Likewise.
+	* lib/iconv.in.h: Likewise.
+	* lib/langinfo.in.h: Likewise.
+	* lib/locale.in.h: Likewise.
+	* lib/math.in.h: Likewise.
+	* lib/netdb.in.h: Likewise.
+	* lib/netinet_in.in.h: Likewise.
+	* lib/pty.in.h: Likewise.
+	* lib/sched.in.h: Likewise.
+	* lib/se-selinux.in.h: Likewise.
+	* lib/search.in.h: Likewise.
+	* lib/spawn.in.h: Likewise.
+	* lib/stdarg.in.h: Likewise.
+	* lib/stdint.in.h: Likewise.
+	* lib/string.in.h: Likewise.
+	* lib/strings.in.h: Likewise.
+	* lib/sys_file.in.h: Likewise.
+	* lib/sys_ioctl.in.h: Likewise.
+	* lib/sys_time.in.h: Likewise.
+	* lib/sys_times.in.h: Likewise.
+	* lib/sys_utsname.in.h: Likewise.
+	* lib/sys_wait.in.h: Likewise.
+	* lib/sysexits.in.h: Likewise.
+	* lib/wctype.in.h: Likewise.
+
 2010-03-28  James Youngman  <jay@gnu.org>
 
 	save-cwd: don't leak a file descriptor when the caller execs.

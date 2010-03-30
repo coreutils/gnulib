@@ -14,12 +14,12 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-#if __GNUC__ >= 3
-@PRAGMA_SYSTEM_HEADER@
-#endif
-
 #ifndef _GL_SELINUX_SELINUX_H
 # define _GL_SELINUX_SELINUX_H
+
+# if __GNUC__ >= 3
+@PRAGMA_SYSTEM_HEADER@
+# endif
 
 # if HAVE_SELINUX_SELINUX_H
 

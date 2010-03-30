@@ -20,11 +20,11 @@
    It is intended to provide definitions and prototypes needed by an
    application.  */
 
-# if __GNUC__ >= 3
-@PRAGMA_SYSTEM_HEADER@
-# endif
-
 #ifndef _GL_NETDB_H
+
+#if __GNUC__ >= 3
+@PRAGMA_SYSTEM_HEADER@
+#endif
 
 #if @HAVE_NETDB_H@
 

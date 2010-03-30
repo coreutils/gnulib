@@ -18,11 +18,11 @@
 
 /* Written by Paul Eggert.  */
 
+#if defined _GL_SYS_TIME_H
+
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
-
-#if defined _GL_SYS_TIME_H
 
 /* Simply delegate to the system's header, without adding anything.  */
 # if @HAVE_SYS_TIME_H@
