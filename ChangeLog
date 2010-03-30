@@ -1,5 +1,10 @@
 2010-03-30  Eric Blake  <eblake@redhat.com>
 
+	maint: improve module indicators
+	* m4/gnulib-common.m4 (gl_MODULE_INDICATOR_SET_VARIABLE)
+	(gl_MODULE_INDICATOR, gl_MODULE_INDICATOR_FOR_TESTS): Fit in 80
+	columns, and avoid extra macro expansion.
+
 	fdopendir: work around FreeBSD bug
 	* m4/dirent_h.m4 (gl_DIRENT_H_DEFAULTS): New witness.
 	* m4/fdopendir.m4 (gl_FUNC_FDOPENDIR): Set it.
