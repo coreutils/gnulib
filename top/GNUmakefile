@@ -49,7 +49,7 @@ include $(srcdir)/maint.mk
 
 # Allow cfg.mk to override these.
 _build-aux ?= build-aux
-_autoreconf ?= autoreconf
+_autoreconf ?= autoreconf -v
 
 # Ensure that $(VERSION) is up to date for dist-related targets, but not
 # for others: rerunning autoreconf and recompiling everything isn't cheap.
@@ -78,7 +78,8 @@ ifeq ($(_have-git-version-gen)0,yes$(MAKELEVEL))
           $(info run '$(MAKE) _version' to fix it)
         else
           $(info INFO: running autoreconf for new version string: $(_curr-ver))
-          _dummy := $(shell $(MAKE) $(AM_MAKEFLAGS) _version)
+GNUmakefile: _version
+	touch GNUmakefile
         endif
       endif
     endif
@@ -88,6 +89,7 @@ endif
 .PHONY: _version
 _version:
 	cd $(srcdir) && rm -rf autom4te.cache .version && $(_autoreconf)
+	$(MAKE) $(AM_MAKEFLAGS) Makefile
 
 else
 

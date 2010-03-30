@@ -1,5 +1,10 @@
 2010-03-31  Eric Blake  <eblake@redhat.com>
 
+	gnumakefile: don't squelch _version output
+	* top/GNUmakefile (_version): Create one-shot dependency rather
+	than using $(shell) when version must be regenerated.
+	(_autoreconf): Run verbosely, by default.
+
 	sys_time: avoid compiler warnings
 	* lib/sys_time.in.h (includes): Ensure gcc pragma is
 	unconditional, fixing regression from 2010-03-29.
