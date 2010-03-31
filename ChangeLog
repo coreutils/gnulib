@@ -1,5 +1,9 @@
 2010-03-31  Eric Blake  <eblake@redhat.com>
 
+	maint.mk: check for [ as well as test
+	* top/maint.mk (sc_prohibit_test_minus_ao): Extend test.
+	Based on a libvirt report by Matthias Bolte.
+
 	gnumakefile: don't squelch _version output
 	* top/GNUmakefile (_version): Create one-shot dependency rather
 	than using $(shell) when version must be regenerated.

@@ -597,9 +597,10 @@ sc_prohibit_S_IS_definition:
 _ptm1 = use "test C1 && test C2", not "test C1 -''a C2"
 _ptm2 = use "test C1 || test C2", not "test C1 -''o C2"
 # Using test's -a and -o operators is not portable.
+# We prefer test over [, since the latter is spelled [[ in configure.ac.
 sc_prohibit_test_minus_ao:
-	@re='\<test .+ -[ao] '						\
-	msg='$(_ptm1); $(_ptm2)'						\
+	@re='(\<test| \[+) .+ -[ao] '					\
+	msg='$(_ptm1); $(_ptm2)'					\
 	  $(_prohibit_regexp)
 
 # Each program that uses proper_name_utf8 must link with one of the
