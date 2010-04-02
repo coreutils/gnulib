@@ -2976,11 +2976,20 @@ func_emit_tests_Makefile_am ()
         } > "$tmp"/amsnippet
         # Skip the contents if it's entirely empty.
         if grep '[^	 ]' "$tmp"/amsnippet > /dev/null ; then
-          echo "## begin gnulib module $module"
-          echo
-          cat "$tmp"/amsnippet
-          echo "## end   gnulib module $module"
-          echo
+          # Mention long-running tests at the end.
+          ofd=3
+          for word in `func_get_status "$module"`; do
+            if test "$word" = 'longrunning-test'; then
+              ofd=4
+              break
+            fi
+          done
+          { echo "## begin gnulib module $module"
+            echo
+            cat "$tmp"/amsnippet
+            echo "## end   gnulib module $module"
+            echo
+          } >&$ofd
         fi
         rm -f "$tmp"/amsnippet
         # Test whether there are some source files in subdirectories.
@@ -2994,7 +3003,7 @@ func_emit_tests_Makefile_am ()
         done
       fi
     done
-  } > "$tmp"/allsnippets
+  } 3> "$tmp"/main_snippets 4> "$tmp"/longrunning_snippets
   # Generate dependencies here, since it eases the debugging of test failures.
   # If there are source files in subdirectories, prevent collision of the
   # object files (example: hash.c and libxml/hash.c).
@@ -3030,7 +3039,7 @@ func_emit_tests_Makefile_am ()
   fi
   # Automake versions < 1.9b create an empty pkgdatadir at installation time
   # if you specify pkgdata_DATA to empty. This is a workaround.
-  if grep '^pkgdata_DATA *+=' "$tmp"/allsnippets > /dev/null; then
+  if grep '^pkgdata_DATA *+=' "$tmp"/main_snippets "$tmp"/longrunning_snippets > /dev/null; then
     echo "pkgdata_DATA ="
   fi
   echo "EXTRA_DIST ="
@@ -3096,7 +3105,7 @@ func_emit_tests_Makefile_am ()
   # srcdir is defined by autoconf and automake.
   echo "TESTS_ENVIRONMENT += EXEEXT='@EXEEXT@' srcdir='\$(srcdir)'"
   echo
-  cat "$tmp"/allsnippets \
+  cat "$tmp"/main_snippets "$tmp"/longrunning_snippets \
     | sed -e 's|\$(top_srcdir)/build-aux/|$(top_srcdir)/'"$auxdir"'/|g'
   echo "# Clean up after Solaris cc."
   echo "clean-local:"
@@ -3109,7 +3118,7 @@ func_emit_tests_Makefile_am ()
   echo "	  fi; \\"
   echo "	done; \\"
   echo "	:"
-  rm -f "$tmp"/allsnippets
+  rm -f "$tmp"/main_snippets "$tmp"/longrunning_snippets
 }
 
 # func_emit_initmacro_start macro_prefix

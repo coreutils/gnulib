@@ -1,5 +1,11 @@
 2010-04-02  Bruno Haible  <bruno@clisp.org>
 
+	gnulib-tool: Ensure that long-running tests are executed last.
+	* gnulib-tool (func_emit_tests_Makefile_am): Emit the code for long-
+	running tests after the one for the other tests.
+
+2010-04-02  Bruno Haible  <bruno@clisp.org>
+
 	gnulib-tool: Ensure the tests in the main directory are executed first.
 	* gnulib-tool (func_emit_tests_Makefile_am): Initialize SUBDIRS to
 	start with the current directory.
