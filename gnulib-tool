@@ -5143,7 +5143,9 @@ func_create_testdir ()
      ./configure || func_exit 1
        cd "$sourcebase"
        echo 'built_sources: $(BUILT_SOURCES)' >> Makefile
-       $MAKE built_sources || func_exit 1
+       $MAKE AUTOCONF="${AUTOCONF}" AUTOHEADER="${AUTOHEADER}" ACLOCAL="${ACLOCAL}" AUTOMAKE="${AUTOMAKE}" AUTORECONF="${AUTORECONF}" AUTOPOINT="${AUTOPOINT}" LIBTOOLIZE="${LIBTOOLIZE}" \
+             built_sources \
+         || func_exit 1
        cd ..
      $MAKE distclean || func_exit 1
     ) || func_exit 1

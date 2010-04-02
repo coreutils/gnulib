@@ -1,5 +1,12 @@
 2010-04-02  Bruno Haible  <bruno@clisp.org>
 
+	gnulib-tool: Obey user's environment variables.
+	* gnulib-tool (func_create_testdir): When creating built sources,
+	respect the environment variables for autoconf, automake, etc. given by
+	the user.
+
+2010-04-02  Bruno Haible  <bruno@clisp.org>
+
 	gnulib-tool: Provide the value of --m4-base to modules.
 	* gnulib-tool (func_import, func_create_testdir): Emit a definition
 	of gl_m4_base.
