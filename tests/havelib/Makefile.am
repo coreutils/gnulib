@@ -76,4 +76,4 @@ MOSTLYCLEANFILES += rpathcfg rpathcfg.log
 
 # Clean up the intermediate directory created by running the tests.
 distclean-local:
-	rm -rf ../havelib-tstdir
+	rm -rf tst
