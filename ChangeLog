@@ -1,5 +1,124 @@
 2010-04-02  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'havelib', moved here from GNU gettext.
+	* modules/havelib-tests: New file, from gettext/autoconf-lib-link with
+	modifications.
+	* tests/havelib/README: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/Makefile.am: New file, from gettext/autoconf-lib-link
+	with modifications.
+	* tests/havelib/rpath-1: New file, from gettext/autoconf-lib-link with
+	modifications.
+	* tests/havelib/rpath-1a: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-1b: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-2_a: New file, from gettext/autoconf-lib-link
+	with modifications.
+	* tests/havelib/rpath-2_b: New file, from gettext/autoconf-lib-link
+	with modifications.
+	* tests/havelib/rpath-2aaa: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-2aab: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-2aac: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-2aad: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-2aba: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-2abb: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-2abc: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-2abd: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-2baa: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-2bab: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-2bac: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-2bad: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-2bba: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-2bbb: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-2bbc: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-2bbd: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-3_a: New file, from gettext/autoconf-lib-link
+	with modifications.
+	* tests/havelib/rpath-3_b: New file, from gettext/autoconf-lib-link
+	with modifications.
+	* tests/havelib/rpath-3aaa: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-3aab: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-3aac: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-3aad: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-3aae: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-3aaf: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-3aag: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-3aah: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-3aba: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-3abb: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-3abc: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-3abd: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-3abe: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-3abf: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-3abg: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-3abh: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-3baa: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-3bab: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-3bac: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-3bad: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-3bae: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-3baf: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-3bag: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-3bah: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-3bba: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-3bbb: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-3bbc: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-3bbd: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-3bbe: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-3bbf: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-3bbg: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpath-3bbh: New file, from gettext/autoconf-lib-link.
+	* tests/havelib/rpathx/rpathx.c: New file, from
+	gettext/autoconf-lib-link.
+	* tests/havelib/rpathx/Makefile.am: New file, from
+	gettext/autoconf-lib-link.
+	* tests/havelib/rpathx/configure.ac: New file, from
+	gettext/autoconf-lib-link with modifications.
+	* tests/havelib/rpathy/rpathy.c: New file, from
+	gettext/autoconf-lib-link.
+	* tests/havelib/rpathy/Makefile.am: New file, from
+	gettext/autoconf-lib-link.
+	* tests/havelib/rpathy/configure.ac: New file, from
+	gettext/autoconf-lib-link with modifications.
+	* tests/havelib/rpathz/rpathz.c: New file, from
+	gettext/autoconf-lib-link.
+	* tests/havelib/rpathz/Makefile.am: New file, from
+	gettext/autoconf-lib-link.
+	* tests/havelib/rpathz/configure.ac: New file, from
+	gettext/autoconf-lib-link with modifications.
+	* tests/havelib/rpathlx/usex.c: New file, from
+	gettext/autoconf-lib-link.
+	* tests/havelib/rpathlx/Makefile.am: New file, from
+	gettext/autoconf-lib-link.
+	* tests/havelib/rpathlx/configure.ac: New file, from
+	gettext/autoconf-lib-link with modifications.
+	* tests/havelib/rpathly/usey.c: New file, from
+	gettext/autoconf-lib-link.
+	* tests/havelib/rpathly/Makefile.am: New file, from
+	gettext/autoconf-lib-link.
+	* tests/havelib/rpathly/configure.ac: New file, from
+	gettext/autoconf-lib-link with modifications.
+	* tests/havelib/rpathlz/usez.c: New file, from
+	gettext/autoconf-lib-link.
+	* tests/havelib/rpathlz/Makefile.am: New file, from
+	gettext/autoconf-lib-link.
+	* tests/havelib/rpathlz/configure.ac: New file, from
+	gettext/autoconf-lib-link with modifications.
+	* tests/havelib/rpathlyx/usey.c: New file, from
+	gettext/autoconf-lib-link.
+	* tests/havelib/rpathlyx/Makefile.am: New file, from
+	gettext/autoconf-lib-link.
+	* tests/havelib/rpathlyx/configure.ac: New file, from
+	gettext/autoconf-lib-link with modifications.
+	* tests/havelib/rpathlzyx/usez.c: New file, from
+	gettext/autoconf-lib-link.
+	* tests/havelib/rpathlzyx/Makefile.am: New file, from
+	gettext/autoconf-lib-link.
+	* tests/havelib/rpathlzyx/configure.ac: New file, from
+	gettext/autoconf-lib-link with modifications.
+	* tests/havelib/rpathcfg.sh: New file, from gettext/autoconf-lib-link
+	with modifications.
+
+2010-04-02  Bruno Haible  <bruno@clisp.org>
+
 	gnulib-tool: Create distributed built sources also for the tests.
 	* gnulib-tool (func_create_testdir): Also generate distributed built
 	sources in the tests directory.
