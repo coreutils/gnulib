@@ -1,3 +1,9 @@
+2010-04-02  Bruno Haible  <bruno@clisp.org>
+
+	gnulib-tool: Provide the value of --m4-base to modules.
+	* gnulib-tool (func_import, func_create_testdir): Emit a definition
+	of gl_m4_base.
+
 2010-04-02  Eric Blake  <eblake@redhat.com>
 
 	maint.mk: fix some fallout

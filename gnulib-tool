@@ -4328,6 +4328,7 @@ s,//*$,/,'
     else
       sed_replace_build_aux="$sed_noop"
     fi
+    echo "  gl_m4_base='$m4base'"
     func_emit_initmacro_start $macro_prefix
     echo "  gl_source_base='$sourcebase'"
     for module in $main_modules; do
@@ -4903,6 +4904,7 @@ func_create_testdir ()
          s|AC_CONFIG_FILES(\(.*\):build-aux/\(.*\))|AC_CONFIG_FILES(\1:'"$auxdir"'/\2)|
          ba
        }'
+     echo "gl_m4_base='../$m4base'"
      func_emit_initmacro_start $macro_prefix
      # We don't have explicit ordering constraints between the various
      # autoconf snippets. It's cleanest to put those of the library before
@@ -5032,6 +5034,7 @@ func_create_testdir ()
    else
      sed_replace_build_aux="$sed_noop"
    fi
+   echo "gl_m4_base='$m4base'"
    func_emit_initmacro_start $macro_prefix
    echo "gl_source_base='$sourcebase'"
    for module in $modules; do
