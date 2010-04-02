@@ -3011,7 +3011,7 @@ func_emit_tests_Makefile_am ()
   # Nothing is being added to SUBDIRS; nevertheless the existence of this
   # variable is needed to avoid an error from automake:
   #   "AM_GNU_GETTEXT used but SUBDIRS not defined"
-  echo "SUBDIRS ="
+  echo "SUBDIRS = ."
   echo "TESTS ="
   echo "XFAIL_TESTS ="
   echo "TESTS_ENVIRONMENT ="
