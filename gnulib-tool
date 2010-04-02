@@ -5122,13 +5122,13 @@ func_create_testdir ()
   fi
   # Need to run configure and make once, to create built files that are to be
   # distributed (such as getdate.c).
+  sed_remove_make_variables='s,[$]([A-Za-z0-9_]*),,g'
   # Extract the value of "CLEANFILES += ..." and "MOSTLYCLEANFILES += ...".
   cleaned_files=`sed -e "$sed_remove_backslash_newline" < "$testdir/$sourcebase/Makefile.am" \
                  | sed -n -e 's,^CLEANFILES[	 ]*+=\([^#]*\).*$,\1,p' -e 's,^MOSTLYCLEANFILES[	 ]*+=\([^#]*\).*$,\1,p'`
   cleaned_files=`for file in $cleaned_files; do echo " $file "; done`
   # Extract the value of "BUILT_SOURCES += ...". Remove variable references
   # such $(FOO_H) because they don't refer to distributed files.
-  sed_remove_make_variables='s,[$]([A-Za-z0-9_]*),,g'
   built_sources=`sed -e "$sed_remove_backslash_newline" < "$testdir/$sourcebase/Makefile.am" \
                  | sed -n -e 's,^BUILT_SOURCES[	 ]*+=\([^#]*\).*$,\1,p' \
                  | sed -e "$sed_remove_make_variables"`
@@ -5138,16 +5138,44 @@ func_create_testdir ()
                                  *) echo $file ;;
                                esac;
                              done`
-  if test -n "$distributed_built_sources"; then
+  tests_distributed_built_sources=
+  if test -n "$inctests"; then
+    # Likewise for built files in the $testsbase directory.
+    tests_cleaned_files=`sed -e "$sed_remove_backslash_newline" < "$testdir/$testsbase/Makefile.am" \
+                         | sed -n -e 's,^CLEANFILES[	 ]*+=\([^#]*\).*$,\1,p' -e 's,^MOSTLYCLEANFILES[	 ]*+=\([^#]*\).*$,\1,p'`
+    tests_cleaned_files=`for file in $tests_cleaned_files; do echo " $file "; done`
+    tests_built_sources=`sed -e "$sed_remove_backslash_newline" < "$testdir/$testsbase/Makefile.am" \
+                         | sed -n -e 's,^BUILT_SOURCES[	 ]*+=\([^#]*\).*$,\1,p' \
+                         | sed -e "$sed_remove_make_variables"`
+    tests_distributed_built_sources=`for file in $tests_built_sources; do
+                                       case "$tests_cleaned_files" in
+                                         *" "$file" "*) ;;
+                                         *) echo $file ;;
+                                       esac;
+                                     done`
+  fi
+  if test -n "$distributed_built_sources" || test -n "$tests_distributed_built_sources"; then
     (cd "$testdir"
      ./configure || func_exit 1
-       cd "$sourcebase"
-       echo 'built_sources: $(BUILT_SOURCES)' >> Makefile
-       $MAKE AUTOCONF="${AUTOCONF}" AUTOHEADER="${AUTOHEADER}" ACLOCAL="${ACLOCAL}" AUTOMAKE="${AUTOMAKE}" AUTORECONF="${AUTORECONF}" AUTOPOINT="${AUTOPOINT}" LIBTOOLIZE="${LIBTOOLIZE}" \
-             built_sources \
-         || func_exit 1
-       cd ..
-     $MAKE distclean || func_exit 1
+       if test -n "$distributed_built_sources"; then
+         cd "$sourcebase"
+         echo 'built_sources: $(BUILT_SOURCES)' >> Makefile
+         $MAKE AUTOCONF="${AUTOCONF}" AUTOHEADER="${AUTOHEADER}" ACLOCAL="${ACLOCAL}" AUTOMAKE="${AUTOMAKE}" AUTORECONF="${AUTORECONF}" AUTOPOINT="${AUTOPOINT}" LIBTOOLIZE="${LIBTOOLIZE}" \
+               built_sources \
+           || func_exit 1
+         cd ..
+       fi
+       if test -n "$tests_distributed_built_sources"; then
+         cd "$testsbase"
+         echo 'built_sources: $(BUILT_SOURCES)' >> Makefile
+         $MAKE AUTOCONF="${AUTOCONF}" AUTOHEADER="${AUTOHEADER}" ACLOCAL="${ACLOCAL}" AUTOMAKE="${AUTOMAKE}" AUTORECONF="${AUTORECONF}" AUTOPOINT="${AUTOPOINT}" LIBTOOLIZE="${LIBTOOLIZE}" \
+               built_sources \
+           || func_exit 1
+         cd ..
+       fi
+     $MAKE AUTOCONF="${AUTOCONF}" AUTOHEADER="${AUTOHEADER}" ACLOCAL="${ACLOCAL}" AUTOMAKE="${AUTOMAKE}" AUTORECONF="${AUTORECONF}" AUTOPOINT="${AUTOPOINT}" LIBTOOLIZE="${LIBTOOLIZE}" \
+           distclean \
+       || func_exit 1
     ) || func_exit 1
   fi
 }

@@ -1,5 +1,11 @@
 2010-04-02  Bruno Haible  <bruno@clisp.org>
 
+	gnulib-tool: Create distributed built sources also for the tests.
+	* gnulib-tool (func_create_testdir): Also generate distributed built
+	sources in the tests directory.
+
+2010-04-02  Bruno Haible  <bruno@clisp.org>
+
 	gnulib-tool: Obey user's environment variables.
 	* gnulib-tool (func_create_testdir): When creating built sources,
 	respect the environment variables for autoconf, automake, etc. given by
