@@ -1,18 +1,8 @@
-2010-03-31  Eric Blake  <eblake@redhat.com>
+2010-04-02  Eric Blake  <eblake@redhat.com>
 
-	maint.mk: check for [ as well as test
-	* top/maint.mk (sc_prohibit_test_minus_ao): Extend test.
-	Based on a libvirt report by Matthias Bolte.
-
-	gnumakefile: don't squelch _version output
-	* top/GNUmakefile (_version): Create one-shot dependency rather
-	than using $(shell) when version must be regenerated.
-	(_autoreconf): Run verbosely, by default.
-
-	sys_time: avoid compiler warnings
-	* lib/sys_time.in.h (includes): Ensure gcc pragma is
-	unconditional, fixing regression from 2010-03-29.
-	Reported by Simon Josefsson.
+	maint.mk: fix some fallout
+	* NEWS: Document the incompatible change, and its effect on cfg.mk.
+	* top/maint.mk (sc_prohibit_test_minus_ao): Update.
 
 2010-03-28  Jose E. Marchesi  <jemarch@gnu.org>
 
@@ -57,6 +47,24 @@
 	(sc_error_message_warn_fatal): Likewise.
 	(sc_error_message_uppercase): Likewise.
 	(sc_error_message_period): Likewise.
+
+2010-03-31  Eric Blake  <eblake@redhat.com>
+
+	maint.mk: check for [ as well as test
+	* top/maint.mk (sc_prohibit_test_minus_ao): Extend test.
+	Based on a libvirt report by Matthias Bolte.
+
+	gnumakefile: don't squelch _version output
+	* top/GNUmakefile (_version): Create one-shot dependency rather
+	than using $(shell) when version must be regenerated.
+	(_autoreconf): Run verbosely, by default.
+
+	sys_time: avoid compiler warnings
+	* lib/sys_time.in.h (includes): Ensure gcc pragma is
+	unconditional, fixing regression from 2010-03-29.
+	Reported by Simon Josefsson.
+
+2010-03-28  Jose E. Marchesi  <jemarch@gnu.org>
 
 	maint.mk: s/_header_without_use/_sc_header_without_use/
 	* top/maint.mk (_sc_header_without_use): Rename from _header_without_use.

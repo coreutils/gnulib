@@ -6,6 +6,11 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2010-04-02  maintainer-makefile
+                            The macro _prohibit_regexp has been revamped into
+                            a new macro _sc_search_regexp; custom syntax
+                            checks in your cfg.mk will need to be rewritten.
+
 2010-03-28  lib-ignore      This module now provides a variable
                             IGNORE_UNUSED_LIBRARIES_CFLAGS that you should
                             add to LDFLAGS (when linking C programs only) or
