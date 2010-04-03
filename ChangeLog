@@ -1,5 +1,11 @@
 2010-04-03  Bruno Haible  <bruno@clisp.org>
 
+	sys_stat: Fix C++ test error on mingw.
+	* build-aux/c++defs.h (_GL_CXXALIAS_RPL_CAST_1): New macro.
+	* lib/sys_stat.in.h (lchmod): Use it instead of _GL_CXXALIAS_RPL_1.
+
+2010-04-03  Bruno Haible  <bruno@clisp.org>
+
 	pty: Update doc.
 	* doc/glibc-headers/pty.texi: Mention changes done since 2010-03-18.
 

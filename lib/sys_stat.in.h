@@ -390,7 +390,10 @@ _GL_WARN_ON_USE (futimens, "futimens is not portable - "
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define lchmod chmod
 #  endif
-_GL_CXXALIAS_RPL_1 (lchmod, chmod, int, (const char *filename, mode_t mode));
+/* Need to cast, because on mingw, the second parameter of chmod is
+                                                int mode.  */
+_GL_CXXALIAS_RPL_CAST_1 (lchmod, chmod, int,
+                         (const char *filename, mode_t mode));
 # else
 #  if 0 /* assume already declared */
 _GL_FUNCDECL_SYS (lchmod, int, (const char *filename, mode_t mode)

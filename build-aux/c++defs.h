@@ -126,6 +126,24 @@
     _GL_EXTERN_C int _gl_cxxalias_dummy
 #endif
 
+/* _GL_CXXALIAS_RPL_CAST_1 (func, rpl_func, rettype, parameters);
+   is like  _GL_CXXALIAS_RPL_1 (func, rpl_func, rettype, parameters);
+   except that the C function rpl_func may have a slightly different
+   declaration.  A cast is used to silence the "invalid conversion" error
+   that would otherwise occur.  */
+#if defined __cplusplus && defined GNULIB_NAMESPACE
+# define _GL_CXXALIAS_RPL_CAST_1(func,rpl_func,rettype,parameters) \
+    namespace GNULIB_NAMESPACE                                     \
+    {                                                              \
+      rettype (*const func) parameters =                           \
+        reinterpret_cast<rettype(*)parameters>(::rpl_func);        \
+    }                                                              \
+    _GL_EXTERN_C int _gl_cxxalias_dummy
+#else
+# define _GL_CXXALIAS_RPL_CAST_1(func,rpl_func,rettype,parameters) \
+    _GL_EXTERN_C int _gl_cxxalias_dummy
+#endif
+
 /* _GL_CXXALIAS_SYS (func, rettype, parameters);
    declares a C++ alias called GNULIB_NAMESPACE::func
    that redirects to the system provided function func, if GNULIB_NAMESPACE
