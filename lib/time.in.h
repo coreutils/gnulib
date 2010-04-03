@@ -122,6 +122,11 @@ _GL_FUNCDECL_RPL (localtime_r, struct tm *, (time_t const *restrict __timer,
 _GL_CXXALIAS_RPL (localtime_r, struct tm *, (time_t const *restrict __timer,
                                              struct tm *restrict __result));
 #  else
+#   if ! @HAVE_LOCALTIME_R@
+_GL_FUNCDECL_SYS (localtime_r, struct tm *, (time_t const *restrict __timer,
+                                             struct tm *restrict __result)
+                                            _GL_ARG_NONNULL ((1, 2)));
+#   endif
 _GL_CXXALIAS_SYS (localtime_r, struct tm *, (time_t const *restrict __timer,
                                              struct tm *restrict __result));
 #  endif
@@ -137,6 +142,11 @@ _GL_FUNCDECL_RPL (gmtime_r, struct tm *, (time_t const *restrict __timer,
 _GL_CXXALIAS_RPL (gmtime_r, struct tm *, (time_t const *restrict __timer,
                                           struct tm *restrict __result));
 #  else
+#   if ! @HAVE_LOCALTIME_R@
+_GL_FUNCDECL_SYS (gmtime_r, struct tm *, (time_t const *restrict __timer,
+                                          struct tm *restrict __result)
+                                         _GL_ARG_NONNULL ((1, 2)));
+#   endif
 _GL_CXXALIAS_SYS (gmtime_r, struct tm *, (time_t const *restrict __timer,
                                           struct tm *restrict __result));
 #  endif

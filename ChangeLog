@@ -1,5 +1,14 @@
 2010-04-03  Bruno Haible  <bruno@clisp.org>
 
+	time_r: Fix C++ test error on mingw.
+	* lib/time.in.h (localtime_r, gmtime_r): Use modern idiom.
+	* m4/time_r.m4 (gl_TIME_R): When localtime_r does not exist, set
+	HAVE_LOCALTIME_R to 0, not REPLACE_LOCALTIME_R to 1.
+	* m4/time_h.m4 (gl_HEADER_TIME_H_DEFAULTS): Initialize HAVE_LOCALTIME_R.
+	* modules/time (Makefile.am): Substitute HAVE_LOCALTIME_R.
+
+2010-04-03  Bruno Haible  <bruno@clisp.org>
+
 	time_r: Minor updates.
 	* modules/time_r (Description): Mention the provided functions.
 	* lib/time_r.c: Don't include <string.h>.
