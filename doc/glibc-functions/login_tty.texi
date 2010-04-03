@@ -8,7 +8,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 10, mingw.
+AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 10.
 @item
 This function requires linking with @code{-lutil} on some platforms:
 glibc 2.3.6, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8.
@@ -18,6 +18,9 @@ MacOS X 10.3, OSF/1 5.1, Cygwin, Interix 3.5.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This function is missing on some platforms:
+mingw.
 @item
 This function is declared in @code{<utmp.h>} on glibc, Cygwin,
 in @code{<util.h>} on MacOS X 10.3, NetBSD 3.0, OpenBSD 3.8,

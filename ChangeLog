@@ -1,5 +1,12 @@
 2010-04-03  Bruno Haible  <bruno@clisp.org>
 
+	Update doc regarding mingw.
+	* doc/glibc-functions/openpty.texi: Update regarding mingw.
+	* doc/glibc-functions/login_tty.texi: Likewise.
+	* doc/glibc-functions/forkpty.texi: Likewise.
+
+2010-04-03  Bruno Haible  <bruno@clisp.org>
+
 	stdlib: Avoid compilation failure of c-strtold on mingw.
 	* lib/stdlib.in.h: Don't include <unistd.h> on native Windows systems.
 
