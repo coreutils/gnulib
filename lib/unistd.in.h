@@ -415,9 +415,8 @@ _GL_WARN_ON_USE (faccessat, "faccessat is not portable - "
    Return 0 if successful, otherwise -1 and errno set.
    See the POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/fchdir.html>.  */
-# if @REPLACE_FCHDIR@
-_GL_FUNCDECL_RPL (fchdir, int, (int /*fd*/));
-_GL_CXXALIAS_RPL (fchdir, int, (int /*fd*/));
+# if ! @HAVE_FCHDIR@
+_GL_FUNCDECL_SYS (fchdir, int, (int /*fd*/));
 
 /* Gnulib internal hooks needed to maintain the fchdir metadata.  */
 _GL_EXTERN_C int _gl_register_fd (int fd, const char *filename)
@@ -426,9 +425,8 @@ _GL_EXTERN_C void _gl_unregister_fd (int fd);
 _GL_EXTERN_C int _gl_register_dup (int oldfd, int newfd);
 _GL_EXTERN_C const char *_gl_directory_name (int fd);
 
-# else
-_GL_CXXALIAS_SYS (fchdir, int, (int /*fd*/));
 # endif
+_GL_CXXALIAS_SYS (fchdir, int, (int /*fd*/));
 _GL_CXXALIASWARN (fchdir);
 #elif defined GNULIB_POSIXCHECK
 # undef fchdir
