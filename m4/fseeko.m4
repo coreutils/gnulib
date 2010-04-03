@@ -1,4 +1,4 @@
-# fseeko.m4 serial 7
+# fseeko.m4 serial 8
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,8 +19,14 @@ AC_DEFUN([gl_FUNC_FSEEKO],
 ]], [fseeko (stdin, 0, 0);])],
         [gl_cv_func_fseeko=yes], [gl_cv_func_fseeko=no])
     ])
-  if test $gl_cv_func_fseeko = no \
-      || test $gl_cv_var_stdin_large_offset = no; then
+  if test $gl_cv_func_fseeko = no; then
+    HAVE_FSEEKO=0
+  else
+    if test $gl_cv_var_stdin_large_offset = no; then
+      REPLACE_FSEEKO=1
+    fi
+  fi
+  if test $HAVE_FSEEKO = 0 || test $REPLACE_FSEEKO = 1; then
     gl_REPLACE_FSEEKO
   fi
 ])
@@ -28,8 +34,6 @@ AC_DEFUN([gl_FUNC_FSEEKO],
 AC_DEFUN([gl_REPLACE_FSEEKO],
 [
   AC_LIBOBJ([fseeko])
-  AC_REQUIRE([gl_STDIO_H_DEFAULTS])
-  REPLACE_FSEEKO=1
   dnl If we are also using the fseek module, then fseek needs replacing, too.
   m4_ifdef([gl_REPLACE_FSEEK], [gl_REPLACE_FSEEK])
 ])

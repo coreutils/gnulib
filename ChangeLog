@@ -1,5 +1,16 @@
 2010-04-03  Bruno Haible  <bruno@clisp.org>
 
+	fseeko: Fix C++ test error on mingw.
+	* lib/stdio.in.h (fseeko): Use modern idiom.
+	* lib/fseeko.c (fseeko): Renamed from rpl_fseeko.
+	* m4/fseeko.m4 (gl_FUNC_FSEEKO): Distinguish the case that the function
+	is missing and that it needs to be replaced.
+	(gl_REPLACE_FSEEKO): Don't set REPLACE_FSEEKO here.
+	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Initialize HAVE_FSEEKO.
+	* modules/stdio (Makefile.am): Substitute HAVE_FSEEKO.
+
+2010-04-03  Bruno Haible  <bruno@clisp.org>
+
 	mkstemp: Fix C++ test error on mingw.
 	* lib/stdlib.in.h (mkstemp): Use modern idiom.
 	* m4/mkstemp.m4 (gl_FUNC_MKSTEMP): Distinguish the case that the

@@ -322,30 +322,39 @@ _GL_CXXALIASWARN (fseek);
 #  undef fseek
 # endif
 # if @REPLACE_FSEEKO@
-/* Provide fseek, fseeko functions that are aware of a preceding
-   fflush(), and which detect pipes.  */
+/* Provide an fseeko function that is aware of a preceding fflush(), and which
+   detects pipes.  */
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef fseeko
 #   define fseeko rpl_fseeko
 #  endif
 _GL_FUNCDECL_RPL (fseeko, int, (FILE *fp, off_t offset, int whence)
                                _GL_ARG_NONNULL ((1)));
-#  if !@GNULIB_FSEEK@
-    /* In order to avoid that fseek gets defined as a macro here, the
-       developer can request the 'fseek' module.  */
-#   undef fseek
-#   define fseek rpl_fseek
-static inline int _GL_ARG_NONNULL ((1))
-rpl_fseek (FILE *fp, long offset, int whence)
-{
-  return fseeko (fp, offset, whence);
-}
-#  endif
 _GL_CXXALIAS_RPL (fseeko, int, (FILE *fp, off_t offset, int whence));
 # else
+#  if ! @HAVE_FSEEKO@
+_GL_FUNCDECL_SYS (fseeko, int, (FILE *fp, off_t offset, int whence)
+                               _GL_ARG_NONNULL ((1)));
+#  endif
 _GL_CXXALIAS_SYS (fseeko, int, (FILE *fp, off_t offset, int whence));
 # endif
 _GL_CXXALIASWARN (fseeko);
+# if (@REPLACE_FSEEKO@ || !@HAVE_FSEEKO@) && !@GNULIB_FSEEK@
+   /* Provide an fseek function that is consistent with fseeko.  */
+   /* In order to avoid that fseek gets defined as a macro here, the
+      developer can request the 'fseek' module.  */
+#  undef fseek
+#  define fseek rpl_fseek
+static inline int _GL_ARG_NONNULL ((1))
+rpl_fseek (FILE *fp, long offset, int whence)
+{
+#  if @REPLACE_FSEEKO@
+  return rpl_fseeko (fp, offset, whence);
+#  else
+  return fseeko (fp, offset, whence);
+#  endif
+}
+# endif
 #elif defined GNULIB_POSIXCHECK
 # define _GL_FSEEK_WARN /* Category 1, above.  */
 # undef fseek
