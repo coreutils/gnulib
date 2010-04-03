@@ -2625,11 +2625,23 @@ gl_locale_name_thread_unsafe (int category, const char *categoryname)
            locale names of length > 31, we can assume that it is NUL terminated
            in this buffer. But we need to make a copy of the locale name, of
            indefinite extent.  */
-        struct _xlocale
+        struct _xlocale_part1_v0 /* used in MacOS X 10.5 */
           {
             int32_t __refcount;
             void (*__free_extra)(void *);
             __darwin_mbstate_t __mbs[10];
+            int64_t __magic;
+          };
+        struct _xlocale_part1_v1 /* used in MacOS X >= 10.6.0 */
+          {
+            int32_t __refcount;
+            void (*__free_extra)(void *);
+            __darwin_mbstate_t __mbs[10];
+            /*pthread_lock_t*/ int __lock;
+            int64_t __magic;
+          };
+        struct _xlocale_part2
+          {
             int64_t __magic;
             unsigned char __collate_load_error;
             unsigned char __collate_substitute_nontrivial;
@@ -2689,7 +2701,23 @@ gl_locale_name_thread_unsafe (int category, const char *categoryname)
             char *_time_locale_buf;
             /* more */
           };
-        struct _xlocale *tlp = (struct _xlocale *) thread_locale;
+        struct _xlocale_part2 *tlp;
+        if (((struct _xlocale_part1_v0 *) thread_locale)->__magic
+            == 0x786C6F63616C6530LL)
+          /* MacOS X 10.5 */
+          tlp =
+            (struct _xlocale_part2 *)
+            &((struct _xlocale_part1_v0 *) thread_locale)->__magic;
+        else if (((struct _xlocale_part1_v1 *) thread_locale)->__magic
+                 == 0x786C6F63616C6530LL)
+          /* MacOS X >= 10.6.0 */
+          tlp =
+            (struct _xlocale_part2 *)
+            &((struct _xlocale_part1_v1 *) thread_locale)->__magic;
+        else
+          /* Unsupported version of MacOS X: The internals of 'struct _xlocale'
+             have changed again.  */
+          return "";
         switch (category)
           {
           case LC_CTYPE:

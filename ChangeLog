@@ -1,3 +1,10 @@
+2010-04-03  Bruno Haible  <bruno@clisp.org>
+
+	localename: Port to MacOS X 10.6.
+	* lib/localename.c (gl_locale_name_thread_unsafe): On MacOS X, try the
+	memory layout of the locales in MacOS X 10.6 as well.
+	Reported by Panu Kekäläinen <panu@kekalainen.eu>.
+
 2010-04-02  Bruno Haible  <bruno@clisp.org>
 
 	gnulib-tool: Ensure that long-running tests are executed last.
