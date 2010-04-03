@@ -775,7 +775,9 @@ getpagesize ()
 /* Need to cast, because on Cygwin 1.5.x systems, the return type is size_t.  */
 _GL_CXXALIAS_SYS_CAST (getpagesize, int, (void));
 # endif
+# if @HAVE_DECL_GETPAGESIZE@
 _GL_CXXALIASWARN (getpagesize);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef getpagesize
 # if HAVE_RAW_DECL_GETPAGESIZE

@@ -1,5 +1,16 @@
 2010-04-03  Bruno Haible  <bruno@clisp.org>
 
+	getpagesize: Fix C++ test error on mingw.
+	* lib/unistd.in.h (getpagesize): Don't use _GL_CXXALIASWARN if the
+	system does not declare the function.
+	* m4/getpagesize.m4 (gl_FUNC_GETPAGESIZE): Also check whether it's
+	declared.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize
+	HAVE_DECL_GETPAGESIZE.
+	* modules/unistd (Makefile.am): Substitute HAVE_DECL_GETPAGESIZE.
+
+2010-04-03  Bruno Haible  <bruno@clisp.org>
+
 	stdio: Make C++ tests work on mingw.
 	* lib/stdio.in.h (getline): Don't use _GL_CXXALIASWARN if the system
 	does not declare the function.
