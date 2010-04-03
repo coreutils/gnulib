@@ -406,22 +406,30 @@ _GL_CXXALIASWARN (ftell);
 #   define ftello rpl_ftello
 #  endif
 _GL_FUNCDECL_RPL (ftello, off_t, (FILE *fp) _GL_ARG_NONNULL ((1)));
-#  if !@GNULIB_FTELL@
-    /* In order to avoid that ftell gets defined as a macro here, the
-       developer can request the 'ftell' module.  */
-#   undef ftell
-#   define ftell rpl_ftell
-static inline long _GL_ARG_NONNULL ((1))
-rpl_ftell (FILE *f)
-{
-  return ftello (f);
-}
-#  endif
 _GL_CXXALIAS_RPL (ftello, off_t, (FILE *fp));
 # else
+#  if ! @HAVE_FTELLO@
+_GL_FUNCDECL_SYS (ftello, off_t, (FILE *fp) _GL_ARG_NONNULL ((1)));
+#  endif
 _GL_CXXALIAS_SYS (ftello, off_t, (FILE *fp));
 # endif
 _GL_CXXALIASWARN (ftello);
+# if (@REPLACE_FTELLO@ || !@HAVE_FTELLO@) && !@GNULIB_FTELL@
+   /* Provide an ftell function that is consistent with ftello.  */
+   /* In order to avoid that ftell gets defined as a macro here, the
+      developer can request the 'ftell' module.  */
+#  undef ftell
+#  define ftell rpl_ftell
+static inline long _GL_ARG_NONNULL ((1))
+rpl_ftell (FILE *f)
+{
+#  if @REPLACE_FTELLO@
+  return rpl_ftello (f);
+#  else
+  return ftello (f);
+#  endif
+}
+# endif
 #elif defined GNULIB_POSIXCHECK
 # define _GL_FTELL_WARN /* Category 1, above.  */
 # undef ftell

@@ -1,5 +1,16 @@
 2010-04-03  Bruno Haible  <bruno@clisp.org>
 
+	ftello: Fix C++ test error on mingw.
+	* lib/stdio.in.h (ftello): Use modern idiom.
+	* lib/ftello.c (ftello): Renamed from rpl_ftello.
+	* m4/ftello.m4 (gl_FUNC_FTELLO): Distinguish the case that the function
+	is missing and that it needs to be replaced.
+	(gl_REPLACE_FTELLO): Don't set REPLACE_FTELLO here.
+	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Initialize HAVE_FTELLO.
+	* modules/stdio (Makefile.am): Substitute HAVE_FTELLO.
+
+2010-04-03  Bruno Haible  <bruno@clisp.org>
+
 	fseeko: Fix C++ test error on mingw.
 	* lib/stdio.in.h (fseeko): Use modern idiom.
 	* lib/fseeko.c (fseeko): Renamed from rpl_fseeko.

@@ -1,5 +1,5 @@
 /* An ftello() function that works around platform bugs.
-   Copyright (C) 2007, 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2007, 2009-2010 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -22,14 +22,13 @@
 /* Get lseek.  */
 #include <unistd.h>
 
+off_t
+ftello (FILE *fp)
 #undef ftello
 #if !HAVE_FTELLO
 # undef ftell
 # define ftello ftell
 #endif
-
-off_t
-rpl_ftello (FILE *fp)
 {
 #if LSEEK_PIPE_BROKEN
   /* mingw gives bogus answers rather than failure on non-seekable files.  */
