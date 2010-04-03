@@ -1,5 +1,17 @@
 2010-04-03  Bruno Haible  <bruno@clisp.org>
 
+	strptime: Fix C++ test error on mingw.
+	* lib/time.in.h (strptime): Use HAVE_STRPTIME, not REPLACE_STRPTIME.
+	* m4/strptime.m4 (gl_FUNC_STRPTIME): Set HAVE_STRPTIME, not
+	REPLACE_STRPTIME. Invoke gl_PREREQ_STRPTIME.
+	(gl_PREREQ_STRPTIME): New macro, extracted from gl_FUNC_STRPTIME.
+	* m4/time_h.m4 (gl_HEADER_TIME_H_DEFAULTS): Initialize HAVE_STRPTIME,
+	not REPLACE_STRPTIME.
+	* modules/time (Makefile.am): Substitute HAVE_STRPTIME, not
+	REPLACE_STRPTIME.
+
+2010-04-03  Bruno Haible  <bruno@clisp.org>
+
 	timegm: Fix C++ test error on mingw.
 	* lib/time.in.h (timegm): Use modern idiom.
 	* m4/timegm.m4 (gl_FUNC_TIMEGM): When timegm does not exist, set

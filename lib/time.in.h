@@ -157,23 +157,15 @@ _GL_CXXALIASWARN (gmtime_r);
    the resulting broken-down time into TM.  See
    <http://www.opengroup.org/susv3xsh/strptime.html>.  */
 # if @GNULIB_STRPTIME@
-#  if @REPLACE_STRPTIME@
-#   if !(defined __cplusplus && defined GNULIB_NAMESPACE)
-#    undef strptime
-#    define strptime rpl_strptime
-#   endif
-_GL_FUNCDECL_RPL (strptime, char *, (char const *restrict __buf,
+#  if ! @HAVE_STRPTIME@
+_GL_FUNCDECL_SYS (strptime, char *, (char const *restrict __buf,
                                      char const *restrict __format,
                                      struct tm *restrict __tm)
                                     _GL_ARG_NONNULL ((1, 2, 3)));
-_GL_CXXALIAS_RPL (strptime, char *, (char const *restrict __buf,
-                                     char const *restrict __format,
-                                     struct tm *restrict __tm));
-#  else
+#  endif
 _GL_CXXALIAS_SYS (strptime, char *, (char const *restrict __buf,
                                      char const *restrict __format,
                                      struct tm *restrict __tm));
-#  endif
 _GL_CXXALIASWARN (strptime);
 # endif
 
