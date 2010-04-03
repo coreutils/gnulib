@@ -1,4 +1,4 @@
-# timegm.m4 serial 6
+# timegm.m4 serial 7
 dnl Copyright (C) 2003, 2007, 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,18 +8,18 @@ AC_DEFUN([gl_FUNC_TIMEGM],
 [
   AC_REQUIRE([gl_HEADER_TIME_H_DEFAULTS])
   AC_REQUIRE([gl_FUNC_MKTIME])
+  REPLACE_TIMEGM=0
   if test $ac_cv_func_working_mktime = no; then
     # Assume that timegm is buggy if mktime is.
-    AC_LIBOBJ([timegm])
-    ac_cv_func_timegm=no
+    REPLACE_TIMEGM=1
   else
-    AC_REPLACE_FUNCS([timegm])
-  fi
-  REPLACE_TIMEGM=1
-  if test $ac_cv_func_timegm = yes; then
-    AC_CHECK_DECLS([timegm], [REPLACE_TIMEGM=0], [], [#include <time.h>])
+    AC_CHECK_FUNCS([timegm])
+    if test $ac_cv_func_timegm != yes; then
+      REPLACE_TIMEGM=1
+    fi
   fi
   if test $REPLACE_TIMEGM = 1; then
+    AC_LIBOBJ([timegm])
     gl_PREREQ_TIMEGM
   fi
 ])

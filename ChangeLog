@@ -1,5 +1,11 @@
 2010-04-03  Bruno Haible  <bruno@clisp.org>
 
+	timegm: Assume declaration if function exists.
+	* m4/timegm.m4 (gl_FUNC_TIMEGM): Assume timegm is declared if and only
+	if it exists. Don't clobber ac_cv_func_timegm.
+
+2010-04-03  Bruno Haible  <bruno@clisp.org>
+
 	time_r: Fix C++ test error on mingw.
 	* lib/time.in.h (localtime_r, gmtime_r): Use modern idiom.
 	* m4/time_r.m4 (gl_TIME_R): When localtime_r does not exist, set
