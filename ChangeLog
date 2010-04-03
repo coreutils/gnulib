@@ -1,5 +1,13 @@
 2010-04-03  Bruno Haible  <bruno@clisp.org>
 
+	time_r: Minor updates.
+	* modules/time_r (Description): Mention the provided functions.
+	* lib/time_r.c: Don't include <string.h>.
+	* doc/posix-functions/gmtime_r.texi: Mention the 'time_r' module.
+	* doc/posix-functions/localtime_r.texi: Likewise.
+
+2010-04-03  Bruno Haible  <bruno@clisp.org>
+
 	time: Fix regression introduced on 2010-03-08.
 	* m4/time_h.m4 (gl_TIME_MODULE_INDICATOR): Require
 	gl_HEADER_TIME_H_DEFAULTS, not gl_HEADER_STRING_H_DEFAULTS.

@@ -1,5 +1,5 @@
 Description:
-Reentrant time functions like localtime_r.
+Reentrant time functions: localtime_r, gmtime_r.
 
 Files:
 lib/time_r.c
