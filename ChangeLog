@@ -1,12 +1,21 @@
 2010-04-03  Bruno Haible  <bruno@clisp.org>
 
+	mkstemp: Fix C++ test error on mingw.
+	* lib/stdlib.in.h (mkstemp): Use modern idiom.
+	* m4/mkstemp.m4 (gl_FUNC_MKSTEMP): Distinguish the case that the
+	function is missing and that it needs to be replaced.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Initialize HAVE_MKSTEMP.
+	* modules/stdlib (Makefile.am): Substitute HAVE_MKSTEMP.
+
+2010-04-03  Bruno Haible  <bruno@clisp.org>
+
 	stpncpy: Fix C++ test error on mingw.
 	* lib/string.in.h (stpncpy): Use modern idiom.
 	* m4/stpncpy.m4 (gl_FUNC_STPNCPY): Distinguish the case that the
 	function is missing and that it needs to be replaced.
 	* m4/string_h.m4 (gl_HEADER_STRING_H_DEFAULTS): Initialize
 	REPLACE_STPNCPY.
-	* modules/string (Makefile.am): Replace REPLACE_STPNCPY.
+	* modules/string (Makefile.am): Substitute REPLACE_STPNCPY.
 
 2010-04-03  Bruno Haible  <bruno@clisp.org>
 

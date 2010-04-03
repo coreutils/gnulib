@@ -329,6 +329,9 @@ _GL_WARN_ON_USE (mkostemps, "mkostemps is unportable - "
 _GL_FUNCDECL_RPL (mkstemp, int, (char * /*template*/) _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (mkstemp, int, (char * /*template*/));
 # else
+#  if ! @HAVE_MKSTEMP@
+_GL_FUNCDECL_SYS (mkstemp, int, (char * /*template*/) _GL_ARG_NONNULL ((1)));
+#  endif
 _GL_CXXALIAS_SYS (mkstemp, int, (char * /*template*/));
 # endif
 _GL_CXXALIASWARN (mkstemp);

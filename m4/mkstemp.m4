@@ -1,4 +1,4 @@
-#serial 17
+#serial 18
 
 # Copyright (C) 2001, 2003-2007, 2009-2010 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -16,35 +16,41 @@ AC_DEFUN([gl_FUNC_MKSTEMP],
   AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
   AC_REQUIRE([AC_SYS_LARGEFILE])
 
-  AC_CACHE_CHECK([for working mkstemp],
-    [gl_cv_func_working_mkstemp],
-    [
-      mkdir conftest.mkstemp
-      AC_RUN_IFELSE(
-        [AC_LANG_PROGRAM(
-          [AC_INCLUDES_DEFAULT],
-          [[int i;
-            off_t large = (off_t) 4294967295u;
-            if (large < 0)
-              large = 2147483647;
-            for (i = 0; i < 70; i++)
-              {
-                char templ[] = "conftest.mkstemp/coXXXXXX";
-                int (*mkstemp_function) (char *) = mkstemp;
-                int fd = mkstemp_function (templ);
-                if (fd < 0 || lseek (fd, large, SEEK_SET) != large)
-                  return 1;
-                close (fd);
-              }
-            return 0;]])],
-        [gl_cv_func_working_mkstemp=yes],
-        [gl_cv_func_working_mkstemp=no],
-        [gl_cv_func_working_mkstemp=no])
-      rm -rf conftest.mkstemp
-    ])
-
-  if test $gl_cv_func_working_mkstemp != yes; then
-    REPLACE_MKSTEMP=1
+  AC_CHECK_FUNCS_ONCE([mkstemp])
+  if test $ac_cv_func_mkstemp = yes; then
+    AC_CACHE_CHECK([for working mkstemp],
+      [gl_cv_func_working_mkstemp],
+      [
+        mkdir conftest.mkstemp
+        AC_RUN_IFELSE(
+          [AC_LANG_PROGRAM(
+            [AC_INCLUDES_DEFAULT],
+            [[int i;
+              off_t large = (off_t) 4294967295u;
+              if (large < 0)
+                large = 2147483647;
+              for (i = 0; i < 70; i++)
+                {
+                  char templ[] = "conftest.mkstemp/coXXXXXX";
+                  int (*mkstemp_function) (char *) = mkstemp;
+                  int fd = mkstemp_function (templ);
+                  if (fd < 0 || lseek (fd, large, SEEK_SET) != large)
+                    return 1;
+                  close (fd);
+                }
+              return 0;]])],
+          [gl_cv_func_working_mkstemp=yes],
+          [gl_cv_func_working_mkstemp=no],
+          [gl_cv_func_working_mkstemp=no])
+        rm -rf conftest.mkstemp
+      ])
+    if test $gl_cv_func_working_mkstemp != yes; then
+      REPLACE_MKSTEMP=1
+      AC_LIBOBJ([mkstemp])
+      gl_PREREQ_MKSTEMP
+    fi
+  else
+    HAVE_MKSTEMP=0
     AC_LIBOBJ([mkstemp])
     gl_PREREQ_MKSTEMP
   fi
