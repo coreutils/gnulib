@@ -59,7 +59,9 @@ _GL_CXXALIAS_RPL (duplocale, locale_t, (locale_t locale));
 _GL_CXXALIAS_SYS (duplocale, locale_t, (locale_t locale));
 #  endif
 # endif
+# if @HAVE_DUPLOCALE@
 _GL_CXXALIASWARN (duplocale);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef duplocale
 # if HAVE_RAW_DECL_DUPLOCALE
