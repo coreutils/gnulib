@@ -1,5 +1,10 @@
 2010-04-03  Bruno Haible  <bruno@clisp.org>
 
+	stdlib: Avoid compilation failure of c-strtold on mingw.
+	* lib/stdlib.in.h: Don't include <unistd.h> on native Windows systems.
+
+2010-04-03  Bruno Haible  <bruno@clisp.org>
+
 	locale: Make C++ tests work on Cygwin and mingw.
 	* lib/locale.in.h (duplocale): Don't use _GL_CXXALIASWARN if gnulib
 	cannot provide the function.

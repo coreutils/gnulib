@@ -67,10 +67,10 @@ struct random_data
 };
 #endif
 
-#if (@GNULIB_MKSTEMP@ || @GNULIB_GETSUBOPT@ || defined GNULIB_POSIXCHECK) && ! defined __GLIBC__
+#if (@GNULIB_MKSTEMP@ || @GNULIB_GETSUBOPT@ || defined GNULIB_POSIXCHECK) && ! defined __GLIBC__ && !((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)
 /* On MacOS X 10.3, only <unistd.h> declares mkstemp.  */
 /* On Cygwin 1.7.1, only <unistd.h> declares getsubopt.  */
-/* But avoid namespace pollution on glibc systems.  */
+/* But avoid namespace pollution on glibc systems and native Windows.  */
 # include <unistd.h>
 #endif
 
