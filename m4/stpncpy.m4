@@ -1,4 +1,4 @@
-# stpncpy.m4 serial 10
+# stpncpy.m4 serial 11
 dnl Copyright (C) 2002-2003, 2005-2007, 2009-2010 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -25,8 +25,10 @@ AC_DEFUN([gl_FUNC_STPNCPY],
   dnl   in AIX:     dest + max(0,n-1)
   dnl Only the glibc return value is useful in practice.
 
-  AC_CACHE_CHECK([for working stpncpy], [gl_cv_func_stpncpy], [
-    AC_TRY_RUN([
+  AC_CHECK_FUNCS_ONCE([stpncpy])
+  if test $ac_cv_func_stpncpy = yes; then
+    AC_CACHE_CHECK([for working stpncpy], [gl_cv_func_stpncpy], [
+      AC_TRY_RUN([
 #include <stdlib.h>
 #include <string.h> /* for strcpy */
 /* The stpncpy prototype is missing in <string.h> on AIX 4.  */
@@ -45,17 +47,23 @@ int main () {
   if (stpncpy (dest, src, 7) != dest + 5) exit(1);
   exit(0);
 }
-], gl_cv_func_stpncpy=yes, gl_cv_func_stpncpy=no,
-  [AC_EGREP_CPP([Thanks for using GNU], [
+], [gl_cv_func_stpncpy=yes], [gl_cv_func_stpncpy=no],
+        [AC_EGREP_CPP([Thanks for using GNU], [
 #include <features.h>
 #ifdef __GNU_LIBRARY__
   Thanks for using GNU
 #endif
-], gl_cv_func_stpncpy=yes, gl_cv_func_stpncpy=no)])])
-
-  if test $gl_cv_func_stpncpy = yes; then
-    AC_DEFINE([HAVE_STPNCPY], [1],
-      [Define if you have the stpncpy() function and it works.])
+], [gl_cv_func_stpncpy=yes], [gl_cv_func_stpncpy=no])
+        ])
+    ])
+    if test $gl_cv_func_stpncpy = yes; then
+      AC_DEFINE([HAVE_STPNCPY], [1],
+        [Define if you have the stpncpy() function and it works.])
+    else
+      REPLACE_STPNCPY=1
+      AC_LIBOBJ([stpncpy])
+      gl_PREREQ_STPNCPY
+    fi
   else
     HAVE_STPNCPY=0
     AC_LIBOBJ([stpncpy])

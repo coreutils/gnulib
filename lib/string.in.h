@@ -222,7 +222,7 @@ _GL_WARN_ON_USE (stpcpy, "stpcpy is unportable - "
 /* Copy no more than N bytes of SRC to DST, returning a pointer past the
    last non-NUL byte written into DST.  */
 #if @GNULIB_STPNCPY@
-# if ! @HAVE_STPNCPY@
+# if @REPLACE_STPNCPY@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define stpncpy rpl_stpncpy
 #  endif
@@ -234,6 +234,12 @@ _GL_CXXALIAS_RPL (stpncpy, char *,
                   (char *restrict __dst, char const *restrict __src,
                    size_t __n));
 # else
+#  if ! @HAVE_STPNCPY@
+_GL_FUNCDECL_SYS (stpncpy, char *,
+                  (char *restrict __dst, char const *restrict __src,
+                   size_t __n)
+                  _GL_ARG_NONNULL ((1, 2)));
+#  endif
 _GL_CXXALIAS_SYS (stpncpy, char *,
                   (char *restrict __dst, char const *restrict __src,
                    size_t __n));

@@ -1,5 +1,15 @@
 2010-04-03  Bruno Haible  <bruno@clisp.org>
 
+	stpncpy: Fix C++ test error on mingw.
+	* lib/string.in.h (stpncpy): Use modern idiom.
+	* m4/stpncpy.m4 (gl_FUNC_STPNCPY): Distinguish the case that the
+	function is missing and that it needs to be replaced.
+	* m4/string_h.m4 (gl_HEADER_STRING_H_DEFAULTS): Initialize
+	REPLACE_STPNCPY.
+	* modules/string (Makefile.am): Replace REPLACE_STPNCPY.
+
+2010-04-03  Bruno Haible  <bruno@clisp.org>
+
 	sys_stat: Fix C++ test error on mingw.
 	* build-aux/c++defs.h (_GL_CXXALIAS_RPL_CAST_1): New macro.
 	* lib/sys_stat.in.h (lchmod): Use it instead of _GL_CXXALIAS_RPL_1.
