@@ -1,5 +1,10 @@
 2010-04-03  Bruno Haible  <bruno@clisp.org>
 
+	unistd: Fix C++ test error on mingw.
+	* lib/unistd.in.h (getcwd): Use _GL_CXXALIAS_SYS_CAST.
+
+2010-04-03  Bruno Haible  <bruno@clisp.org>
+
 	Update doc regarding mingw.
 	* doc/glibc-functions/openpty.texi: Update regarding mingw.
 	* doc/glibc-functions/login_tty.texi: Likewise.

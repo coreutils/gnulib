@@ -525,7 +525,9 @@ _GL_WARN_ON_USE (ftruncate, "ftruncate is unportable - "
 _GL_FUNCDECL_RPL (getcwd, char *, (char *buf, size_t size));
 _GL_CXXALIAS_RPL (getcwd, char *, (char *buf, size_t size));
 # else
-_GL_CXXALIAS_SYS (getcwd, char *, (char *buf, size_t size));
+/* Need to cast, because on mingw, the second parameter is
+                                                   int size.  */
+_GL_CXXALIAS_SYS_CAST (getcwd, char *, (char *buf, size_t size));
 # endif
 _GL_CXXALIASWARN (getcwd);
 #elif defined GNULIB_POSIXCHECK
