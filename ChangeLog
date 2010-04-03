@@ -1,5 +1,11 @@
 2010-04-03  Bruno Haible  <bruno@clisp.org>
 
+	stdio: Make C++ tests work on mingw.
+	* lib/stdio.in.h (getline): Don't use _GL_CXXALIASWARN if the system
+	does not declare the function.
+
+2010-04-03  Bruno Haible  <bruno@clisp.org>
+
 	ftello: Fix C++ test error on mingw.
 	* lib/stdio.in.h (ftello): Use modern idiom.
 	* lib/ftello.c (ftello): Renamed from rpl_ftello.

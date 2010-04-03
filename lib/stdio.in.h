@@ -533,7 +533,9 @@ _GL_FUNCDECL_SYS (getline, ssize_t,
 _GL_CXXALIAS_SYS (getline, ssize_t,
                   (char **lineptr, size_t *linesize, FILE *stream));
 # endif
+# if @HAVE_DECL_GETLINE@
 _GL_CXXALIASWARN (getline);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef getline
 # if HAVE_RAW_DECL_GETLINE
