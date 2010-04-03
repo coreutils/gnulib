@@ -1,5 +1,14 @@
 2010-04-03  Bruno Haible  <bruno@clisp.org>
 
+	timegm: Fix C++ test error on mingw.
+	* lib/time.in.h (timegm): Use modern idiom.
+	* m4/timegm.m4 (gl_FUNC_TIMEGM): When timegm does not exist, set
+	HAVE_TIMEGM to 0, not REPLACE_TIMEGM to 1.
+	* m4/time_h.m4 (gl_HEADER_TIME_H_DEFAULTS): Initialize HAVE_TIMEGM.
+	* modules/time (Makefile.am): Substitute HAVE_TIMEGM.
+
+2010-04-03  Bruno Haible  <bruno@clisp.org>
+
 	timegm: Assume declaration if function exists.
 	* m4/timegm.m4 (gl_FUNC_TIMEGM): Assume timegm is declared if and only
 	if it exists. Don't clobber ac_cv_func_timegm.

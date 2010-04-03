@@ -187,6 +187,9 @@ _GL_CXXALIASWARN (strptime);
 _GL_FUNCDECL_RPL (timegm, time_t, (struct tm *__tm) _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (timegm, time_t, (struct tm *__tm));
 #  else
+#   if ! @HAVE_TIMEGM@
+_GL_FUNCDECL_SYS (timegm, time_t, (struct tm *__tm) _GL_ARG_NONNULL ((1)));
+#   endif
 _GL_CXXALIAS_SYS (timegm, time_t, (struct tm *__tm));
 #  endif
 _GL_CXXALIASWARN (timegm);
