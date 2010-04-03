@@ -1,3 +1,9 @@
+2010-04-03  Bruno Haible  <bruno@clisp.org>
+
+	time: Fix regression introduced on 2010-03-08.
+	* m4/time_h.m4 (gl_TIME_MODULE_INDICATOR): Require
+	gl_HEADER_TIME_H_DEFAULTS, not gl_HEADER_STRING_H_DEFAULTS.
+
 2010-04-03  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: don't silently disable project-specific syntax-check rules

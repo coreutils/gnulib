@@ -64,7 +64,7 @@ AC_DEFUN([gl_CHECK_TYPE_STRUCT_TIMESPEC],
 AC_DEFUN([gl_TIME_MODULE_INDICATOR],
 [
   dnl Use AC_REQUIRE here, so that the default settings are expanded once only.
-  AC_REQUIRE([gl_HEADER_STRING_H_DEFAULTS])
+  AC_REQUIRE([gl_HEADER_TIME_H_DEFAULTS])
   gl_MODULE_INDICATOR_SET_VARIABLE([$1])
   dnl Define it also as a C macro, for the benefit of the unit tests.
   gl_MODULE_INDICATOR_FOR_TESTS([$1])
