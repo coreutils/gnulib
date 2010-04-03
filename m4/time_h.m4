@@ -78,8 +78,8 @@ AC_DEFUN([gl_HEADER_TIME_H_DEFAULTS],
   GNULIB_TIMEGM=0;                       AC_SUBST([GNULIB_TIMEGM])
   GNULIB_TIME_R=0;                       AC_SUBST([GNULIB_TIME_R])
   dnl Assume proper GNU behavior unless another module says otherwise.
-  HAVE_LOCALTIME_R=0;                    AC_SUBST([HAVE_LOCALTIME_R])
-  HAVE_TIMEGM=0;                         AC_SUBST([HAVE_TIMEGM])
+  HAVE_LOCALTIME_R=1;                    AC_SUBST([HAVE_LOCALTIME_R])
+  HAVE_TIMEGM=1;                         AC_SUBST([HAVE_TIMEGM])
   dnl If another module says to replace or to not replace, do that.
   dnl Otherwise, replace only if someone compiles with -DGNULIB_PORTCHECK;
   dnl this lets maintainers check for portability.
