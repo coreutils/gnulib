@@ -189,6 +189,15 @@ define _sc_say_and_exit
    { echo -e "$(ME): $$msg" 1>&2; exit 1; };
 endef
 
+# _sc_search_regexp used to be named _prohibit_regexp.  However,
+# upgrading to the new definition and leaving the old name undefined
+# would usually convert each custom rule using $(_prohibit_regexp)
+# (usually defined in cfg.mk) into a no-op.  This definition ensures
+# that people know right away if they're still using the old name.
+# FIXME: remove in 2012.
+_prohibit_regexp = \
+  $(error '*** you need to s/_prohibit_regexp/_sc_search_regexp/, and adapt')
+
 define _sc_search_regexp
    dummy=; : so we do not need a semicolon before each use;		\
 									\
