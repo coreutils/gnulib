@@ -1,4 +1,4 @@
-# wcwidth.m4 serial 15
+# wcwidth.m4 serial 16
 dnl Copyright (C) 2006-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -34,9 +34,7 @@ AC_DEFUN([gl_FUNC_WCWIDTH],
     HAVE_DECL_WCWIDTH=0
   fi
 
-  if test $ac_cv_func_wcwidth = no; then
-    REPLACE_WCWIDTH=1
-  else
+  if test $ac_cv_func_wcwidth = yes; then
     dnl On MacOS X 10.3, wcwidth(0x0301) (COMBINING ACUTE ACCENT) returns 1.
     dnl On OSF/1 5.1, wcwidth(0x200B) (ZERO WIDTH SPACE) returns 1.
     dnl This leads to bugs in 'ls' (coreutils).
@@ -84,11 +82,13 @@ changequote([,])dnl
       *no) REPLACE_WCWIDTH=1 ;;
     esac
   fi
-  if test $REPLACE_WCWIDTH = 1; then
+  if test $ac_cv_func_wcwidth != yes || test $REPLACE_WCWIDTH = 1; then
     AC_LIBOBJ([wcwidth])
   fi
-
-  if test $REPLACE_WCWIDTH = 1 || test $HAVE_DECL_WCWIDTH = 0; then
+  if test $ac_cv_func_wcwidth != yes || test $REPLACE_WCWIDTH = 1 \
+     || test $HAVE_DECL_WCWIDTH = 0; then
     gl_REPLACE_WCHAR_H
   fi
+  dnl We don't substitute HAVE_WCWIDTH. We assume that if the system does not
+  dnl have the wcwidth function, then it does not declare it.
 ])

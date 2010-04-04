@@ -1,5 +1,12 @@
 2010-04-03  Bruno Haible  <bruno@clisp.org>
 
+	wcwidth: Fix C++ test error on mingw.
+	* lib/wcwidth.c (wcwidth): Renamed from rpl_wcwidth.
+	* m4/wcwidth.m4 (gl_FUNC_WCWIDTH): If the wcwidth function does not
+	exist, don't set REPLACE_WCWIDTH. Instead, rely on HAVE_DECL_WCWIDTH.
+
+2010-04-03  Bruno Haible  <bruno@clisp.org>
+
 	nanosleep: Fix C++ test error on mingw.
 	* lib/nanosleep.c (nanosleep): Renamed from rpl_nanosleep.
 	* lib/time.in.h (nanosleep): Use modern idiom.
