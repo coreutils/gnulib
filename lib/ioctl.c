@@ -50,7 +50,7 @@ rpl_ioctl (int fd, int request, ... /* {void *,char *} arg */)
 # include "w32sock.h"
 
 int
-rpl_ioctl (int fd, int req, ...)
+ioctl (int fd, int req, ...)
 {
   void *buf;
   va_list args;

@@ -1,3 +1,10 @@
+2010-04-04  Bruno Haible  <bruno@clisp.org>
+
+	ioctl: Fix C++ test error on mingw.
+	* lib/ioctl.c (ioctl): Renamed from rpl_ioctl.
+	* lib/sys_ioctl.in.h (ioctl): When SYS_IOCTL_H_HAVE_WINSOCK2_H is 1,
+	use _GL_FUNCDECL_SYS, not _GL_FUNCDECL_RPL.
+
 2010-04-03  Bruno Haible  <bruno@clisp.org>
 
 	wcwidth: Fix C++ test error on mingw.
