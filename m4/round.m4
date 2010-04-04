@@ -1,4 +1,4 @@
-# round.m4 serial 7
+# round.m4 serial 8
 dnl Copyright (C) 2007, 2009-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,17 +12,16 @@ AC_DEFUN([gl_FUNC_ROUND],
   AC_CHECK_DECLS([round], , , [#include <math.h>])
   if test "$ac_cv_have_decl_round" = yes; then
     gl_CHECK_MATH_LIB([ROUND_LIBM], [x = round (x);])
-  fi
-  if test "$ac_cv_have_decl_round" = yes && test "$ROUND_LIBM" != missing; then
-    dnl Test whether round() produces correct results. On NetBSD 3.0, for
-    dnl x = 1/2 - 2^-54, the system's round() returns a wrong result.
-    AC_REQUIRE([AC_PROG_CC])
-    AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
-    AC_CACHE_CHECK([whether round works], [gl_cv_func_round_works],
-      [
-        save_LIBS="$LIBS"
-        LIBS="$LIBS $ROUND_LIBM"
-        AC_RUN_IFELSE([AC_LANG_SOURCE([[
+    if test "$ROUND_LIBM" != missing; then
+      dnl Test whether round() produces correct results. On NetBSD 3.0, for
+      dnl x = 1/2 - 2^-54, the system's round() returns a wrong result.
+      AC_REQUIRE([AC_PROG_CC])
+      AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+      AC_CACHE_CHECK([whether round works], [gl_cv_func_round_works],
+        [
+          save_LIBS="$LIBS"
+          LIBS="$LIBS $ROUND_LIBM"
+          AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <float.h>
 #include <math.h>
 int main()
@@ -40,19 +39,24 @@ int main()
   volatile double x = 0.5 - 0.5 / TWO_MANT_DIG;
   exit (x < 0.5 && round (x) != 0.0);
 }]])], [gl_cv_func_round_works=yes], [gl_cv_func_round_works=no],
-        [case "$host_os" in
-           netbsd*) gl_cv_func_round_works="guessing no";;
-           *)       gl_cv_func_round_works="guessing yes";;
-         esac
+          [case "$host_os" in
+             netbsd*) gl_cv_func_round_works="guessing no";;
+             *)       gl_cv_func_round_works="guessing yes";;
+           esac
+          ])
+          LIBS="$save_LIBS"
         ])
-        LIBS="$save_LIBS"
-      ])
-    case "$gl_cv_func_round_works" in
-      *no) ROUND_LIBM=missing ;;
-    esac
+      case "$gl_cv_func_round_works" in
+        *no) ROUND_LIBM=missing ;;
+      esac
+    fi
+    if test "$ROUND_LIBM" = missing; then
+      REPLACE_ROUND=1
+    fi
+  else
+    HAVE_DECL_ROUND=0
   fi
-  if test "$ac_cv_have_decl_round" != yes || test "$ROUND_LIBM" = missing; then
-    REPLACE_ROUND=1
+  if test $HAVE_DECL_ROUND = 0 || test $REPLACE_ROUND = 1; then
     AC_LIBOBJ([round])
     gl_FUNC_FLOOR_LIBS
     gl_FUNC_CEIL_LIBS

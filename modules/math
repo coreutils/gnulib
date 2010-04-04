@@ -70,17 +70,25 @@ math.h: math.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	      -e 's|@''HAVE_DECL_ACOSL''@|$(HAVE_DECL_ACOSL)|g' \
 	      -e 's|@''HAVE_DECL_ASINL''@|$(HAVE_DECL_ASINL)|g' \
 	      -e 's|@''HAVE_DECL_ATANL''@|$(HAVE_DECL_ATANL)|g' \
+	      -e 's|@''HAVE_DECL_CEILF''@|$(HAVE_DECL_CEILF)|g' \
+	      -e 's|@''HAVE_DECL_CEILL''@|$(HAVE_DECL_CEILL)|g' \
 	      -e 's|@''HAVE_DECL_COSL''@|$(HAVE_DECL_COSL)|g' \
 	      -e 's|@''HAVE_DECL_EXPL''@|$(HAVE_DECL_EXPL)|g' \
+	      -e 's|@''HAVE_DECL_FLOORF''@|$(HAVE_DECL_FLOORF)|g' \
+	      -e 's|@''HAVE_DECL_FLOORL''@|$(HAVE_DECL_FLOORL)|g' \
 	      -e 's|@''HAVE_DECL_FREXPL''@|$(HAVE_DECL_FREXPL)|g' \
 	      -e 's|@''HAVE_DECL_LDEXPL''@|$(HAVE_DECL_LDEXPL)|g' \
 	      -e 's|@''HAVE_DECL_LOGB''@|$(HAVE_DECL_LOGB)|g' \
 	      -e 's|@''HAVE_DECL_LOGL''@|$(HAVE_DECL_LOGL)|g' \
+	      -e 's|@''HAVE_DECL_ROUND''@|$(HAVE_DECL_ROUND)|g' \
+	      -e 's|@''HAVE_DECL_ROUNDF''@|$(HAVE_DECL_ROUNDF)|g' \
+	      -e 's|@''HAVE_DECL_ROUNDL''@|$(HAVE_DECL_ROUNDL)|g' \
 	      -e 's|@''HAVE_DECL_SINL''@|$(HAVE_DECL_SINL)|g' \
 	      -e 's|@''HAVE_DECL_SQRTL''@|$(HAVE_DECL_SQRTL)|g' \
 	      -e 's|@''HAVE_DECL_TANL''@|$(HAVE_DECL_TANL)|g' \
 	      -e 's|@''HAVE_DECL_TRUNC''@|$(HAVE_DECL_TRUNC)|g' \
 	      -e 's|@''HAVE_DECL_TRUNCF''@|$(HAVE_DECL_TRUNCF)|g' \
+	      -e 's|@''HAVE_DECL_TRUNCL''@|$(HAVE_DECL_TRUNCL)|g' \
 	      -e 's|@''REPLACE_CEILF''@|$(REPLACE_CEILF)|g' \
 	      -e 's|@''REPLACE_CEILL''@|$(REPLACE_CEILL)|g' \
 	      -e 's|@''REPLACE_FLOORF''@|$(REPLACE_FLOORF)|g' \

@@ -1,4 +1,4 @@
-# ceill.m4 serial 5
+# ceill.m4 serial 6
 dnl Copyright (C) 2007, 2009-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -20,9 +20,9 @@ AC_DEFUN([gl_FUNC_CEILL],
       REPLACE_CEILL=1
     fi
   else
-    REPLACE_CEILL=1
+    HAVE_DECL_CEILL=0
   fi
-  if test $REPLACE_CEILL = 1; then
+  if test $HAVE_DECL_CEILL = 0 || test $REPLACE_CEILL = 1; then
     AC_LIBOBJ([ceill])
     CEILL_LIBM=
   fi

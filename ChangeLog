@@ -1,5 +1,33 @@
 2010-04-04  Bruno Haible  <bruno@clisp.org>
 
+	math: Fix some C++ test errors on Cygwin.
+	* lib/math.in.h (ceilf, ceill, floorf, floorl, roundf, round, roundl,
+	truncl): Provide declaration if the system does not have it.
+	* m4/ceilf.m4 (gl_FUNC_CEILF): If the function is not declared, set
+	HAVE_DECL_CEILF to 0, not REPLACE_CEILF to 1.
+	* m4/ceill.m4 (gl_FUNC_CEILL): If the function is not declared, set
+	HAVE_DECL_CEILL to 0, not REPLACE_CEILL to 1.
+	* m4/floorf.m4 (gl_FUNC_FLOORF): If the function is not declared, set
+	HAVE_DECL_FLOORF to 0, not REPLACE_FLOORF to 1.
+	* m4/floorl.m4 (gl_FUNC_FLOORL): If the function is not declared, set
+	HAVE_DECL_FLOORL to 0, not REPLACE_FLOORL to 1.
+	* m4/round.m4 (gl_FUNC_ROUND): If the function is not declared, set
+	HAVE_DECL_ROUND to 0, not REPLACE_ROUND to 1.
+	* m4/roundf.m4 (gl_FUNC_ROUNDF): If the function is not declared, set
+	HAVE_DECL_ROUNDF to 0, not REPLACE_ROUNDF to 1.
+	* m4/roundl.m4 (gl_FUNC_ROUNDL): If the function is not declared, set
+	HAVE_DECL_ROUNDL to 0, not REPLACE_ROUNDL to 1.
+	* m4/truncl.m4 (gl_FUNC_TRUNCL): If the function is not declared, set
+	HAVE_DECL_TRUNCL to 0, not REPLACE_TRUNCL to 1.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize HAVE_DECL_CEILF,
+	HAVE_DECL_CEILL, HAVE_DECL_FLOORF, HAVE_DECL_FLOORL, HAVE_DECL_ROUND,
+	HAVE_DECL_ROUNDF, HAVE_DECL_ROUNDL, HAVE_DECL_TRUNCL.
+	* modules/math (Makefile.am): Substitute HAVE_DECL_CEILF,
+	HAVE_DECL_CEILL, HAVE_DECL_FLOORF, HAVE_DECL_FLOORL, HAVE_DECL_ROUND,
+	HAVE_DECL_ROUNDF, HAVE_DECL_ROUNDL, HAVE_DECL_TRUNCL.
+
+2010-04-04  Bruno Haible  <bruno@clisp.org>
+
 	* m4/ceilf.m4 (gl_FUNC_CEILF): Remove redundant AC_SUBST invocation.
 	* m4/ceill.m4 (gl_FUNC_CEILL): Likewise.
 	* m4/floorf.m4 (gl_FUNC_FLOORF): Likewise.

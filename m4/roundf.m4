@@ -1,4 +1,4 @@
-# roundf.m4 serial 8
+# roundf.m4 serial 9
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,17 +12,16 @@ AC_DEFUN([gl_FUNC_ROUNDF],
   AC_CHECK_DECLS([roundf], , , [#include <math.h>])
   if test "$ac_cv_have_decl_roundf" = yes; then
     gl_CHECK_MATH_LIB([ROUNDF_LIBM], [x = roundf (x);])
-  fi
-  if test "$ac_cv_have_decl_roundf" = yes && test "$ROUNDF_LIBM" != missing; then
-    dnl Test whether roundf() produces correct results. On mingw, for
-    dnl x = 1/2 - 2^-25, the system's roundf() returns a wrong result.
-    AC_REQUIRE([AC_PROG_CC])
-    AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
-    AC_CACHE_CHECK([whether roundf works], [gl_cv_func_roundf_works],
-      [
-        save_LIBS="$LIBS"
-        LIBS="$LIBS $ROUNDF_LIBM"
-        AC_RUN_IFELSE([AC_LANG_SOURCE([[
+    if test "$ROUNDF_LIBM" != missing; then
+      dnl Test whether roundf() produces correct results. On mingw, for
+      dnl x = 1/2 - 2^-25, the system's roundf() returns a wrong result.
+      AC_REQUIRE([AC_PROG_CC])
+      AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+      AC_CACHE_CHECK([whether roundf works], [gl_cv_func_roundf_works],
+        [
+          save_LIBS="$LIBS"
+          LIBS="$LIBS $ROUNDF_LIBM"
+          AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <float.h>
 #include <math.h>
 int main()
@@ -37,19 +36,24 @@ int main()
   volatile float x = 0.5f - 0.5f / TWO_MANT_DIG;
   exit (x < 0.5f && roundf (x) != 0.0f);
 }]])], [gl_cv_func_roundf_works=yes], [gl_cv_func_roundf_works=no],
-        [case "$host_os" in
-           mingw*) gl_cv_func_roundf_works="guessing no";;
-           *)      gl_cv_func_roundf_works="guessing yes";;
-         esac
+          [case "$host_os" in
+             mingw*) gl_cv_func_roundf_works="guessing no";;
+             *)      gl_cv_func_roundf_works="guessing yes";;
+           esac
+          ])
+          LIBS="$save_LIBS"
         ])
-        LIBS="$save_LIBS"
-      ])
-    case "$gl_cv_func_roundf_works" in
-      *no) ROUNDF_LIBM=missing ;;
-    esac
+      case "$gl_cv_func_roundf_works" in
+        *no) ROUNDF_LIBM=missing ;;
+      esac
+    fi
+    if test "$ROUNDF_LIBM" = missing; then
+      REPLACE_ROUNDF=1
+    fi
+  else
+    HAVE_DECL_ROUNDF=0
   fi
-  if test "$ac_cv_have_decl_roundf" != yes || test "$ROUNDF_LIBM" = missing; then
-    REPLACE_ROUNDF=1
+  if test $HAVE_DECL_ROUNDF = 0 || test $REPLACE_ROUNDF = 1; then
     AC_LIBOBJ([roundf])
     AC_CHECK_DECLS([ceilf, floorf], , , [#include <math.h>])
     if test "$ac_cv_have_decl_floorf" = yes \
