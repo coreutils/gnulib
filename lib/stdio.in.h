@@ -921,7 +921,10 @@ _GL_FUNCDECL_SYS (vdprintf, int, (int fd, const char *format, va_list args)
                                  __attribute__ ((__format__ (__printf__, 2, 0)))
                                  _GL_ARG_NONNULL ((2)));
 #  endif
-_GL_CXXALIAS_SYS (vdprintf, int, (int fd, const char *format, va_list args));
+/* Need to cast, because on Solaris, the third parameter will likely be
+                                                    __va_list args.  */
+_GL_CXXALIAS_SYS_CAST (vdprintf, int,
+                       (int fd, const char *format, va_list args));
 # endif
 _GL_CXXALIASWARN (vdprintf);
 #elif defined GNULIB_POSIXCHECK
@@ -944,7 +947,11 @@ _GL_FUNCDECL_RPL (vfprintf, int, (FILE *fp, const char *format, va_list args)
                                  _GL_ARG_NONNULL ((1, 2)));
 _GL_CXXALIAS_RPL (vfprintf, int, (FILE *fp, const char *format, va_list args));
 # else
-_GL_CXXALIAS_SYS (vfprintf, int, (FILE *fp, const char *format, va_list args));
+/* Need to cast, because on Solaris, the third parameter is
+                                                      __va_list args
+   and GCC's fixincludes did not change this to __gnuc_va_list.  */
+_GL_CXXALIAS_SYS_CAST (vfprintf, int,
+                       (FILE *fp, const char *format, va_list args));
 # endif
 _GL_CXXALIASWARN (vfprintf);
 #endif
@@ -970,7 +977,10 @@ _GL_FUNCDECL_RPL (vprintf, int, (const char *format, va_list args)
                                 _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (vprintf, int, (const char *format, va_list args));
 # else
-_GL_CXXALIAS_SYS (vprintf, int, (const char *format, va_list args));
+/* Need to cast, because on Solaris, the second parameter is
+                                                          __va_list args
+   and GCC's fixincludes did not change this to __gnuc_va_list.  */
+_GL_CXXALIAS_SYS_CAST (vprintf, int, (const char *format, va_list args));
 # endif
 _GL_CXXALIASWARN (vprintf);
 #endif
@@ -1026,8 +1036,11 @@ _GL_FUNCDECL_RPL (vsprintf, int,
 _GL_CXXALIAS_RPL (vsprintf, int,
                   (char *str, const char *format, va_list args));
 # else
-_GL_CXXALIAS_SYS (vsprintf, int,
-                  (char *str, const char *format, va_list args));
+/* Need to cast, because on Solaris, the third parameter is
+                                                       __va_list args
+   and GCC's fixincludes did not change this to __gnuc_va_list.  */
+_GL_CXXALIAS_SYS_CAST (vsprintf, int,
+                       (char *str, const char *format, va_list args));
 # endif
 _GL_CXXALIASWARN (vsprintf);
 #elif defined GNULIB_POSIXCHECK
