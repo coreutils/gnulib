@@ -1,4 +1,4 @@
-# isfinite.m4 serial 6
+# isfinite.m4 serial 7
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -30,7 +30,6 @@ AC_DEFUN([gl_ISFINITE],
     AC_LIBOBJ([isfinite])
     ISFINITE_LIBM=
   fi
-  AC_SUBST([REPLACE_ISFINITE])
   AC_SUBST([ISFINITE_LIBM])
 ])
 

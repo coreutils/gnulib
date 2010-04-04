@@ -1,5 +1,15 @@
 2010-04-04  Bruno Haible  <bruno@clisp.org>
 
+	* m4/ceilf.m4 (gl_FUNC_CEILF): Remove redundant AC_SUBST invocation.
+	* m4/ceill.m4 (gl_FUNC_CEILL): Likewise.
+	* m4/floorf.m4 (gl_FUNC_FLOORF): Likewise.
+	* m4/floorl.m4 (gl_FUNC_FLOORL): Likewise.
+	* m4/isfinite.m4 (gl_ISFINITE): Likewise.
+	* m4/isinf.m4 (gl_ISINF): Likewise.
+	* m4/truncl.m4 (gl_FUNC_TRUNCL): Likewise.
+
+2010-04-04  Bruno Haible  <bruno@clisp.org>
+
 	* m4/trunc.m4 (gl_FUNC_TRUNC): Remove redundant AC_SUBST invocation.
 	* m4/truncf.m4 (gl_FUNC_TRUNCF): Likewise.
 

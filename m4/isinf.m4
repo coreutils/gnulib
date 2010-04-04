@@ -1,4 +1,4 @@
-# isinf.m4 serial 2
+# isinf.m4 serial 3
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -27,7 +27,6 @@ AC_DEFUN([gl_ISINF],
     AC_LIBOBJ([isinf])
     ISINF_LIBM=
   fi
-  AC_SUBST([REPLACE_ISINF])
   AC_SUBST([ISINF_LIBM])
 ])
 
