@@ -1,5 +1,10 @@
 2010-04-04  Bruno Haible  <bruno@clisp.org>
 
+	strerror: Update documentation.
+	* doc/posix-functions/strerror.texi: Remove mention of old platforms.
+
+2010-04-04  Bruno Haible  <bruno@clisp.org>
+
 	stdio: Fix some C++ test errors on Solaris 8 with GCC.
 	* lib/stdio.in.h (vdprintf, vfprintf, vprintf, vsprintf): Use
 	_GL_CXXALIAS_SYS_CAST.

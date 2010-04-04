@@ -9,8 +9,6 @@ Gnulib module: strerror
 Portability problems fixed by Gnulib:
 @itemize
 @item
-This function is missing on some old platforms.
-@item
 This function does not support the error values that are specified by POSIX
 but not defined by the system, on some platforms:
 OpenBSD 4.0, OSF/1 5.1, Cygwin 1.5.x, mingw.
