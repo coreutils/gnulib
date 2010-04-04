@@ -82,11 +82,15 @@
 /* The definition of _GL_WARN_ON_USE is copied here.  */
 
 
-/* Define wint_t.  (Also done in wctype.in.h.)  */
+/* Define wint_t and WEOF.  (Also done in wctype.in.h.)  */
 #if !@HAVE_WINT_T@ && !defined wint_t
 # define wint_t int
 # ifndef WEOF
 #  define WEOF -1
+# endif
+#else
+# ifndef WEOF
+#  define WEOF ((wint_t) -1)
 # endif
 #endif
 

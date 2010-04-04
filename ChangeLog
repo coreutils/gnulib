@@ -1,6 +1,13 @@
 2010-04-04  Hauke Fath  <hauke@espresso.rhein-neckar.de>  (tiny change)
             Bruno Haible  <bruno@clisp.org>
 
+	wchar: Port to NetBSD 1.5.
+	* lib/wchar.in.h (WEOF): Provide fallback also when wint_t exists.
+	* lib/wctype.in.h (WEOF): Likewise.
+
+2010-04-04  Hauke Fath  <hauke@espresso.rhein-neckar.de>  (tiny change)
+            Bruno Haible  <bruno@clisp.org>
+
 	Port extended stdio to NetBSD 1.5.
 	* lib/stdio-impl.h [NetBSD]: Include <sys/param.h>.
 	(struct __sfileext, fp_ub): Define the "old way" for NetBSD 1.5Z and
