@@ -1,3 +1,9 @@
+2010-04-04  Bruno Haible  <bruno@clisp.org>
+
+	btowc: Avoid warning.
+	* lib/btowc.c: Include <stdlib.h>.
+	Reported by Hauke Fath <hauke@espresso.rhein-neckar.de>.
+
 2010-04-04  Hauke Fath  <hauke@espresso.rhein-neckar.de>  (tiny change)
             Bruno Haible  <bruno@clisp.org>
 
