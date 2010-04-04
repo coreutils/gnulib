@@ -1,5 +1,10 @@
 2010-04-04  Bruno Haible  <bruno@clisp.org>
 
+	* m4/trunc.m4 (gl_FUNC_TRUNC): Remove redundant AC_SUBST invocation.
+	* m4/truncf.m4 (gl_FUNC_TRUNCF): Likewise.
+
+2010-04-04  Bruno Haible  <bruno@clisp.org>
+
 	* m4/tmpfile.m4 (gl_FUNC_TMPFILE): Renamed from gl_TMPFILE.
 	* modules/tmpfile (configure.ac): Update.
 
