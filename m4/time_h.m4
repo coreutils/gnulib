@@ -79,6 +79,7 @@ AC_DEFUN([gl_HEADER_TIME_H_DEFAULTS],
   GNULIB_TIME_R=0;                       AC_SUBST([GNULIB_TIME_R])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_LOCALTIME_R=1;                    AC_SUBST([HAVE_LOCALTIME_R])
+  HAVE_NANOSLEEP=1;                      AC_SUBST([HAVE_NANOSLEEP])
   HAVE_STRPTIME=1;                       AC_SUBST([HAVE_STRPTIME])
   HAVE_TIMEGM=1;                         AC_SUBST([HAVE_TIMEGM])
   dnl If another module says to replace or to not replace, do that.

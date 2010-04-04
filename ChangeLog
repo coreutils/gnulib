@@ -1,5 +1,16 @@
 2010-04-03  Bruno Haible  <bruno@clisp.org>
 
+	nanosleep: Fix C++ test error on mingw.
+	* lib/nanosleep.c (nanosleep): Renamed from rpl_nanosleep.
+	* lib/time.in.h (nanosleep): Use modern idiom.
+	* m4/nanosleep.m4 (gl_FUNC_NANOSLEEP): When the system does not have a
+	nanosleep function, set HAVE_NANOSLEEP to 0, instead of setting
+	REPLACE_NANOSLEEP to 1.
+	* m4/time_h.m4 (gl_HEADER_TIME_H_DEFAULTS): Initialize HAVE_NANOSLEEP.
+	* modules/time (Makefile.am): Substitute HAVE_NANOSLEEP.
+
+2010-04-03  Bruno Haible  <bruno@clisp.org>
+
 	strptime: Fix C++ test error on mingw.
 	* lib/time.in.h (strptime): Use HAVE_STRPTIME, not REPLACE_STRPTIME.
 	* m4/strptime.m4 (gl_FUNC_STRPTIME): Set HAVE_STRPTIME, not

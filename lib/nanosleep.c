@@ -36,15 +36,15 @@
 
 #include <unistd.h>
 
-#undef nanosleep
 
 enum { BILLION = 1000 * 1000 * 1000 };
 
 #if HAVE_BUG_BIG_NANOSLEEP
 
 int
-rpl_nanosleep (const struct timespec *requested_delay,
-               struct timespec *remaining_delay)
+nanosleep (const struct timespec *requested_delay,
+           struct timespec *remaining_delay)
+#undef nanosleep
 {
   /* nanosleep mishandles large sleeps due to internal overflow
      problems.  The worst known case of this is cygwin 1.5.x, which
@@ -128,8 +128,8 @@ my_usleep (const struct timespec *ts_delay)
    *REMAINING_DELAY part isn't implemented yet.  */
 
 int
-rpl_nanosleep (const struct timespec *requested_delay,
-               struct timespec *remaining_delay)
+nanosleep (const struct timespec *requested_delay,
+           struct timespec *remaining_delay)
 {
   static bool initialized;
 

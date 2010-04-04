@@ -87,6 +87,11 @@ _GL_FUNCDECL_RPL (nanosleep, int,
 _GL_CXXALIAS_RPL (nanosleep, int,
                   (struct timespec const *__rqtp, struct timespec *__rmtp));
 #  else
+#   if ! @HAVE_NANOSLEEP@
+_GL_FUNCDECL_SYS (nanosleep, int,
+                  (struct timespec const *__rqtp, struct timespec *__rmtp)
+                  _GL_ARG_NONNULL ((1)));
+#   endif
 _GL_CXXALIAS_SYS (nanosleep, int,
                   (struct timespec const *__rqtp, struct timespec *__rmtp));
 #  endif
