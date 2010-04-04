@@ -1,5 +1,10 @@
 2010-04-04  Bruno Haible  <bruno@clisp.org>
 
+	Implement nanosleep for native Windows.
+	* lib/nanosleep.c (nanosleep): New implementation for native Windows.
+
+2010-04-04  Bruno Haible  <bruno@clisp.org>
+
 	math: Fix some C++ test errors on Solaris 8.
 	* lib/math.in.h (truncf, trunc): Use simpler idiom.
 
