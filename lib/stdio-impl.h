@@ -1,5 +1,5 @@
 /* Implementation details of FILE streams.
-   Copyright (C) 2007-2010 Free Software Foundation, Inc.
+   Copyright (C) 2007-2008, 2010 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -20,6 +20,11 @@
 
 
 /* BSD stdio derived implementations.  */
+
+#if defined __NetBSD__                         /* NetBSD */
+/* Get __NetBSD_Version__.  */
+# include <sys/param.h>
+#endif
 
 #if defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, MacOS X, Cygwin */
 
@@ -50,7 +55,7 @@
 #  define fp_ fp
 # endif
 
-# if defined __NetBSD__ || defined __OpenBSD__ /* NetBSD, OpenBSD */
+# if (defined __NetBSD__ && __NetBSD_Version__ >= 105270000) || defined __OpenBSD__ /* NetBSD >= 1.5ZA, OpenBSD */
   /* See <http://cvsweb.netbsd.org/bsdweb.cgi/src/lib/libc/stdio/fileext.h?rev=HEAD&content-type=text/x-cvsweb-markup>
      and <http://www.openbsd.org/cgi-bin/cvsweb/src/lib/libc/stdio/fileext.h?rev=HEAD&content-type=text/x-cvsweb-markup> */
   struct __sfileext
@@ -59,7 +64,7 @@
       /* More fields, not relevant here.  */
     };
 #  define fp_ub ((struct __sfileext *) fp->_ext._base)->_ub
-# else                                         /* FreeBSD, DragonFly, MacOS X, Cygwin */
+# else                                         /* FreeBSD, NetBSD <= 1.5Z, DragonFly, MacOS X, Cygwin */
 #  define fp_ub fp_->_ub
 # endif
 

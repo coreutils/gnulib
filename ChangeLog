@@ -1,3 +1,11 @@
+2010-04-04  Hauke Fath  <hauke@espresso.rhein-neckar.de>  (tiny change)
+            Bruno Haible  <bruno@clisp.org>
+
+	Port extended stdio to NetBSD 1.5.
+	* lib/stdio-impl.h [NetBSD]: Include <sys/param.h>.
+	(struct __sfileext, fp_ub): Define the "old way" for NetBSD 1.5Z and
+	older.
+
 2010-04-04  Bruno Haible  <bruno@clisp.org>
 
 	string: Remove unused substitution.
