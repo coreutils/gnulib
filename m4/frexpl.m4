@@ -7,54 +7,56 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_FREXPL],
 [
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
+  dnl Check whether it's declared.
+  dnl MacOS X 10.3 has frexpl() in libc but doesn't declare it in <math.h>.
+  AC_CHECK_DECL([frexpl], , [HAVE_DECL_FREXPL=0], [#include <math.h>])
   FREXPL_LIBM=
-  AC_CACHE_CHECK([whether frexpl() can be used without linking with libm],
-    [gl_cv_func_frexpl_no_libm],
-    [
-      AC_TRY_LINK([#include <math.h>
-                   long double x;],
-                  [int e; return frexpl (x, &e) > 0;],
-        [gl_cv_func_frexpl_no_libm=yes],
-        [gl_cv_func_frexpl_no_libm=no])
-    ])
-  if test $gl_cv_func_frexpl_no_libm = no; then
-    AC_CACHE_CHECK([whether frexpl() can be used with libm],
-      [gl_cv_func_frexpl_in_libm],
+  if test $HAVE_DECL_FREXPL = 1; then
+    AC_CACHE_CHECK([whether frexpl() can be used without linking with libm],
+      [gl_cv_func_frexpl_no_libm],
       [
-        save_LIBS="$LIBS"
-        LIBS="$LIBS -lm"
         AC_TRY_LINK([#include <math.h>
                      long double x;],
                     [int e; return frexpl (x, &e) > 0;],
-          [gl_cv_func_frexpl_in_libm=yes],
-          [gl_cv_func_frexpl_in_libm=no])
-        LIBS="$save_LIBS"
+          [gl_cv_func_frexpl_no_libm=yes],
+          [gl_cv_func_frexpl_no_libm=no])
       ])
-    if test $gl_cv_func_frexpl_in_libm = yes; then
-      FREXPL_LIBM=-lm
+    if test $gl_cv_func_frexpl_no_libm = no; then
+      AC_CACHE_CHECK([whether frexpl() can be used with libm],
+        [gl_cv_func_frexpl_in_libm],
+        [
+          save_LIBS="$LIBS"
+          LIBS="$LIBS -lm"
+          AC_TRY_LINK([#include <math.h>
+                       long double x;],
+                      [int e; return frexpl (x, &e) > 0;],
+            [gl_cv_func_frexpl_in_libm=yes],
+            [gl_cv_func_frexpl_in_libm=no])
+          LIBS="$save_LIBS"
+        ])
+      if test $gl_cv_func_frexpl_in_libm = yes; then
+        FREXPL_LIBM=-lm
+      fi
+    fi
+    if test $gl_cv_func_frexpl_no_libm = yes \
+       || test $gl_cv_func_frexpl_in_libm = yes; then
+      save_LIBS="$LIBS"
+      LIBS="$LIBS $FREXPL_LIBM"
+      gl_FUNC_FREXPL_WORKS
+      LIBS="$save_LIBS"
+      case "$gl_cv_func_frexpl_works" in
+        *yes) gl_func_frexpl=yes ;;
+        *)    gl_func_frexpl=no; REPLACE_FREXPL=1; FREXPL_LIBM= ;;
+      esac
+    else
+      gl_func_frexpl=no
+    fi
+    if test $gl_func_frexpl = yes; then
+      AC_DEFINE([HAVE_FREXPL], [1],
+        [Define if the frexpl() function is available.])
     fi
   fi
-  if test $gl_cv_func_frexpl_no_libm = yes \
-     || test $gl_cv_func_frexpl_in_libm = yes; then
-    save_LIBS="$LIBS"
-    LIBS="$LIBS $FREXPL_LIBM"
-    gl_FUNC_FREXPL_WORKS
-    LIBS="$save_LIBS"
-    case "$gl_cv_func_frexpl_works" in
-      *yes) gl_func_frexpl=yes ;;
-      *)    gl_func_frexpl=no; REPLACE_FREXPL=1; FREXPL_LIBM= ;;
-    esac
-  else
-    gl_func_frexpl=no
-  fi
-  if test $gl_func_frexpl = yes; then
-    AC_DEFINE([HAVE_FREXPL], [1],
-      [Define if the frexpl() function is available.])
-    dnl Also check whether it's declared.
-    dnl MacOS X 10.3 has frexpl() in libc but doesn't declare it in <math.h>.
-    AC_CHECK_DECL([frexpl], , [HAVE_DECL_FREXPL=0], [#include <math.h>])
-  else
-    HAVE_DECL_FREXPL=0
+  if test $HAVE_DECL_FREXPL = 0 || test $gl_func_frexpl = no; then
     AC_LIBOBJ([frexpl])
   fi
   AC_SUBST([FREXPL_LIBM])
@@ -63,34 +65,36 @@ AC_DEFUN([gl_FUNC_FREXPL],
 AC_DEFUN([gl_FUNC_FREXPL_NO_LIBM],
 [
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
-  AC_CACHE_CHECK([whether frexpl() can be used without linking with libm],
-    [gl_cv_func_frexpl_no_libm],
-    [
-      AC_TRY_LINK([#include <math.h>
-                   long double x;],
-                  [int e; return frexpl (x, &e) > 0;],
-        [gl_cv_func_frexpl_no_libm=yes],
-        [gl_cv_func_frexpl_no_libm=no])
-    ])
-  if test $gl_cv_func_frexpl_no_libm = yes; then
-    gl_FUNC_FREXPL_WORKS
-    case "$gl_cv_func_frexpl_works" in
-      *yes) gl_func_frexpl_no_libm=yes ;;
-      *)    gl_func_frexpl_no_libm=no; REPLACE_FREXPL=1 ;;
-    esac
-  else
-    gl_func_frexpl_no_libm=no
-    dnl Set REPLACE_FREXPL here because the system may have frexpl in libm.
-    REPLACE_FREXPL=1
+  dnl Check whether it's declared.
+  dnl MacOS X 10.3 has frexpl() in libc but doesn't declare it in <math.h>.
+  AC_CHECK_DECL([frexpl], , [HAVE_DECL_FREXPL=0], [#include <math.h>])
+  if test $HAVE_DECL_FREXPL = 1; then
+    AC_CACHE_CHECK([whether frexpl() can be used without linking with libm],
+      [gl_cv_func_frexpl_no_libm],
+      [
+        AC_TRY_LINK([#include <math.h>
+                     long double x;],
+                    [int e; return frexpl (x, &e) > 0;],
+          [gl_cv_func_frexpl_no_libm=yes],
+          [gl_cv_func_frexpl_no_libm=no])
+      ])
+    if test $gl_cv_func_frexpl_no_libm = yes; then
+      gl_FUNC_FREXPL_WORKS
+      case "$gl_cv_func_frexpl_works" in
+        *yes) gl_func_frexpl_no_libm=yes ;;
+        *)    gl_func_frexpl_no_libm=no; REPLACE_FREXPL=1 ;;
+      esac
+    else
+      gl_func_frexpl_no_libm=no
+      dnl Set REPLACE_FREXPL here because the system may have frexpl in libm.
+      REPLACE_FREXPL=1
+    fi
+    if test $gl_func_frexpl_no_libm = yes; then
+      AC_DEFINE([HAVE_FREXPL_IN_LIBC], [1],
+        [Define if the frexpl() function is available in libc.])
+    fi
   fi
-  if test $gl_func_frexpl_no_libm = yes; then
-    AC_DEFINE([HAVE_FREXPL_IN_LIBC], [1],
-      [Define if the frexpl() function is available in libc.])
-    dnl Also check whether it's declared.
-    dnl MacOS X 10.3 has frexpl() in libc but doesn't declare it in <math.h>.
-    AC_CHECK_DECL([frexpl], , [HAVE_DECL_FREXPL=0], [#include <math.h>])
-  else
-    HAVE_DECL_FREXPL=0
+  if test $HAVE_DECL_FREXPL = 0 || test $gl_func_frexpl_no_libm = no; then
     AC_LIBOBJ([frexpl])
   fi
 ])

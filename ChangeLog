@@ -1,5 +1,13 @@
 2010-04-04  Bruno Haible  <bruno@clisp.org>
 
+	frexpl: Fix a C++ test error on Solaris 8 and Cygwin.
+	* m4/frexpl.m4 (gl_FUNC_FREXPL, gl_FUNC_FREXPL_NO_LIBM): When the
+	function is not declared, set HAVE_DECL_FREXPL to 0, instead of setting
+	REPLACE_FREXPL to 1.
+	* doc/posix-functions/frexpl.texi: Update documentation.
+
+2010-04-04  Bruno Haible  <bruno@clisp.org>
+
 	math: Fix some C++ test errors on Solaris 8 and Cygwin.
 	* lib/math.in.h (cosl, logl, sinl): Use simpler idiom.
 

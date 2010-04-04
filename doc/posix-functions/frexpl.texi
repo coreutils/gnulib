@@ -12,6 +12,9 @@ Portability problems fixed by Gnulib:
 This function is missing on some platforms:
 FreeBSD 5.2.1, NetBSD 3.0, OpenBSD 3.8, HP-UX 11, IRIX 6.5, Solaris 9, Cygwin, Interix 3.5.
 @item
+This function is not declared on some platforms:
+MacOS X 10.3.
+@item
 This function does not work on finite numbers on some platforms:
 MacOS X 10.4/PowerPC, AIX 5.1, BeOS.
 @item
