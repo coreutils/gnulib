@@ -6,12 +6,14 @@ lib/tmpfile.c
 m4/tmpfile.m4
 
 Depends-on:
+stdio
 pathmax
 tempname
 tmpdir
 
 configure.ac:
 gl_TMPFILE
+gl_STDIO_MODULE_INDICATOR([tmpfile])
 
 Makefile.am:
 

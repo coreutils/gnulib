@@ -838,6 +838,25 @@ _GL_WARN_ON_USE (sprintf, "sprintf is not always POSIX compliant - "
                  "POSIX compliance");
 #endif
 
+#if @GNULIB_TMPFILE@
+# if @REPLACE_TMPFILE@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define tmpfile rpl_tmpfile
+#  endif
+_GL_FUNCDECL_RPL (tmpfile, FILE *, (void));
+_GL_CXXALIAS_RPL (tmpfile, FILE *, (void));
+# else
+_GL_CXXALIAS_SYS (tmpfile, FILE *, (void));
+# endif
+_GL_CXXALIASWARN (tmpfile);
+#elif defined GNULIB_POSIXCHECK
+# undef tmpfile
+# if HAVE_RAW_DECL_TMPFILE
+_GL_WARN_ON_USE (tmpfile, "tmpfile is not usable on mingw - "
+                 "use gnulib module tmpfile for portability");
+# endif
+#endif
+
 #if @GNULIB_VASPRINTF@
 /* Write formatted output to a string dynamically allocated with malloc().
    If the memory allocation succeeds, store the address of the string in

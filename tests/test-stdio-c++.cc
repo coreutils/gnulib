@@ -149,6 +149,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::snprintf, int,
 SIGNATURE_CHECK (GNULIB_NAMESPACE::sprintf, int, (char *, const char *, ...));
 #endif
 
+#if GNULIB_TEST_TMPFILE
+SIGNATURE_CHECK (GNULIB_NAMESPACE::tmpfile, FILE *, (void));
+#endif
+
 #if GNULIB_TEST_VASPRINTF
 SIGNATURE_CHECK (GNULIB_NAMESPACE::asprintf, int,
                  (char **, const char *, ...));

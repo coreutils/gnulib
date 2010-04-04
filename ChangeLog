@@ -1,5 +1,19 @@
 2010-04-04  Bruno Haible  <bruno@clisp.org>
 
+	tmpfile: Fix C++ test error on mingw.
+	* lib/stdio.in.h (tmpfile): New declaration.
+	* m4/tmpfile.m4 (gl_TMPFILE): Require gl_STDIO_H_DEFAULTS. Set
+	REPLACE_TMPFILE instead of defining tmpfile as a macro in config.h.
+	* modules/tmpfile (Depends-on): Add stdio.
+	(configure.ac): Invoke gl_STDIO_MODULE_INDICATOR.
+	* m4/stdio_h.m4 (gl_STDIO_H): Also check whether tmpfile is declared.
+	(gl_STDIO_H_DEFAULTS): Initialize GNULIB_TMPFILE and REPLACE_TMPFILE.
+	* modules/stdio (Makefile.am): Substitute GNULIB_TMPFILE and
+	REPLACE_TMPFILE.
+	* tests/test-stdio-c++.cc (tmpfile): Verify signature.
+
+2010-04-04  Bruno Haible  <bruno@clisp.org>
+
 	ioctl: Fix C++ test error on mingw.
 	* lib/ioctl.c (ioctl): Renamed from rpl_ioctl.
 	* lib/sys_ioctl.in.h (ioctl): When SYS_IOCTL_H_HAVE_WINSOCK2_H is 1,

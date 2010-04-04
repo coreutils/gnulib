@@ -1,11 +1,12 @@
-# Check whether to use a replacement tmpfile() function.
-
+# tmpfile.m4 serial 1
 # Copyright (C) 2007, 2009, 2010 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
 
 # Written by Ben Pfaff.
+
+# Check whether to use a replacement tmpfile() function.
 
 # The native Windows tmpfile function always tries to put the temporary
 # file in the root directory.  (This behaviour is even documented in
@@ -18,6 +19,7 @@
 # just test for a Windows platform (excluding Cygwin).
 
 AC_DEFUN([gl_TMPFILE], [
+  AC_REQUIRE([gl_STDIO_H_DEFAULTS])
   AC_CACHE_CHECK([whether tmpfile should be overridden],
     [gl_cv_func_tmpfile_unusable],
     [AC_EGREP_CPP([choke me], [
@@ -28,9 +30,8 @@ choke me
        [gl_cv_func_tmpfile_unusable=yes],
        [gl_cv_func_tmpfile_unusable=no])])
   if test $gl_cv_func_tmpfile_unusable = yes; then
+    REPLACE_TMPFILE=1
     AC_LIBOBJ([tmpfile])
-    AC_DEFINE([tmpfile], [rpl_tmpfile],
-      [Define to rpl_tmpfile if the replacement function should be used.])
     gl_PREREQ_TMPFILE
   fi
 ])
