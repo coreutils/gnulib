@@ -225,19 +225,10 @@ _GL_WARN_ON_USE (ceill, "ceill is unportable - "
 
 
 #if @GNULIB_COSL@
-# if !@HAVE_COSL@
-#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
-#   undef cosl
-#   define cosl rpl_cosl
-#  endif
-_GL_FUNCDECL_RPL (cosl, long double, (long double x));
-_GL_CXXALIAS_RPL (cosl, long double, (long double x));
-# else
-#  if !@HAVE_DECL_COSL@
+# if !@HAVE_COSL@ || !@HAVE_DECL_COSL@
 _GL_FUNCDECL_SYS (cosl, long double, (long double x));
-#  endif
-_GL_CXXALIAS_SYS (cosl, long double, (long double x));
 # endif
+_GL_CXXALIAS_SYS (cosl, long double, (long double x));
 _GL_CXXALIASWARN (cosl);
 #elif defined GNULIB_POSIXCHECK
 # undef cosl
@@ -371,19 +362,10 @@ _GL_WARN_ON_USE (ldexpl, "ldexpl is unportable - "
 
 
 #if @GNULIB_LOGL@
-# if !@HAVE_LOGL@
-#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
-#   undef logl
-#   define logl rpl_logl
-#  endif
-_GL_FUNCDECL_RPL (logl, long double, (long double x));
-_GL_CXXALIAS_RPL (logl, long double, (long double x));
-# else
-#  if !@HAVE_DECL_LOGL@
+# if !@HAVE_LOGL@ || !@HAVE_DECL_LOGL@
 _GL_FUNCDECL_SYS (logl, long double, (long double x));
-#  endif
-_GL_CXXALIAS_SYS (logl, long double, (long double x));
 # endif
+_GL_CXXALIAS_SYS (logl, long double, (long double x));
 _GL_CXXALIASWARN (logl);
 #elif defined GNULIB_POSIXCHECK
 # undef logl
@@ -465,19 +447,10 @@ _GL_WARN_ON_USE (roundl, "roundl is unportable - "
 
 
 #if @GNULIB_SINL@
-# if !@HAVE_SINL@
-#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
-#   undef sinl
-#   define sinl rpl_sinl
-#  endif
-_GL_FUNCDECL_RPL (sinl, long double, (long double x));
-_GL_CXXALIAS_RPL (sinl, long double, (long double x));
-# else
-#  if !@HAVE_DECL_SINL@
+# if !@HAVE_SINL@ || !@HAVE_DECL_SINL@
 _GL_FUNCDECL_SYS (sinl, long double, (long double x));
-#  endif
-_GL_CXXALIAS_SYS (sinl, long double, (long double x));
 # endif
+_GL_CXXALIAS_SYS (sinl, long double, (long double x));
 _GL_CXXALIASWARN (sinl);
 #elif defined GNULIB_POSIXCHECK
 # undef sinl
