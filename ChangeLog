@@ -1,5 +1,12 @@
 2010-04-04  Bruno Haible  <bruno@clisp.org>
 
+	string: Remove unused substitution.
+	* m4/string_h.m4 (gl_HEADER_STRING_H_DEFAULTS): Don't initialize
+	HAVE_DECL_STRERROR.
+	* modules/string (Makefile.am): Don't substitute HAVE_DECL_STRERROR.
+
+2010-04-04  Bruno Haible  <bruno@clisp.org>
+
 	strtod: Avoid a possible C++ test error.
 	* m4/strtod.m4 (gl_FUNC_STRTOD): When setting HAVE_STRTOD to 0, don't
 	set REPLACE_STRTOD.
