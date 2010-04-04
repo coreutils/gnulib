@@ -1,5 +1,11 @@
 2010-04-04  Bruno Haible  <bruno@clisp.org>
 
+	strtod: Avoid a possible C++ test error.
+	* m4/strtod.m4 (gl_FUNC_STRTOD): When setting HAVE_STRTOD to 0, don't
+	set REPLACE_STRTOD.
+
+2010-04-04  Bruno Haible  <bruno@clisp.org>
+
 	strerror: Update documentation.
 	* doc/posix-functions/strerror.texi: Remove mention of old platforms.
 

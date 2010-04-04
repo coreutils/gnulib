@@ -1,4 +1,4 @@
-# strtod.m4 serial 13
+# strtod.m4 serial 14
 dnl Copyright (C) 2002-2003, 2006-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,7 +11,6 @@ AC_DEFUN([gl_FUNC_STRTOD],
   dnl Note: AC_FUNC_STRTOD does AC_LIBOBJ([strtod]).
   if test $ac_cv_func_strtod = no; then
     HAVE_STRTOD=0
-    REPLACE_STRTOD=1
     gl_PREREQ_STRTOD
   else
     AC_CACHE_CHECK([whether strtod obeys C99], [gl_cv_func_strtod_works],
