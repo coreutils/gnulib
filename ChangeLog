@@ -1,5 +1,8 @@
 2010-04-04  Bruno Haible  <bruno@clisp.org>
 
+	* m4/tmpfile.m4 (gl_FUNC_TMPFILE): Renamed from gl_TMPFILE.
+	* modules/tmpfile (configure.ac): Update.
+
 	tmpfile: Fix C++ test error on mingw.
 	* lib/stdio.in.h (tmpfile): New declaration.
 	* m4/tmpfile.m4 (gl_TMPFILE): Require gl_STDIO_H_DEFAULTS. Set

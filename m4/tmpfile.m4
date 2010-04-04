@@ -18,7 +18,7 @@
 # directory, even though tmpfile wouldn't work in general.  Instead,
 # just test for a Windows platform (excluding Cygwin).
 
-AC_DEFUN([gl_TMPFILE], [
+AC_DEFUN([gl_FUNC_TMPFILE], [
   AC_REQUIRE([gl_STDIO_H_DEFAULTS])
   AC_CACHE_CHECK([whether tmpfile should be overridden],
     [gl_cv_func_tmpfile_unusable],

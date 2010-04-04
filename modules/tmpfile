@@ -12,7 +12,7 @@ tempname
 tmpdir
 
 configure.ac:
-gl_TMPFILE
+gl_FUNC_TMPFILE
 gl_STDIO_MODULE_INDICATOR([tmpfile])
 
 Makefile.am:
