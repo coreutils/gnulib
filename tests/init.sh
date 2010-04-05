@@ -102,7 +102,7 @@ Exit () { set +e; (exit $1); exit $1; }
 # of TESTS_ENVIRONMENT in your tests/Makefile.am file.
 # This is useful when using automake's parallel tests mode, to print
 # the reason for skip/failure to console, rather than to the .log files.
-${stderr_fileno_=2}
+: ${stderr_fileno_=2}
 
 warn_() { echo "$@" 1>&$stderr_fileno_; }
 fail_() { warn_ "$ME_: failed test: $@"; Exit 1; }
