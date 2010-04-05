@@ -1,5 +1,10 @@
 2010-04-05  Bruno Haible  <bruno@clisp.org>
 
+	vasprintf: Update documentation.
+	* doc/glibc-functions/asprintf.texi: Mention the 'vasprintf' module.
+
+2010-04-05  Bruno Haible  <bruno@clisp.org>
+
 	ptsname: Improve test.
 	* tests/test-ptsname.c (main): Also try the various master names of BSD
 	systems.
