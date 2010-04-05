@@ -68,6 +68,11 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::strchrnul, char *, (char const *, int));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::strdup, char *, (char const *));
 #endif
 
+#if GNULIB_TEST_STRNCAT
+SIGNATURE_CHECK (GNULIB_NAMESPACE::strncat, char *,
+                 (char *, const char *, size_t));
+#endif
+
 #if GNULIB_TEST_STRNDUP
 SIGNATURE_CHECK (GNULIB_NAMESPACE::strndup, char *, (char const *, size_t));
 #endif

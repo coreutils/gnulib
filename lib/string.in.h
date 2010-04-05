@@ -320,6 +320,28 @@ _GL_WARN_ON_USE (strdup, "strdup is unportable - "
 # endif
 #endif
 
+/* Append no more than N characters from SRC onto DEST.  */
+#if @GNULIB_STRNCAT@
+# if @REPLACE_STRNCAT@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef strncat
+#   define strncat rpl_strncat
+#  endif
+_GL_FUNCDECL_RPL (strncat, char *, (char *dest, const char *src, size_t n)
+                                   _GL_ARG_NONNULL ((1, 2)));
+_GL_CXXALIAS_RPL (strncat, char *, (char *dest, const char *src, size_t n));
+# else
+_GL_CXXALIAS_SYS (strncat, char *, (char *dest, const char *src, size_t n));
+# endif
+_GL_CXXALIASWARN (strncat);
+#elif defined GNULIB_POSIXCHECK
+# undef strncat
+# if HAVE_RAW_DECL_STRNCAT
+_GL_WARN_ON_USE (strncat, "strncat is unportable - "
+                 "use gnulib module strncat for portability");
+# endif
+#endif
+
 /* Return a newly allocated copy of at most N bytes of STRING.  */
 #if @GNULIB_STRNDUP@
 # if @REPLACE_STRNDUP@

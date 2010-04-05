@@ -5,7 +5,7 @@
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
 
-# serial 15
+# serial 16
 
 # Written by Paul Eggert.
 
@@ -26,8 +26,10 @@ AC_DEFUN([gl_HEADER_STRING_H_BODY],
   dnl corresponding gnulib module is not in use, and which is not
   dnl guaranteed by C89.
   gl_WARN_ON_USE_PREPARE([[#include <string.h>
-    ]], [memmem mempcpy memrchr rawmemchr stpcpy stpncpy strchrnul strdup
-    strndup strnlen strpbrk strsep strcasestr strtok_r strsignal strverscmp])
+    ]],
+    [memmem mempcpy memrchr rawmemchr stpcpy stpncpy strchrnul strdup
+     strncat strndup strnlen strpbrk strsep strcasestr strtok_r strsignal
+     strverscmp])
 ])
 
 AC_DEFUN([gl_STRING_MODULE_INDICATOR],
@@ -50,6 +52,7 @@ AC_DEFUN([gl_HEADER_STRING_H_DEFAULTS],
   GNULIB_STPNCPY=0;     AC_SUBST([GNULIB_STPNCPY])
   GNULIB_STRCHRNUL=0;   AC_SUBST([GNULIB_STRCHRNUL])
   GNULIB_STRDUP=0;      AC_SUBST([GNULIB_STRDUP])
+  GNULIB_STRNCAT=0;     AC_SUBST([GNULIB_STRNCAT])
   GNULIB_STRNDUP=0;     AC_SUBST([GNULIB_STRNDUP])
   GNULIB_STRNLEN=0;     AC_SUBST([GNULIB_STRNLEN])
   GNULIB_STRPBRK=0;     AC_SUBST([GNULIB_STRPBRK])
@@ -100,6 +103,7 @@ AC_DEFUN([gl_HEADER_STRING_H_DEFAULTS],
   REPLACE_STRSTR=0;             AC_SUBST([REPLACE_STRSTR])
   REPLACE_STRCASESTR=0;         AC_SUBST([REPLACE_STRCASESTR])
   REPLACE_STRERROR=0;           AC_SUBST([REPLACE_STRERROR])
+  REPLACE_STRNCAT=0;            AC_SUBST([REPLACE_STRNCAT])
   REPLACE_STRNDUP=0;            AC_SUBST([REPLACE_STRNDUP])
   REPLACE_STRSIGNAL=0;          AC_SUBST([REPLACE_STRSIGNAL])
   REPLACE_STRTOK_R=0;           AC_SUBST([REPLACE_STRTOK_R])

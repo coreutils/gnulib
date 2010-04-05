@@ -1,3 +1,20 @@
+2010-04-05  Bruno Haible  <bruno@clisp.org>
+
+	New module 'strncat'.
+	* lib/string.in.h (strncat): New declaration.
+	* lib/strncat.c: New file, based on lib/unistr/u-strncat.h.
+	* m4/strncat.m4: New file, based on m4/memchr.m4.
+	* modules/strncat: New file.
+	* m4/string_h.m4 (gl_HEADER_STRING_H_BODY): Also check whether strncat
+	is declared.
+	(gl_HEADER_STRING_H_DEFAULTS): Initialize GNULIB_STRNCAT,
+	REPLACE_STRNCAT.
+	* modules/string (Makefile.am): Substitute GNULIB_STRNCAT,
+	REPLACE_STRNCAT.
+	* doc/posix-functions/strncat.texi: Mention the Solaris bug and the new
+	module.
+	* tests/test-string-c++.cc: Check signature of strncat.
+
 2010-04-05  Jim Meyering  <meyering@redhat.com>
 
 	xstrtoumax-tests: convert to use init.sh
