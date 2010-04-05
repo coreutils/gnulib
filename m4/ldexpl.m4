@@ -1,4 +1,4 @@
-# ldexpl.m4 serial 4
+# ldexpl.m4 serial 5
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,54 +7,56 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_LDEXPL],
 [
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
+  dnl Check whether it's declared.
+  dnl MacOS X 10.3 has ldexpl() in libc but doesn't declare it in <math.h>.
+  AC_CHECK_DECL([ldexpl], , [HAVE_DECL_LDEXPL=0], [#include <math.h>])
   LDEXPL_LIBM=
-  AC_CACHE_CHECK([whether ldexpl() can be used without linking with libm],
-    [gl_cv_func_ldexpl_no_libm],
-    [
-      AC_TRY_LINK([#include <math.h>
-                   long double x;],
-                  [return ldexpl (x, -1) > 0;],
-        [gl_cv_func_ldexpl_no_libm=yes],
-        [gl_cv_func_ldexpl_no_libm=no])
-    ])
-  if test $gl_cv_func_ldexpl_no_libm = no; then
-    AC_CACHE_CHECK([whether ldexpl() can be used with libm],
-      [gl_cv_func_ldexpl_in_libm],
+  if test $HAVE_DECL_LDEXPL = 1; then
+    AC_CACHE_CHECK([whether ldexpl() can be used without linking with libm],
+      [gl_cv_func_ldexpl_no_libm],
       [
-        save_LIBS="$LIBS"
-        LIBS="$LIBS -lm"
         AC_TRY_LINK([#include <math.h>
                      long double x;],
                     [return ldexpl (x, -1) > 0;],
-          [gl_cv_func_ldexpl_in_libm=yes],
-          [gl_cv_func_ldexpl_in_libm=no])
-        LIBS="$save_LIBS"
+          [gl_cv_func_ldexpl_no_libm=yes],
+          [gl_cv_func_ldexpl_no_libm=no])
       ])
-    if test $gl_cv_func_ldexpl_in_libm = yes; then
-      LDEXPL_LIBM=-lm
+    if test $gl_cv_func_ldexpl_no_libm = no; then
+      AC_CACHE_CHECK([whether ldexpl() can be used with libm],
+        [gl_cv_func_ldexpl_in_libm],
+        [
+          save_LIBS="$LIBS"
+          LIBS="$LIBS -lm"
+          AC_TRY_LINK([#include <math.h>
+                       long double x;],
+                      [return ldexpl (x, -1) > 0;],
+            [gl_cv_func_ldexpl_in_libm=yes],
+            [gl_cv_func_ldexpl_in_libm=no])
+          LIBS="$save_LIBS"
+        ])
+      if test $gl_cv_func_ldexpl_in_libm = yes; then
+        LDEXPL_LIBM=-lm
+      fi
+    fi
+    if test $gl_cv_func_ldexpl_no_libm = yes \
+       || test $gl_cv_func_ldexpl_in_libm = yes; then
+      save_LIBS="$LIBS"
+      LIBS="$LIBS $LDEXPL_LIBM"
+      gl_FUNC_LDEXPL_WORKS
+      LIBS="$save_LIBS"
+      case "$gl_cv_func_ldexpl_works" in
+        *yes) gl_func_ldexpl=yes ;;
+        *)    gl_func_ldexpl=no; REPLACE_LDEXPL=1; LDEXPL_LIBM= ;;
+      esac
+    else
+      gl_func_ldexpl=no
+    fi
+    if test $gl_func_ldexpl = yes; then
+      AC_DEFINE([HAVE_LDEXPL], [1],
+        [Define if the ldexpl() function is available.])
     fi
   fi
-  if test $gl_cv_func_ldexpl_no_libm = yes \
-     || test $gl_cv_func_ldexpl_in_libm = yes; then
-    save_LIBS="$LIBS"
-    LIBS="$LIBS $LDEXPL_LIBM"
-    gl_FUNC_LDEXPL_WORKS
-    LIBS="$save_LIBS"
-    case "$gl_cv_func_ldexpl_works" in
-      *yes) gl_func_ldexpl=yes ;;
-      *)    gl_func_ldexpl=no; REPLACE_LDEXPL=1; LDEXPL_LIBM= ;;
-    esac
-  else
-    gl_func_ldexpl=no
-  fi
-  if test $gl_func_ldexpl = yes; then
-    AC_DEFINE([HAVE_LDEXPL], [1],
-      [Define if the ldexpl() function is available.])
-    dnl Also check whether it's declared.
-    dnl MacOS X 10.3 has ldexpl() in libc but doesn't declare it in <math.h>.
-    AC_CHECK_DECL([ldexpl], , [HAVE_DECL_LDEXPL=0], [#include <math.h>])
-  else
-    HAVE_DECL_LDEXPL=0
+  if test $HAVE_DECL_LDEXPL = 0 || test $gl_func_ldexpl = no; then
     AC_LIBOBJ([ldexpl])
   fi
   AC_SUBST([LDEXPL_LIBM])
