@@ -1,3 +1,11 @@
+2010-04-05  Jim Meyering  <meyering@redhat.com>
+
+	xstrtoimax-tests: convert to use init.sh
+	* modules/xstrtoimax-tests (Files): Add tests/init.sh.
+	* tests/test-xstrtoimax.sh: Invoke "$srcdir/init.sh" and path_prepend_.
+	Use Exit, not exit.
+	Remove uses of $EXEEXT and "./" to run a program in the current dir.
+
 2010-04-05  Bruno Haible  <bruno@clisp.org>
 
 	sys_socket: Avoid #define replacements in C++ mode.
