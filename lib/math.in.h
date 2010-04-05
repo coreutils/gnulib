@@ -322,7 +322,7 @@ _GL_FUNCDECL_SYS (frexpl, long double,
 _GL_CXXALIAS_SYS (frexpl, long double, (long double x, int *expptr));
 # endif
 #endif
-#if @GNULIB_FREXPL@
+#if @GNULIB_FREXPL@ && !(@REPLACE_FREXPL@ && !@HAVE_DECL_FREXPL@)
 _GL_CXXALIASWARN (frexpl);
 #endif
 #if !@GNULIB_FREXPL@ && defined GNULIB_POSIXCHECK

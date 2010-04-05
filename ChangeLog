@@ -1,5 +1,10 @@
 2010-04-05  Bruno Haible  <bruno@clisp.org>
 
+	frexpl: Fix a C++ test error on Solaris 8 and Cygwin.
+	* lib/math.in.h (frexpl): Fix condition on _GL_CXXALIASWARN invocation.
+
+2010-04-05  Bruno Haible  <bruno@clisp.org>
+
 	vasprintf: Update documentation.
 	* doc/glibc-functions/asprintf.texi: Mention the 'vasprintf' module.
 
