@@ -96,8 +96,18 @@ test -n "$EXEEXT" && shopt -s expand_aliases
 # sh inside this function.
 Exit () { set +e; (exit $1); exit $1; }
 
-fail_() { echo "$ME_: failed test: $@" 1>&2; Exit 1; }
-skip_() { echo "$ME_: skipped test: $@" 1>&2; Exit 77; }
+# Print warnings (e.g., about skipped and failed tests) to this file number.
+# Override by defining to say, 9, in init.cfg, and putting say,
+# "export ...ENVVAR_SETTINGS...; exec 9>&2; $(SHELL)" in the definition
+# of TESTS_ENVIRONMENT in your tests/Makefile.am file.
+# This is useful when using automake's parallel tests mode, to print
+# the reason for skip/failure to console, rather than to the .log files.
+${stderr_fileno_=2}
+
+warn_() { echo "$@" 1>&$stderr_fileno_; }
+fail_() { warn_ "$ME_: failed test: $@"; Exit 1; }
+skip_() { warn_ "$ME_: skipped test: $@"; Exit 77; }
+framework_failure_() { warn_ "$ME_: set-up failure: $@"; Exit 1; }
 
 # This is a stub function that is run upon trap (upon regular exit and
 # interrupt).  Override it with a per-test function, e.g., to unmount

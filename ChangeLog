@@ -1,3 +1,11 @@
+2010-04-05  Jim Meyering  <meyering@redhat.com>
+
+	init.sh: make it easier for a test script to write to the tty, ...
+	when using automake's parallel-tests mode.
+	* tests/init.sh (stderr_fileno_): Define overridable variable.
+	(warn_): New function, to use it.
+	(fail_, skip_, framework_failure_): Use warn_.
+
 2010-04-04  Bruno Haible  <bruno@clisp.org>
 
 	btowc: Avoid warning.
