@@ -1,5 +1,11 @@
 2010-04-05  Bruno Haible  <bruno@clisp.org>
 
+	Assume rmdir exists.
+	* m4/rmdir.m4 (gl_FUNC_RMDIR): Remove test whether rmdir exists.
+	* doc/posix-functions/rmdir.texi: Remove mention of "old platforms".
+
+2010-04-05  Bruno Haible  <bruno@clisp.org>
+
 	Fix link error on Solaris 8 with cc.
 	* modules/pty-c++-tests (test_pty_c___LDADD): Add LIBINTL.
 
