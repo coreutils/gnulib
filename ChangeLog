@@ -1,5 +1,11 @@
 2010-04-05  Bruno Haible  <bruno@clisp.org>
 
+	strtok_r: Improve idiom.
+	* m4/strtok_r.m4 (gl_FUNC_STRTOK_R): Invoke gl_PREREQ_STRDUP only when
+	AC_LIBOBJ is used.
+
+2010-04-05  Bruno Haible  <bruno@clisp.org>
+
 	strdup: Improve idiom.
 	* m4/strdup.m4 (gl_FUNC_STRDUP): Invoke gl_PREREQ_STRDUP only when
 	AC_LIBOBJ is used.

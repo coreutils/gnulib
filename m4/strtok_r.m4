@@ -1,5 +1,5 @@
-# strtok_r.m4 serial 9
-dnl Copyright (C) 2002, 2003, 2004, 2007, 2009, 2010 Free Software Foundation,
+# strtok_r.m4 serial 10
+dnl Copyright (C) 2002-2004, 2006-2007, 2009-2010 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -59,12 +59,12 @@ changequote([,])dnl
     esac
   else
     AC_LIBOBJ([strtok_r])
+    gl_PREREQ_STRTOK_R
   fi
   AC_CHECK_DECLS_ONCE([strtok_r])
   if test $ac_cv_have_decl_strtok_r = no; then
     HAVE_DECL_STRTOK_R=0
   fi
-  gl_PREREQ_STRTOK_R
 ])
 
 # Prerequisites of lib/strtok_r.c.
