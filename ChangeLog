@@ -1,5 +1,11 @@
 2010-04-05  Bruno Haible  <bruno@clisp.org>
 
+	ptsname: Improve test.
+	* tests/test-ptsname.c (main): Also try the various master names of BSD
+	systems.
+
+2010-04-05  Bruno Haible  <bruno@clisp.org>
+
 	memchr: Avoid a possible C++ test error.
 	* lib/string.in.h (memchr): Provide declaration if function is missing.
 	* m4/memchr.m4 (gl_FUNC_MEMCHR): If the function is missing, set

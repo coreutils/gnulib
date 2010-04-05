@@ -54,13 +54,13 @@ main (void)
     close (fd);
   }
 
-  /* Try various master names of MacOS X.  */
+  /* Try various master names of MacOS X: /dev/pty[p-w][0-9a-f]  */
   {
     int char1;
     int char2;
 
     for (char1 = 'p'; char1 <= 'w'; char1++)
-      for (char2 = '0'; char2 <= 'f'; char2 = (char2 == '9' ? 'a' : char2 + 1))
+      for (char2 = '0'; char2 <= 'f'; (char2 == '9' ? char2 = 'a' : char2++))
         {
           char master_name[32];
           int fd;
@@ -80,6 +80,36 @@ main (void)
               close (fd);
             }
         }
+  }
+
+  /* Try various master names of *BSD: /dev/pty[p-sP-S][0-9a-v]  */
+  {
+    int upper;
+    int char1;
+    int char2;
+
+    for (upper = 0; upper <= 1; upper++)
+      for (char1 = (upper ? 'P' : 'p'); char1 <= (upper ? 'S' : 's'); char1++)
+        for (char2 = '0'; char2 <= 'v'; (char2 == '9' ? char2 = 'a' : char2++))
+          {
+            char master_name[32];
+            int fd;
+
+            sprintf (master_name, "/dev/pty%c%c", char1, char2);
+            fd = open (master_name, O_RDONLY);
+            if (fd >= 0)
+              {
+                char *result;
+                char slave_name[32];
+
+                result = ptsname (fd);
+                ASSERT (result != NULL);
+                sprintf (slave_name, "/dev/tty%c%c", char1, char2);
+                ASSERT (strcmp (result, slave_name) == 0);
+
+                close (fd);
+              }
+          }
   }
 
   return 0;
