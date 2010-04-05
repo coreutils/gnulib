@@ -16,8 +16,6 @@ Cygwin 1.5.x.
 This function fails with @code{EINVAL} instead of the expected
 @code{ENOTDIR} for @code{rmdir("file/")} on some platforms:
 mingw.
-@item
-This function is missing on some old platforms.
 @end itemize
 
 Portability problems not fixed by Gnulib:
