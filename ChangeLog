@@ -1,5 +1,12 @@
 2010-04-05  Bruno Haible  <bruno@clisp.org>
 
+	btowc: Work around Cygwin 1.7.2 bug.
+	* m4/btowc.m4 (gl_FUNC_BTOWC): Set REPLACE_BTOWC to 1 if the function
+	does not map NUL to 0.
+	* doc/posix-functions/btowc.texi: Mention the Cygwin bug.
+
+2010-04-05  Bruno Haible  <bruno@clisp.org>
+
 	Make the multithread modules work on Cygwin 1.7.2.
 	* m4/threadlib.m4 (gl_THREADLIB_BODY): Improve the test whether
 	imported symbols can be declared weak, so that it returns "no" on
