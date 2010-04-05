@@ -1,5 +1,14 @@
 2010-04-05  Bruno Haible  <bruno@clisp.org>
 
+	memchr: Avoid a possible C++ test error.
+	* lib/string.in.h (memchr): Provide declaration if function is missing.
+	* m4/memchr.m4 (gl_FUNC_MEMCHR): If the function is missing, set
+	HAVE_MEMCHR to 0, not REPLACE_MEMCHR to 1.
+	* m4/string_h.m4 (gl_HEADER_STRING_H_DEFAULTS): Initialize HAVE_MEMCHR.
+	* modules/string (Makefile.am): Substitute HAVE_MEMCHR.
+
+2010-04-05  Bruno Haible  <bruno@clisp.org>
+
 	strtok_r: Improve idiom.
 	* m4/strtok_r.m4 (gl_FUNC_STRTOK_R): Invoke gl_PREREQ_STRDUP only when
 	AC_LIBOBJ is used.
