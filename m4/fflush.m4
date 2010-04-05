@@ -1,4 +1,4 @@
-# fflush.m4 serial 7
+# fflush.m4 serial 8
 
 # Copyright (C) 2007-2010 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -67,11 +67,10 @@ AC_DEFUN([gl_FUNC_FFLUSH],
 AC_DEFUN([gl_REPLACE_FFLUSH],
 [
   AC_LIBOBJ([fflush])
-  AC_LIBOBJ([fseeko])
   AC_REQUIRE([gl_STDIO_H_DEFAULTS])
   REPLACE_FFLUSH=1
-  REPLACE_FSEEKO=1
   gl_PREREQ_FFLUSH
+  gl_REPLACE_FSEEKO
 ])
 
 # Prerequisites of lib/fflush.c.
