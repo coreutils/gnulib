@@ -1,5 +1,9 @@
 2010-04-05  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'strncat'.
+	* modules/strncat-tests: New file.
+	* tests/test-strncat.c: New file.
+
 	New module 'strncat'.
 	* lib/string.in.h (strncat): New declaration.
 	* lib/strncat.c: New file, based on lib/unistr/u-strncat.h.
