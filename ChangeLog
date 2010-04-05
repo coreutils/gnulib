@@ -1,5 +1,12 @@
 2010-04-05  Bruno Haible  <bruno@clisp.org>
 
+	Make the multithread modules work on Cygwin 1.7.2.
+	* m4/threadlib.m4 (gl_THREADLIB_BODY): Improve the test whether
+	imported symbols can be declared weak, so that it returns "no" on
+	Cygwin 1.7.2.
+
+2010-04-05  Bruno Haible  <bruno@clisp.org>
+
 	Use the module 'strncat'.
 	* modules/unistr/u8-strncat (Depends-on): Add strncat.
 
