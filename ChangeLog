@@ -1,5 +1,12 @@
 2010-04-05  Bruno Haible  <bruno@clisp.org>
 
+	sys_socket: Avoid #define replacements in C++ mode.
+	* lib/sys_socket.in.h (close, gethostname, select): In C++, attach a
+	warning to the function if possible, rather than #defining the symbol
+	to a dysfunctional alias.
+
+2010-04-05  Bruno Haible  <bruno@clisp.org>
+
 	fseeko: Fix C++ test error on mingw.
 	* m4/fseeko.m4 (gl_HAVE_FSEEKO): New macro, extracted from
 	gl_FUNC_FSEEKO.
