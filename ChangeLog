@@ -1,5 +1,10 @@
 2010-04-05  Bruno Haible  <bruno@clisp.org>
 
+	duplocale: Improve test output.
+	* tests/test-duplocale.c (main): Print reason for skipped test.
+
+2010-04-05  Bruno Haible  <bruno@clisp.org>
+
 	Assume rmdir exists.
 	* m4/rmdir.m4 (gl_FUNC_RMDIR): Remove test whether rmdir exists.
 	* doc/posix-functions/rmdir.texi: Remove mention of "old platforms".
