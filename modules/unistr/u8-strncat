@@ -6,6 +6,7 @@ lib/unistr/u8-strncat.c
 
 Depends-on:
 unistr/base
+strncat
 
 configure.ac:
 

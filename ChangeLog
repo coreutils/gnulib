@@ -1,5 +1,8 @@
 2010-04-05  Bruno Haible  <bruno@clisp.org>
 
+	Use the module 'strncat'.
+	* modules/unistr/u8-strncat (Depends-on): Add strncat.
+
 	Tests for module 'strncat'.
 	* modules/strncat-tests: New file.
 	* tests/test-strncat.c: New file.
