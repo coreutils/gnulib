@@ -1,4 +1,4 @@
-# mbsrtowcs.m4 serial 5
+# mbsrtowcs.m4 serial 6
 dnl Copyright (C) 2008-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,19 +10,20 @@ AC_DEFUN([gl_FUNC_MBSRTOWCS],
 
   AC_REQUIRE([AC_TYPE_MBSTATE_T])
   gl_MBSTATE_T_BROKEN
-  if test $REPLACE_MBSTATE_T = 1; then
-    REPLACE_MBSRTOWCS=1
-  fi
+
   AC_CHECK_FUNCS_ONCE([mbsrtowcs])
   if test $ac_cv_func_mbsrtowcs = no; then
     HAVE_MBSRTOWCS=0
-  fi
-  if test $HAVE_MBSRTOWCS != 0 && test $REPLACE_MBSRTOWCS != 1; then
-    gl_MBSRTOWCS_WORKS
-    case "$gl_cv_func_mbsrtowcs_works" in
-      *yes) ;;
-      *) REPLACE_MBSRTOWCS=1 ;;
-    esac
+  else
+    if test $REPLACE_MBSTATE_T = 1; then
+      REPLACE_MBSRTOWCS=1
+    else
+      gl_MBSRTOWCS_WORKS
+      case "$gl_cv_func_mbsrtowcs_works" in
+        *yes) ;;
+        *) REPLACE_MBSRTOWCS=1 ;;
+      esac
+    fi
   fi
   if test $HAVE_MBSRTOWCS = 0 || test $REPLACE_MBSRTOWCS = 1; then
     gl_REPLACE_WCHAR_H

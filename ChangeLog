@@ -1,5 +1,23 @@
 2010-04-05  Bruno Haible  <bruno@clisp.org>
 
+	mbsinit, mbrtowc, wcrtomb: Improve idioms.
+	* m4/mbsinit.m4 (gl_FUNC_MBSINIT): When the function does not exist,
+	don't set REPLACE_MBSINIT to 1.
+	* m4/mbrtowc.m4 (gl_FUNC_MBRTOWC): When the function does not exist,
+	don't set REPLACE_MBRTOWC to 1.
+	* m4/mbsrtowcs.m4 (gl_FUNC_MBSRTOWCS): When the function does not
+	exist, don't set REPLACE_MBSRTOWCS to 1.
+	* m4/mbsnrtowcs.m4 (gl_FUNC_MBSNRTOWCS): When the function does not
+	exist, don't set REPLACE_MBSNRTOWCS to 1.
+	* m4/wcrtomb.m4 (gl_FUNC_WCRTOMB): When the function does not exist,
+	don't set REPLACE_WCRTOMB to 1.
+	* m4/wcsrtombs.m4 (gl_FUNC_WCSRTOMBS): When the function does not
+	exist, don't set REPLACE_WCSRTOMBS to 1.
+	* m4/wcsnrtombs.m4 (gl_FUNC_WCSNRTOMBS): When the function does not
+	exist, don't set REPLACE_WCSNRTOMBS to 1.
+
+2010-04-05  Bruno Haible  <bruno@clisp.org>
+
 	ldexpl: Improve idiom.
 	* m4/ldexpl.m4 (gl_FUNC_LDEXPL): When the function is not declared,
 	make sure to set HAVE_DECL_LDEXPL to 0.

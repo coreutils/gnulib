@@ -1,4 +1,4 @@
-# wcsrtombs.m4 serial 4
+# wcsrtombs.m4 serial 5
 dnl Copyright (C) 2008-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,28 +10,29 @@ AC_DEFUN([gl_FUNC_WCSRTOMBS],
 
   AC_REQUIRE([AC_TYPE_MBSTATE_T])
   gl_MBSTATE_T_BROKEN
-  if test $REPLACE_MBSTATE_T = 1; then
-    REPLACE_WCSRTOMBS=1
-  fi
+
   AC_CHECK_FUNCS_ONCE([wcsrtombs])
   if test $ac_cv_func_wcsrtombs = no; then
     HAVE_WCSRTOMBS=0
-  fi
-  if test $HAVE_WCSRTOMBS != 0 && test $REPLACE_WCSRTOMBS != 1; then
-    gl_WCSRTOMBS_TERMINATION
-    gl_WCSRTOMBS_NULL
-    case "$gl_cv_func_wcsrtombs_termination" in
-      *yes) ;;
-      *) AC_DEFINE([WCSRTOMBS_TERMINATION_BUG], [1],
-           [Define if the wcsrtombs function may set the source pointer to NULL without NUL-terminating the destination.])
-         REPLACE_WCSRTOMBS=1 ;;
-    esac
-    case "$gl_cv_func_wcsrtombs_null" in
-      *yes) ;;
-      *) AC_DEFINE([WCSRTOMBS_NULL_ARG_BUG], [1],
-           [Define if the wcsrtombs function has the NULL destination argument bug.])
-         REPLACE_WCSRTOMBS=1 ;;
-    esac
+  else
+    if test $REPLACE_MBSTATE_T = 1; then
+      REPLACE_WCSRTOMBS=1
+    else
+      gl_WCSRTOMBS_TERMINATION
+      gl_WCSRTOMBS_NULL
+      case "$gl_cv_func_wcsrtombs_termination" in
+        *yes) ;;
+        *) AC_DEFINE([WCSRTOMBS_TERMINATION_BUG], [1],
+             [Define if the wcsrtombs function may set the source pointer to NULL without NUL-terminating the destination.])
+           REPLACE_WCSRTOMBS=1 ;;
+      esac
+      case "$gl_cv_func_wcsrtombs_null" in
+        *yes) ;;
+        *) AC_DEFINE([WCSRTOMBS_NULL_ARG_BUG], [1],
+             [Define if the wcsrtombs function has the NULL destination argument bug.])
+           REPLACE_WCSRTOMBS=1 ;;
+      esac
+    fi
   fi
   if test $HAVE_WCSRTOMBS = 0 || test $REPLACE_WCSRTOMBS = 1; then
     gl_REPLACE_WCHAR_H
