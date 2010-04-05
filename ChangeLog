@@ -1,5 +1,14 @@
 2010-04-05  Bruno Haible  <bruno@clisp.org>
 
+	strdup: Improve idiom.
+	* m4/strdup.m4 (gl_FUNC_STRDUP): Invoke gl_PREREQ_STRDUP only when
+	AC_LIBOBJ is used.
+	(gl_FUNC_STRDUP_POSIX): When strdup is missing and malloc is not POSIX
+	compliant, don't set REPLACE_STRDUP to 1. Invoke gl_PREREQ_STRDUP only
+	when AC_LIBOBJ is used.
+
+2010-04-05  Bruno Haible  <bruno@clisp.org>
+
 	mbsinit, mbrtowc, wcrtomb: Improve idioms.
 	* m4/mbsinit.m4 (gl_FUNC_MBSINIT): When the function does not exist,
 	don't set REPLACE_MBSINIT to 1.
