@@ -1,35 +1,32 @@
 #!/bin/sh
+: ${srcdir=.}
+. "$srcdir/init.sh"; path_prepend_ .
 
-tmpfiles=""
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-tmpfiles="t-xstrtol.tmp t-xstrtol.xo"
-: > t-xstrtol.tmp
 too_big=99999999999999999999999999999999999999999999999999999999999999999999
 result=0
 
 # test xstrtol
-./test-xstrtol${EXEEXT} 1 >> t-xstrtol.tmp 2>&1 || result=1
-./test-xstrtol${EXEEXT} -1 >> t-xstrtol.tmp 2>&1 || result=1
-./test-xstrtol${EXEEXT} 1k >> t-xstrtol.tmp 2>&1 || result=1
-./test-xstrtol${EXEEXT} ${too_big}h >> t-xstrtol.tmp 2>&1 && result=1
-./test-xstrtol${EXEEXT} $too_big >> t-xstrtol.tmp 2>&1 && result=1
-./test-xstrtol${EXEEXT} x >> t-xstrtol.tmp 2>&1 && result=1
-./test-xstrtol${EXEEXT} 9x >> t-xstrtol.tmp 2>&1 && result=1
-./test-xstrtol${EXEEXT} 010 >> t-xstrtol.tmp 2>&1 || result=1
+test-xstrtol 1 >> out 2>&1 || result=1
+test-xstrtol -1 >> out 2>&1 || result=1
+test-xstrtol 1k >> out 2>&1 || result=1
+test-xstrtol ${too_big}h >> out 2>&1 && result=1
+test-xstrtol $too_big >> out 2>&1 && result=1
+test-xstrtol x >> out 2>&1 && result=1
+test-xstrtol 9x >> out 2>&1 && result=1
+test-xstrtol 010 >> out 2>&1 || result=1
 # suffix without integer is valid
-./test-xstrtol${EXEEXT} MiB >> t-xstrtol.tmp 2>&1 || result=1
+test-xstrtol MiB >> out 2>&1 || result=1
 
 # test xstrtoul
-./test-xstrtoul${EXEEXT} 1 >> t-xstrtol.tmp 2>&1 || result=1
-./test-xstrtoul${EXEEXT} -1 >> t-xstrtol.tmp 2>&1 && result=1
-./test-xstrtoul${EXEEXT} 1k >> t-xstrtol.tmp 2>&1 || result=1
-./test-xstrtoul${EXEEXT} ${too_big}h >> t-xstrtol.tmp 2>&1 && result=1
-./test-xstrtoul${EXEEXT} $too_big >> t-xstrtol.tmp 2>&1 && result=1
-./test-xstrtoul${EXEEXT} x >> t-xstrtol.tmp 2>&1 && result=1
-./test-xstrtoul${EXEEXT} 9x >> t-xstrtol.tmp 2>&1 && result=1
-./test-xstrtoul${EXEEXT} 010 >> t-xstrtol.tmp 2>&1 || result=1
-./test-xstrtoul${EXEEXT} MiB >> t-xstrtol.tmp 2>&1 || result=1
+test-xstrtoul 1 >> out 2>&1 || result=1
+test-xstrtoul -1 >> out 2>&1 && result=1
+test-xstrtoul 1k >> out 2>&1 || result=1
+test-xstrtoul ${too_big}h >> out 2>&1 && result=1
+test-xstrtoul $too_big >> out 2>&1 && result=1
+test-xstrtoul x >> out 2>&1 && result=1
+test-xstrtoul 9x >> out 2>&1 && result=1
+test-xstrtoul 010 >> out 2>&1 || result=1
+test-xstrtoul MiB >> out 2>&1 || result=1
 
 # Find out how to remove carriage returns from output. Solaris /usr/ucb/tr
 # does not understand '\r'.
@@ -40,11 +37,11 @@ else
 fi
 
 # normalize output
-LC_ALL=C tr -d "$cr" < t-xstrtol.tmp > t-xstrtol.xo
-mv t-xstrtol.xo t-xstrtol.tmp
+LC_ALL=C tr -d "$cr" < out > k
+mv k out
 
 # compare expected output
-cat > t-xstrtol.xo <<EOF
+cat > expected <<EOF
 1->1 ()
 -1->-1 ()
 1k->1024 ()
@@ -65,8 +62,6 @@ invalid suffix in X argument \`9x'
 MiB->1048576 ()
 EOF
 
-diff t-xstrtol.xo t-xstrtol.tmp || result=1
+compare expected out || result=1
 
-rm -fr $tmpfiles
-
-exit $result
+Exit $result

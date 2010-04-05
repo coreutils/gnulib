@@ -97,6 +97,12 @@
 
 2010-04-05  Jim Meyering  <meyering@redhat.com>
 
+	xstrtol-tests: convert to use init.sh
+	* modules/xstrtol-tests (Files): Add tests/init.sh.
+	* tests/test-xstrtol.sh: Invoke "$srcdir/init.sh" and path_prepend_.
+	Use Exit, not exit.
+	Remove uses of $EXEEXT and "./" to run a program in the current dir.
+
 	atexit-tests: convert to use init.sh
 	* modules/atexit-tests (Files): Add tests/init.sh.
 	* tests/test-atexit.sh: Invoke "$srcdir/init.sh" and path_prepend_.
