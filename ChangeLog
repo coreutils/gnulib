@@ -1,5 +1,11 @@
 2010-04-06  Bruno Haible  <bruno@clisp.org>
 
+	Fix link error on mingw.
+	* modules/unistd-c++-tests (test_unistd_c___LDADD): Add LIBSOCKET.
+	* modules/fcntl-h-c++-tests (test_fcntl_h_c___LDADD): Likewise.
+
+2010-04-06  Bruno Haible  <bruno@clisp.org>
+
 	Assume rmdir exists.
 	* lib/rmdir.c (rpl_rmdir): Remove code that invokes the rmdir program.
 
