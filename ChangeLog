@@ -1,3 +1,8 @@
+2010-04-06  Giuseppe Scrivano <gscrivano@gnu.org>
+
+	doc: update users.txt
+	* users.txt: Add gcal.
+
 2010-04-06  Jim Meyering  <meyering@redhat.com>
 
 	init.sh: simply unset TMPDIR rather than risking env -i

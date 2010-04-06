@@ -12,6 +12,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   cvs             http://cvs.sv.gnu.org/viewcvs/cvs/ccvs/
   diffutils       http://git.sv.gnu.org/cgit/diffutils.git/
   findutils       http://cvs.sv.gnu.org/viewcvs/findutils/findutils/
+  gcal            http://git.savannah.gnu.org/gitweb/?p=gcal.git
   gettext         http://cvs.sv.gnu.org/viewcvs/gettext/gettext/
   gnuit           http://www.gnu.org/software/gnuit/
                   http://git.savannah.gnu.org/gitweb/?p=gnuit.git
