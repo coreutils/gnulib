@@ -1,5 +1,13 @@
 2010-04-06  Jim Meyering  <meyering@redhat.com>
 
+	init.sh: simply unset TMPDIR rather than risking env -i
+	* tests/init.sh (mktempd_): Using env -i is rather harsh, and
+	although it probably works fine on all Unix-based systems, some
+	systems (Cygwin?) cannot tolerate a totally cleared environment.
+	Suggestion from Eric Blake.
+
+2010-04-06  Jim Meyering  <meyering@redhat.com>
+
 	init.sh: portability fix: use env's POSIX-specified -i option not -u
 	* tests/init.sh (mktempd_): Use env -i and set PATH explicitly rather
 	than unportable env -u.  Solaris 5.11's env lacks support for -u.
