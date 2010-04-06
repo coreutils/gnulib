@@ -306,7 +306,7 @@ mktempd_()
   fail=0
 
   # First, try to use mktemp.
-  d=`env -u TMPDIR mktemp -d -t -p "$destdir_" "$template_" 2>/dev/null` \
+  d=`env -i PATH="$PATH" mktemp -d -t -p "$destdir_" "$template_" 2>/dev/null` \
     || fail=1
 
   # The resulting name must be in the specified directory.

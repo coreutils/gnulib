@@ -1,3 +1,9 @@
+2010-04-06  Jim Meyering  <meyering@redhat.com>
+
+	init.sh: portability fix: use env's POSIX-specified -i option not -u
+	* tests/init.sh (mktempd_): Use env -i and set PATH explicitly rather
+	than unportable env -u.  Solaris 5.11's env lacks support for -u.
+
 2010-04-05  Bruno Haible  <bruno@clisp.org>
 
 	btowc: Work around Cygwin 1.7.2 bug.
