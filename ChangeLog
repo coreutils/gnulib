@@ -1,3 +1,8 @@
+2010-04-06  Bruno Haible  <bruno@clisp.org>
+
+	Assume rmdir exists.
+	* lib/rmdir.c (rpl_rmdir): Remove code that invokes the rmdir program.
+
 2010-04-06  Giuseppe Scrivano <gscrivano@gnu.org>
 
 	doc: update users.txt

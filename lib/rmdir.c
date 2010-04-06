@@ -22,8 +22,6 @@
 
 #include <errno.h>
 #include <string.h>
-#include <sys/stat.h>
-#include <sys/types.h>
 
 #undef rmdir
 
@@ -33,7 +31,6 @@
 int
 rpl_rmdir (char const *dir)
 {
-#if HAVE_RMDIR
   /* Work around cygwin 1.5.x bug where rmdir("dir/./") succeeds.  */
   size_t len = strlen (dir);
   int result;
@@ -51,49 +48,4 @@ rpl_rmdir (char const *dir)
   if (result == -1 && errno == EINVAL)
     errno = ENOTDIR;
   return result;
-
-#else /* !HAVE_RMDIR */
-  /* rmdir adapted from GNU tar.  FIXME: Delete this implementation in
-     2010 if no one reports a system with missing rmdir.  */
-  pid_t cpid;
-  int status;
-  struct stat statbuf;
-
-  if (stat (dir, &statbuf) != 0)
-    return -1;                  /* errno already set */
-
-  if (!S_ISDIR (statbuf.st_mode))
-    {
-      errno = ENOTDIR;
-      return -1;
-    }
-
-  cpid = fork ();
-  switch (cpid)
-    {
-    case -1:                    /* cannot fork */
-      return -1;                /* errno already set */
-
-    case 0:                     /* child process */
-      execl ("/bin/rmdir", "rmdir", dir, (char *) 0);
-      _exit (1);
-
-    default:                    /* parent process */
-
-      /* Wait for kid to finish.  */
-
-      while (wait (&status) != cpid)
-        /* Do nothing.  */ ;
-
-      if (status)
-        {
-
-          /* /bin/rmdir failed.  */
-
-          errno = EIO;
-          return -1;
-        }
-      return 0;
-    }
-#endif /* !HAVE_RMDIR */
 }
