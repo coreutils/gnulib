@@ -1,6 +1,4 @@
 #!/bin/sh
-# $Id: srclist-update,v 1.19 2007-03-30 23:44:27 karl Exp $
-#
 # Check for files in directory $1 being up to date, according to the
 # list on stdin.  Don't actually make any changes, just show the diffs.
 #

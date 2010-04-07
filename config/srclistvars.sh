@@ -1,4 +1,3 @@
-# $Id: srclistvars.sh,v 1.28 2006-08-22 19:38:57 eggert Exp $
 # Variables for srclist-update and srclist.txt.
 # Will change for each user.
 
@@ -18,36 +17,26 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# per-user overrides.
 case $LOGNAME in
-jas | eggert)
-  : ${AUTOCONF=../autoconf}
-  : ${AUTOMAKE=../automake}
-  : ${GETTEXT=../gettext}
-  : ${GNUCONFIG=../config}
-  : ${GNUORG=../gnuorg}
-  : ${GNUWWWLICENSES=$GNUORG}
-  : ${GNUSTANDARDS=../gnustandards}
-  : ${LIBTOOL=../libtool}
-  : ${LIBCSRC=../libc}
-  : ${TEXINFOSRC=../texinfo}
-  ;;
-
 karl)
   : ${ACLOCAL=/usr/local/gnu/share/aclocal}
   : ${GNUBIN=/usr/local/gnu/bin}
+  : ${GNUORG=$HOME/gnu/gnuorg}
   : ${GNUWWWLICENSES=$HOME/gnu/www/www/licenses}
   : ${TEXMFROOT=/usr/local/texmf/texmf-dist}
-  : ${AUTOCONF=../autoconf}
-  : ${AUTOMAKE=../automake}
-  : ${EMACSSRC=../etrunk}
-  : ${GETTEXT=../gettext}
-  : ${GNUCONFIG=../config}
-  : ${GNUORG=$HOME/gnu/gnuorg}
-  : ${GNULIBSRC=../gnulib}
-  : ${GNUSTANDARDS=../gnustandards}
-  : ${LIBCSRC=../libc}
-  : ${LIBTOOL=../libtool}
-  : ${TEXINFOSRC=../texinfo}
   ;;
-
 esac
+
+# Default to sibling (of parent) directories.
+: ${AUTOCONF=../autoconf}
+: ${AUTOMAKE=../automake}
+: ${GETTEXT=../gettext}
+: ${GNUCONFIG=../config}
+: ${GNULIBSRC=../gnulib}
+: ${GNUORG=../gnuorg}
+: ${GNUSTANDARDS=../gnustandards}
+: ${GNUWWWLICENSES=$GNUORG}
+: ${LIBCSRC=../libc}
+: ${LIBTOOL=../libtool}
+: ${TEXINFOSRC=../texinfo}

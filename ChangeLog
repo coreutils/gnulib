@@ -1,3 +1,9 @@
+2010-04-07  Karl Berry  <karl@gnu.org>
+
+	* config/srclist.txt,
+	* config/srclistvars.sh,
+	* config/srclist-update: doc fixes.
+
 2010-04-07  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: add a PATH crosschecking syntax-check rule
