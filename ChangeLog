@@ -1,3 +1,11 @@
+2010-04-07  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: add a PATH crosschecking syntax-check rule
+	* top/maint.mk (sc_cross_check_PATH_usage_in_tests): New rule.
+	Useful if you use a test like the one in help-version (coreutils,
+	diffutils, grep, gzip) that ensures $(VERSION) matches what is
+	printed by prog --version.
+
 2010-04-06  Bruno Haible  <bruno@clisp.org>
 
 	Fix link error on mingw.
