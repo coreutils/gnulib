@@ -18,7 +18,7 @@ nw="$nw -Wtraditional"          # All compilers nowadays support ANSI C
 nw="$nw -Wconversion"           # These warnings usually don't point to mistakes.
 nw="$nw -Wsign-conversion"      # Likewise.
 # Enable all GCC warnings not in this list.
-gl_MANYWARN_COMPLEMENT[warnings], [$warnings], [$nw])
+gl_MANYWARN_COMPLEMENT([warnings], [$warnings], [$nw])
 for w in $warnings; do
   gl_WARN_ADD([$w])
 done
