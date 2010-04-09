@@ -1,4 +1,4 @@
-# serial 14
+# serial 15
 
 # See if we need to emulate a missing ftruncate function using fcntl or chsize.
 
@@ -7,10 +7,12 @@
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
 
-# FIXME: remove this macro, along with all uses of HAVE_FTRUNCATE in 2010,
+# FIXME: remove this macro, along with all uses of HAVE_FTRUNCATE in 2012,
 # if the check below provokes no more reports.  So far, the only report
 # arose from a test build of this gnulib module, cross-compiling to mingw:
 # <http://thread.gmane.org/gmane.comp.lib.gnulib.bugs/9203>
+# Now (in 2010), MSVC has been raised as a possible target:
+# <http://thread.gmane.org/gmane.comp.lib.gnulib.bugs/21394/focus=21396>
 
 AC_DEFUN([gl_FUNC_FTRUNCATE],
 [
