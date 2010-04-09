@@ -1,5 +1,16 @@
 2010-04-13  Eric Blake  <eblake@redhat.com>
 
+	getopt-gnu: match recent glibc fixes and posix ruling
+	* tests/test-getopt.h (test_getopt): Strengthen tests of leading
+	'+' handling, when requesting extensions.
+	* tests/test-getopt_long.h (test_getopt_long): Strengthen test of
+	'W;' handling.
+	* m4/getopt.m4 (gl_GETOPT_CHECK_HEADERS): Detect glibc 2.11 bug.
+	* doc/posix-functions/getopt.texi (getopt): Document this.
+	* doc/glibc-functions/getopt_long.texi (getopt_long): Likewise.
+	* doc/glibc-functions/getopt_long_only.texi (getopt_long_only):
+	Likewise.
+
 	getopt: merge bug fixes from glibc
 	* lib/getopt.c (_getopt_internal_r): Use correct message for 'W;'
 	diagnostics.  Honor '+:' correctly.  Reject ';'.

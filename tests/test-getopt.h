@@ -420,7 +420,7 @@ test_getopt (void)
       ASSERT (optind == 3);
       ASSERT (!output);
     }
-#endif
+#endif /* GNULIB_TEST_GETOPT_GNU */
 
   /* Check that invalid options are recognized; and that both opterr
      and leading ':' can silence output.  */
@@ -993,7 +993,6 @@ test_getopt (void)
           ASSERT (optind == 12);
         }
     }
-#endif
 
   /* Check that the '-' flag has to come first.  */
   for (start = OPTIND_MIN; start <= 1; start++)
@@ -1124,10 +1123,6 @@ test_getopt (void)
       argv[argc++] = "-+";
       argv[argc] = NULL;
       optind = start;
-      /* Suppress output, since glibc is inconsistent on whether this
-         prints a message:
-         http://sources.redhat.com/bugzilla/show_bug.cgi?id=11039 */
-      opterr = 0;
       getopt_loop (argc, argv, "+abp:q:",
                    &a_seen, &b_seen, &p_value, &q_value,
                    &non_options_count, non_options, &unrecognized, &output);
@@ -1138,7 +1133,7 @@ test_getopt (void)
       ASSERT (non_options_count == 0);
       ASSERT (unrecognized == '+');
       ASSERT (optind == 2);
-      ASSERT (!output);
+      ASSERT (output);
     }
 
   /* Check that '--' ends the argument processing.  */
@@ -1195,6 +1190,7 @@ test_getopt (void)
       ASSERT (optind = 1);
       ASSERT (!output);
     }
+#endif /* GNULIB_TEST_GETOPT_GNU */
 
   /* Check that the '+' flag has to come first.  */
   for (start = OPTIND_MIN; start <= 1; start++)
@@ -1263,6 +1259,111 @@ test_getopt (void)
         }
     }
 
-  /* No tests of "-:..." or "+:...", due to glibc bug:
-     http://sources.redhat.com/bugzilla/show_bug.cgi?id=11039 */
+#if GNULIB_TEST_GETOPT_GNU
+  /* If GNU extensions are supported, require compliance with POSIX
+     interpretation on leading '+' behavior.
+     http://austingroupbugs.net/view.php?id=191  */
+  for (start = OPTIND_MIN; start <= 1; start++)
+    {
+      int a_seen = 0;
+      int b_seen = 0;
+      const char *p_value = NULL;
+      const char *q_value = NULL;
+      int non_options_count = 0;
+      const char *non_options[10];
+      int unrecognized = 0;
+      bool output;
+      int argc = 0;
+      const char *argv[10];
+
+      argv[argc++] = "program";
+      argv[argc++] = "donald";
+      argv[argc++] = "-p";
+      argv[argc++] = "billy";
+      argv[argc++] = "duck";
+      argv[argc++] = "-a";
+      argv[argc++] = "bar";
+      argv[argc] = NULL;
+      optind = start;
+      opterr = 1;
+      getopt_loop (argc, argv, "+:abp:q:",
+                   &a_seen, &b_seen, &p_value, &q_value,
+                   &non_options_count, non_options, &unrecognized, &output);
+      ASSERT (strcmp (argv[0], "program") == 0);
+      ASSERT (strcmp (argv[1], "donald") == 0);
+      ASSERT (strcmp (argv[2], "-p") == 0);
+      ASSERT (strcmp (argv[3], "billy") == 0);
+      ASSERT (strcmp (argv[4], "duck") == 0);
+      ASSERT (strcmp (argv[5], "-a") == 0);
+      ASSERT (strcmp (argv[6], "bar") == 0);
+      ASSERT (argv[7] == NULL);
+      ASSERT (a_seen == 0);
+      ASSERT (b_seen == 0);
+      ASSERT (p_value == NULL);
+      ASSERT (q_value == NULL);
+      ASSERT (non_options_count == 0);
+      ASSERT (unrecognized == 0);
+      ASSERT (optind == 1);
+      ASSERT (!output);
+    }
+  for (start = OPTIND_MIN; start <= 1; start++)
+    {
+      int a_seen = 0;
+      int b_seen = 0;
+      const char *p_value = NULL;
+      const char *q_value = NULL;
+      int non_options_count = 0;
+      const char *non_options[10];
+      int unrecognized = 0;
+      bool output;
+      int argc = 0;
+      const char *argv[10];
+
+      argv[argc++] = "program";
+      argv[argc++] = "-p";
+      argv[argc] = NULL;
+      optind = start;
+      getopt_loop (argc, argv, "+:abp:q:",
+                   &a_seen, &b_seen, &p_value, &q_value,
+                   &non_options_count, non_options, &unrecognized, &output);
+      ASSERT (a_seen == 0);
+      ASSERT (b_seen == 0);
+      ASSERT (p_value == NULL);
+      ASSERT (q_value == NULL);
+      ASSERT (non_options_count == 0);
+      ASSERT (unrecognized == 'p');
+      ASSERT (optind == 2);
+      ASSERT (!output);
+    }
+  for (start = OPTIND_MIN; start <= 1; start++)
+    {
+      int a_seen = 0;
+      int b_seen = 0;
+      const char *p_value = NULL;
+      const char *q_value = NULL;
+      int non_options_count = 0;
+      const char *non_options[10];
+      int unrecognized = 0;
+      bool output;
+      int argc = 0;
+      const char *argv[10];
+
+      argv[argc++] = "program";
+      argv[argc++] = "-b";
+      argv[argc++] = "-p";
+      argv[argc] = NULL;
+      optind = start;
+      getopt_loop (argc, argv, "+:abp:q:",
+                   &a_seen, &b_seen, &p_value, &q_value,
+                   &non_options_count, non_options, &unrecognized, &output);
+      ASSERT (a_seen == 0);
+      ASSERT (b_seen == 1);
+      ASSERT (p_value == NULL);
+      ASSERT (q_value == NULL);
+      ASSERT (non_options_count == 0);
+      ASSERT (unrecognized == 'p');
+      ASSERT (optind == 3);
+      ASSERT (!output);
+    }
+#endif /* GNULIB_TEST_GETOPT_GNU */
 }

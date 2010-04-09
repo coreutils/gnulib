@@ -7,6 +7,14 @@ Gnulib module: getopt-gnu
 Portability problems fixed by Gnulib:
 @itemize
 @item
+The function @code{getopt_long} does not obey the combination of
+@samp{+} and @samp{:} flags in the options string on some platforms:
+glibc 2.11.
+@item
+The use of @samp{W;} in the optstring argument to does not always
+allow @code{-W foo} to behave synonymously with @code{--foo}:
+glibc 2.11.
+@item
 The function @code{getopt_long} does not support the @samp{+} flag in
 the options string on some platforms:
 MacOS X 10.5, AIX 5.2, OSF/1 5.1, Solaris 10.
@@ -33,11 +41,4 @@ AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Interix 3.5.
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-The glibc extension of using @samp{W;} in the optstring argument to
-allow @code{-W foo} to behave synonymously with @code{--foo} is not
-very reliable, even in glibc.
-@item
-Mixing a leading @samp{-} or @samp{+} with a leading @samp{:} in the
-optstring argument has inconsistent effects across platforms.
 @end itemize

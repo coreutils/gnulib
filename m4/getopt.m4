@@ -1,4 +1,4 @@
-# getopt.m4 serial 27
+# getopt.m4 serial 28
 dnl Copyright (C) 2002-2006, 2008-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -94,6 +94,10 @@ AC_DEFUN([gl_GETOPT_CHECK_HEADERS],
   dnl is left over from earlier calls, and neither setting optind = 0 nor
   dnl setting optreset = 1 get rid of this internal state.
   dnl POSIX is silent on optind vs. optreset, so we allow either behavior.
+  dnl POSIX 2008 does not specify leading '+' behavior, but see
+  dnl http://austingroupbugs.net/view.php?id=191 for a recommendation on
+  dnl the next version of POSIX.  For now, we only guarantee leading '+'
+  dnl behavior with getopt-gnu.
   if test -z "$gl_replace_getopt"; then
     AC_CACHE_CHECK([whether getopt is POSIX compatible],
       [gl_cv_func_getopt_posix],
@@ -253,6 +257,15 @@ main ()
                  return 6;
                if (getopt (3, argv, "-p") != 'p')
                  return 7;
+             }
+             /* This code fails on glibc 2.11.  */
+             {
+               char *argv[] = { "program", "-b", "-a", NULL };
+               optind = opterr = 0;
+               if (getopt (3, argv, "+:a:b") != 'b')
+                 return 8;
+               if (getopt (3, argv, "+:a:b") != ':')
+                 return 9;
              }
              return 0;
            ]])],
