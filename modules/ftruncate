@@ -1,6 +1,12 @@
 Description:
 ftruncate() function: truncate an open file to a specified length.
 
+Status:
+obsolete
+
+Notice:
+This module is obsolete.
+
 Files:
 lib/ftruncate.c
 m4/ftruncate.m4
@@ -22,4 +28,3 @@ GPL
 
 Maintainer:
 Jim Meyering
-

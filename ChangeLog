@@ -1,3 +1,11 @@
+2010-04-09  Jim Meyering  <meyering@redhat.com>
+
+	ftruncate: mark module as obsolete; even MinGW provides it, now
+	* modules/ftruncate (Status): Obsolete.
+	(Notice): Say that.
+	* doc/posix-functions/ftruncate.texi: Don't say MinGW lacks it.
+	http://thread.gmane.org/gmane.comp.lib.gnulib.bugs/9203
+
 2010-04-08  Bruno Haible  <bruno@clisp.org>
 
 	Fix side effects from tests-related modules.
