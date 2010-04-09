@@ -859,14 +859,18 @@ sc_copyright_check:
 _hv_file ?= $(srcdir)/tests/help-version
 _hv_regex ?= ^ *\. [^ ]*/init\.sh
 sc_cross_check_PATH_usage_in_tests:
-	@if grep -l 'VERSION mismatch' $(_hv_file) >/dev/null		\
-	    && grep -lE '$(_hv_regex)' $(_hv_file) >/dev/null; then	\
-	  good=$$(grep -E '$(_hv_regex)' < $(_hv_file));		\
-	  grep -LFx "$$good"						\
-		$$(grep -lE '$(_hv_regex)' $$($(VC_LIST_EXCEPT)))	\
-	      | grep . &&						\
-	    { echo "$(ME): the above files use path_prepend_ inconsistently" \
-		1>&2; exit 1; } || :;					\
+	@if test -f $(_hv_file); then					\
+	  if grep -l 'VERSION mismatch' $(_hv_file) >/dev/null		\
+	      && grep -lE '$(_hv_regex)' $(_hv_file) >/dev/null; then	\
+	    good=$$(grep -E '$(_hv_regex)' < $(_hv_file));		\
+	    grep -LFx "$$good"						\
+		  $$(grep -lE '$(_hv_regex)' $$($(VC_LIST_EXCEPT)))	\
+		| grep . &&						\
+	      { echo "$(ME): the above files use path_prepend_ inconsistently" \
+		  1>&2; exit 1; } || :;					\
+	  fi;								\
+	else								\
+	  echo "$@: skipped: no such file: $(_hv_file)";		\
 	fi
 
 # #if HAVE_... will evaluate to false for any non numeric string.

@@ -1,5 +1,9 @@
 2010-04-09  Jim Meyering  <meyering@redhat.com>
 
+	maint.mk: print better diagnostic when there is no $(_hv_file)
+	* top/maint.mk (sc_cross_check_PATH_usage_in_tests): Skip test and
+	announce that when $(_hv_file) (aka help-version) does not exist.
+
 	init.sh: run tr in the "C" locale to avoid multibyte interpretation
 	* tests/init.sh (rand_bytes_): Run tr in the "C" locale so it does
 	not try to interpret its random input bytes.  Jarno Rajahalme reported
