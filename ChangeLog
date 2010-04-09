@@ -1,3 +1,12 @@
+2010-04-27  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: syntax-check: prohibit HAVE_<header>_H that are always true
+	Derive the list of guaranteed header names from gnulib/lib/*.in.h,
+	and use that to create a regexp used to detect all #if HAVE_..._H uses.
+	* top/maint.mk (sc_prohibit_always_true_header_tests): New rule.
+	(gl_assured_headers_, az_, AZ_): Define.
+	(gl_header_upper_case_or_, gl_have_header_regex_): Define.
+
 2010-04-26  Jim Meyering  <jim@meyering.net>
 	    Bruno Haible  <bruno@clisp.org>
 
