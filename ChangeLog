@@ -1,5 +1,12 @@
 2010-04-09  Jim Meyering  <meyering@redhat.com>
 
+	init.sh: run tr in the "C" locale to avoid multibyte interpretation
+	* tests/init.sh (rand_bytes_): Run tr in the "C" locale so it does
+	not try to interpret its random input bytes.  Jarno Rajahalme reported
+	that ./test-xalloc-die.sh would fail with "tr: Illegal byte sequence".
+	on Darwin 10.3.0 with LC_CTYPE=UTF-8.
+	(mktempd_): Likewise, just in case.
+
 	ftruncate: add two years to projected module removal date: 2012
 	* m4/ftruncate.m4: Adjust comments.
 

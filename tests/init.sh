@@ -259,7 +259,7 @@ rand_bytes_()
   if test -r "$dev_rand_"; then
     # Note: 256-length($chars_) == 194; 3 copies of $chars_ is 186 + 8 = 194.
     dd ibs=$n_ count=1 if=$dev_rand_ 2>/dev/null \
-      | tr -c $chars_ 01234567$chars_$chars_$chars_
+      | LC_ALL=C tr -c $chars_ 01234567$chars_$chars_$chars_
     return
   fi
 
@@ -276,7 +276,7 @@ rand_bytes_()
 
   echo "$data_" \
     | dd bs=1 skip=50 count=$n_ 2>/dev/null \
-    | tr -c $chars_ 01234567$chars_$chars_$chars_
+    | LC_ALL=C tr -c $chars_ 01234567$chars_$chars_$chars_
 }
 
 mktempd_()
