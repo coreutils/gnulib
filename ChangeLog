@@ -36,6 +36,7 @@
 	* tests/test-trunc2.c (check): Likewise.
 	* tests/test-truncf2.c (check): Likewise.
 	* tests/test-round2.c (equal): Likewise.
+	Reported by Jarno Rajahalme <jarno.rajahalme@nsn.com>.
 
 2010-04-07  Karl Berry  <karl@gnu.org>
 
