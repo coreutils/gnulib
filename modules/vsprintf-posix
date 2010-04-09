@@ -1,6 +1,12 @@
 Description:
 POSIX compatible vsprintf() function: print formatted output to a string
 
+Comment:
+This module should not be used as a dependency from a test module,
+otherwise when this module occurs as a tests-related module, it will
+have side effects on the compilation of the 'vasnprintf' module, if
+that module occurs among the main modules in lib/.
+
 Files:
 lib/vsprintf.c
 m4/vsprintf-posix.m4

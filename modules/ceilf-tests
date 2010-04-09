@@ -10,7 +10,6 @@ float
 isnanf-nolibm
 stdbool
 stdint
-fprintf-posix
 
 configure.ac:
 

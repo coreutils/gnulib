@@ -9,7 +9,6 @@ Depends-on:
 isnand-nolibm
 stdbool
 stdint
-fprintf-posix
 verify
 
 configure.ac:

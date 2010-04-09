@@ -16,6 +16,9 @@
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2007.  */
 
+/* When this test fails on some platform, build it together with the gnulib
+   module 'fprintf-posix' for optimal debugging output.  */
+
 #include <config.h>
 
 #include <math.h>
@@ -123,8 +126,10 @@ check (float x)
       return 0;
     else
       {
+#if GNULIB_TEST_FPRINTF_POSIX
         fprintf (stderr, "truncf %g(%a) = %g(%a) or %g(%a)?\n",
                  x, x, reference, reference, result, result);
+#endif
         return 1;
       }
   }

@@ -1,3 +1,34 @@
+2010-04-08  Bruno Haible  <bruno@clisp.org>
+
+	Fix side effects from tests-related modules.
+	* modules/dprintf-posix (Comment): New section.
+	* modules/fprintf-posix (Comment): Likewise.
+	* modules/obstack-printf-posix (Comment): Likewise.
+	* modules/printf-posix (Comment): Likewise.
+	* modules/snprintf-posix (Comment): Likewise.
+	* modules/sprintf-posix (Comment): Likewise.
+	* modules/vasnprintf-posix (Comment): Likewise.
+	* modules/vasprintf-posix (Comment): Likewise.
+	* modules/vdprintf-posix (Comment): Likewise.
+	* modules/vfprintf-posix (Comment): Likewise.
+	* modules/vprintf-posix (Comment): Likewise.
+	* modules/vsnprintf-posix (Comment): Likewise.
+	* modules/vsprintf-posix (Comment): Likewise.
+	* modules/xprintf-posix (Comment): Likewise.
+	* modules/xvasprintf-posix (Comment): Likewise.
+	* modules/ceilf-tests (Depends-on): Remove fprintf-posix.
+	* modules/floorf-tests (Depends-on): Likewise.
+	* modules/round-tests (Depends-on): Likewise.
+	* modules/roundf-tests (Depends-on): Likewise.
+	* modules/trunc-tests (Depends-on): Likewise.
+	* modules/truncf-tests (Depends-on): Likewise.
+	* tests/test-ceilf2.c (check): Don't invoke fprintf if the
+	'fprintf-posix' module is not present.
+	* tests/test-floorf2.c (check): Likewise.
+	* tests/test-trunc2.c (check): Likewise.
+	* tests/test-truncf2.c (check): Likewise.
+	* tests/test-round2.c (equal): Likewise.
+
 2010-04-07  Karl Berry  <karl@gnu.org>
 
 	* config/srclist.txt,

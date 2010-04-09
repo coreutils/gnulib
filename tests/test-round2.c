@@ -17,6 +17,9 @@
 /* Written by Ben Pfaff <blp@gnu.org>, 2007.
    Heavily based on code by Bruno Haible. */
 
+/* When this test fails on some platform, build it together with the gnulib
+   module 'fprintf-posix' for optimal debugging output.  */
+
 /* Get the two reference implementations of round under the names
    round_reference1 and round_reference2.
 
@@ -62,8 +65,10 @@ equal (const char *message, DOUBLE x, DOUBLE y0, DOUBLE y1)
     return true;
   else
     {
+#if GNULIB_TEST_FPRINTF_POSIX
       fprintf (stderr, "%s: "FUNCTION"(%g(%a)) = %g(%a) or %g(%a)?\n",
                message, x, x, y0, y0, y1, y1);
+#endif
       return false;
     }
 }

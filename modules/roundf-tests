@@ -12,7 +12,6 @@ floorf
 isnanf-nolibm
 stdbool
 stdint
-fprintf-posix
 verify
 
 configure.ac:
