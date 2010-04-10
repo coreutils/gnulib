@@ -1,4 +1,4 @@
-# serial 27
+# serial 28
 # See if we need to use our replacement for Solaris' openat et al functions.
 
 dnl Copyright (C) 2004-2010 Free Software Foundation, Inc.
@@ -106,11 +106,11 @@ AC_DEFUN([gl_FUNC_FCHOWNAT],
   AC_CHECK_FUNC([fchownat],
     [gl_FUNC_FCHOWNAT_DEREF_BUG([REPLACE_FCHOWNAT=1
       AC_DEFINE([FCHOWNAT_NOFOLLOW_BUG], [1], [Define to 1 if your
-      platform has fchownat, but it cannot perform lchown tasks.])])],
+      platform has fchownat, but it cannot perform lchown tasks.])
+      if test $REPLACE_CHOWN = 1; then
+        REPLACE_FCHOWNAT=1
+      fi])],
     [HAVE_FCHOWNAT=0])
-  if test $REPLACE_CHOWN = 1; then
-    REPLACE_FCHOWNAT=1
-  fi
   if test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1; then
     AC_LIBOBJ([fchownat])
   fi

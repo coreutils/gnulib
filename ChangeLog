@@ -1,3 +1,9 @@
+2010-04-10  Bruno Haible  <address@hidden>
+
+	fchownat: Fix a C++ test error on Solaris 8.
+	* m4/openat.m4 (gl_FUNC_FCHOWNAT): Don't set REPLACE_FCHOWNAT to 1 if
+	the function does not exist.
+
 2010-04-10  Bruno Haible  <bruno@clisp.org>
 
 	vasnprintf: Add more tests.
