@@ -1,3 +1,14 @@
+2010-04-10  Bruno Haible  <bruno@clisp.org>
+
+	strnlen: Fix warning in C++ mode on MacOS X.
+	* lib/string.in.h (strnlen): Use the modern idiom.
+	* m4/strnlen.m4 (gl_FUNC_STRNLEN): Set REPLACE_STRNLEN to 1, instead of
+	defining strnlen as a macro already in <config.h>.
+	* m4/string_h.m4 (gl_HEADER_STRING_H_DEFAULTS): Initialize
+	REPLACE_STRNLEN.
+	* modules/string (Makefile.am): Substitute REPLACE_STRNLEN.
+	Reported by Jarno Rajahalme <jarno.rajahalme@nsn.com>.
+
 2010-04-08  James Youngman  <jay@gnu.org>
 
 	* doc/manywarnings.texi (manywarnings): Add missing parenthesis in
