@@ -372,7 +372,7 @@ sc_require_config_h_first:
 
 sc_prohibit_HAVE_MBRTOWC:
 	@prohibit='\bHAVE_MBRTOWC\b'					\
-	halt="do not use $$re; it is always defined"			\
+	halt="do not use $$prohibit; it is always defined"		\
 	  $(_sc_search_regexp)
 
 # To use this "command" macro, you must first define two shell variables:

@@ -1,3 +1,9 @@
+2010-04-10  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: correct a diagnostic
+	* top/maint.mk (sc_prohibit_HAVE_MBRTOWC): Fix obsolete use of $re
+	in diagnostic; now use $prohibit.
+
 2010-04-10  Bruno Haible  <address@hidden>
 
 	fchownat: Fix a C++ test error on Solaris 8.
