@@ -2605,8 +2605,16 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                           count = wctomb (cbuf, *arg);
 #   endif
                           if (count <= 0)
-                            /* Inconsistency.  */
-                            abort ();
+                            {
+                              /* Cannot convert.  */
+                              if (!(result == resultbuf || result == NULL))
+                                free (result);
+                              if (buf_malloced != NULL)
+                                free (buf_malloced);
+                              CLEANUP ();
+                              errno = EILSEQ;
+                              return NULL;
+                            }
                           ENSURE_ALLOCATION (xsum (length, count));
                           memcpy (result + length, cbuf, count);
                           length += count;

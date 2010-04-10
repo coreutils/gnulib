@@ -1,5 +1,12 @@
 2010-04-10  Bruno Haible  <bruno@clisp.org>
 
+	vasnprintf: Fix crash in %ls directive.
+	* lib/vasnprintf.c (VASNPRINTF): Don't abort when a unconvertible wide
+	string is passed as argument to %ls, with no precision and no width.
+	Reported by Jarno Rajahalme <jarno.rajahalme@nsn.com>.
+
+2010-04-10  Bruno Haible  <bruno@clisp.org>
+
 	vasnprintf: Fix multiple test failures on mingw.
 	* lib/vasnprintf.c (SNPRINTF) [mingw]: Define to snprintf, not
 	_snprintf, or snwprintf, not _snwprintf.
