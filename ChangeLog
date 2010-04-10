@@ -1,5 +1,11 @@
 2010-04-10  Bruno Haible  <bruno@clisp.org>
 
+	mkdir: Make it work on mingw64.
+	* lib/sys_stat.in.h: Include <direct.h> together with <io.h>.
+	Reported by Roman Donchenko (Роман Донченко) <dxdragon@yandex.ru>.
+
+2010-04-10  Bruno Haible  <bruno@clisp.org>
+
 	Don't override improved macro from newer autoconf.
 	* m4/gnulib-common.m4 (AC_C_RESTRICT): Don't define for
 	autoconf >= 2.62.
