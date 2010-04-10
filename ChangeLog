@@ -1,5 +1,10 @@
 2010-04-10  Bruno Haible  <bruno@clisp.org>
 
+	write: Fix a C++ test error on mingw.
+	* lib/unistd.in.h (write): Use _GL_CXXALIAS_SYS_CAST.
+
+2010-04-10  Bruno Haible  <bruno@clisp.org>
+
 	vasnprintf test: Reduce code duplication.
 	* tests/test-vasnprintf.c (test_function): New function, extracted from
 	test_vasnprintf.

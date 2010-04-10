@@ -1268,7 +1268,10 @@ _GL_FUNCDECL_RPL (write, ssize_t, (int fd, const void *buf, size_t count)
                                   _GL_ARG_NONNULL ((2)));
 _GL_CXXALIAS_RPL (write, ssize_t, (int fd, const void *buf, size_t count));
 # else
-_GL_CXXALIAS_SYS (write, ssize_t, (int fd, const void *buf, size_t count));
+/* Need to cast, because on mingw, the third parameter is
+                                                             unsigned int count
+   and the return type is 'int'.  */
+_GL_CXXALIAS_SYS_CAST (write, ssize_t, (int fd, const void *buf, size_t count));
 # endif
 _GL_CXXALIASWARN (write);
 #endif
