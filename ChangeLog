@@ -1,5 +1,9 @@
 2010-04-13  Eric Blake  <eblake@redhat.com>
 
+	getopt: merge bug fixes from glibc
+	* lib/getopt.c (_getopt_internal_r): Use correct message for 'W;'
+	diagnostics.  Honor '+:' correctly.  Reject ';'.
+
 	getopt-posix: detect MacOS bug
 	* m4/getopt.m4 (gl_GETOPT_CHECK_HEADERS): Reject MacOS botch of
 	optind when missing a required argument.
