@@ -2,6 +2,7 @@
 
 	mkdir: Make it work on mingw64.
 	* lib/sys_stat.in.h: Include <direct.h> together with <io.h>.
+	* lib/mkdir.c: Update comment.
 	Reported by Roman Donchenko (Роман Донченко) <dxdragon@yandex.ru>.
 
 2010-04-10  Bruno Haible  <bruno@clisp.org>
