@@ -26,20 +26,8 @@
 
 #include "macros.h"
 
-static char *
-my_asnprintf (char *resultbuf, size_t *lengthp, const char *format, ...)
-{
-  va_list args;
-  char *ret;
-
-  va_start (args, format);
-  ret = vasnprintf (resultbuf, lengthp, format, args);
-  va_end (args);
-  return ret;
-}
-
 static void
-test_vasnprintf ()
+test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
 {
   char buf[8];
   int size;
@@ -73,39 +61,28 @@ test_vasnprintf ()
     }
 }
 
+static char *
+my_asnprintf (char *resultbuf, size_t *lengthp, const char *format, ...)
+{
+  va_list args;
+  char *ret;
+
+  va_start (args, format);
+  ret = vasnprintf (resultbuf, lengthp, format, args);
+  va_end (args);
+  return ret;
+}
+
+static void
+test_vasnprintf ()
+{
+  test_function (my_asnprintf);
+}
+
 static void
 test_asnprintf ()
 {
-  char buf[8];
-  int size;
-
-  for (size = 0; size <= 8; size++)
-    {
-      size_t length = size;
-      char *result = asnprintf (NULL, &length, "%d", 12345);
-      ASSERT (result != NULL);
-      ASSERT (strcmp (result, "12345") == 0);
-      ASSERT (length == 5);
-      free (result);
-    }
-
-  for (size = 0; size <= 8; size++)
-    {
-      size_t length;
-      char *result;
-
-      memcpy (buf, "DEADBEEF", 8);
-      length = size;
-      result = asnprintf (buf, &length, "%d", 12345);
-      ASSERT (result != NULL);
-      ASSERT (strcmp (result, "12345") == 0);
-      ASSERT (length == 5);
-      if (size < 6)
-        ASSERT (result != buf);
-      ASSERT (memcmp (buf + size, "DEADBEEF" + size, 8 - size) == 0);
-      if (result != buf)
-        free (result);
-    }
+  test_function (asnprintf);
 }
 
 int

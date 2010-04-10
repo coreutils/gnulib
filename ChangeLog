@@ -1,5 +1,12 @@
 2010-04-10  Bruno Haible  <bruno@clisp.org>
 
+	vasnprintf test: Reduce code duplication.
+	* tests/test-vasnprintf.c (test_function): New function, extracted from
+	test_vasnprintf.
+	(test_vasnprintf, test_asnprintf): Invoke it.
+
+2010-04-10  Bruno Haible  <bruno@clisp.org>
+
 	strnlen: Fix warning in C++ mode on MacOS X.
 	* lib/string.in.h (strnlen): Use the modern idiom.
 	* m4/strnlen.m4 (gl_FUNC_STRNLEN): Set REPLACE_STRNLEN to 1, instead of
