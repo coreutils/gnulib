@@ -1,3 +1,10 @@
+2010-04-10  Bruno Haible  <bruno@clisp.org>
+
+	Don't override improved macro from newer autoconf.
+	* m4/gnulib-common.m4 (AC_C_RESTRICT): Don't define for
+	autoconf >= 2.62.
+	Reported by Joel E. Denny <jdenny@clemson.edu>.
+
 2010-04-10  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: new syntax-check rule: prohibit empty lines at end of file
