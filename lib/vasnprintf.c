@@ -148,8 +148,14 @@
 # define USE_SNPRINTF 1
 # if HAVE_DECL__SNWPRINTF
    /* On Windows, the function swprintf() has a different signature than
-      on Unix; we use the _snwprintf() function instead.  */
-#  define SNPRINTF _snwprintf
+      on Unix; we use the function _snwprintf() or - on mingw - snwprintf()
+      instead.  The mingw function snwprintf() has fewer bugs than the
+      MSVCRT function _snwprintf(), so prefer that.  */
+#  if defined __MINGW32__
+#   define SNPRINTF snwprintf
+#  else
+#   define SNPRINTF _snwprintf
+#  endif
 # else
    /* Unix.  */
 #  define SNPRINTF swprintf
@@ -167,8 +173,15 @@
 #  define USE_SNPRINTF 0
 # endif
 # if HAVE_DECL__SNPRINTF
-   /* Windows.  */
-#  define SNPRINTF _snprintf
+   /* Windows.  The mingw function snprintf() has fewer bugs than the MSVCRT
+      function _snprintf(), so prefer that.  */
+#  if defined __MINGW32__
+#   define SNPRINTF snprintf
+    /* Here we need to call the native snprintf, not rpl_snprintf.  */
+#   undef snprintf
+#  else
+#   define SNPRINTF _snprintf
+#  endif
 # else
    /* Unix.  */
 #  define SNPRINTF snprintf
