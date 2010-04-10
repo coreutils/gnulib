@@ -1,5 +1,20 @@
 2010-04-10  Bruno Haible  <bruno@clisp.org>
 
+	vasnprintf: Correct handling of unconvertible wide string arguments.
+	* lib/vasnprintf.c (MAX_ROOM_NEEDED): New function, extracted from
+	VASNPRINTF.
+	(VASNPRINTF): Use it. After snprintf failed, allocate more memory only
+	if HAVE_SNPRINTF_RETVAL_C99 is false and the allocated memory is
+	smaller than the expected maximum need for the directive. Set errno to
+	EILSEQ, not EINVAL, when the directive is 'c' or 's'.
+	(local_strnlen, local_wcslen, local_wcsnlen): Update conditions.
+	* m4/vasnprintf.m4 (gl_PREREQ_VASNPRINTF): Require AC_C_INLINE and
+	gl_SNPRINTF_RETVAL_C99. Define HAVE_SNPRINTF_RETVAL_C99.
+	* modules/vasnprintf (Files): Add m4/printf.m4.
+	Reported by Jarno Rajahalme <jarno.rajahalme@nsn.com>.
+
+2010-04-10  Bruno Haible  <bruno@clisp.org>
+
 	vasnprintf: Fix crash in %ls directive.
 	* lib/vasnprintf.c (VASNPRINTF): Don't abort when a unconvertible wide
 	string is passed as argument to %ls, with no precision and no width.
