@@ -1,5 +1,9 @@
 2010-04-10  Bruno Haible  <bruno@clisp.org>
 
+	vasnprintf: Add more tests.
+	* tests/test-vasnprintf-posix.c: Include <errno.h>.
+	(test_function): Test converting an invalid wide string.
+
 	vasnprintf: Correct handling of unconvertible wide string arguments.
 	* lib/vasnprintf.c (MAX_ROOM_NEEDED): New function, extracted from
 	VASNPRINTF.

@@ -20,6 +20,7 @@
 
 #include "vasnprintf.h"
 
+#include <errno.h>
 #include <float.h>
 #include <stdarg.h>
 #include <stddef.h>
@@ -3634,6 +3635,46 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
         free (result);
         free (block);
       }
+  }
+#endif
+
+#if HAVE_WCHAR_T
+  /* Test that converting an invalid wchar_t[] to char[] fails with EILSEQ.  */
+  {
+    static const wchar_t input[] = { (wchar_t) 1702057263, 114, 0 };
+    size_t length;
+    char *result = my_asnprintf (NULL, &length, "%ls %d", input, 99);
+    if (result == NULL)
+      ASSERT (errno == EILSEQ);
+    else
+      free (result);
+  }
+  {
+    static const wchar_t input[] = { (wchar_t) 1702057263, 114, 0 };
+    size_t length;
+    char *result = my_asnprintf (NULL, &length, "%3ls %d", input, 99);
+    if (result == NULL)
+      ASSERT (errno == EILSEQ);
+    else
+      free (result);
+  }
+  {
+    static const wchar_t input[] = { (wchar_t) 1702057263, 114, 0 };
+    size_t length;
+    char *result = my_asnprintf (NULL, &length, "%.1ls %d", input, 99);
+    if (result == NULL)
+      ASSERT (errno == EILSEQ);
+    else
+      free (result);
+  }
+  {
+    static const wchar_t input[] = { (wchar_t) 1702057263, 114, 0 };
+    size_t length;
+    char *result = my_asnprintf (NULL, &length, "%3.1ls %d", input, 99);
+    if (result == NULL)
+      ASSERT (errno == EILSEQ);
+    else
+      free (result);
   }
 #endif
 }
