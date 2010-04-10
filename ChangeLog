@@ -1,5 +1,8 @@
 2010-04-10  Jim Meyering  <meyering@redhat.com>
 
+	maint.mk: new syntax-check rule: prohibit empty lines at end of file
+	* top/maint.mk (sc_prohibit_empty_lines_at_EOF): New rule.
+
 	maint.mk: correct a diagnostic
 	* top/maint.mk (sc_prohibit_HAVE_MBRTOWC): Fix obsolete use of $re
 	in diagnostic; now use $prohibit.
