@@ -1,4 +1,4 @@
-# lib-link.m4 serial 20 (gettext-0.18)
+# lib-link.m4 serial 21 (gettext-0.18)
 dnl Copyright (C) 2001-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -74,7 +74,17 @@ AC_DEFUN([AC_LIB_HAVE_LINKFLAGS],
 
   AC_CACHE_CHECK([for lib[]$1], [ac_cv_lib[]Name], [
     ac_save_LIBS="$LIBS"
-    LIBS="$LIBS $LIB[]NAME"
+    dnl If $LIB[]NAME contains some -l options, add it to the end of LIBS,
+    dnl because these -l options might require -L options that are present in
+    dnl LIBS. -l options benefit only from the -L options listed before it.
+    dnl Otherwise, add it to the front of LIBS, because it may be a static
+    dnl library that depends on another static library that is present in LIBS.
+    dnl Static libraries benefit only from the static libraries listed after
+    dnl it.
+    case " $LIB[]NAME" in
+      *" -l"*) LIBS="$LIBS $LIB[]NAME" ;;
+      *)       LIBS="$LIB[]NAME $LIBS" ;;
+    esac
     AC_TRY_LINK([$3], [$4],
       [ac_cv_lib[]Name=yes],
       [ac_cv_lib[]Name='m4_if([$5], [], [no], [[$5]])'])
