@@ -1,5 +1,12 @@
 2010-04-11  Jim Meyering  <meyering@redhat.com>
 
+	maint.mk: print the elapsed time for each syntax-check rule
+	* top/maint.mk (sc_m_rules_): Save start time in a file.
+	(sc_z_rules_): New rules: remove temp file and print elapsed time.
+	(local-check): Interpose the .z rules
+
+2010-04-11  Jim Meyering  <meyering@redhat.com>
+
 	maint.mk: detect_empty_lines_at_EOF_: avoid FP for an empty file
 	* top/maint.mk (detect_empty_lines_at_EOF_): Don't confuse an
 	empty file with one that ends in an empty line.

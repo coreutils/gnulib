@@ -129,8 +129,23 @@ sc_m_rules_ = $(patsubst %, %.m, $(syntax-check-rules))
 .PHONY: $(sc_m_rules_)
 $(sc_m_rules_):
 	@echo $(patsubst sc_%.m, %, $@)
+	@date +%s.%N > .sc-start-$(basename $@)
 
-local-check := $(filter-out $(local-checks-to-skip), $(local-checks-available))
+# Compute and print the elapsed time for each syntax-check rule.
+sc_z_rules_ = $(patsubst %, %.z, $(syntax-check-rules))
+.PHONY: $(sc_z_rules_)
+$(sc_z_rules_): %.z: %
+	@end=$$(date +%s.%N);						\
+	start=$$(cat .sc-start-$*);					\
+	rm -f .sc-start-$*;						\
+	awk -v s=$$start -v e=$$end					\
+	  'END {printf "%.2f: $* done\n", e - s}' < /dev/null
+
+# The patsubst here is to replace each sc_% rule with its sc_%.z wrapper
+# that computes and prints elapsed time.
+local-check :=								\
+  $(patsubst sc_%, sc_%.z,						\
+    $(filter-out $(local-checks-to-skip), $(local-checks-available)))
 
 syntax-check: $(local-check)
 #	@grep -nE '#  *include <(limits|std(def|arg|bool))\.h>'		\
