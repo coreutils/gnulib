@@ -1,3 +1,9 @@
+2010-04-11  Bruno Haible  <bruno@clisp.org>
+
+	libunistring: Detect libunistring also when it depends on libiconv.
+	* m4/libunistring.m4 (gl_LIBUNISTRING): Unset the cached result before
+	the second AC_LIB_HAVE_LINKFLAGS invocation.
+
 2010-04-11  James Youngman  <jay@gnu.org>
 
 	close-stream: declare local scalars to be "const"
