@@ -1,5 +1,11 @@
 2010-04-11  Jim Meyering  <meyering@redhat.com>
 
+	maint.mk: improve empty-line-at-EOF check
+	* top/maint.mk (sc_prohibit_empty_lines_at_EOF): Use Perl-based
+	solution, rather than tail+Perl-based one.  The latter would read
+	a few kilobytes from the end of each file, and did not handle empty
+	files properly.
+
 	maint.mk: print the elapsed time for each syntax-check rule
 	* top/maint.mk (sc_m_rules_): Save start time in a file.
 	(sc_z_rules_): New rules: remove temp file and print elapsed time.

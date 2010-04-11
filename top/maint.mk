@@ -674,27 +674,40 @@ sc_prohibit_cvs_keyword:
 	halt='do not use CVS keyword expansion'				\
 	  $(_sc_search_regexp)
 
-# The following tail+perl pipeline would be more concise, and would
-# produce slightly better output (including counts) if written as
+ include $(srcdir)/dist-check.mk
+
+# This Perl code is slightly obfuscated.  Not only is each "$" doubled
+# because it's in a Makefile, but the $$c's are comments;  we cannot
+# use "#" due to the way the script ends up concatenated onto one line.
+# It would be much more concise, and would produce better output (including
+# counts) if written as:
 #   perl -ln -0777 -e '/\n(\n+)$/ and print "$ARGV: ".length $1' ...
 # but that would be far less efficient, reading the entire contents
-# of each file, rather than just the last few bytes of each.
+# of each file, rather than just the last two bytes of each.
 #
-# This is a perl script that operates on the output of
-# tail -n1 TWO_OR_MORE_FILES
+# This is a perl script that is expected to be the single-quoted argument
+# to a command-line "-le".  The remaining arguments are file names.
 # Print the name of each file that ends in two or more newline bytes.
 # Exit nonzero if at least one such file is found, otherwise, exit 0.
+# Warn about, but otherwise ignore open failure.  Ignore seek/read failure.
 #
 # Use this if you want to remove trailing empty lines from selected files:
 #   perl -pi -0777 -e 's/\n\n+$/\n/' files...
 #
 detect_empty_lines_at_EOF_ =						\
-  /^==> ([^\n]+) <==\n\n\n/m and (print "$$1\n"), $$fail = 1;		\
-  END { exit defined $$fail }
+  foreach my $$f (@ARGV) {						\
+    open F, "<", $$f or (warn "failed to open $$f: $$!\n"), next;	\
+    my $$p = sysseek (F, -2, 2);					\
+    my $$c = "seek failure probably means file has < 2 bytes; ignore";	\
+    my $$two;								\
+    defined $$p and $$p = sysread F, $$two, 2;				\
+    close F;								\
+    $$c = "ignore read failure";					\
+    $$p && $$two eq "\n\n" and (print $$f), $$fail=1;			\
+    } END { exit defined $$fail }
 sc_prohibit_empty_lines_at_EOF:
-	@tail -n1 $$($(VC_LIST_EXCEPT)) /dev/null			\
-	    | perl -00 -ne '$(detect_empty_lines_at_EOF_)'		\
-	  || { echo '$(ME): the above files end with empty line(s)'	\
+	@perl -le '$(detect_empty_lines_at_EOF_)' $$($(VC_LIST_EXCEPT))	\
+          || { echo '$(ME): the above files end with empty line(s)'     \
 		1>&2; exit 1; } || :;					\
 
 # Make sure we don't use st_blocks.  Use ST_NBLOCKS instead.
