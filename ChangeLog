@@ -1,5 +1,11 @@
 2010-04-11  Bruno Haible  <bruno@clisp.org>
 
+	libunistring: Correct value of $LTLIBUNISTRING.
+	* m4/libunistring.m4 (gl_LIBUNISTRING): When it depends on libiconv,
+	correct the value of $LTLIBUNISTRING.
+
+2010-04-11  Bruno Haible  <bruno@clisp.org>
+
 	havelib: Add static libraries to LIBS in the right order.
 	* m4/lib-link.m4 (AC_LIB_HAVE_LINKFLAGS): When $LIB[]NAME contains no
 	-l options, prepend it to $LIBS, instead of appending it to $LIBS.

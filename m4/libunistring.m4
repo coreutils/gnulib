@@ -1,4 +1,4 @@
-# libunistring.m4 serial 3
+# libunistring.m4 serial 4
 dnl Copyright (C) 2009-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -33,6 +33,7 @@ AC_DEFUN([gl_LIBUNISTRING],
         [no, consider installing GNU libunistring])
       if test -n "$LIBUNISTRING"; then
         LIBUNISTRING="$LIBUNISTRING $LIBICONV"
+        LTLIBUNISTRING="$LTLIBUNISTRING $LTLIBICONV"
       fi
       LIBS="$glus_save_LIBS"
     fi
