@@ -1,3 +1,9 @@
+2010-04-11  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: detect_empty_lines_at_EOF_: avoid FP for an empty file
+	* top/maint.mk (detect_empty_lines_at_EOF_): Don't confuse an
+	empty file with one that ends in an empty line.
+
 2010-04-10  Bruno Haible  <bruno@clisp.org>
 
 	mkdir: Make it work on mingw64.

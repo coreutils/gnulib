@@ -674,7 +674,7 @@ sc_prohibit_cvs_keyword:
 #   perl -pi -0777 -e 's/\n\n+$/\n/' files...
 #
 detect_empty_lines_at_EOF_ =						\
-  /^==> ([^\n]+) <==\n\n/m and (print "$$1\n"), $$fail = 1;		\
+  /^==> ([^\n]+) <==\n\n\n/m and (print "$$1\n"), $$fail = 1;		\
   END { exit defined $$fail }
 sc_prohibit_empty_lines_at_EOF:
 	@tail -n1 $$($(VC_LIST_EXCEPT)) /dev/null			\
