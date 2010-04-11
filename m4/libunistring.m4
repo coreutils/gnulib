@@ -1,5 +1,5 @@
-# libunistring.m4 serial 1
-dnl Copyright (C) 2009, 2010 Free Software Foundation, Inc.
+# libunistring.m4 serial 2
+dnl Copyright (C) 2009-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -9,7 +9,7 @@ dnl Searches for an installed libunistring.
 dnl If found, it sets and AC_SUBSTs HAVE_LIBUNISTRING=yes and the LIBUNISTRING
 dnl and LTLIBUNISTRING variables and augments the CPPFLAGS variable, and
 dnl #defines HAVE_LIBUNISTRING to 1. Otherwise, it sets and AC_SUBSTs
-dnl HAVE_LIBUNISTRING=no and LIBUNINSTRING and LTLIBUNISTRING to empty.
+dnl HAVE_LIBUNISTRING=no and LIBUNISTRING and LTLIBUNISTRING to empty.
 
 AC_DEFUN([gl_LIBUNISTRING],
 [
