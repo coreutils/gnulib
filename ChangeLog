@@ -1,3 +1,13 @@
+2010-04-11  Bruno Haible  <bruno@clisp.org>
+
+	Stricter declaration checking in testdirs.
+	* gnulib-tool (func_emit_lib_Makefile_am, func_emit_tests_Makefile_am):
+	If for_tests is true, augment AM_CPPFLAGS to define
+	GNULIB_STRICT_CHECKING.
+	* build-aux/warn-on-use.h (_GL_WARN_ON_USE, _GL_WARN_ON_USE_CXX): When
+	GNULIB_STRICT_CHECKING is defined, verify that the function is
+	declared.
+
 2010-04-11  Paolo Bonzini  <bonzini@gnu.org>
             Bruno Haible  <bruno@clisp.org>
 

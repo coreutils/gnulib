@@ -2781,7 +2781,11 @@ func_emit_lib_Makefile_am ()
   done
   if test -z "$makefile_name"; then
     echo
-    echo "AM_CPPFLAGS ="
+    if $for_test; then
+      echo "AM_CPPFLAGS = -DGNULIB_STRICT_CHECKING=1"
+    else
+      echo "AM_CPPFLAGS ="
+    fi
     echo "AM_CFLAGS ="
   fi
   echo
@@ -3066,6 +3070,9 @@ func_emit_tests_Makefile_am ()
   done
   echo
   echo "AM_CPPFLAGS = \\"
+  if $for_test; then
+    echo "  -DGNULIB_STRICT_CHECKING=1 \\"
+  fi
   if test -n "${witness_macro}"; then
     echo "  -D@${witness_macro}@=1 \\"
   fi
