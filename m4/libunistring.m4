@@ -1,4 +1,4 @@
-# libunistring.m4 serial 4
+# libunistring.m4 serial 5
 dnl Copyright (C) 2009-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,16 +13,16 @@ dnl HAVE_LIBUNISTRING=no and LIBUNISTRING and LTLIBUNISTRING to empty.
 
 AC_DEFUN([gl_LIBUNISTRING],
 [
-  dnl First, try to link without -liconv. libunistring often depends on
-  dnl libiconv, but we don't know (and often don't need to know) where
-  dnl libiconv is installed.
-  AC_LIB_HAVE_LINKFLAGS([unistring], [],
-    [#include <uniconv.h>], [u8_strconv_from_locale((char*)0);],
-    [no, consider installing GNU libunistring])
-  if test "$ac_cv_libunistring" != yes; then
-    dnl Second try, with -liconv.
-    AC_REQUIRE([AM_ICONV])
-    if test -n "$LIBICONV"; then
+  AC_REQUIRE([AM_ICONV])
+  if test -n "$LIBICONV"; then
+    dnl First, try to link without -liconv. libunistring often depends on
+    dnl libiconv, but we don't know (and often don't need to know) where
+    dnl libiconv is installed.
+    AC_LIB_HAVE_LINKFLAGS([unistring], [],
+      [#include <uniconv.h>], [u8_strconv_from_locale((char*)0);],
+      [no, trying again together with libiconv])
+    if test "$ac_cv_libunistring" != yes; then
+      dnl Second try, with -liconv.
       dnl We have to erase the cached result of the first AC_LIB_HAVE_LINKFLAGS
       dnl invocation, otherwise the second one will not be run.
       unset ac_cv_libunistring
@@ -37,5 +37,9 @@ AC_DEFUN([gl_LIBUNISTRING],
       fi
       LIBS="$glus_save_LIBS"
     fi
+  else
+    AC_LIB_HAVE_LINKFLAGS([unistring], [],
+      [#include <uniconv.h>], [u8_strconv_from_locale((char*)0);],
+      [no, consider installing GNU libunistring])
   fi
 ])
