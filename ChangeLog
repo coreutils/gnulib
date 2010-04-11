@@ -1,3 +1,9 @@
+2010-04-11  Jim Meyering  <meyering@redhat.com>
+
+	openat: correct formatting (no semantic change)
+	* m4/openat.m4 (gl_FUNC_FCHOWNAT): Correct formatting in AC_DEFINE.
+	Suggested by Bruno Haible.
+
 2010-04-11  Bruno Haible  <bruno@clisp.org>
 
 	Stricter declaration checking in testdirs.
