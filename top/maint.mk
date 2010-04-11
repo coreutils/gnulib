@@ -674,8 +674,6 @@ sc_prohibit_cvs_keyword:
 	halt='do not use CVS keyword expansion'				\
 	  $(_sc_search_regexp)
 
- include $(srcdir)/dist-check.mk
-
 # This Perl code is slightly obfuscated.  Not only is each "$" doubled
 # because it's in a Makefile, but the $$c's are comments;  we cannot
 # use "#" due to the way the script ends up concatenated onto one line.

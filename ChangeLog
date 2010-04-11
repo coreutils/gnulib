@@ -1,5 +1,8 @@
 2010-04-11  Jim Meyering  <meyering@redhat.com>
 
+	maint.mk: don't include dist-check.mk
+	* top/maint.mk: Remove bogus include directive.
+
 	maint.mk: improve empty-line-at-EOF check
 	* top/maint.mk (sc_prohibit_empty_lines_at_EOF): Use Perl-based
 	solution, rather than tail+Perl-based one.  The latter would read
