@@ -1493,7 +1493,7 @@ sed_extract_field_header='
 if $modcache; then
 
   # Note: The 'eval' silences stderr output in dash.
-  if declare -A x 2>/dev/null && { x[f/2]='foo'; x[f/3]='bar'; eval test '${x[f/2]}' = foo; }; then
+  if (declare -A x && { x[f/2]='foo'; x[f/3]='bar'; eval test '${x[f/2]}' = foo; }) 2>/dev/null; then
     # Zsh 4 and Bash 4 have associative arrays.
     have_associative=true
   else

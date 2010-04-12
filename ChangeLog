@@ -1,3 +1,8 @@
+2010-04-13  Eric Blake  <eblake@redhat.com>
+
+	gnulib-tool: silence warning on BSD sh
+	* gnulib-tool: Avoid leaking warning about unknown 'declare'.
+
 2010-04-13  Jim Meyering  <meyering@redhat.com>
 
 	doc: users.txt: GNU patch now uses gnulib
