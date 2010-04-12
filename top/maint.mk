@@ -139,7 +139,7 @@ $(sc_z_rules_): %.z: %
 	start=$$(cat .sc-start-$*);					\
 	rm -f .sc-start-$*;						\
 	awk -v s=$$start -v e=$$end					\
-	  'END {printf "%.2f: $* done\n", e - s}' < /dev/null
+	  'END {printf "%.2f $(patsubst sc_%,%,$*)\n", e - s}' < /dev/null
 
 # The patsubst here is to replace each sc_% rule with its sc_%.z wrapper
 # that computes and prints elapsed time.

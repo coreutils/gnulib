@@ -1,3 +1,9 @@
+2010-04-12  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: generate more concise timing data for syntax-check rules
+	* top/maint.mk ($(sc_z_rules_)): Remove the ":", "sc_" prefix and
+	" done" from each line that reports a syntax-check test duration.
+
 2010-04-12  Andreas Gruenbacher  <agruen@suse.de>
 
 	git-version-gen: use "git update-index..." rather than "git status"
