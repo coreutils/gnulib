@@ -1,3 +1,10 @@
+2010-04-12  Andreas Gruenbacher  <agruen@suse.de>
+
+	git-version-gen: use "git update-index..." rather than "git status"
+	* build-aux/git-version-gen: Use git update-index --refresh, not
+	"git status".  With some versions of git, "git status" would fail
+	to update the index and result in an unwarranted "-dirty" suffix.
+
 2010-04-11  Jim Meyering  <meyering@redhat.com>
 
 	openat: correct formatting (no semantic change)
