@@ -159,8 +159,8 @@ installation should not use any utilities directly except these:
 @c mkfifo mknod tee uname
 
 @example
-awk cat cmp cp diff echo egrep expr false grep install-info
-ln ls mkdir mv pwd rm rmdir sed sleep sort tar test touch tr true
+awk cat cmp cp diff echo egrep expr false grep install-info ln ls
+mkdir mv printf pwd rm rmdir sed sleep sort tar test touch tr true
 @end example
 
 Compression programs such as @code{gzip} can be used in the
@@ -525,7 +525,6 @@ need @samp{libdir} or @samp{lispdir}.
 
 @table @samp
 @item includedir
-@c rewritten to avoid overfull hbox --roland
 The directory for installing header files to be included by user
 programs with the C @samp{#include} preprocessor directive.  This
 should normally be @file{/usr/local/include}, but write it as
