@@ -1,4 +1,4 @@
-# getopt.m4 serial 26
+# getopt.m4 serial 27
 dnl Copyright (C) 2002-2006, 2008-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -172,6 +172,20 @@ main ()
     if (!(optind == 1))
       return 12;
   }
+  /* Detect MacOS 10.5 bug.  */
+  {
+    char *argv[3] = { "program", "-ab", NULL };
+    optind = OPTIND_MIN;
+    opterr = 0;
+    if (getopt (2, argv, "ab:") != 'a')
+      return 13;
+    if (getopt (2, argv, "ab:") != '?')
+      return 14;
+    if (optopt != 'b')
+      return 15;
+    if (optind != 2)
+      return 16;
+  }
 
   return 0;
 }
@@ -179,6 +193,7 @@ main ()
           [gl_cv_func_getopt_posix=yes], [gl_cv_func_getopt_posix=no],
           [case "$host_os" in
              mingw*) gl_cv_func_getopt_posix="guessing no";;
+             darwin*) gl_cv_func_getopt_posix="guessing no";;
              *)      gl_cv_func_getopt_posix="guessing yes";;
            esac
           ])

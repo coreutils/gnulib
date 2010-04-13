@@ -16,6 +16,10 @@ Portability problems fixed by either Gnulib module @code{getopt-posix} or @code{
 The @code{getopt} function keeps some internal state that cannot be explicitly
 reset on some platforms:
 mingw.
+@item
+The value of @code{optind} after a missing required argument is wrong
+on some platforms:
+MacOS 10.5.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{getopt-gnu}:

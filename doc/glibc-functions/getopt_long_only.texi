@@ -11,6 +11,10 @@ The function @code{getopt_long_only} does not support the @samp{+}
 flag in the options string on some platforms:
 MacOS X 10.5, AIX 5.2, OSF/1 5.1, Solaris 10.
 @item
+The value of @code{optind} after a missing required argument is wrong
+on some platforms:
+MacOS 10.5.
+@item
 The function @code{getopt_long_only} does not obey the @samp{-} flag
 in the options string when @env{POSIXLY_CORRECT} is set on some platforms:
 Cygwin 1.7.0.

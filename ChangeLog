@@ -1,5 +1,13 @@
 2010-04-13  Eric Blake  <eblake@redhat.com>
 
+	getopt-posix: detect MacOS bug
+	* m4/getopt.m4 (gl_GETOPT_CHECK_HEADERS): Reject MacOS botch of
+	optind when missing a required argument.
+	* doc/posix-functions/getopt.texi (getopt): Document the bug.
+	* doc/glibc-functions/getopt_long.texi (getopt_long): Likewise.
+	* doc/glibc-functions/getopt_long_only.texi (getopt_long_only):
+	Likewise.
+
 	getopt-posix: avoid spurious failure on Solaris
 	* m4/getopt.m4 (gl_GETOPT_CHECK_HEADERS): Check for getopt_clip as
 	an indicator that setting optind=1 is sufficient for reset.
