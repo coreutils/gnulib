@@ -1,4 +1,4 @@
-# getopt.m4 serial 25
+# getopt.m4 serial 26
 dnl Copyright (C) 2002-2006, 2008-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -79,8 +79,13 @@ AC_DEFUN([gl_GETOPT_CHECK_HEADERS],
   dnl Existence of the variable, in and of itself, is not a reason to replace
   dnl getopt, but knowledge of the variable is needed to determine how to
   dnl reset and whether a reset reparses the environment.
+  dnl Solaris supports neither optreset nor optind=0, but keeps no state that
+  dnl needs a reset beyond setting optind=1; detect Solaris by getopt_clip.
   if test -z "$gl_replace_getopt"; then
-    AC_CHECK_DECLS([optreset], [], [],
+    AC_CHECK_DECLS([optreset], [],
+      [AC_CHECK_DECLS([getopt_clip], [], [],
+        [[#include <getopt.h>]])
+      ],
       [[#include <getopt.h>]])
   fi
 
@@ -99,7 +104,7 @@ AC_DEFUN([gl_GETOPT_CHECK_HEADERS],
 #include <stdlib.h>
 #include <string.h>
 
-#if !HAVE_DECL_OPTRESET
+#if !HAVE_DECL_OPTRESET && !HAVE_DECL_GETOPT_CLIP
 # define OPTIND_MIN 0
 #else
 # define OPTIND_MIN 1

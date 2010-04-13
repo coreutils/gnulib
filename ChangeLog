@@ -1,5 +1,9 @@
 2010-04-13  Eric Blake  <eblake@redhat.com>
 
+	getopt-posix: avoid spurious failure on Solaris
+	* m4/getopt.m4 (gl_GETOPT_CHECK_HEADERS): Check for getopt_clip as
+	an indicator that setting optind=1 is sufficient for reset.
+
 	getopt-posix: avoid spurious failure on FreeBSD
 	* m4/getopt.m4 (gl_GETOPT_CHECK_HEADERS): Check for optreset even
 	in POSIX mode, since the m4 test uses it.
