@@ -1,4 +1,4 @@
-# getopt.m4 serial 24
+# getopt.m4 serial 25
 dnl Copyright (C) 2002-2006, 2008-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -79,7 +79,7 @@ AC_DEFUN([gl_GETOPT_CHECK_HEADERS],
   dnl Existence of the variable, in and of itself, is not a reason to replace
   dnl getopt, but knowledge of the variable is needed to determine how to
   dnl reset and whether a reset reparses the environment.
-  if test -z "$gl_replace_getopt" && test $gl_getopt_required = GNU; then
+  if test -z "$gl_replace_getopt"; then
     AC_CHECK_DECLS([optreset], [], [],
       [[#include <getopt.h>]])
   fi
