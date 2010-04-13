@@ -1,3 +1,8 @@
+2010-04-13  Jim Meyering  <meyering@redhat.com>
+
+	doc: users.txt: GNU patch now uses gnulib
+	* users.txt: Add patch.
+
 2010-04-12  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: generate more concise timing data for syntax-check rules
