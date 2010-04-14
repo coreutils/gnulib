@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate March 25, 2010
+@set lastupdate April 14, 2010
 @c %**end of header
 
 @dircategory GNU organization
@@ -56,6 +56,7 @@ Texts.  A copy of the license is included in the section entitled
 
 @menu
 * Preface::
+* Getting Help::
 * Stepping Down::
 * Recruiting Developers::
 * Legal Matters::
@@ -75,6 +76,17 @@ Texts.  A copy of the license is included in the section entitled
 @end menu
 
 
+@macro gdgnuorgtext
+The directory @file{/gd/gnuorg} mentioned throughout this document is
+available on the general GNU server, currently
+@code{fencepost.gnu.org}.  If you are the maintainer of a GNU package,
+you should have an account there.  If you don't have one already,
+@url{http://www.gnu.org/software/README.accounts.html}.  You can also
+ask for accounts for people who significantly help you in working on
+the package.
+@end macro
+
+
 @node Preface
 @chapter About This Document
 
@@ -89,43 +101,31 @@ essential to follow these guidelines.
 In addition to this document, please read and follow the GNU Coding
 Standards (@pxref{Top, , Contents, standards, GNU Coding Standards}).
 
-@cindex @code{gnustandards-commit@@gnu.org} mailing list
-If you want to receive diffs for every change to these GNU documents,
-join the mailing list @code{gnustandards-commit@@gnu.org}, via the web
-interface at
-@url{http://lists.gnu.org/mailman/listinfo/gnustandards-commit}.
-Archives are also available there.
-
 @cindex @code{bug-standards@@gnu.org} email address
 @cindex Savannah repository for gnustandards
 @cindex gnustandards project repository
 Please send corrections or suggestions for this document to
 @email{bug-standards@@gnu.org}.  If you make a suggestion, please
-include a suggested new wording for it, to help us consider the
-suggestion efficiently.  We prefer a context diff to the Texinfo
-source, but if that's difficult for you, you can make a context diff
-for some other version of this document, or propose it in any way that
-makes it clear.  The source repository for this document can be found
-at @url{http://savannah.gnu.org/projects/gnustandards}.
+include suggested new wording if you can.  We prefer a context diff to
+the Texinfo source, but if that's difficult for you, you can make a
+context diff for some other version of this document, or propose it in
+any way that makes it clear.  The source repository for this document
+can be found at @url{http://savannah.gnu.org/projects/gnustandards}.
 
-@cindex @code{mentors@@gnu.org} mailing list
-If you have general questions or encounter a situation where it isn't
-clear what to do, you can ask @email{mentors@@gnu.org}, which is a
-list of a few experienced GNU contributors who have offered to answer
-questions for new maintainers.
+@cindex @code{gnustandards-commit@@gnu.org} mailing list
+If you want to receive diffs for every change to these GNU documents,
+join the mailing list @code{gnustandards-commit@@gnu.org}, for
+instance via the web interface at
+@url{http://lists.gnu.org/mailman/listinfo/gnustandards-commit}.
+Archives are also available there.
 
-The directory @file{/gd/gnuorg} mentioned throughout this document is
-found on the GNU file server, currently @code{fencepost.gnu.org}; if
-you are the maintainer of a GNU package, you should have an account
-there.  See @url{http://www.gnu.org/software/README.accounts.html} if
-you don't have one.  (You can also ask for accounts for people who
-help you a large amount in working on the package.)
+@gdgnuorgtext
 
-If on occasion you find that any GNU computer systems
-(@code{fencepost.gnu.org}, @code{ftp.gnu.org},
-@code{savannah.gnu.org}, or others) seem to be down, you can check the
-current status at @url{http://identi.ca/group/fsfstatus}.  Most likely
-the problem, if it is at the FSF end, is already being worked on.
+If you find that any GNU computer systems (@code{fencepost.gnu.org},
+@code{ftp.gnu.org}, @code{www.gnu.org}, @code{savannah.gnu.org},
+@dots{}) seem to be down, you can check the current status at
+@url{http://identi.ca/group/fsfstatus}.  Most likely the problem, if
+it is at the FSF end, is already being worked on.
 
 @cindex Piercy, Marge
 This document uses the gender-neutral third-person pronouns ``person'',
@@ -136,12 +136,36 @@ they apply equally to males and females.  For example, ``Person placed
 per new program under the GNU GPL, to let the public benefit from per
 work, and to enable per to feel person has done the right thing.''
 
-This release of the GNU Maintenance Instructions was last updated
+This release of the GNU Maintainer Information was last updated
 @value{lastupdate}.
+
+
+@node Getting Help
+@chapter Getting Help
+@cindex help, getting
+
+@cindex @code{mentors@@gnu.org} mailing list
+If you have general questions or encounter a situation where it isn't
+clear what to do, you can ask @email{mentors@@gnu.org}, which is a
+list of a few experienced GNU contributors who have offered to answer
+questions for new maintainers.
+
+@cindex advisory committee
+Finally, the GNU Advisory Committee helps to coordinate activities in
+the GNU project on behalf of RMS.  If you have any organizational
+questions or concerns you can contact the committee members directly
+at @email{gnu-advisory@@gnu.org}.  The committee holds a regular
+monthly meeting to discuss any issues that have been raised.  The
+minutes of the meeting are sent to the @email{gnu-prog} list, and can
+also be found, along with additional information, in
+@file{/gd/gnuorg/advisory}.
+
 
 
 @node Stepping Down
 @chapter Stepping Down
+@cindex stepping down as maintainer
+@cindex resigning as maintainer
 
 With good fortune, you will continue maintaining your package for many
 decades.  But sometimes for various reasons maintainers decide to step
@@ -152,6 +176,7 @@ step down, please inform the GNU Project (@email{maintainers@@gnu.org}).
 We need to know that the package no longer has a maintainer, so we can
 look for and appoint a new maintainer.
 
+@cindex @email{maintainers@@gnu.org}
 If you have an idea for who should take over, please tell
 @email{maintainers@@gnu.org} your suggestion.  The appointment of a new
 maintainer needs the GNU Project's confirmation, but your judgment that
@@ -243,12 +268,7 @@ expected papers arrive.
 @cindex @file{/gd/gnuorg} directory
 @c This paragraph intentionally duplicates information given
 @c near the beginning of the file--to make sure people don't miss it.
-The directory @file{/gd/gnuorg} is found on the GNU machines,
-currently @code{fencepost.gnu.org}; if you are the maintainer of a GNU
-package, you should have an account on them.  Contact
-@email{accounts@@gnu.org} if you don't have one.  (You can also ask
-for accounts for people who help you a large amount in working on the
-package.)
+@gdgnuorgtext
 
 In order for the contributor to know person should sign papers, you need
 to ask per for the necessary papers.  If you don't know per well, and you
@@ -269,7 +289,7 @@ Would you be willing to sign a copyright disclaimer to put this change
 in the public domain, so that we can install it in @var{program}?
 @end quotation
 
-If the contributor wants more information, you can send per
+If the contributor then wants more information, you can send per the file
 @file{/gd/gnuorg/conditions.text}, which explains per options (assign
 vs.@: disclaim) and their consequences.
 
@@ -308,7 +328,7 @@ getting an employer's disclaimer from the contributor's employer.
 
 When the contributor emails the form to the FSF, the FSF sends per
 papers to sign.  If person signs them right away, the whole process
-takes about two weeks--mostly waiting for letters to go back and
+takes a couple of weeks---mostly waiting for letters to go back and
 forth.
 
 For less common cases, we have template files you should send to the
@@ -449,7 +469,7 @@ These records don't need to be as detailed as a change log.  They
 don't need to distinguish work done at different times, only different
 people.  They don't need describe changes in more detail than which
 files or parts of a file were changed.  And they don't need to say
-anything about the function or purpose of a file or change--the
+anything about the function or purpose of a file or change---the
 Register of Copyrights doesn't care what the text does, just who wrote
 or contributed to which parts.
 
@@ -896,7 +916,7 @@ GNU package.
 
 You will naturally want to keep the program running on all the platforms
 it supports.  But you personally will not have access to most of these
-platforms--so how should you do it?
+platforms---so how should you do it?
 
 Don't worry about trying to get access to all of these platforms.  Even
 if you did have access to all the platforms, it would be inefficient for
@@ -910,8 +930,9 @@ introduced.
 
 It is important to test the program personally on GNU or GNU/Linux,
 because these are the most important platforms for a GNU package.  If
-you don't have access to one of these platforms, please ask
-@email{maintainers@@gnu.org} to help you out.
+you don't have access to one of these platforms, as a GNU maintainer
+you can get access to the general GNU login machine; see
+@url{http://www.gnu.org/software/README.accounts.html}.
 
 Supporting other platforms is optional---we do it when that seems like
 a good idea, but we don't consider it obligatory.  If the users don't
@@ -1047,7 +1068,7 @@ of community among GNU developers and help in keeping up with project
 management.
 
 @cindex @code{savannah-announce@@gnu.org} mailing list
-If you do use Savannah, it is a good idea to subscribe to the
+If you do use Savannah, please subscribe to the
 @email{savannah-announce@@gnu.org} mailing list
 (@url{http://lists.gnu.org/mailman/listinfo/savannah-announce}).  This
 is a very low-volume list to keep Savannah users informed of system
@@ -1324,7 +1345,6 @@ The file to be distributed; for example, @file{foo.tar.gz}.
 Detached GPG binary signature file for (1); for example,
 @file{foo.tar.gz.sig}.  Make this with @samp{gpg -b foo.tar.gz}.
 
-
 @item
 A clearsigned @dfn{directive file}; for example,
 @file{foo.tar.gz.directive.asc}.  Make this by preparing the plain
@@ -1457,7 +1477,8 @@ Archive an old file, taking it offline:
 version: 1.1
 directory: bar/v1
 archive: foo-1.1.tar.gz
-comment: archive an old file; it will not be available through FTP anymore
+comment: archive an old file; it will not be
+comment: available through FTP any more.
 @end example
 
 @noindent
@@ -1467,7 +1488,8 @@ Archive an old directory (with all contents), taking it offline:
 version: 1.1
 directory: bar/v1
 archive: foo
-comment: archive an old directory; it will not be available through FTP anymore
+comment: archive an old directory; it and its entire
+comment: contents will not be available through FTP anymore
 @end example
 
 @noindent
@@ -1585,9 +1607,9 @@ the present release.
 @chapter Web Pages
 @cindex web pages
 
-Please write web pages about your package for installation on
+Please write web pages about your package, and install them on
 @code{www.gnu.org}.  They should follow our usual standards for web
-pages (see @url{http://www.gnu.org/server/fsf-html-style-sheet.html}).
+pages (see @url{http://www.gnu.org/server/@/fsf-html-style-sheet.html}).
 The overall goals are to support a wide variety of browsers, to focus
 on information rather than flashy eye candy, and to keep the site
 simple and uniform.
@@ -1624,9 +1646,9 @@ If you don't want to use that method, please talk with
 instance, you can mail them pages to install, if necessary.  But that
 is more work for them, so please use Savannah if you can.
 
-If you use Savannah, you can use a special @file{.symlinks} file in
-order to create symbolic links, which are not supported in CVS.  For
-details, see
+If you use Savannah, you can use a special file named @file{.symlinks}
+in order to create symbolic links, which are not supported in CVS.
+For details, see
 @url{http://www.gnu.org/server/standards/README.webmastering.html#symlinks}.
 
 
@@ -1673,11 +1695,10 @@ subdirectory to link to that manual in all its forms, and make
 See the section below for details on a script to make the job of
 creating all these different formats and index pages easier.
 
-We would like to include links to all GNU manuals on the page
-@url{http://www.gnu.org/manual}, so if yours isn't listed, please send
-mail to @code{webmasters@@gnu.org} telling them the name of your
-package and asking them to edit @url{http://www.gnu.org/manual}, and
-they will do so based on the contents of your @file{manual} directory.
+We would like to list all GNU manuals on the page
+@url{http://www.gnu.org/manual}, so if yours isn't there, please send
+mail to @code{webmasters@@gnu.org}, asking them to add yours, and they
+will do so based on the contents of your @file{manual} directory.
 
 @menu
 * Invoking gendocs.sh::
@@ -1836,7 +1857,7 @@ self-defeating to try to find and avoid all these patents.  But there
 are some patents which we know are likely to be used to threaten free
 software, so we make an effort to avoid the patented techniques.  If
 you are concerned about the danger of a patent and would like advice,
-write to @email{maintainers@@gnu.org}, and we will try to help you get
+write to @email{licensing@@gnu.org}, and we will try to help you get
 advice from a lawyer.
 
 Sometimes the GNU project takes a strong stand against a particular
