@@ -1,3 +1,11 @@
+2010-04-14  Simon Josefsson  <simon@josefsson.org>
+
+	* lib/gc-libgcrypt.c (gc_init): Use MIN_GCRYPT_VERSION set to
+	version 1.4.4 by default instead of requiring the libgcrypt
+	version used during build.  This makes it possible to use the
+	application with older but still binary compatible libgcrypt
+	versions.
+
 2010-04-13  Eric Blake  <eblake@redhat.com>
 
 	getopt-gnu: match recent glibc fixes and posix ruling

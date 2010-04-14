@@ -37,6 +37,10 @@
 
 #include <assert.h>
 
+#ifndef MIN_GCRYPT_VERSION
+# define MIN_GCRYPT_VERSION "1.4.4"
+#endif
+
 /* Initialization. */
 
 Gc_rc
@@ -50,7 +54,7 @@ gc_init (void)
       if (gcry_control (GCRYCTL_DISABLE_SECMEM, NULL, 0))
         return GC_INIT_ERROR;
 
-      if (gcry_check_version (GCRYPT_VERSION) == NULL)
+      if (gcry_check_version (MIN_GCRYPT_VERSION) == NULL)
         return GC_INIT_ERROR;
 
       err = gcry_control (GCRYCTL_INITIALIZATION_FINISHED, NULL, 0);
