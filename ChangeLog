@@ -1,3 +1,9 @@
+2010-04-14  Eric Blake  <eblake@redhat.com>
+
+	strtok_r: relax license to LGPLv2+
+	* modules/strtok_r (License): Relax license.
+	Reported by Matthias Bolte.
+
 2010-04-14  Simon Josefsson  <simon@josefsson.org>
 
 	* lib/gc-libgcrypt.c (gc_init): Use MIN_GCRYPT_VERSION set to
