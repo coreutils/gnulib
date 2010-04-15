@@ -660,7 +660,7 @@ sc_GFDL_version:
 	  $(_sc_search_regexp)
 
 # Don't use Texinfo @acronym{} as it is not a good idea.
-texinfo_suffix_re_ ?= \\.(txi|texi(nfo)?)$$
+texinfo_suffix_re_ ?= \.(txi|texi(nfo)?)$$
 sc_texinfo_acronym:
 	@prohibit='@acronym\{'						\
 	in_vc_files='$(texinfo_suffix_re_)'				\

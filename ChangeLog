@@ -1,5 +1,8 @@
 2010-04-15  Jim Meyering  <meyering@redhat.com>
 
+	maint.mk: texinfo_suffix_re_: correct the default regexp
+	* top/maint.mk (texinfo_suffix_re_): Fix default regexp.
+
 	* top/maint.mk (sc_texinfo_acronym): Improve filename regexp, and
 	make it configurable via texinfo_suffix_re_.
 
