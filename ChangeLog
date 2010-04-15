@@ -1,3 +1,8 @@
+2010-04-15  Jim Meyering  <meyering@redhat.com>
+
+	* top/maint.mk (sc_texinfo_acronym): Improve filename regexp, and
+	make it configurable via texinfo_suffix_re_.
+
 2010-04-14  Eric Blake  <eblake@redhat.com>
 
 	strtok_r: relax license to LGPLv2+
