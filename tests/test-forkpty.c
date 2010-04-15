@@ -21,8 +21,8 @@
 #include <pty.h>
 
 #include "signature.h"
-SIGNATURE_CHECK (forkpty, int, (int *, char *, struct termios *,
-                                struct winsize *));
+SIGNATURE_CHECK (forkpty, int, (int *, char *, struct termios const *,
+                                struct winsize const *));
 
 #include <stdio.h>
 

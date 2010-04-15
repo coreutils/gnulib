@@ -1,3 +1,9 @@
+2010-04-15  Eric Blake  <eblake@redhat.com>
+
+	test-forkpty: fix expected signature
+	* tests/test-forkpty.c (SIGNATURE_CHECK): Add appropriate const.
+	Reported by Simon Josefsson.
+
 2010-04-15  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: texinfo_suffix_re_: correct the default regexp
