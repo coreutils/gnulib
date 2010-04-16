@@ -1,3 +1,10 @@
+2010-04-16  Bruno Haible  <bruno@clisp.org>
+
+	Override netdb.h always.
+	* modules/netdb (Makefile.am): Augment BUILT_SOURCES always.
+	* m4/netdb_h.m4 (gl_HEADER_NETDB): Don't set NETDB_H.
+	Reported by Ludovic Courtès <ludo@gnu.org>.
+
 2010-04-15  Bruno Haible  <bruno@clisp.org>
 
 	openpty: Fix mistake from 2010-03-21.
