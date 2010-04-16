@@ -22,6 +22,7 @@
 #define DO_PEDANTIC 0
 
 #define __STDC_LIMIT_MACROS 1 /* to make it work also in C++ mode */
+#define __STDC_CONSTANT_MACROS 1 /* likewise */
 #include <stdint.h>
 
 #include "verify.h"

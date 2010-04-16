@@ -1,5 +1,8 @@
 2010-04-16  Eric Blake  <eblake@redhat.com>
 
+	stdint: allow test to pass with C++
+	* tests/test-stdint.c: Define __STDC_CONSTANT_MACROS, for glibc.
+
 	getopt: allow compilation with C++
 	* lib/getopt_int.h (__ordering): Hoist enum declaration outside
 	struct.
