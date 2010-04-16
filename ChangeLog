@@ -1,3 +1,11 @@
+2010-04-16  Eric Blake  <eblake@redhat.com>
+
+	getopt: allow compilation with C++
+	* lib/getopt_int.h (__ordering): Hoist enum declaration outside
+	struct.
+	* lib/getopt.c (_getopt_internal_r): Use correct type.
+	Reported by Dagobert Michelson, via Joel E. Denny.
+
 2010-04-16  Bruno Haible  <bruno@clisp.org>
 
 	Override netdb.h always.
