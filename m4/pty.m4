@@ -1,4 +1,4 @@
-# pty.m4 serial 6
+# pty.m4 serial 7
 dnl Copyright (C) 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -119,6 +119,8 @@ AC_DEFUN([gl_FUNC_OPENPTY],
     if test $gl_cv_func_openpty_const != yes; then
       REPLACE_OPENPTY=1
       AC_LIBOBJ([openpty])
+      AC_DEFINE([HAVE_OPENPTY], [1],
+        [Define to 1 if the system has the 'openpty' function.])
     fi
   else
     dnl The system does not have openpty.

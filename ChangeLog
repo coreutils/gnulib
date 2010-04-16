@@ -1,3 +1,9 @@
+2010-04-15  Bruno Haible  <bruno@clisp.org>
+
+	openpty: Fix mistake from 2010-03-21.
+	* m4/pty.m4 (gl_FUNC_OPENPTY): Define HAVE_OPENPTY when openpty exists.
+	Reported by Simon Josefsson.
+
 2010-04-15  Eric Blake  <eblake@redhat.com>
 
 	test-forkpty: fix expected signature
