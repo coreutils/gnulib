@@ -1,5 +1,11 @@
 2010-04-16  Eric Blake  <eblake@redhat.com>
 
+	test-stdbool: skip test that fails with Solaris CC
+	* tests/test-stdbool.c (f): Skip test that causes compilation
+	error under buggy C++ compiler.
+	* lib/stdbool.in.h: Document the limitation.
+	* doc/posix-headers/stdbool.texi (stdbool.h): Likewise.
+
 	setenv: allow compilation with C++
 	* lib/setenv.c (__add_to_environ): Add a cast.  Also, drop use of
 	register keyword.
