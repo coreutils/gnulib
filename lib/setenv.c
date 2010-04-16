@@ -112,8 +112,8 @@ int
 __add_to_environ (const char *name, const char *value, const char *combined,
                   int replace)
 {
-  register char **ep;
-  register size_t size;
+  char **ep;
+  size_t size;
   const size_t namelen = strlen (name);
   const size_t vallen = value != NULL ? strlen (value) + 1 : 0;
 
@@ -249,7 +249,7 @@ __add_to_environ (const char *name, const char *value, const char *combined,
           if (np == NULL)
 #endif
             {
-              np = malloc (namelen + 1 + vallen);
+              np = (char *) malloc (namelen + 1 + vallen);
               if (np == NULL)
                 {
 #if defined USE_TSEARCH && !defined _LIBC

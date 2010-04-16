@@ -1,5 +1,9 @@
 2010-04-16  Eric Blake  <eblake@redhat.com>
 
+	setenv: allow compilation with C++
+	* lib/setenv.c (__add_to_environ): Add a cast.  Also, drop use of
+	register keyword.
+
 	stdint: allow test to pass with C++
 	* tests/test-stdint.c: Define __STDC_CONSTANT_MACROS, for glibc.
 
