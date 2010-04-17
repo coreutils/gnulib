@@ -694,16 +694,18 @@ sc_prohibit_cvs_keyword:
 #   perl -pi -0777 -e 's/\n\n+$/\n/' files...
 #
 detect_empty_lines_at_EOF_ =						\
-  foreach my $$f (@ARGV) {						\
-    open F, "<", $$f or (warn "failed to open $$f: $$!\n"), next;	\
-    my $$p = sysseek (F, -2, 2);					\
-    my $$c = "seek failure probably means file has < 2 bytes; ignore";	\
-    my $$two;								\
-    defined $$p and $$p = sysread F, $$two, 2;				\
-    close F;								\
-    $$c = "ignore read failure";					\
-    $$p && $$two eq "\n\n" and (print $$f), $$fail=1;			\
-    } END { exit defined $$fail }
+  foreach my $$f (@ARGV)						\
+    {									\
+      open F, "<", $$f or (warn "failed to open $$f: $$!\n"), next;	\
+      my $$p = sysseek (F, -2, 2);					\
+      my $$c = "seek failure probably means file has < 2 bytes; ignore"; \
+      my $$last_two_bytes;						\
+      defined $$p and $$p = sysread F, $$last_two_bytes, 2;		\
+      close F;								\
+      $$c = "ignore read failure";					\
+      $$p && $$last_two_bytes eq "\n\n" and (print $$f), $$fail=1;	\
+    }									\
+  END { exit defined $$fail }
 sc_prohibit_empty_lines_at_EOF:
 	@perl -le '$(detect_empty_lines_at_EOF_)' $$($(VC_LIST_EXCEPT))	\
           || { echo '$(ME): the above files end with empty line(s)'     \

@@ -1,3 +1,9 @@
+2010-04-17  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: use gnu-style indentation in an embedded perl script
+	* top/maint.mk (detect_empty_lines_at_EOF_): Clean up formatting.
+	Rename variable: s/two/last_two_bytes/
+
 2010-04-16  Eric Blake  <eblake@redhat.com>
 
 	test-stdbool: skip test that fails with Solaris CC
