@@ -1,3 +1,12 @@
+2010-04-18  Andreas Gruenbacher  <agruen@suse.de>
+            Bruno Haible  <bruno@clisp.org>
+
+	diffseq: Accommodate use-case with abstract arrays.
+	* lib/diffseq.h (struct context): Remove xvec, yvec fields if ELEMENT
+	is not defined.
+	(diag, compareseq): Remove local variables xv, yv if ELEMENT is not
+	defined. Use local macro XREF_YREF_EQUAL instead of EQUAL.
+
 2010-04-18  Bruno Haible  <bruno@clisp.org>
 
 	* doc/posix-headers/stdbool.texi: More precise wording.

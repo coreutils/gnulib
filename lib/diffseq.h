@@ -53,6 +53,14 @@
                              early abort of the computation.
      USE_HEURISTIC           (Optional) Define if you want to support the
                              heuristic for large vectors.
+   It is also possible to you this file with abstract arrays.  In this case,
+   xvec and yvec are not represented in memory.  They only exist conceptually.
+   In this case, the list of defines above is amended as follows:
+     ELEMENT                 Undefined.
+     EQUAL                   Undefined.
+     XVECREF_YVECREF_EQUAL(ctxt, xoff, yoff)
+                             A three-argument macro: References xvec[xoff] and
+                             yvec[yoff] and tests these elements for equality.
    Before including this file, you also need to include:
      #include <limits.h>
      #include <stdbool.h>
@@ -92,9 +100,11 @@
  */
 struct context
 {
+  #ifdef ELEMENT
   /* Vectors being compared.  */
   ELEMENT const *xvec;
   ELEMENT const *yvec;
+  #endif
 
   /* Extra fields.  */
   EXTRA_CONTEXT_FIELDS
@@ -170,8 +180,13 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
 {
   OFFSET *const fd = ctxt->fdiag;       /* Give the compiler a chance. */
   OFFSET *const bd = ctxt->bdiag;       /* Additional help for the compiler. */
+#ifdef ELEMENT
   ELEMENT const *const xv = ctxt->xvec; /* Still more help for the compiler. */
   ELEMENT const *const yv = ctxt->yvec; /* And more and more . . . */
+  #define XREF_YREF_EQUAL(x,y)  EQUAL (xv[x], yv[y])
+#else
+  #define XREF_YREF_EQUAL(x,y)  XVECREF_YVECREF_EQUAL (ctxt, x, y)
+#endif
   const OFFSET dmin = xoff - ylim;      /* Minimum valid diagonal. */
   const OFFSET dmax = xlim - yoff;      /* Maximum valid diagonal. */
   const OFFSET fmid = xoff - yoff;      /* Center diagonal of top-down search. */
@@ -210,7 +225,7 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
           OFFSET x0 = tlo < thi ? thi : tlo + 1;
 
           for (x = x0, y = x0 - d;
-               x < xlim && y < ylim && EQUAL (xv[x], yv[y]);
+               x < xlim && y < ylim && XREF_YREF_EQUAL (x, y);
                x++, y++)
             continue;
           if (x - x0 > SNAKE_LIMIT)
@@ -243,7 +258,7 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
           OFFSET x0 = tlo < thi ? tlo : thi - 1;
 
           for (x = x0, y = x0 - d;
-               xoff < x && yoff < y && EQUAL (xv[x - 1], yv[y - 1]);
+               xoff < x && yoff < y && XREF_YREF_EQUAL (x - 1, y - 1);
                x--, y--)
             continue;
           if (x0 - x > SNAKE_LIMIT)
@@ -292,7 +307,7 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
                            that it end with a significant snake.  */
                         int k;
 
-                        for (k = 1; EQUAL (xv[x - k], yv[y - k]); k++)
+                        for (k = 1; XREF_YREF_EQUAL (x - k, y - k); k++)
                           if (k == SNAKE_LIMIT)
                             {
                               best = v;
@@ -331,7 +346,7 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
                            that it end with a significant snake.  */
                         int k;
 
-                        for (k = 0; EQUAL (xv[x + k], yv[y + k]); k++)
+                        for (k = 0; XREF_YREF_EQUAL (x + k, y + k); k++)
                           if (k == SNAKE_LIMIT - 1)
                             {
                               best = v;
@@ -415,6 +430,7 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
           return;
         }
     }
+  #undef XREF_YREF_EQUAL
 }
 
 
@@ -438,18 +454,23 @@ static bool
 compareseq (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim,
             bool find_minimal, struct context *ctxt)
 {
+#ifdef ELEMENT
   ELEMENT const *xv = ctxt->xvec; /* Help the compiler.  */
   ELEMENT const *yv = ctxt->yvec;
+  #define XREF_YREF_EQUAL(x,y)  EQUAL (xv[x], yv[y])
+#else
+  #define XREF_YREF_EQUAL(x,y)  XVECREF_YVECREF_EQUAL (ctxt, x, y)
+#endif
 
   /* Slide down the bottom initial diagonal.  */
-  while (xoff < xlim && yoff < ylim && EQUAL (xv[xoff], yv[yoff]))
+  while (xoff < xlim && yoff < ylim && XREF_YREF_EQUAL (xoff, yoff))
     {
       xoff++;
       yoff++;
     }
 
   /* Slide up the top initial diagonal. */
-  while (xoff < xlim && yoff < ylim && EQUAL (xv[xlim - 1], yv[ylim - 1]))
+  while (xoff < xlim && yoff < ylim && XREF_YREF_EQUAL (xlim - 1, ylim - 1))
     {
       xlim--;
       ylim--;
@@ -487,6 +508,7 @@ compareseq (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim,
     }
 
   return false;
+  #undef XREF_YREF_EQUAL
 }
 
 #undef ELEMENT
@@ -497,4 +519,5 @@ compareseq (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim,
 #undef NOTE_INSERT
 #undef EARLY_ABORT
 #undef USE_HEURISTIC
+#undef XVECREF_YVECREF_EQUAL
 #undef OFFSET_MAX
