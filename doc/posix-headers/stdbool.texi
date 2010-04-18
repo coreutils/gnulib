@@ -28,6 +28,6 @@ Casts and automatic conversions to @samp{bool} don't test against the
 zero value or the null pointer, as they should.  Such casts should only
 be used if the casted value is known to be equal to 0 or 1.
 @item
-You cannot assume that casting floating point to @samp{bool} will
+You cannot assume that casting a floating point literal to @samp{bool} will
 result in a constant expression.
 @end itemize

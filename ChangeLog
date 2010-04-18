@@ -1,3 +1,7 @@
+2010-04-18  Bruno Haible  <bruno@clisp.org>
+
+	* doc/posix-headers/stdbool.texi: More precise wording.
+
 2010-04-17  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: use gnu-style indentation in an embedded perl script
