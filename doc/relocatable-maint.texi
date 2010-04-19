@@ -142,6 +142,3 @@ If your @file{config.h} is not in @file{$(top_builddir)}, then set
 RELOCATABLE_CONFIG_H_DIR='$(top_builddir)/src'
 @end example
 @end enumerate
-
-Set @var{RELOCATABLE_STRIP} to @code{:}.  This is needed so that
-@samp{make install} installs executables without stripping them.

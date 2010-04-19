@@ -2,6 +2,8 @@
 
 	relocatable: Drop the need to define RELOCATABLE_STRIP in Makefile.am.
 	* m4/relocatable.m4 (gl_RELOCATABLE_BODY): Set RELOCATABLE_STRIP.
+	* doc/relocatable-maint.texi (Supporting Relocation): Remove the
+	mention of RELOCATABLE_STRIP.
 	Reported by Sylvain Beucler <beuc@beuc.net>.
 
 2010-04-19  Bruno Haible  <bruno@clisp.org>
