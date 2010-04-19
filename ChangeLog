@@ -1,5 +1,10 @@
 2010-04-19  Bruno Haible  <bruno@clisp.org>
 
+	* lib/diffseq.h: Fix typo in comment.
+	Reported by Eric Blake.
+
+2010-04-19  Bruno Haible  <bruno@clisp.org>
+
 	ioctl: Move autoconf macro to a .m4 file.
 	* m4/ioctl.m4: New file, extracted from modules/ioctl.
 	* modules/ioctl (Files): Add it.

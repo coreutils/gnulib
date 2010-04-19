@@ -53,7 +53,7 @@
                              early abort of the computation.
      USE_HEURISTIC           (Optional) Define if you want to support the
                              heuristic for large vectors.
-   It is also possible to you this file with abstract arrays.  In this case,
+   It is also possible to use this file with abstract arrays.  In this case,
    xvec and yvec are not represented in memory.  They only exist conceptually.
    In this case, the list of defines above is amended as follows:
      ELEMENT                 Undefined.
