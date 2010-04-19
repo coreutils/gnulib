@@ -1,3 +1,10 @@
+2010-04-20  Andreas Gruenbacher  <agruen@suse.de>
+
+	* build-aux/bootstrap: Use "git -h" for testing for supported options
+	instead of "git --help".  The short-form option only shows a summary,
+	and doesn't layout the full man page.  Grep for the full option name
+	in the summary, too.
+
 2010-04-19  Bruno Haible  <bruno@clisp.org>
 
 	relocatable: Drop the need to define RELOCATABLE_STRIP in Makefile.am.

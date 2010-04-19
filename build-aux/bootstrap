@@ -424,7 +424,7 @@ case ${GNULIB_SRCDIR--} in
 
     trap cleanup_gnulib 1 2 13 15
 
-    git clone --help|grep depth > /dev/null && shallow='--depth 2' || shallow=
+    git clone -h|grep -- --depth > /dev/null && shallow='--depth 2' || shallow=
     git clone $shallow git://git.sv.gnu.org/gnulib "$gnulib_path" ||
       cleanup_gnulib
 
@@ -437,7 +437,7 @@ case ${GNULIB_SRCDIR--} in
   if test -d "$GNULIB_SRCDIR"/.git && \
         git_modules_config submodule.gnulib.url >/dev/null; then
     echo "$0: getting gnulib files..."
-    if git submodule --help|grep reference > /dev/null; then
+    if git submodule -h|grep -- --reference > /dev/null; then
       # Prefer the one-liner available in git 1.6.4 or newer.
       git submodule update --init --reference "$GNULIB_SRCDIR" \
         "$gnulib_path" || exit $?
