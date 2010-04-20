@@ -1,3 +1,11 @@
+2010-04-20  Simon Josefsson  <simon@josefsson.org>
+            Bruno Haible  <bruno@clisp.org>
+
+	visibility: Don't use -fvisibility if it leads to a warning.
+	* m4/visibility.m4 (gl_VISIBILITY): Check whether -Werror is usable. If
+	yes, don't pretend that visibility works if it leads to a warning.
+	Reported by Mike Gran <spk121@yahoo.com>.
+
 2010-04-20  Andreas Gruenbacher  <agruen@suse.de>
 
 	* build-aux/bootstrap: Use "git -h" for testing for supported options
