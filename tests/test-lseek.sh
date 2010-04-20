@@ -8,7 +8,8 @@ tmpfiles=t-lseek.tmp
 ./test-lseek${EXEEXT} 0 < "$srcdir/test-lseek.sh" > t-lseek.tmp || exit 1
 
 # pipes
-echo hi | ./test-lseek${EXEEXT} 1 | cat || exit 1
+: | { ./test-lseek${EXEEXT} 1; echo $? > t-lseek.tmp; } | :
+test "x`cat t-lseek.tmp`" = x0 || exit 1
 
 # closed descriptors
 ./test-lseek${EXEEXT} 2 <&- >&- || exit 1

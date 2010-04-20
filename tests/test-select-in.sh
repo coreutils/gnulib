@@ -18,7 +18,8 @@ test `cat t-select-in.tmp` = "1" || exit 1
 # Pipes.
 
 rm -f t-select-in.tmp
-{ sleep 1; echo abc; } | ./test-select-fd${EXEEXT} r 0 t-select-in.tmp
+{ sleep 1; echo abc; } | \
+  { ./test-select-fd${EXEEXT} r 0 t-select-in.tmp; cat > /dev/null; }
 test `cat t-select-in.tmp` = "0" || exit 1
 
 rm -f t-select-in.tmp
