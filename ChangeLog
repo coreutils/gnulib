@@ -1,3 +1,7 @@
+2010-04-21  Simon Josefsson  <simon@josefsson.org>
+
+	* tests/test-vasprintf.c: Test %08lx.
+
 2010-04-20  Eric Blake  <eblake@redhat.com>
 
 	tests: be robust to ignored SIGPIPE

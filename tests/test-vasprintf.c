@@ -56,6 +56,16 @@ test_vasprintf ()
       ASSERT (strcmp (result, "12345") == 0);
       free (result);
     }
+
+  for (repeat = 0; repeat <= 8; repeat++)
+    {
+      char *result;
+      int retval = my_asprintf (&result, "%08lx", 12345);
+      ASSERT (retval == 8);
+      ASSERT (result != NULL);
+      ASSERT (strcmp (result, "00003039") == 0);
+      free (result);
+    }
 }
 
 static void
@@ -70,6 +80,16 @@ test_asprintf ()
       ASSERT (retval == 5);
       ASSERT (result != NULL);
       ASSERT (strcmp (result, "12345") == 0);
+      free (result);
+    }
+
+  for (repeat = 0; repeat <= 8; repeat++)
+    {
+      char *result;
+      int retval = asprintf (&result, "%08lx", 12345);
+      ASSERT (retval == 8);
+      ASSERT (result != NULL);
+      ASSERT (strcmp (result, "00003039") == 0);
       free (result);
     }
 }
