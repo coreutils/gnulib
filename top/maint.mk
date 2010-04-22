@@ -645,6 +645,12 @@ sc_useless_cpp_parens:
 	halt='found useless parentheses in cpp directive'		\
 	  $(_sc_search_regexp)
 
+# Prohibit checked in backup files.
+sc_prohibit_backup_files:
+	@$(VC_LIST) | grep '~$$' &&				\
+	  { echo '$(ME): found version controlled backup file' 1>&2;	\
+	    exit 1; } || :
+
 # Require the latest GPL.
 sc_GPL_version:
 	@prohibit='either ''version [^3]'				\
