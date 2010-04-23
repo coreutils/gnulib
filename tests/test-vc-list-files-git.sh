@@ -16,18 +16,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-if ( diff --version < /dev/null 2>&1 | grep GNU ) 2>&1 > /dev/null; then
-  compare() { diff -u "$@"; }
-elif ( cmp --version < /dev/null 2>&1 | grep GNU ) 2>&1 > /dev/null; then
-  compare() { cmp -s "$@"; }
-else
-  compare() { cmp "$@"; }
-fi
+: ${srcdir=.}
+. "$srcdir/init.sh"; path_prepend_ .
 
 tmpdir=vc-git-$$
-trap 'st=$?; cd '"`pwd`"' && rm -rf $tmpdir; exit $st' 0
-trap '(exit $?); exit $?' 1 2 13 15
-
 GIT_DIR= GIT_WORK_TREE=; unset GIT_DIR GIT_WORK_TREE
 
 fail=1
@@ -35,7 +27,7 @@ mkdir $tmpdir && cd $tmpdir &&
   # without git, skip the test
   # The double use of 'exit' is needed for the reference to $? inside the trap.
   { ( git init -q ) > /dev/null 2>&1 \
-    || { echo "Skipping test: git not found in PATH"; (exit 77); exit 77; }; } &&
+    || skip_ "git not found in PATH"; } &&
   mkdir d &&
   touch d/a b c &&
   git config user.email "you@example.com" &&
@@ -47,4 +39,4 @@ mkdir $tmpdir && cd $tmpdir &&
   compare expected actual &&
   fail=0
 
-(exit $fail); exit $fail
+Exit $fail

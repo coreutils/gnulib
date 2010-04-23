@@ -1,3 +1,14 @@
+2010-04-23  Jim Meyering  <meyering@redhat.com>
+
+	vc-list-files tests: convert to use init.sh
+	* tests/test-vc-list-files-cvs.sh: Invoke "$srcdir/init.sh" and
+	path_prepend_.
+	Use Exit, not exit.
+	Use skip_ rather than open coding it.
+	Remove trap set-up and compare definitions.
+	* tests/test-vc-list-files-git.sh: Likewise.
+	* modules/vc-list-files-tests (Files): Add tests/init.sh.
+
 2010-04-22  Simon Josefsson  <simon@josefsson.org>
 
 	* top/maint.mk (sc_prohibit_backup_files): Prohibit checked in

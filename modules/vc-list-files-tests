@@ -1,6 +1,7 @@
 Files:
 tests/test-vc-list-files-git.sh
 tests/test-vc-list-files-cvs.sh
+tests/init.sh
 
 Depends-on:
 

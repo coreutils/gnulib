@@ -16,18 +16,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-tmpdir=vc-cvs-$$
-trap 'st=$?; cd '"`pwd`"' && rm -rf $tmpdir; exit $st' 0
-trap '(exit $?); exit $?' 1 2 13 15
+: ${srcdir=.}
+. "$srcdir/init.sh"; path_prepend_ .
 
-if ( diff --version < /dev/null 2>&1 | grep GNU ) 2>&1 > /dev/null; then
-  compare() { diff -u "$@"; }
-elif ( cmp --version < /dev/null 2>&1 | grep GNU ) 2>&1 > /dev/null; then
-  compare() { cmp -s "$@"; }
-else
-  compare() { cmp "$@"; }
-fi
-
+tmpdir=vc-cvs
 repo=`pwd`/$tmpdir/repo
 
 fail=0
@@ -46,7 +38,7 @@ for i in with-cvsu without; do
     # without cvs, skip the test
     # The double use of 'exit' is needed for the reference to $? inside the trap.
     { ( cvs -Q -d "$repo" init ) > /dev/null 2>&1 \
-      || { echo "Skipping test: cvs not found in PATH"; (exit 77); exit 77; }; } &&
+      || skip_ "cvs not found in PATH"; } &&
     mkdir w && cd w &&
     mkdir d &&
     touch d/a b c &&
@@ -59,4 +51,4 @@ for i in with-cvsu without; do
   test $ok = 0 && fail=1
 done
 
-(exit $fail); exit $fail
+Exit $fail
