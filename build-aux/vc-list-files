@@ -2,7 +2,7 @@
 # List version-controlled file names.
 
 # Print a version string.
-scriptversion=2010-02-21.13; # UTC
+scriptversion=2010-04-23.22; # UTC
 
 # Copyright (C) 2006-2010 Free Software Foundation, Inc.
 
@@ -102,6 +102,8 @@ elif test -d CVS; then
 	}}'\''				\
       `find "$dir" -name Entries -print` /dev/null' $postprocess
   fi
+elif test -d .svn; then
+  eval exec svn list -R '"$dir"' $postprocess
 else
   echo "$0: Failed to determine type of version control used in `pwd`" 1>&2
   exit 1

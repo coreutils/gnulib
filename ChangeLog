@@ -1,3 +1,9 @@
+2010-04-24  Giuseppe Scrivano  <gscrivano@gnu.org>
+
+	vc-list-files: Add support for subversion
+	* build-aux/vc-list-files: Use "svn list" to generate the list of
+	files controlled by subversion.
+
 2010-04-23  Jim Meyering  <meyering@redhat.com>
 
 	vc-list-files tests: convert to use init.sh
