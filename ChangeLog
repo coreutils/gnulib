@@ -1,5 +1,12 @@
 2010-04-24  Bruno Haible  <bruno@clisp.org>
 
+	Avoid a gcc warning.
+	* tests/test-vasprintf.c (test_vasprintf, test_asprintf): Pass argument
+	of correct type for %08lx directive.
+	Reported by Eric Blake.
+
+2010-04-24  Bruno Haible  <bruno@clisp.org>
+
 	vasnprintf: Correct errno value in case of out-of-memory.
 	* lib/vasnprintf.c (VASNPRINTF): Set errno to 0 before calling SNPRINTF
 	or sprintf. Use the errno value from SNPRINTF or sprintf.
@@ -36,7 +43,7 @@
 
 2010-04-21  Simon Josefsson  <simon@josefsson.org>
 
-	* tests/test-vasprintf.c: Test %08lx.
+	* tests/test-vasprintf.c (test_vasprintf, test_asprintf): Test %08lx.
 
 2010-04-20  Eric Blake  <eblake@redhat.com>
 

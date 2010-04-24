@@ -60,7 +60,7 @@ test_vasprintf ()
   for (repeat = 0; repeat <= 8; repeat++)
     {
       char *result;
-      int retval = my_asprintf (&result, "%08lx", 12345);
+      int retval = my_asprintf (&result, "%08lx", 12345UL);
       ASSERT (retval == 8);
       ASSERT (result != NULL);
       ASSERT (strcmp (result, "00003039") == 0);
@@ -86,7 +86,7 @@ test_asprintf ()
   for (repeat = 0; repeat <= 8; repeat++)
     {
       char *result;
-      int retval = asprintf (&result, "%08lx", 12345);
+      int retval = asprintf (&result, "%08lx", 12345UL);
       ASSERT (retval == 8);
       ASSERT (result != NULL);
       ASSERT (strcmp (result, "00003039") == 0);
