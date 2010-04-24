@@ -1,5 +1,12 @@
 2010-04-24  Bruno Haible  <bruno@clisp.org>
 
+	vasnprintf: Correct errno value in case of out-of-memory.
+	* lib/vasnprintf.c (VASNPRINTF): Set errno to 0 before calling SNPRINTF
+	or sprintf. Use the errno value from SNPRINTF or sprintf.
+	Reported by Ian Beckwith <ianb@erislabs.net>.
+
+2010-04-24  Bruno Haible  <bruno@clisp.org>
+
 	ansi-c++-opt: Find correct compiler when cross-compiling.
 	* m4/ansi-c++.m4 (gl_PROG_ANSI_CXX): Use AC_CHECK_TOOLS instead of
 	AC_CHECK_PROGS.
