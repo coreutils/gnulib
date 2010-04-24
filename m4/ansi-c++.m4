@@ -1,4 +1,4 @@
-# ansi-c++.m4 serial 4
+# ansi-c++.m4 serial 5
 dnl Copyright (C) 2002-2003, 2005, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -48,7 +48,9 @@ AC_DEFUN([gl_PROG_ANSI_CXX],
     if test -n "$CCC"; then
       CXX="$CCC"
     else
-      AC_CHECK_PROGS([CXX], [g++ c++ gpp aCC CC cxx cc++ cl FCC KCC RCC xlC_r xlC], [:])
+      AC_CHECK_TOOLS([CXX],
+                     [g++ c++ gpp aCC CC cxx cc++ cl FCC KCC RCC xlC_r xlC],
+                     [:])
     fi
   fi
   if test "$CXX" != ":"; then

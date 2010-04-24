@@ -1,3 +1,10 @@
+2010-04-24  Bruno Haible  <bruno@clisp.org>
+
+	ansi-c++-opt: Find correct compiler when cross-compiling.
+	* m4/ansi-c++.m4 (gl_PROG_ANSI_CXX): Use AC_CHECK_TOOLS instead of
+	AC_CHECK_PROGS.
+	Reported by Simon Josefsson.
+
 2010-04-24  Giuseppe Scrivano  <gscrivano@gnu.org>
 
 	vc-list-files: Add support for subversion
