@@ -4,10 +4,13 @@
 
 POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/sigwait.html}
 
-Gnulib module: ---
+Gnulib module: extensions
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This function has an incompatible declaration on some platforms:
+Solaris 10 (when @code{_POSIX_PTHREAD_SEMANTICS} is not defined).
 @end itemize
 
 Portability problems not fixed by Gnulib:
@@ -15,9 +18,6 @@ Portability problems not fixed by Gnulib:
 @item
 This function is missing on some platforms:
 mingw, BeOS.
-@item
-This function has an incompatible declaration on some platforms:
-Solaris 10 (when @code{_POSIX_PTHREAD_SEMANTICS} is not defined).
 @item
 On Linux/glibc platforms before the advent of NPTL, signals could only be
 sent to one particular thread.  In POSIX, signals are sent to the entire

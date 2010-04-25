@@ -1,4 +1,4 @@
-#serial 6
+#serial 7
 
 # Copyright (C) 2005-2007, 2009-2010 Free Software Foundation, Inc.
 #
@@ -16,6 +16,8 @@ AC_DEFUN([gl_FUNC_GETLOGIN_R],
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
 
   dnl Persuade glibc <unistd.h> to declare getlogin_r().
+  dnl Persuade Solaris <unistd.h> to provide the POSIX compliant declaration of
+  dnl getlogin_r().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
   AC_CHECK_FUNCS_ONCE([getlogin_r])

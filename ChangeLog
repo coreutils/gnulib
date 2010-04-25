@@ -1,5 +1,20 @@
 2010-04-25  Bruno Haible  <bruno@clisp.org>
 
+	Use the 'extensions' module for some more functions on Solaris.
+	* doc/posix-functions/asctime_r.texi: Recommend to use the 'extensions'
+	module.
+	* doc/posix-functions/ctime_r.texi: Likewise.
+	* doc/posix-functions/getgrgid_r.texi: Likewise.
+	* doc/posix-functions/getgrnam_r.texi: Likewise.
+	* doc/posix-functions/getpwnam_r.texi: Likewise.
+	* doc/posix-functions/getpwuid_r.texi: Likewise.
+	* doc/posix-functions/readdir_r.texi: Likewise.
+	* doc/posix-functions/sigwait.texi: Likewise.
+	* m4/getlogin_r.m4 (gl_FUNC_GETLOGIN_R): Add comment.
+	* doc/posix-functions/getlogin_r.texi: Mark Solaris problem as fixed.
+
+2010-04-25  Bruno Haible  <bruno@clisp.org>
+
 	ttyname_r: Make it work on MacOS X 10.4 and Solaris 10.
 	* m4/ttyname_r.m4 (gl_FUNC_TTYNAME_R): Test whether the system function
 	has the POSIX declaration. Set REPLACE_TTYNAME_R if not.
