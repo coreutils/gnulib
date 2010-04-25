@@ -22,12 +22,30 @@
 #include <unistd.h>
 
 #include <errno.h>
+#include <limits.h>
 #include <string.h>
 
 int
 ttyname_r (int fd, char *buf, size_t buflen)
+#undef ttyname_r
 {
-#if HAVE_TTYNAME
+  /* When ttyname_r exists and works, use it.
+     But on Solaris 10, ttyname_r is broken: it returns NULL in situations
+     when ttyname finds the result.  */
+#if HAVE_TTYNAME_R && !defined __sun
+  /* This code is multithread-safe.  */
+  char *name = ttyname_r (fd, buf, buflen <= INT_MAX ? buflen : INT_MAX);
+  if (name == NULL)
+    return errno;
+  if (name != buf)
+    {
+      size_t namelen = strlen (name) + 1;
+      if (namelen > buflen)
+        return ERANGE;
+      memmove (buf, name, namelen);
+    }
+  return 0;
+#elif HAVE_TTYNAME
   /* Note: This is not multithread-safe.  */
   char *name;
   size_t namelen;

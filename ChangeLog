@@ -1,5 +1,20 @@
 2010-04-25  Bruno Haible  <bruno@clisp.org>
 
+	ttyname_r: Make it work on MacOS X 10.4 and Solaris 10.
+	* m4/ttyname_r.m4 (gl_FUNC_TTYNAME_R): Test whether the system function
+	has the POSIX declaration. Set REPLACE_TTYNAME_R if not.
+	* lib/ttyname_r.c: Include <limits.h>.
+	(ttyname_r): Define using the system's ttyname_r function, if it exists
+	and not on Solaris.
+	* lib/unistd.in.h (ttyname_r): Replace function if REPLACE_TTYNAME_R is
+	set.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize REPLACE_TTYNAME_R.
+	* modules/unistd (Makefile.am): Substitute REPLACE_TTYNAME_R.
+	* doc/posix-functions/ttyname_r.texi: Mark the problem as fixed.
+	Reported by Simon Josefsson.
+
+2010-04-25  Bruno Haible  <bruno@clisp.org>
+
 	Mention effects of _POSIX_PTHREAD_SEMANTICS on Solaris.
 	* doc/posix-functions/asctime_r.texi: Mention the Solaris problem.
 	* doc/posix-functions/ctime_r.texi: Likewise.
