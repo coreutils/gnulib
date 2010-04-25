@@ -247,6 +247,15 @@ Options for --import:
                             (.gitignore and/or .cvsignore).
       --no-changelog        Don't update or create ChangeLog files.
 
+Options for --create-[mega]testdir, --[mega]test:
+      --without-c++-tests   Exclude unit tests for C++ interoperability.
+      --without-longrunning-tests
+                            Exclude unit tests that are long-runners.
+      --without-privileged-tests
+                            Exclude unit tests that require root privileges.
+      --without-unportable-tests
+                            Exclude unit tests that fail on some platforms.
+
 Options for --import, --update, --create-[mega]testdir, --[mega]test:
   -s, --symbolic, --symlink Make symbolic links instead of copying files.
       --local-symlink       Make symbolic links instead of copying files, only
@@ -875,6 +884,13 @@ fi
 # - inc_unportable_tests  true if --with-unportable-tests was given, blank
 #                         otherwise
 # - inc_all_tests   true if --with-all-tests was given, blank otherwise
+# - excl_cxx_tests  true if --without-c++-tests was given, blank otherwise
+# - excl_longrunning_tests  true if --without-longrunning-tests was given,
+#                           blank otherwise
+# - excl_privileged_tests  true if --without-privileged-tests was given, blank
+#                          otherwise
+# - excl_unportable_tests  true if --without-unportable-tests was given, blank
+#                          otherwise
 # - avoidlist       list of modules to avoid, from --avoid
 # - lgpl            yes or a number if --lgpl was given, blank otherwise
 # - makefile_name   from --makefile-name
@@ -912,6 +928,10 @@ fi
   inc_privileged_tests=
   inc_unportable_tests=
   inc_all_tests=
+  excl_cxx_tests=
+  excl_longrunning_tests=
+  excl_privileged_tests=
+  excl_unportable_tests=
   avoidlist=
   lgpl=
   makefile_name=
@@ -1084,6 +1104,18 @@ fi
       --with-all-tests | --with-all-test | --with-all-tes | --with-all-te | --with-all-t | --with-all- | --with-all | --with-al | --with-a)
         inc_all_tests=true
         shift ;;
+      --without-c++-tests | --without-c++-test | --without-c++-tes | --without-c++-te | --without-c++-t | --without-c++- | --without-c++ | --without-c+ | --without-c)
+        excl_cxx_tests=true
+        shift ;;
+      --without-longrunning-tests | --without-longrunning-test | --without-longrunning-tes | --without-longrunning-te | --without-longrunning-t | --without-longrunning- | --without-longrunning | --without-longrunnin | --without-longrunni | --without-longrunn | --without-longrun | --without-longru | --without-longr | --without-long | --without-lon | --without-lo | --without-l)
+        excl_longrunning_tests=true
+        shift ;;
+      --without-privileged-tests | --without-privileged-test | --without-privileged-tes | --without-privileged-te | --without-privileged-t | --without-privileged- | --without-privileged | --without-privilege | --without-privileg | --without-privile | --without-privil | --without-privi | --without-priv | --without-pri | --without-pr | --without-p)
+        excl_privileged_tests=true
+        shift ;;
+      --without-unportable-tests | --without-unportable-test | --without-unportable-tes | --without-unportable-te | --without-unportable-t | --without-unportable- | --without-unportable | --without-unportabl | --without-unportab | --without-unporta | --without-unport | --without-unpor | --without-unpo | --without-unp | --without-un | --without-u)
+        excl_unportable_tests=true
+        shift ;;
       --avoid )
         shift
         if test $# = 0; then
@@ -1183,6 +1215,14 @@ fi
     esac
   done
 
+  if test "$mode" = import; then
+    if test -n "$excl_cxx_tests" || test -n "$excl_longrunning_tests" \
+       || test -n "$excl_privileged_tests" || test -n "$excl_unportable_tests"; then
+      echo "gnulib-tool: invalid options for 'import' mode" 1>&2
+      echo "Try 'gnulib-tool --help' for more information." 1>&2
+      func_exit 1
+    fi
+  fi
   if test "$mode" = update; then
     if test $# != 0; then
       echo "gnulib-tool: too many arguments in 'update' mode" 1>&2
@@ -1198,6 +1238,8 @@ fi
        || test -n "$inc_cxx_tests" || test -n "$inc_longrunning_tests" \
        || test -n "$inc_privileged_tests" || test -n "$inc_unportable_tests" \
        || test -n "$inc_all_tests" \
+       || test -n "$excl_cxx_tests" || test -n "$excl_longrunning_tests" \
+       || test -n "$excl_privileged_tests" || test -n "$excl_unportable_tests" \
        || test -n "$avoidlist" || test -n "$lgpl" || test -n "$makefile_name" \
        || test -n "$macro_prefix" || test -n "$po_domain" \
        || test -n "$vc_files"; then
@@ -2296,6 +2338,14 @@ func_get_tests_module ()
 #                         included, blank otherwise
 # - inc_all_tests   true if all kinds of problematic unit tests should be
 #                   included, blank otherwise
+# - excl_cxx_tests   true if C++ interoperability tests should be excluded,
+#                    blank otherwise
+# - excl_longrunning_tests  true if long-runnings tests should be excluded,
+#                           blank otherwise
+# - excl_privileged_tests  true if tests that require root privileges should be
+#                          excluded, blank otherwise
+# - excl_unportable_tests  true if tests that fail on some platforms should be
+#                          excluded, blank otherwise
 # - avoidlist       list of modules to avoid
 func_acceptable ()
 {
@@ -2310,18 +2360,26 @@ func_acceptable ()
       for word in `func_get_status "$1"`; do
         case "$word" in
           c++-test)
+            test -z "$excl_cxx_tests" \
+              || inc=false
             test -n "$inc_all_tests" || test -n "$inc_cxx_tests" \
               || inc=false
             ;;
           longrunning-test)
+            test -z "$excl_longrunning_tests" \
+              || inc=false
             test -n "$inc_all_tests" || test -n "$inc_longrunning_tests" \
               || inc=false
             ;;
           privileged-test)
+            test -z "$excl_privileged_tests" \
+              || inc=false
             test -n "$inc_all_tests" || test -n "$inc_privileged_tests" \
               || inc=false
             ;;
           unportable-test)
+            test -z "$excl_unportable_tests" \
+              || inc=false
             test -n "$inc_all_tests" || test -n "$inc_unportable_tests" \
               || inc=false
             ;;
@@ -2357,6 +2415,14 @@ func_acceptable ()
 #                         included, blank otherwise
 # - inc_all_tests   true if all kinds of problematic unit tests should be
 #                   included, blank otherwise
+# - excl_cxx_tests   true if C++ interoperability tests should be excluded,
+#                    blank otherwise
+# - excl_longrunning_tests  true if long-runnings tests should be excluded,
+#                           blank otherwise
+# - excl_privileged_tests  true if tests that require root privileges should be
+#                          excluded, blank otherwise
+# - excl_unportable_tests  true if tests that fail on some platforms should be
+#                          excluded, blank otherwise
 # - avoidlist       list of modules to avoid
 # - tmp             pathname of a temporary directory
 # Output:
@@ -3460,6 +3526,11 @@ func_import ()
   if test -z "$inc_all_tests"; then
     inc_all_tests="$cached_inc_all_tests"
   fi
+  # --without-*-tests options are not supported here.
+  excl_cxx_tests=
+  excl_longrunning_tests=
+  excl_privileged_tests=
+  excl_unportable_tests=
   # Append the cached and the specified avoidlist. This is probably better
   # than dropping the cached one when --avoid is specified at least once.
   avoidlist=`for m in $cached_avoidlist $avoidlist; do echo $m; done | LC_ALL=C sort -u`
@@ -4661,6 +4732,14 @@ s,//*$,/,'
 # - inctests        true if tests should be included, blank otherwise
 # - incobsolete     true if obsolete modules among dependencies should be
 #                   included, blank otherwise
+# - excl_cxx_tests   true if C++ interoperability tests should be excluded,
+#                    blank otherwise
+# - excl_longrunning_tests  true if long-runnings tests should be excluded,
+#                           blank otherwise
+# - excl_privileged_tests  true if tests that require root privileges should be
+#                          excluded, blank otherwise
+# - excl_unportable_tests  true if tests that fail on some platforms should be
+#                          excluded, blank otherwise
 # - avoidlist       list of modules to avoid
 # - libtool         true if --libtool was given, false if --no-libtool was
 #                   given, blank otherwise
