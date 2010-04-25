@@ -29,12 +29,31 @@ int
 ttyname_r (int fd, char *buf, size_t buflen)
 #undef ttyname_r
 {
-  /* When ttyname_r exists and works, use it.
-     But on Solaris 10, ttyname_r is broken: it returns NULL in situations
-     when ttyname finds the result.  */
-#if HAVE_TTYNAME_R && !defined __sun
+  /* When ttyname_r exists, use it.  */
+#if HAVE_TTYNAME_R
   /* This code is multithread-safe.  */
-  char *name = ttyname_r (fd, buf, buflen <= INT_MAX ? buflen : INT_MAX);
+  /* On Solaris, ttyname_r always fails if buflen < 128.  So provide a buffer
+     that is large enough.  */
+  char largerbuf[512];
+# if HAVE_POSIXDECL_TTYNAME_R
+  int err =
+    (buflen < sizeof (largerbuf)
+     ? ttyname_r (fd, largerbuf, sizeof (largerbuf))
+     : ttyname_r (fd, buf, buflen <= INT_MAX ? buflen : INT_MAX));
+  if (err != 0)
+    return err;
+  if (buflen < sizeof (largerbuf))
+    {
+      size_t namelen = strlen (largerbuf);
+      if (namelen > buflen)
+        return ERANGE;
+      memcpy (buf, largerbuf, namelen);
+    }
+# else
+  char *name =
+    (buflen < sizeof (largerbuf)
+     ? ttyname_r (fd, largerbuf, sizeof (largerbuf))
+     : ttyname_r (fd, buf, buflen <= INT_MAX ? buflen : INT_MAX));
   if (name == NULL)
     return errno;
   if (name != buf)
@@ -44,6 +63,7 @@ ttyname_r (int fd, char *buf, size_t buflen)
         return ERANGE;
       memmove (buf, name, namelen);
     }
+# endif
   return 0;
 #elif HAVE_TTYNAME
   /* Note: This is not multithread-safe.  */

@@ -14,6 +14,10 @@ NetBSD 3.0, mingw, BeOS.
 @item
 This function has an incompatible declaration on some platforms:
 MacOS X 10.4, Solaris 10 (when @code{_POSIX_PTHREAD_SEMANTICS} is not defined).
+@item
+This function refuses to do anything when the output buffer is less than 128
+bytes large, on some platforms:
+Solaris 10.
 @end itemize
 
 Portability problems not fixed by Gnulib:

@@ -1,5 +1,16 @@
 2010-04-25  Bruno Haible  <bruno@clisp.org>
 
+	ttyname_r: Make it work on Solaris 10.
+	* m4/ttyname_r.m4 (gl_FUNC_TTYNAME_R): Define HAVE_POSIXDECL_TTYNAME_R
+	if the system function has the POSIX declaration. Test whether the
+	function fails if the buffer is less than 128 bytes large.
+	* lib/ttyname_r.c (ttyname_r): Handle both possible declarations of the
+	system's ttyname_r function. Provide a reasonably large buffer.
+	* modules/ttyname_r (Depends-on): Add extensions.
+	* doc/posix-functions/ttyname_r.texi: Mention the Solaris problem.
+
+2010-04-25  Bruno Haible  <bruno@clisp.org>
+
 	Use the 'extensions' module for some more functions on Solaris.
 	* doc/posix-functions/asctime_r.texi: Recommend to use the 'extensions'
 	module.
