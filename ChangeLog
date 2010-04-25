@@ -1,5 +1,20 @@
 2010-04-25  Bruno Haible  <bruno@clisp.org>
 
+	Mention effects of _POSIX_PTHREAD_SEMANTICS on Solaris.
+	* doc/posix-functions/asctime_r.texi: Mention the Solaris problem.
+	* doc/posix-functions/ctime_r.texi: Likewise.
+	* doc/posix-functions/getgrgid_r.texi: Likewise.
+	* doc/posix-functions/getgrnam_r.texi: Likewise.
+	* doc/posix-functions/getlogin_r.texi: Likewise.
+	* doc/posix-functions/getpwnam_r.texi: Likewise.
+	* doc/posix-functions/getpwuid_r.texi: Likewise.
+	* doc/posix-functions/readdir_r.texi: Likewise.
+	* doc/posix-functions/sigwait.texi: Likewise.
+	* doc/posix-functions/ttyname_r.texi: Likewise.
+	Reported by Simon Josefsson.
+
+2010-04-25  Bruno Haible  <bruno@clisp.org>
+
 	gnulib-tool: Don't include hairy tests of dependencies in testdirs.
 	* gnulib-tool (func_usage): Document that --with-*-tests options apply
 	also to --create-testdir.

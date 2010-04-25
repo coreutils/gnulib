@@ -16,6 +16,9 @@ Portability problems not fixed by Gnulib:
 This function is missing on some platforms:
 mingw.
 @item
+This function has an incompatible declaration on some platforms:
+Solaris 10 (when @code{_POSIX_PTHREAD_SEMANTICS} is not defined).
+@item
 This function may put more than 26 bytes into the argument buffer if an
 invalid year is passed.
 @end itemize

@@ -15,4 +15,7 @@ NetBSD 3.0, mingw.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This function has an incompatible declaration on some platforms:
+Solaris 10 (when @code{_POSIX_PTHREAD_SEMANTICS} is not defined).
 @end itemize
