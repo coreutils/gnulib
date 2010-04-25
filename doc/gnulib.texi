@@ -739,8 +739,16 @@ When @code{gnulib-tool} receives the option @code{--with-all-tests},
 it will include all tests regardless of their status attributes.
 
 @code{gnulib-tool --create-testdir} and
-@code{gnulib-tool --create-megatestdir} always include all tests
-regardless of their status attributes.
+@code{gnulib-tool --create-megatestdir} by default include all tests of
+modules specified on the command line, regardless of their status
+attributes.  Tests of modules occurring as dependencies are not included
+by default if they have one of these status attributes.  The options
+@code{--with-c++-tests}, @code{--with-longrunning-tests},
+@code{--with-privileged-tests}, @code{--with-unportable-tests} are
+recognized here as well.  Additionally, @code{gnulib-tool} also
+understands the options @code{--without-c++-tests},
+@code{--without-longrunning-tests}, @code{--without-privileged-tests},
+@code{--without-unportable-tests}.
 
 In order to mark a module with a status attribute, you need to add it
 to the module description, like this:

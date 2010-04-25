@@ -200,6 +200,15 @@ Options for --import, --create-[mega]testdir, --[mega]test:
       --with-obsolete       Include obsolete modules when they occur among the
                             dependencies. By default, dependencies to obsolete
                             modules are ignored.
+      --with-c++-tests      Include even unit tests for C++ interoperability.
+      --with-longrunning-tests
+                            Include even unit tests that are long-runners.
+      --with-privileged-tests
+                            Include even unit tests that require root
+                            privileges.
+      --with-unportable-tests
+                            Include even unit tests that fail on some platforms.
+      --with-all-tests      Include all kinds of problematic unit tests.
       --avoid=MODULE        Avoid including the given MODULE. Useful if you
                             have code that provides equivalent functionality.
                             This option can be repeated.
@@ -233,15 +242,6 @@ Options for --import:
                             'gl_INIT'. Default is 'gl'.
       --po-domain=NAME      Specify the prefix of the i18n domain. Usually use
                             the package name. A suffix '-gnulib' is appended.
-      --with-c++-tests      Include even unit tests for C++ interoperability.
-      --with-longrunning-tests
-                            Include even unit tests that are long-runners.
-      --with-privileged-tests
-                            Include even unit tests that require root
-                            privileges.
-      --with-unportable-tests
-                            Include even unit tests that fail on some platforms.
-      --with-all-tests      Include all kinds of problematic unit tests.
       --vc-files            Update version control related files.
       --no-vc-files         Don't update version control related files
                             (.gitignore and/or .cvsignore).
@@ -2328,24 +2328,6 @@ func_get_tests_module ()
 # func_acceptable module
 # tests whether a module is acceptable.
 # Input:
-# - inc_cxx_tests   true if C++ interoperability tests should be included,
-#                   blank otherwise
-# - inc_longrunning_tests  true if long-runnings tests should be included,
-#                          blank otherwise
-# - inc_privileged_tests  true if tests that require root privileges should be
-#                         included, blank otherwise
-# - inc_unportable_tests  true if tests that fail on some platforms should be
-#                         included, blank otherwise
-# - inc_all_tests   true if all kinds of problematic unit tests should be
-#                   included, blank otherwise
-# - excl_cxx_tests   true if C++ interoperability tests should be excluded,
-#                    blank otherwise
-# - excl_longrunning_tests  true if long-runnings tests should be excluded,
-#                           blank otherwise
-# - excl_privileged_tests  true if tests that require root privileges should be
-#                          excluded, blank otherwise
-# - excl_unportable_tests  true if tests that fail on some platforms should be
-#                          excluded, blank otherwise
 # - avoidlist       list of modules to avoid
 func_acceptable ()
 {
@@ -2354,46 +2336,6 @@ func_acceptable ()
       return 1
     fi
   done
-  case "$1" in
-    *-tests)
-      inc=true
-      for word in `func_get_status "$1"`; do
-        case "$word" in
-          c++-test)
-            test -z "$excl_cxx_tests" \
-              || inc=false
-            test -n "$inc_all_tests" || test -n "$inc_cxx_tests" \
-              || inc=false
-            ;;
-          longrunning-test)
-            test -z "$excl_longrunning_tests" \
-              || inc=false
-            test -n "$inc_all_tests" || test -n "$inc_longrunning_tests" \
-              || inc=false
-            ;;
-          privileged-test)
-            test -z "$excl_privileged_tests" \
-              || inc=false
-            test -n "$inc_all_tests" || test -n "$inc_privileged_tests" \
-              || inc=false
-            ;;
-          unportable-test)
-            test -z "$excl_unportable_tests" \
-              || inc=false
-            test -n "$inc_all_tests" || test -n "$inc_unportable_tests" \
-              || inc=false
-            ;;
-          *-test)
-            test -n "$inc_all_tests" \
-              || inc=false
-            ;;
-        esac
-      done
-      if ! $inc; then
-        return 1
-      fi
-      ;;
-  esac
   return 0
 }
 
@@ -2413,8 +2355,12 @@ func_acceptable ()
 #                         included, blank otherwise
 # - inc_unportable_tests  true if tests that fail on some platforms should be
 #                         included, blank otherwise
-# - inc_all_tests   true if all kinds of problematic unit tests should be
-#                   included, blank otherwise
+# - inc_all_direct_tests   true if all kinds of problematic unit tests among
+#                          the unit tests of the specified modules should be
+#                          included, blank otherwise
+# - inc_all_indirect_tests   true if all kinds of problematic unit tests among
+#                            the unit tests of the dependencies should be
+#                            included, blank otherwise
 # - excl_cxx_tests   true if C++ interoperability tests should be excluded,
 #                    blank otherwise
 # - excl_longrunning_tests  true if long-runnings tests should be excluded,
@@ -2437,6 +2383,7 @@ func_modules_transitive_closure ()
   handledmodules=
   inmodules="$modules"
   outmodules=
+  fmtc_inc_all_tests="$inc_all_direct_tests"
   while test -n "$inmodules"; do
     inmodules_this_round="$inmodules"
     inmodules=                    # Accumulator, queue for next round
@@ -2469,7 +2416,43 @@ func_modules_transitive_closure ()
           if test -n "$inctests"; then
             testsmodule=`func_get_tests_module $module`
             if test -n "$testsmodule"; then
-              func_append inmodules " $testsmodule"
+              # Determine whether to include the tests module.
+              inc=true
+              for word in `func_get_status "$testsmodule"`; do
+                case "$word" in
+                  c++-test)
+                    test -z "$excl_cxx_tests" \
+                      || inc=false
+                    test -n "$fmtc_inc_all_tests" || test -n "$inc_cxx_tests" \
+                      || inc=false
+                    ;;
+                  longrunning-test)
+                    test -z "$excl_longrunning_tests" \
+                      || inc=false
+                    test -n "$fmtc_inc_all_tests" || test -n "$inc_longrunning_tests" \
+                      || inc=false
+                    ;;
+                  privileged-test)
+                    test -z "$excl_privileged_tests" \
+                      || inc=false
+                    test -n "$fmtc_inc_all_tests" || test -n "$inc_privileged_tests" \
+                      || inc=false
+                    ;;
+                  unportable-test)
+                    test -z "$excl_unportable_tests" \
+                      || inc=false
+                    test -n "$fmtc_inc_all_tests" || test -n "$inc_unportable_tests" \
+                      || inc=false
+                    ;;
+                  *-test)
+                    test -n "$fmtc_inc_all_tests" \
+                      || inc=false
+                    ;;
+                esac
+              done
+              if $inc; then
+                func_append inmodules " $testsmodule"
+              fi
             fi
           fi
         fi
@@ -2479,6 +2462,7 @@ func_modules_transitive_closure ()
     # Remove $handledmodules from $inmodules.
     for m in $inmodules; do echo $m; done | LC_ALL=C sort -u > "$tmp"/queued-modules
     inmodules=`echo "$handledmodules" | LC_ALL=C join -v 2 - "$tmp"/queued-modules`
+    fmtc_inc_all_tests="$inc_all_indirect_tests"
   done
   modules=`for m in $outmodules; do echo $m; done | LC_ALL=C sort -u`
   rm -f "$tmp"/queued-modules
@@ -3606,6 +3590,10 @@ func_import ()
 
   # Canonicalize the list of specified modules.
   specified_modules=`for m in $specified_modules; do echo $m; done | LC_ALL=C sort -u`
+
+  # Include all kinds of tests modules if --with-all-tests was specified.
+  inc_all_direct_tests="$inc_all_tests"
+  inc_all_indirect_tests="$inc_all_tests"
 
   # Determine final module list.
   modules="$specified_modules"
@@ -4760,8 +4748,10 @@ func_create_testdir ()
   fi
   modules=`for m in $modules; do echo $m; done | LC_ALL=C sort -u`
 
-  # Unlike in func_import, here we want to include all kinds of tests.
-  inc_all_tests=true
+  # Unlike in func_import, here we want to include all kinds of tests for the
+  # directly specified modules, but not for dependencies.
+  inc_all_direct_tests=true
+  inc_all_indirect_tests="$inc_all_tests"
 
   # Check that the license of every module is consistent with the license of
   # its dependencies.
