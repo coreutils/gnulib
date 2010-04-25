@@ -99,6 +99,10 @@ main ()
           return 1;
         }
     }
+
+    /* Close the master side before the slave side gets closed.
+       This is necessary on MacOS X 10.4.11.  */
+    close (master);
   }
 
   return 0;

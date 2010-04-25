@@ -1,3 +1,10 @@
+2010-04-25  Simon Josefsson  <simon@josefsson.org>
+            Bruno Haible  <bruno@clisp.org>
+
+	Work around a MacOS X 10.4 bug with openpty.
+	* doc/glibc-functions/openpty.texi: Mention the MacOS X 10.4 bug.
+	* tests/test-openpty.c (main): Close the master side explicitly.
+
 2010-04-25  Bruno Haible  <bruno@clisp.org>
 
 	strnlen: Fix a C++ test error on MacOS X and Solaris.

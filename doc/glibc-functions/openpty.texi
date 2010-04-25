@@ -30,4 +30,9 @@ Portability problems not fixed by Gnulib:
 @item
 This function is missing on some platforms:
 mingw.
+@item
+After a successful call to @code{openpty}, the application needs to close
+the master's file descriptor before closing the slave's file descriptor,
+otherwise the process may hang in a state where it cannot be killed, on
+some platforms: MacOS X 10.4.11.
 @end itemize
