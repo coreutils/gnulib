@@ -1,3 +1,11 @@
+2010-04-25  Bruno Haible  <bruno@clisp.org>
+
+	strnlen: Fix a C++ test error on MacOS X and Solaris.
+	* m4/strnlen.m4 (gl_FUNC_STRNLEN): Don't set REPLACE_STRNLEN to 1 if
+	the function is not declared.
+	Reported by Jarno Rajahalme <jarno.rajahalme@nsn.com> and
+	Simon Josefsson.
+
 2010-04-24  Bruno Haible  <bruno@clisp.org>
 
 	Avoid a gcc warning.
