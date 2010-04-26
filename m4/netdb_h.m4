@@ -1,4 +1,4 @@
-# netdb_h.m4 serial 8
+# netdb_h.m4 serial 9
 dnl Copyright (C) 2008, 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -15,6 +15,11 @@ AC_DEFUN([gl_HEADER_NETDB],
     HAVE_NETDB_H=0
   fi
   AC_SUBST([HAVE_NETDB_H])
+
+  dnl Check for declarations of anything we want to poison if the
+  dnl corresponding gnulib module is not in use.
+  gl_WARN_ON_USE_PREPARE([[#include <netdb.h>]],
+    [getaddrinfo freeaddrinfo gai_strerror getnameinfo])
 ])
 
 AC_DEFUN([gl_NETDB_MODULE_INDICATOR],

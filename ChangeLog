@@ -1,3 +1,15 @@
+2010-04-25  Bruno Haible  <bruno@clisp.org>
+
+	netdb: Add support for GNULIB_POSIXCHECK.
+	* lib/netdb.in.h: Include warn-on-use.h.
+	(getaddrinfo, freeaddrinfo, gai_strerror, getnameinfo): Warn if these
+	functions are used when GNULIB_POSIXCHECK is defined and the
+	getaddrinfo module is not in use.
+	* m4/netdb_h.m4 (gl_HEADER_NETDB): Test whether getaddrinfo,
+	freeaddrinfo, gai_strerror, getnameinfo are declared.
+	* modules/netdb (Depends-on): Add warn-on-use.
+	(Makefile.am): Include warn-on-use.h in netdb.h.
+
 2010-04-24  Ian Beckwith  <ianb@erislabs.net>
 
 	build: avoid "make check" failure without .git/ directory
