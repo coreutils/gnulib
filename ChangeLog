@@ -1,3 +1,9 @@
+2010-04-24  Ian Beckwith  <ianb@erislabs.net>
+
+	build: avoid "make check" failure without .git/ directory
+	* Makefile (sc_prefer_ac_check_funcs_once): Skip this test when
+	there is no .git/ directory.
+
 2010-04-25  Bruno Haible  <bruno@clisp.org>
 
 	ptsname: Fix misuse of ttyname_r.
