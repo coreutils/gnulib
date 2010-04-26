@@ -1,6 +1,6 @@
 #!/bin/sh
 # Print a version string.
-scriptversion=2010-02-24.17; # UTC
+scriptversion=2010-04-26.15; # UTC
 
 # Copyright (C) 2007-2010 Free Software Foundation, Inc.
 #
@@ -140,7 +140,8 @@ case "$dirty" in
 esac
 
 # Omit the trailing newline, so that m4_esyscmd can use the result directly.
-echo "$v" | tr -d '\012'
+echo "$v" | tr -d '
+'
 
 # Local variables:
 # eval: (add-hook 'write-file-hooks 'time-stamp)
