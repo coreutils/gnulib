@@ -1,3 +1,9 @@
+2010-04-26  Jim Meyering  <meyering@redhat.com>
+
+	git-version-gen: aesthetic tweak
+	* build-aux/git-version-gen: Use "$nl" rather than a literal,
+	so that the command remains on a single line.
+
 2010-04-26  Eric Blake  <eblake@redhat.com>
 
 	git-version-gen: allow use on EBCDIC hosts
