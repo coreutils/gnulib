@@ -19,7 +19,7 @@ Include:
 "safe-write.h"
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Jim Meyering, Bruno Haible

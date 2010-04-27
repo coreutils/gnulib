@@ -17,7 +17,7 @@ Include:
 "full-write.h"
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Jim Meyering, Bruno Haible

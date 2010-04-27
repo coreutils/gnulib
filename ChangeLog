@@ -1,5 +1,11 @@
 2010-04-27  Eric Blake  <eblake@redhat.com>
 
+	full-read, full-write: relax license
+	* modules/full-read (License): Drop to LGPLv2+.
+	* modules/full-write (License): Likewise.
+	* modules/safe-read (License): Likewise.
+	* modules/safe-write (License): Likewise.
+
 	pthread: mention library for linking
 	* modules/pthread (Link): Mention $(LIB_PTHREAD).
 
