@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate April 14, 2010
+@set lastupdate April 25, 2010
 @c %**end of header
 
 @dircategory GNU organization
@@ -57,6 +57,7 @@ Texts.  A copy of the license is included in the section entitled
 @menu
 * Preface::
 * Getting Help::
+* Getting a GNU Account::
 * Stepping Down::
 * Recruiting Developers::
 * Legal Matters::
@@ -74,17 +75,6 @@ Texts.  A copy of the license is included in the section entitled
 * GNU Free Documentation License::
 * Index::
 @end menu
-
-
-@macro gdgnuorgtext
-The directory @file{/gd/gnuorg} mentioned throughout this document is
-available on the general GNU server, currently
-@code{fencepost.gnu.org}.  If you are the maintainer of a GNU package,
-you should have an account there.  If you don't have one already,
-@url{http://www.gnu.org/software/README.accounts.html}.  You can also
-ask for accounts for people who significantly help you in working on
-the package.
-@end macro
 
 
 @node Preface
@@ -119,14 +109,6 @@ instance via the web interface at
 @url{http://lists.gnu.org/mailman/listinfo/gnustandards-commit}.
 Archives are also available there.
 
-@gdgnuorgtext
-
-If you find that any GNU computer systems (@code{fencepost.gnu.org},
-@code{ftp.gnu.org}, @code{www.gnu.org}, @code{savannah.gnu.org},
-@dots{}) seem to be down, you can check the current status at
-@url{http://identi.ca/group/fsfstatus}.  Most likely the problem, if
-it is at the FSF end, is already being worked on.
-
 @cindex Piercy, Marge
 This document uses the gender-neutral third-person pronouns ``person'',
 ``per'', ``pers'' and ``perself'' which were promoted, and perhaps
@@ -151,15 +133,43 @@ list of a few experienced GNU contributors who have offered to answer
 questions for new maintainers.
 
 @cindex advisory committee
-Finally, the GNU Advisory Committee helps to coordinate activities in
-the GNU project on behalf of RMS.  If you have any organizational
-questions or concerns you can contact the committee members directly
-at @email{gnu-advisory@@gnu.org}.  The committee holds a regular
-monthly meeting to discuss any issues that have been raised.  The
-minutes of the meeting are sent to the @email{gnu-prog} list, and can
-also be found, along with additional information, in
+The GNU Advisory Committee helps to coordinate activities in the GNU
+project on behalf of RMS.  If you have any organizational questions or
+concerns you can contact the committee at
+@email{gnu-advisory@@gnu.org}.  The committee holds a regular monthly
+meeting to discuss any issues that have been raised.  The minutes of
+the meeting are sent to the @code{gnu-prog} list, and can also be
+found, along with additional information, in
 @file{/gd/gnuorg/advisory}.
 
+
+
+@node Getting a GNU Account
+@chapter Getting a GNU Account
+@cindex shell account, on fencepost
+@cindex @code{fencepost.gnu.org} GNU machine
+
+@c We want to repeat this text later, so define a macro.
+@macro gdgnuorgtext
+The directory @file{/gd/gnuorg} mentioned throughout this document is
+available on the general GNU server, currently
+@code{fencepost.gnu.org}.  If you are the maintainer of a GNU package,
+you should have an account there.  If you don't have one already,
+@url{http://www.gnu.org/software/README.accounts.html}.  You can also
+ask for accounts for people who significantly help you in working on
+the package.
+@end macro
+
+@gdgnuorgtext
+
+@cindex down, when GNU machines are
+@cindex outage, of GNU machines
+@cindex @url{identi.ca/group/fsfstatus}
+If you find that any GNU computer systems (@code{fencepost.gnu.org},
+@code{ftp.gnu.org}, @code{www.gnu.org}, @code{savannah.gnu.org},
+@dots{}) seem to be down, you can check the current status at
+@url{http://identi.ca/group/fsfstatus}.  Most likely the problem, if
+it can be alleviated at the FSF end, is already being worked on.
 
 
 @node Stepping Down
