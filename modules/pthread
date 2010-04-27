@@ -22,6 +22,9 @@ MOSTLYCLEANFILES += pthread.h
 Include:
 <pthread.h>
 
+Link:
+$(LIB_PTHREAD)
+
 License:
 LGPLv2+
 

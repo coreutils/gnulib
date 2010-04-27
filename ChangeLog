@@ -1,3 +1,8 @@
+2010-04-27  Eric Blake  <eblake@redhat.com>
+
+	pthread: mention library for linking
+	* modules/pthread (Link): Mention $(LIB_PTHREAD).
+
 2010-04-27  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: fix a bug introduced in last change
