@@ -649,20 +649,21 @@ sc_useless_cpp_parens:
 # using the appropriate gnulib module.  CAUTION: for each "unnecessary"
 # #if HAVE_HEADER_H that you remove, be sure that your project explicitly
 # requires the gnulib module that guarantees the usability of that header.
-gl_assured_headers_ := \
-  $(shell cd $(gnulib_dir)/lib && ls -1 *.in.h|sed 's/\.in\.h$$/ \\/')
+gl_assured_headers_ = \
+  cd $(gnulib_dir)/lib && echo *.in.h|sed 's/\.in\.h//'
 
 # Convert the list of names to upper case, and replace each space with "|".
 az_ = abcdefghijklmnopqrstuvwxyz
 AZ_ = ABCDEFGHIJKLMNOPQRSTUVWXYZ
-gl_header_upper_case_or_ := \
-  $(shell echo $(gl_assured_headers_)					\
+gl_header_upper_case_or_ =						\
+  $$($(gl_assured_headers_)						\
     | tr $(az_)/.- $(AZ_)___						\
     | tr -s ' ' '|'							\
-   )
-gl_have_header_regex_ = HAVE_($(gl_header_upper_case_or_))_H
+    )
 sc_prohibit_always_true_header_tests:
-	@prohibit='\<$(gl_have_header_regex_)\>'			\
+	@or=$(gl_header_upper_case_or_);				\
+	re="HAVE_($$or)_H";						\
+	prohibit='\<'"$$re"'\>'						\
 	halt='do not test the above HAVE_<header>_H symbol(s);\n'\
 '  with the corresponding gnulib module, they are always true'		\
 	  $(_sc_search_regexp)

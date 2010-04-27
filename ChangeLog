@@ -1,5 +1,10 @@
 2010-04-27  Jim Meyering  <meyering@redhat.com>
 
+	maint.mk: avoid side-effect in latest syntax-check
+	* top/maint.mk (sc_prohibit_always_true_header_tests): Rework not
+	to run commands via $(shell...), and hence to incur cost only when
+	the new rule is actually run.
+
 	maint.mk: syntax-check: prohibit HAVE_<header>_H that are always true
 	Derive the list of guaranteed header names from gnulib/lib/*.in.h,
 	and use that to create a regexp used to detect all #if HAVE_..._H uses.
