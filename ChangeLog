@@ -1,3 +1,10 @@
+2010-04-26  Jim Meyering  <jim@meyering.net>
+	    Bruno Haible  <bruno@clisp.org>
+
+	gnulib-common.m4: make glibc write diagnostics to stderr, not /dev/tty
+	* m4/gnulib-common.m4 (gl_COMMON_BODY): Set LIBC_FATAL_STDERR_.
+	Prompted by an exchange with Gilles Espinasse.
+
 2010-04-26  Jim Meyering  <meyering@redhat.com>
 
 	git-version-gen: aesthetic tweak
