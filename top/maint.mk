@@ -650,7 +650,7 @@ sc_useless_cpp_parens:
 # #if HAVE_HEADER_H that you remove, be sure that your project explicitly
 # requires the gnulib module that guarantees the usability of that header.
 gl_assured_headers_ = \
-  cd $(gnulib_dir)/lib && echo *.in.h|sed 's/\.in\.h//'
+  cd $(gnulib_dir)/lib && echo *.in.h|sed 's/\.in\.h//g'
 
 # Convert the list of names to upper case, and replace each space with "|".
 az_ = abcdefghijklmnopqrstuvwxyz

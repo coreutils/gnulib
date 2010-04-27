@@ -1,5 +1,10 @@
 2010-04-27  Jim Meyering  <meyering@redhat.com>
 
+	maint.mk: fix a bug introduced in last change
+	* top/maint.mk (gl_assured_headers_): Now that all names are on
+	one line, use sed's "g" modifier.  Note that while the \.in\.h LHS
+	is not anchored to end of word, it should be adequate.
+
 	maint.mk: avoid side-effect in latest syntax-check
 	* top/maint.mk (sc_prohibit_always_true_header_tests): Rework not
 	to run commands via $(shell...), and hence to incur cost only when
