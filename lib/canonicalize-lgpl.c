@@ -43,7 +43,7 @@
 # include <shlib-compat.h>
 #else
 # define SHLIB_COMPAT(lib, introduced, obsoleted) 0
-# define versioned_symbol(lib, local, symbol, version)
+# define versioned_symbol(lib, local, symbol, version) extern int dummy
 # define compat_symbol(lib, local, symbol, version)
 # define weak_alias(local, symbol)
 # define __canonicalize_file_name canonicalize_file_name

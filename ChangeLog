@@ -1,3 +1,10 @@
+2010-04-28  Eric Blake  <eblake@redhat.com>
+
+	canonicalize-lgpl: avoid compiler warning
+	* lib/canonicalize-lgpl.c (versioned_symbol): Avoid an 'empty
+	declaration' / 'extraneous semicolon' warning with some compilers.
+	Reported by Andreas Gruenbacher.
+
 2010-04-28  Jim Meyering  <meyering@redhat.com>
 
 	init.sh: ensure a more reliable exit status when exiting via trap
