@@ -300,7 +300,7 @@ fdutimens (char const *file, int fd, struct timespec const timespec[2])
   {
 #if HAVE_FUTIMESAT || HAVE_WORKING_UTIMES
     struct timeval timeval[2];
-    struct timeval const *t;
+    struct timeval *t;
     if (ts)
       {
         timeval[0].tv_sec = ts[0].tv_sec;
@@ -484,7 +484,7 @@ lutimens (char const *file, struct timespec const timespec[2])
 #if HAVE_LUTIMES && !HAVE_UTIMENSAT
   {
     struct timeval timeval[2];
-    struct timeval const *t;
+    struct timeval *t;
     int result;
     if (ts)
       {

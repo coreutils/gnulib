@@ -1,3 +1,8 @@
+2010-04-27  Andreas Gruenbacher  <agruen@suse.de>  (tiny change)
+
+	* lib/utimens.c: On Tru64, the timestamp parameter of utimens(2)
+	is not declared as a const *; avoid warnings in that case.
+
 2010-04-28  Eric Blake  <eblake@redhat.com>
 
 	canonicalize-lgpl: avoid compiler warning
