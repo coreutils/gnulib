@@ -225,10 +225,12 @@ setup_()
     || fail_ "failed to create temporary directory in $initial_cwd_"
   cd "$test_dir_"
 
-  # This pair of trap statements ensures that the temporary directory,
-  # $test_dir_, is removed upon exit as well as upon catchable signal.
+  # These trap statements ensure that the temporary directory, $test_dir_,
+  # is removed upon exit as well as upon receipt of any of the listed signals.
   trap remove_tmp_ 0
-  trap 'Exit $?' 1 2 13 15
+  for sig_ in 1 2 3 13 15; do
+    eval "trap 'Exit $(expr $sig_ + 128)' $sig_"
+  done
 }
 
 # Create a temporary directory, much like mktemp -d does.
