@@ -16,6 +16,10 @@ Portability problems not fixed by Gnulib:
 This function is missing on some platforms:
 mingw, Interix 3.5, BeOS.
 @item
+The declaration of this function lacks @code{const} in the second argument
+on some platforms:
+OSF/1 5.1.
+@item
 On some platforms, this function mis-handles trailing slash:
 FreeBSD 7.2, Solaris 9.
 @item
@@ -32,3 +36,7 @@ On some platforms, @code{utimes} failed on read-only files when
 @code{utime} worked fine.
 glibc 2.2.5.
 @end itemize
+
+Extension: Gnulib provides a module @samp{utimens} that works around these
+problems and allows to set the time with nanosecond resolution (as far as
+supported by the file system).

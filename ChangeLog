@@ -1,3 +1,10 @@
+2010-04-27  Bruno Haible  <bruno@clisp.org>
+
+	Update doc about utimes().
+	* doc/posix-functions/utimes.texi: Mention the OSF/1 problem and the
+	'utimens' module.
+	Reported by Andreas Gruenbacher <agruen@suse.de>.
+
 2010-04-27  Eric Blake  <eblake@redhat.com>
 
 	full-read, full-write: relax license
