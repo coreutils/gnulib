@@ -1,3 +1,10 @@
+2010-04-28  Bruno Haible  <bruno@clisp.org>
+
+	getdate: Generate getdate.c in the source directory.
+	* modules/getdate (Makefile.am): Add rule for getdate.c. Augment
+	MOSTLYCLEANFILES.
+	Suggested by Daniel Richard G. <skunk@iskunk.org> and Ralf Wildenhues.
+
 2010-04-27  Andreas Gruenbacher  <agruen@suse.de>  (tiny change)
 
 	* lib/utimens.c: On Tru64, the timestamp parameter of utimens(2)

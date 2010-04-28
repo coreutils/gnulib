@@ -25,8 +25,20 @@ configure.ac:
 gl_GETDATE
 
 Makefile.am:
+# This rule overrides the Automake generated .y.c rule, to ensure that the
+# getdate.c file gets generated in the source directory, not in the build
+# directory.
+getdate.c: getdate.y
+	$(AM_V_GEN)$(SHELL) $(YLWRAP) $(srcdir)/getdate.y \
+	                              y.tab.c getdate.c \
+	                              y.tab.h getdate.h \
+	                              y.output getdate.output \
+	                              -- $(YACC) $(YFLAGS) $(AM_YFLAGS) && \
+	mv getdate.c getdate.c-t && \
+	mv getdate.c-t $(srcdir)/getdate.c
 lib_SOURCES += getdate.y
 BUILT_SOURCES += getdate.c
+MOSTLYCLEANFILES += getdate.c-t
 MAINTAINERCLEANFILES += getdate.c
 EXTRA_DIST += getdate.c
 
