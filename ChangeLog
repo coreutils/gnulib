@@ -1,3 +1,8 @@
+2010-04-29  Jim Meyering  <meyering@redhat.com>
+
+	inttypes: relax license to LGPLv2+
+	* modules/inttypes (License): Relax license.
+
 2010-04-29  Simon Josefsson  <simon@josefsson.org>
 
 	* top/maint.mk (indent): Run twice to produce idempotent results.

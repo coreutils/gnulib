@@ -56,7 +56,7 @@ Include:
 <inttypes.h>
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 all
