@@ -47,7 +47,7 @@ Link:
 $(PTY_LIB)
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Simon Josefsson

@@ -64,7 +64,7 @@ Include:
 <spawn.h>
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Bruno Haible, glibc

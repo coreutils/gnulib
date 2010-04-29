@@ -32,7 +32,7 @@ Include:
 <sysexits.h>
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Simon Josefsson

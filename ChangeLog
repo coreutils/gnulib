@@ -1,3 +1,17 @@
+2010-04-29  Eric Blake  <eblake@redhat.com>
+
+	headers: relax license to LGPLv2+
+	* modules/fcntl-h (License): Relax license.
+	* modules/getopt-posix (License): Likewise.
+	* modules/locale (License): Likewise.
+	* modules/math (License): Likewise.
+	* modules/pty (License): Likewise.
+	* modules/sched (License): Likewise.
+	* modules/search (License): Likewise.
+	* modules/spawn (License): Likewise.
+	* modules/stdarg (License): Likewise.
+	* modules/sysexits (License): Likewise.
+
 2010-04-29  Jim Meyering  <meyering@redhat.com>
 
 	inttypes: relax license to LGPLv2+
