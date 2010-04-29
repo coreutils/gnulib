@@ -1127,9 +1127,11 @@ refresh-po:
 	echo 'en@quot' >> $(PODIR)/LINGUAS && \
 	ls $(PODIR)/*.po | sed 's/\.po//' | sed 's,$(PODIR)/,,' | sort >> $(PODIR)/LINGUAS
 
+ # Running indent once is not idempotent, but running it twice is.
 INDENT_SOURCES ?= $(C_SOURCES)
 .PHONY: indent
 indent:
+	indent $(INDENT_SOURCES)
 	indent $(INDENT_SOURCES)
 
 # If you want to set UPDATE_COPYRIGHT_* environment variables,
