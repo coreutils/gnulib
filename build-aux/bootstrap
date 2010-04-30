@@ -1,6 +1,6 @@
 #! /bin/sh
 # Print a version string.
-scriptversion=2010-02-24.17; # UTC
+scriptversion=2010-04-30.16; # UTC
 
 # Bootstrap this package from checked-out sources.
 
@@ -819,7 +819,7 @@ if test $with_gettext = yes; then
       a\
           '"$XGETTEXT_OPTIONS"' $${end_of_xgettext_options+}
     }
-  ' po/Makevars.template >po/Makevars
+  ' po/Makevars.template >po/Makevars || exit 1
 
   if test -d runtime-po; then
     # Similarly for runtime-po/Makevars, but not quite the same.
@@ -833,7 +833,7 @@ if test $with_gettext = yes; then
         a\
             '"$XGETTEXT_OPTIONS_RUNTIME"' $${end_of_xgettext_options+}
       }
-    ' <po/Makevars.template >runtime-po/Makevars
+    ' po/Makevars.template >runtime-po/Makevars || exit 1
 
     # Copy identical files from po to runtime-po.
     (cd po && cp -p Makefile.in.in *-quot *.header *.sed *.sin ../runtime-po)

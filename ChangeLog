@@ -1,3 +1,9 @@
+2010-04-30  Jim Meyering  <meyering@redhat.com>
+
+	bootstrap: don't ignore failure to generate po*/Makevars
+	* build-aux/bootstrap (with_gettext): Don't ignore failure
+	to create po/Makevars or runtime-po/Makevars.
+
 2010-04-29  Eric Blake  <eblake@redhat.com>
 
 	headers: relax license to LGPLv2+
