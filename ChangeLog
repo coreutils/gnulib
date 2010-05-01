@@ -1,5 +1,11 @@
 2010-05-01  Bruno Haible  <bruno@clisp.org>
 
+	freading: Adapt to special meaning of _IOREAD flag on Solaris.
+	* lib/freading.c (freading): On Solaris, ignore the _IOREAD flag if
+	the _IOWRT flag is also set.
+
+2010-05-01  Bruno Haible  <bruno@clisp.org>
+
 	Fix doc about a HP-UX stdio bug.
 	* doc/posix-functions/ftell.texi: Mark HP-UX bug as unfixed.
 	* doc/posix-functions/ftello.texi: Likewise.

@@ -40,7 +40,11 @@ freading (FILE *fp)
 #elif defined __EMX__               /* emx+gcc */
   return (fp->_flags & _IOREAD) != 0;
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */
+# if defined __sun                  /* Solaris */
+  return (fp->_flag & _IOREAD) != 0 && (fp->_flag & _IOWRT) == 0;
+# else
   return (fp->_flag & _IOREAD) != 0;
+# endif
 #elif defined __UCLIBC__            /* uClibc */
   return (fp->__modeflags & (__FLAG_READONLY | __FLAG_READING)) != 0;
 #elif defined __QNX__               /* QNX */
