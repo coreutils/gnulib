@@ -1,5 +1,13 @@
 2010-05-01  Bruno Haible  <bruno@clisp.org>
 
+	ftell: Another test.
+	* tests/test-ftell3.c: New file.
+	* modules/ftell-tests (Files): Add it.
+	(Makefile.am): Add it to TESTS and check_PROGRAMS. Augment
+	MOSTLYCLEANFILES.
+
+2010-05-01  Bruno Haible  <bruno@clisp.org>
+
 	ftell, ftello: Work around Solaris bug.
 	* m4/ftello.m4 (gl_FUNC_FTELLO): Detect Solaris bug.
 	* lib/ftello.c: Include stdio-impl.h.
