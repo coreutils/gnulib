@@ -15,10 +15,6 @@ IRIX 5.3, OSF/1 4.0, Solaris 2.5.1, mingw.
 The declaration of @code{ftello} in @code{<stdio.h>} is not enabled by default
 on some platforms: glibc 2.3.6.
 @item
-This function produces incorrect results immediately after @code{fseek} on some
-platforms:
-HP-UX 11.
-@item
 This function fails on seekable stdin, stdout, and stderr: cygwin <= 1.5.24.
 @end itemize
 
@@ -28,6 +24,10 @@ Portability problems not fixed by Gnulib:
 On platforms where @code{off_t} is a 32-bit type, @code{ftello} does not work
 correctly with files larger than 2 GB.  The fix is to use the
 @code{AC_SYS_LARGEFILE} macro.
+@item
+This function produces incorrect results immediately after @code{fseek} on some
+platforms:
+HP-UX 11.
 @item
 @code{fflush}, @code{ftell}, @code{ftello}, @code{fgetpos} behave incorrectly
 on input streams that are opened in @code{O_TEXT} mode and whose contents

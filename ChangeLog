@@ -1,5 +1,11 @@
 2010-05-01  Bruno Haible  <bruno@clisp.org>
 
+	Fix doc about a HP-UX stdio bug.
+	* doc/posix-functions/ftell.texi: Mark HP-UX bug as unfixed.
+	* doc/posix-functions/ftello.texi: Likewise.
+
+2010-05-01  Bruno Haible  <bruno@clisp.org>
+
 	lseek test: Fix failure on Solaris.
 	* tests/test-lseek.sh: Partially revert 2010-04-20 commit. Consume all
 	output.
