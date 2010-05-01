@@ -1,5 +1,12 @@
 2010-05-01  Bruno Haible  <bruno@clisp.org>
 
+	fpurge: Sharper test.
+	* tests/test-fpurge.c (main): Add one more ftell check.
+	* modules/fpurge-tests (Depends-on): Add ftell.
+	Suggested by Eric Blake.
+
+2010-05-01  Bruno Haible  <bruno@clisp.org>
+
 	ftello: Another test.
 	* tests/test-ftello3.c: New file.
 	* modules/ftello-tests (Files): Add it.

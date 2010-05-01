@@ -108,6 +108,8 @@ main (void)
       if (check_filepos)
         ASSERT (ftell (fp) == 8);
       ASSERT (putc ('!', fp) == '!');
+      if (check_filepos)
+        ASSERT (ftell (fp) == 9);
       ASSERT (fclose (fp) == 0);
       fp = fopen (TESTFILE, "r");
       if (fp == NULL)

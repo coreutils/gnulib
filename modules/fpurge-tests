@@ -4,6 +4,7 @@ tests/macros.h
 
 Depends-on:
 fflush
+ftell
 
 configure.ac:
 
