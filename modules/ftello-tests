@@ -2,6 +2,7 @@ Files:
 tests/test-ftello.c
 tests/test-ftello.sh
 tests/test-ftello2.sh
+tests/test-ftello3.c
 tests/signature.h
 tests/macros.h
 m4/ungetc.m4
@@ -13,5 +14,6 @@ configure.ac:
 gl_FUNC_UNGETC_WORKS
 
 Makefile.am:
-TESTS += test-ftello.sh test-ftello2.sh
-check_PROGRAMS += test-ftello
+TESTS += test-ftello.sh test-ftello2.sh test-ftello3
+check_PROGRAMS += test-ftello test-ftello3
+MOSTLYCLEANFILES += t-ftello3.tmp

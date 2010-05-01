@@ -1,5 +1,11 @@
 2010-05-01  Bruno Haible  <bruno@clisp.org>
 
+	ftello: Another test.
+	* tests/test-ftello3.c: New file.
+	* modules/ftello-tests (Files): Add it.
+	(Makefile.am): Add it to TESTS and check_PROGRAMS. Augment
+	MOSTLYCLEANFILES.
+
 	ftell: Another test.
 	* tests/test-ftell3.c: New file.
 	* modules/ftell-tests (Files): Add it.
