@@ -1,5 +1,17 @@
 2010-05-01  Bruno Haible  <bruno@clisp.org>
 
+	ftell, ftello: Work around Solaris bug.
+	* m4/ftello.m4 (gl_FUNC_FTELLO): Detect Solaris bug.
+	* lib/ftello.c: Include stdio-impl.h.
+	(ftello): On Solaris, when _IOWRT is set, compute the result without
+	looking at _IOREAD.
+	* modules/ftello (Files): Add lib/stdio-impl.h.
+	* doc/posix-functions/ftell.texi: Mention Solaris bug.
+	* doc/posix-functions/ftello.texi: Likewise.
+	Reported by Eric Blake.
+
+2010-05-01  Bruno Haible  <bruno@clisp.org>
+
 	freading: Adapt to special meaning of _IOREAD flag on Solaris.
 	* lib/freading.c (freading): On Solaris, ignore the _IOREAD flag if
 	the _IOWRT flag is also set.

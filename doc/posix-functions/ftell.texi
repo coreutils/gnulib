@@ -10,6 +10,10 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function mistakenly succeeds on pipes on some platforms: mingw.
+@item
+This function produces incorrect results after @code{putc} that followed a
+@code{getc} call that reached EOF on some platforms:
+Solaris 10.
 @end itemize
 
 Portability problems not fixed by Gnulib:

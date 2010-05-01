@@ -1,5 +1,5 @@
-# ftello.m4 serial 6
-dnl Copyright (C) 2007, 2008, 2009, 2010 Free Software Foundation, Inc.
+# ftello.m4 serial 7
+dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -10,7 +10,7 @@ AC_DEFUN([gl_FUNC_FTELLO],
   AC_REQUIRE([AC_PROG_CC])
   AC_REQUIRE([gl_STDIN_LARGE_OFFSET])
 
-  dnl Persuade glibc <stdio.h> to declare fseeko().
+  dnl Persuade glibc <stdio.h> to declare ftello().
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
   AC_CACHE_CHECK([for ftello], [gl_cv_func_ftello],
@@ -23,6 +23,93 @@ AC_DEFUN([gl_FUNC_FTELLO],
   else
     if test $gl_cv_var_stdin_large_offset = no; then
       REPLACE_FTELLO=1
+    else
+      dnl Detect bug on Solaris.
+      dnl ftell and ftello produce incorrect results after putc that followed a
+      dnl getc call that reached EOF on Solaris. This is because the _IOREAD
+      dnl flag does not get cleared in this case, even though _IOWRT gets set,
+      dnl and ftell and ftello look whether the _IOREAD flag is set.
+      AC_REQUIRE([AC_CANONICAL_HOST])
+      AC_CACHE_CHECK([whether ftello works],
+        [gl_cv_func_ftello_works],
+        [
+          dnl Initial guess, used when cross-compiling or when /dev/tty cannot
+          dnl be opened.
+changequote(,)dnl
+          case "$host_os" in
+                      # Guess no on Solaris.
+            solaris*) gl_cv_func_ftello_works="guessing no" ;;
+                      # Guess yes otherwise.
+            *)        gl_cv_func_ftello_works="guessing yes" ;;
+          esac
+changequote([,])dnl
+          AC_TRY_RUN([
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define TESTFILE "conftest.tmp"
+int
+main (void)
+{
+  FILE *fp;
+
+  /* Create a file with some contents.  */
+  fp = fopen (TESTFILE, "w");
+  if (fp == NULL)
+    return 70;
+  if (fwrite ("foogarsh", 1, 8, fp) < 8)
+    return 71;
+  if (fclose (fp))
+    return 72;
+
+  /* The file's contents is now "foogarsh".  */
+
+  /* Try writing after reading to EOF.  */
+  fp = fopen (TESTFILE, "r+");
+  if (fp == NULL)
+    return 73;
+  if (fseek (fp, -1, SEEK_END))
+    return 74;
+  if (!(getc (fp) == 'h'))
+    return 1;
+  if (!(getc (fp) == EOF))
+    return 2;
+  if (!(ftell (fp) == 8))
+    return 3;
+  if (!(ftell (fp) == 8))
+    return 4;
+  if (!(putc ('!', fp) == '!'))
+    return 5;
+  if (!(ftell (fp) == 9))
+    return 6;
+  if (!(fclose (fp) == 0))
+    return 7;
+  fp = fopen (TESTFILE, "r");
+  if (fp == NULL)
+    return 75;
+  {
+    char buf[10];
+    if (!(fread (buf, 1, 10, fp) == 9))
+      return 10;
+    if (!(memcmp (buf, "foogarsh!", 9) == 0))
+      return 11;
+  }
+  if (!(fclose (fp) == 0))
+    return 12;
+
+  /* The file's contents is now "foogarsh!".  */
+
+  return 0;
+}], [gl_cv_func_ftello_works=yes], [gl_cv_func_ftello_works=no], [:])
+        ])
+      case "$gl_cv_func_ftello_works" in
+        *yes) ;;
+        *)
+          REPLACE_FTELLO=1
+          AC_DEFINE([FTELLO_BROKEN_AFTER_SWITCHING_FROM_READ_TO_WRITE], [1],
+            [Define to 1 if the system's ftello function has the Solaris bug.])
+          ;;
+      esac
     fi
   fi
   if test $HAVE_FTELLO = 0 || test $REPLACE_FTELLO = 1; then
