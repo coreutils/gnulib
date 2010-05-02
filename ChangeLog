@@ -1,5 +1,12 @@
 2010-05-02  Bruno Haible  <bruno@clisp.org>
 
+	Fix regression from 2010-04-25.
+	* gnulib-tool (func_modules_transitive_closure): Check the status of
+	all modules, not only of the tests that are of the form foo-tests where
+	foo is a module.
+
+2010-05-02  Bruno Haible  <bruno@clisp.org>
+
 	wctob: Work around nasty Cygwin 1.7.2 bug.
 	* m4/wctob.m4 (gl_FUNC_WCTOB): Detect the Cygwin bug.
 	* doc/posix-functions/wctob.texi: Mention the Cygwin bug.

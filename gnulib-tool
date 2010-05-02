@@ -2398,63 +2398,55 @@ func_modules_transitive_closure ()
           if test -n "$duplicated_deps"; then
             func_warning "module $module has duplicated dependencies: "`echo $duplicated_deps`
           fi
-          for dep in $deps; do
-            if test -n "$incobsolete" \
-               || { inc=true
-                    for word in `func_get_status $dep`; do
-                      case "$word" in
-                        obsolete)
-                          inc=false
-                          ;;
-                      esac
-                    done
-                    $inc
-                  }; then
-              func_append inmodules " $dep"
-            fi
-          done
           if test -n "$inctests"; then
             testsmodule=`func_get_tests_module $module`
             if test -n "$testsmodule"; then
-              # Determine whether to include the tests module.
-              inc=true
-              for word in `func_get_status "$testsmodule"`; do
-                case "$word" in
-                  c++-test)
-                    test -z "$excl_cxx_tests" \
-                      || inc=false
-                    test -n "$fmtc_inc_all_tests" || test -n "$inc_cxx_tests" \
-                      || inc=false
-                    ;;
-                  longrunning-test)
-                    test -z "$excl_longrunning_tests" \
-                      || inc=false
-                    test -n "$fmtc_inc_all_tests" || test -n "$inc_longrunning_tests" \
-                      || inc=false
-                    ;;
-                  privileged-test)
-                    test -z "$excl_privileged_tests" \
-                      || inc=false
-                    test -n "$fmtc_inc_all_tests" || test -n "$inc_privileged_tests" \
-                      || inc=false
-                    ;;
-                  unportable-test)
-                    test -z "$excl_unportable_tests" \
-                      || inc=false
-                    test -n "$fmtc_inc_all_tests" || test -n "$inc_unportable_tests" \
-                      || inc=false
-                    ;;
-                  *-test)
-                    test -n "$fmtc_inc_all_tests" \
-                      || inc=false
-                    ;;
-                esac
-              done
-              if $inc; then
-                func_append inmodules " $testsmodule"
-              fi
+              deps="$deps $testsmodule"
             fi
           fi
+          for dep in $deps; do
+            # Determine whether to include the dependency or tests module.
+            inc=true
+            for word in `func_get_status $dep`; do
+              case "$word" in
+                obsolete)
+                  test -n "$incobsolete" \
+                    || inc=false
+                  ;;
+                c++-test)
+                  test -z "$excl_cxx_tests" \
+                    || inc=false
+                  test -n "$fmtc_inc_all_tests" || test -n "$inc_cxx_tests" \
+                    || inc=false
+                  ;;
+                longrunning-test)
+                  test -z "$excl_longrunning_tests" \
+                    || inc=false
+                  test -n "$fmtc_inc_all_tests" || test -n "$inc_longrunning_tests" \
+                    || inc=false
+                  ;;
+                privileged-test)
+                  test -z "$excl_privileged_tests" \
+                    || inc=false
+                  test -n "$fmtc_inc_all_tests" || test -n "$inc_privileged_tests" \
+                    || inc=false
+                  ;;
+                unportable-test)
+                  test -z "$excl_unportable_tests" \
+                    || inc=false
+                  test -n "$fmtc_inc_all_tests" || test -n "$inc_unportable_tests" \
+                    || inc=false
+                  ;;
+                *-test)
+                  test -n "$fmtc_inc_all_tests" \
+                    || inc=false
+                  ;;
+              esac
+            done
+            if $inc; then
+              func_append inmodules " $dep"
+            fi
+          done
         fi
       fi
     done
