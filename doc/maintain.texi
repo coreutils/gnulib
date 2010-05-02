@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate April 29, 2010
+@set lastupdate May 1, 2010
 @c %**end of header
 
 @dircategory GNU organization
@@ -164,7 +164,7 @@ the package.
 
 @cindex down, when GNU machines are
 @cindex outage, of GNU machines
-@cindex @url{identi.ca/group/fsfstatus}
+@cindex @url{http://identi.ca/group/fsfstatus}
 If you find that any GNU computer systems (@code{fencepost.gnu.org},
 @code{ftp.gnu.org}, @code{www.gnu.org}, @code{savannah.gnu.org},
 @dots{}) seem to be down, you can check the current status at
@@ -1330,7 +1330,7 @@ for your GNU package:
 @item
 Create an account for yourself at @url{http://savannah.gnu.org}, if
 you don't already have one.  By the way, this is also needed to
-maintain the web pages at @url{www.gnu.org} for your project
+maintain the web pages at @url{http://www.gnu.org} for your project
 (@pxref{Web Pages}).
 
 @item
