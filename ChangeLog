@@ -1,5 +1,11 @@
 2010-05-02  Bruno Haible  <bruno@clisp.org>
 
+	wcwidth: Declare also when it's aliased.
+	* lib/wchar.in.h (wcwidth): Don't test whether wcwidth is defined as a
+	macro.
+
+2010-05-02  Bruno Haible  <bruno@clisp.org>
+
 	Fix regression from 2010-04-25.
 	* gnulib-tool (func_modules_transitive_closure): Check the status of
 	all modules, not only of the tests that are of the form foo-tests where
