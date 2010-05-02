@@ -12,6 +12,9 @@ Portability problems fixed by Gnulib:
 This function is missing on some platforms:
 HP-UX 11.00, IRIX 5.3, Solaris 2.6, mingw, Interix 3.5.
 @item
+This function clobbers caller-owned registers on some platforms:
+Cygwin 1.7.2.
+@item
 This function does not work on some platforms:
 Solaris 9.
 @item
