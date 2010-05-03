@@ -1,5 +1,8 @@
 2010-05-03  Jim Meyering  <meyering@redhat.com>
 
+	announce-gen: backslash-escape '@'s in --help output
+	* build-aux/announce-gen: Fix syntax errors.
+
 	maint.mk, announce-gen: allow project-specific announcement mail headers
 	* top/maint.mk (translation_project_): Define default.
 	(announcement_Cc_, announcement_mail_headers_): Likewise.

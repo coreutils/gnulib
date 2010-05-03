@@ -3,7 +3,7 @@ eval '(exit $?0)' && eval 'exec perl -wS "$0" ${1+"$@"}'
     if 0;
 # Generate a release announcement message.
 
-my $VERSION = '2010-05-03 19:35'; # UTC
+my $VERSION = '2010-05-03 20:17'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -76,7 +76,7 @@ The following are optional:
    --no-print-checksums         do not emit MD5 or SHA1 checksums
    --archive-suffix=SUF         add SUF to the list of archive suffixes
    --mail-headers=HEADERS       a space-separated list of mail headers, e.g.,
-                                To: x@example.com Cc: y-announce@example.com,...
+                                To: x\@example.com Cc: y-announce\@example.com,...
 
    --help             display this help and exit
    --version          output version information and exit
