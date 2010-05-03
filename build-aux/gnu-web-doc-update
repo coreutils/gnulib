@@ -90,7 +90,9 @@ trap 'exit $?' 1 2 13 15
 # just-released version number, not some string like 7.6.18-20761.
 # That version string propagates into all documentation.
 git checkout -b $tmp_branch v$version
-./bootstrap && ./configure && make && make web-manual
+ok=0
+./bootstrap && ./configure && make && make web-manual && ok=1
+test $ok = 1 || exit 1
 
 tmp=$(mktemp -d --tmpdir=. web-doc-update.XXXXXX) || exit 1
 ( cd $tmp \

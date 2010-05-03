@@ -1,5 +1,8 @@
 2010-05-03  Jim Meyering  <meyering@redhat.com>
 
+	gnu-web-doc-update: don't ignore configure or build failure
+	* build-aux/gnu-web-doc-update: Exit nonzero upon internal failure.
+
 	announce-gen: backslash-escape '@'s in --help output
 	* build-aux/announce-gen: Fix syntax errors.
 
