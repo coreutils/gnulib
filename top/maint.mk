@@ -544,6 +544,13 @@ sc_prohibit_signal_without_use:
 	re='\<($(_sig_function_re)) *\(|\<($(_sig_syms_re))\>'		\
 	  $(_sc_header_without_use)
 
+# Prohibit the inclusion of strings.h without a sensible use.
+# Using the likes of bcmp, bcopy, bzero, index or rindex is not sensible.
+sc_prohibit_strings_without_use:
+	@h='<strings.h>'						\
+	re='\<(strn?casecmp|ffs(ll)?)\>'				\
+	  $(_sc_header_without_use)
+
 # Get the list of symbol names with this:
 # perl -lne '/^# *define (\w+)\(/ and print $1' lib/intprops.h|grep -v '^s'|fmt
 _intprops_names =							\

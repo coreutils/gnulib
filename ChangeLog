@@ -6,6 +6,11 @@
 
 2010-05-03  Jim Meyering  <meyering@redhat.com>
 
+	maint.mk: prohibit unwarranted use of <strings.h>
+	* top/maint.mk (sc_prohibit_strings_without_use): Reject inclusion of
+	strings.h in a file that does not also use strcasecmp, strncasecmp,
+	ffs or ffsll.
+
 	maint.mk: remove obsolete comments
 	* top/maint.mk: Remove stale, commented-out rules.
 
