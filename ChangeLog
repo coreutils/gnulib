@@ -1,3 +1,9 @@
+2010-05-03  Giuseppe Scrivano  <gscrivano@gnu.org>
+
+	bootstrap: don't ignore download_po_files failure
+	* build-aux/bootstrap (update_po_files): Don't ignore download_po_files
+	failure.
+
 2010-05-03  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: allow to pass options to gendocs.sh
