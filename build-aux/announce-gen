@@ -3,7 +3,7 @@ eval '(exit $?0)' && eval 'exec perl -wS "$0" ${1+"$@"}'
     if 0;
 # Generate a release announcement message.
 
-my $VERSION = '2009-11-20 13:36'; # UTC
+my $VERSION = '2010-05-03 19:35'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -75,6 +75,8 @@ The following are optional:
                                 required if gnulib is in TOOL_LIST.
    --no-print-checksums         do not emit MD5 or SHA1 checksums
    --archive-suffix=SUF         add SUF to the list of archive suffixes
+   --mail-headers=HEADERS       a space-separated list of mail headers, e.g.,
+                                To: x@example.com Cc: y-announce@example.com,...
 
    --help             display this help and exit
    --version          output version information and exit
@@ -346,6 +348,7 @@ sub get_tool_versions ($$)
   # issue "1,2" instead of "1.2", what confuses our regexps.
   $ENV{LC_ALL} = "C";
 
+  my $mail_headers;
   my $release_type;
   my $package_name;
   my $prev_version;
@@ -359,6 +362,7 @@ sub get_tool_versions ($$)
 
   GetOptions
     (
+     'mail-headers=s'     => \$mail_headers,
      'release-type=s'     => \$release_type,
      'package-name=s'     => \$package_name,
      'previous-version=s' => \$prev_version,
@@ -422,11 +426,18 @@ sub get_tool_versions ($$)
   %size
     or exit 1;
 
+  my $headers = '';
+  if (defined $mail_headers)
+    {
+      ($headers = $mail_headers) =~ s/\s+(\S+:)/\n$1/g;
+      $headers .= "\n";
+    }
+
   # The markup is escaped as <\# so that when this script is sent by
   # mail (or part of a diff), Gnus is not triggered.
   print <<EOF;
 
-Subject: $my_distdir released [$release_type]
+${headers}Subject: $my_distdir released [$release_type]
 
 <\#secure method=pgpmime mode=sign>
 

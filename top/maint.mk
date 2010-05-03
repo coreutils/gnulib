@@ -992,8 +992,16 @@ gpg_key_ID ?= \
      && gpgv .ann-sig - < /dev/null 2>&1 \
 	  | sed -n '/.*key ID \([0-9A-F]*\)/s//\1/p'; rm -f .ann-sig)
 
+translation_project_ ?= coordinator@translationproject.org
+announcement_Cc_ ?= $(translation_project_), $(PACKAGE_BUGREPORT)
+announcement_mail_headers_ ?=						\
+To: info-gnu@gnu.org							\
+Cc: $(announcement_Cc_)							\
+Mail-Followup-To: $(PACKAGE_BUGREPORT)
+
 announcement: NEWS ChangeLog $(rel-files)
 	@$(build_aux)/announce-gen					\
+	    --mail-headers='$(announcement_mail_headers_)'		\
 	    --release-type=$(RELEASE_TYPE)				\
 	    --package=$(PACKAGE)					\
 	    --prev=$(PREV_VERSION)					\

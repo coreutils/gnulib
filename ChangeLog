@@ -1,5 +1,11 @@
 2010-05-03  Jim Meyering  <meyering@redhat.com>
 
+	maint.mk, announce-gen: allow project-specific announcement mail headers
+	* top/maint.mk (translation_project_): Define default.
+	(announcement_Cc_, announcement_mail_headers_): Likewise.
+	(announcement): Invoke announce-gen with new --mail-headers option.
+	* build-aux/announce-gen: New option: --mail-headers=HEADERS.
+
 	test-xalloc-die: avoid unwarranted test failure on OpenSolaris 5.11
 	* tests/test-xalloc-die.sh: Redirect stdout before stderr, (i.e.,
 	"> out 2> err", rather than "2> err > out").  Otherwise, with /bin/sh
