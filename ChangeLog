@@ -1,3 +1,12 @@
+2010-05-03  Jim Meyering  <meyering@redhat.com>
+
+	test-xalloc-die: avoid unwarranted test failure on OpenSolaris 5.11
+	* tests/test-xalloc-die.sh: Redirect stdout before stderr, (i.e.,
+	"> out 2> err", rather than "2> err > out").  Otherwise, with /bin/sh
+	on OpenSolaris 5.11 snv_134, we would end up with a stray "1> out"
+	line in the "err2" output file when running "make check" in verbose
+	mode (i.e., with set -x enabled).
+
 2010-05-03  Bruno Haible  <bruno@clisp.org>
 
 	wctob: Fix for weird platforms.

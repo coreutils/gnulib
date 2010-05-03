@@ -18,7 +18,7 @@
 
 . "${srcdir=.}/init.sh"; path_prepend_ .
 
-test-xalloc-die${EXEEXT} 2> err > out
+test-xalloc-die${EXEEXT} > out 2> err
 case $? in
   1) ;;
   *) Exit 1;;
