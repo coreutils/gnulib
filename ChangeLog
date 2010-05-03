@@ -1,3 +1,8 @@
+2010-05-03  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: remove obsolete comments
+	* top/maint.mk: Remove stale, commented-out rules.
+
 2010-05-02  Bruno Haible  <bruno@clisp.org>
 
 	wcwidth: Declare also when it's aliased.

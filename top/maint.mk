@@ -148,16 +148,6 @@ local-check :=								\
     $(filter-out $(local-checks-to-skip), $(local-checks-available)))
 
 syntax-check: $(local-check)
-#	@grep -nE '#  *include <(limits|std(def|arg|bool))\.h>'		\
-#	    $$(find -type f -name '*.[chly]') &&			\
-#	  { echo '$(ME): found conditional include' 1>&2;		\
-#	    exit 1; } || :
-
-#	grep -nE '^#  *include <(string|stdlib)\.h>'			\
-#	    $(srcdir)/{lib,src}/*.[chy] &&				\
-#	  { echo '$(ME): FIXME' 1>&2;					\
-#	    exit 1; } || :
-# FIXME: don't allow `#include .strings\.h' anywhere
 
 # _sc_search_regexp
 #
