@@ -1,5 +1,9 @@
 2010-05-03  Jim Meyering  <meyering@redhat.com>
 
+	maint.mk: allow to pass options to gendocs.sh
+	* top/maint.mk (web-manual): Pass gendocs_options_ to gendocs.sh.
+	(gendocs_options_): New overridable variable.
+
 	gnu-web-doc-update: don't ignore configure or build failure
 	* build-aux/gnu-web-doc-update: Exit nonzero upon internal failure.
 

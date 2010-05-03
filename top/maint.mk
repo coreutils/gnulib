@@ -1085,12 +1085,17 @@ release-prep:
 	$(VC) commit -F .ci-msg -a
 	rm .ci-msg
 
+# Override this with e.g., -s $(srcdir)/some_other_name.texi
+# if the default $(PACKAGE)-derived name doesn't apply.
+gendocs_options_ ?=
+
 .PHONY: web-manual
 web-manual:
 	@test -z "$(manual_title)" \
 	  && { echo define manual_title in cfg.mk 1>&2; exit 1; } || :
 	@cd '$(srcdir)/doc'; \
-	  $(SHELL) ../build-aux/gendocs.sh -o '$(abs_builddir)/doc/manual' \
+	  $(SHELL) ../build-aux/gendocs.sh $(gendocs_options_) \
+	     -o '$(abs_builddir)/doc/manual' \
 	     --email $(PACKAGE_BUGREPORT) $(PACKAGE) \
 	    "$(PACKAGE_NAME) - $(manual_title)"
 	@echo " *** Upload the doc/manual directory to web-cvs."
