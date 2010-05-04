@@ -1,3 +1,75 @@
+2010-05-04  Eric Blake  <eblake@redhat.com>
+
+	docs: update cygwin progress
+	* doc/posix-functions/wctob.texi (wctob): Cygwin 1.7.6 will fix
+	this bug.
+	* doc/glibc-functions/get_nprocs_conf.texi (get_nprocs_conf):
+	Added in cygwin 1.7.2.
+	* doc/glibc-functions/get_phys_pages.texi (get_phys_pages):
+	Likewise.
+	* doc/glibc-functions/get_avphys_pages.texi (get_avphys_pages):
+	Likewise.
+	* doc/glibc-functions/dup3.texi (dup3): Likewise.
+	* doc/glibc-functions/pipe2.texi (pipe2): Likewise.
+	* doc/glibc-functions/accept4.texi (accept4): Likewise.
+	* doc/posix-functions/strfmon.texi (strfmon): Likewise.
+	* doc/glibc-functions/get_nprocs.texi (get_nprocs): Likewise.
+	Mention nproc module.
+	* doc/glibc-functions/xdr_uint16_t.texi (xdr_uint16_t): Mention
+	bug in cygwin 1.7.5 addition.
+	* doc/glibc-functions/xdr_uint32_t.texi (xdr_uint32_t): Likewise.
+	* doc/glibc-functions/xdr_uint64_t.texi (xdr_uint64_t): Likewise.
+	* doc/glibc-functions/xdr_uint8_t.texi (xdr_uint8_t): Likewise.
+	* doc/glibc-functions/xdr_array.texi (xdr_array): Added in cygwin
+	1.7.5.
+	* doc/glibc-functions/xdr_bool.texi (xdr_bool): Likewise.
+	* doc/glibc-functions/xdr_bytes.texi (xdr_bytes): Likewise.
+	* doc/glibc-functions/xdr_char.texi (xdr_char): Likewise.
+	* doc/glibc-functions/xdr_double.texi (xdr_double): Likewise.
+	* doc/glibc-functions/xdr_enum.texi (xdr_enum): Likewise.
+	* doc/glibc-functions/xdr_float.texi (xdr_float): Likewise.
+	* doc/glibc-functions/xdr_free.texi (xdr_free): Likewise.
+	* doc/glibc-functions/xdr_hyper.texi (xdr_hyper): Likewise.
+	* doc/glibc-functions/xdr_int.texi (xdr_int): Likewise.
+	* doc/glibc-functions/xdr_int16_t.texi (xdr_int16_t): Likewise.
+	* doc/glibc-functions/xdr_int32_t.texi (xdr_int32_t): Likewise.
+	* doc/glibc-functions/xdr_int64_t.texi (xdr_int64_t): Likewise.
+	* doc/glibc-functions/xdr_int8_t.texi (xdr_int8_t): Likewise.
+	* doc/glibc-functions/xdr_long.texi (xdr_long): Likewise.
+	* doc/glibc-functions/xdr_longlong_t.texi (xdr_longlong_t):
+	Likewise.
+	* doc/glibc-functions/xdr_netobj.texi (xdr_netobj): Likewise.
+	* doc/glibc-functions/xdr_opaque.texi (xdr_opaque): Likewise.
+	* doc/glibc-functions/xdr_pointer.texi (xdr_pointer): Likewise.
+	* doc/glibc-functions/xdr_reference.texi (xdr_reference):
+	Likewise.
+	* doc/glibc-functions/xdr_short.texi (xdr_short): Likewise.
+	* doc/glibc-functions/xdr_sizeof.texi (xdr_sizeof): Likewise.
+	* doc/glibc-functions/xdr_string.texi (xdr_string): Likewise.
+	* doc/glibc-functions/xdr_u_char.texi (xdr_u_char): Likewise.
+	* doc/glibc-functions/xdr_u_hyper.texi (xdr_u_hyper): Likewise.
+	* doc/glibc-functions/xdr_u_int.texi (xdr_u_int): Likewise.
+	* doc/glibc-functions/xdr_u_long.texi (xdr_u_long): Likewise.
+	* doc/glibc-functions/xdr_u_longlong_t.texi (xdr_u_longlong_t):
+	Likewise.
+	* doc/glibc-functions/xdr_u_short.texi (xdr_u_short): Likewise.
+	* doc/glibc-functions/xdr_union.texi (xdr_union): Likewise.
+	* doc/glibc-functions/xdr_vector.texi (xdr_vector): Likewise.
+	* doc/glibc-functions/xdr_void.texi (xdr_void): Likewise.
+	* doc/glibc-functions/xdr_wrapstring.texi (xdr_wrapstring):
+	Likewise.
+	* doc/glibc-functions/xdrmem_create.texi (xdrmem_create):
+	Likewise.
+	* doc/glibc-functions/xdrrec_create.texi (xdrrec_create):
+	Likewise.
+	* doc/glibc-functions/xdrrec_endofrecord.texi
+	(xdrrec_endofrecord): Likewise.
+	* doc/glibc-functions/xdrrec_eof.texi (xdrrec_eof): Likewise.
+	* doc/glibc-functions/xdrrec_skiprecord.texi (xdrrec_skiprecord):
+	Likewise.
+	* doc/glibc-functions/xdrstdio_create.texi (xdrstdio_create):
+	Likewise.
+
 2010-05-04  Jim Meyering  <meyering@redhat.com>
 
 	gendocs.sh: make its "-s FILE" option more useful

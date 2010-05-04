@@ -12,5 +12,5 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-Cygwin, mingw, BeOS.
+Cygwin 1.7.4, mingw, BeOS.
 @end itemize
