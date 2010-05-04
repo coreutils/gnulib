@@ -1,3 +1,9 @@
+2010-05-04  Jim Meyering  <meyering@redhat.com>
+
+	gendocs.sh: make its "-s FILE" option more useful
+	* build-aux/gendocs.sh: When honoring the -s FILE option, update
+	$PACKAGE to reflect the probably-different basename of "FILE".
+
 2010-05-03  Giuseppe Scrivano  <gscrivano@gnu.org>
 
 	bootstrap: don't ignore download_po_files failure

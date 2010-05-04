@@ -2,7 +2,7 @@
 # gendocs.sh -- generate a GNU manual in many formats.  This script is
 #   mentioned in maintain.texi.  See the help message below for usage details.
 
-scriptversion=2010-02-13.20
+scriptversion=2010-05-04.09
 
 # Copyright 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010
 # Free Software Foundation, Inc.
@@ -149,8 +149,16 @@ while test $# -gt 0; do
   shift
 done
 
+# For most of the following, the base name is just $PACKAGE
+base=$PACKAGE
+
 if test -n "$srcfile"; then
-  :
+  # but here, we use the basename of $srcfile
+  base=`basename "$srcfile"`
+  case $base in
+    *.txi|*.texi|*.texinfo) base=`echo "$base"|sed 's/\.[texinfo]*$//'`;;
+  esac
+  PACKAGE=$base
 elif test -s "$srcdir/$PACKAGE.texinfo"; then
   srcfile=$srcdir/$PACKAGE.texinfo
 elif test -s "$srcdir/$PACKAGE.texi"; then
