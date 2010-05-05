@@ -1,3 +1,8 @@
+2010-05-05  Peter O'Gorman  <pogma@thewrittenword.com>
+
+	pread: Update documentation.
+	* doc/posix-functions/pread.texi: Mention the 'pread' module.
+
 2010-05-04  Eric Blake  <eblake@redhat.com>
 
 	docs: update cygwin progress
