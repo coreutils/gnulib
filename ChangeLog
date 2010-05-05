@@ -1,5 +1,12 @@
 2010-05-05  Paul Eggert  <eggert@cs.ucla.edu>
 
+	Further improvements to verify.h, suggested by Eric Blake.
+	* lib/verify.h (_GL_CONCAT, _GL_CONCAT0, _GL_GENSYM): Renamed from
+	the GL_* versions, to avoid collision with OpenGL.
+	(_GL_COUNTER): New macro, so that we can fall back on __LINE__ if
+	__COUNTER__ doesn't work.  Test that __COUNTER__ increments rather
+	than testing merely whether it's defined.
+
 	Modify verify.h to pacify gcc -Wredundant_decls.
 	* lib/verify.h (GL_CONCAT, GL_CONCAT0, GL_GENSYM): New macros.
 	These use the prefix "GL_" since they're likely to be useful elsewhere.
