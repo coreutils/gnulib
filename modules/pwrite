@@ -1,0 +1,25 @@
+Description:
+pwrite() function: write without changing file offset
+
+Files:
+lib/pwrite.c
+m4/pwrite.m4
+
+Depends-on:
+lseek
+unistd
+
+configure.ac:
+gl_FUNC_PWRITE
+gl_UNISTD_MODULE_INDICATOR([pwrite])
+
+Makefile.am:
+
+Include:
+<unistd.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+Peter O'Gorman

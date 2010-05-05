@@ -1,5 +1,20 @@
 2010-05-05  Peter O'Gorman  <pogma@thewrittenword.com>
 
+	New module pwrite.
+	* lib/unistd.in.h (pwrite): New declaration.
+	* lib/pwrite.c: New file, from glibc with modifications.
+	* m4/pwrite.m4: New file.
+	* m4/unistd_h.m4 (gl_UNISTD_H): Test whether pwrite is declared.
+	(gl_UNISTD_H_DEFAULTS): Initialize GNULIB_PWRITE, HAVE_PWRITE,
+	REPLACE_PWRITE.
+	* modules/pwrite: New file.
+	* modules/unistd (Makefile.am): Substitute GNULIB_PWRITE, HAVE_PWRITE,
+	REPLACE_PWRITE.
+	* tests/test-unistd-c++.cc: Check GNULIB_NAMESPACE::pwrite.
+	* doc/posix-functions/pwrite.texi: Mention the new module.
+
+2010-05-05  Peter O'Gorman  <pogma@thewrittenword.com>
+
 	pread: Update documentation.
 	* doc/posix-functions/pread.texi: Mention the 'pread' module.
 

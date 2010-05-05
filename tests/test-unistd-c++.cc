@@ -138,6 +138,11 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::pread, ssize_t,
                  (int, void *, size_t, off_t));
 #endif
 
+#if GNULIB_TEST_PWRITE
+SIGNATURE_CHECK (GNULIB_NAMESPACE::pwrite, ssize_t,
+                 (int, const void *, size_t, off_t));
+#endif
+
 #if GNULIB_TEST_READLINK
 SIGNATURE_CHECK (GNULIB_NAMESPACE::readlink, ssize_t,
                  (const char *, char *, size_t));
