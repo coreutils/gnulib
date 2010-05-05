@@ -21,12 +21,20 @@
 
 #include "verify.h"
 
+#ifndef EXP_FAIL
+# define EXP_FAIL 0
+#endif
+
 int x;
 enum { a, b, c };
 
+#if EXP_FAIL == 1
 verify (x >= 0);                  /* should give ERROR: non-constant expression */
+#endif
 verify (c == 2);                  /* should be ok */
+#if EXP_FAIL == 2
 verify (1 + 1 == 3);              /* should give ERROR */
+#endif
 verify (1 == 1); verify (1 == 1); /* should be ok */
 
 enum
@@ -36,13 +44,25 @@ enum
 
 int function (int n)
 {
+#if EXP_FAIL == 3
   verify (n >= 0);                  /* should give ERROR: non-constant expression */
+#endif
   verify (c == 2);                  /* should be ok */
+#if EXP_FAIL == 4
   verify (1 + 1 == 3);              /* should give ERROR */
+#endif
   verify (1 == 1); verify (1 == 1); /* should be ok */
 
   if (n)
-    return (verify_true (1 == 1), verify_true (1 == 1), 7); /* should be ok */
-  else
-    return (verify_true (1 == 2), 5); /* should give ERROR */
+    return ((void) verify_true (1 == 1), verify_true (1 == 1) + 7); /* should be ok */
+#if EXP_FAIL == 5
+  return (verify_true (1 == 2), 5); /* should give ERROR */
+#endif
+  return 0;
+}
+
+int
+main (void)
+{
+  return !(function (0) == 0 && function (1) == 8);
 }

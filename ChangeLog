@@ -1,3 +1,11 @@
+2010-05-05  Eric Blake  <eblake@redhat.com>
+
+	verify: automate tests
+	* modules/verify-tests: New module.
+	* tests/test-verify.sh: New file.
+	* tests/test-verify.c: Guard each negative test with a unique id.
+	Also avoid warning about unused left hand of comma expressions.
+
 2010-05-05  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Further improvements to verify.h, suggested by Eric Blake.

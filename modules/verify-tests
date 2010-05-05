@@ -1,0 +1,13 @@
+Files:
+tests/test-verify.c
+tests/test-verify.sh
+tests/init.sh
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS_ENVIRONMENT += MAKE='$(MAKE)'
+TESTS += test-verify test-verify.sh
+check_PROGRAMS += test-verify
