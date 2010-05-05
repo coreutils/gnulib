@@ -75,7 +75,8 @@
 
      But this has the problem that two invocations of verify from
      within the same macro would collide, since the __LINE__ value
-     would be the same for both invocations.
+     would be the same for both invocations.  (The GCC __COUNTER__
+     macro solves this problem, but is not portable.)
 
      A solution is to use the sizeof operator.  It yields a number,
      getting rid of the identity of the type.  Declarations like
@@ -103,20 +104,38 @@
 
        extern int (*dummy (void)) [sizeof (struct {...})];
 
+   * GCC warns about duplicate declarations of the dummy function if
+     -Wredundant_decls is used.  GCC 4.3 and later have a builtin
+     __COUNTER__ macro that can let us generate unique identifiers for
+     each dummy function, to suppress this warning.
+
    * This implementation exploits the fact that GCC does not warn about
      the last declaration mentioned above.  If a future version of GCC
      introduces a warning for this, the problem could be worked around
-     by using code specialized to GCC, e.g.,:
+     by using code specialized to GCC, just as __COUNTER__ is already
+     being used if available.
 
        #if 4 <= __GNUC__
-       # define verify(R) \
-           extern int (* verify_function__ (void)) \
-                      [__builtin_constant_p (R) && (R) ? 1 : -1]
+       # define verify(R) [another version to keep GCC happy]
        #endif
 
    * In C++, any struct definition inside sizeof is invalid.
      Use a template type to work around the problem.  */
 
+/* Concatenate two preprocessor tokens.  */
+# define GL_CONCAT(x, y) GL_CONCAT0 (x, y)
+# define GL_CONCAT0(x, y) x##y
+
+/* __COUNTER__ evaluates to 0, 1, 2,..., adding one one each time the
+   preprocessor uses it.  If the preprocessor doesn't support this
+   builtin macro, define it to 0.  */
+# ifndef __COUNTER__
+#  define __COUNTER__ 0
+# endif
+
+/* Generate a symbol with the given prefix, making it unique if
+   possible.  */
+# define GL_GENSYM(prefix) GL_CONCAT(prefix, __COUNTER__)
 
 /* Verify requirement R at compile-time, as an integer constant expression.
    Return 1.  */
@@ -135,6 +154,7 @@ template <int w>
 /* Verify requirement R at compile-time, as a declaration without a
    trailing ';'.  */
 
-# define verify(R) extern int (* verify_function__ (void)) [verify_true (R)]
+# define verify(R) \
+    extern int (* GL_GENSYM(verify_function) (void)) [verify_true (R)]
 
 #endif

@@ -1,3 +1,13 @@
+2010-05-05  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Modify verify.h to pacify gcc -Wredundant_decls.
+	* lib/verify.h (GL_CONCAT, GL_CONCAT0, GL_GENSYM): New macros.
+	These use the prefix "GL_" since they're likely to be useful elsewhere.
+	We may need to break them out into a different .h file.
+	(__COUNTER__): Define to 0 if the compiler doesn't support it.
+	(verify) [!defined __cplusplus]: Use them to avoid duplicate decls
+	of verify_function__.
+
 2010-05-05  Peter O'Gorman  <pogma@thewrittenword.com>
 
 	Tests for module pwrite.
