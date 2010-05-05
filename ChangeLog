@@ -1,5 +1,10 @@
 2010-05-05  Peter O'Gorman  <pogma@thewrittenword.com>
 
+	Tests for module pwrite.
+	* modules/pwrite-tests: New file.
+	* tests/test-pwrite.sh: New file.
+	* tests/test-pwrite.c: New file.
+
 	New module pwrite.
 	* lib/unistd.in.h (pwrite): New declaration.
 	* lib/pwrite.c: New file, from glibc with modifications.
