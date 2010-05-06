@@ -7,6 +7,7 @@ tests/test-exclude4.sh
 tests/test-exclude5.sh
 tests/test-exclude6.sh
 tests/test-exclude7.sh
+tests/test-exclude8.sh
 
 Depends-on:
 progname
@@ -21,7 +22,8 @@ TESTS += \
  test-exclude4.sh\
  test-exclude5.sh\
  test-exclude6.sh\
- test-exclude7.sh
+ test-exclude7.sh\
+ test-exclude8.sh
 
 check_PROGRAMS += test-exclude
 test_exclude_LDADD = $(LDADD) @LIBINTL@

@@ -1,3 +1,11 @@
+2010-05-06  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	exclude: Unescape hashed patterns in wildcard mode.
+	* lib/exclude.c (add_exclude): Unescape the pattern before adding it
+	to the hash list.
+	* tests/test-exclude8.sh: New test case.
+	* modules/exclude-tests: Add new test.
+
 2010-05-05  Eric Blake  <eblake@redhat.com>
 
 	verify: automate tests
