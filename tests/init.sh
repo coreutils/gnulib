@@ -21,11 +21,16 @@
 # The typical skeleton of a test looks like this:
 #
 #   #!/bin/sh
-#   : ${srcdir=.}
-#   . "$srcdir/init.sh"; path_prepend_ .
+#   . "${srcdir=.}/init.sh"; path_prepend_ .
 #   Execute some commands.
 #   Note that these commands are executed in a subdirectory, therefore you
 #   need to prepend "../" to relative filenames in the build directory.
+#   Note that the "path_prepend_ ." is useful only if the body of your
+#   test invokes programs residing in the initial directory.
+#   For example, if the programs you want to test are in src/, and this test
+#   script is named tests/test-1, then you would use "path_prepend_ ../src",
+#   or perhaps export PATH='$(abs_top_builddir)/src$(PATH_SEPARATOR)'"$$PATH"
+#   to all tests via automake's TESTS_ENVIRONMENT.
 #   Set the exit code 0 for success, 77 for skipped, or 1 or other for failure.
 #   Use the skip_ and fail_ functions to print a diagnostic and then exit
 #   with the corresponding exit code.
