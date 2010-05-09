@@ -1,5 +1,10 @@
 2010-05-09  Bruno Haible  <bruno@clisp.org>
 
+	acl: Avoid test failure on Cygwin-hosted mingw.
+	* tests/test-set-mode-acl.sh: Skip test if USE_ACL is 0.
+
+2010-05-09  Bruno Haible  <bruno@clisp.org>
+
 	error: Use system's fcntl function.
 	* lib/error.c (fcntl): Undefine.
 
