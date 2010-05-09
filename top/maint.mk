@@ -979,20 +979,22 @@ sc_copyright_check:
 # sets PATH correctly.  This is an inexpensive way to ensure that
 # the other init.sh-using tests also get it right.
 _hv_file ?= $(srcdir)/tests/help-version
-_hv_regex ?= ^ *\. [^ ]*/init\.sh
+_hv_regex_weak ?= ^ *\. .*/init\.sh"
+_hv_regex_strong ?= ^ *\. "\$${srcdir=\.}/init\.sh"
 sc_cross_check_PATH_usage_in_tests:
 	@if test -f $(_hv_file); then					\
-	  if grep -l 'VERSION mismatch' $(_hv_file) >/dev/null		\
-	      && grep -lE '$(_hv_regex)' $(_hv_file) >/dev/null; then	\
-	    good=$$(grep -E '$(_hv_regex)' < $(_hv_file));		\
-	    grep -LFx "$$good"						\
-		  $$(grep -lE '$(_hv_regex)' $$($(VC_LIST_EXCEPT)))	\
-		| grep . &&						\
-	      { echo "$(ME): the above files use path_prepend_ inconsistently" \
-		  1>&2; exit 1; } || :;					\
-	  fi;								\
-	else								\
-	  echo "$@: skipped: no such file: $(_hv_file)";		\
+	  grep -l 'VERSION mismatch' $(_hv_file) >/dev/null		\
+	    || { echo "$@: skipped: no such file: $(_hv_file)" 1>&2;	\
+		 exit 0; };						\
+	  grep -lE '$(_hv_regex_strong)' $(_hv_file) >/dev/null		\
+	    || { echo "$@: $(_hv_file) lacks conforming use of init.sh" 1>&2; \
+		 exit 1; };						\
+	  good=$$(grep -E '$(_hv_regex_strong)' $(_hv_file));		\
+	  grep -LFx "$$good"						\
+		$$(grep -lE '$(_hv_regex_weak)' $$($(VC_LIST_EXCEPT)))	\
+	      | grep . &&						\
+	    { echo "$(ME): the above files use path_prepend_ inconsistently" \
+		1>&2; exit 1; } || :;					\
 	fi
 
 # #if HAVE_... will evaluate to false for any non numeric string.

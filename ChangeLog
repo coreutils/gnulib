@@ -9,6 +9,20 @@
 
 2010-05-09  Jim Meyering  <meyering@redhat.com>
 
+	maint.mk: improve sc_cross_check_PATH_usage_in_tests
+	With my recent change in init.sh from the two-line form:
+	    -#   : ${srcdir=.}
+	    -#   . "$srcdir/init.sh"; path_prepend_ .
+	    +#   . "${srcdir=.}/init.sh"; path_prepend_ .
+	I noticed that using the one-line form would cause this test
+	to fail with a false-positive, or to stop working altogether,
+	depending on whether help-version changed or all the tests did.
+	* top/maint.mk (_hv_regex): Remove this definition.
+	(_hv_regex_weak): Use a weak regex to select all init.sh-sourcing files.
+	(_hv_regex_strong): Use a stronger regex to check for conformance.
+	(sc_cross_check_PATH_usage_in_tests): Rewrite to use the above.
+	Give a separate diagnostic for lack of conforming use.
+
 	maint.mk: prohibit definition of symbols defined by gnulib
 	* top/maint.mk (sc_prohibit_always-defined_macros): Reject the
 	definition of symbols defined by gnulib.
