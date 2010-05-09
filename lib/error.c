@@ -94,6 +94,9 @@ extern void __error_at_line (int status, int errnum, const char *file_name,
 #  include <windows.h>
 # endif
 
+/* The gnulib override of fcntl is not needed in this file.  */
+# undef fcntl
+
 # if !HAVE_DECL_STRERROR_R && STRERROR_R_CHAR_P
 #  ifndef HAVE_DECL_STRERROR_R
 "this configure-time declaration test was not run"
