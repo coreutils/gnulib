@@ -1,3 +1,9 @@
+2010-05-09  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: prohibit definition of symbols defined by gnulib
+	* top/maint.mk (sc_prohibit_always-defined_macros): Reject the
+	definition of symbols defined by gnulib.
+
 2010-05-09  Bruno Haible  <bruno@clisp.org>
 
 	acl: Avoid test failure on Cygwin-hosted mingw.

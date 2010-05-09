@@ -665,6 +665,50 @@ sc_prohibit_always_true_header_tests:
 '  with the corresponding gnulib module, they are always true'		\
 	  $(_sc_search_regexp)
 
+# ==================================================================
+gl_other_headers_ ?= \
+  intprops.h	\
+  openat.h	\
+  stat-macros.h
+
+# Perl -lne code to extract "significant" cpp-defined symbols from a
+# gnulib header file, eliminating a few common false-positives.
+gl_extract_significant_defines_ = \
+  /^\# *define ([^_ (][^ (]*)(\s*\(|\s+\w+)/ && $$2 !~ /(?:rpl_|_used_without_)/\
+    and print $$1
+
+# Create a list of regular expressions matching the names
+# of macros that are guaranteed to be defined by parts of gnulib.
+.re-defmac:
+	@gen_h=$(gl_generated_headers_);				\
+	(cd $(gnulib_dir)/lib;						\
+	  for f in *.in.h $(gl_other_headers_); do			\
+	    perl -lne '$(gl_extract_significant_defines_)' $$f;		\
+	  done;								\
+	) | sort -u							\
+	  | grep -Ev '^ATTRIBUTE_NORETURN'				\
+	  | sed 's/^/^ *# *define /;s/$$/\\>/'				\
+	  > $@-t
+	@mv $@-t $@
+
+define gl_trap_
+  Exit () { set +e; (exit $$1); exit $$1; };				\
+  for sig in 1 2 3 13 15; do						\
+    eval "trap 'Exit $$(expr $$sig + 128)' $$sig";			\
+  done
+endef
+
+# Don't define macros that we already get from gnulib header files.
+sc_prohibit_always-defined_macros: .re-defmac
+	@if test -d $(gnulib_dir); then					\
+	  trap 'rc=$$?; rm -f .re-defmac; exit $$rc' 0;			\
+	  $(gl_trap_);							\
+	  grep -f .re-defmac $$($(VC_LIST_EXCEPT))			\
+	    && { echo '$(ME): define the above via some gnulib .h file'	\
+		  1>&2;  exit 1; } || :;				\
+	fi
+# ==================================================================
+
 # Prohibit checked in backup files.
 sc_prohibit_backup_files:
 	@$(VC_LIST) | grep '~$$' &&				\
