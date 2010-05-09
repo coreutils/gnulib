@@ -1,5 +1,13 @@
 2010-05-09  Bruno Haible  <bruno@clisp.org>
 
+	error: More reliable output on mingw.
+	* lib/error.c: Include <windows.h>.
+	(is_open): New function.
+	(flush_stdout): Call it instead of fcntl, also if F_GETFL is not
+	defined.
+
+2010-05-09  Bruno Haible  <bruno@clisp.org>
+
 	vasnprintf: Fix syntax errors in libintl build on mingw.
 	* lib/vasnprintf.c (VASNPRINTF): Move a closing brace. Undefine
 	pad_ourselves and prec_ourselves after use.
