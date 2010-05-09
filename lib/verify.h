@@ -71,7 +71,7 @@
 
        #define _GL_CONCAT0(x, y) x##y
        #define _GL_CONCAT(x, y) _GL_CONCAT0 (x, y)
-       extern struct {...} * _GL_CONCAT(dummy,__LINE__);
+       extern struct {...} * _GL_CONCAT (dummy, __LINE__);
 
      But this has the problem that two invocations of verify from
      within the same macro would collide, since the __LINE__ value
@@ -138,7 +138,7 @@
 
 /* Generate a symbol with the given prefix, making it unique if
    possible.  */
-# define _GL_GENSYM(prefix) _GL_CONCAT(prefix, _GL_COUNTER)
+# define _GL_GENSYM(prefix) _GL_CONCAT (prefix, _GL_COUNTER)
 
 /* Verify requirement R at compile-time, as an integer constant expression.
    Return 1.  */
@@ -158,6 +158,6 @@ template <int w>
    trailing ';'.  */
 
 # define verify(R) \
-    extern int (* _GL_GENSYM(verify_function) (void)) [verify_true (R)]
+    extern int (* _GL_GENSYM (verify_function) (void)) [verify_true (R)]
 
 #endif

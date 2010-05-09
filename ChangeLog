@@ -1,3 +1,9 @@
+2010-05-09  Jim Meyering  <meyering@redhat.com>
+
+	verify: adjust formatting to be more consistent
+	* lib/verify.h (_GL_GENSYM): Add a space before each of a few
+	argument-list '('s, and after one comma.
+
 2010-05-09  Bruno Haible  <bruno@clisp.org>
 
 	error: More reliable output on mingw.
