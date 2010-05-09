@@ -9,6 +9,9 @@
 
 2010-05-09  Jim Meyering  <meyering@redhat.com>
 
+	init.sh: enable MALLOC_PERTURB_
+	* tests/init.sh: Enable glibc's malloc-perturbing option.
+
 	maint.mk: improve sc_cross_check_PATH_usage_in_tests
 	With my recent change in init.sh from the two-line form:
 	    -#   : ${srcdir=.}
