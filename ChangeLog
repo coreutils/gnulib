@@ -1,3 +1,9 @@
+2010-05-09  Bruno Haible  <bruno@clisp.org>
+
+	vasnprintf: Fix syntax errors in libintl build on mingw.
+	* lib/vasnprintf.c (VASNPRINTF): Move a closing brace. Undefine
+	pad_ourselves and prec_ourselves after use.
+
 2010-05-08  Bruno Haible  <bruno@clisp.org>
 
 	* lib/config.charset: Update comments for Cygwin 1.7.
