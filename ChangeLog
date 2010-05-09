@@ -1,3 +1,12 @@
+2010-05-09  Bruno Haible  <bruno@clisp.org>
+
+	Update to GNU gettext 0.18.
+	* m4/gettext.m4: Update to GNU gettext 0.17.
+	* m4/intl.m4: Likewise.
+	* m4/po.m4: Likewise.
+	* modules/gettext (Files): Add m4/fcntl-o.m4.
+	(configure.ac): Require gettext infrastructure from version 0.18.
+
 2010-05-09  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: prohibit definition of symbols defined by gnulib

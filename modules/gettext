@@ -3,6 +3,7 @@ Translate messages to user's native language.
 
 Files:
 m4/codeset.m4
+m4/fcntl-o.m4
 m4/gettext.m4
 m4/glibc2.m4
 m4/glibc21.m4
@@ -38,7 +39,7 @@ havelib
 
 configure.ac:
 AM_GNU_GETTEXT([external])
-AM_GNU_GETTEXT_VERSION([0.17])
+AM_GNU_GETTEXT_VERSION([0.18])
 
 Makefile.am:
 # This is for those projects which use "gettextize --intl" to put a source-code
