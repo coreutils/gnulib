@@ -69,7 +69,6 @@ main (void)
   ASSERT (close (fd) == 0);
 
   {
-    char read_buf[N];
     fd = open (file, O_RDONLY);
     ASSERT (0 <= fd);
     ASSERT (read (fd, buf, N) == N);

@@ -1,5 +1,8 @@
 2010-05-10  Peter O'Gorman  <pogma@thewrittenword.com>
 
+	test-pwrite.c: Remove unused variable declaration.
+	* tests/test-pwrite.c (main): Remove read_buf declaration.
+
 	Remove useless test-pwrite.sh file.
 	* tests/test-pwrite.sh: Delete file.
 	* modules/pwrite-tests: Remove references.
