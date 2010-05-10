@@ -1,5 +1,12 @@
 2010-05-10  Peter O'Gorman  <pogma@thewrittenword.com>
 
+	Remove useless test-pwrite.sh file.
+	* tests/test-pwrite.sh: Delete file.
+	* modules/pwrite-tests: Remove references.
+	Reported by Bruno Haible.
+
+2010-05-10  Peter O'Gorman  <pogma@thewrittenword.com>
+
 	init.sh: fix a typo
 	* tests/init.sh: Correct typo in MALLOC_PERTURB_ initialization.
 
