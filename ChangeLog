@@ -1,3 +1,12 @@
+2010-05-10  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: avoid using a temporary file in the always-defined-macros check
+	* top/maint.mk (.re-defmac): Remove rule.
+	(gl_trap_): Remove definition.
+	(sc_prohibit_always-defined_macros): Rewrite not to create and
+	depend on a temporary file.  Instead, depend on GNU grep's ability
+	to read a list of regular expressions from stdin when given "-f -".
+
 2010-05-09  Bruno Haible  <bruno@clisp.org>
 
 	Update to GNU gettext 0.18.
