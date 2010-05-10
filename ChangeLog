@@ -1,3 +1,8 @@
+2010-05-10  Peter O'Gorman  <pogma@thewrittenword.com>
+
+	init.sh: fix a typo
+	* tests/init.sh: Correct typo in MALLOC_PERTURB_ initialization.
+
 2010-05-10  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: avoid using a temporary file in the always-defined-macros check
