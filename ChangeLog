@@ -1,3 +1,10 @@
+2010-05-11  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: tweak preceding change
+	* top/maint.mk (gl_extract_significant_defines_): Make exclusion
+	regexps tighter by anchoring at EOL, and make the new group "shy"
+	for slightly decreased overhead.
+
 2010-05-11  Eric Blake  <eblake@redhat.com>
 
 	maint.mk: gnulib doesn't guarantee NSIG

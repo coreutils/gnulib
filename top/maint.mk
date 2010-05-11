@@ -676,7 +676,7 @@ gl_other_headers_ ?= \
 gl_extract_significant_defines_ = \
   /^\# *define ([^_ (][^ (]*)(\s*\(|\s+\w+)/\
     && $$2 !~ /(?:rpl_|_used_without_)/\
-    && $$1 !~ /^(NSIG|ATTRIBUTE_NORETURN)/\
+    && $$1 !~ /^(?:NSIG|ATTRIBUTE_NORETURN)$$/\
     and print $$1
 
 # Create a list of regular expressions matching the names
