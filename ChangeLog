@@ -1,3 +1,8 @@
+2010-05-11  Eric Blake  <eblake@redhat.com>
+
+	maint.mk: gnulib doesn't guarantee NSIG
+	* top/maint.mk (gl_extract_significant_defines_): Exclude NSIG.
+
 2010-05-10  Peter O'Gorman  <pogma@thewrittenword.com>
 
 	test-pwrite.c: Remove unused variable declaration.
