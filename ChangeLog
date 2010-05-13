@@ -1,3 +1,10 @@
+2010-05-13  Bruno Haible  <bruno@clisp.org>
+
+	Avoid useless warnings from G++.
+	* build-aux/c++defs.h (_GL_CXXALIASWARN_2, _GL_CXXALIASWARN1_2): Don't
+	use _GL_WARN_ON_USE or _GL_WARN_ON_USE_CXX when optimizing.
+	Reported by Jarno Rajahalme <jarno.rajahalme@nsn.com>.
+
 2010-05-11  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: tweak preceding change
