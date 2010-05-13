@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate May 1, 2010
+@set lastupdate May 13, 2010
 @c %**end of header
 
 @dircategory GNU organization
@@ -2038,16 +2038,19 @@ Note that this uses a space, not a slash.
 @cindex hosting
 
 We recommend using @code{savannah.gnu.org} for the source code
-repository for your package, and, even more so, using
-@code{ftp.gnu.org} as the standard distribution site.  Doing so makes
-it easier for developers and users to find the latest GNU releases.
-@xref{Old Versions}, for more information about Savannah.
+repository for your package, but that's not required.  @xref{Old
+Versions}, for more information about Savannah.
 
-However, it is ok to use other machines if you wish.  If you use a
-company's machine to hold the repository for your program, or as its
-ftp site, please put this statement in a prominent place on the site,
-so as to prevent people from getting the wrong idea about the
-relationship between the package and the company:
+We strongly urge you to use @code{ftp.gnu.org} as the standard FTP
+distribution site.  Doing so makes it easier for developers and users
+to find the latest GNU releases.  However, it is ok to use another FTP
+server if you wish, provided it allows access from the general public
+without limitation (for instance, without excluding any country).
+
+If you use a company's machine to hold the repository for your
+program, or as its ftp site, please put this statement in a prominent
+place on the site, so as to prevent people from getting the wrong idea
+about the relationship between the package and the company:
 
 @smallexample
 The programs <list of them> hosted here are free software packages
