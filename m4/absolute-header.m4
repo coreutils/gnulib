@@ -1,4 +1,4 @@
-# absolute-header.m4 serial 11
+# absolute-header.m4 serial 12
 dnl Copyright (C) 2006-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,7 +8,7 @@ dnl From Derek Price.
 
 # gl_ABSOLUTE_HEADER(HEADER1 HEADER2 ...)
 # ---------------------------------------
-# Find the absolute name of a header file, assuming the header exists.
+# Find the absolute name of a header file, testing first if the header exists.
 # If the header were sys/inttypes.h, this macro would define
 # ABSOLUTE_SYS_INTTYPES_H to the `""' quoted absolute name of sys/inttypes.h
 # in config.h
@@ -31,29 +31,7 @@ m4_foreach_w([gl_HEADER_NAME], [$1],
                     [ac_cv_header_]m4_defn([gl_HEADER_NAME]))dnl
     AC_CHECK_HEADERS_ONCE(m4_defn([gl_HEADER_NAME]))dnl
     if test AS_VAR_GET(ac_header_exists) = yes; then
-      AC_LANG_CONFTEST([AC_LANG_SOURCE([[#include <]]m4_dquote(m4_defn([gl_HEADER_NAME]))[[>]])])
-      dnl AIX "xlc -E" and "cc -E" omit #line directives for header files
-      dnl that contain only a #include of other header files and no
-      dnl non-comment tokens of their own. This leads to a failure to
-      dnl detect the absolute name of <dirent.h>, <signal.h>, <poll.h>
-      dnl and others. The workaround is to force preservation of comments
-      dnl through option -C. This ensures all necessary #line directives
-      dnl are present. GCC supports option -C as well.
-      case "$host_os" in
-        aix*) gl_absname_cpp="$ac_cpp -C" ;;
-        *)    gl_absname_cpp="$ac_cpp" ;;
-      esac
-      dnl eval is necessary to expand gl_absname_cpp.
-      dnl Ultrix and Pyramid sh refuse to redirect output of eval,
-      dnl so use subshell.
-      AS_VAR_SET(gl_absolute_header,
-[`(eval "$gl_absname_cpp conftest.$ac_ext") 2>&AS_MESSAGE_LOG_FD |
-sed -n '\#/]m4_defn([gl_HEADER_NAME])[#{
-        s#.*"\(.*/]m4_defn([gl_HEADER_NAME])[\)".*#\1#
-        s#^/[^/]#//&#
-        p
-        q
-}'`])
+      gl_ABSOLUTE_HEADER_ONE(m4_defn([gl_HEADER_NAME]))
     fi
     AS_VAR_POPDEF([ac_header_exists])dnl
     ])dnl
@@ -63,3 +41,37 @@ sed -n '\#/]m4_defn([gl_HEADER_NAME])[#{
   AS_VAR_POPDEF([gl_absolute_header])dnl
 ])dnl
 ])# gl_ABSOLUTE_HEADER
+
+# gl_ABSOLUTE_HEADER_ONE(HEADER)
+# ------------------------------
+# Like gl_ABSOLUTE_HEADER, except that:
+#   - it assumes that the header exists,
+#   - it uses the current CPPFLAGS,
+#   - it does not cache the result,
+#   - it is silent.
+AC_DEFUN([gl_ABSOLUTE_HEADER_ONE],
+[
+  AC_LANG_CONFTEST([AC_LANG_SOURCE([[#include <]]m4_dquote([$1])[[>]])])
+  dnl AIX "xlc -E" and "cc -E" omit #line directives for header files
+  dnl that contain only a #include of other header files and no
+  dnl non-comment tokens of their own. This leads to a failure to
+  dnl detect the absolute name of <dirent.h>, <signal.h>, <poll.h>
+  dnl and others. The workaround is to force preservation of comments
+  dnl through option -C. This ensures all necessary #line directives
+  dnl are present. GCC supports option -C as well.
+  case "$host_os" in
+    aix*) gl_absname_cpp="$ac_cpp -C" ;;
+    *)    gl_absname_cpp="$ac_cpp" ;;
+  esac
+  dnl eval is necessary to expand gl_absname_cpp.
+  dnl Ultrix and Pyramid sh refuse to redirect output of eval,
+  dnl so use subshell.
+  AS_VAR_SET([gl_cv_absolute_]AS_TR_SH([[$1]]),
+[`(eval "$gl_absname_cpp conftest.$ac_ext") 2>&AS_MESSAGE_LOG_FD |
+sed -n '\#/$1#{
+        s#.*"\(.*/$1\)".*#\1#
+        s#^/[^/]#//&#
+        p
+        q
+}'`])
+])

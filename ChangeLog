@@ -1,3 +1,10 @@
+2010-05-16  Bruno Haible  <bruno@clisp.org>
+
+	absolute-header: Make the macro usable in more situations.
+	* m4/absolute-header.m4 (gl_ABSOLUTE_HEADER_ONE): New macro, extracted
+	from gl_ABSOLUTE_HEADER.
+	(gl_ABSOLUTE_HEADER): Use it. Fix comment.
+
 2010-05-16  James Youngman  <jay@gnu.org>
 
 	doc: update users.txt
