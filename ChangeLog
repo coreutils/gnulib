@@ -1,5 +1,11 @@
 2010-05-16  Jim Meyering  <meyering@redhat.com>
 
+	init.sh: fix an error in the previous change; add more comments
+	* tests/init.sh: Compare exit code in loop against 9, not 2.
+	Patch by Bruno Haible.
+	Make the two tests more similar by adding an empty "then" clause.
+	Add comments.
+
 	init.sh: avoid unnecessary shell re-exec
 	* tests/init.sh: Improve the re-exec-required check to first test the
 	current shell.  If it passes the test, do not search for a shell that

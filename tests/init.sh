@@ -90,13 +90,17 @@ else
   # It does not evaluate any of the code after the "unexpected" `('.  Thus,
   # we must run it in a subshell.
   ( eval "$gl_shell_test_script_" ) > /dev/null 2>&1
-  if test $? != 9; then
+  if test $? = 9; then
+    : # The current shell is adequate.  No re-exec required.
+  else
+    # Search for a shell that meets our requirements.
     for re_shell_ in "${CONFIG_SHELL:-no_shell}" /bin/sh bash dash zsh pdksh fail
     do
       test "$re_shell_" = no_shell && continue
       test "$re_shell_" = fail && skip_ failed to find an adequate shell
       "$re_shell_" -c "$gl_shell_test_script_" 2>/dev/null
-      if test $? = 2; then
+      if test $? = 9; then
+        # Found an acceptable shell.
         exec "$re_shell_" "$0" --no-reexec "$@"
         echo "$ME_: exec failed" 1>&2
         exit 127
