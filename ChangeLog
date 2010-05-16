@@ -1,5 +1,11 @@
 2010-05-16  Bruno Haible  <bruno@clisp.org>
 
+	Avoid autoconf warnings about AM_ICONV.
+	* m4/iconv.m4 (AM_ICONV): Define using AM_DEFUN_ONCE for autoconf >=
+	2.64.
+
+2010-05-16  Bruno Haible  <bruno@clisp.org>
+
 	absolute-header: Make the macro usable in more situations.
 	* m4/absolute-header.m4 (gl_ABSOLUTE_HEADER_ONE): New macro, extracted
 	from gl_ABSOLUTE_HEADER.
