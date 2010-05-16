@@ -1,5 +1,23 @@
 2010-05-16  Bruno Haible  <bruno@clisp.org>
 
+	Fix collision between gnulib's and libintl's printf replacements.
+	* lib/stdio.in.h (_GL_STDIO_STRINGIZE,
+	_GL_STDIO_MACROEXPAND_AND_STRINGIZE): New macros.
+	(printf): When using GNU C, map the __printf__ function to rpl_printf
+	via __asm__. When not using GNU C, define rpl_printf instead of
+	__printf__.
+	* lib/printf.c: Ignore DEPENDS_ON_LIBINTL. Undoes the 2010-03-25
+	commit.
+	* lib/stdio-write.c: Ignore DEPENDS_ON_LIBINTL. Undoes the 2009-08-10
+	commit.
+	* m4/asm-underscore.m4: New file.
+	* m4/stdio_h.m4 (gl_STDIO_H): Require gl_ASM_SYMBOL_PREFIX.
+	* modules/stdio (Files): Add m4/asm-underscore.m4.
+	(Makefile.am): Substitute ASM_SYMBOL_PREFIX.
+	Reported by Ben Pfaff.
+
+2010-05-16  Bruno Haible  <bruno@clisp.org>
+
 	verify: Avoid skipping the test on openSUSE 11.0.
 	* tests/test-verify.sh: Unset MALLOC_PERTURB_.
 

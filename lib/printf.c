@@ -23,8 +23,6 @@
 
 #include <stdarg.h>
 
-#if !DEPENDS_ON_LIBINTL /* avoid collision with intl/printf.c */
-
 /* Print formatted output to standard output.
    Return string length of formatted string.  On error, return a negative
    value.  */
@@ -40,5 +38,3 @@ printf (const char *format, ...)
 
   return retval;
 }
-
-#endif
