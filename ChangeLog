@@ -1,3 +1,8 @@
+2010-05-16  Bruno Haible  <bruno@clisp.org>
+
+	verify: Avoid skipping the test on openSUSE 11.0.
+	* tests/test-verify.sh: Unset MALLOC_PERTURB_.
+
 2010-05-13  Bruno Haible  <bruno@clisp.org>
 
 	Avoid useless warnings from G++.

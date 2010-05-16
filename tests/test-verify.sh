@@ -1,6 +1,10 @@
 #!/bin/sh
 . "${srcdir=.}/init.sh"
 
+# We are not interested in triggering bugs in the compilers and tools
+# (such as gcc 4.3.1 on openSUSE 11.0).
+unset MALLOC_PERTURB_
+
 # Rather than figure out how to invoke the compiler with the right
 # include path ourselves, we let make do it:
 (cd "$initial_cwd_" && rm -f test-verify.o \
