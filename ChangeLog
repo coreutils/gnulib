@@ -1,3 +1,14 @@
+2010-05-16  Jim Meyering  <meyering@redhat.com>
+
+	init.sh: avoid unnecessary shell re-exec
+	* tests/init.sh: Improve the re-exec-required check to first test the
+	current shell.  If it passes the test, do not search for a shell that
+	does pass, and do not re-exec.  This test is particularly contorted to
+	avoid triggering misbehavior in Solaris 10's /bin/sh whereby any use
+	of $(...) evokes a syntax error and causes immediate shell exit with
+	status 2.  Bruno Haible reported that the re-exec made it impossible
+	to single-step through any init.sh-using script.
+
 2010-05-16  Bruno Haible  <bruno@clisp.org>
 
 	Fix collision between gnulib's and libintl's printf replacements.
