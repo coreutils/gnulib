@@ -1,5 +1,6 @@
 The following packages appear to be using gnulib and gnulib-tool:
 
+  CSSC            http://git.savannah.gnu.org/cgit/cssc.git
   Net::CDP        http://search.cpan.org/src/MCHAPMAN/Net-CDP-0.09/libcdp/
   OPeNDAP         http://scm.opendap.org:8090/svn/trunk/
   anubis          http://cvs.sv.gnu.org/viewcvs/anubis/anubis/

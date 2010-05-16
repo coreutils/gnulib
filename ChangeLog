@@ -1,3 +1,8 @@
+2010-05-16  James Youngman  <jay@gnu.org>
+
+	doc: update users.txt
+	* users.txt: Add CSSC.
+
 2010-05-16  Jim Meyering  <meyering@redhat.com>
 
 	init.sh: fix an error in the previous change; add more comments
