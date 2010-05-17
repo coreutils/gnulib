@@ -1,3 +1,10 @@
+2010-05-17  Giuseppe Scrivano  <gscrivano@gnu.org>
+
+	bootstrap: fix an error when gnulib is not used as a git submodule
+	* build-aux/bootstrap (gnulib_path): If its length is zero then
+	assign "gnulib" to it.
+	* build-aux/bootstrap: Redirect "git clone -h" stderr to stdout.
+
 2010-05-16  Bruno Haible  <bruno@clisp.org>
 
 	Avoid autoconf warnings about AM_ICONV.
