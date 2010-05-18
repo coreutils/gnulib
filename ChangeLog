@@ -1,5 +1,10 @@
 2010-05-18  Richard Jones  <rjones@redhat.com>
 
+	doc: users.txt: list hivex
+	* users.txt: Add hivex.
+
+2010-05-18  Richard Jones  <rjones@redhat.com>
+
 	doc: users.txt: list febootstrap
 	* users.txt: Add febootstrap.
 

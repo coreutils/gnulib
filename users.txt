@@ -29,6 +29,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   guile           http://cvs.sv.gnu.org/viewvc/guile/guile/guile-core/
   gzip            http://git.sv.gnu.org/cgit/gzip.git/
   hello           http://cvs.sv.gnu.org/viewcvs/hello/hello/
+  hivex           http://git.annexia.org/?p=hivex.git
   icoutils        http://riva.ucam.org/svn/cjwatson/src/debian/icoutils/trunk/icoutils/
   inetutils       http://cvs.sv.gnu.org/viewcvs/inetutils/inetutils/
   jwhois          http://cvs.sv.gnu.org/viewvc/jwhois/jwhois/
