@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_private_use
 check_PROGRAMS += test-pr_private_use
 test_pr_private_use_SOURCES = unictype/test-pr_private_use.c
-
+test_pr_private_use_LDADD = $(LDADD) $(LIBUNISTRING)

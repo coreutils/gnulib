@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_radical
 check_PROGRAMS += test-pr_radical
 test_pr_radical_SOURCES = unictype/test-pr_radical.c
-
+test_pr_radical_LDADD = $(LDADD) $(LIBUNISTRING)

@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_currency_symbol
 check_PROGRAMS += test-pr_currency_symbol
 test_pr_currency_symbol_SOURCES = unictype/test-pr_currency_symbol.c
-
+test_pr_currency_symbol_LDADD = $(LDADD) $(LIBUNISTRING)

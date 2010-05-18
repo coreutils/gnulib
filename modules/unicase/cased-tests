@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-cased
 check_PROGRAMS += test-cased
 test_cased_SOURCES = unicase/test-cased.c
-
+test_cased_LDADD = $(LDADD) $(LIBUNISTRING)

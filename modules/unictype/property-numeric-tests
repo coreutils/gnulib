@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_numeric
 check_PROGRAMS += test-pr_numeric
 test_pr_numeric_SOURCES = unictype/test-pr_numeric.c
-
+test_pr_numeric_LDADD = $(LDADD) $(LIBUNISTRING)

@@ -11,9 +11,9 @@ uniname/base
 memcmp
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [uniname/uniname.c])
 
 Makefile.am:
-lib_SOURCES += uniname/uniname.c
 
 Include:
 "uniname.h"

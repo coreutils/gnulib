@@ -13,4 +13,4 @@ Makefile.am:
 TESTS += test-categ_Zs
 check_PROGRAMS += test-categ_Zs
 test_categ_Zs_SOURCES = unictype/test-categ_Zs.c
-
+test_categ_Zs_LDADD = $(LDADD) $(LIBUNISTRING)

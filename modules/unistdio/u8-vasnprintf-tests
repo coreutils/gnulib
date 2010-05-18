@@ -25,8 +25,8 @@ TESTS += test-u8-vasnprintf1 unistdio/test-u8-vasnprintf2.sh unistdio/test-u8-va
 TESTS_ENVIRONMENT += LOCALE_FR='@LOCALE_FR@' LOCALE_FR_UTF8='@LOCALE_FR_UTF8@'
 check_PROGRAMS += test-u8-vasnprintf1 test-u8-vasnprintf2 test-u8-vasnprintf3
 test_u8_vasnprintf1_SOURCES = unistdio/test-u8-vasnprintf1.c
-test_u8_vasnprintf1_LDADD = $(LDADD) @LIBICONV@
+test_u8_vasnprintf1_LDADD = $(LDADD) $(LIBUNISTRING) @LIBICONV@
 test_u8_vasnprintf2_SOURCES = unistdio/test-u8-vasnprintf2.c
-test_u8_vasnprintf2_LDADD = $(LDADD) @LIBICONV@
+test_u8_vasnprintf2_LDADD = $(LDADD) $(LIBUNISTRING) @LIBICONV@
 test_u8_vasnprintf3_SOURCES = unistdio/test-u8-vasnprintf3.c
-test_u8_vasnprintf3_LDADD = $(LDADD) @LIBICONV@
+test_u8_vasnprintf3_LDADD = $(LDADD) $(LIBUNISTRING) @LIBICONV@

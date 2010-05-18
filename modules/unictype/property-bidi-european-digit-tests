@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_bidi_european_digit
 check_PROGRAMS += test-pr_bidi_european_digit
 test_pr_bidi_european_digit_SOURCES = unictype/test-pr_bidi_european_digit.c
-
+test_pr_bidi_european_digit_LDADD = $(LDADD) $(LIBUNISTRING)

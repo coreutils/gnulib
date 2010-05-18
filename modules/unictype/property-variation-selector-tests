@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_variation_selector
 check_PROGRAMS += test-pr_variation_selector
 test_pr_variation_selector_SOURCES = unictype/test-pr_variation_selector.c
-
+test_pr_variation_selector_LDADD = $(LDADD) $(LIBUNISTRING)

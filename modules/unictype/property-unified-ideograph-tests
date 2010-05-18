@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_unified_ideograph
 check_PROGRAMS += test-pr_unified_ideograph
 test_pr_unified_ideograph_SOURCES = unictype/test-pr_unified_ideograph.c
-
+test_pr_unified_ideograph_LDADD = $(LDADD) $(LIBUNISTRING)

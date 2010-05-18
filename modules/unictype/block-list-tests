@@ -10,4 +10,4 @@ Makefile.am:
 TESTS += test-block_list
 check_PROGRAMS += test-block_list
 test_block_list_SOURCES = unictype/test-block_list.c
-
+test_block_list_LDADD = $(LDADD) $(LIBUNISTRING)

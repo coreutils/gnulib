@@ -11,9 +11,9 @@ localename
 gperf
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9.3], [unicase/locale-language.c])
 
 Makefile.am:
-lib_SOURCES += unicase/locale-language.c
 
 unicase/locale-languages.h: $(srcdir)/unicase/locale-languages.gperf
 	$(GPERF) -m 10 $(srcdir)/unicase/locale-languages.gperf > $(srcdir)/unicase/locale-languages.h-t

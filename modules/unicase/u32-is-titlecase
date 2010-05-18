@@ -10,9 +10,9 @@ unicase/u32-is-invariant
 unicase/u32-totitle
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9.1], [unicase/u32-is-titlecase.c])
 
 Makefile.am:
-lib_SOURCES += unicase/u32-is-titlecase.c
 
 Include:
 "unicase.h"

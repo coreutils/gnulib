@@ -10,4 +10,4 @@ Makefile.am:
 TESTS += test-u8-strwidth
 check_PROGRAMS += test-u8-strwidth
 test_u8_strwidth_SOURCES = uniwidth/test-u8-strwidth.c
-
+test_u8_strwidth_LDADD = $(LDADD) $(LIBUNISTRING)

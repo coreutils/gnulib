@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-u16-strcoll
 check_PROGRAMS += test-u16-strcoll
 test_u16_strcoll_SOURCES = unistr/test-u16-strcoll.c
-test_u16_strcoll_LDADD = $(LDADD) @LIBICONV@
+test_u16_strcoll_LDADD = $(LDADD) $(LIBUNISTRING) @LIBICONV@

@@ -9,9 +9,9 @@ unistr/base
 unistr/u8-uctomb
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [unistr/u32-to-u8.c])
 
 Makefile.am:
-lib_SOURCES += unistr/u32-to-u8.c
 
 Include:
 "unistr.h"

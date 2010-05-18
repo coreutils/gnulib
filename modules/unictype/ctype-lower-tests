@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-ctype_lower
 check_PROGRAMS += test-ctype_lower
 test_ctype_lower_SOURCES = unictype/test-ctype_lower.c
-
+test_ctype_lower_LDADD = $(LDADD) $(LIBUNISTRING)

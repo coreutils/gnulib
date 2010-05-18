@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-u8-asnprintf1
 check_PROGRAMS += test-u8-asnprintf1
 test_u8_asnprintf1_SOURCES = unistdio/test-u8-asnprintf1.c
-test_u8_asnprintf1_LDADD = $(LDADD) @LIBICONV@
+test_u8_asnprintf1_LDADD = $(LDADD) $(LIBUNISTRING) @LIBICONV@

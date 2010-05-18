@@ -2,7 +2,8 @@ Description:
 Base layer for elementary Unicode string functions.
 
 Files:
-lib/unistr.h
+lib/unistr.in.h
+m4/libunistring-base.m4
 
 Depends-on:
 unitypes
@@ -11,8 +12,18 @@ stdbool
 inline
 
 configure.ac:
+gl_LIBUNISTRING_LIBHEADER([0.9.2], [unistr.h])
 
 Makefile.am:
+BUILT_SOURCES += $(LIBUNISTRING_UNISTR_H)
+
+unistr.h: unistr.in.h
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  cat $(srcdir)/unistr.in.h; \
+	} > $@-t && \
+	mv -f $@-t $@
+MOSTLYCLEANFILES += unistr.h unistr.h-t
 
 Include:
 "unistr.h"

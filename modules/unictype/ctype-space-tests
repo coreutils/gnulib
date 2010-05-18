@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-ctype_space
 check_PROGRAMS += test-ctype_space
 test_ctype_space_SOURCES = unictype/test-ctype_space.c
-
+test_ctype_space_LDADD = $(LDADD) $(LIBUNISTRING)

@@ -10,9 +10,9 @@ unictype/category-none
 unictype/category-test-withtable
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [unictype/categ_and_not.c])
 
 Makefile.am:
-lib_SOURCES += unictype/categ_and_not.c
 
 Include:
 "unictype.h"

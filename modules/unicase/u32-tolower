@@ -13,9 +13,9 @@ unicase/empty-suffix-context
 unicase/tolower
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9.1], [unicase/u32-tolower.c])
 
 Makefile.am:
-lib_SOURCES += unicase/u32-tolower.c
 
 Include:
 "unicase.h"

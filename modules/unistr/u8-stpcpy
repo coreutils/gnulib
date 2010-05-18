@@ -10,9 +10,9 @@ unistr/base
 
 configure.ac:
 AC_CHECK_FUNCS_ONCE([stpcpy])
+gl_LIBUNISTRING_LIBSOURCE([0.9], [unistr/u8-stpcpy.c])
 
 Makefile.am:
-lib_SOURCES += unistr/u8-stpcpy.c
 
 Include:
 "unistr.h"

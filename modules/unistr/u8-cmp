@@ -9,9 +9,9 @@ unistr/base
 memcmp
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [unistr/u8-cmp.c])
 
 Makefile.am:
-lib_SOURCES += unistr/u8-cmp.c
 
 Include:
 "unistr.h"

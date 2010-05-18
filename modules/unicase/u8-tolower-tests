@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-u8-tolower
 check_PROGRAMS += test-u8-tolower
 test_u8_tolower_SOURCES = unicase/test-u8-tolower.c
-
+test_u8_tolower_LDADD = $(LDADD) $(LIBUNISTRING)

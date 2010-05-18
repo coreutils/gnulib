@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_dash
 check_PROGRAMS += test-pr_dash
 test_pr_dash_SOURCES = unictype/test-pr_dash.c
-
+test_pr_dash_LDADD = $(LDADD) $(LIBUNISTRING)

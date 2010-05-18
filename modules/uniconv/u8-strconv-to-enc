@@ -12,9 +12,9 @@ unistr/u8-check
 unistr/u8-strlen
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [uniconv/u8-strconv-to-enc.c])
 
 Makefile.am:
-lib_SOURCES += uniconv/u8-strconv-to-enc.c
 
 Include:
 "uniconv.h"

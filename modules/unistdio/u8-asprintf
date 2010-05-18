@@ -10,9 +10,9 @@ unistdio/base
 unistdio/u8-vasprintf
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [unistdio/u8-asprintf.c])
 
 Makefile.am:
-lib_SOURCES += unistdio/u8-asprintf.c
 
 Include:
 "unistdio.h"

@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-u8-totitle
 check_PROGRAMS += test-u8-totitle
 test_u8_totitle_SOURCES = unicase/test-u8-totitle.c
-
+test_u8_totitle_LDADD = $(LDADD) $(LIBUNISTRING)

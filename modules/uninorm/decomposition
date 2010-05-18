@@ -9,9 +9,9 @@ uninorm/base
 uninorm/decomposition-table
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [uninorm/decomposition.c])
 
 Makefile.am:
-lib_SOURCES += uninorm/decomposition.c
 
 Include:
 "uninorm.h"

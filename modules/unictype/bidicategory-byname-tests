@@ -10,4 +10,4 @@ Makefile.am:
 TESTS += test-bidi_byname
 check_PROGRAMS += test-bidi_byname
 test_bidi_byname_SOURCES = unictype/test-bidi_byname.c
-
+test_bidi_byname_LDADD = $(LDADD) $(LIBUNISTRING)

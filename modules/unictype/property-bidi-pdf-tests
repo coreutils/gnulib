@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_bidi_pdf
 check_PROGRAMS += test-pr_bidi_pdf
 test_pr_bidi_pdf_SOURCES = unictype/test-pr_bidi_pdf.c
-
+test_pr_bidi_pdf_LDADD = $(LDADD) $(LIBUNISTRING)

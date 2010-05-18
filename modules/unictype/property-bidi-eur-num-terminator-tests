@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_bidi_eur_num_terminator
 check_PROGRAMS += test-pr_bidi_eur_num_terminator
 test_pr_bidi_eur_num_terminator_SOURCES = unictype/test-pr_bidi_eur_num_terminator.c
-
+test_pr_bidi_eur_num_terminator_LDADD = $(LDADD) $(LIBUNISTRING)

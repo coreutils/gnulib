@@ -10,9 +10,9 @@ unilbrk/u32-possible-linebreaks
 uniwidth/width
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [unilbrk/u32-width-linebreaks.c])
 
 Makefile.am:
-lib_SOURCES += unilbrk/u32-width-linebreaks.c
 
 Include:
 "unilbrk.h"

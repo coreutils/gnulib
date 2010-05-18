@@ -29,8 +29,9 @@ test_nfkc_SOURCES = \
   uninorm/test-u8-nfkc.c \
   uninorm/test-u16-nfkc.c \
   uninorm/test-u32-nfkc.c
+test_nfkc_LDADD = $(LDADD) $(LIBUNISTRING)
 test_u32_nfkc_big_SOURCES = \
   uninorm/test-u32-nfkc-big.c \
   uninorm/test-u32-normalize-big.c
-test_u32_nfkc_big_LDADD = $(LDADD) @LIBINTL@
+test_u32_nfkc_big_LDADD = $(LDADD) $(LIBUNISTRING) @LIBINTL@
 

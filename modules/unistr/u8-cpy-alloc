@@ -10,9 +10,9 @@ unistr/base
 malloc-posix
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [unistr/u8-cpy-alloc.c])
 
 Makefile.am:
-lib_SOURCES += unistr/u8-cpy-alloc.c
 
 Include:
 "unistr.h"

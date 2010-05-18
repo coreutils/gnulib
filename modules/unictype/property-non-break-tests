@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_non_break
 check_PROGRAMS += test-pr_non_break
 test_pr_non_break_SOURCES = unictype/test-pr_non_break.c
-
+test_pr_non_break_LDADD = $(LDADD) $(LIBUNISTRING)

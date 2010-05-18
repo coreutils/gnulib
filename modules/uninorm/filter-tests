@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-uninorm-filter-nfc
 check_PROGRAMS += test-uninorm-filter-nfc
 test_uninorm_filter_nfc_SOURCES = uninorm/test-uninorm-filter-nfc.c
-
+test_uninorm_filter_nfc_LDADD = $(LDADD) $(LIBUNISTRING)

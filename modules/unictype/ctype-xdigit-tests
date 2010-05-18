@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-ctype_xdigit
 check_PROGRAMS += test-ctype_xdigit
 test_ctype_xdigit_SOURCES = unictype/test-ctype_xdigit.c
-
+test_ctype_xdigit_LDADD = $(LDADD) $(LIBUNISTRING)

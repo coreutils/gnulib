@@ -12,9 +12,9 @@ unistr/u8-mbtouc-unsafe
 streq
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [unilbrk/u8-possible-linebreaks.c])
 
 Makefile.am:
-lib_SOURCES += unilbrk/u8-possible-linebreaks.c
 
 Include:
 "unilbrk.h"

@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_zero_width
 check_PROGRAMS += test-pr_zero_width
 test_pr_zero_width_SOURCES = unictype/test-pr_zero_width.c
-
+test_pr_zero_width_LDADD = $(LDADD) $(LIBUNISTRING)

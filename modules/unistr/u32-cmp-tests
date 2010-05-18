@@ -18,3 +18,4 @@ Makefile.am:
 TESTS += test-u32-cmp
 check_PROGRAMS += test-u32-cmp
 test_u32_cmp_SOURCES = unistr/test-u32-cmp.c
+test_u32_cmp_LDADD = $(LDADD) $(LIBUNISTRING)

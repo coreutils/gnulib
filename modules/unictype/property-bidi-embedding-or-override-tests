@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_bidi_embedding_or_override
 check_PROGRAMS += test-pr_bidi_embedding_or_override
 test_pr_bidi_embedding_or_override_SOURCES = unictype/test-pr_bidi_embedding_or_override.c
-
+test_pr_bidi_embedding_or_override_LDADD = $(LDADD) $(LIBUNISTRING)

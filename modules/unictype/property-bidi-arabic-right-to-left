@@ -12,9 +12,9 @@ unictype/bidicategory-of
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
+gl_LIBUNISTRING_LIBSOURCE([0.9], [unictype/pr_bidi_arabic_right_to_left.c])
 
 Makefile.am:
-lib_SOURCES += unictype/pr_bidi_arabic_right_to_left.c
 
 Include:
 "unictype.h"

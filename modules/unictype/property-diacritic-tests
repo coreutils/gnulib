@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_diacritic
 check_PROGRAMS += test-pr_diacritic
 test_pr_diacritic_SOURCES = unictype/test-pr_diacritic.c
-
+test_pr_diacritic_LDADD = $(LDADD) $(LIBUNISTRING)

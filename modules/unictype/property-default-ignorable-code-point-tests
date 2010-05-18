@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_default_ignorable_code_point
 check_PROGRAMS += test-pr_default_ignorable_code_point
 test_pr_default_ignorable_code_point_SOURCES = unictype/test-pr_default_ignorable_code_point.c
-
+test_pr_default_ignorable_code_point_LDADD = $(LDADD) $(LIBUNISTRING)

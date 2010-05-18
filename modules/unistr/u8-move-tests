@@ -11,3 +11,4 @@ Makefile.am:
 TESTS += test-u8-move
 check_PROGRAMS += test-u8-move
 test_u8_move_SOURCES = unistr/test-u8-move.c
+test_u8_move_LDADD = $(LDADD) $(LIBUNISTRING)

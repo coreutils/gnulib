@@ -10,9 +10,9 @@ unistdio/base
 unistdio/u16-u16-vasprintf
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [unistdio/u16-u16-asprintf.c])
 
 Makefile.am:
-lib_SOURCES += unistdio/u16-u16-asprintf.c
 
 Include:
 "unistdio.h"

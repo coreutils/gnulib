@@ -14,9 +14,9 @@ localcharset
 memxfrm
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9.1], [unicase/u32-casexfrm.c])
 
 Makefile.am:
-lib_SOURCES += unicase/u32-casexfrm.c
 
 Include:
 "unicase.h"

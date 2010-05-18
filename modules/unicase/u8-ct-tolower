@@ -11,9 +11,9 @@ unicase/special-casing
 unicase/toupper
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9.1], [unicase/u8-ct-tolower.c])
 
 Makefile.am:
-lib_SOURCES += unicase/u8-ct-tolower.c
 
 Include:
 "unicase.h"

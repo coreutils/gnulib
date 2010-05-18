@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-ulc-asnprintf1
 check_PROGRAMS += test-ulc-asnprintf1
 test_ulc_asnprintf1_SOURCES = unistdio/test-ulc-asnprintf1.c
-test_ulc_asnprintf1_LDADD = $(LDADD) @LIBICONV@
+test_ulc_asnprintf1_LDADD = $(LDADD) $(LIBUNISTRING) @LIBICONV@

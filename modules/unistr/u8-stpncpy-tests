@@ -18,3 +18,4 @@ Makefile.am:
 TESTS += test-u8-stpncpy
 check_PROGRAMS += test-u8-stpncpy
 test_u8_stpncpy_SOURCES = unistr/test-u8-stpncpy.c
+test_u8_stpncpy_LDADD = $(LDADD) $(LIBUNISTRING)

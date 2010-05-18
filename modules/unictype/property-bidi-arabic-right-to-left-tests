@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_bidi_arabic_right_to_left
 check_PROGRAMS += test-pr_bidi_arabic_right_to_left
 test_pr_bidi_arabic_right_to_left_SOURCES = unictype/test-pr_bidi_arabic_right_to_left.c
-
+test_pr_bidi_arabic_right_to_left_LDADD = $(LDADD) $(LIBUNISTRING)

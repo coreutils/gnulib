@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_math
 check_PROGRAMS += test-pr_math
 test_pr_math_SOURCES = unictype/test-pr_math.c
-
+test_pr_math_LDADD = $(LDADD) $(LIBUNISTRING)

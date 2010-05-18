@@ -11,4 +11,4 @@ Makefile.am:
 TESTS += test-u16-is-uppercase
 check_PROGRAMS += test-u16-is-uppercase
 test_u16_is_uppercase_SOURCES = unicase/test-u16-is-uppercase.c
-
+test_u16_is_uppercase_LDADD = $(LDADD) $(LIBUNISTRING)

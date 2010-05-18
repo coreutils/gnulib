@@ -10,9 +10,9 @@ Depends-on:
 unicase/base
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [unicase/tolower.c])
 
 Makefile.am:
-lib_SOURCES += unicase/tolower.c
 
 Include:
 "unicase.h"

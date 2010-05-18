@@ -8,9 +8,9 @@ Depends-on:
 unistr/base
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [unistr/u8-strmblen.c])
 
 Makefile.am:
-lib_SOURCES += unistr/u8-strmblen.c
 
 Include:
 "unistr.h"

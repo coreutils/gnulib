@@ -14,9 +14,9 @@ unictype/combining-class
 unistr/u16-mbtouc-unsafe
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9.1], [unicase/u16-suffix-context.c])
 
 Makefile.am:
-lib_SOURCES += unicase/u16-suffix-context.c
 
 Include:
 "unicase.h"

@@ -12,5 +12,5 @@ Makefile.am:
 TESTS += test-u8-normcoll
 check_PROGRAMS += test-u8-normcoll
 test_u8_normcoll_SOURCES = uninorm/test-u8-normcoll.c
-test_u8_normcoll_LDADD = $(LDADD) @LIBICONV@
+test_u8_normcoll_LDADD = $(LDADD) $(LIBUNISTRING) @LIBICONV@
 

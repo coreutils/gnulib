@@ -15,9 +15,9 @@ unistr/u32-mbtouc-unsafe
 unistr/u32-prev
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9.1], [unicase/u32-prefix-context.c])
 
 Makefile.am:
-lib_SOURCES += unicase/u32-prefix-context.c
 
 Include:
 "unicase.h"

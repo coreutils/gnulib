@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_bidi_other_neutral
 check_PROGRAMS += test-pr_bidi_other_neutral
 test_pr_bidi_other_neutral_SOURCES = unictype/test-pr_bidi_other_neutral.c
-
+test_pr_bidi_other_neutral_LDADD = $(LDADD) $(LIBUNISTRING)

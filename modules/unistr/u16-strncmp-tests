@@ -11,3 +11,4 @@ Makefile.am:
 TESTS += test-u16-strncmp
 check_PROGRAMS += test-u16-strncmp
 test_u16_strncmp_SOURCES = unistr/test-u16-strncmp.c
+test_u16_strncmp_LDADD = $(LDADD) $(LIBUNISTRING)

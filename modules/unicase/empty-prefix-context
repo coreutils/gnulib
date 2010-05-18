@@ -8,9 +8,9 @@ Depends-on:
 unicase/base
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9.1], [unicase/empty-prefix-context.c])
 
 Makefile.am:
-lib_SOURCES += unicase/empty-prefix-context.c
 
 Include:
 "unicase.h"

@@ -10,5 +10,5 @@ Makefile.am:
 TESTS += test-u16-conv-to-enc
 check_PROGRAMS += test-u16-conv-to-enc
 test_u16_conv_to_enc_SOURCES = uniconv/test-u16-conv-to-enc.c
-test_u16_conv_to_enc_LDADD = $(LDADD) @LIBICONV@
+test_u16_conv_to_enc_LDADD = $(LDADD) $(LIBUNISTRING) @LIBICONV@
 

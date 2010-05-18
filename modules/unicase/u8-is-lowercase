@@ -10,9 +10,9 @@ unicase/u8-is-invariant
 unicase/u8-tolower
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9.1], [unicase/u8-is-lowercase.c])
 
 Makefile.am:
-lib_SOURCES += unicase/u8-is-lowercase.c
 
 Include:
 "unicase.h"

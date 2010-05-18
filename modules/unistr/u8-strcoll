@@ -11,9 +11,9 @@ unistr/u8-strcmp
 uniconv/u8-strconv-to-locale
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9.3], [unistr/u8-strcoll.c])
 
 Makefile.am:
-lib_SOURCES += unistr/u8-strcoll.c
 
 Include:
 "unistr.h"

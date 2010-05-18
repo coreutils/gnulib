@@ -29,7 +29,8 @@ test_nfc_SOURCES = \
   uninorm/test-u8-nfc.c \
   uninorm/test-u16-nfc.c \
   uninorm/test-u32-nfc.c
+test_nfc_LDADD = $(LDADD) $(LIBUNISTRING)
 test_u32_nfc_big_SOURCES = \
   uninorm/test-u32-nfc-big.c \
   uninorm/test-u32-normalize-big.c
-test_u32_nfc_big_LDADD = $(LDADD) @LIBINTL@
+test_u32_nfc_big_LDADD = $(LDADD) $(LIBUNISTRING) @LIBINTL@

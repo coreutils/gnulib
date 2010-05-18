@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_other_lowercase
 check_PROGRAMS += test-pr_other_lowercase
 test_pr_other_lowercase_SOURCES = unictype/test-pr_other_lowercase.c
-
+test_pr_other_lowercase_LDADD = $(LDADD) $(LIBUNISTRING)

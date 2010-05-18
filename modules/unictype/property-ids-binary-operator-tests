@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_ids_binary_operator
 check_PROGRAMS += test-pr_ids_binary_operator
 test_pr_ids_binary_operator_SOURCES = unictype/test-pr_ids_binary_operator.c
-
+test_pr_ids_binary_operator_LDADD = $(LDADD) $(LIBUNISTRING)

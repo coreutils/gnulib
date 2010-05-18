@@ -13,4 +13,4 @@ Makefile.am:
 TESTS += test-categ_Pi
 check_PROGRAMS += test-categ_Pi
 test_categ_Pi_SOURCES = unictype/test-categ_Pi.c
-
+test_categ_Pi_LDADD = $(LDADD) $(LIBUNISTRING)

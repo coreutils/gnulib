@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_combining
 check_PROGRAMS += test-pr_combining
 test_pr_combining_SOURCES = unictype/test-pr_combining.c
-
+test_pr_combining_LDADD = $(LDADD) $(LIBUNISTRING)

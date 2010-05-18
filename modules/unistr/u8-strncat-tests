@@ -18,3 +18,4 @@ Makefile.am:
 TESTS += test-u8-strncat
 check_PROGRAMS += test-u8-strncat
 test_u8_strncat_SOURCES = unistr/test-u8-strncat.c
+test_u8_strncat_LDADD = $(LDADD) $(LIBUNISTRING)

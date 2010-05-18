@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_grapheme_extend
 check_PROGRAMS += test-pr_grapheme_extend
 test_pr_grapheme_extend_SOURCES = unictype/test-pr_grapheme_extend.c
-
+test_pr_grapheme_extend_LDADD = $(LDADD) $(LIBUNISTRING)

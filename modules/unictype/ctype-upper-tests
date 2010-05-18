@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-ctype_upper
 check_PROGRAMS += test-ctype_upper
 test_ctype_upper_SOURCES = unictype/test-ctype_upper.c
-
+test_ctype_upper_LDADD = $(LDADD) $(LIBUNISTRING)

@@ -10,9 +10,9 @@ uninorm/base
 uninorm/canonical-decomposition
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [uninorm/nfd.c])
 
 Makefile.am:
-lib_SOURCES += uninorm/nfd.c
 
 Include:
 "uninorm.h"

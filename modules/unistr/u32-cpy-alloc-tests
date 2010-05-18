@@ -11,3 +11,4 @@ Makefile.am:
 TESTS += test-u32-cpy-alloc
 check_PROGRAMS += test-u32-cpy-alloc
 test_u32_cpy_alloc_SOURCES = unistr/test-u32-cpy-alloc.c
+test_u32_cpy_alloc_LDADD = $(LDADD) $(LIBUNISTRING)

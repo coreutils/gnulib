@@ -11,9 +11,9 @@ unistdio/u32-u32-vasnprintf
 errno
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [unistdio/u32-u32-vasprintf.c])
 
 Makefile.am:
-lib_SOURCES += unistdio/u32-u32-vasprintf.c
 
 Include:
 "unistdio.h"

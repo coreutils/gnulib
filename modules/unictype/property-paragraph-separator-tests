@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_paragraph_separator
 check_PROGRAMS += test-pr_paragraph_separator
 test_pr_paragraph_separator_SOURCES = unictype/test-pr_paragraph_separator.c
-
+test_pr_paragraph_separator_LDADD = $(LDADD) $(LIBUNISTRING)

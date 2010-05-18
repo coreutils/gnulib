@@ -11,4 +11,4 @@ Makefile.am:
 TESTS += test-bidi_test
 check_PROGRAMS += test-bidi_test
 test_bidi_test_SOURCES = unictype/test-bidi_test.c
-
+test_bidi_test_LDADD = $(LDADD) $(LIBUNISTRING)

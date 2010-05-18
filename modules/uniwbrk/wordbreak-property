@@ -9,9 +9,9 @@ Depends-on:
 uniwbrk/base
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [uniwbrk/wordbreak-property.c])
 
 Makefile.am:
-lib_SOURCES += uniwbrk/wordbreak-property.c
 
 Include:
 "uniwbrk.h"

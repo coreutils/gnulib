@@ -10,9 +10,9 @@ unistr/base
 unistr/u32-strlen
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [unistr/u32-strncat.c])
 
 Makefile.am:
-lib_SOURCES += unistr/u32-strncat.c
 
 Include:
 "unistr.h"

@@ -11,9 +11,9 @@ uniconv/u8-conv-from-enc
 localcharset
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9.1], [unicase/ulc-casexfrm.c])
 
 Makefile.am:
-lib_SOURCES += unicase/ulc-casexfrm.c
 
 Include:
 "unicase.h"

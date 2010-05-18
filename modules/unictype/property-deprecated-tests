@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_deprecated
 check_PROGRAMS += test-pr_deprecated
 test_pr_deprecated_SOURCES = unictype/test-pr_deprecated.c
-
+test_pr_deprecated_LDADD = $(LDADD) $(LIBUNISTRING)

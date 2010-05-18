@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_unassigned_code_value
 check_PROGRAMS += test-pr_unassigned_code_value
 test_pr_unassigned_code_value_SOURCES = unictype/test-pr_unassigned_code_value.c
-
+test_pr_unassigned_code_value_LDADD = $(LDADD) $(LIBUNISTRING)

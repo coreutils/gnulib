@@ -12,9 +12,9 @@ uninorm/decompose-internal
 malloc-posix
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [uninorm/uninorm-filter.c])
 
 Makefile.am:
-lib_SOURCES += uninorm/uninorm-filter.c
 
 Include:
 "uninorm.h"

@@ -10,4 +10,4 @@ Makefile.am:
 TESTS += test-composition
 check_PROGRAMS += test-composition
 test_composition_SOURCES = uninorm/test-composition.c
-
+test_composition_LDADD = $(LDADD) $(LIBUNISTRING)

@@ -21,8 +21,8 @@ TESTS += test-ulc-vasnprintf1 unistdio/test-ulc-vasnprintf2.sh unistdio/test-ulc
 TESTS_ENVIRONMENT += LOCALE_FR='@LOCALE_FR@' LOCALE_FR_UTF8='@LOCALE_FR_UTF8@'
 check_PROGRAMS += test-ulc-vasnprintf1 test-ulc-vasnprintf2 test-ulc-vasnprintf3
 test_ulc_vasnprintf1_SOURCES = unistdio/test-ulc-vasnprintf1.c
-test_ulc_vasnprintf1_LDADD = $(LDADD) @LIBICONV@
+test_ulc_vasnprintf1_LDADD = $(LDADD) $(LIBUNISTRING) @LIBICONV@
 test_ulc_vasnprintf2_SOURCES = unistdio/test-ulc-vasnprintf2.c
-test_ulc_vasnprintf2_LDADD = $(LDADD) @LIBICONV@
+test_ulc_vasnprintf2_LDADD = $(LDADD) $(LIBUNISTRING) @LIBICONV@
 test_ulc_vasnprintf3_SOURCES = unistdio/test-ulc-vasnprintf3.c
-test_ulc_vasnprintf3_LDADD = $(LDADD) @LIBICONV@
+test_ulc_vasnprintf3_LDADD = $(LDADD) $(LIBUNISTRING) @LIBICONV@

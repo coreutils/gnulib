@@ -11,9 +11,9 @@ uniconv/u16-conv-from-enc
 unistr/u16-strlen
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [uniconv/u16-strconv-from-enc.c])
 
 Makefile.am:
-lib_SOURCES += uniconv/u16-strconv-from-enc.c
 
 Include:
 "uniconv.h"

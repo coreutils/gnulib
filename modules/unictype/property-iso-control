@@ -13,9 +13,9 @@ unictype/category-Cc
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
+gl_LIBUNISTRING_LIBSOURCE([0.9], [unictype/pr_iso_control.c])
 
 Makefile.am:
-lib_SOURCES += unictype/pr_iso_control.c
 
 Include:
 "unictype.h"

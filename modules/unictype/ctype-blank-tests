@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-ctype_blank
 check_PROGRAMS += test-ctype_blank
 test_ctype_blank_SOURCES = unictype/test-ctype_blank.c
-
+test_ctype_blank_LDADD = $(LDADD) $(LIBUNISTRING)

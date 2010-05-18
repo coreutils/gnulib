@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_bidi_arabic_digit
 check_PROGRAMS += test-pr_bidi_arabic_digit
 test_pr_bidi_arabic_digit_SOURCES = unictype/test-pr_bidi_arabic_digit.c
-
+test_pr_bidi_arabic_digit_LDADD = $(LDADD) $(LIBUNISTRING)

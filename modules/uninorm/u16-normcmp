@@ -12,9 +12,9 @@ unistr/u16-cmp2
 minmax
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [uninorm/u16-normcmp.c])
 
 Makefile.am:
-lib_SOURCES += uninorm/u16-normcmp.c
 
 Include:
 "uninorm.h"

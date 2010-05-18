@@ -18,3 +18,4 @@ Makefile.am:
 TESTS += test-u32-stpncpy
 check_PROGRAMS += test-u32-stpncpy
 test_u32_stpncpy_SOURCES = unistr/test-u32-stpncpy.c
+test_u32_stpncpy_LDADD = $(LDADD) $(LIBUNISTRING)

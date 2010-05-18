@@ -13,9 +13,9 @@ localcharset
 memxfrm
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [uninorm/u8-normxfrm.c])
 
 Makefile.am:
-lib_SOURCES += uninorm/u8-normxfrm.c
 
 Include:
 "uninorm.h"

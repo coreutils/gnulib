@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_extender
 check_PROGRAMS += test-pr_extender
 test_pr_extender_SOURCES = unictype/test-pr_extender.c
-
+test_pr_extender_LDADD = $(LDADD) $(LIBUNISTRING)

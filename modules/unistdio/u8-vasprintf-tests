@@ -11,4 +11,4 @@ Makefile.am:
 TESTS += test-u8-vasprintf1
 check_PROGRAMS += test-u8-vasprintf1
 test_u8_vasprintf1_SOURCES = unistdio/test-u8-vasprintf1.c
-test_u8_vasprintf1_LDADD = $(LDADD) @LIBICONV@
+test_u8_vasprintf1_LDADD = $(LDADD) $(LIBUNISTRING) @LIBICONV@

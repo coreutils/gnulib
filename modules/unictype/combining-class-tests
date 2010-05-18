@@ -10,4 +10,4 @@ Makefile.am:
 TESTS += test-combining
 check_PROGRAMS += test-combining
 test_combining_SOURCES = unictype/test-combining.c
-
+test_combining_LDADD = $(LDADD) $(LIBUNISTRING)

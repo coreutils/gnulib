@@ -46,9 +46,9 @@ unictype/category-Zs
 unictype/category-none
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [unictype/categ_byname.c])
 
 Makefile.am:
-lib_SOURCES += unictype/categ_byname.c
 
 Include:
 "unictype.h"

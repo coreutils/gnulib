@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_alphabetic
 check_PROGRAMS += test-pr_alphabetic
 test_pr_alphabetic_SOURCES = unictype/test-pr_alphabetic.c
-
+test_pr_alphabetic_LDADD = $(LDADD) $(LIBUNISTRING)

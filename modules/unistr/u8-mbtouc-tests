@@ -11,3 +11,4 @@ Makefile.am:
 TESTS += test-u8-mbtouc
 check_PROGRAMS += test-u8-mbtouc
 test_u8_mbtouc_SOURCES = unistr/test-u8-mbtouc.c
+test_u8_mbtouc_LDADD = $(LDADD) $(LIBUNISTRING)

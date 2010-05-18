@@ -11,4 +11,4 @@ Makefile.am:
 TESTS += test-u32-is-titlecase
 check_PROGRAMS += test-u32-is-titlecase
 test_u32_is_titlecase_SOURCES = unicase/test-u32-is-titlecase.c
-
+test_u32_is_titlecase_LDADD = $(LDADD) $(LIBUNISTRING)

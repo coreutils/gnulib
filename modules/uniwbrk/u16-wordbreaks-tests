@@ -10,4 +10,4 @@ Makefile.am:
 TESTS += test-u16-wordbreaks
 check_PROGRAMS += test-u16-wordbreaks
 test_u16_wordbreaks_SOURCES = uniwbrk/test-u16-wordbreaks.c
-
+test_u16_wordbreaks_LDADD = $(LDADD) $(LIBUNISTRING)

@@ -8,9 +8,9 @@ Depends-on:
 unictype/base
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [unictype/pr_test.c])
 
 Makefile.am:
-lib_SOURCES += unictype/pr_test.c
 
 Include:
 "unictype.h"

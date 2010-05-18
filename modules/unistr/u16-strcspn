@@ -12,9 +12,9 @@ unistr/u16-strmbtouc
 unistr/u16-strchr
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [unistr/u16-strcspn.c])
 
 Makefile.am:
-lib_SOURCES += unistr/u16-strcspn.c
 
 Include:
 "unistr.h"

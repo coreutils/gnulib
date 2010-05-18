@@ -11,9 +11,9 @@ uninorm/u8-normxfrm
 memcmp2
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [uninorm/u8-normcoll.c])
 
 Makefile.am:
-lib_SOURCES += uninorm/u8-normcoll.c
 
 Include:
 "uninorm.h"

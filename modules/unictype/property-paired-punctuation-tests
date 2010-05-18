@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_paired_punctuation
 check_PROGRAMS += test-pr_paired_punctuation
 test_pr_paired_punctuation_SOURCES = unictype/test-pr_paired_punctuation.c
-
+test_pr_paired_punctuation_LDADD = $(LDADD) $(LIBUNISTRING)

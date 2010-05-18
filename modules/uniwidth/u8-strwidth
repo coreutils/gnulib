@@ -10,9 +10,9 @@ uniwidth/u8-width
 unistr/u8-strlen
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [uniwidth/u8-strwidth.c])
 
 Makefile.am:
-lib_SOURCES += uniwidth/u8-strwidth.c
 
 Include:
 "uniwidth.h"

@@ -21,5 +21,5 @@ TESTS_ENVIRONMENT += \
   LOCALE_FR_UTF8='@LOCALE_FR_UTF8@'
 check_PROGRAMS += test-ulc-casecmp
 test_ulc_casecmp_SOURCES = unicase/test-ulc-casecmp.c
-test_ulc_casecmp_LDADD = $(LDADD) @LIBICONV@
+test_ulc_casecmp_LDADD = $(LDADD) $(LIBUNISTRING) @LIBICONV@
 

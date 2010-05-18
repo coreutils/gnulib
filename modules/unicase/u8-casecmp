@@ -13,9 +13,9 @@ unistr/u8-cmp2
 minmax
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9.1], [unicase/u8-casecmp.c])
 
 Makefile.am:
-lib_SOURCES += unicase/u8-casecmp.c
 
 Include:
 "unicase.h"

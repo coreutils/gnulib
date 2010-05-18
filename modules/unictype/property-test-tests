@@ -11,4 +11,4 @@ Makefile.am:
 TESTS += test-pr_test
 check_PROGRAMS += test-pr_test
 test_pr_test_SOURCES = unictype/test-pr_test.c
-
+test_pr_test_LDADD = $(LDADD) $(LIBUNISTRING)

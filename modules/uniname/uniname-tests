@@ -13,5 +13,5 @@ Makefile.am:
 TESTS += uniname/test-uninames.sh
 check_PROGRAMS += test-uninames
 test_uninames_SOURCES = uniname/test-uninames.c
-test_uninames_LDADD = $(LDADD) @LIBINTL@
+test_uninames_LDADD = $(LDADD) $(LIBUNISTRING) @LIBINTL@
 

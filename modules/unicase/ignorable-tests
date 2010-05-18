@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-ignorable
 check_PROGRAMS += test-ignorable
 test_ignorable_SOURCES = unicase/test-ignorable.c
-
+test_ignorable_LDADD = $(LDADD) $(LIBUNISTRING)

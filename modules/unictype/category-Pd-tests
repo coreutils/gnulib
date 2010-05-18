@@ -13,4 +13,4 @@ Makefile.am:
 TESTS += test-categ_Pd
 check_PROGRAMS += test-categ_Pd
 test_categ_Pd_SOURCES = unictype/test-categ_Pd.c
-
+test_categ_Pd_LDADD = $(LDADD) $(LIBUNISTRING)

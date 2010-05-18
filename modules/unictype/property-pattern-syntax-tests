@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_pattern_syntax
 check_PROGRAMS += test-pr_pattern_syntax
 test_pr_pattern_syntax_SOURCES = unictype/test-pr_pattern_syntax.c
-
+test_pr_pattern_syntax_LDADD = $(LDADD) $(LIBUNISTRING)

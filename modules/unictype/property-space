@@ -13,9 +13,9 @@ unictype/category-Zs
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
+gl_LIBUNISTRING_LIBSOURCE([0.9], [unictype/pr_space.c])
 
 Makefile.am:
-lib_SOURCES += unictype/pr_space.c
 
 Include:
 "unictype.h"

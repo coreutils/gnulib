@@ -10,3 +10,4 @@ Makefile.am:
 TESTS += test-u8-next
 check_PROGRAMS += test-u8-next
 test_u8_next_SOURCES = unistr/test-u8-next.c
+test_u8_next_LDADD = $(LDADD) $(LIBUNISTRING)

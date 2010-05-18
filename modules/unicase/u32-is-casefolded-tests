@@ -11,4 +11,4 @@ Makefile.am:
 TESTS += test-u32-is-casefolded
 check_PROGRAMS += test-u32-is-casefolded
 test_u32_is_casefolded_SOURCES = unicase/test-u32-is-casefolded.c
-
+test_u32_is_casefolded_LDADD = $(LDADD) $(LIBUNISTRING)

@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_format_control
 check_PROGRAMS += test-pr_format_control
 test_pr_format_control_SOURCES = unictype/test-pr_format_control.c
-
+test_pr_format_control_LDADD = $(LDADD) $(LIBUNISTRING)

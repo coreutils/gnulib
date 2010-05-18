@@ -10,9 +10,9 @@ unicase/u8-is-invariant
 unicase/u8-casefold
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9.1], [unicase/u8-is-casefolded.c])
 
 Makefile.am:
-lib_SOURCES += unicase/u8-is-casefolded.c
 
 Include:
 "unicase.h"

@@ -9,9 +9,9 @@ unictype/base
 unictype/bidicategory-of
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [unictype/bidi_test.c])
 
 Makefile.am:
-lib_SOURCES += unictype/bidi_test.c
 
 Include:
 "unictype.h"

@@ -19,3 +19,4 @@ Makefile.am:
 TESTS += test-u8-chr
 check_PROGRAMS += test-u8-chr
 test_u8_chr_SOURCES = unistr/test-u8-chr.c
+test_u8_chr_LDADD = $(LDADD) $(LIBUNISTRING)

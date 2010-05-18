@@ -11,4 +11,4 @@ Makefile.am:
 TESTS += test-u16-is-cased
 check_PROGRAMS += test-u16-is-cased
 test_u16_is_cased_SOURCES = unicase/test-u16-is-cased.c
-
+test_u16_is_cased_LDADD = $(LDADD) $(LIBUNISTRING)

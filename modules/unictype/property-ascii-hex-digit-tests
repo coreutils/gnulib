@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_ascii_hex_digit
 check_PROGRAMS += test-pr_ascii_hex_digit
 test_pr_ascii_hex_digit_SOURCES = unictype/test-pr_ascii_hex_digit.c
-
+test_pr_ascii_hex_digit_LDADD = $(LDADD) $(LIBUNISTRING)

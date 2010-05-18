@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_not_a_character
 check_PROGRAMS += test-pr_not_a_character
 test_pr_not_a_character_SOURCES = unictype/test-pr_not_a_character.c
-
+test_pr_not_a_character_LDADD = $(LDADD) $(LIBUNISTRING)

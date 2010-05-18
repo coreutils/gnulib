@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_uppercase
 check_PROGRAMS += test-pr_uppercase
 test_pr_uppercase_SOURCES = unictype/test-pr_uppercase.c
-
+test_pr_uppercase_LDADD = $(LDADD) $(LIBUNISTRING)

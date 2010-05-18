@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_soft_dotted
 check_PROGRAMS += test-pr_soft_dotted
 test_pr_soft_dotted_SOURCES = unictype/test-pr_soft_dotted.c
-
+test_pr_soft_dotted_LDADD = $(LDADD) $(LIBUNISTRING)

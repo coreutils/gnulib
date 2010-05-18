@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_other_id_start
 check_PROGRAMS += test-pr_other_id_start
 test_pr_other_id_start_SOURCES = unictype/test-pr_other_id_start.c
-
+test_pr_other_id_start_LDADD = $(LDADD) $(LIBUNISTRING)

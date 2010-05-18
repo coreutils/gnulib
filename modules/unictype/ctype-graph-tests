@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-ctype_graph
 check_PROGRAMS += test-ctype_graph
 test_ctype_graph_SOURCES = unictype/test-ctype_graph.c
-
+test_ctype_graph_LDADD = $(LDADD) $(LIBUNISTRING)

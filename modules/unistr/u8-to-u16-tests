@@ -11,3 +11,4 @@ Makefile.am:
 TESTS += test-u8-to-u16
 check_PROGRAMS += test-u8-to-u16
 test_u8_to_u16_SOURCES = unistr/test-u8-to-u16.c
+test_u8_to_u16_LDADD = $(LDADD) $(LIBUNISTRING)

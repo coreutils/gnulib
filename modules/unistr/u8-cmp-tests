@@ -18,3 +18,4 @@ Makefile.am:
 TESTS += test-u8-cmp
 check_PROGRAMS += test-u8-cmp
 test_u8_cmp_SOURCES = unistr/test-u8-cmp.c
+test_u8_cmp_LDADD = $(LDADD) $(LIBUNISTRING)

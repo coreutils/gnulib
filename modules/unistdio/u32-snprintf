@@ -10,9 +10,9 @@ unistdio/base
 unistdio/u32-vsnprintf
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [unistdio/u32-snprintf.c])
 
 Makefile.am:
-lib_SOURCES += unistdio/u32-snprintf.c
 
 Include:
 "unistdio.h"

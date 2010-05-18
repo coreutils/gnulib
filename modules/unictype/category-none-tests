@@ -11,4 +11,4 @@ Makefile.am:
 TESTS += test-categ_none
 check_PROGRAMS += test-categ_none
 test_categ_none_SOURCES = unictype/test-categ_none.c
-
+test_categ_none_LDADD = $(LDADD) $(LIBUNISTRING)

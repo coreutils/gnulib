@@ -12,9 +12,9 @@ uninorm/composition
 uninorm/nfd
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [uninorm/nfc.c])
 
 Makefile.am:
-lib_SOURCES += uninorm/nfc.c
 
 Include:
 "uninorm.h"

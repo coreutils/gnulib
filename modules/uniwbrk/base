@@ -2,14 +2,25 @@ Description:
 Base layer for word breaks.
 
 Files:
-lib/uniwbrk.h
+lib/uniwbrk.in.h
+m4/libunistring-base.m4
 
 Depends-on:
 unitypes
 
 configure.ac:
+gl_LIBUNISTRING_LIBHEADER([0.9], [uniwbrk.h])
 
 Makefile.am:
+BUILT_SOURCES += $(LIBUNISTRING_UNIWBRK_H)
+
+uniwbrk.h: uniwbrk.in.h
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  cat $(srcdir)/uniwbrk.in.h; \
+	} > $@-t && \
+	mv -f $@-t $@
+MOSTLYCLEANFILES += uniwbrk.h uniwbrk.h-t
 
 Include:
 "uniwbrk.h"

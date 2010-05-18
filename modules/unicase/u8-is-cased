@@ -15,9 +15,9 @@ uninorm/nfd
 unistr/u8-cmp
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9.1], [unicase/u8-is-cased.c])
 
 Makefile.am:
-lib_SOURCES += unicase/u8-is-cased.c
 
 Include:
 "unicase.h"

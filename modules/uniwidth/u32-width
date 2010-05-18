@@ -9,9 +9,9 @@ uniwidth/base
 uniwidth/width
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [uniwidth/u32-width.c])
 
 Makefile.am:
-lib_SOURCES += uniwidth/u32-width.c
 
 Include:
 "uniwidth.h"

@@ -14,4 +14,4 @@ Makefile.am:
 TESTS += test-decomposing-form
 check_PROGRAMS += test-decomposing-form
 test_decomposing_form_SOURCES = uninorm/test-decomposing-form.c
-
+test_decomposing_form_LDADD = $(LDADD) $(LIBUNISTRING)

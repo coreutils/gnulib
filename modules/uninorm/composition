@@ -10,9 +10,9 @@ uninorm/base
 gperf
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [uninorm/composition.c])
 
 Makefile.am:
-lib_SOURCES += uninorm/composition.c
 
 uninorm/composition-table.h: $(srcdir)/uninorm/composition-table.gperf
 	$(GPERF) -m 1 $(srcdir)/uninorm/composition-table.gperf > $(srcdir)/uninorm/composition-table.h-t

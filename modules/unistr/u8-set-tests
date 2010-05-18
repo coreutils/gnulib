@@ -11,3 +11,4 @@ Makefile.am:
 TESTS += test-u8-set
 check_PROGRAMS += test-u8-set
 test_u8_set_SOURCES = unistr/test-u8-set.c
+test_u8_set_LDADD = $(LDADD) $(LIBUNISTRING)

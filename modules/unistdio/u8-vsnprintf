@@ -12,9 +12,9 @@ unistr/u8-cpy
 errno
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [unistdio/u8-vsnprintf.c])
 
 Makefile.am:
-lib_SOURCES += unistdio/u8-vsnprintf.c
 
 Include:
 "unistdio.h"

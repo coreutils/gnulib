@@ -10,9 +10,9 @@ uniconv/u16-strconv-to-enc
 localcharset
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [uniconv/u16-strconv-to-locale.c])
 
 Makefile.am:
-lib_SOURCES += uniconv/u16-strconv-to-locale.c
 
 Include:
 "uniconv.h"

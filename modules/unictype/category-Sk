@@ -9,9 +9,9 @@ Depends-on:
 unictype/base
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [unictype/categ_Sk.c])
 
 Makefile.am:
-lib_SOURCES += unictype/categ_Sk.c
 
 Include:
 "unictype.h"

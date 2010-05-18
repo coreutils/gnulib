@@ -11,3 +11,4 @@ Makefile.am:
 TESTS += test-u8-stpcpy
 check_PROGRAMS += test-u8-stpcpy
 test_u8_stpcpy_SOURCES = unistr/test-u8-stpcpy.c
+test_u8_stpcpy_LDADD = $(LDADD) $(LIBUNISTRING)

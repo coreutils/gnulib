@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_bidi_non_spacing_mark
 check_PROGRAMS += test-pr_bidi_non_spacing_mark
 test_pr_bidi_non_spacing_mark_SOURCES = unictype/test-pr_bidi_non_spacing_mark.c
-
+test_pr_bidi_non_spacing_mark_LDADD = $(LDADD) $(LIBUNISTRING)

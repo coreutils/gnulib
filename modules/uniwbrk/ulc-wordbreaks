@@ -13,9 +13,9 @@ c-ctype
 localcharset
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [uniwbrk/ulc-wordbreaks.c])
 
 Makefile.am:
-lib_SOURCES += uniwbrk/ulc-wordbreaks.c
 
 Include:
 "uniwbrk.h"

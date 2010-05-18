@@ -13,4 +13,4 @@ Makefile.am:
 TESTS += test-categ_Po
 check_PROGRAMS += test-categ_Po
 test_categ_Po_SOURCES = unictype/test-categ_Po.c
-
+test_categ_Po_LDADD = $(LDADD) $(LIBUNISTRING)

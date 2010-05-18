@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_bidi_whitespace
 check_PROGRAMS += test-pr_bidi_whitespace
 test_pr_bidi_whitespace_SOURCES = unictype/test-pr_bidi_whitespace.c
-
+test_pr_bidi_whitespace_LDADD = $(LDADD) $(LIBUNISTRING)

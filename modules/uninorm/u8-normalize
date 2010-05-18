@@ -16,9 +16,9 @@ uninorm/decompose-internal
 
 configure.ac:
 gl_MODULE_INDICATOR_FOR_TESTS([uninorm/u8-normalize])
+gl_LIBUNISTRING_LIBSOURCE([0.9], [uninorm/u8-normalize.c])
 
 Makefile.am:
-lib_SOURCES += uninorm/u8-normalize.c
 
 Include:
 "uninorm.h"

@@ -47,9 +47,9 @@ multiarch
 
 configure.ac:
 gl_PREREQ_VASNPRINTF_WITH_EXTRAS
+gl_LIBUNISTRING_LIBSOURCE([0.9], [unistdio/u32-vasnprintf.c])
 
 Makefile.am:
-lib_SOURCES += unistdio/u32-vasnprintf.c
 
 Include:
 "unistdio.h"

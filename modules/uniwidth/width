@@ -10,9 +10,9 @@ uniwidth/base
 streq
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [uniwidth/width.c])
 
 Makefile.am:
-lib_SOURCES += uniwidth/width.c
 
 Include:
 "uniwidth.h"

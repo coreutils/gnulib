@@ -10,4 +10,4 @@ Makefile.am:
 TESTS += test-categ_test_withtable
 check_PROGRAMS += test-categ_test_withtable
 test_categ_test_withtable_SOURCES = unictype/test-categ_test_withtable.c
-
+test_categ_test_withtable_LDADD = $(LDADD) $(LIBUNISTRING)

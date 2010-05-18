@@ -13,4 +13,4 @@ Makefile.am:
 TESTS += test-u8-vsprintf1
 check_PROGRAMS += test-u8-vsprintf1
 test_u8_vsprintf1_SOURCES = unistdio/test-u8-vsprintf1.c
-test_u8_vsprintf1_LDADD = $(LDADD) @LIBINTL@ @LIBICONV@
+test_u8_vsprintf1_LDADD = $(LDADD) $(LIBUNISTRING) @LIBINTL@ @LIBICONV@

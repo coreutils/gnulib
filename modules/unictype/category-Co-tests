@@ -13,4 +13,4 @@ Makefile.am:
 TESTS += test-categ_Co
 check_PROGRAMS += test-categ_Co
 test_categ_Co_SOURCES = unictype/test-categ_Co.c
-
+test_categ_Co_LDADD = $(LDADD) $(LIBUNISTRING)

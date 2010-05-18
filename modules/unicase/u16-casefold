@@ -12,9 +12,9 @@ unicase/empty-prefix-context
 unicase/empty-suffix-context
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9.1], [unicase/u16-casefold.c])
 
 Makefile.am:
-lib_SOURCES += unicase/u16-casefold.c
 
 Include:
 "unicase.h"

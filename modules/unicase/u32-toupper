@@ -13,9 +13,9 @@ unicase/empty-suffix-context
 unicase/toupper
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9.1], [unicase/u32-toupper.c])
 
 Makefile.am:
-lib_SOURCES += unicase/u32-toupper.c
 
 Include:
 "unicase.h"

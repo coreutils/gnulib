@@ -12,4 +12,4 @@ Makefile.am:
 TESTS += test-pr_xid_continue
 check_PROGRAMS += test-pr_xid_continue
 test_pr_xid_continue_SOURCES = unictype/test-pr_xid_continue.c
-
+test_pr_xid_continue_LDADD = $(LDADD) $(LIBUNISTRING)

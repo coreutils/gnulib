@@ -11,9 +11,9 @@ unicase/ulc-casexfrm
 memcmp2
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9.1], [unicase/ulc-casecoll.c])
 
 Makefile.am:
-lib_SOURCES += unicase/ulc-casecoll.c
 
 Include:
 "unicase.h"

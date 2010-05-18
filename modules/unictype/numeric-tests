@@ -11,4 +11,4 @@ Makefile.am:
 TESTS += test-numeric
 check_PROGRAMS += test-numeric
 test_numeric_SOURCES = unictype/test-numeric.c
-
+test_numeric_LDADD = $(LDADD) $(LIBUNISTRING)

@@ -12,9 +12,9 @@ stdint
 errno
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [unistdio/u32-vsprintf.c])
 
 Makefile.am:
-lib_SOURCES += unistdio/u32-vsprintf.c
 
 Include:
 "unistdio.h"

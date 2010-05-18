@@ -12,9 +12,9 @@ unistr/u8-strmbtouc
 unistr/u8-strchr
 
 configure.ac:
+gl_LIBUNISTRING_LIBSOURCE([0.9], [unistr/u8-strcspn.c])
 
 Makefile.am:
-lib_SOURCES += unistr/u8-strcspn.c
 
 Include:
 "unistr.h"
