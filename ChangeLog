@@ -1,3 +1,8 @@
+2010-05-18  Richard Jones  <rjones@redhat.com>
+
+	doc: users.txt: list febootstrap
+	* users.txt: Add febootstrap.
+
 2010-05-17  Giuseppe Scrivano  <gscrivano@gnu.org>
 
 	bootstrap: fix an error when gnulib is not used as a git submodule
