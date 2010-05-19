@@ -1,5 +1,13 @@
 2010-05-19  Bruno Haible  <bruno@clisp.org>
 
+	Clean up dead code in recent commit.
+	* m4/libunistring-base.m4 (gl_LIBUNISTRING_VERSION_CMP): Include the
+	body of gl_LIBUNISTRING_VERSION_CMP_ORIG as fallback.
+	(gl_LIBUNISTRING_VERSION_CMP_ORIG): Remove macro.
+	Suggested by Paolo Bonzini.
+
+2010-05-19  Bruno Haible  <bruno@clisp.org>
+
 	Avoid valgrind error reports from libunistring.
 	* lib/libunistring.valgrind: New file, based on lib/malloca.valgrind.
 	* modules/libunistring (Files): Add it.

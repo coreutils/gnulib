@@ -1,4 +1,4 @@
-# libunistring-base.m4 serial 1
+# libunistring-base.m4 serial 2
 dnl Copyright (C) 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -97,45 +97,43 @@ changequote([,])
 dnl gl_LIBUNISTRING_VERSION_CMP([VERSION])
 dnl Expands to a shell statement that evaluates to true if LIBUNISTRING_VERSION
 dnl is less than the VERSION argument.
-dnl This is the unoptimized variant:
-AC_DEFUN([gl_LIBUNISTRING_VERSION_CMP_ORIG],
-[ { test "$HAVE_LIBUNISTRING" != yes \
-    || {
-         requested_version_major=`echo '$1' | sed -n -e "$gl_libunistring_sed_extract_major"`
-         requested_version_minor=`echo '$1' | sed -n -e "$gl_libunistring_sed_extract_minor"`
-         requested_version_subminor=`echo '$1' | sed -n -e "$gl_libunistring_sed_extract_subminor"`
-         test $LIBUNISTRING_VERSION_MAJOR -lt $requested_version_major \
-         || { test $LIBUNISTRING_VERSION_MAJOR -eq $requested_version_major \
-              && { test $LIBUNISTRING_VERSION_MINOR -lt $requested_version_minor \
-                   || { test $LIBUNISTRING_VERSION_MINOR -eq $requested_version_minor \
-                        && test $LIBUNISTRING_VERSION_SUBMINOR -lt $requested_version_subminor
-                      }
-                 }
-            }
-       }
-  }
-])
-dnl This is the optimized variant, that assumes the argument is a literal:
 AC_DEFUN([gl_LIBUNISTRING_VERSION_CMP],
 [ { test "$HAVE_LIBUNISTRING" != yes \
     || {
-         m4_pushdef([requested_version_major],
-           [gl_LIBUNISTRING_ARG_OR_ZERO(m4_bpatsubst([$1], [^\([0-9]*\).*], [\1]), [])])
-         m4_pushdef([requested_version_minor],
-           [gl_LIBUNISTRING_ARG_OR_ZERO(m4_bpatsubst([$1], [^[0-9]*[.]\([0-9]*\).*], [\1]), [$1])])
-         m4_pushdef([requested_version_subminor],
-           [gl_LIBUNISTRING_ARG_OR_ZERO(m4_bpatsubst([$1], [^[0-9]*[.][0-9]*[.]\([0-9]*\).*], [\1]), [$1])])
-         test $LIBUNISTRING_VERSION_MAJOR -lt requested_version_major \
-         || { test $LIBUNISTRING_VERSION_MAJOR -eq requested_version_major \
-              && { test $LIBUNISTRING_VERSION_MINOR -lt requested_version_minor \
-                   || { test $LIBUNISTRING_VERSION_MINOR -eq requested_version_minor \
-                        && test $LIBUNISTRING_VERSION_SUBMINOR -lt requested_version_subminor
-                      }
-                 }
-            }
-         m4_popdef([requested_version_subminor])
-         m4_popdef([requested_version_minor])
-         m4_popdef([requested_version_major])
+         dnl AS_LITERAL_IF exists and works fine since autoconf-2.59 at least.
+         AS_LITERAL_IF([$1],
+           [dnl This is the optimized variant, that assumes the argument is a literal:
+            m4_pushdef([requested_version_major],
+              [gl_LIBUNISTRING_ARG_OR_ZERO(m4_bpatsubst([$1], [^\([0-9]*\).*], [\1]), [])])
+            m4_pushdef([requested_version_minor],
+              [gl_LIBUNISTRING_ARG_OR_ZERO(m4_bpatsubst([$1], [^[0-9]*[.]\([0-9]*\).*], [\1]), [$1])])
+            m4_pushdef([requested_version_subminor],
+              [gl_LIBUNISTRING_ARG_OR_ZERO(m4_bpatsubst([$1], [^[0-9]*[.][0-9]*[.]\([0-9]*\).*], [\1]), [$1])])
+            test $LIBUNISTRING_VERSION_MAJOR -lt requested_version_major \
+            || { test $LIBUNISTRING_VERSION_MAJOR -eq requested_version_major \
+                 && { test $LIBUNISTRING_VERSION_MINOR -lt requested_version_minor \
+                      || { test $LIBUNISTRING_VERSION_MINOR -eq requested_version_minor \
+                           && test $LIBUNISTRING_VERSION_SUBMINOR -lt requested_version_subminor
+                         }
+                    }
+               }
+            m4_popdef([requested_version_subminor])
+            m4_popdef([requested_version_minor])
+            m4_popdef([requested_version_major])
+           ],
+           [dnl This is the unoptimized variant:
+            requested_version_major=`echo '$1' | sed -n -e "$gl_libunistring_sed_extract_major"`
+            requested_version_minor=`echo '$1' | sed -n -e "$gl_libunistring_sed_extract_minor"`
+            requested_version_subminor=`echo '$1' | sed -n -e "$gl_libunistring_sed_extract_subminor"`
+            test $LIBUNISTRING_VERSION_MAJOR -lt $requested_version_major \
+            || { test $LIBUNISTRING_VERSION_MAJOR -eq $requested_version_major \
+                 && { test $LIBUNISTRING_VERSION_MINOR -lt $requested_version_minor \
+                      || { test $LIBUNISTRING_VERSION_MINOR -eq $requested_version_minor \
+                           && test $LIBUNISTRING_VERSION_SUBMINOR -lt $requested_version_subminor
+                         }
+                    }
+               }
+           ])
        }
   }
 ])
