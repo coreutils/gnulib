@@ -5,6 +5,7 @@ Files:
 m4/libunistring-optional.m4
 m4/libunistring.m4
 m4/absolute-header.m4
+lib/libunistring.valgrind
 
 Depends-on:
 havelib

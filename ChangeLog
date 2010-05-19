@@ -1,3 +1,10 @@
+2010-05-19  Bruno Haible  <bruno@clisp.org>
+
+	Avoid valgrind error reports from libunistring.
+	* lib/libunistring.valgrind: New file, based on lib/malloca.valgrind.
+	* modules/libunistring (Files): Add it.
+	* modules/libunistring-optional (Files): Likewise.
+
 2010-05-18  Paolo Bonzini  <bonzini@gnu.org>
             Bruno Haible  <bruno@clisp.org>
 
