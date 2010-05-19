@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate May 13, 2010
+@set lastupdate May 17, 2010
 @c %**end of header
 
 @dircategory GNU organization
@@ -1233,12 +1233,12 @@ version, and checking that the result exactly matches the new version.
 @node Distribution on ftp.gnu.org
 @section Distribution on @code{ftp.gnu.org}
 @cindex GNU ftp site
-@cindex @code{ftp.gnu.org}, the GNU ftp site
+@cindex @code{ftp.gnu.org}, the GNU release site
 
-GNU packages are distributed through directory @file{/gnu} on
-@code{ftp.gnu.org}.  Each package should have a subdirectory
-named after the package, and all the distribution files for the package
-should go in that subdirectory.
+GNU packages are distributed through the directory @file{/gnu} on
+@code{ftp.gnu.org}, via both HTTP and FTP.  Each package should have a
+subdirectory named after the package, and all the distribution files
+for the package should go in that subdirectory.
 
 @c If you have an interest in seeing the monthly download logs from the FTP
 @c site at @code{ftp.gnu.org} for your program, that is something that
@@ -1254,13 +1254,13 @@ versions on @code{ftp.gnu.org}.
 @cindex beta releases
 @cindex pretest releases
 
-@cindex @code{alpha.gnu.org}, ftp site for test releases
+@cindex @code{alpha.gnu.org}, test release site
 When you release a greatly changed new major version of a program, you
 might want to do so as a pretest.  This means that you make a tar file,
 but send it only to a group of volunteers that you have recruited.  (Use
 a suitable GNU mailing list/newsgroup to recruit them.)
 
-We normally use the FTP server @code{alpha.gnu.org} for pretests and
+We normally use the server @code{alpha.gnu.org} for pretests and
 prerelease versions.  @xref{Automated FTP Uploads}, for procedural details
 of putting new versions on @code{alpha.gnu.org}.
 
@@ -1645,7 +1645,7 @@ Your package's web page (normally
 @item
 Your package's download location (normally
 @indicateurl{http://ftp.gnu.org/gnu/@var{package}/}).  It is also
-useful to mention the FTP mirror list at
+useful to mention the mirror list at
 @url{http://www.gnu.org/order/ftp.html}, and that
 @url{http://ftpmirror.gnu.org/@var{package/}} will automatically
 redirect to a nearby mirror.
@@ -2035,15 +2035,16 @@ Note that this uses a space, not a slash.
 @cindex source repository
 @cindex version control system
 @cindex FTP site
+@cindex release site
 @cindex hosting
 
 We recommend using @code{savannah.gnu.org} for the source code
 repository for your package, but that's not required.  @xref{Old
 Versions}, for more information about Savannah.
 
-We strongly urge you to use @code{ftp.gnu.org} as the standard FTP
+We strongly urge you to use @code{ftp.gnu.org} as the standard
 distribution site.  Doing so makes it easier for developers and users
-to find the latest GNU releases.  However, it is ok to use another FTP
+to find the latest GNU releases.  However, it is ok to use another
 server if you wish, provided it allows access from the general public
 without limitation (for instance, without excluding any country).
 
