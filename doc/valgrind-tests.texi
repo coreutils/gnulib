@@ -1,0 +1,38 @@
+@node Running self-tests under valgrind
+@section Running self-tests under valgrind
+
+For projects written in C or similar languages, running the self-tests
+under Valgrind can reveal hard to find memory issues.  The
+@code{valgrind-tests} module searches for Valgrind and declares the
+@code{VALGRIND} automake variable for use with automake's
+@code{TESTS_ENVIRONMENT}.
+
+After importing the @code{valgrind-tests} module to your project, you
+use it by adding the following to the @code{Makefile.am} that runs the
+self-tests:
+
+@smallexample
+TESTS_ENVIRONMENT = $(VALGRIND)
+@end smallexample
+
+This will run all self-checks under valgrind.  This can be wasteful if
+you have many shell scripts or other non-binaries.  Using the Automake
+parallel-tests feature, this can be avoided by using the following
+instead:
+
+@smallexample
+AUTOMAKE_OPTIONS = parallel-tests
+TEST_EXTENSIONS = .pl .sh
+LOG_COMPILER = $(VALGRIND)
+@end smallexample
+
+Then valgrind will only be used for the non-.sh and non-.pl tests.
+However, this means that binaries invoked through scripts will not be
+invoked under valgrind, which could be solved by adding the following:
+
+@smallexample
+TESTS_ENVIRONMENT = VALGRIND='$(VALGRIND)'
+@end smallexample
+
+And then modify the shell scripts to invoke the binary prefixed with
+@code{$VALGRIND}.

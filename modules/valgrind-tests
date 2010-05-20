@@ -1,0 +1,11 @@
+Description:
+Macro to search for valgrind, for self-tests.
+
+Files:
+m4/valgrind-tests.m4
+
+License:
+unlimited
+
+Maintainer:
+Simon Josefsson

@@ -1,3 +1,11 @@
+2010-05-17  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/valgrind-tests: New file.
+	* m4/valgrind-tests.m4: New file.
+	* doc/valgrind-tests.texi: New file.
+	* doc/gnulib.texi (Running self-tests under valgrind): New
+	section.
+
 2010-05-19  Bruno Haible  <bruno@clisp.org>
 
 	Clean up dead code in recent commit.

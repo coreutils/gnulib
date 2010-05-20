@@ -6416,6 +6416,7 @@ This list of functions is sorted according to the header that declares them.
 * func::
 * warnings::
 * manywarnings::
+* Running self-tests under valgrind::
 @end menu
 
 @node alloca
@@ -6513,6 +6514,8 @@ generated automatically.
 @include warnings.texi
 
 @include manywarnings.texi
+
+@include valgrind-tests.texi
 
 @node GNU Free Documentation License
 @appendix GNU Free Documentation License
