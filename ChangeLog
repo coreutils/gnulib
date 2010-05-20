@@ -1,3 +1,7 @@
+2010-05-20  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/valgrind-tests (configure.ac): Invoke gl_VALGRIND_TESTS.
+
 2010-05-17  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/valgrind-tests: New file.
