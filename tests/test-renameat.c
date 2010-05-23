@@ -29,6 +29,7 @@ SIGNATURE_CHECK (renameat, int, (int, char const *, int, char const *));
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/stat.h>
 
 #include "filenamecat.h"
 #include "xgetcwd.h"

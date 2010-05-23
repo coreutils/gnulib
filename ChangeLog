@@ -1,3 +1,9 @@
+2010-05-23  Jim Meyering  <meyering@redhat.com>
+
+	test-renameat.c: include <sys/stat.h>
+	* tests/test-renameat.c: Include <sys/stat.h>; required for
+	definition of S_IS* macros.
+
 2010-05-23  Ben Pfaff  <blp@cs.stanford.edu>
 
 	Update maintainer documentation for 'relocatable-prog' module.
