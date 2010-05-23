@@ -143,9 +143,9 @@ framework_failure_() { warn_ "$ME_: set-up failure: $@"; Exit 1; }
 # a partition, or to undo any other global state changes.
 cleanup_() { :; }
 
-if ( diff --version < /dev/null 2>&1 | grep GNU ) 2>&1 > /dev/null; then
+if ( diff --version < /dev/null 2>&1 | grep GNU ) > /dev/null 2>&1; then
   compare() { diff -u "$@"; }
-elif ( cmp --version < /dev/null 2>&1 | grep GNU ) 2>&1 > /dev/null; then
+elif ( cmp --version < /dev/null 2>&1 | grep GNU ) > /dev/null 2>&1; then
   compare() { cmp -s "$@"; }
 else
   compare() { cmp "$@"; }
