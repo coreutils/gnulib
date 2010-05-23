@@ -1,3 +1,9 @@
+2010-05-23  Ben Pfaff  <blp@cs.stanford.edu>
+
+	Update maintainer documentation for 'relocatable-prog' module.
+	* doc/relocatable-maint.texi: Update.
+	Comments by Bruno Haible.
+
 2010-05-23  Bruno Haible  <bruno@clisp.org>
 
 	git-merge-changelog: Enable --split-merged-entry by default.

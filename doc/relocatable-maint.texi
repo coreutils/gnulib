@@ -89,6 +89,27 @@ bindtextdomain (PACKAGE, relocate (LOCALEDIR));
 The prototype for this function is in @file{relocatable.h}.
 
 @item
+The @code{set_program_name} function can also configure some
+additional libraries to relocate files that they access, by defining
+corresponding C preprocessor symbols to 1.  The libraries for which
+this is supported and the corresponding preprocessor symbols are:
+
+@table @asis
+@item libcharset
+@code{DEPENDS_ON_LIBCHARSET}
+
+@item libiconv
+@code{DEPENDS_ON_LIBICONV}
+
+@item libintl
+@code{DEPENDS_ON_LIBINTL}
+@end table
+
+Defining the symbol for a library makes every program in the package
+depend on that library, whether the program really uses the library or
+not, so this feature should be used with some caution.
+
+@item
 If your package installs shell scripts, also import the
 @code{relocatable-script} module.  Then, near the beginning of each
 shell script that your package installs, add the following:
