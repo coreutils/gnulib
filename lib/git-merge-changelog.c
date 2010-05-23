@@ -1,5 +1,5 @@
 /* git-merge-changelog - git "merge" driver for GNU style ChangeLog files.
-   Copyright (C) 2008-2009 Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2008-2010 Bruno Haible <bruno@clisp.org>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -947,6 +947,7 @@ usage (int status)
       printf ("B-FILE-NAME names the user-modified file.\n");
       printf ("Writes the merged file into A-FILE-NAME.\n");
       printf ("\n");
+      #if 0 /* --split-merged-entry is now on by default.  */
       printf ("Operation modifiers:\n");
       printf ("\
       --split-merged-entry    Possibly split a merged entry between paragraphs.\n\
@@ -955,6 +956,7 @@ usage (int status)
                               newline, just because they happened on the same\n\
                               date.\n");
       printf ("\n");
+      #endif
       printf ("Informative output:\n");
       printf ("  -h, --help                  display this help and exit\n");
       printf ("  -V, --version               output version information and exit\n");
@@ -980,7 +982,7 @@ main (int argc, char *argv[])
   /* Set default values for variables.  */
   do_help = false;
   do_version = false;
-  split_merged_entry = false;
+  split_merged_entry = true;
 
   /* Parse command line options.  */
   while ((optchar = getopt_long (argc, argv, "hV", long_options, NULL)) != EOF)
@@ -995,7 +997,6 @@ main (int argc, char *argv[])
       do_version = true;
       break;
     case CHAR_MAX + 1:  /* --split-merged-entry */
-      split_merged_entry = true;
       break;
     default:
       usage (EXIT_FAILURE);
