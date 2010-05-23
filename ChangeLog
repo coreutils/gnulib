@@ -1,3 +1,13 @@
+2010-05-23  Jim Meyering  <meyering@redhat.com>
+
+	test-pwrite: do not leave behind a test file named "out"
+	Revert commit d8fa18472a54c1cb2674c296b3d82443f234d5f7.
+	The trivial-looking use of init.sh is really necessary.
+	It ensures that the temporary file, "out", is created in
+	a temporary directory, and removed upon termination.
+	* tests/test-pwrite.sh: Re-add file.
+	* modules/pwrite-tests: Reference it.
+
 2010-05-23  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	Fix output redirection buglet in init.sh.
