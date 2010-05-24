@@ -8,10 +8,11 @@ lib/unistr/u-strcoll.h
 Depends-on:
 unistr/base
 unistr/u16-strcmp
-uniconv/u16-strconv-to-locale
+uniconv/u16-strconv-to-enc
+localcharset
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9.3], [unistr/u16-strcoll.c])
+gl_LIBUNISTRING_LIBSOURCE([0.9.4], [unistr/u16-strcoll.c])
 
 Makefile.am:
 

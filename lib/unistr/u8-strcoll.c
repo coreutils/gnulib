@@ -29,5 +29,5 @@
 #define FUNC u8_strcoll
 #define UNIT uint8_t
 #define U_STRCMP u8_strcmp
-#define U_STRCONV_TO_LOCALE u8_strconv_to_locale
+#define U_STRCONV_TO_ENCODING u8_strconv_to_encoding
 #include "u-strcoll.h"

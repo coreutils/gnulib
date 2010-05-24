@@ -29,5 +29,5 @@
 #define FUNC u32_strcoll
 #define UNIT uint32_t
 #define U_STRCMP u32_strcmp
-#define U_STRCONV_TO_LOCALE u32_strconv_to_locale
+#define U_STRCONV_TO_ENCODING u32_strconv_to_encoding
 #include "u-strcoll.h"

@@ -1,5 +1,27 @@
 2010-05-24  Bruno Haible  <bruno@clisp.org>
 
+	Don't use conversion with transliteration in u{8,16,32}_strcoll.
+	* lib/unistr/u-strcoll.h (FUNC): Use U_STRCONV_TO_ENCODING with
+	iconveh_error argument.
+	* lib/unistr/u8-strcoll.c: Define U_STRCONV_TO_ENCODING instead of
+	U_STRCONV_TO_LOCALE.
+	* lib/unistr/u16-strcoll.c: Likewise.
+	* lib/unistr/u32-strcoll.c: Likewise.
+	* modules/unistr/u8-strcoll (Depends-on): Add
+	uniconv/u8-strconv-to-enc, localcharset. Remove
+	uniconv/u8-strconv-to-locale.
+	(configure.ac): Bump version number.
+	* modules/unistr/u16-strcoll (Depends-on): Add
+	uniconv/u16-strconv-to-enc, localcharset. Remove
+	uniconv/u16-strconv-to-locale.
+	(configure.ac): Bump version number.
+	* modules/unistr/u32-strcoll (Depends-on): Add
+	uniconv/u32-strconv-to-enc, localcharset. Remove
+	uniconv/u32-strconv-to-locale.
+	(configure.ac): Bump version number.
+
+2010-05-24  Bruno Haible  <bruno@clisp.org>
+
 	Avoid a test failure on NetBSD 5.0.
 	* tests/test-striconveh.c (main): On NetBSD, skip a test that triggers
 	an iconv() bug.
