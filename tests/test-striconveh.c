@@ -496,6 +496,9 @@ main ()
           free (result);
         }
 
+      /* Disabled on NetBSD, because NetBSD 5.0 iconv() is buggy: it converts
+         the input "+2D/YQNhB" to U+1FED8 U+3FD8 U+40D8.  */
+#  if !(defined __NetBSD__ && !defined _LIBICONV_VERSION)
       /* Test conversion from UTF-7 to UTF-8 with EILSEQ.  */
       for (h = 0; h < SIZEOF (handlers); h++)
         {
@@ -543,6 +546,7 @@ main ()
               break;
             }
         }
+#  endif
 # endif
     }
 

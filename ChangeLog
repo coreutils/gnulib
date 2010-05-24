@@ -1,5 +1,11 @@
 2010-05-24  Bruno Haible  <bruno@clisp.org>
 
+	Avoid a test failure on NetBSD 5.0.
+	* tests/test-striconveh.c (main): On NetBSD, skip a test that triggers
+	an iconv() bug.
+
+2010-05-24  Bruno Haible  <bruno@clisp.org>
+
 	Adjust #include directive style.
 	* modules/regex (Includes): Recommend to write <regex.h>.
 
