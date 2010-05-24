@@ -1,3 +1,10 @@
+2010-05-24  Bruno Haible  <bruno@clisp.org>
+
+	regex: Don't require alloca.
+	* modules/regex (Depends-on): Remove alloca. Add alloca-opt.
+	* lib/regex_internal.h (alloca): Ensure it's defined even if we call it
+	only inside if (0).
+
 2010-05-23  Jim Meyering  <meyering@redhat.com>
 
 	test-renameat.c: include <sys/stat.h>
