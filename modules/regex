@@ -36,7 +36,7 @@ gl_REGEX
 Makefile.am:
 
 Include:
-"regex.h"
+<regex.h>
 
 License:
 LGPLv2+

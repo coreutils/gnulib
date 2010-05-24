@@ -1,5 +1,10 @@
 2010-05-24  Bruno Haible  <bruno@clisp.org>
 
+	Adjust #include directive style.
+	* modules/regex (Includes): Recommend to write <regex.h>.
+
+2010-05-24  Bruno Haible  <bruno@clisp.org>
+
 	regex: Don't require alloca.
 	* modules/regex (Depends-on): Remove alloca. Add alloca-opt.
 	* lib/regex_internal.h (alloca): Ensure it's defined even if we call it
