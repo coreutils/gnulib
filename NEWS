@@ -6,6 +6,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2010-05-18  uni*/*          The Makefile.am now needs to declare the Automake
+                            option 'subdir-objects'.
+
 2010-04-02  maintainer-makefile
                             The macro _prohibit_regexp has been revamped into
                             a new macro _sc_search_regexp; custom syntax

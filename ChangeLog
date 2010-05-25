@@ -1,5 +1,9 @@
 2010-05-24  Bruno Haible  <bruno@clisp.org>
 
+	* NEWS: Mention requirement for Automake option 'subdir-objects'.
+
+2010-05-24  Bruno Haible  <bruno@clisp.org>
+
 	Don't use conversion with transliteration in u{8,16,32}_strcoll.
 	* lib/unistr/u-strcoll.h (FUNC): Use U_STRCONV_TO_ENCODING with
 	iconveh_error argument.
