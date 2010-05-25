@@ -24,6 +24,7 @@ SIGNATURE_CHECK (pwrite, ssize_t, (int, const void *, size_t, off_t));
 #include <sys/types.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <string.h>
 
 #include "macros.h"
 
