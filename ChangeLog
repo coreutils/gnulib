@@ -1,3 +1,9 @@
+2010-05-25  Bruno Haible  <bruno@clisp.org>
+
+	Update to GNU gettext 0.18, part 2.
+	* build-aux/po/Makefile.in.in: Update to GNU gettext 0.18.
+	Reported by Martin von Gagern <Martin.vGagern@gmx.net>.
+.
 2010-05-25  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	Add missing include in test-pwrite.c.
@@ -1119,8 +1125,8 @@
 
 2010-05-09  Bruno Haible  <bruno@clisp.org>
 
-	Update to GNU gettext 0.18.
-	* m4/gettext.m4: Update to GNU gettext 0.17.
+	Update to GNU gettext 0.18, part 1.
+	* m4/gettext.m4: Update to GNU gettext 0.18.
 	* m4/intl.m4: Likewise.
 	* m4/po.m4: Likewise.
 	* modules/gettext (Files): Add m4/fcntl-o.m4.
