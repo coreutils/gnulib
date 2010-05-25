@@ -3,7 +3,7 @@
 	Update to GNU gettext 0.18, part 2.
 	* build-aux/po/Makefile.in.in: Update to GNU gettext 0.18.
 	Reported by Martin von Gagern <Martin.vGagern@gmx.net>.
-.
+
 2010-05-25  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	Add missing include in test-pwrite.c.
