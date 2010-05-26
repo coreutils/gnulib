@@ -27,7 +27,8 @@ build_aux ?= $(srcdir)/build-aux
 # Do not save the original name or timestamp in the .tar.gz file.
 # Use --rsyncable if available.
 gzip_rsyncable := \
-  $(shell gzip --help 2>/dev/null|grep rsyncable >/dev/null && echo --rsyncable)
+  $(shell gzip --help 2>/dev/null|grep rsyncable >/dev/null \
+    && printf %s --rsyncable)
 GZIP_ENV = '--no-name --best $(gzip_rsyncable)'
 
 GIT = git
@@ -187,11 +188,11 @@ syntax-check: $(local-check)
 
 # By default, _sc_search_regexp does not ignore case.
 export ignore_case =
-_ignore_case = $$(test -n "$$ignore_case" && echo -i || :)
+_ignore_case = $$(test -n "$$ignore_case" && printf %s -i || :)
 
 define _sc_say_and_exit
    dummy=; : so we do not need a semicolon before each use;		\
-   { echo -e "$(ME): $$msg" 1>&2; exit 1; };
+   { printf '%s\n' "$(ME): $$msg" 1>&2; exit 1; };
 endef
 
 # _sc_search_regexp used to be named _prohibit_regexp.  However,

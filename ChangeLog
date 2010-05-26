@@ -1,3 +1,10 @@
+2010-05-26  Eric Blake  <eblake@redhat.com>
+
+	maint.mk: avoid echo -e
+	* top/maint.mk (gzip_rsyncable): Convert all uses of echo -* to
+	printf.
+	Reported by Matthias Bolte.
+
 2010-05-25  Bruno Haible  <bruno@clisp.org>
 
 	Update to GNU gettext 0.18, part 2.
