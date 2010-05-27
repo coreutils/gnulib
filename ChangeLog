@@ -1,3 +1,11 @@
+2010-05-27  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: also prohibit "#undef" of always-defined symbols
+	* top/maint.mk (def_sym_regex): Handle #undef as well as #define.
+	Allow more than one space before the symbol name.
+	(sc_prohibit_always-defined_macros): Use grep's -E, now that
+	the regexp uses alternation.
+
 2010-05-26  Eric Blake  <eblake@redhat.com>
 
 	maint.mk: avoid echo -e

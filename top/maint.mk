@@ -689,7 +689,8 @@ define def_sym_regex
 	    perl -lne '$(gl_extract_significant_defines_)' $$f;		\
 	  done;								\
 	) | sort -u							\
-	  | sed 's/^/^ *# *define /;s/$$/\\>/'
+	  | grep -Ev '^ATTRIBUTE_NORETURN'				\
+	  | sed 's/^/^ *# *(define|undef)  */;s/$$/\\>/'
 endef
 
 # Don't define macros that we already get from gnulib header files.
@@ -698,7 +699,7 @@ sc_prohibit_always-defined_macros:
 	  case $$(echo all: | grep -l -f - Makefile) in Makefile);; *)	\
 	    echo '$(ME): skipping $@: you lack GNU grep' 1>&2; exit 0;;	\
 	  esac;								\
-	  $(def_sym_regex) | grep -f - $$($(VC_LIST_EXCEPT))		\
+	  $(def_sym_regex) | grep -E -f - $$($(VC_LIST_EXCEPT))		\
 	    && { echo '$(ME): define the above via some gnulib .h file'	\
 		  1>&2;  exit 1; } || :;				\
 	fi
