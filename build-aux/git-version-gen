@@ -1,6 +1,6 @@
 #!/bin/sh
 # Print a version string.
-scriptversion=2010-04-26.16; # UTC
+scriptversion=2010-05-28.15; # UTC
 
 # Copyright (C) 2007-2010 Free Software Foundation, Inc.
 #
@@ -67,11 +67,14 @@ scriptversion=2010-04-26.16; # UTC
 #	echo $(VERSION) > $(distdir)/.tarball-version
 
 case $# in
-    1) ;;
-    *) echo 1>&2 "Usage: $0 \$srcdir/.tarball-version"; exit 1;;
+    1|2) ;;
+    *) echo 1>&2 "Usage: $0 \$srcdir/.tarball-version" \
+         '[TAG-NORMALIZATION-SED-SCRIPT]'
+       exit 1;;
 esac
 
 tarball_version_file=$1
+tag_sed_script="${2:-s/x/x/}"
 nl='
 '
 
@@ -95,6 +98,7 @@ then
 elif test -d .git \
     && v=`git describe --abbrev=4 --match='v*' HEAD 2>/dev/null \
 	  || git describe --abbrev=4 HEAD 2>/dev/null` \
+    && v=`printf '%s\n' "$v" | sed "$tag_sed_script"` \
     && case $v in
 	 v[0-9]*) ;;
 	 *) (exit 1) ;;

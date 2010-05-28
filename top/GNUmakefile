@@ -60,8 +60,10 @@ ifeq ($(_have-git-version-gen)0,yes$(MAKELEVEL))
     $(filter maintainer-% dist% alpha beta major,$(MAKECMDGOALS)))
   _is-install-target ?= $(filter-out %check, $(filter install%,$(MAKECMDGOALS)))
   ifneq (,$(_is-dist-target)$(_is-install-target))
-    _curr-ver := $(shell cd $(srcdir) \
-                   && $(_build-aux)/git-version-gen .tarball-version)
+    _curr-ver := $(shell cd $(srcdir)				\
+                   && $(_build-aux)/git-version-gen		\
+                         .tarball-version			\
+                         $(git-version-gen-tag-sed-script))
     ifneq ($(_curr-ver),$(VERSION))
       ifeq ($(_curr-ver),UNKNOWN)
         $(info WARNING: unable to verify if $(VERSION) is the correct version)
