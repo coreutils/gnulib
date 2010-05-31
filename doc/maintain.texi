@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate May 17, 2010
+@set lastupdate May 28, 2010
 @c %**end of header
 
 @dircategory GNU organization
@@ -1669,7 +1669,7 @@ simple and uniform.
 
 We encourage you to use the standard @code{www.gnu.org} template as
 the basis for your pages:
-@url{http://www.gnu.org/server/@/standards@/boilerplate-source.html}.
+@url{http://www.gnu.org/server/@/standards/@/boilerplate-source.html}.
 
 Some GNU packages have just simple web pages, but the more information
 you provide, the better.  So please write as much as you usefully can,
