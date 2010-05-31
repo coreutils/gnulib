@@ -1,3 +1,12 @@
+2010-05-31  Bruno Haible  <bruno@clisp.org>
+
+	Avoid expanding two macros in the wrong order.
+	* m4/libunistring-base.m4 (gl_LIBUNISTRING_LIB_PREPARE): Require
+	gl_LIBUNISTRING if it is defined.
+	* m4/libunistring.m4 (gl_LIBUNISTRING): Define using AC_DEFUN_ONCE for
+	autoconf >= 2.64.
+	Reported by Ludovic Courtès <ludo@gnu.org>.
+
 2010-05-27  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: also prohibit "#undef" of always-defined symbols

@@ -1,4 +1,4 @@
-# libunistring-base.m4 serial 2
+# libunistring-base.m4 serial 3
 dnl Copyright (C) 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -66,6 +66,9 @@ dnl Miscellaneous preparations/initializations.
 
 AC_DEFUN([gl_LIBUNISTRING_LIB_PREPARE],
 [
+  dnl Ensure that HAVE_LIBUNISTRING is fully determined at this point.
+  m4_ifdef([gl_LIBUNISTRING], [AC_REQUIRE([gl_LIBUNISTRING])])
+
   AC_REQUIRE([AC_PROG_AWK])
 
 dnl Sed expressions to extract the parts of a version number.
