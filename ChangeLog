@@ -1,3 +1,14 @@
+2010-06-02  Eric Blake  <eblake@redhat.com>
+
+	time: work with mingw + pthreads-win32 library
+	* m4/time_h.m4 (gl_CHECK_TYPE_STRUCT_TIMESPEC): Set new variable
+	if timespec is defined only in pthread.h.
+	* modules/time (Makefile.am): Substitute it.
+	* lib/time.in.h (!TIME_H_DEFINES_STRUCT_TIMESPEC): Include
+	<pthread.h>, when needed.
+	(GNULIB_TIME_R): Undefine broken localtime_r and gmtime_r macros
+	from the library.
+
 2010-05-31  Bruno Haible  <bruno@clisp.org>
 
 	Avoid expanding two macros in the wrong order.
