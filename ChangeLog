@@ -1,3 +1,12 @@
+2010-06-03  Bruno Haible  <bruno@clisp.org>
+
+	Choose among AC_DEFUN_ONCE, AC_DEFUN in a way that aclocal understands.
+	* m4/iconv.m4 (gl_iconv_AC_DEFUN): New macro.
+	(AM_ICONV): Define it through gl_iconv_AC_DEFUN.
+	* m4/libunistring.m4 (gl_libunistring_AC_DEFUN): New macro.
+	(gl_LIBUNISTRING): Define it through gl_libunistring_AC_DEFUN.
+	Reported by Ludovic Courtès <ludo@gnu.org>.
+
 2010-06-02  Eric Blake  <eblake@redhat.com>
 
 	time: work with mingw + pthreads-win32 library
