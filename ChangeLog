@@ -1,5 +1,12 @@
 2010-06-03  Bruno Haible  <bruno@clisp.org>
 
+	time: Undefine more broken macros.
+	* lib/time.in.h: Undefine broken localtime_r and gmtime_r macros only
+	for pthread-win32. Undefine also asctime_r, ctime_r, rand_r, strtok_r.
+	Reported by Eric Blake.
+
+2010-06-03  Bruno Haible  <bruno@clisp.org>
+
 	Choose among AC_DEFUN_ONCE, AC_DEFUN in a way that aclocal understands.
 	* m4/iconv.m4 (gl_iconv_AC_DEFUN): New macro.
 	(AM_ICONV): Define it through gl_iconv_AC_DEFUN.

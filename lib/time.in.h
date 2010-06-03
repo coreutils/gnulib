@@ -55,6 +55,13 @@
 #   include <sys/time.h>
 #  elif @PTHREAD_H_DEFINES_STRUCT_TIMESPEC@
 #   include <pthread.h>
+/* The pthreads-win32 <pthread.h> also defines a couple of broken macros.  */
+#   undef asctime_r
+#   undef ctime_r
+#   undef gmtime_r
+#   undef localtime_r
+#   undef rand_r
+#   undef strtok_r
 #  else
 
 #   ifdef __cplusplus
@@ -131,7 +138,6 @@ _GL_CXXALIAS_RPL (localtime_r, struct tm *, (time_t const *restrict __timer,
                                              struct tm *restrict __result));
 #  else
 #   if ! @HAVE_LOCALTIME_R@
-#    undef localtime_r
 _GL_FUNCDECL_SYS (localtime_r, struct tm *, (time_t const *restrict __timer,
                                              struct tm *restrict __result)
                                             _GL_ARG_NONNULL ((1, 2)));
@@ -152,7 +158,6 @@ _GL_CXXALIAS_RPL (gmtime_r, struct tm *, (time_t const *restrict __timer,
                                           struct tm *restrict __result));
 #  else
 #   if ! @HAVE_LOCALTIME_R@
-#    undef gmtime_r
 _GL_FUNCDECL_SYS (gmtime_r, struct tm *, (time_t const *restrict __timer,
                                           struct tm *restrict __result)
                                          _GL_ARG_NONNULL ((1, 2)));
