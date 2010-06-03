@@ -1,6 +1,10 @@
+Status:
+gettext-dependent-test
+
 Files:
 tests/test-quotearg.sh
 tests/test-quotearg.c
+tests/test-quotearg.h
 tests/macros.h
 tests/locale/fr/LC_MESSAGES/test-quotearg.po
 tests/locale/fr/LC_MESSAGES/test-quotearg.mo

@@ -1,6 +1,30 @@
 2010-06-03  Bruno Haible  <bruno@clisp.org>
 
 	Reduce dependencies.
+	* tests/test-quotearg.h: New file, extracted from
+	tests/test-quotearg.c.
+	* tests/test-quotearg-simple.c: New file, extracted from
+	tests/test-quotearg.c.
+	* tests/test-quotearg.c: Don't include <ctype.h>.
+	(struct result_strings, struct result_groups, LQ, RQ, LQ_ENC, RQ_ENC,
+	RQ_ESC, inputs, compare, use_quotearg_buffer, use_quotearg,
+	use_quote_double_quotes, use_quotearg_colon): Moved to
+	tests/test-quotearg.h.
+	(results_g, flag_results, custom_quotes, custom_results): Moved
+	to tests/test-quotearg-simple.c.
+	(main): Moved the part that does not depend on gettext to
+	tests/test-quotearg-simple.c. Return 77 if the test cannot be
+	performed.
+	* modules/quotearg-simple: New file.
+	* modules/quotearg-simple-tests: New file.
+	* modules/quotearg (Depends-on): Add quotearg-simple.
+	* modules/quotearg-tests (Status): Mark as gettext-dependent-test.
+	(Files): Add tests/test-quotearg.h.
+	Reported by Paolo Bonzini.
+
+2010-06-03  Bruno Haible  <bruno@clisp.org>
+
+	Reduce dependencies.
 	* modules/acl (Depends-on): Add gettext-h. Remove gettext.
 
 2010-06-03  Bruno Haible  <bruno@clisp.org>

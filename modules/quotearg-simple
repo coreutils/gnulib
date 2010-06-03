@@ -1,0 +1,19 @@
+Description:
+A dummy module whose tests are simple 'quotearg' tests.
+
+Files:
+
+Depends-on:
+quotearg
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+
+License:
+GPL
+
+Maintainer:
+Bruno Haible

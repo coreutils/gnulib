@@ -1,0 +1,15 @@
+Files:
+tests/test-quotearg-simple.c
+tests/test-quotearg.h
+tests/macros.h
+
+Depends-on:
+progname
+stdint
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-quotearg-simple
+check_PROGRAMS += test-quotearg-simple
+test_quotearg_simple_LDADD = $(LDADD) @LIBINTL@
