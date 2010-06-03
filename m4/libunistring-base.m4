@@ -1,4 +1,4 @@
-# libunistring-base.m4 serial 3
+# libunistring-base.m4 serial 4
 dnl Copyright (C) 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -23,8 +23,7 @@ AC_DEFUN([gl_LIBUNISTRING_LIBSOURCE],
   AC_REQUIRE([gl_LIBUNISTRING_LIB_PREPARE])
   dnl Use the variables HAVE_LIBUNISTRING, LIBUNISTRING_VERSION from
   dnl gl_LIBUNISTRING_CORE if that macro has been run.
-  if gl_LIBUNISTRING_VERSION_CMP([$1])
-  then
+  if gl_LIBUNISTRING_VERSION_CMP([$1]); then
     m4_foreach_w([gl_source_file], [$2],
       [AC_LIBOBJ(m4_bpatsubst(m4_defn([gl_source_file]), [\.c$], []))
       ])
@@ -53,8 +52,7 @@ AC_DEFUN([gl_LIBUNISTRING_LIBHEADER],
   AC_REQUIRE([gl_LIBUNISTRING_LIB_PREPARE])
   dnl Use the variables HAVE_LIBUNISTRING, LIBUNISTRING_VERSION from
   dnl gl_LIBUNISTRING_CORE if that macro has been run.
-  if gl_LIBUNISTRING_VERSION_CMP([$1])
-  then
+  if gl_LIBUNISTRING_VERSION_CMP([$1]); then
     LIBUNISTRING_[]AS_TR_CPP([$2])='$2'
   else
     LIBUNISTRING_[]AS_TR_CPP([$2])=
@@ -138,8 +136,7 @@ AC_DEFUN([gl_LIBUNISTRING_VERSION_CMP],
                }
            ])
        }
-  }
-])
+  }])
 
 dnl gl_LIBUNISTRING_ARG_OR_ZERO([ARG], [ORIG]) expands to ARG if it is not the
 dnl same as ORIG, otherwise to 0.
