@@ -14,9 +14,12 @@ unictype/combining-class
 unistr/u8-mbtouc-unsafe
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9.1], [unicase/u8-suffix-context.c])
+gl_LIBUNISTRING_MODULE([0.9.1], [unicase/u8-suffix-context])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNICASE_U8_SUFFIX_CONTEXT
+lib_SOURCES += unicase/u8-suffix-context.c
+endif
 
 Include:
 "unicase.h"

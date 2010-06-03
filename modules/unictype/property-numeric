@@ -11,9 +11,12 @@ unictype/base
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
-gl_LIBUNISTRING_LIBSOURCE([0.9], [unictype/pr_numeric.c])
+gl_LIBUNISTRING_MODULE([0.9], [unictype/property-numeric])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNICTYPE_PROPERTY_NUMERIC
+lib_SOURCES += unictype/pr_numeric.c
+endif
 
 Include:
 "unictype.h"

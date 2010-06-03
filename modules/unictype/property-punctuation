@@ -13,9 +13,12 @@ unictype/category-P
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
-gl_LIBUNISTRING_LIBSOURCE([0.9], [unictype/pr_punctuation.c])
+gl_LIBUNISTRING_MODULE([0.9], [unictype/property-punctuation])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNICTYPE_PROPERTY_PUNCTUATION
+lib_SOURCES += unictype/pr_punctuation.c
+endif
 
 Include:
 "unictype.h"

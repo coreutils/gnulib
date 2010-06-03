@@ -10,9 +10,12 @@ uninorm/base
 uninorm/compat-decomposition
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9], [uninorm/nfkd.c])
+gl_LIBUNISTRING_MODULE([0.9], [uninorm/nfkd])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNINORM_NFKD
+lib_SOURCES += uninorm/nfkd.c
+endif
 
 Include:
 "uninorm.h"

@@ -9,9 +9,12 @@ Depends-on:
 unictype/base
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9], [unictype/categ_Sm.c])
+gl_LIBUNISTRING_MODULE([0.9], [unictype/category-Sm])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNICTYPE_CATEGORY_SM
+lib_SOURCES += unictype/categ_Sm.c
+endif
 
 Include:
 "unictype.h"

@@ -12,9 +12,12 @@ unistr/u32-cpy
 errno
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9], [unistdio/u32-u32-vsnprintf.c])
+gl_LIBUNISTRING_MODULE([0.9], [unistdio/u32-u32-vsnprintf])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNISTDIO_U32_U32_VSNPRINTF
+lib_SOURCES += unistdio/u32-u32-vsnprintf.c
+endif
 
 Include:
 "unistdio.h"

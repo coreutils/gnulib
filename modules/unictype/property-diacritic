@@ -11,9 +11,12 @@ unictype/base
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
-gl_LIBUNISTRING_LIBSOURCE([0.9], [unictype/pr_diacritic.c])
+gl_LIBUNISTRING_MODULE([0.9], [unictype/property-diacritic])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNICTYPE_PROPERTY_DIACRITIC
+lib_SOURCES += unictype/pr_diacritic.c
+endif
 
 Include:
 "unictype.h"

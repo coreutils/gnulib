@@ -15,9 +15,12 @@ uninorm/nfd
 unistr/u16-cmp
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9.1], [unicase/u16-is-cased.c])
+gl_LIBUNISTRING_MODULE([0.9.1], [unicase/u16-is-cased])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNICASE_U16_IS_CASED
+lib_SOURCES += unicase/u16-is-cased.c
+endif
 
 Include:
 "unicase.h"

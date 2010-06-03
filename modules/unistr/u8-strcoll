@@ -12,9 +12,12 @@ uniconv/u8-strconv-to-enc
 localcharset
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9.4], [unistr/u8-strcoll.c])
+gl_LIBUNISTRING_MODULE([0.9.4], [unistr/u8-strcoll])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNISTR_U8_STRCOLL
+lib_SOURCES += unistr/u8-strcoll.c
+endif
 
 Include:
 "unistr.h"

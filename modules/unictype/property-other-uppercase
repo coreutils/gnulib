@@ -11,9 +11,12 @@ unictype/base
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
-gl_LIBUNISTRING_LIBSOURCE([0.9], [unictype/pr_other_uppercase.c])
+gl_LIBUNISTRING_MODULE([0.9], [unictype/property-other-uppercase])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNICTYPE_PROPERTY_OTHER_UPPERCASE
+lib_SOURCES += unictype/pr_other_uppercase.c
+endif
 
 Include:
 "unictype.h"

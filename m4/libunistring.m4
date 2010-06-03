@@ -1,4 +1,4 @@
-# libunistring.m4 serial 8
+# libunistring.m4 serial 9
 dnl Copyright (C) 2009-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -29,7 +29,7 @@ m4_define([gl_libunistring_AC_DEFUN],
         [$1], [$2])]]))
 gl_libunistring_AC_DEFUN([gl_LIBUNISTRING],
 [
-  AC_BEFORE([$0], [gl_LIBUNISTRING_LIBSOURCE])
+  AC_BEFORE([$0], [gl_LIBUNISTRING_MODULE])
   AC_BEFORE([$0], [gl_LIBUNISTRING_LIBHEADER])
   AC_BEFORE([$0], [gl_LIBUNISTRING_LIB_PREPARE])
 

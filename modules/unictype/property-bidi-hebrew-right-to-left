@@ -12,9 +12,12 @@ unictype/bidicategory-of
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
-gl_LIBUNISTRING_LIBSOURCE([0.9], [unictype/pr_bidi_hebrew_right_to_left.c])
+gl_LIBUNISTRING_MODULE([0.9], [unictype/property-bidi-hebrew-right-to-left])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNICTYPE_PROPERTY_BIDI_HEBREW_RIGHT_TO_LEFT
+lib_SOURCES += unictype/pr_bidi_hebrew_right_to_left.c
+endif
 
 Include:
 "unictype.h"

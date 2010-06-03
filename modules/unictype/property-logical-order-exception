@@ -11,9 +11,12 @@ unictype/base
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
-gl_LIBUNISTRING_LIBSOURCE([0.9], [unictype/pr_logical_order_exception.c])
+gl_LIBUNISTRING_MODULE([0.9], [unictype/property-logical-order-exception])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNICTYPE_PROPERTY_LOGICAL_ORDER_EXCEPTION
+lib_SOURCES += unictype/pr_logical_order_exception.c
+endif
 
 Include:
 "unictype.h"

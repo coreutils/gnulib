@@ -11,9 +11,12 @@ unistdio/ulc-vasnprintf
 errno
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9], [unistdio/ulc-vsnprintf.c])
+gl_LIBUNISTRING_MODULE([0.9], [unistdio/ulc-vsnprintf])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNISTDIO_ULC_VSNPRINTF
+lib_SOURCES += unistdio/ulc-vsnprintf.c
+endif
 
 Include:
 "unistdio.h"

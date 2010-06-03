@@ -11,9 +11,12 @@ striconveha
 unistr/u8-check
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9], [uniconv/u8-conv-to-enc.c])
+gl_LIBUNISTRING_MODULE([0.9], [uniconv/u8-conv-to-enc])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNICONV_U8_CONV_TO_ENC
+lib_SOURCES += uniconv/u8-conv-to-enc.c
+endif
 
 Include:
 "uniconv.h"

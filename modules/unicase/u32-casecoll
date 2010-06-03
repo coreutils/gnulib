@@ -12,9 +12,12 @@ unicase/u32-casexfrm
 memcmp2
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9.1], [unicase/u32-casecoll.c])
+gl_LIBUNISTRING_MODULE([0.9.1], [unicase/u32-casecoll])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNICASE_U32_CASECOLL
+lib_SOURCES += unicase/u32-casecoll.c
+endif
 
 Include:
 "unicase.h"

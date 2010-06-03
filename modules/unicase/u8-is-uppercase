@@ -10,9 +10,12 @@ unicase/u8-is-invariant
 unicase/u8-toupper
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9.1], [unicase/u8-is-uppercase.c])
+gl_LIBUNISTRING_MODULE([0.9.1], [unicase/u8-is-uppercase])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNICASE_U8_IS_UPPERCASE
+lib_SOURCES += unicase/u8-is-uppercase.c
+endif
 
 Include:
 "unicase.h"

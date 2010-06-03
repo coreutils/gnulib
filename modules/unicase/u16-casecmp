@@ -13,9 +13,12 @@ unistr/u16-cmp2
 minmax
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9.1], [unicase/u16-casecmp.c])
+gl_LIBUNISTRING_MODULE([0.9.1], [unicase/u16-casecmp])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNICASE_U16_CASECMP
+lib_SOURCES += unicase/u16-casecmp.c
+endif
 
 Include:
 "unicase.h"

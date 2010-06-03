@@ -11,9 +11,12 @@ unilbrk/tables
 streq
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9], [unilbrk/u32-possible-linebreaks.c])
+gl_LIBUNISTRING_MODULE([0.9], [unilbrk/u32-possible-linebreaks])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNILBRK_U32_POSSIBLE_LINEBREAKS
+lib_SOURCES += unilbrk/u32-possible-linebreaks.c
+endif
 
 Include:
 "unilbrk.h"

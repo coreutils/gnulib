@@ -13,9 +13,12 @@ unicase/empty-suffix-context
 unicase/tolower
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9.1], [unicase/u16-tolower.c])
+gl_LIBUNISTRING_MODULE([0.9.1], [unicase/u16-tolower])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNICASE_U16_TOLOWER
+lib_SOURCES += unicase/u16-tolower.c
+endif
 
 Include:
 "unicase.h"

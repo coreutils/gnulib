@@ -13,9 +13,12 @@ unictype/category-Sc
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
-gl_LIBUNISTRING_LIBSOURCE([0.9], [unictype/pr_currency_symbol.c])
+gl_LIBUNISTRING_MODULE([0.9], [unictype/property-currency-symbol])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNICTYPE_PROPERTY_CURRENCY_SYMBOL
+lib_SOURCES += unictype/pr_currency_symbol.c
+endif
 
 Include:
 "unictype.h"

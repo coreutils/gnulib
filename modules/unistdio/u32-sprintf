@@ -10,9 +10,12 @@ unistdio/base
 unistdio/u32-vsprintf
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9], [unistdio/u32-sprintf.c])
+gl_LIBUNISTRING_MODULE([0.9], [unistdio/u32-sprintf])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNISTDIO_U32_SPRINTF
+lib_SOURCES += unistdio/u32-sprintf.c
+endif
 
 Include:
 "unistdio.h"

@@ -11,9 +11,12 @@ uniwidth/width
 unistr/u8-mbtouc-unsafe
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9], [unilbrk/u8-width-linebreaks.c])
+gl_LIBUNISTRING_MODULE([0.9], [unilbrk/u8-width-linebreaks])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNILBRK_U8_WIDTH_LINEBREAKS
+lib_SOURCES += unilbrk/u8-width-linebreaks.c
+endif
 
 Include:
 "unilbrk.h"

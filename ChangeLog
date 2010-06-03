@@ -1,5 +1,17 @@
 2010-06-03  Bruno Haible  <bruno@clisp.org>
 
+	Don't use AC_LIBOBJ with file names in subdirectories.
+	* m4/libunistring-base.m4 (gl_LIBUNISTRING_MODULE): Renamed from
+	gl_LIBUNISTRING_LIBSOURCE. Take a module name as argument, not a file
+	name. Define an automake conditional. Don't invoke AC_LIBOBJ.
+	* m4/libunistring.m4 (gl_LIBUNISTRING): Update AC_BEFORE invocation.
+	* modules/uni*/* (configure.ac): Use gl_LIBUNISTRING_MODULE instead of
+	gl_LIBUNISTRING_LIBSOURCE.
+	(Makefile.am): Augment lib_SOURCES here, conditionally.
+	* NEWS: Drop requirement for Automake option 'subdir-objects'.
+
+2010-06-03  Bruno Haible  <bruno@clisp.org>
+
 	Simplify gl_LIBUNISTRING_VERSION_CMP expansion.
 	* m4/libunistring-base.m4 (gl_LIBUNISTRING_VERSION_CMP): Ensure
 	expansion does not end with a newline.

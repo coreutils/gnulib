@@ -12,9 +12,12 @@ uniwbrk/table
 unistr/u8-mbtouc-unsafe
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9], [uniwbrk/u8-wordbreaks.c])
+gl_LIBUNISTRING_MODULE([0.9], [uniwbrk/u8-wordbreaks])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNIWBRK_U8_WORDBREAKS
+lib_SOURCES += uniwbrk/u8-wordbreaks.c
+endif
 
 Include:
 "uniwbrk.h"

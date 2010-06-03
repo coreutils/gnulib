@@ -11,9 +11,12 @@ unictype/category-none
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
-gl_LIBUNISTRING_LIBSOURCE([0.9], [unictype/categ_of.c])
+gl_LIBUNISTRING_MODULE([0.9], [unictype/category-of])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNICTYPE_CATEGORY_OF
+lib_SOURCES += unictype/categ_of.c
+endif
 
 Include:
 "unictype.h"

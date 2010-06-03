@@ -11,9 +11,12 @@ unictype/base
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
-gl_LIBUNISTRING_LIBSOURCE([0.9], [unictype/pr_variation_selector.c])
+gl_LIBUNISTRING_MODULE([0.9], [unictype/property-variation-selector])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNICTYPE_PROPERTY_VARIATION_SELECTOR
+lib_SOURCES += unictype/pr_variation_selector.c
+endif
 
 Include:
 "unictype.h"

@@ -15,9 +15,12 @@ uninorm/u8-normalize
 uninorm/nfd
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9.1], [unicase/u8-ct-casefold.c])
+gl_LIBUNISTRING_MODULE([0.9.1], [unicase/u8-ct-casefold])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNICASE_U8_CT_CASEFOLD
+lib_SOURCES += unicase/u8-ct-casefold.c
+endif
 
 Include:
 "unicase.h"

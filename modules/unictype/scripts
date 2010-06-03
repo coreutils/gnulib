@@ -11,9 +11,12 @@ unictype/base
 gperf
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9], [unictype/scripts.c])
+gl_LIBUNISTRING_MODULE([0.9], [unictype/scripts])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNICTYPE_SCRIPTS
+lib_SOURCES += unictype/scripts.c
+endif
 
 unictype/scripts_byname.h: unictype/scripts_byname.gperf
 	$(GPERF) -m 10 $(srcdir)/unictype/scripts_byname.gperf > $(srcdir)/unictype/scripts_byname.h-t

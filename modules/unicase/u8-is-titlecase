@@ -10,9 +10,12 @@ unicase/u8-is-invariant
 unicase/u8-totitle
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9.1], [unicase/u8-is-titlecase.c])
+gl_LIBUNISTRING_MODULE([0.9.1], [unicase/u8-is-titlecase])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNICASE_U8_IS_TITLECASE
+lib_SOURCES += unicase/u8-is-titlecase.c
+endif
 
 Include:
 "unicase.h"

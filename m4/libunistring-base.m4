@@ -1,4 +1,4 @@
-# libunistring-base.m4 serial 4
+# libunistring-base.m4 serial 5
 dnl Copyright (C) 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -6,28 +6,26 @@ dnl with or without modifications, as long as this notice is preserved.
 
 dnl From Paolo Bonzini and Bruno Haible.
 
-dnl gl_LIBUNISTRING_LIBSOURCE([VERSION], [SourceFile])
-dnl Declares that SourceFile should be compiled, unless we are linking
-dnl with libunistring and its version is >= the given VERSION.
-dnl SourceFile should be relative to the lib directory and end in '.c'.
+dnl gl_LIBUNISTRING_MODULE([VERSION], [Module])
+dnl Declares that the source files of Module should be compiled, unless we
+dnl are linking with libunistring and its version is >= the given VERSION.
+dnl Defines an automake conditional LIBUNISTRING_COMPILE_$MODULE that is
+dnl true if the source files of Module should be compiled.
 dnl This macro is to be used for public libunistring API, not for
 dnl undocumented API.
 dnl
 dnl You have to bump the VERSION argument to the next projected version
 dnl number each time you make a change that affects the behaviour of the
-dnl functions defined in SourceFile (even if SourceFile itself does not
+dnl functions defined in Module (even if the sources of Module itself do not
 dnl change).
 
-AC_DEFUN([gl_LIBUNISTRING_LIBSOURCE],
+AC_DEFUN([gl_LIBUNISTRING_MODULE],
 [
   AC_REQUIRE([gl_LIBUNISTRING_LIB_PREPARE])
   dnl Use the variables HAVE_LIBUNISTRING, LIBUNISTRING_VERSION from
   dnl gl_LIBUNISTRING_CORE if that macro has been run.
-  if gl_LIBUNISTRING_VERSION_CMP([$1]); then
-    m4_foreach_w([gl_source_file], [$2],
-      [AC_LIBOBJ(m4_bpatsubst(m4_defn([gl_source_file]), [\.c$], []))
-      ])
-  fi
+  AM_CONDITIONAL(AS_TR_CPP([LIBUNISTRING_COMPILE_$2]),
+    [gl_LIBUNISTRING_VERSION_CMP([$1])])
 ])
 
 dnl gl_LIBUNISTRING_LIBHEADER([VERSION], [HeaderFile])
@@ -38,8 +36,8 @@ dnl Prepares for substituting LIBUNISTRING_HEADERFILE (to HeaderFile or empty).
 dnl
 dnl When we are linking with the already installed libunistring and its version
 dnl is < VERSION, we create HeaderFile here, because we may compile functions
-dnl (via gl_LIBUNISTRING_LIBSOURCE above) that are not contained in the
-dnl installed version.
+dnl (via gl_LIBUNISTRING_MODULE above) that are not contained in the installed
+dnl version.
 dnl When we are linking with the already installed libunistring and its version
 dnl is > VERSION, we don't create HeaderFile here: it could cause compilation
 dnl errors in other libunistring header files if some types are missing.

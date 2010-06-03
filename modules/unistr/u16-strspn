@@ -13,9 +13,12 @@ unistr/u16-cmp
 unistr/u16-strchr
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9], [unistr/u16-strspn.c])
+gl_LIBUNISTRING_MODULE([0.9], [unistr/u16-strspn])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNISTR_U16_STRSPN
+lib_SOURCES += unistr/u16-strspn.c
+endif
 
 Include:
 "unistr.h"

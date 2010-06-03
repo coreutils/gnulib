@@ -11,9 +11,12 @@ uninorm/u32-normxfrm
 memcmp2
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9], [uninorm/u32-normcoll.c])
+gl_LIBUNISTRING_MODULE([0.9], [uninorm/u32-normcoll])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNINORM_U32_NORMCOLL
+lib_SOURCES += uninorm/u32-normcoll.c
+endif
 
 Include:
 "uninorm.h"

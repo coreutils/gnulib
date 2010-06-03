@@ -12,9 +12,12 @@ unictype/bidicategory-of
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
-gl_LIBUNISTRING_LIBSOURCE([0.9], [unictype/pr_bidi_embedding_or_override.c])
+gl_LIBUNISTRING_MODULE([0.9], [unictype/property-bidi-embedding-or-override])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNICTYPE_PROPERTY_BIDI_EMBEDDING_OR_OVERRIDE
+lib_SOURCES += unictype/pr_bidi_embedding_or_override.c
+endif
 
 Include:
 "unictype.h"

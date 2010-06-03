@@ -10,9 +10,12 @@ unistr/base
 memmove
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9], [unistr/u8-move.c])
+gl_LIBUNISTRING_MODULE([0.9], [unistr/u8-move])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNISTR_U8_MOVE
+lib_SOURCES += unistr/u8-move.c
+endif
 
 Include:
 "unistr.h"

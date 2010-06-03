@@ -12,9 +12,12 @@ unistr/u8-cmp2
 minmax
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9], [uninorm/u8-normcmp.c])
+gl_LIBUNISTRING_MODULE([0.9], [uninorm/u8-normcmp])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNINORM_U8_NORMCMP
+lib_SOURCES += uninorm/u8-normcmp.c
+endif
 
 Include:
 "uninorm.h"

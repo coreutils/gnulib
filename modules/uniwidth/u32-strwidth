@@ -10,9 +10,12 @@ uniwidth/u32-width
 unistr/u32-strlen
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9], [uniwidth/u32-strwidth.c])
+gl_LIBUNISTRING_MODULE([0.9], [uniwidth/u32-strwidth])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNIWIDTH_U32_STRWIDTH
+lib_SOURCES += uniwidth/u32-strwidth.c
+endif
 
 Include:
 "uniwidth.h"

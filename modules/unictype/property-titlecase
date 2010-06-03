@@ -13,9 +13,12 @@ unictype/category-Lt
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
-gl_LIBUNISTRING_LIBSOURCE([0.9], [unictype/pr_titlecase.c])
+gl_LIBUNISTRING_MODULE([0.9], [unictype/property-titlecase])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNICTYPE_PROPERTY_TITLECASE
+lib_SOURCES += unictype/pr_titlecase.c
+endif
 
 Include:
 "unictype.h"

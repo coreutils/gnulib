@@ -11,9 +11,12 @@ fseterr
 errno
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9], [unistdio/ulc-fprintf.c])
+gl_LIBUNISTRING_MODULE([0.9], [unistdio/ulc-fprintf])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNISTDIO_ULC_FPRINTF
+lib_SOURCES += unistdio/ulc-fprintf.c
+endif
 
 Include:
 "unistdio.h"

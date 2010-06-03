@@ -9,9 +9,12 @@ Depends-on:
 uninorm/base
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9], [uninorm/decomposing-form.c])
+gl_LIBUNISTRING_MODULE([0.9], [uninorm/decomposing-form])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNINORM_DECOMPOSING_FORM
+lib_SOURCES += uninorm/decomposing-form.c
+endif
 
 Include:
 "uninorm.h"

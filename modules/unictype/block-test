@@ -8,9 +8,12 @@ Depends-on:
 unictype/base
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9], [unictype/block_test.c])
+gl_LIBUNISTRING_MODULE([0.9], [unictype/block-test])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNICTYPE_BLOCK_TEST
+lib_SOURCES += unictype/block_test.c
+endif
 
 Include:
 "unictype.h"

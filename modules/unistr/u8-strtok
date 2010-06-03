@@ -11,9 +11,12 @@ unistr/u8-strspn
 unistr/u8-strpbrk
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9], [unistr/u8-strtok.c])
+gl_LIBUNISTRING_MODULE([0.9], [unistr/u8-strtok])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNISTR_U8_STRTOK
+lib_SOURCES += unistr/u8-strtok.c
+endif
 
 Include:
 "unistr.h"

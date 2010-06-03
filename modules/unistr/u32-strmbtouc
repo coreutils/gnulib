@@ -8,9 +8,12 @@ Depends-on:
 unistr/base
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9], [unistr/u32-strmbtouc.c])
+gl_LIBUNISTRING_MODULE([0.9], [unistr/u32-strmbtouc])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNISTR_U32_STRMBTOUC
+lib_SOURCES += unistr/u32-strmbtouc.c
+endif
 
 Include:
 "unistr.h"

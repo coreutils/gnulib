@@ -12,9 +12,12 @@ unictype/bidicategory-of
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
-gl_LIBUNISTRING_LIBSOURCE([0.9], [unictype/pr_bidi_eur_num_terminator.c])
+gl_LIBUNISTRING_MODULE([0.9], [unictype/property-bidi-eur-num-terminator])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNICTYPE_PROPERTY_BIDI_EUR_NUM_TERMINATOR
+lib_SOURCES += unictype/pr_bidi_eur_num_terminator.c
+endif
 
 Include:
 "unictype.h"

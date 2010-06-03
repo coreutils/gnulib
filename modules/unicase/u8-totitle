@@ -12,9 +12,12 @@ unicase/empty-prefix-context
 unicase/empty-suffix-context
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9.1], [unicase/u8-totitle.c])
+gl_LIBUNISTRING_MODULE([0.9.1], [unicase/u8-totitle])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNICASE_U8_TOTITLE
+lib_SOURCES += unicase/u8-totitle.c
+endif
 
 Include:
 "unicase.h"

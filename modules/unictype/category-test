@@ -10,9 +10,12 @@ unictype/base
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
-gl_LIBUNISTRING_LIBSOURCE([0.9], [unictype/categ_test.c])
+gl_LIBUNISTRING_MODULE([0.9], [unictype/category-test])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNICTYPE_CATEGORY_TEST
+lib_SOURCES += unictype/categ_test.c
+endif
 
 Include:
 "unictype.h"

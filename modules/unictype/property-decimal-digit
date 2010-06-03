@@ -13,9 +13,12 @@ unictype/category-Nd
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
-gl_LIBUNISTRING_LIBSOURCE([0.9], [unictype/pr_decimal_digit.c])
+gl_LIBUNISTRING_MODULE([0.9], [unictype/property-decimal-digit])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNICTYPE_PROPERTY_DECIMAL_DIGIT
+lib_SOURCES += unictype/pr_decimal_digit.c
+endif
 
 Include:
 "unictype.h"

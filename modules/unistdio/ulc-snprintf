@@ -10,9 +10,12 @@ unistdio/base
 unistdio/ulc-vsnprintf
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9], [unistdio/ulc-snprintf.c])
+gl_LIBUNISTRING_MODULE([0.9], [unistdio/ulc-snprintf])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNISTDIO_ULC_SNPRINTF
+lib_SOURCES += unistdio/ulc-snprintf.c
+endif
 
 Include:
 "unistdio.h"

@@ -9,9 +9,12 @@ Depends-on:
 unictype/base
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9], [unictype/digit.c])
+gl_LIBUNISTRING_MODULE([0.9], [unictype/digit])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNICTYPE_DIGIT
+lib_SOURCES += unictype/digit.c
+endif
 
 Include:
 "unictype.h"

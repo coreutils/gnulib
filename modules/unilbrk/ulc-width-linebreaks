@@ -12,9 +12,12 @@ uniconv/u8-conv-from-enc
 c-ctype
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9], [unilbrk/ulc-width-linebreaks.c])
+gl_LIBUNISTRING_MODULE([0.9], [unilbrk/ulc-width-linebreaks])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNILBRK_ULC_WIDTH_LINEBREAKS
+lib_SOURCES += unilbrk/ulc-width-linebreaks.c
+endif
 
 Include:
 "unilbrk.h"

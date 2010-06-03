@@ -23,9 +23,12 @@ uninorm/u8-normalize
 stdbool
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9.1], [unicase/u8-ct-totitle.c])
+gl_LIBUNISTRING_MODULE([0.9.1], [unicase/u8-ct-totitle])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNICASE_U8_CT_TOTITLE
+lib_SOURCES += unicase/u8-ct-totitle.c
+endif
 
 Include:
 "unicase.h"

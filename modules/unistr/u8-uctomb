@@ -10,9 +10,12 @@ unistr/base
 
 configure.ac:
 gl_MODULE_INDICATOR([unistr/u8-uctomb])
-gl_LIBUNISTRING_LIBSOURCE([0.9], [unistr/u8-uctomb.c unistr/u8-uctomb-aux.c])
+gl_LIBUNISTRING_MODULE([0.9], [unistr/u8-uctomb])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNISTR_U8_UCTOMB
+lib_SOURCES += unistr/u8-uctomb.c unistr/u8-uctomb-aux.c
+endif
 
 Include:
 "unistr.h"

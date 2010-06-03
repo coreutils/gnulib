@@ -11,9 +11,12 @@ unicase/special-casing
 unicase/toupper
 
 configure.ac:
-gl_LIBUNISTRING_LIBSOURCE([0.9.1], [unicase/u16-ct-tolower.c])
+gl_LIBUNISTRING_MODULE([0.9.1], [unicase/u16-ct-tolower])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNICASE_U16_CT_TOLOWER
+lib_SOURCES += unicase/u16-ct-tolower.c
+endif
 
 Include:
 "unicase.h"

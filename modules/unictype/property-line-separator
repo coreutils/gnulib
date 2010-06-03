@@ -11,9 +11,12 @@ unictype/base
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
-gl_LIBUNISTRING_LIBSOURCE([0.9], [unictype/pr_line_separator.c])
+gl_LIBUNISTRING_MODULE([0.9], [unictype/property-line-separator])
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNICTYPE_PROPERTY_LINE_SEPARATOR
+lib_SOURCES += unictype/pr_line_separator.c
+endif
 
 Include:
 "unictype.h"
