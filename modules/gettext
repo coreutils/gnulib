@@ -39,7 +39,7 @@ havelib
 
 configure.ac:
 AM_GNU_GETTEXT([external])
-AM_GNU_GETTEXT_VERSION([0.18])
+AM_GNU_GETTEXT_VERSION([0.18.1])
 
 Makefile.am:
 # This is for those projects which use "gettextize --intl" to put a source-code

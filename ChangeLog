@@ -1,3 +1,9 @@
+2010-06-04  Bruno Haible  <bruno@clisp.org>
+
+	Update to GNU gettext 0.18.1.
+	* modules/gettext (configure.ac): Require gettext infrastructure from
+	version 0.18.1.
+
 2010-06-03  Bruno Haible  <bruno@clisp.org>
 
 	Don't use AC_LIBOBJ with file names in subdirectories.
