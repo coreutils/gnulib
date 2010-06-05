@@ -1,3 +1,8 @@
+2010-06-05  Bruno Haible  <bruno@clisp.org>
+
+	* doc/posix-functions/strcoll.texi: Mention Solaris limitation.
+	Reported by River Tarnell <river.tarnell@wikimedia.de> via Eric Blake.
+
 2010-06-04  Bruno Haible  <bruno@clisp.org>
 
 	Update to GNU gettext 0.18.1.
