@@ -1,4 +1,4 @@
-# environ.m4 serial 3
+# environ.m4 serial 4
 dnl Copyright (C) 2001-2004, 2006-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -29,7 +29,7 @@ AC_DEFUN([gt_CHECK_VAR_DECL],
       gt_cv_var=yes)])
   AC_MSG_RESULT([$gt_cv_var])
   if test $gt_cv_var = yes; then
-    AC_DEFINE([HAVE_]translit($2, [a-z], [A-Z])[_DECL], 1,
+    AC_DEFINE([HAVE_]m4_translit($2, [a-z], [A-Z])[_DECL], 1,
               [Define if you have the declaration of $2.])
   fi
   undefine([gt_cv_var])

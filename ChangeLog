@@ -1,3 +1,13 @@
+2010-06-04  Bruno Haible  <bruno@clisp.org>
+
+	Prefer documented low-level autoconf macro names.
+	* m4/lib-link.m4: Use m4_translit instead of translit.
+	* m4/environ.m4: Likewise.
+	* m4/mathfunc.m4: Likewise.
+	* m4/onceonly.m4: Likewise.
+	* m4/stdint.m4: Likewise.
+	Suggested by Eric Blake.
+
 2010-06-04  Martin Lambers  <marlam@marlam.de>
             Bruno Haible  <bruno@clisp.org>
 

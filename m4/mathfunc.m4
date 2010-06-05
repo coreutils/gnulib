@@ -1,4 +1,4 @@
-# mathfunc.m4 serial 3
+# mathfunc.m4 serial 4
 dnl Copyright (C) 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,8 +17,8 @@ AC_DEFUN([gl_MATHFUNC],
   dnl are inlined by the compiler, therefore linking of these calls does not
   dnl require -lm, but taking the function pointer of 'fabs' does.
   m4_pushdef([func], [$1])
-  m4_pushdef([FUNC], [translit([$1],[abcdefghijklmnopqrstuvwxyz],
-                                    [ABCDEFGHIJKLMNOPQRSTUVWXYZ])])
+  m4_pushdef([FUNC], [m4_translit([$1],[abcdefghijklmnopqrstuvwxyz],
+                                       [ABCDEFGHIJKLMNOPQRSTUVWXYZ])])
   FUNC[]_LIBM=
   AC_CACHE_CHECK([whether func() can be used without linking with libm],
     [gl_cv_func_]func[_no_libm],
@@ -71,8 +71,8 @@ AC_DEFUN([gl_MATHFUNC],
 AC_DEFUN([gl_COMMON_DOUBLE_MATHFUNC],
 [
   AC_REQUIRE([gl_COMMON_DOUBLE_MATHFUNC_TEST])
-  m4_pushdef([FUNC], [translit([$1],[abcdefghijklmnopqrstuvwxyz],
-                                    [ABCDEFGHIJKLMNOPQRSTUVWXYZ])])
+  m4_pushdef([FUNC], [m4_translit([$1],[abcdefghijklmnopqrstuvwxyz],
+                                       [ABCDEFGHIJKLMNOPQRSTUVWXYZ])])
   FUNC[]_LIBM="$POW_LIBM"
   AC_SUBST(FUNC[_LIBM])
   m4_popdef([FUNC])
