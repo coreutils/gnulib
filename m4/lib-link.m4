@@ -1,4 +1,4 @@
-# lib-link.m4 serial 21 (gettext-0.18)
+# lib-link.m4 serial 22 (gettext-0.18.2)
 dnl Copyright (C) 2001-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,9 +18,9 @@ AC_DEFUN([AC_LIB_LINKFLAGS],
 [
   AC_REQUIRE([AC_LIB_PREPARE_PREFIX])
   AC_REQUIRE([AC_LIB_RPATH])
-  pushdef([Name],[translit([$1],[./-], [___])])
-  pushdef([NAME],[translit([$1],[abcdefghijklmnopqrstuvwxyz./-],
-                                [ABCDEFGHIJKLMNOPQRSTUVWXYZ___])])
+  pushdef([Name],[translit([$1],[./+-], [____])])
+  pushdef([NAME],[translit([$1],[abcdefghijklmnopqrstuvwxyz./+-],
+                                [ABCDEFGHIJKLMNOPQRSTUVWXYZ____])])
   AC_CACHE_CHECK([how to link with lib[]$1], [ac_cv_lib[]Name[]_libs], [
     AC_LIB_LINKFLAGS_BODY([$1], [$2])
     ac_cv_lib[]Name[]_libs="$LIB[]NAME"
@@ -58,9 +58,9 @@ AC_DEFUN([AC_LIB_HAVE_LINKFLAGS],
 [
   AC_REQUIRE([AC_LIB_PREPARE_PREFIX])
   AC_REQUIRE([AC_LIB_RPATH])
-  pushdef([Name],[translit([$1],[./-], [___])])
-  pushdef([NAME],[translit([$1],[abcdefghijklmnopqrstuvwxyz./-],
-                                [ABCDEFGHIJKLMNOPQRSTUVWXYZ___])])
+  pushdef([Name],[translit([$1],[./+-], [____])])
+  pushdef([NAME],[translit([$1],[abcdefghijklmnopqrstuvwxyz./+-],
+                                [ABCDEFGHIJKLMNOPQRSTUVWXYZ____])])
 
   dnl Search for lib[]Name and define LIB[]NAME, LTLIB[]NAME and INC[]NAME
   dnl accordingly.
@@ -157,13 +157,13 @@ dnl package. This declaration must occur before an AC_LIB_LINKFLAGS or similar
 dnl macro call that searches for libname.
 AC_DEFUN([AC_LIB_FROMPACKAGE],
 [
-  pushdef([NAME],[translit([$1],[abcdefghijklmnopqrstuvwxyz./-],
-                                [ABCDEFGHIJKLMNOPQRSTUVWXYZ___])])
+  pushdef([NAME],[translit([$1],[abcdefghijklmnopqrstuvwxyz./+-],
+                                [ABCDEFGHIJKLMNOPQRSTUVWXYZ____])])
   define([acl_frompackage_]NAME, [$2])
   popdef([NAME])
   pushdef([PACK],[$2])
-  pushdef([PACKUP],[translit(PACK,[abcdefghijklmnopqrstuvwxyz./-],
-                                  [ABCDEFGHIJKLMNOPQRSTUVWXYZ___])])
+  pushdef([PACKUP],[translit(PACK,[abcdefghijklmnopqrstuvwxyz./+-],
+                                  [ABCDEFGHIJKLMNOPQRSTUVWXYZ____])])
   define([acl_libsinpackage_]PACKUP,
     m4_ifdef([acl_libsinpackage_]PACKUP, [acl_libsinpackage_]PACKUP[[, ]],)[lib$1])
   popdef([PACKUP])
@@ -178,11 +178,11 @@ dnl in ${LIB${NAME}_PREFIX}/$acl_libdirstem.
 AC_DEFUN([AC_LIB_LINKFLAGS_BODY],
 [
   AC_REQUIRE([AC_LIB_PREPARE_MULTILIB])
-  pushdef([NAME],[translit([$1],[abcdefghijklmnopqrstuvwxyz./-],
-                                [ABCDEFGHIJKLMNOPQRSTUVWXYZ___])])
+  pushdef([NAME],[translit([$1],[abcdefghijklmnopqrstuvwxyz./+-],
+                                [ABCDEFGHIJKLMNOPQRSTUVWXYZ____])])
   pushdef([PACK],[m4_ifdef([acl_frompackage_]NAME, [acl_frompackage_]NAME, lib[$1])])
-  pushdef([PACKUP],[translit(PACK,[abcdefghijklmnopqrstuvwxyz./-],
-                                  [ABCDEFGHIJKLMNOPQRSTUVWXYZ___])])
+  pushdef([PACKUP],[translit(PACK,[abcdefghijklmnopqrstuvwxyz./+-],
+                                  [ABCDEFGHIJKLMNOPQRSTUVWXYZ____])])
   pushdef([PACKLIBS],[m4_ifdef([acl_frompackage_]NAME, [acl_libsinpackage_]PACKUP, lib[$1])])
   dnl Autoconf >= 2.61 supports dots in --with options.
   pushdef([P_A_C_K],[m4_if(m4_version_compare(m4_defn([m4_PACKAGE_VERSION]),[2.61]),[-1],[translit(PACK,[.],[_])],PACK)])
@@ -242,7 +242,7 @@ AC_DEFUN([AC_LIB_LINKFLAGS_BODY],
         names_already_handled="$names_already_handled $name"
         dnl See if it was already located by an earlier AC_LIB_LINKFLAGS
         dnl or AC_LIB_HAVE_LINKFLAGS call.
-        uppername=`echo "$name" | sed -e 'y|abcdefghijklmnopqrstuvwxyz./-|ABCDEFGHIJKLMNOPQRSTUVWXYZ___|'`
+        uppername=`echo "$name" | sed -e 'y|abcdefghijklmnopqrstuvwxyz./+-|ABCDEFGHIJKLMNOPQRSTUVWXYZ____|'`
         eval value=\"\$HAVE_LIB$uppername\"
         if test -n "$value"; then
           if test "$value" = yes; then

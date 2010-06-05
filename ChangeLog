@@ -1,3 +1,10 @@
+2010-06-04  Martin Lambers  <marlam@marlam.de>
+            Bruno Haible  <bruno@clisp.org>
+
+	havelib: Allow library names with '+' characters.
+	* m4/lib-link.m4 (AC_LIB_LINKFLAGS, AC_LIB_HAVE_LINKFLAGS,
+	AC_LIB_FROMPACKAGE, AC_LIB_LINKFLAGS_BODY): Convert '+' in name to '_'.
+
 2010-06-09  Bruno Haible  <bruno@clisp.org>
 
 	Module setenv does not depend on 'malloc-posix', 'realloc-posix'.
