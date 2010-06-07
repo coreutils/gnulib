@@ -103,6 +103,12 @@ endif
 # Override this in cfg.mk if you are using a different format in your
 # NEWS file.
 today = $(shell date +%Y-%m-%d)
+
+# Select which lines of NEWS are searched for $(news-check-regexp).
+# This is a sed line number spec.  The default says that we search
+# lines 1..10 of NEWS for $(news-check-regexp).
+# If you want to search only line 3 or only lines 20-22, use "3" or "20,22".
+news-check-lines-spec ?= 1,10
 news-check-regexp ?= '^\*.* $(VERSION_REGEXP) \($(today)\)'
 
 # Prevent programs like 'sort' from considering distinct strings to be equal.
@@ -874,8 +880,8 @@ sc_makefile_at_at_check:
 	  && { echo '$(ME): use $$(...), not @...@' 1>&2; exit 1; } || :
 
 news-check: NEWS
-	if head $(srcdir)/NEWS | grep -E $(news-check-regexp)		\
-	    >/dev/null; then						\
+	if sed -n $(news-check-lines-spec)p $(srcdir)/NEWS		\
+	    | grep -E $(news-check-regexp) >/dev/null; then		\
 	  :;								\
 	else								\
 	  echo 'NEWS: $$(news-check-regexp) failed to match' 1>&2;	\

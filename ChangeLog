@@ -1,3 +1,9 @@
+2010-06-08  Peter Simons  <simons@cryp.to>
+
+	maint.mk: make the news-check rule more configurable
+	* top/maint.mk (news-check-lines-spec) New variable.
+	(news-check): Use "sed -n 1,10p" in place of "head".
+
 2010-06-07  Jim Meyering  <meyering@redhat.com>
 
 	do-release-commit-and-tag: fix typo in --help
