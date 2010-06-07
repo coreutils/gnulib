@@ -1,5 +1,8 @@
 2010-06-07  Jim Meyering  <meyering@redhat.com>
 
+	do-release-commit-and-tag: fix typo in --help
+	* build-aux/do-release-commit-and-tag (Usage): Fix typo in --help.
+
 	regex: avoid new dead-code warning with gcc-4.6.0
 	* lib/regex_internal.c (re_string_reconstruct): #if-0-out a dead
 	if-block containing a while-loop.  It's been unused for at least
