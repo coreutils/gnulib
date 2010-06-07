@@ -1,3 +1,10 @@
+2010-06-07  Jim Meyering  <meyering@redhat.com>
+
+	regex: avoid new dead-code warning with gcc-4.6.0
+	* lib/regex_internal.c (re_string_reconstruct): #if-0-out a dead
+	if-block containing a while-loop.  It's been unused for at least
+	5 years.
+
 2010-06-05  Bruno Haible  <bruno@clisp.org>
 
 	* doc/posix-functions/strcoll.texi: Mention Solaris limitation.
