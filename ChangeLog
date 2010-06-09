@@ -1,6 +1,14 @@
 2010-06-09  Bruno Haible  <bruno@clisp.org>
 
 	Avoid relocwrapper link errors due to gnulib replacement functions.
+	* lib/areadlink.c: Use the system's malloc, realloc functions.
+	(areadlink): Set errno to ENOMEM explicitly.
+	* modules/areadlink (Depends-on): Remove malloc-posix.
+	Reported by Ben Pfaff <blp@cs.stanford.edu>.
+
+2010-06-09  Bruno Haible  <bruno@clisp.org>
+
+	Avoid relocwrapper link errors due to gnulib replacement functions.
 	* lib/canonicalize-lgpl.c: Use the system's malloc function.
 	* lib/malloca.c: Likewise.
 	* lib/relocatable.c: Likewise.
