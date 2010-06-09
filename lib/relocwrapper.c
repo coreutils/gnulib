@@ -55,6 +55,10 @@
 #include "relocatable.h"
 #include "c-ctype.h"
 
+/* Use the system functions, not the gnulib overrides in this file.  */
+#undef fprintf
+#undef malloc
+
 /* Return a copy of the filename, with an extra ".bin" at the end.
    More generally, it replaces "${EXEEXT}" at the end with ".bin${EXEEXT}".  */
 static char *

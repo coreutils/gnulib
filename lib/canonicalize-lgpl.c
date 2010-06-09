@@ -62,6 +62,8 @@
 # endif
 # define __readlink readlink
 # define __set_errno(e) errno = (e)
+/* Use the system functions, not the gnulib overrides in this file.  */
+# undef malloc
 # ifndef MAXSYMLINKS
 #  ifdef SYMLOOP_MAX
 #   define MAXSYMLINKS SYMLOOP_MAX

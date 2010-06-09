@@ -89,6 +89,10 @@ extern char * canonicalize_file_name (const char *name);
 #undef open
 #undef close
 
+/* Use the system functions, not the gnulib overrides in this file.  */
+#undef malloc
+#undef sprintf
+
 #undef set_program_name
 
 

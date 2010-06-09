@@ -86,6 +86,9 @@
 # define FILE_SYSTEM_PREFIX_LEN(P) 0
 #endif
 
+/* Use the system functions, not the gnulib overrides in this file.  */
+#undef malloc
+
 /* Original installation prefix.  */
 static char *orig_prefix;
 static size_t orig_prefix_len;
