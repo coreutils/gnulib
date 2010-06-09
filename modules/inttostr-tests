@@ -1,0 +1,13 @@
+Files:
+tests/test-inttostr.c
+
+Depends-on:
+intprops
+inttypes
+snprintf-posix
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-inttostr
+check_PROGRAMS += test-inttostr

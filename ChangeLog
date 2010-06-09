@@ -1,3 +1,21 @@
+2010-06-10  Jim Meyering  <meyering@redhat.com>
+
+	inttostr: add a new function, inttostr, and tests
+	The namesake function was not available.  The existence of the
+	template file, inttostr.c makes its addition nontrivial.
+	* lib/anytostr.c: Rename from inttostr.c.
+	(anytostr): Rename from inttostr.
+	* lib/inttostr.c: New file.
+	* modules/inttostr (Files): Add anytostr.c.
+	(Makefile.am): Set lib_SOURCES instead of ...
+	* m4/inttostr.m4: Remove uses of AC_LIBOBJ.
+	* lib/imaxtostr.c: Update use.  s/inttostr/anytostr/
+	* lib/offtostr.c: Likewise.
+	* lib/uinttostr.c: Likewise.
+	* lib/umaxtostr.c: Likewise.
+	* modules/inttostr-tests: New file.
+	* tests/test-inttostr.c: New file.  Test these functions.
+
 2010-06-09  Ben Pfaff  <blp@cs.stanford.edu>
             Bruno Haible  <bruno@clisp.org>
 

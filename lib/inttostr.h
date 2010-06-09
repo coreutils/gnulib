@@ -39,7 +39,8 @@
 # define __attribute_warn_unused_result__ /* empty */
 #endif
 
-char *offtostr (off_t, char *) __attribute_warn_unused_result__;
 char *imaxtostr (intmax_t, char *) __attribute_warn_unused_result__;
-char *umaxtostr (uintmax_t, char *) __attribute_warn_unused_result__;
+char *inttostr (int, char *) __attribute_warn_unused_result__;
+char *offtostr (off_t, char *) __attribute_warn_unused_result__;
 char *uinttostr (unsigned int, char *) __attribute_warn_unused_result__;
+char *umaxtostr (uintmax_t, char *) __attribute_warn_unused_result__;

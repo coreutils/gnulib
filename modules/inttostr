@@ -2,6 +2,7 @@ Description:
 Convert integers to printable strings.
 
 Files:
+lib/anytostr.c
 lib/imaxtostr.c
 lib/inttostr.c
 lib/inttostr.h
@@ -19,6 +20,12 @@ configure.ac:
 gl_INTTOSTR
 
 Makefile.am:
+lib_SOURCES += \
+  imaxtostr.c \
+  inttostr.c \
+  offtostr.c \
+  uinttostr.c \
+  umaxtostr.c
 
 Include:
 "inttostr.h"
