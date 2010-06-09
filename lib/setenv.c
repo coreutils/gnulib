@@ -147,6 +147,9 @@ __add_to_environ (const char *name, const char *value, const char *combined,
                    : realloc (last_environ, (size + 2) * sizeof (char *)));
       if (new_environ == NULL)
         {
+          /* It's easier to set errno to ENOMEM than to rely on the
+             'malloc-posix' and 'realloc-posix' gnulib modules.  */
+          __set_errno (ENOMEM);
           UNLOCK;
           return -1;
         }

@@ -1,3 +1,9 @@
+2010-06-09  Bruno Haible  <bruno@clisp.org>
+
+	Module setenv does not depend on 'malloc-posix', 'realloc-posix'.
+	* lib/setenv.c (__add_to_environ): Set errno to ENOMEM when malloc or
+	realloc failed.
+
 2010-06-08  Peter Simons  <simons@cryp.to>
 
 	maint.mk: make the news-check rule more configurable
