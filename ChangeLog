@@ -1,3 +1,13 @@
+2010-06-09  Ben Pfaff  <blp@cs.stanford.edu>
+            Bruno Haible  <bruno@clisp.org>
+
+	Add "Extending Gnulib" chapter to manual.
+	* doc/gnulib.texi (Writing Modules): Add cross-reference to new
+	chapter.
+	(Extending Gnulib): New chapter.
+	* doc/gnulib-intro.texi (Openness): Add cross-reference to new
+	chapter.
+
 2010-06-09  Bruno Haible  <bruno@clisp.org>
 
 	Avoid relocwrapper link errors due to gnulib replacement functions.

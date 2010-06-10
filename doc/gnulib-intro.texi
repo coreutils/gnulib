@@ -346,5 +346,5 @@ locally add modules that are treated like Gnulib modules by
 @code{gnulib-tool}.
 @end enumerate
 
-This is achieved by the @samp{--local-dir} option of @code{gnulib-tool}.
-
+This is achieved by the @samp{--local-dir} option of @code{gnulib-tool}
+(@pxref{Extending Gnulib}).

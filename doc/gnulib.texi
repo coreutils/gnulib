@@ -54,6 +54,7 @@ Documentation License''.
 * Introduction::
 * Invoking gnulib-tool::
 * Writing modules::
+* Extending Gnulib::
 * Miscellaneous Notes::
 * POSIX Substitutes Library::       Building as a separate substitutes library.
 * Header File Substitutes::         Overriding system headers.
@@ -117,8 +118,8 @@ Resources:
 @node Writing modules
 @chapter Writing modules
 
-This chapter explains how to write modules of your own, either for your own
-package (to be used with gnulib-tool's @samp{--local-dir} option), or for
+This chapter explains how to write modules of your own, either to
+extend Gnulib for your own package (@pxref{Extending Gnulib}), or for
 inclusion in gnulib proper.
 
 The guidelines in this chapter do not necessarily need to be followed for
@@ -606,6 +607,84 @@ The user who distributes libraries that contain Gnulib code is supposed to
 bump the version number in the way described in the Libtool documentation
 before every release.
 @end enumerate
+
+
+@node Extending Gnulib
+@chapter Extending Gnulib
+
+Gnulib modules are intended to be suitable for widespread use.  Most
+problems with Gnulib can and should be fixed in a generic way, so that
+all of Gnulib's users can benefit from the change.  But occasionally a
+problem arises that is difficult or undesirable to fix generically, or
+a project that uses Gnulib may need to work around an issue before the
+Gnulib maintainers commit a final fix.  Maintainers may also want to
+add their own pools of modules to projects as Gnulib ``staging
+areas.''
+
+The obvious way to make local changes to Gnulib modules is to use
+@command{gnulib-tool} to check out pristine modules, then to modify
+the results in-place.  This works well enough for short-lived
+experiments.  It is harder to keep modified versions of Gnulib modules
+for a long time, even though Git (or another distributed version
+control systems) can help out a lot with this during the development
+process.
+
+Git, however, doesn't address the distribution issue.  When a package
+``foobar'' needs a modified version of, say, @file{stdint.in.h}, it
+either has to put a comment into @file{foobar/autogen.sh} saying
+``Attention! This doesn't work with a pristine Gnulib, you need this
+and that patch after checking out Gnulib,'' or it has to use the
+@samp{--avoid=stdint} option and provide the modified @code{stdint}
+module in a different directory.
+
+The @option{--local-dir} option to @command{gnulib-tool} solves this
+problem.  It allows the package to override or augment Gnulib.  This
+means:
+
+@itemize @bullet
+@item
+You can store files that are to override Gnulib files or modules.
+
+@item
+You can store context diffs to be applied to Gnulib files.
+
+@item
+You can add modules of your own, that are not (yet) in Gnulib.
+
+@item
+You can also add unstructured amounts of code to the library, by
+grouping the non-Gnulib files of the library in a single kitchen-sink
+``module.''  (This kind of kitchen-sink module is not needed when you
+use the @command{gnulib-tool} option @samp{--makefile-name}.)
+@end itemize
+
+In a release tarball, you can distribute the contents of this
+@option{--local-dir} directory that will be combinable with newer
+versions of Gnulib, barring incompatible changes to Gnulib.
+
+If the @samp{--local-dir=@var{directory}} option is specified, then
+@command{gnulib-tool} looks in @file{@var{directory}} whenever it
+reads a file from the Gnulib directory.  Suppose @command{gnulib-tool}
+is looking for @var{file}.  Then:
+
+@itemize @bullet
+@item
+If @file{@var{directory}/@var{file}} exists, then @samp{gnulib-tool} uses
+it instead of the file included in Gnulib.
+
+@item
+Otherwise, if @file{@var{directory}/@var{file}.diff} exists, then
+@command{gnulib-tool} uses the file from Gnulib after applying the diff
+using the @command{patch} program.
+
+@item
+Otherwise, @command{gnulib-tool} uses the file included in Gnulib.
+@end itemize
+
+Please make wise use of this option.  It also allows you to easily
+hold back modifications you make to Gnulib macros in cases it may be
+better to share them.
+
 
 
 @node Miscellaneous Notes
