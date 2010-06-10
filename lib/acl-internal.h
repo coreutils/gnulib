@@ -51,6 +51,18 @@
 # define fchmod(fd, mode) (-1)
 #endif
 
+/* Recognize some common errors such as from an NFS mount that does
+   not support ACLs, even when local drives do.  */
+#if defined __APPLE__ && defined __MACH__ /* MacOS X */
+# define ACL_NOT_WELL_SUPPORTED(Err) \
+     ((Err) == ENOTSUP || (Err) == ENOSYS || (Err) == EINVAL || (Err) == EBUSY || (Err) == ENOENT)
+#elif defined EOPNOTSUPP /* Tru64 NFS */
+# define ACL_NOT_WELL_SUPPORTED(Err) \
+     ((Err) == ENOTSUP || (Err) == ENOSYS || (Err) == EINVAL || (Err) == EBUSY || (Err) == EOPNOTSUPP)
+#else
+# define ACL_NOT_WELL_SUPPORTED(Err) \
+     ((Err) == ENOTSUP || (Err) == ENOSYS || (Err) == EINVAL || (Err) == EBUSY)
+#endif
 
 #if USE_ACL
 
@@ -123,17 +135,6 @@ rpl_acl_set_fd (int fd, acl_t acl)
 #   define MODE_INSIDE_ACL 0
 #  else
 #   define MODE_INSIDE_ACL 1
-#  endif
-
-#  if defined __APPLE__ && defined __MACH__ /* MacOS X */
-#   define ACL_NOT_WELL_SUPPORTED(Err) \
-     ((Err) == ENOTSUP || (Err) == ENOSYS || (Err) == EINVAL || (Err) == EBUSY || (Err) == ENOENT)
-#  elif defined EOPNOTSUPP /* Tru64 NFS */
-#   define ACL_NOT_WELL_SUPPORTED(Err) \
-     ((Err) == ENOTSUP || (Err) == ENOSYS || (Err) == EINVAL || (Err) == EBUSY || (Err) == EOPNOTSUPP)
-#  else
-#   define ACL_NOT_WELL_SUPPORTED(Err) \
-     ((Err) == ENOTSUP || (Err) == ENOSYS || (Err) == EINVAL || (Err) == EBUSY)
 #  endif
 
 /* Return the number of entries in ACL.

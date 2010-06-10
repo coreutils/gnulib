@@ -1,3 +1,12 @@
+2010-08-10  Pádraig Brady <P@draigbrady.com>
+	and Eric Blake  <eblake@redhat.com>
+
+	copy-acl: ignore ENOTSUP on HP-UX
+	* lib/acl-internal.h (ACL_NOT_WELL_SUPPORTED): Move definition up,
+	so that it is available for HP-UX.
+	* lib/copy-acl.c (qcopy_acl): Use it.
+	Reported by Patrick M. Callahan.
+
 2010-08-10  Eric Blake  <eblake@redhat.com>
 
 	open, chown: relax license
