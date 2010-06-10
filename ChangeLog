@@ -1,3 +1,10 @@
+2010-06-11  Jim Meyering  <meyering@redhat.com>
+
+	printf.m4: avoid autoconf's "Expanded Before Required" warning
+	* m4/printf.m4 (gl_SNPRINTF_RETVAL_C99): Define using AC_DEFUN_ONCE,
+	rather than AC_DEFUN, to avoid the classic "Expanded Before Required"
+	autoconf warning.
+
 2010-06-10  Ben Pfaff  <blp@cs.stanford.edu>
 
 	Replacement header templates are now named with ".in", not "_".
