@@ -478,11 +478,11 @@ the same place as @samp{datarootdir}, but we use the two separate
 variables so that you can move these program-specific files without
 altering the location for Info files, man pages, etc.
 
-@raggedright
+@c raggedright  (not until next Texinfo release)
 This should normally be @file{/usr/local/share}, but write it as
 @file{$(datarootdir)}.  (If you are using Autoconf, write it as
 @samp{@@datadir@@}.)
-@end raggedright
+@c end raggedright
 
 The definition of @samp{datadir} is the same for all packages, so you
 should install your data in a subdirectory thereof.  Most packages
