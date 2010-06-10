@@ -4,7 +4,7 @@ tests/test-inttostr.c
 Depends-on:
 intprops
 inttypes
-snprintf-posix
+snprintf
 
 configure.ac:
 
