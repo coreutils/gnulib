@@ -1,5 +1,11 @@
 2010-06-11  Jim Meyering  <meyering@redhat.com>
 
+	init.sh: don't use $ME_ or skip_ before they are defined
+	* tests/init.sh: Hoist definitions of $ME_ and skip_ to precede
+	their first uses.  Also hoist their companions: warn_, fail_,
+	framework_failure_, $stderr_fileno.  Prompted by a patch from
+	Stefano Lattarini.
+
 	test-sys_socket: avoid set-but-not-used warnings from gcc
 	* tests/test-sys_socket.c (main): Use "i" and "x", in order to
 	avoid warning about set-but-not-used variables.
