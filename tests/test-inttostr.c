@@ -23,6 +23,7 @@
 #include <inttypes.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <assert.h>
 
 #define STREQ(a, b) (strcmp (a, b) == 0)

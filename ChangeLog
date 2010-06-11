@@ -1,5 +1,8 @@
 2010-06-11  Jim Meyering  <meyering@redhat.com>
 
+	test-inttostr.c: include <string.h> for use of strcmp
+	* tests/test-inttostr.c: Include <string.h> for strcmp declaration.
+
 	test-linkat: avoid failed assertion on "other" architectures
 	* tests/test-linkat.c: Include <sys/stat.h>, for declarations of stat,
 	lstat, mkdir.  Patch by John Rigby, to fix FTBFS on armel, powerpc,
