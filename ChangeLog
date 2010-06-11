@@ -1,5 +1,11 @@
 2010-06-11  Jim Meyering  <meyering@redhat.com>
 
+	test-xvasprintf: avoid 'const' discard warnings
+	* tests/test-xvasprintf.c (test_xvasprintf, test_xasprintf): Use
+	"const" when assigning from literal strings.
+	(test_xasprintf): Add "void" in function argument list to placate
+	-Wstrict-prototypes and to be consistent with test_xvasprintf above.
+
 	tests: avoid compilation warnings in argmatch and exclude tests...
 	in packages that define ARGMATCH_DIE_DECL, like coreutils.
 	* tests/test-exclude.c [ARGMATCH_DIE_DECL]: Also declare the function.
