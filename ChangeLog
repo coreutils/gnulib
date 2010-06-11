@@ -1,3 +1,10 @@
+2010-06-11  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	init.sh: change framework_failure_ to fail with status 99, not 1
+	* tests/init.sh (framework_failure_): Exit 99, not 1.  This informs
+	automake's parallel-tests rule that this is an unexpected failure,
+	even if the test is listed in XFAIL_TESTS.
+
 2010-06-11  Jim Meyering  <meyering@redhat.com>
 
 	test-inttostr: avoid warnings about 4-6KB literal strings
