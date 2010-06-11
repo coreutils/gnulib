@@ -1,5 +1,8 @@
 2010-06-11  Jim Meyering  <meyering@redhat.com>
 
+	test-verify: avoid warning from gcc's -Wmissing-declarations
+	* tests/test-verify.c (function): Declare to be static.
+
 	test-inttostr.c: include <string.h> for use of strcmp
 	* tests/test-inttostr.c: Include <string.h> for strcmp declaration.
 

@@ -42,7 +42,8 @@ enum
   item = verify_true (1 == 1) * 0 + 17 /* should be ok */
 };
 
-int function (int n)
+static int
+function (int n)
 {
 #if EXP_FAIL == 3
   verify (n >= 0);                  /* should give ERROR: non-constant expression */
