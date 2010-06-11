@@ -1,5 +1,9 @@
 2010-06-11  Jim Meyering  <meyering@redhat.com>
 
+	tests: avoid 'const' discard warnings in mbsstr tests
+	* tests/test-mbsstr1.c (main): Add "const" to avoid trivial warning.
+	* tests/test-mbsstr2.c (main): Likewise.
+
 	test-verify: avoid warning from gcc's -Wmissing-declarations
 	* tests/test-verify.c (function): Declare to be static.
 
