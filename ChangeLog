@@ -1,5 +1,11 @@
 2010-06-11  Jim Meyering  <meyering@redhat.com>
 
+	test-inttostr: avoid warnings about 4-6KB literal strings
+	* tests/test-inttostr.c: Don't use <assert.h>.  Instead, ...
+	Include "macros.h", for its definition of ASSERT.
+	(CK): s/assert/ASSERT/
+	* modules/inttostr-tests (Files): Add macros.h.
+
 	init.sh: don't use $ME_ or skip_ before they are defined
 	* tests/init.sh: Hoist definitions of $ME_ and skip_ to precede
 	their first uses.  Also hoist their companions: warn_, fail_,

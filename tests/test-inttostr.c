@@ -24,7 +24,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <assert.h>
+
+#include "macros.h"
 
 #define STREQ(a, b) (strcmp (a, b) == 0)
 #define FMT(T) (TYPE_SIGNED (T) ? "%jd" : "%ju")
@@ -46,16 +47,16 @@
       char ref[100];                                                    \
       char *buf = malloc (INT_BUFSIZE_BOUND (T));                       \
       char const *p;                                                    \
-      assert (buf);                                                     \
+      ASSERT (buf);                                                     \
       *buf = '\0';                                                      \
-      assert (snprintf (ref, sizeof ref, FMT (T), V_min (T)) < sizeof ref); \
-      assert (STREQ ((p = Fn (TYPE_MINIMUM (T), buf)), ref));           \
+      ASSERT (snprintf (ref, sizeof ref, FMT (T), V_min (T)) < sizeof ref); \
+      ASSERT (STREQ ((p = Fn (TYPE_MINIMUM (T), buf)), ref));           \
       /* Ensure that INT_BUFSIZE_BOUND is tight for signed types.  */   \
-      assert (! TYPE_SIGNED (T) || (p == buf && *p == '-'));            \
-      assert (snprintf (ref, sizeof ref, FMT (T), V_max (T)) < sizeof ref); \
-      assert (STREQ ((p = Fn (TYPE_MAXIMUM (T), buf)), ref));           \
+      ASSERT (! TYPE_SIGNED (T) || (p == buf && *p == '-'));            \
+      ASSERT (snprintf (ref, sizeof ref, FMT (T), V_max (T)) < sizeof ref); \
+      ASSERT (STREQ ((p = Fn (TYPE_MAXIMUM (T), buf)), ref));           \
       /* For unsigned types, the bound is not always tight.  */         \
-      assert (! IS_TIGHT (T) || TYPE_SIGNED (T)                         \
+      ASSERT (! IS_TIGHT (T) || TYPE_SIGNED (T)                         \
               || (p == buf && ISDIGIT (*p)));                           \
       free (buf);                                                       \
     }                                                                   \

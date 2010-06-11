@@ -1,4 +1,5 @@
 Files:
+tests/macros.h
 tests/test-inttostr.c
 
 Depends-on:
