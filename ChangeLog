@@ -1,5 +1,9 @@
 2010-06-11  Jim Meyering  <meyering@redhat.com>
 
+	test-sys_socket: avoid set-but-not-used warnings from gcc
+	* tests/test-sys_socket.c (main): Use "i" and "x", in order to
+	avoid warning about set-but-not-used variables.
+
 	test-xvasprintf: avoid 'const' discard warnings
 	* tests/test-xvasprintf.c (test_xvasprintf, test_xasprintf): Use
 	"const" when assigning from literal strings.

@@ -49,5 +49,5 @@ main (void)
   x.ss_family = 42;
   i = 42;
 
-  return 0;
+  return ! (i + x.ss_family);
 }
