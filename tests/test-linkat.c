@@ -29,6 +29,7 @@ SIGNATURE_CHECK (linkat, int, (int, char const *, int, char const *, int));
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
 
 #include "areadlink.h"
 #include "filenamecat.h"

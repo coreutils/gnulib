@@ -1,5 +1,12 @@
 2010-06-11  Jim Meyering  <meyering@redhat.com>
 
+	test-linkat: avoid failed assertion on "other" architectures
+	* tests/test-linkat.c: Include <sys/stat.h>, for declarations of stat,
+	lstat, mkdir.  Patch by John Rigby, to fix FTBFS on armel, powerpc,
+	sparc: https://bugs.launchpad.net/bugs/591968
+
+2010-06-11  Jim Meyering  <meyering@redhat.com>
+
 	printf.m4: avoid autoconf's "Expanded Before Required" warning
 	* m4/printf.m4 (gl_SNPRINTF_RETVAL_C99): Define using AC_DEFUN_ONCE,
 	rather than AC_DEFUN, to avoid the classic "Expanded Before Required"
