@@ -1,5 +1,11 @@
 2010-06-11  Jim Meyering  <meyering@redhat.com>
 
+	tests: avoid compilation warnings in argmatch and exclude tests...
+	in packages that define ARGMATCH_DIE_DECL, like coreutils.
+	* tests/test-exclude.c [ARGMATCH_DIE_DECL]: Also declare the function.
+	Since it always exits, declare with the "noreturn" attribute.
+	* tests/test-argmatch.c: Likewise.
+
 	tests: avoid 'const' discard warnings in mbsstr tests
 	* tests/test-mbsstr1.c (main): Add "const" to avoid trivial warning.
 	* tests/test-mbsstr2.c (main): Likewise.
