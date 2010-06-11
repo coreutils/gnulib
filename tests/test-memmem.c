@@ -94,7 +94,7 @@ main (int argc, char *argv[])
   {
     size_t repeat = 10000;
     size_t m = 1000000;
-    char *needle =
+    const char *needle =
       "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
       "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
     size_t n = strlen (needle);
@@ -118,7 +118,7 @@ main (int argc, char *argv[])
   {
     size_t repeat = 10000;
     size_t m = 1000000;
-    char *haystack =
+    const char *haystack =
       "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
       "ABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABAB";
     size_t n = strlen (haystack);

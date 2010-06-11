@@ -348,7 +348,7 @@ test6 (struct argp *argp)
 
 void
 test_optional (struct argp *argp, int argc, char **argv,
-	       struct test_args *args, char *val, char *a)
+	       struct test_args *args, const char *val, const char *a)
 {
   int index;
   if (argp_parse (argp, argc, argv, 0, &index, args))

@@ -1,3 +1,16 @@
+2010-06-11  Bruno Haible  <bruno@clisp.org>
+
+	Avoid some more warnings from "gcc -Wwrite-strings".
+	* tests/test-argp.c (test_optional): Change 5th and 6th argument type
+	to 'const char *'.
+	* tests/test-c-strstr.c (main): Add 'const' to variable declaration.
+	* tests/test-c-strcasestr.c (main): Likewise.
+	* tests/test-mbscasestr1.c (main): Likewise.
+	* tests/test-mbscasestr2.c (main): Likewise.
+	* tests/test-memmem.c (main): Likewise.
+	* tests/test-strstr.c (main): Likewise.
+	* tests/test-strcasestr.c (main): Likewise.
+
 2010-06-11  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	init.sh: change framework_failure_ to fail with status 99, not 1
