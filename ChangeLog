@@ -1,3 +1,8 @@
+2010-06-10  Ben Pfaff  <blp@cs.stanford.edu>
+
+	Replacement header templates are now named with ".in", not "_".
+	* doc/gnulib-intro.texi: Correct.
+
 2010-06-10  Jim Meyering  <meyering@redhat.com>
 
 	inttostr-tests: depend on snprintf, not snprintf-posix

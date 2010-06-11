@@ -174,7 +174,8 @@ itself).
 For header files, such as @code{stdbool.h} or @code{stdint.h}, we provide
 the substitute only if the system doesn't provide a correct one.  The
 template of this replacement is distributed in a slightly different name,
-with an added underscore, so that on systems which do provide a correct
+with @samp{.in} inserted before the @samp{.h} extension, so that on
+systems which do provide a correct
 header file the system's one is used.
 
 @subsection Enhancements of ISO C or POSIX functions
