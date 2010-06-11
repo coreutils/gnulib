@@ -1,3 +1,11 @@
+2010-06-11  Jim Meyering  <meyering@redhat.com>
+
+	test-sys_socket: mark variables as used more readably
+	* tests/test-sys_socket.c (main): Mark otherwise unused variables
+	as "used" explicitly via (void) statement casts.  This is more
+	readable than using them in an artificial return expression.
+	Suggestion from Bruno Haible.
+
 2010-06-11  Bruno Haible  <bruno@clisp.org>
 
 	Avoid some more warnings from "gcc -Wwrite-strings".

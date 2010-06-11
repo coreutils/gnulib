@@ -49,5 +49,9 @@ main (void)
   x.ss_family = 42;
   i = 42;
 
-  return ! (i + x.ss_family);
+  /* Tell the compiler that these variables are used.  */
+  (void) x;
+  (void) i;
+
+  return 0;
 }
