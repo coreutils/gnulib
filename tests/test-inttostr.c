@@ -65,10 +65,22 @@
 int
 main (void)
 {
-  CK (int,          inttostr);
-  CK (unsigned int, uinttostr);
-  CK (off_t,        offtostr);
-  CK (uintmax_t,    umaxtostr);
-  CK (intmax_t,     imaxtostr);
-  return 0;
+  char buf[2];
+
+  /* Ideally we would rely on the snprintf-posix module, in which case
+     this guard would not be required, but due to limitations in gnulib's
+     implementation (see modules/snprintf-posix), we cannot.  */
+  if (snprintf (buf, sizeof buf, "%ju", (uintmax_t) 3) == 1
+      && buf[0] == '3' && buf[1] == '\0')
+    {
+      CK (int,          inttostr);
+      CK (unsigned int, uinttostr);
+      CK (off_t,        offtostr);
+      CK (uintmax_t,    umaxtostr);
+      CK (intmax_t,     imaxtostr);
+      return 0;
+    }
+
+  /* snprintf doesn't accept %ju; skip this test.  */
+  return 77;
 }
