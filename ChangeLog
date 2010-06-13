@@ -1,5 +1,11 @@
 2010-06-13  Bruno Haible  <bruno@clisp.org>
 
+	relocatable: Make it easier to test whether to install wrappers.
+	* m4/relocatable.m4 (gl_RELOCATABLE_BODY): New automake conditional
+	RELOCATABLE_VIA_WRAPPER.
+
+2010-06-13  Bruno Haible  <bruno@clisp.org>
+
 	gnulib-tool: Display specified modules and dependencies differently.
 	* gnulib-tool (func_show_module_list): New function.
 	(func_import, func_create_testdir): Invoke it.
