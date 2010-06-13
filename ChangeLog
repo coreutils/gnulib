@@ -1,5 +1,12 @@
 2010-06-13  Bruno Haible  <bruno@clisp.org>
 
+	gnulib-tool: Display specified modules and dependencies differently.
+	* gnulib-tool (func_show_module_list): New function.
+	(func_import, func_create_testdir): Invoke it.
+	Reported by Thien-Thi Nguyen <ttn@gnuvola.org>.
+
+2010-06-13  Bruno Haible  <bruno@clisp.org>
+
 	gnulib-tool: Align code of func_import and func_create_testdir.
 	* gnulib-tool (func_create_testdir): Rename variable saved_modules to
 	specified_modules.

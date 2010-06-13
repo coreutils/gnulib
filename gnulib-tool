@@ -2460,6 +2460,31 @@ func_modules_transitive_closure ()
   rm -f "$tmp"/queued-modules
 }
 
+# func_show_module_list
+# Input:
+# - specified_modules  list of specified modules (one per line, sorted)
+# - modules         complete list of modules (one per line, sorted)
+# - tmp             pathname of a temporary directory
+func_show_module_list ()
+{
+  if case "$TERM" in
+       xterm*) test -t 1;;
+       *) false;;
+     esac; then
+    # Assume xterm compatible escape sequences.
+    bold_on=`printf '\x1b[1m'`
+    bold_off=`printf '\x1b[0m'`
+  else
+    bold_on=
+    bold_off=
+  fi
+  echo "Module list with included dependencies (indented):"
+  echo "$specified_modules" | sed -e '/^$/d' -e 's/$/| /' > "$tmp"/specified-modules
+  echo "$modules" | sed -e '/^$/d' \
+    | LC_ALL=C join -t '|' -a 2 "$tmp"/specified-modules - \
+    | sed -e 's/^\(.*\)|.*/|\1/' -e 's/^/    /' -e 's/^    |\(.*\)$/  '"${bold_on}"'\1'"${bold_off}"'/'
+}
+
 # func_modules_add_dummy
 # Input:
 # - local_gnulib_dir  from --local-dir
@@ -3591,8 +3616,7 @@ func_import ()
   modules="$specified_modules"
   func_modules_transitive_closure
   if test $verbose -ge 0; then
-    echo "Module list with included dependencies:"
-    echo "$modules" | sed -e 's/^/  /'
+    func_show_module_list
   fi
   final_modules="$modules"
 
@@ -4811,8 +4835,7 @@ func_create_testdir ()
   modules="$specified_modules"
   func_modules_transitive_closure
   if test $verbose -ge 0; then
-    echo "Module list with included dependencies:"
-    echo "$modules" | sed -e 's/^/  /'
+    func_show_module_list
   fi
 
   # Add the dummy module if needed.
