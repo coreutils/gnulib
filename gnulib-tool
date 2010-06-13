@@ -4738,7 +4738,10 @@ func_create_testdir ()
     modules=`func_all_modules`
     modules=`for m in $modules; do case $m in config-h | ftruncate | mountlist | lib-ignore) ;; *) echo $m;; esac; done`
   fi
-  modules=`for m in $modules; do echo $m; done | LC_ALL=C sort -u`
+  specified_modules="$modules"
+
+  # Canonicalize the list of specified modules.
+  specified_modules=`for m in $specified_modules; do echo $m; done | LC_ALL=C sort -u`
 
   # Unlike in func_import, here we want to include all kinds of tests for the
   # directly specified modules, but not for dependencies.
@@ -4747,13 +4750,12 @@ func_create_testdir ()
 
   # Check that the license of every module is consistent with the license of
   # its dependencies.
-  saved_modules="$modules"
   saved_inctests="$inctests"
   # When computing transitive closures, don't consider $module to depend on
   # $module-tests. Need this becauses tests are implicitly GPL and may depend
   # on GPL modules - therefore we don't want a warning in this case.
   inctests=""
-  for requested_module in $saved_modules; do
+  for requested_module in $specified_modules; do
     requested_license=`func_get_license "$requested_module"`
     if test "$requested_license" != GPL; then
       # Here we use func_modules_transitive_closure, not just
@@ -4793,7 +4795,6 @@ func_create_testdir ()
       done
     fi
   done
-  modules="$saved_modules"
   inctests="$saved_inctests"
 
   # Subdirectory names.
@@ -4807,6 +4808,7 @@ func_create_testdir ()
   vc_files=
 
   # Determine final module list.
+  modules="$specified_modules"
   func_modules_transitive_closure
   if test $verbose -ge 0; then
     echo "Module list with included dependencies:"
