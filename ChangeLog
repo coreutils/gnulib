@@ -1,3 +1,8 @@
+2010-06-14  Thien-Thi Nguyen  <ttn@gnuvola.org>  (tiny change)
+
+	git-version-gen: init shell var to avoid env var influence
+	* build-aux/git-version-gen (v): Init shell var to empty.
+
 2010-06-14  Paul Eggert  <eggert@cs.ucla.edu>
 
 	priv-set: Don't assume that priv.h exists merely because getppriv does.

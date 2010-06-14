@@ -1,6 +1,6 @@
 #!/bin/sh
 # Print a version string.
-scriptversion=2010-05-28.15; # UTC
+scriptversion=2010-06-14.19; # UTC
 
 # Copyright (C) 2007-2010 Free Software Foundation, Inc.
 #
@@ -77,6 +77,9 @@ tarball_version_file=$1
 tag_sed_script="${2:-s/x/x/}"
 nl='
 '
+
+# Avoid meddling by environment variable of the same name.
+v=
 
 # First see if there is a tarball-only version file.
 # then try "git describe", then default.
