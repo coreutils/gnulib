@@ -20,7 +20,7 @@
 #include <config.h>
 #include "priv-set.h"
 
-#if HAVE_GETPPRIV
+#if HAVE_GETPPRIV && HAVE_PRIV_H
 
 # include <errno.h>
 # include <stdbool.h>

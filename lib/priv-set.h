@@ -17,7 +17,7 @@
 
    Written by David Bartley.  */
 
-#if HAVE_GETPPRIV
+#if HAVE_GETPPRIV && HAVE_PRIV_H
 
 # include <priv.h>
 

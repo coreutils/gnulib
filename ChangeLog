@@ -1,3 +1,13 @@
+2010-06-14  Paul Eggert  <eggert@cs.ucla.edu>
+
+	priv-set: Don't assume that priv.h exists merely because getppriv does.
+	See Jan Andersen's bug report about AIX 5L in
+	http://lists.gnu.org/archive/html/bug-tar/2010-06/msg00019.html
+	* m4/priv-set.m4 (gl_PRIV_SET): Check for priv.h.
+	* lib/priv-set.c: Do nothing unless HAVE_PRIV_H.
+	* lib/priv-set.h: Likewise.
+	* tests/test-priv-set.c: Likewise.
+
 2010-06-13  Bruno Haible  <bruno@clisp.org>
 
 	relocatable: Make it easier to test whether to install wrappers.

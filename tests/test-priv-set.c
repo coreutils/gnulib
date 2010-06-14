@@ -20,7 +20,7 @@
 
 #include "priv-set.h"
 
-#if HAVE_GETPPRIV
+#if HAVE_GETPPRIV && HAVE_PRIV_H
 # include <priv.h>
 #endif
 #include <unistd.h>
@@ -32,7 +32,7 @@
 int
 main (void)
 {
-#if HAVE_GETPPRIV
+#if HAVE_GETPPRIV && HAVE_PRIV_H
     priv_set_t *set;
 
     ASSERT (set = priv_allocset ());
