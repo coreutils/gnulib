@@ -15,9 +15,6 @@ AC_DEFUN([gl_FUNC_STRTOD],
   AC_CHECK_DECLS_ONCE([strtod])
   if test $ac_cv_have_decl_strtod != yes; then
     HAVE_STRTOD=0
-    gl_PREREQ_STRTOD
-    dnl Use undocumented macro to set POW_LIB correctly.
-    _AC_LIBOBJ_STRTOD
   else
     AC_CACHE_CHECK([whether strtod obeys C99], [gl_cv_func_strtod_works],
       [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
@@ -101,10 +98,12 @@ numeric_equal (double x, double y)
         [gl_cv_func_strtod_works="guessing no"])])
     if test "$gl_cv_func_strtod_works" != yes; then
       REPLACE_STRTOD=1
-      gl_PREREQ_STRTOD
-      dnl Use undocumented macro to set POW_LIB correctly.
-      _AC_LIBOBJ_STRTOD
     fi
+  fi
+  if test $HAVE_STRTOD = 0 || test $REPLACE_STRTOD = 1; then
+    gl_PREREQ_STRTOD
+    dnl Use undocumented macro to set POW_LIB correctly.
+    _AC_LIBOBJ_STRTOD
   fi
 ])
 
