@@ -1,3 +1,9 @@
+2010-06-15  Giuseppe Scrivano  <gscrivano@gnu.org>
+
+	ipv6: fix detection under mingw
+	* m4/sockpfaf.m4 (gl_SOCKET_FAMILIES): Include <ws2tcpip.h> for struct
+	in6_addr.
+
 2010-06-14  Ben Pfaff  <blp@cs.stanford.edu>
 
 	* m4/strtod.m4 (gl_FUNC_STRTOD): Factor out common code.  Assume
