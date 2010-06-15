@@ -1,3 +1,8 @@
+2010-06-15  René Berber  <r.berber@computer.org>  (tiny change)
+
+	select: Correct timeout.
+	* lib/select.c (rpl_select): Compute wait_timeout correctly.
+
 2010-06-14  Thien-Thi Nguyen  <ttn@gnuvola.org>  (tiny change)
 
 	git-version-gen: init shell var to avoid env var influence

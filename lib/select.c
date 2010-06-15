@@ -246,7 +246,7 @@ rpl_select (int nfds, fd_set *rfds, fd_set *wfds, fd_set *xfds,
     wait_timeout = INFINITE;
   else
     {
-      wait_timeout = timeout->tv_sec + timeout->tv_usec / 1000;
+      wait_timeout = timeout->tv_sec * 1000 + timeout->tv_usec / 1000;
 
       /* select is also used as a portable usleep.  */
       if (!rfds && !wfds && !xfds)
