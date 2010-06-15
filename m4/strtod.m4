@@ -1,4 +1,4 @@
-# strtod.m4 serial 14
+# strtod.m4 serial 15
 dnl Copyright (C) 2002-2003, 2006-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,11 +7,17 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_STRTOD],
 [
   AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
-  AC_FUNC_STRTOD
-  dnl Note: AC_FUNC_STRTOD does AC_LIBOBJ([strtod]).
-  if test $ac_cv_func_strtod = no; then
+  dnl Test whether strtod is declared.
+  dnl Don't call AC_FUNC_STRTOD, because it does not have the right guess
+  dnl when cross-compiling.
+  dnl Don't call AC_CHECK_FUNCS([strtod]) because it would collide with the
+  dnl ac_cv_func_strtod variable set by the AC_FUNC_STRTOD macro,
+  AC_CHECK_DECLS_ONCE([strtod])
+  if test $ac_cv_have_decl_strtod != yes; then
     HAVE_STRTOD=0
     gl_PREREQ_STRTOD
+    dnl Use undocumented macro to set POW_LIB correctly.
+    _AC_LIBOBJ_STRTOD
   else
     AC_CACHE_CHECK([whether strtod obeys C99], [gl_cv_func_strtod_works],
       [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
@@ -27,6 +33,24 @@ numeric_equal (double x, double y)
   return x == y;
 }
 ]], [[
+  {
+    /* In some old versions of Linux (2000 or before), strtod mis-parses
+       strings with leading '+'.  */
+    const char *string = " +69";
+    char *term;
+    double value = strtod (string, &term);
+    if (value != 69 || term != (string + 4))
+      return 1;
+  }
+  {
+    /* Under Solaris 2.4, strtod returns the wrong value for the
+       terminating character under some conditions.  */
+    const char *string = "NaN";
+    char *term;
+    strtod (string, &term);
+    if (term != string && *(term - 1) == 0)
+      return 1;
+  }
   {
     /* Older glibc and Cygwin mis-parse "-0x".  */
     const char *string = "-0x";
