@@ -95,7 +95,19 @@ numeric_equal (double x, double y)
 ]])],
         [gl_cv_func_strtod_works=yes],
         [gl_cv_func_strtod_works=no],
-        [gl_cv_func_strtod_works="guessing no"])])
+        [dnl The last known bugs in glibc strtod(), as of this writing,
+	 dnl were fixed in version 2.8
+         AC_EGREP_CPP([Lucky user],
+           [
+#include <features.h>
+#ifdef __GNU_LIBRARY__
+ #if (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 8) || (__GLIBC__ > 2)
+  Lucky user
+ #endif
+#endif
+           ],
+           [gl_cv_func_strtod_works=yes],
+           [gl_cv_func_strtod_works="guessing no"])])])
     if test "$gl_cv_func_strtod_works" != yes; then
       REPLACE_STRTOD=1
     fi

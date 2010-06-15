@@ -1,6 +1,8 @@
 2010-06-14  Ben Pfaff  <blp@cs.stanford.edu>
 
-	* m4/strtod.m4 (gl_FUNC_STRTOD): Factor out common code.
+	* m4/strtod.m4 (gl_FUNC_STRTOD): Factor out common code.  Assume
+	that strtod() works when cross-compiling to a glibc version known
+	to work.
 
 2010-06-15  Bruno Haible  <bruno@clisp.org>
 
