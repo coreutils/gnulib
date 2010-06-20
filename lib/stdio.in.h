@@ -661,7 +661,7 @@ _GL_FUNCDECL_RPL (printf, int,
                   (const char *format, ...)
                   __attribute__ ((__format__ (__printf__, 1, 2)))
                   _GL_ARG_NONNULL ((1)));
-_GL_CXXALIAS_RPL (printf, printf, int, (const char *format, ...));
+_GL_CXXALIAS_RPL (printf, int, (const char *format, ...));
 #  endif
 #  define GNULIB_overrides_printf 1
 # else
