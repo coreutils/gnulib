@@ -218,7 +218,7 @@ _GL_WARN_ON_USE (ptsname, "grantpt is not portable - "
 #endif
 
 #if @GNULIB_MALLOC_POSIX@
-# if !@HAVE_MALLOC_POSIX@
+# if @REPLACE_MALLOC@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef malloc
 #   define malloc rpl_malloc

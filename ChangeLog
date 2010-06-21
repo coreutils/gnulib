@@ -1,5 +1,15 @@
 2010-06-21  Bruno Haible  <bruno@clisp.org>
 
+	Fix HAVE_MALLOC_POSIX misnomer.
+	* lib/stdlib.in.h (malloc): Use REPLACE_MALLOC instead of
+	!HAVE_MALLOC_POSIX.
+	* m4/malloc.m4 (gl_REPLACE_MALLOC): Set REPLACE_MALLOC instead of
+	HAVE_MALLOC_POSIX.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Initialize REPLACE_MALLOC
+	instead of HAVE_MALLOC_POSIX.
+	* modules/stdlib (Makefile.am): Substitute REPLACE_MALLOC instead of
+	HAVE_MALLOC_POSIX.
+
 	Use modern idiom for malloc() replacement.
 	* modules/malloc (configure.ac): Invoke gl_FUNC_MALLOC_GNU instead of
 	AC_FUNC_MALLOC.
