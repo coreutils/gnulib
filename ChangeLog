@@ -1,5 +1,15 @@
 2010-06-21  Bruno Haible  <bruno@clisp.org>
 
+	Fix HAVE_CALLOC_POSIX misnomer.
+	* lib/stdlib.in.h (calloc): Use REPLACE_CALLOC instead of
+	!HAVE_CALLOC_POSIX.
+	* m4/calloc.m4 (gl_REPLACE_CALLOC): Set REPLACE_CALLOC instead of
+	HAVE_CALLOC_POSIX.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Initialize REPLACE_CALLOC
+	instead of HAVE_CALLOC_POSIX.
+	* modules/stdlib (Makefile.am): Substitute REPLACE_CALLOC instead of
+	HAVE_CALLOC_POSIX.
+
 	Use modern idiom for calloc() replacement.
 	* modules/calloc (configure.ac): Invoke gl_FUNC_CALLOC_GNU instead of
 	AC_FUNC_CALLOC.
