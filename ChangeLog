@@ -1,3 +1,10 @@
+2010-06-22  Eric Blake  <eblake@redhat.com>
+
+	memmem: slight optimization
+	* lib/str-two-way.h (critical_factorization): Update comments.
+	Reduce work during factorization phase.
+	Reported by Carlos Bueno <carlos@bueno.org>.
+
 2010-06-21  Bruno Haible  <bruno@clisp.org>
 
 	Fix HAVE_CALLOC_POSIX misnomer.
