@@ -9,7 +9,7 @@ Depends-on:
 calloc-posix
 
 configure.ac:
-AC_FUNC_CALLOC
+gl_FUNC_CALLOC_GNU
 
 Makefile.am:
 

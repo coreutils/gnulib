@@ -1,5 +1,16 @@
 2010-06-21  Bruno Haible  <bruno@clisp.org>
 
+	Use modern idiom for calloc() replacement.
+	* modules/calloc (configure.ac): Invoke gl_FUNC_CALLOC_GNU instead of
+	AC_FUNC_CALLOC.
+	* m4/calloc.m4 (gl_FUNC_CALLOC_GNU): Renamed from AC_FUNC_CALLOC.
+	Require gl_STDLIB_H_DEFAULTS. Invoke gl_REPLACE_CALLOC.
+	(gl_FUNC_CALLOC_POSIX): Rely on gl_STDLIB_H_DEFAULTS to initialize
+	HAVE_CALLOC_POSIX. Invoke gl_REPLACE_CALLOC.
+	(gl_REPLACE_CALLOC): New macro.
+
+2010-06-21  Bruno Haible  <bruno@clisp.org>
+
 	Fix HAVE_REALLOC_POSIX misnomer.
 	* lib/stdlib.in.h (realloc): Use REPLACE_REALLOC instead of
 	!HAVE_REALLOC_POSIX.

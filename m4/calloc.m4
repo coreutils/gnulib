@@ -1,4 +1,4 @@
-# calloc.m4 serial 9
+# calloc.m4 serial 10
 
 # Copyright (C) 2004-2010 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -27,20 +27,21 @@ AS_IF([test $ac_cv_func_calloc_0_nonnull = yes], [$1], [$2])
 ])# AC_FUNC_CALLOC
 
 
-# AC_FUNC_CALLOC
-# ---------------
+# gl_FUNC_CALLOC_GNU
+# ------------------
 # Report whether `calloc (0, 0)' is properly handled, and replace calloc if
 # needed.
-AC_DEFUN([AC_FUNC_CALLOC],
-[_AC_FUNC_CALLOC_IF(
-  [AC_DEFINE([HAVE_CALLOC], [1],
-             [Define to 1 if your system has a GNU libc compatible `calloc'
-              function, and to 0 otherwise.])],
-  [AC_DEFINE([HAVE_CALLOC], [0])
-   AC_LIBOBJ([calloc])
-   AC_DEFINE([calloc], [rpl_calloc],
-      [Define to rpl_calloc if the replacement function should be used.])])
-])# AC_FUNC_CALLOC
+AC_DEFUN([gl_FUNC_CALLOC_GNU],
+[
+  AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
+  _AC_FUNC_CALLOC_IF(
+    [AC_DEFINE([HAVE_CALLOC], [1],
+               [Define to 1 if your system has a GNU libc compatible `calloc'
+                function, and to 0 otherwise.])],
+    [AC_DEFINE([HAVE_CALLOC], [0])
+     gl_REPLACE_CALLOC
+    ])
+])# gl_FUNC_CALLOC_GNU
 
 
 # gl_FUNC_CALLOC_POSIX
@@ -49,14 +50,18 @@ AC_DEFUN([AC_FUNC_CALLOC],
 # fails), and replace calloc if it is not.
 AC_DEFUN([gl_FUNC_CALLOC_POSIX],
 [
+  AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
   AC_REQUIRE([gl_CHECK_MALLOC_POSIX])
   if test $gl_cv_func_malloc_posix = yes; then
-    HAVE_CALLOC_POSIX=1
     AC_DEFINE([HAVE_CALLOC_POSIX], [1],
       [Define if the 'calloc' function is POSIX compliant.])
   else
-    AC_LIBOBJ([calloc])
-    HAVE_CALLOC_POSIX=0
+    gl_REPLACE_CALLOC
   fi
-  AC_SUBST([HAVE_CALLOC_POSIX])
+])
+
+AC_DEFUN([gl_REPLACE_CALLOC],
+[
+  AC_LIBOBJ([calloc])
+  HAVE_CALLOC_POSIX=0
 ])
