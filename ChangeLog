@@ -1,5 +1,17 @@
 2010-06-21  Bruno Haible  <bruno@clisp.org>
 
+	Use modern idiom for realloc() replacement.
+	* modules/realloc (configure.ac): Invoke gl_FUNC_REALLOC_GNU instead of
+	AC_FUNC_REALLOC.
+	* m4/realloc.m4 (gl_FUNC_REALLOC_GNU): New macro, mostly copied from
+	Autoconf's AC_FUNC_REALLOC.
+	(gl_FUNC_REALLOC_POSIX): Rely on gl_STDLIB_H_DEFAULTS to initialize
+	HAVE_REALLOC_POSIX. Invoke gl_REPLACE_REALLOC.
+	(gl_REPLACE_REALLOC): New macro.
+	Reported by Richard Lloyd <richard.lloyd@connectinternetsolutions.com>.
+
+2010-06-21  Bruno Haible  <bruno@clisp.org>
+
 	Fix HAVE_MALLOC_POSIX misnomer.
 	* lib/stdlib.in.h (malloc): Use REPLACE_MALLOC instead of
 	!HAVE_MALLOC_POSIX.
