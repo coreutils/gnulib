@@ -477,7 +477,7 @@ _GL_WARN_ON_USE (setstate_r, "setstate_r is unportable - "
 
 
 #if @GNULIB_REALLOC_POSIX@
-# if !@HAVE_REALLOC_POSIX@
+# if @REPLACE_REALLOC@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef realloc
 #   define realloc rpl_realloc

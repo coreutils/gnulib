@@ -1,5 +1,15 @@
 2010-06-21  Bruno Haible  <bruno@clisp.org>
 
+	Fix HAVE_REALLOC_POSIX misnomer.
+	* lib/stdlib.in.h (realloc): Use REPLACE_REALLOC instead of
+	!HAVE_REALLOC_POSIX.
+	* m4/realloc.m4 (gl_REPLACE_REALLOC): Set REPLACE_REALLOC instead of
+	HAVE_REALLOC_POSIX.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Initialize REPLACE_REALLOC
+	instead of HAVE_REALLOC_POSIX.
+	* modules/stdlib (Makefile.am): Substitute REPLACE_REALLOC instead of
+	HAVE_REALLOC_POSIX.
+
 	Use modern idiom for realloc() replacement.
 	* modules/realloc (configure.ac): Invoke gl_FUNC_REALLOC_GNU instead of
 	AC_FUNC_REALLOC.
