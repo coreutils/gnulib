@@ -1,3 +1,15 @@
+2010-06-21  Bruno Haible  <bruno@clisp.org>
+
+	Use modern idiom for malloc() replacement.
+	* modules/malloc (configure.ac): Invoke gl_FUNC_MALLOC_GNU instead of
+	AC_FUNC_MALLOC.
+	* m4/malloc.m4 (gl_FUNC_MALLOC_GNU): New macro, mostly copied from
+	Autoconf's AC_FUNC_MALLOC.
+	(gl_FUNC_MALLOC_POSIX): Rely on gl_STDLIB_H_DEFAULTS to initialize
+	HAVE_MALLOC_POSIX. Invoke gl_REPLACE_MALLOC.
+	(gl_REPLACE_MALLOC): New macro.
+	Reported by Richard Lloyd <richard.lloyd@connectinternetsolutions.com>.
+
 2010-06-20  Richard Lloyd  <richard.lloyd@connectinternetsolutions.com>
 
 	stdio.in.h: fix compilation failure when using HP-UX 11's C compiler
