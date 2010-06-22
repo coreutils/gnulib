@@ -1,4 +1,18 @@
 2010-12-15  Pádraig Brady <P@draigBrady.com>
+
+	memmem, memmem-simple: reorganize and expand empty needle check
+	* m4/memmem.m4 (gl_FUNC_MEMMEM_SIMPLE, gl_FUNC_MEMMEM): Move all
+	functional checks to memmem-simple so that one has a fully functional
+	memmem by using just this module.
+	Restrict the performance only check to the memmem module.
+	Also expand the empty needle check to ensure the correct
+	pointer is returned, not just a non NULL pointer.
+	* doc/glibc-functions/memmem.texi: Rearrange the portability
+	documentation to correlate with the rearranged checks.
+	Clarify exactly how the memmem and memmem-simple modules
+	relate to each other.
+
+2010-12-15  Pádraig Brady <P@draigBrady.com>
             Bruno Haible  <bruno@clisp.org>
 
 	Improve cross-compilation guesses for uClibc.
