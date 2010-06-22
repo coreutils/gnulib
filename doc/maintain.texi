@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate May 28, 2010
+@set lastupdate June 21, 2010
 @c %**end of header
 
 @dircategory GNU organization
@@ -160,7 +160,7 @@ ask for accounts for people who significantly help you in working on
 the package.
 @end macro
 
-@gdgnuorgtext
+@gdgnuorgtext{}
 
 @cindex down, when GNU machines are
 @cindex outage, of GNU machines
@@ -278,7 +278,7 @@ expected papers arrive.
 @cindex @file{/gd/gnuorg} directory
 @c This paragraph intentionally duplicates information given
 @c near the beginning of the file--to make sure people don't miss it.
-@gdgnuorgtext
+@gdgnuorgtext{}
 
 In order for the contributor to know person should sign papers, you need
 to ask per for the necessary papers.  If you don't know per well, and you
@@ -1884,7 +1884,10 @@ For new files:
 cvs add -ko @var{file1} @var{file2} ...
 @end example
 
-@xref{Keyword substitution,,,cvs,Version Management with CVS}.
+@c The CVS manual is now built with numeric references and no nonsplit
+@c form, so it's not worth trying to give a direct link.
+See the ``Keyword Substitution'' section in the CVS manual, available
+at @url{http://ximbiot.com/cvs/manual}.
 
 In Texinfo source, the recommended way to literally specify a
 ``dollar'' keyword is:

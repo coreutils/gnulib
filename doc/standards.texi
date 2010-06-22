@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate April 12, 2010
+@set lastupdate June 21, 2010
 @c %**end of header
 
 @dircategory GNU organization
@@ -4191,7 +4191,7 @@ documentation.
 By contrast, it is ok to refer to journal articles and textbooks in
 the comments of a program for explanation of how it functions, even
 though they are non-free.  This is because we don't include such
-things in the GNU system even they are free---they are outside the
+things in the GNU system even if they are free---they are outside the
 scope of what a software distribution needs to include.
 
 Referring to a web site that describes or recommends a non-free

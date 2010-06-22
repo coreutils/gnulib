@@ -2,7 +2,7 @@
 # gendocs.sh -- generate a GNU manual in many formats.  This script is
 #   mentioned in maintain.texi.  See the help message below for usage details.
 
-scriptversion=2010-05-04.09
+scriptversion=2010-06-21.10
 
 # Copyright 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010
 # Free Software Foundation, Inc.
@@ -44,7 +44,7 @@ unset use_texi2html
 
 version="gendocs.sh $scriptversion
 
-Copyright 2009 Free Software Foundation, Inc.
+Copyright 2010 Free Software Foundation, Inc.
 There is NO warranty.  You may redistribute this software
 under the terms of the GNU General Public License.
 For more information about these matters, see the files named COPYING."
@@ -95,11 +95,11 @@ If a manual's Texinfo sources are spread across several directories,
 first copy or symlink all Texinfo sources into a single directory.
 (Part of the script's work is to make a tar.gz of the sources.)
 
-You can set the environment variables MAKEINFO, TEXI2DVI, and DVIPS to
-control the programs that get executed, and GENDOCS_TEMPLATE_DIR to
-control where the gendocs_template file is looked for.  (With --docbook,
-the environment variables DOCBOOK2HTML, DOCBOOK2PDF, DOCBOOK2PS, and
-DOCBOOK2TXT are also respected.)
+You can set the environment variables MAKEINFO, TEXI2DVI, TEXI2HTML, and
+DVIPS to control the programs that get executed, and
+GENDOCS_TEMPLATE_DIR to control where the gendocs_template file is
+looked for.  With --docbook, the environment variables DOCBOOK2HTML,
+DOCBOOK2PDF, DOCBOOK2PS, and DOCBOOK2TXT are also respected.
 
 By default, makeinfo is run in the default (English) locale, since
 that's the language of most Texinfo manuals.  If you happen to have a
