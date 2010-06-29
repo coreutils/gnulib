@@ -3,6 +3,7 @@ Base types for Unicode string functions.
 
 Files:
 lib/unitypes.in.h
+m4/libunistring-base.m4
 
 Depends-on:
 stdint

@@ -1,3 +1,8 @@
+2010-06-28  Ian Beckwith  <ianb@erislabs.net>
+
+	unitypes: Fix bug introduced on 2010-05-18.
+	* modules/unitypes (Files): Really add m4/libunistring-base.m4.
+
 2010-06-22  Eric Blake  <eblake@redhat.com>
 
 	memmem: slight optimization
