@@ -1,3 +1,12 @@
+2010-06-29  Bruno Haible  <bruno@clisp.org>
+
+	string: Fix syntax error with g++ 2.96.
+	* lib/string.in.h (__pure__): Remove definition.
+	(_GL_ATTRIBUTE_PURE): New macro.
+	(memchr, memmem, memrchr, rawmemchr, strchrnul, strnlen, strpbrk,
+	strstr, strcasestr): Use it instead of __attribute__ ((__pure__)).
+	Reported by Christian Weisgerber <naddy@mips.inka.de>.
+
 2010-06-28  Ian Beckwith  <ianb@erislabs.net>
 
 	unitypes: Fix bug introduced on 2010-05-18.
