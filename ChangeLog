@@ -1,3 +1,10 @@
+2010-07-01  Christian Weisgerber  <naddy@mips.inka.de>  (tiny change)
+
+	gettext: Use AC_GNU_SOURCE as a fallback for AC_USE_SYSTEM_EXTENSIONS.
+	* m4/fcntl-o.m4 (gl_FCNTL_O_FLAGS): When AC_USE_SYSTEM_EXTENSIONS is
+	not present (i.e. with autoconf 2.59 and when using gettextize, not
+	gnulib), require AC_GNU_SOURCE instead.
+
 2010-07-01  Ian Beckwith  <ianb@erislabs.net>
 
 	idpriv-drop: Fix tests.
