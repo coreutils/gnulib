@@ -31,12 +31,12 @@ chmod 6755 test-idpriv-drop${EXEEXT}
 ./test-idpriv-drop${EXEEXT} || exit 13          # setuid and setgid root
 
 if chown nobody test-idpriv-drop${EXEEXT} 2>/dev/null; then
-  chmod 4755 test-idpriv-droptemp${EXEEXT}
-  ./test-idpriv-droptemp${EXEEXT} || exit 13    # setuid nobody
-  chmod 2755 test-idpriv-droptemp${EXEEXT}
-  ./test-idpriv-droptemp${EXEEXT} || exit 13    # setgid root
-  chmod 6755 test-idpriv-droptemp${EXEEXT}
-  ./test-idpriv-droptemp${EXEEXT} || exit 13    # setuid nobody and setgid root
+  chmod 4755 test-idpriv-drop${EXEEXT}
+  ./test-idpriv-drop${EXEEXT} || exit 13        # setuid nobody
+  chmod 2755 test-idpriv-drop${EXEEXT}
+  ./test-idpriv-drop${EXEEXT} || exit 13        # setgid root
+  chmod 6755 test-idpriv-drop${EXEEXT}
+  ./test-idpriv-drop${EXEEXT} || exit 13        # setuid nobody and setgid root
 fi
 
 if chown root:nobody test-idpriv-drop${EXEEXT} 2>/dev/null; then

@@ -1,3 +1,9 @@
+2010-07-01  Ian Beckwith  <ianb@erislabs.net>
+
+	idpriv-drop: Fix tests.
+	* tests/test-idpriv-drop.su.sh: Refer to the test-idpriv-drop program,
+	not to the test-idpriv-droptemp program.
+
 2010-06-29  Bruno Haible  <bruno@clisp.org>
 
 	string: Fix syntax error with g++ 2.96.
