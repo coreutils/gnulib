@@ -88,6 +88,8 @@ void hash_free (Hash_table *);
 /* Insertion and deletion.  */
 bool hash_rehash (Hash_table *, size_t) ATTRIBUTE_WUR;
 void *hash_insert (Hash_table *, const void *) ATTRIBUTE_WUR;
+int hash_insert0 (Hash_table *table, const void *entry,
+                  const void **matched_ent);
 void *hash_delete (Hash_table *, const void *);
 
 #endif

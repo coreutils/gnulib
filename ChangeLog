@@ -1,3 +1,12 @@
+2010-07-01  Jim Meyering  <meyering@redhat.com>
+
+	hash: extend module to deal with non-pointer keys
+	* lib/hash.c (hash_insert0): New interface, much like hash_insert
+	but that allows insertion of non-pointer entries.
+	Do not disallow an ENTRY value of NULL.
+	(hash_insert): This is now just a thin wrapper.  Call hash_insert0.
+	* lib/hash.h (hash_insert0): Declare.
+
 2010-07-01  Christian Weisgerber  <naddy@mips.inka.de>  (tiny change)
 
 	gettext: Use AC_GNU_SOURCE as a fallback for AC_USE_SYSTEM_EXTENSIONS.

@@ -1020,25 +1020,32 @@ hash_rehash (Hash_table *table, size_t candidate)
   return false;
 }
 
-/* If ENTRY matches an entry already in the hash table, return the pointer
-   to the entry from the table.  Otherwise, insert ENTRY and return ENTRY.
-   Return NULL if the storage required for insertion cannot be allocated.
-   This implementation does not support duplicate entries or insertion of
-   NULL.  */
+/* Return -1 upon memory allocation failure.
+   Return 1 if insertion succeeded.
+   Return 0 if there is already a matching entry in the table,
+   and in that case, if MATCHED_ENT is non-NULL, set *MATCHED_ENT
+   to that entry.
 
-void *
-hash_insert (Hash_table *table, const void *entry)
+   This interface is easier to use than hash_insert when you must
+   distinguish between the latter two cases.  More importantly,
+   hash_insert is unusable for some types of ENTRY values.  When using
+   hash_insert, the only way to distinguish those cases is to compare
+   the return value and ENTRY.  That works only when you can have two
+   different ENTRY values that point to data that compares "equal".  Thus,
+   when the ENTRY value is a simple scalar, you must use hash_insert0.  */
+int
+hash_insert0 (Hash_table *table, void const *entry, void const **matched_ent)
 {
   void *data;
   struct hash_entry *bucket;
 
-  /* The caller cannot insert a NULL entry.  */
-  if (! entry)
-    abort ();
-
   /* If there's a matching entry already in the table, return that.  */
   if ((data = hash_find_entry (table, entry, &bucket, false)) != NULL)
-    return data;
+    {
+      if (matched_ent)
+        *matched_ent = data;
+      return 0;
+    }
 
   /* If the growth threshold of the buckets in use has been reached, increase
      the table size and rehash.  There's no point in checking the number of
@@ -1062,11 +1069,11 @@ hash_insert (Hash_table *table, const void *entry)
                 * tuning->growth_threshold));
 
           if (SIZE_MAX <= candidate)
-            return NULL;
+            return -1;
 
           /* If the rehash fails, arrange to return NULL.  */
           if (!hash_rehash (table, candidate))
-            return NULL;
+            return -1;
 
           /* Update the bucket we are interested in.  */
           if (hash_find_entry (table, entry, &bucket, false) != NULL)
@@ -1081,7 +1088,7 @@ hash_insert (Hash_table *table, const void *entry)
       struct hash_entry *new_entry = allocate_entry (table);
 
       if (new_entry == NULL)
-        return NULL;
+        return -1;
 
       /* Add ENTRY in the overflow of the bucket.  */
 
@@ -1089,7 +1096,7 @@ hash_insert (Hash_table *table, const void *entry)
       new_entry->next = bucket->next;
       bucket->next = new_entry;
       table->n_entries++;
-      return (void *) entry;
+      return 1;
     }
 
   /* Add ENTRY right in the bucket head.  */
@@ -1098,7 +1105,23 @@ hash_insert (Hash_table *table, const void *entry)
   table->n_entries++;
   table->n_buckets_used++;
 
-  return (void *) entry;
+  return 1;
+}
+
+/* If ENTRY matches an entry already in the hash table, return the pointer
+   to the entry from the table.  Otherwise, insert ENTRY and return ENTRY.
+   Return NULL if the storage required for insertion cannot be allocated.
+   This implementation does not support duplicate entries or insertion of
+   NULL.  */
+
+void *
+hash_insert (Hash_table *table, void const *entry)
+{
+  void const *matched_ent;
+  int err = hash_insert0 (table, entry, &matched_ent);
+  return (err == -1
+          ? NULL
+          : (void *) (err == 0 ? matched_ent : entry));
 }
 
 /* If ENTRY is already in the table, remove it and return the just-deleted
