@@ -1,3 +1,9 @@
+2010-07-01  Bruno Haible  <bruno@clisp.org>
+
+	stdbool: Update doc.
+	* doc/posix-headers/stdbool.texi: Mention OpenBSD bug.
+	Info from Christian Weisgerber <naddy@mips.inka.de>.
+
 2010-07-01  Jim Meyering  <meyering@redhat.com>
 
 	hash: extend module to deal with non-pointer keys

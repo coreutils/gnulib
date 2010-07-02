@@ -12,6 +12,9 @@ This header file is missing on some platforms:
 AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1.
 @item
 Some compilers have bugs relating to @samp{bool}.
+@item
+This header file defines @code{true} incorrectly on some platforms:
+OpenBSD 4.7 with gcc 2.95.
 @end itemize
 
 Portability problems not fixed by Gnulib:
