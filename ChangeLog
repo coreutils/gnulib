@@ -1,3 +1,12 @@
+2010-07-04  Jim Meyering  <meyering@redhat.com>
+
+	hash: once again explicitly disallow insertion of NULL
+	* lib/hash.c (hash_insert0): Reinstate just-removed test:
+	inserting a NULL pointer cannot work with these functions.
+	Add a comment with details.
+	This reverts part of the 2010-07-01 commit, 5bef1a35
+	"hash: extend module to deal with non-pointer keys".
+
 2010-07-01  Bruno Haible  <bruno@clisp.org>
 
 	stdbool: Update doc.

@@ -1032,12 +1032,19 @@ hash_rehash (Hash_table *table, size_t candidate)
    hash_insert, the only way to distinguish those cases is to compare
    the return value and ENTRY.  That works only when you can have two
    different ENTRY values that point to data that compares "equal".  Thus,
-   when the ENTRY value is a simple scalar, you must use hash_insert0.  */
+   when the ENTRY value is a simple scalar, you must use hash_insert0.
+   ENTRY must not be NULL.  */
 int
 hash_insert0 (Hash_table *table, void const *entry, void const **matched_ent)
 {
   void *data;
   struct hash_entry *bucket;
+
+  /* The caller cannot insert a NULL entry, since hash_lookup returns NULL
+     to indicate "not found", and hash_find_entry uses "bucket->data == NULL"
+     to indicate an empty bucket.  */
+  if (! entry)
+    abort ();
 
   /* If there's a matching entry already in the table, return that.  */
   if ((data = hash_find_entry (table, entry, &bucket, false)) != NULL)
