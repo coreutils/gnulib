@@ -1,5 +1,12 @@
 2010-07-04  Bruno Haible  <bruno@clisp.org>
 
+	fsusage: Clarify which code applies to which platforms.
+	* m4/fsusage.m4 (gl_FSUSAGE): Clarify which test succeeds on which
+	platform.
+	* lib/fsusage.c (get_fs_usage): Likewise.
+
+2010-07-04  Bruno Haible  <bruno@clisp.org>
+
 	havelib: Fix bug when AC_LIB_FROMPACKAGE is used more than twice.
 	* m4/lib-link.m4 (AC_LIB_FROMPACKAGE): Use m4_defn.
 	Reported by Martin Lambers <marlam@marlam.de>.
