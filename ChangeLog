@@ -1,3 +1,9 @@
+2010-07-06  Pádraig Brady  <P@draigBrady.com>
+
+	* build-aux/bootstrap: Remove any local translations
+	from the translation project synchronization directory,
+	so that local only translations are not distributed.
+
 2010-07-04  Bruno Haible  <bruno@clisp.org>
 
 	fsusage: Clarify which code applies to which platforms.
