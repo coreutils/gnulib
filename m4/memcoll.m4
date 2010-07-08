@@ -7,6 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_MEMCOLL],
 [
+  AC_REQUIRE([AC_C_INLINE])
   AC_LIBOBJ([memcoll])
 
   dnl Prerequisites of lib/memcoll.c.

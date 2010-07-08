@@ -23,5 +23,6 @@
 # include <stddef.h>
 
 int memcoll (char *, size_t, char *, size_t);
+int memcoll0 (const char *, size_t, const char *, size_t);
 
 #endif /* MEMCOLL_H_ */

@@ -1,3 +1,17 @@
+2010-07-08  Chen Guo <chenguo4@yahoo.com>
+
+	(x)memcoll: speedup when input is known to be NUL delimited
+	* lib/memcoll.c: Include stdlib.
+	(memcoll0) New function.
+	(strcoll_loop) New function, refactored for use in both memcoll
+	and memcoll0.
+	* lib/memcoll.h: Add prototype for memcoll0.
+	* lib/xmemcoll.c: (xmemcoll0) New function.
+	(collate_error) New function, refactored for use in both xmemcoll
+	and xmemcoll0.
+	* lib/xmemcoll.h: Add prototype for xmemcoll0.
+	* m4/memcoll.m4: add inline invocation.
+
 2010-07-06  Pádraig Brady  <P@draigBrady.com>
 
 	* build-aux/bootstrap: Remove any local translations
