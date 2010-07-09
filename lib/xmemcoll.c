@@ -31,9 +31,10 @@
 #include "quotearg.h"
 #include "xmemcoll.h"
 
-static inline void
-collate_error (int collation_errno, const char *s1, size_t s1len,
-               const char *s2, size_t s2len)
+static void
+collate_error (int collation_errno,
+               char const *s1, size_t s1len,
+               char const *s2, size_t s2len)
 {
   error (0, collation_errno, _("string comparison failed"));
   error (0, 0, _("Set LC_ALL='C' to work around the problem."));
@@ -54,10 +55,8 @@ xmemcoll (char *s1, size_t s1len, char *s2, size_t s2len)
 {
   int diff = memcoll (s1, s1len, s2, s2len);
   int collation_errno = errno;
-
   if (collation_errno)
     collate_error (collation_errno, s1, s1len, s2, s2len);
-
   return diff;
 }
 
@@ -65,11 +64,10 @@ xmemcoll (char *s1, size_t s1len, char *s2, size_t s2len)
    no modifications to S1 and S2 are needed. */
 
 int
-xmemcoll0 (const char *s1, size_t s1len, const char *s2, size_t s2len)
+xmemcoll0 (char const *s1, size_t s1len, char const *s2, size_t s2len)
 {
   int diff = memcoll0 (s1, s1len, s2, s2len);
   int collation_errno = errno;
-
   if (collation_errno)
     collate_error (collation_errno, s1, s1len, s2, s2len);
   return diff;

@@ -30,9 +30,10 @@
    NUL bytes. */
 
 static inline int
-strcoll_loop (const char *s1, size_t s1len, const char *s2, size_t s2len)
+strcoll_loop (char const *s1, size_t s1len, const char *s2, size_t s2len)
 {
   int diff;
+
   while (! (errno = 0, (diff = strcoll (s1, s2)) || errno))
     {
       /* strcoll found no difference, but perhaps it was fooled by NUL
@@ -57,6 +58,7 @@ strcoll_loop (const char *s1, size_t s1len, const char *s2, size_t s2len)
           break;
         }
     }
+
   return diff;
 }
 
@@ -65,7 +67,6 @@ strcoll_loop (const char *s1, size_t s1len, const char *s2, size_t s2len)
    adjacent.  Perhaps temporarily modify the bytes after S1 and S2,
    but restore their original contents before returning.  Set errno to an
    error number if there is an error, and to zero otherwise.  */
-
 int
 memcoll (char *s1, size_t s1len, char *s2, size_t s2len)
 {
@@ -97,24 +98,18 @@ memcoll (char *s1, size_t s1len, char *s2, size_t s2len)
   return diff;
 }
 
-/* Like memcoll, but S1 and S2 are known to be NUL delimited, thus no
-   modification to S1 or S2 are needed. */
+/* Compare S1 (with length S1LEN) and S2 (with length S2LEN) according
+   to the LC_COLLATE locale.  S1 and S2 must both end in a null byte.
+   Set errno to an error number if there is an error, and to zero
+   otherwise.  */
 int
-memcoll0 (const char *s1, size_t s1len, const char *s2, size_t s2len)
+memcoll0 (char const *s1, size_t s1len, const char *s2, size_t s2len)
 {
-  int diff;
-  if (!(s1len > 0 && s1[s1len] == '\0'))
-    abort ();
-  if (!(s2len > 0 && s2[s2len] == '\0'))
-    abort ();
-
   if (s1len == s2len && memcmp (s1, s2, s1len) == 0)
     {
       errno = 0;
-      diff = 0;
+      return 0;
     }
   else
-    diff = strcoll_loop (s1, s1len, s2, s2len);
-
-  return diff;
+    return strcoll_loop (s1, s1len, s2, s2len);
 }

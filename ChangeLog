@@ -1,3 +1,20 @@
+2010-07-08  Paul Eggert  <eggert@cs.ucla.edu>
+
+	(x)memcoll: minor tweaks
+	* lib/memcoll.c (strcoll_loop): Prefer the style where 'const'
+	is after the type that it qualifies.
+	(memcoll0): Likewise.
+	* lib/memcoll.h (memcoll0): Likewise.
+	* lib/xmemcoll.c (collate_error, xmemcoll0): Likewise.
+	* lib/xmemcoll.h (xmemcoll0): Likewise.
+	* lib/memcoll.c (memcoll0): Correct the comment.  This function
+	differs from memcoll in that the NUL byte is part of the argument.
+	Omit the abort-checks, as performance is a real issue here.  Plus,
+	the checks were wrong anyway (an off-by-one error).  Omit local
+	variable 'diff', as it's a bit clearer that way.
+	* m4/memcoll.m4 (gl_MEMCOLL): Omit AC_FUNC_STRCOLL, as it's
+	no longer needed.
+
 2010-07-08  Chen Guo <chenguo4@yahoo.com>
 
 	(x)memcoll: speedup when input is known to be NUL delimited
