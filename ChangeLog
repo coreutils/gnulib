@@ -1,3 +1,9 @@
+2010-07-11  Pádraig Brady  <P@draigBrady.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	unistr/u8-strchr: Optimize ASCII argument case.
+	* lib/unistr/u8-strchr.c (u8_strchr): For ASCII arguments, use strchr.
+
 2010-07-08  Paul Eggert  <eggert@cs.ucla.edu>
 
 	(x)memcoll: minor tweaks

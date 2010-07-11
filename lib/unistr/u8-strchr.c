@@ -21,6 +21,8 @@
 /* Specification.  */
 #include "unistr.h"
 
+#include <string.h>
+
 uint8_t *
 u8_strchr (const uint8_t *s, ucs4_t uc)
 {
@@ -30,18 +32,31 @@ u8_strchr (const uint8_t *s, ucs4_t uc)
     {
       uint8_t c0 = uc;
 
-      for (;; s++)
+      if (false)
         {
-          if (*s == c0)
-            break;
-          if (*s == 0)
-            goto notfound;
+          /* Unoptimized code.  */
+          for (;; s++)
+            {
+              if (*s == c0)
+                break;
+              if (*s == 0)
+                goto notfound;
+            }
+          return (uint8_t *) s;
         }
-      return (uint8_t *) s;
+      else
+        {
+          /* Optimized code.
+             strchr() is often so well optimized, that it's worth the
+             added function call.  */
+          return (uint8_t *) strchr ((const char *) s, c0);
+        }
     }
   else
     switch (u8_uctomb_aux (c, uc, 6))
       {
+      /* Loops equivalent to strstr, optimized for a specific length (2, 3, 4)
+         of the needle.  */
       case 2:
         if (*s == 0)
           goto notfound;
