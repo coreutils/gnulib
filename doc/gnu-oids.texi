@@ -32,6 +32,9 @@
 @c Added 2010-05-17 on request from Eric Blossom <eb@comsec.com>
 1.3.6.1.4.1.11591.7 GNU Radio
 
+@c Added 2010-07-02 on request from Sergey Poznyakoff <gray@gnu.org.ua>
+1.3.6.1.4.1.11591.8 GNU Dico
+
 1.3.6.1.4.1.11591.12 digestAlgorithm
   1.3.6.1.4.1.11591.12.2 TIGER/192
   1.3.6.1.4.1.11591.13 encryptionAlgorithm

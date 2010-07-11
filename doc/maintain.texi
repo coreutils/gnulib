@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate June 21, 2010
+@set lastupdate July 5, 2010
 @c %**end of header
 
 @dircategory GNU organization
@@ -1022,7 +1022,7 @@ default configuration for antispam purposes (see below).
 
 To create and maintain simple aliases and unmanaged lists, you can
 edit @file{/com/mailer/aliases} on the main GNU server.  If you don't
-have an account there,
+have an account there, please read
 @url{http://www.gnu.org/software/README.accounts.html} (@pxref{Getting
 a GNU Account}).
 
