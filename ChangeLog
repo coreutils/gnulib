@@ -1,5 +1,13 @@
 2010-07-12  Bruno Haible  <bruno@clisp.org>
 
+	Unify tests that set gl_cv_func_frexpl_no_libm.
+	* m4/frexpl.m4 (gl_CHECK_FREXPL_NO_LIBM): New macro, extracted from
+	gl_FUNC_FREXPL_NO_LIBM.
+	(gl_FUNC_FREXPL, gl_FUNC_FREXPL_NO_LIBM): Invoke it.
+	* m4/printf-frexpl.m4 (gl_FUNC_PRINTF_FREXPL): Likewise.
+
+2010-07-12  Bruno Haible  <bruno@clisp.org>
+
 	Unify tests that set gl_cv_func_frexp_no_libm.
 	* m4/frexp.m4 (gl_CHECK_FREXP_NO_LIBM): New macro, extracted from
 	gl_FUNC_FREXP_NO_LIBM.
