@@ -1,5 +1,5 @@
-# printf-frexp.m4 serial 3
-dnl Copyright (C) 2007, 2009, 2010 Free Software Foundation, Inc.
+# printf-frexp.m4 serial 4
+dnl Copyright (C) 2007, 2009-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -8,16 +8,7 @@ dnl Check how to define printf_frexp() without linking with libm.
 
 AC_DEFUN([gl_FUNC_PRINTF_FREXP],
 [
-  AC_CACHE_CHECK([whether frexp can be used without linking with libm],
-    [gl_cv_func_frexp_no_libm],
-    [
-      AC_TRY_LINK([#include <math.h>
-                   double x;
-                   int y;],
-                  [return frexp (x, &y) < 1;],
-        [gl_cv_func_frexp_no_libm=yes],
-        [gl_cv_func_frexp_no_libm=no])
-    ])
+  AC_REQUIRE([gl_CHECK_FREXP_NO_LIBM])
   if test $gl_cv_func_frexp_no_libm = yes; then
     gl_FUNC_FREXP_WORKS
     case "$gl_cv_func_frexp_works" in

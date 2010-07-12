@@ -1,5 +1,5 @@
-# frexp.m4 serial 7
-dnl Copyright (C) 2007, 2008, 2009, 2010 Free Software Foundation, Inc.
+# frexp.m4 serial 8
+dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -7,16 +7,8 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_FREXP],
 [
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
+  AC_REQUIRE([gl_CHECK_FREXP_NO_LIBM])
   FREXP_LIBM=
-  AC_CACHE_CHECK([whether frexp() can be used without linking with libm],
-    [gl_cv_func_frexp_no_libm],
-    [
-      AC_TRY_LINK([#include <math.h>
-                   double x;],
-                  [int e; return frexp (x, &e) > 0;],
-        [gl_cv_func_frexp_no_libm=yes],
-        [gl_cv_func_frexp_no_libm=no])
-    ])
   if test $gl_cv_func_frexp_no_libm = no; then
     AC_CACHE_CHECK([whether frexp() can be used with libm],
       [gl_cv_func_frexp_in_libm],
@@ -59,15 +51,7 @@ AC_DEFUN([gl_FUNC_FREXP],
 AC_DEFUN([gl_FUNC_FREXP_NO_LIBM],
 [
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
-  AC_CACHE_CHECK([whether frexp() can be used without linking with libm],
-    [gl_cv_func_frexp_no_libm],
-    [
-      AC_TRY_LINK([#include <math.h>
-                   double x;],
-                  [int e; return frexp (x, &e) > 0;],
-        [gl_cv_func_frexp_no_libm=yes],
-        [gl_cv_func_frexp_no_libm=no])
-    ])
+  AC_REQUIRE([gl_CHECK_FREXP_NO_LIBM])
   if test $gl_cv_func_frexp_no_libm = yes; then
     gl_FUNC_FREXP_WORKS
     case "$gl_cv_func_frexp_works" in
@@ -85,6 +69,21 @@ AC_DEFUN([gl_FUNC_FREXP_NO_LIBM],
   else
     AC_LIBOBJ([frexp])
   fi
+])
+
+dnl Test whether frexp() can be used without linking with libm.
+dnl Set gl_cv_func_frexp_no_libm to 'yes' or 'no' accordingly.
+AC_DEFUN([gl_CHECK_FREXP_NO_LIBM],
+[
+  AC_CACHE_CHECK([whether frexp() can be used without linking with libm],
+    [gl_cv_func_frexp_no_libm],
+    [
+      AC_TRY_LINK([#include <math.h>
+                   double x;],
+                  [int e; return frexp (x, &e) > 0;],
+        [gl_cv_func_frexp_no_libm=yes],
+        [gl_cv_func_frexp_no_libm=no])
+    ])
 ])
 
 dnl Test whether frexp() works also on denormalized numbers (this fails e.g. on

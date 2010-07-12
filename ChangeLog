@@ -1,3 +1,11 @@
+2010-07-12  Bruno Haible  <bruno@clisp.org>
+
+	Unify tests that set gl_cv_func_frexp_no_libm.
+	* m4/frexp.m4 (gl_CHECK_FREXP_NO_LIBM): New macro, extracted from
+	gl_FUNC_FREXP_NO_LIBM.
+	(gl_FUNC_FREXP, gl_FUNC_FREXP_NO_LIBM): Require it.
+	* m4/printf-frexp.m4 (gl_FUNC_PRINTF_FREXP): Likewise.
+
 2010-07-12  Paul R. Eggert  <eggert@cs.ucla.edu>
 
 	memcoll: clarify sizes versus lengths, document better, and tweak perf
