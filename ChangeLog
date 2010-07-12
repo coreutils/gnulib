@@ -1,5 +1,13 @@
 2010-07-12  Bruno Haible  <bruno@clisp.org>
 
+	Unify tests that set gl_cv_func_ldexpl_no_libm.
+	* m4/ldexpl.m4 (gl_CHECK_LDEXPL_NO_LIBM): New macro, extracted from
+	gl_FUNC_LDEXPL.
+	(gl_FUNC_LDEXPL): Invoke it.
+	* m4/printf-frexpl.m4 (gl_FUNC_PRINTF_FREXPL): Likewise.
+
+2010-07-12  Bruno Haible  <bruno@clisp.org>
+
 	Unify tests that set gl_cv_func_ldexp_no_libm.
 	* m4/ldexp.m4: New file, based on m4/mathfunc.m4.
 	* m4/strtod.m4 (gl_PREREQ_STRTOD): Require gl_CHECK_LDEXP_NO_LIBM.

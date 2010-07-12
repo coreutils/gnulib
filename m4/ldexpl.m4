@@ -1,4 +1,4 @@
-# ldexpl.m4 serial 5
+# ldexpl.m4 serial 6
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,15 +12,7 @@ AC_DEFUN([gl_FUNC_LDEXPL],
   AC_CHECK_DECL([ldexpl], , [HAVE_DECL_LDEXPL=0], [#include <math.h>])
   LDEXPL_LIBM=
   if test $HAVE_DECL_LDEXPL = 1; then
-    AC_CACHE_CHECK([whether ldexpl() can be used without linking with libm],
-      [gl_cv_func_ldexpl_no_libm],
-      [
-        AC_TRY_LINK([#include <math.h>
-                     long double x;],
-                    [return ldexpl (x, -1) > 0;],
-          [gl_cv_func_ldexpl_no_libm=yes],
-          [gl_cv_func_ldexpl_no_libm=no])
-      ])
+    gl_CHECK_LDEXPL_NO_LIBM
     if test $gl_cv_func_ldexpl_no_libm = no; then
       AC_CACHE_CHECK([whether ldexpl() can be used with libm],
         [gl_cv_func_ldexpl_in_libm],
@@ -60,6 +52,21 @@ AC_DEFUN([gl_FUNC_LDEXPL],
     AC_LIBOBJ([ldexpl])
   fi
   AC_SUBST([LDEXPL_LIBM])
+])
+
+dnl Test whether ldexpl() can be used without linking with libm.
+dnl Set gl_cv_func_ldexpl_no_libm to 'yes' or 'no' accordingly.
+AC_DEFUN([gl_CHECK_LDEXPL_NO_LIBM],
+[
+  AC_CACHE_CHECK([whether ldexpl() can be used without linking with libm],
+    [gl_cv_func_ldexpl_no_libm],
+    [
+      AC_TRY_LINK([#include <math.h>
+                   long double x;],
+                  [return ldexpl (x, -1) > 0;],
+        [gl_cv_func_ldexpl_no_libm=yes],
+        [gl_cv_func_ldexpl_no_libm=no])
+    ])
 ])
 
 dnl Test whether ldexpl() works on finite numbers (this fails on AIX 5.1

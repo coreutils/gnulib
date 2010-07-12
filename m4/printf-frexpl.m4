@@ -30,16 +30,7 @@ AC_DEFUN([gl_FUNC_PRINTF_FREXPL],
     AC_CHECK_DECL([frexpl], , [HAVE_DECL_FREXPL=0], [#include <math.h>])
   fi
 
-  AC_CACHE_CHECK([whether ldexpl can be used without linking with libm],
-    [gl_cv_func_ldexpl_no_libm],
-    [
-      AC_TRY_LINK([#include <math.h>
-                   long double x;
-                   int y;],
-                  [return ldexpl (x, y) < 1;],
-        [gl_cv_func_ldexpl_no_libm=yes],
-        [gl_cv_func_ldexpl_no_libm=no])
-    ])
+  gl_CHECK_LDEXPL_NO_LIBM
   if test $gl_cv_func_ldexpl_no_libm = yes; then
     gl_FUNC_LDEXPL_WORKS
     case "$gl_cv_func_ldexpl_works" in
