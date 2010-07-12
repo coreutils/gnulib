@@ -4,6 +4,7 @@ strtod() function: convert string to 'double'.
 Files:
 lib/strtod.c
 m4/strtod.m4
+m4/ldexp.m4
 
 Depends-on:
 c-ctype

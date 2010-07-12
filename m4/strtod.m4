@@ -1,4 +1,4 @@
-# strtod.m4 serial 15
+# strtod.m4 serial 16
 dnl Copyright (C) 2002-2003, 2006-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -119,18 +119,8 @@ numeric_equal (double x, double y)
 ])
 
 # Prerequisites of lib/strtod.c.
-# FIXME: This implementation is a copy of printf-frexp.m4 and should be shared.
 AC_DEFUN([gl_PREREQ_STRTOD], [
-  AC_CACHE_CHECK([whether ldexp can be used without linking with libm],
-    [gl_cv_func_ldexp_no_libm],
-    [
-      AC_TRY_LINK([#include <math.h>
-                   double x;
-                   int y;],
-                  [return ldexp (x, y) < 1;],
-        [gl_cv_func_ldexp_no_libm=yes],
-        [gl_cv_func_ldexp_no_libm=no])
-    ])
+  AC_REQUIRE([gl_CHECK_LDEXP_NO_LIBM])
   if test $gl_cv_func_ldexp_no_libm = yes; then
     AC_DEFINE([HAVE_LDEXP_IN_LIBC], [1],
       [Define if the ldexp function is available in libc.])

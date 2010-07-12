@@ -1,5 +1,14 @@
 2010-07-12  Bruno Haible  <bruno@clisp.org>
 
+	Unify tests that set gl_cv_func_ldexp_no_libm.
+	* m4/ldexp.m4: New file, based on m4/mathfunc.m4.
+	* m4/strtod.m4 (gl_PREREQ_STRTOD): Require gl_CHECK_LDEXP_NO_LIBM.
+	* modules/ldexp (Files): Remove m4/mathfunc.m4. Add m4/ldexp.m4.
+	(configure.ac): Simply invoke gl_FUNC_LDEXP.
+	* modules/strtod (Files): Add m4/ldexp.m4.
+
+2010-07-12  Bruno Haible  <bruno@clisp.org>
+
 	Unify tests that set gl_cv_func_frexpl_no_libm.
 	* m4/frexpl.m4 (gl_CHECK_FREXPL_NO_LIBM): New macro, extracted from
 	gl_FUNC_FREXPL_NO_LIBM.

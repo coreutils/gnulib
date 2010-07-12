@@ -2,12 +2,12 @@ Description:
 ldexp() function: multiply a 'double' by a power of 2.
 
 Files:
-m4/mathfunc.m4
+m4/ldexp.m4
 
 Depends-on:
 
 configure.ac:
-gl_MATHFUNC([ldexp], [double], [(double, int)])
+gl_FUNC_LDEXP
 
 Makefile.am:
 
