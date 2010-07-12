@@ -11,7 +11,7 @@ AC_DEFUN([gl_FUNC_STRTOD],
   dnl Don't call AC_FUNC_STRTOD, because it does not have the right guess
   dnl when cross-compiling.
   dnl Don't call AC_CHECK_FUNCS([strtod]) because it would collide with the
-  dnl ac_cv_func_strtod variable set by the AC_FUNC_STRTOD macro,
+  dnl ac_cv_func_strtod variable set by the AC_FUNC_STRTOD macro.
   AC_CHECK_DECLS_ONCE([strtod])
   if test $ac_cv_have_decl_strtod != yes; then
     HAVE_STRTOD=0
@@ -113,12 +113,26 @@ numeric_equal (double x, double y)
     fi
   fi
   if test $HAVE_STRTOD = 0 || test $REPLACE_STRTOD = 1; then
+    AC_LIBOBJ([strtod])
     gl_PREREQ_STRTOD
-    dnl Use undocumented macro to set POW_LIB correctly.
-    _AC_LIBOBJ_STRTOD
   fi
 ])
 
 # Prerequisites of lib/strtod.c.
-# The need for pow() is already handled by AC_FUNC_STRTOD.
-AC_DEFUN([gl_PREREQ_STRTOD], [:])
+# FIXME: This implementation is a copy of printf-frexp.m4 and should be shared.
+AC_DEFUN([gl_PREREQ_STRTOD], [
+  AC_CACHE_CHECK([whether ldexp can be used without linking with libm],
+    [gl_cv_func_ldexp_no_libm],
+    [
+      AC_TRY_LINK([#include <math.h>
+                   double x;
+                   int y;],
+                  [return ldexp (x, y) < 1;],
+        [gl_cv_func_ldexp_no_libm=yes],
+        [gl_cv_func_ldexp_no_libm=no])
+    ])
+  if test $gl_cv_func_ldexp_no_libm = yes; then
+    AC_DEFINE([HAVE_LDEXP_IN_LIBC], [1],
+      [Define if the ldexp function is available in libc.])
+  fi
+])

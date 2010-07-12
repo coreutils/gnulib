@@ -11,6 +11,5 @@ signbit
 configure.ac:
 
 Makefile.am:
-LIBS += $(POW_LIB)
 TESTS += test-strtod
 check_PROGRAMS += test-strtod

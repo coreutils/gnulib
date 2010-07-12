@@ -16,50 +16,189 @@
 
 #include <config.h>
 
-/* Don't use __attribute__ __nonnull__ in this compilation unit.  Otherwise gcc
-   optimizes away the nptr == NULL test below.  */
-#define _GL_ARG_NONNULL(params)
-
 #include <stdlib.h>
 
 #include <ctype.h>
 #include <errno.h>
 #include <float.h>
+#include <limits.h>
 #include <math.h>
 #include <stdbool.h>
-#include <string.h>
 
 #include "c-ctype.h"
+
+#ifndef HAVE_LDEXP_IN_LIBC
+#define HAVE_LDEXP_IN_LIBC 0
+#endif
+#ifndef HAVE_RAW_DECL_STRTOD
+#define HAVE_RAW_DECL_STRTOD 0
+#endif
+
+/* Return true if C is a space in the current locale, avoiding
+   problems with signed char and isspace.  */
+static bool
+locale_isspace (char c)
+{
+  unsigned char uc = c;
+  return isspace (uc) != 0;
+}
+
+#if !HAVE_LDEXP_IN_LIBC
+ #define ldexp dummy_ldexp
+ static double ldexp (double x, int exponent) { return x + exponent; }
+#endif
+
+/* Return X * BASE**EXPONENT.  Return an extreme value and set errno
+   to ERANGE if underflow or overflow occurs.  */
+static double
+scale_radix_exp (double x, int radix, long int exponent)
+{
+  /* If RADIX == 10, this code is neither precise nor fast; it is
+     merely a straightforward and relatively portable approximation.
+     If N == 2, this code is precise on a radix-2 implementation,
+     albeit perhaps not fast if ldexp is not in libc.  */
+
+  long int e = exponent;
+
+  if (HAVE_LDEXP_IN_LIBC && radix == 2)
+    return ldexp (x, e < INT_MIN ? INT_MIN : INT_MAX < e ? INT_MAX : e);
+  else
+    {
+      double r = x;
+
+      if (r != 0)
+        {
+          if (e < 0)
+            {
+              while (e++ != 0)
+                {
+                  r /= radix;
+                  if (r == 0 && x != 0)
+                    {
+                      errno = ERANGE;
+                      break;
+                    }
+                }
+            }
+          else
+            {
+              while (e-- != 0)
+                {
+                  if (r < -DBL_MAX / radix)
+                    {
+                      errno = ERANGE;
+                      return -HUGE_VAL;
+                    }
+                  else if (DBL_MAX / radix < r)
+                    {
+                      errno = ERANGE;
+                      return HUGE_VAL;
+                    }
+                  else
+                    r *= radix;
+                }
+            }
+        }
+
+      return r;
+    }
+}
+
+/* Parse a number at NPTR; this is a bit like strtol (NPTR, ENDPTR)
+   except there are no leading spaces or signs or "0x", and ENDPTR is
+   nonnull.  The number uses a base BASE (either 10 or 16) fraction, a
+   radix RADIX (either 10 or 2) exponent, and exponent character
+   EXPCHAR.  To convert from a number of digits to a radix exponent,
+   multiply by RADIX_MULTIPLIER (either 1 or 4).  */
+static double
+parse_number (const char *nptr,
+              int base, int radix, int radix_multiplier, char expchar,
+              char **endptr)
+{
+  const char *s = nptr;
+  bool got_dot = false;
+  long int exponent = 0;
+  double num = 0;
+
+  for (;; ++s)
+    {
+      int digit;
+      if (c_isdigit (*s))
+        digit = *s - '0';
+      else if (base == 16 && c_isxdigit (*s))
+        digit = c_tolower (*s) - ('a' - 10);
+      else if (! got_dot && *s == '.')
+        {
+          /* Record that we have found the decimal point.  */
+          got_dot = true;
+          continue;
+        }
+      else
+        /* Any other character terminates the number.  */
+        break;
+
+      /* Make sure that multiplication by base will not overflow.  */
+      if (num <= DBL_MAX / base)
+        num = num * base + digit;
+      else
+        {
+          /* The value of the digit doesn't matter, since we have already
+             gotten as many digits as can be represented in a `double'.
+             This doesn't necessarily mean the result will overflow.
+             The exponent may reduce it to within range.
+
+             We just need to record that there was another
+             digit so that we can multiply by 10 later.  */
+          exponent += radix_multiplier;
+        }
+
+      /* Keep track of the number of digits after the decimal point.
+         If we just divided by base here, we might lose precision.  */
+      if (got_dot)
+        exponent -= radix_multiplier;
+    }
+
+  if (c_tolower (*s) == expchar && ! locale_isspace (s[1]))
+    {
+      /* Add any given exponent to the implicit one.  */
+      int save = errno;
+      char *end;
+      long int value = strtol (s + 1, &end, 10);
+      errno = save;
+
+      if (s + 1 != end)
+        {
+          /* Skip past the exponent, and add in the implicit exponent,
+             resulting in an extreme value on overflow.  */
+          s = end;
+          exponent =
+            (exponent < 0
+             ? (value < LONG_MIN - exponent ? LONG_MIN : exponent + value)
+             : (LONG_MAX - exponent < value ? LONG_MAX : exponent + value));
+        }
+    }
+
+  *endptr = (char *) s;
+  return scale_radix_exp (num, radix, exponent);
+}
+
+static double underlying_strtod (const char *, char **);
 
 /* Convert NPTR to a double.  If ENDPTR is not NULL, a pointer to the
    character after the last one used in the number is put in *ENDPTR.  */
 double
 strtod (const char *nptr, char **endptr)
 {
-  const unsigned char *s;
   bool negative = false;
 
   /* The number so far.  */
   double num;
 
-  bool got_dot;                 /* Found a decimal point.  */
-  bool got_digit;               /* Seen any digits.  */
-  bool hex = false;             /* Look for hex float exponent.  */
-
-  /* The exponent of the number.  */
-  long int exponent;
-
-  if (nptr == NULL)
-    {
-      errno = EINVAL;
-      goto noconv;
-    }
-
-  /* Use unsigned char for the ctype routines.  */
-  s = (unsigned char *) nptr;
+  const char *s = nptr;
+  char *end;
 
   /* Eat whitespace.  */
-  while (isspace (*s))
+  while (locale_isspace (*s))
     ++s;
 
   /* Get the sign.  */
@@ -67,210 +206,84 @@ strtod (const char *nptr, char **endptr)
   if (*s == '-' || *s == '+')
     ++s;
 
-  num = 0.0;
-  got_dot = false;
-  got_digit = false;
-  exponent = 0;
+  num = underlying_strtod (s, &end);
 
-  /* Check for hex float.  */
-  if (*s == '0' && c_tolower (s[1]) == 'x'
-      && (c_isxdigit (s[2]) || ('.' == s[2] && c_isxdigit (s[3]))))
+  if (c_isdigit (s[*s == '.']))
     {
-      hex = true;
-      s += 2;
-      for (;; ++s)
-        {
-          if (c_isxdigit (*s))
-            {
-              got_digit = true;
+      /* If a hex float was converted incorrectly, do it ourselves.  */
+      if (*s == '0' && c_tolower (s[1]) == 'x' && end <= s + 2
+          && c_isxdigit (s[2 + (s[2] == '.')]))
+        num = parse_number (s + 2, 16, 2, 4, 'p', &end);
 
-              /* Make sure that multiplication by 16 will not overflow.  */
-              if (num > DBL_MAX / 16)
-                /* The value of the digit doesn't matter, since we have already
-                   gotten as many digits as can be represented in a `double'.
-                   This doesn't necessarily mean the result will overflow.
-                   The exponent may reduce it to within range.
-
-                   We just need to record that there was another
-                   digit so that we can multiply by 16 later.  */
-                ++exponent;
-              else
-                num = ((num * 16.0)
-                       + (c_tolower (*s) - (c_isdigit (*s) ? '0' : 'a' - 10)));
-
-              /* Keep track of the number of digits after the decimal point.
-                 If we just divided by 16 here, we would lose precision.  */
-              if (got_dot)
-                --exponent;
-            }
-          else if (!got_dot && *s == '.')
-            /* Record that we have found the decimal point.  */
-            got_dot = true;
-          else
-            /* Any other character terminates the number.  */
-            break;
-        }
+      s = end;
     }
 
-  /* Not a hex float.  */
-  else
+  /* Check for infinities and NaNs.  */
+  else if (c_tolower (*s) == 'i'
+           && c_tolower (s[1]) == 'n'
+           && c_tolower (s[2]) == 'f')
     {
-      for (;; ++s)
-        {
-          if (c_isdigit (*s))
-            {
-              got_digit = true;
-
-              /* Make sure that multiplication by 10 will not overflow.  */
-              if (num > DBL_MAX * 0.1)
-                /* The value of the digit doesn't matter, since we have already
-                   gotten as many digits as can be represented in a `double'.
-                   This doesn't necessarily mean the result will overflow.
-                   The exponent may reduce it to within range.
-
-                   We just need to record that there was another
-                   digit so that we can multiply by 10 later.  */
-                ++exponent;
-              else
-                num = (num * 10.0) + (*s - '0');
-
-              /* Keep track of the number of digits after the decimal point.
-                 If we just divided by 10 here, we would lose precision.  */
-              if (got_dot)
-                --exponent;
-            }
-          else if (!got_dot && *s == '.')
-            /* Record that we have found the decimal point.  */
-            got_dot = true;
-          else
-            /* Any other character terminates the number.  */
-            break;
-        }
-    }
-
-  if (!got_digit)
-    {
-      /* Check for infinities and NaNs.  */
+      s += 3;
       if (c_tolower (*s) == 'i'
           && c_tolower (s[1]) == 'n'
-          && c_tolower (s[2]) == 'f')
+          && c_tolower (s[2]) == 'i'
+          && c_tolower (s[3]) == 't'
+          && c_tolower (s[4]) == 'y')
+        s += 5;
+      num = HUGE_VAL;
+    }
+  else if (c_tolower (*s) == 'n'
+           && c_tolower (s[1]) == 'a'
+           && c_tolower (s[2]) == 'n')
+    {
+      s += 3;
+      if (*s == '(')
         {
-          s += 3;
-          num = HUGE_VAL;
-          if (c_tolower (*s) == 'i'
-              && c_tolower (s[1]) == 'n'
-              && c_tolower (s[2]) == 'i'
-              && c_tolower (s[3]) == 't'
-              && c_tolower (s[4]) == 'y')
-            s += 5;
-          goto valid;
+          const char *p = s + 1;
+          while (c_isalnum (*p))
+            p++;
+          if (*p == ')')
+            s = p + 1;
         }
-#ifdef NAN
-      else if (c_tolower (*s) == 'n'
-               && c_tolower (s[1]) == 'a'
-               && c_tolower (s[2]) == 'n')
-        {
-          s += 3;
-          num = NAN;
-          /* Since nan(<n-char-sequence>) is implementation-defined,
-             we define it by ignoring <n-char-sequence>.  A nicer
-             implementation would populate the bits of the NaN
-             according to interpreting n-char-sequence as a
-             hexadecimal number, but the result is still a NaN.  */
-          if (*s == '(')
-            {
-              const unsigned char *p = s + 1;
-              while (c_isalnum (*p))
-                p++;
-              if (*p == ')')
-                s = p + 1;
-            }
-          goto valid;
-        }
-#endif
-      goto noconv;
-    }
 
-  if (c_tolower (*s) == (hex ? 'p' : 'e') && !isspace (s[1]))
+      /* If the underlying implementation misparsed the NaN, assume
+         its result is incorrect, and return a NaN.  Normally it's
+         better to use the underlying implementation's result, since a
+         nice implementation populates the bits of the NaN according
+         to interpreting n-char-sequence as a hexadecimal number.  */
+      if (s != end)
+        num = NAN;
+    }
+  else
     {
-      /* Get the exponent specified after the `e' or `E'.  */
-      int save = errno;
-      char *end;
-      long int value;
-
-      errno = 0;
-      ++s;
-      value = strtol ((char *) s, &end, 10);
-      if (errno == ERANGE && num)
-        {
-          /* The exponent overflowed a `long int'.  It is probably a safe
-             assumption that an exponent that cannot be represented by
-             a `long int' exceeds the limits of a `double'.  */
-          if (endptr != NULL)
-            *endptr = end;
-          if (value < 0)
-            goto underflow;
-          else
-            goto overflow;
-        }
-      else if (end == (char *) s)
-        /* There was no exponent.  Reset END to point to
-           the 'e' or 'E', so *ENDPTR will be set there.  */
-        end = (char *) s - 1;
-      errno = save;
-      s = (unsigned char *) end;
-      exponent += value;
+      /* No conversion could be performed.  */
+      errno = EINVAL;
+      s = nptr;
     }
 
-  if (num == 0.0)
-    goto valid;
-
-  if (hex)
-    {
-      /* ldexp takes care of range errors.  */
-      num = ldexp (num, exponent);
-      goto valid;
-    }
-
-  /* Multiply NUM by 10 to the EXPONENT power,
-     checking for overflow and underflow.  */
-
-  if (exponent < 0)
-    {
-      if (num < DBL_MIN * pow (10.0, (double) -exponent))
-        goto underflow;
-    }
-  else if (exponent > 0)
-    {
-      if (num > DBL_MAX * pow (10.0, (double) -exponent))
-        goto overflow;
-    }
-
-  num *= pow (10.0, (double) exponent);
-
- valid:
   if (endptr != NULL)
     *endptr = (char *) s;
   return negative ? -num : num;
+}
 
- overflow:
-  /* Return an overflow error.  */
-  if (endptr != NULL)
-    *endptr = (char *) s;
-  errno = ERANGE;
-  return negative ? -HUGE_VAL : HUGE_VAL;
-
- underflow:
-  /* Return an underflow error.  */
-  if (endptr != NULL)
-    *endptr = (char *) s;
-  errno = ERANGE;
-  return negative ? -0.0 : 0.0;
-
- noconv:
-  /* There was no number.  */
-  if (endptr != NULL)
-    *endptr = (char *) nptr;
-  errno = EINVAL;
-  return 0.0;
+/* The "underlying" strtod implementation.  This must be defined
+   after strtod because it #undefs strtod.  */
+static double
+underlying_strtod (const char *nptr, char **endptr)
+{
+  if (HAVE_RAW_DECL_STRTOD)
+    {
+      /* Prefer the native strtod if available.  Usually it should
+         work and it should give more-accurate results than our
+         approximation.  */
+      #undef strtod
+      return strtod (nptr, endptr);
+    }
+  else
+    {
+      /* Approximate strtod well enough for this module.  There's no
+         need to handle anything but finite unsigned decimal
+         numbers with nonnull ENDPTR.  */
+      return parse_number (nptr, 10, 10, 1, 'e', endptr);
+    }
 }

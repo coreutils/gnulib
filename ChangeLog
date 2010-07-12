@@ -1,3 +1,25 @@
+2010-07-12  Paul R. Eggert  <eggert@cs.ucla.edu>
+
+	strtod: make it more-accurate typically, and don't require libm
+	* lib/strtod.c (_GL_ARG_NONNULL): Remove; no longer needed.
+	Include limits.h.  Don't include string.h.
+	(HAVE_LDEXP_IN_LIBC, HAVE_RAW_DECL_STRTOD): Define to 0 if not defined.
+	(locale_isspace): New function, so that no casts are needed to
+	check whether *s is a space.
+	(ldexp): Provide an unused dummy if not available.
+	(scale_radix_exp, parse_number, underlying_strtod): New functions.
+	(strtod): Use them.  This implementation prefers to use the
+	underlying strtod if available, falling back on our own code
+	only to fix known bugs.  This is more likely to produce an
+	accurate result.  Also, it avoids the use of libm functions.
+	* m4/strtod.m4 (gl_FUNC_STRTOD): Don't invoke _AC_LIBOBJ_STRTOD;
+	no longer needed.  Invoke AC_LIBOBJ([strtod]); don't know why this
+	was absent, but it caused a test failure with coreutils.
+	(gl_PREREQ_STRTOD): Check wither ldexp can be used without linking
+	with libm.
+	* modules/strtod (Makefile.am, Link): libm is no longer needed.
+	* modules/strtod-tests (Makefile.am): Likewise.
+
 2010-07-11  Pádraig Brady  <P@draigBrady.com>
             Bruno Haible  <bruno@clisp.org>
 

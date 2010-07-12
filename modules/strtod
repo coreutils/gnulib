@@ -15,13 +15,9 @@ gl_FUNC_STRTOD
 gl_STDLIB_MODULE_INDICATOR([strtod])
 
 Makefile.am:
-LIBS += $(POW_LIB)
 
 Include:
 <stdlib.h>
-
-Link:
-$(POW_LIB)
 
 License:
 LGPL
