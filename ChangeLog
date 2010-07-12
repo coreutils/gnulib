@@ -1,3 +1,15 @@
+2010-07-12  Paul R. Eggert  <eggert@cs.ucla.edu>
+
+	memcoll: clarify sizes versus lengths, document better, and tweak perf
+	* lib/memcoll.c (strcoll_loop, memcoll0):
+	Improve quality of descriptive comments.  Name variables
+	consistently as to whether they are lengths (which do not include
+	terminating null) versus sizes (which do).
+	* lib/xmemcoll.c (xmemcoll0): Likewise.
+	* lib/memcoll.c (strcoll_loop): Tweak the way that the diff is
+	returned when s1size == 0; this is easier to compile and saves
+	about 17% of memcoll's code space on x86-64 with GCC 4.1.2.
+
 2010-07-12  Bruno Haible  <bruno@clisp.org>
 
 	Tests for module '_Exit'.

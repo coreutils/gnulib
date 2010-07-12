@@ -26,11 +26,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* Ensure strcoll operates on the entire input strings, in case they contain
-   NUL bytes. */
-
+/* Compare S1 (with size S1SIZE) and S2 (with length S2SIZE) according
+   to the LC_COLLATE locale.  S1 and S2 are both blocks of memory with
+   nonzero sizes, and the last byte in each block must be a null byte.
+   Set errno to an error number if there is an error, and to zero
+   otherwise.  */
 static inline int
-strcoll_loop (char const *s1, size_t s1len, const char *s2, size_t s2len)
+strcoll_loop (char const *s1, size_t s1size, char const *s2, size_t s2size)
 {
   int diff;
 
@@ -43,20 +45,13 @@ strcoll_loop (char const *s1, size_t s1len, const char *s2, size_t s2len)
       size_t size2 = strlen (s2) + 1;
       s1 += size1;
       s2 += size2;
-      s1len -= size1;
-      s2len -= size2;
+      s1size -= size1;
+      s2size -= size2;
 
-      if (s1len == 0)
-        {
-          if (s2len != 0)
-            diff = -1;
-          break;
-        }
-      else if (s2len == 0)
-        {
-          diff = 1;
-          break;
-        }
+      if (s1size == 0)
+        return - (s2size != 0);
+      if (s2size == 0)
+        return 1;
     }
 
   return diff;
@@ -86,30 +81,31 @@ memcoll (char *s1, size_t s1len, char *s2, size_t s2len)
       char n1 = s1[s1len];
       char n2 = s2[s2len];
 
-      s1[s1len++] = '\0';
-      s2[s2len++] = '\0';
+      s1[s1len] = '\0';
+      s2[s2len] = '\0';
 
-      diff = strcoll_loop (s1, s1len, s2, s2len);
+      diff = strcoll_loop (s1, s1len + 1, s2, s2len + 1);
 
-      s1[s1len - 1] = n1;
-      s2[s2len - 1] = n2;
+      s1[s1len] = n1;
+      s2[s2len] = n2;
     }
 
   return diff;
 }
 
-/* Compare S1 (with length S1LEN) and S2 (with length S2LEN) according
-   to the LC_COLLATE locale.  S1 and S2 must both end in a null byte.
+/* Compare S1 (with size S1SIZE) and S2 (with length S2SIZE) according
+   to the LC_COLLATE locale.  S1 and S2 are both blocks of memory with
+   nonzero sizes, and the last byte in each block must be a null byte.
    Set errno to an error number if there is an error, and to zero
    otherwise.  */
 int
-memcoll0 (char const *s1, size_t s1len, const char *s2, size_t s2len)
+memcoll0 (char const *s1, size_t s1size, char const *s2, size_t s2size)
 {
-  if (s1len == s2len && memcmp (s1, s2, s1len) == 0)
+  if (s1size == s2size && memcmp (s1, s2, s1size) == 0)
     {
       errno = 0;
       return 0;
     }
   else
-    return strcoll_loop (s1, s1len, s2, s2len);
+    return strcoll_loop (s1, s1size, s2, s2size);
 }

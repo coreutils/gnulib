@@ -60,8 +60,10 @@ xmemcoll (char *s1, size_t s1len, char *s2, size_t s2len)
   return diff;
 }
 
-/* Like xmemcoll, but S1 and S2 are known to be NUL delimited, thus
-   no modifications to S1 and S2 are needed. */
+/* Compare S1 (with size S1SIZE) and S2 (with length S2SIZE) according
+   to the LC_COLLATE locale.  S1 and S2 are both blocks of memory with
+   nonzero sizes, and the last byte in each block must be a null byte.
+   Report an error and exit if there is an error.  */
 
 int
 xmemcoll0 (char const *s1, size_t s1len, char const *s2, size_t s2len)
