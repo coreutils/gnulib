@@ -1,5 +1,10 @@
 2010-07-12  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module '_Exit'.
+	* modules/_Exit-tests: New file.
+	* tests/test-_Exit.sh: New file.
+	* tests/test-_Exit.c: New file.
+
 	New module '_Exit'.
 	* lib/stdlib.in.h (__attribute__): New macro.
 	(_Exit): New declaration.
