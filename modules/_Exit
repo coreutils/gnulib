@@ -1,0 +1,24 @@
+Description:
+_Exit() function: terminate current process.
+
+Files:
+lib/_Exit.c
+m4/_Exit.m4
+
+Depends-on:
+stdlib
+
+configure.ac:
+gl_FUNC__EXIT
+gl_STDLIB_MODULE_INDICATOR([_Exit])
+
+Makefile.am:
+
+Include:
+<stdlib.h>
+
+License:
+LGPL
+
+Maintainer:
+all

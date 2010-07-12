@@ -1,3 +1,17 @@
+2010-07-12  Bruno Haible  <bruno@clisp.org>
+
+	New module '_Exit'.
+	* lib/stdlib.in.h (__attribute__): New macro.
+	(_Exit): New declaration.
+	* lib/_Exit.c: New file.
+	* m4/_Exit.m4: New file.
+	* m4/stdlib_h.m4 (gl_STDLIB_H): Check whether _Exit is declared.
+	(gl_STDLIB_H_DEFAULTS): Initialize GNULIB__EXIT and HAVE__EXIT.
+	* modules/stdlib (Makefile.am): Substitute GNULIB__EXIT and HAVE__EXIT.
+	* modules/_Exit: New file.
+	* tests/test-stdlib-c++.cc (_Exit): Check signature.
+	* doc/posix-functions/_Exit_C99.texi: Mention the new module.
+
 2010-07-12  Paul R. Eggert  <eggert@cs.ucla.edu>
 
 	strtod: make it more-accurate typically, and don't require libm

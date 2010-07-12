@@ -24,6 +24,10 @@
 #include "signature.h"
 
 
+#if GNULIB_TEST__EXIT
+SIGNATURE_CHECK (GNULIB_NAMESPACE::_Exit, void, (int));
+#endif
+
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::atexit, int, (void (*) (void)));
 
 #if GNULIB_TEST_ATOLL

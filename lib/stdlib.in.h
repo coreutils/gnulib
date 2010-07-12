@@ -74,6 +74,12 @@ struct random_data
 # include <unistd.h>
 #endif
 
+#ifndef __attribute__
+# if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 8)
+#  define __attribute__(Spec)   /* empty */
+# endif
+#endif
+
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
 /* The definition of _GL_ARG_NONNULL is copied here.  */
@@ -92,6 +98,23 @@ struct random_data
 #elif EXIT_FAILURE != 1
 # undef EXIT_FAILURE
 # define EXIT_FAILURE 1
+#endif
+
+
+#if @GNULIB__EXIT@
+/* Terminate the current process with the given return code, without running
+   the 'atexit' handlers.  */
+# if !@HAVE__EXIT@
+_GL_FUNCDECL_SYS (_Exit, void, (int status) __attribute__ ((__noreturn__)));
+# endif
+_GL_CXXALIAS_SYS (_Exit, void, (int status));
+_GL_CXXALIASWARN (_Exit);
+#elif defined GNULIB_POSIXCHECK
+# undef _Exit
+# if HAVE_RAW_DECL__EXIT
+_GL_WARN_ON_USE (_Exit, "_Exit is unportable - "
+                 "use gnulib module _Exit for portability");
+# endif
 #endif
 
 
