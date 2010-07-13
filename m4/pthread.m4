@@ -17,11 +17,13 @@ AC_DEFUN([gl_PTHREAD_CHECK],
         fi])
      LIBS="$gl_saved_libs"
    else
+     AC_CHECK_TYPES([pthread_t])
      PTHREAD_H='pthread.h'
    fi
 
    AC_SUBST([LIB_PTHREAD])
    AC_SUBST([PTHREAD_H])
 
+   AC_REQUIRE([AC_C_INLINE])
    AC_REQUIRE([AC_C_RESTRICT])
 ])
