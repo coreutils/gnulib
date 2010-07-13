@@ -1,3 +1,8 @@
+2010-07-13  Bruno Haible  <bruno@clisp.org>
+
+	strtod: Add safety check.
+	* lib/strtod.c (ldexp): Abort if this dummy replacement gets called.
+
 2010-07-12  Bruno Haible  <bruno@clisp.org>
 
 	Unify tests that set gl_cv_func_ldexpl_no_libm.

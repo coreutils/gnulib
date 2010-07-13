@@ -45,7 +45,12 @@ locale_isspace (char c)
 
 #if !HAVE_LDEXP_IN_LIBC
  #define ldexp dummy_ldexp
- static double ldexp (double x, int exponent) { return x + exponent; }
+ /* A dummy definition that will never be invoked.  */
+ static double ldexp (double x _GL_UNUSED, int exponent _GL_UNUSED)
+ {
+   abort ();
+   return 0.0;
+ }
 #endif
 
 /* Return X * BASE**EXPONENT.  Return an extreme value and set errno
