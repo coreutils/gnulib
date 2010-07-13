@@ -972,26 +972,21 @@ mem_cd_iconveh_internal (const char *src, size_t srclen,
       size_t memsize = length + extra_alloc;
 
       if (*resultp != NULL && *lengthp >= memsize)
-        {
-          result = *resultp;
-          memcpy (result, tmpbuf, length);
-        }
+        result = *resultp;
       else
         {
           char *memory;
 
           memory = (char *) malloc (memsize > 0 ? memsize : 1);
           if (memory != NULL)
-            {
-              memcpy (memory, tmpbuf, length);
-              result = memory;
-            }
+            result = memory;
           else
             {
               errno = ENOMEM;
               return -1;
             }
         }
+      memcpy (result, tmpbuf, length);
     }
   else if (result != *resultp && length + extra_alloc < allocated)
     {
