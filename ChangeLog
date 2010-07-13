@@ -1,5 +1,12 @@
 2010-07-13  Bruno Haible  <bruno@clisp.org>
 
+	striconveh: Don't malloc memory if the result buffer is sufficient.
+	* lib/striconveh.c (mem_cd_iconveh_internal): Use the provided result
+	buffer if its size is sufficient.
+	Reported by Ludovic Courtès <ludo@gnu.org>.
+
+2010-07-13  Bruno Haible  <bruno@clisp.org>
+
 	strtod: Add safety check.
 	* lib/strtod.c (ldexp): Abort if this dummy replacement gets called.
 
