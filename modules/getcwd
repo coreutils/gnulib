@@ -17,6 +17,7 @@ openat
 stdbool
 unistd
 malloc-posix
+strdup-posix
 
 configure.ac:
 gl_FUNC_GETCWD

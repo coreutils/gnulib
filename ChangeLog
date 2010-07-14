@@ -1,3 +1,20 @@
+2010-07-14  Paul R. Eggert  <eggert@cs.ucla.edu>
+
+	getcwd: on Solaris, work better if ancestors are inaccessible
+	* lib/getcwd.c (__getcwd): If getcwd returns EINVAL for zero
+	buffer and size, try again with a large buffer.  This works better
+	on Solaris, since its getcwd succeeds even if the path to the root
+	is inaccessible, and this is helpful in common cases such as .zfs
+	hidden directories.  Problem reported by J Chapman Flack in
+	http://lists.gnu.org/archive/html/bug-tar/2010-06/msg00000.html
+	Use system getcwd if it's declared, not merely if it's partly
+	working; use the partly-working test only to avoid needless effort
+	if the system getcwd fails.
+	* m4/getcwd-path-max.m4 (gl_FUNC_GETCWD_PATH_MAX): Omit
+	comment that was already obsolete and is now even more obsolete.
+	* modules/getcwd (Depends-on): Depend on strdup, since __getcwd
+	now might call strdup.
+
 2010-07-13  Paul R. Eggert  <eggert@cs.ucla.edu>
 
 	pthread: Add enough so that coreutils/src/sort.c compiles.

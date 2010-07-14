@@ -183,8 +183,6 @@ main ()
   no,*)
     AC_DEFINE([HAVE_PARTLY_WORKING_GETCWD], [1],
       [Define to 1 if getcwd works, except it sometimes fails when it shouldn't,
-       setting errno to ERANGE, ENAMETOOLONG, or ENOENT.  If __GETCWD_PREFIX
-       is not defined, it doesn't matter whether HAVE_PARTLY_WORKING_GETCWD
-       is defined.]);;
+       setting errno to ERANGE, ENAMETOOLONG, or ENOENT.]);;
   esac
 ])
