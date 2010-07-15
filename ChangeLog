@@ -1,3 +1,7 @@
+2010-07-15  Karl Berry  <karl@gnu.org>
+
+	* config/srclist.txt (fdl.texi): only one copy, from gnustandards.
+
 2010-07-14  Paul R. Eggert  <eggert@cs.ucla.edu>
 
 	getcwd: on Solaris, work better if ancestors are inaccessible
