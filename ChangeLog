@@ -1,3 +1,10 @@
+2010-07-18  Bruno Haible  <bruno@clisp.org>
+
+	unistr/u8-strchr: Optimize non-ASCII argument case.
+	* lib/unistr/u8-strchr.c (u8_strchr): Compare the last byte first,
+	because the first byte often matches anyway.
+	Reported by Pádraig Brady <P@draigbrady.com>.
+
 2010-07-15  Karl Berry  <karl@gnu.org>
 
 	* config/srclist.txt (fdl.texi): only one copy, from gnustandards.

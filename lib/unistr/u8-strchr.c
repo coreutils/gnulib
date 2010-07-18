@@ -68,7 +68,7 @@ u8_strchr (const uint8_t *s, ucs4_t uc)
             {
               if (s[1] == 0)
                 goto notfound;
-              if (*s == c0 && s[1] == c1)
+              if (s[1] == c1 && *s == c0)
                 break;
             }
           return (uint8_t *) s;
@@ -86,7 +86,7 @@ u8_strchr (const uint8_t *s, ucs4_t uc)
             {
               if (s[2] == 0)
                 goto notfound;
-              if (*s == c0 && s[1] == c1 && s[2] == c2)
+              if (s[2] == c2 && s[1] == c1 && *s == c0)
                 break;
             }
           return (uint8_t *) s;
@@ -105,7 +105,7 @@ u8_strchr (const uint8_t *s, ucs4_t uc)
             {
               if (s[3] == 0)
                 goto notfound;
-              if (*s == c0 && s[1] == c1 && s[2] == c2 && s[3] == c3)
+              if (s[3] == c3 && s[2] == c2 && s[1] == c1 && *s == c0)
                 break;
             }
           return (uint8_t *) s;
