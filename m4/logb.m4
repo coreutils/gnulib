@@ -1,4 +1,4 @@
-# logb.m4 serial 1
+# logb.m4 serial 2
 dnl Copyright (C) 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -14,26 +14,28 @@ AC_DEFUN([gl_FUNC_LOGB],
   fi
   dnl Test whether logb() can be used without libm.
   LOGB_LIBM=?
-  AC_TRY_LINK([
-     #ifndef __NO_MATH_INLINES
-     # define __NO_MATH_INLINES 1 /* for glibc */
-     #endif
-     #include <math.h>
-     extern double logb (double x);
-     double x;],
-    [x = logb(x);],
+  AC_LINK_IFELSE(
+    [AC_LANG_PROGRAM(
+       [[#ifndef __NO_MATH_INLINES
+         # define __NO_MATH_INLINES 1 /* for glibc */
+         #endif
+         #include <math.h>
+         extern double logb (double x);
+         double x;]],
+       [[x = logb(x);]])],
     [LOGB_LIBM=])
   if test "$LOGB_LIBM" = "?"; then
     save_LIBS="$LIBS"
     LIBS="$LIBS -lm"
-    AC_TRY_LINK([
-       #ifndef __NO_MATH_INLINES
-       # define __NO_MATH_INLINES 1 /* for glibc */
-       #endif
-       #include <math.h>
-       extern double logb (double x);
-       double x;],
-      [x = logb(x);],
+    AC_LINK_IFELSE(
+      [AC_LANG_PROGRAM(
+         [[#ifndef __NO_MATH_INLINES
+           # define __NO_MATH_INLINES 1 /* for glibc */
+           #endif
+           #include <math.h>
+           extern double logb (double x);
+           double x;]],
+         [[x = logb(x);]])],
       [LOGB_LIBM="-lm"])
     LIBS="$save_LIBS"
   fi

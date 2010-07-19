@@ -1,5 +1,53 @@
 2010-08-26  Bruno Haible  <bruno@clisp.org>
 
+	Modernize AC_TRY_LINK invocations.
+	* m4/acosl.m4 (gl_FUNC_ACOSL): Use AC_LINK_IFELSE instead of
+	AC_TRY_LINK.
+	* m4/argp.m4 (gl_ARGP): Likewise.
+	* m4/asinl.m4 (gl_FUNC_ASINL): Likewise.
+	* m4/atanl.m4 (gl_FUNC_ATANL): Likewise.
+	* m4/ceil.m4 (gl_FUNC_CEIL_LIBS): Likewise.
+	* m4/ceilf.m4 (gl_FUNC_CEILF_LIBS): Likewise.
+	* m4/ceill.m4 (gl_FUNC_CEILL_LIBS): Likewise.
+	* m4/codeset.m4 (AM_LANGINFO_CODESET): Likewise.
+	* m4/cosl.m4 (gl_FUNC_COSL): Likewise.
+	* m4/expl.m4 (gl_FUNC_EXPL): Likewise.
+	* m4/floor.m4 (gl_FUNC_FLOOR_LIBS): Likewise.
+	* m4/floorf.m4 (gl_FUNC_FLOORF_LIBS): Likewise.
+	* m4/floorl.m4 (gl_FUNC_FLOORL_LIBS): Likewise.
+	* m4/frexp.m4 (gl_FUNC_FREXP, gl_CHECK_FREXP_NO_LIBM): Likewise.
+	* m4/frexpl.m4 (gl_FUNC_FREXPL, gl_CHECK_FREXPL_NO_LIBM): Likewise.
+	* m4/ftello.m4 (gl_FUNC_FTELLO): Likewise.
+	* m4/gettext.m4 (AM_GNU_GETTEXT): Likewise.
+	* m4/hostent.m4 (gl_HOSTENT): Likewise.
+	* m4/iconv.m4 (AM_ICONV_LINK): Likewise.
+	* m4/intl.m4 (gt_INTL_SUBDIR_CORE): Likewise.
+	* m4/intlmacosx.m4 (gt_INTL_MACOSX): Likewise.
+	* m4/isnand.m4 (gl_HAVE_ISNAND_IN_LIBM, gl_HAVE_ISNAND_NO_LIBM):
+	Likewise.
+	* m4/isnanf.m4 (gl_HAVE_ISNANF_NO_LIBM, gl_HAVE_ISNANF_IN_LIBM):
+	Likewise.
+	* m4/isnanl.m4 (gl_HAVE_ISNANL_NO_LIBM, gl_HAVE_ISNANL_IN_LIBM):
+	Likewise.
+	* m4/lcmessage.m4 (gt_LC_MESSAGES): Likewise.
+	* m4/ldexpl.m4 (gl_FUNC_LDEXPL, gl_CHECK_LDEXPL_NO_LIBM): Likewise.
+	* m4/lib-link.m4 (AC_LIB_HAVE_LINKFLAGS): Likewise.
+	* m4/logb.m4 (gl_FUNC_LOGB): Likewise.
+	* m4/logl.m4 (gl_FUNC_LOGL): Likewise.
+	* m4/printf-frexp.m4 (gl_FUNC_PRINTF_FREXP): Likewise.
+	* m4/servent.m4 (gl_SERVENT): Likewise.
+	* m4/signbit.m4 (gl_SIGNBIT): Likewise.
+	* m4/sinl.m4 (gl_FUNC_SINL): Likewise.
+	* m4/sqrtl.m4 (gl_FUNC_SQRTL): Likewise.
+	* m4/tanl.m4 (gl_FUNC_TANL): Likewise.
+	* m4/threadlib.m4 (gl_THREADLIB_BODY): Likewise.
+	* m4/trunc.m4 (gl_FUNC_TRUNC): Likewise.
+	* m4/truncf.m4 (gl_FUNC_TRUNCF): Likewise.
+	* m4/truncl.m4 (gl_FUNC_TRUNCL): Likewise.
+	* modules/tsearch-tests (configure.ac): Likewise.
+
+2010-08-26  Bruno Haible  <bruno@clisp.org>
+
 	Modernize AC_TRY_COMPILE invocations.
 	* m4/environ.m4 (gt_CHECK_VAR_DECL): Use AC_COMPILE_IFELSE instead of
 	AC_TRY_COMPILE.

@@ -19,9 +19,11 @@ AC_DEFUN([gl_FUNC_FREXPL],
         [
           save_LIBS="$LIBS"
           LIBS="$LIBS -lm"
-          AC_TRY_LINK([#include <math.h>
-                       long double x;],
-                      [int e; return frexpl (x, &e) > 0;],
+          AC_LINK_IFELSE(
+            [AC_LANG_PROGRAM(
+               [[#include <math.h>
+                 long double x;]],
+               [[int e; return frexpl (x, &e) > 0;]])],
             [gl_cv_func_frexpl_in_libm=yes],
             [gl_cv_func_frexpl_in_libm=no])
           LIBS="$save_LIBS"
@@ -90,9 +92,11 @@ AC_DEFUN([gl_CHECK_FREXPL_NO_LIBM],
   AC_CACHE_CHECK([whether frexpl() can be used without linking with libm],
     [gl_cv_func_frexpl_no_libm],
     [
-      AC_TRY_LINK([#include <math.h>
-                   long double x;],
-                  [int e; return frexpl (x, &e) > 0;],
+      AC_LINK_IFELSE(
+        [AC_LANG_PROGRAM(
+           [[#include <math.h>
+             long double x;]],
+           [[int e; return frexpl (x, &e) > 0;]])],
         [gl_cv_func_frexpl_no_libm=yes],
         [gl_cv_func_frexpl_no_libm=no])
     ])

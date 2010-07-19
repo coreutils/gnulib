@@ -1,4 +1,4 @@
-# floor.m4 serial 3
+# floor.m4 serial 4
 dnl Copyright (C) 2007, 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -20,24 +20,26 @@ AC_DEFUN([gl_FUNC_FLOOR_LIBS],
 [
   gl_CACHE_VAL_SILENT([gl_cv_func_floor_libm], [
     gl_cv_func_floor_libm=?
-    AC_TRY_LINK([
-       #ifndef __NO_MATH_INLINES
-       # define __NO_MATH_INLINES 1 /* for glibc */
-       #endif
-       #include <math.h>
-       double x;],
-      [x = floor(x);],
+    AC_LINK_IFELSE(
+      [AC_LANG_PROGRAM(
+         [[#ifndef __NO_MATH_INLINES
+           # define __NO_MATH_INLINES 1 /* for glibc */
+           #endif
+           #include <math.h>
+           double x;]],
+         [[x = floor(x);]])],
       [gl_cv_func_floor_libm=])
     if test "$gl_cv_func_floor_libm" = "?"; then
       save_LIBS="$LIBS"
       LIBS="$LIBS -lm"
-      AC_TRY_LINK([
-         #ifndef __NO_MATH_INLINES
-         # define __NO_MATH_INLINES 1 /* for glibc */
-         #endif
-         #include <math.h>
-         double x;],
-        [x = floor(x);],
+      AC_LINK_IFELSE(
+        [AC_LANG_PROGRAM(
+           [[#ifndef __NO_MATH_INLINES
+             # define __NO_MATH_INLINES 1 /* for glibc */
+             #endif
+             #include <math.h>
+             double x;]],
+           [[x = floor(x);]])],
         [gl_cv_func_floor_libm="-lm"])
       LIBS="$save_LIBS"
     fi

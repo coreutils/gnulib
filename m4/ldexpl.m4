@@ -19,9 +19,11 @@ AC_DEFUN([gl_FUNC_LDEXPL],
         [
           save_LIBS="$LIBS"
           LIBS="$LIBS -lm"
-          AC_TRY_LINK([#include <math.h>
-                       long double x;],
-                      [return ldexpl (x, -1) > 0;],
+          AC_LINK_IFELSE(
+            [AC_LANG_PROGRAM(
+               [[#include <math.h>
+                 long double x;]],
+               [[return ldexpl (x, -1) > 0;]])],
             [gl_cv_func_ldexpl_in_libm=yes],
             [gl_cv_func_ldexpl_in_libm=no])
           LIBS="$save_LIBS"
@@ -61,9 +63,11 @@ AC_DEFUN([gl_CHECK_LDEXPL_NO_LIBM],
   AC_CACHE_CHECK([whether ldexpl() can be used without linking with libm],
     [gl_cv_func_ldexpl_no_libm],
     [
-      AC_TRY_LINK([#include <math.h>
-                   long double x;],
-                  [return ldexpl (x, -1) > 0;],
+      AC_LINK_IFELSE(
+        [AC_LANG_PROGRAM(
+           [[#include <math.h>
+             long double x;]],
+           [[return ldexpl (x, -1) > 0;]])],
         [gl_cv_func_ldexpl_no_libm=yes],
         [gl_cv_func_ldexpl_no_libm=no])
     ])

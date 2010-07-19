@@ -15,24 +15,26 @@ AC_DEFUN([gl_FUNC_TRUNCL],
   if test "$ac_cv_have_decl_truncl" = yes; then
     dnl Test whether truncl() can be used without libm.
     TRUNCL_LIBM=?
-    AC_TRY_LINK([
-       #ifndef __NO_MATH_INLINES
-       # define __NO_MATH_INLINES 1 /* for glibc */
-       #endif
-       #include <math.h>
-       long double x;],
-      [x = truncl(x);],
+    AC_LINK_IFELSE(
+      [AC_LANG_PROGRAM(
+         [[#ifndef __NO_MATH_INLINES
+           # define __NO_MATH_INLINES 1 /* for glibc */
+           #endif
+           #include <math.h>
+           long double x;]],
+         [[x = truncl(x);]])],
       [TRUNCL_LIBM=])
     if test "$TRUNCL_LIBM" = "?"; then
       save_LIBS="$LIBS"
       LIBS="$LIBS -lm"
-      AC_TRY_LINK([
-         #ifndef __NO_MATH_INLINES
-         # define __NO_MATH_INLINES 1 /* for glibc */
-         #endif
-         #include <math.h>
-         long double x;],
-        [x = truncl(x);],
+      AC_LINK_IFELSE(
+        [AC_LANG_PROGRAM(
+           [[#ifndef __NO_MATH_INLINES
+             # define __NO_MATH_INLINES 1 /* for glibc */
+             #endif
+             #include <math.h>
+             long double x;]],
+           [[x = truncl(x);]])],
         [TRUNCL_LIBM="-lm"])
       LIBS="$save_LIBS"
     fi

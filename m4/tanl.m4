@@ -1,4 +1,4 @@
-# tanl.m4 serial 2
+# tanl.m4 serial 3
 dnl Copyright (C) 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -14,12 +14,14 @@ AC_DEFUN([gl_FUNC_TANL],
   AC_CACHE_CHECK([whether tanl() can be used without linking with libm],
     [gl_cv_func_tanl_no_libm],
     [
-      AC_TRY_LINK([#ifndef __NO_MATH_INLINES
-                   # define __NO_MATH_INLINES 1 /* for glibc */
-                   #endif
-                   #include <math.h>
-                   long double x;],
-                  [return tanl (x) > 0.4;],
+      AC_LINK_IFELSE(
+        [AC_LANG_PROGRAM(
+           [[#ifndef __NO_MATH_INLINES
+             # define __NO_MATH_INLINES 1 /* for glibc */
+             #endif
+             #include <math.h>
+             long double x;]],
+           [[return tanl (x) > 0.4;]])],
         [gl_cv_func_tanl_no_libm=yes],
         [gl_cv_func_tanl_no_libm=no])
     ])
@@ -29,12 +31,14 @@ AC_DEFUN([gl_FUNC_TANL],
       [
         save_LIBS="$LIBS"
         LIBS="$LIBS -lm"
-        AC_TRY_LINK([#ifndef __NO_MATH_INLINES
-                     # define __NO_MATH_INLINES 1 /* for glibc */
-                     #endif
-                     #include <math.h>
-                     long double x;],
-                    [return tanl (x) > 0.4;],
+        AC_LINK_IFELSE(
+          [AC_LANG_PROGRAM(
+             [[#ifndef __NO_MATH_INLINES
+               # define __NO_MATH_INLINES 1 /* for glibc */
+               #endif
+               #include <math.h>
+               long double x;]],
+             [[return tanl (x) > 0.4;]])],
           [gl_cv_func_tanl_in_libm=yes],
           [gl_cv_func_tanl_in_libm=no])
         LIBS="$save_LIBS"

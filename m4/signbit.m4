@@ -1,4 +1,4 @@
-# signbit.m4 serial 6
+# signbit.m4 serial 7
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -67,9 +67,11 @@ AC_DEFUN([gl_SIGNBIT],
           AC_CACHE_CHECK([whether copysignf can be used without linking with libm],
             [gl_cv_func_copysignf_no_libm],
             [
-              AC_TRY_LINK([#include <math.h>
-                           float x, y;],
-                          [return copysignf (x, y) < 0;],
+              AC_LINK_IFELSE(
+                [AC_LANG_PROGRAM(
+                   [[#include <math.h>
+                     float x, y;]],
+                   [[return copysignf (x, y) < 0;]])],
                 [gl_cv_func_copysignf_no_libm=yes],
                 [gl_cv_func_copysignf_no_libm=no])
             ])
@@ -87,9 +89,11 @@ AC_DEFUN([gl_SIGNBIT],
           AC_CACHE_CHECK([whether copysign can be used without linking with libm],
             [gl_cv_func_copysign_no_libm],
             [
-              AC_TRY_LINK([#include <math.h>
-                           double x, y;],
-                          [return copysign (x, y) < 0;],
+              AC_LINK_IFELSE(
+                [AC_LANG_PROGRAM(
+                   [[#include <math.h>
+                     double x, y;]],
+                   [[return copysign (x, y) < 0;]])],
                 [gl_cv_func_copysign_no_libm=yes],
                 [gl_cv_func_copysign_no_libm=no])
             ])
@@ -107,9 +111,11 @@ AC_DEFUN([gl_SIGNBIT],
           AC_CACHE_CHECK([whether copysignl can be used without linking with libm],
             [gl_cv_func_copysignl_no_libm],
             [
-              AC_TRY_LINK([#include <math.h>
-                           long double x, y;],
-                          [return copysignl (x, y) < 0;],
+              AC_LINK_IFELSE(
+                [AC_LANG_PROGRAM(
+                   [[#include <math.h>
+                     long double x, y;]],
+                   [[return copysignl (x, y) < 0;]])],
                 [gl_cv_func_copysignl_no_libm=yes],
                 [gl_cv_func_copysignl_no_libm=no])
             ])

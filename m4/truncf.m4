@@ -1,4 +1,4 @@
-# truncf.m4 serial 2
+# truncf.m4 serial 3
 dnl Copyright (C) 2007, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -14,24 +14,26 @@ AC_DEFUN([gl_FUNC_TRUNCF],
   if test "$ac_cv_have_decl_truncf" = yes; then
     dnl Test whether truncf() can be used without libm.
     TRUNCF_LIBM=?
-    AC_TRY_LINK([
-       #ifndef __NO_MATH_INLINES
-       # define __NO_MATH_INLINES 1 /* for glibc */
-       #endif
-       #include <math.h>
-       float x;],
-      [x = truncf(x);],
+    AC_LINK_IFELSE(
+      [AC_LANG_PROGRAM(
+         [[#ifndef __NO_MATH_INLINES
+           # define __NO_MATH_INLINES 1 /* for glibc */
+           #endif
+           #include <math.h>
+           float x;]],
+         [[x = truncf(x);]])],
       [TRUNCF_LIBM=])
     if test "$TRUNCF_LIBM" = "?"; then
       save_LIBS="$LIBS"
       LIBS="$LIBS -lm"
-      AC_TRY_LINK([
-         #ifndef __NO_MATH_INLINES
-         # define __NO_MATH_INLINES 1 /* for glibc */
-         #endif
-         #include <math.h>
-         float x;],
-        [x = truncf(x);],
+      AC_LINK_IFELSE(
+        [AC_LANG_PROGRAM(
+           [[#ifndef __NO_MATH_INLINES
+             # define __NO_MATH_INLINES 1 /* for glibc */
+             #endif
+             #include <math.h>
+             float x;]],
+           [[x = truncf(x);]])],
         [TRUNCF_LIBM="-lm"])
       LIBS="$save_LIBS"
     fi
