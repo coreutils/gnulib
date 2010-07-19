@@ -1,4 +1,4 @@
-# malloc.m4 serial 10
+# malloc.m4 serial 11
 dnl Copyright (C) 2007, 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -47,11 +47,15 @@ AC_DEFUN([gl_CHECK_MALLOC_POSIX],
       dnl It is too dangerous to try to allocate a large amount of memory:
       dnl some systems go to their knees when you do that. So assume that
       dnl all Unix implementations of the function are POSIX compliant.
-      AC_TRY_COMPILE([],
-        [#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-         choke me
-         #endif
-        ], [gl_cv_func_malloc_posix=yes], [gl_cv_func_malloc_posix=no])
+      AC_COMPILE_IFELSE(
+        [AC_LANG_PROGRAM(
+           [[]],
+           [[#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+             choke me
+             #endif
+            ]])],
+        [gl_cv_func_malloc_posix=yes],
+        [gl_cv_func_malloc_posix=no])
     ])
 ])
 

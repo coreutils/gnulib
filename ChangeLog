@@ -1,3 +1,31 @@
+2010-08-26  Bruno Haible  <bruno@clisp.org>
+
+	Modernize AC_TRY_COMPILE invocations.
+	* m4/environ.m4 (gt_CHECK_VAR_DECL): Use AC_COMPILE_IFELSE instead of
+	AC_TRY_COMPILE.
+	* m4/iconv.m4 (gl_iconv_AC_DEFUN): Likewise.
+	* m4/intl.m4 (gt_CHECK_DECL): Likewise.
+	* m4/intmax.m4 (gt_TYPE_INTMAX_T): Likewise.
+	* m4/intmax_t.m4 (gt_AC_TYPE_INTMAX_T): Likewise.
+	* m4/inttypes-pri.m4 (gt_INTTYPES_PRI): Likewise.
+	* m4/inttypes_h.m4 (gl_AC_HEADER_INTTYPES_H): Likewise.
+	* m4/locale_h.m4 (gl_LOCALE_H): Likewise.
+	* m4/lock.m4 (gl_LOCK): Likewise.
+	* m4/malloc.m4 (gl_CHECK_MALLOC_POSIX): Likewise.
+	* m4/mbswidth.m4 (gl_MBSWIDTH): Likewise.
+	* m4/minmax.m4 (gl_MINMAX_IN_HEADER): Likewise.
+	* m4/setenv.m4 (gl_FUNC_UNSETENV): Likewise.
+	* m4/size_max.m4 (gl_SIZE_MAX): Likewise.
+	* m4/ssize_t.m4 (gt_TYPE_SSIZE_T): Likewise.
+	* m4/stdarg.m4 (gl_STDARG_H): Likewise.
+	* m4/stdbool.m4 (AC_HEADER_STDBOOL): Likewise.
+	* m4/stdint_h.m4 (gl_AC_HEADER_STDINT_H): Likewise.
+	* m4/visibility.m4 (gl_VISIBILITY): Likewise.
+	* m4/wchar_t.m4 (gt_TYPE_WCHAR_T): Likewise.
+	* m4/wint_t.m4 (gt_TYPE_WINT_T): Likewise.
+	* m4/libunistring.m4 (gl_LIBUNISTRING_CORE): Likewise. Remove
+	extraneous semicolon.
+
 2010-08-26  Jim Meyering  <meyering@redhat.com>
 
 	stat-time: relax license LGPL

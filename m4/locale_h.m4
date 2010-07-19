@@ -1,4 +1,4 @@
-# locale_h.m4 serial 10
+# locale_h.m4 serial 11
 dnl Copyright (C) 2007, 2009-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,8 +18,11 @@ AC_DEFUN([gl_LOCALE_H],
 
   AC_CACHE_CHECK([whether locale.h conforms to POSIX:2001],
     [gl_cv_header_locale_h_posix2001],
-    [AC_TRY_COMPILE([#include <locale.h>
-int x = LC_MESSAGES;], [],
+    [AC_COMPILE_IFELSE(
+       [AC_LANG_PROGRAM(
+          [[#include <locale.h>
+            int x = LC_MESSAGES;]],
+          [[]])],
        [gl_cv_header_locale_h_posix2001=yes],
        [gl_cv_header_locale_h_posix2001=no])])
 
@@ -32,8 +35,11 @@ int x = LC_MESSAGES;], [],
     dnl itself, we assume that <xlocale.h> will do so.
     AC_CACHE_CHECK([whether locale.h defines locale_t],
       [gl_cv_header_locale_has_locale_t],
-      [AC_TRY_COMPILE([#include <locale.h>
-locale_t x;], [],
+      [AC_COMPILE_IFELSE(
+         [AC_LANG_PROGRAM(
+            [[#include <locale.h>
+              locale_t x;]],
+            [[]])],
          [gl_cv_header_locale_has_locale_t=yes],
          [gl_cv_header_locale_has_locale_t=no])
       ])

@@ -1,5 +1,5 @@
-# intl.m4 serial 17 (gettext-0.18)
-dnl Copyright (C) 1995-2009 Free Software Foundation, Inc.
+# intl.m4 serial 17a
+dnl Copyright (C) 1995-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -17,7 +17,7 @@ dnl Authors:
 dnl   Ulrich Drepper <drepper@cygnus.com>, 1995-2000.
 dnl   Bruno Haible <haible@clisp.cons.org>, 2000-2009.
 
-AC_PREREQ([2.52])
+AC_PREREQ([2.53])
 
 dnl Checks for all prerequisites of the intl subdirectory,
 dnl except for INTL_LIBTOOL_SUFFIX_PREFIX (and possibly LIBTOOL), INTLOBJS,
@@ -279,11 +279,16 @@ dnl Check whether a function is declared.
 AC_DEFUN([gt_CHECK_DECL],
 [
   AC_CACHE_CHECK([whether $1 is declared], [ac_cv_have_decl_$1],
-    [AC_TRY_COMPILE([$2], [
+    [AC_COMPILE_IFELSE(
+       [AC_LANG_PRORAM(
+          [[$2]],
+          [[
 #ifndef $1
   char *p = (char *) $1;
 #endif
-], ac_cv_have_decl_$1=yes, ac_cv_have_decl_$1=no)])
+          ]])],
+       [ac_cv_have_decl_$1=yes],
+       [ac_cv_have_decl_$1=no])])
   if test $ac_cv_have_decl_$1 = yes; then
     gt_value=1
   else

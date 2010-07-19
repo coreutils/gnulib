@@ -1,4 +1,4 @@
-# iconv.m4 serial 11b
+# iconv.m4 serial 11c
 dnl Copyright (C) 2000-2002, 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -214,7 +214,9 @@ gl_iconv_AC_DEFUN([AM_ICONV],
   if test "$am_cv_func_iconv" = yes; then
     AC_MSG_CHECKING([for iconv declaration])
     AC_CACHE_VAL([am_cv_proto_iconv], [
-      AC_TRY_COMPILE([
+      AC_COMPILE_IFELSE(
+        [AC_LANG_PROGRAM(
+           [[
 #include <stdlib.h>
 #include <iconv.h>
 extern
@@ -226,7 +228,10 @@ size_t iconv (iconv_t cd, char * *inbuf, size_t *inbytesleft, char * *outbuf, si
 #else
 size_t iconv();
 #endif
-], [], [am_cv_proto_iconv_arg1=""], [am_cv_proto_iconv_arg1="const"])
+           ]],
+           [[]])],
+        [am_cv_proto_iconv_arg1=""],
+        [am_cv_proto_iconv_arg1="const"])
       am_cv_proto_iconv="extern size_t iconv (iconv_t cd, $am_cv_proto_iconv_arg1 char * *inbuf, size_t *inbytesleft, char * *outbuf, size_t *outbytesleft);"])
     am_cv_proto_iconv=`echo "[$]am_cv_proto_iconv" | tr -s ' ' | sed -e 's/( /(/'`
     AC_MSG_RESULT([
