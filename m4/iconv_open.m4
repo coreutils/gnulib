@@ -1,4 +1,4 @@
-# iconv_open.m4 serial 7
+# iconv_open.m4 serial 8
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -63,7 +63,8 @@ AC_DEFUN([gl_FUNC_ICONV_OPEN_UTF],
       [
         save_LIBS="$LIBS"
         LIBS="$LIBS $LIBICONV"
-        AC_TRY_RUN([
+        AC_RUN_IFELSE(
+          [AC_LANG_SOURCE([[
 #include <iconv.h>
 #include <errno.h>
 #include <stdio.h>
@@ -209,7 +210,9 @@ int main ()
     ASSERT (iconv_close (cd) == 0);
   }
   return 0;
-}], [gl_cv_func_iconv_supports_utf=yes], [gl_cv_func_iconv_supports_utf=no],
+}]])],
+          [gl_cv_func_iconv_supports_utf=yes],
+          [gl_cv_func_iconv_supports_utf=no],
           [
            dnl We know that GNU libiconv, GNU libc, and Solaris >= 9 do.
            dnl OSF/1 5.1 has these encodings, but inserts a BOM in the "to"

@@ -47,7 +47,8 @@ changequote(,)dnl
             *)        gl_cv_func_ftello_works="guessing yes" ;;
           esac
 changequote([,])dnl
-          AC_TRY_RUN([
+          AC_RUN_IFELSE(
+            [AC_LANG_SOURCE([[
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -104,7 +105,9 @@ main (void)
   /* The file's contents is now "foogarsh!".  */
 
   return 0;
-}], [gl_cv_func_ftello_works=yes], [gl_cv_func_ftello_works=no], [:])
+}]])],
+            [gl_cv_func_ftello_works=yes],
+            [gl_cv_func_ftello_works=no], [:])
         ])
       case "$gl_cv_func_ftello_works" in
         *yes) ;;

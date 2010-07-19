@@ -52,7 +52,8 @@ changequote(,)dnl
       esac
 changequote([,])dnl
       if test $LOCALE_JA != none; then
-        AC_TRY_RUN([
+        AC_RUN_IFELSE(
+          [AC_LANG_SOURCE([[
 #include <locale.h>
 #include <string.h>
 #include <wchar.h>
@@ -69,7 +70,7 @@ int main ()
           return 1;
     }
   return 0;
-}],
+}]])],
           [gl_cv_func_mbrlen_incomplete_state=yes],
           [gl_cv_func_mbrlen_incomplete_state=no],
           [])
@@ -102,7 +103,8 @@ changequote(,)dnl
       esac
 changequote([,])dnl
       if test $LOCALE_FR_UTF8 != none || test $LOCALE_JA != none; then
-        AC_TRY_RUN([
+        AC_RUN_IFELSE(
+          [AC_LANG_SOURCE([[
 #include <locale.h>
 #include <string.h>
 #include <wchar.h>
@@ -137,7 +139,7 @@ int main ()
         }
     }
   return 0;
-}],
+}]])],
           [gl_cv_func_mbrlen_retval=yes],
           [gl_cv_func_mbrlen_retval=no],
           [])
@@ -167,7 +169,8 @@ changequote(,)dnl
       esac
 changequote([,])dnl
       if test $LOCALE_ZH_CN != none; then
-        AC_TRY_RUN([
+        AC_RUN_IFELSE(
+          [AC_LANG_SOURCE([[
 #include <locale.h>
 #include <string.h>
 #include <wchar.h>
@@ -183,7 +186,7 @@ int main ()
         return 1;
     }
   return 0;
-}],
+}]])],
           [gl_cv_func_mbrlen_nul_retval=yes],
           [gl_cv_func_mbrlen_nul_retval=no],
           [])

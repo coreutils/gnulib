@@ -1,4 +1,4 @@
-# ldexpl.m4 serial 7
+# ldexpl.m4 serial 8
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -81,7 +81,8 @@ AC_DEFUN([gl_FUNC_LDEXPL_WORKS],
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether ldexpl works], [gl_cv_func_ldexpl_works],
     [
-      AC_TRY_RUN([
+      AC_RUN_IFELSE(
+        [AC_LANG_SOURCE([[
 #include <math.h>
 extern long double ldexpl (long double, int);
 int main()
@@ -91,14 +92,16 @@ int main()
   volatile long double x2 = 1.73205L;
   volatile long double y2 = ldexpl (x2, 0);
   return (y1 != 0.5L) || (y2 != x2);
-}], [gl_cv_func_ldexpl_works=yes], [gl_cv_func_ldexpl_works=no],
-      [
+}]])],
+        [gl_cv_func_ldexpl_works=yes],
+        [gl_cv_func_ldexpl_works=no],
+        [
 changequote(,)dnl
-       case "$host_os" in
-         aix | aix[3-6]*) gl_cv_func_ldexpl_works="guessing no";;
-         *)               gl_cv_func_ldexpl_works="guessing yes";;
-       esac
+         case "$host_os" in
+           aix | aix[3-6]*) gl_cv_func_ldexpl_works="guessing no";;
+           *)               gl_cv_func_ldexpl_works="guessing yes";;
+         esac
 changequote([,])dnl
-      ])
+        ])
     ])
 ])

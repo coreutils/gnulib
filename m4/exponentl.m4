@@ -1,4 +1,4 @@
-# exponentl.m4 serial 2
+# exponentl.m4 serial 3
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,7 +9,8 @@ AC_DEFUN([gl_LONG_DOUBLE_EXPONENT_LOCATION],
   AC_CACHE_CHECK([where to find the exponent in a 'long double'],
     [gl_cv_cc_long_double_expbit0],
     [
-      AC_TRY_RUN([
+      AC_RUN_IFELSE(
+        [AC_LANG_SOURCE([[
 #include <float.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -74,7 +75,7 @@ int main ()
   fprintf (fp, "unknown");
   return (fclose (fp) != 0);
 }
-        ],
+        ]])],
         [gl_cv_cc_long_double_expbit0=`cat conftest.out`],
         [gl_cv_cc_long_double_expbit0="unknown"],
         [

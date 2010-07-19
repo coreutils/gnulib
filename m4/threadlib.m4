@@ -120,13 +120,16 @@ AC_DEFUN([gl_THREADLIB_BODY],
        if test $gl_cv_have_weak = maybe; then
          dnl Second, test whether it actually works. On Cygwin 1.7.2, with
          dnl gcc 4.3, symbols declared weak always evaluate to the address 0.
-         AC_TRY_RUN([
+         AC_RUN_IFELSE(
+           [AC_LANG_SOURCE([[
 #include <stdio.h>
 #pragma weak fputs
 int main ()
 {
   return (fputs == NULL);
-}], [gl_cv_have_weak=yes], [gl_cv_have_weak=no],
+}]])],
+           [gl_cv_have_weak=yes],
+           [gl_cv_have_weak=no],
            [dnl When cross-compiling, assume that only ELF platforms support
             dnl weak symbols.
             AC_EGREP_CPP([Extensible Linking Format],

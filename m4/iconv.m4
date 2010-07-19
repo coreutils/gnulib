@@ -1,4 +1,4 @@
-# iconv.m4 serial 11c
+# iconv.m4 serial 14 (gettext-0.18.2)
 dnl Copyright (C) 2000-2002, 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -72,7 +72,8 @@ AC_DEFUN([AM_ICONV_LINK],
       if test $am_cv_lib_iconv = yes; then
         LIBS="$LIBS $LIBICONV"
       fi
-      AC_TRY_RUN([
+      AC_RUN_IFELSE(
+        [AC_LANG_SOURCE([[
 #include <iconv.h>
 #include <string.h>
 int main ()
@@ -165,7 +166,9 @@ int main ()
       && iconv_open ("utf8", "eucJP") == (iconv_t)(-1))
     return 1;
   return 0;
-}], [am_cv_func_iconv_works=yes], [am_cv_func_iconv_works=no],
+}]])],
+        [am_cv_func_iconv_works=yes],
+        [am_cv_func_iconv_works=no],
         [
 changequote(,)dnl
          case "$host_os" in

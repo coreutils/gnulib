@@ -29,7 +29,8 @@ AC_DEFUN([gl_FUNC_STPNCPY],
   AC_CHECK_FUNCS_ONCE([stpncpy])
   if test $ac_cv_func_stpncpy = yes; then
     AC_CACHE_CHECK([for working stpncpy], [gl_cv_func_stpncpy], [
-      AC_TRY_RUN([
+      AC_RUN_IFELSE(
+        [AC_LANG_SOURCE([[
 #include <stdlib.h>
 #include <string.h> /* for strcpy */
 /* The stpncpy prototype is missing in <string.h> on AIX 4.  */
@@ -50,7 +51,9 @@ int main () {
   if (stpncpy (dest, src, 7) != dest + 5) exit(1);
   exit(0);
 }
-], [gl_cv_func_stpncpy=yes], [gl_cv_func_stpncpy=no],
+]])],
+        [gl_cv_func_stpncpy=yes],
+        [gl_cv_func_stpncpy=no],
         [AC_EGREP_CPP([Thanks for using GNU], [
 #include <features.h>
 #ifdef __GNU_LIBRARY__

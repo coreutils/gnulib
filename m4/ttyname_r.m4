@@ -1,4 +1,4 @@
-# ttyname_r.m4 serial 3
+# ttyname_r.m4 serial 4
 dnl Copyright (C) 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -51,7 +51,8 @@ changequote(,)dnl
             *)        gl_cv_func_ttyname_r_works="guessing yes" ;;
           esac
 changequote([,])dnl
-          AC_TRY_RUN([
+          AC_RUN_IFELSE(
+            [AC_LANG_SOURCE([[
 #include <fcntl.h>
 #include <unistd.h>
 int
@@ -66,7 +67,10 @@ main (void)
   if (ttyname_r (fd, buf, sizeof (buf)) != 0)
     return 1;
   return 0;
-}], [gl_cv_func_ttyname_r_works=yes], [:], [:])
+}]])],
+            [gl_cv_func_ttyname_r_works=yes],
+            [:],
+            [:])
         ])
       case "$gl_cv_func_ttyname_r_works" in
         *yes) ;;

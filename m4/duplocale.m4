@@ -1,4 +1,4 @@
-# duplocale.m4 serial 3
+# duplocale.m4 serial 4
 dnl Copyright (C) 2009-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,7 +17,8 @@ AC_DEFUN([gl_FUNC_DUPLOCALE],
     AC_REQUIRE([gl_LOCALE_H])
     AC_CACHE_CHECK([whether duplocale(LC_GLOBAL_LOCALE) works],
       [gl_cv_func_duplocale_works],
-      [AC_TRY_RUN([
+      [AC_RUN_IFELSE(
+         [AC_LANG_SOURCE([[
 #include <locale.h>
 #if HAVE_XLOCALE_H
 # include <xlocale.h>
@@ -27,7 +28,9 @@ int main ()
   if (duplocale (LC_GLOBAL_LOCALE) == (locale_t)0)
     return 1;
   return 0;
-}], [gl_cv_func_duplocale_works=yes], [gl_cv_func_duplocale_works=no],
+}]])],
+         [gl_cv_func_duplocale_works=yes],
+         [gl_cv_func_duplocale_works=no],
          [dnl Guess it works except on glibc < 2.12 and AIX.
           case "$host_os" in
             aix*) gl_cv_func_duplocale_works="guessing no";;

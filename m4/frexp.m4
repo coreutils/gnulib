@@ -99,7 +99,8 @@ AC_DEFUN([gl_FUNC_FREXP_WORKS],
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether frexp works], [gl_cv_func_frexp_works],
     [
-      AC_TRY_RUN([
+      AC_RUN_IFELSE(
+        [AC_LANG_SOURCE([[
 #include <float.h>
 #include <math.h>
 #include <string.h>
@@ -139,11 +140,13 @@ int main()
       return 1;
   }
   return 0;
-}], [gl_cv_func_frexp_works=yes], [gl_cv_func_frexp_works=no],
-      [case "$host_os" in
-         netbsd* | irix* | mingw*) gl_cv_func_frexp_works="guessing no";;
-         *)                        gl_cv_func_frexp_works="guessing yes";;
-       esac
-      ])
+}]])],
+        [gl_cv_func_frexp_works=yes],
+        [gl_cv_func_frexp_works=no],
+        [case "$host_os" in
+           netbsd* | irix* | mingw*) gl_cv_func_frexp_works="guessing no";;
+           *)                        gl_cv_func_frexp_works="guessing yes";;
+         esac
+        ])
     ])
 ])

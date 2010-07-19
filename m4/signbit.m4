@@ -9,7 +9,8 @@ AC_DEFUN([gl_SIGNBIT],
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   AC_CACHE_CHECK([for signbit macro], [gl_cv_func_signbit],
     [
-      AC_TRY_RUN([
+      AC_RUN_IFELSE(
+        [AC_LANG_SOURCE([[
 #include <math.h>
 /* If signbit is defined as a function, don't use it, since calling it for
    'float' or 'long double' arguments would involve conversions.
@@ -23,7 +24,9 @@ AC_DEFUN([gl_SIGNBIT],
 #endif
 #include <string.h>
 ]gl_SIGNBIT_TEST_PROGRAM
-, [gl_cv_func_signbit=yes], [gl_cv_func_signbit=no],
+])],
+        [gl_cv_func_signbit=yes],
+        [gl_cv_func_signbit=no],
         [gl_cv_func_signbit="guessing no"])
     ])
   dnl GCC 4.0 and newer provides three built-ins for signbit.
@@ -32,7 +35,8 @@ AC_DEFUN([gl_SIGNBIT],
   dnl libc.
   AC_CACHE_CHECK([for signbit compiler built-ins], [gl_cv_func_signbit_gcc],
     [
-      AC_TRY_RUN([
+      AC_RUN_IFELSE(
+        [AC_LANG_SOURCE([[
 #if __GNUC__ >= 4
 # define signbit(x) \
    (sizeof (x) == sizeof (long double) ? __builtin_signbitl (x) : \
@@ -43,7 +47,9 @@ AC_DEFUN([gl_SIGNBIT],
 #endif
 #include <string.h>
 ]gl_SIGNBIT_TEST_PROGRAM
-, [gl_cv_func_signbit_gcc=yes], [gl_cv_func_signbit_gcc=no],
+])],
+        [gl_cv_func_signbit_gcc=yes],
+        [gl_cv_func_signbit_gcc=no],
         [gl_cv_func_signbit_gcc="guessing no"])
     ])
   dnl Use the compiler built-ins whenever possible, because they are more
@@ -217,7 +223,8 @@ AC_DEFUN([gl_FLOATTYPE_SIGN_LOCATION],
   AC_CACHE_CHECK([where to find the sign bit in a '$1'],
     [$2],
     [
-      AC_TRY_RUN([
+      AC_RUN_IFELSE(
+        [AC_LANG_SOURCE([[
 #include <stddef.h>
 #include <stdio.h>
 #define NWORDS \
@@ -270,7 +277,7 @@ int main ()
   fprintf (fp, "word %d bit %d", (int) k, (int) i);
   return (fclose (fp) != 0);
 }
-        ],
+        ]])],
         [$2=`cat conftest.out`],
         [$2="unknown"],
         [

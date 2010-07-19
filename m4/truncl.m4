@@ -46,14 +46,17 @@ AC_DEFUN([gl_FUNC_TRUNCL],
     LIBS="$LIBS $TRUNCL_LIBM"
     AC_CACHE_CHECK([whether truncl works], [gl_cv_func_truncl_works],
       [
-        AC_TRY_RUN([
+        AC_RUN_IFELSE(
+          [AC_LANG_SOURCE([[
 #include <math.h>
 long double x;
 int main()
 {
   x = truncl (0.0L);
   return 0;
-}], [gl_cv_func_truncl_works=yes], [gl_cv_func_truncl_works=no],
+}]])],
+          [gl_cv_func_truncl_works=yes],
+          [gl_cv_func_truncl_works=no],
           [case "$host_os" in
              osf4*) gl_cv_func_truncl_works="guessing no";;
              *)     gl_cv_func_truncl_works="guessing yes";;

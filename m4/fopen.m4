@@ -21,13 +21,16 @@ AC_DEFUN([gl_FUNC_FOPEN],
       AC_CACHE_CHECK([whether fopen recognizes a trailing slash],
         [gl_cv_func_fopen_slash],
         [
-          AC_TRY_RUN([
+          AC_RUN_IFELSE(
+            [AC_LANG_SOURCE([[
 #include <stddef.h>
 #include <stdio.h>
 int main ()
 {
   return fopen ("conftest.sl/", "w") != NULL;
-}], [gl_cv_func_fopen_slash=yes], [gl_cv_func_fopen_slash=no],
+}]])],
+            [gl_cv_func_fopen_slash=yes],
+            [gl_cv_func_fopen_slash=no],
             [
 changequote(,)dnl
              case "$host_os" in

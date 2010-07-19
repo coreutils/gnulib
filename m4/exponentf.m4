@@ -1,5 +1,5 @@
-# exponentf.m4 serial 1
-dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
+# exponentf.m4 serial 2
+dnl Copyright (C) 2007-2008, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -8,7 +8,8 @@ AC_DEFUN([gl_FLOAT_EXPONENT_LOCATION],
   AC_CACHE_CHECK([where to find the exponent in a 'float'],
     [gl_cv_cc_float_expbit0],
     [
-      AC_TRY_RUN([
+      AC_RUN_IFELSE(
+        [AC_LANG_SOURCE([[
 #include <float.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -72,7 +73,7 @@ int main ()
   fprintf (fp, "unknown");
   return (fclose (fp) != 0);
 }
-        ],
+        ]])],
         [gl_cv_cc_float_expbit0=`cat conftest.out`],
         [gl_cv_cc_float_expbit0="unknown"],
         [gl_cv_cc_float_expbit0="word 0 bit 23"])

@@ -1,4 +1,4 @@
-# wcrtomb.m4 serial 5
+# wcrtomb.m4 serial 6
 dnl Copyright (C) 2008-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -40,7 +40,8 @@ changequote(,)dnl
           esac
 changequote([,])dnl
           if test $LOCALE_FR != none || test $LOCALE_FR_UTF8 != none || test $LOCALE_JA != none || test $LOCALE_ZH_CN != none; then
-            AC_TRY_RUN([
+            AC_RUN_IFELSE(
+              [AC_LANG_SOURCE([[
 #include <locale.h>
 #include <stdio.h>
 #include <string.h>
@@ -68,7 +69,7 @@ int main ()
         return 1;
     }
   return 0;
-}],
+}]])],
               [gl_cv_func_wcrtomb_retval=yes],
               [gl_cv_func_wcrtomb_retval=no],
               [:])

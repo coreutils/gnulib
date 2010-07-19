@@ -1,5 +1,5 @@
-# exponentd.m4 serial 1
-dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
+# exponentd.m4 serial 2
+dnl Copyright (C) 2007-2008, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -8,7 +8,8 @@ AC_DEFUN([gl_DOUBLE_EXPONENT_LOCATION],
   AC_CACHE_CHECK([where to find the exponent in a 'double'],
     [gl_cv_cc_double_expbit0],
     [
-      AC_TRY_RUN([
+      AC_RUN_IFELSE(
+        [AC_LANG_SOURCE([[
 #include <float.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -71,7 +72,7 @@ int main ()
   fprintf (fp, "unknown");
   return (fclose (fp) != 0);
 }
-        ],
+        ]])],
         [gl_cv_cc_double_expbit0=`cat conftest.out`],
         [gl_cv_cc_double_expbit0="unknown"],
         [

@@ -1,4 +1,4 @@
-# wctob.m4 serial 5
+# wctob.m4 serial 6
 dnl Copyright (C) 2008-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -38,7 +38,8 @@ changequote(,)dnl
 changequote([,])dnl
         case "$host_os" in
           cygwin*)
-            AC_TRY_RUN([
+            AC_RUN_IFELSE(
+              [AC_LANG_SOURCE([[
 #include <locale.h>
 #include <wchar.h>
 
@@ -54,11 +55,15 @@ int main ()
   if (global != 0x12345678)
     return 2;
   return 0;
-}], [:], [gl_cv_func_wctob_works=no], [:])
+}]])],
+              [:],
+              [gl_cv_func_wctob_works=no],
+              [:])
             ;;
         esac
         if test "$gl_cv_func_wctob_works" != no && test $LOCALE_FR != none; then
-          AC_TRY_RUN([
+          AC_RUN_IFELSE(
+            [AC_LANG_SOURCE([[
 #include <locale.h>
 #include <string.h>
 #include <wchar.h>
@@ -73,7 +78,7 @@ int main ()
           return 1;
     }
   return 0;
-}],
+}]])],
             [gl_cv_func_wctob_works=yes],
             [gl_cv_func_wctob_works=no],
             [:])

@@ -1,4 +1,4 @@
-# btowc.m4 serial 6
+# btowc.m4 serial 7
 dnl Copyright (C) 2008-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -26,7 +26,8 @@ AC_DEFUN([gl_FUNC_BTOWC],
     AC_CACHE_CHECK([whether btowc(0) is correct],
       [gl_cv_func_btowc_nul],
       [
-        AC_TRY_RUN([
+        AC_RUN_IFELSE(
+          [AC_LANG_SOURCE([[
 #include <stdio.h>
 #include <string.h>
 #include <wchar.h>
@@ -35,7 +36,7 @@ int main ()
   if (btowc ('\0') != 0)
     return 1;
   return 0;
-}],
+}]])],
           [gl_cv_func_btowc_nul=yes],
           [gl_cv_func_btowc_nul=no],
           [
@@ -65,7 +66,8 @@ changequote(,)dnl
         esac
 changequote([,])dnl
         if test $LOCALE_FR != none; then
-          AC_TRY_RUN([
+          AC_RUN_IFELSE(
+            [AC_LANG_SOURCE([[
 #include <locale.h>
 #include <stdio.h>
 #include <string.h>
@@ -78,7 +80,7 @@ int main ()
         return 1;
     }
   return 0;
-}],
+}]])],
             [gl_cv_func_btowc_eof=yes],
             [gl_cv_func_btowc_eof=no],
             [:])

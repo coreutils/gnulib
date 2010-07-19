@@ -1,5 +1,49 @@
 2010-08-26  Bruno Haible  <bruno@clisp.org>
 
+	Modernize AC_TRY_RUN invocations.
+	* m4/btowc.m4 (gl_FUNC_BTOWC): Use AC_RUN_IFELSE instead of AC_TRY_RUN.
+	* m4/duplocale.m4 (gl_FUNC_DUPLOCALE): Likewise.
+	* m4/exponentd.m4 (gl_DOUBLE_EXPONENT_LOCATION): Likewise.
+	* m4/exponentf.m4 (gl_FLOAT_EXPONENT_LOCATION): Likewise.
+	* m4/exponentl.m4 (gl_LONG_DOUBLE_EXPONENT_LOCATION): Likewise.
+	* m4/fopen.m4 (gl_FUNC_FOPEN): Likewise.
+	* m4/frexp.m4 (gl_FUNC_FREXP_WORKS): Likewise.
+	* m4/frexpl.m4 (gl_FUNC_FREXPL_WORKS): Likewise.
+	* m4/ftello.m4 (gl_FUNC_FTELLO): Likewise.
+	* m4/iconv.m4 (AM_ICONV_LINK): Likewise.
+	* m4/iconv_open.m4 (gl_FUNC_ICONV_OPEN_UTF): Likewise.
+	* m4/intdiv0.m4 (gt_INTDIV0): Likewise.
+	* m4/isnanf.m4 (gl_ISNANF_WORKS): Likewise.
+	* m4/isnanl.m4 (gl_FUNC_ISNANL_WORKS): Likewise.
+	* m4/ldexpl.m4 (gl_FUNC_LDEXPL_WORKS): Likewise.
+	* m4/mbrlen.m4 (gl_MBRLEN_INCOMPLETE_STATE, gl_MBRLEN_RETVAL,
+	gl_MBRLEN_NUL_RETVAL): Likewise.
+	* m4/mbrtowc.m4 (gl_MBRTOWC_INCOMPLETE_STATE, gl_MBRTOWC_SANITYCHECK,
+	gl_MBRTOWC_NULL_ARG, gl_MBRTOWC_RETVAL, gl_MBRTOWC_NUL_RETVAL):
+	Likewise.
+	* m4/mbsrtowcs.m4 (gl_MBSRTOWCS_WORKS): Likewise.
+	* m4/open.m4 (gl_FUNC_OPEN): Likewise.
+	* m4/printf.m4 (gl_PRINTF_SIZES_C99, gl_PRINTF_LONG_DOUBLE,
+	gl_PRINTF_INFINITE, gl_PRINTF_INFINITE_LONG_DOUBLE,
+	gl_PRINTF_DIRECTIVE_A, gl_PRINTF_DIRECTIVE_F, gl_PRINTF_DIRECTIVE_N,
+	gl_PRINTF_DIRECTIVE_LS, gl_PRINTF_POSITIONS, gl_PRINTF_FLAG_GROUPING,
+	gl_PRINTF_FLAG_LEFTADJUST, gl_PRINTF_FLAG_ZERO, gl_PRINTF_PRECISION,
+	gl_SNPRINTF_TRUNCATION_C99, gl_SNPRINTF_RETVAL_C99,
+	gl_SNPRINTF_DIRECTIVE_N, gl_SNPRINTF_SIZE1, gl_VSNPRINTF_ZEROSIZE_C99):
+	Likewise.
+	* m4/printf-posix.m4 (gt_PRINTF_POSIX): Likewise.
+	* m4/signbit.m4 (gl_SIGNBIT, gl_FLOATTYPE_SIGN_LOCATION): Likewise.
+	* m4/stpncpy.m4 (gl_FUNC_STPNCPY): Likewise.
+	* m4/threadlib.m4 (gl_THREADLIB_BODY): Likewise.
+	* m4/truncl.m4 (gl_FUNC_TRUNCL): Likewise.
+	* m4/ttyname_r.m4 (gl_FUNC_TTYNAME_R): Likewise.
+	* m4/wcrtomb.m4 (gl_FUNC_WCRTOMB): Likewise.
+	* m4/wcsrtombs.m4 (gl_WCSRTOMBS_TERMINATION): Likewise.
+	* m4/wctob.m4 (gl_FUNC_WCTOB): Likewise.
+	* m4/wcwidth.m4 (gl_FUNC_WCWIDTH): Likewise.
+
+2010-08-26  Bruno Haible  <bruno@clisp.org>
+
 	Modernize AC_TRY_LINK invocations.
 	* m4/acosl.m4 (gl_FUNC_ACOSL): Use AC_LINK_IFELSE instead of
 	AC_TRY_LINK.

@@ -41,7 +41,8 @@ AC_DEFUN([gl_FUNC_WCWIDTH],
     AC_CACHE_CHECK([whether wcwidth works reasonably in UTF-8 locales],
       [gl_cv_func_wcwidth_works],
       [
-        AC_TRY_RUN([
+        AC_RUN_IFELSE(
+          [AC_LANG_SOURCE([[
 #include <locale.h>
 /* AIX 3.2.5 declares wcwidth in <string.h>. */
 #include <string.h>
@@ -66,7 +67,9 @@ int main ()
     if (wcwidth (0x0301) > 0 || wcwidth (0x200B) > 0)
       return 1;
   return 0;
-}], [gl_cv_func_wcwidth_works=yes], [gl_cv_func_wcwidth_works=no],
+}]])],
+          [gl_cv_func_wcwidth_works=yes],
+          [gl_cv_func_wcwidth_works=no],
           [
 changequote(,)dnl
            case "$host_os" in
