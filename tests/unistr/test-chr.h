@@ -20,6 +20,7 @@ int
 main (void)
 {
   size_t n = 0x100000;
+  size_t i;
   size_t length;
   UNIT *input;
   uint32_t *input32 = (uint32_t *) malloc (n * sizeof (uint32_t));
@@ -28,7 +29,15 @@ main (void)
   input32[0] = 'a';
   input32[1] = 'b';
   u32_set (input32 + 2, 'c', 1024);
-  u32_set (input32 + 1026, 'd', n - 1028);
+  for (i = 1026; i < n - 2; i += 63)
+    {
+      size_t last = i + 63 < n - 2 ? i + 63 : n - 2;
+      ucs4_t uc = 'd' | (i - 1026);
+      if (uc >= 0xd800 && uc <= 0xdfff)
+        uc |= 0x100000;
+      u32_set (input32 + i, uc, last - i);
+    }
+
   input32[n - 2] = 'e';
   input32[n - 1] = 'a';
 
@@ -36,20 +45,20 @@ main (void)
   ASSERT (input);
 
   /* Basic behavior tests.  */
-  ASSERT (U_CHR (input, n, 'a') == input);
+  ASSERT (U_CHR (input, length, 'a') == input);
 
   ASSERT (U_CHR (input, 0, 'a') == NULL);
   ASSERT (U_CHR (zerosize_ptr (), 0, 'a') == NULL);
 
-  ASSERT (U_CHR (input, n, 'b') == input + 1);
-  ASSERT (U_CHR (input, n, 'c') == input + 2);
-  ASSERT (U_CHR (input, n, 'd') == input + 1026);
+  ASSERT (U_CHR (input, length, 'b') == input + 1);
+  ASSERT (U_CHR (input, length, 'c') == input + 2);
+  ASSERT (U_CHR (input, length, 'd') == input + 1026);
 
-  ASSERT (U_CHR (input + 1, n - 1, 'a') == input + n - 1);
-  ASSERT (U_CHR (input + 1, n - 1, 'e') == input + n - 2);
+  ASSERT (U_CHR (input + 1, length - 1, 'a') == input + length - 1);
+  ASSERT (U_CHR (input + 1, length - 1, 'e') == input + length - 2);
 
-  ASSERT (U_CHR (input, n, 'f') == NULL);
-  ASSERT (U_CHR (input, n, '\0') == NULL);
+  ASSERT (U_CHR (input, length, 'f') == NULL);
+  ASSERT (U_CHR (input, length, '\0') == NULL);
 
   /* Check that a very long haystack is handled quickly if the byte is
      found near the beginning.  */
@@ -57,7 +66,7 @@ main (void)
     size_t repeat = 10000;
     for (; repeat > 0; repeat--)
       {
-        ASSERT (U_CHR (input, n, 'c') == input + 2);
+        ASSERT (U_CHR (input, length, 'c') == input + 2);
       }
   }
 
