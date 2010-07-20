@@ -19,29 +19,29 @@
 int
 main (void)
 {
-  size_t n = 0x100000;
+  size_t size = 0x100000;
   size_t i;
   size_t length;
   UNIT *input;
-  uint32_t *input32 = (uint32_t *) malloc (n * sizeof (uint32_t));
+  uint32_t *input32 = (uint32_t *) malloc (size * sizeof (uint32_t));
   ASSERT (input32);
 
   input32[0] = 'a';
   input32[1] = 'b';
   u32_set (input32 + 2, 'c', 1024);
-  for (i = 1026; i < n - 2; i += 63)
+  for (i = 1026; i < size - 2; i += 63)
     {
-      size_t last = i + 63 < n - 2 ? i + 63 : n - 2;
+      size_t last = i + 63 < size - 2 ? i + 63 : size - 2;
       ucs4_t uc = 'd' | (i - 1026);
       if (uc >= 0xd800 && uc <= 0xdfff)
         uc |= 0x100000;
       u32_set (input32 + i, uc, last - i);
     }
 
-  input32[n - 2] = 'e';
-  input32[n - 1] = 'a';
+  input32[size - 2] = 'e';
+  input32[size - 1] = 'a';
 
-  input = U32_TO_U (input32, n, NULL, &length);
+  input = U32_TO_U (input32, size, NULL, &length);
   ASSERT (input);
 
   /* Basic behavior tests.  */
@@ -53,6 +53,25 @@ main (void)
   ASSERT (U_CHR (input, length, 'b') == input + 1);
   ASSERT (U_CHR (input, length, 'c') == input + 2);
   ASSERT (U_CHR (input, length, 'd') == input + 1026);
+
+  {
+    UNIT *exp = input + 1026;
+    UNIT *prev = input + 1;
+    for (i = 1026; i < size - 2; i += 63)
+      {
+        UNIT c[6];
+        size_t n;
+        ucs4_t uc = 'd' | (i - 1026);
+        if (uc >= 0xd800 && uc <= 0xdfff)
+          uc |= 0x100000;
+        n = U_UCTOMB (c, uc, 6);
+        ASSERT (exp < input + length - 1);
+        ASSERT (U_CHR (prev, (length - 1) - (prev - input), uc) == exp);
+        ASSERT (memcmp (exp, c, n * sizeof (UNIT)) == 0);
+        prev = exp;
+        exp += n * 63;
+      }
+  }
 
   ASSERT (U_CHR (input + 1, length - 1, 'a') == input + length - 1);
   ASSERT (U_CHR (input + 1, length - 1, 'e') == input + length - 2);
@@ -88,6 +107,7 @@ main (void)
      byte being searched.  */
   {
     char *page_boundary = (char *) zerosize_ptr ();
+    size_t n;
 
     if (page_boundary != NULL)
       {
