@@ -5,6 +5,7 @@ Files:
 lib/unistr/u8-chr.c
 
 Depends-on:
+memchr
 unistr/base
 unistr/u8-uctomb
 

@@ -24,65 +24,148 @@
 uint8_t *
 u8_chr (const uint8_t *s, size_t n, ucs4_t uc)
 {
-  uint8_t c[6];
-
   if (uc < 0x80)
     {
       uint8_t c0 = uc;
 
-      for (; n > 0; s++, n--)
-        {
-          if (*s == c0)
-            return (uint8_t *) s;
-        }
+      return (uint8_t *) memchr ((const char *) s, c0, n);
     }
-  else
-    switch (u8_uctomb_aux (c, uc, 6))
+
+  {
+    uint8_t c[6];
+    size_t uc_size;
+    uc_size = u8_uctomb_aux (c, uc, 6);
+
+    if (n < uc_size)
+      return NULL;
+
+    /* For multibyte character matching we use a Boyer-Moore like
+       algorithm that searches for the last byte, skipping multi-byte
+       jumps, and matches back from there.
+
+       Instead of using a table as is usual for Boyer-Moore, we compare
+       the candidate last byte s[UC_SIZE-1] with each of the possible
+       bytes in the UTF-8 representation of UC.  If the final byte does
+       not match, we will perform up to UC_SIZE comparisons per memory
+       load---but each comparison lets us skip one byte in the input!
+
+       If the final byte matches, the "real" Boyer-Moore algorithm
+       is approximated.  Instead, u8_chr just looks for other cN that
+       are equal to the final byte and uses those to try realigning to
+       another possible match.  For example, when searching for 0xF0
+       0xAA 0xBB 0xAA it will always skip forward by two bytes, even if
+       the character in the string was for example 0xF1 0xAA 0xBB 0xAA.
+       The advantage of this scheme is that the skip count after a failed
+       match can be computed outside the loop, and that it keeps the
+       complexity low for a pretty rare case.  In particular, since c[0]
+       is never between 0x80 and 0xBF, c[0] is never equal to c[UC_SIZE-1]
+       and this is optimal for two-byte UTF-8 characters.  */
+    switch (uc_size)
       {
       case 2:
-        if (n > 1)
-          {
-            uint8_t c0 = c[0];
-            uint8_t c1 = c[1];
+        {
+          uint8_t c0 = c[0];
+          uint8_t c1 = c[1];
+          const uint8_t *end = s + n - 1;
 
-            for (n--; n > 0; s++, n--)
-              {
-                if (*s == c0 && s[1] == c1)
-                  return (uint8_t *) s;
-              }
-          }
-        break;
+          while (s < end)
+            {
+              uint8_t s1 = s[1];
+              if (s1 == c1)
+                {
+                  if (*s == c0)
+                    return (uint8_t *) s;
+                  else
+                    s += 2;
+                }
+              else
+                {
+                  if (s1 == c0)
+                    s++;
+                  else
+                    s += 2;
+                }
+            }
+          break;
+        }
 
       case 3:
-        if (n > 2)
-          {
-            uint8_t c0 = c[0];
-            uint8_t c1 = c[1];
-            uint8_t c2 = c[2];
+        {
+          uint8_t c0 = c[0];
+          uint8_t c1 = c[1];
+          uint8_t c2 = c[2];
+          const uint8_t *end = s + n - 2;
+	  size_t skip;
 
-            for (n -= 2; n > 0; s++, n--)
-              {
-                if (*s == c0 && s[1] == c1 && s[2] == c2)
-                  return (uint8_t *) s;
-              }
-          }
-        break;
+	  if (c2 == c1)
+            skip = 1;
+          else
+            skip = 3;
+
+          while (s < end)
+            {
+              uint8_t s2 = s[2];
+              if (s2 == c2)
+                {
+                  if (s[1] == c1 && *s == c0)
+                    return (uint8_t *) s;
+                  else
+                    s += skip;
+                }
+              else
+                {
+                  if (s2 == c1)
+                    s++;
+                  else if (s2 == c0)
+                    s += 2;
+                  else
+                    s += 3;
+                }
+            }
+          break;
+        }
 
       case 4:
-        if (n > 3)
-          {
-            uint8_t c0 = c[0];
-            uint8_t c1 = c[1];
-            uint8_t c2 = c[2];
-            uint8_t c3 = c[3];
+        {
+          uint8_t c0 = c[0];
+          uint8_t c1 = c[1];
+          uint8_t c2 = c[2];
+          uint8_t c3 = c[3];
+          const uint8_t *end = s + n - 3;
+          size_t skip;
 
-            for (n -= 3; n > 0; s++, n--)
-              {
-                if (*s == c0 && s[1] == c1 && s[2] == c2 && s[3] == c3)
-                  return (uint8_t *) s;
-              }
-          }
-        break;
+	  if (c3 == c2)
+            skip = 1;
+          else if (c3 == c1)
+            skip = 2;
+          else
+            skip = 4;
+
+          while (s < end)
+            {
+              uint8_t s3 = s[3];
+              if (s3 == c3)
+                {
+                  if (s[2] == c2 && s[1] == c1 && *s == c0)
+                    return (uint8_t *) s;
+                  else
+                    s += skip;
+                }
+              else
+                {
+                  if (s3 == c2)
+                    s++;
+                  else if (s3 == c1)
+                    s += 2;
+                  else if (s3 == c0)
+                    s += 3;
+                  else
+                    s += 4;
+                }
+            }
+          break;
+        }
       }
-  return NULL;
+    return NULL;
+  }
 }
