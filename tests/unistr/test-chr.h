@@ -20,15 +20,20 @@ int
 main (void)
 {
   size_t n = 0x100000;
-  UNIT *input = (UNIT *) malloc (n * sizeof (UNIT));
-  ASSERT (input);
+  size_t length;
+  UNIT *input;
+  uint32_t *input32 = (uint32_t *) malloc (n * sizeof (uint32_t));
+  ASSERT (input32);
 
-  input[0] = 'a';
-  input[1] = 'b';
-  U_SET (input + 2, 'c', 1024);
-  U_SET (input + 1026, 'd', n - 1028);
-  input[n - 2] = 'e';
-  input[n - 1] = 'a';
+  input32[0] = 'a';
+  input32[1] = 'b';
+  u32_set (input32 + 2, 'c', 1024);
+  u32_set (input32 + 1026, 'd', n - 1028);
+  input32[n - 2] = 'e';
+  input32[n - 1] = 'a';
+
+  input = U32_TO_U (input32, n, NULL, &length);
+  ASSERT (input);
 
   /* Basic behavior tests.  */
   ASSERT (U_CHR (input, n, 'a') == input);

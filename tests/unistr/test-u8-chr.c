@@ -26,6 +26,7 @@
 #include "macros.h"
 
 #define UNIT uint8_t
+#define U32_TO_U u32_to_u8
 #define U_CHR u8_chr
 #define U_SET u8_set
 #include "test-chr.h"

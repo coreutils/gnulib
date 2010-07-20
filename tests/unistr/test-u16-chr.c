@@ -26,6 +26,7 @@
 #include "macros.h"
 
 #define UNIT uint16_t
+#define U32_TO_U u32_to_u16
 #define U_CHR u16_chr
 #define U_SET u16_set
 #include "test-chr.h"

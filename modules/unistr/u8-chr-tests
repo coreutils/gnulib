@@ -9,6 +9,7 @@ Depends-on:
 extensions
 getpagesize
 unistr/u8-set
+unistr/u32-to-u8
 
 configure.ac:
 gl_FUNC_MMAP_ANON
