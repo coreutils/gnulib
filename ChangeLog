@@ -1,3 +1,10 @@
+2010-07-26  Paul R. Eggert  <eggert@cs.ucla.edu>
+
+	timespec: use cast and not conditional, as truncation isn't possible
+	* lib/timespec.h (timespec_cmp): Use cast to pacify gcc -Wconversion
+	instead of a conditional.  Comment about the situation in more detail.
+	This undoes most of the 2009-10-29 patch.
+
 2010-07-18  Bruno Haible  <bruno@clisp.org>
 
 	unistr/u8-strchr: Optimize non-ASCII argument case.

@@ -22,15 +22,39 @@
 # include <time.h>
 
 /* Return negative, zero, positive if A < B, A == B, A > B, respectively.
-   Assume the nanosecond components are in range, or close to it.  */
+
+   For each time stamp T, this code assumes that either:
+
+     * T.tv_nsec is in the range 0..999999999; or
+     * T.tv_sec corresponds to a valid leap second on a host that supports
+       leap seconds, and T.tv_nsec is in the range 1000000000..1999999999; or
+     * T.tv_sec is the minimum time_t value and T.tv_nsec is -1; or
+       T.tv_sec is the maximum time_t value and T.tv_nsec is 2000000000.
+       This allows for special struct timespec values that are less or
+       greater than all possible valid time stamps.
+
+   In all these cases, it is safe to subtract two tv_nsec values and
+   convert the result to integer without worrying about overflow on
+   any platform of interest to the GNU project, since all such
+   platforms have 32-bit int or wider.
+
+   Replacing "(int) (a.tv_nsec - b.tv_nsec)" with something like
+   "a.tv_nsec < b.tv_nsec ? -1 : a.tv_nsec > b.tv_nsec" would cause
+   this function to work in some cases where the above assumption is
+   violated, but not in all cases (e.g., a.tv_sec==1, a.tv_nsec==-2,
+   b.tv_sec==0, b.tv_nsec==999999999) and is arguably not worth the
+   extra instructions.  Using a subtraction has the advantage of
+   detecting some invalid cases on platforms that detect integer
+   overflow.
+
+   The (int) cast avoids a gcc -Wconversion warning.  */
+
 static inline int
 timespec_cmp (struct timespec a, struct timespec b)
 {
   return (a.tv_sec < b.tv_sec ? -1
           : a.tv_sec > b.tv_sec ? 1
-          : a.tv_nsec < b.tv_nsec ? -1
-          : a.tv_nsec > b.tv_nsec ? 1
-          : 0);
+          : (int) (a.tv_nsec - b.tv_nsec));
 }
 
 void gettime (struct timespec *);
