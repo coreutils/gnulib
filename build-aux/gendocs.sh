@@ -2,7 +2,7 @@
 # gendocs.sh -- generate a GNU manual in many formats.  This script is
 #   mentioned in maintain.texi.  See the help message below for usage details.
 
-scriptversion=2010-06-21.10
+scriptversion=2010-07-26.16
 
 # Copyright 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010
 # Free Software Foundation, Inc.
@@ -101,10 +101,10 @@ GENDOCS_TEMPLATE_DIR to control where the gendocs_template file is
 looked for.  With --docbook, the environment variables DOCBOOK2HTML,
 DOCBOOK2PDF, DOCBOOK2PS, and DOCBOOK2TXT are also respected.
 
-By default, makeinfo is run in the default (English) locale, since
-that's the language of most Texinfo manuals.  If you happen to have a
-non-English manual and non-English web site, see the SETLANG setting
-in the source.
+By default, makeinfo and texi2dvi are run in the default (English)
+locale, since that's the language of most Texinfo manuals.  If you
+happen to have a non-English manual and non-English web site, see the
+SETLANG setting in the source.
 
 Email bug reports or enhancement requests to bug-texinfo@gnu.org.
 "
@@ -192,7 +192,7 @@ info_tgz_size=`calcsize $outdir/$PACKAGE.info.tar.gz`
 # do not mv the info files, there's no point in having them available
 # separately on the web.
 
-cmd="${TEXI2DVI} \"$srcfile\""
+cmd="$SETLANG ${TEXI2DVI} \"$srcfile\""
 echo "Generating dvi ... ($cmd)"
 eval "$cmd"
 
@@ -208,7 +208,7 @@ gzip -f -9 $PACKAGE.dvi
 dvi_gz_size=`calcsize $PACKAGE.dvi.gz`
 mv $PACKAGE.dvi.gz $outdir/
 
-cmd="${TEXI2DVI} --pdf \"$srcfile\""
+cmd="$SETLANG ${TEXI2DVI} --pdf \"$srcfile\""
 echo "Generating pdf ... ($cmd)"
 eval "$cmd"
 pdf_size=`calcsize $PACKAGE.pdf`
