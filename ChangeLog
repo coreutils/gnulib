@@ -1,3 +1,10 @@
+2010-07-27  Bruno Haible  <bruno@clisp.org>
+
+	mbspcasecmp: Fix function specification.
+	* lib/string.in.h (mbspcasecmp): Fix specification comment.
+	* lib/mbspcasecmp.c (mbspcasecmp): Likewise.
+	Reported by Eric Blake <eblake@redhat.com>.
+
 2010-07-26  Paul R. Eggert  <eggert@cs.ucla.edu>
 
 	timespec: use cast and not conditional, as truncation isn't possible

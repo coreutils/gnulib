@@ -770,11 +770,10 @@ _GL_EXTERN_C int mbsncasecmp (const char *s1, const char *s2, size_t n)
 #if @GNULIB_MBSPCASECMP@
 /* Compare the initial segment of the character string STRING consisting of
    at most mbslen (PREFIX) characters with the character string PREFIX,
-   ignoring case, returning less than, equal to or greater than zero if this
-   initial segment is lexicographically less than, equal to or greater than
-   PREFIX.
-   Note: This function may, in multibyte locales, return 0 if STRING is of
-   smaller length than PREFIX!
+   ignoring case.  If the two match, return a pointer to the first byte
+   after this prefix in STRING.  Otherwise, return NULL.
+   Note: This function may, in multibyte locales, return non-NULL if STRING
+   is of smaller length than PREFIX!
    Unlike strncasecmp(), this function works correctly in multibyte
    locales.  */
 _GL_EXTERN_C char * mbspcasecmp (const char *string, const char *prefix)

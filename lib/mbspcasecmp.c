@@ -1,5 +1,5 @@
 /* Case-insensitive string comparison function.
-   Copyright (C) 1998-1999, 2005-2010 Free Software Foundation, Inc.
+   Copyright (C) 1998-1999, 2005-2008, 2010 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2007.
 
    This program is free software: you can redistribute it and/or modify
@@ -28,11 +28,10 @@
 
 /* Compare the initial segment of the character string STRING consisting of
    at most mbslen (PREFIX) characters with the character string PREFIX,
-   ignoring case, returning less than, equal to or greater than zero if this
-   initial segment is lexicographically less than, equal to or greater than
-   PREFIX.
-   Note: This function may, in multibyte locales, return 0 if STRING is of
-   smaller length than PREFIX!  */
+   ignoring case.  If the two match, return a pointer to the first byte
+   after this prefix in STRING.  Otherwise, return NULL.
+   Note: This function may, in multibyte locales, return non-NULL if STRING
+   is of smaller length than PREFIX!  */
 char *
 mbspcasecmp (const char *string, const char *prefix)
 {
