@@ -142,14 +142,14 @@ unescape_pattern (char *str)
   do
     {
       if (inset)
-	{
-	  if (*q == ']')
-	    inset = 0;
-	}
+        {
+          if (*q == ']')
+            inset = 0;
+        }
       else if (*q == '[')
-	inset = 1;
+        inset = 1;
       else if (*q == '\\')
-	q++;
+        q++;
     }
   while ((*str++ = *q++));
 }
@@ -501,7 +501,7 @@ add_exclude (struct exclude *ex, char const *pattern, int options)
 
       str = xstrdup (pattern);
       if (options & EXCLUDE_WILDCARDS)
-	unescape_pattern (str);
+        unescape_pattern (str);
       p = hash_insert (seg->v.table, str);
       if (p != str)
         free (str);

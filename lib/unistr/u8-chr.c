@@ -95,9 +95,9 @@ u8_chr (const uint8_t *s, size_t n, ucs4_t uc)
           uint8_t c1 = c[1];
           uint8_t c2 = c[2];
           const uint8_t *end = s + n - 2;
-	  size_t skip;
+          size_t skip;
 
-	  if (c2 == c1)
+          if (c2 == c1)
             skip = 1;
           else
             skip = 3;
@@ -134,7 +134,7 @@ u8_chr (const uint8_t *s, size_t n, ucs4_t uc)
           const uint8_t *end = s + n - 3;
           size_t skip;
 
-	  if (c3 == c2)
+          if (c3 == c2)
             skip = 1;
           else if (c3 == c1)
             skip = 2;

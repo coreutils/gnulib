@@ -100,7 +100,7 @@ pthread_cond_destroy (pthread_cond_t *cond)
 
 static inline int
 pthread_cond_init (pthread_cond_t *restrict cond,
-		   pthread_condattr_t const *restrict attr)
+                   pthread_condattr_t const *restrict attr)
 {
   /* COND is never seriously used.  */
   return 0;
@@ -115,7 +115,7 @@ pthread_cond_signal (pthread_cond_t *cond)
 
 static inline int
 pthread_cond_wait (pthread_cond_t *restrict cond,
-		   pthread_mutex_t *restrict mutex)
+                   pthread_mutex_t *restrict mutex)
 {
   /* Properly-written applications never come here.  */
   abort ();
@@ -155,7 +155,7 @@ pthread_mutex_destroy (pthread_mutex_t *mutex)
 
 static inline int
 pthread_mutex_init (pthread_mutex_t *restrict mutex,
-		    pthread_mutexattr_t const *restrict attr)
+                    pthread_mutexattr_t const *restrict attr)
 {
   /* MUTEX is never seriously used.  */
   return 0;

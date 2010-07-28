@@ -1,3 +1,8 @@
+2010-07-28  Bruno Haible  <bruno@clisp.org>
+
+	Use spaces for indentation, not tabs.
+	* lib/**/*.[hcy] except lib/reg*.[hc]: Untabify.
+
 2010-07-27  Bruno Haible  <bruno@clisp.org>
 
 	mbspcasecmp: Fix function specification.

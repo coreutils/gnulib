@@ -35,12 +35,12 @@ u8_strchr (const uint8_t *s, ucs4_t uc)
       if (false)
         {
           /* Unoptimized code.  */
-	  for (;;)
+          for (;;)
             {
               uint8_t s0 = *s;
               if (s0 == c0)
-	        return (uint8_t *) s;
-	      s++;
+                return (uint8_t *) s;
+              s++;
               if (s0 == 0)
                 break;
             }
@@ -56,9 +56,9 @@ u8_strchr (const uint8_t *s, ucs4_t uc)
   else
       /* Loops equivalent to strstr, optimized for a specific length (2, 3, 4)
          of the needle.  We use an algorithm similar to Boyer-Moore which
-	 is documented in lib/unistr/u8-chr.c.  There is additional
-	 complication because we need to check after every byte for
-	 a NUL byte, but the idea is the same. */
+         is documented in lib/unistr/u8-chr.c.  There is additional
+         complication because we need to check after every byte for
+         a NUL byte, but the idea is the same. */
     switch (u8_uctomb_aux (c, uc, 6))
       {
       case 2:
