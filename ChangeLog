@@ -1,5 +1,20 @@
 2010-07-28  Bruno Haible  <bruno@clisp.org>
 
+	unistr/u*-chr, unistr/u*-strchr: Fix link errors and warnings.
+	* lib/unistr/u8-chr.c: Include <string.h>.
+	* tests/unistr/test-u8-chr.c: Likewise.
+	* tests/unistr/test-u16-chr.c: Likewise.
+	* tests/unistr/test-u32-chr.c: Likewise.
+	* tests/unistr/test-u8-strchr.c: Likewise.
+	* tests/unistr/test-u16-strchr.c: Likewise.
+	* tests/unistr/test-u32-strchr.c: Likewise.
+	* modules/unistr/u8-chr-tests (Depends-on): Add unistr/u32-set.
+	* modules/unistr/u16-chr-tests (Depends-on): Likewise.
+	* modules/unistr/u8-strchr-tests (Depends-on): Likewise.
+	* modules/unistr/u16-strchr-tests (Depends-on): Likewise.
+
+2010-07-28  Bruno Haible  <bruno@clisp.org>
+
 	Use spaces for indentation, not tabs.
 	* lib/**/*.[hcy] except lib/reg*.[hc]: Untabify.
 

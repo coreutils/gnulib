@@ -21,6 +21,8 @@
 /* Specification.  */
 #include "unistr.h"
 
+#include <string.h>
+
 uint8_t *
 u8_chr (const uint8_t *s, size_t n, ucs4_t uc)
 {
