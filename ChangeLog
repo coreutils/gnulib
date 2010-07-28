@@ -17,6 +17,40 @@
 	instead of a conditional.  Comment about the situation in more detail.
 	This undoes most of the 2009-10-29 patch.
 
+2010-07-23  Paolo Bonzini  <pbonzini@redhat.com>
+
+	unistr/u8-chr, unistr/u8-strchr: use Boyer-Moore like algorithm.
+	* lib/unistr/u8-chr.c: Add Boyer-Moore like operation.
+	* lib/unistr/u8-strchr.c: Likewise.
+	* modules/unistr/u8-chr: Depend on memchr.
+
+	unistr/u*-strchr: add tests
+	* modules/unistr/u8-strchr-tests: New file.
+	* modules/unistr/u16-strchr-tests: New file.
+	* modules/unistr/u32-strchr-tests: New file.
+	* tests/unistr/test-strchr.h: New file.
+	* tests/unistr/test-u8-strchr.c: New file.
+	* tests/unistr/test-u16-strchr.c: New file.
+	* tests/unistr/test-u32-strchr.c: New file.
+
+	unistr/u*-chr: test multibyte sequences more
+	* tests/unistr/test-chr.h: Do complete testing of the characters in the
+	test vector.
+	* tests/unistr/test-u8-chr.c (U_UCTOMB): Define.
+	* tests/unistr/test-u16-chr.c (U_UCTOMB): Likewise.
+	* tests/unistr/test-u32-chr.c (U_UCTOMB): Likewise.
+
+	unistr/u*-chr: test multibyte sequences
+	* tests/unistr/test-chr.h: Put characters above 0-127 in the test input.
+
+	unistr/u*-chr: prepare for multibyte tests
+	* modules/unistr/u8-chr-tests: Depend on u32-to-u8.
+	* modules/unistr/u16-chr-tests: Depend on u32-to-u16.
+	* tests/unistr/test-chr.h: Build initial version as UCS-4 then convert.
+	* tests/unistr/test-u8-chr.c (U32_TO_U): Define.
+	* tests/unistr/test-u16-chr.c (U32_TO_U): Likewise.
+	* tests/unistr/test-u32-chr.c (U32_TO_U): Likewise.
+
 2010-07-18  Bruno Haible  <bruno@clisp.org>
 
 	unistr/u8-strchr: Optimize non-ASCII argument case.
