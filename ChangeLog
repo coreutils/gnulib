@@ -1,3 +1,9 @@
+2010-07-29  Eric Blake  <eblake@redhat.com>
+
+	strtod: aid debugging
+	* m4/strtod.m4(gl_FUNC_STRTOD): Use distinct exit status to aid
+	understanding why strtod is rejected.
+
 2010-07-28  Bruno Haible  <bruno@clisp.org>
 
 	unistr/u*-chr, unistr/u*-strchr: Fix link errors and warnings.

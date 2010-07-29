@@ -1,4 +1,4 @@
-# strtod.m4 serial 16
+# strtod.m4 serial 17
 dnl Copyright (C) 2002-2003, 2006-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -46,7 +46,7 @@ numeric_equal (double x, double y)
     char *term;
     strtod (string, &term);
     if (term != string && *(term - 1) == 0)
-      return 1;
+      return 2;
   }
   {
     /* Older glibc and Cygwin mis-parse "-0x".  */
@@ -55,7 +55,7 @@ numeric_equal (double x, double y)
     double value = strtod (string, &term);
     double zero = 0.0;
     if (1.0 / value != -1.0 / zero || term != (string + 2))
-      return 1;
+      return 3;
   }
   {
     /* Many platforms do not parse hex floats.  */
@@ -63,7 +63,7 @@ numeric_equal (double x, double y)
     char *term;
     double value = strtod (string, &term);
     if (value != 20.0 || term != (string + 6))
-      return 1;
+      return 4;
   }
   {
     /* Many platforms do not parse infinities.  HP-UX 11.31 parses inf,
@@ -74,7 +74,7 @@ numeric_equal (double x, double y)
     errno = 0;
     value = strtod (string, &term);
     if (value != HUGE_VAL || term != (string + 3) || errno)
-      return 1;
+      return 5;
   }
   {
     /* glibc 2.7 and cygwin 1.5.24 misparse "nan()".  */
@@ -82,7 +82,7 @@ numeric_equal (double x, double y)
     char *term;
     double value = strtod (string, &term);
     if (numeric_equal (value, value) || term != (string + 5))
-      return 1;
+      return 6;
   }
   {
     /* darwin 10.6.1 misparses "nan(".  */
@@ -90,7 +90,7 @@ numeric_equal (double x, double y)
     char *term;
     double value = strtod (string, &term);
     if (numeric_equal (value, value) || term != (string + 3))
-      return 1;
+      return 7;
   }
 ]])],
         [gl_cv_func_strtod_works=yes],
