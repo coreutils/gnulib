@@ -1,3 +1,8 @@
+2010-07-29  Peter O'Gorman  <pogma@thewrittenword.com>  (tiny change)
+
+	init.sh: work around trap limitation of some shells
+	* tests/init.sh (setup_): Move exit trap outside of shell function.
+
 2010-07-29  Eric Blake  <eblake@redhat.com>
 
 	strtod: aid debugging
