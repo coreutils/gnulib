@@ -215,10 +215,15 @@ strtod (const char *nptr, char **endptr)
 
   if (c_isdigit (s[*s == '.']))
     {
-      /* If a hex float was converted incorrectly, do it ourselves.  */
-      if (*s == '0' && c_tolower (s[1]) == 'x' && end <= s + 2
-          && c_isxdigit (s[2 + (s[2] == '.')]))
-        num = parse_number (s + 2, 16, 2, 4, 'p', &end);
+      /* If a hex float was converted incorrectly, do it ourselves.
+         If the string starts with "0x", consume the "0" ourselves.  */
+      if (*s == '0' && c_tolower (s[1]) == 'x' && end <= s + 2)
+        {
+          if (c_isxdigit (s[2 + (s[2] == '.')]))
+            num = parse_number (s + 2, 16, 2, 4, 'p', &end);
+          else
+            end = s + 1;
+        }
 
       s = end;
     }
