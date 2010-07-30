@@ -1,4 +1,4 @@
-# serial 22
+# serial 23
 # Determine whether we need the chown wrapper.
 
 dnl Copyright (C) 1997-2001, 2003-2005, 2007, 2009-2010 Free Software
@@ -43,6 +43,7 @@ AC_DEFUN_ONCE([gl_FUNC_CHOWN],
 
     dnl Solaris 9 ignores trailing slash.
     dnl FreeBSD 7.2 mishandles trailing slash on symlinks.
+    dnl Likewise for AIX 7.1.
     AC_CACHE_CHECK([whether chown honors trailing slash],
       [gl_cv_func_chown_slash_works],
       [touch conftest.file && rm -f conftest.link

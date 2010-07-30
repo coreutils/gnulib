@@ -1,3 +1,10 @@
+2010-07-30  Bruno Haible  <bruno@clisp.org>
+
+	chown: Update doc regarding AIX.
+	* doc/posix-functions/chown.texi: Mention bug on AIX 7.1.
+	* m4/chown.m4 (gl_FUNC_CHOWN): Update comment.
+	Reported by Rainer Tammer.
+
 2010-07-30  Eric Blake  <eblake@redhat.com>
 
 	strtod: fix bug in replacement function on AIX
