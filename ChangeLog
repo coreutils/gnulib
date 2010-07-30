@@ -1,5 +1,12 @@
 2010-07-30  Bruno Haible  <bruno@clisp.org>
 
+	strndup: Update regarding AIX.
+	* m4/strndup.m4 (gl_FUNC_STRNDUP): When cross-compiling, guess yes on
+	AIX 7.
+	Reported by Rainer Tammer.
+
+2010-07-30  Bruno Haible  <bruno@clisp.org>
+
 	stat: Update regarding AIX.
 	* doc/posix-functions/stat.texi: Mention bug on AIX 7.1.
 	* m4/stat.m4 (gl_FUNC_STAT): Update comment.

@@ -1,4 +1,4 @@
-# strndup.m4 serial 17
+# strndup.m4 serial 18
 dnl Copyright (C) 2002-2003, 2005-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -33,10 +33,14 @@ AC_DEFUN([gl_FUNC_STRNDUP],
   return s[13] != '\0';]])],
          [gl_cv_func_strndup_works=yes],
          [gl_cv_func_strndup_works=no],
-         [case $host_os in
-            aix*) gl_cv_func_strndup_works="guessing no";;
-            *) gl_cv_func_strndup_works="guessing yes";;
-          esac])])
+         [
+changequote(,)dnl
+          case $host_os in
+            aix | aix[3-6]*) gl_cv_func_strndup_works="guessing no";;
+            *)               gl_cv_func_strndup_works="guessing yes";;
+          esac
+changequote([,])dnl
+         ])])
     case $gl_cv_func_strndup_works in
       *no)
         REPLACE_STRNDUP=1
