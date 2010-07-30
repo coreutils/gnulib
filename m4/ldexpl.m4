@@ -1,4 +1,4 @@
-# ldexpl.m4 serial 6
+# ldexpl.m4 serial 7
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -88,10 +88,13 @@ int main()
   volatile long double y2 = ldexpl (x2, 0);
   return (y1 != 0.5L) || (y2 != x2);
 }], [gl_cv_func_ldexpl_works=yes], [gl_cv_func_ldexpl_works=no],
-      [case "$host_os" in
-         aix*) gl_cv_func_ldexpl_works="guessing no";;
-         *)    gl_cv_func_ldexpl_works="guessing yes";;
+      [
+changequote(,)dnl
+       case "$host_os" in
+         aix | aix[3-6]*) gl_cv_func_ldexpl_works="guessing no";;
+         *)               gl_cv_func_ldexpl_works="guessing yes";;
        esac
+changequote([,])dnl
       ])
     ])
 ])

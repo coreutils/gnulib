@@ -1,5 +1,12 @@
 2010-07-30  Bruno Haible  <bruno@clisp.org>
 
+	ldexpl; Update regarding AIX.
+	* m4/ldexpl.m4 (gl_FUNC_LDEXPL_WORKS): When cross-compiling, guess yes
+	on AIX 7.
+	Reported by Rainer Tammer.
+
+2010-07-30  Bruno Haible  <bruno@clisp.org>
+
 	frexpl: Update regarding AIX.
 	* m4/frexpl.m4 (gl_FUNC_FREXPL_WORKS): When cross-compiling, guess yes
 	on AIX 7.
