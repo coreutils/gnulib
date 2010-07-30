@@ -1,4 +1,4 @@
-# round.m4 serial 8
+# round.m4 serial 9
 dnl Copyright (C) 2007, 2009-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -40,8 +40,8 @@ int main()
   exit (x < 0.5 && round (x) != 0.0);
 }]])], [gl_cv_func_round_works=yes], [gl_cv_func_round_works=no],
           [case "$host_os" in
-             netbsd*) gl_cv_func_round_works="guessing no";;
-             *)       gl_cv_func_round_works="guessing yes";;
+             netbsd* | aix*) gl_cv_func_round_works="guessing no";;
+             *)              gl_cv_func_round_works="guessing yes";;
            esac
           ])
           LIBS="$save_LIBS"

@@ -13,7 +13,7 @@ This function is missing on some platforms:
 FreeBSD 5.2.1, OpenBSD 3.8, AIX 5.1, IRIX 6.5, OSF/1 4.0, Solaris 9, Interix 3.5.
 @item
 This functions returns a wrong result for x = 1/2 - 2^-54 on some platforms:
-NetBSD 3.0.
+NetBSD 3.0, AIX 7.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:
