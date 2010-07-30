@@ -1,5 +1,11 @@
 2010-07-30  Bruno Haible  <bruno@clisp.org>
 
+	printf.m4: Update regarding AIX.
+	* m4/printf.m4: Update comments regarding AIX.
+	Reported by Rainer Tammer.
+
+2010-07-30  Bruno Haible  <bruno@clisp.org>
+
 	iconv: Update regarding AIX.
 	* m4/iconv.m4 (AM_ICONV_LINK): When cross-compiling, guess yes on
 	AIX 7.
