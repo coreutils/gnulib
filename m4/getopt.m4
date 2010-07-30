@@ -1,4 +1,4 @@
-# getopt.m4 serial 28
+# getopt.m4 serial 29
 dnl Copyright (C) 2002-2006, 2008-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -102,7 +102,7 @@ AC_DEFUN([gl_GETOPT_CHECK_HEADERS],
     AC_CACHE_CHECK([whether getopt is POSIX compatible],
       [gl_cv_func_getopt_posix],
       [
-        dnl This test fails on mingw and succeeds on all other platforms.
+        dnl This test fails on mingw and succeeds on many other platforms.
         AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <unistd.h>
 #include <stdlib.h>
@@ -176,7 +176,7 @@ main ()
     if (!(optind == 1))
       return 12;
   }
-  /* Detect MacOS 10.5 bug.  */
+  /* Detect MacOS 10.5, AIX 7.1 bug.  */
   {
     char *argv[3] = { "program", "-ab", NULL };
     optind = OPTIND_MIN;
@@ -196,9 +196,9 @@ main ()
 ]])],
           [gl_cv_func_getopt_posix=yes], [gl_cv_func_getopt_posix=no],
           [case "$host_os" in
-             mingw*) gl_cv_func_getopt_posix="guessing no";;
-             darwin*) gl_cv_func_getopt_posix="guessing no";;
-             *)      gl_cv_func_getopt_posix="guessing yes";;
+             mingw*)         gl_cv_func_getopt_posix="guessing no";;
+             darwin* | aix*) gl_cv_func_getopt_posix="guessing no";;
+             *)              gl_cv_func_getopt_posix="guessing yes";;
            esac
           ])
       ])
