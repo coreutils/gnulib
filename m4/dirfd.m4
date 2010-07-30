@@ -1,4 +1,4 @@
-# serial 17   -*- Autoconf -*-
+# serial 18   -*- Autoconf -*-
 
 dnl Find out how to get the file descriptor associated with an open DIR*.
 
@@ -40,11 +40,13 @@ AC_DEFUN([gl_FUNC_DIRFD],
        gl_cv_func_dirfd_macro=yes,
        gl_cv_func_dirfd_macro=no)])
 
-  # Use the replacement only if we have no function, macro,
-  # or declaration with that name.
-  if test $ac_cv_func_dirfd,$ac_cv_have_decl_dirfd,$gl_cv_func_dirfd_macro \
-      = no,no,no; then
-    AC_REPLACE_FUNCS([dirfd])
+  # Use the replacement only if we have no function or macro with that name.
+  if test $ac_cv_func_dirfd,$gl_cv_func_dirfd_macro = no,no; then
+    if test $ac_cv_have_decl_dirfd = yes; then
+      # If the system declares dirfd already, let's declare rpl_dirfd instead.
+      REPLACE_DIRFD=1
+    fi
+    AC_LIBOBJ([dirfd])
     AC_CACHE_CHECK(
               [how to get the file descriptor associated with an open DIR*],
                    gl_cv_sys_dir_fd_member_name,

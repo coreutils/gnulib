@@ -1,4 +1,4 @@
-# dirent_h.m4 serial 12
+# dirent_h.m4 serial 13
 dnl Copyright (C) 2008-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -51,6 +51,7 @@ AC_DEFUN([gl_DIRENT_H_DEFAULTS],
   HAVE_SCANDIR=1;       AC_SUBST([HAVE_SCANDIR])
   HAVE_ALPHASORT=1;     AC_SUBST([HAVE_ALPHASORT])
   REPLACE_CLOSEDIR=0;   AC_SUBST([REPLACE_CLOSEDIR])
+  REPLACE_DIRFD=0;      AC_SUBST([REPLACE_DIRFD])
   REPLACE_FDOPENDIR=0;  AC_SUBST([REPLACE_FDOPENDIR])
   REPLACE_OPENDIR=0;    AC_SUBST([REPLACE_OPENDIR])
 ])

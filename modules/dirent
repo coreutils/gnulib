@@ -36,6 +36,7 @@ dirent.h: dirent.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	      -e 's|@''HAVE_SCANDIR''@|$(HAVE_SCANDIR)|g' \
 	      -e 's|@''HAVE_ALPHASORT''@|$(HAVE_ALPHASORT)|g' \
 	      -e 's|@''REPLACE_CLOSEDIR''@|$(REPLACE_CLOSEDIR)|g' \
+	      -e 's|@''REPLACE_DIRFD''@|$(REPLACE_DIRFD)|g' \
 	      -e 's|@''REPLACE_FDOPENDIR''@|$(REPLACE_FDOPENDIR)|g' \
 	      -e 's|@''REPLACE_OPENDIR''@|$(REPLACE_OPENDIR)|g' \
 	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \

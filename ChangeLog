@@ -1,3 +1,14 @@
+2010-07-30  Bruno Haible  <bruno@clisp.org>
+
+	dirfd: Avoid link error on AIX 7.1.
+	* lib/dirent.in.h (dirfd): Use modern idiom with REPLACE_DIRFD.
+	* m4/dirfd.m4 (gl_FUNC_DIRFD): If the function is declared but does not
+	exist, set REPLACE_DIRFD.
+	* m4/dirent_h.m4 (gl_DIRENT_H_DEFAULTS): Initialize REPLACE_DIRFD.
+	* modules/dirent (Makefile.am): Substitute REPLACE_DIRFD.
+	* doc/posix-functions/dirfd.texi: Update.
+	Reported by Rainer Tammer.
+
 2010-07-30  Eric Blake  <eblake@redhat.com>
 
 	strtod: next round of AIX fixes
