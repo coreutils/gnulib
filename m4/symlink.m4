@@ -1,4 +1,4 @@
-# serial 2
+# serial 3
 # See if we need to provide symlink replacement.
 
 dnl Copyright (C) 2009, 2010 Free Software Foundation, Inc.
@@ -13,8 +13,8 @@ AC_DEFUN([gl_FUNC_SYMLINK],
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
   AC_CHECK_FUNCS_ONCE([symlink])
   dnl The best we can do on mingw is provide a dummy that always fails, so
-  dnl that compilation can proceed with fewer ifdefs.  On Solaris 9 and
-  dnl FreeBSD 7.2, we want to fix a bug with trailing slash handling.
+  dnl that compilation can proceed with fewer ifdefs.  On FreeBSD 7.2, AIX 7.1,
+  dnl and Solaris 9, we want to fix a bug with trailing slash handling.
   if test $ac_cv_func_symlink = no; then
     HAVE_SYMLINK=0
     AC_LIBOBJ([symlink])
