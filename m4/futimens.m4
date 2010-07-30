@@ -1,4 +1,4 @@
-# serial 3
+# serial 4
 # See if we need to provide futimens replacement.
 
 dnl Copyright (C) 2009, 2010 Free Software Foundation, Inc.
@@ -27,7 +27,7 @@ AC_DEFUN([gl_FUNC_FUTIMENS],
       int fd = creat ("conftest.file", 0600);
       struct stat st;
       if (fd < 0) return 1;
-      if (futimens (AT_FDCWD, NULL)) return 2;
+      if (futimens (AT_FDCWD, NULL) == 0) return 2;
       if (futimens (fd, ts)) return 3;
       sleep (1);
       ts[0].tv_nsec = UTIME_NOW;
