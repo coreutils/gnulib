@@ -1,4 +1,4 @@
-# serial 1
+# serial 2
 # See if we need to provide mknod replacement.
 
 dnl Copyright (C) 2009, 2010 Free Software Foundation, Inc.
@@ -27,9 +27,14 @@ AC_DEFUN([gl_FUNC_MKNOD],
              #include <unistd.h>
 ]], [[/* Indeterminate for super-user, assume no.  Why are you running
          configure as root, anyway?  */
-      if (!geteuid ()) return 1;
+      if (!geteuid ()) return 99;
       if (mknod ("conftest.fifo", S_IFIFO | 0600, 0)) return 2;]])],
-         [gl_cv_func_mknod_works=yes], [gl_cv_func_mknod_works=no],
+         [gl_cv_func_mknod_works=yes],
+         [if test $? == 99 && test x"$FORCE_UNSAFE_CONFIGURE" = x; then
+            AC_MSG_FAILURE([you should not run configure as root ]dnl
+[(set FORCE_UNSAFE_CONFIGURE=1 in environment to bypass this check)])
+          fi
+          gl_cv_func_mknod_works=no],
          [gl_cv_func_mknod_works="guessing no"])
        rm -f conftest.fifo])
     if test "$gl_cv_func_mknod_works" != yes; then

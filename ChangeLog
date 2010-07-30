@@ -1,5 +1,10 @@
 2010-08-09  Eric Blake  <eblake@redhat.com>
 
+	mknod: be more vocal about danger of running tests as root
+	* m4/mknod.m4 (gl_FUNC_MKNOD): Make it harder to run configure as
+	root, since that is just asking for problems.
+	Suggested by Bruno Haible, based on a report by Rainer Tammer.
+
 	readlinkat: split into its own module
 	* modules/symlinkat: Split readlinkat...
 	* modules/readlinkat: ...into separate module.
