@@ -1,5 +1,12 @@
 2010-07-30  Bruno Haible  <bruno@clisp.org>
 
+	unlink: Update regarding AIX.
+	* doc/posix-functions/unlink.texi: Mention bug on AIX 7.1.
+	* m4/unlink.m4 (gl_FUNC_UNLINK): Update comment.
+	Reported by Rainer Tammer.
+
+2010-07-30  Bruno Haible  <bruno@clisp.org>
+
 	symlink: Update regarding AIX.
 	* doc/posix-functions/symlink.texi: Mention bug on AIX 7.1.
 	* m4/symlink.m4 (gl_FUNC_SYMLINK): Update comment.

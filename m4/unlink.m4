@@ -1,4 +1,4 @@
-# unlink.m4 serial 4
+# unlink.m4 serial 5
 dnl Copyright (C) 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,7 +9,7 @@ AC_DEFUN([gl_FUNC_UNLINK],
   AC_REQUIRE([gl_AC_DOS])
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
   AC_REQUIRE([AC_CANONICAL_HOST])
-  dnl Detect Solaris 9 and FreeBSD 7.2 bug.
+  dnl Detect FreeBSD 7.2, AIX 7.1, Solaris 9 bug.
   AC_CACHE_CHECK([whether unlink honors trailing slashes],
     [gl_cv_func_unlink_honors_slashes],
     [touch conftest.file
