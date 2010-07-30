@@ -1,5 +1,12 @@
 2010-07-30  Bruno Haible  <bruno@clisp.org>
 
+	strtok_r: Avoid triggering bug in AIX 7.1 xlc compiler.
+	* m4/strtok_r.m4 (gl_FUNC_STRTOK_R): Don't cast an invalid address to
+	a 'char *'.
+	Reported by Rainer Tammer.
+
+2010-07-30  Bruno Haible  <bruno@clisp.org>
+
 	unlink: Update regarding AIX.
 	* doc/posix-functions/unlink.texi: Mention bug on AIX 7.1.
 	* m4/unlink.m4 (gl_FUNC_UNLINK): Update comment.
