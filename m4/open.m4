@@ -1,4 +1,4 @@
-# open.m4 serial 8
+# open.m4 serial 9
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -37,10 +37,10 @@ int main ()
             [
 changequote(,)dnl
              case "$host_os" in
-               freebsd*)        gl_cv_func_open_slash="guessing no" ;;
-               solaris2.[0-9]*) gl_cv_func_open_slash="guessing no" ;;
-               hpux*)           gl_cv_func_open_slash="guessing no" ;;
-               *)               gl_cv_func_open_slash="guessing yes" ;;
+               freebsd* | aix* | hpux* | solaris2.[0-9]*)
+                 gl_cv_func_open_slash="guessing no" ;;
+               *)
+                 gl_cv_func_open_slash="guessing yes" ;;
              esac
 changequote([,])dnl
             ])

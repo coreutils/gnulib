@@ -1,5 +1,14 @@
 2010-07-30  Bruno Haible  <bruno@clisp.org>
 
+	open, fopen: Update regarding AIX.
+	* m4/open.m4 (gl_FUNC_OPEN): Adjust cross-compiling guess for AIX.
+	* m4/fopen.m4 (gl_FUNC_FOPEN): Likewise.
+	* doc/posix-functions/open.texi: Mention the trailing-slash bug on AIX.
+	* doc/posix-functions/fopen.texi: Likewise.
+	Reported by Rainer Tammer.
+
+2010-07-30  Bruno Haible  <bruno@clisp.org>
+
 	chown: Update doc regarding AIX.
 	* doc/posix-functions/chown.texi: Mention bug on AIX 7.1.
 	* m4/chown.m4 (gl_FUNC_CHOWN): Update comment.
