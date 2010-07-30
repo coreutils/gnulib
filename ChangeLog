@@ -1,5 +1,11 @@
 2010-07-30  Bruno Haible  <bruno@clisp.org>
 
+	getline: Update regarding AIX.
+	* doc/posix-functions/getline.texi: Mention bug on AIX 7.1.
+	Reported by Rainer Tammer.
+
+2010-07-30  Bruno Haible  <bruno@clisp.org>
+
 	wcwidth: Drop replacement on AIX 7.
 	* m4/wcwidth.m4 (gl_FUNC_WCWIDTH): When cross-compiling, guess yes on
 	AIX 7.
