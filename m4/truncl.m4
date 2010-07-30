@@ -1,4 +1,4 @@
-# truncl.m4 serial 4
+# truncl.m4 serial 5
 dnl Copyright (C) 2007-2008, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -40,6 +40,8 @@ AC_DEFUN([gl_FUNC_TRUNCL],
       TRUNCL_LIBM=
     fi
     dnl Test whether truncl() works. It crashes on OSF/1 4.0d.
+    save_LIBS="$LIBS"
+    LIBS="$LIBS $TRUNCL_LIBM"
     AC_CACHE_CHECK([whether truncl works], [gl_cv_func_truncl_works],
       [
         AC_TRY_RUN([
@@ -56,6 +58,7 @@ int main()
            esac
           ])
       ])
+    LIBS="$save_LIBS"
     case "$gl_cv_func_truncl_works" in
       *yes) ;;
       *) REPLACE_TRUNCL=1 ;;

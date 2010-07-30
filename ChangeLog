@@ -1,5 +1,12 @@
 2010-07-30  Bruno Haible  <bruno@clisp.org>
 
+	truncl: Fix autoconf test.
+	* m4/truncl.m4 (gl_FUNC_TRUNCL): Add TRUNCL_LIBM to LIBS while testing
+	whether truncl works.
+	Reported by Rainer Tammer.
+
+2010-07-30  Bruno Haible  <bruno@clisp.org>
+
 	round: Update regarding AIX.
 	* m4/round.m4 (gl_FUNC_ROUND): When cross-compiling, guess no on AIX 7.
 	* doc/posix-functions/round.texi: Mention bug on AIX 7.1.
