@@ -1,4 +1,4 @@
-# mbrtowc.m4 serial 17
+# mbrtowc.m4 serial 18
 dnl Copyright (C) 2001-2002, 2004-2005, 2008-2010 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -101,10 +101,10 @@ AC_DEFUN([gl_MBRTOWC_INCOMPLETE_STATE],
       dnl is present.
 changequote(,)dnl
       case "$host_os" in
-              # Guess no on AIX and OSF/1.
-        osf*) gl_cv_func_mbrtowc_incomplete_state="guessing no" ;;
-              # Guess yes otherwise.
-        *)    gl_cv_func_mbrtowc_incomplete_state="guessing yes" ;;
+                     # Guess no on AIX and OSF/1.
+        aix* | osf*) gl_cv_func_mbrtowc_incomplete_state="guessing no" ;;
+                     # Guess yes otherwise.
+        *)           gl_cv_func_mbrtowc_incomplete_state="guessing yes" ;;
       esac
 changequote([,])dnl
       if test $LOCALE_JA != none; then

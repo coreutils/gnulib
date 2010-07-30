@@ -1,3 +1,9 @@
+2010-07-30  Bruno Haible  <bruno@clisp.org>
+
+	mbrtowc: Fix cross-compilation guess for AIX.
+	* m4/mbrtowc.m4 (gl_MBRTOWC_INCOMPLETE_STATE): Fix cross-compilation
+	guess. Leftover from 2008-12-21.
+
 2010-07-29  Peter O'Gorman  <pogma@thewrittenword.com>  (tiny change)
 
 	init.sh: work around trap limitation of some shells
