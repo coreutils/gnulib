@@ -1,5 +1,12 @@
 2010-07-30  Bruno Haible  <bruno@clisp.org>
 
+	iconv: Update regarding AIX.
+	* m4/iconv.m4 (AM_ICONV_LINK): When cross-compiling, guess yes on
+	AIX 7.
+	Reported by Rainer Tammer.
+
+2010-07-30  Bruno Haible  <bruno@clisp.org>
+
 	getopt: Update regarding AIX.
 	* m4/getopt.m4 (gl_GETOPT_CHECK_HEADERS): When cross-compiling, guess
 	no on AIX.
