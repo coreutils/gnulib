@@ -1,5 +1,12 @@
 2010-07-30  Bruno Haible  <bruno@clisp.org>
 
+	frexpl: Update regarding AIX.
+	* m4/frexpl.m4 (gl_FUNC_FREXPL_WORKS): When cross-compiling, guess yes
+	on AIX 7.
+	Reported by Rainer Tammer.
+
+2010-07-30  Bruno Haible  <bruno@clisp.org>
+
 	open, fopen: Update regarding AIX.
 	* m4/open.m4 (gl_FUNC_OPEN): Adjust cross-compiling guess for AIX.
 	* m4/fopen.m4 (gl_FUNC_FOPEN): Likewise.

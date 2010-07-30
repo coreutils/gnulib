@@ -1,4 +1,4 @@
-# frexpl.m4 serial 10
+# frexpl.m4 serial 11
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -179,11 +179,14 @@ int main()
   }
   return 0;
 }], [gl_cv_func_frexpl_works=yes], [gl_cv_func_frexpl_works=no],
-      [case "$host_os" in
-         aix* | beos* | darwin* | irix* | mingw* | pw*)
+      [
+changequote(,)dnl
+       case "$host_os" in
+         aix | aix[3-6]* | beos* | darwin* | irix* | mingw* | pw*)
             gl_cv_func_frexpl_works="guessing no";;
          *) gl_cv_func_frexpl_works="guessing yes";;
        esac
+changequote([,])dnl
       ])
     ])
 ])
