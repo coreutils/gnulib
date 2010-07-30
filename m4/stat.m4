@@ -1,4 +1,4 @@
-# serial 4
+# serial 5
 
 # Copyright (C) 2009, 2010 Free Software Foundation, Inc.
 #
@@ -24,7 +24,7 @@ AC_DEFUN([gl_FUNC_STAT],
             mingw*) gl_cv_func_stat_dir_slash="guessing no";;
             *) gl_cv_func_stat_dir_slash="guessing yes";;
           esac])])
-  dnl Solaris 9 mistakenly succeeds on stat("file/")
+  dnl AIX 7.1, Solaris 9 mistakenly succeed on stat("file/")
   dnl FreeBSD 7.2 mistakenly succeeds on stat("link-to-file/")
   AC_CACHE_CHECK([whether stat handles trailing slashes on files],
       [gl_cv_func_stat_file_slash],
