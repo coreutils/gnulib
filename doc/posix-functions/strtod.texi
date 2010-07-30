@@ -58,7 +58,13 @@ glibc-2.4, AIX 7.1.
 @item
 This function fails to parse C99 hexadecimal floating point on some
 platforms:
-NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw.
+NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1,
+Solaris 10, mingw.
+
+@item
+This function returns the wrong end pointer for @samp{0x1p} on some
+platforms:
+AIX 7.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:

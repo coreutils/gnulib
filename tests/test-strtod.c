@@ -434,6 +434,17 @@ main (void)
     ASSERT (errno == 0);
   }
   {
+    const char input[] = "0XP";
+    char *ptr;
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
+    ASSERT (result == 0.0);
+    ASSERT (!signbit (result));
+    ASSERT (ptr == input + 1);          /* glibc-2.3.6, MacOS X 10.3, FreeBSD 6.2, AIX 7.1 */
+    ASSERT (errno == 0);
+  }
+  {
     const char input[] = "0x.";
     char *ptr;
     double result;
@@ -479,6 +490,16 @@ main (void)
   }
   {
     const char input[] = "1p+1";
+    char *ptr;
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
+    ASSERT (result == 1.0);
+    ASSERT (ptr == input + 1);
+    ASSERT (errno == 0);
+  }
+  {
+    const char input[] = "1P+1";
     char *ptr;
     double result;
     errno = 0;
@@ -771,7 +792,27 @@ main (void)
     ASSERT (errno == 0);
   }
   {
+    const char input[] = "0x1P+";
+    char *ptr;
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
+    ASSERT (result == 1.0);             /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
+    ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
+    ASSERT (errno == 0);
+  }
+  {
     const char input[] = "0x1p+1";
+    char *ptr;
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
+    ASSERT (result == 2.0);             /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
+    ASSERT (ptr == input + 6);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
+    ASSERT (errno == 0);
+  }
+  {
+    const char input[] = "0X1P+1";
     char *ptr;
     double result;
     errno = 0;

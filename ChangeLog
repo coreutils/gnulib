@@ -1,5 +1,12 @@
 2010-07-30  Eric Blake  <eblake@redhat.com>
 
+	strtod: next round of AIX fixes
+	* lib/strtod.c (strtod): Work around AIX bug of parsing p with no
+	exponent.
+	* tests/test-strtod.c (main): Enhance tests.
+	* doc/posix-functions/strtod.texi (strtod): Document next bug.
+	Reported by Rainer Tammer.
+
 	futimens: fix configure check
 	* m4/futimens.m4 (gl_FUNC_FUTIMENS): Use correct logic.
 	Reported by Bruno Haible.

@@ -216,13 +216,23 @@ strtod (const char *nptr, char **endptr)
   if (c_isdigit (s[*s == '.']))
     {
       /* If a hex float was converted incorrectly, do it ourselves.
-         If the string starts with "0x", consume the "0" ourselves.  */
-      if (*s == '0' && c_tolower (s[1]) == 'x' && end <= s + 2)
+         If the string starts with "0x" but does not contain digits,
+         consume the "0" ourselves.  If a hex float is followed by a
+         'p' but no exponent, then adjust the end pointer.  */
+      if (*s == '0' && c_tolower (s[1]) == 'x')
         {
-          if (c_isxdigit (s[2 + (s[2] == '.')]))
+          if (! c_isxdigit (s[2 + (s[2] == '.')]))
+            end = s + 1;
+          else if (end <= s + 2)
             num = parse_number (s + 2, 16, 2, 4, 'p', &end);
           else
-            end = s + 1;
+            {
+              const char *p = s + 2;
+              while (p < end && c_tolower (*p) != 'p')
+                p++;
+              if (p < end && ! c_isdigit (p[1 + (p[1] == '-' || p[1] == '+')]))
+                end = p;
+            }
         }
 
       s = end;
