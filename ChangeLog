@@ -1,5 +1,12 @@
 2010-07-30  Bruno Haible  <bruno@clisp.org>
 
+	rename: Update regarding AIX.
+	* doc/posix-functions/rename.texi: Mention bug on AIX 7.1.
+	* m4/rename.m4 (gl_FUNC_RENAME): Update comment.
+	Reported by Rainer Tammer.
+
+2010-07-30  Bruno Haible  <bruno@clisp.org>
+
 	printf.m4: Update regarding AIX.
 	* m4/printf.m4: Update comments regarding AIX.
 	Reported by Rainer Tammer.
