@@ -1,5 +1,9 @@
 2010-07-31  Bruno Haible  <bruno@clisp.org>
 
+	unistr/u8-strchr: Fix several bugs.
+	* lib/unistr/u8-strchr.c (u8_strchr): Don't search beyond the end of
+	the string. When not found, return NULL, not a pointer near the end.
+
 	More tests for unistr/u8-strchr.
 	* tests/unistr/test-strchr.h (test_strchr): Renamed from main. Check
 	that the function does not read past the first occurrence of the byte

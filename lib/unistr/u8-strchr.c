@@ -62,7 +62,7 @@ u8_strchr (const uint8_t *s, ucs4_t uc)
     switch (u8_uctomb_aux (c, uc, 6))
       {
       case 2:
-        if (*s == 0)
+        if (*s == 0 || s[1] == 0)
           break;
         {
           uint8_t c0 = c[0];
@@ -96,11 +96,11 @@ u8_strchr (const uint8_t *s, ucs4_t uc)
               if (s[1] == 0)
                 break;
             }
-          return (uint8_t *) s;
         }
+        break;
 
       case 3:
-        if (*s == 0 || s[1] == 0)
+        if (*s == 0 || s[1] == 0 || s[2] == 0)
           break;
         {
           uint8_t c0 = c[0];
@@ -147,7 +147,7 @@ u8_strchr (const uint8_t *s, ucs4_t uc)
         }
 
       case 4:
-        if (*s == 0 || s[1] == 0 || s[2] == 0)
+        if (*s == 0 || s[1] == 0 || s[2] == 0 || s[3] == 0)
           break;
         {
           uint8_t c0 = c[0];
