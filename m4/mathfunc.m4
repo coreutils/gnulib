@@ -29,8 +29,9 @@ AC_DEFUN([gl_MATHFUNC],
              # define __NO_MATH_INLINES 1 /* for glibc */
              #endif
              #include <math.h>
-             $2 (*funcptr) $3 = ]func[;]],
-           [[$2 y = funcptr ]m4_bpatsubst([m4_bpatsubst([$3], [int], [2])], [double], [1.6180339887])[;
+             $2 (*funcptr) $3 = ]func[;
+             double d_ret;]],
+           [[$2 y = funcptr ]m4_bpatsubst([m4_bpatsubst([m4_bpatsubst([$3], [int], [2])], [double \*], [&d_ret])], [double], [1.6180339887])[;
              return y < 0.3 || y > 1.7;
            ]])],
         [gl_cv_func_]func[_no_libm=yes],
@@ -48,8 +49,9 @@ AC_DEFUN([gl_MATHFUNC],
                # define __NO_MATH_INLINES 1 /* for glibc */
                #endif
                #include <math.h>
-               $2 (*funcptr) $3 = ]func[;]],
-             [[$2 y = funcptr ]m4_bpatsubst([m4_bpatsubst([$3], [int], [2])], [double], [1.6180339887])[;
+               $2 (*funcptr) $3 = ]func[;
+               double d_ret;]],
+             [[$2 y = funcptr ]m4_bpatsubst([m4_bpatsubst([m4_bpatsubst([$3], [int], [2])], [double \*], [&d_ret])], [double], [1.6180339887])[;
                return y < 0.3 || y > 1.7;
              ]])],
           [gl_cv_func_]func[_in_libm=yes],
