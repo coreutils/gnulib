@@ -1,4 +1,4 @@
-# ansi-c++.m4 serial 5
+# ansi-c++.m4 serial 6
 dnl Copyright (C) 2002-2003, 2005, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -15,17 +15,26 @@ dnl From Bruno Haible.
 AC_DEFUN([gl_CXX_CHOICE],
 [
   AC_MSG_CHECKING([whether to use C++])
-  dnl It would be so nice if plus signs were supported in AC_ARG_ENABLE.
-  dnl Feature request submitted on 2010-03-13.
-  m4_ifdef([gl_CXX_CHOICE_DEFAULT_NO],
-    [AC_ARG_ENABLE([cxx],
-       [  --enable-cxx            also build C++ sources],
-       [CXX_CHOICE="$enableval"],
-       [CXX_CHOICE=no])],
-    [AC_ARG_ENABLE([cxx],
-       [  --disable-cxx           do not build C++ sources],
-       [CXX_CHOICE="$enableval"],
-       [CXX_CHOICE=yes])])
+  dnl Plus signs are supported in AC_ARG_ENABLE starting with autoconf-2.66.
+  m4_version_prereq([2.66],
+    [m4_ifdef([gl_CXX_CHOICE_DEFAULT_NO],
+       [AC_ARG_ENABLE([c++],
+          [  --enable-c++            also build C++ sources],
+          [CXX_CHOICE="$enableval"],
+          [CXX_CHOICE=no])],
+       [AC_ARG_ENABLE([c++],
+          [  --disable-c++           do not build C++ sources],
+          [CXX_CHOICE="$enableval"],
+          [CXX_CHOICE=yes])])],
+    [m4_ifdef([gl_CXX_CHOICE_DEFAULT_NO],
+       [AC_ARG_ENABLE([cxx],
+          [  --enable-cxx            also build C++ sources],
+          [CXX_CHOICE="$enableval"],
+          [CXX_CHOICE=no])],
+       [AC_ARG_ENABLE([cxx],
+          [  --disable-cxx           do not build C++ sources],
+          [CXX_CHOICE="$enableval"],
+          [CXX_CHOICE=yes])])])
   AC_MSG_RESULT([$CXX_CHOICE])
   AC_SUBST([CXX_CHOICE])
 ])
