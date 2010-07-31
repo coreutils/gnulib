@@ -32,7 +32,9 @@ locale_t
 rpl_duplocale (locale_t locale)
 {
   /* Work around crash in the duplocale function in glibc < 2.12.
-     See <http://sourceware.org/bugzilla/show_bug.cgi?id=10969>.  */
+     See <http://sourceware.org/bugzilla/show_bug.cgi?id=10969>.
+     Also, on AIX 7.1, duplocale(LC_GLOBAL_LOCALE) returns (locale_t)0 with
+     errno set to EINVAL.  */
   if (locale == LC_GLOBAL_LOCALE)
     {
       /* Create a copy of the locale by fetching the name of each locale

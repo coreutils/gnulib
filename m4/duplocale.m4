@@ -1,5 +1,5 @@
-# duplocale.m4 serial 2
-dnl Copyright (C) 2009, 2010 Free Software Foundation, Inc.
+# duplocale.m4 serial 3
+dnl Copyright (C) 2009-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -12,6 +12,8 @@ AC_DEFUN([gl_FUNC_DUPLOCALE],
   if test $ac_cv_func_duplocale = yes; then
     dnl Check against glibc bug where duplocale crashes.
     dnl See <http://sourceware.org/bugzilla/show_bug.cgi?id=10969>.
+    dnl Also, on AIX 7.1, duplocale(LC_GLOBAL_LOCALE) returns (locale_t)0 with
+    dnl errno set to EINVAL.
     AC_REQUIRE([gl_LOCALE_H])
     AC_CACHE_CHECK([whether duplocale(LC_GLOBAL_LOCALE) works],
       [gl_cv_func_duplocale_works],
@@ -22,20 +24,27 @@ AC_DEFUN([gl_FUNC_DUPLOCALE],
 #endif
 int main ()
 {
-  (void) duplocale (LC_GLOBAL_LOCALE);
+  if (duplocale (LC_GLOBAL_LOCALE) == (locale_t)0)
+    return 1;
   return 0;
 }], [gl_cv_func_duplocale_works=yes], [gl_cv_func_duplocale_works=no],
-         [dnl Guess it works except on glibc < 2.12.
-          AC_EGREP_CPP([Unlucky GNU user], [
+         [dnl Guess it works except on glibc < 2.12 and AIX.
+          case "$host_os" in
+            aix*) gl_cv_func_duplocale_works="guessing no";;
+            *-gnu*)
+              AC_EGREP_CPP([Unlucky GNU user], [
 #include <features.h>
 #ifdef __GNU_LIBRARY__
  #if (__GLIBC__ == 2 && __GLIBC_MINOR__ < 12)
   Unlucky GNU user
  #endif
 #endif
-            ],
-            [gl_cv_func_duplocale_works="guessing no"],
-            [gl_cv_func_duplocale_works="guessing yes"])
+                ],
+                [gl_cv_func_duplocale_works="guessing no"],
+                [gl_cv_func_duplocale_works="guessing yes"])
+              ;;
+            *) gl_cv_func_duplocale_works="guessing yes";;
+          esac
          ])
       ])
     case "$gl_cv_func_duplocale_works" in

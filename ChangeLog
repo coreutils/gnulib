@@ -1,3 +1,12 @@
+2010-07-31  Bruno Haible  <bruno@clisp.org>
+
+	duplocale: Work around AIX 7.1 bug.
+	* m4/duplocale.m4 (gl_FUNC_DUPLOCALE): Let the test fail also when
+	duplocale(LC_GLOBAL_LOCALE) returns (locale_t)0.
+	* lib/duplocale.c (rpl_duplocale): Update comment.
+	* doc/posix-functions/duplocale.texi: Mention the AIX 7.1 bug.
+	Reported by Rainer Tammer.
+
 2010-07-30  Bruno Haible  <bruno@clisp.org>
 
 	dirfd: Avoid link error on AIX 7.1.

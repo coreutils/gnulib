@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 The argument @code{LC_GLOBAL_LOCALE} is not supported on some platforms:
-glibc 2.11.
+glibc 2.11, AIX 7.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:
