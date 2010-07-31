@@ -1,5 +1,42 @@
 2010-07-31  Bruno Haible  <bruno@clisp.org>
 
+	Update modules list.
+	* MODULES.html.sh (Sorting functions <stdlib.h>): Add array-mergesort.
+	(String handling <string.h>): Add memcmp2, memxfrm.
+	(Container data structures): Add xlist, xsublist, xoset.
+	(Core language properties): Add alignof, unused-parameter.
+	(Process control, Numeric conversion functions <stdlib.h>): Renamed
+	from Numeric conversion functions <stdlib.h>. Add _Exit, atoll.
+	(Unibyte characters <ctype.h>): New section.
+	(String handling <string.h>): New section.
+	(Mathematics <math.h>): Add acos, acosl, asin, asinl, atan, atan2,
+	atanl, cbrt, copysign, cos, cosh, cosl, erf, erfc, exp, expl, fabs,
+	fmod, hypot, j0, j1, jn, ldexp, lgamma, log, log10, log1p, logb, logl,
+	modf, nextafter, pow, remainder, rint, sin, sinh, sinl, sqrt, sqrtl,
+	tan, tanh, tanl, y0, y1, yn.
+	(Support for systems lacking POSIX:2008): Add alphasort, dirent,
+	dprintf, dprintf-posix, duplocale, fcntl, getlogin, getopt-posix,
+	grantpt, iconv-h, ioctl, isblank, langinfo, nl_langinfo, pread,
+	ptsname, pwrite, scandir, servent, sys_utsname, ttyname_r, uname,
+	unlockpt, vdprintf, vdprintf-posix.
+	(Enhancements for POSIX:2008 functions): Add getopt-gnu. Remove getopt.
+	(File system functions): Add concat-filename, sys_file, sys_ioctl,
+	xconcat-filename.
+	(File descriptor based Input/Output): Add dup3, fd-safer-flag,
+	getdtablesize, pipe2, pipe2-safer.
+	(Security): New section.
+	(Networking functions): Add accept4.
+	(Signal handling): Add sigpipe.
+	(Internationalization functions): Add xstriconveh, mbmemcasecmp,
+	mbmemcasecoll.
+	(Unicode string functions): Add libunistring-optional, unistr/u*-cmp2,
+	unistr/u*-strcoll, uniwbrk/*, uninorm/*, unicase/*.
+	(Executing programs): Add findprog-lgpl, pipe-filter-gi,
+	pipe-filter-ii.
+	(Misc): Add argp-version-etc, login_tty, parse-duration.
+
+2010-07-31  Bruno Haible  <bruno@clisp.org>
+
 	Improve doc in MODULES.html.
 	* modules/linkat (Description): Add the word "function".
 	* modules/mkfifo (Description): Likewise.
