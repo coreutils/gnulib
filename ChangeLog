@@ -1,5 +1,12 @@
 2010-07-31  Bruno Haible  <bruno@clisp.org>
 
+	copysign: Does not require -lm on glibc systems.
+	* modules/copysign (configure.ac): Use gl_MATHFUNC, not
+	gl_COMMON_DOUBLE_MATHFUNC.
+	* m4/mathfunc.m4 (gl_COMMON_DOUBLE_MATHFUNC): Update comments.
+
+2010-07-31  Bruno Haible  <bruno@clisp.org>
+
 	duplocale: Work around AIX 7.1 bug.
 	* m4/duplocale.m4 (gl_FUNC_DUPLOCALE): Let the test fail also when
 	duplocale(LC_GLOBAL_LOCALE) returns (locale_t)0.
