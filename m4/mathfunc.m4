@@ -1,4 +1,4 @@
-# mathfunc.m4 serial 5
+# mathfunc.m4 serial 6
 dnl Copyright (C) 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -24,12 +24,15 @@ AC_DEFUN([gl_MATHFUNC],
     [gl_cv_func_]func[_no_libm],
     [
       AC_LINK_IFELSE(
-        [AC_LANG_PROGRAM([[#ifndef __NO_MATH_INLINES
-                           # define __NO_MATH_INLINES 1 /* for glibc */
-                           #endif
-                           #include <math.h>
-                           $2 (*funcptr) $3 = ]func[;]],
-                         [[return 0;]])],
+        [AC_LANG_PROGRAM(
+           [[#ifndef __NO_MATH_INLINES
+             # define __NO_MATH_INLINES 1 /* for glibc */
+             #endif
+             #include <math.h>
+             $2 (*funcptr) $3 = ]func[;]],
+           [[$2 y = funcptr ]m4_bpatsubst([m4_bpatsubst([$3], [int], [2])], [double], [1.6180339887])[;
+             return y < 0.3 || y > 1.7;
+           ]])],
         [gl_cv_func_]func[_no_libm=yes],
         [gl_cv_func_]func[_no_libm=no])
     ])
@@ -40,12 +43,15 @@ AC_DEFUN([gl_MATHFUNC],
         save_LIBS="$LIBS"
         LIBS="$LIBS -lm"
         AC_LINK_IFELSE(
-          [AC_LANG_PROGRAM([[#ifndef __NO_MATH_INLINES
-                             # define __NO_MATH_INLINES 1 /* for glibc */
-                             #endif
-                             #include <math.h>
-                             $2 (*funcptr) $3 = ]func[;]],
-                           [[return 0;]])],
+          [AC_LANG_PROGRAM(
+             [[#ifndef __NO_MATH_INLINES
+               # define __NO_MATH_INLINES 1 /* for glibc */
+               #endif
+               #include <math.h>
+               $2 (*funcptr) $3 = ]func[;]],
+             [[$2 y = funcptr ]m4_bpatsubst([m4_bpatsubst([$3], [int], [2])], [double], [1.6180339887])[;
+               return y < 0.3 || y > 1.7;
+             ]])],
           [gl_cv_func_]func[_in_libm=yes],
           [gl_cv_func_]func[_in_libm=no])
         LIBS="$save_LIBS"
