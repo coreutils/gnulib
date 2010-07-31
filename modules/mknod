@@ -1,5 +1,5 @@
 Description:
-mknod(): create various special devices
+mknod() function: create various special devices
 
 Files:
 lib/mknod.c

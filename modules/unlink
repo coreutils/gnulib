@@ -1,5 +1,5 @@
 Description:
-unlink(): remove a file.
+unlink() function: remove a file.
 
 Files:
 lib/unlink.c

@@ -1,5 +1,5 @@
 Description:
-renameat(): rename a file, relative to two directories
+renameat() function: rename a file, relative to two directories
 
 Files:
 lib/at-func2.c

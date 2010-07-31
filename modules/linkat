@@ -1,5 +1,5 @@
 Description:
-linkat(): create a hard link, relative to two directories
+linkat() function: create a hard link, relative to two directories
 
 Files:
 lib/at-func2.c

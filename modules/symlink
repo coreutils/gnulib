@@ -1,5 +1,5 @@
 Description:
-symlink(): create a symlink, if possible
+symlink() function: create a symlink, if possible
 
 Files:
 lib/symlink.c

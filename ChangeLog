@@ -1,5 +1,17 @@
 2010-07-31  Bruno Haible  <bruno@clisp.org>
 
+	Improve doc in MODULES.html.
+	* modules/linkat (Description): Add the word "function".
+	* modules/mkfifo (Description): Likewise.
+	* modules/mknod (Description): Likewise.
+	* modules/remove (Description): Likewise.
+	* modules/renameat (Description): Likewise.
+	* modules/stat (Description): Likewise.
+	* modules/symlink (Description): Likewise.
+	* modules/unlink (Description): Likewise.
+
+2010-07-31  Bruno Haible  <bruno@clisp.org>
+
 	ansi-c++-opt: Provide option --enable-c++/--disable-c++ when possible.
 	* m4/ansi-c++.m4 (gl_CXX_CHOICE): In Autoconf 2.66 or newer, provide
 	option --enable/disable-c++ instead of --enable/disable-cxx.

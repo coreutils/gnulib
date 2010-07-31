@@ -1,5 +1,5 @@
 Description:
-mkfifo(): create named FIFO
+mkfifo() function: create named FIFO
 
 Files:
 lib/mkfifo.c

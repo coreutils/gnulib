@@ -1,5 +1,5 @@
 Description:
-stat(): query file information
+stat() function: query file information
 
 Files:
 lib/stat.c

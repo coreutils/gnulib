@@ -1,5 +1,5 @@
 Description:
-remove(): remove a file or directory
+remove() function: remove a file or directory
 
 Files:
 lib/remove.c
