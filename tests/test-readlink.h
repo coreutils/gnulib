@@ -74,7 +74,7 @@ test_readlink (ssize_t (*func) (char const *, char *, size_t), bool print)
   ASSERT (symlink (BASE "file", BASE "link2") == 0);
   errno = 0;
   ASSERT (func (BASE "link2/", buf, sizeof buf) == -1);
-  ASSERT (errno == ENOTDIR);
+  ASSERT (errno == ENOTDIR || errno == EINVAL); /* AIX yields EINVAL */
   ASSERT (unlink (BASE "file") == 0);
   ASSERT (unlink (BASE "link2") == 0);
   {

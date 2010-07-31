@@ -49,7 +49,7 @@ test_areadlink (char * (*func) (char const *, size_t), bool print)
   ASSERT (errno == EINVAL);
   errno = 0;
   ASSERT (func (BASE "file/", 1) == NULL);
-  ASSERT (errno == ENOTDIR);
+  ASSERT (errno == ENOTDIR || errno == EINVAL); /* AIX yields EINVAL */
   ASSERT (unlink (BASE "file") == 0);
 
   /* Now test actual symlinks.  */

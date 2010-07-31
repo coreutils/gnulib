@@ -1,5 +1,13 @@
 2010-07-31  Bruno Haible  <bruno@clisp.org>
 
+	readlink, areadlink: Relax test a bit.
+	* tests/test-readlink.h (test_readlink): Accept EINVAL as an
+	alternative to ENOTDIR.
+	* tests/test-areadlink.h (test_areadlink): Likewise.
+	Reported by Rainer Tammer.
+
+2010-07-31  Bruno Haible  <bruno@clisp.org>
+
 	unistr/u8-strstr, unistr/u16-strstr: Optimize the one-character case.
 	* lib/unistr/u-strstr.h (FUNC): When the needle contains only one
 	character, perform the search using U_STRCHR.
