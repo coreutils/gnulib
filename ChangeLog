@@ -1,5 +1,10 @@
 2010-07-31  Bruno Haible  <bruno@clisp.org>
 
+	posix-modules: Ignore backup files of documentation files.
+	* posix-modules: grep only through files named *.texi.
+
+2010-07-31  Bruno Haible  <bruno@clisp.org>
+
 	symlinkat: Fix documentation.
 	* doc/posix-functions/readlinkat.texi: Fix module name.
 
