@@ -1,4 +1,4 @@
-/* Test of uN_chr() functions.
+/* Test of uN_strchr() functions.
    Copyright (C) 2008-2010 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -17,8 +17,8 @@
 /* Written by Paolo Bonzini <bonzini@gnu.org>, 2010.
    Based on test-chr.h, by Eric Blake and Bruno Haible.  */
 
-int
-main (void)
+static void
+test_strchr (void)
 {
   size_t size = 0x100000;
   size_t length;
@@ -101,8 +101,7 @@ main (void)
       }
   }
 
-  /* Check that uN_chr() does not read past the first occurrence of the
-     byte being searched.  */
+  /* Check that uN_strchr() does not read past the end of the string.  */
   {
     char *page_boundary = (char *) zerosize_ptr ();
     size_t n;
@@ -122,7 +121,34 @@ main (void)
       }
   }
 
-  free (input);
+  /* Check that uN_strchr() does not read past the first occurrence of the
+     byte being searched.  */
+  {
+    char *page_boundary = (char *) zerosize_ptr ();
+    size_t n;
 
-  return 0;
+    if (page_boundary != NULL)
+      {
+        for (n = 2; n <= 500 / sizeof (UNIT); n++)
+          {
+            UNIT *mem = (UNIT *) (page_boundary - n * sizeof (UNIT));
+            U_SET (mem, 'X', n - 1);
+            mem[n - 1] = 0;
+            ASSERT (U_STRCHR (mem, 'U') == NULL);
+
+            {
+              size_t i;
+
+              for (i = 0; i < n; i++)
+                {
+                  mem[i] = 'U';
+                  ASSERT (U_STRCHR (mem, 'U') == mem + i);
+                  mem[i] = 'X';
+                }
+            }
+          }
+      }
+  }
+
+  free (input);
 }

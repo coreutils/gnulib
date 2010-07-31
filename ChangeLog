@@ -1,5 +1,15 @@
 2010-07-31  Bruno Haible  <bruno@clisp.org>
 
+	More tests for unistr/u8-strchr.
+	* tests/unistr/test-strchr.h (test_strchr): Renamed from main. Check
+	that the function does not read past the first occurrence of the byte
+	being searched.
+	* tests/unistr/test-u8-strchr.c (main): New function, with more tests.
+	* tests/unistr/test-u16-strchr.c (main): New function.
+	* tests/unistr/test-u32-strchr.c (main): New function.
+
+2010-07-31  Bruno Haible  <bruno@clisp.org>
+
 	posix-modules: Ignore backup files of documentation files.
 	* posix-modules: grep only through files named *.texi.
 

@@ -32,3 +32,118 @@
 #define U_STRCHR u8_strchr
 #define U_SET u8_set
 #include "test-strchr.h"
+
+int
+main (void)
+{
+  test_strchr ();
+
+  /* Check that u8_strchr() does not read past the end of the string.  */
+  {
+    char *page_boundary = (char *) zerosize_ptr ();
+
+    if (page_boundary != NULL)
+      {
+        UNIT *mem;
+
+        mem = (UNIT *) (page_boundary - 1 * sizeof (UNIT));
+        mem[0] = 0;
+        ASSERT (u8_strchr (mem, 0x55) == NULL);
+        ASSERT (u8_strchr (mem, 0x123) == NULL);
+        ASSERT (u8_strchr (mem, 0x3456) == NULL);
+        ASSERT (u8_strchr (mem, 0x23456) == NULL);
+
+        mem = (UNIT *) (page_boundary - 2 * sizeof (UNIT));
+        mem[0] = 0x50;
+        mem[1] = 0;
+        ASSERT (u8_strchr (mem, 0x55) == NULL);
+        ASSERT (u8_strchr (mem, 0x123) == NULL);
+        ASSERT (u8_strchr (mem, 0x3456) == NULL);
+        ASSERT (u8_strchr (mem, 0x23456) == NULL);
+
+        mem = (UNIT *) (page_boundary - 3 * sizeof (UNIT));
+        mem[0] = 0x50;
+        mem[1] = 0x50;
+        mem[2] = 0;
+        ASSERT (u8_strchr (mem, 0x55) == NULL);
+        ASSERT (u8_strchr (mem, 0x123) == NULL);
+        ASSERT (u8_strchr (mem, 0x3456) == NULL);
+        ASSERT (u8_strchr (mem, 0x23456) == NULL);
+
+        mem = (UNIT *) (page_boundary - 3 * sizeof (UNIT));
+        mem[0] = 0xC4; mem[1] = 0xA0; /* U+0120 */
+        mem[2] = 0;
+        ASSERT (u8_strchr (mem, 0x55) == NULL);
+        ASSERT (u8_strchr (mem, 0x123) == NULL);
+        ASSERT (u8_strchr (mem, 0x3456) == NULL);
+        ASSERT (u8_strchr (mem, 0x23456) == NULL);
+
+        mem = (UNIT *) (page_boundary - 3 * sizeof (UNIT));
+        mem[0] = 0xC5; mem[1] = 0xA3; /* U+0163 */
+        mem[2] = 0;
+        ASSERT (u8_strchr (mem, 0x55) == NULL);
+        ASSERT (u8_strchr (mem, 0x123) == NULL);
+        ASSERT (u8_strchr (mem, 0x3456) == NULL);
+        ASSERT (u8_strchr (mem, 0x23456) == NULL);
+
+        mem = (UNIT *) (page_boundary - 4 * sizeof (UNIT));
+        mem[0] = 0x50;
+        mem[1] = 0x50;
+        mem[2] = 0x50;
+        mem[3] = 0;
+        ASSERT (u8_strchr (mem, 0x55) == NULL);
+        ASSERT (u8_strchr (mem, 0x123) == NULL);
+        ASSERT (u8_strchr (mem, 0x3456) == NULL);
+        ASSERT (u8_strchr (mem, 0x23456) == NULL);
+
+        mem = (UNIT *) (page_boundary - 4 * sizeof (UNIT));
+        mem[0] = 0x50;
+        mem[1] = 0xC5; mem[2] = 0xA3; /* U+0163 */
+        mem[3] = 0;
+        ASSERT (u8_strchr (mem, 0x55) == NULL);
+        ASSERT (u8_strchr (mem, 0x123) == NULL);
+        ASSERT (u8_strchr (mem, 0x3456) == NULL);
+        ASSERT (u8_strchr (mem, 0x23456) == NULL);
+        ASSERT (u8_strchr (mem, 0x163) == mem + 1);
+
+        mem = (UNIT *) (page_boundary - 4 * sizeof (UNIT));
+        mem[0] = 0xE3; mem[1] = 0x91; mem[2] = 0x00; /* U+3450 */
+        mem[3] = 0;
+        ASSERT (u8_strchr (mem, 0x55) == NULL);
+        ASSERT (u8_strchr (mem, 0x123) == NULL);
+        ASSERT (u8_strchr (mem, 0x3456) == NULL);
+        ASSERT (u8_strchr (mem, 0x23456) == NULL);
+
+        mem = (UNIT *) (page_boundary - 4 * sizeof (UNIT));
+        mem[0] = 0xE3; mem[1] = 0x92; mem[2] = 0x96; /* U+3496 */
+        mem[3] = 0;
+        ASSERT (u8_strchr (mem, 0x55) == NULL);
+        ASSERT (u8_strchr (mem, 0x123) == NULL);
+        ASSERT (u8_strchr (mem, 0x3456) == NULL);
+        ASSERT (u8_strchr (mem, 0x23456) == NULL);
+
+        mem = (UNIT *) (page_boundary - 5 * sizeof (UNIT));
+        mem[0] = 0x50;
+        mem[1] = 0x50;
+        mem[2] = 0x50;
+        mem[3] = 0x50;
+        mem[4] = 0;
+        ASSERT (u8_strchr (mem, 0x55) == NULL);
+        ASSERT (u8_strchr (mem, 0x123) == NULL);
+        ASSERT (u8_strchr (mem, 0x3456) == NULL);
+        ASSERT (u8_strchr (mem, 0x23456) == NULL);
+
+        mem = (UNIT *) (page_boundary - 5 * sizeof (UNIT));
+        mem[0] = 0x50;
+        mem[1] = 0xE3; mem[2] = 0x92; mem[3] = 0x96; /* U+3496 */
+        mem[4] = 0;
+        ASSERT (u8_strchr (mem, 0x55) == NULL);
+        ASSERT (u8_strchr (mem, 0x123) == NULL);
+        ASSERT (u8_strchr (mem, 0x3456) == NULL);
+        ASSERT (u8_strchr (mem, 0x23456) == NULL);
+        ASSERT (u8_strchr (mem, 0x3496) == mem + 1);
+      }
+  }
+
+  return 0;
+}

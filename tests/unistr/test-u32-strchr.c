@@ -32,3 +32,11 @@
 #define U_STRCHR u32_strchr
 #define U_SET u32_set
 #include "test-strchr.h"
+
+int
+main (void)
+{
+  test_strchr ();
+
+  return 0;
+}
