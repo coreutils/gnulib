@@ -1,5 +1,12 @@
 2010-07-31  Bruno Haible  <bruno@clisp.org>
 
+	unistr/u*-strstr: Fix dependencies.
+	* modules/unistr/u8-strstr (Depends-on): Add unistr/u8-strchr.
+	* modules/unistr/u16-strstr (Depends-on): Add unistr/u16-strchr.
+	* modules/unistr/u32-strstr (Depends-on): Add unistr/u32-strchr.
+
+2010-07-31  Bruno Haible  <bruno@clisp.org>
+
 	unistr/u8-chr, unistr/u8-strchr: Optimize and add comments.
 	* lib/unistr/u8-chr.c (u8_chr): Add comments. Remove a useless test at
 	the beginning of the loop.

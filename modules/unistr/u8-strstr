@@ -7,6 +7,7 @@ lib/unistr/u-strstr.h
 
 Depends-on:
 unistr/base
+unistr/u8-strchr
 
 configure.ac:
 gl_LIBUNISTRING_MODULE([0.9], [unistr/u8-strstr])
