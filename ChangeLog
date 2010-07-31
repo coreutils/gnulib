@@ -1,5 +1,10 @@
 2010-07-31  Bruno Haible  <bruno@clisp.org>
 
+	symlinkat: Fix documentation.
+	* doc/posix-functions/readlinkat.texi: Fix module name.
+
+2010-07-31  Bruno Haible  <bruno@clisp.org>
+
 	fchownat: Replace also when chown has the trailing slash bug.
 	* m4/openat.m4 (gl_FUNC_FCHOWNAT): Move the test of REPLACE_CHOWN
 	outside the gl_FUNC_FCHOWNAT_DEREF_BUG invocation. Fixes regression
