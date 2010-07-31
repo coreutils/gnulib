@@ -1,5 +1,11 @@
 2010-07-31  Bruno Haible  <bruno@clisp.org>
 
+	unistr/u8-chr, unistr/u8-strchr: Optimize and add comments.
+	* lib/unistr/u8-chr.c (u8_chr): Add comments. Remove a useless test at
+	the beginning of the loop.
+	* lib/unistr/u8-strchr.c (u8_strchr): Add comments. Don't fall through
+	cases in 'switch' statement.
+
 	unistr/u8-strchr: Fix several bugs.
 	* lib/unistr/u8-strchr.c (u8_strchr): Don't search beyond the end of
 	the string. When not found, return NULL, not a pointer near the end.

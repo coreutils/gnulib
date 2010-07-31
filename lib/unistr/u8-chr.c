@@ -70,14 +70,17 @@ u8_chr (const uint8_t *s, size_t n, ucs4_t uc)
           uint8_t c1 = c[1];
           const uint8_t *end = s + n - 1;
 
-          while (s < end)
+          do
             {
+              /* Here s < end.
+                 Test whether s[0..1] == { c0, c1 }.  */
               uint8_t s1 = s[1];
               if (s1 == c1)
                 {
                   if (*s == c0)
                     return (uint8_t *) s;
                   else
+                    /* Skip the search at s + 1, because s[1] = c1 < c0.  */
                     s += 2;
                 }
               else
@@ -85,9 +88,11 @@ u8_chr (const uint8_t *s, size_t n, ucs4_t uc)
                   if (s1 == c0)
                     s++;
                   else
+                    /* Skip the search at s + 1, because s[1] != c0.  */
                     s += 2;
                 }
             }
+          while (s < end);
           break;
         }
 
@@ -104,14 +109,19 @@ u8_chr (const uint8_t *s, size_t n, ucs4_t uc)
           else
             skip = 3;
 
-          while (s < end)
+          do
             {
+              /* Here s < end.
+                 Test whether s[0..2] == { c0, c1, c2 }.  */
               uint8_t s2 = s[2];
               if (s2 == c2)
                 {
                   if (s[1] == c1 && *s == c0)
                     return (uint8_t *) s;
                   else
+                    /* If c2 != c1:
+                         Skip the search at s + 1, because s[2] == c2 != c1.
+                       Skip the search at s + 2, because s[2] == c2 < c0.  */
                     s += skip;
                 }
               else
@@ -119,11 +129,15 @@ u8_chr (const uint8_t *s, size_t n, ucs4_t uc)
                   if (s2 == c1)
                     s++;
                   else if (s2 == c0)
+                    /* Skip the search at s + 1, because s[2] != c1.  */
                     s += 2;
                   else
+                    /* Skip the search at s + 1, because s[2] != c1.
+                       Skip the search at s + 2, because s[2] != c0.  */
                     s += 3;
                 }
             }
+          while (s < end);
           break;
         }
 
@@ -143,14 +157,21 @@ u8_chr (const uint8_t *s, size_t n, ucs4_t uc)
           else
             skip = 4;
 
-          while (s < end)
+          do
             {
+              /* Here s < end.
+                 Test whether s[0..3] == { c0, c1, c2, c3 }.  */
               uint8_t s3 = s[3];
               if (s3 == c3)
                 {
                   if (s[2] == c2 && s[1] == c1 && *s == c0)
                     return (uint8_t *) s;
                   else
+                    /* If c3 != c2:
+                         Skip the search at s + 1, because s[3] == c3 != c2.
+                       If c3 != c1:
+                         Skip the search at s + 2, because s[3] == c3 != c1.
+                       Skip the search at s + 3, because s[3] == c3 < c0.  */
                     s += skip;
                 }
               else
@@ -158,13 +179,20 @@ u8_chr (const uint8_t *s, size_t n, ucs4_t uc)
                   if (s3 == c2)
                     s++;
                   else if (s3 == c1)
+                    /* Skip the search at s + 1, because s[3] != c2.  */
                     s += 2;
                   else if (s3 == c0)
+                    /* Skip the search at s + 1, because s[3] != c2.
+                       Skip the search at s + 2, because s[3] != c1.  */
                     s += 3;
                   else
+                    /* Skip the search at s + 1, because s[3] != c2.
+                       Skip the search at s + 2, because s[3] != c1.
+                       Skip the search at s + 3, because s[3] != c0.  */
                     s += 4;
                 }
             }
+          while (s < end);
           break;
         }
       }
