@@ -1,4 +1,4 @@
-# serial 29
+# serial 30
 # See if we need to use our replacement for Solaris' openat et al functions.
 
 dnl Copyright (C) 2004-2010 Free Software Foundation, Inc.
@@ -99,19 +99,22 @@ main ()
 # If we have the fchownat function, and it has the bug (in glibc-2.4)
 # that it dereferences symlinks even with AT_SYMLINK_NOFOLLOW, then
 # use the replacement function.
+# Also if the fchownat function, like chown, has the trailing slash bug,
+# use the replacement function.
 # Also use the replacement function if fchownat is simply not available.
 AC_DEFUN([gl_FUNC_FCHOWNAT],
 [
   AC_REQUIRE([gl_FUNC_CHOWN])
   AC_CHECK_FUNC([fchownat],
-    [gl_FUNC_FCHOWNAT_DEREF_BUG([
-      REPLACE_FCHOWNAT=1
-      AC_DEFINE([FCHOWNAT_NOFOLLOW_BUG], [1],
-                [Define to 1 if your platform has fchownat, but it cannot
-                 perform lchown tasks.])
-      if test $REPLACE_CHOWN = 1; then
-        REPLACE_FCHOWNAT=1
-      fi])],
+    [gl_FUNC_FCHOWNAT_DEREF_BUG(
+       [REPLACE_FCHOWNAT=1
+        AC_DEFINE([FCHOWNAT_NOFOLLOW_BUG], [1],
+                  [Define to 1 if your platform has fchownat, but it cannot
+                   perform lchown tasks.])
+       ])
+     if test $REPLACE_CHOWN = 1; then
+       REPLACE_FCHOWNAT=1
+     fi],
     [HAVE_FCHOWNAT=0])
   if test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1; then
     AC_LIBOBJ([fchownat])
