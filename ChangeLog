@@ -1,5 +1,13 @@
 2010-07-31  Bruno Haible  <bruno@clisp.org>
 
+	iconv: Work around AIX 6.1..7.1 bug.
+	* doc/posix-functions/iconv.texi: Mention AIX 6.1, 7.1 bug.
+	* m4/iconv.m4 (AM_ICONV_LINK): Test against AIX 6.1, 7.1 bug. When
+	cross-compiling, guess no on all versions of AIX.
+	Reported by Rainer Tammer.
+
+2010-07-31  Bruno Haible  <bruno@clisp.org>
+
 	readlink: Relax test a bit.
 	* tests/test-readlink.h (test_readlink): Allow different errno value
 	when readlink is called with a file name that ends in / and refers to

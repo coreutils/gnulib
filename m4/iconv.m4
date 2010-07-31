@@ -1,4 +1,4 @@
-# iconv.m4 serial 11a
+# iconv.m4 serial 11b
 dnl Copyright (C) 2000-2002, 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -58,7 +58,8 @@ AC_DEFUN([AM_ICONV_LINK],
   ])
   if test "$am_cv_func_iconv" = yes; then
     AC_CACHE_CHECK([for working iconv], [am_cv_func_iconv_works], [
-      dnl This tests against bugs in AIX 5.1, HP-UX 11.11, Solaris 10.
+      dnl This tests against bugs in AIX 5.1, AIX 6.1..7.1, HP-UX 11.11,
+      dnl Solaris 10.
       am_save_LIBS="$LIBS"
       if test $am_cv_lib_iconv = yes; then
         LIBS="$LIBS $LIBICONV"
@@ -106,6 +107,24 @@ int main ()
           return 1;
       }
   }
+  /* Test against AIX 6.1..7.1 bug: Buffer overrun.  */
+  {
+    iconv_t cd_88591_to_utf8 = iconv_open ("UTF-8", "ISO-8859-1");
+    if (cd_88591_to_utf8 != (iconv_t)(-1))
+      {
+        static const char input[] = "\304";
+        static char buf[2] = { (char)0xDE, (char)0xAD };
+        const char *inptr = input;
+        size_t inbytesleft = 1;
+        char *outptr = buf;
+        size_t outbytesleft = 1;
+        size_t res = iconv (cd_88591_to_utf8,
+                            (char **) &inptr, &inbytesleft,
+                            &outptr, &outbytesleft);
+        if (res != (size_t)(-1) || outptr - buf > 1 || buf[1] != (char)0xAD)
+          return 1;
+      }
+  }
 #if 0 /* This bug could be worked around by the caller.  */
   /* Test against HP-UX 11.11 bug: Positive return value instead of 0.  */
   {
@@ -142,8 +161,8 @@ int main ()
         [
 changequote(,)dnl
          case "$host_os" in
-           aix | aix[3-6]* | hpux*) am_cv_func_iconv_works="guessing no" ;;
-           *)                       am_cv_func_iconv_works="guessing yes" ;;
+           aix* | hpux*) am_cv_func_iconv_works="guessing no" ;;
+           *)            am_cv_func_iconv_works="guessing yes" ;;
          esac
 changequote([,])dnl
         ])

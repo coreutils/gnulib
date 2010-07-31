@@ -13,6 +13,9 @@ GNU libiconv is not found if installed in @file{$PREFIX/lib}.
 @item
 Failures are not distinguishable from successful returns on some platforms:
 AIX 5.1, Solaris 10.
+@item
+A buffer overrun can occur on some platforms:
+AIX 6.1..7.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:
