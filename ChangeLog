@@ -8,6 +8,7 @@
 	check whether (fd1,file1) points to a directory if file1 or file2 ends
 	in a slash. Code taken from lib/link.c.
 	* doc/posix-functions/linkat.texi: Mention trailing slash bug.
+	Reported by Rainer Tammer.
 
 2010-07-31  Bruno Haible  <bruno@clisp.org>
 
