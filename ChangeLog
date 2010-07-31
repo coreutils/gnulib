@@ -1,5 +1,14 @@
 2010-07-31  Bruno Haible  <bruno@clisp.org>
 
+	readlink: Relax test a bit.
+	* tests/test-readlink.h (test_readlink): Allow different errno value
+	when readlink is called with a file name that ends in / and refers to
+	a file.
+	Suggested by Eric Blake.
+	Reported by Rainer Tammer.
+
+2010-07-31  Bruno Haible  <bruno@clisp.org>
+
 	copysign: Does not require -lm on glibc systems.
 	* modules/copysign (configure.ac): Use gl_MATHFUNC, not
 	gl_COMMON_DOUBLE_MATHFUNC.
