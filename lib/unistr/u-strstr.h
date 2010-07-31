@@ -1,5 +1,5 @@
 /* Substring test for UTF-8/UTF-16/UTF-32 strings.
-   Copyright (C) 1999, 2002, 2006, 2009-2010 Free Software Foundation, Inc.
+   Copyright (C) 1999, 2002, 2006, 2010 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2002.
 
    This program is free software: you can redistribute it and/or modify it
@@ -24,9 +24,19 @@ FUNC (const UNIT *haystack, const UNIT *needle)
   if (first == 0)
     return (UNIT *) haystack;
 
-  /* Is needle nearly empty?  */
+  /* Is needle nearly empty (only one unit)?  */
   if (needle[1] == 0)
     return U_STRCHR (haystack, first);
+
+#ifdef U_STRMBTOUC
+  /* Is needle nearly empty (only one character)?  */
+  {
+    ucs4_t first_uc;
+    int count = U_STRMBTOUC (&first_uc, needle);
+    if (count > 0 && needle[count] == 0)
+      return U_STRCHR (haystack, first_uc);
+  }
+#endif
 
   /* Search for needle's first unit.  */
   for (; *haystack != 0; haystack++)

@@ -1,5 +1,16 @@
 2010-07-31  Bruno Haible  <bruno@clisp.org>
 
+	unistr/u8-strstr, unistr/u16-strstr: Optimize the one-character case.
+	* lib/unistr/u-strstr.h (FUNC): When the needle contains only one
+	character, perform the search using U_STRCHR.
+	* lib/unistr/u8-strstr.c (U_STRMBTOUC): New macro.
+	* lib/unistr/u16-strstr.c (U_STRMBTOUC): Likewise.
+	* modules/unistr/u8-strstr (Depends-on): Add unistr/u8-strmbtouc.
+	* modules/unistr/u16-strstr (Depends-on): Add unistr/u16-strmbtouc.
+	Suggested by Paolo Bonzini.
+
+2010-07-31  Bruno Haible  <bruno@clisp.org>
+
 	unistr/u*-strstr: Fix dependencies.
 	* modules/unistr/u8-strstr (Depends-on): Add unistr/u8-strchr.
 	* modules/unistr/u16-strstr (Depends-on): Add unistr/u16-strchr.

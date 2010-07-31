@@ -1,5 +1,5 @@
 /* Substring test for UTF-8 strings.
-   Copyright (C) 1999, 2002, 2006, 2009-2010 Free Software Foundation, Inc.
+   Copyright (C) 1999, 2002, 2006, 2010 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2002.
 
    This program is free software: you can redistribute it and/or modify it
@@ -25,4 +25,5 @@
 #define FUNC u8_strstr
 #define UNIT uint8_t
 #define U_STRCHR u8_strchr
+#define U_STRMBTOUC u8_strmbtouc
 #include "u-strstr.h"
