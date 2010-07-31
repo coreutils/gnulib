@@ -1,5 +1,16 @@
 2010-07-31  Bruno Haible  <bruno@clisp.org>
 
+	linkat: Work around AIX 7.1 bug.
+	* m4/linkat.m4 (gl_FUNC_LINKAT): Require AC_CANONICAL_HOST. Test
+	whether linkat handles trailing slash correctly. If not, replace linkat
+	and define LINKAT_TRAILING_SLASH_BUG.
+	* lib/linkat.c (rpl_linkat): If LINKAT_TRAILING_SLASH_BUG is defined,
+	check whether (fd1,file1) points to a directory if file1 or file2 ends
+	in a slash. Code taken from lib/link.c.
+	* doc/posix-functions/linkat.texi: Mention trailing slash bug.
+
+2010-07-31  Bruno Haible  <bruno@clisp.org>
+
 	Correctly determine whether pow is available in libc on AIX 7 with xlc.
 	* m4/mathfunc.m4 (gl_MATHFUNC): Actually use the 'funcptr' variable.
 	This disables an xlc optimization that was causing wrong test results.

@@ -1,4 +1,4 @@
-# serial 2
+# serial 3
 # See if we need to provide linkat replacement.
 
 dnl Copyright (C) 2009-2010 Free Software Foundation, Inc.
@@ -15,6 +15,7 @@ AC_DEFUN([gl_FUNC_LINKAT],
   AC_REQUIRE([gl_FUNC_LINK_FOLLOWS_SYMLINK])
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CHECK_FUNCS_ONCE([linkat symlink])
   AC_CHECK_HEADERS_ONCE([sys/param.h])
   if test $ac_cv_func_linkat = no; then
@@ -39,9 +40,60 @@ choke me
          [gl_cv_func_linkat_follow=yes],
          [gl_cv_func_linkat_follow="need runtime check"])
        rm -rf conftest.f1 conftest.f2])
-    if test "$gl_cv_func_linkat_follow" != yes; then
+    AC_CACHE_CHECK([whether linkat handles trailing slash correctly],
+      [gl_cv_func_linkat_slash],
+      [rm -rf conftest.a conftest.b conftest.c conftest.d
+       AC_RUN_IFELSE(
+         [AC_LANG_PROGRAM(
+            [[#include <unistd.h>
+              #include <fcntl.h>
+              #include <errno.h>
+              #include <stdio.h>
+            ]],
+            [[int fd;
+              int err;
+              int ret;
+              /* Create a regular file.  */
+              fd = open ("conftest.a", O_CREAT | O_EXCL | O_WRONLY, 0600);
+              if (fd < 0)
+                return 1;
+              if (write (fd, "hello", 5) < 5)
+                return 2;
+              if (close (fd) < 0)
+                return 3;
+              /* Test whether hard links are supported on the current
+                 device.  */
+              if (linkat (AT_FDCWD, "conftest.a", AT_FDCWD, "conftest.b",
+                          AT_SYMLINK_FOLLOW) < 0)
+                return 0;
+              /* Test whether a trailing "/" is treated like "/.".  */
+              if (linkat (AT_FDCWD, "conftest.a/", AT_FDCWD, "conftest.c",
+                          AT_SYMLINK_FOLLOW) == 0)
+                return 4;
+              if (linkat (AT_FDCWD, "conftest.a", AT_FDCWD, "conftest.d/",
+                          AT_SYMLINK_FOLLOW) == 0)
+                return 5;
+              return 0;
+            ]])],
+         [gl_cv_func_linkat_slash=yes],
+         [gl_cv_func_linkat_slash=no],
+         [# Guess yes on glibc systems, no otherwise.
+          case "$host_os" in
+            *-gnu*) gl_cv_func_linkat_slash="guessing yes";;
+            *)      gl_cv_func_linkat_slash="guessing no";;
+          esac
+         ])
+       rm -rf conftest.a conftest.b conftest.c conftest.d])
+    case "$gl_cv_func_linkat_slash" in
+      *yes) gl_linkat_slash_bug=0 ;;
+      *)    gl_linkat_slash_bug=1 ;;
+    esac
+    if test "$gl_cv_func_linkat_follow" != yes \
+       || test $gl_linkat_slash_bug = 1; then
       REPLACE_LINKAT=1
       AC_LIBOBJ([linkat])
+      AC_DEFINE_UNQUOTED([LINKAT_TRAILING_SLASH_BUG], [$gl_linkat_slash_bug],
+        [Define to 1 if linkat fails to recognize a trailing slash.])
     fi
   fi
 ])
