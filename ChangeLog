@@ -1,3 +1,8 @@
+2010-08-01  Bruno Haible  <bruno@clisp.org>
+
+	link: Update documentation.
+	* doc/posix-functions/link.texi: Update regarding Solaris.
+
 2010-07-31  Bruno Haible  <bruno@clisp.org>
 
 	Update modules list.

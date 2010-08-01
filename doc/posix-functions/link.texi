@@ -14,7 +14,7 @@ mingw.
 @item
 This function fails to reject trailing slashes on non-directories on
 some platforms:
-FreeBSD 7.2, Solaris, Cygwin 1.5.x.
+FreeBSD 7.2, Solaris 10, Cygwin 1.5.x.
 @end itemize
 
 Portability problems not fixed by Gnulib:
