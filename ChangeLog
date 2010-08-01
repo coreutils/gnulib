@@ -1,5 +1,12 @@
 2010-08-01  Bruno Haible  <bruno@clisp.org>
 
+	Add regex documentation.
+	* doc/regex.texi: New file. Taken from regex-0.12/doc/regex.texi in
+	http://ftp.gnu.org/old-gnu/regex/regex-0.12.tar.gz.
+	Written by Kathy A. Hargreaves and Karl Berry.
+
+2010-08-01  Bruno Haible  <bruno@clisp.org>
+
 	link: Update documentation.
 	* doc/posix-functions/link.texi: Update regarding Solaris.
 
