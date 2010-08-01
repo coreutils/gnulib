@@ -6,6 +6,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2010-07-31  ansi-c++-opt    If Autoconf >= 2.66 is used, the 'configure'
+                            option is now called --disable-c++ rather than
+                            --disable-cxx.
+
 2010-04-02  maintainer-makefile
                             The macro _prohibit_regexp has been revamped into
                             a new macro _sc_search_regexp; custom syntax
