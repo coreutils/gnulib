@@ -2,8 +2,14 @@
 @comment %**start of header
 @setfilename gnulib.info
 @settitle GNU Gnulib
+@c Define a new index for the magic constants in regex.texi.
+@defcodeindex cn
 @syncodeindex fn cp
+@syncodeindex ky cp
 @syncodeindex pg cp
+@syncodeindex tp cp
+@syncodeindex vr cp
+@syncodeindex cn cp
 @ifclear texi2html
 @firstparagraphindent insert
 @end ifclear
@@ -63,6 +69,7 @@ Documentation License''.
 * Glibc Header File Substitutes::   Overriding system headers.
 * Glibc Function Substitutes::      Replacing system functions.
 * Particular Modules::              Documentation of individual modules.
+* Regular expressions::             The regex module.
 * GNU Free Documentation License::  Copying and sharing this manual.
 * Index::
 @end menu
@@ -6486,7 +6493,6 @@ This list of functions is sorted according to the header that declares them.
 * Quoting::
 * error and progname::
 * gcd::
-* Regular expressions::
 * Searching for Libraries::
 * Exported Symbols of Shared Libraries::
 * LD Version Scripts::
@@ -6568,16 +6574,6 @@ ASCII characters.
 
 @include gcd.texi
 
-@node Regular expressions
-@section Regular expressions
-
-Gnulib supports many different types of regular expressions; although
-the underlying features are the same or identical, the syntax used
-varies.  The descriptions given here for the different types are
-generated automatically.
-
-@include regexprops-generic.texi
-
 @include havelib.texi
 
 @include lib-symbol-visibility.texi
@@ -6595,6 +6591,34 @@ generated automatically.
 @include manywarnings.texi
 
 @include valgrind-tests.texi
+
+@node Regular expressions
+@chapter Regular expressions
+
+@menu
+* Overview::
+* Regular Expression Syntax::
+* Common Operators::
+* GNU Operators::
+* GNU Emacs Operators::
+* What Gets Matched?::
+* Programming with Regex::
+* Regular expression syntaxes::
+@end menu
+
+@lowersections
+@include regex.texi
+@raisesections
+
+@node Regular expression syntaxes
+@section Regular expression syntaxes
+
+Gnulib supports many different types of regular expressions; although
+the underlying features are the same or identical, the syntax used
+varies.  The descriptions given here for the different types are
+generated automatically.
+
+@include regexprops-generic.texi
 
 @node GNU Free Documentation License
 @appendix GNU Free Documentation License

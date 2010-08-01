@@ -1,5 +1,12 @@
 2010-08-01  Bruno Haible  <bruno@clisp.org>
 
+	Integrate the regex documentation.
+	* doc/gnulib.texi: Define 'cn' index.
+	(Regular expressions): New a chapter that includes regex.texi and
+	regexprops-generic.texi.
+	* doc/regex.texi: Remove boilerplate stuff. Use simplified @node
+	syntax.
+
 	Whitespace cleanup.
 	* doc/regex.texi: Remove trailing spaces.
 
