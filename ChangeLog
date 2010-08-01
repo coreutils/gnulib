@@ -1,5 +1,8 @@
 2010-08-01  Bruno Haible  <bruno@clisp.org>
 
+	Whitespace cleanup.
+	* doc/regex.texi: Remove trailing spaces.
+
 	Add regex documentation.
 	* doc/regex.texi: New file. Taken from regex-0.12/doc/regex.texi in
 	http://ftp.gnu.org/old-gnu/regex/regex-0.12.tar.gz.
