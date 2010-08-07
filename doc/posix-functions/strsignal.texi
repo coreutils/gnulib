@@ -20,7 +20,7 @@ Solaris, AIX 5.1.
 
 Portability problems not fixed by Gnulib:
 @itemize
-This function returns @code{const char *} instead of @code{char *} on
+@item This function returns @code{const char *} instead of @code{char *} on
 some platforms:
 cygwin 1.5.25.
 @end itemize

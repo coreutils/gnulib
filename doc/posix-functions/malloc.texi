@@ -16,7 +16,7 @@ mingw.
 
 Portability problems not fixed by Gnulib:
 @itemize
-@code{malloc (0)} always returns a NULL pointer on some platforms:
+@item @code{malloc (0)} always returns a NULL pointer on some platforms:
 AIX 5.1, OSF/1 5.1.
 @end itemize
 
