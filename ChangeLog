@@ -4,6 +4,7 @@
 	* doc/posix-functions/malloc.texi,
 	* doc/posix-functions/strsignal.texi: missing @item.
 	* doc/ld-version-script.texi: spurious leading i.
+	* doc/regex.texi (Interval Operators): no commas inside @var.
 
 2010-08-01  Bruno Haible  <bruno@clisp.org>
 

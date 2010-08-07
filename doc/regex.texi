@@ -657,11 +657,11 @@ open-interval and close-interval operators; then:
 matches exactly @var{count} occurrences of the preceding regular
 expression.
 
-@item @{@var{min,}@}
+@item @{@var{min},@}
 matches @var{min} or more occurrences of the preceding regular
 expression.
 
-@item  @{@var{min, max}@}
+@item  @{@var{min}, @var{max}@}
 matches at least @var{min} but no more than @var{max} occurrences of
 the preceding regular expression.
 
