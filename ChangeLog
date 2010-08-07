@@ -1,3 +1,10 @@
+2010-08-07  Karl Berry  <karl@gnu.org>
+
+	* doc/posix-headers/limits.texi,
+	* doc/posix-functions/malloc.texi,
+	* doc/posix-functions/strsignal.texi: missing @item.
+	* doc/ld-version-script.texi: spurious leading i.
+
 2010-08-01  Bruno Haible  <bruno@clisp.org>
 
 	Integrate the regex documentation.

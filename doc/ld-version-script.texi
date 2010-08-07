@@ -1,4 +1,4 @@
-i@node LD Version Scripts
+@node LD Version Scripts
 @section LD Version Scripts
 
 The @code{lib-symbol-versions} module can be used to add shared
