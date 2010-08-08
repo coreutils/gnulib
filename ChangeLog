@@ -1,3 +1,11 @@
+2010-08-08  Bruno Haible  <bruno@clisp.org>
+
+	memxfrm: Speed up.
+	* lib/memxfrm.c (memxfrm): Allocate enough memory ahead of time, so
+	that usually only one call to strxfrm is necessary for each string
+	part.
+	Reported by Paul Eggert <eggert@cs.ucla.edu>.
+
 2010-08-07  Karl Berry  <karl@gnu.org>
 
 	* doc/posix-headers/limits.texi,

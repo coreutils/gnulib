@@ -64,11 +64,39 @@ memxfrm (char *s, size_t n, char *resultbuf, size_t *lengthp)
     for (;;)
       {
         /* Search next NUL byte.  */
-        const char *q = p + strlen (p);
+        size_t l = strlen (p);
 
         for (;;)
           {
             size_t k;
+
+            /* A call to strxfrm costs about 20 times more than a call to
+               strdup of the result.  Therefore it is worth to try to avoid
+               calling strxfrm more than once on a given string, by making
+               enough room before calling strxfrm.
+               The size of the strxfrm result, k, is likely to be between
+               l and 3 * l.  */
+            if (3 * l >= allocated - length)
+              {
+                /* Grow the result buffer.  */
+                size_t new_allocated;
+                char *new_result;
+
+                new_allocated = length + 3 * l + 1;
+                if (new_allocated < 2 * allocated)
+                  new_allocated = 2 * allocated;
+                if (new_allocated < 64)
+                  new_allocated = 64;
+                if (result == resultbuf)
+                  new_result = (char *) malloc (new_allocated);
+                else
+                  new_result = (char *) realloc (result, new_allocated);
+                if (new_result != NULL)
+                  {
+                    allocated = new_allocated;
+                    result = new_result;
+                  }
+              }
 
             errno = 0;
             k = strxfrm (result + length, p, allocated - length);
@@ -77,17 +105,21 @@ memxfrm (char *s, size_t n, char *resultbuf, size_t *lengthp)
             if (k >= allocated - length)
               {
                 /* Grow the result buffer.  */
+                size_t new_allocated;
                 char *new_result;
 
-                allocated = 2 * allocated;
-                if (allocated < 64)
-                  allocated = 64;
+                new_allocated = length + k + 1;
+                if (new_allocated < 2 * allocated)
+                  new_allocated = 2 * allocated;
+                if (new_allocated < 64)
+                  new_allocated = 64;
                 if (result == resultbuf)
-                  new_result = (char *) malloc (allocated);
+                  new_result = (char *) malloc (new_allocated);
                 else
-                  new_result = (char *) realloc (result, allocated);
+                  new_result = (char *) realloc (result, new_allocated);
                 if (new_result == NULL)
                   goto out_of_memory_1;
+                allocated = new_allocated;
                 result = new_result;
               }
             else
@@ -97,7 +129,7 @@ memxfrm (char *s, size_t n, char *resultbuf, size_t *lengthp)
               }
           }
 
-        p = q + 1;
+        p = p + l + 1;
         if (p == p_end)
           break;
         result[length] = '\0';
@@ -105,12 +137,23 @@ memxfrm (char *s, size_t n, char *resultbuf, size_t *lengthp)
       }
   }
 
-  /* Shrink the allocated memory if possible.  */
-  if (result != resultbuf && (length > 0 ? length : 1) < allocated)
+  /* Shrink the allocated memory if possible.
+     It is not worth calling realloc when length + 1 == allocated; it would
+     save just one byte.  */
+  if (result != resultbuf && length + 1 < allocated)
     {
-      char *memory = (char *) realloc (result, length > 0 ? length : 1);
-      if (memory != NULL)
-        result = memory;
+      if ((length > 0 ? length : 1) <= *lengthp)
+        {
+          memcpy (resultbuf, result, length);
+          free (result);
+          result = resultbuf;
+        }
+      else
+        {
+          char *memory = (char *) realloc (result, length > 0 ? length : 1);
+          if (memory != NULL)
+            result = memory;
+        }
     }
 
   s[n] = orig_sentinel;
