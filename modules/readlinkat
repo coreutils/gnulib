@@ -1,20 +1,20 @@
 Description:
-symlinkat(): create symlinks relative to a directory
+readlinkat(): read symlinks relative to a directory
 
 Files:
-lib/symlinkat.c
-m4/symlinkat.m4
+lib/readlinkat.c
+m4/readlinkat.m4
 
 Depends-on:
 extensions
 fcntl-h
 openat
-symlink
+readlink
 unistd
 
 configure.ac:
-gl_FUNC_SYMLINKAT
-gl_UNISTD_MODULE_INDICATOR([symlinkat])
+gl_FUNC_READLINKAT
+gl_UNISTD_MODULE_INDICATOR([readlinkat])
 
 Makefile.am:
 

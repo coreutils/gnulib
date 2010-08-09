@@ -6,6 +6,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2010-08-09  symlinkat       This module now only provides symlinkat; use the
+                            new module 'readlinkat' if needed.
+
 2010-07-31  ansi-c++-opt    If Autoconf >= 2.66 is used, the 'configure'
                             option is now called --disable-c++ rather than
                             --disable-cxx.

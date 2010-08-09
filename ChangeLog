@@ -1,3 +1,21 @@
+2010-08-09  Eric Blake  <eblake@redhat.com>
+
+	readlinkat: split into its own module
+	* modules/symlinkat: Split readlinkat...
+	* modules/readlinkat: ...into separate module.
+	* m4/symlinkat.m4 (gl_FUNC_SYMLINKAT): Move readlinkat check...
+	* m4/readlinkat.m4 (gl_FUNC_READLINAT): ...to new file.
+	* lib/symlinkat.c (readlinkat): Move...
+	* lib/readlinkat.c: ...into new file.
+	* modules/symlinkat-tests: Split readlinkat test...
+	* modules/readlinkat-tests: ...into separate module.
+	* tests/test-symlinkat.c: Split...
+	* tests/test-readlinkat.c: ...into new file.
+	* NEWS: Document the split.
+	* doc/posix-functions/readlinkat.texi (readlinkat): Likewise.
+	* lib/unistd.in.h (readlinkat): Likewise.
+	Suggested by Bruno Haible.
+
 2010-08-08  Bruno Haible  <bruno@clisp.org>
 
 	memxfrm: Speed up.

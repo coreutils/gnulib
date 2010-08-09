@@ -1,4 +1,4 @@
-/* Tests of symlinkat and readlinkat.
+/* Tests of symlinkat.
    Copyright (C) 2009, 2010 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,6 @@
 
 #include "signature.h"
 SIGNATURE_CHECK (symlinkat, int, (char const *, int, char const *));
-SIGNATURE_CHECK (readlinkat, ssize_t, (int, char const *, char *, size_t));
 
 #include <fcntl.h>
 #include <errno.h>
@@ -41,7 +40,6 @@ SIGNATURE_CHECK (readlinkat, ssize_t, (int, char const *, char *, size_t));
 
 #define BASE "test-symlinkat.t"
 
-#include "test-readlink.h"
 #include "test-symlink.h"
 
 static int dfd = AT_FDCWD;
@@ -50,12 +48,6 @@ static int
 do_symlink (char const *contents, char const *name)
 {
   return symlinkat (contents, dfd, name);
-}
-
-static ssize_t
-do_readlink (char const *name, char *buf, size_t len)
-{
-  return readlinkat (dfd, name, buf, len);
 }
 
 int
@@ -68,47 +60,10 @@ main (void)
   ignore_value (system ("rm -rf " BASE "*"));
 
   /* Perform same checks as counterpart functions.  */
-  result = test_readlink (do_readlink, false);
-  ASSERT (test_symlink (do_symlink, false) == result);
+  result = test_symlink (do_symlink, false);
   dfd = openat (AT_FDCWD, ".", O_RDONLY);
   ASSERT (0 <= dfd);
-  ASSERT (test_readlink (do_readlink, false) == result);
   ASSERT (test_symlink (do_symlink, false) == result);
-
-  /* Now perform some cross-directory checks.  Skip everything else on
-     mingw.  */
-  if (HAVE_SYMLINK)
-    {
-      const char *contents = "don't matter!";
-      ssize_t exp = strlen (contents);
-
-      /* Create link while cwd is '.', then read it in '..'.  */
-      ASSERT (symlinkat (contents, AT_FDCWD, BASE "link") == 0);
-      errno = 0;
-      ASSERT (symlinkat (contents, dfd, BASE "link") == -1);
-      ASSERT (errno == EEXIST);
-      ASSERT (chdir ("..") == 0);
-      errno = 0;
-      ASSERT (readlinkat (AT_FDCWD, BASE "link", buf, sizeof buf) == -1);
-      ASSERT (errno == ENOENT);
-      ASSERT (readlinkat (dfd, BASE "link", buf, sizeof buf) == exp);
-      ASSERT (strncmp (contents, buf, exp) == 0);
-      ASSERT (unlinkat (dfd, BASE "link", 0) == 0);
-
-      /* Create link while cwd is '..', then read it in '.'.  */
-      ASSERT (symlinkat (contents, dfd, BASE "link") == 0);
-      ASSERT (fchdir (dfd) == 0);
-      errno = 0;
-      ASSERT (symlinkat (contents, AT_FDCWD, BASE "link") == -1);
-      ASSERT (errno == EEXIST);
-      buf[0] = '\0';
-      ASSERT (readlinkat (AT_FDCWD, BASE "link", buf, sizeof buf) == exp);
-      ASSERT (strncmp (contents, buf, exp) == 0);
-      buf[0] = '\0';
-      ASSERT (readlinkat (dfd, BASE "link", buf, sizeof buf) == exp);
-      ASSERT (strncmp (contents, buf, exp) == 0);
-      ASSERT (unlink (BASE "link") == 0);
-    }
 
   ASSERT (close (dfd) == 0);
   if (result == 77)
