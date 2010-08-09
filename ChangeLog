@@ -1,5 +1,10 @@
 2010-08-09  Eric Blake  <eblake@redhat.com>
 
+	readlinkat: adjust client modules
+	* modules/areadlinkat (Depends-on): Use readlinkat, not
+	symlinkat.
+	* modules/areadlinkat-with-size (Depends-on): Likewise.
+
 	mknod: be more vocal about danger of running tests as root
 	* m4/mknod.m4 (gl_FUNC_MKNOD): Make it harder to run configure as
 	root, since that is just asking for problems.

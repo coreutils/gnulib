@@ -8,7 +8,7 @@ lib/areadlinkat.c
 Depends-on:
 areadlink
 stdint
-symlinkat
+readlinkat
 
 configure.ac:
 gl_MODULE_INDICATOR([areadlinkat])
