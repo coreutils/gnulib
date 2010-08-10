@@ -1,3 +1,9 @@
+2010-08-10  Paul Eggert  <eggert@cs.ucla.edu>
+
+	strtod: fix const diagnostic
+	* lib/strtod.c (strtod): Don't assign const char * to char *,
+	as this elicits a warning from GCC when warnings are enabled.
+
 2010-08-10  Pádraig Brady <P@draigbrady.com>
 	and Eric Blake  <eblake@redhat.com>
 

@@ -200,7 +200,8 @@ strtod (const char *nptr, char **endptr)
   double num;
 
   const char *s = nptr;
-  char *end;
+  const char *end;
+  char *endbuf;
 
   /* Eat whitespace.  */
   while (locale_isspace (*s))
@@ -211,7 +212,8 @@ strtod (const char *nptr, char **endptr)
   if (*s == '-' || *s == '+')
     ++s;
 
-  num = underlying_strtod (s, &end);
+  num = underlying_strtod (s, &endbuf);
+  end = endbuf;
 
   if (c_isdigit (s[*s == '.']))
     {
@@ -224,7 +226,10 @@ strtod (const char *nptr, char **endptr)
           if (! c_isxdigit (s[2 + (s[2] == '.')]))
             end = s + 1;
           else if (end <= s + 2)
-            num = parse_number (s + 2, 16, 2, 4, 'p', &end);
+            {
+              num = parse_number (s + 2, 16, 2, 4, 'p', &endbuf);
+              end = endbuf;
+            }
           else
             {
               const char *p = s + 2;
