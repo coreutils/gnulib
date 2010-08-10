@@ -1,3 +1,12 @@
+2010-08-10  Eric Blake  <eblake@redhat.com>
+
+	open, chown: relax license
+	* modules/open (License): Change to LGPLv2+, with consent by all
+	authors, for use in augeas.
+	* modules/chown (License): Likewise.
+	* modules/lchown (Likewise): Likewise.
+	Requested by Adam Stokes.
+
 2010-08-09  Karl Berry  <karl@gnu.org>
 
 	* build-aux/ar-lib: new file, import from Automake.
