@@ -4,6 +4,7 @@
 $GNUCONFIG/config.guess		build-aux
 $GNUCONFIG/config.sub		build-aux
 #
+$AUTOMAKE/lib/ar-lib		build-aux
 $AUTOMAKE/lib/compile		build-aux
 $AUTOMAKE/lib/depcomp		build-aux
 $AUTOMAKE/lib/elisp-comp	build-aux
