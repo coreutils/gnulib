@@ -1,3 +1,9 @@
+2010-08-14  Matthias Bolte  <matthias.bolte@googlemail.com>
+
+	pthread: fix pthread.h creation for srcdir != builddir
+	* modules/pthread (Makefile.am): Fix the rule to work also in a
+	non-srcdir build.
+
 2010-08-13  Karl Berry  <karl@gnu.org>
 
 	* doc/regex.texi (Predefined Syntaxes): @smallexample.
