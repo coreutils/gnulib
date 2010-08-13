@@ -2,7 +2,7 @@
 @section @code{wcscmp}
 @findex wcscmp
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/wcscmp.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/wcscmp.html}
 
 Gnulib module: ---
 

@@ -1,7 +1,7 @@
 @node wordexp.h
 @section @file{wordexp.h}
 
-POSIX specification: @url{http://www.opengroup.org/susv3xbd/wordexp.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/wordexp.h.html}
 
 Gnulib module: ---
 

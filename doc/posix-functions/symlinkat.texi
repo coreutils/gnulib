@@ -2,7 +2,7 @@
 @section @code{symlinkat}
 @findex symlinkat
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/symlinkat.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/symlinkat.html}
 
 Gnulib module: symlinkat
 

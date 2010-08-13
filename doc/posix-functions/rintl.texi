@@ -2,7 +2,7 @@
 @section @code{rintl}
 @findex rintl
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/rintl.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/rintl.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{tgamma}
 @findex tgamma
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/tgamma.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/tgamma.html}
 
 Gnulib module: ---
 

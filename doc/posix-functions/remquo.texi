@@ -2,7 +2,7 @@
 @section @code{remquo}
 @findex remquo
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/remquo.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/remquo.html}
 
 Gnulib module: ---
 

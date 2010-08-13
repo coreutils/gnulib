@@ -2,7 +2,7 @@
 @section @code{lrint}
 @findex lrint
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/lrint.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/lrint.html}
 
 Gnulib module: ---
 

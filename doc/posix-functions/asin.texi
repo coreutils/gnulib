@@ -2,7 +2,7 @@
 @section @code{asin}
 @findex asin
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/asin.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/asin.html}
 
 Gnulib module: asin
 

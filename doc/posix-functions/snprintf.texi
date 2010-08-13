@@ -2,7 +2,7 @@
 @section @code{snprintf}
 @findex snprintf
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/snprintf.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/snprintf.html}
 
 Gnulib module: snprintf or snprintf-posix
 

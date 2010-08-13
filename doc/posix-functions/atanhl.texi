@@ -2,7 +2,7 @@
 @section @code{atanhl}
 @findex atanhl
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/atanhl.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/atanhl.html}
 
 Gnulib module: ---
 

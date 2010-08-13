@@ -2,7 +2,7 @@
 @section @code{floorf}
 @findex floorf
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/floorf.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/floorf.html}
 
 Gnulib module: floorf
 

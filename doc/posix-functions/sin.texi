@@ -2,7 +2,7 @@
 @section @code{sin}
 @findex sin
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/sin.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/sin.html}
 
 Gnulib module: sin
 

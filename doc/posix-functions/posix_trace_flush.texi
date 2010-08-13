@@ -2,7 +2,7 @@
 @section @code{posix_trace_flush}
 @findex posix_trace_flush
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/posix_trace_flush.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/posix_trace_flush.html}
 
 Gnulib module: ---
 

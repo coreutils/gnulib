@@ -1,7 +1,7 @@
 @node sys/timeb.h
 @section @file{sys/timeb.h}
 
-POSIX specification: @url{http://www.opengroup.org/susv3xbd/sys/timeb.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/sys/timeb.h.html}
 
 Gnulib module: ---
 

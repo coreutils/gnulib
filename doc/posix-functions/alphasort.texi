@@ -2,7 +2,7 @@
 @section @code{alphasort}
 @findex alphasort
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/alphasort.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/alphasort.html}
 
 Gnulib module: alphasort
 

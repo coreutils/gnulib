@@ -1,7 +1,7 @@
 @node inttypes.h
 @section @file{inttypes.h}
 
-POSIX specification: @url{http://www.opengroup.org/susv3xbd/inttypes.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/inttypes.h.html}
 
 Gnulib module: inttypes
 

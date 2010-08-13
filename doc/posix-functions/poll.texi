@@ -2,7 +2,7 @@
 @section @code{poll}
 @findex poll
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/poll.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/poll.html}
 
 Gnulib module: poll
 

@@ -2,7 +2,7 @@
 @section @code{tempnam}
 @findex tempnam
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/tempnam.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/tempnam.html}
 
 Gnulib module: ---
 

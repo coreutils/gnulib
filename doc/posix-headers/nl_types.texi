@@ -1,7 +1,7 @@
 @node nl_types.h
 @section @file{nl_types.h}
 
-POSIX specification: @url{http://www.opengroup.org/susv3xbd/nl/types.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/nl/types.h.html}
 
 Gnulib module: ---
 

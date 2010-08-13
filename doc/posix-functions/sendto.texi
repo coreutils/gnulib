@@ -2,7 +2,7 @@
 @section @code{sendto}
 @findex sendto
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/sendto.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/sendto.html}
 
 Gnulib module: sendto
 

@@ -2,7 +2,7 @@
 @section @code{mknod}
 @findex mknod
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/mknod.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/mknod.html}
 
 Gnulib module: mknod
 

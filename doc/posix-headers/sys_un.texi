@@ -1,7 +1,7 @@
 @node sys/un.h
 @section @file{sys/un.h}
 
-POSIX specification: @url{http://www.opengroup.org/susv3xbd/sys/un.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/sys/un.h.html}
 
 Gnulib module: ---
 

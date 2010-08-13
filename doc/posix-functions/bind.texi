@@ -2,7 +2,7 @@
 @section @code{bind}
 @findex bind
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/bind.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/bind.html}
 
 Gnulib module: bind
 

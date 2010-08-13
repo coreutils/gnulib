@@ -2,7 +2,7 @@
 @section @code{flockfile}
 @findex flockfile
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/flockfile.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/flockfile.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{cacos}
 @findex cacos
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/cacos.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/cacos.html}
 
 Gnulib module: ---
 

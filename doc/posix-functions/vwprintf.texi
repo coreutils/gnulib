@@ -2,7 +2,7 @@
 @section @code{vwprintf}
 @findex vwprintf
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/vwprintf.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/vwprintf.html}
 
 Gnulib module: ---
 

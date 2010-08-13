@@ -2,7 +2,7 @@
 @section @code{stderr}
 @findex stderr
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/stderr.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/stderr.html}
 
 Gnulib module: ---
 

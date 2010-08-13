@@ -1,7 +1,7 @@
 @node fenv.h
 @section @file{fenv.h}
 
-POSIX specification: @url{http://www.opengroup.org/susv3xbd/fenv.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/fenv.h.html}
 
 Gnulib module: ---
 

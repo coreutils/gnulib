@@ -2,7 +2,7 @@
 @section @code{lseek}
 @findex lseek
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/lseek.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/lseek.html}
 
 Gnulib module: lseek
 

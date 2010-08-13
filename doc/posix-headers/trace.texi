@@ -1,7 +1,7 @@
 @node trace.h
 @section @file{trace.h}
 
-POSIX specification: @url{http://www.opengroup.org/susv3xbd/trace.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/trace.h.html}
 
 Gnulib module: ---
 

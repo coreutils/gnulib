@@ -2,7 +2,7 @@
 @section @code{wctrans}
 @findex wctrans
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/wctrans.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/wctrans.html}
 
 Gnulib module: ---
 

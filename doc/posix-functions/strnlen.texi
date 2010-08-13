@@ -2,7 +2,7 @@
 @section @code{strnlen}
 @findex strnlen
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/strnlen.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/strnlen.html}
 
 Gnulib module: strnlen
 

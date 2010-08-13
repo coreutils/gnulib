@@ -1,7 +1,7 @@
 @node ctype.h
 @section @file{ctype.h}
 
-POSIX specification: @url{http://www.opengroup.org/susv3xbd/ctype.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/ctype.h.html}
 
 Gnulib module: ctype
 

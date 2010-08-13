@@ -2,7 +2,7 @@
 @section @code{strtoll}
 @findex strtoll
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/strtoll.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/strtoll.html}
 
 Gnulib module: strtoll
 

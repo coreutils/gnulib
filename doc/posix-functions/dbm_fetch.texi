@@ -2,7 +2,7 @@
 @section @code{dbm_fetch}
 @findex dbm_fetch
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/dbm_fetch.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/dbm_fetch.html}
 
 Gnulib module: ---
 

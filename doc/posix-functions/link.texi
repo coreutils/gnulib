@@ -2,7 +2,7 @@
 @section @code{link}
 @findex link
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/link.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/link.html}
 
 Gnulib module: link
 

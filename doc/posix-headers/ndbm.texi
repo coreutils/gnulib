@@ -1,7 +1,7 @@
 @node ndbm.h
 @section @file{ndbm.h}
 
-POSIX specification: @url{http://www.opengroup.org/susv3xbd/ndbm.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/ndbm.h.html}
 
 Gnulib module: ---
 

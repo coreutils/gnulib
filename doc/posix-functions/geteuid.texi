@@ -2,7 +2,7 @@
 @section @code{geteuid}
 @findex geteuid
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/geteuid.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/geteuid.html}
 
 Gnulib module: ---
 

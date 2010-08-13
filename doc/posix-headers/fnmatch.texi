@@ -1,7 +1,7 @@
 @node fnmatch.h
 @section @file{fnmatch.h}
 
-POSIX specification: @url{http://www.opengroup.org/susv3xbd/fnmatch.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/fnmatch.h.html}
 
 Gnulib module: fnmatch-posix or fnmatch-gnu
 

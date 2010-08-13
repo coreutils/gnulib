@@ -2,7 +2,7 @@
 @section @code{fpclassify}
 @findex fpclassify
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/fpclassify.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/fpclassify.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{csinl}
 @findex csinl
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/csinl.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/csinl.html}
 
 Gnulib module: ---
 

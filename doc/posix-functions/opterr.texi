@@ -2,7 +2,7 @@
 @section @code{opterr}
 @findex opterr
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/opterr.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/opterr.html}
 
 Gnulib module: ---
 

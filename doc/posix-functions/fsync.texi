@@ -2,7 +2,7 @@
 @section @code{fsync}
 @findex fsync
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/fsync.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/fsync.html}
 
 Gnulib module: fsync
 

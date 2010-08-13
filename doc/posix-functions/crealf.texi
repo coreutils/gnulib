@@ -2,7 +2,7 @@
 @section @code{crealf}
 @findex crealf
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/crealf.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/crealf.html}
 
 Gnulib module: ---
 

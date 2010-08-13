@@ -2,7 +2,7 @@
 @section @code{wordexp}
 @findex wordexp
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/wordexp.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/wordexp.html}
 
 Gnulib module: ---
 

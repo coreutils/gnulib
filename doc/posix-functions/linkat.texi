@@ -2,7 +2,7 @@
 @section @code{linkat}
 @findex linkat
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/linkat.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/linkat.html}
 
 Gnulib module: linkat
 

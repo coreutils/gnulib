@@ -2,7 +2,7 @@
 @section @code{pthread_mutex_destroy}
 @findex pthread_mutex_destroy
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/pthread_mutex_destroy.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/pthread_mutex_destroy.html}
 
 Gnulib module: ---
 

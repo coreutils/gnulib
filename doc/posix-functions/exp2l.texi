@@ -2,7 +2,7 @@
 @section @code{exp2l}
 @findex exp2l
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/exp2l.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/exp2l.html}
 
 Gnulib module: ---
 

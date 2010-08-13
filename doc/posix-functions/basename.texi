@@ -2,7 +2,7 @@
 @section @code{basename}
 @findex basename
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/basename.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/basename.html}
 
 Gnulib module: ---
 

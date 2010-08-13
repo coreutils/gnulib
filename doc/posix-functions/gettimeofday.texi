@@ -2,7 +2,7 @@
 @section @code{gettimeofday}
 @findex gettimeofday
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/gettimeofday.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/gettimeofday.html}
 
 Gnulib module: gettimeofday
 

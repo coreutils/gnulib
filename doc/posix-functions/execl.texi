@@ -2,7 +2,7 @@
 @section @code{execl}
 @findex execl
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/execl.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/execl.html}
 
 Gnulib module: ---
 

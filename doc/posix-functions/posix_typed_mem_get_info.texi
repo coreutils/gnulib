@@ -2,7 +2,7 @@
 @section @code{posix_typed_mem_get_info}
 @findex posix_typed_mem_get_info
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/posix_typed_mem_get_info.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/posix_typed_mem_get_info.html}
 
 Gnulib module: ---
 

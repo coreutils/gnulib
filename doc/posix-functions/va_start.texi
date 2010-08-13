@@ -2,7 +2,7 @@
 @section @code{va_start}
 @findex va_start
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/va_start.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/va_start.html}
 
 Gnulib module: ---
 

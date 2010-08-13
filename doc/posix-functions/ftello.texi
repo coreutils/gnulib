@@ -2,7 +2,7 @@
 @section @code{ftello}
 @findex ftello
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/ftello.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/ftello.html}
 
 Gnulib module: ftello
 

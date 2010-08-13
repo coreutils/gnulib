@@ -2,7 +2,7 @@
 @section @code{posix_trace_rewind}
 @findex posix_trace_rewind
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/posix_trace_rewind.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/posix_trace_rewind.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{posix_trace_attr_getcreatetime}
 @findex posix_trace_attr_getcreatetime
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/posix_trace_attr_getcreatetime.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/posix_trace_attr_getcreatetime.html}
 
 Gnulib module: ---
 

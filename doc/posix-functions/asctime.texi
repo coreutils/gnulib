@@ -2,7 +2,7 @@
 @section @code{asctime}
 @findex asctime
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/asctime.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/asctime.html}
 
 Gnulib module: ---
 

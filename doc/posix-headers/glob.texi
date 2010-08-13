@@ -1,7 +1,7 @@
 @node glob.h
 @section @file{glob.h}
 
-POSIX specification: @url{http://www.opengroup.org/susv3xbd/glob.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/glob.h.html}
 
 Gnulib module: glob
 

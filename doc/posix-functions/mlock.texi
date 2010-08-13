@@ -2,7 +2,7 @@
 @section @code{mlock}
 @findex mlock
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/mlock.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/mlock.html}
 
 Gnulib module: ---
 

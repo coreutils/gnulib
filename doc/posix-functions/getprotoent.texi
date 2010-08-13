@@ -2,7 +2,7 @@
 @section @code{getprotoent}
 @findex getprotoent
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/getprotoent.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/getprotoent.html}
 
 Gnulib module: ---
 

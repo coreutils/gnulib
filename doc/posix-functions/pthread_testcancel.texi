@@ -2,7 +2,7 @@
 @section @code{pthread_testcancel}
 @findex pthread_testcancel
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/pthread_testcancel.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/pthread_testcancel.html}
 
 Gnulib module: ---
 

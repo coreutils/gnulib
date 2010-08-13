@@ -2,7 +2,7 @@
 @section @code{vprintf}
 @findex vprintf
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/vprintf.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/vprintf.html}
 
 Gnulib module: vprintf-posix or stdio, sigpipe
 

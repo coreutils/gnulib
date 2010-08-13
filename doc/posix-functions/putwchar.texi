@@ -2,7 +2,7 @@
 @section @code{putwchar}
 @findex putwchar
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/putwchar.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/putwchar.html}
 
 Gnulib module: ---
 

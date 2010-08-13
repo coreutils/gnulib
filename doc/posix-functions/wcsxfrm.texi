@@ -2,7 +2,7 @@
 @section @code{wcsxfrm}
 @findex wcsxfrm
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/wcsxfrm.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/wcsxfrm.html}
 
 Gnulib module: ---
 

@@ -1,7 +1,7 @@
 @node assert.h
 @section @file{assert.h}
 
-POSIX specification: @url{http://www.opengroup.org/susv3xbd/assert.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/assert.h.html}
 
 Gnulib module: ---
 

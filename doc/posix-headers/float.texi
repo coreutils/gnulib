@@ -1,7 +1,7 @@
 @node float.h
 @section @file{float.h}
 
-POSIX specification: @url{http://www.opengroup.org/susv3xbd/float.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/float.h.html}
 
 Gnulib module: float
 

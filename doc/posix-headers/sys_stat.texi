@@ -1,7 +1,7 @@
 @node sys/stat.h
 @section @file{sys/stat.h}
 
-POSIX specification: @url{http://www.opengroup.org/susv3xbd/sys/stat.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/sys/stat.h.html}
 
 Gnulib module: sys_stat
 

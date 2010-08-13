@@ -1,7 +1,7 @@
 @node monetary.h
 @section @file{monetary.h}
 
-POSIX specification: @url{http://www.opengroup.org/susv3xbd/monetary.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/monetary.h.html}
 
 Gnulib module: ---
 

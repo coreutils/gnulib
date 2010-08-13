@@ -2,7 +2,7 @@
 @section @code{fabsl}
 @findex fabsl
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/fabsl.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/fabsl.html}
 
 Gnulib module: ---
 

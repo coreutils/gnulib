@@ -2,7 +2,7 @@
 @section @code{sigsuspend}
 @findex sigsuspend
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/sigsuspend.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/sigsuspend.html}
 
 Gnulib module: ---
 

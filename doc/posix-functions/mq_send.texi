@@ -2,7 +2,7 @@
 @section @code{mq_send}
 @findex mq_send
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/mq_send.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/mq_send.html}
 
 Gnulib module: ---
 

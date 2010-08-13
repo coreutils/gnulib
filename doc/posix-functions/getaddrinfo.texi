@@ -2,7 +2,7 @@
 @section @code{getaddrinfo}
 @findex getaddrinfo
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/getaddrinfo.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/getaddrinfo.html}
 
 Gnulib module: getaddrinfo
 

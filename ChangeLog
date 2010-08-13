@@ -1,3 +1,10 @@
+2010-08-13  Karl Berry  <karl@gnu.org>
+
+	* doc/regex.texi (Predefined Syntaxes): @smallexample.
+	* doc/posix-*/*: force line break before @url of POSIX
+	specifications.
+	Suggested by Werner Lemberg.
+
 2010-08-10  Paul Eggert  <eggert@cs.ucla.edu>
 
 	strtod: fix const diagnostic

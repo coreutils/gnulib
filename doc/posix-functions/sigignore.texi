@@ -2,7 +2,7 @@
 @section @code{sigignore}
 @findex sigignore
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/sigignore.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/sigignore.html}
 
 Gnulib module: ---
 

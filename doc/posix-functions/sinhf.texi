@@ -2,7 +2,7 @@
 @section @code{sinhf}
 @findex sinhf
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/sinhf.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/sinhf.html}
 
 Gnulib module: ---
 

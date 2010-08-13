@@ -2,7 +2,7 @@
 @section @code{getmsg}
 @findex getmsg
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/getmsg.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/getmsg.html}
 
 Gnulib module: ---
 

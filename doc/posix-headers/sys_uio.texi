@@ -1,7 +1,7 @@
 @node sys/uio.h
 @section @file{sys/uio.h}
 
-POSIX specification: @url{http://www.opengroup.org/susv3xbd/sys/uio.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/sys/uio.h.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{putmsg}
 @findex putmsg
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/putmsg.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/putmsg.html}
 
 Gnulib module: ---
 

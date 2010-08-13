@@ -2,7 +2,7 @@
 @section @code{sigrelse}
 @findex sigrelse
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/sigrelse.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/sigrelse.html}
 
 Gnulib module: ---
 

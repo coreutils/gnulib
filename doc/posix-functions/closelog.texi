@@ -2,7 +2,7 @@
 @section @code{closelog}
 @findex closelog
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/closelog.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/closelog.html}
 
 Gnulib module: ---
 

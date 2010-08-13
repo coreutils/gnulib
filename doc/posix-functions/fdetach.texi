@@ -2,7 +2,7 @@
 @section @code{fdetach}
 @findex fdetach
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/fdetach.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/fdetach.html}
 
 Gnulib module: ---
 

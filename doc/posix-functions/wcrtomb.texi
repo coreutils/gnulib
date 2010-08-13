@@ -2,7 +2,7 @@
 @section @code{wcrtomb}
 @findex wcrtomb
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/wcrtomb.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/wcrtomb.html}
 
 Gnulib module: wcrtomb
 

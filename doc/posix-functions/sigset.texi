@@ -2,7 +2,7 @@
 @section @code{sigset}
 @findex sigset
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/sigset.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/sigset.html}
 
 Gnulib module: ---
 

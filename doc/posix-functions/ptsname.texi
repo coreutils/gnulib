@@ -2,7 +2,7 @@
 @section @code{ptsname}
 @findex ptsname
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/ptsname.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/ptsname.html}
 
 Gnulib module: ptsname
 

@@ -2,7 +2,7 @@
 @section @code{vfwscanf}
 @findex vfwscanf
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/vfwscanf.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/vfwscanf.html}
 
 Gnulib module: ---
 

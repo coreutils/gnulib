@@ -2,7 +2,7 @@
 @section @code{sigpending}
 @findex sigpending
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/sigpending.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/sigpending.html}
 
 Gnulib module: sigprocmask
 

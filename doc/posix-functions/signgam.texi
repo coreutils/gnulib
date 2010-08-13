@@ -2,7 +2,7 @@
 @section @code{signgam}
 @findex signgam
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/signgam.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/signgam.html}
 
 Gnulib module: ---
 

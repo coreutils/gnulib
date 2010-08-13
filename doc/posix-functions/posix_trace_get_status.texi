@@ -2,7 +2,7 @@
 @section @code{posix_trace_get_status}
 @findex posix_trace_get_status
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/posix_trace_get_status.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/posix_trace_get_status.html}
 
 Gnulib module: ---
 

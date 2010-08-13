@@ -1,7 +1,7 @@
 @node tgmath.h
 @section @file{tgmath.h}
 
-POSIX specification: @url{http://www.opengroup.org/susv3xbd/tgmath.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/tgmath.h.html}
 
 Gnulib module: ---
 

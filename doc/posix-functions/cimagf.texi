@@ -2,7 +2,7 @@
 @section @code{cimagf}
 @findex cimagf
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/cimagf.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/cimagf.html}
 
 Gnulib module: ---
 

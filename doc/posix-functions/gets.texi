@@ -2,7 +2,7 @@
 @section @code{gets}
 @findex gets
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/gets.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/gets.html}
 
 Gnulib module: ---
 

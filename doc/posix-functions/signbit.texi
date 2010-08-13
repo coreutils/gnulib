@@ -2,7 +2,7 @@
 @section @code{signbit}
 @findex signbit
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/signbit.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/signbit.html}
 
 Gnulib module: signbit
 

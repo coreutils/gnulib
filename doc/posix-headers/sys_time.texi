@@ -1,7 +1,7 @@
 @node sys/time.h
 @section @file{sys/time.h}
 
-POSIX specification: @url{http://www.opengroup.org/susv3xbd/sys/time.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/sys/time.h.html}
 
 Gnulib module: sys_time
 

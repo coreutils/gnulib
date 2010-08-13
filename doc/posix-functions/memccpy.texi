@@ -2,7 +2,7 @@
 @section @code{memccpy}
 @findex memccpy
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/memccpy.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/memccpy.html}
 
 Gnulib module: ---
 

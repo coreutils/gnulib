@@ -2,7 +2,7 @@
 @section @code{shutdown}
 @findex shutdown
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/shutdown.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/shutdown.html}
 
 Gnulib module: shutdown
 

@@ -2,7 +2,7 @@
 @section @code{getsid}
 @findex getsid
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/getsid.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/getsid.html}
 
 Gnulib module: ---
 

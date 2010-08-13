@@ -2,7 +2,7 @@
 @section @code{fnmatch}
 @findex fnmatch
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/fnmatch.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/fnmatch.html}
 
 Gnulib module: fnmatch or fnmatch-gnu
 

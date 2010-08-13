@@ -2,7 +2,7 @@
 @section @code{semget}
 @findex semget
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/semget.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/semget.html}
 
 Gnulib module: ---
 

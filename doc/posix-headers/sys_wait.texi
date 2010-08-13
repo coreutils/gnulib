@@ -1,7 +1,7 @@
 @node sys/wait.h
 @section @file{sys/wait.h}
 
-POSIX specification: @url{http://www.opengroup.org/susv3xbd/sys/wait.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/sys/wait.h.html}
 
 Gnulib module: sys_wait
 

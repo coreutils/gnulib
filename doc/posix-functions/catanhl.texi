@@ -2,7 +2,7 @@
 @section @code{catanhl}
 @findex catanhl
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/catanhl.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/catanhl.html}
 
 Gnulib module: ---
 

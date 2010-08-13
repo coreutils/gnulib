@@ -2,7 +2,7 @@
 @section @code{modff}
 @findex modff
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/modff.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/modff.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{ceilf}
 @findex ceilf
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/ceilf.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/ceilf.html}
 
 Gnulib module: ceilf
 

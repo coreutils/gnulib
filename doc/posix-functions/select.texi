@@ -2,7 +2,7 @@
 @section @code{select}
 @findex select
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/select.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/select.html}
 
 Gnulib module: select
 

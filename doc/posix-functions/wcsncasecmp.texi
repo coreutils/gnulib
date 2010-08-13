@@ -2,7 +2,7 @@
 @section @code{wcsncasecmp}
 @findex wcsncasecmp
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/wcsncasecmp.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/wcsncasecmp.html}
 
 Gnulib module: ---
 

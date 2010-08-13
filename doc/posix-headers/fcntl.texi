@@ -1,7 +1,7 @@
 @node fcntl.h
 @section @file{fcntl.h}
 
-POSIX specification: @url{http://www.opengroup.org/susv3xbd/fcntl.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/fcntl.h.html}
 
 Gnulib module: fcntl-h
 

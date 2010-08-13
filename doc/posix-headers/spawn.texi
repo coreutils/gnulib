@@ -1,7 +1,7 @@
 @node spawn.h
 @section @file{spawn.h}
 
-POSIX specification: @url{http://www.opengroup.org/susv3xbd/spawn.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/spawn.h.html}
 
 Gnulib module: spawn
 

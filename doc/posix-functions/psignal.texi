@@ -2,7 +2,7 @@
 @section @code{psignal}
 @findex psignal
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/psignal.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/psignal.html}
 
 Gnulib module: ---
 

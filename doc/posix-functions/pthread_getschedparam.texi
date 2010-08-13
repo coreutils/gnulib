@@ -2,7 +2,7 @@
 @section @code{pthread_getschedparam}
 @findex pthread_getschedparam
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/pthread_getschedparam.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/pthread_getschedparam.html}
 
 Gnulib module: ---
 

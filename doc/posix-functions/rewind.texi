@@ -2,7 +2,7 @@
 @section @code{rewind}
 @findex rewind
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/rewind.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/rewind.html}
 
 Gnulib module: ---
 

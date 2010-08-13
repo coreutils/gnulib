@@ -1,7 +1,7 @@
 @node setjmp.h
 @section @file{setjmp.h}
 
-POSIX specification: @url{http://www.opengroup.org/susv3xbd/setjmp.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/setjmp.h.html}
 
 Gnulib module: ---
 

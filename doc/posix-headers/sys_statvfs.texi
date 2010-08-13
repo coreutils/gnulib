@@ -1,7 +1,7 @@
 @node sys/statvfs.h
 @section @file{sys/statvfs.h}
 
-POSIX specification: @url{http://www.opengroup.org/susv3xbd/sys/statvfs.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/sys/statvfs.h.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{pthread_mutex_setprioceiling}
 @findex pthread_mutex_setprioceiling
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/pthread_mutex_setprioceiling.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/pthread_mutex_setprioceiling.html}
 
 Gnulib module: ---
 

@@ -1,7 +1,7 @@
 @node string.h
 @section @file{string.h}
 
-POSIX specification: @url{http://www.opengroup.org/susv3xbd/string.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/string.h.html}
 
 Gnulib module: string
 

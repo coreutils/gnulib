@@ -2,7 +2,7 @@
 @section @code{fmod}
 @findex fmod
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/fmod.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/fmod.html}
 
 Gnulib module: fmod
 

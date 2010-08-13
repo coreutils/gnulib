@@ -2,7 +2,7 @@
 @section @code{pthread_rwlock_rdlock}
 @findex pthread_rwlock_rdlock
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/pthread_rwlock_rdlock.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/pthread_rwlock_rdlock.html}
 
 Gnulib module: ---
 

@@ -2,7 +2,7 @@
 @section @code{puts}
 @findex puts
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/puts.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/puts.html}
 
 Gnulib module: stdio, sigpipe
 

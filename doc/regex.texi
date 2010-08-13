@@ -272,9 +272,9 @@ Grep,
 Egrep---in addition to syntaxes for @sc{posix} basic and extended
 regular expressions.
 
-The predefined syntaxes--taken directly from @file{regex.h}---are:
+The predefined syntaxes---taken directly from @file{regex.h}---are:
 
-@example
+@smallexample
 #define RE_SYNTAX_EMACS 0
 
 #define RE_SYNTAX_AWK                                                   \
@@ -332,7 +332,7 @@ The predefined syntaxes--taken directly from @file{regex.h}---are:
    | RE_CONTEXT_INVALID_OPS | RE_NO_BK_BRACES                           \
    | RE_NO_BK_PARENS        | RE_NO_BK_REFS                             \
    | RE_NO_BK_VBAR          | RE_UNMATCHED_RIGHT_PAREN_ORD)
-@end example
+@end smallexample
 
 @node Collating Elements vs. Characters
 @section Collating Elements vs.@: Characters

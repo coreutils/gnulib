@@ -2,7 +2,7 @@
 @section @code{opendir}
 @findex opendir
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/opendir.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/opendir.html}
 
 Gnulib module: ---
 

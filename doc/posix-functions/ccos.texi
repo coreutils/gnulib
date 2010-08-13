@@ -2,7 +2,7 @@
 @section @code{ccos}
 @findex ccos
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/ccos.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/ccos.html}
 
 Gnulib module: ---
 

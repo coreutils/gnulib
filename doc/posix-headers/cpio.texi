@@ -1,7 +1,7 @@
 @node cpio.h
 @section @file{cpio.h}
 
-POSIX specification: @url{http://www.opengroup.org/susv3xbd/cpio.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/cpio.h.html}
 
 Gnulib module: ---
 

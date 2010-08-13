@@ -2,7 +2,7 @@
 @section @code{mkfifoat}
 @findex mkfifoat
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/mkfifoat.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/mkfifoat.html}
 
 Gnulib module: mkfifoat
 

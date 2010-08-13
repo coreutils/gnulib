@@ -2,7 +2,7 @@
 @section @code{pthread_setconcurrency}
 @findex pthread_setconcurrency
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/pthread_setconcurrency.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/pthread_setconcurrency.html}
 
 Gnulib module: ---
 

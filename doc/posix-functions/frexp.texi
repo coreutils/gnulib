@@ -2,7 +2,7 @@
 @section @code{frexp}
 @findex frexp
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/frexp.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/frexp.html}
 
 Gnulib module: frexp
 

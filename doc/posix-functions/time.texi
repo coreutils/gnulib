@@ -2,7 +2,7 @@
 @section @code{time}
 @findex time
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/time.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/time.html}
 
 Gnulib module: ---
 

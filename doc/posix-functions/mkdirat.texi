@@ -2,7 +2,7 @@
 @section @code{mkdirat}
 @findex mkdirat
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/mkdirat.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/mkdirat.html}
 
 Gnulib module: openat
 

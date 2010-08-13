@@ -2,7 +2,7 @@
 @section @code{ctanf}
 @findex ctanf
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/ctanf.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/ctanf.html}
 
 Gnulib module: ---
 

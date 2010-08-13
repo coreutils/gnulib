@@ -2,7 +2,7 @@
 @section @code{posix_trace_attr_setinherited}
 @findex posix_trace_attr_setinherited
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/posix_trace_attr_setinherited.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/posix_trace_attr_setinherited.html}
 
 Gnulib module: ---
 

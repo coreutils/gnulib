@@ -2,7 +2,7 @@
 @section @code{wmemchr}
 @findex wmemchr
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/wmemchr.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/wmemchr.html}
 
 Gnulib module: ---
 

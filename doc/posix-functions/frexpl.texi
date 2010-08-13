@@ -2,7 +2,7 @@
 @section @code{frexpl}
 @findex frexpl
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/frexpl.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/frexpl.html}
 
 Gnulib module: frexpl
 

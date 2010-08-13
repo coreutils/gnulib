@@ -2,7 +2,7 @@
 @section @code{fchdir}
 @findex fchdir
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/fchdir.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/fchdir.html}
 
 Gnulib module: fchdir
 

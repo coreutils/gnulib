@@ -2,7 +2,7 @@
 @section @code{getopt}
 @findex getopt
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/getopt.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/getopt.html}
 
 Gnulib module: getopt-posix or getopt-gnu
 

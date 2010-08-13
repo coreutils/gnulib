@@ -1,7 +1,7 @@
 @node fmtmsg.h
 @section @file{fmtmsg.h}
 
-POSIX specification: @url{http://www.opengroup.org/susv3xbd/fmtmsg.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/fmtmsg.h.html}
 
 Gnulib module: ---
 

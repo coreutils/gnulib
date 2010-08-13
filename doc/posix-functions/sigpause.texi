@@ -2,7 +2,7 @@
 @section @code{sigpause}
 @findex sigpause
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/sigpause.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/sigpause.html}
 
 Gnulib module: ---
 

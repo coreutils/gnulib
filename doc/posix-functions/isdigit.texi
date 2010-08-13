@@ -2,7 +2,7 @@
 @section @code{isdigit}
 @findex isdigit
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/isdigit.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/isdigit.html}
 
 Gnulib module: ---
 

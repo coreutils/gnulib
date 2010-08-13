@@ -1,7 +1,7 @@
 @node net/if.h
 @section @file{net/if.h}
 
-POSIX specification: @url{http://www.opengroup.org/susv3xbd/net/if.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/net/if.h.html}
 
 Gnulib module: ---
 

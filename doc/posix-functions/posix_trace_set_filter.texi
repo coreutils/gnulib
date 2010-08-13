@@ -2,7 +2,7 @@
 @section @code{posix_trace_set_filter}
 @findex posix_trace_set_filter
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/posix_trace_set_filter.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/posix_trace_set_filter.html}
 
 Gnulib module: ---
 

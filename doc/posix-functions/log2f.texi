@@ -2,7 +2,7 @@
 @section @code{log2f}
 @findex log2f
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/log2f.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/log2f.html}
 
 Gnulib module: ---
 

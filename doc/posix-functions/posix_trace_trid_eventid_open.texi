@@ -2,7 +2,7 @@
 @section @code{posix_trace_trid_eventid_open}
 @findex posix_trace_trid_eventid_open
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/posix_trace_trid_eventid_open.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/posix_trace_trid_eventid_open.html}
 
 Gnulib module: ---
 

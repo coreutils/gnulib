@@ -2,7 +2,7 @@
 @section @code{getline}
 @findex getline
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/getline.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/getline.html}
 
 Gnulib module: getline
 

@@ -2,7 +2,7 @@
 @section @code{pthread_barrierattr_setpshared}
 @findex pthread_barrierattr_setpshared
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/pthread_barrierattr_setpshared.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/pthread_barrierattr_setpshared.html}
 
 Gnulib module: ---
 

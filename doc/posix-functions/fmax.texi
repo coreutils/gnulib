@@ -2,7 +2,7 @@
 @section @code{fmax}
 @findex fmax
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/fmax.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/fmax.html}
 
 Gnulib module: ---
 

@@ -1,7 +1,7 @@
 @node arpa/inet.h
 @section @file{arpa/inet.h}
 
-POSIX specification: @url{http://www.opengroup.org/susv3xbd/arpa/inet.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/arpa/inet.h.html}
 
 Gnulib module: arpa_inet
 

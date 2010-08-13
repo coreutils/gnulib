@@ -2,7 +2,7 @@
 @section @code{posix_trace_attr_setstreamfullpolicy}
 @findex posix_trace_attr_setstreamfullpolicy
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/posix_trace_attr_setstreamfullpolicy.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/posix_trace_attr_setstreamfullpolicy.html}
 
 Gnulib module: ---
 

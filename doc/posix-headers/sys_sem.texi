@@ -1,7 +1,7 @@
 @node sys/sem.h
 @section @file{sys/sem.h}
 
-POSIX specification: @url{http://www.opengroup.org/susv3xbd/sys/sem.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/sys/sem.h.html}
 
 Gnulib module: ---
 

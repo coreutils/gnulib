@@ -2,7 +2,7 @@
 @section @code{wcslen}
 @findex wcslen
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/wcslen.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/wcslen.html}
 
 Gnulib module: ---
 

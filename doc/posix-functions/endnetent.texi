@@ -2,7 +2,7 @@
 @section @code{endnetent}
 @findex endnetent
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/endnetent.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/endnetent.html}
 
 Gnulib module: ---
 

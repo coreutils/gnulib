@@ -2,7 +2,7 @@
 @section @code{nl_langinfo_l}
 @findex nl_langinfo_l
 
-POSIX specification: @url{http://www.opengroup.org/onlinepubs/9699919799/functions/nl_langinfo_l.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/nl_langinfo_l.html}
 
 Gnulib module: ---
 
