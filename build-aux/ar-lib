@@ -2,7 +2,7 @@
 # Wrapper for Microsoft lib.exe
 
 me=ar-lib
-scriptversion=2010-08-08.07; # UTC
+scriptversion=2010-08-12.16; # UTC
 
 # Copyright (C) 2010 Free Software
 # Foundation, Inc.
@@ -121,8 +121,28 @@ fi
 
 AR=$1
 shift
-action=$1
-shift
+while :
+do
+  if test $# -lt 2; then
+    func_error "you must specify a program, an action and an archive"
+  fi
+  case $1 in
+    -lib | -LIB \
+    | -ltcg | -LTCG \
+    | -machine* | -MACHINE* \
+    | -subsystem* | -SUBSYSTEM* \
+    | -verbose | -VERBOSE \
+    | -wx* | -WX* )
+      AR="$AR $1"
+      shift
+      ;;
+    *)
+      action=$1
+      shift
+      break
+      ;;
+  esac
+done
 orig_archive=$1
 shift
 func_file_conv "$orig_archive"
