@@ -1,3 +1,10 @@
+2010-08-14  Bruno Haible  <bruno@clisp.org>
+
+	New module 'astrxfrm'.
+	* lib/astrxfrm.h: New file.
+	* lib/astrxfrm.c: New file, based on lib/memxfrm.c.
+	* modules/astrxfrm: New file.
+
 2010-08-14  Reuben Thomas <rrt@sc3d.org>
 
 	regex: Tweak doc.
