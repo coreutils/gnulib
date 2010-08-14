@@ -1220,8 +1220,9 @@ matches, e.g., @samp{foo} and, e.g., the first three characters of
 
 Its interaction with the syntax bits and pattern buffer fields is
 exactly the dual of @samp{^}'s; see the previous section.  (That is,
-``beginning'' becomes ``end'', ``next'' becomes ``previous'', and
-``after'' becomes ``before''.)
+``@samp{^}'' becomes ``@samp{$}'', ``beginning'' becomes ``end'',
+``next'' becomes ``previous'', ``after'' becomes ``before'', and
+``@code{not_bol}'' becomes ``@code{not_eol}''.)
 
 
 @node GNU Operators

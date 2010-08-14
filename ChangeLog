@@ -3,6 +3,7 @@
 	regex: Tweak doc.
 	* doc/regex.texi (Overview): Don't mention regex.c.
 	(GNU Regular Expression Compiling): Likewise.
+	(Match-end-of-line Operator): Mention 'not_eol'.
 
 2010-08-14  Brian Gough  <bjg@gnu.org>
             Bruno Haible  <bruno@clisp.org>
