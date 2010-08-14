@@ -36,10 +36,8 @@ converted to the internal format used by the library functions.  Once
 you've compiled a pattern, you can use it for matching or searching any
 number of times.
 
-The Regex library consists of two source files: @file{regex.h} and
-@file{regex.c}.
+The Regex library is used by including @file{regex.h}.
 @pindex regex.h
-@pindex regex.c
 Regex provides three groups of functions with which you can operate on
 regular expressions.  One group---the @sc{gnu} group---is more powerful
 but not completely compatible with the other two, namely the @sc{posix}
@@ -1568,10 +1566,9 @@ expression.  To do either, you must first compile it in a pattern buffer
 @vindex re_syntax_options @r{initialization}
 Regular expressions match according to the syntax with which they were
 compiled; with @sc{gnu}, you indicate what syntax you want by setting
-the variable @code{re_syntax_options} (declared in @file{regex.h} and
-defined in @file{regex.c}) before calling the compiling function,
-@code{re_compile_pattern} (see below).  @xref{Syntax Bits}, and
-@ref{Predefined Syntaxes}.
+the variable @code{re_syntax_options} (declared in @file{regex.h})
+before calling the compiling function, @code{re_compile_pattern} (see
+below).  @xref{Syntax Bits}, and @ref{Predefined Syntaxes}.
 
 You can change the value of @code{re_syntax_options} at any time.
 Usually, however, you set its value once and then never change it.
