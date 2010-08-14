@@ -1,5 +1,9 @@
 2010-08-14  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'astrxfrm'.
+	* modules/astrxfrm-tests: New file.
+	* tests/test-astrxfrm.c: New file.
+
 	New module 'astrxfrm'.
 	* lib/astrxfrm.h: New file.
 	* lib/astrxfrm.c: New file, based on lib/memxfrm.c.
