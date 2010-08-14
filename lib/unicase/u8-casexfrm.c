@@ -26,7 +26,7 @@
 
 #include "localcharset.h"
 #include "uniconv.h"
-#include "memxfrm.h"
+#include "amemxfrm.h"
 
 #define FUNC u8_casexfrm
 #define UNIT uint8_t

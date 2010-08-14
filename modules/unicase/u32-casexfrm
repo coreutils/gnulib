@@ -11,7 +11,7 @@ unicase/base
 unicase/u32-casefold
 uniconv/u32-conv-to-enc
 localcharset
-memxfrm
+amemxfrm
 
 configure.ac:
 gl_LIBUNISTRING_MODULE([0.9.1], [unicase/u32-casexfrm])

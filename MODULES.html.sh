@@ -1778,7 +1778,7 @@ func_all_modules ()
   func_module memmem-simple
   func_module mempcpy
   func_module memrchr
-  func_module memxfrm
+  func_module amemxfrm
   func_module rawmemchr
   func_module stpcpy
   func_module stpncpy

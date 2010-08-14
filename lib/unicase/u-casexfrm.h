@@ -70,7 +70,7 @@ FUNC (const UNIT *s, size_t n, const char *iso639_language, uninorm_t nf,
     }
 
   /* Apply locale dependent transformations for comparison.  */
-  result = memxfrm (convs, convs_length, resultbuf, lengthp);
+  result = amemxfrm (convs, convs_length, resultbuf, lengthp);
   if (result == NULL)
     {
       if (convs != convsbuf)

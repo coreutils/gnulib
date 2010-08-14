@@ -25,7 +25,7 @@
 
 #include "localcharset.h"
 #include "uniconv.h"
-#include "memxfrm.h"
+#include "amemxfrm.h"
 
 #define FUNC u32_normxfrm
 #define UNIT uint32_t

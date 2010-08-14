@@ -10,7 +10,7 @@ uninorm/base
 uninorm/u16-normalize
 uniconv/u16-conv-to-enc
 localcharset
-memxfrm
+amemxfrm
 
 configure.ac:
 gl_LIBUNISTRING_MODULE([0.9], [uninorm/u16-normxfrm])

@@ -6,6 +6,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2010-08-14  memxfrm         This module is renamed to amemxfrm. The include
+                            file is renamed to "amemxfrm.h". The function is
+                            renamed to amemxfrm.
+
 2010-08-09  symlinkat       This module now only provides symlinkat; use the
                             new module 'readlinkat' if needed.
 

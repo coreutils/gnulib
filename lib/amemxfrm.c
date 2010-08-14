@@ -18,14 +18,14 @@
 #include <config.h>
 
 /* Specification.  */
-#include "memxfrm.h"
+#include "amemxfrm.h"
 
 #include <errno.h>
 #include <stdlib.h>
 #include <string.h>
 
 char *
-memxfrm (char *s, size_t n, char *resultbuf, size_t *lengthp)
+amemxfrm (char *s, size_t n, char *resultbuf, size_t *lengthp)
 {
   /* Result accumulator.  */
   char *result;

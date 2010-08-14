@@ -1,5 +1,5 @@
 /* Locale dependent memory area transformation for comparison.
-   Copyright (C) 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2009-2010 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify it
    under the terms of the GNU Lesser General Public License as published
@@ -14,8 +14,8 @@
    You should have received a copy of the GNU Lesser General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-#ifndef MEMXFRM_H
-#define MEMXFRM_H
+#ifndef AMEMXFRM_H
+#define AMEMXFRM_H
 
 #include <stddef.h>
 
@@ -28,7 +28,7 @@ extern "C" {
 
 /* Transform the memory area [S..S+N-1] to a memory area, in such a way that
    comparing (S1,N1) and (S2,N2) with memcoll() is equivalent to comparing
-   memxfrm(S1,N1) and memxfrm(S2,N2) with memcmp2().
+   amemxfrm(S1,N1) and amemxfrm(S2,N2) with memcmp2().
    The byte S[N] may be temporarily overwritten by this function, but will be
    restored before this function returns.
    The result of this function depends on the LC_COLLATE category of the
@@ -38,11 +38,11 @@ extern "C" {
    freshly allocated string is returned.  In both cases, *lengthp is set to the
    length of the returned string.
    Upon failure, return NULL, with errno set.  */
-extern char * memxfrm (char *s, size_t n, char *resultbuf, size_t *lengthp);
+extern char * amemxfrm (char *s, size_t n, char *resultbuf, size_t *lengthp);
 
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* MEMXFRM_H */
+#endif /* AMEMXFRM_H */

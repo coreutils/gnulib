@@ -1,5 +1,32 @@
 2010-08-14  Bruno Haible  <bruno@clisp.org>
 
+	Rename module 'memxfrm' to 'amemxfrm'.
+	* lib/amemxfrm.h: Renamed from lib/memxfrm.h.
+	(amemxfrm): Renamed from memxfrm.
+	* lib/amemxfrm.c: Renamed from lib/memxfrm.h. Include amemxfrm.h.
+	(amemxfrm): Renamed from memxfrm.
+	* modules/amemxfrm: Renamed from modules/memxfrm. Update.
+	* NEWS: Mention the change.
+	* MODULES.html.sh (String handling <string.h>): Update.
+	* lib/unicase/u-casexfrm.h: Invoke amemxfrm instead of memxfrm.
+	* lib/unicase/u8-casexfrm.c: Include amemxfrm.h instead of memxfrm.h.
+	* lib/unicase/u16-casexfrm.c: Likewise.
+	* lib/unicase/u32-casexfrm.c: Likewise.
+	* lib/uninorm/u-normxfrm.h: Invoke amemxfrm instead of memxfrm.
+	* lib/uninorm/u8-normxfrm.c: Include amemxfrm.h instead of memxfrm.h.
+	* lib/uninorm/u16-normxfrm.c: Likewise.
+	* lib/uninorm/u32-normxfrm.c: Likewise.
+	* modules/unicase/u8-casexfrm (Depends-on): Add amemxfrm, remove
+	memxfrm.
+	* modules/unicase/u16-casexfrm (Depends-on): Likewise.
+	* modules/unicase/u32-casexfrm (Depends-on): Likewise.
+	* modules/uninorm/u8-normxfrm (Depends-on): Likewise.
+	* modules/uninorm/u16-normxfrm (Depends-on): Likewise.
+	* modules/uninorm/u32-normxfrm (Depends-on): Likewise.
+	Suggested by Paul Eggert.
+
+2010-08-14  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'astrxfrm'.
 	* modules/astrxfrm-tests: New file.
 	* tests/test-astrxfrm.c: New file.

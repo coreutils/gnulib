@@ -10,7 +10,7 @@ uninorm/base
 uninorm/u32-normalize
 uniconv/u32-conv-to-enc
 localcharset
-memxfrm
+amemxfrm
 
 configure.ac:
 gl_LIBUNISTRING_MODULE([0.9], [uninorm/u32-normxfrm])
