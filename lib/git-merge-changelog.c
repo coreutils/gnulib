@@ -40,23 +40,52 @@
  */
 
 /* Installation:
+
    $ gnulib-tool --create-testdir --dir=/tmp/testdir123 git-merge-changelog
    $ cd /tmp/testdir123
    $ ./configure
    $ make
    $ make install
-   - Add to .git/config of the checkout (or to your $HOME/.gitconfig) the lines
 
-        [merge "merge-changelog"]
-                name = GNU-style ChangeLog merge driver
-                driver = /usr/local/bin/git-merge-changelog %O %A %B
+   Additionally, for git users:
+     - Add to .git/config of the checkout (or to your $HOME/.gitconfig) the
+       lines
 
-   - In every directory that contains a ChangeLog file, add a file
-     '.gitattributes' with this line:
+          [merge "merge-changelog"]
+                  name = GNU-style ChangeLog merge driver
+                  driver = /usr/local/bin/git-merge-changelog %O %A %B
 
-        ChangeLog    merge=merge-changelog
+     - In every directory that contains a ChangeLog file, add a file
+       '.gitattributes' with this line:
 
-     (See "man 5 gitattributes" for more info.)
+          ChangeLog    merge=merge-changelog
+
+       (See "man 5 gitattributes" for more info.)
+
+   Additionally, for bzr users:
+     - Install the 'extmerge' bzr plug-in listed at
+         <http://doc.bazaar.canonical.com/plugins/en/index.html>
+         <http://wiki.bazaar.canonical.com/BzrPlugins>
+     - Add to your $HOME/.bazaar/bazaar.conf the line
+
+          external_merge = git-merge-changelog %b %T %o
+
+     - Then, to merge a conflict in a ChangeLog file, use
+
+          $ bzr extmerge ChangeLog
+
+   Additionally, for hg users:
+     - Add to your $HOME/.hgrc a couple of lines in a section [merge-tools].
+       See <http://www.selenic.com/mercurial/hgrc.5.html> section merge-tools
+       for reference.
+ */
+
+/* Use as an alternative to 'diff3':
+   git-merge-changelog performs the same role as "diff3 -m", just with
+   reordered arguments:
+     $ git-merge-changelog %O %A %B
+   is comparable to
+     $ diff3 -m %A %O %B
  */
 
 /* Calling convention:

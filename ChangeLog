@@ -1,3 +1,9 @@
+2010-08-14  Brian Gough  <bjg@gnu.org>
+            Bruno Haible  <bruno@clisp.org>
+
+	git-merge-changelog: add doc relating to use with bzr and hg.
+	* lib/git-merge-changelog.c: Add comments regarding bzr, hg, diff3.
+
 2010-08-14  Matthias Bolte  <matthias.bolte@googlemail.com>
 
 	pthread: fix pthread.h creation for srcdir != builddir
