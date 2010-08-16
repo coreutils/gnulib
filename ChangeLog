@@ -1,3 +1,11 @@
+2010-08-15  Bruno Haible  <bruno@clisp.org>
+
+	stpncpy: Allow stpncpy to be defined as a macro.
+	* m4/stpncpy.m4 (gl_FUNC_STPNCPY): Don't attempt to redeclare stpncpy
+	if it's already correctly declared.
+	* lib/string.in.h (stpncpy): Undefine before redefining.
+	Reported by Jeremy Huddleston <jeremyhu@macports.org>.
+
 2010-08-14  Bruno Haible  <bruno@clisp.org>
 
 	Rename module 'memxfrm' to 'amemxfrm'.

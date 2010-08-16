@@ -233,6 +233,7 @@ _GL_WARN_ON_USE (stpcpy, "stpcpy is unportable - "
 #if @GNULIB_STPNCPY@
 # if @REPLACE_STPNCPY@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef stpncpy
 #   define stpncpy rpl_stpncpy
 #  endif
 _GL_FUNCDECL_RPL (stpncpy, char *,
