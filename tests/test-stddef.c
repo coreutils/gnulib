@@ -31,6 +31,20 @@ size_t c = 2;
    per POSIX 2008.  */
 verify (sizeof NULL == sizeof (void *));
 
+/* Check that offsetof produces integer constants with correct type.  */
+struct d
+{
+  char e;
+  char f;
+};
+/* Solaris 10 has a bug where offsetof is under-parenthesized, and
+   cannot be used as an arbitrary expression.  However, since it is
+   unlikely to bite real code, we ignore that short-coming.  */
+/* verify (sizeof offsetof (struct d, e) == sizeof (size_t)); */
+verify (sizeof (offsetof (struct d, e)) == sizeof (size_t));
+verify (offsetof (struct d, e) < -1); /* Must be unsigned.  */
+verify (offsetof (struct d, f) == 1);
+
 int
 main (void)
 {
