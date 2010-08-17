@@ -1,7 +1,7 @@
 #! /bin/sh
 # Wrapper for compilers which do not understand `-c -o'.
 
-scriptversion=2010-08-07.06; # UTC
+scriptversion=2010-08-16.11; # UTC
 
 # Copyright (C) 1999, 2000, 2003, 2004, 2005, 2009, 2010 Free Software
 # Foundation, Inc.
@@ -38,9 +38,11 @@ IFS=" ""	$nl"
 
 file_conv=
 
-# func_file_conv build_file
+# func_file_conv build_file lazy
 # Convert a $build file to $host form and store it in $file
-# Currently only supports Win32 hosts.
+# Currently only supports Win32 hosts. If the determined conversion
+# type is listed in (the comma separated) LAZY, no conversion will
+# take place.
 func_file_conv ()
 {
   file=$1
@@ -60,14 +62,16 @@ func_file_conv ()
 	    ;;
 	esac
       fi
-      case $file_conv in
-	mingw)
+      case $file_conv/,$2, in
+	*,$file_conv,*)
+	  ;;
+	mingw/*)
 	  file=`cmd //C echo "$file " | sed -e 's/"\(.*\) " *$/\1/'`
 	  ;;
-	cygwin)
+	cygwin/*)
 	  file=`cygpath -m "$file" || echo "$file"`
 	  ;;
-	wine)
+	wine/*)
 	  file=`winepath -w "$file" || echo "$file"`
 	  ;;
       esac
@@ -104,7 +108,7 @@ func_cl_wrapper ()
 	  esac
 	  ;;
 	-I*)
-	  func_file_conv "${1#-I}"
+	  func_file_conv "${1#-I}" mingw
 	  set x "$@" -I"$file"
 	  shift
 	  ;;
@@ -128,6 +132,20 @@ func_cl_wrapper ()
 	-Xlinker)
 	  eat=1
 	  linker_opts="$linker_opts $2"
+	  ;;
+	-*)
+	  set x "$@" "$1"
+	  shift
+	  ;;
+	*.cc | *.CC | *.cxx | *.CXX | *.[cC]++)
+	  func_file_conv "$1"
+	  set x "$@" -Tp"$file"
+	  shift
+	  ;;
+	*.c | *.cpp | *.CPP | *.lib | *.LIB | *.Lib)
+	  func_file_conv "$1" mingw
+	  set x "$@" "$file"
+	  shift
 	  ;;
 	*)
 	  set x "$@" "$1"
