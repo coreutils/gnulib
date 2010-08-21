@@ -1,3 +1,9 @@
+2010-08-22  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	Fix gnulib-tool sed script de-commentation for AIX sed.
+	* gnulib-tool (sed_comments): Try indented comments, for AIX 5.3
+	sed.
+
 2010-08-17  Eric Blake  <eblake@redhat.com>
 
 	test-stddef: test for (some) offsetof bugs

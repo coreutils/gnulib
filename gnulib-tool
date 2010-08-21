@@ -109,10 +109,10 @@ fi
 sed_noop='s,x,x,'
 
 # sed_comments is true or false, depending whether 'sed' supports comments.
-# (The GNU autoconf doc says that sed comments are not portable, but does
-# not say which 'sed' versions are affected.)
+# AIX 5.3 sed barfs over indented comments.
 if echo fo | sed -e 's/f/g/
 # s/o/u/
+ # indented comment
 s/o/e/' 2>/dev/null | grep ge > /dev/null; then
   sed_comments=true
 else
