@@ -1,3 +1,8 @@
+2010-08-22  Giuseppe Scrivano  <gscrivano@gnu.org>
+
+	fts: allow compilation with C++
+	* lib/fts_.h: Specify extern "C" linkage with C++.
+
 2010-08-22  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	Fix gnulib-tool sed script de-commentation for AIX sed.
