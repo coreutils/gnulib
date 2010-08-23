@@ -7,7 +7,7 @@
 # unlimited permission to copy and/or distribute it, with or without
 # modifications, as long as this notice is preserved.
 
-# serial 7 argz.m4
+# serial 8 argz.m4
 
 AC_DEFUN([gl_FUNC_ARGZ],
 [gl_PREREQ_ARGZ
@@ -67,7 +67,7 @@ AS_IF([test -z "$ARGZ_H"],
            ;; #(
          *) lt_cv_sys_argz_works=yes ;;
          esac]])
-     AS_IF([test $lt_cv_sys_argz_works = yes],
+     AS_IF([test "$lt_cv_sys_argz_works" = yes],
         [AC_DEFINE([HAVE_WORKING_ARGZ], [1],
                    [This value is set to 1 to indicate that the system argz facility works])],
         [ARGZ_H=argz.h

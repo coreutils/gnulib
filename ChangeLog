@@ -1,3 +1,9 @@
+2010-08-23  Eric Blake  <eblake@redhat.com>
+
+	argz: fix shell quoting issue
+	* m4/argz.m4 (gl_FUNC_ARGZ): Allow for spaces in argument.
+	Reported by Charles Wilson.
+
 2010-08-22  Paolo Bonzini  <bonzini@gnu.org>
 	    Erik Faye-Lund <kusmabite@gmail.com>
 
