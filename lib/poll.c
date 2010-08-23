@@ -150,6 +150,8 @@ win32_compute_revents (HANDLE h, int *p_sought)
           if (avail)
             happened |= *p_sought & (POLLIN | POLLRDNORM);
         }
+      else if (GetLastError () == ERROR_BROKEN_PIPE)
+        happened |= POLLHUP;
 
       else
         {

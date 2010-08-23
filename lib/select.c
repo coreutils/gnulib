@@ -132,6 +132,8 @@ win32_poll_handle (HANDLE h, int fd, struct bitset *rbits, struct bitset *wbits,
           if (avail)
             read = TRUE;
         }
+      else if (GetLastError () == ERROR_BROKEN_PIPE)
+        ;
 
       else
         {
