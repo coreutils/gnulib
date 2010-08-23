@@ -16,6 +16,17 @@
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2007.  */
 
+/* We want this test to succeed even when using gcc's -Werror; but to
+   do that requires a pragma that didn't exist before 4.3.0.  */
+#ifndef __GNUC__
+# define ADDRESS_CHECK_OKAY
+#elif __GNUC__ < 4 || (__GNUC__ == 4 && __GNUC_MINOR__ < 3)
+/* No way to silence -Waddress.  */
+#else
+# pragma GCC diagnostic ignored "-Waddress"
+# define ADDRESS_CHECK_OKAY
+#endif
+
 #include <config.h>
 
 #include <stdbool.h>
@@ -39,49 +50,31 @@
  "error: __bool_true_false_are_defined is not defined"
 #endif
 
-#if 0 /* Cannot be guaranteed with gnulib's <stdbool.h>.  */
+/* Several tests cannot be guaranteed with gnulib's <stdbool.h>, at
+   least, not for all compilers and compiler options.  */
+#if HAVE_STDBOOL_H || defined __GNUC__
 struct s { _Bool s: 1; _Bool t; } s;
 #endif
 
 char a[true == 1 ? 1 : -1];
 char b[false == 0 ? 1 : -1];
 char c[__bool_true_false_are_defined == 1 ? 1 : -1];
-#if 0 /* Cannot be guaranteed with gnulib's <stdbool.h>, at least,
-not for all compilers.  */
+#if HAVE_STDBOOL_H || defined __GNUC__ /* See above.  */
 char d[(bool) 0.5 == true ? 1 : -1];
+# ifdef ADDRESS_CHECK_OKAY
 bool e = &s;
+# endif
 char f[(_Bool) 0.0 == false ? 1 : -1];
 #endif
 char g[true];
 char h[sizeof (_Bool)];
-#if 0 /* See above.  */
+#if HAVE_STDBOOL_H || defined __GNUC__ /* See above.  */
 char i[sizeof s.t];
 #endif
 enum { j = false, k = true, l = false * true, m = true * 256 };
 _Bool n[m];
 char o[sizeof n == m * sizeof n[0] ? 1 : -1];
 char p[-1 - (_Bool) 0 < 0 && -1 - (bool) 0 < 0 ? 1 : -1];
-#if 0 /* Cannot be guaranteed with gnulib's <stdbool.h>.  */
-#if defined __xlc__ || defined __GNUC__
- /* Catch a bug in IBM AIX xlc compiler version 6.0.0.0
-    reported by James Lemley on 2005-10-05; see
-    http://lists.gnu.org/archive/html/bug-coreutils/2005-10/msg00086.html
-    This test is not quite right, since xlc is allowed to
-    reject this program, as the initializer for xlcbug is
-    not one of the forms that C requires support for.
-    However, doing the test right would require a run-time
-    test, and that would make cross-compilation harder.
-    Let us hope that IBM fixes the xlc bug, and also adds
-    support for this kind of constant expression.  In the
-    meantime, this test will reject xlc, which is OK, since
-    our stdbool.h substitute should suffice.  We also test
-    this with GCC, where it should work, to detect more
-    quickly whether someone messes up the test in the
-    future.  */
- char digs[] = "0123456789";
- int xlcbug = 1 / (&(digs + 5)[-2 + (bool) 1] == &digs[4] ? 1 : -1);
-#endif
-#endif
 /* Catch a bug in an HP-UX C compiler.  See
    http://gcc.gnu.org/ml/gcc-patches/2003-12/msg02303.html
    http://lists.gnu.org/archive/html/bug-coreutils/2005-11/msg00161.html
@@ -92,5 +85,11 @@ _Bool *pq = &q;
 int
 main ()
 {
-  return 0;
+  /* Catch a bug in IBM AIX xlc compiler version 6.0.0.0
+     reported by James Lemley on 2005-10-05; see
+     http://lists.gnu.org/archive/html/bug-coreutils/2005-10/msg00086.html
+     This is a runtime test, since a corresponding compile-time
+     test would rely on initializer extensions.  */
+  char digs[] = "0123456789";
+  return &(digs + 5)[-2 + (bool) 1] != &digs[4];
 }

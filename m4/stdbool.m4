@@ -5,6 +5,8 @@ dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
+#serial 2
+
 # Prepare for substituting <stdbool.h> if it is not supported.
 
 AC_DEFUN([AM_STDBOOL_H],
@@ -31,8 +33,9 @@ AC_DEFUN([AM_STDBOOL_H],
 # AM_STDBOOL_H will be renamed to gl_STDBOOL_H in the future.
 AC_DEFUN([gl_STDBOOL_H], [AM_STDBOOL_H])
 
-# This macro is only needed in autoconf <= 2.59.  Newer versions of autoconf
-# have this macro built-in.
+# This version of the macro is needed in autoconf <= 2.67.  Autoconf has
+# it built in since 2.60, but we want the tweaks from the 2.68 version
+# to avoid rejecting clang due to relying on extensions.
 
 AC_DEFUN([AC_HEADER_STDBOOL],
   [AC_CACHE_CHECK([for stdbool.h that conforms to C99],
@@ -74,7 +77,7 @@ AC_DEFUN([AC_HEADER_STDBOOL],
           _Bool n[m];
           char o[sizeof n == m * sizeof n[0] ? 1 : -1];
           char p[-1 - (_Bool) 0 < 0 && -1 - (bool) 0 < 0 ? 1 : -1];
-          #if defined __xlc__ || defined __GNUC__
+          #ifdef __xlc__
            /* Catch a bug in IBM AIX xlc compiler version 6.0.0.0
               reported by James Lemley on 2005-10-05; see
               http://lists.gnu.org/archive/html/bug-coreutils/2005-10/msg00086.html
@@ -87,11 +90,9 @@ AC_DEFUN([AC_HEADER_STDBOOL],
               support for this kind of constant expression.  In the
               meantime, this test will reject xlc, which is OK, since
               our stdbool.h substitute should suffice.  We also test
-              this with GCC, where it should work, to detect more
-              quickly whether someone messes up the test in the
-              future.  */
+              in test-stdbool.c to ensure nothing else messes up.  */
            char digs[] = "0123456789";
-           int xlcbug = 1 / (&(digs + 5)[-2 + (bool) 1] == &digs[4] ? 1 : -1);
+           int xlcbug = 1 / (&(digs + 5)[-2 + (bool) 1] == &digs[4] ? 1 : 0);
           #endif
           /* Catch a bug in an HP-UX C compiler.  See
              http://gcc.gnu.org/ml/gcc-patches/2003-12/msg02303.html

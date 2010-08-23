@@ -1,5 +1,12 @@
 2010-08-23  Eric Blake  <eblake@redhat.com>
 
+	stdbool: avoid rejecting clang
+	* m4/stdbool.m4 (AC_HEADER_STDBOOL): Resync with autoconf.
+	* tests/test-stdbool.c: Enable more tests if using the system
+	<stdbool.h> instead of the gnulib replacement.
+	(main): Move xlc bug test to a runtime test for all compilers.
+	Reported by Anders Kaseorg.
+
 	argz: fix shell quoting issue
 	* m4/argz.m4 (gl_FUNC_ARGZ): Allow for spaces in argument.
 	Reported by Charles Wilson.
