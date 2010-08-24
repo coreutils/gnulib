@@ -45,11 +45,10 @@ test $ac_cv_lib_perfstat_perfstat_cpu_total = yes && gl_have_func=yes
 # Some systems with -lutil have (and need) -lkvm as well, some do not.
 # On Solaris, -lkvm requires nlist from -lelf, so check that first
 # to get the right answer into the cache.
-# For kstat on solaris, we need libelf to force the definition of SVR4 below.
+# For kstat on solaris, we need to test for libelf and libkvm to force the
+# definition of SVR4 below.
 if test $gl_have_func = no; then
   AC_CHECK_LIB([elf], [elf_begin], [LIBS="-lelf $LIBS"])
-fi
-if test $gl_have_func = no; then
   AC_CHECK_LIB([kvm], [kvm_open], [LIBS="-lkvm $LIBS"])
   # Check for the 4.4BSD definition of getloadavg.
   AC_CHECK_LIB([util], [getloadavg],

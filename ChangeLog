@@ -1,3 +1,9 @@
+2010-08-24  Bruno Haible  <bruno@clisp.org>
+
+	getloadavg: simplify code
+	* m4/getloadavg.m4 (gl_GETLOADAVG): Remove useless test of
+	gl_have_func. Update comments.
+
 2010-08-24  Eric Blake  <eblake@redhat.com>
 
 	getloadavg: don't define SVR4 on cygwin
