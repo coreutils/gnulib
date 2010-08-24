@@ -109,7 +109,7 @@ priv_set_remove (const char *priv)
 
 
 /* Try to restore priv to the effective set.
-   Returns 0 if priv was re-added to the effective set (after being prviously
+   Returns 0 if priv was re-added to the effective set (after being previously
    removed by a call to priv_set_remove).
    Returns -1 on error with errno set appropriately.  */
 int
