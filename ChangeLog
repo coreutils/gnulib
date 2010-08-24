@@ -1,3 +1,10 @@
+2010-08-23  Paul Eggert  <eggert@cs.ucla.edu>
+
+	priv-set: fix comments
+	* lib/priv-set.c (priv_set_remove, priv_set_restore): Fix comments
+	to match code, as suggested by David Bartley in:
+	http://lists.gnu.org/archive/html/bug-tar/2010-08/msg00018.html
+
 2010-08-23  Eric Blake  <eblake@redhat.com>
 
 	stdbool: avoid rejecting clang

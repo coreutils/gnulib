@@ -78,7 +78,7 @@ priv_set_ismember (const char *priv)
 
 
 /* Try to remove priv from the effective set.
-   Returns 0 if priv was removed from or was not present in the effective set.
+   Returns 0 if priv was removed.
    Returns -1 on error with errno set appropriately.  */
 int
 priv_set_remove (const char *priv)
@@ -110,8 +110,7 @@ priv_set_remove (const char *priv)
 
 /* Try to restore priv to the effective set.
    Returns 0 if priv was re-added to the effective set (after being prviously
-   removed by a call to priv_set_remove) or if priv was already in the
-   effective set.
+   removed by a call to priv_set_remove).
    Returns -1 on error with errno set appropriately.  */
 int
 priv_set_restore (const char *priv)
