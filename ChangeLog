@@ -1,3 +1,8 @@
+2010-08-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdbool: avoid spurious failure with modern xlc
+	* m4/stdbool.m4 (AC_HEADER_STDBOOL): Resync with autoconf.
+
 2010-08-24  Bruno Haible  <bruno@clisp.org>
 
 	getloadavg: simplify code
