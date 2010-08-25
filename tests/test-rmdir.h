@@ -66,7 +66,7 @@ test_rmdir_func (int (*func) (char const *name), bool print)
   ASSERT (unlink (BASE "dir/file") == 0);
   errno = 0;
   ASSERT (func (BASE "dir/.//") == -1);
-  ASSERT (errno == EINVAL || errno == EBUSY);
+  ASSERT (errno == EINVAL || errno == EBUSY || errno == EEXIST);
   ASSERT (func (BASE "dir") == 0);
 
   /* Test symlink behavior.  Specifying trailing slash should remove

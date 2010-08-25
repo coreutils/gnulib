@@ -1,3 +1,9 @@
+2010-08-25  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	Fix test-unlinkat, test-rmdir failure on AIX 5.3.
+	* tests/test-rmdir.h (test_rmdir_func): Also accept EEXIST for
+	rmdir ("dir/.//"), unlinkat.
+
 2010-08-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stdbool: avoid spurious failure with modern xlc
