@@ -1,5 +1,9 @@
 2010-08-26  Eric Blake  <eblake@redhat.com>
 
+	lib-symbol-versions: fix m4 quoting
+	* m4/ld-version-script.m4 (gl_LD_VERSION_SCRIPT): Use correct
+	format for AC_LINK_IFELSE.
+
 	glob: fix compile test
 	* m4/glob.m4 (gl_GLOB): Use correct format for AC_COMPILE_IFELSE.
 

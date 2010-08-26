@@ -1,4 +1,4 @@
-# ld-version-script.m4 serial 1
+# ld-version-script.m4 serial 2
 dnl Copyright (C) 2008, 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -34,7 +34,7 @@ VERS_2 {
         global: sym;
 } VERS_1;
 EOF
-    AC_LINK_IFELSE(AC_LANG_PROGRAM([], []),
+    AC_LINK_IFELSE([AC_LANG_PROGRAM([], [])],
                    [have_ld_version_script=yes], [have_ld_version_script=no])
     rm -f conftest.map
     LDFLAGS="$save_LDFLAGS"
