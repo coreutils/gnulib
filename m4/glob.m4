@@ -1,4 +1,4 @@
-# glob.m4 serial 10
+# glob.m4 serial 11
 dnl Copyright (C) 2005-2007, 2009-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -24,9 +24,9 @@ AC_DEFUN([gl_GLOB],
   if test -z "$GLOB_H"; then
     AC_CACHE_CHECK([for GNU glob interface version 1],
       [gl_cv_gnu_glob_interface_version_1],
-[     AC_COMPILE_IFELSE(
+[     AC_COMPILE_IFELSE([AC_LANG_SOURCE(
 [[#include <gnu-versions.h>
-char a[_GNU_GLOB_INTERFACE_VERSION == 1 ? 1 : -1];]],
+char a[_GNU_GLOB_INTERFACE_VERSION == 1 ? 1 : -1];]])],
         [gl_cv_gnu_glob_interface_version_1=yes],
         [gl_cv_gnu_glob_interface_version_1=no])])
 
@@ -47,12 +47,12 @@ char a[_GNU_GLOB_INTERFACE_VERSION == 1 ? 1 : -1];]],
       fi
 
       if test $gl_cv_glob_lists_symlinks = maybe; then
-        AC_RUN_IFELSE(
+        AC_RUN_IFELSE([
 AC_LANG_PROGRAM(
 [[#include <stddef.h>
 #include <glob.h>]],
 [[glob_t found;
-if (glob ("conf*-globtest", 0, NULL, &found) == GLOB_NOMATCH) return 1;]]),
+if (glob ("conf*-globtest", 0, NULL, &found) == GLOB_NOMATCH) return 1;]])],
           [gl_cv_glob_lists_symlinks=yes],
           [gl_cv_glob_lists_symlinks=no], [gl_cv_glob_lists_symlinks=no])
       fi])

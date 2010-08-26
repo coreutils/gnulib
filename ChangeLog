@@ -1,5 +1,8 @@
 2010-08-26  Eric Blake  <eblake@redhat.com>
 
+	glob: fix compile test
+	* m4/glob.m4 (gl_GLOB): Use correct format for AC_COMPILE_IFELSE.
+
 	btowc: fix missing file
 	* modules/btowc (Files): Also ship locale-fr.m4.
 
