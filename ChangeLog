@@ -1,3 +1,10 @@
+2010-08-26  Jim Meyering  <meyering@redhat.com>
+
+	stat-time: relax license LGPL
+	* modules/stat-time (License): Change from GPL to LGPL,
+	with consent from all contributors, for use in libguile.
+	Requested by Ludovic Courtès.
+
 2010-08-26  Erik Faye-Lund  <kusmabite@gmail.com>
 
 	poll: return immediately on POLLHUP.
