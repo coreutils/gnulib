@@ -1,5 +1,11 @@
 2010-08-26  Eric Blake  <eblake@redhat.com>
 
+	include_next: silence autoconf 2.68 warning
+	* m4/include_next.m4 (gl_INCLUDE_NEXT): Mark this use of
+	AC_COMPILE_IFELSE as special.
+	(AC_LANG_DEFINES_PROVIDED): Provide dummy implementation for
+	autoconf < 2.68.
+
 	acl: fix compilation test
 	* m4/acl.m4 (gl_FUNC_ALL): Use correct format for
 	AC_COMPILE_IFELSE.

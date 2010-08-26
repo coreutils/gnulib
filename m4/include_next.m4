@@ -1,4 +1,4 @@
-# include_next.m4 serial 14
+# include_next.m4 serial 15
 dnl Copyright (C) 2006-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -68,10 +68,11 @@ EOF
 EOF
      gl_save_CPPFLAGS="$CPPFLAGS"
      CPPFLAGS="$gl_save_CPPFLAGS -Iconftestd1b -Iconftestd2"
-     AC_COMPILE_IFELSE([#include <conftest.h>],
+dnl We intentionally avoid using AC_LANG_SOURCE here.
+     AC_COMPILE_IFELSE([AC_LANG_DEFINES_PROVIDED[#include <conftest.h>]],
        [gl_cv_have_include_next=yes],
        [CPPFLAGS="$gl_save_CPPFLAGS -Iconftestd1a -Iconftestd2"
-        AC_COMPILE_IFELSE([#include <conftest.h>],
+        AC_COMPILE_IFELSE([AC_LANG_DEFINES_PROVIDED[#include <conftest.h>]],
           [gl_cv_have_include_next=buggy],
           [gl_cv_have_include_next=no])
        ])
@@ -185,3 +186,7 @@ AC_DEFUN([gl_CHECK_NEXT_HEADERS],
        [$gl_next_as_first_directive])
      AS_VAR_POPDEF([gl_next_header])])
 ])
+
+# Autoconf 2.68 added warnings for our use of AC_COMPILE_IFELSE;
+# this fallback is safe for all earlier autoconf versions.
+m4_define_default([AC_LANG_DEFINES_PROVIDED])
