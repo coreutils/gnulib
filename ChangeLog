@@ -1,3 +1,9 @@
+2010-08-26  Eric Blake  <eblake@redhat.com>
+
+	acl: fix compilation test
+	* m4/acl.m4 (gl_FUNC_ALL): Use correct format for
+	AC_COMPILE_IFELSE.
+
 2010-08-26  Bruno Haible  <bruno@clisp.org>
 
 	Modernize AC_TRY_RUN invocations.

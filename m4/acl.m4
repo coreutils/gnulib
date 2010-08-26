@@ -1,5 +1,5 @@
 # acl.m4 - check for access control list (ACL) primitives
-# serial 9
+# serial 10
 
 # Copyright (C) 2002, 2004-2010 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -45,10 +45,10 @@ AC_DEFUN([gl_FUNC_ACL],
              AC_REPLACE_FUNCS([acl_entries])
              AC_CACHE_CHECK([for ACL_FIRST_ENTRY],
                [gl_cv_acl_ACL_FIRST_ENTRY],
-               [AC_COMPILE_IFELSE(
+               [AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
 [[#include <sys/types.h>
 #include <sys/acl.h>
-int type = ACL_FIRST_ENTRY;]],
+int type = ACL_FIRST_ENTRY;]])],
                   [gl_cv_acl_ACL_FIRST_ENTRY=yes],
                   [gl_cv_acl_ACL_FIRST_ENTRY=no])])
              if test $gl_cv_acl_ACL_FIRST_ENTRY = yes; then
@@ -58,10 +58,10 @@ int type = ACL_FIRST_ENTRY;]],
              dnl On MacOS X, other types of ACLs are supported.
              AC_CACHE_CHECK([for ACL_TYPE_EXTENDED],
                [gl_cv_acl_ACL_TYPE_EXTENDED],
-               [AC_COMPILE_IFELSE(
+               [AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
 [[#include <sys/types.h>
 #include <sys/acl.h>
-int type = ACL_TYPE_EXTENDED;]],
+int type = ACL_TYPE_EXTENDED;]])],
                   [gl_cv_acl_ACL_TYPE_EXTENDED=yes],
                   [gl_cv_acl_ACL_TYPE_EXTENDED=no])])
              if test $gl_cv_acl_ACL_TYPE_EXTENDED = yes; then
