@@ -4,6 +4,7 @@ btowc() function: convert unibyte character to wide character.
 Files:
 lib/btowc.c
 m4/btowc.m4
+m4/locale-fr.m4
 
 Depends-on:
 wchar

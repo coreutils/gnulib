@@ -1,5 +1,8 @@
 2010-08-26  Eric Blake  <eblake@redhat.com>
 
+	btowc: fix missing file
+	* modules/btowc (Files): Also ship locale-fr.m4.
+
 	lseek: fix link test
 	* m4/lseek.m4 (gl_FUNC_LSEEK): Use correct format for
 	AC_LINK_IFELSE.
