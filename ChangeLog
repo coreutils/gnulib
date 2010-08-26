@@ -1,3 +1,9 @@
+2010-08-26  Erik Faye-Lund  <kusmabite@gmail.com>
+
+	poll: return immediately on POLLHUP.
+	* lib/poll.c (poll): Always set timeout before wait_timeout is
+	computed.
+
 2010-08-25  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	Fix test-unlinkat, test-rmdir failure on AIX 5.3.

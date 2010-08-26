@@ -505,7 +505,7 @@ poll (pfd, nfd, timeout)
           if (sought)
             handle_array[nhandles++] = h;
           if (pfd[i].revents)
-            wait_timeout = 0;
+            timeout = 0;
         }
     }
 
