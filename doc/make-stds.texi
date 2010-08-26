@@ -943,11 +943,12 @@ foo.dvi: foo.texi chap1.texi chap2.texi
 @end smallexample
 
 @noindent
-You must define the variable @code{TEXI2DVI} in the Makefile.  It should
-run the program @code{texi2dvi}, which is part of the Texinfo
-distribution.@footnote{@code{texi2dvi} uses @TeX{} to do the real work
-of formatting. @TeX{} is not distributed with Texinfo.}  Alternatively,
-write just the dependencies, and allow GNU @code{make} to provide the command.
+You must define the variable @code{TEXI2DVI} in the Makefile.  It
+should run the program @code{texi2dvi}, which is part of the Texinfo
+distribution.  (@code{texi2dvi} uses @TeX{} to do the real work of
+formatting. @TeX{} is not distributed with Texinfo.)  Alternatively,
+write only the dependencies, and allow GNU @code{make} to provide the
+command.
 
 Here's another example, this one for generating HTML from Texinfo:
 

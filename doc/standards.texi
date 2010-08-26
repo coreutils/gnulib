@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate June 21, 2010
+@set lastupdate August 24, 2010
 @c %**end of header
 
 @dircategory GNU organization
@@ -543,6 +543,7 @@ command line interface, and how libraries should behave.
 * User Interfaces::             Standards about interfaces generally.
 * Graphical Interfaces::        Standards for graphical interfaces.
 * Command-Line Interfaces::     Standards for command line interfaces.
+* Dynamic Plug-In Interfaces::  Standards for dynamic plug-in interfaces.
 * Option Table::                Table of long options.
 * OID Allocations::             Table of OID slots for GNU.
 * Memory Usage::                When and how to care about memory needs.
@@ -1120,6 +1121,44 @@ General help using GNU software: <http://www.gnu.org/gethelp/>
 @end example
 
 It is ok to mention other appropriate mailing lists and web pages.
+
+
+@node Dynamic Plug-In Interfaces
+@section Standards for Dynamic Plug-in Interfaces
+@cindex plug-ins
+@cindex dynamic plug-ins
+
+Another aspect of keeping free programs free is encouraging
+development of free plug-ins, and discouraging development of
+proprietary plug-ins.  Many GNU programs will not have anything like
+plug-ins at all, but those that do should follow these
+practices.
+
+First, the general plug-in architecture design should closely tie the
+plug-in to the original code, such that the plug-in and the base
+program are parts of one extended program.  For GCC, for example,
+plug-ins receive and modify GCC's internal data structures, and so
+clearly form an extended program with the base GCC.
+
+@vindex plugin_is_GPL_compatible
+Second, you should require plug-in developers to affirm that their
+plug-ins are released under an appropriate license.  This should be
+enforced with a simple programmatic check.  For GCC, again for
+example, a plug-in must define the global symbol
+@code{plugin_is_GPL_compatible}, thus asserting that the plug-in is
+released under a GPL-compatible license (@pxref{Plugins,, Plugins,
+gccint, GCC Internals}).
+
+By adding this check to your program you are not creating a new legal
+requirement.  The GPL itself requires plug-ins to be free software,
+licensed compatibly.  As long as you have followed the first rule above
+to keep plug-ins closely tied to your original program, the GPL and AGPL
+already require those plug-ins to be released under a compatible
+license.  The symbol definition in the plug-in---or whatever equivalent
+works best in your program---makes it harder for anyone who might
+distribute proprietary plug-ins to legally defend themselves.  If a case
+about this got to court, we can point to that symbol as evidence that
+the plug-in developer understood that the license had this requirement.
 
 
 @node Option Table
