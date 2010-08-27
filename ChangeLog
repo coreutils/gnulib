@@ -1,3 +1,8 @@
+2010-08-27  Eric Blake  <eblake@redhat.com>
+
+	login_tty: add missing dependeny
+	* modules/login_tty (Depends-on): Add pty.
+
 2010-08-26  Eric Blake  <eblake@redhat.com>
 
 	lib-symbol-versions: fix m4 quoting

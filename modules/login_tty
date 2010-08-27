@@ -7,6 +7,7 @@ lib/login_tty.c
 m4/pty.m4
 
 Depends-on:
+pty
 
 configure.ac:
 gl_FUNC_LOGIN_TTY
