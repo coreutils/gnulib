@@ -1,6 +1,6 @@
 2010-08-27  Eric Blake  <eblake@redhat.com>
 
-	login_tty: add missing dependeny
+	login_tty: add missing dependency
 	* modules/login_tty (Depends-on): Add pty.
 
 2010-08-26  Eric Blake  <eblake@redhat.com>
