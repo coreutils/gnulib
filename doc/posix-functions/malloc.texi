@@ -20,6 +20,6 @@ Portability problems not fixed by Gnulib:
 AIX 5.1, OSF/1 5.1.
 @end itemize
 
-Extension: Gnulib provides a module @samp{malloc} that substitutes a
+Extension: Gnulib provides a module @samp{malloc-gnu} that substitutes a
 @code{malloc} implementation that behaves more like the glibc implementation,
 regarding the result of @code{malloc (0)}.

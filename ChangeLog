@@ -1,3 +1,14 @@
+2010-08-28  Bruno Haible  <bruno@clisp.org>
+
+	Rename module 'malloc' -> 'malloc-gnu'.
+	* modules/malloc-gnu: New file, copied from modules/malloc.
+	* modules/malloc: Convert to a redirection to 'malloc-gnu'. Mark as
+	obsolete.
+	* modules/argp (Depends-on): Update.
+	* modules/regex (Depends-on): Update.
+	* doc/posix-functions/malloc.texi: Update.
+	* NEWS: Mention the change.
+
 2010-08-28  Eric Blake  <eblake@redhat.com>
 
 	pread, pwrite: add missing dependency

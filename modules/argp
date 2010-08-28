@@ -28,7 +28,7 @@ dirname-lgpl
 getopt-gnu
 strchrnul
 sysexits
-malloc
+malloc-gnu
 mempcpy
 strndup
 strcase

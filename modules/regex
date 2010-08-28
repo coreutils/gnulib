@@ -17,7 +17,7 @@ btowc
 extensions
 gettext-h
 localcharset
-malloc
+malloc-gnu
 memcmp
 memmove
 mbrtowc
