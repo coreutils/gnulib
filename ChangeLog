@@ -1,5 +1,12 @@
 2010-08-28  Bruno Haible  <bruno@clisp.org>
 
+	unistr/u*-strchr: Fix tests dependencies.
+	* modules/unistr/u8-strchr-tests (Depends-on): Add unistr/u32-to-u8.
+	* modules/unistr/u16-strchr-tests (Depends-on): Add unistr/u32-to-u16.
+	Reported by Ian Beckwith <ianb@erislabs.net>.
+
+2010-08-28  Bruno Haible  <bruno@clisp.org>
+
 	read-file: Don't occupy too much unused memory.
 	* lib/read-file.c (fread_file): Shrink the buffer at the end.
 
