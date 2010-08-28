@@ -1,3 +1,9 @@
+2010-08-28  Eric Blake  <eblake@redhat.com>
+
+	pread, pwrite: add missing dependency
+	* modules/pread (Depends-on): Add extensions.
+	* modules/pwrite (Depends-on): Likewise.
+
 2010-08-28  Bruno Haible  <bruno@clisp.org>
 
 	unistr/u*-strchr: Fix tests dependencies.
