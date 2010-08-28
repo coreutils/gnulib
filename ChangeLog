@@ -1,3 +1,14 @@
+2010-08-28  Giuseppe Scrivano  <gscrivano@gnu.org>
+            Eric Blake  <eblake@redhat.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	read-file: Avoid memory reallocations with regular files.
+	* lib/read-file.c: Include <sys/stat.h>, <stdio.h>, <stdint.h>.
+	(fread_file): With regular files, use the remaining length as the
+	initial buffer size.  Check against overflow.
+	* modules/read-file (Depends-on): Add ftello, malloc-posix, stdint,
+	sys_stat.
+
 2010-08-28  Bruno Haible  <bruno@clisp.org>
 
 	ftello: Relax license.

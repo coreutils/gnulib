@@ -20,7 +20,16 @@
 
 #include "read-file.h"
 
-/* Get realloc, free. */
+/* Get fstat.  */
+#include <sys/stat.h>
+
+/* Get ftello.  */
+#include <stdio.h>
+
+/* Get SIZE_MAX.  */
+#include <stdint.h>
+
+/* Get malloc, realloc, free. */
 #include <stdlib.h>
 
 /* Get errno. */
@@ -36,50 +45,90 @@ fread_file (FILE * stream, size_t * length)
 {
   char *buf = NULL;
   size_t alloc = 0;
-  size_t size = 0;
-  int save_errno;
 
-  for (;;)
-    {
-      size_t count;
-      size_t requested;
+  /* For a regular file, allocate a buffer that has exactly the right
+     size.  This avoids the need to do dynamic reallocations later.  */
+  {
+    struct stat st;
 
-      if (size + BUFSIZ + 1 > alloc)
-        {
-          char *new_buf;
+    if (fstat (fileno (stream), &st) >= 0 && S_ISREG (st.st_mode))
+      {
+        off_t pos = ftello (stream);
 
-          alloc += alloc / 2;
-          if (alloc < size + BUFSIZ + 1)
-            alloc = size + BUFSIZ + 1;
+        if (pos >= 0 && pos < st.st_size)
+          {
+            off_t alloc_off = st.st_size - pos;
 
-          new_buf = realloc (buf, alloc);
-          if (!new_buf)
-            {
-              save_errno = errno;
+            if (SIZE_MAX <= alloc_off)
+              {
+                errno = ENOMEM;
+                return NULL;
+              }
+
+            alloc = alloc_off + 1;
+
+            buf = malloc (alloc);
+            if (!buf)
+              /* errno is ENOMEM.  */
+              return NULL;
+          }
+      }
+  }
+
+  {
+    size_t size = 0; /* number of bytes read so far */
+    int save_errno;
+
+    for (;;)
+      {
+        size_t count;
+        size_t requested;
+
+        if (size + BUFSIZ + 1 > alloc)
+          {
+            char *new_buf;
+            size_t new_alloc = alloc + alloc / 2;
+
+            /* Check against overflow.  */
+            if (new_alloc < alloc)
+              {
+                save_errno = ENOMEM;
+                break;
+              }
+
+            alloc = new_alloc;
+            if (alloc < size + BUFSIZ + 1)
+              alloc = size + BUFSIZ + 1;
+
+            new_buf = realloc (buf, alloc);
+            if (!new_buf)
+              {
+                save_errno = errno;
+                break;
+              }
+
+            buf = new_buf;
+          }
+
+        requested = alloc - size - 1;
+        count = fread (buf + size, 1, requested, stream);
+        size += count;
+
+        if (count != requested)
+          {
+            save_errno = errno;
+            if (ferror (stream))
               break;
-            }
+            buf[size] = '\0';
+            *length = size;
+            return buf;
+          }
+      }
 
-          buf = new_buf;
-        }
-
-      requested = alloc - size - 1;
-      count = fread (buf + size, 1, requested, stream);
-      size += count;
-
-      if (count != requested)
-        {
-          save_errno = errno;
-          if (ferror (stream))
-            break;
-          buf[size] = '\0';
-          *length = size;
-          return buf;
-        }
-    }
-
-  free (buf);
-  errno = save_errno;
-  return NULL;
+    free (buf);
+    errno = save_errno;
+    return NULL;
+  }
 }
 
 static char *

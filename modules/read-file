@@ -7,7 +7,11 @@ lib/read-file.c
 m4/read-file.m4
 
 Depends-on:
+ftello
+malloc-posix
 realloc-posix
+stdint
+sys_stat
 
 configure.ac:
 gl_FUNC_READ_FILE
