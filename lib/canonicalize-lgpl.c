@@ -51,6 +51,12 @@
 # include "pathmax.h"
 # include "malloca.h"
 # if HAVE_GETCWD
+#  if IN_RELOCWRAPPER
+    /* When building the relocatable program wrapper, use the system's getcwd
+       function, not the gnulib override, otherwise we would get a link error.
+     */
+#   undef getcwd
+#  endif
 #  ifdef VMS
     /* We want the directory in Unix syntax, not in VMS syntax.  */
 #   define __getcwd(buf, max) getcwd (buf, max, 0)
