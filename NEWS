@@ -6,6 +6,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2010-08-28  realloc         This module is deprecated. Use 'realloc-gnu'
+                            instead. It will be removed 2012-01-01.
+
 2010-08-28  calloc          This module is deprecated. Use 'calloc-gnu'
                             instead. It will be removed 2012-01-01.
 

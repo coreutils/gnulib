@@ -6,15 +6,18 @@ This module should not be used as a dependency from a test module,
 otherwise when this module occurs as a tests-related module, it will
 have side effects on the compilation of the main modules in lib/.
 
+Status:
+obsolete
+
+Notice:
+This module is obsolete. Use the module 'realloc-gnu' instead.
+
 Files:
-lib/realloc.c
 
 Depends-on:
-realloc-posix
+realloc-gnu
 
 configure.ac:
-gl_FUNC_REALLOC_GNU
-AC_DEFINE([GNULIB_REALLOC_GNU], 1, [Define to indicate the 'realloc' module.])
 
 Makefile.am:
 

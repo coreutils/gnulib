@@ -18,5 +18,5 @@ Portability problems not fixed by Gnulib:
 @itemize
 @end itemize
 
-Extension: Gnulib provides a module @samp{realloc} that substitutes a
+Extension: Gnulib provides a module @samp{realloc-gnu} that substitutes a
 @code{realloc} implementation that behaves more like the glibc implementation.

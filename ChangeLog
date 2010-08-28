@@ -1,5 +1,13 @@
 2010-08-28  Bruno Haible  <bruno@clisp.org>
 
+	Rename module 'realloc' -> 'realloc-gnu'.
+	* modules/realloc-gnu: New file, copied from modules/realloc.
+	* modules/realloc: Convert to a redirection to 'realloc-gnu'. Mark as
+	obsolete.
+	* modules/mgetgroups (Depends-on): Update.
+	* doc/posix-functions/realloc.texi: Update.
+	* NEWS: Mention the change.
+
 	Rename module 'calloc' -> 'calloc-gnu'.
 	* modules/calloc-gnu: New file, copied from modules/calloc.
 	* modules/calloc: Convert to a redirection to 'calloc-gnu'. Mark as
