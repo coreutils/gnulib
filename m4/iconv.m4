@@ -1,4 +1,4 @@
-# iconv.m4 serial 14 (gettext-0.18.2)
+# iconv.m4 serial 15 (gettext-0.18.2)
 dnl Copyright (C) 2000-2002, 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -217,8 +217,11 @@ m4_define([gl_iconv_AC_DEFUN],
   m4_version_prereq([2.64],
     [[AC_DEFUN_ONCE(
         [$1], [$2])]],
-    [[AC_DEFUN(
-        [$1], [$2])]]))
+    [m4_ifdef([gl_00GNULIB],
+       [[AC_DEFUN_ONCE(
+           [$1], [$2])]],
+       [[AC_DEFUN(
+           [$1], [$2])]])]))
 gl_iconv_AC_DEFUN([AM_ICONV],
 [
   AM_ICONV_LINK

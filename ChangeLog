@@ -1,5 +1,13 @@
 2010-08-28  Bruno Haible  <bruno@clisp.org>
 
+	Prefer using AC_DEFUN_ONCE over AC_DEFUN in projects with gnulib.
+	* m4/iconv.m4 (gl_iconv_AC_DEFUN): Use AC_DEFUN_ONCE if gl_00GNULIB is
+	defined.
+	* m4/libunistring.m4 (gl_libunistring_AC_DEFUN): Likewise.
+	Suggested by Eric Blake.
+
+2010-08-28  Bruno Haible  <bruno@clisp.org>
+
 	sys_socket, netdb: Ensure socklen_t gets defined.
 	* modules/sys_socket (Depends-on): Add socklen.
 	* modules/netdb (Depends-on): Likewise.
