@@ -1,5 +1,12 @@
 2010-08-28  Bruno Haible  <bruno@clisp.org>
 
+	Rename module 'calloc' -> 'calloc-gnu'.
+	* modules/calloc-gnu: New file, copied from modules/calloc.
+	* modules/calloc: Convert to a redirection to 'calloc-gnu'. Mark as
+	obsolete.
+	* doc/posix-functions/calloc.texi: Update.
+	* NEWS: Mention the change.
+
 	Rename module 'malloc' -> 'malloc-gnu'.
 	* modules/malloc-gnu: New file, copied from modules/malloc.
 	* modules/malloc: Convert to a redirection to 'malloc-gnu'. Mark as

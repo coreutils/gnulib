@@ -18,5 +18,5 @@ Portability problems not fixed by Gnulib:
 @itemize
 @end itemize
 
-Extension: Gnulib provides a module @samp{calloc} that substitutes a
+Extension: Gnulib provides a module @samp{calloc-gnu} that substitutes a
 @code{calloc} implementation that behaves more like the glibc implementation.
