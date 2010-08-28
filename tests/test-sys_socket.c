@@ -1,5 +1,5 @@
 /* Test of <sys/socket.h> substitute.
-   Copyright (C) 2007, 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2007, 2009-2010 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -26,6 +26,9 @@
 /* Check some integer constant expressions.  */
 int a[] = { SHUT_RD, SHUT_WR, SHUT_RDWR };
 #endif
+
+/* Check that the 'socklen_t' type is defined.  */
+socklen_t t1;
 
 int
 main (void)

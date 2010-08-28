@@ -1,4 +1,4 @@
-# socklen.m4 serial 7
+# socklen.m4 serial 8
 dnl Copyright (C) 2005, 2006, 2007, 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,8 +8,9 @@ dnl From Albert Chin, Windows fixes from Simon Josefsson.
 
 dnl Check for socklen_t: historically on BSD it is an int, and in
 dnl POSIX 1g it is a type of its own, but some platforms use different
-dnl types for the argument to getsockopt, getpeername, etc.  So we
-dnl have to test to find something that will work.
+dnl types for the argument to getsockopt, getpeername, etc.:
+dnl HP-UX 10.20, IRIX 6.5, Interix 3.5, BeOS.
+dnl So we have to test to find something that will work.
 
 dnl On mingw32, socklen_t is in ws2tcpip.h ('int'), so we try to find
 dnl it there first.  That file is included by gnulib's sys_socket.in.h, which

@@ -12,6 +12,7 @@ arg-nonnull
 c++defs
 errno
 include_next
+socklen
 warn-on-use
 
 configure.ac:

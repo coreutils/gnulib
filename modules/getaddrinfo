@@ -11,7 +11,6 @@ extensions
 gettext-h
 inet_ntop
 snprintf
-socklen
 stdbool
 sys_socket
 netdb

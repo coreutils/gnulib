@@ -10,6 +10,7 @@ include_next
 arg-nonnull
 warn-on-use
 sys_socket
+socklen
 
 configure.ac:
 gl_HEADER_NETDB

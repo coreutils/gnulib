@@ -1,3 +1,16 @@
+2010-08-28  Bruno Haible  <bruno@clisp.org>
+
+	sys_socket, netdb: Ensure socklen_t gets defined.
+	* modules/sys_socket (Depends-on): Add socklen.
+	* modules/netdb (Depends-on): Likewise.
+	* modules/getaddrinfo (Depends-on): Remove socklen.
+	* modules/getsockopt (Depends-on): Likewise.
+	* modules/setsockopt (Depends-on): Likewise.
+	* tests/test-sys_socket.c: Check that socklen_t is defined.
+	* tests/test-netdb.c: Likewise.
+	* m4/socklen.m4: Update comments.
+	Reported by Ralf Wildenhues <Ralf.Wildenhues@gmx.de>.
+
 2010-08-27  Eric Blake  <eblake@redhat.com>
 
 	login_tty: add missing dependency
