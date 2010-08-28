@@ -119,6 +119,15 @@ fread_file (FILE * stream, size_t * length)
             save_errno = errno;
             if (ferror (stream))
               break;
+
+            /* Shrink the allocated memory if possible.  */
+            if (size + 1 < alloc)
+              {
+                char *smaller_buf = realloc (buf, size + 1);
+                if (smaller_buf != NULL)
+                  buf = smaller_buf;
+              }
+
             buf[size] = '\0';
             *length = size;
             return buf;

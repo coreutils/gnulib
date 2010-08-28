@@ -1,3 +1,8 @@
+2010-08-28  Bruno Haible  <bruno@clisp.org>
+
+	read-file: Don't occupy too much unused memory.
+	* lib/read-file.c (fread_file): Shrink the buffer at the end.
+
 2010-08-28  Giuseppe Scrivano  <gscrivano@gnu.org>
             Eric Blake  <eblake@redhat.com>
             Bruno Haible  <bruno@clisp.org>
