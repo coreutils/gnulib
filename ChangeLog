@@ -1,5 +1,11 @@
 2010-08-28  Bruno Haible  <bruno@clisp.org>
 
+	ftello: Relax license.
+	* modules/ftello (License): Relax to LGPLv2+.
+	Reported by Eric Blake.
+
+2010-08-28  Bruno Haible  <bruno@clisp.org>
+
 	Avoid relocwrapper link errors due to gnulib replacement functions.
 	* lib/canonicalize-lgpl.c [IN_RELOCWRAPPER]: Use the system's getcwd
 	function.
