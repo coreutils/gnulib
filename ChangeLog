@@ -1,5 +1,9 @@
 2010-08-28  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
+	Tests for module 'calloc-gnu'.
+	* modules/calloc-gnu-tests: New file.
+	* tests/test-calloc-gnu.c: New file.
+
 	Tests for module 'malloc-gnu'.
 	* modules/malloc-gnu-tests: New file.
 	* tests/test-malloc-gnu.c: New file.
