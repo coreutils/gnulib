@@ -1,3 +1,11 @@
+2010-08-29  Bruno Haible  <bruno@clisp.org>
+
+	Update modules list.
+	* MODULES.html.sh (Memory management functions <stdlib.h>): Add
+	malloc-gnu, calloc-gnu, realloc-gnu. Remove malloc, calloc, realloc.
+	(String handling <string.h>): Add astrxfrm.
+	(File system functions): Add readlinkat.
+
 2010-08-28  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	Tests for module 'realloc-gnu'.

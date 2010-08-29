@@ -1675,11 +1675,11 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
-  func_module calloc
+  func_module calloc-gnu
   func_module eealloc
   func_module free
-  func_module malloc
-  func_module realloc
+  func_module malloc-gnu
+  func_module realloc-gnu
   func_module pagealign_alloc
   func_end_table
 
@@ -1797,6 +1797,7 @@ func_all_modules ()
   func_module strstr
   func_module strstr-simple
   func_module c-strstr
+  func_module astrxfrm
   func_module trim
   func_module fstrcmp
   func_module xstrndup
@@ -2593,6 +2594,7 @@ func_all_modules ()
   func_module openat-die
   func_module pathmax
   func_module read-file
+  func_module readlinkat
   func_module same
   func_module save-cwd
   func_module savedir
