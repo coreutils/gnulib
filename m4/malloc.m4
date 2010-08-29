@@ -1,4 +1,4 @@
-# malloc.m4 serial 11
+# malloc.m4 serial 12
 dnl Copyright (C) 2007, 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,10 +13,10 @@ AC_DEFUN([gl_FUNC_MALLOC_GNU],
   AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
   dnl _AC_FUNC_MALLOC_IF is defined in Autoconf.
   _AC_FUNC_MALLOC_IF(
-    [AC_DEFINE([HAVE_MALLOC], [1],
+    [AC_DEFINE([HAVE_MALLOC_GNU], [1],
                [Define to 1 if your system has a GNU libc compatible 'malloc'
                 function, and to 0 otherwise.])],
-    [AC_DEFINE([HAVE_MALLOC], [0])
+    [AC_DEFINE([HAVE_MALLOC_GNU], [0])
      gl_REPLACE_MALLOC
     ])
 ])

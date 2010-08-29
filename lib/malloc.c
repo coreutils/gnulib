@@ -21,8 +21,11 @@
 #include <config.h>
 /* Only the AC_FUNC_MALLOC macro defines 'malloc' already in config.h.  */
 #ifdef malloc
-# define NEED_MALLOC_GNU
+# define NEED_MALLOC_GNU 1
 # undef malloc
+/* Whereas the gnulib module 'malloc-gnu' defines HAVE_MALLOC_GNU.  */
+#elif GNULIB_MALLOC_GNU && !HAVE_MALLOC_GNU
+# define NEED_MALLOC_GNU 1
 #endif
 
 /* Specification.  */
@@ -41,7 +44,7 @@ rpl_malloc (size_t n)
 {
   void *result;
 
-#ifdef NEED_MALLOC_GNU
+#if NEED_MALLOC_GNU
   if (n == 0)
     n = 1;
 #endif

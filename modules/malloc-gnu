@@ -14,7 +14,7 @@ malloc-posix
 
 configure.ac:
 gl_FUNC_MALLOC_GNU
-AC_DEFINE([GNULIB_MALLOC_GNU], 1, [Define to indicate the 'malloc' module.])
+gl_MODULE_INDICATOR([malloc-gnu])
 
 Makefile.am:
 

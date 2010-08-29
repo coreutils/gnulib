@@ -1,3 +1,13 @@
+2010-08-29  Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
+            Bruno Haible  <bruno@clisp.org>
+
+	Make the module 'malloc-gnu' work again on AIX and OSF/1.
+	* m4/malloc.m4 (gl_FUNC_MALLOC_GNU): Define HAVE_MALLOC_GNU instead of
+	HAVE_MALLOC.
+	* lib/malloc.c (NEED_MALLOC_GNU): Enable behaviour also when
+	GNULIB_MALLOC_GNU && !HAVE_MALLOC_GNU.
+	* modules/malloc-gnu (configure.ac): Use gl_MODULE_INDICATOR.
+
 2010-08-29  Bruno Haible  <bruno@clisp.org>
 
 	Update modules list.
