@@ -1,6 +1,17 @@
 2010-08-29  Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
             Bruno Haible  <bruno@clisp.org>
 
+	Make the module 'realloc-gnu' work again on AIX and OSF/1.
+	* m4/realloc.m4 (gl_FUNC_REALLOC_GNU): Define HAVE_REALLOC_GNU instead
+	of HAVE_REALLOC.
+	* lib/realloc.c (NEED_REALLOC_GNU): Enable behaviour also when
+	GNULIB_REALLOC_GNU && !HAVE_REALLOC_GNU.
+	(SYSTEM_MALLOC_GLIBC_COMPATIBLE): Adjust definition.
+	* modules/realloc-gnu (configure.ac): Use gl_MODULE_INDICATOR.
+
+2010-08-29  Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
+            Bruno Haible  <bruno@clisp.org>
+
 	Make the module 'calloc-gnu' work again on AIX and OSF/1.
 	* m4/calloc.m4 (gl_FUNC_CALLOC_GNU): Define HAVE_CALLOC_GNU instead of
 	HAVE_CALLOC.

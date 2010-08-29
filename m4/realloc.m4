@@ -1,4 +1,4 @@
-# realloc.m4 serial 10
+# realloc.m4 serial 11
 dnl Copyright (C) 2007, 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,10 +13,10 @@ AC_DEFUN([gl_FUNC_REALLOC_GNU],
   AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
   dnl _AC_FUNC_REALLOC_IF is defined in Autoconf.
   _AC_FUNC_REALLOC_IF(
-    [AC_DEFINE([HAVE_REALLOC], [1],
+    [AC_DEFINE([HAVE_REALLOC_GNU], [1],
                [Define to 1 if your system has a GNU libc compatible 'realloc'
                 function, and to 0 otherwise.])],
-    [AC_DEFINE([HAVE_REALLOC], [0])
+    [AC_DEFINE([HAVE_REALLOC_GNU], [0])
      gl_REPLACE_REALLOC
     ])
 ])# gl_FUNC_REALLOC_GNU
