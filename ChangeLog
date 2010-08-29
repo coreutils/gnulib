@@ -1,6 +1,17 @@
 2010-08-29  Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
             Bruno Haible  <bruno@clisp.org>
 
+	Make the module 'calloc-gnu' work again on AIX and OSF/1.
+	* m4/calloc.m4 (gl_FUNC_CALLOC_GNU): Define HAVE_CALLOC_GNU instead of
+	HAVE_CALLOC.
+	* lib/xmalloc.c: Update accordingly.
+	* lib/calloc.c (NEED_CALLOC_GNU): Enable also when
+	GNULIB_CALLOC_GNU && !HAVE_CALLOC_GNU.
+	* modules/calloc-gnu (configure.ac): Invoke gl_MODULE_INDICATOR.
+
+2010-08-29  Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
+            Bruno Haible  <bruno@clisp.org>
+
 	Make the module 'malloc-gnu' work again on AIX and OSF/1.
 	* m4/malloc.m4 (gl_FUNC_MALLOC_GNU): Define HAVE_MALLOC_GNU instead of
 	HAVE_MALLOC.

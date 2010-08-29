@@ -30,8 +30,8 @@
 
 /* 1 if calloc is known to be compatible with GNU calloc.  This
    matters if we are not also using the calloc module, which defines
-   HAVE_CALLOC and supports the GNU API even on non-GNU platforms.  */
-#if defined HAVE_CALLOC || defined __GLIBC__
+   HAVE_CALLOC_GNU and supports the GNU API even on non-GNU platforms.  */
+#if defined HAVE_CALLOC_GNU || defined __GLIBC__
 enum { HAVE_GNU_CALLOC = 1 };
 #else
 enum { HAVE_GNU_CALLOC = 0 };
