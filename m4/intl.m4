@@ -1,4 +1,4 @@
-# intl.m4 serial 17a
+# intl.m4 serial 17b
 dnl Copyright (C) 1995-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -281,7 +281,7 @@ AC_DEFUN([gt_CHECK_DECL],
 [
   AC_CACHE_CHECK([whether $1 is declared], [ac_cv_have_decl_$1],
     [AC_COMPILE_IFELSE(
-       [AC_LANG_PRORAM(
+       [AC_LANG_PROGRAM(
           [[$2]],
           [[
 #ifndef $1

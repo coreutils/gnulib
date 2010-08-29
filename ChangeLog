@@ -1,5 +1,10 @@
 2010-08-29  Bruno Haible  <bruno@clisp.org>
 
+	gettext: Fix recent mistake.
+	* m4/intl.m4 (gt_CHECK_DECL): Fix typo introduced on 2010-08-26.
+
+2010-08-29  Bruno Haible  <bruno@clisp.org>
+
 	selinux-h: Offer a --without-selinux option.
 	* m4/selinux-selinux-h.m4 (gl_HEADERS_SELINUX_SELINUX_H): If
 	--without-selinux was specified, skip all tests and define
