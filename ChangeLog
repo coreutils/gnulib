@@ -1,3 +1,16 @@
+2010-08-29  Bruno Haible  <bruno@clisp.org>
+
+	selinux-h: Offer a --without-selinux option.
+	* m4/selinux-selinux-h.m4 (gl_HEADERS_SELINUX_SELINUX_H): If
+	--without-selinux was specified, skip all tests and define
+	HAVE_SELINUX_SELINUX_H to 0.
+	(gl_LIBSELINUX): Offer --without-selinux option. If it is specified,
+	set LIB_SELINUX to empty.
+	* m4/selinux-context-h.m4 (gl_HEADERS_SELINUX_CONTEXT_H): Require
+	gl_LIBSELINUX. If --without-selinux was specified, replace
+	selinux/context.h.
+	Reported by Johan Hattne <johan.hattne@utsouthwestern.edu>.
+
 2010-08-29  Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
             Bruno Haible  <bruno@clisp.org>
 
