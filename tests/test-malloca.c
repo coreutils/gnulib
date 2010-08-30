@@ -27,7 +27,7 @@ do_allocation (int n)
 {
   void *ptr = malloca (n);
   freea (ptr);
-  ptr = safe_alloca (n);
+  safe_alloca (n);
 }
 
 void (*func) (int) = do_allocation;
