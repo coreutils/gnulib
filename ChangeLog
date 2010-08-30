@@ -1,5 +1,11 @@
 2010-08-30  Eric Blake  <eblake@redhat.com>
 
+	strstr, memmem, strcasestr: avoid leaked shell message
+	* m4/strstr.m4 (gl_FUNC_STRSTR): Avoid "Alarm clock" message from
+	FreeBSD.
+	* m4/strcasestr.m4 (gl_FUNC_STRCASESTR): Likewise.
+	* m4/memmem.m4 (gl_FUNC_MEMMEM): Likewise.
+
 	tests: silence clang warning
 	* tests/test-malloca.c (do_allocation): Avoid dead store.
 

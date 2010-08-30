@@ -1,4 +1,4 @@
-# memmem.m4 serial 14
+# memmem.m4 serial 15
 dnl Copyright (C) 2002, 2003, 2004, 2007, 2008, 2009, 2010 Free Software
 dnl Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
@@ -32,13 +32,14 @@ AC_DEFUN([gl_FUNC_MEMMEM],
 #include <string.h> /* for memmem */
 #include <stdlib.h> /* for malloc */
 #include <unistd.h> /* for alarm */
+static void quit (int sig) { exit (sig + 128); }
 ]], [[size_t m = 1000000;
     char *haystack = (char *) malloc (2 * m + 1);
     char *needle = (char *) malloc (m + 1);
     void *result = 0;
     /* Failure to compile this test due to missing alarm is okay,
        since all such platforms (mingw) also lack memmem.  */
-    signal (SIGALRM, SIG_DFL);
+    signal (SIGALRM, quit);
     alarm (5);
     /* Check for quadratic performance.  */
     if (haystack && needle)

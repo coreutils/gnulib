@@ -1,4 +1,4 @@
-# strcasestr.m4 serial 13
+# strcasestr.m4 serial 14
 dnl Copyright (C) 2005, 2007, 2008, 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -39,13 +39,14 @@ AC_DEFUN([gl_FUNC_STRCASESTR],
 #include <string.h> /* for memmem */
 #include <stdlib.h> /* for malloc */
 #include <unistd.h> /* for alarm */
+static void quit (int sig) { exit (sig + 128); }
 ]], [[size_t m = 1000000;
     char *haystack = (char *) malloc (2 * m + 2);
     char *needle = (char *) malloc (m + 2);
     void *result = 0;
     /* Failure to compile this test due to missing alarm is okay,
        since all such platforms (mingw) also lack strcasestr.  */
-    signal (SIGALRM, SIG_DFL);
+    signal (SIGALRM, quit);
     alarm (5);
     /* Check for quadratic performance.  */
     if (haystack && needle)
