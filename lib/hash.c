@@ -243,18 +243,25 @@ hash_print_statistics (const Hash_table *table, FILE *stream)
            (unsigned long int) max_bucket_length);
 }
 
+/* Hash KEY and return a pointer to the selected bucket.
+   If TABLE->hasher misbehaves, abort.  */
+static struct hash_entry const *
+safe_hasher (const Hash_table *table, const void *key)
+{
+  size_t n = table->hasher (key, table->n_buckets);
+  if (! (n < table->n_buckets))
+    abort ();
+  return table->bucket + n;
+}
+
 /* If ENTRY matches an entry already in the hash table, return the
    entry from the table.  Otherwise, return NULL.  */
 
 void *
 hash_lookup (const Hash_table *table, const void *entry)
 {
-  struct hash_entry const *bucket
-    = table->bucket + table->hasher (entry, table->n_buckets);
+  struct hash_entry const *bucket = safe_hasher (table, entry);
   struct hash_entry const *cursor;
-
-  if (! (bucket < table->bucket_limit))
-    abort ();
 
   if (bucket->data == NULL)
     return NULL;
@@ -299,12 +306,8 @@ hash_get_first (const Hash_table *table)
 void *
 hash_get_next (const Hash_table *table, const void *entry)
 {
-  struct hash_entry const *bucket
-    = table->bucket + table->hasher (entry, table->n_buckets);
+  struct hash_entry const *bucket = safe_hasher (table, entry);
   struct hash_entry const *cursor;
-
-  if (! (bucket < table->bucket_limit))
-    abort ();
 
   /* Find next entry in the same bucket.  */
   cursor = bucket;
@@ -787,12 +790,8 @@ static void *
 hash_find_entry (Hash_table *table, const void *entry,
                  struct hash_entry **bucket_head, bool delete)
 {
-  struct hash_entry *bucket
-    = table->bucket + table->hasher (entry, table->n_buckets);
+  struct hash_entry *bucket = safe_hasher (table, entry);
   struct hash_entry *cursor;
-
-  if (! (bucket < table->bucket_limit))
-    abort ();
 
   *bucket_head = bucket;
 
@@ -878,10 +877,7 @@ transfer_entries (Hash_table *dst, Hash_table *src, bool safe)
         for (cursor = bucket->next; cursor; cursor = next)
           {
             data = cursor->data;
-            new_bucket = (dst->bucket + dst->hasher (data, dst->n_buckets));
-
-            if (! (new_bucket < dst->bucket_limit))
-              abort ();
+            new_bucket = safe_hasher (dst, data);
 
             next = cursor->next;
 
@@ -908,10 +904,7 @@ transfer_entries (Hash_table *dst, Hash_table *src, bool safe)
         bucket->next = NULL;
         if (safe)
           continue;
-        new_bucket = (dst->bucket + dst->hasher (data, dst->n_buckets));
-
-        if (! (new_bucket < dst->bucket_limit))
-          abort ();
+        new_bucket = safe_hasher (dst, data);
 
         if (new_bucket->data)
           {

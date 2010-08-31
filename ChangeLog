@@ -1,3 +1,13 @@
+2010-08-31  Eric Blake  <eblake@redhat.com>
+	and Jim Meyering  <meyering@redhat.com>
+
+	hash: factor, and guard against misbehaving hasher function
+	* lib/hash.c (safe_hasher): New function, to encapsulate the checking
+	of table->hasher's return value.  Also protect against a hash value
+	so large that adding it to table->bucket results in a NULL pointer.
+	(hash_lookup, hash_get_next, hash_find_entry, transfer_entries):
+	Use it in place of open-coded check-and-abort.
+
 2010-08-30  Bruno Haible  <bruno@clisp.org>
 
 	hash: silence spurious clang warning
