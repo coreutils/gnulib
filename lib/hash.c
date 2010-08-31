@@ -307,9 +307,14 @@ hash_get_next (const Hash_table *table, const void *entry)
     abort ();
 
   /* Find next entry in the same bucket.  */
-  for (cursor = bucket; cursor; cursor = cursor->next)
-    if (cursor->data == entry && cursor->next)
-      return cursor->next->data;
+  cursor = bucket;
+  do
+    {
+      if (cursor->data == entry && cursor->next)
+        return cursor->next->data;
+      cursor = cursor->next;
+    }
+  while (cursor != NULL);
 
   /* Find first entry in any subsequent bucket.  */
   while (++bucket < table->bucket_limit)
