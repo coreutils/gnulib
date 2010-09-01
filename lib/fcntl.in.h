@@ -210,6 +210,10 @@ _GL_WARN_ON_USE (openat, "openat is not portable - "
 # define O_RSYNC 0
 #endif
 
+#ifndef O_SEARCH
+# define O_SEARCH O_RDONLY /* This is often close enough in older systems.  */
+#endif
+
 #ifndef O_SYNC
 # define O_SYNC 0
 #endif

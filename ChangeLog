@@ -1,3 +1,25 @@
+2010-09-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	fcntl-h, etc.: prefer O_SEARCH to O_RDONLY when applicable
+
+	POSIX 2008 specifies a new 'open' flag O_SEARCH, which can be used
+	when one needs search access to a directory but not read access.
+	On systems where it is available, it works in some cases where
+	O_RDONLY does not, namely on directories that are searchable but
+	not readable, and which need only to be searchable.  If O_SEARCH
+	is not available, fall back to the traditional method of using
+	O_RDONLY.
+
+	* lib/fcntl.in.h (O_SEARCH): #define to O_RDONLY if not defined.
+	* lib/chdir-long.c (cdb_advance_fd): Use O_SEARCH, not O_RDONLY,
+	when opening a directory that needs only to be searchable.
+	* lib/chdir-safer.c (chdir_no_follow): Likewise.
+	* lib/fts.c (diropen, fts_open, fd_ring_check): Likewise.
+	* lib/openat-proc.c (openat_proc_name): Likewise.
+	* lib/openat.c (openat_needs_fchdir): Likewise.
+	* lib/save-cwd.c (save_cwd): Likewise.
+	* lib/savewd.c (savewd_save, savewd_chdir): Likewise.
+
 2010-08-28  Bruno Haible  <bruno@clisp.org>
 
 	New module 'host-cpu-c-abi'.

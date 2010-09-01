@@ -76,7 +76,7 @@ save_cwd (struct saved_cwd *cwd)
 {
   cwd->name = NULL;
 
-  cwd->desc = open (".", O_RDONLY);
+  cwd->desc = open (".", O_SEARCH);
   if (!GNULIB_FCNTL_SAFER)
     cwd->desc = fd_safer (cwd->desc);
   if (cwd->desc < 0)

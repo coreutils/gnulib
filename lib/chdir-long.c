@@ -72,7 +72,7 @@ static int
 cdb_advance_fd (struct cd_buf *cdb, char const *dir)
 {
   int new_fd = openat (cdb->fd, dir,
-                       O_RDONLY | O_DIRECTORY | O_NOCTTY | O_NONBLOCK);
+                       O_SEARCH | O_DIRECTORY | O_NOCTTY | O_NONBLOCK);
   if (new_fd < 0)
     return -1;
 

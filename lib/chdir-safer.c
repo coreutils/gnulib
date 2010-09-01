@@ -34,16 +34,19 @@
 #endif
 
 /* Like chdir, but fail if DIR is a symbolic link to a directory (or
-   similar funny business), or if DIR is not readable.  This avoids a
-   minor race condition between when a directory is created or statted
-   and when the process chdirs into it.  */
+   similar funny business).  This avoids a minor race condition
+   between when a directory is created or statted and when the process
+   chdirs into it.
+
+   On older systems lacking full support for O_SEARCH, this function
+   can also fail if DIR is not readable.  */
 int
 chdir_no_follow (char const *dir)
 {
   int result = 0;
   int saved_errno;
   int fd = open (dir,
-                 O_RDONLY | O_DIRECTORY | O_NOCTTY | O_NOFOLLOW | O_NONBLOCK);
+                 O_SEARCH | O_DIRECTORY | O_NOCTTY | O_NOFOLLOW | O_NONBLOCK);
   if (fd < 0)
     return -1;
 

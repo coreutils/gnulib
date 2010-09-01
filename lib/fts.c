@@ -347,7 +347,7 @@ static inline int
 internal_function
 diropen (FTS const *sp, char const *dir)
 {
-  int open_flags = (O_RDONLY | O_DIRECTORY | O_NOCTTY | O_NONBLOCK
+  int open_flags = (O_SEARCH | O_DIRECTORY | O_NOCTTY | O_NONBLOCK
                     | (ISSET (FTS_PHYSICAL) ? O_NOFOLLOW : 0));
 
   int fd = (ISSET (FTS_CWDFD)
@@ -405,7 +405,7 @@ fts_open (char * const *argv,
                early, doing it here saves us the trouble of ensuring
                later (where it'd be messier) that "." can in fact
                be opened.  If not, revert to FTS_NOCHDIR mode.  */
-            int fd = open (".", O_RDONLY);
+            int fd = open (".", O_SEARCH);
             if (fd < 0)
               {
                 /* Even if `.' is unreadable, don't revert to FTS_NOCHDIR mode
@@ -1646,7 +1646,7 @@ fd_ring_check (FTS const *sp)
       int fd = i_ring_pop (&fd_w);
       if (0 <= fd)
         {
-          int parent_fd = openat (cwd_fd, "..", O_RDONLY);
+          int parent_fd = openat (cwd_fd, "..", O_SEARCH);
           if (parent_fd < 0)
             {
               // Warn?
