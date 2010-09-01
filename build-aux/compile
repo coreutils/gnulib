@@ -1,7 +1,7 @@
 #! /bin/sh
 # Wrapper for compilers which do not understand `-c -o'.
 
-scriptversion=2010-08-16.11; # UTC
+scriptversion=2010-08-31.19; # UTC
 
 # Copyright (C) 1999, 2000, 2003, 2004, 2005, 2009, 2010 Free Software
 # Foundation, Inc.
@@ -142,7 +142,7 @@ func_cl_wrapper ()
 	  set x "$@" -Tp"$file"
 	  shift
 	  ;;
-	*.c | *.cpp | *.CPP | *.lib | *.LIB | *.Lib)
+	*.c | *.cpp | *.CPP | *.lib | *.LIB | *.Lib | *.OBJ | *.obj | *.[oO])
 	  func_file_conv "$1" mingw
 	  set x "$@" "$file"
 	  shift
