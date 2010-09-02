@@ -79,6 +79,19 @@ fail_() { warn_ "$ME_: failed test: $@"; Exit 1; }
 skip_() { warn_ "$ME_: skipped test: $@"; Exit 77; }
 framework_failure_() { warn_ "$ME_: set-up failure: $@"; Exit 99; }
 
+# Sanitize this shell to POSIX mode, if possible.
+DUALCASE=1; export DUALCASE
+if test -n "${ZSH_VERSION+set}" && (emulate sh) >/dev/null 2>&1; then
+  emulate sh
+  NULLCMD=:
+  alias -g '${1+"$@"}'='"$@"'
+  setopt NO_GLOB_SUBST
+else
+  case `(set -o) 2>/dev/null` in
+    *posix*) set -o posix ;;
+  esac
+fi
+
 # We require $(...) support unconditionally.
 # We require a few additional shell features only when $EXEEXT is nonempty,
 # in order to support automatic $EXEEXT emulation:
@@ -122,8 +135,14 @@ else
       test "$re_shell_" = fail && skip_ failed to find an adequate shell
       "$re_shell_" -c "$gl_shell_test_script_" 2>/dev/null
       if test $? = 9; then
-        # Found an acceptable shell.
-        exec "$re_shell_" "$0" --no-reexec "$@"
+        # Found an acceptable shell.  Preserve -v and -x.
+        case $- in
+          *v*x* | *x*v*) opts_=-vx ;;
+          *v*) opts_=-v ;;
+          *x*) opts_=-x ;;
+          *) opts_= ;;
+        esac
+        exec "$re_shell_" $opts_ "$0" --no-reexec "$@"
         echo "$ME_: exec failed" 1>&2
         exit 127
       fi
