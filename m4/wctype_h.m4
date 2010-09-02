@@ -1,4 +1,4 @@
-# wctype_h.m4 serial 7
+# wctype_h.m4 serial 8
 
 dnl A placeholder for ISO C99 <wctype.h>, for platforms that lack it.
 
@@ -24,13 +24,13 @@ AC_DEFUN([gl_WCTYPE_H],
   AC_CHECK_DECLS_ONCE([iswblank])
   if test $ac_cv_func_iswblank = yes; then
     HAVE_ISWBLANK=1
-    REPLACE_HAVE_ISWBLANK=0
+    REPLACE_ISWBLANK=0
   else
     HAVE_ISWBLANK=0
     if test $ac_cv_have_decl_iswblank = yes; then
-      REPLACE_HAVE_ISWBLANK=1
+      REPLACE_ISWBLANK=1
     else
-      REPLACE_HAVE_ISWBLANK=0
+      REPLACE_ISWBLANK=0
     fi
   fi
   AC_SUBST([HAVE_ISWBLANK])

@@ -1,3 +1,9 @@
+2010-09-02  Eric Blake  <eblake@redhat.com>
+
+	wctype: fix typo in previous commit
+	* m4/wctype_h.m4 (gl_WCTYPE_H): Fix spelling.
+	Reported by Ludovic Courtès.
+
 2010-09-02  Jim Meyering  <meyering@redhat.com>
 
 	test-update-copyright.sh: skip test if Perl is too old
