@@ -1,3 +1,9 @@
+2010-09-02  Paul Eggert  <eggert@cs.ucla.edu>
+
+	hash: fix safe_hasher const typo
+	* lib/hash.c (safe_hasher): Result is pointer, not pointer to
+	const; otherwise, there is a type error later.
+
 2010-09-02  Jim Meyering  <meyering@redhat.com>
 
 	test-update-copyright.sh: require perl 5.8.0

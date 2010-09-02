@@ -245,7 +245,7 @@ hash_print_statistics (const Hash_table *table, FILE *stream)
 
 /* Hash KEY and return a pointer to the selected bucket.
    If TABLE->hasher misbehaves, abort.  */
-static struct hash_entry const *
+static struct hash_entry *
 safe_hasher (const Hash_table *table, const void *key)
 {
   size_t n = table->hasher (key, table->n_buckets);
