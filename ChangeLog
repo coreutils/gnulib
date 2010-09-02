@@ -1,3 +1,10 @@
+2010-09-02  Jim Meyering  <meyering@redhat.com>
+
+	test-update-copyright.sh: require perl 5.8.0
+	* tests/test-update-copyright.sh: Require 5.8.0,
+	which Tom G. Christensen has confirmed is adequate,
+	while 5.6.1 is not.
+
 2010-09-02  Eric Blake  <eblake@redhat.com>
 
 	wctype: fix typo in previous commit
