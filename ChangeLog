@@ -1,3 +1,9 @@
+2010-09-02  Jim Meyering  <meyering@redhat.com>
+
+	test-update-copyright.sh: skip test if Perl is too old
+	* tests/test-update-copyright.sh: Exit 77 if Perl is too old.
+	Reported by Tom G. Christensen.
+
 2010-09-02  Bruno Haible  <bruno@clisp.org>
 
 	wctype: Avoid compilation error on IRIX 6.5.30.

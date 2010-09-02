@@ -16,6 +16,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# Skip this test if Perl is too old.  FIXME: 5.6.0 is just a guess.
+# We have a report that 5.004_05 is inadequate and that 5.8.8 works.
+perl -e 'require 5.6.0' || exit 77
+
 diffout=`diff -u /dev/null /dev/null 2>&1`
 if test x"$diffout" = x"" && test $? -eq 0; then
   compare() { diff -u "$@"; }
