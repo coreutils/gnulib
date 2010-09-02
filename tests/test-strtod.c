@@ -558,6 +558,26 @@ main (void)
     ASSERT (ptr == input + 10);
     ASSERT (errno == ERANGE);
   }
+  {
+    const char input[] = "1E 1000000";
+    char *ptr;
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
+    ASSERT (result == 1.0);             /* HP-UX 11.11, IRIX 6.5, OSF/1 4.0 */
+    ASSERT (ptr == input + 1);          /* HP-UX 11.11, IRIX 6.5 */
+    ASSERT (errno == 0);
+  }
+  {
+    const char input[] = "0x1P 1000000";
+    char *ptr;
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
+    ASSERT (result == 1.0);             /* NetBSD 3.0, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
+    ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
+    ASSERT (errno == 0);
+  }
 
   /* Infinity.  */
   {
@@ -829,6 +849,16 @@ main (void)
     result = strtod (input, &ptr);
     ASSERT (result == 2.0);             /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
     ASSERT (ptr == input + 6);          /* NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
+    ASSERT (errno == 0);
+  }
+  {
+    const char input[] = "0x1p 2";
+    char *ptr;
+    double result;
+    errno = 0;
+    result = strtod (input, &ptr);
+    ASSERT (result == 1.0);             /* NetBSD 3.0, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
+    ASSERT (ptr == input + 3);          /* NetBSD 3.0, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw */
     ASSERT (errno == 0);
   }
 

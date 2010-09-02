@@ -1,5 +1,11 @@
 2010-09-08  Eric Blake  <eblake@redhat.com>
 
+	strtod: work around IRIX 6.5 bug
+	* lib/strtod.c (strtod): Reparse number on shorter string if
+	exponent parse was invalid.
+	* tests/test-strtod.c (main): Add check for "0x1p 2".
+	Reported by Tom G. Christensen.
+
 	getopt: optimize previous patch
 	* m4/getopt.m4 (gl_GETOPT_CHECK_HEADERS): Correctly check for
 	empty variable.  Speed up awk script.

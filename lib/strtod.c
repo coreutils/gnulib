@@ -24,6 +24,7 @@
 #include <limits.h>
 #include <math.h>
 #include <stdbool.h>
+#include <string.h>
 
 #include "c-ctype.h"
 
@@ -202,6 +203,7 @@ strtod (const char *nptr, char **endptr)
   const char *s = nptr;
   const char *end;
   char *endbuf;
+  int saved_errno;
 
   /* Eat whitespace.  */
   while (locale_isspace (*s))
@@ -212,6 +214,7 @@ strtod (const char *nptr, char **endptr)
   if (*s == '-' || *s == '+')
     ++s;
 
+  saved_errno = errno;
   num = underlying_strtod (s, &endbuf);
   end = endbuf;
 
@@ -237,6 +240,35 @@ strtod (const char *nptr, char **endptr)
                 p++;
               if (p < end && ! c_isdigit (p[1 + (p[1] == '-' || p[1] == '+')]))
                 end = p;
+            }
+        }
+      else
+        {
+          /* If "1e 1" was misparsed as 10.0 instead of 1.0, re-do the
+             underlying strtod on a copy of the original string
+             truncated to avoid the bug.  */
+          const char *e = s + 1;
+          while (e < end && c_tolower (*e) != 'e')
+            e++;
+          if (e < end && ! c_isdigit (e[1 + (e[1] == '-' || e[1] == '+')]))
+            {
+              char *dup = strdup (s);
+              errno = saved_errno;
+              if (!dup)
+                {
+                  /* Not really our day, is it.  Rounding errors are
+                     better than outright failure.  */
+                  num = parse_number (s, 10, 10, 1, 'e', &endbuf);
+                }
+              else
+                {
+                  dup[e - s] = '\0';
+                  num = underlying_strtod (dup, &endbuf);
+                  saved_errno = errno;
+                  free (dup);
+                  errno = saved_errno;
+                }
+              end = e;
             }
         }
 
