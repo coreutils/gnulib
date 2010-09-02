@@ -1,3 +1,12 @@
+2010-09-01  Bruno Haible  <bruno@clisp.org>
+
+	New module 'socketlib'.
+	* modules/socketlib: New file.
+	* m4/socketlib.m4: New file, extracted from m4/sockets.m4.
+	* m4/sockets.m4 (gl_SOCKETS): Require gl_SOCKETLIB.
+	* modules/sockets (Depends-on): Add socketlib.
+	Suggested by Sam Steingold <sds@gnu.org>.
+
 2010-09-01  Paul Eggert  <eggert@cs.ucla.edu>
 
 	fcntl-h, etc.: prefer O_SEARCH to O_RDONLY when applicable

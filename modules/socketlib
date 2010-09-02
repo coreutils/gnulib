@@ -1,0 +1,23 @@
+Description:
+Access to socket primitives.
+
+Files:
+m4/socketlib.m4
+
+Depends-on:
+
+configure.ac:
+gl_SOCKETLIB
+
+Makefile.am:
+
+Include:
+
+Link:
+$(LIBSOCKET)
+
+License:
+LGPLv2+
+
+Maintainer:
+Simon Josefsson
