@@ -29,6 +29,7 @@ wctype.h: wctype.in.h $(CXXDEFS_H) $(WARN_ON_USE_H)
 	      -e 's/@''HAVE_ISWBLANK''@/$(HAVE_ISWBLANK)/g' \
 	      -e 's/@''HAVE_ISWCNTRL''@/$(HAVE_ISWCNTRL)/g' \
 	      -e 's/@''HAVE_WINT_T''@/$(HAVE_WINT_T)/g' \
+	      -e 's/@''REPLACE_ISWBLANK''@/$(REPLACE_ISWBLANK)/g' \
 	      -e 's/@''REPLACE_ISWCNTRL''@/$(REPLACE_ISWCNTRL)/g' \
 	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
 	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \

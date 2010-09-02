@@ -20,6 +20,9 @@ IRIX 5.3.
 The functions @code{isw*} are missing on some platforms:
 FreeBSD 4.11.
 @item
+The function @code{iswblank} is declared but not defined on some platforms:
+IRIX 6.5.30.
+@item
 The functions @code{isw*} are actually defined as macros that don't work,
 on IRIX 5.3.
 @end itemize

@@ -1,3 +1,15 @@
+2010-09-02  Bruno Haible  <bruno@clisp.org>
+
+	wctype: Avoid compilation error on IRIX 6.5.30.
+	* lib/wctype.in.h (iswblank): Declare with a replacement if
+	REPLACE_ISWBLANK is set.
+	* m4/wctype_h.m4 (gl_WCTYPE_H): Check also whether iswblank is
+	declared. Set REPLACE_ISWBLANK.
+	* modules/wctype (Makefile.am): Substitute REPLACE_ISWBLANK.
+	* doc/posix-functions/iswblank.texi: Mention the IRIX 6.5.30 problem.
+	* doc/posix-headers/wctype.texi: Likewise.
+	Reported by Tom G. Christensen <tgc@jupiterrise.com>.
+
 2010-09-01  Bruno Haible  <bruno@clisp.org>
 
 	New module 'socketlib'.
