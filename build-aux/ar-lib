@@ -2,7 +2,7 @@
 # Wrapper for Microsoft lib.exe
 
 me=ar-lib
-scriptversion=2010-08-12.16; # UTC
+scriptversion=2010-09-02.19; # UTC
 
 # Copyright (C) 2010 Free Software
 # Foundation, Inc.
@@ -219,7 +219,7 @@ elif test -n "$extract"; then
       esac
     done
   else
-    $AR -NOLOGO -LIST "$archive" | while read member
+    $AR -NOLOGO -LIST "$archive" | sed -e 's/\\/\\\\/g' | while read member
     do
       $AR -NOLOGO -EXTRACT:"$member" "$archive" || exit $?
     done
