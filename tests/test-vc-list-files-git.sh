@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 : ${srcdir=.}
-. "$srcdir/init.sh"; path_prepend_ $abs_aux_dir .
+. "$srcdir/init.sh"; path_prepend_ "$abs_aux_dir" .
 
 tmpdir=vc-git-$$
 GIT_DIR= GIT_WORK_TREE=; unset GIT_DIR GIT_WORK_TREE

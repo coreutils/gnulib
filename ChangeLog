@@ -1,3 +1,11 @@
+2010-09-04  Jim Meyering  <meyering@redhat.com>
+
+	avoid coreutils "make distcheck" failure
+	Coreutils tests with an absolute build directory name that contains
+	a space.  Not quoting this directory name caused a failure.
+	* tests/test-vc-list-files-git.sh: Quote PATH dir name.
+	* tests/test-vc-list-files-cvs.sh: Likewise.
+
 2010-09-04  Bruno Haible  <bruno@clisp.org>
 
 	gnulib-tool: Avoid error when run in a package without Makefile.am.
