@@ -1,5 +1,11 @@
 2010-09-04  Jim Meyering  <meyering@redhat.com>
 
+	maint.mk: avoid obscure sc_copyright_check failure in coreutils
+	* top/maint.mk (v_etc_file): Prepend $(gnulib_dir)/, to avoid
+	false positives (whose names may be ill-chosen) when searching
+	non-VC'd files.  Otherwise, a file named "a b/lib/version-etc.c"
+	would cause a false-positive.
+
 	avoid coreutils "make distcheck" failure
 	Coreutils tests with an absolute build directory name that contains
 	a space.  Not quoting this directory name caused a failure.

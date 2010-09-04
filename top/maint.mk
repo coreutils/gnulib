@@ -954,7 +954,7 @@ writable-files:
 	  test "$$fail" && exit 1 || : ;				\
 	fi
 
-v_etc_file = lib/version-etc.c
+v_etc_file = $(gnulib_dir)/lib/version-etc.c
 sample-test = tests/sample-test
 texi = doc/$(PACKAGE).texi
 # Make sure that the copyright date in $(v_etc_file) is up to date.
