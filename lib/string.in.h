@@ -311,6 +311,10 @@ _GL_WARN_ON_USE (strchrnul, "strchrnul is unportable - "
 _GL_FUNCDECL_RPL (strdup, char *, (char const *__s) _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (strdup, char *, (char const *__s));
 # else
+#  if defined __cplusplus && defined GNULIB_NAMESPACE && defined strdup
+    /* strdup exists as a function and as a macro.  Get rid of the macro.  */
+#   undef strdup
+#  endif
 #  if !(@HAVE_DECL_STRDUP@ || defined strdup)
 _GL_FUNCDECL_SYS (strdup, char *, (char const *__s) _GL_ARG_NONNULL ((1)));
 #  endif

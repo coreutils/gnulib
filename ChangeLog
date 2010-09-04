@@ -1,5 +1,11 @@
 2010-09-04  Bruno Haible  <bruno@clisp.org>
 
+	strdup: Fix compilation error in C++ mode.
+	* lib/string.in.h (strdup): In C++ mode with GNULIB_NAMESPACE, undefine
+	the macro.
+
+2010-09-04  Bruno Haible  <bruno@clisp.org>
+
 	dirfd: Fix compilation error in C++ mode on MacOS X, *BSD, IRIX.
 	* lib/dirent.in.h (dirfd): In C++ mode with GNULIB_NAMESPACE, turn the
 	macro into a function.
