@@ -1,5 +1,12 @@
 2010-09-04  Bruno Haible  <bruno@clisp.org>
 
+	update-copyright test: Improve output when perl is missing or too old.
+	* tests/test-update-copyright.sh: Move test of Perl version down after
+	the test whether Perl exists. Provide an explanation relating Perl's
+	error message to Automake's SKIP: message.
+
+2010-09-04  Bruno Haible  <bruno@clisp.org>
+
 	Don't augment PATH in TESTS_ENVIRONMENT.
 	* modules/update-copyright-tests (Makefile.am): In TESTS_ENVIRONMENT,
 	set abs_aux_dir instead of augmenting PATH.

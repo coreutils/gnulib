@@ -16,10 +16,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Skip this test if Perl is too old.  FIXME: 5.8.0 is just a guess.
-# We have a report that 5.6.1 is inadequate and that 5.8.0 works.
-perl -e 'require 5.8.0' || exit 77
-
 diffout=`diff -u /dev/null /dev/null 2>&1`
 if test x"$diffout" = x"" && test $? -eq 0; then
   compare() { diff -u "$@"; }
@@ -53,6 +49,13 @@ echo a > $TMP-in
       'your system has insufficient support for Perl' 1>&2
     exit 77
   }
+
+# Skip this test if Perl is too old.  FIXME: 5.8.0 is just a guess.
+# We have a report that 5.6.1 is inadequate and that 5.8.0 works.
+perl -e 'require 5.8.0' || {
+  echo '$0: skipping this test; Perl version is too old' 1>&2
+  exit 77
+}
 
 # Do not let a different envvar setting perturb results.
 UPDATE_COPYRIGHT_MAX_LINE_LENGTH=72
