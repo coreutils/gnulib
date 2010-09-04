@@ -1,5 +1,12 @@
 2010-09-04  Bruno Haible  <bruno@clisp.org>
 
+	dirfd: Fix compilation error in C++ mode on MacOS X, *BSD, IRIX.
+	* lib/dirent.in.h (dirfd): In C++ mode with GNULIB_NAMESPACE, turn the
+	macro into a function.
+	Reported by Jarno Rajahalme <jarno.rajahalme@nsn.com>.
+
+2010-09-04  Bruno Haible  <bruno@clisp.org>
+
 	Set PATH_SEPARATOR the same way autoconf does.
 	* build-aux/relocatable.sh.in (func_find_curr_installdir): Determine
 	the value of PATH_SEPARATOR the same way autoconf-generated configure
