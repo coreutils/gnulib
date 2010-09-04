@@ -145,7 +145,7 @@ Don't forget to
 By default, the source code is copied into @file{lib/} and the M4
 macros in @file{m4/}.  You can override these paths by using
 @code{--source-base=DIRECTORY} and @code{--m4-base=DIRECTORY}.  Some
-modules also provide other files necessary for building. These files
+modules also provide other files necessary for building.  These files
 are copied into the directory specified by @samp{AC_CONFIG_AUX_DIR} in
 @file{configure.ac} or by the @code{--aux-dir=DIRECTORY} option.  If
 neither is specified, the current directory is assumed.
@@ -161,11 +161,11 @@ mechanism the maintainer applies to the sources.  For these reasons,
 this option is generally discouraged.
 
 @code{gnulib-tool} will overwrite any pre-existing files, in
-particular @file{Makefile.am}.  Unfortunately, separating the
+particular @file{Makefile.am}.  It is also possible to separate the
 generated @file{Makefile.am} content (for building the gnulib library)
-into a separate file, say @file{gnulib.mk}, that could be included
-by your handwritten @file{Makefile.am} is not possible, due to how
-variable assignments are handled by Automake.
+into a separate file, say @file{gnulib.mk}, that can be included by your
+handwritten @file{Makefile.am}, but this is a more advanced use of
+@code{gnulib-tool}.
 
 Consequently, it is a good idea to choose directories that are not
 already used by your projects, to separate gnulib imported files from
