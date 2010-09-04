@@ -1,3 +1,12 @@
+2010-09-04  Bruno Haible  <bruno@clisp.org>
+
+	Set PATH_SEPARATOR the same way autoconf does.
+	* build-aux/relocatable.sh.in (func_find_curr_installdir): Determine
+	the value of PATH_SEPARATOR the same way autoconf-generated configure
+	scripts do.
+	* m4/lib-ld.m4 (AC_LIB_PROG_LD): Likewise.
+	* m4/progtest.m4 (AM_PATH_PROG_WITH_TEST): Likewise.
+
 2010-09-04  Stefano Lattarini  <stefano.lattarini@gmail.com>  (tiny change)
 
 	Set PATH_SEPARATOR the same way autoconf does.

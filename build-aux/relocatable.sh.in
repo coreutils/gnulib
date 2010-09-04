@@ -62,15 +62,14 @@ func_find_curr_installdir ()
     */* | *\\*) ;;
     *) # Need to look in the PATH.
       if test "${PATH_SEPARATOR+set}" != set; then
-        func_tmpdir
-        { echo "#! /bin/sh"; echo "exit 0"; } > "$tmp"/conf.sh
-        chmod +x "$tmp"/conf.sh
-        if (PATH="/nonexistent;$tmp"; conf.sh) >/dev/null 2>&1; then
-          PATH_SEPARATOR=';'
-        else
-          PATH_SEPARATOR=:
-        fi
-        rm -rf "$tmp"
+        # Determine PATH_SEPARATOR by trying to find /bin/sh in a PATH which
+        # contains only /bin. Note that ksh looks also at the FPATH variable,
+        # so we have to set that as well for the test.
+        PATH_SEPARATOR=:
+        (PATH='/bin;/bin'; FPATH=$PATH; sh -c :) >/dev/null 2>&1 \
+          && { (PATH='/bin:/bin'; FPATH=$PATH; sh -c :) >/dev/null 2>&1 \
+                 || PATH_SEPARATOR=';'
+             }
       fi
       save_IFS="$IFS"; IFS="$PATH_SEPARATOR"
       for dir in $PATH; do
