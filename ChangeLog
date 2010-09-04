@@ -1,5 +1,11 @@
 2010-09-04  Bruno Haible  <bruno@clisp.org>
 
+	gnulib-tool: Help migration from --import to --add-import or --update.
+	* gnulib-tool: Emit a verbose error message when --import is used
+	without any module name.
+
+2010-09-04  Bruno Haible  <bruno@clisp.org>
+
 	Update doc about gnulib-tool.
 	* doc/gnulib-tool.texi (VCS Issues): Explain 'gnulib-tool --import' vs.
 	'gnulib-tool --update' in more detail.
