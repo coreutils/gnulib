@@ -1,3 +1,8 @@
+2010-09-04  Jim Meyering  <meyering@redhat.com>
+
+	tests: prohibit augmenting PATH via TESTS_ENVIRONMENT
+	* Makefile (sc_prohibit_augmenting_PATH_via_TESTS_ENVIRONMENT): New rule.
+
 2010-09-04  Bruno Haible  <bruno@clisp.org>
 
 	strdup: Fix compilation error in C++ mode.

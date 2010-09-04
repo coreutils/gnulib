@@ -13,13 +13,23 @@ info html dvi pdf:
 	cd doc && $(MAKE) $@ && $(MAKE) mostlyclean
 
 # Perform some platform independent checks on the gnulib code.
-check: sc_prefer_ac_check_funcs_once
+check: \
+  sc_prohibit_augmenting_PATH_via_TESTS_ENVIRONMENT			\
+  sc_prefer_ac_check_funcs_once
 
 sc_prefer_ac_check_funcs_once:
 	if test -d .git; then						\
           git grep -w -l AC_CHECK_FUNCS modules				\
             && { echo use AC_CHECK_FUNCS_ONCE, not AC_CHECK_FUNCS	\
                    in modules/ 1>&2; exit 1; } || :			\
+	else :; fi
+
+sc_prohibit_augmenting_PATH_via_TESTS_ENVIRONMENT:
+	if test -d .git; then						\
+          url=http://thread.gmane.org/gmane.comp.lib.gnulib.bugs/22874;	\
+	  git grep '^[	 ]*TESTS_ENVIRONMENT += PATH=' modules		\
+	    && { printf '%s\n' 'Do not augment PATH via TESTS_ENVIRONMENT;' \
+		 "  see <$$url>" 1>&2; exit 1; } || :			\
 	else :; fi
 
 # Regenerate some files that are stored in the repository.
