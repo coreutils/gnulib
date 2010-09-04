@@ -11,7 +11,7 @@
 	gnulib-tool: Avoid error when run in a package without Makefile.am.
 	* gnulib-tool: When collecting the m4dirs in a package that does not
 	have a Makefile.am, eliminate those directories that contain no
-	gnulib-cache.m4.
+	gnulib-cache.m4. Fix expression that counts these directories.
 
 2010-09-04  Bruno Haible  <bruno@clisp.org>
 
