@@ -127,6 +127,8 @@ func_usage ()
 Usage: gnulib-tool --list
        gnulib-tool --find filename
        gnulib-tool --import [module1 ... moduleN]
+       gnulib-tool --add-import [module1 ... moduleN]
+       gnulib-tool --remove-import [module1 ... moduleN]
        gnulib-tool --update
        gnulib-tool --create-testdir --dir=directory [module1 ... moduleN]
        gnulib-tool --create-megatestdir --dir=directory [module1 ... moduleN]
@@ -151,9 +153,13 @@ Usage: gnulib-tool --list
 Operation modes:
       --list                print the available module names
       --find                find the modules which contain the specified file
-      --import              import the given modules into the current package;
+      --import              import the given modules into the current package
+      --add-import          augment the list of imports from gnulib into the
+                            current package, by adding the given modules;
                             if no modules are specified, update the current
                             package from the current gnulib
+      --remove-import       reduce the list of imports from gnulib into the
+                            current package, by removing the given modules
       --update              update the current package, restore files omitted
                             from version control
       --create-testdir      create a scratch package with the given modules
@@ -861,7 +867,8 @@ fi
 
 # Command-line option processing.
 # Removes the OPTIONS from the arguments. Sets the variables:
-# - mode            list or import or create-testdir or create-megatestdir
+# - mode            list or import or add-import or remove-import or update
+#                   or create-testdir or create-megatestdir
 # - destdir         from --dir
 # - local_gnulib_dir  from --local-dir
 # - modcache        true or false, from --cache-modules/--no-cache-modules
@@ -956,6 +963,12 @@ fi
         shift ;;
       --import | --impor | --impo | --imp | --im | --i )
         mode=import
+        shift ;;
+      --add-import | --add-impor | --add-impo | --add-imp | --add-im | --add-i | --add- | --add | --ad )
+        mode=add-import
+        shift ;;
+      --remove-import | --remove-impor | --remove-impo | --remove-imp | --remove-im | --remove-i | --remove- | --remove | --remov | --remo | --rem | --re | --r )
+        mode=remove-import
         shift ;;
       --update | --updat | --upda | --upd | --up | --u )
         mode=update
@@ -1214,10 +1227,10 @@ fi
     esac
   done
 
-  if test "$mode" = import; then
+  if case "$mode" in import | add-import | remove-import) true;; *) false;; esac; then
     if test -n "$excl_cxx_tests" || test -n "$excl_longrunning_tests" \
        || test -n "$excl_privileged_tests" || test -n "$excl_unportable_tests"; then
-      echo "gnulib-tool: invalid options for 'import' mode" 1>&2
+      echo "gnulib-tool: invalid options for '$mode' mode" 1>&2
       echo "Try 'gnulib-tool --help' for more information." 1>&2
       func_exit 1
     fi
@@ -1264,7 +1277,8 @@ fi
   DEFAULT_AUTOCONF_MINVERSION="2.59"
   autoconf_minversion=
   configure_ac=
-  if { test "$mode" = import || test "$mode" = update; } && test -n "$destdir"; then
+  if case "$mode" in import | add-import | remove-import | update) true;; *) false;; esac \
+     && test -n "$destdir"; then
     if test -f "$destdir"/configure.ac; then
       configure_ac="$destdir/configure.ac"
     else
@@ -1349,6 +1363,15 @@ for signal in 1 2 3 13 15; do
   trap '{ signal='$signal'; func_exit 1; }' $signal
 done
 signal=0
+
+# Note: The 'eval' silences stderr output in dash.
+if (declare -A x && { x[f/2]='foo'; x[f/3]='bar'; eval test '${x[f/2]}' = foo; }) 2>/dev/null; then
+  # Zsh 4 and Bash 4 have associative arrays.
+  have_associative=true
+else
+  # For other shells, use 'eval' with computed shell variable names.
+  have_associative=false
+fi
 
 # func_lookup_file file
 # looks up a file in $local_gnulib_dir or $gnulib_dir, or combines it through
@@ -1532,15 +1555,6 @@ sed_extract_field_header='
   s/^Maintainer:[	 ]*$/maintainer/'
 
 if $modcache; then
-
-  # Note: The 'eval' silences stderr output in dash.
-  if (declare -A x && { x[f/2]='foo'; x[f/3]='bar'; eval test '${x[f/2]}' = foo; }) 2>/dev/null; then
-    # Zsh 4 and Bash 4 have associative arrays.
-    have_associative=true
-  else
-    # For other shells, use 'eval' with computed shell variable names.
-    have_associative=false
-  fi
 
   if $have_associative; then
 
@@ -3308,6 +3322,7 @@ func_emit_initmacro_done ()
 
 # func_import modules
 # Uses also the variables
+# - mode            import or add-import or remove-import or update
 # - destdir         target directory
 # - local_gnulib_dir  from --local-dir
 # - modcache        true or false, from --cache-modules/--no-cache-modules
@@ -3351,6 +3366,8 @@ func_emit_initmacro_done ()
 func_import ()
 {
   # Get the cached settings.
+  # In 'import' mode, we read them only for the purpose of knowing the old
+  # installed file list, and don't use them as defaults.
   cached_local_gnulib_dir=
   cached_specified_modules=
   cached_incobsolete=
@@ -3480,130 +3497,174 @@ func_import ()
     fi
   fi
 
-  # Merge the cached settings with the specified ones.
-  # The m4base must be the same as expected from the pathname.
-  if test -n "$cached_m4base" && test "$cached_m4base" != "$m4base"; then
-    func_fatal_error "$m4base/gnulib-cache.m4 is expected to contain gl_M4_BASE([$m4base])"
-  fi
-  # The local_gnulib_dir defaults to the cached one. Recall that the cached one
-  # is relative to $destdir, whereas the one we use is relative to . or absolute.
-  if test -z "$local_gnulib_dir"; then
-    if test -n "$cached_local_gnulib_dir"; then
-      case "$destdir" in
-        /*)
-          local_gnulib_dir="$destdir/$cached_local_gnulib_dir" ;;
-        *)
-          case "$cached_local_gnulib_dir" in
-            /*)
-              local_gnulib_dir="$destdir/$cached_local_gnulib_dir" ;;
-            *)
-              func_relconcat "$destdir" "$cached_local_gnulib_dir"
-              local_gnulib_dir="$relconcat" ;;
-          esac ;;
-      esac
+  if test "$mode" = import; then
+    # In 'import' mode, the new set of specified modules overrides the cached
+    # set of modules. Ignore the cached settings.
+    specified_modules="$1"
+  else
+    # Merge the cached settings with the specified ones.
+    # The m4base must be the same as expected from the pathname.
+    if test -n "$cached_m4base" && test "$cached_m4base" != "$m4base"; then
+      func_fatal_error "$m4base/gnulib-cache.m4 is expected to contain gl_M4_BASE([$m4base])"
     fi
-  fi
-  # Append the cached and the specified module names. So that
-  # "gnulib-tool --import foo" means to add the module foo.
-  specified_modules="$cached_specified_modules $1"
-  # Included obsolete modules among the dependencies if specified either way.
-  if test -z "$incobsolete"; then
-    incobsolete="$cached_incobsolete"
-  fi
-  # Included special kinds of tests modules among the dependencies if specified
-  # either way.
-  if test -z "$inc_cxx_tests"; then
-    inc_cxx_tests="$cached_inc_cxx_tests"
-  fi
-  if test -z "$inc_longrunning_tests"; then
-    inc_longrunning_tests="$cached_inc_longrunning_tests"
-  fi
-  if test -z "$inc_privileged_tests"; then
-    inc_privileged_tests="$cached_inc_privileged_tests"
-  fi
-  if test -z "$inc_unportable_tests"; then
-    inc_unportable_tests="$cached_inc_unportable_tests"
-  fi
-  if test -z "$inc_all_tests"; then
-    inc_all_tests="$cached_inc_all_tests"
+    # The local_gnulib_dir defaults to the cached one. Recall that the cached one
+    # is relative to $destdir, whereas the one we use is relative to . or absolute.
+    if test -z "$local_gnulib_dir"; then
+      if test -n "$cached_local_gnulib_dir"; then
+        case "$destdir" in
+          /*)
+            local_gnulib_dir="$destdir/$cached_local_gnulib_dir" ;;
+          *)
+            case "$cached_local_gnulib_dir" in
+              /*)
+                local_gnulib_dir="$destdir/$cached_local_gnulib_dir" ;;
+              *)
+                func_relconcat "$destdir" "$cached_local_gnulib_dir"
+                local_gnulib_dir="$relconcat" ;;
+            esac ;;
+        esac
+      fi
+    fi
+    case $mode in
+      add-import)
+        # Append the cached and the specified module names. So that
+        # "gnulib-tool --add-import foo" means to add the module foo.
+        specified_modules="$cached_specified_modules $1"
+        ;;
+      remove-import)
+        # Take the cached module names, minus the specified module names.
+        specified_modules=
+        if $have_associative; then
+          # Use an associative array, for O(N) worst-case run time.
+          declare -A to_remove
+          for m in $1; do
+            to_remove[$m]=yes
+          done
+          for module in $cached_specified_modules; do
+            if test -z "${to_remove[$module]}"; then
+              func_append specified_modules "$module "
+            fi
+          done
+        else
+          # This loop has O(N²) worst-case run time.
+          for module in $cached_specified_modules; do
+            to_remove=
+            for m in $1; do
+              if test "$m" = "$module"; then
+                to_remove=yes
+                break
+              fi
+            done
+            if test -z "$to_remove"; then
+              func_append specified_modules "$module "
+            fi
+          done
+        fi
+        ;;
+      update)
+        # Take the cached module names. There are no specified module names.
+        specified_modules="$cached_specified_modules"
+        ;;
+    esac
+    # Included obsolete modules among the dependencies if specified either way.
+    if test -z "$incobsolete"; then
+      incobsolete="$cached_incobsolete"
+    fi
+    # Included special kinds of tests modules among the dependencies if specified
+    # either way.
+    if test -z "$inc_cxx_tests"; then
+      inc_cxx_tests="$cached_inc_cxx_tests"
+    fi
+    if test -z "$inc_longrunning_tests"; then
+      inc_longrunning_tests="$cached_inc_longrunning_tests"
+    fi
+    if test -z "$inc_privileged_tests"; then
+      inc_privileged_tests="$cached_inc_privileged_tests"
+    fi
+    if test -z "$inc_unportable_tests"; then
+      inc_unportable_tests="$cached_inc_unportable_tests"
+    fi
+    if test -z "$inc_all_tests"; then
+      inc_all_tests="$cached_inc_all_tests"
+    fi
+    # Append the cached and the specified avoidlist. This is probably better
+    # than dropping the cached one when --avoid is specified at least once.
+    avoidlist=`for m in $cached_avoidlist $avoidlist; do echo $m; done | LC_ALL=C sort -u`
+    avoidlist=`echo $avoidlist`
+
+    # The sourcebase defaults to the cached one.
+    if test -z "$sourcebase"; then
+      sourcebase="$cached_sourcebase"
+      if test -z "$sourcebase"; then
+        func_fatal_error "missing --source-base option"
+      fi
+    fi
+    # The pobase defaults to the cached one.
+    if test -z "$pobase"; then
+      pobase="$cached_pobase"
+    fi
+    # The docbase defaults to the cached one.
+    if test -z "$docbase"; then
+      docbase="$cached_docbase"
+      if test -z "$docbase"; then
+        func_fatal_error "missing --doc-base option. --doc-base has been introduced on 2006-07-11; if your last invocation of 'gnulib-tool --import' is before that date, you need to run 'gnulib-tool --import' once, with a --doc-base option."
+      fi
+    fi
+    # The testsbase defaults to the cached one.
+    if test -z "$testsbase"; then
+      testsbase="$cached_testsbase"
+      if test -z "$testsbase"; then
+        func_fatal_error "missing --tests-base option"
+      fi
+    fi
+    # Require the tests if specified either way.
+    if test -z "$inctests"; then
+      inctests="$cached_inctests"
+    fi
+    # The libname defaults to the cached one.
+    if test -z "$supplied_libname"; then
+      libname="$cached_libname"
+      if test -z "$libname"; then
+        func_fatal_error "missing --lib option"
+      fi
+    fi
+    # Require LGPL if specified either way.
+    if test -z "$lgpl"; then
+      lgpl="$cached_lgpl"
+    fi
+    # The makefile_name defaults to the cached one.
+    if test -z "$makefile_name"; then
+      makefile_name="$cached_makefile_name"
+    fi
+    # Use libtool if specified either way, or if guessed.
+    if test -z "$libtool"; then
+      if test -n "$cached_m4base"; then
+        libtool="$cached_libtool"
+      else
+        libtool="$guessed_libtool"
+      fi
+    fi
+    # The macro_prefix defaults to the cached one.
+    if test -z "$macro_prefix"; then
+      macro_prefix="$cached_macro_prefix"
+      if test -z "$macro_prefix"; then
+        func_fatal_error "missing --macro-prefix option"
+      fi
+    fi
+    # The po_domain defaults to the cached one.
+    if test -z "$po_domain"; then
+      po_domain="$cached_po_domain"
+    fi
+    # The vc_files defaults to the cached one.
+    if test -z "$vc_files"; then
+      vc_files="$cached_vc_files"
+    fi
   fi
   # --without-*-tests options are not supported here.
   excl_cxx_tests=
   excl_longrunning_tests=
   excl_privileged_tests=
   excl_unportable_tests=
-  # Append the cached and the specified avoidlist. This is probably better
-  # than dropping the cached one when --avoid is specified at least once.
-  avoidlist=`for m in $cached_avoidlist $avoidlist; do echo $m; done | LC_ALL=C sort -u`
-  avoidlist=`echo $avoidlist`
-
-  # The sourcebase defaults to the cached one.
-  if test -z "$sourcebase"; then
-    sourcebase="$cached_sourcebase"
-    if test -z "$sourcebase"; then
-      func_fatal_error "missing --source-base option"
-    fi
-  fi
-  # The pobase defaults to the cached one.
-  if test -z "$pobase"; then
-    pobase="$cached_pobase"
-  fi
-  # The docbase defaults to the cached one.
-  if test -z "$docbase"; then
-    docbase="$cached_docbase"
-    if test -z "$docbase"; then
-      func_fatal_error "missing --doc-base option. --doc-base has been introduced on 2006-07-11; if your last invocation of 'gnulib-tool --import' is before that date, you need to run 'gnulib-tool --import' once, with a --doc-base option."
-    fi
-  fi
-  # The testsbase defaults to the cached one.
-  if test -z "$testsbase"; then
-    testsbase="$cached_testsbase"
-    if test -z "$testsbase"; then
-      func_fatal_error "missing --tests-base option"
-    fi
-  fi
-  # Require the tests if specified either way.
-  if test -z "$inctests"; then
-    inctests="$cached_inctests"
-  fi
-  # The libname defaults to the cached one.
-  if test -z "$supplied_libname"; then
-    libname="$cached_libname"
-    if test -z "$libname"; then
-      func_fatal_error "missing --lib option"
-    fi
-  fi
-  # Require LGPL if specified either way.
-  if test -z "$lgpl"; then
-    lgpl="$cached_lgpl"
-  fi
-  # The makefile_name defaults to the cached one.
-  if test -z "$makefile_name"; then
-    makefile_name="$cached_makefile_name"
-  fi
-  # Use libtool if specified either way, or if guessed.
-  if test -z "$libtool"; then
-    if test -n "$cached_m4base"; then
-      libtool="$cached_libtool"
-    else
-      libtool="$guessed_libtool"
-    fi
-  fi
-  # The macro_prefix defaults to the cached one.
-  if test -z "$macro_prefix"; then
-    macro_prefix="$cached_macro_prefix"
-    if test -z "$macro_prefix"; then
-      func_fatal_error "missing --macro-prefix option"
-    fi
-  fi
-  # The po_domain defaults to the cached one.
-  if test -z "$po_domain"; then
-    po_domain="$cached_po_domain"
-  fi
-  # The vc_files defaults to the cached one.
-  if test -z "$vc_files"; then
-    vc_files="$cached_vc_files"
-  fi
 
   # Canonicalize the list of specified modules.
   specified_modules=`for m in $specified_modules; do echo $m; done | LC_ALL=C sort -u`
@@ -5429,7 +5490,7 @@ s/\([.*$]\)/[\1]/g'
     done
     ;;
 
-  import | update )
+  import | add-import | remove-import | update )
 
     # Where to import.
     if test -z "$destdir"; then
@@ -5469,96 +5530,109 @@ s/\([.*$]\)/[\1]/g'
     fi
 
     # Determine where to apply func_import.
-    if test -n "$m4base"; then
+    if test "$mode" = import; then
       # Apply func_import to a particular gnulib directory.
-      # Any number of additional modules can be given.
-      if test ! -f "$destdir/$m4base"/gnulib-cache.m4; then
-        # First use of gnulib in the given m4base.
-        test -n "$supplied_libname" || supplied_libname=true
-        test -n "$sourcebase" || sourcebase="lib"
-        test -n "$docbase" || docbase="doc"
-        test -n "$testsbase" || testsbase="tests"
-        test -n "$macro_prefix" || macro_prefix="gl"
-      fi
+      # The command line contains the complete specification; don't look at
+      # the contents of gnulib-cache.m4.
+      test -n "$supplied_libname" || supplied_libname=true
+      test -n "$sourcebase" || sourcebase="lib"
+      test -n "$m4base" || m4base="m4"
+      test -n "$docbase" || docbase="doc"
+      test -n "$testsbase" || testsbase="tests"
+      test -n "$macro_prefix" || macro_prefix="gl"
       func_import "$*"
     else
-      # Apply func_import to all gnulib directories.
-      # To get this list of directories, look at Makefile.am. (Not at
-      # configure, because it may be omitted from version control. Also,
-      # don't run "find $destdir -name gnulib-cache.m4", as it might be
-      # too expensive.)
-      m4dirs=
-      m4dirs_count=0
-      if test -f "$destdir"/Makefile.am; then
-        aclocal_amflags=`sed -n -e 's/^ACLOCAL_AMFLAGS[	 ]*=\(.*\)$/\1/p' "$destdir"/Makefile.am`
-        m4dir_is_next=
-        for arg in $aclocal_amflags; do
-          if test -n "$m4dir_is_next"; then
-            # Ignore absolute directory pathnames, like /usr/local/share/aclocal.
-            case "$arg" in
-              /*) ;;
-              *)
-                if test -f "$destdir/$arg"/gnulib-cache.m4; then
-                  func_append m4dirs " $arg"
-                  m4dirs_count=`expr $m4dirs_count + 1`
-                fi
-                ;;
-            esac
-            m4dir_is_next=
-          else
-            if test "X$arg" = "X-I"; then
-              m4dir_is_next=yes
-            else
-              m4dir_is_next=
-            fi
-          fi
-        done
-      else
-        # No Makefile.am! Oh well. Look at the last generated aclocal.m4.
-        if test -f "$destdir"/aclocal.m4; then
-          sedexpr1='s,^m4_include(\[\(.*\)])$,\1,p'
-          sedexpr2='s,^[^/]*$,.,'
-          sedexpr3='s,/[^/]*$,,'
-          m4dirs=`sed -n -e "$sedexpr1" aclocal.m4 | sed -e "$sedexpr2" -e "$sedexpr3" | LC_ALL=C sort -u`
-          m4dirs=`for arg in $m4dirs; do if test -f "$destdir/$arg"/gnulib-cache.m4; then echo $arg; fi; done`
-          m4dirs_count=`for arg in $m4dirs; do echo "$arg"; done | wc -l`
-        fi
-      fi
-      if test $m4dirs_count = 0; then
-        # First use of gnulib in a package.
+      if test -n "$m4base"; then
+        # Apply func_import to a particular gnulib directory.
         # Any number of additional modules can be given.
-        test -n "$supplied_libname" || supplied_libname=true
-        test -n "$sourcebase" || sourcebase="lib"
-        m4base="m4"
-        test -n "$docbase" || docbase="doc"
-        test -n "$testsbase" || testsbase="tests"
-        test -n "$macro_prefix" || macro_prefix="gl"
+        if test ! -f "$destdir/$m4base"/gnulib-cache.m4; then
+          # First use of gnulib in the given m4base.
+          test -n "$supplied_libname" || supplied_libname=true
+          test -n "$sourcebase" || sourcebase="lib"
+          test -n "$docbase" || docbase="doc"
+          test -n "$testsbase" || testsbase="tests"
+          test -n "$macro_prefix" || macro_prefix="gl"
+        fi
         func_import "$*"
       else
-        if test $m4dirs_count = 1; then
-          # There's only one use of gnulib here. Assume the user means it.
-          # Any number of additional modules can be given.
-          for m4base in $m4dirs; do
-            func_import "$*"
+        # Apply func_import to all gnulib directories.
+        # To get this list of directories, look at Makefile.am. (Not at
+        # configure, because it may be omitted from version control. Also,
+        # don't run "find $destdir -name gnulib-cache.m4", as it might be
+        # too expensive.)
+        m4dirs=
+        m4dirs_count=0
+        if test -f "$destdir"/Makefile.am; then
+          aclocal_amflags=`sed -n -e 's/^ACLOCAL_AMFLAGS[	 ]*=\(.*\)$/\1/p' "$destdir"/Makefile.am`
+          m4dir_is_next=
+          for arg in $aclocal_amflags; do
+            if test -n "$m4dir_is_next"; then
+              # Ignore absolute directory pathnames, like /usr/local/share/aclocal.
+              case "$arg" in
+                /*) ;;
+                *)
+                  if test -f "$destdir/$arg"/gnulib-cache.m4; then
+                    func_append m4dirs " $arg"
+                    m4dirs_count=`expr $m4dirs_count + 1`
+                  fi
+                  ;;
+              esac
+              m4dir_is_next=
+            else
+              if test "X$arg" = "X-I"; then
+                m4dir_is_next=yes
+              else
+                m4dir_is_next=
+              fi
+            fi
           done
         else
-          # Ambiguous - guess what the user meant.
-          if test $# = 0; then
-            # No further arguments. Guess the user wants to update all of them.
+          # No Makefile.am! Oh well. Look at the last generated aclocal.m4.
+          if test -f "$destdir"/aclocal.m4; then
+            sedexpr1='s,^m4_include(\[\(.*\)])$,\1,p'
+            sedexpr2='s,^[^/]*$,.,'
+            sedexpr3='s,/[^/]*$,,'
+            m4dirs=`sed -n -e "$sedexpr1" aclocal.m4 | sed -e "$sedexpr2" -e "$sedexpr3" | LC_ALL=C sort -u`
+            m4dirs=`for arg in $m4dirs; do if test -f "$destdir/$arg"/gnulib-cache.m4; then echo $arg; fi; done`
+            m4dirs_count=`for arg in $m4dirs; do echo "$arg"; done | wc -l`
+          fi
+        fi
+        if test $m4dirs_count = 0; then
+          # First use of gnulib in a package.
+          # Any number of additional modules can be given.
+          test -n "$supplied_libname" || supplied_libname=true
+          test -n "$sourcebase" || sourcebase="lib"
+          m4base="m4"
+          test -n "$docbase" || docbase="doc"
+          test -n "$testsbase" || testsbase="tests"
+          test -n "$macro_prefix" || macro_prefix="gl"
+          func_import "$*"
+        else
+          if test $m4dirs_count = 1; then
+            # There's only one use of gnulib here. Assume the user means it.
+            # Any number of additional modules can be given.
             for m4base in $m4dirs; do
-              # Perform func_import in a subshell, so that variable values
-              # such as
-              #   local_gnulib_dir, incobsolete, inc_cxx_tests,
-              #   inc_longrunning_tests, inc_privileged_tests,
-              #   inc_unportable_tests, inc_all_tests, avoidlist, sourcebase,
-              #   m4base, pobase, docbase, testsbase, inctests, libname, lgpl,
-              #   makefile_name, libtool, macro_prefix, po_domain, vc_files
-              # don't propagate from one directory to another.
-              (func_import) || func_exit 1
+              func_import "$*"
             done
           else
-            # Really ambiguous.
-            func_fatal_error "Ambiguity: to which directory should the modules be added? Please specify at least --m4-base=..."
+            # Ambiguous - guess what the user meant.
+            if test $# = 0; then
+              # No further arguments. Guess the user wants to update all of them.
+              for m4base in $m4dirs; do
+                # Perform func_import in a subshell, so that variable values
+                # such as
+                #   local_gnulib_dir, incobsolete, inc_cxx_tests,
+                #   inc_longrunning_tests, inc_privileged_tests,
+                #   inc_unportable_tests, inc_all_tests, avoidlist, sourcebase,
+                #   m4base, pobase, docbase, testsbase, inctests, libname, lgpl,
+                #   makefile_name, libtool, macro_prefix, po_domain, vc_files
+                # don't propagate from one directory to another.
+                (func_import) || func_exit 1
+              done
+            else
+              # Really ambiguous.
+              func_fatal_error "Ambiguity: to which directory should the modules be added? Please specify at least --m4-base=..."
+            fi
           fi
         fi
       fi

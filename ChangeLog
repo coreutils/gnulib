@@ -1,5 +1,18 @@
 2010-09-04  Bruno Haible  <bruno@clisp.org>
 
+	gnulib-tool: Change --import. New options --add/remove-import.
+	* gnulib-tool: New options --add-import, --remove-import.
+	(func_usage): Document them.
+	(have_associative): Define always.
+	(func_import): In import mode, don't merge the specified settings with
+	the cached settings. Implement remove-import mode.
+	* doc/gnulib-tool.texi (Modified imports): Mention the new options.
+	Explain when to use them versus --import.
+	(Simple update): Use --add-import instead of --import.
+	* NEWS: Mention the change.
+
+2010-09-04  Bruno Haible  <bruno@clisp.org>
+
 	* doc/gnulib-tool.texi (Initial import): Update paragraph about
 	separate gnulib.mk.
 

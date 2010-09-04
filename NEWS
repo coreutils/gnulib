@@ -1,6 +1,12 @@
 Important notes
 ---------------
 
+2010-09-04  gnulib-tool     The option '--import' is no longer cumulative; it
+                            now expects the complete list of modules and other
+                            options on the command line. If you want to
+                            augment (not set) the list of modules, use the
+                            new option '--add-import' instead of '--import'.
+
 User visible incompatible changes
 ---------------------------------
 

@@ -302,30 +302,48 @@ is built from the contents of a different variable, usually
 
 You can at any moment decide to use Gnulib differently than the last time.
 
-If you only want to use more Gnulib modules, simply invoke
-@command{gnulib-tool --import @var{new-modules}}.  @code{gnulib-tool}
-remembers which modules were used last time.  The list of modules that
-you pass after @samp{--import} is @emph{added} to the previous list of
-modules.
+There are two ways to change how Gnulib is used.  Which one you'll use,
+depends on where you keep track of options and module names that you pass
+to @code{gnulib-tool}.
 
-For most changes, such as added or removed modules, or even different
-choices of @samp{--lib}, @samp{--source-base} or @samp{--aux-dir}, there
-are two ways to perform the change.
+@itemize @bullet
+@item
+If you store the options and module names in a file under your own
+control, such as @file{autogen.sh}, @file{bootstrap},
+@file{bootstrap.conf}, or similar, simply invoke @command{gnulib-tool}
+again, with modified options and more or fewer module names.
 
-The standard way is to modify manually the file @file{gnulib-cache.m4}
-in the M4 macros directory, then launch @samp{gnulib-tool --import}.
+@item
+@code{gnulib-tool} remembers which modules were used last time.  If you
+want to rely on @code{gnulib-tool}'s own memory of the last used
+options and module names, you can use the commands
+@command{gnulib-tool --add-import} and
+@command{gnulib-tool --remove-import}.
 
-The other way is to call @command{gnulib-tool} again, with the changed
-command-line options.  Note that this doesn't let you remove modules,
-because as you just learned, the list of modules is always cumulated.
-Also this way is often impractical, because you don't remember the way
-you invoked @code{gnulib-tool} last time.
+So, if you only want to use more Gnulib modules, simply invoke
+@command{gnulib-tool --add-import @var{new-modules}}.  The list of
+modules that you pass after @samp{--add-import} is @emph{added} to the
+previous list of modules.
+
+Similarly, if you want to use fewer Gnulib modules, simply invoke
+@command{gnulib-tool --remove-import @var{unneeded-modules}}.  The list
+of modules that you pass after @samp{--remove-import} is @emph{removed}
+from the previous list of modules.  Note that if a module is then still
+needed as dependency of other modules, it will be used nevertheless.
+If you want to @emph{really} not use a module any more, regardless of
+whether other modules may need it, you need to use the @samp{--avoid}
+option.
+
+For other changes, such as different choices of @samp{--lib},
+@samp{--source-base} or @samp{--aux-dir}, the normal way is to
+modify manually the file @file{gnulib-cache.m4} in the M4 macros
+directory, then launch @samp{gnulib-tool --add-import}.
 
 The only change for which this doesn't work is a change of the
 @samp{--m4-base} directory.  Because, when you pass a different value of
 @samp{--m4-base}, @code{gnulib-tool} will not find the previous
-@file{gnulib-cache.m4} file any more... A possible solution is to manually
-copy the @file{gnulib-cache.m4} into the new M4 macro directory.
+@file{gnulib-cache.m4} file any more...  A possible solution is to
+manually copy the @file{gnulib-cache.m4} into the new M4 macro directory.
 
 In the @file{gnulib-cache.m4}, the macros have the following meaning:
 @table @code
@@ -372,6 +390,7 @@ The argument is the prefix to use for macros in the @file{gnulib-comp.m4}
 file.  Corresponds to the @samp{--macro-prefix} command line argument.
 @end table
 
+@end itemize
 
 @node Simple update
 @section Simple update
@@ -381,7 +400,7 @@ changing the list of modules or other parameters, a simple call
 does it:
 
 @smallexample
-$ gnulib-tool --import
+$ gnulib-tool --add-import
 @end smallexample
 
 @noindent
