@@ -372,15 +372,14 @@ func_gnulib_dir ()
       # explicit canonicalization command when $PATH contains no empty fields.
       self_abspathname=
       if test "${PATH_SEPARATOR+set}" != set; then
-        func_tmpdir
-        { echo "#! /bin/sh"; echo "exit 0"; } > "$tmp"/conf.sh
-        chmod +x "$tmp"/conf.sh
-        if (PATH="/nonexistent;$tmp"; conf.sh) >/dev/null 2>&1; then
-          PATH_SEPARATOR=';'
-        else
-          PATH_SEPARATOR=:
-        fi
-        rm -rf "$tmp"
+        # Determine PATH_SEPARATOR by trying to find /bin/sh in a PATH which
+        # contains only /bin. Note that ksh looks also at the FPATH variable,
+        # so we have to set that as well for the test.
+        PATH_SEPARATOR=:
+        (PATH='/bin;/bin'; FPATH=$PATH; sh -c :) >/dev/null 2>&1 \
+          && { (PATH='/bin:/bin'; FPATH=$PATH; sh -c :) >/dev/null 2>&1 \
+                 || PATH_SEPARATOR=';'
+             }
       fi
       if test "$PATH_SEPARATOR" = ";"; then
         # On Windows, programs are searched in "." before $PATH.

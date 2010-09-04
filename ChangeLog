@@ -1,3 +1,10 @@
+2010-09-04  Stefano Lattarini  <stefano.lattarini@gmail.com>  (tiny change)
+
+	Set PATH_SEPARATOR the same way autoconf does.
+	* gnulib-tool (func_gnulib_dir): Determine the value of PATH_SEPARATOR
+	the same way autoconf-generated configure scripts do.
+	* posix-modules: Likewise.
+
 2010-09-02  Paul Eggert  <eggert@cs.ucla.edu>
 
 	hash: fix safe_hasher const typo
