@@ -1,5 +1,12 @@
 2010-09-04  Bruno Haible  <bruno@clisp.org>
 
+	Update doc about gnulib-tool.
+	* doc/gnulib-tool.texi (VCS Issues): Explain 'gnulib-tool --import' vs.
+	'gnulib-tool --update' in more detail.
+	Reported by Eric Blake.
+
+2010-09-04  Bruno Haible  <bruno@clisp.org>
+
 	gnulib-tool: Change --import. New options --add/remove-import.
 	* gnulib-tool: New options --add-import, --remove-import.
 	(func_usage): Document them.

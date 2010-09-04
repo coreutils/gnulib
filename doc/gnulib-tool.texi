@@ -594,20 +594,34 @@ into the VCS, but instead added to @file{.cvsignore} or equivalent.
 @item
 In projects which customarily omit from their VCS all files that are
 generated from other source files, none of these files and directories
-are added into the VCS.  The only file that must be added to the VCS
-is @file{gnulib-cache.m4} in the M4 macros directory.  Also, the
-script for restoring files not in the VCS, customarily called
-@file{autogen.sh} or @file{bootstrap}, will typically contain the
-statement for restoring the omitted files:
+are added into the VCS.  As described in @ref{Modified imports}, there
+are two ways to keep track of options and module names that are passed
+to @code{gnulib-tool}.  The command for restoring the omitted files
+depends on it:
+
+@itemize @bullet
+@item
+If they are stored in a file other than @code{gnulib-cache.m4}, such as
+@file{autogen.sh}, @file{bootstrap}, @file{bootstrap.conf}, or similar,
+the restoration command is the entire @code{gnulib-tool ... --import ...}
+invocation with all options and module names.
+
+@item
+If the project relies on @code{gnulib-tool}'s memory of the last used
+options and module names, then the file @file{gnulib-cache.m4} in the M4
+macros directory must be added to the VCS, and the restoration command
+is:
 
 @smallexample
 $ gnulib-tool --update
 @end smallexample
 
-The @samp{--update} option operates much like the @samp{--import} option,
-but it does not offer the possibility to change the way Gnulib is used.
-Also it does not report in the ChangeLogs the files that it had to add
-because they were missing.
+The @samp{--update} option operates much like the @samp{--add-import}
+option, but it does not offer the possibility to change the way Gnulib is
+used.  Also it does not report in the ChangeLogs the files that it had to
+add because they were missing.
+
+@end itemize
 
 Gnulib includes the file @file{build-aux/bootstrap} to aid a developer
 in using this setup.  Furthermore, in projects that use git for
