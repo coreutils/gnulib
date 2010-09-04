@@ -1,5 +1,12 @@
 2010-09-04  Bruno Haible  <bruno@clisp.org>
 
+	gnulib-tool: Avoid error when run in a package without Makefile.am.
+	* gnulib-tool: When collecting the m4dirs in a package that does not
+	have a Makefile.am, eliminate those directories that contain no
+	gnulib-cache.m4.
+
+2010-09-04  Bruno Haible  <bruno@clisp.org>
+
 	update-copyright test: Improve output when perl is missing or too old.
 	* tests/test-update-copyright.sh: Move test of Perl version down after
 	the test whether Perl exists. Provide an explanation relating Perl's

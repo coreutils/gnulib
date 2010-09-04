@@ -3313,6 +3313,7 @@ func_emit_initmacro_done ()
 # - modcache        true or false, from --cache-modules/--no-cache-modules
 # - verbose         integer, default 0, inc/decremented by --verbose/--quiet
 # - libname         library name
+# - supplied_libname  true if --lib was given, blank otherwise
 # - sourcebase      directory relative to destdir where to place source code
 # - m4base          directory relative to destdir where to place *.m4 macros
 # - pobase          directory relative to destdir where to place *.po files
@@ -5517,6 +5518,7 @@ s/\([.*$]\)/[\1]/g'
           sedexpr2='s,^[^/]*$,.,'
           sedexpr3='s,/[^/]*$,,'
           m4dirs=`sed -n -e "$sedexpr1" aclocal.m4 | sed -e "$sedexpr2" -e "$sedexpr3" | LC_ALL=C sort -u`
+          m4dirs=`for arg in $m4dirs; do if test -f "$destdir/$arg"/gnulib-cache.m4; then echo $arg; fi; done`
           m4dirs_count=`printf %s "$m4dirs" | wc -l`
         fi
       fi
