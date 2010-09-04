@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 : ${srcdir=.}
-. "$srcdir/init.sh"; path_prepend_ .
+. "$srcdir/init.sh"; path_prepend_ $abs_aux_dir .
 
 tmpdir=vc-cvs
 repo=`pwd`/$tmpdir/repo

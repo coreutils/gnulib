@@ -1,3 +1,14 @@
+2010-09-04  Bruno Haible  <bruno@clisp.org>
+
+	Don't augment PATH in TESTS_ENVIRONMENT.
+	* modules/update-copyright-tests (Makefile.am): In TESTS_ENVIRONMENT,
+	set abs_aux_dir instead of augmenting PATH.
+	* modules/vc-list-files-tests (Makefile.am): Likewise.
+	* tests/test-update-copyright.sh: Augment PATH here.
+	* tests/test-vc-list-files-cvs.sh: Augment PATH here, through
+	path_prepend_.
+	* tests/test-vc-list-files-git.sh: Likewise.
+
 2010-09-04  Jim Meyering  <meyering@redhat.com>
 
 	tests: prohibit augmenting PATH via TESTS_ENVIRONMENT

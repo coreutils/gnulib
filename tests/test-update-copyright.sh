@@ -27,6 +27,9 @@ else
   compare() { cmp "$@"; }
 fi
 
+# Ensure the update-copyright program gets found.
+PATH=$abs_aux_dir:$PATH
+
 TMP_BASE=update-copyright.test
 trap 'rm -f $TMP_BASE*' 0 1 2 3 15
 

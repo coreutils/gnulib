@@ -9,4 +9,4 @@ AC_SUBST([abs_aux_dir])
 
 Makefile.am:
 TESTS += test-update-copyright.sh
-TESTS_ENVIRONMENT += PATH='$(abs_aux_dir)'$(PATH_SEPARATOR)"$$PATH"
+TESTS_ENVIRONMENT += abs_aux_dir='$(abs_aux_dir)'
