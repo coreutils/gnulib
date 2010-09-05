@@ -1,5 +1,11 @@
 2010-09-05  Bruno Haible  <bruno@clisp.org>
 
+	uniwidth/width: Update comment.
+	* lib/uniwidth/width.c (uc_width): Update comment for Unicode >= 3.1.
+	Reported by Emanuele Giaquinta <emanuele.giaquinta@gmail.com>.
+
+2010-09-05  Bruno Haible  <bruno@clisp.org>
+
 	isinf, isnan: Relax license.
 	* modules/isinf (License): Change from GPL to LGPL, with consent from
 	Ben Pfaff.

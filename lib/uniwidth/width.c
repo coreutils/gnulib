@@ -332,8 +332,8 @@ uc_width (ucs4_t uc, const char *encoding)
         }
     }
   /* Test for double-width character.
-   * Generated from "grep '^....;[WF]' EastAsianWidth.txt"
-   * and            "grep '^....;[^WF]' EastAsianWidth.txt"
+   * Generated from "grep '^[^;]\{4,5\};[WF]' EastAsianWidth.txt"
+   * and            "grep '^[^;]\{4,5\};[^WF]' EastAsianWidth.txt"
    */
   if (uc >= 0x1100
       && ((uc < 0x1160) /* Hangul Jamo */
