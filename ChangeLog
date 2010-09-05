@@ -1,3 +1,11 @@
+2010-09-05  Bruno Haible  <bruno@clisp.org>
+
+	isinf, isnan: Relax license.
+	* modules/isinf (License): Change from GPL to LGPL, with consent from
+	Ben Pfaff.
+	* modules/isnan (License): Likewise.
+	Requested by Ludovic Courtès.
+
 2010-09-04  Bruno Haible  <bruno@clisp.org>
 
 	gnulib-tool: Help migration from --import to --add-import or --update.
