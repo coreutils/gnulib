@@ -1,3 +1,9 @@
+2010-09-05  Bruno Haible  <bruno@clisp.org>
+
+	gnulib-tool: Highlight the changed options.
+	* gnulib-tool (func_usage): Display the --import, --add-import,
+	--remove-import explanations in bold font.
+
 2010-09-06  Karl Berry  <karl@gnu.org>
 
 	* doc/gnulib-tool.texi (Modified imports): doc tweaks.
