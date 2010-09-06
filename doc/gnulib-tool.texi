@@ -342,10 +342,10 @@ directory, then launch @samp{gnulib-tool --add-import}.
 The only change for which this doesn't work is a change of the
 @samp{--m4-base} directory.  Because, when you pass a different value of
 @samp{--m4-base}, @code{gnulib-tool} will not find the previous
-@file{gnulib-cache.m4} file any more...  A possible solution is to
+@file{gnulib-cache.m4} file any more.  A possible solution is to
 manually copy the @file{gnulib-cache.m4} into the new M4 macro directory.
 
-In the @file{gnulib-cache.m4}, the macros have the following meaning:
+In the @file{gnulib-cache.m4} file, the macros have the following meaning:
 @table @code
 @item gl_MODULES
 The argument is a space separated list of the requested modules, not including
