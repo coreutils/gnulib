@@ -1,3 +1,10 @@
+2010-09-07  Eric Blake  <eblake@redhat.com>
+
+	getopt: handle POSIXLY_CORRECT set but not exported
+	* m4/getopt.m4 (gl_GETOPT_CHECK_HEADERS): Restore pre-existing
+	export state of POSIXLY_CORRECT, due to bash set -o posix.
+	Reported by Dustin J. Mitchell.
+
 2010-09-05  Bruno Haible  <bruno@clisp.org>
 
 	gnulib-tool: Highlight the changed options.
