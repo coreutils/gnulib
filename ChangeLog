@@ -1,3 +1,17 @@
+2010-09-08  Jim Meyering  <meyering@redhat.com>
+
+	init.sh: penalize a set-x-impaired shell; don't disqualify it
+	* tests/init.sh: Too many shells corrupt application stderr when
+	you set -x, so we can't afford to disqualify them, since at least
+	on Irix-6.5, that would disqualify all bourne shells.
+	Instead, use a two-pass approach.
+	On the first pass, try to find a shell that meets the stricter
+	condition that set -x does not corrupt stderr.
+	If no shell meets the stricter condition, retest each candidate
+	shell, but without that extra condition.  Finally, when
+	VERBOSE=yes is requested and set -x might cause trouble, simply
+	issue a warning and refrain from enabling debug output.
+
 2010-09-08  Eric Blake  <eblake@redhat.com>
 
 	unsetenv: fix OpenBSD bug
