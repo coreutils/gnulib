@@ -842,14 +842,22 @@ cat <<EOF
 $*
 EOF
 }
-alias echo=bsd_echo 2>/dev/null
+exec 3>&2
+exec 2>/dev/null
+alias echo=bsd_echo
+exec 2>&3
+exec 3>&-
 fi
 if test -z "$have_echo" \
    && echo '\t' | grep t > /dev/null; then
   have_echo=yes
 fi
 if test -z "$have_echo"; then
-  unalias echo 2>/dev/null
+  exec 3>&2
+  exec 2>/dev/null
+  unalias echo
+  exec 2>&3
+  exec 3>&-
 fi
 # For Solaris /bin/sh and OSF/1 /bin/sh: respawn using /bin/ksh.
 if test -z "$have_echo" \

@@ -1,3 +1,11 @@
+2010-09-08  Bruno Haible  <bruno@clisp.org>
+
+	gnulib-tool: Avoid stderr output on IRIX related to 'alias', 'unalias'.
+	* gnulib-tool: Use stderr redirection around the 'alias' and 'unalias'
+	commands, because some shells ignore redirections when there is an
+	error in the command lookup.
+	Reported by Eric Blake.
+
 2010-09-07  Reuben Thomas  <rrt@sc3d.org>
 
 	* lib/regex.h: Fix a mention of `regex_compile' (should be
