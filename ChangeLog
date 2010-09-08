@@ -1,3 +1,10 @@
+2010-09-08  Eric Blake  <eblake@redhat.com>
+
+	getopt: optimize previous patch
+	* m4/getopt.m4 (gl_GETOPT_CHECK_HEADERS): Correctly check for
+	empty variable.  Speed up awk script.
+	Reported by Paolo Bonzini.
+
 2010-09-08  Jim Meyering  <meyering@redhat.com>
 
 	test.sh: disqualify shells for which set -x corrupts stderr
@@ -36,13 +43,6 @@
 	Remove POSIX documentation, which is done better in
 	glibc, and refer the reader there. Keep BSD API documentation, as
 	that is not readily available elsewhere.
-
-2010-09-08  Eric Blake  <eblake@redhat.com>
-
-	getopt: optimize previous patch
-	* m4/getopt.m4 (gl_GETOPT_CHECK_HEADERS): Correctly check for
-	empty variable.  Speed up awk script.
-	Reported by Paolo Bonzini.
 
 2010-09-07  Eric Blake  <eblake@redhat.com>
 
