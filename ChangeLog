@@ -1,3 +1,25 @@
+2010-09-07  Reuben Thomas  <rrt@sc3d.org>
+
+        * lib/regex.h: Fix a mention of `regex_compile' (should be
+        `re_compile_pattern').
+        Correct and clarify documentation for RE_CONTEXT_INVALID_DUP.
+        (re_set_registers): Correct name of parameter in comment.         
+        
+        * doc/regex.texi: Add documentation for missing syntax flags.
+        Remove commented-out documentation of defunct syntax option
+          RE_NO_EMPTY_ALTS.
+        Correct name of RE_CHAR_CLASSES in one incorrect occurrence.
+        Add documentation of re_set_registers.
+        Document trick to re-use a pattern buffer by setting fastmap manually.
+        Update documentation of struct re_pattern_buffer per public members.
+        Uncomment documentation of equivalence class operators and
+          collating symbol operators, since they are now implemented, 
+        Explain leftmost-longest matching in relation to alternatives.
+        Tidy documentation of substring matching.
+        Remove POSIX documentation, which is done better in
+          glibc, and refer the reader there. Keep BSD API documentation, as
+          that is not readily available elsewhere.
+
 2010-09-07  Eric Blake  <eblake@redhat.com>
 
 	getopt: handle POSIXLY_CORRECT set but not exported

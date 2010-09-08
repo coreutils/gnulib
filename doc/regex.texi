@@ -39,12 +39,10 @@ number of times.
 The Regex library is used by including @file{regex.h}.
 @pindex regex.h
 Regex provides three groups of functions with which you can operate on
-regular expressions.  One group---the @sc{gnu} group---is more powerful
-but not completely compatible with the other two, namely the @sc{posix}
-and Berkeley @sc{unix} groups; its interface was designed specifically
-for @sc{gnu}.  The other groups have the same interfaces as do the
-regular expression functions in @sc{posix} and Berkeley
-@sc{unix}.
+regular expressions.  One group---the @sc{gnu} group---is more
+powerful but not completely compatible with the other two, namely the
+@sc{posix} and Berkeley @sc{unix} groups; its interface was designed
+specifically for @sc{gnu}.
 
 We wrote this chapter with programmers in mind, not users of
 programs---such as Emacs---that use Regex.  We describe the Regex
@@ -98,20 +96,20 @@ In the following sections, we describe these things in more detail.
 In any particular syntax for regular expressions, some characters are
 always special, others are sometimes special, and others are never
 special.  The particular syntax that Regex recognizes for a given
-regular expression depends on the value in the @code{syntax} field of
-the pattern buffer of that regular expression.
+regular expression depends on the current syntax (as set by
+@code{re_set_syntax}) when the pattern buffer of that regular expression
+was compiled.
 
 You get a pattern buffer by compiling a regular expression.  @xref{GNU
-Pattern Buffers}, and @ref{POSIX Pattern Buffers}, for more information
-on pattern buffers.  @xref{GNU Regular Expression Compiling}, @ref{POSIX
+Pattern Buffers}, for more information on pattern buffers.  @xref{GNU
 Regular Expression Compiling}, and @ref{BSD Regular Expression
 Compiling}, for more information on compiling.
 
-Regex considers the value of the @code{syntax} field to be a collection
-of bits; we refer to these bits as @dfn{syntax bits}.  In most cases,
-they affect what characters represent what operators.  We describe the
-meanings of the operators to which we refer in @ref{Common Operators},
-@ref{GNU Operators}, and @ref{GNU Emacs Operators}.
+Regex considers the current syntax to be a collection of bits; we refer
+to these bits as @dfn{syntax bits}.  In most cases, they affect what
+characters represent what operators.  We describe the meanings of the
+operators to which we refer in @ref{Common Operators}, @ref{GNU
+Operators}, and @ref{GNU Emacs Operators}.
 
 For reference, here is the complete list of syntax bits, in alphabetical
 order:
@@ -159,6 +157,12 @@ open-group or alternation operator.  The same holds for @samp{@{} (or
 it is the beginning of a valid interval and the syntax bit
 @code{RE_INTERVALS} is set.
 
+@cnindex RE_CONTEXT_INVALID_DUP
+@item RE_CONTEXT_INVALID_DUP
+If this bit is set, then an open-interval operator cannot occur at the
+start of a regular expression, or immediately after an alternation,
+open-group or close-interval operator.
+
 @cnindex RE_CONTEXT_INVALID_OPS
 @item RE_CONTEXT_INVALID_OPS
 If this bit is set, then repetition and alternation operators can't be
@@ -183,6 +187,12 @@ repetition and alternation characters anywhere in a regular expression.
 Whether or not they will in fact be operators in certain positions
 depends on other syntax bits.
 
+@cnindex RE_DEBUG
+@item RE_DEBUG
+If this bit is set, and the regex library was compiled with
+@code{-DDEBUG}, then internal debugging is turned on; if unset, then
+it is turned off.
+
 @cnindex RE_DOT_NEWLINE
 @item RE_DOT_NEWLINE
 If this bit is set, then the match-any-character operator matches
@@ -193,10 +203,26 @@ a newline; if this bit isn't set, then it doesn't.
 If this bit is set, then the match-any-character operator doesn't match
 a null character; if this bit isn't set, then it does.
 
+@cnindex RE_HAT_LISTS_NOT_NEWLINE
+@item RE_HAT_LISTS_NOT_NEWLINE
+If this bit is set, nonmatching lists @samp{[^...]} do not match
+newline; if not set, they do.
+
+@cnindex RE_ICASE
+@item RE_ICASE
+If this bit is set, then ignore case when matching; otherwise, case is
+significant.
+
 @cnindex RE_INTERVALS
 @item RE_INTERVALS
 If this bit is set, then Regex recognizes interval operators; if this bit
 isn't set, then it doesn't.
+
+@cnindex RE_INVALID_INTERVAL_ORD
+@item RE_INVALID_INTERVAL_ORD
+If this bit is set, a syntactically invalid interval is treated as a
+string of ordinary characters.  For example, the extended regular
+expression @samp{a@{1} is treated as @samp{a\@{1}.
 
 @cnindex RE_LIMITED_OPS
 @item RE_LIMITED_OPS
@@ -241,6 +267,23 @@ If this bit is set, then a regular expression with a range whose ending
 point collates lower than its starting point is invalid; if this bit
 isn't set, then Regex considers such a range to be empty.
 
+@cnindex RE_NO_GNU_OPS
+@item RE_NO_GNU_OPS
+If this bit is set, GNU regex operators are not recognized; otherwise,
+they are.
+
+@cnindex RE_NO_POSIX_BACKTRACKING
+@item RE_NO_POSIX_BACKTRACKING
+If this bit is set, succeed as soon as we match the whole pattern,
+without further backtracking.  This means that a match may not be
+the leftmost longest; @pxref{What Gets Matched?} for what this means.
+
+@cnindex RE_NO_SUB
+@item RE_NO_SUB
+If this bit is set, then @code{no_sub} will be set to one during
+@code{re_compile_pattern}.  This causes matching and searching routines
+not to record substring match information.
+
 @cnindex RE_UNMATCHED_RIGHT_PAREN_ORD
 @item RE_UNMATCHED_RIGHT_PAREN_ORD
 If this bit is set and the regular expression has no matching open-group
@@ -254,8 +297,8 @@ operator (based on how @code{RE_NO_BK_PARENS} is set) to match @samp{)}.
 @section Predefined Syntaxes
 
 If you're programming with Regex, you can set a pattern buffer's
-(@pxref{GNU Pattern Buffers}, and @ref{POSIX Pattern Buffers})
-@code{syntax} field either to an arbitrary combination of syntax bits
+(@pxref{GNU Pattern Buffers})
+syntax either to an arbitrary combination of syntax bits
 (@pxref{Syntax Bits}) or else to the configurations defined by Regex.
 These configurations define the syntaxes used by certain
 programs---@sc{gnu} Emacs,
@@ -713,32 +756,6 @@ example, supposing that @samp{|} is the alternation operator, then
 @samp{foo|bar|quux} would match any of @samp{foo}, @samp{bar} or
 @samp{quux}.
 
-@ignore
-@c Nobody needs to disallow empty alternatives any more.
-If the syntax bit @code{RE_NO_EMPTY_ALTS} is set, then if either of the regular
-expressions @var{a} or @var{b} is empty, the
-regular expression is invalid.  More precisely, if this syntax bit is
-set, then the alternation operator can't:
-
-@itemize @bullet
-@item
-be first or last in a regular expression;
-
-@item
-follow either another alternation operator or an open-group operator
-(@pxref{Grouping Operators}); or
-
-@item
-precede a close-group operator.
-
-@end itemize
-
-@noindent
-For example, supposing @samp{(} and @samp{)} represent the open and
-close-group operators, then @samp{|foo}, @samp{foo|}, @samp{foo||bar},
-@samp{foo(|bar)}, and @samp{(foo|)bar} would all be invalid.
-@end ignore
-
 The alternation operator operates on the @emph{largest} possible
 surrounding regular expressions.  (Put another way, it has the lowest
 precedence of any regular expression operator.)
@@ -755,7 +772,10 @@ match the longest possible string.  For example, when matching
 take, say, the first (``depth-first'') combination it could match, since
 then it would be content to match just @samp{fooqbar}.
 
-@comment xx something about leftmost-longest
+Note that since the default behavior is to return the leftmost longest
+match, when more than one of a series of alternatives matches the actual
+match will be the longest matching alternative, not necessarily the
+first in the list.
 
 
 @node List Operators
@@ -774,13 +794,10 @@ then it would be content to match just @samp{fooqbar}.
 
 @dfn{Lists}, also called @dfn{bracket expressions}, are a set of one or
 more items.  An @dfn{item} is a character,
-@ignore
-(These get added when they get implemented.)
 a collating symbol, an equivalence class expression,
-@end ignore
 a character class expression, or a range expression.  The syntax bits
 affect which kinds of items you can put in a list.  We explain the last
-two items in subsections below.  Empty lists are invalid.
+four items in subsections below.  Empty lists are invalid.
 
 A @dfn{matching list} matches a single character represented by one of
 the list items.  You form a matching list by enclosing one or more items
@@ -805,8 +822,8 @@ nonmatching list.
 For example, @samp{[^ab]} matches any character except @samp{a} or
 @samp{b}.
 
-If the @code{posix_newline} field in the pattern buffer (@pxref{GNU
-Pattern Buffers} is set, then nonmatching lists do not match a newline.
+If the syntax bit @code{RE_HAT_LISTS_NOT_NEWLINE} is set, then
+nonmatching lists do not match a newline.
 
 Most characters lose any special meaning inside a list.  The special
 characters inside a list follow.
@@ -819,9 +836,6 @@ the @samp{]} character a list item, you must put it first.
 @item \
 quotes the next character if the syntax bit @code{RE_BACKSLASH_ESCAPE_IN_LISTS} is
 set.
-
-@ignore
-Put these in if they get implemented.
 
 @item [.
 represents the open-collating-symbol operator (@pxref{Collating Symbol
@@ -836,8 +850,6 @@ Operators}).
 
 @item =]
 represents the close-equivalence-class operator.
-
-@end ignore
 
 @item [:
 represents the open-character-class operator (@pxref{Character Class
@@ -860,32 +872,31 @@ All other characters are ordinary.  For example, @samp{[.*]} matches
 @samp{.} and @samp{*}.
 
 @menu
+* Collating Symbol Operators::  [.elem.]
+* Equivalence Class Operators:: [=class=]
 * Character Class Operators::   [:class:]
 * Range Operator::          start-end
 @end menu
 
-@ignore
-(If collating symbols and equivalence class expressions get implemented,
-then add this.)
 
-node Collating Symbol Operators
-subsubsection Collating Symbol Operators (@code{[.} @dots{} @code{.]})
+@node Collating Symbol Operators
+@subsection Collating Symbol Operators (@code{[.} @dots{} @code{.]})
 
-If the syntax bit @code{XX} is set, then you can represent
-collating symbols inside lists.  You form a @dfn{collating symbol} by
+Collating symbols can be represented inside lists. 
+You form a @dfn{collating symbol} by
 putting a collating element between an @dfn{open-collating-symbol
 operator} and an @dfn{close-collating-symbol operator}.  @samp{[.}
 represents the open-collating-symbol operator and @samp{.]} represents
 the close-collating-symbol operator.  For example, if @samp{ll} is a
 collating element, then @samp{[[.ll.]]} would match @samp{ll}.
 
-node Equivalence Class Operators
-subsubsection Equivalence Class Operators (@code{[=} @dots{} @code{=]})
+@node Equivalence Class Operators
+@subsection Equivalence Class Operators (@code{[=} @dots{} @code{=]})
 @cindex equivalence class expression in regex
 @cindex @samp{[=} in regex
 @cindex @samp{=]} in regex
 
-If the syntax bit @code{XX} is set, then Regex recognizes equivalence class
+Regex recognizes equivalence class
 expressions inside lists.  A @dfn{equivalence class expression} is a set
 of collating elements which all belong to the same equivalence class.
 You form an equivalence class expression by putting a collating
@@ -899,8 +910,6 @@ equivalence class expression isn't part of an equivalence class, then
 the matcher considers the equivalence class expression to be a collating
 symbol.
 
-@end ignore
-
 @node Character Class Operators
 @subsection Character Class Operators (@code{[:} @dots{} @code{:]})
 
@@ -908,13 +917,13 @@ symbol.
 @cindex @samp{[:} in regex
 @cindex @samp{:]} in regex
 
-If the syntax bit @code{RE_CHARACTER_CLASSES} is set, then Regex
-recognizes character class expressions inside lists.  A @dfn{character
-class expression} matches one character from a given class.  You form a
-character class expression by putting a character class name between an
-@dfn{open-character-class operator} (represented by @samp{[:}) and a
-@dfn{close-character-class operator} (represented by @samp{:]}).  The
-character class names and their meanings are:
+If the syntax bit @code{RE_CHAR_CLASSES} is set, then Regex recognizes
+character class expressions inside lists.  A @dfn{character class
+expression} matches one character from a given class.  You form a
+character class expression by putting a character class name between
+an @dfn{open-character-class operator} (represented by @samp{[:}) and
+a @dfn{close-character-class operator} (represented by @samp{:]}).
+The character class names and their meanings are:
 
 @table @code
 
@@ -973,17 +982,13 @@ Regex recognizes @dfn{range expressions} inside a list. They represent
 those characters
 that fall between two elements in the current collating sequence.  You
 form a range expression by putting a @dfn{range operator} between two
-@ignore
-(If these get implemented, then substitute this for ``characters.'')
 of any of the following: characters, collating elements, collating symbols,
 and equivalence class expressions.  The starting point of the range and
 the ending point of the range don't have to be the same kind of item,
 e.g., the starting point could be a collating element and the ending
 point could be an equivalence class expression.  If a range's ending
 point is an equivalence class, then all the collating elements in that
-class will be in the range.
-@end ignore
-characters.@footnote{You can't use a character class for the starting
+class will be in the range.@footnote{You can't use a character class for the starting
 or ending point of a range, since a character class is not a single
 character.} @samp{-} represents the range operator.  For example,
 @samp{a-f} within a list represents all the characters from @samp{a}
@@ -1195,12 +1200,10 @@ is set.
 @vindex not_bol @r{field in pattern buffer}
 If the @code{not_bol} field is set in the pattern buffer (@pxref{GNU
 Pattern Buffers}), then @samp{^} fails to match at the beginning of the
-string.  @xref{POSIX Matching}, for when you might find this useful.
-
-@vindex newline_anchor @r{field in pattern buffer}
-If the @code{newline_anchor} field is set in the pattern buffer, then
-@samp{^} fails to match after a newline.  This is useful when you do not
-regard the string to be matched as broken into lines.
+string.  This lets you match against pieces of a line, as you would need to if,
+say, searching for repeated instances of a given pattern in a line; it
+would work correctly for patterns both with and without
+match-beginning-of-line operators.
 
 
 @node Match-end-of-line Operator
@@ -1444,11 +1447,15 @@ first subexpression.
 
 Here we describe how you use the Regex data structures and functions in
 C programs.  Regex has three interfaces: one designed for @sc{gnu}, one
-compatible with @sc{posix} and one compatible with Berkeley @sc{unix}.
+compatible with @sc{posix} (as specified by @sc{posix}, draft
+1003.2/D11.2), and one compatible with Berkeley @sc{unix}.  The
+@sc{posix} interface is not documented here; see the documentation of
+GNU libc, or the POSIX man pages.  The Berkeley @sc{unix} interface is
+documented here for convenience, since its documentation is not
+otherwise readily available on GNU systems.
 
 @menu
 * GNU Regex Functions::
-* POSIX Regex Functions::
 * BSD Regex Functions::
 @end menu
 
@@ -1488,71 +1495,18 @@ regular expression.@footnote{Regular expressions are also referred to as
 You can have several different pattern buffers simultaneously, each
 holding a compiled pattern for a different regular expression.
 
-@file{regex.h} defines the pattern buffer @code{struct} as follows:
+@file{regex.h} defines the pattern buffer @code{struct} with the
+following public fields:
 
 @example
-        /* Space that holds the compiled pattern.  It is declared as
-          `unsigned char *' because its elements are
-           sometimes used as array indexes.  */
   unsigned char *buffer;
-
-        /* Number of bytes to which `buffer' points.  */
   unsigned long allocated;
-
-        /* Number of bytes actually used in `buffer'.  */
-  unsigned long used;
-
-        /* Syntax setting with which the pattern was compiled.  */
-  reg_syntax_t syntax;
-
-        /* Pointer to a fastmap, if any, otherwise zero.  re_search uses
-           the fastmap, if there is one, to skip over impossible
-           starting points for matches.  */
   char *fastmap;
-
-        /* Either a translate table to apply to all characters before
-           comparing them, or zero for no translation.  The translation
-           is applied to a pattern when it is compiled and to a string
-           when it is matched.  */
   char *translate;
-
-        /* Number of subexpressions found by the compiler.  */
   size_t re_nsub;
-
-        /* Zero if this pattern cannot match the empty string, one else.
-           Well, in truth it's used only in `re_search_2', to see
-           whether or not we should use the fastmap, so we don't set
-           this absolutely perfectly; see `re_compile_fastmap' (the
-           `duplicate' case).  */
-  unsigned can_be_null : 1;
-
-        /* If REGS_UNALLOCATED, allocate space in the `regs' structure
-             for `max (RE_NREGS, re_nsub + 1)' groups.
-           If REGS_REALLOCATE, reallocate space if necessary.
-           If REGS_FIXED, use what's there.  */
-#define REGS_UNALLOCATED 0
-#define REGS_REALLOCATE 1
-#define REGS_FIXED 2
-  unsigned regs_allocated : 2;
-
-        /* Set to zero when `regex_compile' compiles a pattern; set to one
-           by `re_compile_fastmap' if it updates the fastmap.  */
-  unsigned fastmap_accurate : 1;
-
-        /* If set, `re_match_2' does not return information about
-           subexpressions.  */
   unsigned no_sub : 1;
-
-        /* If set, a beginning-of-line anchor doesn't match at the
-           beginning of the string.  */
   unsigned not_bol : 1;
-
-        /* Similarly for an end-of-line anchor.  */
   unsigned not_eol : 1;
-
-        /* If true, an anchor at a newline matches.  */
-  unsigned newline_anchor : 1;
-
 @end example
 
 
@@ -1631,10 +1585,6 @@ compiled pattern.  It sets the pattern buffer's fields as follows:
 @vindex buffer @r{field, set by @code{re_compile_pattern}}
 to the compiled pattern.
 
-@item used
-@vindex used @r{field, set by @code{re_compile_pattern}}
-to the number of bytes the compiled pattern in @code{buffer} occupies.
-
 @item syntax
 @vindex syntax @r{field, set by @code{re_compile_pattern}}
 to the current value of @code{re_syntax_options}.
@@ -1643,20 +1593,10 @@ to the current value of @code{re_syntax_options}.
 @vindex re_nsub @r{field, set by @code{re_compile_pattern}}
 to the number of subexpressions in @var{regex}.
 
-@item fastmap_accurate
-@vindex fastmap_accurate @r{field, set by @code{re_compile_pattern}}
-to zero on the theory that the pattern you're compiling is different
-than the one previously compiled into @code{buffer}; in that case (since
-you can't make a fastmap without a compiled pattern),
-@code{fastmap} would either contain an incompatible fastmap, or nothing
-at all.
-
-@c xx what else?
 @end table
 
 If @code{re_compile_pattern} can't compile @var{regex}, it returns an
-error string corresponding to one of the errors listed in @ref{POSIX
-Regular Expression Compiling}.
+error string corresponding to a @sc{posix} error code.
 
 
 @node GNU Matching
@@ -1688,13 +1628,12 @@ begin matching; the first character of @var{string} is at index zero.
 pass zero.
 
 @code{re_match} matches the regular expression in @var{pattern_buffer}
-against the string @var{string} according to the syntax in
-@var{pattern_buffers}'s @code{syntax} field.  (@xref{GNU Regular
-Expression Compiling}, for how to set it.)  The function returns
-@math{-1} if the compiled pattern does not match any part of
-@var{string} and @math{-2} if an internal error happens; otherwise, it
-returns how many (possibly zero) characters of @var{string} the pattern
-matched.
+against the string @var{string} according to the syntax of
+@var{pattern_buffer}.  (@xref{GNU Regular Expression Compiling}, for how
+to set it.)  The function returns @math{-1} if the compiled pattern does
+not match any part of @var{string} and @math{-2} if an internal error
+happens; otherwise, it returns how many (possibly zero) characters of
+@var{string} the pattern matched.
 
 An example: suppose @var{pattern_buffer} points to a pattern buffer
 containing the compiled pattern for @samp{a*}, and @var{string} points
@@ -1829,6 +1768,12 @@ compile the fastmap yourself or have @code{re_search} do it for you;
 when @code{fastmap} is nonzero, it automatically compiles a fastmap the
 first time you search using a particular compiled pattern.
 
+By setting the buffer’s @code{fastmap} field before calling
+@code{re_compile_pattern}, you can reuse a buffer data structure across
+multiple searches with different patterns, and allocate the fastmap only
+once.  Nonetheless, the fastmap must be recompiled each time the buffer
+has a new pattern compiled into it.
+
 To compile a fastmap yourself, use:
 
 @findex re_compile_fastmap
@@ -1940,53 +1885,51 @@ as C pointers, but this is only because not all C compilers accept
 zero-length arrays; conceptually, it is simplest to think of them as
 arrays.)
 
-The @code{start} and @code{end} arrays are allocated in various ways,
-depending on the value of the @code{regs_allocated}
-@vindex regs_allocated
-field in the pattern buffer passed to the matcher.
-
+The @code{start} and @code{end} arrays are allocated in one of two ways.
 The simplest and perhaps most useful is to let the matcher (re)allocate
 enough space to record information for all the groups in the regular
-expression.  If @code{regs_allocated} is @code{REGS_UNALLOCATED},
-@vindex REGS_UNALLOCATED
-the matcher allocates @math{1 + @var{re_nsub}} (another field in the
-pattern buffer; @pxref{GNU Pattern Buffers}).  The extra element is set
-to @math{-1}, and sets @code{regs_allocated} to @code{REGS_REALLOCATE}.
-@vindex REGS_REALLOCATE
-Then on subsequent calls with the same pattern buffer and @var{regs}
-arguments, the matcher reallocates more space if necessary.
+expression.  If @code{re_set_registers} is not called before searching
+or matching, then the matcher allocates two arrays each of @math{1 +
+@var{re_nsub}} elements (@var{re_nsub} is another field in the pattern
+buffer; @pxref{GNU Pattern Buffers}).  The extra element is set to
+@math{-1}.  Then on subsequent calls with the same pattern buffer and
+@var{regs} arguments, the matcher reallocates more space if necessary.
 
-It would perhaps be more logical to make the @code{regs_allocated} field
-part of the @code{re_registers} structure, instead of part of the
-pattern buffer.  But in that case the caller would be forced to
-initialize the structure before passing it.  Much existing code doesn't
-do this initialization, and it's arguably better to avoid it anyway.
+The function:
 
-@code{re_compile_pattern} sets @code{regs_allocated} to
-@code{REGS_UNALLOCATED},
-so if you use the GNU regular expression
-functions, you get this behavior by default.
+@findex re_set_registers
+@example
+void
+re_set_registers (struct re_pattern_buffer *@var{buffer},
+			      struct re_registers *@var{regs},
+			      size_t @var{num_regs},
+			      regoff_t *@var{starts}, regoff_t *@var{ends})
+@end example
 
-xx document re_set_registers
+@noindent sets @var{regs} to hold @var{num_regs} registers, storing
+them in @var{starts} and @var{ends}.  Subsequent matches using
+@var{buffer} and @var{regs} will use this memory for recording
+register information.  @var{starts} and @var{ends} must be allocated
+with malloc, and must each be at least @math{@var{num_regs} *
+@code{sizeof (regoff_t)}} bytes long.
 
-@sc{posix}, on the other hand, requires a different interface:  the
-caller is supposed to pass in a fixed-length array which the matcher
-fills.  Therefore, if @code{regs_allocated} is @code{REGS_FIXED}
-@vindex REGS_FIXED
-the matcher simply fills that array.
+If @var{num_regs} is zero, then subsequent matches should allocate
+their own register data.
+
+Unless this function is called, the first search or match using
+@var{buffer} will allocate its own register data, without freeing the
+old data.
 
 The following examples illustrate the information recorded in the
 @code{re_registers} structure.  (In all of them, @samp{(} represents the
 open-group and @samp{)} the close-group operator.  The first character
 in the string @var{string} is at index 0.)
 
-@c xx i'm not sure this is all true anymore.
-
 @itemize @bullet
 
 @item
 If the regular expression has an @w{@var{i}-th}
-group not contained within another group that matches a
+group that matches a
 substring of @var{string}, then the function sets
 @code{@w{@var{regs}->}start[@var{i}]} to the index in @var{string} where
 the substring matched by the @w{@var{i}-th} group begins, and
@@ -2062,23 +2005,6 @@ For example, when you match the pattern @samp{(a*)b} against the string
 0 in @code{@w{@var{regs}->}start[1]} and 0 in @code{@w{@var{regs}->}end[1]}
 @end itemize
 
-@ignore
-The function sets @code{@w{@var{regs}->}start[0]} and
-@code{@w{@var{regs}->}end[0]} to analogous information about the entire
-pattern.
-
-For example, when you match the pattern @samp{(a*)} against the empty
-string, you get:
-
-@itemize
-@item
-0 in @code{@w{@var{regs}->}start[0]} and 0 in @code{@w{@var{regs}->}end[0]}
-
-@item
-0 in @code{@w{@var{regs}->}start[1]} and 0 in @code{@w{@var{regs}->}end[1]}
-@end itemize
-@end ignore
-
 @item
 If an @w{@var{i}-th} group contains a @w{@var{j}-th} group
 in turn not contained within any other group within group @var{i} and
@@ -2145,301 +2071,8 @@ string @samp{c}, you get:
 @node Freeing GNU Pattern Buffers
 @subsection Freeing GNU Pattern Buffers
 
-To free any allocated fields of a pattern buffer, you can use the
-@sc{posix} function described in @ref{Freeing POSIX Pattern Buffers},
-since the type @code{regex_t}---the type for @sc{posix} pattern
-buffers---is equivalent to the type @code{re_pattern_buffer}.  After
-freeing a pattern buffer, you need to again compile a regular expression
-in it (@pxref{GNU Regular Expression Compiling}) before passing it to
-a matching or searching function.
-
-
-@node POSIX Regex Functions
-@section POSIX Regex Functions
-
-If you're writing code that has to be @sc{posix} compatible, you'll need
-to use these functions. Their interfaces are as specified by @sc{posix},
-draft 1003.2/D11.2.
-
-@menu
-* POSIX Pattern Buffers::               The regex_t type.
-* POSIX Regular Expression Compiling::  regcomp ()
-* POSIX Matching::                      regexec ()
-* Reporting Errors::                    regerror ()
-* Using Byte Offsets::                  The regmatch_t type.
-* Freeing POSIX Pattern Buffers::       regfree ()
-@end menu
-
-
-@node POSIX Pattern Buffers
-@subsection POSIX Pattern Buffers
-
-To compile or match a given regular expression the @sc{posix} way, you
-must supply a pattern buffer exactly the way you do for @sc{gnu}
-(@pxref{GNU Pattern Buffers}).  @sc{posix} pattern buffers have type
-@code{regex_t}, which is equivalent to the @sc{gnu} pattern buffer
-type @code{re_pattern_buffer}.
-
-
-@node POSIX Regular Expression Compiling
-@subsection POSIX Regular Expression Compiling
-
-With @sc{posix}, you can only search for a given regular expression; you
-can't match it.  To do this, you must first compile it in a
-pattern buffer, using @code{regcomp}.
-
-@ignore
-Before calling @code{regcomp}, you must initialize this pattern buffer
-as you do for @sc{gnu} (@pxref{GNU Regular Expression Compiling}).  See
-below, however, for how to choose a syntax with which to compile.
-@end ignore
-
-To compile a pattern buffer, use:
-
-@findex regcomp
-@example
-int
-regcomp (regex_t *@var{preg}, const char *@var{regex}, int @var{cflags})
-@end example
-
-@noindent
-@var{preg} is the initialized pattern buffer's address, @var{regex} is
-the regular expression's address, and @var{cflags} is the compilation
-flags, which Regex considers as a collection of bits.  Here are the
-valid bits, as defined in @file{regex.h}:
-
-@table @code
-
-@item REG_EXTENDED
-@vindex REG_EXTENDED
-says to use @sc{posix} Extended Regular Expression syntax; if this isn't
-set, then says to use @sc{posix} Basic Regular Expression syntax.
-@code{regcomp} sets @var{preg}'s @code{syntax} field accordingly.
-
-@item REG_ICASE
-@vindex REG_ICASE
-@cindex ignoring case
-says to ignore case; @code{regcomp} sets @var{preg}'s @code{translate}
-field to a translate table which ignores case, replacing anything you've
-put there before.
-
-@item REG_NOSUB
-@vindex REG_NOSUB
-says to set @var{preg}'s @code{no_sub} field; @pxref{POSIX Matching},
-for what this means.
-
-@item REG_NEWLINE
-@vindex REG_NEWLINE
-says that a:
-
-@itemize @bullet
-
-@item
-match-any-character operator (@pxref{Match-any-character
-Operator}) doesn't match a newline.
-
-@item
-nonmatching list not containing a newline (@pxref{List
-Operators}) matches a newline.
-
-@item
-match-beginning-of-line operator (@pxref{Match-beginning-of-line
-Operator}) matches the empty string immediately after a newline,
-regardless of how @code{REG_NOTBOL} is set (@pxref{POSIX Matching}, for
-an explanation of @code{REG_NOTBOL}).
-
-@item
-match-end-of-line operator (@pxref{Match-beginning-of-line
-Operator}) matches the empty string immediately before a newline,
-regardless of how @code{REG_NOTEOL} is set (@pxref{POSIX Matching},
-for an explanation of @code{REG_NOTEOL}).
-
-@end itemize
-
-@end table
-
-If @code{regcomp} successfully compiles the regular expression, it
-returns zero and sets @code{*@var{pattern_buffer}} to the compiled
-pattern. Except for @code{syntax} (which it sets as explained above), it
-also sets the same fields the same way as does the @sc{gnu} compiling
-function (@pxref{GNU Regular Expression Compiling}).
-
-If @code{regcomp} can't compile the regular expression, it returns one
-of the error codes listed here.  (Except when noted differently, the
-syntax of in all examples below is basic regular expression syntax.)
-
-@table @code
-
-@comment repetitions
-@item REG_BADRPT
-For example, the consecutive repetition operators @samp{**} in
-@samp{a**} are invalid.  As another example, if the syntax is extended
-regular expression syntax, then the repetition operator @samp{*} with
-nothing on which to operate in @samp{*} is invalid.
-
-@item REG_BADBR
-For example, the @var{count} @samp{-1} in @samp{a\@{-1} is invalid.
-
-@item REG_EBRACE
-For example, @samp{a\@{1} is missing a close-interval operator.
-
-@comment lists
-@item REG_EBRACK
-For example, @samp{[a} is missing a close-list operator.
-
-@item REG_ERANGE
-For example, the range ending point @samp{z} that collates lower than
-does its starting point @samp{a} in @samp{[z-a]} is invalid.  Also, the
-range with the character class @samp{[:alpha:]} as its starting point in
-@samp{[[:alpha:]-|]}.
-
-@item REG_ECTYPE
-For example, the character class name @samp{foo} in @samp{[[:foo:]} is
-invalid.
-
-@comment groups
-@item REG_EPAREN
-For example, @samp{a\)} is missing an open-group operator and @samp{\(a}
-is missing a close-group operator.
-
-@item REG_ESUBREG
-For example, the back reference @samp{\2} that refers to a nonexistent
-subexpression in @samp{\(a\)\2} is invalid.
-
-@comment unfinished business
-
-@item REG_EEND
-Returned when a regular expression causes no other more specific error.
-
-@item REG_EESCAPE
-For example, the trailing backslash @samp{\} in @samp{a\} is invalid, as is the
-one in @samp{\}.
-
-@comment kitchen sink
-@item REG_BADPAT
-For example, in the extended regular expression syntax, the empty group
-@samp{()} in @samp{a()b} is invalid.
-
-@comment internal
-@item REG_ESIZE
-Returned when a regular expression needs a pattern buffer larger than
-65536 bytes.
-
-@item REG_ESPACE
-Returned when a regular expression makes Regex to run out of memory.
-
-@end table
-
-
-@node POSIX Matching
-@subsection POSIX Matching
-
-Matching the @sc{posix} way means trying to match a null-terminated
-string starting at its first character.  Once you've compiled a pattern
-into a pattern buffer (@pxref{POSIX Regular Expression Compiling}), you
-can ask the matcher to match that pattern against a string using:
-
-@findex regexec
-@example
-int
-regexec (const regex_t *@var{preg}, const char *@var{string},
-         size_t @var{nmatch}, regmatch_t @var{pmatch}[], int @var{eflags})
-@end example
-
-@noindent
-@var{preg} is the address of a pattern buffer for a compiled pattern.
-@var{string} is the string you want to match.
-
-@xref{Using Byte Offsets}, for an explanation of @var{pmatch}.  If you
-pass zero for @var{nmatch} or you compiled @var{preg} with the
-compilation flag @code{REG_NOSUB} set, then @code{regexec} will ignore
-@var{pmatch}; otherwise, you must allocate it to have at least
-@var{nmatch} elements.  @code{regexec} will record @var{nmatch} byte
-offsets in @var{pmatch}, and set to @math{-1} any unused elements up to
-@math{@var{pmatch}@code{[@var{nmatch}]} - 1}.
-
-@var{eflags} specifies @dfn{execution flags}---namely, the two bits
-@code{REG_NOTBOL} and @code{REG_NOTEOL} (defined in @file{regex.h}).  If
-you set @code{REG_NOTBOL}, then the match-beginning-of-line operator
-(@pxref{Match-beginning-of-line Operator}) always fails to match.
-This lets you match against pieces of a line, as you would need to if,
-say, searching for repeated instances of a given pattern in a line; it
-would work correctly for patterns both with and without
-match-beginning-of-line operators.  @code{REG_NOTEOL} works analogously
-for the match-end-of-line operator (@pxref{Match-end-of-line
-Operator}); it exists for symmetry.
-
-@code{regexec} tries to find a match for @var{preg} in @var{string}
-according to the syntax in @var{preg}'s @code{syntax} field.
-(@xref{POSIX Regular Expression Compiling}, for how to set it.)  The
-function returns zero if the compiled pattern matches @var{string} and
-@code{REG_NOMATCH} (defined in @file{regex.h}) if it doesn't.
-
-@node Reporting Errors
-@subsection Reporting Errors
-
-If either @code{regcomp} or @code{regexec} fail, they return a nonzero
-error code, the possibilities for which are defined in @file{regex.h}.
-@xref{POSIX Regular Expression Compiling}, and @ref{POSIX Matching}, for
-what these codes mean.  To get an error string corresponding to these
-codes, you can use:
-
-@findex regerror
-@example
-size_t
-regerror (int @var{errcode},
-          const regex_t *@var{preg},
-          char *@var{errbuf},
-          size_t @var{errbuf_size})
-@end example
-
-@noindent
-@var{errcode} is an error code, @var{preg} is the address of the pattern
-buffer which provoked the error, @var{errbuf} is the error buffer, and
-@var{errbuf_size} is @var{errbuf}'s size.
-
-@code{regerror} returns the size in bytes of the error string
-corresponding to @var{errcode} (including its terminating null).  If
-@var{errbuf} and @var{errbuf_size} are nonzero, it also returns in
-@var{errbuf} the first @math{@var{errbuf_size} - 1} characters of the
-error string, followed by a null.
-@var{errbuf_size} must be a nonnegative number less than or equal to the
-size in bytes of @var{errbuf}.
-
-You can call @code{regerror} with a null @var{errbuf} and a zero
-@var{errbuf_size} to determine how large @var{errbuf} need be to
-accommodate @code{regerror}'s error string.
-
-@node Using Byte Offsets
-@subsection Using Byte Offsets
-
-In @sc{posix}, variables of type @code{regmatch_t} hold analogous
-information, but are not identical to, @sc{gnu}'s registers (@pxref{Using
-Registers}).  To get information about registers in @sc{posix}, pass to
-@code{regexec} a nonzero @var{pmatch} of type @code{regmatch_t}, i.e.,
-the address of a structure of this type, defined in
-@file{regex.h}:
-
-@tindex regmatch_t
-@example
-typedef struct
-@{
-  regoff_t rm_so;
-  regoff_t rm_eo;
-@} regmatch_t;
-@end example
-
-When reading in @ref{Using Registers}, about how the matching function
-stores the information into the registers, substitute @var{pmatch} for
-@var{regs}, @code{@w{@var{pmatch}[@var{i}]->}rm_so} for
-@code{@w{@var{regs}->}start[@var{i}]} and
-@code{@w{@var{pmatch}[@var{i}]->}rm_eo} for
-@code{@w{@var{regs}->}end[@var{i}]}.
-
-@node Freeing POSIX Pattern Buffers
-@subsection Freeing POSIX Pattern Buffers
-
-To free any allocated fields of a pattern buffer, use:
+To free any allocated fields of a pattern buffer, use the @sc{posix}
+function @code{regfree}:
 
 @findex regfree
 @example
@@ -2448,12 +2081,14 @@ regfree (regex_t *@var{preg})
 @end example
 
 @noindent
-@var{preg} is the pattern buffer whose allocated fields you want freed.
-@code{regfree} also sets @var{preg}'s @code{allocated} and @code{used}
-fields to zero.  After freeing a pattern buffer, you need to again
-compile a regular expression in it (@pxref{POSIX Regular Expression
-Compiling}) before passing it to the matching function (@pxref{POSIX
-Matching}).
+@var{preg} is the pattern buffer whose allocated fields you want freed;
+this works because since the type @code{regex_t}---the type for
+@sc{posix} pattern buffers---is equivalent to the type
+@code{re_pattern_buffer}.
+
+@code{regfree} also sets @var{preg}'s @code{allocated} field to zero.
+After a buffer has been freed, it must have a regular expression
+compiled in it before passing it to a matching or searching function.
 
 
 @node BSD Regex Functions
