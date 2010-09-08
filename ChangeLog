@@ -1,3 +1,12 @@
+2010-09-08  Jim Meyering  <meyering@redhat.com>
+
+	test.sh: disqualify shells for which set -x corrupts stderr
+	* tests/init.sh: Add a test to disqualify /bin/sh from SunOS 5.11
+	and OpenBSD 4.7.  They make it so with "set -x", environment settings
+	appear in stderr output.  For example, this command:
+	    /bin/sh -c 'set -x; P=1 true 2> err' 2>/dev/null; cat err
+	prints "P=1" on those two systems:
+
 2010-09-08  Bruno Haible  <bruno@clisp.org>
 
 	gnulib-tool: Avoid stderr output on IRIX related to 'alias', 'unalias'.

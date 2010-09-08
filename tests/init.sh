@@ -103,11 +103,15 @@ fi
 # shells until we find one that passes.  If one is found, re-exec it.
 # If no acceptable shell is found, skip the current test.
 #
+# The "...set -x; P=1 true 2>err..." test is to disqualify any shell that
+# emits "P=1" into err, as /bin/sh from SunOS 5.11 and OpenBSD 4.7 do.
+#
 # Use "9" to indicate success (rather than 0), in case some shell acts
 # like Solaris 10's /bin/sh but exits successfully instead of with status 2.
 
 gl_shell_test_script_='
 test $(echo y) = y || exit 1
+test -z "$( (exec 3>&1; set -x; P=1 true 2>&3) 2> /dev/null)" || exit 1
 test -z "$EXEEXT" && exit 9
 shopt -s expand_aliases
 alias a-b="echo zoo"
