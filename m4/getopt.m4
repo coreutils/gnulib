@@ -1,4 +1,4 @@
-# getopt.m4 serial 30
+# getopt.m4 serial 31
 dnl Copyright (C) 2002-2006, 2008-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -218,9 +218,8 @@ main ()
        # so take care to revert to the correct (non-)export state.
 dnl GNU Coding Standards currently allow awk but not env; besides, env
 dnl is ambiguous with environment values that contain newlines.
-       gl_awk_probe='BEGIN { for (v in ENVIRON)
-         if (v == "POSIXLY_CORRECT") print "x" }'
-       case ${POSIXLY_CORRECT:+x}`$AWK "$gl_awk_probe" </dev/null` in
+       gl_awk_probe='BEGIN { if ("POSIXLY_CORRECT" in ENVIRON) print "x" }'
+       case ${POSIXLY_CORRECT+x}`$AWK "$gl_awk_probe" </dev/null` in
          xx) gl_had_POSIXLY_CORRECT=exported ;;
          x)  gl_had_POSIXLY_CORRECT=yes      ;;
          *)  gl_had_POSIXLY_CORRECT=         ;;
