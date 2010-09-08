@@ -882,7 +882,7 @@ All other characters are ordinary.  For example, @samp{[.*]} matches
 @node Collating Symbol Operators
 @subsection Collating Symbol Operators (@code{[.} @dots{} @code{.]})
 
-Collating symbols can be represented inside lists. 
+Collating symbols can be represented inside lists.
 You form a @dfn{collating symbol} by
 putting a collating element between an @dfn{open-collating-symbol
 operator} and an @dfn{close-collating-symbol operator}.  @samp{[.}
