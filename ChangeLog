@@ -1,5 +1,11 @@
 2010-09-08  Eric Blake  <eblake@redhat.com>
 
+	unsetenv: fix OpenBSD bug
+	* m4/setenv.m4 (gl_FUNC_UNSETENV): Check for OpenBSD bug.
+	* doc/posix-functions/unsetenv.texi (unsetenv): Update
+	documentation.
+	Reported by Jim Meyering.
+
 	strtod: work around IRIX 6.5 bug
 	* lib/strtod.c (strtod): Reparse number on shorter string if
 	exponent parse was invalid.

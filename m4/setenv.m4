@@ -1,4 +1,4 @@
-# setenv.m4 serial 17
+# setenv.m4 serial 18
 dnl Copyright (C) 2001-2004, 2006-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -78,10 +78,12 @@ int unsetenv();
     fi
 
     dnl Solaris 10 unsetenv does not remove all copies of a name.
-    AC_CACHE_CHECK([whether unsetenv works on duplicates],
+    dnl OpenBSD 4.7 unsetenv("") does not fail.
+    AC_CACHE_CHECK([whether unsetenv obeys POSIX],
       [gl_cv_func_unsetenv_works],
       [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
        #include <stdlib.h>
+       #include <errno.h>
       ]], [[
        char entry[] = "b=2";
        if (putenv ((char *) "a=1")) return 1;
@@ -89,6 +91,7 @@ int unsetenv();
        entry[0] = 'a';
        unsetenv ("a");
        if (getenv ("a")) return 3;
+       if (!unsetenv ("") || errno != EINVAL) return 4;
       ]])],
       [gl_cv_func_unsetenv_works=yes], [gl_cv_func_unsetenv_works=no],
       [gl_cv_func_unsetenv_works="guessing no"])])
