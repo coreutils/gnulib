@@ -12,6 +12,13 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2010-09-13  regex           The module is not guaranteeing anymore support for
+                            64-bit regoff_t on 64-bit systems.  The size of
+                            regoff_t will always be 32-bit unless the program
+                            is being configured --with-included-regex.  This
+                            may change again in the future once glibc provides
+                            this feature as well.
+
 2010-09-12  savedir         The fdsavedir function is now deprecated.
 
 2010-09-10  fcntl-h         This module now defaults O_CLOEXEC to 0, and

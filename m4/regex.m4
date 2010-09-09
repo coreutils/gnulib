@@ -158,12 +158,17 @@ AC_DEFUN([gl_REGEX],
             if (! REG_STARTEND)
               return 1;
 
-            /* Reject hosts whose regoff_t values are too narrow.
-               These include glibc 2.3.5 on hosts with 64-bit ptrdiff_t
-               and 32-bit int.  */
+#if 0
+            /* It would be nice to reject hosts whose regoff_t values are too
+               narrow (including glibc on hosts with 64-bit ptrdiff_t and
+               32-bit int), but we should wait until glibc implements this
+               feature.  Otherwise, support for equivalence classes and
+               multibyte collation symbols would always be broken except
+               when compiling --without-included-regex.   */
             if (sizeof (regoff_t) < sizeof (ptrdiff_t)
                 || sizeof (regoff_t) < sizeof (ssize_t))
               return 1;
+#endif
 
             return 0;]])],
        [gl_cv_func_re_compile_pattern_working=yes],

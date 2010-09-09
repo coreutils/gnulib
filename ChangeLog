@@ -1,3 +1,9 @@
+2010-09-10  Paolo Bonzini  <bonzini@gnu.org>
+
+	regex: Pass the system regex if its only problem is 32-bit regoff_t.
+	* NEWS: Document change.
+	* m4/regex.m4: Disable test for regoff_t size.
+
 2010-09-13  Jim Meyering  <meyering@redhat.com>
 
 	fts: don't operate on an invalid file descriptor after failed dup
