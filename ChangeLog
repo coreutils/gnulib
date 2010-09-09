@@ -1,3 +1,9 @@
+2010-09-09  Bruno Haible  <bruno@clisp.org>
+
+	gnulib-tool: Avoid stderr output on IRIX related to 'alias', 'unalias'.
+	* gnulib-tool: Don't fiddle with file descriptors 0, 1, 2. Instead, use
+	a reliable way to determine whether the 'alias' command works.
+
 2010-09-08  Jim Meyering  <meyering@redhat.com>
 
 	init.sh: penalize a set-x-impaired shell; don't disqualify it

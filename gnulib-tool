@@ -836,28 +836,24 @@ fi
 # that the top-level statement containing the test starts after the 'alias'
 # command.
 if test -z "$have_echo"; then
-bsd_echo ()
+  bsd_echo ()
 {
 cat <<EOF
 $*
 EOF
 }
-exec 3>&2
-exec 2>/dev/null
-alias echo=bsd_echo
-exec 2>&3
-exec 3>&-
+  if (alias echo=bsd_echo) 2>/dev/null; then
+    alias echo=bsd_echo 2>/dev/null
+  fi
 fi
 if test -z "$have_echo" \
    && echo '\t' | grep t > /dev/null; then
   have_echo=yes
 fi
 if test -z "$have_echo"; then
-  exec 3>&2
-  exec 2>/dev/null
-  unalias echo
-  exec 2>&3
-  exec 3>&-
+  if (alias echo=bsd_echo) 2>/dev/null; then
+    unalias echo 2>/dev/null
+  fi
 fi
 # For Solaris /bin/sh and OSF/1 /bin/sh: respawn using /bin/ksh.
 if test -z "$have_echo" \
