@@ -1,4 +1,4 @@
-# strsignal.m4 serial 3
+# strsignal.m4 serial 4
 dnl Copyright (C) 2008, 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -26,6 +26,7 @@ AC_DEFUN([gl_FUNC_STRSIGNAL],
       [AC_RUN_IFELSE(
          [AC_LANG_PROGRAM(
             [[#include <string.h>
+#include <unistd.h> /* NetBSD 5.0 declares it in wrong header. */
             ]],
             [[char *s = strsignal (-1);
               return !(s != (char *) 0 && s != (char *) -1);]])],

@@ -1,5 +1,12 @@
 2010-09-09  Eric Blake  <eblake@redhat.com>
 
+	strsignal: work around NetBSD bug
+	* m4/strsignal.m4 (gl_FUNC_STRSIGNAL): Also check in <unistd.h>.
+	* lib/string.in.h (includes): Likewise.
+	* doc/posix-functions/strsignal.texi (strsignal): Document the
+	bug.
+	Reported by Nelson H. F. Beebe.
+
 	gnulib-tool: work with NetBSD /bin/sh
 	* gnulib-tool (func_cache_var, func_cache_lookup_module)
 	(func_get_description, func_get_comment, func_get_status)

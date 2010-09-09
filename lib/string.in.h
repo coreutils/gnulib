@@ -49,6 +49,12 @@
 # define _GL_ATTRIBUTE_PURE /* empty */
 #endif
 
+/* NetBSD 5.0 declares strsignal in <unistd.h>, not in <string.h>.  */
+/* But avoid namespace pollution on glibc systems.  */
+#if (@GNULIB_STRSIGNAL@ || defined GNULIB_POSIXCHECK)  \
+    && ! defined __GLIBC__
+# include <unistd.h>
+#endif
 
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 

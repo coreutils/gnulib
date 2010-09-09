@@ -16,6 +16,11 @@ AIX 4.3.2, HP-UX 11, IRIX 6.5, OSF/1 5.1, mingw.
 This function does not return a string for out-of-range numbers on
 some platforms:
 Solaris, AIX 5.1.
+
+@item
+This function is declared in @code{unistd.h} instead of
+@code{string.h} on some platforms:
+NetBSD 5.0.
 @end itemize
 
 Portability problems not fixed by Gnulib:
