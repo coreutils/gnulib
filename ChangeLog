@@ -1,3 +1,15 @@
+2010-09-09  Eric Blake  <eblake@redhat.com>
+
+	gnulib-tool: work with NetBSD /bin/sh
+	* gnulib-tool (func_cache_var, func_cache_lookup_module)
+	(func_get_description, func_get_comment, func_get_status)
+	(func_get_notice, func_get_applicability, func_get_filelist)
+	(func_get_dependencies, func_get_autoconf_early_snippet)
+	(func_get_autoconf_snippet, func_get_automake_snippet)
+	(func_get_include_directive, func_get_link_directive)
+	(func_get_license, func_get_maintainer, func_import): Avoid
+	shell syntax errors from parsing syntax extensions.
+
 2010-09-09  Bruno Haible  <bruno@clisp.org>
 
 	gnulib-tool: Avoid stderr output on IRIX related to 'alias', 'unalias'.

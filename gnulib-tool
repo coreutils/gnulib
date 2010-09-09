@@ -1607,11 +1607,11 @@ if $modcache; then
       #   ${param//pattern/replacement}
       # as a shorthand for
       #   `echo "$param" | sed -e "s/pattern/replacement/g"`.
-      # Note: The 'eval' above silences stderr output in dash.
-      func_cache_var ()
+      # Note: The 'eval' is necessary for dash and NetBSD /bin/sh.
+      eval 'func_cache_var ()
       {
         cachevar=c_${1//[!a-zA-Z0-9_]/_}
-      }
+      }'
     else
       func_cache_var ()
       {
@@ -1796,7 +1796,7 @@ if $modcache; then
   func_cache_lookup_module ()
   {
     if $have_associative; then
-      cached=${modcache_cached[$1]}
+      eval 'cached=${modcache_cached[$1]}'
     else
       func_cache_var "$1"
       eval "cached=\"\$${cachevar}_cached\""
@@ -1805,7 +1805,7 @@ if $modcache; then
       # Not found in cache. Look it up on the file system.
       func_lookup_file "modules/$1"
       if $have_associative; then
-        modcache_cached[$1]=yes
+        eval 'modcache_cached[$1]=yes'
       else
         eval "${cachevar}_cached=\"\$1\""
       fi
@@ -1840,8 +1840,8 @@ func_get_description ()
     func_cache_lookup_module "$1"
     # Output the field's value, including the final newline (if any).
     if $have_associative; then
-      if test -n "${modcache_description[$1]+set}"; then
-        echo "${modcache_description[$1]}"
+      if eval 'test -n "${modcache_description[$1]+set}"'; then
+        eval 'echo "${modcache_description[$1]}"'
       fi
     else
       eval "field_set=\"\$${cachevar}_description_set\""
@@ -1866,8 +1866,8 @@ func_get_comment ()
     func_cache_lookup_module "$1"
     # Output the field's value, including the final newline (if any).
     if $have_associative; then
-      if test -n "${modcache_comment[$1]+set}"; then
-        echo "${modcache_comment[$1]}"
+      if eval 'test -n "${modcache_comment[$1]+set}"'; then
+        eval 'echo "${modcache_comment[$1]}"'
       fi
     else
       eval "field_set=\"\$${cachevar}_comment_set\""
@@ -1892,8 +1892,8 @@ func_get_status ()
     func_cache_lookup_module "$1"
     # Output the field's value, including the final newline (if any).
     if $have_associative; then
-      if test -n "${modcache_status[$1]+set}"; then
-        echo "${modcache_status[$1]}"
+      if eval 'test -n "${modcache_status[$1]+set}"'; then
+        eval 'echo "${modcache_status[$1]}"'
       fi
     else
       eval "field_set=\"\$${cachevar}_status_set\""
@@ -1918,8 +1918,8 @@ func_get_notice ()
     func_cache_lookup_module "$1"
     # Output the field's value, including the final newline (if any).
     if $have_associative; then
-      if test -n "${modcache_notice[$1]+set}"; then
-        echo "${modcache_notice[$1]}"
+      if eval 'test -n "${modcache_notice[$1]+set}"'; then
+        eval 'echo "${modcache_notice[$1]}"'
       fi
     else
       eval "field_set=\"\$${cachevar}_notice_set\""
@@ -1945,7 +1945,7 @@ func_get_applicability ()
     func_cache_lookup_module "$1"
     # Get the field's value, without the final newline.
     if $have_associative; then
-      my_applicability="${modcache_applicability[$1]}"
+      eval 'my_applicability="${modcache_applicability[$1]}"'
     else
       eval "my_applicability=\"\$${cachevar}_applicability\""
     fi
@@ -1974,8 +1974,8 @@ func_get_filelist ()
     func_cache_lookup_module "$1"
     # Output the field's value, including the final newline (if any).
     if $have_associative; then
-      if test -n "${modcache_files[$1]+set}"; then
-        echo "${modcache_files[$1]}"
+      if eval 'test -n "${modcache_files[$1]+set}"'; then
+        eval 'echo "${modcache_files[$1]}"'
       fi
     else
       eval "field_set=\"\$${cachevar}_files_set\""
@@ -2065,8 +2065,8 @@ func_get_dependencies ()
     func_cache_lookup_module "$1"
     # Output the field's value, including the final newline (if any).
     if $have_associative; then
-      if test -n "${modcache_dependson[$1]+set}"; then
-        echo "${modcache_dependson[$1]}"
+      if eval 'test -n "${modcache_dependson[$1]+set}"'; then
+        eval 'echo "${modcache_dependson[$1]}"'
       fi
     else
       eval "field_set=\"\$${cachevar}_dependson_set\""
@@ -2091,8 +2091,8 @@ func_get_autoconf_early_snippet ()
     func_cache_lookup_module "$1"
     # Output the field's value, including the final newline (if any).
     if $have_associative; then
-      if test -n "${modcache_configureac_early[$1]+set}"; then
-        echo "${modcache_configureac_early[$1]}"
+      if eval 'test -n "${modcache_configureac_early[$1]+set}"'; then
+        eval 'echo "${modcache_configureac_early[$1]}"'
       fi
     else
       eval "field_set=\"\$${cachevar}_configureac_early_set\""
@@ -2117,8 +2117,8 @@ func_get_autoconf_snippet ()
     func_cache_lookup_module "$1"
     # Output the field's value, including the final newline (if any).
     if $have_associative; then
-      if test -n "${modcache_configureac[$1]+set}"; then
-        echo "${modcache_configureac[$1]}"
+      if eval 'test -n "${modcache_configureac[$1]+set}"'; then
+        eval 'echo "${modcache_configureac[$1]}"'
       fi
     else
       eval "field_set=\"\$${cachevar}_configureac_set\""
@@ -2143,8 +2143,8 @@ func_get_automake_snippet ()
     func_cache_lookup_module "$1"
     # Output the field's value, including the final newline (if any).
     if $have_associative; then
-      if test -n "${modcache_makefile[$1]+set}"; then
-        echo "${modcache_makefile[$1]}"
+      if eval 'test -n "${modcache_makefile[$1]+set}"'; then
+        eval 'echo "${modcache_makefile[$1]}"'
       fi
     else
       eval "field_set=\"\$${cachevar}_makefile_set\""
@@ -2181,8 +2181,8 @@ func_get_automake_snippet ()
             sed -n -e "/^Makefile\.am$sed_extract_prog" < "$lookedup_file"
           else
             if $have_associative; then
-              if test -n "${modcache_makefile[$1]+set}"; then
-                echo "${modcache_makefile[$1]}"
+              if eval 'test -n "${modcache_makefile[$1]+set}"'; then
+                eval 'echo "${modcache_makefile[$1]}"'
               fi
             else
               eval 'field_set="$'"${cachevar}"'_makefile_set"'
@@ -2258,8 +2258,8 @@ func_get_include_directive ()
       func_cache_lookup_module "$1"
       # Output the field's value, including the final newline (if any).
       if $have_associative; then
-        if test -n "${modcache_include[$1]+set}"; then
-          echo "${modcache_include[$1]}"
+        if eval 'test -n "${modcache_include[$1]+set}"'; then
+          eval 'echo "${modcache_include[$1]}"'
         fi
       else
         eval "field_set=\"\$${cachevar}_include_set\""
@@ -2285,8 +2285,8 @@ func_get_link_directive ()
     func_cache_lookup_module "$1"
     # Output the field's value, including the final newline (if any).
     if $have_associative; then
-      if test -n "${modcache_link[$1]+set}"; then
-        echo "${modcache_link[$1]}"
+      if eval 'test -n "${modcache_link[$1]+set}"'; then
+        eval 'echo "${modcache_link[$1]}"'
       fi
     else
       eval "field_set=\"\$${cachevar}_link_set\""
@@ -2312,8 +2312,8 @@ func_get_license ()
       func_cache_lookup_module "$1"
       # Output the field's value, including the final newline (if any).
       if $have_associative; then
-        if test -n "${modcache_license[$1]+set}"; then
-          echo "${modcache_license[$1]}"
+        if eval 'test -n "${modcache_license[$1]+set}"'; then
+          eval 'echo "${modcache_license[$1]}"'
         fi
       else
         eval "field_set=\"\$${cachevar}_license_set\""
@@ -2341,8 +2341,8 @@ func_get_maintainer ()
     func_cache_lookup_module "$1"
     # Output the field's value, including the final newline (if any).
     if $have_associative; then
-      if test -n "${modcache_maintainer[$1]+set}"; then
-        echo "${modcache_maintainer[$1]}"
+      if eval 'test -n "${modcache_maintainer[$1]+set}"'; then
+        eval 'echo "${modcache_maintainer[$1]}"'
       fi
     else
       eval "field_set=\"\$${cachevar}_maintainer_set\""
@@ -3567,10 +3567,10 @@ func_import ()
           # Use an associative array, for O(N) worst-case run time.
           declare -A to_remove
           for m in $1; do
-            to_remove[$m]=yes
+            eval 'to_remove[$m]=yes'
           done
           for module in $cached_specified_modules; do
-            if test -z "${to_remove[$module]}"; then
+            if eval 'test -z "${to_remove[$module]}"'; then
               func_append specified_modules "$module "
             fi
           done
