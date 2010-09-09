@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate August 24, 2010
+@set lastupdate September 9, 2010
 @c %**end of header
 
 @dircategory GNU organization
@@ -2322,6 +2322,13 @@ files that are bigger than will fit in memory all at once.
 If your program creates complicated data structures, just make them in
 memory and give a fatal error if @code{malloc} returns zero.
 
+@pindex valgrind
+@cindex memory leak
+Memory leak detectors such as @command{valgrind} can be useful, but
+don't complicate a program merely to avoid their false alarms.  For
+example, if memory is used until just before a process exits, don't
+free it simply to silence a leak detector.
+
 @node File Usage
 @section File Usage
 @cindex file usage
@@ -2630,6 +2637,17 @@ warnings for valid and legitimate code which they do not want to change.
 If you want to do this, then do.  The compiler should be your servant,
 not your master.
 
+@pindex clang
+@pindex lint
+Don't make the program ugly just to placate static analysis tools such
+as @command{lint}, @command{clang}, and GCC with extra warnings
+options such as @option{-Wconversion} and @option{-Wundef}.  These
+tools can help find bugs and unclear code, but they can also generate
+so many false alarms that that it hurts readability to silence them
+with unnecessary casts, wrappers, and other complications.  For
+example, please don't insert casts to @code{void} or calls to
+do-nothing functions merely to pacify a lint checker.
+
 Declarations of external functions and functions to appear later in the
 source file should all go in one place near the beginning of the file
 (somewhere before the first function definition in the file), or else
@@ -2647,6 +2665,7 @@ declaration of each local variable into the smallest scope that includes
 all its uses.  This makes the program even cleaner.
 
 Don't use local variables or parameters that shadow global identifiers.
+GCC's @samp{-Wshadow} option can detect this problem.
 
 @cindex multiple variables in a line
 Don't declare multiple variables in one declaration that spans lines.
@@ -2750,10 +2769,9 @@ if (foo == 0)
   fatal ("virtual memory exhausted");
 @end example
 
-@pindex lint
-Don't make the program ugly to placate @code{lint}.  Please don't insert any
-casts to @code{void}.  Zero without a cast is perfectly fine as a null
-pointer constant, except when calling a varargs function.
+This example uses zero without a cast as a null pointer constant.
+This is perfectly fine, except that a cast is needed when calling a
+varargs function or when using @code{sizeof}.
 
 @node Names
 @section Naming Variables, Functions, and Files
