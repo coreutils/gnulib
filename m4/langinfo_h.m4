@@ -16,12 +16,14 @@ AC_DEFUN([gl_LANGINFO_H],
 
   dnl Determine whether <langinfo.h> exists. It is missing on mingw and BeOS.
   HAVE_LANGINFO_CODESET=0
+  HAVE_LANGINFO_T_FMT_AMPM=0
   HAVE_LANGINFO_ERA=0
+  HAVE_LANGINFO_YESEXPR=0
   AC_CHECK_HEADERS_ONCE([langinfo.h])
   if test $ac_cv_header_langinfo_h = yes; then
     HAVE_LANGINFO_H=1
     dnl Determine what <langinfo.h> defines. CODESET and ERA etc. are missing
-    dnl on OpenBSD 3.8. T_FMT_AMPM an YESEXPR, NOEXPR are missing on IRIX 5.3.
+    dnl on OpenBSD 3.8. T_FMT_AMPM and YESEXPR, NOEXPR are missing on IRIX 5.3.
     AC_CACHE_CHECK([whether langinfo.h defines CODESET],
       [gl_cv_header_langinfo_codeset],
       [AC_COMPILE_IFELSE(

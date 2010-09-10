@@ -1,5 +1,12 @@
 2010-09-10  Bruno Haible  <bruno@clisp.org>
 
+	langinfo: Fix last commit.
+	* m4/langinfo_h.m4 (gl_LANGINFO_H): Initialize
+	HAVE_LANGINFO_T_FMT_AMPM, HAVE_LANGINFO_YESEXPR.
+	Reported by Tom G. Christensen <tgc@jupiterrise.com>.
+
+2010-09-10  Bruno Haible  <bruno@clisp.org>
+
 	relocatable-prog-wrapper: Fix compilation failure due to O_EXEC.
 	* lib/progreloc.c (O_EXEC): Define fallback.
 
