@@ -59,6 +59,10 @@
 # include "xalloc.h"
 #endif
 
+#ifndef O_EXEC
+# define O_EXEC O_RDONLY /* This is often close enough in older systems.  */
+#endif
+
 /* Declare canonicalize_file_name.
    The <stdlib.h> included above may be the system's one, not the gnulib
    one.  */

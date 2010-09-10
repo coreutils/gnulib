@@ -1,3 +1,8 @@
+2010-09-10  Bruno Haible  <bruno@clisp.org>
+
+	relocatable-prog-wrapper: Fix compilation failure due to O_EXEC.
+	* lib/progreloc.c (O_EXEC): Define fallback.
+
 2010-09-10  Paul Eggert  <eggert@cs.ucla.edu>
 
 	fcntl-h: define O_CLOEXEC and O_EXEC if not defined; use new defines
