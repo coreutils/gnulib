@@ -1,4 +1,4 @@
-# readutmp.m4 serial 16
+# readutmp.m4 serial 17
 dnl Copyright (C) 2002-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,12 +17,14 @@ AC_DEFUN([gl_READUTMP],
     AC_REQUIRE([AC_C_INLINE])
     AC_CHECK_FUNCS_ONCE([utmpname utmpxname])
     AC_CHECK_DECLS([getutent],,,[
+/* <sys/types.h> is a prerequisite of <utmp.h> on FreeBSD 8.0, OpenBSD 4.6.  */
+#include <sys/types.h>
 #ifdef HAVE_UTMP_H
 # include <utmp.h>
 #endif
 ])
     utmp_includes="\
-$ac_includes_default
+AC_INCLUDES_DEFAULT
 #ifdef HAVE_UTMPX_H
 # include <utmpx.h>
 #endif

@@ -1,3 +1,16 @@
+2010-09-10  Bruno Haible  <bruno@clisp.org>
+
+	pty, readutmp: Fix for FreeBSD 8.0 and OpenBSD 4.6.
+	* doc/glibc-functions/login_tty.texi: Mention the include file problem
+	on FreeBSD 8.0 and OpenBSD 4.6.
+	* lib/pty.in.h: Include <sys/types.h> before <libutil.h>.
+	* m4/pty_h.m4 (gl_PTY_H): Likewise.
+	* m4/pty.m4 (gl_FUNC_FORKPTY, gl_FUNC_OPENPTY): Likewise.
+	* m4/readutmp.m4 (gl_READUTMP): Include <sys/types.h> before <utmp.h>.
+	Invoke AC_INCLUDES_DEFAULT instead of using the undocumented variable
+	ac_includes_default.
+	Reported by Mats Erik Andersson <mats.andersson@gisladisker.se>.
+
 2010-09-09  Eric Blake  <eblake@redhat.com>
 
 	strsignal: work around NetBSD bug

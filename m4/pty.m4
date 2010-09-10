@@ -1,4 +1,4 @@
-# pty.m4 serial 7
+# pty.m4 serial 8
 dnl Copyright (C) 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -28,6 +28,8 @@ AC_DEFUN([gl_FUNC_FORKPTY],
   dnl We assume that forkpty exists (possibly in libc, possibly in libutil)
   dnl if and only if it is declared.
   AC_CHECK_DECLS([forkpty],,, [[
+/* <sys/types.h> is a prerequisite of <libutil.h> on FreeBSD 8.0.  */
+#include <sys/types.h>
 #if HAVE_PTY_H
 # include <pty.h>
 #endif
@@ -45,6 +47,8 @@ AC_DEFUN([gl_FUNC_FORKPTY],
       [gl_cv_func_forkpty_const],
       [AC_COMPILE_IFELSE(
         [AC_LANG_PROGRAM([[
+/* <sys/types.h> is a prerequisite of <libutil.h> on FreeBSD 8.0.  */
+#include <sys/types.h>
 #if HAVE_PTY_H
 # include <pty.h>
 #endif
@@ -83,6 +87,8 @@ AC_DEFUN([gl_FUNC_OPENPTY],
   dnl We assume that openpty exists (possibly in libc, possibly in libutil)
   dnl if and only if it is declared.
   AC_CHECK_DECLS([openpty],,, [[
+/* <sys/types.h> is a prerequisite of <libutil.h> on FreeBSD 8.0.  */
+#include <sys/types.h>
 #if HAVE_PTY_H
 # include <pty.h>
 #endif
@@ -100,6 +106,8 @@ AC_DEFUN([gl_FUNC_OPENPTY],
       [gl_cv_func_openpty_const],
       [AC_COMPILE_IFELSE(
         [AC_LANG_PROGRAM([[
+/* <sys/types.h> is a prerequisite of <libutil.h> on FreeBSD 8.0.  */
+#include <sys/types.h>
 #if HAVE_PTY_H
 # include <pty.h>
 #endif

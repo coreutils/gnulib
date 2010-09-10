@@ -25,5 +25,7 @@ mingw.
 This function is declared in @code{<utmp.h>} on glibc, Cygwin,
 in @code{<util.h>} on MacOS X 10.3, NetBSD 3.0, OpenBSD 3.8,
 in @code{<libutil.h>} on FreeBSD 6.0, Haiku, and not declared at all
-on OSF/1 5.1, Interix 3.5.
+on OSF/1 5.1, Interix 3.5.  Also note that @code{<sys/types.h>} is
+a prerequisite of @code{<utmp.h>} on FreeBSD 8.0, OpenBSD 4.6 and
+of @code{<libutil.h>} on FreeBSD 8.0.
 @end itemize
