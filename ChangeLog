@@ -1,5 +1,23 @@
 2010-09-10  Bruno Haible  <bruno@clisp.org>
 
+	langinfo, nl_langinfo: Fix for IRIX 5.3.
+	* m4/langinfo_h.m4 (gl_LANGINFO_H): Test whether langinfo.h defines
+	T_FMT_AMPM, YESEXPR. Set HAVE_LANGINFO_T_FMT_AMPM,
+	HAVE_LANGINFO_YESEXPR.
+	* modules/langinfo (Makefile.am): Substitute HAVE_LANGINFO_T_FMT_AMPM,
+	HAVE_LANGINFO_YESEXPR.
+	* lib/langinfo.in.h (T_FMT_AMPM, GNULIB_defined_T_FMT_AMPM): Define if
+	HAVE_LANGINFO_T_FMT_AMPM is 0.
+	(YESEXPR, NOEXPR, GNULIB_defined_YESEXPR): Define if
+	HAVE_LANGINFO_YESEXPR is 0.
+	* lib/nl_langinfo.c (rpl_nl_langinfo): Handle also T_FMT_AMPM, YESEXPR,
+	NOEXPR.
+	* doc/posix-headers/langinfo.texi: Mention the IRIX 5.3 problem.
+	* doc/posix-functions/nl_langinfo.texi: Likewise.
+	Reported by Eric Blake.
+
+2010-09-10  Bruno Haible  <bruno@clisp.org>
+
 	pty, readutmp: Fix for FreeBSD 8.0 and OpenBSD 4.6.
 	* doc/glibc-functions/login_tty.texi: Mention the include file problem
 	on FreeBSD 8.0 and OpenBSD 4.6.

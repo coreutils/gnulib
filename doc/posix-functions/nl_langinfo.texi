@@ -18,6 +18,10 @@ glibc 2.0.6, OpenBSD 3.8.
 The constants @code{ERA}, @code{ERA_D_FMT}, @code{ERA_D_T_FMT},
 @code{ERA_T_FMT}, @code{ALT_DIGITS} are not supported on some platforms:
 OpenBSD 3.8.
+@item
+The constants @code{T_FMT_AMPM}, @code{YESEXPR}, @code{NOEXPR} are not
+supported on some platforms:
+IRIX 5.3.
 @end itemize
 
 Portability problems not fixed by Gnulib:

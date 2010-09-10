@@ -112,6 +112,11 @@ typedef int nl_item;
 #  define GNULIB_defined_CODESET 1
 # endif
 
+# if !@HAVE_LANGINFO_T_FMT_AMPM@
+#  define T_FMT_AMPM  10006
+#  define GNULIB_defined_T_FMT_AMPM 1
+# endif
+
 # if !@HAVE_LANGINFO_ERA@
 #  define ERA         10047
 #  define ERA_D_FMT   10048
@@ -119,6 +124,12 @@ typedef int nl_item;
 #  define ERA_T_FMT   10050
 #  define ALT_DIGITS  10051
 #  define GNULIB_defined_ERA 1
+# endif
+
+# if !@HAVE_LANGINFO_YESEXPR@
+#  define YESEXPR     10053
+#  define NOEXPR      10054
+#  define GNULIB_defined_YESEXPR 1
 # endif
 
 #endif
