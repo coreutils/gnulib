@@ -38,13 +38,6 @@
 /* Upper bound on getdtablesize().  See lib/getdtablesize.c.  */
 # define OPEN_MAX_MAX 0x10000
 
-#else
-/* Unix API.  */
-
-# ifndef O_CLOEXEC
-#  define O_CLOEXEC 0
-# endif
-
 #endif
 
 int

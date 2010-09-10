@@ -8,9 +8,14 @@ Gnulib module: fcntl-h
 Portability problems fixed by Gnulib:
 @itemize
 @item
-@samp{O_NOCTTY}, @samp{O_DSYNC}, @samp{O_NONBLOCK}, @samp{O_RSYNC},
-@samp{O_SYNC}, @samp{O_DIRECTORY}, @samp{O_NOFOLLOW}, and
-@samp{O_TTY_INIT} are not defined on some platforms.
+@samp{O_CLOEXEC}, @samp{O_DIRECTORY}, @samp{O_DSYNC}, @samp{O_NOCTTY},
+@samp{O_NOFOLLOW}, @samp{O_NONBLOCK}, @samp{O_RSYNC}, @samp{O_SYNC},
+and @samp{O_TTY_INIT} are not defined on some platforms.  Gnulib defines
+these macros to 0.
+
+@item
+@samp{O_EXEC} and @samp{O_SEARCH} are not defined on some platforms.
+Gnulib defines these macros to @samp{O_RDONLY}, which is typically 0.
 
 @item
 @samp{O_BINARY}, @samp{O_TEXT} (not specified by POSIX, but essential for
@@ -48,14 +53,6 @@ Solaris 10.
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-@samp{O_CLOEXEC} is not defined on some platforms.  The gnulib
-replacement is not atomic on these platforms.
-
-@item
-@samp{O_SEARCH} and @samp{O_EXEC} are not defined
-on some platforms.
-
 @item
 @samp{F_SETFD}, @samp{F_GETFL}, @samp{F_SETFL}, @samp{F_GETLK},
 @samp{F_SETLK}, @samp{F_SETLOKW}, @samp{F_GETOWN}, and @samp{F_SETOWN}

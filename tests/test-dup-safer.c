@@ -38,9 +38,6 @@
 # define setmode(f,m) zero ()
 static int zero (void) { return 0; }
 #endif
-#ifndef O_CLOEXEC
-# define O_CLOEXEC 0
-#endif
 
 /* This test intentionally closes stderr.  So, we arrange to have fd 10
    (outside the range of interesting fd's during the test) set up to

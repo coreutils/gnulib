@@ -189,7 +189,7 @@ find_executable (const char *argv0)
     if (link != NULL && link[0] != '[')
       return link;
     if (executable_fd < 0)
-      executable_fd = open ("/proc/self/exe", O_RDONLY, 0);
+      executable_fd = open ("/proc/self/exe", O_EXEC, 0);
 
     {
       char buf[6+10+5];
@@ -198,7 +198,7 @@ find_executable (const char *argv0)
       if (link != NULL && link[0] != '[')
         return link;
       if (executable_fd < 0)
-        executable_fd = open (buf, O_RDONLY, 0);
+        executable_fd = open (buf, O_EXEC, 0);
     }
   }
 #endif

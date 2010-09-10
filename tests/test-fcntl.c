@@ -39,11 +39,6 @@ SIGNATURE_CHECK (fcntl, int, (int, int, ...));
 #include "binary-io.h"
 #include "macros.h"
 
-/* Use O_CLOEXEC if available, but test works without it.  */
-#ifndef O_CLOEXEC
-# define O_CLOEXEC 0
-#endif
-
 #if !O_BINARY
 # define setmode(f,m) zero ()
 static int zero (void) { return 0; }

@@ -30,13 +30,6 @@
 
 # include <io.h>
 
-#else
-/* Unix API.  */
-
-# ifndef O_CLOEXEC
-#  define O_CLOEXEC 0
-# endif
-
 #endif
 
 int

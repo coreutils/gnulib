@@ -1,3 +1,20 @@
+2010-09-10  Paul Eggert  <eggert@cs.ucla.edu>
+
+	fcntl-h: define O_CLOEXEC and O_EXEC if not defined; use new defines
+	* doc/posix-headers/fcntl.texi (fcntl.h): Document that
+	O_CLOEXEC is now defined to 0 if it is not defined, like other flags.
+	Also, O_EXEC is now defined to be O_RDONLY if O_EXEC is not defined.
+	Similarly for O_SEARCH; this last was already true, but not documented.
+	* lib/fcntl.in.h (O_CLOEXEC): Define to 0 if not defined.
+	* lib/dup-safer-flag.c (O_CLOEXEC): Remove now-useless #define.
+	* lib/dup3.c, lib/pipe2.c, tests/test-dup-safer.c, tests/test-fcntl.c:
+	Likewise.
+	* lib/popen-safer.c (open_noinherit): Check whether O_CLOEXEC
+	is zero, not whether it is defined.
+	* tests/test-dup3.c, tests/test-pipe2.c (main): Likewise.
+	* lib/progreloc.c (find_executable): Use O_EXEC rather than O_RDONLY.
+	* lib/open.c (open): Check for O_SEARCH as well as for O_RDONLY.
+
 2010-09-10  Bruno Haible  <bruno@clisp.org>
 
 	langinfo, nl_langinfo: Fix for IRIX 5.3.

@@ -75,7 +75,7 @@ main ()
 {
   int use_cloexec;
 
-#if defined O_CLOEXEC
+#if O_CLOEXEC
   for (use_cloexec = 0; use_cloexec <= 1; use_cloexec++)
 #else
   use_cloexec = 0;
@@ -87,7 +87,7 @@ main ()
       char buffer[1];
 
       o_flags = 0;
-#if defined O_CLOEXEC
+#if O_CLOEXEC
       if (use_cloexec)
         o_flags |= O_CLOEXEC;
 #endif

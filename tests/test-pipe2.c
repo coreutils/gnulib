@@ -92,7 +92,7 @@ main ()
 #else
   use_nonblocking = 0;
 #endif
-#if defined O_CLOEXEC
+#if O_CLOEXEC
     for (use_cloexec = 0; use_cloexec <= 1; use_cloexec++)
 #else
     use_cloexec = 0;
@@ -106,7 +106,7 @@ main ()
         if (use_nonblocking)
           o_flags |= O_NONBLOCK;
 #endif
-#if defined O_CLOEXEC
+#if O_CLOEXEC
         if (use_cloexec)
           o_flags |= O_CLOEXEC;
 #endif

@@ -34,7 +34,7 @@ static int
 open_noinherit (char const *name, int flags)
 {
   int fd;
-#ifdef O_CLOEXEC
+#if O_CLOEXEC
   /* 0 = unknown, 1 = yes, -1 = no.  */
   static int have_cloexec;
   if (have_cloexec >= 0)
