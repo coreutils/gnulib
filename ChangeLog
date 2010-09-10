@@ -1,6 +1,7 @@
 2010-09-10  Paul Eggert  <eggert@cs.ucla.edu>
 
 	fcntl-h: define O_CLOEXEC and O_EXEC if not defined; use new defines
+	* NEWS: Document recent changes to fcntl-h.
 	* doc/posix-headers/fcntl.texi (fcntl.h): Document that
 	O_CLOEXEC is now defined to 0 if it is not defined, like other flags.
 	Also, O_EXEC is now defined to be O_RDONLY if O_EXEC is not defined.
