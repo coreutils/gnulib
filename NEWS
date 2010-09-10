@@ -12,8 +12,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
-2010-09-10 fcntl-h          This module now defaults O_CLOEXEC to 0, and
+2010-09-10  fcntl-h         This module now defaults O_CLOEXEC to 0, and
                             it defaults O_EXEC and O_SEARCH to O_RDONLY.
+                            Use "#if O_CLOEXEC" instead of "#ifdef O_CLOEXEC".
 
 2010-08-28  realloc         This module is deprecated. Use 'realloc-gnu'
                             instead. It will be removed 2012-01-01.
