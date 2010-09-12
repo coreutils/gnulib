@@ -18,10 +18,12 @@
 
 /* Written by David MacKenzie <djm@gnu.ai.mit.edu>. */
 
-#if !defined SAVEDIR_H_
-# define SAVEDIR_H_
+#ifndef _GL_SAVEDIR_H
+#define _GL_SAVEDIR_H
 
+#include <dirent.h>
+char *streamsavedir (DIR *dirp);
 char *savedir (char const *dir);
-char *fdsavedir (int fd);
+char *fdsavedir (int fd); /* deprecated */
 
 #endif

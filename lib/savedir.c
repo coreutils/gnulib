@@ -44,11 +44,11 @@
 /* Return a freshly allocated string containing the file names
    in directory DIRP, separated by '\0' characters;
    the end is marked by two '\0' characters in a row.
-   Return NULL (setting errno) if DIRP cannot be read or closed.
+   Return NULL (setting errno) if DIRP cannot be read.
    If DIRP is NULL, return NULL without affecting errno.  */
 
-static char *
-savedirstream (DIR *dirp)
+char *
+streamsavedir (DIR *dirp)
 {
   char *name_space;
   size_t allocated = NAME_SIZE_DEFAULT;
@@ -96,10 +96,24 @@ savedirstream (DIR *dirp)
     }
   name_space[used] = '\0';
   save_errno = errno;
-  if (closedir (dirp) != 0)
-    save_errno = errno;
   if (save_errno != 0)
     {
+      free (name_space);
+      errno = save_errno;
+      return NULL;
+    }
+  return name_space;
+}
+
+/* Like savedirstreamp (DIRP), except also close DIRP.  */
+
+static char *
+savedirstream (DIR *dirp)
+{
+  char *name_space = streamsavedir (dirp);
+  if (dirp && closedir (dirp) != 0)
+    {
+      int save_errno = errno;
       free (name_space);
       errno = save_errno;
       return NULL;
@@ -123,6 +137,7 @@ savedir (char const *dir)
    the end is marked by two '\0' characters in a row.
    Return NULL (setting errno) if FD cannot be read or closed.  */
 
+/* deprecated */
 char *
 fdsavedir (int fd)
 {

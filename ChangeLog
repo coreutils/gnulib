@@ -1,3 +1,18 @@
+2010-09-12  Paul Eggert  <eggert@cs.ucla.edu>
+
+	savedir: add streamsavedir, deprecate fdsavedir
+	* NEWS: Mention deprecation of fdsavedir.
+	* lib/savedir.c (streamsavedir): New extern function, whose name
+	ends in "savedir" to be consistent with the others.  This differs
+	from savedirstream in that it doesn't close its argument.  The
+	next version of GNU tar will use this instead of fdsavedir, to
+	avoid some race conditions and conserve file descriptors.
+	(savedirstream): Reimplement as a wrapper around streamsavedir.
+	(fdsavedir): Add a comment deprecating this function.  As far as
+	I know, only GNU tar used it, and GNU tar doesn't need it any more.
+	* lib/savedir.h (streamsavedir): New decl.
+	(fdsavedir): Add a comment deprecating this.
+
 2010-09-10  Bruno Haible  <bruno@clisp.org>
 
 	langinfo: Fix last commit.
