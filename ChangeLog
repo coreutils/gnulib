@@ -1,5 +1,11 @@
 2010-09-13  Paul Eggert  <eggert@cs.ucla.edu>
 
+	fts: use O_NOFOLLOW to avoid race condition when opening a directory
+	* lib/fts.c (opendirat): New arg extra_flags.
+	(__opendir2): Use it to avoid following symlinks when opening
+	a directory, if symlinks are not supposed to be followed.  See
+	<http://lists.gnu.org/archive/html/bug-gnulib/2010-09/msg00213.html>.
+
 	fdopendir: preserve argument fd before returning
 	* lib/fdopendir.c: Adjust comments to say POSIX, not Solaris.
 	(fdopendir_with_dup, fd_clone_opendir): New static functions.

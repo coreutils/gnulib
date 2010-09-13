@@ -290,10 +290,11 @@ fts_set_stat_required (FTSENT *p, bool required)
 /* FIXME: if others need this function, move it into lib/openat.c */
 static inline DIR *
 internal_function
-opendirat (int fd, char const *dir)
+opendirat (int fd, char const *dir, int extra_flags)
 {
   int new_fd = openat (fd, dir,
-                       O_RDONLY | O_DIRECTORY | O_NOCTTY | O_NONBLOCK);
+                       (O_RDONLY | O_DIRECTORY | O_NOCTTY | O_NONBLOCK
+                        | extra_flags));
   DIR *dirp;
 
   if (new_fd < 0)
@@ -1237,7 +1238,11 @@ fts_build (register FTS *sp, int type)
 #else
 # define __opendir2(file, flag) \
         ( ! ISSET(FTS_NOCHDIR) && ISSET(FTS_CWDFD) \
-          ? opendirat(sp->fts_cwd_fd, file)        \
+          ? opendirat(sp->fts_cwd_fd, file,        \
+                      ((ISSET(FTS_PHYSICAL)                   \
+                        && ! (cur->fts_level == FTS_ROOTLEVEL \
+                              && ISSET(FTS_COMFOLLOW)))       \
+                       ? O_NOFOLLOW : 0))                     \
           : opendir(file))
 #endif
        if ((dirp = __opendir2(cur->fts_accpath, oflag)) == NULL) {
