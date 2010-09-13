@@ -33,24 +33,86 @@
 #  include "dirent--.h"
 # endif
 
-/* Replacement for Solaris' function by the same name.
-   <http://www.google.com/search?q=fdopendir+site:docs.sun.com>
+static DIR *fdopendir_with_dup (int, int);
+static DIR *fd_clone_opendir (int);
+
+/* Replacement for POSIX fdopendir.
+
    First, try to simulate it via opendir ("/proc/self/fd/FD").  Failing
    that, simulate it by using fchdir metadata, or by doing
    save_cwd/fchdir/opendir(".")/restore_cwd.
    If either the save_cwd or the restore_cwd fails (relatively unlikely),
    then give a diagnostic and exit nonzero.
-   Otherwise, this function works just like Solaris' fdopendir.
+
+   If successful, the resulting stream is based on FD in
+   implementations where streams are based on file descriptors and in
+   applications where no other thread or signal handler allocates or
+   frees file descriptors.  In other cases, consult dirfd on the result
+   to find out whether FD is still being used.
+
+   Otherwise, this function works just like POSIX fdopendir.
 
    W A R N I N G:
-   Unlike other fd-related functions, this one effectively consumes
-   its FD parameter.  The caller should not close or otherwise
-   manipulate FD if this function returns successfully.  Also, this
-   implementation does not guarantee that dirfd(fdopendir(n))==n;
-   the open directory stream may use a clone of FD, or have no
-   associated fd at all.  */
+
+   Unlike other fd-related functions, this one places constraints on FD.
+   If this function returns successfully, FD is under control of the
+   dirent.h system, and the caller should not close or modify the state of
+   FD other than by the dirent.h functions.  */
 DIR *
 fdopendir (int fd)
+{
+  return fdopendir_with_dup (fd, -1);
+}
+
+/* Like fdopendir, except that if OLDER_DUPFD is not -1, it is known
+   to be a dup of FD which is less than FD - 1 and which will be
+   closed by the caller and not otherwise used by the caller.  This
+   function makes sure that FD is closed and all file descriptors less
+   than FD are open, and then calls fd_clone_opendir on a dup of FD.
+   That way, barring race conditions, fd_clone_opendir returns a
+   stream whose file descriptor is FD.  */
+static DIR *
+fdopendir_with_dup (int fd, int older_dupfd)
+{
+  int dupfd = dup (fd);
+  if (dupfd < 0 && errno == EMFILE)
+    dupfd = older_dupfd;
+  if (dupfd < 0)
+    return NULL;
+  else
+    {
+      DIR *dir;
+      int saved_errno;
+      if (dupfd < fd - 1 && dupfd != older_dupfd)
+        {
+          dir = fdopendir_with_dup (fd, dupfd);
+          saved_errno = errno;
+        }
+      else
+        {
+          close (fd);
+          dir = fd_clone_opendir (dupfd);
+          saved_errno = errno;
+          if (! dir)
+            {
+              int fd1 = dup (dupfd);
+              if (fd1 != fd)
+                openat_save_fail (fd1 < 0 ? errno : EBADF);
+            }
+        }
+
+      if (dupfd != older_dupfd)
+        close (dupfd);
+      errno = saved_errno;
+      return dir;
+    }
+}
+
+/* Like fdopendir, except the result controls a clone of FD.  It is
+   the caller's responsibility both to close FD and (if the result is
+   not null) to closedir the result.  */
+static DIR *
+fd_clone_opendir (int fd)
 {
   int saved_errno;
   DIR *dir;
@@ -100,8 +162,6 @@ fdopendir (int fd)
 # endif /* !REPLACE_FCHDIR */
     }
 
-  if (dir)
-    close (fd);
   if (proc_file != buf)
     free (proc_file);
   errno = saved_errno;
