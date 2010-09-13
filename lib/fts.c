@@ -1305,7 +1305,8 @@ fts_build (register FTS *sp, int type)
                 if (ISSET(FTS_CWDFD) && 0 <= dir_fd)
                   {
                     dir_fd = dup (dir_fd);
-                    set_cloexec_flag (dir_fd, true);
+                    if (0 <= dir_fd)
+                      set_cloexec_flag (dir_fd, true);
                   }
                 if (dir_fd < 0 || fts_safe_changedir(sp, cur, dir_fd, NULL)) {
                         if (nlinks && type == BREAD)

@@ -1,3 +1,9 @@
+2010-09-13  Jim Meyering  <meyering@redhat.com>
+
+	fts: don't operate on an invalid file descriptor after failed dup
+	* lib/fts.c (fts_build): Don't call set_cloexec_flag on a
+	negative file descriptor.
+
 2010-09-12  Paul Eggert  <eggert@cs.ucla.edu>
 
 	savedir: add streamsavedir, deprecate fdsavedir
