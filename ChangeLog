@@ -1,3 +1,9 @@
+2010-09-13  Eric Blake  <eblake@redhat.com>
+
+	float: fix broken MirBSD header
+	* m4/float_h.m4 (gl_FLOAT_H): MirBSD copied OpenBSD's bug.
+	* doc/posix-headers/float.texi (float.h): Document it.
+
 2010-09-13  Paul Eggert  <eggert@cs.ucla.edu>
 
 	fts: use O_NOFOLLOW to avoid race condition when opening a directory
