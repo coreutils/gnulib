@@ -13,7 +13,6 @@ cycle-check
 d-ino
 d-type
 dirent-safer
-dirfd
 fchdir
 fcntl-h
 fcntl-safer

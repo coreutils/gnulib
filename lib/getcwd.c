@@ -247,8 +247,6 @@ __getcwd (char *buf, size_t size)
       dirstream = fdopendir (fd);
       if (dirstream == NULL)
         goto lose;
-      /* Reset fd.  It may have been closed by fdopendir.  */
-      fd = dirfd (dirstream);
       fd_needs_closing = false;
 #else
       dirstream = __opendir (dotlist);

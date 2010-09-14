@@ -1,3 +1,18 @@
+2010-09-13  Paul Eggert  <eggert@cs.ucla.edu>
+
+	fts, getcwd, glob: audit for dirfd returning -1
+	* lib/fts.c (opendir): Remove #define; no longer used.
+	(opendirat): New arg PDIR_FD.  All callers changed.
+	(fts_build, _opendir2): Use new opendirat to avoid the need for
+	dirfd, or for checking whether dirfd returns a negative value.
+	Don't use opendir; always use openat followed by fdopendir.
+	* lib/getcwd.c (__getcwd): Don't reset fd; fdopendir no longer clobbers
+	it.
+	* lib/glob.c (link_exists_p): Add comment explaining why dirfd never
+	returns -1 here.
+	* modules/fts (Depends-on): Remove dirfd.
+	* modules/getcwd (Depends-on): Likewise.
+
 2010-09-13  Eric Blake  <eblake@redhat.com>
 
 	float: fix broken MirBSD header

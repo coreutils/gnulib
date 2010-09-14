@@ -10,7 +10,6 @@ m4/getcwd.m4
 Depends-on:
 mempcpy
 d-ino
-dirfd
 extensions
 memmove
 openat

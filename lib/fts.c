@@ -160,8 +160,6 @@ enum Fts_stat
 # define fchdir __fchdir
 # undef open
 # define open __open
-# undef opendir
-# define opendir __opendir
 # undef readdir
 # define readdir __readdir
 #else
@@ -290,7 +288,7 @@ fts_set_stat_required (FTSENT *p, bool required)
 /* FIXME: if others need this function, move it into lib/openat.c */
 static inline DIR *
 internal_function
-opendirat (int fd, char const *dir, int extra_flags)
+opendirat (int fd, char const *dir, int extra_flags, int *pdir_fd)
 {
   int new_fd = openat (fd, dir,
                        (O_RDONLY | O_DIRECTORY | O_NOCTTY | O_NONBLOCK
@@ -301,7 +299,9 @@ opendirat (int fd, char const *dir, int extra_flags)
     return NULL;
   set_cloexec_flag (new_fd, true);
   dirp = fdopendir (new_fd);
-  if (dirp == NULL)
+  if (dirp)
+    *pdir_fd = new_fd;
+  else
     {
       int saved_errno = errno;
       close (new_fd);
@@ -1222,6 +1222,7 @@ fts_build (register FTS *sp, int type)
         bool nostat;
         size_t len, maxlen, new_len;
         char *cp;
+        int dir_fd;
 
         /* Set current node pointer. */
         cur = sp->fts_cur;
@@ -1237,13 +1238,14 @@ fts_build (register FTS *sp, int type)
                 oflag = DTF_HIDEW|DTF_NODUP|DTF_REWIND;
 #else
 # define __opendir2(file, flag) \
-        ( ! ISSET(FTS_NOCHDIR) && ISSET(FTS_CWDFD) \
-          ? opendirat(sp->fts_cwd_fd, file,        \
-                      ((ISSET(FTS_PHYSICAL)                   \
-                        && ! (cur->fts_level == FTS_ROOTLEVEL \
-                              && ISSET(FTS_COMFOLLOW)))       \
-                       ? O_NOFOLLOW : 0))                     \
-          : opendir(file))
+        opendirat((! ISSET(FTS_NOCHDIR) && ISSET(FTS_CWDFD)     \
+                   ? sp->fts_cwd_fd : AT_FDCWD),                \
+                  file,                                         \
+                  ((ISSET(FTS_PHYSICAL)                         \
+                    && ! (ISSET(FTS_COMFOLLOW)                  \
+                          && cur->fts_level == FTS_ROOTLEVEL))  \
+                   ? O_NOFOLLOW : 0),                           \
+                  &dir_fd)
 #endif
        if ((dirp = __opendir2(cur->fts_accpath, oflag)) == NULL) {
                 if (type == BREAD) {
@@ -1306,8 +1308,7 @@ fts_build (register FTS *sp, int type)
          * checking FTS_NS on the returned nodes.
          */
         if (nlinks || type == BREAD) {
-                int dir_fd = dirfd(dirp);
-                if (ISSET(FTS_CWDFD) && 0 <= dir_fd)
+                if (ISSET(FTS_CWDFD))
                   {
                     dir_fd = dup (dir_fd);
                     if (0 <= dir_fd)
