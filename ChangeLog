@@ -1,5 +1,14 @@
 2010-09-14  Eric Blake  <eblake@redhat.com>
 
+	test-rawmemchr: make more robust
+	* modules/rawmemchr-tests (Files): Add zerosize-ptr.h, mmap-anon.m4.
+	(Depends-on, configure.ac): Add needed prerequisites to use it.
+	* modules/memchr-tests (Files, Depends-on, configure.ac):
+	Likewise, to avoid implicit reliance on memchr module prereqs.
+	* tests/test-memchr.c (main): Ensure proper masking.
+	* tests/test-rawmemchr.c (main): Likewise.  Detect oversized
+	reads.
+
 	memchr: detect glibc Alpha bug
 	Avoids http://sourceware.org/bugzilla/show_bug.cgi?id=12019.
 	* m4/memchr.m4 (gl_FUNC_MEMCHR): Detect glibc 2.11.2 failure on

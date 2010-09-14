@@ -57,6 +57,7 @@ main (void)
 
   ASSERT (MEMCHR (input + 1, 'a', n - 1) == input + n - 1);
   ASSERT (MEMCHR (input + 1, 'e', n - 1) == input + n - 2);
+  ASSERT (MEMCHR (input + 1, 0x789abc00 | 'e', n - 1) == input + n - 2);
 
   ASSERT (MEMCHR (input, 'f', n) == NULL);
   ASSERT (MEMCHR (input, '\0', n) == NULL);
