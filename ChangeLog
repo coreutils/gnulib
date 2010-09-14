@@ -1,3 +1,13 @@
+2010-09-14  Eric Blake  <eblake@redhat.com>
+
+	memchr: detect glibc Alpha bug
+	Avoids http://sourceware.org/bugzilla/show_bug.cgi?id=12019.
+	* m4/memchr.m4 (gl_FUNC_MEMCHR): Detect glibc 2.11.2 failure on
+	Alpha.
+	* doc/posix-functions/memchr.texi (memchr): Tweak wording.
+	* tests/test-memchr.c (main): Enhance test.
+	Reported by Nelson H. F. Beebe.
+
 2010-09-13  Paul Eggert  <eggert@cs.ucla.edu>
 
 	fts, getcwd, glob: audit for dirfd returning -1
