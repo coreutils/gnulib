@@ -1,5 +1,12 @@
 2010-09-15  Eric Blake  <eblake@redhat.com>
 
+	stdlib: work around MirBSD WEXITSTATUS bug
+	* lib/stdlib.in.h (includes): Guarantee WEXITSTATUS.
+	* modules/stdlib (Depends-on): Add sys_wait.
+	* tests/test-sys_wait.c (main): Enhance test.
+	* tests/test-stdlib.c (main): Likewise.
+	* doc/posix-headers/stdlib.texi (stdlib.h): Document the bug.
+
 	docs: mention MacOS issue with WEXITSTATUS(constant)
 	* doc/posix-headers/sys_wait.texi (sys/wait.h): Document the
 	issue.

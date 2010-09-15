@@ -26,5 +26,26 @@ static pid_t a;
 int
 main (void)
 {
-  return a;
+  /* Check for existence of required macros.  Note that we document
+     that these are safe only on lvalues.  */
+  int i;
+  for (i = 0; i < 0x10000; i = (i ? i << 1 : 1))
+    if (!!WIFSIGNALED (i) + !!WIFEXITED (i) + !!WIFSTOPPED (i) != 1)
+      return 1;
+  i = WEXITSTATUS (i) + WSTOPSIG (i) + WTERMSIG (i);
+
+  switch (i)
+    {
+#if 0
+  /* Gnulib doesn't guarantee these, yet.  */
+    case WCONTINUED:
+    case WNOHANG:
+    case WUNTRACED:
+    case WEXITED:
+    case WNOWAIT:
+    case WSTOPPED:
+#endif
+      break;
+    }
+  return a ? i : 0;
 }

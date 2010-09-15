@@ -38,6 +38,11 @@
 /* NetBSD 5.0 mis-defines NULL.  */
 #include <stddef.h>
 
+/* MirBSD 10 fails to define WEXITSTATUS.  */
+#ifndef WEXITSTATUS
+# include <sys/wait.h>
+#endif
+
 /* Solaris declares getloadavg() in <sys/loadavg.h>.  */
 #if (@GNULIB_GETLOADAVG@ || defined GNULIB_POSIXCHECK) && @HAVE_SYS_LOADAVG_H@
 # include <sys/loadavg.h>

@@ -11,6 +11,7 @@ c++defs
 include_next
 stddef
 stdint
+sys_wait
 unistd
 warn-on-use
 

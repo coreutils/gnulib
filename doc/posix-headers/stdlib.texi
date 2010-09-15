@@ -17,6 +17,10 @@ The macro @code{EXIT_FAILURE} is incorrectly defined on Tandem/NSK.
 Some platforms provide a @code{NULL} macro that cannot be used in arbitrary
 expressions:
 NetBSD 5.0
+
+@item
+Some platforms fail to provide @code{WEXITSTATUS} and friends:
+MirBSD 10.
 @end itemize
 
 Portability problems not fixed by Gnulib:
