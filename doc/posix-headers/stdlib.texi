@@ -21,4 +21,8 @@ NetBSD 5.0
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+System status macros such as @code{WEXITSTATUS} require an lvalue
+argument on some platforms.
+MacOS X 10.5.
 @end itemize

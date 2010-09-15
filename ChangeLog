@@ -1,5 +1,10 @@
 2010-09-15  Eric Blake  <eblake@redhat.com>
 
+	docs: mention MacOS issue with WEXITSTATUS(constant)
+	* doc/posix-headers/sys_wait.texi (sys/wait.h): Document the
+	issue.
+	* doc/posix-headers/stdlib.texi (stdlib.h): Likewise.
+
 	strnlen: add tests
 	* modules/strnlen-tests: New file.
 	* tests/test-strnlen.c: Likewise.
