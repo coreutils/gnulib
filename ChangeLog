@@ -1,3 +1,12 @@
+2010-09-14  Bruno Haible  <bruno@clisp.org>
+
+	unistr/base: Avoid link errors when module 'libunistring' is also used.
+	* lib/unistr.in.h (u8_mbtouc_unsafe, u16_mbtouc_unsafe,
+	u32_mbtouc_unsafe, u8_mbtouc, u16_mbtouc, u32_mbtouc, u8_mbtoucr,
+	u16_mbtoucr, u32_mbtoucr, u8_uctomb_aux, u16_uctomb_aux, u32_uctomb):
+	Declare also when HAVE_LIBUNISTRING is set.
+	Reported by Pádraig Brady <P@draigbrady.com>.
+
 2010-09-14  Eric Blake  <eblake@redhat.com>
 
 	test-rawmemchr: make more robust

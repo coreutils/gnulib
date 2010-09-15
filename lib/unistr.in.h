@@ -134,7 +134,7 @@ extern int
 /* The variants with _safe suffix are safe, even if the library is compiled
    without --enable-safety.  */
 
-#ifdef GNULIB_UNISTR_U8_MBTOUC_UNSAFE
+#if GNULIB_UNISTR_U8_MBTOUC_UNSAFE || HAVE_LIBUNISTRING
 # if !HAVE_INLINE
 extern int
        u8_mbtouc_unsafe (ucs4_t *puc, const uint8_t *s, size_t n);
@@ -157,7 +157,7 @@ u8_mbtouc_unsafe (ucs4_t *puc, const uint8_t *s, size_t n)
 # endif
 #endif
 
-#ifdef GNULIB_UNISTR_U16_MBTOUC_UNSAFE
+#if GNULIB_UNISTR_U16_MBTOUC_UNSAFE || HAVE_LIBUNISTRING
 # if !HAVE_INLINE
 extern int
        u16_mbtouc_unsafe (ucs4_t *puc, const uint16_t *s, size_t n);
@@ -180,7 +180,7 @@ u16_mbtouc_unsafe (ucs4_t *puc, const uint16_t *s, size_t n)
 # endif
 #endif
 
-#ifdef GNULIB_UNISTR_U32_MBTOUC_UNSAFE
+#if GNULIB_UNISTR_U32_MBTOUC_UNSAFE || HAVE_LIBUNISTRING
 # if !HAVE_INLINE
 extern int
        u32_mbtouc_unsafe (ucs4_t *puc, const uint32_t *s, size_t n);
@@ -205,7 +205,7 @@ u32_mbtouc_unsafe (ucs4_t *puc,
 # endif
 #endif
 
-#ifdef GNULIB_UNISTR_U8_MBTOUC
+#if GNULIB_UNISTR_U8_MBTOUC || HAVE_LIBUNISTRING
 # if !HAVE_INLINE
 extern int
        u8_mbtouc (ucs4_t *puc, const uint8_t *s, size_t n);
@@ -228,7 +228,7 @@ u8_mbtouc (ucs4_t *puc, const uint8_t *s, size_t n)
 # endif
 #endif
 
-#ifdef GNULIB_UNISTR_U16_MBTOUC
+#if GNULIB_UNISTR_U16_MBTOUC || HAVE_LIBUNISTRING
 # if !HAVE_INLINE
 extern int
        u16_mbtouc (ucs4_t *puc, const uint16_t *s, size_t n);
@@ -251,7 +251,7 @@ u16_mbtouc (ucs4_t *puc, const uint16_t *s, size_t n)
 # endif
 #endif
 
-#ifdef GNULIB_UNISTR_U32_MBTOUC
+#if GNULIB_UNISTR_U32_MBTOUC || HAVE_LIBUNISTRING
 # if !HAVE_INLINE
 extern int
        u32_mbtouc (ucs4_t *puc, const uint32_t *s, size_t n);
@@ -279,17 +279,17 @@ u32_mbtouc (ucs4_t *puc, const uint32_t *s, size_t n _GL_UNUSED_PARAMETER)
 /* Similar to u*_mbtouc(), except that the return value gives more details
    about the failure, similar to mbrtowc().  */
 
-#ifdef GNULIB_UNISTR_U8_MBTOUCR
+#if GNULIB_UNISTR_U8_MBTOUCR || HAVE_LIBUNISTRING
 extern int
        u8_mbtoucr (ucs4_t *puc, const uint8_t *s, size_t n);
 #endif
 
-#ifdef GNULIB_UNISTR_U16_MBTOUCR
+#if GNULIB_UNISTR_U16_MBTOUCR || HAVE_LIBUNISTRING
 extern int
        u16_mbtoucr (ucs4_t *puc, const uint16_t *s, size_t n);
 #endif
 
-#ifdef GNULIB_UNISTR_U32_MBTOUCR
+#if GNULIB_UNISTR_U32_MBTOUCR || HAVE_LIBUNISTRING
 extern int
        u32_mbtoucr (ucs4_t *puc, const uint32_t *s, size_t n);
 #endif
@@ -300,7 +300,7 @@ extern int
 /* Similar to wctomb(), except that s must not be NULL, and the argument n
    must be specified.  */
 
-#ifdef GNULIB_UNISTR_U8_UCTOMB
+#if GNULIB_UNISTR_U8_UCTOMB || HAVE_LIBUNISTRING
 /* Auxiliary function, also used by u8_chr, u8_strchr, u8_strrchr.  */
 extern int
        u8_uctomb_aux (uint8_t *s, ucs4_t uc, int n);
@@ -322,7 +322,7 @@ u8_uctomb (uint8_t *s, ucs4_t uc, int n)
 # endif
 #endif
 
-#ifdef GNULIB_UNISTR_U16_UCTOMB
+#if GNULIB_UNISTR_U16_UCTOMB || HAVE_LIBUNISTRING
 /* Auxiliary function, also used by u16_chr, u16_strchr, u16_strrchr.  */
 extern int
        u16_uctomb_aux (uint16_t *s, ucs4_t uc, int n);
@@ -344,7 +344,7 @@ u16_uctomb (uint16_t *s, ucs4_t uc, int n)
 # endif
 #endif
 
-#ifdef GNULIB_UNISTR_U32_UCTOMB
+#if GNULIB_UNISTR_U32_UCTOMB || HAVE_LIBUNISTRING
 # if !HAVE_INLINE
 extern int
        u32_uctomb (uint32_t *s, ucs4_t uc, int n);
