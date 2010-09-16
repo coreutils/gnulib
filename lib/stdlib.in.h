@@ -38,7 +38,7 @@
 /* NetBSD 5.0 mis-defines NULL.  */
 #include <stddef.h>
 
-/* MirBSD 10 fails to define WEXITSTATUS.  */
+/* MirBSD 10 defines WEXITSTATUS in <sys/wait.h>, not in <stdlib.h>.  */
 #ifndef WEXITSTATUS
 # include <sys/wait.h>
 #endif

@@ -19,7 +19,10 @@ expressions:
 NetBSD 5.0
 
 @item
-Some platforms fail to provide @code{WEXITSTATUS} and friends:
+The macros @code{WIFSIGNALED}, @code{WIFEXITED}, @code{WIFSTOPPED},
+@code{WTERMSIG}, @code{WEXITSTATUS}, @code{WNOHANG}, @code{WUNTRACED},
+@code{WSTOPSIG} are not defined in this header file (only in
+@code{<sys/wait.h>} on some platforms:
 MirBSD 10.
 @end itemize
 
