@@ -53,7 +53,7 @@ login_tty (int slave_fd)
     close (dummy_fd);
   }
 
-  /* Assign fd to the standard input, standard output, and standardd error of
+  /* Assign fd to the standard input, standard output, and standard error of
      the current process.  */
   for (i = 0; i < 3; i++)
     if (slave_fd != i)

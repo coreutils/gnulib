@@ -33,7 +33,7 @@ extern "C" {
 
 #if HAVE_ICONV
 
-/* An conversion descriptor for use by the iconveh functions.  */
+/* A conversion descriptor for use by the iconveh functions.  */
 typedef struct
   {
     /* Conversion descriptor from FROM_CODESET to TO_CODESET, or (iconv_t)(-1)

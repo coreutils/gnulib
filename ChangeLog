@@ -1,3 +1,9 @@
+2010-09-16  Bruno Haible  <bruno@clisp.org>
+
+	Fix typos in comments.
+	* lib/striconveh.h: Fix typo in comment.
+	* lib/login_tty.c (login_tty): Likewise.
+
 2010-09-15  Bruno Haible  <bruno@clisp.org>
 
 	stdlib: clarify MirBSD WEXITSTATUS bug
