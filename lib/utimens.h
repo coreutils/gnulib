@@ -8,7 +8,8 @@ int lutimens (char const *, struct timespec const [2]);
 # include <fcntl.h>
 # include <sys/stat.h>
 
-int fdutimensat (int dir, char const *name, int fd, struct timespec const [2]);
+int fdutimensat (int dir, char const *name, int fd, struct timespec const [2],
+                 int atflag);
 
 /* Using this function makes application code slightly more readable.  */
 static inline int

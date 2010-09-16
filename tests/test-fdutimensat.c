@@ -40,7 +40,7 @@ static int dfd = AT_FDCWD;
 static int
 do_futimens (int fd, struct timespec const times[2])
 {
-  return fdutimensat (dfd, NULL, fd, times);
+  return fdutimensat (dfd, NULL, fd, times, 0);
 }
 
 /* Test the use of file descriptors alongside a name.  */
@@ -52,7 +52,7 @@ do_fdutimens (char const *name, struct timespec const times[2])
   if (fd < 0)
     fd = openat (dfd, name, O_RDONLY);
   errno = 0;
-  result = fdutimensat (dfd, name, fd, times);
+  result = fdutimensat (dfd, name, fd, times, 0);
   if (0 <= fd)
     {
       int saved_errno = errno;
@@ -69,11 +69,18 @@ do_lutimens (const char *name, struct timespec const times[2])
   return lutimensat (dfd, name, times);
 }
 
+/* Wrap fdutimensat to behave like lutimens.  */
+static int
+do_lutimens1 (const char *name, struct timespec const times[2])
+{
+  return fdutimensat (dfd, name, -1, times, AT_SYMLINK_NOFOLLOW);
+}
+
 /* Wrap fdutimensat to behave like utimens.  */
 static int
 do_utimens (const char *name, struct timespec const times[2])
 {
-  return fdutimensat (dfd, name, -1, times);
+  return fdutimensat (dfd, name, -1, times, 0);
 }
 
 int
@@ -94,12 +101,14 @@ main (void)
   result3 = test_lutimens (do_lutimens, (result1 + result2) == 0);
   /* We expect 0/0, 0/77, or 77/77, but not 77/0.  */
   ASSERT (result1 <= result3);
+  ASSERT (test_lutimens (do_lutimens1, (result1 + result2) == 0) == result3);
   dfd = open (".", O_RDONLY);
   ASSERT (0 <= dfd);
   ASSERT (test_utimens (do_utimens, false) == result1);
   ASSERT (test_utimens (do_fdutimens, false) == result1);
   ASSERT (test_futimens (do_futimens, false) == result2);
   ASSERT (test_lutimens (do_lutimens, false) == result3);
+  ASSERT (test_lutimens (do_lutimens1, false) == result3);
 
   /* Directory relative tests.  */
   ASSERT (mkdir (BASE "dir", 0700) == 0);
@@ -107,12 +116,15 @@ main (void)
   fd = creat ("file", 0600);
   ASSERT (0 <= fd);
   errno = 0;
-  ASSERT (fdutimensat (fd, ".", AT_FDCWD, NULL) == -1);
+  ASSERT (fdutimensat (fd, ".", fd, NULL, AT_SYMLINK_NOFOLLOW) == -1);
+  ASSERT (errno == EINVAL);
+  errno = 0;
+  ASSERT (fdutimensat (fd, ".", AT_FDCWD, NULL, 0) == -1);
   ASSERT (errno == ENOTDIR);
   {
     struct timespec ts[2] = { { Y2K, 0 }, { Y2K, 0 } };
     struct stat st;
-    ASSERT (fdutimensat (dfd, BASE "dir/file", fd, ts) == 0);
+    ASSERT (fdutimensat (dfd, BASE "dir/file", fd, ts, 0) == 0);
     ASSERT (stat ("file", &st) == 0);
     ASSERT (st.st_atime == Y2K);
     ASSERT (get_stat_atime_ns (&st) == 0);
@@ -122,7 +134,7 @@ main (void)
   ASSERT (close (fd) == 0);
   ASSERT (close (dfd) == 0);
   errno = 0;
-  ASSERT (fdutimensat (dfd, ".", -1, NULL) == -1);
+  ASSERT (fdutimensat (dfd, ".", -1, NULL, 0) == -1);
   ASSERT (errno == EBADF);
 
   /* Cleanup.  */

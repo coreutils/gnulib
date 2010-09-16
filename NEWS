@@ -12,6 +12,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2010-09-16  fdutimensat     The function now takes a new parameter; old users
+                            can safely pass atflag=0 for no semantic change.
+
 2010-09-13  regex           The module is not guaranteeing anymore support for
                             64-bit regoff_t on 64-bit systems.  The size of
                             regoff_t will always be 32-bit unless the program

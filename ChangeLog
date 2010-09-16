@@ -1,3 +1,12 @@
+2010-09-16  Eric Blake  <eblake@redhat.com>
+
+	fdutimensat: add an atflag parameter
+	* lib/fdutimensat.c (fdutimensat): Add new parameter.
+	* lib/utimens.h (fdutimensat): Update prototype.
+	* tests/test-fdutimensat.c: Adjust test to match.
+	* NEWS: Document the change.
+	Suggested by Paul Eggert.
+
 2010-09-16  Bruno Haible  <bruno@clisp.org>
 
 	Fix typos in comments.
