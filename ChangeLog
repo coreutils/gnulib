@@ -1,5 +1,12 @@
 2010-09-17  Eric Blake  <eblake@redhat.com>
 
+	mirbsd: add some more support
+	* m4/c-stack.m4 (AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC): MirBSD is
+	in BSD family.
+	* m4/gc-random.m4 (gl_GC_RANDOM): MirBSD supports same random
+	devices as OpenBSD.
+	* m4/host-os.m4 (mirbsd): Add MirBSD.
+
 	tests: fix unportable assumption on sys/wait.h
 	* tests/test-sys_wait.c (main): Relax test.
 	* tests/test-stdlib.c (main): Likewise.
