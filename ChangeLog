@@ -1,5 +1,13 @@
 2010-09-16  Bruno Haible  <bruno@clisp.org>
 
+	login_tty: Stricter unit test.
+	* modules/login_tty-tests (Depends-on): Add tcgetsid.
+	* tests/test-login_tty.c (main): Also check the results of tcgetpgrp()
+	and tcgetsid() after login_tty.
+	Reported by Mats Erik Andersson <mats.andersson@gisladisker.se>.
+
+2010-09-16  Bruno Haible  <bruno@clisp.org>
+
 	New module 'tcgetsid'.
 	* lib/tcgetsid.c: New file.
 	* m4/tcgetsid.m4: New file.
