@@ -1,5 +1,13 @@
 2010-09-16  Bruno Haible  <bruno@clisp.org>
 
+	login_tty: Make the replacement code work on BSD systems.
+	* lib/login_tty.c: Include <sys/ioctl.h>.
+	(login_tty): Use ioctl TIOCSCTTY when available.
+	* modules/login_tty (Depends-on): Add sys_ioctl.
+	Reported by Mats Erik Andersson <mats.andersson@gisladisker.se>.
+
+2010-09-16  Bruno Haible  <bruno@clisp.org>
+
 	login_tty: Stricter unit test.
 	* modules/login_tty-tests (Depends-on): Add tcgetsid.
 	* tests/test-login_tty.c (main): Also check the results of tcgetpgrp()

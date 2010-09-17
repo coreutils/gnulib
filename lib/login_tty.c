@@ -21,6 +21,7 @@
 
 #include <fcntl.h>
 #include <unistd.h>
+#include <sys/ioctl.h>
 
 int
 login_tty (int slave_fd)
@@ -31,15 +32,22 @@ login_tty (int slave_fd)
   setsid ();
 
   /* Make fd the controlling terminal for the current process.
-     On Solaris: A terminal becomes the controlling terminal of a session
-     if it is being open()ed, at a moment when
-       1. it is not already the controlling terminal of some session, and
-       2. the process that open()s it is a session leader that does not have
-          a controlling terminal.
-     We assume condition 1, try to ensure condition 2, and then open() it.  */
+     On BSD and OSF/1: There is ioctl TIOCSCTTY for this purpose.
+     On Solaris:
+       A terminal becomes the controlling terminal of a session
+       if it is being open()ed, at a moment when
+         1. it is not already the controlling terminal of some session, and
+         2. the process that open()s it is a session leader that does not have
+            a controlling terminal.
+       We assume condition 1, try to ensure condition 2, and then open() it.
+   */
   for (i = 0; i < 3; i++)
     if (i != slave_fd)
       close (i);
+#ifdef TIOCSCTTY
+  if (ioctl (slave_fd, TIOCSCTTY, NULL) < 0)
+    return -1;
+#else
   {
     char *slave_name;
     int dummy_fd;
@@ -52,6 +60,7 @@ login_tty (int slave_fd)
       return -1;
     close (dummy_fd);
   }
+#endif
 
   /* Assign fd to the standard input, standard output, and standard error of
      the current process.  */
