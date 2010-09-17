@@ -24,6 +24,11 @@
 #include "signature.h"
 
 
+#if GNULIB_TEST_TCGETSID
+SIGNATURE_CHECK (GNULIB_NAMESPACE::tcgetsid, pid_t, (int));
+#endif
+
+
 int
 main ()
 {

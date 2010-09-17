@@ -1,5 +1,27 @@
 2010-09-16  Bruno Haible  <bruno@clisp.org>
 
+	New module 'tcgetsid'.
+	* lib/tcgetsid.c: New file.
+	* m4/tcgetsid.m4: New file.
+	* modules/tcgetsid: New file.
+	* modules/termios (Depends-on): Add c++defs, warn-on-use.
+	(Makefile.am): Ensure c++defs.h, warn-on-use.h get included. Substitute
+	GNULIB_TCGETSID, HAVE_TCGETSID.
+	* lib/termios.in.h: Include <sys/types.h>.
+	(tcgetsid): New declaration.
+	* m4/termios_h.m4 (gl_TERMIOS_H): Check whether tcgetsid is declared.
+	(gl_TERMIOS_H_DEFAULTS): Initialize GNULIB_TCGETSID, HAVE_TCGETSID.
+	* doc/posix-functions/tcgetsid.texi: Mention the new module.
+	* tests/test-termios-c++.cc: Check GNULIB_NAMESPACE::tcgetsid.
+
+2010-09-16  Bruno Haible  <bruno@clisp.org>
+
+	Tests for module 'termios'.
+	* modules/termios-c++-tests: New file.
+	* modules/termios-tests: New file.
+	* tests/test-termios-c++.cc: New file.
+	* tests/test-termios.c: New file.
+
 	New module 'termios'.
 	* modules/termios: New file.
 	* lib/termios.in.h: New file.

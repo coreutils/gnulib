@@ -27,8 +27,36 @@
 #ifndef _GL_TERMIOS_H
 #define _GL_TERMIOS_H
 
+#if @GNULIB_TCGETSID@
+/* Get pid_t.  */
+# include <sys/types.h>
+#endif
+
+/* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
+
+/* The definition of _GL_WARN_ON_USE is copied here.  */
+
 
 /* Declare overridden functions.  */
+
+#if @GNULIB_TCGETSID@
+/* Return the session ID of the controlling terminal of the current process.
+   The argument is a descriptor if this controlling terminal.
+   Return -1, with errno set, upon failure.  errno = ENOSYS means that the
+   function is unsupported.  */
+# if !@HAVE_TCGETSID@
+_GL_FUNCDECL_SYS (tcgetsid, pid_t, (int fd));
+# endif
+_GL_CXXALIAS_SYS (tcgetsid, pid_t, (int fd));
+_GL_CXXALIASWARN (tcgetsid);
+#elif defined GNULIB_POSIXCHECK
+# undef tcgetsid
+# if HAVE_RAW_DECL_TCGETSID
+_GL_WARN_ON_USE (tcgetsid, "tcgetsid is not portable - "
+                 "use gnulib module tcgetsid for portability");
+# endif
+#endif
+
 
 #endif /* _GL_TERMIOS_H */
 #endif /* _GL_TERMIOS_H */
