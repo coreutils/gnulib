@@ -35,8 +35,8 @@
    use just futimes (or equivalent) instead of utimes (or equivalent),
    and fail if on an old system without futimes (or equivalent).
    If TIMESPEC is null, set the time stamps to the current time.
-   ATFLAG must be 0 if FD is non-negative; otherwise it may be
-   AT_SYMLINK_NOFOLLOW to operate on FILE as a symlink.
+   ATFLAG is passed to utimensat if FD is negative or futimens was
+   unsupported, which can allow operation on FILE as a symlink.
    Return 0 on success, -1 (setting errno) on failure.  */
 
 int
@@ -44,20 +44,8 @@ fdutimensat (int dir, char const *file, int fd, struct timespec const ts[2],
              int atflag)
 {
   int result = 1;
-  if (atflag & ~AT_SYMLINK_NOFOLLOW)
-    {
-      errno = EINVAL;
-      return -1;
-    }
   if (0 <= fd)
-    {
-      if (atflag)
-        {
-          errno = EINVAL;
-          return -1;
-        }
-      result = futimens (fd, ts);
-    }
+    result = futimens (fd, ts);
   if (file && (fd < 0 || (result == -1 && errno == ENOSYS)))
     result = utimensat (dir, file, ts, atflag);
   if (result == 1)

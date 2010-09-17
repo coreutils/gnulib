@@ -53,6 +53,7 @@ do_fdutimens (char const *name, struct timespec const times[2])
     fd = openat (dfd, name, O_RDONLY);
   errno = 0;
   result = fdutimensat (dfd, name, fd, times, 0);
+  ASSERT (fdutimensat (dfd, name, fd, times, AT_SYMLINK_NOFOLLOW) == result);
   if (0 <= fd)
     {
       int saved_errno = errno;
@@ -115,9 +116,6 @@ main (void)
   ASSERT (chdir (BASE "dir") == 0);
   fd = creat ("file", 0600);
   ASSERT (0 <= fd);
-  errno = 0;
-  ASSERT (fdutimensat (fd, ".", fd, NULL, AT_SYMLINK_NOFOLLOW) == -1);
-  ASSERT (errno == EINVAL);
   errno = 0;
   ASSERT (fdutimensat (fd, ".", AT_FDCWD, NULL, 0) == -1);
   ASSERT (errno == ENOTDIR);

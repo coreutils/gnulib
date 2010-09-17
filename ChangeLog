@@ -1,3 +1,13 @@
+2010-09-17  Eric Blake  <eblake@redhat.com>
+
+	fdutimensat: drop atflag validation
+	* lib/fdutimensat.c (fdutimensat): Allow AT_SYMLINK_NOFOLLOW even
+	with valid fd, to close a race scenario where futimens is
+	unsupported and FILE was replaced by a symlink.
+	* tests/test-fdutimensat.c (do_fdutimens, main): Adjust test
+	accordingly.
+	Suggested by Paul Eggert.
+
 2010-09-16  Bruno Haible  <bruno@clisp.org>
 
 	unlockpt: Fix declaration within GNULIB_POSIXCHECK.
