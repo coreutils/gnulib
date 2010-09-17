@@ -40,7 +40,7 @@
    Return 0 on success, -1 (setting errno) on failure.  */
 
 int
-fdutimensat (int dir, char const *file, int fd, struct timespec const ts[2],
+fdutimensat (int fd, int dir, char const *file, struct timespec const ts[2],
              int atflag)
 {
   int result = 1;

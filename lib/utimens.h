@@ -1,6 +1,5 @@
 #include <time.h>
-int fdutimens (char const *, int, struct timespec const [2]);
-int gl_futimens (int, char const *, struct timespec const [2]);
+int fdutimens (int, char const *, struct timespec const [2]);
 int utimens (char const *, struct timespec const [2]);
 int lutimens (char const *, struct timespec const [2]);
 
@@ -8,13 +7,13 @@ int lutimens (char const *, struct timespec const [2]);
 # include <fcntl.h>
 # include <sys/stat.h>
 
-int fdutimensat (int dir, char const *name, int fd, struct timespec const [2],
+int fdutimensat (int fd, int dir, char const *name, struct timespec const [2],
                  int atflag);
 
 /* Using this function makes application code slightly more readable.  */
 static inline int
-lutimensat (int fd, char const *file, struct timespec const times[2])
+lutimensat (int dir, char const *file, struct timespec const times[2])
 {
-  return utimensat (fd, file, times, AT_SYMLINK_NOFOLLOW);
+  return utimensat (dir, file, times, AT_SYMLINK_NOFOLLOW);
 }
 #endif

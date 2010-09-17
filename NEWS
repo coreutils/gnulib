@@ -12,8 +12,15 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
-2010-09-16  fdutimensat     The function now takes a new parameter; old users
-                            can safely pass atflag=0 for no semantic change.
+2010-09-17  utimens         The function gl_futimens is removed, and its
+                            signature has been migrated to fdutimens.  Callers
+                            of gl_futimens should change function name, and
+                            callers of fdutimens should swap parameter order.
+
+2010-09-17  fdutimensat     This function has a new signature: the fd now comes
+                            first instead of the dir/name pair, and a new
+                            atflag parameter is added at the end.  Old code
+                            should rearrange parameters, and pass 0 for atflag.
 
 2010-09-13  regex           The module is not guaranteeing anymore support for
                             64-bit regoff_t on 64-bit systems.  The size of

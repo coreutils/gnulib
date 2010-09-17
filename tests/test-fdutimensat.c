@@ -40,7 +40,7 @@ static int dfd = AT_FDCWD;
 static int
 do_futimens (int fd, struct timespec const times[2])
 {
-  return fdutimensat (dfd, NULL, fd, times, 0);
+  return fdutimensat (fd, dfd, NULL, times, 0);
 }
 
 /* Test the use of file descriptors alongside a name.  */
@@ -52,8 +52,8 @@ do_fdutimens (char const *name, struct timespec const times[2])
   if (fd < 0)
     fd = openat (dfd, name, O_RDONLY);
   errno = 0;
-  result = fdutimensat (dfd, name, fd, times, 0);
-  ASSERT (fdutimensat (dfd, name, fd, times, AT_SYMLINK_NOFOLLOW) == result);
+  result = fdutimensat (fd, dfd, name, times, 0);
+  ASSERT (fdutimensat (fd, dfd, name, times, AT_SYMLINK_NOFOLLOW) == result);
   if (0 <= fd)
     {
       int saved_errno = errno;
@@ -74,14 +74,14 @@ do_lutimens (const char *name, struct timespec const times[2])
 static int
 do_lutimens1 (const char *name, struct timespec const times[2])
 {
-  return fdutimensat (dfd, name, -1, times, AT_SYMLINK_NOFOLLOW);
+  return fdutimensat (-1, dfd, name, times, AT_SYMLINK_NOFOLLOW);
 }
 
 /* Wrap fdutimensat to behave like utimens.  */
 static int
 do_utimens (const char *name, struct timespec const times[2])
 {
-  return fdutimensat (dfd, name, -1, times, 0);
+  return fdutimensat (-1, dfd, name, times, 0);
 }
 
 int
@@ -117,12 +117,12 @@ main (void)
   fd = creat ("file", 0600);
   ASSERT (0 <= fd);
   errno = 0;
-  ASSERT (fdutimensat (fd, ".", AT_FDCWD, NULL, 0) == -1);
+  ASSERT (fdutimensat (AT_FDCWD, fd, ".", NULL, 0) == -1);
   ASSERT (errno == ENOTDIR);
   {
     struct timespec ts[2] = { { Y2K, 0 }, { Y2K, 0 } };
     struct stat st;
-    ASSERT (fdutimensat (dfd, BASE "dir/file", fd, ts, 0) == 0);
+    ASSERT (fdutimensat (fd, dfd, BASE "dir/file", ts, 0) == 0);
     ASSERT (stat ("file", &st) == 0);
     ASSERT (st.st_atime == Y2K);
     ASSERT (get_stat_atime_ns (&st) == 0);
@@ -132,7 +132,7 @@ main (void)
   ASSERT (close (fd) == 0);
   ASSERT (close (dfd) == 0);
   errno = 0;
-  ASSERT (fdutimensat (dfd, ".", -1, NULL, 0) == -1);
+  ASSERT (fdutimensat (-1, dfd, ".", NULL, 0) == -1);
   ASSERT (errno == EBADF);
 
   /* Cleanup.  */

@@ -1,3 +1,21 @@
+2010-09-17  Eric Blake  <eblake@redhat.com>
+
+	fdutimens, fdutimensat: update signature, again
+	* lib/utimens.h (gl_futimens): Delete, and move signature...
+	(fdutimens): ...here.
+	(fdutimensat): Rearrange signature.
+	(lutimensat): Rename variable for clarity.
+	* lib/fdutimensat.c (fdutimensat): Update signature.
+	* lib/utimens.c (fdutimens): Likewise.
+	(gl_futimens): Delete.
+	(utimens, lutimens): Update callers.
+	* lib/futimens.c (futimens): Likewise.
+	* tests/test-fdutimensat.c: Likewise.
+	* tests/test-utimens.c: Likewise.
+	* tests/test-futimens.h: Update comment.
+	* NEWS: Mention this.
+	Suggested by Paul Eggert.
+
 2010-09-17  Bruno Haible  <bruno@clisp.org>
 
 	Take over the maintenance of some older macros from Autoconf.
