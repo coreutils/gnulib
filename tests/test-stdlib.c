@@ -59,5 +59,5 @@ main (void)
 #endif
       break;
     }
-  return 0;
+  return exitcode;
 }

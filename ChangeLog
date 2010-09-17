@@ -1,5 +1,8 @@
 2010-09-17  Eric Blake  <eblake@redhat.com>
 
+	tests: avoid compiler warning
+	* tests/test-stdlib.c (main): Use the variable.
+
 	fdutimens, fdutimensat: update signature, again
 	* lib/utimens.h (gl_futimens): Delete, and move signature...
 	(fdutimens): ...here.
