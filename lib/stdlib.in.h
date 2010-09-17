@@ -680,7 +680,7 @@ _GL_CXXALIASWARN (unlockpt);
 #elif defined GNULIB_POSIXCHECK
 # undef unlockpt
 # if HAVE_RAW_DECL_UNLOCKPT
-_GL_WARN_ON_USE (ptsname, "unlockpt is not portable - "
+_GL_WARN_ON_USE (unlockpt, "unlockpt is not portable - "
                  "use gnulib module unlockpt for portability");
 # endif
 #endif

@@ -1,5 +1,10 @@
 2010-09-16  Bruno Haible  <bruno@clisp.org>
 
+	unlockpt: Fix declaration within GNULIB_POSIXCHECK.
+	* lib/stdlib.in.h (unlockpt): Fix warning declaration.
+
+2010-09-16  Bruno Haible  <bruno@clisp.org>
+
 	login_tty: Fix detection of function on FreeBSD, OpenBSD, NetBSD.
 	* m4/pty.m4 (gl_FUNC_LOGIN_TTY): Augment LIBS while checking whether
 	login_tty exists.
