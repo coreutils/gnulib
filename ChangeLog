@@ -1,5 +1,12 @@
 2010-09-16  Bruno Haible  <bruno@clisp.org>
 
+	login_tty: Fix detection of function on FreeBSD, OpenBSD, NetBSD.
+	* m4/pty.m4 (gl_FUNC_LOGIN_TTY): Augment LIBS while checking whether
+	login_tty exists.
+	Reported by Mats Erik Andersson <mats.andersson@gisladisker.se>.
+
+2010-09-16  Bruno Haible  <bruno@clisp.org>
+
 	login_tty: Make the replacement code work on BSD systems.
 	* lib/login_tty.c: Include <sys/ioctl.h>.
 	(login_tty): Use ioctl TIOCSCTTY when available.
