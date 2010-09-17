@@ -1,5 +1,8 @@
 2010-09-17  Eric Blake  <eblake@redhat.com>
 
+	init.sh: accomodate directory with no .exes
+	* tests/init.sh: Accomodate directory containing only scripts.
+
 	tests: avoid compiler warning
 	* tests/test-stdlib.c (main): Use the variable.
 

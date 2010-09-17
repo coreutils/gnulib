@@ -240,6 +240,9 @@ find_exe_basenames_()
   feb_result_=
   feb_sp_=
   for feb_file_ in $feb_dir_/*.exe; do
+    if test "x$feb_file_" = "x$feb_dir_/*.exe" && test ! -f "$feb_file_"; then
+      return 0
+    fi
     case $feb_file_ in
       *[!-a-zA-Z/0-9_.+]*) feb_fail_=1; break;;
       *) # Remove leading file name components as well as the .exe suffix.
