@@ -1,5 +1,9 @@
 2010-09-17  Eric Blake  <eblake@redhat.com>
 
+	tests: fix unportable assumption on sys/wait.h
+	* tests/test-sys_wait.c (main): Relax test.
+	* tests/test-stdlib.c (main): Likewise.
+
 	init.sh: accomodate directory with no .exes
 	* tests/init.sh: Accomodate directory containing only scripts.
 

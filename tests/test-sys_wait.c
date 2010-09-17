@@ -30,8 +30,20 @@ main (void)
      that these are safe only on lvalues.  */
   int i;
   for (i = 0; i < 0x10000; i = (i ? i << 1 : 1))
-    if (!!WIFSIGNALED (i) + !!WIFEXITED (i) + !!WIFSTOPPED (i) != 1)
-      return 1;
+    {
+      /* POSIX requires that for all valid process statuses, that
+         exactly one of these three macros is true.  But not all
+         possible 16-bit values map to valid process status.
+         Traditionally, 8 of the bits are for WIFEXITED, 7 of the bits
+         to tell between WIFSIGNALED and WIFSTOPPED, and either 0x80
+         or 0x8000 to flag that core was also dumped.  Since we don't
+         know which byte is WIFEXITED, we skip the both possible bits
+         that can signal core dump.  */
+      if (i == 0x80)
+        continue;
+      if (!!WIFSIGNALED (i) + !!WIFEXITED (i) + !!WIFSTOPPED (i) != 1)
+        return 1;
+    }
   i = WEXITSTATUS (i) + WSTOPSIG (i) + WTERMSIG (i);
 
   switch (i)
