@@ -3,7 +3,7 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/termios.h.html}
 
-Gnulib module: ---
+Gnulib module: termios
 
 Portability problems fixed by Gnulib:
 @itemize

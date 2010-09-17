@@ -1,3 +1,11 @@
+2010-09-16  Bruno Haible  <bruno@clisp.org>
+
+	New module 'termios'.
+	* modules/termios: New file.
+	* lib/termios.in.h: New file.
+	* m4/termios_h.m4: New file.
+	* doc/posix-headers/termios.texi: Mention the new module.
+
 2010-09-16  Eric Blake  <eblake@redhat.com>
 
 	fdutimensat: add an atflag parameter
