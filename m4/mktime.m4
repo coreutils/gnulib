@@ -1,4 +1,4 @@
-# serial 15
+# serial 16
 dnl Copyright (C) 2002-2003, 2005-2007, 2009-2010 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -7,10 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 dnl From Jim Meyering.
 
-# Redefine AC_FUNC_MKTIME, to fix a bug in Autoconf 2.61a and earlier.
-# This redefinition can be removed once a new version of Autoconf is assumed.
-# The redefinition is taken from
-# <http://cvs.sv.gnu.org/viewcvs/*checkout*/autoconf/autoconf/lib/autoconf/functions.m4?rev=1.119>.
+# Redefine AC_FUNC_MKTIME, because it is no longer maintained in Autoconf.
 # AC_FUNC_MKTIME
 # --------------
 AC_DEFUN([AC_FUNC_MKTIME],
