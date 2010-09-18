@@ -1,3 +1,10 @@
+2010-09-18  Jim Meyering  <meyering@redhat.com>
+
+	init.sh: don't let an ephemeral "*.exe" make us skip all dir entries
+	* tests/init.sh (find_exe_basenames_): Don't give up on a directory if
+	a file named "*.exe" is removed between the glob expansion and the
+	processing of that oddly named file.
+
 2010-09-17  Eric Blake  <eblake@redhat.com>
 
 	mirbsd: add some more support
