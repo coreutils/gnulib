@@ -1,5 +1,8 @@
 2010-09-18  Jim Meyering  <meyering@redhat.com>
 
+	init.sh: correct an outdated comment
+	* tests/init.sh (create_exe_shims_):  s/function/alias/
+
 	init.sh: don't let an ephemeral "*.exe" make us skip all dir entries
 	* tests/init.sh (find_exe_basenames_): Don't give up on a directory if
 	a file named "*.exe" is removed between the glob expansion and the

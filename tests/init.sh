@@ -262,7 +262,7 @@ find_exe_basenames_()
 # For each file name of the form PROG.exe, create an alias named
 # PROG that simply invokes PROG.exe, then return 0.  If any selected
 # file name or the directory name, $1, contains an unexpected character,
-# define no function and return 1.
+# define no alias and return 1.
 create_exe_shims_()
 {
   case $EXEEXT in
