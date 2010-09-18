@@ -668,8 +668,9 @@ sc_prohibit_always_true_header_tests:
 	@or=$(gl_header_upper_case_or_);				\
 	re="HAVE_($$or)_H";						\
 	prohibit='\<'"$$re"'\>'						\
-	halt='do not test the above HAVE_<header>_H symbol(s);\n'\
-'  with the corresponding gnulib module, they are always true'		\
+	halt=$$(printf '%s\n'						\
+	'do not test the above HAVE_<header>_H symbol(s);'		\
+	'  with the corresponding gnulib module, they are always true')	\
 	  $(_sc_search_regexp)
 
 # ==================================================================
@@ -1012,9 +1013,10 @@ sc_Wundef_boolean:
 sc_vulnerable_makefile_CVE-2009-4029:
 	@prohibit='perm -777 -exec chmod a\+rwx|chmod 777 \$$\(distdir\)' \
 	in_files=$$(find $(srcdir) -name Makefile.in)			\
-	halt='the above files are vulnerable; beware of running\n'\
-'"make dist*" rules, and upgrade to fixed automake\n'\
-'see http://bugzilla.redhat.com/542609 for details'			\
+	halt=$$(printf '%s\n'						\
+	  'the above files are vulnerable; beware of running'		\
+	  '  "make dist*" rules, and upgrade to fixed automake'		\
+	  '  see http://bugzilla.redhat.com/542609 for details')	\
 	  $(_sc_search_regexp)
 
 vc-diff-check:

@@ -1,3 +1,12 @@
+2010-09-18  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: avoid unexpanded \n in two diagnostics
+	* top/maint.mk (sc_prohibit_always_true_header_tests):
+	Don't use a literal \n in a halt=... assignment.  It would not be
+	expanded, and the two \n bytes would appear in the diagnostic output
+	rather than the desired newline.  Use halt=$$(printf ... instead.
+	(sc_vulnerable_makefile_CVE-2009-4029): Likewise.
+
 2010-09-18  Bruno Haible  <bruno@clisp.org>
 
 	netinet_in: Doc tweak.
