@@ -1,3 +1,9 @@
+2010-09-18  Bruno Haible  <bruno@clisp.org>
+
+	netinet_in: Doc tweak.
+	* doc/posix-headers/netinet_in.texi: Mention an affected platform.
+	Reported by Mats Erik Andersson <mats.andersson@gisladisker.se>.
+
 2010-09-18  Jim Meyering  <meyering@redhat.com>
 
 	init.sh: correct an outdated comment
