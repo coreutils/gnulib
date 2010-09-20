@@ -186,6 +186,13 @@ pthread_spin_init (pthread_spinlock_t *lock, int pshared)
 }
 
 static inline int
+pthread_spin_destroy (pthread_spinlock_t *lock)
+{
+  /* LOCK is never seriously used.  */
+  return 0;
+}
+
+static inline int
 pthread_spin_lock (pthread_spinlock_t *lock)
 {
   /* Only one thread, so it always gets the lock.  */
