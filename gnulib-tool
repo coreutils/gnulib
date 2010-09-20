@@ -163,6 +163,7 @@ Usage: gnulib-tool --list
        gnulib-tool --copy-file file [destination]
 
 Operation modes:
+
       --list                print the available module names
       --find                find the modules which contain the specified file${bold_on}
       --import              import the given modules into the current package
@@ -199,6 +200,7 @@ Operation modes:
       --copy-file                  copy a file that is not part of any module
 
 General options:
+
       --dir=DIRECTORY       Specify the target directory.
                             For --import, this specifies where your
                             configure.ac can be found.  Defaults to current
@@ -210,10 +212,13 @@ General options:
       --verbose             Increase verbosity. May be repeated.
       --quiet               Decrease verbosity. May be repeated.
 
-Options for --import, --update:
+Options for --import, --add/remove-import, --update:
+
       --dry-run             Only print what would have been done.
 
-Options for --import, --create-[mega]testdir, --[mega]test:
+Options for --import, --add/remove-import,
+            --create-[mega]testdir, --[mega]test:
+
       --with-tests          Include unit tests for the included modules.
       --with-obsolete       Include obsolete modules when they occur among the
                             dependencies. By default, dependencies to obsolete
@@ -233,7 +238,8 @@ Options for --import, --create-[mega]testdir, --[mega]test:
       --libtool             Use libtool rules.
       --no-libtool          Don't use libtool rules.
 
-Options for --import:
+Options for --import, --add/remove-import:
+
       --lib=LIBRARY         Specify the library name.  Defaults to 'libgnu'.
       --source-base=DIRECTORY
                             Directory relative to --dir where source code is
@@ -248,7 +254,7 @@ Options for --import:
                             Directory relative to --dir where unit tests are
                             placed (default \"tests\").
       --aux-dir=DIRECTORY   Directory relative to --dir where auxiliary build
-                            tools are placed (default \"build-aux\").
+                            tools are placed (default comes from configure.ac).
       --lgpl[=2|=3]         Abort if modules aren't available under the LGPL.
                             Also modify license template from GPL to LGPL.
                             The version number of the LGPL can be specified;
@@ -266,6 +272,7 @@ Options for --import:
       --no-changelog        Don't update or create ChangeLog files.
 
 Options for --create-[mega]testdir, --[mega]test:
+
       --without-c++-tests   Exclude unit tests for C++ interoperability.
       --without-longrunning-tests
                             Exclude unit tests that are long-runners.
@@ -274,12 +281,15 @@ Options for --create-[mega]testdir, --[mega]test:
       --without-unportable-tests
                             Exclude unit tests that fail on some platforms.
 
-Options for --import, --update, --create-[mega]testdir, --[mega]test:
+Options for --import, --add/remove-import, --update,
+            --create-[mega]testdir, --[mega]test:
+
   -s, --symbolic, --symlink Make symbolic links instead of copying files.
       --local-symlink       Make symbolic links instead of copying files, only
                             for files from the local override directory.
 
-Options for --import, --update:
+Options for --import, --add/remove-import, --update:
+
   -S, --more-symlinks       Make symbolic links instead of copying files, and
                             don't replace copyright notices.
 
