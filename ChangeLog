@@ -1,5 +1,6 @@
 2010-09-21  Reuben Thomas  <rrt@sc3d.org>
 
+	* build-aux/pmccabe2html: Look for sources in src/ instead of lib/.
 	* build-aux/pmccabe2html: Set cut_dir properly, and add mode line
 	for Emacs.
 	* build-aux/pmccabe2html: Make Makefile.am example code more
