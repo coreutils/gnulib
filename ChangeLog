@@ -1,3 +1,8 @@
+2010-09-21  Reuben Thomas  <rrt@sc3d.org>
+
+	* build-aux/pmccabe2html: Make Makefile.am example code more
+	cut-and-paste friendly.
+
 2010-09-21  Simon Josefsson  <simon@josefsson.org>
 
 	* tests/test-net_if.c: New file.
