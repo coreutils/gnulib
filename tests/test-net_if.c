@@ -1,0 +1,83 @@
+/* Test of <net/if.h> functions.
+   Copyright (C) 2010 Free Software Foundation, Inc.
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+
+/* Written by Simon Josefsson <simon@josefsson.org>, 2010.  */
+
+#include <config.h>
+#include <net/if.h>
+#include <stddef.h> /* NULL */
+#include <stdio.h> /* printf */
+
+int
+main (int argc, char *argv[])
+{
+  struct if_nameindex ifn, *ifnp, *p;
+  void (*if_fni) (struct if_nameindex *) = if_freenameindex;
+  char *(*if_itn)(unsigned, char *) = if_indextoname;
+  struct if_nameindex  *(*if_ni)(void) = if_nameindex;
+  unsigned (*if_nti)(const char *) = if_nametoindex;
+
+  ifn.if_index = 42;
+  ifn.if_name = "foo";
+
+  p = ifnp = if_nameindex ();
+  if (ifnp == NULL)
+    {
+      printf ("if_nameindex returned NULL\n");
+      return 1;
+    }
+
+  while (p->if_index)
+    {
+      unsigned idx;
+      char buf[IF_NAMESIZE];
+      char *q;
+
+      if (argc > 1)
+        printf ("index %d name %s\n", p->if_index, p->if_name);
+
+      idx = if_nametoindex (p->if_name);
+      if (idx != p->if_index)
+        {
+          printf ("if_nametoindex (%s) = %d != %d\n",
+                  p->if_name, idx, p->if_index);
+          return 1;
+        }
+
+      q = if_indextoname (p->if_index, buf);
+      if (q == NULL)
+        {
+          printf ("if_indextoname (%d) returned NULL\n", p->if_index);
+          return 1;
+        }
+      if (q != buf)
+        {
+          printf ("if_indextoname (%d) buffer mismatch?\n", p->if_index);
+          return 1;
+        }
+      if (strcmp (p->if_name, q) != 0)
+        {
+          printf ("if_indextoname (%s) = %s ?!\n", p->if_name, q);
+          return 1;
+        }
+
+      p++;
+    }
+
+  if_freenameindex (ifnp);
+
+  return 0;
+}

@@ -1,0 +1,10 @@
+Files:
+tests/test-net_if.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-net_if
+check_PROGRAMS += test-net_if
