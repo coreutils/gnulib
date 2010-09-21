@@ -1,3 +1,11 @@
+2010-09-21  Eric Blake  <eblake@redhat.com>
+
+	net_if: enhance tests
+	* tests/test-net_if.c (main): Move signature checks earlier.
+	Print failures to stderr.
+	* doc/posix-functions/if_freenameindex.texi (if_freenameindex):
+	Document the bug that we do not yet fix.
+
 2010-09-21  Reuben Thomas  <rrt@sc3d.org>
 
 	* doc/gnulib.texi (Out of memory handling): Rewrite section to be

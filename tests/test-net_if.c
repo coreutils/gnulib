@@ -17,32 +17,33 @@
 /* Written by Simon Josefsson <simon@josefsson.org>, 2010.  */
 
 #include <config.h>
+
 #include <net/if.h>
+
+#include "signature.h"
+SIGNATURE_CHECK (if_freenameindex, void, (struct if_nameindex *));
+SIGNATURE_CHECK (if_indextoname, char *, (unsigned int, char *));
+SIGNATURE_CHECK (if_nameindex, struct if_nameindex *, (void));
+SIGNATURE_CHECK (if_nametoindex, unsigned int, (const char *));
+
 #include <stddef.h> /* NULL */
-#include <stdio.h> /* printf */
+#include <stdio.h> /* fprintf */
 
 int
 main (int argc, char *argv[])
 {
-  struct if_nameindex ifn, *ifnp, *p;
-  void (*if_fni) (struct if_nameindex *) = if_freenameindex;
-  char *(*if_itn)(unsigned, char *) = if_indextoname;
-  struct if_nameindex  *(*if_ni)(void) = if_nameindex;
-  unsigned (*if_nti)(const char *) = if_nametoindex;
-
-  ifn.if_index = 42;
-  ifn.if_name = "foo";
+  struct if_nameindex *ifnp, *p;
 
   p = ifnp = if_nameindex ();
   if (ifnp == NULL)
     {
-      printf ("if_nameindex returned NULL\n");
+      fputs ("if_nameindex returned NULL\n", stderr);
       return 1;
     }
 
   while (p->if_index)
     {
-      unsigned idx;
+      unsigned int idx;
       char buf[IF_NAMESIZE];
       char *q;
 
@@ -52,25 +53,26 @@ main (int argc, char *argv[])
       idx = if_nametoindex (p->if_name);
       if (idx != p->if_index)
         {
-          printf ("if_nametoindex (%s) = %d != %d\n",
-                  p->if_name, idx, p->if_index);
+          fprintf (stderr, "if_nametoindex (%s) = %d != %d\n",
+                   p->if_name, idx, p->if_index);
           return 1;
         }
 
       q = if_indextoname (p->if_index, buf);
       if (q == NULL)
         {
-          printf ("if_indextoname (%d) returned NULL\n", p->if_index);
+          fprintf (stderr, "if_indextoname (%d) returned NULL\n", p->if_index);
           return 1;
         }
       if (q != buf)
         {
-          printf ("if_indextoname (%d) buffer mismatch?\n", p->if_index);
+          fprintf (stderr, "if_indextoname (%d) buffer mismatch?\n",
+                   p->if_index);
           return 1;
         }
       if (strcmp (p->if_name, q) != 0)
         {
-          printf ("if_indextoname (%s) = %s ?!\n", p->if_name, q);
+          fprintf (stderr, "if_indextoname (%s) = %s ?!\n", p->if_name, q);
           return 1;
         }
 
