@@ -1,5 +1,10 @@
 2010-09-21  Reuben Thomas  <rrt@sc3d.org>
 
+	* doc/gnulib.texi (Out of memory handling): Rewrite section to be
+	about gnulib, not GSS.
+
+2010-09-21  Reuben Thomas  <rrt@sc3d.org>
+
 	* build-aux/pmccabe2html: Look for sources in src/ instead of lib/.
 	* build-aux/pmccabe2html: Set cut_dir properly, and add mode line
 	for Emacs.
