@@ -1,4 +1,4 @@
-# threadlib.m4 serial 6 (gettext-0.18.2)
+# threadlib.m4 serial 7 (gettext-0.18.2)
 dnl Copyright (C) 2005-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,6 +9,11 @@ dnl From Bruno Haible.
 dnl gl_THREADLIB
 dnl ------------
 dnl Tests for a multithreading library to be used.
+dnl If the configure.ac contains a definition of the gl_THREADLIB_DEFAULT_NO
+dnl (it must be placed before the invocation of gl_THREADLIB_EARLY!), then the
+dnl default is 'no', otherwise it is system dependent. In both cases, the user
+dnl can change the choice through the options --enable-threads=choice or
+dnl --disable-threads.
 dnl Defines at most one of the macros USE_POSIX_THREADS, USE_SOLARIS_THREADS,
 dnl USE_PTH_THREADS, USE_WIN32_THREADS
 dnl Sets the variables LIBTHREAD and LTLIBTHREAD to the linker options for use
@@ -44,10 +49,12 @@ AC_DEFUN([gl_THREADLIB_EARLY_BODY],
     [AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])],
     [AC_REQUIRE([AC_GNU_SOURCE])])
   dnl Check for multithreading.
-  m4_divert_text([DEFAULTS], [gl_use_threads_default=])
+  m4_ifdef([gl_THREADLIB_DEFAULT_NO],
+    [m4_divert_text([DEFAULTS], [gl_use_threads_default=no])],
+    [m4_divert_text([DEFAULTS], [gl_use_threads_default=])])
   AC_ARG_ENABLE([threads],
-AC_HELP_STRING([--enable-threads={posix|solaris|pth|win32}], [specify multithreading API])
-AC_HELP_STRING([--disable-threads], [build without multithread safety]),
+AC_HELP_STRING([--enable-threads={posix|solaris|pth|win32}], [specify multithreading API])m4_ifdef([gl_THREADLIB_DEFAULT_NO], [], [
+AC_HELP_STRING([--disable-threads], [build without multithread safety])]),
     [gl_use_threads=$enableval],
     [if test -n "$gl_use_threads_default"; then
        gl_use_threads="$gl_use_threads_default"
