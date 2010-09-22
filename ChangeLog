@@ -1,3 +1,9 @@
+2010-09-22  Bruno Haible  <bruno@clisp.org>
+
+	Tests for module 'memcasecmp'.
+	* modules/memcasecmp-tests: New file.
+	* tests/test-memcasecmp.c: New file, based on tests/test-memcmp.c.
+
 2010-09-22  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/pthread.in.h: Add split double-inclusion guard, and include
