@@ -1,5 +1,12 @@
 2010-09-22  Bruno Haible  <bruno@clisp.org>
 
+	memcoll, xmemcoll: Clarify size vs. length.
+	* modules/memcoll.c (memcoll0): Clarify specification.
+	* modules/xmemcoll.c (xmemcoll0): Likewise. Reduce by 1 the lengths
+	passed to collate_error.
+
+2010-09-22  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'memcasecmp'.
 	* modules/memcasecmp-tests: New file.
 	* tests/test-memcasecmp.c: New file, based on tests/test-memcmp.c.

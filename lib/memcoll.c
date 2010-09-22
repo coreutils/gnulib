@@ -93,9 +93,9 @@ memcoll (char *s1, size_t s1len, char *s2, size_t s2len)
   return diff;
 }
 
-/* Compare S1 (with size S1SIZE) and S2 (with length S2SIZE) according
-   to the LC_COLLATE locale.  S1 and S2 are both blocks of memory with
-   nonzero sizes, and the last byte in each block must be a null byte.
+/* Compare S1 (a memory block of size S1SIZE, with a NUL as last byte)
+   and S2 (a memory block of size S2SIZE, with a NUL as last byte)
+   according to the LC_COLLATE locale.  S1SIZE and S2SIZE must be > 0.
    Set errno to an error number if there is an error, and to zero
    otherwise.  */
 int

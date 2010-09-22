@@ -60,17 +60,17 @@ xmemcoll (char *s1, size_t s1len, char *s2, size_t s2len)
   return diff;
 }
 
-/* Compare S1 (with size S1SIZE) and S2 (with length S2SIZE) according
-   to the LC_COLLATE locale.  S1 and S2 are both blocks of memory with
-   nonzero sizes, and the last byte in each block must be a null byte.
+/* Compare S1 (a memory block of size S1SIZE, with a NUL as last byte)
+   and S2 (a memory block of size S2SIZE, with a NUL as last byte)
+   according to the LC_COLLATE locale.  S1SIZE and S2SIZE must be > 0.
    Report an error and exit if there is an error.  */
 
 int
-xmemcoll0 (char const *s1, size_t s1len, char const *s2, size_t s2len)
+xmemcoll0 (char const *s1, size_t s1size, char const *s2, size_t s2size)
 {
-  int diff = memcoll0 (s1, s1len, s2, s2len);
+  int diff = memcoll0 (s1, s1size, s2, s2size);
   int collation_errno = errno;
   if (collation_errno)
-    collate_error (collation_errno, s1, s1len, s2, s2len);
+    collate_error (collation_errno, s1, s1size - 1, s2, s2size - 1);
   return diff;
 }
