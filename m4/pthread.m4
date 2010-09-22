@@ -5,25 +5,54 @@ dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_PTHREAD_CHECK],
-  [AC_CHECK_HEADERS_ONCE([pthread.h])
+[
+   AC_REQUIRE([gl_PTHREAD_DEFAULTS])
+   AC_CHECK_HEADERS_ONCE([pthread.h])
+   gl_CHECK_NEXT_HEADERS([pthread.h])
+   if test $ac_cv_header_pthread_h = yes; then
+     HAVE_PTHREAD_H=1
+   else
+     HAVE_PTHREAD_H=0
+   fi
+
+   AC_CHECK_TYPES([pthread_t, pthread_spinlock_t], [], [],
+     [AC_INCLUDES_DEFAULT[
+      #if HAVE_PTHREAD_H
+       #include <pthread.h>
+      #endif]])
+   if test $ac_cv_type_pthread_t != yes; then
+     HAVE_PTHREAD_T=0
+   fi
+   if test $ac_cv_type_pthread_spinlock_t != yes; then
+     HAVE_PTHREAD_SPINLOCK_T=0
+   fi
+
+   if test $ac_cv_header_pthread_h != yes ||
+      test $ac_cv_type_pthread_t != yes ||
+      test $ac_cv_type_pthread_spinlock_t != yes; then
+     PTHREAD_H='pthread.h'
+   fi
 
    LIB_PTHREAD=
-   PTHREAD_H=
-   if test "$ac_cv_header_pthread_h" = yes; then
+   if test $ac_cv_header_pthread_h = yes; then
      gl_saved_libs=$LIBS
      AC_SEARCH_LIBS([pthread_create], [pthread],
        [if test "$ac_cv_search_pthread_create" != "none required"; then
           LIB_PTHREAD="$ac_cv_search_pthread_create"
         fi])
      LIBS="$gl_saved_libs"
-   else
-     AC_CHECK_TYPES([pthread_t])
-     PTHREAD_H='pthread.h'
    fi
-
    AC_SUBST([LIB_PTHREAD])
-   AC_SUBST([PTHREAD_H])
 
    AC_REQUIRE([AC_C_INLINE])
    AC_REQUIRE([AC_C_RESTRICT])
+])
+
+AC_DEFUN([gl_PTHREAD_DEFAULTS],
+[
+  dnl Assume proper GNU behavior unless another module says otherwise.
+  HAVE_PTHREAD_H=1;              AC_SUBST([HAVE_PTHREAD_H])
+  HAVE_PTHREAD_T=1;              AC_SUBST([HAVE_PTHREAD_T])
+  HAVE_PTHREAD_SPINLOCK_T=1;     AC_SUBST([HAVE_PTHREAD_SPINLOCK_T])
+  PTHREAD_H='';                  AC_SUBST([PTHREAD_H])
 ])

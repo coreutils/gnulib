@@ -1,3 +1,22 @@
+2010-09-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/pthread.in.h: Add split double-inclusion guard, and include
+	system <pthread.h> if there is one.  Use @@-style as in other
+	.in.h files.  Define PTHREAD_COND_INITIALIZER etc. only if system
+	pthread.h doesn't.
+	(pthread_mutexattr_destroy, pthread_mutexattr_init):
+	(pthread_mutexattr_settype, pthread_mutex_trylock):
+	New static inline functions, if there's no system <pthread.h>.
+	(pthread_spinlock_t, pthread_spin_init, pthread_spin_destroy):
+	(pthread_spin_lock, pthread_spin_trylock, pthread_spin_unlock):
+	Approximate with mutexes if the system lacks spinlocks, as in
+	MacOS.
+	* m4/pthread.m4 (gl_PTHREAD_CHECK): Require gl_PTHREAD_DEFAULTS.
+	Add gl_CHECK_NEXT_HEADERS for pthread.h, and support the usual
+	@@-style.  Check for spinlocks separately.
+	(gl_PTHREAD_DEFAULTS): New macro.
+	* modules/pthread: Redo to use a more typical style for in.h files.
+
 2010-09-21  Eric Blake  <eblake@redhat.com>
 
 	net_if: enhance tests

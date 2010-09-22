@@ -19,6 +19,17 @@
 /* Written by Paul Eggert and Glen Lenker.  */
 
 #ifndef _GL_PTHREAD_H_
+
+#if __GNUC__ >= 3
+@PRAGMA_SYSTEM_HEADER@
+#endif
+
+/* The include_next requires a split double-inclusion guard.  */
+#if @HAVE_PTHREAD_H@
+# @INCLUDE_NEXT@ @NEXT_PTHREAD_H@
+#endif
+
+#ifndef _GL_PTHREAD_H_
 #define _GL_PTHREAD_H_
 
 #include <errno.h>
@@ -27,7 +38,7 @@
 #include <sys/types.h>
 #include <time.h>
 
-#ifndef HAVE_PTHREAD_T
+#if ! @HAVE_PTHREAD_T@
  typedef int pthread_t;
  typedef int pthread_attr_t;
  typedef int pthread_barrier_t;
@@ -40,9 +51,9 @@
  typedef int pthread_once_t;
  typedef int pthread_rwlock_t;
  typedef int pthread_rwlockattr_t;
- typedef int pthread_spinlock_t;
 #endif
 
+#ifndef PTHREAD_COND_INITIALIZER
 #define PTHREAD_COND_INITIALIZER { 0 }
 #define PTHREAD_MUTEX_INITIALIZER { 0 }
 #define PTHREAD_ONCE_INIT { 0 }
@@ -81,6 +92,9 @@
 
 #define PTHREAD_SCOPE_SYSTEM 0
 #define PTHREAD_SCOPE_PROCESS 1
+#endif
+
+#if ! @HAVE_PTHREAD_T@
 
 /* Provide substitutes for the thread functions that should work
    adequately on a single-threaded implementation, where
@@ -147,6 +161,24 @@ pthread_join (pthread_t thread, void **pvalue)
 }
 
 static inline int
+pthread_mutexattr_destroy (pthread_mutexattr_t *attr)
+{
+  return 0;
+}
+
+static inline int
+pthread_mutexattr_init (pthread_mutexattr_t *attr)
+{
+  return 0;
+}
+
+static inline int
+pthread_mutexattr_settype (pthread_mutexattr_t *attr, int attr_type)
+{
+  return 0;
+}
+
+static inline int
 pthread_mutex_destroy (pthread_mutex_t *mutex)
 {
   /* MUTEX is never seriously used.  */
@@ -170,6 +202,12 @@ pthread_mutex_lock (pthread_mutex_t *mutex)
 }
 
 static inline int
+pthread_mutex_trylock (pthread_mutex_t *mutex)
+{
+  return pthread_mutex_lock (mutex);
+}
+
+static inline int
 pthread_mutex_unlock (pthread_mutex_t *mutex)
 {
   /* There is only one thread, so it always unlocks successfully.
@@ -178,40 +216,44 @@ pthread_mutex_unlock (pthread_mutex_t *mutex)
   return 0;
 }
 
+#endif
+
+#if ! @HAVE_PTHREAD_SPINLOCK_T@
+
+/* Approximate spinlocks with mutexes.  */
+
+typedef pthread_mutex_t pthread_spinlock_t;
+
 static inline int
 pthread_spin_init (pthread_spinlock_t *lock, int pshared)
 {
-  /* LOCK is never seriously used.  */
-  return 0;
+  return pthread_mutex_init (lock, NULL);
 }
 
 static inline int
 pthread_spin_destroy (pthread_spinlock_t *lock)
 {
-  /* LOCK is never seriously used.  */
-  return 0;
+  return pthread_mutex_destroy (lock);
 }
 
 static inline int
 pthread_spin_lock (pthread_spinlock_t *lock)
 {
-  /* Only one thread, so it always gets the lock.  */
-  return 0;
+  return pthread_mutex_lock (lock);
 }
 
 static inline int
 pthread_spin_trylock (pthread_spinlock_t *lock)
 {
-  /* Only one thread, so it always gets the lock.  Assume that a
-     thread never tries a lock that it already holds.  */
-  return 0;
+  return pthread_mutex_trylock (lock);
 }
 
 static inline int
 pthread_spin_unlock (pthread_spinlock_t *lock)
 {
-  /* Only one thread, so spin locks are no-ops.  */
-  return 0;
+  return pthread_mutex_unlock (lock);
 }
+#endif
 
+#endif /* _GL_PTHREAD_H_ */
 #endif /* _GL_PTHREAD_H_ */
