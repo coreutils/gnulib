@@ -1,3 +1,11 @@
+2010-09-22  Pádraig Brady  <P@draigbrady.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	Fix endless loop in mbmemcasecoll.
+	* lib/mbmemcasecoll.c (apply_towlower): When mbrtowc returns 0, copy 1
+	byte.
+	* tests/test-mbmemcasecmp.h (test_ascii): Test embedded NULs.
+
 2010-09-22  Bruno Haible  <bruno@clisp.org>
 
 	Tests for module 'memcoll'.

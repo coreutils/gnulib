@@ -62,6 +62,12 @@ test_ascii (int (*my_casecmp) (const char *, size_t, const char *, size_t))
 
   ASSERT (my_casecmp ("para", 4, "paragraph", 9) < 0);
   ASSERT (my_casecmp ("paragraph", 9, "para", 4) > 0);
+
+  /* Embedded NULs.  */
+  ASSERT (my_casecmp ("1\0", 2, "2\0", 2) < 0);
+  ASSERT (my_casecmp ("2\0", 2, "1\0", 2) > 0);
+  ASSERT (my_casecmp ("x\0""1", 3, "x\0""2", 3) < 0);
+  ASSERT (my_casecmp ("x\0""2", 3, "x\0""1", 3) > 0);
 }
 
 static void

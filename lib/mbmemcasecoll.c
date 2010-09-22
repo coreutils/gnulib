@@ -1,5 +1,5 @@
 /* Locale-specific case-ignoring memory comparison.
-   Copyright (C) 2001, 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2001, 2009-2010 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify it
@@ -61,8 +61,12 @@ apply_towlower (const char *inbuf, size_t inbufsize,
         break;
       if (n1 != (size_t)(-1))
         {
-          wint_t wc2 = towlower (wc1);
+          wint_t wc2;
 
+          if (n1 == 0) /* NUL character? */
+            n1 = 1;
+
+          wc2 = towlower (wc1);
           if (wc2 != wc1)
             {
               size_t n2;
