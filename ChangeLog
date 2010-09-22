@@ -1,5 +1,11 @@
 2010-09-22  Bruno Haible  <bruno@clisp.org>
 
+	termios: Relax license.
+	* modules/termios (License): Change to LGPLv2+.
+	Requested by Eric Blake.
+
+2010-09-22  Bruno Haible  <bruno@clisp.org>
+
 	threadlib: Allow the package to change the default to 'no'.
 	* m4/threadlib.m4 (gl_THREADLIB_EARLY_BODY): When
 	gl_THREADLIB_DEFAULT_NO is defined, change the default to 'no'.
