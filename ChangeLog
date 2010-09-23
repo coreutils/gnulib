@@ -1,3 +1,10 @@
+2010-09-23  Bruno Haible  <bruno@clisp.org>
+
+	setenv: Relax license.
+	* modules/setenv (License): Change to LGPLv2+, with consent by Eric
+	Blake.
+	Requested by Eric Blake.
+
 2010-09-22  Bruno Haible  <bruno@clisp.org>
 
 	termios: Relax license.
