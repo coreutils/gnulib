@@ -121,6 +121,12 @@ test_strchr (void)
       }
   }
 
+#if 0
+  /* This check is disabled, because uN_strchr() is allowed to read past the
+     first occurrence of the byte being searched.  In fact, u8_strchr() does
+     so, on i586 glibc systems: u8_strchr calls strchr, which in
+     glibc/sysdeps/i386/i586/strchr.S loads the second word before the
+     handling of the first word has been completed.  */
   /* Check that uN_strchr() does not read past the first occurrence of the
      byte being searched.  */
   {
@@ -149,6 +155,7 @@ test_strchr (void)
           }
       }
   }
+#endif
 
   free (input);
 }

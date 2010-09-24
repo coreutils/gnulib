@@ -1,3 +1,8 @@
+2010-09-24  Bruno Haible  <bruno@clisp.org>
+
+	unistr/u8-strchr: Fix a test failure on i586 glibc systems.
+	* tests/unistr/test-strchr.h (test_strchr): Disable an invalid check.
+
 2010-09-23  Bruno Haible  <bruno@clisp.org>
 
 	setenv: Relax license.
