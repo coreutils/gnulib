@@ -17,6 +17,7 @@ netdb
 strdup
 servent
 hostent
+sockets
 
 configure.ac:
 gl_GETADDRINFO

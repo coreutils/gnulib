@@ -989,7 +989,7 @@ XP.  The function declaration is present if @code{WINVER >= 0x0501}.
 Windows 2000 does not have getaddrinfo in its @file{WS2_32.DLL}.
 
 Thus, if you want to assume Windows XP or later, you can add
-AC_DEFINE(WINVER, 0x0501) to avoid compiling to (partial) getaddrinfo
+AC_DEFINE(WINVER, 0x0501) to avoid compiling the (partial) getaddrinfo
 implementation.
 
 If you want to support Windows 2000, don't do anything.  The

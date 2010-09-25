@@ -1,3 +1,11 @@
+2010-09-25  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/getaddrinfo (Depends-on): Depend on the sockets module.
+	* lib/getaddrinfo.c (use_win32_p): Call gl_sockets_startup to make
+	sure Windows sockets are working before calling getaddrinfo.
+	* tests/test-getaddrinfo.c (main): Don't call WSAStartup here.
+	* doc/gnulib.texi (Windows sockets): Fix typo.
+
 2010-09-25  Bruno Haible  <bruno@clisp.org>
 
 	Tests for module 'regex-quote'.
