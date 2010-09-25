@@ -1,5 +1,9 @@
 2010-09-25  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'regex-quote'.
+	* modules/regex-quote-tests: New file.
+	* tests/test-regex-quote.c: New file.
+
 	New module 'regex-quote'.
 	* lib/regex-quote.h: New file.
 	* lib/regex-quote.c: New file.

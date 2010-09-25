@@ -1,0 +1,13 @@
+Files:
+tests/test-regex-quote.c
+tests/macros.h
+
+Depends-on:
+regex
+xalloc
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-regex-quote
+check_PROGRAMS += test-regex-quote
