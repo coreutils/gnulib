@@ -1,3 +1,11 @@
+2010-09-25  Bruno Haible  <bruno@clisp.org>
+
+	New module 'regex-quote'.
+	* lib/regex-quote.h: New file.
+	* lib/regex-quote.c: New file.
+	* modules/regex-quote: New file.
+	Suggested by Reuben Thomas <rrt@sc3d.org>.
+
 2010-09-24  Bruno Haible  <bruno@clisp.org>
 
 	unistr/u8-strchr: Fix a test failure on i586 glibc systems.
