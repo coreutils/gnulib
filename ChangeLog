@@ -1,3 +1,8 @@
+2010-09-26  Simon Josefsson  <simon@josefsson.org>
+
+	stdlib, sys_wait: Avoid compilation error on mingw.
+	* lib/sys_wait.in.h: Include <signal.h>, for SIGTERM.
+
 2010-09-26  Bruno Haible  <bruno@clisp.org>
 
 	stdlib tests: Avoid code duplication.

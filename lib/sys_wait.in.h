@@ -79,7 +79,8 @@ extern "C" {
 #else
 /* Native Windows API.  */
 
-# include <process.h>
+# include <process.h> /* for _cwait, WAIT_CHILD */
+# include <signal.h> /* for SIGTERM */
 
 # define waitpid(pid,statusp,options) _cwait (statusp, pid, WAIT_CHILD)
 
