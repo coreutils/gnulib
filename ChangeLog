@@ -1,3 +1,14 @@
+2010-09-26  Bruno Haible  <bruno@clisp.org>
+
+	stdlib tests: Avoid code duplication.
+	* modules/stdlib-tests (Files): Add tests/test-sys_wait.h.
+	* modules/sys_wait-tests (Files): Likewise.
+	* tests/test-sys_wait.h: New file, extracted from tests/test-stdlib.c.
+	* tests/test-stdlib.c: Include test-sys_wait.h.
+	(main): Invoke test_sys_wait_macros.
+	* tests/test-sys_wait.c: Include test-sys_wait.h.
+	(main): Invoke test_sys_wait_macros.
+
 2010-09-25  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/getaddrinfo (Depends-on): Depend on the sockets module.
