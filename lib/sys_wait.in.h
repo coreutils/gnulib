@@ -61,6 +61,11 @@
 #  define WEXITSTATUS(x) (((x) >> 8) & 0xff)
 # endif
 
+/* The stopping signal. Only to be accessed if WIFSTOPPED(x) is true.  */
+# ifndef WSTOPSIG
+#  define WSTOPSIG(x) (((x) >> 8) & 0x7f)
+# endif
+
 /* True if the process dumped core.  Not standardized by POSIX.  */
 # ifndef WCOREDUMP
 #  define WCOREDUMP(x) ((x) & 0x80)
@@ -97,6 +102,9 @@ extern "C" {
 # define WTERMSIG(x) SIGTERM
 
 # define WEXITSTATUS(x) (x)
+
+/* There are no stopping signals.  */
+# define WSTOPSIG(x) 0
 
 /* There are no core dumps.  */
 # define WCOREDUMP(x) 0

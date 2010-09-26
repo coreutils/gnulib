@@ -1,3 +1,9 @@
+2010-09-26  Bruno Haible  <bruno@clisp.org>
+
+	sys_wait: Implement WSTOPSIG.
+	* lib/sys_wait.in.h (WSTOPSIG): New macro.
+	Reported by Simon Josefsson.
+
 2010-09-26  Simon Josefsson  <simon@josefsson.org>
 
 	stdlib, sys_wait: Avoid compilation error on mingw.
