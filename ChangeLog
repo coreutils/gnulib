@@ -1,5 +1,11 @@
 2010-09-28  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'poll-h'.
+	* modules/poll-h-tests: New file.
+	* tests/test-poll-h.c: New file.
+
+2010-09-28  Bruno Haible  <bruno@clisp.org>
+
 	poll-h: Ensure POLL{RD,WR}{NORM,BAND} are defined on glibc platforms.
 	* modules/poll-h (Depends-on): Add 'extensions'.
 
