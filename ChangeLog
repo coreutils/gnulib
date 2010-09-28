@@ -1,5 +1,10 @@
 2010-09-28  Bruno Haible  <bruno@clisp.org>
 
+	poll: Assume ANSI C.
+	* lib/poll.c (poll): Use an ANSI C declaration.
+
+2010-09-28  Bruno Haible  <bruno@clisp.org>
+
 	poll-h: Create poll.h on all platforms.
 	* lib/poll.in.h: Use double-inclusion guard. Don't define POLL*,
 	struct pollfd, nfds_t, INFTIM when the system has <poll.h>.

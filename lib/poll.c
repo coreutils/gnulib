@@ -315,10 +315,7 @@ compute_revents (int fd, int sought, fd_set *rfds, fd_set *wfds, fd_set *efds)
 #endif /* !MinGW */
 
 int
-poll (pfd, nfd, timeout)
-     struct pollfd *pfd;
-     nfds_t nfd;
-     int timeout;
+poll (struct pollfd *pfd, nfds_t nfd, int timeout)
 {
 #ifndef WIN32_NATIVE
   fd_set rfds, wfds, efds;
