@@ -13,9 +13,16 @@ AC_DEFUN([gl_POLL_H],
   AC_REQUIRE([gl_POLL_H_DEFAULTS])
 
   AC_CHECK_HEADERS_ONCE([poll.h])
-  if test $ac_cv_header_poll_h != yes; then
+  if test $ac_cv_header_poll_h = yes; then
+    HAVE_POLL_H=1
+  else
+    HAVE_POLL_H=0
     gl_REPLACE_POLL_H
   fi
+  AC_SUBST([HAVE_POLL_H])
+
+  dnl <poll.h> is always overridden, because of GNULIB_POSIXCHECK.
+  gl_CHECK_NEXT_HEADERS([poll.h])
 
   dnl Check for declarations of anything we want to poison if the
   dnl corresponding gnulib module is not in use.
@@ -26,8 +33,8 @@ AC_DEFUN([gl_POLL_H],
 dnl Unconditionally enables the replacement of <poll.h>.
 AC_DEFUN([gl_REPLACE_POLL_H],
 [
-  AC_REQUIRE([gl_POLL_H_DEFAULTS])
-  POLL_H='poll.h'
+  dnl This is a no-op, because <poll.h> is always overridden.
+  :
 ])
 
 AC_DEFUN([gl_POLL_MODULE_INDICATOR],
@@ -43,7 +50,6 @@ AC_DEFUN([gl_POLL_H_DEFAULTS],
 [
   GNULIB_POLL=0;        AC_SUBST([GNULIB_POLL])
   dnl Assume proper GNU behavior unless another module says otherwise.
-  POLL_H='';            AC_SUBST([POLL_H])
   HAVE_POLL=1;          AC_SUBST([HAVE_POLL])
   REPLACE_POLL=0;       AC_SUBST([REPLACE_POLL])
 ])

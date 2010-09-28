@@ -1,5 +1,18 @@
 2010-09-28  Bruno Haible  <bruno@clisp.org>
 
+	poll-h: Create poll.h on all platforms.
+	* lib/poll.in.h: Use double-inclusion guard. Don't define POLL*,
+	struct pollfd, nfds_t, INFTIM when the system has <poll.h>.
+	* m4/poll_h.m4 (gl_POLL_H): Set HAVE_POLL_H. Invoke
+	gl_CHECK_NEXT_HEADERS. Don't set POLL_H.
+	(gl_REPLACE_POLL_H): Don't set POLL_H.
+	(gl_POLL_H_DEFAULTS): Don't initialize POLL_H.
+	* modules/poll-h (Depends-on): Add include_next.
+	(Makefile.am): Create poll.h unconditionally. Substitute also
+	HAVE_POLL_H, INCLUDE_NEXT, PRAGMA_SYSTEM_HEADER, NEXT_POLL_H.
+
+2010-09-28  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'poll-h'.
 	* modules/poll-h-c++-tests: New file.
 	* tests/test-poll-h-c++.cc: New file.

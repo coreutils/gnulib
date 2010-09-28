@@ -20,6 +20,17 @@
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
 #ifndef _GL_POLL_H
+
+#if __GNUC__ >= 3
+@PRAGMA_SYSTEM_HEADER@
+#endif
+
+/* The include_next requires a split double-inclusion guard.  */
+#if @HAVE_POLL_H@
+# @INCLUDE_NEXT@ @NEXT_POLL_H@
+#endif
+
+#ifndef _GL_POLL_H
 #define _GL_POLL_H
 
 
@@ -28,17 +39,19 @@
 /* The definition of _GL_WARN_ON_USE is copied here.  */
 
 
+#if !@HAVE_POLL_H@
+
 /* fake a poll(2) environment */
-#define POLLIN      0x0001      /* any readable data available   */
-#define POLLPRI     0x0002      /* OOB/Urgent readable data      */
-#define POLLOUT     0x0004      /* file descriptor is writeable  */
-#define POLLERR     0x0008      /* some poll error occurred      */
-#define POLLHUP     0x0010      /* file descriptor was "hung up" */
-#define POLLNVAL    0x0020      /* requested events "invalid"    */
-#define POLLRDNORM  0x0040
-#define POLLRDBAND  0x0080
-#define POLLWRNORM  0x0100
-#define POLLWRBAND  0x0200
+# define POLLIN      0x0001      /* any readable data available   */
+# define POLLPRI     0x0002      /* OOB/Urgent readable data      */
+# define POLLOUT     0x0004      /* file descriptor is writeable  */
+# define POLLERR     0x0008      /* some poll error occurred      */
+# define POLLHUP     0x0010      /* file descriptor was "hung up" */
+# define POLLNVAL    0x0020      /* requested events "invalid"    */
+# define POLLRDNORM  0x0040
+# define POLLRDBAND  0x0080
+# define POLLWRNORM  0x0100
+# define POLLWRBAND  0x0200
 
 struct pollfd
 {
@@ -48,6 +61,14 @@ struct pollfd
 };
 
 typedef unsigned long nfds_t;
+
+/* Define INFTIM only if doing so conforms to POSIX.  */
+# if !defined (_POSIX_C_SOURCE) && !defined (_XOPEN_SOURCE)
+#  define INFTIM (-1)
+# endif
+
+#endif
+
 
 #if @GNULIB_POLL@
 # if @REPLACE_POLL@
@@ -72,10 +93,6 @@ _GL_WARN_ON_USE (poll, "poll is unportable - "
 # endif
 #endif
 
-/* Define INFTIM only if doing so conforms to POSIX.  */
-#if !defined (_POSIX_C_SOURCE) && !defined (_XOPEN_SOURCE)
-#define INFTIM (-1)
-#endif
 
-
+#endif /* _GL_POLL_H */
 #endif /* _GL_POLL_H */
