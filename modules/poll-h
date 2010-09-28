@@ -1,0 +1,40 @@
+Description:
+A POSIX-like <poll.h>.
+
+Files:
+lib/poll.in.h
+m4/poll_h.m4
+
+Depends-on:
+c++defs
+warn-on-use
+
+configure.ac:
+gl_POLL_H
+
+Makefile.am:
+BUILT_SOURCES += $(POLL_H)
+
+# We need the following in order to create <poll.h> when the system
+# doesn't have one.
+poll.h: poll.in.h $(CXXDEFS_H) $(WARN_ON_USE_H)
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  sed -e 's|@''GNULIB_POLL''@|$(GNULIB_POLL)|g' \
+	      -e 's|@''HAVE_POLL''@|$(HAVE_POLL)|g' \
+	      -e 's|@''REPLACE_POLL''@|$(REPLACE_POLL)|g' \
+	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
+	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
+	      < $(srcdir)/poll.in.h; \
+	} > $@-t && \
+	mv -f $@-t $@
+MOSTLYCLEANFILES += poll.h poll.h-t
+
+Include:
+<poll.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+Paolo Bonzini, Bruno Haible

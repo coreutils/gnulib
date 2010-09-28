@@ -22,6 +22,12 @@
 #ifndef _GL_POLL_H
 #define _GL_POLL_H
 
+
+/* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
+
+/* The definition of _GL_WARN_ON_USE is copied here.  */
+
+
 /* fake a poll(2) environment */
 #define POLLIN      0x0001      /* any readable data available   */
 #define POLLPRI     0x0002      /* OOB/Urgent readable data      */
@@ -43,11 +49,33 @@ struct pollfd
 
 typedef unsigned long nfds_t;
 
-extern int poll (struct pollfd *pfd, nfds_t nfd, int timeout);
+#if @GNULIB_POLL@
+# if @REPLACE_POLL@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef poll
+#   define poll rpl_poll
+#  endif
+_GL_FUNCDECL_RPL (poll, int, (struct pollfd *pfd, nfds_t nfd, int timeout));
+_GL_CXXALIAS_RPL (poll, int, (struct pollfd *pfd, nfds_t nfd, int timeout));
+# else
+#  if !@HAVE_POLL@
+_GL_FUNCDECL_SYS (poll, int, (struct pollfd *pfd, nfds_t nfd, int timeout));
+#  endif
+_GL_CXXALIAS_SYS (poll, int, (struct pollfd *pfd, nfds_t nfd, int timeout));
+# endif
+_GL_CXXALIASWARN (poll);
+#elif defined GNULIB_POSIXCHECK
+# undef poll
+# if HAVE_RAW_DECL_POLL
+_GL_WARN_ON_USE (poll, "poll is unportable - "
+                 "use gnulib module poll for portability");
+# endif
+#endif
 
 /* Define INFTIM only if doing so conforms to POSIX.  */
 #if !defined (_POSIX_C_SOURCE) && !defined (_XOPEN_SOURCE)
 #define INFTIM (-1)
 #endif
+
 
 #endif /* _GL_POLL_H */

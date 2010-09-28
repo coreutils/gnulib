@@ -1,3 +1,22 @@
+2010-09-28  Bruno Haible  <bruno@clisp.org>
+
+	New module 'poll-h'.
+	* lib/poll.in.h: Include c++defs.h and warn-on-use.h.
+	(poll): Use modern idiom.
+	* modules/poll-h: New file.
+	* modules/poll (Files): Remove lib/poll.in.h.
+	(Depends-on): Add poll-h.
+	(configure.ac): Invoke gl_POLL_MODULE_INDICATOR.
+	(Makefile.am): Move code for generation of poll.h to modules/poll-h.
+	* m4/poll_h.m4: New file.
+	* m4/poll.m4 (gl_FUNC_POLL): Require gl_POLL_H. Don't check for poll.h
+	here. Don't set POLL_H here. Instead, set HAVE_POLL and REPLACE_POLL
+	and invoke gl_REPLACE_POLL_H.
+	* lib/poll.c: Use common idiom.
+	* tests/test-poll.c: Likewise.
+	* doc/posix-headers/poll.texi: Mention the poll-h module.
+	Suggested by Eric Blake.
+
 2010-09-26  Bruno Haible  <bruno@clisp.org>
 
 	sys_wait: Implement WSTOPSIG.

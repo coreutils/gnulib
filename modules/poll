@@ -3,10 +3,10 @@ poll() function: wait for some event on a set of file descriptors.
 
 Files:
 lib/poll.c
-lib/poll.in.h
 m4/poll.m4
 
 Depends-on:
+poll-h
 alloca
 select
 sys_select
@@ -15,19 +15,9 @@ errno
 
 configure.ac:
 gl_FUNC_POLL
+gl_POLL_MODULE_INDICATOR([poll])
 
 Makefile.am:
-BUILT_SOURCES += $(POLL_H)
-
-# We need the following in order to create <poll.h> when the system
-# doesn't have one.
-poll.h: poll.in.h
-	$(AM_V_GEN)rm -f $@-t $@ && \
-	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  cat $(srcdir)/poll.in.h; \
-	} > $@-t && \
-	mv -f $@-t $@
-MOSTLYCLEANFILES += poll.h poll.h-t
 
 Include:
 <poll.h>

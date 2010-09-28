@@ -1,0 +1,49 @@
+# poll_h.m4 serial 1
+dnl Copyright (C) 2010 Free Software Foundation, Inc.
+dnl This file is free software; the Free Software Foundation
+dnl gives unlimited permission to copy and/or distribute it,
+dnl with or without modifications, as long as this notice is preserved.
+
+dnl Written by Bruno Haible.
+
+AC_DEFUN([gl_POLL_H],
+[
+  dnl Use AC_REQUIRE here, so that the default behavior below is expanded
+  dnl once only, before all statements that occur in other macros.
+  AC_REQUIRE([gl_POLL_H_DEFAULTS])
+
+  AC_CHECK_HEADERS_ONCE([poll.h])
+  if test $ac_cv_header_poll_h != yes; then
+    gl_REPLACE_POLL_H
+  fi
+
+  dnl Check for declarations of anything we want to poison if the
+  dnl corresponding gnulib module is not in use.
+  gl_WARN_ON_USE_PREPARE([[#include <poll.h>]],
+    [poll])
+])
+
+dnl Unconditionally enables the replacement of <poll.h>.
+AC_DEFUN([gl_REPLACE_POLL_H],
+[
+  AC_REQUIRE([gl_POLL_H_DEFAULTS])
+  POLL_H='poll.h'
+])
+
+AC_DEFUN([gl_POLL_MODULE_INDICATOR],
+[
+  dnl Use AC_REQUIRE here, so that the default settings are expanded once only.
+  AC_REQUIRE([gl_POLL_H_DEFAULTS])
+  gl_MODULE_INDICATOR_SET_VARIABLE([$1])
+  dnl Define it also as a C macro, for the benefit of the unit tests.
+  gl_MODULE_INDICATOR_FOR_TESTS([$1])
+])
+
+AC_DEFUN([gl_POLL_H_DEFAULTS],
+[
+  GNULIB_POLL=0;        AC_SUBST([GNULIB_POLL])
+  dnl Assume proper GNU behavior unless another module says otherwise.
+  POLL_H='';            AC_SUBST([POLL_H])
+  HAVE_POLL=1;          AC_SUBST([HAVE_POLL])
+  REPLACE_POLL=0;       AC_SUBST([REPLACE_POLL])
+])
