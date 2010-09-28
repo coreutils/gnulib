@@ -1,6 +1,10 @@
 2010-09-28  Bruno Haible  <bruno@clisp.org>
 
 	Tests for module 'poll-h'.
+	* modules/poll-h-c++-tests: New file.
+	* tests/test-poll-h-c++.cc: New file.
+
+	Tests for module 'poll-h'.
 	* modules/poll-h-tests: New file.
 	* tests/test-poll-h.c: New file.
 
