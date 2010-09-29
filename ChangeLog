@@ -1,5 +1,12 @@
 2010-09-29  Bruno Haible  <bruno@clisp.org>
 
+	More tests for module 'sys_wait'.
+	* modules/sys_wait-c++-tests: New file.
+	* tests/test-sys_wait-c++.cc: New file.
+	Reported by Tatsuro MATSUOKA <tmacchant5@yahoo.co.jp>.
+
+2010-09-29  Bruno Haible  <bruno@clisp.org>
+
 	New module 'waitpid'.
 	* lib/waitpid.c: New file, extracted from lib/sys_wait.in.h.
 	* lib/sys_wait.in.h: Include <sys/types.h>, c++defs.h, warn-on-use.h.
