@@ -1,0 +1,23 @@
+Description:
+waitpid() function: wait for process state change
+
+Files:
+lib/waitpid.c
+m4/waitpid.m4
+
+Depends-on:
+sys_wait
+
+configure.ac:
+gl_FUNC_WAITPID
+
+Makefile.am:
+
+Include:
+<sys/wait.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+Bruno Haible

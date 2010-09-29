@@ -1,3 +1,17 @@
+2010-09-29  Bruno Haible  <bruno@clisp.org>
+
+	New module 'waitpid'.
+	* lib/waitpid.c: New file, extracted from lib/sys_wait.in.h.
+	* lib/sys_wait.in.h: Include <sys/types.h>, c++defs.h, warn-on-use.h.
+	Don't include <process.h>.
+	(waitpid): Declare only, using modern idiom.
+	* m4/waitpid.m4: New file.
+	* m4/sys_wait_h.m4 (gl_SYS_WAIT_H): Check whether waitpid is declared.
+	* modules/waitpid: New file.
+	* modules/sys_wait (Depends-on): Add c++defs, warn-on-use, waitpid.
+	(Makefile.am): Update.
+	Reported by Tatsuro MATSUOKA <tmacchant5@yahoo.co.jp>.
+
 2010-09-28  Bruno Haible  <bruno@clisp.org>
 
 	poll: Assume ANSI C.

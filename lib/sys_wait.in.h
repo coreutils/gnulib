@@ -30,6 +30,15 @@
 #ifndef _GL_SYS_WAIT_H
 #define _GL_SYS_WAIT_H
 
+/* Get pid_t.  */
+#include <sys/types.h>
+
+
+/* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
+
+/* The definition of _GL_WARN_ON_USE is copied here.  */
+
+
 #if !((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)
 /* Unix API.  */
 
@@ -71,23 +80,10 @@
 #  define WCOREDUMP(x) ((x) & 0x80)
 # endif
 
-# ifdef __cplusplus
-extern "C" {
-# endif
-
-/* Declarations of functions.  */
-
-# ifdef __cplusplus
-}
-# endif
-
 #else
 /* Native Windows API.  */
 
-# include <process.h> /* for _cwait, WAIT_CHILD */
 # include <signal.h> /* for SIGTERM */
-
-# define waitpid(pid,statusp,options) _cwait (statusp, pid, WAIT_CHILD)
 
 /* The following macros apply to an argument x, that is a status of a process,
    as returned by waitpid() or, equivalently, _cwait() or GetExitCodeProcess().
@@ -109,6 +105,30 @@ extern "C" {
 /* There are no core dumps.  */
 # define WCOREDUMP(x) 0
 
+#endif
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/* Declarations of functions.  */
+
+#if 1 /* @GNULIB_WAITPID@ */
+# if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+_GL_FUNCDECL_SYS (waitpid, pid_t, (pid_t pid, int *statusp, int options));
+# endif
+_GL_CXXALIAS_SYS (waitpid, pid_t, (pid_t pid, int *statusp, int options));
+_GL_CXXALIASWARN (waitpid);
+#elif defined GNULIB_POSIXCHECK
+# undef waitpid
+# if HAVE_RAW_DECL_WAITPID
+_GL_WARN_ON_USE (waitpid, "waitpid is unportable - "
+                 "use gnulib module sys_wait for portability");
+# endif
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif /* _GL_SYS_WAIT_H */
