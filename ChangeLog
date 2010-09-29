@@ -869,6 +869,17 @@
 	* lib/sys_socket.in.h: Update an URL.
 	* lib/sys_stat.in.h: Break long line.
 
+2010-10-03  Reuben Thomas  <rrt@sc3d.org>
+
+	Improve pmccabe2html.
+	* build-aux/pmccabe2html: Add CYCLO_SRCS variable, and make
+	cyclo-$(PACKAGE).html depend on it, so the HTML file is remade
+	when the sources change. Remove the line in the HTML about "Used
+	ranges" (which implied that there might be other unused ranges),
+	rename "Resume" to "Summary" (easier to understand for more users).
+	* build-aux/pmccabe.css: Removing the dashed dividers, some unused
+	styles, and some unnecessary blank lines.
+
 2010-10-03  Bruno Haible  <bruno@clisp.org>
             Joachim Schmitz  <schmitz@hp.com>  (tiny change)
 
