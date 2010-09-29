@@ -3,6 +3,7 @@
 	More tests for module 'sys_wait'.
 	* modules/sys_wait-c++-tests: New file.
 	* tests/test-sys_wait-c++.cc: New file.
+	* modules/sys_wait-tests (Depends-on): Add sys_wait-c++-tests.
 	Reported by Tatsuro MATSUOKA <tmacchant5@yahoo.co.jp>.
 
 2010-09-29  Bruno Haible  <bruno@clisp.org>
