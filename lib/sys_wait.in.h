@@ -113,7 +113,7 @@ extern "C" {
 
 /* Declarations of functions.  */
 
-#if 1 /* @GNULIB_WAITPID@ */
+#if @GNULIB_WAITPID@
 # if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 _GL_FUNCDECL_SYS (waitpid, pid_t, (pid_t pid, int *statusp, int options));
 # endif

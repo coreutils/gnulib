@@ -12,6 +12,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2010-09-29  sys_wait        This module no longer provides the waitpid()
+                            function. If you need this function, you now need
+                            to request the 'waitpid' module.
+
 2010-09-17  utimens         The function gl_futimens is removed, and its
                             signature has been migrated to fdutimens.  Callers
                             of gl_futimens should change function name, and

@@ -17,6 +17,7 @@ stdbool
 sys_wait
 unistd
 atexit
+waitpid
 
 configure.ac:
 gl_WAIT_PROCESS

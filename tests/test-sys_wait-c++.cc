@@ -24,7 +24,9 @@
 #include "signature.h"
 
 
+#if GNULIB_TEST_WAITPID
 SIGNATURE_CHECK (GNULIB_NAMESPACE::waitpid, pid_t, (pid_t, int *, int));
+#endif
 
 
 int

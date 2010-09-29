@@ -22,9 +22,12 @@ AC_DEFUN([gl_SYS_WAIT_MODULE_INDICATOR],
   dnl Use AC_REQUIRE here, so that the default settings are expanded once only.
   AC_REQUIRE([gl_SYS_WAIT_H_DEFAULTS])
   gl_MODULE_INDICATOR_SET_VARIABLE([$1])
+  dnl Define it also as a C macro, for the benefit of the unit tests.
+  gl_MODULE_INDICATOR_FOR_TESTS([$1])
 ])
 
 AC_DEFUN([gl_SYS_WAIT_H_DEFAULTS],
 [
+  GNULIB_WAITPID=0; AC_SUBST([GNULIB_WAITPID])
   dnl Assume proper GNU behavior unless another module says otherwise.
 ])

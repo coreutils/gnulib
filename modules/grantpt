@@ -9,6 +9,7 @@ Depends-on:
 stdlib
 extensions
 pt_chown
+waitpid
 configmake
 
 configure.ac:

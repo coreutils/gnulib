@@ -1,5 +1,23 @@
 2010-09-29  Bruno Haible  <bruno@clisp.org>
 
+	Separate the module 'waitpid' from the module 'sys_wait'.
+	* lib/sys_wait.in.h (waitpid): Declare only if the 'waitpid' module is
+	present.
+	* m4/sys_wait_h.m4 (gl_SYS_WAIT_MODULE_INDICATOR): Invoke
+	gl_MODULE_INDICATOR_FOR_TESTS.
+	(gl_SYS_WAIT_H_DEFAULTS): Initialize GNULIB_WAITPID.
+	* modules/sys_wait (Depends-on): Remove waitpid.
+	(Makefile.am): Substitute GNULIB_WAITPID.
+	* modules/waitpid (configure.ac): Invoke gl_SYS_WAIT_MODULE_INDICATOR.
+	* tests/test-sys_wait-c++.cc (GNULIB_NAMESPACE::waitpid): Check the
+	signature only if the 'waitpid' module is present.
+	* doc/posix-functions/waitpid.texi: Mention the 'waitpid' module.
+	* NEWS: Mention the change.
+	* modules/grantpt (Depends-on): Add waitpid.
+	* modules/wait-process (Depends-on): Likewise.
+
+2010-09-29  Bruno Haible  <bruno@clisp.org>
+
 	More tests for module 'sys_wait'.
 	* modules/sys_wait-c++-tests: New file.
 	* tests/test-sys_wait-c++.cc: New file.
