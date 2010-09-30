@@ -1835,7 +1835,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
-  func_module getdate
+  func_module get_date
   func_module timegm
   func_module tzset
   func_end_table

@@ -552,5 +552,5 @@ Paul Eggert and others.
 @cindex Pinard, F.
 @cindex Berry, K.
 This chapter was originally produced by Fran@,{c}ois Pinard
-(@email{pinard@@iro.umontreal.ca}) from the @file{getdate.y} source code,
+(@email{pinard@@iro.umontreal.ca}) from the @file{get_date.y} source code,
 and then edited by K.@: Berry (@email{kb@@cs.umb.edu}).

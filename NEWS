@@ -14,7 +14,8 @@ Date        Modules         Changes
 
 2010-09-30  getdate         This module is deprecated. Please use get_date
                             for get_date(), or help us write getdate-posix
-                            for getdate().
+                            for getdate(). Also, doc/getdate.texi has been
+                            renamed to doc/get_date.texi.
 
 2010-09-29  sys_wait        This module no longer provides the waitpid()
                             function. If you need this function, you now need

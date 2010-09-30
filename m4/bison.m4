@@ -1,4 +1,4 @@
-# serial 5
+# serial 6
 
 # Copyright (C) 2002, 2005, 2009, 2010 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -7,7 +7,7 @@
 
 AC_DEFUN([gl_BISON],
 [
-  # getdate.y works with bison only.
+  # get_date.y works with bison only.
   : ${YACC='bison -y'}
 dnl
 dnl Declaring YACC & YFLAGS precious will not be necessary after GNULIB
