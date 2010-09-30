@@ -1,5 +1,13 @@
 2010-09-30  Eric Blake  <eblake@redhat.com>
 
+	bootstrap: use glibtoolize on MacOS
+	* build-aux/bootstrap (check_versions): Convert libtool into
+	libtoolize.
+	(tool search): Move libtool check earlier, and look for
+	glibtoolize for MacOS.
+	(gnulib_tool_options): Auto-add --libtool when appropriate.
+	Reported by Justin Clift.
+
 	poll: fix typo that broke test on MacOS
 	* m4/poll.m4 (gl_FUNC_POLL): Add missing test.
 	Reported by Justin Clift.
