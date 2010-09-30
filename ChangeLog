@@ -1,5 +1,9 @@
 2010-09-30  Eric Blake  <eblake@redhat.com>
 
+	poll: fix typo that broke test on MacOS
+	* m4/poll.m4 (gl_FUNC_POLL): Add missing test.
+	Reported by Justin Clift.
+
 	getdate: rename to get_date
 	Note: getdate.h is not renamed, to minimize client impact.
 	* modules/getdate: Mark obsolete.  Move old contents...

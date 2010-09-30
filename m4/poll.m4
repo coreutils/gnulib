@@ -1,4 +1,4 @@
-# poll.m4 serial 10
+# poll.m4 serial 11
 dnl Copyright (c) 2003, 2005, 2006, 2007, 2009, 2010 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -60,7 +60,7 @@ This is MacOSX or AIX
       REPLACE_POLL=1
     fi
   fi
-  if test $HAVE_POLL = 0 || $REPLACE_POLL = 1; then
+  if test $HAVE_POLL = 0 || test $REPLACE_POLL = 1; then
     gl_REPLACE_POLL_H
     AC_LIBOBJ([poll])
     gl_PREREQ_POLL
