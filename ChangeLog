@@ -1,3 +1,20 @@
+2010-09-30  Eric Blake  <eblake@redhat.com>
+
+	getdate: rename to get_date
+	Note: getdate.h is not renamed, to minimize client impact.
+	* modules/getdate: Mark obsolete.  Move old contents...
+	* modules/get_date: ...to new module name.
+	* modules/getdate-tests: Move...
+	* modules/get_date-tests: ...here.
+	* m4/getdate.m4: Move...
+	* m4/get_date.m4: ...here, and rename gl_GETDATE to gl_GET_DATE.
+	* lib/getdate.y: Move...
+	* lib/get_date.y: ...here.
+	* tests/test-getdate.c: Move...
+	* tests/test-get_date.c: ...here.
+	* doc/posix-functions/getdate.texi (getdate): Update name.
+	* NEWS: Mention the change.
+
 2010-09-29  Bruno Haible  <bruno@clisp.org>
 
 	Separate the module 'waitpid' from the module 'sys_wait'.

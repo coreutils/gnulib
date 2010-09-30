@@ -1,0 +1,14 @@
+Files:
+tests/test-get_date.c
+tests/macros.h
+
+Depends-on:
+progname
+setenv
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-get_date
+check_PROGRAMS += test-get_date
+test_get_date_LDADD = $(LDADD) @LIBINTL@ $(LIB_CLOCK_GETTIME)
