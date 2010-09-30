@@ -1,3 +1,9 @@
+2010-09-30  Justin Clift  <jclift@redhat.com>  (tiny change)
+
+	bootstrap: support ACLOCAL_FLAGS during aclocal
+	* build-aux/bootstrap (aclocal): Honor ACLOCAL_FLAGS, so the user
+	can add additional -I dir for third-party .m4 files.
+
 2010-09-30  Eric Blake  <eblake@redhat.com>
 
 	bootstrap: use glibtoolize on MacOS
