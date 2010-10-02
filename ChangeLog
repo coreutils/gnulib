@@ -1,5 +1,11 @@
 2010-10-02  Bruno Haible  <bruno@clisp.org>
 
+	gnulib-tool: In testdirs, use the newest available config.{guess.sub}.
+	* gnulib-tool (func_create_testdir): Use config.guess and config.sub
+	from gnulib, not from Automake.
+
+2010-10-02  Bruno Haible  <bruno@clisp.org>
+
 	New module 'system-posix'.
 	* modules/system-posix: New file.
 	* lib/stdlib.in.h: Include <sys/wait.h> only when the 'system-posix'

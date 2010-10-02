@@ -4951,6 +4951,11 @@ func_create_testdir ()
     echo "File list:"
     echo "$files" | sed -e 's/^/  /'
   fi
+  # Add files for which the copy in gnulib is newer than the one that
+  # "automake --add-missing --copy" would provide.
+  files="$files build-aux/config.guess"
+  files="$files build-aux/config.sub"
+  files=`for f in $files; do echo $f; done | LC_ALL=C sort -u`
 
   rewritten='%REWRITTEN%'
   sed_rewrite_files="\
