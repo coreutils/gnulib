@@ -98,6 +98,7 @@
 
 /* On OpenBSD 4.0 and on native Windows, the macros ENOMSG, EIDRM, ENOLINK,
    EPROTO, EMULTIHOP, EBADMSG, EOVERFLOW, ENOTSUP, ECANCELED are not defined.
+   Likewise, on NonStop Kernel, EDQUOT is not defined.
    Define them here.  Values >= 2000 seem safe to use: Solaris ESTALE = 151,
    HP-UX EWOULDBLOCK = 246, IRIX EDQUOT = 1133.
 
@@ -148,6 +149,11 @@
 # ifndef ESTALE
 #  define ESTALE    2009
 #  define GNULIB_defined_ESTALE 1
+# endif
+
+# ifndef EDQUOT
+#  define EDQUOT 2010
+#  define GNULIB_defined_EDQUOT 1
 # endif
 
 # ifndef ECANCELED

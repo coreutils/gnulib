@@ -1,5 +1,16 @@
 2010-10-02  Bruno Haible  <bruno@clisp.org>
 
+	Define missing EDQUOT on NonStop Kernel.
+	* lib/errno.in.h (EDQUOT): Assign a value if missing.
+	* lib/strerror.c (rpl_strerror): Handle missing EDQUOT.
+	* m4/errno_h.m4 (gl_HEADER_ERRNO_H): Also test whether EDQUOT is
+	missing.
+	* doc/posix-headers/errno.texi: Mention the NSK bug.
+	* doc/posix-functions/strerror.texi: Mention the workaround on NSK.
+	Reported by Joachim Schmitz <schmitz@hp.com>.
+
+2010-10-02  Bruno Haible  <bruno@clisp.org>
+
 	Update doc for POSIX:2008.
 	* doc/posix-headers/*.texi [except ucontext.texi, sys_timeb.texi]:
 	Update URL of POSIX specification.

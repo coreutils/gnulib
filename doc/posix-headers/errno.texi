@@ -22,14 +22,17 @@ OpenBSD 4.0, mingw.
 The macro @code{ESTALE} is not defined on some platforms:
 mingw, Interix 3.5.
 @item
+The macro @code{EDQUOT} is not defined on some platforms:
+NonStop Kernel, mingw.
+@item
 The macros @code{EWOULDBLOCK}, @code{ETXTBSY}, @code{ELOOP}, @code{ENOTSOCK},
 @code{EDESTADDRREQ}, @code{EMSGSIZE}, @code{EPROTOTYPE}, @code{ENOPROTOOPT},
 @code{EPROTONOSUPPORT}, @code{EOPNOTSUPP}, @code{EAFNOSUPPORT},
 @code{EADDRINUSE}, @code{EADDRNOTAVAIL}, @code{ENETDOWN}, @code{ENETUNREACH},
 @code{ENETRESET}, @code{ECONNABORTED}, @code{ECONNRESET}, @code{ENOBUFS},
 @code{EISCONN}, @code{ENOTCONN}, @code{ETIMEDOUT}, @code{ECONNREFUSED},
-@code{EHOSTUNREACH}, @code{EALREADY}, @code{EINPROGRESS}, @code{EDQUOT} are
-not defined on some platforms:
+@code{EHOSTUNREACH}, @code{EALREADY}, @code{EINPROGRESS} are not defined on
+some platforms:
 mingw.
 @end itemize
 

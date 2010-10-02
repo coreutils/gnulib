@@ -322,6 +322,12 @@ rpl_strerror (int n)
       break;
 # endif
 
+# if GNULIB_defined_EDQUOT
+    case EDQUOT:
+      msg = "Disk quota exceeded";
+      break;
+# endif
+
 # if GNULIB_defined_ECANCELED
     case ECANCELED:
       msg = "Operation canceled";
