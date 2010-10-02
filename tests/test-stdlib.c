@@ -38,7 +38,11 @@ static int exitcode = EXIT_SUCCESS;
    per POSIX 2008.  */
 verify (sizeof NULL == sizeof (void *));
 
-#include "test-sys_wait.h"
+#if GNULIB_TEST_SYSTEM_POSIX
+# include "test-sys_wait.h"
+#else
+# define test_sys_wait_macros() 0
+#endif
 
 int
 main (void)

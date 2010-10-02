@@ -39,7 +39,7 @@
 #include <stddef.h>
 
 /* MirBSD 10 defines WEXITSTATUS in <sys/wait.h>, not in <stdlib.h>.  */
-#ifndef WEXITSTATUS
+#if @GNULIB_SYSTEM_POSIX@ && !defined WEXITSTATUS
 # include <sys/wait.h>
 #endif
 

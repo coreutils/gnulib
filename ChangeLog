@@ -1,3 +1,19 @@
+2010-10-02  Bruno Haible  <bruno@clisp.org>
+
+	New module 'system-posix'.
+	* modules/system-posix: New file.
+	* lib/stdlib.in.h: Include <sys/wait.h> only when the 'system-posix'
+	module is present.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Initialize
+	GNULIB_SYSTEM_POSIX.
+	* modules/stdlib (Depends-on): Remove sys_wait.
+	(Makefile.am): Substitute GNULIB_SYSTEM_POSIX.
+	* doc/posix-functions/system.texi: Mention the new module.
+	* doc/posix-headers/stdlib.texi: Likewise.
+	* tests/test-stdlib.c: If GNULIB_TEST_SYSTEM_POSIX is not defined,
+	define test_sys_wait_macros to a no-op.
+	Reported by Sam Steingold <sds@gnu.org>.
+
 2010-09-30  Bruno Haible  <bruno@clisp.org>
 
 	More renaming from 'getdate' to 'get_date'.

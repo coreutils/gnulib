@@ -4,10 +4,16 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/system.html}
 
-Gnulib module: ---
+Gnulib module: system-posix
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+The macros @code{WIFSIGNALED}, @code{WIFEXITED}, @code{WIFSTOPPED},
+@code{WTERMSIG}, @code{WEXITSTATUS}, @code{WNOHANG}, @code{WUNTRACED},
+@code{WSTOPSIG} are not defined in @code{<stdlib.h>} (only in
+@code{<sys/wait.h>}) on some platforms:
+MirBSD 10.
 @end itemize
 
 Portability problems not fixed by Gnulib:
