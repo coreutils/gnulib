@@ -1,7 +1,7 @@
 @node sys/mman.h
 @section @file{sys/mman.h}
 
-POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/sys/mman.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/basedefs/sys_mman.h.html}
 
 Gnulib module: ---
 

@@ -1,7 +1,7 @@
 @node utmpx.h
 @section @file{utmpx.h}
 
-POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/utmpx.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/basedefs/utmpx.h.html}
 
 Gnulib module: ---
 

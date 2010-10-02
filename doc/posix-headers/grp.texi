@@ -1,7 +1,7 @@
 @node grp.h
 @section @file{grp.h}
 
-POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/grp.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/basedefs/grp.h.html}
 
 Gnulib module: ---
 

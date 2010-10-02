@@ -1,7 +1,7 @@
 @node tar.h
 @section @file{tar.h}
 
-POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/tar.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/basedefs/tar.h.html}
 
 Gnulib module: ---
 

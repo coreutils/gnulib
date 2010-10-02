@@ -1,7 +1,7 @@
 @node signal.h
 @section @file{signal.h}
 
-POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/signal.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/basedefs/signal.h.html}
 
 Gnulib module: signal
 

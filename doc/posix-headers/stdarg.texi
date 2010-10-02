@@ -1,7 +1,7 @@
 @node stdarg.h
 @section @file{stdarg.h}
 
-POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/stdarg.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/basedefs/stdarg.h.html}
 
 Gnulib module: stdarg
 

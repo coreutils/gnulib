@@ -1,7 +1,7 @@
 @node libgen.h
 @section @file{libgen.h}
 
-POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/libgen.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/basedefs/libgen.h.html}
 
 Gnulib module: ---
 

@@ -1,7 +1,7 @@
 @node iconv.h
 @section @file{iconv.h}
 
-POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/iconv.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/basedefs/iconv.h.html}
 
 Gnulib module: iconv
 

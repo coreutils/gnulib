@@ -1,7 +1,7 @@
 @node syslog.h
 @section @file{syslog.h}
 
-POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/syslog.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/basedefs/syslog.h.html}
 
 Gnulib module: ---
 

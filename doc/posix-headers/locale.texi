@@ -1,7 +1,7 @@
 @node locale.h
 @section @file{locale.h}
 
-POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/locale.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/basedefs/locale.h.html}
 
 Gnulib module: locale
 

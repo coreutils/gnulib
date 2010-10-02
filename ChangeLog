@@ -1,5 +1,11 @@
 2010-10-02  Bruno Haible  <bruno@clisp.org>
 
+	Update doc for POSIX:2008.
+	* doc/posix-headers/*.texi [except ucontext.texi, sys_timeb.texi]:
+	Update URL of POSIX specification.
+
+2010-10-02  Bruno Haible  <bruno@clisp.org>
+
 	gnulib-tool: In testdirs, use the newest available config.{guess.sub}.
 	* gnulib-tool (func_create_testdir): Use config.guess and config.sub
 	from gnulib, not from Automake.

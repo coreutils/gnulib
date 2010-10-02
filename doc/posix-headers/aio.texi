@@ -1,7 +1,7 @@
 @node aio.h
 @section @file{aio.h}
 
-POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/aio.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/basedefs/aio.h.html}
 
 Gnulib module: ---
 

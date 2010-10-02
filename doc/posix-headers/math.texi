@@ -1,7 +1,7 @@
 @node math.h
 @section @file{math.h}
 
-POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/math.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/basedefs/math.h.html}
 
 Gnulib module: math
 

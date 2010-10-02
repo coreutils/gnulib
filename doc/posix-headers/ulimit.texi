@@ -1,7 +1,7 @@
 @node ulimit.h
 @section @file{ulimit.h}
 
-POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/ulimit.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/basedefs/ulimit.h.html}
 
 Gnulib module: ---
 

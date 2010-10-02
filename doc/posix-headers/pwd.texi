@@ -1,7 +1,7 @@
 @node pwd.h
 @section @file{pwd.h}
 
-POSIX specification:@* @url{http://www.opengroup.org/susv3xbd/pwd.h.html}
+POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/basedefs/pwd.h.html}
 
 Gnulib module: ---
 
