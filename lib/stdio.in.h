@@ -265,7 +265,8 @@ _GL_CXXALIASWARN (freopen);
 #elif defined GNULIB_POSIXCHECK
 # undef freopen
 /* Assume freopen is always declared.  */
-_GL_WARN_ON_USE (freopen, "freopen on Win32 platforms is not POSIX compatible - "
+_GL_WARN_ON_USE (freopen,
+                 "freopen on Win32 platforms is not POSIX compatible - "
                  "use gnulib module freopen for portability");
 #endif
 

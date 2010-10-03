@@ -177,7 +177,8 @@ _GL_CXXALIASWARN (canonicalize_file_name);
 #elif defined GNULIB_POSIXCHECK
 # undef canonicalize_file_name
 # if HAVE_RAW_DECL_CANONICALIZE_FILE_NAME
-_GL_WARN_ON_USE (canonicalize_file_name, "canonicalize_file_name is unportable - "
+_GL_WARN_ON_USE (canonicalize_file_name,
+                 "canonicalize_file_name is unportable - "
                  "use gnulib module canonicalize-lgpl for portability");
 # endif
 #endif

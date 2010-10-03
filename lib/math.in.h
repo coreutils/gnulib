@@ -609,7 +609,8 @@ _GL_EXTERN_C int isnanf (float x);
    This function is a gnulib extension, unlike isnan() which applied only
    to 'double' numbers earlier but now is a type-generic macro.  */
 # if @HAVE_ISNAND@
-/* The original <math.h> included above provides a declaration of isnan macro.  */
+/* The original <math.h> included above provides a declaration of isnan
+   macro.  */
 #  if __GNUC__ >= 4
     /* GCC 4.0 and newer provides three built-ins for isnan.  */
 #   undef isnand
@@ -629,7 +630,8 @@ _GL_EXTERN_C int isnand (double x);
 #if @GNULIB_ISNANL@
 /* Test for NaN for 'long double' numbers.  */
 # if @HAVE_ISNANL@
-/* The original <math.h> included above provides a declaration of isnan macro or (older) isnanl function.  */
+/* The original <math.h> included above provides a declaration of isnan
+   macro or (older) isnanl function.  */
 #  if __GNUC__ >= 4
     /* GCC 4.0 and newer provides three built-ins for isnan.  */
 #   undef isnanl
@@ -701,11 +703,13 @@ _GL_EXTERN_C int gl_signbitf (float arg);
 _GL_EXTERN_C int gl_signbitd (double arg);
 _GL_EXTERN_C int gl_signbitl (long double arg);
 #  if __GNUC__ >= 2 && !__STRICT_ANSI__
+#   define _GL_NUM_UINT_WORDS(type) \
+      ((sizeof (type) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
 #   if defined FLT_SIGNBIT_WORD && defined FLT_SIGNBIT_BIT && !defined gl_signbitf
 #    define gl_signbitf_OPTIMIZED_MACRO
 #    define gl_signbitf(arg) \
        ({ union { float _value;                                         \
-                  unsigned int _word[(sizeof (float) + sizeof (unsigned int) - 1) / sizeof (unsigned int)]; \
+                  unsigned int _word[_GL_NUM_UINT_WORDS (float)];       \
                 } _m;                                                   \
           _m._value = (arg);                                            \
           (_m._word[FLT_SIGNBIT_WORD] >> FLT_SIGNBIT_BIT) & 1;          \
@@ -714,8 +718,8 @@ _GL_EXTERN_C int gl_signbitl (long double arg);
 #   if defined DBL_SIGNBIT_WORD && defined DBL_SIGNBIT_BIT && !defined gl_signbitd
 #    define gl_signbitd_OPTIMIZED_MACRO
 #    define gl_signbitd(arg) \
-       ({ union { double _value;                                                \
-                  unsigned int _word[(sizeof (double) + sizeof (unsigned int) - 1) / sizeof (unsigned int)]; \
+       ({ union { double _value;                                        \
+                  unsigned int _word[_GL_NUM_UINT_WORDS (double)];      \
                 } _m;                                                   \
           _m._value = (arg);                                            \
           (_m._word[DBL_SIGNBIT_WORD] >> DBL_SIGNBIT_BIT) & 1;          \
@@ -725,10 +729,10 @@ _GL_EXTERN_C int gl_signbitl (long double arg);
 #    define gl_signbitl_OPTIMIZED_MACRO
 #    define gl_signbitl(arg) \
        ({ union { long double _value;                                   \
-                  unsigned int _word[(sizeof (long double) + sizeof (unsigned int) - 1) / sizeof (unsigned int)]; \
+                  unsigned int _word[_GL_NUM_UINT_WORDS (long double)]; \
                 } _m;                                                   \
           _m._value = (arg);                                            \
-          (_m._word[LDBL_SIGNBIT_WORD] >> LDBL_SIGNBIT_BIT) & 1;                \
+          (_m._word[LDBL_SIGNBIT_WORD] >> LDBL_SIGNBIT_BIT) & 1;        \
         })
 #   endif
 #  endif

@@ -1,3 +1,16 @@
+2010-10-03  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Avoid some lines longer than 80 characters.
+	* lib/stdint.in.h: Break long comment lines.
+	* lib/math.in.h: Likewise.
+	(_GL_NUM_UINT_WORDS): New macro, for readability.
+	(gl_signbitf, gl_signbitd, gl_signbitl): Use it.
+	* lib/stdio.in.h: Break lines in _GL_WARN_ON_USE calls.
+	* lib/stdlib.in.h: Likewise.
+	* lib/spawn.in.h: Likewise.
+	* lib/sys_socket.in.h: Update an URL.
+	* lib/sys_stat.in.h: Break long line.
+
 2010-10-03  Bruno Haible  <bruno@clisp.org>
             Joachim Schmitz  <schmitz@hp.com>  (tiny change)
 
