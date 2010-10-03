@@ -24,7 +24,7 @@
 #include <string.h>
 #include <sys/stat.h>
 
-#if HAVE_ACL_GET_FILE || HAVE_ACL || HAVE_ACLX_GET || HAVE_STATACL
+#if HAVE_ACL_GET_FILE || HAVE_FACL || HAVE_ACLX_GET || HAVE_STATACL || HAVE_ACLSORT
 # include <sys/types.h>
 # include <sys/acl.h>
 #endif
@@ -218,7 +218,7 @@ main (int argc, char *argv[])
               }
           }
       }
-#elif HAVE_ACL && defined GETACL /* Solaris, Cygwin, not HP-UX */
+#elif HAVE_FACL && defined GETACL /* Solaris, Cygwin, not HP-UX */
   int count1;
   int count2;
 
@@ -519,6 +519,71 @@ main (int argc, char *argv[])
       fprintf (stderr, "files %s and %s have different ACL entries\n",
                file1, file2);
       return 1;
+    }
+#elif HAVE_ACLSORT /* NonStop Kernel */
+  int count1;
+  int count2;
+
+  count1 = acl ((char *) file1, ACL_CNT, NACLENTRIES, NULL);
+  count2 = acl ((char *) file2, ACL_CNT, NACLENTRIES, NULL);
+
+  if (count1 < 0)
+    {
+      fprintf (stderr, "error accessing the ACLs of file %s\n", file1);
+      fflush (stderr);
+      abort ();
+    }
+  if (count2 < 0)
+    {
+      fprintf (stderr, "error accessing the ACLs of file %s\n", file2);
+      fflush (stderr);
+      abort ();
+    }
+  if (count1 != count2)
+    {
+      fprintf (stderr, "files %s and %s have different number of ACLs: %d and %d\n",
+               file1, file2, count1, count2);
+      return 1;
+    }
+  else if (count1 > 0)
+    {
+      struct acl *entries1 = XNMALLOC (count1, struct acl);
+      struct acl *entries2 = XNMALLOC (count2, struct acl);
+      int i;
+
+      if (acl ((char *) file1, ACL_GET, count1, entries1) < count1)
+        {
+          fprintf (stderr, "error retrieving the ACLs of file %s\n", file1);
+          fflush (stderr);
+          abort ();
+        }
+      if (acl ((char *) file2, ACL_GET, count2, entries2) < count1)
+        {
+          fprintf (stderr, "error retrieving the ACLs of file %s\n", file2);
+          fflush (stderr);
+          abort ();
+        }
+      for (i = 0; i < count1; i++)
+        {
+          if (entries1[i].a_type != entries2[i].a_type)
+            {
+              fprintf (stderr, "files %s and %s: different ACL entry #%d: different types %d and %d\n",
+                       file1, file2, i, entries1[i].a_type, entries2[i].a_type);
+              return 1;
+            }
+          if (entries1[i].a_id != entries2[i].a_id)
+            {
+              fprintf (stderr, "files %s and %s: different ACL entry #%d: different ids %d and %d\n",
+                       file1, file2, i, (int)entries1[i].a_id, (int)entries2[i].a_id);
+              return 1;
+            }
+          if (entries1[i].a_perm != entries2[i].a_perm)
+            {
+              fprintf (stderr, "files %s and %s: different ACL entry #%d: different permissions %03o and %03o\n",
+                       file1, file2, i, (unsigned int) entries1[i].a_perm, (unsigned int) entries2[i].a_perm);
+              return 1;
+            }
+        }
     }
 #endif
   }

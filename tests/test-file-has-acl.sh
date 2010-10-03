@@ -91,8 +91,14 @@ cd "$builddir" ||
       acl_flavor=hpux
     else
       if (getacl tmpfile0 >/dev/null) 2>/dev/null; then
-        # Tru64.
-        acl_flavor=osf1
+        # Tru64, NonStop Kernel.
+        if (getacl -m tmpfile0 >/dev/null) 2>/dev/null; then
+          # Tru64.
+          acl_flavor=osf1
+        else
+          # NonStop Kernel.
+          acl_flavor=nsk
+        fi
       else
         if (aclget tmpfile0 >/dev/null) 2>/dev/null; then
           # AIX.
@@ -284,6 +290,20 @@ cd "$builddir" ||
           func_test_has_acl tmpfile0 no
 
         fi
+        ;;
+
+      nsk)
+
+        # Set an ACL for a user.
+        setacl -m user:$auid:1 tmpfile0
+
+        func_test_has_acl tmpfile0 yes
+
+        # Remove the ACL for the user.
+        setacl -d user:$auid tmpfile0
+
+        func_test_has_acl tmpfile0 no
+
         ;;
 
       aix)

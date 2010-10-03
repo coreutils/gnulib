@@ -1,4 +1,26 @@
 2010-10-03  Bruno Haible  <bruno@clisp.org>
+            Joachim Schmitz  <schmitz@hp.com>  (tiny change)
+
+	acl: Add support for ACLs on NonStop Kernel.
+	* m4/acl.m4 (gl_FUNC_ACL): For Solaris, test for facl(), not for acl().
+	Check whether the function aclsort() exists.
+	* lib/acl-internal.h: For Solaris, test HAVE_FACL, not HAVE_ACL.
+	(acl_nontrivial) [HAVE_ACLSORT]: New declaration.
+	* lib/file-has-acl.c: For Solaris, test HAVE_FACL, not HAVE_ACL.
+	(acl_nontrivial [HAVE_ACLSORT]: New function.
+	(file_has_acl): Implement for NonStop Kernel.
+	* lib/set-mode-acl.c: For Solaris, test HAVE_FACL, not HAVE_ACL.
+	(qset_acl): Implement for NonStop Kernel.
+	* lib/copy-acl.c (qcopy_acl): Implement for NonStop Kernel.
+	* tests/test-sameacls.c: For Solaris, test HAVE_FACL, not HAVE_ACL.
+	(main): Implement for NonStop Kernel.
+	* tests/test-file-has-acl.sh (acl_flavor): Set to 'nsk' on NonStop
+	Kernel. Handle this flavor.
+	* tests/test-set-mode-acl.sh: Likewise.
+	* tests/test-copy-acl.sh: Likewise.
+	* tests/test-copy-file.sh: Likewise.
+
+2010-10-03  Bruno Haible  <bruno@clisp.org>
 
 	Info about ACLs on NonStop Kernel.
 	* doc/acl-resources.txt: Add info about NonStop Kernel.

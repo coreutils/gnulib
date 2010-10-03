@@ -91,8 +91,14 @@ cd "$builddir" ||
       acl_flavor=hpux
     else
       if (getacl tmpfile0 >/dev/null) 2>/dev/null; then
-        # Tru64.
-        acl_flavor=osf1
+        # Tru64, NonStop Kernel.
+        if (getacl -m tmpfile0 >/dev/null) 2>/dev/null; then
+          # Tru64.
+          acl_flavor=osf1
+        else
+          # NonStop Kernel.
+          acl_flavor=nsk
+        fi
       else
         if (aclget tmpfile0 >/dev/null) 2>/dev/null; then
           # AIX.
@@ -174,6 +180,9 @@ cd "$builddir" ||
             ;;
           osf1)
             setacl -u user:$auid:1 tmpfile0
+            ;;
+          nsk)
+            setacl -m user:$auid:1 tmpfile0
             ;;
           aix)
             { aclget tmpfile0 | sed -e 's/disabled$/enabled/'; echo "        permit --x u:$auid"; } | aclput tmpfile0

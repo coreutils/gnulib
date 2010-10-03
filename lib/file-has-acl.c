@@ -118,7 +118,7 @@ acl_access_nontrivial (acl_t acl)
 # endif
 
 
-#elif USE_ACL && HAVE_ACL && defined GETACL /* Solaris, Cygwin, not HP-UX */
+#elif USE_ACL && HAVE_FACL && defined GETACL /* Solaris, Cygwin, not HP-UX */
 
 # if !defined ACL_NO_TRIVIAL /* Solaris <= 10, Cygwin */
 
@@ -294,6 +294,32 @@ acl_nfs4_nontrivial (nfs4_acl_int_t *a)
 
 # endif
 
+#elif USE_ACL && HAVE_ACLSORT /* NonStop Kernel */
+
+/* Test an ACL retrieved with ACL_GET.
+   Return 1 if the given ACL, consisting of COUNT entries, is non-trivial.
+   Return 0 if it is trivial, i.e. equivalent to a simple stat() mode.  */
+int
+acl_nontrivial (int count, struct acl *entries)
+{
+  int i;
+
+  for (i = 0; i < count; i++)
+    {
+      struct acl *ace = &entries[i];
+
+      /* Note: If ace->a_type = USER_OBJ, ace->a_id is the st_uid from stat().
+         If ace->a_type = GROUP_OBJ, ace->a_id is the st_gid from stat().
+         We don't need to check ace->a_id in these cases.  */
+      if (!(ace->a_type == USER_OBJ /* no need to check ace->a_id here */
+            || ace->a_type == GROUP_OBJ /* no need to check ace->a_id here */
+            || ace->a_type == CLASS_OBJ
+            || ace->a_type == OTHER_OBJ))
+        return 1;
+    }
+  return 0;
+}
+
 #endif
 
 
@@ -377,7 +403,7 @@ file_has_acl (char const *name, struct stat const *sb)
         return ACL_NOT_WELL_SUPPORTED (errno) ? 0 : -1;
       return ret;
 
-# elif HAVE_ACL && defined GETACLCNT /* Solaris, Cygwin, not HP-UX */
+# elif HAVE_FACL && defined GETACLCNT /* Solaris, Cygwin, not HP-UX */
 
 #  if defined ACL_NO_TRIVIAL
 
@@ -597,6 +623,37 @@ file_has_acl (char const *name, struct stat const *sb)
         return -1;
 
       return acl_nontrivial (&u.a);
+
+# elif HAVE_ACLSORT /* NonStop Kernel */
+
+      int count;
+      struct acl entries[NACLENTRIES];
+
+      for (;;)
+        {
+          count = acl ((char *) name, ACL_CNT, NACLENTRIES, NULL);
+
+          if (count < 0)
+            return -1;
+
+          if (count == 0)
+            return 0;
+
+          if (count > NACLENTRIES)
+            /* If NACLENTRIES cannot be trusted, use dynamic memory
+               allocation.  */
+            abort ();
+
+          /* If there are more than 4 entries, there cannot be only the
+             four base ACL entries.  */
+          if (count > 4)
+            return 1;
+
+          if (acl ((char *) name, ACL_GET, count, entries) == count)
+            return acl_nontrivial (count, entries);
+          /* Huh? The number of ACL entries changed since the last call.
+             Repeat.  */
+        }
 
 # endif
     }

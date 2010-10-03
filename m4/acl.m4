@@ -1,5 +1,5 @@
 # acl.m4 - check for access control list (ACL) primitives
-# serial 10
+# serial 11
 
 # Copyright (C) 2002, 2004-2010 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -76,8 +76,8 @@ int type = ACL_TYPE_EXTENDED;]])],
 
       dnl Test for Solaris API (Solaris, Cygwin).
       if test $use_acl = 0; then
-        AC_CHECK_FUNCS([acl])
-        if test $ac_cv_func_acl = yes; then
+        AC_CHECK_FUNCS([facl])
+        if test $ac_cv_func_facl = yes; then
           AC_SEARCH_LIBS([acl_trivial], [sec],
             [if test "$ac_cv_search_acl_trivial" != "none required"; then
                LIB_ACL=$ac_cv_search_acl_trivial
@@ -89,7 +89,7 @@ int type = ACL_TYPE_EXTENDED;]])],
       fi
 
       dnl Test for HP-UX API.
-      if test $use_acl = 0 || test "$ac_cv_func_acl" = yes; then
+      if test $use_acl = 0; then
         AC_CHECK_FUNCS([getacl])
         if test $ac_cv_func_getacl = yes; then
           use_acl=1
@@ -108,6 +108,14 @@ int type = ACL_TYPE_EXTENDED;]])],
       if test $use_acl = 0 || test "$ac_cv_func_aclx_get" = yes; then
         AC_CHECK_FUNCS([statacl])
         if test $ac_cv_func_statacl = yes; then
+          use_acl=1
+        fi
+      fi
+
+      dnl Test for NonStop Kernel API.
+      if test $use_acl = 0; then
+        AC_CHECK_FUNCS([aclsort])
+        if test $ac_cv_func_aclsort = yes; then
           use_acl=1
         fi
       fi

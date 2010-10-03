@@ -91,8 +91,14 @@ cd "$builddir" ||
       acl_flavor=hpux
     else
       if (getacl tmpfile0 >/dev/null) 2>/dev/null; then
-        # Tru64.
-        acl_flavor=osf1
+        # Tru64, NonStop Kernel.
+        if (getacl -m tmpfile0 >/dev/null) 2>/dev/null; then
+          # Tru64.
+          acl_flavor=osf1
+        else
+          # NonStop Kernel.
+          acl_flavor=nsk
+        fi
       else
         if (aclget tmpfile0 >/dev/null) 2>/dev/null; then
           # AIX.
@@ -132,7 +138,7 @@ cd "$builddir" ||
         cmp tmpaclout1 tmpaclout2 > /dev/null
       }
       ;;
-    osf1)
+    osf1 | nsk)
       func_test_same_acls ()
       {
         getacl "$1" | sed -e "s/$1/FILENAME/g" > tmpaclout1
@@ -405,6 +411,50 @@ cd "$builddir" ||
         chmod a+x tmpfile9
         getacl tmpfile9 > tmpaclout0
         setacl -b -U tmpaclout0 tmpfile0
+        rm -f tmpfile9
+
+        func_test_copy tmpfile0 tmpfile9
+
+        ;;
+
+      nsk)
+
+        # Set an ACL for a user.
+        setacl -m user:$auid:1 tmpfile0
+
+        func_test_copy tmpfile0 tmpfile2
+
+        # Set an ACL for a group.
+        setacl -m group:$agid:4 tmpfile0
+
+        func_test_copy tmpfile0 tmpfile3
+
+        # Set an ACL for other.
+        setacl -m other:4 tmpfile0
+
+        func_test_copy tmpfile0 tmpfile4
+
+        # Remove the ACL for the user.
+        setacl -d user:$auid tmpfile0
+
+        func_test_copy tmpfile0 tmpfile5
+
+        # Remove the ACL for the group.
+        setacl -d group:$agid tmpfile0
+
+        func_test_copy tmpfile0 tmpfile6
+
+        # Delete all optional ACLs.
+        setacl -m user:$auid:1 tmpfile0
+        setacl -s user::6,group::0,class:7,other:0 tmpfile0
+
+        func_test_copy tmpfile0 tmpfile8
+
+        # Copy ACLs from a file that has no ACLs.
+        echo > tmpfile9
+        chmod a+x tmpfile9
+        getacl tmpfile9 > tmpaclout0
+        setacl -f tmpaclout0 tmpfile0
         rm -f tmpfile9
 
         func_test_copy tmpfile0 tmpfile9
