@@ -414,6 +414,23 @@ Utilities:
   acledit
 
 
+NonStop Kernel ACLs
+
+Documentation:
+  http://bizsupport1.austin.hp.com/bc/docs/support/SupportManual/c02492445/c02492445.pdf p. 249..260
+  http://bizsupport1.austin.hp.com/bc/docs/support/SupportManual/c02128649/c02128649.pdf
+Includes:
+  <sys/acl.h>
+Library:
+  none needed
+Functions:
+  acl
+  aclsort
+Utilities:
+  getacl
+  setacl
+
+
 Cygwin ACLs
 
 Documentation:
