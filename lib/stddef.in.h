@@ -26,6 +26,7 @@
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
+@PRAGMA_COLUMNS@
 
 #if defined __need_wchar_t || defined __need_size_t  \
   || defined __need_ptrdiff_t || defined __need_NULL \

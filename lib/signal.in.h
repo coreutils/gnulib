@@ -18,6 +18,7 @@
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
+@PRAGMA_COLUMNS@
 
 #if defined __need_sig_atomic_t || defined __need_sigset_t
 /* Special invocation convention inside glibc header files.  */

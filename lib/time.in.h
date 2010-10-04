@@ -19,6 +19,7 @@
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
+@PRAGMA_COLUMNS@
 
 /* Don't get in the way of glibc when it includes time.h merely to
    declare a few standard symbols, rather than to declare all the

@@ -25,6 +25,7 @@
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
+@PRAGMA_COLUMNS@
 
 #if @HAVE_NETDB_H@
 

@@ -24,6 +24,7 @@
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
+@PRAGMA_COLUMNS@
 
 #if defined __need_system_sys_stat_h
 /* Special invocation convention.  */

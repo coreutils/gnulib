@@ -26,6 +26,7 @@
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
+@PRAGMA_COLUMNS@
 
 /* When including a system file that in turn includes <inttypes.h>,
    use the system <inttypes.h>, not our substitute.  This avoids

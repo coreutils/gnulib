@@ -23,6 +23,7 @@ pthread.h: pthread.in.h
 	  sed -e 's|@''HAVE_PTHREAD_H''@|$(HAVE_PTHREAD_H)|g' \
 	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
 	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
+	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
 	      -e 's|@''NEXT_PTHREAD_H''@|$(NEXT_PTHREAD_H)|g' \
 	      -e 's|@''HAVE_PTHREAD_T''@|$(HAVE_PTHREAD_T)|g' \
 	      -e 's|@''HAVE_PTHREAD_SPINLOCK_T''@|$(HAVE_PTHREAD_SPINLOCK_T)|g' \

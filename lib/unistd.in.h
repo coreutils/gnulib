@@ -18,6 +18,7 @@
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
+@PRAGMA_COLUMNS@
 
 /* Special invocation convention:
    - On mingw, several headers, including <winsock2.h>, include <unistd.h>,

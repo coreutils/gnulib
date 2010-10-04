@@ -31,6 +31,7 @@
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
+@PRAGMA_COLUMNS@
 
 #if @HAVE_WINT_T@
 /* Solaris 2.5 has a bug: <wchar.h> must be included before <wctype.h>.

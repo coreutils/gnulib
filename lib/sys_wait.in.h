@@ -21,6 +21,7 @@
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
+@PRAGMA_COLUMNS@
 
 /* The include_next requires a split double-inclusion guard.  */
 #if !((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)

@@ -28,6 +28,7 @@
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
+@PRAGMA_COLUMNS@
 
 /* Include the original <ctype.h>.  */
 /* The include_next requires a split double-inclusion guard.  */

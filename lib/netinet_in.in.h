@@ -20,6 +20,7 @@
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
+@PRAGMA_COLUMNS@
 
 #if @HAVE_NETINET_IN_H@
 

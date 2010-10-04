@@ -23,6 +23,7 @@
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
+@PRAGMA_COLUMNS@
 
 /* Include the original <inttypes.h> if it exists, and if this file
    has not been included yet or if this file includes gnulib stdint.h

@@ -25,6 +25,7 @@ poll.h: poll.in.h $(CXXDEFS_H) $(WARN_ON_USE_H)
 	  sed -e 's|@''HAVE_POLL_H''@|$(HAVE_POLL_H)|g' \
 	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
 	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
+	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
 	      -e 's|@''NEXT_POLL_H''@|$(NEXT_POLL_H)|g' \
 	      -e 's|@''GNULIB_POLL''@|$(GNULIB_POLL)|g' \
 	      -e 's|@''HAVE_POLL''@|$(HAVE_POLL)|g' \

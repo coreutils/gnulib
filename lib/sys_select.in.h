@@ -18,6 +18,7 @@
 # if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 # endif
+@PRAGMA_COLUMNS@
 
 /* On OSF/1, <sys/types.h> and <sys/time.h> include <sys/select.h>.
    Simply delegate to the system's header in this case.  */

@@ -18,6 +18,7 @@
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
+@PRAGMA_COLUMNS@
 
 #if defined __need_malloc_and_calloc
 /* Special invocation convention inside glibc header files.  */

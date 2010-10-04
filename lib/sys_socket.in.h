@@ -26,6 +26,7 @@
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
+@PRAGMA_COLUMNS@
 
 #if defined _GL_ALREADY_INCLUDING_SYS_SOCKET_H
 /* Special invocation convention:

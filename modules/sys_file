@@ -25,6 +25,7 @@ sys/file.h: sys_file.in.h $(WARN_ON_USE_H)
 	  sed -e 's/@''HAVE_SYS_FILE_H''@/$(HAVE_SYS_FILE_H)/g' \
 	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
 	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
+	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
 	      -e 's|@''NEXT_SYS_FILE_H''@|$(NEXT_SYS_FILE_H)|g' \
 	      -e 's/@''HAVE_FLOCK''@/$(HAVE_FLOCK)/g' \
 	      -e 's/@''GNULIB_FLOCK''@/$(GNULIB_FLOCK)/g' \

@@ -1,5 +1,98 @@
 2010-10-04  Bruno Haible  <bruno@clisp.org>
 
+	Avoid line length limitation from HP NonStop system header files.
+	* m4/include_next.m4 (gl_INCLUDE_NEXT): Define also PRAGMA_COLUMNS.
+	* lib/arpa_inet.in.h: Use PRAGMA_COLUMNS.
+	* lib/ctype.in.h: Likewise.
+	* lib/dirent.in.h: Likewise.
+	* lib/errno.in.h: Likewise.
+	* lib/fcntl.in.h: Likewise.
+	* lib/float.in.h: Likewise.
+	* lib/getopt.in.h: Likewise.
+	* lib/iconv.in.h: Likewise.
+	* lib/inttypes.in.h: Likewise.
+	* lib/langinfo.in.h: Likewise.
+	* lib/locale.in.h: Likewise.
+	* lib/math.in.h: Likewise.
+	* lib/netdb.in.h: Likewise.
+	* lib/netinet_in.in.h: Likewise.
+	* lib/poll.in.h: Likewise.
+	* lib/pthread.in.h: Likewise.
+	* lib/pty.in.h: Likewise.
+	* lib/sched.in.h: Likewise.
+	* lib/se-selinux.in.h: Likewise.
+	* lib/search.in.h: Likewise.
+	* lib/signal.in.h: Likewise.
+	* lib/spawn.in.h: Likewise.
+	* lib/stdarg.in.h: Likewise.
+	* lib/stddef.in.h: Likewise.
+	* lib/stdint.in.h: Likewise.
+	* lib/stdio.in.h: Likewise.
+	* lib/stdlib.in.h: Likewise.
+	* lib/string.in.h: Likewise.
+	* lib/strings.in.h: Likewise.
+	* lib/sys_file.in.h: Likewise.
+	* lib/sys_ioctl.in.h: Likewise.
+	* lib/sys_select.in.h: Likewise.
+	* lib/sys_socket.in.h: Likewise.
+	* lib/sys_stat.in.h: Likewise.
+	* lib/sys_time.in.h: Likewise.
+	* lib/sys_times.in.h: Likewise.
+	* lib/sys_utsname.in.h: Likewise.
+	* lib/sys_wait.in.h: Likewise.
+	* lib/sysexits.in.h: Likewise.
+	* lib/termios.in.h: Likewise.
+	* lib/time.in.h: Likewise.
+	* lib/unistd.in.h: Likewise.
+	* lib/wchar.in.h: Likewise.
+	* lib/wctype.in.h: Likewise.
+	* modules/arpa_inet (Makefile.am): Substitute PRAGMA_COLUMNS.
+	* modules/ctype (Makefile.am): Likewise.
+	* modules/dirent (Makefile.am): Likewise.
+	* modules/errno (Makefile.am): Likewise.
+	* modules/fcntl-h (Makefile.am): Likewise.
+	* modules/float (Makefile.am): Likewise.
+	* modules/getopt-posix (Makefile.am): Likewise.
+	* modules/iconv-h (Makefile.am): Likewise.
+	* modules/inttypes (Makefile.am): Likewise.
+	* modules/langinfo (Makefile.am): Likewise.
+	* modules/locale (Makefile.am): Likewise.
+	* modules/math (Makefile.am): Likewise.
+	* modules/netdb (Makefile.am): Likewise.
+	* modules/netinet_in (Makefile.am): Likewise.
+	* modules/poll-h (Makefile.am): Likewise.
+	* modules/pthread (Makefile.am): Likewise.
+	* modules/pty (Makefile.am): Likewise.
+	* modules/sched (Makefile.am): Likewise.
+	* modules/search (Makefile.am): Likewise.
+	* modules/selinux-h (Makefile.am): Likewise.
+	* modules/signal (Makefile.am): Likewise.
+	* modules/spawn (Makefile.am): Likewise.
+	* modules/stdarg (Makefile.am): Likewise.
+	* modules/stddef (Makefile.am): Likewise.
+	* modules/stdint (Makefile.am): Likewise.
+	* modules/stdio (Makefile.am): Likewise.
+	* modules/stdlib (Makefile.am): Likewise.
+	* modules/string (Makefile.am): Likewise.
+	* modules/strings (Makefile.am): Likewise.
+	* modules/sys_file (Makefile.am): Likewise.
+	* modules/sys_ioctl (Makefile.am): Likewise.
+	* modules/sys_select (Makefile.am): Likewise.
+	* modules/sys_socket (Makefile.am): Likewise.
+	* modules/sys_stat (Makefile.am): Likewise.
+	* modules/sys_time (Makefile.am): Likewise.
+	* modules/sys_times (Makefile.am): Likewise.
+	* modules/sys_utsname (Makefile.am): Likewise.
+	* modules/sys_wait (Makefile.am): Likewise.
+	* modules/sysexits (Makefile.am): Likewise.
+	* modules/termios (Makefile.am): Likewise.
+	* modules/time (Makefile.am): Likewise.
+	* modules/unistd (Makefile.am): Likewise.
+	* modules/wchar (Makefile.am): Likewise.
+	* modules/wctype (Makefile.am): Likewise.
+
+2010-10-04  Bruno Haible  <bruno@clisp.org>
+
 	read-file tests: Avoid a test failure on NonStop Kernel.
 	* tests/test-read-file.c (main): Don't assume that /etc/resolv.conf is
 	a regular file.
