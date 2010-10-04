@@ -1,3 +1,12 @@
+2010-10-03  Bruno Haible  <bruno@clisp.org>
+
+	gnulib-tool: Fixes for --create-testdir with --libtool.
+	* gnulib-tool (func_get_automake_snippet): Don't augment
+	EXTRA_lib_SOURCES for the pt_chown module, since pt_chown.o goes into
+	an executable.
+	(func_create_testdir): Handle module 'alloca' like func_import.
+	Reported by Bruce Korb <bruce.korb@gmail.com>.
+
 2010-10-03  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Avoid some lines longer than 80 characters.

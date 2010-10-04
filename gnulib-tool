@@ -2228,6 +2228,7 @@ func_get_automake_snippet ()
       # automake will generate a useless dependency; this is harmless.
       case "$1" in
         relocatable-prog-wrapper) ;;
+        pt_chown) ;;
         *)
           func_filter_filelist extra_files "$nl" "$extra_files" '' '.c' '' ''
           if test -n "$extra_files"; then
@@ -5128,6 +5129,12 @@ func_create_testdir ()
            *)
              func_get_autoconf_snippet "$module" \
                | sed -e "$sed_replace_build_aux"
+             if test "$module" = 'alloca' && test "$libtool" = true; then
+               echo 'changequote(,)dnl'
+               echo 'LTALLOCA=`echo "$ALLOCA" | sed -e '"'"'s/\.[^.]* /.lo /g;s/\.[^.]*$/.lo/'"'"'`'
+               echo 'changequote([, ])dnl'
+               echo 'AC_SUBST([LTALLOCA])'
+             fi
              ;;
          esac
        fi
@@ -5250,6 +5257,12 @@ func_create_testdir ()
      if test -n "$module"; then
        func_get_autoconf_snippet "$module" \
          | sed -e "$sed_replace_build_aux"
+       if test "$module" = 'alloca' && test "$libtool" = true; then
+         echo 'changequote(,)dnl'
+         echo 'LTALLOCA=`echo "$ALLOCA" | sed -e '"'"'s/\.[^.]* /.lo /g;s/\.[^.]*$/.lo/'"'"'`'
+         echo 'changequote([, ])dnl'
+         echo 'AC_SUBST([LTALLOCA])'
+       fi
      fi
    done
    func_emit_initmacro_end $macro_prefix
