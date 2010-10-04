@@ -1,3 +1,10 @@
+2010-10-04  Bruno Haible  <bruno@clisp.org>
+
+	read-file tests: Avoid a test failure on NonStop Kernel.
+	* tests/test-read-file.c (main): Don't assume that /etc/resolv.conf is
+	a regular file.
+	Reported by Joachim Schmitz <schmitz@hp.com>.
+
 2010-10-03  Bruno Haible  <bruno@clisp.org>
 
 	gnulib-tool: Fixes for --create-testdir with --libtool.
