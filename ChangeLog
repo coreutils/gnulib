@@ -1,5 +1,12 @@
 2010-10-05  Eric Blake  <eblake@redhat.com>
 
+	bootstrap: work with pkg-config
+	* build-aux/bootstrap (found_aux_dir): Also transliterate - in
+	prerequisite name.
+	(print_versions): Be robust to any \ in $buildreq.  Avoid listing
+	prerequisites that were already found, to avoid confusion.
+	Reported by Justin Clift.
+
 	faccessat: remove unused wrappers
 	* lib/openat.h (accessat, euidaccesat): Delete, since the mere
 	presence of these wrappers dragged in -lgen on Solaris.
