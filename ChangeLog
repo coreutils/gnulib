@@ -7,12 +7,6 @@
 	in comments.
 	* m4/bison.m4: Likewise.
 
-	more ports to Solaris tr, which needs [] around ranges
-	* gnulib-tool: Solaris tr needs [] around ranges.
-	* m4/fnmatch.m4 (gl_FUNC_FNMATCH_POSIX): Likewise.
-	* tests/test-pipe-filter-gi1.c (main): Likewise.
-	* tests/test-pipe-filter-ii1.c (main): Likewise.
-
 2010-10-05  Eric Blake  <eblake@redhat.com>
 
 	parse-datetime: better name than get_date
@@ -46,12 +40,20 @@
 	* m4/bison.m4 (gl_BISON): Likewise.
 	Suggested by Bruno Haible.
 
+2010-10-05  Paul Eggert  <eggert@cs.ucla.edu>
+
+	more ports to Solaris tr, which needs [] around ranges
+	* gnulib-tool: Solaris tr needs [] around ranges.
+	* m4/fnmatch.m4 (gl_FUNC_FNMATCH_POSIX): Likewise.
+	* tests/test-pipe-filter-gi1.c (main): Likewise.
+	* tests/test-pipe-filter-ii1.c (main): Likewise.
+
+2010-10-05  Eric Blake  <eblake@redhat.com>
+
 	bootstrap: fix Solaris regression
 	* build-aux/bootstrap (check_versions): Solaris tr still needs []
 	around ranges.
 	Reported by Pádraig Brady.
-
-2010-10-05  Eric Blake  <eblake@redhat.com>
 
 	bootstrap: work with pkg-config
 	* build-aux/bootstrap (check_versions): Also transliterate - in
