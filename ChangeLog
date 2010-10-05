@@ -1,3 +1,11 @@
+2010-10-05  Paul Eggert  <eggert@cs.ucla.edu>
+
+	more ports to Solaris tr, which needs [] around ranges
+	* gnulib-tool: Solaris tr needs [] around ranges.
+	* m4/fnmatch.m4 (gl_FUNC_FNMATCH_POSIX): Likewise.
+	* tests/test-pipe-filter-gi1.c (main): Likewise.
+	* tests/test-pipe-filter-ii1.c (main): Likewise.
+
 2010-10-05  Eric Blake  <eblake@redhat.com>
 
 	bootstrap: fix Solaris regression

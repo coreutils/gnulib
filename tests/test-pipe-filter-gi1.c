@@ -26,8 +26,8 @@
 #include "macros.h"
 
 
-/* Pipe a text file through 'tr a-z A-Z', which converts ASCII characters from
-   lower case to upper case.  */
+/* Pipe a text file through 'tr "[a-z]" "[A-Z]"', which converts ASCII
+   characters from lower case to upper case.  */
 
 struct locals
 {
@@ -96,8 +96,8 @@ main (int argc, char *argv[])
     l.nread = 0;
 
     argv[0] = tr_program;
-    argv[1] = "a-z";
-    argv[2] = "A-Z";
+    argv[1] = "[a-z]";
+    argv[2] = "[A-Z]";
     argv[3] = NULL;
 
     f = pipe_filter_gi_create ("tr", tr_program, argv, false, true,

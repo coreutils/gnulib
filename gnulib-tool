@@ -4584,7 +4584,7 @@ s,//*$,/,'
     # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
     # created using libtool, because libtool already handles the dependencies.
     if test "$libtool" != true; then
-      libname_upper=`echo "$libname" | LC_ALL=C tr 'a-z-' 'A-Z_'`
+      libname_upper=`echo "$libname" | LC_ALL=C tr '[a-z]-' '[A-Z]_'`
       echo "  ${libname_upper}_LIBDEPS=\"\$gl_libdeps\""
       echo "  AC_SUBST([${libname_upper}_LIBDEPS])"
       echo "  ${libname_upper}_LTLIBDEPS=\"\$gl_ltlibdeps\""
@@ -5163,7 +5163,7 @@ func_create_testdir ()
      # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
      # created using libtool, because libtool already handles the dependencies.
      if test "$libtool" != true; then
-       libname_upper=`echo "$libname" | LC_ALL=C tr 'a-z-' 'A-Z_'`
+       libname_upper=`echo "$libname" | LC_ALL=C tr '[a-z]-' '[A-Z]_'`
        echo "  ${libname_upper}_LIBDEPS=\"\$gl_libdeps\""
        echo "  AC_SUBST([${libname_upper}_LIBDEPS])"
        echo "  ${libname_upper}_LTLIBDEPS=\"\$gl_ltlibdeps\""
@@ -5281,7 +5281,7 @@ func_create_testdir ()
    # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
    # created using libtool, because libtool already handles the dependencies.
    if test "$libtool" != true; then
-     libname_upper=`echo "$libname" | LC_ALL=C tr 'a-z-' 'A-Z_'`
+     libname_upper=`echo "$libname" | LC_ALL=C tr '[a-z]-' '[A-Z]_'`
      echo "  ${libname_upper}_LIBDEPS=\"\$gl_libdeps\""
      echo "  AC_SUBST([${libname_upper}_LIBDEPS])"
      echo "  ${libname_upper}_LTLIBDEPS=\"\$gl_ltlibdeps\""
