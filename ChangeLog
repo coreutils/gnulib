@@ -1,3 +1,10 @@
+2010-10-05  Eric Blake  <eblake@redhat.com>
+
+	faccessat: remove unused wrappers
+	* lib/openat.h (accessat, euidaccesat): Delete, since the mere
+	presence of these wrappers dragged in -lgen on Solaris.
+	Reported by Clemens Brogi; fix suggested by Paul Eggert.
+
 2010-10-05  Jim Meyering  <meyering@redhat.com>
 
 	tests: require @PRAGMA_COLUMNS@ with each @PRAGMA_SYSTEM_HEADER@

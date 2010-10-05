@@ -93,22 +93,10 @@ lstatat (int fd, char const *name, struct stat *st)
   return fstatat (fd, name, st, AT_SYMLINK_NOFOLLOW);
 }
 
-#if GNULIB_FACCESSAT
 /* For now, there are no wrappers named laccessat or leuidaccessat,
    since gnulib doesn't support faccessat(,AT_SYMLINK_NOFOLLOW) and
-   since access rights on symlinks are of limited utility.  */
-
-static inline int
-accessat (int fd, char const *file, int mode)
-{
-  return faccessat (fd, file, mode, 0);
-}
-
-static inline int
-euidaccessat (int fd, char const *file, int mode)
-{
-  return faccessat (fd, file, mode, AT_EACCESS);
-}
-#endif
+   since access rights on symlinks are of limited utility.  Likewise,
+   wrappers are not provided for accessat or euidaccessat, so as to
+   avoid dragging in -lgen on some platforms.  */
 
 #endif /* _GL_HEADER_OPENAT */
