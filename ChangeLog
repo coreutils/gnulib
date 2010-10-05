@@ -8,6 +8,37 @@
 
 2010-10-05  Eric Blake  <eblake@redhat.com>
 
+	parse-datetime: better name than get_date
+	* NEWS: Reword the deprecation notice.
+	* modules/get_date: Rename to modules/parse-datetime.
+	* modules/get_date-tests: Rename to modules/parse-datetime-tests.
+	* m4/get_date.m4: Rename to m4/parse-datetime.m4.
+	* lib/get_date.y: Rename to lib/parse-datetime.y.
+	* tests/test-get_date.c: Rename to tests/test-parse-datetime.c.
+	* doc/get_date.texi: Rename to doc/parse-datetime.texi.
+	* doc/getdate.texi: Provide fallback wrapper.
+	* lib/getdate.h: Move guts, and wrap...
+	* lib/parse-datetime.h: ...new file.
+	* lib/parse-datetime.y (get_date): Rename...
+	(parse_datetime): ...to this.
+	* m4/parse-datetime.m4 (gl_GET_DATE): Rename...
+	(gl_PARSE_DATETIME): ...to this.
+	* doc/posix-functions/getdate.texi (get_date): Provide fallback
+	documentation.
+	* modules/getdate (Files): Provide fallback docs and header.
+	(Notice, Depends-on): Update references.
+	* tests/test-parse-datetime.c: Likewise.
+	* DEPENDENCIES: Likewise.
+	* MODULES.html.sh (Date and time <time.h>): Likewise.
+	* doc/parse-datetime.texi (Date input formats)
+	(Authors of parse_datetime): Likewise.
+	* modules/parse-datetime (Files, configure.ac, Makefile.am)
+	(Include): Likewise.
+	* modules/parse-datetime-tests (Files, Makefile.am): Likewise.
+	* gnulib-tool: Likewise.
+	* m4/bison.m4 (gl_BISON): Likewise.
+	Suggested by Bruno Haible.
+
 	bootstrap: fix Solaris regression
 	* build-aux/bootstrap (check_versions): Solaris tr still needs []
 	around ranges.

@@ -1,4 +1,4 @@
-# get_date.m4 serial 17
+# parse-datetime.m4 serial 18
 dnl Copyright (C) 2002-2006, 2008-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -24,13 +24,13 @@ AC_DEFUN([gl_C_COMPOUND_LITERALS],
   fi
 ])
 
-AC_DEFUN([gl_GET_DATE],
+AC_DEFUN([gl_PARSE_DATETIME],
 [
-  dnl Prerequisites of lib/getdate.h.
+  dnl Prerequisites of lib/parse-datetime.h.
   AC_REQUIRE([AM_STDBOOL_H])
   AC_REQUIRE([gl_TIMESPEC])
 
-  dnl Prerequisites of lib/get_date.y.
+  dnl Prerequisites of lib/parse-datetime.y.
   AC_REQUIRE([gl_BISON])
   AC_REQUIRE([gl_C_COMPOUND_LITERALS])
   AC_STRUCT_TIMEZONE

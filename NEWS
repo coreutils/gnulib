@@ -12,10 +12,12 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
-2010-09-30  getdate         This module is deprecated. Please use get_date
-                            for get_date(), or help us write getdate-posix
-                            for getdate(). Also, doc/getdate.texi has been
-                            renamed to doc/get_date.texi.
+2010-10-05  getdate         This module is deprecated. Please use the new
+                            parse-datetime module for the replacement
+                            function parse_datetime(), or help us write
+                            getdate-posix for getdate(). Also, the header
+                            "getdate.h" has been renamed "parse-datetime.h",
+                            and doc/getdate.texi to doc/parse-datetime.texi.
 
 2010-09-29  sys_wait        This module no longer provides the waitpid()
                             function. If you need this function, you now need

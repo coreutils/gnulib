@@ -7,7 +7,7 @@
 
 AC_DEFUN([gl_BISON],
 [
-  # get_date.y works with bison only.
+  # parse-datetime.y works with bison only.
   : ${YACC='bison -y'}
 dnl
 dnl Declaring YACC & YFLAGS precious will not be necessary after GNULIB

@@ -1,0 +1,52 @@
+Description:
+Convert a date/time string to linear time.
+
+Files:
+doc/parse-datetime.texi
+lib/parse-datetime.h
+lib/parse-datetime.y
+m4/bison.m4
+m4/tm_gmtoff.m4
+m4/parse-datetime.m4
+
+Depends-on:
+c-ctype
+stdbool
+gettime
+intprops
+mktime
+setenv
+unsetenv
+time
+verify
+xalloc
+
+configure.ac:
+gl_PARSE_DATETIME
+
+Makefile.am:
+# This rule overrides the Automake generated .y.c rule, to ensure that the
+# parse-datetime.c file gets generated in the source directory, not in the
+# build directory.
+parse-datetime.c: parse-datetime.y
+	$(AM_V_GEN)$(SHELL) $(YLWRAP) $(srcdir)/parse-datetime.y \
+	                              y.tab.c parse-datetime.c \
+	                              y.tab.h parse-datetime.h \
+	                              y.output parse-datetime.output \
+	                              -- $(YACC) $(YFLAGS) $(AM_YFLAGS) && \
+	mv parse-datetime.c parse-datetime.c-t && \
+	mv parse-datetime.c-t $(srcdir)/parse-datetime.c
+lib_SOURCES += parse-datetime.y
+BUILT_SOURCES += parse-datetime.c
+MOSTLYCLEANFILES += parse-datetime.c-t
+MAINTAINERCLEANFILES += parse-datetime.c
+EXTRA_DIST += parse-datetime.c
+
+Include:
+"parse-datetime.h"
+
+License:
+GPL
+
+Maintainer:
+Paul Eggert

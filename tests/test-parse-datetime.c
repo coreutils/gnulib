@@ -1,4 +1,4 @@
-/* Test of getdate() function.
+/* Test of parse_datetime() function.
    Copyright (C) 2008, 2009, 2010 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
 
 #include <config.h>
 
-#include "getdate.h"
+#include "parse-datetime.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -62,14 +62,14 @@ main (int argc _GL_UNUSED, char **argv)
   now.tv_sec = 4711;
   now.tv_nsec = 1267;
   p = "now";
-  ASSERT (get_date (&result, p, &now));
+  ASSERT (parse_datetime (&result, p, &now));
   LOG (p, now, result);
   ASSERT (now.tv_sec == result.tv_sec && now.tv_nsec == result.tv_nsec);
 
   now.tv_sec = 4711;
   now.tv_nsec = 1267;
   p = "tomorrow";
-  ASSERT (get_date (&result, p, &now));
+  ASSERT (parse_datetime (&result, p, &now));
   LOG (p, now, result);
   ASSERT (now.tv_sec + 24 * 60 * 60 == result.tv_sec
           && now.tv_nsec == result.tv_nsec);
@@ -77,7 +77,7 @@ main (int argc _GL_UNUSED, char **argv)
   now.tv_sec = 4711;
   now.tv_nsec = 1267;
   p = "yesterday";
-  ASSERT (get_date (&result, p, &now));
+  ASSERT (parse_datetime (&result, p, &now));
   LOG (p, now, result);
   ASSERT (now.tv_sec - 24 * 60 * 60 == result.tv_sec
           && now.tv_nsec == result.tv_nsec);
@@ -85,7 +85,7 @@ main (int argc _GL_UNUSED, char **argv)
   now.tv_sec = 4711;
   now.tv_nsec = 1267;
   p = "4 hours";
-  ASSERT (get_date (&result, p, &now));
+  ASSERT (parse_datetime (&result, p, &now));
   LOG (p, now, result);
   ASSERT (now.tv_sec + 4 * 60 * 60 == result.tv_sec
           && now.tv_nsec == result.tv_nsec);
@@ -94,10 +94,10 @@ main (int argc _GL_UNUSED, char **argv)
   now.tv_sec = 4711;
   now.tv_nsec = 1267;
   p = "UTC+400 +24 hours";
-  ASSERT (get_date (&result, p, &now));
+  ASSERT (parse_datetime (&result, p, &now));
   LOG (p, now, result);
   p = "UTC+400 +1 day";
-  ASSERT (get_date (&result2, p, &now));
+  ASSERT (parse_datetime (&result2, p, &now));
   LOG (p, now, result2);
   ASSERT (result.tv_sec == result2.tv_sec
           && result.tv_nsec == result2.tv_nsec);
@@ -106,15 +106,15 @@ main (int argc _GL_UNUSED, char **argv)
   now.tv_sec = 4711;
   now.tv_nsec = 1267;
   p = "UTC+14:00";
-  ASSERT (get_date (&result, p, &now));
+  ASSERT (parse_datetime (&result, p, &now));
   LOG (p, now, result);
   p = "UTC+14";
-  ASSERT (get_date (&result2, p, &now));
+  ASSERT (parse_datetime (&result2, p, &now));
   LOG (p, now, result2);
   ASSERT (result.tv_sec == result2.tv_sec
           && result.tv_nsec == result2.tv_nsec);
   p = "UTC+1400";
-  ASSERT (get_date (&result2, p, &now));
+  ASSERT (parse_datetime (&result2, p, &now));
   LOG (p, now, result2);
   ASSERT (result.tv_sec == result2.tv_sec
           && result.tv_nsec == result2.tv_nsec);
@@ -122,15 +122,15 @@ main (int argc _GL_UNUSED, char **argv)
   now.tv_sec = 4711;
   now.tv_nsec = 1267;
   p = "UTC-14:00";
-  ASSERT (get_date (&result, p, &now));
+  ASSERT (parse_datetime (&result, p, &now));
   LOG (p, now, result);
   p = "UTC-14";
-  ASSERT (get_date (&result2, p, &now));
+  ASSERT (parse_datetime (&result2, p, &now));
   LOG (p, now, result2);
   ASSERT (result.tv_sec == result2.tv_sec
           && result.tv_nsec == result2.tv_nsec);
   p = "UTC-1400";
-  ASSERT (get_date (&result2, p, &now));
+  ASSERT (parse_datetime (&result2, p, &now));
   LOG (p, now, result2);
   ASSERT (result.tv_sec == result2.tv_sec
           && result.tv_nsec == result2.tv_nsec);
@@ -138,10 +138,10 @@ main (int argc _GL_UNUSED, char **argv)
   now.tv_sec = 4711;
   now.tv_nsec = 1267;
   p = "UTC+0:15";
-  ASSERT (get_date (&result, p, &now));
+  ASSERT (parse_datetime (&result, p, &now));
   LOG (p, now, result);
   p = "UTC+0015";
-  ASSERT (get_date (&result2, p, &now));
+  ASSERT (parse_datetime (&result2, p, &now));
   LOG (p, now, result2);
   ASSERT (result.tv_sec == result2.tv_sec
           && result.tv_nsec == result2.tv_nsec);
@@ -149,65 +149,65 @@ main (int argc _GL_UNUSED, char **argv)
   now.tv_sec = 4711;
   now.tv_nsec = 1267;
   p = "UTC-1:30";
-  ASSERT (get_date (&result, p, &now));
+  ASSERT (parse_datetime (&result, p, &now));
   LOG (p, now, result);
   p = "UTC-130";
-  ASSERT (get_date (&result2, p, &now));
+  ASSERT (parse_datetime (&result2, p, &now));
   LOG (p, now, result2);
   ASSERT (result.tv_sec == result2.tv_sec
           && result.tv_nsec == result2.tv_nsec);
 
 
-  /* TZ out of range should cause get_date failure */
+  /* TZ out of range should cause parse_datetime failure */
   now.tv_sec = 4711;
   now.tv_nsec = 1267;
   p = "UTC+25:00";
-  ASSERT (!get_date (&result, p, &now));
+  ASSERT (!parse_datetime (&result, p, &now));
 
         /* Check for several invalid countable dayshifts */
   now.tv_sec = 4711;
   now.tv_nsec = 1267;
   p = "UTC+4:00 +40 yesterday";
-  ASSERT (!get_date (&result, p, &now));
+  ASSERT (!parse_datetime (&result, p, &now));
   p = "UTC+4:00 next yesterday";
-  ASSERT (!get_date (&result, p, &now));
+  ASSERT (!parse_datetime (&result, p, &now));
   p = "UTC+4:00 tomorrow ago";
-  ASSERT (!get_date (&result, p, &now));
+  ASSERT (!parse_datetime (&result, p, &now));
   p = "UTC+4:00 40 now ago";
-  ASSERT (!get_date (&result, p, &now));
+  ASSERT (!parse_datetime (&result, p, &now));
   p = "UTC+4:00 last tomorrow";
-  ASSERT (!get_date (&result, p, &now));
+  ASSERT (!parse_datetime (&result, p, &now));
   p = "UTC+4:00 -4 today";
-  ASSERT (!get_date (&result, p, &now));
+  ASSERT (!parse_datetime (&result, p, &now));
 
   /* And check correct usage of dayshifts */
   now.tv_sec = 4711;
   now.tv_nsec = 1267;
   p = "UTC+400 tomorrow";
-  ASSERT (get_date (&result, p, &now));
+  ASSERT (parse_datetime (&result, p, &now));
   LOG (p, now, result);
   p = "UTC+400 +1 day";
-  ASSERT (get_date (&result2, p, &now));
+  ASSERT (parse_datetime (&result2, p, &now));
   LOG (p, now, result2);
   ASSERT (result.tv_sec == result2.tv_sec
           && result.tv_nsec == result2.tv_nsec);
   now.tv_sec = 4711;
   now.tv_nsec = 1267;
   p = "UTC+400 yesterday";
-  ASSERT (get_date (&result, p, &now));
+  ASSERT (parse_datetime (&result, p, &now));
   LOG (p, now, result);
   p = "UTC+400 1 day ago";
-  ASSERT (get_date (&result2, p, &now));
+  ASSERT (parse_datetime (&result2, p, &now));
   LOG (p, now, result2);
   ASSERT (result.tv_sec == result2.tv_sec
           && result.tv_nsec == result2.tv_nsec);
   now.tv_sec = 4711;
   now.tv_nsec = 1267;
   p = "UTC+400 now";
-  ASSERT (get_date (&result, p, &now));
+  ASSERT (parse_datetime (&result, p, &now));
   LOG (p, now, result);
   p = "UTC+400 +0 minutes"; /* silly, but simple "UTC+400" is different*/
-  ASSERT (get_date (&result2, p, &now));
+  ASSERT (parse_datetime (&result2, p, &now));
   LOG (p, now, result2);
   ASSERT (result.tv_sec == result2.tv_sec
           && result.tv_nsec == result2.tv_nsec);
@@ -221,7 +221,7 @@ main (int argc _GL_UNUSED, char **argv)
       sprintf (tmp, "NEXT %s", day_table[i]);
       now.tv_sec = thur2 + 4711;
       now.tv_nsec = 1267;
-      ASSERT (get_date (&result, tmp, &now));
+      ASSERT (parse_datetime (&result, tmp, &now));
       LOG (tmp, now, result);
       ASSERT (result.tv_nsec == 0);
       ASSERT (result.tv_sec == thur2 + (i == 4 ? 7 : (i + 3) % 7) * 24 * 3600);
@@ -229,7 +229,7 @@ main (int argc _GL_UNUSED, char **argv)
       sprintf (tmp, "LAST %s", day_table[i]);
       now.tv_sec = thur2 + 4711;
       now.tv_nsec = 1267;
-      ASSERT (get_date (&result, tmp, &now));
+      ASSERT (parse_datetime (&result, tmp, &now));
       LOG (tmp, now, result);
       ASSERT (result.tv_nsec == 0);
       ASSERT (result.tv_sec == thur2 + ((i + 3) % 7 - 7) * 24 * 3600);
@@ -238,7 +238,7 @@ main (int argc _GL_UNUSED, char **argv)
   p = "THURSDAY UTC+00";  /* The epoch was on Thursday.  */
   now.tv_sec = 0;
   now.tv_nsec = 0;
-  ASSERT (get_date (&result, p, &now));
+  ASSERT (parse_datetime (&result, p, &now));
   LOG (p, now, result);
   ASSERT (result.tv_sec == now.tv_sec
           && result.tv_nsec == now.tv_nsec);
@@ -246,7 +246,7 @@ main (int argc _GL_UNUSED, char **argv)
   p = "FRIDAY UTC+00";
   now.tv_sec = 0;
   now.tv_nsec = 0;
-  ASSERT (get_date (&result, p, &now));
+  ASSERT (parse_datetime (&result, p, &now));
   LOG (p, now, result);
   ASSERT (result.tv_sec == 24 * 3600
           && result.tv_nsec == now.tv_nsec);

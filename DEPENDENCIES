@@ -101,7 +101,7 @@ at any time.
 
 * Bison 2.0 or newer.
   + Recommended.
-    Needed if you use the 'get_date' module.
+    Needed if you use the 'parse-datetime' module.
   + Homepage:
     http://www.gnu.org/software/bison/
   + Download:

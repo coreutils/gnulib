@@ -33,7 +33,7 @@
 
 #include <config.h>
 
-#include "getdate.h"
+#include "parse-datetime.h"
 
 #include "intprops.h"
 #include "timespec.h"
@@ -1201,7 +1201,8 @@ get_tz (char tzbuf[TZBUFSIZE])
    P can be an incomplete or relative time specification; if so, use
    *NOW as the basis for the returned time.  */
 bool
-get_date (struct timespec *result, char const *p, struct timespec const *now)
+parse_datetime (struct timespec *result, char const *p,
+                struct timespec const *now)
 {
   time_t Start;
   long int Start_ns;
@@ -1550,7 +1551,7 @@ main (int ac, char **av)
     {
       struct timespec d;
       struct tm const *tm;
-      if (! get_date (&d, buff, NULL))
+      if (! parse_datetime (&d, buff, NULL))
         printf ("Bad format - couldn't convert.\n");
       else if (! (tm = localtime (&d.tv_sec)))
         {

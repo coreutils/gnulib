@@ -5,12 +5,14 @@ Status:
 obsolete
 
 Notice:
-This module is obsolete. Use the module 'get_date' instead.
+This module is obsolete. Use the module 'parse-datetime' instead.
 
 Files:
+doc/getdate.texi
+lib/getdate.h
 
 Depends-on:
-get_date
+parse-datetime
 
 configure.ac:
 

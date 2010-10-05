@@ -17,6 +17,6 @@ This function is missing on some platforms:
 MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, Cygwin, mingw, BeOS.
 @end itemize
 
-Gnulib provides a module @code{get_date} that contains a function
-@code{get_date}
+Gnulib provides a module @code{parse-datetime} that contains a function
+@code{parse_datetime}
 that has similar functionality as the @code{getdate} function.

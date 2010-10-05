@@ -14,7 +14,7 @@
 @chapter Date input formats
 
 @cindex date input formats
-@findex get_date
+@findex parse_datetime
 
 First, a quote:
 
@@ -45,7 +45,7 @@ or a week from Sunday, with feelings of helpless confusion.  @dots{}
 This section describes the textual date representations that @sc{gnu}
 programs accept.  These are the strings you, as a user, can supply as
 arguments to the various programs.  The C interface (via the
-@code{get_date} function) is not described here.
+@code{parse_datetime} function) is not described here.
 
 @menu
 * General date syntax::            Common rules.
@@ -57,7 +57,7 @@ arguments to the various programs.  The C interface (via the
 * Pure numbers in date strings::   19931219, 1440.
 * Seconds since the Epoch::        @@1078100502.
 * Specifying time zone rules::     TZ="America/New_York", TZ="UTC0".
-* Authors of get_date::            Bellovin, Eggert, Salz, Berets, et al.
+* Authors of parse_datetime::      Bellovin, Eggert, Salz, Berets, et al.
 @end menu
 
 
@@ -530,10 +530,12 @@ daylight saving time; other rules can specify simple daylight saving
 regimes.  @xref{TZ Variable,, Specifying the Time Zone with @code{TZ},
 libc, The GNU C Library}.
 
-@node Authors of get_date
-@section Authors of @code{get_date}
+@node Authors of parse_datetime
+@section Authors of @code{parse_datetime}
+@c the anchor keeps the old node name, to try to avoid breaking links
+@anchor{Authors of get_date}
 
-@cindex authors of @code{get_date}
+@cindex authors of @code{parse_datetime}
 
 @cindex Bellovin, Steven M.
 @cindex Salz, Rich
@@ -547,10 +549,11 @@ at Chapel Hill.  The code was later tweaked by a couple of people on
 Usenet, then completely overhauled by Rich $alz (@email{rsalz@@bbn.com})
 and Jim Berets (@email{jberets@@bbn.com}) in August, 1990.  Various
 revisions for the @sc{gnu} system were made by David MacKenzie, Jim Meyering,
-Paul Eggert and others.
+Paul Eggert and others, including renaming it to @code{parse_datetime}
+to avoid confusion with the Posix function @code{getdate}.
 
 @cindex Pinard, F.
 @cindex Berry, K.
 This chapter was originally produced by Fran@,{c}ois Pinard
-(@email{pinard@@iro.umontreal.ca}) from the @file{get_date.y} source code,
+(@email{pinard@@iro.umontreal.ca}) from the @file{parse_datetime.y} source code,
 and then edited by K.@: Berry (@email{kb@@cs.umb.edu}).

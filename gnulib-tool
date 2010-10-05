@@ -5354,7 +5354,7 @@ func_create_testdir ()
     ) || func_exit 1
   fi
   # Need to run configure and make once, to create built files that are to be
-  # distributed (such as get_date.c).
+  # distributed (such as parse-datetime.c).
   sed_remove_make_variables='s,[$]([A-Za-z0-9_]*),,g'
   # Extract the value of "CLEANFILES += ..." and "MOSTLYCLEANFILES += ...".
   cleaned_files=`sed -e "$sed_remove_backslash_newline" < "$testdir/$sourcebase/Makefile.am" \
