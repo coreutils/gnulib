@@ -50,7 +50,7 @@
 #define YYMAXDEPTH 20
 #define YYINITDEPTH YYMAXDEPTH
 
-/* Since the code of getdate.y is not included in the Emacs executable
+/* Since the code of parse-datetime.y is not included in the Emacs executable
    itself, there is no need to #define static in this file.  Even if
    the code were included in the Emacs executable, it probably
    wouldn't do any harm to #undef it here; this will only cause
@@ -712,7 +712,7 @@ static table const universal_time_zone_table[] =
 /* The time zone table.  This table is necessarily incomplete, as time
    zone abbreviations are ambiguous; e.g. Australians interpret "EST"
    as Eastern time in Australia, not as US Eastern Standard Time.
-   You cannot rely on getdate to handle arbitrary time zone
+   You cannot rely on parse_datetime to handle arbitrary time zone
    abbreviations; use numeric abbreviations like `-0500' instead.  */
 static table const time_zone_table[] =
 {

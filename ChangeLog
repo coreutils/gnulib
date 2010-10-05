@@ -1,5 +1,12 @@
 2010-10-05  Paul Eggert  <eggert@cs.ucla.edu>
 
+	parse-datetime: do some more renaming
+	* doc/parse-datetime.texi (Authors of parse_datetime): Call it
+	parse_datetime, not get_date.  Mention the renaming.
+	* lib/parse-datetime.y:  Call it parse_datetime, not getdate,
+	in comments.
+	* m4/bison.m4: Likewise.
+
 	more ports to Solaris tr, which needs [] around ranges
 	* gnulib-tool: Solaris tr needs [] around ranges.
 	* m4/fnmatch.m4 (gl_FUNC_FNMATCH_POSIX): Likewise.
