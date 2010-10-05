@@ -1,3 +1,23 @@
+2010-10-05  Eric Blake  <eblake@redhat.com>
+
+	memmem, strstr, strcasestr: fix bug with long periodic needle
+	* lib/str-two-way.h (two_way_long_needle): Avoid bug with long
+	periodic needle having false positive.
+	* m4/memmem.m4 (gl_FUNC_MEMMEM_SIMPLE): Detect bug in glibc 2.12
+	and cygwin 1.7.7.
+	(gl_FUNC_MEMMEM): Be more pessimistic when cross-compiling.
+	* m4/strcasestr.m4 (gl_FUNC_STRCASESTR_SIMPLE)
+	(gl_FUNC_STRCASESTR): Likewise.
+	* m4/strstr.m4 (gl_FUNC_STRSTR_SIMPLE, gl_FUNC_STRSTR): Likewise.
+	* tests/test-memmem.c (main): Expose the bug.
+	* tests/test-strcasestr.c (main): Likewise.
+	* tests/test-strstr.c (main): Likewise.
+	* tests/test-c-strcasestr.c (main): Likewise.
+	* doc/glibc-functions/memmem.texi (memmem): Document the bug.
+	* doc/posix-functions/strstr.texi (strstr): Likewise.
+	* doc/glibc-functions/strcasestr.texi (strcasestr): Likewise.
+	Reported via http://sourceware.org/bugzilla/show_bug.cgi?id=12092
+
 2010-10-05  Paul Eggert  <eggert@cs.ucla.edu>
 
 	parse-datetime: do some more renaming

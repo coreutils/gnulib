@@ -1,4 +1,4 @@
-# memmem.m4 serial 15
+# memmem.m4 serial 16
 dnl Copyright (C) 2002, 2003, 2004, 2007, 2008, 2009, 2010 Free Software
 dnl Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
@@ -16,6 +16,45 @@ AC_DEFUN([gl_FUNC_MEMMEM_SIMPLE],
   AC_CHECK_DECLS_ONCE([memmem])
   if test $ac_cv_have_decl_memmem = no; then
     HAVE_DECL_MEMMEM=0
+  else
+    dnl Detect http://sourceware.org/bugzilla/show_bug.cgi?id=12092.
+    AC_CACHE_CHECK([whether memmem works],
+      [gl_cv_func_memmem_works_always],
+      [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
+#include <string.h> /* for memmem */
+#define P "_EF_BF_BD"
+#define HAYSTACK "F_BD_CE_BD" P P P P "_C3_88_20" P P P "_C3_A7_20" P
+#define NEEDLE P P P P P
+]], [[return !!memmem (HAYSTACK, strlen (HAYSTACK), NEEDLE, strlen (NEEDLE));
+    ]])],
+        [gl_cv_func_memmem_works_always=yes],
+        [gl_cv_func_memmem_works_always=no],
+        [dnl glibc 2.12 and cygwin 1.7.7 have a known bug.  Assume that it
+         dnl works on all other platforms, even if it is not linear.
+         AC_EGREP_CPP([Lucky user],
+           [
+#ifdef __GNU_LIBRARY__
+ #include <features.h>
+ #if (__GLIBC__ == 2 && __GLIBC_MINOR__ > 12) || (__GLIBC__ > 2)
+  Lucky user
+ #endif
+#elif defined __CYGWIN__
+ #include <cygwin/version.h>
+ #if CYGWIN_VERSION_DLL_MAJOR >= 1007 && CYGWIN_VERSION_DLL_MINOR > 7
+  Lucky user
+ #endif
+#else
+  Lucky user
+#endif
+           ],
+           [gl_cv_func_memmem_works_always=yes],
+           [gl_cv_func_memmem_works_always="guessing no"])
+        ])
+      ])
+    if test "$gl_cv_func_memmem_works_always" != yes; then
+      REPLACE_MEMMEM=1
+      AC_LIBOBJ([memmem])
+    fi
   fi
   gl_PREREQ_MEMMEM
 ]) # gl_FUNC_MEMMEM_SIMPLE
@@ -24,9 +63,9 @@ dnl Additionally, check that memmem is efficient and handles empty needles.
 AC_DEFUN([gl_FUNC_MEMMEM],
 [
   AC_REQUIRE([gl_FUNC_MEMMEM_SIMPLE])
-  if test $ac_cv_have_decl_memmem = yes; then
+  if test $HAVE_MEMMEM = 1 && test $REPLACE_MEMMEM = 0; then
     AC_CACHE_CHECK([whether memmem works in linear time],
-      [gl_cv_func_memmem_works],
+      [gl_cv_func_memmem_works_fast],
       [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
 #include <signal.h> /* for signal */
 #include <string.h> /* for memmem */
@@ -52,29 +91,29 @@ static void quit (int sig) { exit (sig + 128); }
       }
     /* Check for empty needle behavior.  */
     return !result || !memmem ("a", 1, 0, 0);]])],
-        [gl_cv_func_memmem_works=yes], [gl_cv_func_memmem_works=no],
-        [dnl Only glibc >= 2.9 and cygwin >= 1.7.0 are known to have a
-         dnl memmem that works in linear time.
+        [gl_cv_func_memmem_works_fast=yes], [gl_cv_func_memmem_works_fast=no],
+        [dnl Only glibc > 2.12 and cygwin > 1.7.7 are known to have a
+         dnl bug-free memmem that works in linear time.
          AC_EGREP_CPP([Lucky user],
            [
 #include <features.h>
 #ifdef __GNU_LIBRARY__
- #if (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 9) || (__GLIBC__ > 2)
+ #if (__GLIBC__ == 2 && __GLIBC_MINOR__ > 12) || (__GLIBC__ > 2)
   Lucky user
  #endif
 #endif
 #ifdef __CYGWIN__
  #include <cygwin/version.h>
- #if CYGWIN_VERSION_DLL_MAJOR >= 1007
+ #if CYGWIN_VERSION_DLL_MAJOR >= 1007 && CYGWIN_VERSION_DLL_MINOR > 7
   Lucky user
  #endif
 #endif
            ],
-           [gl_cv_func_memmem_works=yes],
-           [gl_cv_func_memmem_works="guessing no"])
+           [gl_cv_func_memmem_works_fast=yes],
+           [gl_cv_func_memmem_works_fast="guessing no"])
         ])
       ])
-    if test "$gl_cv_func_memmem_works" != yes; then
+    if test "$gl_cv_func_memmem_works_fast" != yes; then
       REPLACE_MEMMEM=1
       AC_LIBOBJ([memmem])
     fi

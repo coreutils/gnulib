@@ -1,4 +1,4 @@
-# strcasestr.m4 serial 14
+# strcasestr.m4 serial 15
 dnl Copyright (C) 2005, 2007, 2008, 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,6 +19,45 @@ AC_DEFUN([gl_FUNC_STRCASESTR_SIMPLE],
   else
     if test "$gl_cv_func_memchr_works" != yes; then
       REPLACE_STRCASESTR=1
+    else
+      dnl Detect http://sourceware.org/bugzilla/show_bug.cgi?id=12092.
+      AC_CACHE_CHECK([whether strcasestr works],
+        [gl_cv_func_strcasestr_works_always],
+        [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
+#include <string.h> /* for strcasestr */
+#define P "_EF_BF_BD"
+#define HAYSTACK "F_BD_CE_BD" P P P P "_C3_88_20" P P P "_C3_A7_20" P
+#define NEEDLE P P P P P
+]], [[return !!strcasestr (HAYSTACK, NEEDLE);
+      ]])],
+          [gl_cv_func_strcasestr_works_always=yes],
+          [gl_cv_func_strcasestr_works_always=no],
+          [dnl glibc 2.12 and cygwin 1.7.7 have a known bug.  Assume that it
+           dnl works on all other platforms, even if it is not linear.
+           AC_EGREP_CPP([Lucky user],
+             [
+#ifdef __GNU_LIBRARY__
+ #include <features.h>
+ #if (__GLIBC__ == 2 && __GLIBC_MINOR__ > 12) || (__GLIBC__ > 2)
+  Lucky user
+ #endif
+#elif defined __CYGWIN__
+ #include <cygwin/version.h>
+ #if CYGWIN_VERSION_DLL_MAJOR >= 1007 && CYGWIN_VERSION_DLL_MINOR > 7
+  Lucky user
+ #endif
+#else
+  Lucky user
+#endif
+             ],
+             [gl_cv_func_strcasestr_works_always=yes],
+             [gl_cv_func_strcasestr_works_always="guessing no"])
+          ])
+        ])
+      if test "$gl_cv_func_strcasestr_works_always" != yes; then
+        REPLACE_STRCASESTR=1
+        AC_LIBOBJ([strcasestr])
+      fi
     fi
   fi
   if test $HAVE_STRCASESTR = 0 || test $REPLACE_STRCASESTR = 1; then
@@ -36,7 +75,7 @@ AC_DEFUN([gl_FUNC_STRCASESTR],
       [gl_cv_func_strcasestr_linear],
       [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
 #include <signal.h> /* for signal */
-#include <string.h> /* for memmem */
+#include <string.h> /* for strcasestr */
 #include <stdlib.h> /* for malloc */
 #include <unistd.h> /* for alarm */
 static void quit (int sig) { exit (sig + 128); }
@@ -61,19 +100,19 @@ static void quit (int sig) { exit (sig + 128); }
       }
     return !result;]])],
         [gl_cv_func_strcasestr_linear=yes], [gl_cv_func_strcasestr_linear=no],
-        [dnl Only glibc >= 2.9 and cygwin >= 1.7.0 are known to have a
+        [dnl Only glibc > 2.12 and cygwin > 1.7.7 are known to have a
          dnl strcasestr that works in linear time.
          AC_EGREP_CPP([Lucky user],
            [
 #include <features.h>
 #ifdef __GNU_LIBRARY__
- #if (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 9) || (__GLIBC__ > 2)
+ #if (__GLIBC__ == 2 && __GLIBC_MINOR__ > 12) || (__GLIBC__ > 2)
   Lucky user
  #endif
 #endif
 #ifdef __CYGWIN__
  #include <cygwin/version.h>
- #if CYGWIN_VERSION_DLL_MAJOR >= 1007
+ #if CYGWIN_VERSION_DLL_MAJOR >= 1007 && CYGWIN_VERSION_DLL_MINOR > 7
   Lucky user
  #endif
 #endif

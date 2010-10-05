@@ -15,6 +15,11 @@ mingw, BeOS.
 @item
 This function can trigger memchr bugs on some platforms:
 glibc 2.10.
+
+@item
+This function can trigger false positives for long periodic needles on
+some platforms:
+glibc 2.12, Cygwin 1.7.7.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{strcasestr}:

@@ -13,6 +13,10 @@ MacOS X 10.3, FreeBSD 5.2.1, OpenBSD 4.0, AIX 4.3.2, HP-UX 11, IRIX 6.5, OSF/1 5
 @item
 This function has reversed arguments on some older platforms:
 Linux libc 5.0.9
+@item
+This function can trigger false positives for long periodic needles on
+some platforms:
+glibc 2.12, Cygwin 1.7.7.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{memmem}:
