@@ -1,7 +1,14 @@
 2010-10-05  Eric Blake  <eblake@redhat.com>
 
+	bootstrap: fix Solaris regression
+	* build-aux/bootstrap (check_versions): Solaris tr still needs []
+	around ranges.
+	Reported by Pádraig Brady.
+
+2010-10-05  Eric Blake  <eblake@redhat.com>
+
 	bootstrap: work with pkg-config
-	* build-aux/bootstrap (found_aux_dir): Also transliterate - in
+	* build-aux/bootstrap (check_versions): Also transliterate - in
 	prerequisite name.
 	(print_versions): Be robust to any \ in $buildreq.  Avoid listing
 	prerequisites that were already found, to avoid confusion.
