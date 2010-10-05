@@ -2931,6 +2931,18 @@ func_emit_lib_Makefile_am ()
   echo "EXTRA_${libname}_${libext}_SOURCES ="
   if test "$libtool" = true; then
     echo "${libname}_${libext}_LDFLAGS = \$(AM_LDFLAGS)"
+    echo "${libname}_${libext}_LDFLAGS += -no-undefined"
+    # Synthesize an ${libname}_${libext}_LDFLAGS augmentation by combining
+    # the link dependencies of all modules.
+    for module in $modules; do
+      func_verify_nontests_module
+      if test -n "$module"; then
+        func_get_link_directive "$module"
+      fi
+    done \
+      | LC_ALL=C sed -e '/^$/d' -e 's/ when linking with libtool.*//' \
+      | LC_ALL=C sort -u \
+      | LC_ALL=C sed -e 's/^/'"${libname}_${libext}"'_LDFLAGS += /'
   fi
   echo
   if test -n "$pobase"; then

@@ -1,5 +1,12 @@
 2010-10-04  Bruno Haible  <bruno@clisp.org>
 
+	gnulib-tool: Synthesize appropriate _LDFLAGS for a libtool library.
+	* gnulib-tool (func_emit_lib_Makefile_am): When preparing for a libtool
+	library, put '-no-undefined' and the link dependencies into _LDFLAGS.
+	Reported by Bruce Korb and Eric Blake.
+
+2010-10-04  Bruno Haible  <bruno@clisp.org>
+
 	threadlib: Make option --with-libpth-prefix work.
 	* m4/threadlib.m4 (gl_THREADLIB_BODY): When testing whether pth works,
 	use $LIBPTH, not just -lpth.
