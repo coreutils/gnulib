@@ -15,6 +15,7 @@ info html dvi pdf:
 # Perform some platform independent checks on the gnulib code.
 check: \
   sc_prohibit_augmenting_PATH_via_TESTS_ENVIRONMENT			\
+  sc_pragma_columns							\
   sc_prefer_ac_check_funcs_once
 
 sc_prefer_ac_check_funcs_once:
@@ -30,6 +31,18 @@ sc_prohibit_augmenting_PATH_via_TESTS_ENVIRONMENT:
 	  git grep '^[	 ]*TESTS_ENVIRONMENT += PATH=' modules		\
 	    && { printf '%s\n' 'Do not augment PATH via TESTS_ENVIRONMENT;' \
 		 "  see <$$url>" 1>&2; exit 1; } || :			\
+	else :; fi
+
+sc_pragma_columns:
+	if test -d .git; then						\
+          git ls-files|grep '\.in\.h$$'					\
+              | xargs grep -l '^@PRAGMA_SYSTEM_HEADER@'			\
+              | xargs grep -L '^@PRAGMA_COLUMNS@'			\
+              | grep .							\
+	    && { printf '%s\n'						\
+                   'the files listed above use @PRAGMA_SYSTEM_HEADER@'	\
+                   'without also using @PRAGMA_COLUMNS@' 1>&2;		\
+		 exit 1; } || :;					\
 	else :; fi
 
 # Regenerate some files that are stored in the repository.

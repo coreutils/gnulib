@@ -1,3 +1,8 @@
+2010-10-05  Jim Meyering  <meyering@redhat.com>
+
+	tests: require @PRAGMA_COLUMNS@ with each @PRAGMA_SYSTEM_HEADER@
+	* Makefile (sc_pragma_columns): New syntax-check rule.
+
 2010-10-04  Bruno Haible  <bruno@clisp.org>
 
 	gnulib-tool: Synthesize appropriate _LDFLAGS for a libtool library.
