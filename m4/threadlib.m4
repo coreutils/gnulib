@@ -1,4 +1,4 @@
-# threadlib.m4 serial 7 (gettext-0.18.2)
+# threadlib.m4 serial 8 (gettext-0.18.2)
 dnl Copyright (C) 2005-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -250,7 +250,7 @@ int main ()
       AC_LIB_LINKFLAGS([pth])
       gl_have_pth=
       gl_save_LIBS="$LIBS"
-      LIBS="$LIBS -lpth"
+      LIBS="$LIBS $LIBPTH"
       AC_LINK_IFELSE(
         [AC_LANG_PROGRAM([[#include <pth.h>]], [[pth_self();]])],
         [gl_have_pth=yes])

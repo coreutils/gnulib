@@ -1,5 +1,11 @@
 2010-10-04  Bruno Haible  <bruno@clisp.org>
 
+	threadlib: Make option --with-libpth-prefix work.
+	* m4/threadlib.m4 (gl_THREADLIB_BODY): When testing whether pth works,
+	use $LIBPTH, not just -lpth.
+
+2010-10-04  Bruno Haible  <bruno@clisp.org>
+
 	Avoid line length limitation from HP NonStop system header files.
 	* m4/include_next.m4 (gl_INCLUDE_NEXT): Define also PRAGMA_COLUMNS.
 	* lib/arpa_inet.in.h: Use PRAGMA_COLUMNS.
