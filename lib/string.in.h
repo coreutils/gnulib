@@ -51,8 +51,8 @@
 #endif
 
 /* NetBSD 5.0 declares strsignal in <unistd.h>, not in <string.h>.  */
-/* But avoid namespace pollution on glibc systems.  */
-#if (@GNULIB_STRSIGNAL@ || defined GNULIB_POSIXCHECK)  \
+/* But in any case avoid namespace pollution on glibc systems.  */
+#if (@GNULIB_STRSIGNAL@ || defined GNULIB_POSIXCHECK) && defined __NetBSD__ \
     && ! defined __GLIBC__
 # include <unistd.h>
 #endif

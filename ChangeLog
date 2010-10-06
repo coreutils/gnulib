@@ -1,3 +1,11 @@
+2010-10-06  Bruno Haible  <bruno@clisp.org>
+
+	string, sys_select: Avoid #including large headers unless necessary.
+	* lib/string.in.h: Don't include <unistd.h> except on NetBSD.
+	* lib/sys_select.in.h: Don't include <string.h> except on Solaris,
+	OSF/1, BeOS, Haiku.
+	Reported by Jim Meyering.
+
 2010-10-05  Eric Blake  <eblake@redhat.com>
 
 	memmem, strstr, strcasestr: fix bug with long periodic needle
