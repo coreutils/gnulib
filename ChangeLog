@@ -1,5 +1,30 @@
 2010-10-07  Eric Blake  <eblake@redhat.com>
 
+	docs: update cygwin progress
+	* doc/glibc-functions/mkostemp.texi (mkostemp): Added in cygwin
+	1.7.6.
+	* doc/glibc-functions/mkostemps.texi (mkostemps): Likewise.
+	* doc/posix-headers/fenv.texi (fenv.h): Added after cygwin 1.7.7.
+	* doc/posix-functions/feclearexcept.texi (feclearexcept): Likewise.
+	* doc/posix-functions/fegetenv.texi (fegetenv): Likewise.
+	* doc/posix-functions/fegetexceptflag.texi (fegetexceptflag):
+	Likewise.
+	* doc/posix-functions/fegetround.texi (fegetround): Likewise.
+	* doc/posix-functions/feholdexcept.texi (feholdexcept): Likewise.
+	* doc/posix-functions/feraiseexcept.texi (feraiseexcept):
+	Likewise.
+	* doc/posix-functions/fesetenv.texi (fesetenv): Likewise.
+	* doc/posix-functions/fesetexceptflag.texi (fesetexceptflag):
+	Likewise.
+	* doc/posix-functions/fesetround.texi (fesetround): Likewise.
+	* doc/posix-functions/fetestexcept.texi (fetestexcept): Likewise.
+	* doc/posix-functions/feupdateenv.texi (feupdateenv): Likewise.
+	* doc/glibc-functions/feenableexcept.texi (feenableexcept):
+	Likewise.
+	* doc/glibc-functions/fedisableexcept.texi (fedisableexcept):
+	Likewise.
+	* doc/glibc-functions/fegetexcept.texi (fegetexcept): Likewise.
+
 	docs: update parse-datetime history
 	* doc/parse-datetime.texi (Authors of parse_datetime): Better
 	documentation of this function's history and alternatives.
