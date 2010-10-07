@@ -1,5 +1,9 @@
 2010-10-07  Eric Blake  <eblake@redhat.com>
 
+	docs: update parse-datetime history
+	* doc/parse-datetime.texi (Authors of parse_datetime): Better
+	documentation of this function's history and alternatives.
+
 	cygwin: use more robust version check
 	* m4/memmem.m4 (gl_FUNC_MEMMEM_SIMPLE, gl_FUNC_MEMMEM): Don't
 	exclude an eventual cygwin 1.9.1.

@@ -543,15 +543,19 @@ libc, The GNU C Library}.
 @cindex MacKenzie, David
 @cindex Meyering, Jim
 @cindex Eggert, Paul
-@code{parse_datetime} was originally implemented by Steven M. Bellovin
+@code{parse_datetime} started life as @code{getdate}, as originally
+implemented by Steven M. Bellovin
 (@email{smb@@research.att.com}) while at the University of North Carolina
 at Chapel Hill.  The code was later tweaked by a couple of people on
 Usenet, then completely overhauled by Rich $alz (@email{rsalz@@bbn.com})
 and Jim Berets (@email{jberets@@bbn.com}) in August, 1990.  Various
 revisions for the @sc{gnu} system were made by David MacKenzie, Jim Meyering,
-Paul Eggert and others, including renaming it to @code{get_date} and
-then to @code{parse_datetime}
-to avoid confusion with the Posix function @code{getdate}.
+Paul Eggert and others, including renaming it to @code{get_date} to
+avoid a conflict with the alternative Posix function @code{getdate},
+and a later rename to @code{parse_datetime}.  The Posix function
+@code{getdate} can parse more locale-specific dates using
+@code{strptime}, but relies on an environment variable and external
+file, and lacks the thread-safety of @code{parse_datetime}.
 
 @cindex Pinard, F.
 @cindex Berry, K.
