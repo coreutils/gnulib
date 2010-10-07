@@ -68,6 +68,14 @@
 
 #include "xalloc.h"
 
+/* Bison's skeleton tests _STDLIB_H, while some stdlib.h headers
+   use _STDLIB_H_ as witness.  Map the latter to the one bison uses.  */
+/* FIXME: this is temporary.  Remove when we have a mechanism to ensure
+   that the version we're using is fixed, too.  */
+#ifdef _STDLIB_H_
+# undef _STDLIB_H
+# define _STDLIB_H 1
+#endif
 
 /* ISDIGIT differs from isdigit, as follows:
    - Its arg may be any int or unsigned int; it need not be an unsigned char

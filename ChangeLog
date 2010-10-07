@@ -1,3 +1,10 @@
+2010-10-07  Jim Meyering  <meyering@redhat.com>
+
+	parse-datetime: avoid compilation failure on OpenBSD 4.7
+	* lib/parse-datetime.y (_STDLIB_H) [_STDLIB_H_]: Define.
+	This works around a compilation failure on OpenBSD 4.7:
+	http://thread.gmane.org/gmane.comp.parsers.bison.bugs/3418
+
 2010-10-07  Eric Blake  <eblake@redhat.com>
 
 	docs: update cygwin progress
