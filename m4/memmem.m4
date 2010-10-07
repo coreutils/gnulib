@@ -1,4 +1,4 @@
-# memmem.m4 serial 16
+# memmem.m4 serial 17
 dnl Copyright (C) 2002, 2003, 2004, 2007, 2008, 2009, 2010 Free Software
 dnl Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
@@ -40,7 +40,7 @@ AC_DEFUN([gl_FUNC_MEMMEM_SIMPLE],
  #endif
 #elif defined __CYGWIN__
  #include <cygwin/version.h>
- #if CYGWIN_VERSION_DLL_MAJOR >= 1007 && CYGWIN_VERSION_DLL_MINOR > 7
+ #if CYGWIN_VERSION_DLL_COMBINED > CYGWIN_VERSION_DLL_MAKE_COMBINED (1007, 7)
   Lucky user
  #endif
 #else
@@ -104,7 +104,7 @@ static void quit (int sig) { exit (sig + 128); }
 #endif
 #ifdef __CYGWIN__
  #include <cygwin/version.h>
- #if CYGWIN_VERSION_DLL_MAJOR >= 1007 && CYGWIN_VERSION_DLL_MINOR > 7
+ #if CYGWIN_VERSION_DLL_COMBINED > CYGWIN_VERSION_DLL_MAKE_COMBINED (1007, 7)
   Lucky user
  #endif
 #endif

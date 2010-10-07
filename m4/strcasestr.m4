@@ -1,4 +1,4 @@
-# strcasestr.m4 serial 15
+# strcasestr.m4 serial 16
 dnl Copyright (C) 2005, 2007, 2008, 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -43,7 +43,7 @@ AC_DEFUN([gl_FUNC_STRCASESTR_SIMPLE],
  #endif
 #elif defined __CYGWIN__
  #include <cygwin/version.h>
- #if CYGWIN_VERSION_DLL_MAJOR >= 1007 && CYGWIN_VERSION_DLL_MINOR > 7
+ #if CYGWIN_VERSION_DLL_COMBINED > CYGWIN_VERSION_DLL_MAKE_COMBINED (1007, 7)
   Lucky user
  #endif
 #else
@@ -112,7 +112,7 @@ static void quit (int sig) { exit (sig + 128); }
 #endif
 #ifdef __CYGWIN__
  #include <cygwin/version.h>
- #if CYGWIN_VERSION_DLL_MAJOR >= 1007 && CYGWIN_VERSION_DLL_MINOR > 7
+ #if CYGWIN_VERSION_DLL_COMBINED > CYGWIN_VERSION_DLL_MAKE_COMBINED (1007, 7)
   Lucky user
  #endif
 #endif
