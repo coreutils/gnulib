@@ -1,3 +1,8 @@
+2010-10-08  Paul Eggert  <eggert@cs.ucla.edu>
+
+	bootstrap: reformat for readability
+	* build-aux/bootstrap: Rewrite to avoid lines longer than 80 columns.
+
 2010-10-08  Eric Blake  <eblake@redhat.com>
 
 	docs: update cygwin progress
