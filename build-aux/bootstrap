@@ -80,6 +80,10 @@ gnulib_modules=
 # Any gnulib files needed that are not in modules.
 gnulib_files=
 
+# A function to be called to edit gnulib.mk right after it's created.
+# Override it via your own definition in bootstrap.conf.
+gnulib_mk_hook() { :; }
+
 # A function to be called after everything else in this script.
 # Override it via your own definition in bootstrap.conf.
 bootstrap_epilogue() { :; }
@@ -692,7 +696,8 @@ slurp() {
         cmp - $dir/$gnulib_mk > /dev/null || {
           echo "$0: Copying $1/$dir/$file to $dir/$gnulib_mk ..." &&
           rm -f $dir/$gnulib_mk &&
-          sed "$remove_intl" $1/$dir/$file >$dir/$gnulib_mk
+          sed "$remove_intl" $1/$dir/$file >$dir/$gnulib_mk &&
+          gnulib_mk_hook $dir/$gnulib_mk
         }
       elif { test "${2+set}" = set && test -r $2/$dir/$file; } ||
            version_controlled_file $dir $file; then

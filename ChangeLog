@@ -1,5 +1,15 @@
 2010-10-08  Paul Eggert  <eggert@cs.ucla.edu>
 
+	bootstrap: add hook for altering gnulib.mk, for Bison
+	* build-aux/bootstrap (gnulib_mk_hook): New function, so that
+	the Bison bootstrapping process can rewrite file names and variables
+	in this file before later parts of 'bootstrap' use the file.
+	Bison wants to include lib/gnulib.mk from the top-level makefile,
+	so it needs the file names in this file to be relative to the top
+	level, not relative to lib; plus it needs variable names to be
+	rewritten.
+	(slurp): Use the new function.
+
 	bootstrap: reformat for readability
 	* build-aux/bootstrap: Rewrite to avoid lines longer than 80 columns.
 
