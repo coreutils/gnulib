@@ -50,38 +50,47 @@ nanosleep (const struct timespec *requested_delay,
   /* nanosleep mishandles large sleeps due to internal overflow
      problems.  The worst known case of this is cygwin 1.5.x, which
      can't sleep more than 49.7 days (2**32 milliseconds).  Solve this
-     by breaking the sleep up into smaller chunks.  Verify that time_t
-     is large enough.  */
-  verify (TYPE_MAXIMUM (time_t) / 49 / 24 / 60 / 60);
-  const time_t limit = 49 * 24 * 60 * 60;
-  time_t seconds = requested_delay->tv_sec;
-  struct timespec intermediate;
-  intermediate.tv_nsec = 0;
+     by breaking the sleep up into smaller chunks.  */
 
-  while (limit < seconds)
+  if (requested_delay->tv_nsec < 0 || BILLION <= requested_delay->tv_nsec)
     {
-      int result;
-      intermediate.tv_sec = limit;
-      result = nanosleep (&intermediate, remaining_delay);
-      seconds -= limit;
-      if (result)
-        {
-          if (remaining_delay)
-            {
-              remaining_delay->tv_sec += seconds;
-              remaining_delay->tv_nsec += requested_delay->tv_nsec;
-              if (BILLION <= requested_delay->tv_nsec)
-                {
-                  remaining_delay->tv_sec++;
-                  remaining_delay->tv_nsec -= BILLION;
-                }
-            }
-          return result;
-        }
+      errno = EINVAL;
+      return -1;
     }
-  intermediate.tv_sec = seconds;
-  intermediate.tv_nsec = requested_delay->tv_nsec;
-  return nanosleep (&intermediate, remaining_delay);
+
+  {
+    /* Verify that time_t is large enough.  */
+    verify (TYPE_MAXIMUM (time_t) / 49 / 24 / 60 / 60);
+    const time_t limit = 49 * 24 * 60 * 60;
+    time_t seconds = requested_delay->tv_sec;
+    struct timespec intermediate;
+    intermediate.tv_nsec = 0;
+
+    while (limit < seconds)
+      {
+        int result;
+        intermediate.tv_sec = limit;
+        result = nanosleep (&intermediate, remaining_delay);
+        seconds -= limit;
+        if (result)
+          {
+            if (remaining_delay)
+              {
+                remaining_delay->tv_sec += seconds;
+                remaining_delay->tv_nsec += requested_delay->tv_nsec;
+                if (BILLION <= requested_delay->tv_nsec)
+                  {
+                    remaining_delay->tv_sec++;
+                    remaining_delay->tv_nsec -= BILLION;
+                  }
+              }
+            return result;
+          }
+      }
+    intermediate.tv_sec = seconds;
+    intermediate.tv_nsec = requested_delay->tv_nsec;
+    return nanosleep (&intermediate, remaining_delay);
+  }
 }
 
 #elif (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
