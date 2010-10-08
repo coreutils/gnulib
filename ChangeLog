@@ -1,3 +1,51 @@
+2010-10-08  Eric Blake  <eblake@redhat.com>
+
+	docs: update cygwin progress
+	* doc/posix-functions/cacos.texi (cacos): Added after cygwin
+	1.7.7.
+	* doc/posix-functions/cacosf.texi (cacosf): Likewise.
+	* doc/posix-functions/cacosh.texi (cacosh): Likewise.
+	* doc/posix-functions/cacoshf.texi (cacoshf): Likewise.
+	* doc/posix-functions/carg.texi (carg): Likewise.
+	* doc/posix-functions/cargf.texi (cargf): Likewise.
+	* doc/posix-functions/casin.texi (casin): Likewise.
+	* doc/posix-functions/casinf.texi (casinf): Likewise.
+	* doc/posix-functions/casinh.texi (casinh): Likewise.
+	* doc/posix-functions/casinhf.texi (casinhf): Likewise.
+	* doc/posix-functions/catan.texi (catan): Likewise.
+	* doc/posix-functions/catanf.texi (catanf): Likewise.
+	* doc/posix-functions/catanh.texi (catanh): Likewise.
+	* doc/posix-functions/catanhf.texi (catanhf): Likewise.
+	* doc/posix-functions/ccos.texi (ccos): Likewise.
+	* doc/posix-functions/ccosf.texi (ccosf): Likewise.
+	* doc/posix-functions/ccosh.texi (ccosh): Likewise.
+	* doc/posix-functions/ccoshf.texi (ccoshf): Likewise.
+	* doc/posix-functions/cexp.texi (cexp): Likewise.
+	* doc/posix-functions/cexpf.texi (cexpf): Likewise.
+	* doc/posix-functions/cimag.texi (cimag): Likewise.
+	* doc/posix-functions/cimagf.texi (cimagf): Likewise.
+	* doc/posix-functions/clog.texi (clog): Likewise.
+	* doc/posix-functions/clogf.texi (clogf): Likewise.
+	* doc/posix-functions/conj.texi (conj): Likewise.
+	* doc/posix-functions/conjf.texi (conjf): Likewise.
+	* doc/posix-functions/cpow.texi (cpow): Likewise.
+	* doc/posix-functions/cpowf.texi (cpowf): Likewise.
+	* doc/posix-functions/cproj.texi (cproj): Likewise.
+	* doc/posix-functions/cprojf.texi (cprojf): Likewise.
+	* doc/posix-functions/creal.texi (creal): Likewise.
+	* doc/posix-functions/crealf.texi (crealf): Likewise.
+	* doc/posix-functions/csin.texi (csin): Likewise.
+	* doc/posix-functions/csinf.texi (csinf): Likewise.
+	* doc/posix-functions/csinh.texi (csinh): Likewise.
+	* doc/posix-functions/csinhf.texi (csinhf): Likewise.
+	* doc/posix-functions/csqrt.texi (csqrt): Likewise.
+	* doc/posix-functions/csqrtf.texi (csqrtf): Likewise.
+	* doc/posix-functions/ctan.texi (ctan): Likewise.
+	* doc/posix-functions/ctanf.texi (ctanf): Likewise.
+	* doc/posix-functions/ctanh.texi (ctanh): Likewise.
+	* doc/posix-functions/ctanhf.texi (ctanhf): Likewise.
+	* doc/posix-headers/complex.texi (complex.h): Likewise.
+
 2010-10-07  Jim Meyering  <meyering@redhat.com>
 
 	parse-datetime: avoid compilation failure on OpenBSD 4.7
