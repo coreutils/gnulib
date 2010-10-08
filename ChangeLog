@@ -1,3 +1,9 @@
+2010-10-08  Eric Blake  <eblake@redhat.com>
+
+	time: enforce recent POSIX ruling that time_t is integral
+	* lib/time.in.h (__time_t_must_be_integral): Detect any
+	problematic systems, allowing the rest of gnulib to assume POSIX.
+
 2010-10-08  Jim Meyering  <meyering@redhat.com>
 
 	fdopendir: fix a bug on systems lacking openat and /proc support

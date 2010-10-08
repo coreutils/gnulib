@@ -84,6 +84,15 @@ struct timespec
 #  endif
 # endif
 
+/* Per http://austingroupbugs.net/view.php?id=327, POSIX requires
+   time_t to be an integer type, even though C99 permits floating
+   point.  We don't know of any implementation that uses floating
+   point, and it is much easier to write code that doesn't have to
+   worry about that corner case, so we force the issue.  */
+struct __time_t_must_be_integral {
+  unsigned int __floating_time_t_unsupported : 2 * ((time_t) 1 / 2 == 0) - 1;
+};
+
 /* Sleep for at least RQTP seconds unless interrupted,  If interrupted,
    return -1 and store the remaining time into RMTP.  See
    <http://www.opengroup.org/susv3xsh/nanosleep.html>.  */
