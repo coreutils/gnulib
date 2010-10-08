@@ -1,3 +1,35 @@
+2010-10-08  Jim Meyering  <meyering@redhat.com>
+
+	fdopendir: fix a bug on systems lacking openat and /proc support
+	OpenBSD 4.7 is one such system.  The most noticeable effect was
+	failure of any application making nontrivial use of fts: rm, du,
+	chown, chmod etc.  E.g., "mkdir -p a/b; ./rm -rf a" would fail with
+	  ./rm: traversal failed: `a': Bad file descriptor
+	Debugging that, you see that even though FD 6 was closed just
+	prior to the opendir call in fd_clone_opendir, its resulting
+	dir->dd_fd was 8, rather than the expected value of 6:
+
+	Breakpoint 3, fdopendir_with_dup (fd=6, older_dupfd=-1) at fdopendir.c:93
+	93                close (fd);
+	(gdb) n
+	94                dir = fd_clone_opendir (dupfd);
+	(gdb) n
+	95                saved_errno = errno;
+	(gdb) p dir->dd_fd
+	$11 = 8
+
+	Notice how it closes FD 6, then gets a DIR* pointer using FD 8.
+	The problem is that on OpenBSD, fd_clone_opendir has to resort
+	to using the old-style save/restore CWD mechanism, due to its
+	lack of openat/proc support, and *that* would steal the FD (6)
+	that opendir was supposed to use.
+
+	The fix is to squirrel away the desired FD so that save_cwd uses a
+	different one, and then free the dest FD right before calling opendir.
+	That guarantees opendir will use the required file descriptor.
+
+	* lib/fdopendir.c (fd_clone_opendir): Handle the above.
+
 2010-10-08  Bruno Haible  <bruno@clisp.org>
 
 	sys_select: Avoid warning due to undeclared memset() on OpenBSD 4.5.

@@ -140,9 +140,22 @@ fd_clone_opendir (int fd)
         dir = opendir (name);
       saved_errno = errno;
 # else /* !REPLACE_FCHDIR */
+
+      /* Occupy the destination FD slot, so that save_cwd cannot hijack it.  */
+      int fd_reserve = dup (fd);
+      if (fd_reserve < 0)
+        {
+          saved_errno = errno;
+          dir = NULL;
+          goto fail;
+        }
+
       struct saved_cwd saved_cwd;
       if (save_cwd (&saved_cwd) != 0)
         openat_save_fail (errno);
+
+      /* Liberate the target file descriptor, so that opendir uses it.  */
+      close (fd_reserve);
 
       if (fchdir (fd) != 0)
         {
@@ -162,6 +175,7 @@ fd_clone_opendir (int fd)
 # endif /* !REPLACE_FCHDIR */
     }
 
+ fail:
   if (proc_file != buf)
     free (proc_file);
   errno = saved_errno;
