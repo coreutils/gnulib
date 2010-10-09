@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate July 5, 2010
+@set lastupdate October 8, 2010
 @c %**end of header
 
 @dircategory GNU organization
@@ -134,12 +134,11 @@ questions for new maintainers.
 
 @cindex advisory committee
 The GNU Advisory Committee helps to coordinate activities in the GNU
-project on behalf of RMS.  If you have any organizational questions or
-concerns you can contact the committee at
-@email{gnu-advisory@@gnu.org}.  The committee holds a regular monthly
-meeting to discuss any issues that have been raised.  The minutes of
-the meeting are sent to the @code{gnu-prog} list, and can also be
-found, along with additional information, in
+project on behalf of RMS (Richard Stallman, the Chief GNUisance).  If
+you have any organizational questions or concerns you can contact the
+committee at @email{gnu-advisory@@gnu.org}.  See
+@url{http://www.gnu.org/contact/gnu-advisory.html} for the current
+committee members.  Additional information is in
 @file{/gd/gnuorg/advisory}.
 
 
