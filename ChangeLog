@@ -1,3 +1,9 @@
+2010-10-11  Bruno Haible  <bruno@clisp.org>
+
+	Indentation.
+	* lib/spawn.in.h (verify_POSIX_SPAWN_USEVFORK_no_overlap): Improve
+	indentation.
+
 2010-10-11  Jim Meyering  <meyering@redhat.com>
 
 	spawn.in.h: make indentation consistent with parentheses

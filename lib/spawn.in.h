@@ -147,11 +147,11 @@ typedef struct
     | (POSIX_SPAWN_SETSCHEDULER > 0 ? POSIX_SPAWN_SETSCHEDULER - 1 : 0))  \
    + 1)
 typedef int verify_POSIX_SPAWN_USEVFORK_no_overlap
-                 [(((POSIX_SPAWN_RESETIDS | POSIX_SPAWN_SETPGROUP
-                     | POSIX_SPAWN_SETSIGDEF | POSIX_SPAWN_SETSIGMASK
-                     | POSIX_SPAWN_SETSCHEDPARAM | POSIX_SPAWN_SETSCHEDULER)
-                    & POSIX_SPAWN_USEVFORK) == 0)
-                  ? 1 : -1];
+            [(((POSIX_SPAWN_RESETIDS | POSIX_SPAWN_SETPGROUP
+                | POSIX_SPAWN_SETSIGDEF | POSIX_SPAWN_SETSIGMASK
+                | POSIX_SPAWN_SETSCHEDPARAM | POSIX_SPAWN_SETSCHEDULER)
+               & POSIX_SPAWN_USEVFORK) == 0)
+             ? 1 : -1];
 
 
 #if @GNULIB_POSIX_SPAWN@
