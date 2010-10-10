@@ -81,7 +81,7 @@ typedef unsigned int sigset_t;
 #  endif
 
 /* This code supports only 32 signals.  */
-typedef int verify_NSIG_constraint[2 * (NSIG <= 32) - 1];
+typedef int verify_NSIG_constraint[NSIG <= 32 ? 1 : -1];
 
 # endif
 

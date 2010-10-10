@@ -90,7 +90,7 @@ struct timespec
    point, and it is much easier to write code that doesn't have to
    worry about that corner case, so we force the issue.  */
 struct __time_t_must_be_integral {
-  unsigned int __floating_time_t_unsupported : 2 * ((time_t) 1 / 2 == 0) - 1;
+  unsigned int __floating_time_t_unsupported : (time_t) 1;
 };
 
 /* Sleep for at least RQTP seconds unless interrupted,  If interrupted,

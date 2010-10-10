@@ -1,3 +1,17 @@
+2010-10-10  Paul Eggert  <eggert@cs.ucla.edu>
+
+	prefer (X ? 1 : -1) when converting from boolean (1,0) to int (1,-1)
+
+	Formerly the style was sometimes 2*X - 1, because the C standard
+	was wrongly thought to disallow ?: in integral constant expressions.
+	* lib/inet_ntop.c (verify_int_size): Rewrite 2*X-7 (!) to 4<=X?1:-1.
+	* lib/signal.in.h (verify_NSIG_constraint): Rewrite 2*X-1 to X?1:-1.
+	* lib/spawn.in.h (verify_POSIX_SPAWN_USEVFORK_no_overlap): Likewise.
+	* lib/stdint.in.h (_verify_intmax_size): Likewise.
+	* lib/time.in.h (struct __time_t_must_be_integral): Rewrite
+	2 * ((time_t) 1 / 2 == 0) - 1 to (time_t) 1; this suffices to
+	verify that time_t cannot be floating.
+
 2010-10-08  Eric Blake  <eblake@redhat.com>
 
 	time: enforce recent POSIX ruling that time_t is integral
