@@ -75,7 +75,7 @@ test_futimens (int (*func) (int, struct timespec const *),
 
   /* Invalid arguments.  */
   errno = 0;
-  ASSERT (func (AT_FDCWD, NULL) == -1);
+  ASSERT (func (-1, NULL) == -1);
   ASSERT (errno == EBADF);
   {
     struct timespec ts[2] = { { Y2K, UTIME_BOGUS_POS }, { Y2K, 0 } };

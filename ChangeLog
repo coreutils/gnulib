@@ -1,3 +1,10 @@
+2010-10-11  Jim Meyering  <meyering@redhat.com>
+
+	test-futimens: avoid unwarranted test failure on Solaris 5.11
+	* tests/test-futimens.h (test_futimens): When provoking EBADF, use an
+	invalid file descriptor, so we don't provoke EFAULT from Solaris 5.11,
+	because it tries to dereference the NULL name argument.
+
 2010-10-11  Bruno Haible  <bruno@clisp.org>
 
 	Indentation.
