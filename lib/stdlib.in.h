@@ -61,6 +61,9 @@
 #endif
 
 #if !@HAVE_STRUCT_RANDOM_DATA@
+/* Define 'struct random_data'.
+   But allow multiple gnulib generated <stdlib.h> replacements to coexist.  */
+# if !GNULIB_defined_struct_random_data
 struct random_data
 {
   int32_t *fptr;                /* Front pointer.  */
@@ -71,6 +74,8 @@ struct random_data
   int rand_sep;                 /* Distance between front and rear.  */
   int32_t *end_ptr;             /* Pointer behind state table.  */
 };
+#  define GNULIB_defined_struct_random_data 1
+# endif
 #endif
 
 #if (@GNULIB_MKSTEMP@ || @GNULIB_GETSUBOPT@ || defined GNULIB_POSIXCHECK) && ! defined __GLIBC__ && !((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)

@@ -1,3 +1,9 @@
+2010-10-11  Bruno Haible  <bruno@clisp.org>
+
+	stdlib: Allow multiple gnulib generated replacements to coexist.
+	* lib/stdlib.in.h (struct random_data): Avoid identical redefinition.
+	Reported by Sam Steingold <sds@gnu.org>.
+
 2010-10-11  Jim Meyering  <meyering@redhat.com>
 
 	fix a documentation typo
