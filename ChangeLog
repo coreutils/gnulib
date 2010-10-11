@@ -1,3 +1,9 @@
+2010-10-11  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Indentation.
+	* lib/spawn.in.h (verify_POSIX_SPAWN_USEVFORK_no_overlap): Indent
+	higher-level operators more to the left.
+
 2010-10-11  Jim Meyering  <meyering@redhat.com>
 
 	test-futimens: avoid unwarranted test failure on Solaris 5.11
