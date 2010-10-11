@@ -1,3 +1,8 @@
+2010-10-11  Jim Meyering  <meyering@redhat.com>
+
+	fix a documentation typo
+	* doc/posix-functions/futimens.texi (futimens): Fix typo: s/itme/item/
+
 2010-10-11  Eric Blake  <eblake@redhat.com>
 
 	futimens: work around Solaris 11 bug
