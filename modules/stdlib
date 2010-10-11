@@ -18,6 +18,8 @@ configure.ac:
 gl_STDLIB_H
 
 Makefile.am:
+nodist_include_HEADERS += stdlib.h
+
 BUILT_SOURCES += stdlib.h
 
 # We need the following in order to create <stdlib.h> when the system

@@ -12,6 +12,9 @@ configure.ac:
 AM_STDBOOL_H
 
 Makefile.am:
+nodist_include_HEADERS += $(STDBOOL_H)
+EXTRA_HEADERS += stdbool.h
+
 BUILT_SOURCES += $(STDBOOL_H)
 
 # We need the following in order to create <stdbool.h> when the system

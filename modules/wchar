@@ -17,6 +17,8 @@ configure.ac:
 gl_WCHAR_H
 
 Makefile.am:
+nodist_include_HEADERS += wchar.h
+
 BUILT_SOURCES += wchar.h
 
 # We need the following in order to create <wchar.h> when the system

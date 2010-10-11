@@ -13,6 +13,9 @@ configure.ac:
 gl_PTHREAD_CHECK
 
 Makefile.am:
+nodist_include_HEADERS += $(PTHREAD_H)
+EXTRA_HEADERS += pthread.h
+
 BUILT_SOURCES += $(PTHREAD_H)
 
 # We need the following in order to create <pthread.h> when the system

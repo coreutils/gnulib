@@ -12,6 +12,8 @@ Depends-on:
 configure.ac:
 
 Makefile.am:
+nodist_include_HEADERS += c++defs.h
+
 # The BUILT_SOURCES created by this Makefile snippet are not used via #include
 # statements but through direct file reference. Therefore this snippet must be
 # present in all Makefile.am that need it. This is ensured by the applicability

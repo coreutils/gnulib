@@ -16,6 +16,8 @@ configure.ac:
 gl_UNISTD_H
 
 Makefile.am:
+nodist_include_HEADERS += unistd.h
+
 BUILT_SOURCES += unistd.h
 
 # We need the following in order to create an empty placeholder for

@@ -16,6 +16,8 @@ configure.ac:
 gl_DIRENT_H
 
 Makefile.am:
+nodist_include_HEADERS += dirent.h
+
 BUILT_SOURCES += dirent.h
 
 # We need the following in order to create <dirent.h> when the system

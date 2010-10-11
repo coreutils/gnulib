@@ -1,5 +1,33 @@
 2010-10-12  Gary V. Vaughan  <gary@gnu.org>
 
+	add _HEADERS primaries to Makefile.am snippets for installable headers
+	* modules/alloca-opt, modules/arg-nonnull, modules/argz,
+	modules/arpa_inet, modules/byteswap, modules/c++defs, modules/ctype,
+	modules/dirent, modules/errno, modules/fcntl-h, modules/float,
+	modules/fnmatch, modules/getopt-posix, modules/glob, modules/iconv-h,
+	modules/iconv_open, modules/inttypes, modules/langinfo,
+	modules/link-warning, modules/locale, modules/math, modules/netdb,
+	modules/netinet_in, modules/poll-h, modules/pthread, modules/pty,
+	modules/sched, modules/search, modules/selinux-h, modules/signal,
+	modules/spawn, modules/stdarg, modules/stdbool, modules/stddef,
+	modules/stdint, modules/stdio, modules/stdlib, modules/string,
+	modules/strings, modules/sys_file, modules/sys_ioctl,
+	modules/sys_select, modules/sys_socket, modules/sys_stat,
+	modules/sys_time, modules/sys_times, modules/sys_utsname,
+	modules/sys_wait, modules/sysexits, modules/termios, modules/time,
+	modules/unistd, modules/unitypes, modules/unused-parameter,
+	modules/warn-on-use, modules/wchar, modules/wctype (Makefile.am):
+	Add nodist_include_HEADERS, nobase_nodist_include_HEADERS and
+	EXTRA_HEADERS declarations for potentially installable header files.
+	* gnulib-tool: Initialize nodist_include_HEADERS,
+	nobase_nodist_include_HEADERS and EXTRA_HEADERS to prime for new
+	`.*_HEADERS +=' declarations.
+	(func_emit_lib_Makefile_am): Edit away new nodist_include_HEADERS,
+	nobase_nodist_include_HEADERS and EXTRA_HEADERS declarations by
+	default, reverting the Makefile.am snippets above to their original
+	condition prior to this change *unless* the gnulib library is being
+	installed.
+
 	New module `libposix'.
 	* modules/libposix: New module to facilitate an installable
 	library of posix modules.

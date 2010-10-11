@@ -20,6 +20,8 @@ gl_HEADER_SYS_SOCKET
 AC_PROG_MKDIR_P
 
 Makefile.am:
+nobase_nodist_include_HEADERS += sys/socket.h
+
 BUILT_SOURCES += sys/socket.h
 
 # We need the following in order to create <sys/socket.h> when the system

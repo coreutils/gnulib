@@ -18,6 +18,8 @@ configure.ac:
 gl_FCNTL_H
 
 Makefile.am:
+nodist_include_HEADERS += fcntl.h
+
 BUILT_SOURCES += fcntl.h
 
 # We need the following in order to create <fcntl.h> when the system

@@ -15,6 +15,8 @@ gl_SYS_WAIT_H
 AC_PROG_MKDIR_P
 
 Makefile.am:
+nobase_nodist_include_HEADERS += sys/wait.h
+
 BUILT_SOURCES += sys/wait.h
 
 # We need the following in order to create <sys/wait.h> when the system
