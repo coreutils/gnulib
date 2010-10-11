@@ -75,6 +75,9 @@ test_futimens (int (*func) (int, struct timespec const *),
 
   /* Invalid arguments.  */
   errno = 0;
+  ASSERT (func (AT_FDCWD, NULL) == -1);
+  ASSERT (errno == EBADF);
+  errno = 0;
   ASSERT (func (-1, NULL) == -1);
   ASSERT (errno == EBADF);
   {

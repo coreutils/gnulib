@@ -28,6 +28,10 @@ Linux kernel 2.6.25.
 When using @code{UTIME_OMIT} for the modification time, but specifying
 an access time, some systems fail to update the change time:
 Linux kernel 2.6.32.
+@itme
+Passing @code{AT_FDCWD} as the fd argument does not properly fail with
+@code{EBADF} on some systems:
+glibc 2.11, Solaris 11.
 @end itemize
 
 Portability problems not fixed by Gnulib:

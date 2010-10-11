@@ -1,3 +1,11 @@
+2010-10-11  Eric Blake  <eblake@redhat.com>
+
+	futimens: work around Solaris 11 bug
+	* m4/futimens.m4 (gl_FUNC_FUTIMENS): Detect the bug.
+	* tests/test-futimens.h (test_futimens): Enhance, rather than
+	weaken test.
+	* doc/posix-functions/futimens.texi (futimens): Document the bug.
+
 2010-10-11  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Indentation.
