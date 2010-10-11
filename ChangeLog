@@ -1,5 +1,11 @@
 2010-10-12  Gary V. Vaughan  <gary@gnu.org>
 
+	iconv_open: reduce not-trivial repetition of file-list
+	* modules/iconv_open (iconv_headers): New make macro to hold list of
+	iconv header files.
+	(BUILT_SOURCES, MAINTAINERCLEANFILES, EXTRA_DIST): Use it instead of
+	multiple hard-coded copies.
+
 	gnulib-tool: transform hard-coded libgnu.a to $libname.l?a
 	* gnulib-tool (func_emit_lib_Makefile_am): transform hard-coded
 	`libgnu.a' in Makefile.am snippets to be either `$libname.a' or
