@@ -1,5 +1,25 @@
 2010-10-10  Paul Eggert  <eggert@cs.ucla.edu>
 
+	rewrite int foo[2*X-1] to verify(X) or to int foo[X?1:-1]
+
+	* lib/float+.h (verify_sizeof_flt, verify_sizeof_dbl):
+	(verify_sizeof_ldbl): Rewrite 2*X-1 to X?1:-1.
+	* lib/malloca.c: Include "verify.h".
+	(verify1): Remove, replacing with a verify call.
+	* lib/relocwrapper.c (verify1): Likewise.
+	* lib/vasnprintf.c (mp_limb_verify, mp_twolimb_verify, TCHAR_T_verify):
+	Likewise.
+	* modules/malloca (Depends-on): Add 'verify'.
+	* modules/relocatable-prog-wrapper (Depends-on): Add 'verify'.
+	* modules/vasnprintf (Depends-on): Add 'verify'.
+	* modules/unistdio/u8-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/u8-u8-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/u16-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/u16-u16-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/u32-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/u32-u32-vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/ulc-vasnprintf (Depends-on): Likewise.
+
 	prefer (X ? 1 : -1) when converting from boolean (1,0) to int (1,-1)
 
 	Formerly the style was sometimes 2*X - 1, because the C standard

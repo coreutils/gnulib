@@ -26,6 +26,7 @@ stdint
 xsize
 errno
 memchr
+verify
 
 configure.ac:
 gl_FUNC_VASNPRINTF

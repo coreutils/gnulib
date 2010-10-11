@@ -54,6 +54,7 @@
 #include "progname.h"
 #include "relocatable.h"
 #include "c-ctype.h"
+#include "verify.h"
 
 /* Use the system functions, not the gnulib overrides in this file.  */
 #undef fprintf
@@ -114,7 +115,7 @@ add_dotbin (const char *filename)
 /* List of directories that contain the libraries.  */
 static const char *libdirs[] = { LIBDIRS NULL };
 /* Verify that at least one directory is given.  */
-typedef int verify1[2 * (sizeof (libdirs) / sizeof (libdirs[0]) > 1) - 1];
+verify (sizeof (libdirs) / sizeof (libdirs[0]) > 1);
 
 /* Relocate the list of directories that contain the libraries.  */
 static void

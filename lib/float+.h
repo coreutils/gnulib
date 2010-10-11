@@ -141,8 +141,8 @@
 #define SIZEOF_LDBL ((LDBL_TOTAL_BIT + CHAR_BIT - 1) / CHAR_BIT)
 
 /* Verify that SIZEOF_FLT <= sizeof (float) etc.  */
-typedef int verify_sizeof_flt[2 * (SIZEOF_FLT <= sizeof (float)) - 1];
-typedef int verify_sizeof_dbl[2 * (SIZEOF_DBL <= sizeof (double)) - 1];
-typedef int verify_sizeof_ldbl[2 * (SIZEOF_LDBL <= sizeof (long double)) - 1];
+typedef int verify_sizeof_flt[SIZEOF_FLT <= sizeof (float) ? 1 : -1];
+typedef int verify_sizeof_dbl[SIZEOF_DBL <= sizeof (double) ? 1 : - 1];
+typedef int verify_sizeof_ldbl[SIZEOF_LDBL <= sizeof (long double) ? 1 : - 1];
 
 #endif /* _FLOATPLUS_H */

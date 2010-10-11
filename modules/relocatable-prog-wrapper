@@ -42,6 +42,7 @@ unistd
 environ
 intprops
 string
+verify
 
 configure.ac:
 gl_FUNC_READLINK_SEPARATE

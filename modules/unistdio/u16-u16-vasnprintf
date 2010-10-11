@@ -44,6 +44,7 @@ xsize
 errno
 memchr
 multiarch
+verify
 
 configure.ac:
 gl_PREREQ_VASNPRINTF_WITH_EXTRAS

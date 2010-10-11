@@ -21,6 +21,8 @@
 /* Specification.  */
 #include "malloca.h"
 
+#include "verify.h"
+
 /* Use the system functions, not the gnulib overrides in this file.  */
 #undef malloc
 
@@ -53,8 +55,7 @@ struct preliminary_header { void *next; char room[MAGIC_SIZE]; };
 #define HEADER_SIZE \
   (((sizeof (struct preliminary_header) + sa_alignment_max - 1) / sa_alignment_max) * sa_alignment_max)
 struct header { void *next; char room[HEADER_SIZE - sizeof (struct preliminary_header) + MAGIC_SIZE]; };
-/* Verify that HEADER_SIZE == sizeof (struct header).  */
-typedef int verify1[2 * (HEADER_SIZE == sizeof (struct header)) - 1];
+verify (HEADER_SIZE == sizeof (struct header));
 /* We make the hash table quite big, so that during lookups the probability
    of empty hash buckets is quite high.  There is no need to make the hash
    table resizable, because when the hash table gets filled so much that the
