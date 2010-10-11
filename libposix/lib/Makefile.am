@@ -1,10 +1,10 @@
 BUILT_SOURCES =
-EXTRA_DIST =
+SUFFIXES =
 
+EXTRA_DIST =
 EXTRA_HEADERS =
 nodist_include_HEADERS =
 nobase_nodist_include_HEADERS =
-
 
 CLEANFILES =
 MOSTLYCLEANDIRS =
@@ -13,5 +13,4 @@ MAINTAINERCLEANFILES =
 
 include gnulib.mk
 
-
-libposix_la_LDFLAGS += -version-info 0:0:0
+libposix_la_LDFLAGS += -version-info $(LTV_CURRENT):$(LTV_REVISION):$(LTV_AGE)

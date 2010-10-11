@@ -1,4 +1,8 @@
-AC_INIT([GNU libposix], [20101011], [bug-gnulib@gnu.org])
+AC_INIT([GNU libposix],
+        m4_esyscmd([./git-version-gen .tarball-version]),
+        [bug-gnulib@gnu.org])
+
+AS_BOX([Configuring AC_PACKAGE_TARNAME AC_PACKAGE_VERSION])
 
 dnl this should be AC_REQUIRED by gnulib modules that need it,
 dnl but either a couple of modules have forgotten it, or else
@@ -10,12 +14,18 @@ dnl for finding install-sh in the generated configure script
 dnl consider this directory to be a subproject of gnulib proper,
 dnl and will only look for install-sh in . and .. :(
 dnl AC_CONFIG_AUX_DIR([build-aux])
+
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_HEADER([config.h])
 AC_CONFIG_FILES([Makefile lib/Makefile tests/Makefile])
 
 AM_INIT_AUTOMAKE([foreign])
 LT_INIT
+
+# libtool interface versioning for libposix.la
+AC_SUBST([LTV_CURRENT], 0)
+AC_SUBST([LTV_REVISION], 0)
+AC_SUBST([LTV_AGE], 0)
 
 AC_PROG_CC
 LIBPOSIX_EARLY

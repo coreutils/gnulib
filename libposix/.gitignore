@@ -1,5 +1,7 @@
 .deps
 .libs
+/.tarball-version
+/.version
 *.a
 *.gperf
 *.la
@@ -18,8 +20,10 @@ arg-nonnull.h
 c++defs.h
 compile
 config.*
+/config.rpath
 configure
 depcomp
+/git-version-gen
 install-sh
 /lib/*.alias
 /lib/*.c
@@ -42,4 +46,3 @@ stamp-h1
 /tests/test-*
 unused-parameter.h
 warn-on-use.h
-/config.rpath

@@ -1,5 +1,14 @@
 2010-10-12  Gary V. Vaughan  <gary@gnu.org>
 
+	libposix: use git-version-gen for version numbering
+	* build-aux/git-version-gen: In order to work inside the
+	libposix subdirectory, also check the parent directory for .git
+	before assuming git describe will not work.
+	* libposix/bootstrap: Add git-version-gen to gnulib-tool
+	invocation.
+	* libposix/configure.ac (AC_INIT): Use it to get a unique
+	version number, and a configure time banner.
+
 	libposix: raw files to import an installable libposix project
 	* libposix/bootstrap: New script to import gnulib posix modules
 	and bootstrap configury so that the result is an installable
