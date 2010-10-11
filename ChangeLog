@@ -1,5 +1,16 @@
 2010-10-12  Gary V. Vaughan  <gary@gnu.org>
 
+	libposix: raw files to import an installable libposix project
+	* libposix/bootstrap: New script to import gnulib posix modules
+	and bootstrap configury so that the result is an installable
+	libposix.la.
+	* libposix/configure.ac: New file to configure the new libposix
+	subdirectory.
+	* libposix/Makefile.am: New file to delegate build duties to the
+	generated libposix/lib/Makefile at make time.
+	* libposix/lib/Makefile.am: New file to make sure `-version-info'
+	is passed to libtool at libposix.la link-time.
+
 	add _HEADERS primaries to Makefile.am snippets for installable headers
 	* modules/alloca-opt, modules/arg-nonnull, modules/argz,
 	modules/arpa_inet, modules/byteswap, modules/c++defs, modules/ctype,

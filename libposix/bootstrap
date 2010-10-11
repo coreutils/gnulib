@@ -1,0 +1,55 @@
+#! /bin/sh
+
+PATH=..:$PATH
+
+gnulib-tool --import --lib=libposix --makefile-name=gnulib.mk \
+  --macro-prefix=LIBPOSIX --libtool --no-changelog --symlink \
+  --with-tests --with-c++-tests --with-longrunning-tests \
+  libposix
+
+mv tests/gnulib.mk tests/Makefile.am
+
+# sanity check the module list for synchronisation issues.
+echo "posix-modules :
+`posix-modules`
+libposix :
+`gnulib-tool --extract-dependencies libposix`" |awk '
+/^$/		{ next; }
+/^[a-z-]+ :/	{ tag=$1; next; }
+		{ if (modules[$1])
+			modules[$1] = "both";
+		  else
+			modules[$1] = tag;
+		}
+END		{ # posix-modules only 
+		  header=0;
+		  for (i in modules)
+		    {
+		      if ("posix-modules" == modules[i])
+			{
+			  if (0 == header)
+			    {
+			      print "Modules in posix-modules list only:"
+			      header = 1
+			    }
+			  printf ("\t%s\n", i);
+			}
+		    }
+		  # libposix only
+		  header=0;
+		  for (i in modules)
+		    {
+		      if ("libposix" == modules[i])
+			{
+			  if (0 == header)
+			    {
+			      print "Modules in libposix only:"
+			      header = 1
+			    }
+			  printf ("\t%s\n", i);
+			}
+		    }
+		}
+'
+
+autoreconf --force --install --verbose --symlink
