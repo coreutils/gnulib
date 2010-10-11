@@ -1,3 +1,9 @@
+2010-10-11  Gary V. Vaughan  <gary@gnu.org>
+
+	Fix mismatched parens in previous commit
+	* lib/spawn.in.h (verify_POSIX_SPAWN_USEVFORK_no_overlap): Fix mismatched
+	parens.
+
 2010-10-10  Paul Eggert  <eggert@cs.ucla.edu>
 
 	rewrite int foo[2*X-1] to verify(X) or to int foo[X?1:-1]
