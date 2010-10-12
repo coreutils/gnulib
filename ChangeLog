@@ -1,3 +1,13 @@
+2010-10-12  Sam Steingold  <sds@gnu.org>
+	    Gary V. Vaughan  <gary@gnu.org>
+
+	gnulib-tool: transform include guards with `--macro-prefix'
+	* gnulib-tool (func_import): support multiple gllib directories:
+	headers are generated for each gllib differently, depending on which
+	features are actually used, so we need to be able to include all
+	these generated headers without fear that one will shadow another,
+	so we prepend the macro-prefix before the guard macros.
+
 2010-10-11  Bruno Haible  <bruno@clisp.org>
 
 	stdlib: Allow multiple gnulib generated replacements to coexist.
