@@ -2815,6 +2815,11 @@ func_emit_lib_Makefile_am ()
   echo
   uses_subdirs=
   {
+    if test false = "$libtool"; then
+      sed_transform_libgnu_a="s, libgnu\\.a, $libname.a,g"
+    else
+      sed_transform_libgnu_a="s, libgnu\\.a, $libname.la,g"
+    fi
     for module in $modules; do
       func_verify_nontests_module
       if test -n "$module"; then
@@ -2827,6 +2832,7 @@ func_emit_lib_Makefile_am ()
                 -e 's,lib_\([A-Z][A-Z]*\),'"${libname}_${libext}"'_\1,g' \
                 -e 's,lib%_LIBRARIES,lib_LIBRARIES,g' \
                 -e 's,lib%_LTLIBRARIES,lib_LTLIBRARIES,g' \
+		-e "$sed_transform_libgnu_a" \
                 -e "$sed_transform_check_PROGRAMS"
           if test "$module" = 'alloca'; then
             echo "${libname}_${libext}_LIBADD += @${perhapsLT}ALLOCA@"

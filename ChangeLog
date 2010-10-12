@@ -1,3 +1,11 @@
+2010-10-12  Gary V. Vaughan  <gary@gnu.org>
+
+	gnulib-tool: transform hard-coded libgnu.a to $libname.l?a
+	* gnulib-tool (func_emit_lib_Makefile_am): transform hard-coded
+	`libgnu.a' in Makefile.am snippets to be either `$libname.a' or
+	`$libname.la', depending on whether --libtool/--no-libtool options
+	were given.
+
 2010-10-12  Sam Steingold  <sds@gnu.org>
 	    Gary V. Vaughan  <gary@gnu.org>
 
