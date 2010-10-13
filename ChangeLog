@@ -1,3 +1,9 @@
+2010-10-13  Gary V. Vaughan  <gary@gnu.org>
+
+	libposix: reindent with spaces instead of tabs
+	* libposix/Makefile.am: Reindent with spaces instead of tabs.
+	* libposix/bootstrap: Likewise.
+
 2010-10-12  Gary V. Vaughan  <gary@gnu.org>
 
 	libposix: use git-version-gen for version numbering
