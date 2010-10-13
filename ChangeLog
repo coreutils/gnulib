@@ -1,3 +1,13 @@
+2010-10-13  Jim Meyering  <meyering@redhat.com>
+
+	git-version-gen: do require git-VC'd files in cwd
+	* build-aux/git-version-gen: Reject a git version string
+	if there are no commits associated with the current directory.
+	This avoids an unlikely false-positive (unrelated dir whose parent
+	repository also contains a tag matching v*), as pointed out
+	by Giuseppe Scrivano in
+	http://thread.gmane.org/gmane.comp.lib.gnulib.bugs/21843/focus=23664
+
 2010-10-13  Paul Eggert  <eggert@cs.ucla.edu>
 
 	argv-iter: omit nonconforming declaration
@@ -21,7 +31,7 @@
 	git-version-gen: don't require that .git/ be in the current dir
 	* build-aux/git-version-gen: Adjust this script so that it works
 	when run from any working directory beneath the top-level .git/-
-	containing directory.  Inspired by a patch from Giusseppe Scrivano,
+	containing directory.  Inspired by a patch from Giuseppe Scrivano,
 	http://thread.gmane.org/gmane.comp.lib.gnulib.bugs/21843/focus=21847
 
 	test-select: avoid warn_unused_result warnings
