@@ -1,5 +1,11 @@
 2010-10-13  Jim Meyering  <meyering@redhat.com>
 
+	test-select-stdin.c: avoid warn_unused_result warnings
+	* tests/test-select-stdin.c: Include "macros.h".
+	ASSERT that read and fflush succeed.
+
+2010-10-13  Jim Meyering  <meyering@redhat.com>
+
 	git-version-gen: do require git-VC'd files in cwd
 	* build-aux/git-version-gen: Reject a git version string
 	if there are no commits associated with the current directory.
