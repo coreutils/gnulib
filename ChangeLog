@@ -1,3 +1,10 @@
+2010-10-13  Jim Meyering  <meyering@redhat.com>
+
+	test-inttostr: avoid shadowing warnings
+	* tests/test-inttostr.c (main): Rename local, "buf" to "b",
+	and use malloc rather than the stack for the same reason as
+	mentioned in the comment justifying the other allocation.
+
 2010-10-11  Bruno Haible  <bruno@clisp.org>
 
 	stdlib: Allow multiple gnulib generated replacements to coexist.
