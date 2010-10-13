@@ -53,7 +53,6 @@ do_symlink (char const *contents, char const *name)
 int
 main (void)
 {
-  char buf[80];
   int result;
 
   /* Remove any leftovers from a previous partial run.  */

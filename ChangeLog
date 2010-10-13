@@ -1,5 +1,8 @@
 2010-10-13  Jim Meyering  <meyering@redhat.com>
 
+	test-symlinkat: remove declaration of unused local
+	* tests/test-symlinkat.c (main): Remove unused local, "buf".
+
 	test-inttostr: avoid shadowing warnings
 	* tests/test-inttostr.c (main): Rename local, "buf" to "b",
 	and use malloc rather than the stack for the same reason as
