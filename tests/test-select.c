@@ -48,6 +48,8 @@ SIGNATURE_CHECK (FD_ZERO, void, (fd_set *));
 #include <sys/ioctl.h>
 #include <errno.h>
 
+#include "macros.h"
+
 enum { SEL_IN = 1, SEL_OUT = 2, SEL_EXC = 4 };
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
@@ -263,9 +265,9 @@ test_connect_first (void)
 
   addrlen = sizeof (ia);
   c2 = accept (s, (struct sockaddr *) &ia, &addrlen);
-  close (s);
-  close (c1);
-  close (c2);
+  ASSERT (close (s) == 0);
+  ASSERT (close (c1) == 0);
+  ASSERT (close (c2) == 0);
 }
 
 
@@ -289,26 +291,26 @@ test_accept_first (void)
     {
       addrlen = sizeof (ia);
       c = accept (s, (struct sockaddr *) &ia, &addrlen);
-      close (s);
-      write (c, "foo", 3);
-      read (c, buf, 3);
+      ASSERT (close (s) == 0);
+      ASSERT (write (c, "foo", 3) == 3);
+      ASSERT (read (c, buf, 3) == 3);
       shutdown (c, SHUT_RD);
-      close (c);
+      ASSERT (close (c) == 0);
       exit (0);
     }
   else
     {
-      close (s);
+      ASSERT (close (s) == 0);
       c = connect_to_socket (true);
       if (do_select_nowait (c, SEL_OUT) != SEL_OUT)
         failed ("cannot write after blocking connect");
-      write (c, "foo", 3);
+      ASSERT (write (c, "foo", 3) == 3);
       wait (&pid);
       if (do_select_wait (c, SEL_IN) != SEL_IN)
         failed ("cannot read data left in the socket by closed process");
-      read (c, buf, 3);
-      write (c, "foo", 3);
-      close (c);
+      ASSERT (read (c, buf, 3) == 3);
+      ASSERT (write (c, "foo", 3) == 3);
+      ASSERT (close (c) == 0);
     }
 #endif
 }
@@ -325,13 +327,13 @@ test_pair (int rd, int wd)
   if (do_select_nowait (wd, SEL_IN | SEL_OUT | SEL_EXC) != SEL_OUT)
     failed ("expecting writability before writing");
 
-  write (wd, "foo", 3);
+  ASSERT (write (wd, "foo", 3) == 3);
   if (do_select_wait (rd, SEL_IN) != SEL_IN)
     failed ("expecting readability after writing");
   if (do_select_nowait (rd, SEL_IN) != SEL_IN)
     failed ("expecting readability after writing");
 
-  read (rd, buf, 3);
+  ASSERT (read (rd, buf, 3) == 3);
 }
 
 
@@ -347,12 +349,12 @@ test_socket_pair (void)
   int c1 = connect_to_socket (false);
   int c2 = accept (s, (struct sockaddr *) &ia, &addrlen);
 
-  close (s);
+  ASSERT (close (s) == 0);
 
   test_pair (c1, c2);
-  close (c1);
-  write (c2, "foo", 3);
-  close (c2);
+  ASSERT (close (c1) == 0);
+  ASSERT (write (c2, "foo", 3) == 3);
+  ASSERT (close (c2) == 0);
 }
 
 
@@ -363,10 +365,10 @@ test_pipe (void)
 {
   int fd[2];
 
-  pipe (fd);
+  ASSERT (pipe (fd) == 0);
   test_pair (fd[0], fd[1]);
-  close (fd[0]);
-  close (fd[1]);
+  ASSERT (close (fd[0]) == 0);
+  ASSERT (close (fd[1]) == 0);
 }
 
 
