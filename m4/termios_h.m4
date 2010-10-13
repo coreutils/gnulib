@@ -12,6 +12,11 @@ AC_DEFUN([gl_TERMIOS_H],
 
   gl_CHECK_NEXT_HEADERS([termios.h])
 
+  AC_CHECK_HEADERS_ONCE([termios.h])
+  if test $ac_cv_header_termios_h != yes; then
+    HAVE_TERMIOS_H=0
+  fi
+
   dnl Check for declarations of anything we want to poison if the
   dnl corresponding gnulib module is not in use, and which is not
   dnl guaranteed by C89.
@@ -33,4 +38,5 @@ AC_DEFUN([gl_TERMIOS_H_DEFAULTS],
   GNULIB_TCGETSID=0;      AC_SUBST([GNULIB_TCGETSID])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_TCGETSID=1;        AC_SUBST([HAVE_TCGETSID])
+  HAVE_TERMIOS_H=1;       AC_SUBST([HAVE_TERMIOS_H])
 ])

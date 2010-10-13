@@ -1,3 +1,14 @@
+2010-10-13  Eric Blake  <eblake@redhat.com>
+
+	termios: fix compilation on mingw
+	* m4/termios_h.m4 (gl_TERMIOS_H_DEFAULTS): Set default.
+	(gl_TERMIOS_H): Adjust it on mingw.
+	* modules/termios (Makefile.am): Substitute new key.
+	* lib/termios.in.h (includes): Make include_next conditional.
+	* doc/posix-headers/termios.texi (termios.h): Update
+	documentation.
+	Reported by Daniel P. Berrange.
+
 2010-10-13  Jim Meyering  <meyering@redhat.com>
 
 	git-version-gen: don't require that .git/ be in the current dir

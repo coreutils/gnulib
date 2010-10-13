@@ -27,6 +27,7 @@ termios.h: termios.in.h $(CXXDEFS_H) $(WARN_ON_USE_H)
 	      -e 's|@''NEXT_TERMIOS_H''@|$(NEXT_TERMIOS_H)|g' \
 	      -e 's|@''GNULIB_TCGETSID''@|$(GNULIB_TCGETSID)|g' \
 	      -e 's|@''HAVE_TCGETSID''@|$(HAVE_TCGETSID)|g' \
+	      -e 's|@''HAVE_TERMIOS_H''@|$(HAVE_TERMIOS_H)|g' \
 	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
 	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
 	    < $(srcdir)/termios.in.h; \
