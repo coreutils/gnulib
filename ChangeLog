@@ -1,3 +1,10 @@
+2010-10-14  Bruno Haible  <bruno@clisp.org>
+
+	socketlib: Fix.
+	* modules/socketlib (Files): Add m4/sys_socket_h.m4. Needed for
+	gl_PREREQ_SYS_H_WINSOCK2.
+	Reported by Ian Beckwith <ianb@erislabs.net>.
+
 2010-10-13  Jim Meyering  <meyering@redhat.com>
 
 	test-select-stdin.c: avoid warn_unused_result warnings

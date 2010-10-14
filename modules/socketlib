@@ -3,6 +3,7 @@ Access to socket primitives.
 
 Files:
 m4/socketlib.m4
+m4/sys_socket_h.m4
 
 Depends-on:
 
