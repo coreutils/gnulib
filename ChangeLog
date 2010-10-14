@@ -1,3 +1,10 @@
+2010-10-13  Paul Eggert  <eggert@cs.ucla.edu>
+
+	argv-iter: omit nonconforming declaration
+	* lib/argv-iter.h (enum argv_iter_err): Omit the useless
+	enum arg_iter_err declaration, which doesn't conform to C99.
+	Solaris 10 cc warns about this.
+
 2010-10-13  Eric Blake  <eblake@redhat.com>
 
 	termios: fix compilation on mingw
