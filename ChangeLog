@@ -1,5 +1,12 @@
 2010-10-14  Bruno Haible  <bruno@clisp.org>
 
+	vasnprintf: Don't set errno to 0.
+	* lib/vasnprintf.c (VASNPRINTF): Save and restore errno around the
+	block that sets it to 0.
+	Reported by Gianluigi Tiesi <sherpya@netfarm.it>.
+
+2010-10-14  Bruno Haible  <bruno@clisp.org>
+
 	socketlib: Fix.
 	* modules/socketlib (Files): Add m4/sys_socket_h.m4. Needed for
 	gl_PREREQ_SYS_H_WINSOCK2.

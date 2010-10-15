@@ -4599,6 +4599,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                 TCHAR_T *fbp;
                 unsigned int prefix_count;
                 int prefixes[2] IF_LINT (= { 0 });
+                int orig_errno;
 #if !USE_SNPRINTF
                 size_t tmp_length;
                 TCHAR_T tmpbuf[700];
@@ -4901,6 +4902,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                    via %n.  */
                 *(TCHAR_T *) (result + length) = '\0';
 #endif
+
+                orig_errno = errno;
 
                 for (;;)
                   {
@@ -5499,6 +5502,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     length += count;
                     break;
                   }
+                errno = orig_errno;
 #undef pad_ourselves
 #undef prec_ourselves
               }
