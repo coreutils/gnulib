@@ -1,3 +1,10 @@
+2010-10-15  Jim Meyering  <meyering@redhat.com>
+
+	GNUmakefile: handle "stable" target, not "major"
+	* top/GNUmakefile (_is-dist-target): s/major/stable/ to match the
+	lists in maint.mk and announce-gen.  Without this, "make stable"
+	would fail to ensure that $(VERSION) is up to date.
+
 2010-10-15  Ludovic Courtès  <ludo@gnu.org>
 
 	* lib/isnan.c (FUNC): Treat TinyCC (`__TINYC__') like `__SUNPRO_C'
