@@ -117,7 +117,8 @@ FUNC (DOUBLE x)
 # else
   /* Be careful to not do any floating-point operation on x, such as x == x,
      because x may be a signaling NaN.  */
-#  if defined __SUNPRO_C || defined __DECC || (defined __sgi && !defined __GNUC__)
+#  if defined __TINYC__ || defined __SUNPRO_C || defined __DECC \
+      || (defined __sgi && !defined __GNUC__)
   /* The Sun C 5.0 compilers and the Compaq (ex-DEC) 6.4 compilers don't
      recognize the initializers as constant expressions.  The latter compiler
      also fails when constant-folding 0.0 / 0.0 even when constant-folding is

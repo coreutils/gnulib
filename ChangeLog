@@ -1,3 +1,8 @@
+2010-10-15  Ludovic Courtès  <ludo@gnu.org>
+
+	* lib/isnan.c (FUNC): Treat TinyCC (`__TINYC__') like `__SUNPRO_C'
+	& co.
+
 2010-10-14  Bruno Haible  <bruno@clisp.org>
 
 	vasnprintf: Don't set errno to 0.
