@@ -1,3 +1,9 @@
+2010-10-15  Eric Blake  <eblake@redhat.com>
+
+	ignore-value: make header idempotent
+	* lib/ignore-value.h: Add double-inclusion guards.
+	Reported by Stefan Berger.
+
 2010-10-15  Jim Meyering  <meyering@redhat.com>
 
 	GNUmakefile: handle "stable" target, not "major"
