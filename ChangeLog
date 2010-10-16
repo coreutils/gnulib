@@ -1,3 +1,12 @@
+2010-10-16  Joel E. Denny  <joeldenny@joeldenny.org>
+
+	bootstrap: anchor .gitignore entries.
+	* build-aux/bootstrap (insert_sorted_if_absent): Replace all uses
+	with...
+	(insert_vc_ignore): ... this new function, which prepends `/' to
+	all .gitignore entries before passing them to
+	insert_sorted_if_absent.
+
 2010-10-16  Bruno Haible  <bruno@clisp.org>
 
 	nextafter: Fix configure check.
