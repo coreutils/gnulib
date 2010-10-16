@@ -1,5 +1,10 @@
 2010-10-16  Bruno Haible  <bruno@clisp.org>
 
+	nextafter: Fix configure check.
+	* modules/nextafter (configure.ac): Correct expected prototype.
+
+2010-10-16  Bruno Haible  <bruno@clisp.org>
+
 	termios: Update documentation.
 	* doc/posix-headers/termios.texi: Mention remaining mingw problems.
 
