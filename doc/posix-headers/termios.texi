@@ -14,4 +14,8 @@ mingw.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+The types @code{struct termios}, @code{cc_t}, @code{speed_t}, @code{tcflag_t}
+are not defined on some platforms:
+mingw.
 @end itemize
