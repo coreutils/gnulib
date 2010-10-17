@@ -1,5 +1,11 @@
 2010-10-17  Bruno Haible  <bruno@clisp.org>
 
+	nl_langinfo tests: Silence some warnings.
+	* tests/test-nl_langinfo.c: Silence -Wtype-limits warnings.
+	Reported by Jim Meyering.
+
+2010-10-17  Bruno Haible  <bruno@clisp.org>
+
 	Make use of GCC's attribute __alloc_size__.
 	* lib/xalloc.h (ATTRIBUTE_ALLOC_SIZE): New macro.
 	(xmalloc, xzalloc, xcalloc, xrealloc, xmemdup, xnmalloc, xnrealloc,
