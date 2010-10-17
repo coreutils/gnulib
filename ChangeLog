@@ -1,3 +1,14 @@
+2010-10-17  Bruno Haible  <bruno@clisp.org>
+
+	Make use of GCC's attribute __alloc_size__.
+	* lib/xalloc.h (ATTRIBUTE_ALLOC_SIZE): New macro.
+	(xmalloc, xzalloc, xcalloc, xrealloc, xmemdup, xnmalloc, xnrealloc,
+	xcharalloc): Declare with ATTRIBUTE_ALLOC_SIZE.
+	* lib/eealloc.h (eemalloc, eerealloc): Declare with attribute
+	__alloc_size__.
+	* lib/pagealign_alloc.h (pagealign_alloc, pagealign_xalloc): Likewise.
+	Suggested by Jim Meyering.
+
 2010-10-16  Joel E. Denny  <joeldenny@joeldenny.org>
 
 	bootstrap: anchor .gitignore entries.
