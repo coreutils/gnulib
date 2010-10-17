@@ -1,5 +1,10 @@
 2010-10-17  Bruno Haible  <bruno@clisp.org>
 
+	userspec: Drop redundant file.
+	* modules/userspec (Files): Remove lib/inttostr.h.
+
+2010-10-17  Bruno Haible  <bruno@clisp.org>
+
 	nl_langinfo tests: Silence some warnings.
 	* tests/test-nl_langinfo.c: Silence -Wtype-limits warnings.
 	Reported by Jim Meyering.
