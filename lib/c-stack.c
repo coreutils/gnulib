@@ -53,6 +53,12 @@ typedef struct sigaltstack stack_t;
 #endif
 #ifndef SIGSTKSZ
 # define SIGSTKSZ 16384
+#elif HAVE_LIBSIGSEGV && SIGSTKSZ < 16384
+/* libsigsegv 2.6 through 2.8 have a bug where some architectures use
+   more than the Linux default of an 8k alternate stack when deciding
+   if a fault was caused by stack overflow.  */
+# undef SIGSTKSZ
+# define SIGSTKSZ 16384
 #endif
 
 #include <stdlib.h>

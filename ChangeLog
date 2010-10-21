@@ -1,3 +1,9 @@
+2010-10-21  Eric Blake  <eblake@redhat.com>
+
+	c-stack: work around libsigsegv 2.8 bug
+	* lib/c-stack.c (SIGSTKSZ): Increase size to avoid alternate stack
+	overflow on at least PowerPC64.
+
 2010-10-17  Bruno Haible  <bruno@clisp.org>
 
 	userspec: Drop redundant file.
