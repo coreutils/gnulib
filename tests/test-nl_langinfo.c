@@ -112,7 +112,11 @@ main (int argc, char *argv[])
   /* nl_langinfo items of the LC_MONETARY category */
   {
     const char *currency = nl_langinfo (CRNCYSTR);
-    ASSERT (strlen (currency) >= (pass > 0 ? 1 : 0));
+    ASSERT (strlen (currency) >= 0);
+#if !defined __NetBSD__
+    if (pass > 0)
+      ASSERT (strlen (currency) >= 1);
+#endif
   }
   /* nl_langinfo items of the LC_MESSAGES category */
   ASSERT (strlen (nl_langinfo (YESEXPR)) > 0);
