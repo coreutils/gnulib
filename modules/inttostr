@@ -14,6 +14,7 @@ m4/inttostr.m4
 Depends-on:
 intprops
 stdint
+verify
 
 configure.ac:
 gl_INTTOSTR
