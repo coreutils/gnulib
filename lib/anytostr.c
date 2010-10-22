@@ -20,7 +20,6 @@
 #include <config.h>
 
 #include "inttostr.h"
-#include "verify.h"
 
 /* Convert I to a printable string in BUF, which must be at least
    INT_BUFSIZE_BOUND (INTTYPE) bytes long.  Return the address of the
@@ -29,12 +28,10 @@
 char * __attribute_warn_unused_result__
 anytostr (inttype i, char *buf)
 {
-  verify (TYPE_SIGNED (inttype) == inttype_is_signed);
   char *p = buf + INT_STRLEN_BOUND (inttype);
   *p = 0;
 
-#if inttype_is_signed
-  if (i < 0)
+  if (TYPE_SIGNED (inttype) && i < 0)
     {
       do
         *--p = '0' - i % 10;
@@ -43,7 +40,6 @@ anytostr (inttype i, char *buf)
       *--p = '-';
     }
   else
-#endif
     {
       do
         *--p = '0' + i % 10;

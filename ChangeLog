@@ -1,3 +1,17 @@
+2010-10-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	inttostr: simplify by removing unnecessary redundancy
+	* lib/anytostr.c: Don't include verify.h.
+	(anytostr): Don't verify that TYPE_SIGNED (inttype) equals
+	inttype_is_signed.  Instead, use TYPE_SIGNED (inttype) directly.
+	This removes the need for inttype_is_signed, which was put in to
+	suppress some GCC warnings about conversions.  This rewrite should
+	also suppress those warnings.
+	* lib/imaxtostr.c (inttype_is_signed): Remove; no longer needed.
+	* lib/inttostr.c, lib/offtostr.c, lib/uinttostr.c, lib/umaxtostr.c:
+	Likewise.
+	* modules/inttostr (Depends-on): Remove 'verify'.
+
 2010-10-21  Bruno Haible  <bruno@clisp.org>
 
 	nl_langinfo test: Avoid test failure on NetBSD 5.
