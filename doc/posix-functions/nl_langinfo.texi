@@ -32,4 +32,9 @@ returns @code{"US-ASCII"}.
 
 @item
 On Cygwin 1.7.0, only the charset portion of a locale designation is honored.
+
+@item
+On NetBSD 5.0, in some locales, @code{nl_langinfo(CRNCYSTR)} returns the
+empty string, although the local currency symbol, as returned by
+@code{localeconv()->currency_symbol}, is non-empty.
 @end itemize
