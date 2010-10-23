@@ -1,3 +1,12 @@
+2010-10-23  Bruno Haible  <bruno@clisp.org>
+
+	Tests: Fix LOCALE_JA on MirBSD 10.
+	* m4/locale-ja.m4 (gt_LOCALE_JA): Reject a locale identifier that leads
+	to an UTF-8 locale.
+	* m4/locale-fr.m4 (gt_LOCALE_FR): Likewise.
+	* m4/locale-zh.m4 (gt_LOCALE_ZH_CN): Likewise.
+	Reported by Eric Blake.
+
 2010-10-21  Bruno Haible  <bruno@clisp.org>
 
 	nl_langinfo test: Avoid test failure on NetBSD 5.
