@@ -142,6 +142,7 @@ fd_clone_opendir (int fd)
 # else /* !REPLACE_FCHDIR */
 
       /* Occupy the destination FD slot, so that save_cwd cannot hijack it.  */
+      struct saved_cwd saved_cwd;
       int fd_reserve = dup (fd);
       if (fd_reserve < 0)
         {
@@ -150,7 +151,6 @@ fd_clone_opendir (int fd)
           goto fail;
         }
 
-      struct saved_cwd saved_cwd;
       if (save_cwd (&saved_cwd) != 0)
         openat_save_fail (errno);
 
