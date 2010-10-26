@@ -18,6 +18,12 @@
 
 #include <config.h>
 
+/* Solaris 10, which predates POSIX-2008, declares its renameat in
+   unistd.h.  Include unistd.h before including stdio.h, so that
+   gnulib's stdio.h doesn't #define renameat to rpl_renameat before
+   Solaris 10's unistd.h declares the system renameat.  */
+#include <unistd.h>
+
 #include <stdio.h>
 
 #if HAVE_RENAMEAT

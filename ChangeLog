@@ -1,3 +1,11 @@
+2010-10-26  Paul Eggert  <eggert@cs.ucla.edu>
+
+	renameat: port to Solaris 10, which declares renameat in unistd.h
+
+	* lib/renameat.c: Include unistd.h before stdio.h, because
+	Solaris 10 declares renameat in unistd.h.  Problem encountered
+	when building GNU tar 1.24 on Solaris 10.
+
 2010-10-26  Christian Weisgerber  <naddy@mips.inka.de>  (tiny change)
 
 	fdopendir: fix C89 compilation
