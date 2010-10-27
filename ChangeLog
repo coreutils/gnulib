@@ -1,5 +1,12 @@
 2010-10-26  Bruno Haible  <bruno@clisp.org>
 
+	unistd: Refine workaround from 2009-12-23 against Cygwin bug.
+	* lib/unistd.in.h: Don't include <stdio.h> and <fcntl.h>, except on
+	Cygwin and mingw.
+	Suggested by Eric Blake.
+
+2010-10-26  Bruno Haible  <bruno@clisp.org>
+
 	stdio: Work around compilation error due to renameat() on Solaris 10.
 	* lib/stdio.in.h: Include <unistd.h> on Solaris.
 	* lib/renameat.c: Don't include <unistd.h> here.
