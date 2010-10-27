@@ -1,3 +1,11 @@
+2010-10-26  Bruno Haible  <bruno@clisp.org>
+
+	stdio: Work around compilation error due to renameat() on Solaris 10.
+	* lib/stdio.in.h: Include <unistd.h> on Solaris.
+	* lib/renameat.c: Don't include <unistd.h> here.
+	* doc/posix-functions/renameat.texi: Mention the Solaris problem.
+	Reported by Paul Eggert and Eric Blake.
+
 2010-10-26  Paul Eggert  <eggert@cs.ucla.edu>
 
 	renameat: port to Solaris 10, which declares renameat in unistd.h

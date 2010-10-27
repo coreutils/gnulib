@@ -57,6 +57,13 @@
 # endif
 #endif
 
+/* Solaris 10 declares renameat in <unistd.h>, not in <stdio.h>.  */
+/* But in any case avoid namespace pollution on glibc systems.  */
+#if (@GNULIB_RENAMEAT@ || defined GNULIB_POSIXCHECK) && defined __sun \
+    && ! defined __GLIBC__
+# include <unistd.h>
+#endif
+
 
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
