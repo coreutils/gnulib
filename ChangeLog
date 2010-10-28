@@ -1,3 +1,31 @@
+2010-10-28  Bruno Haible  <bruno@clisp.org>
+
+	posix_spawn*, getdtablesize: Relax license.
+	* modules/posix_spawn (License): Change to LGPLv2+.
+	* modules/posix_spawnp (License): Likewise.
+	* modules/posix_spawn-internal (License): Likewise.
+	* modules/posix_spawnattr_init (License): Likewise.
+	* modules/posix_spawnattr_getflags (License): Likewise.
+	* modules/posix_spawnattr_setflags (License): Likewise.
+	* modules/posix_spawnattr_getpgroup (License): Likewise.
+	* modules/posix_spawnattr_setpgroup (License): Likewise.
+	* modules/posix_spawnattr_getschedparam (License): Likewise.
+	* modules/posix_spawnattr_setschedparam (License): Likewise.
+	* modules/posix_spawnattr_getschedpolicy (License): Likewise.
+	* modules/posix_spawnattr_setschedpolicy (License): Likewise.
+	* modules/posix_spawnattr_getsigdefault (License): Likewise.
+	* modules/posix_spawnattr_setsigdefault (License): Likewise.
+	* modules/posix_spawnattr_getsigmask (License): Likewise.
+	* modules/posix_spawnattr_setsigmask (License): Likewise.
+	* modules/posix_spawnattr_destroy (License): Likewise.
+	* modules/posix_spawn_file_actions_init (License): Likewise.
+	* modules/posix_spawn_file_actions_addclose (License): Likewise.
+	* modules/posix_spawn_file_actions_adddup2 (License): Likewise.
+	* modules/posix_spawn_file_actions_addopen (License): Likewise.
+	* modules/posix_spawn_file_actions_destroy (License): Likewise.
+	* modules/getdtablesize (License): Likewise.
+	Requested by Adam Stokes <ajs@redhat.com> for use in netcf.
+
 2010-10-26  Bruno Haible  <bruno@clisp.org>
 
 	unistd: Refine workaround from 2009-12-23 against Cygwin bug.

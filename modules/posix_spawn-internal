@@ -21,7 +21,7 @@ Makefile.am:
 Include:
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Bruno Haible, glibc
