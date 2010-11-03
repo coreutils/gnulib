@@ -1,5 +1,11 @@
 2010-11-03  Eric Blake  <eblake@redhat.com>
 
+	tests: fix compiler warnings
+	* tests/test-getopt.h (test_getopt): Fix condition.
+	* tests/test-getopt_long.h (test_getopt_long): Likewise.
+	* tests/test-pipe2.c (main): Likewise.
+	* tests/test-quotearg-simple.c (main): Avoid icc warning.
+
 	utimens: fix broken m4 test
 	* m4/utimens.m4 (gl_UTIMENS): Include correct headers.
 

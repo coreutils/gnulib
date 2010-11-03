@@ -117,8 +117,8 @@ main ()
         ASSERT (fd[0] >= 0);
         ASSERT (fd[1] >= 0);
         ASSERT (fd[0] != fd[1]);
-        ASSERT (is_open (fd[0]) >= 0);
-        ASSERT (is_open (fd[1]) >= 0);
+        ASSERT (is_open (fd[0]));
+        ASSERT (is_open (fd[1]));
         if (use_cloexec)
           {
             ASSERT (is_cloexec (fd[0]));
