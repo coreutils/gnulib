@@ -40,7 +40,9 @@ main ()
 
   /* Zero.  */
   ASSERT (truncl (0.0L) == 0.0L);
+  ASSERT (!signbit (truncl (0.0L)));
   ASSERT (truncl (minus_zerol) == 0.0L);
+  ASSERT (!!signbit (minus_zerol) == !!signbit (truncl (minus_zerol)));
   /* Positive numbers.  */
   ASSERT (truncl (0.3L) == 0.0L);
   ASSERT (truncl (0.7L) == 0.0L);

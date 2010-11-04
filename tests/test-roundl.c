@@ -42,7 +42,9 @@ main ()
 
   /* Zero.  */
   ASSERT (roundl (0.0L) == 0.0L);
+  ASSERT (!signbit (roundl (0.0L)));
   ASSERT (roundl (minus_zerol) == 0.0L);
+  ASSERT (!!signbit (minus_zerol) == !!signbit (roundl (minus_zerol)));
   /* Positive numbers.  */
   ASSERT (roundl (0.3L) == 0.0L);
   ASSERT (roundl (0.5L) == 1.0L);

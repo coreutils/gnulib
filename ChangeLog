@@ -1,5 +1,19 @@
 2010-11-04  Eric Blake  <eblake@redhat.com>
 
+	ceil, floor, round, trunc: enhance tests of -0
+	* tests/test-ceilf1.c (main): Ensure correct sign of result.
+	* tests/test-ceill.c (main): Likewise.
+	* tests/test-floorf1.c (main): Likewise.
+	* tests/test-floorl.c (main): Likewise.
+	* tests/test-round1.c (main): Likewise.
+	* tests/test-roundf1.c (main): Likewise.
+	* tests/test-roundl.c (main): Likewise.
+	* tests/test-trunc1.c (main): Likewise.
+	* tests/test-truncf1.c (main): Likewise.
+	* tests/test-truncl.c (main): Likewise.
+
+2010-11-04  Eric Blake  <eblake@redhat.com>
+
 	frexp, tests: work around ICC bug with -zero
 	* m4/frexp.m4 (gl_FUNC_FREXP_WORKS): Compute -0.0 in a way that
 	works with more compilers.

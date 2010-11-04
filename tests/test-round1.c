@@ -35,7 +35,9 @@ main ()
 {
   /* Zero.  */
   ASSERT (round (0.0) == 0.0);
+  ASSERT (!signbit (round (0.0)));
   ASSERT (round (minus_zerod) == 0.0);
+  ASSERT (!!signbit (minus_zerod) == !!signbit (round (minus_zerod)));
   /* Positive numbers.  */
   ASSERT (round (0.3) == 0.0);
   ASSERT (round (0.5) == 1.0);

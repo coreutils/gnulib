@@ -33,7 +33,9 @@ main ()
 {
   /* Zero.  */
   ASSERT (floorf (0.0f) == 0.0f);
+  ASSERT (!signbit (floorf (0.0f)));
   ASSERT (floorf (minus_zerof) == 0.0f);
+  ASSERT (!!signbit (minus_zerof) == !!signbit (floorf (minus_zerof)));
   /* Positive numbers.  */
   ASSERT (floorf (0.3f) == 0.0f);
   ASSERT (floorf (0.7f) == 0.0f);

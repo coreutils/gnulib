@@ -33,7 +33,9 @@ main ()
 {
   /* Zero.  */
   ASSERT (ceilf (0.0f) == 0.0f);
+  ASSERT (!signbit (ceilf (0.0f)));
   ASSERT (ceilf (minus_zerof) == 0.0f);
+  ASSERT (!!signbit (minus_zerof) == !!signbit (ceilf (minus_zerof)));
   /* Positive numbers.  */
   ASSERT (ceilf (0.3f) == 1.0f);
   ASSERT (ceilf (0.7f) == 1.0f);
