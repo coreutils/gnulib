@@ -2,6 +2,7 @@ Files:
 tests/test-snprintf-posix.c
 tests/test-snprintf-posix.h
 tests/test-snprintf.c
+tests/minus-zero.h
 tests/nan.h
 tests/signature.h
 tests/macros.h

@@ -104,12 +104,24 @@ AC_DEFUN([gl_FUNC_FREXP_WORKS],
 #include <float.h>
 #include <math.h>
 #include <string.h>
+/* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0.
+   ICC 10.0 has a bug when optimizing the expression -zero.
+   The expression -DBL_MIN * DBL_MIN does not work when cross-compiling
+   to PowerPC on MacOS X 10.5.  */
+#if defined __hpux || defined __sgi || defined __ICC
+static double
+compute_minus_zero (void)
+{
+  return -DBL_MIN * DBL_MIN;
+}
+# define minus_zero compute_minus_zero ()
+#else
+double minus_zero = -0.0;
+#endif
 int main()
 {
   int i;
   volatile double x;
-/* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0.
-   So we use -zero instead.  */
   double zero = 0.0;
   /* Test on denormalized numbers.  */
   for (i = 1, x = 1.0; i >= DBL_MIN_EXP; i--, x *= 0.5)
@@ -132,7 +144,7 @@ int main()
       return 1;
   }
   /* Test on negative zero.  */
-  x = -zero;
+  x = minus_zero;
   {
     int exp;
     double y = frexp (x, &exp);

@@ -28,33 +28,12 @@
 #include <float.h>
 #include <limits.h>
 
+#include "minus-zero.h"
 #include "macros.h"
 
 float zerof = 0.0f;
 double zerod = 0.0;
 long double zerol = 0.0L;
-
-/* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0f.
-   So we use -zerof instead.  */
-
-/* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0.
-   So we use -zerod instead.  */
-
-/* On HP-UX 10.20, negating 0.0L does not yield -0.0L.
-   So we use minus_zerol instead.
-   IRIX cc can't put -0.0L into .data, but can compute at runtime.
-   Note that the expression -LDBL_MIN * LDBL_MIN does not work on other
-   platforms, such as when cross-compiling to PowerPC on MacOS X 10.5.  */
-#if defined __hpux || defined __sgi
-static long double
-compute_minus_zerol (void)
-{
-  return -LDBL_MIN * LDBL_MIN;
-}
-# define minus_zerol compute_minus_zerol ()
-#else
-long double minus_zerol = -0.0L;
-#endif
 
 static void
 test_signbitf ()
@@ -68,10 +47,10 @@ test_signbitf ()
   ASSERT (signbit (-2.718e-30f));
   /* Zeros.  */
   ASSERT (!signbit (0.0f));
-  if (1.0f / -zerof < 0)
-    ASSERT (signbit (-zerof));
+  if (1.0f / minus_zerof < 0)
+    ASSERT (signbit (minus_zerof));
   else
-    ASSERT (!signbit (-zerof));
+    ASSERT (!signbit (minus_zerof));
   /* Infinite values.  */
   ASSERT (!signbit (1.0f / 0.0f));
   ASSERT (signbit (-1.0f / 0.0f));
@@ -113,10 +92,10 @@ test_signbitd ()
   ASSERT (signbit (-2.718e-30));
   /* Zeros.  */
   ASSERT (!signbit (0.0));
-  if (1.0 / -zerod < 0)
-    ASSERT (signbit (-zerod));
+  if (1.0 / minus_zerod < 0)
+    ASSERT (signbit (minus_zerod));
   else
-    ASSERT (!signbit (-zerod));
+    ASSERT (!signbit (minus_zerod));
   /* Infinite values.  */
   ASSERT (!signbit (1.0 / 0.0));
   ASSERT (signbit (-1.0 / 0.0));

@@ -1,6 +1,7 @@
 Files:
 tests/test-isnanl.c
 tests/test-isnanl.h
+tests/minus-zero.h
 tests/nan.h
 tests/macros.h
 

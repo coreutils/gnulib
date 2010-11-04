@@ -24,19 +24,16 @@
 SIGNATURE_CHECK (trunc, double, (double));
 
 #include "isnand-nolibm.h"
+#include "minus-zero.h"
 #include "nan.h"
 #include "macros.h"
-
-/* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0.
-   So we use -zero instead.  */
-double zero = 0.0;
 
 int
 main ()
 {
   /* Zero.  */
   ASSERT (trunc (0.0) == 0.0);
-  ASSERT (trunc (-zero) == 0.0);
+  ASSERT (trunc (minus_zerod) == 0.0);
   /* Positive numbers.  */
   ASSERT (trunc (0.3) == 0.0);
   ASSERT (trunc (0.7) == 0.0);

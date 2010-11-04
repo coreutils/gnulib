@@ -2,6 +2,7 @@ Files:
 tests/test-vasnprintf-posix.c
 tests/test-vasnprintf-posix2.sh
 tests/test-vasnprintf-posix2.c
+tests/minus-zero.h
 tests/nan.h
 tests/macros.h
 m4/locale-fr.m4

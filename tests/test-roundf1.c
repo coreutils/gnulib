@@ -26,19 +26,16 @@
 SIGNATURE_CHECK (roundf, float, (float));
 
 #include "isnanf-nolibm.h"
+#include "minus-zero.h"
 #include "nan.h"
 #include "macros.h"
-
-/* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0f.
-   So we use -zero instead.  */
-float zero = 0.0f;
 
 int
 main ()
 {
   /* Zero.  */
   ASSERT (roundf (0.0f) == 0.0f);
-  ASSERT (roundf (-zero) == 0.0f);
+  ASSERT (roundf (minus_zerof) == 0.0f);
   /* Positive numbers.  */
   ASSERT (roundf (0.3f) == 0.0f);
   ASSERT (roundf (0.5f) == 1.0f);

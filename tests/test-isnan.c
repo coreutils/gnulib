@@ -29,32 +29,9 @@
 #include <float.h>
 #include <limits.h>
 
+#include "minus-zero.h"
 #include "nan.h"
 #include "macros.h"
-
-/* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0f.
-   So we use -zero instead.  */
-float zerof = 0.0f;
-
-/* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0.
-   So we use -zero instead.  */
-double zerod = 0.0;
-
-/* On HP-UX 10.20, negating 0.0L does not yield -0.0L.
-   So we use minus_zerol instead.
-   IRIX cc can't put -0.0L into .data, but can compute at runtime.
-   Note that the expression -LDBL_MIN * LDBL_MIN does not work on other
-   platforms, such as when cross-compiling to PowerPC on MacOS X 10.5.  */
-#if defined __hpux || defined __sgi
-static long double
-compute_minus_zerol (void)
-{
-  return -LDBL_MIN * LDBL_MIN;
-}
-# define minus_zerol compute_minus_zerol ()
-#else
-long double minus_zerol = -0.0L;
-#endif
 
 static void
 test_float (void)
@@ -67,7 +44,7 @@ test_float (void)
   ASSERT (!isnan (-2.718e30f));
   ASSERT (!isnan (-2.718e-30f));
   ASSERT (!isnan (0.0f));
-  ASSERT (!isnan (-zerof));
+  ASSERT (!isnan (minus_zerof));
   /* Infinite values.  */
   ASSERT (!isnan (1.0f / 0.0f));
   ASSERT (!isnan (-1.0f / 0.0f));
@@ -107,7 +84,7 @@ test_double (void)
   ASSERT (!isnan (-2.718e30));
   ASSERT (!isnan (-2.718e-30));
   ASSERT (!isnan (0.0));
-  ASSERT (!isnan (-zerod));
+  ASSERT (!isnan (minus_zerod));
   /* Infinite values.  */
   ASSERT (!isnan (1.0 / 0.0));
   ASSERT (!isnan (-1.0 / 0.0));

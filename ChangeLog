@@ -1,5 +1,62 @@
 2010-11-04  Eric Blake  <eblake@redhat.com>
 
+	frexp, tests: work around ICC bug with -zero
+	* m4/frexp.m4 (gl_FUNC_FREXP_WORKS): Compute -0.0 in a way that
+	works with more compilers.
+	* tests/minus-zero.h: New file.
+	* modules/ceilf-tests (Files): Include it.
+	* modules/ceill-tests (Files): Likewise.
+	* modules/floorf-tests (Files): Likewise.
+	* modules/floorl-tests (Files): Likewise.
+	* modules/frexp-nolibm-tests (Files): Likewise.
+	* modules/frexp-tests (Files): Likewise.
+	* modules/frexpl-nolibm-tests (Files): Likewise.
+	* modules/frexpl-tests (Files): Likewise.
+	* modules/isnan-tests (Files): Likewise.
+	* modules/isnand-nolibm-tests (Files): Likewise.
+	* modules/isnand-tests (Files): Likewise.
+	* modules/isnanf-nolibm-tests (Files): Likewise.
+	* modules/isnanf-tests (Files): Likewise.
+	* modules/isnanl-nolibm-tests (Files): Likewise.
+	* modules/isnanl-tests (Files): Likewise.
+	* modules/round-tests (Files): Likewise.
+	* modules/roundf-tests (Files): Likewise.
+	* modules/roundl-tests (Files): Likewise.
+	* modules/ldexpl-tests (Files): Likewise.
+	* modules/signbit-tests (Files): Likewise.
+	* modules/snprintf-posix-tests (Files): Likewise.
+	* modules/sprintf-posix-tests (Files): Likewise.
+	* modules/strtod-tests (Files): Likewise.
+	* modules/trunc-tests (Files): Likewise.
+	* modules/truncf-tests (Files): Likewise.
+	* modules/truncl-tests (Files): Likewise.
+	* modules/vsnprintf-posix-tests (Files): Likewise.
+	* modules/vsprintf-posix-tests (Files): Likewise.
+	* modules/vasnprintf-posix-tests (Files): Likewise.
+	* modules/vasprintf-posix-tests (Files): Likewise.
+	* tests/test-ceilf1.c (main): Use it.
+	* tests/test-ceill.c (main): Likewise.
+	* tests/test-floorf1.c (main): Likewise.
+	* tests/test-floorl.c (main): Likewise.
+	* tests/test-frexp.c (main): Likewise.
+	* tests/test-frexpl.c (main): Likewise.
+	* tests/test-isnan.c (main): Likewise.
+	* tests/test-isnand.h (main): Likewise.
+	* tests/test-isnanf.h (main): Likewise.
+	* tests/test-isnanl.h (main): Likewise.
+	* tests/test-ldexpl.c (main): Likewise.
+	* tests/test-round.c (main): Likewise.
+	* tests/test-roundf.c (main): Likewise.
+	* tests/test-roundl.c (main): Likewise.
+	* tests/test-signbit.c (test_signbitf, test_signbitd)
+	(test_signbitl): Likewise.
+	* tests/test-snprintf-posix.h (test_function): Likewise.
+	* tests/test-sprintf-posix.h (test_function): Likewise.
+	* tests/test-strtod.c (main): Likewise.
+	* tests/test-trunc1.c (main): Likewise.
+	* tests/test-truncf1.c (main): Likewise.
+	* tests/test-truncl.c (main): Likewise.
+
 	isnanl: work around icc bug
 	* lib/isnan.c (FUNC): Compute run-time NaN under ICC as well.
 
