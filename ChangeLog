@@ -1,3 +1,8 @@
+2010-11-04  Eric Blake  <eblake@redhat.com>
+
+	isnanl: work around icc bug
+	* lib/isnan.c (FUNC): Compute run-time NaN under ICC as well.
+
 2010-11-03  Eric Blake  <eblake@redhat.com>
 
 	tests: fix compiler warnings
