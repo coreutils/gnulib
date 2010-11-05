@@ -1,3 +1,9 @@
+2010-11-05  Thien-Thi Nguyen  <ttn@gnuvola.org>  (tiny change)
+
+	[html] Fix copy/paste bug: Use unique name for compiler warnings.
+	* MODULES.html.sh: For compiler warnings, use name
+	`ansic_ext_compwarn' since `ansic_ext_misc' is already taken.
+
 2010-11-05  Eric Blake  <eblake@redhat.com>
 
 	ceil, floor: avoid spurious failure with icc

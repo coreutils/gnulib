@@ -1953,7 +1953,7 @@ func_all_modules ()
 
   element="Compiler warning management"
   element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
-  func_section_wrap ansic_ext_misc
+  func_section_wrap ansic_ext_compwarn
   func_wrap H3
   func_echo "$element"
 
