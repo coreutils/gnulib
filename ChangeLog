@@ -1,5 +1,13 @@
 2010-11-05  Eric Blake  <eblake@redhat.com>
 
+	ceil, floor: avoid spurious failure with icc
+	* tests/test-ceilf2.c (ceilf_reference): Avoid icc's use of DAZ
+	[denormals-as-zero] when optimizing without -mieee-fp option.
+	* tests/test-floorf2.c (floorf_reference): Likewise.
+	* tests/test-ceilf1.c (dummy): New function.
+	(main): Use it to outsmart icc's optimization.
+	* tests/test-floorf1.c (dummy, main): Likewise.
+
 	tests: require working signbit
 	* modules/ceilf-tests (Depends-on): Add signbit.
 	* modules/ceill-tests (Depends-on): Likewise.
