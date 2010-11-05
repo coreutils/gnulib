@@ -1,5 +1,9 @@
 2010-11-05  Eric Blake  <eblake@redhat.com>
 
+	strtod: work around icc bug
+	* lib/strtod.c (minus_zero): Define to working value.
+	(strtod): Use it to avoid icc bug.
+
 	copysign: enhance tests
 	* modules/copysign-tests (Files): Add minus-zero.h.
 	* tests/test-copysign.c (main): Also test zeros.
