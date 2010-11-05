@@ -1,5 +1,17 @@
 2010-11-05  Eric Blake  <eblake@redhat.com>
 
+	tests: require working signbit
+	* modules/ceilf-tests (Depends-on): Add signbit.
+	* modules/ceill-tests (Depends-on): Likewise.
+	* modules/floorf-tests (Depends-on): Likewise.
+	* modules/floorl-tests (Depends-on): Likewise.
+	* modules/round-tests (Depends-on): Likewise.
+	* modules/roundf-tests (Depends-on): Likewise.
+	* modules/roundl-tests (Depends-on): Likewise.
+	* modules/trunc-tests (Depends-on): Likewise.
+	* modules/truncf-tests (Depends-on): Likewise.
+	* modules/truncl-tests (Depends-on): Likewise.
+
 	strtod: work around icc bug
 	* lib/strtod.c (minus_zero): Define to working value.
 	(strtod): Use it to avoid icc bug.
