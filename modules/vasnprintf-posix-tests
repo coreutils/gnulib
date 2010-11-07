@@ -2,6 +2,7 @@ Files:
 tests/test-vasnprintf-posix.c
 tests/test-vasnprintf-posix2.sh
 tests/test-vasnprintf-posix2.c
+tests/test-vasnprintf-posix3.c
 tests/minus-zero.h
 tests/nan.h
 tests/macros.h
@@ -17,6 +18,6 @@ gt_LOCALE_FR
 gt_LOCALE_FR_UTF8
 
 Makefile.am:
-TESTS += test-vasnprintf-posix test-vasnprintf-posix2.sh
+TESTS += test-vasnprintf-posix test-vasnprintf-posix2.sh test-vasnprintf-posix3
 TESTS_ENVIRONMENT += LOCALE_FR='@LOCALE_FR@' LOCALE_FR_UTF8='@LOCALE_FR_UTF8@'
-check_PROGRAMS += test-vasnprintf-posix test-vasnprintf-posix2
+check_PROGRAMS += test-vasnprintf-posix test-vasnprintf-posix2 test-vasnprintf-posix3

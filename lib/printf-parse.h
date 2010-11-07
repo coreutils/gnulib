@@ -33,6 +33,9 @@
 #define FLAG_SPACE       8      /* space flag */
 #define FLAG_ALT        16      /* # flag */
 #define FLAG_ZERO       32
+#if __GLIBC__ >= 2
+# define FLAG_LOCALIZED 64      /* I flag, uses localized digits */
+#endif
 
 /* arg_index value indicating that no argument is consumed.  */
 #define ARG_NONE        (~(size_t)0)

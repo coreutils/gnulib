@@ -3658,6 +3658,19 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
       free (result);
   }
 #endif
+
+#if __GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2)
+  /* Test that the 'I' flag is supported.  */
+  {
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%Id %d", 1234567, 99);
+    ASSERT (result != NULL);
+    ASSERT (strcmp (result, "1234567 99") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+#endif
 }
 
 static char *

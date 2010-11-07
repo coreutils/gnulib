@@ -4754,6 +4754,10 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                   *fbp++ = ' ';
                 if (flags & FLAG_ALT)
                   *fbp++ = '#';
+#if __GLIBC__ >= 2
+                if (flags & FLAG_LOCALIZED)
+                  *fbp++ = 'I';
+#endif
                 if (!pad_ourselves)
                   {
                     if (flags & FLAG_ZERO)

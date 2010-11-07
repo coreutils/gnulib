@@ -1,3 +1,16 @@
+2010-11-07  Bruno Haible  <bruno@clisp.org>
+
+	vasnprintf: Support I flag on glibc systems.
+	* lib/printf-parse.h (FLAG_LOCALIZED): New macro.
+	* lib/printf-parse.c (PRINTF_PARSE): Handle the 'I' flag.
+	* lib/vasnprintf.c (VASNPRINTF): Pass the 'I' flag on to the system's
+	snprintf function.
+	* tests/test-vasnprintf-posix.c (test_function): Test the 'I' flag on
+	glibc systems.
+	* tests/test-vasnprintf-posix3.c: New file.
+	* modules/vasnprintf-posix-tests (Files): Add it.
+	(TESTS, check_PROGRAMS): Add test-vasnprintf-posix3.
+
 2010-11-05  Thien-Thi Nguyen  <ttn@gnuvola.org>  (tiny change)
 
 	[html] Fix copy/paste bug: Use unique name for compiler warnings.
