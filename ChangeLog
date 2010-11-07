@@ -1,3 +1,10 @@
+2010-11-06  Gary V. Vaughan  <gary@gnu.org>
+
+	libposix: vastly simplified bootstrap sanity check
+	* libposix/bootstrap: Use a much simpler script to ensure that the
+	output of the posix-modules script remains in sync with the module
+	list of the libposix module.
+
 2010-10-13  Gary V. Vaughan  <gary@gnu.org>
 
 	libposix: reindent with spaces instead of tabs

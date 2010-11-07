@@ -2,54 +2,29 @@
 
 PATH=..:$PATH
 
+# Bootstrap for autotools.
 gnulib-tool --import --lib=libposix --makefile-name=gnulib.mk \
   --macro-prefix=LIBPOSIX --libtool --no-changelog --symlink \
   --with-tests --with-c++-tests --with-longrunning-tests \
   git-version-gen libposix
 
+
+# No need to maintain a Makefile.am just to include gnulib.mk.
 mv tests/gnulib.mk tests/Makefile.am
 
-# sanity check the module list for synchronisation issues.
-echo "posix-modules :
-`posix-modules`
-libposix :
-`gnulib-tool --extract-dependencies libposix`" |awk '
-/^$/            { next; }
-/^[a-z-]+ :/    { tag=$1; next; }
-                { if (modules[$1])
-                        modules[$1] = "both";
-                  else
-                        modules[$1] = tag;
-                }
-END             { # posix-modules only
-                  header=0;
-                  for (i in modules)
-                    {
-                      if ("posix-modules" == modules[i])
-                        {
-                          if (0 == header)
-                            {
-                              print "Modules in posix-modules list only:"
-                              header = 1
-                            }
-                          printf ("\t%s\n", i);
-                        }
-                    }
-                  # libposix only
-                  header=0;
-                  for (i in modules)
-                    {
-                      if ("libposix" == modules[i])
-                        {
-                          if (0 == header)
-                            {
-                              print "Modules in libposix only:"
-                              header = 1
-                            }
-                          printf ("\t%s\n", i);
-                        }
-                    }
-                }
-'
 
+# Sanity check the module list for synchronisation issues.
+{
+    sed_noblanks='/^$/d'
+    posix-modules |sed -e "$sed_noblanks" -e 's|$| posix-modules|'
+    gnulib-tool --extract-dependencies libposix \
+        |sed -e "$sed_noblanks" -e 's|$| libposix|'
+} | awk '_[$1] {delete _[$1]; next}
+               {_[$1]=$2}
+         END   {for (k in _)
+                  printf ("bootstrap: warning: `%s'\'' only appears in %s\n", k, _[k])}' \
+  | sort
+
+
+# Run autotools.
 autoreconf --force --install --verbose --symlink
