@@ -1,3 +1,21 @@
+2010-11-07  Paul Eggert  <eggert@cs.ucla.edu>
+
+	fdopendir: fix bug on MacOS X when low on file descriptors
+
+	* lib/fdopendir.c (REPLACE_FCHDIR): #define to 0 if not defined.
+	(fdopendir_with_dup, fd_clone_opendir): Now have extra CWD arg.
+	All callers changed.
+	(fdopendir): Invoke save_cwd at the top level, not after using
+	multiple dup() calls to use up file descriptors.  Then retry
+	fdopendir_with_dup.  This avoids failure with EMFILE if FD is 1
+	less than the maximum number of open file descriptors, because
+	save_cwd fails with errno == EMFILE.  Problem reported by tsteven4
+	on Mac OS X 10.6.4 for tar 1.24
+	<http://lists.gnu.org/archive/html/bug-tar/2010-10/msg00084.html>
+	<http://lists.gnu.org/archive/html/bug-tar/2010-11/msg00000.html>
+	and for tar 1.25
+	<http://lists.gnu.org/archive/html/bug-tar/2010-11/msg00038.html>.
+
 2010-11-07  Bruno Haible  <bruno@clisp.org>
 
 	vasnprintf: Support I flag on glibc systems.
