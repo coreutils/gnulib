@@ -1,3 +1,7 @@
+2010-11-09  Bruno Haible  <bruno@clisp.org>
+
+	* doc/posix-functions/strerror.texi: Add a comment.
+
 2010-11-07  Paul Eggert  <eggert@cs.ucla.edu>
 
 	fdopendir: fix bug on MacOS X when low on file descriptors

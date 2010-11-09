@@ -16,6 +16,8 @@ OpenBSD 4.0, OSF/1 5.1, NonStop Kernel, Cygwin 1.5.x, mingw.
 This function fails to return a string for out-of-range integers on
 some platforms:
 Solaris 8.
+(This is not a POSIX violation, but can still cause bugs because most programs
+call @code{strerror} without setting and testing @code{errno}.)
 @end itemize
 
 Portability problems not fixed by Gnulib:
