@@ -1,5 +1,7 @@
 2010-11-09  Bruno Haible  <bruno@clisp.org>
 
+	* doc/posix-functions/strerror.texi: List more failing platforms.
+
 	* doc/posix-functions/strerror.texi: Add a comment.
 
 2010-11-07  Paul Eggert  <eggert@cs.ucla.edu>
