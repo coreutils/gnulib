@@ -144,7 +144,7 @@ function html_fnc_table (caption,
                     num_lines_p,
                     first_line_p,
                     file_p)
-    for (nfnc = 1; nfnc < nfuncs; nfnc++)
+    for (nfnc = 1; nfnc <= nfuncs; nfnc++)
     {
         html_fnc(nfnc,
                  fname_p,
@@ -425,7 +425,7 @@ function html_fnc (nfun,
                 print codeline
             }
             close(fname nfun "_fn.txt")
-            system("rm " fname nfun "_fn.txt")
+            system("rm " "'" fname "'" nfun "_fn.txt")
             print "</pre>"
             print "</div>"
             print "</td>"
@@ -653,7 +653,7 @@ function wiki_fnc_table (caption,
                     num_lines_p,
                     first_line_p,
                     file_p)
-    for (nfnc = 1; nfnc < nfuncs; nfnc++)
+    for (nfnc = 1; nfnc <= nfuncs; nfnc++)
     {
         wiki_fnc(nfnc,
                  fname_p,

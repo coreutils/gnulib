@@ -1,3 +1,10 @@
+2010-11-11  Torsten Scheck  <Torsten.Scheck@Leica-Microsystems.com> (tiny change)
+
+	* build-aux/pmccabe2html: Fixed a off-by-one error, so last input
+	line is also considered for output. Quoted function name in shell
+	command, so temporary files for functions like MyClass::operator()
+	are removed correctly without errors.
+
 2010-11-09  Bruno Haible  <bruno@clisp.org>
 
 	* doc/posix-functions/strerror.texi: List more failing platforms.
