@@ -1,3 +1,8 @@
+2010-11-11  Christian Weisgerber  <naddy@mips.inka.de>  (tiny change)
+
+	mknod: avoid false failure with dash
+	* m4/mknod.m4 (gl_FUNC_MKNOD): Use portable shell syntax.
+
 2010-11-11  Paul Eggert  <eggert@cs.ucla.edu>
 
 	unlink: Fix "is it should" typo in diagnostic.
