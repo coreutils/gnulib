@@ -32,7 +32,7 @@ AC_DEFUN([gl_FUNC_UNLINK],
      rm -f conftest.file conftest.lnk])
   dnl Detect MacOS X 10.5.6 bug: On read-write HFS mounts, unlink("..") or
   dnl unlink("../..") succeeds without doing anything.
-  AC_CACHE_CHECK([whether unlink of a parent directory fails is it should],
+  AC_CACHE_CHECK([whether unlink of a parent directory fails as it should],
     [gl_cv_func_unlink_parent_fails],
     [case "$host_os" in
        darwin*)
