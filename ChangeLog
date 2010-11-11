@@ -1,3 +1,19 @@
+2010-11-11  Bruno Haible  <bruno@clisp.org>
+
+	New module 'strerror_r-posix'.
+	* lib/string.in.h (strerror_r): New declaration.
+	* lib/strerror_r.c: New file.
+	* m4/strerror_r.m4: New file.
+	* m4/string_h.m4 (gl_HEADER_STRING_H_BODY): Check for the declaration
+	of strerror_r.
+	(gl_HEADER_STRING_H_DEFAULTS): Initialize GNULIB_STRERROR_R,
+	HAVE_DECL_STRERROR_R, REPLACE_STRERROR_R.
+	* modules/strerror_r-posix: New file.
+	* modules/string (Makefile.am): Substitute GNULIB_STRERROR_R,
+	HAVE_DECL_STRERROR_R, REPLACE_STRERROR_R.
+	* doc/posix-functions/strerror_r.texi: Mention the new module and the
+	portability problems.
+
 2010-11-11  Torsten Scheck  <Torsten.Scheck@Leica-Microsystems.com> (tiny change)
 
 	* build-aux/pmccabe2html: Fixed a off-by-one error, so last input

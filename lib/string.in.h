@@ -902,6 +902,35 @@ _GL_WARN_ON_USE (strerror, "strerror is unportable - "
                  "use gnulib module strerror to guarantee non-NULL result");
 #endif
 
+/* Map any int, typically from errno, into an error message.  Multithread-safe.
+   Uses the POSIX declaration, not the glibc declaration.  */
+#if @GNULIB_STRERROR_R@
+# if @REPLACE_STRERROR_R@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef strerror_r
+#   define strerror_r rpl_strerror_r
+#  endif
+_GL_FUNCDECL_RPL (strerror_r, int, (int errnum, char *buf, size_t buflen)
+                                   _GL_ARG_NONNULL ((2)));
+_GL_CXXALIAS_RPL (strerror_r, int, (int errnum, char *buf, size_t buflen));
+# else
+#  if !@HAVE_DECL_STRERROR_R@
+_GL_FUNCDECL_SYS (strerror_r, int, (int errnum, char *buf, size_t buflen)
+                                   _GL_ARG_NONNULL ((2)));
+#  endif
+_GL_CXXALIAS_SYS (strerror_r, int, (int errnum, char *buf, size_t buflen));
+# endif
+# if @HAVE_DECL_STRERROR_R@
+_GL_CXXALIASWARN (strerror_r);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef strerror_r
+# if HAVE_RAW_DECL_STRERROR_R
+_GL_WARN_ON_USE (strerror_r, "strerror_r is unportable - "
+                 "use gnulib module strerror_r-posix for portability");
+# endif
+#endif
+
 #if @GNULIB_STRSIGNAL@
 # if @REPLACE_STRSIGNAL@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
