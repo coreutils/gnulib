@@ -1,5 +1,10 @@
 2010-11-11  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'strerror_r-posix'.
+	* modules/strerror_r-posix-tests: New file.
+	* tests/test-strerror_r.c: New file.
+	* tests/test-string-c++.cc: Check the signature of strerror_r.
+
 	New module 'strerror_r-posix'.
 	* lib/string.in.h (strerror_r): New declaration.
 	* lib/strerror_r.c: New file.
