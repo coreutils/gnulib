@@ -47,10 +47,11 @@ nanosleep (const struct timespec *requested_delay,
            struct timespec *remaining_delay)
 #undef nanosleep
 {
-  /* nanosleep mishandles large sleeps due to internal overflow
-     problems.  The worst known case of this is cygwin 1.5.x, which
-     can't sleep more than 49.7 days (2**32 milliseconds).  Solve this
-     by breaking the sleep up into smaller chunks.  */
+  /* nanosleep mishandles large sleeps due to internal overflow problems.
+     The worst known case of this is Linux 2.6.9 with glibc 2.3.4, which
+     can't sleep more than 24.85 days (2^31 milliseconds).  Similarly,
+     cygwin 1.5.x, which can't sleep more than 49.7 days (2^32 milliseconds).
+     Solve this by breaking the sleep up into smaller chunks.  */
 
   if (requested_delay->tv_nsec < 0 || BILLION <= requested_delay->tv_nsec)
     {
@@ -60,8 +61,8 @@ nanosleep (const struct timespec *requested_delay,
 
   {
     /* Verify that time_t is large enough.  */
-    verify (TYPE_MAXIMUM (time_t) / 49 / 24 / 60 / 60);
-    const time_t limit = 49 * 24 * 60 * 60;
+    verify (TYPE_MAXIMUM (time_t) / 24 / 24 / 60 / 60);
+    const time_t limit = 24 * 24 * 60 * 60;
     time_t seconds = requested_delay->tv_sec;
     struct timespec intermediate;
     intermediate.tv_nsec = 0;

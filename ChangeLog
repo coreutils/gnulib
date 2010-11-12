@@ -1,3 +1,9 @@
+2010-11-12  Bruno Haible  <bruno@clisp.org>
+
+	sleep, nanosleep: Work around Linux 2.6.9 nanosleep bug.
+	* lib/sleep.c (rpl_sleep): Split in chunks no larger than 24 days.
+	* lib/nanosleep.c (nanosleep): Likewise.
+
 2010-11-11  Bruno Haible  <bruno@clisp.org>
 
 	fcntl-h: Fix for use of C++ on glibc systems.
