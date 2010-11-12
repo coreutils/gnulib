@@ -1,5 +1,9 @@
 2010-11-12  Eric Blake  <eblake@redhat.com>
 
+	maintainer-makefile: prohibit test x == x
+	* top/maint.mk (sc_prohibit_test_double_equal): New rule.
+	Based on a report by Matthias Bolte.
+
 	bootstrap: allow FreeBSD gzip
 	* build-aux/bootstrap (get_version): Parse FreeBSD gzip version,
 	which has no '.' and goes to stderr.

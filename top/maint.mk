@@ -817,6 +817,12 @@ sc_prohibit_test_minus_ao:
 	halt='$(_ptm1); $(_ptm2)'					\
 	  $(_sc_search_regexp)
 
+# Avoid a test bashism.
+sc_prohibit_test_double_equal:
+	@prohibit='(\<test| \[+) .+ == '				\
+	halt='use "test x = x", not "test x =''= x"'			\
+	  $(_sc_search_regexp)
+
 # Each program that uses proper_name_utf8 must link with one of the
 # ICONV libraries.  Otherwise, some ICONV library must appear in LDADD.
 # The perl -0777 invocation below extracts the possibly-multi-line
