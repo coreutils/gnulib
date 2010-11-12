@@ -1,3 +1,8 @@
+2010-11-13  Bruno Haible  <bruno@clisp.org>
+
+	rename test: Add comments.
+	* tests/test-rename.h (test_rename): Add structure and comments.
+
 2010-11-13  Eric Blake  <eblake@redhat.com>
 
 	maintainer-makefile: cover a few more files
