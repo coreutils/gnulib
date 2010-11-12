@@ -1,6 +1,6 @@
 #! /bin/sh
 # Print a version string.
-scriptversion=2010-10-08.16; # UTC
+scriptversion=2010-11-12.20; # UTC
 
 # Bootstrap this package from checked-out sources.
 
@@ -345,11 +345,11 @@ get_version() {
 
   $app --version 2>&1 |
   sed -n '# extract version within line
-          s/.*[v ]\{1,\}\([0-9]\{1,\}\.[.a-z0-9-]*\).*/\1/
+          s/.*[v ]\{1,\}\([0-9]\{1,\}\(\.[.a-z0-9-]*\)*\).*/\1/
           t done
 
           # extract version at start of line
-          s/^\([0-9]\{1,\}\.[.a-z0-9-]*\).*/\1/
+          s/^\([0-9]\{1,\}\(\.[.a-z0-9-]*\)\)*.*/\1/
           t done
 
           d

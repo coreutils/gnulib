@@ -1,5 +1,11 @@
 2010-11-12  Eric Blake  <eblake@redhat.com>
 
+	bootstrap: allow FreeBSD gzip
+	* build-aux/bootstrap (get_version): Parse FreeBSD gzip version,
+	which has no '.' and goes to stderr.
+	* build-aux/bootstrap.conf (buildreq): Improve the sample file.
+	Reported by Matthias Bolte.
+
 	maintainer-makefile: check for i18n setup
 	* top/maint.mk (sc_bindtextdomain): Check for evidence that _()
 	will likely work.
