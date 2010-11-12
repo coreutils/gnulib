@@ -1,3 +1,9 @@
+2010-11-12  Eric Blake  <eblake@redhat.com>
+
+	maintainer-makefile: check for i18n setup
+	* top/maint.mk (sc_bindtextdomain): Check for evidence that _()
+	will likely work.
+
 2010-11-12  Bruno Haible  <bruno@clisp.org>
 
 	sleep, nanosleep: Work around Linux 2.6.9 nanosleep bug.
