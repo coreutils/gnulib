@@ -1,5 +1,9 @@
 2010-11-12  Eric Blake  <eblake@redhat.com>
 
+	bootstrap: fix typo in previous attempt
+	* build-aux/bootstrap (buildreq): Correct the grouping.
+	Reported by Paul Eggert.
+
 	maintainer-makefile: prohibit test x == x
 	* top/maint.mk (sc_prohibit_test_double_equal): New rule.
 	Based on a report by Matthias Bolte.
