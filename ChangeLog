@@ -1,3 +1,10 @@
+2010-11-11  Bruno Haible  <bruno@clisp.org>
+
+	fcntl-h: Fix for use of C++ on glibc systems.
+	* lib/fcntl.in.h: Include <sys/stat.h> before include_next <fcntl.h>
+	also on glibc systems in C++ mode.
+	Reported by Gary V. Vaughan <gary@gnu.org>.
+
 2010-11-11  Christian Weisgerber  <naddy@mips.inka.de>  (tiny change)
 
 	mknod: avoid false failure with dash
