@@ -1,3 +1,14 @@
+2010-11-13  Jim Meyering  <meyering@redhat.com>
+
+	remove autoconf-2.57 work-around requiring AC_PROG_EGREP and AC_PROG_CPP
+	Now we require at least autoconf-2.59, which means the work-around
+	is no longer needed.
+	* m4/alloca.m4 (gl_FUNC_ALLOCA): Remove work-around.
+	* m4/dirfd.m4 (gl_FUNC_DIRFD): Likewise.
+	* m4/mmap-anon.m4 (gl_FUNC_MMAP_ANON): Likewise.
+	* m4/strtoimax.m4 (gl_FUNC_STRTOIMAX): Likewise.
+	* m4/strtoumax.m4 (gl_FUNC_STRTOUMAX): Likewise.
+
 2010-11-13  Bruno Haible  <bruno@clisp.org>
 
 	rename, renameat: Avoid test failures at NFS mounted locations.
