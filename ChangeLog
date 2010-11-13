@@ -1,5 +1,8 @@
 2010-11-13  Jim Meyering  <meyering@redhat.com>
 
+	tests: avoid test failure on Solaris 10 due to lack of PATH export
+	* tests/test-update-copyright.sh: Don't forget to export PATH.
+
 	init.sh: ensure that IFS is defined, just in case...
 	* tests/init.sh (setup_): Ensure that IFS is defined,
 	so that saving and restoring it works as expected.  This
