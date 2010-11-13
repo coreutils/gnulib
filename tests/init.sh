@@ -330,6 +330,12 @@ setup_()
     || fail_ "failed to create temporary directory in $initial_cwd_"
   cd "$test_dir_"
 
+  # As autoconf-generated configure scripts do, ensure that IFS
+  # is defined initially, so that saving and restoring $IFS works.
+  gl_init_sh_nl_='
+'
+  IFS=" ""	$gl_init_sh_nl_"
+
   # This trap statement, along with a trap on 0 below, ensure that the
   # temporary directory, $test_dir_, is removed upon exit as well as
   # upon receipt of any of the listed signals.

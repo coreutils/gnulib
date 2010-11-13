@@ -1,5 +1,12 @@
 2010-11-13  Jim Meyering  <meyering@redhat.com>
 
+	init.sh: ensure that IFS is defined, just in case...
+	* tests/init.sh (setup_): Ensure that IFS is defined,
+	so that saving and restoring it works as expected.  This
+	appears to be useful at least for an old version of dash
+	from a long time ago (RH 6).  See here for details:
+	http://thread.gmane.org/gmane.comp.gnu.coreutils.general/436/focus=455
+
 	maint.mk: tighten "test a == b" check
 	* top/maint.mk (sc_prohibit_test_double_equal): Restrict this
 	test to files that contain something like #!/bin/sh.
