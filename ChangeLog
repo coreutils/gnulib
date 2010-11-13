@@ -1,5 +1,26 @@
 2010-11-13  Bruno Haible  <bruno@clisp.org>
 
+	unistr/u8-mbtouc: Improve handling of ill-formed UTF-8 input.
+	* lib/unistr/u8-mbtouc.c (u8_mbtouc): For an invalid multibyte
+	character, return the number of bytes that belong together, not always
+	1.
+	* lib/unistr/u8-mbtouc-unsafe.c (u8_mbtouc_unsafe): Likewise.
+	* lib/unistr/u8-mbtouc-aux.c (u8_mbtouc_aux): Likewise.
+	* lib/unistr/u8-mbtouc-unsafe-aux.c (u8_mbtouc_unsafe_aux): Likewise.
+	* lib/unistr/u8-mbsnlen.c (u8_mbsnlen): Use u8_mbtouc to determine the
+	number of bytes of an invalid character.
+	* tests/unistr/test-u8-mbtouc.c (test_safe_function): New function.
+	(main): Invoke it.
+	* tests/unistr/test-u8-mbtouc.h (test_function): Update two test results.
+	* tests/unistr/test-u8-mbsnlen.c (main): Test various kinds of
+	malformed byte sequences.
+	* modules/unistr/u8-mbtouc (configure.ac): Bump version number.
+	* modules/unistr/u8-mbtouc-unsafe (configure.ac): Likewise.
+	* modules/unistr/u8-mbsnlen (configure.ac): Likewise.
+	Reported by Ben Pfaff and Paolo Bonzini.
+
+2010-11-13  Bruno Haible  <bruno@clisp.org>
+
 	openat: Work around glibc bug with fchownat() and empty file names.
 	* m4/openat.m4 (gl_FUNC_FCHOWNAT_EMPTY_FILENAME_BUG): New macro.
 	(gl_FUNC_FCHOWNAT): Invoke it.

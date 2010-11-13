@@ -33,7 +33,9 @@ u8_mbsnlen (const uint8_t *s, size_t n)
       characters++;
       if (count == -2)
         break;
-      if (count <= 0)
+      if (count < 0)
+        count = u8_mbtouc (&uc, s, n);
+      else if (count == 0)
         count = 1;
       s += count;
       n -= count;
