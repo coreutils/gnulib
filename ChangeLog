@@ -1,5 +1,14 @@
 2010-11-13  Bruno Haible  <bruno@clisp.org>
 
+	openat: Work around glibc bug with fchownat() and empty file names.
+	* m4/openat.m4 (gl_FUNC_FCHOWNAT_EMPTY_FILENAME_BUG): New macro.
+	(gl_FUNC_FCHOWNAT): Invoke it.
+	* lib/fchownat.c (rpl_fchownat): Handle the empty file name specially.
+	* doc/posix-functions/fchownat.texi: Document the glibc bug.
+	Reported by Gary V. Vaughan <gary@gnu.org>.
+
+2010-11-13  Bruno Haible  <bruno@clisp.org>
+
 	openat: Ensure autoconf macro ordering.
 	* m4/openat.m4 (gl_FUNC_FCHOWNAT_DEREF_BUG): Require
 	gl_USE_SYSTEM_EXTENSIONS.
