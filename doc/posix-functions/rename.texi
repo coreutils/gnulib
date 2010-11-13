@@ -60,6 +60,11 @@ is counter-intuitive, so on some systems, @code{rename} fails with
 @code{ENOTDIR} if either argument is a symlink with a trailing slash:
 glibc, OpenBSD, Cygwin 1.7.
 @item
+After renaming a non-empty directory over an existing empty directory,
+the old directory name is still visible through the @code{stat} function
+for 30 seconds after the rename, on NFS file systems, on some platforms:
+Linux 2.6.18.
+@item
 This function will not rename a source that is currently opened
 by any process:
 mingw.

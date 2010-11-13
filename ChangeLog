@@ -1,5 +1,13 @@
 2010-11-13  Bruno Haible  <bruno@clisp.org>
 
+	rename, renameat: Document Linux bug with NFS
+	<http://lists.gnu.org/archive/html/bug-gnulib/2010-11/msg00154.html>.
+	* doc/posix-functions/rename.texi: Mention the NFS bug on Linux.
+	* doc/posix-functions/renameat.texi: Likewise.
+	Suggested by Eric Blake.
+
+2010-11-13  Bruno Haible  <bruno@clisp.org>
+
 	rename test: Add comments.
 	* tests/test-rename.h (test_rename): Add structure and comments.
 
