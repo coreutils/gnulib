@@ -1,4 +1,4 @@
-# serial 30
+# serial 31
 # See if we need to use our replacement for Solaris' openat et al functions.
 
 dnl Copyright (C) 2004-2010 Free Software Foundation, Inc.
@@ -63,6 +63,9 @@ AC_DEFUN([gl_FUNC_OPENAT],
 # gl_FUNC_FCHOWNAT_DEREF_BUG([ACTION-IF-BUGGY[, ACTION-IF-NOT_BUGGY]])
 AC_DEFUN([gl_FUNC_FCHOWNAT_DEREF_BUG],
 [
+  dnl Persuade glibc's <unistd.h> to declare fchownat().
+  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+
   AC_CACHE_CHECK([whether fchownat works with AT_SYMLINK_NOFOLLOW],
     gl_cv_func_fchownat_nofollow_works,
     [
@@ -104,6 +107,7 @@ main ()
 # Also use the replacement function if fchownat is simply not available.
 AC_DEFUN([gl_FUNC_FCHOWNAT],
 [
+  AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
   AC_REQUIRE([gl_FUNC_CHOWN])
   AC_CHECK_FUNC([fchownat],
     [gl_FUNC_FCHOWNAT_DEREF_BUG(

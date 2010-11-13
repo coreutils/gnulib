@@ -1,5 +1,12 @@
 2010-11-13  Bruno Haible  <bruno@clisp.org>
 
+	openat: Ensure autoconf macro ordering.
+	* m4/openat.m4 (gl_FUNC_FCHOWNAT_DEREF_BUG): Require
+	gl_USE_SYSTEM_EXTENSIONS.
+	(gl_FUNC_FCHOWNAT): Require gl_UNISTD_H_DEFAULTS.
+
+2010-11-13  Bruno Haible  <bruno@clisp.org>
+
 	Update comments.
 	* lib/unistr/u8-check.c: Update file name in comments.
 	* lib/unistr/u8-mblen.c: Likewise.
