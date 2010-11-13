@@ -1,5 +1,13 @@
 2010-11-13  Bruno Haible  <bruno@clisp.org>
 
+	rename, renameat: Avoid test failures at NFS mounted locations.
+	* tests/test-rename.h (dentry_exists, assert_nonexistent): New
+	functions.
+	(test_rename): Use assert_nonexistent.
+	* tests/test-rename.c: Include <dirent.h>.
+	* tests/test-renameat.c: Likewise.
+	Reported by Gary V. Vaughan <gary@gnu.org>.
+
 	rename, renameat: Document Linux bug with NFS
 	<http://lists.gnu.org/archive/html/bug-gnulib/2010-11/msg00154.html>.
 	* doc/posix-functions/rename.texi: Mention the NFS bug on Linux.

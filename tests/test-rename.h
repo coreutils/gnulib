@@ -20,6 +20,49 @@
    appropriate headers are already included.  If PRINT, warn before
    skipping symlink tests with status 77.  */
 
+/* Tests whether a file, given by a file name without slashes, exists in
+   the current directory, by scanning the directory entries.  */
+static bool
+dentry_exists (const char *filename)
+{
+  bool exists = false;
+  DIR *dir = opendir (".");
+
+  ASSERT (dir != NULL);
+  for (;;)
+    {
+      struct dirent *d = readdir (dir);
+      if (d == NULL)
+        break;
+      if (strcmp (d->d_name, filename) == 0)
+        {
+          exists = true;
+          break;
+        }
+    }
+  ASSERT (closedir (dir) == 0);
+  return exists;
+}
+
+/* Asserts that a specific file, given by a file name without slashes, does
+   not exist in the current directory.  */
+static void
+assert_nonexistent (const char *filename)
+{
+  struct stat st;
+
+  /* The usual way to test the presence of a file is via stat() or lstat().  */
+  errno = 0;
+  if (stat (filename, &st) == -1)
+    ASSERT (errno == ENOENT);
+  else
+    /* But after renaming a directory over an empty directory on an NFS-mounted
+       file system, on Linux 2.6.18, for a period of 30 seconds the old
+       directory name is "present" according to stat() but "nonexistent"
+       according to dentry_exists().  */
+    ASSERT (!dentry_exists (filename));
+}
+
 static int
 test_rename (int (*func) (char const *, char const *), bool print)
 {
@@ -226,9 +269,7 @@ test_rename (int (*func) (char const *, char const *), bool print)
     }
     { /* Full onto empty.  */
       ASSERT (func (BASE "dir", BASE "dir2") == 0);
-      errno = 0;
-      ASSERT (stat (BASE "dir", &st) == -1);
-      ASSERT (errno == ENOENT);
+      assert_nonexistent (BASE "dir");
       ASSERT (stat (BASE "dir2/file", &st) == 0);
       /* Files present here:
            {BASE}file
@@ -263,9 +304,7 @@ test_rename (int (*func) (char const *, char const *), bool print)
        */
       {
         ASSERT (func (BASE "dir", BASE "dir2/") == 0);
-        errno = 0;
-        ASSERT (stat (BASE "dir", &st) == -1);
-        ASSERT (errno == ENOENT);
+        assert_nonexistent (BASE "dir");
         ASSERT (stat (BASE "dir2/file", &st) == 0);
       }
       /* Files present here:
