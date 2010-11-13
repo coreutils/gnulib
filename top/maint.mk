@@ -820,6 +820,7 @@ sc_prohibit_test_minus_ao:
 # Avoid a test bashism.
 sc_prohibit_test_double_equal:
 	@prohibit='(\<test| \[+) .+ == '				\
+	containing='^#! */bin/sh'					\
 	halt='use "test x = x", not "test x =''= x"'			\
 	  $(_sc_search_regexp)
 

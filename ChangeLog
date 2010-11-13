@@ -1,3 +1,11 @@
+2010-11-13  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: tighten "test a == b" check
+	* top/maint.mk (sc_prohibit_test_double_equal): Restrict this
+	test to files that contain something like #!/bin/sh.
+	Without this, coreutils would get two false positives in
+	the comments of C source files.
+
 2010-11-12  Eric Blake  <eblake@redhat.com>
 
 	bootstrap: fix typo in previous attempt
