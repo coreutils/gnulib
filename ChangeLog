@@ -1,3 +1,9 @@
+2010-11-13  Eric Blake  <eblake@redhat.com>
+
+	maintainer-makefile: cover a few more files
+	* top/maint.mk (sc_prohibit_test_double_equal): Also cover shell
+	scripts generated within C files, for libvirt.
+
 2010-11-13  Bruno Haible  <bruno@clisp.org>
 
 	unistr/u8-mbtouc: Improve handling of ill-formed UTF-8 input.
