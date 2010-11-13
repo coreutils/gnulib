@@ -1,3 +1,12 @@
+2010-11-13  Bruno Haible  <bruno@clisp.org>
+
+	Update comments.
+	* lib/unistr/u8-check.c: Update file name in comments.
+	* lib/unistr/u8-mblen.c: Likewise.
+	* lib/unistr/u8-prev.c: Likewise.
+	* lib/unistr/u8-strmblen.c: Likewise.
+	* lib/unistr/u8-strmbtouc.c: Likewise.
+
 2010-11-13  Jim Meyering  <meyering@redhat.com>
 
 	tests: avoid test failure on Solaris 10 due to lack of PATH export

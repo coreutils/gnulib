@@ -24,7 +24,7 @@
 int
 u8_strmbtouc (ucs4_t *puc, const uint8_t *s)
 {
-  /* Keep in sync with unistr.h and utf8-ucs4.c.  */
+  /* Keep in sync with unistr.h and u8-mbtouc-aux.c.  */
   uint8_t c = *s;
 
   if (c < 0x80)
