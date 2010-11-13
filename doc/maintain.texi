@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate October 25, 2010
+@set lastupdate November 12, 2010
 @c %**end of header
 
 @dircategory GNU organization
@@ -70,6 +70,7 @@ Texts.  A copy of the license is included in the section entitled
 * Ethical and Philosophical Consideration::
 * Terminology::
 * Hosting::
+* Donations::
 * Free Software Directory::
 * Using the Proofreaders List::
 * GNU Free Documentation License::
@@ -2072,6 +2073,36 @@ If you would like to contribute to the development of one of these
 packages, contact the package maintainer or the bug-reporting address
 of the package (which should be listed in the package itself), or look
 on www.gnu.org for more information on how to contribute.
+@end smallexample
+
+
+@node Donations
+@chapter Donations
+@cindex Donations, for packages
+@cindex Money, donated to packages
+
+As a maintainer, you might want to accept donations for your work,
+especially if you pay for any of your own hosting/development
+infrastructure.  Following is some text you can adapt for your
+package's web site, @file{README}, or wherever you find it useful:
+
+@smallexample
+We appreciate contributions of any size -- donations enable us to spend
+more time working on the project, and help cover our infrastructure
+expenses.
+
+If you'd like to make a small donation, please visit @var{url} and do
+it through PayPal.  Since our project isn't a tax-exempt organization,
+we can't offer you a tax deduction, but for all donations over
+@var{amount}, we'd be happy to recognize your contribution on
+@var{another-url}.
+
+If you can make a donation large enough to entirely fund a substantial
+change, such as $1000, then we could discuss with you what change we
+should do with your funds, and we could give you a certain amount of
+specific help in exchange.  Write to us about this at @var{address}.
+
+Thanks for your support!
 @end smallexample
 
 
