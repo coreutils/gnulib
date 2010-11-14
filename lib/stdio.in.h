@@ -367,17 +367,20 @@ _GL_CXXALIASWARN (fseeko);
    /* Provide an fseek function that is consistent with fseeko.  */
    /* In order to avoid that fseek gets defined as a macro here, the
       developer can request the 'fseek' module.  */
-#  undef fseek
-#  define fseek rpl_fseek
+#  if !GNULIB_defined_fseek_function
+#   undef fseek
+#   define fseek rpl_fseek
 static inline int _GL_ARG_NONNULL ((1))
 rpl_fseek (FILE *fp, long offset, int whence)
 {
-#  if @REPLACE_FSEEKO@
+#   if @REPLACE_FSEEKO@
   return rpl_fseeko (fp, offset, whence);
-#  else
+#   else
   return fseeko (fp, offset, whence);
-#  endif
+#   endif
 }
+#   define GNULIB_defined_fseek_function 1
+#  endif
 # endif
 #elif defined GNULIB_POSIXCHECK
 # define _GL_FSEEK_WARN /* Category 1, above.  */
@@ -442,17 +445,20 @@ _GL_CXXALIASWARN (ftello);
    /* Provide an ftell function that is consistent with ftello.  */
    /* In order to avoid that ftell gets defined as a macro here, the
       developer can request the 'ftell' module.  */
-#  undef ftell
-#  define ftell rpl_ftell
+#  if !GNULIB_defined_ftell_function
+#   undef ftell
+#   define ftell rpl_ftell
 static inline long _GL_ARG_NONNULL ((1))
 rpl_ftell (FILE *f)
 {
-#  if @REPLACE_FTELLO@
+#   if @REPLACE_FTELLO@
   return rpl_ftello (f);
-#  else
+#   else
   return ftello (f);
-#  endif
+#   endif
 }
+#   define GNULIB_defined_ftell_function 1
+#  endif
 # endif
 #elif defined GNULIB_POSIXCHECK
 # define _GL_FTELL_WARN /* Category 1, above.  */

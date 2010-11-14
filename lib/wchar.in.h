@@ -104,10 +104,12 @@
    On IRIX 6.5, sizeof (mbstate_t) == 1, which is not sufficient for
    implementing mbrtowc for encodings like UTF-8.  */
 #if !(@HAVE_MBSINIT@ && @HAVE_MBRTOWC@) || @REPLACE_MBSTATE_T@
+# if !GNULIB_defined_mbstate_t
 typedef int rpl_mbstate_t;
-# undef mbstate_t
-# define mbstate_t rpl_mbstate_t
-# define GNULIB_defined_mbstate_t 1
+#  undef mbstate_t
+#  define mbstate_t rpl_mbstate_t
+#  define GNULIB_defined_mbstate_t 1
+# endif
 #endif
 
 

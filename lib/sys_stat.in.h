@@ -461,11 +461,14 @@ _GL_CXXALIAS_RPL (mkdir, int, (char const *name, mode_t mode));
    which are included above.  */
 # if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 
+#  if !GNULIB_defined_rpl_mkdir
 static inline int
 rpl_mkdir (char const *name, mode_t mode)
 {
   return _mkdir (name);
 }
+#   define GNULIB_defined_rpl_mkdir 1
+#  endif
 
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define mkdir rpl_mkdir

@@ -50,14 +50,20 @@
    'volatile sig_atomic_t' ignore the extra modifier, but C89 did not.
    Hence, redefine this to a non-volatile type as needed.  */
 #if ! @HAVE_TYPE_VOLATILE_SIG_ATOMIC_T@
+# if !GNULIB_defined_sig_atomic_t
 typedef int rpl_sig_atomic_t;
-# undef sig_atomic_t
-# define sig_atomic_t rpl_sig_atomic_t
+#  undef sig_atomic_t
+#  define sig_atomic_t rpl_sig_atomic_t
+#  define GNULIB_defined_sig_atomic_t 1
+# endif
 #endif
 
 /* A set or mask of signals.  */
 #if !@HAVE_SIGSET_T@
+# if !GNULIB_defined_sigset_t
 typedef unsigned int sigset_t;
+#  define GNULIB_defined_sigset_t 1
+# endif
 #endif
 
 
@@ -89,7 +95,10 @@ typedef unsigned int sigset_t;
 #  endif
 
 /* This code supports only 32 signals.  */
+#  if !GNULIB_defined_verify_NSIG_constraint
 typedef int verify_NSIG_constraint[NSIG <= 32 ? 1 : -1];
+#   define GNULIB_defined_verify_NSIG_constraint 1
+#  endif
 
 # endif
 
@@ -184,7 +193,10 @@ _GL_CXXALIASWARN (sigprocmask);
 # ifdef __cplusplus
 extern "C" {
 # endif
+# if !GNULIB_defined_function_taking_int_returning_void_t
 typedef void (*_gl_function_taking_int_returning_void_t) (int);
+#  define GNULIB_defined_function_taking_int_returning_void_t 1
+# endif
 # ifdef __cplusplus
 }
 # endif
@@ -258,6 +270,9 @@ _GL_WARN_ON_USE (sigprocmask, "sigprocmask is unportable - "
 # if !@HAVE_SIGACTION@
 
 #  if !@HAVE_SIGINFO_T@
+
+#   if !GNULIB_defined_siginfo_types
+
 /* Present to allow compilation, but unsupported by gnulib.  */
 union sigval
 {
@@ -279,10 +294,16 @@ struct siginfo_t
   union sigval si_value;
 };
 typedef struct siginfo_t siginfo_t;
+
+#    define GNULIB_defined_siginfo_types 1
+#   endif
+
 #  endif /* !@HAVE_SIGINFO_T@ */
 
 /* We assume that platforms which lack the sigaction() function also lack
    the 'struct sigaction' type, and vice versa.  */
+
+#  if !GNULIB_defined_struct_sigaction
 
 struct sigaction
 {
@@ -299,12 +320,15 @@ struct sigaction
   /* Not all POSIX flags are supported.  */
   int sa_flags;
 };
-#  define sa_handler _sa_func._sa_handler
-#  define sa_sigaction _sa_func._sa_sigaction
+#   define sa_handler _sa_func._sa_handler
+#   define sa_sigaction _sa_func._sa_sigaction
 /* Unsupported flags are not present.  */
-#  define SA_RESETHAND 1
-#  define SA_NODEFER 2
-#  define SA_RESTART 4
+#   define SA_RESETHAND 1
+#   define SA_NODEFER 2
+#   define SA_RESTART 4
+
+#   define GNULIB_defined_struct_sigaction 1
+#  endif
 
 _GL_FUNCDECL_SYS (sigaction, int, (int, const struct sigaction *restrict,
                                    struct sigaction *restrict));

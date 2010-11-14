@@ -54,6 +54,8 @@
 # define POLLWRNORM  0x0100
 # define POLLWRBAND  0x0200
 
+# if !GNULIB_defined_poll_types
+
 struct pollfd
 {
   int fd;                       /* which file descriptor to poll */
@@ -62,6 +64,9 @@ struct pollfd
 };
 
 typedef unsigned long nfds_t;
+
+#  define GNULIB_defined_poll_types 1
+# endif
 
 /* Define INFTIM only if doing so conforms to POSIX.  */
 # if !defined (_POSIX_C_SOURCE) && !defined (_XOPEN_SOURCE)

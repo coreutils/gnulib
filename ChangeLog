@@ -1,3 +1,59 @@
+2010-11-14  Bruno Haible  <bruno@clisp.org>
+
+	Allow multiple gnulib generated replacements to coexist.
+	* lib/getopt.in.h (struct option): Avoid identical redefinition.
+	* lib/inttypes.in.h (imaxdiv_t): Likewise.
+	* lib/langinfo.in.h (nl_item): Likewise.
+	* lib/math.in.h (_NaN, NAN): Likewise.
+	* lib/netdb.in.h (struct addrinfo): Likewise.
+	* lib/poll.in.h (struct pollfd, nfds_t): Likewise.
+	* lib/pthread.in.h (pthread_t, pthread_attr_t, pthread_barrier_t,
+	pthread_barrierattr_t, pthread_cond_t, pthread_condattr_t,
+	pthread_key_t, pthread_mutex_t, pthread_mutexattr_t, pthread_once_t,
+	pthread_rwlock_t, pthread_rwlockattr_t, pthread_cond_destroy,
+	pthread_cond_init, pthread_cond_signal, pthread_cond_wait,
+	pthread_create, pthread_exit, pthread_join, pthread_mutexattr_destroy,
+	pthread_mutexattr_init, pthread_mutexattr_settype,
+	pthread_mutex_destroy, pthread_mutex_init, pthread_mutex_lock,
+	pthread_mutex_trylock, pthread_mutex_unlock, pthread_spinlock_t,
+	pthread_spin_init, pthread_spin_destroy, pthread_spin_lock,
+	pthread_spin_trylock, pthread_spin_unlock): Likewise.
+	* lib/sched.in.h (struct sched_param): Likewise.
+	* lib/se-selinux.in.h (security_class_t, security_context_t,
+	is_selinux_enabled, getcon, freecon, getfscreatecon, setfscreatecon,
+	matchpathcon, getfilecon, lgetfilecon, fgetfilecon, setfilecon,
+	lsetfilecon, fsetfilecon, security_check_context,
+	security_check_context_raw, setexeccon, matchpathcon_init_prefix):
+	Likewise.
+	* lib/search.in.h (VISIT, _gl_search_compar_fn, _gl_search_action_fn):
+	Likewise.
+	* lib/signal.in.h (sig_atomic_t, sigset_t, verify_NSIG_constraint,
+	_gl_function_taking_int_returning_void_t, union sigval,
+	struct siginfo_t, siginfo_t, struct sigaction): Likewise.
+	* lib/spawn.in.h (posix_spawnattr_t, posix_spawn_file_actions_t,
+	verify_POSIX_SPAWN_USEVFORK_no_overlap): Likewise.
+	* lib/stdint.in.h (gl_int8_t, gl_uint8_t, gl_int16_t, gl_uint16_t,
+	gl_int32_t, gl_uint32_t, gl_int64_t, gl_uint64_t, int_least8_t,
+	uint_least8_t, int_least16_t, uint_least16_t, int_least32_t,
+	uint_least32_t, int_least64_t, uint_least64_t, gl_int_fast8_t,
+	gl_uint_fast8_t, gl_int_fast16_t, gl_uint_fast16_t, gl_int_fast32_t,
+	gl_uint_fast32_t, int_fast64_t, uint_fast64_t, gl_intptr_t,
+	gl_uintptr_t, intmax_t, uintmax_t, _verify_intmax_size): Likewise.
+	* lib/stdio.in.h (rpl_fseek, rpl_ftell): Likewise.
+	* lib/sys_socket.in.h (sa_family_t, struct sockaddr_storage,
+	socklen_t, rpl_fd_isset): Likewise.
+	* lib/sys_stat.in.h (rpl_mkdir): Likewise.
+	* lib/sys_time.in.h (struct timeval): Likewise.
+	* lib/sys_times.in.h (struct tms): Likewise.
+	* lib/sys_utsname.in.h (struct utsname):
+	* lib/time.in.h (struct timespec, __time_t_must_be_integral): Likewise.
+	* lib/unistd.in.h (getpagesize): Likewise.
+	* lib/wchar.in.h (mbstate_t): Likewise.
+	* lib/wctype.in.h (iswalnum, iswalpha, iswblank, iswcntrl, iswdigit,
+	iswgraph, iswlower, iswprint, iswpunct, iswspace, iswupper, iswxdigit,
+	towlower, towupper): Likewise.
+	Reported by Sam Steingold <sds@gnu.org>.
+
 2011-02-05  Eric Blake  <eblake@redhat.com>
 
 	unsetenv: work around Haiku issues
