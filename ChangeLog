@@ -1,3 +1,9 @@
+2010-11-14  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: rename variable: s/noteworthy/gl_noteworthy_news_/
+	* top/maint.mk (gl_noteworthy_news_): Rename from "noteworthy"
+	and move definition closer to sole use.
+
 2010-11-13  Jim Meyering  <meyering@redhat.com>
 
 	remove autoconf-2.57 work-around requiring AC_PROG_EGREP and AC_PROG_CPP
