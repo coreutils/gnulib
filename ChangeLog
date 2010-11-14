@@ -38,7 +38,8 @@
 	number of bytes of an invalid character.
 	* tests/unistr/test-u8-mbtouc.c (test_safe_function): New function.
 	(main): Invoke it.
-	* tests/unistr/test-u8-mbtouc.h (test_function): Update two test results.
+	* tests/unistr/test-u8-mbtouc.h (test_function): Update two test
+	results.
 	* tests/unistr/test-u8-mbsnlen.c (main): Test various kinds of
 	malformed byte sequences.
 	* modules/unistr/u8-mbtouc (configure.ac): Bump version number.
