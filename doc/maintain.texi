@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate November 12, 2010
+@set lastupdate November 14, 2010
 @c %**end of header
 
 @dircategory GNU organization
@@ -2092,10 +2092,10 @@ more time working on the project, and help cover our infrastructure
 expenses.
 
 If you'd like to make a small donation, please visit @var{url} and do
-it through PayPal.  Since our project isn't a tax-exempt organization,
-we can't offer you a tax deduction, but for all donations over
-@var{amount}, we'd be happy to recognize your contribution on
-@var{another-url}.
+it through @var{payment-service}.  Since our project isn't a
+tax-exempt organization, we can't offer you a tax deduction, but for
+all donations over @var{amount}, we'd be happy to recognize your
+contribution on @var{another-url}.
 
 If you can make a donation large enough to entirely fund a substantial
 change, such as $1000, then we could discuss with you what change we
@@ -2104,6 +2104,10 @@ specific help in exchange.  Write to us about this at @var{address}.
 
 Thanks for your support!
 @end smallexample
+
+We don't recommend any specific payment service.  However, GNU
+developers should not use a service that requires them to sign a
+proprietary software license, such as Google's payment service.
 
 
 @node Free Software Directory
