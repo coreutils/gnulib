@@ -1,3 +1,11 @@
+2010-11-16  Bruce Korb  <bkorb@gnu.org>
+
+	* libposix/bootstrap: generate libposix module file on the fly.
+	* modules/libposix: remove
+	* modules/*: Use pkginclude_HEADERS instead of plain "include".
+	* libposix/lib/Makefile.am: adjust here, too
+	* gnulib-tool: adjust here, too
+
 2010-11-06  Gary V. Vaughan  <gary@gnu.org>
 
 	libposix: vastly simplified bootstrap sanity check
