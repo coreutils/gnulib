@@ -15,7 +15,7 @@ configure.ac:
 gl_POLL_H
 
 Makefile.am:
-nodist_include_HEADERS += poll.h
+nodist_pkgincludedir_HEADERS += poll.h
 
 BUILT_SOURCES += poll.h
 

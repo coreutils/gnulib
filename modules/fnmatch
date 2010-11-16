@@ -24,7 +24,7 @@ configure.ac:
 gl_FUNC_FNMATCH_POSIX
 
 Makefile.am:
-nodist_include_HEADERS += $(FNMATCH_H)
+nodist_pkgincludedir_HEADERS += $(FNMATCH_H)
 EXTRA_HEADERS += fnmatch.h
 
 BUILT_SOURCES += $(FNMATCH_H)

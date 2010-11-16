@@ -14,7 +14,7 @@ configure.ac:
 gl_PTY_H
 
 Makefile.am:
-nodist_include_HEADERS += pty.h
+nodist_pkgincludedir_HEADERS += pty.h
 
 BUILT_SOURCES += pty.h
 

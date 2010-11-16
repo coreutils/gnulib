@@ -22,7 +22,7 @@ gl_FUNC_ICONV_OPEN
 
 Makefile.am:
 iconv_headers = iconv_open-aix.h iconv_open-hpux.h iconv_open-irix.h iconv_open-osf.h iconv_open-solaris.h
-nodist_include_HEADERS += $(iconv_headers)
+nodist_pkgincludedir_HEADERS += $(iconv_headers)
 
 iconv_open-aix.h: iconv_open-aix.gperf
 	$(GPERF) -m 10 $(srcdir)/iconv_open-aix.gperf > $(srcdir)/iconv_open-aix.h-t

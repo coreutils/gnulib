@@ -12,7 +12,7 @@ configure.ac:
 gl_HEADER_ERRNO_H
 
 Makefile.am:
-nodist_include_HEADERS += $(ERRNO_H)
+nodist_pkgincludedir_HEADERS += $(ERRNO_H)
 EXTRA_HEADERS += errno.h
 
 BUILT_SOURCES += $(ERRNO_H)

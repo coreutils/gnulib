@@ -13,7 +13,7 @@ Depends-on:
 configure.ac:
 
 Makefile.am:
-nodist_include_HEADERS += warn-on-use.h
+nodist_pkgincludedir_HEADERS += warn-on-use.h
 
 BUILT_SOURCES += warn-on-use.h
 # The warn-on-use.h that gets inserted into generated .h files is the same as

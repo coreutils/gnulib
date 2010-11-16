@@ -14,7 +14,7 @@ configure.ac:
 gl_TERMIOS_H
 
 Makefile.am:
-nodist_include_HEADERS += termios.h
+nodist_pkgincludedir_HEADERS += termios.h
 
 BUILT_SOURCES += termios.h
 

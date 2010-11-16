@@ -14,7 +14,7 @@ gl_HEADER_NETINET_IN
 AC_PROG_MKDIR_P
 
 Makefile.am:
-nobase_nodist_include_HEADERS += $(NETINET_IN_H)
+nobase_nodist_pkgincludedir_HEADERS += $(NETINET_IN_H)
 EXTRA_HEADERS += netinet/in.h
 
 BUILT_SOURCES += $(NETINET_IN_H)

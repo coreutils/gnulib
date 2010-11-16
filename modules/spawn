@@ -16,7 +16,7 @@ configure.ac:
 gl_SPAWN_H
 
 Makefile.am:
-nodist_include_HEADERS += spawn.h
+nodist_pkgincludedir_HEADERS += spawn.h
 
 BUILT_SOURCES += spawn.h
 

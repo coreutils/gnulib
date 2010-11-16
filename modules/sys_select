@@ -17,7 +17,7 @@ gl_HEADER_SYS_SELECT
 AC_PROG_MKDIR_P
 
 Makefile.am:
-nobase_nodist_include_HEADERS += sys/select.h
+nobase_nodist_pkgincludedir_HEADERS += sys/select.h
 
 BUILT_SOURCES += sys/select.h
 

@@ -13,7 +13,7 @@ configure.ac:
 gl_PTHREAD_CHECK
 
 Makefile.am:
-nodist_include_HEADERS += $(PTHREAD_H)
+nodist_pkgincludedir_HEADERS += $(PTHREAD_H)
 EXTRA_HEADERS += pthread.h
 
 BUILT_SOURCES += $(PTHREAD_H)

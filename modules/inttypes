@@ -17,7 +17,7 @@ configure.ac:
 gl_INTTYPES_H
 
 Makefile.am:
-nodist_include_HEADERS += inttypes.h
+nodist_pkgincludedir_HEADERS += inttypes.h
 
 BUILT_SOURCES += inttypes.h
 

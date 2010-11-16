@@ -16,7 +16,7 @@ configure.ac:
 gl_UNISTD_H
 
 Makefile.am:
-nodist_include_HEADERS += unistd.h
+nodist_pkgincludedir_HEADERS += unistd.h
 
 BUILT_SOURCES += unistd.h
 

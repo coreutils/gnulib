@@ -18,7 +18,7 @@ gl_HEADER_SYS_STAT_H
 AC_PROG_MKDIR_P
 
 Makefile.am:
-nobase_nodist_include_HEADERS += sys/stat.h
+nobase_nodist_pkgincludedir_HEADERS += sys/stat.h
 
 BUILT_SOURCES += sys/stat.h
 

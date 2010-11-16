@@ -15,7 +15,7 @@ configure.ac:
 gl_MATH_H
 
 Makefile.am:
-nodist_include_HEADERS += math.h
+nodist_pkgincludedir_HEADERS += math.h
 
 BUILT_SOURCES += math.h
 

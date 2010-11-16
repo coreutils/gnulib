@@ -12,7 +12,7 @@ configure.ac:
 gl_SCHED_H
 
 Makefile.am:
-nodist_include_HEADERS += $(SCHED_H)
+nodist_pkgincludedir_HEADERS += $(SCHED_H)
 EXTRA_HEADERS += sched.h
 
 BUILT_SOURCES += $(SCHED_H)

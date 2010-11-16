@@ -13,7 +13,7 @@ configure.ac:
 gl_FUNC_ALLOCA
 
 Makefile.am:
-nodist_include_HEADERS += $(ALLOCA_H)
+nodist_pkgincludedir_HEADERS += $(ALLOCA_H)
 EXTRA_HEADERS += alloca.h
 
 BUILT_SOURCES += $(ALLOCA_H)
