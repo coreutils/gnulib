@@ -15,7 +15,7 @@ configure.ac:
 gl_WCTYPE_H
 
 Makefile.am:
-nodist_pkgincludedir_HEADERS += wctype.h
+nodist_pkginclude_HEADERS += wctype.h
 
 BUILT_SOURCES += wctype.h
 

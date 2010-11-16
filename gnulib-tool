@@ -2872,8 +2872,8 @@ func_emit_lib_Makefile_am ()
   echo
   if test -z "$makefile_name"; then
     echo "SUBDIRS ="
-    echo "nodist_include_HEADERS ="
-    echo "nobase_nodist_include_HEADERS ="
+    echo "nodist_pkginclude_HEADERS ="
+    echo "nobase_nodist_pkginclude_HEADERS ="
     echo "noinst_HEADERS ="
     echo "noinst_LIBRARIES ="
     echo "noinst_LTLIBRARIES ="
@@ -2932,7 +2932,7 @@ func_emit_lib_Makefile_am ()
   else
     # Don't install header files when generated library is not installed.
     sed_transform_HEADERS_primaries="\
-        /^\(nobase_\)\{0,1\}nodist_include_HEADERS *=.*$/d
+        /^\(nobase_\)\{0,1\}nodist_pkginclude_HEADERS *=.*$/d
         /^EXTRA_HEADERS *=.*$/d
     "
     # By default, the generated library should not be installed.
@@ -3181,8 +3181,8 @@ func_emit_tests_Makefile_am ()
   if ! $for_test; then
     echo "check_PROGRAMS ="
   fi
-  echo "nodist_include_HEADERS ="
-  echo "nobase_nodist_include_HEADERS ="
+  echo "nodist_pkginclude_HEADERS ="
+  echo "nobase_nodist_pkginclude_HEADERS ="
   echo "noinst_HEADERS ="
   echo "noinst_LIBRARIES ="
   if $use_libtests; then

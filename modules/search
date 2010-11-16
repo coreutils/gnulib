@@ -15,7 +15,7 @@ configure.ac:
 gl_SEARCH_H
 
 Makefile.am:
-nodist_pkgincludedir_HEADERS += search.h
+nodist_pkginclude_HEADERS += search.h
 
 BUILT_SOURCES += search.h
 

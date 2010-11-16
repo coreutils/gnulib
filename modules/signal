@@ -15,7 +15,7 @@ configure.ac:
 gl_SIGNAL_H
 
 Makefile.am:
-nodist_pkgincludedir_HEADERS += signal.h
+nodist_pkginclude_HEADERS += signal.h
 
 BUILT_SOURCES += signal.h
 

@@ -17,7 +17,7 @@ configure.ac:
 gl_WCHAR_H
 
 Makefile.am:
-nodist_pkgincludedir_HEADERS += wchar.h
+nodist_pkginclude_HEADERS += wchar.h
 
 BUILT_SOURCES += wchar.h
 

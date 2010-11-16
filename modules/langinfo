@@ -15,7 +15,7 @@ configure.ac:
 gl_LANGINFO_H
 
 Makefile.am:
-nodist_pkgincludedir_HEADERS += langinfo.h
+nodist_pkginclude_HEADERS += langinfo.h
 
 BUILT_SOURCES += langinfo.h
 

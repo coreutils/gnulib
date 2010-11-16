@@ -14,7 +14,7 @@ configure.ac:
 gl_CTYPE_H
 
 Makefile.am:
-nodist_pkgincludedir_HEADERS += ctype.h
+nodist_pkginclude_HEADERS += ctype.h
 
 BUILT_SOURCES += ctype.h
 

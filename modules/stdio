@@ -19,7 +19,7 @@ configure.ac:
 gl_STDIO_H
 
 Makefile.am:
-nodist_pkgincludedir_HEADERS += stdio.h
+nodist_pkginclude_HEADERS += stdio.h
 
 BUILT_SOURCES += stdio.h
 

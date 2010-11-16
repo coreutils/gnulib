@@ -18,7 +18,7 @@ configure.ac:
 gl_STDLIB_H
 
 Makefile.am:
-nodist_pkgincludedir_HEADERS += stdlib.h
+nodist_pkginclude_HEADERS += stdlib.h
 
 BUILT_SOURCES += stdlib.h
 

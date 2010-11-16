@@ -11,7 +11,7 @@ configure.ac:
 gl_BYTESWAP
 
 Makefile.am:
-nodist_pkgincludedir_HEADERS += $(BYTESWAP_H)
+nodist_pkginclude_HEADERS += $(BYTESWAP_H)
 EXTRA_HEADERS += byteswap.h
 
 BUILT_SOURCES += $(BYTESWAP_H)

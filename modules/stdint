@@ -20,7 +20,7 @@ configure.ac:
 gl_STDINT_H
 
 Makefile.am:
-nodist_pkgincludedir_HEADERS += $(STDINT_H)
+nodist_pkginclude_HEADERS += $(STDINT_H)
 EXTRA_HEADERS += stdint.h
 
 BUILT_SOURCES += $(STDINT_H)

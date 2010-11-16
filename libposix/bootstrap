@@ -2,29 +2,58 @@
 
 PATH=..:$PATH
 
+mkdir tmp
+mkdir tmp/modules
+
+    {   echo alloca
+        posix-modules
+    } | sort -u > tmp/posix-list
+
+    posix_list=$(grep -v '^$' tmp/posix-list)
+
+    cat > tmp/modules/libposix <<- _EOF_
+	Description:
+	Wrap up all the posix modules into an installable libposix.la.
+
+	Files:
+
+	Depends-on:
+	${posix_list}
+
+	configure.ac:
+
+	Makefile.am:
+	lib_LTLIBRARIES = libposix.la
+
+	Include:
+
+	License:
+	LGPL
+
+	Maintainer:
+	Bruce Korb
+	Gary V. Vaughan
+	_EOF_
+
+
+opts='--local-dir=tmp
+	--import
+	--lib=libposix
+	--makefile-name=gnulib.mk
+	--macro-prefix=LIBPOSIX
+	--libtool
+	--no-changelog
+	--symlink
+	--with-tests
+	--with-c++-tests
+	--with-longrunning-tests'
+
 # Bootstrap for autotools.
-gnulib-tool --import --lib=libposix --makefile-name=gnulib.mk \
-  --macro-prefix=LIBPOSIX --libtool --no-changelog --symlink \
-  --with-tests --with-c++-tests --with-longrunning-tests \
-  git-version-gen libposix
+gnulib-tool ${opts} git-version-gen libposix
 
 
 # No need to maintain a Makefile.am just to include gnulib.mk.
 mv tests/gnulib.mk tests/Makefile.am
-
-
-# Sanity check the module list for synchronisation issues.
-{
-    sed_noblanks='/^$/d'
-    posix-modules |sed -e "$sed_noblanks" -e 's|$| posix-modules|'
-    gnulib-tool --extract-dependencies libposix \
-        |sed -e "$sed_noblanks" -e 's|$| libposix|'
-} | awk '_[$1] {delete _[$1]; next}
-               {_[$1]=$2}
-         END   {for (k in _)
-                  printf ("bootstrap: warning: `%s'\'' only appears in %s\n", k, _[k])}' \
-  | sort
-
 
 # Run autotools.
 autoreconf --force --install --verbose --symlink

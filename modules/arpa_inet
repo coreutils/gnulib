@@ -16,7 +16,7 @@ gl_HEADER_ARPA_INET
 AC_PROG_MKDIR_P
 
 Makefile.am:
-nobase_nodist_pkgincludedir_HEADERS += arpa/inet.h
+nobase_nodist_pkginclude_HEADERS += arpa/inet.h
 
 BUILT_SOURCES += arpa/inet.h
 

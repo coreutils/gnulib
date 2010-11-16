@@ -16,7 +16,7 @@ configure.ac:
 gl_HEADER_NETDB
 
 Makefile.am:
-nodist_pkgincludedir_HEADERS += netdb.h
+nodist_pkginclude_HEADERS += netdb.h
 
 BUILT_SOURCES += netdb.h
 

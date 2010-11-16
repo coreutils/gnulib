@@ -15,7 +15,7 @@ gl_SYS_WAIT_H
 AC_PROG_MKDIR_P
 
 Makefile.am:
-nobase_nodist_pkgincludedir_HEADERS += sys/wait.h
+nobase_nodist_pkginclude_HEADERS += sys/wait.h
 
 BUILT_SOURCES += sys/wait.h
 

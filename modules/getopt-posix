@@ -19,7 +19,7 @@ configure.ac:
 gl_FUNC_GETOPT_POSIX
 
 Makefile.am:
-nodist_pkgincludedir_HEADERS += $(GETOPT_H)
+nodist_pkginclude_HEADERS += $(GETOPT_H)
 EXTRA_HEADERS += getopt.h
 
 BUILT_SOURCES += $(GETOPT_H)

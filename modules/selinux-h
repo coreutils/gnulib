@@ -18,7 +18,7 @@ gl_HEADERS_SELINUX_CONTEXT_H
 AC_REQUIRE([AC_C_INLINE])
 
 Makefile.am:
-nobase_nodist_pkgincludedir_HEADERS += selinux/selinux.h
+nobase_nodist_pkginclude_HEADERS += selinux/selinux.h
 
 lib_SOURCES += se-context.in.h se-selinux.in.h
 

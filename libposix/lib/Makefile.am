@@ -3,8 +3,8 @@ SUFFIXES =
 
 EXTRA_DIST =
 EXTRA_HEADERS =
-nodist_include_HEADERS =
-nobase_nodist_include_HEADERS =
+nodist_pkginclude_HEADERS =
+nobase_nodist_pkginclude_HEADERS =
 
 CLEANFILES =
 MOSTLYCLEANDIRS =

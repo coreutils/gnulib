@@ -30,7 +30,7 @@ configure.ac:
 gl_GLOB
 
 Makefile.am:
-nodist_pkgincludedir_HEADERS += $(GLOB_H)
+nodist_pkginclude_HEADERS += $(GLOB_H)
 EXTRA_HEADERS += glob.h
 
 BUILT_SOURCES += $(GLOB_H)

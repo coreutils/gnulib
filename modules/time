@@ -17,7 +17,7 @@ configure.ac:
 gl_HEADER_TIME_H
 
 Makefile.am:
-nodist_pkgincludedir_HEADERS += time.h
+nodist_pkginclude_HEADERS += time.h
 
 BUILT_SOURCES += time.h
 

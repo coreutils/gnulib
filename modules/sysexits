@@ -12,7 +12,7 @@ configure.ac:
 gl_SYSEXITS
 
 Makefile.am:
-nodist_pkgincludedir_HEADERS += $(SYSEXITS_H)
+nodist_pkginclude_HEADERS += $(SYSEXITS_H)
 EXTRA_HEADERS += sysexits.h
 
 BUILT_SOURCES += $(SYSEXITS_H)

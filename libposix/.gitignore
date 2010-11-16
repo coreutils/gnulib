@@ -46,3 +46,6 @@ stamp-h1
 /tests/test-*
 unused-parameter.h
 warn-on-use.h
+/tests
+/tmp
+

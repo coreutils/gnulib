@@ -12,7 +12,7 @@ configure.ac:
 AM_STDBOOL_H
 
 Makefile.am:
-nodist_pkgincludedir_HEADERS += $(STDBOOL_H)
+nodist_pkginclude_HEADERS += $(STDBOOL_H)
 EXTRA_HEADERS += stdbool.h
 
 BUILT_SOURCES += $(STDBOOL_H)

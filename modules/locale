@@ -17,7 +17,7 @@ configure.ac:
 gl_LOCALE_H
 
 Makefile.am:
-nodist_pkgincludedir_HEADERS += locale.h
+nodist_pkginclude_HEADERS += locale.h
 
 BUILT_SOURCES += locale.h
 

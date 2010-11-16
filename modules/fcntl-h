@@ -18,7 +18,7 @@ configure.ac:
 gl_FCNTL_H
 
 Makefile.am:
-nodist_pkgincludedir_HEADERS += fcntl.h
+nodist_pkginclude_HEADERS += fcntl.h
 
 BUILT_SOURCES += fcntl.h
 
