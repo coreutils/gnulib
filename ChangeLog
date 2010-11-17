@@ -1,3 +1,8 @@
+2010-11-17  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: add a URL discussing the no-@acronym policy
+	* top/maint.mk (sc_texinfo_acronym): Add a URL in a comment.
+
 2010-11-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	ftoastr: depend on snprintf, improve comments
