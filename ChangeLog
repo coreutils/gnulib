@@ -1,5 +1,12 @@
 2010-11-17  Bruce Korb  <bkorb@gnu.org>
 
+	* libposix/lib/Makefile.am (lpx-config.h): generate the new header
+	and install it.
+	* libposix/lib/mk-lpx-config-h.sh: script for creating the header
+	by massaging the config.h header.
+
+2010-11-17  Bruce Korb  <bkorb@gnu.org>
+
 	* libposix/mk-tarball: script to make a libposix distribution
 	tarball.
 	* libposix/bootstrap: cleanup and ensure the mkdir's are invoked

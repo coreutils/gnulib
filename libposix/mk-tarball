@@ -47,8 +47,10 @@ func_init()
     git --version >/dev/null 2>&1 \
         || func_die "git is not operational"
 
+    test -d _b && rm -rf _b
+
     case "$*" in
-    *'--clean'* )
+    *'--clean'* | *'--clob'* )
         git clean -f -x -d .
         ;;
     esac
@@ -101,12 +103,12 @@ func_bootstrap()
 
 func_mkdistro()
 {
-    mkdir _b || die mkdir _b
+    mkdir _b               || func_die mkdir _b
     cd _b
-    ../configure || die configure
-    make || die make
-    make distcheck || die make distcheck
-    mv libposix*.tar.gz .. || die cannot move tarball
+    ../configure           || func_die configure
+    make                   || func_die make
+    make distcheck         || func_die make distcheck
+    mv libposix*.tar.gz .. || func_die cannot move tarball
 }
 
 func_init ${1+"$@"}
