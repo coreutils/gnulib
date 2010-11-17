@@ -1,5 +1,11 @@
 2010-11-16  Bruce Korb  <bkorb@gnu.org>
 
+	* tests/test-dprintf-posix2.c (main): call malloc & free before
+	setrlimit under Linux.  Avoid setrlimit/malloc interaction bug.
+	* tests/test-fprintf-posix3.c: ditto
+
+2010-11-16  Bruce Korb  <bkorb@gnu.org>
+
 	* libposix/bootstrap: generate libposix module file on the fly.
 	* modules/libposix: remove
 	* modules/*: Use pkginclude_HEADERS instead of plain "include".

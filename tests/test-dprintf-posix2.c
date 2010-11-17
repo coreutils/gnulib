@@ -64,6 +64,8 @@ main (int argc, char *argv[])
 #endif
   /* On Linux systems, malloc() is limited by RLIMIT_AS.  */
 #ifdef RLIMIT_AS
+  free (malloc (0x88));
+
   if (getrlimit (RLIMIT_AS, &limit) < 0)
     return 77;
   if (limit.rlim_max == RLIM_INFINITY || limit.rlim_max > MAX_ALLOC_TOTAL)
