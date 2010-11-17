@@ -39,12 +39,10 @@ ltmain.sh
 /m4
 missing
 stamp-h1
-/tests/*.c
-/tests/*.h
-/tests/*.mk
-/tests/*.sh
-/tests/test-*
 unused-parameter.h
 warn-on-use.h
 /tests
 /tmp
+_b*
+_i*
+/libposix*.tar.*

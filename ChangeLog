@@ -1,4 +1,13 @@
-2010-11-16  Bruce Korb  <bkorb@gnu.org>
+2010-11-17  Bruce Korb  <bkorb@gnu.org>
+
+	* libposix/mk-tarball: script to make a libposix distribution
+	tarball.
+	* libposix/bootstrap: cleanup and ensure the mkdir's are invoked
+	only when needed.
+	* libposix/configure.ac (m4_esyscmd): fix git version suffix
+	* libposix/lib/Makefile.am (HEADERS): include version info
+
+2010-11-17  Bruce Korb  <bkorb@gnu.org>
 
 	* tests/test-dprintf-posix2.c (main): call malloc & free before
 	setrlimit under Linux.  Avoid setrlimit/malloc interaction bug.

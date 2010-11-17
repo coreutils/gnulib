@@ -2,16 +2,23 @@
 
 PATH=..:$PATH
 
-mkdir tmp
-mkdir tmp/modules
+if test -d tmp
+then
+    if test -d tmp/modules
+    then rm -f tmp/modules/* >/dev/null 2>&1
+    else mkdir tmp/modules
+    fi
+else
+    mkdir tmp tmp/modules
+fi
 
-    {   echo alloca
-        posix-modules
-    } | sort -u > tmp/posix-list
+{   echo alloca
+    posix-modules
+} | sort -u > tmp/posix-list
 
-    posix_list=$(grep -v '^$' tmp/posix-list)
+posix_list=`grep -v '^$' tmp/posix-list`
 
-    cat > tmp/modules/libposix <<- _EOF_
+cat > tmp/modules/libposix <<- _EOF_
 	Description:
 	Wrap up all the posix modules into an installable libposix.la.
 
