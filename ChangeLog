@@ -1,3 +1,9 @@
+2010-11-17  Paul Eggert  <eggert@cs.ucla.edu>
+
+	ftoastr: new module, for lossless conversion of floats to short strings
+	* lib/ftoastr.h, lib/ftoastr.c, lib/dtoastr.c, lib/ldtoastr.c:
+	* modules/ftoastr: New files.
+
 2010-11-15  Paul Eggert  <eggert@cs.ucla.edu>
 
 	bootstrap: port to Solaris sed
