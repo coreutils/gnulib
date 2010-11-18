@@ -1,5 +1,12 @@
 2010-11-17  Paul Eggert  <eggert@cs.ucla.edu>
 
+	intprops: new macro INT_BITS_STRLEN_BOUND
+	* lib/intprops.h (INT_BITS_STRLEN_BOUND): New macro, needed by
+	ftoastr.h.  This exposes an internal of intprops.h that was formerly
+	not exposed.  Also, it uses a slightly tighter bound than before;
+	though this makes no practical difference, we might as well be as
+	tight as we easily can.
+
 	ftoastr: new module, for lossless conversion of floats to short strings
 	* lib/ftoastr.h, lib/ftoastr.c, lib/dtoastr.c, lib/ldtoastr.c:
 	* modules/ftoastr: New files.
