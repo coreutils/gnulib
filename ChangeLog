@@ -1,3 +1,10 @@
+2010-11-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	ftoastr: don't assume snprintf
+	* lib/ftoastr.c (snprintf) [! GNULIB_SNPRINTF_POSIX]:
+	Implement a subset of snprintf here, by using sprintf safely.
+	* modules/ftoastr (Depends-on): Remove snprintf.
+
 2010-11-19  Jim Meyering  <meyering@redhat.com>
 
 	test-rename.h: fix compilation failure

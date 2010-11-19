@@ -17,6 +17,14 @@
 
 /* Written by Paul Eggert.  */
 
+/* This code can misbehave on some buggy or older platforms, when
+   operating on arguments on floating types other than 'double', or
+   when given unusual combinations of options.  Gnulib's
+   snprintf-posix module works around many of these problems.
+
+   This code relies on sprintf, strtod, etc. operating accurately;
+   otherwise, the resulting strings could be inaccurate or too long.  */
+
 #include "ftoastr.h"
 
 #include "intprops.h"
@@ -54,6 +62,34 @@
 #if LENGTH != 2 && ! HAVE_C99_STRTOLD
 # undef STRTOF
 # define STRTOF strtod
+#endif
+
+/* On hosts where it's not known that snprintf works, use sprintf to
+   implement the subset needed here.  Typically BUFSIZE is big enough
+   and there's little performance hit.  */
+#if ! GNULIB_SNPRINTF_POSIX
+# undef snprintf
+# define snprintf ftoastr_snprintf
+static int
+ftoastr_snprintf (char *buf, size_t bufsize, char const *format,
+                  int width, int prec, FLOAT x)
+{
+  char width_0_buffer[LENGTH == 1 ? FLT_BUFSIZE_BOUND
+                      : LENGTH == 2 ? DBL_BUFSIZE_BOUND
+                      : LDBL_BUFSIZE_BOUND];
+  int n = width;
+  if (bufsize < sizeof width_0_buffer)
+    {
+      n = sprintf (width_0_buffer, format, 0, prec, x);
+      if (n < 0)
+        return n;
+      if (n < width)
+        n = width;
+    }
+  if (n < bufsize)
+    n = sprintf (buf, format, width, prec, x);
+  return n;
+}
 #endif
 
 int
