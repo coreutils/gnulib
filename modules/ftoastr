@@ -6,11 +6,13 @@ lib/ftoastr.h
 lib/ftoastr.c
 lib/dtoastr.c
 lib/ldtoastr.c
+m4/c-strtod.m4
 
 Depends-on:
 intprops
 
 configure.ac:
+AC_REQUIRE([gl_C99_STRTOLD])
 
 Makefile.am:
 lib_SOURCES += ftoastr.h ftoastr.c dtoastr.c ldtoastr.c

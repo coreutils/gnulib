@@ -48,6 +48,14 @@
 # define STRTOF strtof
 #endif
 
+/* On pre-C99 hosts, approximate strtof and strtold with strtod.  This
+   may generate one or two extra digits, but that's better than not
+   working at all.  Assume that strtof works if strtold does.  */
+#if LENGTH != 2 && ! HAVE_C99_STRTOLD
+# undef STRTOF
+# define STRTOF strtod
+#endif
+
 int
 FTOASTR (char *buf, size_t bufsize, int flags, int width, FLOAT x)
 {

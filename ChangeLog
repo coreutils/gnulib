@@ -1,3 +1,13 @@
+2010-11-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	ftoastr: port to hosts lacking strtof and strtold
+	Problem reported by Bruno Haible in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2010-11/msg00242.html>.
+	* lib/ftoastr.c (STRTOF): Define to strtod if in a pre-C99
+	environment and strtold (and presumably strtof) are not available.
+	* modules/ftoastr (Files): Add m4/c-strtod.m4.
+	(configure.ac): Require gl_C99_STRTOLD.
+
 2010-11-18  Bruno Haible  <bruno@clisp.org>
 
 	c-strtold: Avoid link error on AIX 7.
