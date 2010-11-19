@@ -783,6 +783,7 @@ test_rename (int (*func) (char const *, char const *), bool print)
       ASSERT (lstat (BASE "link1", &st) == 0);
       ASSERT (S_ISLNK (st.st_mode));
     }
+  }
   /* Files present here:
        {BASE}file
        {BASE}link1 -> {BASE}file

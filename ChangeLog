@@ -1,3 +1,8 @@
+2010-11-19  Jim Meyering  <meyering@redhat.com>
+
+	test-rename.h: fix compilation failure
+	* tests/test-rename.h (test_rename): Add omitted "}".
+
 2010-11-17  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: add a URL discussing the no-@acronym policy
