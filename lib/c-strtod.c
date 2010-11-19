@@ -43,7 +43,7 @@
 # define STRTOD strtod
 #endif
 
-#ifdef LC_ALL_MASK
+#if defined LC_ALL_MASK && (LONG ? HAVE_STRTOLD_L : HAVE_STRTOD_L)
 
 /* Cache for the C locale object.
    Marked volatile so that different threads see the same value
@@ -67,7 +67,7 @@ C_STRTOD (char const *nptr, char **endptr)
 {
   DOUBLE r;
 
-#ifdef LC_ALL_MASK
+#if defined LC_ALL_MASK && (LONG ? HAVE_STRTOLD_L : HAVE_STRTOD_L)
 
   locale_t locale = c_locale ();
   if (!locale)

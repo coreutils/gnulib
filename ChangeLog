@@ -1,3 +1,11 @@
+2010-11-18  Bruno Haible  <bruno@clisp.org>
+
+	c-strtold: Avoid link error on AIX 7.
+	* lib/c-strtod.c: Test also HAVE_STRTOD_L or HAVE_STRTOLD_L.
+	* m4/c-strtod.m4 (gl_C_STRTOD): Test whether strtod_l exists.
+	(gl_C_STRTOLD): Test whether strtold_l exists.
+	Reported by Albert Chin <bug-gnulib@mlists.thewrittenword.com>.
+
 2010-11-17  Paul Eggert  <eggert@cs.ucla.edu>
 
 	intprops: new macro INT_BITS_STRLEN_BOUND
