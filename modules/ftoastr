@@ -10,6 +10,7 @@ m4/c-strtod.m4
 
 Depends-on:
 intprops
+snprintf
 
 configure.ac:
 AC_REQUIRE([gl_C99_STRTOLD])

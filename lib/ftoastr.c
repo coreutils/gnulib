@@ -64,7 +64,8 @@ FTOASTR (char *buf, size_t bufsize, int flags, int width, FLOAT x)
 
      Florian Loitsch, Printing floating-point numbers quickly and accurately
      with integers.  ACM SIGPLAN notices 46, 6 (June 2010), 233-243
-     <http://dx.doi.org/10.1145/1809028.1806623>.  */
+     <http://dx.doi.org/10.1145/1809028.1806623>; also see the
+     2010-03-21 draft <http://florian.loitsch.com/tmp/article.pdf>.  */
 
   char format[sizeof "%-+ 0*.*Lg"];
   FLOAT abs_x = x < 0 ? -x : x;

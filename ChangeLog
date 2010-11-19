@@ -1,5 +1,13 @@
 2010-11-18  Paul Eggert  <eggert@cs.ucla.edu>
 
+	ftoastr: depend on snprintf, improve comments
+	* lib/ftoastr.c: Also mention Loitsch's draft.
+	* lib/ftoastr.h: Require WIDTH to be nonnegative.  This isn't
+	needed in the current implementation, but it might simplify
+	speeding up the code later.
+	* modules/ftoastr: Depend on snprintf; this improves portability.
+	Suggested by Bruno Haible in the same email.
+
 	ftoastr: port to hosts lacking strtof and strtold
 	Problem reported by Bruno Haible in
 	<http://lists.gnu.org/archive/html/bug-gnulib/2010-11/msg00242.html>.

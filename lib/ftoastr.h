@@ -26,8 +26,8 @@
 /* Store into BUF (of size BUFSIZE) an accurate minimal-precision
    string representation of a floating point number.  FLAGS affect the
    formatting of the number.  Pad the output string with spaces as
-   necessary to width WIDTH bytes, in the style of printf.  X is the
-   floating-point number to be converted.
+   necessary to width WIDTH bytes, in the style of printf.  WIDTH must
+   be nonnegative.  X is the floating-point number to be converted.
 
    Return the number of bytes stored into BUF, not counting the
    terminating null.  However, do not overrun BUF: if BUF is too
