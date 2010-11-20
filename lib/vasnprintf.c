@@ -4847,8 +4847,9 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                 fbp[3] = '\0';
 # else
                 /* On glibc2 systems from glibc >= 2.3 - probably also older
-                   ones - we know that snprintf's returns value conforms to
-                   ISO C 99: the gl_SNPRINTF_DIRECTIVE_N test passes.
+                   ones - we know that snprintf's return value conforms to
+                   ISO C 99: the tests gl_SNPRINTF_RETVAL_C99 and
+                   gl_SNPRINTF_TRUNCATION_C99 pass.
                    Therefore we can avoid using %n in this situation.
                    On glibc2 systems from 2004-10-18 or newer, the use of %n
                    in format strings in writable memory may crash the program
