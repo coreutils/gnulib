@@ -1,3 +1,15 @@
+2010-11-20  Joel E. Denny  <joeldenny@joeldenny.org>
+
+	bootstrap: add bootstrap_sync option.
+	See discussion at
+	<http://lists.gnu.org/archive/html/bug-gnulib/2010-10/msg00369.html>,
+	<http://lists.gnu.org/archive/html/bug-gnulib/2010-11/msg00200.html>.
+	* build-aux/bootstrap: Accept --bootstrap-sync to update
+	bootstrap if it is not identical to the local gnulib's
+	bootstrap.  Accept bootstrap_sync=true in bootstrap.conf to
+	enable this by default.  Accept --no-bootstrap-sync to disable
+	it.
+
 2010-11-20  Bruno Haible  <bruno@clisp.org>
 
 	Ensure that <features.h> is included before __GLIBC__ is tested.
