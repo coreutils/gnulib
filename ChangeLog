@@ -1,5 +1,34 @@
 2010-11-20  Bruno Haible  <bruno@clisp.org>
 
+	Ensure that <features.h> is included before __GLIBC__ is tested.
+	* lib/printf-parse.h: Include <features.h>.
+	* m4/vasnprintf.m4 (gl_PREREQ_PRINTF_PARSE): Require gl_FEATURES_H.
+	Reported by Mike Frysinger <vapier@gentoo.org>.
+
+	Ensure that <features.h> is included before __GLIBC__ is tested.
+	* lib/wchar.in.h: Include <features.h>.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Require gl_FEATURES_H.
+	* modules/wchar (Makefile.am): Substitute HAVE_FEATURES_H.
+	Reported by Mike Frysinger <vapier@gentoo.org>.
+
+	Ensure that <features.h> is included before __GLIBC__ is tested.
+	* lib/arpa_inet.in.h: Include <features.h>.
+	* m4/arpa_inet_h.m4 (gl_HEADER_ARPA_INET): Require gl_FEATURES_H.
+	* modules/arpa_inet (Makefile.am): Substitute HAVE_FEATURES_H.
+	Reported by Mike Frysinger <vapier@gentoo.org>.
+
+	Ensure that <features.h> is included before __GLIBC__ is tested.
+	* build-aux/link-warning.h: Include <features.h>.
+	* modules/link-warning (configure.ac): Require gl_FEATURES_H.
+	(Makefile.am): Substitute HAVE_FEATURES_H into link-warning.h.
+	Reported by Mike Frysinger <vapier@gentoo.org>.
+
+	Ensure that <features.h> is included before __GLIBC__ is tested.
+	* m4/gnulib-common.m4 (gl_FEATURES_H): New macro.
+	Reported by Mike Frysinger <vapier@gentoo.org>.
+
+2010-11-20  Bruno Haible  <bruno@clisp.org>
+
 	memmem: Fix autoconf test.
 	* m4/memmem.m4 (gl_FUNC_MEMMEM): Test HAVE_DECL_MEMMEM, not HAVE_MEMMEM.
 

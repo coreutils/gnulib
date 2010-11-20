@@ -15,6 +15,10 @@
    You should have received a copy of the GNU Lesser General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
+#if @HAVE_FEATURES_H@
+# include <features.h> /* for __GLIBC__, __UCLIBC__ */
+#endif
+
 /* GL_LINK_WARNING("literal string") arranges to emit the literal string as
    a linker warning on most glibc systems.
    We use a linker warning rather than a preprocessor warning, because

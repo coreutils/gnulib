@@ -7,7 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 dnl Written by Eric Blake.
 
-# wchar_h.m4 serial 34
+# wchar_h.m4 serial 35
 
 AC_DEFUN([gl_WCHAR_H],
 [
@@ -25,6 +25,8 @@ AC_DEFUN([gl_WCHAR_H],
     HAVE_WCHAR_H=0
   fi
   AC_SUBST([HAVE_WCHAR_H])
+
+  AC_REQUIRE([gl_FEATURES_H])
 
   AC_REQUIRE([gt_TYPE_WINT_T])
   if test $gt_cv_c_wint_t = yes; then
