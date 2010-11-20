@@ -1,4 +1,4 @@
-# memmem.m4 serial 18
+# memmem.m4 serial 19
 dnl Copyright (C) 2002, 2003, 2004, 2007, 2008, 2009, 2010 Free Software
 dnl Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
@@ -64,7 +64,7 @@ dnl Additionally, check that memmem is efficient and handles empty needles.
 AC_DEFUN([gl_FUNC_MEMMEM],
 [
   AC_REQUIRE([gl_FUNC_MEMMEM_SIMPLE])
-  if test $HAVE_MEMMEM = 1 && test $REPLACE_MEMMEM = 0; then
+  if test $HAVE_DECL_MEMMEM = 1 && test $REPLACE_MEMMEM = 0; then
     AC_CACHE_CHECK([whether memmem works in linear time],
       [gl_cv_func_memmem_works_fast],
       [AC_RUN_IFELSE([AC_LANG_PROGRAM([[

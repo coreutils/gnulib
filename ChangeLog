@@ -1,5 +1,10 @@
 2010-11-20  Bruno Haible  <bruno@clisp.org>
 
+	memmem: Fix autoconf test.
+	* m4/memmem.m4 (gl_FUNC_MEMMEM): Test HAVE_DECL_MEMMEM, not HAVE_MEMMEM.
+
+2010-11-20  Bruno Haible  <bruno@clisp.org>
+
 	Port to uClibc.
 	* lib/relocatable.c (find_shared_library_fullname): Treat uClibc like
 	glibc.
