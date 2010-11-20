@@ -140,7 +140,9 @@ unicode_to_mb (unsigned int code,
 
       /* Avoid glibc-2.1 bug and Solaris 7 bug.  */
 # if defined _LIBICONV_VERSION \
-    || !((__GLIBC__ - 0 == 2 && __GLIBC_MINOR__ - 0 <= 1) || defined __sun)
+    || !(((__GLIBC__ - 0 == 2 && __GLIBC_MINOR__ - 0 <= 1) \
+          && !defined __UCLIBC__) \
+         || defined __sun)
 
       /* Get back to the initial shift state.  */
       res = iconv (utf8_to_local, NULL, NULL, &outptr, &outbytesleft);

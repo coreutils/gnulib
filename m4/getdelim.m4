@@ -1,4 +1,4 @@
-# getdelim.m4 serial 6
+# getdelim.m4 serial 7
 
 dnl Copyright (C) 2005-2007, 2009-2010 Free Software Foundation, Inc.
 dnl
@@ -57,7 +57,7 @@ AC_DEFUN([gl_FUNC_GETDELIM],
          [
 #include <features.h>
 #ifdef __GNU_LIBRARY__
- #if (__GLIBC__ >= 2)
+ #if (__GLIBC__ >= 2) && !defined __UCLIBC__
   Lucky GNU user
  #endif
 #endif

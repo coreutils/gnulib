@@ -87,7 +87,7 @@ _GL_CXXALIAS_SYS_CAST2 (memchr,
                         void *, (void const *__s, int __c, size_t __n),
                         void const *, (void const *__s, int __c, size_t __n));
 # endif
-# if __GLIBC__ == 2 && __GLIBC_MINOR__ >= 10 \
+# if ((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 10) && !defined __UCLIBC__) \
      && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
 _GL_CXXALIASWARN1 (memchr, void *, (void *__s, int __c, size_t __n));
 _GL_CXXALIASWARN1 (memchr, void const *,
@@ -172,7 +172,7 @@ _GL_FUNCDECL_SYS (memrchr, void *, (void const *, int, size_t)
 _GL_CXXALIAS_SYS_CAST2 (memrchr,
                         void *, (void const *, int, size_t),
                         void const *, (void const *, int, size_t));
-# if __GLIBC__ == 2 && __GLIBC_MINOR__ >= 10 \
+# if ((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 10) && !defined __UCLIBC__) \
      && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
 _GL_CXXALIASWARN1 (memrchr, void *, (void *, int, size_t));
 _GL_CXXALIASWARN1 (memrchr, void const *, (void const *, int, size_t));
@@ -202,7 +202,7 @@ _GL_FUNCDECL_SYS (rawmemchr, void *, (void const *__s, int __c_in)
 _GL_CXXALIAS_SYS_CAST2 (rawmemchr,
                         void *, (void const *__s, int __c_in),
                         void const *, (void const *__s, int __c_in));
-# if __GLIBC__ == 2 && __GLIBC_MINOR__ >= 10 \
+# if ((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 10) && !defined __UCLIBC__) \
      && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
 _GL_CXXALIASWARN1 (rawmemchr, void *, (void *__s, int __c_in));
 _GL_CXXALIASWARN1 (rawmemchr, void const *, (void const *__s, int __c_in));
@@ -293,7 +293,7 @@ _GL_FUNCDECL_SYS (strchrnul, char *, (char const *__s, int __c_in)
 _GL_CXXALIAS_SYS_CAST2 (strchrnul,
                         char *, (char const *__s, int __c_in),
                         char const *, (char const *__s, int __c_in));
-# if __GLIBC__ == 2 && __GLIBC_MINOR__ >= 10 \
+# if ((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 10) && !defined __UCLIBC__) \
      && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
 _GL_CXXALIASWARN1 (strchrnul, char *, (char *__s, int __c_in));
 _GL_CXXALIASWARN1 (strchrnul, char const *, (char const *__s, int __c_in));
@@ -439,7 +439,7 @@ _GL_FUNCDECL_SYS (strpbrk, char *, (char const *__s, char const *__accept)
 _GL_CXXALIAS_SYS_CAST2 (strpbrk,
                         char *, (char const *__s, char const *__accept),
                         const char *, (char const *__s, char const *__accept));
-# if __GLIBC__ == 2 && __GLIBC_MINOR__ >= 10 \
+# if ((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 10) && !defined __UCLIBC__) \
      && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
 _GL_CXXALIASWARN1 (strpbrk, char *, (char *__s, char const *__accept));
 _GL_CXXALIASWARN1 (strpbrk, char const *,
@@ -541,7 +541,7 @@ _GL_CXXALIAS_SYS_CAST2 (strstr,
                         char *, (const char *haystack, const char *needle),
                         const char *, (const char *haystack, const char *needle));
 # endif
-# if __GLIBC__ == 2 && __GLIBC_MINOR__ >= 10 \
+# if ((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 10) && !defined __UCLIBC__) \
      && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
 _GL_CXXALIASWARN1 (strstr, char *, (char *haystack, const char *needle));
 _GL_CXXALIASWARN1 (strstr, const char *,
@@ -590,7 +590,7 @@ _GL_CXXALIAS_SYS_CAST2 (strcasestr,
                         char *, (const char *haystack, const char *needle),
                         const char *, (const char *haystack, const char *needle));
 # endif
-# if __GLIBC__ == 2 && __GLIBC_MINOR__ >= 10 \
+# if ((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 10) && !defined __UCLIBC__) \
      && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
 _GL_CXXALIASWARN1 (strcasestr, char *, (char *haystack, const char *needle));
 _GL_CXXALIASWARN1 (strcasestr, const char *,

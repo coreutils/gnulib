@@ -1,5 +1,5 @@
-# arpa_inet_h.m4 serial 8
-dnl Copyright (C) 2006, 2008, 2009, 2010 Free Software Foundation, Inc.
+# arpa_inet_h.m4 serial 9
+dnl Copyright (C) 2006, 2008-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -26,7 +26,7 @@ AC_DEFUN([gl_HEADER_ARPA_INET],
   dnl corresponding gnulib module is not in use.
   gl_WARN_ON_USE_PREPARE([[
 /* On some systems, this header is not self-consistent.  */
-#ifndef __GLIBC__
+#if !(defined __GLIBC__ || defined __UCLIBC__)
 # include <sys/socket.h>
 #endif
 #include <arpa/inet.h>

@@ -21,7 +21,7 @@
 /* The glibc/gnulib implementation of getopt supports setting optind =
    0, but not all other implementations do.  This matters for getopt.
    But for getopt_long, we require GNU compatibility.  */
-#if defined __GETOPT_PREFIX || (__GLIBC__ >= 2)
+#if defined __GETOPT_PREFIX || (__GLIBC__ >= 2 && !defined __UCLIBC__)
 # define OPTIND_MIN 0
 #elif HAVE_DECL_OPTRESET
 # define OPTIND_MIN (optreset = 1)

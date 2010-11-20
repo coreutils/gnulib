@@ -3659,7 +3659,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   }
 #endif
 
-#if __GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2)
+#if (__GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2)) && !defined __UCLIBC__
   /* Test that the 'I' flag is supported.  */
   {
     size_t length;

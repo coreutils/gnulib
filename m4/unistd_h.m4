@@ -1,4 +1,4 @@
-# unistd_h.m4 serial 46
+# unistd_h.m4 serial 47
 dnl Copyright (C) 2006-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -27,7 +27,7 @@ AC_DEFUN([gl_UNISTD_H],
   dnl corresponding gnulib module is not in use.
   gl_WARN_ON_USE_PREPARE([[#include <unistd.h>
 /* Some systems declare various items in the wrong headers.  */
-#ifndef __GLIBC__
+#if !(defined __GLIBC__ && !defined __UCLIBC__)
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>

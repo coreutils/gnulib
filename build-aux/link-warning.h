@@ -24,7 +24,7 @@
      Testing __GLIBC__ is sufficient for asserting that GNU ld is in use.
      Testing __ELF__ guarantees the ELF object format.
      Testing __GNUC__ is necessary for the compound expression syntax.  */
-# if defined __GLIBC__ && defined __ELF__ && defined __GNUC__
+# if (defined __GLIBC__ || defined __UCLIBC__) && defined __ELF__ && defined __GNUC__
 #  define GL_LINK_WARNING(message) \
      GL_LINK_WARNING1 (__FILE__, __LINE__, message)
 #  define GL_LINK_WARNING1(file, line, message) \

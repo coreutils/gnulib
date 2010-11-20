@@ -24,7 +24,7 @@
 
 #include <errno.h>
 
-#if HAVE_DECL_STRERROR_R && !(__GLIBC__ >= 2) && !EXTEND_STRERROR_R
+#if HAVE_DECL_STRERROR_R && !(__GLIBC__ >= 2 || defined __UCLIBC__) && !EXTEND_STRERROR_R
 
 /* The system's strerror_r function is OK, except that its third argument
    is 'int', not 'size_t'.  */
@@ -90,7 +90,7 @@ strerror_r (int errnum, char *buf, size_t buflen)
   return (ret < 0 ? errno : ret);
 }
 
-#elif __GLIBC__ >= 2 && HAVE___XPG_STRERROR_R /* glibc >= 2.3.4 */ && !EXTEND_STRERROR_R
+#elif (__GLIBC__ >= 2 || defined __UCLIBC__) && HAVE___XPG_STRERROR_R /* glibc >= 2.3.4 */ && !EXTEND_STRERROR_R
 
 int
 strerror_r (int errnum, char *buf, size_t buflen)
@@ -101,7 +101,7 @@ strerror_r (int errnum, char *buf, size_t buflen)
   return (ret < 0 ? errno : 0);
 }
 
-#else /* (__GLIBC__ >= 2 ? !HAVE___XPG_STRERROR_R : !HAVE_DECL_STRERROR_R) || EXTEND_STRERROR_R */
+#else /* (__GLIBC__ >= 2 || defined __UCLIBC__ ? !HAVE___XPG_STRERROR_R : !HAVE_DECL_STRERROR_R) || EXTEND_STRERROR_R */
 
 # include "glthread/lock.h"
 

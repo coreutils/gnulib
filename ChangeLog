@@ -1,5 +1,49 @@
 2010-11-20  Bruno Haible  <bruno@clisp.org>
 
+	Port to uClibc.
+	* lib/relocatable.c (find_shared_library_fullname): Treat uClibc like
+	glibc.
+	* lib/strerror_r.c: Likewise.
+	* m4/arpa_inet_h.m4 (gl_HEADER_ARPA_INET): Likewise.
+	* m4/duplocale.m4 (gl_FUNC_DUPLOCALE): Likewise.
+	* m4/fsusage.m4 (gl_FILE_SYSTEM_USAGE): Likewise.
+	* m4/glibc21.m4 (gl_GLIBC21): Likewise.
+	* tests/test-sigaction.c (handler, main): Likewise.
+	* lib/localename.c (gl_locale_name_thread_unsafe, HAVE_LOCALE_NULL):
+	Treat uClibc like a non-glibc platform.
+	* lib/propername.c (proper_name_utf8): Likewise.
+	* lib/spawn.in.h: Likewise.
+	* lib/striconv.c (mem_cd_iconv, str_cd_iconv, str_iconv): Likewise.
+	* lib/striconveh.c (iconveh_open, iconv_carefully, iconv_carefully_1,
+	mem_cd_iconveh_internal): Likewise.
+	* lib/striconveha.c (mem_iconveha, str_iconveha): Likewise.
+	* lib/string.in.h (memchr, memrchr, rawmemchr, strchrnul, strpbrk,
+	strstr, strcasestr): Likewise.
+	* lib/unicodeio.c (unicode_to_mb): Likewise.
+	* m4/getdelim.m4 (gl_FUNC_GETDELIM): Likewise.
+	* m4/getline.m4 (gl_FUNC_GETLINE): Likewise.
+	* m4/glibc2.m4 (gt_GLIBC2): Likewise.
+	* m4/iconv_open.m4 (gl_FUNC_ICONV_OPEN): Likewise.
+	* m4/memmem.m4 (gl_FUNC_MEMMEM_SIMPLE, gl_FUNC_MEMMEM): Likewise.
+	* m4/printf.m4 (gl_PRINTF_DIRECTIVE_A): Likewise.
+	* m4/strcasestr.m4 (gl_FUNC_STRCASESTR_SIMPLE, gl_FUNC_STRCASESTR):
+	Likewise.
+	* m4/strstr.m4 (gl_FUNC_STRSTR_SIMPLE, gl_FUNC_STRSTR): Likewise.
+	* m4/strtod.m4 (gl_FUNC_STRTOD): Likewise.
+	* m4/sys_ioctl_h.m4 (gl_SYS_IOCTL_H): Likewise.
+	* m4/sys_select_h.m4 (gl_HEADER_SYS_SELECT): Likewise.
+	* m4/sys_socket_h.m4 (gl_HEADER_SYS_SOCKET): Likewise.
+	* m4/sys_times_h.m4 (gl_SYS_TIMES_H): Likewise.
+	* m4/unistd_h.m4 (gl_UNISTD_H): Likewise.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Likewise.
+	* tests/test-getopt.h (OPTIND_MIN): Likewise.
+	* tests/test-striconveha.c (main): Likewise.
+	* doc/posix-functions/getdelim.texi: Mention an uClibc bug.
+	* doc/posix-functions/getline.texi: Likewise.
+	Reported by Mike Frysinger <vapier@gentoo.org>.
+
+2010-11-20  Bruno Haible  <bruno@clisp.org>
+
 	nproc: Fix condition.
 	* lib/nproc.c: Test HAVE_PTHREAD_GETAFFINITY_NP, not
 	HAVE_PTHREAD_AFFINITY_NP.

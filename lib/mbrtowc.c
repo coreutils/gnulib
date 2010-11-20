@@ -91,7 +91,7 @@ mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
 
     /* Here m > 0.  */
 
-# if __GLIBC__
+# if __GLIBC__ || defined __UCLIBC__
     /* Work around bug <http://sourceware.org/bugzilla/show_bug.cgi?id=9674> */
     mbtowc (NULL, NULL, 0);
 # endif

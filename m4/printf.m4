@@ -1,4 +1,4 @@
-# printf.m4 serial 35
+# printf.m4 serial 36
 dnl Copyright (C) 2003, 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -533,7 +533,7 @@ int main ()
              AC_EGREP_CPP([BZ2908], [
                #include <features.h>
                #ifdef __GNU_LIBRARY__
-                #if (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 5) || (__GLIBC__ > 2)
+                #if ((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 5) || (__GLIBC__ > 2)) && !defined __UCLIBC__
                  BZ2908
                 #endif
                #endif

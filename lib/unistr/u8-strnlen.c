@@ -25,7 +25,7 @@
 /* Specification.  */
 #include "unistr.h"
 
-#if __GLIBC__ >= 2
+#if __GLIBC__ >= 2 || defined __UCLIBC__
 
 # include <string.h>
 

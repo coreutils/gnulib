@@ -1,5 +1,5 @@
 # Configure a replacement for <sys/times.h>.
-# serial 6
+# serial 7
 
 # Copyright (C) 2008, 2009, 2010 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -30,7 +30,7 @@ AC_DEFUN([gl_SYS_TIMES_H],
   dnl corresponding gnulib module is not in use.
   gl_WARN_ON_USE_PREPARE([[
 /* Some systems have incomplete headers.  */
-#ifndef __GLIBC__
+#if !(defined __GLIBC__ && !defined __UCLIBC__)
 # include <time.h>
 #endif
 #include <sys/times.h>

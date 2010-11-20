@@ -1,4 +1,4 @@
-# strstr.m4 serial 10
+# strstr.m4 serial 11
 dnl Copyright (C) 2008, 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -31,7 +31,8 @@ AC_DEFUN([gl_FUNC_STRSTR_SIMPLE],
            [
 #ifdef __GNU_LIBRARY__
  #include <features.h>
- #if (__GLIBC__ == 2 && __GLIBC_MINOR__ > 12) || (__GLIBC__ > 2)
+ #if ((__GLIBC__ == 2 && __GLIBC_MINOR__ > 12) || (__GLIBC__ > 2)) \
+     && !defined __UCLIBC__
   Lucky user
  #endif
 #elif defined __CYGWIN__
@@ -94,7 +95,8 @@ static void quit (int sig) { exit (sig + 128); }
            [
 #include <features.h>
 #ifdef __GNU_LIBRARY__
- #if (__GLIBC__ == 2 && __GLIBC_MINOR__ > 12) || (__GLIBC__ > 2)
+ #if ((__GLIBC__ == 2 && __GLIBC_MINOR__ > 12) || (__GLIBC__ > 2)) \
+     && !defined __UCLIBC__
   Lucky user
  #endif
 #endif

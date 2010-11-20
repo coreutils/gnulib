@@ -1,4 +1,4 @@
-# iconv_open.m4 serial 8
+# iconv_open.m4 serial 9
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -16,7 +16,7 @@ AC_DEFUN([gl_FUNC_ICONV_OPEN],
     dnl We know that GNU libiconv and GNU libc do.
     AC_EGREP_CPP([gnu_iconv], [
       #include <iconv.h>
-      #if defined _LIBICONV_VERSION || defined __GLIBC__
+      #if defined _LIBICONV_VERSION || (defined __GLIBC__ && !defined __UCLIBC__)
        gnu_iconv
       #endif
       ], [gl_func_iconv_gnu=yes], [gl_func_iconv_gnu=no])

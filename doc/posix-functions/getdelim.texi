@@ -22,4 +22,7 @@ FreeBSD 8.0.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This function has quadratic running time for long lines on some platforms:
+uClibc 0.9.31.
 @end itemize

@@ -1,4 +1,4 @@
-# memmem.m4 serial 17
+# memmem.m4 serial 18
 dnl Copyright (C) 2002, 2003, 2004, 2007, 2008, 2009, 2010 Free Software
 dnl Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
@@ -35,7 +35,8 @@ AC_DEFUN([gl_FUNC_MEMMEM_SIMPLE],
            [
 #ifdef __GNU_LIBRARY__
  #include <features.h>
- #if (__GLIBC__ == 2 && __GLIBC_MINOR__ > 12) || (__GLIBC__ > 2)
+ #if ((__GLIBC__ == 2 && __GLIBC_MINOR__ > 12) || (__GLIBC__ > 2)) \
+     && !defined __UCLIBC__
   Lucky user
  #endif
 #elif defined __CYGWIN__
@@ -98,7 +99,8 @@ static void quit (int sig) { exit (sig + 128); }
            [
 #include <features.h>
 #ifdef __GNU_LIBRARY__
- #if (__GLIBC__ == 2 && __GLIBC_MINOR__ > 12) || (__GLIBC__ > 2)
+ #if ((__GLIBC__ == 2 && __GLIBC_MINOR__ > 12) || (__GLIBC__ > 2)) \
+     && !defined __UCLIBC__
   Lucky user
  #endif
 #endif

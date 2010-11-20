@@ -33,7 +33,7 @@
 #define FLAG_SPACE       8      /* space flag */
 #define FLAG_ALT        16      /* # flag */
 #define FLAG_ZERO       32
-#if __GLIBC__ >= 2
+#if __GLIBC__ >= 2 && !defined __UCLIBC__
 # define FLAG_LOCALIZED 64      /* I flag, uses localized digits */
 #endif
 

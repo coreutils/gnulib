@@ -1,4 +1,4 @@
-# strtod.m4 serial 17
+# strtod.m4 serial 18
 dnl Copyright (C) 2002-2003, 2006-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -101,7 +101,8 @@ numeric_equal (double x, double y)
            [
 #include <features.h>
 #ifdef __GNU_LIBRARY__
- #if (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 8) || (__GLIBC__ > 2)
+ #if ((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 8) || (__GLIBC__ > 2)) \
+     && !defined __UCLIBC__
   Lucky user
  #endif
 #endif

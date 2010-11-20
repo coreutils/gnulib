@@ -32,7 +32,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   /* glibc >= 2.2 supports the 'I' flag, and in glibc >= 2.2.3 the fa_IR
      locale defines the 'outdigits' to be U+06F0..U+06F9.
      So we test for glibc >= 2.3.  */
-#if __GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 3)
+#if (__GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 3)) && !defined __UCLIBC__
   /* Test that the 'I' flag is supported.  */
   {
     size_t length;
@@ -75,7 +75,7 @@ test_asnprintf ()
 int
 main (int argc, char *argv[])
 {
-#if __GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 3)
+#if (__GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 3)) && !defined __UCLIBC__
   /* Select a locale with Arabic 'outdigits'.  */
   if (setlocale (LC_ALL, "fa_IR.UTF-8") == NULL)
     {

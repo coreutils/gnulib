@@ -344,8 +344,9 @@ DllMain (HINSTANCE module_handle, DWORD event, LPVOID reserved)
 static void
 find_shared_library_fullname ()
 {
-#if defined __linux__ && __GLIBC__ >= 2
-  /* Linux has /proc/self/maps. glibc 2 has the getline() function.  */
+#if defined __linux__ && (__GLIBC__ >= 2 || defined __UCLIBC__)
+  /* Linux has /proc/self/maps. glibc 2 and uClibc have the getline()
+     function.  */
   FILE *fp;
 
   /* Open the current process' maps file.  It describes one VMA per line.  */

@@ -1,4 +1,4 @@
-# getline.m4 serial 21
+# getline.m4 serial 22
 
 dnl Copyright (C) 1998-2003, 2005-2007, 2009-2010 Free Software Foundation,
 dnl Inc.
@@ -65,7 +65,7 @@ AC_DEFUN([gl_FUNC_GETLINE],
          [
 #include <features.h>
 #ifdef __GNU_LIBRARY__
- #if (__GLIBC__ >= 2)
+ #if (__GLIBC__ >= 2) && !defined __UCLIBC__
   Lucky GNU user
  #endif
 #endif
