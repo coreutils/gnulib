@@ -35,16 +35,26 @@
 2010-11-20  Bruno Haible  <bruno@clisp.org>
 
 	Port to uClibc.
-	* lib/relocatable.c (find_shared_library_fullname): Treat uClibc like
-	glibc.
+	* build-aux/link-warning.h (GL_LINK_WARNING): Treat uClibc like glibc.
+	* lib/fcntl.in.h: Likewise.
+	* lib/hard-locale.c (GLIBC_VERSION): Likewise.
+	* lib/mbrtowc.c (mbrtowc): Likewise.
+	* lib/relocatable.c (find_shared_library_fullname): Likewise.
 	* lib/strerror_r.c: Likewise.
+	* lib/unistr/u8-strnlen.c: Likewise.
+	* lib/vasnprintf.c (decimal_point_char): Likewise.
 	* m4/arpa_inet_h.m4 (gl_HEADER_ARPA_INET): Likewise.
 	* m4/duplocale.m4 (gl_FUNC_DUPLOCALE): Likewise.
 	* m4/fsusage.m4 (gl_FILE_SYSTEM_USAGE): Likewise.
 	* m4/glibc21.m4 (gl_GLIBC21): Likewise.
 	* tests/test-sigaction.c (handler, main): Likewise.
+	* lib/freading.h: Treat uClibc like a non-glibc platform.
+	* lib/freading.c: Likewise.
+	* lib/gettext.h: Likewise.
 	* lib/localename.c (gl_locale_name_thread_unsafe, HAVE_LOCALE_NULL):
-	Treat uClibc like a non-glibc platform.
+	Likewise.
+	* lib/printf-parse.h (FLAG_LOCALIZED): Likewise.
+	* lib/printf-parse.c (PRINTF_PARSE): Likewise.
 	* lib/propername.c (proper_name_utf8): Likewise.
 	* lib/spawn.in.h: Likewise.
 	* lib/striconv.c (mem_cd_iconv, str_cd_iconv, str_iconv): Likewise.
@@ -54,6 +64,15 @@
 	* lib/string.in.h (memchr, memrchr, rawmemchr, strchrnul, strpbrk,
 	strstr, strcasestr): Likewise.
 	* lib/unicodeio.c (unicode_to_mb): Likewise.
+	* lib/uniconv/u16-conv-from-enc.c (UTF16_NAME): Likewise.
+	* lib/uniconv/u16-conv-to-enc.c (UTF16_NAME): Likewise.
+	* lib/uniconv/u16-strconv-to-enc.c (UTF16_NAME): Likewise.
+	* lib/uniconv/u32-conv-from-enc.c (UTF32_NAME): Likewise.
+	* lib/uniconv/u32-conv-to-enc.c (UTF32_NAME): Likewise.
+	* lib/uniconv/u32-strconv-to-enc.c (UTF32_NAME): Likewise.
+	* lib/unistr/u8-stpncpy.c: Likewise.
+	* lib/vasnprintf.c (VASNPRINTF): Likewise.
+	* lib/xmalloc.c (HAVE_GNU_CALLOC): Likewise.
 	* m4/getdelim.m4 (gl_FUNC_GETDELIM): Likewise.
 	* m4/getline.m4 (gl_FUNC_GETLINE): Likewise.
 	* m4/glibc2.m4 (gt_GLIBC2): Likewise.
@@ -72,6 +91,8 @@
 	* m4/wchar_h.m4 (gl_WCHAR_H): Likewise.
 	* tests/test-getopt.h (OPTIND_MIN): Likewise.
 	* tests/test-striconveha.c (main): Likewise.
+	* tests/test-vasnprintf-posix.c (test_function): Likewise.
+	* tests/test-vasnprintf-posix3.c (test_function, main): Likewise.
 	* doc/posix-functions/getdelim.texi: Mention an uClibc bug.
 	* doc/posix-functions/getline.texi: Likewise.
 	Reported by Mike Frysinger <vapier@gentoo.org>.
