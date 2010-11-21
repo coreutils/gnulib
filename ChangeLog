@@ -1,5 +1,11 @@
 2010-11-21  Bruno Haible  <bruno@clisp.org>
 
+	Update for HP-UX 11.23 and HP-UX 11.31.
+	* doc/{glibc,posix}-{headers,functions}/*.texi: Update info about
+	HP-UX.
+
+2010-11-21  Bruno Haible  <bruno@clisp.org>
+
 	Update for MacOS X 10.5.
 	* m4/printf.m4 (gl_PRINTF_INFINITE_LONG_DOUBLE): Don't guess yes on
 	MacOS X; the test fails on MacOS X 10.5.8.
