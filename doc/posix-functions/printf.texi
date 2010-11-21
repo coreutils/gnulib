@@ -22,7 +22,7 @@ AIX 5.2, OSF/1 5.1, Solaris 10, mingw.
 @item
 This function does not support the @samp{a} and @samp{A} directives on some
 platforms:
-glibc-2.3.6, MacOS X 10.5, NetBSD 3.0, OpenBSD 4.0, AIX 5.2, HP-UX 11,
+glibc-2.3.6, MacOS X 10.5, NetBSD 5.0, OpenBSD 4.0, AIX 5.2, HP-UX 11,
 IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin 1.5.x, mingw, BeOS.
 @item
 This function does not support the @samp{F} directive on some platforms:
@@ -49,14 +49,14 @@ HP-UX 10.20.
 @item
 printf @code{"%010f"} of NaN and Infinity yields an incorrect result (padded
 with zeroes) on some platforms:
-MacOS X 10.5, FreeBSD 6.0, NetBSD 3.0, AIX 5.2, IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin 1.5.x, mingw.
+MacOS X 10.5, FreeBSD 6.0, NetBSD 5.0, AIX 5.2, IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin 1.5.x, mingw.
 @item
 This function does not support precisions larger than 512 or 1024 in integer,
 floating-point and pointer output on some platforms:
 mingw, BeOS.
 @item
 This function can crash in out-of-memory conditions on some platforms:
-MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0.
+MacOS X 10.3, FreeBSD 6.0, NetBSD 5.0.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{stdio} or @code{printf-posix}, together with module @code{sigpipe}:

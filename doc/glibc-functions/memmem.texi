@@ -28,7 +28,7 @@ glibc <= 2.0, Cygwin 1.5.x.
 @item
 This function has quadratic instead of linear worst-case complexity on some
 platforms:
-glibc 2.8, FreeBSD 6.2, NetBSD 3.0, AIX 5.1, Cygwin 1.5.x.
+glibc 2.8, FreeBSD 6.2, NetBSD 5.0, AIX 5.1, Cygwin 1.5.x.
 @end itemize
 
 Portability problems not fixed by Gnulib:

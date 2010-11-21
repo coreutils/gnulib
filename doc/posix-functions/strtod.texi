@@ -58,7 +58,7 @@ glibc-2.4, AIX 7.1.
 @item
 This function fails to parse C99 hexadecimal floating point on some
 platforms:
-NetBSD 3.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1,
+NetBSD 5.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1,
 Solaris 10, mingw.
 
 @item
@@ -82,7 +82,7 @@ glibc 2.7, IRIX 6.5, OSF/1 5.1, mingw.
 @item
 This function fails to correctly parse very long strings on some
 platforms:
-MacOS X 10.5, FreeBSD 6.2, NetBSD 3.0, OpenBSD 4.0, IRIX 6.5, OSF/1 5.1, Cygwin, mingw.
+MacOS X 10.5, FreeBSD 6.2, NetBSD 5.0, OpenBSD 4.0, IRIX 6.5, OSF/1 5.1, Cygwin, mingw.
 
 @item
 The replacement function does not always return correctly rounded results.

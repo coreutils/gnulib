@@ -46,7 +46,7 @@ The function @code{getopt_long} is missing on some platforms:
 AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 9, Interix 3.5.
 @item
 The function @code{getopt_long_only} is missing on some platforms:
-MacOS X 10.3, FreeBSD 5.2.1, NetBSD 3.0, AIX 5.1, HP-UX 11, IRIX 6.5,
+MacOS X 10.3, FreeBSD 5.2.1, NetBSD 5.0, AIX 5.1, HP-UX 11, IRIX 6.5,
 OSF/1 5.1, Solaris 9, mingw, Interix 3.5.
 @end itemize
 

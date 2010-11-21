@@ -1,5 +1,13 @@
 2010-11-21  Bruno Haible  <bruno@clisp.org>
 
+	Update for NetBSD 5.0.
+	* m4/printf.m4 (gl_PRINTF_INFINITE_LONG_DOUBLE): Don't guess yes on
+	NetBSD; the test fails on NetBSD 5.0.
+	* doc/{glibc,posix,pastposix}-{headers,functions}/*.texi: Update info
+	about NetBSD.
+
+2010-11-21  Bruno Haible  <bruno@clisp.org>
+
 	Update for HP-UX 11.23 and HP-UX 11.31.
 	* doc/{glibc,posix}-{headers,functions}/*.texi: Update info about
 	HP-UX.
