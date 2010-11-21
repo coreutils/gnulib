@@ -1,4 +1,4 @@
-# printf.m4 serial 36
+# printf.m4 serial 37
 dnl Copyright (C) 2003, 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -439,9 +439,6 @@ changequote(,)dnl
                                          # Guess yes on FreeBSD >= 6.
                    freebsd[1-5]*)        gl_cv_func_printf_infinite_long_double="guessing no";;
                    freebsd* | kfreebsd*) gl_cv_func_printf_infinite_long_double="guessing yes";;
-                                         # Guess yes on MacOS X >= 10.3.
-                   darwin[1-6].*)        gl_cv_func_printf_infinite_long_double="guessing no";;
-                   darwin*)              gl_cv_func_printf_infinite_long_double="guessing yes";;
                                          # Guess yes on HP-UX >= 11.
                    hpux[7-9]* | hpux10*) gl_cv_func_printf_infinite_long_double="guessing no";;
                    hpux*)                gl_cv_func_printf_infinite_long_double="guessing yes";;
@@ -1439,6 +1436,7 @@ dnl                                  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
 dnl   glibc 2.5                      .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
 dnl   glibc 2.3.6                    .  .  .  .  #  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
 dnl   FreeBSD 5.4, 6.1               .  .  .  .  #  .  .  .  .  .  .  #  .  #  .  .  .  .  .  .
+dnl   MacOS X 10.5.8                 .  .  .  #  #  .  .  .  .  .  .  #  .  .  .  .  .  .  .  .
 dnl   MacOS X 10.3.9                 .  .  .  .  #  .  .  .  .  .  .  #  .  #  .  .  .  .  .  .
 dnl   OpenBSD 3.9, 4.0               .  .  #  #  #  #  .  #  .  #  .  #  .  #  .  .  .  .  .  .
 dnl   Cygwin 1.7.0 (2009)            .  .  .  #  .  .  .  ?  .  .  .  .  .  ?  .  .  .  .  .  .

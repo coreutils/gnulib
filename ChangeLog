@@ -1,3 +1,11 @@
+2010-11-21  Bruno Haible  <bruno@clisp.org>
+
+	Update for MacOS X 10.5.
+	* m4/printf.m4 (gl_PRINTF_INFINITE_LONG_DOUBLE): Don't guess yes on
+	MacOS X; the test fails on MacOS X 10.5.8.
+	* doc/{glibc,posix,pastposix}-{headers,functions}/*.texi: Update info
+	about MacOS X.
+
 2010-11-20  Joel E. Denny  <joeldenny@joeldenny.org>
 
 	bootstrap: add bootstrap_sync option.
