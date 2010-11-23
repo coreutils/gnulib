@@ -1,3 +1,10 @@
+2010-11-22  Ben Pfaff  <blp@cs.stanford.edu>
+
+	Uninstall ".bin" files installed by relocwrapper.
+	* modules/relocatable-prog-wrapper (uninstall-relocwrapper):
+	Recursively run "make uninstall" with ".bin" prefixed to EXEEXT,
+	unless it is already there.
+
 2010-11-21  Bruno Haible  <bruno@clisp.org>
 
 	Update for NetBSD 5.0.
