@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate November 14, 2010
+@set lastupdate November 22, 2010
 @c %**end of header
 
 @dircategory GNU organization
@@ -1345,7 +1345,7 @@ good to also send your key to the GPG public key server: @code{gpg
 --keyserver keys.gnupg.net --send-keys @var{keyid}}, where @var{keyid}
 is the eight hex digits reported by @code{gpg --list-public-keys} on
 the @code{pub} line before the date.  For full information about GPG,
-see @url{http://www.gnu.org/software/gpg})
+see @url{http://www.gnu.org/software/gpg}.
 
 @item
 Compose a message with the following items in some @var{msgfile}.
@@ -2083,24 +2083,30 @@ on www.gnu.org for more information on how to contribute.
 
 As a maintainer, you might want to accept donations for your work,
 especially if you pay for any of your own hosting/development
-infrastructure.  Following is some text you can adapt for your
-package's web site, @file{README}, or wherever you find it useful:
+infrastructure.  Following is some text you can adapt to your own
+situation, and use on your package's web site, @file{README}, or
+in wherever way you find it useful:
 
 @smallexample
 We appreciate contributions of any size -- donations enable us to spend
 more time working on the project, and help cover our infrastructure
 expenses.
 
-If you'd like to make a small donation, please visit @var{url} and do
+If you'd like to make a small donation, please visit @var{url1} and do
 it through @var{payment-service}.  Since our project isn't a
 tax-exempt organization, we can't offer you a tax deduction, but for
-all donations over @var{amount}, we'd be happy to recognize your
-contribution on @var{another-url}.
+all donations over @var{amount1}, we'd be happy to recognize your
+contribution on @var{url2}.
 
-If you can make a donation large enough to entirely fund a substantial
-change, such as $1000, then we could discuss with you what change we
-should do with your funds, and we could give you a certain amount of
-specific help in exchange.  Write to us about this at @var{address}.
+We are also happy to consider making particular improvements or
+changes, or giving specific technical assistance, in return for a
+substantial donation over @var{amount2}.  If you would like to discuss
+this possibility, write to us at @var{address}.
+
+Another possibility is to pay a software maintenance fee.  Again,
+write to us about this at @var{address} to discuss how much you want
+to pay and how much maintenance we can offer in return.  If you pay
+more than @var{amount1}, we can give you a document for your records.
 
 Thanks for your support!
 @end smallexample
@@ -2108,6 +2114,10 @@ Thanks for your support!
 We don't recommend any specific payment service.  However, GNU
 developers should not use a service that requires them to sign a
 proprietary software license, such as Google's payment service.
+
+Of course, it is also good to encourage people to join or contribute
+to the FSF (@url{http://www.fsf.org}), either instead of or as well as
+package-specific donations.
 
 
 @node Free Software Directory
