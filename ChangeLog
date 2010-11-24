@@ -1,3 +1,10 @@
+2010-11-24  Bruno Haible  <bruno@clisp.org>
+
+	doc: Corrections regarding MacOS X 10.4 and 10.5.
+	* doc/{glibc,posix,pastposix}-functions/*.texi: Update info about
+	MacOS X.
+	Reported by Simon Josefsson.
+
 2010-11-22  Ben Pfaff  <blp@cs.stanford.edu>
 
 	Uninstall ".bin" files installed by relocwrapper.
