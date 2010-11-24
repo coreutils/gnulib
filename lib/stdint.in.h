@@ -134,40 +134,53 @@ typedef unsigned int gl_uint32_t;
 #define int32_t gl_int32_t
 #define uint32_t gl_uint32_t
 
+/* If the system defines INT64_MAX, assume int64_t works.  That way,
+   if the underlying platform defines int64_t to be a 64-bit long long
+   int, the code below won't mistakenly define it to be a 64-bit long
+   int, which would mess up C++ name mangling.  */
+
+#if INT64_MAX
+# define GL_INT64_T
+#else
 /* Do not undefine int64_t if gnulib is not being used with 64-bit
    types, since otherwise it breaks platforms like Tandem/NSK.  */
-#if LONG_MAX >> 31 >> 31 == 1
-# undef int64_t
+# if LONG_MAX >> 31 >> 31 == 1
+#  undef int64_t
 typedef long int gl_int64_t;
-# define int64_t gl_int64_t
-# define GL_INT64_T
-#elif defined _MSC_VER
-# undef int64_t
+#  define int64_t gl_int64_t
+#  define GL_INT64_T
+# elif defined _MSC_VER
+#  undef int64_t
 typedef __int64 gl_int64_t;
-# define int64_t gl_int64_t
-# define GL_INT64_T
-#elif @HAVE_LONG_LONG_INT@
-# undef int64_t
+#  define int64_t gl_int64_t
+#  define GL_INT64_T
+# elif @HAVE_LONG_LONG_INT@
+#  undef int64_t
 typedef long long int gl_int64_t;
-# define int64_t gl_int64_t
-# define GL_INT64_T
+#  define int64_t gl_int64_t
+#  define GL_INT64_T
+# endif
 #endif
 
-#if ULONG_MAX >> 31 >> 31 >> 1 == 1
-# undef uint64_t
+#if UINT64_MAX
+# define GL_UINT64_T
+#else
+# if ULONG_MAX >> 31 >> 31 >> 1 == 1
+#  undef uint64_t
 typedef unsigned long int gl_uint64_t;
-# define uint64_t gl_uint64_t
-# define GL_UINT64_T
-#elif defined _MSC_VER
-# undef uint64_t
+#  define uint64_t gl_uint64_t
+#  define GL_UINT64_T
+# elif defined _MSC_VER
+#  undef uint64_t
 typedef unsigned __int64 gl_uint64_t;
-# define uint64_t gl_uint64_t
-# define GL_UINT64_T
-#elif @HAVE_UNSIGNED_LONG_LONG_INT@
-# undef uint64_t
+#  define uint64_t gl_uint64_t
+#  define GL_UINT64_T
+# elif @HAVE_UNSIGNED_LONG_LONG_INT@
+#  undef uint64_t
 typedef unsigned long long int gl_uint64_t;
-# define uint64_t gl_uint64_t
-# define GL_UINT64_T
+#  define uint64_t gl_uint64_t
+#  define GL_UINT64_T
+# endif
 #endif
 
 /* Avoid collision with Solaris 2.5.1 <pthread.h> etc.  */
@@ -312,17 +325,14 @@ typedef int _verify_intmax_size[sizeof (intmax_t) == sizeof (uintmax_t)
 #define INT32_MAX  2147483647
 #define UINT32_MAX  4294967295U
 
-#undef INT64_MIN
-#undef INT64_MAX
-#ifdef GL_INT64_T
+#if defined GL_INT64_T && ! defined INT64_MAX
 /* Prefer (- INTMAX_C (1) << 63) over (~ INT64_MAX) because SunPRO C 5.0
    evaluates the latter incorrectly in preprocessor expressions.  */
 # define INT64_MIN  (- INTMAX_C (1) << 63)
 # define INT64_MAX  INTMAX_C (9223372036854775807)
 #endif
 
-#undef UINT64_MAX
-#ifdef GL_UINT64_T
+#if defined GL_UINT64_T && ! defined UINT64_MAX
 # define UINT64_MAX  UINTMAX_C (18446744073709551615)
 #endif
 

@@ -1,3 +1,16 @@
+2010-11-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdint: port to GCC 4.3 + OSX + Octave
+	On this platform, stdint.h is buggy and defines int64_t to long
+	long int.  The replacement defined it to long int, causing
+	problems with C++ style name mangling.  Instead, trust the system
+	definition if INT64_MAX is defined, and likewise for the unsigned
+	variant.   Problem reported by Jarno Rajahalme in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2010-04/msg00143.html>.
+	* lib/stdint.in.h (GL_INT64_T): Define if INT64_MAX is defined,
+	and don't mess with int64_t and INT64_MAX in this case.
+	(GL_UINT64_T): Likewise for UINT64_MAX and uint64_t.
+
 2010-11-24  Bruno Haible  <bruno@clisp.org>
 
 	doc: Corrections regarding MacOS X 10.4 and 10.5.
