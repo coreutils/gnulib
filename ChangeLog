@@ -1,3 +1,8 @@
+2010-11-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	ftoastr: comment fix
+	* lib/ftoastr.c: "little" -> "little or no" in comment
+
 2010-11-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stdint: port to GCC 4.3 + OSX + Octave
