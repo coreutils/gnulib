@@ -25,6 +25,8 @@
    This code relies on sprintf, strtod, etc. operating accurately;
    otherwise, the resulting strings could be inaccurate or too long.  */
 
+#include <config.h>
+
 #include "ftoastr.h"
 
 #include "intprops.h"
