@@ -1,5 +1,10 @@
 2010-11-27  Bruno Haible  <bruno@clisp.org>
 
+	getloadavg: Update documentation.
+	* doc/glibc-functions/getloadavg.texi: Mention the Solaris problem.
+
+2010-11-27  Bruno Haible  <bruno@clisp.org>
+
 	sys_socket: Fix test whether the functions are declared.
 	* m4/sys_socket_h.m4 (gl_HEADER_SYS_SOCKET): Include <sys/socket.h>,
 	not <sys/select.h>.
