@@ -1,5 +1,12 @@
 2010-11-27  Bruno Haible  <bruno@clisp.org>
 
+	regex: Mention link dependencies.
+	* modules/regex (Link): New section.
+	* modules/rpmatch (Link): Likewise.
+	* modules/regex-quote-tests (Makefile.am): Link with $(LIBINTL).
+
+2010-11-27  Bruno Haible  <bruno@clisp.org>
+
 	ftoastr: Fix compilation error on Solaris.
 	* lib/ftoastr.c: Include <config.h>.
 
