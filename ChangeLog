@@ -1,5 +1,12 @@
 2010-11-26  Bruno Haible  <bruno@clisp.org>
 
+	getpass: Make sure to get system declaration on some platforms.
+	* m4/getpass.m4 (gl_FUNC_GETPASS, gl_FUNC_GETPASS_GNU): Require
+	gl_USE_SYSTEM_EXTENSIONS.
+	* modules/getpass (Depends-on): Add extensions.
+
+2010-11-26  Bruno Haible  <bruno@clisp.org>
+
 	iconv-h: Fix test-iconv-h-c++ failure on Solaris 11 2010-11.
 	* lib/iconv.in.h (iconv_open, iconv, iconv_close): Define only if the
 	'iconv' module is present.
