@@ -1,4 +1,10 @@
-2010-11-26  Bruno Haible  <bruno@clisp.org>
+2010-11-27  Bruno Haible  <bruno@clisp.org>
+
+	sys_socket: Fix test whether the functions are declared.
+	* m4/sys_socket_h.m4 (gl_HEADER_SYS_SOCKET): Include <sys/socket.h>,
+	not <sys/select.h>.
+
+2010-11-27  Bruno Haible  <bruno@clisp.org>
 
 	getpass: Make sure to get system declaration on some platforms.
 	* m4/getpass.m4 (gl_FUNC_GETPASS, gl_FUNC_GETPASS_GNU): Require

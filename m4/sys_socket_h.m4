@@ -1,4 +1,4 @@
-# sys_socket_h.m4 serial 18
+# sys_socket_h.m4 serial 19
 dnl Copyright (C) 2005-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -64,10 +64,7 @@ AC_DEFUN([gl_HEADER_SYS_SOCKET],
   gl_WARN_ON_USE_PREPARE([[
 /* Some systems require prerequisite headers.  */
 #include <sys/types.h>
-#if !(defined __GLIBC__ && !defined __UCLIBC__) && HAVE_SYS_TIME_H
-# include <sys/time.h>
-#endif
-#include <sys/select.h>
+#include <sys/socket.h>
     ]], [socket connect accept bind getpeername getsockname getsockopt
     listen recv send recvfrom sendto setsockopt shutdown accept4])
 ])
