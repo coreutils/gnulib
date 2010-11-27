@@ -1,3 +1,22 @@
+2010-11-26  Bruno Haible  <bruno@clisp.org>
+
+	iconv-h: Fix test-iconv-h-c++ failure on Solaris 11 2010-11.
+	* lib/iconv.in.h (iconv_open, iconv, iconv_close): Define only if the
+	'iconv' module is present.
+	(ICONV_CONST): New macro.
+	* m4/iconv_h.m4 (gl_ICONV_H_DEFAULTS): Initialize GNULIB_ICONV and
+	ICONV_CONST.
+	* m4/iconv.m4 (AM_ICONV): If the gnulib module 'iconv-h' is present,
+	set ICONV_CONST.
+	* m4/iconv_open.m4 (gl_FUNC_ICONV_OPEN_UTF): Don't set ICONV_CONST
+	here.
+	* modules/iconv (configure.ac): Invoke gl_ICONV_MODULE_INDICATOR.
+	* modules/iconv-h (Makefile.am): Substitute GNULIB_ICONV.
+	* tests/test-iconv-h.c (ICONV_CONST): Don't define here.
+	* tests/test-iconv-h-c++.cc (ICONV_CONST): Don't define here.
+	(iconv_open, iconv, iconv_close): Test only if the 'iconv' module is
+	present.
+
 2010-11-25  Paul Eggert  <eggert@cs.ucla.edu>
 
 	ftoastr: comment fix

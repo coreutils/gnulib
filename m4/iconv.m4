@@ -1,4 +1,4 @@
-# iconv.m4 serial 15 (gettext-0.18.2)
+# iconv.m4 serial 16 (gettext-0.18.2)
 dnl Copyright (C) 2000-2002, 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -252,5 +252,12 @@ size_t iconv();
          $am_cv_proto_iconv])
     AC_DEFINE_UNQUOTED([ICONV_CONST], [$am_cv_proto_iconv_arg1],
       [Define as const if the declaration of iconv() needs const.])
+    dnl Also substitute ICONV_CONST in the gnulib generated <iconv.h>.
+    m4_ifdef([gl_ICONV_H_DEFAULTS],
+      [AC_REQUIRE([gl_ICONV_H_DEFAULTS])
+       if test -n "$am_cv_proto_iconv_arg1"; then
+         ICONV_CONST="const"
+       fi
+      ])
   fi
 ])

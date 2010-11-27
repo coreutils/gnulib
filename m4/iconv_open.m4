@@ -1,4 +1,4 @@
-# iconv_open.m4 serial 9
+# iconv_open.m4 serial 10
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -52,12 +52,6 @@ AC_DEFUN([gl_FUNC_ICONV_OPEN_UTF],
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_REQUIRE([gl_ICONV_H_DEFAULTS])
   if test "$am_cv_func_iconv" = yes; then
-    if test -n "$am_cv_proto_iconv_arg1"; then
-      ICONV_CONST="const"
-    else
-      ICONV_CONST=
-    fi
-    AC_SUBST([ICONV_CONST])
     AC_CACHE_CHECK([whether iconv supports conversion between UTF-8 and UTF-{16,32}{BE,LE}],
       [gl_cv_func_iconv_supports_utf],
       [
