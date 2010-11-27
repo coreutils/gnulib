@@ -2,7 +2,7 @@
 # gendocs.sh -- generate a GNU manual in many formats.  This script is
 #   mentioned in maintain.texi.  See the help message below for usage details.
 
-scriptversion=2010-11-26.16
+scriptversion=2010-11-27.07
 
 # Copyright 2003-2010 Free Software Foundation, Inc.
 #
@@ -21,12 +21,12 @@ scriptversion=2010-11-26.16
 #
 # Original author: Mohit Agarwal.
 # Send bug reports and any other correspondence to bug-texinfo@gnu.org.
-# 
+#
 # The latest version of this script, and the companion template, is
 # available from Texinfo CVS:
 # http://savannah.gnu.org/cgi-bin/viewcvs/texinfo/texinfo/util/gendocs.sh
 # http://savannah.gnu.org/cgi-bin/viewcvs/texinfo/texinfo/util/gendocs_template
-# 
+#
 # An up-to-date copy is also maintained in Gnulib (gnu.org/software/gnulib).
 
 prog=`basename "$0"`
