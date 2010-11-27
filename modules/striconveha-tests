@@ -9,5 +9,5 @@ configure.ac:
 Makefile.am:
 TESTS += test-striconveha
 check_PROGRAMS += test-striconveha
-test_striconveha_LDADD = $(LDADD) @LIBICONV@
+test_striconveha_LDADD = $(LDADD) $(LIBUNISTRING) @LIBICONV@
 

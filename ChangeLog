@@ -1,5 +1,11 @@
 2010-11-27  Bruno Haible  <bruno@clisp.org>
 
+	Fix link error when module libunistring-optional is in use.
+	* modules/striconveh-tests (Makefile.am): Link with $(LIBUNISTRING).
+	* modules/striconveha-tests (Makefile.am): Likewise.
+
+2010-11-27  Bruno Haible  <bruno@clisp.org>
+
 	regex: Mention link dependencies.
 	* modules/regex (Link): New section.
 	* modules/rpmatch (Link): Likewise.
