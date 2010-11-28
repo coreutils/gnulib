@@ -3032,6 +3032,19 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
   }
 
   {
+    char result[5000];
+    int retval =
+      my_snprintf (result, sizeof (result), "%.4000f %d", 1.0, 99);
+    size_t i;
+    ASSERT (result[0] == '1');
+    ASSERT (result[1] == '.');
+    for (i = 0; i < 4000; i++)
+      ASSERT (result[2 + i] == '0');
+    ASSERT (strcmp (result + 2 + 4000, " 99") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
     char input[5000];
     char result[5000];
     int retval;

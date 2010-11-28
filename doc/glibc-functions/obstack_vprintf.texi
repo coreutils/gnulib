@@ -59,7 +59,7 @@ MacOS X 10.5, FreeBSD 6.0, NetBSD 5.0, AIX 5.2, IRIX 6.5, OSF/1 5.1, Solaris 10,
 @item
 This function does not support precisions larger than 512 or 1024 in integer,
 floating-point and pointer output on some platforms:
-mingw, BeOS.
+Solaris 10/x86, mingw, BeOS.
 @item
 This function can crash in out-of-memory conditions on some platforms:
 MacOS X 10.3, FreeBSD 6.0, NetBSD 5.0.

@@ -1,5 +1,26 @@
 2010-11-27  Bruno Haible  <bruno@clisp.org>
 
+	*printf-posix: Detect a bug on Solaris 10/x86.
+	* m4/printf.m4 (gl_PRINTF_PRECISION): Detect crash with large precision
+	for floating-point output.
+	* tests/test-vasnprintf-posix.c (test_function): Test precision with %f
+	directive.
+	* tests/test-snprintf-posix.h (test_function): Likewise.
+	* tests/test-sprintf-posix.h (test_function): Likewise.
+	* tests/test-vasprintf-posix.c (test_function): Likewise.
+	* doc/posix-functions/fprintf.texi: Mention Solaris/x86 bug.
+	* doc/posix-functions/printf.texi: Likewise.
+	* doc/posix-functions/snprintf.texi: Likewise.
+	* doc/posix-functions/sprintf.texi: Likewise.
+	* doc/posix-functions/vfprintf.texi: Likewise.
+	* doc/posix-functions/vprintf.texi: Likewise.
+	* doc/posix-functions/vsnprintf.texi: Likewise.
+	* doc/posix-functions/vsprintf.texi: Likewise.
+	* doc/glibc-functions/obstack_printf.texi: Likewise.
+	* doc/glibc-functions/obstack_vprintf.texi: Likewise.
+
+2010-11-27  Bruno Haible  <bruno@clisp.org>
+
 	Fix link error when module libunistring-optional is in use.
 	* modules/striconveh-tests (Makefile.am): Link with $(LIBUNISTRING).
 	* modules/striconveha-tests (Makefile.am): Likewise.
