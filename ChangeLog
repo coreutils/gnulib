@@ -1,3 +1,15 @@
+2010-11-28  Bruno Haible  <bruno@clisp.org>
+
+	sys_socket: Ensure ss_family field on AIX.
+	* lib/sys_socket.in.h (ss_family): New macro definition.
+	* m4/sys_socket_h.m4 (gl_HEADER_SYS_SOCKET): Set
+	HAVE_STRUCT_SOCKADDR_STORAGE_SS_FAMILY. Set SYS_SOCKET_H if necessary.
+	(gl_SYS_SOCKET_H_DEFAULTS): Initialize
+	HAVE_STRUCT_SOCKADDR_STORAGE_SS_FAMILY.
+	* modules/sys_socket (Makefile.am): Substitute
+	HAVE_STRUCT_SOCKADDR_STORAGE_SS_FAMILY.
+	* doc/posix-headers/sys_socket.texi: Mention the AIX bug.
+
 2010-11-27  Bruno Haible  <bruno@clisp.org>
 
 	readline: Improve configure output.
