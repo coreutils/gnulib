@@ -1,5 +1,11 @@
 2010-11-27  Bruno Haible  <bruno@clisp.org>
 
+	readline: Improve configure output.
+	* m4/readline.m4 (gl_FUNC_READLINE): Make the
+	"checking for readline..." result understandable.
+
+2010-11-27  Bruno Haible  <bruno@clisp.org>
+
 	*printf-posix: Detect a bug on Solaris 10/x86.
 	* m4/printf.m4 (gl_PRINTF_PRECISION): Detect crash with large precision
 	for floating-point output.
