@@ -1,6 +1,14 @@
 2010-11-28  Bruno Haible  <bruno@clisp.org>
             Paul Eggert  <eggert@cs.ucla.edu>
 
+	Tests for module 'getdomainname'.
+	* modules/getdomainname-tests: New file.
+	* tests/test-getdomainname.c: New file, based on
+	tests/test-gethostname.c.
+
+2010-11-28  Bruno Haible  <bruno@clisp.org>
+            Paul Eggert  <eggert@cs.ucla.edu>
+
 	getdomainname: Use the system function when possible.
 	* lib/unistd.in.h: Include <netdb.h>, for getdomainname's declaration.
 	(getdomainname): Replace if needed. Provide the declaration if it is
