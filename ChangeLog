@@ -1,3 +1,8 @@
+2010-11-30  Bruno Haible  <bruno@clisp.org>
+
+	strerror_r-posix: Fix autoconf test.
+	* m4/strerror_r.m4 (gl_FUNC_STRERROR_R): Fix typo.
+
 2010-11-28  Bruno Haible  <bruno@clisp.org>
             Paul Eggert  <eggert@cs.ucla.edu>
 

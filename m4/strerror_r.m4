@@ -1,4 +1,4 @@
-# strerror_r.m4 serial 1
+# strerror_r.m4 serial 2
 dnl Copyright (C) 2002, 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -50,7 +50,7 @@ AC_DEFUN([gl_FUNC_STRERROR_R],
                   int strerror_r (int, char *, size_t);
                 ]],
                 [[char buf[79];
-                  return strerror (EACCES, buf, 0) < 0
+                  return strerror_r (EACCES, buf, 0) < 0
                          || strerror_r (EACCES, buf, sizeof (buf)) != 0;
                 ]])],
              [gl_cv_func_strerror_r_works=yes],
