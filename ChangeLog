@@ -1,4 +1,30 @@
 2010-11-28  Bruno Haible  <bruno@clisp.org>
+            Paul Eggert  <eggert@cs.ucla.edu>
+
+	getdomainname: Use the system function when possible.
+	* lib/unistd.in.h: Include <netdb.h>, for getdomainname's declaration.
+	(getdomainname): Replace if needed. Provide the declaration if it is
+	missing. Don't use _GL_CXXALIAS_SYS_CAST.
+	* lib/getdomainname.c: Include <limits.h> and <sys/systeminfo.h>.
+	(getdomainname): When the system has getdomainname, call the system
+	function. When sysinfo (SI_SRPC_DOMAIN, ...) is possible, use that.
+	* m4/getdomainname.m4 (gl_FUNC_GETDOMAINNAME): Require
+	gl_HEADER_SYS_SOCKET and gl_HEADER_NETDB. Test whether the function is
+	found in libnsl. Look for the declaration also in <netdb.h>. Replace
+	the function if its second argument is of type 'int' or if it is found
+	in libnsl.
+	(gl_PREREQ_GETDOMAINNAME): Define HAVE_GETDOMAINNAME. Check for
+	<sys/systeminfo.h> and sysinfo().
+	* modules/getdomainname (Depends-on): Add netdb, sys_socket.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize
+	HAVE_DECL_GETDOMAINNAME and REPLACE_GETDOMAINNAME instead of
+	HAVE_GETDOMAINNAME.
+	* modules/unistd (Makefile.am): Substitute HAVE_DECL_GETDOMAINNAME and
+	REPLACE_GETDOMAINNAME instead of HAVE_GETDOMAINNAME.
+	* doc/glibc-functions/getdomainname.texi: Document the problems with
+	the getdomainname declaration.
+
+2010-11-28  Bruno Haible  <bruno@clisp.org>
 
 	sys_socket: Ensure ss_family field on AIX.
 	* lib/sys_socket.in.h (ss_family): New macro definition.
