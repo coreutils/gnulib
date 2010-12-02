@@ -1,3 +1,17 @@
+2010-12-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	utimecmp: fine-grained src to nearby coarse-grained dest
+
+	* lib/utimecmp.c (utimecmp): When UTIMECMP_TRUNCATE_SOURCE is set,
+	and the source is on a file system with higher-resolution time
+	stamps, than the destination, and _PC_TIMESTAMP_RESOLUTION does
+	not work, and the time stamps are close together, the algorithm to
+	determine the exact resolution from the read-back mtime was buggy:
+	it had a "!=" where it should have had an "==".  This bug has been
+	in the code ever since it was introduced to gnulib.
+	Problem reported by Dan Jacobson in
+	<http://debbugs.gnu.org/cgi/bugreport.cgi?bug=7529>.
+
 2010-11-30  Bruno Haible  <bruno@clisp.org>
 
 	strerror_r-posix: Fix autoconf test.
