@@ -1,3 +1,10 @@
+2010-12-04  Bruno Haible  <bruno@clisp.org>
+
+	nproc: Relax license.
+	* modules/nproc (License): Change to LGPL, with consent by Glen Lenker
+	and Paul Eggert.
+	Requested by Ludovic Courtès <ludo@gnu.org>.
+
 2010-12-01  Paul Eggert  <eggert@cs.ucla.edu>
 
 	utimecmp: fine-grained src to nearby coarse-grained dest
