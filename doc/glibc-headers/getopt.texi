@@ -37,7 +37,7 @@ FreeBSD 6.0, NetBSD 5.0(?), OpenBSD 3.8, Cygwin 1.5.x, mingw.
 @item
 The function @code{getopt} does not handle a leading @samp{+} character in
 the options string on some platforms:
-Solaris 10.
+Solaris 11 2010-11.
 @end itemize
 
 Portability problems not fixed by Gnulib:

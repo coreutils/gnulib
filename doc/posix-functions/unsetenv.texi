@@ -22,7 +22,7 @@ FreeBSD 6.0, NetBSD 1.6, OpenBSD 4.7.
 @item
 This function removes only the first value association for the given
 environment variable, not all of them, on some platforms:
-Solaris 10.
+Solaris 11 2010-11.
 @end itemize
 
 Portability problems not fixed by Gnulib:

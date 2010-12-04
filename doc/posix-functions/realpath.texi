@@ -14,11 +14,11 @@ mingw, BeOS.
 @item
 This function does not allow for a NULL @samp{resolved} parameter on
 some platforms:
-Solaris.
+Solaris 10.
 @item
 This function does not always return an absolute path on some
 platforms:
-Solaris.
+Solaris 10.
 @item
 This function fails to detect trailing slashes on non-directories on
 some platforms:

@@ -1,5 +1,11 @@
 2010-12-04  Bruno Haible  <bruno@clisp.org>
 
+	Update for Solaris 11 2010-11.
+	* doc/{glibc,posix}-{functions,headers}: Add info about Solaris 11
+	Express, released in November 2010.
+
+2010-12-04  Bruno Haible  <bruno@clisp.org>
+
 	nproc: Relax license.
 	* modules/nproc (License): Change to LGPL, with consent by Glen Lenker
 	and Paul Eggert.

@@ -35,5 +35,5 @@ HP-UX 11.
 @item
 The functions @code{sgetspent}, @code{sgetspent_r} are missing on some
 platforms:
-IRIX 6.5, Solaris 10.
+HP-UX 11, IRIX 6.5, Solaris 11 2010-11.
 @end itemize
