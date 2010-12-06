@@ -1,4 +1,4 @@
-#serial 10
+#serial 11
 dnl Copyright (C) 2002, 2005, 2007, 2009-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,15 +17,16 @@ AC_DEFUN([gl_FUNC_DUP2],
       [AC_RUN_IFELSE([
          AC_LANG_PROGRAM([[#include <unistd.h>
 #include <errno.h>]],
-           [if (dup2 (1, 1) == 0)
-              return 1;
+           [int result = 0;
+            if (dup2 (1, 1) == 0)
+              result |= 1;
             close (0);
             if (dup2 (0, 0) != -1)
-              return 2;
+              result |= 2;
             /* Many gnulib modules require POSIX conformance of EBADF.  */
             if (dup2 (1, 1000000) == -1 && errno != EBADF)
-              return 3;
-            return 0;
+              result |= 4;
+            return result;
            ])
         ],
         [gl_cv_func_dup2_works=yes], [gl_cv_func_dup2_works=no],

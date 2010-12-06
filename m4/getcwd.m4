@@ -7,7 +7,7 @@
 # with or without modifications, as long as this notice is preserved.
 
 # Written by Paul Eggert.
-# serial 2
+# serial 3
 
 AC_DEFUN([gl_FUNC_GETCWD_NULL],
   [
@@ -27,7 +27,13 @@ AC_DEFUN([gl_FUNC_GETCWD_NULL],
            else
              {
                char *f = getcwd (NULL, 0);
-               return ! (f && f[0] == '/' && !f[1]);
+               if (! f)
+                 return 2;
+               if (f[0] != '/')
+                 return 3;
+               if (f[1] != '\0')
+                 return 4;
+               return 0;
              }
 #endif
          ]])],

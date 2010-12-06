@@ -1,4 +1,4 @@
-# fcntl-o.m4 serial 2
+# fcntl-o.m4 serial 3
 dnl Copyright (C) 2006, 2009-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -37,34 +37,61 @@ AC_DEFUN([gl_FCNTL_O_FLAGS],
             };
           ]],
           [[
-            int status = !constants;
+            int result = !constants;
             {
               static char const sym[] = "conftest.sym";
-              if (symlink (".", sym) != 0
-                  || close (open (sym, O_RDONLY | O_NOFOLLOW)) == 0)
-                status |= 32;
+              if (symlink (".", sym) != 0)
+                result |= 2;
+              else
+                {
+                  int fd = open (sym, O_RDONLY | O_NOFOLLOW);
+                  if (fd >= 0)
+                    {
+                      close (fd);
+                      result |= 4;
+                    }
+                }
               unlink (sym);
             }
             {
               static char const file[] = "confdefs.h";
               int fd = open (file, O_RDONLY | O_NOATIME);
-              char c;
-              struct stat st0, st1;
-              if (fd < 0
-                  || fstat (fd, &st0) != 0
-                  || sleep (1) != 0
-                  || read (fd, &c, 1) != 1
-                  || close (fd) != 0
-                  || stat (file, &st1) != 0
-                  || st0.st_atime != st1.st_atime)
-                status |= 64;
+              if (fd < 0)
+                result |= 8;
+              else
+                {
+                  struct stat st0;
+                  if (fstat (fd, &st0) != 0)
+                    result |= 16;
+                  else
+                    {
+                      char c;
+                      sleep (1);
+                      if (read (fd, &c, 1) != 1)
+                        result |= 24;
+                      else
+                        {
+                          if (close (fd) != 0)
+                            result |= 32;
+                          else
+                            {
+                              struct stat st1;
+                              if (stat (file, &st1) != 0)
+                                result |= 40;
+                              else
+                                if (st0.st_atime != st1.st_atime)
+                                  result |= 64;
+                            }
+                        }
+                    }
+                }
             }
-            return status;]])],
+            return result;]])],
        [gl_cv_header_working_fcntl_h=yes],
        [case $? in #(
-        32) gl_cv_header_working_fcntl_h='no (bad O_NOFOLLOW)';; #(
+        4) gl_cv_header_working_fcntl_h='no (bad O_NOFOLLOW)';; #(
         64) gl_cv_header_working_fcntl_h='no (bad O_NOATIME)';; #(
-        96) gl_cv_header_working_fcntl_h='no (bad O_NOATIME, O_NOFOLLOW)';; #(
+        68) gl_cv_header_working_fcntl_h='no (bad O_NOATIME, O_NOFOLLOW)';; #(
          *) gl_cv_header_working_fcntl_h='no';;
         esac],
        [gl_cv_header_working_fcntl_h=cross-compiling])])

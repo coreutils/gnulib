@@ -1,4 +1,4 @@
-# rmdir.m4 serial 8
+# rmdir.m4 serial 9
 dnl Copyright (C) 2002, 2005, 2009-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,8 +17,15 @@ AC_DEFUN([gl_FUNC_RMDIR],
          [[#include <stdio.h>
            #include <errno.h>
            #include <unistd.h>
-]], [[return !rmdir ("conftest.file/") || errno != ENOTDIR
-       || !rmdir ("conftest.dir/./");]])],
+]], [[int result = 0;
+      if (!rmdir ("conftest.file/"))
+        result |= 1;
+      else if (errno != ENOTDIR)
+        result |= 2;
+      if (!rmdir ("conftest.dir/./"))
+        result |= 4;
+      return result;
+    ]])],
        [gl_cv_func_rmdir_works=yes], [gl_cv_func_rmdir_works=no],
        [gl_cv_func_rmdir_works="guessing no"])
      rm -rf conftest.dir conftest.file])

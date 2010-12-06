@@ -1,4 +1,4 @@
-# mbrtowc.m4 serial 18
+# mbrtowc.m4 serial 19
 dnl Copyright (C) 2001-2002, 2004-2005, 2008-2010 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -271,6 +271,7 @@ changequote([,])dnl
 #include <wchar.h>
 int main ()
 {
+  int result = 0;
   /* This fails on Solaris.  */
   if (setlocale (LC_ALL, "$LOCALE_FR_UTF8") != NULL)
     {
@@ -283,7 +284,7 @@ int main ()
         {
           input[1] = '\0';
           if (mbrtowc (&wc, input + 2, 5, &state) != 1)
-            return 1;
+            result |= 1;
         }
     }
   /* This fails on HP-UX 11.11.  */
@@ -298,10 +299,10 @@ int main ()
         {
           input[1] = '\0';
           if (mbrtowc (&wc, input + 2, 5, &state) != 2)
-            return 1;
+            result |= 2;
         }
     }
-  return 0;
+  return result;
 }]])],
           [gl_cv_func_mbrtowc_retval=yes],
           [gl_cv_func_mbrtowc_retval=no],

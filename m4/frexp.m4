@@ -1,4 +1,4 @@
-# frexp.m4 serial 9
+# frexp.m4 serial 10
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -120,6 +120,7 @@ double minus_zero = -0.0;
 #endif
 int main()
 {
+  int result = 0;
   int i;
   volatile double x;
   double zero = 0.0;
@@ -133,7 +134,7 @@ int main()
       /* On machines with IEEE754 arithmetic: x = 1.11254e-308, exp = -1022.
          On NetBSD: y = 0.75. Correct: y = 0.5.  */
       if (y != 0.5)
-        return 1;
+        result |= 1;
     }
   /* Test on infinite numbers.  */
   x = 1.0 / 0.0;
@@ -141,7 +142,7 @@ int main()
     int exp;
     double y = frexp (x, &exp);
     if (y != x)
-      return 1;
+      result |= 2;
   }
   /* Test on negative zero.  */
   x = minus_zero;
@@ -149,9 +150,9 @@ int main()
     int exp;
     double y = frexp (x, &exp);
     if (memcmp (&y, &x, sizeof x))
-      return 1;
+      result |= 4;
   }
-  return 0;
+  return result;
 }]])],
         [gl_cv_func_frexp_works=yes],
         [gl_cv_func_frexp_works=no],

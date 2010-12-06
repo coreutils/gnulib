@@ -1,4 +1,4 @@
-# serial 3
+# serial 4
 # See if we need to provide symlink replacement.
 
 dnl Copyright (C) 2009, 2010 Free Software Foundation, Inc.
@@ -24,9 +24,16 @@ AC_DEFUN([gl_FUNC_SYMLINK],
       [AC_RUN_IFELSE(
          [AC_LANG_PROGRAM(
            [[#include <unistd.h>
-]], [[if (!symlink ("a", "conftest.link/")) return 1;
-      if (symlink ("conftest.f", "conftest.lnk2")) return 2;
-      if (!symlink ("a", "conftest.lnk2/")) return 3;]])],
+           ]],
+           [[int result = 0;
+             if (!symlink ("a", "conftest.link/"))
+               result |= 1;
+             if (symlink ("conftest.f", "conftest.lnk2"))
+               result |= 2;
+             else if (!symlink ("a", "conftest.lnk2/"))
+               result |= 4;
+             return result;
+           ]])],
          [gl_cv_func_symlink_works=yes], [gl_cv_func_symlink_works=no],
          [gl_cv_func_symlink_works="guessing no"])
       rm -f conftest.f conftest.link conftest.lnk2])

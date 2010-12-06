@@ -39,8 +39,10 @@ AC_DEFUN([gl_PREREQ_ISAPIPE],
             {
               int fd[2];
               struct stat st;
-              if (pipe (fd) != 0 || fstat (fd[0], &st) != 0)
+              if (pipe (fd) != 0)
                 return 1;
+              if (fstat (fd[0], &st) != 0)
+                return 2;
               if (2 <= argc && argv[1][0] == '-')
                 {
                   char const *yesno = (S_ISFIFO (st.st_mode) ? "yes" : "no");
@@ -48,21 +50,21 @@ AC_DEFUN([gl_PREREQ_ISAPIPE],
                     {
                       long int i = st.st_nlink;
                       if (i != st.st_nlink)
-                        return 1;
+                        return 3;
                       printf ("%s (%ld)\n", yesno, i);
                     }
                   else
                     {
                       unsigned long int i = st.st_nlink;
                       if (i != st.st_nlink)
-                        return 1;
+                        return 4;
                       printf ("%s (%lu)\n", yesno, i);
                     }
                 }
               else
                 {
                   if (! S_ISFIFO (st.st_mode) && ! S_ISSOCK (st.st_mode))
-                    return 1;
+                    return 5;
                 }
               return 0;
             }]])],

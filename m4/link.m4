@@ -1,4 +1,4 @@
-# link.m4 serial 4
+# link.m4 serial 5
 dnl Copyright (C) 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -22,10 +22,15 @@ AC_DEFUN([gl_FUNC_LINK],
        AC_RUN_IFELSE(
          [AC_LANG_PROGRAM(
            [[#include <unistd.h>
-]], [[if (!link ("conftest.a", "conftest.b/")) return 1;
+           ]],
+           [[int result = 0;
+             if (!link ("conftest.a", "conftest.b/"))
+               result |= 1;
 #if HAVE_LSTAT
-      if (!link ("conftest.lnk/", "conftest.b")) return 2;
+             if (!link ("conftest.lnk/", "conftest.b"))
+               result |= 2;
 #endif
+             return result;
            ]])],
          [gl_cv_func_link_works=yes], [gl_cv_func_link_works=no],
          [gl_cv_func_link_works="guessing no"])

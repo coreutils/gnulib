@@ -1,4 +1,4 @@
-# memmem.m4 serial 19
+# memmem.m4 serial 20
 dnl Copyright (C) 2002, 2003, 2004, 2007, 2008, 2009, 2010 Free Software
 dnl Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
@@ -73,10 +73,11 @@ AC_DEFUN([gl_FUNC_MEMMEM],
 #include <stdlib.h> /* for malloc */
 #include <unistd.h> /* for alarm */
 static void quit (int sig) { exit (sig + 128); }
-]], [[size_t m = 1000000;
+]], [[
+    int result = 0;
+    size_t m = 1000000;
     char *haystack = (char *) malloc (2 * m + 1);
     char *needle = (char *) malloc (m + 1);
-    void *result = 0;
     /* Failure to compile this test due to missing alarm is okay,
        since all such platforms (mingw) also lack memmem.  */
     signal (SIGALRM, quit);
@@ -88,10 +89,14 @@ static void quit (int sig) { exit (sig + 128); }
         haystack[2 * m] = 'B';
         memset (needle, 'A', m);
         needle[m] = 'B';
-        result = memmem (haystack, 2 * m + 1, needle, m + 1);
+        if (!memmem (haystack, 2 * m + 1, needle, m + 1))
+          result |= 1;
       }
     /* Check for empty needle behavior.  */
-    return !result || !memmem ("a", 1, 0, 0);]])],
+    if (!memmem ("a", 1, 0, 0))
+      result |= 2;
+    return result;
+    ]])],
         [gl_cv_func_memmem_works_fast=yes], [gl_cv_func_memmem_works_fast=no],
         [dnl Only glibc > 2.12 and cygwin > 1.7.7 are known to have a
          dnl bug-free memmem that works in linear time.

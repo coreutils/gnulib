@@ -1,5 +1,80 @@
 2010-12-04  Bruno Haible  <bruno@clisp.org>
 
+	Put more information about failed tests into the test return codes.
+	* m4/c-stack.m4 (AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC): Change test
+	program so that it returns an enumerated value (0, 1, 2, 3, 4, ...).
+	* m4/d-ino.m4 (gl_CHECK_TYPE_STRUCT_DIRENT_D_INO): Likewise.
+	* m4/getcwd-path-max.m4 (gl_FUNC_GETCWD_PATH_MAX): Likewise.
+	* m4/getcwd.m4 (gl_FUNC_GETCWD_NULL): Likewise.
+	* m4/getdelim.m4 (gl_FUNC_GETDELIM): Likewise.
+	* m4/getline.m4 (gl_FUNC_GETLINE): Likewise.
+	* m4/intdiv0.m4 (gt_INTDIV0): Likewise.
+	* m4/isapipe.m4 (gl_PREREQ_ISAPIPE): Likewise.
+	* m4/nanosleep.m4 (gl_FUNC_NANOSLEEP): Likewise.
+	* m4/posix_spawn.m4 (gl_POSIX_SPAWN_WORKS): Likewise.
+	* m4/putenv.m4 (gl_FUNC_PUTENV): Likewise.
+	* m4/sleep.m4 (gl_FUNC_SLEEP): Likewise.
+	* m4/stdint.m4 (gl_STDINT_H): Likewise.
+	* m4/calloc.m4 (_AC_FUNC_CALLOC_IF): Change test program so that it
+	returns a bit mask.
+	* m4/canonicalize.m4 (gl_FUNC_REALPATH_WORKS): Likewise.
+	* m4/chown.m4 (gl_FUNC_CHOWN_FOLLOWS_SYMLINK): Likewise.
+	* m4/dup2.m4 (gl_FUNC_DUP2): Likewise.
+	* m4/fcntl-o.m4 (gl_FCNTL_O_FLAGS): Likewise.
+	* m4/fnmatch.m4 (gl_FUNC_FNMATCH_POSIX): Likewise.
+	* m4/frexp.m4 (gl_FUNC_FREXP_WORKS): Likewise.
+	* m4/frexpl.m4 (gl_FUNC_FREXPL_WORKS): Likewise.
+	* m4/getopt.m4 (gl_GETOPT_CHECK_HEADERS): Likewise.
+	* m4/iconv.m4 (AM_ICONV_LINK): Likewise.
+	* m4/iconv_open.m4 (gl_FUNC_ICONV_OPEN_UTF): Likewise.
+	* m4/isfinite.m4 (gl_ISFINITEL_WORKS): Likewise.
+	* m4/isnanf.m4 (gl_ISNANF_WORKS): Likewise.
+	* m4/isnanl.m4 (gl_FUNC_ISNANL_WORKS): Likewise.
+	* m4/ldexpl.m4 (gl_FUNC_LDEXPL_WORKS): Likewise.
+	* m4/link.m4 (gl_FUNC_LINK): Likewise.
+	* m4/linkat.m4 (gl_FUNC_LINKAT): Likewise.
+	* m4/mbrlen.m4 (gl_MBRLEN_RETVAL): Likewise.
+	* m4/mbrtowc.m4 (gl_MBRTOWC_RETVAL): Likewise.
+	* m4/mbsrtowcs.m4 (gl_MBSRTOWCS_WORKS): Likewise.
+	* m4/memchr.m4 (gl_FUNC_MEMCHR): Likewise.
+	* m4/memmem.m4 (gl_FUNC_MEMMEM): Likewise.
+	* m4/mkfifo.m4 (gl_FUNC_MKFIFO): Likewise.
+	* m4/mkstemp.m4 (gl_FUNC_MKSTEMP): Likewise.
+	* m4/mktime.m4 (AC_FUNC_MKTIME): Likewise.
+	* m4/open.m4 (gl_FUNC_OPEN): Likewise.
+	* m4/poll.m4 (gl_FUNC_POLL): Likewise.
+	* m4/popen.m4 (gl_FUNC_POPEN): Likewise.
+	* m4/printf.m4 (gl_PRINTF_SIZES_C99, gl_PRINTF_LONG_DOUBLE,
+	gl_PRINTF_INFINITE, gl_PRINTF_INFINITE_LONG_DOUBLE,
+	gl_PRINTF_DIRECTIVE_A, gl_PRINTF_DIRECTIVE_F, gl_PRINTF_DIRECTIVE_LS,
+	gl_PRINTF_PRECISION): Likewise.
+	* m4/regex.m4 (gl_REGEX): Likewise.
+	* m4/rename.m4 (gl_FUNC_RENAME): Likewise.
+	* m4/rmdir.m4 (gl_FUNC_RMDIR): Likewise.
+	* m4/setenv.m4 (gl_FUNC_SETENV_SEPARATE): Likewise.
+	* m4/stat.m4 (gl_FUNC_STAT): Likewise.
+	* m4/stpncpy.m4 (gl_FUNC_STPNCPY): Likewise.
+	* m4/strcasestr.m4 (gl_FUNC_STRCASESTR): Likewise.
+	* m4/strerror_r.m4 (gl_FUNC_STRERROR_R): Likewise.
+	* m4/strsignal.m4 (gl_FUNC_STRSIGNAL): Likewise.
+	* m4/strstr.m4 (gl_FUNC_STRSTR): Likewise.
+	* m4/strtod.m4 (gl_FUNC_STRTOD): Likewise.
+	* m4/symlink.m4 (gl_FUNC_SYMLINK): Likewise.
+	* m4/tsearch.m4 (gl_FUNC_TSEARCH): Likewise.
+	* m4/ttyname_r.m4 (gl_FUNC_TTYNAME_R): Likewise.
+	* m4/unlink-busy.m4 (gl_FUNC_UNLINK_BUSY_TEXT): Likewise.
+	* m4/unlink.m4 (gl_FUNC_UNLINK): Likewise.
+	* m4/utimensat.m4 (gl_FUNC_UTIMENSAT): Likewise.
+	* m4/utimes.m4 (gl_FUNC_UTIMES): Likewise.
+	* m4/wcrtomb.m4 (gl_FUNC_WCRTOMB): Likewise.
+	* m4/wcwidth.m4 (gl_FUNC_WCWIDTH): Likewise.
+	* m4/signbit.m4 (gl_SIGNBIT_TEST_PROGRAM): Likewise.
+	(gl_FLOATTYPE_SIGN_LOCATION): Change test program so that it returns an
+	enumerated value.
+	* m4/acl.m4 (gl_ACL_GET_FILE): Use "if ... return 1; return 0;" style.
+
+2010-12-04  Bruno Haible  <bruno@clisp.org>
+
 	Update for Solaris 11 2010-11.
 	* doc/{glibc,posix}-{functions,headers}: Add info about Solaris 11
 	Express, released in November 2010.

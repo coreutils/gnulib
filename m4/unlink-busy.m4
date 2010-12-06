@@ -1,4 +1,4 @@
-#serial 11
+#serial 12
 
 dnl From J. David Anglin.
 
@@ -20,7 +20,12 @@ AC_DEFUN([gl_FUNC_UNLINK_BUSY_TEXT],
             int
             main (int argc, char **argv)
             {
-              return !argc || unlink (argv[0]) != 0;
+              int result = 0;
+              if (argc == 0)
+                result |= 1;
+              else if (unlink (argv[0]) != 0)
+                result |= 2;
+              return result;
             }]])],
       gl_cv_func_unlink_busy_text=yes,
       gl_cv_func_unlink_busy_text=no,

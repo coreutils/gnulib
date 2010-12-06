@@ -1,4 +1,4 @@
-# frexpl.m4 serial 12
+# frexpl.m4 serial 13
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -124,6 +124,7 @@ AC_DEFUN([gl_FUNC_FREXPL_WORKS],
 extern long double frexpl (long double, int *);
 int main()
 {
+  int result = 0;
   volatile long double x;
   /* Test on finite numbers that fails on AIX 5.1.  */
   x = 16.0L;
@@ -131,7 +132,7 @@ int main()
     int exp = -9999;
     frexpl (x, &exp);
     if (exp != 5)
-      return 1;
+      result |= 1;
   }
   /* Test on finite numbers that fails on MacOS X 10.4, because its frexpl
      function returns an invalid (incorrectly normalized) value: it returns
@@ -143,7 +144,7 @@ int main()
     int exp = -9999;
     long double y = frexpl (x, &exp);
     if (!(exp == 1 && y == 0.505L))
-      return 1;
+      result |= 2;
   }
   /* Test on large finite numbers.  This fails on BeOS at i = 16322, while
      LDBL_MAX_EXP = 16384.
@@ -156,7 +157,10 @@ int main()
         int exp = -9999;
         frexpl (x, &exp);
         if (exp != i)
-          return 1;
+          {
+            result |= 4;
+            break;
+          }
       }
   }
   /* Test on denormalized numbers.  */
@@ -171,7 +175,7 @@ int main()
         /* On machines with IEEE854 arithmetic: x = 1.68105e-4932,
            exp = -16382, y = 0.5.  On MacOS X 10.5: exp = -16384, y = 0.5.  */
         if (exp != LDBL_MIN_EXP - 1)
-          return 1;
+          result |= 8;
       }
   }
   /* Test on infinite numbers.  */
@@ -180,9 +184,9 @@ int main()
     int exp;
     long double y = frexpl (x, &exp);
     if (y != x)
-      return 1;
+      result |= 16;
   }
-  return 0;
+  return result;
 }]])],
         [gl_cv_func_frexpl_works=yes],
         [gl_cv_func_frexpl_works=no],

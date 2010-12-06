@@ -1,4 +1,4 @@
-# strtod.m4 serial 18
+# strtod.m4 serial 19
 dnl Copyright (C) 2002-2003, 2006-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -30,6 +30,7 @@ numeric_equal (double x, double y)
   return x == y;
 }
 ]], [[
+  int result = 0;
   {
     /* In some old versions of Linux (2000 or before), strtod mis-parses
        strings with leading '+'.  */
@@ -37,7 +38,7 @@ numeric_equal (double x, double y)
     char *term;
     double value = strtod (string, &term);
     if (value != 69 || term != (string + 4))
-      return 1;
+      result |= 1;
   }
   {
     /* Under Solaris 2.4, strtod returns the wrong value for the
@@ -46,7 +47,7 @@ numeric_equal (double x, double y)
     char *term;
     strtod (string, &term);
     if (term != string && *(term - 1) == 0)
-      return 2;
+      result |= 2;
   }
   {
     /* Older glibc and Cygwin mis-parse "-0x".  */
@@ -55,7 +56,7 @@ numeric_equal (double x, double y)
     double value = strtod (string, &term);
     double zero = 0.0;
     if (1.0 / value != -1.0 / zero || term != (string + 2))
-      return 3;
+      result |= 4;
   }
   {
     /* Many platforms do not parse hex floats.  */
@@ -63,7 +64,7 @@ numeric_equal (double x, double y)
     char *term;
     double value = strtod (string, &term);
     if (value != 20.0 || term != (string + 6))
-      return 4;
+      result |= 8;
   }
   {
     /* Many platforms do not parse infinities.  HP-UX 11.31 parses inf,
@@ -74,7 +75,7 @@ numeric_equal (double x, double y)
     errno = 0;
     value = strtod (string, &term);
     if (value != HUGE_VAL || term != (string + 3) || errno)
-      return 5;
+      result |= 16;
   }
   {
     /* glibc 2.7 and cygwin 1.5.24 misparse "nan()".  */
@@ -82,7 +83,7 @@ numeric_equal (double x, double y)
     char *term;
     double value = strtod (string, &term);
     if (numeric_equal (value, value) || term != (string + 5))
-      return 6;
+      result |= 32;
   }
   {
     /* darwin 10.6.1 misparses "nan(".  */
@@ -90,8 +91,9 @@ numeric_equal (double x, double y)
     char *term;
     double value = strtod (string, &term);
     if (numeric_equal (value, value) || term != (string + 3))
-      return 7;
+      result |= 64;
   }
+  return result;
 ]])],
         [gl_cv_func_strtod_works=yes],
         [gl_cv_func_strtod_works=no],

@@ -1,4 +1,4 @@
-# wcrtomb.m4 serial 6
+# wcrtomb.m4 serial 7
 dnl Copyright (C) 2008-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -48,27 +48,28 @@ changequote([,])dnl
 #include <wchar.h>
 int main ()
 {
+  int result = 0;
   if (setlocale (LC_ALL, "$LOCALE_FR") != NULL)
     {
       if (wcrtomb (NULL, 0, NULL) != 1)
-        return 1;
+        result |= 1;
     }
   if (setlocale (LC_ALL, "$LOCALE_FR_UTF8") != NULL)
     {
       if (wcrtomb (NULL, 0, NULL) != 1)
-        return 1;
+        result |= 2;
     }
   if (setlocale (LC_ALL, "$LOCALE_JA") != NULL)
     {
       if (wcrtomb (NULL, 0, NULL) != 1)
-        return 1;
+        result |= 4;
     }
   if (setlocale (LC_ALL, "$LOCALE_ZH_CN") != NULL)
     {
       if (wcrtomb (NULL, 0, NULL) != 1)
-        return 1;
+        result |= 8;
     }
-  return 0;
+  return result;
 }]])],
               [gl_cv_func_wcrtomb_retval=yes],
               [gl_cv_func_wcrtomb_retval=no],

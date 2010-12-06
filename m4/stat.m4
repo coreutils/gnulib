@@ -1,4 +1,4 @@
-# serial 5
+# serial 6
 
 # Copyright (C) 2009, 2010 Free Software Foundation, Inc.
 #
@@ -36,11 +36,15 @@ AC_DEFUN([gl_FUNC_STAT],
        AC_RUN_IFELSE(
          [AC_LANG_PROGRAM(
            [[#include <sys/stat.h>
-]], [[struct stat st;
-      if (!stat ("conftest.tmp/", &st)) return 1;
+]], [[int result = 0;
+      struct stat st;
+      if (!stat ("conftest.tmp/", &st))
+        result |= 1;
 #if HAVE_LSTAT
-      if (!stat ("conftest.lnk/", &st)) return 2;
+      if (!stat ("conftest.lnk/", &st))
+        result |= 2;
 #endif
+      return result;
            ]])],
          [gl_cv_func_stat_file_slash=yes], [gl_cv_func_stat_file_slash=no],
          [gl_cv_func_stat_file_slash="guessing no"])

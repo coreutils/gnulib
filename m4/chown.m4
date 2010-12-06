@@ -1,4 +1,4 @@
-# serial 23
+# serial 24
 # Determine whether we need the chown wrapper.
 
 dnl Copyright (C) 1997-2001, 2003-2005, 2007, 2009-2010 Free Software
@@ -114,6 +114,7 @@ AC_DEFUN_ONCE([gl_FUNC_CHOWN_FOLLOWS_SYMLINK],
         int
         main ()
         {
+          int result = 0;
           char const *dangling_symlink = "conftest.dangle";
 
           unlink (dangling_symlink);
@@ -122,8 +123,11 @@ AC_DEFUN_ONCE([gl_FUNC_CHOWN_FOLLOWS_SYMLINK],
 
           /* Exit successfully on a conforming system,
              i.e., where chown must fail with ENOENT.  */
-          exit ( ! (chown (dangling_symlink, getuid (), getgid ()) != 0
-                    && errno == ENOENT));
+          if (chown (dangling_symlink, getuid (), getgid ()) == 0)
+            result |= 1;
+          if (errno != ENOENT)
+            result |= 2;
+          return result;
         }
         ]])],
         [gl_cv_func_chown_follows_symlink=yes],

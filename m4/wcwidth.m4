@@ -1,4 +1,4 @@
-# wcwidth.m4 serial 17
+# wcwidth.m4 serial 18
 dnl Copyright (C) 2006-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -63,10 +63,15 @@ int wcwidth (int);
 #endif
 int main ()
 {
+  int result = 0;
   if (setlocale (LC_ALL, "fr_FR.UTF-8") != NULL)
-    if (wcwidth (0x0301) > 0 || wcwidth (0x200B) > 0)
-      return 1;
-  return 0;
+    {
+      if (wcwidth (0x0301) > 0)
+        result |= 1;
+      if (wcwidth (0x200B) > 0)
+        result |= 2;
+    }
+  return result;
 }]])],
           [gl_cv_func_wcwidth_works=yes],
           [gl_cv_func_wcwidth_works=no],

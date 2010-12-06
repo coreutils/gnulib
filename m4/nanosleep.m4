@@ -1,4 +1,4 @@
-# serial 31
+# serial 32
 
 dnl From Jim Meyering.
 dnl Check for the nanosleep function.
@@ -74,7 +74,7 @@ AC_DEFUN([gl_FUNC_NANOSLEEP],
             static struct timespec ts_remaining;
             static struct sigaction act;
             if (! nanosleep)
-              return 1;
+              return 2;
             act.sa_handler = check_for_SIGALRM;
             sigemptyset (&act.sa_mask);
             sigaction (SIGALRM, &act, NULL);
@@ -82,18 +82,21 @@ AC_DEFUN([gl_FUNC_NANOSLEEP],
             ts_sleep.tv_nsec = 1;
             alarm (1);
             if (nanosleep (&ts_sleep, NULL) != 0)
-              return 1;
+              return 3;
             ts_sleep.tv_sec = TYPE_MAXIMUM (time_t);
             ts_sleep.tv_nsec = 999999999;
             alarm (1);
-            if (nanosleep (&ts_sleep, &ts_remaining) == -1 && errno == EINTR
-                && TYPE_MAXIMUM (time_t) - 10 < ts_remaining.tv_sec)
-              return 0;
-            return 119;
+            if (nanosleep (&ts_sleep, &ts_remaining) != -1)
+              return 4;
+            if (errno != EINTR)
+              return 5;
+            if (ts_remaining.tv_sec <= TYPE_MAXIMUM (time_t) - 10)
+              return 6;
+            return 0;
           }]])],
        [gl_cv_func_nanosleep=yes],
        [case $? in dnl (
-        119) gl_cv_func_nanosleep='no (mishandles large arguments)';; dnl (
+        4|5|6) gl_cv_func_nanosleep='no (mishandles large arguments)';; dnl (
         *)   gl_cv_func_nanosleep=no;;
         esac],
        [gl_cv_func_nanosleep=cross-compiling])

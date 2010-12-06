@@ -1,4 +1,4 @@
-# strstr.m4 serial 11
+# strstr.m4 serial 12
 dnl Copyright (C) 2008, 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -68,10 +68,11 @@ AC_DEFUN([gl_FUNC_STRSTR],
 #include <stdlib.h> /* for malloc */
 #include <unistd.h> /* for alarm */
 static void quit (int sig) { exit (sig + 128); }
-]], [[size_t m = 1000000;
+]], [[
+    int result = 0;
+    size_t m = 1000000;
     char *haystack = (char *) malloc (2 * m + 2);
     char *needle = (char *) malloc (m + 2);
-    void *result = 0;
     /* Failure to compile this test due to missing alarm is okay,
        since all such platforms (mingw) also have quadratic strstr.  */
     signal (SIGALRM, quit);
@@ -85,9 +86,11 @@ static void quit (int sig) { exit (sig + 128); }
         memset (needle, 'A', m);
         needle[m] = 'B';
         needle[m + 1] = 0;
-        result = strstr (haystack, needle);
+        if (!strstr (haystack, needle))
+          result |= 1;
       }
-    return !result;]])],
+    return result;
+    ]])],
         [gl_cv_func_strstr_linear=yes], [gl_cv_func_strstr_linear=no],
         [dnl Only glibc > 2.12 and cygwin > 1.7.7 are known to have a
          dnl bug-free strstr that works in linear time.

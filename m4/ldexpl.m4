@@ -1,4 +1,4 @@
-# ldexpl.m4 serial 8
+# ldexpl.m4 serial 9
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -87,11 +87,20 @@ AC_DEFUN([gl_FUNC_LDEXPL_WORKS],
 extern long double ldexpl (long double, int);
 int main()
 {
-  volatile long double x1 = 1.0;
-  volatile long double y1 = ldexpl (x1, -1);
-  volatile long double x2 = 1.73205L;
-  volatile long double y2 = ldexpl (x2, 0);
-  return (y1 != 0.5L) || (y2 != x2);
+  int result = 0;
+  {
+    volatile long double x = 1.0;
+    volatile long double y = ldexpl (x, -1);
+    if (y != 0.5L)
+      result |= 1;
+  }
+  {
+    volatile long double x = 1.73205L;
+    volatile long double y = ldexpl (x, 0);
+    if (y != x)
+      result |= 2;
+  }
+  return result;
 }]])],
         [gl_cv_func_ldexpl_works=yes],
         [gl_cv_func_ldexpl_works=no],

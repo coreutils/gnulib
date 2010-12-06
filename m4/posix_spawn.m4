@@ -1,4 +1,4 @@
-# posix_spawn.m4 serial 7
+# posix_spawn.m4 serial 8
 dnl Copyright (C) 2008-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -291,7 +291,7 @@ parent_main (void)
   if (fflush (fp) || fclose (fp))
     {
       perror ("cannot prepare data file");
-      return 1;
+      return 2;
     }
 
   /* Avoid reading from our stdin, as it could block.  */
@@ -309,7 +309,7 @@ parent_main (void)
         posix_spawn_file_actions_destroy (&actions);
       errno = err;
       perror ("subprocess failed");
-      return 1;
+      return 3;
     }
   posix_spawn_file_actions_destroy (&actions);
   status = 0;
@@ -318,13 +318,13 @@ parent_main (void)
   if (!WIFEXITED (status))
     {
       fprintf (stderr, "subprocess terminated with unexpected wait status %d\n", status);
-      return 1;
+      return 4;
     }
   exitstatus = WEXITSTATUS (status);
   if (exitstatus != 0)
     {
       fprintf (stderr, "subprocess terminated with unexpected exit status %d\n", exitstatus);
-      return 1;
+      return 5;
     }
   return 0;
 }
@@ -339,7 +339,7 @@ child_main (void)
       && memcmp (buf, "Halle Potta", 11) == 0)
     return 0;
   else
-    return 2;
+    return 8;
 }
 
 static void

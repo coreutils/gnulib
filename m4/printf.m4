@@ -1,4 +1,4 @@
-# printf.m4 serial 39
+# printf.m4 serial 40
 dnl Copyright (C) 2003, 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -32,25 +32,26 @@ AC_DEFUN([gl_PRINTF_SIZES_C99],
 static char buf[100];
 int main ()
 {
+  int result = 0;
 #if HAVE_STDINT_H_WITH_UINTMAX || HAVE_INTTYPES_H_WITH_UINTMAX
   buf[0] = '\0';
   if (sprintf (buf, "%ju %d", (uintmax_t) 12345671, 33, 44, 55) < 0
       || strcmp (buf, "12345671 33") != 0)
-    return 1;
+    result |= 1;
 #endif
   buf[0] = '\0';
   if (sprintf (buf, "%zu %d", (size_t) 12345672, 33, 44, 55) < 0
       || strcmp (buf, "12345672 33") != 0)
-    return 1;
+    result |= 2;
   buf[0] = '\0';
   if (sprintf (buf, "%tu %d", (ptrdiff_t) 12345673, 33, 44, 55) < 0
       || strcmp (buf, "12345673 33") != 0)
-    return 1;
+    result |= 4;
   buf[0] = '\0';
   if (sprintf (buf, "%Lg %d", (long double) 1.5, 33, 44, 55) < 0
       || strcmp (buf, "1.5 33") != 0)
-    return 1;
-  return 0;
+    result |= 8;
+  return result;
 }]])],
         [gl_cv_func_printf_sizes_c99=yes],
         [gl_cv_func_printf_sizes_c99=no],
@@ -102,19 +103,20 @@ AC_DEFUN([gl_PRINTF_LONG_DOUBLE],
 static char buf[10000];
 int main ()
 {
+  int result = 0;
   buf[0] = '\0';
   if (sprintf (buf, "%Lf %d", 1.75L, 33, 44, 55) < 0
       || strcmp (buf, "1.750000 33") != 0)
-    return 1;
+    result |= 1;
   buf[0] = '\0';
   if (sprintf (buf, "%Le %d", 1.75L, 33, 44, 55) < 0
       || strcmp (buf, "1.750000e+00 33") != 0)
-    return 1;
+    result |= 2;
   buf[0] = '\0';
   if (sprintf (buf, "%Lg %d", 1.75L, 33, 44, 55) < 0
       || strcmp (buf, "1.75 33") != 0)
-    return 1;
-  return 0;
+    result |= 4;
+  return result;
 }]])],
         [gl_cv_func_printf_long_double=yes],
         [gl_cv_func_printf_long_double=no],
@@ -175,39 +177,40 @@ static char buf[10000];
 static double zero = 0.0;
 int main ()
 {
+  int result = 0;
   if (sprintf (buf, "%f", 1.0 / 0.0) < 0
       || (strcmp (buf, "inf") != 0 && strcmp (buf, "infinity") != 0))
-    return 1;
+    result |= 1;
   if (sprintf (buf, "%f", -1.0 / 0.0) < 0
       || (strcmp (buf, "-inf") != 0 && strcmp (buf, "-infinity") != 0))
-    return 1;
+    result |= 1;
   if (sprintf (buf, "%f", zero / zero) < 0
       || !strisnan (buf, 0, strlen (buf)))
-    return 1;
+    result |= 2;
   if (sprintf (buf, "%e", 1.0 / 0.0) < 0
       || (strcmp (buf, "inf") != 0 && strcmp (buf, "infinity") != 0))
-    return 1;
+    result |= 4;
   if (sprintf (buf, "%e", -1.0 / 0.0) < 0
       || (strcmp (buf, "-inf") != 0 && strcmp (buf, "-infinity") != 0))
-    return 1;
+    result |= 4;
   if (sprintf (buf, "%e", zero / zero) < 0
       || !strisnan (buf, 0, strlen (buf)))
-    return 1;
+    result |= 8;
   if (sprintf (buf, "%g", 1.0 / 0.0) < 0
       || (strcmp (buf, "inf") != 0 && strcmp (buf, "infinity") != 0))
-    return 1;
+    result |= 16;
   if (sprintf (buf, "%g", -1.0 / 0.0) < 0
       || (strcmp (buf, "-inf") != 0 && strcmp (buf, "-infinity") != 0))
-    return 1;
+    result |= 16;
   if (sprintf (buf, "%g", zero / zero) < 0
       || !strisnan (buf, 0, strlen (buf)))
-    return 1;
+    result |= 32;
   /* This test fails on HP-UX 10.20.  */
   if (have_minus_zero ())
     if (sprintf (buf, "%g", - zero) < 0
         || strcmp (buf, "-0") != 0)
-    return 1;
-  return 0;
+    result |= 64;
+  return result;
 }]])],
         [gl_cv_func_printf_infinite=yes],
         [gl_cv_func_printf_infinite=no],
@@ -289,34 +292,35 @@ static char buf[10000];
 static long double zeroL = 0.0L;
 int main ()
 {
+  int result = 0;
   nocrash_init();
   if (sprintf (buf, "%Lf", 1.0L / 0.0L) < 0
       || (strcmp (buf, "inf") != 0 && strcmp (buf, "infinity") != 0))
-    return 1;
+    result |= 1;
   if (sprintf (buf, "%Lf", -1.0L / 0.0L) < 0
       || (strcmp (buf, "-inf") != 0 && strcmp (buf, "-infinity") != 0))
-    return 1;
+    result |= 1;
   if (sprintf (buf, "%Lf", zeroL / zeroL) < 0
       || !strisnan (buf, 0, strlen (buf)))
-    return 1;
+    result |= 1;
   if (sprintf (buf, "%Le", 1.0L / 0.0L) < 0
       || (strcmp (buf, "inf") != 0 && strcmp (buf, "infinity") != 0))
-    return 1;
+    result |= 1;
   if (sprintf (buf, "%Le", -1.0L / 0.0L) < 0
       || (strcmp (buf, "-inf") != 0 && strcmp (buf, "-infinity") != 0))
-    return 1;
+    result |= 1;
   if (sprintf (buf, "%Le", zeroL / zeroL) < 0
       || !strisnan (buf, 0, strlen (buf)))
-    return 1;
+    result |= 1;
   if (sprintf (buf, "%Lg", 1.0L / 0.0L) < 0
       || (strcmp (buf, "inf") != 0 && strcmp (buf, "infinity") != 0))
-    return 1;
+    result |= 1;
   if (sprintf (buf, "%Lg", -1.0L / 0.0L) < 0
       || (strcmp (buf, "-inf") != 0 && strcmp (buf, "-infinity") != 0))
-    return 1;
+    result |= 1;
   if (sprintf (buf, "%Lg", zeroL / zeroL) < 0
       || !strisnan (buf, 0, strlen (buf)))
-    return 1;
+    result |= 1;
 #if CHECK_PRINTF_SAFE && ((defined __ia64 && LDBL_MANT_DIG == 64) || (defined __x86_64__ || defined __amd64__) || (defined __i386 || defined __i386__ || defined _I386 || defined _M_IX86 || defined _X86_))
 /* Representation of an 80-bit 'long double' as an initializer for a sequence
    of 'unsigned int' words.  */
@@ -335,13 +339,13 @@ int main ()
       { LDBL80_WORDS (0xFFFF, 0xC3333333, 0x00000000) };
     if (sprintf (buf, "%Lf", x.value) < 0
         || !strisnan (buf, 0, strlen (buf)))
-      return 1;
+      result |= 2;
     if (sprintf (buf, "%Le", x.value) < 0
         || !strisnan (buf, 0, strlen (buf)))
-      return 1;
+      result |= 2;
     if (sprintf (buf, "%Lg", x.value) < 0
         || !strisnan (buf, 0, strlen (buf)))
-      return 1;
+      result |= 2;
   }
   {
     /* Signalling NaN.  */
@@ -349,81 +353,81 @@ int main ()
       { LDBL80_WORDS (0xFFFF, 0x83333333, 0x00000000) };
     if (sprintf (buf, "%Lf", x.value) < 0
         || !strisnan (buf, 0, strlen (buf)))
-      return 1;
+      result |= 2;
     if (sprintf (buf, "%Le", x.value) < 0
         || !strisnan (buf, 0, strlen (buf)))
-      return 1;
+      result |= 2;
     if (sprintf (buf, "%Lg", x.value) < 0
         || !strisnan (buf, 0, strlen (buf)))
-      return 1;
+      result |= 2;
   }
   { /* Pseudo-NaN.  */
     static union { unsigned int word[4]; long double value; } x =
       { LDBL80_WORDS (0xFFFF, 0x40000001, 0x00000000) };
     if (sprintf (buf, "%Lf", x.value) < 0
         || !strisnan (buf, 0, strlen (buf)))
-      return 1;
+      result |= 4;
     if (sprintf (buf, "%Le", x.value) < 0
         || !strisnan (buf, 0, strlen (buf)))
-      return 1;
+      result |= 4;
     if (sprintf (buf, "%Lg", x.value) < 0
         || !strisnan (buf, 0, strlen (buf)))
-      return 1;
+      result |= 4;
   }
   { /* Pseudo-Infinity.  */
     static union { unsigned int word[4]; long double value; } x =
       { LDBL80_WORDS (0xFFFF, 0x00000000, 0x00000000) };
     if (sprintf (buf, "%Lf", x.value) < 0
         || !strisnan (buf, 0, strlen (buf)))
-      return 1;
+      result |= 8;
     if (sprintf (buf, "%Le", x.value) < 0
         || !strisnan (buf, 0, strlen (buf)))
-      return 1;
+      result |= 8;
     if (sprintf (buf, "%Lg", x.value) < 0
         || !strisnan (buf, 0, strlen (buf)))
-      return 1;
+      result |= 8;
   }
   { /* Pseudo-Zero.  */
     static union { unsigned int word[4]; long double value; } x =
       { LDBL80_WORDS (0x4004, 0x00000000, 0x00000000) };
     if (sprintf (buf, "%Lf", x.value) < 0
         || !strisnan (buf, 0, strlen (buf)))
-      return 1;
+      result |= 16;
     if (sprintf (buf, "%Le", x.value) < 0
         || !strisnan (buf, 0, strlen (buf)))
-      return 1;
+      result |= 16;
     if (sprintf (buf, "%Lg", x.value) < 0
         || !strisnan (buf, 0, strlen (buf)))
-      return 1;
+      result |= 16;
   }
   { /* Unnormalized number.  */
     static union { unsigned int word[4]; long double value; } x =
       { LDBL80_WORDS (0x4000, 0x63333333, 0x00000000) };
     if (sprintf (buf, "%Lf", x.value) < 0
         || !strisnan (buf, 0, strlen (buf)))
-      return 1;
+      result |= 32;
     if (sprintf (buf, "%Le", x.value) < 0
         || !strisnan (buf, 0, strlen (buf)))
-      return 1;
+      result |= 32;
     if (sprintf (buf, "%Lg", x.value) < 0
         || !strisnan (buf, 0, strlen (buf)))
-      return 1;
+      result |= 32;
   }
   { /* Pseudo-Denormal.  */
     static union { unsigned int word[4]; long double value; } x =
       { LDBL80_WORDS (0x0000, 0x83333333, 0x00000000) };
     if (sprintf (buf, "%Lf", x.value) < 0
         || !strisnan (buf, 0, strlen (buf)))
-      return 1;
+      result |= 64;
     if (sprintf (buf, "%Le", x.value) < 0
         || !strisnan (buf, 0, strlen (buf)))
-      return 1;
+      result |= 64;
     if (sprintf (buf, "%Lg", x.value) < 0
         || !strisnan (buf, 0, strlen (buf)))
-      return 1;
+      result |= 64;
   }
 #endif
-  return 0;
+  return result;
 }]])],
             [gl_cv_func_printf_infinite_long_double=yes],
             [gl_cv_func_printf_infinite_long_double=no],
@@ -476,37 +480,38 @@ AC_DEFUN([gl_PRINTF_DIRECTIVE_A],
 static char buf[100];
 int main ()
 {
+  int result = 0;
   if (sprintf (buf, "%a %d", 3.1416015625, 33, 44, 55) < 0
       || (strcmp (buf, "0x1.922p+1 33") != 0
           && strcmp (buf, "0x3.244p+0 33") != 0
           && strcmp (buf, "0x6.488p-1 33") != 0
           && strcmp (buf, "0xc.91p-2 33") != 0))
-    return 1;
+    result |= 1;
   if (sprintf (buf, "%A %d", -3.1416015625, 33, 44, 55) < 0
       || (strcmp (buf, "-0X1.922P+1 33") != 0
           && strcmp (buf, "-0X3.244P+0 33") != 0
           && strcmp (buf, "-0X6.488P-1 33") != 0
           && strcmp (buf, "-0XC.91P-2 33") != 0))
-    return 1;
+    result |= 2;
   /* This catches a FreeBSD 6.1 bug: it doesn't round.  */
   if (sprintf (buf, "%.2a %d", 1.51, 33, 44, 55) < 0
       || (strcmp (buf, "0x1.83p+0 33") != 0
           && strcmp (buf, "0x3.05p-1 33") != 0
           && strcmp (buf, "0x6.0ap-2 33") != 0
           && strcmp (buf, "0xc.14p-3 33") != 0))
-    return 1;
+    result |= 4;
   /* This catches a FreeBSD 6.1 bug.  See
      <http://lists.gnu.org/archive/html/bug-gnulib/2007-04/msg00107.html> */
   if (sprintf (buf, "%010a %d", 1.0 / 0.0, 33, 44, 55) < 0
       || buf[0] == '0')
-    return 1;
+    result |= 8;
   /* This catches a MacOS X 10.3.9 (Darwin 7.9) bug.  */
   if (sprintf (buf, "%.1a", 1.999) < 0
       || (strcmp (buf, "0x1.0p+1") != 0
           && strcmp (buf, "0x2.0p+0") != 0
           && strcmp (buf, "0x4.0p-1") != 0
           && strcmp (buf, "0x8.0p-2") != 0))
-    return 1;
+    result |= 16;
   /* This catches the same MacOS X 10.3.9 (Darwin 7.9) bug and also a
      glibc 2.4 bug <http://sourceware.org/bugzilla/show_bug.cgi?id=2908>.  */
   if (sprintf (buf, "%.1La", 1.999L) < 0
@@ -514,8 +519,8 @@ int main ()
           && strcmp (buf, "0x2.0p+0") != 0
           && strcmp (buf, "0x4.0p-1") != 0
           && strcmp (buf, "0x8.0p-2") != 0))
-    return 1;
-  return 0;
+    result |= 32;
+  return result;
 }]])],
         [gl_cv_func_printf_directive_a=yes],
         [gl_cv_func_printf_directive_a=no],
@@ -559,17 +564,18 @@ AC_DEFUN([gl_PRINTF_DIRECTIVE_F],
 static char buf[100];
 int main ()
 {
+  int result = 0;
   if (sprintf (buf, "%F %d", 1234567.0, 33, 44, 55) < 0
       || strcmp (buf, "1234567.000000 33") != 0)
-    return 1;
+    result |= 1;
   if (sprintf (buf, "%F", 1.0 / 0.0) < 0
       || (strcmp (buf, "INF") != 0 && strcmp (buf, "INFINITY") != 0))
-    return 1;
+    result |= 2;
   /* This catches a Cygwin 1.5.x bug.  */
   if (sprintf (buf, "%.F", 1234.0) < 0
       || strcmp (buf, "1234") != 0)
-    return 1;
-  return 0;
+    result |= 4;
+  return result;
 }]])],
         [gl_cv_func_printf_directive_f=yes],
         [gl_cv_func_printf_directive_f=no],
@@ -664,6 +670,7 @@ AC_DEFUN([gl_PRINTF_DIRECTIVE_LS],
 #include <string.h>
 int main ()
 {
+  int result = 0;
   char buf[100];
   /* Test whether %ls works at all.
      This test fails on OpenBSD 4.0, IRIX 6.5, Solaris 2.6, Haiku, but not on
@@ -673,7 +680,7 @@ int main ()
     buf[0] = '\0';
     if (sprintf (buf, "%ls", wstring) < 0
         || strcmp (buf, "abc") != 0)
-      return 1;
+      result |= 1;
   }
   /* This test fails on IRIX 6.5, Solaris 2.6, Cygwin 1.5, Haiku (with an
      assertion failure inside libc), but not on OpenBSD 4.0.  */
@@ -682,7 +689,7 @@ int main ()
     buf[0] = '\0';
     if (sprintf (buf, "%ls", wstring) < 0
         || strcmp (buf, "a") != 0)
-      return 1;
+      result |= 2;
   }
   /* Test whether precisions in %ls are supported as specified in ISO C 99
      section 7.19.6.1:
@@ -697,9 +704,9 @@ int main ()
     buf[0] = '\0';
     if (sprintf (buf, "%.2ls", wstring) < 0
         || strcmp (buf, "ab") != 0)
-      return 1;
+      result |= 8;
   }
-  return 0;
+  return result;
 }]])],
         [gl_cv_func_printf_directive_ls=yes],
         [gl_cv_func_printf_directive_ls=no],
@@ -901,15 +908,16 @@ AC_DEFUN([gl_PRINTF_PRECISION],
 static char buf[5000];
 int main ()
 {
+  int result = 0;
 #ifdef __BEOS__
   /* On BeOS, this would crash and show a dialog box.  Avoid the crash.  */
   return 1;
 #endif
   if (sprintf (buf, "%.4000d %d", 1, 33, 44) < 4000 + 3)
-    return 1;
+    result |= 1;
   if (sprintf (buf, "%.4000f %d", 1.0, 33, 44) < 4000 + 5)
-    return 2;
-  return 0;
+    result |= 2;
+  return result;
 }]])],
         [gl_cv_func_printf_precision=yes],
         [gl_cv_func_printf_precision=no],

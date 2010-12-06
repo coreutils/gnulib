@@ -1,4 +1,4 @@
-# serial 1
+# serial 2
 # See if we need to provide mkfifo replacement.
 
 dnl Copyright (C) 2009, 2010 Free Software Foundation, Inc.
@@ -27,10 +27,15 @@ AC_DEFUN([gl_FUNC_MKFIFO],
        AC_RUN_IFELSE(
          [AC_LANG_PROGRAM(
            [[#include <sys/stat.h>
-]], [[if (!mkfifo ("conftest.tmp/", 0600)) return 1;
+           ]],
+           [[int result = 0;
+             if (!mkfifo ("conftest.tmp/", 0600))
+               result |= 1;
 #if HAVE_LSTAT
-      if (!mkfifo ("conftest.lnk/", 0600)) return 2;
+             if (!mkfifo ("conftest.lnk/", 0600))
+               result |= 2;
 #endif
+             return result;
            ]])],
          [gl_cv_func_mkfifo_works=yes], [gl_cv_func_mkfifo_works=no],
          [gl_cv_func_mkfifo_works="guessing no"])

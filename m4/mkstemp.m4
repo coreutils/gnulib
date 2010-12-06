@@ -1,4 +1,4 @@
-#serial 18
+#serial 19
 
 # Copyright (C) 2001, 2003-2007, 2009-2010 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -25,7 +25,8 @@ AC_DEFUN([gl_FUNC_MKSTEMP],
         AC_RUN_IFELSE(
           [AC_LANG_PROGRAM(
             [AC_INCLUDES_DEFAULT],
-            [[int i;
+            [[int result = 0;
+              int i;
               off_t large = (off_t) 4294967295u;
               if (large < 0)
                 large = 2147483647;
@@ -34,11 +35,16 @@ AC_DEFUN([gl_FUNC_MKSTEMP],
                   char templ[] = "conftest.mkstemp/coXXXXXX";
                   int (*mkstemp_function) (char *) = mkstemp;
                   int fd = mkstemp_function (templ);
-                  if (fd < 0 || lseek (fd, large, SEEK_SET) != large)
-                    return 1;
-                  close (fd);
+                  if (fd < 0)
+                    result |= 1;
+                  else
+                    {
+                      if (lseek (fd, large, SEEK_SET) != large)
+                        result |= 2;
+                      close (fd);
+                    }
                 }
-              return 0;]])],
+              return result;]])],
           [gl_cv_func_working_mkstemp=yes],
           [gl_cv_func_working_mkstemp=no],
           [gl_cv_func_working_mkstemp=no])

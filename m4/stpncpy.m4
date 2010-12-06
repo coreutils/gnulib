@@ -1,4 +1,4 @@
-# stpncpy.m4 serial 12
+# stpncpy.m4 serial 13
 dnl Copyright (C) 2002-2003, 2005-2007, 2009-2010 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -37,19 +37,30 @@ AC_DEFUN([gl_FUNC_STPNCPY],
 #if !HAVE_DECL_STPNCPY
 extern char *stpncpy (char *dest, const char *src, size_t n);
 #endif
-int main () {
+int main ()
+{
+  int result = 0;
   const char *src = "Hello";
   char dest[10];
   /* AIX 4.3.3 and AIX 5.1 stpncpy() returns dest+1 here.  */
-  strcpy (dest, "\377\377\377\377\377\377");
-  if (stpncpy (dest, src, 2) != dest + 2) exit(1);
+  {
+    strcpy (dest, "\377\377\377\377\377\377");
+    if (stpncpy (dest, src, 2) != dest + 2)
+      result |= 1;
+  }
   /* AIX 4.3.3 and AIX 5.1 stpncpy() returns dest+4 here.  */
-  strcpy (dest, "\377\377\377\377\377\377");
-  if (stpncpy (dest, src, 5) != dest + 5) exit(1);
+  {
+    strcpy (dest, "\377\377\377\377\377\377");
+    if (stpncpy (dest, src, 5) != dest + 5)
+      result |= 2;
+  }
   /* AIX 4.3.3 and AIX 5.1 stpncpy() returns dest+6 here.  */
-  strcpy (dest, "\377\377\377\377\377\377");
-  if (stpncpy (dest, src, 7) != dest + 5) exit(1);
-  exit(0);
+  {
+    strcpy (dest, "\377\377\377\377\377\377");
+    if (stpncpy (dest, src, 7) != dest + 5)
+      result |= 4;
+  }
+  return result;
 }
 ]])],
         [gl_cv_func_stpncpy=yes],
