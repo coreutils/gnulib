@@ -8,7 +8,7 @@ Depends-on:
 unistr/base
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([0.9], [unistr/u8-strcmp])
+gl_LIBUNISTRING_MODULE([0.9.4], [unistr/u8-strcmp])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNISTR_U8_STRCMP

@@ -1,3 +1,10 @@
+2010-12-07  Bruno Haible  <bruno@clisp.org>
+
+	unistr/u8-strcmp: Avoid collision with libc function on Solaris 11.
+	* lib/unistr.in.h (u8_strcmp) [__sun]: Declare with real name
+	u8_strcmp_gnu.
+	* modules/unistr/u8-strcmp (configure.ac): Bump version number.
+
 2010-12-06  Bruno Haible  <bruno@clisp.org>
 
 	Update internal documentation.
