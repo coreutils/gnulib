@@ -18,6 +18,7 @@ dnl AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_HEADER([config.h])
 AC_CONFIG_FILES([Makefile lib/Makefile tests/Makefile])
+AC_CONFIG_FILES([lib/version.h])
 
 AM_INIT_AUTOMAKE([foreign])
 LT_INIT

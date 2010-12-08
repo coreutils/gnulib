@@ -34,6 +34,8 @@ install-sh
 /lib/arpa
 /lib/pt_chown
 /lib/sys
+!lib/version.c
+!lib/version.h.in
 libtool
 ltmain.sh
 /m4

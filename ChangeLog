@@ -1,3 +1,17 @@
+2010-12-08  Gary V. Vaughan  <gary@gnu.org>
+
+	libposix: generate compile and runtime versions with configure
+	* libposix/lib/version.c, libposix/lib/version.h.in: Templates
+	for code to allow runtime and compile time checking of libposix
+	version numbers.
+	* libposix/configure.ac (AC_CONFIG_FILES): Use the already
+	calculated libposix version number to generate libposix/
+	lib/version.h.
+	* libposix/mk-tarball (func_mkver): Removed. Adjust all callers.
+	Don't generate files required by the build in an optionally
+	used script, and incidentally avoid recalculating the version
+	number that configure already knows.
+
 2010-12-07  Gary V. Vaughan  <gary@gnu.org>
 
 	libposix: version filter script was adding a newline
