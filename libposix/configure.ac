@@ -1,6 +1,5 @@
 AC_INIT([GNU libposix],
-    m4_esyscmd([./git-version-gen .tarball-version | \
-	sed 's/-dirty/-modified/']),
+    m4_esyscmd([./git-version-gen .tarball-version]),
     [bug-gnulib@gnu.org])
 
 AS_BOX([Configuring AC_PACKAGE_TARNAME AC_PACKAGE_VERSION])

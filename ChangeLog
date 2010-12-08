@@ -1,3 +1,15 @@
+2010-12-07  Gary V. Vaughan  <gary@gnu.org>
+
+	libposix: version filter script was adding a newline
+	* libposix/configure.ac (AC_INIT): Use the output of
+	git-version-gen unmodified, os per other GNU projects...
+	otherwise the spurious newline added to the version number
+	breaks operation of the configure script (tested with
+	Autoconf-2.68).
+	* libposix/mk-tarball: Remove the filter here too, otherwise
+	we'll end up with two conflicting version numbers in the same
+	release!
+
 2010-11-17  Bruce Korb  <bkorb@gnu.org>
 
 	* libposix/lib/Makefile.am (lpx-config.h): generate the new header

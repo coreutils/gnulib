@@ -63,8 +63,7 @@ func_mkver()
         sed '1,/^$/d;s/^#/ */;/http:\/\/www\.gnu\.org/q' ${prognam}
         echo ' */'
 
-        gv=`../build-aux/git-version-gen .tarball-version | \
-            sed 's/-dirty/-modified/'`
+        gv=`../build-aux/git-version-gen .tarball-version`
         sedcmd='/^2[01][0-9][0-9]-[0-1][0-9]-[0-3][0-9]  /{
 	  s/ .*//
 	  s/-/./gp
