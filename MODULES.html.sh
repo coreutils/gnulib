@@ -2649,6 +2649,7 @@ func_all_modules ()
   func_module full-write
   func_module binary-io
   func_module isapipe
+  func_module pipe-posix
   func_module pipe2
   func_module pipe2-safer
   func_end_table

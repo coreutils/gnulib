@@ -38,7 +38,7 @@ AC_DEFUN([gl_UNISTD_H],
     ]], [chown dup2 dup3 environ euidaccess faccessat fchdir fchownat
     fsync ftruncate getcwd getdomainname getdtablesize getgroups
     gethostname getlogin getlogin_r getpagesize getusershell setusershell
-    endusershell lchown link linkat lseek pipe2 pread pwrite readlink
+    endusershell lchown link linkat lseek pipe pipe2 pread pwrite readlink
     readlinkat rmdir sleep symlink symlinkat ttyname_r unlink unlinkat
     usleep])
 ])
@@ -78,6 +78,7 @@ AC_DEFUN([gl_UNISTD_H_DEFAULTS],
   GNULIB_LINK=0;             AC_SUBST([GNULIB_LINK])
   GNULIB_LINKAT=0;           AC_SUBST([GNULIB_LINKAT])
   GNULIB_LSEEK=0;            AC_SUBST([GNULIB_LSEEK])
+  GNULIB_PIPE=0;             AC_SUBST([GNULIB_PIPE])
   GNULIB_PIPE2=0;            AC_SUBST([GNULIB_PIPE2])
   GNULIB_PREAD=0;            AC_SUBST([GNULIB_PREAD])
   GNULIB_PWRITE=0;           AC_SUBST([GNULIB_PWRITE])

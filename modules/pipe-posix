@@ -1,0 +1,22 @@
+Description:
+Creation of a pipe.
+
+Files:
+
+Depends-on:
+unistd
+
+configure.ac:
+AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
+gl_UNISTD_MODULE_INDICATOR([pipe])
+
+Makefile.am:
+
+Include:
+<unistd.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+Eric Blake

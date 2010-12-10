@@ -1,3 +1,14 @@
+2010-12-10  Eric Blake  <eblake@redhat.com>
+
+	pipe-posix: new module
+	* modules/pipe-posix: New file.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Set default.
+	(gl_UNISTD_H): Check for declaration.
+	* modules/unistd (Makefile.am): Substitute it.
+	* lib/unistd.in.h (pipe): Provide it for mingw.
+	* doc/posix-functions/pipe.texi (pipe): Update documentation.
+	* MODULES.html.sh (File descriptor based Input/Output): Likewise.
+
 2010-12-07  Bruno Haible  <bruno@clisp.org>
 
 	unistr/u8-strcmp: Avoid collision with libc function on Solaris 11.
