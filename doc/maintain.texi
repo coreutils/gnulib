@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate November 22, 2010
+@set lastupdate December 9, 2010
 @c %**end of header
 
 @dircategory GNU organization
@@ -1099,10 +1099,10 @@ useful for your package.
 @cindex version control
 
 It is very important to keep backup files of all source files of GNU.
-You can do this using a source control system (such as RCS, CVS, Git,
-@dots{}) if you like.  The easiest way to use RCS or CVS is via the
-Version Control library in Emacs (@pxref{VC Concepts,, Concepts of
-Version Control, emacs, The GNU Emacs Manual}).
+You can do this using a source control system (such as Bazaar, RCS,
+CVS, Git, Subversion, @dots{}) if you like.  The easiest way to use
+RCS or CVS is via the Version Control library in Emacs (@pxref{VC
+Concepts,, Concepts of Version Control, emacs, The GNU Emacs Manual}).
 
 The history of previous revisions and log entries is very important for
 future maintainers of the package, so even if you do not make it
@@ -1113,15 +1113,14 @@ some day.
 @cindex @code{savannah-hackers@@gnu.org}
 The GNU Project provides a server that GNU software packages can use
 for source control and other package needs: @code{savannah.gnu.org}.
-You don't have to use this repository, but if you plan to allow public
-read-only access to your development sources, it is convenient for
-people to be able to find various GNU packages in a central place.
-Savannah is managed by @email{savannah-hackers@@gnu.org}.
+Savannah is managed by @email{savannah-hackers@@gnu.org}.  For more
+details on using and contributing to Savannah, see
+@url{http://savannah.gnu.org/maintenance}.
 
-All GNU maintainers are strongly encouraged to take advantage of
-Savannah, as sharing such a central point can serve to foster a sense
-of community among GNU developers and help in keeping up with project
-management.
+It's not a requirement, but all GNU maintainers are strongly
+encouraged to take advantage of Savannah, as sharing such a central
+point can serve to foster a sense of community among GNU developers
+and help in keeping up with project management.
 
 @cindex @code{savannah-announce@@gnu.org} mailing list
 If you do use Savannah, please subscribe to the

@@ -2,9 +2,10 @@
 # gendocs.sh -- generate a GNU manual in many formats.  This script is
 #   mentioned in maintain.texi.  See the help message below for usage details.
 
-scriptversion=2010-11-27.07
+scriptversion=2010-11-29.11
 
-# Copyright 2003-2010 Free Software Foundation, Inc.
+# Copyright 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010 Free Software
+# Foundation, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
