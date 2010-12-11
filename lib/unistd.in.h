@@ -82,14 +82,10 @@
 # include <stdlib.h>
 #endif
 
-/* mingw declares getcwd in <io.h>, not in <unistd.h>.  It also provides
-   _pipe in <io.h>, but that requires _O_BINARY from <fcntl.h>.  */
-#if ((@GNULIB_GETCWD@ || @GNULIB_PIPE@ || defined GNULIB_POSIXCHECK) \
+/* mingw declares getcwd in <io.h>, not in <unistd.h>.  */
+#if ((@GNULIB_GETCWD@ || defined GNULIB_POSIXCHECK) \
      && ((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__))
 # include <io.h>
-# if @GNULIB_PIPE@
-#  include <fcntl.h>
-# endif
 #endif
 
 /* AIX and OSF/1 5.1 declare getdomainname in <netdb.h>, not in <unistd.h>.  */
@@ -980,14 +976,22 @@ _GL_WARN_ON_USE (lseek, "lseek does not fail with ESPIPE on pipes on some "
 /* Create a pipe, defaulting to O_BINARY mode.
    Store the read-end as fd[0] and the write-end as fd[1].
    Return 0 upon success, or -1 with errno set upon failure.  */
-# if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-#  define pipe(fd) _pipe (fd, 4096, _O_BINARY)
+# if @HAVE_PIPE@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define pipe rpl_pipe
+#  endif
+_GL_FUNCDECL_RPL (pipe, int, (int fd[2]) _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (pipe, int, (int fd[2]));
+# else
+_GL_FUNCDECL_SYS (pipe, int, (int fd[2]) _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_SYS (pipe, int, (int fd[2]));
 # endif
+_GL_CXXALIASWARN (pipe);
 #elif defined GNULIB_POSIXCHECK
 # undef pipe
 # if HAVE_RAW_DECL_PIPE
 _GL_WARN_ON_USE (pipe, "pipe is unportable - "
-                 "use gnulib module pipe for portability");
+                 "use gnulib module pipe-posix for portability");
 # endif
 #endif
 

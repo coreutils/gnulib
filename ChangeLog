@@ -1,5 +1,19 @@
 2010-12-10  Bruno Haible  <bruno@clisp.org>
 
+	pipe-posix: Make it work in C++ mode.
+	* lib/unistd.in.h: Don't include <io.h>, <fcntl.h> for pipe.
+	(pipe): Use common idiom, not a macro definition.
+	* lib/pipe.c: New file.
+	* m4/pipe.m4: New file.
+	* modules/pipe-posix (Description): Enhance.
+	(Files): Add lib/pipe.c, m4/pipe.m4.
+	(configure.ac): Invoke gl_FUNC_PIPE.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize HAVE_PIPE.
+	* modules/unistd (Makefile.am): Substitute HAVE_PIPE.
+	* tests/test-unistd-c++.cc: Check the signature of pipe.
+
+2010-12-10  Bruno Haible  <bruno@clisp.org>
+
 	Rename module 'pipe' to 'spawn-pipe'.
 	* modules/spawn-pipe: New file, renamed from modules/pipe.
 	(Files, configure.ac, Makefile.am): Update.

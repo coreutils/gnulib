@@ -129,6 +129,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::linkat, int,
 SIGNATURE_CHECK (GNULIB_NAMESPACE::lseek, off_t, (int, off_t, int));
 #endif
 
+#if GNULIB_TEST_PIPE
+SIGNATURE_CHECK (GNULIB_NAMESPACE::pipe, int, (int[2]));
+#endif
+
 #if GNULIB_TEST_PIPE2
 SIGNATURE_CHECK (GNULIB_NAMESPACE::pipe2, int, (int[2], int));
 #endif

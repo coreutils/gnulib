@@ -1,13 +1,15 @@
 Description:
-Creation of a pipe.
+pipe() function: Creation of a pipe.
 
 Files:
+lib/pipe.c
+m4/pipe.m4
 
 Depends-on:
 unistd
 
 configure.ac:
-AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
+gl_FUNC_PIPE
 gl_UNISTD_MODULE_INDICATOR([pipe])
 
 Makefile.am:
