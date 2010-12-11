@@ -1,5 +1,11 @@
 2010-12-10  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'pipe-posix.
+	* modules/pipe-posix-tests: New file.
+	* tests/test-pipe.c: New file, based on tests/test-pipe2.c.
+
+2010-12-10  Bruno Haible  <bruno@clisp.org>
+
 	pipe-posix: Make it work in C++ mode.
 	* lib/unistd.in.h: Don't include <io.h>, <fcntl.h> for pipe.
 	(pipe): Use common idiom, not a macro definition.
