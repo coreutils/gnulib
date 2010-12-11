@@ -32,7 +32,7 @@
 
 #include "javaversion.h"
 #include "execute.h"
-#include "pipe.h"
+#include "spawn-pipe.h"
 #include "wait-process.h"
 #include "classpath.h"
 #include "xsetenv.h"

@@ -19,7 +19,7 @@
 #include <config.h>
 
 /* Specification.  */
-#include "pipe.h"
+#include "spawn-pipe.h"
 
 #include <errno.h>
 #include <fcntl.h>

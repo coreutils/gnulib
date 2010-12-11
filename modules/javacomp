@@ -10,7 +10,7 @@ stdbool
 unistd
 javaversion
 execute
-pipe
+spawn-pipe
 wait-process
 classpath
 xsetenv

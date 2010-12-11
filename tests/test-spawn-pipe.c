@@ -17,7 +17,7 @@
 
 #include <config.h>
 
-#include "pipe.h"
+#include "spawn-pipe.h"
 #include "wait-process.h"
 
 #include <errno.h>

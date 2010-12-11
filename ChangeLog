@@ -1,3 +1,34 @@
+2010-12-10  Bruno Haible  <bruno@clisp.org>
+
+	Rename module 'pipe' to 'spawn-pipe'.
+	* modules/spawn-pipe: New file, renamed from modules/pipe.
+	(Files, configure.ac, Makefile.am): Update.
+	(Include): Mention "spawn-pipe.h" instead of "pipe.h".
+	* modules/pipe: Reduce to an obsolete indirection to 'spawn-pipe'.
+	* lib/spawn-pipe.h: New file, renamed from lib/pipe.h.
+	* lib/spawn-pipe.c: New file, renamed from lib/pipe.c. Include
+	"spawn-pipe.h" instead of "pipe.h".
+	* m4/spawn-pipe.m4: New file, renamed from m4/pipe.m4. Rename gl_PIPE
+	to gl_SPAWN_PIPE.
+	* modules/spawn-pipe-tests: New file, renamed from modules/pipe-tests.
+	(Files, Makefile.am): Update.
+	* tests/test-spawn-pipe.sh: New file, renamed from tests/test-pipe.sh.
+	Update.
+	* tests/test-spawn-pipe.c: New file, renamed from tests/test-pipe.c.
+	Include "spawn-pipe.h" instead of "pipe.h".
+	* lib/csharpcomp.c: Include "spawn-pipe.h" instead of "pipe.h".
+	* lib/javacomp.c: Likewise.
+	* lib/javaversion.c: Likewise.
+	* lib/pipe-filter-gi.c: Likewise.
+	* lib/pipe-filter-ii.c: Likewise.
+	* modules/csharpcomp (Depends-on): Add 'spawn-pipe', remove 'pipe'.
+	* modules/javacomp (Depends-on): Likewise.
+	* modules/javaversion (Depends-on): Likewise.
+	* modules/pipe-filter-gi (Depends-on): Likewise.
+	* modules/pipe-filter-ii (Depends-on): Likewise.
+	* MODULES.html.sh (Executing programs): Update.
+	* NEWS: Mention the change.
+
 2010-12-10  Eric Blake  <eblake@redhat.com>
 
 	pipe-posix: new module

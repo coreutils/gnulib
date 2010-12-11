@@ -15,8 +15,8 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-#ifndef _PIPE_H
-#define _PIPE_H
+#ifndef _SPAWN_PIPE_H
+#define _SPAWN_PIPE_H
 
 /* Get pid_t.  */
 #include <stdlib.h>
@@ -144,4 +144,4 @@ extern pid_t create_pipe_bidi (const char *progname,
 #endif
 
 
-#endif /* _PIPE_H */
+#endif /* _SPAWN_PIPE_H */

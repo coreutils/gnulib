@@ -1,48 +1,23 @@
 Description:
 Creation of subprocesses, communicating via pipes.
 
+Status:
+obsolete
+
+Notice:
+This module is obsolete. Use the module 'spawn-pipe' instead.
+
 Files:
-lib/pipe.h
-lib/pipe.c
-lib/w32spawn.h
-m4/pipe.m4
 
 Depends-on:
-cloexec
-dup2
-environ
-error
-exit
-fatal-signal
-gettext-h
-open
-pipe2
-pipe2-safer
-spawn
-posix_spawnp
-posix_spawn_file_actions_init
-posix_spawn_file_actions_addclose
-posix_spawn_file_actions_adddup2
-posix_spawn_file_actions_addopen
-posix_spawn_file_actions_destroy
-posix_spawnattr_init
-posix_spawnattr_setsigmask
-posix_spawnattr_setflags
-posix_spawnattr_destroy
-stdbool
-strpbrk
-unistd
-unistd-safer
-wait-process
+spawn-pipe
 
 configure.ac:
-gl_PIPE
 
 Makefile.am:
-lib_SOURCES += pipe.h pipe.c w32spawn.h
 
 Include:
-"pipe.h"
+"spawn-pipe.h"
 
 License:
 GPL

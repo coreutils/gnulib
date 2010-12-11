@@ -1,0 +1,14 @@
+Files:
+tests/test-spawn-pipe.sh
+tests/test-spawn-pipe.c
+tests/macros.h
+
+Depends-on:
+progname
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-spawn-pipe.sh
+check_PROGRAMS += test-spawn-pipe
+test_spawn_pipe_LDADD = $(LDADD) @LIBINTL@

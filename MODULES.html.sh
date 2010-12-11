@@ -3324,7 +3324,7 @@ func_all_modules ()
   func_module findprog-lgpl
   func_module wait-process
   func_module execute
-  func_module pipe
+  func_module spawn-pipe
   func_module pipe-filter-gi
   func_module pipe-filter-ii
   func_module sh-quote

@@ -27,7 +27,7 @@
 #include <string.h>
 
 #include "execute.h"
-#include "pipe.h"
+#include "spawn-pipe.h"
 #include "wait-process.h"
 #include "sh-quote.h"
 #include "safe-read.h"
