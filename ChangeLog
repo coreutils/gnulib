@@ -1,6 +1,6 @@
 2010-12-10  Bruno Haible  <bruno@clisp.org>
 
-	Tests for module 'pipe-posix.
+	Tests for module 'pipe-posix'.
 	* modules/pipe-posix-tests: New file.
 	* tests/test-pipe.c: New file, based on tests/test-pipe2.c.
 
