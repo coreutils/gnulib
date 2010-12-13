@@ -1,3 +1,9 @@
+2010-12-13  Pádraig Brady <P@draigBrady.com>
+
+	read-file: Improve handling of large files
+	* lib/read-file.c (fread_file): Minimize realloc()s
+	for regular files, and better manage sizes around SIZE_MAX.
+
 2010-12-13  Eric Blake  <eblake@redhat.com>
 
 	cloexec, fcntl: relax license
