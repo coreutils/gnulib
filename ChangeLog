@@ -1,3 +1,10 @@
+2010-12-13  Eric Blake  <eblake@redhat.com>
+
+	cloexec, fcntl: relax license
+	* modules/cloexec (License): Change from LGPLv3+ to LGPLv2+, with
+	consent from all contributors.
+	* modules/fcntl (License): Likewise.
+
 2010-12-10  Bruno Haible  <bruno@clisp.org>
 
 	Tests for module 'pipe-posix'.
