@@ -46,3 +46,4 @@ warn-on-use.h
 _b*
 _i*
 /libposix*.tar.*
+/libposix-*
