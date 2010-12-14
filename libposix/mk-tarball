@@ -17,15 +17,17 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 case "$0" in
-*/* ) progdir=`echo "$0" | sed 's@/[^/]*$@@'`
-      cd ${progdir}
-      progdir=`pwd`
-      prognam=`echo "$0" | sed 's@.*/@@'`
-      ;;
+*/* )
+  progdir=`echo "$0" | sed 's@/[^/]*$@@'`
+  cd ${progdir}
+  progdir=`pwd`
+  prognam=`echo "$0" | sed 's@.*/@@'`
+  ;;
 
-* )   progdir=`pwd`
-      prognam="$0"
-      ;;
+* )
+  progdir=`pwd`
+  prognam="$0"
+  ;;
 esac
 
 # kill the patriarch process.  If we are not the patriarch,
@@ -33,82 +35,81 @@ esac
 #
 func_die()
 {
-    echo "${prognam} failure:  $*" >&2
-    kill -${SIGTERM} ${progpid}
-    exit 1
+  echo "${prognam} failure:  $*" >&2
+  kill -${SIGTERM} ${progpid}
+  exit 1
 }
 
 func_init()
 {
-    progpid=$$
-    glibdir=`cd .. >/dev/null ; pwd`
-    SIGTERM=15
+  progpid=$$
+  glibdir=`cd .. >/dev/null ; pwd`
+  SIGTERM=15
 
-    git --version >/dev/null 2>&1 \
-        || func_die "git is not operational"
+  git --version >/dev/null 2>&1 \
+    || func_die "git is not operational"
 
-    test -d _b && rm -rf _b
+  test -d _b && rm -rf _b
 
-    case "$*" in
-    *'--clean'* | *'--clob'* )
-        git clean -f -x -d .
-        ;;
-    esac
+  case "$*" in
+  *'--clean'* | *'--clob'* )
+    git clean -f -x -d .
+    ;;
+  esac
 }
 
 func_mkver()
 {
-    {
-        echo '/*'
-        sed '1,/^$/d;s/^#/ */;/http:\/\/www\.gnu\.org/q' ${prognam}
-        echo ' */'
+  {
+    echo '/*'
+    sed '1,/^$/d;s/^#/ */;/http:\/\/www\.gnu\.org/q' ${prognam}
+    echo ' */'
 
-        gv=`../build-aux/git-version-gen .tarball-version | \
-            sed 's/-dirty/-modified/'`
-        sedcmd='/^2[01][0-9][0-9]-[0-1][0-9]-[0-3][0-9]  /{
+    gv=`../build-aux/git-version-gen .tarball-version | \
+      sed 's/-dirty/-modified/'`
+    sedcmd='/^2[01][0-9][0-9]-[0-1][0-9]-[0-3][0-9]  /{
 	  s/ .*//
 	  s/-/./gp
 	  q
 	}'
-        dv=`sed -n "${sedcmd}" ${glibdir}/ChangeLog`
-        cat <<-_EOF_
-		#ifndef LIBPOSIX_GIT_VERSION
-		#define LIBPOSIX_GIT_VERSION "$gv"
-		#define LIBPOSIX_VERSION     "$dv"
+    dv=`sed -n "${sedcmd}" ${glibdir}/ChangeLog`
+    cat <<-_EOF_
+	#ifndef LIBPOSIX_GIT_VERSION
+	#define LIBPOSIX_GIT_VERSION "$gv"
+	#define LIBPOSIX_VERSION     "$dv"
 
-		extern char const libposix_git_version[];
-		extern char const libposix_version[];
-		#endif  /* LIBPOSIX_GIT_VERSION */
+	extern char const libposix_git_version[];
+	extern char const libposix_version[];
+	#endif  /* LIBPOSIX_GIT_VERSION */
 	_EOF_
-    } > lib/version.h
+  } > lib/version.h
 
-    {
-        sed -n '1,/^ \*\/$/p' lib/version.h
+  {
+    sed -n '1,/^ \*\/$/p' lib/version.h
 
-        cat <<-_EOF_
-		#include "version.h"
+    cat <<-\_EOF_
+	#include "version.h"
 
-		char const libposix_git_version[] = LIBPOSIX_GIT_VERSION;
-		char const libposix_version[]     = LIBPOSIX_VERSION;
+	char const libposix_git_version[] = LIBPOSIX_GIT_VERSION;
+	char const libposix_version[]     = LIBPOSIX_VERSION;
 	_EOF_
 
-    } > lib/version.c
+  } > lib/version.c
 }
 
 func_bootstrap()
 {
-    /bin/sh ./bootstrap \
-        || func_die bootstrap failure
+  /bin/sh ./bootstrap func_die bootstrap failure
 }
 
 func_mkdistro()
 {
-    mkdir _b               || func_die mkdir _b
-    cd _b
-    ../configure           || func_die configure
-    make                   || func_die make
-    make distcheck         || func_die make distcheck
-    mv libposix*.tar.gz .. || func_die cannot move tarball
+  mkdir _b               || func_die mkdir _b
+  cd _b
+  ../configure           || func_die configure
+  make                   || func_die make
+  make distcheck         || func_die make distcheck
+  mv libposix*.tar.gz .. || func_die cannot move tarball
 }
 
 func_init ${1+"$@"}
@@ -117,3 +118,13 @@ func_bootstrap
 func_mkdistro
 
 :
+
+## 
+## Local Variables:
+## mode: shell-script
+## indent-tabs-mode: nil
+## sh-indentation: 2
+## sh-basic-offset: 2
+## End:
+
+# end of mk-tarball
