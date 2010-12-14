@@ -1,3 +1,10 @@
+2010-12-14  Eric Blake  <eblake@redhat.com>
+
+	configmake: provide fallbacks for oldest supported autotools
+	* m4/configmake.m4: New file.
+	* modules/configmake (Files): Ship it.
+	(configure.ac): Use it to guarantee fallbacks.
+
 2010-12-13  Pádraig Brady <P@draigBrady.com>
 
 	read-file: Improve handling of large files

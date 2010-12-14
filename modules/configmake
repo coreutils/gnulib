@@ -2,10 +2,12 @@ Description:
 Variables set by "configure" or "make".
 
 Files:
+m4/configmake.m4
 
 Depends-on:
 
 configure.ac:
+gl_CONFIGMAKE_PREP
 
 Makefile.am:
 # Retrieve values of the variables through 'configure' followed by
@@ -22,7 +24,8 @@ Makefile.am:
 #
 # Another advantage is that 'make' output is shorter.
 #
-# Listed in the same order as the GNU makefile conventions.
+# Listed in the same order as the GNU makefile conventions, and
+# provided by autoconf 2.59c+.
 # The Automake-defined pkg* macros are appended, in the order
 # listed in the Automake 1.10a+ documentation.
 configmake.h: Makefile
