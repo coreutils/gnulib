@@ -1,4 +1,4 @@
-# signbit.m4 serial 7
+# signbit.m4 serial 8
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -160,7 +160,8 @@ long double m0l = -LDBL_MIN * LDBL_MIN;
 #else
 long double m0l = -p0l;
 #endif
-  if (signbit (vf))
+  int result = 0;
+  if (signbit (vf)) /* link check */
     vf++;
   {
     float plus_inf = 1.0f / p0f;
@@ -171,9 +172,9 @@ long double m0l = -p0l;
           && (memcmp (&m0f, &p0f, sizeof (float)) == 0 || signbit (m0f))
           && !signbit (plus_inf)
           && signbit (minus_inf)))
-      return 1;
+      result |= 1;
   }
-  if (signbit (vd))
+  if (signbit (vd)) /* link check */
     vd++;
   {
     double plus_inf = 1.0 / p0d;
@@ -184,22 +185,27 @@ long double m0l = -p0l;
           && (memcmp (&m0d, &p0d, sizeof (double)) == 0 || signbit (m0d))
           && !signbit (plus_inf)
           && signbit (minus_inf)))
-      return 1;
+      result |= 2;
   }
-  if (signbit (vl))
+  if (signbit (vl)) /* link check */
     vl++;
   {
     long double plus_inf = 1.0L / p0l;
     long double minus_inf = -1.0L / p0l;
-    if (!(!signbit (255.0L)
-          && signbit (-255.0L)
-          && !signbit (p0l)
-          && (memcmp (&m0l, &p0l, sizeof (long double)) == 0 || signbit (m0l))
-          && !signbit (plus_inf)
-          && signbit (minus_inf)))
-      return 1;
+    if (signbit (255.0L))
+      result |= 4;
+    if (!signbit (-255.0L))
+      result |= 4;
+    if (signbit (p0l))
+      result |= 8;
+    if (!(memcmp (&m0l, &p0l, sizeof (long double)) == 0 || signbit (m0l)))
+      result |= 16;
+    if (signbit (plus_inf))
+      result |= 32;
+    if (!signbit (minus_inf))
+      result |= 64;
   }
-  return 0;
+  return result;
 }
 ]])
 
@@ -249,7 +255,7 @@ int main ()
         {
           /* More than one bit difference.  */
           fprintf (fp, "unknown");
-          return 1;
+          return 2;
         }
       if (x)
         {
@@ -261,7 +267,7 @@ int main ()
     {
       /* No difference.  */
       fprintf (fp, "unknown");
-      return 1;
+      return 3;
     }
   /* Now m = plus.word[k] ^ ~minus.word[k].  */
   if (plus.word[k] & ~minus.word[k])
@@ -269,13 +275,15 @@ int main ()
       /* Oh? The sign bit is set in the positive and cleared in the negative
          numbers?  */
       fprintf (fp, "unknown");
-      return 1;
+      return 4;
     }
   for (i = 0; ; i++)
     if ((m >> i) & 1)
       break;
   fprintf (fp, "word %d bit %d", (int) k, (int) i);
-  return (fclose (fp) != 0);
+  if (fclose (fp) != 0)
+    return 5;
+  return 0;
 }
         ]])],
         [$2=`cat conftest.out`],

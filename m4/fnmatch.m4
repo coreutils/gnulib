@@ -1,4 +1,4 @@
-# Check for fnmatch - serial 4.
+# Check for fnmatch - serial 5.
 
 # Copyright (C) 2000-2007, 2009-2010 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -60,33 +60,60 @@ AC_DEFUN([gl_FUNC_FNMATCH_POSIX],
             static char const a01[] = { 'a' + 1, 0 };
             static char const bs_1[] = { '\\\\' - 1, 0 };
             static char const bs01[] = { '\\\\' + 1, 0 };
-            return
-             !(n ("a*", "", 0)
-               && y ("a*", "abc", 0)
-               && n ("d*/*1", "d/s/1", FNM_PATHNAME)
-               && y ("a\\\\bc", "abc", 0)
-               && n ("a\\\\bc", "abc", FNM_NOESCAPE)
-               && y ("*x", ".x", 0)
-               && n ("*x", ".x", FNM_PERIOD)
-               && y (Apat, "\\\\", 0) && y (Apat, "A", 0)
-               && y (apat, "\\\\", 0) && y (apat, "a", 0)
-               && n (Apat, A_1, 0) == ('A' < '\\\\')
-               && n (apat, a_1, 0) == ('a' < '\\\\')
-               && y (Apat, A01, 0) == ('A' < '\\\\')
-               && y (apat, a01, 0) == ('a' < '\\\\')
-               && y (Apat, bs_1, 0) == ('A' < '\\\\')
-               && y (apat, bs_1, 0) == ('a' < '\\\\')
-               && n (Apat, bs01, 0) == ('A' < '\\\\')
-               && n (apat, bs01, 0) == ('a' < '\\\\')
-               $gl_fnmatch_gnu_start
-               && y ("xxXX", "xXxX", FNM_CASEFOLD)
-               && y ("a++(x|yy)b", "a+xyyyyxb", FNM_EXTMATCH)
-               && n ("d*/*1", "d/s/1", FNM_FILE_NAME)
-               && y ("*", "x", FNM_FILE_NAME | FNM_LEADING_DIR)
-               && y ("x*", "x/y/z", FNM_FILE_NAME | FNM_LEADING_DIR)
-               && y ("*c*", "c/x", FNM_FILE_NAME | FNM_LEADING_DIR)
-               $gl_fnmatch_gnu_end
-              );
+            int result = 0;
+            if (!n ("a*", "", 0))
+              return 1;
+            if (!y ("a*", "abc", 0))
+              return 1;
+            if (!n ("d*/*1", "d/s/1", FNM_PATHNAME))
+              return 2;
+            if (!y ("a\\\\bc", "abc", 0))
+              return 3;
+            if (!n ("a\\\\bc", "abc", FNM_NOESCAPE))
+              return 3;
+            if (!y ("*x", ".x", 0))
+              return 4;
+            if (!n ("*x", ".x", FNM_PERIOD))
+              return 4;
+            if (!y (Apat, "\\\\", 0))
+              return 5;
+            if (!y (Apat, "A", 0))
+              return 5;
+            if (!y (apat, "\\\\", 0))
+              return 5;
+            if (!y (apat, "a", 0))
+              return 5;
+            if (!(n (Apat, A_1, 0) == ('A' < '\\\\')))
+              return 5;
+            if (!(n (apat, a_1, 0) == ('a' < '\\\\')))
+              return 5;
+            if (!(y (Apat, A01, 0) == ('A' < '\\\\')))
+              return 5;
+            if (!(y (apat, a01, 0) == ('a' < '\\\\')))
+              return 5;
+            if (!(y (Apat, bs_1, 0) == ('A' < '\\\\')))
+              return 5;
+            if (!(y (apat, bs_1, 0) == ('a' < '\\\\')))
+              return 5;
+            if (!(n (Apat, bs01, 0) == ('A' < '\\\\')))
+              return 5;
+            if (!(n (apat, bs01, 0) == ('a' < '\\\\')))
+              return 5;
+            $gl_fnmatch_gnu_start
+            if (!y ("xxXX", "xXxX", FNM_CASEFOLD))
+              result |= 8;
+            if (!y ("a++(x|yy)b", "a+xyyyyxb", FNM_EXTMATCH))
+              result |= 16;
+            if (!n ("d*/*1", "d/s/1", FNM_FILE_NAME))
+              result |= 32;
+            if (!y ("*", "x", FNM_FILE_NAME | FNM_LEADING_DIR))
+              result |= 64;
+            if (!y ("x*", "x/y/z", FNM_FILE_NAME | FNM_LEADING_DIR))
+              result |= 64;
+            if (!y ("*c*", "c/x", FNM_FILE_NAME | FNM_LEADING_DIR))
+              result |= 64;
+            $gl_fnmatch_gnu_end
+            return result;
           ]])],
        [eval "$gl_fnmatch_cache_var=yes"],
        [eval "$gl_fnmatch_cache_var=no"],

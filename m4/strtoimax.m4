@@ -1,4 +1,4 @@
-# strtoimax.m4 serial 7
+# strtoimax.m4 serial 8
 dnl Copyright (C) 2002, 2003, 2004, 2006, 2009, 2010 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -7,10 +7,6 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_STRTOIMAX],
 [
-  dnl Work around a bug of AC_EGREP_CPP in autoconf-2.57.
-  AC_REQUIRE([AC_PROG_CPP])
-  AC_REQUIRE([AC_PROG_EGREP])
-
   AC_CACHE_CHECK([whether <inttypes.h> defines strtoimax as a macro],
     gl_cv_func_strtoimax_macro,
     [AC_EGREP_CPP([inttypes_h_defines_strtoimax], [#include <inttypes.h>

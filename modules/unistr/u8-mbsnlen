@@ -9,7 +9,7 @@ unistr/base
 unistr/u8-mbtoucr
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([0.9.3], [unistr/u8-mbsnlen])
+gl_LIBUNISTRING_MODULE([0.9.4], [unistr/u8-mbsnlen])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNISTR_U8_MBSNLEN

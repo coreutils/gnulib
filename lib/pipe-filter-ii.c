@@ -33,7 +33,7 @@
 #endif
 
 #include "error.h"
-#include "pipe.h"
+#include "spawn-pipe.h"
 #include "wait-process.h"
 #include "gettext.h"
 

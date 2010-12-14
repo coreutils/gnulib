@@ -1,4 +1,4 @@
-# gnulib-common.m4 serial 20
+# gnulib-common.m4 serial 21
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -100,6 +100,19 @@ AC_DEFUN([gl_MODULE_INDICATOR_FOR_TESTS],
       [abcdefghijklmnopqrstuvwxyz./-],
       [ABCDEFGHIJKLMNOPQRSTUVWXYZ___]), [1],
     [Define to 1 when the gnulib module $1 should be tested.])
+])
+
+# Test whether <features.h> exists.
+# Set HAVE_FEATURES_H.
+AC_DEFUN([gl_FEATURES_H],
+[
+  AC_CHECK_HEADERS_ONCE([features.h])
+  if test $ac_cv_header_features_h = yes; then
+    HAVE_FEATURES_H=1
+  else
+    HAVE_FEATURES_H=0
+  fi
+  AC_SUBST([HAVE_FEATURES_H])
 ])
 
 # m4_foreach_w

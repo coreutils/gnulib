@@ -126,6 +126,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::mbspbrk, char *,
 SIGNATURE_CHECK (GNULIB_NAMESPACE::strerror, char *, (int));
 #endif
 
+#if GNULIB_TEST_STRERROR_R
+SIGNATURE_CHECK (GNULIB_NAMESPACE::strerror_r, int, (int, char *, size_t));
+#endif
+
 #if GNULIB_TEST_STRSIGNAL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::strsignal, char *, (int));
 #endif

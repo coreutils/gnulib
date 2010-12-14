@@ -15,6 +15,10 @@
    You should have received a copy of the GNU Lesser General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
+#if @HAVE_FEATURES_H@
+# include <features.h> /* for __GLIBC__, __UCLIBC__ */
+#endif
+
 /* GL_LINK_WARNING("literal string") arranges to emit the literal string as
    a linker warning on most glibc systems.
    We use a linker warning rather than a preprocessor warning, because
@@ -24,7 +28,7 @@
      Testing __GLIBC__ is sufficient for asserting that GNU ld is in use.
      Testing __ELF__ guarantees the ELF object format.
      Testing __GNUC__ is necessary for the compound expression syntax.  */
-# if defined __GLIBC__ && defined __ELF__ && defined __GNUC__
+# if (defined __GLIBC__ || defined __UCLIBC__) && defined __ELF__ && defined __GNUC__
 #  define GL_LINK_WARNING(message) \
      GL_LINK_WARNING1 (__FILE__, __LINE__, message)
 #  define GL_LINK_WARNING1(file, line, message) \

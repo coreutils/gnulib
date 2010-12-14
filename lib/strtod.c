@@ -190,6 +190,21 @@ parse_number (const char *nptr,
 
 static double underlying_strtod (const char *, char **);
 
+/* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0.
+   ICC 10.0 has a bug when optimizing the expression -zero.
+   The expression -DBL_MIN * DBL_MIN does not work when cross-compiling
+   to PowerPC on MacOS X 10.5.  */
+#if defined __hpux || defined __sgi || defined __ICC
+static double
+compute_minus_zero (void)
+{
+  return -DBL_MIN * DBL_MIN;
+}
+# define minus_zero compute_minus_zero ()
+#else
+double minus_zero = -0.0;
+#endif
+
 /* Convert NPTR to a double.  If ENDPTR is not NULL, a pointer to the
    character after the last one used in the number is put in *ENDPTR.  */
 double
@@ -320,6 +335,10 @@ strtod (const char *nptr, char **endptr)
 
   if (endptr != NULL)
     *endptr = (char *) s;
+  /* Special case -0.0, since at least ICC miscompiles negation.  We
+     can't use copysign(), as that drags in -lm on some platforms.  */
+  if (!num && negative)
+    return minus_zero;
   return negative ? -num : num;
 }
 

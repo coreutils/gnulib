@@ -1,6 +1,7 @@
 Files:
 tests/test-trunc1.c
 tests/test-trunc2.c
+tests/minus-zero.h
 tests/nan.h
 tests/signature.h
 tests/macros.h
@@ -8,6 +9,7 @@ tests/macros.h
 Depends-on:
 float
 isnand-nolibm
+signbit
 stdbool
 stdint
 

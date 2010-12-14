@@ -1,4 +1,4 @@
-# serial 3
+# serial 4
 # See if we need to provide linkat replacement.
 
 dnl Copyright (C) 2009-2010 Free Software Foundation, Inc.
@@ -50,9 +50,8 @@ choke me
               #include <errno.h>
               #include <stdio.h>
             ]],
-            [[int fd;
-              int err;
-              int ret;
+            [[int result;
+              int fd;
               /* Create a regular file.  */
               fd = open ("conftest.a", O_CREAT | O_EXCL | O_WRONLY, 0600);
               if (fd < 0)
@@ -66,14 +65,15 @@ choke me
               if (linkat (AT_FDCWD, "conftest.a", AT_FDCWD, "conftest.b",
                           AT_SYMLINK_FOLLOW) < 0)
                 return 0;
+              result = 0;
               /* Test whether a trailing "/" is treated like "/.".  */
               if (linkat (AT_FDCWD, "conftest.a/", AT_FDCWD, "conftest.c",
                           AT_SYMLINK_FOLLOW) == 0)
-                return 4;
+                result |= 4;
               if (linkat (AT_FDCWD, "conftest.a", AT_FDCWD, "conftest.d/",
                           AT_SYMLINK_FOLLOW) == 0)
-                return 5;
-              return 0;
+                result |= 8;
+              return result;
             ]])],
          [gl_cv_func_linkat_slash=yes],
          [gl_cv_func_linkat_slash=no],

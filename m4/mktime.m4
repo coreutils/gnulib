@@ -1,4 +1,4 @@
-# serial 16
+# serial 17
 dnl Copyright (C) 2002-2003, 2005-2007, 2009-2010 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -162,6 +162,7 @@ year_2050_test ()
 int
 main ()
 {
+  int result = 0;
   time_t t, delta;
   int i, j;
 
@@ -187,21 +188,27 @@ main ()
 
       for (t = 0; t <= time_t_max - delta; t += delta)
         if (! mktime_test (t))
-          return 1;
+          result |= 1;
       if (! (mktime_test ((time_t) 1)
              && mktime_test ((time_t) (60 * 60))
              && mktime_test ((time_t) (60 * 60 * 24))))
-        return 1;
+        result |= 2;
 
       for (j = 1; ; j <<= 1)
         if (! bigtime_test (j))
-          return 1;
+          result |= 4;
         else if (INT_MAX / 2 < j)
           break;
       if (! bigtime_test (INT_MAX))
-        return 1;
+        result |= 8;
     }
-  return ! (irix_6_4_bug () && spring_forward_gap () && year_2050_test ());
+  if (! irix_6_4_bug ())
+    result |= 16;
+  if (! spring_forward_gap ())
+    result |= 32;
+  if (! year_2050_test ())
+    result |= 64;
+  return result;
 }]])],
                [ac_cv_func_working_mktime=yes],
                [ac_cv_func_working_mktime=no],

@@ -93,18 +93,18 @@ main (int argc, char *argv[])
 
   /* Check that a long periodic needle does not cause false positives.  */
   {
-    const char input[] = ("F_BD_CE_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD"
-                          "_C3_88_20_EF_BF_BD_EF_BF_BD_EF_BF_BD"
-                          "_C3_A7_20_EF_BF_BD");
+    const char input[] = "F_BD_CE_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD"
+                         "_C3_88_20_EF_BF_BD_EF_BF_BD_EF_BF_BD"
+                         "_C3_A7_20_EF_BF_BD";
     const char need[] = "_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD";
     const char *result = strstr (input, need);
     ASSERT (result == NULL);
   }
   {
-    const char input[] = ("F_BD_CE_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD"
-                          "_C3_88_20_EF_BF_BD_EF_BF_BD_EF_BF_BD"
-                          "_C3_A7_20_EF_BF_BD_DA_B5_C2_A6_20"
-                          "_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD");
+    const char input[] = "F_BD_CE_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD"
+                         "_C3_88_20_EF_BF_BD_EF_BF_BD_EF_BF_BD"
+                         "_C3_A7_20_EF_BF_BD_DA_B5_C2_A6_20"
+                         "_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD";
     const char need[] = "_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD_EF_BF_BD";
     const char *result = strstr (input, need);
     ASSERT (result == input + 115);

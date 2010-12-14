@@ -1,4 +1,4 @@
-# canonicalize.m4 serial 16
+# canonicalize.m4 serial 17
 
 dnl Copyright (C) 2003-2007, 2009-2010 Free Software Foundation, Inc.
 
@@ -65,10 +65,23 @@ AC_DEFUN([gl_FUNC_REALPATH_WORKS],
       AC_LANG_PROGRAM([[
         #include <stdlib.h>
       ]], [[
-        char *name1 = realpath ("conftest.a", NULL);
-        char *name2 = realpath ("conftest.b/../conftest.a", NULL);
-        char *name3 = realpath ("conftest.a/", NULL);
-        return !(name1 && *name1 == '/' && !name2 && !name3);
+        int result = 0;
+        {
+          char *name = realpath ("conftest.a", NULL);
+          if (!(name && *name == '/'))
+            result |= 1;
+        }
+        {
+          char *name = realpath ("conftest.b/../conftest.a", NULL);
+          if (name != NULL)
+            result |= 2;
+        }
+        {
+          char *name = realpath ("conftest.a/", NULL);
+          if (name != NULL)
+            result |= 4;
+        }
+        return result;
       ]])
     ], [gl_cv_func_realpath_works=yes], [gl_cv_func_realpath_works=no],
        [gl_cv_func_realpath_works="guessing no"])

@@ -54,6 +54,7 @@ sys/socket.h: sys_socket.in.h $(CXXDEFS_H) $(WARN_ON_USE_H) $(ARG_NONNULL_H)
 	      -e 's|@''HAVE_WINSOCK2_H''@|$(HAVE_WINSOCK2_H)|g' \
 	      -e 's|@''HAVE_WS2TCPIP_H''@|$(HAVE_WS2TCPIP_H)|g' \
 	      -e 's|@''HAVE_STRUCT_SOCKADDR_STORAGE''@|$(HAVE_STRUCT_SOCKADDR_STORAGE)|g' \
+	      -e 's|@''HAVE_STRUCT_SOCKADDR_STORAGE_SS_FAMILY''@|$(HAVE_STRUCT_SOCKADDR_STORAGE_SS_FAMILY)|g' \
 	      -e 's|@''HAVE_SA_FAMILY_T''@|$(HAVE_SA_FAMILY_T)|g' \
 	      -e 's|@''HAVE_ACCEPT4''@|$(HAVE_ACCEPT4)|g' \
 	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \

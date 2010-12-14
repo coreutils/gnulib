@@ -9,7 +9,7 @@ Depends-on:
 stdbool
 xmalloca
 execute
-pipe
+spawn-pipe
 wait-process
 getline
 sh-quote

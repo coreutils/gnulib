@@ -1,4 +1,4 @@
-# poll.m4 serial 11
+# poll.m4 serial 12
 dnl Copyright (c) 2003, 2005, 2006, 2007, 2009, 2010 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -20,27 +20,30 @@ AC_DEFUN([gl_FUNC_POLL],
 #include <poll.h>
          int main()
          {
+           int result = 0;
            struct pollfd ufd;
            /* Try /dev/null for reading.  */
            ufd.fd = open ("/dev/null", O_RDONLY);
-           if (ufd.fd < 0)
-             /* If /dev/null does not exist, it's not MacOS X nor AIX. */
-             return 0;
-           ufd.events = POLLIN;
-           ufd.revents = 0;
-           if (!(poll (&ufd, 1, 0) == 1 && ufd.revents == POLLIN))
-             return 1;
+           /* If /dev/null does not exist, it's not MacOS X nor AIX. */
+           if (ufd.fd >= 0)
+             {
+               ufd.events = POLLIN;
+               ufd.revents = 0;
+               if (!(poll (&ufd, 1, 0) == 1 && ufd.revents == POLLIN))
+                 result |= 1;
+             }
            /* Try /dev/null for writing.  */
            ufd.fd = open ("/dev/null", O_WRONLY);
-           if (ufd.fd < 0)
-             /* If /dev/null does not exist, it's not MacOS X nor AIX. */
-             return 0;
-           ufd.events = POLLOUT;
-           ufd.revents = 0;
-           if (!(poll (&ufd, 1, 0) == 1 && ufd.revents == POLLOUT))
-             return 1;
+           /* If /dev/null does not exist, it's not MacOS X nor AIX. */
+           if (ufd.fd >= 0)
+             {
+               ufd.events = POLLOUT;
+               ufd.revents = 0;
+               if (!(poll (&ufd, 1, 0) == 1 && ufd.revents == POLLOUT))
+                 result |= 2;
+             }
            /* Trying /dev/tty may be too environment dependent.  */
-           return 0;
+           return result;
          }]])],
          [gl_cv_func_poll=yes],
          [gl_cv_func_poll=no],

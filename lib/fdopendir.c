@@ -33,12 +33,16 @@
 #  include "dirent--.h"
 # endif
 
-static DIR *fdopendir_with_dup (int, int);
-static DIR *fd_clone_opendir (int);
+# ifndef REPLACE_FCHDIR
+#  define REPLACE_FCHDIR 0
+# endif
+
+static DIR *fdopendir_with_dup (int, int, struct saved_cwd const *);
+static DIR *fd_clone_opendir (int, struct saved_cwd const *);
 
 /* Replacement for POSIX fdopendir.
 
-   First, try to simulate it via opendir ("/proc/self/fd/FD").  Failing
+   First, try to simulate it via opendir ("/proc/self/fd/...").  Failing
    that, simulate it by using fchdir metadata, or by doing
    save_cwd/fchdir/opendir(".")/restore_cwd.
    If either the save_cwd or the restore_cwd fails (relatively unlikely),
@@ -61,7 +65,24 @@ static DIR *fd_clone_opendir (int);
 DIR *
 fdopendir (int fd)
 {
-  return fdopendir_with_dup (fd, -1);
+  DIR *dir = fdopendir_with_dup (fd, -1, NULL);
+
+  if (! REPLACE_FCHDIR && ! dir)
+    {
+      int saved_errno = errno;
+      if (EXPECTED_ERRNO (saved_errno))
+        {
+          struct saved_cwd cwd;
+          if (save_cwd (&cwd) != 0)
+            openat_save_fail (errno);
+          dir = fdopendir_with_dup (fd, -1, &cwd);
+          saved_errno = errno;
+          free_cwd (&cwd);
+          errno = saved_errno;
+        }
+    }
+
+  return dir;
 }
 
 /* Like fdopendir, except that if OLDER_DUPFD is not -1, it is known
@@ -70,9 +91,13 @@ fdopendir (int fd)
    function makes sure that FD is closed and all file descriptors less
    than FD are open, and then calls fd_clone_opendir on a dup of FD.
    That way, barring race conditions, fd_clone_opendir returns a
-   stream whose file descriptor is FD.  */
+   stream whose file descriptor is FD.
+
+   If REPLACE_CHDIR or CWD is null, use opendir ("/proc/self/fd/...",
+   falling back on fchdir metadata.  Otherwise, CWD is a saved version
+   of the working directory; use fchdir/opendir(".")/restore_cwd(CWD).  */
 static DIR *
-fdopendir_with_dup (int fd, int older_dupfd)
+fdopendir_with_dup (int fd, int older_dupfd, struct saved_cwd const *cwd)
 {
   int dupfd = dup (fd);
   if (dupfd < 0 && errno == EMFILE)
@@ -85,13 +110,13 @@ fdopendir_with_dup (int fd, int older_dupfd)
       int saved_errno;
       if (dupfd < fd - 1 && dupfd != older_dupfd)
         {
-          dir = fdopendir_with_dup (fd, dupfd);
+          dir = fdopendir_with_dup (fd, dupfd, cwd);
           saved_errno = errno;
         }
       else
         {
           close (fd);
-          dir = fd_clone_opendir (dupfd);
+          dir = fd_clone_opendir (dupfd, cwd);
           saved_errno = errno;
           if (! dir)
             {
@@ -112,74 +137,45 @@ fdopendir_with_dup (int fd, int older_dupfd)
    the caller's responsibility both to close FD and (if the result is
    not null) to closedir the result.  */
 static DIR *
-fd_clone_opendir (int fd)
+fd_clone_opendir (int fd, struct saved_cwd const *cwd)
 {
-  int saved_errno;
-  DIR *dir;
-
-  char buf[OPENAT_BUFFER_SIZE];
-  char *proc_file = openat_proc_name (buf, fd, ".");
-  if (proc_file)
+  if (REPLACE_FCHDIR || ! cwd)
     {
-      dir = opendir (proc_file);
-      saved_errno = errno;
+      DIR *dir = NULL;
+      int saved_errno = EOPNOTSUPP;
+      char buf[OPENAT_BUFFER_SIZE];
+      char *proc_file = openat_proc_name (buf, fd, ".");
+      if (proc_file)
+        {
+          dir = opendir (proc_file);
+          saved_errno = errno;
+          if (proc_file != buf)
+            free (proc_file);
+        }
+# if REPLACE_FCHDIR
+      if (! dir && EXPECTED_ERRNO (saved_errno))
+        {
+          char const *name = _gl_directory_name (fd);
+          return (name ? opendir (name) : NULL);
+        }
+# endif
+      errno = saved_errno;
+      return dir;
     }
   else
     {
-      dir = NULL;
-      saved_errno = EOPNOTSUPP;
-    }
-
-  /* If the syscall fails with an expected errno value, resort to
-     save_cwd/restore_cwd.  */
-  if (! dir && EXPECTED_ERRNO (saved_errno))
-    {
-# if REPLACE_FCHDIR
-      const char *name = _gl_directory_name (fd);
-      if (name)
-        dir = opendir (name);
-      saved_errno = errno;
-# else /* !REPLACE_FCHDIR */
-
-      /* Occupy the destination FD slot, so that save_cwd cannot hijack it.  */
-      int fd_reserve = dup (fd);
-      if (fd_reserve < 0)
-        {
-          saved_errno = errno;
-          dir = NULL;
-          goto fail;
-        }
-
-      struct saved_cwd saved_cwd;
-      if (save_cwd (&saved_cwd) != 0)
-        openat_save_fail (errno);
-
-      /* Liberate the target file descriptor, so that opendir uses it.  */
-      close (fd_reserve);
-
       if (fchdir (fd) != 0)
-        {
-          dir = NULL;
-          saved_errno = errno;
-        }
+        return NULL;
       else
         {
-          dir = opendir (".");
-          saved_errno = errno;
-
-          if (restore_cwd (&saved_cwd) != 0)
+          DIR *dir = opendir (".");
+          int saved_errno = errno;
+          if (restore_cwd (cwd) != 0)
             openat_restore_fail (errno);
+          errno = saved_errno;
+          return dir;
         }
-
-      free_cwd (&saved_cwd);
-# endif /* !REPLACE_FCHDIR */
     }
-
- fail:
-  if (proc_file != buf)
-    free (proc_file);
-  errno = saved_errno;
-  return dir;
 }
 
 #else /* HAVE_FDOPENDIR */

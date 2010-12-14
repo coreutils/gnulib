@@ -4,17 +4,13 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/strerror_r.html}
 
-Gnulib module: ---
+Gnulib module: strerror_r-posix
 
 Portability problems fixed by Gnulib:
 @itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
-@itemize
 @item
 This function is missing on some platforms:
-NetBSD 3.0, HP-UX 11, IRIX 6.5, Solaris 9, mingw.
+NetBSD 3.0, HP-UX 11.23, IRIX 6.5, Solaris 9, mingw.
 @item
 glibc has an incompatible version of this function.  The POSIX compliant code
 @smallexample
@@ -24,4 +20,35 @@ is essentially equivalent to this code using the glibc function:
 @smallexample
 char *s = strerror_r (err, buf, buflen);
 @end smallexample
+@item
+This function is sometimes not declared in @code{<string.h>} on some platforms:
+glibc 2.8, OSF/1 5.1.
+@item
+The third argument is of type @code{int} instead of @code{size_t} on some
+platforms:
+AIX 5.1, OSF/1 5.1.
+@item
+When this function fails, it returns -1 and sets @code{errno}, instead of
+returning the error number, on some platforms:
+glibc 2.8 with @code{-D_POSIX_C_SOURCE=200112L}, AIX 6.1, OSF/1 5.1.
+@item
+This function does not support the error values that are specified by POSIX
+but not defined by the system, on some platforms:
+OpenBSD 4.0, OSF/1 5.1, NonStop Kernel, Cygwin 1.5.x.
+@item
+This function always fails when the third argument is less than 80 on some
+platforms:
+HP-UX 11.31.
+@item
+When the buffer is too small, this function does not fail, but instead
+truncates the result and returns 0 on some platforms:
+OSF/1 5.1.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+When the buffer is too small, this function does not fail, but instead
+truncates the result and returns 0 on some platforms:
+AIX 6.1.
 @end itemize

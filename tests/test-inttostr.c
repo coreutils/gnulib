@@ -65,13 +65,15 @@
 int
 main (void)
 {
-  char buf[2];
+  size_t b_size = 2;
+  char *b = malloc (b_size);
+  ASSERT (b);
 
   /* Ideally we would rely on the snprintf-posix module, in which case
      this guard would not be required, but due to limitations in gnulib's
      implementation (see modules/snprintf-posix), we cannot.  */
-  if (snprintf (buf, sizeof buf, "%ju", (uintmax_t) 3) == 1
-      && buf[0] == '3' && buf[1] == '\0')
+  if (snprintf (b, b_size, "%ju", (uintmax_t) 3) == 1
+      && b[0] == '3' && b[1] == '\0')
     {
       CK (int,          inttostr);
       CK (unsigned int, uinttostr);

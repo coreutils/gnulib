@@ -166,14 +166,14 @@ test_function (int (*my_u8_mbtouc) (ucs4_t *, const uint8_t *, size_t))
     static const uint8_t input[] = { 0xF3, 0xD0, 0xBF };
     uc = 0xBADFACE;
     ret = my_u8_mbtouc (&uc, input, 3);
-    ASSERT (ret == 1 || ret == 3);
+    ASSERT (ret == 1);
     ASSERT (uc == 0xFFFD);
   }
   {
     static const uint8_t input[] = { 0xF3, 0x8F, 0xD0 };
     uc = 0xBADFACE;
     ret = my_u8_mbtouc (&uc, input, 3);
-    ASSERT (ret == 1 || ret == 3);
+    ASSERT (ret == 2);
     ASSERT (uc == 0xFFFD);
   }
 }

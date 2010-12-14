@@ -1,4 +1,4 @@
-# ttyname_r.m4 serial 4
+# ttyname_r.m4 serial 5
 dnl Copyright (C) 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -58,15 +58,16 @@ changequote([,])dnl
 int
 main (void)
 {
+  int result = 0;
   int fd;
   char buf[31]; /* use any size < 128 here */
 
   fd = open ("/dev/tty", O_RDONLY);
   if (fd < 0)
-    return 1;
-  if (ttyname_r (fd, buf, sizeof (buf)) != 0)
-    return 1;
-  return 0;
+    result |= 1;
+  else if (ttyname_r (fd, buf, sizeof (buf)) != 0)
+    result |= 2;
+  return result;
 }]])],
             [gl_cv_func_ttyname_r_works=yes],
             [:],

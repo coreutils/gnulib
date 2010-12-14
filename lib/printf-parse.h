@@ -23,6 +23,10 @@
      ENABLE_UNISTDIO    Set to 1 to enable the unistdio extensions.
      STATIC             Set to 'static' to declare the function static.  */
 
+#if HAVE_FEATURES_H
+# include <features.h> /* for __GLIBC__, __UCLIBC__ */
+#endif
+
 #include "printf-args.h"
 
 
@@ -33,6 +37,9 @@
 #define FLAG_SPACE       8      /* space flag */
 #define FLAG_ALT        16      /* # flag */
 #define FLAG_ZERO       32
+#if __GLIBC__ >= 2 && !defined __UCLIBC__
+# define FLAG_LOCALIZED 64      /* I flag, uses localized digits */
+#endif
 
 /* arg_index value indicating that no argument is consumed.  */
 #define ARG_NONE        (~(size_t)0)

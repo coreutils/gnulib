@@ -1,4 +1,4 @@
-# locale-fr.m4 serial 11
+# locale-fr.m4 serial 12
 dnl Copyright (C) 2003, 2005-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -31,11 +31,14 @@ int main () {
      is empty, and the behaviour of Tcl 8.4 in this locale is not useful.
      On OpenBSD 4.0, when an unsupported locale is specified, setlocale()
      succeeds but then nl_langinfo(CODESET) is "646". In this situation,
-     some unit tests fail.  */
+     some unit tests fail.
+     On MirBSD 10, when an unsupported locale is specified, setlocale()
+     succeeds but then nl_langinfo(CODESET) is "UTF-8".  */
 #if HAVE_LANGINFO_CODESET
   {
     const char *cs = nl_langinfo (CODESET);
-    if (cs[0] == '\0' || strcmp (cs, "ASCII") == 0 || strcmp (cs, "646") == 0)
+    if (cs[0] == '\0' || strcmp (cs, "ASCII") == 0 || strcmp (cs, "646") == 0
+        || strcmp (cs, "UTF-8") == 0)
       return 1;
   }
 #endif

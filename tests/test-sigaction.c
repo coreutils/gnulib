@@ -71,7 +71,7 @@ handler (int sig)
       /* This assertion fails on glibc-2.3.6 systems with LinuxThreads,
          when this program is linked with -lpthread, due to the sigaction()
          override in libpthread.so.  */
-#if !defined __GLIBC__
+#if !(defined __GLIBC__ || defined __UCLIBC__)
       ASSERT (sa.sa_handler == SIG_DFL);
 #endif
       break;
@@ -101,7 +101,7 @@ main (void)
   sa.sa_handler = SIG_DFL;
   ASSERT (sigaction (SIGABRT, &sa, &old_sa) == 0);
   ASSERT ((old_sa.sa_flags & SA_SIGINFO) == 0);
-#if !defined __GLIBC__ /* see above */
+#if !(defined __GLIBC__ || defined __UCLIBC__) /* see above */
   ASSERT (old_sa.sa_handler == SIG_DFL);
 #endif
 

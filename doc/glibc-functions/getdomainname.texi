@@ -8,7 +8,18 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-AIX 5.1, mingw, Interix 3.5, BeOS.
+Solaris 11 2010-11, mingw, Interix 3.5, BeOS.
+@item
+This function is declared in @code{netdb.h}, not in @code{unistd.h}, on
+some platforms:
+AIX 7.1.
+@item
+This function is declared in @code{netdb.h} and in @code{sys/socket.h}, not
+in @code{unistd.h}, on some platforms:
+OSF/1 5.1.
+@item
+The second argument is of type @code{int}, not @code{size_t}, on some platforms:
+MacOS X 10.5, FreeBSD 6.4, AIX 7.1, IRIX 6.5.
 @end itemize
 
 Portability problems not fixed by Gnulib:

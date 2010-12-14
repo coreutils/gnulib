@@ -1,56 +1,41 @@
 body {
-
     font-family: Helvetica, sans-serif;
-
 }
 
 .page_title {
-
     font: 18pt Georgia, serif;
-/*    font-size: 1.5em;
-    font-weight: bold; */
     color: darkred;
-    border-bottom: 2px solid darkred;
 }
 
 .section_title {
-
     font: 14pt Georgia, serif;
     color: darkred;
-    border-bottom: 2px dashed darkred;
 }
 
 .report_timestamp {
-
     color: darkred;
     font-weight: bold;
-
 }
 
 .function_src {
-
     text-align: left;
     background: white;
 }
 
 .resume_table {
-
 }
 
 .resume_header_entry {
-    
     color: black;
 }
 
 .resume_number_entry {
-
     color: darkred;
     font-weight: bold;
     text-align: right;
 }
 
 .ranges_table {
-
     border-spacing: 0px;
     border-bottom: solid 2px black;
     border-top: solid 2px black;
@@ -59,7 +44,6 @@ body {
 }
 
 .ranges_header_entry {
-
     padding: 5px;
     border-bottom: solid 1px black;
     font-size: 1em;
@@ -69,36 +53,26 @@ body {
 }
 
 .ranges_entry {
-
 }
 
 .ranges_entry_simple {
-
     background: #87ff75; 
-
 }
 
 .ranges_entry_moderate {
-
     background: #fffc60;
-
 }
 
 .ranges_entry_high {
-
     background: #ff5a5d;
-
 }
 
 .ranges_entry_untestable {
-
     background: #993300
-
 }
 
 
 .function_table {
-
     border-spacing: 0px;
     border-bottom: solid 2px black;
     border-top: solid 2px black;
@@ -107,7 +81,6 @@ body {
 }
 
 .function_table_caption {
-
     font-size: 1.1em;
     font-weight: bold;
     color: black;
@@ -115,12 +88,10 @@ body {
 }
 
 .function_table_header {
-    
 }
 
 
 .function_table_header_entry {
-
     padding: 5px;
     border-bottom: solid 1px black;
     font-size: 1em;
@@ -130,38 +101,27 @@ body {
 }
 
 .function_entry {
-
-
 }
 
 
 .function_entry_simple {
-
     background: #87ff75; 
-
 }
 
 .function_entry_moderate {
-
     background: #fffc60;
-
 }
 
 .function_entry_high {
-
     background: #ff5a5d;
-
 }
 
 .function_entry_untestable {
-
     background: #993300
-
 }
 
 
 .function_entry_name {
-
     font-size: 1em;
     text-align: left;
     font-weight: bold;
@@ -172,7 +132,6 @@ body {
 }
 
 .function_entry_cyclo {
-
     font-size: 1em;
     text-align: right;
     text-valign: top;
@@ -182,7 +141,6 @@ body {
 }
 
 .function_entry_number {
-
     font-size: 1em;
     text-align: right;
     text-valign: top;
@@ -192,7 +150,6 @@ body {
 }
 
 .function_entry_filename {
-
     font-size: 1em;
     text-align: left;
     text-valign: top;
@@ -200,28 +157,3 @@ body {
     border-top: solid 1px black;
     padding: 3px;
 }
-
-.sidemenu {
-    
-    border: 1px black solid;
-    padding: 5px;
-
-}
-
-.sidemenuheader {
- 
-    color: darkred;
-    font-size: 1.1em;
-    font-weight: bold;
-    border-bottom: 1px dashed darkred;
-}
-
-.sidemenuentry {
-
-
-}
-
-.menu {
-
-}
-

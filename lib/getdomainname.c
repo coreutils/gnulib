@@ -1,6 +1,6 @@
 /* getdomainname emulation for systems that doesn't have it.
 
-   Copyright (C) 2003, 2006, 2008, 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2003, 2006, 2008, 2010 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -22,8 +22,13 @@
 /* Specification. */
 #include <unistd.h>
 
+#include <limits.h>
 #include <string.h>
 #include <errno.h>
+
+#if HAVE_SYSINFO && HAVE_SYS_SYSTEMINFO_H /* IRIX, OSF/1, Solaris */
+# include <sys/systeminfo.h>
+#endif
 
 /* Return the NIS domain name of the machine.
    WARNING! The NIS domain name is unrelated to the fully qualified host name
@@ -37,7 +42,31 @@
    Return 0 if successful, otherwise set errno and return -1.  */
 int
 getdomainname (char *name, size_t len)
+#undef getdomainname
 {
+#if HAVE_GETDOMAINNAME                 /* MacOS X, FreeBSD, AIX, IRIX, OSF/1 */
+  extern int getdomainname (char *, int);
+
+  if (len > INT_MAX)
+    len = INT_MAX;
+  return getdomainname (name, (int) len);
+#elif HAVE_SYSINFO && HAVE_SYS_SYSTEMINFO_H && defined SI_SRPC_DOMAIN
+                                       /* Solaris */
+  int ret;
+
+  /* The third argument is a 'long', but the return value must fit in an
+     'int', therefore it's better to avoid arguments > INT_MAX.  */
+  ret = sysinfo (SI_SRPC_DOMAIN, name, len > INT_MAX ? INT_MAX : len);
+  if (ret < 0)
+    /* errno is set here.  */
+    return -1;
+  if (ret > len)
+    {
+      errno = EINVAL;
+      return -1;
+    }
+  return 0;
+#else                                  /* HP-UX, Cygwin, mingw */
   const char *result = "";      /* Hardcode your domain name if you want.  */
   size_t result_len = strlen (result);
 
@@ -50,4 +79,5 @@ getdomainname (char *name, size_t len)
   if (result_len < len)
     name[result_len] = '\0';
   return 0;
+#endif
 }

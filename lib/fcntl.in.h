@@ -26,7 +26,13 @@
 /* Special invocation convention.  */
 
 #include <sys/types.h>
-#ifndef __GLIBC__ /* Avoid namespace pollution on glibc systems.  */
+/* On some systems other than glibc, <sys/stat.h> is a prerequisite of
+   <fcntl.h>.  On glibc systems, we would like to avoid namespace pollution.
+   But on glibc systems, <fcntl.h> includes <sys/stat.h> inside an
+   extern "C" { ... } block, which leads to errors in C++ mode with the
+   overridden <sys/stat.h> from gnulib.  These errors are known to be gone
+   with g++ version >= 4.3.  */
+#if !(defined __GLIBC__ || defined __UCLIBC__) || (defined __cplusplus && defined GNULIB_NAMESPACE && !(__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 3)))
 # include <sys/stat.h>
 #endif
 #@INCLUDE_NEXT@ @NEXT_FCNTL_H@

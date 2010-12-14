@@ -68,13 +68,17 @@
 #  define signed_type_or_expr__(t) 1
 # endif
 
+/* Bound on length of the string representing an unsigned integer
+   value representable in B bits.  log10 (2.0) < 146/485.  The
+   smallest value of B where this bound is not tight is 2621.  */
+# define INT_BITS_STRLEN_BOUND(b) (((b) * 146 + 484) / 485)
+
 /* Bound on length of the string representing an integer type or expression T.
-   Subtract 1 for the sign bit if T is signed; log10 (2.0) < 146/485;
-   add 1 for integer division truncation; add 1 more for a minus sign
-   if needed.  */
+   Subtract 1 for the sign bit if T is signed, and then add 1 more for
+   a minus sign if needed.  */
 # define INT_STRLEN_BOUND(t) \
-  ((sizeof (t) * CHAR_BIT - signed_type_or_expr__ (t)) * 146 / 485 \
-   + signed_type_or_expr__ (t) + 1)
+  (INT_BITS_STRLEN_BOUND (sizeof (t) * CHAR_BIT - signed_type_or_expr__ (t)) \
+   + signed_type_or_expr__ (t))
 
 /* Bound on buffer size needed to represent an integer type or expression T,
    including the terminating null.  */

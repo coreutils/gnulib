@@ -1,5 +1,5 @@
-/* Test of create_pipe_bidi/wait_subprocess.
-   Copyright (C) 2009, 2010 Free Software Foundation, Inc.
+/* Test of pipe.
+   Copyright (C) 2009-2010 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -17,188 +17,87 @@
 
 #include <config.h>
 
-#include "pipe.h"
-#include "wait-process.h"
-
-#include <errno.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
 
-/* Depending on arguments, this test intentionally closes stderr or
-   starts life with stderr closed.  So, we arrange to have fd 10
-   (outside the range of interesting fd's during the test) set up to
-   duplicate the original stderr.  */
+#include "signature.h"
+SIGNATURE_CHECK (pipe, int, (int[2]));
 
-#define BACKUP_STDERR_FILENO 10
-#define ASSERT_STREAM myerr
+#include <fcntl.h>
+#include <stdbool.h>
+
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+/* Get declarations of the Win32 API functions.  */
+# define WIN32_LEAN_AND_MEAN
+# include <windows.h>
+#endif
+
+#include "binary-io.h"
 #include "macros.h"
 
-static FILE *myerr;
-
-/* Code executed by the child process.  argv[1] = "child".  */
-static int
-child_main (int argc, char *argv[])
+/* Return true if FD is open.  */
+static bool
+is_open (int fd)
 {
-  char buffer[2] = { 's', 't' };
-  int fd;
-  int ret;
-
-  ASSERT (argc == 3);
-
-  /* Read one byte from fd 0, and write its value plus one to fd 1.
-     fd 2 should be closed iff the argument is 1.  Check that no other file
-     descriptors leaked.  */
-
-  ASSERT (read (STDIN_FILENO, buffer, 2) == 1);
-
-  buffer[0]++;
-  ASSERT (write (STDOUT_FILENO, buffer, 1) == 1);
-
-  errno = 0;
-  ret = dup2 (STDERR_FILENO, STDERR_FILENO);
-  switch (atoi (argv[2]))
-    {
-    case 0:
-      /* Expect fd 2 is open.  */
-      ASSERT (ret == STDERR_FILENO);
-      break;
-    case 1:
-      /* Expect fd 2 is closed.  */
-      ASSERT (ret == -1);
-      ASSERT (errno == EBADF);
-      break;
-    default:
-      ASSERT (false);
-    }
-
-  for (fd = 3; fd < 7; fd++)
-    {
-      errno = 0;
-      ASSERT (close (fd) == -1);
-      ASSERT (errno == EBADF);
-    }
-
-  return 0;
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+  /* On Win32, the initial state of unassigned standard file
+     descriptors is that they are open but point to an
+     INVALID_HANDLE_VALUE, and there is no fcntl.  */
+  return (HANDLE) _get_osfhandle (fd) != INVALID_HANDLE_VALUE;
+#else
+# ifndef F_GETFL
+#  error Please port fcntl to your platform
+# endif
+  return 0 <= fcntl (fd, F_GETFL);
+#endif
 }
 
-/* Create a bi-directional pipe to a test child, and validate that the
-   child program returns the expected output.  The child is the same
-   program as the parent ARGV0, but with different arguments.
-   STDERR_CLOSED is true if we have already closed fd 2.  */
-static void
-test_pipe (const char *argv0, bool stderr_closed)
+/* Return true if FD is not inherited to child processes.  */
+static bool
+is_cloexec (int fd)
 {
-  int fd[2];
-  char *argv[4];
-  pid_t pid;
-  char buffer[2] = { 'a', 't' };
-
-  /* Set up child.  */
-  argv[0] = (char *) argv0;
-  argv[1] = (char *) "child";
-  argv[2] = (char *) (stderr_closed ? "1" : "0");
-  argv[3] = NULL;
-  pid = create_pipe_bidi (argv0, argv0, argv, false, true, true, fd);
-  ASSERT (0 <= pid);
-  ASSERT (STDERR_FILENO < fd[0]);
-  ASSERT (STDERR_FILENO < fd[1]);
-
-  /* Push child's input.  */
-  ASSERT (write (fd[1], buffer, 1) == 1);
-  ASSERT (close (fd[1]) == 0);
-
-  /* Get child's output.  */
-  ASSERT (read (fd[0], buffer, 2) == 1);
-
-  /* Wait for child.  */
-  ASSERT (wait_subprocess (pid, argv0, true, false, true, true, NULL) == 0);
-  ASSERT (close (fd[0]) == 0);
-
-  /* Check the result.  */
-  ASSERT (buffer[0] == 'b');
-  ASSERT (buffer[1] == 't');
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+  HANDLE h = (HANDLE) _get_osfhandle (fd);
+  DWORD flags;
+  ASSERT (GetHandleInformation (h, &flags));
+  return (flags & HANDLE_FLAG_INHERIT) == 0;
+#else
+  int flags;
+  ASSERT ((flags = fcntl (fd, F_GETFD)) >= 0);
+  return (flags & FD_CLOEXEC) != 0;
+#endif
 }
 
-/* Code executed by the parent process.  */
-static int
-parent_main (int argc, char *argv[])
+/* Return true if FD is in non-blocking mode.  */
+static bool
+is_nonblocking (int fd)
 {
-  int test;
-  int fd;
-
-  ASSERT (argc == 2);
-
-  /* Selectively close various standard fds, to verify the child process is
-     not impacted by this.  */
-  test = atoi (argv[1]);
-  switch (test)
-    {
-    case 0:
-      break;
-    case 1:
-      close (0);
-      break;
-    case 2:
-      close (1);
-      break;
-    case 3:
-      close (0);
-      close (1);
-      break;
-    case 4:
-      close (2);
-      break;
-    case 5:
-      close (0);
-      close (2);
-      break;
-    case 6:
-      close (1);
-      close (2);
-      break;
-    case 7:
-      close (0);
-      close (1);
-      close (2);
-      break;
-    default:
-      ASSERT (false);
-    }
-
-  /* Plug any file descriptor leaks inherited from outside world before
-     starting, so that child has a clean slate (at least for the fds that we
-     might be manipulating).  */
-  for (fd = 3; fd < 7; fd++)
-    close (fd);
-
-  test_pipe (argv[0], test >= 4);
-
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+  /* We don't use the non-blocking mode for sockets here.  */
   return 0;
+#else
+  int flags;
+  ASSERT ((flags = fcntl (fd, F_GETFL)) >= 0);
+  return (flags & O_NONBLOCK) != 0;
+#endif
 }
 
 int
-main (int argc, char *argv[])
+main ()
 {
-  if (argc < 2)
-    {
-      fprintf (stderr, "%s: need arguments\n", argv[0]);
-      return 2;
-    }
-  if (strcmp (argv[1], "child") == 0)
-    {
-      /* fd 2 might be closed, but fd BACKUP_STDERR_FILENO is the original
-         stderr.  */
-      myerr = fdopen (BACKUP_STDERR_FILENO, "w");
-      if (!myerr)
-        return 2;
-      return child_main (argc, argv);
-    }
-  /* We might close fd 2 later, so save it in fd 10.  */
-  if (dup2 (STDERR_FILENO, BACKUP_STDERR_FILENO) != BACKUP_STDERR_FILENO
-      || (myerr = fdopen (BACKUP_STDERR_FILENO, "w")) == NULL)
-    return 2;
-  return parent_main (argc, argv);
+  int fd[2];
+
+  fd[0] = -1;
+  fd[1] = -1;
+  ASSERT (pipe (fd) >= 0);
+  ASSERT (fd[0] >= 0);
+  ASSERT (fd[1] >= 0);
+  ASSERT (fd[0] != fd[1]);
+  ASSERT (is_open (fd[0]));
+  ASSERT (is_open (fd[1]));
+  ASSERT (!is_cloexec (fd[0]));
+  ASSERT (!is_cloexec (fd[1]));
+  ASSERT (!is_nonblocking (fd[0]));
+  ASSERT (!is_nonblocking (fd[1]));
+
+  return 0;
 }

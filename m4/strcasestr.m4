@@ -1,4 +1,4 @@
-# strcasestr.m4 serial 16
+# strcasestr.m4 serial 18
 dnl Copyright (C) 2005, 2007, 2008, 2009, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -38,7 +38,8 @@ AC_DEFUN([gl_FUNC_STRCASESTR_SIMPLE],
              [
 #ifdef __GNU_LIBRARY__
  #include <features.h>
- #if (__GLIBC__ == 2 && __GLIBC_MINOR__ > 12) || (__GLIBC__ > 2)
+ #if ((__GLIBC__ == 2 && __GLIBC_MINOR__ > 12) || (__GLIBC__ > 2)) \
+     && !defined __UCLIBC__
   Lucky user
  #endif
 #elif defined __CYGWIN__
@@ -79,10 +80,11 @@ AC_DEFUN([gl_FUNC_STRCASESTR],
 #include <stdlib.h> /* for malloc */
 #include <unistd.h> /* for alarm */
 static void quit (int sig) { exit (sig + 128); }
-]], [[size_t m = 1000000;
+]], [[
+    int result = 0;
+    size_t m = 1000000;
     char *haystack = (char *) malloc (2 * m + 2);
     char *needle = (char *) malloc (m + 2);
-    void *result = 0;
     /* Failure to compile this test due to missing alarm is okay,
        since all such platforms (mingw) also lack strcasestr.  */
     signal (SIGALRM, quit);
@@ -96,9 +98,11 @@ static void quit (int sig) { exit (sig + 128); }
         memset (needle, 'A', m);
         needle[m] = 'B';
         needle[m + 1] = 0;
-        result = strcasestr (haystack, needle);
+        if (!strcasestr (haystack, needle))
+          result |= 1;
       }
-    return !result;]])],
+    return result;
+    ]])],
         [gl_cv_func_strcasestr_linear=yes], [gl_cv_func_strcasestr_linear=no],
         [dnl Only glibc > 2.12 and cygwin > 1.7.7 are known to have a
          dnl strcasestr that works in linear time.
@@ -106,7 +110,8 @@ static void quit (int sig) { exit (sig + 128); }
            [
 #include <features.h>
 #ifdef __GNU_LIBRARY__
- #if (__GLIBC__ == 2 && __GLIBC_MINOR__ > 12) || (__GLIBC__ > 2)
+ #if ((__GLIBC__ == 2 && __GLIBC_MINOR__ > 12) || (__GLIBC__ > 2)) \
+     && !defined __UCLIBC__
   Lucky user
  #endif
 #endif

@@ -21,7 +21,6 @@
 #include "arg-nonnull.h"
 
 struct argv_iterator;
-enum argv_iter_err;
 
 enum argv_iter_err
 {

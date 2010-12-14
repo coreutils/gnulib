@@ -34,7 +34,7 @@
    alignment.  */
 #if defined _LIBICONV_VERSION
 # define UTF32_NAME "UCS-4-INTERNAL"
-#elif (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2)
+#elif ((__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2)) && !defined __UCLIBC__
 # define UTF32_NAME "WCHAR_T"
 #endif
 

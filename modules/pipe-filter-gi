@@ -7,7 +7,7 @@ lib/pipe-filter-gi.c
 lib/pipe-filter-aux.h
 
 Depends-on:
-pipe
+spawn-pipe
 wait-process
 error
 exit

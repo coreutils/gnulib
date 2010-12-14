@@ -23,7 +23,9 @@
 @PRAGMA_COLUMNS@
 
 /* The include_next requires a split double-inclusion guard.  */
-#@INCLUDE_NEXT@ @NEXT_TERMIOS_H@
+#if @HAVE_TERMIOS_H@
+# @INCLUDE_NEXT@ @NEXT_TERMIOS_H@
+#endif
 
 #ifndef _GL_TERMIOS_H
 #define _GL_TERMIOS_H

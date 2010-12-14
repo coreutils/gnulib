@@ -1,5 +1,6 @@
 Files:
 tests/test-frexp.c
+tests/minus-zero.h
 tests/nan.h
 tests/signature.h
 tests/macros.h

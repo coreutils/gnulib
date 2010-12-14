@@ -30,14 +30,14 @@ The function @code{getopt_long} is missing on some platforms:
 IRIX 6.5, OSF/1 5.1, Solaris 9.
 @item
 The function @code{getopt_long_only} is missing on some platforms:
-MacOS X 10.3, FreeBSD 5.2.1, NetBSD 3.0, IRIX 6.5, OSF/1 5.1, Solaris 9, mingw.
+MacOS X 10.3, FreeBSD 5.2.1, NetBSD 5.0, IRIX 6.5, OSF/1 5.1, Solaris 9, mingw.
 @item
 The method to reset options is incompatible on some platforms:
-FreeBSD 6.0, NetBSD 3.0(?), OpenBSD 3.8, Cygwin 1.5.x, mingw.
+FreeBSD 6.0, NetBSD 5.0(?), OpenBSD 3.8, Cygwin 1.5.x, mingw.
 @item
 The function @code{getopt} does not handle a leading @samp{+} character in
 the options string on some platforms:
-Solaris 10.
+Solaris 11 2010-11.
 @end itemize
 
 Portability problems not fixed by Gnulib:

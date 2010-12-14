@@ -10,7 +10,7 @@ lib/javaversion.class
 Depends-on:
 javaexec
 stdbool
-pipe
+spawn-pipe
 wait-process
 getline
 gettext-h

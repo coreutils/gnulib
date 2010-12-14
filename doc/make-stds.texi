@@ -715,8 +715,9 @@ documentation format) files should be made only when explicitly asked
 for.
 
 By default, the Make rules should compile and link with @samp{-g}, so
-that executable programs have debugging symbols.  Users who don't mind
-being helpless can strip the executables later if they wish.
+that executable programs have debugging symbols.  Otherwise, you are
+essentially helpless in the face of a crash, and it is often far from
+easy to reproduce with a fresh build.
 
 @item install
 Compile the program and copy the executables, libraries, and so on to
@@ -724,8 +725,11 @@ the file names where they should reside for actual use.  If there is a
 simple test to verify that a program is properly installed, this target
 should run that test.
 
-Do not strip executables when installing them.  Devil-may-care users can
-use the @code{install-strip} target to do that.
+Do not strip executables when installing them.  This helps eventual
+debugging that may be needed later, and nowadays disk space is cheap
+and dynamic loaders typically ensure debug sections are not loaded during
+normal execution.  Users that need stripped binaries may invoke the
+@code{install-strip} target to do that.
 
 If possible, write the @code{install} target rule so that it does not
 modify anything in the directory where the program was built, provided
@@ -837,10 +841,7 @@ the program has no bugs.  However, it can be reasonable to install a
 stripped executable for actual execution while saving the unstripped
 executable elsewhere in case there is a bug.
 
-@comment The gratuitous blank line here is to make the table look better
-@comment in the printed Make manual.  Please leave it in.
 @item clean
-
 Delete all files in the current directory that are normally created by
 building the program.  Also delete files in other directories if they
 are created by this makefile.  However, don't delete the files that

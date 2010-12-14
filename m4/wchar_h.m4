@@ -7,7 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 dnl Written by Eric Blake.
 
-# wchar_h.m4 serial 33
+# wchar_h.m4 serial 35
 
 AC_DEFUN([gl_WCHAR_H],
 [
@@ -26,6 +26,8 @@ AC_DEFUN([gl_WCHAR_H],
   fi
   AC_SUBST([HAVE_WCHAR_H])
 
+  AC_REQUIRE([gl_FEATURES_H])
+
   AC_REQUIRE([gt_TYPE_WINT_T])
   if test $gt_cv_c_wint_t = yes; then
     HAVE_WINT_T=1
@@ -38,7 +40,7 @@ AC_DEFUN([gl_WCHAR_H],
   dnl corresponding gnulib module is not in use.
   gl_WARN_ON_USE_PREPARE([[
 /* Some systems require additional headers.  */
-#ifndef __GLIBC__
+#if !(defined __GLIBC__ && !defined __UCLIBC__)
 # include <stddef.h>
 # include <stdio.h>
 # include <time.h>

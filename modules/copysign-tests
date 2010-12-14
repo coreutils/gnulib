@@ -1,6 +1,7 @@
 Files:
 tests/test-copysign.c
 tests/signature.h
+tests/minus-zero.h
 tests/macros.h
 
 Depends-on:

@@ -11,14 +11,18 @@ Portability problems fixed by Gnulib:
 @item
 This function does not reject trailing slashes on non-directories on
 some platforms, as in @code{renameat(fd,"file",fd,"new/")}:
-Solaris 10.
+Solaris 11 2010-11.
 @item
 This function ignores trailing slashes on symlinks on some platforms,
 such that @code{renameat(fd,"link/",fd,"new")} corrupts @file{link}:
 Solaris 9.
 @item
+This function is declared in @code{<unistd.h>} instead of @code{<stdio.h>}
+on some platforms:
+Solaris 11 2010-11.
+@item
 This function is missing on some platforms:
-glibc 2.3.6, MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, AIX
+glibc 2.3.6, MacOS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, AIX
 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 8, Cygwin 1.5.x, mingw,
 Interix 3.5, BeOS.
 But the replacement function is not safe to be used in libraries and is not multithread-safe.
@@ -34,6 +38,11 @@ that @file{dangling} is no longer a dangling symlink.  This behavior
 is counter-intuitive, so on some systems, @code{renameat} fails with
 @code{ENOTDIR} if either argument is a symlink with a trailing slash:
 glibc, OpenBSD, Cygwin 1.7.
+@item
+After renaming a non-empty directory over an existing empty directory,
+the old directory name is still visible through the @code{stat} function
+for 30 seconds after the rename, on NFS file systems, on some platforms:
+Linux 2.6.18.
 @item
 This function will not rename a source that is currently opened
 by any process:

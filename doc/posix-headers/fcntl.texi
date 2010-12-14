@@ -34,21 +34,21 @@ mingw.
 
 @item
 @samp{F_DUPFD_CLOEXEC} is not defined on some platforms:
-MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, AIX 5.1, HP-UX 11,
-IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin 1.7.1, mingw, Interix 3.5,
+MacOS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, AIX 5.1, HP-UX 11,
+IRIX 6.5, OSF/1 5.1, Solaris 11 2010-11, Cygwin 1.7.1, mingw, Interix 3.5,
 BeOS.
 
 @item
 @samp{AT_FDCWD}, @samp{AT_EACCESS}, @samp{AT_SYMLINK_NOFOLLOW},
 @samp{AT_SYMLINK_FOLLOW}, and @samp{AT_REMOVEDIR}
 are not defined on many platforms:
-glibc 2.3.6, MacOS X 10.3, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, AIX
+glibc 2.3.6, MacOS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, AIX
 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 8, Cygwin 1.5.x, mingw, Interix 3.5, BeOS.
 
 @item
 @samp{AT_FDCWD} is defined with a value too large for an @code{int} on some
 platforms:
-Solaris 10.
+Solaris 11 2010-11.
 @end itemize
 
 Portability problems not fixed by Gnulib:

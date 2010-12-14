@@ -244,7 +244,7 @@ main (int argc _GL_UNUSED, char *argv[])
   ASSERT (!isprint ('\033'));
   for (i = literal_quoting_style; i <= clocale_quoting_style; i++)
     {
-      set_quoting_style (NULL, i);
+      set_quoting_style (NULL, (enum quoting_style) i);
       compare_strings (use_quotearg_buffer, &results_g[i].group1, ascii_only);
       compare_strings (use_quotearg, &results_g[i].group2, ascii_only);
       if (i == c_quoting_style)

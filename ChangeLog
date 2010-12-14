@@ -1,3 +1,520 @@
+<<<<<<< HEAD
+=======
+2010-12-13  Pádraig Brady <P@draigBrady.com>
+
+	read-file: Improve handling of large files
+	* lib/read-file.c (fread_file): Minimize realloc()s
+	for regular files, and better manage sizes around SIZE_MAX.
+
+2010-12-13  Eric Blake  <eblake@redhat.com>
+
+	cloexec, fcntl: relax license
+	* modules/cloexec (License): Change from LGPLv3+ to LGPLv2+, with
+	consent from all contributors.
+	* modules/fcntl (License): Likewise.
+
+2010-12-10  Bruno Haible  <bruno@clisp.org>
+
+	Tests for module 'pipe-posix'.
+	* modules/pipe-posix-tests: New file.
+	* tests/test-pipe.c: New file, based on tests/test-pipe2.c.
+
+2010-12-10  Bruno Haible  <bruno@clisp.org>
+
+	pipe-posix: Make it work in C++ mode.
+	* lib/unistd.in.h: Don't include <io.h>, <fcntl.h> for pipe.
+	(pipe): Use common idiom, not a macro definition.
+	* lib/pipe.c: New file.
+	* m4/pipe.m4: New file.
+	* modules/pipe-posix (Description): Enhance.
+	(Files): Add lib/pipe.c, m4/pipe.m4.
+	(configure.ac): Invoke gl_FUNC_PIPE.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize HAVE_PIPE.
+	* modules/unistd (Makefile.am): Substitute HAVE_PIPE.
+	* tests/test-unistd-c++.cc: Check the signature of pipe.
+
+2010-12-10  Bruno Haible  <bruno@clisp.org>
+
+	Rename module 'pipe' to 'spawn-pipe'.
+	* modules/spawn-pipe: New file, renamed from modules/pipe.
+	(Files, configure.ac, Makefile.am): Update.
+	(Include): Mention "spawn-pipe.h" instead of "pipe.h".
+	* modules/pipe: Reduce to an obsolete indirection to 'spawn-pipe'.
+	* lib/spawn-pipe.h: New file, renamed from lib/pipe.h.
+	* lib/spawn-pipe.c: New file, renamed from lib/pipe.c. Include
+	"spawn-pipe.h" instead of "pipe.h".
+	* m4/spawn-pipe.m4: New file, renamed from m4/pipe.m4. Rename gl_PIPE
+	to gl_SPAWN_PIPE.
+	* modules/spawn-pipe-tests: New file, renamed from modules/pipe-tests.
+	(Files, Makefile.am): Update.
+	* tests/test-spawn-pipe.sh: New file, renamed from tests/test-pipe.sh.
+	Update.
+	* tests/test-spawn-pipe.c: New file, renamed from tests/test-pipe.c.
+	Include "spawn-pipe.h" instead of "pipe.h".
+	* lib/csharpcomp.c: Include "spawn-pipe.h" instead of "pipe.h".
+	* lib/javacomp.c: Likewise.
+	* lib/javaversion.c: Likewise.
+	* lib/pipe-filter-gi.c: Likewise.
+	* lib/pipe-filter-ii.c: Likewise.
+	* modules/csharpcomp (Depends-on): Add 'spawn-pipe', remove 'pipe'.
+	* modules/javacomp (Depends-on): Likewise.
+	* modules/javaversion (Depends-on): Likewise.
+	* modules/pipe-filter-gi (Depends-on): Likewise.
+	* modules/pipe-filter-ii (Depends-on): Likewise.
+	* MODULES.html.sh (Executing programs): Update.
+	* NEWS: Mention the change.
+
+2010-12-10  Eric Blake  <eblake@redhat.com>
+
+	pipe-posix: new module
+	* modules/pipe-posix: New file.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Set default.
+	(gl_UNISTD_H): Check for declaration.
+	* modules/unistd (Makefile.am): Substitute it.
+	* lib/unistd.in.h (pipe): Provide it for mingw.
+	* doc/posix-functions/pipe.texi (pipe): Update documentation.
+	* MODULES.html.sh (File descriptor based Input/Output): Likewise.
+
+2010-12-07  Bruno Haible  <bruno@clisp.org>
+
+	unistr/u8-strcmp: Avoid collision with libc function on Solaris 11.
+	* lib/unistr.in.h (u8_strcmp) [__sun]: Declare with real name
+	u8_strcmp_gnu.
+	* modules/unistr/u8-strcmp (configure.ac): Bump version number.
+
+2010-12-06  Bruno Haible  <bruno@clisp.org>
+
+	Update internal documentation.
+	* m4/README: Document new idioms for AC_RUN_IFELSE invocations.
+
+2010-12-04  Bruno Haible  <bruno@clisp.org>
+
+	Put more information about failed tests into the test return codes.
+	* m4/c-stack.m4 (AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC): Change test
+	program so that it returns an enumerated value (0, 1, 2, 3, 4, ...).
+	* m4/d-ino.m4 (gl_CHECK_TYPE_STRUCT_DIRENT_D_INO): Likewise.
+	* m4/getcwd-path-max.m4 (gl_FUNC_GETCWD_PATH_MAX): Likewise.
+	* m4/getcwd.m4 (gl_FUNC_GETCWD_NULL): Likewise.
+	* m4/getdelim.m4 (gl_FUNC_GETDELIM): Likewise.
+	* m4/getline.m4 (gl_FUNC_GETLINE): Likewise.
+	* m4/intdiv0.m4 (gt_INTDIV0): Likewise.
+	* m4/isapipe.m4 (gl_PREREQ_ISAPIPE): Likewise.
+	* m4/nanosleep.m4 (gl_FUNC_NANOSLEEP): Likewise.
+	* m4/posix_spawn.m4 (gl_POSIX_SPAWN_WORKS): Likewise.
+	* m4/putenv.m4 (gl_FUNC_PUTENV): Likewise.
+	* m4/sleep.m4 (gl_FUNC_SLEEP): Likewise.
+	* m4/stdint.m4 (gl_STDINT_H): Likewise.
+	* m4/calloc.m4 (_AC_FUNC_CALLOC_IF): Change test program so that it
+	returns a bit mask.
+	* m4/canonicalize.m4 (gl_FUNC_REALPATH_WORKS): Likewise.
+	* m4/chown.m4 (gl_FUNC_CHOWN_FOLLOWS_SYMLINK): Likewise.
+	* m4/dup2.m4 (gl_FUNC_DUP2): Likewise.
+	* m4/fcntl-o.m4 (gl_FCNTL_O_FLAGS): Likewise.
+	* m4/fnmatch.m4 (gl_FUNC_FNMATCH_POSIX): Likewise.
+	* m4/frexp.m4 (gl_FUNC_FREXP_WORKS): Likewise.
+	* m4/frexpl.m4 (gl_FUNC_FREXPL_WORKS): Likewise.
+	* m4/getopt.m4 (gl_GETOPT_CHECK_HEADERS): Likewise.
+	* m4/iconv.m4 (AM_ICONV_LINK): Likewise.
+	* m4/iconv_open.m4 (gl_FUNC_ICONV_OPEN_UTF): Likewise.
+	* m4/isfinite.m4 (gl_ISFINITEL_WORKS): Likewise.
+	* m4/isnanf.m4 (gl_ISNANF_WORKS): Likewise.
+	* m4/isnanl.m4 (gl_FUNC_ISNANL_WORKS): Likewise.
+	* m4/ldexpl.m4 (gl_FUNC_LDEXPL_WORKS): Likewise.
+	* m4/link.m4 (gl_FUNC_LINK): Likewise.
+	* m4/linkat.m4 (gl_FUNC_LINKAT): Likewise.
+	* m4/mbrlen.m4 (gl_MBRLEN_RETVAL): Likewise.
+	* m4/mbrtowc.m4 (gl_MBRTOWC_RETVAL): Likewise.
+	* m4/mbsrtowcs.m4 (gl_MBSRTOWCS_WORKS): Likewise.
+	* m4/memchr.m4 (gl_FUNC_MEMCHR): Likewise.
+	* m4/memmem.m4 (gl_FUNC_MEMMEM): Likewise.
+	* m4/mkfifo.m4 (gl_FUNC_MKFIFO): Likewise.
+	* m4/mkstemp.m4 (gl_FUNC_MKSTEMP): Likewise.
+	* m4/mktime.m4 (AC_FUNC_MKTIME): Likewise.
+	* m4/open.m4 (gl_FUNC_OPEN): Likewise.
+	* m4/poll.m4 (gl_FUNC_POLL): Likewise.
+	* m4/popen.m4 (gl_FUNC_POPEN): Likewise.
+	* m4/printf.m4 (gl_PRINTF_SIZES_C99, gl_PRINTF_LONG_DOUBLE,
+	gl_PRINTF_INFINITE, gl_PRINTF_INFINITE_LONG_DOUBLE,
+	gl_PRINTF_DIRECTIVE_A, gl_PRINTF_DIRECTIVE_F, gl_PRINTF_DIRECTIVE_LS,
+	gl_PRINTF_PRECISION): Likewise.
+	* m4/regex.m4 (gl_REGEX): Likewise.
+	* m4/rename.m4 (gl_FUNC_RENAME): Likewise.
+	* m4/rmdir.m4 (gl_FUNC_RMDIR): Likewise.
+	* m4/setenv.m4 (gl_FUNC_SETENV_SEPARATE): Likewise.
+	* m4/stat.m4 (gl_FUNC_STAT): Likewise.
+	* m4/stpncpy.m4 (gl_FUNC_STPNCPY): Likewise.
+	* m4/strcasestr.m4 (gl_FUNC_STRCASESTR): Likewise.
+	* m4/strerror_r.m4 (gl_FUNC_STRERROR_R): Likewise.
+	* m4/strsignal.m4 (gl_FUNC_STRSIGNAL): Likewise.
+	* m4/strstr.m4 (gl_FUNC_STRSTR): Likewise.
+	* m4/strtod.m4 (gl_FUNC_STRTOD): Likewise.
+	* m4/symlink.m4 (gl_FUNC_SYMLINK): Likewise.
+	* m4/tsearch.m4 (gl_FUNC_TSEARCH): Likewise.
+	* m4/ttyname_r.m4 (gl_FUNC_TTYNAME_R): Likewise.
+	* m4/unlink-busy.m4 (gl_FUNC_UNLINK_BUSY_TEXT): Likewise.
+	* m4/unlink.m4 (gl_FUNC_UNLINK): Likewise.
+	* m4/utimensat.m4 (gl_FUNC_UTIMENSAT): Likewise.
+	* m4/utimes.m4 (gl_FUNC_UTIMES): Likewise.
+	* m4/wcrtomb.m4 (gl_FUNC_WCRTOMB): Likewise.
+	* m4/wcwidth.m4 (gl_FUNC_WCWIDTH): Likewise.
+	* m4/signbit.m4 (gl_SIGNBIT_TEST_PROGRAM): Likewise.
+	(gl_FLOATTYPE_SIGN_LOCATION): Change test program so that it returns an
+	enumerated value.
+	* m4/acl.m4 (gl_ACL_GET_FILE): Use "if ... return 1; return 0;" style.
+
+2010-12-04  Bruno Haible  <bruno@clisp.org>
+
+	Update for Solaris 11 2010-11.
+	* doc/{glibc,posix}-{functions,headers}: Add info about Solaris 11
+	Express, released in November 2010.
+
+2010-12-04  Bruno Haible  <bruno@clisp.org>
+
+	nproc: Relax license.
+	* modules/nproc (License): Change to LGPL, with consent by Glen Lenker
+	and Paul Eggert.
+	Requested by Ludovic Courtès <ludo@gnu.org>.
+
+2010-12-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	utimecmp: fine-grained src to nearby coarse-grained dest
+
+	* lib/utimecmp.c (utimecmp): When UTIMECMP_TRUNCATE_SOURCE is set,
+	and the source is on a file system with higher-resolution time
+	stamps, than the destination, and _PC_TIMESTAMP_RESOLUTION does
+	not work, and the time stamps are close together, the algorithm to
+	determine the exact resolution from the read-back mtime was buggy:
+	it had a "!=" where it should have had an "==".  This bug has been
+	in the code ever since it was introduced to gnulib.
+	Problem reported by Dan Jacobson in
+	<http://debbugs.gnu.org/cgi/bugreport.cgi?bug=7529>.
+
+2010-11-30  Bruno Haible  <bruno@clisp.org>
+
+	strerror_r-posix: Fix autoconf test.
+	* m4/strerror_r.m4 (gl_FUNC_STRERROR_R): Fix typo.
+
+2010-11-28  Bruno Haible  <bruno@clisp.org>
+            Paul Eggert  <eggert@cs.ucla.edu>
+
+	Tests for module 'getdomainname'.
+	* modules/getdomainname-tests: New file.
+	* tests/test-getdomainname.c: New file, based on
+	tests/test-gethostname.c.
+
+2010-11-28  Bruno Haible  <bruno@clisp.org>
+            Paul Eggert  <eggert@cs.ucla.edu>
+
+	getdomainname: Use the system function when possible.
+	* lib/unistd.in.h: Include <netdb.h>, for getdomainname's declaration.
+	(getdomainname): Replace if needed. Provide the declaration if it is
+	missing. Don't use _GL_CXXALIAS_SYS_CAST.
+	* lib/getdomainname.c: Include <limits.h> and <sys/systeminfo.h>.
+	(getdomainname): When the system has getdomainname, call the system
+	function. When sysinfo (SI_SRPC_DOMAIN, ...) is possible, use that.
+	* m4/getdomainname.m4 (gl_FUNC_GETDOMAINNAME): Require
+	gl_HEADER_SYS_SOCKET and gl_HEADER_NETDB. Test whether the function is
+	found in libnsl. Look for the declaration also in <netdb.h>. Replace
+	the function if its second argument is of type 'int' or if it is found
+	in libnsl.
+	(gl_PREREQ_GETDOMAINNAME): Define HAVE_GETDOMAINNAME. Check for
+	<sys/systeminfo.h> and sysinfo().
+	* modules/getdomainname (Depends-on): Add netdb, sys_socket.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize
+	HAVE_DECL_GETDOMAINNAME and REPLACE_GETDOMAINNAME instead of
+	HAVE_GETDOMAINNAME.
+	* modules/unistd (Makefile.am): Substitute HAVE_DECL_GETDOMAINNAME and
+	REPLACE_GETDOMAINNAME instead of HAVE_GETDOMAINNAME.
+	* doc/glibc-functions/getdomainname.texi: Document the problems with
+	the getdomainname declaration.
+
+2010-11-28  Bruno Haible  <bruno@clisp.org>
+
+	sys_socket: Ensure ss_family field on AIX.
+	* lib/sys_socket.in.h (ss_family): New macro definition.
+	* m4/sys_socket_h.m4 (gl_HEADER_SYS_SOCKET): Set
+	HAVE_STRUCT_SOCKADDR_STORAGE_SS_FAMILY. Set SYS_SOCKET_H if necessary.
+	(gl_SYS_SOCKET_H_DEFAULTS): Initialize
+	HAVE_STRUCT_SOCKADDR_STORAGE_SS_FAMILY.
+	* modules/sys_socket (Makefile.am): Substitute
+	HAVE_STRUCT_SOCKADDR_STORAGE_SS_FAMILY.
+	* doc/posix-headers/sys_socket.texi: Mention the AIX bug.
+
+2010-11-27  Bruno Haible  <bruno@clisp.org>
+
+	readline: Improve configure output.
+	* m4/readline.m4 (gl_FUNC_READLINE): Make the
+	"checking for readline..." result understandable.
+
+2010-11-27  Bruno Haible  <bruno@clisp.org>
+
+	*printf-posix: Detect a bug on Solaris 10/x86.
+	* m4/printf.m4 (gl_PRINTF_PRECISION): Detect crash with large precision
+	for floating-point output.
+	* tests/test-vasnprintf-posix.c (test_function): Test precision with %f
+	directive.
+	* tests/test-snprintf-posix.h (test_function): Likewise.
+	* tests/test-sprintf-posix.h (test_function): Likewise.
+	* tests/test-vasprintf-posix.c (test_function): Likewise.
+	* doc/posix-functions/fprintf.texi: Mention Solaris/x86 bug.
+	* doc/posix-functions/printf.texi: Likewise.
+	* doc/posix-functions/snprintf.texi: Likewise.
+	* doc/posix-functions/sprintf.texi: Likewise.
+	* doc/posix-functions/vfprintf.texi: Likewise.
+	* doc/posix-functions/vprintf.texi: Likewise.
+	* doc/posix-functions/vsnprintf.texi: Likewise.
+	* doc/posix-functions/vsprintf.texi: Likewise.
+	* doc/glibc-functions/obstack_printf.texi: Likewise.
+	* doc/glibc-functions/obstack_vprintf.texi: Likewise.
+
+2010-11-27  Bruno Haible  <bruno@clisp.org>
+
+	Fix link error when module libunistring-optional is in use.
+	* modules/striconveh-tests (Makefile.am): Link with $(LIBUNISTRING).
+	* modules/striconveha-tests (Makefile.am): Likewise.
+
+2010-11-27  Bruno Haible  <bruno@clisp.org>
+
+	regex: Mention link dependencies.
+	* modules/regex (Link): New section.
+	* modules/rpmatch (Link): Likewise.
+	* modules/regex-quote-tests (Makefile.am): Link with $(LIBINTL).
+
+2010-11-27  Bruno Haible  <bruno@clisp.org>
+
+	ftoastr: Fix compilation error on Solaris.
+	* lib/ftoastr.c: Include <config.h>.
+
+2010-11-27  Bruno Haible  <bruno@clisp.org>
+
+	getloadavg: Update documentation.
+	* doc/glibc-functions/getloadavg.texi: Mention the Solaris problem.
+
+2010-11-27  Bruno Haible  <bruno@clisp.org>
+
+	sys_socket: Fix test whether the functions are declared.
+	* m4/sys_socket_h.m4 (gl_HEADER_SYS_SOCKET): Include <sys/socket.h>,
+	not <sys/select.h>.
+
+2010-11-27  Bruno Haible  <bruno@clisp.org>
+
+	getpass: Make sure to get system declaration on some platforms.
+	* m4/getpass.m4 (gl_FUNC_GETPASS, gl_FUNC_GETPASS_GNU): Require
+	gl_USE_SYSTEM_EXTENSIONS.
+	* modules/getpass (Depends-on): Add extensions.
+
+2010-11-26  Bruno Haible  <bruno@clisp.org>
+
+	iconv-h: Fix test-iconv-h-c++ failure on Solaris 11 2010-11.
+	* lib/iconv.in.h (iconv_open, iconv, iconv_close): Define only if the
+	'iconv' module is present.
+	(ICONV_CONST): New macro.
+	* m4/iconv_h.m4 (gl_ICONV_H_DEFAULTS): Initialize GNULIB_ICONV and
+	ICONV_CONST.
+	* m4/iconv.m4 (AM_ICONV): If the gnulib module 'iconv-h' is present,
+	set ICONV_CONST.
+	* m4/iconv_open.m4 (gl_FUNC_ICONV_OPEN_UTF): Don't set ICONV_CONST
+	here.
+	* modules/iconv (configure.ac): Invoke gl_ICONV_MODULE_INDICATOR.
+	* modules/iconv-h (Makefile.am): Substitute GNULIB_ICONV.
+	* tests/test-iconv-h.c (ICONV_CONST): Don't define here.
+	* tests/test-iconv-h-c++.cc (ICONV_CONST): Don't define here.
+	(iconv_open, iconv, iconv_close): Test only if the 'iconv' module is
+	present.
+
+2010-11-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	ftoastr: comment fix
+	* lib/ftoastr.c: "little" -> "little or no" in comment
+
+2010-11-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdint: port to GCC 4.3 + OSX + Octave
+	On this platform, stdint.h is buggy and defines int64_t to long
+	long int.  The replacement defined it to long int, causing
+	problems with C++ style name mangling.  Instead, trust the system
+	definition if INT64_MAX is defined, and likewise for the unsigned
+	variant.   Problem reported by Jarno Rajahalme in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2010-04/msg00143.html>.
+	* lib/stdint.in.h (GL_INT64_T): Define if INT64_MAX is defined,
+	and don't mess with int64_t and INT64_MAX in this case.
+	(GL_UINT64_T): Likewise for UINT64_MAX and uint64_t.
+
+2010-11-24  Bruno Haible  <bruno@clisp.org>
+
+	doc: Corrections regarding MacOS X 10.4 and 10.5.
+	* doc/{glibc,posix,pastposix}-functions/*.texi: Update info about
+	MacOS X.
+	Reported by Simon Josefsson.
+
+2010-11-22  Ben Pfaff  <blp@cs.stanford.edu>
+
+	Uninstall ".bin" files installed by relocwrapper.
+	* modules/relocatable-prog-wrapper (uninstall-relocwrapper):
+	Recursively run "make uninstall" with ".bin" prefixed to EXEEXT,
+	unless it is already there.
+
+2010-11-21  Bruno Haible  <bruno@clisp.org>
+
+	Update for NetBSD 5.0.
+	* m4/printf.m4 (gl_PRINTF_INFINITE_LONG_DOUBLE): Don't guess yes on
+	NetBSD; the test fails on NetBSD 5.0.
+	* doc/{glibc,posix,pastposix}-{headers,functions}/*.texi: Update info
+	about NetBSD.
+
+2010-11-21  Bruno Haible  <bruno@clisp.org>
+
+	Update for HP-UX 11.23 and HP-UX 11.31.
+	* doc/{glibc,posix}-{headers,functions}/*.texi: Update info about
+	HP-UX.
+
+2010-11-21  Bruno Haible  <bruno@clisp.org>
+
+	Update for MacOS X 10.5.
+	* m4/printf.m4 (gl_PRINTF_INFINITE_LONG_DOUBLE): Don't guess yes on
+	MacOS X; the test fails on MacOS X 10.5.8.
+	* doc/{glibc,posix,pastposix}-{headers,functions}/*.texi: Update info
+	about MacOS X.
+
+2010-11-20  Joel E. Denny  <joeldenny@joeldenny.org>
+
+	bootstrap: add bootstrap_sync option.
+	See discussion at
+	<http://lists.gnu.org/archive/html/bug-gnulib/2010-10/msg00369.html>,
+	<http://lists.gnu.org/archive/html/bug-gnulib/2010-11/msg00200.html>.
+	* build-aux/bootstrap: Accept --bootstrap-sync to update
+	bootstrap if it is not identical to the local gnulib's
+	bootstrap.  Accept bootstrap_sync=true in bootstrap.conf to
+	enable this by default.  Accept --no-bootstrap-sync to disable
+	it.
+
+2010-11-20  Bruno Haible  <bruno@clisp.org>
+
+	Ensure that <features.h> is included before __GLIBC__ is tested.
+	* lib/printf-parse.h: Include <features.h>.
+	* m4/vasnprintf.m4 (gl_PREREQ_PRINTF_PARSE): Require gl_FEATURES_H.
+	Reported by Mike Frysinger <vapier@gentoo.org>.
+
+	Ensure that <features.h> is included before __GLIBC__ is tested.
+	* lib/wchar.in.h: Include <features.h>.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Require gl_FEATURES_H.
+	* modules/wchar (Makefile.am): Substitute HAVE_FEATURES_H.
+	Reported by Mike Frysinger <vapier@gentoo.org>.
+
+	Ensure that <features.h> is included before __GLIBC__ is tested.
+	* lib/arpa_inet.in.h: Include <features.h>.
+	* m4/arpa_inet_h.m4 (gl_HEADER_ARPA_INET): Require gl_FEATURES_H.
+	* modules/arpa_inet (Makefile.am): Substitute HAVE_FEATURES_H.
+	Reported by Mike Frysinger <vapier@gentoo.org>.
+
+	Ensure that <features.h> is included before __GLIBC__ is tested.
+	* build-aux/link-warning.h: Include <features.h>.
+	* modules/link-warning (configure.ac): Require gl_FEATURES_H.
+	(Makefile.am): Substitute HAVE_FEATURES_H into link-warning.h.
+	Reported by Mike Frysinger <vapier@gentoo.org>.
+
+	Ensure that <features.h> is included before __GLIBC__ is tested.
+	* m4/gnulib-common.m4 (gl_FEATURES_H): New macro.
+	Reported by Mike Frysinger <vapier@gentoo.org>.
+
+2010-11-20  Bruno Haible  <bruno@clisp.org>
+
+	memmem: Fix autoconf test.
+	* m4/memmem.m4 (gl_FUNC_MEMMEM): Test HAVE_DECL_MEMMEM, not HAVE_MEMMEM.
+
+2010-11-20  Bruno Haible  <bruno@clisp.org>
+
+	Port to uClibc.
+	* build-aux/link-warning.h (GL_LINK_WARNING): Treat uClibc like glibc.
+	* lib/fcntl.in.h: Likewise.
+	* lib/hard-locale.c (GLIBC_VERSION): Likewise.
+	* lib/mbrtowc.c (mbrtowc): Likewise.
+	* lib/relocatable.c (find_shared_library_fullname): Likewise.
+	* lib/strerror_r.c: Likewise.
+	* lib/unistr/u8-strnlen.c: Likewise.
+	* lib/vasnprintf.c (decimal_point_char): Likewise.
+	* m4/arpa_inet_h.m4 (gl_HEADER_ARPA_INET): Likewise.
+	* m4/duplocale.m4 (gl_FUNC_DUPLOCALE): Likewise.
+	* m4/fsusage.m4 (gl_FILE_SYSTEM_USAGE): Likewise.
+	* m4/glibc21.m4 (gl_GLIBC21): Likewise.
+	* tests/test-sigaction.c (handler, main): Likewise.
+	* lib/freading.h: Treat uClibc like a non-glibc platform.
+	* lib/freading.c: Likewise.
+	* lib/gettext.h: Likewise.
+	* lib/localename.c (gl_locale_name_thread_unsafe, HAVE_LOCALE_NULL):
+	Likewise.
+	* lib/printf-parse.h (FLAG_LOCALIZED): Likewise.
+	* lib/printf-parse.c (PRINTF_PARSE): Likewise.
+	* lib/propername.c (proper_name_utf8): Likewise.
+	* lib/spawn.in.h: Likewise.
+	* lib/striconv.c (mem_cd_iconv, str_cd_iconv, str_iconv): Likewise.
+	* lib/striconveh.c (iconveh_open, iconv_carefully, iconv_carefully_1,
+	mem_cd_iconveh_internal): Likewise.
+	* lib/striconveha.c (mem_iconveha, str_iconveha): Likewise.
+	* lib/string.in.h (memchr, memrchr, rawmemchr, strchrnul, strpbrk,
+	strstr, strcasestr): Likewise.
+	* lib/unicodeio.c (unicode_to_mb): Likewise.
+	* lib/uniconv/u16-conv-from-enc.c (UTF16_NAME): Likewise.
+	* lib/uniconv/u16-conv-to-enc.c (UTF16_NAME): Likewise.
+	* lib/uniconv/u16-strconv-to-enc.c (UTF16_NAME): Likewise.
+	* lib/uniconv/u32-conv-from-enc.c (UTF32_NAME): Likewise.
+	* lib/uniconv/u32-conv-to-enc.c (UTF32_NAME): Likewise.
+	* lib/uniconv/u32-strconv-to-enc.c (UTF32_NAME): Likewise.
+	* lib/unistr/u8-stpncpy.c: Likewise.
+	* lib/vasnprintf.c (VASNPRINTF): Likewise.
+	* lib/xmalloc.c (HAVE_GNU_CALLOC): Likewise.
+	* m4/getdelim.m4 (gl_FUNC_GETDELIM): Likewise.
+	* m4/getline.m4 (gl_FUNC_GETLINE): Likewise.
+	* m4/glibc2.m4 (gt_GLIBC2): Likewise.
+	* m4/iconv_open.m4 (gl_FUNC_ICONV_OPEN): Likewise.
+	* m4/memmem.m4 (gl_FUNC_MEMMEM_SIMPLE, gl_FUNC_MEMMEM): Likewise.
+	* m4/printf.m4 (gl_PRINTF_DIRECTIVE_A): Likewise.
+	* m4/strcasestr.m4 (gl_FUNC_STRCASESTR_SIMPLE, gl_FUNC_STRCASESTR):
+	Likewise.
+	* m4/strstr.m4 (gl_FUNC_STRSTR_SIMPLE, gl_FUNC_STRSTR): Likewise.
+	* m4/strtod.m4 (gl_FUNC_STRTOD): Likewise.
+	* m4/sys_ioctl_h.m4 (gl_SYS_IOCTL_H): Likewise.
+	* m4/sys_select_h.m4 (gl_HEADER_SYS_SELECT): Likewise.
+	* m4/sys_socket_h.m4 (gl_HEADER_SYS_SOCKET): Likewise.
+	* m4/sys_times_h.m4 (gl_SYS_TIMES_H): Likewise.
+	* m4/unistd_h.m4 (gl_UNISTD_H): Likewise.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Likewise.
+	* tests/test-getopt.h (OPTIND_MIN): Likewise.
+	* tests/test-striconveha.c (main): Likewise.
+	* tests/test-vasnprintf-posix.c (test_function): Likewise.
+	* tests/test-vasnprintf-posix3.c (test_function, main): Likewise.
+	* doc/posix-functions/getdelim.texi: Mention an uClibc bug.
+	* doc/posix-functions/getline.texi: Likewise.
+	Reported by Mike Frysinger <vapier@gentoo.org>.
+
+2010-11-20  Bruno Haible  <bruno@clisp.org>
+
+	nproc: Fix condition.
+	* lib/nproc.c: Test HAVE_PTHREAD_GETAFFINITY_NP, not
+	HAVE_PTHREAD_AFFINITY_NP.
+
+2010-11-20  Bruno Haible  <bruno@clisp.org>
+
+	Fix a comment.
+	* lib/vasnprintf.c (VASNPRINTF): Fix comment.
+
+2010-11-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	ftoastr: don't assume snprintf
+	* lib/ftoastr.c (snprintf) [! GNULIB_SNPRINTF_POSIX]:
+	Implement a subset of snprintf here, by using sprintf safely.
+	* modules/ftoastr (Depends-on): Remove snprintf.
+
+2010-11-19  Jim Meyering  <meyering@redhat.com>
+
+	test-rename.h: fix compilation failure
+	* tests/test-rename.h (test_rename): Add omitted "}".
+
+2010-11-17  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: add a URL discussing the no-@acronym policy
+	* top/maint.mk (sc_texinfo_acronym): Add a URL in a comment.
+
 2010-11-17  Bruce Korb  <bkorb@gnu.org>
 
 	* libposix/lib/Makefile.am (lpx-config.h): generate the new header
@@ -20,6 +537,45 @@
 	setrlimit under Linux.  Avoid setrlimit/malloc interaction bug.
 	* tests/test-fprintf-posix3.c: ditto
 
+2010-11-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	ftoastr: depend on snprintf, improve comments
+	* lib/ftoastr.c: Also mention Loitsch's draft.
+	* lib/ftoastr.h: Require WIDTH to be nonnegative.  This isn't
+	needed in the current implementation, but it might simplify
+	speeding up the code later.
+	* modules/ftoastr: Depend on snprintf; this improves portability.
+	Suggested by Bruno Haible in the same email.
+
+	ftoastr: port to hosts lacking strtof and strtold
+	Problem reported by Bruno Haible in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2010-11/msg00242.html>.
+	* lib/ftoastr.c (STRTOF): Define to strtod if in a pre-C99
+	environment and strtold (and presumably strtof) are not available.
+	* modules/ftoastr (Files): Add m4/c-strtod.m4.
+	(configure.ac): Require gl_C99_STRTOLD.
+
+2010-11-18  Bruno Haible  <bruno@clisp.org>
+
+	c-strtold: Avoid link error on AIX 7.
+	* lib/c-strtod.c: Test also HAVE_STRTOD_L or HAVE_STRTOLD_L.
+	* m4/c-strtod.m4 (gl_C_STRTOD): Test whether strtod_l exists.
+	(gl_C_STRTOLD): Test whether strtold_l exists.
+	Reported by Albert Chin <bug-gnulib@mlists.thewrittenword.com>.
+
+2010-11-17  Paul Eggert  <eggert@cs.ucla.edu>
+
+	intprops: new macro INT_BITS_STRLEN_BOUND
+	* lib/intprops.h (INT_BITS_STRLEN_BOUND): New macro, needed by
+	ftoastr.h.  This exposes an internal of intprops.h that was formerly
+	not exposed.  Also, it uses a slightly tighter bound than before;
+	though this makes no practical difference, we might as well be as
+	tight as we easily can.
+
+	ftoastr: new module, for lossless conversion of floats to short strings
+	* lib/ftoastr.h, lib/ftoastr.c, lib/dtoastr.c, lib/ldtoastr.c:
+	* modules/ftoastr: New files.
+
 2010-11-16  Bruce Korb  <bkorb@gnu.org>
 
 	* libposix/bootstrap: generate libposix module file on the fly.
@@ -28,12 +584,591 @@
 	* libposix/lib/Makefile.am: adjust here, too
 	* gnulib-tool: adjust here, too
 
+2010-11-15  Paul Eggert  <eggert@cs.ucla.edu>
+
+	bootstrap: port to Solaris sed
+	* build-aux/bootstrap (get_version): Port to Solaris sed.
+	See Ralf Wildenhues's note in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2010-11/msg00156.html>.
+
+2010-11-14  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: rename variable: s/noteworthy/gl_noteworthy_news_/
+	* top/maint.mk (gl_noteworthy_news_): Rename from "noteworthy"
+	and move definition closer to sole use.
+
+2010-11-13  Jim Meyering  <meyering@redhat.com>
+
+	remove autoconf-2.57 work-around requiring AC_PROG_EGREP and AC_PROG_CPP
+	Now we require at least autoconf-2.59, which means the work-around
+	is no longer needed.
+	* m4/alloca.m4 (gl_FUNC_ALLOCA): Remove work-around.
+	* m4/dirfd.m4 (gl_FUNC_DIRFD): Likewise.
+	* m4/mmap-anon.m4 (gl_FUNC_MMAP_ANON): Likewise.
+	* m4/strtoimax.m4 (gl_FUNC_STRTOIMAX): Likewise.
+	* m4/strtoumax.m4 (gl_FUNC_STRTOUMAX): Likewise.
+
+2010-11-13  Bruno Haible  <bruno@clisp.org>
+
+	rename, renameat: Avoid test failures at NFS mounted locations.
+	* tests/test-rename.h (dentry_exists, assert_nonexistent): New
+	functions.
+	(test_rename): Use assert_nonexistent.
+	* tests/test-rename.c: Include <dirent.h>.
+	* tests/test-renameat.c: Likewise.
+	Reported by Gary V. Vaughan <gary@gnu.org>.
+
+	rename, renameat: Document Linux bug with NFS
+	<http://lists.gnu.org/archive/html/bug-gnulib/2010-11/msg00154.html>.
+	* doc/posix-functions/rename.texi: Mention the NFS bug on Linux.
+	* doc/posix-functions/renameat.texi: Likewise.
+	Suggested by Eric Blake.
+
+2010-11-13  Bruno Haible  <bruno@clisp.org>
+
+	rename test: Add comments.
+	* tests/test-rename.h (test_rename): Add structure and comments.
+
+2010-11-13  Eric Blake  <eblake@redhat.com>
+
+	maintainer-makefile: cover a few more files
+	* top/maint.mk (sc_prohibit_test_double_equal): Also cover shell
+	scripts generated within C files, for libvirt.
+
+2010-11-13  Bruno Haible  <bruno@clisp.org>
+
+	unistr/u8-mbtouc: Improve handling of ill-formed UTF-8 input.
+	* lib/unistr/u8-mbtouc.c (u8_mbtouc): For an invalid multibyte
+	character, return the number of bytes that belong together, not always
+	1.
+	* lib/unistr/u8-mbtouc-unsafe.c (u8_mbtouc_unsafe): Likewise.
+	* lib/unistr/u8-mbtouc-aux.c (u8_mbtouc_aux): Likewise.
+	* lib/unistr/u8-mbtouc-unsafe-aux.c (u8_mbtouc_unsafe_aux): Likewise.
+	* lib/unistr/u8-mbsnlen.c (u8_mbsnlen): Use u8_mbtouc to determine the
+	number of bytes of an invalid character.
+	* tests/unistr/test-u8-mbtouc.c (test_safe_function): New function.
+	(main): Invoke it.
+	* tests/unistr/test-u8-mbtouc.h (test_function): Update two test
+	results.
+	* tests/unistr/test-u8-mbsnlen.c (main): Test various kinds of
+	malformed byte sequences.
+	* modules/unistr/u8-mbtouc (configure.ac): Bump version number.
+	* modules/unistr/u8-mbtouc-unsafe (configure.ac): Likewise.
+	* modules/unistr/u8-mbsnlen (configure.ac): Likewise.
+	Reported by Ben Pfaff and Paolo Bonzini.
+
+2010-11-13  Bruno Haible  <bruno@clisp.org>
+
+	openat: Work around glibc bug with fchownat() and empty file names.
+	* m4/openat.m4 (gl_FUNC_FCHOWNAT_EMPTY_FILENAME_BUG): New macro.
+	(gl_FUNC_FCHOWNAT): Invoke it.
+	* lib/fchownat.c (rpl_fchownat): Handle the empty file name specially.
+	* doc/posix-functions/fchownat.texi: Document the glibc bug.
+	Reported by Gary V. Vaughan <gary@gnu.org>.
+
+2010-11-13  Bruno Haible  <bruno@clisp.org>
+
+	openat: Ensure autoconf macro ordering.
+	* m4/openat.m4 (gl_FUNC_FCHOWNAT_DEREF_BUG): Require
+	gl_USE_SYSTEM_EXTENSIONS.
+	(gl_FUNC_FCHOWNAT): Require gl_UNISTD_H_DEFAULTS.
+
+2010-11-13  Bruno Haible  <bruno@clisp.org>
+
+	Update comments.
+	* lib/unistr/u8-check.c: Update file name in comments.
+	* lib/unistr/u8-mblen.c: Likewise.
+	* lib/unistr/u8-prev.c: Likewise.
+	* lib/unistr/u8-strmblen.c: Likewise.
+	* lib/unistr/u8-strmbtouc.c: Likewise.
+
+2010-11-13  Jim Meyering  <meyering@redhat.com>
+
+	tests: avoid test failure on Solaris 10 due to lack of PATH export
+	* tests/test-update-copyright.sh: Don't forget to export PATH.
+
+	init.sh: ensure that IFS is defined, just in case...
+	* tests/init.sh (setup_): Ensure that IFS is defined,
+	so that saving and restoring it works as expected.  This
+	appears to be useful at least for an old version of dash
+	from a long time ago (RH 6).  See here for details:
+	http://thread.gmane.org/gmane.comp.gnu.coreutils.general/436/focus=455
+
+	maint.mk: tighten "test a == b" check
+	* top/maint.mk (sc_prohibit_test_double_equal): Restrict this
+	test to files that contain something like #!/bin/sh.
+	Without this, coreutils would get two false positives in
+	the comments of C source files.
+
+2010-11-12  Eric Blake  <eblake@redhat.com>
+
+	bootstrap: fix typo in previous attempt
+	* build-aux/bootstrap (buildreq): Correct the grouping.
+	Reported by Paul Eggert.
+
+	maintainer-makefile: prohibit test x == x
+	* top/maint.mk (sc_prohibit_test_double_equal): New rule.
+	Based on a report by Matthias Bolte.
+
+	bootstrap: allow FreeBSD gzip
+	* build-aux/bootstrap (get_version): Parse FreeBSD gzip version,
+	which has no '.' and goes to stderr.
+	* build-aux/bootstrap.conf (buildreq): Improve the sample file.
+	Reported by Matthias Bolte.
+
+	maintainer-makefile: check for i18n setup
+	* top/maint.mk (sc_bindtextdomain): Check for evidence that _()
+	will likely work.
+
+2010-11-12  Bruno Haible  <bruno@clisp.org>
+
+	sleep, nanosleep: Work around Linux 2.6.9 nanosleep bug.
+	* lib/sleep.c (rpl_sleep): Split in chunks no larger than 24 days.
+	* lib/nanosleep.c (nanosleep): Likewise.
+
+2010-11-11  Bruno Haible  <bruno@clisp.org>
+
+	fcntl-h: Fix for use of C++ on glibc systems.
+	* lib/fcntl.in.h: Include <sys/stat.h> before include_next <fcntl.h>
+	also on glibc systems in C++ mode.
+	Reported by Gary V. Vaughan <gary@gnu.org>.
+
+2010-11-11  Christian Weisgerber  <naddy@mips.inka.de>  (tiny change)
+
+	mknod: avoid false failure with dash
+	* m4/mknod.m4 (gl_FUNC_MKNOD): Use portable shell syntax.
+
+2010-11-11  Paul Eggert  <eggert@cs.ucla.edu>
+
+	unlink: Fix "is it should" typo in diagnostic.
+	* m4/unlink.m4 (gl_FUNC_UNLINK): Fix typo, as per Reuben Thomas in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2010-11/msg00106.html>.
+
+2010-11-11  Bruno Haible  <bruno@clisp.org>
+
+	Tests for module 'strerror_r-posix'.
+	* modules/strerror_r-posix-tests: New file.
+	* tests/test-strerror_r.c: New file.
+	* tests/test-string-c++.cc: Check the signature of strerror_r.
+
+	New module 'strerror_r-posix'.
+	* lib/string.in.h (strerror_r): New declaration.
+	* lib/strerror_r.c: New file.
+	* m4/strerror_r.m4: New file.
+	* m4/string_h.m4 (gl_HEADER_STRING_H_BODY): Check for the declaration
+	of strerror_r.
+	(gl_HEADER_STRING_H_DEFAULTS): Initialize GNULIB_STRERROR_R,
+	HAVE_DECL_STRERROR_R, REPLACE_STRERROR_R.
+	* modules/strerror_r-posix: New file.
+	* modules/string (Makefile.am): Substitute GNULIB_STRERROR_R,
+	HAVE_DECL_STRERROR_R, REPLACE_STRERROR_R.
+	* doc/posix-functions/strerror_r.texi: Mention the new module and the
+	portability problems.
+
+2010-11-11  Torsten Scheck  <Torsten.Scheck@Leica-Microsystems.com> (tiny change)
+
+	* build-aux/pmccabe2html: Fixed a off-by-one error, so last input
+	line is also considered for output. Quoted function name in shell
+	command, so temporary files for functions like MyClass::operator()
+	are removed correctly without errors.
+
+2010-11-09  Bruno Haible  <bruno@clisp.org>
+
+	* doc/posix-functions/strerror.texi: List more failing platforms.
+
+	* doc/posix-functions/strerror.texi: Add a comment.
+
+2010-11-07  Paul Eggert  <eggert@cs.ucla.edu>
+
+	fdopendir: fix bug on MacOS X when low on file descriptors
+
+	* lib/fdopendir.c (REPLACE_FCHDIR): #define to 0 if not defined.
+	(fdopendir_with_dup, fd_clone_opendir): Now have extra CWD arg.
+	All callers changed.
+	(fdopendir): Invoke save_cwd at the top level, not after using
+	multiple dup() calls to use up file descriptors.  Then retry
+	fdopendir_with_dup.  This avoids failure with EMFILE if FD is 1
+	less than the maximum number of open file descriptors, because
+	save_cwd fails with errno == EMFILE.  Problem reported by tsteven4
+	on Mac OS X 10.6.4 for tar 1.24
+	<http://lists.gnu.org/archive/html/bug-tar/2010-10/msg00084.html>
+	<http://lists.gnu.org/archive/html/bug-tar/2010-11/msg00000.html>
+	and for tar 1.25
+	<http://lists.gnu.org/archive/html/bug-tar/2010-11/msg00038.html>.
+
+2010-11-07  Bruno Haible  <bruno@clisp.org>
+
+	vasnprintf: Support I flag on glibc systems.
+	* lib/printf-parse.h (FLAG_LOCALIZED): New macro.
+	* lib/printf-parse.c (PRINTF_PARSE): Handle the 'I' flag.
+	* lib/vasnprintf.c (VASNPRINTF): Pass the 'I' flag on to the system's
+	snprintf function.
+	* tests/test-vasnprintf-posix.c (test_function): Test the 'I' flag on
+	glibc systems.
+	* tests/test-vasnprintf-posix3.c: New file.
+	* modules/vasnprintf-posix-tests (Files): Add it.
+	(TESTS, check_PROGRAMS): Add test-vasnprintf-posix3.
+
 2010-11-06  Gary V. Vaughan  <gary@gnu.org>
 
 	libposix: vastly simplified bootstrap sanity check
 	* libposix/bootstrap: Use a much simpler script to ensure that the
 	output of the posix-modules script remains in sync with the module
 	list of the libposix module.
+
+2010-11-05  Thien-Thi Nguyen  <ttn@gnuvola.org>  (tiny change)
+
+	[html] Fix copy/paste bug: Use unique name for compiler warnings.
+	* MODULES.html.sh: For compiler warnings, use name
+	`ansic_ext_compwarn' since `ansic_ext_misc' is already taken.
+
+2010-11-05  Eric Blake  <eblake@redhat.com>
+
+	ceil, floor: avoid spurious failure with icc
+	* tests/test-ceilf2.c (ceilf_reference): Avoid icc's use of DAZ
+	[denormals-as-zero] when optimizing without -mieee-fp option.
+	* tests/test-floorf2.c (floorf_reference): Likewise.
+	* tests/test-ceilf1.c (dummy): New function.
+	(main): Use it to outsmart icc's optimization.
+	* tests/test-floorf1.c (dummy, main): Likewise.
+
+	tests: require working signbit
+	* modules/ceilf-tests (Depends-on): Add signbit.
+	* modules/ceill-tests (Depends-on): Likewise.
+	* modules/floorf-tests (Depends-on): Likewise.
+	* modules/floorl-tests (Depends-on): Likewise.
+	* modules/round-tests (Depends-on): Likewise.
+	* modules/roundf-tests (Depends-on): Likewise.
+	* modules/roundl-tests (Depends-on): Likewise.
+	* modules/trunc-tests (Depends-on): Likewise.
+	* modules/truncf-tests (Depends-on): Likewise.
+	* modules/truncl-tests (Depends-on): Likewise.
+
+	strtod: work around icc bug
+	* lib/strtod.c (minus_zero): Define to working value.
+	(strtod): Use it to avoid icc bug.
+
+	copysign: enhance tests
+	* modules/copysign-tests (Files): Add minus-zero.h.
+	* tests/test-copysign.c (main): Also test zeros.
+
+2010-11-04  Eric Blake  <eblake@redhat.com>
+
+	ceil, floor, round, trunc: enhance tests of -0
+	* tests/test-ceilf1.c (main): Ensure correct sign of result.
+	* tests/test-ceill.c (main): Likewise.
+	* tests/test-floorf1.c (main): Likewise.
+	* tests/test-floorl.c (main): Likewise.
+	* tests/test-round1.c (main): Likewise.
+	* tests/test-roundf1.c (main): Likewise.
+	* tests/test-roundl.c (main): Likewise.
+	* tests/test-trunc1.c (main): Likewise.
+	* tests/test-truncf1.c (main): Likewise.
+	* tests/test-truncl.c (main): Likewise.
+
+2010-11-04  Eric Blake  <eblake@redhat.com>
+
+	frexp, tests: work around ICC bug with -zero
+	* m4/frexp.m4 (gl_FUNC_FREXP_WORKS): Compute -0.0 in a way that
+	works with more compilers.
+	* tests/minus-zero.h: New file.
+	* modules/ceilf-tests (Files): Include it.
+	* modules/ceill-tests (Files): Likewise.
+	* modules/floorf-tests (Files): Likewise.
+	* modules/floorl-tests (Files): Likewise.
+	* modules/frexp-nolibm-tests (Files): Likewise.
+	* modules/frexp-tests (Files): Likewise.
+	* modules/frexpl-nolibm-tests (Files): Likewise.
+	* modules/frexpl-tests (Files): Likewise.
+	* modules/isnan-tests (Files): Likewise.
+	* modules/isnand-nolibm-tests (Files): Likewise.
+	* modules/isnand-tests (Files): Likewise.
+	* modules/isnanf-nolibm-tests (Files): Likewise.
+	* modules/isnanf-tests (Files): Likewise.
+	* modules/isnanl-nolibm-tests (Files): Likewise.
+	* modules/isnanl-tests (Files): Likewise.
+	* modules/round-tests (Files): Likewise.
+	* modules/roundf-tests (Files): Likewise.
+	* modules/roundl-tests (Files): Likewise.
+	* modules/ldexpl-tests (Files): Likewise.
+	* modules/signbit-tests (Files): Likewise.
+	* modules/snprintf-posix-tests (Files): Likewise.
+	* modules/sprintf-posix-tests (Files): Likewise.
+	* modules/strtod-tests (Files): Likewise.
+	* modules/trunc-tests (Files): Likewise.
+	* modules/truncf-tests (Files): Likewise.
+	* modules/truncl-tests (Files): Likewise.
+	* modules/vsnprintf-posix-tests (Files): Likewise.
+	* modules/vsprintf-posix-tests (Files): Likewise.
+	* modules/vasnprintf-posix-tests (Files): Likewise.
+	* modules/vasprintf-posix-tests (Files): Likewise.
+	* tests/test-ceilf1.c (main): Use it.
+	* tests/test-ceill.c (main): Likewise.
+	* tests/test-floorf1.c (main): Likewise.
+	* tests/test-floorl.c (main): Likewise.
+	* tests/test-frexp.c (main): Likewise.
+	* tests/test-frexpl.c (main): Likewise.
+	* tests/test-isnan.c (main): Likewise.
+	* tests/test-isnand.h (main): Likewise.
+	* tests/test-isnanf.h (main): Likewise.
+	* tests/test-isnanl.h (main): Likewise.
+	* tests/test-ldexpl.c (main): Likewise.
+	* tests/test-round.c (main): Likewise.
+	* tests/test-roundf.c (main): Likewise.
+	* tests/test-roundl.c (main): Likewise.
+	* tests/test-signbit.c (test_signbitf, test_signbitd)
+	(test_signbitl): Likewise.
+	* tests/test-snprintf-posix.h (test_function): Likewise.
+	* tests/test-sprintf-posix.h (test_function): Likewise.
+	* tests/test-strtod.c (main): Likewise.
+	* tests/test-trunc1.c (main): Likewise.
+	* tests/test-truncf1.c (main): Likewise.
+	* tests/test-truncl.c (main): Likewise.
+
+	isnanl: work around icc bug
+	* lib/isnan.c (FUNC): Compute run-time NaN under ICC as well.
+
+2010-11-03  Eric Blake  <eblake@redhat.com>
+
+	tests: fix compiler warnings
+	* tests/test-getopt.h (test_getopt): Fix condition.
+	* tests/test-getopt_long.h (test_getopt_long): Likewise.
+	* tests/test-pipe2.c (main): Likewise.
+	* tests/test-quotearg-simple.c (main): Avoid icc warning.
+
+	utimens: fix broken m4 test
+	* m4/utimens.m4 (gl_UTIMENS): Include correct headers.
+
+2010-10-28  Bruno Haible  <bruno@clisp.org>
+
+	posix_spawn*, getdtablesize: Relax license.
+	* modules/posix_spawn (License): Change to LGPLv2+.
+	* modules/posix_spawnp (License): Likewise.
+	* modules/posix_spawn-internal (License): Likewise.
+	* modules/posix_spawnattr_init (License): Likewise.
+	* modules/posix_spawnattr_getflags (License): Likewise.
+	* modules/posix_spawnattr_setflags (License): Likewise.
+	* modules/posix_spawnattr_getpgroup (License): Likewise.
+	* modules/posix_spawnattr_setpgroup (License): Likewise.
+	* modules/posix_spawnattr_getschedparam (License): Likewise.
+	* modules/posix_spawnattr_setschedparam (License): Likewise.
+	* modules/posix_spawnattr_getschedpolicy (License): Likewise.
+	* modules/posix_spawnattr_setschedpolicy (License): Likewise.
+	* modules/posix_spawnattr_getsigdefault (License): Likewise.
+	* modules/posix_spawnattr_setsigdefault (License): Likewise.
+	* modules/posix_spawnattr_getsigmask (License): Likewise.
+	* modules/posix_spawnattr_setsigmask (License): Likewise.
+	* modules/posix_spawnattr_destroy (License): Likewise.
+	* modules/posix_spawn_file_actions_init (License): Likewise.
+	* modules/posix_spawn_file_actions_addclose (License): Likewise.
+	* modules/posix_spawn_file_actions_adddup2 (License): Likewise.
+	* modules/posix_spawn_file_actions_addopen (License): Likewise.
+	* modules/posix_spawn_file_actions_destroy (License): Likewise.
+	* modules/getdtablesize (License): Likewise.
+	Requested by Adam Stokes <ajs@redhat.com> for use in netcf.
+
+2010-10-26  Bruno Haible  <bruno@clisp.org>
+
+	unistd: Refine workaround from 2009-12-23 against Cygwin bug.
+	* lib/unistd.in.h: Don't include <stdio.h> and <fcntl.h>, except on
+	Cygwin and mingw.
+	Suggested by Eric Blake.
+
+2010-10-26  Bruno Haible  <bruno@clisp.org>
+
+	stdio: Work around compilation error due to renameat() on Solaris 10.
+	* lib/stdio.in.h: Include <unistd.h> on Solaris.
+	* lib/renameat.c: Don't include <unistd.h> here.
+	* doc/posix-functions/renameat.texi: Mention the Solaris problem.
+	Reported by Paul Eggert and Eric Blake.
+
+2010-10-26  Paul Eggert  <eggert@cs.ucla.edu>
+
+	renameat: port to Solaris 10, which declares renameat in unistd.h
+
+	* lib/renameat.c: Include unistd.h before stdio.h, because
+	Solaris 10 declares renameat in unistd.h.  Problem encountered
+	when building GNU tar 1.24 on Solaris 10.
+
+2010-10-26  Christian Weisgerber  <naddy@mips.inka.de>  (tiny change)
+
+	fdopendir: fix C89 compilation
+	* lib/fdopendir.c (fd_clone_opendir): Move declaration for older
+	compilers.
+
+2010-10-23  Paul Eggert  <eggert@cs.ucla.edu>
+
+	inttostr: simplify by removing unnecessary redundancy
+	* lib/anytostr.c: Don't include verify.h.
+	(anytostr): Don't verify that TYPE_SIGNED (inttype) equals
+	inttype_is_signed.  Instead, disable the bogus GCC warnings, so that
+	there's no need for inttype_is_signed and for calling TYPE_SIGNED.
+	* lib/imaxtostr.c (inttype_is_signed): Remove; no longer needed.
+	* lib/inttostr.c, lib/offtostr.c, lib/uinttostr.c, lib/umaxtostr.c:
+	Likewise.
+	* modules/inttostr (Depends-on): Remove 'verify'.
+
+2010-10-23  Bruno Haible  <bruno@clisp.org>
+
+	nl_langinfo: Mention problem with CRNCYSTR on NetBSD 5.0.
+	* doc/posix-functions/nl_langinfo.texi: Mention problem with CRNCYSTR.
+	Reported by Eric Blake.
+
+2010-10-23  Bruno Haible  <bruno@clisp.org>
+
+	Tests: Fix LOCALE_JA on MirBSD 10.
+	* m4/locale-ja.m4 (gt_LOCALE_JA): Reject a locale identifier that leads
+	to an UTF-8 locale.
+	* m4/locale-fr.m4 (gt_LOCALE_FR): Likewise.
+	* m4/locale-zh.m4 (gt_LOCALE_ZH_CN): Likewise.
+	Reported by Eric Blake.
+
+2010-10-21  Bruno Haible  <bruno@clisp.org>
+
+	nl_langinfo test: Avoid test failure on NetBSD 5.
+	* tests/test-nl_langinfo.c (main): Relax test of nl_langinfo(CRNCYSTR).
+	Reported by Eric Blake.
+
+2010-10-21  Eric Blake  <eblake@redhat.com>
+
+	c-stack: work around libsigsegv 2.8 bug
+	* lib/c-stack.c (SIGSTKSZ): Increase size to avoid alternate stack
+	overflow on at least PowerPC64.
+
+2010-10-17  Bruno Haible  <bruno@clisp.org>
+
+	userspec: Drop redundant file.
+	* modules/userspec (Files): Remove lib/inttostr.h.
+
+2010-10-17  Bruno Haible  <bruno@clisp.org>
+
+	nl_langinfo tests: Silence some warnings.
+	* tests/test-nl_langinfo.c: Silence -Wtype-limits warnings.
+	Reported by Jim Meyering.
+
+2010-10-17  Bruno Haible  <bruno@clisp.org>
+
+	Make use of GCC's attribute __alloc_size__.
+	* lib/xalloc.h (ATTRIBUTE_ALLOC_SIZE): New macro.
+	(xmalloc, xzalloc, xcalloc, xrealloc, xmemdup, xnmalloc, xnrealloc,
+	xcharalloc): Declare with ATTRIBUTE_ALLOC_SIZE.
+	* lib/eealloc.h (eemalloc, eerealloc): Declare with attribute
+	__alloc_size__.
+	* lib/pagealign_alloc.h (pagealign_alloc, pagealign_xalloc): Likewise.
+	Suggested by Jim Meyering.
+
+2010-10-16  Joel E. Denny  <joeldenny@joeldenny.org>
+
+	bootstrap: anchor .gitignore entries.
+	* build-aux/bootstrap (insert_sorted_if_absent): Replace all uses
+	with...
+	(insert_vc_ignore): ... this new function, which prepends `/' to
+	all .gitignore entries before passing them to
+	insert_sorted_if_absent.
+
+2010-10-16  Bruno Haible  <bruno@clisp.org>
+
+	nextafter: Fix configure check.
+	* modules/nextafter (configure.ac): Correct expected prototype.
+
+2010-10-16  Bruno Haible  <bruno@clisp.org>
+
+	termios: Update documentation.
+	* doc/posix-headers/termios.texi: Mention remaining mingw problems.
+
+2010-10-16  Bruno Haible  <bruno@clisp.org>
+
+	tests: Make them compile with TinyCC.
+	* tests/test-strstr.c (main): Remove parentheses around array
+	initializer.
+
+2010-10-15  Eric Blake  <eblake@redhat.com>
+
+	ignore-value: make header idempotent
+	* lib/ignore-value.h: Add double-inclusion guards.
+	Reported by Stefan Berger.
+
+2010-10-15  Jim Meyering  <meyering@redhat.com>
+
+	GNUmakefile: handle "stable" target, not "major"
+	* top/GNUmakefile (_is-dist-target): s/major/stable/ to match the
+	lists in maint.mk and announce-gen.  Without this, "make stable"
+	would fail to ensure that $(VERSION) is up to date.
+
+2010-10-15  Ludovic Courtès  <ludo@gnu.org>
+
+	* lib/isnan.c (FUNC): Treat TinyCC (`__TINYC__') like `__SUNPRO_C'
+	& co.
+
+2010-10-14  Bruno Haible  <bruno@clisp.org>
+
+	vasnprintf: Don't set errno to 0.
+	* lib/vasnprintf.c (VASNPRINTF): Save and restore errno around the
+	block that sets it to 0.
+	Reported by Gianluigi Tiesi <sherpya@netfarm.it>.
+
+2010-10-14  Bruno Haible  <bruno@clisp.org>
+
+	socketlib: Fix.
+	* modules/socketlib (Files): Add m4/sys_socket_h.m4. Needed for
+	gl_PREREQ_SYS_H_WINSOCK2.
+	Reported by Ian Beckwith <ianb@erislabs.net>.
+
+2010-10-13  Jim Meyering  <meyering@redhat.com>
+
+	test-select-stdin.c: avoid warn_unused_result warnings
+	* tests/test-select-stdin.c: Include "macros.h".
+	ASSERT that read and fflush succeed.
+
+2010-10-13  Jim Meyering  <meyering@redhat.com>
+
+	git-version-gen: do require git-VC'd files in cwd
+	* build-aux/git-version-gen: Reject a git version string
+	if there are no commits associated with the current directory.
+	This avoids an unlikely false-positive (unrelated dir whose parent
+	repository also contains a tag matching v*), as pointed out
+	by Giuseppe Scrivano in
+	http://thread.gmane.org/gmane.comp.lib.gnulib.bugs/21843/focus=23664
+
+2010-10-13  Paul Eggert  <eggert@cs.ucla.edu>
+
+	argv-iter: omit nonconforming declaration
+	* lib/argv-iter.h (enum argv_iter_err): Omit the useless
+	enum arg_iter_err declaration, which doesn't conform to C99.
+	Solaris 10 cc warns about this.
+
+2010-10-13  Eric Blake  <eblake@redhat.com>
+
+	termios: fix compilation on mingw
+	* m4/termios_h.m4 (gl_TERMIOS_H_DEFAULTS): Set default.
+	(gl_TERMIOS_H): Adjust it on mingw.
+	* modules/termios (Makefile.am): Substitute new key.
+	* lib/termios.in.h (includes): Make include_next conditional.
+	* doc/posix-headers/termios.texi (termios.h): Update
+	documentation.
+	Reported by Daniel P. Berrange.
+
+2010-10-13  Jim Meyering  <meyering@redhat.com>
+
+	git-version-gen: don't require that .git/ be in the current dir
+	* build-aux/git-version-gen: Adjust this script so that it works
+	when run from any working directory beneath the top-level .git/-
+	containing directory.  Inspired by a patch from Giuseppe Scrivano,
+	http://thread.gmane.org/gmane.comp.lib.gnulib.bugs/21843/focus=21847
+
+	test-select: avoid warn_unused_result warnings
+	* tests/test-select.c: Include "macros.h".
+	ASSERT that each call to read, write, and pipe succeeds.
+	While not technically required, also check each "close".
+	* modules/select-tests (Files): Add tests/macros.h.
+
+	test-symlinkat: remove declaration of unused local
+	* tests/test-symlinkat.c (main): Remove unused local, "buf".
+
+	test-inttostr: avoid shadowing warnings
+	* tests/test-inttostr.c (main): Rename local, "buf" to "b",
+	and use malloc rather than the stack for the same reason as
+	mentioned in the comment justifying the other allocation.
 
 2010-10-13  Gary V. Vaughan  <gary@gnu.org>
 
@@ -603,6 +1738,17 @@
 	* lib/spawn.in.h: Likewise.
 	* lib/sys_socket.in.h: Update an URL.
 	* lib/sys_stat.in.h: Break long line.
+
+2010-10-03  Reuben Thomas  <rrt@sc3d.org>
+
+	Improve pmccabe2html.
+	* build-aux/pmccabe2html: Add CYCLO_SRCS variable, and make
+	cyclo-$(PACKAGE).html depend on it, so the HTML file is remade
+	when the sources change. Remove the line in the HTML about "Used
+	ranges" (which implied that there might be other unused ranges),
+	rename "Resume" to "Summary" (easier to understand for more users).
+	* build-aux/pmccabe.css: Removing the dashed dividers, some unused
+	styles, and some unnecessary blank lines.
 
 2010-10-03  Bruno Haible  <bruno@clisp.org>
             Joachim Schmitz  <schmitz@hp.com>  (tiny change)

@@ -12,6 +12,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2010-12-10  pipe            This module is renamed to spawn-pipe. The include
+                            file is renamed to "spawn-pipe.h".
+
 2010-10-05  getdate         This module is deprecated. Please use the new
                             parse-datetime module for the replacement
                             function parse_datetime(), or help us write

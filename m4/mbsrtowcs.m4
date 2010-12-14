@@ -1,4 +1,4 @@
-# mbsrtowcs.m4 serial 7
+# mbsrtowcs.m4 serial 8
 dnl Copyright (C) 2008-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -64,6 +64,7 @@ changequote([,])dnl
 #include <wchar.h>
 int main ()
 {
+  int result = 0;
   /* Test whether the function works when started with a conversion state
      in non-initial state.  This fails on HP-UX 11.11 and Solaris 10.  */
   if (setlocale (LC_ALL, "$LOCALE_FR_UTF8") != NULL)
@@ -77,7 +78,7 @@ int main ()
           {
             const char *src = input + 2;
             if (mbsrtowcs (NULL, &src, 10, &state) != 4)
-              return 1;
+              result |= 1;
           }
     }
   if (setlocale (LC_ALL, "$LOCALE_JA") != NULL)
@@ -91,7 +92,7 @@ int main ()
           {
             const char *src = input + 4;
             if (mbsrtowcs (NULL, &src, 10, &state) != 3)
-              return 1;
+              result |= 2;
           }
     }
   if (setlocale (LC_ALL, "$LOCALE_ZH_CN") != NULL)
@@ -105,10 +106,10 @@ int main ()
           {
             const char *src = input + 2;
             if (mbsrtowcs (NULL, &src, 10, &state) != 4)
-              return 1;
+              result |= 4;
           }
     }
-  return 0;
+  return result;
 }]])],
           [gl_cv_func_mbsrtowcs_works=yes],
           [gl_cv_func_mbsrtowcs_works=no],

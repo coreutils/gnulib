@@ -1,4 +1,4 @@
-# serial 56
+# serial 57
 
 # Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2003, 2004, 2005, 2006,
 # 2007, 2008, 2009, 2010 Free Software Foundation, Inc.
@@ -41,7 +41,8 @@ AC_DEFUN([gl_REGEX],
            #include <limits.h>
            #include <regex.h>
            ]],
-          [[static struct re_pattern_buffer regex;
+          [[int result = 0;
+            static struct re_pattern_buffer regex;
             unsigned char folded_chars[UCHAR_MAX + 1];
             int i;
             const char *s;
@@ -63,11 +64,11 @@ AC_DEFUN([gl_REGEX],
                   memset (&regex, 0, sizeof regex);
                   s = re_compile_pattern (pat, sizeof pat - 1, &regex);
                   if (s)
-                    return 1;
-                  if (re_search (&regex, data, sizeof data - 1,
-                                 0, sizeof data - 1, &regs)
-                      != -1)
-                    return 1;
+                    result |= 1;
+                  else if (re_search (&regex, data, sizeof data - 1,
+                                      0, sizeof data - 1, &regs)
+                           != -1)
+                    result |= 1;
                   if (! setlocale (LC_ALL, "C"))
                     return 1;
                 }
@@ -78,11 +79,10 @@ AC_DEFUN([gl_REGEX],
             memset (&regex, 0, sizeof regex);
             s = re_compile_pattern ("a[^x]b", 6, &regex);
             if (s)
-              return 1;
-
+              result |= 2;
             /* This should fail, but succeeds for glibc-2.5.  */
-            if (re_search (&regex, "a\nb", 3, 0, 3, &regs) != -1)
-              return 1;
+            else if (re_search (&regex, "a\nb", 3, 0, 3, &regs) != -1)
+              result |= 2;
 
             /* This regular expression is from Spencer ere test number 75
                in grep-2.3.  */
@@ -94,7 +94,7 @@ AC_DEFUN([gl_REGEX],
             s = re_compile_pattern ("a[[:@:>@:]]b\n", 11, &regex);
             /* This should fail with _Invalid character class name_ error.  */
             if (!s)
-              return 1;
+              result |= 4;
 
             /* Ensure that [b-a] is diagnosed as invalid, when
                using RE_NO_EMPTY_RANGES. */
@@ -102,34 +102,31 @@ AC_DEFUN([gl_REGEX],
             memset (&regex, 0, sizeof regex);
             s = re_compile_pattern ("a[b-a]", 6, &regex);
             if (s == 0)
-              return 1;
+              result |= 8;
 
             /* This should succeed, but does not for glibc-2.1.3.  */
             memset (&regex, 0, sizeof regex);
             s = re_compile_pattern ("{1", 2, &regex);
-
             if (s)
-              return 1;
+              result |= 8;
 
             /* The following example is derived from a problem report
                against gawk from Jorge Stolfi <stolfi@ic.unicamp.br>.  */
             memset (&regex, 0, sizeof regex);
             s = re_compile_pattern ("[an\371]*n", 7, &regex);
             if (s)
-              return 1;
-
+              result |= 8;
             /* This should match, but does not for glibc-2.2.1.  */
-            if (re_match (&regex, "an", 2, 0, &regs) != 2)
-              return 1;
+            else if (re_match (&regex, "an", 2, 0, &regs) != 2)
+              result |= 8;
 
             memset (&regex, 0, sizeof regex);
             s = re_compile_pattern ("x", 1, &regex);
             if (s)
-              return 1;
-
+              result |= 8;
             /* glibc-2.2.93 does not work with a negative RANGE argument.  */
-            if (re_search (&regex, "wxy", 3, 2, -2, &regs) != 1)
-              return 1;
+            else if (re_search (&regex, "wxy", 3, 2, -2, &regs) != 1)
+              result |= 8;
 
             /* The version of regex.c in older versions of gnulib
                ignored RE_ICASE.  Detect that problem too.  */
@@ -137,10 +134,9 @@ AC_DEFUN([gl_REGEX],
             memset (&regex, 0, sizeof regex);
             s = re_compile_pattern ("x", 1, &regex);
             if (s)
-              return 1;
-
-            if (re_search (&regex, "WXY", 3, 0, 3, &regs) < 0)
-              return 1;
+              result |= 16;
+            else if (re_search (&regex, "WXY", 3, 0, 3, &regs) < 0)
+              result |= 16;
 
             /* Catch a bug reported by Vin Shelton in
                http://lists.gnu.org/archive/html/bug-coreutils/2007-06/msg00089.html
@@ -151,12 +147,12 @@ AC_DEFUN([gl_REGEX],
             memset (&regex, 0, sizeof regex);
             s = re_compile_pattern ("[[:alnum:]_-]\\\\+$", 16, &regex);
             if (s)
-              return 1;
+              result |= 32;
 
             /* REG_STARTEND was added to glibc on 2004-01-15.
                Reject older versions.  */
             if (! REG_STARTEND)
-              return 1;
+              result |= 64;
 
 #if 0
             /* It would be nice to reject hosts whose regoff_t values are too
@@ -167,10 +163,11 @@ AC_DEFUN([gl_REGEX],
                when compiling --without-included-regex.   */
             if (sizeof (regoff_t) < sizeof (ptrdiff_t)
                 || sizeof (regoff_t) < sizeof (ssize_t))
-              return 1;
+              result |= 64;
 #endif
 
-            return 0;]])],
+            return result;
+          ]])],
        [gl_cv_func_re_compile_pattern_working=yes],
        [gl_cv_func_re_compile_pattern_working=no],
        dnl When crosscompiling, assume it is not working.

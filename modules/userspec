@@ -2,7 +2,6 @@ Description:
 Parse a `user:group' specifier (e.g. the first argument of chown utility).
 
 Files:
-lib/inttostr.h
 lib/userspec.c
 lib/userspec.h
 m4/userspec.m4

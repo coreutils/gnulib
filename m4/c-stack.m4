@@ -8,7 +8,7 @@
 
 # Written by Paul Eggert.
 
-# serial 11
+# serial 12
 
 AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
   [# for STACK_DIRECTION
@@ -77,16 +77,18 @@ AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
               st.ss_size = SIGSTKSZ;
               r = sigaltstack (&st, 0);
               if (r != 0)
-                return r;
+                return 1;
 
               sigemptyset (&act.sa_mask);
               act.sa_flags = SA_NODEFER | SA_ONSTACK | SA_RESETHAND;
               act.sa_handler = segv_handler;
               #if FAULT_YIELDS_SIGBUS
               if (sigaction (SIGBUS, &act, 0) < 0)
-                return -1;
+                return 2;
               #endif
-              return sigaction (SIGSEGV, &act, 0);
+              if (sigaction (SIGSEGV, &act, 0) < 0)
+                return 3;
+              return 0;
             }
             static volatile int *
             recurse_1 (volatile int n, volatile int *p)
@@ -104,6 +106,7 @@ AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
             int
             main ()
             {
+              int result;
               #if HAVE_SETRLIMIT && defined RLIMIT_STACK
               /* Before starting the endless recursion, try to be friendly
                  to the user's machine.  On some Linux 2.2.x systems, there
@@ -114,7 +117,10 @@ AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
               setrlimit (RLIMIT_STACK, &rl);
               #endif
 
-              return c_stack_action () || recurse (0);
+              result = c_stack_action ();
+              if (result != 0)
+                return result;
+              return recurse (0);
             }
            ]])],
         [ac_cv_sys_stack_overflow_works=yes],
@@ -177,7 +183,7 @@ int main ()
     exit(3);
   /* Provoke a SIGSEGV.  */
   raise (SIGSEGV);
-  exit (3);
+  exit (4);
 }]])],
       [gl_cv_sigaltstack_low_base=yes],
       [gl_cv_sigaltstack_low_base=no],
@@ -245,9 +251,9 @@ int main ()
                     s += page_size;
                   if (s < stack_size + page_size)
                     _exit (0);
+                  _exit (4);
                 }
-
-              _exit (1);
+              _exit (5);
             }
 
             static int
@@ -263,16 +269,18 @@ int main ()
               st.ss_size = SIGSTKSZ;
               r = sigaltstack (&st, 0);
               if (r != 0)
-                return r;
+                return 1;
 
               sigemptyset (&act.sa_mask);
               act.sa_flags = SA_NODEFER | SA_ONSTACK | SA_RESETHAND | SA_SIGINFO;
               act.sa_sigaction = segv_handler;
               #if FAULT_YIELDS_SIGBUS
               if (sigaction (SIGBUS, &act, 0) < 0)
-                return -1;
+                return 2;
               #endif
-              return sigaction (SIGSEGV, &act, 0);
+              if (sigaction (SIGSEGV, &act, 0) < 0)
+                return 3;
+              return 0;
             }
             static volatile int *
             recurse_1 (volatile int n, volatile int *p)
@@ -290,6 +298,7 @@ int main ()
             int
             main ()
             {
+              int result;
               #if HAVE_SETRLIMIT && defined RLIMIT_STACK
               /* Before starting the endless recursion, try to be friendly
                  to the user's machine.  On some Linux 2.2.x systems, there
@@ -300,7 +309,10 @@ int main ()
               setrlimit (RLIMIT_STACK, &rl);
               #endif
 
-              return c_stack_action () || recurse (0);
+              result = c_stack_action ();
+              if (result != 0)
+                return result;
+              return recurse (0);
             }
            ]])],
         [ac_cv_sys_xsi_stack_overflow_heuristic=yes],

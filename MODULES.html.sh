@@ -1953,7 +1953,7 @@ func_all_modules ()
 
   element="Compiler warning management"
   element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
-  func_section_wrap ansic_ext_misc
+  func_section_wrap ansic_ext_compwarn
   func_wrap H3
   func_echo "$element"
 
@@ -2649,6 +2649,7 @@ func_all_modules ()
   func_module full-write
   func_module binary-io
   func_module isapipe
+  func_module pipe-posix
   func_module pipe2
   func_module pipe2-safer
   func_end_table
@@ -3323,7 +3324,7 @@ func_all_modules ()
   func_module findprog-lgpl
   func_module wait-process
   func_module execute
-  func_module pipe
+  func_module spawn-pipe
   func_module pipe-filter-gi
   func_module pipe-filter-ii
   func_module sh-quote

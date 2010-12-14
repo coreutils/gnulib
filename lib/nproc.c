@@ -24,7 +24,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#if HAVE_PTHREAD_AFFINITY_NP && 0
+#if HAVE_PTHREAD_GETAFFINITY_NP && 0
 # include <pthread.h>
 # include <sched.h>
 #endif
@@ -71,7 +71,7 @@ num_processors_via_affinity_mask (void)
      Therefore this code is not enabled.
      glibc >= 2.3.4 has sched_getaffinity whereas NetBSD 5 has
      sched_getaffinity_np.  */
-#if HAVE_PTHREAD_AFFINITY_NP && defined __GLIBC__ && 0
+#if HAVE_PTHREAD_GETAFFINITY_NP && defined __GLIBC__ && 0
   {
     cpu_set_t set;
 
@@ -94,7 +94,7 @@ num_processors_via_affinity_mask (void)
           return count;
       }
   }
-#elif HAVE_PTHREAD_AFFINITY_NP && defined __NetBSD__ && 0
+#elif HAVE_PTHREAD_GETAFFINITY_NP && defined __NetBSD__ && 0
   {
     cpuset_t *set;
 

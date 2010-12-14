@@ -1,4 +1,4 @@
-# serial 14
+# serial 15
 # Check for several getcwd bugs with long file names.
 # If so, arrange to compile the wrapper function.
 
@@ -85,7 +85,7 @@ main ()
   size_t n_chdirs = 0;
 
   if (cwd == NULL)
-    exit (1);
+    exit (10);
 
   cwd_len = initial_cwd_len = strlen (cwd);
 
@@ -103,7 +103,7 @@ main ()
       if (mkdir (DIR_NAME, S_IRWXU) < 0 || chdir (DIR_NAME) < 0)
         {
           if (! (errno == ERANGE || is_ENAMETOOLONG (errno)))
-            fail = 2;
+            fail = 20;
           break;
         }
 
@@ -112,12 +112,12 @@ main ()
           c = getcwd (buf, PATH_MAX);
           if (!c && errno == ENOENT)
             {
-              fail = 1;
+              fail = 11;
               break;
             }
           if (c || ! (errno == ERANGE || is_ENAMETOOLONG (errno)))
             {
-              fail = 2;
+              fail = 21;
               break;
             }
         }
@@ -132,12 +132,12 @@ main ()
               if (! (errno == ERANGE || errno == ENOENT
                      || is_ENAMETOOLONG (errno)))
                 {
-                  fail = 2;
+                  fail = 22;
                   break;
                 }
               if (AT_FDCWD || errno == ERANGE || errno == ENOENT)
                 {
-                  fail = 1;
+                  fail = 12;
                   break;
                 }
             }
@@ -145,7 +145,7 @@ main ()
 
       if (c && strlen (c) != cwd_len)
         {
-          fail = 2;
+          fail = 23;
           break;
         }
       ++n_chdirs;
@@ -174,7 +174,7 @@ main ()
           ]])],
     [gl_cv_func_getcwd_path_max=yes],
     [case $? in
-     1) gl_cv_func_getcwd_path_max='no, but it is partly working';;
+     10|11|12) gl_cv_func_getcwd_path_max='no, but it is partly working';;
      *) gl_cv_func_getcwd_path_max=no;;
      esac],
     [gl_cv_func_getcwd_path_max=no])

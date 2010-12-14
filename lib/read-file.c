@@ -39,12 +39,12 @@
    and set *LENGTH to the length of the string.  The string is
    zero-terminated, but the terminating zero byte is not counted in
    *LENGTH.  On errors, *LENGTH is undefined, errno preserves the
-   values set by system functions (if any), and NULL is returned. */
+   values set by system functions (if any), and NULL is returned.  */
 char *
 fread_file (FILE * stream, size_t * length)
 {
   char *buf = NULL;
-  size_t alloc = 0;
+  size_t alloc = BUFSIZ;
 
   /* For a regular file, allocate a buffer that has exactly the right
      size.  This avoids the need to do dynamic reallocations later.  */
@@ -59,21 +59,20 @@ fread_file (FILE * stream, size_t * length)
           {
             off_t alloc_off = st.st_size - pos;
 
-            if (SIZE_MAX <= alloc_off)
+            /* '1' below, accounts for the trailing NUL.  */
+            if (SIZE_MAX - 1 < alloc_off)
               {
                 errno = ENOMEM;
                 return NULL;
               }
 
             alloc = alloc_off + 1;
-
-            buf = malloc (alloc);
-            if (!buf)
-              /* errno is ENOMEM.  */
-              return NULL;
           }
       }
   }
+
+  if (!(buf = malloc (alloc)))
+    return NULL; /* errno is ENOMEM.  */
 
   {
     size_t size = 0; /* number of bytes read so far */
@@ -81,37 +80,10 @@ fread_file (FILE * stream, size_t * length)
 
     for (;;)
       {
-        size_t count;
-        size_t requested;
-
-        if (size + BUFSIZ + 1 > alloc)
-          {
-            char *new_buf;
-            size_t new_alloc = alloc + alloc / 2;
-
-            /* Check against overflow.  */
-            if (new_alloc < alloc)
-              {
-                save_errno = ENOMEM;
-                break;
-              }
-
-            alloc = new_alloc;
-            if (alloc < size + BUFSIZ + 1)
-              alloc = size + BUFSIZ + 1;
-
-            new_buf = realloc (buf, alloc);
-            if (!new_buf)
-              {
-                save_errno = errno;
-                break;
-              }
-
-            buf = new_buf;
-          }
-
-        requested = alloc - size - 1;
-        count = fread (buf + size, 1, requested, stream);
+        /* This reads 1 more than the size of a regular file
+           so that we get eof immediately.  */
+        size_t requested = alloc - size;
+        size_t count = fread (buf + size, 1, requested, stream);
         size += count;
 
         if (count != requested)
@@ -121,7 +93,7 @@ fread_file (FILE * stream, size_t * length)
               break;
 
             /* Shrink the allocated memory if possible.  */
-            if (size + 1 < alloc)
+            if (size < alloc - 1)
               {
                 char *smaller_buf = realloc (buf, size + 1);
                 if (smaller_buf != NULL)
@@ -132,6 +104,29 @@ fread_file (FILE * stream, size_t * length)
             *length = size;
             return buf;
           }
+
+        {
+          char *new_buf;
+
+          if (alloc == SIZE_MAX)
+            {
+              save_errno = ENOMEM;
+              break;
+            }
+
+          if (alloc < SIZE_MAX - alloc / 2)
+            alloc = alloc + alloc / 2;
+          else
+            alloc = SIZE_MAX;
+
+          if (!(new_buf = realloc (buf, alloc)))
+            {
+              save_errno = errno;
+              break;
+            }
+
+          buf = new_buf;
+        }
       }
 
     free (buf);

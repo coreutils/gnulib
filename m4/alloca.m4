@@ -1,4 +1,4 @@
-# alloca.m4 serial 9
+# alloca.m4 serial 10
 dnl Copyright (C) 2002-2004, 2006-2007, 2009-2010 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -7,10 +7,6 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_ALLOCA],
 [
-  dnl Work around a bug of AC_EGREP_CPP in autoconf-2.57.
-  AC_REQUIRE([AC_PROG_CPP])
-  AC_REQUIRE([AC_PROG_EGREP])
-
   AC_REQUIRE([AC_FUNC_ALLOCA])
   if test $ac_cv_func_alloca_works = no; then
     gl_PREREQ_ALLOCA

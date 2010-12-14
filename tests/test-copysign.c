@@ -24,10 +24,14 @@
 SIGNATURE_CHECK (copysign, double, (double, double));
 
 #include "macros.h"
+#include "minus-zero.h"
+
+#include <string.h>
 
 volatile double x;
 volatile double y;
 double z;
+double zero = 0.0;
 
 int
 main ()
@@ -55,6 +59,53 @@ main ()
   y = -0.8;
   z = copysign (x, y);
   ASSERT (z == -0.6);
+
+  /* From signed zero.  */
+  x = 1.0;
+  y = 0.0;
+  z = copysign (x, y);
+  ASSERT (z == 1.0);
+
+  x = 1.0;
+  y = minus_zerod;
+  z = copysign (x, y);
+  /* Assume all gnulib targets support -0.0, until proven otherwise.  */
+  ASSERT (z == -1.0);
+
+  x = -1.0;
+  y = 0.0;
+  z = copysign (x, y);
+  ASSERT (z == 1.0);
+
+  x = -1.0;
+  y = minus_zerod;
+  z = copysign (x, y);
+  ASSERT (z == -1.0);
+
+  /* To signed zero.  */
+  x = 0.0;
+  y = 1.0;
+  z = copysign (x, y);
+  ASSERT (z == 0.0);
+  ASSERT (memcmp (&z, &zero, sizeof z) == 0);
+
+  x = 0.0;
+  y = -1.0;
+  z = copysign (x, y);
+  ASSERT (z == 0.0);
+  ASSERT (memcmp (&z, &zero, sizeof z) != 0);
+
+  x = minus_zerod;
+  y = 1.0;
+  z = copysign (x, y);
+  ASSERT (z == 0.0);
+  ASSERT (memcmp (&z, &zero, sizeof z) == 0);
+
+  x = minus_zerod;
+  y = -1.0;
+  z = copysign (x, y);
+  ASSERT (z == 0.0);
+  ASSERT (memcmp (&z, &zero, sizeof z) != 0);
 
   return 0;
 }

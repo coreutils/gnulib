@@ -63,6 +63,9 @@ ceilf_reference (DOUBLE x)
 
   if (z > L_(0.0))
     {
+      /* Work around ICC's desire to optimize denormal floats to 0.  */
+      if (z < FLT_MIN)
+        return L_(1.0);
       /* Avoid rounding errors for values near 2^k, where k >= MANT_DIG-1.  */
       if (z < TWO_MANT_DIG)
         {

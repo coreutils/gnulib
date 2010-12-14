@@ -21,7 +21,7 @@ Include:
 <fcntl.h>
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Eric Blake

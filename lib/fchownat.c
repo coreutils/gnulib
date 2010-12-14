@@ -88,6 +88,13 @@ rpl_fchownat (int fd, char const *file, uid_t owner, gid_t group, int flag)
   if (flag == AT_SYMLINK_NOFOLLOW)
     return local_lchownat (fd, file, owner, group);
 # endif
+# if FCHOWNAT_EMPTY_FILENAME_BUG
+  if (file[0] == '\0')
+    {
+      errno = ENOENT;
+      return -1;
+    }
+# endif
 # if CHOWN_TRAILING_SLASH_BUG
   {
     size_t len = strlen (file);

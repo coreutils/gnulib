@@ -20,7 +20,7 @@ Portability problems fixed by Gnulib module @code{iconv_open}:
 @item
 This function recognizes only non-standard aliases for many encodings (not
 the IANA registered encoding names) on many platforms:
-AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10.
+AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 11 2010-11.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{iconv_open-utf}:
@@ -35,12 +35,12 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-MacOS X 10.3, FreeBSD 6.0, OpenBSD 3.8, IRIX 5.3, Cygwin, mingw, BeOS,
+MacOS X 10.5, FreeBSD 6.0, OpenBSD 3.8, IRIX 5.3, Cygwin, mingw, BeOS,
 when GNU libiconv is not installed.
 @item
 For some encodings A and B, this function cannot convert directly from A to B,
 although an indirect conversion from A through UTF-8 to B is possible.  This
-occurs on some platforms: Solaris 10.  ---  Gnulib provides a higher-level
+occurs on some platforms: Solaris 11 2010-11.  ---  Gnulib provides a higher-level
 facility @code{striconveh} (a wrapper around @code{iconv}) that deals with
 this problem.
 @item

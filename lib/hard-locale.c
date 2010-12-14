@@ -26,6 +26,8 @@
 
 #ifdef __GLIBC__
 # define GLIBC_VERSION __GLIBC__
+#elif defined __UCLIBC__
+# define GLIBC_VERSION 2
 #else
 # define GLIBC_VERSION 0
 #endif

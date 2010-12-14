@@ -1,7 +1,7 @@
 #! /bin/sh
 # Wrapper for compilers which do not understand `-c -o'.
 
-scriptversion=2010-09-21.14; # UTC
+scriptversion=2010-11-15.09; # UTC
 
 # Copyright (C) 1999, 2000, 2003, 2004, 2005, 2009, 2010 Free Software
 # Foundation, Inc.
@@ -192,6 +192,8 @@ func_cl_wrapper ()
   exit 1
 }
 
+eat=
+
 case $1 in
   '')
      echo "$0: No command.  Try \`$0 --help' for more information." 1>&2
@@ -223,7 +225,6 @@ esac
 
 ofile=
 cfile=
-eat=
 
 for arg
 do

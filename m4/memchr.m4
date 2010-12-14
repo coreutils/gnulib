@@ -1,4 +1,4 @@
-# memchr.m4 serial 9
+# memchr.m4 serial 10
 dnl Copyright (C) 2002-2004, 2009-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -35,6 +35,7 @@ AC_DEFUN_ONCE([gl_FUNC_MEMCHR],
 # endif
 #endif
 ]], [[
+  int result = 0;
   char *fence = NULL;
 #if HAVE_SYS_MMAN_H && HAVE_MPROTECT
 # if HAVE_MAP_ANONYMOUS
@@ -58,14 +59,14 @@ AC_DEFUN_ONCE([gl_FUNC_MEMCHR],
   if (fence)
     {
       if (memchr (fence, 0, 0))
-        return 1;
+        result |= 1;
       strcpy (fence - 9, "12345678");
       if (memchr (fence - 9, 0, 79) != fence - 1)
-        return 2;
+        result |= 2;
       if (memchr (fence - 1, 0, 3) != fence - 1)
-        return 3;
+        result |= 4;
     }
-  return 0;
+  return result;
 ]])], [gl_cv_func_memchr_works=yes], [gl_cv_func_memchr_works=no],
       [dnl Be pessimistic for now.
        gl_cv_func_memchr_works="guessing no"])])

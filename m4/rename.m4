@@ -1,4 +1,4 @@
-# serial 22
+# serial 23
 
 # Copyright (C) 2001, 2003, 2005-2006, 2009-2010 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -28,27 +28,34 @@ AC_DEFUN([gl_FUNC_RENAME],
   dnl links are also broken.
   AC_CACHE_CHECK([whether rename honors trailing slash on destination],
     [gl_cv_func_rename_slash_dst_works],
-    [rm -rf conftest.f conftest.f1 conftest.d1 conftest.d2 conftest.lnk
-    touch conftest.f && mkdir conftest.d1 ||
+    [rm -rf conftest.f conftest.f1 conftest.f2 conftest.d1 conftest.d2 conftest.lnk
+    touch conftest.f && touch conftest.f1 && mkdir conftest.d1 ||
       AC_MSG_ERROR([cannot create temporary files])
     # Assume that if we have lstat, we can also check symlinks.
     if test $ac_cv_func_lstat = yes; then
       ln -s conftest.f conftest.lnk
     fi
-    AC_RUN_IFELSE([AC_LANG_PROGRAM([[
-#       include <stdio.h>
-#       include <stdlib.h>
-]], [if (rename ("conftest.f", "conftest.f1/") == 0) return 1;
-     if (rename ("conftest.d1", "conftest.d2/") != 0) return 2;
+    AC_RUN_IFELSE(
+      [AC_LANG_PROGRAM([[
+#        include <stdio.h>
+#        include <stdlib.h>
+         ]],
+         [[int result = 0;
+           if (rename ("conftest.f1", "conftest.f2/") == 0)
+             result |= 1;
+           if (rename ("conftest.d1", "conftest.d2/") != 0)
+             result |= 2;
 #if HAVE_LSTAT
-     if (rename ("conftest.f", "conftest.lnk/") == 0) return 3;
+           if (rename ("conftest.f", "conftest.lnk/") == 0)
+             result |= 4;
 #endif
-    ])],
+           return result;
+         ]])],
       [gl_cv_func_rename_slash_dst_works=yes],
       [gl_cv_func_rename_slash_dst_works=no],
       dnl When crosscompiling, assume rename is broken.
       [gl_cv_func_rename_slash_dst_works="guessing no"])
-    rm -rf conftest.f conftest.f1 conftest.d1 conftest.d2 conftest.lnk
+    rm -rf conftest.f conftest.f1 conftest.f2 conftest.d1 conftest.d2 conftest.lnk
   ])
   if test "x$gl_cv_func_rename_slash_dst_works" != xyes; then
     AC_LIBOBJ([rename])
@@ -65,27 +72,34 @@ AC_DEFUN([gl_FUNC_RENAME],
   dnl symlinks with a trailing slash.
   AC_CACHE_CHECK([whether rename honors trailing slash on source],
     [gl_cv_func_rename_slash_src_works],
-    [rm -rf conftest.f conftest.d1 conftest.d2 conftest.lnk
-    touch conftest.f && mkdir conftest.d1 ||
+    [rm -rf conftest.f conftest.f1 conftest.d1 conftest.d2 conftest.d3 conftest.lnk
+    touch conftest.f && touch conftest.f1 && mkdir conftest.d1 ||
       AC_MSG_ERROR([cannot create temporary files])
     # Assume that if we have lstat, we can also check symlinks.
     if test $ac_cv_func_lstat = yes; then
       ln -s conftest.f conftest.lnk
     fi
-    AC_RUN_IFELSE([AC_LANG_PROGRAM([[
-#       include <stdio.h>
-#       include <stdlib.h>
-]], [if (rename ("conftest.f/", "conftest.d2") == 0) return 1;
-     if (rename ("conftest.d1/", "conftest.d2") != 0) return 2;
+    AC_RUN_IFELSE(
+      [AC_LANG_PROGRAM([[
+#        include <stdio.h>
+#        include <stdlib.h>
+         ]],
+         [[int result = 0;
+           if (rename ("conftest.f1/", "conftest.d3") == 0)
+             result |= 1;
+           if (rename ("conftest.d1/", "conftest.d2") != 0)
+             result |= 2;
 #if HAVE_LSTAT
-     if (rename ("conftest.lnk/", "conftest.f") == 0) return 3;
+           if (rename ("conftest.lnk/", "conftest.f") == 0)
+             result |= 4;
 #endif
-    ])],
+           return result;
+         ]])],
       [gl_cv_func_rename_slash_src_works=yes],
       [gl_cv_func_rename_slash_src_works=no],
       dnl When crosscompiling, assume rename is broken.
       [gl_cv_func_rename_slash_src_works="guessing no"])
-    rm -rf conftest.f conftest.d1 conftest.d2 conftest.lnk
+    rm -rf conftest.f conftest.f1 conftest.d1 conftest.d2 conftest.d3 conftest.lnk
   ])
   if test "x$gl_cv_func_rename_slash_src_works" != xyes; then
     AC_LIBOBJ([rename])
@@ -103,14 +117,23 @@ AC_DEFUN([gl_FUNC_RENAME],
     [rm -rf conftest.f conftest.f1
     if touch conftest.f && ln conftest.f conftest.f1 &&
         set x `ls -i conftest.f conftest.f1` && test "$2" = "$4"; then
-      AC_RUN_IFELSE([AC_LANG_PROGRAM([[
-#       include <stdio.h>
-#       include <stdlib.h>
-#       include <unistd.h>
-]], [if (rename ("conftest.f", "conftest.f1")) return 1;
-     if (unlink ("conftest.f1")) return 2;
-     if (rename ("conftest.f", "conftest.f")) return 3;
-     if (rename ("conftest.f1", "conftest.f1") == 0) return 4;])],
+      AC_RUN_IFELSE(
+        [AC_LANG_PROGRAM([[
+#          include <stdio.h>
+#          include <stdlib.h>
+#          include <unistd.h>
+           ]],
+           [[int result = 0;
+             if (rename ("conftest.f", "conftest.f1"))
+               result |= 1;
+             if (unlink ("conftest.f1"))
+               result |= 2;
+             if (rename ("conftest.f", "conftest.f"))
+               result |= 4;
+             if (rename ("conftest.f1", "conftest.f1") == 0)
+               result |= 8;
+             return result;
+           ]])],
         [gl_cv_func_rename_link_works=yes],
         [gl_cv_func_rename_link_works=no],
         dnl When crosscompiling, assume rename is broken.
@@ -137,11 +160,18 @@ AC_DEFUN([gl_FUNC_RENAME],
     [rm -rf conftest.f conftest.d1 conftest.d2
     touch conftest.f && mkdir conftest.d1 conftest.d2 ||
       AC_MSG_ERROR([cannot create temporary files])
-    AC_RUN_IFELSE([AC_LANG_PROGRAM([[
-#       include <stdio.h>
-#       include <stdlib.h>
-]], [if (rename ("conftest.d1", "conftest.d2") != 0) return 1;
-     if (rename ("conftest.d2", "conftest.f") == 0) return 2;])],
+    AC_RUN_IFELSE(
+      [AC_LANG_PROGRAM([[
+#        include <stdio.h>
+#        include <stdlib.h>
+         ]],
+         [[int result = 0;
+           if (rename ("conftest.d1", "conftest.d2") != 0)
+             result |= 1;
+           if (rename ("conftest.d2", "conftest.f") == 0)
+             result |= 2;
+           return result;
+         ]])],
       [gl_cv_func_rename_dest_works=yes],
       [gl_cv_func_rename_dest_works=no],
       dnl When crosscompiling, assume rename is broken.

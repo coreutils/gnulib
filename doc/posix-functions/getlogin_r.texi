@@ -13,7 +13,7 @@ This function is missing on some platforms:
 NetBSD 3.0, mingw.
 @item
 This function has an incompatible declaration on some platforms:
-Solaris 10 (when @code{_POSIX_PTHREAD_SEMANTICS} is not defined).
+Solaris 11 2010-11 (when @code{_POSIX_PTHREAD_SEMANTICS} is not defined).
 @end itemize
 
 Portability problems not fixed by Gnulib:

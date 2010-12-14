@@ -12,5 +12,5 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-HP-UX 11, mingw.
+HP-UX 11.23, mingw.
 @end itemize

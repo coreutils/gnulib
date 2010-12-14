@@ -16,6 +16,7 @@
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2007.  */
 
+#include "minus-zero.h"
 #include "nan.h"
 
 /* The SGI MIPS floating-point format does not distinguish 0.0 and -0.0.  */
@@ -23,29 +24,9 @@ static int
 have_minus_zero ()
 {
   static double plus_zero = 0.0;
-  double minus_zero = - plus_zero;
+  double minus_zero = minus_zerod;
   return memcmp (&plus_zero, &minus_zero, sizeof (double)) != 0;
 }
-
-/* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0.
-   So we use -zerod instead.  */
-double zerod = 0.0;
-
-/* On HP-UX 10.20, negating 0.0L does not yield -0.0L.
-   So we use minus_zerol instead.
-   IRIX cc can't put -0.0L into .data, but can compute at runtime.
-   Note that the expression -LDBL_MIN * LDBL_MIN does not work on other
-   platforms, such as when cross-compiling to PowerPC on MacOS X 10.5.  */
-#if defined __hpux || defined __sgi
-static long double
-compute_minus_zerol (void)
-{
-  return -LDBL_MIN * LDBL_MIN;
-}
-# define minus_zerol compute_minus_zerol ()
-#else
-long double minus_zerol = -0.0L;
-#endif
 
 /* Representation of an 80-bit 'long double' as an initializer for a sequence
    of 'unsigned int' words.  */
@@ -178,7 +159,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
   { /* Negative zero.  */
     char result[1000];
     int retval =
-      my_sprintf (result, "%a %d", -zerod, 33, 44, 55);
+      my_sprintf (result, "%a %d", minus_zerod, 33, 44, 55);
     if (have_minus_zero ())
       ASSERT (strcmp (result, "-0x0p+0 33") == 0);
     ASSERT (retval == strlen (result));
@@ -887,7 +868,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
   { /* Negative zero.  */
     char result[1000];
     int retval =
-      my_sprintf (result, "%f %d", -zerod, 33, 44, 55);
+      my_sprintf (result, "%f %d", minus_zerod, 33, 44, 55);
     if (have_minus_zero ())
       ASSERT (strcmp (result, "-0.000000 33") == 0);
     ASSERT (retval == strlen (result));
@@ -1401,7 +1382,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
   { /* Negative zero.  */
     char result[1000];
     int retval =
-      my_sprintf (result, "%F %d", -zerod, 33, 44, 55);
+      my_sprintf (result, "%F %d", minus_zerod, 33, 44, 55);
     if (have_minus_zero ())
       ASSERT (strcmp (result, "-0.000000 33") == 0);
     ASSERT (retval == strlen (result));
@@ -1724,7 +1705,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
   { /* Negative zero.  */
     char result[1000];
     int retval =
-      my_sprintf (result, "%e %d", -zerod, 33, 44, 55);
+      my_sprintf (result, "%e %d", minus_zerod, 33, 44, 55);
     if (have_minus_zero ())
       ASSERT (strcmp (result, "-0.000000e+00 33") == 0
               || strcmp (result, "-0.000000e+000 33") == 0);
@@ -2389,7 +2370,7 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
   { /* Negative zero.  */
     char result[1000];
     int retval =
-      my_sprintf (result, "%g %d", -zerod, 33, 44, 55);
+      my_sprintf (result, "%g %d", minus_zerod, 33, 44, 55);
     if (have_minus_zero ())
       ASSERT (strcmp (result, "-0 33") == 0);
     ASSERT (retval == strlen (result));
@@ -3033,6 +3014,19 @@ test_function (int (*my_sprintf) (char *, const char *, ...))
     for (i = 0; i < 4000 - 6; i++)
       ASSERT (result[2 + i] == '0');
     ASSERT (strcmp (result + 2 + 4000 - 6, "12d687 99") == 0);
+    ASSERT (retval == strlen (result));
+  }
+
+  {
+    char result[5000];
+    int retval =
+      my_sprintf (result, "%.4000f %d", 1.0, 99);
+    size_t i;
+    ASSERT (result[0] == '1');
+    ASSERT (result[1] == '.');
+    for (i = 0; i < 4000; i++)
+      ASSERT (result[2 + i] == '0');
+    ASSERT (strcmp (result + 2 + 4000, " 99") == 0);
     ASSERT (retval == strlen (result));
   }
 

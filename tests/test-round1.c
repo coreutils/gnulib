@@ -26,19 +26,18 @@
 SIGNATURE_CHECK (round, double, (double));
 
 #include "isnand-nolibm.h"
+#include "minus-zero.h"
 #include "nan.h"
 #include "macros.h"
-
-/* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0.
-   So we use -zero instead.  */
-double zero = 0.0;
 
 int
 main ()
 {
   /* Zero.  */
   ASSERT (round (0.0) == 0.0);
-  ASSERT (round (-zero) == 0.0);
+  ASSERT (!signbit (round (0.0)));
+  ASSERT (round (minus_zerod) == 0.0);
+  ASSERT (!!signbit (minus_zerod) == !!signbit (round (minus_zerod)));
   /* Positive numbers.  */
   ASSERT (round (0.3) == 0.0);
   ASSERT (round (0.5) == 1.0);

@@ -1,4 +1,4 @@
-# intdiv0.m4 serial 4 (gettext-0.18.2)
+# intdiv0.m4 serial 5 (gettext-0.18.2)
 dnl Copyright (C) 2002, 2007-2008, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -60,7 +60,7 @@ int main ()
 
   z = x / y;
   nan = y / y;
-  exit (1);
+  exit (2);
 }
 ]])],
           [gt_cv_int_divbyzero_sigfpe=yes],

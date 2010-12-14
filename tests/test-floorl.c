@@ -27,24 +27,9 @@ SIGNATURE_CHECK (floorl, long double, (long double));
 
 #include "fpucw.h"
 #include "isnanl-nolibm.h"
+#include "minus-zero.h"
 #include "nan.h"
 #include "macros.h"
-
-/* On HP-UX 10.20, negating 0.0L does not yield -0.0L.
-   So we use minus_zero instead.
-   IRIX cc can't put -0.0L into .data, but can compute at runtime.
-   Note that the expression -LDBL_MIN * LDBL_MIN does not work on other
-   platforms, such as when cross-compiling to PowerPC on MacOS X 10.5.  */
-#if defined __hpux || defined __sgi
-static long double
-compute_minus_zero (void)
-{
-  return -LDBL_MIN * LDBL_MIN;
-}
-# define minus_zero compute_minus_zero ()
-#else
-long double minus_zero = -0.0L;
-#endif
 
 int
 main ()
@@ -55,7 +40,9 @@ main ()
 
   /* Zero.  */
   ASSERT (floorl (0.0L) == 0.0L);
-  ASSERT (floorl (minus_zero) == 0.0L);
+  ASSERT (!signbit (floorl (0.0L)));
+  ASSERT (floorl (minus_zerol) == 0.0L);
+  ASSERT (!!signbit (minus_zerol) == !!signbit (floorl (minus_zerol)));
   /* Positive numbers.  */
   ASSERT (floorl (0.3L) == 0.0L);
   ASSERT (floorl (0.7L) == 0.0L);

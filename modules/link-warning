@@ -10,6 +10,7 @@ build-aux/link-warning.h
 Depends-on:
 
 configure.ac:
+AC_REQUIRE([gl_FEATURES_H])
 
 Makefile.am:
 nodist_pkginclude_HEADERS += link-warning.h
@@ -24,8 +25,9 @@ BUILT_SOURCES += link-warning.h
 # build-aux/link-warning.h, except that it has the copyright header cut off.
 link-warning.h: $(top_srcdir)/build-aux/link-warning.h
 	$(AM_V_GEN)rm -f $@-t $@ && \
-	sed -n -e '/GL_LINK_WARNING/,$$p' \
+	sed -n -e '/HAVE_FEATURES_H/,$$p' \
 	  < $(top_srcdir)/build-aux/link-warning.h \
+	| sed -e 's|@''HAVE_FEATURES_H''@|$(HAVE_FEATURES_H)|g' \
 	  > $@-t && \
 	mv $@-t $@
 MOSTLYCLEANFILES += link-warning.h link-warning.h-t

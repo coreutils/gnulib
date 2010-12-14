@@ -53,6 +53,20 @@ gl_FUNC_SETENV_SEPARATE
 gl_FUNC_STRERROR_SEPARATE
 
 Makefile.am:
+if RELOCATABLE_VIA_WRAPPER
+uninstall-hook: uninstall-relocwrapper
+uninstall-relocwrapper:
+	if test $(RELOCATABLE) = yes; then \
+	  case '$(EXEEXT)' in \
+	    .bin*) ;; \
+	    *) cd $(top_builddir) && \
+	       $(MAKE) $(AM_MAKEFLAGS) EXEEXT=.bin$(EXEEXT) \
+		       AM_MAKEFLAGS='$(AM_MAKEFLAGS) EXEEXT=.bin$(EXEEXT)' \
+		       uninstall ;; \
+	  esac; \
+	fi
+.PHONY: uninstall-relocwrapper
+endif
 
 Include:
 

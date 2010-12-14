@@ -325,7 +325,7 @@ utimecmp (char const *dst_name,
 
                 res = SYSCALL_RESOLUTION;
 
-                for (a /= res; a % 10 != 0; a /= 10)
+                for (a /= res; a % 10 == 0; a /= 10)
                   {
                     if (res == BILLION)
                       {

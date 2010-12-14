@@ -206,6 +206,13 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
                   dp->flags |= FLAG_ZERO;
                   cp++;
                 }
+#if __GLIBC__ >= 2 && !defined __UCLIBC__
+              else if (*cp == 'I')
+                {
+                  dp->flags |= FLAG_LOCALIZED;
+                  cp++;
+                }
+#endif
               else
                 break;
             }

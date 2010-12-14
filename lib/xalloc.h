@@ -46,6 +46,14 @@ extern "C" {
 #  endif
 # endif
 
+# ifndef ATTRIBUTE_ALLOC_SIZE
+#  if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 3)
+#   define ATTRIBUTE_ALLOC_SIZE(args) __attribute__ ((__alloc_size__ args))
+#  else
+#   define ATTRIBUTE_ALLOC_SIZE(args)
+#  endif
+# endif
+
 /* This function is always triggered when memory is exhausted.
    It must be defined by the application, either explicitly
    or by using gnulib's xalloc-die module.  This is the
@@ -53,13 +61,19 @@ extern "C" {
    memory allocation failure.  */
 extern void xalloc_die (void) ATTRIBUTE_NORETURN;
 
-void *xmalloc (size_t s) ATTRIBUTE_MALLOC;
-void *xzalloc (size_t s) ATTRIBUTE_MALLOC;
-void *xcalloc (size_t n, size_t s) ATTRIBUTE_MALLOC;
-void *xrealloc (void *p, size_t s);
+void *xmalloc (size_t s)
+      ATTRIBUTE_MALLOC ATTRIBUTE_ALLOC_SIZE ((1));
+void *xzalloc (size_t s)
+      ATTRIBUTE_MALLOC ATTRIBUTE_ALLOC_SIZE ((1));
+void *xcalloc (size_t n, size_t s)
+      ATTRIBUTE_MALLOC ATTRIBUTE_ALLOC_SIZE ((1, 2));
+void *xrealloc (void *p, size_t s)
+      ATTRIBUTE_ALLOC_SIZE ((2));
 void *x2realloc (void *p, size_t *pn);
-void *xmemdup (void const *p, size_t s) ATTRIBUTE_MALLOC;
-char *xstrdup (char const *str) ATTRIBUTE_MALLOC;
+void *xmemdup (void const *p, size_t s)
+      ATTRIBUTE_MALLOC ATTRIBUTE_ALLOC_SIZE ((2));
+char *xstrdup (char const *str)
+      ATTRIBUTE_MALLOC;
 
 /* Return 1 if an array of N objects, each of size S, cannot exist due
    to size arithmetic overflow.  S must be positive and N must be
@@ -106,10 +120,13 @@ char *xstrdup (char const *str) ATTRIBUTE_MALLOC;
 # if HAVE_INLINE
 #  define static_inline static inline
 # else
-void *xnmalloc (size_t n, size_t s) ATTRIBUTE_MALLOC;
-void *xnrealloc (void *p, size_t n, size_t s);
+void *xnmalloc (size_t n, size_t s)
+      ATTRIBUTE_MALLOC ATTRIBUTE_ALLOC_SIZE ((1, 2));
+void *xnrealloc (void *p, size_t n, size_t s)
+      ATTRIBUTE_ALLOC_SIZE ((2, 3));
 void *x2nrealloc (void *p, size_t *pn, size_t s);
-char *xcharalloc (size_t n) ATTRIBUTE_MALLOC;
+char *xcharalloc (size_t n)
+      ATTRIBUTE_MALLOC ATTRIBUTE_ALLOC_SIZE ((1));
 # endif
 
 # ifdef static_inline
@@ -117,7 +134,8 @@ char *xcharalloc (size_t n) ATTRIBUTE_MALLOC;
 /* Allocate an array of N objects, each with S bytes of memory,
    dynamically, with error checking.  S must be nonzero.  */
 
-static_inline void *xnmalloc (size_t n, size_t s) ATTRIBUTE_MALLOC;
+static_inline void *xnmalloc (size_t n, size_t s)
+                    ATTRIBUTE_MALLOC ATTRIBUTE_ALLOC_SIZE ((1, 2));
 static_inline void *
 xnmalloc (size_t n, size_t s)
 {
@@ -129,6 +147,8 @@ xnmalloc (size_t n, size_t s)
 /* Change the size of an allocated block of memory P to an array of N
    objects each of S bytes, with error checking.  S must be nonzero.  */
 
+static_inline void *xnrealloc (void *p, size_t n, size_t s)
+                    ATTRIBUTE_ALLOC_SIZE ((2, 3));
 static_inline void *
 xnrealloc (void *p, size_t n, size_t s)
 {
@@ -229,7 +249,8 @@ x2nrealloc (void *p, size_t *pn, size_t s)
 /* Return a pointer to a new buffer of N bytes.  This is like xmalloc,
    except it returns char *.  */
 
-static_inline char *xcharalloc (size_t n) ATTRIBUTE_MALLOC;
+static_inline char *xcharalloc (size_t n)
+                    ATTRIBUTE_MALLOC ATTRIBUTE_ALLOC_SIZE ((1));
 static_inline char *
 xcharalloc (size_t n)
 {

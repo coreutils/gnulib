@@ -21,6 +21,7 @@
 #include "signature.h"
 SIGNATURE_CHECK (rename, int, (char const *, char const *));
 
+#include <dirent.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <stdbool.h>

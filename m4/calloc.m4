@@ -1,4 +1,4 @@
-# calloc.m4 serial 11
+# calloc.m4 serial 12
 
 # Copyright (C) 2004-2010 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -16,14 +16,24 @@
 # -------------------------------------
 # If `calloc (0, 0)' is properly handled, run IF-WORKS, otherwise, IF-NOT.
 AC_DEFUN([_AC_FUNC_CALLOC_IF],
-[AC_REQUIRE([AC_TYPE_SIZE_T])dnl
-AC_CACHE_CHECK([for GNU libc compatible calloc], [ac_cv_func_calloc_0_nonnull],
-[AC_RUN_IFELSE([AC_LANG_PROGRAM([AC_INCLUDES_DEFAULT],
-                  [[exit (!calloc (0, 0) || calloc ((size_t) -1 / 8 + 1, 8));]])],
-               [ac_cv_func_calloc_0_nonnull=yes],
-               [ac_cv_func_calloc_0_nonnull=no],
-               [ac_cv_func_calloc_0_nonnull=no])])
-AS_IF([test $ac_cv_func_calloc_0_nonnull = yes], [$1], [$2])
+[
+  AC_REQUIRE([AC_TYPE_SIZE_T])dnl
+  AC_CACHE_CHECK([for GNU libc compatible calloc],
+    [ac_cv_func_calloc_0_nonnull],
+    [AC_RUN_IFELSE(
+       [AC_LANG_PROGRAM(
+          [AC_INCLUDES_DEFAULT],
+          [[int result = 0;
+            if (!calloc (0, 0))
+              result |= 1;
+            if (calloc ((size_t) -1 / 8 + 1, 8))
+              result |= 2;
+            return result;
+          ]])],
+       [ac_cv_func_calloc_0_nonnull=yes],
+       [ac_cv_func_calloc_0_nonnull=no],
+       [ac_cv_func_calloc_0_nonnull=no])])
+  AS_IF([test $ac_cv_func_calloc_0_nonnull = yes], [$1], [$2])
 ])# AC_FUNC_CALLOC
 
 

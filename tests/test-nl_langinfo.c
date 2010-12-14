@@ -1,5 +1,5 @@
 /* Test of nl_langinfo replacement.
-   Copyright (C) 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2009-2010 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -29,6 +29,13 @@ SIGNATURE_CHECK (nl_langinfo, char *, (nl_item));
 
 #include "c-strcase.h"
 #include "macros.h"
+
+/* For GCC >= 4.2, silence the warnings
+     "comparison of unsigned expression >= 0 is always true"
+   in this file.  */
+#if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 2)
+# pragma GCC diagnostic ignored "-Wtype-limits"
+#endif
 
 int
 main (int argc, char *argv[])
@@ -105,7 +112,11 @@ main (int argc, char *argv[])
   /* nl_langinfo items of the LC_MONETARY category */
   {
     const char *currency = nl_langinfo (CRNCYSTR);
-    ASSERT (strlen (currency) >= (pass > 0 ? 1 : 0));
+    ASSERT (strlen (currency) >= 0);
+#if !defined __NetBSD__
+    if (pass > 0)
+      ASSERT (strlen (currency) >= 1);
+#endif
   }
   /* nl_langinfo items of the LC_MESSAGES category */
   ASSERT (strlen (nl_langinfo (YESEXPR)) > 0);

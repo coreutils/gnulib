@@ -1,4 +1,4 @@
-# getopt.m4 serial 31
+# getopt.m4 serial 32
 dnl Copyright (C) 2002-2006, 2008-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -231,6 +231,7 @@ dnl is ambiguous with environment values that contain newlines.
                            #include <stddef.h>
                            #include <string.h>
            ]], [[
+             int result = 0;
              /* This code succeeds on glibc 2.8, OpenBSD 4.0, Cygwin, mingw,
                 and fails on MacOS X 10.5, AIX 5.2, HP-UX 11, IRIX 6.5,
                 OSF/1 5.1, Solaris 10.  */
@@ -241,7 +242,7 @@ dnl is ambiguous with environment values that contain newlines.
                myargv[2] = 0;
                opterr = 0;
                if (getopt (2, myargv, "+a") != '?')
-                 return 1;
+                 result |= 1;
              }
              /* This code succeeds on glibc 2.8, mingw,
                 and fails on MacOS X 10.5, OpenBSD 4.0, AIX 5.2, HP-UX 11,
@@ -251,33 +252,33 @@ dnl is ambiguous with environment values that contain newlines.
 
                optind = 1;
                if (getopt (4, argv, "p::") != 'p')
-                 return 2;
-               if (optarg != NULL)
-                 return 3;
-               if (getopt (4, argv, "p::") != -1)
-                 return 4;
-               if (optind != 2)
-                 return 5;
+                 result |= 2;
+               else if (optarg != NULL)
+                 result |= 4;
+               else if (getopt (4, argv, "p::") != -1)
+                 result |= 6;
+               else if (optind != 2)
+                 result |= 8;
              }
              /* This code succeeds on glibc 2.8 and fails on Cygwin 1.7.0.  */
              {
                char *argv[] = { "program", "foo", "-p", NULL };
                optind = 0;
                if (getopt (3, argv, "-p") != 1)
-                 return 6;
-               if (getopt (3, argv, "-p") != 'p')
-                 return 7;
+                 result |= 16;
+               else if (getopt (3, argv, "-p") != 'p')
+                 result |= 32;
              }
              /* This code fails on glibc 2.11.  */
              {
                char *argv[] = { "program", "-b", "-a", NULL };
                optind = opterr = 0;
                if (getopt (3, argv, "+:a:b") != 'b')
-                 return 8;
-               if (getopt (3, argv, "+:a:b") != ':')
-                 return 9;
+                 result |= 64;
+               else if (getopt (3, argv, "+:a:b") != ':')
+                 result |= 64;
              }
-             return 0;
+             return result;
            ]])],
         [gl_cv_func_getopt_gnu=yes],
         [gl_cv_func_getopt_gnu=no],

@@ -32,6 +32,11 @@
    "copy.c:233: warning: ignoring return value of 'fchown',
    declared with attribute warn_unused_result".  */
 
+#ifndef _GL_IGNORE_VALUE_H
+# define _GL_IGNORE_VALUE_H
+
 static inline void ignore_value (int i) { (void) i; }
 static inline void ignore_ptr (void* p) { (void) p; }
 /* FIXME: what about aggregate types? */
+
+#endif

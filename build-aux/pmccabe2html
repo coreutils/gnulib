@@ -21,8 +21,10 @@
 
 # Typical Invocation is from a Makefile.am:
 #
-# cyclo-$(PACKAGE).html:
-# 	$(PMCCABE) ${top_srcdir}/src/*.[ch] \
+# CYCLO_SOURCES = ${top_srcdir}/src/*.[ch]
+#
+# cyclo-$(PACKAGE).html: $(CYCLO_SOURCES)
+# 	$(PMCCABE) $(CYCLO_SOURCES) \
 # 		| sort -nr \
 # 		| $(AWK) -f ${top_srcdir}/build-aux/pmccabe2html \
 # 			-v lang=html -v name="$(PACKAGE_NAME)" \
@@ -112,12 +114,12 @@ function build_stats()
 
 function html_fnc_table_complete (caption)
 {
-    html_fnc_table(caption, 1, 0, 1, 1, 1, 0, 1)
+    html_fnc_table(caption, 1, 1, 0, 1, 1, 0, 1)
 }
 
 function html_fnc_table_abbrev (caption)
 {
-    html_fnc_table(caption, 1, 0, 1, 0, 1, 0, 0)
+    html_fnc_table(caption, 1, 1, 0, 0, 1, 0, 0)
 }
 
 
@@ -142,7 +144,7 @@ function html_fnc_table (caption,
                     num_lines_p,
                     first_line_p,
                     file_p)
-    for (nfnc = 1; nfnc < nfuncs; nfnc++)
+    for (nfnc = 1; nfnc <= nfuncs; nfnc++)
     {
         html_fnc(nfnc,
                  fname_p,
@@ -423,7 +425,7 @@ function html_fnc (nfun,
                 print codeline
             }
             close(fname nfun "_fn.txt")
-            system("rm " fname nfun "_fn.txt")
+            system("rm " "'" fname "'" nfun "_fn.txt")
             print "</pre>"
             print "</div>"
             print "</td>"
@@ -435,52 +437,51 @@ function html_fnc (nfun,
 
 function html_global_stats ()
 {
-    print "<div class=\"section_title\">Resume</div>"
+    print "<div class=\"section_title\">Summary</div>"
 
-    print "<br/>"
-    print "<table class=\"resume_table\">"
+    print "<table class=\"summary_table\">"
     # Total number of functions
     print "<tr>"
-    print "<td class=\"resume_header_entry\">"
+    print "<td class=\"summary_header_entry\">"
     print "Total number of functions"
     print "</td>"
-    print "<td class=\"resume_number_entry\">"
+    print "<td class=\"summary_number_entry\">"
     print num_of_functions
     print "</td>"
     print "</tr>"
     # Number of simple functions
     print "<tr>"
-    print "<td class=\"resume_header_entry\">"
+    print "<td class=\"summary_header_entry\">"
     print "Number of low risk functions"
     print "</td>"
-    print "<td class=\"resume_number_entry\">"
+    print "<td class=\"summary_number_entry\">"
     print num_of_simple_functions
     print "</td>"
     print "</tr>"
     # Number of moderate functions
     print "<tr>"
-    print "<td class=\"resume_header_entry\">"
+    print "<td class=\"summary_header_entry\">"
     print "Number of moderate risk functions"
     print "</td>"
-    print "<td class=\"resume_number_entry\">"
+    print "<td class=\"summary_number_entry\">"
     print num_of_moderate_functions
     print "</td>"
     print "</tr>"
     # Number of high functions
     print "<tr>"
-    print "<td class=\"resume_header_entry\">"
+    print "<td class=\"summary_header_entry\">"
     print "Number of high risk functions"
     print "</td>"
-    print "<td class=\"resume_number_entry\">"
+    print "<td class=\"summary_number_entry\">"
     print num_of_high_functions
     print "</td>"
     print "</tr>"
     # Number of untestable functions
     print "<tr>"
-    print "<td class=\"resume_header_entry\">"
+    print "<td class=\"summary_header_entry\">"
     print "Number of untestable functions"
     print "</td>"
-    print "<td class=\"resume_number_entry\">"
+    print "<td class=\"summary_number_entry\">"
     print num_of_untestable_functions
     print "</td>"
     print "</tr>"
@@ -491,7 +492,6 @@ function html_global_stats ()
 function html_function_cyclo ()
 {
     print "<div class=\"section_title\">Details for all functions</div>"
-    print "<p>Used ranges:</p>"
 
     print "<table class=\"ranges_table\">"
     print "<tr>"
@@ -560,27 +560,27 @@ function html_function_cyclo ()
 
 function wiki_global_stats ()
 {
-    print "{| class=\"cyclo_resume_table\""
+    print "{| class=\"cyclo_summary_table\""
     # Total number of functions
     print "|-"
-    print "| class=\"cyclo_resume_header_entry\" | Total number of functions"
-    print "| class=\"cyclo_resume_number_entry\" |" num_of_functions
+    print "| class=\"cyclo_summary_header_entry\" | Total number of functions"
+    print "| class=\"cyclo_summary_number_entry\" |" num_of_functions
     # Number of simple functions
     print "|-"
-    print "| class=\"cyclo_resume_header_entry\" | Number of low risk functions"
-    print "| class=\"cyclo_resume_number_entry\" |" num_of_simple_functions
+    print "| class=\"cyclo_summary_header_entry\" | Number of low risk functions"
+    print "| class=\"cyclo_summary_number_entry\" |" num_of_simple_functions
     # Number of moderate functions
     print "|-"
-    print "| class=\"cyclo_resume_header_entry\" | Number of moderate risk functions"
-    print "| class=\"cyclo_resume_number_entry\" |" num_of_moderate_functions
+    print "| class=\"cyclo_summary_header_entry\" | Number of moderate risk functions"
+    print "| class=\"cyclo_summary_number_entry\" |" num_of_moderate_functions
     # Number of high functions
     print "|-"
-    print "| class=\"cyclo_resume_header_entry\" | Number of high risk functions"
-    print "| class=\"cyclo_resume_number_entry\" |" num_of_high_functions
+    print "| class=\"cyclo_summary_header_entry\" | Number of high risk functions"
+    print "| class=\"cyclo_summary_number_entry\" |" num_of_high_functions
     # Number of untestable functions
     print "|-"
-    print "| class=\"cyclo_resume_header_entry\" | Number of untestable functions"
-    print "| class=\"cyclo_resume_number_entry\" |" num_of_untestable_functions
+    print "| class=\"cyclo_summary_header_entry\" | Number of untestable functions"
+    print "| class=\"cyclo_summary_number_entry\" |" num_of_untestable_functions
     print "|}"
 }
 
@@ -624,7 +624,7 @@ function wiki_function_cyclo ()
 
 function wiki_fnc_table_complete (caption)
 {
-    wiki_fnc_table(caption, 1, 0, 1, 1, 1, 0, 1)
+    wiki_fnc_table(caption, 1, 1, 0, 1, 1, 0, 1)
 }
 
 function wiki_fnc_table_abbrev (caption)
@@ -653,7 +653,7 @@ function wiki_fnc_table (caption,
                     num_lines_p,
                     first_line_p,
                     file_p)
-    for (nfnc = 1; nfnc < nfuncs; nfnc++)
+    for (nfnc = 1; nfnc <= nfuncs; nfnc++)
     {
         wiki_fnc(nfnc,
                  fname_p,

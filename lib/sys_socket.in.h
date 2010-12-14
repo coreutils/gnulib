@@ -70,7 +70,14 @@
 typedef unsigned short  sa_family_t;
 #endif
 
-#if !@HAVE_STRUCT_SOCKADDR_STORAGE@
+#if @HAVE_STRUCT_SOCKADDR_STORAGE@
+/* Make the 'struct sockaddr_storage' field 'ss_family' visible on AIX 7.1.  */
+# if !@HAVE_STRUCT_SOCKADDR_STORAGE_SS_FAMILY@
+#  ifndef ss_family
+#   define ss_family __ss_family
+#  endif
+# endif
+#else
 # include <alignof.h>
 /* Code taken from glibc sysdeps/unix/sysv/linux/bits/socket.h on
    2009-05-08, licensed under LGPLv2.1+, plus portability fixes. */

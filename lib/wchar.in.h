@@ -53,6 +53,10 @@
 
 #define _GL_ALREADY_INCLUDING_WCHAR_H
 
+#if @HAVE_FEATURES_H@
+# include <features.h> /* for __GLIBC__ */
+#endif
+
 /* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
    <wchar.h>.
    BSD/OS 4.0.1 has a bug: <stddef.h>, <stdio.h> and <time.h> must be

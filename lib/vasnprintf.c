@@ -279,7 +279,7 @@ decimal_point_char (void)
      multithread-safe on glibc systems and MacOS X systems, but is not required
      to be multithread-safe by POSIX.  sprintf(), however, is multithread-safe.
      localeconv() is rarely multithread-safe.  */
-#  if HAVE_NL_LANGINFO && (__GLIBC__ || (defined __APPLE__ && defined __MACH__))
+#  if HAVE_NL_LANGINFO && (__GLIBC__ || defined __UCLIBC__ || (defined __APPLE__ && defined __MACH__))
   point = nl_langinfo (RADIXCHAR);
 #  elif 1
   char pointbuf[5];
@@ -4599,6 +4599,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                 TCHAR_T *fbp;
                 unsigned int prefix_count;
                 int prefixes[2] IF_LINT (= { 0 });
+                int orig_errno;
 #if !USE_SNPRINTF
                 size_t tmp_length;
                 TCHAR_T tmpbuf[700];
@@ -4753,6 +4754,10 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                   *fbp++ = ' ';
                 if (flags & FLAG_ALT)
                   *fbp++ = '#';
+#if __GLIBC__ >= 2 && !defined __UCLIBC__
+                if (flags & FLAG_LOCALIZED)
+                  *fbp++ = 'I';
+#endif
                 if (!pad_ourselves)
                   {
                     if (flags & FLAG_ZERO)
@@ -4836,14 +4841,15 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
 #endif
                   *fbp = dp->conversion;
 #if USE_SNPRINTF
-# if !(__GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 3) || ((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__))
+# if !(((__GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 3)) && !defined __UCLIBC__) || ((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__))
                 fbp[1] = '%';
                 fbp[2] = 'n';
                 fbp[3] = '\0';
 # else
                 /* On glibc2 systems from glibc >= 2.3 - probably also older
-                   ones - we know that snprintf's returns value conforms to
-                   ISO C 99: the gl_SNPRINTF_DIRECTIVE_N test passes.
+                   ones - we know that snprintf's return value conforms to
+                   ISO C 99: the tests gl_SNPRINTF_RETVAL_C99 and
+                   gl_SNPRINTF_TRUNCATION_C99 pass.
                    Therefore we can avoid using %n in this situation.
                    On glibc2 systems from 2004-10-18 or newer, the use of %n
                    in format strings in writable memory may crash the program
@@ -4901,6 +4907,8 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                    via %n.  */
                 *(TCHAR_T *) (result + length) = '\0';
 #endif
+
+                orig_errno = errno;
 
                 for (;;)
                   {
@@ -5499,6 +5507,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     length += count;
                     break;
                   }
+                errno = orig_errno;
 #undef pad_ourselves
 #undef prec_ourselves
               }

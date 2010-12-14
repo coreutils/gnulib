@@ -1,4 +1,4 @@
-# sys_socket_h.m4 serial 17
+# sys_socket_h.m4 serial 20
 dnl Copyright (C) 2005-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -57,6 +57,23 @@ AC_DEFUN([gl_HEADER_SYS_SOCKET],
   if test $ac_cv_type_sa_family_t = no; then
     HAVE_SA_FAMILY_T=0
   fi
+  if test $ac_cv_type_struct_sockaddr_storage != no; then
+    AC_CHECK_MEMBERS([struct sockaddr_storage.ss_family],
+      [],
+      [HAVE_STRUCT_SOCKADDR_STORAGE_SS_FAMILY=0],
+      [#include <sys/types.h>
+       #ifdef HAVE_SYS_SOCKET_H
+       #include <sys/socket.h>
+       #endif
+       #ifdef HAVE_WS2TCPIP_H
+       #include <ws2tcpip.h>
+       #endif
+      ])
+  fi
+  if test $HAVE_STRUCT_SOCKADDR_STORAGE = 0 || test $HAVE_SA_FAMILY_T = 0 \
+     || test $HAVE_STRUCT_SOCKADDR_STORAGE_SS_FAMILY = 0; then
+    SYS_SOCKET_H='sys/socket.h'
+  fi
   gl_PREREQ_SYS_H_WINSOCK2
 
   dnl Check for declarations of anything we want to poison if the
@@ -64,10 +81,7 @@ AC_DEFUN([gl_HEADER_SYS_SOCKET],
   gl_WARN_ON_USE_PREPARE([[
 /* Some systems require prerequisite headers.  */
 #include <sys/types.h>
-#if !defined __GLIBC__ && HAVE_SYS_TIME_H
-# include <sys/time.h>
-#endif
-#include <sys/select.h>
+#include <sys/socket.h>
     ]], [socket connect accept bind getpeername getsockname getsockopt
     listen recv send recvfrom sendto setsockopt shutdown accept4])
 ])
@@ -148,6 +162,8 @@ AC_DEFUN([gl_SYS_SOCKET_H_DEFAULTS],
   GNULIB_SHUTDOWN=0;    AC_SUBST([GNULIB_SHUTDOWN])
   GNULIB_ACCEPT4=0;     AC_SUBST([GNULIB_ACCEPT4])
   HAVE_STRUCT_SOCKADDR_STORAGE=1; AC_SUBST([HAVE_STRUCT_SOCKADDR_STORAGE])
+  HAVE_STRUCT_SOCKADDR_STORAGE_SS_FAMILY=1;
+                        AC_SUBST([HAVE_STRUCT_SOCKADDR_STORAGE_SS_FAMILY])
   HAVE_SA_FAMILY_T=1;   AC_SUBST([HAVE_SA_FAMILY_T])
   HAVE_ACCEPT4=1;       AC_SUBST([HAVE_ACCEPT4])
 ])

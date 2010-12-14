@@ -1,6 +1,7 @@
 Files:
 tests/test-vsprintf-posix.c
 tests/test-sprintf-posix.h
+tests/minus-zero.h
 tests/nan.h
 tests/signature.h
 tests/macros.h

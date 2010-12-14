@@ -1,4 +1,4 @@
-# serial 18   -*- Autoconf -*-
+# serial 19   -*- Autoconf -*-
 
 dnl Find out how to get the file descriptor associated with an open DIR*.
 
@@ -16,10 +16,6 @@ AC_DEFUN([gl_FUNC_DIRFD],
 
   dnl Persuade glibc <dirent.h> to declare dirfd().
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
-
-  dnl Work around a bug of AC_EGREP_CPP in autoconf-2.57.
-  AC_REQUIRE([AC_PROG_CPP])
-  AC_REQUIRE([AC_PROG_EGREP])
 
   AC_CHECK_FUNCS([dirfd])
   AC_CHECK_DECLS([dirfd], , ,

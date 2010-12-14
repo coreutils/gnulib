@@ -1,4 +1,4 @@
-# frexp.m4 serial 9
+# frexp.m4 serial 10
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -104,12 +104,25 @@ AC_DEFUN([gl_FUNC_FREXP_WORKS],
 #include <float.h>
 #include <math.h>
 #include <string.h>
+/* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0.
+   ICC 10.0 has a bug when optimizing the expression -zero.
+   The expression -DBL_MIN * DBL_MIN does not work when cross-compiling
+   to PowerPC on MacOS X 10.5.  */
+#if defined __hpux || defined __sgi || defined __ICC
+static double
+compute_minus_zero (void)
+{
+  return -DBL_MIN * DBL_MIN;
+}
+# define minus_zero compute_minus_zero ()
+#else
+double minus_zero = -0.0;
+#endif
 int main()
 {
+  int result = 0;
   int i;
   volatile double x;
-/* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0.
-   So we use -zero instead.  */
   double zero = 0.0;
   /* Test on denormalized numbers.  */
   for (i = 1, x = 1.0; i >= DBL_MIN_EXP; i--, x *= 0.5)
@@ -121,7 +134,7 @@ int main()
       /* On machines with IEEE754 arithmetic: x = 1.11254e-308, exp = -1022.
          On NetBSD: y = 0.75. Correct: y = 0.5.  */
       if (y != 0.5)
-        return 1;
+        result |= 1;
     }
   /* Test on infinite numbers.  */
   x = 1.0 / 0.0;
@@ -129,17 +142,17 @@ int main()
     int exp;
     double y = frexp (x, &exp);
     if (y != x)
-      return 1;
+      result |= 2;
   }
   /* Test on negative zero.  */
-  x = -zero;
+  x = minus_zero;
   {
     int exp;
     double y = frexp (x, &exp);
     if (memcmp (&y, &x, sizeof x))
-      return 1;
+      result |= 4;
   }
-  return 0;
+  return result;
 }]])],
         [gl_cv_func_frexp_works=yes],
         [gl_cv_func_frexp_works=no],

@@ -18,6 +18,10 @@ This header file is lacking the @code{SHUT_RD}, @code{SHUT_WR},
 @code{SHUT_RDWR} macros on some platforms, despite having the @code{shutdown}
 functions:
 emx+gcc.
+@item
+The @code{struct sockaddr_storage} type does not have a member @code{ss_family}
+on some platforms:
+AIX 7.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:

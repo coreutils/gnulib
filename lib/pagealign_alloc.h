@@ -1,6 +1,6 @@
 /* Memory allocation aligned to system page boundaries.
 
-   Copyright (C) 2005, 2008, 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2005, 2008, 2010 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -29,6 +29,9 @@
 extern void *pagealign_alloc (size_t size)
 # if __GNUC__ >= 3
      __attribute__ ((__malloc__))
+#  if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 3)
+     __attribute__ ((__alloc_size__ (1)))
+#  endif
 # endif
      ;
 
@@ -37,6 +40,9 @@ extern void *pagealign_alloc (size_t size)
 extern void *pagealign_xalloc (size_t size)
 # if __GNUC__ >= 3
      __attribute__ ((__malloc__))
+#  if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 3)
+     __attribute__ ((__alloc_size__ (1)))
+#  endif
 # endif
      ;
 

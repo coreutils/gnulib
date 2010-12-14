@@ -87,7 +87,7 @@ _GL_CXXALIAS_SYS_CAST2 (memchr,
                         void *, (void const *__s, int __c, size_t __n),
                         void const *, (void const *__s, int __c, size_t __n));
 # endif
-# if __GLIBC__ == 2 && __GLIBC_MINOR__ >= 10 \
+# if ((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 10) && !defined __UCLIBC__) \
      && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
 _GL_CXXALIASWARN1 (memchr, void *, (void *__s, int __c, size_t __n));
 _GL_CXXALIASWARN1 (memchr, void const *,
@@ -172,7 +172,7 @@ _GL_FUNCDECL_SYS (memrchr, void *, (void const *, int, size_t)
 _GL_CXXALIAS_SYS_CAST2 (memrchr,
                         void *, (void const *, int, size_t),
                         void const *, (void const *, int, size_t));
-# if __GLIBC__ == 2 && __GLIBC_MINOR__ >= 10 \
+# if ((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 10) && !defined __UCLIBC__) \
      && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
 _GL_CXXALIASWARN1 (memrchr, void *, (void *, int, size_t));
 _GL_CXXALIASWARN1 (memrchr, void const *, (void const *, int, size_t));
@@ -202,7 +202,7 @@ _GL_FUNCDECL_SYS (rawmemchr, void *, (void const *__s, int __c_in)
 _GL_CXXALIAS_SYS_CAST2 (rawmemchr,
                         void *, (void const *__s, int __c_in),
                         void const *, (void const *__s, int __c_in));
-# if __GLIBC__ == 2 && __GLIBC_MINOR__ >= 10 \
+# if ((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 10) && !defined __UCLIBC__) \
      && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
 _GL_CXXALIASWARN1 (rawmemchr, void *, (void *__s, int __c_in));
 _GL_CXXALIASWARN1 (rawmemchr, void const *, (void const *__s, int __c_in));
@@ -293,7 +293,7 @@ _GL_FUNCDECL_SYS (strchrnul, char *, (char const *__s, int __c_in)
 _GL_CXXALIAS_SYS_CAST2 (strchrnul,
                         char *, (char const *__s, int __c_in),
                         char const *, (char const *__s, int __c_in));
-# if __GLIBC__ == 2 && __GLIBC_MINOR__ >= 10 \
+# if ((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 10) && !defined __UCLIBC__) \
      && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
 _GL_CXXALIASWARN1 (strchrnul, char *, (char *__s, int __c_in));
 _GL_CXXALIASWARN1 (strchrnul, char const *, (char const *__s, int __c_in));
@@ -439,7 +439,7 @@ _GL_FUNCDECL_SYS (strpbrk, char *, (char const *__s, char const *__accept)
 _GL_CXXALIAS_SYS_CAST2 (strpbrk,
                         char *, (char const *__s, char const *__accept),
                         const char *, (char const *__s, char const *__accept));
-# if __GLIBC__ == 2 && __GLIBC_MINOR__ >= 10 \
+# if ((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 10) && !defined __UCLIBC__) \
      && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
 _GL_CXXALIASWARN1 (strpbrk, char *, (char *__s, char const *__accept));
 _GL_CXXALIASWARN1 (strpbrk, char const *,
@@ -541,7 +541,7 @@ _GL_CXXALIAS_SYS_CAST2 (strstr,
                         char *, (const char *haystack, const char *needle),
                         const char *, (const char *haystack, const char *needle));
 # endif
-# if __GLIBC__ == 2 && __GLIBC_MINOR__ >= 10 \
+# if ((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 10) && !defined __UCLIBC__) \
      && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
 _GL_CXXALIASWARN1 (strstr, char *, (char *haystack, const char *needle));
 _GL_CXXALIASWARN1 (strstr, const char *,
@@ -590,7 +590,7 @@ _GL_CXXALIAS_SYS_CAST2 (strcasestr,
                         char *, (const char *haystack, const char *needle),
                         const char *, (const char *haystack, const char *needle));
 # endif
-# if __GLIBC__ == 2 && __GLIBC_MINOR__ >= 10 \
+# if ((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 10) && !defined __UCLIBC__) \
      && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
 _GL_CXXALIASWARN1 (strcasestr, char *, (char *haystack, const char *needle));
 _GL_CXXALIASWARN1 (strcasestr, const char *,
@@ -900,6 +900,35 @@ _GL_CXXALIASWARN (strerror);
 /* Assume strerror is always declared.  */
 _GL_WARN_ON_USE (strerror, "strerror is unportable - "
                  "use gnulib module strerror to guarantee non-NULL result");
+#endif
+
+/* Map any int, typically from errno, into an error message.  Multithread-safe.
+   Uses the POSIX declaration, not the glibc declaration.  */
+#if @GNULIB_STRERROR_R@
+# if @REPLACE_STRERROR_R@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef strerror_r
+#   define strerror_r rpl_strerror_r
+#  endif
+_GL_FUNCDECL_RPL (strerror_r, int, (int errnum, char *buf, size_t buflen)
+                                   _GL_ARG_NONNULL ((2)));
+_GL_CXXALIAS_RPL (strerror_r, int, (int errnum, char *buf, size_t buflen));
+# else
+#  if !@HAVE_DECL_STRERROR_R@
+_GL_FUNCDECL_SYS (strerror_r, int, (int errnum, char *buf, size_t buflen)
+                                   _GL_ARG_NONNULL ((2)));
+#  endif
+_GL_CXXALIAS_SYS (strerror_r, int, (int errnum, char *buf, size_t buflen));
+# endif
+# if @HAVE_DECL_STRERROR_R@
+_GL_CXXALIASWARN (strerror_r);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef strerror_r
+# if HAVE_RAW_DECL_STRERROR_R
+_GL_WARN_ON_USE (strerror_r, "strerror_r is unportable - "
+                 "use gnulib module strerror_r-posix for portability");
+# endif
 #endif
 
 #if @GNULIB_STRSIGNAL@

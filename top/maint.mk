@@ -590,8 +590,17 @@ sc_changelog:
 sc_program_name:
 	@require='set_program_name *\(m?argv\[0\]\);'			\
 	in_vc_files='\.c$$'						\
-	containing='^main *('						\
+	containing='\<main *('						\
 	halt='the above files do not call set_program_name'		\
+	  $(_sc_search_regexp)
+
+# Ensure that each .c file containing a "main" function also
+# calls bindtextdomain.
+sc_bindtextdomain:
+	@require='bindtextdomain *\('					\
+	in_vc_files='\.c$$'						\
+	containing='\<main *('						\
+	halt='the above files do not call bindtextdomain'		\
 	  $(_sc_search_regexp)
 
 # Require that the final line of each test-lib.sh-using test be this one:
@@ -732,7 +741,8 @@ sc_GFDL_version:
 	halt='GFDL vN, N!=3'						\
 	  $(_sc_search_regexp)
 
-# Don't use Texinfo @acronym{} as it is not a good idea.
+# Don't use Texinfo's @acronym{}.
+# http://lists.gnu.org/archive/html/bug-gnulib/2010-03/msg00321.html
 texinfo_suffix_re_ ?= \.(txi|texi(nfo)?)$$
 sc_texinfo_acronym:
 	@prohibit='@acronym\{'						\
@@ -806,6 +816,13 @@ _ptm2 = use "test C1 || test C2", not "test C1 -''o C2"
 sc_prohibit_test_minus_ao:
 	@prohibit='(\<test| \[+) .+ -[ao] '				\
 	halt='$(_ptm1); $(_ptm2)'					\
+	  $(_sc_search_regexp)
+
+# Avoid a test bashism.
+sc_prohibit_test_double_equal:
+	@prohibit='(\<test| \[+) .+ == '				\
+	containing='#! */bin/[a-z]*sh'					\
+	halt='use "test x = x", not "test x =''= x"'			\
 	  $(_sc_search_regexp)
 
 # Each program that uses proper_name_utf8 must link with one of the
@@ -1081,7 +1098,6 @@ emit_upload_commands:
 	@echo =====================================
 	@echo =====================================
 
-noteworthy = * Noteworthy changes in release ?.? (????-??-??) [?]
 define emit-commit-log
   printf '%s\n' 'post-release administrivia' '' \
     '* NEWS: Add header line for next release.' \
@@ -1119,6 +1135,7 @@ alpha beta stable: $(local-check) writable-files no-submodule-changes
 # Override this in cfg.mk if you follow different procedures.
 release-prep-hook ?= release-prep
 
+gl_noteworthy_news_ = * Noteworthy changes in release ?.? (????-??-??) [?]
 .PHONY: release-prep
 release-prep:
 	case $$RELEASE_TYPE in alpha|beta|stable) ;; \
@@ -1130,7 +1147,7 @@ release-prep:
 	fi
 	echo $(VERSION) > $(prev_version_file)
 	$(MAKE) update-NEWS-hash
-	perl -pi -e '$$. == 3 and print "$(noteworthy)\n\n\n"' NEWS
+	perl -pi -e '$$. == 3 and print "$(gl_noteworthy_news_)\n\n\n"' NEWS
 	$(emit-commit-log) > .ci-msg
 	$(VC) commit -F .ci-msg -a
 	rm .ci-msg
