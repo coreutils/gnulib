@@ -1,3 +1,12 @@
+2010-12-15  Pádraig Brady <P@draigBrady.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	Improve cross-compilation guesses for uClibc.
+	* m4/memmem.m4 (gl_FUNC_MEMMEM_SIMPLE): When cross-compiling, assume
+	that uClibc does not have the glibc bug.
+	* m4/strcasestr.m4 (gl_FUNC_STRCASESTR_SIMPLE): Likewise.
+	* m4/strstr.m4 (gl_FUNC_STRSTR_SIMPLE): Likewise.
+
 2010-12-14  Eric Blake  <eblake@redhat.com>
 
 	configmake: provide fallbacks for oldest supported autotools

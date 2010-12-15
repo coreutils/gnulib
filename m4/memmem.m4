@@ -1,4 +1,4 @@
-# memmem.m4 serial 20
+# memmem.m4 serial 21
 dnl Copyright (C) 2002, 2003, 2004, 2007, 2008, 2009, 2010 Free Software
 dnl Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
@@ -29,14 +29,17 @@ AC_DEFUN([gl_FUNC_MEMMEM_SIMPLE],
     ]])],
         [gl_cv_func_memmem_works_always=yes],
         [gl_cv_func_memmem_works_always=no],
-        [dnl glibc 2.12 and cygwin 1.7.7 have a known bug.  Assume that it
-         dnl works on all other platforms, even if it is not linear.
+        [dnl glibc 2.12 and cygwin 1.7.7 have a known bug.  uClibc is not
+         dnl affected, since it uses different source code for memmem than
+         dnl glibc.
+         dnl Assume that it works on all other platforms, even if it is not
+         dnl linear.
          AC_EGREP_CPP([Lucky user],
            [
 #ifdef __GNU_LIBRARY__
  #include <features.h>
  #if ((__GLIBC__ == 2 && __GLIBC_MINOR__ > 12) || (__GLIBC__ > 2)) \
-     && !defined __UCLIBC__
+     || defined __UCLIBC__
   Lucky user
  #endif
 #elif defined __CYGWIN__
