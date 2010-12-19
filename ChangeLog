@@ -1,5 +1,12 @@
 2010-12-19  Bruno Haible  <bruno@clisp.org>
 
+	stdbool: Relax test.
+	* tests/test-stdbool.c (e): Don't require that casts from a variable's
+	address to 'bool' work in static initializer, for compilers other than
+	GCC.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
 	ftello: Add missing declaration on OSF/1 5.1.
 	* lib/stdio.in.h (ftello): Test HAVE_DECL_FTELLO, not HAVE_FTELLO.
 	* m4/ftello.m4 (gl_FUNC_FTELLO): Test whether ftello is declared.
