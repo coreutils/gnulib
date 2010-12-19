@@ -345,7 +345,7 @@ _GL_FUNCDECL_RPL (fseeko, int, (FILE *fp, off_t offset, int whence)
                                _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (fseeko, int, (FILE *fp, off_t offset, int whence));
 # else
-#  if ! @HAVE_FSEEKO@
+#  if ! @HAVE_DECL_FSEEKO@
 _GL_FUNCDECL_SYS (fseeko, int, (FILE *fp, off_t offset, int whence)
                                _GL_ARG_NONNULL ((1)));
 #  endif

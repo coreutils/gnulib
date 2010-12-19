@@ -1,4 +1,4 @@
-# fseeko.m4 serial 9
+# fseeko.m4 serial 10
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,6 +9,11 @@ AC_DEFUN([gl_FUNC_FSEEKO],
   AC_REQUIRE([gl_STDIO_H_DEFAULTS])
   AC_REQUIRE([gl_HAVE_FSEEKO])
   AC_REQUIRE([gl_STDIN_LARGE_OFFSET])
+
+  AC_CHECK_DECLS_ONCE([fseeko])
+  if test $ac_cv_have_decl_fseeko = no; then
+    HAVE_DECL_FSEEKO=0
+  fi
 
   if test $gl_cv_func_fseeko = no; then
     HAVE_FSEEKO=0
