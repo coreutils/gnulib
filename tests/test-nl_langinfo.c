@@ -30,10 +30,10 @@ SIGNATURE_CHECK (nl_langinfo, char *, (nl_item));
 #include "c-strcase.h"
 #include "macros.h"
 
-/* For GCC >= 4.2, silence the warnings
+/* For GCC >= 4.3, silence the warnings
      "comparison of unsigned expression >= 0 is always true"
    in this file.  */
-#if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 2)
+#if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 3)
 # pragma GCC diagnostic ignored "-Wtype-limits"
 #endif
 

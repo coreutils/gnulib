@@ -1,5 +1,10 @@
 2010-12-19  Bruno Haible  <bruno@clisp.org>
 
+	nl_langinfo tests: Avoid gcc warning.
+	* tests/test-nl_langinfo.c: Don't enable the GCC pragma for GCC 4.2.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
 	mknod: Avoid error in C++ mode on OSF/1 with GCC.
 	* lib/sys_stat.in.h (mknod): Use _GL_CXXALIAS_SYS_CAST instead of
 	_GL_CXXALIAS_SYS.
