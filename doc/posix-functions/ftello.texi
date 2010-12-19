@@ -13,7 +13,8 @@ This function is missing on some platforms:
 IRIX 5.3, OSF/1 4.0, Solaris 2.5.1, mingw.
 @item
 The declaration of @code{ftello} in @code{<stdio.h>} is not enabled by default
-on some platforms: glibc 2.3.6.
+on some platforms:
+glibc 2.3.6, OSF/1 5.1.
 @item
 This function produces incorrect results after @code{putc} that followed a
 @code{getc} call that reached EOF on some platforms:

@@ -1,5 +1,14 @@
 2010-12-19  Bruno Haible  <bruno@clisp.org>
 
+	ftello: Add missing declaration on OSF/1 5.1.
+	* lib/stdio.in.h (ftello): Test HAVE_DECL_FTELLO, not HAVE_FTELLO.
+	* m4/ftello.m4 (gl_FUNC_FTELLO): Test whether ftello is declared.
+	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Initialize HAVE_DECL_FTELLO.
+	* modules/stdio (Makefile.am): Substitute HAVE_DECL_FTELLO.
+	* doc/posix-functions/ftello.texi: Mention the OSF/1 5.1 problem.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
 	fseeko: Add missing declaration on OSF/1 5.1.
 	* lib/stdio.in.h (fseeko): Test HAVE_DECL_FSEEKO, not HAVE_FSEEKO.
 	* m4/fseeko.m4 (gl_FUNC_FSEEKO): Test whether fseeko is declared.

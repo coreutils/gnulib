@@ -1,4 +1,4 @@
-# ftello.m4 serial 8
+# ftello.m4 serial 9
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,6 +12,11 @@ AC_DEFUN([gl_FUNC_FTELLO],
 
   dnl Persuade glibc <stdio.h> to declare ftello().
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
+
+  AC_CHECK_DECLS_ONCE([ftello])
+  if test $ac_cv_have_decl_ftello = no; then
+    HAVE_DECL_FTELLO=0
+  fi
 
   AC_CACHE_CHECK([for ftello], [gl_cv_func_ftello],
     [

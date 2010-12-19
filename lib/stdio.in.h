@@ -421,7 +421,7 @@ _GL_CXXALIASWARN (ftell);
 _GL_FUNCDECL_RPL (ftello, off_t, (FILE *fp) _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (ftello, off_t, (FILE *fp));
 # else
-#  if ! @HAVE_FTELLO@
+#  if ! @HAVE_DECL_FTELLO@
 _GL_FUNCDECL_SYS (ftello, off_t, (FILE *fp) _GL_ARG_NONNULL ((1)));
 #  endif
 _GL_CXXALIAS_SYS (ftello, off_t, (FILE *fp));
