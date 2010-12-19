@@ -1,5 +1,18 @@
 2010-12-19  Bruno Haible  <bruno@clisp.org>
 
+	tcgetsid: Add missing declaration on OSF/1 5.1.
+	* lib/termios.in.h (tcgetsid): Test HAVE_DECL_TCGETSID instead of
+	HAVE_TCGETSID.
+	* m4/tcgetsid.m4 (gl_FUNC_TCGETSID): Test whether tcgetsid is declared.
+	Don't set HAVE_TCGETSID.
+	* m4/termios_h.m4 (gl_TERMIOS_H_DEFAULTS): Initialize
+	HAVE_DECL_TCGETSID, not HAVE_TCGETSID.
+	* modules/termios (Makefile.am): Substitute HAVE_DECL_TCGETSID, not
+	HAVE_TCGETSID.
+	* doc/posix-functions/tcgetsid.texi: Mention the OSF/1 5.1 problem.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
 	stdio: Fix problem with popen() declaration on OSF/1 5.1.
 	* lib/stdio.in.h: During the include_next statement, let recursive
 	includes of this file include only the system header file.
