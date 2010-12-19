@@ -1,4 +1,4 @@
-# setenv.m4 serial 19
+# setenv.m4 serial 20
 dnl Copyright (C) 2001-2004, 2006-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -57,9 +57,12 @@ AC_DEFUN([gl_FUNC_SETENV_SEPARATE],
 AC_DEFUN([gl_FUNC_UNSETENV],
 [
   AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
+  AC_CHECK_DECLS_ONCE([unsetenv])
+  if test $ac_cv_have_decl_unsetenv = no; then
+    HAVE_DECL_UNSETENV=0
+  fi
   AC_CHECK_FUNCS([unsetenv])
   if test $ac_cv_func_unsetenv = no; then
-    HAVE_UNSETENV=0
     AC_LIBOBJ([unsetenv])
     gl_PREREQ_UNSETENV
   else
@@ -68,6 +71,8 @@ AC_DEFUN([gl_FUNC_UNSETENV],
       [AC_COMPILE_IFELSE(
          [AC_LANG_PROGRAM(
             [[
+#undef _BSD
+#define _BSD 1 /* unhide unsetenv declaration in OSF/1 5.1 <stdlib.h> */
 #include <stdlib.h>
 extern
 #ifdef __cplusplus

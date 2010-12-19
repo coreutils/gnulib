@@ -1,5 +1,17 @@
 2010-12-19  Bruno Haible  <bruno@clisp.org>
 
+	unsetenv: Add missing declaration on OSF/1 5.1.
+	* lib/stdlib.in.h (setenv): Test HAVE_DECL_UNSETENV, not HAVE_UNSETENV.
+	* m4/setenv.m4 (gl_FUNC_UNSETENV): Test whether unsetenv is declared.
+	Don't set HAVE_UNSETENV. In the test program, set _BSD.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Initialize HAVE_DECL_UNSETENV,
+	not HAVE_UNSETENV.
+	* modules/stdlib (Makefile.am): Substitute HAVE_DECL_UNSETENV, not
+	HAVE_UNSETENV.
+	* doc/posix-functions/unsetenv.texi: Mention the OSF/1 5.1 problem.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
 	setenv: Add missing declaration on OSF/1 5.1.
 	* lib/stdlib.in.h (setenv): Test HAVE_DECL_SETENV, not HAVE_SETENV.
 	* m4/setenv.m4 (gl_FUNC_SETENV_SEPARATE): Test whether setenv is
