@@ -1,3 +1,10 @@
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
+	iconv: Make it possible again to use this module without 'iconv-h'.
+	* modules/iconv (configure.ac): Don't invoke gl_ICONV_MODULE_INDICATOR
+	if it is not defined.
+	Reported by Ian Beckwith <ianb@erislabs.net>.
+
 2010-12-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	acl: port to Solaris 8 when copying from tmpfs to ufs
