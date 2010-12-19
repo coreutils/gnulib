@@ -324,6 +324,7 @@ setup_()
   fi
 
   initial_cwd_=$PWD
+  fail=0
 
   pfx_=`testdir_prefix_`
   test_dir_=`mktempd_ "$initial_cwd_" "$pfx_-$ME_.XXXX"` \
@@ -415,8 +416,6 @@ mktempd_()
   *XXXX) ;;
   *) fail_ "invalid template: $template_ (must have a suffix of at least 4 X's)";;
   esac
-
-  fail=0
 
   # First, try to use mktemp.
   d=`unset TMPDIR; mktemp -d -t -p "$destdir_" "$template_" 2>/dev/null` \

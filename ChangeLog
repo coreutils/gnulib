@@ -1,3 +1,11 @@
+2010-12-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	tests: set fail=0 at start
+	* tests/init.sh (setup_): Move fail=0 initialization here ...
+	(mktempd_): ... from here, so that tests can rely on fail being
+	set to 0 initially.  This fixes a problem in coreutils; see:
+	http://lists.gnu.org/archive/html/coreutils/2010-12/msg00083.html
+
 2010-12-18  Bruno Haible  <bruno@clisp.org>
 
 	memmem-simple: Stylistic changes.
