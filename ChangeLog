@@ -1,3 +1,9 @@
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
+	stdbool test: Avoid a gcc warning.
+	* tests/test-stdbool.c (main): Fail if e1 is false.
+	Reported by Jim Meyering.
+
 2010-12-19  Jim Meyering  <meyering@redhat.com>
 
 	setenv: restore to working order

@@ -90,10 +90,16 @@ _Bool *pq = &q;
 int
 main ()
 {
+  int error = 0;
+
 #if HAVE_STDBOOL_H || defined __GNUC__ /* See above.  */
 # ifdef ADDRESS_CHECK_OKAY /* Avoid gcc warning.  */
   /* A cast from a variable's address to bool is valid in expressions.  */
-  bool e1 = &s;
+  {
+    bool e1 = &s;
+    if (!e1)
+      error = 1;
+  }
 # endif
 #endif
 
@@ -102,6 +108,11 @@ main ()
      http://lists.gnu.org/archive/html/bug-coreutils/2005-10/msg00086.html
      This is a runtime test, since a corresponding compile-time
      test would rely on initializer extensions.  */
-  char digs[] = "0123456789";
-  return &(digs + 5)[-2 + (bool) 1] != &digs[4];
+  {
+    char digs[] = "0123456789";
+    if (&(digs + 5)[-2 + (bool) 1] != &digs[4])
+      error = 1;
+  }
+
+  return error;
 }
