@@ -21,7 +21,9 @@ AC_DEFUN([gl_FUNC_SETENV_SEPARATE],
     HAVE_DECL_SETENV=0
   fi
   AC_CHECK_FUNCS_ONCE([setenv])
-  if test $ac_cv_func_setenv = yes; then
+  if test $ac_cv_func_setenv = no; then
+    HAVE_SETENV=0
+  else
     AC_CACHE_CHECK([whether setenv validates arguments],
       [gl_cv_func_setenv_works],
       [AC_RUN_IFELSE([AC_LANG_PROGRAM([[

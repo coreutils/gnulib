@@ -1,3 +1,13 @@
+2010-12-19  Jim Meyering  <meyering@redhat.com>
+
+	setenv: restore to working order
+	$HAVE_SETENV is used in gl_FUNC_SETENV, yet its definitions were
+	mistakenly removed.
+	* m4/setenv.m4 (gl_FUNC_SETENV_SEPARATE): Restore code to set
+	HAVE_SETENV.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Restore code to initialize
+	HAVE_SETENV.
+
 2010-12-19  Bruno Haible  <bruno@clisp.org>
 
 	Document some different function declarations on OSF/1 5.1.
