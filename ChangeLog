@@ -1,5 +1,12 @@
 2010-12-19  Bruno Haible  <bruno@clisp.org>
 
+	doc: Mention vasprintf-posix module.
+	* doc/glibc-functions/asprintf.texi: Mention the workarounds present in
+	the 'vasprintf-posix' module.
+	* doc/glibc-functions/vasprintf.texi: Likewise.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
 	unsetenv: Add missing declaration on OSF/1 5.1.
 	* lib/stdlib.in.h (setenv): Test HAVE_DECL_UNSETENV, not HAVE_UNSETENV.
 	* m4/setenv.m4 (gl_FUNC_UNSETENV): Test whether unsetenv is declared.
