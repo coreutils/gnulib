@@ -435,6 +435,10 @@ _GL_EXTERN_C void _gl_unregister_fd (int fd);
 _GL_EXTERN_C int _gl_register_dup (int oldfd, int newfd);
 _GL_EXTERN_C const char *_gl_directory_name (int fd);
 
+# else
+#  if !@HAVE_DECL_FCHDIR@
+_GL_FUNCDECL_SYS (fchdir, int, (int /*fd*/));
+#  endif
 # endif
 _GL_CXXALIAS_SYS (fchdir, int, (int /*fd*/));
 _GL_CXXALIASWARN (fchdir);

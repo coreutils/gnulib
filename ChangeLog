@@ -1,5 +1,14 @@
 2010-12-19  Bruno Haible  <bruno@clisp.org>
 
+	fchdir: Add missing declaration on OSF/1 5.1.
+	* lib/unistd.in.h (fchdir): Provide declaration if systems lacks it.
+	* m4/fchdir.m4 (gl_FUNC_FCHDIR): Check whether fchdir is declared.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize HAVE_DECL_FCHDIR.
+	* modules/unistd (Makefile.am): Substitute HAVE_DECL_FCHDIR.
+	* doc/posix-functions/fchdir.texi: Mention the OSF/1 5.1 problem.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
 	relocatable-prog-wrapper: Separate from relocatable-prog.
 	* modules/relocatable-prog (Makefile.am): Define uninstall-hook and
 	uninstall-relocwrapper rule here.
