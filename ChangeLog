@@ -1,5 +1,11 @@
 2010-12-19  Bruno Haible  <bruno@clisp.org>
 
+	stdio: Fix problem with popen() declaration on OSF/1 5.1.
+	* lib/stdio.in.h: During the include_next statement, let recursive
+	includes of this file include only the system header file.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
 	iconv_open: Fix regression from 2010-12-04.
 	* m4/iconv_open.m4 (gl_FUNC_ICONV_OPEN_UTF): Fix typo.
 	Reported by Noah Lavine <noah.b.lavine@gmail.com>.

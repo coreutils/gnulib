@@ -21,8 +21,14 @@
 #endif
 @PRAGMA_COLUMNS@
 
-#if defined __need_FILE || defined __need___FILE
-/* Special invocation convention inside glibc header files.  */
+#if defined __need_FILE || defined __need___FILE || defined _GL_ALREADY_INCLUDING_STDIO_H
+/* Special invocation convention:
+   - Inside glibc header files.
+   - On OSF/1 5.1 we have a sequence of nested includes
+     <stdio.h> -> <getopt.h> -> <ctype.h> -> <sys/localedef.h> ->
+     <sys/lc_core.h> -> <nl_types.h> -> <mesg.h> -> <stdio.h>.
+     In this situation, the functions are not yet declared, therefore we cannot
+     provide the C++ aliases.  */
 
 #@INCLUDE_NEXT@ @NEXT_STDIO_H@
 
@@ -31,8 +37,12 @@
 
 #ifndef _GL_STDIO_H
 
+#define _GL_ALREADY_INCLUDING_STDIO_H
+
 /* The include_next requires a split double-inclusion guard.  */
 #@INCLUDE_NEXT@ @NEXT_STDIO_H@
+
+#undef _GL_ALREADY_INCLUDING_STDIO_H
 
 #ifndef _GL_STDIO_H
 #define _GL_STDIO_H
