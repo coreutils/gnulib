@@ -1,5 +1,11 @@
 2010-12-19  Bruno Haible  <bruno@clisp.org>
 
+	unistr/u8-mbsnlen: Add missing dependency.
+	* modules/unistr/u8-mbsnlen (Depends-on): Add unistr/u8-mbtouc.
+	Reported by Ian Beckwith <ianb@erislabs.net>.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
 	iconv: Make it possible again to use this module without 'iconv-h'.
 	* modules/iconv (configure.ac): Don't invoke gl_ICONV_MODULE_INDICATOR
 	if it is not defined.
