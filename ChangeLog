@@ -1,5 +1,17 @@
 2010-12-19  Bruno Haible  <bruno@clisp.org>
 
+	setenv: Add missing declaration on OSF/1 5.1.
+	* lib/stdlib.in.h (setenv): Test HAVE_DECL_SETENV, not HAVE_SETENV.
+	* m4/setenv.m4 (gl_FUNC_SETENV_SEPARATE): Test whether setenv is
+	declared. Don't set HAVE_SETENV.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Initialize HAVE_DECL_SETENV,
+	not HAVE_SETENV.
+	* modules/stdlib (Makefile.am): Substitute HAVE_DECL_SETENV, not
+	HAVE_SETENV.
+	* doc/posix-functions/setenv.texi: Mention the OSF/1 5.1 problem.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
 	nl_langinfo tests: Avoid gcc warning.
 	* tests/test-nl_langinfo.c: Don't enable the GCC pragma for GCC 4.2.
 

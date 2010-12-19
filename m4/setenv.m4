@@ -16,10 +16,12 @@ AC_DEFUN([gl_FUNC_SETENV],
 AC_DEFUN([gl_FUNC_SETENV_SEPARATE],
 [
   AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
+  AC_CHECK_DECLS_ONCE([setenv])
+  if test $ac_cv_have_decl_setenv = no; then
+    HAVE_DECL_SETENV=0
+  fi
   AC_CHECK_FUNCS_ONCE([setenv])
-  if test $ac_cv_func_setenv = no; then
-    HAVE_SETENV=0
-  else
+  if test $ac_cv_func_setenv = yes; then
     AC_CACHE_CHECK([whether setenv validates arguments],
       [gl_cv_func_setenv_works],
       [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
