@@ -1,5 +1,12 @@
 2010-12-18  Paul Eggert  <eggert@cs.ucla.edu>
 
+	acl: port to Solaris 8 when copying from tmpfs to ufs
+	* lib/copy-acl.c (qcopy_acl): Also allow EINVAL as an ignorable
+	error number.  Problem observed on Solaris 8 with latest
+	coreutils, with "mv A B", where A is on a tmpfs file system and B
+	is on a ufs file system.  This caused coreutils' mv/part-symlink
+	test to fail.
+
 	tests: set fail=0 at start
 	* tests/init.sh (setup_): Move fail=0 initialization here ...
 	(mktempd_): ... from here, so that tests can rely on fail being

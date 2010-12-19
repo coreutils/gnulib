@@ -358,7 +358,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
       if (ret < 0 && saved_errno == 0)
         {
           saved_errno = errno;
-          if ((errno == ENOSYS || errno == EOPNOTSUPP)
+          if ((errno == ENOSYS || errno == EOPNOTSUPP || errno == EINVAL)
               && !acl_nontrivial (count, entries))
             saved_errno = 0;
         }
