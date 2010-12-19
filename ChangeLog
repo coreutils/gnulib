@@ -1,5 +1,11 @@
 2010-12-19  Bruno Haible  <bruno@clisp.org>
 
+	mknod: Avoid error in C++ mode on OSF/1 with GCC.
+	* lib/sys_stat.in.h (mknod): Use _GL_CXXALIAS_SYS_CAST instead of
+	_GL_CXXALIAS_SYS.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
 	stdbool: Relax test.
 	* tests/test-stdbool.c (e): Don't require that casts from a variable's
 	address to 'bool' work in static initializer, for compilers other than
