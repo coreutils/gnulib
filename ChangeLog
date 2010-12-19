@@ -1,5 +1,11 @@
 2010-12-19  Bruno Haible  <bruno@clisp.org>
 
+	iconv_open: Fix regression from 2010-12-04.
+	* m4/iconv_open.m4 (gl_FUNC_ICONV_OPEN_UTF): Fix typo.
+	Reported by Noah Lavine <noah.b.lavine@gmail.com>.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
 	stdbool test: Avoid a gcc warning.
 	* tests/test-stdbool.c (main): Fail if e1 is false.
 	Reported by Jim Meyering.
