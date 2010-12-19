@@ -1,5 +1,13 @@
 2010-12-19  Bruno Haible  <bruno@clisp.org>
 
+	relocatable-prog-wrapper: Separate from relocatable-prog.
+	* modules/relocatable-prog (Makefile.am): Define uninstall-hook and
+	uninstall-relocwrapper rule here.
+	* modules/relocatable-prog-wrapper (Makefile.am): ... not here.
+	Reported by Ian Beckwith <ianb@erislabs.net>.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
 	unistr/u8-mbsnlen: Add missing dependency.
 	* modules/unistr/u8-mbsnlen (Depends-on): Add unistr/u8-mbtouc.
 	Reported by Ian Beckwith <ianb@erislabs.net>.
