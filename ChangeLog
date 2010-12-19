@@ -1,5 +1,13 @@
 2010-12-19  Bruno Haible  <bruno@clisp.org>
 
+	Document some different function declarations on OSF/1 5.1.
+	* doc/posix-functions/gai_strerror.texi: Mention different declaration.
+	* doc/posix-functions/inet_ntop.texi: Likewise.
+	* doc/posix-functions/gethostname.texi: Likewise.
+	* lib/unistd.in.h (gethostname): Update comment.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
 	doc: Mention vasprintf-posix module.
 	* doc/glibc-functions/asprintf.texi: Mention the workarounds present in
 	the 'vasprintf-posix' module.

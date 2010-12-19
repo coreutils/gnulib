@@ -16,6 +16,10 @@ specified by POSIX, and it is defined only in the ws2_32 library.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+This function's second argument type is @code{int} instead of @code{size_t}
+on some platforms:
+OSF/1 5.1, Solaris 10.
+@item
 If the given buffer is too small for the host name, some implementations
 fail with @code{EINVAL}, instead of returning a truncated host name.
 @end itemize
