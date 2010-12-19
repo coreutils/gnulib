@@ -1,4 +1,4 @@
-# memmem.m4 serial 21
+# memmem.m4 serial 22
 dnl Copyright (C) 2002, 2003, 2004, 2007, 2008, 2009, 2010 Free Software
 dnl Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
@@ -32,16 +32,16 @@ AC_DEFUN([gl_FUNC_MEMMEM_SIMPLE],
       result |= 1;
     /* Check for empty needle behavior.  */
     {
-      char* haystack="AAA";
-      if (memmem (haystack, 3, 0, 0) != haystack)
+      const char *haystack = "AAA";
+      if (memmem (haystack, 3, NULL, 0) != haystack)
         result |= 2;
     }
     return result;
     ]])],
         [gl_cv_func_memmem_works_always=yes],
         [gl_cv_func_memmem_works_always=no],
-        [dnl glibc 2.12 and cygwin 1.7.7 have issue #12092 above.
-         dnl Also empty needles work on glibc >= 2.1 and cygwin >= 1.7.0
+        [dnl glibc 2.9..2.12 and cygwin 1.7.7 have issue #12092 above.
+         dnl Also empty needles work on glibc >= 2.1 and cygwin >= 1.7.0.
          dnl uClibc is not affected, since it uses different source code.
          dnl Assume that it works on all other platforms (even if not linear).
          AC_EGREP_CPP([Lucky user],
@@ -50,7 +50,8 @@ AC_DEFUN([gl_FUNC_MEMMEM_SIMPLE],
  #include <features.h>
  #if ((__GLIBC__ == 2 && ((__GLIBC_MINOR > 0 && __GLIBC_MINOR__ < 9) \
                           || __GLIBC_MINOR__ > 12)) \
-     || (__GLIBC__ > 2)) || defined __UCLIBC__
+      || (__GLIBC__ > 2)) \
+     || defined __UCLIBC__
   Lucky user
  #endif
 #elif defined __CYGWIN__

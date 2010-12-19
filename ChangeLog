@@ -1,3 +1,9 @@
+2010-12-18  Bruno Haible  <bruno@clisp.org>
+
+	memmem-simple: Stylistic changes.
+	* m4/memmem.m4 (gl_FUNC_MEMMEM_SIMPLE): Avoid possible gcc warning.
+	Fix preprocessor directive indentation.
+
 2010-12-15  Pádraig Brady <P@draigBrady.com>
 
 	memmem, memmem-simple: reorganize and expand empty needle check
