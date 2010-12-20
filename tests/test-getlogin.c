@@ -23,6 +23,7 @@
 #include "signature.h"
 SIGNATURE_CHECK (getlogin, char *, (void));
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -39,7 +40,10 @@ main (void)
   if (buf == NULL)
     {
       /* getlogin() fails when stdin is not connected to a tty.  */
+      ASSERT (errno == ENOTTY);
+#if !defined __hpux /* On HP-UX 11.11 it fails anyway.  */
       ASSERT (! isatty (0));
+#endif
       fprintf (stderr, "Skipping test: stdin is not a tty.\n");
       return 77;
     }

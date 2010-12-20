@@ -3,7 +3,9 @@
 	getlogin, getlogin_r: Document HP-UX 11.11 bugs.
 	* doc/posix-functions/getlogin.texi: Document HP-UX 11.11 bug.
 	* doc/posix-functions/getlogin_r.texi: Likewise.
-	* tests/test-getlogin_r.c (main): Avoid test failure on HP-UX 11.11.
+	* tests/test-getlogin.c: Include <errno.h>.
+	(main): Avoid test failure on HP-UX 11.11.
+	* tests/test-getlogin_r.c (main): Likewise.
 
 2010-12-20  Bruno Haible  <bruno@clisp.org>
 
