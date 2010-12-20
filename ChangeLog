@@ -1,5 +1,10 @@
 2010-12-19  Bruno Haible  <bruno@clisp.org>
 
+	ldexpl test: Fix link error on OSF/1 5.1.
+	* modules/ldexpl-tests (Makefile.am): Define test_ldexpl_LDADD.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
 	wctype: Make it work in C++ mode on OSF/1 5.1.
 	* lib/wctype.in.h (iswblank): Declare but not define here.
 	* lib/iswblank.c: New file, extracted from lib/wctype.in.h.
