@@ -22,4 +22,7 @@ Solaris 11 2010-11 (when @code{_POSIX_PTHREAD_SEMANTICS} is not defined).
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This function fails even when standard input is a tty on some platforms:
+HP-UX 11.11.
 @end itemize
