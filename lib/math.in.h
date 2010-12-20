@@ -680,6 +680,10 @@ _GL_EXTERN_C int rpl_isnanl (long double x);
     sizeof (x) == sizeof (double) ? gl_isnan_d (x) : \
     gl_isnan_f (x))
 # endif
+/* Ensure isnan is a macro.  */
+# ifndef isnan
+#  define isnan isnan
+# endif
 #elif defined GNULIB_POSIXCHECK
 # if defined isnan
 _GL_WARN_REAL_FLOATING_DECL (isnan);

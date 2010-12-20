@@ -1,5 +1,12 @@
 2010-12-19  Bruno Haible  <bruno@clisp.org>
 
+	isnan: Ensure it is a macro.
+	* lib/math.in.h (isnan): Define as a macro if not already a macro.
+	* doc/posix-functions/isnan.texi: Mention problem on IRIX, OSF/1,
+	Solaris.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
 	ldexpl test: Fix link error on OSF/1 5.1.
 	* modules/ldexpl-tests (Makefile.am): Define test_ldexpl_LDADD.
 
