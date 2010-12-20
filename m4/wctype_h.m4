@@ -1,4 +1,4 @@
-# wctype_h.m4 serial 8
+# wctype_h.m4 serial 9
 
 dnl A placeholder for ISO C99 <wctype.h>, for platforms that lack it.
 
@@ -82,4 +82,14 @@ AC_DEFUN([gl_WCTYPE_H],
     REPLACE_ISWCNTRL=0
   fi
   AC_SUBST([REPLACE_ISWCNTRL])
+
+  if test $HAVE_ISWCNTRL = 0 || test $REPLACE_ISWCNTRL = 1; then
+    dnl Redefine all of iswcntrl, ..., towupper in <wctype.h>.
+    :
+  else
+    if test $HAVE_ISWBLANK = 0 || test $REPLACE_ISWBLANK = 1; then
+      dnl Redefine only iswblank.
+      AC_LIBOBJ([iswblank])
+    fi
+  fi
 ])

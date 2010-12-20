@@ -284,18 +284,10 @@ towupper
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define iswblank rpl_iswblank
 #  endif
-# endif
-
-static inline int
-# if @REPLACE_ISWBLANK@
-rpl_iswblank
+extern int rpl_iswblank (wint_t wc);
 # else
-iswblank
+extern int iswblank (wint_t wc);
 # endif
-         (wint_t wc)
-{
-  return wc == ' ' || wc == '\t';
-}
 
 #endif
 
