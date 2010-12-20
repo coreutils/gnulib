@@ -1,5 +1,15 @@
 2010-12-19  Bruno Haible  <bruno@clisp.org>
 
+	sys_socket: Use POSIX compatible declarations on OSF/1 5.1.
+	* m4/sys_socket_h.m4 (gl_HEADER_SYS_SOCKET): On OSF/1, define
+	_POSIX_PII_SOCKET.
+	* doc/posix-functions/recv.texi: Document the OSF/1 problem.
+	* doc/posix-functions/recvfrom.texi: Likewise.
+	* doc/posix-functions/send.texi: Likewise.
+	* doc/posix-functions/sendto.texi: Likewise.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
 	tcgetsid: Add missing declaration on OSF/1 5.1.
 	* lib/termios.in.h (tcgetsid): Test HAVE_DECL_TCGETSID instead of
 	HAVE_TCGETSID.
