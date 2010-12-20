@@ -1,4 +1,4 @@
-#serial 7
+#serial 8
 
 # Copyright (C) 2005-2007, 2009-2010 Free Software Foundation, Inc.
 #
@@ -20,14 +20,15 @@ AC_DEFUN([gl_FUNC_GETLOGIN_R],
   dnl getlogin_r().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
+  AC_CHECK_DECLS_ONCE([getlogin_r])
+  if test $ac_cv_have_decl_getlogin_r = no; then
+    HAVE_DECL_GETLOGIN_R=0
+  fi
+
   AC_CHECK_FUNCS_ONCE([getlogin_r])
   if test $ac_cv_func_getlogin_r = no; then
     AC_LIBOBJ([getlogin_r])
     gl_PREREQ_GETLOGIN_R
-    AC_CHECK_DECLS_ONCE([getlogin_r])
-    if test $ac_cv_have_decl_getlogin_r = no; then
-      HAVE_DECL_GETLOGIN_R=0
-    fi
   fi
 ])
 
