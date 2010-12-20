@@ -35,4 +35,8 @@ Portability problems not fixed by Gnulib:
 @item
 Many signals are not defined on some platforms:
 mingw.
+@item
+The macros @code{SIGRTMIN} and @code{SIGRTMAX} expand to an expression of type
+@code{long} instead of @code{int} on some platforms:
+OSF/1 5.1.
 @end itemize

@@ -1,5 +1,11 @@
 2010-12-19  Bruno Haible  <bruno@clisp.org>
 
+	signal: Document problem with type of SIGRTMIN, SIGRTMAX on OSF/1 5.1.
+	* doc/posix-headers/signal.texi: Document OSF/1 5.1 problem.
+	* lib/strsignal.c (strsignal): Cast SIGRTMIN to 'int'.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
 	sys_socket: Use POSIX compatible declarations on OSF/1 5.1.
 	* m4/sys_socket_h.m4 (gl_HEADER_SYS_SOCKET): On OSF/1, define
 	_POSIX_PII_SOCKET.
