@@ -1249,7 +1249,7 @@ _GL_FUNCDECL_RPL (ttyname_r, int,
 _GL_CXXALIAS_RPL (ttyname_r, int,
                   (int fd, char *buf, size_t buflen));
 # else
-#  if !@HAVE_TTYNAME_R@
+#  if !@HAVE_DECL_TTYNAME_R@
 _GL_FUNCDECL_SYS (ttyname_r, int,
                   (int fd, char *buf, size_t buflen) _GL_ARG_NONNULL ((2)));
 #  endif

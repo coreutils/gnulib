@@ -1,5 +1,18 @@
 2010-12-20  Bruno Haible  <bruno@clisp.org>
 
+	ttyname_r: Add missing declaration on HP-UX 11.
+	* lib/unistd.in.h (ttyname_r): Test HAVE_DECL_TTYNAME_R instead of
+	HAVE_TTYNAME_R.
+	* m4/ttyname_r.m4 (gl_FUNC_TTYNAME_R): Test whether ttyname_r is
+	declared. Set HAVE_TTYNAME_R always.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize
+	HAVE_DECL_TTYNAME_R, not HAVE_TTYNAME_R.
+	* modules/unistd (Makefile.am): Substitute HAVE_DECL_TTYNAME_R, not
+	HAVE_TTYNAME_R.
+	* doc/posix-functions/ttyname_r.texi: Document the HP-UX 11 problem.
+
+2010-12-20  Bruno Haible  <bruno@clisp.org>
+
 	getlogin, getlogin_r: Document HP-UX 11.11 bugs.
 	* doc/posix-functions/getlogin.texi: Document HP-UX 11.11 bug.
 	* doc/posix-functions/getlogin_r.texi: Likewise.
