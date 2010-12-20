@@ -1,5 +1,5 @@
 /* Convert wide string to string.
-   Copyright (C) 2008, 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2008, 2010 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2008.
 
    This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@
 
 extern mbstate_t _gl_wcsrtombs_state;
 
-#if HAVE_WCSRTOMBS && !WCSRTOMBS_TERMINATION_BUG
+#if HAVE_WCSRTOMBS && !WCSRTOMBS_TERMINATION_BUG && !defined GNULIB_defined_mbstate_t
 /* Override the system's wcsrtombs() function.  */
 
 # undef wcsrtombs

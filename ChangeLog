@@ -1,3 +1,9 @@
+2010-12-20  Bruno Haible  <bruno@clisp.org>
+
+	wcsrtombs: Don't confuse mbstate_t with rpl_mbstate_t.
+	* lib/wcsrtombs.c: If gnulib overrides mbstate_t, define wcsrtombs
+	through wcrtomb.
+
 2010-12-19  Paul Eggert  <eggert@cs.ucla.edu>
 
 	ftoastr: fix comment
