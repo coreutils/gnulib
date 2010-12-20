@@ -1,3 +1,9 @@
+2010-12-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	ftoastr: fix comment
+	* lib/ftoastr.h: Fix typo in comment.  Noted by Ben Pfaff in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2010-12/msg00130.html>.
+
 2010-12-19  Bruno Haible  <bruno@clisp.org>
 
 	isnan: Ensure it is a macro.
