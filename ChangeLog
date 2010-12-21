@@ -1,3 +1,12 @@
+2010-12-21  Bruno Haible  <bruno@clisp.org>
+
+	Fix cross-compilation guesses on Solaris.
+	* m4/fopen.m4 (gl_FUNC_FOPEN): Correct shell pattern so that it does
+	not match "solaris2.10".
+	* m4/open.m4 (gl_FUNC_OPEN): Likewise.
+	* m4/printf.m4 (gl_SNPRINTF_TRUNCATION_C99, gl_SNPRINTF_DIRECTIVE_N,
+	gl_VSNPRINTF_ZEROSIZE_C99): Likewise.
+
 2010-12-21  Paul Eggert  <eggert@cs.ucla.edu>
 
 	snprintf: port snprintf (NULL, 0, ...) to Solaris 8 and 9

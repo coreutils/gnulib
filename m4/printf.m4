@@ -1,4 +1,4 @@
-# printf.m4 serial 40
+# printf.m4 serial 41
 dnl Copyright (C) 2003, 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -1102,7 +1102,8 @@ changequote(,)dnl
                                  gl_cv_func_snprintf_truncation_c99="guessing no";;
            openbsd*)             gl_cv_func_snprintf_truncation_c99="guessing yes";;
                                  # Guess yes on Solaris >= 2.6.
-           solaris2.[0-5]*)      gl_cv_func_snprintf_truncation_c99="guessing no";;
+           solaris2.[0-5] | solaris2.[0-5].*)
+                                 gl_cv_func_snprintf_truncation_c99="guessing no";;
            solaris*)             gl_cv_func_snprintf_truncation_c99="guessing yes";;
                                  # Guess yes on AIX >= 4.
            aix[1-3]*)            gl_cv_func_snprintf_truncation_c99="guessing no";;
@@ -1247,7 +1248,8 @@ changequote(,)dnl
            darwin[1-6].*)        gl_cv_func_snprintf_directive_n="guessing no";;
            darwin*)              gl_cv_func_snprintf_directive_n="guessing yes";;
                                  # Guess yes on Solaris >= 2.6.
-           solaris2.[0-5]*)      gl_cv_func_snprintf_directive_n="guessing no";;
+           solaris2.[0-5] | solaris2.[0-5].*)
+                                 gl_cv_func_snprintf_directive_n="guessing no";;
            solaris*)             gl_cv_func_snprintf_directive_n="guessing yes";;
                                  # Guess yes on AIX >= 4.
            aix[1-3]*)            gl_cv_func_snprintf_directive_n="guessing no";;
@@ -1375,7 +1377,8 @@ changequote(,)dnl
                                  # Guess yes on Cygwin.
            cygwin*)              gl_cv_func_vsnprintf_zerosize_c99="guessing yes";;
                                  # Guess yes on Solaris >= 2.6.
-           solaris2.[0-5]*)      gl_cv_func_vsnprintf_zerosize_c99="guessing no";;
+           solaris2.[0-5] | solaris2.[0-5].*)
+                                 gl_cv_func_vsnprintf_zerosize_c99="guessing no";;
            solaris*)             gl_cv_func_vsnprintf_zerosize_c99="guessing yes";;
                                  # Guess yes on AIX >= 4.
            aix[1-3]*)            gl_cv_func_vsnprintf_zerosize_c99="guessing no";;
