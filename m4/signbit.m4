@@ -1,4 +1,4 @@
-# signbit.m4 serial 8
+# signbit.m4 serial 9
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -306,3 +306,43 @@ int main ()
       ;;
   esac
 ])
+
+# Expands to code that defines a function signbitf(float).
+# It extracts the sign bit of a non-NaN value.
+AC_DEFUN([gl_FLOAT_SIGNBIT_CODE],
+[
+  gl_FLOATTYPE_SIGNBIT_CODE([float], [f], [f])
+])
+
+# Expands to code that defines a function signbitd(double).
+# It extracts the sign bit of a non-NaN value.
+AC_DEFUN([gl_DOUBLE_SIGNBIT_CODE],
+[
+  gl_FLOATTYPE_SIGNBIT_CODE([double], [d], [])
+])
+
+# Expands to code that defines a function signbitl(long double).
+# It extracts the sign bit of a non-NaN value.
+AC_DEFUN([gl_LONG_DOUBLE_SIGNBIT_CODE],
+[
+  gl_FLOATTYPE_SIGNBIT_CODE([long double], [l], [L])
+])
+
+AC_DEFUN([gl_FLOATTYPE_SIGNBIT_CODE],
+[[
+static int
+signbit$2 ($1 value)
+{
+  typedef union { $1 f; unsigned char b[sizeof ($1)]; } float_union;
+  static float_union plus_one = { 1.0$3 };   /* unused bits are zero here */
+  static float_union minus_one = { -1.0$3 }; /* unused bits are zero here */
+  /* Compute the sign bit mask as the XOR of plus_one and minus_one.  */
+  float_union u;
+  unsigned int i;
+  u.f = value;
+  for (i = 0; i < sizeof ($1); i++)
+    if (u.b[i] & (plus_one.b[i] ^ minus_one.b[i]))
+      return 1;
+  return 0;
+}
+]])

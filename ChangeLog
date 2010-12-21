@@ -1,5 +1,13 @@
 2010-12-21  Bruno Haible  <bruno@clisp.org>
 
+	Support for minus zero in autoconf macros.
+	* m4/minus-zero.m4: New file, based on tests/minus-zero.h.
+	* m4/signbit.m4 (gl_FLOAT_SIGNBIT_CODE, gl_DOUBLE_SIGNBIT_CODE,
+	gl_LONG_DOUBLE_SIGNBIT_CODE, gl_FLOATTYPE_SIGNBIT_CODE): New macros.
+	* tests/minus-zero.h: Update comments.
+
+2010-12-21  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'ceil'.
 	* modules/ceil-tests: New file.
 	* tests/test-ceil1.c: New file, based on tests/test-ceill.c.

@@ -1,26 +1,17 @@
-/* Macros for floating-point negative zero.
-   Copyright (C) 2010 Free Software Foundation, Inc.
+# minus-zero.m4 serial 1
+dnl Copyright (C) 2010 Free Software Foundation, Inc.
+dnl This file is free software; the Free Software Foundation
+dnl gives unlimited permission to copy and/or distribute it,
+dnl with or without modifications, as long as this notice is preserved.
 
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 3 of the License, or
-   (at your option) any later version.
+# Macros for floating-point negative zero.
+# Keep in sync with tests/minus-zero.h!
 
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
-
-/* Keep in sync with m4/minus-zero.m4!  */
-
+# Expands to code that defines a variable or macro minus_zerof.
+AC_DEFUN([gl_FLOAT_MINUS_ZERO_CODE],
+[[
 #include <float.h>
-
-
 /* minus_zerof represents the value -0.0f.  */
-
 /* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0f.
    ICC 10.0 has a bug when optimizing the expression -zero.
    The expression -FLT_MIN * FLT_MIN does not work when cross-compiling
@@ -35,10 +26,13 @@ compute_minus_zerof (void)
 #else
 float minus_zerof = -0.0f;
 #endif
+]])
 
-
+# Expands to code that defines a variable or macro minus_zerod.
+AC_DEFUN([gl_DOUBLE_MINUS_ZERO_CODE],
+[[
+#include <float.h>
 /* minus_zerod represents the value -0.0.  */
-
 /* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0.
    ICC 10.0 has a bug when optimizing the expression -zero.
    The expression -DBL_MIN * DBL_MIN does not work when cross-compiling
@@ -53,10 +47,17 @@ compute_minus_zerod (void)
 #else
 double minus_zerod = -0.0;
 #endif
+]])
 
-
+# Expands to code that defines a variable or macro minus_zerol.
+AC_DEFUN([gl_LONG_DOUBLE_MINUS_ZERO_CODE],
+[[
+#include <float.h>
+#if defined __i386__ && (defined __BEOS__ || defined __OpenBSD__)
+# undef LDBL_MIN
+# define LDBL_MIN        3.3621031431120935063E-4932L
+#endif
 /* minus_zerol represents the value -0.0L.  */
-
 /* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0L.
    IRIX cc can't put -0.0L into .data, but can compute at runtime.
    ICC 10.0 has a bug when optimizing the expression -zero.
@@ -72,3 +73,4 @@ compute_minus_zerol (void)
 #else
 long double minus_zerol = -0.0L;
 #endif
+]])
