@@ -1,5 +1,15 @@
 2010-12-21  Bruno Haible  <bruno@clisp.org>
 
+	New module 'floorl-ieee'.
+	* modules/floorl-ieee: New file.
+	* modules/floorl-ieee-tests: New file.
+	* tests/test-floorl-ieee.c: New file, based on tests/test-floorl.c.
+	* tests/test-floorl.c (main): Remove signbit tests.
+	* modules/floorl-tests (Depends-on): Remove signbit.
+	* doc/posix-functions/floorl.texi: Mention the new module.
+
+2010-12-21  Bruno Haible  <bruno@clisp.org>
+
 	New module 'round-ieee'.
 	* modules/round-ieee: New file.
 	* m4/round.m4 (gl_FUNC_ROUND): If gl_FUNC_ROUND_IEEE is also used, test
