@@ -1,0 +1,23 @@
+Description:
+truncl() function according to ISO C 99 with IEC 60559.
+
+Files:
+
+Depends-on:
+truncl
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(TRUNCL_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible

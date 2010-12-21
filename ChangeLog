@@ -1,5 +1,15 @@
 2010-12-21  Bruno Haible  <bruno@clisp.org>
 
+	New module 'truncl-ieee'.
+	* modules/truncl-ieee: New file.
+	* modules/truncl-ieee-tests: New file.
+	* tests/test-truncl-ieee.c: New file, based on tests/test-truncl.c.
+	* tests/test-truncl.c (main): Remove signbit tests.
+	* modules/truncl-tests (Depends-on): Remove signbit.
+	* doc/posix-functions/truncl.texi: Mention the new module.
+
+2010-12-21  Bruno Haible  <bruno@clisp.org>
+
 	New module 'ceill-ieee'.
 	* modules/ceill-ieee: New file.
 	* modules/ceill-ieee-tests: New file.
