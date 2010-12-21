@@ -1,5 +1,12 @@
 2010-12-21  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'ceil'.
+	* modules/ceil-tests: New file.
+	* tests/test-ceil1.c: New file, based on tests/test-ceill.c.
+	* tests/test-ceil2.c: New file, based on tests/test-ceilf2.c.
+
+2010-12-21  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'floor'.
 	* modules/floor-tests: New file.
 	* tests/test-floor1.c: New file, based on tests/test-floorl.c.
