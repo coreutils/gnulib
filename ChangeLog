@@ -1,5 +1,18 @@
 2010-12-21  Bruno Haible  <bruno@clisp.org>
 
+	New module 'roundl-ieee'.
+	* modules/roundl-ieee: New file.
+	* m4/roundl.m4 (gl_FUNC_ROUNDL): If gl_FUNC_ROUNDL_IEEE is also used,
+	test whether roundl works according to ISO C 99 with IEC 60559.
+	* m4/roundl-ieee.m4: New file.
+	* modules/roundl-ieee-tests: New file.
+	* tests/test-roundl-ieee.c: New file, based on tests/test-roundl.c.
+	* tests/test-roundl.c (main): Remove signbit tests.
+	* modules/roundl-tests (Depends-on): Remove signbit.
+	* doc/posix-functions/roundl.texi: Mention the new module.
+
+2010-12-21  Bruno Haible  <bruno@clisp.org>
+
 	New module 'truncl-ieee'.
 	* modules/truncl-ieee: New file.
 	* modules/truncl-ieee-tests: New file.

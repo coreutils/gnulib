@@ -1,4 +1,4 @@
-# roundl.m4 serial 7
+# roundl.m4 serial 8
 dnl Copyright (C) 2007, 2009-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -6,6 +6,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_ROUNDL],
 [
+  m4_divert_text([DEFAULTS], [gl_roundl_required=plain])
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   dnl Persuade glibc <math.h> to declare roundl().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
@@ -15,6 +16,40 @@ AC_DEFUN([gl_FUNC_ROUNDL],
     if test "$ROUNDL_LIBM" = missing; then
       REPLACE_ROUNDL=1
     fi
+    m4_ifdef([gl_FUNC_ROUNDL_IEEE], [
+      if test $gl_roundl_required = ieee && test $REPLACE_ROUNDL = 0; then
+        AC_CACHE_CHECK([whether roundl works according to ISO C 99 with IEC 60559],
+          [gl_cv_func_roundl_ieee],
+          [
+            save_LIBS="$LIBS"
+            LIBS="$LIBS $ROUNDL_LIBM"
+            AC_RUN_IFELSE(
+              [AC_LANG_SOURCE([[
+#ifndef __NO_MATH_INLINES
+# define __NO_MATH_INLINES 1 /* for glibc */
+#endif
+#include <math.h>
+]gl_LONG_DOUBLE_MINUS_ZERO_CODE[
+]gl_LONG_DOUBLE_SIGNBIT_CODE[
+int main()
+{
+  /* Test whether roundl (-0.0L) is -0.0L.  */
+  if (signbitl (minus_zerol) && !signbitl (roundl (minus_zerol)))
+    return 1;
+  return 0;
+}
+              ]])],
+              [gl_cv_func_roundl_ieee=yes],
+              [gl_cv_func_roundl_ieee=no],
+              [gl_cv_func_roundl_ieee="guessing no"])
+            LIBS="$save_LIBS"
+          ])
+        case "$gl_cv_func_roundl_ieee" in
+          *yes) ;;
+          *) REPLACE_ROUNDL=1 ;;
+        esac
+      fi
+    ])
   else
     HAVE_DECL_ROUNDL=0
   fi
