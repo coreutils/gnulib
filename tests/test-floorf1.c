@@ -46,9 +46,7 @@ main (int argc, char **argv _GL_UNUSED)
 
   /* Zero.  */
   ASSERT (my_floorf (0.0f) == 0.0f);
-  ASSERT (!signbit (my_floorf (0.0f)));
   ASSERT (my_floorf (minus_zerof) == 0.0f);
-  ASSERT (!!signbit (minus_zerof) == !!signbit (my_floorf (minus_zerof)));
   /* Positive numbers.  */
   ASSERT (my_floorf (0.3f) == 0.0f);
   ASSERT (my_floorf (0.7f) == 0.0f);

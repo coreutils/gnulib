@@ -1,5 +1,18 @@
 2010-12-21  Bruno Haible  <bruno@clisp.org>
 
+	New module 'floorf-ieee'.
+	* modules/floorf-ieee: New file.
+	* m4/floorf.m4 (gl_FUNC_FLOORF): If gl_FUNC_FLOORF_IEEE is also used,
+	test whether floorf works according to ISO C 99 with IEC 60559.
+	* m4/floorf-ieee.m4: New file.
+	* modules/floorf-ieee-tests: New file.
+	* tests/test-floorf-ieee.c: New file, based on tests/test-floorf1.c.
+	* tests/test-floorf1.c (main): Remove signbit tests.
+	* modules/floorf-tests (Depends-on): Remove 'signbit'.
+	* doc/posix-functions/floorf.texi: Mention the new module.
+
+2010-12-21  Bruno Haible  <bruno@clisp.org>
+
 	Support for minus zero in autoconf macros.
 	* m4/minus-zero.m4: New file, based on tests/minus-zero.h.
 	* m4/signbit.m4 (gl_FLOAT_SIGNBIT_CODE, gl_DOUBLE_SIGNBIT_CODE,
