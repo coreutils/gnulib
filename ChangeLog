@@ -1,5 +1,15 @@
 2010-12-20  Bruno Haible  <bruno@clisp.org>
 
+	round*, trunc*: Update documentation regarding glibc.
+	* doc/posix-functions/roundf.texi: Mention missing declaration problem.
+	* doc/posix-functions/round.texi: Likewise.
+	* doc/posix-functions/roundl.texi: Likewise.
+	* doc/posix-functions/truncf.texi: Likewise.
+	* doc/posix-functions/trunc.texi: Likewise.
+	* doc/posix-functions/truncl.texi: Likewise.
+
+2010-12-20  Bruno Haible  <bruno@clisp.org>
+
 	roundf, round, roundl: Update documentation regarding OSF/1 5.1.
 	* doc/posix-functions/roundf.texi: Mention OSF/1 5.1 problem.
 	* doc/posix-functions/round.texi: Likewise.

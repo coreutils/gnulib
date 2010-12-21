@@ -11,6 +11,9 @@ Portability problems fixed by Gnulib:
 @item
 This function is missing on some platforms:
 FreeBSD 5.2.1, NetBSD 3.0, OpenBSD 3.8, Solaris 9, Interix 3.5.
+@item
+This function is not declared (without @code{-D_GNU_SOURCE}) on some platforms:
+glibc 2.8.
 @end itemize
 
 Portability problems not fixed by Gnulib:
