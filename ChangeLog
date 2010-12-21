@@ -1,5 +1,18 @@
 2010-12-21  Bruno Haible  <bruno@clisp.org>
 
+	New module 'round-ieee'.
+	* modules/round-ieee: New file.
+	* m4/round.m4 (gl_FUNC_ROUND): If gl_FUNC_ROUND_IEEE is also used, test
+	whether round works according to ISO C 99 with IEC 60559.
+	* m4/round-ieee.m4: New file.
+	* modules/round-ieee-tests: New file.
+	* tests/test-round-ieee.c: New file, based on tests/test-roundf-ieee.c.
+	* tests/test-round1.c (main): Remove signbit tests.
+	* modules/round-tests (Depends-on): Remove 'signbit'.
+	* doc/posix-functions/round.texi: Mention the new module.
+
+2010-12-21  Bruno Haible  <bruno@clisp.org>
+
 	New module 'trunc-ieee'.
 	* modules/trunc-ieee: New file.
 	* m4/trunc.m4 (gl_FUNC_TRUNC): If gl_FUNC_TRUNC_IEEE is also used, test

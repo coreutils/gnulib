@@ -1,0 +1,15 @@
+Files:
+tests/test-round-ieee.c
+tests/minus-zero.h
+tests/macros.h
+
+Depends-on:
+float
+signbit
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-round-ieee
+check_PROGRAMS += test-round-ieee
+test_round_ieee_LDADD = $(LDADD) @ROUND_LIBM@
