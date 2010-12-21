@@ -1,0 +1,23 @@
+Description:
+ceill() function according to ISO C 99 with IEC 60559.
+
+Files:
+
+Depends-on:
+ceill
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(CEILL_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible

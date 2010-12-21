@@ -4,7 +4,7 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/ceill.html}
 
-Gnulib module: ceill
+Gnulib module: ceill or ceill-ieee
 
 Portability problems fixed by Gnulib:
 @itemize
