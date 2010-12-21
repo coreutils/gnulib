@@ -202,6 +202,19 @@ _GL_WARN_ON_USE (ceilf, "ceilf is unportable - "
 # endif
 #endif
 
+#if @GNULIB_CEIL@
+# if @REPLACE_CEIL@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define ceil rpl_ceil
+#  endif
+_GL_FUNCDECL_RPL (ceil, double, (double x));
+_GL_CXXALIAS_RPL (ceil, double, (double x));
+# else
+_GL_CXXALIAS_SYS (ceil, double, (double x));
+# endif
+_GL_CXXALIASWARN (ceil);
+#endif
+
 #if @GNULIB_CEILL@
 # if @REPLACE_CEILL@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)

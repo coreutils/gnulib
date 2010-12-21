@@ -1,0 +1,15 @@
+Files:
+tests/test-ceil-ieee.c
+tests/minus-zero.h
+tests/macros.h
+
+Depends-on:
+float
+signbit
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-ceil-ieee
+check_PROGRAMS += test-ceil-ieee
+test_ceil_ieee_LDADD = $(LDADD) @FLOOR_LIBM@

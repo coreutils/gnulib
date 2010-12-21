@@ -1,5 +1,25 @@
 2010-12-21  Bruno Haible  <bruno@clisp.org>
 
+	New module 'ceil-ieee'.
+	* modules/ceil-ieee: New file.
+	* m4/ceil.m4 (gl_FUNC_CEIL): Require gl_MATH_H_DEFAULTS. If
+	gl_FUNC_CEIL_IEEE is also used, test whether ceil works according to
+	ISO C 99 with IEC 60559.
+	* m4/ceil-ieee.m4: New file.
+	* modules/ceil (Files): Add lib/ceil.c.
+	(Depends-on): Add 'float'.
+	(configure.ac): Invoke gl_MATH_MODULE_INDICATOR.
+	* lib/math.in.h (ceil): New declaration.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize GNULIB_CEIL,
+	REPLACE_CEIL.
+	* modules/math (Makefile.am): Substitute GNULIB_CEIL, REPLACE_CEIL.
+	* modules/ceil-ieee-tests: New file.
+	* tests/test-ceil-ieee.c: New file, based on tests/test-ceilf-ieee.c.
+	* tests/test-math-c++.cc: Check the signature of 'ceil'.
+	* doc/posix-functions/ceil.texi: Mention the new module.
+
+2010-12-21  Bruno Haible  <bruno@clisp.org>
+
 	New module 'floor-ieee'.
 	* modules/floor-ieee: New file.
 	* m4/floor.m4 (gl_FUNC_FLOOR): Require gl_MATH_H_DEFAULTS. If

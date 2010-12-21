@@ -1,17 +1,16 @@
 Description:
-ceil() function: round towards positive infinity.
+ceil() function according to ISO C 99 with IEC 60559.
 
 Files:
-lib/ceil.c
-m4/ceil.m4
+m4/ceil-ieee.m4
+m4/minus-zero.m4
+m4/signbit.m4
 
 Depends-on:
-math
-float
+ceil
 
 configure.ac:
-gl_FUNC_CEIL
-gl_MATH_MODULE_INDICATOR([ceil])
+gl_FUNC_CEIL_IEEE
 
 Makefile.am:
 
@@ -26,4 +25,3 @@ LGPL
 
 Maintainer:
 Bruno Haible
-

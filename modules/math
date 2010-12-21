@@ -29,6 +29,7 @@ math.h: math.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	      -e 's|@''GNULIB_ACOSL''@|$(GNULIB_ACOSL)|g' \
 	      -e 's|@''GNULIB_ASINL''@|$(GNULIB_ASINL)|g' \
 	      -e 's|@''GNULIB_ATANL''@|$(GNULIB_ATANL)|g' \
+	      -e 's|@''GNULIB_CEIL''@|$(GNULIB_CEIL)|g' \
 	      -e 's|@''GNULIB_CEILF''@|$(GNULIB_CEILF)|g' \
 	      -e 's|@''GNULIB_CEILL''@|$(GNULIB_CEILL)|g' \
 	      -e 's|@''GNULIB_COSL''@|$(GNULIB_COSL)|g' \
@@ -91,6 +92,7 @@ math.h: math.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	      -e 's|@''HAVE_DECL_TRUNC''@|$(HAVE_DECL_TRUNC)|g' \
 	      -e 's|@''HAVE_DECL_TRUNCF''@|$(HAVE_DECL_TRUNCF)|g' \
 	      -e 's|@''HAVE_DECL_TRUNCL''@|$(HAVE_DECL_TRUNCL)|g' \
+	      -e 's|@''REPLACE_CEIL''@|$(REPLACE_CEIL)|g' \
 	      -e 's|@''REPLACE_CEILF''@|$(REPLACE_CEILF)|g' \
 	      -e 's|@''REPLACE_CEILL''@|$(REPLACE_CEILL)|g' \
 	      -e 's|@''REPLACE_FLOOR''@|$(REPLACE_FLOOR)|g' \
