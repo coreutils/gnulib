@@ -4,9 +4,9 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/trunc.html}
 
-Gnulib module: trunc
+Gnulib module: trunc or trunc-ieee
 
-Portability problems fixed by Gnulib:
+Portability problems fixed by either Gnulib module @code{trunc} or @code{trunc-ieee}:
 @itemize
 @item
 This function is missing on some platforms:
@@ -14,6 +14,14 @@ FreeBSD 5.2.1, NetBSD 3.0, OpenBSD 3.8, Solaris 9, Interix 3.5.
 @item
 This function is not declared (without @code{-D_GNU_SOURCE}) on some platforms:
 glibc 2.8.
+@end itemize
+
+Portability problems fixed by Gnulib module @code{trunc-ieee}:
+@itemize
+@item
+This function returns a positive zero for a minus zero argument
+on some platforms:
+OSF/1 5.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:

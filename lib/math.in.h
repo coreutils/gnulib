@@ -541,10 +541,18 @@ _GL_WARN_ON_USE (truncf, "truncf is unportable - "
 #endif
 
 #if @GNULIB_TRUNC@
-# if !@HAVE_DECL_TRUNC@
+# if @REPLACE_TRUNC@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define trunc rpl_trunc
+#  endif
+_GL_FUNCDECL_RPL (trunc, double, (double x));
+_GL_CXXALIAS_RPL (trunc, double, (double x));
+# else
+#  if !@HAVE_DECL_TRUNC@
 _GL_FUNCDECL_SYS (trunc, double, (double x));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (trunc, double, (double x));
+# endif
 _GL_CXXALIASWARN (trunc);
 #elif defined GNULIB_POSIXCHECK
 # undef trunc
