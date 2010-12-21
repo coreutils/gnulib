@@ -96,6 +96,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::expl, long double, (long double));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::floorf, float, (float));
 #endif
 
+#if GNULIB_TEST_FLOOR
+SIGNATURE_CHECK (GNULIB_NAMESPACE::floor, double, (double));
+#endif
+
 #if GNULIB_TEST_FLOORL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::floorl, long double, (long double));
 #endif

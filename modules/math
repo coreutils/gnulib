@@ -33,6 +33,7 @@ math.h: math.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	      -e 's|@''GNULIB_CEILL''@|$(GNULIB_CEILL)|g' \
 	      -e 's|@''GNULIB_COSL''@|$(GNULIB_COSL)|g' \
 	      -e 's|@''GNULIB_EXPL''@|$(GNULIB_EXPL)|g' \
+	      -e 's|@''GNULIB_FLOOR''@|$(GNULIB_FLOOR)|g' \
 	      -e 's|@''GNULIB_FLOORF''@|$(GNULIB_FLOORF)|g' \
 	      -e 's|@''GNULIB_FLOORL''@|$(GNULIB_FLOORL)|g' \
 	      -e 's|@''GNULIB_FREXP''@|$(GNULIB_FREXP)|g' \
@@ -92,6 +93,7 @@ math.h: math.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	      -e 's|@''HAVE_DECL_TRUNCL''@|$(HAVE_DECL_TRUNCL)|g' \
 	      -e 's|@''REPLACE_CEILF''@|$(REPLACE_CEILF)|g' \
 	      -e 's|@''REPLACE_CEILL''@|$(REPLACE_CEILL)|g' \
+	      -e 's|@''REPLACE_FLOOR''@|$(REPLACE_FLOOR)|g' \
 	      -e 's|@''REPLACE_FLOORF''@|$(REPLACE_FLOORF)|g' \
 	      -e 's|@''REPLACE_FLOORL''@|$(REPLACE_FLOORL)|g' \
 	      -e 's|@''REPLACE_FREXP''@|$(REPLACE_FREXP)|g' \

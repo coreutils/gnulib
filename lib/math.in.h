@@ -277,6 +277,19 @@ _GL_WARN_ON_USE (floorf, "floorf is unportable - "
 # endif
 #endif
 
+#if @GNULIB_FLOOR@
+# if @REPLACE_FLOOR@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define floor rpl_floor
+#  endif
+_GL_FUNCDECL_RPL (floor, double, (double x));
+_GL_CXXALIAS_RPL (floor, double, (double x));
+# else
+_GL_CXXALIAS_SYS (floor, double, (double x));
+# endif
+_GL_CXXALIASWARN (floor);
+#endif
+
 #if @GNULIB_FLOORL@
 # if @REPLACE_FLOORL@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
