@@ -262,7 +262,7 @@ _GL_WARN_ON_USE (expl, "expl is unportable - "
 #  endif
 _GL_FUNCDECL_RPL (floorf, float, (float x));
 _GL_CXXALIAS_RPL (floorf, float, (float x));
-#else
+# else
 #  if !@HAVE_DECL_FLOORF@
 _GL_FUNCDECL_SYS (floorf, float, (float x));
 #  endif

@@ -1,5 +1,10 @@
 2010-12-21  Bruno Haible  <bruno@clisp.org>
 
+	math: Fix indentation.
+	* lib/math.in.h (floorf): Fix indentation.
+
+2010-12-21  Bruno Haible  <bruno@clisp.org>
+
 	Fix cross-compilation guesses on Solaris.
 	* m4/fopen.m4 (gl_FUNC_FOPEN): Correct shell pattern so that it does
 	not match "solaris2.10".
