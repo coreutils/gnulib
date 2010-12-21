@@ -1,5 +1,18 @@
 2010-12-21  Bruno Haible  <bruno@clisp.org>
 
+	New module 'roundf-ieee'.
+	* modules/roundf-ieee: New file.
+	* m4/roundf.m4 (gl_FUNC_ROUNDF): If gl_FUNC_ROUNDF_IEEE is also used,
+	test whether roundf works according to ISO C 99 with IEC 60559.
+	* m4/roundf-ieee.m4: New file.
+	* modules/roundf-ieee-tests: New file.
+	* tests/test-roundf-ieee.c: New file, based on tests/test-roundf1.c.
+	* tests/test-roundf1.c (main): Remove signbit tests.
+	* modules/roundf-tests (Depends-on): Remove 'signbit'.
+	* doc/posix-functions/roundf.texi: Mention the new module.
+
+2010-12-21  Bruno Haible  <bruno@clisp.org>
+
 	New module 'truncf-ieee'.
 	* modules/truncf-ieee: New file.
 	* m4/truncf.m4 (gl_FUNC_TRUNCF): If gl_FUNC_TRUNCF_IEEE is also used,

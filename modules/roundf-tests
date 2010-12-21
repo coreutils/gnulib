@@ -11,7 +11,6 @@ Depends-on:
 ceilf
 floorf
 isnanf-nolibm
-signbit
 stdbool
 stdint
 verify
