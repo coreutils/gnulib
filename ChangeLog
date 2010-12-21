@@ -1,3 +1,22 @@
+2010-12-21  Paul Eggert  <eggert@cs.ucla.edu>
+
+	snprintf: port snprintf (NULL, 0, ...) to Solaris 8 and 9
+	This fixes a problem observed with the latest coreutils snapshot
+	that caused a test to fail on Solaris 8.  src/csplit.c's call
+	snprintf (NULL, 0, format, UINT_MAX) returns -1 on Solaris 9 and
+	earlier, instead of returning the number of bytes that would have
+	been generated; this causes csplit to incorrectly report memory
+	exhaustion.
+	* m4/printf.m4 (gl_SNPRINTF_RETVAL_C99): Also check for
+	snprintf (NULL, 0, ...) and (for good measure) snprintf (buf, 0, ...).
+	Guess that it doesn't work on Solaris 2.6 through 9.  Adjust
+	comments to match.
+	(gl_PRINTF_SIZES_C99, gl_PRINTF_DIRECTIVE_F, gl_SNPRINTF_RETVAL_C99):
+	Fix typo in matching older versions of Solaris: "solaris2.10"
+	is matched by the shell pattern "solaris2.[0-9]*".  This matters
+	only for guessing while cross-compiling.
+	* m4/snprintf.m4 (gl_FUNC_SNPRINTF): Also check gl_SNPRINTF_RETVAL_C99.
+
 2010-12-20  Paul Eggert  <eggert@cs.ucla.edu>
 
 	ftoastr: fix comment again

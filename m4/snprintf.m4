@@ -13,7 +13,12 @@ AC_DEFUN([gl_FUNC_SNPRINTF],
     gl_SNPRINTF_SIZE1
     case "$gl_cv_func_snprintf_size1" in
       *yes)
-        gl_cv_func_snprintf_usable=yes
+        gl_SNPRINTF_RETVAL_C99
+        case "$gl_cv_func_snprintf_retval_c99" in
+          *yes)
+            gl_cv_func_snprintf_usable=yes
+            ;;
+        esac
         ;;
     esac
   fi
