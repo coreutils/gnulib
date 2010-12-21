@@ -9,7 +9,6 @@ tests/macros.h
 Depends-on:
 float
 isnanf-nolibm
-signbit
 stdbool
 stdint
 

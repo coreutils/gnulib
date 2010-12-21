@@ -1,5 +1,21 @@
 2010-12-21  Bruno Haible  <bruno@clisp.org>
 
+	New module 'truncf-ieee'.
+	* modules/truncf-ieee: New file.
+	* m4/truncf.m4 (gl_FUNC_TRUNCF): If gl_FUNC_TRUNCF_IEEE is also used,
+	test whether truncf works according to ISO C 99 with IEC 60559.
+	* m4/truncf-ieee.m4: New file.
+	* lib/math.in.h (truncf): Replace if REPLACE_TRUNCF is set.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize REPLACE_TRUNCF.
+	* modules/math (Makefile.am): Substitute REPLACE_TRUNCF.
+	* modules/truncf-ieee-tests: New file.
+	* tests/test-truncf-ieee.c: New file, based on tests/test-truncf1.c.
+	* tests/test-truncf1.c (main): Remove signbit tests.
+	* modules/truncf-tests (Depends-on): Remove 'signbit'.
+	* doc/posix-functions/truncf.texi: Mention the new module.
+
+2010-12-21  Bruno Haible  <bruno@clisp.org>
+
 	New module 'ceilf-ieee'.
 	* modules/ceilf-ieee: New file.
 	* m4/ceilf.m4 (gl_FUNC_FLOORF): If gl_FUNC_CEILF_IEEE is also used,

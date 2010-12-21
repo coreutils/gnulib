@@ -1,4 +1,4 @@
-# truncf.m4 serial 3
+# truncf.m4 serial 4
 dnl Copyright (C) 2007, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -6,6 +6,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_TRUNCF],
 [
+  m4_divert_text([DEFAULTS], [gl_truncf_required=plain])
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   dnl Persuade glibc <math.h> to declare truncf().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
@@ -40,8 +41,44 @@ AC_DEFUN([gl_FUNC_TRUNCF],
     if test "$TRUNCF_LIBM" = "?"; then
       TRUNCF_LIBM=
     fi
+    m4_ifdef([gl_FUNC_TRUNCF_IEEE], [
+      if test $gl_truncf_required = ieee && test $REPLACE_TRUNCF = 0; then
+        AC_CACHE_CHECK([whether truncf works according to ISO C 99 with IEC 60559],
+          [gl_cv_func_truncf_ieee],
+          [
+            save_LIBS="$LIBS"
+            LIBS="$LIBS $TRUNCF_LIBM"
+            AC_RUN_IFELSE(
+              [AC_LANG_SOURCE([[
+#ifndef __NO_MATH_INLINES
+# define __NO_MATH_INLINES 1 /* for glibc */
+#endif
+#include <math.h>
+]gl_FLOAT_MINUS_ZERO_CODE[
+]gl_FLOAT_SIGNBIT_CODE[
+int main()
+{
+  /* Test whether truncf (-0.0f) is -0.0f.  */
+  if (signbitf (minus_zerof) && !signbitf (truncf (minus_zerof)))
+    return 1;
+  return 0;
+}
+              ]])],
+              [gl_cv_func_truncf_ieee=yes],
+              [gl_cv_func_truncf_ieee=no],
+              [gl_cv_func_truncf_ieee="guessing no"])
+            LIBS="$save_LIBS"
+          ])
+        case "$gl_cv_func_truncf_ieee" in
+          *yes) ;;
+          *) REPLACE_TRUNCF=1 ;;
+        esac
+      fi
+    ])
   else
     HAVE_DECL_TRUNCF=0
+  fi
+  if test $HAVE_DECL_TRUNCF = 0 || test $REPLACE_TRUNCF = 1; then
     AC_LIBOBJ([truncf])
     TRUNCF_LIBM=
   fi

@@ -493,10 +493,18 @@ _GL_WARN_ON_USE (tanl, "tanl is unportable - "
 
 
 #if @GNULIB_TRUNCF@
-# if !@HAVE_DECL_TRUNCF@
+# if @REPLACE_TRUNCF@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define truncf rpl_truncf
+#  endif
+_GL_FUNCDECL_RPL (truncf, float, (float x));
+_GL_CXXALIAS_RPL (truncf, float, (float x));
+# else
+#  if !@HAVE_DECL_TRUNCF@
 _GL_FUNCDECL_SYS (truncf, float, (float x));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (truncf, float, (float x));
+# endif
 _GL_CXXALIASWARN (truncf);
 #elif defined GNULIB_POSIXCHECK
 # undef truncf

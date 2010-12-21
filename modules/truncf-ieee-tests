@@ -1,0 +1,15 @@
+Files:
+tests/test-truncf-ieee.c
+tests/minus-zero.h
+tests/macros.h
+
+Depends-on:
+float
+signbit
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-truncf-ieee
+check_PROGRAMS += test-truncf-ieee
+test_truncf_ieee_LDADD = $(LDADD) @TRUNCF_LIBM@
