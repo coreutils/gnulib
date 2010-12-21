@@ -1,5 +1,18 @@
 2010-12-21  Bruno Haible  <bruno@clisp.org>
 
+	New module 'ceilf-ieee'.
+	* modules/ceilf-ieee: New file.
+	* m4/ceilf.m4 (gl_FUNC_FLOORF): If gl_FUNC_CEILF_IEEE is also used,
+	test whether ceilf works according to ISO C 99 with IEC 60559.
+	* m4/ceilf-ieee.m4: New file.
+	* modules/ceilf-ieee-tests: New file.
+	* tests/test-ceilf-ieee.c: New file, based on tests/test-ceilf1.c.
+	* tests/test-ceilf1.c (main): Remove signbit tests.
+	* modules/ceilf-tests (Depends-on): Remove 'signbit'.
+	* doc/posix-functions/ceilf.texi: Mention the new module.
+
+2010-12-21  Bruno Haible  <bruno@clisp.org>
+
 	New module 'floorf-ieee'.
 	* modules/floorf-ieee: New file.
 	* m4/floorf.m4 (gl_FUNC_FLOORF): If gl_FUNC_FLOORF_IEEE is also used,

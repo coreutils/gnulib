@@ -46,9 +46,7 @@ main (int argc, char **argv _GL_UNUSED)
 
   /* Zero.  */
   ASSERT (my_ceilf (0.0f) == 0.0f);
-  ASSERT (!signbit (my_ceilf (0.0f)));
   ASSERT (my_ceilf (minus_zerof) == 0.0f);
-  ASSERT (!!signbit (minus_zerof) == !!signbit (my_ceilf (minus_zerof)));
   /* Positive numbers.  */
   ASSERT (my_ceilf (0.3f) == 1.0f);
   ASSERT (my_ceilf (0.7f) == 1.0f);
