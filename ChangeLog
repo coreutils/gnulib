@@ -1,3 +1,10 @@
+2010-12-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	ftoastr: fix comment again
+	* lib/ftoastr.h: Fix typo in comment.  Noted by Ben Pfaff in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2010-12/msg00149.html>.
+	Also, simplify example a bit by using flags = 0.
+
 2010-12-20  Bruno Haible  <bruno@clisp.org>
 
 	round*, trunc*: Update documentation regarding glibc.
