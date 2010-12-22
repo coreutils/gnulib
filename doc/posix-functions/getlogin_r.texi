@@ -18,6 +18,10 @@ HP-UX 11.
 @item
 This function has an incompatible declaration on some platforms:
 Solaris 11 2010-11 (when @code{_POSIX_PTHREAD_SEMANTICS} is not defined).
+@item
+This function returns a truncated result, instead of failing with error code
+@code{ERANGE}, when the buffer is not large enough, on some platforms:
+OSF/1 5.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:

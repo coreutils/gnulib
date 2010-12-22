@@ -1,6 +1,6 @@
 /* Provide a working getlogin_r for systems which lack it.
 
-   Copyright (C) 2005-2007, 2009-2010 Free Software Foundation, Inc.
+   Copyright (C) 2005-2007, 2010 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -39,6 +39,7 @@ extern char *getlogin (void);
 int
 getlogin_r (char *name, size_t size)
 {
+#undef getlogin_r
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
   /* Native Windows platform.  */
   DWORD sz;
@@ -59,6 +60,14 @@ getlogin_r (char *name, size_t size)
         return ENOENT;
     }
   return 0;
+#elif HAVE_GETLOGIN_R
+  /* Platform with a getlogin_r() function.  */
+  int ret = getlogin_r (name, size);
+
+  if (ret == 0 && memchr (name, '\0', size) == NULL)
+    /* name contains a truncated result.  */
+    return ERANGE;
+  return ret;
 #else
   /* Platform with a getlogin() function.  */
   char *n;

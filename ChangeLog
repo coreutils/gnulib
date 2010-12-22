@@ -1,5 +1,17 @@
 2010-12-22  Bruno Haible  <bruno@clisp.org>
 
+	getlogin_r: Work around portability problem on OSF/1.
+	* m4/getlogin_r.m4 (gl_FUNC_GETLOGIN_R): Detect the OSF/1 problem.
+	* lib/unistd.in.h (getlogin_r): Replace if REPLACE_GETLOGIN_R is set.
+	* lib/getlogin_r.c (getlogin_r): When getlogin_r exists, invoke it and
+	test for a truncated result.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize REPLACE_GETLOGIN_R.
+	* modules/unistd (Makefile.am): Substitute REPLACE_GETLOGIN_R.
+	* modules/getlogin_r (Depends-on): Add memchr.
+	* doc/posix-functions/getlogin_r.texi: Mention the OSF/1 problem.
+
+2010-12-22  Bruno Haible  <bruno@clisp.org>
+
 	ptsname: Avoid test failure on OSF/1 5.1.
 	* modules/ptsname-tests (Depends-on): Add 'same-inode'.
 	* tests/test-ptsname.c: Include <sys/stat.h>, same-inode.h.
