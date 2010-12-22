@@ -18,5 +18,5 @@ Portability problems not fixed by Gnulib:
 @item
 This function's fourth argument type is @code{size_t} instead of
 @code{socklen_t} on some platforms:
-OSF/1 5.1.
+OSF/1 5.1, Solaris 10.
 @end itemize
