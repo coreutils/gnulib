@@ -1,3 +1,10 @@
+2010-12-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	test-posixtm.c: add two tests
+	* tests/test-posixtm.c: Add two tests, to highlight the
+	bug in Solaris 10 (and earlier) localtime.  Gnulib doesn't work
+	around this bug; this is merely to document it.
+
 2010-12-22  Bruno Haible  <bruno@clisp.org>
 
 	getlogin_r: Work around portability problem on OSF/1.
