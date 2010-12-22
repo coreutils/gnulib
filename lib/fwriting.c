@@ -33,7 +33,7 @@ fwriting (FILE *fp)
   return (fp_->_flags & __SWR) != 0;
 #elif defined __EMX__               /* emx+gcc */
   return (fp->_flags & _IOWRT) != 0;
-#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */
+#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw, NonStop Kernel */
   return (fp->_flag & _IOWRT) != 0;
 #elif defined __UCLIBC__            /* uClibc */
   return (fp->__modeflags & __FLAG_WRITING) != 0;

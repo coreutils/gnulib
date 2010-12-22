@@ -75,6 +75,17 @@
 
 /* SystemV derived implementations.  */
 
+#ifdef __TANDEM                     /* NonStop Kernel */
+# ifndef _IOERR
+/* These values were determined by the program 'stdioext-flags' at
+   <http://lists.gnu.org/archive/html/bug-gnulib/2010-12/msg00165.html>.  */
+#  define _IOERR   0x40
+#  define _IOREAD  0x80
+#  define _IOWRT    0x4
+#  define _IORW   0x100
+# endif
+#endif
+
 #if defined _IOERR
 
 # if defined __sun && defined _LP64 /* Solaris/{SPARC,AMD64} 64-bit */

@@ -1,5 +1,24 @@
 2010-12-22  Bruno Haible  <bruno@clisp.org>
 
+	Port extended stdio modules to HP NonStop Kernel.
+	* lib/stdio-impl.h (_IOERR, _IOREAD, _IOWRT, _IORW) [__TANDEM]: New
+	macros.
+	* lib/fbufmode.c: Update comments.
+	* lib/fflush.c: Likewise.
+	* lib/fpurge.c: Likewise.
+	* lib/freadable.c: Likewise.
+	* lib/freadahead.c: Likewise.
+	* lib/freading.c: Likewise.
+	* lib/freadptr.c: Likewise.
+	* lib/freadseek.c: Likewise.
+	* lib/fseeko.c: Likewise.
+	* lib/fseterr.c: Likewise.
+	* lib/fwritable.c: Likewise.
+	* lib/fwriting.c: Likewise.
+	Reported by Joachim Schmitz <jojo@schmitz-digital.de>.
+
+2010-12-22  Bruno Haible  <bruno@clisp.org>
+
 	ttyname_r: Work around bug on OSF/1 5.1.
 	* doc/posix-functions/ttyname_r.texi: Mention the OSF/1 bug.
 	* m4/ttyname_r.m4 (gl_FUNC_TTYNAME_R): Detect the OSF/1 bug. Say "no"

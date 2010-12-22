@@ -69,7 +69,7 @@ fseeko (FILE *fp, off_t offset, int whence)
       && fp->_rcount == 0
       && fp->_wcount == 0
       && fp->_ungetc_count == 0)
-#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */
+#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw, NonStop Kernel */
   if (fp_->_ptr == fp_->_base
       && (fp_->_ptr == NULL || fp_->_cnt == 0))
 #elif defined __UCLIBC__            /* uClibc */
@@ -131,7 +131,7 @@ fseeko (FILE *fp, off_t offset, int whence)
       fp_->_flags &= ~__SEOF;
 #elif defined __EMX__               /* emx+gcc */
       fp->_flags &= ~_IOEOF;
-#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */
+#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw, NonStop Kernel */
       fp->_flag &= ~_IOEOF;
 #elif defined __MINT__              /* Atari FreeMiNT */
       fp->__offset = pos;
