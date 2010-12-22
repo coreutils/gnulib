@@ -61,4 +61,9 @@ MacOS X 10.3, FreeBSD 6.0, NetBSD 5.0.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This function mishandles large floating point precisions
+(for example, formatting 1.0 with @samp{"%.511f"})
+on some platforms:
+Solaris 10.
 @end itemize

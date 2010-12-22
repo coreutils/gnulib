@@ -1,5 +1,25 @@
 2010-12-22  Paul Eggert  <eggert@cs.ucla.edu>
 
+	doc: document Solaris printf bug with large float precisions
+	* doc/posix-functions/dprintf.texi (dprintf):
+	* doc/posix-functions/fprintf.texi (fprintf):
+	* doc/posix-functions/printf.texi (printf):
+	* doc/posix-functions/snprintf.texi (snprintf):
+	* doc/posix-functions/sprintf.texi (sprintf):
+	* doc/posix-functions/vdprintf.texi (vdprintf):
+	* doc/posix-functions/vfprintf.texi (vfprintf):
+	* doc/posix-functions/vprintf.texi (vprintf):
+	* doc/posix-functions/vsnprintf.texi (vsnprintf):
+	* doc/posix-functions/vsprintf.texi (vsprintf):
+	Mention that these functions mishandle large floating point
+	precisions on Solaris 10.  The same bug is also present in Solaris
+	8, and I assume earlier.  This causes "cd gnulib-tests; make
+	check" to fail on Solaris 8 (and I assume, later) when building
+	the latest coreutils, in test-vasprintf-posix's call to
+	my_asprintf (&result, "%.4000f %d", 1.0, 99).  I have not checked
+	the wide flavors (e.g., wprintf) so this patch just updates the
+	documentation for the narrow ones.
+
 	test-posixtm.c: add two tests
 	* tests/test-posixtm.c: Add two tests, to highlight the
 	bug in Solaris 10 (and earlier) localtime.  Gnulib doesn't work

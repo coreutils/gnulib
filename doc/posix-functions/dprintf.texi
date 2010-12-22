@@ -24,4 +24,9 @@ glibc-2.3.6.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This function mishandles large floating point precisions
+(for example, formatting 1.0 with @samp{"%.511f"})
+on some platforms:
+Solaris 10.
 @end itemize
