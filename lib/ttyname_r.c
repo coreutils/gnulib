@@ -32,8 +32,9 @@ ttyname_r (int fd, char *buf, size_t buflen)
   /* When ttyname_r exists, use it.  */
 #if HAVE_TTYNAME_R
   /* This code is multithread-safe.  */
-  /* On Solaris, ttyname_r always fails if buflen < 128.  So provide a buffer
-     that is large enough.  */
+  /* On Solaris, ttyname_r always fails if buflen < 128.  On OSF/1 5.1,
+     ttyname_r ignores the buffer size and assumes the buffer is large enough.
+     So provide a buffer that is large enough.  */
   char largerbuf[512];
 # if HAVE_POSIXDECL_TTYNAME_R
   int err =

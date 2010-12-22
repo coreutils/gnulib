@@ -1,5 +1,14 @@
 2010-12-22  Bruno Haible  <bruno@clisp.org>
 
+	ttyname_r: Work around bug on OSF/1 5.1.
+	* doc/posix-functions/ttyname_r.texi: Mention the OSF/1 bug.
+	* m4/ttyname_r.m4 (gl_FUNC_TTYNAME_R): Detect the OSF/1 bug. Say "no"
+	instead of "guessing no" when the OSF/1 bug or the Solaris bug is
+	present.
+	* lib/ttyname_r.c (ttyname_r): Update comments.
+
+2010-12-22  Bruno Haible  <bruno@clisp.org>
+
 	round: Implement result sign according to IEEE 754.
 	* lib/round.c (MIN, MINUS_ZERO): New macros.
 	(FLOOR_FREE_ROUND): Return -0.0 for -0.5 < x < 0.
