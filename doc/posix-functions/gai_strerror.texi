@@ -17,5 +17,5 @@ Portability problems not fixed by Gnulib:
 @itemize
 This function's return type is @code{char *} instead of @code{const char *}
 on some platforms:
-OSF/1 5.1, Solaris 9.
+AIX 7.1, HP-UX 11, OSF/1 5.1, Solaris 9.
 @end itemize

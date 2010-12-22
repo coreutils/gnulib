@@ -1,3 +1,9 @@
+2010-12-22  Bruno Haible  <bruno@clisp.org>
+
+	getaddrinfo: Update doc.
+	* doc/posix-functions/gai_strerror.texi: Return type is also different
+	on AIX and HP-UX.
+
 2010-12-22  Paul Eggert  <eggert@cs.ucla.edu>
 
 	getaddrinfo, inet_ntop: Update doc for Solaris.
