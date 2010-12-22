@@ -1,5 +1,13 @@
 2010-12-22  Bruno Haible  <bruno@clisp.org>
 
+	ptsname: Avoid test failure on OSF/1 5.1.
+	* modules/ptsname-tests (Depends-on): Add 'same-inode'.
+	* tests/test-ptsname.c: Include <sys/stat.h>, same-inode.h.
+	(same_slave): New function.
+	(main): Use it to compare ptsname's result with the expected file name.
+
+2010-12-22  Bruno Haible  <bruno@clisp.org>
+
 	Port extended stdio modules to HP NonStop Kernel.
 	* lib/stdio-impl.h (_IOERR, _IOREAD, _IOWRT, _IORW) [__TANDEM]: New
 	macros.
