@@ -1,5 +1,12 @@
 2010-12-22  Bruno Haible  <bruno@clisp.org>
 
+	round: Implement result sign according to IEEE 754.
+	* lib/round.c (MIN, MINUS_ZERO): New macros.
+	(FUNC): Return -0.0 for -0.5 < x < 0.
+	* tests/test-roundf-ieee.c (main): Test also values between -1 and 1.
+	* tests/test-round-ieee.c (main): Likewise.
+	* tests/test-roundl-ieee.c (main): Likewise.
+
 	trunc: Implement result sign according to IEEE 754.
 	* lib/trunc.c (MIN, MINUS_ZERO): New macros.
 	(FUNC): Return +0.0 for 0 < x < 1 and -0.0 for -1 < x < 0.
