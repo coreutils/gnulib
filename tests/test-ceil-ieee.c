@@ -24,9 +24,20 @@
 int
 main ()
 {
+  /* See IEEE 754, section 6.3:
+       "the sign of the result of the round floating-point number to
+        integral value operation is the sign of the operand. These rules
+        shall apply even when operands or results are zero or infinite."  */
+
   /* Zero.  */
   ASSERT (!signbit (ceil (0.0)));
   ASSERT (!!signbit (ceil (minus_zerod)) == !!signbit (minus_zerod));
+  /* Positive numbers.  */
+  ASSERT (!signbit (ceil (0.3)));
+  ASSERT (!signbit (ceil (0.7)));
+  /* Negative numbers.  */
+  ASSERT (!!signbit (ceil (-0.3)) == !!signbit (minus_zerod));
+  ASSERT (!!signbit (ceil (-0.7)) == !!signbit (minus_zerod));
 
   return 0;
 }
