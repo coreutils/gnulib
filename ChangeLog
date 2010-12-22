@@ -1,5 +1,15 @@
 2010-12-22  Bruno Haible  <bruno@clisp.org>
 
+	floor: Implement result sign according to IEEE 754.
+	* lib/floor.c (FUNC): Return +0.0 for 0 < x < 1.
+	* tests/test-floor2.c (floor_reference): Keep in sync with lib/floor.c.
+	* tests/test-floorf2.c (floorf_reference): Likewise.
+	* tests/test-floorf-ieee.c (main): Test also values between -1 and 1.
+	* tests/test-floor-ieee.c (main): Likewise.
+	* tests/test-floorl-ieee.c (main): Likewise.
+
+2010-12-22  Bruno Haible  <bruno@clisp.org>
+
 	getaddrinfo: Update doc.
 	* doc/posix-functions/gai_strerror.texi: Return type is also different
 	on AIX and HP-UX.
