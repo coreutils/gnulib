@@ -1,5 +1,18 @@
 2010-12-22  Bruno Haible  <bruno@clisp.org>
 
+	trunc: Implement result sign according to IEEE 754.
+	* lib/trunc.c (MIN, MINUS_ZERO): New macros.
+	(FUNC): Return +0.0 for 0 < x < 1 and -0.0 for -1 < x < 0.
+	* tests/test-trunc2.c: Include minus-zero.h.
+	(MINUS_ZERO): New macro.
+	(trunc_reference): Keep in sync with lib/trunc.c.
+	* tests/test-truncf2.c: Include minus-zero.h.
+	(MINUS_ZERO): New macro.
+	(truncf_reference): Keep in sync with lib/trunc.c.
+	* tests/test-truncf-ieee.c (main): Test also values between -1 and 1.
+	* tests/test-trunc-ieee.c (main): Likewise.
+	* tests/test-truncl-ieee.c (main): Likewise.
+
 	ceil: Implement result sign according to IEEE 754.
 	* lib/ceil.c (MIN, MINUS_ZERO): New macros.
 	(FUNC): Return -0.0 for -1 < x < 0.
