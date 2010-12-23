@@ -1,3 +1,8 @@
+2010-12-23  Eric Blake  <eblake@redhat.com>
+
+	sigpipe: relax to LGPLv2+, since it did not have any LGPLv3+ parts
+	* modules/sigpipe (License): Relax license.
+
 2010-12-22  Paul Eggert  <eggert@cs.ucla.edu>
 
 	doc: document Solaris printf bug with large float precisions
