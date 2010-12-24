@@ -1,3 +1,16 @@
+2010-12-23  Paul Eggert  <eggert@cs.ucla.edu>
+
+	vsnprintf: make more consistent with snprintf; doc fixes
+
+	* doc/posix-functions/snprintf.texi (snprintf): The workaround for
+	the byte count return problem was promoted from the snprintf-posix
+	to the snprintf module.
+	* doc/posix-functions/vsnprintf.texi (vsnprintf): Likewise.
+	* m4/vsnprintf.m4 (gl_FUNC_VSNPRINTF): Also check
+	gl_SNPRINTF_RETVAL_C99, for consistency with gl_FUNC_SNPRINTF.
+	* tests/test-snprintf.c (main): Check the byte count returned.
+	* tests/test-vsnprintf.c (main): Likewise.
+
 2010-12-23  Eric Blake  <eblake@redhat.com>
 
 	sigpipe: relax to LGPLv2+, since it did not have any LGPLv3+ parts

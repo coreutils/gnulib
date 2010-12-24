@@ -15,6 +15,9 @@ IRIX 5.3, OSF/1 4.0, Solaris 2.5.1.
 This function overwrites memory even when a size argument of 1 is passed on some
 platforms:
 Linux libc5.
+@item
+This function does not return a byte count as specified in C99 on some platforms:
+HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 9, mingw.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{vsnprintf-posix}:
@@ -71,9 +74,6 @@ MacOS X 10.3, FreeBSD 6.0, NetBSD 5.0.
 @item
 This function does not truncate the result as specified in C99 on some platforms:
 mingw.
-@item
-This function does not return a byte count as specified in C99 on some platforms:
-HP-UX 11, IRIX 6.5, OSF/1 5.1, mingw.
 @item
 This function does not fully support the @samp{n} directive on some platforms:
 HP-UX 11, mingw.
