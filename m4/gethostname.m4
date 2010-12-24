@@ -1,5 +1,5 @@
-# gethostname.m4 serial 9
-dnl Copyright (C) 2002, 2008, 2009, 2010 Free Software Foundation, Inc.
+# gethostname.m4 serial 10
+dnl Copyright (C) 2002, 2008-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -83,7 +83,11 @@ lucky
 #if HAVE_NETDB_H
 # include <netdb.h>
 #endif
-])
+],
+          [dnl The system does not define MAXHOSTNAMELEN in any of the common
+           dnl headers. Use a safe fallback.
+           gl_cv_decl_HOST_NAME_MAX=256
+          ])
       fi
     fi
   ])

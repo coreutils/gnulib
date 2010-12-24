@@ -1,5 +1,13 @@
 2010-12-24  Bruno Haible  <bruno@clisp.org>
 
+	gethostname: Provide a fallback for HOST_NAME_MAX.
+	* m4/gethostname.m4 (gl_FUNC_GETHOSTNAME): When neither HOST_NAME_MAX
+	nor MAXHOSTNAMELEN is found in the usual system headers, use 256
+	instead.
+	Reported by Joachim Schmitz <jojo@schmitz-digital.de>.
+
+2010-12-24  Bruno Haible  <bruno@clisp.org>
+
 	sigaction tests: Allow missing SA_RESETHAND and SA_RESTART.
 	* tests/test-sigaction.c (SA_RESETHAND): Fall back to 0.
 	(SA_RESTART): Likewise.
