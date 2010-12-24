@@ -137,9 +137,10 @@ typedef unsigned int gl_uint32_t;
 /* If the system defines INT64_MAX, assume int64_t works.  That way,
    if the underlying platform defines int64_t to be a 64-bit long long
    int, the code below won't mistakenly define it to be a 64-bit long
-   int, which would mess up C++ name mangling.  */
+   int, which would mess up C++ name mangling.  We must use #ifdef
+   rather than #if, to avoid an error with HP-UX 10.20 cc.  */
 
-#if INT64_MAX
+#ifdef INT64_MAX
 # define GL_INT64_T
 #else
 /* Do not undefine int64_t if gnulib is not being used with 64-bit
@@ -162,7 +163,7 @@ typedef long long int gl_int64_t;
 # endif
 #endif
 
-#if UINT64_MAX
+#ifdef UINT64_MAX
 # define GL_UINT64_T
 #else
 # if ULONG_MAX >> 31 >> 31 >> 1 == 1

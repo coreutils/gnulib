@@ -144,7 +144,7 @@ check (double x)
 int
 main ()
 {
-#if UINT64_MAX
+#ifdef UINT64_MAX
   unsigned int highbits;
   unsigned int lowbits;
   int error = 0;

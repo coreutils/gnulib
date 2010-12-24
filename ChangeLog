@@ -1,5 +1,11 @@
 2010-12-24  Eric Blake  <eblake@redhat.com>
 
+	stdint: avoid HP-UX 10.20 preprocessor bug
+	* lib/stdint.in.h (INT64_MAX, UINT64_MAX): Check via #ifdef rather
+	than #if.
+	* tests/test-floor2.c (main): Likewise.
+	Reported by Peter O'Gorman.
+
 	pipe: make obsoletion transition easier
 	* lib/pipe.h: Restore file as thin shim around "spawn-pipe.h".
 	* modules/pipe (Files): Include revived file.
