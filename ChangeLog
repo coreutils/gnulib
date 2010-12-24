@@ -1,5 +1,14 @@
 2010-12-24  Bruno Haible  <bruno@clisp.org>
 
+	sys_select: Ensure all necessary types on NonStop Kernel.
+	* lib/sys_select.in.h: If the system does not have <sys/select.h>,
+	include <sys/time.h>.
+	* doc/posix-headers/sys_select.texi: Mention that it's missing on
+	NonStop Kernel.
+	Reported by Joachim Schmitz <jojo@schmitz-digital.de>.
+
+2010-12-24  Bruno Haible  <bruno@clisp.org>
+
 	sys_select: Remove unneeded include.
 	* lib/sys_select.in.h: Don't include <sys/socket.h> on platforms that
 	have <sys/select.h>.
