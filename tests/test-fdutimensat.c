@@ -48,12 +48,17 @@ static int
 do_fdutimens (char const *name, struct timespec const times[2])
 {
   int result;
+  int nofollow_result;
+  int nofollow_errno;
   int fd = openat (dfd, name, O_WRONLY);
   if (fd < 0)
     fd = openat (dfd, name, O_RDONLY);
   errno = 0;
+  nofollow_result = fdutimensat (fd, dfd, name, times, AT_SYMLINK_NOFOLLOW);
+  nofollow_errno = errno;
   result = fdutimensat (fd, dfd, name, times, 0);
-  ASSERT (fdutimensat (fd, dfd, name, times, AT_SYMLINK_NOFOLLOW) == result);
+  ASSERT (result == nofollow_result
+          || (nofollow_result == -1 && nofollow_errno == ENOSYS));
   if (0 <= fd)
     {
       int saved_errno = errno;

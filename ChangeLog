@@ -1,5 +1,12 @@
 2010-12-23  Paul Eggert  <eggert@cs.ucla.edu>
 
+	tests: port test-fdutimensat.c to Solaris 8
+	* tests/test-fdutimensat.c (do_fdutimens): Don't assume
+	fdutimensat works with a nonnegative fd and AT_SYMLINK_NOFOLLOW.
+	On Solaris 8, it fails with errno == ENOSYS, because there is no
+	futimens (so it can't use the fd), and there is no lutimens (so it
+	can't implement AT_SYMLINK_NOFOLLOW on symlinks).
+
 	vsnprintf: make more consistent with snprintf; doc fixes
 
 	* doc/posix-functions/snprintf.texi (snprintf): The workaround for
