@@ -1,5 +1,12 @@
 2010-12-24  Bruno Haible  <bruno@clisp.org>
 
+	sys_socket: Hide mismatch of declarations on NonStop Kernel.
+	* lib/sys_socket.in.h (connect, bind, sendto, setsockopt): Use
+	_GL_CXXALIAS_SYS_CAST instead of _GL_CXXALIAS_SYS.
+	Reported by Joachim Schmitz <jojo@schmitz-digital.de>.
+
+2010-12-24  Bruno Haible  <bruno@clisp.org>
+
 	gethostname: Ensure declaration on NonStop Kernel.
 	* lib/unistd.in.h: Include <netdb.h> also on NonStop Kernel systems.
 	Reported by Joachim Schmitz <jojo@schmitz-digital.de>.

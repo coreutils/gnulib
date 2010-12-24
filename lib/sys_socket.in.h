@@ -245,8 +245,11 @@ _GL_FUNCDECL_RPL (connect, int,
 _GL_CXXALIAS_RPL (connect, int,
                   (int fd, const struct sockaddr *addr, socklen_t addrlen));
 # else
-_GL_CXXALIAS_SYS (connect, int,
-                  (int fd, const struct sockaddr *addr, socklen_t addrlen));
+/* Need to cast, because on NonStop Kernel, the third parameter is
+                                                     size_t addrlen.  */
+_GL_CXXALIAS_SYS_CAST (connect, int,
+                       (int fd,
+                        const struct sockaddr *addr, socklen_t addrlen));
 # endif
 _GL_CXXALIASWARN (connect);
 #elif @HAVE_WINSOCK2_H@
@@ -300,8 +303,11 @@ _GL_FUNCDECL_RPL (bind, int,
 _GL_CXXALIAS_RPL (bind, int,
                   (int fd, const struct sockaddr *addr, socklen_t addrlen));
 # else
-_GL_CXXALIAS_SYS (bind, int,
-                  (int fd, const struct sockaddr *addr, socklen_t addrlen));
+/* Need to cast, because on NonStop Kernel, the third parameter is
+                                                     size_t addrlen.  */
+_GL_CXXALIAS_SYS_CAST (bind, int,
+                       (int fd,
+                        const struct sockaddr *addr, socklen_t addrlen));
 # endif
 _GL_CXXALIASWARN (bind);
 #elif @HAVE_WINSOCK2_H@
@@ -522,9 +528,11 @@ _GL_CXXALIAS_RPL (sendto, ssize_t,
                   (int fd, const void *buf, size_t len, int flags,
                    const struct sockaddr *to, socklen_t tolen));
 # else
-_GL_CXXALIAS_SYS (sendto, ssize_t,
-                  (int fd, const void *buf, size_t len, int flags,
-                   const struct sockaddr *to, socklen_t tolen));
+/* Need to cast, because on NonStop Kernel, the sixth parameter is
+                                                   size_t tolen.  */
+_GL_CXXALIAS_SYS_CAST (sendto, ssize_t,
+                       (int fd, const void *buf, size_t len, int flags,
+                        const struct sockaddr *to, socklen_t tolen));
 # endif
 _GL_CXXALIASWARN (sendto);
 #elif @HAVE_WINSOCK2_H@
@@ -550,8 +558,11 @@ _GL_FUNCDECL_RPL (setsockopt, int, (int fd, int level, int optname,
 _GL_CXXALIAS_RPL (setsockopt, int, (int fd, int level, int optname,
                                     const void * optval, socklen_t optlen));
 # else
-_GL_CXXALIAS_SYS (setsockopt, int, (int fd, int level, int optname,
-                                    const void * optval, socklen_t optlen));
+/* Need to cast, because on NonStop Kernel, the fifth parameter is
+                                             size_t optlen.  */
+_GL_CXXALIAS_SYS_CAST (setsockopt, int,
+                       (int fd, int level, int optname,
+                        const void * optval, socklen_t optlen));
 # endif
 _GL_CXXALIASWARN (setsockopt);
 #elif @HAVE_WINSOCK2_H@
