@@ -35,6 +35,9 @@ struct
 #endif
 } s;
 
+/* Check that NSIG is defined.  */
+int nsig = NSIG;
+
 int
 main (void)
 {

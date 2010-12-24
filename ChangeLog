@@ -1,5 +1,12 @@
 2010-12-24  Bruno Haible  <bruno@clisp.org>
 
+	signal: Define NSIG.
+	* lib/signal.in.h (NSIG): Define to 32 on NonStop Kernel.
+	* tests/test-signal.c (nsig): New variable.
+	Reported by Joachim Schmitz <jojo@schmitz-digital.de>.
+
+2010-12-24  Bruno Haible  <bruno@clisp.org>
+
 	rename, renameat: Avoid test failures on OSF/1 5.1.
 	* tests/test-rename.h (test_rename): Allow EEXIST and ENOTDIR as
 	alternative error codes.
