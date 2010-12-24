@@ -65,8 +65,11 @@
 #ifndef _GL_SYS_SELECT_H
 #define _GL_SYS_SELECT_H
 
-#if !@HAVE_SYS_SELECT_H@ || @REPLACE_SELECT@
+#if !@HAVE_SYS_SELECT_H@
 /* A platform that lacks <sys/select.h>.  */
+/* On native Windows platforms:
+   Get the 'fd_set' type.  Also, gnulib's <sys/socket.h> redefines select
+   so as to hide the declaration from <winsock2.h>.  */
 # include <sys/socket.h>
 #endif
 

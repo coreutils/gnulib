@@ -1,5 +1,11 @@
 2010-12-24  Bruno Haible  <bruno@clisp.org>
 
+	sys_select: Remove unneeded include.
+	* lib/sys_select.in.h: Don't include <sys/socket.h> on platforms that
+	have <sys/select.h>.
+
+2010-12-24  Bruno Haible  <bruno@clisp.org>
+
 	gethostname: Provide a fallback for HOST_NAME_MAX.
 	* m4/gethostname.m4 (gl_FUNC_GETHOSTNAME): When neither HOST_NAME_MAX
 	nor MAXHOSTNAMELEN is found in the usual system headers, use 256
