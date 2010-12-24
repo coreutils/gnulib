@@ -34,6 +34,12 @@ SIGNATURE_CHECK (sigaction, int, (int, struct sigaction const *,
 #ifndef SA_ONSTACK
 # define SA_ONSTACK 0
 #endif
+#ifndef SA_RESETHAND
+# define SA_RESETHAND 0
+#endif
+#ifndef SA_RESTART
+# define SA_RESTART 0
+#endif
 #ifndef SA_SIGINFO
 # define SA_SIGINFO 0
 #endif

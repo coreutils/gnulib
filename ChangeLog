@@ -1,5 +1,12 @@
 2010-12-24  Bruno Haible  <bruno@clisp.org>
 
+	sigaction tests: Allow missing SA_RESETHAND and SA_RESTART.
+	* tests/test-sigaction.c (SA_RESETHAND): Fall back to 0.
+	(SA_RESTART): Likewise.
+	Reported by Joachim Schmitz <jojo@schmitz-digital.de>.
+
+2010-12-24  Bruno Haible  <bruno@clisp.org>
+
 	signal: Define NSIG.
 	* lib/signal.in.h (NSIG): Define to 32 on NonStop Kernel.
 	* tests/test-signal.c (nsig): New variable.
