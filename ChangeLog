@@ -1,3 +1,25 @@
+2010-12-24  Bruno Haible  <bruno@clisp.org>
+
+	*printf: Detect large precisions bug on Solaris 10/SPARC.
+	* m4/printf.m4 (gl_PRINTF_PRECISION): Add one more test code, provided
+	by Paul Eggert.
+	* tests/test-snprintf-posix.h (test_function): Add this test code here
+	too.
+	* tests/test-sprintf-posix.h (test_function): Likewise.
+	* tests/test-vasnprintf-posix.c (test_function): Likewise.
+	* tests/test-vasprintf-posix.c (test_function): Likewise.
+	* doc/posix-functions/fprintf.texi: Mention Solaris 10 bug as worked
+	around by gnulib.
+	* doc/posix-functions/printf.texi: Likewise.
+	* doc/posix-functions/snprintf.texi: Likewise.
+	* doc/posix-functions/sprintf.texi: Likewise.
+	* doc/posix-functions/vfprintf.texi: Likewise.
+	* doc/posix-functions/vprintf.texi: Likewise.
+	* doc/posix-functions/vsnprintf.texi: Likewise.
+	* doc/posix-functions/vsprintf.texi: Likewise.
+	* doc/posix-functions/dprintf.texi: Undo last commit.
+	* doc/posix-functions/vdprintf.texi: Likewise.
+
 2010-12-23  Paul Eggert  <eggert@cs.ucla.edu>
 
 	tests: port test-fdutimensat.c to Solaris 8
