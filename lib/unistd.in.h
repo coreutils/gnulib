@@ -88,9 +88,11 @@
 # include <io.h>
 #endif
 
-/* AIX and OSF/1 5.1 declare getdomainname in <netdb.h>, not in <unistd.h>.  */
+/* AIX and OSF/1 5.1 declare getdomainname in <netdb.h>, not in <unistd.h>.
+   NonStop Kernel declares gethostname in <netdb.h>, not in <unistd.h>.  */
 /* But avoid namespace pollution on glibc systems.  */
-#if @GNULIB_GETDOMAINNAME@ && (defined _AIX || defined __osf__) \
+#if ((@GNULIB_GETDOMAINNAME@ && (defined _AIX || defined __osf__)) \
+     || (@GNULIB_GETHOSTNAME@ && defined __TANDEM)) \
     && !defined __GLIBC__
 # include <netdb.h>
 #endif
