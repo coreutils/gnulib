@@ -339,7 +339,7 @@ test_rename (int (*func) (char const *, char const *), bool print)
       {
         errno = 0;
         ASSERT (func (BASE "dir2/.", BASE "dir") == -1);
-        ASSERT (errno == EINVAL || errno == EBUSY);
+        ASSERT (errno == EINVAL || errno == EBUSY || errno == EEXIST);
       }
       ASSERT (rmdir (BASE "dir") == 0);
       /* Files present here:
@@ -366,7 +366,7 @@ test_rename (int (*func) (char const *, char const *), bool print)
       {
         errno = 0;
         ASSERT (func (BASE "dir2/.//", BASE "dir") == -1);
-        ASSERT (errno == EINVAL || errno == EBUSY);
+        ASSERT (errno == EINVAL || errno == EBUSY || errno == EEXIST);
       }
       ASSERT (rmdir (BASE "dir2") == 0);
       /* Files present here:
@@ -914,7 +914,7 @@ test_rename (int (*func) (char const *, char const *), bool print)
         if (result) /* GNU/Linux rejects attempts to use link2/.  */
           {
             ASSERT (result == -1);
-            ASSERT (errno == ENOTDIR);
+            ASSERT (errno == ENOTDIR || errno == EISDIR);
           }
         memset (&st, 0, sizeof st);
         ASSERT (lstat (BASE "dir", &st) == 0);

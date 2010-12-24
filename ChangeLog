@@ -1,5 +1,12 @@
 2010-12-24  Bruno Haible  <bruno@clisp.org>
 
+	rename, renameat: Avoid test failures on OSF/1 5.1.
+	* tests/test-rename.h (test_rename): Allow EEXIST and ENOTDIR as
+	alternative error codes.
+	* tests/test-renameat.c (main): Likewise.
+
+2010-12-24  Bruno Haible  <bruno@clisp.org>
+
 	*printf: Detect large precisions bug on Solaris 10/SPARC.
 	* m4/printf.m4 (gl_PRINTF_PRECISION): Add one more test code, provided
 	by Paul Eggert.
