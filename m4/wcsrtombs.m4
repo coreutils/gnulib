@@ -1,4 +1,4 @@
-# wcsrtombs.m4 serial 6
+# wcsrtombs.m4 serial 7
 dnl Copyright (C) 2008-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -72,6 +72,13 @@ changequote([,])dnl
           [AC_LANG_SOURCE([[
 #include <locale.h>
 #include <stdlib.h>
+/* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
+   <wchar.h>.
+   BSD/OS 4.0.1 has a bug: <stddef.h>, <stdio.h> and <time.h> must be
+   included before <wchar.h>.  */
+#include <stddef.h>
+#include <stdio.h>
+#include <time.h>
 #include <wchar.h>
 int main ()
 {
@@ -127,6 +134,13 @@ changequote([,])dnl
           [AC_LANG_SOURCE([[
 #include <locale.h>
 #include <stdlib.h>
+/* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
+   <wchar.h>.
+   BSD/OS 4.0.1 has a bug: <stddef.h>, <stdio.h> and <time.h> must be
+   included before <wchar.h>.  */
+#include <stddef.h>
+#include <stdio.h>
+#include <time.h>
 #include <wchar.h>
 int main ()
 {

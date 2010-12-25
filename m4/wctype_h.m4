@@ -1,4 +1,4 @@
-# wctype_h.m4 serial 9
+# wctype_h.m4 serial 10
 
 dnl A placeholder for ISO C99 <wctype.h>, for platforms that lack it.
 
@@ -53,13 +53,19 @@ AC_DEFUN([gl_WCTYPE_H],
       dnl The other functions are likely broken in the same way.
       AC_CACHE_CHECK([whether iswcntrl works], [gl_cv_func_iswcntrl_works],
         [
-          AC_RUN_IFELSE([AC_LANG_SOURCE([[
-                            #include <stddef.h>
-                            #include <stdio.h>
-                            #include <time.h>
-                            #include <wchar.h>
-                            #include <wctype.h>
-                            int main () { return iswprint ('x') == 0; }]])],
+          AC_RUN_IFELSE(
+            [AC_LANG_SOURCE([[
+               /* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be
+                  included before <wchar.h>.
+                  BSD/OS 4.0.1 has a bug: <stddef.h>, <stdio.h> and <time.h>
+                  must be included before <wchar.h>.  */
+               #include <stddef.h>
+               #include <stdio.h>
+               #include <time.h>
+               #include <wchar.h>
+               #include <wctype.h>
+               int main () { return iswprint ('x') == 0; }
+            ]])],
             [gl_cv_func_iswcntrl_works=yes], [gl_cv_func_iswcntrl_works=no],
             [AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <stdlib.h>
                           #if __GNU_LIBRARY__ == 1

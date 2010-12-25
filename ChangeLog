@@ -1,5 +1,25 @@
 2010-12-25  Bruno Haible  <bruno@clisp.org>
 
+	Ensure all prerequisites of <wchar.h> are included.
+	* m4/btowc.m4 (gl_FUNC_BTOWC): Include <stddef.h>, <stdio.h>, <time.h>
+	before <wchar.h>.
+	* m4/mbrlen.m4 (gl_MBRLEN_INCOMPLETE_STATE, gl_MBRLEN_RETVAL,
+	gl_MBRLEN_NUL_RETVAL): Likewise.
+	* m4/mbrtowc.m4 (gl_MBRTOWC_INCOMPLETE_STATE, gl_MBRTOWC_SANITYCHECK,
+	gl_MBRTOWC_NULL_ARG, gl_MBRTOWC_RETVAL, gl_MBRTOWC_NUL_RETVAL,
+	AC_FUNC_MBRTOWC): Likewise.
+	* m4/mbsrtowcs.m4 (gl_MBSRTOWCS_WORKS): Likewise.
+	* m4/mbstate_t.m4 (AC_TYPE_MBSTATE_T): Likewise.
+	* m4/wcrtomb.m4 (gl_FUNC_WCRTOMB): Likewise.
+	* m4/wcsrtombs.m4 (gl_WCSRTOMBS_TERMINATION, gl_WCSRTOMBS_NULL):
+	Likewise.
+	* m4/wctob.m4 (gl_FUNC_WCTOB): Likewise.
+	* m4/wchar_h.m4 (gl_WCHAR_H_INLINE_OK): Likewise.
+	(gl_WCHAR_H): Improve comments.
+	* m4/wctype_h.m4 (gl_WCTYPE_H): Likewise.
+
+2010-12-25  Bruno Haible  <bruno@clisp.org>
+
 	strtok_r: Fix C syntax error in autoconf macro.
 	* m4/strtok_r.m4 (gl_FUNC_STRTOK_R): Don't use UTF-8 encoded U+00A0
 	characters in test program.

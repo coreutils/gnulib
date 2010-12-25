@@ -7,7 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 dnl Written by Eric Blake.
 
-# wchar_h.m4 serial 35
+# wchar_h.m4 serial 36
 
 AC_DEFUN([gl_WCHAR_H],
 [
@@ -39,7 +39,10 @@ AC_DEFUN([gl_WCHAR_H],
   dnl Check for declarations of anything we want to poison if the
   dnl corresponding gnulib module is not in use.
   gl_WARN_ON_USE_PREPARE([[
-/* Some systems require additional headers.  */
+/* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
+   <wchar.h>.
+   BSD/OS 4.0.1 has a bug: <stddef.h>, <stdio.h> and <time.h> must be
+   included before <wchar.h>.  */
 #if !(defined __GLIBC__ && !defined __UCLIBC__)
 # include <stddef.h>
 # include <stdio.h>
@@ -63,6 +66,13 @@ AC_DEFUN([gl_WCHAR_H_INLINE_OK],
     [gl_cv_header_wchar_h_correct_inline=yes
      AC_LANG_CONFTEST([
        AC_LANG_SOURCE([[#define wcstod renamed_wcstod
+/* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
+   <wchar.h>.
+   BSD/OS 4.0.1 has a bug: <stddef.h>, <stdio.h> and <time.h> must be
+   included before <wchar.h>.  */
+#include <stddef.h>
+#include <stdio.h>
+#include <time.h>
 #include <wchar.h>
 extern int zero (void);
 int main () { return zero(); }
@@ -71,6 +81,13 @@ int main () { return zero(); }
        mv conftest.$ac_objext conftest1.$ac_objext
        AC_LANG_CONFTEST([
          AC_LANG_SOURCE([[#define wcstod renamed_wcstod
+/* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
+   <wchar.h>.
+   BSD/OS 4.0.1 has a bug: <stddef.h>, <stdio.h> and <time.h> must be
+   included before <wchar.h>.  */
+#include <stddef.h>
+#include <stdio.h>
+#include <time.h>
 #include <wchar.h>
 int zero (void) { return 0; }
 ]])])
