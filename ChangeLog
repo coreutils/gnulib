@@ -1,3 +1,9 @@
+2010-12-24  Bruno Haible  <bruno@clisp.org>
+
+	select tests: Avoid failures on OSF/1 5.1.
+	* tests/test-select.c (test_accept_first, test_socket_pair): Ignore
+	failure of closing the last socket; it may fail with ECONNRESET.
+
 2010-12-24  Eric Blake  <eblake@redhat.com>
 
 	stdint: avoid HP-UX 10.20 preprocessor bug

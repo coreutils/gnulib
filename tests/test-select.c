@@ -310,7 +310,7 @@ test_accept_first (void)
         failed ("cannot read data left in the socket by closed process");
       ASSERT (read (c, buf, 3) == 3);
       ASSERT (write (c, "foo", 3) == 3);
-      ASSERT (close (c) == 0);
+      (void) close (c); /* may fail with errno = ECONNRESET */
     }
 #endif
 }
@@ -354,7 +354,7 @@ test_socket_pair (void)
   test_pair (c1, c2);
   ASSERT (close (c1) == 0);
   ASSERT (write (c2, "foo", 3) == 3);
-  ASSERT (close (c2) == 0);
+  (void) close (c2); /* may fail with errno = ECONNRESET */
 }
 
 
