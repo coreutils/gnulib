@@ -6,7 +6,7 @@ POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/funct
 
 Gnulib module: truncl or truncl-ieee
 
-Portability problems fixed by Gnulib:
+Portability problems fixed by either Gnulib module @code{truncl} or @code{truncl-ieee}:
 @itemize
 @item
 This function is missing on some platforms:
@@ -17,6 +17,14 @@ glibc 2.8.
 @item
 This function crashes on some platforms:
 OSF/1 4.0.
+@end itemize
+
+Portability problems fixed by Gnulib module @code{truncl-ieee}:
+@itemize
+@item
+This function returns a positive zero for an argument between -1 and 0
+on some platforms:
+OSF/1 5.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:
