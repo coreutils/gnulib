@@ -284,9 +284,9 @@ towupper
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define iswblank rpl_iswblank
 #  endif
-extern int rpl_iswblank (wint_t wc);
+_GL_FUNCDECL_RPL (iswblank, int, (wint_t wc));
 # else
-extern int iswblank (wint_t wc);
+_GL_FUNCDECL_SYS (iswblank, int, (wint_t wc));
 # endif
 
 #endif
