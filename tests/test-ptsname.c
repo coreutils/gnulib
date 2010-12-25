@@ -77,6 +77,30 @@ main (void)
     close (fd);
   }
 
+#if defined __sun
+  /* Solaris has BSD-style /dev/pty[p-r][0-9a-f] files, but the function
+     ptsname() does not work on them.  */
+  {
+    int fd;
+    char *result;
+
+    /* Open the controlling tty of the current process.  */
+    fd = open ("/dev/ptmx", O_RDWR | O_NOCTTY);
+    if (fd < 0)
+      {
+        fprintf (stderr, "Skipping test: cannot open pseudo-terminal\n");
+        return 77;
+      }
+
+    result = ptsname (fd);
+    ASSERT (result != NULL);
+    ASSERT (memcmp (result, "/dev/pts/", 9) == 0);
+
+    close (fd);
+  }
+
+#else
+
   /* Try various master names of MacOS X: /dev/pty[p-w][0-9a-f]  */
   {
     int char1;
@@ -134,6 +158,8 @@ main (void)
               }
           }
   }
+
+#endif
 
   return 0;
 }

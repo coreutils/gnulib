@@ -15,4 +15,7 @@ MacOS X 10.3, OpenBSD 3.8, mingw, BeOS.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+On Solaris 11 2010-11, this function fails on all BSD-style @file{/dev/pty*}
+device files.
 @end itemize
