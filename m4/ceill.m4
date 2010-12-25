@@ -1,4 +1,4 @@
-# ceill.m4 serial 7
+# ceill.m4 serial 8
 dnl Copyright (C) 2007, 2009-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -6,6 +6,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_CEILL],
 [
+  m4_divert_text([DEFAULTS], [gl_ceill_required=plain])
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   dnl Persuade glibc <math.h> to declare ceill().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
@@ -19,6 +20,40 @@ AC_DEFUN([gl_FUNC_CEILL],
       dnl libm.so, but not in the libm.so that the compiler uses.
       REPLACE_CEILL=1
     fi
+    m4_ifdef([gl_FUNC_CEILL_IEEE], [
+      if test $gl_ceill_required = ieee && test $REPLACE_CEILL = 0; then
+        AC_CACHE_CHECK([whether ceill works according to ISO C 99 with IEC 60559],
+          [gl_cv_func_ceill_ieee],
+          [
+            save_LIBS="$LIBS"
+            LIBS="$LIBS $CEILL_LIBM"
+            AC_RUN_IFELSE(
+              [AC_LANG_SOURCE([[
+#ifndef __NO_MATH_INLINES
+# define __NO_MATH_INLINES 1 /* for glibc */
+#endif
+#include <math.h>
+]gl_LONG_DOUBLE_MINUS_ZERO_CODE[
+]gl_LONG_DOUBLE_SIGNBIT_CODE[
+int main()
+{
+  /* Test whether ceill (-0.3L) is -0.0L.  */
+  if (signbitl (minus_zerol) && !signbitl (ceill (-0.3L)))
+    return 1;
+  return 0;
+}
+              ]])],
+              [gl_cv_func_ceill_ieee=yes],
+              [gl_cv_func_ceill_ieee=no],
+              [gl_cv_func_ceill_ieee="guessing no"])
+            LIBS="$save_LIBS"
+          ])
+        case "$gl_cv_func_ceill_ieee" in
+          *yes) ;;
+          *) REPLACE_CEILL=1 ;;
+        esac
+      fi
+    ])
   else
     HAVE_DECL_CEILL=0
   fi

@@ -1,5 +1,16 @@
 2010-12-25  Bruno Haible  <bruno@clisp.org>
 
+	ceill-ieee: Make it work on OSF/1 5.1 with cc.
+	* doc/posix-functions/ceill.texi: Mention the OSF/1 5.1 bug.
+	* m4/ceill.m4 (gl_FUNC_CEILL): If gl_FUNC_CEILL_IEEE is also used,
+	test whether ceill works according to ISO C 99 with IEC 60559.
+	* m4/ceill-ieee.m4: New file.
+	* modules/ceill-ieee (Files): Add it and m4/minus-zero.m4,
+	m4/signbit.m4.
+	(configure.ac): Invoke gl_FUNC_CEILL_IEEE.
+
+2010-12-25  Bruno Haible  <bruno@clisp.org>
+
 	Ensure all prerequisites of <wchar.h> are included.
 	* m4/btowc.m4 (gl_FUNC_BTOWC): Include <stddef.h>, <stdio.h>, <time.h>
 	before <wchar.h>.
