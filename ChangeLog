@@ -1,5 +1,9 @@
 2010-12-25  Paul Eggert  <eggert@cs.ucla.edu>
 
+	utimens: simplify the logic of the previous change
+	* m4/utimes.m4 (gl_FUNC_UTIMES): Simplify the logic a bit.
+	This should not affect whether the test succeeds or fails.
+
 	utimens: configure better on hosts with NFS clock skew
 	* m4/utimes.m4 (gl_FUNC_UTIMES): Don't assume that utimes (f, NULL)
 	uses the clock of the local host.  It might use the clock of the

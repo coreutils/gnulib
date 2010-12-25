@@ -96,13 +96,11 @@ main ()
           result |= 1;
         else
           {
-            int a_ok_POSIX = inorder (t0, st1.st_atime, t2);
             int m_ok_POSIX = inorder (t0, st1.st_mtime, t2);
-            int a_ok_NFS = inorder (st0.st_mtime, st1.st_atime, st2.st_mtime);
             int m_ok_NFS = inorder (st0.st_mtime, st1.st_mtime, st2.st_mtime);
-            if (! ((a_ok_POSIX || a_ok_NFS) && st1.st_atime == st1.st_mtime))
+            if (! (st1.st_atime == st1.st_mtime))
               result |= 16;
-            if (! (a_ok_POSIX ? m_ok_POSIX : m_ok_NFS))
+            if (! (m_ok_POSIX || m_ok_NFS))
               result |= 32;
           }
         if (close (fd) != 0)
