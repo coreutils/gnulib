@@ -15,5 +15,5 @@ if ANSICXX
 TESTS += test-fcntl-h-c++
 check_PROGRAMS += test-fcntl-h-c++
 test_fcntl_h_c___SOURCES = test-fcntl-h-c++.cc
-test_fcntl_h_c___LDADD = $(LDADD) $(LIBINTL) $(LIB_CLOCK_GETTIME) $(LIBSOCKET)
+test_fcntl_h_c___LDADD = $(LDADD) $(LIBINTL) $(LIB_CLOCK_GETTIME) $(LIB_EACCESS) $(LIBSOCKET)
 endif

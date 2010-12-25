@@ -15,5 +15,5 @@ if ANSICXX
 TESTS += test-wctype-c++
 check_PROGRAMS += test-wctype-c++
 test_wctype_c___SOURCES = test-wctype-c++.cc
-test_wctype_c___LDADD = $(LDADD) $(LIBINTL) $(LIB_NANOSLEEP)
+test_wctype_c___LDADD = $(LDADD) $(LIBINTL) $(LIB_NANOSLEEP) $(LIB_EACCESS)
 endif

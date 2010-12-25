@@ -1,5 +1,16 @@
 2010-12-25  Bruno Haible  <bruno@clisp.org>
 
+	Fix more C++ link errors on Solaris 8.
+	* modules/fcntl-h-c++-tests (test_fcntl_h_c___LDADD): Add
+	$(LIB_EACCESS).
+	* modules/stdio-c++-tests (test_stdio_c___LDADD): Likewise.
+	* modules/stdlib-c++-tests (test_stdlib_c___LDADD): Likewise.
+	* modules/sys_ioctl-c++-tests (test_sys_ioctl_c___LDADD): Likewise.
+	* modules/wchar-c++-tests (test_wchar_c___LDADD): Likewise.
+	* modules/wctype-c++-tests (test_wctype_c___LDADD): Likewise.
+
+2010-12-25  Bruno Haible  <bruno@clisp.org>
+
 	printf-posix: Fix link error when a non-GCC compiler is used.
 	* lib/stdio.in.h (printf): When not using GCC, override printf
 	correctly.
