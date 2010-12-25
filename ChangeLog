@@ -1,5 +1,12 @@
 2010-12-25  Bruno Haible  <bruno@clisp.org>
 
+	fcntl-h: Fix for use of C++ on glibc systems.
+	* lib/fcntl.in.h: Include <sys/stat.h> before include_next <fcntl.h>
+	also on glibc systems in C++ mode.
+	Reported by Gary V. Vaughan <gary@gnu.org>.
+
+2010-12-25  Bruno Haible  <bruno@clisp.org>
+
 	roundl-ieee: Make it work on OSF/1 5.1 with cc.
 	* modules/roundl-ieee (Depends-on): Add floorl-ieee, ceill-ieee.
 
