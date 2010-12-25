@@ -23,6 +23,8 @@
 
 #include <float.h>
 
+#undef MIN
+
 #ifdef USE_LONG_DOUBLE
 # define FUNC truncl
 # define DOUBLE long double

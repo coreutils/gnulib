@@ -20,8 +20,12 @@
 
 #include <config.h>
 
-#include <float.h>
+/* Specification.  */
 #include <math.h>
+
+#include <float.h>
+
+#undef MIN
 
 #ifdef USE_LONG_DOUBLE
 # define ROUND roundl

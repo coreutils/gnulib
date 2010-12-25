@@ -1,5 +1,13 @@
 2010-12-24  Bruno Haible  <bruno@clisp.org>
 
+	ceil, trunc, round: Fix gcc warnings.
+	* lib/ceil.c (MIN): Undefine before redefining.
+	* lib/trunc.c (MIN): Likewise.
+	* lib/round.c (MIN): Likewise.
+	Include <math.h> first.
+
+2010-12-24  Bruno Haible  <bruno@clisp.org>
+
 	select tests: Avoid failures on OSF/1 5.1.
 	* tests/test-select.c (test_accept_first, test_socket_pair): Ignore
 	failure of closing the last socket; it may fail with ECONNRESET.
