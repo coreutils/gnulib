@@ -1,3 +1,11 @@
+2010-12-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	utimens: configure better on hosts with NFS clock skew
+	* m4/utimes.m4 (gl_FUNC_UTIMES): Don't assume that utimes (f, NULL)
+	uses the clock of the local host.  It might use the clock of the
+	NFS server.  Reported for Linux 2.4.21 client by Bruno Haible in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2010-11/msg00113.html>.
+
 2010-12-25  Bruno Haible  <bruno@clisp.org>
 
 	ptsname test: Avoid failure on Solaris.
