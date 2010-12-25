@@ -1,5 +1,10 @@
 2010-12-25  Bruno Haible  <bruno@clisp.org>
 
+	roundl-ieee: Make it work on OSF/1 5.1 with cc.
+	* modules/roundl-ieee (Depends-on): Add floorl-ieee, ceill-ieee.
+
+2010-12-25  Bruno Haible  <bruno@clisp.org>
+
 	truncl-ieee: Make it work on OSF/1 5.1 with cc.
 	* doc/posix-functions/truncl.texi: Mention the OSF/1 5.1 bug.
 	* m4/truncl.m4 (gl_FUNC_TRUNCL): If gl_FUNC_TRUNCL_IEEE is also used,
