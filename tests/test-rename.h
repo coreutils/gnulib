@@ -56,11 +56,16 @@ assert_nonexistent (const char *filename)
   if (stat (filename, &st) == -1)
     ASSERT (errno == ENOENT);
   else
-    /* But after renaming a directory over an empty directory on an NFS-mounted
-       file system, on Linux 2.6.18, for a period of 30 seconds the old
-       directory name is "present" according to stat() but "nonexistent"
-       according to dentry_exists().  */
-    ASSERT (!dentry_exists (filename));
+    {
+      /* But after renaming a directory over an empty directory on an NFS-
+         mounted file system, on Linux 2.6.18, for a period of 30 seconds the
+         old directory name is "present" according to stat() but "nonexistent"
+         according to dentry_exists().  */
+      ASSERT (!dentry_exists (filename));
+      /* Remove the old directory name, so that subsequent mkdir calls
+         succeed.  */
+      (void) rmdir (filename);
+    }
 }
 
 static int

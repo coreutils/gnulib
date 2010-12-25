@@ -1,5 +1,11 @@
 2010-12-25  Bruno Haible  <bruno@clisp.org>
 
+	rename, renameat: Avoid test failures at NFS mounted locations.
+	* tests/test-rename.h (assert_nonexistent): Remove the old directory,
+	so that subsequent mkdir calls succeed.
+
+2010-12-25  Bruno Haible  <bruno@clisp.org>
+
 	iswblank: Fix C++ link error on Solaris 8.
 	* lib/wctype.in.h (iswblank): Declare using _GL_FUNCDECL_RPL or
 	_GL_FUNCDECL_SYS.
