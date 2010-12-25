@@ -1,3 +1,9 @@
+2010-12-25  Bruno Haible  <bruno@clisp.org>
+
+	strtok_r: Fix C syntax error in autoconf macro.
+	* m4/strtok_r.m4 (gl_FUNC_STRTOK_R): Don't use UTF-8 encoded U+00A0
+	characters in test program.
+
 2010-12-24  Bruno Haible  <bruno@clisp.org>
 
 	ceil, trunc, round: Fix gcc warnings.
