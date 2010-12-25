@@ -1,5 +1,10 @@
 2010-12-25  Bruno Haible  <bruno@clisp.org>
 
+	ptsname: Avoid ERANGE failure on some systems.
+	* lib/ptsname.c (buffer): Increase size.
+
+2010-12-25  Bruno Haible  <bruno@clisp.org>
+
 	rename, renameat: Avoid test failures at NFS mounted locations.
 	* tests/test-rename.h (assert_nonexistent): Remove the old directory,
 	so that subsequent mkdir calls succeed.
