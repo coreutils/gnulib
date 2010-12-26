@@ -1,5 +1,12 @@
 2010-12-25  Bruno Haible  <bruno@clisp.org>
 
+	printf-posix: Fix link error when a non-GCC compiler is used.
+	* lib/stdio.in.h (printf): When not using GCC, override printf
+	correctly.
+	Reported by Joachim Schmitz <jojo@schmitz-digital.de>.
+
+2010-12-25  Bruno Haible  <bruno@clisp.org>
+
 	strerror_r-posix: Update doc.
 	* doc/posix-functions/strerror_r.texi: Update doc about the return
 	value. See <http://sources.redhat.com/bugzilla/show_bug.cgi?id=12204>.

@@ -676,6 +676,9 @@ _GL_FUNCDECL_RPL_1 (__printf__, int,
                     _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL_1 (printf, __printf__, int, (const char *format, ...));
 #  else
+#   if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#    define printf rpl_printf
+#   endif
 _GL_FUNCDECL_RPL (printf, int,
                   (const char *format, ...)
                   __attribute__ ((__format__ (__printf__, 1, 2)))
