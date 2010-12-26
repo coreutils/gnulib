@@ -44,13 +44,12 @@
 #ifndef _GL_ARPA_INET_H
 #define _GL_ARPA_INET_H
 
+/* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
+
 /* The definition of _GL_ARG_NONNULL is copied here.  */
 
 /* The definition of _GL_WARN_ON_USE is copied here.  */
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 #if @GNULIB_INET_NTOP@
 # if !@HAVE_DECL_INET_NTOP@
@@ -69,10 +68,15 @@ extern "C" {
 
    For more details, see the POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/inet_ntop.html>.  */
-extern const char *inet_ntop (int af, const void *restrict src,
-                              char *restrict dst, socklen_t cnt)
-     _GL_ARG_NONNULL ((2, 3));
+_GL_FUNCDECL_SYS (inet_ntop, const char *,
+                  (int af, const void *restrict src,
+                   char *restrict dst, socklen_t cnt)
+                  _GL_ARG_NONNULL ((2, 3)));
 # endif
+_GL_CXXALIAS_SYS (inet_ntop, const char *,
+                  (int af, const void *restrict src,
+                   char *restrict dst, socklen_t cnt));
+_GL_CXXALIASWARN (inet_ntop);
 #elif defined GNULIB_POSIXCHECK
 # undef inet_ntop
 # if HAVE_RAW_DECL_INET_NTOP
@@ -83,9 +87,13 @@ _GL_WARN_ON_USE (inet_ntop, "inet_ntop is unportable - "
 
 #if @GNULIB_INET_PTON@
 # if !@HAVE_DECL_INET_PTON@
-extern int inet_pton (int af, const char *restrict src, void *restrict dst)
-     _GL_ARG_NONNULL ((2, 3));
+_GL_FUNCDECL_SYS (inet_pton, int,
+                  (int af, const char *restrict src, void *restrict dst)
+                  _GL_ARG_NONNULL ((2, 3)));
 # endif
+_GL_CXXALIAS_SYS (inet_pton, int,
+                  (int af, const char *restrict src, void *restrict dst));
+_GL_CXXALIASWARN (inet_pton);
 #elif defined GNULIB_POSIXCHECK
 # undef inet_pton
 # if HAVE_RAW_DECL_INET_PTON
@@ -94,9 +102,6 @@ _GL_WARN_ON_USE (inet_pton, "inet_pton is unportable - "
 # endif
 #endif
 
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* _GL_ARPA_INET_H */
 #endif /* _GL_ARPA_INET_H */

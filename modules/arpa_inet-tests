@@ -2,6 +2,7 @@ Files:
 tests/test-arpa_inet.c
 
 Depends-on:
+arpa_inet-c++-tests
 
 configure.ac:
 

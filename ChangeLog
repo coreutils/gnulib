@@ -1,3 +1,15 @@
+2010-12-26  Bruno Haible  <bruno@clisp.org>
+
+	arpa_inet: Use the common idioms with C++ support.
+	* lib/arpa_inet.in.h: Include c++defs.h.
+	(inet_ntop, inet_pton): Declare using the macros with C++ namespace
+	support.
+	* modules/arpa_inet (Depends-on): Add c++defs.
+	(Makefile.am): Substitute the contents of c++defs.h.
+	* modules/arpa_inet-tests (Depends-on): Add arpa_inet-c++-tests.
+	* modules/arpa_inet-c++-tests: New file.
+	* tests/test-arpa_inet-c++.cc: New file.
+
 2010-12-25  Bruno Haible  <bruno@clisp.org>
 
 	Fix more C++ link errors on Solaris 8.
