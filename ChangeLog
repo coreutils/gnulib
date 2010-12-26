@@ -1,3 +1,9 @@
+2010-12-25  Bruno Haible  <bruno@clisp.org>
+
+	strerror_r-posix: Update doc.
+	* doc/posix-functions/strerror_r.texi: Update doc about the return
+	value. See <http://sources.redhat.com/bugzilla/show_bug.cgi?id=12204>.
+
 2010-12-25  Paul Eggert  <eggert@cs.ucla.edu>
 
 	utimens: simplify the logic of the previous change
