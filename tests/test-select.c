@@ -204,7 +204,9 @@ do_select (int fd, int ev, struct timeval *tv)
 static int
 do_select_nowait (int fd, int ev)
 {
-  static struct timeval tv0;
+  struct timeval tv0;
+  tv0.tv_sec = 0;
+  tv0.tv_usec = 0;
   return do_select (fd, ev, &tv0);
 }
 
