@@ -42,6 +42,7 @@ SIGNATURE_CHECK (FD_ZERO, void, (fd_set *));
 #include <string.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <unistd.h>
 #include <fcntl.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -56,19 +57,12 @@ enum { SEL_IN = 1, SEL_OUT = 2, SEL_EXC = 4 };
 # define WIN32_NATIVE
 #endif
 
-#ifdef WIN32_NATIVE
-#include <io.h>
-#define pipe(x) _pipe(x, 256, O_BINARY)
-#endif
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 #ifdef HAVE_SYS_WAIT_H
-#include <sys/wait.h>
+# include <sys/wait.h>
 #endif
 
 #ifndef SO_REUSEPORT
-#define SO_REUSEPORT    SO_REUSEADDR
+# define SO_REUSEPORT    SO_REUSEADDR
 #endif
 
 #define TEST_PORT       12345

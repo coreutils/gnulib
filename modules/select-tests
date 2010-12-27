@@ -11,11 +11,13 @@ Depends-on:
 stdbool
 netinet_in
 arpa_inet
+unistd
 sys_ioctl
 extensions
 inet_pton
 errno
 perror
+pipe-posix
 socket
 bind
 setsockopt
@@ -27,7 +29,7 @@ close
 gettimeofday
 
 configure.ac:
-AC_CHECK_HEADERS_ONCE([unistd.h sys/wait.h])
+AC_CHECK_HEADERS_ONCE([sys/wait.h])
 
 Makefile.am:
 TESTS += test-select test-select-in.sh test-select-out.sh

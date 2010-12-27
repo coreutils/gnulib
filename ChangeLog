@@ -1,5 +1,13 @@
 2010-12-27  Bruno Haible  <bruno@clisp.org>
 
+	select tests: Use existing modules.
+	* modules/select-tests (Depends-on): Add pipe-posix, unistd.
+	(configure.ac): Don't test for unistd.h.
+	* tests/test-select.c: Include <unistd.h> always. Use pipe() as
+	declared in <unistd.h>.
+
+2010-12-27  Bruno Haible  <bruno@clisp.org>
+
 	mbrtowc: Work around a Solaris 7 bug.
 	* m4/mbrtowc.m4 (gl_MBRTOWC_NULL_ARG1): New macro.
 	(gl_MBRTOWC_NULL_ARG2): Renamed from gl_MBRTOWC_NULL_ARG.
