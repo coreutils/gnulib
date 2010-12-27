@@ -338,7 +338,7 @@ fdutimens (int fd, char const *file, struct timespec const timespec[2])
 #  endif
         if (futimes (fd, t) == 0)
           {
-#  if __linux__ && __GLIBC__ && ! HAVE_WORKING_UTIMES
+#  if __linux__ && __GLIBC__
             /* Work around a longstanding glibc bug, still present as
                of 2010-12-27.  On older Linux kernels that lack both
                utimensat and utimes, glibc's futimes rounds instead of
