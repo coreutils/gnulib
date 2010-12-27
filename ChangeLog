@@ -1,3 +1,9 @@
+2010-12-27  Jim Meyering  <meyering@redhat.com>
+
+	read-file.c: tweak syntax
+	* lib/read-file.c (fread_file): Remove space after "*" in function
+	definitions.
+
 2010-12-27  Bruno Haible  <bruno@clisp.org>
 
 	times test: Avoid gcc warnings on OSF/1.
