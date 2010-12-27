@@ -34,6 +34,12 @@
 # include <sys/socket.h>
 #endif
 
+/* On NonStop Kernel, inet_ntop and inet_pton are declared in <netdb.h>.
+   But avoid namespace pollution on glibc systems.  */
+#if defined __TANDEM && !defined __GLIBC__
+# include <netdb.h>
+#endif
+
 #if @HAVE_ARPA_INET_H@
 
 /* The include_next requires a split double-inclusion guard.  */
