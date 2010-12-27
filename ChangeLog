@@ -1,3 +1,16 @@
+2010-12-27  Bruno Haible  <bruno@clisp.org>
+
+	mbrtowc: Work around a Solaris 7 bug.
+	* m4/mbrtowc.m4 (gl_MBRTOWC_NULL_ARG1): New macro.
+	(gl_MBRTOWC_NULL_ARG2): Renamed from gl_MBRTOWC_NULL_ARG.
+	(gl_FUNC_MBRTOWC): Update. Define MBRTOWC_NULL_ARG2_BUG instead of
+	MBRTOWC_NULL_ARG_BUG. Invoke gl_MBRTOWC_NULL_ARG1 and define
+	MBRTOWC_NULL_ARG1_BUG.
+	* lib/mbrtowc.c (rpl_mbrtowc): Use MBRTOWC_NULL_ARG2_BUG instead of
+	MBRTOWC_NULL_ARG_BUG. Handle MBRTOWC_NULL_ARG1_BUG.
+	* tests/test-mbrtowc.c (main): Test support of a NULL first argument.
+	* doc/posix-functions/mbrtowc.texi: Mention the Solaris 7 bug.
+
 2010-12-27  Jim Meyering  <meyering@redhat.com>
 
 	read-file.c: tweak syntax
