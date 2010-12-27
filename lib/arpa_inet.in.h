@@ -79,9 +79,11 @@ _GL_FUNCDECL_SYS (inet_ntop, const char *,
                    char *restrict dst, socklen_t cnt)
                   _GL_ARG_NONNULL ((2, 3)));
 # endif
-_GL_CXXALIAS_SYS (inet_ntop, const char *,
-                  (int af, const void *restrict src,
-                   char *restrict dst, socklen_t cnt));
+/* Need to cast, because on NonStop Kernel, the fourth parameter is
+                                            size_t cnt.  */
+_GL_CXXALIAS_SYS_CAST (inet_ntop, const char *,
+                       (int af, const void *restrict src,
+                        char *restrict dst, socklen_t cnt));
 _GL_CXXALIASWARN (inet_ntop);
 #elif defined GNULIB_POSIXCHECK
 # undef inet_ntop

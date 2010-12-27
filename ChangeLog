@@ -1,5 +1,12 @@
 2010-12-26  Bruno Haible  <bruno@clisp.org>
 
+	inet_ntop: Hide mismatch of declaration on NonStop Kernel.
+	* lib/arpa_inet.in.h (inet_ntop): Use _GL_CXXALIAS_SYS_CAST instead of
+	_GL_CXXALIAS_SYS.
+	Reported by Joachim Schmitz <jojo@schmitz-digital.de>.
+
+2010-12-26  Bruno Haible  <bruno@clisp.org>
+
 	inet_ntop, inet_pton: Ensure declaration on NonStop Kernel.
 	* lib/arpa_inet.in.h: On NonStop Kernel, include also <netdb.h>.
 	* m4/arpa_inet_h.m4 (gl_HEADER_ARPA_INET): Likewise.
