@@ -1,3 +1,12 @@
+2010-12-27  Paul Eggert  <eggert@cs.ucla.edu>
+
+	utimens: work around glibc rounding bug on older Linux kernels
+	* lib/utimens.c (fdutimens): If invoking futimesat or futimes
+	on Linux with a glibc whose utimes might not work, then work
+	around a longstanding glibc bug involving rounding rather than
+	truncated time stamps.  Reported for Linux 2.4.21 by Bruno Haible in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2010-11/msg00113.html>.
+
 2010-12-26  Bruno Haible  <bruno@clisp.org>
 
 	inet_ntop: Hide mismatch of declaration on NonStop Kernel.
