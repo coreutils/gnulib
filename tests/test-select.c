@@ -51,8 +51,6 @@ SIGNATURE_CHECK (FD_ZERO, void, (fd_set *));
 
 #include "macros.h"
 
-enum { SEL_IN = 1, SEL_OUT = 2, SEL_EXC = 4 };
-
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 # define WIN32_NATIVE
 #endif
@@ -165,10 +163,20 @@ connect_to_socket (bool blocking)
 }
 
 
-/* A slightly more convenient interface to select(2).  */
+/* A slightly more convenient interface to select(2).
+   Waits until a specific event occurs on a file descriptor FD.
+   EV is a bit mask of events to look for:
+     SEL_IN - input can be polled without blocking,
+     SEL_OUT - output can be provided without blocking,
+     SEL_EXC - an exception occurred,
+   A maximum wait time is specified by TIMEOUT.
+   *TIMEOUT = { 0, 0 } means to return immediately,
+   TIMEOUT = NULL means to wait indefinitely.  */
+
+enum { SEL_IN = 1, SEL_OUT = 2, SEL_EXC = 4 };
 
 static int
-do_select (int fd, int ev, struct timeval *tv)
+do_select (int fd, int ev, struct timeval *timeout)
 {
   fd_set rfds, wfds, xfds;
   int r, rev;
@@ -182,7 +190,7 @@ do_select (int fd, int ev, struct timeval *tv)
     FD_SET (fd, &wfds);
   if (ev & SEL_EXC)
     FD_SET (fd, &xfds);
-  r = select (fd + 1, &rfds, &wfds, &xfds, tv);
+  r = select (fd + 1, &rfds, &wfds, &xfds, timeout);
   if (r < 0)
     return r;
 
@@ -217,7 +225,7 @@ do_select_wait (int fd, int ev)
 }
 
 
-/* Test poll(2) for TTYs.  */
+/* Test select(2) for TTYs.  */
 
 #ifdef INTERACTIVE
 static void
@@ -238,7 +246,7 @@ test_tty (void)
 #endif
 
 
-/* Test poll(2) for unconnected nonblocking sockets.  */
+/* Test select(2) for unconnected nonblocking sockets.  */
 
 static void
 test_connect_first (void)
@@ -267,7 +275,7 @@ test_connect_first (void)
 }
 
 
-/* Test poll(2) for unconnected blocking sockets.  */
+/* Test select(2) for unconnected blocking sockets.  */
 
 static void
 test_accept_first (void)
@@ -333,7 +341,7 @@ test_pair (int rd, int wd)
 }
 
 
-/* Test poll(2) on connected sockets.  */
+/* Test select(2) on connected sockets.  */
 
 static void
 test_socket_pair (void)
@@ -354,7 +362,7 @@ test_socket_pair (void)
 }
 
 
-/* Test poll(2) on pipes.  */
+/* Test select(2) on pipes.  */
 
 static void
 test_pipe (void)

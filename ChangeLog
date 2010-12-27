@@ -1,5 +1,10 @@
 2010-12-27  Bruno Haible  <bruno@clisp.org>
 
+	select tests: Improve comments.
+	* tests/test-select.c (do_select): Add comments.
+
+2010-12-27  Bruno Haible  <bruno@clisp.org>
+
 	select tests: Safer way of handling timeout.
 	* tests/test-select.c (do_select_nowait): Zero-initialize the timeout
 	at every invocation.
