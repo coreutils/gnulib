@@ -1,5 +1,11 @@
 2010-12-27  Bruno Haible  <bruno@clisp.org>
 
+	select tests: Use 'bool' where appropriate.
+	* tests/test-select.c (connect_to_socket): Change argument type to
+	'bool'.
+
+2010-12-27  Bruno Haible  <bruno@clisp.org>
+
 	select tests: Use existing modules.
 	* modules/select-tests (Depends-on): Add pipe-posix, unistd.
 	(configure.ac): Don't test for unistd.h.

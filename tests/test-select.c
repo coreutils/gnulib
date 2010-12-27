@@ -128,7 +128,7 @@ open_server_socket (void)
 }
 
 static int
-connect_to_socket (int blocking)
+connect_to_socket (bool blocking)
 {
   int s;
   struct sockaddr_in ia;
