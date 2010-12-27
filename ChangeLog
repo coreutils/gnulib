@@ -1,3 +1,8 @@
+2010-12-27  Bruno Haible  <bruno@clisp.org>
+
+	linkat test: Avoid failure on Solaris 11 2010-11.
+	* tests/test-linkat.c (main): Allow ENOTDIR as alternative error code.
+
 2010-12-27  Paul Eggert  <eggert@cs.ucla.edu>
 
 	utimens: work around glibc rounding bug on more platforms
