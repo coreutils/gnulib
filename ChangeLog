@@ -1,3 +1,25 @@
+2010-12-26  Ben Pfaff  <blp@cs.stanford.edu>
+
+	New module 'unigbrk/base'.
+	* modules/unigbrk/base: New file.
+	* lib/unigbrk.in.h: New file.
+
+	New module 'unigbrk/uc-gbrk-prop'.
+	* lib/gen-uni-tables.c: Generate lib/unigbrk/gbrkprop.h.
+	* modules/unigbrk/uc-gbrk-prop: New file.
+	* lib/unigbrk/gbrkprop.h: New file.
+	* lib/unigbrk/uc-gbrk-prop.c: New file.
+
+	New module 'unigbrk/uc-is-grapheme-break'.
+	* modules/unigbrk/uc-is-grapheme-break: New file.
+	* modules/unigbrk/uc-is-grapheme-break-tests: New file.
+	* lib/unigbrk/uc-is-grapheme-break.c: New file.
+	* tests/unigbrk/test-uc-is-grapheme-break.c: New file.
+	* tests/unigbrk/test-uc-is-grapheme-break.sh: New file.
+	* tests/unigbrk/GraphemeBreakTest.txt: New file.
+
+	With corrections and tweaks by Bruno Haible <bruno@clisp.org>.
+
 2010-12-27  Bruno Haible  <bruno@clisp.org>
 
 	linkat test: Avoid failure on Solaris 11 2010-11.
