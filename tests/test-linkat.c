@@ -53,6 +53,17 @@ do_link (char const *name1, char const *name2)
   return linkat (dfd1, name1, dfd2, name2, flag);
 }
 
+/* Can we expect that link() and linkat(), when called on a symlink,
+   increment the link count of that symlink?  */
+#if LINK_FOLLOWS_SYMLINKS == 0
+# define EXPECT_LINK_HARDLINKS_SYMLINKS 1
+#elif LINK_FOLLOWS_SYMLINKS == -1
+extern int __xpg4;
+# define EXPECT_LINK_HARDLINKS_SYMLINKS (__xpg4 == 0)
+#else
+# define EXPECT_LINK_HARDLINKS_SYMLINKS 0
+#endif
+
 /* Wrapper to see if two symlinks act the same.  */
 static void
 check_same_link (char const *name1, char const *name2)
@@ -68,7 +79,7 @@ check_same_link (char const *name1, char const *name2)
   ASSERT (contents1);
   ASSERT (contents2);
   ASSERT (strcmp (contents1, contents2) == 0);
-  if (!LINK_FOLLOWS_SYMLINKS)
+  if (EXPECT_LINK_HARDLINKS_SYMLINKS)
     ASSERT (SAME_INODE (st1, st2));
   free (contents1);
   free (contents2);
