@@ -1,3 +1,9 @@
+2010-12-29  Eric Blake  <eblake@redhat.com>
+
+	mountlist: fix local drive detection on cygwin
+	* lib/mountlist.c (ME_REMOTE) [__CYGWIN__]: Provide implementation
+	that works for cygwin.
+
 2010-12-29  Paul Eggert  <eggert@cs.ucla.edu>
 
 	ftoastr, snprintf: ftoastr + snprintf module
