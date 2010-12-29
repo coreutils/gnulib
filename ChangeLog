@@ -1,3 +1,15 @@
+2010-12-29  Paul Eggert  <eggert@cs.ucla.edu>
+
+	ftoastr, snprintf: ftoastr + snprintf module
+	* lib/ftoastr.c: Use GNULIB_SNPRINTF, not GNULIB_SNPRINTF_POSIX,
+	since the snprintf module now should be good enough here.
+	* modules/snprintf (configure.ac): Add gl_MODULE_INDICATOR([snprintf]).
+	It seems odd to have both gl_STDIO_MODULE_INDICATOR([snprintf])
+	and gl_MODULE_INDICATOR([snprintf]), but the former enables
+	GNULIB_SNPRINTF only for the test directory, and the latter
+	doesn't arrange for gl_STDIO_H_DEFAULTS to be called, so neither
+	seems to suffice by itself.
+
 2010-12-28  Paul Eggert  <eggert@cs.ucla.edu>
 
 	alloca: one step towards thread-safety

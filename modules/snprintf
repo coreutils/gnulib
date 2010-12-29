@@ -14,6 +14,7 @@ errno
 configure.ac:
 gl_FUNC_SNPRINTF
 gl_STDIO_MODULE_INDICATOR([snprintf])
+gl_MODULE_INDICATOR([snprintf])
 
 Makefile.am:
 
