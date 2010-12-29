@@ -166,7 +166,8 @@ me_remote (char const *fs_name, char const *fs_type _GL_UNUSED)
 {
   if (fs_name[0] && fs_name[1] == ':')
     {
-      char const drive[3] = { fs_name[0], ':', '\0' };
+      char drive[4];
+      sprintf (drive, "%c:\\", fs_name[0]);
       switch (GetDriveType (drive))
         {
         case DRIVE_REMOVABLE:

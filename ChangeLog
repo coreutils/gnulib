@@ -1,5 +1,9 @@
 2010-12-29  Eric Blake  <eblake@redhat.com>
 
+	mountlist: tweak previous commit
+	* lib/mountlist.c (me_remote): Guarantee trailing backslash.
+	Reported by Paul Eggert.
+
 	mountlist: fix local drive detection on cygwin
 	* lib/mountlist.c (ME_REMOTE) [__CYGWIN__]: Provide implementation
 	that works for cygwin.
