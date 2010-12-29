@@ -1,5 +1,10 @@
 2010-12-28  Paul Eggert  <eggert@cs.ucla.edu>
 
+	alloca: one step towards thread-safety
+	* lib/alloca.c (find_stack_direction): New arg PTR, to avoid the
+	need for a static variable.  All callers changed.  This does not
+	make the alloca replacement thread-safe, but it's one step.
+
 	tests: minor indenting change
 	* tests/init.sh: Sync from coreutils housekeeping patch
 	<http://lists.gnu.org/archive/html/coreutils/2010-12/msg00116.html>
