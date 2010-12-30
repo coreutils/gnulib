@@ -35,11 +35,16 @@ main (void)
 {
   /* Test with a large enough buffer.  */
   char buf[1024];
+  int err;
 
-  if (getlogin_r (buf, sizeof (buf)) != 0)
+  err = getlogin_r (buf, sizeof (buf));
+  if (err != 0)
     {
       /* getlogin_r() fails when stdin is not connected to a tty.  */
+      ASSERT (err == ENOTTY);
+#if !defined __hpux /* On HP-UX 11.11 it fails anyway.  */
       ASSERT (! isatty (0));
+#endif
       fprintf (stderr, "Skipping test: stdin is not a tty.\n");
       return 77;
     }

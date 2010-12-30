@@ -2,13 +2,16 @@ Description:
 ceil() function: round towards positive infinity.
 
 Files:
+lib/ceil.c
 m4/ceil.m4
 
 Depends-on:
 math
+float
 
 configure.ac:
 gl_FUNC_CEIL
+gl_MATH_MODULE_INDICATOR([ceil])
 
 Makefile.am:
 

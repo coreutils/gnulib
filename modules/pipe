@@ -8,6 +8,7 @@ Notice:
 This module is obsolete. Use the module 'spawn-pipe' instead.
 
 Files:
+lib/pipe.h
 
 Depends-on:
 spawn-pipe
@@ -17,7 +18,6 @@ configure.ac:
 Makefile.am:
 
 Include:
-"spawn-pipe.h"
 
 License:
 GPL

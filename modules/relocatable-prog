@@ -29,6 +29,20 @@ gl_RELOCATABLE([$gl_source_base])
 
 Makefile.am:
 DEFS += -DEXEEXT=\"@EXEEXT@\"
+if RELOCATABLE_VIA_WRAPPER
+uninstall-hook: uninstall-relocwrapper
+uninstall-relocwrapper:
+	if test $(RELOCATABLE) = yes; then \
+	  case '$(EXEEXT)' in \
+	    .bin*) ;; \
+	    *) cd $(top_builddir) && \
+	       $(MAKE) $(AM_MAKEFLAGS) EXEEXT=.bin$(EXEEXT) \
+		       AM_MAKEFLAGS='$(AM_MAKEFLAGS) EXEEXT=.bin$(EXEEXT)' \
+		       uninstall ;; \
+	  esac; \
+	fi
+.PHONY: uninstall-relocwrapper
+endif
 
 Include:
 "relocatable.h"

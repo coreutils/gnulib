@@ -91,7 +91,7 @@ fpurge (FILE *fp)
   fp->_wcount = 0;
   fp->_ungetc_count = 0;
   return 0;
-# elif defined _IOERR               /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */
+# elif defined _IOERR               /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw, NonStop Kernel */
   fp->_ptr = fp->_base;
   if (fp->_ptr != NULL)
     fp->_cnt = 0;

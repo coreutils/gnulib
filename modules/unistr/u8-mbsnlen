@@ -7,6 +7,7 @@ lib/unistr/u8-mbsnlen.c
 Depends-on:
 unistr/base
 unistr/u8-mbtoucr
+unistr/u8-mbtouc
 
 configure.ac:
 gl_LIBUNISTRING_MODULE([0.9.4], [unistr/u8-mbsnlen])

@@ -11,8 +11,16 @@ Portability problems fixed by Gnulib:
 @item
 This function is missing on some platforms:
 HP-UX 11.00, OSF/1 4.0, Solaris 2.5.1, mingw, Interix 3.5, BeOS.
+@item
+This function is declared in @code{<netdb.h>} instead of @code{<arpa/inet.h>}
+on some platforms:
+NonStop Kernel.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This function's fourth argument type is @code{size_t} instead of
+@code{socklen_t} on some platforms:
+OSF/1 5.1, Solaris 10.
 @end itemize

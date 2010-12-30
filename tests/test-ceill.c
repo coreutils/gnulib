@@ -40,9 +40,7 @@ main ()
 
   /* Zero.  */
   ASSERT (ceill (0.0L) == 0.0L);
-  ASSERT (!signbit (ceill (0.0L)));
   ASSERT (ceill (minus_zerol) == 0.0L);
-  ASSERT (!!signbit (minus_zerol) == !!signbit (ceill (minus_zerol)));
   /* Positive numbers.  */
   ASSERT (ceill (0.3L) == 1.0L);
   ASSERT (ceill (0.7L) == 1.0L);

@@ -8,6 +8,7 @@ m4/getlogin_r.m4
 Depends-on:
 extensions
 unistd
+memchr
 
 configure.ac:
 gl_FUNC_GETLOGIN_R

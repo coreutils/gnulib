@@ -330,12 +330,53 @@ fdutimens (int fd, char const *file, struct timespec const timespec[2])
            worth optimizing, and who knows what other messed-up systems
            are out there?  So play it safe and fall back on the code
            below.  */
-# if HAVE_FUTIMESAT && !FUTIMESAT_NULL_BUG
-        if (futimesat (fd, NULL, t) == 0)
-          return 0;
-# elif HAVE_FUTIMES
+
+# if (HAVE_FUTIMESAT && !FUTIMESAT_NULL_BUG) || HAVE_FUTIMES
+#  if HAVE_FUTIMESAT && !FUTIMESAT_NULL_BUG
+#   undef futimes
+#   define futimes(fd, t) futimesat (fd, NULL, t)
+#  endif
         if (futimes (fd, t) == 0)
-          return 0;
+          {
+#  if __linux__ && __GLIBC__
+            /* Work around a longstanding glibc bug, still present as
+               of 2010-12-27.  On older Linux kernels that lack both
+               utimensat and utimes, glibc's futimes rounds instead of
+               truncating when falling back on utime.  The same bug
+               occurs in futimesat with a null 2nd arg.  */
+            if (t)
+              {
+                bool abig = 500000 <= t[0].tv_usec;
+                bool mbig = 500000 <= t[1].tv_usec;
+                if ((abig | mbig) && fstat (fd, &st) == 0)
+                  {
+                    /* If these two subtractions overflow, they'll
+                       track the overflows inside the buggy glibc.  */
+                    time_t adiff = st.st_atime - t[0].tv_sec;
+                    time_t mdiff = st.st_mtime - t[1].tv_sec;
+
+                    struct timeval *tt = NULL;
+                    struct timeval truncated_timeval[2];
+                    truncated_timeval[0] = t[0];
+                    truncated_timeval[1] = t[1];
+                    if (abig && adiff == 1 && get_stat_atime_ns (&st) == 0)
+                      {
+                        tt = truncated_timeval;
+                        tt[0].tv_usec = 0;
+                      }
+                    if (mbig && mdiff == 1 && get_stat_mtime_ns (&st) == 0)
+                      {
+                        tt = truncated_timeval;
+                        tt[1].tv_usec = 0;
+                      }
+                    if (tt)
+                      futimes (fd, tt);
+                  }
+              }
+#  endif
+
+            return 0;
+          }
 # endif
       }
 #endif /* HAVE_FUTIMESAT || HAVE_WORKING_UTIMES */

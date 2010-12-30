@@ -33,9 +33,7 @@ main ()
 {
   /* Zero.  */
   ASSERT (truncf (0.0f) == 0.0f);
-  ASSERT (!signbit (truncf (0.0f)));
   ASSERT (truncf (minus_zerof) == 0.0f);
-  ASSERT (!!signbit (minus_zerof) == !!signbit (truncf (minus_zerof)));
   /* Positive numbers.  */
   ASSERT (truncf (0.3f) == 0.0f);
   ASSERT (truncf (0.7f) == 0.0f);

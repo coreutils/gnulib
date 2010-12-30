@@ -12,6 +12,9 @@ Portability problems fixed by Gnulib:
 @code{isnan} was introduced with C99 and is thus commonly not present
 on pre-C99 systems.
 @item
+@code{isnan} is not a macro on some platforms:
+IRIX 6.5, OSF/1 5.1 with gcc, Solaris 11 2010-11.
+@item
 On IRIX 6.5 with @code{cc}, @code{isnan} does not recognize some NaNs.
 @item
 On NetBSD/i386 and glibc/ia64, @code{isnan} does not recognize some

@@ -8,8 +8,12 @@ Gnulib module: tcgetsid
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
 This function is missing on some platforms:
 MacOS X 10.3, FreeBSD 6.0, OpenBSD 4.5, Cygwin, mingw, Interix 3.5, BeOS.
+@item
+This function is not declared on some platforms:
+OSF/1 5.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:

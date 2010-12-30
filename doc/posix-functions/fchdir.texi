@@ -12,6 +12,9 @@ Portability problems fixed by Gnulib:
 This function is missing on some platforms:
 Tandem/NSK, mingw, BeOS.
 But the replacement function is not safe to be used in libraries and is not multithread-safe.
+@item
+This function is not declared on some platforms:
+OSF/1 5.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:

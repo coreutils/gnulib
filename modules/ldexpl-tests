@@ -16,3 +16,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-ldexpl
 check_PROGRAMS += test-ldexpl
+test_ldexpl_LDADD = $(LDADD) @LDEXPL_LIBM@

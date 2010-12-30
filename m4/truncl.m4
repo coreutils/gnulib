@@ -1,4 +1,4 @@
-# truncl.m4 serial 5
+# truncl.m4 serial 6
 dnl Copyright (C) 2007-2008, 2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -6,6 +6,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_TRUNCL],
 [
+  m4_divert_text([DEFAULTS], [gl_truncl_required=plain])
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   dnl Persuade glibc <math.h> to declare truncl().
@@ -68,6 +69,40 @@ int main()
       *yes) ;;
       *) REPLACE_TRUNCL=1 ;;
     esac
+    m4_ifdef([gl_FUNC_TRUNCL_IEEE], [
+      if test $gl_truncl_required = ieee && test $REPLACE_TRUNCL = 0; then
+        AC_CACHE_CHECK([whether truncl works according to ISO C 99 with IEC 60559],
+          [gl_cv_func_truncl_ieee],
+          [
+            save_LIBS="$LIBS"
+            LIBS="$LIBS $TRUNCL_LIBM"
+            AC_RUN_IFELSE(
+              [AC_LANG_SOURCE([[
+#ifndef __NO_MATH_INLINES
+# define __NO_MATH_INLINES 1 /* for glibc */
+#endif
+#include <math.h>
+]gl_LONG_DOUBLE_MINUS_ZERO_CODE[
+]gl_LONG_DOUBLE_SIGNBIT_CODE[
+int main()
+{
+  /* Test whether truncl (-0.3L) is -0.0L.  */
+  if (signbitl (minus_zerol) && !signbitl (truncl (-0.3L)))
+    return 1;
+  return 0;
+}
+              ]])],
+              [gl_cv_func_truncl_ieee=yes],
+              [gl_cv_func_truncl_ieee=no],
+              [gl_cv_func_truncl_ieee="guessing no"])
+            LIBS="$save_LIBS"
+          ])
+        case "$gl_cv_func_truncl_ieee" in
+          *yes) ;;
+          *) REPLACE_TRUNCL=1 ;;
+        esac
+      fi
+    ])
   else
     HAVE_DECL_TRUNCL=0
   fi

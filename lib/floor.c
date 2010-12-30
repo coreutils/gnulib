@@ -1,5 +1,5 @@
 /* Round towards negative infinity.
-   Copyright (C) 2007, 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2007, 2010 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -65,8 +65,12 @@ FUNC (DOUBLE x)
 
   if (z > L_(0.0))
     {
+      /* For 0 < x < 1, return +0.0 even if the current rounding mode is
+         FE_DOWNWARD.  */
+      if (z < L_(1.0))
+        z = L_(0.0);
       /* Avoid rounding errors for values near 2^k, where k >= MANT_DIG-1.  */
-      if (z < TWO_MANT_DIG)
+      else if (z < TWO_MANT_DIG)
         {
           /* Round to the next integer (nearest or up or down, doesn't matter).  */
           z += TWO_MANT_DIG;

@@ -34,15 +34,21 @@ AC_DEFUN([gl_FUNC_UTIMES],
 #include <stdio.h>
 #include <utime.h>
 
+static int
+inorder (time_t a, time_t b, time_t c)
+{
+  return a <= b && b <= c;
+}
+
 int
 main ()
 {
   int result = 0;
   char const *file = "conftest.utimes";
+  static struct timeval timeval[2] = {{9, 10}, {999999, 999999}};
 
   /* Test whether utimes() essentially works.  */
   {
-    static struct timeval timeval[2] = {{9, 10}, {999999, 999999}};
     struct stat sbuf;
     FILE *f = fopen (file, "w");
     if (f == NULL)
@@ -56,37 +62,52 @@ main ()
     else if (!(sbuf.st_atime == timeval[0].tv_sec
                && sbuf.st_mtime == timeval[1].tv_sec))
       result |= 4;
-    unlink (file);
+    if (unlink (file) != 0)
+      result |= 1;
   }
 
   /* Test whether utimes() with a NULL argument sets the file's timestamp
-     to the current time.  Note that this test fails on NFS file systems
+     to the current time.  Use 'fstat' as well as 'time' to
+     determine the "current" time, to accommodate NFS file systems
      if there is a time skew between the host and the NFS server.  */
   {
-    struct stat sbuf;
-    FILE *f = fopen (file, "w");
-    if (f == NULL)
-      result |= 1;
-    else if (fclose (f) != 0)
+    int fd = open (file, O_WRONLY|O_CREAT, 0644);
+    if (fd < 0)
       result |= 1;
     else
       {
-        time_t now;
-        if (time (&now) == (time_t)-1)
+        time_t t0, t2;
+        struct stat st0, st1, st2;
+        if (time (&t0) == (time_t) -1)
           result |= 1;
+        else if (fstat (fd, &st0) != 0)
+          result |= 1;
+        else if (utimes (file, timeval) != 0)
+          result |= 2;
         else if (utimes (file, NULL) != 0)
           result |= 8;
-        else if (lstat (file, &sbuf) != 0)
+        else if (fstat (fd, &st1) != 0)
+          result |= 1;
+        else if (write (fd, "\n", 1) != 1)
+          result |= 1;
+        else if (fstat (fd, &st2) != 0)
+          result |= 1;
+        else if (time (&t2) == (time_t) -1)
           result |= 1;
         else
           {
-            if (!(now - sbuf.st_atime <= 2))
+            int m_ok_POSIX = inorder (t0, st1.st_mtime, t2);
+            int m_ok_NFS = inorder (st0.st_mtime, st1.st_mtime, st2.st_mtime);
+            if (! (st1.st_atime == st1.st_mtime))
               result |= 16;
-            if (!(now - sbuf.st_mtime <= 2))
+            if (! (m_ok_POSIX || m_ok_NFS))
               result |= 32;
           }
+        if (close (fd) != 0)
+          result |= 1;
       }
-    unlink (file);
+    if (unlink (file) != 0)
+      result |= 1;
   }
 
   /* Test whether utimes() with a NULL argument works on read-only files.  */
@@ -98,7 +119,8 @@ main ()
       result |= 1;
     else if (utimes (file, NULL) != 0)
       result |= 64;
-    unlink (file);
+    if (unlink (file) != 0)
+      result |= 1;
   }
 
   return result;

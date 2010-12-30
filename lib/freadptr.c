@@ -56,7 +56,7 @@ freadptr (FILE *fp, size_t *sizep)
     abort ();
   *sizep = fp->_rcount;
   return fp->_ptr;
-#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */
+#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw, NonStop Kernel */
   if ((fp_->_flag & _IOWRT) != 0)
     return NULL;
   size = fp_->_cnt;

@@ -56,11 +56,16 @@ assert_nonexistent (const char *filename)
   if (stat (filename, &st) == -1)
     ASSERT (errno == ENOENT);
   else
-    /* But after renaming a directory over an empty directory on an NFS-mounted
-       file system, on Linux 2.6.18, for a period of 30 seconds the old
-       directory name is "present" according to stat() but "nonexistent"
-       according to dentry_exists().  */
-    ASSERT (!dentry_exists (filename));
+    {
+      /* But after renaming a directory over an empty directory on an NFS-
+         mounted file system, on Linux 2.6.18, for a period of 30 seconds the
+         old directory name is "present" according to stat() but "nonexistent"
+         according to dentry_exists().  */
+      ASSERT (!dentry_exists (filename));
+      /* Remove the old directory name, so that subsequent mkdir calls
+         succeed.  */
+      (void) rmdir (filename);
+    }
 }
 
 static int
@@ -339,7 +344,7 @@ test_rename (int (*func) (char const *, char const *), bool print)
       {
         errno = 0;
         ASSERT (func (BASE "dir2/.", BASE "dir") == -1);
-        ASSERT (errno == EINVAL || errno == EBUSY);
+        ASSERT (errno == EINVAL || errno == EBUSY || errno == EEXIST);
       }
       ASSERT (rmdir (BASE "dir") == 0);
       /* Files present here:
@@ -366,7 +371,7 @@ test_rename (int (*func) (char const *, char const *), bool print)
       {
         errno = 0;
         ASSERT (func (BASE "dir2/.//", BASE "dir") == -1);
-        ASSERT (errno == EINVAL || errno == EBUSY);
+        ASSERT (errno == EINVAL || errno == EBUSY || errno == EEXIST);
       }
       ASSERT (rmdir (BASE "dir2") == 0);
       /* Files present here:
@@ -914,7 +919,7 @@ test_rename (int (*func) (char const *, char const *), bool print)
         if (result) /* GNU/Linux rejects attempts to use link2/.  */
           {
             ASSERT (result == -1);
-            ASSERT (errno == ENOTDIR);
+            ASSERT (errno == ENOTDIR || errno == EISDIR);
           }
         memset (&st, 0, sizeof st);
         ASSERT (lstat (BASE "dir", &st) == 0);

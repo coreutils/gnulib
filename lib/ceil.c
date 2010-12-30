@@ -1,5 +1,5 @@
 /* Round towards positive infinity.
-   Copyright (C) 2007, 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2007, 2010 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -23,21 +23,33 @@
 
 #include <float.h>
 
+#undef MIN
+
 #ifdef USE_LONG_DOUBLE
 # define FUNC ceill
 # define DOUBLE long double
 # define MANT_DIG LDBL_MANT_DIG
+# define MIN LDBL_MIN
 # define L_(literal) literal##L
 #elif ! defined USE_FLOAT
 # define FUNC ceil
 # define DOUBLE double
 # define MANT_DIG DBL_MANT_DIG
+# define MIN DBL_MIN
 # define L_(literal) literal
 #else /* defined USE_FLOAT */
 # define FUNC ceilf
 # define DOUBLE float
 # define MANT_DIG FLT_MANT_DIG
+# define MIN FLT_MIN
 # define L_(literal) literal##f
+#endif
+
+/* -0.0.  See minus-zero.h.  */
+#if defined __hpux || defined __sgi || defined __ICC
+# define MINUS_ZERO (-MIN * MIN)
+#else
+# define MINUS_ZERO L_(-0.0)
 #endif
 
 /* 2^(MANT_DIG-1).  */
@@ -78,8 +90,12 @@ FUNC (DOUBLE x)
     }
   else if (z < L_(0.0))
     {
+      /* For -1 < x < 0, return -0.0 regardless of the current rounding
+         mode.  */
+      if (z > L_(-1.0))
+        z = MINUS_ZERO;
       /* Avoid rounding errors for values near -2^k, where k >= MANT_DIG-1.  */
-      if (z > - TWO_MANT_DIG)
+      else if (z > - TWO_MANT_DIG)
         {
           /* Round to the next integer (nearest or up or down, doesn't matter).  */
           z -= TWO_MANT_DIG;

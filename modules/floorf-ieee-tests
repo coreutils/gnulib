@@ -1,0 +1,15 @@
+Files:
+tests/test-floorf-ieee.c
+tests/minus-zero.h
+tests/macros.h
+
+Depends-on:
+float
+signbit
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-floorf-ieee
+check_PROGRAMS += test-floorf-ieee
+test_floorf_ieee_LDADD = $(LDADD) @FLOORF_LIBM@

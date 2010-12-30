@@ -39,8 +39,8 @@
 
    Example:
 
-     char buf[DBL_ABUFSIZE_BOUND];
-     int r = dtoastr (buf, sizeof buf, "%*.*g", 0, 0.1);
+     char buf[DBL_BUFSIZE_BOUND];
+     int r = dtoastr (buf, sizeof buf, 0, 0, 0.1);
 
    In the C locale, this sets R to 3 and stores "0.1" into BUF.  */
 

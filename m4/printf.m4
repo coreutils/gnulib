@@ -1,4 +1,4 @@
-# printf.m4 serial 40
+# printf.m4 serial 42
 dnl Copyright (C) 2003, 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -71,8 +71,8 @@ changequote(,)dnl
                                  gl_cv_func_printf_sizes_c99="guessing no";;
            openbsd*)             gl_cv_func_printf_sizes_c99="guessing yes";;
                                  # Guess yes on Solaris >= 2.10.
-           solaris2.[0-9]*)      gl_cv_func_printf_sizes_c99="guessing no";;
-           solaris*)             gl_cv_func_printf_sizes_c99="guessing yes";;
+           solaris2.[1-9][0-9]*) gl_cv_func_printf_sizes_c99="guessing yes";;
+           solaris*)             gl_cv_func_printf_sizes_c99="guessing no";;
                                  # Guess yes on NetBSD >= 3.
            netbsd[1-2]* | netbsdelf[1-2]* | netbsdaout[1-2]* | netbsdcoff[1-2]*)
                                  gl_cv_func_printf_sizes_c99="guessing no";;
@@ -591,8 +591,8 @@ changequote(,)dnl
            darwin[1-6].*)        gl_cv_func_printf_directive_f="guessing no";;
            darwin*)              gl_cv_func_printf_directive_f="guessing yes";;
                                  # Guess yes on Solaris >= 2.10.
-           solaris2.[0-9]*)      gl_cv_func_printf_directive_f="guessing no";;
-           solaris*)             gl_cv_func_printf_directive_f="guessing yes";;
+           solaris2.[1-9][0-9]*) gl_cv_func_printf_sizes_c99="guessing yes";;
+           solaris*)             gl_cv_func_printf_sizes_c99="guessing no";;
                                  # If we don't know, assume the worst.
            *)                    gl_cv_func_printf_directive_f="guessing no";;
          esac
@@ -890,8 +890,9 @@ changequote([,])dnl
 dnl Test whether the *printf family of functions supports large precisions.
 dnl On mingw, precisions larger than 512 are treated like 512, in integer,
 dnl floating-point or pointer output. On Solaris 10/x86, precisions larger
-dnl than 510 in floating-point output crash the program. On BeOS, precisions
-dnl larger than 1044 crash the program.
+dnl than 510 in floating-point output crash the program. On Solaris 10/SPARC,
+dnl precisions larger than 510 in floating-point output yield wrong results.
+dnl On BeOS, precisions larger than 1044 crash the program.
 dnl Result is gl_cv_func_printf_precision.
 
 AC_DEFUN([gl_PRINTF_PRECISION],
@@ -917,6 +918,9 @@ int main ()
     result |= 1;
   if (sprintf (buf, "%.4000f %d", 1.0, 33, 44) < 4000 + 5)
     result |= 2;
+  if (sprintf (buf, "%.511f %d", 1.0, 33, 44) < 511 + 5
+      || buf[0] != '1')
+    result |= 4;
   return result;
 }]])],
         [gl_cv_func_printf_precision=yes],
@@ -1102,7 +1106,8 @@ changequote(,)dnl
                                  gl_cv_func_snprintf_truncation_c99="guessing no";;
            openbsd*)             gl_cv_func_snprintf_truncation_c99="guessing yes";;
                                  # Guess yes on Solaris >= 2.6.
-           solaris2.[0-5]*)      gl_cv_func_snprintf_truncation_c99="guessing no";;
+           solaris2.[0-5] | solaris2.[0-5].*)
+                                 gl_cv_func_snprintf_truncation_c99="guessing no";;
            solaris*)             gl_cv_func_snprintf_truncation_c99="guessing yes";;
                                  # Guess yes on AIX >= 4.
            aix[1-3]*)            gl_cv_func_snprintf_truncation_c99="guessing no";;
@@ -1161,6 +1166,10 @@ int main ()
   strcpy (buf, "ABCDEF");
   if (snprintf (buf, 3, "%d %d", 4567, 89) != 7)
     return 1;
+  if (snprintf (buf, 0, "%d %d", 4567, 89) != 7)
+    return 2;
+  if (snprintf (NULL, 0, "%d %d", 4567, 89) != 7)
+    return 3;
   return 0;
 }]])],
         [gl_cv_func_snprintf_retval_c99=yes],
@@ -1180,9 +1189,9 @@ changequote(,)dnl
            openbsd[1-2].* | openbsd3.[0-8] | openbsd3.[0-8].*)
                                  gl_cv_func_snprintf_retval_c99="guessing no";;
            openbsd*)             gl_cv_func_snprintf_retval_c99="guessing yes";;
-                                 # Guess yes on Solaris >= 2.6.
-           solaris2.[0-5]*)      gl_cv_func_snprintf_retval_c99="guessing no";;
-           solaris*)             gl_cv_func_snprintf_retval_c99="guessing yes";;
+                                 # Guess yes on Solaris >= 2.10.
+           solaris2.[1-9][0-9]*) gl_cv_func_printf_sizes_c99="guessing yes";;
+           solaris*)             gl_cv_func_printf_sizes_c99="guessing no";;
                                  # Guess yes on AIX >= 4.
            aix[1-3]*)            gl_cv_func_snprintf_retval_c99="guessing no";;
            aix*)                 gl_cv_func_snprintf_retval_c99="guessing yes";;
@@ -1243,7 +1252,8 @@ changequote(,)dnl
            darwin[1-6].*)        gl_cv_func_snprintf_directive_n="guessing no";;
            darwin*)              gl_cv_func_snprintf_directive_n="guessing yes";;
                                  # Guess yes on Solaris >= 2.6.
-           solaris2.[0-5]*)      gl_cv_func_snprintf_directive_n="guessing no";;
+           solaris2.[0-5] | solaris2.[0-5].*)
+                                 gl_cv_func_snprintf_directive_n="guessing no";;
            solaris*)             gl_cv_func_snprintf_directive_n="guessing yes";;
                                  # Guess yes on AIX >= 4.
            aix[1-3]*)            gl_cv_func_snprintf_directive_n="guessing no";;
@@ -1371,7 +1381,8 @@ changequote(,)dnl
                                  # Guess yes on Cygwin.
            cygwin*)              gl_cv_func_vsnprintf_zerosize_c99="guessing yes";;
                                  # Guess yes on Solaris >= 2.6.
-           solaris2.[0-5]*)      gl_cv_func_vsnprintf_zerosize_c99="guessing no";;
+           solaris2.[0-5] | solaris2.[0-5].*)
+                                 gl_cv_func_vsnprintf_zerosize_c99="guessing no";;
            solaris*)             gl_cv_func_vsnprintf_zerosize_c99="guessing yes";;
                                  # Guess yes on AIX >= 4.
            aix[1-3]*)            gl_cv_func_vsnprintf_zerosize_c99="guessing no";;
@@ -1452,10 +1463,10 @@ dnl   Cygwin 1.5.25 (2008)           .  .  .  #  #  .  .  #  .  .  .  .  .  #  .
 dnl   Cygwin 1.5.19 (2006)           #  .  .  #  #  #  .  #  .  #  .  #  #  #  .  .  .  .  .  .
 dnl   Solaris 11 2010-11             .  .  #  #  #  .  .  #  .  .  .  #  .  .  .  .  .  .  .  .
 dnl   Solaris 10                     .  .  #  #  #  .  .  #  .  .  .  #  #  .  .  .  .  .  .  .
-dnl   Solaris 2.6 ... 9              #  .  #  #  #  #  .  #  .  .  .  #  .  .  .  .  .  .  .  .
+dnl   Solaris 2.6 ... 9              #  .  #  #  #  #  .  #  .  .  .  #  #  .  .  .  #  .  .  .
 dnl   Solaris 2.5.1                  #  .  #  #  #  #  .  #  .  .  .  #  .  .  #  #  #  #  #  #
 dnl   AIX 5.2, 7.1                   .  .  #  #  #  .  .  .  .  .  .  #  .  .  .  .  .  .  .  .
-dnl   AIX 4.3.2, 5.1                 #  .  #  #  #  #  .  .  .  .  .  #  .  .  .  .  .  .  .  .
+dnl   AIX 4.3.2, 5.1                 #  .  #  #  #  #  .  .  .  .  .  #  .  .  .  .  #  .  .  .
 dnl   HP-UX 11.31                    .  .  .  .  #  .  .  .  .  .  .  #  .  .  .  .  #  #  .  .
 dnl   HP-UX 11.{00,11,23}            #  .  .  .  #  #  .  .  .  .  .  #  .  .  .  .  #  #  .  #
 dnl   HP-UX 10.20                    #  .  #  .  #  #  .  ?  .  .  #  #  .  .  .  .  #  #  ?  #
@@ -1465,6 +1476,6 @@ dnl   OSF/1 4.0d                     #  .  #  #  #  #  .  .  .  .  .  #  .  .  #
 dnl   NetBSD 5.0                     .  .  .  #  #  .  .  .  .  .  .  #  .  #  .  .  .  .  .  .
 dnl   NetBSD 4.0                     .  ?  ?  ?  ?  ?  .  ?  .  ?  ?  ?  ?  ?  .  .  .  ?  ?  ?
 dnl   NetBSD 3.0                     .  .  .  .  #  #  .  ?  #  #  ?  #  .  #  .  .  .  .  .  .
-dnl   Haiku                          .  .  .  #  #  #  .  #  .  .  .  .  .  ?  .  .  .  .  .  .
-dnl   BeOS                           #  #  .  #  #  #  .  ?  #  .  ?  .  #  ?  .  .  .  .  .  .
+dnl   Haiku                          .  .  .  #  #  #  .  #  .  .  .  .  .  ?  .  .  ?  .  .  .
+dnl   BeOS                           #  #  .  #  #  #  .  ?  #  .  ?  .  #  ?  .  .  ?  .  .  .
 dnl   mingw                          #  #  #  #  #  #  .  .  #  #  .  #  #  ?  .  #  #  #  .  .

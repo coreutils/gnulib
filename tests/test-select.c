@@ -42,6 +42,7 @@ SIGNATURE_CHECK (FD_ZERO, void, (fd_set *));
 #include <string.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <unistd.h>
 #include <fcntl.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -50,25 +51,16 @@ SIGNATURE_CHECK (FD_ZERO, void, (fd_set *));
 
 #include "macros.h"
 
-enum { SEL_IN = 1, SEL_OUT = 2, SEL_EXC = 4 };
-
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 # define WIN32_NATIVE
 #endif
 
-#ifdef WIN32_NATIVE
-#include <io.h>
-#define pipe(x) _pipe(x, 256, O_BINARY)
-#endif
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 #ifdef HAVE_SYS_WAIT_H
-#include <sys/wait.h>
+# include <sys/wait.h>
 #endif
 
 #ifndef SO_REUSEPORT
-#define SO_REUSEPORT    SO_REUSEADDR
+# define SO_REUSEPORT    SO_REUSEADDR
 #endif
 
 #define TEST_PORT       12345
@@ -134,7 +126,7 @@ open_server_socket (void)
 }
 
 static int
-connect_to_socket (int blocking)
+connect_to_socket (bool blocking)
 {
   int s;
   struct sockaddr_in ia;
@@ -171,10 +163,20 @@ connect_to_socket (int blocking)
 }
 
 
-/* A slightly more convenient interface to select(2).  */
+/* A slightly more convenient interface to select(2).
+   Waits until a specific event occurs on a file descriptor FD.
+   EV is a bit mask of events to look for:
+     SEL_IN - input can be polled without blocking,
+     SEL_OUT - output can be provided without blocking,
+     SEL_EXC - an exception occurred,
+   A maximum wait time is specified by TIMEOUT.
+   *TIMEOUT = { 0, 0 } means to return immediately,
+   TIMEOUT = NULL means to wait indefinitely.  */
+
+enum { SEL_IN = 1, SEL_OUT = 2, SEL_EXC = 4 };
 
 static int
-do_select (int fd, int ev, struct timeval *tv)
+do_select (int fd, int ev, struct timeval *timeout)
 {
   fd_set rfds, wfds, xfds;
   int r, rev;
@@ -188,7 +190,7 @@ do_select (int fd, int ev, struct timeval *tv)
     FD_SET (fd, &wfds);
   if (ev & SEL_EXC)
     FD_SET (fd, &xfds);
-  r = select (fd + 1, &rfds, &wfds, &xfds, tv);
+  r = select (fd + 1, &rfds, &wfds, &xfds, timeout);
   if (r < 0)
     return r;
 
@@ -210,7 +212,9 @@ do_select (int fd, int ev, struct timeval *tv)
 static int
 do_select_nowait (int fd, int ev)
 {
-  static struct timeval tv0;
+  struct timeval tv0;
+  tv0.tv_sec = 0;
+  tv0.tv_usec = 0;
   return do_select (fd, ev, &tv0);
 }
 
@@ -221,7 +225,7 @@ do_select_wait (int fd, int ev)
 }
 
 
-/* Test poll(2) for TTYs.  */
+/* Test select(2) for TTYs.  */
 
 #ifdef INTERACTIVE
 static void
@@ -242,7 +246,7 @@ test_tty (void)
 #endif
 
 
-/* Test poll(2) for unconnected nonblocking sockets.  */
+/* Test select(2) for unconnected nonblocking sockets.  */
 
 static void
 test_connect_first (void)
@@ -271,7 +275,7 @@ test_connect_first (void)
 }
 
 
-/* Test poll(2) for unconnected blocking sockets.  */
+/* Test select(2) for unconnected blocking sockets.  */
 
 static void
 test_accept_first (void)
@@ -310,7 +314,7 @@ test_accept_first (void)
         failed ("cannot read data left in the socket by closed process");
       ASSERT (read (c, buf, 3) == 3);
       ASSERT (write (c, "foo", 3) == 3);
-      ASSERT (close (c) == 0);
+      (void) close (c); /* may fail with errno = ECONNRESET */
     }
 #endif
 }
@@ -337,7 +341,7 @@ test_pair (int rd, int wd)
 }
 
 
-/* Test poll(2) on connected sockets.  */
+/* Test select(2) on connected sockets.  */
 
 static void
 test_socket_pair (void)
@@ -354,11 +358,11 @@ test_socket_pair (void)
   test_pair (c1, c2);
   ASSERT (close (c1) == 0);
   ASSERT (write (c2, "foo", 3) == 3);
-  ASSERT (close (c2) == 0);
+  (void) close (c2); /* may fail with errno = ECONNRESET */
 }
 
 
-/* Test poll(2) on pipes.  */
+/* Test select(2) on pipes.  */
 
 static void
 test_pipe (void)

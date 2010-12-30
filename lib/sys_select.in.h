@@ -44,6 +44,8 @@
 
 /* On OSF/1 4.0, <sys/select.h> provides only a forward declaration
    of 'struct timeval', and no definition of this type.
+   Also, MacOS X, AIX, HP-UX, IRIX, Solaris, Interix declare select()
+   in <sys/time.h>.
    But avoid namespace pollution on glibc systems.  */
 # ifndef __GLIBC__
 #  include <sys/time.h>
@@ -65,8 +67,14 @@
 #ifndef _GL_SYS_SELECT_H
 #define _GL_SYS_SELECT_H
 
-#if !@HAVE_SYS_SELECT_H@ || @REPLACE_SELECT@
+#if !@HAVE_SYS_SELECT_H@
 /* A platform that lacks <sys/select.h>.  */
+/* Get the 'struct timeval' and 'fd_set' types and the FD_* macros
+   on most platforms.  */
+# include <sys/time.h>
+/* On native Windows platforms:
+   Get the 'fd_set' type.  Also, gnulib's <sys/socket.h> redefines select
+   so as to hide the declaration from <winsock2.h>.  */
 # include <sys/socket.h>
 #endif
 

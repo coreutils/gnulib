@@ -108,7 +108,7 @@ strsignal (int signum)
 #ifdef SIGRTMIN
       if (signum >= SIGRTMIN && signum <= SIGRTMAX)
         len = __snprintf (buffer, BUFFERSIZ - 1, _("Real-time signal %d"),
-                          signum - SIGRTMIN);
+                          signum - (int) SIGRTMIN);
       else
 #endif
         len = __snprintf (buffer, BUFFERSIZ - 1, _("Unknown signal %d"),

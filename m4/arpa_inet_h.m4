@@ -1,4 +1,4 @@
-# arpa_inet_h.m4 serial 10
+# arpa_inet_h.m4 serial 11
 dnl Copyright (C) 2006, 2008-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -30,6 +30,9 @@ AC_DEFUN([gl_HEADER_ARPA_INET],
 /* On some systems, this header is not self-consistent.  */
 #if !(defined __GLIBC__ || defined __UCLIBC__)
 # include <sys/socket.h>
+#endif
+#ifdef __TANDEM
+# include <netdb.h>
 #endif
 #include <arpa/inet.h>
     ]], [inet_ntop inet_pton])

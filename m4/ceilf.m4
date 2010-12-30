@@ -1,4 +1,4 @@
-# ceilf.m4 serial 7
+# ceilf.m4 serial 8
 dnl Copyright (C) 2007, 2009-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -6,6 +6,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_CEILF],
 [
+  m4_divert_text([DEFAULTS], [gl_ceilf_required=plain])
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   dnl Persuade glibc <math.h> to declare ceilf().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
@@ -19,6 +20,40 @@ AC_DEFUN([gl_FUNC_CEILF],
       dnl libm.so, but not in the libm.so that the compiler uses.
       REPLACE_CEILF=1
     fi
+    m4_ifdef([gl_FUNC_CEILF_IEEE], [
+      if test $gl_ceilf_required = ieee && test $REPLACE_CEILF = 0; then
+        AC_CACHE_CHECK([whether ceilf works according to ISO C 99 with IEC 60559],
+          [gl_cv_func_ceilf_ieee],
+          [
+            save_LIBS="$LIBS"
+            LIBS="$LIBS $CEILF_LIBM"
+            AC_RUN_IFELSE(
+              [AC_LANG_SOURCE([[
+#ifndef __NO_MATH_INLINES
+# define __NO_MATH_INLINES 1 /* for glibc */
+#endif
+#include <math.h>
+]gl_FLOAT_MINUS_ZERO_CODE[
+]gl_FLOAT_SIGNBIT_CODE[
+int main()
+{
+  /* Test whether ceilf (-0.0f) is -0.0f.  */
+  if (signbitf (minus_zerof) && !signbitf (ceilf (minus_zerof)))
+    return 1;
+  return 0;
+}
+              ]])],
+              [gl_cv_func_ceilf_ieee=yes],
+              [gl_cv_func_ceilf_ieee=no],
+              [gl_cv_func_ceilf_ieee="guessing no"])
+            LIBS="$save_LIBS"
+          ])
+        case "$gl_cv_func_ceilf_ieee" in
+          *yes) ;;
+          *) REPLACE_CEILF=1 ;;
+        esac
+      fi
+    ])
   else
     HAVE_DECL_CEILF=0
   fi

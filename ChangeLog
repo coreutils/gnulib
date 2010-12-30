@@ -2,6 +2,1097 @@
 
 	* libposix/bootstrap (posix_list): remove unnecessary temp file
 
+2010-12-29  Eric Blake  <eblake@redhat.com>
+
+	mountlist: tweak previous commit
+	* lib/mountlist.c (me_remote): Guarantee trailing backslash.
+	Reported by Paul Eggert.
+
+	mountlist: fix local drive detection on cygwin
+	* lib/mountlist.c (ME_REMOTE) [__CYGWIN__]: Provide implementation
+	that works for cygwin.
+
+2010-12-29  Paul Eggert  <eggert@cs.ucla.edu>
+
+	ftoastr, snprintf: ftoastr + snprintf module
+	* lib/ftoastr.c: Use GNULIB_SNPRINTF, not GNULIB_SNPRINTF_POSIX,
+	since the snprintf module now should be good enough here.
+	* modules/snprintf (configure.ac): Add gl_MODULE_INDICATOR([snprintf]).
+	It seems odd to have both gl_STDIO_MODULE_INDICATOR([snprintf])
+	and gl_MODULE_INDICATOR([snprintf]), but the former enables
+	GNULIB_SNPRINTF only for the test directory, and the latter
+	doesn't arrange for gl_STDIO_H_DEFAULTS to be called, so neither
+	seems to suffice by itself.
+
+2010-12-28  Paul Eggert  <eggert@cs.ucla.edu>
+
+	alloca: one step towards thread-safety
+	* lib/alloca.c (find_stack_direction): New arg PTR, to avoid the
+	need for a static variable.  All callers changed.  This does not
+	make the alloca replacement thread-safe, but it's one step.
+
+	tests: minor indenting change
+	* tests/init.sh: Sync from coreutils housekeeping patch
+	<http://lists.gnu.org/archive/html/coreutils/2010-12/msg00116.html>
+	to keep lines within 80 columns.
+
+2010-12-28  Jim Meyering  <meyering@redhat.com>
+
+	regex: don't infloop on persistent failing calloc
+	* lib/regexec.c (build_trtable): Return failure indication upon
+	calloc failure.  Otherwise, re_search_internal could infloop on OOM.
+	In glibc, this was fixed for version 2.13:
+	http://sourceware.org/bugzilla/show_bug.cgi?id=12348
+
+2010-12-28  Bruno Haible  <bruno@clisp.org>
+            Paul Eggert <eggert@cs.ucla.edu>
+
+	linkat: Make implementation robust against system behaviour variations.
+	* m4/link-follow.m4 (gl_FUNC_LINK_FOLLOWS_SYMLINK): Define
+	LINK_FOLLOWS_SYMLINKS to -1 if it needs a runtime test in the Solaris
+	way, and to -2 if it needs a generic runtime test.
+	* lib/linkat.c (solaris_optimized_link_immediate,
+	solaris_optimized_link_follow): New functions.
+	* tests/test-linkat.c (EXPECT_LINK_HARDLINKS_SYMLINKS): New macro.
+	(check_same_link): Use it.
+
+2010-12-26  Ben Pfaff  <blp@cs.stanford.edu>
+
+	New module 'unigbrk/base'.
+	* modules/unigbrk/base: New file.
+	* lib/unigbrk.in.h: New file.
+
+	New module 'unigbrk/uc-gbrk-prop'.
+	* lib/gen-uni-tables.c: Generate lib/unigbrk/gbrkprop.h.
+	* modules/unigbrk/uc-gbrk-prop: New file.
+	* lib/unigbrk/gbrkprop.h: New file.
+	* lib/unigbrk/uc-gbrk-prop.c: New file.
+
+	New module 'unigbrk/uc-is-grapheme-break'.
+	* modules/unigbrk/uc-is-grapheme-break: New file.
+	* modules/unigbrk/uc-is-grapheme-break-tests: New file.
+	* lib/unigbrk/uc-is-grapheme-break.c: New file.
+	* tests/unigbrk/test-uc-is-grapheme-break.c: New file.
+	* tests/unigbrk/test-uc-is-grapheme-break.sh: New file.
+	* tests/unigbrk/GraphemeBreakTest.txt: New file.
+
+	With corrections and tweaks by Bruno Haible <bruno@clisp.org>.
+
+2010-12-27  Bruno Haible  <bruno@clisp.org>
+
+	linkat test: Avoid failure on Solaris 11 2010-11.
+	* tests/test-linkat.c (main): Allow ENOTDIR as alternative error code.
+
+2010-12-27  Paul Eggert  <eggert@cs.ucla.edu>
+
+	utimens: work around glibc rounding bug on more platforms
+	* lib/utimens.c (fdutimens): Work around rounding bug even if
+	HAVE_WORKING_UTIMES.  Reported for Linux 2.4.21 by Bruno Haible in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2010-12/msg00298.html>.
+
+2010-12-27  Bruno Haible  <bruno@clisp.org>
+
+	select tests: Improve comments.
+	* tests/test-select.c (do_select): Add comments.
+
+2010-12-27  Bruno Haible  <bruno@clisp.org>
+
+	select tests: Safer way of handling timeout.
+	* tests/test-select.c (do_select_nowait): Zero-initialize the timeout
+	at every invocation.
+
+2010-12-27  Bruno Haible  <bruno@clisp.org>
+
+	select tests: Use 'bool' where appropriate.
+	* tests/test-select.c (connect_to_socket): Change argument type to
+	'bool'.
+
+2010-12-27  Bruno Haible  <bruno@clisp.org>
+
+	select tests: Use existing modules.
+	* modules/select-tests (Depends-on): Add pipe-posix, unistd.
+	(configure.ac): Don't test for unistd.h.
+	* tests/test-select.c: Include <unistd.h> always. Use pipe() as
+	declared in <unistd.h>.
+
+2010-12-27  Bruno Haible  <bruno@clisp.org>
+
+	mbrtowc: Work around a Solaris 7 bug.
+	* m4/mbrtowc.m4 (gl_MBRTOWC_NULL_ARG1): New macro.
+	(gl_MBRTOWC_NULL_ARG2): Renamed from gl_MBRTOWC_NULL_ARG.
+	(gl_FUNC_MBRTOWC): Update. Define MBRTOWC_NULL_ARG2_BUG instead of
+	MBRTOWC_NULL_ARG_BUG. Invoke gl_MBRTOWC_NULL_ARG1 and define
+	MBRTOWC_NULL_ARG1_BUG.
+	* lib/mbrtowc.c (rpl_mbrtowc): Use MBRTOWC_NULL_ARG2_BUG instead of
+	MBRTOWC_NULL_ARG_BUG. Handle MBRTOWC_NULL_ARG1_BUG.
+	* tests/test-mbrtowc.c (main): Test support of a NULL first argument.
+	* doc/posix-functions/mbrtowc.texi: Mention the Solaris 7 bug.
+
+2010-12-27  Jim Meyering  <meyering@redhat.com>
+
+	read-file.c: tweak syntax
+	* lib/read-file.c (fread_file): Remove space after "*" in function
+	definitions.
+
+2010-12-27  Bruno Haible  <bruno@clisp.org>
+
+	times test: Avoid gcc warnings on OSF/1.
+	* tests/test-times.c (main): Cast printf arguments from clock_t to
+	'long int'.
+
+2010-12-27  Paul Eggert  <eggert@cs.ucla.edu>
+
+	utimens: work around glibc rounding bug on older Linux kernels
+	* lib/utimens.c (fdutimens): If invoking futimesat or futimes
+	on Linux with a glibc whose utimes might not work, then work
+	around a longstanding glibc bug involving rounding rather than
+	truncated time stamps.  Reported for Linux 2.4.21 by Bruno Haible in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2010-11/msg00113.html>.
+
+2010-12-26  Bruno Haible  <bruno@clisp.org>
+
+	inet_ntop: Hide mismatch of declaration on NonStop Kernel.
+	* lib/arpa_inet.in.h (inet_ntop): Use _GL_CXXALIAS_SYS_CAST instead of
+	_GL_CXXALIAS_SYS.
+	Reported by Joachim Schmitz <jojo@schmitz-digital.de>.
+
+2010-12-26  Bruno Haible  <bruno@clisp.org>
+
+	inet_ntop, inet_pton: Ensure declaration on NonStop Kernel.
+	* lib/arpa_inet.in.h: On NonStop Kernel, include also <netdb.h>.
+	* m4/arpa_inet_h.m4 (gl_HEADER_ARPA_INET): Likewise.
+	* m4/inet_ntop.m4 (gl_PREREQ_INET_NTOP): Include also <netdb.h> when
+	looking for the declaration.
+	* m4/inet_pton.m4 (gl_PREREQ_INET_PTON): Likewise.
+	* doc/posix-functions/inet_ntop.texi: Document the NonStop Kernel
+	problem.
+	* doc/posix-functions/inet_pton.texi: Likewise.
+
+2010-12-26  Bruno Haible  <bruno@clisp.org>
+
+	arpa_inet: Use the common idioms with C++ support.
+	* lib/arpa_inet.in.h: Include c++defs.h.
+	(inet_ntop, inet_pton): Declare using the macros with C++ namespace
+	support.
+	* modules/arpa_inet (Depends-on): Add c++defs.
+	(Makefile.am): Substitute the contents of c++defs.h.
+	* modules/arpa_inet-tests (Depends-on): Add arpa_inet-c++-tests.
+	* modules/arpa_inet-c++-tests: New file.
+	* tests/test-arpa_inet-c++.cc: New file.
+
+2010-12-25  Bruno Haible  <bruno@clisp.org>
+
+	Fix more C++ link errors on Solaris 8.
+	* modules/fcntl-h-c++-tests (test_fcntl_h_c___LDADD): Add
+	$(LIB_EACCESS).
+	* modules/stdio-c++-tests (test_stdio_c___LDADD): Likewise.
+	* modules/stdlib-c++-tests (test_stdlib_c___LDADD): Likewise.
+	* modules/sys_ioctl-c++-tests (test_sys_ioctl_c___LDADD): Likewise.
+	* modules/wchar-c++-tests (test_wchar_c___LDADD): Likewise.
+	* modules/wctype-c++-tests (test_wctype_c___LDADD): Likewise.
+
+2010-12-25  Bruno Haible  <bruno@clisp.org>
+
+	printf-posix: Fix link error when a non-GCC compiler is used.
+	* lib/stdio.in.h (printf): When not using GCC, override printf
+	correctly.
+	Reported by Joachim Schmitz <jojo@schmitz-digital.de>.
+
+2010-12-25  Bruno Haible  <bruno@clisp.org>
+
+	strerror_r-posix: Update doc.
+	* doc/posix-functions/strerror_r.texi: Update doc about the return
+	value. See <http://sources.redhat.com/bugzilla/show_bug.cgi?id=12204>.
+
+2010-12-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	utimens: simplify the logic of the previous change
+	* m4/utimes.m4 (gl_FUNC_UTIMES): Simplify the logic a bit.
+	This should not affect whether the test succeeds or fails.
+
+	utimens: configure better on hosts with NFS clock skew
+	* m4/utimes.m4 (gl_FUNC_UTIMES): Don't assume that utimes (f, NULL)
+	uses the clock of the local host.  It might use the clock of the
+	NFS server.  Reported for Linux 2.4.21 client by Bruno Haible in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2010-11/msg00113.html>.
+
+2010-12-25  Bruno Haible  <bruno@clisp.org>
+
+	ptsname test: Avoid failure on Solaris.
+	* tests/test-ptsname.c (main): For Solaris, use the recommended way to
+	open a pseudo-terminal; don't use BSD-style ptys.
+	* doc/posix-functions/ptsname.texi: Document the limitation on Solaris.
+
+2010-12-25  Bruno Haible  <bruno@clisp.org>
+
+	ptsname: Avoid ERANGE failure on some systems.
+	* lib/ptsname.c (buffer): Increase size.
+
+2010-12-25  Bruno Haible  <bruno@clisp.org>
+
+	rename, renameat: Avoid test failures at NFS mounted locations.
+	* tests/test-rename.h (assert_nonexistent): Remove the old directory,
+	so that subsequent mkdir calls succeed.
+
+2010-12-25  Bruno Haible  <bruno@clisp.org>
+
+	iswblank: Fix C++ link error on Solaris 8.
+	* lib/wctype.in.h (iswblank): Declare using _GL_FUNCDECL_RPL or
+	_GL_FUNCDECL_SYS.
+
+2010-12-25  Bruno Haible  <bruno@clisp.org>
+
+	unistd: Fix C++ link error on Solaris 8.
+	* modules/unistd-c++-tests (test_unistd_c___LDADD): Add $(LIB_EACCESS).
+
+2010-12-25  Bruno Haible  <bruno@clisp.org>
+
+	readlink doc: Mention an old glibc bug.
+	* doc/posix-functions/readlink.texi: Mention glibc 2.4 bug (BZ #2450).
+
+2010-12-25  Bruno Haible  <bruno@clisp.org>
+
+	fcntl-h: Fix for use of C++ on glibc systems.
+	* lib/fcntl.in.h: Include <sys/stat.h> before include_next <fcntl.h>
+	also on glibc systems in C++ mode.
+	Reported by Gary V. Vaughan <gary@gnu.org>.
+
+2010-12-25  Bruno Haible  <bruno@clisp.org>
+
+	roundl-ieee: Make it work on OSF/1 5.1 with cc.
+	* modules/roundl-ieee (Depends-on): Add floorl-ieee, ceill-ieee.
+
+2010-12-25  Bruno Haible  <bruno@clisp.org>
+
+	truncl-ieee: Make it work on OSF/1 5.1 with cc.
+	* doc/posix-functions/truncl.texi: Mention the OSF/1 5.1 bug.
+	* m4/truncl.m4 (gl_FUNC_TRUNCL): If gl_FUNC_TRUNCL_IEEE is also used,
+	test whether truncl works according to ISO C 99 with IEC 60559.
+	* m4/truncl-ieee.m4: New file.
+	* modules/truncl-ieee (Files): Add it and m4/minus-zero.m4,
+	m4/signbit.m4.
+	(configure.ac): Invoke gl_FUNC_TRUNCL_IEEE.
+
+2010-12-25  Bruno Haible  <bruno@clisp.org>
+
+	ceill-ieee: Make it work on OSF/1 5.1 with cc.
+	* doc/posix-functions/ceill.texi: Mention the OSF/1 5.1 bug.
+	* m4/ceill.m4 (gl_FUNC_CEILL): If gl_FUNC_CEILL_IEEE is also used,
+	test whether ceill works according to ISO C 99 with IEC 60559.
+	* m4/ceill-ieee.m4: New file.
+	* modules/ceill-ieee (Files): Add it and m4/minus-zero.m4,
+	m4/signbit.m4.
+	(configure.ac): Invoke gl_FUNC_CEILL_IEEE.
+
+2010-12-25  Bruno Haible  <bruno@clisp.org>
+
+	Ensure all prerequisites of <wchar.h> are included.
+	* m4/btowc.m4 (gl_FUNC_BTOWC): Include <stddef.h>, <stdio.h>, <time.h>
+	before <wchar.h>.
+	* m4/mbrlen.m4 (gl_MBRLEN_INCOMPLETE_STATE, gl_MBRLEN_RETVAL,
+	gl_MBRLEN_NUL_RETVAL): Likewise.
+	* m4/mbrtowc.m4 (gl_MBRTOWC_INCOMPLETE_STATE, gl_MBRTOWC_SANITYCHECK,
+	gl_MBRTOWC_NULL_ARG, gl_MBRTOWC_RETVAL, gl_MBRTOWC_NUL_RETVAL,
+	AC_FUNC_MBRTOWC): Likewise.
+	* m4/mbsrtowcs.m4 (gl_MBSRTOWCS_WORKS): Likewise.
+	* m4/mbstate_t.m4 (AC_TYPE_MBSTATE_T): Likewise.
+	* m4/wcrtomb.m4 (gl_FUNC_WCRTOMB): Likewise.
+	* m4/wcsrtombs.m4 (gl_WCSRTOMBS_TERMINATION, gl_WCSRTOMBS_NULL):
+	Likewise.
+	* m4/wctob.m4 (gl_FUNC_WCTOB): Likewise.
+	* m4/wchar_h.m4 (gl_WCHAR_H_INLINE_OK): Likewise.
+	(gl_WCHAR_H): Improve comments.
+	* m4/wctype_h.m4 (gl_WCTYPE_H): Likewise.
+
+2010-12-25  Bruno Haible  <bruno@clisp.org>
+
+	strtok_r: Fix C syntax error in autoconf macro.
+	* m4/strtok_r.m4 (gl_FUNC_STRTOK_R): Don't use UTF-8 encoded U+00A0
+	characters in test program.
+
+2010-12-24  Bruno Haible  <bruno@clisp.org>
+
+	ceil, trunc, round: Fix gcc warnings.
+	* lib/ceil.c (MIN): Undefine before redefining.
+	* lib/trunc.c (MIN): Likewise.
+	* lib/round.c (MIN): Likewise.
+	Include <math.h> first.
+
+2010-12-24  Bruno Haible  <bruno@clisp.org>
+
+	select tests: Avoid failures on OSF/1 5.1.
+	* tests/test-select.c (test_accept_first, test_socket_pair): Ignore
+	failure of closing the last socket; it may fail with ECONNRESET.
+
+2010-12-24  Eric Blake  <eblake@redhat.com>
+
+	stdint: avoid HP-UX 10.20 preprocessor bug
+	* lib/stdint.in.h (INT64_MAX, UINT64_MAX): Check via #ifdef rather
+	than #if.
+	* tests/test-floor2.c (main): Likewise.
+	Reported by Peter O'Gorman.
+
+	pipe: make obsoletion transition easier
+	* lib/pipe.h: Restore file as thin shim around "spawn-pipe.h".
+	* modules/pipe (Files): Include revived file.
+	(Include): Drop reference, to mirror getdate's behavior.
+
+2010-12-24  Bruno Haible  <bruno@clisp.org>
+
+	sys_socket: Hide mismatch of declarations on NonStop Kernel.
+	* lib/sys_socket.in.h (connect, bind, sendto, setsockopt): Use
+	_GL_CXXALIAS_SYS_CAST instead of _GL_CXXALIAS_SYS.
+	Reported by Joachim Schmitz <jojo@schmitz-digital.de>.
+
+2010-12-24  Bruno Haible  <bruno@clisp.org>
+
+	gethostname: Ensure declaration on NonStop Kernel.
+	* lib/unistd.in.h: Include <netdb.h> also on NonStop Kernel systems.
+	Reported by Joachim Schmitz <jojo@schmitz-digital.de>.
+
+2010-12-24  Bruno Haible  <bruno@clisp.org>
+
+	sys_select: Ensure all necessary types on NonStop Kernel.
+	* lib/sys_select.in.h: If the system does not have <sys/select.h>,
+	include <sys/time.h>.
+	* doc/posix-headers/sys_select.texi: Mention that it's missing on
+	NonStop Kernel.
+	Reported by Joachim Schmitz <jojo@schmitz-digital.de>.
+
+2010-12-24  Bruno Haible  <bruno@clisp.org>
+
+	sys_select: Remove unneeded include.
+	* lib/sys_select.in.h: Don't include <sys/socket.h> on platforms that
+	have <sys/select.h>.
+
+2010-12-24  Bruno Haible  <bruno@clisp.org>
+
+	gethostname: Provide a fallback for HOST_NAME_MAX.
+	* m4/gethostname.m4 (gl_FUNC_GETHOSTNAME): When neither HOST_NAME_MAX
+	nor MAXHOSTNAMELEN is found in the usual system headers, use 256
+	instead.
+	Reported by Joachim Schmitz <jojo@schmitz-digital.de>.
+
+2010-12-24  Bruno Haible  <bruno@clisp.org>
+
+	sigaction tests: Allow missing SA_RESETHAND and SA_RESTART.
+	* tests/test-sigaction.c (SA_RESETHAND): Fall back to 0.
+	(SA_RESTART): Likewise.
+	Reported by Joachim Schmitz <jojo@schmitz-digital.de>.
+
+2010-12-24  Bruno Haible  <bruno@clisp.org>
+
+	signal: Define NSIG.
+	* lib/signal.in.h (NSIG): Define to 32 on NonStop Kernel.
+	* tests/test-signal.c (nsig): New variable.
+	Reported by Joachim Schmitz <jojo@schmitz-digital.de>.
+
+2010-12-24  Bruno Haible  <bruno@clisp.org>
+
+	rename, renameat: Avoid test failures on OSF/1 5.1.
+	* tests/test-rename.h (test_rename): Allow EEXIST and ENOTDIR as
+	alternative error codes.
+	* tests/test-renameat.c (main): Likewise.
+
+2010-12-24  Bruno Haible  <bruno@clisp.org>
+
+	*printf: Detect large precisions bug on Solaris 10/SPARC.
+	* m4/printf.m4 (gl_PRINTF_PRECISION): Add one more test code, provided
+	by Paul Eggert.
+	* tests/test-snprintf-posix.h (test_function): Add this test code here
+	too.
+	* tests/test-sprintf-posix.h (test_function): Likewise.
+	* tests/test-vasnprintf-posix.c (test_function): Likewise.
+	* tests/test-vasprintf-posix.c (test_function): Likewise.
+	* doc/posix-functions/fprintf.texi: Mention Solaris 10 bug as worked
+	around by gnulib.
+	* doc/posix-functions/printf.texi: Likewise.
+	* doc/posix-functions/snprintf.texi: Likewise.
+	* doc/posix-functions/sprintf.texi: Likewise.
+	* doc/posix-functions/vfprintf.texi: Likewise.
+	* doc/posix-functions/vprintf.texi: Likewise.
+	* doc/posix-functions/vsnprintf.texi: Likewise.
+	* doc/posix-functions/vsprintf.texi: Likewise.
+	* doc/posix-functions/dprintf.texi: Undo last commit.
+	* doc/posix-functions/vdprintf.texi: Likewise.
+
+2010-12-23  Paul Eggert  <eggert@cs.ucla.edu>
+
+	tests: port test-fdutimensat.c to Solaris 8
+	* tests/test-fdutimensat.c (do_fdutimens): Don't assume
+	fdutimensat works with a nonnegative fd and AT_SYMLINK_NOFOLLOW.
+	On Solaris 8, it fails with errno == ENOSYS, because there is no
+	futimens (so it can't use the fd), and there is no lutimens (so it
+	can't implement AT_SYMLINK_NOFOLLOW on symlinks).
+
+	vsnprintf: make more consistent with snprintf; doc fixes
+
+	* doc/posix-functions/snprintf.texi (snprintf): The workaround for
+	the byte count return problem was promoted from the snprintf-posix
+	to the snprintf module.
+	* doc/posix-functions/vsnprintf.texi (vsnprintf): Likewise.
+	* m4/vsnprintf.m4 (gl_FUNC_VSNPRINTF): Also check
+	gl_SNPRINTF_RETVAL_C99, for consistency with gl_FUNC_SNPRINTF.
+	* tests/test-snprintf.c (main): Check the byte count returned.
+	* tests/test-vsnprintf.c (main): Likewise.
+
+2010-12-23  Eric Blake  <eblake@redhat.com>
+
+	sigpipe: relax to LGPLv2+, since it did not have any LGPLv3+ parts
+	* modules/sigpipe (License): Relax license.
+
+2010-12-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	doc: document Solaris printf bug with large float precisions
+	* doc/posix-functions/dprintf.texi (dprintf):
+	* doc/posix-functions/fprintf.texi (fprintf):
+	* doc/posix-functions/printf.texi (printf):
+	* doc/posix-functions/snprintf.texi (snprintf):
+	* doc/posix-functions/sprintf.texi (sprintf):
+	* doc/posix-functions/vdprintf.texi (vdprintf):
+	* doc/posix-functions/vfprintf.texi (vfprintf):
+	* doc/posix-functions/vprintf.texi (vprintf):
+	* doc/posix-functions/vsnprintf.texi (vsnprintf):
+	* doc/posix-functions/vsprintf.texi (vsprintf):
+	Mention that these functions mishandle large floating point
+	precisions on Solaris 10.  The same bug is also present in Solaris
+	8, and I assume earlier.  This causes "cd gnulib-tests; make
+	check" to fail on Solaris 8 (and I assume, later) when building
+	the latest coreutils, in test-vasprintf-posix's call to
+	my_asprintf (&result, "%.4000f %d", 1.0, 99).  I have not checked
+	the wide flavors (e.g., wprintf) so this patch just updates the
+	documentation for the narrow ones.
+
+	test-posixtm.c: add two tests
+	* tests/test-posixtm.c: Add two tests, to highlight the
+	bug in Solaris 10 (and earlier) localtime.  Gnulib doesn't work
+	around this bug; this is merely to document it.
+
+2010-12-22  Bruno Haible  <bruno@clisp.org>
+
+	getlogin_r: Work around portability problem on OSF/1.
+	* m4/getlogin_r.m4 (gl_FUNC_GETLOGIN_R): Detect the OSF/1 problem.
+	* lib/unistd.in.h (getlogin_r): Replace if REPLACE_GETLOGIN_R is set.
+	* lib/getlogin_r.c (getlogin_r): When getlogin_r exists, invoke it and
+	test for a truncated result.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize REPLACE_GETLOGIN_R.
+	* modules/unistd (Makefile.am): Substitute REPLACE_GETLOGIN_R.
+	* modules/getlogin_r (Depends-on): Add memchr.
+	* doc/posix-functions/getlogin_r.texi: Mention the OSF/1 problem.
+
+2010-12-22  Bruno Haible  <bruno@clisp.org>
+
+	ptsname: Avoid test failure on OSF/1 5.1.
+	* modules/ptsname-tests (Depends-on): Add 'same-inode'.
+	* tests/test-ptsname.c: Include <sys/stat.h>, same-inode.h.
+	(same_slave): New function.
+	(main): Use it to compare ptsname's result with the expected file name.
+
+2010-12-22  Bruno Haible  <bruno@clisp.org>
+
+	Port extended stdio modules to HP NonStop Kernel.
+	* lib/stdio-impl.h (_IOERR, _IOREAD, _IOWRT, _IORW) [__TANDEM]: New
+	macros.
+	* lib/fbufmode.c: Update comments.
+	* lib/fflush.c: Likewise.
+	* lib/fpurge.c: Likewise.
+	* lib/freadable.c: Likewise.
+	* lib/freadahead.c: Likewise.
+	* lib/freading.c: Likewise.
+	* lib/freadptr.c: Likewise.
+	* lib/freadseek.c: Likewise.
+	* lib/fseeko.c: Likewise.
+	* lib/fseterr.c: Likewise.
+	* lib/fwritable.c: Likewise.
+	* lib/fwriting.c: Likewise.
+	Reported by Joachim Schmitz <jojo@schmitz-digital.de>.
+
+2010-12-22  Bruno Haible  <bruno@clisp.org>
+
+	ttyname_r: Work around bug on OSF/1 5.1.
+	* doc/posix-functions/ttyname_r.texi: Mention the OSF/1 bug.
+	* m4/ttyname_r.m4 (gl_FUNC_TTYNAME_R): Detect the OSF/1 bug. Say "no"
+	instead of "guessing no" when the OSF/1 bug or the Solaris bug is
+	present.
+	* lib/ttyname_r.c (ttyname_r): Update comments.
+
+2010-12-22  Bruno Haible  <bruno@clisp.org>
+
+	round: Implement result sign according to IEEE 754.
+	* lib/round.c (MIN, MINUS_ZERO): New macros.
+	(FLOOR_FREE_ROUND): Return -0.0 for -0.5 < x < 0.
+	* tests/test-roundf-ieee.c (main): Test also values between -1 and 1.
+	* tests/test-round-ieee.c (main): Likewise.
+	* tests/test-roundl-ieee.c (main): Likewise.
+
+	trunc: Implement result sign according to IEEE 754.
+	* lib/trunc.c (MIN, MINUS_ZERO): New macros.
+	(FUNC): Return +0.0 for 0 < x < 1 and -0.0 for -1 < x < 0.
+	* tests/test-trunc2.c: Include minus-zero.h.
+	(MINUS_ZERO): New macro.
+	(trunc_reference): Keep in sync with lib/trunc.c.
+	* tests/test-truncf2.c: Include minus-zero.h.
+	(MINUS_ZERO): New macro.
+	(truncf_reference): Keep in sync with lib/trunc.c.
+	* tests/test-truncf-ieee.c (main): Test also values between -1 and 1.
+	* tests/test-trunc-ieee.c (main): Likewise.
+	* tests/test-truncl-ieee.c (main): Likewise.
+
+	ceil: Implement result sign according to IEEE 754.
+	* lib/ceil.c (MIN, MINUS_ZERO): New macros.
+	(FUNC): Return -0.0 for -1 < x < 0.
+	* tests/test-ceil2.c: Include minus-zero.h.
+	(MINUS_ZERO): New macro.
+	(ceil_reference): Keep in sync with lib/ceil.c.
+	* tests/test-ceilf2.c: Include minus-zero.h.
+	(MINUS_ZERO): New macro.
+	(ceilf_reference): Keep in sync with lib/ceil.c.
+	* tests/test-ceilf-ieee.c (main): Test also values between -1 and 1.
+	* tests/test-ceil-ieee.c (main): Likewise.
+	* tests/test-ceill-ieee.c (main): Likewise.
+
+	floor: Implement result sign according to IEEE 754.
+	* lib/floor.c (FUNC): Return +0.0 for 0 < x < 1.
+	* tests/test-floor2.c (floor_reference): Keep in sync with lib/floor.c.
+	* tests/test-floorf2.c (floorf_reference): Likewise.
+	* tests/test-floorf-ieee.c (main): Test also values between -1 and 1.
+	* tests/test-floor-ieee.c (main): Likewise.
+	* tests/test-floorl-ieee.c (main): Likewise.
+
+2010-12-22  Bruno Haible  <bruno@clisp.org>
+
+	getaddrinfo: Update doc.
+	* doc/posix-functions/gai_strerror.texi: Return type is also different
+	on AIX and HP-UX.
+
+2010-12-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	getaddrinfo, inet_ntop: Update doc for Solaris.
+	* doc/posix-functions/gai_strerror.texi: Return type is also an
+	issue on Solaris 9 and earlier.
+	* doc/posix-functions/inet_ntop.texi: 4th arg type is also an issue
+	on Solaris 10 and earlier.
+
+2010-12-21  Bruno Haible  <bruno@clisp.org>
+
+	New module 'roundl-ieee'.
+	* modules/roundl-ieee: New file.
+	* m4/roundl.m4 (gl_FUNC_ROUNDL): If gl_FUNC_ROUNDL_IEEE is also used,
+	test whether roundl works according to ISO C 99 with IEC 60559.
+	* m4/roundl-ieee.m4: New file.
+	* modules/roundl-ieee-tests: New file.
+	* tests/test-roundl-ieee.c: New file, based on tests/test-roundl.c.
+	* tests/test-roundl.c (main): Remove signbit tests.
+	* modules/roundl-tests (Depends-on): Remove signbit.
+	* doc/posix-functions/roundl.texi: Mention the new module.
+
+2010-12-21  Bruno Haible  <bruno@clisp.org>
+
+	New module 'truncl-ieee'.
+	* modules/truncl-ieee: New file.
+	* modules/truncl-ieee-tests: New file.
+	* tests/test-truncl-ieee.c: New file, based on tests/test-truncl.c.
+	* tests/test-truncl.c (main): Remove signbit tests.
+	* modules/truncl-tests (Depends-on): Remove signbit.
+	* doc/posix-functions/truncl.texi: Mention the new module.
+
+2010-12-21  Bruno Haible  <bruno@clisp.org>
+
+	New module 'ceill-ieee'.
+	* modules/ceill-ieee: New file.
+	* modules/ceill-ieee-tests: New file.
+	* tests/test-ceill-ieee.c: New file, based on tests/test-ceill.c.
+	* tests/test-ceill.c (main): Remove signbit tests.
+	* modules/ceill-tests (Depends-on): Remove signbit.
+	* doc/posix-functions/ceill.texi: Mention the new module.
+
+2010-12-21  Bruno Haible  <bruno@clisp.org>
+
+	New module 'floorl-ieee'.
+	* modules/floorl-ieee: New file.
+	* modules/floorl-ieee-tests: New file.
+	* tests/test-floorl-ieee.c: New file, based on tests/test-floorl.c.
+	* tests/test-floorl.c (main): Remove signbit tests.
+	* modules/floorl-tests (Depends-on): Remove signbit.
+	* doc/posix-functions/floorl.texi: Mention the new module.
+
+2010-12-21  Bruno Haible  <bruno@clisp.org>
+
+	New module 'round-ieee'.
+	* modules/round-ieee: New file.
+	* m4/round.m4 (gl_FUNC_ROUND): If gl_FUNC_ROUND_IEEE is also used, test
+	whether round works according to ISO C 99 with IEC 60559.
+	* m4/round-ieee.m4: New file.
+	* modules/round-ieee-tests: New file.
+	* tests/test-round-ieee.c: New file, based on tests/test-roundf-ieee.c.
+	* tests/test-round1.c (main): Remove signbit tests.
+	* modules/round-tests (Depends-on): Remove 'signbit'.
+	* doc/posix-functions/round.texi: Mention the new module.
+
+2010-12-21  Bruno Haible  <bruno@clisp.org>
+
+	New module 'trunc-ieee'.
+	* modules/trunc-ieee: New file.
+	* m4/trunc.m4 (gl_FUNC_TRUNC): If gl_FUNC_TRUNC_IEEE is also used, test
+	whether trunc works according to ISO C 99 with IEC 60559.
+	* m4/trunc-ieee.m4: New file.
+	* lib/math.in.h (trunc): Replace if REPLACE_TRUNC is set.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize REPLACE_TRUNC.
+	* modules/math (Makefile.am): Substitute REPLACE_TRUNC.
+	* modules/trunc-ieee-tests: New file.
+	* tests/test-trunc-ieee.c: New file, based on tests/test-truncf-ieee.c.
+	* tests/test-trunc1.c (main): Remove signbit tests.
+	* modules/trunc-tests (Depends-on): Remove 'signbit'.
+	* doc/posix-functions/trunc.texi: Mention the new module.
+
+2010-12-21  Bruno Haible  <bruno@clisp.org>
+
+	New module 'ceil-ieee'.
+	* modules/ceil-ieee: New file.
+	* m4/ceil.m4 (gl_FUNC_CEIL): Require gl_MATH_H_DEFAULTS. If
+	gl_FUNC_CEIL_IEEE is also used, test whether ceil works according to
+	ISO C 99 with IEC 60559.
+	* m4/ceil-ieee.m4: New file.
+	* modules/ceil (Files): Add lib/ceil.c.
+	(Depends-on): Add 'float'.
+	(configure.ac): Invoke gl_MATH_MODULE_INDICATOR.
+	* lib/math.in.h (ceil): New declaration.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize GNULIB_CEIL,
+	REPLACE_CEIL.
+	* modules/math (Makefile.am): Substitute GNULIB_CEIL, REPLACE_CEIL.
+	* modules/ceil-ieee-tests: New file.
+	* tests/test-ceil-ieee.c: New file, based on tests/test-ceilf-ieee.c.
+	* tests/test-math-c++.cc: Check the signature of 'ceil'.
+	* doc/posix-functions/ceil.texi: Mention the new module.
+
+2010-12-21  Bruno Haible  <bruno@clisp.org>
+
+	New module 'floor-ieee'.
+	* modules/floor-ieee: New file.
+	* m4/floor.m4 (gl_FUNC_FLOOR): Require gl_MATH_H_DEFAULTS. If
+	gl_FUNC_FLOOR_IEEE is also used, test whether floor works according to
+	ISO C 99 with IEC 60559.
+	* m4/floor-ieee.m4: New file.
+	* modules/floor (Files): Add lib/floor.c.
+	(Depends-on): Add 'float'.
+	(configure.ac): Invoke gl_MATH_MODULE_INDICATOR.
+	* lib/math.in.h (floor): New declaration.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize GNULIB_FLOOR,
+	REPLACE_FLOOR.
+	* modules/math (Makefile.am): Substitute GNULIB_FLOOR, REPLACE_FLOOR.
+	* modules/floor-ieee-tests: New file.
+	* tests/test-floor-ieee.c: New file, based on tests/test-floorf-ieee.c.
+	* tests/test-math-c++.cc: Check the signature of 'floor'.
+	* doc/posix-functions/floor.texi: Mention the new module.
+
+2010-12-21  Bruno Haible  <bruno@clisp.org>
+
+	New module 'roundf-ieee'.
+	* modules/roundf-ieee: New file.
+	* m4/roundf.m4 (gl_FUNC_ROUNDF): If gl_FUNC_ROUNDF_IEEE is also used,
+	test whether roundf works according to ISO C 99 with IEC 60559.
+	* m4/roundf-ieee.m4: New file.
+	* modules/roundf-ieee-tests: New file.
+	* tests/test-roundf-ieee.c: New file, based on tests/test-roundf1.c.
+	* tests/test-roundf1.c (main): Remove signbit tests.
+	* modules/roundf-tests (Depends-on): Remove 'signbit'.
+	* doc/posix-functions/roundf.texi: Mention the new module.
+
+2010-12-21  Bruno Haible  <bruno@clisp.org>
+
+	New module 'truncf-ieee'.
+	* modules/truncf-ieee: New file.
+	* m4/truncf.m4 (gl_FUNC_TRUNCF): If gl_FUNC_TRUNCF_IEEE is also used,
+	test whether truncf works according to ISO C 99 with IEC 60559.
+	* m4/truncf-ieee.m4: New file.
+	* lib/math.in.h (truncf): Replace if REPLACE_TRUNCF is set.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize REPLACE_TRUNCF.
+	* modules/math (Makefile.am): Substitute REPLACE_TRUNCF.
+	* modules/truncf-ieee-tests: New file.
+	* tests/test-truncf-ieee.c: New file, based on tests/test-truncf1.c.
+	* tests/test-truncf1.c (main): Remove signbit tests.
+	* modules/truncf-tests (Depends-on): Remove 'signbit'.
+	* doc/posix-functions/truncf.texi: Mention the new module.
+
+2010-12-21  Bruno Haible  <bruno@clisp.org>
+
+	New module 'ceilf-ieee'.
+	* modules/ceilf-ieee: New file.
+	* m4/ceilf.m4 (gl_FUNC_FLOORF): If gl_FUNC_CEILF_IEEE is also used,
+	test whether ceilf works according to ISO C 99 with IEC 60559.
+	* m4/ceilf-ieee.m4: New file.
+	* modules/ceilf-ieee-tests: New file.
+	* tests/test-ceilf-ieee.c: New file, based on tests/test-ceilf1.c.
+	* tests/test-ceilf1.c (main): Remove signbit tests.
+	* modules/ceilf-tests (Depends-on): Remove 'signbit'.
+	* doc/posix-functions/ceilf.texi: Mention the new module.
+
+2010-12-21  Bruno Haible  <bruno@clisp.org>
+
+	New module 'floorf-ieee'.
+	* modules/floorf-ieee: New file.
+	* m4/floorf.m4 (gl_FUNC_FLOORF): If gl_FUNC_FLOORF_IEEE is also used,
+	test whether floorf works according to ISO C 99 with IEC 60559.
+	* m4/floorf-ieee.m4: New file.
+	* modules/floorf-ieee-tests: New file.
+	* tests/test-floorf-ieee.c: New file, based on tests/test-floorf1.c.
+	* tests/test-floorf1.c (main): Remove signbit tests.
+	* modules/floorf-tests (Depends-on): Remove 'signbit'.
+	* doc/posix-functions/floorf.texi: Mention the new module.
+
+2010-12-21  Bruno Haible  <bruno@clisp.org>
+
+	Support for minus zero in autoconf macros.
+	* m4/minus-zero.m4: New file, based on tests/minus-zero.h.
+	* m4/signbit.m4 (gl_FLOAT_SIGNBIT_CODE, gl_DOUBLE_SIGNBIT_CODE,
+	gl_LONG_DOUBLE_SIGNBIT_CODE, gl_FLOATTYPE_SIGNBIT_CODE): New macros.
+	* tests/minus-zero.h: Update comments.
+
+2010-12-21  Bruno Haible  <bruno@clisp.org>
+
+	Tests for module 'ceil'.
+	* modules/ceil-tests: New file.
+	* tests/test-ceil1.c: New file, based on tests/test-ceill.c.
+	* tests/test-ceil2.c: New file, based on tests/test-ceilf2.c.
+
+2010-12-21  Bruno Haible  <bruno@clisp.org>
+
+	Tests for module 'floor'.
+	* modules/floor-tests: New file.
+	* tests/test-floor1.c: New file, based on tests/test-floorl.c.
+	* tests/test-floor2.c: New file, based on tests/test-floorf2.c.
+
+2010-12-21  Bruno Haible  <bruno@clisp.org>
+
+	math: Fix indentation.
+	* lib/math.in.h (floorf): Fix indentation.
+
+2010-12-21  Bruno Haible  <bruno@clisp.org>
+
+	Fix cross-compilation guesses on Solaris.
+	* m4/fopen.m4 (gl_FUNC_FOPEN): Correct shell pattern so that it does
+	not match "solaris2.10".
+	* m4/open.m4 (gl_FUNC_OPEN): Likewise.
+	* m4/printf.m4 (gl_SNPRINTF_TRUNCATION_C99, gl_SNPRINTF_DIRECTIVE_N,
+	gl_VSNPRINTF_ZEROSIZE_C99): Likewise.
+
+2010-12-21  Paul Eggert  <eggert@cs.ucla.edu>
+
+	snprintf: port snprintf (NULL, 0, ...) to Solaris 8 and 9
+	This fixes a problem observed with the latest coreutils snapshot
+	that caused a test to fail on Solaris 8.  src/csplit.c's call
+	snprintf (NULL, 0, format, UINT_MAX) returns -1 on Solaris 9 and
+	earlier, instead of returning the number of bytes that would have
+	been generated; this causes csplit to incorrectly report memory
+	exhaustion.
+	* m4/printf.m4 (gl_SNPRINTF_RETVAL_C99): Also check for
+	snprintf (NULL, 0, ...) and (for good measure) snprintf (buf, 0, ...).
+	Guess that it doesn't work on Solaris 2.6 through 9.  Adjust
+	comments to match.
+	(gl_PRINTF_SIZES_C99, gl_PRINTF_DIRECTIVE_F, gl_SNPRINTF_RETVAL_C99):
+	Fix typo in matching older versions of Solaris: "solaris2.10"
+	is matched by the shell pattern "solaris2.[0-9]*".  This matters
+	only for guessing while cross-compiling.
+	* m4/snprintf.m4 (gl_FUNC_SNPRINTF): Also check gl_SNPRINTF_RETVAL_C99.
+
+2010-12-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	ftoastr: fix comment again
+	* lib/ftoastr.h: Fix typo in comment.  Noted by Ben Pfaff in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2010-12/msg00149.html>.
+	Also, simplify example a bit by using flags = 0.
+
+2010-12-20  Bruno Haible  <bruno@clisp.org>
+
+	round*, trunc*: Update documentation regarding glibc.
+	* doc/posix-functions/roundf.texi: Mention missing declaration problem.
+	* doc/posix-functions/round.texi: Likewise.
+	* doc/posix-functions/roundl.texi: Likewise.
+	* doc/posix-functions/truncf.texi: Likewise.
+	* doc/posix-functions/trunc.texi: Likewise.
+	* doc/posix-functions/truncl.texi: Likewise.
+
+2010-12-20  Bruno Haible  <bruno@clisp.org>
+
+	roundf, round, roundl: Update documentation regarding OSF/1 5.1.
+	* doc/posix-functions/roundf.texi: Mention OSF/1 5.1 problem.
+	* doc/posix-functions/round.texi: Likewise.
+	* doc/posix-functions/roundl.texi: Likewise.
+
+2010-12-20  Bruno Haible  <bruno@clisp.org>
+
+	ttyname_r: Add missing declaration on HP-UX 11.
+	* lib/unistd.in.h (ttyname_r): Test HAVE_DECL_TTYNAME_R instead of
+	HAVE_TTYNAME_R.
+	* m4/ttyname_r.m4 (gl_FUNC_TTYNAME_R): Test whether ttyname_r is
+	declared. Set HAVE_TTYNAME_R always.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize
+	HAVE_DECL_TTYNAME_R, not HAVE_TTYNAME_R.
+	* modules/unistd (Makefile.am): Substitute HAVE_DECL_TTYNAME_R, not
+	HAVE_TTYNAME_R.
+	* doc/posix-functions/ttyname_r.texi: Document the HP-UX 11 problem.
+
+2010-12-20  Bruno Haible  <bruno@clisp.org>
+
+	getlogin, getlogin_r: Document HP-UX 11.11 bugs.
+	* doc/posix-functions/getlogin.texi: Document HP-UX 11.11 bug.
+	* doc/posix-functions/getlogin_r.texi: Likewise.
+	* tests/test-getlogin.c: Include <errno.h>.
+	(main): Avoid test failure on HP-UX 11.11.
+	* tests/test-getlogin_r.c (main): Likewise.
+
+2010-12-20  Bruno Haible  <bruno@clisp.org>
+
+	getlogin_r: Add missing declaration on HP-UX 11.
+	* m4/getlogin_r.m4 (gl_FUNC_GETLOGIN_R): Test whether getlogin_r is
+	declared also when it exists as a function.
+	* doc/posix-functions/getlogin_r.texi: Document this workaround.
+
+2010-12-20  Bruno Haible  <bruno@clisp.org>
+
+	wcsrtombs: Don't confuse mbstate_t with rpl_mbstate_t.
+	* lib/wcsrtombs.c: If gnulib overrides mbstate_t, define wcsrtombs
+	through wcrtomb.
+
+2010-12-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	ftoastr: fix comment
+	* lib/ftoastr.h: Fix typo in comment.  Noted by Ben Pfaff in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2010-12/msg00130.html>.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
+	isnan: Ensure it is a macro.
+	* lib/math.in.h (isnan): Define as a macro if not already a macro.
+	* doc/posix-functions/isnan.texi: Mention problem on IRIX, OSF/1,
+	Solaris.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
+	ldexpl test: Fix link error on OSF/1 5.1.
+	* modules/ldexpl-tests (Makefile.am): Define test_ldexpl_LDADD.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
+	wctype: Make it work in C++ mode on OSF/1 5.1.
+	* lib/wctype.in.h (iswblank): Declare but not define here.
+	* lib/iswblank.c: New file, extracted from lib/wctype.in.h.
+	* m4/wctype_h.m4 (gl_WCTYPE_H): Arrange to compile it if needed.
+	* modules/wctype (Files): Add lib/iswblank.c.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
+	signal: Document problem with type of SIGRTMIN, SIGRTMAX on OSF/1 5.1.
+	* doc/posix-headers/signal.texi: Document OSF/1 5.1 problem.
+	* lib/strsignal.c (strsignal): Cast SIGRTMIN to 'int'.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
+	sys_socket: Use POSIX compatible declarations on OSF/1 5.1.
+	* m4/sys_socket_h.m4 (gl_HEADER_SYS_SOCKET): On OSF/1, define
+	_POSIX_PII_SOCKET.
+	* doc/posix-functions/recv.texi: Document the OSF/1 problem.
+	* doc/posix-functions/recvfrom.texi: Likewise.
+	* doc/posix-functions/send.texi: Likewise.
+	* doc/posix-functions/sendto.texi: Likewise.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
+	tcgetsid: Add missing declaration on OSF/1 5.1.
+	* lib/termios.in.h (tcgetsid): Test HAVE_DECL_TCGETSID instead of
+	HAVE_TCGETSID.
+	* m4/tcgetsid.m4 (gl_FUNC_TCGETSID): Test whether tcgetsid is declared.
+	Don't set HAVE_TCGETSID.
+	* m4/termios_h.m4 (gl_TERMIOS_H_DEFAULTS): Initialize
+	HAVE_DECL_TCGETSID, not HAVE_TCGETSID.
+	* modules/termios (Makefile.am): Substitute HAVE_DECL_TCGETSID, not
+	HAVE_TCGETSID.
+	* doc/posix-functions/tcgetsid.texi: Mention the OSF/1 5.1 problem.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
+	stdio: Fix problem with popen() declaration on OSF/1 5.1.
+	* lib/stdio.in.h: During the include_next statement, let recursive
+	includes of this file include only the system header file.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
+	iconv_open: Fix regression from 2010-12-04.
+	* m4/iconv_open.m4 (gl_FUNC_ICONV_OPEN_UTF): Fix typo.
+	Reported by Noah Lavine <noah.b.lavine@gmail.com>.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
+	stdbool test: Avoid a gcc warning.
+	* tests/test-stdbool.c (main): Fail if e1 is false.
+	Reported by Jim Meyering.
+
+2010-12-19  Jim Meyering  <meyering@redhat.com>
+
+	setenv: restore to working order
+	$HAVE_SETENV is used in gl_FUNC_SETENV, yet its definitions were
+	mistakenly removed.
+	* m4/setenv.m4 (gl_FUNC_SETENV_SEPARATE): Restore code to set
+	HAVE_SETENV.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Restore code to initialize
+	HAVE_SETENV.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
+	Document some different function declarations on OSF/1 5.1.
+	* doc/posix-functions/gai_strerror.texi: Mention different declaration.
+	* doc/posix-functions/inet_ntop.texi: Likewise.
+	* doc/posix-functions/gethostname.texi: Likewise.
+	* lib/unistd.in.h (gethostname): Update comment.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
+	doc: Mention vasprintf-posix module.
+	* doc/glibc-functions/asprintf.texi: Mention the workarounds present in
+	the 'vasprintf-posix' module.
+	* doc/glibc-functions/vasprintf.texi: Likewise.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
+	unsetenv: Add missing declaration on OSF/1 5.1.
+	* lib/stdlib.in.h (setenv): Test HAVE_DECL_UNSETENV, not HAVE_UNSETENV.
+	* m4/setenv.m4 (gl_FUNC_UNSETENV): Test whether unsetenv is declared.
+	Don't set HAVE_UNSETENV. In the test program, set _BSD.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Initialize HAVE_DECL_UNSETENV,
+	not HAVE_UNSETENV.
+	* modules/stdlib (Makefile.am): Substitute HAVE_DECL_UNSETENV, not
+	HAVE_UNSETENV.
+	* doc/posix-functions/unsetenv.texi: Mention the OSF/1 5.1 problem.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
+	setenv: Add missing declaration on OSF/1 5.1.
+	* lib/stdlib.in.h (setenv): Test HAVE_DECL_SETENV, not HAVE_SETENV.
+	* m4/setenv.m4 (gl_FUNC_SETENV_SEPARATE): Test whether setenv is
+	declared. Don't set HAVE_SETENV.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Initialize HAVE_DECL_SETENV,
+	not HAVE_SETENV.
+	* modules/stdlib (Makefile.am): Substitute HAVE_DECL_SETENV, not
+	HAVE_SETENV.
+	* doc/posix-functions/setenv.texi: Mention the OSF/1 5.1 problem.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
+	nl_langinfo tests: Avoid gcc warning.
+	* tests/test-nl_langinfo.c: Don't enable the GCC pragma for GCC 4.2.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
+	mknod: Avoid error in C++ mode on OSF/1 with GCC.
+	* lib/sys_stat.in.h (mknod): Use _GL_CXXALIAS_SYS_CAST instead of
+	_GL_CXXALIAS_SYS.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
+	stdbool: Relax test.
+	* tests/test-stdbool.c (e): Don't require that casts from a variable's
+	address to 'bool' work in static initializer, for compilers other than
+	GCC.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
+	ftello: Add missing declaration on OSF/1 5.1.
+	* lib/stdio.in.h (ftello): Test HAVE_DECL_FTELLO, not HAVE_FTELLO.
+	* m4/ftello.m4 (gl_FUNC_FTELLO): Test whether ftello is declared.
+	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Initialize HAVE_DECL_FTELLO.
+	* modules/stdio (Makefile.am): Substitute HAVE_DECL_FTELLO.
+	* doc/posix-functions/ftello.texi: Mention the OSF/1 5.1 problem.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
+	fseeko: Add missing declaration on OSF/1 5.1.
+	* lib/stdio.in.h (fseeko): Test HAVE_DECL_FSEEKO, not HAVE_FSEEKO.
+	* m4/fseeko.m4 (gl_FUNC_FSEEKO): Test whether fseeko is declared.
+	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Initialize HAVE_DECL_FSEEKO.
+	* modules/stdio (Makefile.am): Substitute HAVE_DECL_FSEEKO.
+	* doc/posix-functions/fseeko.texi: Mention the OSF/1 5.1 problem.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
+	fchdir: Add missing declaration on OSF/1 5.1.
+	* lib/unistd.in.h (fchdir): Provide declaration if systems lacks it.
+	* m4/fchdir.m4 (gl_FUNC_FCHDIR): Check whether fchdir is declared.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize HAVE_DECL_FCHDIR.
+	* modules/unistd (Makefile.am): Substitute HAVE_DECL_FCHDIR.
+	* doc/posix-functions/fchdir.texi: Mention the OSF/1 5.1 problem.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
+	relocatable-prog-wrapper: Separate from relocatable-prog.
+	* modules/relocatable-prog (Makefile.am): Define uninstall-hook and
+	uninstall-relocwrapper rule here.
+	* modules/relocatable-prog-wrapper (Makefile.am): ... not here.
+	Reported by Ian Beckwith <ianb@erislabs.net>.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
+	unistr/u8-mbsnlen: Add missing dependency.
+	* modules/unistr/u8-mbsnlen (Depends-on): Add unistr/u8-mbtouc.
+	Reported by Ian Beckwith <ianb@erislabs.net>.
+
+2010-12-19  Bruno Haible  <bruno@clisp.org>
+
+	iconv: Make it possible again to use this module without 'iconv-h'.
+	* modules/iconv (configure.ac): Don't invoke gl_ICONV_MODULE_INDICATOR
+	if it is not defined.
+	Reported by Ian Beckwith <ianb@erislabs.net>.
+
+2010-12-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	acl: port to Solaris 8 when copying from tmpfs to ufs
+	* lib/copy-acl.c (qcopy_acl): Also allow EINVAL as an ignorable
+	error number.  Problem observed on Solaris 8 with latest
+	coreutils, with "mv A B", where A is on a tmpfs file system and B
+	is on a ufs file system.  This caused coreutils' mv/part-symlink
+	test to fail.
+
+	tests: set fail=0 at start
+	* tests/init.sh (setup_): Move fail=0 initialization here ...
+	(mktempd_): ... from here, so that tests can rely on fail being
+	set to 0 initially.  This fixes a problem in coreutils; see:
+	http://lists.gnu.org/archive/html/coreutils/2010-12/msg00083.html
+
+2010-12-18  Bruno Haible  <bruno@clisp.org>
+
+	memmem-simple: Stylistic changes.
+	* m4/memmem.m4 (gl_FUNC_MEMMEM_SIMPLE): Avoid possible gcc warning.
+	Fix preprocessor directive indentation.
+
+2010-12-15  Pádraig Brady <P@draigBrady.com>
+
+	memmem, memmem-simple: reorganize and expand empty needle check
+	* m4/memmem.m4 (gl_FUNC_MEMMEM_SIMPLE, gl_FUNC_MEMMEM): Move all
+	functional checks to memmem-simple so that one has a fully functional
+	memmem by using just this module.
+	Restrict the performance only check to the memmem module.
+	Also expand the empty needle check to ensure the correct
+	pointer is returned, not just a non NULL pointer.
+	* doc/glibc-functions/memmem.texi: Rearrange the portability
+	documentation to correlate with the rearranged checks.
+	Clarify exactly how the memmem and memmem-simple modules
+	relate to each other.
+
+2010-12-15  Pádraig Brady <P@draigBrady.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	Improve cross-compilation guesses for uClibc.
+	* m4/memmem.m4 (gl_FUNC_MEMMEM_SIMPLE): When cross-compiling, assume
+	that uClibc does not have the glibc bug.
+	* m4/strcasestr.m4 (gl_FUNC_STRCASESTR_SIMPLE): Likewise.
+	* m4/strstr.m4 (gl_FUNC_STRSTR_SIMPLE): Likewise.
+
+2010-12-14  Eric Blake  <eblake@redhat.com>
+
+	configmake: provide fallbacks for oldest supported autotools
+	* m4/configmake.m4: New file.
+	* modules/configmake (Files): Ship it.
+	(configure.ac): Use it to guarantee fallbacks.
+
 2010-12-13  Pádraig Brady <P@draigBrady.com>
 
 	read-file: Improve handling of large files

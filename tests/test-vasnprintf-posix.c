@@ -3568,6 +3568,21 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
   }
 
   {
+    size_t length;
+    char *result =
+      my_asnprintf (NULL, &length, "%.511f %d", 1.0, 99);
+    size_t i;
+    ASSERT (result != NULL);
+    ASSERT (result[0] == '1');
+    ASSERT (result[1] == '.');
+    for (i = 0; i < 511; i++)
+      ASSERT (result[2 + i] == '0');
+    ASSERT (strcmp (result + 2 + 511, " 99") == 0);
+    ASSERT (length == strlen (result));
+    free (result);
+  }
+
+  {
     char input[5000];
     size_t length;
     char *result;

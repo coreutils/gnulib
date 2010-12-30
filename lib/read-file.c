@@ -41,7 +41,7 @@
    *LENGTH.  On errors, *LENGTH is undefined, errno preserves the
    values set by system functions (if any), and NULL is returned.  */
 char *
-fread_file (FILE * stream, size_t * length)
+fread_file (FILE *stream, size_t *length)
 {
   char *buf = NULL;
   size_t alloc = BUFSIZ;
@@ -136,7 +136,7 @@ fread_file (FILE * stream, size_t * length)
 }
 
 static char *
-internal_read_file (const char *filename, size_t * length, const char *mode)
+internal_read_file (const char *filename, size_t *length, const char *mode)
 {
   FILE *stream = fopen (filename, mode);
   char *out;
@@ -170,7 +170,7 @@ internal_read_file (const char *filename, size_t * length, const char *mode)
    undefined, errno preserves the values set by system functions (if
    any), and NULL is returned.  */
 char *
-read_file (const char *filename, size_t * length)
+read_file (const char *filename, size_t *length)
 {
   return internal_read_file (filename, length, "r");
 }
@@ -183,7 +183,7 @@ read_file (const char *filename, size_t * length)
    preserves the values set by system functions (if any), and NULL is
    returned.  */
 char *
-read_binary_file (const char *filename, size_t * length)
+read_binary_file (const char *filename, size_t *length)
 {
   return internal_read_file (filename, length, "rb");
 }

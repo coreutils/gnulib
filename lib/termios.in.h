@@ -47,7 +47,7 @@
    The argument is a descriptor if this controlling terminal.
    Return -1, with errno set, upon failure.  errno = ENOSYS means that the
    function is unsupported.  */
-# if !@HAVE_TCGETSID@
+# if !@HAVE_DECL_TCGETSID@
 _GL_FUNCDECL_SYS (tcgetsid, pid_t, (int fd));
 # endif
 _GL_CXXALIAS_SYS (tcgetsid, pid_t, (int fd));

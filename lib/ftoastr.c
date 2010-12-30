@@ -69,7 +69,7 @@
 /* On hosts where it's not known that snprintf works, use sprintf to
    implement the subset needed here.  Typically BUFSIZE is big enough
    and there's little or no performance hit.  */
-#if ! GNULIB_SNPRINTF_POSIX
+#if ! GNULIB_SNPRINTF
 # undef snprintf
 # define snprintf ftoastr_snprintf
 static int

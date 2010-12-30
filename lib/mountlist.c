@@ -156,6 +156,31 @@
      || strcmp (Fs_type, "ignore") == 0)
 #endif
 
+#ifdef __CYGWIN__
+# include <windows.h>
+# define ME_REMOTE me_remote
+/* All cygwin mount points include `:' or start with `//'; so it
+   requires a native Windows call to determine remote disks.  */
+static bool
+me_remote (char const *fs_name, char const *fs_type _GL_UNUSED)
+{
+  if (fs_name[0] && fs_name[1] == ':')
+    {
+      char drive[4];
+      sprintf (drive, "%c:\\", fs_name[0]);
+      switch (GetDriveType (drive))
+        {
+        case DRIVE_REMOVABLE:
+        case DRIVE_FIXED:
+        case DRIVE_CDROM:
+        case DRIVE_RAMDISK:
+          return false;
+        }
+    }
+  return true;
+}
+#endif
+
 #ifndef ME_REMOTE
 /* A file system is `remote' if its Fs_name contains a `:'
    or if (it is of type (smbfs or cifs) and its Fs_name starts with `//').  */

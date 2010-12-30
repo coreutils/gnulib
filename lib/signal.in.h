@@ -72,6 +72,14 @@ typedef unsigned int sigset_t;
 #endif
 
 
+/* Maximum signal number + 1.  */
+#ifndef NSIG
+# if defined __TANDEM
+#  define NSIG 32
+# endif
+#endif
+
+
 #if @GNULIB_SIGPROCMASK@
 # if !@HAVE_POSIX_SIGNALBLOCKING@
 

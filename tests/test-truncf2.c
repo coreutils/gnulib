@@ -29,6 +29,7 @@
 #include <stdio.h>
 
 #include "isnanf-nolibm.h"
+#include "minus-zero.h"
 #include "macros.h"
 
 
@@ -37,6 +38,9 @@
 #define DOUBLE float
 #define MANT_DIG FLT_MANT_DIG
 #define L_(literal) literal##f
+
+/* -0.0.  See minus-zero.h.  */
+#define MINUS_ZERO minus_zerof
 
 /* 2^(MANT_DIG-1).  */
 static const DOUBLE TWO_MANT_DIG =
@@ -63,8 +67,12 @@ truncf_reference (DOUBLE x)
 
   if (z > L_(0.0))
     {
+      /* For 0 < x < 1, return +0.0 even if the current rounding mode is
+         FE_DOWNWARD.  */
+      if (z < L_(1.0))
+        z = L_(0.0);
       /* Avoid rounding errors for values near 2^k, where k >= MANT_DIG-1.  */
-      if (z < TWO_MANT_DIG)
+      else if (z < TWO_MANT_DIG)
         {
           /* Round to the next integer (nearest or up or down, doesn't matter).  */
           z += TWO_MANT_DIG;
@@ -76,8 +84,12 @@ truncf_reference (DOUBLE x)
     }
   else if (z < L_(0.0))
     {
+      /* For -1 < x < 0, return -0.0 regardless of the current rounding
+         mode.  */
+      if (z > L_(-1.0))
+        z = MINUS_ZERO;
       /* Avoid rounding errors for values near -2^k, where k >= MANT_DIG-1.  */
-      if (z > - TWO_MANT_DIG)
+      else if (z > - TWO_MANT_DIG)
         {
           /* Round to the next integer (nearest or up or down, doesn't matter).  */
           z -= TWO_MANT_DIG;

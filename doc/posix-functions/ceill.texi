@@ -4,13 +4,21 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/ceill.html}
 
-Gnulib module: ceill
+Gnulib module: ceill or ceill-ieee
 
-Portability problems fixed by Gnulib:
+Portability problems fixed by either Gnulib module @code{ceill} or @code{ceill-ieee}:
 @itemize
 @item
 This function is missing on some platforms:
 FreeBSD 5.2.1, NetBSD 5.0, OpenBSD 3.8, HP-UX 11, IRIX 6.5, Solaris 9, Cygwin, Interix 3.5, BeOS.
+@end itemize
+
+Portability problems fixed by Gnulib module @code{ceill-ieee}:
+@itemize
+@item
+This function returns a positive zero for an argument between -1 and 0
+on some platforms:
+OSF/1 5.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:

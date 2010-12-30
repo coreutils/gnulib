@@ -12,6 +12,9 @@ Portability problems fixed by Gnulib:
 This function is missing on some platforms:
 AIX 4.3.2, HP-UX 11.23, IRIX 6.5, Solaris 9, mingw, BeOS.
 @item
+This function is not declared on some platforms:
+OSF/1 5.1.
+@item
 On some platforms, this function does not fail with @samp{EINVAL} when
 passed an empty string or a string containing @samp{=}:
 MacOS X 10.5, FreeBSD 6.0, NetBSD 1.6, OpenBSD 3.8, Cygwin 1.5.x.

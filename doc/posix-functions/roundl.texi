@@ -4,13 +4,24 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/roundl.html}
 
-Gnulib module: roundl
+Gnulib module: roundl or roundl-ieee
 
-Portability problems fixed by Gnulib:
+Portability problems fixed by either Gnulib module @code{roundl} or @code{roundl-ieee}:
 @itemize
 @item
 This function is missing on some platforms:
 FreeBSD 5.2.1, NetBSD 5.0, OpenBSD 3.8, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 4.0, Solaris 9, Cygwin, Interix 3.5, BeOS.
+@item
+This function is not declared on some platforms:
+glibc 2.8, OSF/1 5.1.
+@end itemize
+
+Portability problems fixed by Gnulib module @code{roundl-ieee}:
+@itemize
+@item
+This function returns a positive zero for a minus zero argument
+on some platforms:
+OSF/1 5.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:

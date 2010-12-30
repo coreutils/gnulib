@@ -27,6 +27,7 @@
                       /usr/local/share/Unidata/EastAsianWidth.txt \
                       /usr/local/share/Unidata/LineBreak.txt \
                       /usr/local/share/Unidata/WordBreakProperty.txt \
+                      /usr/local/share/Unidata/GraphemeBreakProperty.txt \
                       /usr/local/share/Unidata/CompositionExclusions.txt \
                       /usr/local/share/Unidata/SpecialCasing.txt \
                       /usr/local/share/Unidata/CaseFolding.txt \
@@ -5141,6 +5142,8 @@ fill_width (const char *width_filename)
     }
 }
 
+/* ========================================================================= */
+
 /* Line breaking classification.  */
 
 enum
@@ -6743,6 +6746,234 @@ output_wbrk_tables (const char *filename, const char *version)
 
 /* ========================================================================= */
 
+/* Grapheme break property.  */
+
+/* Possible values of the Grapheme_Cluster_Break property.  */
+enum
+{
+  GBP_OTHER        = 0,
+  GBP_CR           = 1,
+  GBP_LF           = 2,
+  GBP_CONTROL      = 3,
+  GBP_EXTEND       = 4,
+  GBP_PREPEND      = 5,
+  GBP_SPACINGMARK  = 6,
+  GBP_L            = 7,
+  GBP_V            = 8,
+  GBP_T            = 9,
+  GBP_LV           = 10,
+  GBP_LVT          = 11
+};
+
+/* Construction of sparse 3-level tables.  */
+#define TABLE gbp_table
+#define ELEMENT unsigned char
+#define DEFAULT GBP_OTHER
+#define xmalloc malloc
+#define xrealloc realloc
+#include "3level.h"
+
+/* The grapheme break property from the GraphemeBreakProperty.txt file.  */
+int unicode_org_gbp[0x110000];
+
+/* Output the per-character grapheme break property table.  */
+static void
+output_gbp_table (const char *filename, const char *version)
+{
+  FILE *stream;
+  unsigned int ch, i;
+  struct gbp_table t;
+  unsigned int level1_offset, level2_offset, level3_offset;
+
+  stream = fopen (filename, "w");
+  if (stream == NULL)
+    {
+      fprintf (stderr, "cannot open '%s' for writing\n", filename);
+      exit (1);
+    }
+
+  fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
+  fprintf (stream, "/* Grapheme break property of Unicode characters.  */\n");
+  fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
+           version);
+
+  t.p = 7;
+  t.q = 9;
+  gbp_table_init (&t);
+
+  for (ch = 0; ch < 0x110000; ch++)
+    gbp_table_add (&t, ch, unicode_org_gbp[ch]);
+
+  gbp_table_finalize (&t);
+
+  /* Offsets in t.result, in memory of this process.  */
+  level1_offset =
+    5 * sizeof (uint32_t);
+  level2_offset =
+    5 * sizeof (uint32_t)
+    + t.level1_size * sizeof (uint32_t);
+  level3_offset =
+    5 * sizeof (uint32_t)
+    + t.level1_size * sizeof (uint32_t)
+    + (t.level2_size << t.q) * sizeof (uint32_t);
+
+  for (i = 0; i < 5; i++)
+    fprintf (stream, "#define gbrkprop_header_%d %d\n", i,
+             ((uint32_t *) t.result)[i]);
+  fprintf (stream, "static const\n");
+  fprintf (stream, "struct\n");
+  fprintf (stream, "  {\n");
+  fprintf (stream, "    int level1[%zu];\n", t.level1_size);
+  fprintf (stream, "    short level2[%zu << %d];\n", t.level2_size, t.q);
+  fprintf (stream, "    unsigned char level3[(%zu << %d) / 2];\n",
+           t.level3_size, t.p);
+  fprintf (stream, "  }\n");
+  fprintf (stream, "unigbrkprop =\n");
+  fprintf (stream, "{\n");
+  fprintf (stream, "  {");
+  if (t.level1_size > 8)
+    fprintf (stream, "\n   ");
+  for (i = 0; i < t.level1_size; i++)
+    {
+      uint32_t offset;
+      if (i > 0 && (i % 8) == 0)
+        fprintf (stream, "\n   ");
+      offset = ((uint32_t *) (t.result + level1_offset))[i];
+      if (offset == 0)
+        fprintf (stream, " %5d", -1);
+      else
+        fprintf (stream, " %5zu",
+                 (offset - level2_offset) / sizeof (uint32_t));
+      if (i+1 < t.level1_size)
+        fprintf (stream, ",");
+    }
+  if (t.level1_size > 8)
+    fprintf (stream, "\n ");
+  fprintf (stream, " },\n");
+  fprintf (stream, "  {");
+  if (t.level2_size << t.q > 8)
+    fprintf (stream, "\n   ");
+  for (i = 0; i < t.level2_size << t.q; i++)
+    {
+      uint32_t offset;
+      if (i > 0 && (i % 8) == 0)
+        fprintf (stream, "\n   ");
+      offset = ((uint32_t *) (t.result + level2_offset))[i];
+      if (offset == 0)
+        fprintf (stream, " %5d", -1);
+      else
+        fprintf (stream, " %5zu",
+                 (offset - level3_offset) / sizeof (uint8_t) / 2);
+      if (i+1 < t.level2_size << t.q)
+        fprintf (stream, ",");
+    }
+  if (t.level2_size << t.q > 8)
+    fprintf (stream, "\n ");
+  fprintf (stream, " },\n");
+  fprintf (stream, "  {");
+  if (t.level3_size << t.p > 8)
+    fprintf (stream, "\n   ");
+  for (i = 0; i < (t.level3_size << t.p) / 2; i++)
+    {
+      unsigned char *p = (unsigned char *) (t.result + level3_offset);
+      unsigned char value0 = p[i * 2];
+      unsigned char value1 = p[i * 2 + 1];
+      if (i > 0 && (i % 8) == 0)
+        fprintf (stream, "\n   ");
+      fprintf (stream, " 0x%02x%s", (value1 << 4) + value0,
+               (i+1 < (t.level3_size << t.p) / 2 ? "," : ""));
+    }
+  if (t.level3_size << t.p > 8)
+    fprintf (stream, "\n ");
+  fprintf (stream, " }\n");
+  fprintf (stream, "};\n");
+
+  if (ferror (stream) || fclose (stream))
+    {
+      fprintf (stderr, "error writing to '%s'\n", filename);
+      exit (1);
+    }
+}
+
+/* Stores in unicode_org_gbp[] the grapheme breaking property from the
+   GraphemeBreakProperty.txt file.  */
+static void
+fill_org_gbp (const char *graphemebreakproperty_filename)
+{
+  unsigned int i;
+  FILE *stream;
+  int lineno = 0;
+
+  for (i = 0; i < 0x110000; i++)
+    unicode_org_gbp[i] = GBP_OTHER;
+
+  stream = fopen (graphemebreakproperty_filename, "r");
+  if (stream == NULL)
+    {
+      fprintf (stderr, "error during fopen of '%s'\n",
+               graphemebreakproperty_filename);
+      exit (1);
+    }
+
+  for (;;)
+    {
+      char buf[200+1];
+      unsigned int i1, i2;
+      char padding[200+1];
+      char propname[200+1];
+      int propvalue;
+
+      lineno++;
+      if (fscanf (stream, "%200[^\n]\n", buf) < 1)
+        break;
+
+      if (buf[0] == '\0' || buf[0] == '#')
+        continue;
+
+      if (sscanf (buf, "%X..%X%[ ;]%[^ ]", &i1, &i2, padding, propname) != 4)
+        {
+          if (sscanf (buf, "%X%[ ;]%[^ ]", &i1, padding, propname) != 3)
+            {
+              fprintf (stderr, "parse error in '%s'\n",
+                       graphemebreakproperty_filename);
+              exit (1);
+            }
+          i2 = i1;
+        }
+#define PROP(name,value) \
+      if (strcmp (propname, name) == 0) propvalue = value; else
+      PROP ("CR", GBP_CR)
+      PROP ("LF", GBP_LF)
+      PROP ("Control", GBP_CONTROL)
+      PROP ("Extend", GBP_EXTEND)
+      PROP ("Prepend", GBP_PREPEND)
+      PROP ("SpacingMark", GBP_SPACINGMARK)
+      PROP ("L", GBP_L)
+      PROP ("V", GBP_V)
+      PROP ("T", GBP_T)
+      PROP ("LV", GBP_LV)
+      PROP ("LVT", GBP_LVT)
+#undef PROP
+        {
+          fprintf (stderr, "unknown property value '%s' in %s:%d\n", propname,
+                   graphemebreakproperty_filename, lineno);
+          exit (1);
+        }
+      if (!(i1 <= i2 && i2 < 0x110000))
+        abort ();
+
+      for (i = i1; i <= i2; i++)
+        unicode_org_gbp[i] = propvalue;
+    }
+  if (ferror (stream) || fclose (stream))
+    {
+      fprintf (stderr, "error reading from '%s'\n", graphemebreakproperty_filename);
+      exit (1);
+    }
+}
+
+/* ========================================================================= */
+
 /* Maximum number of characters into which a single Unicode character can be
    decomposed.  */
 #define MAX_DECOMP_LENGTH 18
@@ -8279,14 +8510,15 @@ main (int argc, char * argv[])
   const char *eastasianwidth_filename;
   const char *linebreak_filename;
   const char *wordbreakproperty_filename;
+  const char *graphemebreakproperty_filename;
   const char *compositionexclusions_filename;
   const char *specialcasing_filename;
   const char *casefolding_filename;
   const char *version;
 
-  if (argc != 14)
+  if (argc != 15)
     {
-      fprintf (stderr, "Usage: %s UnicodeData.txt PropList.txt DerivedCoreProperties.txt Scripts.txt Blocks.txt PropList-3.0.1.txt EastAsianWidth.txt LineBreak.txt WordBreakProperty.txt CompositionExclusions.txt SpecialCasing.txt CaseFolding.txt version\n",
+      fprintf (stderr, "Usage: %s UnicodeData.txt PropList.txt DerivedCoreProperties.txt Scripts.txt Blocks.txt PropList-3.0.1.txt EastAsianWidth.txt LineBreak.txt WordBreakProperty.txt GraphemeBreakProperty.txt CompositionExclusions.txt SpecialCasing.txt CaseFolding.txt version\n",
                argv[0]);
       exit (1);
     }
@@ -8300,10 +8532,11 @@ main (int argc, char * argv[])
   eastasianwidth_filename = argv[7];
   linebreak_filename = argv[8];
   wordbreakproperty_filename = argv[9];
-  compositionexclusions_filename = argv[10];
-  specialcasing_filename = argv[11];
-  casefolding_filename = argv[12];
-  version = argv[13];
+  graphemebreakproperty_filename = argv[10];
+  compositionexclusions_filename = argv[11];
+  specialcasing_filename = argv[12];
+  casefolding_filename = argv[13];
+  version = argv[14];
 
   fill_attributes (unicodedata_filename);
   clear_properties ();
@@ -8315,6 +8548,7 @@ main (int argc, char * argv[])
   fill_width (eastasianwidth_filename);
   fill_org_lbp (linebreak_filename);
   fill_org_wbp (wordbreakproperty_filename);
+  fill_org_gbp (graphemebreakproperty_filename);
   fill_composition_exclusions (compositionexclusions_filename);
   fill_casing_rules (specialcasing_filename);
   fill_casefolding_rules (casefolding_filename);
@@ -8346,6 +8580,8 @@ main (int argc, char * argv[])
   debug_output_wbrk_tables ("uniwbrk/wbrkprop.txt");
   debug_output_org_wbrk_tables ("uniwbrk/wbrkprop_org.txt");
   output_wbrk_tables ("uniwbrk/wbrkprop.h", version);
+
+  output_gbp_table ("unigbrk/gbrkprop.h", version);
 
   output_decomposition_tables ("uninorm/decomposition-table1.h", "uninorm/decomposition-table2.h", version);
   debug_output_composition_tables ("uninorm/composition.txt");
@@ -8379,6 +8615,7 @@ main (int argc, char * argv[])
         /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.1.0/ucd/EastAsianWidth.txt \
         /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.1.0/ucd/LineBreak.txt \
         /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.1.0/ucd/auxiliary/WordBreakProperty.txt \
+        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.1.0/ucd/auxiliary/GraphemeBreakProperty.txt \
         /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.1.0/ucd/CompositionExclusions.txt \
         /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.1.0/ucd/SpecialCasing.txt \
         /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.1.0/ucd/CaseFolding.txt \

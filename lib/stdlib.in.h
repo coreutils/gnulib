@@ -584,7 +584,7 @@ _GL_FUNCDECL_RPL (setenv, int,
 _GL_CXXALIAS_RPL (setenv, int,
                   (const char *name, const char *value, int replace));
 # else
-#  if !@HAVE_SETENV@
+#  if !@HAVE_DECL_SETENV@
 _GL_FUNCDECL_SYS (setenv, int,
                   (const char *name, const char *value, int replace)
                   _GL_ARG_NONNULL ((1)));
@@ -592,7 +592,9 @@ _GL_FUNCDECL_SYS (setenv, int,
 _GL_CXXALIAS_SYS (setenv, int,
                   (const char *name, const char *value, int replace));
 # endif
+# if !(@REPLACE_SETENV@ && !@HAVE_DECL_SETENV@)
 _GL_CXXALIASWARN (setenv);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef setenv
 # if HAVE_RAW_DECL_SETENV
@@ -702,12 +704,14 @@ _GL_WARN_ON_USE (unlockpt, "unlockpt is not portable - "
 _GL_FUNCDECL_RPL (unsetenv, int, (const char *name) _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (unsetenv, int, (const char *name));
 # else
-#  if !@HAVE_UNSETENV@
+#  if !@HAVE_DECL_UNSETENV@
 _GL_FUNCDECL_SYS (unsetenv, int, (const char *name) _GL_ARG_NONNULL ((1)));
 #  endif
 _GL_CXXALIAS_SYS (unsetenv, int, (const char *name));
 # endif
+# if !(@REPLACE_UNSETENV@ && !@HAVE_DECL_UNSETENV@)
 _GL_CXXALIASWARN (unsetenv);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef unsetenv
 # if HAVE_RAW_DECL_UNSETENV

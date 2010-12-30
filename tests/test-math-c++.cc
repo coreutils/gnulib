@@ -80,6 +80,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::atanl, long double, (long double));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::ceilf, float, (float));
 #endif
 
+#if GNULIB_TEST_CEIL
+SIGNATURE_CHECK (GNULIB_NAMESPACE::ceil, double, (double));
+#endif
+
 #if GNULIB_TEST_CEILL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::ceill, long double, (long double));
 #endif
@@ -94,6 +98,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::expl, long double, (long double));
 
 #if GNULIB_TEST_FLOORF
 SIGNATURE_CHECK (GNULIB_NAMESPACE::floorf, float, (float));
+#endif
+
+#if GNULIB_TEST_FLOOR
+SIGNATURE_CHECK (GNULIB_NAMESPACE::floor, double, (double));
 #endif
 
 #if GNULIB_TEST_FLOORL

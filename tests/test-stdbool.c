@@ -61,8 +61,13 @@ char b[false == 0 ? 1 : -1];
 char c[__bool_true_false_are_defined == 1 ? 1 : -1];
 #if HAVE_STDBOOL_H || defined __GNUC__ /* See above.  */
 char d[(bool) 0.5 == true ? 1 : -1];
-# ifdef ADDRESS_CHECK_OKAY
+# ifdef ADDRESS_CHECK_OKAY /* Avoid gcc warning.  */
+/* C99 may plausibly be interpreted as not requiring support for a cast from
+   a variable's address to bool in a static initializer.  So treat it like a
+   GCC extension.  */
+#  ifdef __GNUC__
 bool e = &s;
+#  endif
 # endif
 char f[(_Bool) 0.0 == false ? 1 : -1];
 #endif
@@ -85,11 +90,29 @@ _Bool *pq = &q;
 int
 main ()
 {
+  int error = 0;
+
+#if HAVE_STDBOOL_H || defined __GNUC__ /* See above.  */
+# ifdef ADDRESS_CHECK_OKAY /* Avoid gcc warning.  */
+  /* A cast from a variable's address to bool is valid in expressions.  */
+  {
+    bool e1 = &s;
+    if (!e1)
+      error = 1;
+  }
+# endif
+#endif
+
   /* Catch a bug in IBM AIX xlc compiler version 6.0.0.0
      reported by James Lemley on 2005-10-05; see
      http://lists.gnu.org/archive/html/bug-coreutils/2005-10/msg00086.html
      This is a runtime test, since a corresponding compile-time
      test would rely on initializer extensions.  */
-  char digs[] = "0123456789";
-  return &(digs + 5)[-2 + (bool) 1] != &digs[4];
+  {
+    char digs[] = "0123456789";
+    if (&(digs + 5)[-2 + (bool) 1] != &digs[4])
+      error = 1;
+  }
+
+  return error;
 }

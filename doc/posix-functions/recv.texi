@@ -9,6 +9,10 @@ Gnulib module: recv
 Portability problems fixed by Gnulib:
 @itemize
 @item
+This function has the return type @code{int} instead of @code{ssize_t}
+on some platforms:
+OSF/1 5.1.
+@item
 On Windows platforms (excluding Cygwin), error codes for @code{recv}
 are not placed in @code{errno}, and @code{WSAGetLastError} must be
 used instead.

@@ -321,7 +321,7 @@ mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
 size_t
 rpl_mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
 {
-# if MBRTOWC_NULL_ARG_BUG || MBRTOWC_RETVAL_BUG
+# if MBRTOWC_NULL_ARG2_BUG || MBRTOWC_RETVAL_BUG
   if (s == NULL)
     {
       pwc = NULL;
@@ -379,7 +379,16 @@ rpl_mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
     return ret;
   }
 # else
-  return mbrtowc (pwc, s, n, ps);
+  {
+#   if MBRTOWC_NULL_ARG1_BUG
+    wchar_t dummy;
+
+    if (pwc == NULL)
+      pwc = &dummy;
+#   endif
+
+    return mbrtowc (pwc, s, n, ps);
+  }
 # endif
 }
 

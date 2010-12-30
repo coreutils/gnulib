@@ -47,15 +47,16 @@ main (int argc, char *argv[])
   int size;
   int retval;
 
+  retval = my_snprintf (NULL, 0, "%d", 12345);
+  ASSERT (retval == 5);
+
   for (size = 0; size <= 8; size++)
     {
       memcpy (buf, "DEADBEEF", 8);
       retval = my_snprintf (buf, size, "%d", 12345);
+      ASSERT (retval == 5);
       if (size < 6)
         {
-#if CHECK_VSNPRINTF_POSIX
-          ASSERT (retval < 0 || retval >= size);
-#endif
           if (size > 0)
             {
               ASSERT (memcmp (buf, "12345", size - 1) == 0);
@@ -68,7 +69,6 @@ main (int argc, char *argv[])
         }
       else
         {
-          ASSERT (retval == 5);
           ASSERT (memcmp (buf, "12345\0EF", 8) == 0);
         }
     }

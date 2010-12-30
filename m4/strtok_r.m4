@@ -1,4 +1,4 @@
-# strtok_r.m4 serial 11
+# strtok_r.m4 serial 12
 dnl Copyright (C) 2002-2004, 2006-2007, 2009-2010 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -16,7 +16,7 @@ AC_DEFUN([gl_FUNC_STRTOK_R],
   if test $ac_cv_func_strtok_r = yes; then
     dnl glibc 2.7 has a bug in strtok_r that causes a segmentation fault
     dnl when the second argument to strtok_r is a constant string that has
-    dnl exactly one byte and compiling with optimization.  This bug is, for
+    dnl exactly one byte and compiling with optimization.  This bug is, for
     dnl example, present in the glibc 2.7-18 package in Debian "lenny".
     dnl See <http://sources.redhat.com/bugzilla/show_bug.cgi?id=5614>.
     AC_CACHE_CHECK([whether strtok_r works], [gl_cv_func_strtok_r_works],
@@ -32,10 +32,10 @@ AC_DEFUN([gl_FUNC_STRTOK_R],
             ]],
             [[static const char dummy[] = "\177\01a";
               char delimiters[] = "xxxxxxxx";
-              char *save_ptr = (char *) dummy;
-              strtok_r (delimiters, "x", &save_ptr);
-              strtok_r (NULL, "x", &save_ptr);
-              return 0;
+              char *save_ptr = (char *) dummy;
+              strtok_r (delimiters, "x", &save_ptr);
+              strtok_r (NULL, "x", &save_ptr);
+              return 0;
             ]])
          ],
          [gl_cv_func_strtok_r_works=yes],

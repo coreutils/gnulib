@@ -1,4 +1,4 @@
-# roundf.m4 serial 9
+# roundf.m4 serial 10
 dnl Copyright (C) 2007-2010 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -6,6 +6,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_ROUNDF],
 [
+  m4_divert_text([DEFAULTS], [gl_roundf_required=plain])
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   dnl Persuade glibc <math.h> to declare roundf().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
@@ -50,6 +51,40 @@ int main()
     if test "$ROUNDF_LIBM" = missing; then
       REPLACE_ROUNDF=1
     fi
+    m4_ifdef([gl_FUNC_ROUNDF_IEEE], [
+      if test $gl_roundf_required = ieee && test $REPLACE_ROUNDF = 0; then
+        AC_CACHE_CHECK([whether roundf works according to ISO C 99 with IEC 60559],
+          [gl_cv_func_roundf_ieee],
+          [
+            save_LIBS="$LIBS"
+            LIBS="$LIBS $ROUNDF_LIBM"
+            AC_RUN_IFELSE(
+              [AC_LANG_SOURCE([[
+#ifndef __NO_MATH_INLINES
+# define __NO_MATH_INLINES 1 /* for glibc */
+#endif
+#include <math.h>
+]gl_FLOAT_MINUS_ZERO_CODE[
+]gl_FLOAT_SIGNBIT_CODE[
+int main()
+{
+  /* Test whether roundf (-0.0f) is -0.0f.  */
+  if (signbitf (minus_zerof) && !signbitf (roundf (minus_zerof)))
+    return 1;
+  return 0;
+}
+              ]])],
+              [gl_cv_func_roundf_ieee=yes],
+              [gl_cv_func_roundf_ieee=no],
+              [gl_cv_func_roundf_ieee="guessing no"])
+            LIBS="$save_LIBS"
+          ])
+        case "$gl_cv_func_roundf_ieee" in
+          *yes) ;;
+          *) REPLACE_ROUNDF=1 ;;
+        esac
+      fi
+    ])
   else
     HAVE_DECL_ROUNDF=0
   fi

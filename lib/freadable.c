@@ -33,7 +33,7 @@ freadable (FILE *fp)
   return (fp_->_flags & (__SRW | __SRD)) != 0;
 #elif defined __EMX__               /* emx+gcc */
   return (fp->_flags & (_IORW | _IOREAD)) != 0;
-#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw */
+#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw, NonStop Kernel */
   return (fp->_flag & (_IORW | _IOREAD)) != 0;
 #elif defined __QNX__               /* QNX */
   return (fp->_Mode & 0x1 /* _MOPENR */) != 0;

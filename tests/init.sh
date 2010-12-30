@@ -111,7 +111,7 @@ fi
 
 # Eval this code in a subshell to determine a shell's suitability.
 # 10 - passes all tests; ok to use
-#  9 - ok, but enabling "set -x" corrupts application stderr; prefer higher score
+#  9 - ok, but enabling "set -x" corrupts app stderr; prefer higher score
 #  ? - not ok
 gl_shell_test_script_='
 test $(echo y) = y || exit 1
@@ -324,6 +324,7 @@ setup_()
   fi
 
   initial_cwd_=$PWD
+  fail=0
 
   pfx_=`testdir_prefix_`
   test_dir_=`mktempd_ "$initial_cwd_" "$pfx_-$ME_.XXXX"` \
@@ -413,10 +414,9 @@ mktempd_()
 
   case $template_ in
   *XXXX) ;;
-  *) fail_ "invalid template: $template_ (must have a suffix of at least 4 X's)";;
+  *) fail_ \
+       "invalid template: $template_ (must have a suffix of at least 4 X's)";;
   esac
-
-  fail=0
 
   # First, try to use mktemp.
   d=`unset TMPDIR; mktemp -d -t -p "$destdir_" "$template_" 2>/dev/null` \
