@@ -1,3 +1,7 @@
+2010-12-30  Bruce Korb  <bkorb@gnu.org>
+
+	* libposix/bootstrap (posix_list): remove unnecessary temp file
+
 2010-12-13  Pádraig Brady <P@draigBrady.com>
 
 	read-file: Improve handling of large files

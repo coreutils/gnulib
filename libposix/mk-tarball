@@ -57,13 +57,18 @@ func_init()
     test $# -eq 1 && exit 0
     ;;
   esac
+
+  case "$-" in
+  *x* ) dashx=-x ;;
+  * ) dashx= ;;
+  esac
 }
 
 func_bootstrap()
 {
-  
-  /bin/sh ./bootstrap \
-    || func_die bootstrap failure
+  PS4='>bs> ' \
+    /bin/sh ${dashx} ./bootstrap \
+      || func_die bootstrap failure
 }
 
 func_mkdistro()
