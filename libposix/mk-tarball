@@ -54,52 +54,16 @@ func_init()
   case "$*" in
   *'--clean'* | *'--clob'* )
     git clean -f -x -d .
+    test $# -eq 1 && exit 0
     ;;
   esac
 }
 
-func_mkver()
-{
-  {
-    echo '/*'
-    sed '1,/^$/d;s/^#/ */;/http:\/\/www\.gnu\.org/q' ${prognam}
-    echo ' */'
-
-    gv=`../build-aux/git-version-gen .tarball-version | \
-      sed 's/-dirty/-modified/'`
-    sedcmd='/^2[01][0-9][0-9]-[0-1][0-9]-[0-3][0-9]  /{
-	  s/ .*//
-	  s/-/./gp
-	  q
-	}'
-    dv=`sed -n "${sedcmd}" ${glibdir}/ChangeLog`
-    cat <<-_EOF_
-	#ifndef LIBPOSIX_GIT_VERSION
-	#define LIBPOSIX_GIT_VERSION "$gv"
-	#define LIBPOSIX_VERSION     "$dv"
-
-	extern char const libposix_git_version[];
-	extern char const libposix_version[];
-	#endif  /* LIBPOSIX_GIT_VERSION */
-	_EOF_
-  } > lib/version.h
-
-  {
-    sed -n '1,/^ \*\/$/p' lib/version.h
-
-    cat <<-\_EOF_
-	#include "version.h"
-
-	char const libposix_git_version[] = LIBPOSIX_GIT_VERSION;
-	char const libposix_version[]     = LIBPOSIX_VERSION;
-	_EOF_
-
-  } > lib/version.c
-}
-
 func_bootstrap()
 {
-  /bin/sh ./bootstrap func_die bootstrap failure
+  
+  /bin/sh ./bootstrap \
+    || func_die bootstrap failure
 }
 
 func_mkdistro()
@@ -113,7 +77,6 @@ func_mkdistro()
 }
 
 func_init ${1+"$@"}
-func_mkver
 func_bootstrap
 func_mkdistro
 

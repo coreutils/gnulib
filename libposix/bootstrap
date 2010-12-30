@@ -12,11 +12,10 @@ else
     mkdir tmp tmp/modules
 fi
 
+posix_list=`
 {   echo alloca
     posix-modules
-} | sort -u > tmp/posix-list
-
-posix_list=`grep -v '^$' tmp/posix-list`
+} | tr -d ' \t' | sed '/^$/d' | sort -u`
 
 cat > tmp/modules/libposix <<- _EOF_
 	Description:
@@ -57,7 +56,6 @@ opts='--local-dir=tmp
 
 # Bootstrap for autotools.
 gnulib-tool ${opts} git-version-gen libposix
-
 
 # No need to maintain a Makefile.am just to include gnulib.mk.
 mv tests/gnulib.mk tests/Makefile.am
