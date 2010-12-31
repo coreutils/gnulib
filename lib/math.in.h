@@ -699,7 +699,7 @@ _GL_EXTERN_C int isnanl (long double x);
    that recursively expand back to isnan.  So use the gnulib
    replacements for them directly. */
 #  if @HAVE_ISNANF@ && __GNUC__ >= 4
-#   define gl_isnan_f(x) __builtin_isnan ((float)(x))
+#   define gl_isnan_f(x) __builtin_isnanf ((float)(x))
 #  else
 _GL_EXTERN_C int rpl_isnanf (float x);
 #   define gl_isnan_f(x) rpl_isnanf (x)
@@ -711,7 +711,7 @@ _GL_EXTERN_C int rpl_isnand (double x);
 #   define gl_isnan_d(x) rpl_isnand (x)
 #  endif
 #  if @HAVE_ISNANL@ && __GNUC__ >= 4
-#   define gl_isnan_l(x) __builtin_isnan ((long double)(x))
+#   define gl_isnan_l(x) __builtin_isnanl ((long double)(x))
 #  else
 _GL_EXTERN_C int rpl_isnanl (long double x);
 #   define gl_isnan_l(x) rpl_isnanl (x)
@@ -721,6 +721,12 @@ _GL_EXTERN_C int rpl_isnanl (long double x);
    (sizeof (x) == sizeof (long double) ? gl_isnan_l (x) : \
     sizeof (x) == sizeof (double) ? gl_isnan_d (x) : \
     gl_isnan_f (x))
+# elif __GNUC__ >= 4
+#  undef isnan
+#  define isnan(x) \
+   (sizeof (x) == sizeof (long double) ? __builtin_isnanl ((long double)(x)) : \
+    sizeof (x) == sizeof (double) ? __builtin_isnan ((double)(x)) : \
+    __builtin_isnanf ((float)(x)))
 # endif
 /* Ensure isnan is a macro.  */
 # ifndef isnan

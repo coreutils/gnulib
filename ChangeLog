@@ -1,5 +1,13 @@
 2010-12-31  Bruno Haible  <bruno@clisp.org>
 
+	isnan: Use GCC built-ins when possible.
+	* lib/math.in.h (gl_isnan_f): Use __builtin_isnanf instead of
+	__builtin_isnan.
+	(gl_isnan_l): Use __builtin_isnanl instead of __builtin_isnan.
+	(isnan): Define using GCC built-ins for GCC >= 4.0.
+
+2010-12-31  Bruno Haible  <bruno@clisp.org>
+
 	isnand: Fix mistake.
 	* m4/isnand.m4 (gl_HAVE_ISNAND_IN_LIBM): Use __builtin_isnan, not
 	__builtin_isnand.
