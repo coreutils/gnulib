@@ -1,3 +1,17 @@
+2010-12-31  Bruno Haible  <bruno@clisp.org>
+
+	time_r: Add missing declarations on HP-UX 11.
+	* lib/time.in.h (localtime_r, gmtime_r): Test HAVE_DECL_LOCALTIME_R
+	instead of HAVE_LOCALTIME_R.
+	* m4/time_r.m4 (gl_TIME_R): Test whether localtime_r is declared. Set
+	HAVE_LOCALTIME_R always.
+	* m4/time_h.m4 (gl_HEADER_TIME_H_DEFAULTS): Initialize
+	HAVE_DECL_LOCALTIME_R, not HAVE_LOCALTIME_R.
+	* modules/time (Makefile.am): Substitute HAVE_DECL_LOCALTIME_R, not
+	HAVE_LOCALTIME_R.
+	* doc/posix-functions/gmtime_r.texi: Document the HP-UX 11 problem.
+	* doc/posix-functions/localtime_r.texi: Likewise.
+
 2010-12-29  Eric Blake  <eblake@redhat.com>
 
 	mountlist: tweak previous commit

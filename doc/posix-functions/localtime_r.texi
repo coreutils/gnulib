@@ -12,6 +12,10 @@ Portability problems fixed by Gnulib:
 This function is missing on some platforms:
 mingw.
 @item
+This function is not declared unless @code{_REENTRANT} is defined,
+on some platforms:
+HP-UX 11.
+@item
 Some platforms define a function of this name that is incompatible to POSIX:
 HP-UX 10.
 @end itemize

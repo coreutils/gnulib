@@ -2,7 +2,7 @@
 
 # Copyright (C) 2000-2001, 2003-2007, 2009-2010 Free Software Foundation, Inc.
 
-# serial 2
+# serial 3
 
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -95,7 +95,7 @@ AC_DEFUN([gl_HEADER_TIME_H_DEFAULTS],
   GNULIB_TIMEGM=0;                       AC_SUBST([GNULIB_TIMEGM])
   GNULIB_TIME_R=0;                       AC_SUBST([GNULIB_TIME_R])
   dnl Assume proper GNU behavior unless another module says otherwise.
-  HAVE_LOCALTIME_R=1;                    AC_SUBST([HAVE_LOCALTIME_R])
+  HAVE_DECL_LOCALTIME_R=1;               AC_SUBST([HAVE_DECL_LOCALTIME_R])
   HAVE_NANOSLEEP=1;                      AC_SUBST([HAVE_NANOSLEEP])
   HAVE_STRPTIME=1;                       AC_SUBST([HAVE_STRPTIME])
   HAVE_TIMEGM=1;                         AC_SUBST([HAVE_TIMEGM])
