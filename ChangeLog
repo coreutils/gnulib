@@ -1,3 +1,11 @@
+2010-12-31  Eric Blake  <eblake@redhat.com>
+
+	nl_langinfo: fix YESEXPR on Irix 6.5
+	* m4/nl_langinfo.m4 (gl_FUNC_NL_LANGINFO): Test for Irix bug.
+	* lib/nl_langinfo.c (rpl_nl_langinfo): Work around it.
+	* doc/posix-functions/nl_langinfo.texi (nl_langinfo): Document
+	it.
+
 2010-12-31  Bruno Haible  <bruno@clisp.org>
 
 	iconv: Document HP-UX 11 bug.

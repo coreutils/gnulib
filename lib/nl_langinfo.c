@@ -97,7 +97,7 @@ rpl_nl_langinfo (nl_item item)
          strings, appended in memory.  */
       return "\0\0\0\0\0\0\0\0\0\0";
 # endif
-# if GNULIB_defined_YESEXPR
+# if GNULIB_defined_YESEXPR || !FUNC_NL_LANGINFO_YESEXPR_WORKS
     case YESEXPR:
       return "^[yY]";
     case NOEXPR:

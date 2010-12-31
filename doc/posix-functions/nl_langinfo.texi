@@ -22,6 +22,10 @@ OpenBSD 3.8.
 The constants @code{T_FMT_AMPM}, @code{YESEXPR}, @code{NOEXPR} are not
 supported on some platforms:
 IRIX 5.3.
+@item
+The constants @code{YESEXPR} and @code{NOEXPR} do not return a valid
+string on some platforms:
+Irix 6.5.
 @end itemize
 
 Portability problems not fixed by Gnulib:
