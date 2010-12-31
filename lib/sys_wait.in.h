@@ -108,9 +108,6 @@
 
 #endif
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /* Declarations of functions.  */
 
@@ -128,9 +125,6 @@ _GL_WARN_ON_USE (waitpid, "waitpid is unportable - "
 # endif
 #endif
 
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* _GL_SYS_WAIT_H */
 #endif /* _GL_SYS_WAIT_H */

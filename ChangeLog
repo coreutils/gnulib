@@ -1,5 +1,10 @@
 2010-12-31  Bruno Haible  <bruno@clisp.org>
 
+	waitpid: Fix link error in C++ mode.
+	* lib/sys_wait.in.h: Remove extern "C" { ... } group.
+
+2010-12-31  Bruno Haible  <bruno@clisp.org>
+
 	isnan: Use GCC built-ins when possible.
 	* lib/math.in.h (gl_isnan_f): Use __builtin_isnanf instead of
 	__builtin_isnan.
