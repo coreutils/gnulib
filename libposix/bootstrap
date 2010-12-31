@@ -14,7 +14,7 @@ fi
 
 posix_list=`
 {   echo alloca
-    posix-modules
+    posix-modules | sed '/^error$/d'
 } | tr -d ' \t' | sed '/^$/d' | sort -u`
 
 cat > tmp/modules/libposix <<- _EOF_
@@ -41,6 +41,21 @@ cat > tmp/modules/libposix <<- _EOF_
 	Gary V. Vaughan
 	_EOF_
 
+# We cannot tell which modules will get pulled in via dependencies
+# when gnulib-tool gets run.  Therefore, strip out "error" from all
+# modules that mention it.  Either we won't use the module, or the
+# module will have to be tweaked to remove the dependency for libposix.
+# "GNULIB_LIBPOSIX" is a CPP symbol for libposix.
+#
+set -- `egrep -l '^error$' ../modules/[a-z]*`
+
+for mod
+do
+    test "X$mod" = Xerror && continue
+    echo 'NOTE: removing "error" dependency from' ${mod}
+    d=`basename $mod`
+    sed '/^error$/d' ${mod} > tmp/modules/$d
+done >&2
 
 opts='--local-dir=tmp
 	--import
@@ -55,10 +70,13 @@ opts='--local-dir=tmp
 	--with-longrunning-tests'
 
 # Bootstrap for autotools.
+#
 gnulib-tool ${opts} git-version-gen libposix
 
 # No need to maintain a Makefile.am just to include gnulib.mk.
+#
 mv tests/gnulib.mk tests/Makefile.am
 
 # Run autotools.
+#
 autoreconf --force --install --verbose --symlink

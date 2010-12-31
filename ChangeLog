@@ -1,6 +1,12 @@
 2010-12-30  Bruce Korb  <bkorb@gnu.org>
 
 	* libposix/bootstrap (posix_list): remove unnecessary temp file
+	(modules): install all modules to tmp/modules that reference
+	the 'error' module.
+	* libposix/configure.ac (GNULIB_LIBPOSIX): define this in
+	config.h so that openat-die.c can omit calls to error().
+	* lib/openat-die.c: remove error module stuff when GNULIB_LIBPOSIX
+	is defined.
 
 2010-12-29  Eric Blake  <eblake@redhat.com>
 
