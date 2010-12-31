@@ -1,5 +1,10 @@
 2010-12-31  Bruno Haible  <bruno@clisp.org>
 
+	open: Avoid C++ error on HP-UX 11.
+	* lib/fcntl.in.h (open): Disable _GL_CXXALIASWARN invocation on HP-UX.
+
+2010-12-31  Bruno Haible  <bruno@clisp.org>
+
 	time_r: Add missing declarations on HP-UX 11.
 	* lib/time.in.h (localtime_r, gmtime_r): Test HAVE_DECL_LOCALTIME_R
 	instead of HAVE_LOCALTIME_R.
