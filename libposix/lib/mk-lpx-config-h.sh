@@ -41,6 +41,7 @@ EOF
 	/^\/\*.*\*\/$/d
 	/^\/\*/,/\*\/$/d
 	/^$/d
+	/#define GNULIB_TEST/d
 	s/^\(# *define *\)\([A-Za-z]\)/\1LPX_\2/
 	/^#if/s/\(defined *\)\([A-Za-z]\)/\1LPX_\2/g
 	s/^\(# *ifn*def *\)\([A-Za-z]\)/\1LPX_\2/
