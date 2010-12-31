@@ -1,5 +1,10 @@
 2010-12-31  Bruno Haible  <bruno@clisp.org>
 
+	iconv: Document HP-UX 11 bug.
+	* doc/posix-functions/iconv.texi: Document HP-UX 11 return value bug.
+
+2010-12-31  Bruno Haible  <bruno@clisp.org>
+
 	ldexpl: Fix link error on HP-UX 11.
 	* m4/ldexpl.m4 (gl_FUNC_LDEXPL): When replacing ldexpl, set
 	LDEXPL_LIBM, using $ISNANL_LIBM.

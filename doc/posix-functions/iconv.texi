@@ -34,4 +34,7 @@ implementation-defined character into the output buffer.  ---
 Gnulib provides higher-level facilities @code{striconv} and @code{striconveh}
 (wrappers around @code{iconv}) that deal with conversion errors in a platform
 independent way.
+@item
+This function returns a positive return value, instead of zero, when
+converting from ISO-8859-1 to UTF-8 on HP-UX 11.
 @end itemize
