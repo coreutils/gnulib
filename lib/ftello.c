@@ -50,7 +50,7 @@ ftello (FILE *fp)
       ftello (fp);
 
       /* Compute the file position ourselves.  */
-      pos = llseek (fileno (fp), (off_t) 0, SEEK_CUR);
+      pos = lseek (fileno (fp), (off_t) 0, SEEK_CUR);
       if (pos >= 0)
         {
           if ((fp_->_flag & _IONBF) == 0 && fp_->_base != NULL)

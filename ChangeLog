@@ -1,5 +1,8 @@
 2010-12-31  Eric Blake  <eblake@redhat.com>
 
+	ftello: avoid compilation failure with SunStudio c89
+	* lib/ftello.c (ftello): Use lseek, not llseek.
+
 	tests: avoid failing coreutils tests on cygwin
 	* tests/init.sh (find_exe_basenames_): Exempt [.exe.
 	(create_exe_shims_): Return 0 when skipping.
