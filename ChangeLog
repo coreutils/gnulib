@@ -1,5 +1,10 @@
 2010-12-31  Bruno Haible  <bruno@clisp.org>
 
+	sys_select: Avoid warning about missing memset declaration on HP-UX 11.
+	* lib/sys_select.in.h: On HP-UX, include also <string.h>.
+
+2010-12-31  Bruno Haible  <bruno@clisp.org>
+
 	waitpid: Fix link error in C++ mode.
 	* lib/sys_wait.in.h: Remove extern "C" { ... } group.
 

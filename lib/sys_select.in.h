@@ -72,6 +72,11 @@
 /* Get the 'struct timeval' and 'fd_set' types and the FD_* macros
    on most platforms.  */
 # include <sys/time.h>
+/* On HP-UX 11, <sys/time.h> provides an FD_ZERO implementation
+   that relies on memset(), but without including <string.h>.  */
+# if defined __hpux
+#  include <string.h>
+# endif
 /* On native Windows platforms:
    Get the 'fd_set' type.  Also, gnulib's <sys/socket.h> redefines select
    so as to hide the declaration from <winsock2.h>.  */
