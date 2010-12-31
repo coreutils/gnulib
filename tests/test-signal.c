@@ -59,7 +59,8 @@ main (void)
 #ifdef SIGALRM
     case SIGALRM:
 #endif
-#ifdef SIGBUS
+      /* On Haiku, SIGBUS is mistakenly equal to SIGSEGV.  */
+#if defined SIGBUS && SIGBUS != SIGSEGV
     case SIGBUS:
 #endif
 #ifdef SIGCHLD

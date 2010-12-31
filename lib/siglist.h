@@ -23,6 +23,9 @@
 
 /* This file is included multiple times.  */
 
+/* Duplicate values (such as SIGBUS==SIGSEGV on Haiku) favor the last
+   list entry.  */
+
 /* Standard signals  */
 #ifdef SIGHUP
   init_sig (SIGHUP, "HUP", N_("Hangup"))

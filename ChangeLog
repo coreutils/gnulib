@@ -350,6 +350,14 @@
 
 2010-12-31  Eric Blake  <eblake@redhat.com>
 
+	signal: work around Haiku issue with SIGBUS
+	* lib/siglist.h: Add comment.
+	* lib/sig2str.c (numname_table): Swap SIGBUS order, to match
+	strsignal's favoring of SIGSEGV.
+	* tests/test-signal.c (main): Avoid test failure.
+	* doc/posix-headers/signal.texi (signal.h): Document the issue.
+	Reported by Scott McCreary.
+
 	nl_langinfo: fix YESEXPR on Irix 6.5
 	* m4/nl_langinfo.m4 (gl_FUNC_NL_LANGINFO): Test for Irix bug.
 	* lib/nl_langinfo.c (rpl_nl_langinfo): Work around it.

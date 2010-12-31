@@ -41,7 +41,7 @@
 static struct numname { int num; char const name[8]; } numname_table[] =
   {
     /* Signals required by POSIX 1003.1-2001 base, listed in
-       traditional numeric order.  */
+       traditional numeric order where possible.  */
 #ifdef SIGHUP
     NUMNAME (HUP),
 #endif
@@ -66,11 +66,13 @@ static struct numname { int num; char const name[8]; } numname_table[] =
 #ifdef SIGKILL
     NUMNAME (KILL),
 #endif
-#ifdef SIGBUS
-    NUMNAME (BUS),
-#endif
 #ifdef SIGSEGV
     NUMNAME (SEGV),
+#endif
+    /* On Haiku, SIGSEGV == SIGBUS, but we prefer SIGSEGV to match
+       strsignal.c output, so SIGBUS must be listed second.  */
+#ifdef SIGBUS
+    NUMNAME (BUS),
 #endif
 #ifdef SIGPIPE
     NUMNAME (PIPE),
