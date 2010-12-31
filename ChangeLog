@@ -1,5 +1,11 @@
 2010-12-31  Bruno Haible  <bruno@clisp.org>
 
+	isnand: Fix mistake.
+	* m4/isnand.m4 (gl_HAVE_ISNAND_IN_LIBM): Use __builtin_isnan, not
+	__builtin_isnand.
+
+2010-12-31  Bruno Haible  <bruno@clisp.org>
+
 	open: Avoid C++ error on HP-UX 11.
 	* lib/fcntl.in.h (open): Disable _GL_CXXALIASWARN invocation on HP-UX.
 
