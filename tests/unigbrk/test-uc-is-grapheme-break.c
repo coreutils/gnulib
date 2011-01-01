@@ -1,5 +1,5 @@
 /* Grapheme cluster break function test.
-   Copyright (C) 2010 Free Software Foundation, Inc.
+   Copyright (C) 2010-2011 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify it
    under the terms of the GNU Lesser General Public License as published
@@ -97,12 +97,12 @@ main (int argc, char *argv[])
           ucs4_t next;
 
           p += strspn (p, " \t\r\n");
-          if (!strncmp (p, "\xc3\xb7" /* ÷ */, 2))
+          if (!strncmp (p, "\303\267" /* ÷ */, 2))
             {
               should_break = true;
               p += 2;
             }
-          else if (!strncmp (p, "\xc3\x97" /* × */, 2))
+          else if (!strncmp (p, "\303\227" /* × */, 2))
             {
               should_break = false;
               p += 2;

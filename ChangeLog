@@ -1,3 +1,9 @@
+2011-01-01  Bruno Haible  <bruno@clisp.org>
+
+	Avoid use of hexadecimal escapes.
+	* tests/unigbrk/test-uc-is-grapheme-break.c (main): Use octal escapes
+	instead of hexadecimal escapes.
+
 2011-01-01  Jim Meyering  <meyering@redhat.com>
 
 	maint: new rule to update copyright year ranges
