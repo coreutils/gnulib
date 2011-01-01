@@ -20,14 +20,14 @@ check: \
 
 sc_prefer_ac_check_funcs_once:
 	if test -d .git; then						\
-          git grep -w -l AC_CHECK_FUNCS modules				\
-            && { echo use AC_CHECK_FUNCS_ONCE, not AC_CHECK_FUNCS	\
-                   in modules/ 1>&2; exit 1; } || :			\
+	  git grep -w -l AC_CHECK_FUNCS modules				\
+	    && { echo use AC_CHECK_FUNCS_ONCE, not AC_CHECK_FUNCS	\
+		   in modules/ 1>&2; exit 1; } || :			\
 	else :; fi
 
 sc_prohibit_augmenting_PATH_via_TESTS_ENVIRONMENT:
 	if test -d .git; then						\
-          url=http://thread.gmane.org/gmane.comp.lib.gnulib.bugs/22874;	\
+	  url=http://thread.gmane.org/gmane.comp.lib.gnulib.bugs/22874;	\
 	  git grep '^[	 ]*TESTS_ENVIRONMENT += PATH=' modules		\
 	    && { printf '%s\n' 'Do not augment PATH via TESTS_ENVIRONMENT;' \
 		 "  see <$$url>" 1>&2; exit 1; } || :			\
@@ -35,13 +35,13 @@ sc_prohibit_augmenting_PATH_via_TESTS_ENVIRONMENT:
 
 sc_pragma_columns:
 	if test -d .git; then						\
-          git ls-files|grep '\.in\.h$$'					\
-              | xargs grep -l '^@PRAGMA_SYSTEM_HEADER@'			\
-              | xargs grep -L '^@PRAGMA_COLUMNS@'			\
-              | grep .							\
+	  git ls-files|grep '\.in\.h$$'					\
+	      | xargs grep -l '^@PRAGMA_SYSTEM_HEADER@'			\
+	      | xargs grep -L '^@PRAGMA_COLUMNS@'			\
+	      | grep .							\
 	    && { printf '%s\n'						\
-                   'the files listed above use @PRAGMA_SYSTEM_HEADER@'	\
-                   'without also using @PRAGMA_COLUMNS@' 1>&2;		\
+		   'the files listed above use @PRAGMA_SYSTEM_HEADER@'	\
+		   'without also using @PRAGMA_COLUMNS@' 1>&2;		\
 		 exit 1; } || :;					\
 	else :; fi
 
