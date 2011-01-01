@@ -1,3 +1,8 @@
+2011-01-01  Jim Meyering  <meyering@redhat.com>
+
+	version-etc: update the copyright year it reports
+	* lib/version-etc.c (COPYRIGHT_YEAR): Update to 2011.
+
 2010-12-31  Bruno Haible  <bruno@clisp.org>
 
 	isfinite: Avoid compiler bug of "cc -O" on HP-UX 11.11.
