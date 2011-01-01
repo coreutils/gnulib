@@ -1,5 +1,23 @@
 2011-01-01  Ben Pfaff  <blp@cs.stanford.edu>
 
+	Rename uc_is_grapheme_cluster_break() to uc_is_grapheme_break()
+	for consistency, since the "cluster" term is not used elsewhere.
+	* lib/unigbrk.in.h: Update name.
+	* lib/unigbrk/u16-grapheme-breaks.c: Update name.
+	* lib/unigbrk/u16-grapheme-next.c: Update name.
+	* lib/unigbrk/u16-grapheme-prev.c: Update name.
+	* lib/unigbrk/u32-grapheme-breaks.c: Update name.
+	* lib/unigbrk/u32-grapheme-next.c: Update name.
+	* lib/unigbrk/u32-grapheme-prev.c: Update name.
+	* lib/unigbrk/u8-grapheme-breaks.c: Update name.
+	* lib/unigbrk/u8-grapheme-next.c: Update name.
+	* lib/unigbrk/u8-grapheme-prev.c: Update name.
+	* lib/unigbrk/uc-is-grapheme-break.c: Update name.
+	* tests/unigbrk/test-uc-is-grapheme-break.c: Update name.
+	Suggested by Bruno Haible.
+
+2011-01-01  Ben Pfaff  <blp@cs.stanford.edu>
+
 	Remove module 'u8-grapheme-len' as too redundant with
 	'u8-grapheme-next'.
 	* modules/unigbrk/u8-grapheme-len: Delete file.

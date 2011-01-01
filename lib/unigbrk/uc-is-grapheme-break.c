@@ -90,7 +90,7 @@ static const unsigned short int gb_table[12] =
   };
 
 bool
-uc_is_grapheme_cluster_break (ucs4_t a, ucs4_t b)
+uc_is_grapheme_break (ucs4_t a, ucs4_t b)
 {
   int a_gcp, b_gcp;
 

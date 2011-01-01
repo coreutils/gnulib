@@ -134,7 +134,7 @@ main (int argc, char *argv[])
               next = next_int;
             }
 
-          if (uc_is_grapheme_cluster_break (prev, next) != should_break)
+          if (uc_is_grapheme_break (prev, next) != should_break)
             {
               int prev_gbp = uc_graphemeclusterbreak_property (prev);
               int next_gbp = uc_graphemeclusterbreak_property (next);

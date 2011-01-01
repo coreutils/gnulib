@@ -41,7 +41,7 @@ u32_grapheme_prev (const uint32_t *s, const uint32_t *start)
           return start;
         }
 
-      if (uc_is_grapheme_cluster_break (prev, next))
+      if (uc_is_grapheme_break (prev, next))
         break;
 
       next = prev;

@@ -35,7 +35,7 @@ u32_grapheme_breaks (const uint32_t *s, size_t n, char *p)
 
       u32_mbtouc (&next, &s[i], 1);
 
-      p[i] = uc_is_grapheme_cluster_break (prev, next);
+      p[i] = uc_is_grapheme_break (prev, next);
 
       prev = next;
     }

@@ -37,7 +37,7 @@ u8_grapheme_breaks (const uint8_t *s, size_t n, char *p)
 
       mblen = u8_mbtouc (&next, s, n);
 
-      p[0] = uc_is_grapheme_cluster_break (prev, next);
+      p[0] = uc_is_grapheme_break (prev, next);
       for (i = 1; i < mblen; i++)
         p[i] = 0;
 

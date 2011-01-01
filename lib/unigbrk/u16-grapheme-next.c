@@ -36,7 +36,7 @@ u16_grapheme_next (const uint16_t *s, const uint16_t *end)
       ucs4_t next;
 
       mblen = u16_mbtouc (&next, s, end - s);
-      if (uc_is_grapheme_cluster_break (prev, next))
+      if (uc_is_grapheme_break (prev, next))
         break;
 
       prev = next;

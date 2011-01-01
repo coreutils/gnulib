@@ -76,7 +76,7 @@ extern int
    Use A == 0 or B == 0 to indicate start of text or end of text,
    respectively. */
 extern bool
-       uc_is_grapheme_cluster_break (ucs4_t a, ucs4_t b);
+       uc_is_grapheme_break (ucs4_t a, ucs4_t b);
 
 /* Returns the start of the next grapheme cluster following S, or NULL if the
    end of the string has been reached. */

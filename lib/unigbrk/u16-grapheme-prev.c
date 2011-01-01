@@ -44,7 +44,7 @@ u16_grapheme_prev (const uint16_t *s, const uint16_t *start)
           return start;
         }
 
-      if (uc_is_grapheme_cluster_break (prev, next))
+      if (uc_is_grapheme_break (prev, next))
         break;
 
       s = prev_s;

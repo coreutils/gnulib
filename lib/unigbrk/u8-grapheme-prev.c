@@ -44,7 +44,7 @@ u8_grapheme_prev (const uint8_t *s, const uint8_t *start)
           return start;
         }
 
-      if (uc_is_grapheme_cluster_break (prev, next))
+      if (uc_is_grapheme_break (prev, next))
         break;
 
       s = prev_s;

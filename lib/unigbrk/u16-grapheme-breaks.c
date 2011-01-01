@@ -36,7 +36,7 @@ u16_grapheme_breaks (const uint16_t *s, size_t n, char *p)
 
       mblen = u16_mbtouc (&next, s, n);
 
-      p[0] = uc_is_grapheme_cluster_break (prev, next);
+      p[0] = uc_is_grapheme_break (prev, next);
       if (mblen > 1)
         p[1] = 0;
 
