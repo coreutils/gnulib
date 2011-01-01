@@ -1,3 +1,21 @@
+2010-12-31  Ben Pfaff  <blp@cs.stanford.edu>
+
+	gbrkprop: Fix implementation of uc_graphemeclusterbreak_property.
+	* lib/unigbrk/gbrkprop.h: Regenerate with gen-uni-tables.c.  I had
+	modified how this file was generated before I initially submitted
+	the module, but failed to regenerate it.  This meant that several
+	of the level2 entries were wrong.
+	* lib/unigbrk/uc-gbrk-prop.h (uc_graphemeclusterbreak_property):
+	Remove the division-by-2 that is folded into the table now that
+	gbrkprop.h has been regenerated properly.  Now -1 entries are
+	handled correctly.
+
+	New module 'unigbrk/uc-gbrk-prop-tests'.
+	* modules/unigbrk/uc-gbrk-prop-tests: New file.
+	* lib/gen-uni-tables.c: Generate tests/test-uc-gbrk-prop.h.
+	* tests/unigbrk/test-uc-gbrk-prop.c: New file.
+	* tests/unigbrk/test-uc-gbrk-prop.h: New file.
+
 2011-01-01  Bruno Haible  <bruno@clisp.org>
 
 	Avoid use of hexadecimal escapes.

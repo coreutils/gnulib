@@ -6776,6 +6776,83 @@ enum
 /* The grapheme break property from the GraphemeBreakProperty.txt file.  */
 int unicode_org_gbp[0x110000];
 
+/* Output the unit test data for the grapheme break property.  */
+static void
+output_gbp_test (const char *filename)
+{
+  FILE *stream;
+  bool need_comma;
+  unsigned int ch;
+
+  stream = fopen (filename, "w");
+  if (stream == NULL)
+    {
+      fprintf (stderr, "cannot open '%s' for writing\n", filename);
+      exit (1);
+    }
+
+  fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
+  fprintf (stream, "/* Test the Unicode grapheme break property functions.\n");
+  fprintf (stream, "   Copyright (C) 2010 Free Software Foundation, Inc.\n");
+  fprintf (stream, "\n");
+  fprintf (stream, "   This program is free software: you can redistribute it and/or modify\n");
+  fprintf (stream, "   it under the terms of the GNU General Public License as published by\n");
+  fprintf (stream, "   the Free Software Foundation; either version 3 of the License, or\n");
+  fprintf (stream, "   (at your option) any later version.\n");
+  fprintf (stream, "\n");
+  fprintf (stream, "   This program is distributed in the hope that it will be useful,\n");
+  fprintf (stream, "   but WITHOUT ANY WARRANTY; without even the implied warranty of\n");
+  fprintf (stream, "   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n");
+  fprintf (stream, "   GNU General Public License for more details.\n");
+  fprintf (stream, "\n");
+  fprintf (stream, "   You should have received a copy of the GNU General Public License\n");
+  fprintf (stream, "   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */\n");
+  fprintf (stream, "\n");
+
+  need_comma = false;
+  for (ch = 0; ch < 0x110000; ch++)
+    {
+      int gbp = unicode_org_gbp[ch];
+      const char *gbp_string;
+
+      while (ch + 1 < 0x110000 && unicode_org_gbp[ch + 1] == gbp)
+        ch++;
+
+      switch (gbp)
+        {
+#define CASE(x) case x: gbp_string = #x; break;
+      CASE (GBP_OTHER)
+      CASE (GBP_CR)
+      CASE (GBP_LF)
+      CASE (GBP_CONTROL)
+      CASE (GBP_EXTEND)
+      CASE (GBP_PREPEND)
+      CASE (GBP_SPACINGMARK)
+      CASE (GBP_L)
+      CASE (GBP_V)
+      CASE (GBP_T)
+      CASE (GBP_LV)
+      CASE (GBP_LVT)
+#undef CASE
+        default:
+          abort ();
+        }
+
+      if (need_comma)
+        fprintf (stream, ",\n");
+      fprintf (stream, "{ 0x%04X, %s }", ch + 1, gbp_string);
+
+      need_comma = true;
+    }
+  fprintf (stream, "\n");
+
+  if (ferror (stream) || fclose (stream))
+    {
+      fprintf (stderr, "error writing to '%s'\n", filename);
+      exit (1);
+    }
+}
+
 /* Output the per-character grapheme break property table.  */
 static void
 output_gbp_table (const char *filename, const char *version)
@@ -8581,6 +8658,7 @@ main (int argc, char * argv[])
   debug_output_org_wbrk_tables ("uniwbrk/wbrkprop_org.txt");
   output_wbrk_tables ("uniwbrk/wbrkprop.h", version);
 
+  output_gbp_test ("../tests/unigbrk/test-uc-gbrk-prop.h");
   output_gbp_table ("unigbrk/gbrkprop.h", version);
 
   output_decomposition_tables ("uninorm/decomposition-table1.h", "uninorm/decomposition-table2.h", version);
