@@ -1,5 +1,5 @@
 # Makefile for gnulib central.
-# Copyright (C) 2006, 2009, 2010 Free Software Foundation, Inc.
+# Copyright (C) 2006, 2009-2011 Free Software Foundation, Inc.
 #
 # Copying and distribution of this file, with or without modification,
 # in any medium, are permitted without royalty provided the copyright
@@ -53,3 +53,21 @@ regen: MODULES.html
 # where it then appears at <http://www.gnu.org/software/gnulib/MODULES.html>.
 MODULES.html: MODULES.html.sh
 	./MODULES.html.sh > MODULES.html
+
+# Run this rule once per year (usually early in January)
+# to update all FSF copyright year lists here.
+# We exclude the files listed in srclist.txt (maintained elsewhere)
+# as well as those in tests/unictype (generated).
+update-copyright:
+	exempt=$$(mktemp);						\
+	grep -v '^#' config/srclist.txt|grep -v '^$$'			\
+	  | while read src dst; do					\
+	      test -f "$$dst" && { echo "$$dst"; continue; };		\
+	      test -d "$$dst" || continue;				\
+	      echo "$$dst"/$$(basename "$$src");			\
+	    done > $$exempt;						\
+	git ls-files tests/unictype >> $$exempt;			\
+	git ls-files | grep -vFf $$exempt				\
+	  | UPDATE_COPYRIGHT_MAX_LINE_LENGTH=79				\
+	    UPDATE_COPYRIGHT_USE_INTERVALS=1				\
+	      xargs build-aux/update-copyright

@@ -1,5 +1,8 @@
 2011-01-01  Jim Meyering  <meyering@redhat.com>
 
+	maint: new rule to update copyright year ranges
+	* Makefile (update-copyright): New rule.
+
 	maint: indent with TABs in Makefile
 	* Makefile: Expand leading sequences of spaces to TABs
 
