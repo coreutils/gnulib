@@ -1,5 +1,10 @@
 2011-01-01  Jim Meyering  <meyering@redhat.com>
 
+	maint: update almost all copyright ranges to include 2011
+	Run the new "make update-copyright" rule.
+
+2011-01-01  Jim Meyering  <meyering@redhat.com>
+
 	maint: update-copyright: exempt doc/INSTALL*
 	* Makefile (update-copyright): Also exclude doc/INSTALL*,
 	since they are generated.  Suggested by Bruno Haible.
@@ -73424,7 +73429,7 @@
 	coding: utf-8
 	End:
 
-	Copyright (C) 1997-2010 Free Software Foundation, Inc.
+	Copyright (C) 1997-2011 Free Software Foundation, Inc.
 
 	Copying and distribution of this file, with or without
 	modification, are permitted provided the copyright notice
