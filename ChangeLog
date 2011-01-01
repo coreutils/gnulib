@@ -1,3 +1,10 @@
+2010-12-31  Bruno Haible  <bruno@clisp.org>
+
+	pread: Work around HP-UX 11 bugs.
+	* m4/pread.m4 (gl_FUNC_PREAD): When pread exists, test whether it works
+	and set REPLACE_PREAD if not.
+	* doc/posix-functions/pread.texi: Document the HP-UX 11 bugs.
+
 2010-12-31  Eric Blake  <eblake@redhat.com>
 
 	nl_langinfo: fix YESEXPR on Irix 6.5
