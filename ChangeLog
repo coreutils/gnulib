@@ -1,5 +1,99 @@
 2010-12-31  Ben Pfaff  <blp@cs.stanford.edu>
 
+	New module 'u8-grapheme-len'.
+	* modules/unigbrk/u8-grapheme-len: New file.
+	* modules/unigbrk/u8-grapheme-len-tests: New file.
+	* lib/unigbrk.in.h: Add prototype for new function.
+	* lib/unigbrk/u8-grapheme-len.c: New file.
+	* tests/unigbrk/test-u8-grapheme-len.c: New file.
+
+	New module 'u16-grapheme-len'.
+	* modules/unigbrk/u16-grapheme-len: New file.
+	* modules/unigbrk/u16-grapheme-len-tests: New file.
+	* lib/unigbrk.in.h: Add prototype for new function.
+	* lib/unigbrk/u16-grapheme-len.c: New file.
+	* tests/unigbrk/test-u16-grapheme-len.c: New file.
+
+	New module 'u32-grapheme-len'.
+	* modules/unigbrk/u32-grapheme-len: New file.
+	* modules/unigbrk/u32-grapheme-len-tests: New file.
+	* lib/unigbrk.in.h: Add prototype for new function.
+	* lib/unigbrk/u32-grapheme-len.c: New file.
+	* tests/unigbrk/test-u32-grapheme-len.c: New file.
+
+	New module 'u8-grapheme-next'.
+	* modules/unigbrk/u8-grapheme-next: New file.
+	* modules/unigbrk/u8-grapheme-next-tests: New file.
+	* lib/unigbrk.in.h: Add prototype for new function.
+	* lib/unigbrk/u8-grapheme-next.c: New file.
+	* tests/unigbrk/test-u8-grapheme-next.c: New file.
+
+	New module 'u16-grapheme-next'.
+	* modules/unigbrk/u16-grapheme-next: New file.
+	* modules/unigbrk/u16-grapheme-next-tests: New file.
+	* lib/unigbrk.in.h: Add prototype for new function.
+	* lib/unigbrk/u16-grapheme-next.c: New file.
+	* tests/unigbrk/test-u16-grapheme-next.c: New file.
+
+	New module 'u32-grapheme-next'.
+	* modules/unigbrk/u32-grapheme-next: New file.
+	* modules/unigbrk/u32-grapheme-next-tests: New file.
+	* lib/unigbrk.in.h: Add prototype for new function.
+	* lib/unigbrk/u32-grapheme-next.c: New file.
+	* tests/unigbrk/test-u32-grapheme-next.c: New file.
+
+	New module 'u8-grapheme-prev'.
+	* modules/unigbrk/u8-grapheme-prev: New file.
+	* modules/unigbrk/u8-grapheme-prev-tests: New file.
+	* lib/unigbrk.in.h: Add prototype for new function.
+	* lib/unigbrk/u8-grapheme-prev.c: New file.
+	* tests/unigbrk/test-u8-grapheme-prev.c: New file.
+
+	New module 'u16-grapheme-prev'.
+	* modules/unigbrk/u16-grapheme-prev: New file.
+	* modules/unigbrk/u16-grapheme-prev-tests: New file.
+	* lib/unigbrk.in.h: Add prototype for new function.
+	* lib/unigbrk/u16-grapheme-prev.c: New file.
+	* tests/unigbrk/test-u16-grapheme-prev.c: New file.
+
+	New module 'u32-grapheme-prev'.
+	* modules/unigbrk/u32-grapheme-prev: New file.
+	* modules/unigbrk/u32-grapheme-prev-tests: New file.
+	* lib/unigbrk.in.h: Add prototype for new function.
+	* lib/unigbrk/u32-grapheme-prev.c: New file.
+	* tests/unigbrk/test-u32-grapheme-prev.c: New file.
+
+	New module 'u8-grapheme-breaks'.
+	* modules/unigbrk/u8-grapheme-breaks: New file.
+	* modules/unigbrk/u8-grapheme-breaks-tests: New file.
+	* lib/unigbrk.in.h: Add prototype for new function.
+	* lib/unigbrk/u8-grapheme-breaks.c: New file.
+	* tests/unigbrk/test-u8-grapheme-breaks.c: New file.
+
+	New module 'u16-grapheme-breaks'.
+	* modules/unigbrk/u16-grapheme-breaks: New file.
+	* modules/unigbrk/u16-grapheme-breaks-tests: New file.
+	* lib/unigbrk.in.h: Add prototype for new function.
+	* lib/unigbrk/u16-grapheme-breaks.c: New file.
+	* tests/unigbrk/test-u16-grapheme-breaks.c: New file.
+
+	New module 'u32-grapheme-breaks'.
+	* modules/unigbrk/u32-grapheme-breaks: New file.
+	* modules/unigbrk/u32-grapheme-breaks-tests: New file.
+	* lib/unigbrk.in.h: Add prototype for new function.
+	* lib/unigbrk/u32-grapheme-breaks.c: New file.
+	* tests/unigbrk/test-u32-grapheme-breaks.c: New file.
+
+	New module 'ulc-grapheme-breaks'.
+	* modules/unigbrk/ulc-grapheme-breaks: New file.
+	* modules/unigbrk/ulc-grapheme-breaks-tests: New file.
+	* m4/locale-ar.m4: New file.
+	* lib/unigbrk/ulc-grapheme-breaks.c: New file.
+	* tests/unigbrk/test-ulc-grapheme-breaks.c: New file.
+	* tests/unigbrk/test-ulc-grapheme-breaks.sh: New file.
+
+2010-12-31  Ben Pfaff  <blp@cs.stanford.edu>
+
 	gbrkprop: Fix implementation of uc_graphemeclusterbreak_property.
 	* lib/unigbrk/gbrkprop.h: Regenerate with gen-uni-tables.c.  I had
 	modified how this file was generated before I initially submitted

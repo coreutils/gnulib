@@ -1,0 +1,12 @@
+Files:
+tests/unigbrk/test-u32-grapheme-len.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-u32-grapheme-len
+check_PROGRAMS += test-u32-grapheme-len
+test_u32_grapheme_len_SOURCES = unigbrk/test-u32-grapheme-len.c
+test_u32_grapheme_len_LDADD = $(LDADD) $(LIBUNISTRING)

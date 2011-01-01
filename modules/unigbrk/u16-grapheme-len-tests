@@ -1,0 +1,12 @@
+Files:
+tests/unigbrk/test-u16-grapheme-len.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-u16-grapheme-len
+check_PROGRAMS += test-u16-grapheme-len
+test_u16_grapheme_len_SOURCES = unigbrk/test-u16-grapheme-len.c
+test_u16_grapheme_len_LDADD = $(LDADD) $(LIBUNISTRING)

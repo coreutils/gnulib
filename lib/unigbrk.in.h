@@ -21,6 +21,9 @@
 /* Get bool.  */
 #include <stdbool.h>
 
+/* Get size_t. */
+#include <stddef.h>
+
 #include "unitypes.h"
 
 #ifdef __cplusplus
@@ -74,6 +77,48 @@ extern int
    respectively. */
 extern bool
        uc_is_grapheme_cluster_break (ucs4_t a, ucs4_t b);
+
+/* Returns the length (in units) of the first grapheme cluster in the N units
+   in S.  If the return value is N, then extending the string could extend the
+   length of the grapheme cluster too.  Returns 0 only if N is zero. */
+extern size_t
+       u8_grapheme_len (const uint8_t *s, size_t n);
+extern size_t
+       u16_grapheme_len (const uint16_t *s, size_t n);
+extern size_t
+       u32_grapheme_len (const uint32_t *s, size_t n);
+
+/* Returns the start of the next grapheme cluster following S, or NULL if the
+   end of the string has ben reached. */
+extern const uint8_t *
+       u8_grapheme_next (const uint8_t *s, const uint8_t *end);
+extern const uint16_t *
+       u16_grapheme_next (const uint16_t *s, const uint16_t *end);
+extern const uint32_t *
+       u32_grapheme_next (const uint32_t *s, const uint32_t *end);
+
+/* Returns the start of the previous grapheme cluster before S, or NULL if the
+   start of the string has ben reached. */
+extern const uint8_t *
+       u8_grapheme_prev (const uint8_t *s, const uint8_t *start);
+extern const uint16_t *
+       u16_grapheme_prev (const uint16_t *s, const uint16_t *start);
+extern const uint32_t *
+       u32_grapheme_prev (const uint32_t *s, const uint32_t *start);
+
+/* Determine the grapheme cluster boundaries in S, and store the result at
+   p[0..n-1].  p[i] = 1 means that a new grapheme cluster begins at s[i].  p[i]
+   = 0 means that s[i-1] and s[i] are part of the same grapheme cluster.  p[0]
+   will always be 1.
+ */
+extern void
+       u8_grapheme_breaks (const uint8_t *s, size_t n, char *p);
+extern void
+       u16_grapheme_breaks (const uint16_t *s, size_t n, char *p);
+extern void
+       u32_grapheme_breaks (const uint32_t *s, size_t n, char *p);
+extern void
+       ulc_grapheme_breaks (const char *s, size_t n, char *p);
 
 /* ========================================================================= */
 
