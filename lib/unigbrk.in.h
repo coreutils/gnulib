@@ -89,7 +89,7 @@ extern size_t
        u32_grapheme_len (const uint32_t *s, size_t n);
 
 /* Returns the start of the next grapheme cluster following S, or NULL if the
-   end of the string has ben reached. */
+   end of the string has been reached. */
 extern const uint8_t *
        u8_grapheme_next (const uint8_t *s, const uint8_t *end);
 extern const uint16_t *
@@ -98,7 +98,7 @@ extern const uint32_t *
        u32_grapheme_next (const uint32_t *s, const uint32_t *end);
 
 /* Returns the start of the previous grapheme cluster before S, or NULL if the
-   start of the string has ben reached. */
+   start of the string has been reached. */
 extern const uint8_t *
        u8_grapheme_prev (const uint8_t *s, const uint8_t *start);
 extern const uint16_t *

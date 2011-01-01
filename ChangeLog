@@ -1,3 +1,8 @@
+2011-01-01  Ben Pfaff  <blp@cs.stanford.edu>
+
+	* unigbrk.in.h: Fix typo: "ben" => "been".
+	Reported by Bruno Haible.
+
 2011-01-01  Jim Meyering  <meyering@redhat.com>
 
 	maint: update almost all copyright ranges to include 2011
