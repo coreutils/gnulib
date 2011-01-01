@@ -1,5 +1,12 @@
 2010-12-31  Bruno Haible  <bruno@clisp.org>
 
+	isfinite: Avoid compiler bug of "cc -O" on HP-UX 11.11.
+	* lib/isfinite.c (zerof, zerod, zerol): New variables.
+	(gl_isfinitef, gl_isfinited, gl_isfinitel): Use them instead of literal
+	zero.
+
+2010-12-31  Bruno Haible  <bruno@clisp.org>
+
 	pwrite: Work around HP-UX 11.11 bug.
 	* m4/pwrite.m4 (gl_FUNC_PWRITE): When pwrite exists, test whether it
 	works and set REPLACE_PWRITE if not.

@@ -23,17 +23,30 @@
 #include "isnand-nolibm.h"
 #include "isnanl-nolibm.h"
 
+/* The "cc" compiler on HP-UX 11.11, when optimizing, simplifies the test
+   x - y == 0.0  to  x == y, a simplification which is invalid when x and y
+   are Infinity.  Disable this optimization.  */
+#if defined __hpux && !defined __GNUC__
+static float zerof;
+static double zerod;
+static long double zerol;
+#else
+# define zerof 0.f
+# define zerod 0.
+# define zerol 0.L
+#endif
+
 int gl_isfinitef (float x)
 {
-  return !isnanf (x) && x - x == 0.f;
+  return !isnanf (x) && x - x == zerof;
 }
 
 int gl_isfinited (double x)
 {
-  return !isnand (x) && x - x == 0.;
+  return !isnand (x) && x - x == zerod;
 }
 
 int gl_isfinitel (long double x)
 {
-  return !isnanl (x) && x - x == 0.L;
+  return !isnanl (x) && x - x == zerol;
 }
