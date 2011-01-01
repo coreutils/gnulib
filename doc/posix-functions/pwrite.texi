@@ -11,6 +11,10 @@ Portability problems fixed by Gnulib:
 @item
 This function is missing on some platforms:
 HP-UX 10, mingw, BeOS.
+@item
+This function does not fail when an invalid (negative) offset is passed when
+large file support is enabled on some platforms:
+HP-UX 11.11.
 @end itemize
 
 Portability problems not fixed by Gnulib:

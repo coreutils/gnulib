@@ -1,5 +1,14 @@
 2010-12-31  Bruno Haible  <bruno@clisp.org>
 
+	pwrite: Work around HP-UX 11.11 bug.
+	* m4/pwrite.m4 (gl_FUNC_PWRITE): When pwrite exists, test whether it
+	works and set REPLACE_PWRITE if not.
+	* lib/pwrite.c (pwrite): Add an implementation that uses the system
+	function.
+	* doc/posix-functions/pwrite.texi: Document the HP-UX 11 bug.
+
+2010-12-31  Bruno Haible  <bruno@clisp.org>
+
 	pread: Work around HP-UX 11 bugs.
 	* m4/pread.m4 (gl_FUNC_PREAD): When pread exists, test whether it works
 	and set REPLACE_PREAD if not.
