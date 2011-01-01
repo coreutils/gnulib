@@ -60,6 +60,7 @@ MODULES.html: MODULES.html.sh
 # as well as those in tests/unictype (generated).
 # Also exclude any file that includes the "GENERATED AUTOMATICALLY" comment,
 # being careful not to exclude code that merely generates the comment.
+# Also exclude doc/INSTALL*, since they too are generated.
 update-copyright:
 	exempt=$$(mktemp);						\
 	grep -v '^#' config/srclist.txt|grep -v '^$$'			\
@@ -69,6 +70,7 @@ update-copyright:
 	      echo "$$dst"/$$(basename "$$src");			\
 	    done > $$exempt;						\
 	git ls-files tests/unictype >> $$exempt;			\
+	git ls-files doc/INSTALL* >> $$exempt;				\
 	git ls-files | grep -vFf $$exempt				\
 	  | xargs grep -L '^/\*.*GENERATED AUTOMATICALLY'		\
 	  | UPDATE_COPYRIGHT_MAX_LINE_LENGTH=79				\

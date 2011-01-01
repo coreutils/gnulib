@@ -1,5 +1,11 @@
 2011-01-01  Jim Meyering  <meyering@redhat.com>
 
+	maint: update-copyright: exempt doc/INSTALL*
+	* Makefile (update-copyright): Also exclude doc/INSTALL*,
+	since they are generated.  Suggested by Bruno Haible.
+
+2011-01-01  Jim Meyering  <meyering@redhat.com>
+
 	maint: refine the update-copyright rule
 	* Makefile (update-copyright): Also exclude any file that includes
 	the "GENERATED AUTOMATICALLY" comment, being careful not to exclude
