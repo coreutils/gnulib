@@ -1,5 +1,33 @@
 2011-01-01  Ben Pfaff  <blp@cs.stanford.edu>
 
+	Remove module 'u8-grapheme-len' as too redundant with
+	'u8-grapheme-next'.
+	* modules/unigbrk/u8-grapheme-len: Delete file.
+	* modules/unigbrk/u8-grapheme-len-tests: Delete file.
+	* lib/unigbrk.in.h: Remove prototype for deleted function.
+	* lib/unigbrk/u8-grapheme-len.c: Delete file.
+	* tests/unigbrk/test-u8-grapheme-len.c: Delete file.
+
+	Remove module 'u16-grapheme-len' as too redundant with
+	'u16-grapheme-next'.
+	* modules/unigbrk/u16-grapheme-len: Delete file.
+	* modules/unigbrk/u16-grapheme-len-tests: Delete file.
+	* lib/unigbrk.in.h: Remove prototype for deleted function.
+	* lib/unigbrk/u16-grapheme-len.c: Delete file.
+	* tests/unigbrk/test-u16-grapheme-len.c: Delete file.
+
+	Remove module 'u32-grapheme-len' as too redundant with
+	'u32-grapheme-next'.
+	* modules/unigbrk/u32-grapheme-len: Delete file.
+	* modules/unigbrk/u32-grapheme-len-tests: Delete file.
+	* lib/unigbrk.in.h: Remove prototype for deleted function.
+	* lib/unigbrk/u32-grapheme-len.c: Delete file.
+	* tests/unigbrk/test-u32-grapheme-len.c: Delete file.
+
+	Suggested by Bruno Haible.
+
+2011-01-01  Ben Pfaff  <blp@cs.stanford.edu>
+
 	* unigbrk.in.h: Fix typo: "ben" => "been".
 	Reported by Bruno Haible.
 

@@ -78,16 +78,6 @@ extern int
 extern bool
        uc_is_grapheme_cluster_break (ucs4_t a, ucs4_t b);
 
-/* Returns the length (in units) of the first grapheme cluster in the N units
-   in S.  If the return value is N, then extending the string could extend the
-   length of the grapheme cluster too.  Returns 0 only if N is zero. */
-extern size_t
-       u8_grapheme_len (const uint8_t *s, size_t n);
-extern size_t
-       u16_grapheme_len (const uint16_t *s, size_t n);
-extern size_t
-       u32_grapheme_len (const uint32_t *s, size_t n);
-
 /* Returns the start of the next grapheme cluster following S, or NULL if the
    end of the string has been reached. */
 extern const uint8_t *
