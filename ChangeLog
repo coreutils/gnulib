@@ -1,3 +1,10 @@
+2011-01-01  Jim Meyering  <meyering@redhat.com>
+
+	maint: refine the update-copyright rule
+	* Makefile (update-copyright): Also exclude any file that includes
+	the "GENERATED AUTOMATICALLY" comment, being careful not to exclude
+	code that merely generates the comment.
+
 2010-12-31  Ben Pfaff  <blp@cs.stanford.edu>
 
 	New module 'u8-grapheme-len'.

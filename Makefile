@@ -58,6 +58,8 @@ MODULES.html: MODULES.html.sh
 # to update all FSF copyright year lists here.
 # We exclude the files listed in srclist.txt (maintained elsewhere)
 # as well as those in tests/unictype (generated).
+# Also exclude any file that includes the "GENERATED AUTOMATICALLY" comment,
+# being careful not to exclude code that merely generates the comment.
 update-copyright:
 	exempt=$$(mktemp);						\
 	grep -v '^#' config/srclist.txt|grep -v '^$$'			\
@@ -68,6 +70,7 @@ update-copyright:
 	    done > $$exempt;						\
 	git ls-files tests/unictype >> $$exempt;			\
 	git ls-files | grep -vFf $$exempt				\
+	  | xargs grep -L '^/\*.*GENERATED AUTOMATICALLY'		\
 	  | UPDATE_COPYRIGHT_MAX_LINE_LENGTH=79				\
 	    UPDATE_COPYRIGHT_USE_INTERVALS=1				\
 	      xargs build-aux/update-copyright
