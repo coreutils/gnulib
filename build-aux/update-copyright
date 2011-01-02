@@ -3,7 +3,7 @@ eval '(exit $?0)' && eval 'exec perl -wS -0777 -pi "$0" ${1+"$@"}'
     if 0;
 # Update an FSF copyright year list to include the current year.
 
-my $VERSION = '2009-12-28.11:09'; # UTC
+my $VERSION = '2011-01-02.19:00'; # UTC
 
 # Copyright (C) 2009-2011 Free Software Foundation, Inc.
 #
@@ -122,7 +122,8 @@ use warnings;
 
 my $copyright_re = 'Copyright';
 my $circle_c_re = '(?:\([cC]\)|@copyright{}|&copy;)';
-my $holder = 'Free Software Foundation, Inc.';
+my $holder = $ENV{UPDATE_COPYRIGHT_HOLDER};
+$holder ||= 'Free Software Foundation, Inc.';
 my $prefix_max = 5;
 my $margin = $ENV{UPDATE_COPYRIGHT_MAX_LINE_LENGTH};
 !$margin || $margin !~ m/^\d+$/
@@ -252,7 +253,7 @@ if (defined $stmt_re)
   }
 else
   {
-    print STDERR "$ARGV: warning: FSF copyright statement not found\n";
+    print STDERR "$ARGV: warning: copyright statement not found\n";
   }
 
 # Local variables:
