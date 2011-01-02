@@ -1,4 +1,4 @@
-# pread.m4 serial 3
+# pread.m4 serial 4
 dnl Copyright (C) 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -32,7 +32,7 @@ changequote([,])dnl
         gl_save_CPPFLAGS="$CPPFLAGS"
         CPPFLAGS="$CPPFLAGS -D_FILE_OFFSET_BITS=64"
         AC_RUN_IFELSE(
-          [AC_LANG_SOURCE([[
+          [AC_LANG_PROGRAM([[
 #include <sys/types.h>
 #include <unistd.h>
 #include <fcntl.h>
