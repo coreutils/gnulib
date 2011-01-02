@@ -24,25 +24,9 @@
 
 #include <errno.h>
 
-#if HAVE_PWRITE
-
-ssize_t
-pwrite (int fd, const void *buf, size_t nbyte, off_t offset)
-# undef pwrite
-{
-  if (offset < 0)
-    {
-      errno = EINVAL;
-      return -1;
-    }
-  return pwrite (fd, buf, nbyte, offset);
-}
-
-#else
-
-# define __libc_lseek(f,o,w) lseek (f, o, w)
-# define __set_errno(Val) errno = (Val)
-# define __libc_write(f,b,n) write (f, b, n)
+#define __libc_lseek(f,o,w) lseek (f, o, w)
+#define __set_errno(Val) errno = (Val)
+#define __libc_write(f,b,n) write (f, b, n)
 
 /* Note: This implementation of pwrite is not multithread-safe.  */
 
@@ -78,5 +62,3 @@ pwrite (int fd, const void *buf, size_t nbyte, off_t offset)
 
   return result;
 }
-
-#endif

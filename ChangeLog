@@ -1,5 +1,14 @@
 2011-01-02  Bruno Haible  <bruno@clisp.org>
 
+	pwrite: Fix test whether it works and make it work on HP-UX 11.11.
+	* m4/pwrite.m4 (gl_FUNC_PWRITE): Use AC_LANG_PROGRAM, not
+	AC_LANG_SOURCE. Extend the test program to catch another HP-UX 11.11
+	bug.
+	* lib/pwrite.c: Undo 2010-12-31 patch.
+	* doc/posix-functions/pwrite.texi: Document another HP-UX 11.11 bug.
+
+2011-01-02  Bruno Haible  <bruno@clisp.org>
+
 	pread: Fix test whether it works.
 	* m4/pread.m4 (gl_FUNC_PREAD): Use AC_LANG_PROGRAM, not AC_LANG_SOURCE.
 
