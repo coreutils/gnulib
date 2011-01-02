@@ -26,7 +26,6 @@ const uint16_t *
 u16_grapheme_prev (const uint16_t *s, const uint16_t *start)
 {
   ucs4_t next;
-  int mblen;
 
   if (s == start)
     return NULL;

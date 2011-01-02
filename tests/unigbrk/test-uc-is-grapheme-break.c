@@ -110,7 +110,7 @@ main (int argc, char *argv[])
           else
             {
               fprintf (stderr, "%s:%d.%d: syntax error expecting `÷' or `÷'\n",
-                       filename, lineno, p - line + 1);
+                       filename, lineno, (int) (p - line + 1));
               exit (1);
             }
 
@@ -126,7 +126,7 @@ main (int argc, char *argv[])
                 {
                   fprintf (stderr, "%s:%d.%d: syntax error at `%s' expecting "
                            "hexadecimal Unicode code point number\n",
-                           filename, lineno, p - line + 1, p);
+                           filename, lineno, (int) (p - line + 1), p);
                   exit (1);
                 }
               p += n;

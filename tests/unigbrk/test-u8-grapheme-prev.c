@@ -27,8 +27,9 @@
 #include "macros.h"
 
 static void
-test_u8_grapheme_prev (const uint8_t *s, size_t n, size_t len)
+test_u8_grapheme_prev (const char *input, size_t n, size_t len)
 {
+  const uint8_t *s = (const uint8_t *) input;
   const uint8_t *end = s + n;
   const uint8_t *prev = u8_grapheme_prev (end, s);
   if (prev != end - len)
@@ -50,7 +51,7 @@ test_u8_grapheme_prev (const uint8_t *s, size_t n, size_t len)
 int
 main (void)
 {
-  static const char s[] = "abc";
+  static const uint8_t s[] = "abc";
 
   /* Empty string. */
   ASSERT (u8_grapheme_prev (NULL, NULL) == NULL);

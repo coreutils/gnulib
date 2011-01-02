@@ -28,8 +28,9 @@
 #include "macros.h"
 
 static void
-test_u8_grapheme_breaks (const uint8_t *s, const char *expected)
+test_u8_grapheme_breaks (const char *input, const char *expected)
 {
+  const uint8_t *s = (const uint8_t *) input;
   size_t n = strlen (expected);
   char *breaks;
   size_t i;
@@ -71,8 +72,6 @@ test_u8_grapheme_breaks (const uint8_t *s, const char *expected)
 int
 main (void)
 {
-  static const char s[] = "abc";
-
   /* Standalone 1-unit graphemes.  */
   test_u8_grapheme_breaks ("a", "#");
   test_u8_grapheme_breaks ("ab", "##");

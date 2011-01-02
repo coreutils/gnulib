@@ -26,7 +26,6 @@ const uint8_t *
 u8_grapheme_prev (const uint8_t *s, const uint8_t *start)
 {
   ucs4_t next;
-  int mblen;
 
   if (s == start)
     return NULL;

@@ -1,5 +1,25 @@
 2011-01-02  Bruno Haible  <bruno@clisp.org>
 
+	unigbrk: Avoid gcc warnings.
+	* lib/unigbrk/u16-grapheme-breaks.c (u16_grapheme_breaks): Remove
+	unused variable.
+	* lib/unigbrk/u16-grapheme-prev.c (u16_grapheme_prev): Likewise.
+	* lib/unigbrk/u8-grapheme-prev.c (u8_grapheme_prev): Likewise.
+	* tests/unigbrk/test-u16-grapheme-breaks.c (main): Likewise.
+	* tests/unigbrk/test-u32-grapheme-breaks.c (main): Likewise.
+	* tests/unigbrk/test-u8-grapheme-breaks.c (test_u8_grapheme_breaks):
+	Change type of first argument to 'const char *'.
+	(main): Remove unused variable.
+	* tests/unigbrk/test-u8-grapheme-next.c (test_u8_grapheme_next): Change
+	type of first argument to 'const char *'.
+	* tests/unigbrk/test-u8-grapheme-prev.c (test_u8_grapheme_prev):
+	Likewise.
+	(main): Change type of variable 's'.
+	* tests/unigbrk/test-uc-is-grapheme-break.c (main): Cast column number
+	to 'int'.
+
+2011-01-02  Bruno Haible  <bruno@clisp.org>
+
 	pwrite: Fix test whether it works and make it work on HP-UX 11.11.
 	* m4/pwrite.m4 (gl_FUNC_PWRITE): Use AC_LANG_PROGRAM, not
 	AC_LANG_SOURCE. Extend the test program to catch another HP-UX 11.11

@@ -27,8 +27,9 @@
 #include "macros.h"
 
 static void
-test_u8_grapheme_next (const uint8_t *s, size_t n, size_t len)
+test_u8_grapheme_next (const char *input, size_t n, size_t len)
 {
+  const uint8_t *s = (const uint8_t *) input;
   const uint8_t *next = u8_grapheme_next (s, s + n);
   if (next != s + len)
     {

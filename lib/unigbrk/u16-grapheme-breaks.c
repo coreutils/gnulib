@@ -32,7 +32,6 @@ u16_grapheme_breaks (const uint16_t *s, size_t n, char *p)
   for (; n > 0; s += mblen, p += mblen, n -= mblen)
     {
       ucs4_t next;
-      int i;
 
       mblen = u16_mbtouc (&next, s, n);
 

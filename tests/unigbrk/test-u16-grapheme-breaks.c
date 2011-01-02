@@ -81,8 +81,6 @@ test_u16_grapheme_breaks (const char *expected, ...)
 int
 main (void)
 {
-  static const char s[] = "abc";
-
   /* Standalone 1-unit graphemes.  */
   test_u16_grapheme_breaks ("#", 'a', -1);
   test_u16_grapheme_breaks ("##", 'a', 'b', -1);
