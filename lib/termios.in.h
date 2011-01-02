@@ -22,6 +22,17 @@
 #endif
 @PRAGMA_COLUMNS@
 
+/* On HP-UX 11.00, some of the function declarations in <sys/termio.h>,
+   included by <termios.h>, are not protected by extern "C".  Enforce
+   "C" linkage for these functions nevertheless.  */
+#if defined __hpux && defined __cplusplus
+# include <sys/types.h>
+# include <sys/ioctl.h>
+extern "C" {
+# include <sys/termio.h>
+}
+#endif
+
 /* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_TERMIOS_H@
 # @INCLUDE_NEXT@ @NEXT_TERMIOS_H@

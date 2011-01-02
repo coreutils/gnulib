@@ -1,3 +1,10 @@
+2011-01-02  Bruno Haible  <bruno@clisp.org>
+
+	tcgetsid: Correct linkage in C++ mode on HP-UX 11.00.
+	* lib/termios.in.h: In C++ mode, on HP-UX, include <sys/termios.h> with
+	C linkage.
+	* doc/posix-functions/tcgetsid.texi: Mention the HP-UX 11.00 bug.
+
 2011-01-01  Ben Pfaff  <blp@cs.stanford.edu>
 
 	Rename uc_is_grapheme_cluster_break() to uc_is_grapheme_break()
