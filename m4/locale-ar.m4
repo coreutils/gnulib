@@ -1,4 +1,4 @@
-# locale-ar.m4 serial 1
+# locale-ar.m4 serial 2
 dnl Copyright (C) 2003, 2005-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -26,12 +26,13 @@ char buf[16];
 int main () {
   /* Check whether the given locale name is recognized by the system.  */
   if (setlocale (LC_ALL, "") == NULL) return 1;
-  /* Check that nl_langinfo(CODESET) is nonempty and not "ASCII" or "646". */
+  /* Check that nl_langinfo(CODESET) is nonempty and not "ASCII" or "646"
+     and ends in "6". */
 #if HAVE_LANGINFO_CODESET
   {
     const char *cs = nl_langinfo (CODESET);
     if (cs[0] == '\0' || strcmp (cs, "ASCII") == 0 || strcmp (cs, "646") == 0
-        || strcmp (cs, "UTF-8") == 0)
+        || cs[strlen (cs) - 1] != '6')
       return 1;
   }
 #endif
@@ -41,11 +42,6 @@ int main () {
      LC_ALL is set on the command line.  */
   if (strchr (getenv ("LC_ALL"), '.') == NULL) return 1;
 #endif
-  /* Check that the name of the first month begins with U+0643 (ك) as encoded
-     by ISO 8859-6.  This excludes the UTF-8 encoding.  */
-  t.tm_year = 1975 - 1900; t.tm_mon = 1 - 1; t.tm_mday = 4;
-  strftime (buf, sizeof (buf), "%B", &t);
-  if ((unsigned char) buf[0] != 0xe3) return 1;
   return 0;
 }
 changequote([,])dnl
@@ -55,9 +51,17 @@ changequote([,])dnl
       # otherwise on MacOS X 10.3.5 the LC_TIME=C from the beginning of the
       # configure script would override the LC_ALL setting. Likewise for
       # LC_CTYPE, which is also set at the beginning of the configure script.
-      # Test for the usual locale name.
-      for gt_cv_locale_ar in ar_SA ar_SA.ISO-8859-6 ar_EG ar_EG.ISO-8859-6 none; do
-        if test $gt_cv_locale_ar = none || (LC_ALL=$gt_cv_locale_ar LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
+      # Values tested:
+      #   - The usual locale name:                         ar_SA
+      #   - The locale name with explicit encoding suffix: ar_SA.ISO-8859-6
+      #   - The HP-UX locale name:                         ar_SA.iso88596
+      #   - The Solaris 7 locale name:                     ar
+      # Also try ar_EG instead of ar_SA because Egypt is a large country too.
+      for gt_cv_locale_ar in ar_SA ar_SA.ISO-8859-6 ar_SA.iso88596 ar_EG ar_EG.ISO-8859-6 ar_EG.iso88596 ar none; do
+        if test $gt_cv_locale_ar = none; then
+          break
+        fi
+        if (LC_ALL=$gt_cv_locale_ar LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
 	  break
 	fi
       done

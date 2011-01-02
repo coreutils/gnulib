@@ -1,5 +1,12 @@
 2011-01-02  Bruno Haible  <bruno@clisp.org>
 
+	Fix detection of traditional Arabic locale on HP-UX, Solaris, Cygwin.
+	* m4/locale-ar.m4 (gt_LOCALE_AR): Require that the locale encoding name
+	ends in "6". Don't require a specific month name. Try also the locale
+	names found on HP-UX 11 and Solaris 7.
+
+2011-01-02  Bruno Haible  <bruno@clisp.org>
+
 	tcgetsid: Correct linkage in C++ mode on HP-UX 11.00.
 	* lib/termios.in.h: In C++ mode, on HP-UX, include <sys/termios.h> with
 	C linkage.
