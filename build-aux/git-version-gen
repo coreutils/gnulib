@@ -1,6 +1,6 @@
 #!/bin/sh
 # Print a version string.
-scriptversion=2011-01-03.10; # UTC
+scriptversion=2011-01-03.18; # UTC
 
 # Copyright (C) 2007-2011 Free Software Foundation, Inc.
 #
@@ -122,8 +122,12 @@ then
 	    # result is the same as if we were using the newer version
 	    # of git describe.
 	    vtag=`echo "$v" | sed 's/-.*//'`
-	    numcommits=`git rev-list "$vtag"..HEAD | wc -l`
+	    commit_list=`git rev-list "$vtag"..HEAD 2>/dev/null` \
+		|| { commit_list=failed;
+		     echo "$0: WARNING: git rev-list failed" 1>&2; }
+	    numcommits=`echo "$commit_list" | wc -l`
 	    v=`echo "$v" | sed "s/\(.*\)-\(.*\)/\1-$numcommits-\2/"`;
+	    test "$commit_list" = failed && v=UNKNOWN
 	    ;;
     esac
 

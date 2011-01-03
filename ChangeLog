@@ -1,5 +1,11 @@
 2011-01-03  Jim Meyering  <meyering@redhat.com>
 
+	git-version-gen: handle failed "git rev-list"
+	* build-aux/git-version-gen: Rather than leaking a "fatal" error
+	from git and proceeding as if it had succeeded but printed no SHA1
+	checksums, suppress the diagnostic and handle the failure.
+	Reported by Bruce Korb in http://marc.info/?l=git&m=129399145930450&w=2
+
 	git-version-gen: include command name in one more diagnostic
 	* build-aux/git-version-gen: When the required .tarball-version file
 	was missing or unreadable, you might see the diagnostic from "cat",
