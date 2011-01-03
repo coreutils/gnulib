@@ -1,5 +1,12 @@
 2011-01-03  Jim Meyering  <meyering@redhat.com>
 
+	git-version-gen: include command name in one more diagnostic
+	* build-aux/git-version-gen: When the required .tarball-version file
+	was missing or unreadable, you might see the diagnostic from "cat",
+	but no trace of the name of the invoking script.  Now, you still see
+	the diagnostic from cat, but also get one from "git-version-gen: ".
+	Inspired by a patch from Bruce Korb.
+
 	update-copyright: adjust test to match changed code
 	* tests/test-update-copyright.sh: Change test's expected output
 	to match new actual output.
