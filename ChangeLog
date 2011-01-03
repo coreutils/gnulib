@@ -1,3 +1,9 @@
+2011-01-03  Jim Meyering  <meyering@redhat.com>
+
+	update-copyright: adjust test to match changed code
+	* tests/test-update-copyright.sh: Change test's expected output
+	to match new actual output.
+
 2011-01-02  Bruno Haible  <bruno@clisp.org>
 
 	getlogin_r: Avoid test failure on HP-UX 11.
