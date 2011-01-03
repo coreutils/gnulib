@@ -1,3 +1,11 @@
+2011-01-02  Bruno Haible  <bruno@clisp.org>
+
+	getlogin_r: Avoid test failure on HP-UX 11.
+	* tests/test-getlogin_r.c (main): Allow an error code EINVAL instead of
+	ERANGE when the second argument is zero.
+	* doc/posix-functions/getlogin_r.texi: Document the HP-UX 11
+	portability problem.
+
 2011-01-02  Bruce Korb  <bkorb@gnu.org>
 
 	* build-aux/update-copyright: doc Simon's changes

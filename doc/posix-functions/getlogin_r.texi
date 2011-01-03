@@ -29,4 +29,8 @@ Portability problems not fixed by Gnulib:
 @item
 This function fails even when standard input is a tty on some platforms:
 HP-UX 11.11.
+@item
+This function fails with error code @code{EINVAL} instead of @code{ERANGE} when
+the second argument is zero on some platforms:
+HP-UX 11.31.
 @end itemize

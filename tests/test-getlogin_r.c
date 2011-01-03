@@ -78,7 +78,13 @@ main (void)
     size_t i;
 
     for (i = 0; i <= n; i++)
-      ASSERT (getlogin_r (smallbuf, i) == ERANGE);
+      {
+        err = getlogin_r (smallbuf, i);
+        if (i == 0)
+          ASSERT (err == ERANGE || err == EINVAL);
+        else
+          ASSERT (err == ERANGE);
+      }
   }
 
   /* Test with a huge buffer.  */
