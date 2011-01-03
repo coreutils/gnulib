@@ -1,3 +1,9 @@
+2011-01-03  Ben Pfaff  <blp@cs.stanford.edu>
+
+	git-version-gen: use (...) rather than sh -c '...'
+	* build-aux/git-version-gen: Rather than hard-coding a shell's name
+	with "sh -c '...'", just use "(...)".  Less syntax is better, too.
+
 2011-01-03  Jim Meyering  <meyering@redhat.com>
 
 	git-version-gen: convert leading TABs to spaces
