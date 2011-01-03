@@ -1,3 +1,7 @@
+2011-01-02  Bruce Korb  <bkorb@gnu.org>
+
+	* build-aux/update-copyright: doc Simon's changes
+
 2011-01-02  Simon Josefsson  <simon@josefsson.org>
 
 	* build-aux/update-copyright: Support UPDATE_COPYRIGHT_HOLDER
