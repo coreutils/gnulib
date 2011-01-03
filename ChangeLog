@@ -1,5 +1,8 @@
 2011-01-03  Jim Meyering  <meyering@redhat.com>
 
+	git-version-gen: convert leading TABs to spaces
+	* build-aux/git-version-gen: Expand leading TABs.
+
 	git-version-gen: handle failed "git rev-list"
 	* build-aux/git-version-gen: Rather than leaking a "fatal" error
 	from git and proceeding as if it had succeeded but printed no SHA1
