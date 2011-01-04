@@ -1,6 +1,6 @@
 #!/bin/sh
 # Print a version string.
-scriptversion=2011-01-03.20; # UTC
+scriptversion=2011-01-04.08; # UTC
 
 # Copyright (C) 2007-2011 Free Software Foundation, Inc.
 #
@@ -143,7 +143,7 @@ v=`echo "$v" |sed 's/^v//'`
 # Don't declare a version "dirty" merely because a time stamp has changed.
 git update-index --refresh > /dev/null 2>&1
 
-dirty=`(git diff-index --name-only HEAD) 2>/dev/null` || dirty=
+dirty=`exec 2>/dev/null; git diff-index --name-only HEAD` || dirty=
 case "$dirty" in
     '') ;;
     *) # Append the suffix only if there isn't one already.
