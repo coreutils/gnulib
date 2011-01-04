@@ -1,3 +1,9 @@
+2011-01-04  Bruce Korb  <address@hidden>
+
+	git-version-gen: avoid a sub-shell
+	* build-aux/git-version-gen: Redirect stderr in `...` via
+	"exec 2>...", rather than via an added sub-shell.
+
 2011-01-03  Ben Pfaff  <blp@cs.stanford.edu>
 
 	git-version-gen: use (...) rather than sh -c '...'
