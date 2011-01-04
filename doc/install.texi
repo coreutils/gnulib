@@ -7,7 +7,7 @@
 @unnumbered Installation Instructions
 
 Copyright @copyright{} 1994, 1995, 1996, 1999, 2000, 2001, 2002, 2004,
-2005, 2006, 2007, 2008, 2009, 2010 Free Software Foundation, Inc.
+2005, 2006, 2007, 2008, 2009, 2010, 2011 Free Software Foundation, Inc.
 
 Copying and distribution of this file, with or without modification, are
 permitted in any medium without royalty provided the copyright notice
@@ -28,9 +28,9 @@ Some packages provide this @file{INSTALL} file but do not implement all
 of the features documented below.  The lack of an optional feature in a
 given package is not necessarily a bug.
 @end ifclear
-More recommendations for @acronym{GNU} packages can be found in
+More recommendations for GNU packages can be found in
 @ref{Makefile Conventions, , Makefile Conventions, standards,
-@acronym{GNU} Coding Standards}.
+GNU Coding Standards}.
 
 The @command{configure} shell script attempts to guess correct values
 for various system-dependent variables used during compilation.  It uses
@@ -103,7 +103,7 @@ distribution.
 Often, you can also type @samp{make uninstall} to remove the installed
 files again.  In practice, not all packages have tested that
 uninstallation works correctly, even though it is required by the
-@acronym{GNU} Coding Standards.
+GNU Coding Standards.
 
 @item
 Some packages, particularly those that use Automake, provide @samp{make
@@ -135,14 +135,14 @@ Here is an example:
 
 You can compile the package for more than one kind of computer at the
 same time, by placing the object files for each architecture in their
-own directory.  To do this, you can use @acronym{GNU} @command{make}.
+own directory.  To do this, you can use GNU @command{make}.
 @command{cd} to the directory where you want the object files and
 executables to go and run the @command{configure} script.
 @command{configure} automatically checks for the source code in the
 directory that @command{configure} is in and in @file{..}.  This is
 known as a @dfn{VPATH} build.
 
-With a non-@acronym{GNU} @command{make},
+With a non-GNU @command{make},
 it is safer to compile the package for one
 architecture at a time in the source code directory.  After you have
 installed the package for one architecture, use @samp{make distclean}
@@ -204,16 +204,16 @@ directory configuration variables that were expressed in terms of
 @command{configure}, but not in terms of @samp{$@{prefix@}}, must each be
 overridden at install time for the entire
 installation to be relocated.  The approach of makefile variable
-overrides for each directory variable is required by the @acronym{GNU}
+overrides for each directory variable is required by the GNU
 Coding Standards, and ideally causes no recompilation.  However, some
 platforms have known limitations with the semantics of shared libraries
 that end up requiring recompilation when using this method, particularly
-noticeable in packages that use @acronym{GNU} Libtool.
+noticeable in packages that use GNU Libtool.
 
 The second method involves providing the @samp{DESTDIR} variable.  For
 example, @samp{make install DESTDIR=/alternate/directory} will prepend
 @samp{/alternate/directory} before all installation names.  The approach
-of @samp{DESTDIR} overrides is not required by the @acronym{GNU} Coding
+of @samp{DESTDIR} overrides is not required by the GNU Coding
 Standards, and does not work on platforms that have drive letters.  On
 the other hand, it does better at avoiding recompilation issues, and
 works well even when some directory options were not specified in terms
