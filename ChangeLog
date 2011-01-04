@@ -1,3 +1,15 @@
+2011-01-04  Eric Blake  <eblake@redhat.com>
+
+	doc: regenerate INSTALL
+	* doc/Makefile (INSTALL, INSTALL.ISO, INSTALL.UTF-8): Re-add
+	@firstparagraphindent support, now that autoconf dropped it.
+	(INSTALL_PRELUDE): Reinstate old macro.
+	* doc/install.texi: Resync from autoconf.
+	* doc/INSTALL: Reflect recent autoconf update.
+	* doc/INSTALL.ISO: Likewise.
+	* doc/INSTALL.UTF-8: Likewise.
+	Reported by Karl Berry.
+
 2011-01-04  Bruce Korb  <address@hidden>
 
 	git-version-gen: avoid a sub-shell
