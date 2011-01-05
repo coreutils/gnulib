@@ -15,9 +15,9 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-/* Written by Jim Meyering.  */
+/* Written by Jim Meyering and Pádraig Brady.  */
 
-/* Use these functions to avoid a warning when using a function declared with
+/* Use "ignore_value" to avoid a warning when using a function declared with
    gcc's warn_unused_result attribute, but for which you really do want to
    ignore the result.  Traditionally, people have used a "(void)" cast to
    indicate that a function's return value is deliberately unused.  However,
@@ -35,8 +35,25 @@
 #ifndef _GL_IGNORE_VALUE_H
 # define _GL_IGNORE_VALUE_H
 
-static inline void ignore_value (int i) { (void) i; }
-static inline void ignore_ptr (void* p) { (void) p; }
+# include <stdint.h>
+
+# ifndef ATTRIBUTE_DEPRECATED
+/* The __attribute__((__deprecated__)) feature
+   is available in gcc versions 3.1 and newer.  */
+#  if __GNUC__ < 3 || (__GNUC__ == 3 && __GNUC_MINOR__ < 1)
+#   define ATTRIBUTE_DEPRECATED /* empty */
+#  else
+#   define ATTRIBUTE_DEPRECATED __attribute__ ((__deprecated__))
+#  endif
+# endif
+
+static inline void _ignore_value (intptr_t p) { (void) p; }
+# define ignore_value(x) _ignore_value ((intptr_t) x)
+
+/* ignore_value works for both scalars and pointers; deprecate ignore_ptr.  */
+static inline void ATTRIBUTE_DEPRECATED
+ignore_ptr (void *p) { (void) p; } /* deprecated: use ignore_value */
+
 /* FIXME: what about aggregate types? */
 
 #endif

@@ -1,3 +1,14 @@
+2011-01-05  Pádraig Brady <P@draigBrady.com>
+	and Jim Meyering  <meyering@redhat.com>
+
+	ignore-value: make ignore_value more generic; deprecate ignore_ptr
+	* lib/ignore-value.h: Include <stdint.h>, for decl of intptr_t.
+	(ATTRIBUTE_DEPRECATED): Define.
+	(_ignore_case): New function.
+	(ignore_value): New macro, to replace the old function.
+	(ignore_ptr): Arrange for any use to evoke a deprecation warning.
+	* modules/ignore-value (Depends-on): Add stdint.
+
 2011-01-04  Eric Blake  <eblake@redhat.com>
 
 	doc: regenerate INSTALL
