@@ -1,5 +1,11 @@
 2011-01-06  Eric Blake  <eblake@redhat.com>
 
+	ignore-value: support aggregate types
+	* lib/ignore-value.h (ignore_value): Provide separate gcc
+	definition.
+	* modules/ignore-value-tests: New test module.
+	* tests/test-ignore-value.c: New test.
+
 	maint.mk: improve sc_prohibit_strcmp regex
 	* top/maint.mk (sc_prohibit_strcmp): Detect strcmp()!=0, as
 	documented.  Also, detect strcmp((expr),expr) == 0.  Exempt the

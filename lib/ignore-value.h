@@ -47,13 +47,14 @@
 #  endif
 # endif
 
-static inline void _ignore_value (intptr_t p) { (void) p; }
-# define ignore_value(x) _ignore_value ((intptr_t) x)
+# if __GNUC__ < 3 || (__GNUC__ == 3 && __GNUC_MINOR__ < 1)
+#  define ignore_value(x) ((void) (x))
+# else
+#  define ignore_value(x) (({ __typeof__ (x) __x = (x); (void) __x; }))
+# endif
 
 /* ignore_value works for both scalars and pointers; deprecate ignore_ptr.  */
 static inline void ATTRIBUTE_DEPRECATED
 ignore_ptr (void *p) { (void) p; } /* deprecated: use ignore_value */
-
-/* FIXME: what about aggregate types? */
 
 #endif
