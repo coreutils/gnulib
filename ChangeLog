@@ -1,5 +1,10 @@
 2011-01-06  Eric Blake  <eblake@redhat.com>
 
+	maint.mk: improve sc_prohibit_strcmp regex
+	* top/maint.mk (sc_prohibit_strcmp): Detect strcmp()!=0, as
+	documented.  Also, detect strcmp((expr),expr) == 0.  Exempt the
+	definition of STRNEQ.
+
 	signal: work around Haiku issue with SIGBUS
 	* lib/siglist.h: Add comment.
 	* lib/sig2str.c (numname_table): Swap SIGBUS order, to match

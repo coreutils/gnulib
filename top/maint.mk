@@ -292,10 +292,10 @@ sc_prohibit_atoi_atof:
 
 # Use STREQ rather than comparing strcmp == 0, or != 0.
 sc_prohibit_strcmp:
-	@grep -nE '! *str''cmp *\(|\<str''cmp *\([^)]+\) *=='		\
+	@grep -nE '! *str''cmp *\(|\<str''cmp *\(.+\) *[!=]='	\
 	    $$($(VC_LIST_EXCEPT))					\
-	  | grep -vE ':# *define STREQ\(' &&				\
-	  { echo '$(ME): use STREQ in place of the above uses of str''cmp' \
+	  | grep -vE ':# *define STRN?EQ\(' &&				\
+	  { echo '$(ME): replace str''cmp calls above with STREQ/STRNEQ' \
 		1>&2; exit 1; } || :
 
 # Pass EXIT_*, not number, to usage, exit, and error (when exiting)
