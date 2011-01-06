@@ -1,5 +1,13 @@
 2011-01-06  Eric Blake  <eblake@redhat.com>
 
+	signal: work around Haiku issue with SIGBUS
+	* lib/siglist.h: Add comment.
+	* lib/sig2str.c (numname_table): Swap SIGBUS order, to match
+	strsignal's favoring of SIGSEGV.
+	* tests/test-signal.c (main): Avoid test failure.
+	* doc/posix-headers/signal.texi (signal.h): Document the issue.
+	Reported by Scott McCreary.
+
 	maint.mk: add pre-release check to ensure submodule commits are public
 	* top/maint.mk (public-submodule-commit): New rule.
 	(submodule-checks): New variable.
@@ -349,14 +357,6 @@
 	* doc/posix-functions/pread.texi: Document the HP-UX 11 bugs.
 
 2010-12-31  Eric Blake  <eblake@redhat.com>
-
-	signal: work around Haiku issue with SIGBUS
-	* lib/siglist.h: Add comment.
-	* lib/sig2str.c (numname_table): Swap SIGBUS order, to match
-	strsignal's favoring of SIGSEGV.
-	* tests/test-signal.c (main): Avoid test failure.
-	* doc/posix-headers/signal.texi (signal.h): Document the issue.
-	Reported by Scott McCreary.
 
 	nl_langinfo: fix YESEXPR on Irix 6.5
 	* m4/nl_langinfo.m4 (gl_FUNC_NL_LANGINFO): Test for Irix bug.
