@@ -1,3 +1,10 @@
+2011-01-06  Eric Blake  <eblake@redhat.com>
+
+	maint.mk: add pre-release check to ensure submodule commits are public
+	* top/maint.mk (public-submodule-commit): New rule.
+	(submodule-checks): New variable.
+	(alpha beta stable): Depend on the variable.
+
 2011-01-05  Pádraig Brady <P@draigBrady.com>
 	and Jim Meyering  <meyering@redhat.com>
 

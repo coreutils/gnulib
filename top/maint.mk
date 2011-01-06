@@ -1118,9 +1118,25 @@ no-submodule-changes:
 	  : ;								\
 	fi
 
+submodule-checks ?= no-submodule-changes public-submodule-commit
+
+# Ensure that each sub-module commit we're using is public.
+# Without this, it is too easy to tag and release code that
+# cannot be built from a fresh clone.
+.PHONY: public-submodule-commit
+public-submodule-commit:
+	if test -d $(srcdir)/.git; then					\
+	  git submodule foreach 'test $$(git rev-parse origin)'		\
+	      = '"$$(git merge-base --independent origin $$sha1)"'	\
+	    || { echo '$(ME): found non-public submodule commit' >&2;	\
+		 exit 1; };						\
+	else								\
+	  : ;								\
+	fi
+
 .PHONY: alpha beta stable
 ALL_RECURSIVE_TARGETS += alpha beta stable
-alpha beta stable: $(local-check) writable-files no-submodule-changes
+alpha beta stable: $(local-check) writable-files $(submodule-checks)
 	test $@ = stable						\
 	  && { echo $(VERSION) | grep -E '^[0-9]+(\.[0-9]+)+$$'		\
 	       || { echo "invalid version string: $(VERSION)" 1>&2; exit 1;};}\
