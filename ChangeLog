@@ -1,5 +1,10 @@
 2011-01-07  Bruno Haible  <bruno@clisp.org>
 
+	remove test: Avoid failure on HP-UX 11.
+	* tests/test-remove.c (main): Allow EEXIST as alternative error code.
+
+2011-01-07  Bruno Haible  <bruno@clisp.org>
+
 	mkdir, mkdirat tests: Avoid failure on HP-UX 11.11.
 	* tests/test-mkdir.h (test_mkdir): Allow EOPNOTSUPP as alternative
 	error code.

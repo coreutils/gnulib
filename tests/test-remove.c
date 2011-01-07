@@ -78,7 +78,7 @@ main (void)
   /* Empty directory.  */
   errno = 0;
   ASSERT (remove (BASE "dir/.//") == -1);
-  ASSERT (errno == EINVAL || errno == EBUSY);
+  ASSERT (errno == EINVAL || errno == EBUSY || errno == EEXIST);
   ASSERT (remove (BASE "dir") == 0);
 
   /* Test symlink behavior.  Specifying trailing slash should remove
