@@ -1,5 +1,11 @@
 2010-12-30  Bruce Korb  <bkorb@gnu.org>
 
+	libposix/bootstrap: disable testing of error-module-using modules
+	* libposix/bootstrap (opts): append --avoid=${mod}-tests
+	for each module that has the error reference removed
+
+2010-12-30  Bruce Korb  <bkorb@gnu.org>
+
 	* libposix/bootstrap (posix_list): remove unnecessary temp file
 	(modules): install all modules to tmp/modules that reference
 	the 'error' module.
