@@ -1,3 +1,9 @@
+2011-01-07  Bruno Haible  <bruno@clisp.org>
+
+	mkdir, mkdirat tests: Avoid failure on HP-UX 11.11.
+	* tests/test-mkdir.h (test_mkdir): Allow EOPNOTSUPP as alternative
+	error code.
+
 2011-01-07  Pádraig Brady <P@draigBrady.com>
 
 	ignore-value: fixup comments, and add Eric Blake

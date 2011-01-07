@@ -33,7 +33,7 @@ test_mkdir (int (*func) (char const *, mode_t), bool print)
   ASSERT (errno == ENOTDIR || errno == EEXIST);
   errno = 0;
   ASSERT (func (BASE "file/dir", 0700) == -1);
-  ASSERT (errno == ENOTDIR || errno == ENOENT);
+  ASSERT (errno == ENOTDIR || errno == ENOENT || errno == EOPNOTSUPP);
   ASSERT (unlink (BASE "file") == 0);
   errno = 0;
   ASSERT (func ("", 0700) == -1);
