@@ -1,5 +1,11 @@
 2011-01-07  Bruno Haible  <bruno@clisp.org>
 
+	strtod: Restore errno when successfully parsing Infinity or NaN.
+	* lib/strtod.c (strtod): After successfully parsing an Infinity or NaN,
+	restore the original errno.
+
+2011-01-07  Bruno Haible  <bruno@clisp.org>
+
 	remove test: Avoid failure on HP-UX 11.
 	* tests/test-remove.c (main): Allow EEXIST as alternative error code.
 
