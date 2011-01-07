@@ -15,7 +15,7 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-/* Written by Jim Meyering and Pádraig Brady.  */
+/* Written by Jim Meyering, Eric Blake and Pádraig Brady.  */
 
 /* Use "ignore_value" to avoid a warning when using a function declared with
    gcc's warn_unused_result attribute, but for which you really do want to
@@ -47,13 +47,17 @@
 #  endif
 # endif
 
-# if __GNUC__ < 3 || (__GNUC__ == 3 && __GNUC_MINOR__ < 1)
+/* The __attribute__((__warn_unused_result__)) feature
+   is available in gcc versions 3.4 and newer,
+   while the typeof feature has been available since 2.7 at least.  */
+# if __GNUC__ < 3 || (__GNUC__ == 3 && __GNUC_MINOR__ < 4)
 #  define ignore_value(x) ((void) (x))
 # else
 #  define ignore_value(x) (({ __typeof__ (x) __x = (x); (void) __x; }))
 # endif
 
-/* ignore_value works for both scalars and pointers; deprecate ignore_ptr.  */
+/* ignore_value works for scalars, pointers and aggregates;
+   deprecate ignore_ptr.  */
 static inline void ATTRIBUTE_DEPRECATED
 ignore_ptr (void *p) { (void) p; } /* deprecated: use ignore_value */
 

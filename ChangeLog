@@ -1,3 +1,11 @@
+2011-01-07  Pádraig Brady <P@draigBrady.com>
+
+	ignore-value: fixup comments, and add Eric Blake
+	as an author since he rewrote the macros.
+	* lib/ignore-value.h (ignore_value):  State that
+	we now support aggregates.  Also specify exactly
+	when the GCC warn_unused_result feature was added.
+
 2011-01-06  Eric Blake  <eblake@redhat.com>
 
 	ignore-value: support aggregate types
