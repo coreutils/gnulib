@@ -5413,9 +5413,6 @@ get_lbp (unsigned int ch)
           || ch == 0x2CF9 /* COPTIC OLD NUBIAN FULL STOP */
           || ch == 0x2CFE /* COPTIC FULL STOP */
           || ch == 0x2E2E /* REVERSED QUESTION MARK */
-#if REVISION_22
-          || ch == 0xA60C /* VAI SYLLABLE LENGTHENER */
-#endif
           || ch == 0xA60E /* VAI FULL STOP */
           || ch == 0xA876 /* PHAGS-PA MARK SHAD */
           || ch == 0xA877 /* PHAGS-PA MARK DOUBLE SHAD */
@@ -5729,8 +5726,6 @@ get_lbp (unsigned int ch)
                  && ch != 0x21E7 /* UPWARDS WHITE ARROW */
                  && ch != 0x24FF /* NEGATIVE CIRCLED DIGIT ZERO */
                  && ch != 0x273D /* HEAVY TEARDROP-SPOKED ASTERISK */)
-#if !REVISION_22
-                || ch == 0x00A1 /* INVERTED EXCLAMATION MARK */
                 || ch == 0x00A7 /* SECTION SIGN */
                 || ch == 0x00A8 /* DIAERESIS */
                 || ch == 0x00AA /* FEMININE ORDINAL INDICATOR */
@@ -5744,7 +5739,6 @@ get_lbp (unsigned int ch)
                 || ch == 0x00BC /* VULGAR FRACTION ONE QUARTER */
                 || ch == 0x00BD /* VULGAR FRACTION ONE HALF */
                 || ch == 0x00BE /* VULGAR FRACTION THREE QUARTERS */
-                || ch == 0x00BF /* INVERTED QUESTION MARK */
                 || ch == 0x00D7 /* MULTIPLICATION SIGN */
                 || ch == 0x00F7 /* DIVISION SIGN */
                 || ch == 0x02C7 /* CARON */
@@ -5758,7 +5752,6 @@ get_lbp (unsigned int ch)
                 || ch == 0x02DA /* RING ABOVE */
                 || ch == 0x02DB /* OGONEK */
                 || ch == 0x02DD /* DOUBLE ACUTE ACCENT */
-#endif
                 || ch == 0x24EA /* CIRCLED DIGIT ZERO */
                 || (ch >= 0x2780 && ch <= 0x2793) /* DINGBAT ... CIRCLED DIGIT ... */
                 /* Extra characters for compatibility with Unicode LineBreak.txt.  */
@@ -8697,7 +8690,9 @@ main (int argc, char * argv[])
         /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.1.0/ucd/CompositionExclusions.txt \
         /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.1.0/ucd/SpecialCasing.txt \
         /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.1.0/ucd/CaseFolding.txt \
-        5.1.0
+        5.1.0 \
+   && diff unilbrk/lbrkprop_org.txt unilbrk/lbrkprop.txt \
+   && diff uniwbrk/wbrkprop_org.txt uniwbrk/wbrkprop.txt
    "
  * End:
  */

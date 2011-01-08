@@ -1,3 +1,10 @@
+2011-01-08  Bruno Haible  <bruno@clisp.org>
+
+	unilbrk: Clarify gen-uni-tables.c code.
+	* lib/gen-uni-tables.c (get_lbp): Assume REVISION_22 to be false. These
+	were mistakes in UAX #14 revision 22 that are corrected in revision 24.
+	Clarify what to do with unilbrk/lbrkprop.txt and uniwbrk/wbrkprop.txt.
+
 2011-01-07  Bruno Haible  <bruno@clisp.org>
 
 	strtod: Restore errno when successfully parsing Infinity or NaN.
