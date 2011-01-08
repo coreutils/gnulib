@@ -5188,7 +5188,7 @@ enum
 };
 
 /* Returns the line breaking classification for ch, as a bit mask.  */
-static int
+static int64_t
 get_lbp (unsigned int ch)
 {
   int attr = 0;
@@ -5201,15 +5201,15 @@ get_lbp (unsigned int ch)
           || ch == 0x000B /* line tabulation */
           || ch == 0x2028 /* LINE SEPARATOR */
           || ch == 0x2029 /* PARAGRAPH SEPARATOR */)
-        attr |= 1 << LBP_BK;
+        attr |= (int64_t) 1 << LBP_BK;
 
       if (ch == 0x2060 /* WORD JOINER */
           || ch == 0xFEFF /* ZERO WIDTH NO-BREAK SPACE */)
-        attr |= 1 << LBP_WJ;
+        attr |= (int64_t) 1 << LBP_WJ;
 
       /* zero width space */
       if (ch == 0x200B /* ZERO WIDTH SPACE */)
-        attr |= 1 << LBP_ZW;
+        attr |= (int64_t) 1 << LBP_ZW;
 
       /* non-breaking (glue) */
       if (ch == 0x00A0 /* NO-BREAK SPACE */
@@ -5222,15 +5222,15 @@ get_lbp (unsigned int ch)
           || ch == 0x0F0C /* TIBETAN MARK DELIMITER TSHEG BSTAR */
           || ch == 0x0F12 /* TIBETAN MARK RGYA GRAM SHAD */
           || (ch >= 0x035C && ch <= 0x0362) /* COMBINING DOUBLE ... */)
-        attr |= 1 << LBP_GL;
+        attr |= (int64_t) 1 << LBP_GL;
 
       /* space */
       if (ch == 0x0020 /* SPACE */)
-        attr |= 1 << LBP_SP;
+        attr |= (int64_t) 1 << LBP_SP;
 
       /* break opportunity before and after */
       if (ch == 0x2014 /* EM DASH */)
-        attr |= 1 << LBP_B2;
+        attr |= (int64_t) 1 << LBP_B2;
 
       /* break opportunity after */
       if (ch == 0x1680 /* OGHAM SPACE MARK */
@@ -5340,7 +5340,7 @@ get_lbp (unsigned int ch)
           || ch == 0x12471 /* CUNEIFORM PUNCTUATION SIGN VERTICAL COLON */
           || ch == 0x12472 /* CUNEIFORM PUNCTUATION SIGN DIAGONAL COLON */
           || ch == 0x12473 /* CUNEIFORM PUNCTUATION SIGN DIAGONAL TRICOLON */)
-        attr |= 1 << LBP_BA;
+        attr |= (int64_t) 1 << LBP_BA;
 
       /* break opportunity before */
       if (ch == 0x00B4 /* ACUTE ACCENT */
@@ -5362,15 +5362,15 @@ get_lbp (unsigned int ch)
           || ch == 0xA874 /* PHAGS-PA SINGLE HEAD MARK */
           || ch == 0xA875 /* PHAGS-PA DOUBLE HEAD MARK */
           || ch == 0x1806 /* MONGOLIAN TODO SOFT HYPHEN */)
-        attr |= 1 << LBP_BB;
+        attr |= (int64_t) 1 << LBP_BB;
 
       /* hyphen */
       if (ch == 0x002D /* HYPHEN-MINUS */)
-        attr |= 1 << LBP_HY;
+        attr |= (int64_t) 1 << LBP_HY;
 
       /* contingent break opportunity */
       if (ch == 0xFFFC /* OBJECT REPLACEMENT CHARACTER */)
-        attr |= 1 << LBP_CB;
+        attr |= (int64_t) 1 << LBP_CB;
 
       /* closing punctuation */
       if ((unicode_attributes[ch].category[0] == 'P'
@@ -5385,7 +5385,7 @@ get_lbp (unsigned int ch)
           || ch == 0xFF0E /* FULLWIDTH FULL STOP */
           || ch == 0xFF61 /* HALFWIDTH IDEOGRAPHIC FULL STOP */
           || ch == 0xFF64 /* HALFWIDTH IDEOGRAPHIC COMMA */)
-        attr |= 1 << LBP_CL;
+        attr |= (int64_t) 1 << LBP_CL;
 
       /* exclamation/interrogation */
       if (ch == 0x0021 /* EXCLAMATION MARK */
@@ -5422,14 +5422,14 @@ get_lbp (unsigned int ch)
           || ch == 0xFE57 /* SMALL EXCLAMATION MARK */
           || ch == 0xFF01 /* FULLWIDTH EXCLAMATION MARK */
           || ch == 0xFF1F /* FULLWIDTH QUESTION MARK */)
-        attr |= 1 << LBP_EX;
+        attr |= (int64_t) 1 << LBP_EX;
 
       /* inseparable */
       if (ch == 0x2024 /* ONE DOT LEADER */
           || ch == 0x2025 /* TWO DOT LEADER */
           || ch == 0x2026 /* HORIZONTAL ELLIPSIS */
           || ch == 0xFE19 /* PRESENTATION FORM FOR VERTICAL HORIZONTAL ELLIPSIS */)
-        attr |= 1 << LBP_IN;
+        attr |= (int64_t) 1 << LBP_IN;
 
       /* non starter */
       if (ch == 0x17D6 /* KHMER SIGN CAMNUC PII KUUH */
@@ -5462,7 +5462,7 @@ get_lbp (unsigned int ch)
           || ch == 0xFF9F /* HALFWIDTH KATAKANA SEMI-VOICED SOUND MARK */
           || strstr (unicode_attributes[ch].name, "HIRAGANA LETTER SMALL ") != NULL
           || strstr (unicode_attributes[ch].name, "KATAKANA LETTER SMALL ") != NULL)
-        attr |= 1 << LBP_NS;
+        attr |= (int64_t) 1 << LBP_NS;
 
       /* opening punctuation */
       if ((unicode_attributes[ch].category[0] == 'P'
@@ -5470,7 +5470,7 @@ get_lbp (unsigned int ch)
           || ch == 0x00A1 /* INVERTED EXCLAMATION MARK */
           || ch == 0x00BF /* INVERTED QUESTION MARK */
           || ch == 0x2E18 /* INVERTED INTERROBANG */)
-        attr |= 1 << LBP_OP;
+        attr |= (int64_t) 1 << LBP_OP;
 
       /* ambiguous quotation */
       if ((unicode_attributes[ch].category[0] == 'P'
@@ -5488,7 +5488,7 @@ get_lbp (unsigned int ch)
           || ch == 0x2E07 /* RAISED DOTTED INTERPOLATION MARKER */
           || ch == 0x2E08 /* DOTTED TRANSPOSITION MARKER */
           || ch == 0x2E0B /* RAISED SQUARE */)
-        attr |= 1 << LBP_QU;
+        attr |= (int64_t) 1 << LBP_QU;
 
       /* infix separator (numeric) */
       if (ch == 0x002C /* COMMA */
@@ -5504,7 +5504,7 @@ get_lbp (unsigned int ch)
           || ch == 0xFE10 /* PRESENTATION FORM FOR VERTICAL COMMA */
           || ch == 0xFE13 /* PRESENTATION FORM FOR VERTICAL COLON */
           || ch == 0xFE14 /* PRESENTATION FORM FOR VERTICAL SEMICOLON */)
-        attr |= 1 << LBP_IS;
+        attr |= (int64_t) 1 << LBP_IS;
 
       /* numeric */
       if ((unicode_attributes[ch].category[0] == 'N'
@@ -5512,7 +5512,7 @@ get_lbp (unsigned int ch)
            && strstr (unicode_attributes[ch].name, "FULLWIDTH") == NULL)
           || ch == 0x066B /* ARABIC DECIMAL SEPARATOR */
           || ch == 0x066C /* ARABIC THOUSANDS SEPARATOR */)
-        attr |= 1 << LBP_NU;
+        attr |= (int64_t) 1 << LBP_NU;
 
       /* postfix (numeric) */
       if (ch == 0x0025 /* PERCENT SIGN */
@@ -5539,7 +5539,7 @@ get_lbp (unsigned int ch)
           || ch == 0x0609 /* ARABIC-INDIC PER MILLE SIGN */
           || ch == 0x060A /* ARABIC-INDIC PER TEN THOUSAND SIGN */
           || ch == 0x0D79 /* MALAYALAM DATE MARK */)
-        attr |= 1 << LBP_PO;
+        attr |= (int64_t) 1 << LBP_PO;
 
       /* prefix (numeric) */
       if ((unicode_attributes[ch].category[0] == 'S'
@@ -5550,27 +5550,27 @@ get_lbp (unsigned int ch)
           || ch == 0x2116 /* NUMERO SIGN */
           || ch == 0x2212 /* MINUS SIGN */
           || ch == 0x2213 /* MINUS-OR-PLUS SIGN */)
-        if (!(attr & (1 << LBP_PO)))
-          attr |= 1 << LBP_PR;
+        if (!(attr & ((int64_t) 1 << LBP_PO)))
+          attr |= (int64_t) 1 << LBP_PR;
 
       /* symbols allowing breaks */
       if (ch == 0x002F /* SOLIDUS */)
-        attr |= 1 << LBP_SY;
+        attr |= (int64_t) 1 << LBP_SY;
 
       if (ch >= 0xAC00 && ch <= 0xD7A3 && ((ch - 0xAC00) % 28) == 0)
-        attr |= 1 << LBP_H2;
+        attr |= (int64_t) 1 << LBP_H2;
 
       if (ch >= 0xAC00 && ch <= 0xD7A3 && ((ch - 0xAC00) % 28) != 0)
-        attr |= 1 << LBP_H3;
+        attr |= (int64_t) 1 << LBP_H3;
 
       if ((ch >= 0x1100 && ch <= 0x1159) || ch == 0x115F)
-        attr |= 1 << LBP_JL;
+        attr |= (int64_t) 1 << LBP_JL;
 
       if (ch >= 0x1160 && ch <= 0x11A2)
-        attr |= 1 << LBP_JV;
+        attr |= (int64_t) 1 << LBP_JV;
 
       if (ch >= 0x11A8 && ch <= 0x11F9)
-        attr |= 1 << LBP_JT;
+        attr |= (int64_t) 1 << LBP_JT;
 
       /* complex context (South East Asian) */
       if (((unicode_attributes[ch].category[0] == 'C'
@@ -5590,7 +5590,7 @@ get_lbp (unsigned int ch)
               || (ch >= 0x1000 && ch <= 0x109F)
               || (ch >= 0x1780 && ch <= 0x17FF)
               || (ch >= 0x1950 && ch <= 0x19DF)))
-        attr |= 1 << LBP_SA;
+        attr |= (int64_t) 1 << LBP_SA;
 
       /* attached characters and combining marks */
       if ((unicode_attributes[ch].category[0] == 'M'
@@ -5600,8 +5600,8 @@ get_lbp (unsigned int ch)
           || (unicode_attributes[ch].category[0] == 'C'
               && (unicode_attributes[ch].category[1] == 'c'
                   || unicode_attributes[ch].category[1] == 'f')))
-        if (!(attr & ((1 << LBP_BK) | (1 << LBP_BA) | (1 << LBP_GL) | (1 << LBP_SA) | (1 << LBP_WJ) | (1 << LBP_ZW))))
-          attr |= 1 << LBP_CM;
+        if (!(attr & (((int64_t) 1 << LBP_BK) | ((int64_t) 1 << LBP_BA) | ((int64_t) 1 << LBP_GL) | ((int64_t) 1 << LBP_SA) | ((int64_t) 1 << LBP_WJ) | ((int64_t) 1 << LBP_ZW))))
+          attr |= (int64_t) 1 << LBP_CM;
 
       /* ideographic */
       if ((ch >= 0x2E80 && ch <= 0x2FFF) /* CJK RADICAL, KANGXI RADICAL, IDEOGRAPHIC DESCRIPTION */
@@ -5623,7 +5623,7 @@ get_lbp (unsigned int ch)
           || (ch >= 0x2F800 && ch <= 0x2FA1D) /* CJK COMPATIBILITY IDEOGRAPH */
           || strstr (unicode_attributes[ch].name, "FULLWIDTH LATIN ") != NULL
           || (ch >= 0x3000 && ch <= 0x33FF
-              && !(attr & ((1 << LBP_CM) | (1 << LBP_NS) | (1 << LBP_OP) | (1 << LBP_CL))))
+              && !(attr & (((int64_t) 1 << LBP_CM) | ((int64_t) 1 << LBP_NS) | ((int64_t) 1 << LBP_OP) | ((int64_t) 1 << LBP_CL))))
           /* Extra characters for compatibility with Unicode LineBreak.txt.  */
           || ch == 0xFE30 /* PRESENTATION FORM FOR VERTICAL TWO DOT LEADER */
           || ch == 0xFE31 /* PRESENTATION FORM FOR VERTICAL EM DASH */
@@ -5667,7 +5667,7 @@ get_lbp (unsigned int ch)
           || ch == 0xFFE2 /* FULLWIDTH NOT SIGN */
           || ch == 0xFFE3 /* FULLWIDTH MACRON */
           || ch == 0xFFE4 /* FULLWIDTH BROKEN BAR */)
-        if (!(attr & ((1 << LBP_NS) | (1 << LBP_CM))))
+        if (!(attr & (((int64_t) 1 << LBP_NS) | ((int64_t) 1 << LBP_CM))))
           {
             /* ambiguous (ideograph) ? */
             if ((unicode_width[ch] != NULL
@@ -5675,9 +5675,9 @@ get_lbp (unsigned int ch)
                  && ch >= 0x2000)
                 || ch == 0x24EA /* CIRCLED DIGIT ZERO */
                 || (ch >= 0x2780 && ch <= 0x2793) /* DINGBAT ... CIRCLED DIGIT ... */)
-              attr |= 1 << LBP_AI;
+              attr |= (int64_t) 1 << LBP_AI;
             else
-              attr |= 1 << LBP_ID;
+              attr |= (int64_t) 1 << LBP_ID;
           }
 
       /* ordinary alphabetic and symbol characters */
@@ -5708,7 +5708,7 @@ get_lbp (unsigned int ch)
           || ch == 0x2062 /* INVISIBLE TIMES */
           || ch == 0x2063 /* INVISIBLE SEPARATOR */
           || ch == 0x2064 /* INVISIBLE PLUS */)
-        if (!(attr & ((1 << LBP_GL) | (1 << LBP_B2) | (1 << LBP_BA) | (1 << LBP_BB) | (1 << LBP_HY) | (1 << LBP_CB) | (1 << LBP_CL) | (1 << LBP_EX) | (1 << LBP_IN) | (1 << LBP_NS) | (1 << LBP_OP) | (1 << LBP_QU) | (1 << LBP_IS) | (1 << LBP_NU) | (1 << LBP_PO) | (1 << LBP_PR) | (1 << LBP_SY) | (1 << LBP_H2) | (1 << LBP_H3) | (1 << LBP_JL) | (1 << LBP_JV) | (1 << LBP_JT) | (1 << LBP_SA) | (1 << LBP_ID))))
+        if (!(attr & (((int64_t) 1 << LBP_GL) | ((int64_t) 1 << LBP_B2) | ((int64_t) 1 << LBP_BA) | ((int64_t) 1 << LBP_BB) | ((int64_t) 1 << LBP_HY) | ((int64_t) 1 << LBP_CB) | ((int64_t) 1 << LBP_CL) | ((int64_t) 1 << LBP_EX) | ((int64_t) 1 << LBP_IN) | ((int64_t) 1 << LBP_NS) | ((int64_t) 1 << LBP_OP) | ((int64_t) 1 << LBP_QU) | ((int64_t) 1 << LBP_IS) | ((int64_t) 1 << LBP_NU) | ((int64_t) 1 << LBP_PO) | ((int64_t) 1 << LBP_PR) | ((int64_t) 1 << LBP_SY) | ((int64_t) 1 << LBP_H2) | ((int64_t) 1 << LBP_H3) | ((int64_t) 1 << LBP_JL) | ((int64_t) 1 << LBP_JV) | ((int64_t) 1 << LBP_JT) | ((int64_t) 1 << LBP_SA) | ((int64_t) 1 << LBP_ID))))
           {
             /* ambiguous (alphabetic) ? */
             if ((unicode_width[ch] != NULL
@@ -5759,16 +5759,16 @@ get_lbp (unsigned int ch)
                 || ch == 0x2574 /* BOX DRAWINGS LIGHT LEFT */
                 || ch == 0x2616 /* WHITE SHOGI PIECE */
                 || ch == 0x2617 /* BLACK SHOGI PIECE */)
-              attr |= 1 << LBP_AI;
+              attr |= (int64_t) 1 << LBP_AI;
             else
-              attr |= 1 << LBP_AL;
-            attr &= ~(1 << LBP_CM);
+              attr |= (int64_t) 1 << LBP_AL;
+            attr &= ~((int64_t) 1 << LBP_CM);
           }
     }
 
   if (attr == 0)
     /* unknown */
-    attr |= 1 << LBP_XX;
+    attr |= (int64_t) 1 << LBP_XX;
 
   return attr;
 }
@@ -5781,8 +5781,8 @@ debug_output_lbp (FILE *stream)
 
   for (i = 0; i < 0x110000; i++)
     {
-      int attr = get_lbp (i);
-      if (attr != 1 << LBP_XX)
+      int64_t attr = get_lbp (i);
+      if (attr != (int64_t) 1 << LBP_XX)
         {
           fprintf (stream, "0x%04X", i);
 #define PRINT_BIT(attr,bit) \
@@ -6058,13 +6058,13 @@ output_lbp (FILE *stream1, FILE *stream2)
 
   for (i = 0; i < 0x110000; i++)
     {
-      int attr = get_lbp (i);
+      int64_t attr = get_lbp (i);
 
       /* Now attr should contain exactly one bit.  */
       if (attr == 0 || ((attr & (attr - 1)) != 0))
         abort ();
 
-      if (attr != 1 << LBP_XX)
+      if (attr != (int64_t) 1 << LBP_XX)
         {
           unsigned int log2_attr;
           for (log2_attr = 0; attr > 1; attr >>= 1, log2_attr++);

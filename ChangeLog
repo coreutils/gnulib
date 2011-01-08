@@ -1,5 +1,11 @@
 2011-01-08  Bruno Haible  <bruno@clisp.org>
 
+	gen-uni-tables: Prepare for Unicode 5.2.0.
+	* lib/gen-uni-tables.c (get_lbp): Allow for more than 32 LBP_* values.
+	(debug_output_lbp, output_lbp): Update.
+
+2011-01-08  Bruno Haible  <bruno@clisp.org>
+
 	unilbrk: Clarify gen-uni-tables.c code.
 	* lib/gen-uni-tables.c (get_lbp): Assume REVISION_22 to be false. These
 	were mistakes in UAX #14 revision 22 that are corrected in revision 24.
