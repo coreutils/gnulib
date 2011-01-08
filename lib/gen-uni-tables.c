@@ -5191,7 +5191,7 @@ enum
 static int64_t
 get_lbp (unsigned int ch)
 {
-  int attr = 0;
+  int64_t attr = 0;
 
   if (unicode_attributes[ch].name != NULL)
     {
