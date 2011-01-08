@@ -1,4 +1,4 @@
-2010-12-30  Bruce Korb  <bkorb@gnu.org>
+2011-01-07  Bruce Korb  <bkorb@gnu.org>
 
 	libposix/bootstrap: disable testing of error-module-using modules
 	* libposix/bootstrap (opts): append --avoid=${mod}-tests
