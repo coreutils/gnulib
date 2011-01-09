@@ -1,5 +1,11 @@
 2011-01-09  Bruno Haible  <bruno@clisp.org>
 
+	Update to Unicode 5.2.0.
+	* tests/unigbrk/GraphemeBreakTest.txt: Copied from Unicode 5.2.0, with
+	trailing whitespace removed.
+
+2011-01-09  Bruno Haible  <bruno@clisp.org>
+
 	New Unicode character properties, from Unicode 5.2.0.
 	* lib/unictype.in.h (UC_PROPERTY_CASED, UC_PROPERTY_CASE_IGNORABLE,
 	UC_PROPERTY_CHANGES_WHEN_LOWERCASED,
