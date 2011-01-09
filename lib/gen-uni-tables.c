@@ -31,7 +31,7 @@
                       /usr/local/share/Unidata/CompositionExclusions.txt \
                       /usr/local/share/Unidata/SpecialCasing.txt \
                       /usr/local/share/Unidata/CaseFolding.txt \
-                      5.2.0
+                      6.0.0
  */
 
 #include <stdbool.h>
@@ -5398,8 +5398,8 @@ symbolic_width (unsigned int ch)
       if ((ch >= 0x4E00 && ch <= 0x9FFF) /* CJK Unified Ideographs block */
           || (ch >= 0x3400 && ch <= 0x4DBF) /* CJK Unified Ideographs Extension A block */
           || (ch >= 0xF900 && ch <= 0xFAFF) /* CJK Compatibility Ideographs block */
-          || (ch >= 0x20000 && ch <= 0x2FFFD) /* Supplementary Ideographic Plane */
-          || (ch >= 0x30000 && ch <= 0x3FFFD) /* Tertiary Ideographic Plane */)
+          || (ch >= 0x20000 && ch <= 0x2FFFF) /* Supplementary Ideographic Plane */
+          || (ch >= 0x30000 && ch <= 0x3FFFF) /* Tertiary Ideographic Plane */)
         return '2';
       return 0;
     }
@@ -5486,7 +5486,7 @@ output_width_property_test (const char *filename)
 /* ========================================================================= */
 
 /* Line breaking classification.
-   Updated for Unicode TR #14 revision 24.  */
+   Updated for Unicode TR #14 revision 26.  */
 
 enum
 {
@@ -5564,7 +5564,10 @@ get_lbp (unsigned int ch)
           || ch == 0x0F08 /* TIBETAN MARK SBRUL SHAD */
           || ch == 0x0F0C /* TIBETAN MARK DELIMITER TSHEG BSTAR */
           || ch == 0x0F12 /* TIBETAN MARK RGYA GRAM SHAD */
-          || (ch >= 0x035C && ch <= 0x0362) /* COMBINING DOUBLE ... */)
+          || (ch >= 0x035C && ch <= 0x0362) /* COMBINING DOUBLE ... */
+          /* Extra characters for compatibility with Unicode LineBreak.txt.  */
+          || ch == 0x0FD9 /* TIBETAN MARK LEADING MCHAN RTAGS */
+          || ch == 0x0FDA /* TIBETAN MARK TRAILING MCHAN RTAGS */)
         attr |= (int64_t) 1 << LBP_GL;
 
       /* space */
@@ -5690,6 +5693,7 @@ get_lbp (unsigned int ch)
           || ch == 0x10A54 /* KHAROSHTHI PUNCTUATION MANGALAM */
           || ch == 0x10A55 /* KHAROSHTHI PUNCTUATION LOTUS */
           /* Extra characters for compatibility with Unicode LineBreak.txt.  */
+          || ch == 0x2D70 /* TIFINAGH SEPARATOR MARK */
           || ch == 0xA4FE /* LISU PUNCTUATION COMMA */
           || ch == 0xA4FF /* LISU PUNCTUATION FULL STOP */
           || ch == 0xA6F3 /* BAMUM FULL STOP */
@@ -5709,6 +5713,8 @@ get_lbp (unsigned int ch)
           || ch == 0x10B3D /* LARGE ONE DOT OVER TWO DOTS PUNCTUATION */
           || ch == 0x10B3E /* LARGE TWO RINGS OVER ONE RING PUNCTUATION */
           || ch == 0x10B3F /* LARGE ONE RING OVER TWO RINGS PUNCTUATION */
+          || ch == 0x11047 /* BRAHMI DANDA */
+          || ch == 0x11048 /* BRAHMI DOUBLE DANDA */
           || ch == 0x110BE /* KAITHI SECTION MARK */
           || ch == 0x110BF /* KAITHI DOUBLE SECTION MARK */
           || ch == 0x110C0 /* KAITHI DANDA */
@@ -5988,6 +5994,7 @@ get_lbp (unsigned int ch)
            /* Extra characters for compatibility with Unicode LineBreak.txt.  */
            || ch == 0x109E /* MYANMAR SYMBOL SHAN ONE */
            || ch == 0x109F /* MYANMAR SYMBOL SHAN EXCLAMATION */
+           || ch == 0x19DA /* NEW TAI LUE THAM DIGIT ONE */
            || ch == 0x19DE /* NEW TAI LUE SIGN LAE */
            || ch == 0x19DF /* NEW TAI LUE SIGN LAEV */
            || (ch >= 0x1AA0 && ch <= 0x1AAD) /* TAI THAM SIGN */
@@ -6078,8 +6085,11 @@ get_lbp (unsigned int ch)
           || ch == 0xFFE3 /* FULLWIDTH MACRON */
           || ch == 0xFFE4 /* FULLWIDTH BROKEN BAR */
           /* Extra characters for compatibility with Unicode LineBreak.txt.  */
+          || (ch >= 0x1B000 && ch <= 0x1B001) /* Kana Supplement */
           || (ch >= 0x1F200 && ch <= 0x1F248) /* Enclosed Ideographic Supplement */
-          || (ch >= 0x2A700 && ch <= 0x2B734) /* CJK Ideograph Extension C */)
+          || (ch >= 0x1F250 && ch <= 0x1F251) /* Enclosed Ideographic Supplement */
+          || (ch >= 0x2A700 && ch <= 0x2B734) /* CJK Ideograph Extension C */
+          || (ch >= 0x2B740 && ch <= 0x2B81D) /* CJK Ideograph Extension D */)
         if (!(attr & (((int64_t) 1 << LBP_NS) | ((int64_t) 1 << LBP_CM))))
           {
             /* ambiguous (ideograph) ? */
@@ -6695,7 +6705,7 @@ output_lbrk_tables (const char *filename1, const char *filename2, const char *ve
 /* ========================================================================= */
 
 /* Word break property.
-   Updated for Unicode TR #29 revision 15.  */
+   Updated for Unicode TR #29 revision 17.  */
 
 /* Possible values of the Word_Break property.  */
 enum
@@ -7172,7 +7182,7 @@ output_wbrk_tables (const char *filename, const char *version)
 /* ========================================================================= */
 
 /* Grapheme break property.
-   Updated for Unicode TR #29 revision 15.  */
+   Updated for Unicode TR #29 revision 17.  */
 
 /* Possible values of the Grapheme_Cluster_Break property.  */
 enum
@@ -7478,7 +7488,7 @@ fill_org_gbp (const char *graphemebreakproperty_filename)
 /* ========================================================================= */
 
 /* Composition and decomposition.
-   Updated for Unicode TR #15 revision 31.  */
+   Updated for Unicode TR #15 revision 33.  */
 
 /* Maximum number of characters into which a single Unicode character can be
    decomposed.  */
@@ -9108,20 +9118,20 @@ main (int argc, char * argv[])
  * compile-command: "
    gcc -O -Wall gen-uni-tables.c -Iunictype -o gen-uni-tables && \
    ./gen-uni-tables \
-        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.2.0/ucd/UnicodeData.txt \
-        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.2.0/ucd/PropList.txt \
-        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.2.0/ucd/DerivedCoreProperties.txt \
-        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.2.0/ucd/Scripts.txt \
-        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.2.0/ucd/Blocks.txt \
+        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/UnicodeData.txt \
+        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/PropList.txt \
+        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/DerivedCoreProperties.txt \
+        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/Scripts.txt \
+        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/Blocks.txt \
         /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/3.0.1/PropList-3.0.1.txt \
-        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.2.0/ucd/EastAsianWidth.txt \
-        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.2.0/ucd/LineBreak.txt \
-        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.2.0/ucd/auxiliary/WordBreakProperty.txt \
-        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.2.0/ucd/auxiliary/GraphemeBreakProperty.txt \
-        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.2.0/ucd/CompositionExclusions.txt \
-        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.2.0/ucd/SpecialCasing.txt \
-        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/5.2.0/ucd/CaseFolding.txt \
-        5.2.0 \
+        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/EastAsianWidth.txt \
+        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/LineBreak.txt \
+        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/auxiliary/WordBreakProperty.txt \
+        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/auxiliary/GraphemeBreakProperty.txt \
+        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/CompositionExclusions.txt \
+        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/SpecialCasing.txt \
+        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/CaseFolding.txt \
+        6.0.0 \
    && diff unilbrk/lbrkprop_org.txt unilbrk/lbrkprop.txt \
    && diff uniwbrk/wbrkprop_org.txt uniwbrk/wbrkprop.txt
    "

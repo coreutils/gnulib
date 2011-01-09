@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Language syntax properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 5.2.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 6.0.0.  */
 #define identsyntax_header_0 12
 #define identsyntax_header_1 14
 #define identsyntax_header_2 7

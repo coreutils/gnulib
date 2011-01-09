@@ -27,6 +27,7 @@
     { 0xFA70, 0xFAD9 },
     { 0x20000, 0x2A6D6 },
     { 0x2A700, 0x2B734 },
+    { 0x2B740, 0x2B81D },
     { 0x2F800, 0x2FA1D }
 
 #define PREDICATE(c) uc_is_property_ideographic (c)

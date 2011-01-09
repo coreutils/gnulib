@@ -80,5 +80,20 @@ main ()
     }
   }
 
+  /* Test that a break is possible after a zero-width space followed by some
+     regular spaces (rule LB8 in Unicode TR#14 revision 26).  */
+  {
+    static const uint16_t input[4] = { 'x', 0x200B, ' ', 'y' };
+    char *p = (char *) malloc (SIZEOF (input));
+    size_t i;
+
+    u16_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
+    for (i = 0; i < 4; i++)
+      {
+        ASSERT (p[i] == (i == 3 ? UC_BREAK_POSSIBLE : UC_BREAK_PROHIBITED));
+      }
+    free (p);
+  }
+
   return 0;
 }

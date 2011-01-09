@@ -74,5 +74,20 @@ main ()
     }
   }
 
+  /* Test that a break is possible after a zero-width space followed by some
+     regular spaces (rule LB8 in Unicode TR#14 revision 26).  */
+  {
+    static const uint8_t input[6] = "x\342\200\213 y";
+    char *p = (char *) malloc (SIZEOF (input));
+    size_t i;
+
+    u8_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
+    for (i = 0; i < 4; i++)
+      {
+        ASSERT (p[i] == (i == 5 ? UC_BREAK_POSSIBLE : UC_BREAK_PROHIBITED));
+      }
+    free (p);
+  }
+
   return 0;
 }

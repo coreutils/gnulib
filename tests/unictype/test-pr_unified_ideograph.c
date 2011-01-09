@@ -27,7 +27,8 @@
     { 0xFA23, 0xFA24 },
     { 0xFA27, 0xFA29 },
     { 0x20000, 0x2A6D6 },
-    { 0x2A700, 0x2B734 }
+    { 0x2A700, 0x2B734 },
+    { 0x2B740, 0x2B81D }
 
 #define PREDICATE(c) uc_is_property_unified_ideograph (c)
 #include "test-predicate-part2.h"

@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Unicode scripts.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 5.2.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 6.0.0.  */
 struct named_script { const char *name; unsigned int index; };
 %struct-type
 %language=ANSI-C
@@ -102,3 +102,6 @@ Inscriptional_Parthian, 88
 Inscriptional_Pahlavi, 89
 Old_Turkic, 90
 Kaithi, 91
+Batak, 92
+Brahmi, 93
+Mandaic, 94
