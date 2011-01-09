@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Test the Unicode character type functions.
-   Copyright (C) 2007, 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2007 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@
     { 0x038E, 0x03A1 },
     { 0x03A3, 0x03F5 },
     { 0x03F7, 0x0481 },
-    { 0x048A, 0x0523 },
+    { 0x048A, 0x0525 },
     { 0x0531, 0x0556 },
     { 0x0561, 0x0587 },
     { 0x10A0, 0x10C5 },
@@ -64,8 +64,6 @@
     { 0x1FE0, 0x1FEC },
     { 0x1FF2, 0x1FF4 },
     { 0x1FF6, 0x1FFC },
-    { 0x2071, 0x2071 },
-    { 0x207F, 0x207F },
     { 0x2090, 0x2094 },
     { 0x2102, 0x2102 },
     { 0x2107, 0x2107 },
@@ -86,9 +84,8 @@
     { 0x24B6, 0x24E9 },
     { 0x2C00, 0x2C2E },
     { 0x2C30, 0x2C5E },
-    { 0x2C60, 0x2C6F },
-    { 0x2C71, 0x2C7D },
-    { 0x2C80, 0x2CE4 },
+    { 0x2C60, 0x2CE4 },
+    { 0x2CEB, 0x2CEE },
     { 0x2D00, 0x2D25 },
     { 0xA640, 0xA65F },
     { 0xA662, 0xA66D },

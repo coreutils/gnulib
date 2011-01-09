@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Unicode scripts.  */
-/* Generated automatically by gen-ctype.c for Unicode 5.1.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 5.2.0.  */
 struct named_script { const char *name; unsigned int index; };
 %struct-type
 %language=ANSI-C
@@ -87,3 +87,18 @@ Lycian, 73
 Carian, 74
 Lydian, 75
 Cham, 76
+Tai_Tham, 77
+Tai_Viet, 78
+Avestan, 79
+Egyptian_Hieroglyphs, 80
+Samaritan, 81
+Lisu, 82
+Bamum, 83
+Javanese, 84
+Meetei_Mayek, 85
+Imperial_Aramaic, 86
+Old_South_Arabian, 87
+Inscriptional_Parthian, 88
+Inscriptional_Pahlavi, 89
+Old_Turkic, 90
+Kaithi, 91

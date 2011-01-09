@@ -42,7 +42,7 @@ main ()
     for (i = 0; i < 36; i++)
       {
         ASSERT (p[i] == (i == 35 ? UC_BREAK_MANDATORY :
-                         i == 11 || i == 21 || i == 31 ? UC_BREAK_POSSIBLE :
+                         i == 11 || i == 16 || i == 31 ? UC_BREAK_POSSIBLE :
                          UC_BREAK_PROHIBITED));
       }
     free (p);

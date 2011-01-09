@@ -1,3 +1,305 @@
+2011-01-09  Bruno Haible  <bruno@clisp.org>
+
+	Update to Unicode 5.2.0.
+	* lib/gen-uni-tables.c (output_predicate, output_category,
+	output_combclass, output_bidi_category, output_decimal_digit_test,
+	output_decimal_digit, output_digit_test, output_digit,
+	output_numeric_test, output_numeric, output_mirror, output_scripts,
+	output_scripts_byname, output_blocks, output_ident_category): Fix
+	comment header.
+	(is_WBP_MIDNUMLET, is_WBP_MIDLETTER): New functions, extracted from
+	get_wbp.
+	(PROP_CASED, PROP_CASE_IGNORABLE, PROP_CHANGES_WHEN_*): New enumeration
+	items.
+	(fill_properties): Also fill the peoperties Cased, Case_Ignorable,
+	Changes_When_Lowercased, Changes_When_Uppercased,
+	Changes_When_Titlecased, Changes_When_Casefolded,
+	Changes_When_Casemapped.
+	(is_property_alphabetic, is_property_default_ignorable_code_point):
+	Update for Unicode 5.2.0.
+	(is_property_cased, is_property_case_ignorable,
+	is_property_changes_when_lowercased,
+	is_property_changes_when_uppercased,
+	is_property_changes_when_titlecased,
+	is_property_changes_when_casefolded,
+	is_property_changes_when_casemapped): New functions.
+	(output_properties): Output also the properties cased, case_ignorable,
+	changes_when_lowercased, changes_when_uppercased,
+	changes_when_titlecased, changes_when_casefolded,
+	changes_when_casemapped.
+	(symbolic_width): Update for Unicode 5.2.0, incorporating changes from
+	Unicode TR#11 revision 17 -> 19.
+	(LBP_CP): New enumeration value.
+	(LBP_*): Adjust values accordingly.
+	(get_lbp): Update for Unicode 5.2.0, incorporating changes from Unicode
+	TR#14 revision 22 -> 24.
+	(debug_output_lbp): Allow for LBP_* bits >= 32. Support LBP_CP.
+	(fill_org_lbp, debug_output_org_lbp, output_lbp): Support LBP_CP.
+	(get_wbp): Update for Unicode 5.2.0, incorporating changes from Unicode
+	TR#29 revision 13 -> 15. Use functions is_WBP_MIDNUMLET,
+	is_WBP_MIDLETTER.
+	(output_composition_tables): Allow for 24 bits instead of 16 bits in
+	the code1 and code2 of each composition rule.
+	* lib/unicase/cased.h: Regenerated for Unicode 5.2.0.
+	* lib/unicase/ignorable.h: Likewise.
+	* lib/unicase/tocasefold.h: Likewise.
+	* lib/unicase/tolower.h: Likewise.
+	* lib/unicase/totitle.h: Likewise.
+	* lib/unicase/toupper.h: Likewise.
+	* lib/unictype/bidi_of.h: Likewise.
+	* lib/unictype/blocks.h: Likewise.
+	* lib/unictype/categ_C.h: Likewise.
+	* lib/unictype/categ_Cf.h: Likewise.
+	* lib/unictype/categ_Cn.h: Likewise.
+	* lib/unictype/categ_L.h: Likewise.
+	* lib/unictype/categ_Ll.h: Likewise.
+	* lib/unictype/categ_Lm.h: Likewise.
+	* lib/unictype/categ_Lo.h: Likewise.
+	* lib/unictype/categ_Lu.h: Likewise.
+	* lib/unictype/categ_M.h: Likewise.
+	* lib/unictype/categ_Mc.h: Likewise.
+	* lib/unictype/categ_Mn.h: Likewise.
+	* lib/unictype/categ_N.h: Likewise.
+	* lib/unictype/categ_Nd.h: Likewise.
+	* lib/unictype/categ_Nl.h: Likewise.
+	* lib/unictype/categ_No.h: Likewise.
+	* lib/unictype/categ_P.h: Likewise.
+	* lib/unictype/categ_Pd.h: Likewise.
+	* lib/unictype/categ_Po.h: Likewise.
+	* lib/unictype/categ_S.h: Likewise.
+	* lib/unictype/categ_Sc.h: Likewise.
+	* lib/unictype/categ_So.h: Likewise.
+	* lib/unictype/categ_of.h: Likewise.
+	* lib/unictype/combining.h: Likewise.
+	* lib/unictype/ctype_alnum.h: Likewise.
+	* lib/unictype/ctype_alpha.h: Likewise.
+	* lib/unictype/ctype_graph.h: Likewise.
+	* lib/unictype/ctype_lower.h: Likewise.
+	* lib/unictype/ctype_print.h: Likewise.
+	* lib/unictype/ctype_punct.h: Likewise.
+	* lib/unictype/ctype_upper.h: Likewise.
+	* lib/unictype/decdigit.h: Likewise.
+	* lib/unictype/digit.h: Likewise.
+	* lib/unictype/numeric.h: Likewise.
+	* lib/unictype/pr_alphabetic.h: Likewise.
+	* lib/unictype/pr_bidi_arabic_digit.h: Likewise.
+	* lib/unictype/pr_bidi_eur_num_terminator.h: Likewise.
+	* lib/unictype/pr_bidi_european_digit.h: Likewise.
+	* lib/unictype/pr_bidi_hebrew_right_to_left.h: Likewise.
+	* lib/unictype/pr_bidi_left_to_right.h: Likewise.
+	* lib/unictype/pr_bidi_non_spacing_mark.h: Likewise.
+	* lib/unictype/pr_bidi_other_neutral.h: Likewise.
+	* lib/unictype/pr_combining.h: Likewise.
+	* lib/unictype/pr_composite.h: Likewise.
+	* lib/unictype/pr_currency_symbol.h: Likewise.
+	* lib/unictype/pr_dash.h: Likewise.
+	* lib/unictype/pr_decimal_digit.h: Likewise.
+	* lib/unictype/pr_deprecated.h: Likewise.
+	* lib/unictype/pr_diacritic.h: Likewise.
+	* lib/unictype/pr_extender.h: Likewise.
+	* lib/unictype/pr_grapheme_base.h: Likewise.
+	* lib/unictype/pr_grapheme_extend.h: Likewise.
+	* lib/unictype/pr_grapheme_link.h: Likewise.
+	* lib/unictype/pr_id_continue.h: Likewise.
+	* lib/unictype/pr_id_start.h: Likewise.
+	* lib/unictype/pr_ideographic.h: Likewise.
+	* lib/unictype/pr_ignorable_control.h: Likewise.
+	* lib/unictype/pr_logical_order_exception.h: Likewise.
+	* lib/unictype/pr_lowercase.h: Likewise.
+	* lib/unictype/pr_numeric.h: Likewise.
+	* lib/unictype/pr_other_alphabetic.h: Likewise.
+	* lib/unictype/pr_punctuation.h: Likewise.
+	* lib/unictype/pr_sentence_terminal.h: Likewise.
+	* lib/unictype/pr_terminal_punctuation.h: Likewise.
+	* lib/unictype/pr_unassigned_code_value.h: Likewise.
+	* lib/unictype/pr_unified_ideograph.h: Likewise.
+	* lib/unictype/pr_uppercase.h: Likewise.
+	* lib/unictype/pr_xid_continue.h: Likewise.
+	* lib/unictype/pr_xid_start.h: Likewise.
+	* lib/unictype/pr_zero_width.h: Likewise.
+	* lib/unictype/scripts.h: Likewise.
+	* lib/unictype/scripts_byname.gperf: Likewise.
+	* lib/unictype/sy_java_ident.h: Likewise.
+	* lib/unigbrk/gbrkprop.h: Likewise.
+	* lib/unilbrk/lbrkprop1.h: Likewise.
+	* lib/unilbrk/lbrkprop2.h: Likewise.
+	* lib/unilbrk/lbrktables.h: Likewise.
+	* lib/unilbrk/lbrktables.c (unilbrk_table): Add a row and column for
+	LBP_CP. Implement rule LB30.
+	* lib/uniwidth/width.c (nonspacing_table_data): Add U+0816..U+0819,
+	U+081B..U+0823, U+0825..U+0827, U+0829..U+082D, U+0900, U+0955, U+109D,
+	U+1A56, U+1A58..U+1A5E, U+1A60, U+1A62, U+1A65..U+1A6C, U+1A73..U+1A7C,
+	U+1A7F, U+1CD0..U+1CD2, U+1CD4..U+1CE0, U+1CE2..U+1CE8, U+1CED, U+1DFD,
+	U+2CEF..U+2CF1, U+A6F0..U+A6F1, U+A8E0..U+A8F1, U+A980..U+A982, U+A9B3,
+	U+A9B6..U+A9B9, U+A9BC, U+AAB0, U+AAB2..U+AAB4, U+AAB7..U+AAB8,
+	U+AABE..U+AABF, U+AAC1, U+ABE5, U+ABE8, U+ABED, U+11080..U+11081,
+	U+110B3..U+110B6, U+110B9..U+110BA, U+110BD.
+	(uc_width): Return 2 also for unassigned code points of planes 2 and 3.
+	* lib/uninorm/composition-table.gperf: Regenerated for Unicode 5.2.0.
+	* lib/uninorm/composition.c (struct composition_rule): Allow for 24
+	bits instead of 16 bits in the code1 and code2 of each composition
+	rule.
+	(uc_composition): Update for Unicode 5.2.0.
+	* lib/uninorm/decomposition-table1.h: Regenerated for Unicode 5.2.0.
+	* lib/uninorm/decomposition-table2.h: Likewise.
+	* lib/uniwbrk/wbrkprop.h: Likewise.
+	* tests/unicase/test-cased.c: Likewise.
+	* tests/unicase/test-ignorable.c: Likewise.
+	* tests/unicase/test-uc_tolower.c: Likewise.
+	* tests/unicase/test-uc_totitle.c: Likewise.
+	* tests/unicase/test-uc_toupper.c: Likewise.
+	* tests/unictype/test-categ_C.c: Likewise.
+	* tests/unictype/test-categ_Cf.c: Likewise.
+	* tests/unictype/test-categ_Cn.c: Likewise.
+	* tests/unictype/test-categ_L.c: Likewise.
+	* tests/unictype/test-categ_Ll.c: Likewise.
+	* tests/unictype/test-categ_Lm.c: Likewise.
+	* tests/unictype/test-categ_Lo.c: Likewise.
+	* tests/unictype/test-categ_Lu.c: Likewise.
+	* tests/unictype/test-categ_M.c: Likewise.
+	* tests/unictype/test-categ_Mc.c: Likewise.
+	* tests/unictype/test-categ_Mn.c: Likewise.
+	* tests/unictype/test-categ_N.c: Likewise.
+	* tests/unictype/test-categ_Nd.c: Likewise.
+	* tests/unictype/test-categ_Nl.c: Likewise.
+	* tests/unictype/test-categ_No.c: Likewise.
+	* tests/unictype/test-categ_P.c: Likewise.
+	* tests/unictype/test-categ_Pd.c: Likewise.
+	* tests/unictype/test-categ_Po.c: Likewise.
+	* tests/unictype/test-categ_S.c: Likewise.
+	* tests/unictype/test-categ_Sc.c: Likewise.
+	* tests/unictype/test-categ_So.c: Likewise.
+	* tests/unictype/test-ctype_alnum.c: Likewise.
+	* tests/unictype/test-ctype_alpha.c: Likewise.
+	* tests/unictype/test-ctype_graph.c: Likewise.
+	* tests/unictype/test-ctype_lower.c: Likewise.
+	* tests/unictype/test-ctype_print.c: Likewise.
+	* tests/unictype/test-ctype_punct.c: Likewise.
+	* tests/unictype/test-ctype_upper.c: Likewise.
+	* tests/unictype/test-decdigit.h: Likewise.
+	* tests/unictype/test-digit.h: Likewise.
+	* tests/unictype/test-numeric.h: Likewise.
+	* tests/unictype/test-pr_alphabetic.c: Likewise.
+	* tests/unictype/test-pr_bidi_arabic_digit.c: Likewise.
+	* tests/unictype/test-pr_bidi_eur_num_terminator.c: Likewise.
+	* tests/unictype/test-pr_bidi_european_digit.c: Likewise.
+	* tests/unictype/test-pr_bidi_hebrew_right_to_left.c: Likewise.
+	* tests/unictype/test-pr_bidi_left_to_right.c: Likewise.
+	* tests/unictype/test-pr_bidi_non_spacing_mark.c: Likewise.
+	* tests/unictype/test-pr_bidi_other_neutral.c: Likewise.
+	* tests/unictype/test-pr_combining.c: Likewise.
+	* tests/unictype/test-pr_composite.c: Likewise.
+	* tests/unictype/test-pr_currency_symbol.c: Likewise.
+	* tests/unictype/test-pr_dash.c: Likewise.
+	* tests/unictype/test-pr_decimal_digit.c: Likewise.
+	* tests/unictype/test-pr_deprecated.c: Likewise.
+	* tests/unictype/test-pr_diacritic.c: Likewise.
+	* tests/unictype/test-pr_extender.c: Likewise.
+	* tests/unictype/test-pr_grapheme_base.c: Likewise.
+	* tests/unictype/test-pr_grapheme_extend.c: Likewise.
+	* tests/unictype/test-pr_grapheme_link.c: Likewise.
+	* tests/unictype/test-pr_id_continue.c: Likewise.
+	* tests/unictype/test-pr_id_start.c: Likewise.
+	* tests/unictype/test-pr_ideographic.c: Likewise.
+	* tests/unictype/test-pr_ignorable_control.c: Likewise.
+	* tests/unictype/test-pr_logical_order_exception.c: Likewise.
+	* tests/unictype/test-pr_lowercase.c: Likewise.
+	* tests/unictype/test-pr_numeric.c: Likewise.
+	* tests/unictype/test-pr_other_alphabetic.c: Likewise.
+	* tests/unictype/test-pr_punctuation.c: Likewise.
+	* tests/unictype/test-pr_sentence_terminal.c: Likewise.
+	* tests/unictype/test-pr_terminal_punctuation.c: Likewise.
+	* tests/unictype/test-pr_unassigned_code_value.c: Likewise.
+	* tests/unictype/test-pr_unified_ideograph.c: Likewise.
+	* tests/unictype/test-pr_uppercase.c: Likewise.
+	* tests/unictype/test-pr_xid_continue.c: Likewise.
+	* tests/unictype/test-pr_xid_start.c: Likewise.
+	* tests/unictype/test-pr_zero_width.c: Likewise.
+	* tests/unigbrk/test-uc-gbrk-prop.h: Likewise.
+	* tests/unilbrk/test-u8-possible-linebreaks.c (main): Update for
+	changed behaviour: line breaking is now disallowed between a letter
+	or '=' and '('.
+	* tests/unilbrk/test-u16-possible-linebreaks.c (main): Likewise.
+	* tests/unilbrk/test-u32-possible-linebreaks.c (main): Likewise.
+	* tests/unilbrk/test-ulc-possible-linebreaks.c (main): Likewise.
+	* tests/unilbrk/test-ulc-width-linebreaks.c (main): Likewise.
+	* tests/uniwidth/test-uc_width2.sh: Same updates as in
+	lib/uniwidth/width.c.
+	* tests/uninorm/NormalizationTest.txt: Update from Unicode 5.2.0,
+	without comments, but with the original copyright notice.
+	* lib/unicase/special-casing-table.gperf: Regenerated; only comment
+	changes.
+	* lib/unictype/categ_Cc.h: Likewise.
+	* lib/unictype/categ_Co.h: Likewise.
+	* lib/unictype/categ_Cs.h: Likewise.
+	* lib/unictype/categ_Lt.h: Likewise.
+	* lib/unictype/categ_Me.h: Likewise.
+	* lib/unictype/categ_Pc.h: Likewise.
+	* lib/unictype/categ_Pe.h: Likewise.
+	* lib/unictype/categ_Pf.h: Likewise.
+	* lib/unictype/categ_Pi.h: Likewise.
+	* lib/unictype/categ_Ps.h: Likewise.
+	* lib/unictype/categ_Sk.h: Likewise.
+	* lib/unictype/categ_Sm.h: Likewise.
+	* lib/unictype/categ_Z.h: Likewise.
+	* lib/unictype/categ_Zl.h: Likewise.
+	* lib/unictype/categ_Zp.h: Likewise.
+	* lib/unictype/categ_Zs.h: Likewise.
+	* lib/unictype/ctype_blank.h: Likewise.
+	* lib/unictype/ctype_cntrl.h: Likewise.
+	* lib/unictype/ctype_digit.h: Likewise.
+	* lib/unictype/ctype_space.h: Likewise.
+	* lib/unictype/ctype_xdigit.h: Likewise.
+	* lib/unictype/mirror.h: Likewise.
+	* lib/unictype/pr_ascii_hex_digit.h: Likewise.
+	* lib/unictype/pr_bidi_arabic_right_to_left.h: Likewise.
+	* lib/unictype/pr_bidi_block_separator.h: Likewise.
+	* lib/unictype/pr_bidi_boundary_neutral.h: Likewise.
+	* lib/unictype/pr_bidi_common_separator.h: Likewise.
+	* lib/unictype/pr_bidi_control.h: Likewise.
+	* lib/unictype/pr_bidi_embedding_or_override.h: Likewise.
+	* lib/unictype/pr_bidi_eur_num_separator.h: Likewise.
+	* lib/unictype/pr_bidi_pdf.h: Likewise.
+	* lib/unictype/pr_bidi_segment_separator.h: Likewise.
+	* lib/unictype/pr_bidi_whitespace.h: Likewise.
+	* lib/unictype/pr_default_ignorable_code_point.h: Likewise.
+	* lib/unictype/pr_format_control.h: Likewise.
+	* lib/unictype/pr_hex_digit.h: Likewise.
+	* lib/unictype/pr_hyphen.h: Likewise.
+	* lib/unictype/pr_ids_binary_operator.h: Likewise.
+	* lib/unictype/pr_ids_trinary_operator.h: Likewise.
+	* lib/unictype/pr_iso_control.h: Likewise.
+	* lib/unictype/pr_join_control.h: Likewise.
+	* lib/unictype/pr_left_of_pair.h: Likewise.
+	* lib/unictype/pr_line_separator.h: Likewise.
+	* lib/unictype/pr_math.h: Likewise.
+	* lib/unictype/pr_non_break.h: Likewise.
+	* lib/unictype/pr_not_a_character.h: Likewise.
+	* lib/unictype/pr_other_default_ignorable_code_point.h: Likewise.
+	* lib/unictype/pr_other_grapheme_extend.h: Likewise.
+	* lib/unictype/pr_other_id_continue.h: Likewise.
+	* lib/unictype/pr_other_id_start.h: Likewise.
+	* lib/unictype/pr_other_lowercase.h: Likewise.
+	* lib/unictype/pr_other_math.h: Likewise.
+	* lib/unictype/pr_other_uppercase.h: Likewise.
+	* lib/unictype/pr_paired_punctuation.h: Likewise.
+	* lib/unictype/pr_paragraph_separator.h: Likewise.
+	* lib/unictype/pr_pattern_syntax.h: Likewise.
+	* lib/unictype/pr_pattern_white_space.h: Likewise.
+	* lib/unictype/pr_private_use.h: Likewise.
+	* lib/unictype/pr_quotation_mark.h: Likewise.
+	* lib/unictype/pr_radical.h: Likewise.
+	* lib/unictype/pr_soft_dotted.h: Likewise.
+	* lib/unictype/pr_space.h: Likewise.
+	* lib/unictype/pr_titlecase.h: Likewise.
+	* lib/unictype/pr_variation_selector.h: Likewise.
+	* lib/unictype/pr_white_space.h: Likewise.
+	* lib/unictype/sy_c_ident.h: Likewise.
+	* lib/unictype/sy_c_whitespace.h: Likewise.
+	* lib/unictype/sy_java_whitespace.h: Likewise.
+	* modules/uni*/*: Bump version number of expected libunistring version.
+	Reported by Simon Josefsson.
+
 2011-01-09  Karl Heuer  <kwzh@gnu.org>
 
 	useless-if-before-free: fix typo in --help and make the internal,

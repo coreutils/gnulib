@@ -10,7 +10,7 @@ uninorm/base
 uninorm/compat-decomposition
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([0.9], [uninorm/nfkd])
+gl_LIBUNISTRING_MODULE([0.9.4], [uninorm/nfkd])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNINORM_NFKD

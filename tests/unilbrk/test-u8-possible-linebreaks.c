@@ -45,7 +45,7 @@ main ()
           ASSERT (p[i] == (i == 90 ? UC_BREAK_MANDATORY :
                            i == 7
                            || i == 13 || i == 39
-                           || i == 41 || i == 43 || i == 44 || i == 50
+                           || i == 43 || i == 44
                            || i == 61 || i == 67
                            || i == 70 || i == 73 || i == 77 || i == 80
                            || i == 84 || i == 87 ? UC_BREAK_POSSIBLE :
@@ -64,7 +64,7 @@ main ()
           ASSERT (p[i] == (i == 90 ? UC_BREAK_MANDATORY :
                            i == 7
                            || i == 13 || i == 39
-                           || i == 41 || i == 43 || i == 44 || i == 50
+                           || i == 43 || i == 44
                            || i == 52 || i == 61 || i == 67
                            || i == 70 || i == 73 || i == 77 || i == 80
                            || i == 84 || i == 87 ? UC_BREAK_POSSIBLE :

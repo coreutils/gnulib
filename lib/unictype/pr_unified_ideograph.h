@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-ctype.c for Unicode 5.1.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 5.2.0.  */
 #define header_0 16
 #define header_2 9
 #define header_3 127
@@ -11,7 +11,7 @@ struct
     int header[1];
     int level1[3];
     short level2[2 << 7];
-    /*unsigned*/ int level3[5 << 4];
+    /*unsigned*/ int level3[6 << 4];
   }
 u_property_unified_ideograph =
 {
@@ -234,14 +234,14 @@ u_property_unified_ideograph =
         4 +   256 * sizeof (short) / sizeof (int) +     0,
         4 +   256 * sizeof (short) / sizeof (int) +     0,
         4 +   256 * sizeof (short) / sizeof (int) +    64,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
+        4 +   256 * sizeof (short) / sizeof (int) +     0,
+        4 +   256 * sizeof (short) / sizeof (int) +     0,
+        4 +   256 * sizeof (short) / sizeof (int) +     0,
+        4 +   256 * sizeof (short) / sizeof (int) +     0,
+        4 +   256 * sizeof (short) / sizeof (int) +     0,
+        4 +   256 * sizeof (short) / sizeof (int) +     0,
+        4 +   256 * sizeof (short) / sizeof (int) +     0,
+        4 +   256 * sizeof (short) / sizeof (int) +    80,
        -1,
        -1,
        -1,
@@ -291,14 +291,18 @@ u_property_unified_ideograph =
     0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
     0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
     0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
-    0xFFFFFFFF, 0xFFFFFFFF, 0x0000000F, 0x00000000,
+    0xFFFFFFFF, 0xFFFFFFFF, 0x00000FFF, 0x00000000,
     0x801AC000, 0x0000039A, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
     0xFFFFFFFF, 0xFFFFFFFF, 0x007FFFFF, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
+    0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
+    0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
+    0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
+    0xFFFFFFFF, 0x001FFFFF, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000
   }
 };

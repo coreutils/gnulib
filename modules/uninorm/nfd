@@ -10,7 +10,7 @@ uninorm/base
 uninorm/canonical-decomposition
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([0.9], [uninorm/nfd])
+gl_LIBUNISTRING_MODULE([0.9.4], [uninorm/nfd])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNINORM_NFD

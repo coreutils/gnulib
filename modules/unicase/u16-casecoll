@@ -12,7 +12,7 @@ unicase/u16-casexfrm
 memcmp2
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([0.9.1], [unicase/u16-casecoll])
+gl_LIBUNISTRING_MODULE([0.9.4], [unicase/u16-casecoll])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICASE_U16_CASECOLL
