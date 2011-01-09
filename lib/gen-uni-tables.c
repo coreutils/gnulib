@@ -5144,6 +5144,227 @@ fill_width (const char *width_filename)
 
 /* ========================================================================= */
 
+/* Non-spacing attribute and width.  */
+
+/* The non-spacing attribute table consists of:
+   - Non-spacing characters; generated from PropList.txt or
+     "grep '^[^;]*;[^;]*;[^;]*;[^;]*;NSM;' UnicodeData.txt"
+   - Format control characters; generated from
+     "grep '^[^;]*;[^;]*;Cf;' UnicodeData.txt"
+   - Zero width characters; generated from
+     "grep '^[^;]*;ZERO WIDTH ' UnicodeData.txt"
+ */
+
+static bool
+is_nonspacing (unsigned int ch)
+{
+  return (unicode_attributes[ch].name != NULL
+          && (get_bidi_category (ch) == UC_BIDI_NSM
+              || is_category_Cc (ch) || is_category_Cf (ch)
+              || strncmp (unicode_attributes[ch].name, "ZERO WIDTH ", 11) == 0));
+}
+
+static void
+output_nonspacing_property (const char *filename)
+{
+  FILE *stream;
+  int ind[0x110000 / 0x200];
+  unsigned int i;
+  unsigned int i_max;
+  int next_ind;
+
+  stream = fopen (filename, "w");
+  if (stream == NULL)
+    {
+      fprintf (stderr, "cannot open '%s' for writing\n", filename);
+      exit (1);
+    }
+
+  next_ind = 0;
+  for (i = 0; i < 0x110000 / 0x200; i++)
+    {
+      bool nontrivial = false;
+      unsigned int ch;
+
+      if (i != 0xe0000 / 0x200) /* The 0xe0000 block is handled by code.  */
+        for (ch = i * 0x200; ch < (i + 1) * 0x200; ch++)
+          if (is_nonspacing (ch))
+            {
+              nontrivial = true;
+              break;
+            }
+      if (nontrivial)
+        ind[i] = next_ind++;
+      else
+        ind[i] = -1;
+    }
+
+  fprintf (stream, "static const unsigned char nonspacing_table_data[%d*64] = {\n",
+           next_ind);
+  i_max = 0;
+  for (i = 0; i < 0x110000 / 0x200; i++)
+    {
+      bool nontrivial = (ind[i] >= 0);
+
+      if (nontrivial)
+        {
+          unsigned int j;
+
+          fprintf (stream, "  /* 0x%04x-0x%04x */\n", i * 0x200, (i + 1) * 0x200 - 1);
+          for (j = 0; j < 8; j++)
+            {
+              unsigned int k;
+
+              fprintf (stream, " ");
+              for (k = 0; k < 8; k++)
+                {
+                  unsigned int l;
+                  unsigned char bits = 0;
+
+                  for (l = 0; l < 8; l++)
+                    {
+                      unsigned int ch = i * 0x200 + j * 0x40 + k * 8 + l;
+
+                      if (is_nonspacing (ch))
+                        bits |= 1 << l;
+                    }
+                  fprintf (stream, " 0x%02x%c", bits,
+                           ind[i] + 1 == next_ind && j == 8 - 1 && k == 8 - 1 ? ' ' : ',');
+                }
+              fprintf (stream, " /* 0x%04x-0x%04x */\n",
+                       i * 0x200 + j * 0x40, i * 0x200 + (j + 1) * 0x40 - 1);
+            }
+          i_max = i;
+        }
+    }
+  fprintf (stream, "};\n");
+
+  i_max = ((i_max + 8 - 1) / 8) * 8;
+  fprintf (stream, "static const signed char nonspacing_table_ind[%u] = {\n",
+           i_max);
+  {
+    unsigned int j;
+
+    for (j = 0; j < i_max / 8; j++)
+      {
+        unsigned int k;
+
+        fprintf (stream, " ");
+        for (k = 0; k < 8; k++)
+          {
+            i = j * 8 + k;
+            fprintf (stream, " %2d%c", ind[i],
+                     j == i_max / 8 - 1 && k == 8 - 1 ? ' ' : ',');
+          }
+        fprintf (stream, " /* 0x%04x-0x%04x */\n",
+                 j * 8 * 0x200, (j + 1) * 8 * 0x200 - 1);
+      }
+  }
+  fprintf (stream, "};\n");
+
+  if (ferror (stream) || fclose (stream))
+    {
+      fprintf (stderr, "error writing to '%s'\n", filename);
+      exit (1);
+    }
+}
+
+/* Returns the width of ch as one of 0, '0', '1', '2', 'A'.  */
+static char
+symbolic_width (unsigned int ch)
+{
+  /* Test for unassigned character.  */
+  if (is_property_unassigned_code_value (ch))
+    {
+      /* Unicode TR#11 section "Unassigned and Private-Use Characters".  */
+      if (ch >= 0xE000 && ch <= 0xF8FF)
+        return 'A';
+      if ((ch >= 0x20000 && ch <= 0x2FFFD) || (ch >= 0x30000 && ch <= 0x3FFFD))
+        return '2';
+      return 0;
+    }
+  else
+    {
+      /* Test for non-spacing or control character.  */
+      if (is_category_Cc (ch) && ch < 0x00A0)
+        return 0;
+      if (is_nonspacing (ch))
+        return '0';
+      /* Test for double-width character.  */
+      if (unicode_width[ch] != NULL
+          && (strcmp (unicode_width[ch], "W") == 0
+              || strcmp (unicode_width[ch], "F") == 0))
+        return '2';
+      /* Test for half-width character.  */
+      if (unicode_width[ch] != NULL
+          && strcmp (unicode_width[ch], "H") == 0)
+        return '1';
+    }
+  /* In ancient CJK encodings, Cyrillic and most other characters are
+     double-width as well.  */
+  if (ch >= 0x00A1 && ch < 0x10000)
+    return 'A';
+  return '1';
+}
+
+static void
+output_width_property_test (const char *filename)
+{
+  FILE *stream;
+  unsigned int interval_start, interval_end, ch;
+  char interval_value;
+
+  stream = fopen (filename, "w");
+  if (stream == NULL)
+    {
+      fprintf (stderr, "cannot open '%s' for writing\n", filename);
+      exit (1);
+    }
+
+  interval_value = 0;
+  interval_start = interval_end = 0; /* avoid GCC warning */
+  for (ch = 0; ch < 0x110000; ch++)
+    {
+      char value = symbolic_width (ch);
+      if (value != 0) /* skip Cc control characters and unassigned characters */
+        {
+          if (value == interval_value)
+            /* Extend the interval.  */
+            interval_end = ch;
+          else
+            {
+              /* Terminate the interval.  */
+              if (interval_value != 0)
+                {
+                  if (interval_end == interval_start)
+                    fprintf (stream, "%04X\t\t%c\n", interval_start, interval_value);
+                  else
+                    fprintf (stream, "%04X..%04X\t%c\n", interval_start, interval_end, interval_value);
+                }
+              /* Start a new interval.  */
+              interval_start = interval_end = ch;
+              interval_value = value;
+            }
+        }
+    }
+  /* Terminate the last interval.  */
+  if (interval_value != 0)
+    {
+      if (interval_end == interval_start)
+        fprintf (stream, "%04X\t\t%c\n", interval_start, interval_value);
+      else
+        fprintf (stream, "%04X..%04X\t%c\n", interval_start, interval_end, interval_value);
+    }
+
+  if (ferror (stream) || fclose (stream))
+    {
+      fprintf (stderr, "error writing to '%s'\n", filename);
+      exit (1);
+    }
+}
+
+/* ========================================================================= */
+
 /* Line breaking classification.  */
 
 enum
@@ -8641,6 +8862,8 @@ main (int argc, char * argv[])
   output_scripts_byname (version);
   output_blocks (version);
   output_ident_properties (version);
+  output_nonspacing_property ("uniwidth/width.c.part");
+  output_width_property_test ("../tests/uniwidth/test-uc_width2.sh.part");
   output_old_ctype (version);
 
   debug_output_lbrk_tables ("unilbrk/lbrkprop.txt");

@@ -1,3 +1,17 @@
+2011-01-09  Bruno Haible  <bruno@clisp.org>
+
+	uniwidth/width: Fix width of U+1D173..U+1D17A.
+	* lib/gen-uni-tables.c (is_nonspacing, output_nonspacing_property,
+	symbolic_width, output_width_property_test): New functions.
+	(main): Invoke output_nonspacing_property, output_width_property_test.
+	* lib/uniwidth/width.c (nonspacing_table_data): Set bits for
+	U+1D173..U+1D17A.
+	* tests/uniwidth/test-uc_width2.sh: For U+1D173..U+1D17A, expect 0, not
+	1.
+	* modules/uniwidth/*: Bump version number of expected libunistring
+	version.
+	* modules/unilbrk/*: Likewise.
+
 2011-01-08  Bruno Haible  <bruno@clisp.org>
 
 	uninorm tests: Preserve copyright of Unicode data file.
