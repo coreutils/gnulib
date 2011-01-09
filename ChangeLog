@@ -1,5 +1,11 @@
 2011-01-08  Bruno Haible  <bruno@clisp.org>
 
+	uninorm tests: Preserve copyright of Unicode data file.
+	* tests/uninorm/NormalizationTest.txt: Re-add original copyright.
+	Mention modifications.
+
+2011-01-08  Bruno Haible  <bruno@clisp.org>
+
 	gen-uni-tables: Prepare for Unicode 5.2.0.
 	* lib/gen-uni-tables.c (get_lbp): Allow for more than 32 LBP_* values.
 	(debug_output_lbp, output_lbp): Update.

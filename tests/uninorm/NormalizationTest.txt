@@ -1,10 +1,10 @@
-
-
-
-
-
-
-
+# NormalizationTest-5.1.0.txt
+# Date: 2008-03-03, 21:58:00 GMT [MD]
+#
+# Unicode Character Database
+# Copyright (c) 1991-2008 Unicode, Inc.
+# For terms of use, see http://www.unicode.org/terms_of_use.html
+# Most comments have been stripped from this file.
 
 
 
