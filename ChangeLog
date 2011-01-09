@@ -1,3 +1,15 @@
+2011-01-09  Karl Heuer  <kwzh@gnu.org>
+
+	useless-if-before-free: fix typo in --help and make the internal,
+	automatic version date update process work once again.
+	--help output contained a NUL character instead of the
+	backslash-zero that was intended.  Also, the "must lie within
+	the first 8 lines" line is on line 9, and hence not getting
+	automatically updated.
+	* build-aux/useless-if-before-free: Fix the former by adding a
+	backslash, and the latter by condensing the three lines of what-it-does
+	to a single line, leaving one line of slack for the future.
+
 2011-01-09  Bruno Haible  <bruno@clisp.org>
 
 	uniwidth/width: Fix width of U+1D173..U+1D17A.
