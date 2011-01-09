@@ -3132,6 +3132,13 @@ func_all_modules ()
   func_module unictype/property-bidi-segment-separator
   func_module unictype/property-bidi-whitespace
   func_module unictype/property-byname
+  func_module unictype/property-case-ignorable
+  func_module unictype/property-cased
+  func_module unictype/property-changes-when-casefolded
+  func_module unictype/property-changes-when-casemapped
+  func_module unictype/property-changes-when-lowercased
+  func_module unictype/property-changes-when-titlecased
+  func_module unictype/property-changes-when-uppercased
   func_module unictype/property-combining
   func_module unictype/property-composite
   func_module unictype/property-currency-symbol

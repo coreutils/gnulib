@@ -26,6 +26,13 @@ unictype/property-bidi-other-neutral
 unictype/property-bidi-pdf
 unictype/property-bidi-segment-separator
 unictype/property-bidi-whitespace
+unictype/property-case-ignorable
+unictype/property-cased
+unictype/property-changes-when-casefolded
+unictype/property-changes-when-casemapped
+unictype/property-changes-when-lowercased
+unictype/property-changes-when-titlecased
+unictype/property-changes-when-uppercased
 unictype/property-combining
 unictype/property-composite
 unictype/property-currency-symbol

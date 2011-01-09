@@ -1,5 +1,30 @@
 2011-01-09  Bruno Haible  <bruno@clisp.org>
 
+	New Unicode character properties, from Unicode 5.2.0.
+	* lib/unictype.in.h (UC_PROPERTY_CASED, UC_PROPERTY_CASE_IGNORABLE,
+	UC_PROPERTY_CHANGES_WHEN_LOWERCASED,
+	UC_PROPERTY_CHANGES_WHEN_UPPERCASED,
+	UC_PROPERTY_CHANGES_WHEN_TITLECASED,
+	UC_PROPERTY_CHANGES_WHEN_CASEFOLDED,
+	UC_PROPERTY_CHANGES_WHEN_CASEMAPPED,
+	uc_is_property_cased, uc_is_property_case_ignorable,
+	uc_is_property_changes_when_lowercased,
+	uc_is_property_changes_when_uppercased,
+	uc_is_property_changes_when_titlecased,
+	uc_is_property_changes_when_casefolded,
+	uc_is_property_changes_when_casemapped): New declarations.
+	* lib/unictype/pr_byname.gperf: Add the new properties.
+	* modules/unictype/property-byname (Depends-on): Depend on the new
+	properties modules.
+	* modules/unictype/property-all (Depends-on): Likewise.
+	* MODULES.html.sh (Unicode string functions): Add
+	unictype/property-case-ignorable, unictype/property-cased,
+	unictype/property-changes-when-casefolded,
+	unictype/property-changes-when-casemapped,
+	unictype/property-changes-when-lowercased,
+	unictype/property-changes-when-titlecased,
+	unictype/property-changes-when-uppercased.
+
 	New module 'unictype/property-changes-when-casemapped'.
 	* modules/unictype/property-changes-when-casemapped: New file.
 	* lib/unictype/pr_changes_when_casemapped.c: New file.
