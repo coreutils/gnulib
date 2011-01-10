@@ -62,6 +62,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   prelude-manager https://trac.prelude-ids.org/browser/trunk/prelude-manager/
   pspp            http://git.sv.gnu.org/gitweb/?p=pspp.git
   radius          http://cvs.sv.gnu.org/viewcvs/radius/radius/
+  recutils        http://git.savannah.gnu.org/gitweb/?p=recutils.git
   sed             http://cvs.savannah.gnu.org/viewcvs/sed/?root=sed
   shishi          http://git.sv.gnu.org/gitweb/?p=shishi.git
   tar             http://cvs.sv.gnu.org/viewcvs/tar/tar/
