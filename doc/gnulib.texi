@@ -6496,6 +6496,7 @@ This list of functions is sorted according to the header that declares them.
 * Visual Studio Compatibility::
 * Supporting Relocation::
 * func::
+* configmake::
 * warnings::
 * manywarnings::
 * Running self-tests under valgrind::
@@ -6582,6 +6583,8 @@ ASCII characters.
 @include relocatable-maint.texi
 
 @include func.texi
+
+@include configmake.texi
 
 @include warnings.texi
 

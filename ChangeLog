@@ -1,3 +1,9 @@
+2011-01-09  Karl Berry  <karl@gnu.org>
+
+	* doc/configmake.texi: New file.
+	* doc/gnulib.texi: Include it.
+	* modules/configmake: Move documentation from here.
+
 2011-01-09  Bruno Haible  <bruno@clisp.org>
 
 	Update to Unicode 6.0.0.
