@@ -1,5 +1,7 @@
 2011-01-09  Karl Berry  <karl@gnu.org>
 
+	* doc/posix-functions/gai_strerror.texi: Insert missing @item.
+
 	* doc/configmake.texi: New file.
 	* doc/gnulib.texi: Include it.
 	* modules/configmake: Move documentation from here.
