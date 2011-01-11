@@ -54,7 +54,7 @@
 /* Record the location of the current working directory in CWD so that
    the program may change to other directories and later use restore_cwd
    to return to the recorded location.  This function may allocate
-   space using malloc (via xgetcwd) or leave a file descriptor open;
+   space using malloc (via getcwd) or leave a file descriptor open;
    use free_cwd to perform the necessary free or close.  Upon failure,
    no memory is allocated, any locally opened file descriptors are
    closed;  return non-zero -- in that case, free_cwd need not be
@@ -81,7 +81,7 @@ save_cwd (struct saved_cwd *cwd)
     cwd->desc = fd_safer (cwd->desc);
   if (cwd->desc < 0)
     {
-      cwd->name = xgetcwd ();
+      cwd->name = getcwd (NULL, 0);
       return cwd->name ? 0 : -1;
     }
 

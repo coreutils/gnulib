@@ -1,5 +1,20 @@
 2011-01-11  Paul Eggert  <eggert@cs.ucla.edu>
 
+	openat, save-cwd: avoid xmalloc
+
+	This removes a direct (but undocumented) dependency of openat on
+	xalloc, along with an indirect dependency via save-cwd.  It also
+	removes a dependency of save-cwd on xgetcwd, and thereby
+	indirectly on xalloc.  This change causes the openat substitute
+	to fall back on save_cwd when memory is tight, and for save_cwd to
+	fail instead of dying when memory is tight, but that's good enough.
+
+	* lib/openat-proc.c: Include stdlib.h (for malloc), not
+	xalloc.h (for xmalloc).
+	(openat_proc_name): Use malloc, not xmalloc.
+	* lib/save-cwd.c (save_cwd): Use getcwd, not xgetcwd.
+	* modules/save-cwd (Files): Depend on getcwd, not xgetcwd.
+
 	openat: Increase OPENAT_BUFFER_SIZE from 512 to at least 1024
 	This avoids heap allocation for file names whose lengths are in
 	the range 512..1023, with the upper bound increasing to at most
