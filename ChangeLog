@@ -1,3 +1,11 @@
+2011-01-11  Jim Meyering  <meyering@redhat.com>
+
+	save-cwd: remove #if-!HAVE_FCHDIR'd code; use the fchdir module
+	There is no need to work around the lack of the fchdir function,
+	since gnulib can now provide a replacement when required.
+	* lib/save-cwd.c: Remove #if !HAVE_FCHDIR...#endif code.
+	* modules/save-cwd (Depends-on): Add fchdir.
+
 2011-01-11  Paul Eggert  <eggert@cs.ucla.edu>
 
 	openat, save-cwd: avoid xmalloc
