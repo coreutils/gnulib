@@ -1,3 +1,14 @@
+2011-01-11  Paul Eggert  <eggert@cs.ucla.edu>
+
+	openat: Increase OPENAT_BUFFER_SIZE from 512 to at least 1024
+	This avoids heap allocation for file names whose lengths are in
+	the range 512..1023, with the upper bound increasing to at most
+	4031 depending on the platform's PATH_MAX.  (We do not want
+	pathmax.h here as it might supply a non-constant PATH_MAX.)
+	* lib/openat-priv.h (SAFER_ALLOCA_MAX, SAFER_ALLOCA): New macros.
+	Perhaps they should be moved to malloca.h?
+	(OPENAT_BUFFER_SIZE): Use them.
+
 2011-01-10  Bruno Haible  <bruno@clisp.org>
 
 	doc: Update users.txt.

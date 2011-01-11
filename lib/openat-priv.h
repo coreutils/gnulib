@@ -21,9 +21,29 @@
 #define _GL_HEADER_OPENAT_PRIV
 
 #include <errno.h>
+#include <limits.h>
 #include <stdlib.h>
 
-#define OPENAT_BUFFER_SIZE 512
+/* Maximum number of bytes that it is safe to allocate as a single
+   array on the stack, and that is known as a compile-time constant.
+   The assumption is that we'll touch the array very quickly, or a
+   temporary very near the array, provoking an out-of-memory trap.  On
+   some operating systems, there is only one guard page for the stack,
+   and a page size can be as small as 4096 bytes.  Subtract 64 in the
+   hope that this will let the compiler touch a nearby temporary and
+   provoke a trap.  */
+#define SAFER_ALLOCA_MAX (4096 - 64)
+
+#define SAFER_ALLOCA(m) ((m) < SAFER_ALLOCA_MAX ? (m) : SAFER_ALLOCA_MAX)
+
+#if defined PATH_MAX
+# define OPENAT_BUFFER_SIZE SAFER_ALLOCA (PATH_MAX)
+#elif defined _XOPEN_PATH_MAX
+# define OPENAT_BUFFER_SIZE SAFER_ALLOCA (_XOPEN_PATH_MAX)
+#else
+# define OPENAT_BUFFER_SIZE SAFER_ALLOCA (1024)
+#endif
+
 char *openat_proc_name (char buf[OPENAT_BUFFER_SIZE], int fd, char const *file);
 
 /* Trying to access a BUILD_PROC_NAME file will fail on systems without
