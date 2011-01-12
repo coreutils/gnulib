@@ -1,3 +1,10 @@
+2011-01-12  Rob Vermaas  <rob.vermaas@gmail.com>
+
+	save-cwd: no longer include "xgetcwd.h"
+	* lib/save-cwd.c: Don't include "xgetcwd.h"; it's no longer used.
+	This avoids a compilation failure in projects that use save-cwd
+	without also using the xgetcwd module.
+
 2011-01-11  Paul Eggert  <eggert@cs.ucla.edu>
 
 	ftoastr: split into 3 modules ftoastr, dtoastr, ldtoastr

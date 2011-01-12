@@ -30,7 +30,6 @@
 
 #include "chdir-long.h"
 #include "unistd--.h"
-#include "xgetcwd.h"
 #include "cloexec.h"
 
 #if GNULIB_FCNTL_SAFER
