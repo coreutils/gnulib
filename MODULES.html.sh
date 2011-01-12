@@ -2281,8 +2281,11 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module dtoastr
+  func_module ftoastr
   func_module intprops
   func_module inttostr
+  func_module ldtoastr
   func_module xstrtoimax
   func_module xstrtoumax
   func_end_table

@@ -1,3 +1,16 @@
+2011-01-11  Paul Eggert  <eggert@cs.ucla.edu>
+
+	ftoastr: split into 3 modules ftoastr, dtoastr, ldtoastr
+	This is so that a program like Emacs, which needs only dtoastr,
+	does not have to bother with distributing and compiling ftoastr
+	and ldtoastr.
+	* MODULES.html.sh: Document these modules (ftoastr wasn't documented).
+	* modules/dtoastr, modules/ldtoastr: New files.
+	* modules/ftoastr: Now works just for 'float'.
+	(Files): Remove lib/dtoastr.c, lib/ldtoastr.c.
+	(Makefile.am): Remove ftoastr.h (not needed and no effect),
+	dtoastr.c, ldtoastr.c.
+
 2011-01-11  Jim Meyering  <meyering@redhat.com>
 
 	save-cwd: remove #if-!HAVE_FCHDIR'd code; use the fchdir module

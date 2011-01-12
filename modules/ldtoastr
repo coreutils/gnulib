@@ -1,9 +1,10 @@
 Description:
-Convert float to accurate string.
+Convert long double to accurate string.
 
 Files:
 lib/ftoastr.h
 lib/ftoastr.c
+lib/ldtoastr.c
 m4/c-strtod.m4
 
 Depends-on:
@@ -13,7 +14,7 @@ configure.ac:
 AC_REQUIRE([gl_C99_STRTOLD])
 
 Makefile.am:
-lib_SOURCES += ftoastr.c
+lib_SOURCES += ldtoastr.c
 
 Include:
 "ftoastr.h"
