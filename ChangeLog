@@ -1,3 +1,9 @@
+2011-01-14  Bruno Haible  <bruno@clisp.org>
+
+	filemode: Make function declarations usable in C++ mode.
+	* lib/filemode.h: Enclose function declarations in extern "C" block.
+	Reported by John W. Eaton <jwe@gnu.org>.
+
 2011-01-12  Rob Vermaas  <rob.vermaas@gmail.com>
 
 	save-cwd: no longer include "xgetcwd.h"

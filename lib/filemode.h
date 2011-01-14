@@ -21,13 +21,24 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 
+/* Get the declaration of strmode.  */
 # if HAVE_DECL_STRMODE
-#  include <string.h> /* FreeBSD, OpenBSD */
+#  include <string.h> /* MacOS X, FreeBSD, OpenBSD */
 #  include <unistd.h> /* NetBSD */
-# else
-void strmode (mode_t mode, char *str);
 # endif
 
-void filemodestring (struct stat const *statp, char *str);
+# ifdef __cplusplus
+extern "C" {
+# endif
+
+# if !HAVE_DECL_STRMODE
+extern void strmode (mode_t mode, char *str);
+# endif
+
+extern void filemodestring (struct stat const *statp, char *str);
+
+# ifdef __cplusplus
+}
+# endif
 
 #endif
