@@ -1,5 +1,9 @@
 2011-01-18  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'get-rusage-as'.
+	* modules/get-rusage-as-tests: New file.
+	* tests/test-get-rusage-as.c: New file.
+
 	New module 'get-rusage-as'.
 	* modules/get-rusage-as: New file.
 	* lib/resource-ext.h: New file.
