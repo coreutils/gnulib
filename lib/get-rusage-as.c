@@ -653,7 +653,11 @@ get_rusage_as_via_iterator (void)
   while (VirtualQuery ((void*)address, &info, sizeof(info)) == sizeof(info))
     {
       if (info.State != MEM_FREE)
-        total += info.RegionSize;
+        /* Ignore areas where info.Protect has the undocumented value 0.
+           This is needed, so that on Cygwin, areas used by malloc() are
+           distinguished from areas reserved for future malloc().  */
+        if (info.Protect != 0)
+          total += info.RegionSize;
       address = (unsigned long)info.BaseAddress + info.RegionSize;
     }
   return total;

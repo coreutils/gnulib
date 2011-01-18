@@ -1,3 +1,9 @@
+2011-01-18  Bruno Haible  <bruno@clisp.org>
+
+	get-rusage-as: Improvement for Cygwin.
+	* lib/get-rusage-as.c (get_rusage_as_via_iterator): On Windows, ignore
+	areas that are merely reserved.
+
 2011-01-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	strftime: remove dependencies on multibyte modules
