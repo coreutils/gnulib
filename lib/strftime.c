@@ -48,8 +48,11 @@ extern char *tzname[];
    GB18030, EUC-TW, BIG5, BIG5-HKSCS, CP950, EUC-JP, EUC-KR, CP949,
    SHIFT_JIS, CP932, JOHAB) are safe for formats, because the byte '%'
    cannot occur in a multibyte character except in the first byte.
-   But this does not hold for the DEC-HANYU encoding used on OSF/1.  */
-#if !defined __osf__
+
+   The DEC-HANYU encoding used on OSF/1 is not safe for formats, but
+   this encoding has never been seen in real-life use, so we ignore
+   it.  */
+#if !(defined __osf__ && 0)
 # define MULTIBYTE_IS_FORMAT_SAFE 1
 #endif
 #define DO_MULTIBYTE (! MULTIBYTE_IS_FORMAT_SAFE)

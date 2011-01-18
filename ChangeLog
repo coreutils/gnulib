@@ -1,3 +1,29 @@
+2011-01-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	strftime: remove dependencies on multibyte modules
+
+	strftime depended on mbrlen, mbsinit, and wchar, but these modules
+	are needed only if ! MULTIBYTE_IS_FORMAT_SAFE, and that is true
+	only if __osf__ is defined, and I suspect OSF doesn't need these
+	other modules.  If my guess is wrong, we'll need to come up with a
+	variant of strftime that doesn't need the multibyte modules.
+
+	I discovered this problem when attempting modify Emacs to use the
+	strftime module.  With the previous gnulib, this caused Emacs to
+	need 31 new files, ranging from lib/config.charset to
+	m4/wint_t.m4.  This was overkill and I expect would be offputting
+	to the Emacs maintainers.  After this change, only 6 new files are
+	needed, namely strftime.[ch], srtftime.m4, stdbool.in.h,
+	stdbool.m4, and tm_gmtoff.m4.
+
+	* lib/strftime.c (MULTIBYTE_IS_FORMAT_SAFE): Define to 1 always.
+	Suggested by Bruno Haible in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-01/msg00238.html>.
+	* m4/strftime.m4 (gl_FUNC_STRFTIME): Do not require AC_TYPE_MBSTATE_T,
+	and do not check for wchar.h.
+	* modules/strftime (Files): Remove m4/mbstate_t.m4.
+	(Depends-on): Remove mbrlen, mbsinit, wchar.
+
 2011-01-18  Bruno Haible  <bruno@clisp.org>
 
 	Tests for module 'get-rusage-as'.

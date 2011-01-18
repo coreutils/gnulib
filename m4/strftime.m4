@@ -21,11 +21,9 @@ AC_DEFUN([gl_FUNC_STRFTIME],
  # This defines (or not) HAVE_TZNAME and HAVE_TM_ZONE.
  AC_REQUIRE([AC_STRUCT_TIMEZONE])
 
- AC_REQUIRE([AC_TYPE_MBSTATE_T])
  AC_REQUIRE([gl_TM_GMTOFF])
 
  AC_CHECK_FUNCS_ONCE([tzset])
- AC_CHECK_HEADERS_ONCE([wchar.h])
 
  AC_DEFINE([my_strftime], [nstrftime],
    [Define to the name of the strftime replacement function.])
