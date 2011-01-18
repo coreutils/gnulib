@@ -20,14 +20,17 @@
 
 #include <stdio.h>
 
-#if HAVE_GETRLIMIT && HAVE_SETRLIMIT
-
 #include <stdlib.h>
-#include <sys/types.h>
-#include <sys/time.h>
-#include <sys/resource.h>
 #include <string.h>
 #include <errno.h>
+
+#if HAVE_GETRLIMIT && HAVE_SETRLIMIT
+# include <sys/types.h>
+# include <sys/time.h>
+# include <sys/resource.h>
+#endif
+
+#include "resource-ext.h"
 
 /* Test against a memory leak in the fprintf replacement.  */
 
@@ -45,32 +48,32 @@
 int
 main (int argc, char *argv[])
 {
-  struct rlimit limit;
+  uintptr_t initial_rusage_as;
   int arg;
-  int repeat;
+  int result;
 
   /* Limit the amount of malloc()ed memory to MAX_ALLOC_TOTAL or less.  */
 
   /* On BSD systems, malloc() is limited by RLIMIT_DATA.  */
-#ifdef RLIMIT_DATA
-  if (getrlimit (RLIMIT_DATA, &limit) < 0)
-    return 77;
-  if (limit.rlim_max == RLIM_INFINITY || limit.rlim_max > MAX_ALLOC_TOTAL)
-    limit.rlim_max = MAX_ALLOC_TOTAL;
-  limit.rlim_cur = limit.rlim_max;
-  if (setrlimit (RLIMIT_DATA, &limit) < 0)
-    return 77;
+#if HAVE_GETRLIMIT && HAVE_SETRLIMIT && defined RLIMIT_DATA
+  {
+    struct rlimit limit;
+
+    if (getrlimit (RLIMIT_DATA, &limit) >= 0)
+      {
+        if (limit.rlim_max == RLIM_INFINITY || limit.rlim_max > MAX_ALLOC_TOTAL)
+          limit.rlim_max = MAX_ALLOC_TOTAL;
+        limit.rlim_cur = limit.rlim_max;
+        (void) setrlimit (RLIMIT_DATA, &limit);
+      }
+  }
 #endif
-  /* On Linux systems, malloc() is limited by RLIMIT_AS.  */
-#ifdef RLIMIT_AS
-  if (getrlimit (RLIMIT_AS, &limit) < 0)
+  /* On Linux systems, malloc() is limited by RLIMIT_AS.
+     On some systems, setrlimit of RLIMIT_AS doesn't work but get_rusage_as ()
+     does.  Allow the address space size to grow by at most MAX_ALLOC_TOTAL.  */
+  initial_rusage_as = get_rusage_as ();
+  if (initial_rusage_as == 0)
     return 77;
-  if (limit.rlim_max == RLIM_INFINITY || limit.rlim_max > MAX_ALLOC_TOTAL)
-    limit.rlim_max = MAX_ALLOC_TOTAL;
-  limit.rlim_cur = limit.rlim_max;
-  if (setrlimit (RLIMIT_AS, &limit) < 0)
-    return 77;
-#endif
 
   arg = atoi (argv[1]);
   if (arg == 0)
@@ -79,30 +82,28 @@ main (int argc, char *argv[])
       if (memory == NULL)
         return 1;
       memset (memory, 17, MAX_ALLOC_TOTAL);
-      return 78;
+      result = 78;
     }
-
-  /* Perform the test and test whether it triggers a permanent memory
-     allocation of more than MAX_ALLOC_TOTAL bytes.  */
-
-  for (repeat = 0; repeat < NUM_ROUNDS; repeat++)
+  else
     {
-      /* This may produce a temporary memory allocation of 11000 bytes.
-         but should not result in a permanent memory allocation.  */
-      if (fprintf (stdout, "%011000d\n", 17) == -1
-          && errno == ENOMEM)
-        return 1;
+      /* Perform the test and test whether it triggers a permanent memory
+         allocation of more than MAX_ALLOC_TOTAL bytes.  */
+      int repeat;
+
+      for (repeat = 0; repeat < NUM_ROUNDS; repeat++)
+        {
+          /* This may produce a temporary memory allocation of 11000 bytes.
+             but should not result in a permanent memory allocation.  */
+          if (fprintf (stdout, "%011000d\n", 17) == -1
+              && errno == ENOMEM)
+            return 1;
+        }
+
+      result = 0;
     }
 
-  return 0;
+  if (get_rusage_as () > initial_rusage_as + MAX_ALLOC_TOTAL)
+    return 1;
+
+  return result;
 }
-
-#else
-
-int
-main (int argc, char *argv[])
-{
-  return 77;
-}
-
-#endif

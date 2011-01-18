@@ -9,6 +9,7 @@ tests/macros.h
 
 Depends-on:
 stdint
+get-rusage-as
 
 configure.ac:
 AC_CHECK_FUNCS_ONCE([getrlimit setrlimit])

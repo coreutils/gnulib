@@ -1,5 +1,21 @@
 2011-01-18  Bruno Haible  <bruno@clisp.org>
 
+	*printf-posix: Avoid test failures. Make tests work on MacOS X, Cygwin.
+	* tests/test-fprintf-posix3.c: Include "resource-ext.h".
+	(main): Perform test also when getrlimit and setrlimit don't exist or
+	when setrlimit of RLIMIT_DATA fails (like on Cygwin). Instead of
+	limiting the address space size using setrlimit, compare the address
+	space size before and after the the test.
+	* tests/test-dprintf-posix2.c: Likewise.
+	* tests/test-fprintf-posix3.sh: Update skip messages.
+	* tests/test-dprintf-posix2.sh: Likewise.
+	* modules/fprintf-posix-tests (Depends-on): Add get-rusage-as.
+	* modules/dprintf-posix-tests (Depends-on): Likewise.
+	Reported by Bruce Korb <bkorb@gnu.org> and
+	Gary V. Vaughan <gary@gnu.org>.
+
+2011-01-18  Bruno Haible  <bruno@clisp.org>
+
 	get-rusage-as: Improvement for Cygwin.
 	* lib/get-rusage-as.c (get_rusage_as_via_iterator): On Windows, ignore
 	areas that are merely reserved.
