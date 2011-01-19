@@ -1,4 +1,4 @@
-# include_next.m4 serial 16
+# include_next.m4 serial 17
 dnl Copyright (C) 2006-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -149,9 +149,19 @@ choke me
 # provides some type/enum definitions or function/variable declarations.
 AC_DEFUN([gl_CHECK_NEXT_HEADERS],
 [
+  AC_CHECK_HEADERS_ONCE([$1])
+  gl_NEXT_HEADERS([$1])
+])
+
+# gl_NEXT_HEADERS(HEADER1 HEADER2 ...)
+# ------------------------------------
+# Like gl_CHECK_NEXT_HEADERS, except do not check whether the headers exist.
+# This is suitable for headers like <stddef.h> that are standardized by C89
+# and therefore can be assumed to exist.
+AC_DEFUN([gl_NEXT_HEADERS],
+[
   AC_REQUIRE([gl_INCLUDE_NEXT])
   AC_REQUIRE([AC_CANONICAL_HOST])
-  AC_CHECK_HEADERS_ONCE([$1])
 
   m4_foreach_w([gl_HEADER_NAME], [$1],
     [AS_VAR_PUSHDEF([gl_next_header],

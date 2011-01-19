@@ -1,3 +1,21 @@
+2011-01-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	include_next: do not check for standard headers like stddef.h
+
+	I found this problem when modifying Emacs to use gnulib.
+	I noticed that it added HAVE_STDDEF_H to config.h, even though
+	gnulib always assumes <stddef.h> exists as per README and this
+	symbol is unnecessary.
+	* m4/include_next.m4 (gl_NEXT_HEADERS): New macro, which does not
+	use AC_CHECK_HEADERS_ONCE, but which otherwise contains what
+	gl_CHECK_NEXT_HEADERS used to contain.  This makes 'configure' run
+	faster for headers like stddef.h that are known to exist.
+	(gl_CHECK_NEXT_HEADERS): Use it.
+	* m4/float_h.m4 (gl_FLOAT_H): For float.h, use gl_NEXT_HEADERS
+	rather than gl_CHECK_NEXT_HEADERS.
+	* m4/stdarg.m4 (gl_STDARG_H): Likewise, for stdarg.h.
+	* m4/stddef_h.m4 (gl_STDDEF_H): Likewise, for stddef.h.
+
 2011-01-18  Eric Blake  <eblake@redhat.com>
 
 	ansi-c++-opt: skip C++ dependency style if C++ is unused
