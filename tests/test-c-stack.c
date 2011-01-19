@@ -61,7 +61,7 @@ main (int argc, char **argv)
 #endif
 
   program_name = argv[0];
-  if (c_stack_action (0) == 0)
+  if (c_stack_action (NULL) == 0)
     {
       if (1 < argc)
         {

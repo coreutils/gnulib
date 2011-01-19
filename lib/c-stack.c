@@ -80,9 +80,9 @@ typedef struct sigaltstack stack_t;
 #include "ignore-value.h"
 
 #if defined SA_ONSTACK && defined SA_SIGINFO
-# define SIGACTION_WORKS 1
+# define SIGINFO_WORKS 1
 #else
-# define SIGACTION_WORKS 0
+# define SIGINFO_WORKS 0
 # ifndef SA_ONSTACK
 #  define SA_ONSTACK 0
 # endif
@@ -109,6 +109,12 @@ static void
 die (int signo)
 {
   char const *message;
+#if !SIGINFO_WORKS
+  /* We can't easily determine whether it is a stack overflow; so
+     assume that the rest of our program is perfect (!) and that
+     this segmentation violation is a stack overflow.  */
+  signo = 0;
+#endif /* !SIGINFO_WORKS */
   segv_action (signo);
   message = signo ? program_error_message : stack_overflow_message;
   ignore_value (write (STDERR_FILENO, program_name, strlen (program_name)));
@@ -223,7 +229,7 @@ c_stack_action (void (*action) (int))
 # if STACK_DIRECTION
 #  define find_stack_direction(ptr) STACK_DIRECTION
 # else
-#  if ! SIGACTION_WORKS || HAVE_XSI_STACK_OVERFLOW_HEURISTIC
+#  if ! SIGINFO_WORKS || HAVE_XSI_STACK_OVERFLOW_HEURISTIC
 static int
 find_stack_direction (char const *addr)
 {
@@ -233,7 +239,7 @@ find_stack_direction (char const *addr)
 #  endif
 # endif
 
-# if SIGACTION_WORKS
+# if SIGINFO_WORKS
 
 /* Handle a segmentation violation and exit.  This function is
    async-signal-safe.  */
@@ -316,7 +322,7 @@ c_stack_action (void (*action) (int))
 
   sigemptyset (&act.sa_mask);
 
-# if SIGACTION_WORKS
+# if SIGINFO_WORKS
   /* POSIX 1003.1-2001 says SA_RESETHAND implies SA_NODEFER, but
      this is not true on Solaris 8 at least.  It doesn't hurt to use
      SA_NODEFER here, so leave it in.  */

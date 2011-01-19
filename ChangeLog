@@ -1,5 +1,13 @@
 2011-01-19  Eric Blake  <eblake@redhat.com>
 
+	c-stack: assume stack overflow if SA_SIGINFO unsupported
+	* lib/c-stack.c (SIGACTION_WORKS): Rename...
+	(SIGINFO_WORKS): ...since gnulib module guarantees that (most) of
+	sigaction will work.
+	(die): Assume stack overflow if siginfo doesn't work, to let Haiku
+	behavior match Linux.
+	* tests/test-c-stack.c (main): Prefer NULL for pointers.
+
 	stdbool-tests: accomodate Haiku
 	* tests/test-stdbool.c: Haiku's gcc 2.95 lacks native _Bool.
 
