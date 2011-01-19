@@ -52,14 +52,14 @@
 
 /* Several tests cannot be guaranteed with gnulib's <stdbool.h>, at
    least, not for all compilers and compiler options.  */
-#if HAVE_STDBOOL_H || defined __GNUC__
+#if HAVE_STDBOOL_H || 3 <= __GNUC__
 struct s { _Bool s: 1; _Bool t; } s;
 #endif
 
 char a[true == 1 ? 1 : -1];
 char b[false == 0 ? 1 : -1];
 char c[__bool_true_false_are_defined == 1 ? 1 : -1];
-#if HAVE_STDBOOL_H || defined __GNUC__ /* See above.  */
+#if HAVE_STDBOOL_H || 3 <= __GNUC__ /* See above.  */
 char d[(bool) 0.5 == true ? 1 : -1];
 # ifdef ADDRESS_CHECK_OKAY /* Avoid gcc warning.  */
 /* C99 may plausibly be interpreted as not requiring support for a cast from
@@ -73,7 +73,7 @@ char f[(_Bool) 0.0 == false ? 1 : -1];
 #endif
 char g[true];
 char h[sizeof (_Bool)];
-#if HAVE_STDBOOL_H || defined __GNUC__ /* See above.  */
+#if HAVE_STDBOOL_H || 3 <= __GNUC__ /* See above.  */
 char i[sizeof s.t];
 #endif
 enum { j = false, k = true, l = false * true, m = true * 256 };
@@ -92,7 +92,7 @@ main ()
 {
   int error = 0;
 
-#if HAVE_STDBOOL_H || defined __GNUC__ /* See above.  */
+#if HAVE_STDBOOL_H || 3 <= __GNUC__ /* See above.  */
 # ifdef ADDRESS_CHECK_OKAY /* Avoid gcc warning.  */
   /* A cast from a variable's address to bool is valid in expressions.  */
   {

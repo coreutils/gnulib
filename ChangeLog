@@ -1,5 +1,8 @@
 2011-01-19  Eric Blake  <eblake@redhat.com>
 
+	stdbool-tests: accomodate Haiku
+	* tests/test-stdbool.c: Haiku's gcc 2.95 lacks native _Bool.
+
 	binary-io: fix O_TEXT on Haiku
 	* modules/binary-io (Depends-on): Add fcntl-h.
 	* lib/binary-io.h (O_TEXT): Rely on replacement <fcntl.h> rather
