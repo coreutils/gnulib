@@ -1,3 +1,10 @@
+2011-01-18  Eric Blake  <eblake@redhat.com>
+
+	ansi-c++-opt: skip C++ dependency style if C++ is unused
+	* m4/ansi-c++.m4 (gl_PROG_ANSI_CXX): Avoid full-blown dependency
+	tests when we know C++ compilation is not desired.
+	Reported by Scott McCreary.
+
 2011-01-18  Bruno Haible  <bruno@clisp.org>
 
 	*printf-posix: Avoid test failures. Make tests work on MacOS X, Cygwin.
