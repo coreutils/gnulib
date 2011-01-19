@@ -5,6 +5,7 @@ Files:
 lib/binary-io.h
 
 Depends-on:
+fcntl-h
 
 configure.ac:
 

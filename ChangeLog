@@ -1,3 +1,11 @@
+2011-01-19  Eric Blake  <eblake@redhat.com>
+
+	binary-io: fix O_TEXT on Haiku
+	* modules/binary-io (Depends-on): Add fcntl-h.
+	* lib/binary-io.h (O_TEXT): Rely on replacement <fcntl.h> rather
+	than blindly undefining O_TEXT.
+	Reported by Scott McCreary.
+
 2011-01-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	include_next: do not check for standard headers like stddef.h

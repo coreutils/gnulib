@@ -18,23 +18,12 @@
 #define _BINARY_H
 
 /* For systems that distinguish between text and binary I/O.
-   O_BINARY is usually declared in <fcntl.h>. */
+   O_BINARY is guaranteed by the gnulib <fcntl.h>. */
 #include <fcntl.h>
 
 /* The MSVC7 <stdio.h> doesn't like to be included after '#define fileno ...',
    so we include it here first.  */
 #include <stdio.h>
-
-#if !defined O_BINARY && defined _O_BINARY
-  /* For MSC-compatible compilers.  */
-# define O_BINARY _O_BINARY
-# define O_TEXT _O_TEXT
-#endif
-#if defined __BEOS__ || defined __HAIKU__
-  /* BeOS 5 and Haiku have O_BINARY and O_TEXT, but they have no effect.  */
-# undef O_BINARY
-# undef O_TEXT
-#endif
 
 /* SET_BINARY (fd);
    changes the file descriptor fd to perform binary I/O.  */
@@ -57,8 +46,6 @@
 # endif
 #else
   /* On reasonable systems, binary I/O is the default.  */
-# undef O_BINARY
-# define O_BINARY 0
 # define SET_BINARY(fd) /* do nothing */ ((void) 0)
 #endif
 
