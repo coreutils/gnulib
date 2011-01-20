@@ -1,3 +1,9 @@
+2011-01-21  Benjamin Lindner  <bjmldn@gmail.com>  (tiny change)
+
+	bootstrap: support --no-git option
+	* build-aux/bootstrap: Add --no-git option, to be used when
+	--gnulib-srcdir points to the exact desired checkout.
+
 2011-01-21  Eric Blake  <eblake@redhat.com>
 
 	strerror_r-posix: work with glibc 2.13

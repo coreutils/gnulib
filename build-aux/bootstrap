@@ -1,6 +1,6 @@
 #! /bin/sh
 # Print a version string.
-scriptversion=2011-01-14.08; # UTC
+scriptversion=2011-01-21.16; # UTC
 
 # Bootstrap this package from checked-out sources.
 
@@ -63,6 +63,8 @@ Options:
  --copy                   Copy files instead of creating symbolic links.
  --force                  Attempt to bootstrap even if the sources seem
                           not to have been checked out.
+ --no-git                 Do not use git to update gnulib.  Requires that
+                          --gnulib-srcdir point to a correct gnulib snapshot.
  --skip-po                Do not download po files.
 
 If the file $0.conf exists in the same directory as this script, its
@@ -178,6 +180,9 @@ vc_ignore=auto
 # default.
 bootstrap_sync=false
 
+# Use git to update gnulib sources
+use_git=true
+
 # find_tool ENVVAR NAMES...
 # -------------------------
 # Search for a required program.  Use the value of ENVVAR, if set,
@@ -253,11 +258,20 @@ do
     bootstrap_sync=true;;
   --no-bootstrap-sync)
     bootstrap_sync=false;;
+  --no-git)
+    use_git=false;;
   *)
     echo >&2 "$0: $option: unknown option"
     exit 1;;
   esac
 done
+
+if $use_git || test -d "$GNULIB_SRCDIR"; then
+  :
+else
+  echo "$0: Error: --no-git requires --gnulib-srcdir" >&2
+  exit 1
+fi
 
 if test -n "$checkout_only_file" && test ! -r "$checkout_only_file"; then
   echo "$0: Bootstrapping from a non-checked-out distribution is risky." >&2
@@ -383,6 +397,10 @@ check_versions() {
     # We only need libtoolize from the libtool package.
     if test "$app" = libtool; then
       app=libtoolize
+    fi
+    # Exempt git if --no-git is in effect.
+    if test "$app" = git; then
+      $use_git || continue
     fi
     # Honor $APP variables ($TAR, $AUTOCONF, etc.)
     appvar=`echo $app | tr '[a-z]-' '[A-Z]_'`
