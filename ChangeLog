@@ -1,5 +1,26 @@
 2011-01-19  Paul Eggert  <eggert@cs.ucla.edu>
 
+	assume <ctype.h>, ..., <time.h> exist
+	For years gnulib has been assuming the existence of the headers
+	<ctime.h>, <errno.h>, <fcntl.h>, <locale.h>, <signal.h>,
+	<stdio.h>, <stdlib.h>, <string.h>, and <time.h>.  Omit checks for
+	them, since they don't appear to be needed.
+	* README (Portability guidelines): Document this.
+	* lib/flock.c: Assume <fcntl.h> exists.
+	* lib/regex_internal.h: Assume <locale.h> exists.
+	* m4/ctype.m4 (gl_CTYPE_H): Assume <ctype.h> exists.
+	* m4/errno_h.m4 (gl_HEADER_ERRNO_H): Assume <errno.h> exists.
+	* m4/fcntl_h.m4 (gl_FCNTL_H): Assume <fcntl.h> exists.
+	* m4/flock.m4 (gl_PREREQ_FLOCK): Likewise.
+	* m4/locale_h.m4 (gl_LOCALE_H): Assume <locale.h> exists.
+	* m4/regex.m4 (gl_REGEX): Likewise.
+	* m4/signal_h.m4 (gl_SIGNAL_H): Assume <signal.h> exists.
+	* m4/stdio_h.m4 (gl_STDIO_H): Assume <stdio.h> exists.
+	* m4/stdlib_h.m4 (gl_STDLIB_H): Assume <stdlib.h> exists.
+	* m4/string_h.m4 (gl_STRING_H): Assume <string.h> exists.
+	* tests/test-argp.c: Likewise.
+	* m4/time_h.m4 (gl_HEADER_TIME_H_BODY): Assume <time.h> exists.
+
 	multiarch: remove AA_APPLE_UNIVERSAL_BUILD
 	* m4/multiarch.m4 (gl_MULTIARCH): Don't AC_DEFINE
 	AA_APPLE_UNIVERSAL_BUILD.  See

@@ -163,9 +163,7 @@ flock (int fd, int operation)
 #ifdef HAVE_STRUCT_FLOCK_L_TYPE
 /* We know how to implement flock in terms of fcntl. */
 
-#ifdef HAVE_FCNTL_H
 #include <fcntl.h>
-#endif
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>

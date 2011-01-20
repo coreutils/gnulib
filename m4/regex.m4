@@ -1,4 +1,4 @@
-# serial 57
+# serial 58
 
 # Copyright (C) 1996-2001, 2003-2011 Free Software Foundation, Inc.
 #
@@ -13,8 +13,6 @@ AC_PREREQ([2.50])
 
 AC_DEFUN([gl_REGEX],
 [
-  AC_CHECK_HEADERS_ONCE([locale.h])
-
   AC_ARG_WITH([included-regex],
     [AS_HELP_STRING([--without-included-regex],
                     [don't compile regex; this is the default on systems
@@ -34,9 +32,7 @@ AC_DEFUN([gl_REGEX],
       [AC_RUN_IFELSE(
         [AC_LANG_PROGRAM(
           [AC_INCLUDES_DEFAULT[
-           #if HAVE_LOCALE_H
-            #include <locale.h>
-           #endif
+           #include <locale.h>
            #include <limits.h>
            #include <regex.h>
            ]],
@@ -47,31 +43,29 @@ AC_DEFUN([gl_REGEX],
             const char *s;
             struct re_registers regs;
 
-            #if HAVE_LOCALE_H
-              /* http://sourceware.org/ml/libc-hacker/2006-09/msg00008.html
-                 This test needs valgrind to catch the bug on Debian
-                 GNU/Linux 3.1 x86, but it might catch the bug better
-                 on other platforms and it shouldn't hurt to try the
-                 test here.  */
-              if (setlocale (LC_ALL, "en_US.UTF-8"))
-                {
-                  static char const pat[] = "insert into";
-                  static char const data[] =
-                    "\xFF\0\x12\xA2\xAA\xC4\xB1,K\x12\xC4\xB1*\xACK";
-                  re_set_syntax (RE_SYNTAX_GREP | RE_HAT_LISTS_NOT_NEWLINE
-                                 | RE_ICASE);
-                  memset (&regex, 0, sizeof regex);
-                  s = re_compile_pattern (pat, sizeof pat - 1, &regex);
-                  if (s)
-                    result |= 1;
-                  else if (re_search (&regex, data, sizeof data - 1,
-                                      0, sizeof data - 1, &regs)
-                           != -1)
-                    result |= 1;
-                  if (! setlocale (LC_ALL, "C"))
-                    return 1;
-                }
-            #endif
+            /* http://sourceware.org/ml/libc-hacker/2006-09/msg00008.html
+               This test needs valgrind to catch the bug on Debian
+               GNU/Linux 3.1 x86, but it might catch the bug better
+               on other platforms and it shouldn't hurt to try the
+               test here.  */
+            if (setlocale (LC_ALL, "en_US.UTF-8"))
+              {
+                static char const pat[] = "insert into";
+                static char const data[] =
+                  "\xFF\0\x12\xA2\xAA\xC4\xB1,K\x12\xC4\xB1*\xACK";
+                re_set_syntax (RE_SYNTAX_GREP | RE_HAT_LISTS_NOT_NEWLINE
+                               | RE_ICASE);
+                memset (&regex, 0, sizeof regex);
+                s = re_compile_pattern (pat, sizeof pat - 1, &regex);
+                if (s)
+                  result |= 1;
+                else if (re_search (&regex, data, sizeof data - 1,
+                                    0, sizeof data - 1, &regs)
+                         != -1)
+                  result |= 1;
+                if (! setlocale (LC_ALL, "C"))
+                  return 1;
+              }
 
             /* This test is from glibc bug 3957, reported by Andrew Mackey.  */
             re_set_syntax (RE_SYNTAX_EGREP | RE_HAT_LISTS_NOT_NEWLINE);

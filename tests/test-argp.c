@@ -21,9 +21,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#if HAVE_STRING_H
-# include <string.h>
-#endif
+#include <string.h>
 #if HAVE_STRINGS_H
 # include <strings.h>
 #endif

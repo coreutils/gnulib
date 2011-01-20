@@ -9,7 +9,7 @@ AC_DEFUN([gl_STDIO_H],
   AC_REQUIRE([gl_STDIO_H_DEFAULTS])
   AC_REQUIRE([AC_C_INLINE])
   AC_REQUIRE([gl_ASM_SYMBOL_PREFIX])
-  gl_CHECK_NEXT_HEADERS([stdio.h])
+  gl_NEXT_HEADERS([stdio.h])
   dnl No need to create extra modules for these functions. Everyone who uses
   dnl <stdio.h> likely needs them.
   GNULIB_FPRINTF=1
