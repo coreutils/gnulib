@@ -1,3 +1,11 @@
+2011-01-20  Jim Meyering  <meyering@redhat.com>
+
+	mountlist: clean up code formatting
+	* lib/mountlist.c (read_file_system_list): Split a long line,
+	correct bracing style, use NULL in place of "(struct statfs *)0",
+	don't parenthesize return value, add spaces around "=" and after
+	";-in-for-stmt".
+
 2011-01-14  Markus Duft <mduft@gentoo.org>
 
 	mountlist: add support for Interix

@@ -384,19 +384,20 @@ read_file_system_list (bool need_fs_type)
 
     if (listmntent (&mntlist, KMTAB, NULL, NULL) < 0)
       return NULL;
-    for (p = mntlist; p; p = p->next) {
-      mnt = p->ment;
-      me = xmalloc (sizeof *me);
-      me->me_devname = xstrdup (mnt->mnt_fsname);
-      me->me_mountdir = xstrdup (mnt->mnt_dir);
-      me->me_type = xstrdup (mnt->mnt_type);
-      me->me_type_malloced = 1;
-      me->me_dummy = ME_DUMMY (me->me_devname, me->me_type);
-      me->me_remote = ME_REMOTE (me->me_devname, me->me_type);
-      me->me_dev = -1;
-      *mtail = me;
-      mtail = &me->me_next;
-    }
+    for (p = mntlist; p; p = p->next)
+      {
+        mnt = p->ment;
+        me = xmalloc (sizeof *me);
+        me->me_devname = xstrdup (mnt->mnt_fsname);
+        me->me_mountdir = xstrdup (mnt->mnt_dir);
+        me->me_type = xstrdup (mnt->mnt_type);
+        me->me_type_malloced = 1;
+        me->me_dummy = ME_DUMMY (me->me_devname, me->me_type);
+        me->me_remote = ME_REMOTE (me->me_devname, me->me_type);
+        me->me_dev = -1;
+        *mtail = me;
+        mtail = &me->me_next;
+      }
     freemntlist (mntlist);
   }
 #endif
@@ -594,7 +595,8 @@ read_file_system_list (bool need_fs_type)
               break;
 
           me = xmalloc (sizeof *me);
-          me->me_devname = xstrdup (fi.device_name[0] != '\0' ? fi.device_name : fi.fsh_name);
+          me->me_devname = xstrdup (fi.device_name[0] != '\0'
+                                    ? fi.device_name : fi.fsh_name);
           me->me_mountdir = xstrdup (re != NULL ? re->name : fi.fsh_name);
           me->me_type = xstrdup (fi.fsh_name);
           me->me_type_malloced = 1;
@@ -624,9 +626,9 @@ read_file_system_list (bool need_fs_type)
     size_t bufsize;
     struct statfs *stats;
 
-    numsys = getfsstat ((struct statfs *)0, 0L, MNT_NOWAIT);
+    numsys = getfsstat (NULL, 0L, MNT_NOWAIT);
     if (numsys < 0)
-      return (NULL);
+      return NULL;
     if (SIZE_MAX / sizeof *stats <= numsys)
       xalloc_die ();
 
@@ -637,7 +639,7 @@ read_file_system_list (bool need_fs_type)
     if (numsys < 0)
       {
         free (stats);
-        return (NULL);
+        return NULL;
       }
 
     for (counter = 0; counter < numsys; counter++)
@@ -723,11 +725,11 @@ read_file_system_list (bool need_fs_type)
 #ifdef MOUNTED_GETMNTTBL        /* DolphinOS goes its own way.  */
   {
     struct mntent **mnttbl = getmnttbl (), **ent;
-    for (ent=mnttbl;*ent;ent++)
+    for (ent = mnttbl; *ent; ent++)
       {
         me = xmalloc (sizeof *me);
-        me->me_devname = xstrdup ( (*ent)->mt_resource);
-        me->me_mountdir = xstrdup ( (*ent)->mt_directory);
+        me->me_devname = xstrdup ((*ent)->mt_resource);
+        me->me_mountdir = xstrdup ((*ent)->mt_directory);
         me->me_type = xstrdup ((*ent)->mt_fstype);
         me->me_type_malloced = 1;
         me->me_dummy = ME_DUMMY (me->me_devname, me->me_type);
