@@ -1,3 +1,12 @@
+2011-01-20  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: improve the public-submodule-commit rule
+	* top/maint.mk (public-submodule-commit): Prefix with $(AM_V_GEN),
+	to suppress printing of its commands... unless V=1.
+	Add git submodule's --quiet option to suppress printing of e.g.,
+	"Entering gnulib" output.
+	"cd" into $(srcdir) before running git submodule.
+
 2011-01-20  Bruno Haible  <bruno@clisp.org>
 
 	include_next: Fix bug introduced on 2011-01-18.

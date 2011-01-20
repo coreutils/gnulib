@@ -1125,8 +1125,9 @@ submodule-checks ?= no-submodule-changes public-submodule-commit
 # cannot be built from a fresh clone.
 .PHONY: public-submodule-commit
 public-submodule-commit:
-	if test -d $(srcdir)/.git; then					\
-	  git submodule foreach 'test $$(git rev-parse origin)'		\
+	$(AM_V_GEN)if test -d $(srcdir)/.git; then			\
+	  cd $(srcdir) &&						\
+	  git submodule --quiet foreach 'test $$(git rev-parse origin)'	\
 	      = '"$$(git merge-base --independent origin $$sha1)"'	\
 	    || { echo '$(ME): found non-public submodule commit' >&2;	\
 		 exit 1; };						\
