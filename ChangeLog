@@ -1,3 +1,9 @@
+2011-01-20  Bruno Haible  <bruno@clisp.org>
+
+	mbfile, mbiter: Complete change from 2008-12-21.
+	* m4/mbfile.m4 (gl_MBFILE): Don't require AC_FUNC_MBRTOWC.
+	* m4/mbiter.m4 (gl_MBITER): Likewise.
+
 2011-01-20  Jim Meyering  <meyering@redhat.com>
 
 	init.sh: insert space between each function name and "()"

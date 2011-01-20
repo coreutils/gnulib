@@ -1,4 +1,4 @@
-# mbfile.m4 serial 5
+# mbfile.m4 serial 6
 dnl Copyright (C) 2005, 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,8 +11,5 @@ AC_DEFUN([gl_MBFILE],
 [
   AC_REQUIRE([AC_C_INLINE])
   AC_REQUIRE([AC_TYPE_MBSTATE_T])
-  dnl The following line is that so the user can test HAVE_MBRTOWC before
-  dnl #include "mbfile.h". It can be removed in 2010.
-  AC_REQUIRE([AC_FUNC_MBRTOWC])
   :
 ])
