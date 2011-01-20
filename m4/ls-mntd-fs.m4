@@ -326,6 +326,23 @@ if test -z "$ac_list_mounted_fs"; then
 fi
 
 if test -z "$ac_list_mounted_fs"; then
+  # Interix / BSD alike statvfs
+  # the code is really interix specific, so make sure, we're on it.
+  case "$host" in
+  *-interix*)
+    AC_CHECK_FUNCS([statvfs])
+    if test $ac_cv_func_statvfs = yes; then
+      ac_list_mounted_fs=found
+      AC_DEFINE([MOUNTED_INTERIX_STATVFS], [1],
+                [Define if we are on interix, and ought to use statvfs plus
+                 some special knowledge on where mounted filesystems can be
+                 found. (Interix)])
+    fi
+    ;;
+  esac
+fi
+
+if test -z "$ac_list_mounted_fs"; then
   AC_MSG_ERROR([could not determine how to read list of mounted file systems])
   # FIXME -- no need to abort building the whole package
   # Can't build mountlist.c or anything that needs its functions

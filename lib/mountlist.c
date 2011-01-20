@@ -112,6 +112,11 @@
 # include <sys/vfs.h>
 #endif
 
+#ifdef MOUNTED_INTERIX_STATVFS  /* Interix. */
+# include <sys/statvfs.h>
+# include <dirent.h>
+#endif
+
 #ifdef DOLPHIN
 /* So special that it's not worth putting this in autoconf.  */
 # undef MOUNTED_FREAD_FSTYP
@@ -878,6 +883,45 @@ read_file_system_list (bool need_fs_type)
     free (entries);
   }
 #endif /* MOUNTED_VMOUNT. */
+
+#ifdef MOUNTED_INTERIX_STATVFS
+  {
+    DIR *dirp = opendir ("/dev/fs");
+    char node[9 + NAME_MAX];
+
+    if (!dirp)
+      goto free_then_fail;
+
+    while (1)
+      {
+        struct statvfs dev;
+        struct dirent entry;
+        struct dirent *result;
+
+        if (readdir_r (dirp, &entry, &result) || result == NULL)
+          break;
+
+        strcpy (node, "/dev/fs/");
+        strcat (node, entry.d_name);
+
+        if (statvfs (node, &dev) == 0)
+          {
+            me = xmalloc (sizeof *me);
+            me->me_devname = xstrdup (dev.f_mntfromname);
+            me->me_mountdir = xstrdup (dev.f_mntonname);
+            me->me_type = xstrdup (dev.f_fstypename);
+            me->me_type_malloced = 1;
+            me->me_dummy = ME_DUMMY (me->me_devname, me->me_type);
+            me->me_remote = ME_REMOTE (me->me_devname, me->me_type);
+            me->me_dev = (dev_t) -1;        /* Magic; means not known yet. */
+
+            /* Add to the linked list. */
+            *mtail = me;
+            mtail = &me->me_next;
+          }
+      }
+  }
+#endif /* MOUNTED_INTERIX_STATVFS */
 
   *mtail = NULL;
   return mount_list;
