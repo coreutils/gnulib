@@ -1,5 +1,14 @@
 2011-01-20  Bruno Haible  <bruno@clisp.org>
 
+	include_next: Fix bug introduced on 2011-01-18.
+	* m4/include_next.m4 (gl_NEXT_HEADERS_INTERNAL): New macro, extracted
+	from gl_CHECK_NEXT_HEADERS and gl_NEXT_HEADERS. Omit test of
+	ac_cv_header_... variable if the second argument is not 'check'.
+	(gl_CHECK_NEXT_HEADERS, gl_NEXT_HEADERS): Invoke
+	gl_NEXT_HEADERS_INTERNAL.
+
+2011-01-20  Bruno Haible  <bruno@clisp.org>
+
 	Allow the user to avoid the GNULIB_TEST_* macros.
 	* m4/gnulib-common.m4 (gl_ASSERT_NO_GNULIB_TESTS): New macro.
 	Suggested by Paul Eggert.

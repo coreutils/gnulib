@@ -1,4 +1,4 @@
-# include_next.m4 serial 17
+# include_next.m4 serial 18
 dnl Copyright (C) 2006-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -149,8 +149,7 @@ choke me
 # provides some type/enum definitions or function/variable declarations.
 AC_DEFUN([gl_CHECK_NEXT_HEADERS],
 [
-  AC_CHECK_HEADERS_ONCE([$1])
-  gl_NEXT_HEADERS([$1])
+  gl_NEXT_HEADERS_INTERNAL([$1], [check])
 ])
 
 # gl_NEXT_HEADERS(HEADER1 HEADER2 ...)
@@ -160,8 +159,18 @@ AC_DEFUN([gl_CHECK_NEXT_HEADERS],
 # and therefore can be assumed to exist.
 AC_DEFUN([gl_NEXT_HEADERS],
 [
+  gl_NEXT_HEADERS_INTERNAL([$1], [assume])
+])
+
+# The guts of gl_CHECK_NEXT_HEADERS and gl_NEXT_HEADERS.
+AC_DEFUN([gl_NEXT_HEADERS_INTERNAL],
+[
   AC_REQUIRE([gl_INCLUDE_NEXT])
   AC_REQUIRE([AC_CANONICAL_HOST])
+
+  m4_if([$2], [check],
+    [AC_CHECK_HEADERS_ONCE([$1])
+    ])
 
   m4_foreach_w([gl_HEADER_NAME], [$1],
     [AS_VAR_PUSHDEF([gl_next_header],
@@ -172,39 +181,44 @@ AC_DEFUN([gl_NEXT_HEADERS],
        AC_CACHE_CHECK(
          [absolute name of <]m4_defn([gl_HEADER_NAME])[>],
          m4_defn([gl_next_header]),
-         [AS_VAR_PUSHDEF([gl_header_exists],
-                         [ac_cv_header_]m4_defn([gl_HEADER_NAME]))
-          if test AS_VAR_GET(gl_header_exists) = yes; then
-            AC_LANG_CONFTEST(
-              [AC_LANG_SOURCE(
-                 [[#include <]]m4_dquote(m4_defn([gl_HEADER_NAME]))[[>]]
-               )])
-            dnl AIX "xlc -E" and "cc -E" omit #line directives for header files
-            dnl that contain only a #include of other header files and no
-            dnl non-comment tokens of their own. This leads to a failure to
-            dnl detect the absolute name of <dirent.h>, <signal.h>, <poll.h>
-            dnl and others. The workaround is to force preservation of comments
-            dnl through option -C. This ensures all necessary #line directives
-            dnl are present. GCC supports option -C as well.
-            case "$host_os" in
-              aix*) gl_absname_cpp="$ac_cpp -C" ;;
-              *)    gl_absname_cpp="$ac_cpp" ;;
-            esac
-            dnl eval is necessary to expand gl_absname_cpp.
-            dnl Ultrix and Pyramid sh refuse to redirect output of eval,
-            dnl so use subshell.
-            AS_VAR_SET([gl_next_header],
-              ['"'`(eval "$gl_absname_cpp conftest.$ac_ext") 2>&AS_MESSAGE_LOG_FD |
-               sed -n '\#/]m4_defn([gl_HEADER_NAME])[#{
-                 s#.*"\(.*/]m4_defn([gl_HEADER_NAME])[\)".*#\1#
-                 s#^/[^/]#//&#
-                 p
-                 q
-               }'`'"'])
-          else
-            AS_VAR_SET([gl_next_header], ['<'gl_HEADER_NAME'>'])
-          fi
-          AS_VAR_POPDEF([gl_header_exists])])
+         [m4_if([$2], [check],
+            [AS_VAR_PUSHDEF([gl_header_exists],
+                            [ac_cv_header_]m4_defn([gl_HEADER_NAME]))
+             if test AS_VAR_GET(gl_header_exists) = yes; then
+             AS_VAR_POPDEF([gl_header_exists])
+            ])
+               AC_LANG_CONFTEST(
+                 [AC_LANG_SOURCE(
+                    [[#include <]]m4_dquote(m4_defn([gl_HEADER_NAME]))[[>]]
+                  )])
+               dnl AIX "xlc -E" and "cc -E" omit #line directives for header
+               dnl files that contain only a #include of other header files and
+               dnl no non-comment tokens of their own. This leads to a failure
+               dnl to detect the absolute name of <dirent.h>, <signal.h>,
+               dnl <poll.h> and others. The workaround is to force preservation
+               dnl of comments through option -C. This ensures all necessary
+               dnl #line directives are present. GCC supports option -C as well.
+               case "$host_os" in
+                 aix*) gl_absname_cpp="$ac_cpp -C" ;;
+                 *)    gl_absname_cpp="$ac_cpp" ;;
+               esac
+               dnl eval is necessary to expand gl_absname_cpp.
+               dnl Ultrix and Pyramid sh refuse to redirect output of eval,
+               dnl so use subshell.
+               AS_VAR_SET([gl_next_header],
+                 ['"'`(eval "$gl_absname_cpp conftest.$ac_ext") 2>&AS_MESSAGE_LOG_FD |
+                  sed -n '\#/]m4_defn([gl_HEADER_NAME])[#{
+                    s#.*"\(.*/]m4_defn([gl_HEADER_NAME])[\)".*#\1#
+                    s#^/[^/]#//&#
+                    p
+                    q
+                  }'`'"'])
+          m4_if([$2], [check],
+            [else
+               AS_VAR_SET([gl_next_header], ['<'gl_HEADER_NAME'>'])
+             fi
+            ])
+         ])
      fi
      AC_SUBST(
        AS_TR_CPP([NEXT_]m4_defn([gl_HEADER_NAME])),
