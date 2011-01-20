@@ -1,3 +1,11 @@
+2011-01-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	multiarch: remove AA_APPLE_UNIVERSAL_BUILD
+	* m4/multiarch.m4 (gl_MULTIARCH): Don't AC_DEFINE
+	AA_APPLE_UNIVERSAL_BUILD.  See
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-01/msg00247.html>.
+	* NEWS: Document this.
+
 2011-01-19  Eric Blake  <eblake@redhat.com>
 
 	c-stack: assume stack overflow if SA_SIGINFO unsupported
