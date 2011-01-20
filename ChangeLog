@@ -1,3 +1,10 @@
+2011-01-20  Jim Meyering  <meyering@redhat.com>
+
+	init.sh: insert space between each function name and "()"
+	* tests/init.sh: Make it a little easier to see that a function's
+	name is "warn_", and not "warn" when looking at the first part of
+	its definition: "warn_ ()".  Suggested by Ralf Wildenhues.
+
 2011-01-14  Jim Meyering  <meyering@redhat.com>
 
 	bootstrap: avoid failure when there is no .gitmodules file
