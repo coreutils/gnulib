@@ -16,15 +16,6 @@
 	name is "warn_", and not "warn" when looking at the first part of
 	its definition: "warn_ ()".  Suggested by Ralf Wildenhues.
 
-2011-01-14  Jim Meyering  <meyering@redhat.com>
-
-	bootstrap: avoid failure when there is no .gitmodules file
-	": ${gnulib_path=gnulib}" fails to set $gnulib_path when that variable
-	has been assigned to, even when its value is the empty string.
-	* build-aux/bootstrap (gnulib_path): Test explicitly for an empty
-	"$gnulib_path", rather than using ${gnulib_path=gnulib}.
-	Reported by John W. Eaton <jwe@gnu.org>.
-
 2011-01-20  Jim Meyering  <meyering@redhat.com>
 
 	mountlist: clean up code formatting
