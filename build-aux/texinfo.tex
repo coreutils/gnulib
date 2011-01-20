@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2011-01-20.08}
+\def\texinfoversion{2011-01-15.17}
 %
 % Copyright 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -118,8 +118,8 @@
 \ifx\putwordChapter\undefined   \gdef\putwordChapter{Chapter}\fi
 \ifx\putwordfile\undefined      \gdef\putwordfile{file}\fi
 \ifx\putwordin\undefined        \gdef\putwordin{in}\fi
-\ifx\putwordIndexIsEmpty\undefined       \gdef\putwordIndexIsEmpty{(Index is empty)}\fi
-\ifx\putwordIndexNonexistent\undefined   \gdef\putwordIndexNonexistent{(Index is nonexistent)}\fi
+\ifx\putwordIndexIsEmpty\undefined     \gdef\putwordIndexIsEmpty{(Index is empty)}\fi
+\ifx\putwordIndexNonexistent\undefined \gdef\putwordIndexNonexistent{(Index is nonexistent)}\fi
 \ifx\putwordInfo\undefined      \gdef\putwordInfo{Info}\fi
 \ifx\putwordInstanceVariableof\undefined \gdef\putwordInstanceVariableof{Instance Variable of}\fi
 \ifx\putwordMethodon\undefined  \gdef\putwordMethodon{Method on}\fi
@@ -163,12 +163,10 @@
 \chardef\dashChar  = `\-
 \chardef\dotChar   = `\.
 \chardef\exclamChar= `\!
-\chardef\hashChar  = `\#
 \chardef\lquoteChar= `\`
 \chardef\questChar = `\?
 \chardef\rquoteChar= `\'
 \chardef\semiChar  = `\;
-\chardef\slashChar = `\/
 \chardef\underChar = `\_
 
 % Ignore a token.
@@ -559,7 +557,7 @@
 \parseargdef\end{%
   \if 1\csname iscond.#1\endcsname
   \else
-    % The general wording of \badenverr may not be ideal.
+    % The general wording of \badenverr may not be ideal, but... --kasal, 06nov03
     \expandafter\checkenv\csname#1\endcsname
     \csname E#1\endcsname
     \endgroup
@@ -2255,14 +2253,12 @@ end
 
 % Markup style setup for left and right quotes.
 \defmarkupstylesetup\markupsetuplq{%
-  \expandafter\let\expandafter \temp
-    \csname markupsetuplq\currentmarkupstyle\endcsname
+  \expandafter\let\expandafter \temp \csname markupsetuplq\currentmarkupstyle\endcsname
   \ifx\temp\relax \markupsetuplqdefault \else \temp \fi
 }
 
 \defmarkupstylesetup\markupsetuprq{%
-  \expandafter\let\expandafter \temp
-    \csname markupsetuprq\currentmarkupstyle\endcsname
+  \expandafter\let\expandafter \temp \csname markupsetuprq\currentmarkupstyle\endcsname
   \ifx\temp\relax \markupsetuprqdefault \else \temp \fi
 }
 
@@ -2491,22 +2487,6 @@ end
     \codex
   }
 }
-% Handle @url similarly to \code, but allows line breaks after .#?/ (only).
-{
-  \catcode`\.=\active \catcode`\#=\active
-  \catcode`\?=\active \catcode`\/=\active
-  %
-  \global\def\urefcode{\begingroup
-    \setupmarkupstyle{code}%
-    \catcode\dotChar=\active   \catcode\hashChar=\active
-    \catcode\questChar=\active \catcode\slashChar=\active
-    \let.\urefcodedot
-    \let#\urefcodehash
-    \let?\urefcodequestion
-    \let/\urefcodeslash
-    \codex
-  }
-}
 
 \def\realdash{-}
 \def\codedash{-\discretionary{}{}{}}
@@ -2520,24 +2500,6 @@ end
              \else\normalunderscore \fi
              \discretionary{}{}{}}%
             {\_}%
-}
-% we put a little stretch before and after the breakable chars, to help
-% line breaking of long url's.  The unequal skips make look better in
-% cmtt at least, especially for dots.
-\def\urefprestretch{\nobreak \hskip0pt plus.13em }
-\def\urefpoststretch{\allowbreak \hskip0pt plus.1em }
-\def\urefcodedot{\urefprestretch .\urefpoststretch}
-\def\urefcodehash{\urefprestretch \#\urefpoststretch}
-\def\urefcodequestion{\urefprestretch ?\urefpoststretch}
-\def\urefcodeslash{\futurelet\next\urefcodeslashfinish}
-{
-  \catcode`\/=\active
-  \global\def\urefcodeslashfinish{%
-    \urefprestretch \slashChar
-    % Allow line break only after the final / in a sequence of
-    % slashes, to avoid line break between the slashes in http://.
-    \ifx\next/\else \urefpoststretch \fi
-  }
 }
 \def\codex #1{\tclose{#1}\endgroup}
 
@@ -2627,16 +2589,13 @@ end
       \ifpdf
         \unhbox0             % PDF: 2nd arg given, show only it
       \else
-        % \empty at the end of \scantokens arg gets rid of
-        % trailing newline (and ultimate spurious whitespace).
-        \unhbox0\ (\urefcode{\scantokens{#1\empty}})% DVI: 2nd arg given,
-                                                    % show both it and url
+        \unhbox0\ (\code{#1})% DVI: 2nd arg given, show both it and url
       \fi
     \else
-      \urefcode{\scantokens{#1\empty}}% only url given, so show it
+      \code{#1}% only url given, so show it
     \fi
   \fi
-  \leavevmode\endlink
+  \endlink
 \endgroup}
 
 % @url synonym for @uref, since that's how everyone uses it.
@@ -3075,9 +3034,8 @@ end
 \newif\ifsetshortcontentsaftertitlepage
  \let\setshortcontentsaftertitlepage = \setshortcontentsaftertitlepagetrue
 
-\parseargdef\shorttitlepage{%
-  \begingroup \hbox{}\vskip 1.5in \chaprm \centerline{#1}%
-  \endgroup\page\hbox{}\page}
+\parseargdef\shorttitlepage{\begingroup\hbox{}\vskip 1.5in \chaprm \centerline{#1}%
+        \endgroup\page\hbox{}\page}
 
 \envdef\titlepage{%
   % Open one extra group, as we want to close it in the middle of \Etitlepage.
@@ -5285,8 +5243,7 @@ end
   \global\let\subsubsection = \appendixsubsubsec
 }
 
-% normally unnmhead0 calls unnumberedzzz:
-\outer\parseargdef\unnumbered{\unnmhead0{#1}}
+\outer\parseargdef\unnumbered{\unnmhead0{#1}} % normally unnmhead0 calls unnumberedzzz
 \def\unnumberedzzz#1{%
   \global\secno=0 \global\subsecno=0 \global\subsubsecno=0
     \global\advance\unnumberedno by 1
@@ -5330,47 +5287,40 @@ end
 \let\top\unnumbered
 
 % Sections.
-% 
 \outer\parseargdef\numberedsec{\numhead1{#1}} % normally calls seczzz
 \def\seczzz#1{%
   \global\subsecno=0 \global\subsubsecno=0  \global\advance\secno by 1
   \sectionheading{#1}{sec}{Ynumbered}{\the\chapno.\the\secno}%
 }
 
-% normally calls appendixsectionzzz:
-\outer\parseargdef\appendixsection{\apphead1{#1}}
+\outer\parseargdef\appendixsection{\apphead1{#1}} % normally calls appendixsectionzzz
 \def\appendixsectionzzz#1{%
   \global\subsecno=0 \global\subsubsecno=0  \global\advance\secno by 1
   \sectionheading{#1}{sec}{Yappendix}{\appendixletter.\the\secno}%
 }
 \let\appendixsec\appendixsection
 
-% normally calls unnumberedseczzz:
-\outer\parseargdef\unnumberedsec{\unnmhead1{#1}}
+\outer\parseargdef\unnumberedsec{\unnmhead1{#1}} % normally calls unnumberedseczzz
 \def\unnumberedseczzz#1{%
   \global\subsecno=0 \global\subsubsecno=0  \global\advance\secno by 1
   \sectionheading{#1}{sec}{Ynothing}{\the\unnumberedno.\the\secno}%
 }
 
 % Subsections.
-% 
-% normally calls numberedsubseczzz:
-\outer\parseargdef\numberedsubsec{\numhead2{#1}}
+\outer\parseargdef\numberedsubsec{\numhead2{#1}} % normally calls numberedsubseczzz
 \def\numberedsubseczzz#1{%
   \global\subsubsecno=0  \global\advance\subsecno by 1
   \sectionheading{#1}{subsec}{Ynumbered}{\the\chapno.\the\secno.\the\subsecno}%
 }
 
-% normally calls appendixsubseczzz:
-\outer\parseargdef\appendixsubsec{\apphead2{#1}}
+\outer\parseargdef\appendixsubsec{\apphead2{#1}} % normally calls appendixsubseczzz
 \def\appendixsubseczzz#1{%
   \global\subsubsecno=0  \global\advance\subsecno by 1
   \sectionheading{#1}{subsec}{Yappendix}%
                  {\appendixletter.\the\secno.\the\subsecno}%
 }
 
-% normally calls unnumberedsubseczzz:
-\outer\parseargdef\unnumberedsubsec{\unnmhead2{#1}}
+\outer\parseargdef\unnumberedsubsec{\unnmhead2{#1}} %normally calls unnumberedsubseczzz
 \def\unnumberedsubseczzz#1{%
   \global\subsubsecno=0  \global\advance\subsecno by 1
   \sectionheading{#1}{subsec}{Ynothing}%
@@ -5378,25 +5328,21 @@ end
 }
 
 % Subsubsections.
-% 
-% normally numberedsubsubseczzz:
-\outer\parseargdef\numberedsubsubsec{\numhead3{#1}}
+\outer\parseargdef\numberedsubsubsec{\numhead3{#1}} % normally numberedsubsubseczzz
 \def\numberedsubsubseczzz#1{%
   \global\advance\subsubsecno by 1
   \sectionheading{#1}{subsubsec}{Ynumbered}%
                  {\the\chapno.\the\secno.\the\subsecno.\the\subsubsecno}%
 }
 
-% normally appendixsubsubseczzz:
-\outer\parseargdef\appendixsubsubsec{\apphead3{#1}}
+\outer\parseargdef\appendixsubsubsec{\apphead3{#1}} % normally appendixsubsubseczzz
 \def\appendixsubsubseczzz#1{%
   \global\advance\subsubsecno by 1
   \sectionheading{#1}{subsubsec}{Yappendix}%
                  {\appendixletter.\the\secno.\the\subsecno.\the\subsubsecno}%
 }
 
-% normally unnumberedsubsubseczzz:
-\outer\parseargdef\unnumberedsubsubsec{\unnmhead3{#1}}
+\outer\parseargdef\unnumberedsubsubsec{\unnmhead3{#1}} %normally unnumberedsubsubseczzz
 \def\unnumberedsubsubseczzz#1{%
   \global\advance\subsubsecno by 1
   \sectionheading{#1}{subsubsec}{Ynothing}%
@@ -7291,8 +7237,7 @@ end
 
 % @inforef is relatively simple.
 \def\inforef #1{\inforefzzz #1,,,,**}
-\def\inforefzzz #1,#2,#3,#4**{%
-  \putwordSee{} \putwordInfo{} \putwordfile{} \file{\ignorespaces #3{}},
+\def\inforefzzz #1,#2,#3,#4**{\putwordSee{} \putwordInfo{} \putwordfile{} \file{\ignorespaces #3{}},
   node \samp{\ignorespaces#1{}}}
 
 % @node's only job in TeX is to define \lastnode, which is used in
@@ -7353,7 +7298,7 @@ end
       \toks0 = \expandafter{\lastsection}%
       \immediate \writexrdef{title}{\the\toks0 }%
       \immediate \writexrdef{snt}{\csname #2\endcsname}% \Ynumbered etc.
-      \safewhatsit{\writexrdef{pg}{\folio}}% will be written later, at \shipout
+      \safewhatsit{\writexrdef{pg}{\folio}}% will be written later, during \shipout
     }%
   \fi
 }
