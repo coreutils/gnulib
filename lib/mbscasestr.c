@@ -30,6 +30,7 @@
 #define TOLOWER(Ch) (isupper (Ch) ? tolower (Ch) : (Ch))
 
 /* Knuth-Morris-Pratt algorithm.  */
+#define UNIT unsigned char
 #define CANON_ELEMENT(c) TOLOWER (c)
 #include "str-kmp.h"
 
@@ -368,10 +369,12 @@ mbscasestr (const char *haystack, const char *needle)
                   if (needle_last_ccount == NULL)
                     {
                       /* Try the Knuth-Morris-Pratt algorithm.  */
-                      const char *result;
+                      const unsigned char *result;
                       bool success =
-                        knuth_morris_pratt_unibyte (haystack, needle - 1,
-                                                    &result);
+                        knuth_morris_pratt ((const unsigned char *) haystack,
+                                            (const unsigned char *) (needle - 1),
+                                            strlen (needle - 1),
+                                            &result);
                       if (success)
                         return (char *) result;
                       try_kmp = false;

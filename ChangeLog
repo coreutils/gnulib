@@ -1,3 +1,13 @@
+2011-01-21  Pádraig Brady  <P@draigBrady.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	Prepare for faster uN_strstr functions.
+	* lib/str-kmp.h: Support definable UNITs.
+	(knuth_morris_pratt): Renamed from knuth_morris_pratt_unibyte. Add
+	needle_len argument.
+	* lib/mbsstr.c (mbsstr): Adjust for the changed str-kmp.h.
+	* lib/mbscasestr.c (mbscasestr): Likewise.
+
 2011-01-21  Pádraig Brady <P@draigBrady.com>
 
 	malloca-tests: make faster by unsetting MALLOC_PERTURB_
