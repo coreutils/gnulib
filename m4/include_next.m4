@@ -147,6 +147,9 @@ choke me
 # Note: This macro assumes that the header file is not empty after
 # preprocessing, i.e. it does not only define preprocessor macros but also
 # provides some type/enum definitions or function/variable declarations.
+#
+# This macro also checks whether each header exists, by invoking
+# AC_CHECK_HEADERS_ONCE or AC_CHECK_HEADERS on each argument.
 AC_DEFUN([gl_CHECK_NEXT_HEADERS],
 [
   gl_NEXT_HEADERS_INTERNAL([$1], [check])

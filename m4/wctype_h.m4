@@ -1,4 +1,4 @@
-# wctype_h.m4 serial 10
+# wctype_h.m4 serial 11
 
 dnl A placeholder for ISO C99 <wctype.h>, for platforms that lack it.
 
@@ -75,7 +75,7 @@ AC_DEFUN([gl_WCTYPE_H],
             ])
         ])
     fi
-    gl_CHECK_NEXT_HEADERS([wctype.h])
+    gl_NEXT_HEADERS([wctype.h])
     HAVE_WCTYPE_H=1
   else
     HAVE_WCTYPE_H=0

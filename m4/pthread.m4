@@ -7,7 +7,6 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_PTHREAD_CHECK],
 [
    AC_REQUIRE([gl_PTHREAD_DEFAULTS])
-   AC_CHECK_HEADERS_ONCE([pthread.h])
    gl_CHECK_NEXT_HEADERS([pthread.h])
    if test $ac_cv_header_pthread_h = yes; then
      HAVE_PTHREAD_H=1

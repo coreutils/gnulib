@@ -1,5 +1,5 @@
 # Configure a replacement for <sys/file.h>.
-# serial 5
+# serial 6
 
 # Copyright (C) 2008-2011 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -15,7 +15,6 @@ AC_DEFUN([gl_HEADER_SYS_FILE_H],
   dnl <sys/file.h> is always overridden, because of GNULIB_POSIXCHECK.
   gl_CHECK_NEXT_HEADERS([sys/file.h])
 
-  AC_CHECK_HEADERS_ONCE([sys/file.h])
   if test $ac_cv_header_sys_file_h = yes; then
     HAVE_SYS_FILE_H=1
   else

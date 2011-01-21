@@ -1,4 +1,4 @@
-# search_h.m4 serial 7
+# search_h.m4 serial 8
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,7 +7,6 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_SEARCH_H],
 [
   AC_REQUIRE([gl_SEARCH_H_DEFAULTS])
-  AC_CHECK_HEADERS_ONCE([search.h])
   gl_CHECK_NEXT_HEADERS([search.h])
   if test $ac_cv_header_search_h = yes; then
     HAVE_SEARCH_H=1

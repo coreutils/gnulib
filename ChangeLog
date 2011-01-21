@@ -1,3 +1,24 @@
+2011-01-21  Paul Eggert  <eggert@cs.ucla.edu>
+
+	gl_CHECK_NEXT_HEADERS implies AC_CHECK_HEADERS_ONCE
+	* m4/include_next.m4 (gl_CHECK_HEXT_HEADERS): Document this.
+	* m4/getopt.m4 (gl_GETOPT_CHECK_HEADERS): Don't bother to invoke
+	AC_CHECK_HEADERS_ONCE on a header that we also invoke
+	gl_CHECK_NEXT_HEADERS on, since the latter invokes the former.
+	* m4/netdb_h.m4 (gl_HEADER_NETDB): Likewise.
+	* m4/pthread.m4 (gl_PTHREAD_CHECK): Likewise.
+	* m4/sched_h.m4 (gl_SCHED_H): Likewise.
+	* m4/search_h.m4 (gl_SEARCH_H): Likewise.
+	* m4/spawn_h.m4 (gl_SPAWN_H): Likewise.
+	* m4/sys_file_h.m4 (gl_HEADER_SYS_FILE_H): Likewise.
+	* m4/sys_select_h.m4 (gl_HEADER_SYS_SELECT): Likewise.
+	* m4/sys_times_h.m4 (gl_SYS_TIMES_H): Likewise.
+	* m4/sys_utsname_h.m4 (gl_SYS_UTSNAME_H): Likewise.
+	* m4/termios_h.m4 (gl_TERMIOS_H): Likewise.
+	* m4/unistd_h.m4 (gl_UNISTD_H): Likewise.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Likewise.
+	* m4/wctype_h.m4 (gl_WCTYPE_H): Likewise.
+
 2011-01-21  Eric Blake  <eblake@redhat.com>
 
 	maintainer-makefile: work with older git for submodule check

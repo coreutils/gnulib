@@ -7,7 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 dnl Written by Eric Blake.
 
-# wchar_h.m4 serial 36
+# wchar_h.m4 serial 37
 
 AC_DEFUN([gl_WCHAR_H],
 [
@@ -17,7 +17,6 @@ AC_DEFUN([gl_WCHAR_H],
   dnl Check for <wchar.h> (missing in Linux uClibc when built without wide
   dnl character support).
   dnl <wchar.h> is always overridden, because of GNULIB_POSIXCHECK.
-  AC_CHECK_HEADERS_ONCE([wchar.h])
   gl_CHECK_NEXT_HEADERS([wchar.h])
   if test $ac_cv_header_wchar_h = yes; then
     HAVE_WCHAR_H=1
