@@ -98,7 +98,7 @@ strerror_r (int errnum, char *buf, size_t buflen)
   extern int __xpg_strerror_r (int errnum, char *buf, size_t buflen);
 
   int ret = __xpg_strerror_r (errnum, buf, buflen);
-  return (ret < 0 ? errno : 0);
+  return (ret < 0 ? errno : ret);
 }
 
 #else /* (__GLIBC__ >= 2 || defined __UCLIBC__ ? !HAVE___XPG_STRERROR_R : !HAVE_DECL_STRERROR_R) || EXTEND_STRERROR_R */

@@ -1,3 +1,8 @@
+2011-01-21  Eric Blake  <eblake@redhat.com>
+
+	strerror_r-posix: work with glibc 2.13
+	* lib/strerror_r.c (strerror_r): Fix return type.
+
 2011-01-21  Pádraig Brady  <P@draigBrady.com>
             Bruno Haible  <bruno@clisp.org>
 
