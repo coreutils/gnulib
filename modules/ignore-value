@@ -5,7 +5,6 @@ Files:
 lib/ignore-value.h
 
 Depends-on:
-stdint
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])

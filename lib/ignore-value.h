@@ -35,8 +35,6 @@
 #ifndef _GL_IGNORE_VALUE_H
 # define _GL_IGNORE_VALUE_H
 
-# include <stdint.h>
-
 # ifndef ATTRIBUTE_DEPRECATED
 /* The __attribute__((__deprecated__)) feature
    is available in gcc versions 3.1 and newer.  */

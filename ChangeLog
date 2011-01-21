@@ -1,3 +1,9 @@
+2011-01-21  Pádraig Brady <P@draigBrady.com>
+
+	ignore-value: remove stdint dependency
+	* lib/ignore-value.h: Remove <stdint.h>
+	* modules/ignore-value: Remove stdint dependency.
+
 2011-01-21  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: adjust variable name to be consistent with other gl_ vars
