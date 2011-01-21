@@ -193,7 +193,7 @@ fi
 test -n "$EXEEXT" && shopt -s expand_aliases
 
 # Enable glibc's malloc-perturbing option.
-# This is cheap and useful for exposing code that depends on the fact that
+# This is useful for exposing code that depends on the fact that
 # malloc-related functions often return memory that is mostly zeroed.
 # If you have the time and cycles, use valgrind to do an even better job.
 : ${MALLOC_PERTURB_=87}

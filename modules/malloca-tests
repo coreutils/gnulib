@@ -2,6 +2,7 @@ Files:
 tests/test-malloca.c
 
 Depends-on:
+unsetenv
 
 configure.ac:
 

@@ -1,5 +1,13 @@
 2011-01-21  Pádraig Brady <P@draigBrady.com>
 
+	malloca-tests: make faster by unsetting MALLOC_PERTURB_
+	* tests/test-malloca.c (main): Unset the environment variable
+	to greatly speed up the test.
+	* tests/init.sh: Don't say that MALLOC_PERTURB_ is cheap.
+	* modules/malloca-tests: Depend on unsetenv.
+
+2011-01-21  Pádraig Brady <P@draigBrady.com>
+
 	ignore-value: remove stdint dependency
 	* lib/ignore-value.h: Remove <stdint.h>
 	* modules/ignore-value: Remove stdint dependency.
