@@ -1,3 +1,9 @@
+2011-01-21  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: adjust variable name to be consistent with other gl_ vars
+	* top/maint.mk (gl_public_submodule_commit): Rename the variable
+	to be lower case.
+
 2011-01-20  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: make "check" depend on public-submodule-commit by default

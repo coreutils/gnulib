@@ -1138,10 +1138,10 @@ public-submodule-commit:
 # dependent of "check" by default.  However, some of us do occasionally
 # commit a temporary change that deliberately points to a non-public
 # submodule commit, and want to be able to use rules like "make check".
-# In that case, run e.g., "make check GL_PUBLIC_SUBMODULE_COMMIT="
+# In that case, run e.g., "make check gl_public_submodule_commit="
 # to disable this test.
-GL_PUBLIC_SUBMODULE_COMMIT ?= public-submodule-commit
-check: $(GL_PUBLIC_SUBMODULE_COMMIT)
+gl_public_submodule_commit ?= public-submodule-commit
+check: $(gl_public_submodule_commit)
 
 .PHONY: alpha beta stable
 ALL_RECURSIVE_TARGETS += alpha beta stable
