@@ -1,3 +1,11 @@
+2011-01-21  Eric Blake  <eblake@redhat.com>
+
+	bootstrap: minor portability fixes
+	* build-aux/bootstrap (me): Use $me instead of $0 in functions.
+	(usage): Omit leading capital and trailing . on help phrases, per
+	GNU Coding Standards.
+	(check_versions, top level): Prefix messages with script name.
+
 2011-01-21  Benjamin Lindner  <bjmldn@gmail.com>  (tiny change)
 
 	bootstrap: support --no-git option
