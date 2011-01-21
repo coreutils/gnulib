@@ -1,5 +1,10 @@
 2011-01-21  Eric Blake  <eblake@redhat.com>
 
+	maintainer-makefile: work with older git for submodule check
+	* top/maint.mk (public-submodule-commit): Rewrite to avoid
+	merge-base --independent, which Ubuntu 10.04 git 1.7.0.4 lacks.
+	Reported by Matthias Bolte.
+
 	bootstrap: minor portability fixes
 	* build-aux/bootstrap (me): Use $me instead of $0 in functions.
 	(usage): Omit leading capital and trailing . on help phrases, per
