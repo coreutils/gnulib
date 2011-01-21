@@ -1,6 +1,18 @@
 2011-01-21  Pádraig Brady  <P@draigBrady.com>
             Bruno Haible  <bruno@clisp.org>
 
+	uN_strstr: New unit tests.
+	* modules/unistr/u8-strstr-tests: New file.
+	* modules/unistr/u16-strstr-tests: New file.
+	* modules/unistr/u32-strstr-tests: New file.
+	* tests/unistr/test-u-strstr.h: New file, based on tests/test-strstr.c.
+	* tests/unistr/test-u8-strstr.c: New file.
+	* tests/unistr/test-u16-strstr.c: New file.
+	* tests/unistr/test-u32-strstr.c: New file.
+
+2011-01-21  Pádraig Brady  <P@draigBrady.com>
+            Bruno Haible  <bruno@clisp.org>
+
 	Make uN_strstr functions O(n) worst-case.
 	* lib/unistr/u-strstr.h (FUNC): In the 8-bit case, use strstr. In the
 	16-bit and 32-bit unit cases, use the unibyte algorithm from
