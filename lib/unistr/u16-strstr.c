@@ -20,10 +20,18 @@
 /* Specification.  */
 #include "unistr.h"
 
+#include "malloca.h"
+
 /* FIXME: Maybe walking the string via u16_mblen is a win?  */
 
-#define FUNC u16_strstr
 #define UNIT uint16_t
+
+#define CANON_ELEMENT(c) c
+#include "str-kmp.h"
+
+#define FUNC u16_strstr
 #define U_STRCHR u16_strchr
 #define U_STRMBTOUC u16_strmbtouc
+#define U_STRLEN u16_strlen
+#define U_STRNLEN u16_strnlen
 #include "u-strstr.h"

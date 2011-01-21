@@ -20,10 +20,13 @@
 /* Specification.  */
 #include "unistr.h"
 
+#include <string.h>
+
 /* FIXME: Maybe walking the string via u8_mblen is a win?  */
 
 #define FUNC u8_strstr
 #define UNIT uint8_t
 #define U_STRCHR u8_strchr
 #define U_STRMBTOUC u8_strmbtouc
+#define UNIT_IS_UINT8_T 1
 #include "u-strstr.h"

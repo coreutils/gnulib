@@ -20,7 +20,15 @@
 /* Specification.  */
 #include "unistr.h"
 
-#define FUNC u32_strstr
+#include "malloca.h"
+
 #define UNIT uint32_t
+
+#define CANON_ELEMENT(c) c
+#include "str-kmp.h"
+
+#define FUNC u32_strstr
 #define U_STRCHR u32_strchr
+#define U_STRLEN u32_strlen
+#define U_STRNLEN u32_strnlen
 #include "u-strstr.h"

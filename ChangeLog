@@ -1,6 +1,30 @@
 2011-01-21  Pádraig Brady  <P@draigBrady.com>
             Bruno Haible  <bruno@clisp.org>
 
+	Make uN_strstr functions O(n) worst-case.
+	* lib/unistr/u-strstr.h (FUNC): In the 8-bit case, use strstr. In the
+	16-bit and 32-bit unit cases, use the unibyte algorithm from
+	lib/mbsstr.c.
+	* lib/unistr/u8-strstr.c: Include <string.h>.
+	(UNIT_IS_UINT8_T): New macro.
+	* lib/unistr/u16-strstr.c: Include malloca.h and str-kmp.h.
+	(U_STRLEN, U_STRNLEN): New macros.
+	* lib/unistr/u32-strstr.c: Include malloca.h and str-kmp.h.
+	(U_STRLEN, U_STRNLEN): New macros.
+	* modules/unistr/u8-strstr (Depends-on): Add strstr.
+	(configure.ac): Update required libunistring version.
+	* modules/unistr/u16-strstr (Files): Add lib/str-kmp.h.
+	(Depends-on): Add unistr/u16-strlen, unistr/u16-strnlen, stdbool,
+	malloca.
+	(configure.ac): Update required libunistring version.
+	* modules/unistr/u32-strstr (Files): Add lib/str-kmp.h.
+	(Depends-on): Add unistr/u32-strlen, unistr/u32-strnlen, stdbool,
+	malloca.
+	(configure.ac): Update required libunistring version.
+
+2011-01-21  Pádraig Brady  <P@draigBrady.com>
+            Bruno Haible  <bruno@clisp.org>
+
 	Prepare for faster uN_strstr functions.
 	* lib/str-kmp.h: Support definable UNITs.
 	(knuth_morris_pratt): Renamed from knuth_morris_pratt_unibyte. Add
