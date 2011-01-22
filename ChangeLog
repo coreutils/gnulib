@@ -1,3 +1,14 @@
+2011-01-28  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	move-if-change: cope with concurrent mv of identical file.
+	* build-aux/move-if-change (CMPPROG): Accept environment
+	variable as an override for `cmp'.
+	(usage): Document CMPPROG.
+	Adjust comparison to drop stdout.  Cope with failure of mv if
+	the target file exists and is identical to the source, for
+	parallel builds.
+	Report from H.J. Lu against binutils in PR binutils/12283.
+
 2011-01-28  Bruce Korb  <bkorb@gnu.org>
 
 	* users.txt: Mention sharutils.
