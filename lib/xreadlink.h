@@ -18,8 +18,6 @@
 
 /* Written by Jim Meyering <jim@meyering.net>  */
 
-#include <stddef.h>
-
 extern char *xreadlink (char const *filename);
 
 #if GNULIB_XREADLINKAT

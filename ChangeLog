@@ -1,5 +1,8 @@
 2011-01-23  Jim Meyering  <meyering@redhat.com>
 
+	xreadlink.h: remove unnecessary #include
+	* lib/xreadlink.h: Don't include <stddef.h>.  It was not used.
+
 	maint.mk: add syntax-check rule: detect unnecessary #include <stddef.h>
 	* top/maint.mk (sc_prohibit_stddef_without_use): New rule.
 
