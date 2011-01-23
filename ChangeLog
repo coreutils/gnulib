@@ -1,5 +1,11 @@
 2011-01-23  Bruno Haible  <bruno@clisp.org>
 
+	uninorm: Tweak includes.
+	* lib/uninorm/normalize-internal.h: Don't include <stddef.h>.
+	Reported by Jim Meyering.
+
+2011-01-23  Bruno Haible  <bruno@clisp.org>
+
 	get-rusage-as: Improve on NetBSD.
 	* lib/get-rusage-as.c (get_rusage_as_via_iterator): On NetBSD, use
 	/proc, like on FreeBSD.
