@@ -1,5 +1,11 @@
 2011-01-23  Bruno Haible  <bruno@clisp.org>
 
+	get-rusage-as: Fix bug.
+	* lib/get-rusage-as.c (get_rusage_as_via_setrlimit): Restore the
+	original limit when aborting the first loop.
+
+2011-01-23  Bruno Haible  <bruno@clisp.org>
+
 	wctype: Ensure valid C syntax.
 	* m4/wctype_h.m4 (gl_WCTYPE_H): Invoke gl_CHECK_NEXT_HEADERS
 	unconditionally, instead of gl_NEXT_HEADERS conditionally.

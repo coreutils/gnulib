@@ -182,7 +182,7 @@ get_rusage_as_via_setrlimit (void)
   if (getrlimit (RLIMIT_AS, &orig_limit) < 0)
     {
       result = 0;
-      goto done;
+      goto done2;
     }
 
   if (orig_limit.rlim_max != RLIM_INFINITY
@@ -192,7 +192,7 @@ get_rusage_as_via_setrlimit (void)
        So bail out.  */
     {
       result = 0;
-      goto done;
+      goto done2;
     }
 
   {
@@ -223,7 +223,7 @@ get_rusage_as_via_setrlimit (void)
           {
             /* try_next could not be increased.  */
             result = low_bound;
-            goto done;
+            goto done1;
           }
 
         try_limit.rlim_max = orig_limit.rlim_max;
@@ -311,11 +311,12 @@ get_rusage_as_via_setrlimit (void)
     result = low_bound;
   }
 
+ done1:
   /* Restore the original rlim_cur value.  */
   if (setrlimit (RLIMIT_AS, &orig_limit) < 0)
     abort ();
 
- done:
+ done2:
 # if !HAVE_MAP_ANONYMOUS
   close (fd);
 # endif
