@@ -1,3 +1,9 @@
+2011-01-23  Bruno Haible  <bruno@clisp.org>
+
+	wctype: Ensure valid C syntax.
+	* m4/wctype_h.m4 (gl_WCTYPE_H): Invoke gl_CHECK_NEXT_HEADERS
+	unconditionally, instead of gl_NEXT_HEADERS conditionally.
+
 2011-01-21  Paul Eggert  <eggert@cs.ucla.edu>
 
 	getopt: omit HAVE_OPTRESET, HAVE_GETOPT_CLIP from config.h
