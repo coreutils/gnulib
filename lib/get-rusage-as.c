@@ -61,7 +61,8 @@
 
    NetBSD:
      a) setrlimit with RLIMIT_AS works.
-     b) No VMA iteration API exists.
+     b) The /proc/self/maps file contains a list of the virtual memory areas.
+     Both methods agree,
 
    OpenBSD:
      a) setrlimit exists, but RLIMIT_AS is not defined.
@@ -328,7 +329,7 @@ get_rusage_as_via_setrlimit (void)
 
 /* Support for reading text files in the /proc file system.  */
 
-#if defined __linux__ || defined __FreeBSD__ /* || defined __CYGWIN__ */
+#if defined __linux__ || defined __FreeBSD__ || defined __NetBSD__ /* || defined __CYGWIN__ */
 
 /* Buffered read-only streams.
    We cannot use <stdio.h> here, because fopen() calls malloc(), and a malloc()
@@ -462,7 +463,7 @@ get_rusage_as_via_iterator (void)
   rof_close (&rof);
   return total;
 
-#elif defined __FreeBSD__
+#elif defined __FreeBSD__ || defined __NetBSD__
 
   struct rofile rof;
   int c;

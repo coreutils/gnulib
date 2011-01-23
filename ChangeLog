@@ -1,3 +1,9 @@
+2011-01-23  Bruno Haible  <bruno@clisp.org>
+
+	get-rusage-as: Improve on NetBSD.
+	* lib/get-rusage-as.c (get_rusage_as_via_iterator): On NetBSD, use
+	/proc, like on FreeBSD.
+
 2011-01-23  Jim Meyering  <meyering@redhat.com>
 
 	xreadlink.h: remove unnecessary #include
