@@ -571,6 +571,13 @@ sc_prohibit_intprops_without_use:
 	re='\<($(_intprops_syms_re)) *\('				\
 	  $(_sc_header_without_use)
 
+_stddef_syms_re = NULL|offsetof|ptrdiff_t|size_t|wchar_t
+# Prohibit the inclusion of stddef.h without an actual use.
+sc_prohibit_stddef_without_use:
+	@h='<stddef.h>'							\
+	re='\<($(_stddef_syms_re)) *\('					\
+	  $(_sc_header_without_use)
+
 sc_obsolete_symbols:
 	@prohibit='\<(HAVE''_FCNTL_H|O''_NDELAY)\>'			\
 	halt='do not use HAVE''_FCNTL_H or O'_NDELAY			\
