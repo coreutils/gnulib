@@ -17,7 +17,6 @@
 
 /* Written by Paul Eggert.  */
 
-#include <stddef.h>
 #include <stdint.h>
 
 /* Return X rotated left by N bits, where 0 < N < 64.  */

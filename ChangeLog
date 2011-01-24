@@ -1,3 +1,8 @@
+2011-01-24  Jim Meyering  <meyering@redhat.com>
+
+	u64: remove unnecessary #include
+	* lib/u64.h: Don't include <stddef.h>.  It was not used.
+
 2011-01-23  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Allow the user to avoid the GNULIB_TEST_* macros.
