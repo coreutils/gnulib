@@ -331,10 +331,12 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
         {
           /* Consider [start,end-1] \ [auxmap_start,auxmap_end-1]
              = [start,auxmap_start-1] u [auxmap_end,end-1].  */
-          if (callback (data, start, auxmap_start, flags))
-            break;
-          if (callback (data, auxmap_end, end, flags))
-            break;
+          if (start < auxmap_start)
+            if (callback (data, start, auxmap_start, flags))
+              break;
+          if (auxmap_end - 1 < end - 1)
+            if (callback (data, auxmap_end, end, flags))
+              break;
         }
       else
         {

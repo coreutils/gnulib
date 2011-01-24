@@ -1,3 +1,9 @@
+2011-01-24  Bruno Haible  <bruno@clisp.org>
+
+	vma-iter: Avoid empty intervals.
+	* lib/vma-iter.c (vma_iterate) [IRIX, OSF/1]: Don't call the callback
+	on an empty interval.
+
 2011-01-24  Jim Meyering  <meyering@redhat.com>
 
 	u64: remove unnecessary #include
