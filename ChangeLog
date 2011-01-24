@@ -1,3 +1,8 @@
+2011-01-23  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Allow the user to avoid the GNULIB_TEST_* macros.
+	* m4/gnulib-common.m4 (gl_ASSERT_NO_GNULIB_POSIXCHECK): New macro.
+
 2011-01-23  Bruno Haible  <bruno@clisp.org>
 
 	New module 'vma-iter'.
