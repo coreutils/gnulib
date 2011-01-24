@@ -11,6 +11,7 @@ stdint
 unistd
 extensions
 getpagesize
+vma-iter
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])

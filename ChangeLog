@@ -1,5 +1,17 @@
 2011-01-23  Bruno Haible  <bruno@clisp.org>
 
+	New module 'vma-iter'.
+	* lib/vma-iter.h: New file.
+	* lib/vma-iter.c: New file, based on lib/get-rusage-as.c.
+	* modules/vma-iter: New file.
+	* lib/get-rusage-as.c: Include vma-iter.h. Don't include system headers
+	for get_rusage_as_via_iterator.
+	(vma_iterate_callback): New function.
+	(get_rusage_as_via_iterator): Rewritten to use vma_iterate.
+	* modules/get-rusage-as (Depends-on): Add vma-iter.
+
+2011-01-23  Bruno Haible  <bruno@clisp.org>
+
 	uninorm: Tweak includes.
 	* lib/uninorm/normalize-internal.h: Don't include <stddef.h>.
 	Reported by Jim Meyering.

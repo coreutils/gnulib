@@ -141,23 +141,7 @@
 
 /* System support for get_rusage_as_via_iterator().  */
 
-#if defined __sgi || defined __osf__ /* IRIX, OSF/1 */
-# include <string.h> /* memcpy */
-# include <sys/types.h>
-# include <sys/procfs.h> /* PIOC*, prmap_t */
-#endif
-
-#if defined __APPLE__ && defined __MACH__ /* MacOS X */
-# include <mach/mach.h>
-#endif
-
-#if (defined _WIN32 || defined __WIN32__) || defined __CYGWIN__ /* Windows */
-# include <windows.h>
-#endif
-
-#if defined __BEOS__ /* BeOS */
-# include <OS.h>
-#endif
+#include "vma-iter.h"
 
 
 #if HAVE_SETRLIMIT && defined RLIMIT_AS && HAVE_SYS_MMAN_H && HAVE_MPROTECT
@@ -327,368 +311,37 @@ get_rusage_as_via_setrlimit (void)
 #endif
 
 
-/* Support for reading text files in the /proc file system.  */
+#if VMA_ITERATE_SUPPORTED
 
-#if defined __linux__ || defined __FreeBSD__ || defined __NetBSD__ /* || defined __CYGWIN__ */
-
-/* Buffered read-only streams.
-   We cannot use <stdio.h> here, because fopen() calls malloc(), and a malloc()
-   call may call mmap() and thus pre-allocate available memory.  */
-
-struct rofile
-  {
-    int fd;
-    size_t position;
-    size_t filled;
-    int eof_seen;
-    char buffer[1024];
-  };
-
-/* Open a read-only file stream.  */
 static int
-rof_open (struct rofile *rof, const char *filename)
+vma_iterate_callback (void *data, uintptr_t start, uintptr_t end,
+                      unsigned int flags)
 {
-  int fd = open (filename, O_RDONLY);
-  if (fd < 0)
-    return -1;
-  rof->fd = fd;
-  rof->position = 0;
-  rof->filled = 0;
-  rof->eof_seen = 0;
+  uintptr_t *totalp = (uintptr_t *) data;
+
+  *totalp += end - start;
   return 0;
 }
-
-/* Return the next byte from a read-only file stream without consuming it,
-   or -1 at EOF.  */
-static int
-rof_peekchar (struct rofile *rof)
-{
-  if (rof->position == rof->filled)
-    {
-      if (rof->eof_seen)
-        return -1;
-      else
-        for (;;)
-          {
-            int n = read (rof->fd, rof->buffer, sizeof (rof->buffer));
-# ifdef EINTR
-            if (n < 0 && errno == EINTR)
-              continue;
-# endif
-            if (n <= 0)
-              {
-                rof->eof_seen = 1;
-                return -1;
-              }
-            rof->filled = n;
-            rof->position = 0;
-            break;
-          }
-    }
-  return (unsigned char) rof->buffer[rof->position];
-}
-
-/* Return the next byte from a read-only file stream, or -1 at EOF.  */
-static int
-rof_getchar (struct rofile *rof)
-{
-  int c = rof_peekchar (rof);
-  if (c >= 0)
-    rof->position++;
-  return c;
-}
-
-/* Parse an unsigned hexadecimal number from a read-only file stream.  */
-static int
-rof_scanf_lx (struct rofile *rof, unsigned long *valuep)
-{
-  unsigned long value = 0;
-  unsigned int numdigits = 0;
-  for (;;)
-    {
-      int c = rof_peekchar (rof);
-      if (c >= '0' && c <= '9')
-        value = (value << 4) + (c - '0');
-      else if (c >= 'A' && c <= 'F')
-        value = (value << 4) + (c - 'A' + 10);
-      else if (c >= 'a' && c <= 'f')
-        value = (value << 4) + (c - 'a' + 10);
-      else
-        break;
-      rof_getchar (rof);
-      numdigits++;
-    }
-  if (numdigits == 0)
-    return -1;
-  *valuep = value;
-  return 0;
-}
-
-/* Close a read-only file stream.  */
-static void
-rof_close (struct rofile *rof)
-{
-  close (rof->fd);
-}
-
-#endif
-
 
 static inline uintptr_t
 get_rusage_as_via_iterator (void)
 {
-#if defined __linux__ /* || defined __CYGWIN__ */
+  uintptr_t total = 0;
 
-  struct rofile rof;
-  int c;
-  unsigned long total;
+  vma_iterate (vma_iterate_callback, &total);
 
-  /* Open the current process' maps file.  It describes one VMA per line.  */
-  if (rof_open (&rof, "/proc/self/maps") < 0)
-    return 0;
-
-  total = 0;
-  for (;;)
-    {
-      unsigned long start, end;
-
-      if (!(rof_scanf_lx (&rof, &start) >= 0
-            && rof_getchar (&rof) == '-'
-            && rof_scanf_lx (&rof, &end) >= 0))
-        break;
-      while (c = rof_getchar (&rof), c != -1 && c != '\n')
-        ;
-      total += end - start;
-    }
-  rof_close (&rof);
   return total;
-
-#elif defined __FreeBSD__ || defined __NetBSD__
-
-  struct rofile rof;
-  int c;
-  unsigned long total;
-
-  /* Open the current process' maps file.  It describes one VMA per line.  */
-  if (rof_open (&rof, "/proc/curproc/map") < 0)
-    return 0;
-
-  total = 0;
-  for (;;)
-    {
-      unsigned long start, end;
-
-      if (!(rof_getchar (&rof) == '0'
-            && rof_getchar (&rof) == 'x'
-            && rof_scanf_lx (&rof, &start) >= 0))
-        break;
-      while (c = rof_peekchar (&rof), c == ' ' || c == '\t')
-        rof_getchar (&rof);
-      if (!(rof_getchar (&rof) == '0'
-            && rof_getchar (&rof) == 'x'
-            && rof_scanf_lx (&rof, &end) >= 0))
-        break;
-      while (c = rof_getchar (&rof), c != -1 && c != '\n')
-        continue;
-      total += end - start;
-    }
-  rof_close (&rof);
-  return total;
-
-#elif defined __sgi || defined __osf__ /* IRIX, OSF/1 */
-
-  size_t pagesize;
-  char fnamebuf[6+10+1];
-  char *fname;
-  int fd;
-  int nmaps;
-  size_t memneed;
-# if HAVE_MAP_ANONYMOUS
-#  define zero_fd -1
-#  define map_flags MAP_ANONYMOUS
-# else
-  int zero_fd;
-#  define map_flags 0
-# endif
-  void *auxmap;
-  unsigned long auxmap_start;
-  unsigned long auxmap_end;
-  prmap_t* maps;
-  prmap_t* mp;
-  unsigned long total;
-
-  pagesize = getpagesize ();
-
-  /* Construct fname = sprintf (fnamebuf+i, "/proc/%u", getpid ()).  */
-  fname = fnamebuf + sizeof (fnamebuf) - 1;
-  *fname = '\0';
-  {
-    unsigned int value = getpid ();
-    do
-      *--fname = (value % 10) + '0';
-    while ((value = value / 10) > 0);
-  }
-  fname -= 6;
-  memcpy (fname, "/proc/", 6);
-
-  fd = open (fname, O_RDONLY);
-  if (fd < 0)
-    return 0;
-
-  if (ioctl (fd, PIOCNMAP, &nmaps) < 0)
-    goto fail2;
-
-  memneed = (nmaps + 10) * sizeof (prmap_t);
-  /* Allocate memneed bytes of memory.
-     We cannot use alloca here, because not much stack space is guaranteed.
-     We also cannot use malloc here, because a malloc() call may call mmap()
-     and thus pre-allocate available memory.
-     So use mmap(), and ignore the resulting VMA.  */
-  memneed = ((memneed - 1) / pagesize + 1) * pagesize;
-# if !HAVE_MAP_ANONYMOUS
-  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
-  if (zero_fd < 0)
-    goto fail2;
-# endif
-  auxmap = (void *) mmap ((void *) 0, memneed, PROT_READ | PROT_WRITE,
-                          map_flags | MAP_PRIVATE, zero_fd, 0);
-# if !HAVE_MAP_ANONYMOUS
-  close (zero_fd);
-# endif
-  if (auxmap == (void *) -1)
-    goto fail2;
-  auxmap_start = (unsigned long) auxmap;
-  auxmap_end = auxmap_start + memneed;
-  maps = (prmap_t *) auxmap;
-
-  if (ioctl (fd, PIOCMAP, maps) < 0)
-    goto fail1;
-
-  total = 0;
-  for (mp = maps;;)
-    {
-      unsigned long start, end;
-
-      start = (unsigned long) mp->pr_vaddr;
-      end = start + mp->pr_size;
-      if (start == 0 && end == 0)
-        break;
-      mp++;
-      if (start <= auxmap_start && auxmap_end - 1 <= end - 1)
-        /* Consider [start,end-1] \ [auxmap_start,auxmap_end-1]
-           = [start,auxmap_start-1] u [auxmap_end,end-1].  */
-        total += (end - start) - memneed;
-      else
-        total += end - start;
-    }
-  munmap (auxmap, memneed);
-  close (fd);
-  return total;
-
- fail1:
-  munmap (auxmap, memneed);
- fail2:
-  close (fd);
-  return 0;
-
-#elif defined __APPLE__ && defined __MACH__ /* MacOS X */
-
-  task_t task = mach_task_self ();
-  vm_address_t address;
-  vm_size_t size;
-  vm_address_t total = 0;
-
-  for (address = VM_MIN_ADDRESS;; address += size)
-    {
-      int more;
-      mach_port_t object_name;
-      /* In MacOS X 10.5, the types vm_address_t, vm_offset_t, vm_size_t have
-         32 bits in 32-bit processes and 64 bits in 64-bit processes. Whereas
-         mach_vm_address_t and mach_vm_size_t are always 64 bits large.
-         MacOS X 10.5 has three vm_region like methods:
-           - vm_region. It has arguments that depend on whether the current
-             process is 32-bit or 64-bit. When linking dynamically, this
-             function exists only in 32-bit processes. Therefore we use it only
-             in 32-bit processes.
-           - vm_region_64. It has arguments that depend on whether the current
-             process is 32-bit or 64-bit. It interprets a flavor
-             VM_REGION_BASIC_INFO as VM_REGION_BASIC_INFO_64, which is
-             dangerous since 'struct vm_region_basic_info_64' is larger than
-             'struct vm_region_basic_info'; therefore let's write
-             VM_REGION_BASIC_INFO_64 explicitly.
-           - mach_vm_region. It has arguments that are 64-bit always. This
-             function is useful when you want to access the VM of a process
-             other than the current process.
-         In 64-bit processes, we could use vm_region_64 or mach_vm_region.
-         I choose vm_region_64 because it uses the same types as vm_region,
-         resulting in less conditional code.  */
-# if defined __ppc64__ || defined __x86_64__
-      struct vm_region_basic_info_64 info;
-      mach_msg_type_number_t info_count = VM_REGION_BASIC_INFO_COUNT_64;
-
-      more = (vm_region_64 (task, &address, &size, VM_REGION_BASIC_INFO_64,
-                            (vm_region_info_t)&info, &info_count, &object_name)
-              == KERN_SUCCESS);
-# else
-      struct vm_region_basic_info info;
-      mach_msg_type_number_t info_count = VM_REGION_BASIC_INFO_COUNT;
-
-      more = (vm_region (task, &address, &size, VM_REGION_BASIC_INFO,
-                         (vm_region_info_t)&info, &info_count, &object_name)
-              == KERN_SUCCESS);
-# endif
-      if (object_name != MACH_PORT_NULL)
-        mach_port_deallocate (mach_task_self (), object_name);
-      if (!more)
-        break;
-      total += size;
-    }
-  return total;
-
-#elif (defined _WIN32 || defined __WIN32__) || defined __CYGWIN__
-  /* Windows platform.  Use the native Windows API.  */
-
-  MEMORY_BASIC_INFORMATION info;
-  unsigned long address = 0;
-  unsigned long total = 0;
-
-  while (VirtualQuery ((void*)address, &info, sizeof(info)) == sizeof(info))
-    {
-      if (info.State != MEM_FREE)
-        /* Ignore areas where info.Protect has the undocumented value 0.
-           This is needed, so that on Cygwin, areas used by malloc() are
-           distinguished from areas reserved for future malloc().  */
-        if (info.Protect != 0)
-          total += info.RegionSize;
-      address = (unsigned long)info.BaseAddress + info.RegionSize;
-    }
-  return total;
-
-#elif defined __BEOS__
-  /* Use the BeOS specific API.  */
-
-  area_info info;
-  int32 cookie;
-  unsigned long total = 0;
-
-  cookie = 0;
-  while (get_next_area_info (0, &cookie, &info) == B_OK)
-    {
-      unsigned long start, end;
-
-      start = (unsigned long) info.address;
-      end = start + info.size;
-
-      total += end - start;
-    }
-  return total;
+}
 
 #else
 
+static inline uintptr_t
+get_rusage_as_via_iterator (void)
+{
   return 0;
+}
 
 #endif
-}
 
 
 uintptr_t
