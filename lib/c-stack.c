@@ -109,12 +109,12 @@ static void
 die (int signo)
 {
   char const *message;
-#if !SIGINFO_WORKS
+#if !SIGINFO_WORKS && !HAVE_LIBSIGSEGV
   /* We can't easily determine whether it is a stack overflow; so
      assume that the rest of our program is perfect (!) and that
      this segmentation violation is a stack overflow.  */
   signo = 0;
-#endif /* !SIGINFO_WORKS */
+#endif /* !SIGINFO_WORKS && !HAVE_LIBSIGSEGV */
   segv_action (signo);
   message = signo ? program_error_message : stack_overflow_message;
   ignore_value (write (STDERR_FILENO, program_name, strlen (program_name)));
