@@ -308,6 +308,14 @@ get_rusage_as_via_setrlimit (void)
   return result;
 }
 
+#else
+
+static inline uintptr_t
+get_rusage_as_via_setrlimit (void)
+{
+  return 0;
+}
+
 #endif
 
 
@@ -364,3 +372,31 @@ get_rusage_as (void)
   return get_rusage_as_via_iterator ();
 #endif
 }
+
+
+#ifdef TEST
+
+#include <stdio.h>
+
+int
+main ()
+{
+  printf ("Initially:           0x%08lX 0x%08lX 0x%08lX\n",
+          get_rusage_as_via_setrlimit (), get_rusage_as_via_iterator (),
+          get_rusage_as ());
+  malloc (0x88);
+  printf ("After small malloc:  0x%08lX 0x%08lX 0x%08lX\n",
+          get_rusage_as_via_setrlimit (), get_rusage_as_via_iterator (),
+          get_rusage_as ());
+  malloc (0x8812);
+  printf ("After medium malloc: 0x%08lX 0x%08lX 0x%08lX\n",
+          get_rusage_as_via_setrlimit (), get_rusage_as_via_iterator (),
+          get_rusage_as ());
+  malloc (0x281237);
+  printf ("After large malloc:  0x%08lX 0x%08lX 0x%08lX\n",
+          get_rusage_as_via_setrlimit (), get_rusage_as_via_iterator (),
+          get_rusage_as ());
+  return 0;
+}
+
+#endif /* TEST */

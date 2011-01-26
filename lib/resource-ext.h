@@ -27,7 +27,8 @@ extern "C" {
 
 /* Returns the amount of address space currently in use by the current
    process, or zero if unknown.
-   This is the quantity which is limited by setrlimit(RLIMIT_AS,...).  */
+   This is the quantity which is limited by setrlimit(RLIMIT_AS,...).
+   Note: This function always returns zero on OpenBSD and AIX.  */
 extern uintptr_t get_rusage_as (void);
 
 
