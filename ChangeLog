@@ -1,3 +1,9 @@
+2011-01-25  Bruno Haible  <bruno@clisp.org>
+
+	vma-iter: Treat Haiku like BeOS.
+	* lib/vma-iter.h (VMA_ITERATE_SUPPORTED): Define on Haiku as well.
+	* lib/vma-iter.c (vma_iterate) [Haiku]: Use the BeOS API.
+
 2011-01-25  Eric Blake  <eblake@redhat.com>
 
 	c-stack: fix regression on cygwin when libsigsegv is present

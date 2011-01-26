@@ -40,7 +40,7 @@
 # include <windows.h>
 #endif
 
-#if defined __BEOS__ /* BeOS */
+#if defined __BEOS__ || defined __HAIKU__ /* BeOS, Haiku */
 # include <OS.h>
 #endif
 
@@ -466,7 +466,7 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
       address = (unsigned long)info.BaseAddress + info.RegionSize;
     }
 
-#elif defined __BEOS__
+#elif defined __BEOS__ || defined __HAIKU__
   /* Use the BeOS specific API.  */
 
   area_info info;
