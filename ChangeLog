@@ -1,5 +1,9 @@
 2011-01-26  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'get-rusage-data'.
+	* modules/get-rusage-data-tests: New file.
+	* tests/test-get-rusage-data.c: New file.
+
 	New module 'get-rusage-data'.
 	* lib/resource-ext.h (get_rusage_data): New declaration.
 	* lib/get-rusage-data.c: New file.
