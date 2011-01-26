@@ -31,6 +31,14 @@ extern "C" {
    Note: This function always returns zero on OpenBSD and AIX.  */
 extern uintptr_t get_rusage_as (void);
 
+/* Returns the size of the data segment, or zero if unknown.
+   This is the quantity which is limited by setrlimit(RLIMIT_DATA,...).
+   Note: This function always returns zero on HP-UX 11.00.
+   Note: The total size of all malloc()ed memory is bounded by the size of
+   the data segment only on the following platforms:
+   FreeBSD, AIX, HP-UX 11.23 and newer, IRIX, OSF/1, Solaris, BeOS, Haiku.  */
+extern uintptr_t get_rusage_data (void);
+
 
 #ifdef __cplusplus
 }
