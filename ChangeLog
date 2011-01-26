@@ -1,3 +1,8 @@
+2011-01-26  Karl Berry  <karl@gnu.org>
+
+	* doc/Makefile (lang_env, makeinfo_prog, manual_opts): new
+	variables to make it easier to override the makeinfo program used.
+
 2011-01-26  Eric Blake  <eblake@redhat.com>
 
 	fcntl: work around Haiku F_DUPFD bugs

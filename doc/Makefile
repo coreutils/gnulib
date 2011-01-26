@@ -7,11 +7,15 @@
 
 doc = gnulib
 
-MAKEINFO = env LANG= LC_MESSAGES= LC_ALL= LANGUAGE= makeinfo
-TEXI2HTML = $(MAKEINFO) --no-split --reference-limit=2000 --html
+lang_env = env LANG= LC_MESSAGES= LC_ALL= LANGUAGE=
+makeinfo_prog = makeinfo
+MAKEINFO = $(lang_env) $(makeinfo_prog)
+
+manual_opts = --no-split --reference-limit=2000
+TEXI2HTML = $(MAKEINFO) $(manual_opts) --html
 
 %.info: %.texi
-	LANG= LC_MESSAGES= LC_ALL= LANGUAGE= makeinfo --no-split --reference-limit=2000 $<
+	$(MAKEINFO) $(manual_opts) $<
 
 %.html: %.texi
 	$(TEXI2HTML) -o $@ $<
