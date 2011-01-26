@@ -1,3 +1,11 @@
+2011-01-26  Eric Blake  <eblake@redhat.com>
+
+	fcntl: work around Haiku F_DUPFD bugs
+	* m4/fcntl.m4 (gl_FUNC_FCNTL): Also catch Haiku errno bug.
+	* lib/fcntl.c (rpl_fcntl) [F_DUPFD]: Work around Haiku losing
+	cloexec bit on duplication.
+	* doc/posix-functions/fcntl.texi (fcntl): Document the bug.
+
 2011-01-26  Bruno Haible  <bruno@clisp.org>
 
 	Enable memory leak tests on AIX.

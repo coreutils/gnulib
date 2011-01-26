@@ -187,7 +187,21 @@ rpl_fcntl (int fd, int action, /* arg */...)
           errno = EINVAL;
         else
           {
+            /* Haiku alpha 2 loses fd flags on original.  */
+            int flags = fcntl (fd, F_GETFD);
+            if (flags < 0)
+              {
+                result = -1;
+                break;
+              }
             result = fcntl (fd, action, target);
+            if (0 <= result && fcntl (fd, F_SETFD, flags) == -1)
+              {
+                int saved_errno = errno;
+                close (result);
+                result = -1;
+                errno = saved_errno;
+              }
 # if REPLACE_FCHDIR
             if (0 <= result)
               result = _gl_register_dup (fd, result);
