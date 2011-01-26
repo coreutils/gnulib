@@ -1,5 +1,11 @@
 2011-01-26  Bruno Haible  <bruno@clisp.org>
 
+	Enable memory leak tests on AIX.
+	* tests/test-dprintf-posix2.c (main): Don't skip the test on AIX.
+	* tests/test-fprintf-posix3.c (main): Likewise.
+
+2011-01-26  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'get-rusage-data'.
 	* modules/get-rusage-data-tests: New file.
 	* tests/test-get-rusage-data.c: New file.

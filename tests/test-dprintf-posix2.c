@@ -55,7 +55,7 @@ main (int argc, char *argv[])
 
   /* Limit the amount of malloc()ed memory to MAX_ALLOC_TOTAL or less.  */
 
-  /* On BSD systems, malloc() is limited by RLIMIT_DATA.  */
+  /* On AIX systems, malloc() is limited by RLIMIT_DATA.  */
 #if HAVE_GETRLIMIT && HAVE_SETRLIMIT && defined RLIMIT_DATA
   {
     struct rlimit limit;
@@ -69,12 +69,14 @@ main (int argc, char *argv[])
       }
   }
 #endif
-  /* On Linux systems, malloc() is limited by RLIMIT_AS.
+  /* On all systems except AIX and OpenBSD, malloc() is limited by RLIMIT_AS.
      On some systems, setrlimit of RLIMIT_AS doesn't work but get_rusage_as ()
      does.  Allow the address space size to grow by at most MAX_ALLOC_TOTAL.  */
   initial_rusage_as = get_rusage_as ();
+#if !defined _AIX
   if (initial_rusage_as == 0)
     return 77;
+#endif
 
   arg = atoi (argv[1]);
   if (arg == 0)
