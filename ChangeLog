@@ -1,3 +1,8 @@
+2011-01-27  Bruno Haible  <bruno@clisp.org>
+
+	Prepare for supporting FreeBSD 10.
+	* build-aux/config.libpath: Remove handling of freebsd1*.
+
 2011-01-27  Gerald Pfeifer  <gerald@pfeifer.com>  (tiny change)
 
 	Prepare for supporting FreeBSD 10.

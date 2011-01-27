@@ -66,8 +66,6 @@ case $host_os in
   dgux*)
     shlibpath_var=LD_LIBRARY_PATH
     ;;
-  freebsd1*)
-    ;;
   freebsd* | dragonfly*)
     shlibpath_var=LD_LIBRARY_PATH
     ;;
