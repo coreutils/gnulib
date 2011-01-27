@@ -1,3 +1,9 @@
+2011-01-27  Gerald Pfeifer  <gerald@pfeifer.com>  (tiny change)
+
+	Prepare for supporting FreeBSD 10.
+	* build-aux/config.rpath: Remove handling of freebsd1* which soon would
+	match FreeBSD 10.0.
+
 2011-01-27  Bruno Haible  <bruno@clisp.org>
 
 	vma-iter, get-rusage-as: Add OpenBSD support.
