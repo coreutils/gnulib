@@ -14,6 +14,7 @@ getpagesize
 
 configure.ac:
 gl_FUNC_MMAP_ANON
+AC_CHECK_FUNCS_ONCE([mquery])
 
 Makefile.am:
 lib_SOURCES += vma-iter.c

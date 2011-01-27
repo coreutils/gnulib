@@ -69,7 +69,9 @@
 
    OpenBSD:
      a) setrlimit with RLIMIT_DATA works.
-     b) No VMA iteration API exists.
+     b) mquery() can be used to find out about the virtual memory areas.
+     get_rusage_data_via_setrlimit() works much better than
+     get_rusage_data_via_iterator().
      Note that malloc() appears to use mmap() for both large and small
      allocations.
 

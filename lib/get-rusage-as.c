@@ -66,7 +66,7 @@
 
    OpenBSD:
      a) setrlimit exists, but RLIMIT_AS is not defined.
-     b) No VMA iteration API exists.
+     b) mquery() can be used to find out about the virtual memory areas.
 
    AIX:
      a) setrlimit with RLIMIT_AS succeeds but does not really work: The OS

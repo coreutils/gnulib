@@ -1,3 +1,14 @@
+2011-01-27  Bruno Haible  <bruno@clisp.org>
+
+	vma-iter, get-rusage-as: Add OpenBSD support.
+	* modules/vma-iter (configure.ac): Test for mquery.
+	* lib/vma-iter.h (VMA_ITERATE_SUPPORTED): Define also on OpenBSD.
+	* lib/vma-iter.c: Include <sys/mman.h>.
+	(vma_iterate): Add an implementation based on mquery().
+	* lib/resource-ext.h (get_rusage_as): Update comments.
+	* lib/get-rusage-as.c: Likewise.
+	* lib/get-rusage-data.c: Likewise.
+
 2011-01-26  Karl Berry  <karl@gnu.org>
 
 	* doc/Makefile (lang_env, makeinfo_prog, manual_opts): new

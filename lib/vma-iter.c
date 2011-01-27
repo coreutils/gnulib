@@ -44,6 +44,11 @@
 # include <OS.h>
 #endif
 
+#if HAVE_MQUERY /* OpenBSD */
+# include <sys/types.h>
+# include <sys/mman.h> /* mquery */
+#endif
+
 
 /* Support for reading text files in the /proc file system.  */
 
@@ -487,6 +492,99 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
         flags |= VMA_PROT_WRITE;
 
       if (callback (data, start, end, flags))
+        break;
+    }
+
+#elif HAVE_MQUERY /* OpenBSD */
+
+  uintptr_t pagesize;
+  uintptr_t address;
+  int /*bool*/ address_known_mapped;
+
+  pagesize = getpagesize ();
+  /* Avoid calling mquery with a NULL first argument, because this argument
+     value has a specific meaning.  We know the NULL page is unmapped.  */
+  address = pagesize;
+  address_known_mapped = 0;
+  for (;;)
+    {
+      /* Test whether the page at address is mapped.  */
+      if (address_known_mapped
+          || mquery ((void *) address, pagesize, 0, MAP_FIXED, -1, 0)
+             == (void *) -1)
+        {
+          /* The page at address is mapped.
+             This is the start of an interval.  */
+          uintptr_t start = address;
+          uintptr_t end;
+
+          /* Find the end of the interval.  */
+          end = (uintptr_t) mquery ((void *) address, pagesize, 0, 0, -1, 0);
+          if (end == (uintptr_t) (void *) -1)
+            end = 0; /* wrap around */
+          address = end;
+
+          /* It's too complicated to find out about the flags.  Just pass 0.  */
+          if (callback (data, start, end, 0))
+            break;
+
+          if (address < pagesize) /* wrap around? */
+            break;
+        }
+      /* Here we know that the page at address is unmapped.  */
+      {
+        uintptr_t query_size = pagesize;
+
+        address += pagesize;
+
+        /* Query larger and larger blocks, to get through the unmapped address
+           range with few mquery() calls.  */
+        for (;;)
+          {
+            if (2 * query_size > query_size)
+              query_size = 2 * query_size;
+            if (address + query_size - 1 < query_size) /* wrap around? */
+              {
+                address_known_mapped = 0;
+                break;
+              }
+            if (mquery ((void *) address, query_size, 0, MAP_FIXED, -1, 0)
+                == (void *) -1)
+              {
+                /* Not all the interval [address .. address + query_size - 1]
+                   is unmapped.  */
+                address_known_mapped = (query_size == pagesize);
+                break;
+              }
+            /* The interval [address .. address + query_size - 1] is
+               unmapped.  */
+            address += query_size;
+          }
+        /* Reduce the query size again, to determine the precise size of the
+           unmapped interval that starts at address.  */
+        while (query_size > pagesize)
+          {
+            query_size = query_size / 2;
+            if (address + query_size - 1 >= query_size)
+              {
+                if (mquery ((void *) address, query_size, 0, MAP_FIXED, -1, 0)
+                    != (void *) -1)
+                  {
+                    /* The interval [address .. address + query_size - 1] is
+                       unmapped.  */
+                    address += query_size;
+                    address_known_mapped = 0;
+                  }
+                else
+                  address_known_mapped = (query_size == pagesize);
+              }
+          }
+        /* Here again query_size = pagesize, and
+           either address + pagesize - 1 < pagesize, or
+           mquery ((void *) address, pagesize, 0, MAP_FIXED, -1, 0) fails.
+           So, the unmapped area ends at address.  */
+      }
+      if (address + pagesize - 1 < pagesize) /* wrap around? */
         break;
     }
 
