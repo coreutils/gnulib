@@ -1,3 +1,10 @@
+2011-01-29  Eric Blake  <eblake@redhat.com>
+
+	mktime: avoid infinite loop
+	* m4/mktime.m4 (AC_FUNC_MKTIME): Avoid overflow on possibly-signed
+	type; behavior is still undefined but portable to all known targets.
+	Reported by Rich Felker.
+
 2011-01-29  Simon Josefsson  <simon@josefsson.org>
 
 	rename, unlink, same-inode: Relicense.
