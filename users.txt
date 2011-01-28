@@ -65,6 +65,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   radius          http://cvs.sv.gnu.org/viewcvs/radius/radius/
   recutils        http://git.savannah.gnu.org/gitweb/?p=recutils.git
   sed             http://cvs.savannah.gnu.org/viewcvs/sed/?root=sed
+  sharutils       http://cvs.savannah.gnu.org/viewvc/sharutils/sharutils/
   shishi          http://git.sv.gnu.org/gitweb/?p=shishi.git
   tar             http://cvs.sv.gnu.org/viewcvs/tar/tar/
   texinfo         http://cvs.sv.gnu.org/viewcvs/texinfo/texinfo/
