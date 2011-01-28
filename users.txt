@@ -56,6 +56,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   myserver        http://git.sv.gnu.org/gitweb/?p=myserver.git;a=summary
   netcf           http://fedorahosted.org/netcf/
   newts           http://svn.arete.cc/newts/trunk/
+  OATH Toolkit    http://www.nongnu.org/oath-toolkit/
   parted          http://git.debian.org/?p=parted/parted.git;a=summary
   patch           http://git.sv.gnu.org/gitweb/?p=patch.git
   prelude-lml     https://trac.prelude-ids.org/browser/trunk/prelude-lml/
