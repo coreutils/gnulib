@@ -1,3 +1,9 @@
+2011-01-28  Paul Eggert  <eggert@cs.ucla.edu>
+
+	mktime: fix misspelling in comment
+	* lib/mktime.c (__mktime_internal): Fix misspelling in comment.
+	This merges all recent glibc changes of importance.
+
 2011-01-28  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	move-if-change: cope with concurrent mv of identical file.

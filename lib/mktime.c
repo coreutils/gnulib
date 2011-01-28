@@ -375,7 +375,7 @@ __mktime_internal (struct tm *tp,
       int diff = approx_biennia - approx_requested_biennia;
       int abs_diff = diff < 0 ? - diff : diff;
 
-      /* IRIX 4.0.5 cc miscaculates TIME_T_MIN / 3: it erroneously
+      /* IRIX 4.0.5 cc miscalculates TIME_T_MIN / 3: it erroneously
          gives a positive value of 715827882.  Setting a variable
          first then doing math on it seems to work.
          (ghazi@caip.rutgers.edu) */
