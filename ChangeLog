@@ -1,3 +1,35 @@
+2011-01-29  Paul Eggert  <eggert@cs.ucla.edu>
+
+	mktime: fix some integer overflow issues and sidestep the rest
+
+	This was prompted by a bug report by Benjamin Lindner for MinGW
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-01/msg00472.html>.
+	His bug is due to signed integer overflow (0 - INT_MIN), and I
+	I scanned through mktime.c looking for other integer overflow
+	problems, fixing all the bugs I found.
+
+	Although the C Standard says the resulting code is still not safe
+	in the presence of integer overflow, in practice it should be good
+	enough for all real-world two's-complement implementations, except
+	for debugging environments that deliberately trap on integer
+	overflow (e.g., gcc -ftrapv).
+
+	* lib/mktime.c (WRAPV): New macro.
+	(SHR): Also check that long_int and time_t shift right in the
+	usual way, before using the fast-but-unportable method.
+	(TYPE_ONES_COMPLEMENT, TYPE_SIGNED_MAGNITUDE): Remove, no longer
+	used.  The code already assumed two's complement, so there's
+	no need to test for alternatives.  All uses removed.
+	(TYPE_MAXIMUM): Don't rely here on overflow behavior not defined by
+	the C standard.  Problem reported by Rich Felker in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-01/msg00488.html>.
+	(twos_complement_arithmetic): Also check long_int and time_t.
+	(time_t_avg, time_t_add_ok, time_t_int_add_ok): New functions.
+	(guess_time_tm, ranged_convert, __mktime_internal): Use them.
+	(__mktime_internal): Avoid integer overflow with unary subtraction
+	in two instances where -1 - X is an adequate replacement for -X,
+	since the calculations are approximate.
+
 2011-01-29  Eric Blake  <eblake@redhat.com>
 
 	mktime: avoid infinite loop
