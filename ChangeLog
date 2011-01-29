@@ -1,5 +1,14 @@
 2011-01-28  Paul Eggert  <eggert@cs.ucla.edu>
 
+	mktime: avoid problems on NetBSD 5 / i386
+	* lib/mktime.c (long_int): New type.  This works around a problem
+	on NetBSD 5 / i386, where 'long int' and 'int' are both 32 bits
+	but time_t is 64 bits, and where I expect the existing code is
+	wrong in some cases.
+	(leapyear, ydhms_diff, guess_time_tm, __mktime_internal): Use it.
+	(ydhms_diff): Bring back the compile-time check for wide-enough
+	year and yday.
+
 	mktime: fix misspelling in comment
 	* lib/mktime.c (__mktime_internal): Fix misspelling in comment.
 	This merges all recent glibc changes of importance.
