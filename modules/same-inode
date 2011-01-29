@@ -14,7 +14,7 @@ Include:
 "same-inode.h"
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Jim Meyering

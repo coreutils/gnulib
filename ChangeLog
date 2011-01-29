@@ -1,3 +1,10 @@
+2011-01-29  Simon Josefsson  <simon@josefsson.org>
+
+	rename, unlink, same-inode: Relicense.
+	* modules/rename (License): Relax from LGPLv3+ to LGPLv2+.
+	* modules/unlink (License): Likewise.
+	* modules/same-inode (License): Likewise.
+
 2011-01-28  Paul Eggert  <eggert@cs.ucla.edu>
 
 	mktime: avoid problems on NetBSD 5 / i386
