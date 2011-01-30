@@ -1,5 +1,8 @@
 2011-01-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	mktime: #undef mktime before #defining it
+	* lib/mktime.c (mktime) [DEBUG]: #undef mktime before #defining it.
+
 	mktime: systematically normalize tm_isdst comparisons
 	* lib/mktime.c (isdst_differ): New function.
 	(__mktime_internal): Use it systematically for all isdst comparisons.
