@@ -1,5 +1,13 @@
 2011-01-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	mktime: systematically normalize tm_isdst comparisons
+	* lib/mktime.c (isdst_differ): New function.
+	(__mktime_internal): Use it systematically for all isdst comparisons.
+	This completes the fix for libc BZ #6723, and removes the need for
+	normalizing tm_isdst.  See
+	<http://sourceware.org/bugzilla/show_bug.cgi?id=6723>
+	(not_equal_tm) [DEBUG]: Use isdst_differ here, too.
+
 	mktime: fix some integer overflow issues and sidestep the rest
 
 	This was prompted by a bug report by Benjamin Lindner for MinGW
