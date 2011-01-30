@@ -113,7 +113,7 @@ typedef long long int long_int;
 #define TYPE_MAXIMUM(t) \
   ((t) (! TYPE_SIGNED (t) \
         ? (t) -1 \
-        : (((((t) 1 << (sizeof (t) * CHAR_BIT - 2)) - 1) << 1) + 1)))
+        : ((((t) 1 << (sizeof (t) * CHAR_BIT - 2)) - 1) * 2 + 1)))
 
 #ifndef TIME_T_MIN
 # define TIME_T_MIN TYPE_MINIMUM (time_t)

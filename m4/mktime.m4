@@ -1,4 +1,4 @@
-# serial 18
+# serial 19
 dnl Copyright (C) 2002-2003, 2005-2007, 2009-2011 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -175,12 +175,13 @@ main ()
 
   time_t_max = (! time_t_signed
                 ? (time_t) -1
-                : ~ (~ (time_t) 0 << (sizeof (time_t) * CHAR_BIT - 1)));
+                : ((((time_t) 1 << (sizeof (time_t) * CHAR_BIT - 2)) - 1)
+                   * 2 + 1));
   time_t_min = (! time_t_signed
                 ? (time_t) 0
                 : time_t_signed_magnitude
                 ? ~ (time_t) 0
-                : ~ (time_t) 0 << (sizeof (time_t) * CHAR_BIT - 1));
+                : ~ time_t_max);
 
   delta = time_t_max / 997; /* a suitable prime number */
   for (i = 0; i < N_STRINGS; i++)

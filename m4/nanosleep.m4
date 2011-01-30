@@ -1,4 +1,4 @@
-# serial 32
+# serial 33
 
 dnl From Jim Meyering.
 dnl Check for the nanosleep function.
@@ -58,7 +58,7 @@ AC_DEFUN([gl_FUNC_NANOSLEEP],
           #define TYPE_MAXIMUM(t) \
             ((t) (! TYPE_SIGNED (t) \
                   ? (t) -1 \
-                  : ~ (~ (t) 0 << (sizeof (t) * CHAR_BIT - 1))))
+                  : ((((t) 1 << (sizeof (t) * CHAR_BIT - 2)) - 1) * 2 + 1)))
 
           static void
           check_for_SIGALRM (int sig)

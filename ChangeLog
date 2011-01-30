@@ -1,5 +1,18 @@
 2011-01-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	TYPE_MAXIMUM: avoid theoretically undefined behavior
+	* lib/intprops.h (TYPE_MINIMUM, TYPE_MAXIMUM): Do not shift a
+	negative number, which the C Standard says has undefined behavior.
+	In practice this is not a problem, but might as well do it by the book.
+	Reported by Rich Felker and Eric Blake; see
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-01/msg00493.html>.
+	* lib/strtol.c (TYPE_MINIMUM, TYPE_MAXIMUM): Likewise.
+	* m4/mktime.m4 (AC_FUNC_MKTIME): Likewise.
+	* m4/nanosleep.m4 (gl_FUNC_NANOSLEEP): Likewise.
+	* m4/parse-datetime.m4 (gl_PARSE_DATETIME): Likewise.
+	* m4/stdint.m4 (gl_STDINT_H): Likewise.
+	* lib/mktime.c (TYPE_MAXIMUM): Redo slightly to match the others.
+
 	mktime: #undef mktime before #defining it
 	* lib/mktime.c (mktime) [DEBUG]: #undef mktime before #defining it.
 
