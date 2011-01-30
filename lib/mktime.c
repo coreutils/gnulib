@@ -64,12 +64,16 @@
 # define mktime my_mktime
 #endif /* DEBUG */
 
+/* Verify a requirement at compile-time (unlike assert, which is runtime).  */
+#define verify(name, assertion) struct name { char a[(assertion) ? 1 : -1]; }
+
 /* A signed type that is at least one bit wider than int.  */
 #if INT_MAX <= LONG_MAX / 2
 typedef long int long_int;
 #else
 typedef long long int long_int;
 #endif
+verify (long_int_is_wide_enough, INT_MAX == INT_MAX * (long_int) 2 / 2);
 
 /* Shift A right by B bits portably, by dividing A by 2**B and
    truncating towards minus infinity.  A and B should be free of side
@@ -122,9 +126,6 @@ typedef long long int long_int;
 # define TIME_T_MAX TYPE_MAXIMUM (time_t)
 #endif
 #define TIME_T_MIDPOINT (SHR (TIME_T_MIN + TIME_T_MAX, 1) + 1)
-
-/* Verify a requirement at compile-time (unlike assert, which is runtime).  */
-#define verify(name, assertion) struct name { char a[(assertion) ? 1 : -1]; }
 
 verify (time_t_is_integer, TYPE_IS_INTEGER (time_t));
 verify (twos_complement_arithmetic,
@@ -196,8 +197,6 @@ ydhms_diff (long_int year1, long_int yday1, int hour1, int min1, int sec1,
             int year0, int yday0, int hour0, int min0, int sec0)
 {
   verify (C99_integer_division, -1 / 2 == 0);
-  verify (long_int_year_and_yday_are_wide_enough,
-          INT_MAX == INT_MAX * (long_int) 2 / 2);
 
   /* Compute intervening leap days correctly even if year is negative.
      Take care to avoid integer overflow here.  */
@@ -733,6 +732,6 @@ main (int argc, char **argv)
 
 /*
 Local Variables:
-compile-command: "gcc -DDEBUG -Wall -W -O2 -g mktime.c -o mktime"
+compile-command: "gcc -DDEBUG -I. -Wall -W -O2 -g mktime.c -o mktime"
 End:
 */

@@ -1,3 +1,11 @@
+2011-01-30  Paul Eggert  <eggert@cs.ucla.edu>
+
+	mktime: clarify long_int width checking
+	* lib/mktime.c (long_int_is_wide_enough): Move this assertion to
+	the top level, to make it clearer that the assumption about
+	long_int width is being checked.  See
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-01/msg00554.html>.
+
 2011-01-30  Simon Josefsson  <simon@josefsson.org>
 
 	ignore-value: Fix self-test.
