@@ -1,3 +1,8 @@
+2011-01-30  Simon Josefsson  <simon@josefsson.org>
+
+	ignore-value: Fix self-test.
+	* tests/test-ignore-value.c: Include sys/types.h for off_t.
+
 2011-01-29  Paul Eggert  <eggert@cs.ucla.edu>
 
 	TYPE_MAXIMUM: avoid theoretically undefined behavior
