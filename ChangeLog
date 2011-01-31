@@ -1,3 +1,10 @@
+2011-01-31  Simon Josefsson  <simon@josefsson.org>
+
+	doc: off_t is not available in eglibc 2.11.2 stdio.h.
+	* doc/posix-headers/stdio.texi (stdio.h): Mention that off_t isn't
+	declared by eglibc 2.11.2.
+	* lib/stdio.in.h: Likewise.
+
 2011-01-31  Eric Blake  <eblake@redhat.com>
 
 	ignore-value: add missing test dependency

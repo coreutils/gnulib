@@ -52,7 +52,8 @@
 
 #include <stddef.h>
 
-/* Get off_t and ssize_t.  Needed on many systems, including glibc 2.8.  */
+/* Get off_t and ssize_t.  Needed on many systems, including glibc 2.8
+   and eglibc 2.11.2.  */
 #include <sys/types.h>
 
 #ifndef __attribute__
