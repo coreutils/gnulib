@@ -1,3 +1,10 @@
+2011-01-31  Eric Blake  <eblake@redhat.com>
+
+	ignore-value: add missing test dependency
+	* tests/test-ignore-value.c: Revert previous change; stdio.h
+	provides off_t.
+	* modules/ignore-value-tests (Depends-on): Add missing dependency.
+
 2011-01-30  Paul Eggert  <eggert@cs.ucla.edu>
 
 	mktime: clarify long_int width checking
