@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-ctype.c for Unicode 5.1.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 6.0.0.  */
 #define header_0 16
 #define header_2 9
 #define header_3 127
@@ -11,7 +11,7 @@ struct
     int header[1];
     int level1[2];
     short level2[2 << 7];
-    /*unsigned*/ int level3[6 << 4];
+    /*unsigned*/ int level3[7 << 4];
   }
 u_property_bidi_european_digit =
 {
@@ -269,7 +269,7 @@ u_property_bidi_european_digit =
        -1,
        -1,
        -1,
-       -1,
+        3 +   256 * sizeof (short) / sizeof (int) +    96,
        -1,
        -1,
        -1,
@@ -302,6 +302,10 @@ u_property_bidi_european_digit =
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0xFFFFC000, 0xFFFFFFFF
+    0x00000000, 0x00000000, 0xFFFFC000, 0xFFFFFFFF,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x000007FF, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000
   }
 };

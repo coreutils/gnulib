@@ -1,6 +1,5 @@
 # poll.m4 serial 12
-dnl Copyright (c) 2003, 2005, 2006, 2007, 2009, 2010 Free Software Foundation,
-dnl Inc.
+dnl Copyright (c) 2003, 2005-2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.

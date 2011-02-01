@@ -19,7 +19,8 @@
 
     { 0x00B7, 0x00B7 },
     { 0x0387, 0x0387 },
-    { 0x1369, 0x1371 }
+    { 0x1369, 0x1371 },
+    { 0x19DA, 0x19DA }
 
 #define PREDICATE(c) uc_is_property_other_id_continue (c)
 #include "test-predicate-part2.h"

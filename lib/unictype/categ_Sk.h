@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Categories of Unicode characters.  */
-/* Generated automatically by gen-ctype.c for Unicode 5.1.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 6.0.0.  */
 #define header_0 16
 #define header_2 9
 #define header_3 127
@@ -11,7 +11,7 @@ struct
     int header[1];
     int level1[1];
     short level2[1 << 7];
-    /*unsigned*/ int level3[6 << 4];
+    /*unsigned*/ int level3[7 << 4];
   }
 u_categ_Sk =
 {
@@ -143,9 +143,9 @@ u_categ_Sk =
        -1,
        -1,
        -1,
+        2 +   128 * sizeof (short) / sizeof (int) +    80,
        -1,
-       -1,
-        2 +   128 * sizeof (short) / sizeof (int) +    80
+        2 +   128 * sizeof (short) / sizeof (int) +    96
   },
   {
     0x00000000, 0x00000000, 0x40000000, 0x00000001,
@@ -168,6 +168,10 @@ u_categ_Sk =
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x007FFFFF, 0x00000003, 0x00000000, 0x00000000,
     0x00000600, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0xFFFC0000, 0x00000003, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x40000000, 0x00000001, 0x00000000,

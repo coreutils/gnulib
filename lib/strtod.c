@@ -1,4 +1,4 @@
-/* Copyright (C) 1991-1992, 1997, 1999, 2003, 2006, 2008-2010 Free Software
+/* Copyright (C) 1991-1992, 1997, 1999, 2003, 2006, 2008-2011 Free Software
    Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -303,6 +303,7 @@ strtod (const char *nptr, char **endptr)
           && c_tolower (s[4]) == 'y')
         s += 5;
       num = HUGE_VAL;
+      errno = saved_errno;
     }
   else if (c_tolower (*s) == 'n'
            && c_tolower (s[1]) == 'a'
@@ -325,6 +326,7 @@ strtod (const char *nptr, char **endptr)
          to interpreting n-char-sequence as a hexadecimal number.  */
       if (s != end)
         num = NAN;
+      errno = saved_errno;
     }
   else
     {

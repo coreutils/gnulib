@@ -19,7 +19,12 @@ Note that the gnulib replacement code is functional but not atomic.
 @item
 The @code{F_DUPFD} action of this function does not reject
 out-of-range targets properly on some platforms:
-Cygwin 1.5.x.
+Cygwin 1.5.x, Haiku.
+
+@item
+The @code{F_DUPFD} action of this function mistakenly clears
+FD_CLOEXEC on the source descriptor on some platforms:
+Haiku.
 
 @item
 This function is missing on some platforms:

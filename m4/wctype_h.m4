@@ -1,8 +1,8 @@
-# wctype_h.m4 serial 10
+# wctype_h.m4 serial 12
 
 dnl A placeholder for ISO C99 <wctype.h>, for platforms that lack it.
 
-dnl Copyright (C) 2006-2010 Free Software Foundation, Inc.
+dnl Copyright (C) 2006-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -36,7 +36,6 @@ AC_DEFUN([gl_WCTYPE_H],
   AC_SUBST([HAVE_ISWBLANK])
   AC_SUBST([REPLACE_ISWBLANK])
 
-  AC_CHECK_HEADERS_ONCE([wctype.h])
   AC_REQUIRE([AC_C_INLINE])
 
   AC_REQUIRE([gt_TYPE_WINT_T])
@@ -47,6 +46,7 @@ AC_DEFUN([gl_WCTYPE_H],
   fi
   AC_SUBST([HAVE_WINT_T])
 
+  gl_CHECK_NEXT_HEADERS([wctype.h])
   if test $ac_cv_header_wctype_h = yes; then
     if test $ac_cv_func_iswcntrl = yes; then
       dnl Linux libc5 has an iswprint function that returns 0 for all arguments.
@@ -75,7 +75,6 @@ AC_DEFUN([gl_WCTYPE_H],
             ])
         ])
     fi
-    gl_CHECK_NEXT_HEADERS([wctype.h])
     HAVE_WCTYPE_H=1
   else
     HAVE_WCTYPE_H=0

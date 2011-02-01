@@ -1,5 +1,5 @@
-# stdarg.m4 serial 4
-dnl Copyright (C) 2006, 2008-2010 Free Software Foundation, Inc.
+# stdarg.m4 serial 5
+dnl Copyright (C) 2006, 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -41,7 +41,7 @@ void (*func) (va_list, va_list) = va_copy;
     if test $gl_aixcc = yes; then
       dnl Provide a substitute <stdarg.h> file.
       STDARG_H=stdarg.h
-      gl_CHECK_NEXT_HEADERS([stdarg.h])
+      gl_NEXT_HEADERS([stdarg.h])
       dnl Fallback for the case when <stdarg.h> contains only macro definitions.
       if test "$gl_cv_next_stdarg_h" = '""'; then
         gl_cv_next_stdarg_h='"///usr/include/stdarg.h"'

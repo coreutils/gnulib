@@ -1,6 +1,6 @@
 /* A GNU-like <stdio.h>.
 
-   Copyright (C) 2004, 2007-2010 Free Software Foundation, Inc.
+   Copyright (C) 2004, 2007-2011 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -52,7 +52,8 @@
 
 #include <stddef.h>
 
-/* Get off_t and ssize_t.  Needed on many systems, including glibc 2.8.  */
+/* Get off_t and ssize_t.  Needed on many systems, including glibc 2.8
+   and eglibc 2.11.2.  */
 #include <sys/types.h>
 
 #ifndef __attribute__

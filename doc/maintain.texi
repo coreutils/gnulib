@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate December 9, 2010
+@set lastupdate January 20, 2011
 @c %**end of header
 
 @dircategory GNU organization
@@ -23,8 +23,8 @@
 Information for maintainers of GNU software, last updated @value{lastupdate}.
 
 Copyright @copyright{} 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999,
-2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010 Free Software
-Foundation, Inc.
+2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009,
+2010, 2011 Free Software Foundation, Inc.
 
 @quotation
 Permission is granted to copy, distribute and/or modify this document
@@ -288,7 +288,7 @@ this:
 
 @quotation
 Would you be willing to assign the copyright to the Free Software
-Foundation, so that we could install it in @var{program}?
+Foundation, so that we could install it in @var{package}?
 @end quotation
 
 @noindent
@@ -296,7 +296,7 @@ or
 
 @quotation
 Would you be willing to sign a copyright disclaimer to put this change
-in the public domain, so that we can install it in @var{program}?
+in the public domain, so that we can install it in @var{package}?
 @end quotation
 
 If the contributor then wants more information, you can send per the file
@@ -362,7 +362,7 @@ changes to a manual, you can use @file{assign.future.manual}.
 For a translation of a manual, use @file{assign.translation.manual}.
 
 For translations of program strings (as used by GNU Gettext, for
-example; @pxref{Internationalization,,,standards,GNU Coding
+example; @pxref{Internationalization,,, standards, GNU Coding
 Standards}), use @file{disclaim.translation}.  If you make use of the
 Translation Project (@url{http://translationproject.org}) facilities,
 please check with the TP coordinators that they have sent the
@@ -682,15 +682,71 @@ any files distributed under the Lesser GPL, it should contain a full
 copy of its plain text version also (conventionally in a file named
 @file{COPYING.LESSER}).
 
-If you have questions about license issues for your GNU package,
+If you have questions about licensing issues for your GNU package,
 please write @email{licensing@@gnu.org}.
 
 @menu
-* Source: Canonical License Sources.
-* Code: License Notices for Code.
+* Which:         Licensing of GNU Packages.
+* Canonical:     Canonical License Sources.
+* Code:          License Notices for Code.
 * Documentation: License Notices for Documentation.
-* Other: License Notices for Other Files.
+* Other:         License Notices for Other Files.
 @end menu
+
+
+@node Licensing of GNU Packages
+@subsection Licensing of GNU Packages
+
+Normally, GNU packages should use the latest version of the GNU GPL,
+with the ``or any later version'' formulation.  @xref{License Notices
+for Code}, for the exact wording of the license notice.
+
+Occasionally, a GNU library may provide functionality which is already
+widely available to proprietary programs through alternative
+implementations; for example, the GNU C Library.  In such cases, the
+Lesser GPL should be used (again, for the notice wording,
+@pxref{License Notices for Code}).  If a GNU library provides unique
+functionality, however, the GNU GPL should be used.
+@url{http://www.gnu.org/licenses/why-not-lgpl.html} discusses this
+strategic choice.
+
+Some of these libraries need to work with programs released under
+GPLv2-only; that is, which allow the GNU GPL version 2 but not later
+versions.  In this case, the GNU package should be released under a
+dual license: GNU GPL version 2 (or any later version) and the GNU
+Lesser GPL version 3 (or any later version).  Here is the notice for
+that case:
+
+@smallexample
+This file is part of GNU @var{package}.
+
+GNU @var{package} is free software: you can redistribute it and/or
+modify it under the terms of either:
+
+  * the GNU Lesser General Public License as published by the Free
+    Software Foundation; either version 3 of the License, or (at your
+    option) any later version.
+
+or
+
+  * the GNU General Public License as published by the Free
+    Software Foundation; either version 2 of the License, or (at your
+    option) any later version.
+
+or both in parallel, as here.
+
+GNU @var{package} is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
+
+You should have received copies of the GNU General Public License and
+the GNU Lesser General Public License along with this program.  If
+not, see @url{http://www.gnu.org/licenses/}.
+@end smallexample
+
+For small packages, you can use ``This program'' instead of ``GNU
+@var{package}''.
 
 
 @node Canonical License Sources
@@ -713,7 +769,7 @@ can access via anonymous Git or CVS.  See
 The official Texinfo sources for the licenses are also available in
 those same places, so you can include them in your documentation.  A
 GFDL-covered manual should include the GFDL in this way.  @xref{GNU
-Sample Texts,,,texinfo,Texinfo}, for a full example in a Texinfo
+Sample Texts,,, texinfo, Texinfo}, for a full example in a Texinfo
 manual.
 
 
@@ -724,14 +780,14 @@ Typically the license notice for program files (including build scripts,
 configure files and makefiles) should cite the GPL, like this:
 
 @quotation
-This file is part of GNU @var{program}.
+This file is part of GNU @var{package}.
 
-GNU @var{program} is free software: you can redistribute it and/or
+GNU @var{package} is free software: you can redistribute it and/or
 modify it under the terms of the GNU General Public License as
 published by the Free Software Foundation, either version 3 of the
 License, or (at your option) any later version.
 
-GNU @var{program} is distributed in the hope that it will be useful,
+GNU @var{package} is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
@@ -757,6 +813,12 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see @url{http://www.gnu.org/licenses/}.
 @end quotation
+
+In either case, for those few packages which use the Lesser GPL
+(@pxref{Licensing of GNU Packages}), insert the word ``Lesser'' before
+``General'' in @emph{all three} places.
+@url{http://@/www.gnu.org/@/licenses/@/gpl-howto.html} discusses application
+the GPL in more detail.
 
 
 @node License Notices for Documentation
@@ -791,7 +853,7 @@ manual.  If there are none, then say ``with no Invariant Sections''.
 If your manual is not published by the FSF, and under 400 pages, you
 can omit both cover texts.
 
-@xref{GNU Sample Texts,,,texinfo,Texinfo}, for a full example in a
+@xref{GNU Sample Texts,,, texinfo, Texinfo}, for a full example in a
 Texinfo manual, and see
 @url{http://www.gnu.org/licenses/fdl-howto.html} for more advice about
 how to use the GNU FDL.
@@ -984,7 +1046,7 @@ have them.
 Once a program is in use, you will get bug reports for it.  Most GNU
 programs have their own special lists for sending bug reports.  The
 advertised bug-reporting email address should always be
-@samp{bug-@var{program}@@gnu.org}, to help show users that the program
+@samp{bug-@var{package}@@gnu.org}, to help show users that the program
 is a GNU package, but it is ok to set up that list to forward to another
 site if you prefer.  The package distribution should state the
 name of the bug-reporting list in a prominent place, and ask users to
@@ -998,14 +1060,14 @@ move away from using @email{bug-gnu-utils}.
 
 @cindex help for users, mailing list for
 Some GNU programs with many users have another mailing list,
-@samp{help-@var{program}.org}, for people to ask other users for help.
+@samp{help-@var{package}.org}, for people to ask other users for help.
 If your program has many users, you should create such a list for it.
 For a fairly new program, which doesn't have a large user base yet, it
 is better not to bother with this.
 
 @cindex announcements, mailing list for
 If you wish, you can also have a mailing list
-@samp{info-@var{program}} for announcements (@pxref{Announcements}),
+@samp{info-@var{package}} for announcements (@pxref{Announcements}),
 and any others you find useful.
 
 
@@ -1337,14 +1399,15 @@ maintain the web pages at @url{http://www.gnu.org} for your project
 
 @item
 In the @samp{My Account Conf} page on @code{savannah}, upload the GPG
-key you will use to sign your packages.
+key you will use to sign your packages.  If you haven't created one
+before, you can do so with the command @code{gpg --gen-key} (you can
+accept all the default answers to its questions).
 
-You can create a key with the command @code{gpg --gen-key}.  It is
-good to also send your key to the GPG public key server: @code{gpg
---keyserver keys.gnupg.net --send-keys @var{keyid}}, where @var{keyid}
-is the eight hex digits reported by @code{gpg --list-public-keys} on
-the @code{pub} line before the date.  For full information about GPG,
-see @url{http://www.gnu.org/software/gpg}.
+Optional but recommended: Send your key to a GPG public key server:
+@code{gpg --keyserver keys.gnupg.net --send-keys @var{keyid}}, where
+@var{keyid} is the eight hex digits reported by @code{gpg
+--list-public-keys} on the @code{pub} line before the date.  For full
+information about GPG, see @url{http://www.gnu.org/software/gpg}.
 
 @item
 Compose a message with the following items in some @var{msgfile}.
@@ -1358,7 +1421,7 @@ Name of package(s) that you are the maintainer for, and your
 preferred email address.
 
 @item
-An ASCII armored copy of your GnuPG key, as an attachment.  (@samp{gpg
+An ASCII armored copy of your GPG key, as an attachment.  (@samp{gpg
 --export -a @var{your_key_id} >mykey.asc} should give you this.)
 
 @item
@@ -1367,7 +1430,7 @@ authorize to make releases for which packages, if any (in the case that you
 don't make all releases yourself).
 
 @item
-ASCII armored copies of GnuPG keys for any individuals listed in (3).
+ASCII armored copies of GPG keys for any individuals listed in (3).
 @end enumerate
 @end enumerate
 
@@ -1627,7 +1690,7 @@ on the GNU Planet web page.
 
 @cindex announcement mailing list, project-specific
 You can maintain your own mailing list (typically
-@email{info-@var{program}@@gnu.org}) for announcements as well if you
+@email{info-@var{package}@@gnu.org}) for announcements as well if you
 like.  For your own list, of course you decide as you see fit what
 events are worth announcing.  (@xref{Mail}, for setting this up, and
 more suggestions on handling mail for your package.)
@@ -1653,7 +1716,7 @@ useful to mention the mirror list at
 redirect to a nearby mirror.
 
 @item
-The NEWS (@pxref{NEWS File,,, standards, GNU Coding Standards}) for
+The @t{NEWS} (@pxref{NEWS File,,, standards, GNU Coding Standards}) for
 the present release.
 @end itemize
 

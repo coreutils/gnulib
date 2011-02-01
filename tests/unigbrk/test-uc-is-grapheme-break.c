@@ -1,5 +1,5 @@
 /* Grapheme cluster break function test.
-   Copyright (C) 2010 Free Software Foundation, Inc.
+   Copyright (C) 2010-2011 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify it
    under the terms of the GNU Lesser General Public License as published
@@ -97,12 +97,12 @@ main (int argc, char *argv[])
           ucs4_t next;
 
           p += strspn (p, " \t\r\n");
-          if (!strncmp (p, "\xc3\xb7" /* ÷ */, 2))
+          if (!strncmp (p, "\303\267" /* ÷ */, 2))
             {
               should_break = true;
               p += 2;
             }
-          else if (!strncmp (p, "\xc3\x97" /* × */, 2))
+          else if (!strncmp (p, "\303\227" /* × */, 2))
             {
               should_break = false;
               p += 2;
@@ -110,7 +110,7 @@ main (int argc, char *argv[])
           else
             {
               fprintf (stderr, "%s:%d.%d: syntax error expecting `÷' or `÷'\n",
-                       filename, lineno, p - line + 1);
+                       filename, lineno, (int) (p - line + 1));
               exit (1);
             }
 
@@ -126,7 +126,7 @@ main (int argc, char *argv[])
                 {
                   fprintf (stderr, "%s:%d.%d: syntax error at `%s' expecting "
                            "hexadecimal Unicode code point number\n",
-                           filename, lineno, p - line + 1, p);
+                           filename, lineno, (int) (p - line + 1), p);
                   exit (1);
                 }
               p += n;
@@ -134,7 +134,7 @@ main (int argc, char *argv[])
               next = next_int;
             }
 
-          if (uc_is_grapheme_cluster_break (prev, next) != should_break)
+          if (uc_is_grapheme_break (prev, next) != should_break)
             {
               int prev_gbp = uc_graphemeclusterbreak_property (prev);
               int next_gbp = uc_graphemeclusterbreak_property (next);

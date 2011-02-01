@@ -1,0 +1,28 @@
+Description:
+Find grapheme cluster breaks in UTF-32 string.
+
+Files:
+lib/unigbrk/u32-grapheme-breaks.c
+tests/macros.h
+
+Depends-on:
+unigbrk/uc-is-grapheme-break
+unistr/u32-mbtouc
+
+configure.ac:
+gl_MODULE_INDICATOR([unigbrk/u32-grapheme-breaks])
+gl_LIBUNISTRING_MODULE([0.9.4], [unigbrk/u32-grapheme-breaks])
+
+Makefile.am:
+if LIBUNISTRING_COMPILE_UNIGBRK_U32_GRAPHEME_BREAKS
+lib_SOURCES += unigbrk/u32-grapheme-breaks.c
+endif
+
+Include:
+"unigbrk.h"
+
+License:
+LGPL
+
+Maintainer:
+Ben Pfaff, Bruno Haible

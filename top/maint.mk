@@ -2,7 +2,7 @@
 # This Makefile fragment tries to be general-purpose enough to be
 # used by many projects via the gnulib maintainer-makefile module.
 
-## Copyright (C) 2001-2010 Free Software Foundation, Inc.
+## Copyright (C) 2001-2011 Free Software Foundation, Inc.
 ##
 ## This program is free software: you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -292,10 +292,10 @@ sc_prohibit_atoi_atof:
 
 # Use STREQ rather than comparing strcmp == 0, or != 0.
 sc_prohibit_strcmp:
-	@grep -nE '! *str''cmp *\(|\<str''cmp *\([^)]+\) *=='		\
+	@grep -nE '! *str''cmp *\(|\<str''cmp *\(.+\) *[!=]='	\
 	    $$($(VC_LIST_EXCEPT))					\
-	  | grep -vE ':# *define STREQ\(' &&				\
-	  { echo '$(ME): use STREQ in place of the above uses of str''cmp' \
+	  | grep -vE ':# *define STRN?EQ\(' &&				\
+	  { echo '$(ME): replace str''cmp calls above with STREQ/STRNEQ' \
 		1>&2; exit 1; } || :
 
 # Pass EXIT_*, not number, to usage, exit, and error (when exiting)
@@ -569,6 +569,13 @@ _intprops_syms_re = $(subst $(_sp),|,$(strip $(_intprops_names)))
 sc_prohibit_intprops_without_use:
 	@h='"intprops.h"'						\
 	re='\<($(_intprops_syms_re)) *\('				\
+	  $(_sc_header_without_use)
+
+_stddef_syms_re = NULL|offsetof|ptrdiff_t|size_t|wchar_t
+# Prohibit the inclusion of stddef.h without an actual use.
+sc_prohibit_stddef_without_use:
+	@h='<stddef.h>'							\
+	re='\<($(_stddef_syms_re)) *\('					\
 	  $(_sc_header_without_use)
 
 sc_obsolete_symbols:
@@ -1118,9 +1125,34 @@ no-submodule-changes:
 	  : ;								\
 	fi
 
+submodule-checks ?= no-submodule-changes public-submodule-commit
+
+# Ensure that each sub-module commit we're using is public.
+# Without this, it is too easy to tag and release code that
+# cannot be built from a fresh clone.
+.PHONY: public-submodule-commit
+public-submodule-commit:
+	$(AM_V_GEN)if test -d $(srcdir)/.git; then			\
+	  cd $(srcdir) &&						\
+	  git submodule --quiet foreach test '$$(git rev-parse $$sha1)'	\
+	      = '$$(git merge-base origin $$sha1)'			\
+	    || { echo '$(ME): found non-public submodule commit' >&2;	\
+		 exit 1; };						\
+	else								\
+	  : ;								\
+	fi
+# This rule has a high enough utility/cost ratio that it should be a
+# dependent of "check" by default.  However, some of us do occasionally
+# commit a temporary change that deliberately points to a non-public
+# submodule commit, and want to be able to use rules like "make check".
+# In that case, run e.g., "make check gl_public_submodule_commit="
+# to disable this test.
+gl_public_submodule_commit ?= public-submodule-commit
+check: $(gl_public_submodule_commit)
+
 .PHONY: alpha beta stable
 ALL_RECURSIVE_TARGETS += alpha beta stable
-alpha beta stable: $(local-check) writable-files no-submodule-changes
+alpha beta stable: $(local-check) writable-files $(submodule-checks)
 	test $@ = stable						\
 	  && { echo $(VERSION) | grep -E '^[0-9]+(\.[0-9]+)+$$'		\
 	       || { echo "invalid version string: $(VERSION)" 1>&2; exit 1;};}\

@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Test the Unicode character mapping functions.
-   Copyright (C) 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2009 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-/* Generated automatically by gen-case.c for Unicode 5.1.0.  */
+/* Generated automatically by gen-case.c for Unicode 6.0.0.  */
 
 #include "test-mapping-part1.h"
 
@@ -443,6 +443,8 @@
     { 0x051E, 0x051F },
     { 0x0520, 0x0521 },
     { 0x0522, 0x0523 },
+    { 0x0524, 0x0525 },
+    { 0x0526, 0x0527 },
     { 0x0531, 0x0561 },
     { 0x0532, 0x0562 },
     { 0x0533, 0x0563 },
@@ -843,8 +845,11 @@
     { 0x2C6D, 0x0251 },
     { 0x2C6E, 0x0271 },
     { 0x2C6F, 0x0250 },
+    { 0x2C70, 0x0252 },
     { 0x2C72, 0x2C73 },
     { 0x2C75, 0x2C76 },
+    { 0x2C7E, 0x023F },
+    { 0x2C7F, 0x0240 },
     { 0x2C80, 0x2C81 },
     { 0x2C82, 0x2C83 },
     { 0x2C84, 0x2C85 },
@@ -895,6 +900,8 @@
     { 0x2CDE, 0x2CDF },
     { 0x2CE0, 0x2CE1 },
     { 0x2CE2, 0x2CE3 },
+    { 0x2CEB, 0x2CEC },
+    { 0x2CED, 0x2CEE },
     { 0xA640, 0xA641 },
     { 0xA642, 0xA643 },
     { 0xA644, 0xA645 },
@@ -911,6 +918,7 @@
     { 0xA65A, 0xA65B },
     { 0xA65C, 0xA65D },
     { 0xA65E, 0xA65F },
+    { 0xA660, 0xA661 },
     { 0xA662, 0xA663 },
     { 0xA664, 0xA665 },
     { 0xA666, 0xA667 },
@@ -976,6 +984,13 @@
     { 0xA784, 0xA785 },
     { 0xA786, 0xA787 },
     { 0xA78B, 0xA78C },
+    { 0xA78D, 0x0265 },
+    { 0xA790, 0xA791 },
+    { 0xA7A0, 0xA7A1 },
+    { 0xA7A2, 0xA7A3 },
+    { 0xA7A4, 0xA7A5 },
+    { 0xA7A6, 0xA7A7 },
+    { 0xA7A8, 0xA7A9 },
     { 0xFF21, 0xFF41 },
     { 0xFF22, 0xFF42 },
     { 0xFF23, 0xFF43 },

@@ -1,5 +1,5 @@
 /* Grapheme cluster break property function.
-   Copyright (C) 2010 Free Software Foundation, Inc.
+   Copyright (C) 2010-2011 Free Software Foundation, Inc.
    Written by Ben Pfaff <blp@cs.stanford.edu>, 2010.
 
    This program is free software: you can redistribute it and/or modify it
@@ -32,7 +32,7 @@ uc_graphemeclusterbreak_property (ucs4_t uc)
       if (lookup1 >= 0)
         {
           unsigned int index2 = (uc >> gbrkprop_header_2) & gbrkprop_header_3;
-          int lookup2 = unigbrkprop.level2[lookup1 + index2] / 2;
+          int lookup2 = unigbrkprop.level2[lookup1 + index2];
           if (lookup2 >= 0)
             {
               unsigned int index3 = uc & gbrkprop_header_4;

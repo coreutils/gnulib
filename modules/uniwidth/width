@@ -10,7 +10,7 @@ uniwidth/base
 streq
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([0.9], [uniwidth/width])
+gl_LIBUNISTRING_MODULE([0.9.4], [uniwidth/width])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNIWIDTH_WIDTH

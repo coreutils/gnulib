@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-ctype.c for Unicode 5.1.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 6.0.0.  */
 #define header_0 16
 #define header_2 9
 #define header_3 127
@@ -11,7 +11,7 @@ struct
     int header[1];
     int level1[3];
     short level2[2 << 7];
-    /*unsigned*/ int level3[8 << 4];
+    /*unsigned*/ int level3[9 << 4];
   }
 u_property_ideographic =
 {
@@ -234,15 +234,15 @@ u_property_ideographic =
         4 +   256 * sizeof (short) / sizeof (int) +    16,
         4 +   256 * sizeof (short) / sizeof (int) +    16,
         4 +   256 * sizeof (short) / sizeof (int) +    96,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
+        4 +   256 * sizeof (short) / sizeof (int) +    16,
+        4 +   256 * sizeof (short) / sizeof (int) +    16,
+        4 +   256 * sizeof (short) / sizeof (int) +    16,
+        4 +   256 * sizeof (short) / sizeof (int) +    16,
+        4 +   256 * sizeof (short) / sizeof (int) +    16,
+        4 +   256 * sizeof (short) / sizeof (int) +    16,
+        4 +   256 * sizeof (short) / sizeof (int) +    16,
+        4 +   256 * sizeof (short) / sizeof (int) +   112,
+        4 +   256 * sizeof (short) / sizeof (int) +   128,
        -1,
        -1,
        -1,
@@ -275,7 +275,7 @@ u_property_ideographic =
        -1,
        -1,
         4 +   256 * sizeof (short) / sizeof (int) +    16,
-        4 +   256 * sizeof (short) / sizeof (int) +   112,
+        4 +   256 * sizeof (short) / sizeof (int) +   128,
        -1,
        -1
   },
@@ -295,19 +295,23 @@ u_property_ideographic =
     0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
     0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
     0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
-    0xFFFFFFFF, 0xFFFFFFFF, 0x0000000F, 0x00000000,
+    0xFFFFFFFF, 0xFFFFFFFF, 0x00000FFF, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
     0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
-    0xFFFFFFFF, 0xFFFF3FFF, 0xFFFFFFFF, 0xFFFF07FF,
+    0xFFFFFFFF, 0xFFFF3FFF, 0xFFFFFFFF, 0xFFFF3FFF,
     0xFFFFFFFF, 0xFFFFFFFF, 0x03FFFFFF, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
     0xFFFFFFFF, 0xFFFFFFFF, 0x007FFFFF, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
+    0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
+    0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
+    0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
+    0xFFFFFFFF, 0x001FFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
+    0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
     0x3FFFFFFF, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,

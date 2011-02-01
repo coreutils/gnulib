@@ -1,6 +1,6 @@
 /* strerror_r.c --- POSIX compatible system error routine
 
-   Copyright (C) 2010 Free Software Foundation, Inc.
+   Copyright (C) 2010-2011 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -98,7 +98,7 @@ strerror_r (int errnum, char *buf, size_t buflen)
   extern int __xpg_strerror_r (int errnum, char *buf, size_t buflen);
 
   int ret = __xpg_strerror_r (errnum, buf, buflen);
-  return (ret < 0 ? errno : 0);
+  return (ret < 0 ? errno : ret);
 }
 
 #else /* (__GLIBC__ >= 2 || defined __UCLIBC__ ? !HAVE___XPG_STRERROR_R : !HAVE_DECL_STRERROR_R) || EXTEND_STRERROR_R */

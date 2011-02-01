@@ -1,5 +1,5 @@
-# errno_h.m4 serial 7
-dnl Copyright (C) 2004, 2006, 2008-2010 Free Software Foundation, Inc.
+# errno_h.m4 serial 8
+dnl Copyright (C) 2004, 2006, 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -50,7 +50,7 @@ booboo
   if test $gl_cv_header_errno_h_complete = yes; then
     ERRNO_H=''
   else
-    gl_CHECK_NEXT_HEADERS([errno.h])
+    gl_NEXT_HEADERS([errno.h])
     ERRNO_H='errno.h'
   fi
   AC_SUBST([ERRNO_H])

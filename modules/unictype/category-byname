@@ -46,7 +46,7 @@ unictype/category-Zs
 unictype/category-none
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([0.9], [unictype/category-byname])
+gl_LIBUNISTRING_MODULE([0.9.4], [unictype/category-byname])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICTYPE_CATEGORY_BYNAME

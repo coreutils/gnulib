@@ -1,5 +1,5 @@
-# spawn_h.m4 serial 11
-dnl Copyright (C) 2008-2010 Free Software Foundation, Inc.
+# spawn_h.m4 serial 12
+dnl Copyright (C) 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -15,7 +15,6 @@ AC_DEFUN([gl_SPAWN_H],
   dnl <spawn.h> is always overridden, because of GNULIB_POSIXCHECK.
   gl_CHECK_NEXT_HEADERS([spawn.h])
 
-  AC_CHECK_HEADERS_ONCE([spawn.h])
   if test $ac_cv_header_spawn_h = yes; then
     HAVE_SPAWN_H=1
     AC_CHECK_TYPES([posix_spawnattr_t], [], [HAVE_POSIX_SPAWNATTR_T=0], [[

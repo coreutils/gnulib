@@ -14,7 +14,7 @@ localcharset
 amemxfrm
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([0.9.1], [unicase/u32-casexfrm])
+gl_LIBUNISTRING_MODULE([0.9.4], [unicase/u32-casexfrm])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICASE_U32_CASEXFRM

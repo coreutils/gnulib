@@ -12,6 +12,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2011-01-18  multiarch       This no longer #defines AA_APPLE_UNIVERSAL_BUILD;
+                            instead, use the shell var APPLE_UNIVERSAL_BUILD.
+
 2010-12-10  pipe            This module is renamed to spawn-pipe. The include
                             file is renamed to "spawn-pipe.h".
 

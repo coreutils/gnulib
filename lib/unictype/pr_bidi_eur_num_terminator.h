@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-ctype.c for Unicode 5.1.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 6.0.0.  */
 #define header_0 16
 #define header_2 9
 #define header_3 127
@@ -11,7 +11,7 @@ struct
     int header[1];
     int level1[1];
     short level2[1 << 7];
-    /*unsigned*/ int level3[9 << 4];
+    /*unsigned*/ int level3[10 << 4];
   }
 u_property_bidi_eur_num_terminator =
 {
@@ -102,6 +102,7 @@ u_property_bidi_eur_num_terminator =
        -1,
        -1,
        -1,
+        2 +   128 * sizeof (short) / sizeof (int) +   128,
        -1,
        -1,
        -1,
@@ -144,8 +145,7 @@ u_property_bidi_eur_num_terminator =
        -1,
        -1,
        -1,
-       -1,
-        2 +   128 * sizeof (short) / sizeof (int) +   128
+        2 +   128 * sizeof (short) / sizeof (int) +   144
   },
   {
     0x00000000, 0x00000038, 0x00000000, 0x00000000,
@@ -159,7 +159,7 @@ u_property_bidi_eur_num_terminator =
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x000C0000,
+    0x00000000, 0x00000000, 0x00000000, 0x080C0000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00020000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
@@ -173,10 +173,14 @@ u_property_bidi_eur_num_terminator =
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x08000000, 0x00000000,
     0x00000000, 0x001F0000, 0x00000000, 0x00000000,
-    0x00000000, 0x003FFFFF, 0x00000000, 0x00000000,
+    0x00000000, 0x03FFFFFF, 0x00000000, 0x00000000,
     0x00000000, 0x00004000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00080000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x03000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,

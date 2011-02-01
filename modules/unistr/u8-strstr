@@ -9,9 +9,10 @@ Depends-on:
 unistr/base
 unistr/u8-strchr
 unistr/u8-strmbtouc
+strstr
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([0.9], [unistr/u8-strstr])
+gl_LIBUNISTRING_MODULE([0.9.4], [unistr/u8-strstr])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNISTR_U8_STRSTR

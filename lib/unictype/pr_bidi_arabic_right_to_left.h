@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-ctype.c for Unicode 5.1.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 6.0.0.  */
 #define header_0 16
 #define header_2 9
 #define header_3 127
@@ -148,7 +148,7 @@ u_property_bidi_arabic_right_to_left =
         2 +   128 * sizeof (short) / sizeof (int) +    64
   },
   {
-    0xF8002930, 0xFFFFFFFF, 0x800007FF, 0xFFFEE000,
+    0xF8002930, 0xFFFFFFFF, 0x000007FF, 0xFFFEE000,
     0xFFFFFFFF, 0xFFFFFFFF, 0x003FFFFF, 0xFC00C060,
     0xFFFD7FFF, 0x0000FFFF, 0xFFFFF800, 0xFFFFFFFF,
     0xFFFFFFFF, 0xFFFE003F, 0x00000000, 0x00000000,

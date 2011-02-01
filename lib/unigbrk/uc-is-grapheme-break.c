@@ -1,5 +1,5 @@
 /* Grapheme cluster break function.
-   Copyright (C) 2010 Free Software Foundation, Inc.
+   Copyright (C) 2010-2011 Free Software Foundation, Inc.
    Written by Ben Pfaff <blp@cs.stanford.edu>, 2010.
 
    This program is free software: you can redistribute it and/or modify it
@@ -90,7 +90,7 @@ static const unsigned short int gb_table[12] =
   };
 
 bool
-uc_is_grapheme_cluster_break (ucs4_t a, ucs4_t b)
+uc_is_grapheme_break (ucs4_t a, ucs4_t b)
 {
   int a_gcp, b_gcp;
 

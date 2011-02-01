@@ -1,5 +1,5 @@
 /* Test of safe automatic memory allocation.
-   Copyright (C) 2005, 2007, 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2005, 2007, 2009-2011 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -36,6 +36,9 @@ int
 main ()
 {
   int i;
+
+  /* This slows down malloc a lot.  */
+  unsetenv ("MALLOC_PERTURB_");
 
   /* Repeat a lot of times, to make sure there's no memory leak.  */
   for (i = 0; i < 50000; i++)

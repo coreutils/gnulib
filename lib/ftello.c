@@ -1,5 +1,5 @@
 /* An ftello() function that works around platform bugs.
-   Copyright (C) 2007, 2009-2010 Free Software Foundation, Inc.
+   Copyright (C) 2007, 2009-2011 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -50,7 +50,7 @@ ftello (FILE *fp)
       ftello (fp);
 
       /* Compute the file position ourselves.  */
-      pos = llseek (fileno (fp), (off_t) 0, SEEK_CUR);
+      pos = lseek (fileno (fp), (off_t) 0, SEEK_CUR);
       if (pos >= 0)
         {
           if ((fp_->_flag & _IONBF) == 0 && fp_->_base != NULL)

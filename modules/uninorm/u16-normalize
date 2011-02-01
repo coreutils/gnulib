@@ -16,7 +16,7 @@ uninorm/decompose-internal
 
 configure.ac:
 gl_MODULE_INDICATOR_FOR_TESTS([uninorm/u16-normalize])
-gl_LIBUNISTRING_MODULE([0.9], [uninorm/u16-normalize])
+gl_LIBUNISTRING_MODULE([0.9.4], [uninorm/u16-normalize])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNINORM_U16_NORMALIZE

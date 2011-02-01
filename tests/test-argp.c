@@ -1,5 +1,5 @@
 /* Test suite for argp.
-   Copyright (C) 2006-2007, 2009-2010 Free Software Foundation, Inc.
+   Copyright (C) 2006-2007, 2009-2011 Free Software Foundation, Inc.
    This file is part of the GNUlib Library.
 
    This program is free software: you can redistribute it and/or modify
@@ -21,9 +21,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#if HAVE_STRING_H
-# include <string.h>
-#endif
+#include <string.h>
 #if HAVE_STRINGS_H
 # include <strings.h>
 #endif

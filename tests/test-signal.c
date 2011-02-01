@@ -1,5 +1,5 @@
 /* Test of <signal.h> substitute.
-   Copyright (C) 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2009-2011 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -59,7 +59,8 @@ main (void)
 #ifdef SIGALRM
     case SIGALRM:
 #endif
-#ifdef SIGBUS
+      /* On Haiku, SIGBUS is mistakenly equal to SIGSEGV.  */
+#if defined SIGBUS && SIGBUS != SIGSEGV
     case SIGBUS:
 #endif
 #ifdef SIGCHLD

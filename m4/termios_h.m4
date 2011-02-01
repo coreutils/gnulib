@@ -1,5 +1,5 @@
-# termios_h.m4 serial 2
-dnl Copyright (C) 2010 Free Software Foundation, Inc.
+# termios_h.m4 serial 3
+dnl Copyright (C) 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -11,8 +11,6 @@ AC_DEFUN([gl_TERMIOS_H],
   AC_REQUIRE([gl_TERMIOS_H_DEFAULTS])
 
   gl_CHECK_NEXT_HEADERS([termios.h])
-
-  AC_CHECK_HEADERS_ONCE([termios.h])
   if test $ac_cv_header_termios_h != yes; then
     HAVE_TERMIOS_H=0
   fi

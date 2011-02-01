@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-ctype.c for Unicode 5.1.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 6.0.0.  */
 #define header_0 16
 #define header_2 9
 #define header_3 127
@@ -289,7 +289,7 @@ u_property_other_math =
     0x00000000, 0x00000000, 0x00270000, 0x00330000,
     0x00400000, 0x001C0000, 0x00000001, 0x6000001E,
     0x00006000, 0x00000000, 0x1FFF0000, 0x0000F862,
-    0x3E2FFC04, 0xF1FBB310, 0x000003E0, 0x00000000,
+    0x3E2FFC84, 0xF1FBB310, 0x000003E0, 0x00000000,
     0xF3E00000, 0xF0C33EB6, 0x2FEB3FFF, 0x00000030,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,

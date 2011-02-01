@@ -1,5 +1,5 @@
-# ansi-c++.m4 serial 6
-dnl Copyright (C) 2002-2003, 2005, 2010 Free Software Foundation, Inc.
+# ansi-c++.m4 serial 7
+dnl Copyright (C) 2002-2003, 2005, 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -116,9 +116,13 @@ EOF
 
   AM_CONDITIONAL([$2], [test "$$1" != ":"])
 
-  dnl This macro invocation resolves an automake error:
-  dnl /usr/local/share/automake-1.11/am/depend2.am: am__fastdepCXX does not appear in AM_CONDITIONAL
-  dnl /usr/local/share/automake-1.11/am/depend2.am:   The usual way to define `am__fastdepCXX' is to add `AC_PROG_CXX'
-  dnl /usr/local/share/automake-1.11/am/depend2.am:   to `configure.ac' and run `aclocal' and `autoconf' again.
-  _AM_DEPENDENCIES([CXX])
+  if test "$$1" != ":"; then
+    dnl This macro invocation resolves an automake error:
+    dnl /usr/local/share/automake-1.11/am/depend2.am: am__fastdepCXX does not appear in AM_CONDITIONAL
+    dnl /usr/local/share/automake-1.11/am/depend2.am:   The usual way to define `am__fastdepCXX' is to add `AC_PROG_CXX'
+    dnl /usr/local/share/automake-1.11/am/depend2.am:   to `configure.ac' and run `aclocal' and `autoconf' again.
+    _AM_DEPENDENCIES([CXX])
+  else
+    AM_CONDITIONAL([am__fastdepCXX], [false])
+  fi
 ])

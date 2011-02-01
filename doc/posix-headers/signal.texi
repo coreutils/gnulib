@@ -39,4 +39,8 @@ mingw.
 The macros @code{SIGRTMIN} and @code{SIGRTMAX} expand to an expression of type
 @code{long} instead of @code{int} on some platforms:
 OSF/1 5.1.
+@item
+The macro @code{SIGBUS} is set to the same value as @code{SIGSEGV},
+rather than being a distinct signal, on some platforms:
+Haiku.
 @end itemize

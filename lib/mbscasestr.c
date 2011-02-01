@@ -1,5 +1,5 @@
 /* Case-insensitive searching in a string.
-   Copyright (C) 2005-2010 Free Software Foundation, Inc.
+   Copyright (C) 2005-2011 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2005.
 
    This program is free software: you can redistribute it and/or modify
@@ -30,6 +30,7 @@
 #define TOLOWER(Ch) (isupper (Ch) ? tolower (Ch) : (Ch))
 
 /* Knuth-Morris-Pratt algorithm.  */
+#define UNIT unsigned char
 #define CANON_ELEMENT(c) TOLOWER (c)
 #include "str-kmp.h"
 
@@ -368,10 +369,12 @@ mbscasestr (const char *haystack, const char *needle)
                   if (needle_last_ccount == NULL)
                     {
                       /* Try the Knuth-Morris-Pratt algorithm.  */
-                      const char *result;
+                      const unsigned char *result;
                       bool success =
-                        knuth_morris_pratt_unibyte (haystack, needle - 1,
-                                                    &result);
+                        knuth_morris_pratt ((const unsigned char *) haystack,
+                                            (const unsigned char *) (needle - 1),
+                                            strlen (needle - 1),
+                                            &result);
                       if (success)
                         return (char *) result;
                       try_kmp = false;

@@ -1,5 +1,5 @@
 /* Tests of remove.
-   Copyright (C) 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2009-2011 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -78,7 +78,7 @@ main (void)
   /* Empty directory.  */
   errno = 0;
   ASSERT (remove (BASE "dir/.//") == -1);
-  ASSERT (errno == EINVAL || errno == EBUSY);
+  ASSERT (errno == EINVAL || errno == EBUSY || errno == EEXIST);
   ASSERT (remove (BASE "dir") == 0);
 
   /* Test symlink behavior.  Specifying trailing slash should remove

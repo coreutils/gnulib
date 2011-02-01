@@ -1,0 +1,26 @@
+Description:
+Convert long double to accurate string.
+
+Files:
+lib/ftoastr.h
+lib/ftoastr.c
+lib/ldtoastr.c
+m4/c-strtod.m4
+
+Depends-on:
+intprops
+
+configure.ac:
+AC_REQUIRE([gl_C99_STRTOLD])
+
+Makefile.am:
+lib_SOURCES += ldtoastr.c
+
+Include:
+"ftoastr.h"
+
+License:
+GPL
+
+Maintainer:
+Paul Eggert

@@ -1,5 +1,5 @@
 /* Test of line breaking of UTF-8 strings.
-   Copyright (C) 2008-2010 Free Software Foundation, Inc.
+   Copyright (C) 2008-2011 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -45,7 +45,7 @@ main ()
           ASSERT (p[i] == (i == 90 ? UC_BREAK_MANDATORY :
                            i == 7
                            || i == 13 || i == 39
-                           || i == 41 || i == 43 || i == 44 || i == 50
+                           || i == 43 || i == 44
                            || i == 61 || i == 67
                            || i == 70 || i == 73 || i == 77 || i == 80
                            || i == 84 || i == 87 ? UC_BREAK_POSSIBLE :
@@ -64,7 +64,7 @@ main ()
           ASSERT (p[i] == (i == 90 ? UC_BREAK_MANDATORY :
                            i == 7
                            || i == 13 || i == 39
-                           || i == 41 || i == 43 || i == 44 || i == 50
+                           || i == 43 || i == 44
                            || i == 52 || i == 61 || i == 67
                            || i == 70 || i == 73 || i == 77 || i == 80
                            || i == 84 || i == 87 ? UC_BREAK_POSSIBLE :
@@ -72,6 +72,21 @@ main ()
         }
       free (p);
     }
+  }
+
+  /* Test that a break is possible after a zero-width space followed by some
+     regular spaces (rule LB8 in Unicode TR#14 revision 26).  */
+  {
+    static const uint8_t input[6] = "x\342\200\213 y";
+    char *p = (char *) malloc (SIZEOF (input));
+    size_t i;
+
+    u8_possible_linebreaks (input, SIZEOF (input), "UTF-8", p);
+    for (i = 0; i < 4; i++)
+      {
+        ASSERT (p[i] == (i == 5 ? UC_BREAK_POSSIBLE : UC_BREAK_PROHIBITED));
+      }
+    free (p);
   }
 
   return 0;

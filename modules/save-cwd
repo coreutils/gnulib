@@ -9,9 +9,10 @@ m4/save-cwd.m4
 Depends-on:
 chdir-long
 cloexec
+getcwd
+fchdir
 stdbool
 unistd-safer
-xgetcwd
 
 configure.ac:
 gl_SAVE_CWD

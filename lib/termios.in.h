@@ -1,5 +1,5 @@
 /* Substitute for and wrapper around <termios.h>.
-   Copyright (C) 2010 Free Software Foundation, Inc.
+   Copyright (C) 2010-2011 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -21,6 +21,17 @@
 @PRAGMA_SYSTEM_HEADER@
 #endif
 @PRAGMA_COLUMNS@
+
+/* On HP-UX 11.00, some of the function declarations in <sys/termio.h>,
+   included by <termios.h>, are not protected by extern "C".  Enforce
+   "C" linkage for these functions nevertheless.  */
+#if defined __hpux && defined __cplusplus
+# include <sys/types.h>
+# include <sys/ioctl.h>
+extern "C" {
+# include <sys/termio.h>
+}
+#endif
 
 /* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_TERMIOS_H@

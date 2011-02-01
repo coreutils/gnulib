@@ -1,6 +1,6 @@
 /* mountlist.c -- return a list of mounted file systems
 
-   Copyright (C) 1991-1992, 1997-2010 Free Software Foundation, Inc.
+   Copyright (C) 1991-1992, 1997-2011 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -110,6 +110,11 @@
 #ifdef MOUNTED_VMOUNT           /* AIX.  */
 # include <fshelp.h>
 # include <sys/vfs.h>
+#endif
+
+#ifdef MOUNTED_INTERIX_STATVFS  /* Interix. */
+# include <sys/statvfs.h>
+# include <dirent.h>
 #endif
 
 #ifdef DOLPHIN
@@ -379,19 +384,20 @@ read_file_system_list (bool need_fs_type)
 
     if (listmntent (&mntlist, KMTAB, NULL, NULL) < 0)
       return NULL;
-    for (p = mntlist; p; p = p->next) {
-      mnt = p->ment;
-      me = xmalloc (sizeof *me);
-      me->me_devname = xstrdup (mnt->mnt_fsname);
-      me->me_mountdir = xstrdup (mnt->mnt_dir);
-      me->me_type = xstrdup (mnt->mnt_type);
-      me->me_type_malloced = 1;
-      me->me_dummy = ME_DUMMY (me->me_devname, me->me_type);
-      me->me_remote = ME_REMOTE (me->me_devname, me->me_type);
-      me->me_dev = -1;
-      *mtail = me;
-      mtail = &me->me_next;
-    }
+    for (p = mntlist; p; p = p->next)
+      {
+        mnt = p->ment;
+        me = xmalloc (sizeof *me);
+        me->me_devname = xstrdup (mnt->mnt_fsname);
+        me->me_mountdir = xstrdup (mnt->mnt_dir);
+        me->me_type = xstrdup (mnt->mnt_type);
+        me->me_type_malloced = 1;
+        me->me_dummy = ME_DUMMY (me->me_devname, me->me_type);
+        me->me_remote = ME_REMOTE (me->me_devname, me->me_type);
+        me->me_dev = -1;
+        *mtail = me;
+        mtail = &me->me_next;
+      }
     freemntlist (mntlist);
   }
 #endif
@@ -589,7 +595,8 @@ read_file_system_list (bool need_fs_type)
               break;
 
           me = xmalloc (sizeof *me);
-          me->me_devname = xstrdup (fi.device_name[0] != '\0' ? fi.device_name : fi.fsh_name);
+          me->me_devname = xstrdup (fi.device_name[0] != '\0'
+                                    ? fi.device_name : fi.fsh_name);
           me->me_mountdir = xstrdup (re != NULL ? re->name : fi.fsh_name);
           me->me_type = xstrdup (fi.fsh_name);
           me->me_type_malloced = 1;
@@ -619,9 +626,9 @@ read_file_system_list (bool need_fs_type)
     size_t bufsize;
     struct statfs *stats;
 
-    numsys = getfsstat ((struct statfs *)0, 0L, MNT_NOWAIT);
+    numsys = getfsstat (NULL, 0L, MNT_NOWAIT);
     if (numsys < 0)
-      return (NULL);
+      return NULL;
     if (SIZE_MAX / sizeof *stats <= numsys)
       xalloc_die ();
 
@@ -632,7 +639,7 @@ read_file_system_list (bool need_fs_type)
     if (numsys < 0)
       {
         free (stats);
-        return (NULL);
+        return NULL;
       }
 
     for (counter = 0; counter < numsys; counter++)
@@ -718,11 +725,11 @@ read_file_system_list (bool need_fs_type)
 #ifdef MOUNTED_GETMNTTBL        /* DolphinOS goes its own way.  */
   {
     struct mntent **mnttbl = getmnttbl (), **ent;
-    for (ent=mnttbl;*ent;ent++)
+    for (ent = mnttbl; *ent; ent++)
       {
         me = xmalloc (sizeof *me);
-        me->me_devname = xstrdup ( (*ent)->mt_resource);
-        me->me_mountdir = xstrdup ( (*ent)->mt_directory);
+        me->me_devname = xstrdup ((*ent)->mt_resource);
+        me->me_mountdir = xstrdup ((*ent)->mt_directory);
         me->me_type = xstrdup ((*ent)->mt_fstype);
         me->me_type_malloced = 1;
         me->me_dummy = ME_DUMMY (me->me_devname, me->me_type);
@@ -878,6 +885,45 @@ read_file_system_list (bool need_fs_type)
     free (entries);
   }
 #endif /* MOUNTED_VMOUNT. */
+
+#ifdef MOUNTED_INTERIX_STATVFS
+  {
+    DIR *dirp = opendir ("/dev/fs");
+    char node[9 + NAME_MAX];
+
+    if (!dirp)
+      goto free_then_fail;
+
+    while (1)
+      {
+        struct statvfs dev;
+        struct dirent entry;
+        struct dirent *result;
+
+        if (readdir_r (dirp, &entry, &result) || result == NULL)
+          break;
+
+        strcpy (node, "/dev/fs/");
+        strcat (node, entry.d_name);
+
+        if (statvfs (node, &dev) == 0)
+          {
+            me = xmalloc (sizeof *me);
+            me->me_devname = xstrdup (dev.f_mntfromname);
+            me->me_mountdir = xstrdup (dev.f_mntonname);
+            me->me_type = xstrdup (dev.f_fstypename);
+            me->me_type_malloced = 1;
+            me->me_dummy = ME_DUMMY (me->me_devname, me->me_type);
+            me->me_remote = ME_REMOTE (me->me_devname, me->me_type);
+            me->me_dev = (dev_t) -1;        /* Magic; means not known yet. */
+
+            /* Add to the linked list. */
+            *mtail = me;
+            mtail = &me->me_next;
+          }
+      }
+  }
+#endif /* MOUNTED_INTERIX_STATVFS */
 
   *mtail = NULL;
   return mount_list;

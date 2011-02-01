@@ -24,6 +24,13 @@ other_uppercase, { &uc_is_property_other_uppercase }
 lowercase, { &uc_is_property_lowercase }
 other_lowercase, { &uc_is_property_other_lowercase }
 titlecase, { &uc_is_property_titlecase }
+cased, { &uc_is_property_cased }
+case_ignorable, { &uc_is_property_case_ignorable }
+changes_when_lowercased, { &uc_is_property_changes_when_lowercased }
+changes_when_uppercased, { &uc_is_property_changes_when_uppercased }
+changes_when_titlecased, { &uc_is_property_changes_when_titlecased }
+changes_when_casefolded, { &uc_is_property_changes_when_casefolded }
+changes_when_casemapped, { &uc_is_property_changes_when_casemapped }
 soft_dotted, { &uc_is_property_soft_dotted }
 id_start, { &uc_is_property_id_start }
 other_id_start, { &uc_is_property_other_id_start }

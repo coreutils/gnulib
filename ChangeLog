@@ -1,8 +1,1837 @@
+2011-01-31  Simon Josefsson  <simon@josefsson.org>
+
+	doc: off_t is not available in eglibc 2.11.2 stdio.h.
+	* doc/posix-headers/stdio.texi (stdio.h): Mention that off_t isn't
+	declared by eglibc 2.11.2.
+	* lib/stdio.in.h: Likewise.
+
+2011-01-31  Eric Blake  <eblake@redhat.com>
+
+	ignore-value: add missing test dependency
+	* tests/test-ignore-value.c: Revert previous change; stdio.h
+	provides off_t.
+	* modules/ignore-value-tests (Depends-on): Add missing dependency.
+
+2011-01-30  Paul Eggert  <eggert@cs.ucla.edu>
+
+	mktime: clarify long_int width checking
+	* lib/mktime.c (long_int_is_wide_enough): Move this assertion to
+	the top level, to make it clearer that the assumption about
+	long_int width is being checked.  See
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-01/msg00554.html>.
+
+2011-01-30  Simon Josefsson  <simon@josefsson.org>
+
+	ignore-value: Fix self-test.
+	* tests/test-ignore-value.c: Include sys/types.h for off_t.
+
+2011-01-29  Paul Eggert  <eggert@cs.ucla.edu>
+
+	TYPE_MAXIMUM: avoid theoretically undefined behavior
+	* lib/intprops.h (TYPE_MINIMUM, TYPE_MAXIMUM): Do not shift a
+	negative number, which the C Standard says has undefined behavior.
+	In practice this is not a problem, but might as well do it by the book.
+	Reported by Rich Felker and Eric Blake; see
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-01/msg00493.html>.
+	* lib/strtol.c (TYPE_MINIMUM, TYPE_MAXIMUM): Likewise.
+	* m4/mktime.m4 (AC_FUNC_MKTIME): Likewise.
+	* m4/nanosleep.m4 (gl_FUNC_NANOSLEEP): Likewise.
+	* m4/parse-datetime.m4 (gl_PARSE_DATETIME): Likewise.
+	* m4/stdint.m4 (gl_STDINT_H): Likewise.
+	* lib/mktime.c (TYPE_MAXIMUM): Redo slightly to match the others.
+
+	mktime: #undef mktime before #defining it
+	* lib/mktime.c (mktime) [DEBUG]: #undef mktime before #defining it.
+
+	mktime: systematically normalize tm_isdst comparisons
+	* lib/mktime.c (isdst_differ): New function.
+	(__mktime_internal): Use it systematically for all isdst comparisons.
+	This completes the fix for libc BZ #6723, and removes the need for
+	normalizing tm_isdst.  See
+	<http://sourceware.org/bugzilla/show_bug.cgi?id=6723>
+	(not_equal_tm) [DEBUG]: Use isdst_differ here, too.
+
+	mktime: fix some integer overflow issues and sidestep the rest
+
+	This was prompted by a bug report by Benjamin Lindner for MinGW
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-01/msg00472.html>.
+	His bug is due to signed integer overflow (0 - INT_MIN), and I
+	I scanned through mktime.c looking for other integer overflow
+	problems, fixing all the bugs I found.
+
+	Although the C Standard says the resulting code is still not safe
+	in the presence of integer overflow, in practice it should be good
+	enough for all real-world two's-complement implementations, except
+	for debugging environments that deliberately trap on integer
+	overflow (e.g., gcc -ftrapv).
+
+	* lib/mktime.c (WRAPV): New macro.
+	(SHR): Also check that long_int and time_t shift right in the
+	usual way, before using the fast-but-unportable method.
+	(TYPE_ONES_COMPLEMENT, TYPE_SIGNED_MAGNITUDE): Remove, no longer
+	used.  The code already assumed two's complement, so there's
+	no need to test for alternatives.  All uses removed.
+	(TYPE_MAXIMUM): Don't rely here on overflow behavior not defined by
+	the C standard.  Problem reported by Rich Felker in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-01/msg00488.html>.
+	(twos_complement_arithmetic): Also check long_int and time_t.
+	(time_t_avg, time_t_add_ok, time_t_int_add_ok): New functions.
+	(guess_time_tm, ranged_convert, __mktime_internal): Use them.
+	(__mktime_internal): Avoid integer overflow with unary subtraction
+	in two instances where -1 - X is an adequate replacement for -X,
+	since the calculations are approximate.
+
+2011-01-29  Eric Blake  <eblake@redhat.com>
+
+	mktime: avoid infinite loop
+	* m4/mktime.m4 (AC_FUNC_MKTIME): Avoid overflow on possibly-signed
+	type; behavior is still undefined but portable to all known targets.
+	Reported by Rich Felker.
+
+2011-01-29  Simon Josefsson  <simon@josefsson.org>
+
+	rename, unlink, same-inode: Relicense.
+	* modules/rename (License): Relax from LGPLv3+ to LGPLv2+.
+	* modules/unlink (License): Likewise.
+	* modules/same-inode (License): Likewise.
+
+2011-01-28  Paul Eggert  <eggert@cs.ucla.edu>
+
+	mktime: avoid problems on NetBSD 5 / i386
+	* lib/mktime.c (long_int): New type.  This works around a problem
+	on NetBSD 5 / i386, where 'long int' and 'int' are both 32 bits
+	but time_t is 64 bits, and where I expect the existing code is
+	wrong in some cases.
+	(leapyear, ydhms_diff, guess_time_tm, __mktime_internal): Use it.
+	(ydhms_diff): Bring back the compile-time check for wide-enough
+	year and yday.
+
+	mktime: fix misspelling in comment
+	* lib/mktime.c (__mktime_internal): Fix misspelling in comment.
+	This merges all recent glibc changes of importance.
+
+2011-01-28  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	move-if-change: cope with concurrent mv of identical file.
+	* build-aux/move-if-change (CMPPROG): Accept environment
+	variable as an override for `cmp'.
+	(usage): Document CMPPROG.
+	Adjust comparison to drop stdout.  Cope with failure of mv if
+	the target file exists and is identical to the source, for
+	parallel builds.
+	Report from H.J. Lu against binutils in PR binutils/12283.
+
+2011-01-28  Bruce Korb  <bkorb@gnu.org>
+
+	* users.txt: Mention sharutils.
+
+2011-01-28  Simon Josefsson  <simon@josefsson.org>
+
+	* users.txt: Mention OATH Toolkit.
+
+2011-01-27  Bruno Haible  <bruno@clisp.org>
+
+	Prepare for supporting FreeBSD 10.
+	* build-aux/config.libpath: Remove handling of freebsd1*.
+
+2011-01-27  Gerald Pfeifer  <gerald@pfeifer.com>  (tiny change)
+
+	Prepare for supporting FreeBSD 10.
+	* build-aux/config.rpath: Remove handling of freebsd1* which soon would
+	match FreeBSD 10.0.
+
+2011-01-27  Bruno Haible  <bruno@clisp.org>
+
+	vma-iter, get-rusage-as: Add OpenBSD support.
+	* modules/vma-iter (configure.ac): Test for mquery.
+	* lib/vma-iter.h (VMA_ITERATE_SUPPORTED): Define also on OpenBSD.
+	* lib/vma-iter.c: Include <sys/mman.h>.
+	(vma_iterate): Add an implementation based on mquery().
+	* lib/resource-ext.h (get_rusage_as): Update comments.
+	* lib/get-rusage-as.c: Likewise.
+	* lib/get-rusage-data.c: Likewise.
+
+2011-01-26  Karl Berry  <karl@gnu.org>
+
+	* doc/Makefile (lang_env, makeinfo_prog, manual_opts): new
+	variables to make it easier to override the makeinfo program used.
+
+2011-01-26  Eric Blake  <eblake@redhat.com>
+
+	fcntl: work around Haiku F_DUPFD bugs
+	* m4/fcntl.m4 (gl_FUNC_FCNTL): Also catch Haiku errno bug.
+	* lib/fcntl.c (rpl_fcntl) [F_DUPFD]: Work around Haiku losing
+	cloexec bit on duplication.
+	* doc/posix-functions/fcntl.texi (fcntl): Document the bug.
+
+2011-01-26  Bruno Haible  <bruno@clisp.org>
+
+	Enable memory leak tests on AIX.
+	* tests/test-dprintf-posix2.c (main): Don't skip the test on AIX.
+	* tests/test-fprintf-posix3.c (main): Likewise.
+
+2011-01-26  Bruno Haible  <bruno@clisp.org>
+
+	Tests for module 'get-rusage-data'.
+	* modules/get-rusage-data-tests: New file.
+	* tests/test-get-rusage-data.c: New file.
+
+	New module 'get-rusage-data'.
+	* lib/resource-ext.h (get_rusage_data): New declaration.
+	* lib/get-rusage-data.c: New file.
+	* modules/get-rusage-data: New file.
+
+2011-01-25  Bruno Haible  <bruno@clisp.org>
+
+	get-rusage-as: Allow for easier testing.
+	* lib/resource-ext.h (get_rusage_as): Add comment.
+	* lib/get-rusage-as.c (get_rusage_as_via_setrlimit): Define always.
+	(main): New function for interactive testing.
+
+2011-01-25  Bruno Haible  <bruno@clisp.org>
+
+	vma-iter: Treat Haiku like BeOS.
+	* lib/vma-iter.h (VMA_ITERATE_SUPPORTED): Define on Haiku as well.
+	* lib/vma-iter.c (vma_iterate) [Haiku]: Use the BeOS API.
+
+2011-01-25  Eric Blake  <eblake@redhat.com>
+
+	c-stack: fix regression on cygwin when libsigsegv is present
+	* lib/c-stack.c (die): Don't flatten error if sigsegv is present.
+
+2011-01-24  Bruno Haible  <bruno@clisp.org>
+
+	vma-iter: Avoid empty intervals.
+	* lib/vma-iter.c (vma_iterate) [IRIX, OSF/1]: Don't call the callback
+	on an empty interval.
+
+2011-01-24  Jim Meyering  <meyering@redhat.com>
+
+	u64: remove unnecessary #include
+	* lib/u64.h: Don't include <stddef.h>.  It was not used.
+
+2011-01-23  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Allow the user to avoid the GNULIB_TEST_* macros.
+	* m4/gnulib-common.m4 (gl_ASSERT_NO_GNULIB_POSIXCHECK): New macro.
+
+2011-01-23  Bruno Haible  <bruno@clisp.org>
+
+	New module 'vma-iter'.
+	* lib/vma-iter.h: New file.
+	* lib/vma-iter.c: New file, based on lib/get-rusage-as.c.
+	* modules/vma-iter: New file.
+	* lib/get-rusage-as.c: Include vma-iter.h. Don't include system headers
+	for get_rusage_as_via_iterator.
+	(vma_iterate_callback): New function.
+	(get_rusage_as_via_iterator): Rewritten to use vma_iterate.
+	* modules/get-rusage-as (Depends-on): Add vma-iter.
+
+2011-01-23  Bruno Haible  <bruno@clisp.org>
+
+	uninorm: Tweak includes.
+	* lib/uninorm/normalize-internal.h: Don't include <stddef.h>.
+	Reported by Jim Meyering.
+
+2011-01-23  Bruno Haible  <bruno@clisp.org>
+
+	get-rusage-as: Improve on NetBSD.
+	* lib/get-rusage-as.c (get_rusage_as_via_iterator): On NetBSD, use
+	/proc, like on FreeBSD.
+
+2011-01-23  Jim Meyering  <meyering@redhat.com>
+
+	xreadlink.h: remove unnecessary #include
+	* lib/xreadlink.h: Don't include <stddef.h>.  It was not used.
+
+	maint.mk: add syntax-check rule: detect unnecessary #include <stddef.h>
+	* top/maint.mk (sc_prohibit_stddef_without_use): New rule.
+
+2011-01-23  Bruno Haible  <bruno@clisp.org>
+
+	get-rusage-as: Fix bug.
+	* lib/get-rusage-as.c (get_rusage_as_via_setrlimit): Restore the
+	original limit when aborting the first loop.
+
+2011-01-23  Bruno Haible  <bruno@clisp.org>
+
+	wctype: Ensure valid C syntax.
+	* m4/wctype_h.m4 (gl_WCTYPE_H): Invoke gl_CHECK_NEXT_HEADERS
+	unconditionally, instead of gl_NEXT_HEADERS conditionally.
+
+2011-01-21  Paul Eggert  <eggert@cs.ucla.edu>
+
+	getopt: omit HAVE_OPTRESET, HAVE_GETOPT_CLIP from config.h
+	* m4/getopt.m4 (gl_GETOPT_CHECK_HEADERS): Do not put the
+	symbols HAVE_OPTRESET and HAVE_GETOPT_CLIP into config.h,
+	as they are needed only for configure's test case.
+	This removes two unnecessary symbols from config.h.
+
+	gl_CHECK_NEXT_HEADERS implies AC_CHECK_HEADERS_ONCE
+	* m4/include_next.m4 (gl_CHECK_HEXT_HEADERS): Document this.
+	* m4/getopt.m4 (gl_GETOPT_CHECK_HEADERS): Don't bother to invoke
+	AC_CHECK_HEADERS_ONCE on a header that we also invoke
+	gl_CHECK_NEXT_HEADERS on, since the latter invokes the former.
+	* m4/netdb_h.m4 (gl_HEADER_NETDB): Likewise.
+	* m4/pthread.m4 (gl_PTHREAD_CHECK): Likewise.
+	* m4/sched_h.m4 (gl_SCHED_H): Likewise.
+	* m4/search_h.m4 (gl_SEARCH_H): Likewise.
+	* m4/spawn_h.m4 (gl_SPAWN_H): Likewise.
+	* m4/sys_file_h.m4 (gl_HEADER_SYS_FILE_H): Likewise.
+	* m4/sys_select_h.m4 (gl_HEADER_SYS_SELECT): Likewise.
+	* m4/sys_times_h.m4 (gl_SYS_TIMES_H): Likewise.
+	* m4/sys_utsname_h.m4 (gl_SYS_UTSNAME_H): Likewise.
+	* m4/termios_h.m4 (gl_TERMIOS_H): Likewise.
+	* m4/unistd_h.m4 (gl_UNISTD_H): Likewise.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Likewise.
+	* m4/wctype_h.m4 (gl_WCTYPE_H): Likewise.
+
+2011-01-21  Eric Blake  <eblake@redhat.com>
+
+	maintainer-makefile: work with older git for submodule check
+	* top/maint.mk (public-submodule-commit): Rewrite to avoid
+	merge-base --independent, which Ubuntu 10.04 git 1.7.0.4 lacks.
+	Reported by Matthias Bolte.
+
+	bootstrap: minor portability fixes
+	* build-aux/bootstrap (me): Use $me instead of $0 in functions.
+	(usage): Omit leading capital and trailing . on help phrases, per
+	GNU Coding Standards.
+	(check_versions, top level): Prefix messages with script name.
+
+2011-01-21  Benjamin Lindner  <bjmldn@gmail.com>  (tiny change)
+
+	bootstrap: support --no-git option
+	* build-aux/bootstrap: Add --no-git option, to be used when
+	--gnulib-srcdir points to the exact desired checkout.
+
+2011-01-21  Eric Blake  <eblake@redhat.com>
+
+	strerror_r-posix: work with glibc 2.13
+	* lib/strerror_r.c (strerror_r): Fix return type.
+
+2011-01-21  Pádraig Brady  <P@draigBrady.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	uN_strstr: New unit tests.
+	* modules/unistr/u8-strstr-tests: New file.
+	* modules/unistr/u16-strstr-tests: New file.
+	* modules/unistr/u32-strstr-tests: New file.
+	* tests/unistr/test-u-strstr.h: New file, based on tests/test-strstr.c.
+	* tests/unistr/test-u8-strstr.c: New file.
+	* tests/unistr/test-u16-strstr.c: New file.
+	* tests/unistr/test-u32-strstr.c: New file.
+
+2011-01-21  Pádraig Brady  <P@draigBrady.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	Make uN_strstr functions O(n) worst-case.
+	* lib/unistr/u-strstr.h (FUNC): In the 8-bit case, use strstr. In the
+	16-bit and 32-bit unit cases, use the unibyte algorithm from
+	lib/mbsstr.c.
+	* lib/unistr/u8-strstr.c: Include <string.h>.
+	(UNIT_IS_UINT8_T): New macro.
+	* lib/unistr/u16-strstr.c: Include malloca.h and str-kmp.h.
+	(U_STRLEN, U_STRNLEN): New macros.
+	* lib/unistr/u32-strstr.c: Include malloca.h and str-kmp.h.
+	(U_STRLEN, U_STRNLEN): New macros.
+	* modules/unistr/u8-strstr (Depends-on): Add strstr.
+	(configure.ac): Update required libunistring version.
+	* modules/unistr/u16-strstr (Files): Add lib/str-kmp.h.
+	(Depends-on): Add unistr/u16-strlen, unistr/u16-strnlen, stdbool,
+	malloca.
+	(configure.ac): Update required libunistring version.
+	* modules/unistr/u32-strstr (Files): Add lib/str-kmp.h.
+	(Depends-on): Add unistr/u32-strlen, unistr/u32-strnlen, stdbool,
+	malloca.
+	(configure.ac): Update required libunistring version.
+
+2011-01-21  Pádraig Brady  <P@draigBrady.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	Prepare for faster uN_strstr functions.
+	* lib/str-kmp.h: Support definable UNITs.
+	(knuth_morris_pratt): Renamed from knuth_morris_pratt_unibyte. Add
+	needle_len argument.
+	* lib/mbsstr.c (mbsstr): Adjust for the changed str-kmp.h.
+	* lib/mbscasestr.c (mbscasestr): Likewise.
+
+2011-01-21  Pádraig Brady <P@draigBrady.com>
+
+	malloca-tests: make faster by unsetting MALLOC_PERTURB_
+	* tests/test-malloca.c (main): Unset the environment variable
+	to greatly speed up the test.
+	* tests/init.sh: Don't say that MALLOC_PERTURB_ is cheap.
+	* modules/malloca-tests: Depend on unsetenv.
+
+2011-01-21  Pádraig Brady <P@draigBrady.com>
+
+	ignore-value: remove stdint dependency
+	* lib/ignore-value.h: Remove <stdint.h>
+	* modules/ignore-value: Remove stdint dependency.
+
+2011-01-21  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: adjust variable name to be consistent with other gl_ vars
+	* top/maint.mk (gl_public_submodule_commit): Rename the variable
+	to be lower case.
+
+2011-01-20  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: make "check" depend on public-submodule-commit by default
+	* top/maint.mk (GL_PUBLIC_SUBMODULE_COMMIT): New overridable variable.
+
+2011-01-20  Bruno Haible  <bruno@clisp.org>
+
+	mbfile, mbiter: Complete change from 2008-12-21.
+	* m4/mbfile.m4 (gl_MBFILE): Don't require AC_FUNC_MBRTOWC.
+	* m4/mbiter.m4 (gl_MBITER): Likewise.
+
+2011-01-20  Jim Meyering  <meyering@redhat.com>
+
+	init.sh: insert space between each function name and "()"
+	* tests/init.sh: Make it a little easier to see that a function's
+	name is "warn_", and not "warn" when looking at the first part of
+	its definition: "warn_ ()".  Suggested by Ralf Wildenhues.
+
+2011-01-20  Jim Meyering  <meyering@redhat.com>
+
+	mountlist: clean up code formatting
+	* lib/mountlist.c (read_file_system_list): Split a long line,
+	correct bracing style, use NULL in place of "(struct statfs *)0",
+	don't parenthesize return value, add spaces around "=" and after
+	";-in-for-stmt".
+
+2011-01-14  Markus Duft <mduft@gentoo.org>
+
+	mountlist: add support for Interix
+	* lib/mountlist.c (read_file_system_list) [MOUNTED_INTERIX_STATVFS]:
+	Apply statvfs to all entries of /dev/fs.
+	* m4/ls-mntd-fs.m4 (gl_LIST_MOUNTED_FILE_SYSTEMS): Check for statvfs,
+	and if found, AC_DEFINE MOUNTED_INTERIX_STATVFS.
+
+2011-01-20  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: improve the public-submodule-commit rule
+	* top/maint.mk (public-submodule-commit): Prefix with $(AM_V_GEN),
+	to suppress printing of its commands... unless V=1.
+	Add git submodule's --quiet option to suppress printing of e.g.,
+	"Entering gnulib" output.
+	"cd" into $(srcdir) before running git submodule.
+
+2011-01-20  Bruno Haible  <bruno@clisp.org>
+
+	include_next: Fix bug introduced on 2011-01-18.
+	* m4/include_next.m4 (gl_NEXT_HEADERS_INTERNAL): New macro, extracted
+	from gl_CHECK_NEXT_HEADERS and gl_NEXT_HEADERS. Omit test of
+	ac_cv_header_... variable if the second argument is not 'check'.
+	(gl_CHECK_NEXT_HEADERS, gl_NEXT_HEADERS): Invoke
+	gl_NEXT_HEADERS_INTERNAL.
+
+2011-01-20  Bruno Haible  <bruno@clisp.org>
+
+	Allow the user to avoid the GNULIB_TEST_* macros.
+	* m4/gnulib-common.m4 (gl_ASSERT_NO_GNULIB_TESTS): New macro.
+	Suggested by Paul Eggert.
+
+2011-01-14  Jim Meyering  <meyering@redhat.com>
+
+	bootstrap: avoid failure when there is no .gitmodules file
+	": ${gnulib_path=gnulib}" fails to set $gnulib_path when that variable
+	has been assigned to, even when its value is the empty string.
+	* build-aux/bootstrap (gnulib_path): Test explicitly for an empty
+	"$gnulib_path", rather than using ${gnulib_path=gnulib}.
+	Reported by John W. Eaton <jwe@gnu.org>.
+
+2011-01-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	assume <ctype.h>, ..., <time.h> exist
+	For years gnulib has been assuming the existence of the headers
+	<ctime.h>, <errno.h>, <fcntl.h>, <locale.h>, <signal.h>,
+	<stdio.h>, <stdlib.h>, <string.h>, and <time.h>.  Omit checks for
+	them, since they don't appear to be needed.
+	* README (Portability guidelines): Document this.
+	* lib/flock.c: Assume <fcntl.h> exists.
+	* lib/regex_internal.h: Assume <locale.h> exists.
+	* m4/ctype.m4 (gl_CTYPE_H): Assume <ctype.h> exists.
+	* m4/errno_h.m4 (gl_HEADER_ERRNO_H): Assume <errno.h> exists.
+	* m4/fcntl_h.m4 (gl_FCNTL_H): Assume <fcntl.h> exists.
+	* m4/flock.m4 (gl_PREREQ_FLOCK): Likewise.
+	* m4/locale_h.m4 (gl_LOCALE_H): Assume <locale.h> exists.
+	* m4/regex.m4 (gl_REGEX): Likewise.
+	* m4/signal_h.m4 (gl_SIGNAL_H): Assume <signal.h> exists.
+	* m4/stdio_h.m4 (gl_STDIO_H): Assume <stdio.h> exists.
+	* m4/stdlib_h.m4 (gl_STDLIB_H): Assume <stdlib.h> exists.
+	* m4/string_h.m4 (gl_STRING_H): Assume <string.h> exists.
+	* tests/test-argp.c: Likewise.
+	* m4/time_h.m4 (gl_HEADER_TIME_H_BODY): Assume <time.h> exists.
+
+	multiarch: remove AA_APPLE_UNIVERSAL_BUILD
+	* m4/multiarch.m4 (gl_MULTIARCH): Don't AC_DEFINE
+	AA_APPLE_UNIVERSAL_BUILD.  See
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-01/msg00247.html>.
+	* NEWS: Document this.
+
+2011-01-19  Eric Blake  <eblake@redhat.com>
+
+	c-stack: assume stack overflow if SA_SIGINFO unsupported
+	* lib/c-stack.c (SIGACTION_WORKS): Rename...
+	(SIGINFO_WORKS): ...since gnulib module guarantees that (most) of
+	sigaction will work.
+	(die): Assume stack overflow if siginfo doesn't work, to let Haiku
+	behavior match Linux.
+	* tests/test-c-stack.c (main): Prefer NULL for pointers.
+
+	stdbool-tests: accomodate Haiku
+	* tests/test-stdbool.c: Haiku's gcc 2.95 lacks native _Bool.
+
+	binary-io: fix O_TEXT on Haiku
+	* modules/binary-io (Depends-on): Add fcntl-h.
+	* lib/binary-io.h (O_TEXT): Rely on replacement <fcntl.h> rather
+	than blindly undefining O_TEXT.
+	Reported by Scott McCreary.
+
+2011-01-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	include_next: do not check for standard headers like stddef.h
+
+	I found this problem when modifying Emacs to use gnulib.
+	I noticed that it added HAVE_STDDEF_H to config.h, even though
+	gnulib always assumes <stddef.h> exists as per README and this
+	symbol is unnecessary.
+	* m4/include_next.m4 (gl_NEXT_HEADERS): New macro, which does not
+	use AC_CHECK_HEADERS_ONCE, but which otherwise contains what
+	gl_CHECK_NEXT_HEADERS used to contain.  This makes 'configure' run
+	faster for headers like stddef.h that are known to exist.
+	(gl_CHECK_NEXT_HEADERS): Use it.
+	* m4/float_h.m4 (gl_FLOAT_H): For float.h, use gl_NEXT_HEADERS
+	rather than gl_CHECK_NEXT_HEADERS.
+	* m4/stdarg.m4 (gl_STDARG_H): Likewise, for stdarg.h.
+	* m4/stddef_h.m4 (gl_STDDEF_H): Likewise, for stddef.h.
+
+2011-01-18  Eric Blake  <eblake@redhat.com>
+
+	ansi-c++-opt: skip C++ dependency style if C++ is unused
+	* m4/ansi-c++.m4 (gl_PROG_ANSI_CXX): Avoid full-blown dependency
+	tests when we know C++ compilation is not desired.
+	Reported by Scott McCreary.
+
+2011-01-18  Bruno Haible  <bruno@clisp.org>
+
+	*printf-posix: Avoid test failures. Make tests work on MacOS X, Cygwin.
+	* tests/test-fprintf-posix3.c: Include "resource-ext.h".
+	(main): Perform test also when getrlimit and setrlimit don't exist or
+	when setrlimit of RLIMIT_DATA fails (like on Cygwin). Instead of
+	limiting the address space size using setrlimit, compare the address
+	space size before and after the the test.
+	* tests/test-dprintf-posix2.c: Likewise.
+	* tests/test-fprintf-posix3.sh: Update skip messages.
+	* tests/test-dprintf-posix2.sh: Likewise.
+	* modules/fprintf-posix-tests (Depends-on): Add get-rusage-as.
+	* modules/dprintf-posix-tests (Depends-on): Likewise.
+	Reported by Bruce Korb <bkorb@gnu.org> and
+	Gary V. Vaughan <gary@gnu.org>.
+
+2011-01-18  Bruno Haible  <bruno@clisp.org>
+
+	get-rusage-as: Improvement for Cygwin.
+	* lib/get-rusage-as.c (get_rusage_as_via_iterator): On Windows, ignore
+	areas that are merely reserved.
+
+2011-01-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	strftime: remove dependencies on multibyte modules
+
+	strftime depended on mbrlen, mbsinit, and wchar, but these modules
+	are needed only if ! MULTIBYTE_IS_FORMAT_SAFE, and that is true
+	only if __osf__ is defined, and I suspect OSF doesn't need these
+	other modules.  If my guess is wrong, we'll need to come up with a
+	variant of strftime that doesn't need the multibyte modules.
+
+	I discovered this problem when attempting modify Emacs to use the
+	strftime module.  With the previous gnulib, this caused Emacs to
+	need 31 new files, ranging from lib/config.charset to
+	m4/wint_t.m4.  This was overkill and I expect would be offputting
+	to the Emacs maintainers.  After this change, only 6 new files are
+	needed, namely strftime.[ch], srtftime.m4, stdbool.in.h,
+	stdbool.m4, and tm_gmtoff.m4.
+
+	* lib/strftime.c (MULTIBYTE_IS_FORMAT_SAFE): Define to 1 always.
+	Suggested by Bruno Haible in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-01/msg00238.html>.
+	* m4/strftime.m4 (gl_FUNC_STRFTIME): Do not require AC_TYPE_MBSTATE_T,
+	and do not check for wchar.h.
+	* modules/strftime (Files): Remove m4/mbstate_t.m4.
+	(Depends-on): Remove mbrlen, mbsinit, wchar.
+
+2011-01-18  Bruno Haible  <bruno@clisp.org>
+
+	Tests for module 'get-rusage-as'.
+	* modules/get-rusage-as-tests: New file.
+	* tests/test-get-rusage-as.c: New file.
+
+	New module 'get-rusage-as'.
+	* modules/get-rusage-as: New file.
+	* lib/resource-ext.h: New file.
+	* lib/get-rusage-as.c: New file.
+
+2011-01-17  Eric Blake  <eblake@redhat.com>
+
+	sigaction: relax license from LGPLv3+ to LGPLv2+
+	* modules/sigaction (License): Relax to LGPLv2+.
+
+2011-01-14  Bruno Haible  <bruno@clisp.org>
+
+	filemode: Make function declarations usable in C++ mode.
+	* lib/filemode.h: Enclose function declarations in extern "C" block.
+	Reported by John W. Eaton <jwe@gnu.org>.
+
+2011-01-12  Rob Vermaas  <rob.vermaas@gmail.com>
+
+	save-cwd: no longer include "xgetcwd.h"
+	* lib/save-cwd.c: Don't include "xgetcwd.h"; it's no longer used.
+	This avoids a compilation failure in projects that use save-cwd
+	without also using the xgetcwd module.
+
+2011-01-11  Paul Eggert  <eggert@cs.ucla.edu>
+
+	ftoastr: split into 3 modules ftoastr, dtoastr, ldtoastr
+	This is so that a program like Emacs, which needs only dtoastr,
+	does not have to bother with distributing and compiling ftoastr
+	and ldtoastr.
+	* MODULES.html.sh: Document these modules (ftoastr wasn't documented).
+	* modules/dtoastr, modules/ldtoastr: New files.
+	* modules/ftoastr: Now works just for 'float'.
+	(Files): Remove lib/dtoastr.c, lib/ldtoastr.c.
+	(Makefile.am): Remove ftoastr.h (not needed and no effect),
+	dtoastr.c, ldtoastr.c.
+
+2011-01-11  Jim Meyering  <meyering@redhat.com>
+
+	save-cwd: remove #if-!HAVE_FCHDIR'd code; use the fchdir module
+	There is no need to work around the lack of the fchdir function,
+	since gnulib can now provide a replacement when required.
+	* lib/save-cwd.c: Remove #if !HAVE_FCHDIR...#endif code.
+	* modules/save-cwd (Depends-on): Add fchdir.
+
+2011-01-11  Paul Eggert  <eggert@cs.ucla.edu>
+
+	openat, save-cwd: avoid xmalloc
+
+	This removes a direct (but undocumented) dependency of openat on
+	xalloc, along with an indirect dependency via save-cwd.  It also
+	removes a dependency of save-cwd on xgetcwd, and thereby
+	indirectly on xalloc.  This change causes the openat substitute
+	to fall back on save_cwd when memory is tight, and for save_cwd to
+	fail instead of dying when memory is tight, but that's good enough.
+
+	* lib/openat-proc.c: Include stdlib.h (for malloc), not
+	xalloc.h (for xmalloc).
+	(openat_proc_name): Use malloc, not xmalloc.
+	* lib/save-cwd.c (save_cwd): Use getcwd, not xgetcwd.
+	* modules/save-cwd (Files): Depend on getcwd, not xgetcwd.
+
+	openat: Increase OPENAT_BUFFER_SIZE from 512 to at least 1024
+	This avoids heap allocation for file names whose lengths are in
+	the range 512..1023, with the upper bound increasing to at most
+	4031 depending on the platform's PATH_MAX.  (We do not want
+	pathmax.h here as it might supply a non-constant PATH_MAX.)
+	* lib/openat-priv.h (SAFER_ALLOCA_MAX, SAFER_ALLOCA): New macros.
+	Perhaps they should be moved to malloca.h?
+	(OPENAT_BUFFER_SIZE): Use them.
+
+2011-01-10  Bruno Haible  <bruno@clisp.org>
+
+	doc: Update users.txt.
+	* users.txt: Add recutils.
+
+2011-01-09  Karl Berry  <karl@gnu.org>
+
+	* doc/posix-functions/gai_strerror.texi: Insert missing @item.
+
+	* doc/configmake.texi: New file.
+	* doc/gnulib.texi: Include it.
+	* modules/configmake: Move documentation from here.
+
+2011-01-09  Bruno Haible  <bruno@clisp.org>
+
+	Update to Unicode 6.0.0.
+	* lib/gen-uni-tables.c (symbolic_width): Fix bounds of planes.
+	(get_lbp): Update for Unicode 6.0.0.
+	* lib/uniwidth/width.c (nonspacing_table_data): Add U+065F,
+	U+0859..U+085B, U+093A, U+0956..U+0957, U+0F8D..U+0F8F, U+135D..U+135E,
+	U+1BE6, U+1BE8..U+1BE9, U+1BED, U+1BEF..U+1BF1, U+1DFC, U+2D7F,
+	U+11001, U+11038..U+11046. Remove U+06DE.
+	(uc_width): Fix bounds of planes.
+	* tests/uniwidth/test-uc_width2.sh: Same updates as in
+	lib/uniwidth/width.c.
+	* tests/unigbrk/GraphemeBreakTest.txt: Copied from Unicode 6.0.0, with
+	trailing whitespace removed.
+	* tests/uninorm/NormalizationTest.txt: Update from Unicode 6.0.0,
+	without comments, but with the original copyright notice.
+	* lib/unicase/cased.h: Regenerated for Unicode 6.0.0.
+	* lib/unicase/ignorable.h: Likewise.
+	* lib/unicase/tocasefold.h: Likewise.
+	* lib/unicase/tolower.h: Likewise.
+	* lib/unicase/totitle.h: Likewise.
+	* lib/unicase/toupper.h: Likewise.
+	* lib/unictype/bidi_of.h: Likewise.
+	* lib/unictype/blocks.h: Likewise.
+	* lib/unictype/categ_C.h: Likewise.
+	* lib/unictype/categ_Cn.h: Likewise.
+	* lib/unictype/categ_L.h: Likewise.
+	* lib/unictype/categ_Ll.h: Likewise.
+	* lib/unictype/categ_Lm.h: Likewise.
+	* lib/unictype/categ_Lo.h: Likewise.
+	* lib/unictype/categ_Lu.h: Likewise.
+	* lib/unictype/categ_M.h: Likewise.
+	* lib/unictype/categ_Mc.h: Likewise.
+	* lib/unictype/categ_Me.h: Likewise.
+	* lib/unictype/categ_Mn.h: Likewise.
+	* lib/unictype/categ_N.h: Likewise.
+	* lib/unictype/categ_Nd.h: Likewise.
+	* lib/unictype/categ_No.h: Likewise.
+	* lib/unictype/categ_P.h: Likewise.
+	* lib/unictype/categ_Po.h: Likewise.
+	* lib/unictype/categ_S.h: Likewise.
+	* lib/unictype/categ_Sc.h: Likewise.
+	* lib/unictype/categ_Sk.h: Likewise.
+	* lib/unictype/categ_Sm.h: Likewise.
+	* lib/unictype/categ_So.h: Likewise.
+	* lib/unictype/categ_of.h: Likewise.
+	* lib/unictype/combining.h: Likewise.
+	* lib/unictype/ctype_alnum.h: Likewise.
+	* lib/unictype/ctype_alpha.h: Likewise.
+	* lib/unictype/ctype_graph.h: Likewise.
+	* lib/unictype/ctype_lower.h: Likewise.
+	* lib/unictype/ctype_print.h: Likewise.
+	* lib/unictype/ctype_punct.h: Likewise.
+	* lib/unictype/ctype_upper.h: Likewise.
+	* lib/unictype/decdigit.h: Likewise.
+	* lib/unictype/digit.h: Likewise.
+	* lib/unictype/numeric.h: Likewise.
+	* lib/unictype/pr_alphabetic.h: Likewise.
+	* lib/unictype/pr_bidi_arabic_digit.h: Likewise.
+	* lib/unictype/pr_bidi_arabic_right_to_left.h: Likewise.
+	* lib/unictype/pr_bidi_boundary_neutral.h: Likewise.
+	* lib/unictype/pr_bidi_eur_num_terminator.h: Likewise.
+	* lib/unictype/pr_bidi_hebrew_right_to_left.h: Likewise.
+	* lib/unictype/pr_bidi_left_to_right.h: Likewise.
+	* lib/unictype/pr_bidi_non_spacing_mark.h: Likewise.
+	* lib/unictype/pr_bidi_other_neutral.h: Likewise.
+	* lib/unictype/pr_case_ignorable.h: Likewise.
+	* lib/unictype/pr_cased.h: Likewise.
+	* lib/unictype/pr_changes_when_casefolded.h: Likewise.
+	* lib/unictype/pr_changes_when_casemapped.h: Likewise.
+	* lib/unictype/pr_changes_when_lowercased.h: Likewise.
+	* lib/unictype/pr_changes_when_titlecased.h: Likewise.
+	* lib/unictype/pr_changes_when_uppercased.h: Likewise.
+	* lib/unictype/pr_combining.h: Likewise.
+	* lib/unictype/pr_composite.h: Likewise.
+	* lib/unictype/pr_currency_symbol.h: Likewise.
+	* lib/unictype/pr_decimal_digit.h: Likewise.
+	* lib/unictype/pr_deprecated.h: Likewise.
+	* lib/unictype/pr_format_control.h: Likewise.
+	* lib/unictype/pr_grapheme_base.h: Likewise.
+	* lib/unictype/pr_grapheme_extend.h: Likewise.
+	* lib/unictype/pr_grapheme_link.h: Likewise.
+	* lib/unictype/pr_id_continue.h: Likewise.
+	* lib/unictype/pr_id_start.h: Likewise.
+	* lib/unictype/pr_ideographic.h: Likewise.
+	* lib/unictype/pr_lowercase.h: Likewise.
+	* lib/unictype/pr_math.h: Likewise.
+	* lib/unictype/pr_numeric.h: Likewise.
+	* lib/unictype/pr_other_alphabetic.h: Likewise.
+	* lib/unictype/pr_other_id_continue.h: Likewise.
+	* lib/unictype/pr_other_math.h: Likewise.
+	* lib/unictype/pr_punctuation.h: Likewise.
+	* lib/unictype/pr_sentence_terminal.h: Likewise.
+	* lib/unictype/pr_terminal_punctuation.h: Likewise.
+	* lib/unictype/pr_unassigned_code_value.h: Likewise.
+	* lib/unictype/pr_unified_ideograph.h: Likewise.
+	* lib/unictype/pr_uppercase.h: Likewise.
+	* lib/unictype/pr_xid_continue.h: Likewise.
+	* lib/unictype/pr_xid_start.h: Likewise.
+	* lib/unictype/scripts.h: Likewise.
+	* lib/unictype/scripts_byname.gperf: Likewise.
+	* lib/unictype/sy_java_ident.h: Likewise.
+	* lib/unigbrk/gbrkprop.h: Likewise.
+	* lib/unilbrk/lbrkprop1.h: Likewise.
+	* lib/unilbrk/lbrkprop2.h: Likewise.
+	* lib/uninorm/decomposition-table2.h: Likewise.
+	* lib/uniwbrk/wbrkprop.h: Likewise.
+	* tests/unicase/test-cased.c: Likewise.
+	* tests/unicase/test-ignorable.c: Likewise.
+	* tests/unicase/test-uc_tolower.c: Likewise.
+	* tests/unicase/test-uc_totitle.c: Likewise.
+	* tests/unicase/test-uc_toupper.c: Likewise.
+	* tests/unictype/test-categ_C.c: Likewise.
+	* tests/unictype/test-categ_Cn.c: Likewise.
+	* tests/unictype/test-categ_L.c: Likewise.
+	* tests/unictype/test-categ_Ll.c: Likewise.
+	* tests/unictype/test-categ_Lm.c: Likewise.
+	* tests/unictype/test-categ_Lo.c: Likewise.
+	* tests/unictype/test-categ_Lu.c: Likewise.
+	* tests/unictype/test-categ_M.c: Likewise.
+	* tests/unictype/test-categ_Mc.c: Likewise.
+	* tests/unictype/test-categ_Me.c: Likewise.
+	* tests/unictype/test-categ_Mn.c: Likewise.
+	* tests/unictype/test-categ_N.c: Likewise.
+	* tests/unictype/test-categ_Nd.c: Likewise.
+	* tests/unictype/test-categ_No.c: Likewise.
+	* tests/unictype/test-categ_P.c: Likewise.
+	* tests/unictype/test-categ_Po.c: Likewise.
+	* tests/unictype/test-categ_S.c: Likewise.
+	* tests/unictype/test-categ_Sc.c: Likewise.
+	* tests/unictype/test-categ_Sk.c: Likewise.
+	* tests/unictype/test-categ_Sm.c: Likewise.
+	* tests/unictype/test-categ_So.c: Likewise.
+	* tests/unictype/test-ctype_alnum.c: Likewise.
+	* tests/unictype/test-ctype_alpha.c: Likewise.
+	* tests/unictype/test-ctype_graph.c: Likewise.
+	* tests/unictype/test-ctype_lower.c: Likewise.
+	* tests/unictype/test-ctype_print.c: Likewise.
+	* tests/unictype/test-ctype_punct.c: Likewise.
+	* tests/unictype/test-ctype_upper.c: Likewise.
+	* tests/unictype/test-decdigit.h: Likewise.
+	* tests/unictype/test-digit.h: Likewise.
+	* tests/unictype/test-numeric.h: Likewise.
+	* tests/unictype/test-pr_alphabetic.c: Likewise.
+	* tests/unictype/test-pr_bidi_arabic_digit.c: Likewise.
+	* tests/unictype/test-pr_bidi_arabic_right_to_left.c: Likewise.
+	* tests/unictype/test-pr_bidi_boundary_neutral.c: Likewise.
+	* tests/unictype/test-pr_bidi_eur_num_terminator.c: Likewise.
+	* tests/unictype/test-pr_bidi_hebrew_right_to_left.c: Likewise.
+	* tests/unictype/test-pr_bidi_left_to_right.c: Likewise.
+	* tests/unictype/test-pr_bidi_non_spacing_mark.c: Likewise.
+	* tests/unictype/test-pr_bidi_other_neutral.c: Likewise.
+	* tests/unictype/test-pr_case_ignorable.c: Likewise.
+	* tests/unictype/test-pr_cased.c: Likewise.
+	* tests/unictype/test-pr_changes_when_casefolded.c: Likewise.
+	* tests/unictype/test-pr_changes_when_casemapped.c: Likewise.
+	* tests/unictype/test-pr_changes_when_lowercased.c: Likewise.
+	* tests/unictype/test-pr_changes_when_titlecased.c: Likewise.
+	* tests/unictype/test-pr_changes_when_uppercased.c: Likewise.
+	* tests/unictype/test-pr_combining.c: Likewise.
+	* tests/unictype/test-pr_composite.c: Likewise.
+	* tests/unictype/test-pr_currency_symbol.c: Likewise.
+	* tests/unictype/test-pr_decimal_digit.c: Likewise.
+	* tests/unictype/test-pr_deprecated.c: Likewise.
+	* tests/unictype/test-pr_format_control.c: Likewise.
+	* tests/unictype/test-pr_grapheme_base.c: Likewise.
+	* tests/unictype/test-pr_grapheme_extend.c: Likewise.
+	* tests/unictype/test-pr_grapheme_link.c: Likewise.
+	* tests/unictype/test-pr_id_continue.c: Likewise.
+	* tests/unictype/test-pr_id_start.c: Likewise.
+	* tests/unictype/test-pr_ideographic.c: Likewise.
+	* tests/unictype/test-pr_lowercase.c: Likewise.
+	* tests/unictype/test-pr_math.c: Likewise.
+	* tests/unictype/test-pr_numeric.c: Likewise.
+	* tests/unictype/test-pr_other_alphabetic.c: Likewise.
+	* tests/unictype/test-pr_other_id_continue.c: Likewise.
+	* tests/unictype/test-pr_other_math.c: Likewise.
+	* tests/unictype/test-pr_punctuation.c: Likewise.
+	* tests/unictype/test-pr_sentence_terminal.c: Likewise.
+	* tests/unictype/test-pr_terminal_punctuation.c: Likewise.
+	* tests/unictype/test-pr_unassigned_code_value.c: Likewise.
+	* tests/unictype/test-pr_unified_ideograph.c: Likewise.
+	* tests/unictype/test-pr_uppercase.c: Likewise.
+	* tests/unictype/test-pr_xid_continue.c: Likewise.
+	* tests/unictype/test-pr_xid_start.c: Likewise.
+	* tests/unigbrk/test-uc-gbrk-prop.h: Likewise.
+	* lib/unicase/special-casing-table.gperf: Regenerated; only comment
+	changes.
+	* lib/unictype/categ_Cc.h: Likewise.
+	* lib/unictype/categ_Cf.h: Likewise.
+	* lib/unictype/categ_Co.h: Likewise.
+	* lib/unictype/categ_Cs.h: Likewise.
+	* lib/unictype/categ_Lt.h: Likewise.
+	* lib/unictype/categ_Nl.h: Likewise.
+	* lib/unictype/categ_Pc.h: Likewise.
+	* lib/unictype/categ_Pd.h: Likewise.
+	* lib/unictype/categ_Pe.h: Likewise.
+	* lib/unictype/categ_Pf.h: Likewise.
+	* lib/unictype/categ_Pi.h: Likewise.
+	* lib/unictype/categ_Ps.h: Likewise.
+	* lib/unictype/categ_Z.h: Likewise.
+	* lib/unictype/categ_Zl.h: Likewise.
+	* lib/unictype/categ_Zp.h: Likewise.
+	* lib/unictype/categ_Zs.h: Likewise.
+	* lib/unictype/ctype_blank.h: Likewise.
+	* lib/unictype/ctype_cntrl.h: Likewise.
+	* lib/unictype/ctype_digit.h: Likewise.
+	* lib/unictype/ctype_space.h: Likewise.
+	* lib/unictype/ctype_xdigit.h: Likewise.
+	* lib/unictype/mirror.h: Likewise.
+	* lib/unictype/pr_ascii_hex_digit.h: Likewise.
+	* lib/unictype/pr_bidi_block_separator.h: Likewise.
+	* lib/unictype/pr_bidi_common_separator.h: Likewise.
+	* lib/unictype/pr_bidi_control.h: Likewise.
+	* lib/unictype/pr_bidi_embedding_or_override.h: Likewise.
+	* lib/unictype/pr_bidi_eur_num_separator.h: Likewise.
+	* lib/unictype/pr_bidi_european_digit.h: Likewise.
+	* lib/unictype/pr_bidi_pdf.h: Likewise.
+	* lib/unictype/pr_bidi_segment_separator.h: Likewise.
+	* lib/unictype/pr_bidi_whitespace.h: Likewise.
+	* lib/unictype/pr_dash.h: Likewise.
+	* lib/unictype/pr_default_ignorable_code_point.h: Likewise.
+	* lib/unictype/pr_diacritic.h: Likewise.
+	* lib/unictype/pr_extender.h: Likewise.
+	* lib/unictype/pr_hex_digit.h: Likewise.
+	* lib/unictype/pr_hyphen.h: Likewise.
+	* lib/unictype/pr_ids_binary_operator.h: Likewise.
+	* lib/unictype/pr_ids_trinary_operator.h: Likewise.
+	* lib/unictype/pr_ignorable_control.h: Likewise.
+	* lib/unictype/pr_iso_control.h: Likewise.
+	* lib/unictype/pr_join_control.h: Likewise.
+	* lib/unictype/pr_left_of_pair.h: Likewise.
+	* lib/unictype/pr_line_separator.h: Likewise.
+	* lib/unictype/pr_logical_order_exception.h: Likewise.
+	* lib/unictype/pr_non_break.h: Likewise.
+	* lib/unictype/pr_not_a_character.h: Likewise.
+	* lib/unictype/pr_other_default_ignorable_code_point.h: Likewise.
+	* lib/unictype/pr_other_grapheme_extend.h: Likewise.
+	* lib/unictype/pr_other_id_start.h: Likewise.
+	* lib/unictype/pr_other_lowercase.h: Likewise.
+	* lib/unictype/pr_other_uppercase.h: Likewise.
+	* lib/unictype/pr_paired_punctuation.h: Likewise.
+	* lib/unictype/pr_paragraph_separator.h: Likewise.
+	* lib/unictype/pr_pattern_syntax.h: Likewise.
+	* lib/unictype/pr_pattern_white_space.h: Likewise.
+	* lib/unictype/pr_private_use.h: Likewise.
+	* lib/unictype/pr_quotation_mark.h: Likewise.
+	* lib/unictype/pr_radical.h: Likewise.
+	* lib/unictype/pr_soft_dotted.h: Likewise.
+	* lib/unictype/pr_space.h: Likewise.
+	* lib/unictype/pr_titlecase.h: Likewise.
+	* lib/unictype/pr_variation_selector.h: Likewise.
+	* lib/unictype/pr_white_space.h: Likewise.
+	* lib/unictype/pr_zero_width.h: Likewise.
+	* lib/unictype/sy_c_ident.h: Likewise.
+	* lib/unictype/sy_c_whitespace.h: Likewise.
+	* lib/unictype/sy_java_whitespace.h: Likewise.
+	* lib/uninorm/composition-table.gperf: Likewise.
+	* lib/uninorm/decomposition-table1.h: Likewise.
+	* tests/unilbrk/test-u8-possible-linebreaks.c (main): Add test for rule
+	LB8.
+	* tests/unilbrk/test-u16-possible-linebreaks.c (main): Likewise.
+	* tests/unilbrk/test-u32-possible-linebreaks.c (main): Likewise.
+	* modules/unictype/*: Bump version number of expected libunistring
+	version.
+
+2011-01-09  Bruno Haible  <bruno@clisp.org>
+
+	Update to Unicode 5.2.0.
+	* tests/unigbrk/GraphemeBreakTest.txt: Copied from Unicode 5.2.0, with
+	trailing whitespace removed.
+
+2011-01-09  Bruno Haible  <bruno@clisp.org>
+
+	New Unicode character properties, from Unicode 5.2.0.
+	* lib/unictype.in.h (UC_PROPERTY_CASED, UC_PROPERTY_CASE_IGNORABLE,
+	UC_PROPERTY_CHANGES_WHEN_LOWERCASED,
+	UC_PROPERTY_CHANGES_WHEN_UPPERCASED,
+	UC_PROPERTY_CHANGES_WHEN_TITLECASED,
+	UC_PROPERTY_CHANGES_WHEN_CASEFOLDED,
+	UC_PROPERTY_CHANGES_WHEN_CASEMAPPED,
+	uc_is_property_cased, uc_is_property_case_ignorable,
+	uc_is_property_changes_when_lowercased,
+	uc_is_property_changes_when_uppercased,
+	uc_is_property_changes_when_titlecased,
+	uc_is_property_changes_when_casefolded,
+	uc_is_property_changes_when_casemapped): New declarations.
+	* lib/unictype/pr_byname.gperf: Add the new properties.
+	* modules/unictype/property-byname (Depends-on): Depend on the new
+	properties modules.
+	* modules/unictype/property-all (Depends-on): Likewise.
+	* MODULES.html.sh (Unicode string functions): Add
+	unictype/property-case-ignorable, unictype/property-cased,
+	unictype/property-changes-when-casefolded,
+	unictype/property-changes-when-casemapped,
+	unictype/property-changes-when-lowercased,
+	unictype/property-changes-when-titlecased,
+	unictype/property-changes-when-uppercased.
+
+	New module 'unictype/property-changes-when-casemapped'.
+	* modules/unictype/property-changes-when-casemapped: New file.
+	* lib/unictype/pr_changes_when_casemapped.c: New file.
+	* lib/unictype/pr_changes_when_casemapped.h: New file, automatically
+	generated by gen-uni-tables.
+	* modules/unictype/property-changes-when-casemapped-tests: New file.
+	* tests/unictype/test-pr_changes_when_casemapped.c: New file,
+	automatically generated by gen-uni-tables.
+
+	New module 'unictype/property-changes-when-casefolded'.
+	* modules/unictype/property-changes-when-casefolded: New file.
+	* lib/unictype/pr_changes_when_casefolded.c: New file.
+	* lib/unictype/pr_changes_when_casefolded.h: New file, automatically
+	generated by gen-uni-tables.
+	* modules/unictype/property-changes-when-casefolded-tests: New file.
+	* tests/unictype/test-pr_changes_when_casefolded.c: New file,
+	automatically generated by gen-uni-tables.
+
+	New module 'unictype/property-changes-when-titlecased'.
+	* modules/unictype/property-changes-when-titlecased: New file.
+	* lib/unictype/pr_changes_when_titlecased.c: New file.
+	* lib/unictype/pr_changes_when_titlecased.h: New file, automatically
+	generated by gen-uni-tables.
+	* modules/unictype/property-changes-when-titlecased-tests: New file.
+	* tests/unictype/test-pr_changes_when_titlecased.c: New file,
+	automatically generated by gen-uni-tables.
+
+	New module 'unictype/property-changes-when-uppercased'.
+	* modules/unictype/property-changes-when-uppercased: New file.
+	* lib/unictype/pr_changes_when_uppercased.c: New file.
+	* lib/unictype/pr_changes_when_uppercased.h: New file, automatically
+	generated by gen-uni-tables.
+	* modules/unictype/property-changes-when-uppercased-tests: New file.
+	* tests/unictype/test-pr_changes_when_uppercased.c: New file,
+	automatically generated by gen-uni-tables.
+
+	New module 'unictype/property-changes-when-lowercased'.
+	* modules/unictype/property-changes-when-lowercased: New file.
+	* lib/unictype/pr_changes_when_lowercased.c: New file.
+	* lib/unictype/pr_changes_when_lowercased.h: New file, automatically
+	generated by gen-uni-tables.
+	* modules/unictype/property-changes-when-lowercased-tests: New file.
+	* tests/unictype/test-pr_changes_when_lowercased.c: New file,
+	automatically generated by gen-uni-tables.
+
+	New module 'unictype/property-case-ignorable'.
+	* modules/unictype/property-case-ignorable: New file.
+	* lib/unictype/pr_case_ignorable.c: New file.
+	* lib/unictype/pr_case_ignorable.h: New file, automatically generated
+	by gen-uni-tables.
+	* modules/unictype/property-case-ignorable-tests: New file.
+	* tests/unictype/test-pr_case_ignorable.c: New file, automatically
+	generated by gen-uni-tables.
+
+	New module 'unictype/property-cased'.
+	* modules/unictype/property-cased: New file.
+	* lib/unictype/pr_cased.c: New file.
+	* lib/unictype/pr_cased.h: New file, automatically generated by
+	gen-uni-tables.
+	* modules/unictype/property-cased-tests: New file.
+	* tests/unictype/test-pr_cased.c: New file, automatically generated by
+	gen-uni-tables.
+
+2011-01-09  Bruno Haible  <bruno@clisp.org>
+
+	Update to Unicode 5.2.0.
+	* lib/gen-uni-tables.c (output_predicate, output_category,
+	output_combclass, output_bidi_category, output_decimal_digit_test,
+	output_decimal_digit, output_digit_test, output_digit,
+	output_numeric_test, output_numeric, output_mirror, output_scripts,
+	output_scripts_byname, output_blocks, output_ident_category): Fix
+	comment header.
+	(is_WBP_MIDNUMLET, is_WBP_MIDLETTER): New functions, extracted from
+	get_wbp.
+	(PROP_CASED, PROP_CASE_IGNORABLE, PROP_CHANGES_WHEN_*): New enumeration
+	items.
+	(fill_properties): Also fill the peoperties Cased, Case_Ignorable,
+	Changes_When_Lowercased, Changes_When_Uppercased,
+	Changes_When_Titlecased, Changes_When_Casefolded,
+	Changes_When_Casemapped.
+	(is_property_alphabetic, is_property_default_ignorable_code_point):
+	Update for Unicode 5.2.0.
+	(is_property_cased, is_property_case_ignorable,
+	is_property_changes_when_lowercased,
+	is_property_changes_when_uppercased,
+	is_property_changes_when_titlecased,
+	is_property_changes_when_casefolded,
+	is_property_changes_when_casemapped): New functions.
+	(output_properties): Output also the properties cased, case_ignorable,
+	changes_when_lowercased, changes_when_uppercased,
+	changes_when_titlecased, changes_when_casefolded,
+	changes_when_casemapped.
+	(symbolic_width): Update for Unicode 5.2.0, incorporating changes from
+	Unicode TR#11 revision 17 -> 19.
+	(LBP_CP): New enumeration value.
+	(LBP_*): Adjust values accordingly.
+	(get_lbp): Update for Unicode 5.2.0, incorporating changes from Unicode
+	TR#14 revision 22 -> 24.
+	(debug_output_lbp): Allow for LBP_* bits >= 32. Support LBP_CP.
+	(fill_org_lbp, debug_output_org_lbp, output_lbp): Support LBP_CP.
+	(get_wbp): Update for Unicode 5.2.0, incorporating changes from Unicode
+	TR#29 revision 13 -> 15. Use functions is_WBP_MIDNUMLET,
+	is_WBP_MIDLETTER.
+	(output_composition_tables): Allow for 24 bits instead of 16 bits in
+	the code1 and code2 of each composition rule.
+	* lib/unicase/cased.h: Regenerated for Unicode 5.2.0.
+	* lib/unicase/ignorable.h: Likewise.
+	* lib/unicase/tocasefold.h: Likewise.
+	* lib/unicase/tolower.h: Likewise.
+	* lib/unicase/totitle.h: Likewise.
+	* lib/unicase/toupper.h: Likewise.
+	* lib/unictype/bidi_of.h: Likewise.
+	* lib/unictype/blocks.h: Likewise.
+	* lib/unictype/categ_C.h: Likewise.
+	* lib/unictype/categ_Cf.h: Likewise.
+	* lib/unictype/categ_Cn.h: Likewise.
+	* lib/unictype/categ_L.h: Likewise.
+	* lib/unictype/categ_Ll.h: Likewise.
+	* lib/unictype/categ_Lm.h: Likewise.
+	* lib/unictype/categ_Lo.h: Likewise.
+	* lib/unictype/categ_Lu.h: Likewise.
+	* lib/unictype/categ_M.h: Likewise.
+	* lib/unictype/categ_Mc.h: Likewise.
+	* lib/unictype/categ_Mn.h: Likewise.
+	* lib/unictype/categ_N.h: Likewise.
+	* lib/unictype/categ_Nd.h: Likewise.
+	* lib/unictype/categ_Nl.h: Likewise.
+	* lib/unictype/categ_No.h: Likewise.
+	* lib/unictype/categ_P.h: Likewise.
+	* lib/unictype/categ_Pd.h: Likewise.
+	* lib/unictype/categ_Po.h: Likewise.
+	* lib/unictype/categ_S.h: Likewise.
+	* lib/unictype/categ_Sc.h: Likewise.
+	* lib/unictype/categ_So.h: Likewise.
+	* lib/unictype/categ_of.h: Likewise.
+	* lib/unictype/combining.h: Likewise.
+	* lib/unictype/ctype_alnum.h: Likewise.
+	* lib/unictype/ctype_alpha.h: Likewise.
+	* lib/unictype/ctype_graph.h: Likewise.
+	* lib/unictype/ctype_lower.h: Likewise.
+	* lib/unictype/ctype_print.h: Likewise.
+	* lib/unictype/ctype_punct.h: Likewise.
+	* lib/unictype/ctype_upper.h: Likewise.
+	* lib/unictype/decdigit.h: Likewise.
+	* lib/unictype/digit.h: Likewise.
+	* lib/unictype/numeric.h: Likewise.
+	* lib/unictype/pr_alphabetic.h: Likewise.
+	* lib/unictype/pr_bidi_arabic_digit.h: Likewise.
+	* lib/unictype/pr_bidi_eur_num_terminator.h: Likewise.
+	* lib/unictype/pr_bidi_european_digit.h: Likewise.
+	* lib/unictype/pr_bidi_hebrew_right_to_left.h: Likewise.
+	* lib/unictype/pr_bidi_left_to_right.h: Likewise.
+	* lib/unictype/pr_bidi_non_spacing_mark.h: Likewise.
+	* lib/unictype/pr_bidi_other_neutral.h: Likewise.
+	* lib/unictype/pr_combining.h: Likewise.
+	* lib/unictype/pr_composite.h: Likewise.
+	* lib/unictype/pr_currency_symbol.h: Likewise.
+	* lib/unictype/pr_dash.h: Likewise.
+	* lib/unictype/pr_decimal_digit.h: Likewise.
+	* lib/unictype/pr_deprecated.h: Likewise.
+	* lib/unictype/pr_diacritic.h: Likewise.
+	* lib/unictype/pr_extender.h: Likewise.
+	* lib/unictype/pr_grapheme_base.h: Likewise.
+	* lib/unictype/pr_grapheme_extend.h: Likewise.
+	* lib/unictype/pr_grapheme_link.h: Likewise.
+	* lib/unictype/pr_id_continue.h: Likewise.
+	* lib/unictype/pr_id_start.h: Likewise.
+	* lib/unictype/pr_ideographic.h: Likewise.
+	* lib/unictype/pr_ignorable_control.h: Likewise.
+	* lib/unictype/pr_logical_order_exception.h: Likewise.
+	* lib/unictype/pr_lowercase.h: Likewise.
+	* lib/unictype/pr_numeric.h: Likewise.
+	* lib/unictype/pr_other_alphabetic.h: Likewise.
+	* lib/unictype/pr_punctuation.h: Likewise.
+	* lib/unictype/pr_sentence_terminal.h: Likewise.
+	* lib/unictype/pr_terminal_punctuation.h: Likewise.
+	* lib/unictype/pr_unassigned_code_value.h: Likewise.
+	* lib/unictype/pr_unified_ideograph.h: Likewise.
+	* lib/unictype/pr_uppercase.h: Likewise.
+	* lib/unictype/pr_xid_continue.h: Likewise.
+	* lib/unictype/pr_xid_start.h: Likewise.
+	* lib/unictype/pr_zero_width.h: Likewise.
+	* lib/unictype/scripts.h: Likewise.
+	* lib/unictype/scripts_byname.gperf: Likewise.
+	* lib/unictype/sy_java_ident.h: Likewise.
+	* lib/unigbrk/gbrkprop.h: Likewise.
+	* lib/unilbrk/lbrkprop1.h: Likewise.
+	* lib/unilbrk/lbrkprop2.h: Likewise.
+	* lib/unilbrk/lbrktables.h: Likewise.
+	* lib/unilbrk/lbrktables.c (unilbrk_table): Add a row and column for
+	LBP_CP. Implement rule LB30.
+	* lib/uniwidth/width.c (nonspacing_table_data): Add U+0816..U+0819,
+	U+081B..U+0823, U+0825..U+0827, U+0829..U+082D, U+0900, U+0955, U+109D,
+	U+1A56, U+1A58..U+1A5E, U+1A60, U+1A62, U+1A65..U+1A6C, U+1A73..U+1A7C,
+	U+1A7F, U+1CD0..U+1CD2, U+1CD4..U+1CE0, U+1CE2..U+1CE8, U+1CED, U+1DFD,
+	U+2CEF..U+2CF1, U+A6F0..U+A6F1, U+A8E0..U+A8F1, U+A980..U+A982, U+A9B3,
+	U+A9B6..U+A9B9, U+A9BC, U+AAB0, U+AAB2..U+AAB4, U+AAB7..U+AAB8,
+	U+AABE..U+AABF, U+AAC1, U+ABE5, U+ABE8, U+ABED, U+11080..U+11081,
+	U+110B3..U+110B6, U+110B9..U+110BA, U+110BD.
+	(uc_width): Return 2 also for unassigned code points of planes 2 and 3.
+	* lib/uninorm/composition-table.gperf: Regenerated for Unicode 5.2.0.
+	* lib/uninorm/composition.c (struct composition_rule): Allow for 24
+	bits instead of 16 bits in the code1 and code2 of each composition
+	rule.
+	(uc_composition): Update for Unicode 5.2.0.
+	* lib/uninorm/decomposition-table1.h: Regenerated for Unicode 5.2.0.
+	* lib/uninorm/decomposition-table2.h: Likewise.
+	* lib/uniwbrk/wbrkprop.h: Likewise.
+	* tests/unicase/test-cased.c: Likewise.
+	* tests/unicase/test-ignorable.c: Likewise.
+	* tests/unicase/test-uc_tolower.c: Likewise.
+	* tests/unicase/test-uc_totitle.c: Likewise.
+	* tests/unicase/test-uc_toupper.c: Likewise.
+	* tests/unictype/test-categ_C.c: Likewise.
+	* tests/unictype/test-categ_Cf.c: Likewise.
+	* tests/unictype/test-categ_Cn.c: Likewise.
+	* tests/unictype/test-categ_L.c: Likewise.
+	* tests/unictype/test-categ_Ll.c: Likewise.
+	* tests/unictype/test-categ_Lm.c: Likewise.
+	* tests/unictype/test-categ_Lo.c: Likewise.
+	* tests/unictype/test-categ_Lu.c: Likewise.
+	* tests/unictype/test-categ_M.c: Likewise.
+	* tests/unictype/test-categ_Mc.c: Likewise.
+	* tests/unictype/test-categ_Mn.c: Likewise.
+	* tests/unictype/test-categ_N.c: Likewise.
+	* tests/unictype/test-categ_Nd.c: Likewise.
+	* tests/unictype/test-categ_Nl.c: Likewise.
+	* tests/unictype/test-categ_No.c: Likewise.
+	* tests/unictype/test-categ_P.c: Likewise.
+	* tests/unictype/test-categ_Pd.c: Likewise.
+	* tests/unictype/test-categ_Po.c: Likewise.
+	* tests/unictype/test-categ_S.c: Likewise.
+	* tests/unictype/test-categ_Sc.c: Likewise.
+	* tests/unictype/test-categ_So.c: Likewise.
+	* tests/unictype/test-ctype_alnum.c: Likewise.
+	* tests/unictype/test-ctype_alpha.c: Likewise.
+	* tests/unictype/test-ctype_graph.c: Likewise.
+	* tests/unictype/test-ctype_lower.c: Likewise.
+	* tests/unictype/test-ctype_print.c: Likewise.
+	* tests/unictype/test-ctype_punct.c: Likewise.
+	* tests/unictype/test-ctype_upper.c: Likewise.
+	* tests/unictype/test-decdigit.h: Likewise.
+	* tests/unictype/test-digit.h: Likewise.
+	* tests/unictype/test-numeric.h: Likewise.
+	* tests/unictype/test-pr_alphabetic.c: Likewise.
+	* tests/unictype/test-pr_bidi_arabic_digit.c: Likewise.
+	* tests/unictype/test-pr_bidi_eur_num_terminator.c: Likewise.
+	* tests/unictype/test-pr_bidi_european_digit.c: Likewise.
+	* tests/unictype/test-pr_bidi_hebrew_right_to_left.c: Likewise.
+	* tests/unictype/test-pr_bidi_left_to_right.c: Likewise.
+	* tests/unictype/test-pr_bidi_non_spacing_mark.c: Likewise.
+	* tests/unictype/test-pr_bidi_other_neutral.c: Likewise.
+	* tests/unictype/test-pr_combining.c: Likewise.
+	* tests/unictype/test-pr_composite.c: Likewise.
+	* tests/unictype/test-pr_currency_symbol.c: Likewise.
+	* tests/unictype/test-pr_dash.c: Likewise.
+	* tests/unictype/test-pr_decimal_digit.c: Likewise.
+	* tests/unictype/test-pr_deprecated.c: Likewise.
+	* tests/unictype/test-pr_diacritic.c: Likewise.
+	* tests/unictype/test-pr_extender.c: Likewise.
+	* tests/unictype/test-pr_grapheme_base.c: Likewise.
+	* tests/unictype/test-pr_grapheme_extend.c: Likewise.
+	* tests/unictype/test-pr_grapheme_link.c: Likewise.
+	* tests/unictype/test-pr_id_continue.c: Likewise.
+	* tests/unictype/test-pr_id_start.c: Likewise.
+	* tests/unictype/test-pr_ideographic.c: Likewise.
+	* tests/unictype/test-pr_ignorable_control.c: Likewise.
+	* tests/unictype/test-pr_logical_order_exception.c: Likewise.
+	* tests/unictype/test-pr_lowercase.c: Likewise.
+	* tests/unictype/test-pr_numeric.c: Likewise.
+	* tests/unictype/test-pr_other_alphabetic.c: Likewise.
+	* tests/unictype/test-pr_punctuation.c: Likewise.
+	* tests/unictype/test-pr_sentence_terminal.c: Likewise.
+	* tests/unictype/test-pr_terminal_punctuation.c: Likewise.
+	* tests/unictype/test-pr_unassigned_code_value.c: Likewise.
+	* tests/unictype/test-pr_unified_ideograph.c: Likewise.
+	* tests/unictype/test-pr_uppercase.c: Likewise.
+	* tests/unictype/test-pr_xid_continue.c: Likewise.
+	* tests/unictype/test-pr_xid_start.c: Likewise.
+	* tests/unictype/test-pr_zero_width.c: Likewise.
+	* tests/unigbrk/test-uc-gbrk-prop.h: Likewise.
+	* tests/unilbrk/test-u8-possible-linebreaks.c (main): Update for
+	changed behaviour: line breaking is now disallowed between a letter
+	or '=' and '('.
+	* tests/unilbrk/test-u16-possible-linebreaks.c (main): Likewise.
+	* tests/unilbrk/test-u32-possible-linebreaks.c (main): Likewise.
+	* tests/unilbrk/test-ulc-possible-linebreaks.c (main): Likewise.
+	* tests/unilbrk/test-ulc-width-linebreaks.c (main): Likewise.
+	* tests/uniwidth/test-uc_width2.sh: Same updates as in
+	lib/uniwidth/width.c.
+	* tests/uninorm/NormalizationTest.txt: Update from Unicode 5.2.0,
+	without comments, but with the original copyright notice.
+	* lib/unicase/special-casing-table.gperf: Regenerated; only comment
+	changes.
+	* lib/unictype/categ_Cc.h: Likewise.
+	* lib/unictype/categ_Co.h: Likewise.
+	* lib/unictype/categ_Cs.h: Likewise.
+	* lib/unictype/categ_Lt.h: Likewise.
+	* lib/unictype/categ_Me.h: Likewise.
+	* lib/unictype/categ_Pc.h: Likewise.
+	* lib/unictype/categ_Pe.h: Likewise.
+	* lib/unictype/categ_Pf.h: Likewise.
+	* lib/unictype/categ_Pi.h: Likewise.
+	* lib/unictype/categ_Ps.h: Likewise.
+	* lib/unictype/categ_Sk.h: Likewise.
+	* lib/unictype/categ_Sm.h: Likewise.
+	* lib/unictype/categ_Z.h: Likewise.
+	* lib/unictype/categ_Zl.h: Likewise.
+	* lib/unictype/categ_Zp.h: Likewise.
+	* lib/unictype/categ_Zs.h: Likewise.
+	* lib/unictype/ctype_blank.h: Likewise.
+	* lib/unictype/ctype_cntrl.h: Likewise.
+	* lib/unictype/ctype_digit.h: Likewise.
+	* lib/unictype/ctype_space.h: Likewise.
+	* lib/unictype/ctype_xdigit.h: Likewise.
+	* lib/unictype/mirror.h: Likewise.
+	* lib/unictype/pr_ascii_hex_digit.h: Likewise.
+	* lib/unictype/pr_bidi_arabic_right_to_left.h: Likewise.
+	* lib/unictype/pr_bidi_block_separator.h: Likewise.
+	* lib/unictype/pr_bidi_boundary_neutral.h: Likewise.
+	* lib/unictype/pr_bidi_common_separator.h: Likewise.
+	* lib/unictype/pr_bidi_control.h: Likewise.
+	* lib/unictype/pr_bidi_embedding_or_override.h: Likewise.
+	* lib/unictype/pr_bidi_eur_num_separator.h: Likewise.
+	* lib/unictype/pr_bidi_pdf.h: Likewise.
+	* lib/unictype/pr_bidi_segment_separator.h: Likewise.
+	* lib/unictype/pr_bidi_whitespace.h: Likewise.
+	* lib/unictype/pr_default_ignorable_code_point.h: Likewise.
+	* lib/unictype/pr_format_control.h: Likewise.
+	* lib/unictype/pr_hex_digit.h: Likewise.
+	* lib/unictype/pr_hyphen.h: Likewise.
+	* lib/unictype/pr_ids_binary_operator.h: Likewise.
+	* lib/unictype/pr_ids_trinary_operator.h: Likewise.
+	* lib/unictype/pr_iso_control.h: Likewise.
+	* lib/unictype/pr_join_control.h: Likewise.
+	* lib/unictype/pr_left_of_pair.h: Likewise.
+	* lib/unictype/pr_line_separator.h: Likewise.
+	* lib/unictype/pr_math.h: Likewise.
+	* lib/unictype/pr_non_break.h: Likewise.
+	* lib/unictype/pr_not_a_character.h: Likewise.
+	* lib/unictype/pr_other_default_ignorable_code_point.h: Likewise.
+	* lib/unictype/pr_other_grapheme_extend.h: Likewise.
+	* lib/unictype/pr_other_id_continue.h: Likewise.
+	* lib/unictype/pr_other_id_start.h: Likewise.
+	* lib/unictype/pr_other_lowercase.h: Likewise.
+	* lib/unictype/pr_other_math.h: Likewise.
+	* lib/unictype/pr_other_uppercase.h: Likewise.
+	* lib/unictype/pr_paired_punctuation.h: Likewise.
+	* lib/unictype/pr_paragraph_separator.h: Likewise.
+	* lib/unictype/pr_pattern_syntax.h: Likewise.
+	* lib/unictype/pr_pattern_white_space.h: Likewise.
+	* lib/unictype/pr_private_use.h: Likewise.
+	* lib/unictype/pr_quotation_mark.h: Likewise.
+	* lib/unictype/pr_radical.h: Likewise.
+	* lib/unictype/pr_soft_dotted.h: Likewise.
+	* lib/unictype/pr_space.h: Likewise.
+	* lib/unictype/pr_titlecase.h: Likewise.
+	* lib/unictype/pr_variation_selector.h: Likewise.
+	* lib/unictype/pr_white_space.h: Likewise.
+	* lib/unictype/sy_c_ident.h: Likewise.
+	* lib/unictype/sy_c_whitespace.h: Likewise.
+	* lib/unictype/sy_java_whitespace.h: Likewise.
+	* modules/uni*/*: Bump version number of expected libunistring version.
+	Reported by Simon Josefsson.
+
+2011-01-09  Karl Heuer  <kwzh@gnu.org>
+
+	useless-if-before-free: fix typo in --help and make the internal,
+	automatic version date update process work once again.
+	--help output contained a NUL character instead of the
+	backslash-zero that was intended.  Also, the "must lie within
+	the first 8 lines" line is on line 9, and hence not getting
+	automatically updated.
+	* build-aux/useless-if-before-free: Fix the former by adding a
+	backslash, and the latter by condensing the three lines of what-it-does
+	to a single line, leaving one line of slack for the future.
+
+2011-01-09  Bruno Haible  <bruno@clisp.org>
+
+	uniwidth/width: Fix width of U+1D173..U+1D17A.
+	* lib/gen-uni-tables.c (is_nonspacing, output_nonspacing_property,
+	symbolic_width, output_width_property_test): New functions.
+	(main): Invoke output_nonspacing_property, output_width_property_test.
+	* lib/uniwidth/width.c (nonspacing_table_data): Set bits for
+	U+1D173..U+1D17A.
+	* tests/uniwidth/test-uc_width2.sh: For U+1D173..U+1D17A, expect 0, not
+	1.
+	* modules/uniwidth/*: Bump version number of expected libunistring
+	version.
+	* modules/unilbrk/*: Likewise.
+
+2011-01-08  Bruno Haible  <bruno@clisp.org>
+
+	uninorm tests: Preserve copyright of Unicode data file.
+	* tests/uninorm/NormalizationTest.txt: Re-add original copyright.
+	Mention modifications.
+
+2011-01-08  Bruno Haible  <bruno@clisp.org>
+
+	gen-uni-tables: Prepare for Unicode 5.2.0.
+	* lib/gen-uni-tables.c (get_lbp): Allow for more than 32 LBP_* values.
+	(debug_output_lbp, output_lbp): Update.
+
+2011-01-08  Bruno Haible  <bruno@clisp.org>
+
+	unilbrk: Clarify gen-uni-tables.c code.
+	* lib/gen-uni-tables.c (get_lbp): Assume REVISION_22 to be false. These
+	were mistakes in UAX #14 revision 22 that are corrected in revision 24.
+	Clarify what to do with unilbrk/lbrkprop.txt and uniwbrk/wbrkprop.txt.
+
+2011-01-07  Bruno Haible  <bruno@clisp.org>
+
+	strtod: Restore errno when successfully parsing Infinity or NaN.
+	* lib/strtod.c (strtod): After successfully parsing an Infinity or NaN,
+	restore the original errno.
+
+2011-01-07  Bruno Haible  <bruno@clisp.org>
+
+	remove test: Avoid failure on HP-UX 11.
+	* tests/test-remove.c (main): Allow EEXIST as alternative error code.
+
+2011-01-07  Bruno Haible  <bruno@clisp.org>
+
+	mkdir, mkdirat tests: Avoid failure on HP-UX 11.11.
+	* tests/test-mkdir.h (test_mkdir): Allow EOPNOTSUPP as alternative
+	error code.
+
+2011-01-07  Pádraig Brady <P@draigBrady.com>
+
+	ignore-value: fixup comments, and add Eric Blake
+	as an author since he rewrote the macros.
+	* lib/ignore-value.h (ignore_value):  State that
+	we now support aggregates.  Also specify exactly
+	when the GCC warn_unused_result feature was added.
+
 2011-01-07  Bruce Korb  <bkorb@gnu.org>
 
 	libposix/bootstrap: disable testing of error-module-using modules
 	* libposix/bootstrap (opts): append --avoid=${mod}-tests
 	for each module that has the error reference removed
+
+2011-01-06  Eric Blake  <eblake@redhat.com>
+
+	ignore-value: support aggregate types
+	* lib/ignore-value.h (ignore_value): Provide separate gcc
+	definition.
+	* modules/ignore-value-tests: New test module.
+	* tests/test-ignore-value.c: New test.
+
+	maint.mk: improve sc_prohibit_strcmp regex
+	* top/maint.mk (sc_prohibit_strcmp): Detect strcmp()!=0, as
+	documented.  Also, detect strcmp((expr),expr) == 0.  Exempt the
+	definition of STRNEQ.
+
+	signal: work around Haiku issue with SIGBUS
+	* lib/siglist.h: Add comment.
+	* lib/sig2str.c (numname_table): Swap SIGBUS order, to match
+	strsignal's favoring of SIGSEGV.
+	* tests/test-signal.c (main): Avoid test failure.
+	* doc/posix-headers/signal.texi (signal.h): Document the issue.
+	Reported by Scott McCreary.
+
+	maint.mk: add pre-release check to ensure submodule commits are public
+	* top/maint.mk (public-submodule-commit): New rule.
+	(submodule-checks): New variable.
+	(alpha beta stable): Depend on the variable.
+
+2011-01-05  Pádraig Brady <P@draigBrady.com>
+	and Jim Meyering  <meyering@redhat.com>
+
+	ignore-value: make ignore_value more generic; deprecate ignore_ptr
+	* lib/ignore-value.h: Include <stdint.h>, for decl of intptr_t.
+	(ATTRIBUTE_DEPRECATED): Define.
+	(_ignore_case): New function.
+	(ignore_value): New macro, to replace the old function.
+	(ignore_ptr): Arrange for any use to evoke a deprecation warning.
+	* modules/ignore-value (Depends-on): Add stdint.
+
+2011-01-04  Eric Blake  <eblake@redhat.com>
+
+	doc: regenerate INSTALL
+	* doc/Makefile (INSTALL, INSTALL.ISO, INSTALL.UTF-8): Re-add
+	@firstparagraphindent support, now that autoconf dropped it.
+	(INSTALL_PRELUDE): Reinstate old macro.
+	* doc/install.texi: Resync from autoconf.
+	* doc/INSTALL: Reflect recent autoconf update.
+	* doc/INSTALL.ISO: Likewise.
+	* doc/INSTALL.UTF-8: Likewise.
+	Reported by Karl Berry.
+
+2011-01-04  Bruce Korb  <address@hidden>
+
+	git-version-gen: avoid a sub-shell
+	* build-aux/git-version-gen: Redirect stderr in `...` via
+	"exec 2>...", rather than via an added sub-shell.
+
+2011-01-03  Ben Pfaff  <blp@cs.stanford.edu>
+
+	git-version-gen: use (...) rather than sh -c '...'
+	* build-aux/git-version-gen: Rather than hard-coding a shell's name
+	with "sh -c '...'", just use "(...)".  Less syntax is better, too.
+
+2011-01-03  Jim Meyering  <meyering@redhat.com>
+
+	git-version-gen: convert leading TABs to spaces
+	* build-aux/git-version-gen: Expand leading TABs.
+
+	git-version-gen: handle failed "git rev-list"
+	* build-aux/git-version-gen: Rather than leaking a "fatal" error
+	from git and proceeding as if it had succeeded but printed no SHA1
+	checksums, suppress the diagnostic and handle the failure.
+	Reported by Bruce Korb in http://marc.info/?l=git&m=129399145930450&w=2
+
+	git-version-gen: include command name in one more diagnostic
+	* build-aux/git-version-gen: When the required .tarball-version file
+	was missing or unreadable, you might see the diagnostic from "cat",
+	but no trace of the name of the invoking script.  Now, you still see
+	the diagnostic from cat, but also get one from "git-version-gen: ".
+	Inspired by a patch from Bruce Korb.
+
+	update-copyright: adjust test to match changed code
+	* tests/test-update-copyright.sh: Change test's expected output
+	to match new actual output.
+
+2011-01-02  Bruno Haible  <bruno@clisp.org>
+
+	getlogin_r: Avoid test failure on HP-UX 11.
+	* tests/test-getlogin_r.c (main): Allow an error code EINVAL instead of
+	ERANGE when the second argument is zero.
+	* doc/posix-functions/getlogin_r.texi: Document the HP-UX 11
+	portability problem.
+
+2011-01-02  Bruce Korb  <bkorb@gnu.org>
+
+	* build-aux/update-copyright: doc Simon's changes
+
+2011-01-02  Simon Josefsson  <simon@josefsson.org>
+
+	* build-aux/update-copyright: Support UPDATE_COPYRIGHT_HOLDER
+	environment variable.
+
+2011-01-02  Bruno Haible  <bruno@clisp.org>
+
+	unigbrk: Avoid gcc warnings.
+	* lib/unigbrk/u16-grapheme-breaks.c (u16_grapheme_breaks): Remove
+	unused variable.
+	* lib/unigbrk/u16-grapheme-prev.c (u16_grapheme_prev): Likewise.
+	* lib/unigbrk/u8-grapheme-prev.c (u8_grapheme_prev): Likewise.
+	* tests/unigbrk/test-u16-grapheme-breaks.c (main): Likewise.
+	* tests/unigbrk/test-u32-grapheme-breaks.c (main): Likewise.
+	* tests/unigbrk/test-u8-grapheme-breaks.c (test_u8_grapheme_breaks):
+	Change type of first argument to 'const char *'.
+	(main): Remove unused variable.
+	* tests/unigbrk/test-u8-grapheme-next.c (test_u8_grapheme_next): Change
+	type of first argument to 'const char *'.
+	* tests/unigbrk/test-u8-grapheme-prev.c (test_u8_grapheme_prev):
+	Likewise.
+	(main): Change type of variable 's'.
+	* tests/unigbrk/test-uc-is-grapheme-break.c (main): Cast column number
+	to 'int'.
+
+2011-01-02  Bruno Haible  <bruno@clisp.org>
+
+	pwrite: Fix test whether it works and make it work on HP-UX 11.11.
+	* m4/pwrite.m4 (gl_FUNC_PWRITE): Use AC_LANG_PROGRAM, not
+	AC_LANG_SOURCE. Extend the test program to catch another HP-UX 11.11
+	bug.
+	* lib/pwrite.c: Undo 2010-12-31 patch.
+	* doc/posix-functions/pwrite.texi: Document another HP-UX 11.11 bug.
+
+2011-01-02  Bruno Haible  <bruno@clisp.org>
+
+	pread: Fix test whether it works.
+	* m4/pread.m4 (gl_FUNC_PREAD): Use AC_LANG_PROGRAM, not AC_LANG_SOURCE.
+
+2011-01-02  Bruno Haible  <bruno@clisp.org>
+
+	Fix detection of traditional Arabic locale on HP-UX, Solaris, Cygwin.
+	* m4/locale-ar.m4 (gt_LOCALE_AR): Require that the locale encoding name
+	ends in "6". Don't require a specific month name. Try also the locale
+	names found on HP-UX 11 and Solaris 7.
+
+2011-01-02  Bruno Haible  <bruno@clisp.org>
+
+	tcgetsid: Correct linkage in C++ mode on HP-UX 11.00.
+	* lib/termios.in.h: In C++ mode, on HP-UX, include <sys/termios.h> with
+	C linkage.
+	* doc/posix-functions/tcgetsid.texi: Mention the HP-UX 11.00 bug.
+
+2011-01-01  Ben Pfaff  <blp@cs.stanford.edu>
+
+	Rename uc_is_grapheme_cluster_break() to uc_is_grapheme_break()
+	for consistency, since the "cluster" term is not used elsewhere.
+	* lib/unigbrk.in.h: Update name.
+	* lib/unigbrk/u16-grapheme-breaks.c: Update name.
+	* lib/unigbrk/u16-grapheme-next.c: Update name.
+	* lib/unigbrk/u16-grapheme-prev.c: Update name.
+	* lib/unigbrk/u32-grapheme-breaks.c: Update name.
+	* lib/unigbrk/u32-grapheme-next.c: Update name.
+	* lib/unigbrk/u32-grapheme-prev.c: Update name.
+	* lib/unigbrk/u8-grapheme-breaks.c: Update name.
+	* lib/unigbrk/u8-grapheme-next.c: Update name.
+	* lib/unigbrk/u8-grapheme-prev.c: Update name.
+	* lib/unigbrk/uc-is-grapheme-break.c: Update name.
+	* tests/unigbrk/test-uc-is-grapheme-break.c: Update name.
+	Suggested by Bruno Haible.
+
+2011-01-01  Ben Pfaff  <blp@cs.stanford.edu>
+
+	Remove module 'u8-grapheme-len' as too redundant with
+	'u8-grapheme-next'.
+	* modules/unigbrk/u8-grapheme-len: Delete file.
+	* modules/unigbrk/u8-grapheme-len-tests: Delete file.
+	* lib/unigbrk.in.h: Remove prototype for deleted function.
+	* lib/unigbrk/u8-grapheme-len.c: Delete file.
+	* tests/unigbrk/test-u8-grapheme-len.c: Delete file.
+
+	Remove module 'u16-grapheme-len' as too redundant with
+	'u16-grapheme-next'.
+	* modules/unigbrk/u16-grapheme-len: Delete file.
+	* modules/unigbrk/u16-grapheme-len-tests: Delete file.
+	* lib/unigbrk.in.h: Remove prototype for deleted function.
+	* lib/unigbrk/u16-grapheme-len.c: Delete file.
+	* tests/unigbrk/test-u16-grapheme-len.c: Delete file.
+
+	Remove module 'u32-grapheme-len' as too redundant with
+	'u32-grapheme-next'.
+	* modules/unigbrk/u32-grapheme-len: Delete file.
+	* modules/unigbrk/u32-grapheme-len-tests: Delete file.
+	* lib/unigbrk.in.h: Remove prototype for deleted function.
+	* lib/unigbrk/u32-grapheme-len.c: Delete file.
+	* tests/unigbrk/test-u32-grapheme-len.c: Delete file.
+
+	Suggested by Bruno Haible.
+
+2011-01-01  Ben Pfaff  <blp@cs.stanford.edu>
+
+	* unigbrk.in.h: Fix typo: "ben" => "been".
+	Reported by Bruno Haible.
+
+2011-01-01  Jim Meyering  <meyering@redhat.com>
+
+	maint: update almost all copyright ranges to include 2011
+	Run the new "make update-copyright" rule.
+
+2011-01-01  Jim Meyering  <meyering@redhat.com>
+
+	maint: update-copyright: exempt doc/INSTALL*
+	* Makefile (update-copyright): Also exclude doc/INSTALL*,
+	since they are generated.  Suggested by Bruno Haible.
+
+2011-01-01  Jim Meyering  <meyering@redhat.com>
+
+	maint: refine the update-copyright rule
+	* Makefile (update-copyright): Also exclude any file that includes
+	the "GENERATED AUTOMATICALLY" comment, being careful not to exclude
+	code that merely generates the comment.
+
+2010-12-31  Ben Pfaff  <blp@cs.stanford.edu>
+
+	New module 'u8-grapheme-len'.
+	* modules/unigbrk/u8-grapheme-len: New file.
+	* modules/unigbrk/u8-grapheme-len-tests: New file.
+	* lib/unigbrk.in.h: Add prototype for new function.
+	* lib/unigbrk/u8-grapheme-len.c: New file.
+	* tests/unigbrk/test-u8-grapheme-len.c: New file.
+
+	New module 'u16-grapheme-len'.
+	* modules/unigbrk/u16-grapheme-len: New file.
+	* modules/unigbrk/u16-grapheme-len-tests: New file.
+	* lib/unigbrk.in.h: Add prototype for new function.
+	* lib/unigbrk/u16-grapheme-len.c: New file.
+	* tests/unigbrk/test-u16-grapheme-len.c: New file.
+
+	New module 'u32-grapheme-len'.
+	* modules/unigbrk/u32-grapheme-len: New file.
+	* modules/unigbrk/u32-grapheme-len-tests: New file.
+	* lib/unigbrk.in.h: Add prototype for new function.
+	* lib/unigbrk/u32-grapheme-len.c: New file.
+	* tests/unigbrk/test-u32-grapheme-len.c: New file.
+
+	New module 'u8-grapheme-next'.
+	* modules/unigbrk/u8-grapheme-next: New file.
+	* modules/unigbrk/u8-grapheme-next-tests: New file.
+	* lib/unigbrk.in.h: Add prototype for new function.
+	* lib/unigbrk/u8-grapheme-next.c: New file.
+	* tests/unigbrk/test-u8-grapheme-next.c: New file.
+
+	New module 'u16-grapheme-next'.
+	* modules/unigbrk/u16-grapheme-next: New file.
+	* modules/unigbrk/u16-grapheme-next-tests: New file.
+	* lib/unigbrk.in.h: Add prototype for new function.
+	* lib/unigbrk/u16-grapheme-next.c: New file.
+	* tests/unigbrk/test-u16-grapheme-next.c: New file.
+
+	New module 'u32-grapheme-next'.
+	* modules/unigbrk/u32-grapheme-next: New file.
+	* modules/unigbrk/u32-grapheme-next-tests: New file.
+	* lib/unigbrk.in.h: Add prototype for new function.
+	* lib/unigbrk/u32-grapheme-next.c: New file.
+	* tests/unigbrk/test-u32-grapheme-next.c: New file.
+
+	New module 'u8-grapheme-prev'.
+	* modules/unigbrk/u8-grapheme-prev: New file.
+	* modules/unigbrk/u8-grapheme-prev-tests: New file.
+	* lib/unigbrk.in.h: Add prototype for new function.
+	* lib/unigbrk/u8-grapheme-prev.c: New file.
+	* tests/unigbrk/test-u8-grapheme-prev.c: New file.
+
+	New module 'u16-grapheme-prev'.
+	* modules/unigbrk/u16-grapheme-prev: New file.
+	* modules/unigbrk/u16-grapheme-prev-tests: New file.
+	* lib/unigbrk.in.h: Add prototype for new function.
+	* lib/unigbrk/u16-grapheme-prev.c: New file.
+	* tests/unigbrk/test-u16-grapheme-prev.c: New file.
+
+	New module 'u32-grapheme-prev'.
+	* modules/unigbrk/u32-grapheme-prev: New file.
+	* modules/unigbrk/u32-grapheme-prev-tests: New file.
+	* lib/unigbrk.in.h: Add prototype for new function.
+	* lib/unigbrk/u32-grapheme-prev.c: New file.
+	* tests/unigbrk/test-u32-grapheme-prev.c: New file.
+
+	New module 'u8-grapheme-breaks'.
+	* modules/unigbrk/u8-grapheme-breaks: New file.
+	* modules/unigbrk/u8-grapheme-breaks-tests: New file.
+	* lib/unigbrk.in.h: Add prototype for new function.
+	* lib/unigbrk/u8-grapheme-breaks.c: New file.
+	* tests/unigbrk/test-u8-grapheme-breaks.c: New file.
+
+	New module 'u16-grapheme-breaks'.
+	* modules/unigbrk/u16-grapheme-breaks: New file.
+	* modules/unigbrk/u16-grapheme-breaks-tests: New file.
+	* lib/unigbrk.in.h: Add prototype for new function.
+	* lib/unigbrk/u16-grapheme-breaks.c: New file.
+	* tests/unigbrk/test-u16-grapheme-breaks.c: New file.
+
+	New module 'u32-grapheme-breaks'.
+	* modules/unigbrk/u32-grapheme-breaks: New file.
+	* modules/unigbrk/u32-grapheme-breaks-tests: New file.
+	* lib/unigbrk.in.h: Add prototype for new function.
+	* lib/unigbrk/u32-grapheme-breaks.c: New file.
+	* tests/unigbrk/test-u32-grapheme-breaks.c: New file.
+
+	New module 'ulc-grapheme-breaks'.
+	* modules/unigbrk/ulc-grapheme-breaks: New file.
+	* modules/unigbrk/ulc-grapheme-breaks-tests: New file.
+	* m4/locale-ar.m4: New file.
+	* lib/unigbrk/ulc-grapheme-breaks.c: New file.
+	* tests/unigbrk/test-ulc-grapheme-breaks.c: New file.
+	* tests/unigbrk/test-ulc-grapheme-breaks.sh: New file.
+
+2010-12-31  Ben Pfaff  <blp@cs.stanford.edu>
+
+	gbrkprop: Fix implementation of uc_graphemeclusterbreak_property.
+	* lib/unigbrk/gbrkprop.h: Regenerate with gen-uni-tables.c.  I had
+	modified how this file was generated before I initially submitted
+	the module, but failed to regenerate it.  This meant that several
+	of the level2 entries were wrong.
+	* lib/unigbrk/uc-gbrk-prop.h (uc_graphemeclusterbreak_property):
+	Remove the division-by-2 that is folded into the table now that
+	gbrkprop.h has been regenerated properly.  Now -1 entries are
+	handled correctly.
+
+	New module 'unigbrk/uc-gbrk-prop-tests'.
+	* modules/unigbrk/uc-gbrk-prop-tests: New file.
+	* lib/gen-uni-tables.c: Generate tests/test-uc-gbrk-prop.h.
+	* tests/unigbrk/test-uc-gbrk-prop.c: New file.
+	* tests/unigbrk/test-uc-gbrk-prop.h: New file.
+
+2011-01-01  Bruno Haible  <bruno@clisp.org>
+
+	Avoid use of hexadecimal escapes.
+	* tests/unigbrk/test-uc-is-grapheme-break.c (main): Use octal escapes
+	instead of hexadecimal escapes.
+
+2011-01-01  Jim Meyering  <meyering@redhat.com>
+
+	maint: new rule to update copyright year ranges
+	* Makefile (update-copyright): New rule.
+
+	maint: indent with TABs in Makefile
+	* Makefile: Expand leading sequences of spaces to TABs
+
+	version-etc: update the copyright year it reports
+	* lib/version-etc.c (COPYRIGHT_YEAR): Update to 2011.
+
+2010-12-31  Bruno Haible  <bruno@clisp.org>
+
+	isfinite: Avoid compiler bug of "cc -O" on HP-UX 11.11.
+	* lib/isfinite.c (zerof, zerod, zerol): New variables.
+	(gl_isfinitef, gl_isfinited, gl_isfinitel): Use them instead of literal
+	zero.
+
+2010-12-31  Bruno Haible  <bruno@clisp.org>
+
+	pwrite: Work around HP-UX 11.11 bug.
+	* m4/pwrite.m4 (gl_FUNC_PWRITE): When pwrite exists, test whether it
+	works and set REPLACE_PWRITE if not.
+	* lib/pwrite.c (pwrite): Add an implementation that uses the system
+	function.
+	* doc/posix-functions/pwrite.texi: Document the HP-UX 11 bug.
+
+2010-12-31  Bruno Haible  <bruno@clisp.org>
+
+	pread: Work around HP-UX 11 bugs.
+	* m4/pread.m4 (gl_FUNC_PREAD): When pread exists, test whether it works
+	and set REPLACE_PREAD if not.
+	* doc/posix-functions/pread.texi: Document the HP-UX 11 bugs.
+
+2010-12-31  Eric Blake  <eblake@redhat.com>
+
+	nl_langinfo: fix YESEXPR on Irix 6.5
+	* m4/nl_langinfo.m4 (gl_FUNC_NL_LANGINFO): Test for Irix bug.
+	* lib/nl_langinfo.c (rpl_nl_langinfo): Work around it.
+	* doc/posix-functions/nl_langinfo.texi (nl_langinfo): Document
+	it.
+
+2010-12-31  Bruno Haible  <bruno@clisp.org>
+
+	iconv: Document HP-UX 11 bug.
+	* doc/posix-functions/iconv.texi: Document HP-UX 11 return value bug.
+
+2010-12-31  Bruno Haible  <bruno@clisp.org>
+
+	ldexpl: Fix link error on HP-UX 11.
+	* m4/ldexpl.m4 (gl_FUNC_LDEXPL): When replacing ldexpl, set
+	LDEXPL_LIBM, using $ISNANL_LIBM.
+
+2010-12-31  Eric Blake  <eblake@redhat.com>
+
+	ftello: avoid compilation failure with SunStudio c89
+	* lib/ftello.c (ftello): Use lseek, not llseek.
+
+	tests: avoid failing coreutils tests on cygwin
+	* tests/init.sh (find_exe_basenames_): Exempt [.exe.
+	(create_exe_shims_): Return 0 when skipping.
+
+2010-12-31  Bruno Haible  <bruno@clisp.org>
+
+	sys_select: Avoid warning about missing memset declaration on HP-UX 11.
+	* lib/sys_select.in.h: On HP-UX, include also <string.h>.
+
+2010-12-31  Bruno Haible  <bruno@clisp.org>
+
+	waitpid: Fix link error in C++ mode.
+	* lib/sys_wait.in.h: Remove extern "C" { ... } group.
+
+2010-12-31  Bruno Haible  <bruno@clisp.org>
+
+	isnan: Use GCC built-ins when possible.
+	* lib/math.in.h (gl_isnan_f): Use __builtin_isnanf instead of
+	__builtin_isnan.
+	(gl_isnan_l): Use __builtin_isnanl instead of __builtin_isnan.
+	(isnan): Define using GCC built-ins for GCC >= 4.0.
+
+2010-12-31  Bruno Haible  <bruno@clisp.org>
+
+	isnand: Fix mistake.
+	* m4/isnand.m4 (gl_HAVE_ISNAND_IN_LIBM): Use __builtin_isnan, not
+	__builtin_isnand.
+
+2010-12-31  Bruno Haible  <bruno@clisp.org>
+
+	open: Avoid C++ error on HP-UX 11.
+	* lib/fcntl.in.h (open): Disable _GL_CXXALIASWARN invocation on HP-UX.
+
+2010-12-31  Bruno Haible  <bruno@clisp.org>
+
+	time_r: Add missing declarations on HP-UX 11.
+	* lib/time.in.h (localtime_r, gmtime_r): Test HAVE_DECL_LOCALTIME_R
+	instead of HAVE_LOCALTIME_R.
+	* m4/time_r.m4 (gl_TIME_R): Test whether localtime_r is declared. Set
+	HAVE_LOCALTIME_R always.
+	* m4/time_h.m4 (gl_HEADER_TIME_H_DEFAULTS): Initialize
+	HAVE_DECL_LOCALTIME_R, not HAVE_LOCALTIME_R.
+	* modules/time (Makefile.am): Substitute HAVE_DECL_LOCALTIME_R, not
+	HAVE_LOCALTIME_R.
+	* doc/posix-functions/gmtime_r.texi: Document the HP-UX 11 problem.
+	* doc/posix-functions/localtime_r.texi: Likewise.
 
 2010-12-30  Bruce Korb  <bkorb@gnu.org>
 
@@ -73358,7 +75187,7 @@
 	coding: utf-8
 	End:
 
-	Copyright (C) 1997-2010 Free Software Foundation, Inc.
+	Copyright (C) 1997-2011 Free Software Foundation, Inc.
 
 	Copying and distribution of this file, with or without
 	modification, are permitted provided the copyright notice

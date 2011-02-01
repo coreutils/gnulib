@@ -1,6 +1,6 @@
 /* Like <fcntl.h>, but with non-working flags defined to 0.
 
-   Copyright (C) 2006-2010 Free Software Foundation, Inc.
+   Copyright (C) 2006-2011 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -107,7 +107,11 @@ _GL_CXXALIAS_RPL (open, int, (const char *filename, int flags, ...));
 # else
 _GL_CXXALIAS_SYS (open, int, (const char *filename, int flags, ...));
 # endif
+/* On HP-UX 11, in C++ mode, open() is defined as an inline function with a
+   default argument.  _GL_CXXALIASWARN does not work in this case.  */
+# if !defined __hpux
 _GL_CXXALIASWARN (open);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef open
 /* Assume open is always declared.  */

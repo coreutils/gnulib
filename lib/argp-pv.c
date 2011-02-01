@@ -1,5 +1,5 @@
 /* Default definition for ARGP_PROGRAM_VERSION.
-   Copyright (C) 1996, 1997, 1999, 2006, 2009, 2010 Free Software Foundation,
+   Copyright (C) 1996-1997, 1999, 2006, 2009-2011 Free Software Foundation,
    Inc.
    This file is part of the GNU C Library.
    Written by Miles Bader <miles@gnu.ai.mit.edu>.

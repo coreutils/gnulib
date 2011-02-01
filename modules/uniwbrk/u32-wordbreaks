@@ -12,7 +12,7 @@ uniwbrk/table
 unistr/u32-mbtouc-unsafe
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([0.9], [uniwbrk/u32-wordbreaks])
+gl_LIBUNISTRING_MODULE([0.9.4], [uniwbrk/u32-wordbreaks])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNIWBRK_U32_WORDBREAKS

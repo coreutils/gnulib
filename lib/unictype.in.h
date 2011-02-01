@@ -1,5 +1,5 @@
 /* Unicode character classification and properties.
-   Copyright (C) 2002, 2005-2010 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2005-2011 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify it
    under the terms of the GNU Lesser General Public License as published
@@ -389,6 +389,13 @@ extern const uc_property_t UC_PROPERTY_OTHER_UPPERCASE;
 extern const uc_property_t UC_PROPERTY_LOWERCASE;
 extern const uc_property_t UC_PROPERTY_OTHER_LOWERCASE;
 extern const uc_property_t UC_PROPERTY_TITLECASE;
+extern const uc_property_t UC_PROPERTY_CASED;
+extern const uc_property_t UC_PROPERTY_CASE_IGNORABLE;
+extern const uc_property_t UC_PROPERTY_CHANGES_WHEN_LOWERCASED;
+extern const uc_property_t UC_PROPERTY_CHANGES_WHEN_UPPERCASED;
+extern const uc_property_t UC_PROPERTY_CHANGES_WHEN_TITLECASED;
+extern const uc_property_t UC_PROPERTY_CHANGES_WHEN_CASEFOLDED;
+extern const uc_property_t UC_PROPERTY_CHANGES_WHEN_CASEMAPPED;
 extern const uc_property_t UC_PROPERTY_SOFT_DOTTED;
 /* Identifiers.  */
 extern const uc_property_t UC_PROPERTY_ID_START;
@@ -485,6 +492,13 @@ extern bool uc_is_property_other_uppercase (ucs4_t uc);
 extern bool uc_is_property_lowercase (ucs4_t uc);
 extern bool uc_is_property_other_lowercase (ucs4_t uc);
 extern bool uc_is_property_titlecase (ucs4_t uc);
+extern bool uc_is_property_cased (ucs4_t uc);
+extern bool uc_is_property_case_ignorable (ucs4_t uc);
+extern bool uc_is_property_changes_when_lowercased (ucs4_t uc);
+extern bool uc_is_property_changes_when_uppercased (ucs4_t uc);
+extern bool uc_is_property_changes_when_titlecased (ucs4_t uc);
+extern bool uc_is_property_changes_when_casefolded (ucs4_t uc);
+extern bool uc_is_property_changes_when_casemapped (ucs4_t uc);
 extern bool uc_is_property_soft_dotted (ucs4_t uc);
 extern bool uc_is_property_id_start (ucs4_t uc);
 extern bool uc_is_property_other_id_start (ucs4_t uc);

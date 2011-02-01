@@ -1,5 +1,5 @@
-# fcntl.m4 serial 3
-dnl Copyright (C) 2009, 2010 Free Software Foundation, Inc.
+# fcntl.m4 serial 4
+dnl Copyright (C) 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -24,11 +24,16 @@ AC_DEFUN([gl_FUNC_FCNTL],
     gl_REPLACE_FCNTL
   else
     dnl cygwin 1.5.x F_DUPFD has wrong errno, and allows negative target
+    dnl haiku alpha 2 F_DUPFD has wrong errno
     AC_CACHE_CHECK([whether fcntl handles F_DUPFD correctly],
       [gl_cv_func_fcntl_f_dupfd_works],
       [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
 #include <fcntl.h>
-]], [[return fcntl (0, F_DUPFD, -1) != -1;
+#include <errno.h>
+]], [[int result = 0;
+      if (fcntl (0, F_DUPFD, -1) != -1) result |= 1;
+      if (errno != EINVAL) result |= 2;
+      return result;
          ]])],
          [gl_cv_func_fcntl_f_dupfd_works=yes],
          [gl_cv_func_fcntl_f_dupfd_works=no],

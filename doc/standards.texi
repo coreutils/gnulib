@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate September 9, 2010
+@set lastupdate January 27, 2011
 @c %**end of header
 
 @dircategory GNU organization
@@ -27,8 +27,8 @@
 The GNU coding standards, last updated @value{lastupdate}.
 
 Copyright @copyright{} 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999,
-2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010 Free Software
-Foundation, Inc.
+2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011
+Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -703,7 +703,11 @@ fd = open (filename, O_WRONLY | O_CREAT | O_EXCL, 0600);
 @noindent
 or by using the @code{mkstemps} function from libiberty.
 
-In bash, use @code{set -C} to avoid this problem.
+In bash, use @code{set -C} (long name @code{noclobber}) to avoid this
+problem.  In addition, the @code{mktemp} utility is a more general
+solution for creating temporary files from shell scripts
+(@pxref{mktemp invocation,,, coreutils, GNU Coreutils}).
+
 
 @node Libraries
 @section Library Behavior

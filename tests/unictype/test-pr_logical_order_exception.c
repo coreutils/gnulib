@@ -18,7 +18,10 @@
 #include "test-predicate-part1.h"
 
     { 0x0E40, 0x0E44 },
-    { 0x0EC0, 0x0EC4 }
+    { 0x0EC0, 0x0EC4 },
+    { 0xAAB5, 0xAAB6 },
+    { 0xAAB9, 0xAAB9 },
+    { 0xAABB, 0xAABC }
 
 #define PREDICATE(c) uc_is_property_logical_order_exception (c)
 #include "test-predicate-part2.h"

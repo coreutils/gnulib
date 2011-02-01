@@ -12,7 +12,7 @@ uninorm/composition
 uninorm/nfkd
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([0.9], [uninorm/nfkc])
+gl_LIBUNISTRING_MODULE([0.9.4], [uninorm/nfkc])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNINORM_NFKC

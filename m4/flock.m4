@@ -1,5 +1,5 @@
-# flock.m4 serial 1
-dnl Copyright (C) 2008-2010 Free Software Foundation, Inc.
+# flock.m4 serial 2
+dnl Copyright (C) 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -19,7 +19,7 @@ dnl Prerequisites of lib/flock.c.
 AC_DEFUN([gl_PREREQ_FLOCK],
 [
   AC_CHECK_FUNCS_ONCE([fcntl])
-  AC_CHECK_HEADERS_ONCE([unistd.h fcntl.h])
+  AC_CHECK_HEADERS_ONCE([unistd.h])
 
   dnl Do we have a POSIX fcntl lock implementation?
   AC_CHECK_MEMBERS([struct flock.l_type],[],[],[[#include <fcntl.h>]])

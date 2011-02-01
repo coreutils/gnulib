@@ -1,5 +1,5 @@
-# sys_select_h.m4 serial 15
-dnl Copyright (C) 2006-2010 Free Software Foundation, Inc.
+# sys_select_h.m4 serial 16
+dnl Copyright (C) 2006-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -45,7 +45,6 @@ AC_DEFUN([gl_HEADER_SYS_SELECT],
           ])
       fi
     ])
-  AC_CHECK_HEADERS_ONCE([sys/select.h])
   dnl <sys/select.h> is always overridden, because of GNULIB_POSIXCHECK.
   gl_CHECK_NEXT_HEADERS([sys/select.h])
   if test $ac_cv_header_sys_select_h = yes; then

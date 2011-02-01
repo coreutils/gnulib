@@ -1,11 +1,9 @@
 Description:
-Convert floating point to accurate string
+Convert float to accurate string.
 
 Files:
 lib/ftoastr.h
 lib/ftoastr.c
-lib/dtoastr.c
-lib/ldtoastr.c
 m4/c-strtod.m4
 
 Depends-on:
@@ -15,7 +13,7 @@ configure.ac:
 AC_REQUIRE([gl_C99_STRTOLD])
 
 Makefile.am:
-lib_SOURCES += ftoastr.h ftoastr.c dtoastr.c ldtoastr.c
+lib_SOURCES += ftoastr.c
 
 Include:
 "ftoastr.h"

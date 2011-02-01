@@ -1,6 +1,6 @@
 dnl A placeholder for POSIX 2008 <stddef.h>, for platforms that have issues.
-# stddef_h.m4 serial 2
-dnl Copyright (C) 2009, 2010 Free Software Foundation, Inc.
+# stddef_h.m4 serial 3
+dnl Copyright (C) 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -25,7 +25,7 @@ AC_DEFUN([gl_STDDEF_H],
     STDDEF_H=stddef.h
   fi
   if test -n "$STDDEF_H"; then
-    gl_CHECK_NEXT_HEADERS([stddef.h])
+    gl_NEXT_HEADERS([stddef.h])
   fi
 ])
 

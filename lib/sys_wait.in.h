@@ -1,5 +1,5 @@
 /* A POSIX-like <sys/wait.h>.
-   Copyright (C) 2001-2003, 2005-2010 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2005-2011 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -108,9 +108,6 @@
 
 #endif
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /* Declarations of functions.  */
 
@@ -128,9 +125,6 @@ _GL_WARN_ON_USE (waitpid, "waitpid is unportable - "
 # endif
 #endif
 
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* _GL_SYS_WAIT_H */
 #endif /* _GL_SYS_WAIT_H */

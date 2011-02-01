@@ -56,13 +56,16 @@ The following packages appear to be using gnulib and gnulib-tool:
   myserver        http://git.sv.gnu.org/gitweb/?p=myserver.git;a=summary
   netcf           http://fedorahosted.org/netcf/
   newts           http://svn.arete.cc/newts/trunk/
+  OATH Toolkit    http://www.nongnu.org/oath-toolkit/
   parted          http://git.debian.org/?p=parted/parted.git;a=summary
   patch           http://git.sv.gnu.org/gitweb/?p=patch.git
   prelude-lml     https://trac.prelude-ids.org/browser/trunk/prelude-lml/
   prelude-manager https://trac.prelude-ids.org/browser/trunk/prelude-manager/
   pspp            http://git.sv.gnu.org/gitweb/?p=pspp.git
   radius          http://cvs.sv.gnu.org/viewcvs/radius/radius/
+  recutils        http://git.savannah.gnu.org/gitweb/?p=recutils.git
   sed             http://cvs.savannah.gnu.org/viewcvs/sed/?root=sed
+  sharutils       http://cvs.savannah.gnu.org/viewvc/sharutils/sharutils/
   shishi          http://git.sv.gnu.org/gitweb/?p=shishi.git
   tar             http://cvs.sv.gnu.org/viewcvs/tar/tar/
   texinfo         http://cvs.sv.gnu.org/viewcvs/texinfo/texinfo/
@@ -85,7 +88,7 @@ Articles:
 
 -----
 
-Copyright (C) 2006-2010 Free Software Foundation, Inc.
+Copyright (C) 2006-2011 Free Software Foundation, Inc.
 
 This file is free documentation; the Free Software Foundation
 gives unlimited permission to copy and/or distribute it,

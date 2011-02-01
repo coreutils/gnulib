@@ -1,6 +1,6 @@
 /* uint64_t-like operations that work even on hosts lacking uint64_t
 
-   Copyright (C) 2006, 2009, 2010 Free Software Foundation, Inc.
+   Copyright (C) 2006, 2009-2011 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -17,7 +17,6 @@
 
 /* Written by Paul Eggert.  */
 
-#include <stddef.h>
 #include <stdint.h>
 
 /* Return X rotated left by N bits, where 0 < N < 64.  */

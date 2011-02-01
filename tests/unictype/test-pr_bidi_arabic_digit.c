@@ -20,7 +20,9 @@
     { 0x0600, 0x0603 },
     { 0x0660, 0x0669 },
     { 0x066B, 0x066C },
-    { 0x06DD, 0x06DD }
+    { 0x06DD, 0x06DD },
+    { 0x070F, 0x070F },
+    { 0x10E60, 0x10E7E }
 
 #define PREDICATE(c) uc_is_property_bidi_arabic_digit (c)
 #include "test-predicate-part2.h"

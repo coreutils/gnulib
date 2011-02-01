@@ -1,5 +1,5 @@
-# parse-datetime.m4 serial 18
-dnl Copyright (C) 2002-2006, 2008-2010 Free Software Foundation, Inc.
+# parse-datetime.m4 serial 19
+dnl Copyright (C) 2002-2006, 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -41,9 +41,11 @@ AC_DEFUN([gl_PARSE_DATETIME],
 #include <time.h> /* for time_t */
 #include <limits.h> /* for CHAR_BIT, LONG_MIN, LONG_MAX */
 #define TYPE_MINIMUM(t) \
-  ((t) ((t) 0 < (t) -1 ? (t) 0 : ~ (t) 0 << (sizeof (t) * CHAR_BIT - 1)))
+  ((t) ((t) 0 < (t) -1 ? (t) 0 : ~ TYPE_MAXIMUM (t)))
 #define TYPE_MAXIMUM(t) \
-  ((t) ((t) 0 < (t) -1 ? (t) -1 : ~ (~ (t) 0 << (sizeof (t) * CHAR_BIT - 1))))
+  ((t) ((t) 0 < (t) -1 \
+        ? (t) -1 \
+        : ((((t) 1 << (sizeof (t) * CHAR_BIT - 2)) - 1) * 2 + 1)))
 typedef int verify_min[2 * (LONG_MIN <= TYPE_MINIMUM (time_t)) - 1];
 typedef int verify_max[2 * (TYPE_MAXIMUM (time_t) <= LONG_MAX) - 1];
        ]])],

@@ -1,5 +1,5 @@
-# sys_utsname_h.m4 serial 6
-dnl Copyright (C) 2009-2010 Free Software Foundation, Inc.
+# sys_utsname_h.m4 serial 7
+dnl Copyright (C) 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -14,7 +14,6 @@ AC_DEFUN([gl_SYS_UTSNAME_H],
 
   dnl <sys/utsname.h> is always overridden, because of GNULIB_POSIXCHECK.
   gl_CHECK_NEXT_HEADERS([sys/utsname.h])
-  AC_CHECK_HEADERS_ONCE([sys/utsname.h])
   if test $ac_cv_header_sys_utsname_h != yes; then
     HAVE_SYS_UTSNAME_H=0
     HAVE_STRUCT_UTSNAME=0

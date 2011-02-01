@@ -1,6 +1,6 @@
-# serial 12
+# serial 13
 # Configure fcntl.h.
-dnl Copyright (C) 2006, 2007, 2009, 2010 Free Software Foundation, Inc.
+dnl Copyright (C) 2006-2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -11,7 +11,7 @@ AC_DEFUN([gl_FCNTL_H],
 [
   AC_REQUIRE([gl_FCNTL_H_DEFAULTS])
   AC_REQUIRE([gl_FCNTL_O_FLAGS])
-  gl_CHECK_NEXT_HEADERS([fcntl.h])
+  gl_NEXT_HEADERS([fcntl.h])
 
   dnl Check for declarations of anything we want to poison if the
   dnl corresponding gnulib module is not in use, if it is not common

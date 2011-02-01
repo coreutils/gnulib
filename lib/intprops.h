@@ -1,7 +1,6 @@
 /* intprops.h -- properties of integer types
 
-   Copyright (C) 2001, 2002, 2003, 2004, 2005, 2009, 2010 Free Software
-   Foundation, Inc.
+   Copyright (C) 2001-2005, 2009-2011 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -50,11 +49,11 @@
         ? (t) 0 \
         : TYPE_SIGNED_MAGNITUDE (t) \
         ? ~ (t) 0 \
-        : ~ (t) 0 << (sizeof (t) * CHAR_BIT - 1)))
+        : ~ TYPE_MAXIMUM (t)))
 # define TYPE_MAXIMUM(t) \
   ((t) (! TYPE_SIGNED (t) \
         ? (t) -1 \
-        : ~ (~ (t) 0 << (sizeof (t) * CHAR_BIT - 1))))
+        : ((((t) 1 << (sizeof (t) * CHAR_BIT - 2)) - 1) * 2 + 1)))
 
 /* Return zero if T can be determined to be an unsigned type.
    Otherwise, return 1.

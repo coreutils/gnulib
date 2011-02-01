@@ -12,7 +12,7 @@ unictype/bidicategory-of
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
-gl_LIBUNISTRING_MODULE([0.9], [unictype/property-bidi-arabic-right-to-left])
+gl_LIBUNISTRING_MODULE([0.9.4], [unictype/property-bidi-arabic-right-to-left])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICTYPE_PROPERTY_BIDI_ARABIC_RIGHT_TO_LEFT

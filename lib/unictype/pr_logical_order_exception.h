@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-ctype.c for Unicode 5.1.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 6.0.0.  */
 #define header_0 16
 #define header_2 9
 #define header_3 127
@@ -11,7 +11,7 @@ struct
     int header[1];
     int level1[1];
     short level2[1 << 7];
-    /*unsigned*/ int level3[1 << 4];
+    /*unsigned*/ int level3[2 << 4];
   }
 u_property_logical_order_exception =
 {
@@ -103,7 +103,7 @@ u_property_logical_order_exception =
        -1,
        -1,
        -1,
-       -1,
+        2 +   128 * sizeof (short) / sizeof (int) +    16,
        -1,
        -1,
        -1,
@@ -150,6 +150,10 @@ u_property_logical_order_exception =
   {
     0x00000000, 0x00000000, 0x0000001F, 0x00000000,
     0x00000000, 0x00000000, 0x0000001F, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x1A600000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000
   }

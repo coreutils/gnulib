@@ -26,7 +26,8 @@
     { 0x2080, 0x2089 },
     { 0x2488, 0x249B },
     { 0xFF10, 0xFF19 },
-    { 0x1D7CE, 0x1D7FF }
+    { 0x1D7CE, 0x1D7FF },
+    { 0x1F100, 0x1F10A }
 
 #define PREDICATE(c) uc_is_property_bidi_european_digit (c)
 #include "test-predicate-part2.h"

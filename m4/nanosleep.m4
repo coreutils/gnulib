@@ -1,11 +1,11 @@
-# serial 32
+# serial 33
 
 dnl From Jim Meyering.
 dnl Check for the nanosleep function.
 dnl If not found, use the supplied replacement.
 dnl
 
-# Copyright (C) 1999-2001, 2003-2010 Free Software Foundation, Inc.
+# Copyright (C) 1999-2001, 2003-2011 Free Software Foundation, Inc.
 
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -58,7 +58,7 @@ AC_DEFUN([gl_FUNC_NANOSLEEP],
           #define TYPE_MAXIMUM(t) \
             ((t) (! TYPE_SIGNED (t) \
                   ? (t) -1 \
-                  : ~ (~ (t) 0 << (sizeof (t) * CHAR_BIT - 1))))
+                  : ((((t) 1 << (sizeof (t) * CHAR_BIT - 2)) - 1) * 2 + 1)))
 
           static void
           check_for_SIGALRM (int sig)

@@ -1,5 +1,5 @@
 /* Test of getting user name.
-   Copyright (C) 2010 Free Software Foundation, Inc.
+   Copyright (C) 2010-2011 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -78,7 +78,13 @@ main (void)
     size_t i;
 
     for (i = 0; i <= n; i++)
-      ASSERT (getlogin_r (smallbuf, i) == ERANGE);
+      {
+        err = getlogin_r (smallbuf, i);
+        if (i == 0)
+          ASSERT (err == ERANGE || err == EINVAL);
+        else
+          ASSERT (err == ERANGE);
+      }
   }
 
   /* Test with a huge buffer.  */

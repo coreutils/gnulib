@@ -1,6 +1,5 @@
 /* Canonical list of all signal names.
-   Copyright (C) 1996, 1997, 1998, 1999, 2008, 2009, 2010 Free Software
-   Foundation, Inc.
+   Copyright (C) 1996-1999, 2008-2011 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 
    This program is free software: you can redistribute it and/or modify
@@ -23,6 +22,9 @@
    this single common file for all platforms.  */
 
 /* This file is included multiple times.  */
+
+/* Duplicate values (such as SIGBUS==SIGSEGV on Haiku) favor the last
+   list entry.  */
 
 /* Standard signals  */
 #ifdef SIGHUP

@@ -1,5 +1,5 @@
 Description:
-Variables set by "configure" or "make".
+Access from source code to variables set by "configure" or "make".
 
 Files:
 m4/configmake.m4
@@ -10,20 +10,6 @@ configure.ac:
 gl_CONFIGMAKE_PREP
 
 Makefile.am:
-# Retrieve values of the variables through 'configure' followed by
-# 'make', not directly through 'configure', so that a user who
-# sets some of these variables consistently on the 'make' command
-# line gets correct results.
-#
-# One advantage of this approach, compared to the classical
-# approach of adding -DLIBDIR=\"$(libdir)\" etc. to AM_CPPFLAGS,
-# is that it protects against the use of undefined variables.
-# If, say, $(libdir) is not set in the Makefile, LIBDIR is not
-# defined by this module, and code using LIBDIR gives a
-# compilation error.
-#
-# Another advantage is that 'make' output is shorter.
-#
 # Listed in the same order as the GNU makefile conventions, and
 # provided by autoconf 2.59c+.
 # The Automake-defined pkg* macros are appended, in the order

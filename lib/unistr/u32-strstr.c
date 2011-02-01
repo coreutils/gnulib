@@ -1,5 +1,5 @@
 /* Substring test for UTF-32 strings.
-   Copyright (C) 1999, 2002, 2006, 2009-2010 Free Software Foundation, Inc.
+   Copyright (C) 1999, 2002, 2006, 2009-2011 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2002.
 
    This program is free software: you can redistribute it and/or modify it
@@ -20,7 +20,15 @@
 /* Specification.  */
 #include "unistr.h"
 
-#define FUNC u32_strstr
+#include "malloca.h"
+
 #define UNIT uint32_t
+
+#define CANON_ELEMENT(c) c
+#include "str-kmp.h"
+
+#define FUNC u32_strstr
 #define U_STRCHR u32_strchr
+#define U_STRLEN u32_strlen
+#define U_STRNLEN u32_strnlen
 #include "u-strstr.h"

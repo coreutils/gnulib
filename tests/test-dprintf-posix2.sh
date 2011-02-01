@@ -9,14 +9,14 @@
 ) 2>/dev/null
 malloc_result=$?
 if test $malloc_result = 77; then
-  echo "Skipping test: getrlimit and setrlimit don't work"
+  echo "Skipping test: no way to determine address space size"
   exit 77
 fi
 
 ./test-dprintf-posix2${EXEEXT} 1 > /dev/null
 result=$?
 if test $result = 77; then
-  echo "Skipping test: getrlimit and setrlimit don't work"
+  echo "Skipping test: no way to determine address space size"
   exit 77
 fi
 if test $result != 0; then
@@ -24,7 +24,7 @@ if test $result != 0; then
 fi
 
 if test $malloc_result = 78; then
-  echo "Skipping test: getrlimit and setrlimit don't work"
+  echo "Skipping test: get_rusage_as() doesn't work"
   exit 77
 fi
 
