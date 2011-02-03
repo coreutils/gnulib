@@ -169,7 +169,12 @@ main (void)
   ASSERT (dup2 (fd + 1, fd + 1) == fd + 1);
   ASSERT (!is_inheritable (fd + 1));
   ASSERT (dup2 (fd + 1, fd + 2) == fd + 2);
+  ASSERT (!is_inheritable (fd + 1));
   ASSERT (is_inheritable (fd + 2));
+  errno = 0;
+  ASSERT (dup2 (fd + 1, -1) == -1);
+  ASSERT (errno == EBADF);
+  ASSERT (!is_inheritable (fd + 1));
 #endif
 
   /* On systems that distinguish between text and binary mode, dup2

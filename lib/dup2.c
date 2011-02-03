@@ -59,6 +59,10 @@ rpl_dup2 (int fd, int desired_fd)
       errno = EBADF;
       return -1;
     }
+# elif !defined __linux__
+  /* On Haiku, dup2 (fd, fd) mistakenly clears FD_CLOEXEC.  */
+  if (fd == desired_fd)
+    return fcntl (fd, F_GETFL) == -1 ? -1 : fd;
 # endif
   result = dup2 (fd, desired_fd);
 # ifdef __linux__
