@@ -1753,8 +1753,9 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
     return NULL;
 
 #define CLEANUP() \
-  free (d.dir);                                                         \
-  if (a.arg)                                                            \
+  if (d.dir != d.direct_alloc_dir)                                      \
+    free (d.dir);                                                       \
+  if (a.arg != a.direct_alloc_arg)                                      \
     free (a.arg);
 
   if (PRINTF_FETCHARGS (args, &a) < 0)

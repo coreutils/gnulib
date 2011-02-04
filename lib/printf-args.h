@@ -1,5 +1,5 @@
 /* Decomposed printf argument list.
-   Copyright (C) 1999, 2002-2003, 2006-2007, 2009-2011 Free Software
+   Copyright (C) 1999, 2002-2003, 2006-2007, 2011 Free Software
    Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -136,10 +136,14 @@ typedef struct
 }
 argument;
 
+/* Number of directly allocated arguments (no malloc() needed).  */
+#define N_DIRECT_ALLOC_ARGUMENTS 7
+
 typedef struct
 {
   size_t count;
   argument *arg;
+  argument direct_alloc_arg[N_DIRECT_ALLOC_ARGUMENTS];
 }
 arguments;
 
