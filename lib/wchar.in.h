@@ -446,6 +446,24 @@ _GL_WARN_ON_USE (wmemchr, "wmemchr is unportable - "
 #endif
 
 
+/* Compare N wide characters of S1 and S2.  */
+#if @GNULIB_WMEMCMP@
+# if !@HAVE_WMEMCMP@
+_GL_FUNCDECL_SYS (wmemcmp, int,
+                  (const wchar_t *s1, const wchar_t *s2, size_t n));
+# endif
+_GL_CXXALIAS_SYS (wmemcmp, int,
+                  (const wchar_t *s1, const wchar_t *s2, size_t n));
+_GL_CXXALIASWARN (wmemcmp);
+#elif defined GNULIB_POSIXCHECK
+# undef wmemcmp
+# if HAVE_RAW_DECL_WMEMCMP
+_GL_WARN_ON_USE (wmemcmp, "wmemcmp is unportable - "
+                 "use gnulib module wmemcmp for portability");
+# endif
+#endif
+
+
 #endif /* _GL_WCHAR_H */
 #endif /* _GL_WCHAR_H */
 #endif

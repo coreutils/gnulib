@@ -1,3 +1,17 @@
+2011-02-05  Bruno Haible  <bruno@clisp.org>
+
+	New module 'wmemcmp'.
+	* modules/wmemcmp: New file.
+	* lib/wchar.in.h (wmemcmp): New declaration.
+	* lib/wmemcmp.c: New file.
+	* lib/wmemcmp-impl.h: New file, from libutf8 with modifications.
+	* m4/wmemcmp.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wmemcmp is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WMEMCMP, HAVE_WMEMCMP.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WMEMCMP, HAVE_WMEMCMP.
+	* tests/test-wchar-c++.cc: Test the declaration of wmemcmp.
+	* doc/posix-functions/wmemcmp.texi: Mention the new module.
+
 2011-02-07  Jim Meyering  <meyering@redhat.com>
 
 	di-set, ino-map: new modules, from coreutils
