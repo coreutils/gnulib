@@ -1,3 +1,9 @@
+2011-02-04  Eric Blake  <eblake@redhat.com>
+
+	fdopendir: detect FreeBSD bug
+	* m4/fdopendir.m4 (gl_FUNC_FDOPENDIR): Detect bug.
+	* doc/posix-functions/fdopendir.texi (fdopendir): Document it.
+
 2011-02-04  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stdbool: do not define HAVE_STDBOOL_H

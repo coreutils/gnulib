@@ -23,6 +23,10 @@ FreeBSD 7.3.
 This function does not reject non-directory file descriptors on some
 platforms:
 GNU/Hurd.
+@item
+This function mistakenly closes non-directory file descriptors on some
+platforms:
+FreeBSD 8.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:
