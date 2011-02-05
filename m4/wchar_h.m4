@@ -51,7 +51,7 @@ AC_DEFUN([gl_WCHAR_H],
     ]],
     [btowc wctob mbsinit mbrtowc mbrlen mbsrtowcs mbsnrtowcs wcrtomb
      wcsrtombs wcsnrtombs wcwidth wmemchr wmemcmp wmemcpy wmemmove wmemset
-     wcslen wcsnlen wcscpy
+     wcslen wcsnlen wcscpy wcpcpy
     ])
 ])
 
@@ -154,6 +154,7 @@ AC_DEFUN([gl_WCHAR_H_DEFAULTS],
   GNULIB_WCSLEN=0;     AC_SUBST([GNULIB_WCSLEN])
   GNULIB_WCSNLEN=0;    AC_SUBST([GNULIB_WCSNLEN])
   GNULIB_WCSCPY=0;     AC_SUBST([GNULIB_WCSCPY])
+  GNULIB_WCPCPY=0;     AC_SUBST([GNULIB_WCPCPY])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_BTOWC=1;         AC_SUBST([HAVE_BTOWC])
   HAVE_MBSINIT=1;       AC_SUBST([HAVE_MBSINIT])
@@ -172,6 +173,7 @@ AC_DEFUN([gl_WCHAR_H_DEFAULTS],
   HAVE_WCSLEN=1;        AC_SUBST([HAVE_WCSLEN])
   HAVE_WCSNLEN=1;       AC_SUBST([HAVE_WCSNLEN])
   HAVE_WCSCPY=1;        AC_SUBST([HAVE_WCSCPY])
+  HAVE_WCPCPY=1;        AC_SUBST([HAVE_WCPCPY])
   HAVE_DECL_WCTOB=1;    AC_SUBST([HAVE_DECL_WCTOB])
   HAVE_DECL_WCWIDTH=1;  AC_SUBST([HAVE_DECL_WCWIDTH])
   REPLACE_MBSTATE_T=0;  AC_SUBST([REPLACE_MBSTATE_T])

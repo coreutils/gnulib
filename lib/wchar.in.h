@@ -565,6 +565,22 @@ _GL_WARN_ON_USE (wcscpy, "wcscpy is unportable - "
 #endif
 
 
+/* Copy SRC to DEST, returning the address of the terminating L'\0' in DEST.  */
+#if @GNULIB_WCPCPY@
+# if !@HAVE_WCPCPY@
+_GL_FUNCDECL_SYS (wcpcpy, wchar_t *, (wchar_t *dest, const wchar_t *src));
+# endif
+_GL_CXXALIAS_SYS (wcpcpy, wchar_t *, (wchar_t *dest, const wchar_t *src));
+_GL_CXXALIASWARN (wcpcpy);
+#elif defined GNULIB_POSIXCHECK
+# undef wcpcpy
+# if HAVE_RAW_DECL_WCPCPY
+_GL_WARN_ON_USE (wcpcpy, "wcpcpy is unportable - "
+                 "use gnulib module wcpcpy for portability");
+# endif
+#endif
+
+
 #endif /* _GL_WCHAR_H */
 #endif /* _GL_WCHAR_H */
 #endif
