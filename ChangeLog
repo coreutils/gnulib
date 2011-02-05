@@ -1,3 +1,12 @@
+2011-02-04  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdbool: do not define HAVE_STDBOOL_H
+	* m4/stdbool.m4 (AC_CHECK_HEADER_STDBOOL): Renamed from
+	AC_HEADER_STDBOOL.  All uses changed.  Do not define
+	HAVE_STDBOOL_H, as gnulib does not need this.  This change is
+	imported from the latest Autoconf git.  It was motivated by Emacs,
+	which uses gnulib but does not need HAVE_STDBOOL_H.
+
 2011-02-04  Bruno Haible  <bruno@clisp.org>
 
 	wcsnrtombs: Prepare for new module wwcsnrtombs.
