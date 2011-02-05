@@ -533,6 +533,22 @@ _GL_WARN_ON_USE (wcslen, "wcslen is unportable - "
 #endif
 
 
+/* Return the number of wide characters in S, but at most MAXLEN.  */
+#if @GNULIB_WCSNLEN@
+# if !@HAVE_WCSNLEN@
+_GL_FUNCDECL_SYS (wcsnlen, size_t, (const wchar_t *s, size_t maxlen));
+# endif
+_GL_CXXALIAS_SYS (wcsnlen, size_t, (const wchar_t *s, size_t maxlen));
+_GL_CXXALIASWARN (wcsnlen);
+#elif defined GNULIB_POSIXCHECK
+# undef wcsnlen
+# if HAVE_RAW_DECL_WCSNLEN
+_GL_WARN_ON_USE (wcsnlen, "wcsnlen is unportable - "
+                 "use gnulib module wcsnlen for portability");
+# endif
+#endif
+
+
 #endif /* _GL_WCHAR_H */
 #endif /* _GL_WCHAR_H */
 #endif
