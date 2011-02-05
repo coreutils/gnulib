@@ -1,5 +1,19 @@
 2011-02-05  Bruno Haible  <bruno@clisp.org>
 
+	New module 'wcsncpy'.
+	* modules/wcsncpy: New file.
+	* lib/wchar.in.h (wcsncpy): New declaration.
+	* lib/wcsncpy.c: New file.
+	* lib/wcsncpy-impl.h: New file, from libutf8 with modifications.
+	* m4/wcsncpy.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wcsncpy is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WCSNCPY, HAVE_WCSNCPY.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WCSNCPY, HAVE_WCSNCPY.
+	* tests/test-wchar-c++.cc: Test the declaration of wcsncpy.
+	* doc/posix-functions/wcsncpy.texi: Mention the new module.
+
+2011-02-05  Bruno Haible  <bruno@clisp.org>
+
 	New module 'wcpcpy'.
 	* modules/wcpcpy: New file.
 	* lib/wchar.in.h (wcpcpy): New declaration.
