@@ -1,5 +1,12 @@
 2011-02-04  Bruno Haible  <bruno@clisp.org>
 
+	mbsrtowcs: Prepare for new module mbsrtowwcs.
+	* lib/mbsrtowcs-impl.h: New file, extracted from lib/mbsrtowcs.c.
+	* lib/mbsrtowcs.c: Include it.
+	* modules/mbsrtowcs (Files): Add lib/mbsrtowcs-impl.h.
+
+2011-02-04  Bruno Haible  <bruno@clisp.org>
+
 	vasnprintf: Reduce use of malloc for small format strings.
 	* lib/printf-args.h (N_DIRECT_ALLOC_ARGUMENTS): New macro.
 	(arguments): Add room for the first 7 arguments.
