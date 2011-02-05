@@ -599,6 +599,25 @@ _GL_WARN_ON_USE (wcsncpy, "wcsncpy is unportable - "
 #endif
 
 
+/* Copy no more than N characters of SRC to DEST, returning the address of
+   the last character written into DEST.  */
+#if @GNULIB_WCPNCPY@
+# if !@HAVE_WCPNCPY@
+_GL_FUNCDECL_SYS (wcpncpy, wchar_t *,
+                  (wchar_t *dest, const wchar_t *src, size_t n));
+# endif
+_GL_CXXALIAS_SYS (wcpncpy, wchar_t *,
+                  (wchar_t *dest, const wchar_t *src, size_t n));
+_GL_CXXALIASWARN (wcpncpy);
+#elif defined GNULIB_POSIXCHECK
+# undef wcpncpy
+# if HAVE_RAW_DECL_WCPNCPY
+_GL_WARN_ON_USE (wcpncpy, "wcpncpy is unportable - "
+                 "use gnulib module wcpncpy for portability");
+# endif
+#endif
+
+
 #endif /* _GL_WCHAR_H */
 #endif /* _GL_WCHAR_H */
 #endif
