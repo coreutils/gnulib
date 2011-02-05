@@ -1,5 +1,10 @@
 2011-02-04  Bruno Haible  <bruno@clisp.org>
 
+	wcsrtombs: Prepare for new module wwcsrtombs.
+	* lib/wcsrtombs-impl.h: New file, extracted from lib/wcsrtombs.c.
+	* lib/wcsrtombs.c: Include it.
+	* modules/wcsrtombs (Files): Add lib/wcsrtombs-impl.h.
+
 	mbsnrtowcs: Prepare for new module mbsnrtowwcs.
 	* lib/mbsnrtowcs-impl.h: New file, extracted from lib/mbsnrtowcs.c.
 	* lib/mbsnrtowcs.c: Include it.
