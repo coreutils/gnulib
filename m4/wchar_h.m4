@@ -48,8 +48,10 @@ AC_DEFUN([gl_WCHAR_H],
 # include <time.h>
 #endif
 #include <wchar.h>
-    ]], [btowc wctob mbsinit mbrtowc mbrlen mbsrtowcs mbsnrtowcs wcrtomb
-    wcsrtombs wcsnrtombs wcwidth])
+    ]],
+    [btowc wctob mbsinit mbrtowc mbrlen mbsrtowcs mbsnrtowcs wcrtomb
+     wcsrtombs wcsnrtombs wcwidth wmemchr
+    ])
 ])
 
 dnl Check whether <wchar.h> is usable at all.

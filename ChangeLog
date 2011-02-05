@@ -6,8 +6,8 @@
 	* lib/wmemchr.c: New file.
 	* lib/wmemchr-impl.h: New file, from libutf8 with modifications.
 	* m4/wmemchr.m4: New file.
-	* m4/wchar_h.m4 (gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WMEMCHR,
-	HAVE_WMEMCHR.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wmemchr is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WMEMCHR, HAVE_WMEMCHR.
 	* modules/wchar (Makefile.am): Substitute GNULIB_WMEMCHR, HAVE_WMEMCHR.
 	* tests/test-wchar-c++.cc: Test the declaration of wmemchr.
 	* doc/posix-functions/wmemchr.texi: Mention the new module.
