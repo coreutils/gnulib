@@ -6,5 +6,10 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_WMEMCHR],
 [
-  AC_REPLACE_FUNCS([wmemchr])
+  AC_REQUIRE([gl_WCHAR_H_DEFAULTS])
+  AC_CHECK_FUNCS_ONCE([wmemchr])
+  if test $ac_cv_func_wmemchr = no; then
+    HAVE_WMEMCHR=0
+    AC_LIBOBJ([wmemchr])
+  fi
 ])
