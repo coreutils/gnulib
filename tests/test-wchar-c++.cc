@@ -85,6 +85,11 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::wmemcmp, int,
                  (const wchar_t *, const wchar_t *, size_t));
 #endif
 
+#if GNULIB_TEST_WMEMCPY
+SIGNATURE_CHECK (GNULIB_NAMESPACE::wmemcpy, wchar_t *,
+                 (wchar_t *, const wchar_t *, size_t));
+#endif
+
 
 int
 main ()

@@ -464,6 +464,24 @@ _GL_WARN_ON_USE (wmemcmp, "wmemcmp is unportable - "
 #endif
 
 
+/* Copy N wide characters of SRC to DEST.  */
+#if @GNULIB_WMEMCPY@
+# if !@HAVE_WMEMCPY@
+_GL_FUNCDECL_SYS (wmemcpy, wchar_t *,
+                  (wchar_t *dest, const wchar_t *src, size_t n));
+# endif
+_GL_CXXALIAS_SYS (wmemcpy, wchar_t *,
+                  (wchar_t *dest, const wchar_t *src, size_t n));
+_GL_CXXALIASWARN (wmemcpy);
+#elif defined GNULIB_POSIXCHECK
+# undef wmemcpy
+# if HAVE_RAW_DECL_WMEMCPY
+_GL_WARN_ON_USE (wmemcpy, "wmemcpy is unportable - "
+                 "use gnulib module wmemcpy for portability");
+# endif
+#endif
+
+
 #endif /* _GL_WCHAR_H */
 #endif /* _GL_WCHAR_H */
 #endif
