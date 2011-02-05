@@ -501,6 +501,22 @@ _GL_WARN_ON_USE (wmemmove, "wmemmove is unportable - "
 #endif
 
 
+/* Set N wide characters of S to C.  */
+#if @GNULIB_WMEMSET@
+# if !@HAVE_WMEMSET@
+_GL_FUNCDECL_SYS (wmemset, wchar_t *, (wchar_t *s, wchar_t c, size_t n));
+# endif
+_GL_CXXALIAS_SYS (wmemset, wchar_t *, (wchar_t *s, wchar_t c, size_t n));
+_GL_CXXALIASWARN (wmemset);
+#elif defined GNULIB_POSIXCHECK
+# undef wmemset
+# if HAVE_RAW_DECL_WMEMSET
+_GL_WARN_ON_USE (wmemset, "wmemset is unportable - "
+                 "use gnulib module wmemset for portability");
+# endif
+#endif
+
+
 #endif /* _GL_WCHAR_H */
 #endif /* _GL_WCHAR_H */
 #endif

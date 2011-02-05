@@ -95,6 +95,11 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::wmemmove, wchar_t *,
                  (wchar_t *, const wchar_t *, size_t));
 #endif
 
+#if GNULIB_TEST_WMEMSET
+SIGNATURE_CHECK (GNULIB_NAMESPACE::wmemset, wchar_t *,
+                 (wchar_t *, wchar_t, size_t));
+#endif
+
 
 int
 main ()

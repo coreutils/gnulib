@@ -1,5 +1,19 @@
 2011-02-05  Bruno Haible  <bruno@clisp.org>
 
+	New module 'wmemset'.
+	* modules/wmemset: New file.
+	* lib/wchar.in.h (wmemset): New declaration.
+	* lib/wmemset.c: New file.
+	* lib/wmemset-impl.h: New file, from libutf8 with modifications.
+	* m4/wmemset.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wmemset is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WMEMSET, HAVE_WMEMSET.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WMEMSET, HAVE_WMEMSET.
+	* tests/test-wchar-c++.cc: Test the declaration of wmemset.
+	* doc/posix-functions/wmemset.texi: Mention the new module.
+
+2011-02-05  Bruno Haible  <bruno@clisp.org>
+
 	New module 'wmemmove'.
 	* modules/wmemmove: New file.
 	* lib/wchar.in.h (wmemmove): New declaration.
