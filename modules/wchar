@@ -48,6 +48,7 @@ wchar.h: wchar.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	      -e 's|@''GNULIB_WMEMSET''@|$(GNULIB_WMEMSET)|g' \
 	      -e 's|@''GNULIB_WCSLEN''@|$(GNULIB_WCSLEN)|g' \
 	      -e 's|@''GNULIB_WCSNLEN''@|$(GNULIB_WCSNLEN)|g' \
+	      -e 's|@''GNULIB_WCSCPY''@|$(GNULIB_WCSCPY)|g' \
 	      -e 's|@''HAVE_WINT_T''@|$(HAVE_WINT_T)|g' \
 	      -e 's|@''HAVE_BTOWC''@|$(HAVE_BTOWC)|g' \
 	      -e 's|@''HAVE_MBSINIT''@|$(HAVE_MBSINIT)|g' \
@@ -65,6 +66,7 @@ wchar.h: wchar.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	      -e 's|@''HAVE_WMEMSET''@|$(HAVE_WMEMSET)|g' \
 	      -e 's|@''HAVE_WCSLEN''@|$(HAVE_WCSLEN)|g' \
 	      -e 's|@''HAVE_WCSNLEN''@|$(HAVE_WCSNLEN)|g' \
+	      -e 's|@''HAVE_WCSCPY''@|$(HAVE_WCSCPY)|g' \
 	      -e 's|@''HAVE_DECL_WCTOB''@|$(HAVE_DECL_WCTOB)|g' \
 	      -e 's|@''HAVE_DECL_WCWIDTH''@|$(HAVE_DECL_WCWIDTH)|g' \
 	      -e 's|@''REPLACE_MBSTATE_T''@|$(REPLACE_MBSTATE_T)|g' \

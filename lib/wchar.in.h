@@ -549,6 +549,22 @@ _GL_WARN_ON_USE (wcsnlen, "wcsnlen is unportable - "
 #endif
 
 
+/* Copy SRC to DEST.  */
+#if @GNULIB_WCSCPY@
+# if !@HAVE_WCSCPY@
+_GL_FUNCDECL_SYS (wcscpy, wchar_t *, (wchar_t *dest, const wchar_t *src));
+# endif
+_GL_CXXALIAS_SYS (wcscpy, wchar_t *, (wchar_t *dest, const wchar_t *src));
+_GL_CXXALIASWARN (wcscpy);
+#elif defined GNULIB_POSIXCHECK
+# undef wcscpy
+# if HAVE_RAW_DECL_WCSCPY
+_GL_WARN_ON_USE (wcscpy, "wcscpy is unportable - "
+                 "use gnulib module wcscpy for portability");
+# endif
+#endif
+
+
 #endif /* _GL_WCHAR_H */
 #endif /* _GL_WCHAR_H */
 #endif
