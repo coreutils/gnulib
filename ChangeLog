@@ -1910,6 +1910,13 @@
 	* doc/posix-functions/gmtime_r.texi: Document the HP-UX 11 problem.
 	* doc/posix-functions/localtime_r.texi: Likewise.
 
+2010-12-30  Bruce Korb  <bkorb@gnu.org>
+
+	libposix: avoid calling error() within libposix
+	* lib/openat-die.c: remove error module stuff when GNULIB_LIBPOSIX
+	is defined.
+	* lib/xalloc-die.c: Same thing.
+
 2010-12-29  Eric Blake  <eblake@redhat.com>
 
 	mountlist: tweak previous commit
@@ -3555,6 +3562,13 @@
 	* lib/ftoastr.h, lib/ftoastr.c, lib/dtoastr.c, lib/ldtoastr.c:
 	* modules/ftoastr: New files.
 
+2010-11-16  Bruce Korb  <bkorb@gnu.org>
+
+	libposix: Libposix module will be created on the fly
+	* modules/libposix: remove
+	* modules/*: Use pkginclude_HEADERS instead of plain "include".
+	* gnulib-tool: adjust here, too
+
 2010-11-15  Paul Eggert  <eggert@cs.ucla.edu>
 
 	bootstrap: port to Solaris sed
@@ -4133,6 +4147,74 @@
 	* tests/test-inttostr.c (main): Rename local, "buf" to "b",
 	and use malloc rather than the stack for the same reason as
 	mentioned in the comment justifying the other allocation.
+
+2010-10-12  Gary V. Vaughan  <gary@gnu.org>
+
+	libposix: use git-version-gen for version numbering
+	* build-aux/git-version-gen: In order to work inside the
+	libposix subdirectory, also check the parent directory for .git
+	before assuming git describe will not work.
+
+	add _HEADERS primaries to Makefile.am snippets for installable headers
+	* modules/alloca-opt, modules/arg-nonnull, modules/argz,
+	modules/arpa_inet, modules/byteswap, modules/c++defs, modules/ctype,
+	modules/dirent, modules/errno, modules/fcntl-h, modules/float,
+	modules/fnmatch, modules/getopt-posix, modules/glob, modules/iconv-h,
+	modules/iconv_open, modules/inttypes, modules/langinfo,
+	modules/link-warning, modules/locale, modules/math, modules/netdb,
+	modules/netinet_in, modules/poll-h, modules/pthread, modules/pty,
+	modules/sched, modules/search, modules/selinux-h, modules/signal,
+	modules/spawn, modules/stdarg, modules/stdbool, modules/stddef,
+	modules/stdint, modules/stdio, modules/stdlib, modules/string,
+	modules/strings, modules/sys_file, modules/sys_ioctl,
+	modules/sys_select, modules/sys_socket, modules/sys_stat,
+	modules/sys_time, modules/sys_times, modules/sys_utsname,
+	modules/sys_wait, modules/sysexits, modules/termios, modules/time,
+	modules/unistd, modules/unitypes, modules/unused-parameter,
+	modules/warn-on-use, modules/wchar, modules/wctype (Makefile.am):
+	Add nodist_include_HEADERS, nobase_nodist_include_HEADERS and
+	EXTRA_HEADERS declarations for potentially installable header files.
+	* gnulib-tool: Initialize nodist_include_HEADERS,
+	nobase_nodist_include_HEADERS and EXTRA_HEADERS to prime for new
+	`.*_HEADERS +=' declarations.
+	(func_emit_lib_Makefile_am): Edit away new nodist_include_HEADERS,
+	nobase_nodist_include_HEADERS and EXTRA_HEADERS declarations by
+	default, reverting the Makefile.am snippets above to their original
+	condition prior to this change *unless* the gnulib library is being
+	installed.
+
+	New module `libposix'.
+	* modules/libposix: New module to facilitate an installable
+	library of posix modules.
+	(Makefile.am): Use lib_LTLIBRARIES to mark libposix.la as
+	installable.
+	(Depends-On): List all the modules found by `posix-modules',
+	except `strdup' which is spurious, and with the addition of
+	`alloca' to satisfy an otherwise undefined LTALLOCA definition;
+	and `progname' to provide a non-extern program_name symbol so that
+	compilation with `-no-undefined' symbols can work.
+
+	iconv_open: reduce not-trivial repetition of file-list
+	* modules/iconv_open (iconv_headers): New make macro to hold list of
+	iconv header files.
+	(BUILT_SOURCES, MAINTAINERCLEANFILES, EXTRA_DIST): Use it instead of
+	multiple hard-coded copies.
+
+	gnulib-tool: transform hard-coded libgnu.a to $libname.l?a
+	* gnulib-tool (func_emit_lib_Makefile_am): transform hard-coded
+	`libgnu.a' in Makefile.am snippets to be either `$libname.a' or
+	`$libname.la', depending on whether --libtool/--no-libtool options
+	were given.
+
+2010-10-12  Sam Steingold  <sds@gnu.org>
+	    Gary V. Vaughan  <gary@gnu.org>
+
+	gnulib-tool: transform include guards with `--macro-prefix'
+	* gnulib-tool (func_import): support multiple gllib directories:
+	headers are generated for each gllib differently, depending on which
+	features are actually used, so we need to be able to include all
+	these generated headers without fear that one will shadow another,
+	so we prepend the macro-prefix before the guard macros.
 
 2010-10-11  Bruno Haible  <bruno@clisp.org>
 

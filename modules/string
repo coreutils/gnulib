@@ -17,6 +17,8 @@ configure.ac:
 gl_HEADER_STRING_H
 
 Makefile.am:
+nodist_pkginclude_HEADERS += string.h
+
 BUILT_SOURCES += string.h
 
 # We need the following in order to create <string.h> when the system

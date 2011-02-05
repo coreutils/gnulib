@@ -24,6 +24,9 @@ configure.ac:
 gl_FUNC_FNMATCH_POSIX
 
 Makefile.am:
+nodist_pkginclude_HEADERS += $(FNMATCH_H)
+EXTRA_HEADERS += fnmatch.h
+
 BUILT_SOURCES += $(FNMATCH_H)
 
 # We need the following in order to create <fnmatch.h> when the system

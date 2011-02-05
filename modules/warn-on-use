@@ -13,6 +13,8 @@ Depends-on:
 configure.ac:
 
 Makefile.am:
+nodist_pkginclude_HEADERS += warn-on-use.h
+
 BUILT_SOURCES += warn-on-use.h
 # The warn-on-use.h that gets inserted into generated .h files is the same as
 # build-aux/warn-on-use.h, except that it has the copyright header cut off.

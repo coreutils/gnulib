@@ -13,6 +13,9 @@ configure.ac:
 gl_FUNC_ALLOCA
 
 Makefile.am:
+nodist_pkginclude_HEADERS += $(ALLOCA_H)
+EXTRA_HEADERS += alloca.h
+
 BUILT_SOURCES += $(ALLOCA_H)
 
 # We need the following in order to create <alloca.h> when the system

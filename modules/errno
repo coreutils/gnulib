@@ -12,6 +12,9 @@ configure.ac:
 gl_HEADER_ERRNO_H
 
 Makefile.am:
+nodist_pkginclude_HEADERS += $(ERRNO_H)
+EXTRA_HEADERS += errno.h
+
 BUILT_SOURCES += $(ERRNO_H)
 
 # We need the following in order to create <errno.h> when the system

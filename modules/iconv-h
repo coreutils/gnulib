@@ -15,6 +15,9 @@ configure.ac:
 gl_ICONV_H
 
 Makefile.am:
+nodist_pkginclude_HEADERS += $(ICONV_H)
+EXTRA_HEADERS += iconv.h
+
 BUILT_SOURCES += $(ICONV_H)
 
 # We need the following in order to create <iconv.h> when the system

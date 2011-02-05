@@ -18,6 +18,9 @@ configure.ac:
 gl_FUNC_ARGZ
 
 Makefile.am:
+nodist_pkginclude_HEADERS += $(ARGZ_H)
+EXTRA_HEADERS += argz.h
+
 BUILT_SOURCES += $(ARGZ_H)
 
 # We need the following in order to create <argz.h> when the system

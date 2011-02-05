@@ -12,6 +12,9 @@ configure.ac:
 gl_FLOAT_H
 
 Makefile.am:
+nodist_pkginclude_HEADERS += $(FLOAT_H)
+EXTRA_HEADERS += float.h
+
 BUILT_SOURCES += $(FLOAT_H)
 
 # We need the following in order to create <float.h> when the system

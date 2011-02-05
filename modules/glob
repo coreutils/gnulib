@@ -30,6 +30,9 @@ configure.ac:
 gl_GLOB
 
 Makefile.am:
+nodist_pkginclude_HEADERS += $(GLOB_H)
+EXTRA_HEADERS += glob.h
+
 BUILT_SOURCES += $(GLOB_H)
 
 # We need the following in order to create <glob.h> when the system

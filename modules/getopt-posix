@@ -19,6 +19,9 @@ configure.ac:
 gl_FUNC_GETOPT_POSIX
 
 Makefile.am:
+nodist_pkginclude_HEADERS += $(GETOPT_H)
+EXTRA_HEADERS += getopt.h
+
 BUILT_SOURCES += $(GETOPT_H)
 
 # We need the following in order to create <getopt.h> when the system
