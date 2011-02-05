@@ -428,6 +428,22 @@ _GL_WARN_ON_USE (wcwidth, "wcwidth is unportable - "
 #endif
 
 
+/* Search N wide characters of S for C.  */
+#if @GNULIB_WMEMCHR@
+# if !@HAVE_WMEMCHR@
+_GL_FUNCDECL_SYS (wmemchr, wchar_t *, (const wchar_t *s, wchar_t c, size_t n));
+# endif
+_GL_CXXALIAS_SYS (wmemchr, wchar_t *, (const wchar_t *s, wchar_t c, size_t n));
+_GL_CXXALIASWARN (wmemchr);
+#elif defined GNULIB_POSIXCHECK
+# undef wmemchr
+# if HAVE_RAW_DECL_WMEMCHR
+_GL_WARN_ON_USE (wmemchr, "wmemchr is unportable - "
+                 "use gnulib module wmemchr for portability");
+# endif
+#endif
+
+
 #endif /* _GL_WCHAR_H */
 #endif /* _GL_WCHAR_H */
 #endif

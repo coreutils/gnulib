@@ -75,6 +75,11 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::wcsnrtombs, size_t,
 SIGNATURE_CHECK (GNULIB_NAMESPACE::wcwidth, int, (wchar_t));
 #endif
 
+#if GNULIB_TEST_WMEMCHR
+SIGNATURE_CHECK (GNULIB_NAMESPACE::wmemchr, wchar_t *,
+                 (const wchar_t *, wchar_t, size_t));
+#endif
+
 
 int
 main ()
