@@ -482,6 +482,25 @@ _GL_WARN_ON_USE (wmemcpy, "wmemcpy is unportable - "
 #endif
 
 
+/* Copy N wide characters of SRC to DEST, guaranteeing correct behavior for
+   overlapping memory areas.  */
+#if @GNULIB_WMEMMOVE@
+# if !@HAVE_WMEMMOVE@
+_GL_FUNCDECL_SYS (wmemmove, wchar_t *,
+                  (wchar_t *dest, const wchar_t *src, size_t n));
+# endif
+_GL_CXXALIAS_SYS (wmemmove, wchar_t *,
+                  (wchar_t *dest, const wchar_t *src, size_t n));
+_GL_CXXALIASWARN (wmemmove);
+#elif defined GNULIB_POSIXCHECK
+# undef wmemmove
+# if HAVE_RAW_DECL_WMEMMOVE
+_GL_WARN_ON_USE (wmemmove, "wmemmove is unportable - "
+                 "use gnulib module wmemmove for portability");
+# endif
+#endif
+
+
 #endif /* _GL_WCHAR_H */
 #endif /* _GL_WCHAR_H */
 #endif

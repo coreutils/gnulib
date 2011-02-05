@@ -1,0 +1,25 @@
+Description:
+wmemmove() function: copy wide character array.
+
+Files:
+lib/wmemmove.c
+lib/wmemmove-impl.h
+m4/wmemmove.m4
+
+Depends-on:
+wchar
+
+configure.ac:
+gl_FUNC_WMEMMOVE
+gl_WCHAR_MODULE_INDICATOR([wmemmove])
+
+Makefile.am:
+
+Include:
+<wchar.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible

@@ -90,6 +90,11 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::wmemcpy, wchar_t *,
                  (wchar_t *, const wchar_t *, size_t));
 #endif
 
+#if GNULIB_TEST_WMEMMOVE
+SIGNATURE_CHECK (GNULIB_NAMESPACE::wmemmove, wchar_t *,
+                 (wchar_t *, const wchar_t *, size_t));
+#endif
+
 
 int
 main ()
