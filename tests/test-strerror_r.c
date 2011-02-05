@@ -74,8 +74,8 @@ main (void)
         if (ret == 0)
           {
             /* Truncated result.  POSIX allows this, and it actually
-               happens on AIX 6.1.  */
-            ASSERT (strcmp (buf, "BADFACE") != 0);
+               happens on AIX 6.1 and Cygwin.  */
+            ASSERT ((strcmp (buf, "BADFACE") == 0) == (i == 0));
           }
         else
           {

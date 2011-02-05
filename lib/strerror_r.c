@@ -27,7 +27,7 @@
 #if HAVE_DECL_STRERROR_R && !(__GLIBC__ >= 2 || defined __UCLIBC__) && !EXTEND_STRERROR_R
 
 /* The system's strerror_r function is OK, except that its third argument
-   is 'int', not 'size_t'.  */
+   is 'int', not 'size_t', or its return type is wrong.  */
 
 # include <limits.h>
 
@@ -61,6 +61,11 @@ strerror_r (int errnum, char *buf, size_t buflen)
     else
       ret = strerror_r (errnum, buf, buflen);
   }
+# elif defined __CYGWIN__
+  /* Cygwin only provides the glibc interface, is thread-safe, and
+     always succeeds (although it may truncate). */
+  strerror_r (errnum, buf, buflen);
+  ret = 0;
 # else
   ret = strerror_r (errnum, buf, buflen);
 # endif

@@ -1,3 +1,13 @@
+2011-02-05  Eric Blake  <eblake@redhat.com>
+
+	strerror_r-posix: port to cygwin
+	* lib/strerror_r.c (strerror_r) [__CYGWIN__]: Add cygwin
+	implementation.
+	* m4/strerror_r.m4 (gl_FUNC_STRERROR_R): Adjust comment.
+	* tests/test-strerror_r.c (main): Fix test.
+	* doc/posix-functions/strerror_r.texi (strerror_r): Document the
+	issue.
+
 2011-02-05  Bruno Haible  <bruno@clisp.org>
 
 	New module 'wmemchr'.

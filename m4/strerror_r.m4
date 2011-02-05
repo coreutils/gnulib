@@ -24,7 +24,7 @@ AC_DEFUN([gl_FUNC_STRERROR_R],
   if test $ac_cv_func_strerror_r = yes; then
     if test -z "$ERRNO_H"; then
       dnl The POSIX prototype is:  int strerror_r (int, char *, size_t);
-      dnl glibc's prototype:       char *strerror_r (int, char *, size_t);
+      dnl glibc, Cygwin:           char *strerror_r (int, char *, size_t);
       dnl AIX 5.1, OSF/1 5.1:      int strerror_r (int, char *, int);
       AC_CACHE_CHECK([for strerror_r with POSIX signature],
         [gl_cv_func_strerror_r_posix_signature],

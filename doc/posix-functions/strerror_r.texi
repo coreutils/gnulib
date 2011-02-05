@@ -12,7 +12,8 @@ Portability problems fixed by Gnulib:
 This function is missing on some platforms:
 NetBSD 3.0, HP-UX 11.23, IRIX 6.5, Solaris 9, mingw.
 @item
-glibc has an incompatible version of this function.  The POSIX compliant code
+glibc and Cygwin have an incompatible version of this function.  The
+POSIX compliant code
 @smallexample
 char *s = (strerror_r (err, buf, buflen) == 0 ? buf : NULL);
 @end smallexample
