@@ -100,6 +100,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::wmemset, wchar_t *,
                  (wchar_t *, wchar_t, size_t));
 #endif
 
+#if GNULIB_TEST_WCSLEN
+SIGNATURE_CHECK (GNULIB_NAMESPACE::wcslen, size_t, (const wchar_t *));
+#endif
+
 
 int
 main ()

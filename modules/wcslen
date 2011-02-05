@@ -1,0 +1,31 @@
+Description:
+wcslen() function: determine the length of a wide string.
+
+Status:
+obsolete
+
+Notice:
+This module is obsolete.
+
+Files:
+lib/wcslen.c
+lib/wcslen-impl.h
+m4/wcslen.m4
+
+Depends-on:
+wchar
+
+configure.ac:
+gl_FUNC_WCSLEN
+gl_WCHAR_MODULE_INDICATOR([wcslen])
+
+Makefile.am:
+
+Include:
+<wchar.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible

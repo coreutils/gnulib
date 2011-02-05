@@ -517,6 +517,22 @@ _GL_WARN_ON_USE (wmemset, "wmemset is unportable - "
 #endif
 
 
+/* Return the number of wide characters in S.  */
+#if @GNULIB_WCSLEN@
+# if !@HAVE_WCSLEN@
+_GL_FUNCDECL_SYS (wcslen, size_t, (const wchar_t *s));
+# endif
+_GL_CXXALIAS_SYS (wcslen, size_t, (const wchar_t *s));
+_GL_CXXALIASWARN (wcslen);
+#elif defined GNULIB_POSIXCHECK
+# undef wcslen
+# if HAVE_RAW_DECL_WCSLEN
+_GL_WARN_ON_USE (wcslen, "wcslen is unportable - "
+                 "use gnulib module wcslen for portability");
+# endif
+#endif
+
+
 #endif /* _GL_WCHAR_H */
 #endif /* _GL_WCHAR_H */
 #endif
