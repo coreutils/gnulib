@@ -1,5 +1,9 @@
 2011-02-05  Eric Blake  <eblake@redhat.com>
 
+	unsetenv: work around Haiku issues
+	* m4/setenv.m4 (gl_FUNC_UNSETENV): Also detect Haiku issue.
+	* doc/posix-functions/unsetenv.texi (unsetenv): Document it.
+
 	strerror_r-posix: port to cygwin
 	* lib/strerror_r.c (strerror_r) [__CYGWIN__]: Add cygwin
 	implementation.
