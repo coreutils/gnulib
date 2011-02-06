@@ -1,5 +1,19 @@
 2011-02-06  Bruno Haible  <bruno@clisp.org>
 
+	New module 'wcscoll'.
+	* modules/wcscoll: New file.
+	* lib/wchar.in.h (wcscoll): New declaration.
+	* lib/wcscoll.c: New file.
+	* lib/wcscoll-impl.h: New file.
+	* m4/wcscoll.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wcscoll is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WCSCOLL, HAVE_WCSCOLL.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WCSCOLL, HAVE_WCSCOLL.
+	* tests/test-wchar-c++.cc: Test the declaration of wcscoll.
+	* doc/posix-functions/wcscoll.texi: Mention the new module.
+
+2011-02-06  Bruno Haible  <bruno@clisp.org>
+
 	New module 'wcsncasecmp'.
 	* modules/wcsncasecmp: New file.
 	* lib/wchar.in.h (wcsncasecmp): New declaration.

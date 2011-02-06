@@ -720,6 +720,23 @@ _GL_WARN_ON_USE (wcsncasecmp, "wcsncasecmp is unportable - "
 #endif
 
 
+/* Compare S1 and S2, both interpreted as appropriate to the LC_COLLATE
+   category of the current locale.  */
+#if @GNULIB_WCSCOLL@
+# if !@HAVE_WCSCOLL@
+_GL_FUNCDECL_SYS (wcscoll, int, (const wchar_t *s1, const wchar_t *s2));
+# endif
+_GL_CXXALIAS_SYS (wcscoll, int, (const wchar_t *s1, const wchar_t *s2));
+_GL_CXXALIASWARN (wcscoll);
+#elif defined GNULIB_POSIXCHECK
+# undef wcscoll
+# if HAVE_RAW_DECL_WCSCOLL
+_GL_WARN_ON_USE (wcscoll, "wcscoll is unportable - "
+                 "use gnulib module wcscoll for portability");
+# endif
+#endif
+
+
 #endif /* _GL_WCHAR_H */
 #endif /* _GL_WCHAR_H */
 #endif
