@@ -1,5 +1,19 @@
 2011-02-06  Bruno Haible  <bruno@clisp.org>
 
+	New module 'wcsdup'.
+	* modules/wcsdup: New file.
+	* lib/wchar.in.h (wcsdup): New declaration.
+	* lib/wcsdup.c: New file.
+	* lib/wcsdup-impl.h: New file, from libutf8 with modifications.
+	* m4/wcsdup.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wcsdup is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WCSDUP, HAVE_WCSDUP.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WCSDUP, HAVE_WCSDUP.
+	* tests/test-wchar-c++.cc: Test the declaration of wcsdup.
+	* doc/posix-functions/wcsdup.texi: Mention the new module.
+
+2011-02-06  Bruno Haible  <bruno@clisp.org>
+
 	New module 'wcsxfrm'.
 	* modules/wcsxfrm: New file.
 	* lib/wchar.in.h (wcsxfrm): New declaration.

@@ -755,6 +755,22 @@ _GL_WARN_ON_USE (wcsxfrm, "wcsxfrm is unportable - "
 #endif
 
 
+/* Duplicate S, returning an identical malloc'd string.  */
+#if @GNULIB_WCSDUP@
+# if !@HAVE_WCSDUP@
+_GL_FUNCDECL_SYS (wcsdup, wchar_t *, (const wchar_t *s));
+# endif
+_GL_CXXALIAS_SYS (wcsdup, wchar_t *, (const wchar_t *s));
+_GL_CXXALIASWARN (wcsdup);
+#elif defined GNULIB_POSIXCHECK
+# undef wcsdup
+# if HAVE_RAW_DECL_WCSDUP
+_GL_WARN_ON_USE (wcsdup, "wcsdup is unportable - "
+                 "use gnulib module wcsdup for portability");
+# endif
+#endif
+
+
 #endif /* _GL_WCHAR_H */
 #endif /* _GL_WCHAR_H */
 #endif
