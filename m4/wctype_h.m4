@@ -130,6 +130,24 @@ AC_DEFUN([gl_WCTYPE_H],
   if test $gl_cv_type_wctrans_t = no; then
     HAVE_WCTRANS_T=0
   fi
+
+  dnl Check for declarations of anything we want to poison if the
+  dnl corresponding gnulib module is not in use.
+  gl_WARN_ON_USE_PREPARE([[
+/* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
+   <wchar.h>.
+   BSD/OS 4.0.1 has a bug: <stddef.h>, <stdio.h> and <time.h> must be
+   included before <wchar.h>.  */
+#if !(defined __GLIBC__ && !defined __UCLIBC__)
+# include <stddef.h>
+# include <stdio.h>
+# include <time.h>
+# include <wchar.h>
+#endif
+#include <wctype.h>
+    ]],
+    [wctype
+    ])
 ])
 
 AC_DEFUN([gl_WCTYPE_MODULE_INDICATOR],
@@ -144,6 +162,7 @@ AC_DEFUN([gl_WCTYPE_MODULE_INDICATOR],
 AC_DEFUN([gl_WCTYPE_H_DEFAULTS],
 [
   GNULIB_ISWBLANK=0;    AC_SUBST([GNULIB_ISWBLANK])
+  GNULIB_WCTYPE=0;      AC_SUBST([GNULIB_WCTYPE])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_ISWBLANK=1;      AC_SUBST([HAVE_ISWBLANK])
   HAVE_WCTYPE_T=1;      AC_SUBST([HAVE_WCTYPE_T])

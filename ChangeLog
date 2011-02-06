@@ -1,5 +1,20 @@
 2011-02-06  Bruno Haible  <bruno@clisp.org>
 
+	New module 'wctype'.
+	* modules/wctype: Change to represent the wctype() substitute.
+	* lib/wctype.in.h (wctype): New declaration.
+	* lib/wctype.c: New file.
+	* lib/wctype-impl.h: New file.
+	* m4/wctype.m4: New file.
+	* m4/wctype_h.m4 (gl_WCTYPE_H): Test whether wctype is declared.
+	(gl_WCTYPE_H_DEFAULTS): Initialize GNULIB_WCTYPE.
+	* modules/wctype-h (Makefile.am): Substitute GNULIB_WCTYPE.
+	* tests/test-wctype-h-c++.cc: Test the declaration of wctype.
+	* doc/posix-functions/wctype.texi: Mention the new module and the
+	HP-UX 11.00 problem.
+
+2011-02-06  Bruno Haible  <bruno@clisp.org>
+
 	wctype-h: Ensure wctype_t and wctrans_t are defined.
 	* lib/wctype.in.h (wctype_t, wctrans_t): New type declarations.
 	* m4/wctype_h.m4 (gl_WCTYPE_H): Determine HAVE_WCTYPE_T, HAVE_WCTRANS_T.

@@ -1,12 +1,24 @@
 Description:
-A <wctype.h> that conforms better to C99.
+wctype() function: get descriptor for a wide character property.
+
+Status:
+obsolete
+
+Notice:
+This module is obsolete.
 
 Files:
+lib/wctype.c
+lib/wctype-impl.h
+m4/wctype.m4
 
 Depends-on:
 wctype-h
+iswblank
 
 configure.ac:
+gl_FUNC_WCTYPE
+gl_WCTYPE_MODULE_INDICATOR([wctype])
 
 Makefile.am:
 

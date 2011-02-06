@@ -384,6 +384,21 @@ typedef void * wctype_t;
 # endif
 #endif
 
+/* Get a descriptor for a wide character property.  */
+#if @GNULIB_WCTYPE@
+# if !@HAVE_WCTYPE_T@
+_GL_FUNCDECL_SYS (wctype, wctype_t, (const char *name));
+# endif
+_GL_CXXALIAS_SYS (wctype, wctype_t, (const char *name));
+_GL_CXXALIASWARN (wctype);
+#elif defined GNULIB_POSIXCHECK
+# undef wctype
+# if HAVE_RAW_DECL_WCTYPE
+_GL_WARN_ON_USE (wctype, "wctype is unportable - "
+                 "use gnulib module wctype for portability");
+# endif
+#endif
+
 #if @REPLACE_ISWCNTRL@ || defined __MINGW32__
 _GL_CXXALIAS_RPL (towlower, wint_t, (wint_t wc));
 _GL_CXXALIAS_RPL (towupper, wint_t, (wint_t wc));
