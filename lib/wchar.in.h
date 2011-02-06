@@ -837,6 +837,24 @@ _GL_WARN_ON_USE (wcsspn, "wcsspn is unportable - "
 #endif
 
 
+/* Find the first occurrence in WCS of any character in ACCEPT.  */
+#if @GNULIB_WCSPBRK@
+# if !@HAVE_WCSPBRK@
+_GL_FUNCDECL_SYS (wcspbrk, wchar_t *,
+                  (const wchar_t *wcs, const wchar_t *accept));
+# endif
+_GL_CXXALIAS_SYS (wcspbrk, wchar_t *,
+                  (const wchar_t *wcs, const wchar_t *accept));
+_GL_CXXALIASWARN (wcspbrk);
+#elif defined GNULIB_POSIXCHECK
+# undef wcspbrk
+# if HAVE_RAW_DECL_WCSPBRK
+_GL_WARN_ON_USE (wcspbrk, "wcspbrk is unportable - "
+                 "use gnulib module wcspbrk for portability");
+# endif
+#endif
+
+
 #endif /* _GL_WCHAR_H */
 #endif /* _GL_WCHAR_H */
 #endif
