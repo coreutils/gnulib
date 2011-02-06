@@ -14,8 +14,6 @@ gl_HEADER_SYS_FILE_H
 AC_PROG_MKDIR_P
 
 Makefile.am:
-nobase_nodist_pkginclude_HEADERS += sys/file.h
-
 BUILT_SOURCES += sys/file.h
 
 # We need the following in order to create <sys/file.h> when the system

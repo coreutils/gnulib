@@ -2815,11 +2815,6 @@ func_emit_lib_Makefile_am ()
   echo
   uses_subdirs=
   {
-    if test false = "$libtool"; then
-      sed_transform_libgnu_a="s, libgnu\\.a, $libname.a,g"
-    else
-      sed_transform_libgnu_a="s, libgnu\\.a, $libname.la,g"
-    fi
     for module in $modules; do
       func_verify_nontests_module
       if test -n "$module"; then
@@ -2832,7 +2827,6 @@ func_emit_lib_Makefile_am ()
                 -e 's,lib_\([A-Z][A-Z]*\),'"${libname}_${libext}"'_\1,g' \
                 -e 's,lib%_LIBRARIES,lib_LIBRARIES,g' \
                 -e 's,lib%_LTLIBRARIES,lib_LTLIBRARIES,g' \
-		-e "$sed_transform_libgnu_a" \
                 -e "$sed_transform_check_PROGRAMS"
           if test "$module" = 'alloca'; then
             echo "${libname}_${libext}_LIBADD += @${perhapsLT}ALLOCA@"
@@ -2872,8 +2866,6 @@ func_emit_lib_Makefile_am ()
   echo
   if test -z "$makefile_name"; then
     echo "SUBDIRS ="
-    echo "nodist_pkginclude_HEADERS ="
-    echo "nobase_nodist_pkginclude_HEADERS ="
     echo "noinst_HEADERS ="
     echo "noinst_LIBRARIES ="
     echo "noinst_LTLIBRARIES ="
@@ -2883,7 +2875,6 @@ func_emit_lib_Makefile_am ()
       echo "pkgdata_DATA ="
     fi
     echo "EXTRA_DIST ="
-    echo "EXTRA_HEADERS ="
     echo "BUILT_SOURCES ="
     echo "SUFFIXES ="
   fi
@@ -2923,18 +2914,11 @@ func_emit_lib_Makefile_am ()
           && test -f "$sourcebase/Makefile.am" \
           && LC_ALL=C grep "^[a-zA-Z0-9_]*_${perhapsLT}LIBRARIES *+\{0,1\}= *$libname\\.$libext\$" "$sourcebase/Makefile.am" > /dev/null; \
         }; then
-    # Install associated header files, per module Makefile.am snippets.
-    sed_transform_HEADERS_primaries="$sed_noop"
     # One of the snippets or the user's Makefile.am already specifies an
     # installation location for the library. Don't confuse automake by saying
     # it should not be installed.
     :
   else
-    # Don't install header files when generated library is not installed.
-    sed_transform_HEADERS_primaries="\
-        /^\(nobase_\)\{0,1\}nodist_pkginclude_HEADERS *=.*$/d
-        /^EXTRA_HEADERS *=.*$/d
-    "
     # By default, the generated library should not be installed.
     echo "noinst_${perhapsLT}LIBRARIES += $libname.$libext"
   fi
@@ -2966,8 +2950,7 @@ func_emit_lib_Makefile_am ()
     echo
   fi
   cat "$tmp"/allsnippets \
-    | sed -e 's|\$(top_srcdir)/build-aux/|$(top_srcdir)/'"$auxdir"'/|g' \
-          -e "$sed_transform_HEADERS_primaries"
+    | sed -e 's|\$(top_srcdir)/build-aux/|$(top_srcdir)/'"$auxdir"'/|g'
   echo
   echo "mostlyclean-local: mostlyclean-generic"
   echo "	@for dir in '' \$(MOSTLYCLEANDIRS); do \\"
@@ -3181,8 +3164,6 @@ func_emit_tests_Makefile_am ()
   if ! $for_test; then
     echo "check_PROGRAMS ="
   fi
-  echo "nodist_pkginclude_HEADERS ="
-  echo "nobase_nodist_pkginclude_HEADERS ="
   echo "noinst_HEADERS ="
   echo "noinst_LIBRARIES ="
   if $use_libtests; then
@@ -3198,7 +3179,6 @@ func_emit_tests_Makefile_am ()
     echo "pkgdata_DATA ="
   fi
   echo "EXTRA_DIST ="
-  echo "EXTRA_HEADERS ="
   echo "BUILT_SOURCES ="
   echo "SUFFIXES ="
   echo "MOSTLYCLEANFILES = core *.stackdump"
@@ -3867,9 +3847,6 @@ s,^\(.................................................[^ ]*\) *,                
       break
     fi
   done
-  test -n "${macro_prefix}" && sed_transform_lib_file=$sed_transform_lib_file"
-    s/_GL_\(.*\)_H/_${macro_prefix}_GL_\1_H/g
-  "
   sed_transform_main_lib_file="$sed_transform_lib_file"
   if test -n "$do_copyrights"; then
     if test -n "$lgpl"; then
@@ -3908,10 +3885,6 @@ s,^\(.................................................[^ ]*\) *,                
       s/version 2\(.1\)\{0,1\}\([ ,]\)/version 3\2/g
     '
   fi
-  test -n "${macro_prefix}" \
-    && sed_transform_build_aux_file=$sed_transform_build_aux_file"
-         s/_GL_\(.*\)_H/_${macro_prefix}_GL_\1_H/g
-       "
 
   # Determine script to apply to library files that go into $testsbase/.
   sed_transform_testsrelated_lib_file="$sed_transform_lib_file"

@@ -15,8 +15,6 @@ gl_SYS_UTSNAME_H
 AC_PROG_MKDIR_P
 
 Makefile.am:
-nobase_nodist_pkginclude_HEADERS += sys/utsname.h
-
 BUILT_SOURCES += sys/utsname.h
 
 # We need the following in order to create <sys/utsname.h> when the system

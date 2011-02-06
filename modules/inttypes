@@ -17,8 +17,6 @@ configure.ac:
 gl_INTTYPES_H
 
 Makefile.am:
-nodist_pkginclude_HEADERS += inttypes.h
-
 BUILT_SOURCES += inttypes.h
 
 # We need the following in order to create <inttypes.h> when the system

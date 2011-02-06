@@ -22,10 +22,7 @@
 
 #include <stdlib.h>
 
-#ifndef GNULIB_LIBPOSIX
 #include "error.h"
-#endif
-
 #include "exitfail.h"
 
 #include "gettext.h"
@@ -34,9 +31,7 @@
 void
 xalloc_die (void)
 {
-#ifndef GNULIB_LIBPOSIX
   error (exit_failure, 0, "%s", _("memory exhausted"));
-#endif
 
   /* The `noreturn' cannot be given to error, since it may return if
      its first argument is 0.  To help compilers understand the

@@ -12,9 +12,6 @@ configure.ac:
 gl_SCHED_H
 
 Makefile.am:
-nodist_pkginclude_HEADERS += $(SCHED_H)
-EXTRA_HEADERS += sched.h
-
 BUILT_SOURCES += $(SCHED_H)
 
 # We need the following in order to create a replacement for <sched.h> when

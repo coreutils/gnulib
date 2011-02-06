@@ -6,5 +6,3 @@
 allsnippets.tmp
 amsnippet.tmp
 testdir*
-*.diff
-*.patch

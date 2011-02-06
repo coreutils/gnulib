@@ -19,9 +19,6 @@ configure.ac:
 gl_STDARG_H
 
 Makefile.am:
-nodist_pkginclude_HEADERS += $(STDARG_H)
-EXTRA_HEADERS += stdarg.h
-
 BUILT_SOURCES += $(STDARG_H)
 
 # We need the following in order to create <stdarg.h> when the system

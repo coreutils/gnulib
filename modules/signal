@@ -15,8 +15,6 @@ configure.ac:
 gl_SIGNAL_H
 
 Makefile.am:
-nodist_pkginclude_HEADERS += signal.h
-
 BUILT_SOURCES += signal.h
 
 # We need the following in order to create <signal.h> when the system

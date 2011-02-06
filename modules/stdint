@@ -20,9 +20,6 @@ configure.ac:
 gl_STDINT_H
 
 Makefile.am:
-nodist_pkginclude_HEADERS += $(STDINT_H)
-EXTRA_HEADERS += stdint.h
-
 BUILT_SOURCES += $(STDINT_H)
 
 # We need the following in order to create <stdint.h> when the system

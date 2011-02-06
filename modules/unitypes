@@ -12,9 +12,6 @@ configure.ac:
 gl_LIBUNISTRING_LIBHEADER([0.9], [unitypes.h])
 
 Makefile.am:
-nodist_pkginclude_HEADERS += $(LIBUNISTRING_UNITYPES_H)
-EXTRA_HEADERS += unitypes.h
-
 BUILT_SOURCES += $(LIBUNISTRING_UNITYPES_H)
 
 unitypes.h: unitypes.in.h

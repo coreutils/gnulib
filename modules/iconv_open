@@ -21,9 +21,6 @@ configure.ac:
 gl_FUNC_ICONV_OPEN
 
 Makefile.am:
-iconv_headers = iconv_open-aix.h iconv_open-hpux.h iconv_open-irix.h iconv_open-osf.h iconv_open-solaris.h
-nodist_pkginclude_HEADERS += $(iconv_headers)
-
 iconv_open-aix.h: iconv_open-aix.gperf
 	$(GPERF) -m 10 $(srcdir)/iconv_open-aix.gperf > $(srcdir)/iconv_open-aix.h-t
 	mv $(srcdir)/iconv_open-aix.h-t $(srcdir)/iconv_open-aix.h
@@ -39,10 +36,10 @@ iconv_open-osf.h: iconv_open-osf.gperf
 iconv_open-solaris.h: iconv_open-solaris.gperf
 	$(GPERF) -m 10 $(srcdir)/iconv_open-solaris.gperf > $(srcdir)/iconv_open-solaris.h-t
 	mv $(srcdir)/iconv_open-solaris.h-t $(srcdir)/iconv_open-solaris.h
-BUILT_SOURCES        += $(iconv_headers)
+BUILT_SOURCES        += iconv_open-aix.h iconv_open-hpux.h iconv_open-irix.h iconv_open-osf.h iconv_open-solaris.h
 MOSTLYCLEANFILES     += iconv_open-aix.h-t iconv_open-hpux.h-t iconv_open-irix.h-t iconv_open-osf.h-t iconv_open-solaris.h-t
-MAINTAINERCLEANFILES += $(iconv_headers)
-EXTRA_DIST           += $(iconv_headers)
+MAINTAINERCLEANFILES += iconv_open-aix.h iconv_open-hpux.h iconv_open-irix.h iconv_open-osf.h iconv_open-solaris.h
+EXTRA_DIST           += iconv_open-aix.h iconv_open-hpux.h iconv_open-irix.h iconv_open-osf.h iconv_open-solaris.h
 
 Include:
 <iconv.h>

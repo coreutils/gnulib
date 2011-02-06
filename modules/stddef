@@ -13,9 +13,6 @@ configure.ac:
 gl_STDDEF_H
 
 Makefile.am:
-nodist_pkginclude_HEADERS += $(STDDEF_H)
-EXTRA_HEADERS += stddef.h
-
 BUILT_SOURCES += $(STDDEF_H)
 
 # We need the following in order to create <stddef.h> when the system
