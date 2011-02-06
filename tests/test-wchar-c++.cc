@@ -187,6 +187,11 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::wcscspn, size_t,
                  (const wchar_t *, const wchar_t *));
 #endif
 
+#if GNULIB_TEST_WCSSPN
+SIGNATURE_CHECK (GNULIB_NAMESPACE::wcsspn, size_t,
+                 (const wchar_t *, const wchar_t *));
+#endif
+
 
 int
 main ()

@@ -820,6 +820,23 @@ _GL_WARN_ON_USE (wcscspn, "wcscspn is unportable - "
 #endif
 
 
+/* Return the length of the initial segmet of WCS which consists entirely
+   of wide characters in ACCEPT.  */
+#if @GNULIB_WCSSPN@
+# if !@HAVE_WCSSPN@
+_GL_FUNCDECL_SYS (wcsspn, size_t, (const wchar_t *wcs, const wchar_t *accept));
+# endif
+_GL_CXXALIAS_SYS (wcsspn, size_t, (const wchar_t *wcs, const wchar_t *accept));
+_GL_CXXALIASWARN (wcsspn);
+#elif defined GNULIB_POSIXCHECK
+# undef wcsspn
+# if HAVE_RAW_DECL_WCSSPN
+_GL_WARN_ON_USE (wcsspn, "wcsspn is unportable - "
+                 "use gnulib module wcsspn for portability");
+# endif
+#endif
+
+
 #endif /* _GL_WCHAR_H */
 #endif /* _GL_WCHAR_H */
 #endif
