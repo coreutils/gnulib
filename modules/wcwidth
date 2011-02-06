@@ -10,7 +10,7 @@ m4/wint_t.m4
 Depends-on:
 extensions
 wchar
-wctype
+wctype-h
 localcharset
 streq
 uniwidth/width

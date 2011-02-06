@@ -1,5 +1,41 @@
 2011-02-06  Bruno Haible  <bruno@clisp.org>
 
+	Rename module 'wctype' to 'wctype-h'.
+	* modules/wctype-h: Renamed from modules/wctype.
+	* modules/wctype: Simplyfy to a redirection to 'wctype-h'.
+	* modules/wctype-h-tests: Renamed from modules/wctype-tests.
+	(Files, Depends-on, Makefile.am): Update.
+	* modules/wctype-h-c++-tests: Renamed from modules/wctype-c++-tests.
+	(Files, Makefile.am): Update.
+	* tests/test-wctype-h.c: Renamed from tests/test-wctype.c.
+	* tests/test-wctype-h-c++.cc: Renamed from tests/test-wctype-c++.cc.
+	* doc/posix-headers/wctype.texi: Update.
+	* doc/posix-functions/iswalnum.texi: Update.
+	* doc/posix-functions/iswalpha.texi: Update.
+	* doc/posix-functions/iswblank.texi: Update.
+	* doc/posix-functions/iswcntrl.texi: Update.
+	* doc/posix-functions/iswdigit.texi: Update.
+	* doc/posix-functions/iswgraph.texi: Update.
+	* doc/posix-functions/iswlower.texi: Update.
+	* doc/posix-functions/iswprint.texi: Update.
+	* doc/posix-functions/iswpunct.texi: Update.
+	* doc/posix-functions/iswspace.texi: Update.
+	* doc/posix-functions/iswupper.texi: Update.
+	* doc/posix-functions/iswxdigit.texi: Update.
+	* doc/posix-functions/towlower.texi: Update.
+	* doc/posix-functions/towupper.texi: Update.
+	* NEWS: Mention the change.
+	* modules/fnmatch (Dependencies): Add wctype-h, remove wctype.
+	* modules/mbchar (Dependencies): Likewise.
+	* modules/mbswidth (Dependencies): Likewise.
+	* modules/quotearg (Dependencies): Likewise.
+	* modules/regex (Dependencies): Likewise.
+	* modules/wcscasecmp (Dependencies): Likewise.
+	* modules/wcsncasecmp (Dependencies): Likewise.
+	* modules/wcwidth (Dependencies): Likewise.
+
+2011-02-06  Bruno Haible  <bruno@clisp.org>
+
 	New module 'wcswidth'.
 	* modules/wcswidth: New file.
 	* lib/wchar.in.h (wcswidth): New declaration.

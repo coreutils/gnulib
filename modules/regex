@@ -28,7 +28,7 @@ stdint
 ssize_t
 wchar
 wcrtomb
-wctype
+wctype-h
 
 configure.ac:
 gl_REGEX

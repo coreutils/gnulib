@@ -14,7 +14,7 @@ extensions
 alloca
 stdbool
 wchar
-wctype
+wctype-h
 memchr
 memcmp
 mbsrtowcs

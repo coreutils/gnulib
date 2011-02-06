@@ -8,7 +8,7 @@ m4/wcscasecmp.m4
 
 Depends-on:
 wchar
-wctype
+wctype-h
 
 configure.ac:
 gl_FUNC_WCSCASECMP

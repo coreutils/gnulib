@@ -4,7 +4,7 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/iswcntrl.html}
 
-Gnulib module: wctype
+Gnulib module: wctype-h
 
 Portability problems fixed by Gnulib:
 @itemize
