@@ -146,7 +146,7 @@ AC_DEFUN([gl_WCTYPE_H],
 #endif
 #include <wctype.h>
     ]],
-    [wctype iswctype
+    [wctype iswctype wctrans
     ])
 ])
 
@@ -164,6 +164,7 @@ AC_DEFUN([gl_WCTYPE_H_DEFAULTS],
   GNULIB_ISWBLANK=0;    AC_SUBST([GNULIB_ISWBLANK])
   GNULIB_WCTYPE=0;      AC_SUBST([GNULIB_WCTYPE])
   GNULIB_ISWCTYPE=0;    AC_SUBST([GNULIB_ISWCTYPE])
+  GNULIB_WCTRANS=0;     AC_SUBST([GNULIB_WCTRANS])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_ISWBLANK=1;      AC_SUBST([HAVE_ISWBLANK])
   HAVE_WCTYPE_T=1;      AC_SUBST([HAVE_WCTYPE_T])

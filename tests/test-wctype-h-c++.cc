@@ -50,6 +50,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::iswctype, int, (wint_t, wctype_t));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::towlower, wint_t, (wint_t));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::towupper, wint_t, (wint_t));
 
+#if GNULIB_TEST_WCTRANS
+SIGNATURE_CHECK (GNULIB_NAMESPACE::wctrans, wctrans_t, (const char *));
+#endif
+
 
 int
 main ()

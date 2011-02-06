@@ -1,0 +1,25 @@
+Description:
+wctrans() function: get descriptor for a wide character case conversion.
+
+Files:
+lib/wctrans.c
+lib/wctrans-impl.h
+m4/wctrans.m4
+
+Depends-on:
+wctype-h
+
+configure.ac:
+gl_FUNC_WCTRANS
+gl_WCTYPE_MODULE_INDICATOR([wctrans])
+
+Makefile.am:
+
+Include:
+<wctype.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible

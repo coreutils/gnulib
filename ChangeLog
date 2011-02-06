@@ -1,5 +1,19 @@
 2011-02-06  Bruno Haible  <bruno@clisp.org>
 
+	New module 'wctrans'.
+	* modules/wctrans: New file.
+	* lib/wctype.in.h (wctrans): New declaration.
+	* lib/wctrans.c: New file.
+	* lib/wctrans-impl.h: New file.
+	* m4/wctrans.m4: New file.
+	* m4/wctype_h.m4 (gl_WCTYPE_H): Test whether wctrans is declared.
+	(gl_WCTYPE_H_DEFAULTS): Initialize GNULIB_WCTRANS.
+	* modules/wctype-h (Makefile.am): Substitute GNULIB_WCTRANS.
+	* tests/test-wctype-h-c++.cc: Test the declaration of wctrans.
+	* doc/posix-functions/wctrans.texi: Mention the new module.
+
+2011-02-06  Bruno Haible  <bruno@clisp.org>
+
 	New module 'iswctype'.
 	* modules/iswctype: New file.
 	* lib/wctype.in.h (iswctype): New declaration.

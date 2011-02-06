@@ -433,6 +433,21 @@ typedef void * wctrans_t;
 # endif
 #endif
 
+/* Get a descriptor for a wide character case conversion.  */
+#if @GNULIB_WCTRANS@
+# if !@HAVE_WCTRANS_T@
+_GL_FUNCDECL_SYS (wctrans, wctrans_t, (const char *name));
+# endif
+_GL_CXXALIAS_SYS (wctrans, wctrans_t, (const char *name));
+_GL_CXXALIASWARN (wctrans);
+#elif defined GNULIB_POSIXCHECK
+# undef wctrans
+# if HAVE_RAW_DECL_WCTRANS
+_GL_WARN_ON_USE (wctrans, "wctrans is unportable - "
+                 "use gnulib module wctrans for portability");
+# endif
+#endif
+
 
 #endif /* _GL_WCTYPE_H */
 #endif /* _GL_WCTYPE_H */
