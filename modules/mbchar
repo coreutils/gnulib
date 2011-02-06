@@ -11,6 +11,7 @@ extensions
 stdbool
 wchar
 wctype-h
+iswblank
 wcwidth
 memcmp
 

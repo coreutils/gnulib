@@ -1,3 +1,23 @@
+2011-02-06  Bruno Haible  <bruno@clisp.org>
+
+	New module 'iswblank'.
+	* lib/wctype.in.h (iswblank): Don't declare if GNULIB_ISWBLANK is 0.
+	* modules/iswblank: New file.
+	* modules/wctype-h (Files): Remove lib/iswblank.c.
+	(Makefile.am): Substitute GNULIB_ISWBLANK.
+	* m4/iswblank.m4: New file, partially extracted from m4/wctype_h.m4.
+	* m4/wctype_h.m4 (gl_WCTYPE_MODULE_INDICATOR): New macro.
+	(gl_WCTYPE_H_DEFAULTS): New macro.
+	(gl_WCTYPE_H): Require it. Remove iswblank related code.
+	* modules/iswblank-tests: New file.
+	* tests/test-iswblank.c: New file, extraced from tests/test-wctype-h.c.
+	* tests/test-wctype-h.c (main): Remove iswblank tests.
+	* tests/test-wctype-h-c++.cc: Guard the signature test of iswblank.
+	* doc/posix-functions/iswblank.texi: Mention module 'iswblank' instead
+	of 'wctype-h'.
+	* NEWS: Mention the change.
+	* modules/mbchar (Depends-on): Add iswblank.
+
 2011-02-08  Bruno Haible  <bruno@clisp.org>
 
 	di-set tests: Refactor.

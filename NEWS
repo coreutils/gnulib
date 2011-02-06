@@ -12,6 +12,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2011-02-08  wctype-h        This module no longer provides the iswblank()
+                            function. If you need this function, you now need
+                            to request the 'iswblank' module.
+
 2011-02-07  wctype          This module is renamed to wctype-h.
 
 2011-01-18  multiarch       This no longer #defines AA_APPLE_UNIVERSAL_BUILD;

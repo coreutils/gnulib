@@ -1,4 +1,4 @@
-# wctype_h.m4 serial 12
+# wctype_h.m4 serial 13
 
 dnl A placeholder for ISO C99 <wctype.h>, for platforms that lack it.
 
@@ -11,6 +11,7 @@ dnl Written by Paul Eggert.
 
 AC_DEFUN([gl_WCTYPE_H],
 [
+  AC_REQUIRE([gl_WCTYPE_H_DEFAULTS])
   AC_REQUIRE([AC_PROG_CC])
   AC_REQUIRE([AC_CANONICAL_HOST])
   AC_CHECK_FUNCS_ONCE([iswcntrl])
@@ -20,21 +21,6 @@ AC_DEFUN([gl_WCTYPE_H],
     HAVE_ISWCNTRL=0
   fi
   AC_SUBST([HAVE_ISWCNTRL])
-  AC_CHECK_FUNCS_ONCE([iswblank])
-  AC_CHECK_DECLS_ONCE([iswblank])
-  if test $ac_cv_func_iswblank = yes; then
-    HAVE_ISWBLANK=1
-    REPLACE_ISWBLANK=0
-  else
-    HAVE_ISWBLANK=0
-    if test $ac_cv_have_decl_iswblank = yes; then
-      REPLACE_ISWBLANK=1
-    else
-      REPLACE_ISWBLANK=0
-    fi
-  fi
-  AC_SUBST([HAVE_ISWBLANK])
-  AC_SUBST([REPLACE_ISWBLANK])
 
   AC_REQUIRE([AC_C_INLINE])
 
@@ -91,10 +77,22 @@ AC_DEFUN([gl_WCTYPE_H],
   if test $HAVE_ISWCNTRL = 0 || test $REPLACE_ISWCNTRL = 1; then
     dnl Redefine all of iswcntrl, ..., towupper in <wctype.h>.
     :
-  else
-    if test $HAVE_ISWBLANK = 0 || test $REPLACE_ISWBLANK = 1; then
-      dnl Redefine only iswblank.
-      AC_LIBOBJ([iswblank])
-    fi
   fi
+])
+
+AC_DEFUN([gl_WCTYPE_MODULE_INDICATOR],
+[
+  dnl Use AC_REQUIRE here, so that the default settings are expanded once only.
+  AC_REQUIRE([gl_WCTYPE_H_DEFAULTS])
+  gl_MODULE_INDICATOR_SET_VARIABLE([$1])
+  dnl Define it also as a C macro, for the benefit of the unit tests.
+  gl_MODULE_INDICATOR_FOR_TESTS([$1])
+])
+
+AC_DEFUN([gl_WCTYPE_H_DEFAULTS],
+[
+  GNULIB_ISWBLANK=0;    AC_SUBST([GNULIB_ISWBLANK])
+  dnl Assume proper GNU behavior unless another module says otherwise.
+  HAVE_ISWBLANK=1;      AC_SUBST([HAVE_ISWBLANK])
+  REPLACE_ISWBLANK=0;   AC_SUBST([REPLACE_ISWBLANK])
 ])

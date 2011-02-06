@@ -33,7 +33,6 @@ main (void)
   /* Check that the isw* functions exist as functions or as macros.  */
   (void) iswalnum (0);
   (void) iswalpha (0);
-  (void) iswblank (0);
   (void) iswcntrl (0);
   (void) iswdigit (0);
   (void) iswgraph (0);
@@ -47,7 +46,6 @@ main (void)
   /* Check that the isw* functions map WEOF to 0.  */
   ASSERT (!iswalnum (e));
   ASSERT (!iswalpha (e));
-  ASSERT (!iswblank (e));
   ASSERT (!iswcntrl (e));
   ASSERT (!iswdigit (e));
   ASSERT (!iswgraph (e));
