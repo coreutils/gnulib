@@ -1,5 +1,19 @@
 2011-02-06  Bruno Haible  <bruno@clisp.org>
 
+	New module 'wcsstr'.
+	* modules/wcsstr: New file.
+	* lib/wchar.in.h (wcsstr): New declaration.
+	* lib/wcsstr.c: New file.
+	* lib/wcsstr-impl.h: New file, from libutf8 with modifications.
+	* m4/wcsstr.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wcsstr is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WCSSTR, HAVE_WCSSTR.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WCSSTR, HAVE_WCSSTR.
+	* tests/test-wchar-c++.cc: Test the declaration of wcsstr.
+	* doc/posix-functions/wcsstr.texi: Mention the new module.
+
+2011-02-06  Bruno Haible  <bruno@clisp.org>
+
 	New module 'wcspbrk'.
 	* modules/wcspbrk: New file.
 	* lib/wchar.in.h (wcspbrk): New declaration.

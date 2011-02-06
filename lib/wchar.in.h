@@ -855,6 +855,24 @@ _GL_WARN_ON_USE (wcspbrk, "wcspbrk is unportable - "
 #endif
 
 
+/* Find the first occurrence of NEEDLE in HAYSTACK.  */
+#if @GNULIB_WCSSTR@
+# if !@HAVE_WCSSTR@
+_GL_FUNCDECL_SYS (wcsstr, wchar_t *,
+                  (const wchar_t *haystack, const wchar_t *needle));
+# endif
+_GL_CXXALIAS_SYS (wcsstr, wchar_t *,
+                  (const wchar_t *haystack, const wchar_t *needle));
+_GL_CXXALIASWARN (wcsstr);
+#elif defined GNULIB_POSIXCHECK
+# undef wcsstr
+# if HAVE_RAW_DECL_WCSSTR
+_GL_WARN_ON_USE (wcsstr, "wcsstr is unportable - "
+                 "use gnulib module wcsstr for portability");
+# endif
+#endif
+
+
 #endif /* _GL_WCHAR_H */
 #endif /* _GL_WCHAR_H */
 #endif
