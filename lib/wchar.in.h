@@ -634,6 +634,24 @@ _GL_WARN_ON_USE (wcscat, "wcscat is unportable - "
 #endif
 
 
+/* Append no more than N wide characters of SRC onto DEST.  */
+#if @GNULIB_WCSNCAT@
+# if !@HAVE_WCSNCAT@
+_GL_FUNCDECL_SYS (wcsncat, wchar_t *,
+                  (wchar_t *dest, const wchar_t *src, size_t n));
+# endif
+_GL_CXXALIAS_SYS (wcsncat, wchar_t *,
+                  (wchar_t *dest, const wchar_t *src, size_t n));
+_GL_CXXALIASWARN (wcsncat);
+#elif defined GNULIB_POSIXCHECK
+# undef wcsncat
+# if HAVE_RAW_DECL_WCSNCAT
+_GL_WARN_ON_USE (wcsncat, "wcsncat is unportable - "
+                 "use gnulib module wcsncat for portability");
+# endif
+#endif
+
+
 #endif /* _GL_WCHAR_H */
 #endif /* _GL_WCHAR_H */
 #endif

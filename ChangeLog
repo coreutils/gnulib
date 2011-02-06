@@ -1,5 +1,19 @@
 2011-02-05  Bruno Haible  <bruno@clisp.org>
 
+	New module 'wcsncat'.
+	* modules/wcsncat: New file.
+	* lib/wchar.in.h (wcsncat): New declaration.
+	* lib/wcsncat.c: New file.
+	* lib/wcsncat-impl.h: New file, from libutf8 with modifications.
+	* m4/wcsncat.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wcsncat is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WCSNCAT, HAVE_WCSNCAT.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WCSNCAT, HAVE_WCSNCAT.
+	* tests/test-wchar-c++.cc: Test the declaration of wcsncat.
+	* doc/posix-functions/wcsncat.texi: Mention the new module.
+
+2011-02-05  Bruno Haible  <bruno@clisp.org>
+
 	New module 'wcscat'.
 	* modules/wcscat: New file.
 	* lib/wchar.in.h (wcscat): New declaration.

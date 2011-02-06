@@ -133,6 +133,11 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::wcscat, wchar_t *,
                  (wchar_t *, const wchar_t *));
 #endif
 
+#if GNULIB_TEST_WCSNCAT
+SIGNATURE_CHECK (GNULIB_NAMESPACE::wcsncat, wchar_t *,
+                 (wchar_t *, const wchar_t *, size_t));
+#endif
+
 
 int
 main ()
