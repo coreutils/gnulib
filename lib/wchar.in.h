@@ -873,6 +873,24 @@ _GL_WARN_ON_USE (wcsstr, "wcsstr is unportable - "
 #endif
 
 
+/* Divide WCS into tokens separated by characters in DELIM.  */
+#if @GNULIB_WCSTOK@
+# if !@HAVE_WCSTOK@
+_GL_FUNCDECL_SYS (wcstok, wchar_t *,
+                  (wchar_t *wcs, const wchar_t *delim, wchar_t **ptr));
+# endif
+_GL_CXXALIAS_SYS (wcstok, wchar_t *,
+                  (wchar_t *wcs, const wchar_t *delim, wchar_t **ptr));
+_GL_CXXALIASWARN (wcstok);
+#elif defined GNULIB_POSIXCHECK
+# undef wcstok
+# if HAVE_RAW_DECL_WCSTOK
+_GL_WARN_ON_USE (wcstok, "wcstok is unportable - "
+                 "use gnulib module wcstok for portability");
+# endif
+#endif
+
+
 #endif /* _GL_WCHAR_H */
 #endif /* _GL_WCHAR_H */
 #endif

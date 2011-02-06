@@ -1,0 +1,27 @@
+Description:
+wcstok() function: split a wide string into tokens.
+
+Files:
+lib/wcstok.c
+lib/wcstok-impl.h
+m4/wcstok.m4
+
+Depends-on:
+wchar
+wcsspn
+wcspbrk
+
+configure.ac:
+gl_FUNC_WCSTOK
+gl_WCHAR_MODULE_INDICATOR([wcstok])
+
+Makefile.am:
+
+Include:
+<wchar.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible

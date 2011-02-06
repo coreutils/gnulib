@@ -202,6 +202,11 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::wcsstr, wchar_t *,
                  (const wchar_t *, const wchar_t *));
 #endif
 
+#if GNULIB_TEST_WCSTOK
+SIGNATURE_CHECK (GNULIB_NAMESPACE::wcstok, wchar_t *,
+                 (wchar_t *, const wchar_t *, wchar_t **));
+#endif
+
 
 int
 main ()
