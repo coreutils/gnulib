@@ -702,6 +702,24 @@ _GL_WARN_ON_USE (wcscasecmp, "wcscasecmp is unportable - "
 #endif
 
 
+/* Compare no more than N chars of S1 and S2, ignoring case.  */
+#if @GNULIB_WCSNCASECMP@
+# if !@HAVE_WCSNCASECMP@
+_GL_FUNCDECL_SYS (wcsncasecmp, int,
+                  (const wchar_t *s1, const wchar_t *s2, size_t n));
+# endif
+_GL_CXXALIAS_SYS (wcsncasecmp, int,
+                  (const wchar_t *s1, const wchar_t *s2, size_t n));
+_GL_CXXALIASWARN (wcsncasecmp);
+#elif defined GNULIB_POSIXCHECK
+# undef wcsncasecmp
+# if HAVE_RAW_DECL_WCSNCASECMP
+_GL_WARN_ON_USE (wcsncasecmp, "wcsncasecmp is unportable - "
+                 "use gnulib module wcsncasecmp for portability");
+# endif
+#endif
+
+
 #endif /* _GL_WCHAR_H */
 #endif /* _GL_WCHAR_H */
 #endif
