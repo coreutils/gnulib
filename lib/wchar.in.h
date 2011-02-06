@@ -771,6 +771,22 @@ _GL_WARN_ON_USE (wcsdup, "wcsdup is unportable - "
 #endif
 
 
+/* Find the first occurrence of WC in WCS.  */
+#if @GNULIB_WCSCHR@
+# if !@HAVE_WCSCHR@
+_GL_FUNCDECL_SYS (wcschr, wchar_t *, (const wchar_t *wcs, wchar_t wc));
+# endif
+_GL_CXXALIAS_SYS (wcschr, wchar_t *, (const wchar_t *wcs, wchar_t wc));
+_GL_CXXALIASWARN (wcschr);
+#elif defined GNULIB_POSIXCHECK
+# undef wcschr
+# if HAVE_RAW_DECL_WCSCHR
+_GL_WARN_ON_USE (wcschr, "wcschr is unportable - "
+                 "use gnulib module wcschr for portability");
+# endif
+#endif
+
+
 #endif /* _GL_WCHAR_H */
 #endif /* _GL_WCHAR_H */
 #endif

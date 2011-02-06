@@ -1,0 +1,31 @@
+Description:
+wcschr() function: search wide string for a wide character.
+
+Status:
+obsolete
+
+Notice:
+This module is obsolete.
+
+Files:
+lib/wcschr.c
+lib/wcschr-impl.h
+m4/wcschr.m4
+
+Depends-on:
+wchar
+
+configure.ac:
+gl_FUNC_WCSCHR
+gl_WCHAR_MODULE_INDICATOR([wcschr])
+
+Makefile.am:
+
+Include:
+<wchar.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible

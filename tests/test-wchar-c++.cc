@@ -172,6 +172,11 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::wcsxfrm, size_t,
 SIGNATURE_CHECK (GNULIB_NAMESPACE::wcsdup, wchar_t *, (const wchar_t *));
 #endif
 
+#if GNULIB_TEST_WCSCHR
+SIGNATURE_CHECK (GNULIB_NAMESPACE::wcschr, wchar_t *,
+                 (const wchar_t *, wchar_t));
+#endif
+
 
 int
 main ()
