@@ -1,5 +1,19 @@
 2011-02-06  Bruno Haible  <bruno@clisp.org>
 
+	New module 'wcsxfrm'.
+	* modules/wcsxfrm: New file.
+	* lib/wchar.in.h (wcsxfrm): New declaration.
+	* lib/wcsxfrm.c: New file.
+	* lib/wcsxfrm-impl.h: New file.
+	* m4/wcsxfrm.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wcsxfrm is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WCSXFRM, HAVE_WCSXFRM.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WCSXFRM, HAVE_WCSXFRM.
+	* tests/test-wchar-c++.cc: Test the declaration of wcsxfrm.
+	* doc/posix-functions/wcsxfrm.texi: Mention the new module.
+
+2011-02-06  Bruno Haible  <bruno@clisp.org>
+
 	New module 'wcscoll'.
 	* modules/wcscoll: New file.
 	* lib/wchar.in.h (wcscoll): New declaration.

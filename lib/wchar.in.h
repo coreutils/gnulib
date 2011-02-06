@@ -737,6 +737,24 @@ _GL_WARN_ON_USE (wcscoll, "wcscoll is unportable - "
 #endif
 
 
+/* Transform S2 into array pointed to by S1 such that if wcscmp is applied
+   to two transformed strings the result is the as applying 'wcscoll' to the
+   original strings.  */
+#if @GNULIB_WCSXFRM@
+# if !@HAVE_WCSXFRM@
+_GL_FUNCDECL_SYS (wcsxfrm, size_t, (wchar_t *s1, const wchar_t *s2, size_t n));
+# endif
+_GL_CXXALIAS_SYS (wcsxfrm, size_t, (wchar_t *s1, const wchar_t *s2, size_t n));
+_GL_CXXALIASWARN (wcsxfrm);
+#elif defined GNULIB_POSIXCHECK
+# undef wcsxfrm
+# if HAVE_RAW_DECL_WCSXFRM
+_GL_WARN_ON_USE (wcsxfrm, "wcsxfrm is unportable - "
+                 "use gnulib module wcsxfrm for portability");
+# endif
+#endif
+
+
 #endif /* _GL_WCHAR_H */
 #endif /* _GL_WCHAR_H */
 #endif

@@ -1,0 +1,26 @@
+Description:
+wcsxfrm() function: transform wide string for comparison using the current
+locale.
+
+Files:
+lib/wcsxfrm.c
+lib/wcsxfrm-impl.h
+m4/wcsxfrm.m4
+
+Depends-on:
+wchar
+
+configure.ac:
+gl_FUNC_WCSXFRM
+gl_WCHAR_MODULE_INDICATOR([wcsxfrm])
+
+Makefile.am:
+
+Include:
+<wchar.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
