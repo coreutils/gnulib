@@ -1,5 +1,20 @@
 2011-02-06  Bruno Haible  <bruno@clisp.org>
 
+	New module 'iswctype'.
+	* modules/iswctype: New file.
+	* lib/wctype.in.h (iswctype): New declaration.
+	* lib/iswctype.c: New file.
+	* lib/iswctype-impl.h: New file.
+	* m4/iswctype.m4: New file.
+	* m4/wctype_h.m4 (gl_WCTYPE_H): Test whether iswctype is declared.
+	(gl_WCTYPE_H_DEFAULTS): Initialize GNULIB_ISWCTYPE.
+	* modules/wctype-h (Makefile.am): Substitute GNULIB_ISWCTYPE.
+	* tests/test-wctype-h-c++.cc: Test the declaration of iswctype.
+	* doc/posix-functions/iswctype.texi: Mention the new module and the
+	HP-UX 11.00 problem.
+
+2011-02-06  Bruno Haible  <bruno@clisp.org>
+
 	New module 'wctype'.
 	* modules/wctype: Change to represent the wctype() substitute.
 	* lib/wctype.in.h (wctype): New declaration.

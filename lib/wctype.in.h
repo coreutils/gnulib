@@ -399,6 +399,23 @@ _GL_WARN_ON_USE (wctype, "wctype is unportable - "
 # endif
 #endif
 
+/* Test whether a wide character has a given property.
+   The argument WC must be either a wchar_t value or WEOF.
+   The argument DESC must have been returned by the wctype() function.  */
+#if @GNULIB_ISWCTYPE@
+# if !@HAVE_WCTYPE_T@
+_GL_FUNCDECL_SYS (iswctype, int, (wint_t wc, wctype_t desc));
+# endif
+_GL_CXXALIAS_SYS (iswctype, int, (wint_t wc, wctype_t desc));
+_GL_CXXALIASWARN (iswctype);
+#elif defined GNULIB_POSIXCHECK
+# undef iswctype
+# if HAVE_RAW_DECL_ISWCTYPE
+_GL_WARN_ON_USE (iswctype, "iswctype is unportable - "
+                 "use gnulib module iswctype for portability");
+# endif
+#endif
+
 #if @REPLACE_ISWCNTRL@ || defined __MINGW32__
 _GL_CXXALIAS_RPL (towlower, wint_t, (wint_t wc));
 _GL_CXXALIAS_RPL (towupper, wint_t, (wint_t wc));

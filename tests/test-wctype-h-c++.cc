@@ -43,6 +43,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::iswxdigit, int, (wint_t));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::wctype, wctype_t, (const char *));
 #endif
 
+#if GNULIB_TEST_ISWCTYPE
+SIGNATURE_CHECK (GNULIB_NAMESPACE::iswctype, int, (wint_t, wctype_t));
+#endif
+
 SIGNATURE_CHECK (GNULIB_NAMESPACE::towlower, wint_t, (wint_t));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::towupper, wint_t, (wint_t));
 
