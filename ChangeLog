@@ -1,5 +1,21 @@
 2011-02-06  Bruno Haible  <bruno@clisp.org>
 
+	New module 'wcswidth'.
+	* modules/wcswidth: New file.
+	* lib/wchar.in.h (wcswidth): New declaration.
+	* lib/wcswidth.c: New file.
+	* lib/wcswidth-impl.h: New file, from libutf8 with modifications.
+	* m4/wcswidth.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wcswidth is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WCSWIDTH, HAVE_WCSWIDTH,
+	REPLACE_WCSWIDTH.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WCSWIDTH,
+	HAVE_WCSWIDTH, REPLACE_WCSWIDTH.
+	* tests/test-wchar-c++.cc: Test the declaration of wcswidth.
+	* doc/posix-functions/wcswidth.texi: Mention the new module.
+
+2011-02-06  Bruno Haible  <bruno@clisp.org>
+
 	New module 'wcstok'.
 	* modules/wcstok: New file.
 	* lib/wchar.in.h (wcstok): New declaration.

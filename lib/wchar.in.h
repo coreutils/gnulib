@@ -891,6 +891,32 @@ _GL_WARN_ON_USE (wcstok, "wcstok is unportable - "
 #endif
 
 
+/* Determine number of column positions required for first N wide
+   characters (or fewer if S ends before this) in S.  */
+#if @GNULIB_WCSWIDTH@
+# if @REPLACE_WCSWIDTH@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef wcswidth
+#   define wcswidth rpl_wcswidth
+#  endif
+_GL_FUNCDECL_RPL (wcswidth, int, (const wchar_t *s, size_t n));
+_GL_CXXALIAS_RPL (wcswidth, int, (const wchar_t *s, size_t n));
+# else
+#  if !@HAVE_WCSWIDTH@
+_GL_FUNCDECL_SYS (wcswidth, int, (const wchar_t *s, size_t n));
+#  endif
+_GL_CXXALIAS_SYS (wcswidth, int, (const wchar_t *s, size_t n));
+# endif
+_GL_CXXALIASWARN (wcswidth);
+#elif defined GNULIB_POSIXCHECK
+# undef wcswidth
+# if HAVE_RAW_DECL_WCSWIDTH
+_GL_WARN_ON_USE (wcswidth, "wcswidth is unportable - "
+                 "use gnulib module wcswidth for portability");
+# endif
+#endif
+
+
 #endif /* _GL_WCHAR_H */
 #endif /* _GL_WCHAR_H */
 #endif

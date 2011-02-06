@@ -207,6 +207,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::wcstok, wchar_t *,
                  (wchar_t *, const wchar_t *, wchar_t **));
 #endif
 
+#if GNULIB_TEST_WCSWIDTH
+SIGNATURE_CHECK (GNULIB_NAMESPACE::wcswidth, int, (const wchar_t *, size_t));
+#endif
+
 
 int
 main ()
