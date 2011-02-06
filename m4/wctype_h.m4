@@ -1,4 +1,4 @@
-# wctype_h.m4 serial 13
+# wctype_h.m4 serial 14
 
 dnl A placeholder for ISO C99 <wctype.h>, for platforms that lack it.
 
@@ -78,6 +78,58 @@ AC_DEFUN([gl_WCTYPE_H],
     dnl Redefine all of iswcntrl, ..., towupper in <wctype.h>.
     :
   fi
+
+  dnl We assume that the wctype() and iswctype() functions exist if and only
+  dnl if the type wctype_t is defined in <wchar.h> or in <wctype.h> if that
+  dnl exists.
+  dnl HP-UX 11.00 declares all these in <wchar.h> and lacks <wctype.h>.
+  AC_CACHE_CHECK([for wctype_t], [gl_cv_type_wctype_t],
+    [AC_COMPILE_IFELSE(
+       [AC_LANG_PROGRAM(
+          [[/* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be
+               included before <wchar.h>.
+               BSD/OS 4.0.1 has a bug: <stddef.h>, <stdio.h> and <time.h>
+               must be included before <wchar.h>.  */
+            #include <stddef.h>
+            #include <stdio.h>
+            #include <time.h>
+            #include <wchar.h>
+            #if HAVE_WCTYPE_H
+            # include <wctype.h>
+            #endif
+            wctype_t a;
+          ]],
+          [[]])],
+       [gl_cv_type_wctype_t=yes],
+       [gl_cv_type_wctype_t=no])
+    ])
+  if test $gl_cv_type_wctype_t = no; then
+    HAVE_WCTYPE_T=0
+  fi
+
+  dnl We assume that the wctrans() and towctrans() functions exist if and only
+  dnl if the type wctrans_t is defined in <wctype.h>.
+  AC_CACHE_CHECK([for wctrans_t], [gl_cv_type_wctrans_t],
+    [AC_COMPILE_IFELSE(
+       [AC_LANG_PROGRAM(
+          [[/* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be
+               included before <wchar.h>.
+               BSD/OS 4.0.1 has a bug: <stddef.h>, <stdio.h> and <time.h>
+               must be included before <wchar.h>.  */
+            #include <stddef.h>
+            #include <stdio.h>
+            #include <time.h>
+            #include <wchar.h>
+            #include <wctype.h>
+            wctrans_t a;
+          ]],
+          [[]])],
+       [gl_cv_type_wctrans_t=yes],
+       [gl_cv_type_wctrans_t=no])
+    ])
+  if test $gl_cv_type_wctrans_t = no; then
+    HAVE_WCTRANS_T=0
+  fi
 ])
 
 AC_DEFUN([gl_WCTYPE_MODULE_INDICATOR],
@@ -94,5 +146,7 @@ AC_DEFUN([gl_WCTYPE_H_DEFAULTS],
   GNULIB_ISWBLANK=0;    AC_SUBST([GNULIB_ISWBLANK])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_ISWBLANK=1;      AC_SUBST([HAVE_ISWBLANK])
+  HAVE_WCTYPE_T=1;      AC_SUBST([HAVE_WCTYPE_T])
+  HAVE_WCTRANS_T=1;     AC_SUBST([HAVE_WCTRANS_T])
   REPLACE_ISWBLANK=0;   AC_SUBST([REPLACE_ISWBLANK])
 ])

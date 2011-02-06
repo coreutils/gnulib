@@ -27,6 +27,12 @@ wint_t a = 'x';
 /* Check that WEOF is defined.  */
 wint_t e = WEOF;
 
+/* Check that the type wctype_t is defined.  */
+wctype_t p;
+
+/* Check that the type wctrans_t is defined.  */
+wctrans_t q;
+
 int
 main (void)
 {

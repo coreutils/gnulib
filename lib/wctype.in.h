@@ -377,6 +377,13 @@ _GL_CXXALIAS_SYS (iswblank, int, (wint_t wc));
 _GL_CXXALIASWARN (iswblank);
 #endif
 
+#if !@HAVE_WCTYPE_T@
+# if !GNULIB_defined_wctype_t
+typedef void * wctype_t;
+#  define GNULIB_defined_wctype_t 1
+# endif
+#endif
+
 #if @REPLACE_ISWCNTRL@ || defined __MINGW32__
 _GL_CXXALIAS_RPL (towlower, wint_t, (wint_t wc));
 _GL_CXXALIAS_RPL (towupper, wint_t, (wint_t wc));
@@ -386,6 +393,13 @@ _GL_CXXALIAS_SYS (towupper, wint_t, (wint_t wc));
 #endif
 _GL_CXXALIASWARN (towlower);
 _GL_CXXALIASWARN (towupper);
+
+#if !@HAVE_WCTRANS_T@
+# if !GNULIB_defined_wctrans_t
+typedef void * wctrans_t;
+#  define GNULIB_defined_wctrans_t 1
+# endif
+#endif
 
 
 #endif /* _GL_WCTYPE_H */

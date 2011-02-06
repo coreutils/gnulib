@@ -1,3 +1,13 @@
+2011-02-06  Bruno Haible  <bruno@clisp.org>
+
+	wctype-h: Ensure wctype_t and wctrans_t are defined.
+	* lib/wctype.in.h (wctype_t, wctrans_t): New type declarations.
+	* m4/wctype_h.m4 (gl_WCTYPE_H): Determine HAVE_WCTYPE_T, HAVE_WCTRANS_T.
+	(gl_WCTYPE_H_DEFAULTS): Initialize HAVE_WCTYPE_T, HAVE_WCTRANS_T.
+	* modules/wctype-h (Makefile.am): Substitute HAVE_WCTYPE_T,
+	HAVE_WCTRANS_T.
+	* tests/test-wctype-h.c: Check that wctype_t and wctrans_t are defined.
+
 2011-02-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	flock: fix license typo
