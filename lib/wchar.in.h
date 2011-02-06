@@ -668,6 +668,24 @@ _GL_WARN_ON_USE (wcscmp, "wcscmp is unportable - "
 #endif
 
 
+/* Compare no more than N wide characters of S1 and S2.  */
+#if @GNULIB_WCSNCMP@
+# if !@HAVE_WCSNCMP@
+_GL_FUNCDECL_SYS (wcsncmp, int,
+                  (const wchar_t *s1, const wchar_t *s2, size_t n));
+# endif
+_GL_CXXALIAS_SYS (wcsncmp, int,
+                  (const wchar_t *s1, const wchar_t *s2, size_t n));
+_GL_CXXALIASWARN (wcsncmp);
+#elif defined GNULIB_POSIXCHECK
+# undef wcsncmp
+# if HAVE_RAW_DECL_WCSNCMP
+_GL_WARN_ON_USE (wcsncmp, "wcsncmp is unportable - "
+                 "use gnulib module wcsncmp for portability");
+# endif
+#endif
+
+
 #endif /* _GL_WCHAR_H */
 #endif /* _GL_WCHAR_H */
 #endif
