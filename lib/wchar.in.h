@@ -618,6 +618,22 @@ _GL_WARN_ON_USE (wcpncpy, "wcpncpy is unportable - "
 #endif
 
 
+/* Append SRC onto DEST.  */
+#if @GNULIB_WCSCAT@
+# if !@HAVE_WCSCAT@
+_GL_FUNCDECL_SYS (wcscat, wchar_t *, (wchar_t *dest, const wchar_t *src));
+# endif
+_GL_CXXALIAS_SYS (wcscat, wchar_t *, (wchar_t *dest, const wchar_t *src));
+_GL_CXXALIASWARN (wcscat);
+#elif defined GNULIB_POSIXCHECK
+# undef wcscat
+# if HAVE_RAW_DECL_WCSCAT
+_GL_WARN_ON_USE (wcscat, "wcscat is unportable - "
+                 "use gnulib module wcscat for portability");
+# endif
+#endif
+
+
 #endif /* _GL_WCHAR_H */
 #endif /* _GL_WCHAR_H */
 #endif
