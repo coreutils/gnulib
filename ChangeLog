@@ -1,5 +1,12 @@
 2011-02-06  Bruno Haible  <bruno@clisp.org>
 
+	iswblank: Ensure declaration on glibc systems.
+	* m4/iswblank.m4 (gl_FUNC_ISWBLANK): Require gl_USE_SYSTEM_EXTENSIONS.
+	* modules/iswblank (Dependencies): Add 'extensions'.
+	* doc/posix-functions/iswblank.texi: Document the glibc problem.
+
+2011-02-06  Bruno Haible  <bruno@clisp.org>
+
 	New module 'iswblank'.
 	* lib/wctype.in.h (iswblank): Don't declare if GNULIB_ISWBLANK is 0.
 	* modules/iswblank: New file.

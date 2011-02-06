@@ -7,6 +7,7 @@ m4/iswblank.m4
 
 Depends-on:
 wctype-h
+extensions
 
 configure.ac:
 gl_FUNC_ISWBLANK

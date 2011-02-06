@@ -1,4 +1,4 @@
-# iswblank.m4 serial 1
+# iswblank.m4 serial 2
 dnl Copyright (C) 2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,6 +8,8 @@ AC_DEFUN([gl_FUNC_ISWBLANK],
 [
   AC_REQUIRE([gl_WCTYPE_H_DEFAULTS])
   AC_REQUIRE([gl_WCTYPE_H])
+  dnl Persuade glibc <wctype.h> to declare iswblank().
+  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_CHECK_FUNCS_ONCE([iswblank])
   AC_CHECK_DECLS_ONCE([iswblank])
   if test $ac_cv_func_iswblank = no; then
