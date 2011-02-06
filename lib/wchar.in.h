@@ -787,6 +787,22 @@ _GL_WARN_ON_USE (wcschr, "wcschr is unportable - "
 #endif
 
 
+/* Find the last occurrence of WC in WCS.  */
+#if @GNULIB_WCSRCHR@
+# if !@HAVE_WCSRCHR@
+_GL_FUNCDECL_SYS (wcsrchr, wchar_t *, (const wchar_t *wcs, wchar_t wc));
+# endif
+_GL_CXXALIAS_SYS (wcsrchr, wchar_t *, (const wchar_t *wcs, wchar_t wc));
+_GL_CXXALIASWARN (wcsrchr);
+#elif defined GNULIB_POSIXCHECK
+# undef wcsrchr
+# if HAVE_RAW_DECL_WCSRCHR
+_GL_WARN_ON_USE (wcsrchr, "wcsrchr is unportable - "
+                 "use gnulib module wcsrchr for portability");
+# endif
+#endif
+
+
 #endif /* _GL_WCHAR_H */
 #endif /* _GL_WCHAR_H */
 #endif
