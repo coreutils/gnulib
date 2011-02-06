@@ -148,6 +148,11 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::wcsncmp, int,
                  (const wchar_t *, const wchar_t *, size_t));
 #endif
 
+#if GNULIB_TEST_WCSCASECMP
+SIGNATURE_CHECK (GNULIB_NAMESPACE::wcscasecmp, int,
+                 (const wchar_t *, const wchar_t *));
+#endif
+
 
 int
 main ()
