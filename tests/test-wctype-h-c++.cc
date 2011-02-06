@@ -54,6 +54,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::towupper, wint_t, (wint_t));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::wctrans, wctrans_t, (const char *));
 #endif
 
+#if GNULIB_TEST_TOWCTRANS
+SIGNATURE_CHECK (GNULIB_NAMESPACE::towctrans, wint_t, (wint_t, wctrans_t));
+#endif
+
 
 int
 main ()

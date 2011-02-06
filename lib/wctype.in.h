@@ -448,6 +448,23 @@ _GL_WARN_ON_USE (wctrans, "wctrans is unportable - "
 # endif
 #endif
 
+/* Perform a given case conversion on a wide character.
+   The argument WC must be either a wchar_t value or WEOF.
+   The argument DESC must have been returned by the wctrans() function.  */
+#if @GNULIB_TOWCTRANS@
+# if !@HAVE_WCTRANS_T@
+_GL_FUNCDECL_SYS (towctrans, wint_t, (wint_t wc, wctrans_t desc));
+# endif
+_GL_CXXALIAS_SYS (towctrans, wint_t, (wint_t wc, wctrans_t desc));
+_GL_CXXALIASWARN (towctrans);
+#elif defined GNULIB_POSIXCHECK
+# undef towctrans
+# if HAVE_RAW_DECL_TOWCTRANS
+_GL_WARN_ON_USE (towctrans, "towctrans is unportable - "
+                 "use gnulib module towctrans for portability");
+# endif
+#endif
+
 
 #endif /* _GL_WCTYPE_H */
 #endif /* _GL_WCTYPE_H */
