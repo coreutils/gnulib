@@ -1,3 +1,17 @@
+2011-02-07  Jim Meyering  <meyering@redhat.com>
+
+	di-set, ino-map: new modules, from coreutils
+	* lib/di-set.c: New file.
+	* lib/di-set.h: Likewise.
+	* lib/ino-map.c: Likewise.
+	* lib/ino-map.h: Likewise.
+	* modules/di-set: Likewise.
+	* modules/di-set-tests: Likewise.
+	* modules/ino-map: Likewise.
+	* modules/ino-map-tests: Likewise.
+	* tests/test-di-set.c: Likewise.
+	* tests/test-ino-map.c: Likewise.
+
 2011-02-06  Paul Eggert  <eggert@cs.ucla.edu>
 
 	getloadavg: merge minor changes from Emacs
