@@ -1,3 +1,14 @@
+2011-02-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	getloadavg: merge minor changes from Emacs
+
+	* lib/getloadavg.c (getloadavg_initialized): More-accurate comment.
+	(getloadavg): Use memset, not bzero.
+
+	2008-07-25  Chong Yidong  <cyd@stupidchicken.com>
+	* lib/getloadavg.c (nl): Rename to name_list to avoid ncurses.h
+	clash (bug#86).
+
 2010-11-14  Bruno Haible  <bruno@clisp.org>
 
 	Allow multiple gnulib generated replacements to coexist.

@@ -482,13 +482,13 @@ static struct dg_sys_info_load_info load_info;  /* what-a-mouthful! */
 # if !defined (HAVE_LIBKSTAT) && defined (LOAD_AVE_TYPE)
 /* File descriptor open to /dev/kmem or VMS load ave driver.  */
 static int channel;
-/* True iff channel is valid.  */
+/* True if channel is valid.  */
 static bool getloadavg_initialized;
 /* Offset in kmem to seek to read load average, or 0 means invalid.  */
 static long offset;
 
 #  if ! defined __VMS && ! defined sgi && ! defined __linux__
-static struct nlist nl[2];
+static struct nlist name_list[2];
 #  endif
 
 #  ifdef SUNOS_5
@@ -732,7 +732,7 @@ getloadavg (double loadavg[], int nelem)
       for (i = 0; i < conf.config_maxclass; ++i)
         {
           struct class_stats stats;
-          bzero ((char *) &stats, sizeof stats);
+          memset (&stats, 0, sizeof stats);
 
           desc.sd_type = CPUTYPE_CLASS;
           desc.sd_objid = i;
@@ -899,32 +899,32 @@ getloadavg (double loadavg[], int nelem)
     {
 #  ifndef sgi
 #   if ! defined NLIST_STRUCT || ! defined N_NAME_POINTER
-      strcpy (nl[0].n_name, LDAV_SYMBOL);
-      strcpy (nl[1].n_name, "");
+      strcpy (name_list[0].n_name, LDAV_SYMBOL);
+      strcpy (name_list[1].n_name, "");
 #   else /* NLIST_STRUCT */
 #    ifdef HAVE_STRUCT_NLIST_N_UN_N_NAME
-      nl[0].n_un.n_name = LDAV_SYMBOL;
-      nl[1].n_un.n_name = 0;
+      name_list[0].n_un.n_name = LDAV_SYMBOL;
+      name_list[1].n_un.n_name = 0;
 #    else /* not HAVE_STRUCT_NLIST_N_UN_N_NAME */
-      nl[0].n_name = LDAV_SYMBOL;
-      nl[1].n_name = 0;
+      name_list[0].n_name = LDAV_SYMBOL;
+      name_list[1].n_name = 0;
 #    endif /* not HAVE_STRUCT_NLIST_N_UN_N_NAME */
 #   endif /* NLIST_STRUCT */
 
 #   ifndef SUNOS_5
       if (
 #    if !(defined (_AIX) && !defined (ps2))
-          nlist (KERNEL_FILE, nl)
+          nlist (KERNEL_FILE, name_list)
 #    else  /* _AIX */
-          knlist (nl, 1, sizeof (nl[0]))
+          knlist (name_list, 1, sizeof (name_list[0]))
 #    endif
           >= 0)
-          /* Omit "&& nl[0].n_type != 0 " -- it breaks on Sun386i.  */
+          /* Omit "&& name_list[0].n_type != 0 " -- it breaks on Sun386i.  */
           {
 #    ifdef FIXUP_KERNEL_SYMBOL_ADDR
-            FIXUP_KERNEL_SYMBOL_ADDR (nl);
+            FIXUP_KERNEL_SYMBOL_ADDR (name_list);
 #    endif
-            offset = nl[0].n_value;
+            offset = name_list[0].n_value;
           }
 #   endif /* !SUNOS_5 */
 #  else  /* sgi */
@@ -955,8 +955,8 @@ getloadavg (double loadavg[], int nelem)
       if (kd != 0)
         {
           /* nlist the currently running kernel.  */
-          kvm_nlist (kd, nl);
-          offset = nl[0].n_value;
+          kvm_nlist (kd, name_list);
+          offset = name_list[0].n_value;
           getloadavg_initialized = true;
         }
 #  endif /* SUNOS_5 */
