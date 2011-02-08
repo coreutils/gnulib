@@ -1219,6 +1219,8 @@
 	indirectly on xalloc.  This change causes the openat substitute
 	to fall back on save_cwd when memory is tight, and for save_cwd to
 	fail instead of dying when memory is tight, but that's good enough.
+	Problem and initial idea for fix reported by Bastien Roucaries in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-01/msg00170.html>.
 
 	* lib/openat-proc.c: Include stdlib.h (for malloc), not
 	xalloc.h (for xmalloc).
