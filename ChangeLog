@@ -1,3 +1,21 @@
+2011-02-08  Paul Eggert  <eggert@cs.ucla.edu>
+
+	getloadavg: don't depend on c-strtod, cloexec, fcntl-safer
+	See the thread rooted at
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-02/msg00090.html>.
+	* lib/getloadavg.c: Do not include c-strtod.h, cloexec.h, or fcntl--.h.
+	Include <fcntl.h> only if (defined __linux__ || defined __CYGWIN__
+	|| defined SUNOS_5 || (defined LOAD_AVE_TYPE && !  defined
+	__VMS)); previously it was always included (via fcntl--.h).
+	(getloadavg): Do not use c_strtod.  Instead, approximate it by
+	hand; this is good enough for load averages.  Also, do not use
+	set_cloexec_flag; instead, use the O_CLOEXEC and F_DUPFD_CLOEXEC
+	flags directly if available and don't bother otherwise.  (Packages
+	that need the extra reliability should use the modules that define
+	these flags on older platforms that lack them.)
+	* modules/getloadavg (Depends-on): Remove c-strtod, cloexec,
+	fcntl-safer.
+
 2011-02-08  Jim Meyering  <meyering@redhat.com>
 
 	di-set.h, ino-map.h: add multiple-inclusion guard

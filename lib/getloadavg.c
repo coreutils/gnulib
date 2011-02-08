@@ -108,8 +108,6 @@
 #  include <sys/param.h>
 # endif
 
-# include "c-strtod.h"
-# include "cloexec.h"
 # include "intprops.h"
 
 /* The existing Emacs configuration files define a macro called
@@ -372,7 +370,6 @@
 #    endif /* NLIST_STRUCT */
 
 #    ifdef SUNOS_5
-#     include <fcntl.h>
 #     include <kvm.h>
 #     include <kstat.h>
 #    endif
@@ -461,7 +458,10 @@
 #  include <sys/dg_sys_info.h>
 # endif
 
-# include "fcntl--.h"
+# if (defined __linux__ || defined __CYGWIN__ || defined SUNOS_5        \
+      || (defined LOAD_AVE_TYPE && ! defined __VMS))
+#  include <fcntl.h>
+# endif
 
 /* Avoid static vars inside a function since in HPUX they dump as pure.  */
 
@@ -618,19 +618,30 @@ getloadavg (double loadavg[], int nelem)
 
   for (elem = 0; elem < nelem; elem++)
     {
-      char *endptr;
-      double d;
+      double numerator = 0;
+      double denominator = 1;
+      bool have_digit = false;
 
-      errno = 0;
-      d = c_strtod (ptr, &endptr);
-      if (ptr == endptr || (d == 0 && errno != 0))
+      while (*ptr == ' ')
+        ptr++;
+
+      /* Finish if this number is missing, and report an error if all
+         were missing.  */
+      if (! ('0' <= *ptr && *ptr <= '9'))
         {
           if (elem == 0)
             return -1;
           break;
         }
-      loadavg[elem] = d;
-      ptr = endptr;
+
+      while ('0' <= *ptr && *ptr <= '9')
+        numerator = 10 * numerator + (*ptr++ - '0');
+
+      if (*ptr == '.')
+        for (ptr++; '0' <= *ptr && *ptr <= '9'; ptr++)
+          numerator = 10 * numerator + (*ptr - '0'), denominator *= 10;
+
+      loadavg[elem++] = numerator / denominator;
     }
 
   return elem;
@@ -940,13 +951,27 @@ getloadavg (double loadavg[], int nelem)
   if (!getloadavg_initialized)
     {
 #  ifndef SUNOS_5
-      channel = open ("/dev/kmem", O_RDONLY);
-      if (channel >= 0)
+      /* Set the channel to close on exec, so it does not
+         litter any child's descriptor table.  */
+#   ifndef O_CLOEXEC
+#    define O_CLOEXEC 0
+#   endif
+      int fd = open ("/dev/kmem", O_RDONLY | O_CLOEXEC);
+      if (0 <= fd)
         {
-          /* Set the channel to close on exec, so it does not
-             litter any child's descriptor table.  */
-          set_cloexec_flag (channel, true);
-          getloadavg_initialized = true;
+#   if F_DUPFD_CLOEXEC
+          if (fd <= STDERR_FILENO)
+            {
+              int fd1 = fcntl (fd, F_DUPFD_CLOEXEC, STDERR_FILENO + 1);
+              close (fd);
+              fd = fd1;
+            }
+#   endif
+          if (0 <= fd)
+            {
+              channel = fd;
+              getloadavg_initialized = true;
+            }
         }
 #  else /* SUNOS_5 */
       /* We pass 0 for the kernel, corefile, and swapfile names
