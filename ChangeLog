@@ -1,4 +1,15 @@
 2011-02-08  Paul Eggert  <eggert@cs.ucla.edu>
+	    Bruno Haible  <bruno@clisp.org>
+
+	stdlib: improve random_r modularization
+	* lib/stdlib.in.h: Encapsulate all the stuff having to do with
+	random_r inside "#if @GNULIB_RANDOM_R@", so that it's clearer that
+	you also need the random_r module to get this material right.
+	* m4/random_r.m4 (gl_FUNC_RANDOM_R): Move check for random.h here ...
+	* m4/stdlib_h.m4 (gl_STDLIB_H): ... from here.
+	(gl_STDLIB_H_DEFAULTS): Default HAVE_RANDOM_H to 1, and AC_SUBST it.
+
+2011-02-08  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stdlib: don't depend on stdint
 	* lib/stdlib.in.h: Don't include <stdint.h> merely because

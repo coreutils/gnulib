@@ -1,4 +1,4 @@
-# serial 2
+# serial 3
 dnl Copyright (C) 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,6 +7,11 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_RANDOM_R],
 [
   AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
+
+  AC_CHECK_HEADERS([random.h], [], [], [AC_INCLUDES_DEFAULT])
+  if test $ac_cv_header_random_h = no; then
+    HAVE_RANDOM_H=0
+  fi
 
   AC_CHECK_TYPES([struct random_data],
     [], [HAVE_STRUCT_RANDOM_DATA=0],
