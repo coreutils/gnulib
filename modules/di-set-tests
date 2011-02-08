@@ -1,5 +1,6 @@
 Files:
 tests/test-di-set.c
+tests/macros.h
 
 Depends-on:
 
