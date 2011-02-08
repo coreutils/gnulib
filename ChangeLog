@@ -1,3 +1,11 @@
+2011-02-08  Jim Meyering  <meyering@redhat.com>
+
+	di-set.h, ino-map.h: add multiple-inclusion guard
+	Technically, the guard is required only for ino-map.h, due to its
+	INO_MAP_INSERT_FAILURE definition, but do both for consistency.
+	* lib/di-set.h: Add file-spanning #ifndef _GL_DI_SET_H.
+	* lib/ino-map.h: Likewise.
+
 2011-02-06  Bruno Haible  <bruno@clisp.org>
 
 	iswblank: Ensure declaration on glibc systems.
