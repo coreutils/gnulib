@@ -1,5 +1,17 @@
 2011-02-08  Paul Eggert  <eggert@cs.ucla.edu>
 
+	stdlib: don't depend on stdint
+	* lib/stdlib.in.h: Don't include <stdint.h> merely because
+	GNULIB_POSIXCHECK is defined.  GNULIB_POSIXCHECK seems to
+	be independent of whether stdint.h is needed.
+	* m4/random_r.m4 (gl_FUNC_RANDOM_R): Check for struct random_data
+	here, instead of ...
+	* m4/stdlib_h.m4 (gl_STDLIB_H): ... here.  Applications that need
+	struct random_data should be using the random_r module, not just
+	the stdlib module (which wouldn't make sense: what package needs
+	just struct random_data without also needing random_r?).
+	* modules/stdlib (Depends-on): Remove stdint.
+
 	getloadavg: don't depend on c-strtod, cloexec, fcntl-safer
 	See the thread rooted at
 	<http://lists.gnu.org/archive/html/bug-gnulib/2011-02/msg00090.html>.

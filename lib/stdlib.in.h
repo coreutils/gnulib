@@ -55,8 +55,7 @@
 # include <random.h>
 #endif
 
-#if !@HAVE_STRUCT_RANDOM_DATA@ || (@GNULIB_RANDOM_R@ && !@HAVE_RANDOM_R@) \
-    || defined GNULIB_POSIXCHECK
+#if !@HAVE_STRUCT_RANDOM_DATA@ || (@GNULIB_RANDOM_R@ && !@HAVE_RANDOM_R@)
 # include <stdint.h>
 #endif
 
