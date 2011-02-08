@@ -1,3 +1,15 @@
+2011-02-08  Bruno Haible  <bruno@clisp.org>
+
+	Split large sed scripts, for HP-UX sed.
+	* modules/math (Makefile.am): Split sed scripts around 50 sed commands,
+	to avoid HP-UX limit of 99 commands, in the near future.
+	* modules/stdlib (Makefile.am): Likewise.
+	* modules/unistd (Makefile.am): Likewise.
+	* modules/wchar (Makefile.am): Likewise.
+	Reported by Albert Chin <bug-gnulib@mlists.thewrittenword.com>.
+	Suggestion by Ralf Wildenhues <Ralf.Wildenhues@gmx.de> in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2010-01/msg00216.html>.
+
 2011-02-08  Paul Eggert  <eggert@cs.ucla.edu>
 	    Bruno Haible  <bruno@clisp.org>
 
