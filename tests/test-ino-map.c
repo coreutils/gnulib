@@ -17,24 +17,10 @@
 /* Written by Jim Meyering.  */
 
 #include <config.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-
-/* FIXME: once/if in gnulib, use #include "macros.h" in place of this */
-#define ASSERT(expr) \
-  do                                                                         \
-    {                                                                        \
-      if (!(expr))                                                           \
-        {                                                                    \
-          fprintf (stderr, "%s:%d: assertion failed\n", __FILE__, __LINE__); \
-          fflush (stderr);                                                   \
-          abort ();                                                          \
-        }                                                                    \
-    }                                                                        \
-  while (0)
 
 #include "ino-map.h"
+
+#include "macros.h"
 
 int
 main ()
@@ -50,11 +36,13 @@ main ()
   ASSERT (ino_map_insert (ino_map, 0) == INO_MAP_INIT + 2);
   ASSERT (ino_map_insert (ino_map, 0) == INO_MAP_INIT + 2);
 
-  int i;
-  for (i = 0; i < 100; i++)
-    {
-      ASSERT (ino_map_insert (ino_map, 10000 + i) == INO_MAP_INIT + 3 + i);
-    }
+  {
+    int i;
+    for (i = 0; i < 100; i++)
+      {
+        ASSERT (ino_map_insert (ino_map, 10000 + i) == INO_MAP_INIT + 3 + i);
+      }
+  }
 
   ino_map_free (ino_map);
 

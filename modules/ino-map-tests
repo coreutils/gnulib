@@ -1,5 +1,6 @@
 Files:
 tests/test-ino-map.c
+tests/macros.h
 
 Depends-on:
 

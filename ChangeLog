@@ -1,3 +1,13 @@
+2011-02-08  Bruno Haible  <bruno@clisp.org>
+
+	ino-map tests: Refactor.
+	* tests/test-ino-map.c: Include ino-map.h early. Include macros.h. Drop
+	unnecessary includes.
+	(ASSERT): Remove macro.
+	(main): Make C90 compliant by avoiding variable declaration after
+	statement.
+	* modules/ino-map-tests (Files): Add tests/macros.h.
+
 2011-02-08  Jim Meyering  <meyering@redhat.com>
 
 	di-set: add "const" to a cast
