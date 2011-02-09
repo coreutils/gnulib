@@ -1,3 +1,12 @@
+2011-02-09  Bruno Haible  <bruno@clisp.org>
+
+	gnulib-tool: Make copyright notice adjustment more robust.
+	* gnulib-tool (func_import): In sed_transform_main_lib_file,
+	sed_transform_build_aux_file, sed_transform_testsrelated_lib_file,
+	allow a line break to occur after "GNU" in "GNU [Lesser] General Public
+	License".
+	Reported by Glenn Morris <rgm@gnu.org> via Paul Eggert.
+
 2011-02-06  Bruno Haible  <bruno@clisp.org>
 
 	New module 'towctrans'.
