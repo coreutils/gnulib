@@ -1,3 +1,10 @@
+2011-02-09  Paul Eggert  <eggert@cs.ucla.edu>
+
+	flock: fix license typo
+
+	* lib/flock.c: Fix typo in license.  One of the "Lesser"s was
+	omitted.
+
 2011-02-08  Bruno Haible  <bruno@clisp.org>
 
 	Split large sed scripts, for HP-UX sed.
