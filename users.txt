@@ -32,6 +32,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   hivex           http://git.annexia.org/?p=hivex.git
   icoutils        http://riva.ucam.org/svn/cjwatson/src/debian/icoutils/trunk/icoutils/
   inetutils       http://cvs.sv.gnu.org/viewcvs/inetutils/inetutils/
+  iwhd            http://repo.or.cz/w/iwhd.git
   jwhois          http://cvs.sv.gnu.org/viewvc/jwhois/jwhois/
   libdap          http://scm.opendap.org:8090/svn/trunk/libdap/
   libffcall       http://savannah.gnu.org/projects/libffcall/
