@@ -66,6 +66,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   pspp            http://git.sv.gnu.org/gitweb/?p=pspp.git
   radius          http://cvs.sv.gnu.org/viewcvs/radius/radius/
   recutils        http://git.savannah.gnu.org/gitweb/?p=recutils.git
+  rcs             http://git.savannah.gnu.org/cgit/rcs.git
   sed             http://cvs.savannah.gnu.org/viewcvs/sed/?root=sed
   sharutils       http://cvs.savannah.gnu.org/viewvc/sharutils/sharutils/
   shishi          http://git.sv.gnu.org/gitweb/?p=shishi.git
