@@ -1,4 +1,4 @@
-# locale-ja.m4 serial 8
+# locale-ja.m4 serial 9
 dnl Copyright (C) 2003, 2005-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -27,7 +27,17 @@ int main ()
 {
   const char *p;
   /* Check whether the given locale name is recognized by the system.  */
+#if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
+  /* On native Win32, setlocale(category, "") looks at the system settings,
+     not at the environment variables.  Also, when an encoding suffix such
+     as ".65001" or ".54936" is speficied, it succeeds but sets the LC_CTYPE
+     category of the locale to "C".  */
+  if (setlocale (LC_ALL, getenv ("LC_ALL")) == NULL
+      || strcmp (setlocale (LC_CTYPE, NULL), "C") == 0)
+    return 1;
+#else
   if (setlocale (LC_ALL, "") == NULL) return 1;
+#endif
   /* Check whether nl_langinfo(CODESET) is nonempty and not "ASCII" or "646".
      On MacOS X 10.3.5 (Darwin 7.5) in the fr_FR locale, nl_langinfo(CODESET)
      is empty, and the behaviour of Tcl 8.4 in this locale is not useful.

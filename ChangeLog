@@ -1,3 +1,13 @@
+2011-02-11  Bruno Haible  <bruno@clisp.org>
+
+	Prepare for locale dependent tests on mingw.
+	* m4/locale-ar.m4 (gt_LOCALE_AR): On native Windows, call setlocale
+	differently.
+	* m4/locale-fr.m4 (gt_LOCALE_FR, gt_LOCALE_FR_UTF8): Likewise.
+	* m4/locale-ja.m4 (gt_LOCALE_JA): Likewise.
+	* m4/locale-tr.m4 (gt_LOCALE_TR_UTF8): Likewise.
+	* m4/locale-zh.m4 (gt_LOCALE_ZH_CN): Likewise.
+
 2011-02-11  Eric Blake  <eblake@redhat.com>
 
 	strptime: avoid compiler warnings
