@@ -1,5 +1,20 @@
 2011-02-11  Bruno Haible  <bruno@clisp.org>
 
+	New module 'setlocale'.
+	* lib/locale.in.h (setlocale): New declaration.
+	* lib/setlocale.c: New file, based on
+	gettext/gettext-runtime/intl/setlocale.c.
+	* m4/setlocale.m4: New file.
+	* m4/locale_h.m4 (gl_LOCALE_H): Test whether setlocale is declared.
+	(gl_LOCALE_H_DEFAULTS): Initialize GNULIB_SETLOCALE, REPLACE_SETLOCALE.
+	* modules/locale (Makefile.am): Substitute GNULIB_SETLOCALE,
+	REPLACE_SETLOCALE.
+	* modules/setlocale: New file.
+	* tests/test-locale-c++.cc: Test the declaration of setlocale.
+	* doc/posix-functions/setlocale.texi: Mention the new module.
+
+2011-02-11  Bruno Haible  <bruno@clisp.org>
+
 	Prepare for locale dependent tests on mingw.
 	* m4/locale-ar.m4 (gt_LOCALE_AR): On native Windows, don't try "ar"
 	because it has the wrong locale encoding.
