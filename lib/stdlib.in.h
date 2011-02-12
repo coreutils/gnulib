@@ -88,12 +88,6 @@ struct random_data
 # include <unistd.h>
 #endif
 
-#ifndef __attribute__
-# if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 8)
-#  define __attribute__(Spec)   /* empty */
-# endif
-#endif
-
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
 /* The definition of _GL_ARG_NONNULL is copied here.  */
@@ -119,7 +113,12 @@ struct random_data
 /* Terminate the current process with the given return code, without running
    the 'atexit' handlers.  */
 # if !@HAVE__EXIT@
-_GL_FUNCDECL_SYS (_Exit, void, (int status) __attribute__ ((__noreturn__)));
+#  if @HAVE_ATTRIBUTE_NORETURN@
+#   define _GL_ATTRIBUTE_NORETURN __attribute__ ((__noreturn__))
+#  else
+#   define _GL_ATTRIBUTE_NORETURN
+#  endif
+_GL_FUNCDECL_SYS (_Exit, void, (int status)) _GL_ATTRIBUTE_NORETURN;
 # endif
 _GL_CXXALIAS_SYS (_Exit, void, (int status));
 _GL_CXXALIASWARN (_Exit);

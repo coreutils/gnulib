@@ -1,3 +1,65 @@
+2011-02-12  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdlib: support non-GCC __attribute__
+
+	Fix a serious and tricky problem encountered when attempting to
+	add the getloadavg module to Emacs.  Emacs worked fine on RHEL
+	5.5, but it crashed due to memory corruption on Solaris 10 with
+	Sun C 5.11.  Emacs normally ORs 3-bit tags into their low-order
+	bits that are otherwise zero.  This tagging is optional inside
+	Emacs but is preferred and is used when __attribute__ ((__aligned
+	(8))) works, as it does with both recent-enough GCC and with Sun C
+	5.11.  However, Sun C 5.11 is not GCC and does not #define
+	__GNUC__ and __GNUC_MINOR__.
+
+	When I added the getloadavg module to Emacs, it brought in
+	stdlib.in.h, which contained this fragment:
+
+	   #ifndef __attribute__
+	   # if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 8)
+	   #  define __attribute__(Spec)   /* empty */
+	   # endif
+	   #endif
+
+	When files that include <stdlib.h> were compiled with Sun C 5.11,
+	the above code disabled __attribute__ ((__aligned (8))), which
+	caused variables to not be properly aligned, which eventually led
+	to the pointer corruption mentioned above.  (This was a bit hard
+	to diagnose, unfortunately.)
+
+	Several "#define __attribute__(X) /* empty */" code snippets need
+	to be eradicated from Gnulib to work with non-GCC compilers that
+	support __attribute__.  The Autoconf way to do this is to test for
+	each kind of attribute that we want support for, and selectively
+	enable that in source code.
+
+	Fix this problem just for stdlib.h, by adding a test for the
+	__noreturn__ attribute, and change stdlib.in.h to use that test
+	when needed.  This technique can be easily generalized to the
+	other *.in.h files and attributes, and a similar technique can be
+	used for *.h and *.c files.  This patch is enough to solve the
+	problem for Emacs + getloadavg, and I thought I'd publish it for
+	feedback before undertaking further, similar fixes in other
+	modules.
+
+	This patch does not arrange to #define HAVE_ATTRIBUTE_NORETURN
+	because it's not needed for stdlib.h.  It merely substitutes the
+	value directly into stdlib.h.  We may well need to #define it, or
+	similar symbols, for other modules, but it's nice to also have an
+	option to not #define it for applications like Emacs that do not
+	need it.
+
+	* lib/stdlib.in.h (__attribute__): Do not #define.
+	(_GL_ATTRIBUTE_NORETURN): New macro, which in stdlib.h needs to
+	be defined only if the _Exit module is also used.
+	* m4/_Exit.m4 (gl_FUNC__EXIT): Require gl_ATTRIBUTE_NORETURN.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Subst
+	HAVE_ATTRIBUTE_NORETURN and default it to 1, its value on GNU
+	platforms.
+	* modules/_Exit (Files): Add m4/attribute.m4.
+	* modules/stdlib (Makefile.am): Substitute HAVE_ATTRIBUTE_NORETURN.
+	* m4/attribute.m4: New file.
+
 2011-02-12  Bruno Haible  <bruno@clisp.org>
 
 	wcsrtombs: Work around bug on native Windows.

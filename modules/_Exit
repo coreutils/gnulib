@@ -4,6 +4,7 @@ _Exit() function: terminate current process.
 Files:
 lib/_Exit.c
 m4/_Exit.m4
+m4/attribute.m4
 
 Depends-on:
 stdlib
