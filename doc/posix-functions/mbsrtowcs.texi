@@ -14,6 +14,9 @@ HP-UX 11.00, IRIX 6.5, Solaris 2.6, mingw, Interix 3.5.
 @item
 This function does not work on some platforms:
 HP-UX 11, Solaris 11 2010-11.
+@item
+This function does not work when the first argument is NULL on some platforms:
+mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:

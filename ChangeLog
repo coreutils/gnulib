@@ -1,5 +1,12 @@
 2011-02-12  Bruno Haible  <bruno@clisp.org>
 
+	mbsrtowcs: Work around bug on native Windows.
+	* m4/mbsrtowcs.m4 (gl_MBSRTOWCS_WORKS): Require gt_LOCALE_FR. Test
+	against mingw bug.
+	* doc/posix-functions/mbsrtowcs.texi: Document mingw bug.
+
+2011-02-12  Bruno Haible  <bruno@clisp.org>
+
 	Avoid setlocale bugs in tests.
 	* modules/btowc (Dependencies): Add setlocale.
 	* modules/c-strcase (Dependencies): Likewise.
