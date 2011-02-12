@@ -57,24 +57,40 @@ int main () {
 changequote([,])dnl
       ])])
     if AC_TRY_EVAL([ac_link]) && test -s conftest$ac_exeext; then
-      # Setting LC_ALL is not enough. Need to set LC_TIME to empty, because
-      # otherwise on MacOS X 10.3.5 the LC_TIME=C from the beginning of the
-      # configure script would override the LC_ALL setting. Likewise for
-      # LC_CTYPE, which is also set at the beginning of the configure script.
-      # Values tested:
-      #   - The usual locale name:                         ar_SA
-      #   - The locale name with explicit encoding suffix: ar_SA.ISO-8859-6
-      #   - The HP-UX locale name:                         ar_SA.iso88596
-      #   - The Solaris 7 locale name:                     ar
-      # Also try ar_EG instead of ar_SA because Egypt is a large country too.
-      for gt_cv_locale_ar in ar_SA ar_SA.ISO-8859-6 ar_SA.iso88596 ar_EG ar_EG.ISO-8859-6 ar_EG.iso88596 ar none; do
-        if test $gt_cv_locale_ar = none; then
-          break
-        fi
-        if (LC_ALL=$gt_cv_locale_ar LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
-	  break
-	fi
-      done
+      case "$host_os" in
+        # Handle native Windows specially, because there setlocale() interprets
+        # "ar" as "Arabic" or "Arabic_Saudi Arabia.1256",
+        # "fr" or "fra" as "French" or "French_France.1252",
+        # "ge"(!) or "deu"(!) as "German" or "German_Germany.1252",
+        # "ja" as "Japanese" or "Japanese_Japan.932",
+        # and similar.
+        mingw*)
+          # Note that on native Win32, the Arabic locale is
+          # "Arabic_Saudi Arabia.1256", and CP1256 is very different from
+          # ISO-8859-6, so we cannot use it here.
+          gt_cv_locale_ar=none
+          ;;
+        *)
+          # Setting LC_ALL is not enough. Need to set LC_TIME to empty, because
+          # otherwise on MacOS X 10.3.5 the LC_TIME=C from the beginning of the
+          # configure script would override the LC_ALL setting. Likewise for
+          # LC_CTYPE, which is also set at the beginning of the configure script.
+          # Values tested:
+          #   - The usual locale name:                         ar_SA
+          #   - The locale name with explicit encoding suffix: ar_SA.ISO-8859-6
+          #   - The HP-UX locale name:                         ar_SA.iso88596
+          #   - The Solaris 7 locale name:                     ar
+          # Also try ar_EG instead of ar_SA because Egypt is a large country too.
+          for gt_cv_locale_ar in ar_SA ar_SA.ISO-8859-6 ar_SA.iso88596 ar_EG ar_EG.ISO-8859-6 ar_EG.iso88596 ar none; do
+            if test $gt_cv_locale_ar = none; then
+              break
+            fi
+            if (LC_ALL=$gt_cv_locale_ar LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
+              break
+            fi
+          done
+          ;;
+      esac
     fi
     rm -fr conftest*
   ])

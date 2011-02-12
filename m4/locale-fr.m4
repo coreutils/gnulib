@@ -72,37 +72,56 @@ int main () {
 changequote([,])dnl
       ])])
     if AC_TRY_EVAL([ac_link]) && test -s conftest$ac_exeext; then
-      # Setting LC_ALL is not enough. Need to set LC_TIME to empty, because
-      # otherwise on MacOS X 10.3.5 the LC_TIME=C from the beginning of the
-      # configure script would override the LC_ALL setting. Likewise for
-      # LC_CTYPE, which is also set at the beginning of the configure script.
-      # Test for the usual locale name.
-      if (LC_ALL=fr_FR LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
-        gt_cv_locale_fr=fr_FR
-      else
-        # Test for the locale name with explicit encoding suffix.
-        if (LC_ALL=fr_FR.ISO-8859-1 LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
-          gt_cv_locale_fr=fr_FR.ISO-8859-1
-        else
-          # Test for the AIX, OSF/1, FreeBSD, NetBSD, OpenBSD locale name.
-          if (LC_ALL=fr_FR.ISO8859-1 LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
-            gt_cv_locale_fr=fr_FR.ISO8859-1
+      case "$host_os" in
+        # Handle native Windows specially, because there setlocale() interprets
+        # "ar" as "Arabic" or "Arabic_Saudi Arabia.1256",
+        # "fr" or "fra" as "French" or "French_France.1252",
+        # "ge"(!) or "deu"(!) as "German" or "German_Germany.1252",
+        # "ja" as "Japanese" or "Japanese_Japan.932",
+        # and similar.
+        mingw*)
+          # Test for the native Win32 locale name.
+          if (LC_ALL=French_France.1252 LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
+            gt_cv_locale_fr=French_France.1252
           else
-            # Test for the HP-UX locale name.
-            if (LC_ALL=fr_FR.iso88591 LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
-              gt_cv_locale_fr=fr_FR.iso88591
+            # None found.
+            gt_cv_locale_fr=none
+          fi
+          ;;
+        *)
+          # Setting LC_ALL is not enough. Need to set LC_TIME to empty, because
+          # otherwise on MacOS X 10.3.5 the LC_TIME=C from the beginning of the
+          # configure script would override the LC_ALL setting. Likewise for
+          # LC_CTYPE, which is also set at the beginning of the configure script.
+          # Test for the usual locale name.
+          if (LC_ALL=fr_FR LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
+            gt_cv_locale_fr=fr_FR
+          else
+            # Test for the locale name with explicit encoding suffix.
+            if (LC_ALL=fr_FR.ISO-8859-1 LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
+              gt_cv_locale_fr=fr_FR.ISO-8859-1
             else
-              # Test for the Solaris 7 locale name.
-              if (LC_ALL=fr LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
-                gt_cv_locale_fr=fr
+              # Test for the AIX, OSF/1, FreeBSD, NetBSD, OpenBSD locale name.
+              if (LC_ALL=fr_FR.ISO8859-1 LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
+                gt_cv_locale_fr=fr_FR.ISO8859-1
               else
-                # None found.
-                gt_cv_locale_fr=none
+                # Test for the HP-UX locale name.
+                if (LC_ALL=fr_FR.iso88591 LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
+                  gt_cv_locale_fr=fr_FR.iso88591
+                else
+                  # Test for the Solaris 7 locale name.
+                  if (LC_ALL=fr LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
+                    gt_cv_locale_fr=fr
+                  else
+                    # None found.
+                    gt_cv_locale_fr=none
+                  fi
+                fi
               fi
             fi
           fi
-        fi
-      fi
+          ;;
+      esac
     fi
     rm -fr conftest*
   ])
@@ -179,27 +198,46 @@ int main () {
 changequote([,])dnl
       ])])
     if AC_TRY_EVAL([ac_link]) && test -s conftest$ac_exeext; then
-      # Setting LC_ALL is not enough. Need to set LC_TIME to empty, because
-      # otherwise on MacOS X 10.3.5 the LC_TIME=C from the beginning of the
-      # configure script would override the LC_ALL setting. Likewise for
-      # LC_CTYPE, which is also set at the beginning of the configure script.
-      # Test for the usual locale name.
-      if (LC_ALL=fr_FR LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
-        gt_cv_locale_fr_utf8=fr_FR
-      else
-        # Test for the locale name with explicit encoding suffix.
-        if (LC_ALL=fr_FR.UTF-8 LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
-          gt_cv_locale_fr_utf8=fr_FR.UTF-8
-        else
-          # Test for the Solaris 7 locale name.
-          if (LC_ALL=fr.UTF-8 LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
-            gt_cv_locale_fr_utf8=fr.UTF-8
+      case "$host_os" in
+        # Handle native Windows specially, because there setlocale() interprets
+        # "ar" as "Arabic" or "Arabic_Saudi Arabia.1256",
+        # "fr" or "fra" as "French" or "French_France.1252",
+        # "ge"(!) or "deu"(!) as "German" or "German_Germany.1252",
+        # "ja" as "Japanese" or "Japanese_Japan.932",
+        # and similar.
+        mingw*)
+          # Test for the hypothetical native Win32 locale name.
+          if (LC_ALL=French_France.65001 LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
+            gt_cv_locale_fr_utf8=French_France.65001
           else
             # None found.
             gt_cv_locale_fr_utf8=none
           fi
-        fi
-      fi
+          ;;
+        *)
+          # Setting LC_ALL is not enough. Need to set LC_TIME to empty, because
+          # otherwise on MacOS X 10.3.5 the LC_TIME=C from the beginning of the
+          # configure script would override the LC_ALL setting. Likewise for
+          # LC_CTYPE, which is also set at the beginning of the configure script.
+          # Test for the usual locale name.
+          if (LC_ALL=fr_FR LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
+            gt_cv_locale_fr_utf8=fr_FR
+          else
+            # Test for the locale name with explicit encoding suffix.
+            if (LC_ALL=fr_FR.UTF-8 LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
+              gt_cv_locale_fr_utf8=fr_FR.UTF-8
+            else
+              # Test for the Solaris 7 locale name.
+              if (LC_ALL=fr.UTF-8 LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
+                gt_cv_locale_fr_utf8=fr.UTF-8
+              else
+                # None found.
+                gt_cv_locale_fr_utf8=none
+              fi
+            fi
+          fi
+          ;;
+      esac
     fi
     rm -fr conftest*
   ])

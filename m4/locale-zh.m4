@@ -77,22 +77,41 @@ int main ()
 changequote([,])dnl
       ])])
     if AC_TRY_EVAL([ac_link]) && test -s conftest$ac_exeext; then
-      # Setting LC_ALL is not enough. Need to set LC_TIME to empty, because
-      # otherwise on MacOS X 10.3.5 the LC_TIME=C from the beginning of the
-      # configure script would override the LC_ALL setting. Likewise for
-      # LC_CTYPE, which is also set at the beginning of the configure script.
-      # Test for the locale name without encoding suffix.
-      if (LC_ALL=zh_CN LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
-        gt_cv_locale_zh_CN=zh_CN
-      else
-        # Test for the locale name with explicit encoding suffix.
-        if (LC_ALL=zh_CN.GB18030 LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
-          gt_cv_locale_zh_CN=zh_CN.GB18030
-        else
-          # None found.
-          gt_cv_locale_zh_CN=none
-        fi
-      fi
+      case "$host_os" in
+        # Handle native Windows specially, because there setlocale() interprets
+        # "ar" as "Arabic" or "Arabic_Saudi Arabia.1256",
+        # "fr" or "fra" as "French" or "French_France.1252",
+        # "ge"(!) or "deu"(!) as "German" or "German_Germany.1252",
+        # "ja" as "Japanese" or "Japanese_Japan.932",
+        # and similar.
+        mingw*)
+          # Test for the hypothetical native Win32 locale name.
+          if (LC_ALL=Chinese_China.54936 LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
+            gt_cv_locale_zh_CN=Chinese_China.54936
+          else
+            # None found.
+            gt_cv_locale_zh_CN=none
+          fi
+          ;;
+        *)
+          # Setting LC_ALL is not enough. Need to set LC_TIME to empty, because
+          # otherwise on MacOS X 10.3.5 the LC_TIME=C from the beginning of the
+          # configure script would override the LC_ALL setting. Likewise for
+          # LC_CTYPE, which is also set at the beginning of the configure script.
+          # Test for the locale name without encoding suffix.
+          if (LC_ALL=zh_CN LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
+            gt_cv_locale_zh_CN=zh_CN
+          else
+            # Test for the locale name with explicit encoding suffix.
+            if (LC_ALL=zh_CN.GB18030 LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
+              gt_cv_locale_zh_CN=zh_CN.GB18030
+            else
+              # None found.
+              gt_cv_locale_zh_CN=none
+            fi
+          fi
+          ;;
+      esac
     else
       # If there was a link error, due to mblen(), the system is so old that
       # it certainly doesn't have a chinese locale.

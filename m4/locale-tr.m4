@@ -9,6 +9,7 @@ dnl From Bruno Haible.
 dnl Determine the name of a turkish locale with UTF-8 encoding.
 AC_DEFUN([gt_LOCALE_TR_UTF8],
 [
+  AC_REQUIRE([AC_CANONICAL_HOST])
   AC_REQUIRE([AM_LANGINFO_CODESET])
   AC_CACHE_CHECK([for a turkish Unicode locale], [gt_cv_locale_tr_utf8], [
     AC_LANG_CONFTEST([AC_LANG_SOURCE([
@@ -76,27 +77,46 @@ int main () {
 changequote([,])dnl
       ])])
     if AC_TRY_EVAL([ac_link]) && test -s conftest$ac_exeext; then
-      # Setting LC_ALL is not enough. Need to set LC_TIME to empty, because
-      # otherwise on MacOS X 10.3.5 the LC_TIME=C from the beginning of the
-      # configure script would override the LC_ALL setting. Likewise for
-      # LC_CTYPE, which is also set at the beginning of the configure script.
-      # Test for the usual locale name.
-      if (LC_ALL=tr_TR LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
-        gt_cv_locale_tr_utf8=tr_TR
-      else
-        # Test for the locale name with explicit encoding suffix.
-        if (LC_ALL=tr_TR.UTF-8 LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
-          gt_cv_locale_tr_utf8=tr_TR.UTF-8
-        else
-          # Test for the Solaris 7 locale name.
-          if (LC_ALL=tr.UTF-8 LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
-            gt_cv_locale_tr_utf8=tr.UTF-8
+      case "$host_os" in
+        # Handle native Windows specially, because there setlocale() interprets
+        # "ar" as "Arabic" or "Arabic_Saudi Arabia.1256",
+        # "fr" or "fra" as "French" or "French_France.1252",
+        # "ge"(!) or "deu"(!) as "German" or "German_Germany.1252",
+        # "ja" as "Japanese" or "Japanese_Japan.932",
+        # and similar.
+        mingw*)
+          # Test for the hypothetical native Win32 locale name.
+          if (LC_ALL=Turkish_Turkey.65001 LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
+            gt_cv_locale_tr_utf8=Turkish_Turkey.65001
           else
             # None found.
             gt_cv_locale_tr_utf8=none
           fi
-        fi
-      fi
+          ;;
+        *)
+          # Setting LC_ALL is not enough. Need to set LC_TIME to empty, because
+          # otherwise on MacOS X 10.3.5 the LC_TIME=C from the beginning of the
+          # configure script would override the LC_ALL setting. Likewise for
+          # LC_CTYPE, which is also set at the beginning of the configure script.
+          # Test for the usual locale name.
+          if (LC_ALL=tr_TR LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
+            gt_cv_locale_tr_utf8=tr_TR
+          else
+            # Test for the locale name with explicit encoding suffix.
+            if (LC_ALL=tr_TR.UTF-8 LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
+              gt_cv_locale_tr_utf8=tr_TR.UTF-8
+            else
+              # Test for the Solaris 7 locale name.
+              if (LC_ALL=tr.UTF-8 LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
+                gt_cv_locale_tr_utf8=tr.UTF-8
+              else
+                # None found.
+                gt_cv_locale_tr_utf8=none
+              fi
+            fi
+          fi
+          ;;
+      esac
     else
       gt_cv_locale_tr_utf8=none
     fi
