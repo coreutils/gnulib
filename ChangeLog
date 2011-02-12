@@ -1,5 +1,16 @@
 2011-02-11  Bruno Haible  <bruno@clisp.org>
 
+	setlocale: Workaround native Windows bug.
+	* lib/setlocale.c (rpl_setlocale): On native Windows, when setlocale
+	succeeds but sets LC_CTYPE to "C", report a failure.
+	* tests/test-setlocale2.sh: New file.
+	* tests/test-setlocale2.c: New file.
+	* modules/setlocale-tests (Files): Add the new files.
+	(Makefile.am): Enable test-setlocale2.sh test.
+	* doc/posix-functions/setlocale.texi: Mention workaround.
+
+2011-02-11  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'setlocale'.
 	* modules/setlocale-tests: New file.
 	* tests/test-setlocale1.sh: New file.

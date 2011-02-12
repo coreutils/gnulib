@@ -844,6 +844,14 @@ rpl_setlocale (int category, const char *locale)
 
           if (setlocale_unixlike (LC_ALL, base_name) == NULL)
             goto fail;
+# if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+          /* On native Windows, setlocale(LC_ALL,...) may succeed but set the
+             LC_CTYPE category to an invalid value ("C") when it does not
+             support the specified encoding.  Report a failure instead.  */
+          if (strchr (base_name, '.') != NULL
+              && strcmp (setlocale (LC_CTYPE, NULL), "C") == 0)
+            goto fail;
+# endif
 
           for (i = 0; i < sizeof (categories) / sizeof (categories[0]); i++)
             {
@@ -886,7 +894,45 @@ rpl_setlocale (int category, const char *locale)
         }
     }
   else
-    return setlocale_single (category, locale);
+    {
+# if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+      if (category == LC_ALL && locale != NULL && strchr (locale, '.') != NULL)
+        {
+          char *saved_locale;
+
+          /* Back up the old locale.  */
+          saved_locale = setlocale (LC_ALL, NULL);
+          if (saved_locale == NULL)
+            return NULL;
+          saved_locale = strdup (saved_locale);
+          if (saved_locale == NULL)
+            return NULL;
+
+          if (setlocale_unixlike (LC_ALL, locale) == NULL)
+            {
+              free (saved_locale);
+              return NULL;
+            }
+
+          /* On native Windows, setlocale(LC_ALL,...) may succeed but set the
+             LC_CTYPE category to an invalid value ("C") when it does not
+             support the specified encoding.  Report a failure instead.  */
+          if (strcmp (setlocale (LC_CTYPE, NULL), "C") == 0)
+            {
+              if (saved_locale[0] != '\0') /* don't risk an endless recursion */
+                setlocale (LC_ALL, saved_locale);
+              free (saved_locale);
+              return NULL;
+            }
+
+          /* It was really successful.  */
+          free (saved_locale);
+          return setlocale (LC_ALL, NULL);
+        }
+      else
+# endif
+        return setlocale_single (category, locale);
+    }
 }
 
 #endif
