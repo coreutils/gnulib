@@ -9,6 +9,7 @@ m4/codeset.m4
 
 Depends-on:
 uninorm/nfc
+setlocale
 
 configure.ac:
 gt_LOCALE_FR

@@ -17,6 +17,7 @@ progname
 stdint
 setenv
 unsetenv
+setlocale
 
 configure.ac:
 gt_LOCALE_FR

@@ -15,6 +15,7 @@ unistr/u16-cmp
 unistr/u16-cpy
 unistr/u16-strcmp
 unistr/u16-strlen
+setlocale
 
 configure.ac:
 gt_LOCALE_FR

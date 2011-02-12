@@ -1,5 +1,42 @@
 2011-02-12  Bruno Haible  <bruno@clisp.org>
 
+	Avoid setlocale bugs in tests.
+	* modules/btowc (Dependencies): Add setlocale.
+	* modules/c-strcase (Dependencies): Likewise.
+	* modules/mbmemcasecmp (Dependencies): Likewise.
+	* modules/mbmemcasecoll (Dependencies): Likewise.
+	* modules/mbrtowc (Dependencies): Likewise.
+	* modules/mbscasecmp (Dependencies): Likewise.
+	* modules/mbscasestr (Dependencies): Likewise.
+	* modules/mbschr (Dependencies): Likewise.
+	* modules/mbscspn (Dependencies): Likewise.
+	* modules/mbsinit (Dependencies): Likewise.
+	* modules/mbsncasecmp (Dependencies): Likewise.
+	* modules/mbsnrtowcs (Dependencies): Likewise.
+	* modules/mbspbrk (Dependencies): Likewise.
+	* modules/mbspcasecmp (Dependencies): Likewise.
+	* modules/mbsrchr (Dependencies): Likewise.
+	* modules/mbsrtowcs (Dependencies): Likewise.
+	* modules/mbsspn (Dependencies): Likewise.
+	* modules/mbsstr (Dependencies): Likewise.
+	* modules/nl_langinfo (Dependencies): Likewise.
+	* modules/quotearg (Dependencies): Likewise.
+	* modules/unicase/locale-language (Dependencies): Likewise.
+	* modules/unicase/ulc-casecmp (Dependencies): Likewise.
+	* modules/unicase/ulc-casecoll (Dependencies): Likewise.
+	* modules/unigbrk/ulc-grapheme-breaks (Dependencies): Likewise.
+	* modules/unistdio/u8-vasnprintf (Dependencies): Likewise.
+	* modules/unistdio/u16-vasnprintf (Dependencies): Likewise.
+	* modules/unistdio/u32-vasnprintf (Dependencies): Likewise.
+	* modules/unistdio/ulc-vasnprintf (Dependencies): Likewise.
+	* modules/uniwbrk/ulc-wordbreaks (Dependencies): Likewise.
+	* modules/vasnprintf-posix (Dependencies): Likewise.
+	* modules/wcrtomb (Dependencies): Likewise.
+	* modules/wcsnrtombs (Dependencies): Likewise.
+	* modules/wcsrtombs (Dependencies): Likewise.
+
+2011-02-12  Bruno Haible  <bruno@clisp.org>
+
 	setlocale: Workaround native Windows bug.
 	* lib/setlocale.c (rpl_setlocale): On native Windows, when setlocale
 	succeeds but sets LC_CTYPE to "C", report a failure.

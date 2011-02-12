@@ -6,6 +6,7 @@ m4/locale-fr.m4
 m4/codeset.m4
 
 Depends-on:
+setlocale
 
 configure.ac:
 gt_LOCALE_FR

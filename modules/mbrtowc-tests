@@ -14,6 +14,7 @@ m4/codeset.m4
 Depends-on:
 mbsinit
 wctob
+setlocale
 
 configure.ac:
 gt_LOCALE_FR
