@@ -37,7 +37,7 @@ rpl_wcsrtombs (char *dest, const wchar_t **srcp, size_t len, mbstate_t *ps)
     {
       const wchar_t *temp_src = *srcp;
 
-      return wcsrtombs (NULL, &temp_src, len, ps);
+      return wcsrtombs (NULL, &temp_src, (size_t)-1, ps);
     }
   else
 # endif

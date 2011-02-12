@@ -1,5 +1,13 @@
 2011-02-12  Bruno Haible  <bruno@clisp.org>
 
+	wcsrtombs: Work around bug on native Windows.
+	* m4/wcsrtombs.m4 (gl_WCSRTOMBS_NULL): Test against mingw bug.
+	* lib/wcsrtombs.c (rpl_wcsrtombs): When dest is NULL, pass SIZE_MAX
+	instead of len.
+	* doc/posix-functions/wcsrtombs.texi: Document mingw bug.
+
+2011-02-12  Bruno Haible  <bruno@clisp.org>
+
 	mbsrtowcs: Work around bug on native Windows.
 	* m4/mbsrtowcs.m4 (gl_MBSRTOWCS_WORKS): Require gt_LOCALE_FR. Test
 	against mingw bug.

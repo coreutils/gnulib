@@ -15,6 +15,9 @@ HP-UX 11.00, IRIX 6.5, Solaris 2.6, mingw, Interix 3.5.
 This function may set the source pointer to NULL before NUL terminating the destination string on some platforms:
 OSF/1 5.1.
 @item
+This function does not ignore the length argument if the destination argument is NULL on some platforms:
+mingw.
+@item
 This function updates the source pointer also if the destination argument is NULL on some platforms:
 HP-UX 11, OSF/1 5.1.
 @end itemize
