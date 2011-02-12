@@ -1,5 +1,10 @@
 2011-02-11  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'setlocale'.
+	* modules/setlocale-tests: New file.
+	* tests/test-setlocale1.sh: New file.
+	* tests/test-setlocale1.c: New file.
+
 	New module 'setlocale'.
 	* lib/locale.in.h (setlocale): New declaration.
 	* lib/setlocale.c: New file, based on
