@@ -1,4 +1,4 @@
-# stdlib_h.m4 serial 37
+# stdlib_h.m4 serial 36
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -65,7 +65,6 @@ AC_DEFUN([gl_STDLIB_H_DEFAULTS],
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE__EXIT=1;              AC_SUBST([HAVE__EXIT])
   HAVE_ATOLL=1;              AC_SUBST([HAVE_ATOLL])
-  HAVE_ATTRIBUTE_NORETURN=1; AC_SUBST([HAVE_ATTRIBUTE_NORETURN])
   HAVE_CANONICALIZE_FILE_NAME=1;  AC_SUBST([HAVE_CANONICALIZE_FILE_NAME])
   HAVE_DECL_GETLOADAVG=1;    AC_SUBST([HAVE_DECL_GETLOADAVG])
   HAVE_GETSUBOPT=1;          AC_SUBST([HAVE_GETSUBOPT])

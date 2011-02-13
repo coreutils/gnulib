@@ -1,3 +1,14 @@
+2011-02-12  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdlib: don't get in the way of non-GCC __attribute__
+	See thread starting at
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-02/msg00161.html>.
+	Revert previous stdlib change, installing the following instead:
+	* lib/stdin.in.h (__attribute__): Remove.  We do not want
+	to get in the way of a non-GCC compiler that supports __attribute__.
+	(_GL_ATTRIBUTE_RETURN): New macro.
+	(_Exit): Use it instead of __attribute__.
+
 2011-02-12  Bruno Haible  <bruno@clisp.org>
 
 	quotearg test: Avoid test failure on mingw.
