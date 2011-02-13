@@ -1,5 +1,13 @@
 2011-02-13  Bruno Haible  <bruno@clisp.org>
 
+	mbsinit: Work around mingw bug.
+	* m4/mbsinit.m4 (gl_FUNC_MBSINIT): Replace mbsinit also on mingw.
+	* lib/mbsinit.c (mbsinit): Provide an alternate definition for native
+	Windows.
+	* doc/posix-functions/mbsinit.texi: Mention the mingw bug.
+
+2011-02-13  Bruno Haible  <bruno@clisp.org>
+
 	mbsinit: Don't crash for a NULL argument.
 	* lib/mbsinit.c (mbsinit): When the argument is NULL, return 1.
 	* tests/test-mbsinit.c (mbsinit): Check this behaviour.
