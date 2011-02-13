@@ -52,6 +52,7 @@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef setlocale
 #   define setlocale rpl_setlocale
+#   define GNULIB_defined_setlocale 1
 #  endif
 _GL_FUNCDECL_RPL (setlocale, char *, (int category, const char *locale));
 _GL_CXXALIAS_RPL (setlocale, char *, (int category, const char *locale));
