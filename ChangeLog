@@ -1,3 +1,14 @@
+2011-02-13  Bruno Haible  <bruno@clisp.org>
+
+	Don't interfere with a program's definition of __attribute__.
+	* lib/stdio.in.h (__attribute__): Remove definition.
+	(_GL_ATTRIBUTE_FORMAT, _GL_ATTRIBUTE_FORMAT_PRINTF): New macros.
+	(dprintf, fprintf, obstack_printf, obstack_printf, obstack_vprintf,
+	printf, snprintf, sprintf, asprintf, vasprintf, vdprintf, vfprintf,
+	vsnprintf, vsprintf): Use _GL_ATTRIBUTE_FORMAT_PRINTF.
+	* lib/string.in.h (__attribute__): Remove definition.
+	Reported by Paul Eggert.
+
 2011-02-12  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stdlib: don't get in the way of non-GCC __attribute__
