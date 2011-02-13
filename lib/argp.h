@@ -34,16 +34,16 @@
 # define __NTH(fct) fct __THROW
 #endif
 
-#ifndef __attribute__
 /* The __attribute__ feature is available in gcc versions 2.5 and later.
    The __-protected variants of the attributes 'format' and 'printf' are
    accepted by gcc versions 2.6.4 (effectively 2.7) and later.
-   We enable __attribute__ only if these are supported too, because
+   We enable _GL_ATTRIBUTE_FORMAT only if these are supported too, because
    gnulib and libintl do '#define printf __printf__' when they override
    the 'printf' function.  */
-# if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 7)
-#  define __attribute__(Spec)   /* empty */
-# endif
+#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 7)
+# define _GL_ATTRIBUTE_FORMAT(spec) __attribute__ ((__format__ spec))
+#else
+# define _GL_ATTRIBUTE_FORMAT(spec) /* empty */
 #endif
 
 /* GCC 2.95 and later have "__restrict"; C99 compilers have
@@ -530,10 +530,10 @@ extern void __argp_usage (const struct argp_state *__state);
    message, then exit (1).  */
 extern void argp_error (const struct argp_state *__restrict __state,
                         const char *__restrict __fmt, ...)
-     __attribute__ ((__format__ (__printf__, 2, 3)));
+     _GL_ATTRIBUTE_FORMAT ((__printf__, 2, 3));
 extern void __argp_error (const struct argp_state *__restrict __state,
                           const char *__restrict __fmt, ...)
-     __attribute__ ((__format__ (__printf__, 2, 3)));
+     _GL_ATTRIBUTE_FORMAT ((__printf__, 2, 3));
 
 /* Similar to the standard gnu error-reporting function error(), but will
    respect the ARGP_NO_EXIT and ARGP_NO_ERRS flags in STATE, and will print
@@ -546,11 +546,11 @@ extern void __argp_error (const struct argp_state *__restrict __state,
 extern void argp_failure (const struct argp_state *__restrict __state,
                           int __status, int __errnum,
                           const char *__restrict __fmt, ...)
-     __attribute__ ((__format__ (__printf__, 4, 5)));
+     _GL_ATTRIBUTE_FORMAT ((__printf__, 4, 5));
 extern void __argp_failure (const struct argp_state *__restrict __state,
                             int __status, int __errnum,
                             const char *__restrict __fmt, ...)
-     __attribute__ ((__format__ (__printf__, 4, 5)));
+     _GL_ATTRIBUTE_FORMAT ((__printf__, 4, 5));
 
 #if _LIBC || !defined __USE_EXTERN_INLINES
 /* Returns true if the option OPT is a valid short option.  */

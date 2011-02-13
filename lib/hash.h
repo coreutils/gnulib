@@ -27,15 +27,12 @@
 # include <stdio.h>
 # include <stdbool.h>
 
-/* The warn_unused_result attribute appeared first in gcc-3.4.0 */
-# ifndef __attribute__
-#  if __GNUC__ < 3 || (__GNUC__ == 3 && __GNUC_MINOR__ < 4)
-#   define __attribute__(x)
-#  endif
-# endif
-
-# ifndef ATTRIBUTE_WUR
+/* The __attribute__ feature is available in gcc versions 2.5 and later.
+   The warn_unused_result attribute appeared first in gcc-3.4.0.  */
+# if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
 #  define ATTRIBUTE_WUR __attribute__ ((__warn_unused_result__))
+# else
+#  define ATTRIBUTE_WUR /* empty */
 # endif
 
 typedef size_t (*Hash_hasher) (const void *, size_t);

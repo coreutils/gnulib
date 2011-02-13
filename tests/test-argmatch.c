@@ -29,15 +29,11 @@
 /* Some packages define ARGMATCH_DIE and ARGMATCH_DIE_DECL in <config.h>, and
    thus must link with a definition of that function.  Provide it here.  */
 #ifdef ARGMATCH_DIE_DECL
-#ifndef __attribute__
-# if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 8)
-#  define __attribute__(x) /* empty */
+# if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 8)
+#  define ATTRIBUTE_NORETURN __attribute__ ((__noreturn__))
+# else
+#  define ATTRIBUTE_NORETURN /* empty */
 # endif
-#endif
-
-#ifndef ATTRIBUTE_NORETURN
-# define ATTRIBUTE_NORETURN __attribute__ ((__noreturn__))
-#endif
 
 ARGMATCH_DIE_DECL ATTRIBUTE_NORETURN;
 ARGMATCH_DIE_DECL { exit (1); }

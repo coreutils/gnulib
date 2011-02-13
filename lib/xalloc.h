@@ -26,30 +26,22 @@ extern "C" {
 # endif
 
 
-# ifndef __attribute__
-#  if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 8)
-#   define __attribute__(x)
-#  endif
-# endif
-
-# ifndef ATTRIBUTE_NORETURN
+# if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 8)
 #  define ATTRIBUTE_NORETURN __attribute__ ((__noreturn__))
+# else
+#  define ATTRIBUTE_NORETURN /* empty */
 # endif
 
-# ifndef ATTRIBUTE_MALLOC
-#  if __GNUC__ >= 3
-#   define ATTRIBUTE_MALLOC __attribute__ ((__malloc__))
-#  else
-#   define ATTRIBUTE_MALLOC
-#  endif
+# if __GNUC__ >= 3
+#  define ATTRIBUTE_MALLOC __attribute__ ((__malloc__))
+# else
+#  define ATTRIBUTE_MALLOC
 # endif
 
-# ifndef ATTRIBUTE_ALLOC_SIZE
-#  if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 3)
-#   define ATTRIBUTE_ALLOC_SIZE(args) __attribute__ ((__alloc_size__ args))
-#  else
-#   define ATTRIBUTE_ALLOC_SIZE(args)
-#  endif
+# if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 3)
+#  define ATTRIBUTE_ALLOC_SIZE(args) __attribute__ ((__alloc_size__ args))
+# else
+#  define ATTRIBUTE_ALLOC_SIZE(args)
 # endif
 
 /* This function is always triggered when memory is exhausted.

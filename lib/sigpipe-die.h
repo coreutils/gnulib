@@ -47,14 +47,10 @@ extern "C" {
 #endif
 
 
-# ifndef __attribute__
-#  if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 8)
-#   define __attribute__(x)
-#  endif
-# endif
-
-# ifndef ATTRIBUTE_NORETURN
+# if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 8)
 #  define ATTRIBUTE_NORETURN __attribute__ ((__noreturn__))
+# else
+#  define ATTRIBUTE_NORETURN /* empty */
 # endif
 
 /* Emit an error message indicating a SIGPIPE signal, and terminate the

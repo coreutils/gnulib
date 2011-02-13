@@ -1,5 +1,47 @@
 2011-02-13  Bruno Haible  <bruno@clisp.org>
 
+	Don't interfere with a program's definition of __attribute__.
+	* lib/argp.h (__attribute__): Remove definition.
+	(_GL_ATTRIBUTE_FORMAT): New macro.
+	(argp_error, __argp_error, argp_failure, __argp_failure): Use it.
+	* lib/argp-fmtstream.h (__attribute__): Remove definition.
+	(_GL_ATTRIBUTE_FORMAT): New macro.
+	(__argp_fmtstream_printf, argp_fmtstream_printf): Use it.
+	* lib/argp-help.c (hol_entry_long_iterate): Use __attribute__ only for
+	GCC 3 or newer.
+	* lib/error.h (__attribute__): Remove definition.
+	(_GL_ATTRIBUTE_FORMAT): New macro.
+	(error, error_at_line): Use it.
+	* lib/hash.h (__attribute__): Remove definition.
+	(ATTRIBUTE_WUR): Update definition. Define always.
+	* lib/openat.h (__attribute__): Remove definition.
+	(ATTRIBUTE_NORETURN): Update definition. Define always.
+	* lib/sigpipe-die.h (__attribute__): Remove definition.
+	(ATTRIBUTE_NORETURN): Update definition. Define always.
+	* lib/vasnprintf.h (__attribute__): Remove definition.
+	(_GL_ATTRIBUTE_FORMAT): New macro.
+	(asnprintf, vasnprintf): Use it.
+	* lib/xalloc.h (__attribute__): Remove definition.
+	(ATTRIBUTE_NORETURN): Update definition. Define always.
+	(ATTRIBUTE_MALLOC, ATTRIBUTE_ALLOC_SIZE): Define always.
+	* lib/xmemdup0.h (__attribute__): Remove definition.
+	(ATTRIBUTE_NORETURN): Update definition. Define always.
+	* lib/xprintf.h (__attribute__): Remove definition.
+	(_GL_ATTRIBUTE_FORMAT): New macro.
+	(xprintf, xvprintf, xfprintf, xvfprintf): Use it.
+	* lib/xstrtol.h (__attribute__): Remove definition.
+	(ATTRIBUTE_NORETURN): Update definition. Define always.
+	* lib/xvasprintf.h (__attribute__): Remove definition.
+	(_GL_ATTRIBUTE_FORMAT): New macro.
+	(xasprintf, xvasprintf): Use it.
+	* tests/test-argmatch.c (__attribute__): Remove definition.
+	(ATTRIBUTE_NORETURN): Update definition. Define always.
+	* tests/test-exclude.c (__attribute__): Remove definition.
+	(ATTRIBUTE_NORETURN): Update definition. Define always.
+	Reported by Paul Eggert.
+
+2011-02-13  Bruno Haible  <bruno@clisp.org>
+
 	mbrtowc: Add more tests for native Windows platforms.
 	* tests/test-mbrtowc-w32-1.sh: New file.
 	* tests/test-mbrtowc-w32-2.sh: New file.
