@@ -1,5 +1,12 @@
 2011-02-13  Bruno Haible  <bruno@clisp.org>
 
+	mbrtowc: Work around native Windows bug.
+	* m4/mbrtowc.m4 (gl_MBRTOWC_RETVAL): Detect native Windows bug. Use the
+	guess when no suitable locale for testing was found.
+	* doc/posix-functions/mbrtowc.texi: Mention the native Windows bug.
+
+2011-02-13  Bruno Haible  <bruno@clisp.org>
+
 	mbsinit: Work around mingw bug.
 	* m4/mbsinit.m4 (gl_FUNC_MBSINIT): Replace mbsinit also on mingw.
 	* lib/mbsinit.c (mbsinit): Provide an alternate definition for native

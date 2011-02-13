@@ -1,4 +1,4 @@
-# mbrtowc.m4 serial 21
+# mbrtowc.m4 serial 22
 dnl Copyright (C) 2001-2002, 2004-2005, 2008-2011 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -348,7 +348,7 @@ AC_DEFUN([gl_MBRTOWC_RETVAL],
   AC_REQUIRE([AC_PROG_CC])
   AC_REQUIRE([gt_LOCALE_FR_UTF8])
   AC_REQUIRE([gt_LOCALE_JA])
-  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  AC_REQUIRE([AC_CANONICAL_HOST])
   AC_CACHE_CHECK([whether mbrtowc has a correct return value],
     [gl_cv_func_mbrtowc_retval],
     [
@@ -356,13 +356,14 @@ AC_DEFUN([gl_MBRTOWC_RETVAL],
       dnl is present.
 changequote(,)dnl
       case "$host_os" in
-                          # Guess no on HP-UX and Solaris.
-        hpux* | solaris*) gl_cv_func_mbrtowc_retval="guessing no" ;;
-                          # Guess yes otherwise.
-        *)                gl_cv_func_mbrtowc_retval="guessing yes" ;;
+                                   # Guess no on HP-UX, Solaris, native Windows.
+        hpux* | solaris* | mingw*) gl_cv_func_mbrtowc_retval="guessing no" ;;
+                                   # Guess yes otherwise.
+        *)                         gl_cv_func_mbrtowc_retval="guessing yes" ;;
       esac
 changequote([,])dnl
-      if test $LOCALE_FR_UTF8 != none || test $LOCALE_JA != none; then
+      if test $LOCALE_FR_UTF8 != none || test $LOCALE_JA != none \
+         || { case "$host_os" in mingw*) true;; *) false;; esac; }; then
         AC_RUN_IFELSE(
           [AC_LANG_SOURCE([[
 #include <locale.h>
@@ -378,6 +379,7 @@ changequote([,])dnl
 int main ()
 {
   int result = 0;
+  int found_some_locale = 0;
   /* This fails on Solaris.  */
   if (setlocale (LC_ALL, "$LOCALE_FR_UTF8") != NULL)
     {
@@ -392,6 +394,7 @@ int main ()
           if (mbrtowc (&wc, input + 2, 5, &state) != 1)
             result |= 1;
         }
+      found_some_locale = 1;
     }
   /* This fails on HP-UX 11.11.  */
   if (setlocale (LC_ALL, "$LOCALE_JA") != NULL)
@@ -407,11 +410,61 @@ int main ()
           if (mbrtowc (&wc, input + 2, 5, &state) != 2)
             result |= 2;
         }
+      found_some_locale = 1;
     }
-  return result;
+  /* This fails on native Windows.  */
+  if (setlocale (LC_ALL, "Japanese_Japan.932") != NULL)
+    {
+      char input[] = "<\223\372\226\173\214\352>"; /* "<日本語>" */
+      mbstate_t state;
+      wchar_t wc;
+
+      memset (&state, '\0', sizeof (mbstate_t));
+      if (mbrtowc (&wc, input + 3, 1, &state) == (size_t)(-2))
+        {
+          input[3] = '\0';
+          if (mbrtowc (&wc, input + 4, 4, &state) != 1)
+            result |= 4;
+        }
+      found_some_locale = 1;
+    }
+  if (setlocale (LC_ALL, "Chinese_Taiwan.950") != NULL)
+    {
+      char input[] = "<\244\351\245\273\273\171>"; /* "<日本語>" */
+      mbstate_t state;
+      wchar_t wc;
+
+      memset (&state, '\0', sizeof (mbstate_t));
+      if (mbrtowc (&wc, input + 3, 1, &state) == (size_t)(-2))
+        {
+          input[3] = '\0';
+          if (mbrtowc (&wc, input + 4, 4, &state) != 1)
+            result |= 8;
+        }
+      found_some_locale = 1;
+    }
+  if (setlocale (LC_ALL, "Chinese_China.936") != NULL)
+    {
+      char input[] = "<\310\325\261\276\325\132>"; /* "<日本語>" */
+      mbstate_t state;
+      wchar_t wc;
+
+      memset (&state, '\0', sizeof (mbstate_t));
+      if (mbrtowc (&wc, input + 3, 1, &state) == (size_t)(-2))
+        {
+          input[3] = '\0';
+          if (mbrtowc (&wc, input + 4, 4, &state) != 1)
+            result |= 16;
+        }
+      found_some_locale = 1;
+    }
+  return (found_some_locale ? result : 77);
 }]])],
           [gl_cv_func_mbrtowc_retval=yes],
-          [gl_cv_func_mbrtowc_retval=no],
+          [if test $? != 77; then
+             gl_cv_func_mbrtowc_retval=no
+           fi
+          ],
           [:])
       fi
     ])
