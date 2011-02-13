@@ -32,6 +32,8 @@ main (int argc, char *argv[])
 {
   static mbstate_t state;
 
+  ASSERT (mbsinit (NULL));
+
   ASSERT (mbsinit (&state));
 
   if (argc > 1)

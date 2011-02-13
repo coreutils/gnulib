@@ -43,5 +43,5 @@ mbsinit (const mbstate_t *ps)
 {
   const char *pstate = (const char *)ps;
 
-  return pstate[0] == 0;
+  return pstate == NULL || pstate[0] == 0;
 }

@@ -1,5 +1,11 @@
 2011-02-13  Bruno Haible  <bruno@clisp.org>
 
+	mbsinit: Don't crash for a NULL argument.
+	* lib/mbsinit.c (mbsinit): When the argument is NULL, return 1.
+	* tests/test-mbsinit.c (mbsinit): Check this behaviour.
+
+2011-02-13  Bruno Haible  <bruno@clisp.org>
+
 	Don't interfere with a program's definition of __attribute__.
 	* lib/stdio.in.h (__attribute__): Remove definition.
 	(_GL_ATTRIBUTE_FORMAT, _GL_ATTRIBUTE_FORMAT_PRINTF): New macros.
