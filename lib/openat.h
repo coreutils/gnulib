@@ -28,9 +28,9 @@
 #include <stdbool.h>
 
 #if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 8)
-# define ATTRIBUTE_NORETURN __attribute__ ((__noreturn__))
+# define _GL_ATTRIBUTE_NORETURN __attribute__ ((__noreturn__))
 #else
-# define ATTRIBUTE_NORETURN /* empty */
+# define _GL_ATTRIBUTE_NORETURN /* empty */
 #endif
 
 #if !HAVE_OPENAT
@@ -47,8 +47,8 @@ bool openat_needs_fchdir (void);
 
 #endif
 
-void openat_restore_fail (int) ATTRIBUTE_NORETURN;
-void openat_save_fail (int) ATTRIBUTE_NORETURN;
+void openat_restore_fail (int) _GL_ATTRIBUTE_NORETURN;
+void openat_save_fail (int) _GL_ATTRIBUTE_NORETURN;
 
 /* Using these function names makes application code
    slightly more readable than it would be with

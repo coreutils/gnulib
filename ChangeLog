@@ -1,5 +1,32 @@
 2011-02-13  Bruno Haible  <bruno@clisp.org>
 
+	Consistent macro naming for macros that use GCC __attribute__.
+	* lib/di-set.h (_GL_ATTRIBUTE_NONNULL): Renamed from
+	_ATTRIBUTE_NONNULL_.
+	* lib/ino-map.h (_GL_ATTRIBUTE_NONNULL): Likewise.
+	* lib/hash.h (_GL_ATTRIBUTE_WUR): Renamed from ATTRIBUTE_WUR.
+	* lib/ignore-value.h (_GL_ATTRIBUTE_DEPRECATED): Renamed from
+	ATTRIBUTE_DEPRECATED.
+	* lib/openat.h (_GL_ATTRIBUTE_NORETURN): Renamed from
+	ATTRIBUTE_NORETURN.
+	* lib/sigpipe-die.h (_GL_ATTRIBUTE_NORETURN): Likewise.
+	* lib/xmemdup0.h (_GL_ATTRIBUTE_NORETURN): Likewise.
+	* lib/xstrtol.h (_GL_ATTRIBUTE_NORETURN): Likewise.
+	* lib/xalloc.h (_GL_ATTRIBUTE_NORETURN): Likewise.
+	(_GL_ATTRIBUTE_MALLOC): Renamed from ATTRIBUTE_MALLOC.
+	(_GL_ATTRIBUTE_ALLOC_SIZE): Renamed from ATTRIBUTE_ALLOC_SIZE.
+	* lib/version-etc.h (_GL_ATTRIBUTE_SENTINEL): Renamed from
+	ATTRIBUTE_SENTINEL.
+	* lib/safe-alloc.h (_GL_ATTRIBUTE_RETURN_CHECK): Renamed from
+	ATTRIBUTE_RETURN_CHECK.
+	* tests/test-ignore-value.c (_GL_ATTRIBUTE_RETURN_CHECK): Likewise.
+	* tests/test-argmatch.c (_GL_ATTRIBUTE_NORETURN): Renamed from
+	ATTRIBUTE_NORETURN.
+	* tests/test-exclude.c (_GL_ATTRIBUTE_NORETURN): Likewise.
+	Reported by Paul Eggert.
+
+2011-02-13  Bruno Haible  <bruno@clisp.org>
+
 	Don't interfere with a program's definition of __attribute__.
 	* lib/argp.h (__attribute__): Remove definition.
 	(_GL_ATTRIBUTE_FORMAT): New macro.

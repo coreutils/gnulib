@@ -48,14 +48,14 @@ extern "C" {
 
 
 # if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 8)
-#  define ATTRIBUTE_NORETURN __attribute__ ((__noreturn__))
+#  define _GL_ATTRIBUTE_NORETURN __attribute__ ((__noreturn__))
 # else
-#  define ATTRIBUTE_NORETURN /* empty */
+#  define _GL_ATTRIBUTE_NORETURN /* empty */
 # endif
 
 /* Emit an error message indicating a SIGPIPE signal, and terminate the
    process with an error code.  */
-extern void sigpipe_die (void) ATTRIBUTE_NORETURN;
+extern void sigpipe_die (void) _GL_ATTRIBUTE_NORETURN;
 
 /* Install a SIGPIPE handler that invokes PREPARE_DIE and then emits an
    error message and exits.  PREPARE_DIE may be NULL, meaning a no-op.  */

@@ -30,9 +30,9 @@
 /* The __attribute__ feature is available in gcc versions 2.5 and later.
    The warn_unused_result attribute appeared first in gcc-3.4.0.  */
 # if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
-#  define ATTRIBUTE_WUR __attribute__ ((__warn_unused_result__))
+#  define _GL_ATTRIBUTE_WUR __attribute__ ((__warn_unused_result__))
 # else
-#  define ATTRIBUTE_WUR /* empty */
+#  define _GL_ATTRIBUTE_WUR /* empty */
 # endif
 
 typedef size_t (*Hash_hasher) (const void *, size_t);
@@ -78,13 +78,13 @@ size_t hash_string (const char *, size_t);
 void hash_reset_tuning (Hash_tuning *);
 Hash_table *hash_initialize (size_t, const Hash_tuning *,
                              Hash_hasher, Hash_comparator,
-                             Hash_data_freer) ATTRIBUTE_WUR;
+                             Hash_data_freer) _GL_ATTRIBUTE_WUR;
 void hash_clear (Hash_table *);
 void hash_free (Hash_table *);
 
 /* Insertion and deletion.  */
-bool hash_rehash (Hash_table *, size_t) ATTRIBUTE_WUR;
-void *hash_insert (Hash_table *, const void *) ATTRIBUTE_WUR;
+bool hash_rehash (Hash_table *, size_t) _GL_ATTRIBUTE_WUR;
+void *hash_insert (Hash_table *, const void *) _GL_ATTRIBUTE_WUR;
 int hash_insert0 (Hash_table *table, const void *entry,
                   const void **matched_ent);
 void *hash_delete (Hash_table *, const void *);

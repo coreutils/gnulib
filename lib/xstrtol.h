@@ -52,9 +52,9 @@ _DECLARE_XSTRTOL (xstrtoull, unsigned long long int)
 #endif
 
 #if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 8)
-# define ATTRIBUTE_NORETURN __attribute__ ((__noreturn__))
+# define _GL_ATTRIBUTE_NORETURN __attribute__ ((__noreturn__))
 #else
-# define ATTRIBUTE_NORETURN /* empty */
+# define _GL_ATTRIBUTE_NORETURN /* empty */
 #endif
 
 /* Report an error for an invalid integer in an option argument.
@@ -74,6 +74,6 @@ _DECLARE_XSTRTOL (xstrtoull, unsigned long long int)
 
 void xstrtol_fatal (enum strtol_error,
                     int, char, struct option const *,
-                    char const *) ATTRIBUTE_NORETURN;
+                    char const *) _GL_ATTRIBUTE_NORETURN;
 
 #endif /* not XSTRTOL_H_ */
