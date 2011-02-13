@@ -1,5 +1,11 @@
 2011-02-12  Bruno Haible  <bruno@clisp.org>
 
+	quotearg test: Avoid test failure on mingw.
+	* tests/test-quotearg.sh: Convert the locale identifier from native
+	Windows syntax to Unix syntax.
+
+2011-02-12  Bruno Haible  <bruno@clisp.org>
+
 	setlocale: Prefer gnulib's override over libintl's override.
 	* lib/locale.in.h (GNULIB_defined_setlocale): New macro.
 	* lib/gettext.h (setlocale): Redefine to rpl_setlocale if
