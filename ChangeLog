@@ -1,5 +1,19 @@
 2011-02-13  Bruno Haible  <bruno@clisp.org>
 
+	mbrtowc: Add more tests for native Windows platforms.
+	* tests/test-mbrtowc-w32-1.sh: New file.
+	* tests/test-mbrtowc-w32-2.sh: New file.
+	* tests/test-mbrtowc-w32-3.sh: New file.
+	* tests/test-mbrtowc-w32-4.sh: New file.
+	* tests/test-mbrtowc-w32-5.sh: New file.
+	* tests/test-mbrtowc-w32.c: New file.
+	* modules/mbrtowc-tests (Files): Add them.
+	(Makefile.am): Arrange to run these tests.
+	* tests/test-mbrtowc-w32-6.sh: New file, currently unused.
+	* tests/test-mbrtowc-w32-7.sh: New file, currently unused.
+
+2011-02-13  Bruno Haible  <bruno@clisp.org>
+
 	mbrtowc: Work around native Windows bug.
 	* m4/mbrtowc.m4 (gl_MBRTOWC_RETVAL): Detect native Windows bug. Use the
 	guess when no suitable locale for testing was found.
