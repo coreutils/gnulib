@@ -241,7 +241,7 @@
 	strptime: avoid compiler warnings
 	* lib/strptime.c (__strptime_internal) [!_NL_CURRENT]: Avoid
 	compiler warnings about dead code.
-	Reported by Matthias Bolte.
+	Reported by Daniel P. Berrange.
 
 2011-02-11  Thien-Thi Nguyen  <ttn@gnuvola.org>
 
