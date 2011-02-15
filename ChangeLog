@@ -1,5 +1,34 @@
 2011-02-15  Paul Eggert  <eggert@cs.ucla.edu>
 
+	getloadavg: set errno
+	* lib/getloadavg.c: Set errno when returning -1.  If no other
+	error number looks appropriate, set it to ENOSYS if the getloadavg
+	looks like it can't possibly ever work, ENOTSUP otherwise.
+	Suggested by Bruno Haible in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-02/msg00187.html>.
+
+	getloadavg: trim unused parts and speed up 'configure'
+	* NEWS: Document this.
+	* lib/getloadavg.c: Ignore HAVE_GETLOADAVG; this file is now
+	always compiled if getloadavg is absent.
+	Move test code to ...
+	* tests/test-getloadavg.c: New file, containing previous
+	contents of test from lib/getloadavg.c.  It also contains
+	suggestions by Bruno Haible in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-02/msg00186.html>.
+	* modules/getloadavg-tests: New file.
+	* m4/getloadavg.m4 (gl_GETLOADAVG): Do not check for getloadavg twice.
+	Do tests in the same order as they're needed for getloadavg.c.
+	Omit setgid-related tests that generate symbols KMEM_GROUP,
+	NEET_SETGID, GETLOADAVG_PRIVILEGED; nobody seems to use those any more.
+	Do only the tests that are needed to see whether the system has
+	getloadavg, moving the other tests into ...
+	(gl_PREREQ_GETLOADAVG): ... here.  Do not define obsolete symbol
+	NLIST_NAME_UNION; nobody should be using it.  Do not define
+	symbols C_GETLOADAVG and HAVE_GETLOADAVG; they're no longer
+	relevant, as the user of this module shouldn't care how getloadavg
+	is implemented.
+
 	getloadavg: omit unused var
 	* lib/getloadavg.c (getloadavg): Omit unused local variable.
 

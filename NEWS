@@ -12,6 +12,17 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2011-02-14  getloadavg      This module no longer #defines C_GETLOADAVG or
+                            HAVE_GETLOADAVG, as the application no longer needs
+                            to worry about how getloadavg is defined.  It no
+                            longer defines the obsolete symbol NLIST_NAME_UNION
+                            (which should have been internal to the module
+                            anyway).  Also, support for setgid use has been
+                            removed, as nobody seems to be using it; thus
+                            GETLOADAVG_PRIVILEGED is no longer #defined and
+                            KMEM_GROUP and NEED_SETGID are no longer
+                            substituted for.
+
 2011-02-08  wctype-h        This module no longer provides the iswblank()
                             function. If you need this function, you now need
                             to request the 'iswblank' module.
