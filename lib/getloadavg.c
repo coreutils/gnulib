@@ -620,7 +620,6 @@ getloadavg (double loadavg[], int nelem)
     {
       double numerator = 0;
       double denominator = 1;
-      bool have_digit = false;
 
       while (*ptr == ' ')
         ptr++;

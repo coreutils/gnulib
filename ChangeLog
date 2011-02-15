@@ -1,3 +1,8 @@
+2011-02-15  Paul Eggert  <eggert@cs.ucla.edu>
+
+	getloadavg: omit unused var
+	* lib/getloadavg.c (getloadavg): Omit unused local variable.
+
 2011-02-15  Jim Meyering  <meyering@redhat.com>
 
 	doc: update users.txt
