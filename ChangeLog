@@ -1,3 +1,8 @@
+2011-02-15  Jim Meyering  <meyering@redhat.com>
+
+	doc: update users.txt
+	* users.txt: Update iwhd's URL.
+
 2011-02-13  Bruno Haible  <bruno@clisp.org>
 
 	Consistent macro naming for macros that use GCC __attribute__.
