@@ -1,3 +1,18 @@
+2011-02-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	longlong: tune, particularly for common case of c99
+
+	* m4/longlong.m4 (AC_TYPE_LONG_LONG_INT): Don't bother compiling
+	or running anything if c99, or if unsigned long long int does not
+	work.  In either case, we know the answer without further tests.
+	Do not compile _AC_TYPE_LONG_LONG_SNIPPET twice.  Instead, compile
+	it at most once, and use its results for both long long int and
+	unsigned long long int.  This is more likely to be efficient in
+	the common case where the program wants to check for both long
+	long int and unsigned long long int.
+	(AC_TYPE_UNSIGNED_LONG_LONG_INT): Don't bother compiling if c99,
+	since the answer is already known.
+
 2011-02-15  Paul Eggert  <eggert@cs.ucla.edu>
 
 	getloadavg: set errno
