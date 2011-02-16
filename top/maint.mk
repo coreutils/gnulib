@@ -126,8 +126,13 @@ syntax-check-rules := $(sort $(shell sed -n 's/^\(sc_[a-zA-Z0-9_-]*\):.*/\1/p' \
 			$(srcdir)/$(ME) $(_cfg_mk)))
 .PHONY: $(syntax-check-rules)
 
-local-checks-available = \
-  $(syntax-check-rules)
+ifeq ($(shell $(VC_LIST) >/dev/null 2>&1; echo $$?),0)
+local-checks-available += $(syntax-check-rules)
+else
+local-checks-available += no-vc-detected
+no-vc-detected:
+	@echo "No version control files detected; skipping syntax check"
+endif
 .PHONY: $(local-checks-available)
 
 # Arrange to print the name of each syntax-checking rule just before running it.

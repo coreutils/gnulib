@@ -1,3 +1,11 @@
+2011-02-16  Eric Blake  <eblake@redhat.com>
+
+	maintainer-makefile: make syntax-check a no-op from tarballs
+	* top/maint.mk (no-vc-detected): New rule.
+	(local-checks-available): Use it to avoid hanging if someone tries
+	'make syntax-check' from a tarball.  Also append to any non-syntax
+	checks already defined in cfg.mk.
+
 2011-02-16  Paul Eggert  <eggert@cs.ucla.edu>
 
 	longlong: tune, particularly for common case of c99
