@@ -30,6 +30,14 @@ check_avg (int minutes, double avg, int printit)
 {
   if (printit)
     printf ("%d-minute: %f  ", minutes, avg);
+  else
+    {
+      /* Plausibility checks.  */
+      if (avg < 0.01)
+        printf ("suspiciously low %d-minute average: %f\n", minutes, avg);
+      if (avg > 1000000)
+        printf ("suspiciously high %d-minute average: %f\n", minutes, avg);
+    }
   if (avg < 0 || avg != avg)
     exit (minutes);
 }

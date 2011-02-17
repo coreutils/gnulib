@@ -1,3 +1,9 @@
+2011-02-17  Bruno Haible  <bruno@clisp.org>
+
+	getloadavg test: Add some plausibility checks.
+	* tests/test-getloadavg.c (check_avg): Print a warning when the value
+	is improbable.
+
 2011-02-16  Eric Blake  <eblake@redhat.com>
 
 	maintainer-makefile: make syntax-check a no-op from tarballs
