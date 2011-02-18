@@ -23,6 +23,11 @@ Date        Modules         Changes
                             KMEM_GROUP and NEED_SETGID are no longer
                             substituted for.
 
+2011-02-08  stdlib          Unless the random_r module is also used, this
+                            module no longer guarantees that the following are
+                            defined: struct random_data, RAND_MAX, random_r,
+                            srandom_r, initstate_r, setstate_r.
+
 2011-02-08  wctype-h        This module no longer provides the iswblank()
                             function. If you need this function, you now need
                             to request the 'iswblank' module.
