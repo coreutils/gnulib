@@ -948,9 +948,7 @@ getloadavg (double loadavg[], int nelem)
           }
 #   endif /* !SUNOS_5 */
 #  else  /* sgi */
-      int ldav_off;
-
-      ldav_off = sysmp (MP_KERNADDR, MPKA_AVENRUN);
+      ptrdiff_t ldav_off = sysmp (MP_KERNADDR, MPKA_AVENRUN);
       if (ldav_off != -1)
         offset = (long int) ldav_off & 0x7fffffff;
 #  endif /* sgi */
