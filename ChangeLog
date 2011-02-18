@@ -1,5 +1,11 @@
 2011-02-17  Bruno Haible  <bruno@clisp.org>
 
+	havelib: Fix comments.
+	* m4/lib-link.m4 (AC_LIB_RPATH): Update comments after 2007-01-02
+	change.
+
+2011-02-17  Bruno Haible  <bruno@clisp.org>
+
 	havelib: Update config.rpath.
 	* build-aux/config.rpath: Update to match libtool.m4 from libtool-2.4.
 
