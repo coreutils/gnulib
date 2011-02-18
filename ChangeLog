@@ -1,5 +1,11 @@
 2011-02-17  Bruno Haible  <bruno@clisp.org>
 
+	getloadavg: Add comments about platforms.
+	* m4/getloadavg.m4: Add comment.
+	* lib/getloadavg.c: Likewise.
+
+2011-02-17  Bruno Haible  <bruno@clisp.org>
+
 	getloadavg: Fix link error on Solaris 2.6.
 	* modules/getloadavg (Link): New section.
 	* modules/getloadavg-tests (Makefile.am): Use GETLOADAVG_LIBS for
