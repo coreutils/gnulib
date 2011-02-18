@@ -1,3 +1,9 @@
+2011-02-18  Eric Blake  <eblake@redhat.com>
+
+	longlong: skip, rather than fail, on cross-compilation
+	* m4/longlong.m4 (AC_TYPE_LONG_LONG_INT): Avoid aborting configure
+	when cross-compiling; regression from 2011-02-16.
+
 2011-02-17  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* NEWS: Mention 2011-02-08 change to stdlib.

@@ -1,4 +1,4 @@
-# longlong.m4 serial 15
+# longlong.m4 serial 16
 dnl Copyright (C) 1999-2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -45,7 +45,8 @@ AC_DEFUN([AC_TYPE_LONG_LONG_INT],
                    }
                  return 0;]])],
             [],
-            [ac_cv_type_long_long_int=no])
+            [ac_cv_type_long_long_int=no],
+            [:])
         fi
       fi])
   if test $ac_cv_type_long_long_int = yes; then
