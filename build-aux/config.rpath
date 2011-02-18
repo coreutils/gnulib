@@ -358,7 +358,7 @@ else
       ;;
     darwin* | rhapsody*)
       hardcode_direct=no
-      if { case $cc_basename in ifort*) true;; *) test "$GCC" = yes;; }; then
+      if { case $cc_basename in ifort*) true;; *) test "$GCC" = yes;; esac; }; then
         :
       else
         ld_shlibs=no
