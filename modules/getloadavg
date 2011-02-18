@@ -20,6 +20,9 @@ Makefile.am:
 Include:
 <stdlib.h>
 
+Link:
+$(GETLOADAVG_LIBS)
+
 License:
 GPL
 

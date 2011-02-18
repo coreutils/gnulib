@@ -1,3 +1,12 @@
+2011-02-17  Bruno Haible  <bruno@clisp.org>
+
+	getloadavg: Fix link error on Solaris 2.6.
+	* modules/getloadavg (Link): New section.
+	* modules/getloadavg-tests (Makefile.am): Use GETLOADAVG_LIBS for
+	linking test-getloadavg.
+	* doc/glibc-functions/getloadavg.texi: Mention that Solaris 2.6 lacks
+	getloadavg.
+
 2011-02-17  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/getloadavg.c (getloadavg) [sgi]: Make ldav_off of type ptrdiff_t.
