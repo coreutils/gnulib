@@ -1,3 +1,13 @@
+2011-02-18  Bruno Haible  <bruno@clisp.org>
+
+	stdint: Cut dependency to module 'wchar'.
+	* lib/stdint.in.h: Include wchar.h only when HAVE_WCHAR_H is 1. Also
+	include the necessary prerequisites.
+	* m4/stdint.m4 (gl_STDINT_H): Test whether wchar.h exists.
+	* modules/stdint (Depends-on): Remove wchar.
+	(Makefile.am): Substitute HAVE_WCHAR_H.
+	This reverts part of a 2007-01-06 commit. Reported by Paul Eggert.
+
 2011-02-18  Eric Blake  <eblake@redhat.com>
 
 	longlong: skip, rather than fail, on cross-compilation
