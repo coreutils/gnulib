@@ -1,3 +1,9 @@
+2011-02-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdint: omit redundant check for wchar.h
+	* m4/stdint.m4 (gl_STDINT_H): The earlier part of this macro now
+	always tests whether wchar.h exists, so remove the now-redundant test.
+
 2011-02-18  Bruno Haible  <bruno@clisp.org>
 
 	stdint: Cut dependency to module 'wchar'.
