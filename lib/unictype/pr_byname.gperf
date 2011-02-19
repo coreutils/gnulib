@@ -1,4 +1,4 @@
-struct named_property { const char *name; uc_property_t property; };
+struct named_property { int name; uc_property_t property; };
 %struct-type
 %language=ANSI-C
 %define hash-function-name properties_hash
@@ -7,6 +7,8 @@ struct named_property { const char *name; uc_property_t property; };
 %readonly-tables
 %global-table
 %define word-array-name properties
+%pic
+%define string-pool-name properties_stringpool
 %%
 white_space, { &uc_is_property_white_space }
 alphabetic, { &uc_is_property_alphabetic }

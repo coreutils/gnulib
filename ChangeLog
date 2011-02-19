@@ -1,5 +1,10 @@
 2011-02-19  Bruno Haible  <bruno@clisp.org>
 
+	unictype/property-byname: Reduce the size of the 'data' segment.
+	* lib/unictype/pr_byname.gperf: Add gperf option '%pic'.
+
+2011-02-19  Bruno Haible  <bruno@clisp.org>
+
 	unictype/scripts: Reduce the size of the 'data' segment.
 	* lib/gen-uni-tables.c (output_scripts_byname): Emit gperf option
 	'%pic'.
