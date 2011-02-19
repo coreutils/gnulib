@@ -1,3 +1,12 @@
+2011-02-19  Jim Meyering  <meyering@redhat.com>
+
+	git-version-gen: skip "-dirty" check when appropriate
+	* build-aux/git-version-gen: Don't run any git commands when the
+	version string comes from .tarball-version.  Prior to this, we
+	would run git update-index --refresh even from a just-unpacked
+	tarball directory, and that could affect a .git/ directory in a
+	parent of the build directory.  Reported by Mike Frysinger.
+
 2011-02-19  Bruno Haible  <bruno@clisp.org>
 
 	unictype/property-byname: Reduce the size of the 'data' segment.
