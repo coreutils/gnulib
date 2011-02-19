@@ -3943,7 +3943,7 @@ output_scripts_byname (const char *version)
   fprintf (stream, "/* Unicode scripts.  */\n");
   fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
            version);
-  fprintf (stream, "struct named_script { const char *name; unsigned int index; };\n");
+  fprintf (stream, "struct named_script { int name; unsigned int index; };\n");
   fprintf (stream, "%%struct-type\n");
   fprintf (stream, "%%language=ANSI-C\n");
   fprintf (stream, "%%define hash-function-name scripts_hash\n");
@@ -3951,6 +3951,8 @@ output_scripts_byname (const char *version)
   fprintf (stream, "%%readonly-tables\n");
   fprintf (stream, "%%global-table\n");
   fprintf (stream, "%%define word-array-name script_names\n");
+  fprintf (stream, "%%pic\n");
+  fprintf (stream, "%%define string-pool-name script_stringpool\n");
   fprintf (stream, "%%%%\n");
   for (s = 0; s < numscripts; s++)
     fprintf (stream, "%s, %u\n", scripts[s], s);
