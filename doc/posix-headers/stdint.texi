@@ -23,6 +23,10 @@ mingw.
 The values of @code{INT8_MAX}, @code{UINT8_MAX} etc. are not usable in
 preprocessor expressions on some platforms:
 HP-UX 11.23.
+@item
+The macros @code{WCHAR_MIN} and @code{WCHAR_MAX} are not defined in
+@code{<stdint.h>} (only in @code{<wchar.h>}) on some platforms:
+Dragonfly, BSDI.
 @end itemize
 
 Portability problems not fixed by Gnulib:

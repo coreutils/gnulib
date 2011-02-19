@@ -1,3 +1,8 @@
+2011-02-19  Bruno Haible  <bruno@clisp.org>
+
+	stdint: Update documentation.
+	* doc/posix-headers/stdint.texi: Mention WCHAR_MIN, WCHAR_MAX problem.
+
 2011-02-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stdint: omit redundant check for wchar.h
