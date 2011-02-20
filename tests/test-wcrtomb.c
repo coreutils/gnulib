@@ -105,6 +105,14 @@ main (int argc, char *argv[])
         }
   }
 
+  /* Test special calling convention, passing a NULL pointer.  */
+  {
+    ret = wcrtomb (NULL, '\0', NULL);
+    ASSERT (ret == 1);
+    ret = wcrtomb (NULL, btowc ('x'), NULL);
+    ASSERT (ret == 1);
+  }
+
   if (argc > 1)
     switch (argv[1][0])
       {
