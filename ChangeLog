@@ -1,3 +1,12 @@
+2011-02-28  Christian Rössel  <christian.roessel@gmx.de>  (tiny change)
+	    Markus Geimer  <m.geimer@fz-juelich.de>  (tiny change)
+
+	Fix OpenMP flag detection for various Fortran compilers.
+	* m4/openmp.m4 (_AC_LANG_OPENMP(Fortran 77)): Use '!$'
+	OpenMP-conditional compilation construct, to force compile
+	failure with missing OpenMP flag.
+	(AC_OPENMP): Add flags for Cray CCE and NEC SX compilers.
+
 2011-02-25  Eric Blake  <eblake@redhat.com>
 
 	strstr: expand test coverage
