@@ -22,7 +22,7 @@
 #include <stdlib.h>
 
 #ifndef GNULIB_LIBPOSIX
-#include "error.h"
+# include "error.h"
 #endif
 
 #include "exitfail.h"

@@ -298,7 +298,7 @@ rpl_linkat (int fd1, char const *file1, int fd2, char const *file2, int flag)
       return -1;
     }
 
-#if LINKAT_TRAILING_SLASH_BUG
+# if LINKAT_TRAILING_SLASH_BUG
   /* Reject trailing slashes on non-directories.  */
   {
     size_t len1 = strlen (file1);
@@ -319,7 +319,7 @@ rpl_linkat (int fd1, char const *file1, int fd2, char const *file2, int flag)
           }
       }
   }
-#endif
+# endif
 
   if (!flag)
     return linkat (fd1, file1, fd2, file2, flag);

@@ -628,7 +628,7 @@ fts_close (FTS *sp)
 #if defined __linux__ \
   && HAVE_SYS_VFS_H && HAVE_FSTATFS && HAVE_STRUCT_STATFS_F_TYPE
 
-#include <sys/vfs.h>
+# include <sys/vfs.h>
 
 /* Linux-specific constants from coreutils' src/fs.h */
 # define S_MAGIC_TMPFS 0x1021994

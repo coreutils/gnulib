@@ -45,6 +45,15 @@ sc_pragma_columns:
 		 exit 1; } || :;					\
 	else :; fi
 
+# Verify that certain (for now, only Jim Meyering's) lib/**.c files
+# are consistently cpp indented.
+sc_cpp_indent_check:
+	./gnulib-tool --extract-filelist $$(cd modules; grep -ilr meyering .) \
+          | sort -u \
+          | grep 'lib/.*\.c$$' \
+          | grep -v '/getloadavg\.c$$' \
+          | xargs cppi -c
+
 # Regenerate some files that are stored in the repository.
 regen: MODULES.html
 

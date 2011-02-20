@@ -45,7 +45,7 @@ enum { BILLION = 1000 * 1000 * 1000 };
 int
 nanosleep (const struct timespec *requested_delay,
            struct timespec *remaining_delay)
-#undef nanosleep
+# undef nanosleep
 {
   /* nanosleep mishandles large sleeps due to internal overflow problems.
      The worst known case of this is Linux 2.6.9 with glibc 2.3.4, which

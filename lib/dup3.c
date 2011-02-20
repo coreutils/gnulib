@@ -56,10 +56,10 @@ dup3 (int oldfd, int newfd, int flags)
         if (!(result < 0 && errno == ENOSYS))
           {
             have_dup3_really = 1;
-#if REPLACE_FCHDIR
+# if REPLACE_FCHDIR
             if (0 <= result)
               result = _gl_register_dup (oldfd, newfd);
-#endif
+# endif
             return result;
           }
         have_dup3_really = -1;

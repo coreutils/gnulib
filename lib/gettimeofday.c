@@ -40,10 +40,10 @@
 static struct tm tm_zero_buffer;
 static struct tm *localtime_buffer_addr = &tm_zero_buffer;
 
-#undef localtime
+# undef localtime
 extern struct tm *localtime (time_t const *);
 
-#undef gmtime
+# undef gmtime
 extern struct tm *gmtime (time_t const *);
 
 /* This is a wrapper for localtime.  It is used only on systems for which
@@ -79,7 +79,7 @@ rpl_gmtime (time_t const *timep)
 
 #if TZSET_CLOBBERS_LOCALTIME
 
-#undef tzset
+# undef tzset
 extern void tzset (void);
 
 /* This is a wrapper for tzset, for systems on which tzset may clobber

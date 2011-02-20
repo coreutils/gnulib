@@ -1,3 +1,26 @@
+2011-02-22  Jim Meyering  <meyering@redhat.com>
+
+	maint: adjust cpp indentation to reflect nesting depth
+	I.e., in a block of code that begins with an unnested "#if",
+	put one space between the "#" in column 1 and following token.
+	For example,
+	-#include <sys/vfs.h>
+	+# include <sys/vfs.h>
+	Do this only in .c files that are part of a module I maintain.
+	* lib/linkat.c: Filter through cppi.
+	* lib/nanosleep.c: Likewise.
+	* lib/openat.c: Likewise.
+	* lib/openat-die.c: Likewise.
+	* lib/dup3.c: Likewise.
+	* lib/fchownat.c: Likewise.
+	* lib/flock.c: Likewise.
+	* lib/fsync.c: Likewise.
+	* lib/fts.c: Likewise.
+	* lib/getpass.c: Likewise.
+	* lib/gettimeofday.c: Likewise.
+	* lib/userspec.c: Likewise.
+	* Makefile (sc_cpp_indent_check): New rule, to check this.
+
 2011-02-22  Bruno Haible  <bruno@clisp.org>
 
 	New module 'wctomb'.
