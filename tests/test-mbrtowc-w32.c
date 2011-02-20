@@ -18,6 +18,7 @@
 
 #include <wchar.h>
 
+#include <errno.h>
 #include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -319,6 +320,19 @@ test_one_locale (const char *name, int codepage)
         ASSERT (ret == 1);
         ASSERT (wc == '>');
         ASSERT (mbsinit (&state));
+
+        /* Test some invalid input.  */
+        memset (&state, '\0', sizeof (mbstate_t));
+        wc = (wchar_t) 0xBADFACE;
+        ret = mbrtowc (&wc, "\377", 1, &state); /* 0xFF */
+        ASSERT (ret == (size_t)-1);
+        ASSERT (errno == EILSEQ);
+
+        memset (&state, '\0', sizeof (mbstate_t));
+        wc = (wchar_t) 0xBADFACE;
+        ret = mbrtowc (&wc, "\225\377", 2, &state); /* 0x95 0xFF */
+        ASSERT (ret == (size_t)-1);
+        ASSERT (errno == EILSEQ);
       }
       return 0;
 
@@ -378,6 +392,19 @@ test_one_locale (const char *name, int codepage)
         ASSERT (ret == 1);
         ASSERT (wc == '>');
         ASSERT (mbsinit (&state));
+
+        /* Test some invalid input.  */
+        memset (&state, '\0', sizeof (mbstate_t));
+        wc = (wchar_t) 0xBADFACE;
+        ret = mbrtowc (&wc, "\377", 1, &state); /* 0xFF */
+        ASSERT (ret == (size_t)-1);
+        ASSERT (errno == EILSEQ);
+
+        memset (&state, '\0', sizeof (mbstate_t));
+        wc = (wchar_t) 0xBADFACE;
+        ret = mbrtowc (&wc, "\225\377", 2, &state); /* 0x95 0xFF */
+        ASSERT (ret == (size_t)-1);
+        ASSERT (errno == EILSEQ);
       }
       return 0;
 
@@ -437,6 +464,19 @@ test_one_locale (const char *name, int codepage)
         ASSERT (ret == 1);
         ASSERT (wc == '>');
         ASSERT (mbsinit (&state));
+
+        /* Test some invalid input.  */
+        memset (&state, '\0', sizeof (mbstate_t));
+        wc = (wchar_t) 0xBADFACE;
+        ret = mbrtowc (&wc, "\377", 1, &state); /* 0xFF */
+        ASSERT (ret == (size_t)-1);
+        ASSERT (errno == EILSEQ);
+
+        memset (&state, '\0', sizeof (mbstate_t));
+        wc = (wchar_t) 0xBADFACE;
+        ret = mbrtowc (&wc, "\225\377", 2, &state); /* 0x95 0xFF */
+        ASSERT (ret == (size_t)-1);
+        ASSERT (errno == EILSEQ);
       }
       return 0;
 
@@ -496,6 +536,43 @@ test_one_locale (const char *name, int codepage)
         ASSERT (ret == 1);
         ASSERT (wc == 'r');
         ASSERT (mbsinit (&state));
+
+        /* Test some invalid input.  */
+        memset (&state, '\0', sizeof (mbstate_t));
+        wc = (wchar_t) 0xBADFACE;
+        ret = mbrtowc (&wc, "\377", 1, &state); /* 0xFF */
+        ASSERT (ret == (size_t)-1);
+        ASSERT (errno == EILSEQ);
+
+        memset (&state, '\0', sizeof (mbstate_t));
+        wc = (wchar_t) 0xBADFACE;
+        ret = mbrtowc (&wc, "\225\377", 2, &state); /* 0x95 0xFF */
+        ASSERT (ret == (size_t)-1);
+        ASSERT (errno == EILSEQ);
+
+        memset (&state, '\0', sizeof (mbstate_t));
+        wc = (wchar_t) 0xBADFACE;
+        ret = mbrtowc (&wc, "\201\045", 2, &state); /* 0x81 0x25 */
+        ASSERT (ret == (size_t)-1);
+        ASSERT (errno == EILSEQ);
+
+        memset (&state, '\0', sizeof (mbstate_t));
+        wc = (wchar_t) 0xBADFACE;
+        ret = mbrtowc (&wc, "\201\060\377", 3, &state); /* 0x81 0x30 0xFF */
+        ASSERT (ret == (size_t)-1);
+        ASSERT (errno == EILSEQ);
+
+        memset (&state, '\0', sizeof (mbstate_t));
+        wc = (wchar_t) 0xBADFACE;
+        ret = mbrtowc (&wc, "\201\060\377\064", 4, &state); /* 0x81 0x30 0xFF 0x34 */
+        ASSERT (ret == (size_t)-1);
+        ASSERT (errno == EILSEQ);
+
+        memset (&state, '\0', sizeof (mbstate_t));
+        wc = (wchar_t) 0xBADFACE;
+        ret = mbrtowc (&wc, "\201\060\211\072", 4, &state); /* 0x81 0x30 0x89 0x3A */
+        ASSERT (ret == (size_t)-1);
+        ASSERT (errno == EILSEQ);
       }
       return 0;
 
@@ -553,6 +630,67 @@ test_one_locale (const char *name, int codepage)
         ASSERT (ret == 1);
         ASSERT (wc == 'r');
         ASSERT (mbsinit (&state));
+
+        /* Test some invalid input.  */
+        memset (&state, '\0', sizeof (mbstate_t));
+        wc = (wchar_t) 0xBADFACE;
+        ret = mbrtowc (&wc, "\377", 1, &state); /* 0xFF */
+        ASSERT (ret == (size_t)-1);
+        ASSERT (errno == EILSEQ);
+
+        memset (&state, '\0', sizeof (mbstate_t));
+        wc = (wchar_t) 0xBADFACE;
+        ret = mbrtowc (&wc, "\303\300", 2, &state); /* 0xC3 0xC0 */
+        ASSERT (ret == (size_t)-1);
+        ASSERT (errno == EILSEQ);
+
+        memset (&state, '\0', sizeof (mbstate_t));
+        wc = (wchar_t) 0xBADFACE;
+        ret = mbrtowc (&wc, "\343\300", 2, &state); /* 0xE3 0xC0 */
+        ASSERT (ret == (size_t)-1);
+        ASSERT (errno == EILSEQ);
+
+        memset (&state, '\0', sizeof (mbstate_t));
+        wc = (wchar_t) 0xBADFACE;
+        ret = mbrtowc (&wc, "\343\300\200", 3, &state); /* 0xE3 0xC0 0x80 */
+        ASSERT (ret == (size_t)-1);
+        ASSERT (errno == EILSEQ);
+
+        memset (&state, '\0', sizeof (mbstate_t));
+        wc = (wchar_t) 0xBADFACE;
+        ret = mbrtowc (&wc, "\343\200\300", 3, &state); /* 0xE3 0x80 0xC0 */
+        ASSERT (ret == (size_t)-1);
+        ASSERT (errno == EILSEQ);
+
+        memset (&state, '\0', sizeof (mbstate_t));
+        wc = (wchar_t) 0xBADFACE;
+        ret = mbrtowc (&wc, "\363\300", 2, &state); /* 0xF3 0xC0 */
+        ASSERT (ret == (size_t)-1);
+        ASSERT (errno == EILSEQ);
+
+        memset (&state, '\0', sizeof (mbstate_t));
+        wc = (wchar_t) 0xBADFACE;
+        ret = mbrtowc (&wc, "\363\300\200\200", 4, &state); /* 0xF3 0xC0 0x80 0x80 */
+        ASSERT (ret == (size_t)-1);
+        ASSERT (errno == EILSEQ);
+
+        memset (&state, '\0', sizeof (mbstate_t));
+        wc = (wchar_t) 0xBADFACE;
+        ret = mbrtowc (&wc, "\363\200\300", 3, &state); /* 0xF3 0x80 0xC0 */
+        ASSERT (ret == (size_t)-1);
+        ASSERT (errno == EILSEQ);
+
+        memset (&state, '\0', sizeof (mbstate_t));
+        wc = (wchar_t) 0xBADFACE;
+        ret = mbrtowc (&wc, "\363\200\300\200", 4, &state); /* 0xF3 0x80 0xC0 0x80 */
+        ASSERT (ret == (size_t)-1);
+        ASSERT (errno == EILSEQ);
+
+        memset (&state, '\0', sizeof (mbstate_t));
+        wc = (wchar_t) 0xBADFACE;
+        ret = mbrtowc (&wc, "\363\200\200\300", 4, &state); /* 0xF3 0x80 0x80 0xC0 */
+        ASSERT (ret == (size_t)-1);
+        ASSERT (errno == EILSEQ);
       }
       return 0;
 

@@ -1,3 +1,17 @@
+2011-02-22  Bruno Haible  <bruno@clisp.org>
+
+	wcrtomb: Add more tests for native Windows platforms.
+	* tests/test-wcrtomb-w32-1.sh: New file.
+	* tests/test-wcrtomb-w32-2.sh: New file.
+	* tests/test-wcrtomb-w32-3.sh: New file.
+	* tests/test-wcrtomb-w32-4.sh: New file.
+	* tests/test-wcrtomb-w32-5.sh: New file.
+	* tests/test-wcrtomb-w32.c: New file.
+	* modules/wcrtomb-tests (Files): Add them.
+	(Makefile.am): Arrange to run these tests.
+	* tests/test-wcrtomb-w32-6.sh: New file, currently unused.
+	* tests/test-wcrtomb-w32-7.sh: New file, currently unused.
+
 2011-02-20  Bruno Haible  <bruno@clisp.org>
 
 	wcrtomb: Enhance test.
