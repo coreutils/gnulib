@@ -1,3 +1,9 @@
+2011-02-20  Jim Meyering  <meyering@redhat.com>
+
+	test-exclude.c: remove unmatched #endif
+	* tests/test-exclude.c: Remove stray #endif, left over from
+	the change of a week ago.
+
 2011-02-19  Jim Meyering  <meyering@redhat.com>
 
 	git-version-gen: skip "-dirty" check when appropriate

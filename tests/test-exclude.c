@@ -68,7 +68,6 @@ ARGMATCH_VERIFY (exclude_keywords, exclude_flags);
 # else
 #  define _GL_ATTRIBUTE_NORETURN /* empty */
 # endif
-#endif
 
 ARGMATCH_DIE_DECL _GL_ATTRIBUTE_NORETURN;
 ARGMATCH_DIE_DECL { exit (1); }
