@@ -8,6 +8,7 @@ m4/locale-fr.m4
 
 Depends-on:
 wchar
+mbtowc
 
 configure.ac:
 gl_FUNC_BTOWC

@@ -60,6 +60,11 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::grantpt, int, (int));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::malloc, void *, (size_t));
 #endif
 
+#if GNULIB_TEST_MBTOWC
+SIGNATURE_CHECK (GNULIB_NAMESPACE::mbtowc, int,
+                 (wchar_t *, const char *, size_t));
+#endif
+
 #if GNULIB_TEST_MKDTEMP
 SIGNATURE_CHECK (GNULIB_NAMESPACE::mkdtemp, char *, (char *));
 #endif

@@ -274,6 +274,21 @@ _GL_WARN_ON_USE (malloc, "malloc is not POSIX compliant everywhere - "
                  "use gnulib module malloc-posix for portability");
 #endif
 
+/* Convert a multibyte character to a wide character.  */
+#if @GNULIB_MBTOWC@
+# if @REPLACE_MBTOWC@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef mbtowc
+#   define mbtowc rpl_mbtowc
+#  endif
+_GL_FUNCDECL_RPL (mbtowc, int, (wchar_t *pwc, const char *s, size_t n));
+_GL_CXXALIAS_RPL (mbtowc, int, (wchar_t *pwc, const char *s, size_t n));
+# else
+_GL_CXXALIAS_SYS (mbtowc, int, (wchar_t *pwc, const char *s, size_t n));
+# endif
+_GL_CXXALIASWARN (mbtowc);
+#endif
+
 #if @GNULIB_MKDTEMP@
 /* Create a unique temporary directory from TEMPLATE.
    The last six characters of TEMPLATE must be "XXXXXX";

@@ -1,5 +1,21 @@
 2011-02-22  Bruno Haible  <bruno@clisp.org>
 
+	New module 'mbtowc'.
+	* lib/stdlib.in.h (mbtowc): New declaration.
+	* lib/mbtowc.c: New file.
+	* lib/mbtowc-impl.h: New file, from libutf8 with modifications.
+	* m4/mbtowc.m4: New file.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Initialize GNULIB_MBTOWC,
+	REPLACE_MBTOWC.
+	* modules/stdlib (Makefile.am): Substitute GNULIB_MBTOWC,
+	REPLACE_MBTOWC.
+	* modules/mbtowc: New file.
+	* tests/test-stdlib-c++.cc: Test signature of mbtowc.
+	* doc/posix-functions/mbtowc.texi: Mention the new module.
+	* modules/btowc (Depends-on): Add mbtowc.
+
+2011-02-22  Bruno Haible  <bruno@clisp.org>
+
 	wcrtomb: Add more tests for native Windows platforms.
 	* tests/test-wcrtomb-w32-1.sh: New file.
 	* tests/test-wcrtomb-w32-2.sh: New file.
