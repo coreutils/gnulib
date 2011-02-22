@@ -152,6 +152,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::unlockpt, int, (int));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::unsetenv, int, (const char *));
 #endif
 
+#if GNULIB_TEST_WCTOMB
+SIGNATURE_CHECK (GNULIB_NAMESPACE::wctomb, int, (char *, wchar_t));
+#endif
+
 
 int
 main ()

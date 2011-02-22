@@ -738,6 +738,21 @@ _GL_WARN_ON_USE (unsetenv, "unsetenv is unportable - "
 # endif
 #endif
 
+/* Convert a wide character to a multibyte character.  */
+#if @GNULIB_WCTOMB@
+# if @REPLACE_WCTOMB@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef wctomb
+#   define wctomb rpl_wctomb
+#  endif
+_GL_FUNCDECL_RPL (wctomb, int, (char *s, wchar_t wc));
+_GL_CXXALIAS_RPL (wctomb, int, (char *s, wchar_t wc));
+# else
+_GL_CXXALIAS_SYS (wctomb, int, (char *s, wchar_t wc));
+# endif
+_GL_CXXALIASWARN (wctomb);
+#endif
+
 
 #endif /* _GL_STDLIB_H */
 #endif /* _GL_STDLIB_H */

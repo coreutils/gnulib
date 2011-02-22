@@ -1,5 +1,21 @@
 2011-02-22  Bruno Haible  <bruno@clisp.org>
 
+	New module 'wctomb'.
+	* lib/stdlib.in.h (wctomb): New declaration.
+	* lib/wctomb.c: New file.
+	* lib/wctomb-impl.h: New file.
+	* m4/wctomb.m4: New file.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Initialize GNULIB_WCTOMB,
+	REPLACE_WCTOMB.
+	* modules/stdlib (Makefile.am): Substitute GNULIB_WCTOMB,
+	REPLACE_WCTOMB.
+	* modules/wctomb: New file.
+	* tests/test-stdlib-c++.cc: Test signature of wctomb.
+	* doc/posix-functions/wctomb.texi: Mention the new module.
+	* modules/wctob (Depends-on): Add wctomb.
+
+2011-02-22  Bruno Haible  <bruno@clisp.org>
+
 	New module 'mbtowc'.
 	* lib/stdlib.in.h (mbtowc): New declaration.
 	* lib/mbtowc.c: New file.

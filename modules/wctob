@@ -9,6 +9,7 @@ m4/codeset.m4
 
 Depends-on:
 wchar
+wctomb
 
 configure.ac:
 gl_FUNC_WCTOB
