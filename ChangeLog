@@ -1,3 +1,9 @@
+2011-02-22  Jim Meyering  <meyering@redhat.com>
+
+	maint: sc_cpp_indent_check: remove the "only in lib/" restriction
+	* Makefile (sc_cpp_indent_check): Don't limit the check to files
+	in lib/.
+
 2011-02-22  Eric Blake  <eblake@redhat.com>
 
 	maint: avoid any CDPATH issue

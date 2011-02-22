@@ -46,12 +46,12 @@ sc_pragma_columns:
 	else :; fi
 
 # Verify that certain (for now, only Jim Meyering and Eric Blake's)
-# lib/**.c files are consistently cpp indented.
+# *.c files are consistently cpp indented.
 sc_cpp_indent_check:
 	./gnulib-tool --extract-filelist \
             $$(cd ./modules; grep -ilrE '(meyering|blake)' .) \
           | sort -u \
-          | grep 'lib/.*\.c$$' \
+          | grep '\.c$$' \
           | grep -v '/getloadavg\.c$$' \
           | xargs cppi -c
 
