@@ -48,7 +48,8 @@ sc_pragma_columns:
 # Verify that certain (for now, only Jim Meyering's) lib/**.c files
 # are consistently cpp indented.
 sc_cpp_indent_check:
-	./gnulib-tool --extract-filelist $$(cd modules; grep -ilr meyering .) \
+	./gnulib-tool --extract-filelist \
+            $$(cd modules; grep -ilrE '(meyering|blake)' .) \
           | sort -u \
           | grep 'lib/.*\.c$$' \
           | grep -v '/getloadavg\.c$$' \

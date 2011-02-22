@@ -130,7 +130,7 @@ fpurge (FILE *fp)
   fp->__put_limit = fp->__buffer;
   return 0;
 # else
- #error "Please port gnulib fpurge.c to your platform! Look at the definitions of fflush, setvbuf and ungetc on your system, then report this to bug-gnulib."
+#  error "Please port gnulib fpurge.c to your platform! Look at the definitions of fflush, setvbuf and ungetc on your system, then report this to bug-gnulib."
 # endif
 
 #endif

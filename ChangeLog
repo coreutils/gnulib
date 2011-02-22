@@ -1,3 +1,15 @@
+2011-02-22  Eric Blake  <eblake@redhat.com>
+
+	maint: adjust cpp indentation for my modules, as well
+	* Makefile (sc_cpp_indent_check): Add my name.
+	* lib/fbufmode.c: Filter through cppi.
+	* lib/fpurge.c: Likewise.
+	* lib/freadable.c: Likewise.
+	* lib/freading.c: Likewise.
+	* lib/fwritable.c: Likewise.
+	* lib/fwriting.c: Likewise.
+	* lib/sigaction.c: Likewise.
+
 2011-02-22  Jim Meyering  <meyering@redhat.com>
 
 	maint: adjust cpp indentation to reflect nesting depth

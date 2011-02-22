@@ -142,10 +142,10 @@ sigaction (int sig, const struct sigaction *restrict act,
       return -1;
     }
 
-  #ifdef SIGABRT_COMPAT
+#ifdef SIGABRT_COMPAT
   if (sig == SIGABRT_COMPAT)
     sig = SIGABRT;
-  #endif
+#endif
 
   /* POSIX requires sigaction() to be async-signal-safe.  In other
      words, if an asynchronous signal can occur while we are anywhere

@@ -51,6 +51,6 @@ fwriting (FILE *fp)
   return (fp->__buffer < fp->__put_limit /*|| fp->__bufp == fp->__get_limit ??*/);
 # endif
 #else
- #error "Please port gnulib fwriting.c to your platform!"
+# error "Please port gnulib fwriting.c to your platform!"
 #endif
 }
