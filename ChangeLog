@@ -1,3 +1,11 @@
+2011-02-22  Bruno Haible  <bruno@clisp.org>
+
+	ioctl: Fix for MacOS X in 64-bit mode.
+	* lib/ioctl.c (rpl_ioctl): Zero-extend, not sign-extend, the request
+	value.
+	Suggested by Eric Blake.
+	Reported by Markus Gothe <nietzsche@lysator.liu.se>.
+
 2011-02-22  Jim Meyering  <meyering@redhat.com>
 
 	maint: sc_cpp_indent_check: remove the "only in lib/" restriction

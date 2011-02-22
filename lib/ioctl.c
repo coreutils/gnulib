@@ -37,7 +37,9 @@ rpl_ioctl (int fd, int request, ... /* {void *,char *} arg */)
   buf = va_arg (args, void *);
   va_end (args);
 
-  return ioctl (fd, request, buf);
+  /* Cast 'request' so that when the system's ioctl function takes a 64-bit
+     request argument, the value gets zero-extended, not sign-extended.  */
+  return ioctl (fd, (unsigned int) request, buf);
 }
 
 #else /* mingw */
