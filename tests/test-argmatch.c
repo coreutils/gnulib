@@ -29,6 +29,7 @@
 /* Some packages define ARGMATCH_DIE and ARGMATCH_DIE_DECL in <config.h>, and
    thus must link with a definition of that function.  Provide it here.  */
 #ifdef ARGMATCH_DIE_DECL
+
 # if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 8)
 #  define _GL_ATTRIBUTE_NORETURN __attribute__ ((__noreturn__))
 # else
@@ -37,6 +38,7 @@
 
 ARGMATCH_DIE_DECL _GL_ATTRIBUTE_NORETURN;
 ARGMATCH_DIE_DECL { exit (1); }
+
 #endif
 
 enum backup_type

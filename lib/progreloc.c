@@ -117,7 +117,7 @@ maybe_executable (const char *filename)
   if (access (filename, X_OK) < 0)
     return false;
 
-#ifdef __linux__
+# ifdef __linux__
   if (executable_fd >= 0)
     {
       /* If we already have an executable_fd, check that filename points to
@@ -135,7 +135,7 @@ maybe_executable (const char *filename)
             return false;
         }
     }
-#endif
+# endif
 #endif
 
   return true;
@@ -157,7 +157,7 @@ find_executable (const char *argv0)
     /* Shouldn't happen.  */
     return NULL;
   {
-#if defined __CYGWIN__
+# if defined __CYGWIN__
     /* cygwin-1.5.13 (2005-03-01) or newer would also allow a Linux-like
        implementation: readlink of "/proc/self/exe".  But using the
        result of the Win32 system call is simpler and is consistent with the
@@ -176,12 +176,12 @@ find_executable (const char *argv0)
       return NULL;
     /* Call canonicalize_file_name, because Cygwin supports symbolic links.  */
     return canonicalize_file_name (location_as_posix_path);
-#else
+# else
     return xstrdup (location);
-#endif
+# endif
   }
 #else /* Unix && !Cygwin */
-#ifdef __linux__
+# ifdef __linux__
   /* The executable is accessible as /proc/<pid>/exe.  In newer Linux
      versions, also as /proc/self/exe.  Linux >= 2.1 provides a symlink
      to the true pathname; older Linux versions give only device and ino,
@@ -205,8 +205,8 @@ find_executable (const char *argv0)
         executable_fd = open (buf, O_EXEC, 0);
     }
   }
-#endif
-#if HAVE_MACH_O_DYLD_H && HAVE__NSGETEXECUTABLEPATH
+# endif
+# if HAVE_MACH_O_DYLD_H && HAVE__NSGETEXECUTABLEPATH
   /* On MacOS X 10.2 or newer, the function
        int _NSGetExecutablePath (char *buf, uint32_t *bufsize);
      can be used to retrieve the executable's full path.  */
@@ -215,7 +215,7 @@ find_executable (const char *argv0)
   if (_NSGetExecutablePath (location, &length) == 0
       && location[0] == '/')
     return canonicalize_file_name (location);
-#endif
+# endif
   /* Guess the executable's full path.  We assume the executable has been
      called via execlp() or execvp() with properly set up argv[0].  The
      login(1) convention to add a '-' prefix to argv[0] is not supported.  */
@@ -256,10 +256,10 @@ find_executable (const char *argv0)
                 /* We have a path item at p, of length p_len.
                    Now concatenate the path item and argv0.  */
                 concat_name = (char *) xmalloc (p_len + strlen (argv0) + 2);
-#ifdef NO_XMALLOC
+# ifdef NO_XMALLOC
                 if (concat_name == NULL)
                   return NULL;
-#endif
+# endif
                 if (p_len == 0)
                   /* An empty PATH element designates the current directory.  */
                   strcpy (concat_name, argv0);

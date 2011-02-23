@@ -1,3 +1,13 @@
+2011-02-23  Bruno Haible  <bruno@clisp.org>
+
+	Fix misindentation of preprocessor directives.
+	* lib/argp-namefrob.h: Reindent preprocessor directives.
+	* lib/getopt_int.h (struct _getopt_data): Likewise.
+	* lib/progreloc.c (maybe_executable, find_executable): Likewise.
+	* lib/vasnprintf.c (decode_long_double): Likewise.
+	* tests/test-argmatch.c: Insert blank lines, for clarity.
+	* tests/test-exclude.c: Likewise.
+
 2011-02-22  Bruno Haible  <bruno@clisp.org>
 
 	ioctl: Fix for MacOS X in 64-bit mode.
