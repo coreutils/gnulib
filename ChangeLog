@@ -1,3 +1,13 @@
+2011-02-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	backupfile: remove unnecessary use of m4/dos.m4
+	* m4/backupfile.m4 (gl_BACKUPFILE): Don't require gl_AC_DOS; none
+	of its symbols are used by the backupfile code.  backupfile.c does
+	use a symbol HAVE_DOS_FILE_NAMES, but that symbol is meant only
+	for the rare case of programs that want all their backup file
+	names to live within 8+3 limits, and dos.m4 doesn't address that.
+	* modules/backupfile (Files): Remove m4/dos.m4.
+
 2011-02-24  Jim Meyering  <meyering@redhat.com>
 
 	strstr: fix a bug whereby strstr would mistakenly return NULL

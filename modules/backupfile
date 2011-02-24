@@ -5,7 +5,6 @@ variables.
 Files:
 lib/backupfile.h
 lib/backupfile.c
-m4/dos.m4
 m4/backupfile.m4
 
 Depends-on:
