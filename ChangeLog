@@ -1,3 +1,13 @@
+2011-02-24  Jim Meyering  <meyering@redhat.com>
+
+	strstr: fix a bug whereby strstr would mistakenly return NULL
+	* lib/str-two-way.h (two_way_short_needle): Correct off-by-one error
+	in period calculation.
+	(two_way_long_needle): Likewise.
+	Reported by Ralf Wildenhues, with the short needle and haystack.
+	* tests/test-strstr.c: Add Ralf's test case to trigger the bug.
+	Add a more involved test to trigger the bug in two_way_long_needle.
+
 2011-02-24  Stefano Lattarini  <stefano.lattarini@gmail.com>  (tiny change)
 
 	gnulib-tool: remove use of bold display in help screen
