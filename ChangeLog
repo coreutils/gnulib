@@ -1,3 +1,10 @@
+2011-02-24  Stefano Lattarini  <stefano.lattarini@gmail.com>  (tiny change)
+
+	gnulib-tool: remove use of bold display in help screen
+	* gnulib-tool (func_usage): Do not use bold display anymore in the
+	help screen.  That was just meant to be a temporary emphasis for a
+	backward-incompatible change.
+
 2011-02-23  Bruno Haible  <bruno@clisp.org>
 
 	Fix misindentation of preprocessor directives.

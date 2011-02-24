@@ -123,24 +123,12 @@ fi
 # outputs to stdout the --help usage message.
 func_usage ()
 {
-  # This use of bold display can be removed on 2011-01-01.
-  if case "$TERM" in
-       xterm*) test -t 1;;
-       *) false;;
-     esac; then
-    # Assume xterm compatible escape sequences.
-    bold_on=`printf '\x1b[1m'`
-    bold_off=`printf '\x1b[0m'`
-  else
-    bold_on=
-    bold_off=
-  fi
   echo "\
 Usage: gnulib-tool --list
-       gnulib-tool --find filename${bold_on}
+       gnulib-tool --find filename
        gnulib-tool --import [module1 ... moduleN]
        gnulib-tool --add-import [module1 ... moduleN]
-       gnulib-tool --remove-import [module1 ... moduleN]${bold_off}
+       gnulib-tool --remove-import [module1 ... moduleN]
        gnulib-tool --update
        gnulib-tool --create-testdir --dir=directory [module1 ... moduleN]
        gnulib-tool --create-megatestdir --dir=directory [module1 ... moduleN]
@@ -165,14 +153,14 @@ Usage: gnulib-tool --list
 Operation modes:
 
       --list                print the available module names
-      --find                find the modules which contain the specified file${bold_on}
+      --find                find the modules which contain the specified file
       --import              import the given modules into the current package
       --add-import          augment the list of imports from gnulib into the
                             current package, by adding the given modules;
                             if no modules are specified, update the current
                             package from the current gnulib
       --remove-import       reduce the list of imports from gnulib into the
-                            current package, by removing the given modules${bold_off}
+                            current package, by removing the given modules
       --update              update the current package, restore files omitted
                             from version control
       --create-testdir      create a scratch package with the given modules
