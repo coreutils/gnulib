@@ -1,3 +1,13 @@
+2011-02-25  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: detect missing-NL-at-EOF, too
+	* top/maint.mk (sc_prohibit_empty_lines_at_EOF): Adjust so that
+	it also detects when a file lacks a newline at EOF.
+	(require_exactly_one_NL_at_EOF_): Renamed from
+	detect_empty_lines_at_EOF_.  I opted not to rename the rule,
+	since people may well have .x-sc_... file names tied to the
+	existing name.  Suggested by Eric Blake.
+
 2011-02-25  Paul Eggert  <eggert@cs.ucla.edu>
 
 	dirname: move m4/dos.m4 functionality into lib/dosname.h
