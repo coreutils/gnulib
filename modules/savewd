@@ -7,7 +7,7 @@ lib/savewd.c
 m4/savewd.m4
 
 Depends-on:
-dirname-lgpl
+dosname
 errno
 exit
 fchdir

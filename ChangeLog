@@ -1,3 +1,47 @@
+2011-02-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	dirname: move m4/dos.m4 functionality into lib/dosname.h
+
+	m4/dos.m4 needs to go.  It laboriously invokes the C compiler, and
+	extracts symbols from it, puts them into config.h; but it's much
+	easier to use the symbols directly.  filename.h already does this,
+	but it disagrees with dos.m4 in some respects.  This patch
+	introduces a different include file dosname.h that packages up
+	dos.m4, and then later we can work on merging filename.h and
+	dosname.h.  Applications that need only the easy-to-configure
+	symbols should consider including dosname.h rather than dirname.h.
+	* NEWS: Mention incompatible changes.
+	* m4/dos.m4: Remove.
+	* lib/dosname.h, modules/dosname: New files.
+	* lib/dirname.h (ISSLASH, FILE_SYSTEM_PREFIX_LEN):
+	(FILE_SYSTEM_DRIVE_PREFIX_CAN_BE_RELATIVE):
+	(IS_ABSOLUTE_FILE_NAME, IS_RELATIVE_FILE_NAME): Move to lib/dosname.h.
+	* lib/at-func.c, lib/at-func2.c, lib/openat.c, lib/savewd.c:
+	Include dosname.h, not dirname.h.
+	* lib/rmdir.c, lib/stat.c, lib/unlink.c, lib/unlinkat.c:
+	Include dosname.h, for definitions of symbols like ISSLASH
+	that used to be in config.h.
+	* m4/dirname.m4 (gl_DIRNAME_LGPL): Do not require gl_AC_DOS.
+	* m4/rmdir.m4 (gl_FUNC_RMDIR): Likewise.
+	* m4/stat.m4 (gl_FUNC_STAT): Likewise.
+	* m4/unlink.m4 (gl_FUNC_UNLINK): Likewise.
+	* modules/dirname-lgpl (Files): Omit m4/dos.m4.
+	* modules/rmdir (Files): Likewise.
+	* modules/stat (Files): Likewise.
+	* modules/unlink (Files): Likewise.
+	* modules/dirname-lgpl (Depends-on): Add dosname.
+	* modules/lstat (Depends-on): Likewise.
+	* modules/openat (Depends-on): Likewise.
+	* modules/rmdir (Depends-on): Likewise.
+	* modules/savewd (Depends-on): Likewise.
+	* modules/stat (Depends-on): Likewise.
+	* modules/unlink (Depends-on): Likewise.
+	* modules/openat (Depends-on): Remove dirname-lgpl.
+	* modules/savewd (Depends-on): Likewise.
+	* tests/test-dirname.c: Do not use removed symbols like
+	FILE_SYSTEM_BACKSLASH_IS_FILE_NAME_SEPARATOR.  Instead, use
+	the remaining symbols, e.g., ISSLASH ('\\').
+
 2011-02-25  Eric Blake  <eblake@redhat.com>
 
 	strstr: revert patches that introduced bug and pessimization

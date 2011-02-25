@@ -1,0 +1,20 @@
+Description:
+Macros for porting to systems with DOS-style file names.
+
+Files:
+lib/dosname.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+"dosname.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+Eric Blake, Paul Eggert, Jim Meyering

@@ -25,7 +25,7 @@
 #include <string.h>
 #include <sys/stat.h>
 
-#include "dirname.h" /* solely for definition of IS_ABSOLUTE_FILE_NAME */
+#include "dosname.h" /* solely for definition of IS_ABSOLUTE_FILE_NAME */
 #include "openat-priv.h"
 #include "save-cwd.h"
 

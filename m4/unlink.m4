@@ -1,4 +1,4 @@
-# unlink.m4 serial 6
+# unlink.m4 serial 7
 dnl Copyright (C) 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -6,7 +6,6 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_UNLINK],
 [
-  AC_REQUIRE([gl_AC_DOS])
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
   AC_REQUIRE([AC_CANONICAL_HOST])
   dnl Detect FreeBSD 7.2, AIX 7.1, Solaris 9 bug.

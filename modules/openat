@@ -16,7 +16,7 @@ m4/openat.m4
 m4/mode_t.m4
 
 Depends-on:
-dirname-lgpl
+dosname
 errno
 extensions
 fchdir

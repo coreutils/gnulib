@@ -3,10 +3,10 @@ rmdir() function: delete a directory.
 
 Files:
 lib/rmdir.c
-m4/dos.m4
 m4/rmdir.m4
 
 Depends-on:
+dosname
 sys_stat
 unistd
 

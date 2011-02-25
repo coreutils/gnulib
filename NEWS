@@ -12,6 +12,17 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2011-02-25  dirname         These modules no longer put #defines for the
+            dirname-lgpl    following symbols into <config.h>: ISSLASH,
+            backupfile      FILE_SYSTEM_ACCEPTS_DRIVE_LETTER_PREFIX,
+            lstat           FILE_SYSTEM_BACKSLASH_IS_FILE_NAME_SEPARATOR,
+            openat          FILE_SYSTEM_DRIVE_PREFIX_CAN_BE_RELATIVE.
+            remove          Applications that need ISSLASH can include the new
+            rmdir           header dosname.h.
+            savewd
+            stat
+            unlink
+
 2011-02-14  getloadavg      This module no longer #defines C_GETLOADAVG or
                             HAVE_GETLOADAVG, as the application no longer needs
                             to worry about how getloadavg is defined.  It no

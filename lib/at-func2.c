@@ -25,7 +25,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "dirname.h" /* solely for definition of IS_ABSOLUTE_FILE_NAME */
+#include "dosname.h" /* solely for definition of IS_ABSOLUTE_FILE_NAME */
 #include "filenamecat.h"
 #include "openat.h"
 #include "same-inode.h"
