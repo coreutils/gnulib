@@ -1,3 +1,12 @@
+2011-02-25  Eric Blake  <eblake@redhat.com>
+
+	strstr: expand test coverage
+	* tests/test-strstr.c (main): Add much shorter trigger.  Fix C89
+	compilation.
+	* tests/test-memmem.c (main): Duplicate tests.
+	* tests/test-strcasestr.c (main): Likewise.
+	* tests/test-c-strcasestr.c (main): Likewise.
+
 2011-02-25  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: detect missing-NL-at-EOF, too

@@ -232,6 +232,14 @@ main (int argc, char *argv[])
   }
 
   {
+    /* Same bug, shorter trigger.  */
+    const char *haystack = "..wi.d.";
+    const char *needle = ".d.";
+    const char* p = strstr (haystack, needle);
+    ASSERT (p - haystack == 4);
+  }
+
+  {
     /* Like the above, but trigger the flaw in two_way_long_needle
        by using a needle of length LONG_NEEDLE_THRESHOLD (32) or greater.
        Rather than trying to find the right alignment manually, I've
@@ -248,16 +256,18 @@ main (int argc, char *argv[])
       "with_e_\n"
       "..............................\n"
       "with_FGHIJKLMNOPQRSTUVWXYZ\n"
-      "with_567890123456789\n" "with_multilib_list\n";
+      "with_567890123456789\n"
+      "with_multilib_list\n";
     size_t h_len = strlen (h);
     char *haystack = malloc (h_len + 1);
-    ASSERT (haystack);
     size_t i;
+    ASSERT (haystack);
     for (i = 0; i < h_len - strlen (needle); i++)
       {
+        const char *p;
         memcpy (haystack, h, h_len + 1);
         memcpy (haystack + i, needle, strlen (needle) + 1);
-        const char *p = strstr (haystack, needle);
+        p = strstr (haystack, needle);
         ASSERT (p);
         ASSERT (p - haystack == i);
       }
