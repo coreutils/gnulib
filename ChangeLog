@@ -1,5 +1,7 @@
 2011-02-24  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* lib/openat-proc.c: Don't include dirname.h; not needed.
+
 	backupfile: remove unnecessary use of m4/dos.m4
 	* m4/backupfile.m4 (gl_BACKUPFILE): Don't require gl_AC_DOS; none
 	of its symbols are used by the backupfile code.  backupfile.c does
