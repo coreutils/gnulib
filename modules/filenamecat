@@ -6,7 +6,6 @@ lib/filenamecat.c
 m4/filenamecat.m4
 
 Depends-on:
-dirname-lgpl
 filenamecat-lgpl
 xalloc
 
