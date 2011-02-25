@@ -1,5 +1,9 @@
 2011-02-24  Paul Eggert  <eggert@cs.ucla.edu>
 
+	remove: remove unnecessary use of m4/dos.m4
+	* m4/remove.m4 (gl_FUNC_REMOVE): Don't require gl_AC_DOS; not needed.
+	* modules/remove (FILES): Remove m4/dos.m4.
+
 	* lib/openat-proc.c: Don't include dirname.h; not needed.
 
 	backupfile: remove unnecessary use of m4/dos.m4
