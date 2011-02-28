@@ -1,3 +1,19 @@
+2011-02-28  Corinna Vinschen  <vinschen@redhat.com>  (tiny change)
+            Charles Wilson  <cygwin@cwilson.fastmail.fm>  (tiny change)
+            Bruno Haible  <bruno@clisp.org>  (tiny change)
+
+	On Cygwin, use /proc file system instead of win32 API.
+	* lib/relocatable.c: On Cygwin, use file names from /proc, rather than
+	Win32 file names.
+	(DllMain): Simplify by removing Cygwin specific code.
+	(find_shared_library_fullname): Use Linux specific implementation also
+	for Cygwin.
+	(get_shared_library_fullname): Update accordingly.
+	* lib/progreloc.c: On Cygwin, use file names from /proc, rather than
+	Win32 file names.
+	(find_executable): On Cygwin, use /proc, like on Linux. Remove previous
+	Cygwin specific code.
+
 2011-02-28  Christian Rössel  <christian.roessel@gmx.de>  (tiny change)
 	    Markus Geimer  <m.geimer@fz-juelich.de>  (tiny change)
 
