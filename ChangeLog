@@ -1,3 +1,10 @@
+2011-02-28  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdio: simplify by moving gl_STDIN_LARGE_OFFSET to fseeko, ftello
+	* m4/fseeko.m4 (gl_STDIN_LARGE_OFFSET): Moved here, from ...
+	* m4/stdio_h.m4 (gl_STDIN_LARGE_OFFSET): ... here, because
+	* modules/ftello (Files): Add m4/fseeko.m4, for gl_STDIN_LARGE_OFFSET.
+
 2011-02-28  Bruno Haible  <bruno@clisp.org>
 
 	localcharset: Assume ANSI C behaviour of free().
