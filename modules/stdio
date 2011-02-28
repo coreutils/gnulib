@@ -3,15 +3,12 @@ A GNU-like <stdio.h>.
 
 Files:
 lib/stdio.in.h
-lib/stdio-write.c
 m4/stdio_h.m4
-m4/asm-underscore.m4
 
 Depends-on:
 include_next
 arg-nonnull
 c++defs
-raise
 stddef
 warn-on-use
 

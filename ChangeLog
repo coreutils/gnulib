@@ -1,5 +1,18 @@
 2011-02-28  Paul Eggert  <eggert@cs.ucla.edu>
 
+	stdio: simplify by moving files to printf-posix, sigpipe
+	* m4/stdio_h.m4 (gl_STDIO_H): Do not require gl_ASM_SYMBOL_PREFIX,
+	since this symbol is needed only if printf is replaced.
+	* m4/printf-posix-rpl.m4 (gl_REPLACE_PRINTF):
+	Require gl_ASM_SYMBOL_PREFIX.
+	* modules/printf-posix (Files): Add m4/asm-underscore.m4.
+	* modules/sigpipe (Files): Likewise.  Also, add m4/stdio-write.c.
+	(Depends-on): Add 'raise'.
+	(configure.ac): Require gl_ASM_SYMBOL_PREFIX.
+	* modules/stdio (Files): Remove lib/stdio-write.c,
+	m4/asm-underscore.m4.
+	(Depends-on): Remove 'raise'.
+
 	stdio: simplify by moving gl_STDIN_LARGE_OFFSET to fseeko, ftello
 	* m4/fseeko.m4 (gl_STDIN_LARGE_OFFSET): Moved here, from ...
 	* m4/stdio_h.m4 (gl_STDIN_LARGE_OFFSET): ... here, because
