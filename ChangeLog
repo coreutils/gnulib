@@ -1,3 +1,10 @@
+2011-02-28  Bruno Haible  <bruno@clisp.org>
+
+	localcharset: Assume ANSI C behaviour of free().
+	* lib/localcharset.c (get_charset_aliases): Remove NULL test before
+	calling free().
+	Suggested by Simon Josefsson <simon@josefsson.org>.
+
 2011-02-28  Corinna Vinschen  <vinschen@redhat.com>  (tiny change)
             Charles Wilson  <cygwin@cwilson.fastmail.fm>  (tiny change)
             Bruno Haible  <bruno@clisp.org>  (tiny change)
