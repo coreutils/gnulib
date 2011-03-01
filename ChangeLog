@@ -1,3 +1,9 @@
+2011-03-01  Eric Blake  <eblake@redhat.com>
+
+	test-link: work on Hurd
+	* tests/test-link.h (test_link): Hurd rejects linking directories
+	with EISDIR instead of the POSIX-mandated EPERM.
+
 2011-02-28  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stdio: simplify by moving files to printf-posix, sigpipe
