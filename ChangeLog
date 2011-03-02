@@ -1,3 +1,9 @@
+2011-03-02  Jim Meyering  <meyering@redhat.com>
+
+	getopt-gnu: relax license from LGPLv3+ to LGPLv2+
+	* modules/getopt-gnu (License): Relax to LGPLv2+, for augeas,
+	on request from Matt Booth.
+
 2011-03-01  Eric Blake  <eblake@redhat.com>
 
 	test-link: work on Hurd
