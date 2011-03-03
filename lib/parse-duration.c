@@ -26,7 +26,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "xalloc.h"
 
 #ifndef NUL
 #define NUL '\0'
@@ -381,7 +380,7 @@ parse_time (cch_t * pz)
 }
 
 /* Returns a substring of the given string, with spaces at the beginning and at
-   the end destructively removed.  */
+   the end destructively removed, per SNOBOL.  */
 static char *
 trim (char * pz)
 {
@@ -406,13 +405,20 @@ trim (char * pz)
 static time_t
 parse_period (cch_t * in_pz)
 {
-  char * pz   = xstrdup (in_pz);
-  char * pT   = strchr (pz, 'T');
+  char * pT;
   char * ps;
+  char * pz   = strdup (in_pz);
   void * fptr = pz;
   time_t res  = 0;
 
-  if (pT != NUL)
+  if (pz == NULL)
+    {
+      errno = ENOMEM;
+      return BAD_TIME;
+    }
+
+  pT = strchr (pz, 'T');
+  if (pT != NULL)
     {
       *(pT++) = NUL;
       pz = trim (pz);

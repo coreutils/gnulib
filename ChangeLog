@@ -1,3 +1,10 @@
+2011-03-03  Bruce Korb  <bkorb@gnu.org>
+
+	parse-duration: remove xalloc.h dependency
+	* lib/parse-duration.c (parse_period): handle NULL return from
+	strdup instead of calling xstrdup().
+	* modules/parse-duration: remove "xalloc" dependency
+
 2011-03-03  Matthew Booth  <mbooth@redhat.com>
 
 	bootstrap: honor m4_base when running aclocal
