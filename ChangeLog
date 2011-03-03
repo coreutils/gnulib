@@ -1,3 +1,8 @@
+2011-03-03  Matthew Booth  <mbooth@redhat.com>
+
+	bootstrap: honor m4_base when running aclocal
+	* build-aux/bootstrap: Fix hard-coded use of m4 directory name.
+
 2011-03-02  Jim Meyering  <meyering@redhat.com>
 
 	getopt-gnu: relax license from LGPLv3+ to LGPLv2+
