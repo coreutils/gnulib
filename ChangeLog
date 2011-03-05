@@ -1,3 +1,8 @@
+2011-03-05  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	Update AC_OPENMP macro for Lahey compiler on GNU/Linux.
+	* m4/openmp.m4 (AC_OPENMP): Sync from Autoconf.
+
 2011-03-03  Bruce Korb  <bkorb@gnu.org>
 
 	parse-duration: remove xalloc.h dependency
