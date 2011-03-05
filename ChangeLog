@@ -1,3 +1,10 @@
+2011-03-05  Bruno Haible  <bruno@clisp.org>
+
+	doc: Improve doc regarding autopoint vs. gnulib.
+	* doc/gnulib-tool.texi (gettextize and autopoint): Recommend to
+	disable autopoint while running autoreconf.
+	Suggested by Ralf Wildenhues.
+
 2011-03-05  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	Update AC_OPENMP macro for Lahey compiler on GNU/Linux.

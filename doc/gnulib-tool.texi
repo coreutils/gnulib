@@ -483,6 +483,14 @@ it means that a new GNU gettext release was made, and its autoconf macros
 were integrated into Gnulib and now mismatch the @file{po/} infrastructure.
 In this case, fetch and install the new GNU gettext release and run
 @code{gettextize} followed by @code{gnulib-tool}.
+
+@item
+When you invoke @code{autoreconf} after @code{gnulib-tool}, make sure to
+not invoke @code{autopoint} a second time, by setting the @code{AUTOPOINT}
+environment variable, like this:
+@smallexample
+$ env AUTOPOINT=true autoreconf --install
+@end smallexample
 @end enumerate
 
 
