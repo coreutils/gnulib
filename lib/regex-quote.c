@@ -29,7 +29,7 @@
 static const char bre_special[] = "$^.*[]\\";
 
 /* Characters that are special in an ERE.  */
-static const char ere_special[] = "$^.*[]\\+?()";
+static const char ere_special[] = "$^.*[]\\+?{}()|";
 
 size_t
 regex_quote_length (const char *string, int cflags)

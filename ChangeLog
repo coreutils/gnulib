@@ -1,3 +1,9 @@
+2011-03-06  Bruno Haible  <bruno@clisp.org>
+
+	regex-quote: Fix creation of POSIX extended regular expressions.
+	* lib/regex-quote.c (ere_special): Add grouping and alternation
+	operators.
+
 2011-03-05  Bruno Haible  <bruno@clisp.org>
 
 	doc: Improve doc regarding autopoint vs. gnulib.
