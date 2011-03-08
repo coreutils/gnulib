@@ -1,3 +1,24 @@
+2011-03-08  Bruno Haible  <bruno@clisp.org>
+
+	regex-quote: New API.
+	* lib/regex-quote.h: Include <stdbool.h>.
+	(struct regex_quote_spec): New type.
+	(regex_quote_spec_posix, regex_quote_spec_gnu, regex_quote_spec_pcre):
+	New declarations.
+	(regex_quote_length, regex_quote_copy, regex_quote): Take a
+	'const struct regex_quote_spec *' argument.
+	* lib/regex-quote.c (RE_*, PCRE_*): New macros.
+	(pcre_special): New constant.
+	(regex_quote_spec_posix, regex_quote_spec_gnu, regex_quote_spec_pcre):
+	New functions.
+	(regex_quote_length, regex_quote_copy, regex_quote): Take a
+	'const struct regex_quote_spec *' argument.
+	* modules/regex-quote (Depends-on): Add stdbool.
+	* tests/test-regex-quote.c (check): Update for new API. Add test for
+	anchored results.
+	* NEWS: Mention the API change.
+	Reported by Reuben Thomas and Eric Blake.
+
 2011-03-06  Bruno Haible  <bruno@clisp.org>
 
 	regex-quote: Fix creation of POSIX extended regular expressions.

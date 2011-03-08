@@ -12,6 +12,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2011-03-08  regex-quote     The last argument is no longer an 'int cflags'
+                            but instead a pointer to a previously constructed
+                            'struct regex_quote_spec'.
+
 2011-02-25  dirname         These modules no longer put #defines for the
             dirname-lgpl    following symbols into <config.h>: ISSLASH,
             backupfile      FILE_SYSTEM_ACCEPTS_DRIVE_LETTER_PREFIX,
