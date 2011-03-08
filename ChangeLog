@@ -1,3 +1,10 @@
+2011-03-07  Bastien Roucariès  <roucaries.bastien@gmail.com>
+
+	passfd module, part 1.
+	* m4/afunix.m4: New file.
+	* m4/sockpfaf.m4 (gl_SOCKET_FAMILIES): Also test for UNIX domain
+	sockets.
+
 2011-03-08  Bruno Haible  <bruno@clisp.org>
 
 	regex-quote: New API.
