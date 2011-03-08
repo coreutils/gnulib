@@ -1,3 +1,11 @@
+2011-03-08  Bruno Haible  <bruno@clisp.org>
+
+	passfd module, part 1, tweaks.
+	* m4/afunix.m4 (gl_SOCKET_AFUNIX): Update AC_REQUIRE invocation.
+	Improve indentation. Improve AC_MSG_CHECKING messages.
+	* m4/sockpfaf.m4 (gl_SOCKET_FAMILY_UNIX): New macro, extracted from
+	gl_SOCKET_FAMILIES.
+
 2011-03-07  Bastien Roucariès  <roucaries.bastien@gmail.com>
 
 	passfd module, part 1.
