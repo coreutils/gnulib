@@ -1,3 +1,13 @@
+2011-03-10  Eric Blake  <eblake@redhat.com>
+
+	wchar: add explicit dependencies, for Tru64
+	* modules/mbmemcasecoll (Depends-on): Add wchar.
+	* modules/mbtowc (Depends-on): Likewise.
+	* modules/vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/u-printf-args (Depends-on): Likewise.
+	* modules/wctomb (Depends-on): Likewise.
+	Reported by Peter O'Gorman.
+
 2011-03-08  Bruno Haible  <bruno@clisp.org>
 
 	passfd module, part 1, tweaks.

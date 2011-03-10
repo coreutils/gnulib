@@ -9,6 +9,7 @@ m4/wctomb.m4
 Depends-on:
 stdlib
 wcrtomb
+wchar
 
 configure.ac:
 gl_FUNC_WCTOMB

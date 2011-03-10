@@ -13,6 +13,7 @@ m4/inttypes_h.m4
 
 Depends-on:
 unitypes
+wchar
 
 configure.ac:
 gl_PREREQ_PRINTF_ARGS

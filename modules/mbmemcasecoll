@@ -13,6 +13,7 @@ mbrtowc
 wcrtomb
 memcmp2
 memcoll
+wchar
 
 configure.ac:
 
