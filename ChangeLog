@@ -1,3 +1,9 @@
+2011-03-11  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: relax a regexp to accommodate other formatting styles
+	* top/maint.mk (sc_unmarked_diagnostics): Allow 0 or 1 space
+	between "ngettext" and the following "(".
+
 2011-03-11  Pádraig Brady <P@draigBrady.com>
 
 	maint.mk: suppress a false positive warning
