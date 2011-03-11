@@ -1,3 +1,9 @@
+2011-03-11  Pádraig Brady <P@draigBrady.com>
+
+	maint.mk: suppress a false positive warning
+	* top/maint.mk ((sc_unmarked_diagnostics): Don't warn when
+	diagnostics are marked with ngettext.
+
 2011-03-10  Eric Blake  <eblake@redhat.com>
 
 	wchar: add explicit dependencies, for Tru64

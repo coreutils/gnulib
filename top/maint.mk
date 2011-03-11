@@ -659,7 +659,7 @@ sc_two_space_separator_in_usage:
 sc_unmarked_diagnostics:
 	@grep -nE							\
 	    '\<error *\([^"]*"[^"]*[a-z]{3}' $$($(VC_LIST_EXCEPT))	\
-	  | grep -v '_''(' &&						\
+	  | grep -Ev '(_|ngettext )\(' &&				\
 	  { echo '$(ME): found unmarked diagnostic(s)' 1>&2;		\
 	    exit 1; } || :
 
