@@ -359,7 +359,7 @@ _GL_WARN_ON_USE (fstatat, "fstatat is not portable - "
    implementation relies on futimesat, which on Solaris 10 makes an invocation
    to futimens that is meant to invoke the libc's futimens(), not gnulib's
    futimens().  */
-# if @REPLACE_FUTIMENS@ || defined __sun
+# if @REPLACE_FUTIMENS@ || (!@HAVE_FUTIMENS@ && defined __sun)
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef futimens
 #   define futimens rpl_futimens
@@ -622,7 +622,7 @@ _GL_WARN_ON_USE (stat, "stat is unportable - "
    implementation relies on futimesat, which on Solaris 10 makes an invocation
    to utimensat that is meant to invoke the libc's utimensat(), not gnulib's
    utimensat().  */
-# if @REPLACE_UTIMENSAT@ || defined __sun
+# if @REPLACE_UTIMENSAT@ || (!@HAVE_UTIMENSAT@ && defined __sun)
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef utimensat
 #   define utimensat rpl_utimensat
