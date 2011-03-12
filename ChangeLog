@@ -1,3 +1,11 @@
+2011-03-12  Bruno Haible  <bruno@clisp.org>
+
+	futimens, utimensat: Avoid endless recursion on Solaris 10.
+	* lib/sys_stat.in.h (futimens, utimensat): Define with rpl_ prefix on
+	Solaris.
+	Reported by Ben Walton <bwalton@artsci.utoronto.ca> via Eric Blake
+	in <http://debbugs.gnu.org/cgi/bugreport.cgi?bug=8230>.
+
 2011-03-11  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: relax a regexp to accommodate other formatting styles
