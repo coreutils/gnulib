@@ -28,6 +28,8 @@ wcswidth (const wchar_t *s, size_t n)
         int width = wcwidth (c);
         if (width < 0)
           goto found_nonprinting;
+        if (width > INT_MAX - count)
+          goto overflow;
         count += width;
       }
     }
@@ -35,4 +37,7 @@ wcswidth (const wchar_t *s, size_t n)
 
  found_nonprinting:
   return -1;
+
+ overflow:
+  return INT_MAX;
 }

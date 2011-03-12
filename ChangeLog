@@ -1,5 +1,14 @@
 2011-03-12  Bruno Haible  <bruno@clisp.org>
 
+	wcswidth, mbswidth: Avoid integer overflow.
+	* lib/wcswidth.c: Include <limits.h>.
+	* lib/wcswidth-impl.h (wcswidth): Avoid 'int' overflow.
+	* lib/mbswidth.c: Include <limits.h>.
+	(mbsnwidth): Avoid 'int' overflow.
+	Reported by Jim Meyering.
+
+2011-03-12  Bruno Haible  <bruno@clisp.org>
+
 	futimens, utimensat: Avoid endless recursion on Solaris 10.
 	* lib/sys_stat.in.h (futimens, utimensat): Define with rpl_ prefix on
 	Solaris.

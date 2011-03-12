@@ -20,4 +20,6 @@
 /* Specification.  */
 #include <wchar.h>
 
+#include <limits.h>
+
 #include "wcswidth-impl.h"
