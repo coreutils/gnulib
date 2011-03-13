@@ -1,3 +1,9 @@
+2011-03-07  Bastien Roucariès  <roucaries.bastien@gmail.com>
+
+	passfd module, part 4.
+	* modules/passfd-tests: New file.
+	* tests/test-passfd.c: New file.
+
 2011-03-13  Jim Meyering  <meyering@redhat.com>
 
 	Makefile: rely on GNU make; derive syntax-check rule names
