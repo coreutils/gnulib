@@ -2,13 +2,12 @@ Description:
 Passfile descriptors along Unix (socket/stream) file descriptors
 
 Files:
-m4/sockpfaf.m4
-m4/afunix.m4
-lib/passfd.c
 lib/passfd.h
+lib/passfd.c
+m4/afunix.m4
+m4/sockpfaf.m4
 
 Depends-on:
-errno
 sys_socket
 extensions
 
@@ -19,8 +18,6 @@ Makefile.am:
 lib_SOURCES += passfd.c
 
 Include:
-<sys/socket.h>
-<sys/un.h>
 "passfd.h"
 
 License:

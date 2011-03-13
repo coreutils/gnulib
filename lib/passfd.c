@@ -2,7 +2,7 @@
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 2 of the License, or
+   the Free Software Foundation; either version 3 of the License, or
    (at your option) any later version.
 
    This program is distributed in the hope that it will be useful,
@@ -16,6 +16,8 @@
 #include <config.h>
 
 /* Specification.  */
+#include "passfd.h"
+
 #include <errno.h>
 #include <stddef.h>
 #include <stdlib.h>
@@ -23,20 +25,15 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#ifdef HAVE_SYS_SOCKET_H
 #include <sys/socket.h>
-#endif
-#ifdef HAVE_SYS_UN_H
-#include <sys/un.h>
-#endif
-#ifdef HAVE_WINSOCK2_H
-#include <winsock2.h>
+#if HAVE_SYS_UN_H
+# include <sys/un.h>
 #endif
 
-/* Sendfd sends the file descriptor fd along the socket
+/* sendfd sends the file descriptor fd along the socket
    to a process calling recvfd on the other end.
-   
-   return -1 in case of error, 0 on success
+
+   Return 0 on success, or -1 with errno set in case of error.
 */
 int
 sendfd (int sock, int fd)
@@ -54,7 +51,7 @@ sendfd (int sock, int fd)
   msg.msg_namelen = 0;
 
   {
-#ifdef HAVE_UNIXSOCKET_SCM_RIGHTS_BSD44_WAY
+#if HAVE_UNIXSOCKET_SCM_RIGHTS_BSD44_WAY
     struct cmsghdr *cmsg;
     char buf[CMSG_SPACE (sizeof (fd))];
 
@@ -81,17 +78,14 @@ sendfd (int sock, int fd)
   return 0;
 }
 
-/* Sendfd sends the file descriptor fd along the socket 
-   to a process calling recvfd on the other end.
+/* recvfd receives a file descriptor through the socket.
 
-   return -1 in case of error, fd on success
+   Return 0 on success, or -1 with errno set in case of error.
 */
 int
 recvfd (int sock)
 {
   char recv = 0;
-  const int mone = -1;
-  int fd;
   struct iovec iov[1];
   struct msghdr msg;
 
@@ -104,9 +98,11 @@ recvfd (int sock)
   msg.msg_namelen = 0;
 
   {
-#ifdef HAVE_UNIXSOCKET_SCM_RIGHTS_BSD44_WAY
+#if HAVE_UNIXSOCKET_SCM_RIGHTS_BSD44_WAY
+    int fd;
     struct cmsghdr *cmsg;
     char buf[CMSG_SPACE (sizeof (fd))];
+    const int mone = -1;
 
     msg.msg_control = buf;
     msg.msg_controllen = sizeof (buf);
@@ -124,16 +120,18 @@ recvfd (int sock)
     cmsg = CMSG_FIRSTHDR (&msg);
     /* be paranoiac */
     if (cmsg == NULL || cmsg->cmsg_len != CMSG_LEN (sizeof (int))
-	|| cmsg->cmsg_level != SOL_SOCKET || cmsg->cmsg_type != SCM_RIGHTS)
+        || cmsg->cmsg_level != SOL_SOCKET || cmsg->cmsg_type != SCM_RIGHTS)
       {
-	/* fake errno: at end the file is not available */
-	errno = EACCES;
-	return -1;
+        /* fake errno: at end the file is not available */
+        errno = EACCES;
+        return -1;
       }
 
     memcpy (&fd, CMSG_DATA (cmsg), sizeof (fd));
     return fd;
 #elif HAVE_UNIXSOCKET_SCM_RIGHTS_BSD43_WAY
+    int fd;
+
     msg.msg_accrights = &fd;
     msg.msg_accrightslen = sizeof (fd);
     if (recvmsg (sock, &msg, 0) < 0)

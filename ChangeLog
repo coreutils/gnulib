@@ -1,3 +1,16 @@
+2011-03-13  Bruno Haible  <bruno@clisp.org>
+
+	passfd module, part 2, tweaks.
+	* modules/passfd (Files): Reorder.
+	(Depends-on): Remove errno.
+	(Include): Remove <sys/socket.h>, <sys/un.h>.
+	* lib/passfd.h: Use a GPLv3+ header. Make C++ safe.
+	* lib/passfd.c: Untabify. Use a GPLv3+ header. Really include the
+	specification header. Include <sys/socket.h> always. Don't include
+	<winsock2.h>. Use "#if HAVE_..." instead of "#ifdef HAVE_...".
+	(sendfd): Clarify that it sets errno when it fails.
+	(recvfd): Fix specification.
+
 2011-03-07  Bastien Roucariès  <roucaries.bastien@gmail.com>
 
 	passfd module, part 2.
