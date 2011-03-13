@@ -25,6 +25,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
+#include <sys/wait.h>
 
 #include "macros.h"
 
@@ -86,8 +87,7 @@ main ()
         }
       ASSERT (ret == pid);
 
-      ret = WIFEXITED (status);
-      if (ret == 0)
+      if (!WIFEXITED (status))
         {
           fprintf (stderr, "Child does not normally exit\n");
           return 65;
@@ -100,8 +100,8 @@ main ()
         }
 
       /* try to stat new fd */
-      ret == fstat (fd, &st);
-      if (0 != ret)
+      ret = fstat (fd, &st);
+      if (ret < 0)
         {
           perror ("fstat");
           return 80;
