@@ -1,5 +1,5 @@
-/* Test of terminating the current process.
-   Copyright (C) 2010-2011 Free Software Foundation, Inc.
+/* Test of passing file descriptors.
+   Copyright (C) 2011 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -14,18 +14,17 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-/* Written by Bruno Haible <bruno@clisp.org>, 2010.  */
-
 #include <config.h>
+
+#include "passfd.h"
+
+#include <fcntl.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
-#include "passfd.h"
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
-#include <fcntl.h>
-
 
 #include "macros.h"
 
@@ -57,7 +56,7 @@ main ()
   pid = fork ();
   if (pid == -1)
     {
-      perror ("fork:");
+      perror ("fork");
       return 3;
     }
   if (pid == 0)
@@ -65,7 +64,7 @@ main ()
       ret = sendfd (pair[1], fdnull);
       if (ret == -1)
         {
-          perror ("sendfd:");
+          perror ("sendfd");
           return 64;
         }
       return 0;
@@ -82,7 +81,7 @@ main ()
       ret = waitpid (pid, &status, 0);
       if (ret == -1)
         {
-          perror ("waitpid:");
+          perror ("waitpid");
           return 17;
         }
       ASSERT (ret == pid);
@@ -96,7 +95,7 @@ main ()
       ret = WEXITSTATUS (status);
       if (ret != 0)
         {
-          fprintf (stderr, "Send fd fail");
+          fprintf (stderr, "Send fd fail\n");
           return ret;
         }
 
@@ -104,7 +103,7 @@ main ()
       ret == fstat (fd, &st);
       if (0 != ret)
         {
-          perror("fstat:");
+          perror ("fstat");
           return 80;
         }
       return 0;
