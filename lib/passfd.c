@@ -19,6 +19,7 @@
 #include "passfd.h"
 
 #include <errno.h>
+#include <fcntl.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
@@ -29,6 +30,8 @@
 #if HAVE_SYS_UN_H
 # include <sys/un.h>
 #endif
+
+#include "cloexec.h"
 
 /* sendfd sends the file descriptor fd along the socket
    to a process calling recvfd on the other end.
@@ -79,15 +82,22 @@ sendfd (int sock, int fd)
 }
 
 /* recvfd receives a file descriptor through the socket.
+   The flags are a bitmask, possibly including O_CLOEXEC (defined in <fcntl.h>).
 
    Return 0 on success, or -1 with errno set in case of error.
 */
 int
-recvfd (int sock)
+recvfd (int sock, int flags)
 {
   char recv = 0;
   struct iovec iov[1];
   struct msghdr msg;
+
+  if ((flags & ~O_CLOEXEC) != 0)
+    {
+      errno = EINVAL;
+      return -1;
+    }
 
   /* send at least one char */
   iov[0].iov_base = &recv;
@@ -103,6 +113,11 @@ recvfd (int sock)
     struct cmsghdr *cmsg;
     char buf[CMSG_SPACE (sizeof (fd))];
     const int mone = -1;
+# if HAVE_MSG_CMSG_CLOEXEC
+    int flags_recvmsg = (flags & O_CLOEXEC ? MSG_CMSG_CLOEXEC : 0);
+# else
+    int flags_recvmsg = 0;
+# endif
 
     msg.msg_control = buf;
     msg.msg_controllen = sizeof (buf);
@@ -114,7 +129,7 @@ recvfd (int sock)
     memcpy (CMSG_DATA (cmsg), &mone, sizeof (mone));
     msg.msg_controllen = cmsg->cmsg_len;
 
-    if (recvmsg (sock, &msg, 0) < 0)
+    if (recvmsg (sock, &msg, flags_recvmsg) < 0)
       return -1;
 
     cmsg = CMSG_FIRSTHDR (&msg);
@@ -128,7 +143,23 @@ recvfd (int sock)
       }
 
     memcpy (&fd, CMSG_DATA (cmsg), sizeof (fd));
+
+# if !HAVE_MSG_CMSG_CLOEXEC
+    /* set close-on-exec flag */
+    if (flags & O_CLOEXEC)
+      {
+        if (set_cloexec_flag (fd, true) < 0)
+          {
+            int saved_errno = errno;
+            (void) close (fd);
+            errno = saved_errno;
+            return -1;
+          }
+      }
+# endif
+
     return fd;
+
 #elif HAVE_UNIXSOCKET_SCM_RIGHTS_BSD43_WAY
     int fd;
 
@@ -136,7 +167,21 @@ recvfd (int sock)
     msg.msg_accrightslen = sizeof (fd);
     if (recvmsg (sock, &msg, 0) < 0)
       return -1;
+
+    /* set close-on-exec flag */
+    if (flags & O_CLOEXEC)
+      {
+        if (set_cloexec_flag (fd, true) < 0)
+          {
+            int saved_errno = errno;
+            (void) close (fd);
+            errno = saved_errno;
+            return -1;
+          }
+      }
+
     return fd;
+
 #else
     errno = ENOSYS;
     return -1;

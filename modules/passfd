@@ -8,6 +8,7 @@ m4/afunix.m4
 m4/sockpfaf.m4
 
 Depends-on:
+cloexec
 sys_socket
 extensions
 

@@ -23,7 +23,7 @@ extern "C" {
 #endif
 
 extern int sendfd (int sock, int fd);
-extern int recvfd (int sock);
+extern int recvfd (int sock, int flags);
 
 #ifdef __cplusplus
 }

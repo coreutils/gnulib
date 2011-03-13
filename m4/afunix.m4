@@ -1,4 +1,4 @@
-# afunix.m4 serial 2
+# afunix.m4 serial 3
 dnl Copyright (C) 2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -108,5 +108,32 @@ AC_DEFUN([gl_SOCKET_AFUNIX],
   if test $gl_cv_socket_unix_scm_rights_bsd43_way = yes; then
     AC_DEFINE([HAVE_UNIXSOCKET_SCM_RIGHTS_BSD43_WAY], [1],
       [Define to 1 if fd can be sent/received in the BSD4.3 way.])
+  fi
+
+  AC_MSG_CHECKING([for UNIX domain sockets recvmsg() MSG_CMSG_CLOEXEC flag])
+  AC_CACHE_VAL([gl_cv_socket_unix_msg_cmsg_cloexec],
+    [AC_COMPILE_IFELSE(
+       [AC_LANG_PROGRAM(
+          [[#include <sys/types.h>
+            #ifdef HAVE_SYS_SOCKET_H
+            #include <sys/socket.h>
+            #endif
+            #ifdef HAVE_SYS_UN_H
+            #include <sys/un.h>
+            #endif
+            #ifdef HAVE_WINSOCK2_H
+            #include <winsock2.h>
+            #endif
+            ]],
+            [[int flags = MSG_CMSG_CLOEXEC;
+              if (&flags) return 0;
+            ]])],
+       [gl_cv_socket_unix_msg_cmsg_cloexec=yes],
+       [gl_cv_socket_unix_msg_cmsg_cloexec=no])
+    ])
+  AC_MSG_RESULT([$gl_cv_socket_unix_msg_cmsg_cloexec])
+  if test $gl_cv_socket_unix_msg_cmsg_cloexec = yes; then
+    AC_DEFINE([HAVE_MSG_CMSG_CLOEXEC], [1],
+      [Define to 1 if recvmsg could be specified with MSG_CMSG_CLOEXEC.])
   fi
 ])
