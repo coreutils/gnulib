@@ -1,3 +1,11 @@
+2011-03-13  Jim Meyering  <meyering@redhat.com>
+
+	Makefile: rely on GNU make; derive syntax-check rule names
+	Rather than requiring that each sc_ rule be listed as a dependent
+	of "check", use features of GNU make to derive the list.
+	* Makefile (syntax-check-rules): Define.
+	(check): Depend on the new variable, not the hard-coded list.
+
 2011-03-13  Bastien Roucariès  <roucaries.bastien@gmail.com>
             Bruno Haible  <bruno@clisp.org>
 
