@@ -1,4 +1,4 @@
-# afunix.m4 serial 4
+# afunix.m4 serial 5
 dnl Copyright (C) 2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -37,6 +37,10 @@ AC_DEFUN([gl_SOCKET_AFUNIX],
     AC_DEFINE([HAVE_UNIXSOCKET_SCM_RIGHTS], [1],
       [Define to 1 if <sys/socket.h> defines SCM_RIGHTS.])
   fi
+
+  dnl Persuade AIX 5.2 <sys/socket.h> to declare CMSG_SPACE, CMSG_LEN.
+  AC_DEFINE([_LINUX_SOURCE_COMPAT], [1],
+    [Define in order to get some macros on AIX systems.])
 
   AC_MSG_CHECKING([for UNIX domain sockets SCM_RIGHTS that behave in BSD4.4 way])
   AC_CACHE_VAL([gl_cv_socket_unix_scm_rights_bsd44_way],

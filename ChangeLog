@@ -1,5 +1,10 @@
 2011-03-13  Bruno Haible  <bruno@clisp.org>
 
+	passfd: Fix link error on AIX 5.2.
+	* m4/afunix.m4 (gl_SOCKET_AFUNIX): Define _LINUX_SOURCE_COMPAT.
+
+2011-03-13  Bruno Haible  <bruno@clisp.org>
+
 	passfd: Work around bug with CMSG_FIRSTHDR on FreeBSD 6.4.
 	* lib/sys_socket.in.h: Include <stddef.h>.
 	* m4/afunix.m4 (gl_SOCKET_AFUNIX): Include <stddef.h> before using
