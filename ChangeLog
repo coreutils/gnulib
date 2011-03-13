@@ -1,5 +1,13 @@
 2011-03-13  Bruno Haible  <bruno@clisp.org>
 
+	passfd: Fix link error on Solaris.
+	* modules/passfd (Description): Correct.
+	(Depends-on): Add socketlib.
+	(Link): New section.
+	* modules/passfd-tests (Makefile.am): Link test-passfd with LIBSOCKET.
+
+2011-03-13  Bruno Haible  <bruno@clisp.org>
+
 	passfd: Fix link error on AIX 5.2.
 	* m4/afunix.m4 (gl_SOCKET_AFUNIX): Define _LINUX_SOURCE_COMPAT.
 
