@@ -1,5 +1,11 @@
 2011-03-13  Bruno Haible  <bruno@clisp.org>
 
+	passfd test: Fix warnings.
+	* tests/test-passfd.c: Include <sys/wait.h>.
+	(main): Fix typo.
+
+2011-03-13  Bruno Haible  <bruno@clisp.org>
+
 	passfd module, part 4, tweaks.
 	* tests/test-passfd.c: Reorder includes.
 	(main): Fix perror and printf calls.
