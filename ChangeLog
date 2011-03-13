@@ -1,3 +1,10 @@
+2011-03-07  Bastien Roucariès  <roucaries.bastien@gmail.com>
+
+	passfd module, part 2.
+	* modules/passfd: New file.
+	* lib/passfd.h: New file.
+	* lib/passfd.c: New file.
+
 2011-03-12  Bruno Haible  <bruno@clisp.org>
 
 	wcswidth, mbswidth: Avoid integer overflow.

@@ -1,0 +1,30 @@
+Description:
+Passfile descriptors along Unix (socket/stream) file descriptors
+
+Files:
+m4/sockpfaf.m4
+m4/afunix.m4
+lib/passfd.c
+lib/passfd.h
+
+Depends-on:
+errno
+sys_socket
+extensions
+
+configure.ac:
+gl_SOCKET_AFUNIX
+
+Makefile.am:
+lib_SOURCES += passfd.c
+
+Include:
+<sys/socket.h>
+<sys/un.h>
+"passfd.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+Bastien ROUCARIÈS
