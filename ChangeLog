@@ -1,5 +1,10 @@
 2011-03-13  Bruno Haible  <bruno@clisp.org>
 
+	passfd: Fix compilation error on OpenBSD.
+	* lib/passfd.c: Include <sys/uio.h>.
+
+2011-03-13  Bruno Haible  <bruno@clisp.org>
+
 	passfd test: Fix warnings.
 	* tests/test-passfd.c: Include <sys/wait.h>.
 	(main): Fix typo.
