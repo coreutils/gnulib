@@ -50,6 +50,10 @@
    <sys/types.h>.  */
 # include <sys/types.h>
 
+/* On FreeBSD 6.4, <sys/socket.h> defines some macros that assume that NULL
+   is defined.  */
+# include <stddef.h>
+
 /* The include_next requires a split double-inclusion guard.  */
 # @INCLUDE_NEXT@ @NEXT_SYS_SOCKET_H@
 

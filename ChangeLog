@@ -1,5 +1,12 @@
 2011-03-13  Bruno Haible  <bruno@clisp.org>
 
+	passfd: Work around bug with CMSG_FIRSTHDR on FreeBSD 6.4.
+	* lib/sys_socket.in.h: Include <stddef.h>.
+	* m4/afunix.m4 (gl_SOCKET_AFUNIX): Include <stddef.h> before using
+	CMSG_FIRSTHDR. Remove unused variable.
+
+2011-03-13  Bruno Haible  <bruno@clisp.org>
+
 	passfd: Fix compilation error on OpenBSD.
 	* lib/passfd.c: Include <sys/uio.h>.
 

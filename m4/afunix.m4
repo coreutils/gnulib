@@ -1,4 +1,4 @@
-# afunix.m4 serial 3
+# afunix.m4 serial 4
 dnl Copyright (C) 2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -43,6 +43,7 @@ AC_DEFUN([gl_SOCKET_AFUNIX],
     [AC_COMPILE_IFELSE(
        [AC_LANG_PROGRAM(
           [[#include <sys/types.h>
+            #include <stddef.h>
             #ifdef HAVE_SYS_SOCKET_H
             #include <sys/socket.h>
             #endif
@@ -57,7 +58,6 @@ AC_DEFUN([gl_SOCKET_AFUNIX],
               struct cmsghdr *cmsg;
               int myfds[1] = {0};
               char buf[CMSG_SPACE (sizeof (myfds))];
-              int *fdptr;
 
               msg.msg_control = buf;
               msg.msg_controllen = sizeof buf;
