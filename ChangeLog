@@ -1,5 +1,11 @@
 2011-03-13  Bruno Haible  <bruno@clisp.org>
 
+	ignore-value tests: Avoid warnings.
+	* tests/test-ignore-value.c (_GL_ATTRIBUTE_RETURN_CHECK): Define to
+	empty for gcc < 3.4.
+
+2011-03-13  Bruno Haible  <bruno@clisp.org>
+
 	passfd: Fix link error on Solaris.
 	* modules/passfd (Description): Correct.
 	(Depends-on): Add socketlib.

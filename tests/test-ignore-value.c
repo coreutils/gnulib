@@ -24,7 +24,7 @@
 #include <stdio.h>
 
 #ifndef _GL_ATTRIBUTE_RETURN_CHECK
-# if __GNUC__ < 3 || (__GNUC__ == 3 && __GNUC_MINOR__ < 1)
+# if __GNUC__ < 3 || (__GNUC__ == 3 && __GNUC_MINOR__ < 4)
 #  define _GL_ATTRIBUTE_RETURN_CHECK
 # else
 #  define _GL_ATTRIBUTE_RETURN_CHECK __attribute__((__warn_unused_result__))
