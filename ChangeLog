@@ -1,3 +1,13 @@
+2011-03-16  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: allow fine-grained syntax-check exclusion via Make variables
+	Before, you would have had to create one .x-sc_ file per rule in order
+	to exempt offending files.  Now, you may instead use a Make variable --
+	usually defined in cfg.mk -- whose name identifies the affected rule.
+	* top/maint.mk (_sc_excl): Define.
+	(VC_LIST_EXCEPT): Use it to exclude names on a per-rule basis.
+	(_sc_search_regexp): When not using VC_LIST_EXCEPT, exclude here, too.
+
 2011-03-13  Bruno Haible  <bruno@clisp.org>
 
 	ignore-value tests: Avoid warnings.
