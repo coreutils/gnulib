@@ -955,13 +955,13 @@ fix_po_file_diag = \
 apply the above patch\n'
 
 # Verify that all source files using _() are listed in po/POTFILES.in.
-po_file = po/POTFILES.in
+po_file ?= $(srcdir)/po/POTFILES.in
 sc_po_check:
 	@if test -f $(po_file); then					\
 	  grep -E -v '^(#|$$)' $(po_file)				\
 	    | grep -v '^src/false\.c$$' | sort > $@-1;			\
 	  files=;							\
-	  for file in $$($(VC_LIST_EXCEPT)) lib/*.[ch]; do		\
+	  for file in $$($(VC_LIST_EXCEPT)) $(srcdir)lib/*.[ch]; do	\
 	    test -r $$file || continue;					\
 	    case $$file in						\
 	      *.m4|*.mk) continue ;;					\
@@ -976,7 +976,7 @@ sc_po_check:
 	    files="$$files $$file";					\
 	  done;								\
 	  grep -E -l '\b(N?_|gettext *)\([^)"]*("|$$)' $$files		\
-	    | sort -u > $@-2;						\
+	    | sort -u | sed 's|^$(_dot_escaped_srcdir)/||' > $@-2;	\
 	  diff -u -L $(po_file) -L $(po_file) $@-1 $@-2			\
 	    || { printf '$(ME): '$(fix_po_file_diag) 1>&2; exit 1; };	\
 	  rm -f $@-1 $@-2;						\

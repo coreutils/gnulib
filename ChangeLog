@@ -1,3 +1,10 @@
+2011-03-18  Eric Blake  <eblake@redhat.com>
+
+	maint.mk: let po check work in VPATH build
+	* top/maint.mk (po_file): Allow cfg.mk override.
+	(sc_po_check): Allow VPATH use.
+	Reported by Jiri Denemark.
+
 2011-03-16  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: allow fine-grained syntax-check exclusion via Make variables
