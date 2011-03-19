@@ -1,6 +1,15 @@
 2011-03-19  Paul Eggert  <eggert@cs.ucla.edu>
             Bruno Haible  <bruno@clisp.org>
 
+	inet_ntop, inet_pton: Simplify.
+	* modules/inet_ntop (Depends-on): Remove socklen, since sys_socket is
+	documented to provide socklen_t and we already depend on sys_socket.
+	* modules/inet_pton (Depends-on): Likewise.
+	* lib/arpa_inet.in.h: Adjust comment.
+
+2011-03-19  Paul Eggert  <eggert@cs.ucla.edu>
+            Bruno Haible  <bruno@clisp.org>
+
 	netdb: Simplify.
 	* modules/netdb (Depends-on): Remove socklen, since sys_socket is
 	documented to provide socklen_t and we already depend on sys_socket.
