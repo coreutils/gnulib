@@ -1,3 +1,8 @@
+2011-03-19  Bruno Haible  <bruno@clisp.org>
+
+	socklen: Update comment.
+	* m4/socklen.m4: Update comment about platforms.
+
 2011-03-19  Paul Eggert  <eggert@cs.ucla.edu>
             Bruno Haible  <bruno@clisp.org>
 
