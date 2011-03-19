@@ -37,7 +37,8 @@
 #ifndef _GL_NETDB_H
 #define _GL_NETDB_H
 
-/* Get netdb.h definitions such as struct hostent for MinGW.  */
+/* Get <netdb.h> definitions such as 'socklen_t' on IRIX 6.5 and OSF/1 4.0 and
+   'struct hostent' on MinGW.  */
 #include <sys/socket.h>
 
 /* The definition of _GL_ARG_NONNULL is copied here.  */
