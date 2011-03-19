@@ -1,3 +1,9 @@
+2011-03-19  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: fix po-file syntax-check rule
+	* top/maint.mk (sc_po_check): Fix fatal typo in yesterday's change.
+	Patch by Bruno Haible.
+
 2011-03-19  Bruno Haible  <bruno@clisp.org>
 
 	socklen: Update comment.

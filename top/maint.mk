@@ -961,7 +961,7 @@ sc_po_check:
 	  grep -E -v '^(#|$$)' $(po_file)				\
 	    | grep -v '^src/false\.c$$' | sort > $@-1;			\
 	  files=;							\
-	  for file in $$($(VC_LIST_EXCEPT)) $(srcdir)lib/*.[ch]; do	\
+	  for file in $$($(VC_LIST_EXCEPT)) $(srcdir)/lib/*.[ch]; do	\
 	    test -r $$file || continue;					\
 	    case $$file in						\
 	      *.m4|*.mk) continue ;;					\
