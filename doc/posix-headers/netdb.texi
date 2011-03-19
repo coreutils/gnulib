@@ -16,6 +16,10 @@ This header file is incomplete on some platforms:
 Cygwin 1.5.x, Haiku.
 
 @item
+This header file does not define the type @code{socklen_t} on some platforms:
+HP-UX 10.20, IRIX 6.5, OSF/1 4.0, Interix 3.5, BeOS.
+
+@item
 This header file does not define @code{AI_ALL}, @code{AI_V4MAPPED},
 @code{AI_ADDRCONFIG} on some platforms:
 NetBSD 5.0.

@@ -1,3 +1,10 @@
+2011-03-19  Bruno Haible  <bruno@clisp.org>
+
+	sys_socket, netdb: Document problem with socklen_t.
+	* doc/posix-headers/sys_socket.texi: Mention lack of socklen_t on some
+	platforms.
+	* doc/posix-headers/netdb.texi: Likewise.
+
 2011-03-18  Eric Blake  <eblake@redhat.com>
 
 	maint.mk: let po check work in VPATH build
