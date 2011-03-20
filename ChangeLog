@@ -1,3 +1,10 @@
+2011-03-20  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: sort file names *after* new transformation
+	* top/maint.mk (sc_po_check): Sorting before removing the $(srcdir)/
+	prefix would have led to an unwarranted failure in GNU parted.
+	Sort after that transformation.
+
 2011-03-19  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: fix po-file syntax-check rule

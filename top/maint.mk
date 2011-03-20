@@ -976,7 +976,7 @@ sc_po_check:
 	    files="$$files $$file";					\
 	  done;								\
 	  grep -E -l '\b(N?_|gettext *)\([^)"]*("|$$)' $$files		\
-	    | sort -u | sed 's|^$(_dot_escaped_srcdir)/||' > $@-2;	\
+	    | sed 's|^$(_dot_escaped_srcdir)/||' | sort -u > $@-2;	\
 	  diff -u -L $(po_file) -L $(po_file) $@-1 $@-2			\
 	    || { printf '$(ME): '$(fix_po_file_diag) 1>&2; exit 1; };	\
 	  rm -f $@-1 $@-2;						\
