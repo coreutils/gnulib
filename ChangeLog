@@ -1,3 +1,10 @@
+2011-03-20  Bruno Haible  <bruno@clisp.org>
+
+	verror: Fix compilation error introduced on 2011-02-13.
+	* lib/verror.h (verror, verror_at_line): Use _GL_ATTRIBUTE_FORMAT macro
+	instead of __attribute__.
+	Reported by Tom G. Christensen <tgc@jupiterrise.com>.
+
 2011-03-20  Paul Eggert  <eggert@cs.ucla.edu>
             Bruno Haible  <bruno@clisp.org>
 
