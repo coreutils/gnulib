@@ -1,3 +1,22 @@
+2011-03-20  Paul Eggert  <eggert@cs.ucla.edu>
+            Bruno Haible  <bruno@clisp.org>
+
+	socklen: do not depend on sys_socket
+	While trying to modify Emacs to use gnulib's socklen module,
+	I discovered a circular dependency: socklen depends on sys_socket
+	and vice versa.  Emacs can use socklen, but it does not need
+	sys_socket because it has its own substitute for sys/socket.h.
+	* m4/socklen.m4 (gl_SOCKET_HEADERS): New macro, extracted from
+	gl_TYPE_SOCKLEN_T.
+	(gl_CHECK_SOCKET_HEADERS): New macro, taken from parts of
+	gl_PREREQ_SYS_H_SOCKET.
+	(gl_TYPE_SOCKLEN_T): Require it instead of requiring
+	gl_PREREQ_SYS_H_SOCKET.
+	* m4/sys_socket_h.m4 (gl_PREREQ_SYS_H_SOCKET): Require
+	gl_CHECK_SOCKET_HEADERS instead of doing its work ourselves.
+	* modules/socklen (Depends-on): Do not depend on sys_socket.
+	(Include): Adjust to match the code used in gl_SOCKET_HEADERS.
+
 2011-03-20  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: sort file names *after* new transformation

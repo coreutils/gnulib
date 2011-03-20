@@ -5,7 +5,6 @@ Files:
 m4/socklen.m4
 
 Depends-on:
-sys_socket
 
 configure.ac:
 gl_TYPE_SOCKLEN_T
@@ -13,8 +12,12 @@ gl_TYPE_SOCKLEN_T
 Makefile.am:
 
 Include:
-<sys/types.h>
-<sys/socket.h>
+#include <sys/types.h>
+#if HAVE_SYS_SOCKET_H
+# include <sys/socket.h>
+#elif HAVE_WS2TCPIP_H
+# include <ws2tcpip.h>
+#endif
 
 License:
 unlimited
