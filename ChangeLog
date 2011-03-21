@@ -1,3 +1,25 @@
+2011-03-21  Bruno Haible  <bruno@clisp.org>
+
+	unictype: Add support for Arabic shaping properties.
+	* lib/unictype.in.h (UC_JOINING_TYPE_*): New enumeration values.
+	(uc_joining_type_name, uc_joining_type_byname, uc_joining_type): New
+	declarations.
+	(UC_JOINING_GROUP_*): New enumeration values.
+	(uc_joining_group_name, uc_joining_group_byname, uc_joining_group): New
+	declarations.
+	* lib/gen-uni-tables.c (UC_JOINING_TYPE_*): New enumeration values.
+	(unicode_joining_type): New variable.
+	(UC_JOINING_GROUP_*): New enumeration values.
+	(unicode_joining_group): New variable.
+	(fill_arabicshaping, joining_type_as_c_identifier,
+	output_joining_type_test, output_joining_type,
+	joining_group_as_c_identifier, output_joining_group_test,
+	output_joining_group): New functions.
+	(main); Add an argument denoting the ArabicShaping.txt file. Invoke
+	fill_arabicshaping and output_joining_type_test, output_joining_type,
+	output_joining_group_test, output_joining_group.
+	Reported by Simon Josefsson.
+
 2011-03-21  Jim Meyering  <meyering@redhat.com>
 
 	strftime: fix a bug in yesterday's change

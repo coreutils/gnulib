@@ -359,6 +359,112 @@ extern bool
 
 /* ========================================================================= */
 
+/* Field 2 of the file ArabicShaping.txt in the Unicode Character Database.  */
+
+/* Possible joining types.  */
+enum
+{
+  UC_JOINING_TYPE_U, /* Non_Joining */
+  UC_JOINING_TYPE_T, /* Transparent */
+  UC_JOINING_TYPE_C, /* Join_Causing */
+  UC_JOINING_TYPE_L, /* Left_Joining */
+  UC_JOINING_TYPE_R, /* Right_Joining */
+  UC_JOINING_TYPE_D  /* Dual_Joining */
+};
+
+/* Return the name of a joining type.  */
+extern const char *
+       uc_joining_type_name (int joining_type);
+
+/* Return the joining type given by name, e.g. "D".  */
+extern int
+       uc_joining_type_byname (const char *joining_type_name);
+
+/* Return the joining type of a Unicode character.  */
+extern int
+       uc_joining_type (ucs4_t uc);
+
+/* ========================================================================= */
+
+/* Field 3 of the file ArabicShaping.txt in the Unicode Character Database.  */
+
+/* Possible joining groups.
+   This enumeration may be extended in the future.  */
+enum
+{
+  UC_JOINING_GROUP_NONE,                  /* No_Joining_Group */
+  UC_JOINING_GROUP_AIN,                   /* Ain */
+  UC_JOINING_GROUP_ALAPH,                 /* Alaph */
+  UC_JOINING_GROUP_ALEF,                  /* Alef */
+  UC_JOINING_GROUP_BEH,                   /* Beh */
+  UC_JOINING_GROUP_BETH,                  /* Beth */
+  UC_JOINING_GROUP_BURUSHASKI_YEH_BARREE, /* Burushaski_Yeh_Barree */
+  UC_JOINING_GROUP_DAL,                   /* Dal */
+  UC_JOINING_GROUP_DALATH_RISH,           /* Dalath_Rish */
+  UC_JOINING_GROUP_E,                     /* E */
+  UC_JOINING_GROUP_FARSI_YEH,             /* Farsi_Yeh */
+  UC_JOINING_GROUP_FE,                    /* Fe */
+  UC_JOINING_GROUP_FEH,                   /* Feh */
+  UC_JOINING_GROUP_FINAL_SEMKATH,         /* Final_Semkath */
+  UC_JOINING_GROUP_GAF,                   /* Gaf */
+  UC_JOINING_GROUP_GAMAL,                 /* Gamal */
+  UC_JOINING_GROUP_HAH,                   /* Hah */
+  UC_JOINING_GROUP_HE,                    /* He */
+  UC_JOINING_GROUP_HEH,                   /* Heh */
+  UC_JOINING_GROUP_HEH_GOAL,              /* Heh_Goal */
+  UC_JOINING_GROUP_HETH,                  /* Heth */
+  UC_JOINING_GROUP_KAF,                   /* Kaf */
+  UC_JOINING_GROUP_KAPH,                  /* Kaph */
+  UC_JOINING_GROUP_KHAPH,                 /* Khaph */
+  UC_JOINING_GROUP_KNOTTED_HEH,           /* Knotted_Heh */
+  UC_JOINING_GROUP_LAM,                   /* Lam */
+  UC_JOINING_GROUP_LAMADH,                /* Lamadh */
+  UC_JOINING_GROUP_MEEM,                  /* Meem */
+  UC_JOINING_GROUP_MIM,                   /* Mim */
+  UC_JOINING_GROUP_NOON,                  /* Noon */
+  UC_JOINING_GROUP_NUN,                   /* Nun */
+  UC_JOINING_GROUP_NYA,                   /* Nya */
+  UC_JOINING_GROUP_PE,                    /* Pe */
+  UC_JOINING_GROUP_QAF,                   /* Qaf */
+  UC_JOINING_GROUP_QAPH,                  /* Qaph */
+  UC_JOINING_GROUP_REH,                   /* Reh */
+  UC_JOINING_GROUP_REVERSED_PE,           /* Reversed_Pe */
+  UC_JOINING_GROUP_SAD,                   /* Sad */
+  UC_JOINING_GROUP_SADHE,                 /* Sadhe */
+  UC_JOINING_GROUP_SEEN,                  /* Seen */
+  UC_JOINING_GROUP_SEMKATH,               /* Semkath */
+  UC_JOINING_GROUP_SHIN,                  /* Shin */
+  UC_JOINING_GROUP_SWASH_KAF,             /* Swash_Kaf */
+  UC_JOINING_GROUP_SYRIAC_WAW,            /* Syriac_Waw */
+  UC_JOINING_GROUP_TAH,                   /* Tah */
+  UC_JOINING_GROUP_TAW,                   /* Taw */
+  UC_JOINING_GROUP_TEH_MARBUTA,           /* Teh_Marbuta */
+  UC_JOINING_GROUP_TEH_MARBUTA_GOAL,      /* Teh_Marbuta_Goal */
+  UC_JOINING_GROUP_TETH,                  /* Teth */
+  UC_JOINING_GROUP_WAW,                   /* Waw */
+  UC_JOINING_GROUP_YEH,                   /* Yeh */
+  UC_JOINING_GROUP_YEH_BARREE,            /* Yeh_Barree */
+  UC_JOINING_GROUP_YEH_WITH_TAIL,         /* Yeh_With_Tail */
+  UC_JOINING_GROUP_YUDH,                  /* Yudh */
+  UC_JOINING_GROUP_YUDH_HE,               /* Yudh_He */
+  UC_JOINING_GROUP_ZAIN,                  /* Zain */
+  UC_JOINING_GROUP_ZHAIN                  /* Zhain */
+};
+
+/* Return the name of a joining group.  */
+extern const char *
+       uc_joining_group_name (int joining_group);
+
+/* Return the joining group given by name, e.g. "Teh_Marbuta".  */
+extern int
+       uc_joining_group_byname (const char *joining_group_name);
+
+/* Return the joining group of a Unicode character.  */
+extern int
+       uc_joining_group (ucs4_t uc);
+
+/* ========================================================================= */
+
 /* Common API for properties.  */
 
 /* Data type denoting a property.  This is not just a number, but rather a
