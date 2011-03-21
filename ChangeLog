@@ -1,5 +1,10 @@
 2011-03-21  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unictype/joininggroup-byname'.
+	* modules/unictype/joininggroup-byname: New file.
+	* lib/unictype/joininggroup_byname.c: New file.
+	* lib/unictype/joininggroup_byname.gperf: New file.
+
 	Tests for module 'unictype/joininggroup-name'.
 	* modules/unictype/joininggroup-name-tests: New file.
 	* tests/unictype/test-joininggroup_name.c: New file.

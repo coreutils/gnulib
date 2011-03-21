@@ -1,0 +1,35 @@
+Description:
+Find a Unicode character Arabic joining group, given its name.
+
+Files:
+lib/unictype/joininggroup_byname.c
+lib/unictype/joininggroup_byname.gperf
+
+Depends-on:
+unictype/base
+gperf
+
+configure.ac:
+gl_LIBUNISTRING_MODULE([0.9.4], [unictype/joininggroup-byname])
+
+Makefile.am:
+if LIBUNISTRING_COMPILE_UNICTYPE_JOININGGROUP_BYNAME
+lib_SOURCES += unictype/joininggroup_byname.c
+endif
+
+unictype/joininggroup_byname.h: unictype/joininggroup_byname.gperf
+	$(GPERF) -m 10 $(srcdir)/unictype/joininggroup_byname.gperf > $(srcdir)/unictype/joininggroup_byname.h-t
+	mv $(srcdir)/unictype/joininggroup_byname.h-t $(srcdir)/unictype/joininggroup_byname.h
+BUILT_SOURCES        += unictype/joininggroup_byname.h
+MOSTLYCLEANFILES     += unictype/joininggroup_byname.h-t
+MAINTAINERCLEANFILES += unictype/joininggroup_byname.h
+EXTRA_DIST           += unictype/joininggroup_byname.h
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
