@@ -1,5 +1,8 @@
 2011-03-21  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unictype/joininggroup-all'.
+	* modules/unictype/joininggroup-all: New file.
+
 	Tests for module 'unictype/joininggroup-of'.
 	* modules/unictype/joininggroup-of-tests: New file.
 	* tests/unictype/test-joininggroup_of.c: New file.
