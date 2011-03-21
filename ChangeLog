@@ -1,5 +1,9 @@
 2011-03-21  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unictype/joiningtype-name'.
+	* modules/unictype/joiningtype-name: New file.
+	* lib/unictype/joiningtype_name.c: New file.
+
 	unictype: Add support for Arabic shaping properties.
 	* lib/unictype.in.h (UC_JOINING_TYPE_*): New enumeration values.
 	(uc_joining_type_name, uc_joining_type_byname, uc_joining_type): New
