@@ -1,5 +1,10 @@
 2011-03-21  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unictype/joininggroup-name'.
+	* modules/unictype/joininggroup-name: New file.
+	* lib/unictype/joininggroup_name.c: New file.
+	* lib/unictype/joininggroup_name.h: New file.
+
 	New module 'unictype/joiningtype-all'.
 	* modules/unictype/joiningtype-all: New file.
 
