@@ -172,15 +172,15 @@ extern char *tzname[];
 #define add(n, f)                                                             \
   do                                                                          \
     {                                                                         \
-      int _n = (n);                                                           \
-      int _delta = width - _n;                                                \
-      int _incr = _n + (_delta > 0 ? _delta : 0);                             \
-      if ((size_t) _incr >= maxsize - i)                                      \
+      size_t _n = (n);                                                        \
+      size_t _incr = _n < width ? width : _n;                                 \
+      if (_incr >= maxsize - i)                                               \
         return 0;                                                             \
       if (p)                                                                  \
         {                                                                     \
-          if (digits == 0 && _delta > 0)                                      \
+          if (digits == 0 && _n < width)                                      \
             {                                                                 \
+              size_t _delta = width - _n;                                     \
               if (pad == L_('0'))                                             \
                 memset_zero (p, _delta);                                      \
               else                                                            \

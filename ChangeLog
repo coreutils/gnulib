@@ -1,5 +1,14 @@
 2011-03-20  Paul Eggert  <eggert@cs.ucla.edu>
 
+	strftime: don't assume a byte count fits in 'int'
+	* lib/strftime.c (add): Don't assume first arg fits in 'int'.  I
+	found this problem by static analysis, using gcc -Wstrict-overflow
+	(GCC 4.5.2, x86-64).  This reported an optimization that depended
+	on an integer overflow having undefined behavior, but it turns out
+	that the argument is a size, which might not fit in 'int' anyway,
+
+2011-03-20  Paul Eggert  <eggert@cs.ucla.edu>
+
 	stdio: don't require ignore_value around fwrite
 
 	This patch works around libc bug 11959
