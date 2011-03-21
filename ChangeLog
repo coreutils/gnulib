@@ -1,3 +1,30 @@
+2011-03-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdio: don't require ignore_value around fwrite
+
+	This patch works around libc bug 11959
+	<http://sources.redhat.com/bugzilla/show_bug.cgi?id=11959>.
+	Without this patch, applications must often write
+	ignore_value (fwrite (...)) even though the ignore_value is
+	not helpful here.  It's common to write many objects, using
+	fwrite/printf/etc., and then use ferror to detect output error.
+
+	I considered making this patch optional, but decided against it,
+	because libc is obviously being inconsistent here: there is no
+	reason libc should insist that user code must inspect fwrite
+	return's value without also insisting that it inspect printf's,
+	putchar's, etc.  If user code wants to have a strict style where
+	all these functions' values are checked (so that ferror need not
+	be checked), we could add support for that style in a new gnulib
+	module, but in the meantime it's better to be consistent and to
+	support common usage.
+
+	* lib/stdio.in.h (rpl_fwrite): Define this wrapper around fwrite,
+	to work around libc bug 11959, if __USE_FORTIFY_LEVEL indicates
+	that we are compiling in checking mode, and if not C++, and
+	if not already wrapping fwrite for some other reason.
+	(fwrite): #define to rpl_fwrite if the latter is defined.
+
 2011-03-20  Bruno Haible  <bruno@clisp.org>
 
 	verror: Fix compilation error introduced on 2011-02-13.

@@ -496,6 +496,23 @@ _GL_CXXALIAS_RPL (fwrite, size_t,
 # else
 _GL_CXXALIAS_SYS (fwrite, size_t,
                   (const void *ptr, size_t s, size_t n, FILE *stream));
+
+/* Work around glibc bug 11959
+   <http://sources.redhat.com/bugzilla/show_bug.cgi?id=11959>,
+   which sometimes causes an unwanted diagnostic for fwrite calls.
+   This affects only function declaration attributes, so it's not
+   needed for C++.  */
+#  if !defined __cplusplus && 0 < __USE_FORTIFY_LEVEL
+static inline size_t _GL_ARG_NONNULL ((1, 4))
+rpl_fwrite (const void *ptr, size_t s, size_t n, FILE *stream)
+{
+  size_t r = fwrite (ptr, s, n, stream);
+  (void) r;
+  return r;
+}
+#   undef fwrite
+#   define fwrite rpl_fwrite
+#  endif
 # endif
 _GL_CXXALIASWARN (fwrite);
 #endif
