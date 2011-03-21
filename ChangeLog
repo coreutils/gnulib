@@ -1,3 +1,9 @@
+2011-03-21  Jim Meyering  <meyering@redhat.com>
+
+	tests: add strftime-tests module
+	* tests/test-strftime.c: New file.
+	* modules/strftime-tests: New module.
+
 2011-03-20  Paul Eggert  <eggert@cs.ucla.edu>
 
 	strftime: don't assume a byte count fits in 'int'
