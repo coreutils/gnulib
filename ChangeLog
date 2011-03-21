@@ -1,5 +1,12 @@
 2011-03-21  Jim Meyering  <meyering@redhat.com>
 
+	strftime: fix a bug in yesterday's change
+	* lib/strftime.c (add): Accommodate width's initial value of -1.
+	Otherwise, nstrftime would copy uninitialized data into
+	the result buffer.
+
+2011-03-21  Jim Meyering  <meyering@redhat.com>
+
 	tests: add strftime-tests module
 	* tests/test-strftime.c: New file.
 	* modules/strftime-tests: New module.

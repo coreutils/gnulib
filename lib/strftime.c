@@ -173,12 +173,13 @@ extern char *tzname[];
   do                                                                          \
     {                                                                         \
       size_t _n = (n);                                                        \
-      size_t _incr = _n < width ? width : _n;                                 \
+      size_t _w = (width < 0 ? 0 : width);                                    \
+      size_t _incr = _n < _w ? _w : _n;                                       \
       if (_incr >= maxsize - i)                                               \
         return 0;                                                             \
       if (p)                                                                  \
         {                                                                     \
-          if (digits == 0 && _n < width)                                      \
+          if (digits == 0 && _n < _w)                                         \
             {                                                                 \
               size_t _delta = width - _n;                                     \
               if (pad == L_('0'))                                             \
