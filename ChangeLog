@@ -1,5 +1,9 @@
 2011-03-21  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unictype/joiningtype-byname'.
+	* modules/unictype/joiningtype-byname: New file.
+	* lib/unictype/joiningtype_byname.c: New file.
+
 	Tests for module 'unictype/joiningtype-name'.
 	* modules/unictype/joiningtype-name-tests: New file.
 	* tests/unictype/test-joiningtype_name.c: New file.
