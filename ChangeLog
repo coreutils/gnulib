@@ -1,3 +1,30 @@
+2011-03-22  Bruno Haible  <bruno@clisp.org>
+
+	unictype/bidi*: Rename functions.
+	* lib/unictype.in.h (uc_bidi_class_name, uc_bidi_class_byname,
+	uc_bidi_class, uc_is_bidi_class): New declarations.
+	* lib/unictype/bidi_byname.c (uc_bidi_class_byname): Renamed from
+	uc_bidi_category_byname.
+	(uc_bidi_category_byname): New function.
+	* lib/unictype/bidi_name.c (u_bidi_class_name): Renamed from
+	u_bidi_category_name.
+	(uc_bidi_class_name): Renamed from uc_bidi_category_name.
+	(uc_bidi_category_name): New function.
+	* lib/unictype/bidi_of.c (uc_bidi_class): Renamed from
+	uc_bidi_category.
+	(uc_bidi_category): New function.
+	* lib/unictype/bidi_test.c (uc_is_bidi_class): Renamed from
+	uc_is_bidi_category. Invoke uc_bidi_class.
+	(uc_is_bidi_category): New function.
+	* tests/unictype/test-bidi_byname.c (main): Test uc_bidi_class_byname
+	instead of uc_bidi_category_byname.
+	* tests/unictype/test-bidi_name.c (main): Test uc_bidi_class_name
+	instead of uc_bidi_category_name.
+	* tests/unictype/test-bidi_of.c (main): Test uc_bidi_class instead of
+	uc_bidi_category.
+	* tests/unictype/test-bidi_test.c (main): Test uc_is_bidi_class
+	instead of uc_is_bidi_category.
+
 2011-03-21  Bruno Haible  <bruno@clisp.org>
 
 	New module 'unictype/joininggroup-all'.

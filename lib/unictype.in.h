@@ -257,7 +257,8 @@ extern int
 
 /* ========================================================================= */
 
-/* Field 4 of Unicode Character Database: Bidirectional category.  */
+/* Field 4 of Unicode Character Database: Bidi class.
+   Before Unicode 4.0, this field was called "Bidirectional category".  */
 
 enum
 {
@@ -282,20 +283,31 @@ enum
   UC_BIDI_ON   /* Other Neutral */
 };
 
-/* Return the name of a bidirectional category.  */
+/* Return the name of a bidi class.  */
+extern const char *
+       uc_bidi_class_name (int bidi_class);
+/* Same; obsolete function name.  */
 extern const char *
        uc_bidi_category_name (int category);
 
-/* Return the bidirectional category given by name, e.g. "LRE".  */
+/* Return the bidi class given by name, e.g. "LRE".  */
+extern int
+       uc_bidi_class_byname (const char *bidi_class_name);
+/* Same; obsolete function name.  */
 extern int
        uc_bidi_category_byname (const char *category_name);
 
-/* Return the bidirectional category of a Unicode character.  */
+/* Return the bidi class of a Unicode character.  */
+extern int
+       uc_bidi_class (ucs4_t uc);
+/* Same; obsolete function name.  */
 extern int
        uc_bidi_category (ucs4_t uc);
 
-/* Test whether a Unicode character belongs to a given bidirectional
-   category.  */
+/* Test whether a Unicode character belongs to a given bidi class.  */
+extern bool
+       uc_is_bidi_class (ucs4_t uc, int bidi_class);
+/* Same; obsolete function name.  */
 extern bool
        uc_is_bidi_category (ucs4_t uc, int category);
 

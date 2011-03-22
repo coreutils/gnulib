@@ -1,5 +1,5 @@
 /* Test the Unicode character type functions.
-   Copyright (C) 2007-2009 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009, 2011 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -25,9 +25,9 @@
 int
 main ()
 {
-  ASSERT (uc_bidi_category ('x') == UC_BIDI_L);
-  ASSERT (uc_bidi_category (0x05D7) == UC_BIDI_R);
-  ASSERT (uc_bidi_category ('7') == UC_BIDI_EN);
+  ASSERT (uc_bidi_class ('x') == UC_BIDI_L);
+  ASSERT (uc_bidi_class (0x05D7) == UC_BIDI_R);
+  ASSERT (uc_bidi_class ('7') == UC_BIDI_EN);
 
   return 0;
 }

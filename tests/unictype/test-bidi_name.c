@@ -1,5 +1,5 @@
 /* Test the Unicode character type functions.
-   Copyright (C) 2007-2009 Free Software Foundation, Inc.
+   Copyright (C) 2007-2009, 2011 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -25,8 +25,8 @@
 int
 main ()
 {
-  ASSERT (strcmp (uc_bidi_category_name (UC_BIDI_NSM), "NSM") == 0);
-  ASSERT (uc_bidi_category_name (-1) == NULL);
+  ASSERT (strcmp (uc_bidi_class_name (UC_BIDI_NSM), "NSM") == 0);
+  ASSERT (uc_bidi_class_name (-1) == NULL);
 
   return 0;
 }
