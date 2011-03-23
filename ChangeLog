@@ -1,3 +1,12 @@
+2011-03-23  Jim Meyering  <meyering@redhat.com>
+
+	doc: update users.txt
+	Looking through matches up to the following URL (there are still
+	several more pages), I found several projects that use gnulib:
+	http://codesearch.google.com/codesearch?start=50&q=gnulib-cache\.m4
+	* users.txt: Add nagios plugins (nagiosplug), acct, gengetopt,
+	gmediaserver, gtkreindeer, jugtail, libunistring, mini-httpd, reindeer.
+
 2011-03-22  Bruno Haible  <bruno@clisp.org>
 
 	unictype/bidi*: Rename functions.

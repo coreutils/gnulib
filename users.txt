@@ -3,6 +3,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   CSSC            http://git.savannah.gnu.org/cgit/cssc.git
   Net::CDP        http://search.cpan.org/src/MCHAPMAN/Net-CDP-0.09/libcdp/
   OPeNDAP         http://scm.opendap.org:8090/svn/trunk/
+  acct            http://cvs.sv.gnu.org/viewcvs/acct/acct/
   anubis          http://cvs.sv.gnu.org/viewcvs/anubis/anubis/
   augeas          http://augeas.net/
   autobuild       http://josefsson.org/autobuild/
@@ -16,6 +17,8 @@ The following packages appear to be using gnulib and gnulib-tool:
   findutils       http://cvs.sv.gnu.org/viewcvs/findutils/findutils/
   gcal            http://git.savannah.gnu.org/gitweb/?p=gcal.git
   gettext         http://cvs.sv.gnu.org/viewcvs/gettext/gettext/
+  gengetopt       http://git.sv.gnu.org/gitweb/?p=gengetopt.git
+  gmediaserver    http://cvs.sv.gnu.org/viewvc/gmediaserver/gmediaserver/
   gnuit           http://www.gnu.org/software/gnuit/
                   http://git.savannah.gnu.org/gitweb/?p=gnuit.git
   gnutls          http://cvs.gnupg.org/cgi-bin/viewcvs.cgi/gnutls/?root=GNU+TLS+Library
@@ -24,6 +27,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   gpg             http://cvs.gnupg.org/cgi-bin/viewcvs.cgi/trunk/
   gsasl           http://git.sv.gnu.org/gitweb/?p=gsasl.git
   gss             http://git.sv.gnu.org/gitweb/?p=gss.git
+  gtkreindeer     http://git.sv.gnu.org/gitweb/?p=gtkreindeer.git
   gtk-vnc         http://gtk-vnc.codemonkey.ws/hg/outgoing.hg
   grep            http://git.sv.gnu.org/cgit/grep.git/
   guile           http://cvs.sv.gnu.org/viewvc/guile/guile/guile-core/
@@ -33,6 +37,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   icoutils        http://riva.ucam.org/svn/cjwatson/src/debian/icoutils/trunk/icoutils/
   inetutils       http://cvs.sv.gnu.org/viewcvs/inetutils/inetutils/
   iwhd            http://git.fedorahosted.org/git/?p=iwhd.git
+  jugtail         http://cvs.savannah.gnu.org/viewvc/?root=jugtail
   jwhois          http://cvs.sv.gnu.org/viewvc/jwhois/jwhois/
   libdap          http://scm.opendap.org:8090/svn/trunk/libdap/
   libffcall       http://savannah.gnu.org/projects/libffcall/
@@ -46,6 +51,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   libpreludedb    https://trac.prelude-ids.org/browser/trunk/libpreludedb/
   libtasn1        http://cvs.gnupg.org/cgi-bin/viewcvs.cgi/libtasn1/?root=GNU+TLS+Library
                   http://repo.or.cz/w/libtasn1.git
+  libunistring    http://git.sv.gnu.org/gitweb/?p=libunistring.git
   libvirt         http://libvirt.org/
                   http://git.et.redhat.com/?p=libvirt.git;a=summary
   m4              http://git.sv.gnu.org/gitweb/?p=m4.git;a=summary
@@ -53,8 +59,10 @@ The following packages appear to be using gnulib and gnulib-tool:
   mailutils       http://cvs.sv.gnu.org/viewcvs/mailutils/mailutils/
   man-db          http://www.chiark.greenend.org.uk/~cjwatson/bzr/man-db/trunk/
   miktex          https://svn.sourceforge.net/svnroot/miktex/miktex/trunk
+  mini-httpd      http://git.sv.gnu.org/gitweb/?p=mini-httpd.git
   msmtp           http://msmtp.cvs.sourceforge.net/msmtp/msmtp/
   myserver        http://git.sv.gnu.org/gitweb/?p=myserver.git;a=summary
+  nagios-plugins  http://nagiosplug.git.sourceforge.net/
   netcf           http://fedorahosted.org/netcf/
   newts           http://svn.arete.cc/newts/trunk/
   OATH Toolkit    http://www.nongnu.org/oath-toolkit/
@@ -66,6 +74,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   pspp            http://git.sv.gnu.org/gitweb/?p=pspp.git
   radius          http://cvs.sv.gnu.org/viewcvs/radius/radius/
   recutils        http://git.savannah.gnu.org/gitweb/?p=recutils.git
+  reindeer        http://git.sv.gnu.org/gitweb/?p=reindeer.git
   rcs             http://git.savannah.gnu.org/cgit/rcs.git
   sed             http://cvs.savannah.gnu.org/viewcvs/sed/?root=sed
   sharutils       http://cvs.savannah.gnu.org/viewvc/sharutils/sharutils/
