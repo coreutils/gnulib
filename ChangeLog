@@ -1,3 +1,8 @@
+2011-03-23  Ben Walton  <bwalton@artsci.utoronto.ca>
+
+	doc: update users.txt
+	* users.txt: Add cvsps, tmpwatch
+
 2011-03-23  Matt Rice  <ratmice@gmail.com>
 
 	doc: update users.txt

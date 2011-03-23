@@ -12,6 +12,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   coreutils       http://git.sv.gnu.org/gitweb/?p=coreutils.git
   cpio            http://cvs.sv.gnu.org/viewcvs/cpio/cpio/
   cvs             http://cvs.sv.gnu.org/viewcvs/cvs/ccvs/
+  cvsps           http://sourceforge.net/projects/cvsps/
   diffutils       http://git.sv.gnu.org/cgit/diffutils.git/
   febootstrap     http://people.redhat.com/~rjones/febootstrap/
   findutils       http://cvs.sv.gnu.org/viewcvs/findutils/findutils/
@@ -82,6 +83,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   shishi          http://git.sv.gnu.org/gitweb/?p=shishi.git
   tar             http://cvs.sv.gnu.org/viewcvs/tar/tar/
   texinfo         http://cvs.sv.gnu.org/viewcvs/texinfo/texinfo/
+  tmpwatch        https://fedorahosted.org/tmpwatch/
   vc-dwim         http://git.sv.gnu.org/gitweb/?p=vc-dwim.git
   wget            http://hg.addictivecode.org/wget/mainline/
   wydawca         http://svn.gnu.org.ua/viewvc/wydawca/trunk/
