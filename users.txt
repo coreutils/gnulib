@@ -16,6 +16,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   febootstrap     http://people.redhat.com/~rjones/febootstrap/
   findutils       http://cvs.sv.gnu.org/viewcvs/findutils/findutils/
   gcal            http://git.savannah.gnu.org/gitweb/?p=gcal.git
+  gdb             http://sourceware.org/git/?p=gdb.git;a=summary
   gettext         http://cvs.sv.gnu.org/viewcvs/gettext/gettext/
   gengetopt       http://git.sv.gnu.org/gitweb/?p=gengetopt.git
   gmediaserver    http://cvs.sv.gnu.org/viewvc/gmediaserver/gmediaserver/
