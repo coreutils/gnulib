@@ -33,7 +33,7 @@ GZIP_ENV = '--no-name --best $(gzip_rsyncable)'
 
 GIT = git
 VC = $(GIT)
-VC-tag = git tag -s -m '$(VERSION)' -u '$(gpg_key_ID)'
+VC-tag = git tag -s -m '$(VERSION)' 'v$(VERSION)' -u '$(gpg_key_ID)'
 
 VC_LIST = $(build_aux)/vc-list-files -C $(srcdir)
 

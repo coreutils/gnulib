@@ -1,5 +1,8 @@
 2011-03-25  Reuben Thomas  <rrt@sc3d.org>
 
+	maint.mk: add missing version to VC-tag
+	* top/maint.mk: git tag was missing actual tag name; add it.
+
 	valgrind: do leak checking, and exit with code 1 on error (not 0)
 	* m4/valgrind-tests.m4: Add `--error-exitcode=1 --leak-check=full'
 	to VALGRIND.
