@@ -1,5 +1,9 @@
 2011-03-25  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unictype/category-LC'.
+	* modules/unictype/category-LC-tests: New file.
+	* tests/unictype/test-categ_LC.c: New file, automatically generated.
+
 	New module 'unictype/category-LC'.
 	* lib/unictype.in.h (UC_CATEGORY_MASK_LC): New enumeration value.
 	(UC_CATEGORY_LC): New declaration.
