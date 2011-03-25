@@ -61,6 +61,7 @@ uc_general_category_t;
 enum
 {
   UC_CATEGORY_MASK_L  = 0x0000001f,
+  UC_CATEGORY_MASK_LC = 0x00000007,
   UC_CATEGORY_MASK_Lu = 0x00000001,
   UC_CATEGORY_MASK_Ll = 0x00000002,
   UC_CATEGORY_MASK_Lt = 0x00000004,
@@ -101,6 +102,7 @@ enum
 
 /* Predefined General category values.  */
 extern const uc_general_category_t UC_CATEGORY_L;
+extern const uc_general_category_t UC_CATEGORY_LC;
 extern const uc_general_category_t UC_CATEGORY_Lu;
 extern const uc_general_category_t UC_CATEGORY_Ll;
 extern const uc_general_category_t UC_CATEGORY_Lt;
@@ -142,6 +144,7 @@ extern const uc_general_category_t _UC_CATEGORY_NONE;
 
 /* Alias names for predefined General category values.  */
 #define UC_LETTER                    UC_CATEGORY_L
+#define UC_CASED_LETTER              UC_CATEGORY_LC
 #define UC_UPPERCASE_LETTER          UC_CATEGORY_Lu
 #define UC_LOWERCASE_LETTER          UC_CATEGORY_Ll
 #define UC_TITLECASE_LETTER          UC_CATEGORY_Lt

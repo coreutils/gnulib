@@ -282,6 +282,17 @@ is_category_L (unsigned int ch)
 }
 
 static bool
+is_category_LC (unsigned int ch)
+{
+  /* See PropertyValueAliases.txt.  */
+  return (unicode_attributes[ch].name != NULL
+          && unicode_attributes[ch].category[0] == 'L'
+          && (unicode_attributes[ch].category[1] == 'u'
+              || unicode_attributes[ch].category[1] == 'l'
+              || unicode_attributes[ch].category[1] == 't'));
+}
+
+static bool
 is_category_Lu (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
@@ -805,6 +816,7 @@ output_categories (const char *version)
   output_predicate_test ("../tests/unictype/test-categ_" #C ".c", is_category_ ## C, "uc_is_general_category (c, UC_CATEGORY_" #C ")"); \
   output_predicate ("unictype/categ_" #C ".h", is_category_ ## C, "u_categ_" #C, "Categories", version);
   CATEGORY (L)
+  CATEGORY (LC)
   CATEGORY (Lu)
   CATEGORY (Ll)
   CATEGORY (Lt)
@@ -847,6 +859,7 @@ output_categories (const char *version)
 enum
 {
   UC_CATEGORY_MASK_L  = 0x0000001f,
+  UC_CATEGORY_MASK_LC = 0x00000007,
   UC_CATEGORY_MASK_Lu = 0x00000001,
   UC_CATEGORY_MASK_Ll = 0x00000002,
   UC_CATEGORY_MASK_Lt = 0x00000004,
@@ -896,6 +909,7 @@ general_category_byname (const char *category_name)
         switch (category_name[1])
           {
           case '\0': return UC_CATEGORY_MASK_L;
+          case 'C': return UC_CATEGORY_MASK_LC;
           case 'u': return UC_CATEGORY_MASK_Lu;
           case 'l': return UC_CATEGORY_MASK_Ll;
           case 't': return UC_CATEGORY_MASK_Lt;

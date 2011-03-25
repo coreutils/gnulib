@@ -1,3 +1,21 @@
+2011-03-25  Bruno Haible  <bruno@clisp.org>
+
+	New module 'unictype/category-LC'.
+	* lib/unictype.in.h (UC_CATEGORY_MASK_LC): New enumeration value.
+	(UC_CATEGORY_LC): New declaration.
+	(UC_CASED_LETTER): New macro.
+	* lib/gen-uni-tables.c (is_category_LC): New function.
+	(output_categories): Also handle category LC.
+	(UC_CATEGORY_MASK_LC): New enumeration value.
+	(general_category_byname): Also handle category LC.
+	* lib/unictype/categ_LC.c: New file.
+	* lib/unictype/categ_LC.h: New file, automatically generated.
+	* lib/unictype/categ_name.c (uc_general_category_name): Also handle
+	category LC.
+	* lib/unictype/categ_byname.c (uc_general_category_byname): Likewise.
+	* modules/unictype/category-LC: New file.
+	* modules/unictype/category-all (Depends-on): Add unictype/category-LC.
+
 2011-03-25  Eric Blake  <eblake@redhat.com>
 
 	xmalloc: revert yesterday's regression

@@ -1,5 +1,5 @@
 /* Categories of Unicode characters.
-   Copyright (C) 2002, 2006-2007, 2009-2011 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2006-2007, 2011 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2002.
 
    This program is free software: you can redistribute it and/or modify it
@@ -31,6 +31,7 @@ uc_general_category_byname (const char *category_name)
         switch (category_name[1])
           {
           case '\0': return UC_CATEGORY_L;
+          case 'C': return UC_CATEGORY_LC;
           case 'u': return UC_CATEGORY_Lu;
           case 'l': return UC_CATEGORY_Ll;
           case 't': return UC_CATEGORY_Lt;
