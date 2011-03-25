@@ -18,7 +18,9 @@
 	category LC.
 	* lib/unictype/categ_byname.c (uc_general_category_byname): Likewise.
 	* modules/unictype/category-LC: New file.
-	* modules/unictype/category-all (Depends-on): Add unictype/category-LC.
+	* modules/unictype/category-byname (Depends-on): Add
+	unictype/category-LC.
+	* modules/unictype/category-all (Depends-on): Likewise.
 
 2011-03-25  Eric Blake  <eblake@redhat.com>
 
