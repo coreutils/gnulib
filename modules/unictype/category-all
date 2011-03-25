@@ -45,6 +45,7 @@ unictype/category-Zs
 unictype/category-and
 unictype/category-and-not
 unictype/category-byname
+unictype/category-longname
 unictype/category-name
 unictype/category-of
 unictype/category-or

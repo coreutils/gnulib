@@ -1,5 +1,13 @@
 2011-03-25  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unictype/category-longname'.
+	* lib/unictype.in.h (uc_general_category_long_name): New declaration.
+	* lib/unictype/categ_longname.c: New file.
+	* modules/unictype/category-longname: New file.
+	* modules/unictype/category-all (Depends-on): Add it.
+
+2011-03-25  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'unictype/category-LC'.
 	* modules/unictype/category-LC-tests: New file.
 	* tests/unictype/test-categ_LC.c: New file, automatically generated.
