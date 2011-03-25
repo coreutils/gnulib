@@ -211,7 +211,8 @@ extern const char *
 extern const char *
        uc_general_category_long_name (uc_general_category_t category);
 
-/* Return the general category given by name, e.g. "Lu".  */
+/* Return the general category given by name, e.g. "Lu", or by long name,
+   e.g. "Uppercase Letter".  */
 extern uc_general_category_t
        uc_general_category_byname (const char *category_name);
 

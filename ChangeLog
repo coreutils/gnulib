@@ -1,5 +1,21 @@
 2011-03-25  Bruno Haible  <bruno@clisp.org>
 
+	unictype/category-byname: Recognize long names as well.
+	* lib/unictype.in.h (uc_general_category_byname): Allow argument to be
+	a long name.
+	* lib/unictype/categ_byname.c: Include <stdlib.h>, <string.h>,
+	unictype/categ_byname.h.
+	(UC_CATEGORY_INDEX_*): New enumeration values.
+	(uc_general_category_byname): Use uc_general_category_lookup and
+	convert from index to value.
+	* lib/unictype/categ_byname.gperf: New file.
+	* modules/unictype/category-byname (Files): Add
+	lib/unictype/categ_byname.gperf.
+	(Depends-on): Add gperf.
+	(Makefile.am): Add rule for generating unictype/categ_byname.h.
+	* tests/unictype/test-categ_byname.c (main): Test the recognition of
+	long names.
+
 	Tests for module 'unictype/category-longname'.
 	* modules/unictype/category-longname-tests: New file.
 	* tests/unictype/test-categ_longname.c: New file.
