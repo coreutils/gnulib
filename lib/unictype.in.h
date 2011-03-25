@@ -264,6 +264,10 @@ enum
 extern int
        uc_combining_class (ucs4_t uc);
 
+/* Return the name of a canonical combining class.  */
+extern const char *
+       uc_combining_class_name (int ccc);
+
 /* ========================================================================= */
 
 /* Field 4 of Unicode Character Database: Bidi class.
