@@ -1,3 +1,8 @@
+2010-11-30  Reuben Thomas  <rrt@sc3d.org>
+
+	posix-modules: say what it does.
+	* posix-modules: Add a line to the --help output saying what it does.
+
 2011-03-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	xmalloc: Do not leak if underlying realloc is C99 compatible.
