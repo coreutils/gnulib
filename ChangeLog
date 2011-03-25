@@ -1,5 +1,10 @@
 2011-03-25  Bruno Haible  <bruno@clisp.org>
 
+	unictype: Update list of canonical combining classes.
+	* lib/unictype.in.h (UC_CCC_ATA): New enumeration value.
+
+2011-03-25  Bruno Haible  <bruno@clisp.org>
+
 	unictype/category-byname: Recognize long names as well.
 	* lib/unictype.in.h (uc_general_category_byname): Allow argument to be
 	a long name.

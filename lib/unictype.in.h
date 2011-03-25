@@ -245,6 +245,7 @@ enum
   UC_CCC_VR   =   9, /* Virama */
   UC_CCC_ATBL = 200, /* Attached Below Left */
   UC_CCC_ATB  = 202, /* Attached Below */
+  UC_CCC_ATA  = 214, /* Attached Above */
   UC_CCC_ATAR = 216, /* Attached Above Right */
   UC_CCC_BL   = 218, /* Below Left */
   UC_CCC_B    = 220, /* Below */
