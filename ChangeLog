@@ -1,3 +1,10 @@
+2011-03-25  Eric Blake  <eblake@redhat.com>
+
+	xmalloc: revert yesterday's regression
+	* lib/xmalloc.c (xrealloc): Once again forward xrealloc(NULL,0) to
+	realloc's underlying behavior (allowing allocation of zero-size
+	objects, especially if malloc-gnu is also in use).
+
 2011-03-25  Reuben Thomas  <rrt@sc3d.org>
 
 	maint.mk: add missing version to VC-tag

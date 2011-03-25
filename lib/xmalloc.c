@@ -52,7 +52,7 @@ xmalloc (size_t n)
 void *
 xrealloc (void *p, size_t n)
 {
-  if (!n)
+  if (!n && p)
     {
       /* The GNU and C99 realloc behaviors disagree here.  Act like
          GNU, even if the underlying realloc is C99.  */
@@ -61,7 +61,7 @@ xrealloc (void *p, size_t n)
     }
 
   p = realloc (p, n);
-  if (!p)
+  if (!p && n)
     xalloc_die ();
   return p;
 }
