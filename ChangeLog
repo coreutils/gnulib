@@ -1,5 +1,9 @@
 2011-03-26  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unictype/bidiclass-longname'.
+	* modules/unictype/bidiclass-longname-tests: New file.
+	* tests/unictype/test-bidi_longname.c: New file.
+
 	New module 'unictype/bidiclass-longname'.
 	* lib/unictype.in.h (uc_bidi_class_long_name): New declaration.
 	* lib/unictype/bidi_longname.c: New file.
