@@ -1,5 +1,12 @@
 2011-03-26  Bruno Haible  <bruno@clisp.org>
 
+	unictype/property-byname: Allow omitted word separators and aliases.
+	* lib/unictype/pr_byname.gperf: Add property names without word
+	separators. Add aliases from Unicode 6.0 PropertyAliases.txt, except
+	for 'space'.
+
+2011-03-26  Bruno Haible  <bruno@clisp.org>
+
 	unictype/joininggroup-byname: Allow hyphens, omitted word separators.
 	* lib/unictype/joininggroup_byname.c (uc_joining_group_byname): Convert
 	also hyphens to space.
