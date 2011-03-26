@@ -1,5 +1,19 @@
 2011-03-26  Bruno Haible  <bruno@clisp.org>
 
+	unictype/bidiclass-byname: Recognize long names as well.
+	* lib/unictype.in.h (uc_bidi_class_byname): Allow argument to be a long
+	name.
+	* lib/unictype/bidi_byname.c: Include <string.h>,
+	unictype/bidi_byname.h.
+	(uc_bidi_class_byname): Use uc_bidi_class_lookup.
+	* lib/unictype/bidi_byname.gperf: New file.
+	* modules/unictype/bidiclass-byname (Files): Add
+	lib/unictype/bidi_byname.gperf.
+	(Depends-on): Add gperf.
+	(Makefile.am): Add rule for generating unictype/bidi_byname.h.
+	* tests/unictype/test-bidi_byname.c (main): Test the recognition of
+	long names.
+
 	Tests for module 'unictype/bidiclass-longname'.
 	* modules/unictype/bidiclass-longname-tests: New file.
 	* tests/unictype/test-bidi_longname.c: New file.

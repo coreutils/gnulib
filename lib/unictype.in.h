@@ -316,7 +316,8 @@ extern const char *
 extern const char *
        uc_bidi_class_long_name (int bidi_class);
 
-/* Return the bidi class given by name, e.g. "LRE".  */
+/* Return the bidi class given by name, e.g. "LRE", or by long name, e.g.
+   "Left-to-Right Embedding".  */
 extern int
        uc_bidi_class_byname (const char *bidi_class_name);
 /* Same; obsolete function name.  */

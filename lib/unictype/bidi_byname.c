@@ -20,151 +20,43 @@
 /* Specification.  */
 #include "unictype.h"
 
+#include <string.h>
+
+#include "unictype/bidi_byname.h"
+
 int
 uc_bidi_class_byname (const char *bidi_class_name)
 {
-  switch (bidi_class_name[0])
+  size_t len;
+
+  len = strlen (bidi_class_name);
+  if (len <= MAX_WORD_LENGTH)
     {
-    case 'A':
-      switch (bidi_class_name[1])
-        {
-        case 'L':
-          if (bidi_class_name[2] == '\0')
-            return UC_BIDI_AL;
-          break;
-        case 'N':
-          if (bidi_class_name[2] == '\0')
-            return UC_BIDI_AN;
-          break;
-        }
-      break;
-    case 'B':
-      switch (bidi_class_name[1])
-        {
-        case '\0':
-          return UC_BIDI_B;
-        case 'N':
-          if (bidi_class_name[2] == '\0')
-            return UC_BIDI_BN;
-          break;
-        }
-      break;
-    case 'C':
-      switch (bidi_class_name[1])
-        {
-        case 'S':
-          if (bidi_class_name[2] == '\0')
-            return UC_BIDI_CS;
-          break;
-        }
-      break;
-    case 'E':
-      switch (bidi_class_name[1])
-        {
-        case 'N':
-          if (bidi_class_name[2] == '\0')
-            return UC_BIDI_EN;
-          break;
-        case 'S':
-          if (bidi_class_name[2] == '\0')
-            return UC_BIDI_ES;
-          break;
-        case 'T':
-          if (bidi_class_name[2] == '\0')
-            return UC_BIDI_ET;
-          break;
-        }
-      break;
-    case 'L':
-      switch (bidi_class_name[1])
-        {
-        case '\0':
-          return UC_BIDI_L;
-        case 'R':
-          switch (bidi_class_name[2])
-            {
-            case 'E':
-              if (bidi_class_name[3] == '\0')
-                return UC_BIDI_LRE;
+      char buf[MAX_WORD_LENGTH + 1];
+      const struct named_bidi_class *found;
+
+      /* Copy bidi_class_name into buf, converting '_' and '-' to ' '.  */
+      {
+        const char *p = bidi_class_name;
+        char *q = buf;
+
+        for (;; p++, q++)
+          {
+            char c = *p;
+
+            if (c == '_' || c == '-')
+              c = ' ';
+            *q = c;
+            if (c == '\0')
               break;
-            case 'O':
-              if (bidi_class_name[3] == '\0')
-                return UC_BIDI_LRO;
-              break;
-            }
-          break;
-        }
-      break;
-    case 'N':
-      switch (bidi_class_name[1])
-        {
-        case 'S':
-          switch (bidi_class_name[2])
-            {
-            case 'M':
-              if (bidi_class_name[3] == '\0')
-                return UC_BIDI_NSM;
-              break;
-            }
-          break;
-        }
-      break;
-    case 'O':
-      switch (bidi_class_name[1])
-        {
-        case 'N':
-          if (bidi_class_name[2] == '\0')
-            return UC_BIDI_ON;
-          break;
-        }
-      break;
-    case 'P':
-      switch (bidi_class_name[1])
-        {
-        case 'D':
-          switch (bidi_class_name[2])
-            {
-            case 'F':
-              if (bidi_class_name[3] == '\0')
-                return UC_BIDI_PDF;
-              break;
-            }
-          break;
-        }
-      break;
-    case 'R':
-      switch (bidi_class_name[1])
-        {
-        case '\0':
-          return UC_BIDI_R;
-        case 'L':
-          switch (bidi_class_name[2])
-            {
-            case 'E':
-              if (bidi_class_name[3] == '\0')
-                return UC_BIDI_RLE;
-              break;
-            case 'O':
-              if (bidi_class_name[3] == '\0')
-                return UC_BIDI_RLO;
-              break;
-            }
-          break;
-        }
-      break;
-    case 'S':
-      if (bidi_class_name[1] == '\0')
-        return UC_BIDI_S;
-      break;
-    case 'W':
-      switch (bidi_class_name[1])
-        {
-        case 'S':
-          if (bidi_class_name[2] == '\0')
-            return UC_BIDI_WS;
-          break;
-        }
-      break;
+          }
+      }
+      /* Here q == buf + len.  */
+
+      /* Do a hash table lookup, with case-insensitive comparison.  */
+      found = uc_bidi_class_lookup (buf, len);
+      if (found != NULL)
+        return found->bidi_class;
     }
   /* Invalid bidi class name.  */
   return -1;
