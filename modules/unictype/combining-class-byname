@@ -1,0 +1,35 @@
+Description:
+Find a Unicode character canonical combining class, given its name.
+
+Files:
+lib/unictype/combiningclass_byname.c
+lib/unictype/combiningclass_byname.gperf
+
+Depends-on:
+unictype/base
+gperf
+
+configure.ac:
+gl_LIBUNISTRING_MODULE([0.9.4], [unictype/combining-class-byname])
+
+Makefile.am:
+if LIBUNISTRING_COMPILE_UNICTYPE_COMBINING_CLASS_BYNAME
+lib_SOURCES += unictype/combiningclass_byname.c
+endif
+
+unictype/combiningclass_byname.h: unictype/combiningclass_byname.gperf
+	$(GPERF) -m 10 $(srcdir)/unictype/combiningclass_byname.gperf > $(srcdir)/unictype/combiningclass_byname.h-t
+	mv $(srcdir)/unictype/combiningclass_byname.h-t $(srcdir)/unictype/combiningclass_byname.h
+BUILT_SOURCES        += unictype/combiningclass_byname.h
+MOSTLYCLEANFILES     += unictype/combiningclass_byname.h-t
+MAINTAINERCLEANFILES += unictype/combiningclass_byname.h
+EXTRA_DIST           += unictype/combiningclass_byname.h
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
