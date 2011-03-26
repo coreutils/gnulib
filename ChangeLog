@@ -1,5 +1,15 @@
 2011-03-26  Bruno Haible  <bruno@clisp.org>
 
+	unictype/property-byname: Reduce the number of load-time relocations.
+	* lib/unictype/pr_byname.c: Include <stdlib.h>.
+	(UC_PROPERTY_INDEX_*): New enumeration values.
+	(uc_property_byname): Convert an index from the lookup table to an
+	uc_property_t.
+	* lib/unictype/pr_byname.gperf: Store indices instead of uc_property_t
+	values.
+
+2011-03-26  Bruno Haible  <bruno@clisp.org>
+
 	unictype/property-byname: Allow omitted word separators and aliases.
 	* lib/unictype/pr_byname.gperf: Add property names without word
 	separators. Add aliases from Unicode 6.0 PropertyAliases.txt, except
