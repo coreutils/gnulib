@@ -1,5 +1,38 @@
 2011-03-26  Bruno Haible  <bruno@clisp.org>
 
+	unictype/bidi*: Rename modules.
+	* modules/unictype/bidiclass-all: Renamed from
+	modules/unictype/bidicategory-all.
+	* modules/unictype/bidiclass-name: Renamed from
+	modules/unictype/bidiclass-name.
+	(Description): Update.
+	* modules/unictype/bidiclass-name-tests: Renamed from
+	modules/unictype/bidicategory-name-tests.
+	* modules/unictype/bidiclass-byname: Renamed from
+	modules/unictype/bidicategory-byname.
+	(Description): Update.
+	* modules/unictype/bidiclass-byname-tests: Renamed from
+	modules/unictype/bidicategory-byname-tests.
+	* modules/unictype/bidiclass-of: Renamed from
+	modules/unictype/bidicategory-of.
+	(Description): Update.
+	* modules/unictype/bidiclass-of-tests: Renamed from
+	modules/unictype/bidicategory-of-tests.
+	* modules/unictype/bidiclass-test: Renamed from
+	modules/unictype/bidicategory-test.
+	(Description): Update.
+	* modules/unictype/bidiclass-test-tests: Renamed from
+	modules/unictype/bidicategory-test-tests.
+	* modules/unictype/bidicategory-all: New file, a simple redirection.
+	* modules/unictype/bidicategory-name: Likewise.
+	* modules/unictype/bidicategory-byname: Likewise.
+	* modules/unictype/bidicategory-of: Likewise.
+	* modules/unictype/bidicategory-test: Likewise.
+	* modules/unictype/property-bidi-* (Dependencies): Update.
+	* lib/unictype/bidi_*.c: Update comment.
+
+2011-03-26  Bruno Haible  <bruno@clisp.org>
+
 	unictype/bidi*: Rename functions, part 2.
 	* modules/unictype/bidicategory-name (configure.ac): Update required
 	libunistring version.

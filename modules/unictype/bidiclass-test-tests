@@ -3,7 +3,7 @@ tests/unictype/test-bidi_test.c
 tests/macros.h
 
 Depends-on:
-unictype/bidicategory-of
+unictype/bidiclass-of
 
 configure.ac:
 

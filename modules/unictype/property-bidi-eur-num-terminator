@@ -8,7 +8,7 @@ lib/unictype/bitmap.h
 
 Depends-on:
 unictype/base
-unictype/bidicategory-of
+unictype/bidiclass-of
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])

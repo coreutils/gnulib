@@ -1,4 +1,4 @@
-/* Bidi categories of Unicode characters.
+/* Bidi classes of Unicode characters.
    Copyright (C) 2002, 2006, 2011 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2002.
 

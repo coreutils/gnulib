@@ -1,14 +1,16 @@
 Description:
-Complete API for Unicode character bidi categories.
+Unicode character bidi category functions.
+
+Status:
+obsolete
+
+Notice:
+This module is obsolete. Use the module 'unictype/bidiclass-all' instead.
 
 Files:
 
 Depends-on:
-unictype/base
-unictype/bidicategory-byname
-unictype/bidicategory-name
-unictype/bidicategory-of
-unictype/bidicategory-test
+unictype/bidiclass-all
 
 configure.ac:
 
@@ -22,4 +24,3 @@ LGPL
 
 Maintainer:
 Bruno Haible
-

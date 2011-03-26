@@ -1,16 +1,14 @@
 Description:
-Name of Unicode character bidi category.
-
-Status:
-obsolete
-
-Notice:
-This module is obsolete. Use the module 'unictype/bidiclass-name' instead.
+Complete API for Unicode character bidi categories.
 
 Files:
 
 Depends-on:
+unictype/base
+unictype/bidiclass-byname
 unictype/bidiclass-name
+unictype/bidiclass-of
+unictype/bidiclass-test
 
 configure.ac:
 
