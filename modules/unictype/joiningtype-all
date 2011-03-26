@@ -6,6 +6,7 @@ Files:
 Depends-on:
 unictype/base
 unictype/joiningtype-byname
+unictype/joiningtype-longname
 unictype/joiningtype-name
 unictype/joiningtype-of
 
