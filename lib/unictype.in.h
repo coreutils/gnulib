@@ -312,6 +312,10 @@ extern const char *
 extern const char *
        uc_bidi_category_name (int category);
 
+/* Return the long name of a bidi class.  */
+extern const char *
+       uc_bidi_class_long_name (int bidi_class);
+
 /* Return the bidi class given by name, e.g. "LRE".  */
 extern int
        uc_bidi_class_byname (const char *bidi_class_name);

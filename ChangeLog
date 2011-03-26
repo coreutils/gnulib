@@ -1,5 +1,14 @@
 2011-03-26  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unictype/bidiclass-longname'.
+	* lib/unictype.in.h (uc_bidi_class_long_name): New declaration.
+	* lib/unictype/bidi_longname.c: New file.
+	* modules/unictype/bidiclass-longname: New file.
+	* modules/unictype/bidiclass-all (Depends-on): Add
+	unictype/bidiclass-longname.
+
+2011-03-26  Bruno Haible  <bruno@clisp.org>
+
 	unictype/bidi*: Rename modules.
 	* modules/unictype/bidiclass-all: Renamed from
 	modules/unictype/bidicategory-all.

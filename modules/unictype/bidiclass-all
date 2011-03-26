@@ -6,6 +6,7 @@ Files:
 Depends-on:
 unictype/base
 unictype/bidiclass-byname
+unictype/bidiclass-longname
 unictype/bidiclass-name
 unictype/bidiclass-of
 unictype/bidiclass-test
