@@ -1,5 +1,9 @@
 2011-03-26  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'unictype/joiningtype-longname'.
+	* modules/unictype/joiningtype-longname-tests: New file.
+	* tests/unictype/test-joiningtype_longname.c: New file.
+
 	New module 'unictype/joiningtype-longname'.
 	* lib/unictype.in.h (uc_joiningtype_class_long_name): New declaration.
 	* lib/unictype/joiningtype_longname.c: New file.
