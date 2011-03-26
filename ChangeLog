@@ -1,5 +1,10 @@
 2011-03-25  Bruno Haible  <bruno@clisp.org>
 
+	New module 'unictype/combining-class-longname'.
+	* lib/unictype.in.h (uc_combining_class_long_name): New declaration.
+	* lib/unictype/combiningclass_longname.c: New file.
+	* modules/unictype/combining-class-longname: New file.
+
 	Tests for module 'unictype/combining-class-name'.
 	* modules/unictype/combining-class-name-tests: New file.
 	* tests/unictype/test-combiningclass_name.c: New file.

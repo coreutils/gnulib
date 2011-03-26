@@ -268,6 +268,10 @@ extern int
 extern const char *
        uc_combining_class_name (int ccc);
 
+/* Return the long name of a canonical combining class.  */
+extern const char *
+       uc_combining_class_long_name (int ccc);
+
 /* ========================================================================= */
 
 /* Field 4 of Unicode Character Database: Bidi class.
