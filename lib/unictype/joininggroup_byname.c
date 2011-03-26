@@ -35,7 +35,7 @@ uc_joining_group_byname (const char *joining_group_name)
       char buf[MAX_WORD_LENGTH + 1];
       const struct named_joining_group *found;
 
-      /* Copy joining_group_name into buf, converting '_' to ' '.  */
+      /* Copy joining_group_name into buf, converting '_' and '-' to ' '.  */
       {
         const char *p = joining_group_name;
         char *q = buf;
@@ -44,7 +44,7 @@ uc_joining_group_byname (const char *joining_group_name)
           {
             char c = *p;
 
-            if (c == '_')
+            if (c == '_' || c == '-')
               c = ' ';
             *q = c;
             if (c == '\0')

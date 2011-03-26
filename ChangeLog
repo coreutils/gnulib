@@ -1,5 +1,14 @@
 2011-03-26  Bruno Haible  <bruno@clisp.org>
 
+	unictype/joininggroup-byname: Allow hyphens, omitted word separators.
+	* lib/unictype/joininggroup_byname.c (uc_joining_group_byname): Convert
+	also hyphens to space.
+	* lib/unictype/joininggroup_byname.gperf: Recognize the names also
+	without spaces.
+	* tests/unictype/test-joininggroup_byname.c (main): Add more tests.
+
+2011-03-26  Bruno Haible  <bruno@clisp.org>
+
 	unictype/joiningtype-byname: Recognize long names as well.
 	* lib/unictype.in.h (uc_joiningtype_class_byname): Allow argument to be
 	a long name.
