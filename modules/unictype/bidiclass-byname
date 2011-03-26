@@ -11,7 +11,7 @@ configure.ac:
 gl_LIBUNISTRING_MODULE([0.9.4], [unictype/bidiclass-byname])
 
 Makefile.am:
-if LIBUNISTRING_COMPILE_UNICTYPE_BIDICATEGORY_BYNAME
+if LIBUNISTRING_COMPILE_UNICTYPE_BIDICLASS_BYNAME
 lib_SOURCES += unictype/bidi_byname.c
 endif
 
