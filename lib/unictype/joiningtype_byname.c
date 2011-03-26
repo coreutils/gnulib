@@ -20,25 +20,44 @@
 /* Specification.  */
 #include "unictype.h"
 
+#include <string.h>
+
+#include "unictype/joiningtype_byname.h"
+
 int
 uc_joining_type_byname (const char *joining_type_name)
 {
-  if (joining_type_name[0] != '\0' && joining_type_name[1] == '\0')
-    switch (joining_type_name[0])
+  size_t len;
+
+  len = strlen (joining_type_name);
+  if (len <= MAX_WORD_LENGTH)
+    {
+      char buf[MAX_WORD_LENGTH + 1];
+      const struct named_joining_type *found;
+
+      /* Copy joining_type_name into buf, converting '_' and '-' to ' '.  */
       {
-      case 'C':
-        return UC_JOINING_TYPE_C;
-      case 'D':
-        return UC_JOINING_TYPE_D;
-      case 'L':
-        return UC_JOINING_TYPE_L;
-      case 'R':
-        return UC_JOINING_TYPE_R;
-      case 'T':
-        return UC_JOINING_TYPE_T;
-      case 'U':
-        return UC_JOINING_TYPE_U;
+        const char *p = joining_type_name;
+        char *q = buf;
+
+        for (;; p++, q++)
+          {
+            char c = *p;
+
+            if (c == '_' || c == '-')
+              c = ' ';
+            *q = c;
+            if (c == '\0')
+              break;
+          }
       }
+      /* Here q == buf + len.  */
+
+      /* Do a hash table lookup, with case-insensitive comparison.  */
+      found = uc_joining_type_lookup (buf, len);
+      if (found != NULL)
+        return found->joining_type;
+    }
   /* Invalid joining type name.  */
   return -1;
 }

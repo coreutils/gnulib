@@ -1,5 +1,19 @@
 2011-03-26  Bruno Haible  <bruno@clisp.org>
 
+	unictype/joiningtype-byname: Recognize long names as well.
+	* lib/unictype.in.h (uc_joiningtype_class_byname): Allow argument to be
+	a long name.
+	* lib/unictype/joiningtype_byname.c: Include <string.h>,
+	unictype/joiningtype_byname.h.
+	(uc_joiningtype_class_byname): Use uc_joining_type_lookup.
+	* lib/unictype/joiningtype_byname.gperf: New file.
+	* modules/unictype/joiningtype-byname (Files): Add
+	lib/unictype/joiningtype_byname.gperf.
+	(Depends-on): Add gperf.
+	(Makefile.am): Add rule for generating unictype/joiningtype_byname.h.
+	* tests/unictype/test-joiningtype_byname.c (main): Test the recognition of
+	long names.
+
 	Tests for module 'unictype/joiningtype-longname'.
 	* modules/unictype/joiningtype-longname-tests: New file.
 	* tests/unictype/test-joiningtype_longname.c: New file.

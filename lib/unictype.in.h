@@ -419,7 +419,8 @@ extern const char *
 extern const char *
        uc_joining_type_long_name (int joining_type);
 
-/* Return the joining type given by name, e.g. "D".  */
+/* Return the joining type given by name, e.g. "D", or by long name, e.g.
+   "Dual Joining".  */
 extern int
        uc_joining_type_byname (const char *joining_type_name);
 

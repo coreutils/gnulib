@@ -33,6 +33,30 @@ main ()
   ASSERT (uc_joining_type_byname ("L") == UC_JOINING_TYPE_L);
   ASSERT (uc_joining_type_byname ("R") == UC_JOINING_TYPE_R);
   ASSERT (uc_joining_type_byname ("D") == UC_JOINING_TYPE_D);
+
+  ASSERT (uc_joining_type_byname ("JOIN CAUSING") == UC_JOINING_TYPE_C);
+  ASSERT (uc_joining_type_byname ("Join Causing") == UC_JOINING_TYPE_C);
+  ASSERT (uc_joining_type_byname ("Join_Causing") == UC_JOINING_TYPE_C);
+  ASSERT (uc_joining_type_byname ("JoinCausing") == UC_JOINING_TYPE_C);
+  ASSERT (uc_joining_type_byname ("DUAL JOINING") == UC_JOINING_TYPE_D);
+  ASSERT (uc_joining_type_byname ("Dual Joining") == UC_JOINING_TYPE_D);
+  ASSERT (uc_joining_type_byname ("Dual_Joining") == UC_JOINING_TYPE_D);
+  ASSERT (uc_joining_type_byname ("DualJoining") == UC_JOINING_TYPE_D);
+  ASSERT (uc_joining_type_byname ("LEFT JOINING") == UC_JOINING_TYPE_L);
+  ASSERT (uc_joining_type_byname ("Left Joining") == UC_JOINING_TYPE_L);
+  ASSERT (uc_joining_type_byname ("Left_Joining") == UC_JOINING_TYPE_L);
+  ASSERT (uc_joining_type_byname ("LeftJoining") == UC_JOINING_TYPE_L);
+  ASSERT (uc_joining_type_byname ("RIGHT JOINING") == UC_JOINING_TYPE_R);
+  ASSERT (uc_joining_type_byname ("Right Joining") == UC_JOINING_TYPE_R);
+  ASSERT (uc_joining_type_byname ("Right_Joining") == UC_JOINING_TYPE_R);
+  ASSERT (uc_joining_type_byname ("RightJoining") == UC_JOINING_TYPE_R);
+  ASSERT (uc_joining_type_byname ("TRANSPARENT") == UC_JOINING_TYPE_T);
+  ASSERT (uc_joining_type_byname ("Transparent") == UC_JOINING_TYPE_T);
+  ASSERT (uc_joining_type_byname ("NON JOINING") == UC_JOINING_TYPE_U);
+  ASSERT (uc_joining_type_byname ("Non Joining") == UC_JOINING_TYPE_U);
+  ASSERT (uc_joining_type_byname ("Non_Joining") == UC_JOINING_TYPE_U);
+  ASSERT (uc_joining_type_byname ("NonJoining") == UC_JOINING_TYPE_U);
+
   ASSERT (uc_joining_type_byname ("X") < 0);
   ASSERT (uc_joining_type_byname ("") < 0);
 
