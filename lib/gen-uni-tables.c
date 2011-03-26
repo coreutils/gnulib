@@ -9701,7 +9701,7 @@ main (int argc, char * argv[])
 
   output_categories (version);
   output_category ("unictype/categ_of.h", version);
-  output_combclass ("unictype/combining.h", version);
+  output_combclass ("unictype/combiningclass.h", version);
   output_bidi_category ("unictype/bidi_of.h", version);
   output_decimal_digit_test ("../tests/unictype/test-decdigit.h", version);
   output_decimal_digit ("unictype/decdigit.h", version);

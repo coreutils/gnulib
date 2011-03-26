@@ -21,7 +21,7 @@
 #include "unictype.h"
 
 /* Define u_combclass table.  */
-#include "combining.h"
+#include "combiningclass.h"
 
 int
 uc_combining_class (ucs4_t uc)

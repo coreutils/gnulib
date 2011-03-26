@@ -1,5 +1,5 @@
 Files:
-tests/unictype/test-combining.c
+tests/unictype/test-combiningclass.c
 tests/macros.h
 
 Depends-on:
@@ -7,7 +7,7 @@ Depends-on:
 configure.ac:
 
 Makefile.am:
-TESTS += test-combining
-check_PROGRAMS += test-combining
-test_combining_SOURCES = unictype/test-combining.c
-test_combining_LDADD = $(LDADD) $(LIBUNISTRING)
+TESTS += test-combiningclass
+check_PROGRAMS += test-combiningclass
+test_combiningclass_SOURCES = unictype/test-combiningclass.c
+test_combiningclass_LDADD = $(LDADD) $(LIBUNISTRING)

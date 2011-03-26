@@ -1,5 +1,19 @@
 2011-03-25  Bruno Haible  <bruno@clisp.org>
 
+	unictype/combining-class: Rename source files.
+	* lib/gen-uni-tables.c (main): Emit unictype/combiningclass.h instead
+	of unictype/combining.h.
+	* lib/unictype/combiningclass.c: Renamed from lib/unictype/combining.c.
+	Update.
+	* lib/unictype/combiningclass.h: Renamed from lib/unictype/combining.h.
+	* modules/unictype/combining-class (Description): Fix.
+	(Files, Makefile.am): Update.
+	* tests/unictype/test-combiningclass.c: Renamed from
+	tests/unictype/test-combining.c.
+	* modules/unictype/combining-class-tests (Files, Makefile.am): Update.
+
+2011-03-25  Bruno Haible  <bruno@clisp.org>
+
 	unictype: Update list of canonical combining classes.
 	* lib/unictype.in.h (UC_CCC_ATA): New enumeration value.
 
