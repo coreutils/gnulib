@@ -1,3 +1,8 @@
+2011-03-28  Simon Josefsson  <simon@josefsson.org>
+
+	* doc/posix-functions/getaddrinfo.texi: Drop netdb.h discussion.
+	Reported by Bastien ROUCARIES <roucaries.bastien@gmail.com>.
+
 2011-03-26  Bruno Haible  <bruno@clisp.org>
 
 	unictype/property-byname: Reduce the number of load-time relocations.
