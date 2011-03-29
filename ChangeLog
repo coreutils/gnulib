@@ -1,3 +1,8 @@
+2011-03-29  Simon Josefsson  <simon@josefsson.org>
+
+	lib-symbol-visibility: Add a notice.
+	* modules/lib-symbol-visibility (Notice): New field.
+
 2011-03-29  Bruno Haible  <bruno@clisp.org>
 
 	getaddrinfo: Doc fix.
