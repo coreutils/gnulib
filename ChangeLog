@@ -1,3 +1,49 @@
+2011-03-29  Bruno Haible  <bruno@clisp.org>
+
+	Relicense some modules under LGPLv2+, for libidn2.
+	* modules/array-mergesort (License): Change to LGPLv2+.
+	* modules/c-strcaseeq (License): Likewise.
+	* modules/striconveh (License): Likewise.
+	* modules/striconveha (License): Likewise.
+	* modules/uniconv/base (License): Likewise.
+	* modules/uniconv/u8-conv-from-enc (License): Likewise.
+	* modules/uniconv/u8-strconv-from-enc (License): Likewise.
+	* modules/uniconv/u8-strconv-from-locale (License): Likewise.
+	* modules/unictype/base (License): Likewise.
+	* modules/unictype/bidiclass-of (License): Likewise.
+	* modules/unictype/category-M (License): Likewise.
+	* modules/unictype/category-none (License): Likewise.
+	* modules/unictype/category-of (License): Likewise.
+	* modules/unictype/category-test (License): Likewise.
+	* modules/unictype/category-test-withtable (License): Likewise.
+	* modules/unictype/combining-class (License): Likewise.
+	* modules/unictype/joiningtype-of (License): Likewise.
+	* modules/unictype/scripts (License): Likewise.
+	* modules/uninorm/base (License): Likewise.
+	* modules/uninorm/canonical-decomposition (License): Likewise.
+	* modules/uninorm/composition (License): Likewise.
+	* modules/uninorm/decompose-internal (License): Likewise.
+	* modules/uninorm/decomposition-table (License): Likewise.
+	* modules/uninorm/nfc (License): Likewise.
+	* modules/uninorm/nfd (License): Likewise.
+	* modules/uninorm/u32-normalize (License): Likewise.
+	* modules/unistr/base (License): Likewise.
+	* modules/unistr/u32-cpy (License): Likewise.
+	* modules/unistr/u32-mbtouc-unsafe (License): Likewise.
+	* modules/unistr/u32-to-u8 (License): Likewise.
+	* modules/unistr/u32-uctomb (License): Likewise.
+	* modules/unistr/u8-check (License): Likewise.
+	* modules/unistr/u8-mblen (License): Likewise.
+	* modules/unistr/u8-mbtouc (License): Likewise.
+	* modules/unistr/u8-mbtouc-unsafe (License): Likewise.
+	* modules/unistr/u8-mbtoucr (License): Likewise.
+	* modules/unistr/u8-prev (License): Likewise.
+	* modules/unistr/u8-strlen (License): Likewise.
+	* modules/unistr/u8-to-u32 (License): Likewise.
+	* modules/unistr/u8-uctomb (License): Likewise.
+	* modules/unitypes (License): Likewise.
+	Requested by Simon Josefsson.
+
 2011-03-29  Simon Josefsson  <simon@josefsson.org>
 
 	lib-symbol-visibility: Add a notice.

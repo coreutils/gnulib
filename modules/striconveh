@@ -39,7 +39,7 @@ Link:
 $(LTLIBICONV) when linking with libtool, $(LIBICONV) otherwise
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Bruno Haible
