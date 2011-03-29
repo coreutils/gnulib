@@ -1,3 +1,9 @@
+2011-03-29  Bruno Haible  <bruno@clisp.org>
+
+	getaddrinfo: Doc fix.
+	* doc/posix-functions/getaddrinfo.texi: Mention Windows problem in the
+	section "fixed in Gnulib".
+
 2011-03-28  Simon Josefsson  <simon@josefsson.org>
 
 	* doc/posix-functions/getaddrinfo.texi: Drop netdb.h discussion.
