@@ -3,12 +3,6 @@
 <!--#include virtual="/server/banner.html" -->
 <h2>%%TITLE%%</h2>
 
-<!-- This document is in XML, and xhtml 1.0 -->
-<!-- Please make sure to properly nest your tags -->
-<!-- and ensure that your final document validates -->
-<!-- consistent with W3C xhtml 1.0 and CSS standards -->
-<!-- See validator.w3.org -->
-
 <address>Free Software Foundation</address>
 <address>last updated %%DATE%%</address>
 
