@@ -1,3 +1,9 @@
+2011-03-30  Bruno Haible  <bruno@clisp.org>
+
+	c-strcasestr: Relicense under LGPLv2+.
+	* modules/c-strcasestr (License): Change to LGPLv2+.
+	Requested by Eric Blake, for libvirt.
+
 2011-03-30  Simon Josefsson  <simon@josefsson.org>
 
 	* users.txt: Add libidn2.  Fix libtasn1 link.
