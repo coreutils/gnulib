@@ -1,5 +1,12 @@
 2011-03-30  Eric Blake  <eblake@redhat.com>
 
+	passfd: standardize coding conventions
+	* m4/afunix.m4 (gl_SOCKET_AFUNIX): Drop check for something that
+	can be learned at compile time.
+	* lib/passfd.c (MSG_CMSG_CLOEXEC): Reduce number of in-function
+	ifdefs.
+	(passfd, recvfd): Follow gnulib code conventions.
+
 	passfd: fix incorrect sendmsg arguments
 	* lib/passfd.c (sendfd): Avoid uninitialized msg_flags field, and
 	incorrect msg_controllen value.

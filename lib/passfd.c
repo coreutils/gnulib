@@ -34,6 +34,10 @@
 
 #include "cloexec.h"
 
+#ifndef MSG_CMSG_CLOEXEC
+# define MSG_CMSG_CLOEXEC 0
+#endif
+
 /* sendfd sends the file descriptor fd along the socket
    to a process calling recvfd on the other end.
 
@@ -43,41 +47,41 @@ int
 sendfd (int sock, int fd)
 {
   char send = 0;
-  struct iovec iov[1];
+  struct iovec iov;
   struct msghdr msg;
 
   /* send at least one char */
   memset (&msg, 0, sizeof msg);
-  iov[0].iov_base = &send;
-  iov[0].iov_len = 1;
-  msg.msg_iov = iov;
+  iov.iov_base = &send;
+  iov.iov_len = 1;
+  msg.msg_iov = &iov;
   msg.msg_iovlen = 1;
-  msg.msg_name = 0;
+  msg.msg_name = NULL;
   msg.msg_namelen = 0;
 
   {
 #if HAVE_UNIXSOCKET_SCM_RIGHTS_BSD44_WAY
     struct cmsghdr *cmsg;
-    char buf[CMSG_SPACE (sizeof (fd))];
+    char buf[CMSG_SPACE (sizeof fd)];
 
     msg.msg_control = buf;
-    msg.msg_controllen = sizeof (buf);
+    msg.msg_controllen = sizeof buf;
     cmsg = CMSG_FIRSTHDR (&msg);
     cmsg->cmsg_level = SOL_SOCKET;
     cmsg->cmsg_type = SCM_RIGHTS;
-    cmsg->cmsg_len = CMSG_LEN (sizeof (int));
+    cmsg->cmsg_len = CMSG_LEN (sizeof fd);
     /* Initialize the payload: */
-    memcpy (CMSG_DATA (cmsg), &fd, sizeof (fd));
+    memcpy (CMSG_DATA (cmsg), &fd, sizeof fd);
 #elif HAVE_UNIXSOCKET_SCM_RIGHTS_BSD43_WAY
     msg.msg_accrights = &fd;
-    msg.msg_accrightslen = sizeof (fd);
+    msg.msg_accrightslen = sizeof fd;
 #else
     errno = ENOSYS;
     return -1;
 #endif
   }
 
-  if (sendmsg (sock, &msg, 0) != iov[0].iov_len)
+  if (sendmsg (sock, &msg, 0) != iov.iov_len)
     return -1;
   return 0;
 }
@@ -91,7 +95,7 @@ int
 recvfd (int sock, int flags)
 {
   char recv = 0;
-  struct iovec iov[1];
+  struct iovec iov;
   struct msghdr msg;
 
   if ((flags & ~O_CLOEXEC) != 0)
@@ -101,33 +105,29 @@ recvfd (int sock, int flags)
     }
 
   /* send at least one char */
-  iov[0].iov_base = &recv;
-  iov[0].iov_len = 1;
-  msg.msg_iov = iov;
+  iov.iov_base = &recv;
+  iov.iov_len = 1;
+  msg.msg_iov = &iov;
   msg.msg_iovlen = 1;
-  msg.msg_name = 0;
+  msg.msg_name = NULL;
   msg.msg_namelen = 0;
 
   {
 #if HAVE_UNIXSOCKET_SCM_RIGHTS_BSD44_WAY
     int fd;
     struct cmsghdr *cmsg;
-    char buf[CMSG_SPACE (sizeof (fd))];
+    char buf[CMSG_SPACE (sizeof fd)];
     const int mone = -1;
-# if HAVE_MSG_CMSG_CLOEXEC
-    int flags_recvmsg = (flags & O_CLOEXEC ? MSG_CMSG_CLOEXEC : 0);
-# else
-    int flags_recvmsg = 0;
-# endif
+    int flags_recvmsg = flags & O_CLOEXEC ? MSG_CMSG_CLOEXEC : 0;
 
     msg.msg_control = buf;
-    msg.msg_controllen = sizeof (buf);
+    msg.msg_controllen = sizeof buf;
     cmsg = CMSG_FIRSTHDR (&msg);
     cmsg->cmsg_level = SOL_SOCKET;
     cmsg->cmsg_type = SCM_RIGHTS;
-    cmsg->cmsg_len = CMSG_LEN (sizeof (int));
+    cmsg->cmsg_len = CMSG_LEN (sizeof mone);
     /* Initialize the payload: */
-    memcpy (CMSG_DATA (cmsg), &mone, sizeof (mone));
+    memcpy (CMSG_DATA (cmsg), &mone, sizeof mone);
     msg.msg_controllen = cmsg->cmsg_len;
 
     if (recvmsg (sock, &msg, flags_recvmsg) < 0)
@@ -135,7 +135,7 @@ recvfd (int sock, int flags)
 
     cmsg = CMSG_FIRSTHDR (&msg);
     /* be paranoiac */
-    if (cmsg == NULL || cmsg->cmsg_len != CMSG_LEN (sizeof (int))
+    if (cmsg == NULL || cmsg->cmsg_len != CMSG_LEN (sizeof fd)
         || cmsg->cmsg_level != SOL_SOCKET || cmsg->cmsg_type != SCM_RIGHTS)
       {
         /* fake errno: at end the file is not available */
@@ -143,11 +143,10 @@ recvfd (int sock, int flags)
         return -1;
       }
 
-    memcpy (&fd, CMSG_DATA (cmsg), sizeof (fd));
+    memcpy (&fd, CMSG_DATA (cmsg), sizeof fd);
 
-# if !HAVE_MSG_CMSG_CLOEXEC
     /* set close-on-exec flag */
-    if (flags & O_CLOEXEC)
+    if (!MSG_CMSG_CLOEXEC && (flags & O_CLOEXEC))
       {
         if (set_cloexec_flag (fd, true) < 0)
           {
@@ -157,7 +156,6 @@ recvfd (int sock, int flags)
             return -1;
           }
       }
-# endif
 
     return fd;
 
@@ -165,7 +163,7 @@ recvfd (int sock, int flags)
     int fd;
 
     msg.msg_accrights = &fd;
-    msg.msg_accrightslen = sizeof (fd);
+    msg.msg_accrightslen = sizeof fd;
     if (recvmsg (sock, &msg, 0) < 0)
       return -1;
 
@@ -175,7 +173,7 @@ recvfd (int sock, int flags)
         if (set_cloexec_flag (fd, true) < 0)
           {
             int saved_errno = errno;
-            (void) close (fd);
+            close (fd);
             errno = saved_errno;
             return -1;
           }
