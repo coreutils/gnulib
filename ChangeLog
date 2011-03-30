@@ -1,3 +1,7 @@
+2011-03-30  Simon Josefsson  <simon@josefsson.org>
+
+	* users.txt: Add libidn2.  Fix libtasn1 link.
+
 2011-03-30  Jim Meyering  <meyering@redhat.com>
 
 	tests: readlink* ("",... fails with EINVAL on newer kernels

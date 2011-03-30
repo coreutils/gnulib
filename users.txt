@@ -47,12 +47,12 @@ The following packages appear to be using gnulib and gnulib-tool:
   libguestfs      http://libguestfs.org/
   libiconv        http://libiconv.cvs.sourceforge.net/libiconv/libiconv/
   libidn          http://git.sv.gnu.org/gitweb/?p=libidn.git
+  libidn2         http://josefsson.org/libidn2/
   libksba         http://cvs.gnupg.org/cgi-bin/viewcvs.cgi/trunk/?root=KSBA
   libntlm         http://git.josefsson.org/?p=libntlm.git;a=summary
   libprelude      https://trac.prelude-ids.org/browser/trunk/libprelude/
   libpreludedb    https://trac.prelude-ids.org/browser/trunk/libpreludedb/
-  libtasn1        http://cvs.gnupg.org/cgi-bin/viewcvs.cgi/libtasn1/?root=GNU+TLS+Library
-                  http://repo.or.cz/w/libtasn1.git
+  libtasn1        http://git.savannah.gnu.org/gitweb/?p=libtasn1.git
   libunistring    http://git.sv.gnu.org/gitweb/?p=libunistring.git
   libvirt         http://libvirt.org/
                   http://git.et.redhat.com/?p=libvirt.git;a=summary
