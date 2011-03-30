@@ -1,3 +1,13 @@
+2011-03-30  Jim Meyering  <meyering@redhat.com>
+
+	tests: readlink* ("",... fails with EINVAL on newer kernels
+	readlink and readlinkat have typically failed with ENOENT for
+	the invalid, empty file name,  "".  However, with the advent
+	of linux-2.6.39, they fail with EINVAL.
+	* tests/test-areadlink.h (test_areadlink): Also accept EINVAL
+	when operating on the empty file name.
+	* tests/test-readlink.h (test_readlink): Likewise.
+
 2011-03-29  Bruno Haible  <bruno@clisp.org>
 
 	Relicense some modules under LGPLv2+, for libidn2.
