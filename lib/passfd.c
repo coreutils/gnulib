@@ -47,6 +47,7 @@ sendfd (int sock, int fd)
   struct msghdr msg;
 
   /* send at least one char */
+  memset (&msg, 0, sizeof msg);
   iov[0].iov_base = &send;
   iov[0].iov_len = 1;
   msg.msg_iov = iov;
@@ -67,7 +68,6 @@ sendfd (int sock, int fd)
     cmsg->cmsg_len = CMSG_LEN (sizeof (int));
     /* Initialize the payload: */
     memcpy (CMSG_DATA (cmsg), &fd, sizeof (fd));
-    msg.msg_controllen = cmsg->cmsg_len;
 #elif HAVE_UNIXSOCKET_SCM_RIGHTS_BSD43_WAY
     msg.msg_accrights = &fd;
     msg.msg_accrightslen = sizeof (fd);

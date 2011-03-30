@@ -1,3 +1,12 @@
+2011-03-30  Eric Blake  <eblake@redhat.com>
+
+	passfd: fix incorrect sendmsg arguments
+	* lib/passfd.c (sendfd): Avoid uninitialized msg_flags field, and
+	incorrect msg_controllen value.
+	* modules/passfd-tests (Depends-on): Check for alarm.
+	* tests/test-passfd.c (main) [HAVE_DECL_ALARM]: Avoid hanging test.
+	Reported by Bastien ROUCARIES.
+
 2011-03-30  Bruno Haible  <bruno@clisp.org>
 
 	c-strcasestr: Relicense under LGPLv2+.

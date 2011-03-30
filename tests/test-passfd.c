@@ -19,6 +19,7 @@
 #include "passfd.h"
 
 #include <fcntl.h>
+#include <signal.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -39,6 +40,12 @@ main ()
   int fdnull;
   int fd;
   struct stat st;
+
+#if HAVE_DECL_ALARM
+  /* Avoid hanging on failure.  */
+  signal (SIGALRM, SIG_DFL);
+  alarm (5);
+#endif
 
   fdnull = open ("/dev/null", O_RDWR);
   if (fdnull < 0)
