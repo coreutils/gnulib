@@ -24,6 +24,7 @@
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 /* Native Woe32 API.  */
 
+# include <sys/ioctl.h>
 # include <sys/socket.h>
 # include <unistd.h>
 
@@ -35,6 +36,11 @@ int
 get_nonblocking_flag (int desc)
 {
   HANDLE h = (HANDLE) _get_osfhandle (desc);
+  if (h == INVALID_HANDLE_VALUE)
+    {
+      errno = EBADF;
+      return -1;
+    }
   if (GetFileType (h) == FILE_TYPE_PIPE)
     {
       /* h is a pipe or socket.  */
@@ -56,6 +62,11 @@ int
 set_nonblocking_flag (int desc, bool value)
 {
   HANDLE h = (HANDLE) _get_osfhandle (desc);
+  if (h == INVALID_HANDLE_VALUE)
+    {
+      errno = EBADF;
+      return -1;
+    }
   if (GetFileType (h) == FILE_TYPE_PIPE)
     {
       /* h is a pipe or socket.  */
@@ -90,6 +101,8 @@ set_nonblocking_flag (int desc, bool value)
   else
     {
       /* Win32 does not support non-blocking on regular files.  */
+      if (!value)
+        return 0;
       errno = ENOTSUP;
       return -1;
     }

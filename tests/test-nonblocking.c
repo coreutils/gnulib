@@ -55,11 +55,14 @@ main (void)
 
   /* Test directories; setting nonblocking is unspecified.  */
   fd_file = open (".", O_RDONLY);
-  ASSERT (STDERR_FILENO < fd_file);
-  ASSERT (get_nonblocking_flag (fd_file) == 0);
-  ASSERT (set_nonblocking_flag (fd_file, false) == 0);
-  ASSERT (get_nonblocking_flag (fd_file) == 0);
-  ASSERT (close (fd_file) == 0);
+  if (STDERR_FILENO < fd_file)
+    {
+      /* mingw can't open directories unless fchdir module is active.  */
+      ASSERT (get_nonblocking_flag (fd_file) == 0);
+      ASSERT (set_nonblocking_flag (fd_file, false) == 0);
+      ASSERT (get_nonblocking_flag (fd_file) == 0);
+      ASSERT (close (fd_file) == 0);
+    }
 
   /* Test pipes.  */
   ASSERT (pipe (fd_pipe) == 0);
