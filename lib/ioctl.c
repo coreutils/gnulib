@@ -63,6 +63,10 @@ ioctl (int fd, int req, ...)
   buf = va_arg (args, void *);
   va_end (args);
 
+  /* We don't support FIONBIO on pipes here.  If you want to make pipe
+     fds non-blocking, use the gnulib 'nonblocking' module, until
+     gnulib implements fcntl F_GETFL / F_SETFL with O_NONBLOCK.  */
+
   sock = FD_TO_SOCKET (fd);
   r = ioctlsocket (sock, req, buf);
   if (r < 0)

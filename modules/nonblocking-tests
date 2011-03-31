@@ -1,0 +1,16 @@
+Files:
+tests/test-nonblocking.c
+tests/macros.h
+
+Depends-on:
+close
+open
+pipe-posix
+socket
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-nonblocking
+check_PROGRAMS += test-nonblocking
+test_nonblocking_LDADD = $(LDADD) @LIBSOCKET@
