@@ -1,4 +1,11 @@
 2011-03-31  Bruno Haible  <bruno@clisp.org>
+
+	Fix bug with gl_WARN_ON_USE_PREPARE, introduced on 2011-01-23.
+	* m4/gnulib-common.m4 (gl_ASSERT_NO_GNULIB_POSIXCHECK): Hide the
+	gl_WARN_ON_USE_PREPARE definition from 'aclocal'.
+	Reported by Simon Josefsson <simon@josefsson.org>.
+
+2011-03-31  Bruno Haible  <bruno@clisp.org>
 	and Eric Blake  <eblake@redhat.com>
 
 	nonblocking: new module
@@ -2629,7 +2636,7 @@
 
 2011-01-23  Paul Eggert  <eggert@cs.ucla.edu>
 
-	Allow the user to avoid the GNULIB_TEST_* macros.
+	Allow the user to avoid the HAVE_RAW_DECL_* macros.
 	* m4/gnulib-common.m4 (gl_ASSERT_NO_GNULIB_POSIXCHECK): New macro.
 
 2011-01-23  Bruno Haible  <bruno@clisp.org>
