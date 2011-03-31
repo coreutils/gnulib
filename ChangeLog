@@ -12,7 +12,7 @@
 2011-03-30  Eric Blake  <eblake@redhat.com>
 
 	passfd: fix scoping bug
-	* lib/passfd.c (sendfd, passfd): Don't let buf go out of scope
+	* lib/passfd.c (sendfd, recvfd): Don't let buf go out of scope
 	before sendmsg/recvmsg.
 
 	passfd: standardize coding conventions
@@ -20,7 +20,7 @@
 	can be learned at compile time.
 	* lib/passfd.c (MSG_CMSG_CLOEXEC): Reduce number of in-function
 	ifdefs.
-	(passfd, recvfd): Follow gnulib code conventions.
+	(sendfd, recvfd): Follow gnulib code conventions.
 
 	passfd: fix incorrect sendmsg arguments
 	* lib/passfd.c (sendfd): Avoid uninitialized msg_flags field, and
