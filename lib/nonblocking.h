@@ -26,8 +26,9 @@
    - A write() call returns -1 with errno set to EAGAIN when it cannot
      transport the requested amount of data (but at most one pipe buffer)
      without blocking.
-   Non-blocking I/O is most useful for character devices.  Whether it
-   also works on regular files and block devices is platform dependent.
+   Non-blocking I/O is most useful for character devices, pipes, and sockets.
+   Whether it also works on regular files and block devices is platform
+   dependent.
 
    There are three modern alternatives to non-blocking I/O:
      - use select() or poll() followed by read() or write() if the descriptor
