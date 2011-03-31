@@ -1,3 +1,14 @@
+2011-03-30  Bruno Haible  <bruno@clisp.org>
+
+	stdio: Avoid GCC >= 4.4 warnings when using %lld and similar on mingw.
+	* lib/stdio.in.h (_GL_ATTRIBUTE_FORMAT_PRINTF): Use 'gnu_printf' format
+	instead of 'printf' format for GCC >= 4.4.
+	(_GL_ATTRIBUTE_FORMAT_PRINTF_SYSTEM): New macro.
+	(fprintf, printf, vfprintf, vprintf): Declare with
+	_GL_ATTRIBUTE_FORMAT_PRINTF_SYSTEM when the function ends up calling
+	the system's vfprintf() function.
+	Reported by Daniel P. Berrange <berrange@redhat.com> via Eric Blake.
+
 2011-03-30  Eric Blake  <eblake@redhat.com>
 
 	passfd: fix scoping bug
