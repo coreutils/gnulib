@@ -49,6 +49,10 @@ sendfd (int sock, int fd)
   char send = 0;
   struct iovec iov;
   struct msghdr msg;
+#if HAVE_UNIXSOCKET_SCM_RIGHTS_BSD44_WAY
+  struct cmsghdr *cmsg;
+  char buf[CMSG_SPACE (sizeof fd)];
+#endif
 
   /* send at least one char */
   memset (&msg, 0, sizeof msg);
@@ -59,27 +63,22 @@ sendfd (int sock, int fd)
   msg.msg_name = NULL;
   msg.msg_namelen = 0;
 
-  {
 #if HAVE_UNIXSOCKET_SCM_RIGHTS_BSD44_WAY
-    struct cmsghdr *cmsg;
-    char buf[CMSG_SPACE (sizeof fd)];
-
-    msg.msg_control = buf;
-    msg.msg_controllen = sizeof buf;
-    cmsg = CMSG_FIRSTHDR (&msg);
-    cmsg->cmsg_level = SOL_SOCKET;
-    cmsg->cmsg_type = SCM_RIGHTS;
-    cmsg->cmsg_len = CMSG_LEN (sizeof fd);
-    /* Initialize the payload: */
-    memcpy (CMSG_DATA (cmsg), &fd, sizeof fd);
+  msg.msg_control = buf;
+  msg.msg_controllen = sizeof buf;
+  cmsg = CMSG_FIRSTHDR (&msg);
+  cmsg->cmsg_level = SOL_SOCKET;
+  cmsg->cmsg_type = SCM_RIGHTS;
+  cmsg->cmsg_len = CMSG_LEN (sizeof fd);
+  /* Initialize the payload: */
+  memcpy (CMSG_DATA (cmsg), &fd, sizeof fd);
 #elif HAVE_UNIXSOCKET_SCM_RIGHTS_BSD43_WAY
-    msg.msg_accrights = &fd;
-    msg.msg_accrightslen = sizeof fd;
+  msg.msg_accrights = &fd;
+  msg.msg_accrightslen = sizeof fd;
 #else
-    errno = ENOSYS;
-    return -1;
+  errno = ENOSYS;
+  return -1;
 #endif
-  }
 
   if (sendmsg (sock, &msg, 0) != iov.iov_len)
     return -1;
@@ -97,6 +96,12 @@ recvfd (int sock, int flags)
   char recv = 0;
   struct iovec iov;
   struct msghdr msg;
+  int fd = -1;
+#if HAVE_UNIXSOCKET_SCM_RIGHTS_BSD44_WAY
+  struct cmsghdr *cmsg;
+  char buf[CMSG_SPACE (sizeof fd)];
+  int flags_recvmsg = flags & O_CLOEXEC ? MSG_CMSG_CLOEXEC : 0;
+#endif
 
   if ((flags & ~O_CLOEXEC) != 0)
     {
@@ -105,6 +110,7 @@ recvfd (int sock, int flags)
     }
 
   /* send at least one char */
+  memset (&msg, 0, sizeof msg);
   iov.iov_base = &recv;
   iov.iov_len = 1;
   msg.msg_iov = &iov;
@@ -112,78 +118,64 @@ recvfd (int sock, int flags)
   msg.msg_name = NULL;
   msg.msg_namelen = 0;
 
-  {
 #if HAVE_UNIXSOCKET_SCM_RIGHTS_BSD44_WAY
-    int fd;
-    struct cmsghdr *cmsg;
-    char buf[CMSG_SPACE (sizeof fd)];
-    const int mone = -1;
-    int flags_recvmsg = flags & O_CLOEXEC ? MSG_CMSG_CLOEXEC : 0;
+  msg.msg_control = buf;
+  msg.msg_controllen = sizeof buf;
+  cmsg = CMSG_FIRSTHDR (&msg);
+  cmsg->cmsg_level = SOL_SOCKET;
+  cmsg->cmsg_type = SCM_RIGHTS;
+  cmsg->cmsg_len = CMSG_LEN (sizeof fd);
+  /* Initialize the payload: */
+  memcpy (CMSG_DATA (cmsg), &fd, sizeof fd);
+  msg.msg_controllen = cmsg->cmsg_len;
 
-    msg.msg_control = buf;
-    msg.msg_controllen = sizeof buf;
-    cmsg = CMSG_FIRSTHDR (&msg);
-    cmsg->cmsg_level = SOL_SOCKET;
-    cmsg->cmsg_type = SCM_RIGHTS;
-    cmsg->cmsg_len = CMSG_LEN (sizeof mone);
-    /* Initialize the payload: */
-    memcpy (CMSG_DATA (cmsg), &mone, sizeof mone);
-    msg.msg_controllen = cmsg->cmsg_len;
+  if (recvmsg (sock, &msg, flags_recvmsg) < 0)
+    return -1;
 
-    if (recvmsg (sock, &msg, flags_recvmsg) < 0)
+  cmsg = CMSG_FIRSTHDR (&msg);
+  /* be paranoiac */
+  if (cmsg == NULL || cmsg->cmsg_len != CMSG_LEN (sizeof fd)
+      || cmsg->cmsg_level != SOL_SOCKET || cmsg->cmsg_type != SCM_RIGHTS)
+    {
+      /* fake errno: at end the file is not available */
+      errno = EACCES;
       return -1;
+    }
 
-    cmsg = CMSG_FIRSTHDR (&msg);
-    /* be paranoiac */
-    if (cmsg == NULL || cmsg->cmsg_len != CMSG_LEN (sizeof fd)
-        || cmsg->cmsg_level != SOL_SOCKET || cmsg->cmsg_type != SCM_RIGHTS)
-      {
-        /* fake errno: at end the file is not available */
-        errno = EACCES;
-        return -1;
-      }
+  memcpy (&fd, CMSG_DATA (cmsg), sizeof fd);
 
-    memcpy (&fd, CMSG_DATA (cmsg), sizeof fd);
-
-    /* set close-on-exec flag */
-    if (!MSG_CMSG_CLOEXEC && (flags & O_CLOEXEC))
-      {
-        if (set_cloexec_flag (fd, true) < 0)
-          {
-            int saved_errno = errno;
-            (void) close (fd);
-            errno = saved_errno;
-            return -1;
-          }
-      }
-
-    return fd;
+  /* set close-on-exec flag */
+  if (!MSG_CMSG_CLOEXEC && (flags & O_CLOEXEC))
+    {
+      if (set_cloexec_flag (fd, true) < 0)
+        {
+          int saved_errno = errno;
+          (void) close (fd);
+          errno = saved_errno;
+          return -1;
+        }
+    }
 
 #elif HAVE_UNIXSOCKET_SCM_RIGHTS_BSD43_WAY
-    int fd;
-
-    msg.msg_accrights = &fd;
-    msg.msg_accrightslen = sizeof fd;
-    if (recvmsg (sock, &msg, 0) < 0)
-      return -1;
-
-    /* set close-on-exec flag */
-    if (flags & O_CLOEXEC)
-      {
-        if (set_cloexec_flag (fd, true) < 0)
-          {
-            int saved_errno = errno;
-            close (fd);
-            errno = saved_errno;
-            return -1;
-          }
-      }
-
-    return fd;
-
-#else
-    errno = ENOSYS;
+  msg.msg_accrights = &fd;
+  msg.msg_accrightslen = sizeof fd;
+  if (recvmsg (sock, &msg, 0) < 0)
     return -1;
+
+  /* set close-on-exec flag */
+  if (flags & O_CLOEXEC)
+    {
+      if (set_cloexec_flag (fd, true) < 0)
+        {
+          int saved_errno = errno;
+          close (fd);
+          errno = saved_errno;
+          return -1;
+        }
+    }
+#else
+  errno = ENOSYS;
 #endif
-  }
+
+  return fd;
 }

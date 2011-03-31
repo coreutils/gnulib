@@ -1,5 +1,9 @@
 2011-03-30  Eric Blake  <eblake@redhat.com>
 
+	passfd: fix scoping bug
+	* lib/passfd.c (sendfd, passfd): Don't let buf go out of scope
+	before sendmsg/recvmsg.
+
 	passfd: standardize coding conventions
 	* m4/afunix.m4 (gl_SOCKET_AFUNIX): Drop check for something that
 	can be learned at compile time.
