@@ -1,4 +1,4 @@
-# setenv.m4 serial 20
+# setenv.m4 serial 21
 dnl Copyright (C) 2001-2004, 2006-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -97,20 +97,30 @@ int unsetenv();
     fi
 
     dnl Solaris 10 unsetenv does not remove all copies of a name.
+    dnl Haiku alpha 2 unsetenv gets confused by assignment to environ.
     dnl OpenBSD 4.7 unsetenv("") does not fail.
     AC_CACHE_CHECK([whether unsetenv obeys POSIX],
       [gl_cv_func_unsetenv_works],
       [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
        #include <stdlib.h>
        #include <errno.h>
+       extern char **environ;
       ]], [[
-       char entry[] = "b=2";
+       char entry1[] = "a=1";
+       char entry2[] = "b=2";
+       char *env[] = { entry1, entry2, NULL };
        if (putenv ((char *) "a=1")) return 1;
-       if (putenv (entry)) return 2;
-       entry[0] = 'a';
+       if (putenv (entry2)) return 2;
+       entry2[0] = 'a';
        unsetenv ("a");
        if (getenv ("a")) return 3;
        if (!unsetenv ("") || errno != EINVAL) return 4;
+       entry2[0] = 'b';
+       environ = env;
+       if (!getenv ("a")) return 5;
+       entry2[0] = 'a';
+       unsetenv ("a");
+       if (getenv ("a")) return 6;
       ]])],
       [gl_cv_func_unsetenv_works=yes], [gl_cv_func_unsetenv_works=no],
       [gl_cv_func_unsetenv_works="guessing no"])])

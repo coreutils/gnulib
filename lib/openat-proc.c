@@ -30,7 +30,6 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "dirname.h"
 #include "intprops.h"
 #include "same-inode.h"
 

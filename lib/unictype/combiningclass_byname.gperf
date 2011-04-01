@@ -1,0 +1,66 @@
+/* Categories of Unicode characters.  */
+struct named_combining_class { int name; int combining_class; };
+%struct-type
+%ignore-case
+%language=ANSI-C
+%define hash-function-name combining_class_hash
+%define lookup-function-name uc_combining_class_lookup
+%readonly-tables
+%global-table
+%define word-array-name combining_class_names
+%pic
+%define string-pool-name combining_class_stringpool
+%%
+NR, UC_CCC_NR
+OV, UC_CCC_OV
+NK, UC_CCC_NK
+KV, UC_CCC_KV
+VR, UC_CCC_VR
+ATBL, UC_CCC_ATBL
+ATB, UC_CCC_ATB
+ATA, UC_CCC_ATA
+ATAR, UC_CCC_ATAR
+BL, UC_CCC_BL
+B, UC_CCC_B
+BR, UC_CCC_BR
+L, UC_CCC_L
+R, UC_CCC_R
+AL, UC_CCC_AL
+A, UC_CCC_A
+AR, UC_CCC_AR
+DB, UC_CCC_DB
+DA, UC_CCC_DA
+IS, UC_CCC_IS
+Not Reordered, UC_CCC_NR
+NotReordered, UC_CCC_NR
+Overlay, UC_CCC_OV
+Nukta, UC_CCC_NK
+Kana Voicing, UC_CCC_KV
+KanaVoicing, UC_CCC_KV
+Virama, UC_CCC_VR
+Attached Below Left, UC_CCC_ATBL
+AttachedBelowLeft, UC_CCC_ATBL
+Attached Below, UC_CCC_ATB
+AttachedBelow, UC_CCC_ATB
+Attached Above, UC_CCC_ATA
+AttachedAbove, UC_CCC_ATA
+Attached Above Right, UC_CCC_ATAR
+AttachedAboveRight, UC_CCC_ATAR
+Below Left, UC_CCC_BL
+BelowLeft, UC_CCC_BL
+Below, UC_CCC_B
+Below Right, UC_CCC_BR
+BelowRight, UC_CCC_BR
+Left, UC_CCC_L
+Right, UC_CCC_R
+Above Left, UC_CCC_AL
+AboveLeft, UC_CCC_AL
+Above, UC_CCC_A
+Above Right, UC_CCC_AR
+AboveRight, UC_CCC_AR
+Double Below, UC_CCC_DB
+DoubleBelow, UC_CCC_DB
+Double Above, UC_CCC_DA
+DoubleAbove, UC_CCC_DA
+Iota Subscript, UC_CCC_IS
+IotaSubscript, UC_CCC_IS

@@ -162,5 +162,93 @@ main ()
     free (haystack);
   }
 
+  {
+    /* Ensure that with a barely periodic "short" needle, strcasestr's
+       search does not mistakenly skip just past the match point.
+       This use of strcasestr would mistakenly return NULL before
+       gnulib v0.0-4927.  */
+    const char *haystack =
+      "\n"
+      "with_build_libsubdir\n"
+      "with_local_prefix\n"
+      "with_gxx_include_dir\n"
+      "with_cpp_install_dir\n"
+      "enable_generated_files_in_srcdir\n"
+      "with_gnu_ld\n"
+      "with_ld\n"
+      "with_demangler_in_ld\n"
+      "with_gnu_as\n"
+      "with_as\n"
+      "enable_largefile\n"
+      "enable_werror_always\n"
+      "enable_checking\n"
+      "enable_coverage\n"
+      "enable_gather_detailed_mem_stats\n"
+      "enable_build_with_cxx\n"
+      "with_stabs\n"
+      "enable_multilib\n"
+      "enable___cxa_atexit\n"
+      "enable_decimal_float\n"
+      "enable_fixed_point\n"
+      "enable_threads\n"
+      "enable_tls\n"
+      "enable_objc_gc\n"
+      "with_dwarf2\n"
+      "enable_shared\n"
+      "with_build_sysroot\n"
+      "with_sysroot\n"
+      "with_specs\n"
+      "with_pkgversion\n"
+      "with_bugurl\n"
+      "enable_languages\n"
+      "with_multilib_list\n";
+    const char *needle = "\n"
+      "with_GNU_ld\n";
+    const char* p = strcasestr (haystack, needle);
+    ASSERT (p - haystack == 114);
+  }
+
+  {
+    /* Same bug, shorter trigger.  */
+    const char *haystack = "..wi.D.";
+    const char *needle = ".d.";
+    const char* p = strcasestr (haystack, needle);
+    ASSERT (p - haystack == 4);
+  }
+
+  {
+    /* Like the above, but trigger the flaw in two_way_long_needle
+       by using a needle of length LONG_NEEDLE_THRESHOLD (32) or greater.
+       Rather than trying to find the right alignment manually, I've
+       arbitrarily chosen the following needle and template for the
+       haystack, and ensure that for each placement of the needle in
+       that haystack, strcasestr finds it.  */
+    const char *needle = "\nwith_gnu_ld-extend-to-len-32-b\n";
+    const char *h =
+      "\n"
+      "with_build_libsubdir\n"
+      "with_local_prefix\n"
+      "with_gxx_include_dir\n"
+      "with_cpp_install_dir\n"
+      "with_e_\n"
+      "..............................\n"
+      "with_FGHIJKLMNOPQRSTUVWXYZ\n"
+      "with_567890123456789\n"
+      "with_multilib_list\n";
+    size_t h_len = strlen (h);
+    char *haystack = malloc (h_len + 1);
+    size_t i;
+    ASSERT (haystack);
+    for (i = 0; i < h_len - strlen (needle); i++)
+      {
+        const char *p;
+        memcpy (haystack, h, h_len + 1);
+        memcpy (haystack + i, needle, strlen (needle) + 1);
+        p = strcasestr (haystack, needle);
+        ASSERT (p);
+        ASSERT (p - haystack == i);
+      }
+  }
+
   return 0;
 }

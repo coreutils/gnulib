@@ -1,5 +1,5 @@
 /* Categories of Unicode characters.
-   Copyright (C) 2002, 2006-2007, 2009-2011 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2006-2007, 2011 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2002.
 
    This program is free software: you can redistribute it and/or modify it
@@ -59,6 +59,8 @@ uc_general_category_name (uc_general_category_t category)
         {
           if (bitmask == UC_CATEGORY_MASK_L)
             return "L";
+          if (bitmask == UC_CATEGORY_MASK_LC)
+            return "LC";
           if (bitmask == UC_CATEGORY_MASK_M)
             return "M";
           if (bitmask == UC_CATEGORY_MASK_N)

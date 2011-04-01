@@ -21,6 +21,7 @@
      $ gen-uni-tables /usr/local/share/Unidata/UnicodeData.txt \
                       /usr/local/share/Unidata/PropList.txt \
                       /usr/local/share/Unidata/DerivedCoreProperties.txt \
+                      /usr/local/share/Unidata/ArabicShaping.txt \
                       /usr/local/share/Unidata/Scripts.txt \
                       /usr/local/share/Unidata/Blocks.txt \
                       /usr/local/share/Unidata/PropList-3.0.1.txt \
@@ -259,6 +260,7 @@ fill_attributes (const char *unicodedata_filename)
                              field11, field12, field13, field14);
         }
     }
+
   if (ferror (stream) || fclose (stream))
     {
       fprintf (stderr, "error reading from '%s'\n", unicodedata_filename);
@@ -277,6 +279,17 @@ is_category_L (unsigned int ch)
 {
   return (unicode_attributes[ch].name != NULL
           && unicode_attributes[ch].category[0] == 'L');
+}
+
+static bool
+is_category_LC (unsigned int ch)
+{
+  /* See PropertyValueAliases.txt.  */
+  return (unicode_attributes[ch].name != NULL
+          && unicode_attributes[ch].category[0] == 'L'
+          && (unicode_attributes[ch].category[1] == 'u'
+              || unicode_attributes[ch].category[1] == 'l'
+              || unicode_attributes[ch].category[1] == 't'));
 }
 
 static bool
@@ -803,6 +816,7 @@ output_categories (const char *version)
   output_predicate_test ("../tests/unictype/test-categ_" #C ".c", is_category_ ## C, "uc_is_general_category (c, UC_CATEGORY_" #C ")"); \
   output_predicate ("unictype/categ_" #C ".h", is_category_ ## C, "u_categ_" #C, "Categories", version);
   CATEGORY (L)
+  CATEGORY (LC)
   CATEGORY (Lu)
   CATEGORY (Ll)
   CATEGORY (Lt)
@@ -845,6 +859,7 @@ output_categories (const char *version)
 enum
 {
   UC_CATEGORY_MASK_L  = 0x0000001f,
+  UC_CATEGORY_MASK_LC = 0x00000007,
   UC_CATEGORY_MASK_Lu = 0x00000001,
   UC_CATEGORY_MASK_Ll = 0x00000002,
   UC_CATEGORY_MASK_Lt = 0x00000004,
@@ -894,6 +909,7 @@ general_category_byname (const char *category_name)
         switch (category_name[1])
           {
           case '\0': return UC_CATEGORY_MASK_L;
+          case 'C': return UC_CATEGORY_MASK_LC;
           case 'u': return UC_CATEGORY_MASK_Lu;
           case 'l': return UC_CATEGORY_MASK_Ll;
           case 't': return UC_CATEGORY_MASK_Lt;
@@ -2760,6 +2776,7 @@ fill_property30 (char array[0x110000], const char *proplist_filename, const char
       for (i = i1; i <= i2; i++)
         array[i] = 1;
     }
+
   if (ferror (stream) || fclose (stream))
     {
       fprintf (stderr, "error reading from '%s'\n", proplist_filename);
@@ -3651,6 +3668,616 @@ output_properties (const char *version)
 
 /* ========================================================================= */
 
+/* Arabic Shaping.  */
+
+enum
+{
+  UC_JOINING_TYPE_U, /* Non_Joining */
+  UC_JOINING_TYPE_T, /* Transparent */
+  UC_JOINING_TYPE_C, /* Join_Causing */
+  UC_JOINING_TYPE_L, /* Left_Joining */
+  UC_JOINING_TYPE_R, /* Right_Joining */
+  UC_JOINING_TYPE_D  /* Dual_Joining */
+};
+
+static uint8_t unicode_joining_type[0x110000];
+
+enum
+{
+  UC_JOINING_GROUP_NONE,                  /* No_Joining_Group */
+  UC_JOINING_GROUP_AIN,                   /* Ain */
+  UC_JOINING_GROUP_ALAPH,                 /* Alaph */
+  UC_JOINING_GROUP_ALEF,                  /* Alef */
+  UC_JOINING_GROUP_BEH,                   /* Beh */
+  UC_JOINING_GROUP_BETH,                  /* Beth */
+  UC_JOINING_GROUP_BURUSHASKI_YEH_BARREE, /* Burushaski_Yeh_Barree */
+  UC_JOINING_GROUP_DAL,                   /* Dal */
+  UC_JOINING_GROUP_DALATH_RISH,           /* Dalath_Rish */
+  UC_JOINING_GROUP_E,                     /* E */
+  UC_JOINING_GROUP_FARSI_YEH,             /* Farsi_Yeh */
+  UC_JOINING_GROUP_FE,                    /* Fe */
+  UC_JOINING_GROUP_FEH,                   /* Feh */
+  UC_JOINING_GROUP_FINAL_SEMKATH,         /* Final_Semkath */
+  UC_JOINING_GROUP_GAF,                   /* Gaf */
+  UC_JOINING_GROUP_GAMAL,                 /* Gamal */
+  UC_JOINING_GROUP_HAH,                   /* Hah */
+  UC_JOINING_GROUP_HE,                    /* He */
+  UC_JOINING_GROUP_HEH,                   /* Heh */
+  UC_JOINING_GROUP_HEH_GOAL,              /* Heh_Goal */
+  UC_JOINING_GROUP_HETH,                  /* Heth */
+  UC_JOINING_GROUP_KAF,                   /* Kaf */
+  UC_JOINING_GROUP_KAPH,                  /* Kaph */
+  UC_JOINING_GROUP_KHAPH,                 /* Khaph */
+  UC_JOINING_GROUP_KNOTTED_HEH,           /* Knotted_Heh */
+  UC_JOINING_GROUP_LAM,                   /* Lam */
+  UC_JOINING_GROUP_LAMADH,                /* Lamadh */
+  UC_JOINING_GROUP_MEEM,                  /* Meem */
+  UC_JOINING_GROUP_MIM,                   /* Mim */
+  UC_JOINING_GROUP_NOON,                  /* Noon */
+  UC_JOINING_GROUP_NUN,                   /* Nun */
+  UC_JOINING_GROUP_NYA,                   /* Nya */
+  UC_JOINING_GROUP_PE,                    /* Pe */
+  UC_JOINING_GROUP_QAF,                   /* Qaf */
+  UC_JOINING_GROUP_QAPH,                  /* Qaph */
+  UC_JOINING_GROUP_REH,                   /* Reh */
+  UC_JOINING_GROUP_REVERSED_PE,           /* Reversed_Pe */
+  UC_JOINING_GROUP_SAD,                   /* Sad */
+  UC_JOINING_GROUP_SADHE,                 /* Sadhe */
+  UC_JOINING_GROUP_SEEN,                  /* Seen */
+  UC_JOINING_GROUP_SEMKATH,               /* Semkath */
+  UC_JOINING_GROUP_SHIN,                  /* Shin */
+  UC_JOINING_GROUP_SWASH_KAF,             /* Swash_Kaf */
+  UC_JOINING_GROUP_SYRIAC_WAW,            /* Syriac_Waw */
+  UC_JOINING_GROUP_TAH,                   /* Tah */
+  UC_JOINING_GROUP_TAW,                   /* Taw */
+  UC_JOINING_GROUP_TEH_MARBUTA,           /* Teh_Marbuta */
+  UC_JOINING_GROUP_TEH_MARBUTA_GOAL,      /* Teh_Marbuta_Goal */
+  UC_JOINING_GROUP_TETH,                  /* Teth */
+  UC_JOINING_GROUP_WAW,                   /* Waw */
+  UC_JOINING_GROUP_YEH,                   /* Yeh */
+  UC_JOINING_GROUP_YEH_BARREE,            /* Yeh_Barree */
+  UC_JOINING_GROUP_YEH_WITH_TAIL,         /* Yeh_With_Tail */
+  UC_JOINING_GROUP_YUDH,                  /* Yudh */
+  UC_JOINING_GROUP_YUDH_HE,               /* Yudh_He */
+  UC_JOINING_GROUP_ZAIN,                  /* Zain */
+  UC_JOINING_GROUP_ZHAIN                  /* Zhain */
+};
+
+static uint8_t unicode_joining_group[0x110000];
+
+static void
+fill_arabicshaping (const char *arabicshaping_filename)
+{
+  FILE *stream;
+  unsigned int i;
+  int lineno;
+
+  stream = fopen (arabicshaping_filename, "r");
+  if (stream == NULL)
+    {
+      fprintf (stderr, "error during fopen of '%s'\n", arabicshaping_filename);
+      exit (1);
+    }
+
+  for (i = 0; i < 0x110000; i++)
+    {
+      unicode_joining_type[i] = (uint8_t)~(uint8_t)0;
+      unicode_joining_group[i] = UC_JOINING_GROUP_NONE;
+    }
+
+  lineno = 0;
+  for (;;)
+    {
+      char buf[100+1];
+      char separator1[100+1];
+      char padding1[100+1];
+      char schematic_name[100+1];
+      char separator2[100+1];
+      char padding2[100+1];
+      char joining_type_name[100+1];
+      char separator3[100+1];
+      char padding3[100+1];
+      char joining_group_name[100+1];
+      int joining_type;
+      int joining_group;
+
+      lineno++;
+      if (fscanf (stream, "%100[^\n]\n", buf) < 1)
+        break;
+
+      if (buf[0] == '\0' || buf[0] == '#')
+        continue;
+
+      if (sscanf (buf, "%X%[;]%[ ]%[^;]%[;]%[ ]%[^;]%[;]%[ ]%100[^\n]",
+                  &i, separator1, padding1, schematic_name, separator2,
+                  padding2, joining_type_name, separator3, padding3,
+                  joining_group_name) != 10)
+        {
+          fprintf (stderr, "parse error in '%s':%d\n",
+                   arabicshaping_filename, lineno);
+          exit (1);
+        }
+      if (i >= 0x110000)
+        abort ();
+
+#define TRY(name) else if (strcmp (joining_type_name, #name + 16) == 0) joining_type = name;
+      if (false) {}
+      TRY(UC_JOINING_TYPE_U)
+      TRY(UC_JOINING_TYPE_T)
+      TRY(UC_JOINING_TYPE_C)
+      TRY(UC_JOINING_TYPE_L)
+      TRY(UC_JOINING_TYPE_R)
+      TRY(UC_JOINING_TYPE_D)
+#undef TRY
+      else
+        {
+          fprintf (stderr, "unknown joining type value \"%s\" in '%s':%d\n",
+                   joining_type_name, arabicshaping_filename, lineno);
+          exit (1);
+        }
+
+      /* Remove trailing spaces.  */
+      while (joining_group_name[0] != '\0'
+             && joining_group_name[strlen (joining_group_name) - 1] == ' ')
+        joining_group_name[strlen (joining_group_name) - 1] = '\0';
+
+#define TRY(value,name) else if (strcmp (joining_group_name, name) == 0) joining_group = value;
+      if (false) {}
+      TRY(UC_JOINING_GROUP_NONE,                  "No_Joining_Group")
+      TRY(UC_JOINING_GROUP_AIN,                   "AIN")
+      TRY(UC_JOINING_GROUP_ALAPH,                 "ALAPH")
+      TRY(UC_JOINING_GROUP_ALEF,                  "ALEF")
+      TRY(UC_JOINING_GROUP_BEH,                   "BEH")
+      TRY(UC_JOINING_GROUP_BETH,                  "BETH")
+      TRY(UC_JOINING_GROUP_BURUSHASKI_YEH_BARREE, "BURUSHASKI YEH BARREE")
+      TRY(UC_JOINING_GROUP_DAL,                   "DAL")
+      TRY(UC_JOINING_GROUP_DALATH_RISH,           "DALATH RISH")
+      TRY(UC_JOINING_GROUP_E,                     "E")
+      TRY(UC_JOINING_GROUP_FARSI_YEH,             "FARSI YEH")
+      TRY(UC_JOINING_GROUP_FE,                    "FE")
+      TRY(UC_JOINING_GROUP_FEH,                   "FEH")
+      TRY(UC_JOINING_GROUP_FINAL_SEMKATH,         "FINAL SEMKATH")
+      TRY(UC_JOINING_GROUP_GAF,                   "GAF")
+      TRY(UC_JOINING_GROUP_GAMAL,                 "GAMAL")
+      TRY(UC_JOINING_GROUP_HAH,                   "HAH")
+      TRY(UC_JOINING_GROUP_HE,                    "HE")
+      TRY(UC_JOINING_GROUP_HEH,                   "HEH")
+      TRY(UC_JOINING_GROUP_HEH_GOAL,              "HEH GOAL")
+      TRY(UC_JOINING_GROUP_HETH,                  "HETH")
+      TRY(UC_JOINING_GROUP_KAF,                   "KAF")
+      TRY(UC_JOINING_GROUP_KAPH,                  "KAPH")
+      TRY(UC_JOINING_GROUP_KHAPH,                 "KHAPH")
+      TRY(UC_JOINING_GROUP_KNOTTED_HEH,           "KNOTTED HEH")
+      TRY(UC_JOINING_GROUP_LAM,                   "LAM")
+      TRY(UC_JOINING_GROUP_LAMADH,                "LAMADH")
+      TRY(UC_JOINING_GROUP_MEEM,                  "MEEM")
+      TRY(UC_JOINING_GROUP_MIM,                   "MIM")
+      TRY(UC_JOINING_GROUP_NOON,                  "NOON")
+      TRY(UC_JOINING_GROUP_NUN,                   "NUN")
+      TRY(UC_JOINING_GROUP_NYA,                   "NYA")
+      TRY(UC_JOINING_GROUP_PE,                    "PE")
+      TRY(UC_JOINING_GROUP_QAF,                   "QAF")
+      TRY(UC_JOINING_GROUP_QAPH,                  "QAPH")
+      TRY(UC_JOINING_GROUP_REH,                   "REH")
+      TRY(UC_JOINING_GROUP_REVERSED_PE,           "REVERSED PE")
+      TRY(UC_JOINING_GROUP_SAD,                   "SAD")
+      TRY(UC_JOINING_GROUP_SADHE,                 "SADHE")
+      TRY(UC_JOINING_GROUP_SEEN,                  "SEEN")
+      TRY(UC_JOINING_GROUP_SEMKATH,               "SEMKATH")
+      TRY(UC_JOINING_GROUP_SHIN,                  "SHIN")
+      TRY(UC_JOINING_GROUP_SWASH_KAF,             "SWASH KAF")
+      TRY(UC_JOINING_GROUP_SYRIAC_WAW,            "SYRIAC WAW")
+      TRY(UC_JOINING_GROUP_TAH,                   "TAH")
+      TRY(UC_JOINING_GROUP_TAW,                   "TAW")
+      TRY(UC_JOINING_GROUP_TEH_MARBUTA,           "TEH MARBUTA")
+      TRY(UC_JOINING_GROUP_TEH_MARBUTA_GOAL,      "TEH MARBUTA GOAL")
+      TRY(UC_JOINING_GROUP_TETH,                  "TETH")
+      TRY(UC_JOINING_GROUP_WAW,                   "WAW")
+      TRY(UC_JOINING_GROUP_YEH,                   "YEH")
+      TRY(UC_JOINING_GROUP_YEH_BARREE,            "YEH BARREE")
+      TRY(UC_JOINING_GROUP_YEH_WITH_TAIL,         "YEH WITH TAIL")
+      TRY(UC_JOINING_GROUP_YUDH,                  "YUDH")
+      TRY(UC_JOINING_GROUP_YUDH_HE,               "YUDH HE")
+      TRY(UC_JOINING_GROUP_ZAIN,                  "ZAIN")
+      TRY(UC_JOINING_GROUP_ZHAIN,                 "ZHAIN")
+#undef TRY
+      else
+        {
+          fprintf (stderr, "unknown joining group value \"%s\" in '%s':%d\n",
+                   joining_group_name, arabicshaping_filename, lineno);
+          exit (1);
+        }
+
+      unicode_joining_type[i] = joining_type;
+      unicode_joining_group[i] = joining_group;
+    }
+
+  if (ferror (stream) || fclose (stream))
+    {
+      fprintf (stderr, "error reading from '%s'\n", arabicshaping_filename);
+      exit (1);
+    }
+}
+
+/* Convert a Joining_Type value to a C identifier.  */
+static const char *
+joining_type_as_c_identifier (int joining_type)
+{
+#define TRY(value) if (joining_type == value) return #value;
+  TRY(UC_JOINING_TYPE_U)
+  TRY(UC_JOINING_TYPE_T)
+  TRY(UC_JOINING_TYPE_C)
+  TRY(UC_JOINING_TYPE_L)
+  TRY(UC_JOINING_TYPE_R)
+  TRY(UC_JOINING_TYPE_D)
+#undef TRY
+  abort ();
+}
+
+static void
+output_joining_type_test (const char *filename, const char *version)
+{
+  FILE *stream;
+  bool need_comma;
+  unsigned int ch;
+
+  stream = fopen (filename, "w");
+  if (stream == NULL)
+    {
+      fprintf (stderr, "cannot open '%s' for writing\n", filename);
+      exit (1);
+    }
+
+  fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
+  fprintf (stream, "/* Arabic joining type of Unicode characters.  */\n");
+  fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
+           version);
+
+  need_comma = false;
+  for (ch = 0; ch < 0x110000; ch++)
+    {
+      int value = unicode_joining_type[ch];
+
+      if (value != (uint8_t)~(uint8_t)0)
+        {
+          if (need_comma)
+            fprintf (stream, ",\n");
+          fprintf (stream, "    { 0x%04X, %s }", ch, joining_type_as_c_identifier (value));
+          need_comma = true;
+        }
+    }
+  if (need_comma)
+    fprintf (stream, "\n");
+
+  if (ferror (stream) || fclose (stream))
+    {
+      fprintf (stderr, "error writing to '%s'\n", filename);
+      exit (1);
+    }
+}
+
+/* Construction of sparse 3-level tables.  */
+#define TABLE joining_type_table
+#define ELEMENT uint8_t
+#define DEFAULT (uint8_t)~(uint8_t)0
+#define xmalloc malloc
+#define xrealloc realloc
+#include "3level.h"
+
+static void
+output_joining_type (const char *filename, const char *version)
+{
+  FILE *stream;
+  unsigned int ch, i;
+  struct joining_type_table t;
+  unsigned int level1_offset, level2_offset, level3_offset;
+  uint8_t *level3_packed;
+
+  stream = fopen (filename, "w");
+  if (stream == NULL)
+    {
+      fprintf (stderr, "cannot open '%s' for writing\n", filename);
+      exit (1);
+    }
+
+  fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
+  fprintf (stream, "/* Arabic joining type of Unicode characters.  */\n");
+  fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
+           version);
+
+  t.p = 7;
+  t.q = 9;
+  joining_type_table_init (&t);
+
+  for (ch = 0; ch < 0x110000; ch++)
+    {
+      uint8_t value = unicode_joining_type[ch];
+
+      joining_type_table_add (&t, ch, value);
+    }
+
+  joining_type_table_finalize (&t);
+
+  /* Offsets in t.result, in memory of this process.  */
+  level1_offset =
+    5 * sizeof (uint32_t);
+  level2_offset =
+    5 * sizeof (uint32_t)
+    + t.level1_size * sizeof (uint32_t);
+  level3_offset =
+    5 * sizeof (uint32_t)
+    + t.level1_size * sizeof (uint32_t)
+    + (t.level2_size << t.q) * sizeof (uint32_t);
+
+  for (i = 0; i < 5; i++)
+    fprintf (stream, "#define joining_type_header_%d %d\n", i,
+             ((uint32_t *) t.result)[i]);
+  fprintf (stream, "static const\n");
+  fprintf (stream, "struct\n");
+  fprintf (stream, "  {\n");
+  fprintf (stream, "    int level1[%zu];\n", t.level1_size);
+  fprintf (stream, "    short level2[%zu << %d];\n", t.level2_size, t.q);
+  fprintf (stream, "    unsigned char level3[%zu * %d];\n", t.level3_size,
+           (1 << t.p) * 4 / 8);
+  fprintf (stream, "  }\n");
+  fprintf (stream, "u_joining_type =\n");
+  fprintf (stream, "{\n");
+  fprintf (stream, "  {");
+  if (t.level1_size > 8)
+    fprintf (stream, "\n   ");
+  for (i = 0; i < t.level1_size; i++)
+    {
+      uint32_t offset;
+      if (i > 0 && (i % 8) == 0)
+        fprintf (stream, "\n   ");
+      offset = ((uint32_t *) (t.result + level1_offset))[i];
+      if (offset == 0)
+        fprintf (stream, " %5d", -1);
+      else
+        fprintf (stream, " %5zu",
+                 (offset - level2_offset) / sizeof (uint32_t));
+      if (i+1 < t.level1_size)
+        fprintf (stream, ",");
+    }
+  if (t.level1_size > 8)
+    fprintf (stream, "\n ");
+  fprintf (stream, " },\n");
+  fprintf (stream, "  {");
+  if (t.level2_size << t.q > 8)
+    fprintf (stream, "\n   ");
+  for (i = 0; i < t.level2_size << t.q; i++)
+    {
+      uint32_t offset;
+      if (i > 0 && (i % 8) == 0)
+        fprintf (stream, "\n   ");
+      offset = ((uint32_t *) (t.result + level2_offset))[i];
+      if (offset == 0)
+        fprintf (stream, " %5d", -1);
+      else
+        fprintf (stream, " %5zu",
+                 (offset - level3_offset) / sizeof (uint8_t));
+      if (i+1 < t.level2_size << t.q)
+        fprintf (stream, ",");
+    }
+  if (t.level2_size << t.q > 8)
+    fprintf (stream, "\n ");
+  fprintf (stream, " },\n");
+  /* Pack the level3 array.  Each entry needs 4 bits only.  */
+  level3_packed =
+    (uint8_t *) calloc ((t.level3_size << t.p) * 4 / 8, sizeof (uint8_t));
+  for (i = 0; i < t.level3_size << t.p; i++)
+    {
+      unsigned int j = (i * 4) / 8;
+      unsigned int k = (i * 4) % 8;
+      uint32_t value = ((unsigned char *) (t.result + level3_offset))[i] & 0x0f;
+      level3_packed[j] |= (value << k);
+    }
+  fprintf (stream, "  {");
+  if ((t.level3_size << t.p) * 4 / 8 > 8)
+    fprintf (stream, "\n   ");
+  for (i = 0; i < (t.level3_size << t.p) * 4 / 8; i++)
+    {
+      if (i > 0 && (i % 8) == 0)
+        fprintf (stream, "\n   ");
+      fprintf (stream, " 0x%02x", level3_packed[i]);
+      if (i+1 < (t.level3_size << t.p) * 4 / 8)
+        fprintf (stream, ",");
+    }
+  if ((t.level3_size << t.p) * 4 / 8 > 8)
+    fprintf (stream, "\n ");
+  fprintf (stream, " }\n");
+  free (level3_packed);
+  fprintf (stream, "};\n");
+
+  if (ferror (stream) || fclose (stream))
+    {
+      fprintf (stderr, "error writing to '%s'\n", filename);
+      exit (1);
+    }
+}
+
+/* Convert a Joining_Group value to a C identifier.  */
+static const char *
+joining_group_as_c_identifier (int joining_group)
+{
+#define TRY(value) if (joining_group == value) return #value;
+  TRY(UC_JOINING_GROUP_NONE)
+  TRY(UC_JOINING_GROUP_AIN)
+  TRY(UC_JOINING_GROUP_ALAPH)
+  TRY(UC_JOINING_GROUP_ALEF)
+  TRY(UC_JOINING_GROUP_BEH)
+  TRY(UC_JOINING_GROUP_BETH)
+  TRY(UC_JOINING_GROUP_BURUSHASKI_YEH_BARREE)
+  TRY(UC_JOINING_GROUP_DAL)
+  TRY(UC_JOINING_GROUP_DALATH_RISH)
+  TRY(UC_JOINING_GROUP_E)
+  TRY(UC_JOINING_GROUP_FARSI_YEH)
+  TRY(UC_JOINING_GROUP_FE)
+  TRY(UC_JOINING_GROUP_FEH)
+  TRY(UC_JOINING_GROUP_FINAL_SEMKATH)
+  TRY(UC_JOINING_GROUP_GAF)
+  TRY(UC_JOINING_GROUP_GAMAL)
+  TRY(UC_JOINING_GROUP_HAH)
+  TRY(UC_JOINING_GROUP_HE)
+  TRY(UC_JOINING_GROUP_HEH)
+  TRY(UC_JOINING_GROUP_HEH_GOAL)
+  TRY(UC_JOINING_GROUP_HETH)
+  TRY(UC_JOINING_GROUP_KAF)
+  TRY(UC_JOINING_GROUP_KAPH)
+  TRY(UC_JOINING_GROUP_KHAPH)
+  TRY(UC_JOINING_GROUP_KNOTTED_HEH)
+  TRY(UC_JOINING_GROUP_LAM)
+  TRY(UC_JOINING_GROUP_LAMADH)
+  TRY(UC_JOINING_GROUP_MEEM)
+  TRY(UC_JOINING_GROUP_MIM)
+  TRY(UC_JOINING_GROUP_NOON)
+  TRY(UC_JOINING_GROUP_NUN)
+  TRY(UC_JOINING_GROUP_NYA)
+  TRY(UC_JOINING_GROUP_PE)
+  TRY(UC_JOINING_GROUP_QAF)
+  TRY(UC_JOINING_GROUP_QAPH)
+  TRY(UC_JOINING_GROUP_REH)
+  TRY(UC_JOINING_GROUP_REVERSED_PE)
+  TRY(UC_JOINING_GROUP_SAD)
+  TRY(UC_JOINING_GROUP_SADHE)
+  TRY(UC_JOINING_GROUP_SEEN)
+  TRY(UC_JOINING_GROUP_SEMKATH)
+  TRY(UC_JOINING_GROUP_SHIN)
+  TRY(UC_JOINING_GROUP_SWASH_KAF)
+  TRY(UC_JOINING_GROUP_SYRIAC_WAW)
+  TRY(UC_JOINING_GROUP_TAH)
+  TRY(UC_JOINING_GROUP_TAW)
+  TRY(UC_JOINING_GROUP_TEH_MARBUTA)
+  TRY(UC_JOINING_GROUP_TEH_MARBUTA_GOAL)
+  TRY(UC_JOINING_GROUP_TETH)
+  TRY(UC_JOINING_GROUP_WAW)
+  TRY(UC_JOINING_GROUP_YEH)
+  TRY(UC_JOINING_GROUP_YEH_BARREE)
+  TRY(UC_JOINING_GROUP_YEH_WITH_TAIL)
+  TRY(UC_JOINING_GROUP_YUDH)
+  TRY(UC_JOINING_GROUP_YUDH_HE)
+  TRY(UC_JOINING_GROUP_ZAIN)
+  TRY(UC_JOINING_GROUP_ZHAIN)
+#undef TRY
+  abort ();
+}
+
+static void
+output_joining_group_test (const char *filename, const char *version)
+{
+  FILE *stream;
+  bool need_comma;
+  unsigned int ch;
+
+  stream = fopen (filename, "w");
+  if (stream == NULL)
+    {
+      fprintf (stderr, "cannot open '%s' for writing\n", filename);
+      exit (1);
+    }
+
+  fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
+  fprintf (stream, "/* Arabic joining group of Unicode characters.  */\n");
+  fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
+           version);
+
+  need_comma = false;
+  for (ch = 0; ch < 0x110000; ch++)
+    {
+      int value = unicode_joining_group[ch];
+
+      if (value != UC_JOINING_GROUP_NONE)
+        {
+          if (need_comma)
+            fprintf (stream, ",\n");
+          fprintf (stream, "    { 0x%04X, %s }", ch, joining_group_as_c_identifier (value));
+          need_comma = true;
+        }
+    }
+  if (need_comma)
+    fprintf (stream, "\n");
+
+  if (ferror (stream) || fclose (stream))
+    {
+      fprintf (stderr, "error writing to '%s'\n", filename);
+      exit (1);
+    }
+}
+
+static void
+output_joining_group (const char *filename, const char *version)
+{
+  FILE *stream;
+  unsigned int ch_min, ch_max, ch, i;
+
+  stream = fopen (filename, "w");
+  if (stream == NULL)
+    {
+      fprintf (stderr, "cannot open '%s' for writing\n", filename);
+      exit (1);
+    }
+
+  fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
+  fprintf (stream, "/* Arabic joining type of Unicode characters.  */\n");
+  fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
+           version);
+
+  ch_min = 0x10FFFF;
+  for (ch = 0; ch < 0x110000; ch++)
+    if (unicode_joining_group[ch] != UC_JOINING_GROUP_NONE)
+      {
+        ch_min = ch;
+        break;
+      }
+
+  ch_max = 0;
+  for (ch = 0x10FFFF; ch > 0; ch--)
+    if (unicode_joining_group[ch] != UC_JOINING_GROUP_NONE)
+      {
+        ch_max = ch;
+        break;
+      }
+
+  if (!(ch_min <= ch_max))
+    abort ();
+
+  /* If the interval [ch_min, ch_max] is too large, we should better use a
+     3-level table.  */
+  if (!(ch_max - ch_min < 0x200))
+    abort ();
+
+  fprintf (stream, "#define joining_group_header_0 0x%x\n", ch_min);
+  fprintf (stream, "static const unsigned char u_joining_group[0x%x - 0x%x] =\n",
+           ch_max + 1, ch_min);
+  fprintf (stream, "{");
+  for (i = 0; i <= ch_max - ch_min; i++)
+    {
+      const char *s;
+
+      ch = ch_min + i;
+      if ((i % 2) == 0)
+        fprintf (stream, "\n ");
+      s = joining_group_as_c_identifier (unicode_joining_group[ch]);
+      fprintf (stream, " %s", s);
+      if (i+1 <= ch_max - ch_min)
+        {
+          fprintf (stream, ",");
+          if (((i+1) % 2) != 0)
+            fprintf (stream, "%*s", 38 - (int) strlen (s), "");
+        }
+    }
+  fprintf (stream, "\n");
+  fprintf (stream, "};\n");
+
+  if (ferror (stream) || fclose (stream))
+    {
+      fprintf (stderr, "error writing to '%s'\n", filename);
+      exit (1);
+    }
+}
+
+/* ========================================================================= */
+
 /* Scripts.  */
 
 static const char *scripts[256];
@@ -3943,7 +4570,7 @@ output_scripts_byname (const char *version)
   fprintf (stream, "/* Unicode scripts.  */\n");
   fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
            version);
-  fprintf (stream, "struct named_script { const char *name; unsigned int index; };\n");
+  fprintf (stream, "struct named_script { int name; unsigned int index; };\n");
   fprintf (stream, "%%struct-type\n");
   fprintf (stream, "%%language=ANSI-C\n");
   fprintf (stream, "%%define hash-function-name scripts_hash\n");
@@ -3951,6 +4578,8 @@ output_scripts_byname (const char *version)
   fprintf (stream, "%%readonly-tables\n");
   fprintf (stream, "%%global-table\n");
   fprintf (stream, "%%define word-array-name script_names\n");
+  fprintf (stream, "%%pic\n");
+  fprintf (stream, "%%define string-pool-name script_stringpool\n");
   fprintf (stream, "%%%%\n");
   for (s = 0; s < numscripts; s++)
     fprintf (stream, "%s, %u\n", scripts[s], s);
@@ -5251,6 +5880,7 @@ fill_width (const char *width_filename)
           unicode_width[i] = strdup (field1);
         }
     }
+
   if (ferror (stream) || fclose (stream))
     {
       fprintf (stderr, "error reading from '%s'\n", width_filename);
@@ -6398,6 +7028,7 @@ fill_org_lbp (const char *linebreak_filename)
           unicode_org_lbp[i] = value;
         }
     }
+
   if (ferror (stream) || fclose (stream))
     {
       fprintf (stderr, "error reading from '%s'\n", linebreak_filename);
@@ -7478,6 +8109,7 @@ fill_org_gbp (const char *graphemebreakproperty_filename)
       for (i = i1; i <= i2; i++)
         unicode_org_gbp[i] = propvalue;
     }
+
   if (ferror (stream) || fclose (stream))
     {
       fprintf (stderr, "error reading from '%s'\n", graphemebreakproperty_filename);
@@ -9013,6 +9645,7 @@ main (int argc, char * argv[])
   const char *unicodedata_filename;
   const char *proplist_filename;
   const char *derivedproplist_filename;
+  const char *arabicshaping_filename;
   const char *scripts_filename;
   const char *blocks_filename;
   const char *proplist30_filename;
@@ -9025,9 +9658,9 @@ main (int argc, char * argv[])
   const char *casefolding_filename;
   const char *version;
 
-  if (argc != 15)
+  if (argc != 16)
     {
-      fprintf (stderr, "Usage: %s UnicodeData.txt PropList.txt DerivedCoreProperties.txt Scripts.txt Blocks.txt PropList-3.0.1.txt EastAsianWidth.txt LineBreak.txt WordBreakProperty.txt GraphemeBreakProperty.txt CompositionExclusions.txt SpecialCasing.txt CaseFolding.txt version\n",
+      fprintf (stderr, "Usage: %s UnicodeData.txt PropList.txt DerivedCoreProperties.txt ArabicShaping.txt Scripts.txt Blocks.txt PropList-3.0.1.txt EastAsianWidth.txt LineBreak.txt WordBreakProperty.txt GraphemeBreakProperty.txt CompositionExclusions.txt SpecialCasing.txt CaseFolding.txt version\n",
                argv[0]);
       exit (1);
     }
@@ -9035,23 +9668,25 @@ main (int argc, char * argv[])
   unicodedata_filename = argv[1];
   proplist_filename = argv[2];
   derivedproplist_filename = argv[3];
-  scripts_filename = argv[4];
-  blocks_filename = argv[5];
-  proplist30_filename = argv[6];
-  eastasianwidth_filename = argv[7];
-  linebreak_filename = argv[8];
-  wordbreakproperty_filename = argv[9];
-  graphemebreakproperty_filename = argv[10];
-  compositionexclusions_filename = argv[11];
-  specialcasing_filename = argv[12];
-  casefolding_filename = argv[13];
-  version = argv[14];
+  arabicshaping_filename = argv[4];
+  scripts_filename = argv[5];
+  blocks_filename = argv[6];
+  proplist30_filename = argv[7];
+  eastasianwidth_filename = argv[8];
+  linebreak_filename = argv[9];
+  wordbreakproperty_filename = argv[10];
+  graphemebreakproperty_filename = argv[11];
+  compositionexclusions_filename = argv[12];
+  specialcasing_filename = argv[13];
+  casefolding_filename = argv[14];
+  version = argv[15];
 
   fill_attributes (unicodedata_filename);
   clear_properties ();
   fill_properties (proplist_filename);
   fill_properties (derivedproplist_filename);
   fill_properties30 (proplist30_filename);
+  fill_arabicshaping (arabicshaping_filename);
   fill_scripts (scripts_filename);
   fill_blocks (blocks_filename);
   fill_width (eastasianwidth_filename);
@@ -9066,7 +9701,7 @@ main (int argc, char * argv[])
 
   output_categories (version);
   output_category ("unictype/categ_of.h", version);
-  output_combclass ("unictype/combining.h", version);
+  output_combclass ("unictype/combiningclass.h", version);
   output_bidi_category ("unictype/bidi_of.h", version);
   output_decimal_digit_test ("../tests/unictype/test-decdigit.h", version);
   output_decimal_digit ("unictype/decdigit.h", version);
@@ -9076,6 +9711,11 @@ main (int argc, char * argv[])
   output_numeric ("unictype/numeric.h", version);
   output_mirror ("unictype/mirror.h", version);
   output_properties (version);
+  output_joining_type_test ("../tests/unictype/test-joiningtype_of.h", version);
+  output_joining_type ("unictype/joiningtype_of.h", version);
+  output_joining_group_test ("../tests/unictype/test-joininggroup_of.h", version);
+  output_joining_group ("unictype/joininggroup_of.h", version);
+
   output_scripts (version);
   output_scripts_byname (version);
   output_blocks (version);
@@ -9121,6 +9761,7 @@ main (int argc, char * argv[])
         /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/UnicodeData.txt \
         /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/PropList.txt \
         /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/DerivedCoreProperties.txt \
+        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/ArabicShaping.txt \
         /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/Scripts.txt \
         /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/Blocks.txt \
         /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/3.0.1/PropList-3.0.1.txt \

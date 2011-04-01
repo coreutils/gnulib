@@ -15,6 +15,7 @@ unistr/u8-cmp
 unistr/u8-cpy
 unistr/u8-strcmp
 unistr/u8-strlen
+setlocale
 
 configure.ac:
 gt_LOCALE_FR

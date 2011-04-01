@@ -78,6 +78,6 @@ fbufmode (FILE *fp)
     return _IOLBF;
   return (fp->__bufsize > 0 ? _IOFBF : _IONBF);
 #else
- #error "Please port gnulib fbufmode.c to your platform! Look at the setvbuf implementation."
+# error "Please port gnulib fbufmode.c to your platform! Look at the setvbuf implementation."
 #endif
 }

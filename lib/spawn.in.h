@@ -83,6 +83,7 @@
 # define posix_spawnattr_t rpl_posix_spawnattr_t
 #endif
 #if @REPLACE_POSIX_SPAWN@ || !@HAVE_POSIX_SPAWNATTR_T@
+# if !GNULIB_defined_posix_spawnattr_t
 typedef struct
 {
   short int _flags;
@@ -93,6 +94,8 @@ typedef struct
   int _policy;
   int __pad[16];
 } posix_spawnattr_t;
+#  define GNULIB_defined_posix_spawnattr_t 1
+# endif
 #endif
 
 
@@ -102,6 +105,7 @@ typedef struct
 # define posix_spawn_file_actions_t rpl_posix_spawn_file_actions_t
 #endif
 #if @REPLACE_POSIX_SPAWN@ || !@HAVE_POSIX_SPAWN_FILE_ACTIONS_T@
+# if !GNULIB_defined_posix_spawn_file_actions_t
 typedef struct
 {
   int _allocated;
@@ -109,6 +113,8 @@ typedef struct
   struct __spawn_action *_actions;
   int __pad[16];
 } posix_spawn_file_actions_t;
+#  define GNULIB_defined_posix_spawn_file_actions_t 1
+# endif
 #endif
 
 
@@ -146,6 +152,7 @@ typedef struct
     | POSIX_SPAWN_SETSCHEDULER                                            \
     | (POSIX_SPAWN_SETSCHEDULER > 0 ? POSIX_SPAWN_SETSCHEDULER - 1 : 0))  \
    + 1)
+#if !GNULIB_defined_verify_POSIX_SPAWN_USEVFORK_no_overlap
 typedef int verify_POSIX_SPAWN_USEVFORK_no_overlap
             [(((POSIX_SPAWN_RESETIDS | POSIX_SPAWN_SETPGROUP
                 | POSIX_SPAWN_SETSIGDEF | POSIX_SPAWN_SETSIGMASK
@@ -153,6 +160,8 @@ typedef int verify_POSIX_SPAWN_USEVFORK_no_overlap
                & POSIX_SPAWN_USEVFORK)
               == 0)
              ? 1 : -1];
+# define GNULIB_defined_verify_POSIX_SPAWN_USEVFORK_no_overlap 1
+#endif
 
 
 #if @GNULIB_POSIX_SPAWN@

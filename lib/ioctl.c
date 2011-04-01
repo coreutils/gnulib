@@ -37,7 +37,9 @@ rpl_ioctl (int fd, int request, ... /* {void *,char *} arg */)
   buf = va_arg (args, void *);
   va_end (args);
 
-  return ioctl (fd, request, buf);
+  /* Cast 'request' so that when the system's ioctl function takes a 64-bit
+     request argument, the value gets zero-extended, not sign-extended.  */
+  return ioctl (fd, (unsigned int) request, buf);
 }
 
 #else /* mingw */
@@ -60,6 +62,10 @@ ioctl (int fd, int req, ...)
   va_start (args, req);
   buf = va_arg (args, void *);
   va_end (args);
+
+  /* We don't support FIONBIO on pipes here.  If you want to make pipe
+     fds non-blocking, use the gnulib 'nonblocking' module, until
+     gnulib implements fcntl F_GETFL / F_SETFL with O_NONBLOCK.  */
 
   sock = FD_TO_SOCKET (fd);
   r = ioctlsocket (sock, req, buf);

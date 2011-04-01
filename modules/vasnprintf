@@ -27,6 +27,7 @@ xsize
 errno
 memchr
 verify
+wchar
 
 configure.ac:
 gl_FUNC_VASNPRINTF

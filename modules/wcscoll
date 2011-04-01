@@ -1,0 +1,31 @@
+Description:
+wcscoll() function: compare two wide strings using the current locale.
+
+Status:
+obsolete
+
+Notice:
+This module is obsolete.
+
+Files:
+lib/wcscoll.c
+lib/wcscoll-impl.h
+m4/wcscoll.m4
+
+Depends-on:
+wchar
+
+configure.ac:
+gl_FUNC_WCSCOLL
+gl_WCHAR_MODULE_INDICATOR([wcscoll])
+
+Makefile.am:
+
+Include:
+<wchar.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible

@@ -26,6 +26,8 @@ func_usage ()
   echo "\
 Usage: posix-modules
 
+Lists the gnulib modules that implement POSIX interfaces.
+
 Report bugs to <bug-gnulib@gnu.org>."
 }
 

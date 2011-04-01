@@ -1,5 +1,5 @@
-/* Bidi categories of Unicode characters.
-   Copyright (C) 2002, 2006, 2009-2011 Free Software Foundation, Inc.
+/* Bidi classes of Unicode characters.
+   Copyright (C) 2002, 2006, 2011 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2002.
 
    This program is free software: you can redistribute it and/or modify it
@@ -20,16 +20,22 @@
 /* Specification.  */
 #include "unictype.h"
 
-static const char u_bidi_category_name[19][4] =
+static const char u_bidi_class_name[19][4] =
 {
   "L",  "LRE", "LRO", "R",   "AL", "RLE", "RLO", "PDF", "EN", "ES",
   "ET", "AN",  "CS",  "NSM", "BN", "B",   "S",   "WS",  "ON"
 };
 
 const char *
+uc_bidi_class_name (int bidi_class)
+{
+  if (bidi_class >= 0 && bidi_class < sizeof (u_bidi_class_name) / sizeof (u_bidi_class_name[0]))
+    return u_bidi_class_name[bidi_class];
+  return NULL;
+}
+
+const char *
 uc_bidi_category_name (int category)
 {
-  if (category >= 0 && category < sizeof (u_bidi_category_name) / sizeof (u_bidi_category_name[0]))
-    return u_bidi_category_name[category];
-  return NULL;
+  return uc_bidi_class_name (category);
 }

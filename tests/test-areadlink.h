@@ -36,7 +36,7 @@ test_areadlink (char * (*func) (char const *, size_t), bool print)
   ASSERT (errno == ENOENT);
   errno = 0;
   ASSERT (func ("", 1) == NULL);
-  ASSERT (errno == ENOENT);
+  ASSERT (errno == ENOENT || errno == EINVAL);
   errno = 0;
   ASSERT (func (".", 1) == NULL);
   ASSERT (errno == EINVAL);

@@ -1,0 +1,70 @@
+/* Bidi classes of Unicode characters.  */
+struct named_bidi_class { int name; int bidi_class; };
+%struct-type
+%ignore-case
+%language=ANSI-C
+%define hash-function-name bidi_class_hash
+%define lookup-function-name uc_bidi_class_lookup
+%readonly-tables
+%global-table
+%define word-array-name bidi_class_names
+%pic
+%define string-pool-name bidi_class_stringpool
+%%
+AL, UC_BIDI_AL
+AN, UC_BIDI_AN
+B, UC_BIDI_B
+BN, UC_BIDI_BN
+CS, UC_BIDI_CS
+EN, UC_BIDI_EN
+ES, UC_BIDI_ES
+ET, UC_BIDI_ET
+L, UC_BIDI_L
+LRE, UC_BIDI_LRE
+LRO, UC_BIDI_LRO
+NSM, UC_BIDI_NSM
+ON, UC_BIDI_ON
+PDF, UC_BIDI_PDF
+R, UC_BIDI_R
+RLE, UC_BIDI_RLE
+RLO, UC_BIDI_RLO
+S, UC_BIDI_S
+WS, UC_BIDI_WS
+Arabic Letter, UC_BIDI_AL
+ArabicLetter, UC_BIDI_AL
+Arabic Number, UC_BIDI_AN
+ArabicNumber, UC_BIDI_AN
+Paragraph Separator, UC_BIDI_B
+ParagraphSeparator, UC_BIDI_B
+Boundary Neutral, UC_BIDI_BN
+BoundaryNeutral, UC_BIDI_BN
+Common Separator, UC_BIDI_CS
+CommonSeparator, UC_BIDI_CS
+European Number, UC_BIDI_EN
+EuropeanNumber, UC_BIDI_EN
+European Separator, UC_BIDI_ES
+EuropeanSeparator, UC_BIDI_ES
+European Terminator, UC_BIDI_ET
+EuropeanTerminator, UC_BIDI_ET
+Left To Right, UC_BIDI_L
+LeftToRight, UC_BIDI_L
+Left To Right Embedding, UC_BIDI_LRE
+LeftToRightEmbedding, UC_BIDI_LRE
+Left To Right Override, UC_BIDI_LRO
+LeftToRightOverride, UC_BIDI_LRO
+Nonspacing Mark, UC_BIDI_NSM
+NonspacingMark, UC_BIDI_NSM
+Other Neutral, UC_BIDI_ON
+OtherNeutral, UC_BIDI_ON
+Pop Directional Format, UC_BIDI_PDF
+PopDirectionalFormat, UC_BIDI_PDF
+Right To Left, UC_BIDI_R
+RightToLeft, UC_BIDI_R
+Right To Left Embedding, UC_BIDI_RLE
+RightToLeftEmbedding, UC_BIDI_RLE
+Right To Left Override, UC_BIDI_RLO
+RightToLeftOverride, UC_BIDI_RLO
+Segment Separator, UC_BIDI_S
+SegmentSeparator, UC_BIDI_S
+White Space, UC_BIDI_WS
+WhiteSpace, UC_BIDI_WS

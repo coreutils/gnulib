@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate January 27, 2011
+@set lastupdate March 28, 2011
 @c %**end of header
 
 @dircategory GNU organization
@@ -50,8 +50,8 @@ Texts.  A copy of the license is included in the section entitled
 @contents
 
 @ifnottex
-@node Top, Preface, (dir), (dir)
-@top Version
+@node Top
+@top GNU Coding Standards
 
 @insertcopying
 @end ifnottex
@@ -701,7 +701,8 @@ fd = open (filename, O_WRONLY | O_CREAT | O_EXCL, 0600);
 @end example
 
 @noindent
-or by using the @code{mkstemps} function from libiberty.
+or by using the @code{mkstemps} function from Gnulib
+(@pxref{mkstemps,,, gnulib, Gnulib}).
 
 In bash, use @code{set -C} (long name @code{noclobber}) to avoid this
 problem.  In addition, the @code{mktemp} utility is a more general
@@ -2831,6 +2832,7 @@ GNU programs that have it, but there is no need to do this in new GNU
 programs.  @code{doschk} also reports file names longer than 14
 characters.
 
+
 @node System Portability
 @section Portability between System Types
 @cindex portability, between system types
@@ -2912,9 +2914,9 @@ printf ("diff = %ld\n", (long) (pointer2 - pointer1));
 @end example
 
 1989 Standard C requires this to work, and we know of only one
-counterexample: 64-bit programs on Microsoft Windows.  We will
-leave it to those who want to port GNU programs to that environment
-to figure out how to do it.
+counterexample: 64-bit programs on Microsoft Windows.  We will leave
+it to those who want to port GNU programs to that environment to
+figure out how to do it.
 
 Predefined file-size types like @code{off_t} are an exception: they are
 longer than @code{long} on many platforms, so code like the above won't
@@ -2945,51 +2947,6 @@ while ((c = getchar ()) != EOF)
   @}
 @end example
 
-It used to be ok to not worry about the difference between pointers
-and integers when passing arguments to functions.  However, on most
-modern 64-bit machines pointers are wider than @code{int}.
-Conversely, integer types like @code{long long int} and @code{off_t}
-are wider than pointers on most modern 32-bit machines.  Hence it's
-often better nowadays to use prototypes to define functions whose
-argument types are not trivial.
-
-In particular, if functions accept varying argument counts or types
-they should be declared using prototypes containing @samp{...} and
-defined using @file{stdarg.h}.  For an example of this, please see the
-@uref{http://www.gnu.org/software/gnulib/, Gnulib} error module, which
-declares and defines the following function:
-
-@example
-/* Print a message with `fprintf (stderr, FORMAT, ...)';
-   if ERRNUM is nonzero, follow it with ": " and strerror (ERRNUM).
-   If STATUS is nonzero, terminate the program with `exit (STATUS)'.  */
-
-void error (int status, int errnum, const char *format, ...);
-@end example
-
-A simple way to use the Gnulib error module is to obtain the two
-source files @file{error.c} and @file{error.h} from the Gnulib library
-source code repository at
-@uref{http://git.savannah.gnu.org/@/gitweb/@/?p=gnulib.git}.
-Here's a sample use:
-
-@example
-#include "error.h"
-#include <errno.h>
-#include <stdio.h>
-
-char *program_name = "myprogram";
-
-FILE *
-xfopen (char const *name)
-@{
-  FILE *fp = fopen (name, "r");
-  if (! fp)
-    error (1, errno, "cannot read %s", name);
-  return fp;
-@}
-@end example
-
 @cindex casting pointers to integers
 Avoid casting pointers to integers if you can.  Such casts greatly
 reduce portability, and in most programs they are easy to avoid.  In the
@@ -3000,133 +2957,75 @@ sizes.  You will also need to make provision for systems in which the
 normal range of addresses you can get from @code{malloc} starts far away
 from zero.
 
+
 @node System Functions
 @section Calling System Functions
+
+@cindex C library functions, and portability
+@cindex POSIX functions, and portability
 @cindex library functions, and portability
 @cindex portability, and library functions
 
-C implementations differ substantially.  Standard C reduces but does
-not eliminate the incompatibilities; meanwhile, many GNU packages still
-support pre-standard compilers because this is not hard to do.  This
-chapter gives recommendations for how to use the more-or-less standard C
-library functions to avoid unnecessary loss of portability.
+Historically, C implementations differed substantially, and many
+systems lacked a full implementation of ANSI/ISO C89.  Nowadays,
+however, very few systems lack a C89 compiler and GNU C supports
+almost all of C99.  Similarly, most systems implement POSIX.1-1993
+libraries and tools, and many have POSIX.1-2001.
 
-@itemize @bullet
-@item
-Don't use the return value of @code{sprintf}.  It returns the number of
-characters written on some systems, but not on all systems.
+Hence, there is little reason to support old C or non-POSIX systems,
+and you may want to take advantage of C99 and POSIX-1.2001 to write
+clearer, more portable, or faster code.  You should use standard
+interfaces where possible; but if GNU extensions make your program
+more maintainable, powerful, or otherwise better, don't hesitate to
+use them.  In any case, don't make your own declaration of system
+functions; that's a recipe for conflict.
 
-@item
-Be aware that @code{vfprintf} is not always available.
+Despite the standards, nearly every library function has some sort of
+portability issue on some system or another.  Here are some examples:
 
-@item
-@code{main} should be declared to return type @code{int}.  It should
-terminate either by calling @code{exit} or by returning the integer
-status code; make sure it cannot ever return an undefined value.
+@table @code
+@item open
+Names with trailing @code{/}'s are mishandled on many platforms.
 
-@cindex declaration for system functions
-@item
-Don't declare system functions explicitly.
+@item printf
+@code{long double} may be unimplemented; floating values Infinity and
+NaN are often mishandled; output for large precisions may be
+incorrect.
 
-Almost any declaration for a system function is wrong on some system.
-To minimize conflicts, leave it to the system header files to declare
-system functions.  If the headers don't declare a function, let it
-remain undeclared.
+@item readlink
+May return @code{int} instead of @code{ssize_t}.
 
-While it may seem unclean to use a function without declaring it, in
-practice this works fine for most system library functions on the
-systems where this really happens; thus, the disadvantage is only
-theoretical.  By contrast, actual declarations have frequently caused
-actual conflicts.
+@item scanf
+On Windows, @code{errno} is not set on failure.
+@end table
 
-@item
-If you must declare a system function, don't specify the argument types.
-Use an old-style declaration, not a Standard C prototype.  The more you
-specify about the function, the more likely a conflict.
+@cindex Gnulib
+@uref{http://www.gnu.org/software/gnulib/, Gnulib} is a big help in
+this regard.  Gnulib provides implementations of standard interfaces
+on many of the systems that lack them, including portable
+implementations of enhanced GNU interfaces, thereby making their use
+portable, and of POSIX-1.2008 interfaces, some of which are missing
+even on up-to-date GNU systems.
 
-@item
-In particular, don't unconditionally declare @code{malloc} or
-@code{realloc}.
+@findex xmalloc, in Gnulib
+@findex error messages, in Gnulib
+@findex data structures, in Gnulib
+Gnulib also provides many useful non-standard interfaces; for example,
+C implementations of standard data structures (hash tables, binary
+trees), error-checking type-safe wrappers for memory allocation
+functions (@code{xmalloc}, @code{xrealloc}), and output of error
+messages.
 
-Most GNU programs use those functions just once, in functions
-conventionally named @code{xmalloc} and @code{xrealloc}.  These
-functions call @code{malloc} and @code{realloc}, respectively, and
-check the results.
+Gnulib integrates with GNU Autoconf and Automake to remove much of the
+burden of writing portable code from the programmer: Gnulib makes your
+configure script automatically determine what features are missing and
+use the Gnulib code to supply the missing pieces.
 
-Because @code{xmalloc} and @code{xrealloc} are defined in your program,
-you can declare them in other files without any risk of type conflict.
+The Gnulib and Autoconf manuals have extensive sections on
+portability: @ref{Top,, Introduction, gnulib, Gnulib} and
+@pxref{Portable C and C++,,, autoconf, Autoconf}.  Please consult them
+for many more details.
 
-On most systems, @code{int} is the same length as a pointer; thus, the
-calls to @code{malloc} and @code{realloc} work fine.  For the few
-exceptional systems (mostly 64-bit machines), you can use
-@strong{conditionalized} declarations of @code{malloc} and
-@code{realloc}---or put these declarations in configuration files
-specific to those systems.
-
-@cindex string library functions
-@item
-The string functions require special treatment.  Some Unix systems have
-a header file @file{string.h}; others have @file{strings.h}.  Neither
-file name is portable.  There are two things you can do: use Autoconf to
-figure out which file to include, or don't include either file.
-
-@item
-If you don't include either strings file, you can't get declarations for
-the string functions from the header file in the usual way.
-
-That causes less of a problem than you might think.  The newer standard
-string functions should be avoided anyway because many systems still
-don't support them.  The string functions you can use are these:
-
-@example
-strcpy   strncpy   strcat   strncat
-strlen   strcmp    strncmp
-strchr   strrchr
-@end example
-
-The copy and concatenate functions work fine without a declaration as
-long as you don't use their values.  Using their values without a
-declaration fails on systems where the width of a pointer differs from
-the width of @code{int}, and perhaps in other cases.  It is trivial to
-avoid using their values, so do that.
-
-The compare functions and @code{strlen} work fine without a declaration
-on most systems, possibly all the ones that GNU software runs on.
-You may find it necessary to declare them @strong{conditionally} on a
-few systems.
-
-The search functions must be declared to return @code{char *}.  Luckily,
-there is no variation in the data type they return.  But there is
-variation in their names.  Some systems give these functions the names
-@code{index} and @code{rindex}; other systems use the names
-@code{strchr} and @code{strrchr}.  Some systems support both pairs of
-names, but neither pair works on all systems.
-
-You should pick a single pair of names and use it throughout your
-program.  (Nowadays, it is better to choose @code{strchr} and
-@code{strrchr} for new programs, since those are the standard
-names.)  Declare both of those names as functions returning @code{char
-*}.  On systems which don't support those names, define them as macros
-in terms of the other pair.  For example, here is what to put at the
-beginning of your file (or in a header) if you want to use the names
-@code{strchr} and @code{strrchr} throughout:
-
-@example
-#ifndef HAVE_STRCHR
-#define strchr index
-#endif
-#ifndef HAVE_STRRCHR
-#define strrchr rindex
-#endif
-
-char *strchr ();
-char *strrchr ();
-@end example
-@end itemize
-
-Here we assume that @code{HAVE_STRCHR} and @code{HAVE_STRRCHR} are
-macros defined in systems where the corresponding functions exist.
-One way to get them properly defined is to use Autoconf.
 
 @node Internationalization
 @section Internationalization

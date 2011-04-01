@@ -23,6 +23,8 @@
 #include <errno.h>
 #include <string.h>
 
+#include "dosname.h"
+
 #undef rmdir
 
 /* Remove directory DIR.

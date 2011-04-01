@@ -7,9 +7,9 @@ lib/dirname-lgpl.c
 lib/basename-lgpl.c
 lib/stripslash.c
 m4/dirname.m4
-m4/dos.m4
 
 Depends-on:
+dosname
 double-slash-root
 malloc-posix
 stdbool

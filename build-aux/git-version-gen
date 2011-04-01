@@ -1,6 +1,6 @@
 #!/bin/sh
 # Print a version string.
-scriptversion=2011-01-04.17; # UTC
+scriptversion=2011-02-19.19; # UTC
 
 # Copyright (C) 2007-2011 Free Software Foundation, Inc.
 #
@@ -80,6 +80,7 @@ nl='
 
 # Avoid meddling by environment variable of the same name.
 v=
+v_from_git=
 
 # First see if there is a tarball-only version file.
 # then try "git describe", then default.
@@ -134,24 +135,30 @@ then
     # Change the first '-' to a '.', so version-comparing tools work properly.
     # Remove the "g" in git describe's output string, to save a byte.
     v=`echo "$v" | sed 's/-/./;s/\(.*\)-g/\1-/'`;
+    v_from_git=1
 else
     v=UNKNOWN
 fi
 
 v=`echo "$v" |sed 's/^v//'`
 
-# Don't declare a version "dirty" merely because a time stamp has changed.
-git update-index --refresh > /dev/null 2>&1
+# Test whether to append the "-dirty" suffix only if the version
+# string we're using came from git.  I.e., skip the test if it's "UNKNOWN"
+# or if it came from .tarball-version.
+if test -n "$v_from_git"; then
+  # Don't declare a version "dirty" merely because a time stamp has changed.
+  git update-index --refresh > /dev/null 2>&1
 
-dirty=`exec 2>/dev/null;git diff-index --name-only HEAD` || dirty=
-case "$dirty" in
-    '') ;;
-    *) # Append the suffix only if there isn't one already.
-        case $v in
-          *-dirty) ;;
-          *) v="$v-dirty" ;;
-        esac ;;
-esac
+  dirty=`exec 2>/dev/null;git diff-index --name-only HEAD` || dirty=
+  case "$dirty" in
+      '') ;;
+      *) # Append the suffix only if there isn't one already.
+          case $v in
+            *-dirty) ;;
+            *) v="$v-dirty" ;;
+          esac ;;
+  esac
+fi
 
 # Omit the trailing newline, so that m4_esyscmd can use the result directly.
 echo "$v" | tr -d "$nl"

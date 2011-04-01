@@ -26,30 +26,22 @@ extern "C" {
 # endif
 
 
-# ifndef __attribute__
-#  if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 8)
-#   define __attribute__(x)
-#  endif
+# if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 8)
+#  define _GL_ATTRIBUTE_NORETURN __attribute__ ((__noreturn__))
+# else
+#  define _GL_ATTRIBUTE_NORETURN /* empty */
 # endif
 
-# ifndef ATTRIBUTE_NORETURN
-#  define ATTRIBUTE_NORETURN __attribute__ ((__noreturn__))
+# if __GNUC__ >= 3
+#  define _GL_ATTRIBUTE_MALLOC __attribute__ ((__malloc__))
+# else
+#  define _GL_ATTRIBUTE_MALLOC
 # endif
 
-# ifndef ATTRIBUTE_MALLOC
-#  if __GNUC__ >= 3
-#   define ATTRIBUTE_MALLOC __attribute__ ((__malloc__))
-#  else
-#   define ATTRIBUTE_MALLOC
-#  endif
-# endif
-
-# ifndef ATTRIBUTE_ALLOC_SIZE
-#  if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 3)
-#   define ATTRIBUTE_ALLOC_SIZE(args) __attribute__ ((__alloc_size__ args))
-#  else
-#   define ATTRIBUTE_ALLOC_SIZE(args)
-#  endif
+# if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 3)
+#  define _GL_ATTRIBUTE_ALLOC_SIZE(args) __attribute__ ((__alloc_size__ args))
+# else
+#  define _GL_ATTRIBUTE_ALLOC_SIZE(args)
 # endif
 
 /* This function is always triggered when memory is exhausted.
@@ -57,21 +49,21 @@ extern "C" {
    or by using gnulib's xalloc-die module.  This is the
    function to call when one wants the program to die because of a
    memory allocation failure.  */
-extern void xalloc_die (void) ATTRIBUTE_NORETURN;
+extern void xalloc_die (void) _GL_ATTRIBUTE_NORETURN;
 
 void *xmalloc (size_t s)
-      ATTRIBUTE_MALLOC ATTRIBUTE_ALLOC_SIZE ((1));
+      _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_ALLOC_SIZE ((1));
 void *xzalloc (size_t s)
-      ATTRIBUTE_MALLOC ATTRIBUTE_ALLOC_SIZE ((1));
+      _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_ALLOC_SIZE ((1));
 void *xcalloc (size_t n, size_t s)
-      ATTRIBUTE_MALLOC ATTRIBUTE_ALLOC_SIZE ((1, 2));
+      _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_ALLOC_SIZE ((1, 2));
 void *xrealloc (void *p, size_t s)
-      ATTRIBUTE_ALLOC_SIZE ((2));
+      _GL_ATTRIBUTE_ALLOC_SIZE ((2));
 void *x2realloc (void *p, size_t *pn);
 void *xmemdup (void const *p, size_t s)
-      ATTRIBUTE_MALLOC ATTRIBUTE_ALLOC_SIZE ((2));
+      _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_ALLOC_SIZE ((2));
 char *xstrdup (char const *str)
-      ATTRIBUTE_MALLOC;
+      _GL_ATTRIBUTE_MALLOC;
 
 /* Return 1 if an array of N objects, each of size S, cannot exist due
    to size arithmetic overflow.  S must be positive and N must be
@@ -119,12 +111,12 @@ char *xstrdup (char const *str)
 #  define static_inline static inline
 # else
 void *xnmalloc (size_t n, size_t s)
-      ATTRIBUTE_MALLOC ATTRIBUTE_ALLOC_SIZE ((1, 2));
+      _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_ALLOC_SIZE ((1, 2));
 void *xnrealloc (void *p, size_t n, size_t s)
-      ATTRIBUTE_ALLOC_SIZE ((2, 3));
+      _GL_ATTRIBUTE_ALLOC_SIZE ((2, 3));
 void *x2nrealloc (void *p, size_t *pn, size_t s);
 char *xcharalloc (size_t n)
-      ATTRIBUTE_MALLOC ATTRIBUTE_ALLOC_SIZE ((1));
+      _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_ALLOC_SIZE ((1));
 # endif
 
 # ifdef static_inline
@@ -133,7 +125,7 @@ char *xcharalloc (size_t n)
    dynamically, with error checking.  S must be nonzero.  */
 
 static_inline void *xnmalloc (size_t n, size_t s)
-                    ATTRIBUTE_MALLOC ATTRIBUTE_ALLOC_SIZE ((1, 2));
+                    _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_ALLOC_SIZE ((1, 2));
 static_inline void *
 xnmalloc (size_t n, size_t s)
 {
@@ -146,7 +138,7 @@ xnmalloc (size_t n, size_t s)
    objects each of S bytes, with error checking.  S must be nonzero.  */
 
 static_inline void *xnrealloc (void *p, size_t n, size_t s)
-                    ATTRIBUTE_ALLOC_SIZE ((2, 3));
+                    _GL_ATTRIBUTE_ALLOC_SIZE ((2, 3));
 static_inline void *
 xnrealloc (void *p, size_t n, size_t s)
 {
@@ -248,7 +240,7 @@ x2nrealloc (void *p, size_t *pn, size_t s)
    except it returns char *.  */
 
 static_inline char *xcharalloc (size_t n)
-                    ATTRIBUTE_MALLOC ATTRIBUTE_ALLOC_SIZE ((1));
+                    _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_ALLOC_SIZE ((1));
 static_inline char *
 xcharalloc (size_t n)
 {

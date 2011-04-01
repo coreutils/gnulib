@@ -8,6 +8,7 @@ m4/locale-tr.m4
 m4/codeset.m4
 
 Depends-on:
+setlocale
 
 configure.ac:
 gt_LOCALE_FR

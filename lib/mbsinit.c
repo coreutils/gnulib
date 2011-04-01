@@ -22,6 +22,18 @@
 
 #include "verify.h"
 
+#if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
+
+/* On native Windows, 'mbstate_t' is defined as 'int'.  */
+
+int
+mbsinit (const mbstate_t *ps)
+{
+  return ps == NULL || *ps == 0;
+}
+
+#else
+
 /* Platforms that lack mbsinit() also lack mbrlen(), mbrtowc(), mbsrtowcs()
    and wcrtomb(), wcsrtombs().
    We assume that
@@ -43,5 +55,7 @@ mbsinit (const mbstate_t *ps)
 {
   const char *pstate = (const char *)ps;
 
-  return pstate[0] == 0;
+  return pstate == NULL || pstate[0] == 0;
 }
+
+#endif

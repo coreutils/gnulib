@@ -1,0 +1,31 @@
+Description:
+wcsncmp() function: compare two wide strings.
+
+Status:
+obsolete
+
+Notice:
+This module is obsolete.
+
+Files:
+lib/wcsncmp.c
+lib/wcsncmp-impl.h
+m4/wcsncmp.m4
+
+Depends-on:
+wchar
+
+configure.ac:
+gl_FUNC_WCSNCMP
+gl_WCHAR_MODULE_INDICATOR([wcsncmp])
+
+Makefile.am:
+
+Include:
+<wchar.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible

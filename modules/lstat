@@ -6,6 +6,7 @@ lib/lstat.c
 m4/lstat.m4
 
 Depends-on:
+dosname
 stat
 sys_stat
 

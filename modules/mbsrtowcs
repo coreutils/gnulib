@@ -3,6 +3,7 @@ mbsrtowcs() function: convert string to wide string.
 
 Files:
 lib/mbsrtowcs.c
+lib/mbsrtowcs-impl.h
 lib/mbsrtowcs-state.c
 m4/mbsrtowcs.m4
 m4/mbstate_t.m4

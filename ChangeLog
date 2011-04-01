@@ -1,3 +1,2429 @@
+2011-03-31  Eric Blake  <eblake@redhat.com>
+
+	nonblocking: fix mingw test failures
+	* lib/nonblocking.c (set_nonblocking_flag): Succeed when clearing
+	non-blocking flag on regular file.
+	(get_nonblocking_flag): Set errno on invalid fd.
+	* tests/test-nonblocking.c (main): Avoid test failure on
+	directories if fchdir is not active.
+	* modules/nonblocking-tests (Depends-on): Drop unused dependency.
+
+2011-03-31  Bruno Haible  <bruno@clisp.org>
+
+	Fix bug with gl_WARN_ON_USE_PREPARE, introduced on 2011-01-23.
+	* m4/gnulib-common.m4 (gl_ASSERT_NO_GNULIB_POSIXCHECK): Hide the
+	gl_WARN_ON_USE_PREPARE definition from 'aclocal'.
+	Reported by Simon Josefsson <simon@josefsson.org>.
+
+2011-03-31  Bruno Haible  <bruno@clisp.org>
+	and Eric Blake  <eblake@redhat.com>
+
+	nonblocking: new module
+	* modules/nonblocking: New module.
+	* modules/nonblocking-tests: Likewise.
+	* lib/nonblocking.h: New file.
+	* lib/nonblocking.c: Likewise.
+	* tests/test-nonblocking.c: New test.
+	* lib/ioctl.c (ioctl) [mingw]: Update comment.
+
+2011-03-30  Bruno Haible  <bruno@clisp.org>
+
+	stdio: Avoid GCC >= 4.4 warnings when using %lld and similar on mingw.
+	* lib/stdio.in.h (_GL_ATTRIBUTE_FORMAT_PRINTF): Use 'gnu_printf' format
+	instead of 'printf' format for GCC >= 4.4.
+	(_GL_ATTRIBUTE_FORMAT_PRINTF_SYSTEM): New macro.
+	(fprintf, printf, vfprintf, vprintf): Declare with
+	_GL_ATTRIBUTE_FORMAT_PRINTF_SYSTEM when the function ends up calling
+	the system's vfprintf() function.
+	Reported by Daniel P. Berrange <berrange@redhat.com> via Eric Blake.
+
+2011-03-30  Eric Blake  <eblake@redhat.com>
+
+	passfd: fix scoping bug
+	* lib/passfd.c (sendfd, recvfd): Don't let buf go out of scope
+	before sendmsg/recvmsg.
+
+	passfd: standardize coding conventions
+	* m4/afunix.m4 (gl_SOCKET_AFUNIX): Drop check for something that
+	can be learned at compile time.
+	* lib/passfd.c (MSG_CMSG_CLOEXEC): Reduce number of in-function
+	ifdefs.
+	(sendfd, recvfd): Follow gnulib code conventions.
+
+	passfd: fix incorrect sendmsg arguments
+	* lib/passfd.c (sendfd): Avoid uninitialized msg_flags field, and
+	incorrect msg_controllen value.
+	* modules/passfd-tests (Depends-on): Check for alarm.
+	* tests/test-passfd.c (main) [HAVE_DECL_ALARM]: Avoid hanging test.
+	Reported by Bastien ROUCARIES.
+
+2011-03-30  Bruno Haible  <bruno@clisp.org>
+
+	c-strcasestr: Relicense under LGPLv2+.
+	* modules/c-strcasestr (License): Change to LGPLv2+.
+	Requested by Eric Blake, for libvirt.
+
+2011-03-30  Simon Josefsson  <simon@josefsson.org>
+
+	* users.txt: Add libidn2.  Fix libtasn1 link.
+
+2011-03-30  Jim Meyering  <meyering@redhat.com>
+
+	tests: readlink* ("",... fails with EINVAL on newer kernels
+	readlink and readlinkat have typically failed with ENOENT for
+	the invalid, empty file name,  "".  However, with the advent
+	of linux-2.6.39, they fail with EINVAL.
+	* tests/test-areadlink.h (test_areadlink): Also accept EINVAL
+	when operating on the empty file name.
+	* tests/test-readlink.h (test_readlink): Likewise.
+
+2011-03-29  Bruno Haible  <bruno@clisp.org>
+
+	Relicense some modules under LGPLv2+, for libidn2.
+	* modules/array-mergesort (License): Change to LGPLv2+.
+	* modules/c-strcaseeq (License): Likewise.
+	* modules/striconveh (License): Likewise.
+	* modules/striconveha (License): Likewise.
+	* modules/uniconv/base (License): Likewise.
+	* modules/uniconv/u8-conv-from-enc (License): Likewise.
+	* modules/uniconv/u8-strconv-from-enc (License): Likewise.
+	* modules/uniconv/u8-strconv-from-locale (License): Likewise.
+	* modules/unictype/base (License): Likewise.
+	* modules/unictype/bidiclass-of (License): Likewise.
+	* modules/unictype/category-M (License): Likewise.
+	* modules/unictype/category-none (License): Likewise.
+	* modules/unictype/category-of (License): Likewise.
+	* modules/unictype/category-test (License): Likewise.
+	* modules/unictype/category-test-withtable (License): Likewise.
+	* modules/unictype/combining-class (License): Likewise.
+	* modules/unictype/joiningtype-of (License): Likewise.
+	* modules/unictype/scripts (License): Likewise.
+	* modules/uninorm/base (License): Likewise.
+	* modules/uninorm/canonical-decomposition (License): Likewise.
+	* modules/uninorm/composition (License): Likewise.
+	* modules/uninorm/decompose-internal (License): Likewise.
+	* modules/uninorm/decomposition-table (License): Likewise.
+	* modules/uninorm/nfc (License): Likewise.
+	* modules/uninorm/nfd (License): Likewise.
+	* modules/uninorm/u32-normalize (License): Likewise.
+	* modules/unistr/base (License): Likewise.
+	* modules/unistr/u32-cpy (License): Likewise.
+	* modules/unistr/u32-mbtouc-unsafe (License): Likewise.
+	* modules/unistr/u32-to-u8 (License): Likewise.
+	* modules/unistr/u32-uctomb (License): Likewise.
+	* modules/unistr/u8-check (License): Likewise.
+	* modules/unistr/u8-mblen (License): Likewise.
+	* modules/unistr/u8-mbtouc (License): Likewise.
+	* modules/unistr/u8-mbtouc-unsafe (License): Likewise.
+	* modules/unistr/u8-mbtoucr (License): Likewise.
+	* modules/unistr/u8-prev (License): Likewise.
+	* modules/unistr/u8-strlen (License): Likewise.
+	* modules/unistr/u8-to-u32 (License): Likewise.
+	* modules/unistr/u8-uctomb (License): Likewise.
+	* modules/unitypes (License): Likewise.
+	Requested by Simon Josefsson.
+
+2011-03-29  Simon Josefsson  <simon@josefsson.org>
+
+	lib-symbol-visibility: Add a notice.
+	* modules/lib-symbol-visibility (Notice): New field.
+
+2011-03-29  Bruno Haible  <bruno@clisp.org>
+
+	getaddrinfo: Doc fix.
+	* doc/posix-functions/getaddrinfo.texi: Mention Windows problem in the
+	section "fixed in Gnulib".
+
+2011-03-28  Simon Josefsson  <simon@josefsson.org>
+
+	* doc/posix-functions/getaddrinfo.texi: Drop netdb.h discussion.
+	Reported by Bastien ROUCARIES <roucaries.bastien@gmail.com>.
+
+2011-03-26  Bruno Haible  <bruno@clisp.org>
+
+	unictype/property-byname: Reduce the number of load-time relocations.
+	* lib/unictype/pr_byname.c: Include <stdlib.h>.
+	(UC_PROPERTY_INDEX_*): New enumeration values.
+	(uc_property_byname): Convert an index from the lookup table to an
+	uc_property_t.
+	* lib/unictype/pr_byname.gperf: Store indices instead of uc_property_t
+	values.
+
+2011-03-26  Bruno Haible  <bruno@clisp.org>
+
+	unictype/property-byname: Allow omitted word separators and aliases.
+	* lib/unictype/pr_byname.gperf: Add property names without word
+	separators. Add aliases from Unicode 6.0 PropertyAliases.txt, except
+	for 'space'.
+
+2011-03-26  Bruno Haible  <bruno@clisp.org>
+
+	unictype/joininggroup-byname: Allow hyphens, omitted word separators.
+	* lib/unictype/joininggroup_byname.c (uc_joining_group_byname): Convert
+	also hyphens to space.
+	* lib/unictype/joininggroup_byname.gperf: Recognize the names also
+	without spaces.
+	* tests/unictype/test-joininggroup_byname.c (main): Add more tests.
+
+2011-03-26  Bruno Haible  <bruno@clisp.org>
+
+	unictype/joiningtype-byname: Recognize long names as well.
+	* lib/unictype.in.h (uc_joiningtype_class_byname): Allow argument to be
+	a long name.
+	* lib/unictype/joiningtype_byname.c: Include <string.h>,
+	unictype/joiningtype_byname.h.
+	(uc_joiningtype_class_byname): Use uc_joining_type_lookup.
+	* lib/unictype/joiningtype_byname.gperf: New file.
+	* modules/unictype/joiningtype-byname (Files): Add
+	lib/unictype/joiningtype_byname.gperf.
+	(Depends-on): Add gperf.
+	(Makefile.am): Add rule for generating unictype/joiningtype_byname.h.
+	* tests/unictype/test-joiningtype_byname.c (main): Test the recognition of
+	long names.
+
+	Tests for module 'unictype/joiningtype-longname'.
+	* modules/unictype/joiningtype-longname-tests: New file.
+	* tests/unictype/test-joiningtype_longname.c: New file.
+
+	New module 'unictype/joiningtype-longname'.
+	* lib/unictype.in.h (uc_joiningtype_class_long_name): New declaration.
+	* lib/unictype/joiningtype_longname.c: New file.
+	* modules/unictype/joiningtype-longname: New file.
+	* modules/unictype/joiningtype-all (Depends-on): Add
+	unictype/joiningtype-longname.
+
+2011-03-26  Bruno Haible  <bruno@clisp.org>
+
+	unictype/bidiclass-byname: Recognize long names as well.
+	* lib/unictype.in.h (uc_bidi_class_byname): Allow argument to be a long
+	name.
+	* lib/unictype/bidi_byname.c: Include <string.h>,
+	unictype/bidi_byname.h.
+	(uc_bidi_class_byname): Use uc_bidi_class_lookup.
+	* lib/unictype/bidi_byname.gperf: New file.
+	* modules/unictype/bidiclass-byname (Files): Add
+	lib/unictype/bidi_byname.gperf.
+	(Depends-on): Add gperf.
+	(Makefile.am): Add rule for generating unictype/bidi_byname.h.
+	* tests/unictype/test-bidi_byname.c (main): Test the recognition of
+	long names.
+
+	Tests for module 'unictype/bidiclass-longname'.
+	* modules/unictype/bidiclass-longname-tests: New file.
+	* tests/unictype/test-bidi_longname.c: New file.
+
+	New module 'unictype/bidiclass-longname'.
+	* lib/unictype.in.h (uc_bidi_class_long_name): New declaration.
+	* lib/unictype/bidi_longname.c: New file.
+	* modules/unictype/bidiclass-longname: New file.
+	* modules/unictype/bidiclass-all (Depends-on): Add
+	unictype/bidiclass-longname.
+
+2011-03-26  Bruno Haible  <bruno@clisp.org>
+
+	unictype/bidi*: Rename modules.
+	* modules/unictype/bidiclass-all: Renamed from
+	modules/unictype/bidicategory-all.
+	* modules/unictype/bidiclass-name: Renamed from
+	modules/unictype/bidiclass-name.
+	(Description): Update.
+	* modules/unictype/bidiclass-name-tests: Renamed from
+	modules/unictype/bidicategory-name-tests.
+	* modules/unictype/bidiclass-byname: Renamed from
+	modules/unictype/bidicategory-byname.
+	(Description): Update.
+	* modules/unictype/bidiclass-byname-tests: Renamed from
+	modules/unictype/bidicategory-byname-tests.
+	* modules/unictype/bidiclass-of: Renamed from
+	modules/unictype/bidicategory-of.
+	(Description): Update.
+	* modules/unictype/bidiclass-of-tests: Renamed from
+	modules/unictype/bidicategory-of-tests.
+	* modules/unictype/bidiclass-test: Renamed from
+	modules/unictype/bidicategory-test.
+	(Description): Update.
+	* modules/unictype/bidiclass-test-tests: Renamed from
+	modules/unictype/bidicategory-test-tests.
+	* modules/unictype/bidicategory-all: New file, a simple redirection.
+	* modules/unictype/bidicategory-name: Likewise.
+	* modules/unictype/bidicategory-byname: Likewise.
+	* modules/unictype/bidicategory-of: Likewise.
+	* modules/unictype/bidicategory-test: Likewise.
+	* modules/unictype/property-bidi-* (Dependencies): Update.
+	* lib/unictype/bidi_*.c: Update comment.
+
+2011-03-26  Bruno Haible  <bruno@clisp.org>
+
+	unictype/bidi*: Rename functions, part 2.
+	* modules/unictype/bidicategory-name (configure.ac): Update required
+	libunistring version.
+	* modules/unictype/bidicategory-byname (configure.ac): Likewise.
+
+2011-03-25  Bruno Haible  <bruno@clisp.org>
+
+	New module 'unictype/combining-class-all'.
+	* modules/unictype/combining-class-all: New file.
+
+	Tests for module 'unictype/combining-class-byname'.
+	* modules/unictype/combining-class-byname-tests: New file.
+	* tests/unictype/test-combiningclass_byname.c: New file.
+
+	New module 'unictype/combining-class-byname'.
+	* lib/unictype.in.h (uc_combining_class_byname): New declaration.
+	* lib/unictype/combiningclass_byname.c: New file.
+	* lib/unictype/combiningclass_byname.gperf: New file.
+	* modules/unictype/combining-class-byname: New file.
+
+	Tests for module 'unictype/combining-class-longname'.
+	* modules/unictype/combining-class-longname-tests: New file.
+	* tests/unictype/test-combiningclass_longname.c: New file.
+
+	New module 'unictype/combining-class-longname'.
+	* lib/unictype.in.h (uc_combining_class_long_name): New declaration.
+	* lib/unictype/combiningclass_longname.c: New file.
+	* modules/unictype/combining-class-longname: New file.
+
+	Tests for module 'unictype/combining-class-name'.
+	* modules/unictype/combining-class-name-tests: New file.
+	* tests/unictype/test-combiningclass_name.c: New file.
+
+	New module 'unictype/combining-class-name'.
+	* lib/unictype.in.h (uc_combining_class_name): New declaration.
+	* lib/unictype/combiningclass_name.c: New file.
+	* modules/unictype/combining-class-name: New file.
+
+2011-03-25  Bruno Haible  <bruno@clisp.org>
+
+	unictype/combining-class: Rename source files.
+	* lib/gen-uni-tables.c (main): Emit unictype/combiningclass.h instead
+	of unictype/combining.h.
+	* lib/unictype/combiningclass.c: Renamed from lib/unictype/combining.c.
+	Update.
+	* lib/unictype/combiningclass.h: Renamed from lib/unictype/combining.h.
+	* modules/unictype/combining-class (Description): Fix.
+	(Files, Makefile.am): Update.
+	* tests/unictype/test-combiningclass.c: Renamed from
+	tests/unictype/test-combining.c.
+	* modules/unictype/combining-class-tests (Files, Makefile.am): Update.
+
+2011-03-25  Bruno Haible  <bruno@clisp.org>
+
+	unictype: Update list of canonical combining classes.
+	* lib/unictype.in.h (UC_CCC_ATA): New enumeration value.
+
+2011-03-25  Bruno Haible  <bruno@clisp.org>
+
+	unictype/category-byname: Recognize long names as well.
+	* lib/unictype.in.h (uc_general_category_byname): Allow argument to be
+	a long name.
+	* lib/unictype/categ_byname.c: Include <stdlib.h>, <string.h>,
+	unictype/categ_byname.h.
+	(UC_CATEGORY_INDEX_*): New enumeration values.
+	(uc_general_category_byname): Use uc_general_category_lookup and
+	convert from index to value.
+	* lib/unictype/categ_byname.gperf: New file.
+	* modules/unictype/category-byname (Files): Add
+	lib/unictype/categ_byname.gperf.
+	(Depends-on): Add gperf.
+	(Makefile.am): Add rule for generating unictype/categ_byname.h.
+	* tests/unictype/test-categ_byname.c (main): Test the recognition of
+	long names.
+
+	Tests for module 'unictype/category-longname'.
+	* modules/unictype/category-longname-tests: New file.
+	* tests/unictype/test-categ_longname.c: New file.
+
+	New module 'unictype/category-longname'.
+	* lib/unictype.in.h (uc_general_category_long_name): New declaration.
+	* lib/unictype/categ_longname.c: New file.
+	* modules/unictype/category-longname: New file.
+	* modules/unictype/category-all (Depends-on): Add it.
+
+2011-03-25  Bruno Haible  <bruno@clisp.org>
+
+	Tests for module 'unictype/category-LC'.
+	* modules/unictype/category-LC-tests: New file.
+	* tests/unictype/test-categ_LC.c: New file, automatically generated.
+
+	New module 'unictype/category-LC'.
+	* lib/unictype.in.h (UC_CATEGORY_MASK_LC): New enumeration value.
+	(UC_CATEGORY_LC): New declaration.
+	(UC_CASED_LETTER): New macro.
+	* lib/gen-uni-tables.c (is_category_LC): New function.
+	(output_categories): Also handle category LC.
+	(UC_CATEGORY_MASK_LC): New enumeration value.
+	(general_category_byname): Also handle category LC.
+	* lib/unictype/categ_LC.c: New file.
+	* lib/unictype/categ_LC.h: New file, automatically generated.
+	* lib/unictype/categ_name.c (uc_general_category_name): Also handle
+	category LC.
+	* lib/unictype/categ_byname.c (uc_general_category_byname): Likewise.
+	* modules/unictype/category-LC: New file.
+	* modules/unictype/category-byname (Depends-on): Add
+	unictype/category-LC.
+	* modules/unictype/category-all (Depends-on): Likewise.
+
+2011-03-25  Eric Blake  <eblake@redhat.com>
+
+	xmalloc: revert yesterday's regression
+	* lib/xmalloc.c (xrealloc): Once again forward xrealloc(NULL,0) to
+	realloc's underlying behavior (allowing allocation of zero-size
+	objects, especially if malloc-gnu is also in use).
+
+2011-03-25  Reuben Thomas  <rrt@sc3d.org>
+
+	maint.mk: add missing version to VC-tag
+	* top/maint.mk: git tag was missing actual tag name; add it.
+
+	valgrind: do leak checking, and exit with code 1 on error (not 0)
+	* m4/valgrind-tests.m4: Add `--error-exitcode=1 --leak-check=full'
+	to VALGRIND.
+
+2010-11-30  Reuben Thomas  <rrt@sc3d.org>
+
+	posix-modules: say what it does.
+	* posix-modules: Add a line to the --help output saying what it does.
+
+2011-03-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	xmalloc: Do not leak if underlying realloc is C99 compatible.
+	* lib/xmalloc.c (xrealloc): If N is zero, call 'free' directly.
+	This avoids a leak on C99-based systems.  See
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-03/msg00243.html>.
+
+2011-03-24  Eric Blake  <eblake@redhat.com>
+
+	realloc: document portability problem
+	* doc/posix-functions/realloc.texi (realloc): Mention pitfalls of
+	passing 0 size to realloc.
+
+2011-03-23  Ben Walton  <bwalton@artsci.utoronto.ca>
+
+	doc: update users.txt
+	* users.txt: Add cvsps, tmpwatch
+
+2011-03-23  Matt Rice  <ratmice@gmail.com>
+
+	doc: update users.txt
+	* users.txt: Add gdb.
+
+2011-03-23  Jim Meyering  <meyering@redhat.com>
+
+	doc: update users.txt
+	Looking through matches up to the following URL (there are still
+	several more pages), I found several projects that use gnulib:
+	http://codesearch.google.com/codesearch?start=50&q=gnulib-cache\.m4
+	* users.txt: Add nagios plugins (nagiosplug), acct, gengetopt,
+	gmediaserver, gtkreindeer, jugtail, libunistring, mini-httpd, reindeer.
+
+2011-03-22  Bruno Haible  <bruno@clisp.org>
+
+	unictype/bidi*: Rename functions.
+	* lib/unictype.in.h (uc_bidi_class_name, uc_bidi_class_byname,
+	uc_bidi_class, uc_is_bidi_class): New declarations.
+	* lib/unictype/bidi_byname.c (uc_bidi_class_byname): Renamed from
+	uc_bidi_category_byname.
+	(uc_bidi_category_byname): New function.
+	* lib/unictype/bidi_name.c (u_bidi_class_name): Renamed from
+	u_bidi_category_name.
+	(uc_bidi_class_name): Renamed from uc_bidi_category_name.
+	(uc_bidi_category_name): New function.
+	* lib/unictype/bidi_of.c (uc_bidi_class): Renamed from
+	uc_bidi_category.
+	(uc_bidi_category): New function.
+	* lib/unictype/bidi_test.c (uc_is_bidi_class): Renamed from
+	uc_is_bidi_category. Invoke uc_bidi_class.
+	(uc_is_bidi_category): New function.
+	* tests/unictype/test-bidi_byname.c (main): Test uc_bidi_class_byname
+	instead of uc_bidi_category_byname.
+	* tests/unictype/test-bidi_name.c (main): Test uc_bidi_class_name
+	instead of uc_bidi_category_name.
+	* tests/unictype/test-bidi_of.c (main): Test uc_bidi_class instead of
+	uc_bidi_category.
+	* tests/unictype/test-bidi_test.c (main): Test uc_is_bidi_class
+	instead of uc_is_bidi_category.
+
+2011-03-21  Bruno Haible  <bruno@clisp.org>
+
+	New module 'unictype/joininggroup-all'.
+	* modules/unictype/joininggroup-all: New file.
+
+	Tests for module 'unictype/joininggroup-of'.
+	* modules/unictype/joininggroup-of-tests: New file.
+	* tests/unictype/test-joininggroup_of.c: New file.
+	* tests/unictype/test-joininggroup_of.h: New file, automatically
+	generated by gen-uni-tables.
+
+	New module 'unictype/joininggroup-of'.
+	* modules/unictype/joininggroup-of: New file.
+	* lib/unictype/joininggroup_of.c: New file.
+	* lib/unictype/joininggroup_of.h: New file, automatically generated by
+	gen-uni-tables.
+
+	Tests for module 'unictype/joininggroup-byname'.
+	* modules/unictype/joininggroup-byname-tests: New file.
+	* tests/unictype/test-joininggroup_byname.c: New file.
+
+	New module 'unictype/joininggroup-byname'.
+	* modules/unictype/joininggroup-byname: New file.
+	* lib/unictype/joininggroup_byname.c: New file.
+	* lib/unictype/joininggroup_byname.gperf: New file.
+
+	Tests for module 'unictype/joininggroup-name'.
+	* modules/unictype/joininggroup-name-tests: New file.
+	* tests/unictype/test-joininggroup_name.c: New file.
+
+	New module 'unictype/joininggroup-name'.
+	* modules/unictype/joininggroup-name: New file.
+	* lib/unictype/joininggroup_name.c: New file.
+	* lib/unictype/joininggroup_name.h: New file.
+
+	New module 'unictype/joiningtype-all'.
+	* modules/unictype/joiningtype-all: New file.
+
+	Tests for module 'unictype/joiningtype-of'.
+	* modules/unictype/joiningtype-of-tests: New file.
+	* tests/unictype/test-joiningtype_of.c: New file.
+	* tests/unictype/test-joiningtype_of.h: New file, automatically
+	generated by gen-uni-tables.
+
+	New module 'unictype/joiningtype-of'.
+	* modules/unictype/joiningtype-of: New file.
+	* lib/unictype/joiningtype_of.c: New file.
+	* lib/unictype/joiningtype_of.h: New file, automatically generated by
+	gen-uni-tables.
+
+	Tests for module 'unictype/joiningtype-byname'.
+	* modules/unictype/joiningtype-byname-tests: New file.
+	* tests/unictype/test-joiningtype_byname.c: New file.
+
+	New module 'unictype/joiningtype-byname'.
+	* modules/unictype/joiningtype-byname: New file.
+	* lib/unictype/joiningtype_byname.c: New file.
+
+	Tests for module 'unictype/joiningtype-name'.
+	* modules/unictype/joiningtype-name-tests: New file.
+	* tests/unictype/test-joiningtype_name.c: New file.
+
+	New module 'unictype/joiningtype-name'.
+	* modules/unictype/joiningtype-name: New file.
+	* lib/unictype/joiningtype_name.c: New file.
+
+	unictype: Add support for Arabic shaping properties.
+	* lib/unictype.in.h (UC_JOINING_TYPE_*): New enumeration values.
+	(uc_joining_type_name, uc_joining_type_byname, uc_joining_type): New
+	declarations.
+	(UC_JOINING_GROUP_*): New enumeration values.
+	(uc_joining_group_name, uc_joining_group_byname, uc_joining_group): New
+	declarations.
+	* lib/gen-uni-tables.c (UC_JOINING_TYPE_*): New enumeration values.
+	(unicode_joining_type): New variable.
+	(UC_JOINING_GROUP_*): New enumeration values.
+	(unicode_joining_group): New variable.
+	(fill_arabicshaping, joining_type_as_c_identifier,
+	output_joining_type_test, output_joining_type,
+	joining_group_as_c_identifier, output_joining_group_test,
+	output_joining_group): New functions.
+	(main); Add an argument denoting the ArabicShaping.txt file. Invoke
+	fill_arabicshaping and output_joining_type_test, output_joining_type,
+	output_joining_group_test, output_joining_group.
+	Reported by Simon Josefsson.
+
+2011-03-21  Jim Meyering  <meyering@redhat.com>
+
+	strftime: fix a bug in yesterday's change
+	* lib/strftime.c (add): Accommodate width's initial value of -1.
+	Otherwise, nstrftime would copy uninitialized data into
+	the result buffer.
+
+2011-03-21  Jim Meyering  <meyering@redhat.com>
+
+	tests: add strftime-tests module
+	* tests/test-strftime.c: New file.
+	* modules/strftime-tests: New module.
+
+2011-03-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	strftime: don't assume a byte count fits in 'int'
+	* lib/strftime.c (add): Don't assume first arg fits in 'int'.  I
+	found this problem by static analysis, using gcc -Wstrict-overflow
+	(GCC 4.5.2, x86-64).  This reported an optimization that depended
+	on an integer overflow having undefined behavior, but it turns out
+	that the argument is a size, which might not fit in 'int' anyway,
+
+2011-03-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdio: don't require ignore_value around fwrite
+
+	This patch works around libc bug 11959
+	<http://sources.redhat.com/bugzilla/show_bug.cgi?id=11959>.
+	Without this patch, applications must often write
+	ignore_value (fwrite (...)) even though the ignore_value is
+	not helpful here.  It's common to write many objects, using
+	fwrite/printf/etc., and then use ferror to detect output error.
+
+	I considered making this patch optional, but decided against it,
+	because libc is obviously being inconsistent here: there is no
+	reason libc should insist that user code must inspect fwrite
+	return's value without also insisting that it inspect printf's,
+	putchar's, etc.  If user code wants to have a strict style where
+	all these functions' values are checked (so that ferror need not
+	be checked), we could add support for that style in a new gnulib
+	module, but in the meantime it's better to be consistent and to
+	support common usage.
+
+	* lib/stdio.in.h (rpl_fwrite): Define this wrapper around fwrite,
+	to work around libc bug 11959, if __USE_FORTIFY_LEVEL indicates
+	that we are compiling in checking mode, and if not C++, and
+	if not already wrapping fwrite for some other reason.
+	(fwrite): #define to rpl_fwrite if the latter is defined.
+
+2011-03-20  Bruno Haible  <bruno@clisp.org>
+
+	verror: Fix compilation error introduced on 2011-02-13.
+	* lib/verror.h (verror, verror_at_line): Use _GL_ATTRIBUTE_FORMAT macro
+	instead of __attribute__.
+	Reported by Tom G. Christensen <tgc@jupiterrise.com>.
+
+2011-03-20  Paul Eggert  <eggert@cs.ucla.edu>
+            Bruno Haible  <bruno@clisp.org>
+
+	socklen: do not depend on sys_socket
+	While trying to modify Emacs to use gnulib's socklen module,
+	I discovered a circular dependency: socklen depends on sys_socket
+	and vice versa.  Emacs can use socklen, but it does not need
+	sys_socket because it has its own substitute for sys/socket.h.
+	* m4/socklen.m4 (gl_SOCKET_HEADERS): New macro, extracted from
+	gl_TYPE_SOCKLEN_T.
+	(gl_CHECK_SOCKET_HEADERS): New macro, taken from parts of
+	gl_PREREQ_SYS_H_SOCKET.
+	(gl_TYPE_SOCKLEN_T): Require it instead of requiring
+	gl_PREREQ_SYS_H_SOCKET.
+	* m4/sys_socket_h.m4 (gl_PREREQ_SYS_H_SOCKET): Require
+	gl_CHECK_SOCKET_HEADERS instead of doing its work ourselves.
+	* modules/socklen (Depends-on): Do not depend on sys_socket.
+	(Include): Adjust to match the code used in gl_SOCKET_HEADERS.
+
+2011-03-20  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: sort file names *after* new transformation
+	* top/maint.mk (sc_po_check): Sorting before removing the $(srcdir)/
+	prefix would have led to an unwarranted failure in GNU parted.
+	Sort after that transformation.
+
+2011-03-19  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: fix po-file syntax-check rule
+	* top/maint.mk (sc_po_check): Fix fatal typo in yesterday's change.
+	Patch by Bruno Haible.
+
+2011-03-19  Bruno Haible  <bruno@clisp.org>
+
+	socklen: Update comment.
+	* m4/socklen.m4: Update comment about platforms.
+
+2011-03-19  Paul Eggert  <eggert@cs.ucla.edu>
+            Bruno Haible  <bruno@clisp.org>
+
+	inet_ntop, inet_pton: Simplify.
+	* modules/inet_ntop (Depends-on): Remove socklen, since sys_socket is
+	documented to provide socklen_t and we already depend on sys_socket.
+	* modules/inet_pton (Depends-on): Likewise.
+	* lib/arpa_inet.in.h: Adjust comment.
+
+2011-03-19  Paul Eggert  <eggert@cs.ucla.edu>
+            Bruno Haible  <bruno@clisp.org>
+
+	netdb: Simplify.
+	* modules/netdb (Depends-on): Remove socklen, since sys_socket is
+	documented to provide socklen_t and we already depend on sys_socket.
+	* lib/netdb.in.h: Adjust comment.
+
+2011-03-19  Bruno Haible  <bruno@clisp.org>
+
+	sys_socket, netdb: Document problem with socklen_t.
+	* doc/posix-headers/sys_socket.texi: Mention lack of socklen_t on some
+	platforms.
+	* doc/posix-headers/netdb.texi: Likewise.
+
+2011-03-18  Eric Blake  <eblake@redhat.com>
+
+	maint.mk: let po check work in VPATH build
+	* top/maint.mk (po_file): Allow cfg.mk override.
+	(sc_po_check): Allow VPATH use.
+	Reported by Jiri Denemark.
+
+2011-03-16  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: allow fine-grained syntax-check exclusion via Make variables
+	Before, you would have had to create one .x-sc_ file per rule in order
+	to exempt offending files.  Now, you may instead use a Make variable --
+	usually defined in cfg.mk -- whose name identifies the affected rule.
+	* top/maint.mk (_sc_excl): Define.
+	(VC_LIST_EXCEPT): Use it to exclude names on a per-rule basis.
+	(_sc_search_regexp): When not using VC_LIST_EXCEPT, exclude here, too.
+
+2011-03-13  Bruno Haible  <bruno@clisp.org>
+
+	ignore-value tests: Avoid warnings.
+	* tests/test-ignore-value.c (_GL_ATTRIBUTE_RETURN_CHECK): Define to
+	empty for gcc < 3.4.
+
+2011-03-13  Bruno Haible  <bruno@clisp.org>
+
+	passfd: Fix link error on Solaris.
+	* modules/passfd (Description): Correct.
+	(Depends-on): Add socketlib.
+	(Link): New section.
+	* modules/passfd-tests (Makefile.am): Link test-passfd with LIBSOCKET.
+
+2011-03-13  Bruno Haible  <bruno@clisp.org>
+
+	passfd: Fix link error on AIX 5.2.
+	* m4/afunix.m4 (gl_SOCKET_AFUNIX): Define _LINUX_SOURCE_COMPAT.
+
+2011-03-13  Bruno Haible  <bruno@clisp.org>
+
+	passfd: Work around bug with CMSG_FIRSTHDR on FreeBSD 6.4.
+	* lib/sys_socket.in.h: Include <stddef.h>.
+	* m4/afunix.m4 (gl_SOCKET_AFUNIX): Include <stddef.h> before using
+	CMSG_FIRSTHDR. Remove unused variable.
+
+2011-03-13  Bruno Haible  <bruno@clisp.org>
+
+	passfd: Fix compilation error on OpenBSD.
+	* lib/passfd.c: Include <sys/uio.h>.
+
+2011-03-13  Bruno Haible  <bruno@clisp.org>
+
+	passfd test: Fix warnings.
+	* tests/test-passfd.c: Include <sys/wait.h>.
+	(main): Fix typo.
+
+2011-03-13  Bruno Haible  <bruno@clisp.org>
+
+	passfd module, part 4, tweaks.
+	* tests/test-passfd.c: Reorder includes.
+	(main): Fix perror and printf calls.
+
+2011-03-07  Bastien Roucariès  <roucaries.bastien@gmail.com>
+
+	passfd module, part 4.
+	* modules/passfd-tests: New file.
+	* tests/test-passfd.c: New file.
+
+2011-03-13  Jim Meyering  <meyering@redhat.com>
+
+	Makefile: rely on GNU make; derive syntax-check rule names
+	Rather than requiring that each sc_ rule be listed as a dependent
+	of "check", use features of GNU make to derive the list.
+	* Makefile (syntax-check-rules): Define.
+	(check): Depend on the new variable, not the hard-coded list.
+
+2011-03-13  Bastien Roucariès  <roucaries.bastien@gmail.com>
+            Bruno Haible  <bruno@clisp.org>
+
+	passfd module, part 3.
+	* lib/passfd.h (recvfd): Add a flags argument.
+	* lib/passfd.c: Include <fcntl.h>, cloexec.h.
+	(recvfd): Add a flags argument.
+	* m4/afunix.m4 (gl_SOCKET_AFUNIX): Test whether MSG_CMSG_CLOEXEC
+	exists.
+	* modules/passfd (Depends-on): Add cloexec.
+	Suggested by Eric Blake.
+
+2011-03-13  Bruno Haible  <bruno@clisp.org>
+
+	passfd module, part 2, tweaks.
+	* modules/passfd (Files): Reorder.
+	(Depends-on): Remove errno.
+	(Include): Remove <sys/socket.h>, <sys/un.h>.
+	* lib/passfd.h: Use a GPLv3+ header. Make C++ safe.
+	* lib/passfd.c: Untabify. Use a GPLv3+ header. Really include the
+	specification header. Include <sys/socket.h> always. Don't include
+	<winsock2.h>. Use "#if HAVE_..." instead of "#ifdef HAVE_...".
+	(sendfd): Clarify that it sets errno when it fails.
+	(recvfd): Fix specification.
+
+2011-03-07  Bastien Roucariès  <roucaries.bastien@gmail.com>
+
+	passfd module, part 2.
+	* modules/passfd: New file.
+	* lib/passfd.h: New file.
+	* lib/passfd.c: New file.
+
+2011-03-12  Bruno Haible  <bruno@clisp.org>
+
+	wcswidth, mbswidth: Avoid integer overflow.
+	* lib/wcswidth.c: Include <limits.h>.
+	* lib/wcswidth-impl.h (wcswidth): Avoid 'int' overflow.
+	* lib/mbswidth.c: Include <limits.h>.
+	(mbsnwidth): Avoid 'int' overflow.
+	Reported by Jim Meyering.
+
+2011-03-12  Bruno Haible  <bruno@clisp.org>
+
+	futimens, utimensat: Avoid endless recursion on Solaris 10.
+	* lib/sys_stat.in.h (futimens, utimensat): Define with rpl_ prefix on
+	Solaris.
+	Reported by Ben Walton <bwalton@artsci.utoronto.ca> via Eric Blake
+	in <http://debbugs.gnu.org/cgi/bugreport.cgi?bug=8230>.
+
+2011-03-11  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: relax a regexp to accommodate other formatting styles
+	* top/maint.mk (sc_unmarked_diagnostics): Allow 0 or 1 space
+	between "ngettext" and the following "(".
+
+2011-03-11  Pádraig Brady <P@draigBrady.com>
+
+	maint.mk: suppress a false positive warning
+	* top/maint.mk ((sc_unmarked_diagnostics): Don't warn when
+	diagnostics are marked with ngettext.
+
+2011-03-10  Eric Blake  <eblake@redhat.com>
+
+	wchar: add explicit dependencies, for Tru64
+	* modules/mbmemcasecoll (Depends-on): Add wchar.
+	* modules/mbtowc (Depends-on): Likewise.
+	* modules/vasnprintf (Depends-on): Likewise.
+	* modules/unistdio/u-printf-args (Depends-on): Likewise.
+	* modules/wctomb (Depends-on): Likewise.
+	Reported by Peter O'Gorman.
+
+2011-03-08  Bruno Haible  <bruno@clisp.org>
+
+	passfd module, part 1, tweaks.
+	* m4/afunix.m4 (gl_SOCKET_AFUNIX): Update AC_REQUIRE invocation.
+	Improve indentation. Improve AC_MSG_CHECKING messages.
+	* m4/sockpfaf.m4 (gl_SOCKET_FAMILY_UNIX): New macro, extracted from
+	gl_SOCKET_FAMILIES.
+
+2011-03-07  Bastien Roucariès  <roucaries.bastien@gmail.com>
+
+	passfd module, part 1.
+	* m4/afunix.m4: New file.
+	* m4/sockpfaf.m4 (gl_SOCKET_FAMILIES): Also test for UNIX domain
+	sockets.
+
+2011-03-08  Bruno Haible  <bruno@clisp.org>
+
+	regex-quote: New API.
+	* lib/regex-quote.h: Include <stdbool.h>.
+	(struct regex_quote_spec): New type.
+	(regex_quote_spec_posix, regex_quote_spec_gnu, regex_quote_spec_pcre):
+	New declarations.
+	(regex_quote_length, regex_quote_copy, regex_quote): Take a
+	'const struct regex_quote_spec *' argument.
+	* lib/regex-quote.c (RE_*, PCRE_*): New macros.
+	(pcre_special): New constant.
+	(regex_quote_spec_posix, regex_quote_spec_gnu, regex_quote_spec_pcre):
+	New functions.
+	(regex_quote_length, regex_quote_copy, regex_quote): Take a
+	'const struct regex_quote_spec *' argument.
+	* modules/regex-quote (Depends-on): Add stdbool.
+	* tests/test-regex-quote.c (check): Update for new API. Add test for
+	anchored results.
+	* NEWS: Mention the API change.
+	Reported by Reuben Thomas and Eric Blake.
+
+2011-03-06  Bruno Haible  <bruno@clisp.org>
+
+	regex-quote: Fix creation of POSIX extended regular expressions.
+	* lib/regex-quote.c (ere_special): Add grouping and alternation
+	operators.
+
+2011-03-05  Bruno Haible  <bruno@clisp.org>
+
+	doc: Improve doc regarding autopoint vs. gnulib.
+	* doc/gnulib-tool.texi (gettextize and autopoint): Recommend to
+	disable autopoint while running autoreconf.
+	Suggested by Ralf Wildenhues.
+
+2011-03-05  Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+
+	Update AC_OPENMP macro for Lahey compiler on GNU/Linux.
+	* m4/openmp.m4 (AC_OPENMP): Sync from Autoconf.
+
+2011-03-03  Bruce Korb  <bkorb@gnu.org>
+
+	parse-duration: remove xalloc.h dependency
+	* lib/parse-duration.c (parse_period): handle NULL return from
+	strdup instead of calling xstrdup().
+	* modules/parse-duration: remove "xalloc" dependency
+
+2011-03-03  Matthew Booth  <mbooth@redhat.com>
+
+	bootstrap: honor m4_base when running aclocal
+	* build-aux/bootstrap: Fix hard-coded use of m4 directory name.
+
+2011-03-02  Jim Meyering  <meyering@redhat.com>
+
+	getopt-gnu: relax license from LGPLv3+ to LGPLv2+
+	* modules/getopt-gnu (License): Relax to LGPLv2+, for augeas,
+	on request from Matt Booth.
+
+2011-03-01  Eric Blake  <eblake@redhat.com>
+
+	test-link: work on Hurd
+	* tests/test-link.h (test_link): Hurd rejects linking directories
+	with EISDIR instead of the POSIX-mandated EPERM.
+
+2011-02-28  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdio: simplify by moving files to printf-posix, sigpipe
+	* m4/stdio_h.m4 (gl_STDIO_H): Do not require gl_ASM_SYMBOL_PREFIX,
+	since this symbol is needed only if printf is replaced.
+	* m4/printf-posix-rpl.m4 (gl_REPLACE_PRINTF):
+	Require gl_ASM_SYMBOL_PREFIX.
+	* modules/printf-posix (Files): Add m4/asm-underscore.m4.
+	* modules/sigpipe (Files): Likewise.  Also, add m4/stdio-write.c.
+	(Depends-on): Add 'raise'.
+	(configure.ac): Require gl_ASM_SYMBOL_PREFIX.
+	* modules/stdio (Files): Remove lib/stdio-write.c,
+	m4/asm-underscore.m4.
+	(Depends-on): Remove 'raise'.
+
+	stdio: simplify by moving gl_STDIN_LARGE_OFFSET to fseeko, ftello
+	* m4/fseeko.m4 (gl_STDIN_LARGE_OFFSET): Moved here, from ...
+	* m4/stdio_h.m4 (gl_STDIN_LARGE_OFFSET): ... here, because
+	* modules/ftello (Files): Add m4/fseeko.m4, for gl_STDIN_LARGE_OFFSET.
+
+2011-02-28  Bruno Haible  <bruno@clisp.org>
+
+	localcharset: Assume ANSI C behaviour of free().
+	* lib/localcharset.c (get_charset_aliases): Remove NULL test before
+	calling free().
+	Suggested by Simon Josefsson <simon@josefsson.org>.
+
+2011-02-28  Corinna Vinschen  <vinschen@redhat.com>  (tiny change)
+            Charles Wilson  <cygwin@cwilson.fastmail.fm>  (tiny change)
+            Bruno Haible  <bruno@clisp.org>  (tiny change)
+
+	On Cygwin, use /proc file system instead of win32 API.
+	* lib/relocatable.c: On Cygwin, use file names from /proc, rather than
+	Win32 file names.
+	(DllMain): Simplify by removing Cygwin specific code.
+	(find_shared_library_fullname): Use Linux specific implementation also
+	for Cygwin.
+	(get_shared_library_fullname): Update accordingly.
+	* lib/progreloc.c: On Cygwin, use file names from /proc, rather than
+	Win32 file names.
+	(find_executable): On Cygwin, use /proc, like on Linux. Remove previous
+	Cygwin specific code.
+
+2011-02-28  Christian Rössel  <christian.roessel@gmx.de>  (tiny change)
+	    Markus Geimer  <m.geimer@fz-juelich.de>  (tiny change)
+
+	Fix OpenMP flag detection for various Fortran compilers.
+	* m4/openmp.m4 (_AC_LANG_OPENMP(Fortran 77)): Use '!$'
+	OpenMP-conditional compilation construct, to force compile
+	failure with missing OpenMP flag.
+	(AC_OPENMP): Add flags for Cray CCE and NEC SX compilers.
+
+2011-02-25  Eric Blake  <eblake@redhat.com>
+
+	strstr: expand test coverage
+	* tests/test-strstr.c (main): Add much shorter trigger.  Fix C89
+	compilation.
+	* tests/test-memmem.c (main): Duplicate tests.
+	* tests/test-strcasestr.c (main): Likewise.
+	* tests/test-c-strcasestr.c (main): Likewise.
+
+2011-02-25  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: detect missing-NL-at-EOF, too
+	* top/maint.mk (sc_prohibit_empty_lines_at_EOF): Adjust so that
+	it also detects when a file lacks a newline at EOF.
+	(require_exactly_one_NL_at_EOF_): Renamed from
+	detect_empty_lines_at_EOF_.  I opted not to rename the rule,
+	since people may well have .x-sc_... file names tied to the
+	existing name.  Suggested by Eric Blake.
+
+2011-02-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	dirname: move m4/dos.m4 functionality into lib/dosname.h
+
+	m4/dos.m4 needs to go.  It laboriously invokes the C compiler, and
+	extracts symbols from it, puts them into config.h; but it's much
+	easier to use the symbols directly.  filename.h already does this,
+	but it disagrees with dos.m4 in some respects.  This patch
+	introduces a different include file dosname.h that packages up
+	dos.m4, and then later we can work on merging filename.h and
+	dosname.h.  Applications that need only the easy-to-configure
+	symbols should consider including dosname.h rather than dirname.h.
+	* NEWS: Mention incompatible changes.
+	* m4/dos.m4: Remove.
+	* lib/dosname.h, modules/dosname: New files.
+	* lib/dirname.h (ISSLASH, FILE_SYSTEM_PREFIX_LEN):
+	(FILE_SYSTEM_DRIVE_PREFIX_CAN_BE_RELATIVE):
+	(IS_ABSOLUTE_FILE_NAME, IS_RELATIVE_FILE_NAME): Move to lib/dosname.h.
+	* lib/at-func.c, lib/at-func2.c, lib/openat.c, lib/savewd.c:
+	Include dosname.h, not dirname.h.
+	* lib/rmdir.c, lib/stat.c, lib/unlink.c, lib/unlinkat.c:
+	Include dosname.h, for definitions of symbols like ISSLASH
+	that used to be in config.h.
+	* m4/dirname.m4 (gl_DIRNAME_LGPL): Do not require gl_AC_DOS.
+	* m4/rmdir.m4 (gl_FUNC_RMDIR): Likewise.
+	* m4/stat.m4 (gl_FUNC_STAT): Likewise.
+	* m4/unlink.m4 (gl_FUNC_UNLINK): Likewise.
+	* modules/dirname-lgpl (Files): Omit m4/dos.m4.
+	* modules/rmdir (Files): Likewise.
+	* modules/stat (Files): Likewise.
+	* modules/unlink (Files): Likewise.
+	* modules/dirname-lgpl (Depends-on): Add dosname.
+	* modules/lstat (Depends-on): Likewise.
+	* modules/openat (Depends-on): Likewise.
+	* modules/rmdir (Depends-on): Likewise.
+	* modules/savewd (Depends-on): Likewise.
+	* modules/stat (Depends-on): Likewise.
+	* modules/unlink (Depends-on): Likewise.
+	* modules/openat (Depends-on): Remove dirname-lgpl.
+	* modules/savewd (Depends-on): Likewise.
+	* tests/test-dirname.c: Do not use removed symbols like
+	FILE_SYSTEM_BACKSLASH_IS_FILE_NAME_SEPARATOR.  Instead, use
+	the remaining symbols, e.g., ISSLASH ('\\').
+
+2011-02-25  Eric Blake  <eblake@redhat.com>
+
+	strstr: revert patches that introduced bug and pessimization
+	* lib/str-two-way.h: Add another reference.
+	(two_way_short_needle, two_way_long_needle): Revert changes from
+	2011-02-24; they pessimize search speed.
+	(critical_factorization): Partially revert changes from
+	2010-06-22; they violate the requirement that the left half of the
+	needle be smaller than the period of the needle.
+
+2011-02-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	filenamecat: remove unnecessary dependency on dirname-lgpl
+	* modules/filenamecat (Depends-on): Remove dirname-lgpl, as there
+	is no direct dependency, just an indirect one via filenamecat-lgpl.
+
+	remove: remove unnecessary use of m4/dos.m4
+	* m4/remove.m4 (gl_FUNC_REMOVE): Don't require gl_AC_DOS; not needed.
+	* modules/remove (FILES): Remove m4/dos.m4.
+
+	* lib/openat-proc.c: Don't include dirname.h; not needed.
+
+	backupfile: remove unnecessary use of m4/dos.m4
+	* m4/backupfile.m4 (gl_BACKUPFILE): Don't require gl_AC_DOS; none
+	of its symbols are used by the backupfile code.  backupfile.c does
+	use a symbol HAVE_DOS_FILE_NAMES, but that symbol is meant only
+	for the rare case of programs that want all their backup file
+	names to live within 8+3 limits, and dos.m4 doesn't address that.
+	* modules/backupfile (Files): Remove m4/dos.m4.
+
+2011-02-24  Jim Meyering  <meyering@redhat.com>
+
+	strstr: fix a bug whereby strstr would mistakenly return NULL
+	* lib/str-two-way.h (two_way_short_needle): Correct off-by-one error
+	in period calculation.
+	(two_way_long_needle): Likewise.
+	The original problem was reported by Mike Stump in
+	http://thread.gmane.org/gmane.comp.sysutils.autoconf.bugs/7834
+	Ralf Wildenhues provided the short needle and haystack.
+	* tests/test-strstr.c: Add Ralf's test case to trigger the bug.
+	Add a more involved test to trigger the bug in two_way_long_needle.
+
+2011-02-24  Stefano Lattarini  <stefano.lattarini@gmail.com>  (tiny change)
+
+	gnulib-tool: remove use of bold display in help screen
+	* gnulib-tool (func_usage): Do not use bold display anymore in the
+	help screen.  That was just meant to be a temporary emphasis for a
+	backward-incompatible change.
+
+2011-02-23  Bruno Haible  <bruno@clisp.org>
+
+	Fix misindentation of preprocessor directives.
+	* lib/argp-namefrob.h: Reindent preprocessor directives.
+	* lib/getopt_int.h (struct _getopt_data): Likewise.
+	* lib/progreloc.c (maybe_executable, find_executable): Likewise.
+	* lib/vasnprintf.c (decode_long_double): Likewise.
+	* tests/test-argmatch.c: Insert blank lines, for clarity.
+	* tests/test-exclude.c: Likewise.
+
+2011-02-22  Bruno Haible  <bruno@clisp.org>
+
+	ioctl: Fix for MacOS X in 64-bit mode.
+	* lib/ioctl.c (rpl_ioctl): Zero-extend, not sign-extend, the request
+	value.
+	Suggested by Eric Blake.
+	Reported by Markus Gothe <nietzsche@lysator.liu.se>.
+
+2011-02-22  Jim Meyering  <meyering@redhat.com>
+
+	maint: sc_cpp_indent_check: remove the "only in lib/" restriction
+	* Makefile (sc_cpp_indent_check): Don't limit the check to files
+	in lib/.
+
+2011-02-22  Eric Blake  <eblake@redhat.com>
+
+	maint: avoid any CDPATH issue
+	* Makefile (sc_cpp_indent_check): Anchor cd argument.
+
+	maint: adjust cpp indentation for my modules, as well
+	* Makefile (sc_cpp_indent_check): Add my name.
+	* lib/fbufmode.c: Filter through cppi.
+	* lib/fpurge.c: Likewise.
+	* lib/freadable.c: Likewise.
+	* lib/freading.c: Likewise.
+	* lib/fwritable.c: Likewise.
+	* lib/fwriting.c: Likewise.
+	* lib/sigaction.c: Likewise.
+
+2011-02-22  Jim Meyering  <meyering@redhat.com>
+
+	maint: adjust cpp indentation to reflect nesting depth
+	I.e., in a block of code that begins with an unnested "#if",
+	put one space between the "#" in column 1 and following token.
+	For example,
+	-#include <sys/vfs.h>
+	+# include <sys/vfs.h>
+	Do this only in .c files that are part of a module I maintain.
+	* lib/linkat.c: Filter through cppi.
+	* lib/nanosleep.c: Likewise.
+	* lib/openat.c: Likewise.
+	* lib/openat-die.c: Likewise.
+	* lib/dup3.c: Likewise.
+	* lib/fchownat.c: Likewise.
+	* lib/flock.c: Likewise.
+	* lib/fsync.c: Likewise.
+	* lib/fts.c: Likewise.
+	* lib/getpass.c: Likewise.
+	* lib/gettimeofday.c: Likewise.
+	* lib/userspec.c: Likewise.
+	* Makefile (sc_cpp_indent_check): New rule, to check this.
+
+2011-02-22  Bruno Haible  <bruno@clisp.org>
+
+	New module 'wctomb'.
+	* lib/stdlib.in.h (wctomb): New declaration.
+	* lib/wctomb.c: New file.
+	* lib/wctomb-impl.h: New file.
+	* m4/wctomb.m4: New file.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Initialize GNULIB_WCTOMB,
+	REPLACE_WCTOMB.
+	* modules/stdlib (Makefile.am): Substitute GNULIB_WCTOMB,
+	REPLACE_WCTOMB.
+	* modules/wctomb: New file.
+	* tests/test-stdlib-c++.cc: Test signature of wctomb.
+	* doc/posix-functions/wctomb.texi: Mention the new module.
+	* modules/wctob (Depends-on): Add wctomb.
+
+2011-02-22  Bruno Haible  <bruno@clisp.org>
+
+	New module 'mbtowc'.
+	* lib/stdlib.in.h (mbtowc): New declaration.
+	* lib/mbtowc.c: New file.
+	* lib/mbtowc-impl.h: New file, from libutf8 with modifications.
+	* m4/mbtowc.m4: New file.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Initialize GNULIB_MBTOWC,
+	REPLACE_MBTOWC.
+	* modules/stdlib (Makefile.am): Substitute GNULIB_MBTOWC,
+	REPLACE_MBTOWC.
+	* modules/mbtowc: New file.
+	* tests/test-stdlib-c++.cc: Test signature of mbtowc.
+	* doc/posix-functions/mbtowc.texi: Mention the new module.
+	* modules/btowc (Depends-on): Add mbtowc.
+
+2011-02-22  Bruno Haible  <bruno@clisp.org>
+
+	wcrtomb: Add more tests for native Windows platforms.
+	* tests/test-wcrtomb-w32-1.sh: New file.
+	* tests/test-wcrtomb-w32-2.sh: New file.
+	* tests/test-wcrtomb-w32-3.sh: New file.
+	* tests/test-wcrtomb-w32-4.sh: New file.
+	* tests/test-wcrtomb-w32-5.sh: New file.
+	* tests/test-wcrtomb-w32.c: New file.
+	* modules/wcrtomb-tests (Files): Add them.
+	(Makefile.am): Arrange to run these tests.
+	* tests/test-wcrtomb-w32-6.sh: New file, currently unused.
+	* tests/test-wcrtomb-w32-7.sh: New file, currently unused.
+
+2011-02-20  Bruno Haible  <bruno@clisp.org>
+
+	wcrtomb: Enhance test.
+	* tests/test-wcrtomb.c (main): Add test against bug with NULL argument.
+
+2011-02-20  Bruno Haible  <bruno@clisp.org>
+
+	mbrtowc: Tiny optimization.
+	* lib/mbrtowc.c (mbrtowc): Delay pstate assignment until it is needed.
+
+2011-02-20  Jim Meyering  <meyering@redhat.com>
+
+	test-exclude.c: remove unmatched #endif
+	* tests/test-exclude.c: Remove stray #endif, left over from
+	the change of a week ago.
+
+2011-02-19  Jim Meyering  <meyering@redhat.com>
+
+	git-version-gen: skip "-dirty" check when appropriate
+	* build-aux/git-version-gen: Don't run any git commands when the
+	version string comes from .tarball-version.  Prior to this, we
+	would run git update-index --refresh even from a just-unpacked
+	tarball directory, and that could affect a .git/ directory in a
+	parent of the build directory.  Reported by Mike Frysinger.
+
+2011-02-19  Bruno Haible  <bruno@clisp.org>
+
+	unictype/property-byname: Reduce the size of the 'data' segment.
+	* lib/unictype/pr_byname.gperf: Add gperf option '%pic'.
+
+2011-02-19  Bruno Haible  <bruno@clisp.org>
+
+	unictype/scripts: Reduce the size of the 'data' segment.
+	* lib/gen-uni-tables.c (output_scripts_byname): Emit gperf option
+	'%pic'.
+	* lib/unictype/scripts_byname.gperf: Regenerated.
+
+2011-02-19  Bruno Haible  <bruno@clisp.org>
+
+	stdint: Update documentation.
+	* doc/posix-headers/stdint.texi: Mention WCHAR_MIN, WCHAR_MAX problem.
+
+2011-02-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdint: omit redundant check for wchar.h
+	* m4/stdint.m4 (gl_STDINT_H): The earlier part of this macro now
+	always tests whether wchar.h exists, so remove the now-redundant test.
+
+2011-02-18  Bruno Haible  <bruno@clisp.org>
+
+	stdint: Cut dependency to module 'wchar'.
+	* lib/stdint.in.h: Include wchar.h only when HAVE_WCHAR_H is 1. Also
+	include the necessary prerequisites.
+	* m4/stdint.m4 (gl_STDINT_H): Test whether wchar.h exists.
+	* modules/stdint (Depends-on): Remove wchar.
+	(Makefile.am): Substitute HAVE_WCHAR_H.
+	This reverts part of a 2007-01-06 commit. Reported by Paul Eggert.
+
+2011-02-18  Eric Blake  <eblake@redhat.com>
+
+	longlong: skip, rather than fail, on cross-compilation
+	* m4/longlong.m4 (AC_TYPE_LONG_LONG_INT): Avoid aborting configure
+	when cross-compiling; regression from 2011-02-16.
+
+2011-02-17  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* NEWS: Mention 2011-02-08 change to stdlib.
+
+2011-02-17  Bruno Haible  <bruno@clisp.org>
+
+	getloadavg: Add comments about platforms.
+	* m4/getloadavg.m4: Add comment.
+	* lib/getloadavg.c: Likewise.
+
+2011-02-17  Bruno Haible  <bruno@clisp.org>
+
+	getloadavg: Fix link error on Solaris 2.6.
+	* modules/getloadavg (Link): New section.
+	* modules/getloadavg-tests (Makefile.am): Use GETLOADAVG_LIBS for
+	linking test-getloadavg.
+	* doc/glibc-functions/getloadavg.texi: Mention that Solaris 2.6 lacks
+	getloadavg.
+
+2011-02-17  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/getloadavg.c (getloadavg) [sgi]: Make ldav_off of type ptrdiff_t.
+	It was 'int', but this doesn't match the IRIX 6.5 manual.
+	Suggested by Bruno Haible in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-02/msg00207.html>.
+
+2011-02-17  Bruno Haible  <bruno@clisp.org>
+
+	havelib: Fix comments.
+	* m4/lib-link.m4 (AC_LIB_RPATH): Update comments after 2007-01-02
+	change.
+
+2011-02-17  Bruno Haible  <bruno@clisp.org>
+
+	havelib: Update config.rpath.
+	* build-aux/config.rpath: Update to match libtool.m4 from libtool-2.4.
+
+2011-02-17  Bruno Haible  <bruno@clisp.org>
+
+	getloadavg test: Add some plausibility checks.
+	* tests/test-getloadavg.c (check_avg): Print a warning when the value
+	is improbable.
+
+2011-02-16  Eric Blake  <eblake@redhat.com>
+
+	maintainer-makefile: make syntax-check a no-op from tarballs
+	* top/maint.mk (no-vc-detected): New rule.
+	(local-checks-available): Use it to avoid hanging if someone tries
+	'make syntax-check' from a tarball.  Also append to any non-syntax
+	checks already defined in cfg.mk.
+
+2011-02-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	longlong: tune, particularly for common case of c99
+
+	* m4/longlong.m4 (AC_TYPE_LONG_LONG_INT): Don't bother compiling
+	or running anything if c99, or if unsigned long long int does not
+	work.  In either case, we know the answer without further tests.
+	Do not compile _AC_TYPE_LONG_LONG_SNIPPET twice.  Instead, compile
+	it at most once, and use its results for both long long int and
+	unsigned long long int.  This is more likely to be efficient in
+	the common case where the program wants to check for both long
+	long int and unsigned long long int.
+	(AC_TYPE_UNSIGNED_LONG_LONG_INT): Don't bother compiling if c99,
+	since the answer is already known.
+
+2011-02-15  Paul Eggert  <eggert@cs.ucla.edu>
+
+	getloadavg: set errno
+	* lib/getloadavg.c: Set errno when returning -1.  If no other
+	error number looks appropriate, set it to ENOSYS if the getloadavg
+	looks like it can't possibly ever work, ENOTSUP otherwise.
+	Suggested by Bruno Haible in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-02/msg00187.html>.
+
+	getloadavg: trim unused parts and speed up 'configure'
+	* NEWS: Document this.
+	* lib/getloadavg.c: Ignore HAVE_GETLOADAVG; this file is now
+	always compiled if getloadavg is absent.
+	Move test code to ...
+	* tests/test-getloadavg.c: New file, containing previous
+	contents of test from lib/getloadavg.c.  It also contains
+	suggestions by Bruno Haible in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-02/msg00186.html>.
+	* modules/getloadavg-tests: New file.
+	* m4/getloadavg.m4 (gl_GETLOADAVG): Do not check for getloadavg twice.
+	Do tests in the same order as they're needed for getloadavg.c.
+	Omit setgid-related tests that generate symbols KMEM_GROUP,
+	NEET_SETGID, GETLOADAVG_PRIVILEGED; nobody seems to use those any more.
+	Do only the tests that are needed to see whether the system has
+	getloadavg, moving the other tests into ...
+	(gl_PREREQ_GETLOADAVG): ... here.  Do not define obsolete symbol
+	NLIST_NAME_UNION; nobody should be using it.  Do not define
+	symbols C_GETLOADAVG and HAVE_GETLOADAVG; they're no longer
+	relevant, as the user of this module shouldn't care how getloadavg
+	is implemented.
+
+	getloadavg: omit unused var
+	* lib/getloadavg.c (getloadavg): Omit unused local variable.
+
+2011-02-15  Jim Meyering  <meyering@redhat.com>
+
+	doc: update users.txt
+	* users.txt: Update iwhd's URL.
+
+2011-02-13  Bruno Haible  <bruno@clisp.org>
+
+	Consistent macro naming for macros that use GCC __attribute__.
+	* lib/di-set.h (_GL_ATTRIBUTE_NONNULL): Renamed from
+	_ATTRIBUTE_NONNULL_.
+	* lib/ino-map.h (_GL_ATTRIBUTE_NONNULL): Likewise.
+	* lib/hash.h (_GL_ATTRIBUTE_WUR): Renamed from ATTRIBUTE_WUR.
+	* lib/ignore-value.h (_GL_ATTRIBUTE_DEPRECATED): Renamed from
+	ATTRIBUTE_DEPRECATED.
+	* lib/openat.h (_GL_ATTRIBUTE_NORETURN): Renamed from
+	ATTRIBUTE_NORETURN.
+	* lib/sigpipe-die.h (_GL_ATTRIBUTE_NORETURN): Likewise.
+	* lib/xmemdup0.h (_GL_ATTRIBUTE_NORETURN): Likewise.
+	* lib/xstrtol.h (_GL_ATTRIBUTE_NORETURN): Likewise.
+	* lib/xalloc.h (_GL_ATTRIBUTE_NORETURN): Likewise.
+	(_GL_ATTRIBUTE_MALLOC): Renamed from ATTRIBUTE_MALLOC.
+	(_GL_ATTRIBUTE_ALLOC_SIZE): Renamed from ATTRIBUTE_ALLOC_SIZE.
+	* lib/version-etc.h (_GL_ATTRIBUTE_SENTINEL): Renamed from
+	ATTRIBUTE_SENTINEL.
+	* lib/safe-alloc.h (_GL_ATTRIBUTE_RETURN_CHECK): Renamed from
+	ATTRIBUTE_RETURN_CHECK.
+	* tests/test-ignore-value.c (_GL_ATTRIBUTE_RETURN_CHECK): Likewise.
+	* tests/test-argmatch.c (_GL_ATTRIBUTE_NORETURN): Renamed from
+	ATTRIBUTE_NORETURN.
+	* tests/test-exclude.c (_GL_ATTRIBUTE_NORETURN): Likewise.
+	Reported by Paul Eggert.
+
+2011-02-13  Bruno Haible  <bruno@clisp.org>
+
+	Don't interfere with a program's definition of __attribute__.
+	* lib/argp.h (__attribute__): Remove definition.
+	(_GL_ATTRIBUTE_FORMAT): New macro.
+	(argp_error, __argp_error, argp_failure, __argp_failure): Use it.
+	* lib/argp-fmtstream.h (__attribute__): Remove definition.
+	(_GL_ATTRIBUTE_FORMAT): New macro.
+	(__argp_fmtstream_printf, argp_fmtstream_printf): Use it.
+	* lib/argp-help.c (hol_entry_long_iterate): Use __attribute__ only for
+	GCC 3 or newer.
+	* lib/error.h (__attribute__): Remove definition.
+	(_GL_ATTRIBUTE_FORMAT): New macro.
+	(error, error_at_line): Use it.
+	* lib/hash.h (__attribute__): Remove definition.
+	(ATTRIBUTE_WUR): Update definition. Define always.
+	* lib/openat.h (__attribute__): Remove definition.
+	(ATTRIBUTE_NORETURN): Update definition. Define always.
+	* lib/sigpipe-die.h (__attribute__): Remove definition.
+	(ATTRIBUTE_NORETURN): Update definition. Define always.
+	* lib/vasnprintf.h (__attribute__): Remove definition.
+	(_GL_ATTRIBUTE_FORMAT): New macro.
+	(asnprintf, vasnprintf): Use it.
+	* lib/xalloc.h (__attribute__): Remove definition.
+	(ATTRIBUTE_NORETURN): Update definition. Define always.
+	(ATTRIBUTE_MALLOC, ATTRIBUTE_ALLOC_SIZE): Define always.
+	* lib/xmemdup0.h (__attribute__): Remove definition.
+	(ATTRIBUTE_NORETURN): Update definition. Define always.
+	* lib/xprintf.h (__attribute__): Remove definition.
+	(_GL_ATTRIBUTE_FORMAT): New macro.
+	(xprintf, xvprintf, xfprintf, xvfprintf): Use it.
+	* lib/xstrtol.h (__attribute__): Remove definition.
+	(ATTRIBUTE_NORETURN): Update definition. Define always.
+	* lib/xvasprintf.h (__attribute__): Remove definition.
+	(_GL_ATTRIBUTE_FORMAT): New macro.
+	(xasprintf, xvasprintf): Use it.
+	* tests/test-argmatch.c (__attribute__): Remove definition.
+	(ATTRIBUTE_NORETURN): Update definition. Define always.
+	* tests/test-exclude.c (__attribute__): Remove definition.
+	(ATTRIBUTE_NORETURN): Update definition. Define always.
+	Reported by Paul Eggert.
+
+2011-02-13  Bruno Haible  <bruno@clisp.org>
+
+	mbrtowc: Add more tests for native Windows platforms.
+	* tests/test-mbrtowc-w32-1.sh: New file.
+	* tests/test-mbrtowc-w32-2.sh: New file.
+	* tests/test-mbrtowc-w32-3.sh: New file.
+	* tests/test-mbrtowc-w32-4.sh: New file.
+	* tests/test-mbrtowc-w32-5.sh: New file.
+	* tests/test-mbrtowc-w32.c: New file.
+	* modules/mbrtowc-tests (Files): Add them.
+	(Makefile.am): Arrange to run these tests.
+	* tests/test-mbrtowc-w32-6.sh: New file, currently unused.
+	* tests/test-mbrtowc-w32-7.sh: New file, currently unused.
+
+2011-02-13  Bruno Haible  <bruno@clisp.org>
+
+	mbrtowc: Work around native Windows bug.
+	* m4/mbrtowc.m4 (gl_MBRTOWC_RETVAL): Detect native Windows bug. Use the
+	guess when no suitable locale for testing was found.
+	* doc/posix-functions/mbrtowc.texi: Mention the native Windows bug.
+
+2011-02-13  Bruno Haible  <bruno@clisp.org>
+
+	mbsinit: Work around mingw bug.
+	* m4/mbsinit.m4 (gl_FUNC_MBSINIT): Replace mbsinit also on mingw.
+	* lib/mbsinit.c (mbsinit): Provide an alternate definition for native
+	Windows.
+	* doc/posix-functions/mbsinit.texi: Mention the mingw bug.
+
+2011-02-13  Bruno Haible  <bruno@clisp.org>
+
+	mbsinit: Don't crash for a NULL argument.
+	* lib/mbsinit.c (mbsinit): When the argument is NULL, return 1.
+	* tests/test-mbsinit.c (mbsinit): Check this behaviour.
+
+2011-02-13  Bruno Haible  <bruno@clisp.org>
+
+	Don't interfere with a program's definition of __attribute__.
+	* lib/stdio.in.h (__attribute__): Remove definition.
+	(_GL_ATTRIBUTE_FORMAT, _GL_ATTRIBUTE_FORMAT_PRINTF): New macros.
+	(dprintf, fprintf, obstack_printf, obstack_printf, obstack_vprintf,
+	printf, snprintf, sprintf, asprintf, vasprintf, vdprintf, vfprintf,
+	vsnprintf, vsprintf): Use _GL_ATTRIBUTE_FORMAT_PRINTF.
+	* lib/string.in.h (__attribute__): Remove definition.
+	Reported by Paul Eggert.
+
+2011-02-12  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdlib: don't get in the way of non-GCC __attribute__
+	See thread starting at
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-02/msg00161.html>.
+	Revert previous stdlib change, installing the following instead:
+	* lib/stdlib.in.h (__attribute__): Remove.  We do not want
+	to get in the way of a non-GCC compiler that supports __attribute__.
+	(_GL_ATTRIBUTE_RETURN): New macro.
+	(_Exit): Use it instead of __attribute__.
+
+2011-02-12  Bruno Haible  <bruno@clisp.org>
+
+	quotearg test: Avoid test failure on mingw.
+	* tests/test-quotearg.sh: Convert the locale identifier from native
+	Windows syntax to Unix syntax.
+
+2011-02-12  Bruno Haible  <bruno@clisp.org>
+
+	setlocale: Prefer gnulib's override over libintl's override.
+	* lib/locale.in.h (GNULIB_defined_setlocale): New macro.
+	* lib/gettext.h (setlocale): Redefine to rpl_setlocale if
+	GNULIB_defined_setlocale is set.
+
+2011-02-12  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdlib: support non-GCC __attribute__
+
+	Fix a serious and tricky problem encountered when attempting to
+	add the getloadavg module to Emacs.  Emacs worked fine on RHEL
+	5.5, but it crashed due to memory corruption on Solaris 10 with
+	Sun C 5.11.  Emacs normally ORs 3-bit tags into their low-order
+	bits that are otherwise zero.  This tagging is optional inside
+	Emacs but is preferred and is used when __attribute__ ((__aligned
+	(8))) works, as it does with both recent-enough GCC and with Sun C
+	5.11.  However, Sun C 5.11 is not GCC and does not #define
+	__GNUC__ and __GNUC_MINOR__.
+
+	When I added the getloadavg module to Emacs, it brought in
+	stdlib.in.h, which contained this fragment:
+
+	   #ifndef __attribute__
+	   # if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 8)
+	   #  define __attribute__(Spec)   /* empty */
+	   # endif
+	   #endif
+
+	When files that include <stdlib.h> were compiled with Sun C 5.11,
+	the above code disabled __attribute__ ((__aligned (8))), which
+	caused variables to not be properly aligned, which eventually led
+	to the pointer corruption mentioned above.  (This was a bit hard
+	to diagnose, unfortunately.)
+
+	Several "#define __attribute__(X) /* empty */" code snippets need
+	to be eradicated from Gnulib to work with non-GCC compilers that
+	support __attribute__.  The Autoconf way to do this is to test for
+	each kind of attribute that we want support for, and selectively
+	enable that in source code.
+
+	Fix this problem just for stdlib.h, by adding a test for the
+	__noreturn__ attribute, and change stdlib.in.h to use that test
+	when needed.  This technique can be easily generalized to the
+	other *.in.h files and attributes, and a similar technique can be
+	used for *.h and *.c files.  This patch is enough to solve the
+	problem for Emacs + getloadavg, and I thought I'd publish it for
+	feedback before undertaking further, similar fixes in other
+	modules.
+
+	This patch does not arrange to #define HAVE_ATTRIBUTE_NORETURN
+	because it's not needed for stdlib.h.  It merely substitutes the
+	value directly into stdlib.h.  We may well need to #define it, or
+	similar symbols, for other modules, but it's nice to also have an
+	option to not #define it for applications like Emacs that do not
+	need it.
+
+	* lib/stdlib.in.h (__attribute__): Do not #define.
+	(_GL_ATTRIBUTE_NORETURN): New macro, which in stdlib.h needs to
+	be defined only if the _Exit module is also used.
+	* m4/_Exit.m4 (gl_FUNC__EXIT): Require gl_ATTRIBUTE_NORETURN.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Subst
+	HAVE_ATTRIBUTE_NORETURN and default it to 1, its value on GNU
+	platforms.
+	* modules/_Exit (Files): Add m4/attribute.m4.
+	* modules/stdlib (Makefile.am): Substitute HAVE_ATTRIBUTE_NORETURN.
+	* m4/attribute.m4: New file.
+
+2011-02-12  Bruno Haible  <bruno@clisp.org>
+
+	wcsrtombs: Work around bug on native Windows.
+	* m4/wcsrtombs.m4 (gl_WCSRTOMBS_NULL): Test against mingw bug.
+	* lib/wcsrtombs.c (rpl_wcsrtombs): When dest is NULL, pass SIZE_MAX
+	instead of len.
+	* doc/posix-functions/wcsrtombs.texi: Document mingw bug.
+
+2011-02-12  Bruno Haible  <bruno@clisp.org>
+
+	mbsrtowcs: Work around bug on native Windows.
+	* m4/mbsrtowcs.m4 (gl_MBSRTOWCS_WORKS): Require gt_LOCALE_FR. Test
+	against mingw bug.
+	* doc/posix-functions/mbsrtowcs.texi: Document mingw bug.
+
+2011-02-12  Bruno Haible  <bruno@clisp.org>
+
+	Avoid setlocale bugs in tests.
+	* modules/btowc (Dependencies): Add setlocale.
+	* modules/c-strcase (Dependencies): Likewise.
+	* modules/mbmemcasecmp (Dependencies): Likewise.
+	* modules/mbmemcasecoll (Dependencies): Likewise.
+	* modules/mbrtowc (Dependencies): Likewise.
+	* modules/mbscasecmp (Dependencies): Likewise.
+	* modules/mbscasestr (Dependencies): Likewise.
+	* modules/mbschr (Dependencies): Likewise.
+	* modules/mbscspn (Dependencies): Likewise.
+	* modules/mbsinit (Dependencies): Likewise.
+	* modules/mbsncasecmp (Dependencies): Likewise.
+	* modules/mbsnrtowcs (Dependencies): Likewise.
+	* modules/mbspbrk (Dependencies): Likewise.
+	* modules/mbspcasecmp (Dependencies): Likewise.
+	* modules/mbsrchr (Dependencies): Likewise.
+	* modules/mbsrtowcs (Dependencies): Likewise.
+	* modules/mbsspn (Dependencies): Likewise.
+	* modules/mbsstr (Dependencies): Likewise.
+	* modules/nl_langinfo (Dependencies): Likewise.
+	* modules/quotearg (Dependencies): Likewise.
+	* modules/unicase/locale-language (Dependencies): Likewise.
+	* modules/unicase/ulc-casecmp (Dependencies): Likewise.
+	* modules/unicase/ulc-casecoll (Dependencies): Likewise.
+	* modules/unigbrk/ulc-grapheme-breaks (Dependencies): Likewise.
+	* modules/unistdio/u8-vasnprintf (Dependencies): Likewise.
+	* modules/unistdio/u16-vasnprintf (Dependencies): Likewise.
+	* modules/unistdio/u32-vasnprintf (Dependencies): Likewise.
+	* modules/unistdio/ulc-vasnprintf (Dependencies): Likewise.
+	* modules/uniwbrk/ulc-wordbreaks (Dependencies): Likewise.
+	* modules/vasnprintf-posix (Dependencies): Likewise.
+	* modules/wcrtomb (Dependencies): Likewise.
+	* modules/wcsnrtombs (Dependencies): Likewise.
+	* modules/wcsrtombs (Dependencies): Likewise.
+
+2011-02-12  Bruno Haible  <bruno@clisp.org>
+
+	setlocale: Workaround native Windows bug.
+	* lib/setlocale.c (rpl_setlocale): On native Windows, when setlocale
+	succeeds but sets LC_CTYPE to "C", report a failure.
+	* tests/test-setlocale2.sh: New file.
+	* tests/test-setlocale2.c: New file.
+	* modules/setlocale-tests (Files): Add the new files.
+	(Makefile.am): Enable test-setlocale2.sh test.
+	* doc/posix-functions/setlocale.texi: Mention workaround.
+
+2011-02-11  Bruno Haible  <bruno@clisp.org>
+
+	Tests for module 'setlocale'.
+	* modules/setlocale-tests: New file.
+	* tests/test-setlocale1.sh: New file.
+	* tests/test-setlocale1.c: New file.
+
+	New module 'setlocale'.
+	* lib/locale.in.h (setlocale): New declaration.
+	* lib/setlocale.c: New file, based on
+	gettext/gettext-runtime/intl/setlocale.c.
+	* m4/setlocale.m4: New file.
+	* m4/locale_h.m4 (gl_LOCALE_H): Test whether setlocale is declared.
+	(gl_LOCALE_H_DEFAULTS): Initialize GNULIB_SETLOCALE, REPLACE_SETLOCALE.
+	* modules/locale (Makefile.am): Substitute GNULIB_SETLOCALE,
+	REPLACE_SETLOCALE.
+	* modules/setlocale: New file.
+	* tests/test-locale-c++.cc: Test the declaration of setlocale.
+	* doc/posix-functions/setlocale.texi: Mention the new module.
+
+2011-02-11  Bruno Haible  <bruno@clisp.org>
+
+	Prepare for locale dependent tests on mingw.
+	* m4/locale-ar.m4 (gt_LOCALE_AR): On native Windows, don't try "ar"
+	because it has the wrong locale encoding.
+	* m4/locale-fr.m4 (gt_LOCALE_FR): On native Windows, try
+	French_France.1252 instead of "fr".
+	(gt_LOCALE_FR_UTF8): On native Windows, try French_France.65001.
+	* m4/locale-ja.m4 (gt_LOCALE_JA): On native Windows, don't try "ja"
+	because it has the wrong locale encoding.
+	* m4/locale-tr.m4 (gt_LOCALE_TR_UTF8): Require AC_CANONICAL_HOST. On
+	native Windows, try Turkish_Turkey.65001.
+	* m4/locale-zh.m4 (gt_LOCALE_ZH_CN): On native Windows, try
+	Chinese_China.54936.
+
+	Prepare for locale dependent tests on mingw.
+	* m4/locale-ar.m4 (gt_LOCALE_AR): On native Windows, call setlocale
+	differently.
+	* m4/locale-fr.m4 (gt_LOCALE_FR, gt_LOCALE_FR_UTF8): Likewise.
+	* m4/locale-ja.m4 (gt_LOCALE_JA): Likewise.
+	* m4/locale-tr.m4 (gt_LOCALE_TR_UTF8): Likewise.
+	* m4/locale-zh.m4 (gt_LOCALE_ZH_CN): Likewise.
+
+2011-02-11  Eric Blake  <eblake@redhat.com>
+
+	strptime: avoid compiler warnings
+	* lib/strptime.c (__strptime_internal) [!_NL_CURRENT]: Avoid
+	compiler warnings about dead code.
+	Reported by Daniel P. Berrange.
+
+2011-02-11  Thien-Thi Nguyen  <ttn@gnuvola.org>
+
+	doc: update users.txt
+	* users.txt: Add rcs.
+
+2011-02-10  John W. Eaton  <jwe@gnu.org>
+
+	doc: update users.txt
+	* users.txt: Add octave.
+
+2011-02-10  Jim Meyering  <meyering@redhat.com>
+
+	doc: update users.txt
+	* users.txt: Add iwhd.
+
+2011-02-09  Bruno Haible  <bruno@clisp.org>
+
+	gnulib-tool: Make copyright notice adjustment more robust.
+	* gnulib-tool (func_import): In sed_transform_main_lib_file,
+	sed_transform_build_aux_file, sed_transform_testsrelated_lib_file,
+	allow a line break to occur after "GNU" in "GNU [Lesser] General Public
+	License".
+	Reported by Glenn Morris <rgm@gnu.org> via Paul Eggert.
+
+2011-02-06  Bruno Haible  <bruno@clisp.org>
+
+	New module 'towctrans'.
+	* modules/towctrans: New file.
+	* lib/wctype.in.h (towctrans): New declaration.
+	* lib/towctrans.c: New file.
+	* lib/towctrans-impl.h: New file.
+	* m4/towctrans.m4: New file.
+	* m4/wctype_h.m4 (gl_WCTYPE_H): Test whether towctrans is declared.
+	(gl_WCTYPE_H_DEFAULTS): Initialize GNULIB_TOWCTRANS.
+	* modules/wctype-h (Makefile.am): Substitute GNULIB_TOWCTRANS.
+	* tests/test-wctype-h-c++.cc: Test the declaration of towctrans.
+	* doc/posix-functions/towctrans.texi: Mention the new module.
+
+2011-02-06  Bruno Haible  <bruno@clisp.org>
+
+	New module 'wctrans'.
+	* modules/wctrans: New file.
+	* lib/wctype.in.h (wctrans): New declaration.
+	* lib/wctrans.c: New file.
+	* lib/wctrans-impl.h: New file.
+	* m4/wctrans.m4: New file.
+	* m4/wctype_h.m4 (gl_WCTYPE_H): Test whether wctrans is declared.
+	(gl_WCTYPE_H_DEFAULTS): Initialize GNULIB_WCTRANS.
+	* modules/wctype-h (Makefile.am): Substitute GNULIB_WCTRANS.
+	* tests/test-wctype-h-c++.cc: Test the declaration of wctrans.
+	* doc/posix-functions/wctrans.texi: Mention the new module.
+
+2011-02-06  Bruno Haible  <bruno@clisp.org>
+
+	New module 'iswctype'.
+	* modules/iswctype: New file.
+	* lib/wctype.in.h (iswctype): New declaration.
+	* lib/iswctype.c: New file.
+	* lib/iswctype-impl.h: New file.
+	* m4/iswctype.m4: New file.
+	* m4/wctype_h.m4 (gl_WCTYPE_H): Test whether iswctype is declared.
+	(gl_WCTYPE_H_DEFAULTS): Initialize GNULIB_ISWCTYPE.
+	* modules/wctype-h (Makefile.am): Substitute GNULIB_ISWCTYPE.
+	* tests/test-wctype-h-c++.cc: Test the declaration of iswctype.
+	* doc/posix-functions/iswctype.texi: Mention the new module and the
+	HP-UX 11.00 problem.
+
+2011-02-06  Bruno Haible  <bruno@clisp.org>
+
+	New module 'wctype'.
+	* modules/wctype: Change to represent the wctype() substitute.
+	* lib/wctype.in.h (wctype): New declaration.
+	* lib/wctype.c: New file.
+	* lib/wctype-impl.h: New file.
+	* m4/wctype.m4: New file.
+	* m4/wctype_h.m4 (gl_WCTYPE_H): Test whether wctype is declared.
+	(gl_WCTYPE_H_DEFAULTS): Initialize GNULIB_WCTYPE.
+	* modules/wctype-h (Makefile.am): Substitute GNULIB_WCTYPE.
+	* tests/test-wctype-h-c++.cc: Test the declaration of wctype.
+	* doc/posix-functions/wctype.texi: Mention the new module and the
+	HP-UX 11.00 problem.
+
+2011-02-06  Bruno Haible  <bruno@clisp.org>
+
+	wctype-h: Ensure wctype_t and wctrans_t are defined.
+	* lib/wctype.in.h (wctype_t, wctrans_t): New type declarations.
+	* m4/wctype_h.m4 (gl_WCTYPE_H): Determine HAVE_WCTYPE_T, HAVE_WCTRANS_T.
+	(gl_WCTYPE_H_DEFAULTS): Initialize HAVE_WCTYPE_T, HAVE_WCTRANS_T.
+	* modules/wctype-h (Makefile.am): Substitute HAVE_WCTYPE_T,
+	HAVE_WCTRANS_T.
+	* tests/test-wctype-h.c: Check that wctype_t and wctrans_t are defined.
+
+2011-02-09  Paul Eggert  <eggert@cs.ucla.edu>
+
+	flock: fix license typo
+
+	* lib/flock.c: Fix typo in license.  One of the "Lesser"s was
+	omitted.
+
+2011-02-08  Bruno Haible  <bruno@clisp.org>
+
+	Split large sed scripts, for HP-UX sed.
+	* modules/math (Makefile.am): Split sed scripts around 50 sed commands,
+	to avoid HP-UX limit of 99 commands, in the near future.
+	* modules/stdlib (Makefile.am): Likewise.
+	* modules/unistd (Makefile.am): Likewise.
+	* modules/wchar (Makefile.am): Likewise.
+	Reported by Albert Chin <bug-gnulib@mlists.thewrittenword.com>.
+	Suggestion by Ralf Wildenhues <Ralf.Wildenhues@gmx.de> in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2010-01/msg00216.html>.
+
+2011-02-08  Paul Eggert  <eggert@cs.ucla.edu>
+	    Bruno Haible  <bruno@clisp.org>
+
+	stdlib: improve random_r modularization
+	* lib/stdlib.in.h: Encapsulate all the stuff having to do with
+	random_r inside "#if @GNULIB_RANDOM_R@", so that it's clearer that
+	you also need the random_r module to get this material right.
+	* m4/random_r.m4 (gl_FUNC_RANDOM_R): Move check for random.h here ...
+	* m4/stdlib_h.m4 (gl_STDLIB_H): ... from here.
+	(gl_STDLIB_H_DEFAULTS): Default HAVE_RANDOM_H to 1, and AC_SUBST it.
+
+2011-02-08  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdlib: don't depend on stdint
+	* lib/stdlib.in.h: Don't include <stdint.h> merely because
+	GNULIB_POSIXCHECK is defined.  GNULIB_POSIXCHECK seems to
+	be independent of whether stdint.h is needed.
+	* m4/random_r.m4 (gl_FUNC_RANDOM_R): Check for struct random_data
+	here, instead of ...
+	* m4/stdlib_h.m4 (gl_STDLIB_H): ... here.  Applications that need
+	struct random_data should be using the random_r module, not just
+	the stdlib module (which wouldn't make sense: what package needs
+	just struct random_data without also needing random_r?).
+	* modules/stdlib (Depends-on): Remove stdint.
+
+	getloadavg: don't depend on c-strtod, cloexec, fcntl-safer
+	See the thread rooted at
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-02/msg00090.html>.
+	* lib/getloadavg.c: Do not include c-strtod.h, cloexec.h, or fcntl--.h.
+	Include <fcntl.h> only if (defined __linux__ || defined __CYGWIN__
+	|| defined SUNOS_5 || (defined LOAD_AVE_TYPE && !  defined
+	__VMS)); previously it was always included (via fcntl--.h).
+	(getloadavg): Do not use c_strtod.  Instead, approximate it by
+	hand; this is good enough for load averages.  Also, do not use
+	set_cloexec_flag; instead, use the O_CLOEXEC and F_DUPFD_CLOEXEC
+	flags directly if available and don't bother otherwise.  (Packages
+	that need the extra reliability should use the modules that define
+	these flags on older platforms that lack them.)
+	* modules/getloadavg (Depends-on): Remove c-strtod, cloexec,
+	fcntl-safer.
+
+2011-02-08  Jim Meyering  <meyering@redhat.com>
+
+	di-set.h, ino-map.h: add multiple-inclusion guard
+	Technically, the guard is required only for ino-map.h, due to its
+	INO_MAP_INSERT_FAILURE definition, but do both for consistency.
+	* lib/di-set.h: Add file-spanning #ifndef _GL_DI_SET_H.
+	* lib/ino-map.h: Likewise.
+
+2011-02-06  Bruno Haible  <bruno@clisp.org>
+
+	iswblank: Ensure declaration on glibc systems.
+	* m4/iswblank.m4 (gl_FUNC_ISWBLANK): Require gl_USE_SYSTEM_EXTENSIONS.
+	* modules/iswblank (Dependencies): Add 'extensions'.
+	* doc/posix-functions/iswblank.texi: Document the glibc problem.
+
+2011-02-06  Bruno Haible  <bruno@clisp.org>
+
+	New module 'iswblank'.
+	* lib/wctype.in.h (iswblank): Don't declare if GNULIB_ISWBLANK is 0.
+	* modules/iswblank: New file.
+	* modules/wctype-h (Files): Remove lib/iswblank.c.
+	(Makefile.am): Substitute GNULIB_ISWBLANK.
+	* m4/iswblank.m4: New file, partially extracted from m4/wctype_h.m4.
+	* m4/wctype_h.m4 (gl_WCTYPE_MODULE_INDICATOR): New macro.
+	(gl_WCTYPE_H_DEFAULTS): New macro.
+	(gl_WCTYPE_H): Require it. Remove iswblank related code.
+	* modules/iswblank-tests: New file.
+	* tests/test-iswblank.c: New file, extraced from tests/test-wctype-h.c.
+	* tests/test-wctype-h.c (main): Remove iswblank tests.
+	* tests/test-wctype-h-c++.cc: Guard the signature test of iswblank.
+	* doc/posix-functions/iswblank.texi: Mention module 'iswblank' instead
+	of 'wctype-h'.
+	* NEWS: Mention the change.
+	* modules/mbchar (Depends-on): Add iswblank.
+
+2011-02-08  Bruno Haible  <bruno@clisp.org>
+
+	di-set tests: Refactor.
+	* tests/test-di-set.c: Include di-set.h early. Include macros.h. Drop
+	unnecessary includes.
+	(ASSERT): Remove macro.
+	(main): Make C90 compliant by avoiding variable declaration after
+	statement.
+	* modules/di-set-tests (Files): Add tests/macros.h.
+
+2011-02-08  Bruno Haible  <bruno@clisp.org>
+
+	ino-map tests: Refactor.
+	* tests/test-ino-map.c: Include ino-map.h early. Include macros.h. Drop
+	unnecessary includes.
+	(ASSERT): Remove macro.
+	(main): Make C90 compliant by avoiding variable declaration after
+	statement.
+	* modules/ino-map-tests (Files): Add tests/macros.h.
+
+2011-02-08  Jim Meyering  <meyering@redhat.com>
+
+	di-set: add "const" to a cast
+	* lib/di-set.c (di_set_insert): Cast hash_insert0 argument to
+	"(void const *)", not "(void *)".  Spotted by Bruno Haible.
+
+2011-02-06  Bruno Haible  <bruno@clisp.org>
+
+	Rename module 'wctype' to 'wctype-h'.
+	* modules/wctype-h: Renamed from modules/wctype.
+	* modules/wctype: Simplyfy to a redirection to 'wctype-h'.
+	* modules/wctype-h-tests: Renamed from modules/wctype-tests.
+	(Files, Depends-on, Makefile.am): Update.
+	* modules/wctype-h-c++-tests: Renamed from modules/wctype-c++-tests.
+	(Files, Makefile.am): Update.
+	* tests/test-wctype-h.c: Renamed from tests/test-wctype.c.
+	* tests/test-wctype-h-c++.cc: Renamed from tests/test-wctype-c++.cc.
+	* doc/posix-headers/wctype.texi: Update.
+	* doc/posix-functions/iswalnum.texi: Update.
+	* doc/posix-functions/iswalpha.texi: Update.
+	* doc/posix-functions/iswblank.texi: Update.
+	* doc/posix-functions/iswcntrl.texi: Update.
+	* doc/posix-functions/iswdigit.texi: Update.
+	* doc/posix-functions/iswgraph.texi: Update.
+	* doc/posix-functions/iswlower.texi: Update.
+	* doc/posix-functions/iswprint.texi: Update.
+	* doc/posix-functions/iswpunct.texi: Update.
+	* doc/posix-functions/iswspace.texi: Update.
+	* doc/posix-functions/iswupper.texi: Update.
+	* doc/posix-functions/iswxdigit.texi: Update.
+	* doc/posix-functions/towlower.texi: Update.
+	* doc/posix-functions/towupper.texi: Update.
+	* NEWS: Mention the change.
+	* modules/fnmatch (Dependencies): Add wctype-h, remove wctype.
+	* modules/mbchar (Dependencies): Likewise.
+	* modules/mbswidth (Dependencies): Likewise.
+	* modules/quotearg (Dependencies): Likewise.
+	* modules/regex (Dependencies): Likewise.
+	* modules/wcscasecmp (Dependencies): Likewise.
+	* modules/wcsncasecmp (Dependencies): Likewise.
+	* modules/wcwidth (Dependencies): Likewise.
+
+2011-02-06  Bruno Haible  <bruno@clisp.org>
+
+	New module 'wcswidth'.
+	* modules/wcswidth: New file.
+	* lib/wchar.in.h (wcswidth): New declaration.
+	* lib/wcswidth.c: New file.
+	* lib/wcswidth-impl.h: New file, from libutf8 with modifications.
+	* m4/wcswidth.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wcswidth is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WCSWIDTH, HAVE_WCSWIDTH,
+	REPLACE_WCSWIDTH.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WCSWIDTH,
+	HAVE_WCSWIDTH, REPLACE_WCSWIDTH.
+	* tests/test-wchar-c++.cc: Test the declaration of wcswidth.
+	* doc/posix-functions/wcswidth.texi: Mention the new module.
+
+2011-02-06  Bruno Haible  <bruno@clisp.org>
+
+	New module 'wcstok'.
+	* modules/wcstok: New file.
+	* lib/wchar.in.h (wcstok): New declaration.
+	* lib/wcstok.c: New file.
+	* lib/wcstok-impl.h: New file, from libutf8 with modifications.
+	* m4/wcstok.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wcstok is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WCSTOK, HAVE_WCSTOK.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WCSTOK, HAVE_WCSTOK.
+	* tests/test-wchar-c++.cc: Test the declaration of wcstok.
+	* doc/posix-functions/wcstok.texi: Mention the new module.
+
+2011-02-06  Bruno Haible  <bruno@clisp.org>
+
+	New module 'wcsstr'.
+	* modules/wcsstr: New file.
+	* lib/wchar.in.h (wcsstr): New declaration.
+	* lib/wcsstr.c: New file.
+	* lib/wcsstr-impl.h: New file, from libutf8 with modifications.
+	* m4/wcsstr.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wcsstr is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WCSSTR, HAVE_WCSSTR.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WCSSTR, HAVE_WCSSTR.
+	* tests/test-wchar-c++.cc: Test the declaration of wcsstr.
+	* doc/posix-functions/wcsstr.texi: Mention the new module.
+
+2011-02-06  Bruno Haible  <bruno@clisp.org>
+
+	New module 'wcspbrk'.
+	* modules/wcspbrk: New file.
+	* lib/wchar.in.h (wcspbrk): New declaration.
+	* lib/wcspbrk.c: New file.
+	* lib/wcspbrk-impl.h: New file, from libutf8 with modifications.
+	* m4/wcspbrk.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wcspbrk is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WCSPBRK, HAVE_WCSPBRK.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WCSPBRK, HAVE_WCSPBRK.
+	* tests/test-wchar-c++.cc: Test the declaration of wcspbrk.
+	* doc/posix-functions/wcspbrk.texi: Mention the new module.
+
+2011-02-06  Bruno Haible  <bruno@clisp.org>
+
+	New module 'wcsspn'.
+	* modules/wcsspn: New file.
+	* lib/wchar.in.h (wcsspn): New declaration.
+	* lib/wcsspn.c: New file.
+	* lib/wcsspn-impl.h: New file, from libutf8 with modifications.
+	* m4/wcsspn.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wcsspn is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WCSSPN, HAVE_WCSSPN.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WCSSPN, HAVE_WCSSPN.
+	* tests/test-wchar-c++.cc: Test the declaration of wcsspn.
+	* doc/posix-functions/wcsspn.texi: Mention the new module.
+
+2011-02-06  Bruno Haible  <bruno@clisp.org>
+
+	New module 'wcscspn'.
+	* modules/wcscspn: New file.
+	* lib/wchar.in.h (wcscspn): New declaration.
+	* lib/wcscspn.c: New file.
+	* lib/wcscspn-impl.h: New file, from libutf8 with modifications.
+	* m4/wcscspn.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wcscspn is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WCSCSPN, HAVE_WCSCSPN.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WCSCSPN, HAVE_WCSCSPN.
+	* tests/test-wchar-c++.cc: Test the declaration of wcscspn.
+	* doc/posix-functions/wcscspn.texi: Mention the new module.
+
+2011-02-06  Bruno Haible  <bruno@clisp.org>
+
+	New module 'wcsrchr'.
+	* modules/wcsrchr: New file.
+	* lib/wchar.in.h (wcsrchr): New declaration.
+	* lib/wcsrchr.c: New file.
+	* lib/wcsrchr-impl.h: New file, from libutf8 with modifications.
+	* m4/wcsrchr.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wcsrchr is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WCSRCHR, HAVE_WCSRCHR.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WCSRCHR, HAVE_WCSRCHR.
+	* tests/test-wchar-c++.cc: Test the declaration of wcsrchr.
+	* doc/posix-functions/wcsrchr.texi: Mention the new module.
+
+2011-02-06  Bruno Haible  <bruno@clisp.org>
+
+	New module 'wcschr'.
+	* modules/wcschr: New file.
+	* lib/wchar.in.h (wcschr): New declaration.
+	* lib/wcschr.c: New file.
+	* lib/wcschr-impl.h: New file, from libutf8 with modifications.
+	* m4/wcschr.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wcschr is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WCSCHR, HAVE_WCSCHR.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WCSCHR, HAVE_WCSCHR.
+	* tests/test-wchar-c++.cc: Test the declaration of wcschr.
+	* doc/posix-functions/wcschr.texi: Mention the new module.
+
+2011-02-06  Bruno Haible  <bruno@clisp.org>
+
+	New module 'wcsdup'.
+	* modules/wcsdup: New file.
+	* lib/wchar.in.h (wcsdup): New declaration.
+	* lib/wcsdup.c: New file.
+	* lib/wcsdup-impl.h: New file, from libutf8 with modifications.
+	* m4/wcsdup.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wcsdup is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WCSDUP, HAVE_WCSDUP.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WCSDUP, HAVE_WCSDUP.
+	* tests/test-wchar-c++.cc: Test the declaration of wcsdup.
+	* doc/posix-functions/wcsdup.texi: Mention the new module.
+
+2011-02-06  Bruno Haible  <bruno@clisp.org>
+
+	New module 'wcsxfrm'.
+	* modules/wcsxfrm: New file.
+	* lib/wchar.in.h (wcsxfrm): New declaration.
+	* lib/wcsxfrm.c: New file.
+	* lib/wcsxfrm-impl.h: New file.
+	* m4/wcsxfrm.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wcsxfrm is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WCSXFRM, HAVE_WCSXFRM.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WCSXFRM, HAVE_WCSXFRM.
+	* tests/test-wchar-c++.cc: Test the declaration of wcsxfrm.
+	* doc/posix-functions/wcsxfrm.texi: Mention the new module.
+
+2011-02-06  Bruno Haible  <bruno@clisp.org>
+
+	New module 'wcscoll'.
+	* modules/wcscoll: New file.
+	* lib/wchar.in.h (wcscoll): New declaration.
+	* lib/wcscoll.c: New file.
+	* lib/wcscoll-impl.h: New file.
+	* m4/wcscoll.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wcscoll is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WCSCOLL, HAVE_WCSCOLL.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WCSCOLL, HAVE_WCSCOLL.
+	* tests/test-wchar-c++.cc: Test the declaration of wcscoll.
+	* doc/posix-functions/wcscoll.texi: Mention the new module.
+
+2011-02-06  Bruno Haible  <bruno@clisp.org>
+
+	New module 'wcsncasecmp'.
+	* modules/wcsncasecmp: New file.
+	* lib/wchar.in.h (wcsncasecmp): New declaration.
+	* lib/wcsncasecmp.c: New file.
+	* lib/wcsncasecmp-impl.h: New file, from libutf8 with modifications.
+	* m4/wcsncasecmp.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wcsncasecmp is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WCSNCASECMP, HAVE_WCSNCASECMP.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WCSNCASECMP,
+	HAVE_WCSNCASECMP.
+	* tests/test-wchar-c++.cc: Test the declaration of wcsncasecmp.
+	* doc/posix-functions/wcsncasecmp.texi: Mention the new module.
+
+2011-02-06  Bruno Haible  <bruno@clisp.org>
+
+	New module 'wcscasecmp'.
+	* modules/wcscasecmp: New file.
+	* lib/wchar.in.h (wcscasecmp): New declaration.
+	* lib/wcscasecmp.c: New file.
+	* lib/wcscasecmp-impl.h: New file, from libutf8 with modifications.
+	* m4/wcscasecmp.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wcscasecmp is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WCSCASECMP, HAVE_WCSCASECMP.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WCSCASECMP,
+	HAVE_WCSCASECMP.
+	* tests/test-wchar-c++.cc: Test the declaration of wcscasecmp.
+	* doc/posix-functions/wcscasecmp.texi: Mention the new module.
+
+2011-02-05  Bruno Haible  <bruno@clisp.org>
+
+	New module 'wcsncmp'.
+	* modules/wcsncmp: New file.
+	* lib/wchar.in.h (wcsncmp): New declaration.
+	* lib/wcsncmp.c: New file.
+	* lib/wcsncmp-impl.h: New file, from libutf8 with modifications.
+	* m4/wcsncmp.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wcsncmp is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WCSNCMP, HAVE_WCSNCMP.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WCSNCMP, HAVE_WCSNCMP.
+	* tests/test-wchar-c++.cc: Test the declaration of wcsncmp.
+	* doc/posix-functions/wcsncmp.texi: Mention the new module.
+
+2011-02-05  Bruno Haible  <bruno@clisp.org>
+
+	New module 'wcscmp'.
+	* modules/wcscmp: New file.
+	* lib/wchar.in.h (wcscmp): New declaration.
+	* lib/wcscmp.c: New file.
+	* lib/wcscmp-impl.h: New file, from libutf8 with modifications.
+	* m4/wcscmp.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wcscmp is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WCSCMP, HAVE_WCSCMP.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WCSCMP, HAVE_WCSCMP.
+	* tests/test-wchar-c++.cc: Test the declaration of wcscmp.
+	* doc/posix-functions/wcscmp.texi: Mention the new module.
+
+2011-02-05  Bruno Haible  <bruno@clisp.org>
+
+	New module 'wcsncat'.
+	* modules/wcsncat: New file.
+	* lib/wchar.in.h (wcsncat): New declaration.
+	* lib/wcsncat.c: New file.
+	* lib/wcsncat-impl.h: New file, from libutf8 with modifications.
+	* m4/wcsncat.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wcsncat is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WCSNCAT, HAVE_WCSNCAT.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WCSNCAT, HAVE_WCSNCAT.
+	* tests/test-wchar-c++.cc: Test the declaration of wcsncat.
+	* doc/posix-functions/wcsncat.texi: Mention the new module.
+
+2011-02-05  Bruno Haible  <bruno@clisp.org>
+
+	New module 'wcscat'.
+	* modules/wcscat: New file.
+	* lib/wchar.in.h (wcscat): New declaration.
+	* lib/wcscat.c: New file.
+	* lib/wcscat-impl.h: New file, from libutf8 with modifications.
+	* m4/wcscat.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wcscat is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WCSCAT, HAVE_WCSCAT.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WCSCAT, HAVE_WCSCAT.
+	* tests/test-wchar-c++.cc: Test the declaration of wcscat.
+	* doc/posix-functions/wcscat.texi: Mention the new module.
+
+2011-02-05  Bruno Haible  <bruno@clisp.org>
+
+	New module 'wcpncpy'.
+	* modules/wcpncpy: New file.
+	* lib/wchar.in.h (wcpncpy): New declaration.
+	* lib/wcpncpy.c: New file.
+	* lib/wcpncpy-impl.h: New file, from libutf8 with modifications.
+	* m4/wcpncpy.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wcpncpy is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WCPNCPY, HAVE_WCPNCPY.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WCPNCPY, HAVE_WCPNCPY.
+	* tests/test-wchar-c++.cc: Test the declaration of wcpncpy.
+	* doc/posix-functions/wcpncpy.texi: Mention the new module.
+
+2011-02-05  Bruno Haible  <bruno@clisp.org>
+
+	New module 'wcsncpy'.
+	* modules/wcsncpy: New file.
+	* lib/wchar.in.h (wcsncpy): New declaration.
+	* lib/wcsncpy.c: New file.
+	* lib/wcsncpy-impl.h: New file, from libutf8 with modifications.
+	* m4/wcsncpy.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wcsncpy is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WCSNCPY, HAVE_WCSNCPY.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WCSNCPY, HAVE_WCSNCPY.
+	* tests/test-wchar-c++.cc: Test the declaration of wcsncpy.
+	* doc/posix-functions/wcsncpy.texi: Mention the new module.
+
+2011-02-05  Bruno Haible  <bruno@clisp.org>
+
+	New module 'wcpcpy'.
+	* modules/wcpcpy: New file.
+	* lib/wchar.in.h (wcpcpy): New declaration.
+	* lib/wcpcpy.c: New file.
+	* lib/wcpcpy-impl.h: New file, from libutf8 with modifications.
+	* m4/wcpcpy.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wcpcpy is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WCPCPY, HAVE_WCPCPY.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WCPCPY, HAVE_WCPCPY.
+	* tests/test-wchar-c++.cc: Test the declaration of wcpcpy.
+	* doc/posix-functions/wcpcpy.texi: Mention the new module.
+
+2011-02-05  Bruno Haible  <bruno@clisp.org>
+
+	New module 'wcscpy'.
+	* modules/wcscpy: New file.
+	* lib/wchar.in.h (wcscpy): New declaration.
+	* lib/wcscpy.c: New file.
+	* lib/wcscpy-impl.h: New file, from libutf8 with modifications.
+	* m4/wcscpy.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wcscpy is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WCSCPY, HAVE_WCSCPY.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WCSCPY, HAVE_WCSCPY.
+	* tests/test-wchar-c++.cc: Test the declaration of wcscpy.
+	* doc/posix-functions/wcscpy.texi: Mention the new module.
+
+2011-02-05  Bruno Haible  <bruno@clisp.org>
+
+	New module 'wcsnlen'.
+	* modules/wcsnlen: New file.
+	* lib/wchar.in.h (wcsnlen): New declaration.
+	* lib/wcsnlen.c: New file.
+	* lib/wcsnlen-impl.h: New file, from libutf8 with modifications.
+	* m4/wcsnlen.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wcsnlen is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WCSNLEN, HAVE_WCSNLEN.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WCSNLEN, HAVE_WCSNLEN.
+	* tests/test-wchar-c++.cc: Test the declaration of wcsnlen.
+	* doc/posix-functions/wcsnlen.texi: Mention the new module.
+
+2011-02-05  Bruno Haible  <bruno@clisp.org>
+
+	New module 'wcslen'.
+	* modules/wcslen: New file.
+	* lib/wchar.in.h (wcslen): New declaration.
+	* lib/wcslen.c: New file.
+	* lib/wcslen-impl.h: New file, from libutf8 with modifications.
+	* m4/wcslen.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wcslen is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WCSLEN, HAVE_WCSLEN.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WCSLEN, HAVE_WCSLEN.
+	* tests/test-wchar-c++.cc: Test the declaration of wcslen.
+	* doc/posix-functions/wcslen.texi: Mention the new module.
+
+2011-02-05  Bruno Haible  <bruno@clisp.org>
+
+	New module 'wmemset'.
+	* modules/wmemset: New file.
+	* lib/wchar.in.h (wmemset): New declaration.
+	* lib/wmemset.c: New file.
+	* lib/wmemset-impl.h: New file, from libutf8 with modifications.
+	* m4/wmemset.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wmemset is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WMEMSET, HAVE_WMEMSET.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WMEMSET, HAVE_WMEMSET.
+	* tests/test-wchar-c++.cc: Test the declaration of wmemset.
+	* doc/posix-functions/wmemset.texi: Mention the new module.
+
+2011-02-05  Bruno Haible  <bruno@clisp.org>
+
+	New module 'wmemmove'.
+	* modules/wmemmove: New file.
+	* lib/wchar.in.h (wmemmove): New declaration.
+	* lib/wmemmove.c: New file.
+	* lib/wmemmove-impl.h: New file, from libutf8 with modifications.
+	* m4/wmemmove.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wmemmove is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WMEMMOVE, HAVE_WMEMMOVE.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WMEMMOVE,
+	HAVE_WMEMMOVE.
+	* tests/test-wchar-c++.cc: Test the declaration of wmemmove.
+	* doc/posix-functions/wmemmove.texi: Mention the new module.
+
+2011-02-05  Bruno Haible  <bruno@clisp.org>
+
+	New module 'wmemcpy'.
+	* modules/wmemcpy: New file.
+	* lib/wchar.in.h (wmemcpy): New declaration.
+	* lib/wmemcpy.c: New file.
+	* lib/wmemcpy-impl.h: New file, from libutf8 with modifications.
+	* m4/wmemcpy.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wmemcpy is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WMEMCPY, HAVE_WMEMCPY.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WMEMCPY, HAVE_WMEMCPY.
+	* tests/test-wchar-c++.cc: Test the declaration of wmemcpy.
+	* doc/posix-functions/wmemcpy.texi: Mention the new module.
+
+2011-02-05  Bruno Haible  <bruno@clisp.org>
+
+	New module 'wmemcmp'.
+	* modules/wmemcmp: New file.
+	* lib/wchar.in.h (wmemcmp): New declaration.
+	* lib/wmemcmp.c: New file.
+	* lib/wmemcmp-impl.h: New file, from libutf8 with modifications.
+	* m4/wmemcmp.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wmemcmp is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WMEMCMP, HAVE_WMEMCMP.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WMEMCMP, HAVE_WMEMCMP.
+	* tests/test-wchar-c++.cc: Test the declaration of wmemcmp.
+	* doc/posix-functions/wmemcmp.texi: Mention the new module.
+
+2011-02-07  Jim Meyering  <meyering@redhat.com>
+
+	di-set, ino-map: new modules, from coreutils
+	* lib/di-set.c: New file.
+	* lib/di-set.h: Likewise.
+	* lib/ino-map.c: Likewise.
+	* lib/ino-map.h: Likewise.
+	* modules/di-set: Likewise.
+	* modules/di-set-tests: Likewise.
+	* modules/ino-map: Likewise.
+	* modules/ino-map-tests: Likewise.
+	* tests/test-di-set.c: Likewise.
+	* tests/test-ino-map.c: Likewise.
+
+2011-02-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	getloadavg: merge minor changes from Emacs
+
+	* lib/getloadavg.c (getloadavg_initialized): More-accurate comment.
+	(getloadavg): Use memset, not bzero.
+
+	2008-07-25  Chong Yidong  <cyd@stupidchicken.com>
+	* lib/getloadavg.c (nl): Rename to name_list to avoid ncurses.h
+	clash (bug#86).
+
+2010-11-14  Bruno Haible  <bruno@clisp.org>
+
+	Allow multiple gnulib generated replacements to coexist.
+	* lib/getopt.in.h (struct option): Avoid identical redefinition.
+	* lib/inttypes.in.h (imaxdiv_t): Likewise.
+	* lib/langinfo.in.h (nl_item): Likewise.
+	* lib/math.in.h (_NaN, NAN): Likewise.
+	* lib/netdb.in.h (struct addrinfo): Likewise.
+	* lib/poll.in.h (struct pollfd, nfds_t): Likewise.
+	* lib/pthread.in.h (pthread_t, pthread_attr_t, pthread_barrier_t,
+	pthread_barrierattr_t, pthread_cond_t, pthread_condattr_t,
+	pthread_key_t, pthread_mutex_t, pthread_mutexattr_t, pthread_once_t,
+	pthread_rwlock_t, pthread_rwlockattr_t, pthread_cond_destroy,
+	pthread_cond_init, pthread_cond_signal, pthread_cond_wait,
+	pthread_create, pthread_exit, pthread_join, pthread_mutexattr_destroy,
+	pthread_mutexattr_init, pthread_mutexattr_settype,
+	pthread_mutex_destroy, pthread_mutex_init, pthread_mutex_lock,
+	pthread_mutex_trylock, pthread_mutex_unlock, pthread_spinlock_t,
+	pthread_spin_init, pthread_spin_destroy, pthread_spin_lock,
+	pthread_spin_trylock, pthread_spin_unlock): Likewise.
+	* lib/sched.in.h (struct sched_param): Likewise.
+	* lib/se-selinux.in.h (security_class_t, security_context_t,
+	is_selinux_enabled, getcon, freecon, getfscreatecon, setfscreatecon,
+	matchpathcon, getfilecon, lgetfilecon, fgetfilecon, setfilecon,
+	lsetfilecon, fsetfilecon, security_check_context,
+	security_check_context_raw, setexeccon, matchpathcon_init_prefix):
+	Likewise.
+	* lib/search.in.h (VISIT, _gl_search_compar_fn, _gl_search_action_fn):
+	Likewise.
+	* lib/signal.in.h (sig_atomic_t, sigset_t, verify_NSIG_constraint,
+	_gl_function_taking_int_returning_void_t, union sigval,
+	struct siginfo_t, siginfo_t, struct sigaction): Likewise.
+	* lib/spawn.in.h (posix_spawnattr_t, posix_spawn_file_actions_t,
+	verify_POSIX_SPAWN_USEVFORK_no_overlap): Likewise.
+	* lib/stdint.in.h (gl_int8_t, gl_uint8_t, gl_int16_t, gl_uint16_t,
+	gl_int32_t, gl_uint32_t, gl_int64_t, gl_uint64_t, int_least8_t,
+	uint_least8_t, int_least16_t, uint_least16_t, int_least32_t,
+	uint_least32_t, int_least64_t, uint_least64_t, gl_int_fast8_t,
+	gl_uint_fast8_t, gl_int_fast16_t, gl_uint_fast16_t, gl_int_fast32_t,
+	gl_uint_fast32_t, int_fast64_t, uint_fast64_t, gl_intptr_t,
+	gl_uintptr_t, intmax_t, uintmax_t, _verify_intmax_size): Likewise.
+	* lib/stdio.in.h (rpl_fseek, rpl_ftell): Likewise.
+	* lib/sys_socket.in.h (sa_family_t, struct sockaddr_storage,
+	socklen_t, rpl_fd_isset): Likewise.
+	* lib/sys_stat.in.h (rpl_mkdir): Likewise.
+	* lib/sys_time.in.h (struct timeval): Likewise.
+	* lib/sys_times.in.h (struct tms): Likewise.
+	* lib/sys_utsname.in.h (struct utsname):
+	* lib/time.in.h (struct timespec, __time_t_must_be_integral): Likewise.
+	* lib/unistd.in.h (getpagesize): Likewise.
+	* lib/wchar.in.h (mbstate_t): Likewise.
+	* lib/wctype.in.h (iswalnum, iswalpha, iswblank, iswcntrl, iswdigit,
+	iswgraph, iswlower, iswprint, iswpunct, iswspace, iswupper, iswxdigit,
+	towlower, towupper): Likewise.
+	Reported by Sam Steingold <sds@gnu.org>.
+
+2011-02-05  Eric Blake  <eblake@redhat.com>
+
+	unsetenv: work around Haiku issues
+	* m4/setenv.m4 (gl_FUNC_UNSETENV): Also detect Haiku issue.
+	* doc/posix-functions/unsetenv.texi (unsetenv): Document it.
+
+2010-12-30  Bruce Korb  <bkorb@gnu.org>
+
+	libposix: avoid calling error() within libposix
+	* lib/openat-die.c: remove error module stuff when GNULIB_LIBPOSIX
+	is defined.
+
+2011-02-05  Eric Blake  <eblake@redhat.com>
+
+	strerror_r-posix: port to cygwin
+	* lib/strerror_r.c (strerror_r) [__CYGWIN__]: Add cygwin
+	implementation.
+	* m4/strerror_r.m4 (gl_FUNC_STRERROR_R): Adjust comment.
+	* tests/test-strerror_r.c (main): Fix test.
+	* doc/posix-functions/strerror_r.texi (strerror_r): Document the
+	issue.
+
+2011-02-05  Bruno Haible  <bruno@clisp.org>
+
+	New module 'wmemchr'.
+	* modules/wmemchr: New file.
+	* lib/wchar.in.h (wmemchr): New declaration.
+	* lib/wmemchr.c: New file.
+	* lib/wmemchr-impl.h: New file, from libutf8 with modifications.
+	* m4/wmemchr.m4: New file.
+	* m4/wchar_h.m4 (gl_WCHAR_H): Test whether wmemchr is declared.
+	(gl_WCHAR_H_DEFAULTS): Initialize GNULIB_WMEMCHR, HAVE_WMEMCHR.
+	* modules/wchar (Makefile.am): Substitute GNULIB_WMEMCHR, HAVE_WMEMCHR.
+	* tests/test-wchar-c++.cc: Test the declaration of wmemchr.
+	* doc/posix-functions/wmemchr.texi: Mention the new module.
+
+2011-02-04  Eric Blake  <eblake@redhat.com>
+
+	fdopendir: detect FreeBSD bug
+	* m4/fdopendir.m4 (gl_FUNC_FDOPENDIR): Detect bug.
+	* doc/posix-functions/fdopendir.texi (fdopendir): Document it.
+
+2011-02-04  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdbool: do not define HAVE_STDBOOL_H
+	* m4/stdbool.m4 (AC_CHECK_HEADER_STDBOOL): Renamed from
+	AC_HEADER_STDBOOL.  All uses changed.  Do not define
+	HAVE_STDBOOL_H, as gnulib does not need this.  This change is
+	imported from the latest Autoconf git.  It was motivated by Emacs,
+	which uses gnulib but does not need HAVE_STDBOOL_H.
+
+2011-02-04  Bruno Haible  <bruno@clisp.org>
+
+	wcsnrtombs: Prepare for new module wwcsnrtombs.
+	* lib/wcsnrtombs-impl.h: New file, extracted from lib/wcsnrtombs.c.
+	* lib/wcsnrtombs.c: Include it.
+	* modules/wcsnrtombs (Files): Add lib/wcsnrtombs-impl.h.
+
+	wcsrtombs: Prepare for new module wwcsrtombs.
+	* lib/wcsrtombs-impl.h: New file, extracted from lib/wcsrtombs.c.
+	* lib/wcsrtombs.c: Include it.
+	* modules/wcsrtombs (Files): Add lib/wcsrtombs-impl.h.
+
+	mbsnrtowcs: Prepare for new module mbsnrtowwcs.
+	* lib/mbsnrtowcs-impl.h: New file, extracted from lib/mbsnrtowcs.c.
+	* lib/mbsnrtowcs.c: Include it.
+	* modules/mbsnrtowcs (Files): Add lib/mbsnrtowcs-impl.h.
+
+	mbsrtowcs: Prepare for new module mbsrtowwcs.
+	* lib/mbsrtowcs-impl.h: New file, extracted from lib/mbsrtowcs.c.
+	* lib/mbsrtowcs.c: Include it.
+	* modules/mbsrtowcs (Files): Add lib/mbsrtowcs-impl.h.
+
+2011-02-04  Bruno Haible  <bruno@clisp.org>
+
+	vasnprintf: Reduce use of malloc for small format strings.
+	* lib/printf-args.h (N_DIRECT_ALLOC_ARGUMENTS): New macro.
+	(arguments): Add room for the first 7 arguments.
+	* lib/printf-parse.h (N_DIRECT_ALLOC_DIRECTIVES): New macro.
+	(char_directives, u8_directives, u16_directives, u32_directives): Add
+	room for the first 7 directives.
+	* lib/printf-parse.c: Include <string.h>.
+	(PRINTF_PARSE): Change memory handling code so that it uses the first
+	7 preallocated elements in an 'arguments' or 'DIRECTIVES' struct.
+	* lib/vasnprintf.c (VASNPRINTF): Update memory handling code.
+	Reported by Pádraig Brady <P@draigbrady.com>.
+
 2011-01-31  Eric Blake  <eblake@redhat.com>
 
 	dup2: work around Haiku bug
@@ -220,7 +2646,7 @@
 
 2011-01-23  Paul Eggert  <eggert@cs.ucla.edu>
 
-	Allow the user to avoid the GNULIB_TEST_* macros.
+	Allow the user to avoid the HAVE_RAW_DECL_* macros.
 	* m4/gnulib-common.m4 (gl_ASSERT_NO_GNULIB_POSIXCHECK): New macro.
 
 2011-01-23  Bruno Haible  <bruno@clisp.org>
@@ -632,6 +3058,8 @@
 	indirectly on xalloc.  This change causes the openat substitute
 	to fall back on save_cwd when memory is tight, and for save_cwd to
 	fail instead of dying when memory is tight, but that's good enough.
+	Problem and initial idea for fix reported by Bastien Roucaries in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-01/msg00170.html>.
 
 	* lib/openat-proc.c: Include stdlib.h (for malloc), not
 	xalloc.h (for xmalloc).

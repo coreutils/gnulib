@@ -20,7 +20,7 @@ Include:
 "uninorm/decomposition-table.h"
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Bruno Haible

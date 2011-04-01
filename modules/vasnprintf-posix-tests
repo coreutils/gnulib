@@ -12,6 +12,7 @@ m4/codeset.m4
 Depends-on:
 stdint
 float
+setlocale
 
 configure.ac:
 gt_LOCALE_FR

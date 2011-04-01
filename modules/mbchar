@@ -10,7 +10,8 @@ Depends-on:
 extensions
 stdbool
 wchar
-wctype
+wctype-h
+iswblank
 wcwidth
 memcmp
 

@@ -1,5 +1,5 @@
 /* Parse printf format string.
-   Copyright (C) 1999, 2002-2003, 2005, 2007, 2009-2011 Free Software
+   Copyright (C) 1999, 2002-2003, 2005, 2007, 2010-2011 Free Software
    Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -47,6 +47,9 @@
 /* xxx_directive: A parsed directive.
    xxx_directives: A parsed format string.  */
 
+/* Number of directly allocated directives (no malloc() needed).  */
+#define N_DIRECT_ALLOC_DIRECTIVES 7
+
 /* A parsed directive.  */
 typedef struct
 {
@@ -71,6 +74,7 @@ typedef struct
   char_directive *dir;
   size_t max_width_length;
   size_t max_precision_length;
+  char_directive direct_alloc_dir[N_DIRECT_ALLOC_DIRECTIVES];
 }
 char_directives;
 
@@ -100,6 +104,7 @@ typedef struct
   u8_directive *dir;
   size_t max_width_length;
   size_t max_precision_length;
+  u8_directive direct_alloc_dir[N_DIRECT_ALLOC_DIRECTIVES];
 }
 u8_directives;
 
@@ -127,6 +132,7 @@ typedef struct
   u16_directive *dir;
   size_t max_width_length;
   size_t max_precision_length;
+  u16_directive direct_alloc_dir[N_DIRECT_ALLOC_DIRECTIVES];
 }
 u16_directives;
 
@@ -154,6 +160,7 @@ typedef struct
   u32_directive *dir;
   size_t max_width_length;
   size_t max_precision_length;
+  u32_directive direct_alloc_dir[N_DIRECT_ALLOC_DIRECTIVES];
 }
 u32_directives;
 

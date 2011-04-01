@@ -4,7 +4,7 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/iswblank.html}
 
-Gnulib module: wctype
+Gnulib module: iswblank
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -14,6 +14,9 @@ AIX 4.3.2, IRIX 6.5, OSF/1 5.1, Solaris 9, mingw.
 @item
 This function is declared but not defined on some platforms:
 IRIX 6.5.30.
+@item
+This function is not declared (without @code{-D_GNU_SOURCE}) on some platforms:
+glibc 2.8.
 @item
 This function returns 0 for all possible arguments on some platforms:
 Linux libc5.

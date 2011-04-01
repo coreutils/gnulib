@@ -1,9 +1,12 @@
-# Makefile for gnulib central.
+# GNU Makefile for gnulib central.
 # Copyright (C) 2006, 2009-2011 Free Software Foundation, Inc.
 #
 # Copying and distribution of this file, with or without modification,
 # in any medium, are permitted without royalty provided the copyright
 # notice and this notice are preserved.
+
+# This Makefile requires the use of GNU make.  Some targets require
+# that you have tools like git, makeinfo and cppi installed.
 
 # Produce some files that are not stored in the repository.
 all:
@@ -12,11 +15,12 @@ all:
 info html dvi pdf:
 	cd doc && $(MAKE) $@ && $(MAKE) mostlyclean
 
+# Collect the names of rules starting with `sc_'.
+syntax-check-rules := $(sort $(shell sed -n 's/^\(sc_[a-zA-Z0-9_-]*\):.*/\1/p'\
+			Makefile))
+
 # Perform some platform independent checks on the gnulib code.
-check: \
-  sc_prohibit_augmenting_PATH_via_TESTS_ENVIRONMENT			\
-  sc_pragma_columns							\
-  sc_prefer_ac_check_funcs_once
+check: $(syntax-check-rules)
 
 sc_prefer_ac_check_funcs_once:
 	if test -d .git; then						\
@@ -44,6 +48,16 @@ sc_pragma_columns:
 		   'without also using @PRAGMA_COLUMNS@' 1>&2;		\
 		 exit 1; } || :;					\
 	else :; fi
+
+# Verify that certain (for now, only Jim Meyering and Eric Blake's)
+# *.c files are consistently cpp indented.
+sc_cpp_indent_check:
+	./gnulib-tool --extract-filelist \
+            $$(cd ./modules; grep -ilrE '(meyering|blake)' .) \
+          | sort -u \
+          | grep '\.c$$' \
+          | grep -v '/getloadavg\.c$$' \
+          | xargs cppi -c
 
 # Regenerate some files that are stored in the repository.
 regen: MODULES.html

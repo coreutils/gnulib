@@ -24,6 +24,8 @@
 #include <string.h>
 #include <sys/stat.h>
 
+#include "dosname.h"
+
 #undef unlink
 
 /* Remove file NAME.

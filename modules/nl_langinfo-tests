@@ -7,6 +7,7 @@ m4/locale-fr.m4
 
 Depends-on:
 c-strcase
+setlocale
 
 configure.ac:
 gt_LOCALE_FR

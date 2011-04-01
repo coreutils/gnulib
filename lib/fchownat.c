@@ -66,15 +66,15 @@
 static int
 local_lchownat (int fd, char const *file, uid_t owner, gid_t group);
 
-# define AT_FUNC_NAME local_lchownat
-# define AT_FUNC_F1 lchown
-# define AT_FUNC_POST_FILE_PARAM_DECLS , uid_t owner, gid_t group
-# define AT_FUNC_POST_FILE_ARGS        , owner, group
-# include "at-func.c"
-# undef AT_FUNC_NAME
-# undef AT_FUNC_F1
-# undef AT_FUNC_POST_FILE_PARAM_DECLS
-# undef AT_FUNC_POST_FILE_ARGS
+#  define AT_FUNC_NAME local_lchownat
+#  define AT_FUNC_F1 lchown
+#  define AT_FUNC_POST_FILE_PARAM_DECLS , uid_t owner, gid_t group
+#  define AT_FUNC_POST_FILE_ARGS        , owner, group
+#  include "at-func.c"
+#  undef AT_FUNC_NAME
+#  undef AT_FUNC_F1
+#  undef AT_FUNC_POST_FILE_PARAM_DECLS
+#  undef AT_FUNC_POST_FILE_ARGS
 
 # endif
 

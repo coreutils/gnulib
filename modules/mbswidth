@@ -10,7 +10,7 @@ m4/mbswidth.m4
 
 Depends-on:
 wchar
-wctype
+wctype-h
 mbrtowc
 mbsinit
 wcwidth

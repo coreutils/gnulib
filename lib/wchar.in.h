@@ -104,10 +104,12 @@
    On IRIX 6.5, sizeof (mbstate_t) == 1, which is not sufficient for
    implementing mbrtowc for encodings like UTF-8.  */
 #if !(@HAVE_MBSINIT@ && @HAVE_MBRTOWC@) || @REPLACE_MBSTATE_T@
+# if !GNULIB_defined_mbstate_t
 typedef int rpl_mbstate_t;
-# undef mbstate_t
-# define mbstate_t rpl_mbstate_t
-# define GNULIB_defined_mbstate_t 1
+#  undef mbstate_t
+#  define mbstate_t rpl_mbstate_t
+#  define GNULIB_defined_mbstate_t 1
+# endif
 #endif
 
 
@@ -424,6 +426,493 @@ _GL_CXXALIASWARN (wcwidth);
 # if HAVE_RAW_DECL_WCWIDTH
 _GL_WARN_ON_USE (wcwidth, "wcwidth is unportable - "
                  "use gnulib module wcwidth for portability");
+# endif
+#endif
+
+
+/* Search N wide characters of S for C.  */
+#if @GNULIB_WMEMCHR@
+# if !@HAVE_WMEMCHR@
+_GL_FUNCDECL_SYS (wmemchr, wchar_t *, (const wchar_t *s, wchar_t c, size_t n));
+# endif
+_GL_CXXALIAS_SYS (wmemchr, wchar_t *, (const wchar_t *s, wchar_t c, size_t n));
+_GL_CXXALIASWARN (wmemchr);
+#elif defined GNULIB_POSIXCHECK
+# undef wmemchr
+# if HAVE_RAW_DECL_WMEMCHR
+_GL_WARN_ON_USE (wmemchr, "wmemchr is unportable - "
+                 "use gnulib module wmemchr for portability");
+# endif
+#endif
+
+
+/* Compare N wide characters of S1 and S2.  */
+#if @GNULIB_WMEMCMP@
+# if !@HAVE_WMEMCMP@
+_GL_FUNCDECL_SYS (wmemcmp, int,
+                  (const wchar_t *s1, const wchar_t *s2, size_t n));
+# endif
+_GL_CXXALIAS_SYS (wmemcmp, int,
+                  (const wchar_t *s1, const wchar_t *s2, size_t n));
+_GL_CXXALIASWARN (wmemcmp);
+#elif defined GNULIB_POSIXCHECK
+# undef wmemcmp
+# if HAVE_RAW_DECL_WMEMCMP
+_GL_WARN_ON_USE (wmemcmp, "wmemcmp is unportable - "
+                 "use gnulib module wmemcmp for portability");
+# endif
+#endif
+
+
+/* Copy N wide characters of SRC to DEST.  */
+#if @GNULIB_WMEMCPY@
+# if !@HAVE_WMEMCPY@
+_GL_FUNCDECL_SYS (wmemcpy, wchar_t *,
+                  (wchar_t *dest, const wchar_t *src, size_t n));
+# endif
+_GL_CXXALIAS_SYS (wmemcpy, wchar_t *,
+                  (wchar_t *dest, const wchar_t *src, size_t n));
+_GL_CXXALIASWARN (wmemcpy);
+#elif defined GNULIB_POSIXCHECK
+# undef wmemcpy
+# if HAVE_RAW_DECL_WMEMCPY
+_GL_WARN_ON_USE (wmemcpy, "wmemcpy is unportable - "
+                 "use gnulib module wmemcpy for portability");
+# endif
+#endif
+
+
+/* Copy N wide characters of SRC to DEST, guaranteeing correct behavior for
+   overlapping memory areas.  */
+#if @GNULIB_WMEMMOVE@
+# if !@HAVE_WMEMMOVE@
+_GL_FUNCDECL_SYS (wmemmove, wchar_t *,
+                  (wchar_t *dest, const wchar_t *src, size_t n));
+# endif
+_GL_CXXALIAS_SYS (wmemmove, wchar_t *,
+                  (wchar_t *dest, const wchar_t *src, size_t n));
+_GL_CXXALIASWARN (wmemmove);
+#elif defined GNULIB_POSIXCHECK
+# undef wmemmove
+# if HAVE_RAW_DECL_WMEMMOVE
+_GL_WARN_ON_USE (wmemmove, "wmemmove is unportable - "
+                 "use gnulib module wmemmove for portability");
+# endif
+#endif
+
+
+/* Set N wide characters of S to C.  */
+#if @GNULIB_WMEMSET@
+# if !@HAVE_WMEMSET@
+_GL_FUNCDECL_SYS (wmemset, wchar_t *, (wchar_t *s, wchar_t c, size_t n));
+# endif
+_GL_CXXALIAS_SYS (wmemset, wchar_t *, (wchar_t *s, wchar_t c, size_t n));
+_GL_CXXALIASWARN (wmemset);
+#elif defined GNULIB_POSIXCHECK
+# undef wmemset
+# if HAVE_RAW_DECL_WMEMSET
+_GL_WARN_ON_USE (wmemset, "wmemset is unportable - "
+                 "use gnulib module wmemset for portability");
+# endif
+#endif
+
+
+/* Return the number of wide characters in S.  */
+#if @GNULIB_WCSLEN@
+# if !@HAVE_WCSLEN@
+_GL_FUNCDECL_SYS (wcslen, size_t, (const wchar_t *s));
+# endif
+_GL_CXXALIAS_SYS (wcslen, size_t, (const wchar_t *s));
+_GL_CXXALIASWARN (wcslen);
+#elif defined GNULIB_POSIXCHECK
+# undef wcslen
+# if HAVE_RAW_DECL_WCSLEN
+_GL_WARN_ON_USE (wcslen, "wcslen is unportable - "
+                 "use gnulib module wcslen for portability");
+# endif
+#endif
+
+
+/* Return the number of wide characters in S, but at most MAXLEN.  */
+#if @GNULIB_WCSNLEN@
+# if !@HAVE_WCSNLEN@
+_GL_FUNCDECL_SYS (wcsnlen, size_t, (const wchar_t *s, size_t maxlen));
+# endif
+_GL_CXXALIAS_SYS (wcsnlen, size_t, (const wchar_t *s, size_t maxlen));
+_GL_CXXALIASWARN (wcsnlen);
+#elif defined GNULIB_POSIXCHECK
+# undef wcsnlen
+# if HAVE_RAW_DECL_WCSNLEN
+_GL_WARN_ON_USE (wcsnlen, "wcsnlen is unportable - "
+                 "use gnulib module wcsnlen for portability");
+# endif
+#endif
+
+
+/* Copy SRC to DEST.  */
+#if @GNULIB_WCSCPY@
+# if !@HAVE_WCSCPY@
+_GL_FUNCDECL_SYS (wcscpy, wchar_t *, (wchar_t *dest, const wchar_t *src));
+# endif
+_GL_CXXALIAS_SYS (wcscpy, wchar_t *, (wchar_t *dest, const wchar_t *src));
+_GL_CXXALIASWARN (wcscpy);
+#elif defined GNULIB_POSIXCHECK
+# undef wcscpy
+# if HAVE_RAW_DECL_WCSCPY
+_GL_WARN_ON_USE (wcscpy, "wcscpy is unportable - "
+                 "use gnulib module wcscpy for portability");
+# endif
+#endif
+
+
+/* Copy SRC to DEST, returning the address of the terminating L'\0' in DEST.  */
+#if @GNULIB_WCPCPY@
+# if !@HAVE_WCPCPY@
+_GL_FUNCDECL_SYS (wcpcpy, wchar_t *, (wchar_t *dest, const wchar_t *src));
+# endif
+_GL_CXXALIAS_SYS (wcpcpy, wchar_t *, (wchar_t *dest, const wchar_t *src));
+_GL_CXXALIASWARN (wcpcpy);
+#elif defined GNULIB_POSIXCHECK
+# undef wcpcpy
+# if HAVE_RAW_DECL_WCPCPY
+_GL_WARN_ON_USE (wcpcpy, "wcpcpy is unportable - "
+                 "use gnulib module wcpcpy for portability");
+# endif
+#endif
+
+
+/* Copy no more than N wide characters of SRC to DEST.  */
+#if @GNULIB_WCSNCPY@
+# if !@HAVE_WCSNCPY@
+_GL_FUNCDECL_SYS (wcsncpy, wchar_t *,
+                  (wchar_t *dest, const wchar_t *src, size_t n));
+# endif
+_GL_CXXALIAS_SYS (wcsncpy, wchar_t *,
+                  (wchar_t *dest, const wchar_t *src, size_t n));
+_GL_CXXALIASWARN (wcsncpy);
+#elif defined GNULIB_POSIXCHECK
+# undef wcsncpy
+# if HAVE_RAW_DECL_WCSNCPY
+_GL_WARN_ON_USE (wcsncpy, "wcsncpy is unportable - "
+                 "use gnulib module wcsncpy for portability");
+# endif
+#endif
+
+
+/* Copy no more than N characters of SRC to DEST, returning the address of
+   the last character written into DEST.  */
+#if @GNULIB_WCPNCPY@
+# if !@HAVE_WCPNCPY@
+_GL_FUNCDECL_SYS (wcpncpy, wchar_t *,
+                  (wchar_t *dest, const wchar_t *src, size_t n));
+# endif
+_GL_CXXALIAS_SYS (wcpncpy, wchar_t *,
+                  (wchar_t *dest, const wchar_t *src, size_t n));
+_GL_CXXALIASWARN (wcpncpy);
+#elif defined GNULIB_POSIXCHECK
+# undef wcpncpy
+# if HAVE_RAW_DECL_WCPNCPY
+_GL_WARN_ON_USE (wcpncpy, "wcpncpy is unportable - "
+                 "use gnulib module wcpncpy for portability");
+# endif
+#endif
+
+
+/* Append SRC onto DEST.  */
+#if @GNULIB_WCSCAT@
+# if !@HAVE_WCSCAT@
+_GL_FUNCDECL_SYS (wcscat, wchar_t *, (wchar_t *dest, const wchar_t *src));
+# endif
+_GL_CXXALIAS_SYS (wcscat, wchar_t *, (wchar_t *dest, const wchar_t *src));
+_GL_CXXALIASWARN (wcscat);
+#elif defined GNULIB_POSIXCHECK
+# undef wcscat
+# if HAVE_RAW_DECL_WCSCAT
+_GL_WARN_ON_USE (wcscat, "wcscat is unportable - "
+                 "use gnulib module wcscat for portability");
+# endif
+#endif
+
+
+/* Append no more than N wide characters of SRC onto DEST.  */
+#if @GNULIB_WCSNCAT@
+# if !@HAVE_WCSNCAT@
+_GL_FUNCDECL_SYS (wcsncat, wchar_t *,
+                  (wchar_t *dest, const wchar_t *src, size_t n));
+# endif
+_GL_CXXALIAS_SYS (wcsncat, wchar_t *,
+                  (wchar_t *dest, const wchar_t *src, size_t n));
+_GL_CXXALIASWARN (wcsncat);
+#elif defined GNULIB_POSIXCHECK
+# undef wcsncat
+# if HAVE_RAW_DECL_WCSNCAT
+_GL_WARN_ON_USE (wcsncat, "wcsncat is unportable - "
+                 "use gnulib module wcsncat for portability");
+# endif
+#endif
+
+
+/* Compare S1 and S2.  */
+#if @GNULIB_WCSCMP@
+# if !@HAVE_WCSCMP@
+_GL_FUNCDECL_SYS (wcscmp, int, (const wchar_t *s1, const wchar_t *s2));
+# endif
+_GL_CXXALIAS_SYS (wcscmp, int, (const wchar_t *s1, const wchar_t *s2));
+_GL_CXXALIASWARN (wcscmp);
+#elif defined GNULIB_POSIXCHECK
+# undef wcscmp
+# if HAVE_RAW_DECL_WCSCMP
+_GL_WARN_ON_USE (wcscmp, "wcscmp is unportable - "
+                 "use gnulib module wcscmp for portability");
+# endif
+#endif
+
+
+/* Compare no more than N wide characters of S1 and S2.  */
+#if @GNULIB_WCSNCMP@
+# if !@HAVE_WCSNCMP@
+_GL_FUNCDECL_SYS (wcsncmp, int,
+                  (const wchar_t *s1, const wchar_t *s2, size_t n));
+# endif
+_GL_CXXALIAS_SYS (wcsncmp, int,
+                  (const wchar_t *s1, const wchar_t *s2, size_t n));
+_GL_CXXALIASWARN (wcsncmp);
+#elif defined GNULIB_POSIXCHECK
+# undef wcsncmp
+# if HAVE_RAW_DECL_WCSNCMP
+_GL_WARN_ON_USE (wcsncmp, "wcsncmp is unportable - "
+                 "use gnulib module wcsncmp for portability");
+# endif
+#endif
+
+
+/* Compare S1 and S2, ignoring case.  */
+#if @GNULIB_WCSCASECMP@
+# if !@HAVE_WCSCASECMP@
+_GL_FUNCDECL_SYS (wcscasecmp, int, (const wchar_t *s1, const wchar_t *s2));
+# endif
+_GL_CXXALIAS_SYS (wcscasecmp, int, (const wchar_t *s1, const wchar_t *s2));
+_GL_CXXALIASWARN (wcscasecmp);
+#elif defined GNULIB_POSIXCHECK
+# undef wcscasecmp
+# if HAVE_RAW_DECL_WCSCASECMP
+_GL_WARN_ON_USE (wcscasecmp, "wcscasecmp is unportable - "
+                 "use gnulib module wcscasecmp for portability");
+# endif
+#endif
+
+
+/* Compare no more than N chars of S1 and S2, ignoring case.  */
+#if @GNULIB_WCSNCASECMP@
+# if !@HAVE_WCSNCASECMP@
+_GL_FUNCDECL_SYS (wcsncasecmp, int,
+                  (const wchar_t *s1, const wchar_t *s2, size_t n));
+# endif
+_GL_CXXALIAS_SYS (wcsncasecmp, int,
+                  (const wchar_t *s1, const wchar_t *s2, size_t n));
+_GL_CXXALIASWARN (wcsncasecmp);
+#elif defined GNULIB_POSIXCHECK
+# undef wcsncasecmp
+# if HAVE_RAW_DECL_WCSNCASECMP
+_GL_WARN_ON_USE (wcsncasecmp, "wcsncasecmp is unportable - "
+                 "use gnulib module wcsncasecmp for portability");
+# endif
+#endif
+
+
+/* Compare S1 and S2, both interpreted as appropriate to the LC_COLLATE
+   category of the current locale.  */
+#if @GNULIB_WCSCOLL@
+# if !@HAVE_WCSCOLL@
+_GL_FUNCDECL_SYS (wcscoll, int, (const wchar_t *s1, const wchar_t *s2));
+# endif
+_GL_CXXALIAS_SYS (wcscoll, int, (const wchar_t *s1, const wchar_t *s2));
+_GL_CXXALIASWARN (wcscoll);
+#elif defined GNULIB_POSIXCHECK
+# undef wcscoll
+# if HAVE_RAW_DECL_WCSCOLL
+_GL_WARN_ON_USE (wcscoll, "wcscoll is unportable - "
+                 "use gnulib module wcscoll for portability");
+# endif
+#endif
+
+
+/* Transform S2 into array pointed to by S1 such that if wcscmp is applied
+   to two transformed strings the result is the as applying 'wcscoll' to the
+   original strings.  */
+#if @GNULIB_WCSXFRM@
+# if !@HAVE_WCSXFRM@
+_GL_FUNCDECL_SYS (wcsxfrm, size_t, (wchar_t *s1, const wchar_t *s2, size_t n));
+# endif
+_GL_CXXALIAS_SYS (wcsxfrm, size_t, (wchar_t *s1, const wchar_t *s2, size_t n));
+_GL_CXXALIASWARN (wcsxfrm);
+#elif defined GNULIB_POSIXCHECK
+# undef wcsxfrm
+# if HAVE_RAW_DECL_WCSXFRM
+_GL_WARN_ON_USE (wcsxfrm, "wcsxfrm is unportable - "
+                 "use gnulib module wcsxfrm for portability");
+# endif
+#endif
+
+
+/* Duplicate S, returning an identical malloc'd string.  */
+#if @GNULIB_WCSDUP@
+# if !@HAVE_WCSDUP@
+_GL_FUNCDECL_SYS (wcsdup, wchar_t *, (const wchar_t *s));
+# endif
+_GL_CXXALIAS_SYS (wcsdup, wchar_t *, (const wchar_t *s));
+_GL_CXXALIASWARN (wcsdup);
+#elif defined GNULIB_POSIXCHECK
+# undef wcsdup
+# if HAVE_RAW_DECL_WCSDUP
+_GL_WARN_ON_USE (wcsdup, "wcsdup is unportable - "
+                 "use gnulib module wcsdup for portability");
+# endif
+#endif
+
+
+/* Find the first occurrence of WC in WCS.  */
+#if @GNULIB_WCSCHR@
+# if !@HAVE_WCSCHR@
+_GL_FUNCDECL_SYS (wcschr, wchar_t *, (const wchar_t *wcs, wchar_t wc));
+# endif
+_GL_CXXALIAS_SYS (wcschr, wchar_t *, (const wchar_t *wcs, wchar_t wc));
+_GL_CXXALIASWARN (wcschr);
+#elif defined GNULIB_POSIXCHECK
+# undef wcschr
+# if HAVE_RAW_DECL_WCSCHR
+_GL_WARN_ON_USE (wcschr, "wcschr is unportable - "
+                 "use gnulib module wcschr for portability");
+# endif
+#endif
+
+
+/* Find the last occurrence of WC in WCS.  */
+#if @GNULIB_WCSRCHR@
+# if !@HAVE_WCSRCHR@
+_GL_FUNCDECL_SYS (wcsrchr, wchar_t *, (const wchar_t *wcs, wchar_t wc));
+# endif
+_GL_CXXALIAS_SYS (wcsrchr, wchar_t *, (const wchar_t *wcs, wchar_t wc));
+_GL_CXXALIASWARN (wcsrchr);
+#elif defined GNULIB_POSIXCHECK
+# undef wcsrchr
+# if HAVE_RAW_DECL_WCSRCHR
+_GL_WARN_ON_USE (wcsrchr, "wcsrchr is unportable - "
+                 "use gnulib module wcsrchr for portability");
+# endif
+#endif
+
+
+/* Return the length of the initial segmet of WCS which consists entirely
+   of wide characters not in REJECT.  */
+#if @GNULIB_WCSCSPN@
+# if !@HAVE_WCSCSPN@
+_GL_FUNCDECL_SYS (wcscspn, size_t, (const wchar_t *wcs, const wchar_t *reject));
+# endif
+_GL_CXXALIAS_SYS (wcscspn, size_t, (const wchar_t *wcs, const wchar_t *reject));
+_GL_CXXALIASWARN (wcscspn);
+#elif defined GNULIB_POSIXCHECK
+# undef wcscspn
+# if HAVE_RAW_DECL_WCSCSPN
+_GL_WARN_ON_USE (wcscspn, "wcscspn is unportable - "
+                 "use gnulib module wcscspn for portability");
+# endif
+#endif
+
+
+/* Return the length of the initial segmet of WCS which consists entirely
+   of wide characters in ACCEPT.  */
+#if @GNULIB_WCSSPN@
+# if !@HAVE_WCSSPN@
+_GL_FUNCDECL_SYS (wcsspn, size_t, (const wchar_t *wcs, const wchar_t *accept));
+# endif
+_GL_CXXALIAS_SYS (wcsspn, size_t, (const wchar_t *wcs, const wchar_t *accept));
+_GL_CXXALIASWARN (wcsspn);
+#elif defined GNULIB_POSIXCHECK
+# undef wcsspn
+# if HAVE_RAW_DECL_WCSSPN
+_GL_WARN_ON_USE (wcsspn, "wcsspn is unportable - "
+                 "use gnulib module wcsspn for portability");
+# endif
+#endif
+
+
+/* Find the first occurrence in WCS of any character in ACCEPT.  */
+#if @GNULIB_WCSPBRK@
+# if !@HAVE_WCSPBRK@
+_GL_FUNCDECL_SYS (wcspbrk, wchar_t *,
+                  (const wchar_t *wcs, const wchar_t *accept));
+# endif
+_GL_CXXALIAS_SYS (wcspbrk, wchar_t *,
+                  (const wchar_t *wcs, const wchar_t *accept));
+_GL_CXXALIASWARN (wcspbrk);
+#elif defined GNULIB_POSIXCHECK
+# undef wcspbrk
+# if HAVE_RAW_DECL_WCSPBRK
+_GL_WARN_ON_USE (wcspbrk, "wcspbrk is unportable - "
+                 "use gnulib module wcspbrk for portability");
+# endif
+#endif
+
+
+/* Find the first occurrence of NEEDLE in HAYSTACK.  */
+#if @GNULIB_WCSSTR@
+# if !@HAVE_WCSSTR@
+_GL_FUNCDECL_SYS (wcsstr, wchar_t *,
+                  (const wchar_t *haystack, const wchar_t *needle));
+# endif
+_GL_CXXALIAS_SYS (wcsstr, wchar_t *,
+                  (const wchar_t *haystack, const wchar_t *needle));
+_GL_CXXALIASWARN (wcsstr);
+#elif defined GNULIB_POSIXCHECK
+# undef wcsstr
+# if HAVE_RAW_DECL_WCSSTR
+_GL_WARN_ON_USE (wcsstr, "wcsstr is unportable - "
+                 "use gnulib module wcsstr for portability");
+# endif
+#endif
+
+
+/* Divide WCS into tokens separated by characters in DELIM.  */
+#if @GNULIB_WCSTOK@
+# if !@HAVE_WCSTOK@
+_GL_FUNCDECL_SYS (wcstok, wchar_t *,
+                  (wchar_t *wcs, const wchar_t *delim, wchar_t **ptr));
+# endif
+_GL_CXXALIAS_SYS (wcstok, wchar_t *,
+                  (wchar_t *wcs, const wchar_t *delim, wchar_t **ptr));
+_GL_CXXALIASWARN (wcstok);
+#elif defined GNULIB_POSIXCHECK
+# undef wcstok
+# if HAVE_RAW_DECL_WCSTOK
+_GL_WARN_ON_USE (wcstok, "wcstok is unportable - "
+                 "use gnulib module wcstok for portability");
+# endif
+#endif
+
+
+/* Determine number of column positions required for first N wide
+   characters (or fewer if S ends before this) in S.  */
+#if @GNULIB_WCSWIDTH@
+# if @REPLACE_WCSWIDTH@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef wcswidth
+#   define wcswidth rpl_wcswidth
+#  endif
+_GL_FUNCDECL_RPL (wcswidth, int, (const wchar_t *s, size_t n));
+_GL_CXXALIAS_RPL (wcswidth, int, (const wchar_t *s, size_t n));
+# else
+#  if !@HAVE_WCSWIDTH@
+_GL_FUNCDECL_SYS (wcswidth, int, (const wchar_t *s, size_t n));
+#  endif
+_GL_CXXALIAS_SYS (wcswidth, int, (const wchar_t *s, size_t n));
+# endif
+_GL_CXXALIASWARN (wcswidth);
+#elif defined GNULIB_POSIXCHECK
+# undef wcswidth
+# if HAVE_RAW_DECL_WCSWIDTH
+_GL_WARN_ON_USE (wcswidth, "wcswidth is unportable - "
+                 "use gnulib module wcswidth for portability");
 # endif
 #endif
 

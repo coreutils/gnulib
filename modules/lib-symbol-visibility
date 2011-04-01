@@ -1,6 +1,10 @@
 Description:
 Control of symbols exported by shared libraries.
 
+Notice:
+The value of $(CFLAG_VISIBILITY) needs to be added to the CFLAGS for the
+compilation of all sources that make up the library.
+
 Files:
 m4/visibility.m4
 

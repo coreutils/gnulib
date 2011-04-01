@@ -29,18 +29,37 @@
 static void
 check (const char *literal, int cflags, const char *expected)
 {
+  struct regex_quote_spec spec;
   char *result;
   size_t length;
 
-  result = regex_quote (literal, cflags);
+  spec = regex_quote_spec_posix (cflags, false);
+  result = regex_quote (literal, &spec);
   ASSERT (strcmp (result, expected) == 0);
-  length = regex_quote_length (literal, cflags);
+  length = regex_quote_length (literal, &spec);
   ASSERT (length == strlen (result));
   free (result);
 
   result = (char *) xmalloc (1 + length + 1 + 1);
   result[0] = '^';
-  strcpy (regex_quote_copy (result + 1, literal, cflags), "$");
+  strcpy (regex_quote_copy (result + 1, literal, &spec), "$");
+  {
+    regex_t regex;
+    regmatch_t match[1];
+
+    ASSERT (regcomp (&regex, result, cflags) == 0);
+
+    ASSERT (regexec (&regex, literal, 1, match, 0) == 0);
+    ASSERT (match[0].rm_so == 0);
+    ASSERT (match[0].rm_eo == strlen (literal));
+    regfree (&regex);
+  }
+  free (result);
+
+  spec = regex_quote_spec_posix (cflags, true);
+  result = regex_quote (literal, &spec);
+  length = regex_quote_length (literal, &spec);
+  ASSERT (length == strlen (result));
   {
     regex_t regex;
     regmatch_t match[1];

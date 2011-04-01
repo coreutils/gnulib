@@ -3,6 +3,7 @@ Find a Unicode character category, given its name.
 
 Files:
 lib/unictype/categ_byname.c
+lib/unictype/categ_byname.gperf
 
 Depends-on:
 unictype/base
@@ -13,6 +14,7 @@ unictype/category-Cn
 unictype/category-Co
 unictype/category-Cs
 unictype/category-L
+unictype/category-LC
 unictype/category-Ll
 unictype/category-Lm
 unictype/category-Lo
@@ -44,6 +46,7 @@ unictype/category-Zl
 unictype/category-Zp
 unictype/category-Zs
 unictype/category-none
+gperf
 
 configure.ac:
 gl_LIBUNISTRING_MODULE([0.9.4], [unictype/category-byname])
@@ -52,6 +55,14 @@ Makefile.am:
 if LIBUNISTRING_COMPILE_UNICTYPE_CATEGORY_BYNAME
 lib_SOURCES += unictype/categ_byname.c
 endif
+
+unictype/categ_byname.h: unictype/categ_byname.gperf
+	$(GPERF) -m 10 $(srcdir)/unictype/categ_byname.gperf > $(srcdir)/unictype/categ_byname.h-t
+	mv $(srcdir)/unictype/categ_byname.h-t $(srcdir)/unictype/categ_byname.h
+BUILT_SOURCES        += unictype/categ_byname.h
+MOSTLYCLEANFILES     += unictype/categ_byname.h-t
+MAINTAINERCLEANFILES += unictype/categ_byname.h
+EXTRA_DIST           += unictype/categ_byname.h
 
 Include:
 "unictype.h"

@@ -12,6 +12,43 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2011-03-08  regex-quote     The last argument is no longer an 'int cflags'
+                            but instead a pointer to a previously constructed
+                            'struct regex_quote_spec'.
+
+2011-02-25  dirname         These modules no longer put #defines for the
+            dirname-lgpl    following symbols into <config.h>: ISSLASH,
+            backupfile      FILE_SYSTEM_ACCEPTS_DRIVE_LETTER_PREFIX,
+            lstat           FILE_SYSTEM_BACKSLASH_IS_FILE_NAME_SEPARATOR,
+            openat          FILE_SYSTEM_DRIVE_PREFIX_CAN_BE_RELATIVE.
+            remove          Applications that need ISSLASH can include the new
+            rmdir           header dosname.h.
+            savewd
+            stat
+            unlink
+
+2011-02-14  getloadavg      This module no longer #defines C_GETLOADAVG or
+                            HAVE_GETLOADAVG, as the application no longer needs
+                            to worry about how getloadavg is defined.  It no
+                            longer defines the obsolete symbol NLIST_NAME_UNION
+                            (which should have been internal to the module
+                            anyway).  Also, support for setgid use has been
+                            removed, as nobody seems to be using it; thus
+                            GETLOADAVG_PRIVILEGED is no longer #defined and
+                            KMEM_GROUP and NEED_SETGID are no longer
+                            substituted for.
+
+2011-02-08  stdlib          Unless the random_r module is also used, this
+                            module no longer guarantees that the following are
+                            defined: struct random_data, RAND_MAX, random_r,
+                            srandom_r, initstate_r, setstate_r.
+
+2011-02-08  wctype-h        This module no longer provides the iswblank()
+                            function. If you need this function, you now need
+                            to request the 'iswblank' module.
+
+2011-02-07  wctype          This module is renamed to wctype-h.
+
 2011-01-18  multiarch       This no longer #defines AA_APPLE_UNIVERSAL_BUILD;
                             instead, use the shell var APPLE_UNIVERSAL_BUILD.
 

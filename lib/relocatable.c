@@ -43,7 +43,7 @@
 # include "xalloc.h"
 #endif
 
-#if defined _WIN32 || defined __WIN32__ || defined __CYGWIN__
+#if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>
 #endif
@@ -70,8 +70,8 @@
    ISSLASH(C)           tests whether C is a directory separator character.
    IS_PATH_WITH_DIR(P)  tests whether P contains a directory specification.
  */
-#if defined _WIN32 || defined __WIN32__ || defined __CYGWIN__ || defined __EMX__ || defined __DJGPP__
-  /* Win32, Cygwin, OS/2, DOS */
+#if ((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__) || defined __EMX__ || defined __DJGPP__
+  /* Win32, OS/2, DOS */
 # define ISSLASH(C) ((C) == '/' || (C) == '\\')
 # define HAS_DEVICE(P) \
     ((((P)[0] >= 'A' && (P)[0] <= 'Z') || ((P)[0] >= 'a' && (P)[0] <= 'z')) \
@@ -293,7 +293,12 @@ compute_curr_prefix (const char *orig_installprefix,
 /* Full pathname of shared library, or NULL.  */
 static char *shared_library_fullname;
 
-#if defined _WIN32 || defined __WIN32__ || defined __CYGWIN__
+#if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
+/* Native Win32 only.
+   On Cygwin, it is better to use the Cygwin provided /proc interface, than
+   to use native Win32 API and cygwin_conv_to_posix_path, because it supports
+   longer file names
+   (see <http://cygwin.com/ml/cygwin/2011-01/msg00410.html>).  */
 
 /* Determine the full pathname of the shared library when it is loaded.  */
 
@@ -315,38 +320,21 @@ DllMain (HINSTANCE module_handle, DWORD event, LPVOID reserved)
         /* Shouldn't happen.  */
         return FALSE;
 
-      {
-#if defined __CYGWIN__
-        /* On Cygwin, we need to convert paths coming from Win32 system calls
-           to the Unix-like slashified notation.  */
-        static char location_as_posix_path[2 * MAX_PATH];
-        /* There's no error return defined for cygwin_conv_to_posix_path.
-           See cygwin-api/func-cygwin-conv-to-posix-path.html.
-           Does it overflow the buffer of expected size MAX_PATH or does it
-           truncate the path?  I don't know.  Let's catch both.  */
-        cygwin_conv_to_posix_path (location, location_as_posix_path);
-        location_as_posix_path[MAX_PATH - 1] = '\0';
-        if (strlen (location_as_posix_path) >= MAX_PATH - 1)
-          /* A sign of buffer overflow or path truncation.  */
-          return FALSE;
-        shared_library_fullname = strdup (location_as_posix_path);
-#else
-        shared_library_fullname = strdup (location);
-#endif
-      }
+      shared_library_fullname = strdup (location);
     }
 
   return TRUE;
 }
 
-#else /* Unix except Cygwin */
+#else /* Unix */
 
 static void
 find_shared_library_fullname ()
 {
-#if defined __linux__ && (__GLIBC__ >= 2 || defined __UCLIBC__)
+#if (defined __linux__ && (__GLIBC__ >= 2 || defined __UCLIBC__)) || defined __CYGWIN__
   /* Linux has /proc/self/maps. glibc 2 and uClibc have the getline()
-     function.  */
+     function.
+     Cygwin >= 1.5 has /proc/self/maps and the getline() function too.  */
   FILE *fp;
 
   /* Open the current process' maps file.  It describes one VMA per line.  */
@@ -391,7 +379,7 @@ find_shared_library_fullname ()
 #endif
 }
 
-#endif /* (WIN32 or Cygwin) / (Unix except Cygwin) */
+#endif /* WIN32 / Unix */
 
 /* Return the full pathname of the current shared library.
    Return NULL if unknown.
@@ -399,7 +387,7 @@ find_shared_library_fullname ()
 static char *
 get_shared_library_fullname ()
 {
-#if !(defined _WIN32 || defined __WIN32__ || defined __CYGWIN__)
+#if !((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__)
   static bool tried_find_shared_library_fullname;
   if (!tried_find_shared_library_fullname)
     {

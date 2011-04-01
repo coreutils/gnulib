@@ -31,10 +31,13 @@
 
 #if !@HAVE_STRUCT_SCHED_PARAM@
 
+# if !GNULIB_defined_struct_sched_param
 struct sched_param
 {
   int sched_priority;
 };
+#  define GNULIB_defined_struct_sched_param 1
+# endif
 
 #endif
 

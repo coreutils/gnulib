@@ -3,10 +3,10 @@ stat() function: query file information
 
 Files:
 lib/stat.c
-m4/dos.m4
 m4/stat.m4
 
 Depends-on:
+dosname
 stdbool
 sys_stat
 

@@ -1,7 +1,7 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Unicode scripts.  */
 /* Generated automatically by gen-uni-tables.c for Unicode 6.0.0.  */
-struct named_script { const char *name; unsigned int index; };
+struct named_script { int name; unsigned int index; };
 %struct-type
 %language=ANSI-C
 %define hash-function-name scripts_hash
@@ -9,6 +9,8 @@ struct named_script { const char *name; unsigned int index; };
 %readonly-tables
 %global-table
 %define word-array-name script_names
+%pic
+%define string-pool-name script_stringpool
 %%
 Common, 0
 Latin, 1

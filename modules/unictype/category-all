@@ -11,6 +11,7 @@ unictype/category-Cn
 unictype/category-Co
 unictype/category-Cs
 unictype/category-L
+unictype/category-LC
 unictype/category-Ll
 unictype/category-Lm
 unictype/category-Lo
@@ -44,6 +45,7 @@ unictype/category-Zs
 unictype/category-and
 unictype/category-and-not
 unictype/category-byname
+unictype/category-longname
 unictype/category-name
 unictype/category-of
 unictype/category-or

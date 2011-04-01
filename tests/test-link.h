@@ -136,13 +136,15 @@ test_link (int (*func) (char const *, char const *), bool print)
     else
       {
         /* Most everyone else.  */
-        ASSERT (errno == EPERM || errno == EACCES);
+        ASSERT (errno == EPERM || errno == EACCES || errno == EISDIR);
         errno = 0;
         ASSERT (func (BASE "d/.", BASE "c") == -1);
-        ASSERT (errno == EPERM || errno == EACCES || errno == EINVAL);
+        ASSERT (errno == EPERM || errno == EACCES || errno == EISDIR
+                || errno == EINVAL);
         errno = 0;
         ASSERT (func (BASE "d/.//", BASE "c") == -1);
-        ASSERT (errno == EPERM || errno == EACCES || errno == EINVAL);
+        ASSERT (errno == EPERM || errno == EACCES || errno == EISDIR
+                || errno == EINVAL);
       }
   }
   ASSERT (unlink (BASE "a") == 0);

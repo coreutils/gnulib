@@ -1,0 +1,35 @@
+Description:
+Find a Unicode character bidi class, given its name.
+
+Files:
+lib/unictype/bidi_byname.c
+lib/unictype/bidi_byname.gperf
+
+Depends-on:
+unictype/base
+gperf
+
+configure.ac:
+gl_LIBUNISTRING_MODULE([0.9.4], [unictype/bidiclass-byname])
+
+Makefile.am:
+if LIBUNISTRING_COMPILE_UNICTYPE_BIDICLASS_BYNAME
+lib_SOURCES += unictype/bidi_byname.c
+endif
+
+unictype/bidi_byname.h: unictype/bidi_byname.gperf
+	$(GPERF) -m 10 $(srcdir)/unictype/bidi_byname.gperf > $(srcdir)/unictype/bidi_byname.h-t
+	mv $(srcdir)/unictype/bidi_byname.h-t $(srcdir)/unictype/bidi_byname.h
+BUILT_SOURCES        += unictype/bidi_byname.h
+MOSTLYCLEANFILES     += unictype/bidi_byname.h-t
+MAINTAINERCLEANFILES += unictype/bidi_byname.h
+EXTRA_DIST           += unictype/bidi_byname.h
+
+Include:
+"unictype.h"
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible

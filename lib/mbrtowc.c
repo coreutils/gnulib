@@ -40,9 +40,6 @@ mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
 {
   char *pstate = (char *)ps;
 
-  if (pstate == NULL)
-    pstate = internal_state;
-
   if (s == NULL)
     {
       pwc = NULL;
@@ -54,6 +51,10 @@ mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
     return (size_t)(-2);
 
   /* Here n > 0.  */
+
+  if (pstate == NULL)
+    pstate = internal_state;
+
   {
     size_t nstate = pstate[0];
     char buf[4];

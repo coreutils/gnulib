@@ -40,6 +40,6 @@ fwritable (FILE *fp)
 #elif defined __MINT__              /* Atari FreeMiNT */
   return fp->__mode.__write;
 #else
- #error "Please port gnulib fwritable.c to your platform! Look at the definition of fopen, fdopen on your system, then report this to bug-gnulib."
+# error "Please port gnulib fwritable.c to your platform! Look at the definition of fopen, fdopen on your system, then report this to bug-gnulib."
 #endif
 }

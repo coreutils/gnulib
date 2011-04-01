@@ -11,11 +11,11 @@ Portability problems fixed by Gnulib:
 @item
 This function is missing on some platforms:
 HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 7, Cygwin 1.5.x, mingw, Interix 3.5, BeOS.
+@item
+On Windows, this function is declared in @code{<ws2tcpip.h>} rather than in
+@code{<netdb.h>}.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-On Windows, this function is declared in @code{<ws2tcpip.h>} rather than in
-@code{<netdb.h>}.
 @end itemize

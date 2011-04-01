@@ -28,13 +28,13 @@
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 
 /* _get_osfhandle */
-#include <io.h>
+# include <io.h>
 
 /* FlushFileBuffers */
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
+# define WIN32_LEAN_AND_MEAN
+# include <windows.h>
 
-#include <errno.h>
+# include <errno.h>
 
 int
 fsync (int fd)
@@ -73,6 +73,6 @@ fsync (int fd)
 
 #else /* !Windows */
 
-#error "This platform lacks fsync function, and Gnulib doesn't provide a replacement. This is a bug in Gnulib."
+# error "This platform lacks fsync function, and Gnulib doesn't provide a replacement. This is a bug in Gnulib."
 
 #endif /* !Windows */

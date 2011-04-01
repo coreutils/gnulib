@@ -1,20 +1,20 @@
 Description:
 Test whether a Unicode character belongs to a given bidi category.
 
+Status:
+obsolete
+
+Notice:
+This module is obsolete. Use the module 'unictype/bidiclass-test' instead.
+
 Files:
-lib/unictype/bidi_test.c
 
 Depends-on:
-unictype/base
-unictype/bidicategory-of
+unictype/bidiclass-test
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([0.9.4], [unictype/bidicategory-test])
 
 Makefile.am:
-if LIBUNISTRING_COMPILE_UNICTYPE_BIDICATEGORY_TEST
-lib_SOURCES += unictype/bidi_test.c
-endif
 
 Include:
 "unictype.h"
@@ -24,4 +24,3 @@ LGPL
 
 Maintainer:
 Bruno Haible
-

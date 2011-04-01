@@ -228,8 +228,7 @@ get_charset_aliases (void)
                         {
                           /* Out of memory. */
                           res_size = 0;
-                          if (old_res_ptr != NULL)
-                            free (old_res_ptr);
+                          free (old_res_ptr);
                           break;
                         }
                       strcpy (res_ptr + res_size - (l2 + 1) - (l1 + 1), buf1);

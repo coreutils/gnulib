@@ -18,7 +18,7 @@
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
    Lesser General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
+   You should have received a copy of the GNU Lesser General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 #include <config.h>
@@ -27,13 +27,13 @@
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 
 /* _get_osfhandle */
-#include <io.h>
+# include <io.h>
 
 /* LockFileEx */
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
+# define WIN32_LEAN_AND_MEAN
+# include <windows.h>
 
-#include <errno.h>
+# include <errno.h>
 
 /* Determine the current size of a file.  Because the other braindead
  * APIs we'll call need lower/upper 32 bit pairs, keep the file size
@@ -47,9 +47,9 @@ file_size (HANDLE h, DWORD * lower, DWORD * upper)
 }
 
 /* LOCKFILE_FAIL_IMMEDIATELY is undefined on some Windows systems. */
-#ifndef LOCKFILE_FAIL_IMMEDIATELY
-# define LOCKFILE_FAIL_IMMEDIATELY 1
-#endif
+# ifndef LOCKFILE_FAIL_IMMEDIATELY
+#  define LOCKFILE_FAIL_IMMEDIATELY 1
+# endif
 
 /* Acquire a lock. */
 static BOOL
@@ -160,17 +160,17 @@ flock (int fd, int operation)
 
 #else /* !Windows */
 
-#ifdef HAVE_STRUCT_FLOCK_L_TYPE
+# ifdef HAVE_STRUCT_FLOCK_L_TYPE
 /* We know how to implement flock in terms of fcntl. */
 
-#include <fcntl.h>
+#  include <fcntl.h>
 
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
+#  ifdef HAVE_UNISTD_H
+#   include <unistd.h>
+#  endif
 
-#include <errno.h>
-#include <string.h>
+#  include <errno.h>
+#  include <string.h>
 
 int
 flock (int fd, int operation)
@@ -211,10 +211,10 @@ flock (int fd, int operation)
   return r;
 }
 
-#else /* !HAVE_STRUCT_FLOCK_L_TYPE */
+# else /* !HAVE_STRUCT_FLOCK_L_TYPE */
 
-#error "This platform lacks flock function, and Gnulib doesn't provide a replacement. This is a bug in Gnulib."
+#  error "This platform lacks flock function, and Gnulib doesn't provide a replacement. This is a bug in Gnulib."
 
-#endif /* !HAVE_STRUCT_FLOCK_L_TYPE */
+# endif /* !HAVE_STRUCT_FLOCK_L_TYPE */
 
 #endif /* !Windows */

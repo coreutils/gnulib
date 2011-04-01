@@ -1,5 +1,5 @@
-/* Bidi categories of Unicode characters.
-   Copyright (C) 2002, 2006, 2009-2011 Free Software Foundation, Inc.
+/* Bidi classes of Unicode characters.
+   Copyright (C) 2002, 2006, 2011 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2002.
 
    This program is free software: you can redistribute it and/or modify it
@@ -21,7 +21,13 @@
 #include "unictype.h"
 
 bool
+uc_is_bidi_class (ucs4_t uc, int bidi_class)
+{
+  return (uc_bidi_class (uc) == bidi_class);
+}
+
+bool
 uc_is_bidi_category (ucs4_t uc, int category)
 {
-  return (uc_bidi_category (uc) == category);
+  return uc_is_bidi_class (uc, category);
 }

@@ -37,7 +37,8 @@
 #ifndef _GL_NETDB_H
 #define _GL_NETDB_H
 
-/* Get netdb.h definitions such as struct hostent for MinGW.  */
+/* Get <netdb.h> definitions such as 'socklen_t' on IRIX 6.5 and OSF/1 4.0 and
+   'struct hostent' on MinGW.  */
 #include <sys/socket.h>
 
 /* The definition of _GL_ARG_NONNULL is copied here.  */
@@ -51,6 +52,7 @@
 
 # if !@HAVE_STRUCT_ADDRINFO@
 
+#  if !GNULIB_defined_struct_addrinfo
 /* Structure to contain information about address of a service provider.  */
 struct addrinfo
 {
@@ -63,6 +65,8 @@ struct addrinfo
   char *ai_canonname;           /* Canonical name for service location.  */
   struct addrinfo *ai_next;     /* Pointer to next in list.  */
 };
+#   define GNULIB_defined_struct_addrinfo 1
+#  endif
 # endif
 
 /* Possible values for `ai_flags' field in `addrinfo' structure.  */

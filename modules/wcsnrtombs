@@ -3,6 +3,7 @@ wcsnrtombs() function: convert wide string to string.
 
 Files:
 lib/wcsnrtombs.c
+lib/wcsnrtombs-impl.h
 lib/wcsrtombs-state.c
 m4/wcsnrtombs.m4
 m4/mbrtowc.m4

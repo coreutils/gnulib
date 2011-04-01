@@ -1,0 +1,26 @@
+Description:
+Read, set or clear the non-blocking file descriptor flag.
+
+Files:
+lib/nonblocking.c
+lib/nonblocking.h
+
+Depends-on:
+fcntl-h
+ioctl
+stdbool
+sys_socket
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += nonblocking.c
+
+Include:
+"nonblocking.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+Bruno Haible, Eric Blake

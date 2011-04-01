@@ -1,4 +1,4 @@
-struct named_property { const char *name; uc_property_t property; };
+struct named_property { int name; int property_index; };
 %struct-type
 %language=ANSI-C
 %define hash-function-name properties_hash
@@ -7,90 +7,212 @@ struct named_property { const char *name; uc_property_t property; };
 %readonly-tables
 %global-table
 %define word-array-name properties
+%pic
+%define string-pool-name properties_stringpool
 %%
-white_space, { &uc_is_property_white_space }
-alphabetic, { &uc_is_property_alphabetic }
-other_alphabetic, { &uc_is_property_other_alphabetic }
-not_a_character, { &uc_is_property_not_a_character }
-default_ignorable_code_point, { &uc_is_property_default_ignorable_code_point }
-other_default_ignorable_code_point, { &uc_is_property_other_default_ignorable_code_point }
-deprecated, { &uc_is_property_deprecated }
-logical_order_exception, { &uc_is_property_logical_order_exception }
-variation_selector, { &uc_is_property_variation_selector }
-private_use, { &uc_is_property_private_use }
-unassigned_code_value, { &uc_is_property_unassigned_code_value }
-uppercase, { &uc_is_property_uppercase }
-other_uppercase, { &uc_is_property_other_uppercase }
-lowercase, { &uc_is_property_lowercase }
-other_lowercase, { &uc_is_property_other_lowercase }
-titlecase, { &uc_is_property_titlecase }
-cased, { &uc_is_property_cased }
-case_ignorable, { &uc_is_property_case_ignorable }
-changes_when_lowercased, { &uc_is_property_changes_when_lowercased }
-changes_when_uppercased, { &uc_is_property_changes_when_uppercased }
-changes_when_titlecased, { &uc_is_property_changes_when_titlecased }
-changes_when_casefolded, { &uc_is_property_changes_when_casefolded }
-changes_when_casemapped, { &uc_is_property_changes_when_casemapped }
-soft_dotted, { &uc_is_property_soft_dotted }
-id_start, { &uc_is_property_id_start }
-other_id_start, { &uc_is_property_other_id_start }
-id_continue, { &uc_is_property_id_continue }
-other_id_continue, { &uc_is_property_other_id_continue }
-xid_start, { &uc_is_property_xid_start }
-xid_continue, { &uc_is_property_xid_continue }
-pattern_white_space, { &uc_is_property_pattern_white_space }
-pattern_syntax, { &uc_is_property_pattern_syntax }
-join_control, { &uc_is_property_join_control }
-grapheme_base, { &uc_is_property_grapheme_base }
-grapheme_extend, { &uc_is_property_grapheme_extend }
-other_grapheme_extend, { &uc_is_property_other_grapheme_extend }
-grapheme_link, { &uc_is_property_grapheme_link }
-bidi_control, { &uc_is_property_bidi_control }
-bidi_left_to_right, { &uc_is_property_bidi_left_to_right }
-bidi_hebrew_right_to_left, { &uc_is_property_bidi_hebrew_right_to_left }
-bidi_arabic_right_to_left, { &uc_is_property_bidi_arabic_right_to_left }
-bidi_european_digit, { &uc_is_property_bidi_european_digit }
-bidi_eur_num_separator, { &uc_is_property_bidi_eur_num_separator }
-bidi_eur_num_terminator, { &uc_is_property_bidi_eur_num_terminator }
-bidi_arabic_digit, { &uc_is_property_bidi_arabic_digit }
-bidi_common_separator, { &uc_is_property_bidi_common_separator }
-bidi_block_separator, { &uc_is_property_bidi_block_separator }
-bidi_segment_separator, { &uc_is_property_bidi_segment_separator }
-bidi_whitespace, { &uc_is_property_bidi_whitespace }
-bidi_non_spacing_mark, { &uc_is_property_bidi_non_spacing_mark }
-bidi_boundary_neutral, { &uc_is_property_bidi_boundary_neutral }
-bidi_pdf, { &uc_is_property_bidi_pdf }
-bidi_embedding_or_override, { &uc_is_property_bidi_embedding_or_override }
-bidi_other_neutral, { &uc_is_property_bidi_other_neutral }
-hex_digit, { &uc_is_property_hex_digit }
-ascii_hex_digit, { &uc_is_property_ascii_hex_digit }
-ideographic, { &uc_is_property_ideographic }
-unified_ideograph, { &uc_is_property_unified_ideograph }
-radical, { &uc_is_property_radical }
-ids_binary_operator, { &uc_is_property_ids_binary_operator }
-ids_trinary_operator, { &uc_is_property_ids_trinary_operator }
-zero_width, { &uc_is_property_zero_width }
-space, { &uc_is_property_space }
-non_break, { &uc_is_property_non_break }
-iso_control, { &uc_is_property_iso_control }
-format_control, { &uc_is_property_format_control }
-dash, { &uc_is_property_dash }
-hyphen, { &uc_is_property_hyphen }
-punctuation, { &uc_is_property_punctuation }
-line_separator, { &uc_is_property_line_separator }
-paragraph_separator, { &uc_is_property_paragraph_separator }
-quotation_mark, { &uc_is_property_quotation_mark }
-sentence_terminal, { &uc_is_property_sentence_terminal }
-terminal_punctuation, { &uc_is_property_terminal_punctuation }
-currency_symbol, { &uc_is_property_currency_symbol }
-math, { &uc_is_property_math }
-other_math, { &uc_is_property_other_math }
-paired_punctuation, { &uc_is_property_paired_punctuation }
-left_of_pair, { &uc_is_property_left_of_pair }
-combining, { &uc_is_property_combining }
-composite, { &uc_is_property_composite }
-decimal_digit, { &uc_is_property_decimal_digit }
-numeric, { &uc_is_property_numeric }
-diacritic, { &uc_is_property_diacritic }
-extender, { &uc_is_property_extender }
-ignorable_control, { &uc_is_property_ignorable_control }
+white_space, UC_PROPERTY_INDEX_WHITE_SPACE
+whitespace, UC_PROPERTY_INDEX_WHITE_SPACE
+wspace, UC_PROPERTY_INDEX_WHITE_SPACE
+alphabetic, UC_PROPERTY_INDEX_ALPHABETIC
+alpha, UC_PROPERTY_INDEX_ALPHABETIC
+other_alphabetic, UC_PROPERTY_INDEX_OTHER_ALPHABETIC
+otheralphabetic, UC_PROPERTY_INDEX_OTHER_ALPHABETIC
+oalpha, UC_PROPERTY_INDEX_OTHER_ALPHABETIC
+not_a_character, UC_PROPERTY_INDEX_NOT_A_CHARACTER
+notacharacter, UC_PROPERTY_INDEX_NOT_A_CHARACTER
+default_ignorable_code_point, UC_PROPERTY_INDEX_DEFAULT_IGNORABLE_CODE_POINT
+defaultignorablecodepoint, UC_PROPERTY_INDEX_DEFAULT_IGNORABLE_CODE_POINT
+di, UC_PROPERTY_INDEX_DEFAULT_IGNORABLE_CODE_POINT
+other_default_ignorable_code_point, UC_PROPERTY_INDEX_OTHER_DEFAULT_IGNORABLE_CODE_POINT
+otherdefaultignorablecodepoint, UC_PROPERTY_INDEX_OTHER_DEFAULT_IGNORABLE_CODE_POINT
+odi, UC_PROPERTY_INDEX_OTHER_DEFAULT_IGNORABLE_CODE_POINT
+deprecated, UC_PROPERTY_INDEX_DEPRECATED
+dep, UC_PROPERTY_INDEX_DEPRECATED
+logical_order_exception, UC_PROPERTY_INDEX_LOGICAL_ORDER_EXCEPTION
+logicalorderexception, UC_PROPERTY_INDEX_LOGICAL_ORDER_EXCEPTION
+loe, UC_PROPERTY_INDEX_LOGICAL_ORDER_EXCEPTION
+variation_selector, UC_PROPERTY_INDEX_VARIATION_SELECTOR
+variationselector, UC_PROPERTY_INDEX_VARIATION_SELECTOR
+vs, UC_PROPERTY_INDEX_VARIATION_SELECTOR
+private_use, UC_PROPERTY_INDEX_PRIVATE_USE
+privateuse, UC_PROPERTY_INDEX_PRIVATE_USE
+unassigned_code_value, UC_PROPERTY_INDEX_UNASSIGNED_CODE_VALUE
+unassignedcodevalue, UC_PROPERTY_INDEX_UNASSIGNED_CODE_VALUE
+uppercase, UC_PROPERTY_INDEX_UPPERCASE
+upper, UC_PROPERTY_INDEX_UPPERCASE
+other_uppercase, UC_PROPERTY_INDEX_OTHER_UPPERCASE
+otheruppercase, UC_PROPERTY_INDEX_OTHER_UPPERCASE
+oupper, UC_PROPERTY_INDEX_OTHER_UPPERCASE
+lowercase, UC_PROPERTY_INDEX_LOWERCASE
+lower, UC_PROPERTY_INDEX_LOWERCASE
+other_lowercase, UC_PROPERTY_INDEX_OTHER_LOWERCASE
+otherlowercase, UC_PROPERTY_INDEX_OTHER_LOWERCASE
+olower, UC_PROPERTY_INDEX_OTHER_LOWERCASE
+titlecase, UC_PROPERTY_INDEX_TITLECASE
+cased, UC_PROPERTY_INDEX_CASED
+case_ignorable, UC_PROPERTY_INDEX_CASE_IGNORABLE
+caseignorable, UC_PROPERTY_INDEX_CASE_IGNORABLE
+ci, UC_PROPERTY_INDEX_CASE_IGNORABLE
+changes_when_lowercased, UC_PROPERTY_INDEX_CHANGES_WHEN_LOWERCASED
+changeswhenlowercased, UC_PROPERTY_INDEX_CHANGES_WHEN_LOWERCASED
+cwl, UC_PROPERTY_INDEX_CHANGES_WHEN_LOWERCASED
+changes_when_uppercased, UC_PROPERTY_INDEX_CHANGES_WHEN_UPPERCASED
+changeswhenuppercased, UC_PROPERTY_INDEX_CHANGES_WHEN_UPPERCASED
+cwu, UC_PROPERTY_INDEX_CHANGES_WHEN_UPPERCASED
+changes_when_titlecased, UC_PROPERTY_INDEX_CHANGES_WHEN_TITLECASED
+changeswhentitlecased, UC_PROPERTY_INDEX_CHANGES_WHEN_TITLECASED
+cwt, UC_PROPERTY_INDEX_CHANGES_WHEN_TITLECASED
+changes_when_casefolded, UC_PROPERTY_INDEX_CHANGES_WHEN_CASEFOLDED
+changeswhencasefolded, UC_PROPERTY_INDEX_CHANGES_WHEN_CASEFOLDED
+cwcf, UC_PROPERTY_INDEX_CHANGES_WHEN_CASEFOLDED
+changes_when_casemapped, UC_PROPERTY_INDEX_CHANGES_WHEN_CASEMAPPED
+changeswhencasemapped, UC_PROPERTY_INDEX_CHANGES_WHEN_CASEMAPPED
+cwcm, UC_PROPERTY_INDEX_CHANGES_WHEN_CASEMAPPED
+soft_dotted, UC_PROPERTY_INDEX_SOFT_DOTTED
+softdotted, UC_PROPERTY_INDEX_SOFT_DOTTED
+sd, UC_PROPERTY_INDEX_SOFT_DOTTED
+id_start, UC_PROPERTY_INDEX_ID_START
+idstart, UC_PROPERTY_INDEX_ID_START
+ids, UC_PROPERTY_INDEX_ID_START
+other_id_start, UC_PROPERTY_INDEX_OTHER_ID_START
+otheridstart, UC_PROPERTY_INDEX_OTHER_ID_START
+oids, UC_PROPERTY_INDEX_OTHER_ID_START
+id_continue, UC_PROPERTY_INDEX_ID_CONTINUE
+idcontinue, UC_PROPERTY_INDEX_ID_CONTINUE
+idc, UC_PROPERTY_INDEX_ID_CONTINUE
+other_id_continue, UC_PROPERTY_INDEX_OTHER_ID_CONTINUE
+otheridcontinue, UC_PROPERTY_INDEX_OTHER_ID_CONTINUE
+oidc, UC_PROPERTY_INDEX_OTHER_ID_CONTINUE
+xid_start, UC_PROPERTY_INDEX_XID_START
+xidstart, UC_PROPERTY_INDEX_XID_START
+xids, UC_PROPERTY_INDEX_XID_START
+xid_continue, UC_PROPERTY_INDEX_XID_CONTINUE
+xidcontinue, UC_PROPERTY_INDEX_XID_CONTINUE
+xidc, UC_PROPERTY_INDEX_XID_CONTINUE
+pattern_white_space, UC_PROPERTY_INDEX_PATTERN_WHITE_SPACE
+patternwhitespace, UC_PROPERTY_INDEX_PATTERN_WHITE_SPACE
+pat_ws, UC_PROPERTY_INDEX_PATTERN_WHITE_SPACE
+patws, UC_PROPERTY_INDEX_PATTERN_WHITE_SPACE
+pattern_syntax, UC_PROPERTY_INDEX_PATTERN_SYNTAX
+patternsyntax, UC_PROPERTY_INDEX_PATTERN_SYNTAX
+pat_syn, UC_PROPERTY_INDEX_PATTERN_SYNTAX
+patsyn, UC_PROPERTY_INDEX_PATTERN_SYNTAX
+join_control, UC_PROPERTY_INDEX_JOIN_CONTROL
+joincontrol, UC_PROPERTY_INDEX_JOIN_CONTROL
+join_c, UC_PROPERTY_INDEX_JOIN_CONTROL
+joinc, UC_PROPERTY_INDEX_JOIN_CONTROL
+grapheme_base, UC_PROPERTY_INDEX_GRAPHEME_BASE
+graphemebase, UC_PROPERTY_INDEX_GRAPHEME_BASE
+gr_base, UC_PROPERTY_INDEX_GRAPHEME_BASE
+grbase, UC_PROPERTY_INDEX_GRAPHEME_BASE
+grapheme_extend, UC_PROPERTY_INDEX_GRAPHEME_EXTEND
+graphemeextend, UC_PROPERTY_INDEX_GRAPHEME_EXTEND
+gr_ext, UC_PROPERTY_INDEX_GRAPHEME_EXTEND
+grext, UC_PROPERTY_INDEX_GRAPHEME_EXTEND
+other_grapheme_extend, UC_PROPERTY_INDEX_OTHER_GRAPHEME_EXTEND
+othergraphemeextend, UC_PROPERTY_INDEX_OTHER_GRAPHEME_EXTEND
+ogr_ext, UC_PROPERTY_INDEX_OTHER_GRAPHEME_EXTEND
+ogrext, UC_PROPERTY_INDEX_OTHER_GRAPHEME_EXTEND
+grapheme_link, UC_PROPERTY_INDEX_GRAPHEME_LINK
+graphemelink, UC_PROPERTY_INDEX_GRAPHEME_LINK
+gr_link, UC_PROPERTY_INDEX_GRAPHEME_LINK
+grlink, UC_PROPERTY_INDEX_GRAPHEME_LINK
+bidi_control, UC_PROPERTY_INDEX_BIDI_CONTROL
+bidicontrol, UC_PROPERTY_INDEX_BIDI_CONTROL
+bidi_c, UC_PROPERTY_INDEX_BIDI_CONTROL
+bidic, UC_PROPERTY_INDEX_BIDI_CONTROL
+bidi_left_to_right, UC_PROPERTY_INDEX_BIDI_LEFT_TO_RIGHT
+bidilefttoright, UC_PROPERTY_INDEX_BIDI_LEFT_TO_RIGHT
+bidi_hebrew_right_to_left, UC_PROPERTY_INDEX_BIDI_HEBREW_RIGHT_TO_LEFT
+bidihebrewrighttoleft, UC_PROPERTY_INDEX_BIDI_HEBREW_RIGHT_TO_LEFT
+bidi_arabic_right_to_left, UC_PROPERTY_INDEX_BIDI_ARABIC_RIGHT_TO_LEFT
+bidiarabicrighttoleft, UC_PROPERTY_INDEX_BIDI_ARABIC_RIGHT_TO_LEFT
+bidi_european_digit, UC_PROPERTY_INDEX_BIDI_EUROPEAN_DIGIT
+bidieuropeandigit, UC_PROPERTY_INDEX_BIDI_EUROPEAN_DIGIT
+bidi_eur_num_separator, UC_PROPERTY_INDEX_BIDI_EUR_NUM_SEPARATOR
+bidieurnumseparator, UC_PROPERTY_INDEX_BIDI_EUR_NUM_SEPARATOR
+bidi_eur_num_terminator, UC_PROPERTY_INDEX_BIDI_EUR_NUM_TERMINATOR
+bidieurnumterminator, UC_PROPERTY_INDEX_BIDI_EUR_NUM_TERMINATOR
+bidi_arabic_digit, UC_PROPERTY_INDEX_BIDI_ARABIC_DIGIT
+bidiarabicdigit, UC_PROPERTY_INDEX_BIDI_ARABIC_DIGIT
+bidi_common_separator, UC_PROPERTY_INDEX_BIDI_COMMON_SEPARATOR
+bidicommonseparator, UC_PROPERTY_INDEX_BIDI_COMMON_SEPARATOR
+bidi_block_separator, UC_PROPERTY_INDEX_BIDI_BLOCK_SEPARATOR
+bidiblockseparator, UC_PROPERTY_INDEX_BIDI_BLOCK_SEPARATOR
+bidi_segment_separator, UC_PROPERTY_INDEX_BIDI_SEGMENT_SEPARATOR
+bidisegmentseparator, UC_PROPERTY_INDEX_BIDI_SEGMENT_SEPARATOR
+bidi_whitespace, UC_PROPERTY_INDEX_BIDI_WHITESPACE
+bidiwhitespace, UC_PROPERTY_INDEX_BIDI_WHITESPACE
+bidi_non_spacing_mark, UC_PROPERTY_INDEX_BIDI_NON_SPACING_MARK
+bidinonspacingmark, UC_PROPERTY_INDEX_BIDI_NON_SPACING_MARK
+bidi_boundary_neutral, UC_PROPERTY_INDEX_BIDI_BOUNDARY_NEUTRAL
+bidiboundaryneutral, UC_PROPERTY_INDEX_BIDI_BOUNDARY_NEUTRAL
+bidi_pdf, UC_PROPERTY_INDEX_BIDI_PDF
+bidipdf, UC_PROPERTY_INDEX_BIDI_PDF
+bidi_embedding_or_override, UC_PROPERTY_INDEX_BIDI_EMBEDDING_OR_OVERRIDE
+bidiembeddingoroverride, UC_PROPERTY_INDEX_BIDI_EMBEDDING_OR_OVERRIDE
+bidi_other_neutral, UC_PROPERTY_INDEX_BIDI_OTHER_NEUTRAL
+bidiotherneutral, UC_PROPERTY_INDEX_BIDI_OTHER_NEUTRAL
+hex_digit, UC_PROPERTY_INDEX_HEX_DIGIT
+hexdigit, UC_PROPERTY_INDEX_HEX_DIGIT
+hex, UC_PROPERTY_INDEX_HEX_DIGIT
+ascii_hex_digit, UC_PROPERTY_INDEX_ASCII_HEX_DIGIT
+asciihexdigit, UC_PROPERTY_INDEX_ASCII_HEX_DIGIT
+ahex, UC_PROPERTY_INDEX_ASCII_HEX_DIGIT
+ideographic, UC_PROPERTY_INDEX_IDEOGRAPHIC
+ideo, UC_PROPERTY_INDEX_IDEOGRAPHIC
+unified_ideograph, UC_PROPERTY_INDEX_UNIFIED_IDEOGRAPH
+unifiedideograph, UC_PROPERTY_INDEX_UNIFIED_IDEOGRAPH
+uideo, UC_PROPERTY_INDEX_UNIFIED_IDEOGRAPH
+radical, UC_PROPERTY_INDEX_RADICAL
+ids_binary_operator, UC_PROPERTY_INDEX_IDS_BINARY_OPERATOR
+idsbinaryoperator, UC_PROPERTY_INDEX_IDS_BINARY_OPERATOR
+idsb, UC_PROPERTY_INDEX_IDS_BINARY_OPERATOR
+ids_trinary_operator, UC_PROPERTY_INDEX_IDS_TRINARY_OPERATOR
+idstrinaryoperator, UC_PROPERTY_INDEX_IDS_TRINARY_OPERATOR
+idst, UC_PROPERTY_INDEX_IDS_TRINARY_OPERATOR
+zero_width, UC_PROPERTY_INDEX_ZERO_WIDTH
+zerowidth, UC_PROPERTY_INDEX_ZERO_WIDTH
+space, UC_PROPERTY_INDEX_SPACE
+non_break, UC_PROPERTY_INDEX_NON_BREAK
+nonbreak, UC_PROPERTY_INDEX_NON_BREAK
+iso_control, UC_PROPERTY_INDEX_ISO_CONTROL
+isocontrol, UC_PROPERTY_INDEX_ISO_CONTROL
+format_control, UC_PROPERTY_INDEX_FORMAT_CONTROL
+formatcontrol, UC_PROPERTY_INDEX_FORMAT_CONTROL
+dash, UC_PROPERTY_INDEX_DASH
+hyphen, UC_PROPERTY_INDEX_HYPHEN
+punctuation, UC_PROPERTY_INDEX_PUNCTUATION
+line_separator, UC_PROPERTY_INDEX_LINE_SEPARATOR
+lineseparator, UC_PROPERTY_INDEX_LINE_SEPARATOR
+paragraph_separator, UC_PROPERTY_INDEX_PARAGRAPH_SEPARATOR
+paragraphseparator, UC_PROPERTY_INDEX_PARAGRAPH_SEPARATOR
+quotation_mark, UC_PROPERTY_INDEX_QUOTATION_MARK
+quotationmark, UC_PROPERTY_INDEX_QUOTATION_MARK
+qmark, UC_PROPERTY_INDEX_QUOTATION_MARK
+sentence_terminal, UC_PROPERTY_INDEX_SENTENCE_TERMINAL
+sentenceterminal, UC_PROPERTY_INDEX_SENTENCE_TERMINAL
+terminal_punctuation, UC_PROPERTY_INDEX_TERMINAL_PUNCTUATION
+terminalpunctuation, UC_PROPERTY_INDEX_TERMINAL_PUNCTUATION
+term, UC_PROPERTY_INDEX_TERMINAL_PUNCTUATION
+currency_symbol, UC_PROPERTY_INDEX_CURRENCY_SYMBOL
+currencysymbol, UC_PROPERTY_INDEX_CURRENCY_SYMBOL
+math, UC_PROPERTY_INDEX_MATH
+other_math, UC_PROPERTY_INDEX_OTHER_MATH
+othermath, UC_PROPERTY_INDEX_OTHER_MATH
+omath, UC_PROPERTY_INDEX_OTHER_MATH
+paired_punctuation, UC_PROPERTY_INDEX_PAIRED_PUNCTUATION
+pairedpunctuation, UC_PROPERTY_INDEX_PAIRED_PUNCTUATION
+left_of_pair, UC_PROPERTY_INDEX_LEFT_OF_PAIR
+leftofpair, UC_PROPERTY_INDEX_LEFT_OF_PAIR
+combining, UC_PROPERTY_INDEX_COMBINING
+composite, UC_PROPERTY_INDEX_COMPOSITE
+decimal_digit, UC_PROPERTY_INDEX_DECIMAL_DIGIT
+decimaldigit, UC_PROPERTY_INDEX_DECIMAL_DIGIT
+numeric, UC_PROPERTY_INDEX_NUMERIC
+diacritic, UC_PROPERTY_INDEX_DIACRITIC
+dia, UC_PROPERTY_INDEX_DIACRITIC
+extender, UC_PROPERTY_INDEX_EXTENDER
+ext, UC_PROPERTY_INDEX_EXTENDER
+ignorable_control, UC_PROPERTY_INDEX_IGNORABLE_CONTROL
+ignorablecontrol, UC_PROPERTY_INDEX_IGNORABLE_CONTROL

@@ -17,7 +17,7 @@ memcmp
 quotearg-simple
 stdbool
 wchar
-wctype
+wctype-h
 xalloc
 
 configure.ac:

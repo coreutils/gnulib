@@ -22,8 +22,9 @@
 #include <stdlib.h>
 
 #ifndef GNULIB_LIBPOSIX
-#include "error.h"
-#endif  /* GNULIB_LIBPOSIX */
+# include "error.h"
+#endif
+
 #include "exitfail.h"
 
 #include "gettext.h"
@@ -35,7 +36,7 @@ openat_save_fail (int errnum)
 #ifndef GNULIB_LIBPOSIX
   error (exit_failure, errnum,
          _("unable to record current working directory"));
-#endif  /* GNULIB_LIBPOSIX */
+#endif
   /* The `noreturn' attribute cannot be applied to error, since it returns
      when its first argument is 0.  To help compilers understand that this
      function does not return, call abort.  Also, the abort is a
@@ -54,7 +55,7 @@ openat_restore_fail (int errnum)
 #ifndef GNULIB_LIBPOSIX
   error (exit_failure, errnum,
          _("failed to return to initial working directory"));
-#endif  /* GNULIB_LIBPOSIX */
+#endif
 
   /* As above.  */
   abort ();

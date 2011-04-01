@@ -3,7 +3,6 @@ remove() function: remove a file or directory
 
 Files:
 lib/remove.c
-m4/dos.m4
 m4/remove.m4
 
 Depends-on:

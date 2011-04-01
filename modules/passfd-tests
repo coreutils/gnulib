@@ -1,0 +1,13 @@
+Files:
+tests/test-passfd.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+AC_CHECK_DECLS_ONCE([alarm])
+
+Makefile.am:
+TESTS += test-passfd
+check_PROGRAMS += test-passfd
+test_passfd_LDADD = $(LDADD) @LIBSOCKET@

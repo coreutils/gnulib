@@ -18,7 +18,7 @@ Include:
 "uninorm/decompose-internal.h"
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Bruno Haible

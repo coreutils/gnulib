@@ -935,11 +935,11 @@ decode_long_double (long double x, int *ep, mpn_t *mp)
         abort ();
       m.limbs[--i] = (hi << (GMP_LIMB_BITS / 2)) | lo;
     }
-#if 0 /* On FreeBSD 6.1/x86, 'long double' numbers sometimes have excess
-         precision.  */
+#  if 0 /* On FreeBSD 6.1/x86, 'long double' numbers sometimes have excess
+           precision.  */
   if (!(y == 0.0L))
     abort ();
-#endif
+#  endif
   /* Normalise.  */
   while (m.nlimbs > 0 && m.limbs[m.nlimbs - 1] == 0)
     m.nlimbs--;
@@ -1753,8 +1753,9 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
     return NULL;
 
 #define CLEANUP() \
-  free (d.dir);                                                         \
-  if (a.arg)                                                            \
+  if (d.dir != d.direct_alloc_dir)                                      \
+    free (d.dir);                                                       \
+  if (a.arg != a.direct_alloc_arg)                                      \
     free (a.arg);
 
   if (PRINTF_FETCHARGS (args, &a) < 0)

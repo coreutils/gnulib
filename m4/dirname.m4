@@ -1,4 +1,4 @@
-#serial 8   -*- autoconf -*-
+#serial 9   -*- autoconf -*-
 dnl Copyright (C) 2002-2006, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,7 +18,6 @@ AC_DEFUN([gl_DIRNAME_LGPL],
   AC_LIBOBJ([stripslash])
 
   dnl Prerequisites of lib/dirname.h.
-  AC_REQUIRE([gl_AC_DOS])
   AC_REQUIRE([gl_DOUBLE_SLASH_ROOT])
 
   dnl No prerequisites of lib/basename-lgpl.c, lib/dirname-lgpl.c,

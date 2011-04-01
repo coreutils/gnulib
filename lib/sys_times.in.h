@@ -48,6 +48,7 @@ extern "C" {
 # endif
 
 # if !@HAVE_STRUCT_TMS@
+#  if !GNULIB_defined_struct_tms
   /* Structure describing CPU time used by a process and its children.  */
   struct tms
   {
@@ -57,6 +58,8 @@ extern "C" {
     clock_t tms_cutime;         /* User CPU time of dead children.  */
     clock_t tms_cstime;         /* System CPU time of dead children.  */
   };
+#   define GNULIB_defined_struct_tms 1
+#  endif
 # endif
 
 # if @GNULIB_TIMES@

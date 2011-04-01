@@ -31,7 +31,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-#include "dirname.h"
+#include "dosname.h"
 #include "fcntl-safer.h"
 
 /* Save the working directory into *WD, if it hasn't been saved

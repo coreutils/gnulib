@@ -1,0 +1,30 @@
+/* Arabic joining type of Unicode characters.  */
+struct named_joining_type { int name; int joining_type; };
+%struct-type
+%ignore-case
+%language=ANSI-C
+%define hash-function-name joining_type_hash
+%define lookup-function-name uc_joining_type_lookup
+%readonly-tables
+%global-table
+%define word-array-name joining_type_names
+%pic
+%define string-pool-name joining_type_stringpool
+%%
+C, UC_JOINING_TYPE_C
+D, UC_JOINING_TYPE_D
+L, UC_JOINING_TYPE_L
+R, UC_JOINING_TYPE_R
+T, UC_JOINING_TYPE_T
+U, UC_JOINING_TYPE_U
+Join Causing, UC_JOINING_TYPE_C
+JoinCausing, UC_JOINING_TYPE_C
+Dual Joining, UC_JOINING_TYPE_D
+DualJoining, UC_JOINING_TYPE_D
+Left Joining, UC_JOINING_TYPE_L
+LeftJoining, UC_JOINING_TYPE_L
+Right Joining, UC_JOINING_TYPE_R
+RightJoining, UC_JOINING_TYPE_R
+Transparent, UC_JOINING_TYPE_T
+Non Joining, UC_JOINING_TYPE_U
+NonJoining, UC_JOINING_TYPE_U

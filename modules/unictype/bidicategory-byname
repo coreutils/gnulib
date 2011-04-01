@@ -1,19 +1,20 @@
 Description:
 Find a Unicode character bidi category, given its name.
 
+Status:
+obsolete
+
+Notice:
+This module is obsolete. Use the module 'unictype/bidiclass-byname' instead.
+
 Files:
-lib/unictype/bidi_byname.c
 
 Depends-on:
-unictype/base
+unictype/bidiclass-byname
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([0.9], [unictype/bidicategory-byname])
 
 Makefile.am:
-if LIBUNISTRING_COMPILE_UNICTYPE_BIDICATEGORY_BYNAME
-lib_SOURCES += unictype/bidi_byname.c
-endif
 
 Include:
 "unictype.h"
@@ -23,4 +24,3 @@ LGPL
 
 Maintainer:
 Bruno Haible
-

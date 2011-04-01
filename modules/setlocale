@@ -1,0 +1,25 @@
+Description:
+setlocale() function: set the current locale.
+
+Files:
+lib/setlocale.c
+m4/setlocale.m4
+
+Depends-on:
+locale
+localename
+
+configure.ac:
+gl_FUNC_SETLOCALE
+gl_LOCALE_MODULE_INDICATOR([setlocale])
+
+Makefile.am:
+
+Include:
+<locale.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible

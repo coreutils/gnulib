@@ -40,6 +40,6 @@ freadable (FILE *fp)
 #elif defined __MINT__              /* Atari FreeMiNT */
   return fp->__mode.__read;
 #else
- #error "Please port gnulib freadable.c to your platform! Look at the definition of fopen, fdopen on your system, then report this to bug-gnulib."
+# error "Please port gnulib freadable.c to your platform! Look at the definition of fopen, fdopen on your system, then report this to bug-gnulib."
 #endif
 }

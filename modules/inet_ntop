@@ -6,7 +6,6 @@ lib/inet_ntop.c
 m4/inet_ntop.m4
 
 Depends-on:
-socklen
 sys_socket
 arpa_inet
 errno

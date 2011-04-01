@@ -73,18 +73,21 @@ _GL_WARN_ON_USE (rpl_ ## func ## l, #func " is unportable - "       \
    it on platforms like Solaris 10, where NAN is present but defined
    as a function pointer rather than a floating point constant.  */
 #if !defined NAN || @REPLACE_NAN@
-# undef NAN
+# if !GNULIB_defined_NAN
+#  undef NAN
   /* The Compaq (ex-DEC) C 6.4 compiler chokes on the expression 0.0 / 0.0.  */
-# ifdef __DECC
+#  ifdef __DECC
 static float
 _NaN ()
 {
   static float zero = 0.0f;
   return zero / zero;
 }
-#  define NAN (_NaN())
-# else
-#  define NAN (0.0f / 0.0f)
+#   define NAN (_NaN())
+#  else
+#   define NAN (0.0f / 0.0f)
+#  endif
+#  define GNULIB_defined_NAN 1
 # endif
 #endif
 

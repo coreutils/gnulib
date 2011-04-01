@@ -108,6 +108,8 @@
         warnings in the signed case.  */ \
      ((((zero) + 1) << ((bits) ? (bits) - 1 - (signed) : 0)) - 1) * 2 + 1)
 
+#if !GNULIB_defined_stdint_types
+
 /* 7.18.1.1. Exact-width integer types */
 
 /* Here we assume a standard architecture where the hardware integer
@@ -295,6 +297,9 @@ typedef unsigned long int gl_uintmax_t;
    to be found in the autoconf macros.  */
 typedef int _verify_intmax_size[sizeof (intmax_t) == sizeof (uintmax_t)
                                 ? 1 : -1];
+
+#define GNULIB_defined_stdint_types 1
+#endif /* !GNULIB_defined_stdint_types */
 
 /* 7.18.2. Limits of specified-width integer types */
 
@@ -492,7 +497,12 @@ typedef int _verify_intmax_size[sizeof (intmax_t) == sizeof (uintmax_t)
    sequence of nested includes
    <wchar.h> -> <stdio.h> -> <getopt.h> -> <stdlib.h>, and the latter includes
    <stdint.h> and assumes its types are already defined.  */
-#if ! (defined WCHAR_MIN && defined WCHAR_MAX)
+#if @HAVE_WCHAR_H@ && ! (defined WCHAR_MIN && defined WCHAR_MAX)
+  /* BSD/OS 4.0.1 has a bug: <stddef.h>, <stdio.h> and <time.h> must be
+     included before <wchar.h>.  */
+# include <stddef.h>
+# include <stdio.h>
+# include <time.h>
 # define _GL_JUST_INCLUDE_SYSTEM_WCHAR_H
 # include <wchar.h>
 # undef _GL_JUST_INCLUDE_SYSTEM_WCHAR_H

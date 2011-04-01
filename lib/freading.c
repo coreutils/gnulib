@@ -31,38 +31,38 @@ freading (FILE *fp)
   /* Most systems provide FILE as a struct and the necessary bitmask in
      <stdio.h>, because they need it for implementing getc() and putc() as
      fast macros.  */
-#if defined _IO_ftrylockfile || __GNU_LIBRARY__ == 1 /* GNU libc, BeOS, Haiku, Linux libc5 */
+# if defined _IO_ftrylockfile || __GNU_LIBRARY__ == 1 /* GNU libc, BeOS, Haiku, Linux libc5 */
   return ((fp->_flags & _IO_NO_WRITES) != 0
           || ((fp->_flags & (_IO_NO_READS | _IO_CURRENTLY_PUTTING)) == 0
               && fp->_IO_read_base != NULL));
-#elif defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, MacOS X, Cygwin */
+# elif defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, MacOS X, Cygwin */
   return (fp_->_flags & __SRD) != 0;
-#elif defined __EMX__               /* emx+gcc */
+# elif defined __EMX__               /* emx+gcc */
   return (fp->_flags & _IOREAD) != 0;
-#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw, NonStop Kernel */
-# if defined __sun                  /* Solaris */
+# elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw, NonStop Kernel */
+#  if defined __sun                  /* Solaris */
   return (fp->_flag & _IOREAD) != 0 && (fp->_flag & _IOWRT) == 0;
-# else
+#  else
   return (fp->_flag & _IOREAD) != 0;
-# endif
-#elif defined __UCLIBC__            /* uClibc */
+#  endif
+# elif defined __UCLIBC__            /* uClibc */
   return (fp->__modeflags & (__FLAG_READONLY | __FLAG_READING)) != 0;
-#elif defined __QNX__               /* QNX */
+# elif defined __QNX__               /* QNX */
   return ((fp->_Mode & 0x2 /* _MOPENW */) == 0
           || (fp->_Mode & 0x1000 /* _MREAD */) != 0);
-#elif defined __MINT__              /* Atari FreeMiNT */
+# elif defined __MINT__              /* Atari FreeMiNT */
   if (!fp->__mode.__write)
     return 1;
   if (!fp->__mode.__read)
     return 0;
-# ifdef _IO_CURRENTLY_GETTING /* Flag added on 2009-02-28 */
+#  ifdef _IO_CURRENTLY_GETTING /* Flag added on 2009-02-28 */
   return (fp->__flags & _IO_CURRENTLY_GETTING) != 0;
-# else
+#  else
   return (fp->__buffer < fp->__get_limit /*|| fp->__bufp == fp->__put_limit ??*/);
+#  endif
+# else
+#  error "Please port gnulib freading.c to your platform!"
 # endif
-#else
- #error "Please port gnulib freading.c to your platform!"
-#endif
 }
 
 #endif

@@ -3,10 +3,10 @@ unlink() function: remove a file.
 
 Files:
 lib/unlink.c
-m4/dos.m4
 m4/unlink.m4
 
 Depends-on:
+dosname
 lstat
 unistd
 

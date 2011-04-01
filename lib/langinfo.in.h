@@ -41,7 +41,10 @@
 /* A platform that lacks <langinfo.h>.  */
 
 /* Assume that it also lacks <nl_types.h> and the nl_item type.  */
+# if !GNULIB_defined_nl_item
 typedef int nl_item;
+#  define GNULIB_defined_nl_item 1
+# endif
 
 /* nl_langinfo items of the LC_CTYPE category */
 # define CODESET     10000

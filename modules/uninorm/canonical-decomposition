@@ -20,7 +20,7 @@ Include:
 "uninorm.h"
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Bruno Haible

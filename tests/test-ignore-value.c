@@ -23,20 +23,20 @@
 
 #include <stdio.h>
 
-#ifndef ATTRIBUTE_RETURN_CHECK
-# if __GNUC__ < 3 || (__GNUC__ == 3 && __GNUC_MINOR__ < 1)
-#  define ATTRIBUTE_RETURN_CHECK
+#ifndef _GL_ATTRIBUTE_RETURN_CHECK
+# if __GNUC__ < 3 || (__GNUC__ == 3 && __GNUC_MINOR__ < 4)
+#  define _GL_ATTRIBUTE_RETURN_CHECK
 # else
-#  define ATTRIBUTE_RETURN_CHECK __attribute__((__warn_unused_result__))
+#  define _GL_ATTRIBUTE_RETURN_CHECK __attribute__((__warn_unused_result__))
 # endif
 #endif
 
 struct s { int i; };
-static char doChar (void) ATTRIBUTE_RETURN_CHECK;
-static int doInt (void) ATTRIBUTE_RETURN_CHECK;
-static off_t doOff (void) ATTRIBUTE_RETURN_CHECK;
-static void *doPtr (void) ATTRIBUTE_RETURN_CHECK;
-static struct s doStruct (void) ATTRIBUTE_RETURN_CHECK;
+static char doChar (void) _GL_ATTRIBUTE_RETURN_CHECK;
+static int doInt (void) _GL_ATTRIBUTE_RETURN_CHECK;
+static off_t doOff (void) _GL_ATTRIBUTE_RETURN_CHECK;
+static void *doPtr (void) _GL_ATTRIBUTE_RETURN_CHECK;
+static struct s doStruct (void) _GL_ATTRIBUTE_RETURN_CHECK;
 
 static char
 doChar (void)

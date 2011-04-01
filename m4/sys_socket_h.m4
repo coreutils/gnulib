@@ -1,4 +1,4 @@
-# sys_socket_h.m4 serial 21
+# sys_socket_h.m4 serial 22
 dnl Copyright (C) 2005-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -101,17 +101,13 @@ AC_DEFUN([gl_HEADER_SYS_SOCKET],
 AC_DEFUN([gl_PREREQ_SYS_H_SOCKET],
 [
   dnl Check prerequisites of the <sys/socket.h> replacement.
+  AC_REQUIRE([gl_CHECK_SOCKET_HEADERS])
   gl_CHECK_NEXT_HEADERS([sys/socket.h])
   if test $ac_cv_header_sys_socket_h = yes; then
     HAVE_SYS_SOCKET_H=1
     HAVE_WS2TCPIP_H=0
   else
     HAVE_SYS_SOCKET_H=0
-    dnl We cannot use AC_CHECK_HEADERS_ONCE here, because that would make
-    dnl the check for those headers unconditional; yet cygwin reports
-    dnl that the headers are present but cannot be compiled (since on
-    dnl cygwin, all socket information should come from sys/socket.h).
-    AC_CHECK_HEADERS([ws2tcpip.h])
     if test $ac_cv_header_ws2tcpip_h = yes; then
       HAVE_WS2TCPIP_H=1
     else

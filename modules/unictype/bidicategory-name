@@ -1,19 +1,20 @@
 Description:
 Name of Unicode character bidi category.
 
+Status:
+obsolete
+
+Notice:
+This module is obsolete. Use the module 'unictype/bidiclass-name' instead.
+
 Files:
-lib/unictype/bidi_name.c
 
 Depends-on:
-unictype/base
+unictype/bidiclass-name
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([0.9], [unictype/bidicategory-name])
 
 Makefile.am:
-if LIBUNISTRING_COMPILE_UNICTYPE_BIDICATEGORY_NAME
-lib_SOURCES += unictype/bidi_name.c
-endif
 
 Include:
 "unictype.h"
@@ -23,4 +24,3 @@ LGPL
 
 Maintainer:
 Bruno Haible
-

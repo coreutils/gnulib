@@ -26,53 +26,53 @@
 
 #if !((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__)
 
-#include <stdbool.h>
+# include <stdbool.h>
 
-#if HAVE_DECL___FSETLOCKING && HAVE___FSETLOCKING
-# if HAVE_STDIO_EXT_H
-#  include <stdio_ext.h>
+# if HAVE_DECL___FSETLOCKING && HAVE___FSETLOCKING
+#  if HAVE_STDIO_EXT_H
+#   include <stdio_ext.h>
+#  endif
+# else
+#  define __fsetlocking(stream, type)    /* empty */
 # endif
-#else
-# define __fsetlocking(stream, type)    /* empty */
-#endif
 
-#if HAVE_TERMIOS_H
-# include <termios.h>
-#endif
+# if HAVE_TERMIOS_H
+#  include <termios.h>
+# endif
 
-#if USE_UNLOCKED_IO
-# include "unlocked-io.h"
-#else
-# if !HAVE_DECL_FFLUSH_UNLOCKED
-#  undef fflush_unlocked
-#  define fflush_unlocked(x) fflush (x)
+# if USE_UNLOCKED_IO
+#  include "unlocked-io.h"
+# else
+#  if !HAVE_DECL_FFLUSH_UNLOCKED
+#   undef fflush_unlocked
+#   define fflush_unlocked(x) fflush (x)
+#  endif
+#  if !HAVE_DECL_FLOCKFILE
+#   undef flockfile
+#   define flockfile(x) ((void) 0)
+#  endif
+#  if !HAVE_DECL_FUNLOCKFILE
+#   undef funlockfile
+#   define funlockfile(x) ((void) 0)
+#  endif
+#  if !HAVE_DECL_FPUTS_UNLOCKED
+#   undef fputs_unlocked
+#   define fputs_unlocked(str,stream) fputs (str, stream)
+#  endif
+#  if !HAVE_DECL_PUTC_UNLOCKED
+#   undef putc_unlocked
+#   define putc_unlocked(c,stream) putc (c, stream)
+#  endif
 # endif
-# if !HAVE_DECL_FLOCKFILE
-#  undef flockfile
-#  define flockfile(x) ((void) 0)
-# endif
-# if !HAVE_DECL_FUNLOCKFILE
-#  undef funlockfile
-#  define funlockfile(x) ((void) 0)
-# endif
-# if !HAVE_DECL_FPUTS_UNLOCKED
-#  undef fputs_unlocked
-#  define fputs_unlocked(str,stream) fputs (str, stream)
-# endif
-# if !HAVE_DECL_PUTC_UNLOCKED
-#  undef putc_unlocked
-#  define putc_unlocked(c,stream) putc (c, stream)
-# endif
-#endif
 
 /* It is desirable to use this bit on systems that have it.
    The only bit of terminal state we want to twiddle is echoing, which is
    done in software; there is no need to change the state of the terminal
    hardware.  */
 
-#ifndef TCSASOFT
-# define TCSASOFT 0
-#endif
+# ifndef TCSASOFT
+#  define TCSASOFT 0
+# endif
 
 static void
 call_fclose (void *arg)
@@ -112,7 +112,7 @@ getpass (const char *prompt)
   flockfile (out);
 
   /* Turn echoing off if it is on now.  */
-#if HAVE_TCGETATTR
+# if HAVE_TCGETATTR
   if (tcgetattr (fileno (in), &t) == 0)
     {
       /* Save the old one. */
@@ -121,7 +121,7 @@ getpass (const char *prompt)
       t.c_lflag &= ~(ECHO | ISIG);
       tty_changed = (tcsetattr (fileno (in), TCSAFLUSH | TCSASOFT, &t) == 0);
     }
-#endif
+# endif
 
   /* Write the prompt.  */
   fputs_unlocked (prompt, out);
@@ -158,10 +158,10 @@ getpass (const char *prompt)
     }
 
   /* Restore the original setting.  */
-#if HAVE_TCSETATTR
+# if HAVE_TCSETATTR
   if (tty_changed)
     tcsetattr (fileno (in), TCSAFLUSH | TCSASOFT, &s);
-#endif
+# endif
 
   funlockfile (out);
 
@@ -176,15 +176,15 @@ getpass (const char *prompt)
    improved by Simon Josefsson. */
 
 /* For PASS_MAX. */
-#include <limits.h>
+# include <limits.h>
 /* For _getch(). */
-#include <conio.h>
+# include <conio.h>
 /* For strdup(). */
-#include <string.h>
+# include <string.h>
 
-#ifndef PASS_MAX
-# define PASS_MAX 512
-#endif
+# ifndef PASS_MAX
+#  define PASS_MAX 512
+# endif
 
 char *
 getpass (const char *prompt)

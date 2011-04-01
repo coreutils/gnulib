@@ -1,20 +1,20 @@
 Description:
 Determine bidi category of a Unicode character.
 
+Status:
+obsolete
+
+Notice:
+This module is obsolete. Use the module 'unictype/bidiclass-of' instead.
+
 Files:
-lib/unictype/bidi_of.c
-lib/unictype/bidi_of.h
 
 Depends-on:
-unictype/base
+unictype/bidiclass-of
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([0.9.4], [unictype/bidicategory-of])
 
 Makefile.am:
-if LIBUNISTRING_COMPILE_UNICTYPE_BIDICATEGORY_OF
-lib_SOURCES += unictype/bidi_of.c
-endif
 
 Include:
 "unictype.h"
@@ -24,4 +24,3 @@ LGPL
 
 Maintainer:
 Bruno Haible
-
