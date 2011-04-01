@@ -13,6 +13,7 @@ lib/wcpcpy-impl.h
 m4/wcpcpy.m4
 
 Depends-on:
+extensions
 wchar
 
 configure.ac:

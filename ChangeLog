@@ -1,3 +1,15 @@
+2011-04-01  Bruno Haible  <bruno@clisp.org>
+
+	wcpcpy, wcpncpy: Ensure declaration on glibc >= 2.13 systems.
+	* m4/wcpcpy.m4 (gl_FUNC_WCPCPY): Require AC_USE_SYSTEM_EXTENSIONS.
+	* m4/wcpncpy.m4 (gl_FUNC_WCPNCPY): Likewise.
+	* modules/wcpcpy (Depends-on): Add extensions.
+	* modules/wcpncpy (Depends-on): Likewise.
+	* doc/posix-functions/wcpcpy.texi: Mention missing declaration on glibc
+	systems.
+	* doc/posix-functions/wcpncpy.texi: Likewise.
+	* doc/posix-functions/wcwidth.texi: Likewise.
+
 2011-03-31  Eric Blake  <eblake@redhat.com>
 
 	nonblocking: fix mingw test failures
