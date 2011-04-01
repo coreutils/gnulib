@@ -435,8 +435,22 @@ _GL_WARN_ON_USE (wcwidth, "wcwidth is unportable - "
 # if !@HAVE_WMEMCHR@
 _GL_FUNCDECL_SYS (wmemchr, wchar_t *, (const wchar_t *s, wchar_t c, size_t n));
 # endif
-_GL_CXXALIAS_SYS (wmemchr, wchar_t *, (const wchar_t *s, wchar_t c, size_t n));
+  /* On some systems, this function is defined as an overloaded function:
+       extern "C++" {
+         const wchar_t * std::wmemchr (const wchar_t *, wchar_t, size_t);
+         wchar_t * std::wmemchr (wchar_t *, wchar_t, size_t);
+       }  */
+_GL_CXXALIAS_SYS_CAST2 (wmemchr,
+                        wchar_t *, (const wchar_t *, wchar_t, size_t),
+                        const wchar_t *, (const wchar_t *, wchar_t, size_t));
+# if ((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 10) && !defined __UCLIBC__) \
+     && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
+_GL_CXXALIASWARN1 (wmemchr, wchar_t *, (wchar_t *s, wchar_t c, size_t n));
+_GL_CXXALIASWARN1 (wmemchr, const wchar_t *,
+                   (const wchar_t *s, wchar_t c, size_t n));
+# else
 _GL_CXXALIASWARN (wmemchr);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef wmemchr
 # if HAVE_RAW_DECL_WMEMCHR
@@ -776,8 +790,21 @@ _GL_WARN_ON_USE (wcsdup, "wcsdup is unportable - "
 # if !@HAVE_WCSCHR@
 _GL_FUNCDECL_SYS (wcschr, wchar_t *, (const wchar_t *wcs, wchar_t wc));
 # endif
-_GL_CXXALIAS_SYS (wcschr, wchar_t *, (const wchar_t *wcs, wchar_t wc));
+  /* On some systems, this function is defined as an overloaded function:
+       extern "C++" {
+         const wchar_t * std::wcschr (const wchar_t *, wchar_t);
+         wchar_t * std::wcschr (wchar_t *, wchar_t);
+       }  */
+_GL_CXXALIAS_SYS_CAST2 (wcschr,
+                        wchar_t *, (const wchar_t *, wchar_t),
+                        const wchar_t *, (const wchar_t *, wchar_t));
+# if ((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 10) && !defined __UCLIBC__) \
+     && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
+_GL_CXXALIASWARN1 (wcschr, wchar_t *, (wchar_t *wcs, wchar_t wc));
+_GL_CXXALIASWARN1 (wcschr, const wchar_t *, (const wchar_t *wcs, wchar_t wc));
+# else
 _GL_CXXALIASWARN (wcschr);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef wcschr
 # if HAVE_RAW_DECL_WCSCHR
@@ -792,8 +819,21 @@ _GL_WARN_ON_USE (wcschr, "wcschr is unportable - "
 # if !@HAVE_WCSRCHR@
 _GL_FUNCDECL_SYS (wcsrchr, wchar_t *, (const wchar_t *wcs, wchar_t wc));
 # endif
-_GL_CXXALIAS_SYS (wcsrchr, wchar_t *, (const wchar_t *wcs, wchar_t wc));
+  /* On some systems, this function is defined as an overloaded function:
+       extern "C++" {
+         const wchar_t * std::wcsrchr (const wchar_t *, wchar_t);
+         wchar_t * std::wcsrchr (wchar_t *, wchar_t);
+       }  */
+_GL_CXXALIAS_SYS_CAST2 (wcsrchr,
+                        wchar_t *, (const wchar_t *, wchar_t),
+                        const wchar_t *, (const wchar_t *, wchar_t));
+# if ((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 10) && !defined __UCLIBC__) \
+     && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
+_GL_CXXALIASWARN1 (wcsrchr, wchar_t *, (wchar_t *wcs, wchar_t wc));
+_GL_CXXALIASWARN1 (wcsrchr, const wchar_t *, (const wchar_t *wcs, wchar_t wc));
+# else
 _GL_CXXALIASWARN (wcsrchr);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef wcsrchr
 # if HAVE_RAW_DECL_WCSRCHR
@@ -843,9 +883,23 @@ _GL_WARN_ON_USE (wcsspn, "wcsspn is unportable - "
 _GL_FUNCDECL_SYS (wcspbrk, wchar_t *,
                   (const wchar_t *wcs, const wchar_t *accept));
 # endif
-_GL_CXXALIAS_SYS (wcspbrk, wchar_t *,
-                  (const wchar_t *wcs, const wchar_t *accept));
+  /* On some systems, this function is defined as an overloaded function:
+       extern "C++" {
+         const wchar_t * std::wcspbrk (const wchar_t *, const wchar_t *);
+         wchar_t * std::wcspbrk (wchar_t *, const wchar_t *);
+       }  */
+_GL_CXXALIAS_SYS_CAST2 (wcspbrk,
+                        wchar_t *, (const wchar_t *, const wchar_t *),
+                        const wchar_t *, (const wchar_t *, const wchar_t *));
+# if ((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 10) && !defined __UCLIBC__) \
+     && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
+_GL_CXXALIASWARN1 (wcspbrk, wchar_t *,
+                   (wchar_t *wcs, const wchar_t *accept));
+_GL_CXXALIASWARN1 (wcspbrk, const wchar_t *,
+                   (const wchar_t *wcs, const wchar_t *accept));
+# else
 _GL_CXXALIASWARN (wcspbrk);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef wcspbrk
 # if HAVE_RAW_DECL_WCSPBRK
@@ -861,9 +915,23 @@ _GL_WARN_ON_USE (wcspbrk, "wcspbrk is unportable - "
 _GL_FUNCDECL_SYS (wcsstr, wchar_t *,
                   (const wchar_t *haystack, const wchar_t *needle));
 # endif
-_GL_CXXALIAS_SYS (wcsstr, wchar_t *,
-                  (const wchar_t *haystack, const wchar_t *needle));
+  /* On some systems, this function is defined as an overloaded function:
+       extern "C++" {
+         const wchar_t * std::wcsstr (const wchar_t *, const wchar_t *);
+         wchar_t * std::wcsstr (wchar_t *, const wchar_t *);
+       }  */
+_GL_CXXALIAS_SYS_CAST2 (wcsstr,
+                        wchar_t *, (const wchar_t *, const wchar_t *),
+                        const wchar_t *, (const wchar_t *, const wchar_t *));
+# if ((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 10) && !defined __UCLIBC__) \
+     && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
+_GL_CXXALIASWARN1 (wcsstr, wchar_t *,
+                   (wchar_t *haystack, const wchar_t *needle));
+_GL_CXXALIASWARN1 (wcsstr, const wchar_t *,
+                   (const wchar_t *haystack, const wchar_t *needle));
+# else
 _GL_CXXALIASWARN (wcsstr);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef wcsstr
 # if HAVE_RAW_DECL_WCSSTR

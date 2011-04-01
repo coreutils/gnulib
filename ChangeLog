@@ -1,5 +1,13 @@
 2011-04-01  Bruno Haible  <bruno@clisp.org>
 
+	wmemchr, wcschr, wcsrchr, wcspbrk, wcsstr: Avoid errors in C++ mode.
+	* lib/wchar.in.h (wmemchr, wcschr, wcsrchr, wcspbrk, wcsstr): Use
+	_GL_CXXALIAS_SYS_CAST2 instead of _GL_CXXALIAS_SYS. On glibc >= 2.10
+	systems, use _GL_CXXALIASWARN1 instead of _GL_CXXALIASWARN.
+	Reported by Bruce Korb <bruce.korb@gmail.com>.
+
+2011-04-01  Bruno Haible  <bruno@clisp.org>
+
 	wcpcpy, wcpncpy: Ensure declaration on glibc >= 2.13 systems.
 	* m4/wcpcpy.m4 (gl_FUNC_WCPCPY): Require AC_USE_SYSTEM_EXTENSIONS.
 	* m4/wcpncpy.m4 (gl_FUNC_WCPNCPY): Likewise.
