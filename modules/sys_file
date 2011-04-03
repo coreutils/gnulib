@@ -18,7 +18,7 @@ BUILT_SOURCES += sys/file.h
 
 # We need the following in order to create <sys/file.h> when the system
 # has one that is incomplete.
-sys/file.h: sys_file.in.h $(WARN_ON_USE_H)
+sys/file.h: sys_file.in.h $(top_builddir)/config.status $(WARN_ON_USE_H)
 	$(AM_V_at)$(MKDIR_P) sys
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \

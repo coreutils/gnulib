@@ -18,7 +18,7 @@ BUILT_SOURCES += $(NETINET_IN_H)
 
 # We need the following in order to create <netinet/in.h> when the system
 # doesn't have one.
-netinet/in.h: netinet_in.in.h
+netinet/in.h: netinet_in.in.h $(top_builddir)/config.status
 	$(AM_V_at)$(MKDIR_P) netinet
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \

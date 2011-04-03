@@ -18,7 +18,7 @@ BUILT_SOURCES += ctype.h
 
 # We need the following in order to create <ctype.h> when the system
 # doesn't have one that works with the given compiler.
-ctype.h: ctype.in.h $(CXXDEFS_H) $(WARN_ON_USE_H)
+ctype.h: ctype.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \

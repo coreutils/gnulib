@@ -19,7 +19,7 @@ BUILT_SOURCES += poll.h
 
 # We need the following in order to create <poll.h> when the system
 # doesn't have one.
-poll.h: poll.in.h $(CXXDEFS_H) $(WARN_ON_USE_H)
+poll.h: poll.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|@''HAVE_POLL_H''@|$(HAVE_POLL_H)|g' \

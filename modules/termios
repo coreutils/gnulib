@@ -18,7 +18,7 @@ BUILT_SOURCES += termios.h
 
 # We need the following in order to create <termios.h> when the system
 # version does not have all declarations.
-termios.h: termios.in.h $(CXXDEFS_H) $(WARN_ON_USE_H)
+termios.h: termios.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \

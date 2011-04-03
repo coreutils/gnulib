@@ -16,7 +16,7 @@ BUILT_SOURCES += $(SCHED_H)
 
 # We need the following in order to create a replacement for <sched.h> when
 # the system doesn't have one.
-sched.h: sched.in.h
+sched.h: sched.in.h $(top_builddir)/config.status
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|@''HAVE_SCHED_H''@|$(HAVE_SCHED_H)|g' \

@@ -18,7 +18,7 @@ BUILT_SOURCES += pty.h
 
 # We need the following in order to create <pty.h> when the system
 # doesn't have one that works with the given compiler.
-pty.h: pty.in.h $(CXXDEFS_H) $(WARN_ON_USE_H)
+pty.h: pty.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|@''HAVE_PTY_H''@|$(HAVE_PTY_H)|g' \

@@ -19,7 +19,7 @@ BUILT_SOURCES += langinfo.h
 
 # We need the following in order to create an empty placeholder for
 # <langinfo.h> when the system doesn't have one.
-langinfo.h: langinfo.in.h $(CXXDEFS_H) $(WARN_ON_USE_H)
+langinfo.h: langinfo.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|@''HAVE_LANGINFO_H''@|$(HAVE_LANGINFO_H)|g' \

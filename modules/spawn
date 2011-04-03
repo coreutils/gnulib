@@ -20,7 +20,7 @@ BUILT_SOURCES += spawn.h
 
 # We need the following in order to create a replacement for <spawn.h> when
 # the system doesn't have one.
-spawn.h: spawn.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
+spawn.h: spawn.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|@''HAVE_SPAWN_H''@|$(HAVE_SPAWN_H)|g' \

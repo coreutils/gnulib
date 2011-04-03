@@ -19,7 +19,7 @@ BUILT_SOURCES += sys/times.h
 
 # We need the following in order to create <sys/times.h> when the system
 # doesn't have one that works with the given compiler.
-sys/times.h: sys_times.in.h $(WARN_ON_USE_H) $(ARG_NONNULL_H)
+sys/times.h: sys_times.in.h $(top_builddir)/config.status $(WARN_ON_USE_H) $(ARG_NONNULL_H)
 	$(AM_V_at)$(MKDIR_P) sys
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
