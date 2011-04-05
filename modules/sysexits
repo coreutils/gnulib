@@ -16,6 +16,7 @@ BUILT_SOURCES += $(SYSEXITS_H)
 
 # We need the following in order to create <sysexits.h> when the system
 # doesn't have one that works with the given compiler.
+if GL_GENERATE_SYSEXITS_H
 sysexits.h: sysexits.in.h $(top_builddir)/config.status
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
@@ -27,6 +28,10 @@ sysexits.h: sysexits.in.h $(top_builddir)/config.status
 	      < $(srcdir)/sysexits.in.h; \
 	} > $@-t && \
 	mv -f $@-t $@
+else
+sysexits.h: $(top_builddir)/config.status
+	rm -f $@
+endif
 MOSTLYCLEANFILES += sysexits.h sysexits.h-t
 
 Include:

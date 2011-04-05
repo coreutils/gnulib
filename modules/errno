@@ -16,6 +16,7 @@ BUILT_SOURCES += $(ERRNO_H)
 
 # We need the following in order to create <errno.h> when the system
 # doesn't have one that is POSIX compliant.
+if GL_GENERATE_ERRNO_H
 errno.h: errno.in.h $(top_builddir)/config.status
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
@@ -32,6 +33,10 @@ errno.h: errno.in.h $(top_builddir)/config.status
 	      < $(srcdir)/errno.in.h; \
 	} > $@-t && \
 	mv $@-t $@
+else
+errno.h: $(top_builddir)/config.status
+	rm -f $@
+endif
 MOSTLYCLEANFILES += errno.h errno.h-t
 
 Include:

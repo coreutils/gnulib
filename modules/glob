@@ -34,6 +34,7 @@ BUILT_SOURCES += $(GLOB_H)
 
 # We need the following in order to create <glob.h> when the system
 # doesn't have one that works with the given compiler.
+if GL_GENERATE_GLOB_H
 glob.h: glob.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
@@ -44,6 +45,10 @@ glob.h: glob.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      < $(srcdir)/glob.in.h; \
 	} > $@-t && \
 	mv -f $@-t $@
+else
+glob.h: $(top_builddir)/config.status
+	rm -f $@
+endif
 MOSTLYCLEANFILES += glob.h glob.h-t
 
 Include:

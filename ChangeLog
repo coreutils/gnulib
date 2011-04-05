@@ -1,5 +1,98 @@
 2011-04-05  Bruno Haible  <bruno@clisp.org>
 
+	Remove leftover generated .h files after config.status changed.
+
+	* m4/alloca.m4 (gl_FUNC_ALLOCA): New automake conditional
+	GL_GENERATE_ALLOCA_H.
+	* modules/alloca-opt (Makefile.am): Remove alloca.h if
+	GL_GENERATE_ALLOCA_H evaluates to false.
+
+	* m4/argz.m4 (gl_FUNC_ARGZ): New automake conditional
+	GL_GENERATE_ARGZ_H.
+	* modules/argz (Makefile.am): Remove argz.h if GL_GENERATE_ARGZ_H
+	evaluates to false.
+
+	* m4/byteswap.m4 (gl_BYTESWAP): New automake conditional
+	GL_GENERATE_BYTESWAP_H.
+	* modules/byteswap (Makefile.am): Remove byteswap.h if
+	GL_GENERATE_BYTESWAP_H evaluates to false.
+
+	* m4/errno_h.m4 (gl_HEADER_ERRNO_H): New automake conditional
+	GL_GENERATE_ERRNO_H.
+	* modules/errno (Makefile.am): Remove errno.h if GL_GENERATE_ERRNO_H
+	evaluates to false.
+
+	* m4/float_h.m4 (gl_FLOAT_H): New automake conditional
+	GL_GENERATE_FLOAT_H.
+	* modules/float (Makefile.am): Remove float.h if GL_GENERATE_FLOAT_H
+	evaluates to false.
+
+	* m4/fnmatch.m4 (gl_FUNC_FNMATCH_POSIX): New automake conditional
+	GL_GENERATE_FNMATCH_H.
+	* modules/fnmatch (Makefile.am): Remove fnmatch.h if
+	GL_GENERATE_FNMATCH_H evaluates to false.
+
+	* m4/glob.m4 (gl_GLOB_SUBSTITUTE, gl_GLOB): New automake conditional
+	GL_GENERATE_GLOB_H.
+	* modules/glob (Makefile.am): Remove glob.h if GL_GENERATE_GLOB_H
+	evaluates to false.
+
+	* m4/iconv_h.m4 (gl_REPLACE_ICONV_H, gl_ICONV_H_DEFAULTS): New
+	automake conditional GL_GENERATE_ICONV_H.
+	* modules/iconv-h (Makefile.am): Remove iconv.h if GL_GENERATE_ICONV_H
+	evaluates to false.
+
+	* m4/netinet_in_h.m4 (gl_HEADER_NETINET_IN): New automake conditional
+	GL_GENERATE_NETINET_IN_H.
+	* modules/netinet_in (Makefile.am): Remove netinet/in.h if
+	GL_GENERATE_NETINET_IN_H evaluates to false.
+
+	* m4/pthread.m4 (gl_PTHREAD_CHECK): Set PTHREAD_H here. New automake
+	conditional GL_GENERATE_PTHREAD_H.
+	(gl_PTHREAD_DEFAULTS): Don't set PTHREAD_H here.
+	* modules/pthread (Makefile.am): Remove pthread.h if
+	GL_GENERATE_PTHREAD_H evaluates to false.
+
+	* m4/sched_h.m4 (gl_SCHED_H): New automake conditional
+	GL_GENERATE_SCHED_H.
+	* modules/sched (Makefile.am): Remove sched.h if GL_GENERATE_SCHED_H
+	evaluates to false.
+
+	* m4/selinux-context-h.m4 (gl_HEADERS_SELINUX_CONTEXT_H): New automake
+	conditional GL_GENERATE_SELINUX_CONTEXT_H.
+	* modules/selinux-h (Makefile.am): Remove selinux/context.h if
+	GL_GENERATE_SELINUX_CONTEXT_H evaluates to false.
+
+	* m4/stdarg.m4 (gl_STDARG_H): New automake conditional
+	GL_GENERATE_STDARG_H.
+	* modules/stdarg (Makefile.am): Remove stdarg.h if
+	GL_GENERATE_STDARG_H evaluates to false.
+
+	* m4/stdbool.m4 (AM_STDBOOL_H): New automake conditional
+	GL_GENERATE_STDBOOL_H.
+	* modules/stdbool (Makefile.am): Remove stdbool.h if
+	GL_GENERATE_STDBOOL_H evaluates to false.
+
+	* m4/stddef_h.m4 (gl_STDDEF_H): Set STDDEF_H here. New automake
+	conditional GL_GENERATE_STDDEF_H.
+	(gl_STDDEF_H_DEFAULTS): Don't set STDDEF_H here.
+	* modules/stddef (Makefile.am): Remove stddef.h if
+	GL_GENERATE_STDDEF_H evaluates to false.
+
+	* m4/stdint.m4 (gl_STDINT_H): New automake conditional
+	GL_GENERATE_STDINT_H.
+	* modules/stdint (Makefile.am): Remove stdint.h if
+	GL_GENERATE_STDINT_H evaluates to false.
+
+	* m4/sysexits.m4 (gl_SYSEXITS): New automake conditional
+	GL_GENERATE_SYSEXITS_H.
+	* modules/sysexits (Makefile.am): Remove sysexits.h if
+	GL_GENERATE_SYSEXITS_H evaluates to false.
+
+	Reported by Karl Berry and Ralf Wildenhues.
+
+2011-04-05  Bruno Haible  <bruno@clisp.org>
+
 	Ensure to rebuild generated .h files when config.status has changed.
 	* modules/arpa_inet (Makefile.am): Add dependency from .h file to
 	config.status.

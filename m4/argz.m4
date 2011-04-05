@@ -7,7 +7,7 @@
 # unlimited permission to copy and/or distribute it, with or without
 # modifications, as long as this notice is preserved.
 
-# serial 8 argz.m4
+# serial 9 argz.m4
 
 AC_DEFUN([gl_FUNC_ARGZ],
 [gl_PREREQ_ARGZ
@@ -74,6 +74,7 @@ AS_IF([test -z "$ARGZ_H"],
         AC_LIBOBJ([argz])])])
 
 AC_SUBST([ARGZ_H])
+AM_CONDITIONAL([GL_GENERATE_ARGZ_H], [test -n "$ARGZ_H"])
 ])
 
 # Prerequisites of lib/argz.c.

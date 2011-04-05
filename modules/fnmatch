@@ -28,13 +28,18 @@ BUILT_SOURCES += $(FNMATCH_H)
 
 # We need the following in order to create <fnmatch.h> when the system
 # doesn't have one that supports the required API.
-fnmatch.h: fnmatch.in.h $(ARG_NONNULL_H)
+if GL_GENERATE_FNMATCH_H
+fnmatch.h: fnmatch.in.h $(top_builddir)/config.status $(ARG_NONNULL_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
 	      < $(srcdir)/fnmatch.in.h; \
 	} > $@-t && \
 	mv -f $@-t $@
+else
+fnmatch.h: $(top_builddir)/config.status
+	rm -f $@
+endif
 MOSTLYCLEANFILES += fnmatch.h fnmatch.h-t
 
 Include:

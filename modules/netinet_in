@@ -18,6 +18,7 @@ BUILT_SOURCES += $(NETINET_IN_H)
 
 # We need the following in order to create <netinet/in.h> when the system
 # doesn't have one.
+if GL_GENERATE_NETINET_IN_H
 netinet/in.h: netinet_in.in.h $(top_builddir)/config.status
 	$(AM_V_at)$(MKDIR_P) netinet
 	$(AM_V_GEN)rm -f $@-t $@ && \
@@ -30,6 +31,10 @@ netinet/in.h: netinet_in.in.h $(top_builddir)/config.status
 	      < $(srcdir)/netinet_in.in.h; \
 	} > $@-t && \
 	mv $@-t $@
+else
+netinet/in.h: $(top_builddir)/config.status
+	rm -f $@
+endif
 MOSTLYCLEANFILES += netinet/in.h netinet/in.h-t
 MOSTLYCLEANDIRS += netinet
 

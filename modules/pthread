@@ -17,6 +17,7 @@ BUILT_SOURCES += $(PTHREAD_H)
 
 # We need the following in order to create <pthread.h> when the system
 # doesn't have one that works with the given compiler.
+if GL_GENERATE_PTHREAD_H
 pthread.h: pthread.in.h $(top_builddir)/config.status
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
@@ -30,6 +31,10 @@ pthread.h: pthread.in.h $(top_builddir)/config.status
 	      < $(srcdir)/pthread.in.h; \
 	} > $@-t && \
 	mv $@-t $@
+else
+pthread.h: $(top_builddir)/config.status
+	rm -f $@
+endif
 MOSTLYCLEANFILES += pthread.h pthread.h-t
 
 Include:

@@ -1,4 +1,4 @@
-# Check for fnmatch - serial 5.
+# Check for fnmatch - serial 6.
 
 # Copyright (C) 2000-2007, 2009-2011 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -139,6 +139,7 @@ AC_DEFUN([gl_FUNC_FNMATCH_POSIX],
     AC_CHECK_HEADERS_ONCE([wctype.h])
   fi
   AC_SUBST([FNMATCH_H])
+  AM_CONDITIONAL([GL_GENERATE_FNMATCH_H], [test -n "$FNMATCH_H"])
 ])
 
 # Request a POSIX compliant fnmatch function with GNU extensions.
