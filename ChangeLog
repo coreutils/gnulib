@@ -1,3 +1,9 @@
+2011-04-05  Eric Blake  <eblake@redhat.com>
+
+	bootstrap: preserve git whitelist item sorting
+	* build-aux/bootstrap (sort_patterns): New function.
+	(insert_sorted_if_absent): Use it to sink ! lines to the bottom.
+
 2011-04-05  Simon Josefsson  <simon@josefsson.org>
 
 	* top/maint.mk (sc_prohibit_empty_lines_at_EOF): Don't trigger
