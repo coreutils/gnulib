@@ -1,3 +1,9 @@
+2011-04-05  Bruno Haible  <bruno@clisp.org>
+
+	pipe2: Relicense under LGPLv2+.
+	* modules/pipe2 (License): Change to LGPLv2+.
+	Requested by Eric Blake, for libvirt.
+
 2011-04-05  Bruce Korb  <bkorb@gnu.org>
 
 	bootstrap: compute gnulib_extra_files after updating build_aux
