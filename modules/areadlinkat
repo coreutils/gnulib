@@ -6,8 +6,7 @@ lib/areadlink.h
 lib/areadlinkat.c
 
 Depends-on:
-areadlink
-stdint
+careadlinkat
 readlinkat
 
 configure.ac:

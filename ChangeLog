@@ -1,3 +1,22 @@
+2011-04-05  Paul Eggert  <eggert@cs.ucla.edu>
+
+	areadlink, areadlinkat: rewrite in terms of careadlinkat
+	* lib/areadlink.c, lib/areadlinkat.c: Include careadlinkat.h
+	instead of errno.h, limits.h, stdint.h, stdlib.h, string.h, unistd.h.
+	(SSIZE_MAX, INITIAL_BUF_SIZE): Remove.
+	(malloc, realloc): Remove #undefs.
+	(areadlink, areadlinkat): Rewrite in terms of careadlinkat.
+	* modules/areadlink (Depends-on): Add careadlinkat.  Remove
+	readlink, ssize_t, stdint, unistd.
+	* modules/areadlinkat (Depends-on): Add careadlinkat.  Remove
+	areadlink, stdint.
+
+	careadlinkat: new module
+	* lib/allocator.h, lib/careadlinkat.h, lib/careadlinkat.c:
+	* modules/careadlinkat: New files, written by me with
+	a review and feedback from Ben Pfaff in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-04/msg00008.html>.
+
 2011-04-01  Bruno Haible  <bruno@clisp.org>
 
 	wmemchr, wcschr, wcsrchr, wcspbrk, wcsstr: Avoid errors in C++ mode.
