@@ -130,18 +130,7 @@ source_base=lib
 m4_base=m4
 doc_base=doc
 tests_base=tests
-
-# Extra files from gnulib, which override files from other sources.
-gnulib_extra_files="
-        $build_aux/install-sh
-        $build_aux/missing
-        $build_aux/mdate-sh
-        $build_aux/texinfo.tex
-        $build_aux/depcomp
-        $build_aux/config.guess
-        $build_aux/config.sub
-        doc/INSTALL
-"
+gnulib_extra_files=''
 
 # Additional gnulib-tool options to use.  Use "\newline" to break lines.
 gnulib_tool_option_extras=
@@ -229,6 +218,18 @@ case "$0" in
   *) test -r "$0.conf" && . ./"$0.conf" ;;
 esac
 
+# Extra files from gnulib, which override files from other sources.
+test -z "${gnulib_extra_files}" && \
+  gnulib_extra_files="
+        $build_aux/install-sh
+        $build_aux/missing
+        $build_aux/mdate-sh
+        $build_aux/texinfo.tex
+        $build_aux/depcomp
+        $build_aux/config.guess
+        $build_aux/config.sub
+        doc/INSTALL
+"
 
 if test "$vc_ignore" = auto; then
   vc_ignore=

@@ -1,3 +1,9 @@
+2011-04-05  Bruce Korb  <bkorb@gnu.org>
+
+	bootstrap: compute gnulib_extra_files after updating build_aux
+	* build-aux/bootstrap (gnulib_extra_files): bootstrap.conf may
+	change build_aux or also supply gnulib_extra_files.  Handle correctly.
+
 2011-04-05  Eric Blake  <eblake@redhat.com>
 
 	bootstrap: preserve git whitelist item sorting
