@@ -20,6 +20,17 @@
 #ifndef VERIFY_H
 # define VERIFY_H 1
 
+/* Define HAVE__STATIC_ASSERT to 1 if _Static_assert works as per the
+   C1X draft N1548 section 6.7.10.  This is supported by GCC 4.6.0 and
+   later, and its use here generates easier-to-read diagnostics when
+   verify (R) fails.
+
+   For now, use this only with GCC.  Eventually whether _Static_assert
+   works should be determined by 'configure'.  */
+# if 4 < __GNUC__ || (__GNUC__ == 4 && 6 <= __GNUC_MINOR__)
+#  define HAVE__STATIC_ASSERT 1
+# endif
+
 /* Each of these macros verifies that its argument R is nonzero.  To
    be portable, R should be an integer constant expression.  Unlike
    assert (R), there is no run-time overhead.
@@ -31,7 +42,12 @@
 
    Symbols ending in "__" are private to this header.
 
-   The code below uses several ideas.
+   If _Static_assert works, verify (R) uses it directly.  Similarly,
+   verify_true (R) works by packaging a _Static_assert inside a struct
+   that is an operand of sizeof.
+
+   The code below uses several ideas for C++ compilers, and for C
+   compilers that do not support _Static_assert:
 
    * The first step is ((R) ? 1 : -1).  Given an expression R, of
      integral or boolean or floating-point type, this yields an
@@ -109,15 +125,9 @@
      __COUNTER__ macro that can let us generate unique identifiers for
      each dummy function, to suppress this warning.
 
-   * This implementation exploits the fact that GCC does not warn about
-     the last declaration mentioned above.  If a future version of GCC
-     introduces a warning for this, the problem could be worked around
-     by using code specialized to GCC, just as __COUNTER__ is already
-     being used if available.
-
-       #if 4 <= __GNUC__
-       # define verify(R) [another version to keep GCC happy]
-       #endif
+   * This implementation exploits the fact that older versions of GCC,
+     which do not support _Static_assert, also do not warn about the
+     last declaration mentioned above.
 
    * In C++, any struct definition inside sizeof is invalid.
      Use a template type to work around the problem.  */
@@ -148,6 +158,13 @@ template <int w>
   struct verify_type__ { unsigned int verify_error_if_negative_size__: w; };
 #  define verify_true(R) \
      (!!sizeof (verify_type__<(R) ? 1 : -1>))
+# elif HAVE__STATIC_ASSERT
+#  define verify_true(R) \
+     (!!sizeof \
+      (struct { \
+        _Static_assert (R, "verify_true (" #R ")"); \
+        int verify_dummy__; \
+       }))
 # else
 #  define verify_true(R) \
      (!!sizeof \
@@ -157,7 +174,11 @@ template <int w>
 /* Verify requirement R at compile-time, as a declaration without a
    trailing ';'.  */
 
-# define verify(R) \
+# if HAVE__STATIC_ASSERT
+#  define verify(R) _Static_assert (R, "verify (" #R ")")
+# else
+#  define verify(R) \
     extern int (* _GL_GENSYM (verify_function) (void)) [verify_true (R)]
+# endif
 
 #endif

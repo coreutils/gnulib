@@ -1,3 +1,10 @@
+2011-04-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	verify: use _Static_assert if available
+	* lib/verify.h (HAVE__STATIC_ASSERT): New macro.
+	(verify_true, verify): Use it if available.  This generates better
+	diagnostics with GCC 4.6.0 and later.
+
 2011-04-05  Bruno Haible  <bruno@clisp.org>
 
 	Remove leftover generated .h files after config.status changed.
