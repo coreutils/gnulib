@@ -1,3 +1,9 @@
+2011-04-06  Eric Blake  <eblake@redhat.com>
+
+	binary-io: relicense under LGPLv2+
+	* modules/binary-io (License): Relax to LGPLv2+.
+	Requested for libvirt, and required by pipe2.
+
 2011-04-06  Paul Eggert  <eggert@cs.ucla.edu>
 
 	verify: use _Static_assert if available
