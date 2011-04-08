@@ -102,9 +102,6 @@ nonintr_select (int n, fd_set *readfds, fd_set *writefds, fd_set *exceptfds,
 #endif
 
 /* Non-blocking I/O.  */
-#ifndef O_NONBLOCK
-# define O_NONBLOCK O_NDELAY
-#endif
 #if HAVE_SELECT
 # define IS_EAGAIN(errcode) 0
 #else

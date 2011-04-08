@@ -11,6 +11,7 @@ spawn-pipe
 wait-process
 error
 exit
+fcntl-h
 gettext-h
 stdbool
 stdint

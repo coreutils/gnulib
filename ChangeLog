@@ -1,5 +1,10 @@
 2011-04-08  Eric Blake  <eblake@redhat.com>
 
+	pipe-filter: drop O_NONBLOCK workarounds
+	* modules/pipe-filter-gi (Depends-on): Add fcntl-h.
+	* modules/pipe-filter-ii (Depends-on): Likewise.
+	* lib/pipe-filter-aux.h (O_NONBLOCK): Delete workaround.
+
 	nonblocking: provide O_NONBLOCK for mingw
 	* modules/nonblocking (Depends-on): Add open.
 	(configure.ac): Set new witness macro.
