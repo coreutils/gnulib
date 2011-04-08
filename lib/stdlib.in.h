@@ -259,25 +259,24 @@ _GL_WARN_ON_USE (ptsname, "grantpt is not portable - "
    rely on GNU or POSIX semantics for malloc and realloc (for example,
    by never specifying a zero size), so it does not need malloc or
    realloc to be redefined.  */
-#if !_GL_USE_STDLIB_ALLOC
-# if @GNULIB_MALLOC_POSIX@
-#  if @REPLACE_MALLOC@
-#   if !(defined __cplusplus && defined GNULIB_NAMESPACE)
-#    undef malloc
-#    define malloc rpl_malloc
-#   endif
+#if @GNULIB_MALLOC_POSIX@
+# if @REPLACE_MALLOC@
+#  if !((defined __cplusplus && defined GNULIB_NAMESPACE) \
+        || _GL_USE_STDLIB_ALLOC)
+#   undef malloc
+#   define malloc rpl_malloc
+#  endif
 _GL_FUNCDECL_RPL (malloc, void *, (size_t size));
 _GL_CXXALIAS_RPL (malloc, void *, (size_t size));
-#  else
+# else
 _GL_CXXALIAS_SYS (malloc, void *, (size_t size));
-#  endif
+# endif
 _GL_CXXALIASWARN (malloc);
-# elif defined GNULIB_POSIXCHECK
-#  undef malloc
+#elif defined GNULIB_POSIXCHECK && !_GL_USE_STDLIB_ALLOC
+# undef malloc
 /* Assume malloc is always declared.  */
 _GL_WARN_ON_USE (malloc, "malloc is not POSIX compliant everywhere - "
                  "use gnulib module malloc-posix for portability");
-# endif
 #endif
 
 /* Convert a multibyte character to a wide character.  */
@@ -535,25 +534,24 @@ _GL_WARN_ON_USE (setstate_r, "setstate_r is unportable - "
 #endif
 
 
-#if !_GL_USE_STDLIB_ALLOC
-# if @GNULIB_REALLOC_POSIX@
-#  if @REPLACE_REALLOC@
-#   if !(defined __cplusplus && defined GNULIB_NAMESPACE)
-#    undef realloc
-#    define realloc rpl_realloc
-#   endif
+#if @GNULIB_REALLOC_POSIX@
+# if @REPLACE_REALLOC@
+#  if !((defined __cplusplus && defined GNULIB_NAMESPACE) \
+        || _GL_USE_STDLIB_ALLOC)
+#   undef realloc
+#   define realloc rpl_realloc
+#  endif
 _GL_FUNCDECL_RPL (realloc, void *, (void *ptr, size_t size));
 _GL_CXXALIAS_RPL (realloc, void *, (void *ptr, size_t size));
-#  else
+# else
 _GL_CXXALIAS_SYS (realloc, void *, (void *ptr, size_t size));
-#  endif
+# endif
 _GL_CXXALIASWARN (realloc);
-# elif defined GNULIB_POSIXCHECK
-#  undef realloc
+#elif defined GNULIB_POSIXCHECK && !_GL_USE_STDLIB_ALLOC
+# undef realloc
 /* Assume realloc is always declared.  */
 _GL_WARN_ON_USE (realloc, "realloc is not POSIX compliant everywhere - "
                  "use gnulib module realloc-posix for portability");
-# endif
 #endif
 
 #if @GNULIB_REALPATH@
