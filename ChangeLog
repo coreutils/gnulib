@@ -9,6 +9,7 @@
 	* lib/progreloc.c (_GL_USE_STDLIB_ALLOC, malloc): Likewise.
 	* lib/setenv.c (_GL_USE_STDLIB_ALLOC, malloc, realloc): Likewise.
 	* lib/canonicalize-lgpl.c (_GL_USE_STDLIB_ALLOC, malloc): Likewise.
+	* lib/relocatable.c (_GL_USE_STDLIB_ALLOC, malloc): Likewise.
 
 	careadlinkat: rename members to avoid problem
 	* lib/allocator.h (struct allocator): Rename members from
