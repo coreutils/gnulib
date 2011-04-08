@@ -256,6 +256,11 @@ _GL_WARN_ON_USE (openat, "openat is not portable - "
 # define O_TTY_INIT 0
 #endif
 
+#if O_ACCMODE != (O_RDONLY | O_WRONLY | O_RDWR | O_EXEC | O_SEARCH)
+# undef O_ACCMODE
+# define O_ACCMODE (O_RDONLY | O_WRONLY | O_RDWR | O_EXEC | O_SEARCH)
+#endif
+
 /* For systems that distinguish between text and binary I/O.
    O_BINARY is usually declared in fcntl.h  */
 #if !defined O_BINARY && defined _O_BINARY

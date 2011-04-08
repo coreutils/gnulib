@@ -23,6 +23,11 @@ non-zero value; otherwise, the gnulib replacement is 0.
 Gnulib defines these macros to @samp{O_RDONLY}, which is typically 0.
 
 @item
+The @samp{O_ACCMODE} mask mistakenly omits @samp{O_SEARCH} and
+@samp{O_EXEC} on some platforms:
+Cygwin.
+
+@item
 @samp{O_BINARY}, @samp{O_TEXT} (not specified by POSIX, but essential for
 portability to Woe32 platforms) are defined on some platforms but not on
 others.

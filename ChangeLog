@@ -1,5 +1,9 @@
 2011-04-08  Eric Blake  <eblake@redhat.com>
 
+	fcntl-h: fix O_ACCMODE on cygwin
+	* doc/posix-headers/fcntl.texi (fcntl.h): Document the bug.
+	* lib/fcntl.in.h (O_ACCMODE): Fix it.
+
 	pipe-filter: drop O_NONBLOCK workarounds
 	* modules/pipe-filter-gi (Depends-on): Add fcntl-h.
 	* modules/pipe-filter-ii (Depends-on): Likewise.
