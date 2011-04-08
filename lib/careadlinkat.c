@@ -133,16 +133,16 @@ careadlinkat (int fd, char const *filename,
 
           if (buf == stack_buf)
             {
-              char *b = (char *) alloc->malloc (link_size);
+              char *b = (char *) alloc->allocate (link_size);
               if (! b)
                 break;
               memcpy (b, buf, link_size);
               buf = b;
             }
-          else if (link_size < buf_size && buf != buffer && alloc->realloc)
+          else if (link_size < buf_size && buf != buffer && alloc->reallocate)
             {
               /* Shrink BUF before returning it.  */
-              char *b = (char *) alloc->realloc (buf, link_size);
+              char *b = (char *) alloc->reallocate (buf, link_size);
               if (b)
                 buf = b;
             }
@@ -159,7 +159,7 @@ careadlinkat (int fd, char const *filename,
         buf_size = buf_size_max;
       else
         break;
-      buf = (char *) alloc->malloc (buf_size);
+      buf = (char *) alloc->allocate (buf_size);
     }
   while (buf);
 
