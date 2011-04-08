@@ -18,6 +18,7 @@
 
 /* written by Jim Meyering and Bruno Haible */
 
+#define _GL_USE_STDLIB_ALLOC 1
 #include <config.h>
 /* Only the AC_FUNC_MALLOC macro defines 'malloc' already in config.h.  */
 #ifdef malloc
@@ -28,13 +29,9 @@
 # define NEED_MALLOC_GNU 1
 #endif
 
-/* Specification.  */
 #include <stdlib.h>
 
 #include <errno.h>
-
-/* Call the system's malloc below.  */
-#undef malloc
 
 /* Allocate an N-byte block of memory from the heap.
    If N is zero, allocate a 1-byte block.  */
