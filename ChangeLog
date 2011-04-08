@@ -1,5 +1,18 @@
 2011-04-08  Eric Blake  <eblake@redhat.com>
 
+	nonblocking: provide O_NONBLOCK for mingw
+	* modules/nonblocking (Depends-on): Add open.
+	(configure.ac): Set new witness macro.
+	* m4/fcntl_h.m4 (gl_FCNTL_H_DEFAULTS): Provide default for it.
+	* modules/fcntl-h (Makefile.am): Substitute it.
+	* lib/fcntl.in.h (O_NONBLOCK): Guarantee non-zero definition when
+	nonblocking module is in use.
+	* lib/nonblocking.c: Adjust portability test.
+	* lib/open.c (open): Don't let native open see gnulib flag.
+	* tests/test-fcntl-h.c (main): Enhance test.
+	* tests/test-open.h (test_open): Likewise.
+	* doc/posix-headers/fcntl.texi (fcntl.h): Document the replacement.
+
 	careadlink: fix compilation error on mingw
 	* lib/careadlinkat.c (standard_allocator): Avoid renaming fields
 	within struct allocator.

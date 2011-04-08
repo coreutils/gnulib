@@ -63,6 +63,12 @@ test_open (int (*func) (char const *, int, ...), bool print)
   ASSERT (write (fd, "c", 1) == 1);
   ASSERT (close (fd) == 0);
 
+  /* Although O_NONBLOCK on regular files can be ignored, it must not
+     cause a failure.  */
+  fd = func (BASE "file", O_NONBLOCK | O_RDONLY);
+  ASSERT (0 <= fd);
+  ASSERT (close (fd) == 0);
+
   /* Symlink handling, where supported.  */
   if (symlink (BASE "file", BASE "link") != 0)
     {

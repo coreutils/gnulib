@@ -182,8 +182,7 @@ _GL_WARN_ON_USE (openat, "openat is not portable - "
 #endif
 
 #if !defined O_CLOEXEC && defined O_NOINHERIT
-/* Mingw spells it `O_NOINHERIT'.  Intentionally leave it
-   undefined if not available.  */
+/* Mingw spells it `O_NOINHERIT'.  */
 # define O_CLOEXEC O_NOINHERIT
 #endif
 
@@ -217,6 +216,16 @@ _GL_WARN_ON_USE (openat, "openat is not portable - "
 
 #ifndef O_NONBLOCK
 # define O_NONBLOCK O_NDELAY
+#endif
+
+#if @GNULIB_NONBLOCKING@
+# if O_NONBLOCK
+#  define GNULIB_defined_O_NONBLOCK 0
+# else
+#  define GNULIB_defined_O_NONBLOCK 1
+#  undef O_NONBLOCK
+#  define O_NONBLOCK 0x40000000
+# endif
 #endif
 
 #ifndef O_NOCTTY

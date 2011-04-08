@@ -8,10 +8,12 @@ lib/nonblocking.h
 Depends-on:
 fcntl-h
 ioctl
+open
 stdbool
 sys_socket
 
 configure.ac:
+gl_FCNTL_MODULE_INDICATOR([nonblocking])
 
 Makefile.am:
 lib_SOURCES += nonblocking.c

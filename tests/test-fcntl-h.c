@@ -29,10 +29,88 @@ int o = O_DIRECT | O_DIRECTORY | O_DSYNC | O_NDELAY | O_NOATIME | O_NONBLOCK
 int sk[] = { SEEK_CUR, SEEK_END, SEEK_SET };
 
 /* Check that the FD_* macros are defined.  */
-int fd = FD_CLOEXEC;
+int i = FD_CLOEXEC;
 
 int
 main (void)
 {
-  return 0;
+  /* Ensure no overlap in SEEK_*. */
+  switch (0)
+    {
+    case SEEK_CUR:
+    case SEEK_END:
+    case SEEK_SET:
+      ;
+    }
+
+  /* Ensure no dangerous overlap in non-zero gnulib-defined replacements.  */
+  switch (O_RDONLY)
+    {
+      /* Access modes */
+    case O_RDONLY:
+    case O_WRONLY:
+    case O_RDWR:
+#if O_EXEC && O_EXEC != O_RDONLY
+    case O_EXEC:
+#endif
+#if O_SEARCH && O_EXEC != O_SEARCH && O_SEARCH != O_RDONLY
+    case O_SEARCH:
+#endif
+      i = O_ACCMODE == (O_RDONLY | O_WRONLY | O_RDWR | O_EXEC | O_SEARCH);
+      break;
+
+      /* Everyone should have these */
+    case O_CREAT:
+    case O_EXCL:
+    case O_TRUNC:
+    case O_APPEND:
+      break;
+
+      /* These might be 0 or O_RDONLY, only test non-zero versions.  */
+#if O_CLOEXEC
+    case O_CLOEXEC:
+#endif
+#if O_DIRECT
+    case O_DIRECT:
+#endif
+#if O_DIRECTORY
+    case O_DIRECTORY:
+#endif
+#if O_DSYNC
+    case O_DSYNC:
+#endif
+#if O_NOATIME
+    case O_NOATIME:
+#endif
+#if O_NONBLOCK
+    case O_NONBLOCK:
+#endif
+#if O_NOCTTY
+    case O_NOCTTY:
+#endif
+#if O_NOFOLLOW
+    case O_NOFOLLOW:
+#endif
+#if O_NOLINKS
+    case O_NOLINKS:
+#endif
+#if O_RSYNC && O_RSYNC != O_DSYNC
+    case O_RSYNC:
+#endif
+#if O_SYNC && O_SYNC != O_RSYNC
+    case O_SYNC:
+#endif
+#if O_TTY_INIT
+    case O_TTY_INIT:
+#endif
+#if O_BINARY
+    case O_BINARY:
+#endif
+#if O_TEXT
+    case O_TEXT:
+#endif
+      ;
+    }
+
+  return !i;
 }

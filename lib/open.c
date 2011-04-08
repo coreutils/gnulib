@@ -63,6 +63,15 @@ open (const char *filename, int flags, ...)
       va_end (arg);
     }
 
+#if GNULIB_defined_O_NONBLOCK
+  /* The only known platform that lacks O_NONBLOCK is mingw, but it
+     also lacks named pipes and Unix sockets, which are the only two
+     file types that require non-blocking handling in open().
+     Therefore, it is safe to ignore O_NONBLOCK here.  It is handy
+     that mingw also lacks openat(), so that is also covered here.  */
+  flags &= ~O_NONBLOCK;
+#endif
+
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
   if (strcmp (filename, "/dev/null") == 0)
     filename = "NUL";

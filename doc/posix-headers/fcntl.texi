@@ -9,9 +9,14 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 @samp{O_CLOEXEC}, @samp{O_DIRECTORY}, @samp{O_DSYNC}, @samp{O_NOCTTY},
-@samp{O_NOFOLLOW}, @samp{O_NONBLOCK}, @samp{O_RSYNC}, @samp{O_SYNC},
+@samp{O_NOFOLLOW}, @samp{O_RSYNC}, @samp{O_SYNC},
 and @samp{O_TTY_INIT} are not defined on some platforms.  Gnulib defines
-these macros to 0.
+these macros to 0, which is generally safe.
+
+@item
+@samp{O_NONBLOCK} is not defined on some platforms.  If the
+@samp{nonblocking} module is in use, gnulib guarantees a working
+non-zero value; otherwise, the gnulib replacement is 0.
 
 @item
 @samp{O_EXEC} and @samp{O_SEARCH} are not defined on some platforms.
