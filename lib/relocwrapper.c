@@ -43,6 +43,7 @@
    libc functions, no gettext(), no error(), no xmalloc(), no xsetenv().
  */
 
+#define _GL_USE_STDLIB_ALLOC 1
 #include <config.h>
 
 #include <stdio.h>
@@ -58,7 +59,6 @@
 
 /* Use the system functions, not the gnulib overrides in this file.  */
 #undef fprintf
-#undef malloc
 
 /* Return a copy of the filename, with an extra ".bin" at the end.
    More generally, it replaces "${EXEEXT}" at the end with ".bin${EXEEXT}".  */
