@@ -54,6 +54,7 @@ rpl_ioctl (int fd, int request, ... /* {void *,char *} arg */)
 int
 ioctl (int fd, int req, ...)
 {
+# if GNULIB_SOCKET
   void *buf;
   va_list args;
   SOCKET sock;
@@ -73,6 +74,11 @@ ioctl (int fd, int req, ...)
     set_winsock_errno ();
 
   return r;
+
+# else
+  errno = ENOSYS;
+  return -1;
+# endif
 }
 
 #endif

@@ -1,5 +1,12 @@
 2011-04-08  Eric Blake  <eblake@redhat.com>
 
+	nonblocking: reduce dependency
+	* tests/test-nonblocking.c: Only test sockets when in use.
+	* modules/nonblocking-tests (Depends-on): Drop socket.
+	(Makefile.am): Link even if sockets are not present.
+	* modules/pipe2-tests (Makefile.am): Likewise.
+	* lib/ioctl.c (ioctl) [WIN32]: Fail if sockets are not also in use.
+
 	pipe2: fix O_NONBLOCK support on mingw
 	* modules/pipe2 (Depends-on): Add nonblocking.
 	* lib/pipe2.c (pipe2) [WIN32]: Add O_NONBLOCK support.
