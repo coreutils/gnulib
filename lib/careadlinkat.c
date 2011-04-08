@@ -18,6 +18,7 @@
 
 /* Written by Paul Eggert, Bruno Haible, and Jim Meyering.  */
 
+#define _GL_USE_STDLIB_ALLOC 1
 #include <config.h>
 
 #include "careadlinkat.h"
@@ -52,10 +53,10 @@ careadlinkatcwd (int fd, char const *filename, char *buffer,
 }
 #endif
 
-/* Forward declaration.  We want to #undef malloc before initializing
-   this struct, but cannot do so until after all code that uses named
-   fields from "allocator.h" has been compiled.  */
-static struct allocator const standard_allocator;
+/* A standard allocator.  For now, only careadlinkat needs this, but
+   perhaps it should be moved to the allocator module.  */
+static struct allocator const standard_allocator =
+  { malloc, realloc, free, NULL };
 
 /* Assuming the current directory is FD, get the symbolic link value
    of FILENAME as a null-terminated string and put it into a buffer.
@@ -168,14 +169,3 @@ careadlinkat (int fd, char const *filename,
   errno = ENOMEM;
   return NULL;
 }
-
-/* Use the system functions, not the gnulib overrides, because this
-   module does not depend on GNU or POSIX semantics.  See comments
-   above why this must occur here.  */
-#undef malloc
-#undef realloc
-
-/* A standard allocator.  For now, only careadlinkat needs this, but
-   perhaps it should be moved to the allocator module.  */
-static struct allocator const standard_allocator =
-  { malloc, realloc, free, NULL };
