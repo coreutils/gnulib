@@ -16,6 +16,7 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 #ifndef _LIBC
+# define _GL_USE_STDLIB_ALLOC 1
 # include <config.h>
 #endif
 
@@ -68,8 +69,6 @@
 # endif
 # define __readlink readlink
 # define __set_errno(e) errno = (e)
-/* Use the system functions, not the gnulib overrides in this file.  */
-# undef malloc
 # ifndef MAXSYMLINKS
 #  ifdef SYMLOOP_MAX
 #   define MAXSYMLINKS SYMLOOP_MAX
