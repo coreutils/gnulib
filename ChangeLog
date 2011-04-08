@@ -1,5 +1,12 @@
 2011-04-08  Eric Blake  <eblake@redhat.com>
 
+	pipe2: fix O_NONBLOCK support on mingw
+	* modules/pipe2 (Depends-on): Add nonblocking.
+	* lib/pipe2.c (pipe2) [WIN32]: Add O_NONBLOCK support.
+	* tests/test-pipe2.c (is_nonblocking): Adjust test accordingly.
+	* tests/test-nonblocking.c (main): Likewise.
+	* modules/pipe2-tests (Makefile.am): Avoid link failure.
+
 	fcntl-h: fix O_ACCMODE on cygwin
 	* doc/posix-headers/fcntl.texi (fcntl.h): Document the bug.
 	* lib/fcntl.in.h (O_ACCMODE): Fix it.

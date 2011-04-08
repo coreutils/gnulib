@@ -33,6 +33,7 @@ SIGNATURE_CHECK (pipe2, int, (int[2], int));
 
 #include "binary-io.h"
 #include "macros.h"
+#include "nonblocking.h"
 
 /* Return true if FD is open.  */
 static bool
@@ -67,49 +68,23 @@ is_cloexec (int fd)
 #endif
 }
 
-/* Return true if FD is in non-blocking mode.  */
-static bool
-is_nonblocking (int fd)
-{
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-  /* We don't use the non-blocking mode for sockets here.  */
-  return 0;
-#else
-  int flags;
-  ASSERT ((flags = fcntl (fd, F_GETFL)) >= 0);
-  return (flags & O_NONBLOCK) != 0;
-#endif
-}
-
 int
 main ()
 {
   int use_nonblocking;
   int use_cloexec;
 
-#if !((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)
   for (use_nonblocking = 0; use_nonblocking <= 1; use_nonblocking++)
-#else
-  use_nonblocking = 0;
-#endif
-#if O_CLOEXEC
-    for (use_cloexec = 0; use_cloexec <= 1; use_cloexec++)
-#else
-    use_cloexec = 0;
-#endif
+    for (use_cloexec = 0; use_cloexec <= !!O_CLOEXEC; use_cloexec++)
       {
         int o_flags;
         int fd[2];
 
         o_flags = 0;
-#if !((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)
         if (use_nonblocking)
           o_flags |= O_NONBLOCK;
-#endif
-#if O_CLOEXEC
         if (use_cloexec)
           o_flags |= O_CLOEXEC;
-#endif
 
         fd[0] = -1;
         fd[1] = -1;
@@ -131,14 +106,17 @@ main ()
           }
         if (use_nonblocking)
           {
-            ASSERT (is_nonblocking (fd[0]));
-            ASSERT (is_nonblocking (fd[1]));
+            ASSERT (get_nonblocking_flag (fd[0]) == 1);
+            ASSERT (get_nonblocking_flag (fd[1]) == 1);
           }
         else
           {
-            ASSERT (!is_nonblocking (fd[0]));
-            ASSERT (!is_nonblocking (fd[1]));
+            ASSERT (get_nonblocking_flag (fd[0]) == 0);
+            ASSERT (get_nonblocking_flag (fd[1]) == 0);
           }
+
+        ASSERT (close (fd[0]) == 0);
+        ASSERT (close (fd[1]) == 0);
       }
 
   return 0;
