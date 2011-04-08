@@ -1,5 +1,14 @@
 2011-04-08  Paul Eggert  <eggert@cs.ucla.edu>
 
+	allocator: New module.
+	* modules/allocator, lib/allocator.c: New files.
+	* lib/allocator.h (stdlib_allocator): New decl.
+	* lib/careadlinkat.c (_GL_USE_STDLIB_ALLOC, standard_allocator):
+	Remove.  Do not include <stdlib.h>.
+	(careadlinkat): Use stdlib_allocator instead of rolling our own.
+	* modules/careadlinkat (Files): Remove lib/allocator.h.
+	(Depends-on): Add allocator.
+
 	stdlib: let modules use system malloc, realloc
 	* lib/stdlib.in.h (malloc, realloc): Don't #define or add warnings
 	if !_GL_USE_STDLIB_ALLOC.

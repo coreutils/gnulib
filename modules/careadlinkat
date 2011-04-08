@@ -4,9 +4,9 @@ Read symbolic links into a buffer without size limitation, relative to fd.
 Files:
 lib/careadlinkat.c
 lib/careadlinkat.h
-lib/allocator.h
 
 Depends-on:
+allocator
 readlink
 ssize_t
 unistd

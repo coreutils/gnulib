@@ -50,4 +50,7 @@ struct allocator
   void (*die) (void);
 };
 
+/* An allocator using the stdlib functions and a null DIE function.  */
+extern struct allocator const stdlib_allocator;
+
 #endif

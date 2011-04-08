@@ -18,7 +18,6 @@
 
 /* Written by Paul Eggert, Bruno Haible, and Jim Meyering.  */
 
-#define _GL_USE_STDLIB_ALLOC 1
 #include <config.h>
 
 #include "careadlinkat.h"
@@ -27,7 +26,6 @@
 
 #include <errno.h>
 #include <limits.h>
-#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
@@ -52,11 +50,6 @@ careadlinkatcwd (int fd, char const *filename, char *buffer,
   return readlink (filename, buffer, buffer_size);
 }
 #endif
-
-/* A standard allocator.  For now, only careadlinkat needs this, but
-   perhaps it should be moved to the allocator module.  */
-static struct allocator const standard_allocator =
-  { malloc, realloc, free, NULL };
 
 /* Assuming the current directory is FD, get the symbolic link value
    of FILENAME as a null-terminated string and put it into a buffer.
@@ -90,7 +83,7 @@ careadlinkat (int fd, char const *filename,
   char stack_buf[1024];
 
   if (! alloc)
-    alloc = &standard_allocator;
+    alloc = &stdlib_allocator;
 
   if (! buffer_size)
     {
