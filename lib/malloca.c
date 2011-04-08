@@ -16,15 +16,13 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
+#define _GL_USE_STDLIB_ALLOC 1
 #include <config.h>
 
 /* Specification.  */
 #include "malloca.h"
 
 #include "verify.h"
-
-/* Use the system functions, not the gnulib overrides in this file.  */
-#undef malloc
 
 /* The speed critical point in this file is freea() applied to an alloca()
    result: it must be fast, to match the speed of alloca().  The speed of

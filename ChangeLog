@@ -5,6 +5,7 @@
 	if !_GL_USE_STDLIB_ALLOC.
 	* lib/careadlinkat.c (_GL_USE_STDLIB_ALLOC): Define.
 	(malloc, realloc): Don't #undef; no longer needed.
+	* lib/malloca.c (_GL_USE_STDLIB_ALLOC, malloc): Likewise.
 
 	careadlinkat: rename members to avoid problem
 	* lib/allocator.h (struct allocator): Rename members from
