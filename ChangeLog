@@ -1,5 +1,8 @@
 2011-04-09  Jim Meyering  <meyering@redhat.com>
 
+	maint: fix "the the" in comment
+	* lib/count-one-bits.h: s/the the/the/
+
 	maint: change "can not" to "cannot"
 	But do not change the occurrences in maintain.texi or in
 	build-aux/po/Makefile.in.in, which I presume comes from gettext.

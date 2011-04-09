@@ -38,7 +38,7 @@
           count += count_one_bits_32 (x >> 31 >> 1);                        \
         return count;
 
-/* Compute and return the the number of 1-bits set in the least
+/* Compute and return the number of 1-bits set in the least
    significant 32 bits of X. */
 static inline int
 count_one_bits_32 (unsigned int x)
