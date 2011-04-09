@@ -841,6 +841,11 @@ sc_prohibit_S_IS_definition:
 	halt='do not define S_IS* macros; include <sys/stat.h>'		\
 	  $(_sc_search_regexp)
 
+sc_prohibit_can_not:
+	@prohibit='\<can[ ]not\>'					\
+	halt='use "cannot", not "can'' not"'				\
+	  $(_sc_search_regexp)
+
 _ptm1 = use "test C1 && test C2", not "test C1 -''a C2"
 _ptm2 = use "test C1 || test C2", not "test C1 -''o C2"
 # Using test's -a and -o operators is not portable.

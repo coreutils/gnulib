@@ -1,3 +1,9 @@
+2011-04-09  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: prohibit use of "can not"
+	* top/maint.mk (sc_prohibit_can_not): New rule.
+	Writing "can not" (rather than "cannot") is too common.  Prohibit it.
+
 2011-04-09  Bruno Haible  <bruno@clisp.org>
 
 	careadlinkat: Guard against misuse of careadlinkatcwd.
