@@ -1,5 +1,12 @@
 2011-04-09  Bruno Haible  <bruno@clisp.org>
 
+	careadlinkat: Clarify specification.
+	* lib/careadlinkat.h (careadlinkat): Clarify preadlinkat argument.
+	(careadlinkatcwd): Add comment.
+	* lib/careadlinkat.c (careadlinkat): Clarify preadlinkat argument.
+
+2011-04-09  Bruno Haible  <bruno@clisp.org>
+
 	areadlinkat: Avoid link error on many platforms.
 	* modules/areadlinkat (Depends-on): Add areadlink.
 
