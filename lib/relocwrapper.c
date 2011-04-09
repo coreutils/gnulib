@@ -20,7 +20,9 @@
     -> progname
     -> progreloc
         -> areadlink
-           -> readlink
+           -> careadlinkat
+             -> allocator
+             -> readlink
         -> canonicalize-lgpl
            -> malloca
            -> readlink

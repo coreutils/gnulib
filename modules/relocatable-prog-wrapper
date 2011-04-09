@@ -10,6 +10,10 @@ lib/progname.c
 lib/progreloc.c
 lib/areadlink.h
 lib/areadlink.c
+lib/careadlinkat.h
+lib/careadlinkat.c
+lib/allocator.h
+lib/allocator.c
 lib/readlink.c
 lib/canonicalize-lgpl.c
 lib/malloca.h
