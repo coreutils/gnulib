@@ -1,5 +1,8 @@
 2011-04-09  Jim Meyering  <meyering@redhat.com>
 
+	maint: change "a a" to "a"
+	* tests/test-lchown.h (test_lchown): s/a a/a/
+
 	maint.mk: prohibit \<the the\>
 	* top/maint.mk (sc_prohibit_the_the): New rule.
 
