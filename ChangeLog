@@ -1,3 +1,11 @@
+2011-04-08  Bruno Haible  <bruno@clisp.org>
+
+	verify: Fix syntax error with GCC 4.6 in C++ mode.
+	* lib/verify.h (HAVE__STATIC_ASSERT): Don't define in C++ mode.
+	(HAVE_STATIC_ASSERT): New macro.
+	(verify_true, verify): Use 'static_assert' if it is supported and
+	'_Static_assert' is not supported.
+
 2011-04-08  Paul Eggert  <eggert@cs.ucla.edu>
 
 	allocator: New module.

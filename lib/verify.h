@@ -22,13 +22,22 @@
 
 /* Define HAVE__STATIC_ASSERT to 1 if _Static_assert works as per the
    C1X draft N1548 section 6.7.10.  This is supported by GCC 4.6.0 and
-   later, and its use here generates easier-to-read diagnostics when
-   verify (R) fails.
+   later, in C mode, and its use here generates easier-to-read diagnostics
+   when verify (R) fails.
+
+   Define HAVE_STATIC_ASSERT to 1 if static_assert works as per the
+   C1X draft N1548 section 7.2 or the C++0X draft N3242 section 7.(4).
+   This will likely be supported by future GCC versions, in C++ mode.
 
    For now, use this only with GCC.  Eventually whether _Static_assert
-   works should be determined by 'configure'.  */
-# if 4 < __GNUC__ || (__GNUC__ == 4 && 6 <= __GNUC_MINOR__)
+   and static_assert works should be determined by 'configure'.  */
+# if (4 < __GNUC__ || (__GNUC__ == 4 && 6 <= __GNUC_MINOR__)) && !defined __cplusplus
 #  define HAVE__STATIC_ASSERT 1
+# endif
+/* The condition (99 < __GNUC__) is temporary, until we know about the
+   first G++ release that supports static_assert.  */
+# if (99 < __GNUC__) && defined __cplusplus
+#  define HAVE_STATIC_ASSERT 1
 # endif
 
 /* Each of these macros verifies that its argument R is nonzero.  To
@@ -165,6 +174,13 @@ template <int w>
         _Static_assert (R, "verify_true (" #R ")"); \
         int verify_dummy__; \
        }))
+# elif HAVE_STATIC_ASSERT
+#  define verify_true(R) \
+     (!!sizeof \
+      (struct { \
+        static_assert (R, "verify_true (" #R ")"); \
+        int verify_dummy__; \
+       }))
 # else
 #  define verify_true(R) \
      (!!sizeof \
@@ -176,6 +192,8 @@ template <int w>
 
 # if HAVE__STATIC_ASSERT
 #  define verify(R) _Static_assert (R, "verify (" #R ")")
+# elif HAVE_STATIC_ASSERT
+#  define verify(R) static_assert (R, "verify (" #R ")")
 # else
 #  define verify(R) \
     extern int (* _GL_GENSYM (verify_function) (void)) [verify_true (R)]
