@@ -1,5 +1,10 @@
 2011-04-09  Bruno Haible  <bruno@clisp.org>
 
+	areadlinkat: Avoid link error on many platforms.
+	* modules/areadlinkat (Depends-on): Add areadlink.
+
+2011-04-09  Bruno Haible  <bruno@clisp.org>
+
 	allocator, careadlinkat: Fix double-inclusion guard.
 	* lib/allocator.h: Fix double-inclusion guard.
 	* lib/careadlinkat.h: Likewise.

@@ -6,6 +6,7 @@ lib/areadlink.h
 lib/areadlinkat.c
 
 Depends-on:
+areadlink
 careadlinkat
 readlinkat
 
