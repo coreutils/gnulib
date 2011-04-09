@@ -1,5 +1,13 @@
 2011-04-09  Jim Meyering  <meyering@redhat.com>
 
+	maint: change "can not" to "cannot"
+	But do not change the occurrences in maintain.texi or in
+	build-aux/po/Makefile.in.in, which I presume comes from gettext.
+	* doc/gnulib-tool.texi: s/can not/cannot/
+	* doc/posix-functions/accept.texi (accept): Likewise.
+	* doc/posix-functions/socket.texi (socket): Likewise.
+	* lib/mbrtowc.c: Likewise.
+
 	maint.mk: prohibit use of "can not"
 	* top/maint.mk (sc_prohibit_can_not): New rule.
 	Writing "can not" (rather than "cannot") is too common.  Prohibit it.
