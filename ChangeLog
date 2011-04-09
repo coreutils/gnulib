@@ -2,6 +2,7 @@
 
 	relocatable-prog-wrapper: Update after module 'areadlink' changed.
 	* lib/relocwrapper.c: Update dependencies hierarchy.
+	* build-aux/install-reloc: Update list of files to be compiled.
 	* modules/relocatable-prog-wrapper (Files): Add lib/careadlinkat.[hc],
 	lib/allocator.[hc].
 
