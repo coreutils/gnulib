@@ -1,3 +1,9 @@
+2011-04-09  Paul Eggert  <eggert@cs.ucla.edu>
+
+	maint: change "can not" to "cannot"
+	* doc/posix-functions/iconv.texi (iconv): This one crossed line
+	boundaries.
+
 2011-04-09  Jim Meyering  <meyering@redhat.com>
 
 	maint: change "a a" to "a"
