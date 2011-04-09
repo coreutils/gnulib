@@ -22,8 +22,6 @@
 
 #include "careadlinkat.h"
 
-#include "allocator.h"
-
 #include <errno.h>
 #include <limits.h>
 #include <string.h>
@@ -37,6 +35,8 @@
 #ifndef SSIZE_MAX
 # define SSIZE_MAX ((ssize_t) (SIZE_MAX / 2))
 #endif
+
+#include "allocator.h"
 
 #if ! HAVE_READLINKAT
 /* Ignore FD.  Get the symbolic link value of FILENAME and put it into

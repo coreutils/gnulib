@@ -1,5 +1,10 @@
 2011-04-09  Bruno Haible  <bruno@clisp.org>
 
+	careadlinkat: Use common coding style.
+	* lib/careadlinkat.c: Move gnulib includes after system includes.
+
+2011-04-09  Bruno Haible  <bruno@clisp.org>
+
 	careadlinkat: Clarify specification.
 	* lib/careadlinkat.h (careadlinkat): Clarify preadlinkat argument.
 	(careadlinkatcwd): Add comment.
