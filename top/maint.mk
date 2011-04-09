@@ -841,6 +841,11 @@ sc_prohibit_S_IS_definition:
 	halt='do not define S_IS* macros; include <sys/stat.h>'		\
 	  $(_sc_search_regexp)
 
+sc_prohibit_the_the:
+	@prohibit='\<the[ ]the\>'					\
+	halt='avoid double "the"'					\
+	  $(_sc_search_regexp)
+
 sc_prohibit_can_not:
 	@prohibit='\<can[ ]not\>'					\
 	halt='use "cannot", not "can'' not"'				\
