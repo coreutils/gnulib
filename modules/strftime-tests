@@ -3,7 +3,6 @@ tests/test-strftime.c
 tests/macros.h
 
 Depends-on:
-strftime
 
 configure.ac:
 
