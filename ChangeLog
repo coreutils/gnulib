@@ -1,5 +1,11 @@
 2011-04-09  Bruno Haible  <bruno@clisp.org>
 
+	careadlinkat: Guard against misuse of careadlinkatcwd.
+	* lib/careadlinkat.c: Include <stdlib.h>.
+	(careadlinkatcwd): Check that the fd argument is as expected.
+
+2011-04-09  Bruno Haible  <bruno@clisp.org>
+
 	careadlinkat: Use common coding style.
 	* lib/careadlinkat.c: Move gnulib includes after system includes.
 
