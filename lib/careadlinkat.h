@@ -18,6 +18,7 @@
 /* Written by Paul Eggert, Bruno Haible, and Jim Meyering.  */
 
 #ifndef _GL_CAREADLINKAT_H
+#define _GL_CAREADLINKAT_H
 
 #include <fcntl.h>
 #include <unistd.h>

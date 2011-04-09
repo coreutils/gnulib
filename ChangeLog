@@ -1,5 +1,11 @@
 2011-04-09  Bruno Haible  <bruno@clisp.org>
 
+	allocator, careadlinkat: Fix double-inclusion guard.
+	* lib/allocator.h: Fix double-inclusion guard.
+	* lib/careadlinkat.h: Likewise.
+
+2011-04-09  Bruno Haible  <bruno@clisp.org>
+
 	relocatable-prog-wrapper: Update after module 'areadlink' changed.
 	* lib/relocwrapper.c: Update dependencies hierarchy.
 	* build-aux/install-reloc: Update list of files to be compiled.
