@@ -1,5 +1,28 @@
 2011-04-10  Jim Meyering  <meyering@redhat.com>
 
+	maint.mk: prohibit doubled words
+	Detect them also when they're separated by a newline.
+	There are 3 ways to customize it:
+	  - disable the test on a per file basis, as usual with rules using
+	    $(VC_LIST_EXCEPT)
+	  - replace the default doubled-word-selecting regexp (affects all files)
+	  - ignore a particular file-vs-doubled-word match
+	I nearly used that last one to ignore the "is is" match in
+	coreutils' NEWS file, since the text was "ls -is is ..."
+	To do that, I would have added this line to cfg.mk:
+	  ignore_doubled_word_match_RE_ = ^NEWS:[0-9]+:is[ ]is$
+	but it would have ignored any "is is" match in NEWS.
+	Low probability, but still...
+	Instead, I changed the text, slightly:
+	  -  ls -is is now consistent with ls -lis in ignoring values returned
+	  +  "ls -is" is now consistent with ls -lis in ignoring values returned
+	* top/maint.mk (prohibit_double_word_RE_): Provide default.
+	(prohibit_doubled_word_): Define.
+	(sc_prohibit_doubled_word): New rule.
+	(sc_prohibit_the_the): Remove.  Subsumed by the above.
+
+2011-04-10  Jim Meyering  <meyering@redhat.com>
+
 	maint: fix doubled-word typo in comment
 	* m4/gethostname.m4: s/is is/it is/
 	* m4/getdomainname.m4: Likewise.
