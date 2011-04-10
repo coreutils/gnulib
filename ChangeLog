@@ -1,3 +1,9 @@
+2011-04-09  Mats Erik Andersson  <mats.andersson@gisladisker.se>  (tiny change)
+
+	getaddrinfo: Fix test for sa_len member.
+	* m4/getaddrinfo.m4 (gl_PREREQ_GETADDRINFO): When testing for sa_len,
+	include <sys/types.h> before <sys/socket.h>.
+
 2011-04-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	maint: change "can not" to "cannot"

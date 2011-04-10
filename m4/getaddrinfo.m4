@@ -1,4 +1,4 @@
-# getaddrinfo.m4 serial 23
+# getaddrinfo.m4 serial 24
 dnl Copyright (C) 2004-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -105,7 +105,10 @@ AC_DEFUN([gl_PREREQ_GETADDRINFO], [
 
   dnl Including sys/socket.h is wrong for Windows, but Windows does not
   dnl have sa_len so the result is correct anyway.
-  AC_CHECK_MEMBERS([struct sockaddr.sa_len], , , [#include <sys/socket.h>])
+  AC_CHECK_MEMBERS([struct sockaddr.sa_len], , , [
+#include <sys/types.h>
+#include <sys/socket.h>
+])
 
   AC_CHECK_HEADERS_ONCE([netinet/in.h])
 
