@@ -1,3 +1,9 @@
+2011-04-10  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: remove useless semicolon and backslash
+	* top/maint.mk (sc_prohibit_empty_lines_at_EOF): Remove stray
+	semicolon and backslash.
+
 2011-04-10  Bruno Haible  <bruno@clisp.org>
 
 	stdint test: Fix compilation failure on OSF/1 with DTK compiler.

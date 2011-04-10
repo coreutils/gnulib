@@ -824,7 +824,7 @@ require_exactly_one_NL_at_EOF_ =					\
 sc_prohibit_empty_lines_at_EOF:
 	@perl -le '$(require_exactly_one_NL_at_EOF_)' $$($(VC_LIST_EXCEPT)) \
 	  || { echo '$(ME): empty line(s) or no newline at EOF'		\
-		1>&2; exit 1; } || :;					\
+		1>&2; exit 1; } || :
 
 # Make sure we don't use st_blocks.  Use ST_NBLOCKS instead.
 # This is a bit of a kludge, since it prevents use of the string
