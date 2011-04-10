@@ -1,5 +1,9 @@
 2011-04-10  Jim Meyering  <meyering@redhat.com>
 
+	maint: remove doubled words in comments, e.g., s/a a/a/
+	* lib/strptime.c (day_of_the_week): s/the the/the/
+	* tests/test-chown.h (test_chown): s/a a/a/
+
 	test-chown.h: correct a cast
 	* tests/test-chown.h (test_chown): Cast -1 to gid_t (not uid_t)
 	when the destination is a stat.st_gid.
