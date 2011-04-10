@@ -1,3 +1,9 @@
+2011-04-10  Jim Meyering  <meyering@redhat.com>
+
+	test-chown.h: correct a cast
+	* tests/test-chown.h (test_chown): Cast -1 to gid_t (not uid_t)
+	when the destination is a stat.st_gid.
+
 2011-04-09  Mats Erik Andersson  <mats.andersson@gisladisker.se>  (tiny change)
 
 	getaddrinfo: Fix test for sa_len member.
