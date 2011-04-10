@@ -1,5 +1,10 @@
 2011-04-10  Jim Meyering  <meyering@redhat.com>
 
+	maint: remove doubled word: s/it it/it/
+	* lib/stat-time.h (get_stat_birthtime): s/it it/it/
+
+2011-04-10  Jim Meyering  <meyering@redhat.com>
+
 	maint.mk: remove useless semicolon and backslash
 	* top/maint.mk (sc_prohibit_empty_lines_at_EOF): Remove stray
 	semicolon and backslash.

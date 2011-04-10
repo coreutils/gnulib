@@ -175,7 +175,7 @@ get_stat_birthtime (struct stat const *st)
      using zero.  Attempt to work around this problem.  Alas, this can
      report failure even for valid time stamps.  Also, NetBSD
      sometimes returns junk in the birth time fields; work around this
-     bug if it it is detected.  There's no need to detect negative
+     bug if it is detected.  There's no need to detect negative
      tv_nsec junk as negative tv_nsec already indicates an error.  */
   if (t.tv_sec == 0 || 1000000000 <= t.tv_nsec)
     t.tv_nsec = -1;
