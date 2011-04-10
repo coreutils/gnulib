@@ -1,4 +1,4 @@
-# getdomainname.m4 serial 5
+# getdomainname.m4 serial 6
 dnl Copyright (C) 2002-2003, 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,7 +18,7 @@ AC_DEFUN([gl_FUNC_GETDOMAINNAME],
   dnl   is discouraged, see
   dnl   <http://www.sun.com/software/solaris/programs/abi/appcert_faq.xml#q18>.
   dnl   We need to avoid a collision with this function.
-  dnl - Otherwise is is in libc.
+  dnl - Otherwise it is in libc.
   AC_CHECK_FUNCS([getdomainname], , [
     AC_CACHE_CHECK([for getdomainname in -lnsl],
       [gl_cv_func_getdomainname_in_libnsl],

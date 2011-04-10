@@ -1,5 +1,11 @@
 2011-04-10  Jim Meyering  <meyering@redhat.com>
 
+	maint: fix doubled-word typo in comment
+	* m4/gethostname.m4: s/is is/it is/
+	* m4/getdomainname.m4: Likewise.
+
+2011-04-10  Jim Meyering  <meyering@redhat.com>
+
 	maint: remove doubled word: s/it it/it/
 	* lib/stat-time.h (get_stat_birthtime): s/it it/it/
 
