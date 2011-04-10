@@ -155,7 +155,7 @@
 	* tests/test-open.h (test_open): Likewise.
 	* doc/posix-headers/fcntl.texi (fcntl.h): Document the replacement.
 
-	careadlink: fix compilation error on mingw
+	careadlinkat: fix compilation error on mingw
 	* lib/careadlinkat.c (standard_allocator): Avoid renaming fields
 	within struct allocator.
 
