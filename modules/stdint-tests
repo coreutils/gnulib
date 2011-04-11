@@ -6,6 +6,7 @@ m4/wint_t.m4
 Depends-on:
 verify
 intprops
+wchar
 
 configure.ac:
 gt_TYPE_WCHAR_T

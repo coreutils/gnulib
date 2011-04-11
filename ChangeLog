@@ -1,3 +1,8 @@
+2011-04-10  Bruno Haible  <bruno@clisp.org>
+
+	stdint test: Fix compilation failure on OSF/1 with DTK compiler.
+	* modules/stdint-tests (Depends-on): Add wchar.
+
 2011-04-10  Jim Meyering  <meyering@redhat.com>
 
 	maint: remove doubled words in comments, e.g., s/a a/a/
