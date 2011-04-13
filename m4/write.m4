@@ -1,4 +1,4 @@
-# write.m4 serial 1
+# write.m4 serial 2
 dnl Copyright (C) 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -14,7 +14,15 @@ AC_DEFUN([gl_FUNC_WRITE],
     gl_SIGNAL_SIGPIPE
     if test $gl_cv_header_signal_h_SIGPIPE != yes; then
       REPLACE_WRITE=1
-      AC_LIBOBJ([write])
     fi
   ])
+  m4_ifdef([gl_NONBLOCKING_IO], [
+    gl_NONBLOCKING_IO
+    if test $gl_cv_have_nonblocking != yes; then
+      REPLACE_WRITE=1
+    fi
+  ])
+  if test $REPLACE_WRITE = 1; then
+    AC_LIBOBJ([write])
+  fi
 ])

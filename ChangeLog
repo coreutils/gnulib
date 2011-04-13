@@ -1,3 +1,47 @@
+2011-04-13  Bruno Haible  <bruno@clisp.org>
+
+	Support non-blocking pipe I/O in write() on native Windows.
+	* lib/unistd.in.h (write): Enable replacement also if
+	GNULIB_UNISTD_H_NONBLOCKING is 1.
+	* lib/write.c: Enable replacement also if GNULIB_NONBLOCKING.
+	(rpl_write): When failing to write on a non-blocking pipe, change
+	errno from ENOSPC to EAGAIN.
+	* lib/stdio.in.h (fprintf, fputc, fputs, fwrite, printf, putc,
+	putchar, puts, vfprintf, vprintf): Enable replacement also if
+	GNULIB_STDIO_H_NONBLOCKING is 1.
+	* lib/stdio-write.c: Enable replacements also if GNULIB_NONBLOCKING.
+	(CLEAR_ERRNO, HANDLE_ENOSPC): New macros.
+	(CLEAR_LastError, HANDLE_ERROR_NO_DATA): New macros, extracted from
+	CALL_WITH_SIGPIPE_EMULATION.
+	(CALL_WITH_SIGPIPE_EMULATION): Use them.
+	* m4/nonblocking.m4: New file.
+	* m4/write.m4 (gl_FUNC_WRITE): Enable REPLACE_WRITE also if required
+	for non-blocking I/O support.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize
+	GNULIB_UNISTD_H_NONBLOCKING.
+	* m4/stdio_h.m4 (gl_STDIO_H): Enable REPLACE_STDIO_WRITE_FUNCS also if
+	required for non-blocking I/O support.
+	(gl_STDIO_H_DEFAULTS): Initialize GNULIB_STDIO_H_NONBLOCKING.
+	* modules/nonblocking (Files): Add m4/nonblocking.m4,
+	lib/stdio-write.c, m4/asm-underscore.m4.
+	(Depends-on): Add stdio, unistd.
+	(configure.ac): Invoke gl_NONBLOCKING_IO. Define GNULIB_NONBLOCKING.
+	Set GNULIB_STDIO_H_NONBLOCKING, GNULIB_UNISTD_H_NONBLOCKING.
+	* modules/unistd (Makefile.am): Substitute GNULIB_UNISTD_H_NONBLOCKING.
+	* modules/stdio (Makefile.am): Substitute GNULIB_STDIO_H_NONBLOCKING.
+	* doc/posix-functions/fprintf.texi: Mention 'nonblocking' module and
+	problem with non-blocking pipes.
+	* doc/posix-functions/fputc.texi: Likewise.
+	* doc/posix-functions/fputs.texi: Likewise.
+	* doc/posix-functions/fwrite.texi: Likewise.
+	* doc/posix-functions/printf.texi: Likewise.
+	* doc/posix-functions/putc.texi: Likewise.
+	* doc/posix-functions/putchar.texi: Likewise.
+	* doc/posix-functions/puts.texi: Likewise.
+	* doc/posix-functions/vfprintf.texi: Likewise.
+	* doc/posix-functions/vprintf.texi: Likewise.
+	* doc/posix-functions/write.texi: Likewise.
+
 2011-04-10  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: prohibit doubled words

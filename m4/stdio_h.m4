@@ -1,4 +1,4 @@
-# stdio_h.m4 serial 33
+# stdio_h.m4 serial 34
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -28,9 +28,17 @@ AC_DEFUN([gl_STDIO_H],
     gl_SIGNAL_SIGPIPE
     if test $gl_cv_header_signal_h_SIGPIPE != yes; then
       REPLACE_STDIO_WRITE_FUNCS=1
-      AC_LIBOBJ([stdio-write])
     fi
   ])
+  m4_ifdef([gl_NONBLOCKING_IO], [
+    gl_NONBLOCKING_IO
+    if test $gl_cv_have_nonblocking != yes; then
+      REPLACE_STDIO_WRITE_FUNCS=1
+    fi
+  ])
+  if test $REPLACE_STDIO_WRITE_FUNCS = 1; then
+    AC_LIBOBJ([stdio-write])
+  fi
 
   dnl Check for declarations of anything we want to poison if the
   dnl corresponding gnulib module is not in use, and which is not
@@ -82,6 +90,7 @@ AC_DEFUN([gl_STDIO_H_DEFAULTS],
   GNULIB_RENAMEAT=0;             AC_SUBST([GNULIB_RENAMEAT])
   GNULIB_SNPRINTF=0;             AC_SUBST([GNULIB_SNPRINTF])
   GNULIB_SPRINTF_POSIX=0;        AC_SUBST([GNULIB_SPRINTF_POSIX])
+  GNULIB_STDIO_H_NONBLOCKING=0;  AC_SUBST([GNULIB_STDIO_H_NONBLOCKING])
   GNULIB_STDIO_H_SIGPIPE=0;      AC_SUBST([GNULIB_STDIO_H_SIGPIPE])
   GNULIB_TMPFILE=0;              AC_SUBST([GNULIB_TMPFILE])
   GNULIB_VASPRINTF=0;            AC_SUBST([GNULIB_VASPRINTF])

@@ -20,8 +20,9 @@
 /* Specification.  */
 #include <unistd.h>
 
-/* Replace this function only if module 'sigpipe' is requested.  */
-#if GNULIB_SIGPIPE
+/* Replace this function only if module 'nonblocking' or module 'sigpipe' is
+   requested.  */
+#if GNULIB_NONBLOCKING || GNULIB_SIGPIPE
 
 /* On native Windows platforms, SIGPIPE does not exist.  When write() is
    called on a pipe with no readers, WriteFile() fails with error
@@ -45,14 +46,35 @@ rpl_write (int fd, const void *buf, size_t count)
 
   if (ret < 0)
     {
-      if (GetLastError () == ERROR_NO_DATA
-          && GetFileType ((HANDLE) _get_osfhandle (fd)) == FILE_TYPE_PIPE)
+#  if GNULIB_NONBLOCKING
+      if (errno == ENOSPC)
         {
-          /* Try to raise signal SIGPIPE.  */
-          raise (SIGPIPE);
-          /* If it is currently blocked or ignored, change errno from EINVAL
-             to EPIPE.  */
-          errno = EPIPE;
+          HANDLE h = (HANDLE) _get_osfhandle (fd);
+          if (GetFileType (h) == FILE_TYPE_PIPE)
+            {
+              /* h is a pipe or socket.  */
+              DWORD state;
+              if (GetNamedPipeHandleState (h, &state, NULL, NULL, NULL, NULL, 0)
+                  && (state & PIPE_NOWAIT) != 0)
+                /* h is a pipe in non-blocking mode.
+                   Change errno from ENOSPC to EAGAIN.  */
+                errno = EAGAIN;
+            }
+        }
+      else
+#  endif
+        {
+#  if GNULIB_SIGPIPE
+          if (GetLastError () == ERROR_NO_DATA
+              && GetFileType ((HANDLE) _get_osfhandle (fd)) == FILE_TYPE_PIPE)
+            {
+              /* Try to raise signal SIGPIPE.  */
+              raise (SIGPIPE);
+              /* If it is currently blocked or ignored, change errno from
+                 EINVAL to EPIPE.  */
+              errno = EPIPE;
+            }
+#  endif
         }
     }
   return ret;

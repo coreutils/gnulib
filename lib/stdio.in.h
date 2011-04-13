@@ -203,7 +203,7 @@ _GL_WARN_ON_USE (fopen, "fopen on Win32 platforms is not POSIX compatible - "
 
 #if @GNULIB_FPRINTF_POSIX@ || @GNULIB_FPRINTF@
 # if (@GNULIB_FPRINTF_POSIX@ && @REPLACE_FPRINTF@) \
-     || (@GNULIB_FPRINTF@ && @REPLACE_STDIO_WRITE_FUNCS@ && @GNULIB_STDIO_H_SIGPIPE@)
+     || (@GNULIB_FPRINTF@ && @REPLACE_STDIO_WRITE_FUNCS@ && (@GNULIB_STDIO_H_NONBLOCKING@ || @GNULIB_STDIO_H_SIGPIPE@))
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define fprintf rpl_fprintf
 #  endif
@@ -262,7 +262,7 @@ _GL_WARN_ON_USE (fpurge, "fpurge is not always present - "
 #endif
 
 #if @GNULIB_FPUTC@
-# if @REPLACE_STDIO_WRITE_FUNCS@ && @GNULIB_STDIO_H_SIGPIPE@
+# if @REPLACE_STDIO_WRITE_FUNCS@ && (@GNULIB_STDIO_H_NONBLOCKING@ || @GNULIB_STDIO_H_SIGPIPE@)
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef fputc
 #   define fputc rpl_fputc
@@ -276,7 +276,7 @@ _GL_CXXALIASWARN (fputc);
 #endif
 
 #if @GNULIB_FPUTS@
-# if @REPLACE_STDIO_WRITE_FUNCS@ && @GNULIB_STDIO_H_SIGPIPE@
+# if @REPLACE_STDIO_WRITE_FUNCS@ && (@GNULIB_STDIO_H_NONBLOCKING@ || @GNULIB_STDIO_H_SIGPIPE@)
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef fputs
 #   define fputs rpl_fputs
@@ -506,7 +506,7 @@ _GL_WARN_ON_USE (ftell, "ftell cannot handle files larger than 4 GB "
 
 
 #if @GNULIB_FWRITE@
-# if @REPLACE_STDIO_WRITE_FUNCS@ && @GNULIB_STDIO_H_SIGPIPE@
+# if @REPLACE_STDIO_WRITE_FUNCS@ && (@GNULIB_STDIO_H_NONBLOCKING@ || @GNULIB_STDIO_H_SIGPIPE@)
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef fwrite
 #   define fwrite rpl_fwrite
@@ -711,7 +711,7 @@ _GL_WARN_ON_USE (popen, "popen is buggy on some platforms - "
 
 #if @GNULIB_PRINTF_POSIX@ || @GNULIB_PRINTF@
 # if (@GNULIB_PRINTF_POSIX@ && @REPLACE_PRINTF@) \
-     || (@GNULIB_PRINTF@ && @REPLACE_STDIO_WRITE_FUNCS@ && @GNULIB_STDIO_H_SIGPIPE@)
+     || (@GNULIB_PRINTF@ && @REPLACE_STDIO_WRITE_FUNCS@ && (@GNULIB_STDIO_H_NONBLOCKING@ || @GNULIB_STDIO_H_SIGPIPE@))
 #  if defined __GNUC__
 #   if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 /* Don't break __attribute__((format(printf,M,N))).  */
@@ -760,7 +760,7 @@ _GL_WARN_ON_USE (printf, "printf is not always POSIX compliant - "
 #endif
 
 #if @GNULIB_PUTC@
-# if @REPLACE_STDIO_WRITE_FUNCS@ && @GNULIB_STDIO_H_SIGPIPE@
+# if @REPLACE_STDIO_WRITE_FUNCS@ && (@GNULIB_STDIO_H_NONBLOCKING@ || @GNULIB_STDIO_H_SIGPIPE@)
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef putc
 #   define putc rpl_fputc
@@ -774,7 +774,7 @@ _GL_CXXALIASWARN (putc);
 #endif
 
 #if @GNULIB_PUTCHAR@
-# if @REPLACE_STDIO_WRITE_FUNCS@ && @GNULIB_STDIO_H_SIGPIPE@
+# if @REPLACE_STDIO_WRITE_FUNCS@ && (@GNULIB_STDIO_H_NONBLOCKING@ || @GNULIB_STDIO_H_SIGPIPE@)
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef putchar
 #   define putchar rpl_putchar
@@ -788,7 +788,7 @@ _GL_CXXALIASWARN (putchar);
 #endif
 
 #if @GNULIB_PUTS@
-# if @REPLACE_STDIO_WRITE_FUNCS@ && @GNULIB_STDIO_H_SIGPIPE@
+# if @REPLACE_STDIO_WRITE_FUNCS@ && (@GNULIB_STDIO_H_NONBLOCKING@ || @GNULIB_STDIO_H_SIGPIPE@)
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef puts
 #   define puts rpl_puts
@@ -1031,7 +1031,7 @@ _GL_WARN_ON_USE (vdprintf, "vdprintf is unportable - "
 
 #if @GNULIB_VFPRINTF_POSIX@ || @GNULIB_VFPRINTF@
 # if (@GNULIB_VFPRINTF_POSIX@ && @REPLACE_VFPRINTF@) \
-     || (@GNULIB_VFPRINTF@ && @REPLACE_STDIO_WRITE_FUNCS@ && @GNULIB_STDIO_H_SIGPIPE@)
+     || (@GNULIB_VFPRINTF@ && @REPLACE_STDIO_WRITE_FUNCS@ && (@GNULIB_STDIO_H_NONBLOCKING@ || @GNULIB_STDIO_H_SIGPIPE@))
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define vfprintf rpl_vfprintf
 #  endif
@@ -1067,7 +1067,7 @@ _GL_WARN_ON_USE (vfprintf, "vfprintf is not always POSIX compliant - "
 
 #if @GNULIB_VPRINTF_POSIX@ || @GNULIB_VPRINTF@
 # if (@GNULIB_VPRINTF_POSIX@ && @REPLACE_VPRINTF@) \
-     || (@GNULIB_VPRINTF@ && @REPLACE_STDIO_WRITE_FUNCS@ && @GNULIB_STDIO_H_SIGPIPE@)
+     || (@GNULIB_VPRINTF@ && @REPLACE_STDIO_WRITE_FUNCS@ && (@GNULIB_STDIO_H_NONBLOCKING@ || @GNULIB_STDIO_H_SIGPIPE@))
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define vprintf rpl_vprintf
 #  endif
