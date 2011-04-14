@@ -1,5 +1,13 @@
 2011-04-13  Bruno Haible  <bruno@clisp.org>
 
+	safe-write, full-read: Avoid unnecessary compilation units.
+	* modules/safe-write (Files): Add lib/safe-read.c, m4/safe-read.m4.
+	(Depends-on): Remove safe-read. Add ssize_t.
+	* modules/full-read (Files): Add lib/full-write.c.
+	(Depends-on): Add full-write.
+
+2011-04-13  Bruno Haible  <bruno@clisp.org>
+
 	Support non-blocking pipe I/O and SIGPIPE in pwrite().
 	* modules/pwrite (Depends-on): Add 'write'.
 

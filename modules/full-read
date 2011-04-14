@@ -4,10 +4,10 @@ An interface to the read() function that reads all it is asked to read.
 Files:
 lib/full-read.h
 lib/full-read.c
+lib/full-write.c
 
 Depends-on:
 safe-read
-full-write
 
 configure.ac:
 
