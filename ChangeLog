@@ -1,5 +1,10 @@
 2011-04-13  Bruno Haible  <bruno@clisp.org>
 
+	Support non-blocking pipe I/O and SIGPIPE in pwrite().
+	* modules/pwrite (Depends-on): Add 'write'.
+
+2011-04-13  Bruno Haible  <bruno@clisp.org>
+
 	Support non-blocking pipe I/O in write() on native Windows.
 	* lib/unistd.in.h (write): Enable replacement also if
 	GNULIB_UNISTD_H_NONBLOCKING is 1.
