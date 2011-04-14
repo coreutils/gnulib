@@ -1,5 +1,13 @@
 2011-04-14  Bruno Haible  <bruno@clisp.org>
 
+	Support non-blocking pipe I/O in write() on native Windows.
+	* lib/write.c (rpl_write): Split a write request that failed merely
+	because the byte count was larger than the pipe buffer's size.
+	* doc/posix-functions/write.texi: Mention the problem with large byte
+	counts.
+
+2011-04-14  Bruno Haible  <bruno@clisp.org>
+
 	wchar: Ensure that wchar_t gets defined on uClibc.
 	* lib/wchar.in.h: On uClibc, include <stddef.h>.
 	Reported by Giuseppe Scrivano <gscrivano@gnu.org>.
