@@ -1,5 +1,49 @@
 2011-04-14  Bruno Haible  <bruno@clisp.org>
 
+	Support non-blocking pipe I/O in read() on native Windows.
+	* lib/unistd.in.h: Include <sys/types.h> also for 'read'.
+	(read): New declaration.
+	* lib/read.c: New file.
+	* lib/stdio.in.h (_GL_ATTRIBUTE_FORMAT_SCANF,
+	_GL_ATTRIBUTE_FORMAT_SCANF_SYSTEM): New macros.
+	(fgetc, fgets, fread, fscanf, getc, getchar, gets, scanf, vfscanf,
+	vscanf): New declarations.
+	* lib/stdio-read.c: New file.
+	* m4/read.m4: New file.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize GNULIB_READ,
+	REPLACE_READ.
+	* m4/stdio_h.m4 (gl_STDIO_H): Set GNULIB_FGETC, GNULIB_FGETS,
+	GNULIB_FREAD, GNULIB_FSCANF, GNULIB_GETC, GNULIB_GETCHAR, GNULIB_GETS,
+	GNULIB_SCANF, GNULIB_VFSCANF, GNULIB_VSCANF. In non-blocking I/O is
+	desired and needs workarounds, set REPLACE_STDIO_READ_FUNCS.
+	(gl_STDIO_H_DEFAULTS): Initialize GNULIB_FGETC, GNULIB_FGETS,
+	GNULIB_FREAD, GNULIB_FSCANF, GNULIB_GETC, GNULIB_GETCHAR, GNULIB_GETS,
+	GNULIB_SCANF, GNULIB_VFSCANF, GNULIB_VSCANF, REPLACE_STDIO_READ_FUNCS.
+	* modules/read: New file.
+	* modules/nonblocking (Files): Add lib/stdio-read.c.
+	* modules/unistd (Makefile.am): Substitute GNULIB_READ, REPLACE_READ.
+	* modules/stdio (Makefile.am): Substitute GNULIB_FGETC, GNULIB_FGETS,
+	GNULIB_FREAD, GNULIB_FSCANF, GNULIB_GETC, GNULIB_GETCHAR, GNULIB_GETS,
+	GNULIB_SCANF, GNULIB_VFSCANF, GNULIB_VSCANF, REPLACE_STDIO_READ_FUNCS.
+	* modules/pread (Depends-on): Add read.
+	* modules/safe-read (Depends-on): Likewise.
+	* tests/test-stdio-c++.cc (fgetc, fgets, fread, fscanf, getc, getchar,
+	gets, scanf, vfscanf, vscanf): Verify signatures.
+	* doc/posix-functions/read.texi: Mention 'nonblocking' module and
+	problem with non-blocking pipes.
+	* doc/posix-functions/fgetc.texi: Likewise.
+	* doc/posix-functions/fgets.texi: Likewise.
+	* doc/posix-functions/fread.texi: Likewise.
+	* doc/posix-functions/fscanf.texi: Likewise.
+	* doc/posix-functions/getc.texi: Likewise.
+	* doc/posix-functions/getchar.texi: Likewise.
+	* doc/posix-functions/gets.texi: Likewise.
+	* doc/posix-functions/scanf.texi: Likewise.
+	* doc/posix-functions/vfscanf.texi: Likewise.
+	* doc/posix-functions/vscanf.texi: Likewise.
+
+2011-04-14  Bruno Haible  <bruno@clisp.org>
+
 	Support non-blocking pipe I/O in write() on native Windows.
 	* lib/write.c (rpl_write): Split a write request that failed merely
 	because the byte count was larger than the pipe buffer's size.

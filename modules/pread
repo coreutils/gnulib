@@ -8,6 +8,7 @@ m4/pread.m4
 Depends-on:
 extensions
 lseek
+read
 unistd
 
 configure.ac:

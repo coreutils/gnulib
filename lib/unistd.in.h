@@ -97,7 +97,8 @@
 # include <netdb.h>
 #endif
 
-#if (@GNULIB_WRITE@ || @GNULIB_READLINK@ || @GNULIB_READLINKAT@ \
+#if (@GNULIB_READ@ || @GNULIB_WRITE@ \
+     || @GNULIB_READLINK@ || @GNULIB_READLINKAT@ \
      || @GNULIB_PREAD@ || @GNULIB_PWRITE@ || defined GNULIB_POSIXCHECK)
 /* Get ssize_t.  */
 # include <sys/types.h>
@@ -1102,6 +1103,28 @@ _GL_CXXALIASWARN (pwrite);
 _GL_WARN_ON_USE (pwrite, "pwrite is unportable - "
                  "use gnulib module pwrite for portability");
 # endif
+#endif
+
+
+#if @GNULIB_READ@
+/* Read up to COUNT bytes from file descriptor FD into the buffer starting
+   at BUF.  See the POSIX:2001 specification
+   <http://www.opengroup.org/susv3xsh/read.html>.  */
+# if @REPLACE_READ@ && @GNULIB_UNISTD_H_NONBLOCKING@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef read
+#   define read rpl_read
+#  endif
+_GL_FUNCDECL_RPL (read, ssize_t, (int fd, void *buf, size_t count)
+                                 _GL_ARG_NONNULL ((2)));
+_GL_CXXALIAS_RPL (read, ssize_t, (int fd, void *buf, size_t count));
+# else
+/* Need to cast, because on mingw, the third parameter is
+                                                          unsigned int count
+   and the return type is 'int'.  */
+_GL_CXXALIAS_SYS_CAST (read, ssize_t, (int fd, void *buf, size_t count));
+# endif
+_GL_CXXALIASWARN (read);
 #endif
 
 

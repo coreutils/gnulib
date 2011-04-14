@@ -5,6 +5,7 @@ Files:
 lib/nonblocking.h
 lib/nonblocking.c
 m4/nonblocking.m4
+lib/stdio-read.c
 lib/stdio-write.c
 m4/asm-underscore.m4
 

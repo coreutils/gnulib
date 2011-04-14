@@ -1,0 +1,24 @@
+Description:
+POSIX compatible read() function: read data from a file descriptor
+
+Files:
+lib/read.c
+m4/read.m4
+
+Depends-on:
+unistd
+
+configure.ac:
+gl_FUNC_READ
+gl_UNISTD_MODULE_INDICATOR([read])
+
+Makefile.am:
+
+Include:
+<unistd.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+Bruno Haible

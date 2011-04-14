@@ -36,6 +36,14 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::fclose, int, (FILE *));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::fflush, int, (FILE *));
 #endif
 
+#if GNULIB_TEST_FGETC
+SIGNATURE_CHECK (GNULIB_NAMESPACE::fgetc, int, (FILE *));
+#endif
+
+#if GNULIB_TEST_FGETS
+SIGNATURE_CHECK (GNULIB_NAMESPACE::fgets, char *, (char *, int, FILE *));
+#endif
+
 #if GNULIB_TEST_FOPEN
 SIGNATURE_CHECK (GNULIB_NAMESPACE::fopen, FILE *,
                  (const char *, const char *));
@@ -57,9 +65,18 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::fputc, int, (int, FILE *));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::fputs, int, (const char *, FILE *));
 #endif
 
+#if GNULIB_TEST_FREAD
+SIGNATURE_CHECK (GNULIB_NAMESPACE::fread, size_t,
+                 (void *, size_t, size_t, FILE *));
+#endif
+
 #if GNULIB_TEST_FREOPEN
 SIGNATURE_CHECK (GNULIB_NAMESPACE::freopen, FILE *,
                  (const char *, const char *, FILE *));
+#endif
+
+#if GNULIB_TEST_FSCANF
+SIGNATURE_CHECK (GNULIB_NAMESPACE::fscanf, int, (FILE *, const char *, ...));
 #endif
 
 #if GNULIB_TEST_FSEEK
@@ -83,6 +100,14 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::fwrite, size_t,
                  (const void *, size_t, size_t, FILE *));
 #endif
 
+#if GNULIB_TEST_GETC
+SIGNATURE_CHECK (GNULIB_NAMESPACE::getc, int, (FILE *));
+#endif
+
+#if GNULIB_TEST_GETCHAR
+SIGNATURE_CHECK (GNULIB_NAMESPACE::getchar, int, (void));
+#endif
+
 #if GNULIB_TEST_GETDELIM
 SIGNATURE_CHECK (GNULIB_NAMESPACE::getdelim, ssize_t,
                  (char **, size_t *, int, FILE *));
@@ -91,6 +116,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::getdelim, ssize_t,
 #if GNULIB_TEST_GETLINE
 SIGNATURE_CHECK (GNULIB_NAMESPACE::getline, ssize_t,
                  (char **, size_t *, FILE *));
+#endif
+
+#if GNULIB_TEST_GETS
+SIGNATURE_CHECK (GNULIB_NAMESPACE::gets, char *, (char *));
 #endif
 
 #if GNULIB_TEST_OBSTACK_PRINTF || GNULIB_TEST_OBSTACK_PRINTF_POSIX
@@ -140,6 +169,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::renameat, int,
                  (int, char const *, int, char const *));
 #endif
 
+#if GNULIB_TEST_SCANF
+SIGNATURE_CHECK (GNULIB_NAMESPACE::scanf, int, (const char *, ...));
+#endif
+
 #if GNULIB_TEST_SNPRINTF
 SIGNATURE_CHECK (GNULIB_NAMESPACE::snprintf, int,
                  (char *, size_t, const char *, ...));
@@ -170,8 +203,17 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::vfprintf, int,
                  (FILE *, const char *, va_list));
 #endif
 
+#if GNULIB_TEST_VFSCANF
+SIGNATURE_CHECK (GNULIB_NAMESPACE::vfscanf, int,
+                 (FILE *, const char *, va_list));
+#endif
+
 #if GNULIB_TEST_VPRINTF_POSIX || GNULIB_TEST_VPRINTF
 SIGNATURE_CHECK (GNULIB_NAMESPACE::vprintf, int, (const char *, va_list));
+#endif
+
+#if GNULIB_TEST_VSCANF
+SIGNATURE_CHECK (GNULIB_NAMESPACE::vscanf, int, (const char *, va_list));
 #endif
 
 #if GNULIB_TEST_VSNPRINTF
