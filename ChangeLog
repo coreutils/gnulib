@@ -1,3 +1,10 @@
+2011-04-15  Bruno Haible  <bruno@clisp.org>
+
+	Don't require lib/stdio-write.c when only module 'stdio' is used.
+	* m4/stdio_h.m4 (gl_STDIO_H): Move the AC_LIBOBJ back into the m4_ifdef
+	invocation.
+	Reported by Rob Vermaas <rob.vermaas@gmail.com>.
+
 2011-04-14  Bruno Haible  <bruno@clisp.org>
 
 	Support non-blocking pipe I/O in read() on native Windows.

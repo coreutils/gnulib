@@ -1,4 +1,4 @@
-# stdio_h.m4 serial 35
+# stdio_h.m4 serial 36
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -22,9 +22,11 @@ AC_DEFUN([gl_STDIO_H],
   GNULIB_FGETS=1
   GNULIB_GETS=1
   GNULIB_FREAD=1
-  dnl This ifdef is just an optimization, to avoid performing a configure
-  dnl check whose result is not used. It does not make the test of
-  dnl GNULIB_STDIO_H_NONBLOCKING or GNULIB_NONBLOCKING redundant.
+  dnl This ifdef is necessary to avoid an error "missing file lib/stdio-read.c"
+  dnl "expected source file, required through AC_LIBSOURCES, not found". It is
+  dnl also an optimization, to avoid performing a configure check whose result
+  dnl is not used. But it does not make the test of GNULIB_STDIO_H_NONBLOCKING
+  dnl or GNULIB_NONBLOCKING redundant.
   m4_ifdef([gl_NONBLOCKING_IO], [
     gl_NONBLOCKING_IO
     if test $gl_cv_have_nonblocking != yes; then
@@ -45,24 +47,30 @@ AC_DEFUN([gl_STDIO_H],
   GNULIB_FPUTS=1
   GNULIB_PUTS=1
   GNULIB_FWRITE=1
-  dnl This ifdef is just an optimization, to avoid performing a configure
-  dnl check whose result is not used. It does not make the test of
-  dnl GNULIB_STDIO_H_SIGPIPE or GNULIB_SIGPIPE redundant.
+  dnl This ifdef is necessary to avoid an error "missing file lib/stdio-write.c"
+  dnl "expected source file, required through AC_LIBSOURCES, not found". It is
+  dnl also an optimization, to avoid performing a configure check whose result
+  dnl is not used. But it does not make the test of GNULIB_STDIO_H_SIGPIPE or
+  dnl GNULIB_SIGPIPE redundant.
   m4_ifdef([gl_SIGNAL_SIGPIPE], [
     gl_SIGNAL_SIGPIPE
     if test $gl_cv_header_signal_h_SIGPIPE != yes; then
       REPLACE_STDIO_WRITE_FUNCS=1
+      AC_LIBOBJ([stdio-write])
     fi
   ])
+  dnl This ifdef is necessary to avoid an error "missing file lib/stdio-write.c"
+  dnl "expected source file, required through AC_LIBSOURCES, not found". It is
+  dnl also an optimization, to avoid performing a configure check whose result
+  dnl is not used. But it does not make the test of GNULIB_STDIO_H_NONBLOCKING
+  dnl or GNULIB_NONBLOCKING redundant.
   m4_ifdef([gl_NONBLOCKING_IO], [
     gl_NONBLOCKING_IO
     if test $gl_cv_have_nonblocking != yes; then
       REPLACE_STDIO_WRITE_FUNCS=1
+      AC_LIBOBJ([stdio-write])
     fi
   ])
-  if test $REPLACE_STDIO_WRITE_FUNCS = 1; then
-    AC_LIBOBJ([stdio-write])
-  fi
 
   dnl Check for declarations of anything we want to poison if the
   dnl corresponding gnulib module is not in use, and which is not
