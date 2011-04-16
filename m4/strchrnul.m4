@@ -10,17 +10,16 @@ AC_DEFUN([gl_FUNC_STRCHRNUL],
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
   AC_REQUIRE([gl_HEADER_STRING_H_DEFAULTS])
-  AC_REPLACE_FUNCS([strchrnul])
+  AC_CHECK_FUNCS([strchrnul])
   if test $ac_cv_func_strchrnul = no; then
     HAVE_STRCHRNUL=0
-    gl_PREREQ_STRCHRNUL
   else
     AC_CACHE_CHECK([whether strchrnul works],
       [gl_cv_func_strchrnul_works],
       [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
 #include <string.h> /* for strchrnul */
 ]], [[const char *buf = "a";
-      return strchrnul(buf, 'b') != buf + 1;
+      return strchrnul (buf, 'b') != buf + 1;
     ]])],
         [gl_cv_func_strchrnul_works=yes],
         [gl_cv_func_strchrnul_works=no],
@@ -36,14 +35,18 @@ AC_DEFUN([gl_FUNC_STRCHRNUL],
   Lucky user
 #endif
            ],
-           [gl_cv_func_strchrnul_works=yes],
+           [gl_cv_func_strchrnul_works="guessing yes"],
            [gl_cv_func_strchrnul_works="guessing no"])
         ])
       ])
-    if test "$gl_cv_func_strchrnul_works" != yes; then
-      REPLACE_STRCHRNUL=1
-      AC_LIBOBJ([strchrnul])
-    fi
+    case "$gl_cv_func_strchrnul_works" in
+      *yes) ;;
+      *) REPLACE_STRCHRNUL=1 ;;
+    esac
+  fi
+  if test $HAVE_STRCHRNUL = 0 || test $REPLACE_STRCHRNUL = 1; then
+    AC_LIBOBJ([strchrnul])
+    gl_PREREQ_STRCHRNUL
   fi
 ])
 

@@ -1,3 +1,13 @@
+2011-04-16  Bruno Haible  <bruno@clisp.org>
+
+	strchrnul: Tweak last commit.
+	* doc/glibc-functions/strchrnul.texi: Add more details about Cygwin
+	bug.
+	* lib/string.in.h (strchrnul): Use same arguments in _GL_FUNCDECL_RPL
+	as in _GL_FUNCDECL_SYS.
+	* m4/strchrnul.m4 (gl_FUNC_STRCHRNUL): Invoke gl_PREREQ_STRCHRNUL after
+	AC_LIBOBJ. When cross-compiling, say "guessing yes" not "yes".
+
 2011-04-15  Eric Blake  <eblake@redhat.com>
 
 	strchrnul: work around cygwin bug

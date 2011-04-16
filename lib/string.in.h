@@ -281,10 +281,9 @@ _GL_WARN_ON_USE (strchr, "strchr cannot work correctly on character strings "
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define strchrnul rpl_strchrnul
 #  endif
-_GL_FUNCDECL_RPL (strchrnul, char *,
-                  (const char *str, int ch)
-                  _GL_ATTRIBUTE_PURE
-                  _GL_ARG_NONNULL ((1)));
+_GL_FUNCDECL_RPL (strchrnul, char *, (const char *__s, int __c_in)
+                                     _GL_ATTRIBUTE_PURE
+                                     _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (strchrnul, char *,
                   (const char *str, int ch));
 # else
