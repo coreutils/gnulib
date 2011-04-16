@@ -1,5 +1,11 @@
 2011-04-16  Bruno Haible  <bruno@clisp.org>
 
+	gettext: Clarify the needed programmer actions.
+	* modules/gettext (Notice): New field.
+	Suggested by Ben Pfaff <blp@cs.stanford.edu>.
+
+2011-04-16  Bruno Haible  <bruno@clisp.org>
+
 	strchrnul: Tweak last commit.
 	* doc/glibc-functions/strchrnul.texi: Add more details about Cygwin
 	bug.

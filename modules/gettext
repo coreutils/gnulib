@@ -1,6 +1,9 @@
 Description:
 Translate messages to user's native language.
 
+Notice:
+You must add an invocation of AM_GNU_GETTEXT([external]) to configure.ac.
+
 Files:
 m4/codeset.m4
 m4/fcntl-o.m4
