@@ -66,23 +66,17 @@ pipe2 (int fd[2], int flags)
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 /* Native Woe32 API.  */
 
+  if (_pipe (fd, 4096, flags & ~O_NONBLOCK) < 0)
+    return -1;
+
   if (flags & O_NONBLOCK)
     {
-      int result = _pipe (fd, 4096, flags & ~O_NONBLOCK);
-      if (result != 0)
-        return result;
       if (set_nonblocking_flag (fd[0], true) != 0
           || set_nonblocking_flag (fd[1], true) != 0)
-        {
-          int saved_errno = errno;
-          close (fd[0]);
-          close (fd[1]);
-          result = -1;
-          errno = saved_errno;
-        }
-      return result;
+        goto fail;
     }
-  return _pipe (fd, 4096, flags);
+
+  return 0;
 
 #else
 /* Unix API.  */
@@ -131,6 +125,8 @@ pipe2 (int fd[2], int flags)
 
   return 0;
 
+#endif
+
  fail:
   {
     int saved_errno = errno;
@@ -139,6 +135,4 @@ pipe2 (int fd[2], int flags)
     errno = saved_errno;
     return -1;
   }
-
-#endif
 }
