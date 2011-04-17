@@ -5,6 +5,7 @@ tests/macros.h
 Depends-on:
 close
 pipe-posix
+nonblocking-pipe-tests
 
 configure.ac:
 

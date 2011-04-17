@@ -1,3 +1,16 @@
+2011-04-17  Bruno Haible  <bruno@clisp.org>
+
+	nonblocking: Add tests for pipes.
+	* tests/test-nonblocking-pipe.sh: New file.
+	* tests/test-nonblocking-pipe-main.c: New file.
+	* tests/test-nonblocking-pipe-child.c: New file.
+	* tests/test-nonblocking-pipe.h: New file.
+	* tests/test-nonblocking-writer.h: New file.
+	* tests/test-nonblocking-reader.h: New file.
+	* tests/test-nonblocking-misc.h: New file.
+	* modules/nonblocking-pipe-tests: New file.
+	* modules/nonblocking-tests (Depends-on): Add nonblocking-pipe-tests.
+
 2011-04-16  Bruno Haible  <bruno@clisp.org>
 
 	gettext: Clarify the needed programmer actions.
