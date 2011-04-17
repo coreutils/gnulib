@@ -218,6 +218,9 @@ _GL_WARN_ON_USE (openat, "openat is not portable - "
 # define O_NONBLOCK O_NDELAY
 #endif
 
+/* If the gnulib module 'nonblocking' is in use, guarantee a working non-zero
+   value of O_NONBLOCK.  Otherwise, O_NONBLOCK is defined (above) to O_NDELAY
+   or to 0 as fallback.  */
 #if @GNULIB_NONBLOCKING@
 # if O_NONBLOCK
 #  define GNULIB_defined_O_NONBLOCK 0
