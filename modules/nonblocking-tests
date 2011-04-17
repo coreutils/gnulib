@@ -6,6 +6,7 @@ Depends-on:
 close
 pipe-posix
 nonblocking-pipe-tests
+nonblocking-socket-tests
 
 configure.ac:
 

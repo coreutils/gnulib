@@ -1,5 +1,17 @@
 2011-04-17  Bruno Haible  <bruno@clisp.org>
 
+	nonblocking: Add tests for sockets.
+	* tests/test-nonblocking-socket.sh: New file.
+	* tests/test-nonblocking-socket-main.c: New file.
+	* tests/test-nonblocking-socket-child.c: New file.
+	* tests/test-nonblocking-socket.h: New file.
+	* tests/socket-server.h: New file.
+	* tests/socket-client.h: New file.
+	* modules/nonblocking-socket-tests: New file.
+	* modules/nonblocking-tests (Depends-on): Add nonblocking-socket-tests.
+
+2011-04-17  Bruno Haible  <bruno@clisp.org>
+
 	nonblocking: Add tests for pipes.
 	* tests/test-nonblocking-pipe.sh: New file.
 	* tests/test-nonblocking-pipe-main.c: New file.
