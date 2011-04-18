@@ -1,4 +1,4 @@
-/* Hook for making the close() function extensible.
+/* Hook for making making file descriptor functions close(), ioctl() extensible.
    Copyright (C) 2009-2011 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2009.
 
@@ -18,13 +18,9 @@
 #include <config.h>
 
 /* Specification.  */
-#include "close-hook.h"
+#include "fd-hook.h"
 
 #include <stdlib.h>
-#include <unistd.h>
-
-#undef close
-
 
 /* Currently, this entire code is only needed for the handling of sockets
    on native Windows platforms.  */
@@ -32,49 +28,77 @@
 
 /* The first and last link in the doubly linked list.
    Initially the list is empty.  */
-static struct close_hook anchor = { &anchor, &anchor, NULL };
+static struct fd_hook anchor = { &anchor, &anchor, NULL, NULL };
 
 int
-execute_close_hooks (int fd, const struct close_hook *remaining_list)
+execute_close_hooks (const struct fd_hook *remaining_list, gl_close_fn primary,
+                     int fd)
 {
   if (remaining_list == &anchor)
     /* End of list reached.  */
-    return close (fd);
+    return primary (fd);
   else
-    return remaining_list->private_fn (fd, remaining_list->private_next);
+    return remaining_list->private_close_fn (remaining_list->private_next,
+                                             primary, fd);
 }
 
 int
-execute_all_close_hooks (int fd)
+execute_all_close_hooks (gl_close_fn primary, int fd)
 {
-  return execute_close_hooks (fd, anchor.private_next);
+  return execute_close_hooks (anchor.private_next, primary, fd);
+}
+
+int
+execute_ioctl_hooks (const struct fd_hook *remaining_list, gl_ioctl_fn primary,
+                     int fd, int request, void *arg)
+{
+  if (remaining_list == &anchor)
+    /* End of list reached.  */
+    return primary (fd, request, arg);
+  else
+    return remaining_list->private_ioctl_fn (remaining_list->private_next,
+                                             primary, fd, request, arg);
+}
+
+int
+execute_all_ioctl_hooks (gl_ioctl_fn primary,
+                         int fd, int request, void *arg)
+{
+  return execute_ioctl_hooks (anchor.private_next, primary, fd, request, arg);
 }
 
 void
-register_close_hook (close_hook_fn hook, struct close_hook *link)
+register_fd_hook (close_hook_fn close_hook, ioctl_hook_fn ioctl_hook, struct fd_hook *link)
 {
+  if (close_hook == NULL)
+    close_hook = execute_close_hooks;
+  if (ioctl_hook == NULL)
+    ioctl_hook = execute_ioctl_hooks;
+
   if (link->private_next == NULL && link->private_prev == NULL)
     {
       /* Add the link to the doubly linked list.  */
       link->private_next = anchor.private_next;
       link->private_prev = &anchor;
-      link->private_fn = hook;
+      link->private_close_fn = close_hook;
+      link->private_ioctl_fn = ioctl_hook;
       anchor.private_next->private_prev = link;
       anchor.private_next = link;
     }
   else
     {
       /* The link is already in use.  */
-      if (link->private_fn != hook)
+      if (link->private_close_fn != close_hook
+          || link->private_ioctl_fn != ioctl_hook)
         abort ();
     }
 }
 
 void
-unregister_close_hook (struct close_hook *link)
+unregister_fd_hook (struct fd_hook *link)
 {
-  struct close_hook *next = link->private_next;
-  struct close_hook *prev = link->private_prev;
+  struct fd_hook *next = link->private_next;
+  struct fd_hook *prev = link->private_prev;
 
   if (next != NULL && prev != NULL)
     {
@@ -84,7 +108,8 @@ unregister_close_hook (struct close_hook *link)
       /* Clear the link, to mark it unused.  */
       link->private_next = NULL;
       link->private_prev = NULL;
-      link->private_fn = NULL;
+      link->private_close_fn = NULL;
+      link->private_ioctl_fn = NULL;
     }
 }
 

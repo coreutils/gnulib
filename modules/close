@@ -7,7 +7,7 @@ m4/close.m4
 
 Depends-on:
 unistd
-close-hook
+fd-hook
 fclose
 
 configure.ac:

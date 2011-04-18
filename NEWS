@@ -12,6 +12,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2011-04-19  close-hook      This module has been renamed to 'fd-hook' and
+                            generalized.
+
 2011-03-08  regex-quote     The last argument is no longer an 'int cflags'
                             but instead a pointer to a previously constructed
                             'struct regex_quote_spec'.

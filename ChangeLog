@@ -1,5 +1,47 @@
 2011-04-19  Bruno Haible  <bruno@clisp.org>
 
+	ioctl: Remove link dependency on native Windows.
+	* lib/fd-hook.h: Renamed from lib/close-hook.h.
+	(gl_close_fn, gl_ioctl_fn): New types.
+	(struct fd_hook): Renamed from struct close_hook. Change type of
+	private_close_fn field. Add private_ioctl_fn field.
+	(close_hook_fn): Add parameter for primary close method.
+	(execute_close_hooks, execute_all_close_hooks): Likewise.
+	(ioctl_hook_fn): New type.
+	(execute_ioctl_hooks, execute_all_ioctl_hooks): New declarations.
+	(register_fd_hook): Renamed from register_close_hook. Add ioctl_hook
+	argument.
+	(unregister_fd_hook): Renamed from unregister_close_hook.
+	* lib/fd-hook.c: Renamed from lib/close-hook.c.
+	Don't include <unistd.h>.
+	(close): Remove undef.
+	(anchor): Update.
+	(execute_close_hooks): Add argument for primary close method.
+	(execute_all_close_hooks): Likewise.
+	(execute_ioctl_hooks, execute_all_ioctl_hooks): New functions.
+	(register_fd_hook): Renamed from register_close_hook. Add ioctl_hook
+	argument. Allow each argument to be NULL.
+	(unregister_fd_hook): Renamed from unregister_close_hook.
+	* lib/close.c (rpl_close): Pass 'close' function pointer to
+	execute_all_close_hooks.
+	* lib/ioctl.c: Include <errno.h>, fd-hook.h.
+	(primary_ioctl): New function.
+	(ioctl): Don't call ioctlsocket here. Instead, call
+	execute_all_ioctl_hooks.
+	* lib/sockets.c (close_fd_maybe_socket): Add argument for primary
+	close method.
+	(ioctl_fd_maybe_socket): New function, with code from lib/ioctl.c.
+	(fd_sockets_hook): Renamed from close_sockets_hook.
+	(gl_sockets_startup, gl_sockets_cleanup): Update.
+	* modules/fd-hook: Renamed from modules/close-hook. Update.
+	* modules/close (Depends-on): Add fd-hook, remove close-hook.
+	* modules/sockets (Depends-on): Likewise.
+	* modules/ioctl (Depends-on): Add fd-hook.
+	* tests/test-nonblocking.c (main): Use GNULIB_TEST_SOCKET, not
+	GNULIB_SOCKET.
+
+2011-04-19  Bruno Haible  <bruno@clisp.org>
+
 	Move the support of O_NONBLOCK in open() to the 'open' module.
 	* modules/nonblocking (Depends-on): Remove 'open'.
 	* m4/nonblocking.m4 (gl_NONBLOCKING_IO_BODY): Set

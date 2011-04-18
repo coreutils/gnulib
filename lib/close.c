@@ -19,7 +19,7 @@
 /* Specification.  */
 #include <unistd.h>
 
-#include "close-hook.h"
+#include "fd-hook.h"
 
 /* Override close() to call into other gnulib modules.  */
 
@@ -28,7 +28,7 @@ rpl_close (int fd)
 #undef close
 {
 #if WINDOWS_SOCKETS
-  int retval = execute_all_close_hooks (fd);
+  int retval = execute_all_close_hooks (close, fd);
 #else
   int retval = close (fd);
 #endif

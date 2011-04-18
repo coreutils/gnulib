@@ -79,7 +79,7 @@ main (void)
   ASSERT (close (fd_pipe[1]) == 0);
 #endif /* GNULIB_TEST_PIPE2 */
 
-#if GNULIB_SOCKET
+#if GNULIB_TEST_SOCKET
   {
     /* Test sockets.  */
     bool sock_works = true;
@@ -104,7 +104,7 @@ main (void)
     ASSERT (close (fd_sock) == 0);
 # endif /* SOCK_NONBLOCK */
   }
-#endif /* GNULIB_SOCKET */
+#endif /* GNULIB_TEST_SOCKET */
 
   /* Test error handling.  */
   {
