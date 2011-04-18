@@ -106,7 +106,7 @@ full_read_from_nonblocking_fd (size_t fd, void *buf, size_t count)
       dbgfprintf (stderr, "%s: << read -> %ld%s\n", PROG_ROLE,
                   (long) ret, dbgstrerror (ret < 0, saved_errno));
       /* This assertion fails if the non-blocking flag is effectively not set
-         on fd = STDIN_FILENO.  */
+         on fd.  */
       ASSERT (spent_time < 0.5);
       if (ret < 0)
         {
