@@ -1,3 +1,13 @@
+2011-04-19  Bruno Haible  <bruno@clisp.org>
+
+	Move the support of O_NONBLOCK in open() to the 'open' module.
+	* modules/nonblocking (Depends-on): Remove 'open'.
+	* m4/nonblocking.m4 (gl_NONBLOCKING_IO_BODY): Set
+	gl_cv_have_open_O_NONBLOCK.
+	* m4/open.m4 (gl_FUNC_OPEN): Replace open() also when required for
+	O_NONBLOCK support.
+	* doc/posix-functions/open.texi: Document support for O_NONBLOCK.
+
 2011-04-17  Bruno Haible  <bruno@clisp.org>
 
 	pipe2: Simplify code.

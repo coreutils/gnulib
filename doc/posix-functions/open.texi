@@ -14,6 +14,10 @@ and (without the slash) names a nonexistent file or a file that is not a
 directory, on some platforms:
 FreeBSD 7.2, AIX 7.1, HP-UX 11.00, Solaris 9, Irix 5.3.
 @item
+This function does not support the @code{O_NONBLOCK} flag when it is defined
+by the gnulib module @code{nonblock} on some platforms:
+mingw.
+@item
 On Windows platforms (excluding Cygwin), this function does usually not
 recognize the @file{/dev/null} filename.
 @end itemize
