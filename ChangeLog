@@ -1,3 +1,13 @@
+2011-04-20  Jim Meyering  <meyering@redhat.com>
+
+	useless-if-before-free: avoid false-positive
+	* build-aux/useless-if-before-free: Adjust regexp for the non-brace
+	disjunct so that it too requires a terminating ";".  Without that,
+	this script would identify as useless one statement from gcc that
+	was not:
+	  if (aligned_ptr)
+	    free (((void **) aligned_ptr) [-1]);
+
 2011-04-20  Giuseppe Scrivano  <gscrivano@gnu.org>
 
 	doc: update users.txt.
