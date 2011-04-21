@@ -1,5 +1,19 @@
 2011-04-21  Eric Blake  <eblake@redhat.com>
 
+	passfd: allow compilation on mingw
+	* modules/sys_socket (Depends-on): Add sys_uio.
+	* lib/sys_socket.in.h [!@HAVE_SYS_SOCKET_H@]: Use it for struct
+	iovec and a minimal struct msghdr.
+	* m4/afunix.m4 (gl_SOCKET_AFUNIX): Detect recvmsg/sendmsg.
+	* tests/test-sys_socket.c (main): Enhance test.
+	* lib/passfd.c (include): Drop <sys/uio.h>; <sys/sockets.h> is
+	guaranteed to provide what we need.
+	(sendmsg, recvmsg): Declare fallbacks if we lack sendmsg.
+	* modules/passfd-tests (Depends-on): Add sys_wait.
+	* tests/test-passfd.c (main): Skip test on mingw, for now.
+	* doc/posix-headers/sys_socket.texi (sys/socket.h): Document the
+	partial 'struct msghdr' implementation.
+
 	sys_uio: new module
 	* modules/sys_uio: New module.
 	* modules/sys_uio-tests: Likewise.

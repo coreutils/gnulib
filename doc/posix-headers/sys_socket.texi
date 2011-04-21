@@ -29,4 +29,10 @@ AIX 7.1.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This header file does not declare the @code{msg_control} and
+@code{msg_controllen} members of @code{struct msghdr} on some
+platforms.  This can be detected by the absence of the
+@code{CMSG_FIRSTHDR} macro:
+gnulib replacement header, old BSD
 @end itemize

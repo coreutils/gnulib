@@ -146,7 +146,6 @@ struct sockaddr_storage
    suggests that getaddrinfo should be available on all Windows
    releases. */
 
-
 # if @HAVE_WINSOCK2_H@
 #  include <winsock2.h>
 # endif
@@ -176,6 +175,19 @@ typedef int socklen_t;
 #  endif
 
 # endif
+
+/* For struct iovec */
+# include <sys/uio.h>
+
+/* Rudimentary 'struct msghdr'; this works as long as you don't try to
+   access msg_control or msg_controllen.  */
+struct msghdr {
+  void *msg_name;
+  socklen_t msg_namelen;
+  struct iovec *msg_iov;
+  int msg_iovlen;
+  int msg_flags;
+};
 
 #endif
 

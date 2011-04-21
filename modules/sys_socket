@@ -13,6 +13,7 @@ c++defs
 errno
 include_next
 socklen
+sys_uio
 warn-on-use
 
 configure.ac:

@@ -18,6 +18,7 @@
 
 #include "passfd.h"
 
+#include <errno.h>
 #include <fcntl.h>
 #include <signal.h>
 #include <stdlib.h>
@@ -33,6 +34,7 @@
 int
 main ()
 {
+#if HAVE_SOCKETPAIR
   int pair[2];
   int ret;
   pid_t pid;
@@ -41,11 +43,11 @@ main ()
   int fd;
   struct stat st;
 
-#if HAVE_DECL_ALARM
+# if HAVE_DECL_ALARM
   /* Avoid hanging on failure.  */
   signal (SIGALRM, SIG_DFL);
   alarm (5);
-#endif
+# endif
 
   fdnull = open ("/dev/null", O_RDWR);
   if (fdnull < 0)
@@ -115,4 +117,17 @@ main ()
         }
       return 0;
     }
+#else
+  errno = 0;
+  ASSERT(sendfd (0, 0) == -1);
+  ASSERT(errno == ENOSYS);
+
+  errno = 0;
+  ASSERT(recvfd (0, 0) == -1);
+  ASSERT(errno == ENOSYS);
+
+  fputs ("skipping test: socketpair not supported on this system\n",
+         stderr);
+  return 77;
+#endif
 }

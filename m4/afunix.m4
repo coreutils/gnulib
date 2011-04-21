@@ -1,4 +1,4 @@
-# afunix.m4 serial 6
+# afunix.m4 serial 7
 dnl Copyright (C) 2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,6 +8,7 @@ AC_DEFUN([gl_SOCKET_AFUNIX],
 [
   AC_REQUIRE([gl_HEADER_SYS_SOCKET])
   AC_REQUIRE([gl_SOCKET_FAMILY_UNIX])
+  AC_CHECK_FUNCS_ONCE([recvmsg sendmsg])
 
   AC_MSG_CHECKING([for UNIX domain sockets SCM_RIGHTS])
   AC_CACHE_VAL([gl_cv_socket_unix_scm_rights],
