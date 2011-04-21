@@ -3,15 +3,15 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/basedefs/sys_uio.h.html}
 
-Gnulib module: ---
+Gnulib module: sys_uio
 
 Portability problems fixed by Gnulib:
-@itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
 @itemize
 @item
 This header file is missing on some platforms:
 mingw.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @end itemize

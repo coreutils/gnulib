@@ -2464,6 +2464,7 @@ func_all_modules ()
   func_module sys_stat
   func_module sys_time
   func_module sys_times
+  func_module sys_uio
   func_module sys_utsname
   func_module sys_wait
   func_module tsearch

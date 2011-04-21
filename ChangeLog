@@ -1,3 +1,14 @@
+2011-04-21  Eric Blake  <eblake@redhat.com>
+
+	sys_uio: new module
+	* modules/sys_uio: New module.
+	* modules/sys_uio-tests: Likewise.
+	* lib/sys_uio.in.h: New file.
+	* m4/sys_uio_h.m4: Likewise.
+	* tests/test-sys_uio.c: Likewise.
+	* doc/posix-headers/sys_uio.texi (sys/uio.h): Document it.
+	* MODULES.html.sh (systems lacking POSIX:2008): Likewise.
+
 2011-04-20  Jim Meyering  <meyering@redhat.com>
 
 	useless-if-before-free: avoid false-positive
