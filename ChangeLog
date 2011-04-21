@@ -1,5 +1,17 @@
 2011-04-21  Eric Blake  <eblake@redhat.com>
 
+	passfd: speed up configure and drop unused code
+	* m4/afunix.m4 (gl_SOCKET_AFUNIX): Rename...
+	* m4/passfd.m4 (gl_PASSFD): ...to something more fitting of
+	its use.  Drop test for setting unused HAVE_UNIXSOCKET_SCM_RIGHTS.
+	Instead of probing at configure for unix_scm_rights_bsd44_way,
+	instead probe for CMSG_FIRSTHDR at compile time.  Simplify BSD 4.3
+	check to a struct member probe.
+	* lib/passfd.c (includes): Nothing here requires <sys/un.h>.
+	(sendfd, recvfd): Update preprocessor checks.
+	* modules/passfd (Files): Reflect rename, and drop unused file.
+	(Depends-on): Drop unused dependency.
+
 	passfd: allow compilation on mingw
 	* modules/sys_socket (Depends-on): Add sys_uio.
 	* lib/sys_socket.in.h [!@HAVE_SYS_SOCKET_H@]: Use it for struct

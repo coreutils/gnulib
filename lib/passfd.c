@@ -27,9 +27,6 @@
 #include <unistd.h>
 
 #include <sys/socket.h>
-#if HAVE_SYS_UN_H
-# include <sys/un.h>
-#endif
 
 #include "cloexec.h"
 
@@ -49,7 +46,7 @@ sendfd (int sock, int fd)
   char send = 0;
   struct iovec iov;
   struct msghdr msg;
-# if HAVE_UNIXSOCKET_SCM_RIGHTS_BSD44_WAY
+# ifdef CMSG_FIRSTHDR
   struct cmsghdr *cmsg;
   char buf[CMSG_SPACE (sizeof fd)];
 # endif
@@ -63,7 +60,7 @@ sendfd (int sock, int fd)
   msg.msg_name = NULL;
   msg.msg_namelen = 0;
 
-# if HAVE_UNIXSOCKET_SCM_RIGHTS_BSD44_WAY
+# ifdef CMSG_FIRSTHDR
   msg.msg_control = buf;
   msg.msg_controllen = sizeof buf;
   cmsg = CMSG_FIRSTHDR (&msg);
@@ -72,7 +69,7 @@ sendfd (int sock, int fd)
   cmsg->cmsg_len = CMSG_LEN (sizeof fd);
   /* Initialize the payload: */
   memcpy (CMSG_DATA (cmsg), &fd, sizeof fd);
-# elif HAVE_UNIXSOCKET_SCM_RIGHTS_BSD43_WAY
+# elif HAVE_STRUCT_MSGHDR_MSG_ACCRIGHTS
   msg.msg_accrights = &fd;
   msg.msg_accrightslen = sizeof fd;
 # else
@@ -107,7 +104,7 @@ recvfd (int sock, int flags)
   struct iovec iov;
   struct msghdr msg;
   int fd = -1;
-# if HAVE_UNIXSOCKET_SCM_RIGHTS_BSD44_WAY
+# ifdef CMSG_FIRSTHDR
   struct cmsghdr *cmsg;
   char buf[CMSG_SPACE (sizeof fd)];
   int flags_recvmsg = flags & O_CLOEXEC ? MSG_CMSG_CLOEXEC : 0;
@@ -128,7 +125,7 @@ recvfd (int sock, int flags)
   msg.msg_name = NULL;
   msg.msg_namelen = 0;
 
-# if HAVE_UNIXSOCKET_SCM_RIGHTS_BSD44_WAY
+# ifdef CMSG_FIRSTHDR
   msg.msg_control = buf;
   msg.msg_controllen = sizeof buf;
   cmsg = CMSG_FIRSTHDR (&msg);
@@ -166,7 +163,7 @@ recvfd (int sock, int flags)
         }
     }
 
-# elif HAVE_UNIXSOCKET_SCM_RIGHTS_BSD43_WAY
+# elif HAVE_STRUCT_MSGHDR_MSG_ACCRIGHTS
   msg.msg_accrights = &fd;
   msg.msg_accrightslen = sizeof fd;
   if (recvmsg (sock, &msg, 0) < 0)
