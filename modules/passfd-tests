@@ -6,7 +6,8 @@ Depends-on:
 sys_wait
 
 configure.ac:
-AC_CHECK_DECLS_ONCE([alarm socketpair])
+AC_CHECK_DECLS_ONCE([alarm])
+AC_CHECK_FUNCS_ONCE([socketpair])
 
 Makefile.am:
 TESTS += test-passfd

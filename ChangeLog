@@ -1,5 +1,8 @@
 2011-04-21  Eric Blake  <eblake@redhat.com>
 
+	passfd: fix test regression on Linux
+	* modules/passfd-tests (configure.ac): Correct socketpair check.
+
 	passfd: speed up configure and drop unused code
 	* m4/afunix.m4 (gl_SOCKET_AFUNIX): Rename...
 	* m4/passfd.m4 (gl_PASSFD): ...to something more fitting of
