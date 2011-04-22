@@ -1,3 +1,9 @@
+2011-04-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	strtol: remove dependency on wchar
+	* lib/strtol.c: Include <wchar.h> only if USE_WIDE_CHAR is defined.
+	* modules/strtol (Depends-on): Remove wchar.
+
 2011-04-21  Eric Blake  <eblake@redhat.com>
 
 	passfd: fix test regression on Linux
