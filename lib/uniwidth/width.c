@@ -22,6 +22,14 @@
 
 #include "cjk.h"
 
+/* The attribute __pure__ was added in gcc 2.96.  */
+#undef _GL_ATTRIBUTE_PURE
+#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 96)
+# define _GL_ATTRIBUTE_PURE __attribute__ ((__pure__))
+#else
+# define _GL_ATTRIBUTE_PURE /* empty */
+#endif
+
 /*
  * Non-spacing attribute table.
  * Consists of:
@@ -311,7 +319,7 @@ static const signed char nonspacing_table_ind[240] = {
 };
 
 /* Determine number of column positions required for UC.  */
-int
+int _GL_ATTRIBUTE_PURE
 uc_width (ucs4_t uc, const char *encoding)
 {
   /* Test for non-spacing or control character.  */

@@ -22,6 +22,14 @@
 #include <stdlib.h>
 #include <string.h>
 
+/* The attribute __pure__ was added in gcc 2.96.  */
+#undef _GL_ATTRIBUTE_PURE
+#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 96)
+# define _GL_ATTRIBUTE_PURE __attribute__ ((__pure__))
+#else
+# define _GL_ATTRIBUTE_PURE /* empty */
+#endif
+
 struct argv_iterator
 {
   /* Test FP to determine whether in read-mode or argv-mode. */
@@ -96,7 +104,7 @@ argv_iter (struct argv_iterator *ai, enum argv_iter_err *err)
     }
 }
 
-size_t
+size_t _GL_ATTRIBUTE_PURE
 argv_iter_n_args (struct argv_iterator const *ai)
 {
   return ai->fp ? ai->item_idx : ai->p - ai->arg_list;

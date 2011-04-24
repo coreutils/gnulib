@@ -79,7 +79,15 @@ extern int rpl_isnanf (float x);
   ((sizeof (DOUBLE) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
 typedef union { DOUBLE value; unsigned int word[NWORDS]; } memory_double;
 
-int
+/* The attribute __const__ was added in gcc 2.95.  */
+#undef _GL_ATTRIBUTE_CONST
+#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 95)
+# define _GL_ATTRIBUTE_CONST __attribute__ ((__const__))
+#else
+# define _GL_ATTRIBUTE_CONST /* empty */
+#endif
+
+int _GL_ATTRIBUTE_CONST
 FUNC (DOUBLE x)
 {
 #ifdef KNOWN_EXPBIT0_LOCATION

@@ -24,7 +24,15 @@
 
 #include "c-ctype.h"
 
-int
+/* The attribute __pure__ was added in gcc 2.96.  */
+#undef _GL_ATTRIBUTE_PURE
+#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 96)
+# define _GL_ATTRIBUTE_PURE __attribute__ ((__pure__))
+#else
+# define _GL_ATTRIBUTE_PURE /* empty */
+#endif
+
+int _GL_ATTRIBUTE_PURE
 c_strncasecmp (const char *s1, const char *s2, size_t n)
 {
   register const unsigned char *p1 = (const unsigned char *) s1;

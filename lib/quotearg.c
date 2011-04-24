@@ -42,6 +42,14 @@
 
 #define INT_BITS (sizeof (int) * CHAR_BIT)
 
+/* The attribute __pure__ was added in gcc 2.96.  */
+#undef _GL_ATTRIBUTE_PURE
+#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 96)
+# define _GL_ATTRIBUTE_PURE __attribute__ ((__pure__))
+#else
+# define _GL_ATTRIBUTE_PURE /* empty */
+#endif
+
 struct quoting_options
 {
   /* Basic quoting style.  */
@@ -105,7 +113,7 @@ clone_quoting_options (struct quoting_options *o)
 }
 
 /* Get the value of O's quoting style.  If O is null, use the default.  */
-enum quoting_style
+enum quoting_style _GL_ATTRIBUTE_PURE
 get_quoting_style (struct quoting_options *o)
 {
   return (o ? o : &default_quoting_options)->style;

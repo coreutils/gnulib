@@ -22,6 +22,14 @@
 /* Specification.  */
 #include "sockets.h"
 
+/* The attribute __const__ was added in gcc 2.95.  */
+#undef _GL_ATTRIBUTE_CONST
+#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 95)
+# define _GL_ATTRIBUTE_CONST __attribute__ ((__const__))
+#else
+# define _GL_ATTRIBUTE_CONST /* empty */
+#endif
+
 #if WINDOWS_SOCKETS
 
 /* This includes winsock2.h on MinGW. */
@@ -103,7 +111,7 @@ static int initialized_sockets_version /* = 0 */;
 
 #endif /* WINDOWS_SOCKETS */
 
-int
+int _GL_ATTRIBUTE_CONST
 gl_sockets_startup (int version _GL_UNUSED)
 {
 #if WINDOWS_SOCKETS

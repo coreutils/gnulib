@@ -24,11 +24,19 @@
 #include <ctype.h>
 #include <limits.h>
 
+/* The attribute __pure__ was added in gcc 2.96.  */
+#undef _GL_ATTRIBUTE_PURE
+#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 96)
+# define _GL_ATTRIBUTE_PURE __attribute__ ((__pure__))
+#else
+# define _GL_ATTRIBUTE_PURE /* empty */
+#endif
+
 /* Like memcmp, but ignore differences in case.
    Convert to upper case (not lower) before comparing so that
    join -i works with sort -f.  */
 
-int
+int _GL_ATTRIBUTE_PURE
 memcasecmp (const void *vs1, const void *vs2, size_t n)
 {
   size_t i;

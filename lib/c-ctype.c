@@ -22,9 +22,17 @@ Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 #define NO_C_CTYPE_MACROS
 #include "c-ctype.h"
 
+/* The attribute __const__ was added in gcc 2.95.  */
+#undef _GL_ATTRIBUTE_CONST
+#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 95)
+# define _GL_ATTRIBUTE_CONST __attribute__ ((__const__))
+#else
+# define _GL_ATTRIBUTE_CONST /* empty */
+#endif
+
 /* The function isascii is not locale dependent. Its use in EBCDIC is
    questionable. */
-bool
+bool _GL_ATTRIBUTE_CONST
 c_isascii (int c)
 {
   return (c >= 0x00 && c <= 0x7f);

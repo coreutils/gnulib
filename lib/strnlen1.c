@@ -21,10 +21,18 @@
 
 #include <string.h>
 
+/* The attribute __pure__ was added in gcc 2.96.  */
+#undef _GL_ATTRIBUTE_PURE
+#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 96)
+# define _GL_ATTRIBUTE_PURE __attribute__ ((__pure__))
+#else
+# define _GL_ATTRIBUTE_PURE /* empty */
+#endif
+
 /* Find the length of STRING + 1, but scan at most MAXLEN bytes.
    If no '\0' terminator is found in that many characters, return MAXLEN.  */
 /* This is the same as strnlen (string, maxlen - 1) + 1.  */
-size_t
+size_t _GL_ATTRIBUTE_PURE
 strnlen1 (const char *string, size_t maxlen)
 {
   const char *end = (const char *) memchr (string, '\0', maxlen);

@@ -29,6 +29,14 @@
 
 #define STREQ(a, b) (strcmp (a, b) == 0)
 
+/* The attribute __pure__ was added in gcc 2.96.  */
+#undef _GL_ATTRIBUTE_PURE
+#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 96)
+# define _GL_ATTRIBUTE_PURE __attribute__ ((__pure__))
+#else
+# define _GL_ATTRIBUTE_PURE /* empty */
+#endif
+
 /* Hash an F_triple, and *do* consider the file name.  */
 size_t
 triple_hash (void const *x, size_t table_size)
@@ -41,7 +49,7 @@ triple_hash (void const *x, size_t table_size)
 }
 
 /* Hash an F_triple, without considering the file name.  */
-size_t
+size_t _GL_ATTRIBUTE_PURE
 triple_hash_no_name (void const *x, size_t table_size)
 {
   struct F_triple const *p = x;

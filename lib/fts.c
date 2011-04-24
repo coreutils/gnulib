@@ -261,6 +261,14 @@ bool fts_debug = false;
     }                                                           \
   while (false)
 
+/* The attribute __pure__ was added in gcc 2.96.  */
+#undef _GL_ATTRIBUTE_PURE
+#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 96)
+# define _GL_ATTRIBUTE_PURE __attribute__ ((__pure__))
+#else
+# define _GL_ATTRIBUTE_PURE /* empty */
+#endif
+
 static void
 fd_ring_clear (I_ring *fd_ring)
 {
@@ -1906,7 +1914,7 @@ fts_padjust (FTS *sp, FTSENT *head)
 }
 
 static size_t
-internal_function
+internal_function _GL_ATTRIBUTE_PURE
 fts_maxarglen (char * const *argv)
 {
         size_t len, max;

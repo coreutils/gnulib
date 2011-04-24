@@ -23,11 +23,19 @@
 
 #define SIZE_BITS (sizeof (size_t) * CHAR_BIT)
 
+/* The attribute __pure__ was added in gcc 2.96.  */
+#undef _GL_ATTRIBUTE_PURE
+#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 96)
+# define _GL_ATTRIBUTE_PURE __attribute__ ((__pure__))
+#else
+# define _GL_ATTRIBUTE_PURE /* empty */
+#endif
+
 /* A hash function for NUL-terminated char* strings using
    the method described by Bruno Haible.
    See http://www.haible.de/bruno/hashfunc.html.  */
 
-size_t
+size_t _GL_ATTRIBUTE_PURE
 hash_pjw (const void *x, size_t tablesize)
 {
   const char *s;

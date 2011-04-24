@@ -57,6 +57,14 @@
 ARGMATCH_DIE_DECL;
 #endif
 
+/* The attribute __pure__ was added in gcc 2.96.  */
+#undef _GL_ATTRIBUTE_PURE
+#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 96)
+# define _GL_ATTRIBUTE_PURE __attribute__ ((__pure__))
+#else
+# define _GL_ATTRIBUTE_PURE /* empty */
+#endif
+
 static void
 __argmatch_die (void)
 {
@@ -79,7 +87,7 @@ argmatch_exit_fn argmatch_die = __argmatch_die;
      "no", "nope" -> 1
    "y" is a valid argument, for `0', and "n" for `1'.  */
 
-ptrdiff_t
+ptrdiff_t _GL_ATTRIBUTE_PURE
 argmatch (const char *arg, const char *const *arglist,
           const char *vallist, size_t valsize)
 {
