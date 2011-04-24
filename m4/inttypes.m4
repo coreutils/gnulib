@@ -1,4 +1,4 @@
-# inttypes.m4 serial 19
+# inttypes.m4 serial 20
 dnl Copyright (C) 2006-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,7 +12,6 @@ AC_DEFUN([gl_INTTYPES_H],
   AC_REQUIRE([gl_STDINT_H])
   AC_REQUIRE([gt_INTTYPES_PRI])
   AC_CHECK_HEADERS_ONCE([inttypes.h])
-  AC_CHECK_DECLS_ONCE([imaxabs])
   AC_CHECK_DECLS_ONCE([imaxdiv])
   AC_CHECK_DECLS_ONCE([strtoimax])
   AC_CHECK_DECLS_ONCE([strtoumax])
@@ -61,12 +60,6 @@ AC_DEFUN([gl_INTTYPES_H],
     done
   fi
   AC_SUBST([PRIPTR_PREFIX])
-
-  if test "$ac_cv_have_decl_imaxabs" = yes; then
-    HAVE_DECL_IMAXABS=1
-  else
-    HAVE_DECL_IMAXABS=0
-  fi
 
   if test "$ac_cv_have_decl_imaxdiv" = yes; then
     HAVE_DECL_IMAXDIV=1

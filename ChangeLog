@@ -1,5 +1,12 @@
 2011-04-22  Paul Eggert  <eggert@cs.ucla.edu>
 
+	inttypes: Move some configure check to module 'imaxabs'.
+	* m4/imaxabs.m4 (gl_FUNC_IMAXABS): Require gl_INTTYPES_H_DEFAULTS
+	instead of gl_INTTYPES_H.  Check for imaxabs decl here.
+	* m4/inttypes.m4 (gl_INTTYPES_H): Don't check for imaxabs decl here.
+
+2011-04-22  Paul Eggert  <eggert@cs.ucla.edu>
+
 	inttypes: Remove configure tests that are not needed since 2009-12-31.
 	* m4/inttypes.m4 (gl_INTTYPES_H): Remove determination of
 	gl_cv_header_working_inttypes_h.
