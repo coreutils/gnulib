@@ -1,3 +1,7 @@
+2011-04-25  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/gnumakefile (configure.ac): Replace TAB with SPCs.
+
 2011-04-25  Bruno Haible  <bruno@clisp.org>
 
 	strtol, strtoul: Mark modules as obsolete.
