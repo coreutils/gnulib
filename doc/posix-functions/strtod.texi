@@ -4,13 +4,10 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/strtod.html}
 
-Gnulib module: strtod
+Gnulib module: strtod or strtod-obsolete
 
-Portability problems fixed by Gnulib:
+Portability problems fixed by either Gnulib module @code{strtod} or @code{strtod-obsolete}:
 @itemize
-@item
-This function is missing on some old platforms.
-
 @item
 This function mis-parses strings with leading @samp{+} on some old platforms:
 Old versions of Linux.
@@ -65,6 +62,12 @@ Solaris 11 2010-11, mingw.
 This function returns the wrong end pointer for @samp{0x1p} on some
 platforms:
 AIX 7.1.
+@end itemize
+
+Portability problems fixed by Gnulib module @code{strtod-obsolete}:
+@itemize
+@item
+This function is missing on some old platforms.
 @end itemize
 
 Portability problems not fixed by Gnulib:
