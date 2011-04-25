@@ -1,3 +1,14 @@
+2011-04-25  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: makefile_at_at_check extend and clean up
+	* top/maint.mk (sc_makefile_at_at_check): Check *.mk files
+	in addition to */Makefile.am.
+	Exempt legitimate uses of @VAR@ notation, e.g.,
+	MAKEINFO = env LANG= LC_MESSAGES= LC_ALL= LANGUAGE= @MAKEINFO@
+	Remove obsolete coreutils-specific comment.
+	Prompted by discussion here:
+	http://thread.gmane.org/gmane.comp.lib.gnulib.bugs/26074
+
 2011-04-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	strtoul: remove dependency on strtol

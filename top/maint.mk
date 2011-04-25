@@ -942,16 +942,23 @@ update-NEWS-hash: NEWS
 # Ensure that we use only the standard $(VAR) notation,
 # not @...@ in Makefile.am, now that we can rely on automake
 # to emit a definition for each substituted variable.
-# We use perl rather than "grep -nE ..." to exempt a single
-# use of an @...@-delimited variable name in src/Makefile.am.
+# However, there is still one case in which @VAR@ use is not just
+# legitimate, but actually required: when augmenting an automake-defined
+# variable with a prefix.  For example, gettext uses this:
+# MAKEINFO = env LANG= LC_MESSAGES= LC_ALL= LANGUAGE= @MAKEINFO@
+# otherwise, makeinfo would put German or French (current locale)
+# navigation hints in the otherwise-English documentation.
+#
 # Allow the package to add exceptions via a hook in cfg.mk;
 # for example, @PRAGMA_SYSTEM_HEADER@ can be permitted by
 # setting this to ' && !/PRAGMA_SYSTEM_HEADER/'.
 _makefile_at_at_check_exceptions ?=
 sc_makefile_at_at_check:
-	@perl -ne '/\@[A-Z_0-9]+\@/'$(_makefile_at_at_check_exceptions)	\
+	@perl -ne '/\@[A-Z_0-9]+\@/'					\
+          -e ' && !/([A-Z_0-9]+)\s+=.*\@\1\@$$/'			\
+          -e ''$(_makefile_at_at_check_exceptions)			\
 	  -e 'and (print "$$ARGV:$$.: $$_"), $$m=1; END {exit !$$m}'	\
-	    $$($(VC_LIST_EXCEPT) | grep -E '(^|/)Makefile\.am$$')	\
+	    $$($(VC_LIST_EXCEPT) | grep -E '(^|/)(Makefile\.am|[^/]+\.mk)$$') \
 	  && { echo '$(ME): use $$(...), not @...@' 1>&2; exit 1; } || :
 
 news-check: NEWS
