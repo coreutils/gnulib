@@ -38,14 +38,6 @@
 #include "xalloc.h"
 #include "gettext.h"
 
-/* The attribute __const__ was added in gcc 2.95.  */
-#undef _GL_ATTRIBUTE_CONST
-#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 95)
-# define _GL_ATTRIBUTE_CONST __attribute__ ((__const__))
-#else
-# define _GL_ATTRIBUTE_CONST /* empty */
-#endif
-
 
 /* Tests whether STRING contains trim (SUB), starting and ending at word
    boundaries.
@@ -156,7 +148,7 @@ mbsstr_trimmed_wordbounded (const char *string, const char *sub)
 
 /* Return the localization of NAME.  NAME is written in ASCII.  */
 
-const char * _GL_ATTRIBUTE_CONST
+const char *
 proper_name (const char *name)
 {
   /* See whether there is a translation.   */

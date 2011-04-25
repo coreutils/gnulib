@@ -21,15 +21,7 @@
 
 #include <string.h>
 
-/* The attribute __pure__ was added in gcc 2.96.  */
-#undef _GL_ATTRIBUTE_PURE
-#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 96)
-# define _GL_ATTRIBUTE_PURE __attribute__ ((__pure__))
-#else
-# define _GL_ATTRIBUTE_PURE /* empty */
-#endif
-
-int _GL_ATTRIBUTE_PURE
+int
 memcmp2 (const char *s1, size_t n1, const char *s2, size_t n2)
 {
   int cmp = memcmp (s1, s2, n1 <= n2 ? n1 : n2);

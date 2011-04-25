@@ -29,18 +29,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 #include <stdint.h>
 #include <string.h>
 
-/* The attribute __pure__ was added in gcc 2.96.  */
-#undef _GL_ATTRIBUTE_PURE
-#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 96)
-# define _GL_ATTRIBUTE_PURE __attribute__ ((__pure__))
-#else
-# define _GL_ATTRIBUTE_PURE /* empty */
-#endif
-
 /* Return the first address of either C1 or C2 (treated as unsigned
    char) that occurs within N bytes of the memory region S.  If
    neither byte appears, return NULL.  */
-void * _GL_ATTRIBUTE_PURE
+void *
 memchr2 (void const *s, int c1_in, int c2_in, size_t n)
 {
   /* On 32-bit hardware, choosing longword to be a 32-bit unsigned

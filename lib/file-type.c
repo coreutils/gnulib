@@ -25,15 +25,7 @@
 #include <gettext.h>
 #define _(text) gettext (text)
 
-/* The attribute __pure__ was added in gcc 2.96.  */
-#undef _GL_ATTRIBUTE_PURE
-#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 96)
-# define _GL_ATTRIBUTE_PURE __attribute__ ((__pure__))
-#else
-# define _GL_ATTRIBUTE_PURE /* empty */
-#endif
-
-char const * _GL_ATTRIBUTE_PURE
+char const *
 file_type (struct stat const *st)
 {
   /* See POSIX 1003.1-2001 XCU Table 4-8 lines 17093-17107 for some of

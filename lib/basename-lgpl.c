@@ -22,19 +22,11 @@
 
 #include <string.h>
 
-/* The attribute __pure__ was added in gcc 2.96.  */
-#undef _GL_ATTRIBUTE_PURE
-#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 96)
-# define _GL_ATTRIBUTE_PURE __attribute__ ((__pure__))
-#else
-# define _GL_ATTRIBUTE_PURE /* empty */
-#endif
-
 /* Return the address of the last file name component of NAME.  If
    NAME has no relative file name components because it is a file
    system root, return the empty string.  */
 
-char * _GL_ATTRIBUTE_PURE
+char *
 last_component (char const *name)
 {
   char const *base = name + FILE_SYSTEM_PREFIX_LEN (name);

@@ -32,14 +32,6 @@
 # error "compile this file only if your system defines PATH_MAX"
 #endif
 
-/* The attribute __pure__ was added in gcc 2.96.  */
-#undef _GL_ATTRIBUTE_PURE
-#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 96)
-# define _GL_ATTRIBUTE_PURE __attribute__ ((__pure__))
-#else
-# define _GL_ATTRIBUTE_PURE /* empty */
-#endif
-
 /* The results of openat() in this file are not leaked to any
    single-threaded code that could use stdio.
    FIXME - if the kernel ever adds support for multi-thread safety for
@@ -91,7 +83,7 @@ cdb_advance_fd (struct cd_buf *cdb, char const *dir)
 }
 
 /* Return a pointer to the first non-slash in S.  */
-static inline char * _GL_ATTRIBUTE_PURE
+static inline char *
 find_non_slash (char const *s)
 {
   size_t n_slash = strspn (s, "/");

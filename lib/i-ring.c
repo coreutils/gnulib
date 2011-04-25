@@ -21,14 +21,6 @@
 
 #include <stdlib.h>
 
-/* The attribute __pure__ was added in gcc 2.96.  */
-#undef _GL_ATTRIBUTE_PURE
-#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 96)
-# define _GL_ATTRIBUTE_PURE __attribute__ ((__pure__))
-#else
-# define _GL_ATTRIBUTE_PURE /* empty */
-#endif
-
 void
 i_ring_init (I_ring *ir, int default_val)
 {
@@ -41,7 +33,7 @@ i_ring_init (I_ring *ir, int default_val)
   ir->ir_default_val = default_val;
 }
 
-bool _GL_ATTRIBUTE_PURE
+bool
 i_ring_empty (I_ring const *ir)
 {
   return ir->ir_empty;

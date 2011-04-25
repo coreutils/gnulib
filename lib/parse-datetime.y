@@ -113,14 +113,6 @@ typedef long int long_time_t;
 typedef time_t long_time_t;
 #endif
 
-/* The attribute __pure__ was added in gcc 2.96.  */
-#undef _GL_ATTRIBUTE_PURE
-#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 96)
-# define _GL_ATTRIBUTE_PURE __attribute__ ((__pure__))
-#else
-# define _GL_ATTRIBUTE_PURE /* empty */
-#endif
-
 /* Lots of this code assumes time_t and time_t-like values fit into
    long_time_t.  */
 verify (TYPE_MINIMUM (long_time_t) <= TYPE_MINIMUM (time_t)
@@ -876,7 +868,7 @@ to_year (textint textyear)
   return year;
 }
 
-static table const * _GL_ATTRIBUTE_PURE
+static table const *
 lookup_zone (parser_control const *pc, char const *name)
 {
   table const *tp;

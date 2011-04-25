@@ -26,14 +26,6 @@
 #include <c-ctype.h>
 #include <limits.h>
 
-/* The attribute __pure__ was added in gcc 2.96.  */
-#undef _GL_ATTRIBUTE_PURE
-#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 96)
-# define _GL_ATTRIBUTE_PURE __attribute__ ((__pure__))
-#else
-# define _GL_ATTRIBUTE_PURE /* empty */
-#endif
-
 /* Match a file suffix defined by this regular expression:
    /(\.[A-Za-z~][A-Za-z0-9~]*)*$/
    Scan the string *STR and return a pointer to the matching suffix, or
@@ -88,7 +80,7 @@ order (unsigned char c)
    section on the `Version' control field.  This version of the code
    implements that from s5.6.12 of Debian Policy v3.8.0.1
    http://www.debian.org/doc/debian-policy/ch-controlfields.html#s-f-Version */
-static int _GL_ATTRIBUTE_PURE
+static int
 verrevcmp (const char *s1, size_t s1_len, const char *s2, size_t s2_len)
 {
   size_t s1_pos = 0;

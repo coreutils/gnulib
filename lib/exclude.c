@@ -60,14 +60,6 @@ verify (((EXCLUDE_ANCHORED | EXCLUDE_INCLUDE | EXCLUDE_WILDCARDS)
             | FNM_CASEFOLD | FNM_EXTMATCH))
         == 0);
 
-/* The attribute __pure__ was added in gcc 2.96.  */
-#undef _GL_ATTRIBUTE_PURE
-#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 96)
-# define _GL_ATTRIBUTE_PURE __attribute__ ((__pure__))
-#else
-# define _GL_ATTRIBUTE_PURE /* empty */
-#endif
-
 
 /* Exclusion patterns are grouped into a singly-linked list of
    "exclusion segments".  Each segment represents a set of patterns
@@ -119,7 +111,7 @@ struct exclude
   };
 
 /* Return true if str has wildcard characters */
-bool _GL_ATTRIBUTE_PURE
+bool
 fnmatch_pattern_has_wildcards (const char *str, int options)
 {
   const char *cset = "\\?*[]";

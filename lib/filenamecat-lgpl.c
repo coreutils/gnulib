@@ -31,18 +31,10 @@
 # define mempcpy(D, S, N) ((void *) ((char *) memcpy (D, S, N) + (N)))
 #endif
 
-/* The attribute __pure__ was added in gcc 2.96.  */
-#undef _GL_ATTRIBUTE_PURE
-#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 96)
-# define _GL_ATTRIBUTE_PURE __attribute__ ((__pure__))
-#else
-# define _GL_ATTRIBUTE_PURE /* empty */
-#endif
-
 /* Return the longest suffix of F that is a relative file name.
    If it has no such suffix, return the empty string.  */
 
-static char const * _GL_ATTRIBUTE_PURE
+static char const *
 longest_relative_suffix (char const *f)
 {
   for (f += FILE_SYSTEM_PREFIX_LEN (f); ISSLASH (*f); f++)

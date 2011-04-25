@@ -53,14 +53,6 @@
 
 #include <string.h>
 
-/* The attribute __const__ was added in gcc 2.95.  */
-#undef _GL_ATTRIBUTE_CONST
-#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 95)
-# define _GL_ATTRIBUTE_CONST __attribute__ ((__const__))
-#else
-# define _GL_ATTRIBUTE_CONST /* empty */
-#endif
-
 /* C89 compliant way to cast 'char' to 'unsigned char'. */
 static inline unsigned char
 to_uchar (char ch)
@@ -303,7 +295,7 @@ static const signed char b64[0x100] = {
 /* Return true if CH is a character from the Base64 alphabet, and
    false otherwise.  Note that '=' is padding and not considered to be
    part of the alphabet.  */
-bool _GL_ATTRIBUTE_CONST
+bool
 isbase64 (char ch)
 {
   return uchar_in_range (to_uchar (ch)) && 0 <= b64[to_uchar (ch)];

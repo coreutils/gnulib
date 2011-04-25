@@ -43,14 +43,6 @@
 # endif
 #endif
 
-/* The attribute __const__ was added in gcc 2.95.  */
-#undef _GL_ATTRIBUTE_CONST
-#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 95)
-# define _GL_ATTRIBUTE_CONST __attribute__ ((__const__))
-#else
-# define _GL_ATTRIBUTE_CONST /* empty */
-#endif
-
 struct hash_entry
   {
     void *data;
@@ -154,7 +146,7 @@ static const Hash_tuning default_tuning =
    number of buckets (used plus unused), or the maximum number of slots, are
    the same quantity.  */
 
-size_t _GL_ATTRIBUTE_PURE
+size_t
 hash_get_n_buckets (const Hash_table *table)
 {
   return table->n_buckets;
@@ -162,7 +154,7 @@ hash_get_n_buckets (const Hash_table *table)
 
 /* Return the number of slots in use (non-empty buckets).  */
 
-size_t _GL_ATTRIBUTE_PURE
+size_t
 hash_get_n_buckets_used (const Hash_table *table)
 {
   return table->n_buckets_used;
@@ -170,7 +162,7 @@ hash_get_n_buckets_used (const Hash_table *table)
 
 /* Return the number of active entries.  */
 
-size_t _GL_ATTRIBUTE_PURE
+size_t
 hash_get_n_entries (const Hash_table *table)
 {
   return table->n_entries;
@@ -178,7 +170,7 @@ hash_get_n_entries (const Hash_table *table)
 
 /* Return the length of the longest chain (bucket).  */
 
-size_t _GL_ATTRIBUTE_PURE
+size_t
 hash_get_max_bucket_length (const Hash_table *table)
 {
   struct hash_entry const *bucket;
@@ -205,7 +197,7 @@ hash_get_max_bucket_length (const Hash_table *table)
 /* Do a mild validation of a hash table, by traversing it and checking two
    statistics.  */
 
-bool _GL_ATTRIBUTE_PURE
+bool
 hash_table_ok (const Hash_table *table)
 {
   struct hash_entry const *bucket;
@@ -292,7 +284,7 @@ hash_lookup (const Hash_table *table, const void *entry)
 
 /* Return the first data in the table, or NULL if the table is empty.  */
 
-void * _GL_ATTRIBUTE_PURE
+void *
 hash_get_first (const Hash_table *table)
 {
   struct hash_entry const *bucket;
@@ -409,7 +401,7 @@ hash_do_for_each (const Hash_table *table, Hash_processor processor,
    algorithms tend to be domain-specific, so what's good for [diffutils'] io.c
    may not be good for your application."  */
 
-size_t _GL_ATTRIBUTE_PURE
+size_t
 hash_string (const char *string, size_t n_buckets)
 {
 # define HASH_ONE_CHAR(Value, Byte) \
@@ -448,7 +440,7 @@ hash_string (const char *string, size_t n_buckets)
 /* Return true if CANDIDATE is a prime number.  CANDIDATE should be an odd
    number at least equal to 11.  */
 
-static bool _GL_ATTRIBUTE_CONST
+static bool
 is_prime (size_t candidate)
 {
   size_t divisor = 3;
@@ -467,7 +459,7 @@ is_prime (size_t candidate)
 /* Round a given CANDIDATE number up to the nearest prime, and return that
    prime.  Primes lower than 10 are merely skipped.  */
 
-static size_t _GL_ATTRIBUTE_CONST
+static size_t
 next_prime (size_t candidate)
 {
   /* Skip small primes.  */
@@ -548,7 +540,7 @@ check_tuning (Hash_table *table)
    TUNING, or return 0 if there is no possible way to allocate that
    many entries.  */
 
-static size_t _GL_ATTRIBUTE_PURE
+static size_t
 compute_bucket_size (size_t candidate, const Hash_tuning *tuning)
 {
   if (!tuning->is_n_buckets)
