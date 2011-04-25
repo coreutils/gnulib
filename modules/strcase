@@ -1,6 +1,12 @@
 Description:
 Case-insensitive string comparison functions.
 
+Status:
+obsolete
+
+Notice:
+This module is obsolete.
+
 Files:
 lib/strcasecmp.c
 lib/strncasecmp.c
