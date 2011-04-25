@@ -1,6 +1,12 @@
 Description:
 strtoul() function: convert string to 'unsigned long'.
 
+Status:
+obsolete
+
+Notice:
+This module is obsolete.
+
 Files:
 lib/strtol.c
 lib/strtoul.c
