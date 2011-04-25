@@ -1,3 +1,11 @@
+2011-04-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	strtoll: remove dependency on strtol
+	This is so that 'configure' need not check for strtol merely because
+	the application needs strtoll.
+	* modules/strtoll (Files): Add lib/strtol.c.
+	(Depends-on): Remove strtol.
+
 2011-04-22  Paul Eggert  <eggert@cs.ucla.edu>
 
 	inttypes: Move some configure check to module 'imaxdiv'.
