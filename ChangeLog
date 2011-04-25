@@ -1,5 +1,15 @@
 2011-04-25  Bruno Haible  <bruno@clisp.org>
 
+	dup2: Remove check for dup2, unless supporting old obsolete platforms.
+	* modules/dup2-obsolete: New file.
+	* m4/dup2-obsolete.m4: New file.
+	* m4/dup2.m4 (gl_FUNC_DUP2): Don't check whether dup2 exists if
+	gl_FUNC_DUP2_OBSOLETE is not also defined.
+	* modules/dup2 (Depends-on): Add dup2-obsolete.
+	* doc/posix-functions/dup2.texi: Mention module dup2-obsolete.
+
+2011-04-25  Bruno Haible  <bruno@clisp.org>
+
 	strnlen: Avoid memchr related link error on old obsolete platforms.
 	* modules/memchr-obsolete: New file.
 	* m4/memchr-obsolete.m4: New file.
