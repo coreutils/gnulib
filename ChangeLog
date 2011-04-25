@@ -1,5 +1,11 @@
 2011-04-24  Paul Eggert  <eggert@cs.ucla.edu>
 
+	strtoul: remove dependency on strtol
+	This is so that 'configure' need not check for strtol merely because
+	the application needs strtoul.
+	* modules/strtoul (Files): Add lib/strtol.c.
+	(Depends-on): Remove strtol.
+
 	strtoull: remove dependency on strtoul
 	This is like the strtoll change.
 	* modules/strtoull (Files): Add lib/strtol.c, lib/strtoul.c.
