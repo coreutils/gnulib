@@ -8,6 +8,7 @@ m4/strnlen.m4
 Depends-on:
 extensions
 string
+memchr-obsolete
 
 configure.ac:
 gl_FUNC_STRNLEN

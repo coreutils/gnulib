@@ -10,6 +10,7 @@ m4/mmap-anon.m4
 Depends-on:
 extensions
 string
+memchr-obsolete
 
 configure.ac:
 gl_FUNC_MEMCHR

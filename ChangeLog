@@ -1,3 +1,14 @@
+2011-04-25  Bruno Haible  <bruno@clisp.org>
+
+	strnlen: Avoid memchr related link error on old obsolete platforms.
+	* modules/memchr-obsolete: New file.
+	* m4/memchr-obsolete.m4: New file.
+	* m4/memchr.m4 (gl_FUNC_MEMCHR): Don't check whether memchr exists if
+	gl_FUNC_MEMCHR_OBSOLETE is not also defined.
+	* modules/memchr (Depends-on): Add memchr-obsolete.
+	* modules/strnlen (Depends-on): Likewise.
+	* doc/posix-functions/memchr.texi: Mention module memchr-obsolete.
+
 2011-04-25  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: makefile_at_at_check extend and clean up
