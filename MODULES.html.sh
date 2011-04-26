@@ -2353,6 +2353,7 @@ func_all_modules ()
   func_module futimens
   func_module getaddrinfo
   func_module getcwd
+  func_module getcwd-lgpl
   func_module getgroups
   func_module gethostname
   func_module getlogin

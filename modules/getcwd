@@ -20,6 +20,7 @@ strdup-posix
 
 configure.ac:
 gl_FUNC_GETCWD
+gl_MODULE_INDICATOR([getcwd])
 gl_UNISTD_MODULE_INDICATOR([getcwd])
 
 Makefile.am:

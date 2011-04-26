@@ -1,5 +1,13 @@
 2011-04-27  Eric Blake  <eblake@redhat.com>
 
+	getcwd-lgpl: new module
+	* modules/getcwd-lgpl: New module.
+	* lib/getcwd-lgpl.c: New file.
+	* doc/posix-functions/getcwd.texi (getcwd): Document it.
+	* MODULES.html.sh (lacking POSIX:2008): Likewise.
+	* modules/getcwd (configure.ac): Set C witness.
+	* m4/getcwd.m4 (gl_FUNC_GETCWD_LGPL): New macro.
+
 	getcwd: tweak comments
 	* m4/getcwd-abort-bug.m4: Fix comments.
 	* m4/getcwd-path-max.m4: Likewise.
