@@ -4,7 +4,8 @@ tests/signature.h
 tests/macros.h
 
 Depends-on:
-getcwd
+cloexec
+getcwd-lgpl
 
 configure.ac:
 

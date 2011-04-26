@@ -34,7 +34,6 @@ SIGNATURE_CHECK (linkat, int, (int, char const *, int, char const *, int));
 #include "areadlink.h"
 #include "filenamecat.h"
 #include "same-inode.h"
-#include "xgetcwd.h"
 #include "ignore-value.h"
 #include "macros.h"
 
@@ -119,7 +118,8 @@ main (void)
   ASSERT (mkdir (BASE "sub1", 0700) == 0);
   ASSERT (mkdir (BASE "sub2", 0700) == 0);
   ASSERT (close (creat (BASE "00", 0600)) == 0);
-  cwd = xgetcwd ();
+  cwd = getcwd (NULL, 0);
+  ASSERT (cwd);
 
   dfd = open (BASE "sub1", O_RDONLY);
   ASSERT (0 <= dfd);

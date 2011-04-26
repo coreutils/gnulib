@@ -1,5 +1,13 @@
 2011-04-27  Eric Blake  <eblake@redhat.com>
 
+	tests: reduce dependencies
+	* tests/test-linkat.c (main): Use lighter-weight getcwd.
+	* tests/test-renameat.c (main): Likewise.
+	* modules/linkat-tests (Depends-on): Relax dependency.
+	* modules/renameat-tests (Depends-on): Likewise.
+	* modules/fchdir-tests (Depends-on): Likewise.  Also make cloexec
+	dependency explicit.
+
 	save-cwd: reduce default dependency
 	* modules/save-cwd (Depends-on): Use getcwd-lgpl.
 	* lib/save-cwd.c: Update comments.

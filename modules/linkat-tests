@@ -8,9 +8,9 @@ Depends-on:
 ignore-value
 areadlink-with-size
 filenamecat
+getcwd-lgpl
 progname
 same-inode
-xgetcwd
 
 configure.ac:
 
