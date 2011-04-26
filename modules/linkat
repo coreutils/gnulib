@@ -14,6 +14,7 @@ errno
 extensions
 fcntl-h
 filenamecat-lgpl
+getcwd-lgpl
 openat
 link
 link-follow

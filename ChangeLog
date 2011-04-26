@@ -1,5 +1,9 @@
 2011-04-27  Eric Blake  <eblake@redhat.com>
 
+	linkat, renameat: add missing dependency
+	* modules/linkat (Depends-on): Require getcwd-lgpl.
+	* modules/renameat (Depends-on): Likewise.
+
 	tests: reduce dependencies
 	* tests/test-linkat.c (main): Use lighter-weight getcwd.
 	* tests/test-renameat.c (main): Likewise.

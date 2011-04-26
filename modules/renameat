@@ -10,6 +10,7 @@ Depends-on:
 extensions
 fcntl-h
 filenamecat-lgpl
+getcwd-lgpl
 openat
 rename
 same-inode
