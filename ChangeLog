@@ -1,5 +1,9 @@
 2011-04-25  Paul Eggert  <eggert@cs.ucla.edu>
 
+	inttypes: omit now-redundant strtoimax and strtoumax work
+	* m4/inttypes.m4 (gl_INTTYPES_H): Do not check for strtoimax and
+	strtoumax decls; gl_FUNC_STRTOIMAX and gl_FUNC_STRTOUMAX now do this.
+
 	strtoimax, strtoumax: simplify, port to HP-UX 11.00 64-bit
 	This supports apps that need pointers to strtoimax and strtoumax,
 	and ports to HP-UX 11.00 64.bit, which has macros that expand to
