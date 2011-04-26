@@ -2,13 +2,14 @@ Description:
 strtoumax() function: convert string to 'uintmax_t'.
 
 Files:
+lib/strtoimax.c
 lib/strtoumax.c
 m4/longlong.m4
 m4/strtoumax.m4
 
 Depends-on:
-strtoimax
 strtoull
+verify
 inttypes-incomplete
 stdint
 

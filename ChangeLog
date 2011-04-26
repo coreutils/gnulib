@@ -1,5 +1,10 @@
 2011-04-25  Paul Eggert  <eggert@cs.ucla.edu>
 
+	strtoumax: remove dependency on strtoimax
+	This is like the strtoull change of yesterday.
+	* modules/strtoumax (Files): Add lib/strtoimax.c.
+	(Depends-on): Remove strtoimax and add verify.
+
 	inttypes-incomplete: new module
 	* m4/inttypes.m4 (gl_INTTYPES_INCOMPLETE): New macro, containing
 	all but the PRI* and SCN* parts of gl_INTTYPES_H.
