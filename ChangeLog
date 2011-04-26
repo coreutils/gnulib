@@ -1,5 +1,9 @@
 2011-04-27  Eric Blake  <eblake@redhat.com>
 
+	filenamecat-lgpl: fix licence
+	* modules/filenamecat-lgpl (License): Mark as LGPLv2+, as intended
+	when it was first created.
+
 	linkat, renameat: add missing dependency
 	* modules/linkat (Depends-on): Require getcwd-lgpl.
 	* modules/renameat (Depends-on): Likewise.
