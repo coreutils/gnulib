@@ -1,4 +1,4 @@
-# strtoimax.m4 serial 8
+# strtoimax.m4 serial 9
 dnl Copyright (C) 2002-2004, 2006, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -6,16 +6,12 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_STRTOIMAX],
 [
-  AC_CACHE_CHECK([whether <inttypes.h> defines strtoimax as a macro],
-    gl_cv_func_strtoimax_macro,
-    [AC_EGREP_CPP([inttypes_h_defines_strtoimax], [#include <inttypes.h>
-#ifdef strtoimax
- inttypes_h_defines_strtoimax
-#endif],
-       gl_cv_func_strtoimax_macro=yes,
-       gl_cv_func_strtoimax_macro=no)])
+  AC_REQUIRE([gl_INTTYPES_H_DEFAULTS])
 
-  if test "$gl_cv_func_strtoimax_macro" != yes; then
+  AC_CHECK_DECLS_ONCE([strtoimax])
+  if test "$ac_cv_have_decl_strtoimax" != yes; then
+    HAVE_DECL_STRTOIMAX=0
+
     AC_REPLACE_FUNCS([strtoimax])
     if test $ac_cv_func_strtoimax = no; then
       gl_PREREQ_STRTOIMAX

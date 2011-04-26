@@ -1,3 +1,16 @@
+2011-04-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	strtoimax, strtoumax: simplify, port to HP-UX 11.00 64-bit
+	This supports apps that need pointers to strtoimax and strtoumax,
+	and ports to HP-UX 11.00 64.bit, which has macros that expand to
+	nonexistent functions.  See
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-04/msg00241.html>
+	et seq.
+	* lib/inttypes.in.h (strtoimax, strtoumax): #undef before declaring.
+	* m4/strtoimax.m4 (gl_FUNC_STRTOIMAX): Don't check whether it's
+	a macro.
+	* m4/strtoumax.m4 (gl_FUNC_STRTOUMAX): Likewise.
+
 2011-04-25  Simon Josefsson  <simon@josefsson.org>
 
 	* modules/gnumakefile (configure.ac): Replace TAB with SPCs.
