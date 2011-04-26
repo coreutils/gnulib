@@ -9,9 +9,12 @@ Depends-on:
 close
 dirent
 dirfd
+dosname
 dup2
 fcntl
 fcntl-h
+filenamecat-lgpl
+getcwd-lgpl
 include_next
 malloc-posix
 open

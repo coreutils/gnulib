@@ -69,6 +69,7 @@ AC_DEFUN([gl_FUNC_DUP2],
 AC_DEFUN([gl_REPLACE_DUP2],
 [
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
+  AC_CHECK_FUNCS_ONCE([dup2])
   if test $ac_cv_func_dup2 = yes; then
     REPLACE_DUP2=1
   fi

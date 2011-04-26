@@ -1,5 +1,13 @@
 2011-04-27  Eric Blake  <eblake@redhat.com>
 
+	fchdir: avoid extra chdir and fix test
+	* modules/fchdir (Depends-on): Add dosname, filenamecat-lgpl,
+	getcwd-lgpl.
+	* lib/fchdir.c (get_name): Any absolute name will do; it does not
+	have to be canonical.
+	(canonicalize_file_name): Drop unused macro.
+	* m4/dup2.m4 (gl_REPLACE_DUP2): Ensure dup2 is replaced.
+
 	filenamecat-lgpl: fix licence
 	* modules/filenamecat-lgpl (License): Mark as LGPLv2+, as intended
 	when it was first created.
