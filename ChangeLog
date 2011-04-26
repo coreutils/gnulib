@@ -1,3 +1,10 @@
+2011-04-27  Eric Blake  <eblake@redhat.com>
+
+	getcwd: tweak comments
+	* m4/getcwd-abort-bug.m4: Fix comments.
+	* m4/getcwd-path-max.m4: Likewise.
+	* m4/getcwd.m4: Likewise.
+
 2011-04-27  Reuben Thomas  <rrt@sc3d.org>
 	and Eric Blake  <eblake@redhat.com>
 

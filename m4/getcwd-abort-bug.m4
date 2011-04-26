@@ -1,4 +1,4 @@
-# serial 2
+# serial 3
 # Determine whether getcwd aborts when the length of the working directory
 # name is unusually large.  Any length between 4k and 16k trigger the bug
 # when using glibc-2.4.90-9 or older.
@@ -58,7 +58,7 @@ main ()
   size_t d;
 
   /* The bug is triggered when PATH_MAX < getpagesize (), so skip
-     this relative expensive and invasive test if that's not true.  */
+     this relatively expensive and invasive test if that's not true.  */
   if (getpagesize () <= PATH_MAX)
     return 0;
 

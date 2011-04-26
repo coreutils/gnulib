@@ -6,7 +6,7 @@
 # with or without modifications, as long as this notice is preserved.
 
 # Written by Paul Eggert.
-# serial 3
+# serial 4
 
 AC_DEFUN([gl_FUNC_GETCWD_NULL],
   [
@@ -52,6 +52,8 @@ AC_DEFUN([gl_FUNC_GETCWD_NULL],
         ]])])
 ])
 
+dnl Check for all known getcwd bugs; useful for a program likely to be
+dnl executed from an arbitrary location.
 AC_DEFUN([gl_FUNC_GETCWD],
 [
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
