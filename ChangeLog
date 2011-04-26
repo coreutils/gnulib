@@ -1,3 +1,9 @@
+2011-04-26  Paul Eggert  <eggert@cs.ucla.edu>
+
+	inttypes: also provide default values for 32-bit tests
+	* m4/inttypes.m4 (gl_INTTYPES_H_DEFAULTS): Also provide default values
+	for INT32_MAX_LT_INTMAX_MAX and for UINT32_MAX_LT_UINTMAX_MAX.
+
 2011-04-25  Paul Eggert  <eggert@cs.ucla.edu>
 
 	strtoumax: remove dependency on strtoimax
