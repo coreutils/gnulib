@@ -1,4 +1,4 @@
-# inttypes.m4 serial 22
+# inttypes.m4 serial 23
 dnl Copyright (C) 2006-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,8 +9,13 @@ dnl Test whether <inttypes.h> is supported or must be substituted.
 
 AC_DEFUN([gl_INTTYPES_H],
 [
+  AC_REQUIRE([gl_INTTYPES_INCOMPLETE])
+  gl_INTTYPES_PRI_SCN
+])
+
+AC_DEFUN([gl_INTTYPES_INCOMPLETE],
+[
   AC_REQUIRE([gl_STDINT_H])
-  AC_REQUIRE([gt_INTTYPES_PRI])
   AC_CHECK_HEADERS_ONCE([inttypes.h])
 
   dnl Override <inttypes.h> always, so that the portability warnings work.
@@ -34,6 +39,17 @@ AC_DEFUN([gl_INTTYPES_H],
 # define __STDC_LIMIT_MACROS 1
 #endif
 ])
+
+  dnl Check for declarations of anything we want to poison if the
+  dnl corresponding gnulib module is not in use.
+  gl_WARN_ON_USE_PREPARE([[#include <inttypes.h>
+    ]], [imaxabs imaxdiv strtoimax strtoumax])
+])
+
+# Ensure that the PRI* and SCN* macros are defined appropriately.
+AC_DEFUN([gl_INTTYPES_PRI_SCN],
+[
+  AC_REQUIRE([gt_INTTYPES_PRI])
 
   PRIPTR_PREFIX=
   if test -n "$STDINT_H"; then
@@ -86,11 +102,6 @@ AC_DEFUN([gl_INTTYPES_H],
   else
     UINT64_MAX_EQ_ULONG_MAX=-1
   fi
-
-  dnl Check for declarations of anything we want to poison if the
-  dnl corresponding gnulib module is not in use.
-  gl_WARN_ON_USE_PREPARE([[#include <inttypes.h>
-    ]], [imaxabs imaxdiv strtoimax strtoumax])
 ])
 
 # Define the symbol $1 to be 1 if the condition is true, 0 otherwise.
@@ -152,4 +163,8 @@ AC_DEFUN([gl_INTTYPES_H_DEFAULTS],
   HAVE_DECL_IMAXDIV=1;   AC_SUBST([HAVE_DECL_IMAXDIV])
   HAVE_DECL_STRTOIMAX=1; AC_SUBST([HAVE_DECL_STRTOIMAX])
   HAVE_DECL_STRTOUMAX=1; AC_SUBST([HAVE_DECL_STRTOUMAX])
+  INT64_MAX_EQ_LONG_MAX='defined _LP64';  AC_SUBST([INT64_MAX_EQ_LONG_MAX])
+  PRI_MACROS_BROKEN=0;   AC_SUBST([PRI_MACROS_BROKEN])
+  PRIPTR_PREFIX=__PRIPTR_PREFIX;  AC_SUBST([PRIPTR_PREFIX])
+  UINT64_MAX_EQ_ULONG_MAX='defined _LP64';  AC_SUBST([UINT64_MAX_EQ_ULONG_MAX])
 ])

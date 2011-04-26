@@ -9,7 +9,7 @@ m4/strtoimax.m4
 Depends-on:
 strtoll
 verify
-inttypes
+inttypes-incomplete
 stdint
 
 configure.ac:

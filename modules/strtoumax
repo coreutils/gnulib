@@ -9,7 +9,7 @@ m4/strtoumax.m4
 Depends-on:
 strtoimax
 strtoull
-inttypes
+inttypes-incomplete
 stdint
 
 configure.ac:

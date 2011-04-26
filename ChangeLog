@@ -1,5 +1,24 @@
 2011-04-25  Paul Eggert  <eggert@cs.ucla.edu>
 
+	inttypes-incomplete: new module
+	* m4/inttypes.m4 (gl_INTTYPES_INCOMPLETE): New macro, containing
+	all but the PRI* and SCN* parts of gl_INTTYPES_H.
+	(gl_INTTYPES_PRI_SCN): New macro, containing the PRI* and SCN* parts
+	of gl_INTTYPES_H.
+	(gl_INTTYPES_H): Rewrite in terms of these new macros.
+	(gl_INTTYPES_H_DEFAULTS): Provide defaults for the PRI* and SCN*
+	parts, in case gl_INTTYPE_PRI_SCN is not invoked.
+	* modules/imaxabs, modules/imaxdiv, modules/strtoimax (Depends-on):
+	* modules/strtoumax, modules/xstrtol (Depends-on):
+	Depend on inttypes-incomplete, not inttypes.
+	* modules/inttypes-incomplete: New module, containing the contents
+	of the old modules/inttypes module, except that the Files: section
+	omits m4/inttypes-pri.m4, and the configure.ac section invokes
+	gl_INTTYPES_INCOMPLETE rather than gl_INTTYPES_H.
+	* modules/inttypes (Files): Remove lib/inttypes.in.h, m4/inttypes.m4.
+	(Depends-on): Depend only on inttypes-incomplete.
+	(Makefile.am): Remove everything; this is now in inttypes-incomplete.
+
 	inttypes: omit now-redundant strtoimax and strtoumax work
 	* m4/inttypes.m4 (gl_INTTYPES_H): Do not check for strtoimax and
 	strtoumax decls; gl_FUNC_STRTOIMAX and gl_FUNC_STRTOUMAX now do this.
