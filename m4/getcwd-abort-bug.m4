@@ -21,6 +21,7 @@ AC_DEFUN([gl_FUNC_GETCWD_ABORT_BUG],
      rm -rf confdir-14B---
      # Arrange for deletion of the temporary directory this test creates.
      ac_clean_files="$ac_clean_files confdir-14B---"
+     dnl Please keep this in sync with tests/test-getcwd.c.
      AC_RUN_IFELSE(
        [AC_LANG_SOURCE(
           [[

@@ -21,6 +21,7 @@ AC_DEFUN([gl_FUNC_GETCWD_PATH_MAX],
     gl_cv_func_getcwd_path_max,
     [# Arrange for deletion of the temporary directory this test creates.
      ac_clean_files="$ac_clean_files confdir3"
+     dnl Please keep this in sync with tests/test-getcwd.c.
      AC_RUN_IFELSE(
        [AC_LANG_SOURCE(
           [[

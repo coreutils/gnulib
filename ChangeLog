@@ -1,3 +1,14 @@
+2011-04-26  Eric Blake  <eblake@redhat.com>
+
+	getcwd: enhance tests
+	* tests/test-getcwd-lgpl.c: New file, taken from...
+	* tests/test-getcwd.c: ...old contents.  Rewrite this file to
+	repeat long path stress tests from m4 probe.
+	* modules/getcwd-lgpl-tests: New module.
+	* modules/getcwd-tests (Depends-on): Depend on lgpl tests.
+	* m4/getcwd-abort-bug.m4: Update comment.
+	* m4/getcwd-path-max.m4: Likewise.
+
 2011-04-27  Eric Blake  <eblake@redhat.com>
 
 	getcwd-lgpl: new module
