@@ -9,7 +9,7 @@ m4/save-cwd.m4
 Depends-on:
 chdir-long
 cloexec
-getcwd
+getcwd-lgpl
 fchdir
 stdbool
 unistd-safer

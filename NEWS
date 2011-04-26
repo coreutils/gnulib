@@ -12,6 +12,11 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2011-04-27  save-cwd        This module pulls in fewer dependencies by
+                            default; to retain robust handling of directories
+                            with an absolute name longer than PATH_MAX, you
+                            must now explicitly include the 'getcwd' module.
+
 2011-04-19  close-hook      This module has been renamed to 'fd-hook' and
                             generalized.
 

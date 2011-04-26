@@ -1,4 +1,9 @@
-2011-04-26  Eric Blake  <eblake@redhat.com>
+2011-04-27  Eric Blake  <eblake@redhat.com>
+
+	save-cwd: reduce default dependency
+	* modules/save-cwd (Depends-on): Use getcwd-lgpl.
+	* lib/save-cwd.c: Update comments.
+	* NEWS: Document the semantic change.
 
 	getcwd: enhance tests
 	* tests/test-getcwd-lgpl.c: New file, taken from...
@@ -8,8 +13,6 @@
 	* modules/getcwd-tests (Depends-on): Depend on lgpl tests.
 	* m4/getcwd-abort-bug.m4: Update comment.
 	* m4/getcwd-path-max.m4: Likewise.
-
-2011-04-27  Eric Blake  <eblake@redhat.com>
 
 	getcwd-lgpl: new module
 	* modules/getcwd-lgpl: New module.
