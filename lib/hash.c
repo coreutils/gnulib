@@ -27,7 +27,7 @@
 #include "hash.h"
 
 #include "bitrotate.h"
-#include "xalloc.h"
+#include "xalloc-oversized.h"
 
 #include <stdint.h>
 #include <stdio.h>

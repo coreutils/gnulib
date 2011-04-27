@@ -31,7 +31,7 @@
 #endif
 
 #include "getugroups.h"
-#include "xalloc.h"
+#include "xalloc-oversized.h"
 
 static gid_t *
 realloc_groupbuf (gid_t *g, size_t num)
@@ -192,15 +192,4 @@ mgetgroups (char const *username, gid_t gid, gid_t **groups)
     }
 
   return ng;
-}
-
-/* Like mgetgroups, but call xalloc_die on allocation failure.  */
-
-int
-xgetgroups (char const *username, gid_t gid, gid_t **groups)
-{
-  int result = mgetgroups (username, gid, groups);
-  if (result == -1 && errno == ENOMEM)
-    xalloc_die ();
-  return result;
 }

@@ -12,6 +12,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2011-04-27  mgetgroups      The 'xgetgroups' function has been split into
+                            a new 'xgetgroups' module.
+
 2011-04-27  save-cwd        This module pulls in fewer dependencies by
                             default; to retain robust handling of directories
                             with an absolute name longer than PATH_MAX, you

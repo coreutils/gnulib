@@ -1,5 +1,20 @@
 2011-04-28  Eric Blake  <eblake@redhat.com>
 
+	hash, mgetgroups: drop xalloc dependency
+	* lib/hash.c (includes): Adjust includes.
+	* lib/mgetgroups.c (includes): Likewise.
+	(xgetgroups): Move...
+	* lib/xgetgroups.c: ...to new file.
+	* lib/mgetgroups.h (xgetgroups): Make declaration conditional.
+	* modules/xgetgroups: New file, split from...
+	* modules/mgetgroups: ...here.
+	(Depends-on): Add xalloc-oversized.
+	* modules/hash (Depends-on): Likewise.
+	* modules/hash-tests (Depends-on): Drop xalloc.
+	(test_hash_LDADD): Drop unused library.
+	* tests/test-hash.c (main): Break xalloc dependency.
+	(includes): Drop unused include.
+
 	xalloc-oversized: new module
 	* modules/xalloc-oversized: New module.
 	* modules/xalloc (Depends-on): Add it.

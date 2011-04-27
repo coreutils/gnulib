@@ -1,5 +1,6 @@
-/* Get a list of all group IDs associated with a specified user ID.
-   Copyright (C) 2007, 2009-2011 Free Software Foundation, Inc.
+/* xgetgroups.c -- return a list of the groups a user or current process is in
+
+   Copyright (C) 2007-2011 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -14,9 +15,23 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-#include <sys/types.h>
+/* Extracted from coreutils' src/id.c. */
 
-int mgetgroups (const char *username, gid_t gid, gid_t **groups);
-#if GNULIB_XGETGROUPS
-int xgetgroups (const char *username, gid_t gid, gid_t **groups);
-#endif
+#include <config.h>
+
+#include "mgetgroups.h"
+
+#include <errno.h>
+
+#include "xalloc.h"
+
+/* Like mgetgroups, but call xalloc_die on allocation failure.  */
+
+int
+xgetgroups (char const *username, gid_t gid, gid_t **groups)
+{
+  int result = mgetgroups (username, gid, groups);
+  if (result == -1 && errno == ENOMEM)
+    xalloc_die ();
+  return result;
+}
