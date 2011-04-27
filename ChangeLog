@@ -1,3 +1,11 @@
+2011-04-27  Reuben Thomas  <rrt@sc3d.org>
+	and Eric Blake  <eblake@redhat.com>
+
+	mkstemp: replace if system version uses wrong permissions
+	* m4/mkstemp.m4 (gl_FUNC_MKSTEMP): Add test for non-owner
+	read/write mode bits set in file created by mkstemp.
+	* doc/posix-functions/mkstemp.texi (mkstemp): Document the fix.
+
 2011-04-27  Eric Blake  <eblake@redhat.com>
 
 	passfd: avoid compiler warning
