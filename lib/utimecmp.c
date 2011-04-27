@@ -33,7 +33,6 @@
 #include "stat-time.h"
 #include "utimens.h"
 #include "verify.h"
-#include "xalloc.h"
 
 #ifndef MAX
 # define MAX(a, b) ((a) > (b) ? (a) : (b))
@@ -122,7 +121,9 @@ utimecmp (char const *dst_name,
   /* Things to watch out for:
 
      The code uses a static hash table internally and is not safe in the
-     presence of signals, multiple threads, etc.
+     presence of signals, multiple threads, etc.  However, memory pressure
+     that prevents use of the hash table is not fatal - we just fall back
+     to redoing the computations on every call in that case.
 
      int and long int might be 32 bits.  Many of the calculations store
      numbers up to 2 billion, and multiply by 10; they have to avoid
@@ -143,12 +144,13 @@ utimecmp (char const *dst_name,
     {
       /* Look up the time stamp resolution for the destination device.  */
 
-      /* Hash table for devices.  */
+      /* Hash table for caching information learned about devices.  */
       static Hash_table *ht;
 
       /* Information about the destination file system.  */
       static struct fs_res *new_dst_res;
-      struct fs_res *dst_res;
+      struct fs_res *dst_res = NULL;
+      struct fs_res tmp_dst_res;
 
       /* Time stamp resolution in nanoseconds.  */
       int res;
@@ -163,24 +165,46 @@ utimecmp (char const *dst_name,
       if (src_s <= dst_s - 2)
         return 1;
 
+      /* Try to do a hash lookup, but fall back to stack variables and
+         recomputation on low memory situations.  */
       if (! ht)
         ht = hash_initialize (16, NULL, dev_info_hash, dev_info_compare, free);
-      if (! new_dst_res)
+      if (ht)
         {
-          new_dst_res = xmalloc (sizeof *new_dst_res);
-          new_dst_res->resolution = 2 * BILLION;
-          new_dst_res->exact = false;
-        }
-      new_dst_res->dev = dst_stat->st_dev;
-      dst_res = hash_insert (ht, new_dst_res);
-      if (! dst_res)
-        xalloc_die ();
+          if (! new_dst_res)
+            {
+              new_dst_res = malloc (sizeof *new_dst_res);
+              if (!new_dst_res)
+                goto low_memory;
+              new_dst_res->resolution = 2 * BILLION;
+              new_dst_res->exact = false;
+            }
+          new_dst_res->dev = dst_stat->st_dev;
+          dst_res = hash_insert (ht, new_dst_res);
+          if (! dst_res)
+            goto low_memory;
 
-      if (dst_res == new_dst_res)
+          if (dst_res == new_dst_res)
+            {
+              /* NEW_DST_RES is now in use in the hash table, so allocate a
+                 new entry next time.  */
+              new_dst_res = NULL;
+            }
+        }
+      else
         {
-          /* NEW_DST_RES is now in use in the hash table, so allocate a
-             new entry next time.  */
-          new_dst_res = NULL;
+        low_memory:
+          if (ht)
+            {
+              tmp_dst_res.dev = dst_stat->st_dev;
+              dst_res = hash_lookup (ht, &tmp_dst_res);
+            }
+          if (!dst_res)
+            {
+              dst_res = &tmp_dst_res;
+              dst_res->resolution = 2 * BILLION;
+              dst_res->exact = false;
+            }
         }
 
       res = dst_res->resolution;

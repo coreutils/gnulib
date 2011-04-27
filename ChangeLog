@@ -1,3 +1,10 @@
+2011-04-28  Eric Blake  <eblake@redhat.com>
+
+	utimecmp: drop dependency on xmalloc
+	* lib/utimecmp.c (utimecmp): Work even if hash table cache fails
+	due to memory pressure.
+	* modules/utimecmp (Depends-on): Drop xalloc.
+
 2011-04-27  Eric Blake  <eblake@redhat.com>
 
 	getcwd: fix mingw bugs
