@@ -1,3 +1,9 @@
+2011-04-27  Eric Blake  <eblake@redhat.com>
+
+	passfd: avoid compiler warning
+	* lib/passfd.c (sendfd, recvfd): Avoid shadowing names.
+	Reported by Laine Stump.
+
 2011-04-27  J.T. Conklin  <jtc@acorntoolworks.com>  (tiny change)
 
 	* gnulib-tool: change "join -a 2" to "join -a2", the latter is

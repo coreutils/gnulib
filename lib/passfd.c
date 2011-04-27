@@ -43,7 +43,7 @@
 int
 sendfd (int sock, int fd)
 {
-  char send = 0;
+  char byte = 0;
   struct iovec iov;
   struct msghdr msg;
 # ifdef CMSG_FIRSTHDR
@@ -53,7 +53,7 @@ sendfd (int sock, int fd)
 
   /* send at least one char */
   memset (&msg, 0, sizeof msg);
-  iov.iov_base = &send;
+  iov.iov_base = &byte;
   iov.iov_len = 1;
   msg.msg_iov = &iov;
   msg.msg_iovlen = 1;
@@ -100,7 +100,7 @@ sendfd (int sock _GL_UNUSED, int fd _GL_UNUSED)
 int
 recvfd (int sock, int flags)
 {
-  char recv = 0;
+  char byte = 0;
   struct iovec iov;
   struct msghdr msg;
   int fd = -1;
@@ -118,7 +118,7 @@ recvfd (int sock, int flags)
 
   /* send at least one char */
   memset (&msg, 0, sizeof msg);
-  iov.iov_base = &recv;
+  iov.iov_base = &byte;
   iov.iov_len = 1;
   msg.msg_iov = &iov;
   msg.msg_iovlen = 1;
