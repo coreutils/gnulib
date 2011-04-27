@@ -24,3 +24,6 @@ On platforms other than glibc 2.0.7 or newer, @code{mkstemp} can create a
 world or group writable or readable file, if you haven't set the process
 umask to 077.  This is a security risk.
 @end itemize
+
+The gnulib module clean-temp can create temporary files that are less
+likely to be left behind on signals such as SIGINT.

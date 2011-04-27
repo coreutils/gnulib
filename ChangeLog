@@ -1,3 +1,10 @@
+2011-04-27  Reuben Thomas  <rrt@sc3d.org>
+	and Eric Blake  <eblake@redhat.com>
+
+	mkstemp: mention clean-temp module
+	* lib/mkstemp.c: Add comment.
+	* doc/posix-functions/mkstemp.texi (mkstemp): Likewise.
+
 2011-04-26  Paul Eggert  <eggert@cs.ucla.edu>
 
 	inttypes: also provide default values for 32-bit tests
