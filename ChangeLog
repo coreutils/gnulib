@@ -1,5 +1,11 @@
 2011-04-28  Eric Blake  <eblake@redhat.com>
 
+	xalloc-oversized: new module
+	* modules/xalloc-oversized: New module.
+	* modules/xalloc (Depends-on): Add it.
+	* lib/xalloc.h (xalloc_oversized): Move...
+	* lib/xalloc-oversized.h: ...into new file.
+
 	utimecmp: drop dependency on xmalloc
 	* lib/utimecmp.c (utimecmp): Work even if hash table cache fails
 	due to memory pressure.
