@@ -25,5 +25,5 @@ Portability problems not fixed by Gnulib:
 @itemize
 @end itemize
 
-The gnulib module clean-temp can create temporary files that are less
-likely to be left behind on signals such as SIGINT.
+The gnulib module @code{clean-temp} can create temporary files that will not
+be left behind after signals such as SIGINT.

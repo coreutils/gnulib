@@ -15,3 +15,6 @@ glibc 2.10, MacOS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, AIX
 Portability problems not fixed by Gnulib:
 @itemize
 @end itemize
+
+The gnulib module @code{clean-temp} can create temporary files that will not
+be left behind after signals such as SIGINT.

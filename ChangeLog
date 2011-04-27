@@ -1,3 +1,13 @@
+2011-04-27  Bruno Haible  <bruno@clisp.org>
+
+	clean-temp: Clarify what it does.
+	* lib/clean-temp.h: Add more comments.
+	* doc/posix-functions/mkstemp.texi: Tweak reference to 'clean-temp'
+	module.
+	* doc/glibc-functions/mkostemp.texi: Mention 'clean-temp' here too.
+	* doc/glibc-functions/mkstemps.texi: Likewise.
+	* doc/glibc-functions/mkostemps.texi: Likewise.
+
 2011-04-27  Eric Blake  <eblake@redhat.com>
 
 	fchdir: avoid extra chdir and fix test
