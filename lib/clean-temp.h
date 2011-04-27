@@ -43,7 +43,7 @@ extern "C" {
    are automatically cleaned up (at the latest) when the program exits or
    dies from a fatal signal such as SIGINT, SIGTERM, SIGHUP, but not if it
    dies from a fatal signal such as SIGQUIT, SIGKILL, or SIGABRT, SIGSEGV,
-   SIGBUS, SIGILL, SIGFPE,  */
+   SIGBUS, SIGILL, SIGFPE.  */
 
 struct temp_dir
 {
