@@ -9,4 +9,3 @@ configure.ac:
 Makefile.am:
 TESTS += test-openat-safer
 check_PROGRAMS += test-openat-safer
-test_openat_safer_LDADD = $(LDADD) @LIBINTL@

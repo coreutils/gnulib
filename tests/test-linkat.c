@@ -140,9 +140,11 @@ main (void)
   for (i = 0; i < 32; i++)
     {
       int fd1 = (i & 8) ? dfd : AT_FDCWD;
-      char *file1 = file_name_concat ((i & 4) ? ".." : cwd, BASE "xx", NULL);
+      char *file1 = mfile_name_concat ((i & 4) ? ".." : cwd, BASE "xx", NULL);
       int fd2 = (i & 2) ? dfd : AT_FDCWD;
-      char *file2 = file_name_concat ((i & 1) ? ".." : cwd, BASE "xx", NULL);
+      char *file2 = mfile_name_concat ((i & 1) ? ".." : cwd, BASE "xx", NULL);
+      ASSERT (file1);
+      ASSERT (file2);
       flag = (i & 0x10 ? AT_SYMLINK_FOLLOW : 0);
 
       ASSERT (sprintf (strchr (file1, '\0') - 2, "%02d", i) == 2);

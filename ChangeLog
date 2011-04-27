@@ -1,5 +1,21 @@
 2011-04-28  Eric Blake  <eblake@redhat.com>
 
+	tests: drop unused link dependency
+	* modules/areadlinkat-tests (Makefile.am): Drop stale LDADD.
+	* modules/dirent-safer-tests (Makefile.am): Likewise.
+	* modules/fdopendir-tests (Makefile.am): Likewise.
+	* modules/mkfifoat-tests (Makefile.am): Likewise.
+	* modules/openat-safer-tests (Makefile.am): Likewise.
+	* modules/openat-tests (Makefile.am): Likewise.
+	* modules/readlinkat-tests (Makefile.am): Likewise.
+	* modules/symlinkat-tests (Makefile.am): Likewise.
+	* modules/linkat-tests (Makefile.am): Likewise.
+	(Depends-on): Switch to filenamecat-lgpl.
+	* modules/fdutimensat-tests (test_fdutimensat_LDADD): Drop unused
+	LIBINTL.
+	* modules/utimensat-tests (test_utimensat_LDADD): Likewise.
+	* tests/test-linkat.c (main): Don't require xalloc.
+
 	hash, mgetgroups: drop xalloc dependency
 	* lib/hash.c (includes): Adjust includes.
 	* lib/mgetgroups.c (includes): Likewise.

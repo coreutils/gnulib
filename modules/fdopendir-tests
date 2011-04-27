@@ -12,4 +12,3 @@ configure.ac:
 Makefile.am:
 TESTS += test-fdopendir
 check_PROGRAMS += test-fdopendir
-test_fdopendir_LDADD = $(LDADD) @LIBINTL@

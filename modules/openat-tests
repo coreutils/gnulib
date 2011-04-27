@@ -31,8 +31,3 @@ Makefile.am:
 TESTS += test-fchownat test-fstatat test-mkdirat test-openat test-unlinkat
 check_PROGRAMS += test-fchownat test-fstatat test-mkdirat test-openat \
   test-unlinkat
-test_fchownat_LDADD = $(LDADD) @LIBINTL@
-test_fstatat_LDADD = $(LDADD) @LIBINTL@
-test_mkdirat_LDADD = $(LDADD) @LIBINTL@
-test_openat_LDADD = $(LDADD) @LIBINTL@
-test_unlinkat_LDADD = $(LDADD) @LIBINTL@
