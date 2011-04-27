@@ -1,5 +1,12 @@
 2011-04-27  Bruno Haible  <bruno@clisp.org>
 
+	mkstemps: Ensure declaration on MacOS X 10.5.
+	* lib/stdlib.in.h: Include <unistd.h> when mkstemps is requested.
+	* doc/glibc-functions/mkstemps.texi: Document header file problem on
+	MacOS X.
+
+2011-04-27  Bruno Haible  <bruno@clisp.org>
+
 	mkstemp: More documentation.
 	* doc/posix-functions/mkstemp.texi: Document header file problem on
 	MacOS X.
