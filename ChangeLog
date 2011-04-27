@@ -1,3 +1,8 @@
+2011-04-27  J.T. Conklin  <jtc@acorntoolworks.com>  (tiny change)
+
+	* gnulib-tool: change "join -a 2" to "join -a2", the latter is
+	required by the NetBSD (and perhaps other 4.4BSD derived) join.
+
 2011-04-27  Reuben Thomas  <rrt@sc3d.org>
 	and Eric Blake  <eblake@redhat.com>
 

@@ -2522,7 +2522,7 @@ func_show_module_list ()
   echo "Module list with included dependencies (indented):"
   echo "$specified_modules" | sed -e '/^$/d' -e 's/$/| /' > "$tmp"/specified-modules
   echo "$modules" | sed -e '/^$/d' \
-    | LC_ALL=C join -t '|' -a 2 "$tmp"/specified-modules - \
+    | LC_ALL=C join -t '|' -a2 "$tmp"/specified-modules - \
     | sed -e 's/^\(.*\)|.*/|\1/' -e 's/^/    /' -e 's/^    |\(.*\)$/  '"${bold_on}"'\1'"${bold_off}"'/'
 }
 
