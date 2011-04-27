@@ -1,5 +1,11 @@
 2011-04-27  Bruno Haible  <bruno@clisp.org>
 
+	mkstemp: Tweak configure message when cross-compiling.
+	* m4/mkstemp.m4 (gl_FUNC_MKSTEMP): When cross-compiling, qualify the
+	result as a guess.
+
+2011-04-27  Bruno Haible  <bruno@clisp.org>
+
 	clean-temp: Clarify what it does.
 	* lib/clean-temp.h: Add more comments.
 	* doc/posix-functions/mkstemp.texi: Tweak reference to 'clean-temp'

@@ -56,10 +56,10 @@ AC_DEFUN([gl_FUNC_MKSTEMP],
               return result;]])],
           [gl_cv_func_working_mkstemp=yes],
           [gl_cv_func_working_mkstemp=no],
-          [gl_cv_func_working_mkstemp=no])
+          [gl_cv_func_working_mkstemp="guessing no"])
         rm -rf conftest.mkstemp
       ])
-    if test $gl_cv_func_working_mkstemp != yes; then
+    if test "$gl_cv_func_working_mkstemp" != yes; then
       REPLACE_MKSTEMP=1
       AC_LIBOBJ([mkstemp])
       gl_PREREQ_MKSTEMP
