@@ -53,7 +53,7 @@ rpl_getcwd (char *buf, size_t size)
       if (!buf)
         {
           errno = ENOMEM;
-          return -1;
+          return NULL;
         }
       result = getcwd (buf, size);
       if (!result)

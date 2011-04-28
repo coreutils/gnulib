@@ -1,3 +1,10 @@
+2011-04-27  Eric Blake  <eblake@redhat.com>
+
+	getcwd: fix mingw bugs
+	* m4/getcwd.m4 (gl_FUNC_GETCWD_NULL): Detect one mingw bug.
+	* doc/posix-functions/getcwd.texi (getcwd): Document the problems.
+	* lib/getcwd-lgpl.c (rpl_getcwd): Fix return type.
+
 2011-04-27  Bruno Haible  <bruno@clisp.org>
 
 	mkstemps: Ensure declaration on MacOS X 10.5.

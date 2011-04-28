@@ -6,7 +6,7 @@
 # with or without modifications, as long as this notice is preserved.
 
 # Written by Paul Eggert.
-# serial 5
+# serial 6
 
 AC_DEFUN([gl_FUNC_GETCWD_NULL],
   [
@@ -20,7 +20,8 @@ AC_DEFUN([gl_FUNC_GETCWD_NULL],
 #        endif
 ]], [[
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-/* mingw cwd does not start with '/', but getcwd does allocate.  */
+/* mingw cwd does not start with '/', but getcwd does allocate.
+   However, mingw fails to honor non-zero size.  */
 #else
            if (chdir ("/") != 0)
              return 1;
@@ -36,6 +37,9 @@ AC_DEFUN([gl_FUNC_GETCWD_NULL],
                return 0;
              }
 #endif
+         /* If size is non-zero, allocation must fail if size is too small */
+         if (getcwd (NULL, 1))
+           return 5;
          ]])],
         [gl_cv_func_getcwd_null=yes],
         [gl_cv_func_getcwd_null=no],
@@ -45,8 +49,6 @@ AC_DEFUN([gl_FUNC_GETCWD_NULL],
          *-gnu*)               gl_cv_func_getcwd_null="guessing yes";;
                                # Guess yes on Cygwin.
          cygwin*)              gl_cv_func_getcwd_null="guessing yes";;
-                               # Guess yes on mingw.
-         mingw*)               gl_cv_func_getcwd_null="guessing yes";;
                                # If we don't know, assume the worst.
          *)                    gl_cv_func_getcwd_null="guessing no";;
        esac
