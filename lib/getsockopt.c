@@ -46,7 +46,8 @@ rpl_getsockopt (int fd, int level, int optname, void *optval, socklen_t *optlen)
       int milliseconds_len = sizeof (int);
       struct timeval tv;
       size_t n;
-      r = getsockopt (sock, level, optname, &milliseconds, &milliseconds_len);
+      r = getsockopt (sock, level, optname, (char *) &milliseconds,
+                      &milliseconds_len);
       tv.tv_sec = milliseconds / 1000;
       tv.tv_usec = (milliseconds - 1000 * tv.tv_sec) * 1000;
       n = sizeof (struct timeval);

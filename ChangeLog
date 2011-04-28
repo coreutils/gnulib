@@ -1,5 +1,9 @@
 2011-04-28  Eric Blake  <eblake@redhat.com>
 
+	getsockopt: avoid compiler warning
+	* lib/getsockopt.c (rpl_getsockopt): Add a cast for mingw.
+	Reported by Matthias Bolte.
+
 	tests: drop unused link dependency
 	* modules/areadlinkat-tests (Makefile.am): Drop stale LDADD.
 	* modules/dirent-safer-tests (Makefile.am): Likewise.
