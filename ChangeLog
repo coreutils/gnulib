@@ -1,5 +1,16 @@
 2011-04-28  Eric Blake  <eblake@redhat.com>
 
+	getaddrinfo: fix gai_strerror signature
+	* m4/getaddrinfo.m4 (gl_GETADDRINFO): Detect broken signatures,
+	and work around mingw with UNICODE defined.
+	(gl_PREREQ_GETADDRINFO): Drop redundant decl check.
+	* m4/netdb_h.m4 (gl_NETDB_H_DEFAULTS): Add witness.
+	* modules/netdb (Makefile.am): Substitute it.
+	* lib/netdb.in.h (gai_strerror): Declare replacement.
+	* lib/gai_strerror.c (rpl_gai_strerror): Fix signature.
+	* doc/posix-functions/gai_strerror.texi (gai_strerror): Document
+	the fix.
+
 	getsockopt: avoid compiler warning
 	* lib/getsockopt.c (rpl_getsockopt): Add a cast for mingw.
 	Reported by Matthias Bolte.

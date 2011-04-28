@@ -167,12 +167,23 @@ extern int getaddrinfo (const char *restrict nodename,
 extern void freeaddrinfo (struct addrinfo *ai) _GL_ARG_NONNULL ((1));
 # endif
 
-# if !@HAVE_DECL_GAI_STRERROR@
+# if @REPLACE_GAI_STRERROR@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef gai_strerror
+#   define gai_strerror rpl_gai_strerror
+#  endif
+_GL_FUNCDECL_RPL (gai_strerror, const char *, (int ecode));
+_GL_CXXALIAS_RPL (gai_strerror, const char *, (int ecode));
+# else
+#  if !@HAVE_DECL_GAI_STRERROR@
 /* Convert error return from getaddrinfo() to a string.
    For more details, see the POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/gai_strerror.html>.  */
-extern const char *gai_strerror (int ecode);
+_GL_FUNCDECL_SYS (gai_strerror, const char *, (int ecode));
+#  endif
+_GL_CXXALIAS_SYS (gai_strerror, const char *, (int ecode));
 # endif
+_GL_CXXALIASWARN (gai_strerror);
 
 # if !@HAVE_DECL_GETNAMEINFO@
 /* Convert socket address to printable node and service names.
