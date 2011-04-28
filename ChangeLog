@@ -1,3 +1,10 @@
+2011-04-29  Eric Blake  <eblake@redhat.com>
+
+	quotearg: avoid uninitialized variable use
+	* lib/quotearg.c (quoting_options_from_style): Initialize
+	remaining fields, and ensure that custom styles are only used via
+	quoting_options rather than quoting_style.
+
 2011-04-29  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: remove unused VC-tag variable

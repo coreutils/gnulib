@@ -168,10 +168,10 @@ set_custom_quoting (struct quoting_options *o,
 static struct quoting_options
 quoting_options_from_style (enum quoting_style style)
 {
-  struct quoting_options o;
+  struct quoting_options o = { 0 };
+  if (style == custom_quoting_style)
+    abort ();
   o.style = style;
-  o.flags = 0;
-  memset (o.quote_these_too, 0, sizeof o.quote_these_too);
   return o;
 }
 
