@@ -1,3 +1,8 @@
+2011-04-29  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: remove unused VC-tag variable
+	* top/maint.mk (VC-tag): Remove unused variable.
+
 2011-04-29  Bruno Haible  <bruno@clisp.org>
 
 	netdb: fix gai_strerror replacements
