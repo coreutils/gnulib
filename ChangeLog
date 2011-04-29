@@ -1,3 +1,9 @@
+2011-04-29  Jim Meyering  <meyering@redhat.com>
+
+	announce-gen: indent with spaces, not TABs
+	* build-aux/announce-gen: Convert all TABs to spaces, to match
+	the style of most other files in gnulib.
+
 2011-04-29  Eric Blake  <eblake@redhat.com>
 
 	quotearg: avoid uninitialized variable use
