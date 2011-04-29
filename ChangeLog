@@ -1,5 +1,11 @@
 2011-04-29  Jim Meyering  <meyering@redhat.com>
 
+	test-getcwd.c: avoid new set-but-not-used warning
+	* tests/test-getcwd.c (test_abort_bug): Exit nonzero for any problem,
+	not just the glibc/abort one that getcwd-abort-bug.m4 detects.
+	* m4/getcwd-abort-bug.m4: Update this now-duplicated code to match,
+	and adjust the code that sets gl_cv_func_getcwd_abort_bug accordingly.
+
 	test-hash.c: avoid a new shadowing warning
 	* tests/test-hash.c (main): Don't shadow "dup".
 

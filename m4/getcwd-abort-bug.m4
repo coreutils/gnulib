@@ -1,4 +1,4 @@
-# serial 3
+# serial 4
 # Determine whether getcwd aborts when the length of the working directory
 # name is unusually large.  Any length between 4k and 16k trigger the bug
 # when using glibc-2.4.90-9 or older.
@@ -65,7 +65,7 @@ main ()
 
   cwd = getcwd (NULL, 0);
   if (cwd == NULL)
-    return 0;
+    return 2;
 
   initial_cwd_len = strlen (cwd);
   free (cwd);
@@ -92,15 +92,22 @@ main ()
   while (0 < d--)
     {
       if (chdir ("..") < 0)
-        break;
+        {
+          fail = 5;
+          break;
+        }
       rmdir (dir_name);
     }
 
-  return 0;
+  return fail;
 }
           ]])],
     [gl_cv_func_getcwd_abort_bug=no],
-    [gl_cv_func_getcwd_abort_bug=yes],
+    dnl A "regular" nonzero return does not indicate this bug.
+    dnl An abort will provoke an exit code of something like 134 (128 + 6).
+    [test $? -gt 128 \
+      && gl_cv_func_getcwd_abort_bug=yes \
+      || gl_cv_func_getcwd_abort_bug=no],
     [gl_cv_func_getcwd_abort_bug=yes])
   ])
   AS_IF([test $gl_cv_func_getcwd_abort_bug = yes], [$1], [$2])

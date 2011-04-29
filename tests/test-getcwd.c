@@ -55,7 +55,7 @@ test_abort_bug (void)
 
   cwd = getcwd (NULL, 0);
   if (cwd == NULL)
-    return 0;
+    return 2;
 
   initial_cwd_len = strlen (cwd);
   free (cwd);
@@ -82,11 +82,14 @@ test_abort_bug (void)
   while (0 < d--)
     {
       if (chdir ("..") < 0)
-        break;
+        {
+          fail = 5;
+          break;
+        }
       rmdir (dir_name);
     }
 
-  return 0;
+  return fail;
 }
 
 /* The length of this name must be 8.  */
