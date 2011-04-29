@@ -208,9 +208,9 @@ main (int argc, char **argv)
               {
                 char buf[50];
                 char const *p = uinttostr (i, buf);
-                char *dup = strdup (p);
-                ASSERT (dup);
-                insert_new (ht, dup);
+                char *p_dup = strdup (p);
+                ASSERT (p_dup);
+                insert_new (ht, p_dup);
               }
               break;
 

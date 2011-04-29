@@ -1,3 +1,8 @@
+2011-04-29  Jim Meyering  <meyering@redhat.com>
+
+	test-hash.c: avoid a new shadowing warning
+	* tests/test-hash.c (main): Don't shadow "dup".
+
 2011-04-28  Eric Blake  <eblake@redhat.com>
 
 	getaddrinfo: fix gai_strerror signature
