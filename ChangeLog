@@ -1,3 +1,9 @@
+2011-04-29  Bruno Haible  <bruno@clisp.org>
+
+	netdb: fix gai_strerror replacements
+	* lib/netdb.in.h: Add _GL_FUNCDECL_RPL definitions.
+	* modules/netdb: Substitute it.
+
 2011-04-29  Jim Meyering  <meyering@redhat.com>
 
 	test-getcwd.c: avoid new set-but-not-used warning
