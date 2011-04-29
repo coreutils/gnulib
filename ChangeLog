@@ -1,5 +1,9 @@
 2011-04-29  Jim Meyering  <meyering@redhat.com>
 
+	vc-list-files: indent with spaces, not TABs
+	* build-aux/vc-list-files: Convert leading TABs to spaces,
+	to match the style of most other files in gnulib.
+
 	announce-gen: indent with spaces, not TABs
 	* build-aux/announce-gen: Convert all TABs to spaces, to match
 	the style of most other files in gnulib.
