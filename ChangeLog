@@ -1,3 +1,8 @@
+2011-04-29  Reuben Thomas  <rrt@sc3d.org>
+
+	announce-gen: cosmetic improvement
+	* build-aux/announce-gen: Strip any leading ./ from the NEWS file name.
+
 2011-04-29  Jim Meyering  <meyering@redhat.com>
 
 	vc-list-files: indent with spaces, not TABs

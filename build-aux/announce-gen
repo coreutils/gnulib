@@ -3,7 +3,7 @@ eval '(exit $?0)' && eval 'exec perl -wS "$0" ${1+"$@"}'
     if 0;
 # Generate a release announcement message.
 
-my $VERSION = '2011-04-29 19:58'; # UTC
+my $VERSION = '2011-04-29 21:01'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -180,7 +180,10 @@ sub print_news_deltas ($$$)
 {
   my ($news_file, $prev_version, $curr_version) = @_;
 
-  print "\n$news_file\n\n";
+  my $news_name = $news_file;
+  $news_name =~ s|^\./||;
+
+  print "\n$news_name\n\n";
 
   # Print all lines from $news_file, starting with the first one
   # that mentions $curr_version up to but not including
