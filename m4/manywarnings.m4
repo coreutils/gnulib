@@ -35,6 +35,49 @@ AC_DEFUN([gl_MANYWARN_COMPLEMENT],
 # using gl_WARN_ADD if you want to make sure your gcc understands it.
 AC_DEFUN([gl_MANYWARN_ALL_GCC],
 [
+ dnl First, check if -Wno-missing-field-initializers is needed.
+ dnl -Wmissing-field-initializers is implied by -W, but that issues
+ dnl warnings with GCC version before 4.7, for the common idiom
+ dnl of initializing types on the stack to zero, using { 0, }
+ AC_REQUIRE([AC_PROG_CC])
+ if test -n "$GCC"; then
+
+   dnl First, check -W -Werror -Wno-missing-field-initializers is supported
+   dnl with the current $CC $CFLAGS $CPPFLAGS.
+   AC_MSG_CHECKING([whether -Wno-missing-field-initializers is supported])
+   AC_CACHE_VAL([gl_cv_cc_nomfi_supported], [
+     gl_save_CFLAGS="$CFLAGS"
+     CFLAGS="$CFLAGS -W -Werror -Wno-missing-field-initializers"
+     AC_COMPILE_IFELSE(
+       [AC_LANG_PROGRAM([[]], [[]])],
+       [gl_cv_cc_nomfi_supported=yes],
+       [gl_cv_cc_nomfi_supported=no])
+     CFLAGS="$gl_save_CFLAGS"])
+   AC_MSG_RESULT([$gl_cv_cc_nomfi_supported])
+
+   if test "$gl_cv_cc_nomfi_supported" = yes; then
+     dnl Now check whether -Wno-missing-field-initializers is needed
+     dnl for the { 0, } construct.
+     AC_MSG_CHECKING([whether -Wno-missing-field-initializers is needed])
+     AC_CACHE_VAL([gl_cv_cc_nomfi_needed], [
+       gl_save_CFLAGS="$CFLAGS"
+       CFLAGS="$CFLAGS -W -Werror"
+       AC_COMPILE_IFELSE(
+         [AC_LANG_PROGRAM(
+            [[void f (void)
+              {
+                typedef struct { int a; int b; } s_t;
+                s_t s1 = { 0, };
+              }
+            ]],
+            [[]])],
+         [gl_cv_cc_nomfi_needed=no],
+         [gl_cv_cc_nomfi_needed=yes])
+       CFLAGS="$gl_save_CFLAGS"])
+     AC_MSG_RESULT([$gl_cv_cc_nomfi_needed])
+   fi
+ fi
+
  gl_manywarn_set=
  for gl_manywarn_item in \
    -Wall \
@@ -104,5 +147,11 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC],
   ; do
     gl_manywarn_set="$gl_manywarn_set $gl_manywarn_item"
   done
-  $1=$gl_manywarn_set
+
+ # Disable the missing-field-initializers warning if needed
+ if test "$gl_cv_cc_nomfi_needed" = yes; then
+   gl_manywarn_set="$gl_manywarn_set -Wno-missing-field-initializers"
+ fi
+
+ $1=$gl_manywarn_set
 ])

@@ -1,3 +1,9 @@
+2011-04-30  Pádraig Brady <P@draigBrady.com>
+
+	manywarnings: add -Wno-missing-field-initializers if needed.
+	* m4/manywarnings.m4 (gl_MANYWARN_ALL_GCC): Add the above
+	option if it's needed to allow initialization with { 0, }
+
 2011-04-29  Reuben Thomas  <rrt@sc3d.org>
 
 	announce-gen: cosmetic improvement
