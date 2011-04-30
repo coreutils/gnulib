@@ -4,9 +4,9 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/vscanf.html}
 
-Gnulib module: stdio, nonblocking
+Gnulib module: vscanf, nonblocking
 
-Portability problems fixed by Gnulib module @code{stdio}, together with module @code{nonblocking}:
+Portability problems fixed by Gnulib module @code{vscanf}, together with module @code{nonblocking}:
 @itemize
 @item
 When reading from a non-blocking pipe whose buffer is empty, this function

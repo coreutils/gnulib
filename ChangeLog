@@ -1,5 +1,15 @@
 2011-04-30  Bruno Haible  <bruno@clisp.org>
 
+	New modules 'vfscanf', 'vscanf'.
+	* modules/vfscanf: New file.
+	* modules/vscanf: New file.
+	* m4/stdio_h.m4 (gl_STDIO_H): Don't set GNULIB_VFSCANF, GNULIB_VSCANF
+	here.
+	* doc/posix-functions/vfscanf.texi: Mention module 'vfscanf'.
+	* doc/posix-functions/vscanf.texi: Mention module 'vscanf'.
+
+2011-04-30  Bruno Haible  <bruno@clisp.org>
+
 	passfd: Add comments.
 	* lib/passfd.c: Add comments about platforms.
 
