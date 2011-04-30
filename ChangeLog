@@ -1,5 +1,11 @@
 2011-04-30  Bruno Haible  <bruno@clisp.org>
 
+	sys_uio: Protect definition of 'struct iovec'.
+	* lib/sys_uio.in.h (struct iovec): Avoid redefinition. In C++, define
+	it as a C struct.
+
+2011-04-30  Bruno Haible  <bruno@clisp.org>
+
 	manywarnings: fix indentation
 	* m4/manywarnings.m4: Indent by 2 spaces consistently.
 

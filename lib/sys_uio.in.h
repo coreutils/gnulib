@@ -37,12 +37,24 @@
 /* Get 'ssize_t'.  */
 # include <sys/types.h>
 
+# ifdef __cplusplus
+extern "C" {
+# endif
+
+# if !GNULIB_defined_struct_iovec
 /* All known platforms that lack <sys/uio.h> also lack any declaration
    of struct iovec in any other header.  */
 struct iovec {
   void *iov_base;
   size_t iov_len;
 };
+#  define GNULIB_defined_struct_iovec 1
+# endif
+
+# ifdef __cplusplus
+}
+# endif
+
 #endif
 
 #endif /* _GL_SYS_UIO_H */
