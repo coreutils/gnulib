@@ -2,6 +2,7 @@ Files:
 tests/test-netdb.c
 
 Depends-on:
+netdb-c++-tests
 
 configure.ac:
 

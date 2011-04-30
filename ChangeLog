@@ -1,5 +1,17 @@
 2011-04-30  Bruno Haible  <bruno@clisp.org>
 
+	netdb: Make it work in C++ mode.
+	* lib/netdb.in.h (struct addrinfo): In C++, define as a C struct.
+	(getaddrinfo, freeaddrinfo, getnameinfo): Use macros from c++defs
+	module.
+	* m4/netdb_h.m4 (gl_NETDB_MODULE_INDICATOR): Invoke
+	gl_MODULE_INDICATOR_FOR_TESTS.
+	* modules/netdb-tests (Depends-on): Add netdb-c++-tests.
+	* modules/netdb-c++-tests: New file.
+	* tests/test-netdb-c++.cc: New file.
+
+2011-04-30  Bruno Haible  <bruno@clisp.org>
+
 	New modules 'vfscanf', 'vscanf'.
 	* modules/vfscanf: New file.
 	* modules/vscanf: New file.

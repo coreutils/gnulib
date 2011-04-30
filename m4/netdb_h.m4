@@ -1,4 +1,4 @@
-# netdb_h.m4 serial 10
+# netdb_h.m4 serial 11
 dnl Copyright (C) 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -26,6 +26,8 @@ AC_DEFUN([gl_NETDB_MODULE_INDICATOR],
   dnl Use AC_REQUIRE here, so that the default settings are expanded once only.
   AC_REQUIRE([gl_NETDB_H_DEFAULTS])
   gl_MODULE_INDICATOR_SET_VARIABLE([$1])
+  dnl Define it also as a C macro, for the benefit of the unit tests.
+  gl_MODULE_INDICATOR_FOR_TESTS([$1])
 ])
 
 AC_DEFUN([gl_NETDB_H_DEFAULTS],
