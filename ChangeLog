@@ -1,5 +1,10 @@
 2011-04-30  Bruno Haible  <bruno@clisp.org>
 
+	passfd: Add comments.
+	* lib/passfd.c: Add comments about platforms.
+
+2011-04-30  Bruno Haible  <bruno@clisp.org>
+
 	sys_uio: Make <sys/uio.h> self-contained.
 	* lib/sys_uio.in.h: Include <sys/types.h> before <sys/uio.h>.
 	* doc/posix-headers/sys_uio.texi: Mention the OpenBSD problem.
