@@ -1,5 +1,10 @@
 2011-04-30  Bruno Haible  <bruno@clisp.org>
 
+	dup3: cleanup
+	* lib/dup3.c: Remove old code, leftover from 2009-12-16.
+
+2011-04-30  Bruno Haible  <bruno@clisp.org>
+
 	netdb: Make it work in C++ mode.
 	* lib/netdb.in.h (struct addrinfo): In C++, define as a C struct.
 	(getaddrinfo, freeaddrinfo, getnameinfo): Use macros from c++defs
