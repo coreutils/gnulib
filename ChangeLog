@@ -1,3 +1,10 @@
+2011-04-30  Eric Blake  <eblake@redhat.com>
+
+	fclose: don't fail on non-seekable input stream
+	* modules/fclose (Depends-on): Add freading, fflush, fseeko.
+	* lib/fclose.c (rpl_fclose): Skip fflush for non-seekable input,
+	since fflush is allowed to fail in that case.
+
 2011-04-30  Bruno Haible  <bruno@clisp.org>
 
 	dup3: cleanup
