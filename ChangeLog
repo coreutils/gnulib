@@ -1,5 +1,12 @@
 2011-04-30  Bruno Haible  <bruno@clisp.org>
 
+	sys_socket: Ensure 'struct iovec' definition.
+	* lib/sys_socket.in.h: Include <sys/uio.h> also on platforms that have
+	<sys/socket.h>.
+	* doc/posix-headers/sys_socket.texi: Mention the OpenBSD problem.
+
+2011-04-30  Bruno Haible  <bruno@clisp.org>
+
 	sys_uio: Protect definition of 'struct iovec'.
 	* lib/sys_uio.in.h (struct iovec): Avoid redefinition. In C++, define
 	it as a C struct.

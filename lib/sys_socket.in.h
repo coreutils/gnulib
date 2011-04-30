@@ -108,6 +108,12 @@ struct sockaddr_storage
 
 #endif
 
+/* Get struct iovec.  */
+/* But avoid namespace pollution on glibc systems.  */
+#if ! defined __GLIBC__
+# include <sys/uio.h>
+#endif
+
 #if @HAVE_SYS_SOCKET_H@
 
 /* A platform that has <sys/socket.h>.  */
@@ -175,9 +181,6 @@ typedef int socklen_t;
 #  endif
 
 # endif
-
-/* For struct iovec */
-# include <sys/uio.h>
 
 /* Rudimentary 'struct msghdr'; this works as long as you don't try to
    access msg_control or msg_controllen.  */
