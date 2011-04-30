@@ -98,7 +98,7 @@ struct addrinfo
 #  define AI_ALL         0 /* 0x0010: Return IPv4 mapped and IPv6 addresses. */
 # endif
 # ifndef AI_ADDRCONFIG
-#  define AI_ADDRCONFIG  0 /* 0x0020: Use configuration of this host to choose
+#  define AI_ADDRCONFIG  0 /* 0x0020: Use configuration of this host to choose \
                                       returned address type.  */
 # endif
 
