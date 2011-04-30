@@ -1682,7 +1682,7 @@
 	Reported by Tom G. Christensen <tgc@jupiterrise.com>.
 
 2011-03-20  Paul Eggert  <eggert@cs.ucla.edu>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	socklen: do not depend on sys_socket
 	While trying to modify Emacs to use gnulib's socklen module,
@@ -1719,7 +1719,7 @@
 	* m4/socklen.m4: Update comment about platforms.
 
 2011-03-19  Paul Eggert  <eggert@cs.ucla.edu>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	inet_ntop, inet_pton: Simplify.
 	* modules/inet_ntop (Depends-on): Remove socklen, since sys_socket is
@@ -1728,7 +1728,7 @@
 	* lib/arpa_inet.in.h: Adjust comment.
 
 2011-03-19  Paul Eggert  <eggert@cs.ucla.edu>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	netdb: Simplify.
 	* modules/netdb (Depends-on): Remove socklen, since sys_socket is
@@ -1817,7 +1817,7 @@
 	(check): Depend on the new variable, not the hard-coded list.
 
 2011-03-13  Bastien Roucariès  <roucaries.bastien@gmail.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	passfd module, part 3.
 	* lib/passfd.h (recvfd): Add a flags argument.
@@ -1993,8 +1993,8 @@
 	Suggested by Simon Josefsson <simon@josefsson.org>.
 
 2011-02-28  Corinna Vinschen  <vinschen@redhat.com>  (tiny change)
-            Charles Wilson  <cygwin@cwilson.fastmail.fm>  (tiny change)
-            Bruno Haible  <bruno@clisp.org>  (tiny change)
+	    Charles Wilson  <cygwin@cwilson.fastmail.fm>  (tiny change)
+	    Bruno Haible  <bruno@clisp.org>  (tiny change)
 
 	On Cygwin, use /proc file system instead of win32 API.
 	* lib/relocatable.c: On Cygwin, use file names from /proc, rather than
@@ -3841,7 +3841,7 @@
 	* lib/strerror_r.c (strerror_r): Fix return type.
 
 2011-01-21  Pádraig Brady  <P@draigBrady.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	uN_strstr: New unit tests.
 	* modules/unistr/u8-strstr-tests: New file.
@@ -3853,7 +3853,7 @@
 	* tests/unistr/test-u32-strstr.c: New file.
 
 2011-01-21  Pádraig Brady  <P@draigBrady.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Make uN_strstr functions O(n) worst-case.
 	* lib/unistr/u-strstr.h (FUNC): In the 8-bit case, use strstr. In the
@@ -3877,7 +3877,7 @@
 	(configure.ac): Update required libunistring version.
 
 2011-01-21  Pádraig Brady  <P@draigBrady.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Prepare for faster uN_strstr functions.
 	* lib/str-kmp.h: Support definable UNITs.
@@ -5402,7 +5402,7 @@
 	http://sourceware.org/bugzilla/show_bug.cgi?id=12348
 
 2010-12-28  Bruno Haible  <bruno@clisp.org>
-            Paul Eggert <eggert@cs.ucla.edu>
+	    Paul Eggert <eggert@cs.ucla.edu>
 
 	linkat: Make implementation robust against system behaviour variations.
 	* m4/link-follow.m4 (gl_FUNC_LINK_FOLLOWS_SYMLINK): Define
@@ -6435,7 +6435,7 @@
 	relate to each other.
 
 2010-12-15  Pádraig Brady <P@draigBrady.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Improve cross-compilation guesses for uClibc.
 	* m4/memmem.m4 (gl_FUNC_MEMMEM_SIMPLE): When cross-compiling, assume
@@ -6645,7 +6645,7 @@
 	* m4/strerror_r.m4 (gl_FUNC_STRERROR_R): Fix typo.
 
 2010-11-28  Bruno Haible  <bruno@clisp.org>
-            Paul Eggert  <eggert@cs.ucla.edu>
+	    Paul Eggert  <eggert@cs.ucla.edu>
 
 	Tests for module 'getdomainname'.
 	* modules/getdomainname-tests: New file.
@@ -6653,7 +6653,7 @@
 	tests/test-gethostname.c.
 
 2010-11-28  Bruno Haible  <bruno@clisp.org>
-            Paul Eggert  <eggert@cs.ucla.edu>
+	    Paul Eggert  <eggert@cs.ucla.edu>
 
 	getdomainname: Use the system function when possible.
 	* lib/unistd.in.h: Include <netdb.h>, for getdomainname's declaration.
@@ -8075,7 +8075,7 @@
 	styles, and some unnecessary blank lines.
 
 2010-10-03  Bruno Haible  <bruno@clisp.org>
-            Joachim Schmitz  <schmitz@hp.com>  (tiny change)
+	    Joachim Schmitz  <schmitz@hp.com>  (tiny change)
 
 	acl: Add support for ACLs on NonStop Kernel.
 	* m4/acl.m4 (gl_FUNC_ACL): For Solaris, test for facl(), not for acl().
@@ -8347,7 +8347,7 @@
 	Reported by Paul Eggert.
 
 2010-09-22  Pádraig Brady  <P@draigbrady.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Fix endless loop in mbmemcasecoll.
 	* lib/mbmemcasecoll.c (apply_towlower): When mbrtowc returns 0, copy 1
@@ -9123,7 +9123,7 @@
 	Reported by Johan Hattne <johan.hattne@utsouthwestern.edu>.
 
 2010-08-29  Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Make the module 'realloc-gnu' work again on AIX and OSF/1.
 	* m4/realloc.m4 (gl_FUNC_REALLOC_GNU): Define HAVE_REALLOC_GNU instead
@@ -9134,7 +9134,7 @@
 	* modules/realloc-gnu (configure.ac): Use gl_MODULE_INDICATOR.
 
 2010-08-29  Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Make the module 'calloc-gnu' work again on AIX and OSF/1.
 	* m4/calloc.m4 (gl_FUNC_CALLOC_GNU): Define HAVE_CALLOC_GNU instead of
@@ -9145,7 +9145,7 @@
 	* modules/calloc-gnu (configure.ac): Invoke gl_MODULE_INDICATOR.
 
 2010-08-29  Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Make the module 'malloc-gnu' work again on AIX and OSF/1.
 	* m4/malloc.m4 (gl_FUNC_MALLOC_GNU): Define HAVE_MALLOC_GNU instead of
@@ -9221,8 +9221,8 @@
 	* lib/read-file.c (fread_file): Shrink the buffer at the end.
 
 2010-08-28  Giuseppe Scrivano  <gscrivano@gnu.org>
-            Eric Blake  <eblake@redhat.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Eric Blake  <eblake@redhat.com>
+	    Bruno Haible  <bruno@clisp.org>
 
 	read-file: Avoid memory reallocations with regular files.
 	* lib/read-file.c: Include <sys/stat.h>, <stdio.h>, <stdint.h>.
@@ -9560,7 +9560,7 @@
 	(Match-end-of-line Operator): Mention 'not_eol'.
 
 2010-08-14  Brian Gough  <bjg@gnu.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	git-merge-changelog: add doc relating to use with bzr and hg.
 	* lib/git-merge-changelog.c: Add comments regarding bzr, hg, diff3.
@@ -10251,7 +10251,7 @@
 	* modules/strtod-tests (Makefile.am): Likewise.
 
 2010-07-11  Pádraig Brady  <P@draigBrady.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	unistr/u8-strchr: Optimize ASCII argument case.
 	* lib/unistr/u8-strchr.c (u8_strchr): For ASCII arguments, use strchr.
@@ -10609,7 +10609,7 @@
 	* tests/test-inttostr.c: New file.  Test these functions.
 
 2010-06-09  Ben Pfaff  <blp@cs.stanford.edu>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Add "Extending Gnulib" chapter to manual.
 	* doc/gnulib.texi (Writing Modules): Add cross-reference to new
@@ -10649,7 +10649,7 @@
 	Suggested by Eric Blake.
 
 2010-06-04  Martin Lambers  <marlam@marlam.de>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	havelib: Allow library names with '+' characters.
 	* m4/lib-link.m4 (AC_LIB_LINKFLAGS, AC_LIB_HAVE_LINKFLAGS,
@@ -10905,7 +10905,7 @@
 	* modules/libunistring-optional (Files): Likewise.
 
 2010-05-18  Paolo Bonzini  <bonzini@gnu.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	New module 'libunistring-optional'.
 	* modules/libunistring-optional: New file.
@@ -12457,7 +12457,7 @@
 	(func_import): Set the excl_*_tests variables to empty.
 
 2010-04-25  Simon Josefsson  <simon@josefsson.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Work around a MacOS X 10.4 bug with openpty.
 	* doc/glibc-functions/openpty.texi: Mention the MacOS X 10.4 bug.
@@ -12526,7 +12526,7 @@
 	EPIPE.
 
 2010-04-20  Simon Josefsson  <simon@josefsson.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	visibility: Don't use -fvisibility if it leads to a warning.
 	* m4/visibility.m4 (gl_VISIBILITY): Check whether -Werror is usable. If
@@ -12562,7 +12562,7 @@
 	Reported by Ian Beckwith <ianb@erislabs.net>.
 
 2010-04-18  Andreas Gruenbacher  <agruen@suse.de>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	diffseq: Accommodate use-case with abstract arrays.
 	* lib/diffseq.h (struct context): Remove xvec, yvec fields if ELEMENT
@@ -12713,7 +12713,7 @@
 	declared.
 
 2010-04-11  Paolo Bonzini  <bonzini@gnu.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	libunistring: Improve configure output.
 	* m4/libunistring.m4 (gl_LIBUNISTRING): Check for libiconv first.
@@ -13136,14 +13136,14 @@
 	Reported by Hauke Fath <hauke@espresso.rhein-neckar.de>.
 
 2010-04-04  Hauke Fath  <hauke@espresso.rhein-neckar.de>  (tiny change)
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	wchar: Port to NetBSD 1.5.
 	* lib/wchar.in.h (WEOF): Provide fallback also when wint_t exists.
 	* lib/wctype.in.h (WEOF): Likewise.
 
 2010-04-04  Hauke Fath  <hauke@espresso.rhein-neckar.de>  (tiny change)
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Port extended stdio to NetBSD 1.5.
 	* lib/stdio-impl.h [NetBSD]: Include <sys/param.h>.
@@ -13924,7 +13924,7 @@
 	$(LIBSOCKET).
 
 2010-03-28  Bruno Haible  <bruno@clisp.org>
-            Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+	    Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	lib-ignore: Determine different options for different compilers.
 	* m4/lib-ignore.m4 (gl_IGNORE_UNUSED_LIBRARIES): Set a variable which
