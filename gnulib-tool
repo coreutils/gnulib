@@ -3360,6 +3360,65 @@ func_emit_initmacro_done ()
   echo "])"
 }
 
+# func_emit_autoconf_snippets modules verifier toplevel disable_libtool disable_gettext
+# collects and emit the autoconf snippets of a set of modules.
+# - modules is the list of modules.
+# - verifier is one of func_verify_module, func_verify_nontests_module,
+#   func_verify_tests_module. It selects the subset of $modules to consider.
+# - toplevel is true or false. 'false' means a subordinate use of gnulib-tool.
+# - disable_libtool is true or false. It tells whether to disable libtool
+#   handling even if it has been specified through the command line options.
+# - disable_gettext is true or false. It tells whether to disable AM_GNU_GETTEXT
+#   invocations.
+# Input:
+# - local_gnulib_dir  from --local-dir
+# - modcache          true or false, from --cache-modules/--no-cache-modules
+# - sed_replace_build_aux  sed expression that replaces reference to build-aux
+func_emit_autoconf_snippets ()
+{
+  verifier="$2"
+  toplevel="$3"
+  disable_libtool="$4"
+  disable_gettext="$5"
+  for module in $1; do
+    eval $verifier # one of func_verify_module, func_verify_nontests_module, func_verify_tests_module.
+    if test -n "$module"; then
+      if { case $module in
+             gnumakefile | maintainer-makefile)
+               # These modules are meant to be used only in the top-level directory.
+               $toplevel ;;
+             *)
+               true ;;
+           esac
+         }; then
+        func_get_autoconf_snippet "$module" \
+          | sed -e '/^$/d;' -e 's/^/  /' \
+                -e "$sed_replace_build_aux" \
+          | { if $disable_libtool; then
+                sed -e 's/\$gl_cond_libtool/false/g' \
+                    -e 's/gl_libdeps/gltests_libdeps/g' \
+                    -e 's/gl_ltlibdeps/gltests_ltlibdeps/g'
+              else
+                cat
+              fi
+            } \
+          | { if $disable_gettext; then
+                sed -e 's/AM_GNU_GETTEXT(\[external\])/dnl you must add AM_GNU_GETTEXT([external]) or similar to configure.ac./'
+              else
+                cat
+              fi
+            }
+        if test "$module" = 'alloca' && test "$libtool" = true && ! $disable_libtool; then
+          echo 'changequote(,)dnl'
+          echo 'LTALLOCA=`echo "$ALLOCA" | sed -e '"'"'s/\.[^.]* /.lo /g;s/\.[^.]*$/.lo/'"'"'`'
+          echo 'changequote([, ])dnl'
+          echo 'AC_SUBST([LTALLOCA])'
+        fi
+      fi
+    fi
+  done
+}
+
 # func_import modules
 # Uses also the variables
 # - mode            import or add-import or remove-import or update
@@ -4541,22 +4600,7 @@ s,//*$,/,'
     echo "  gl_m4_base='$m4base'"
     func_emit_initmacro_start $macro_prefix
     echo "  gl_source_base='$sourcebase'"
-    for module in $main_modules; do
-      func_verify_module
-      if test -n "$module"; then
-        echo "  # Code from module $module:"
-        func_get_autoconf_snippet "$module" \
-          | sed -e '/^$/d;' -e 's/^/  /' \
-                -e 's/AM_GNU_GETTEXT(\[external\])/dnl you must add AM_GNU_GETTEXT([external]) or similar to configure.ac./' \
-                -e "$sed_replace_build_aux"
-        if test "$module" = 'alloca' && test "$libtool" = true; then
-          echo 'changequote(,)dnl'
-          echo 'LTALLOCA=`echo "$ALLOCA" | sed -e '"'"'s/\.[^.]* /.lo /g;s/\.[^.]*$/.lo/'"'"'`'
-          echo 'changequote([, ])dnl'
-          echo 'AC_SUBST([LTALLOCA])'
-        fi
-      fi
-    done
+    func_emit_autoconf_snippets "$main_modules" func_verify_module true false true
     echo "  # End of code from modules"
     func_emit_initmacro_end $macro_prefix
     echo "  gltests_libdeps="
@@ -4572,18 +4616,7 @@ s,//*$,/,'
     echo "  AC_SUBST([${macro_prefix}tests_WITNESS])"
     echo "  gl_module_indicator_condition=\$${macro_prefix}tests_WITNESS"
     echo "  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [\$gl_module_indicator_condition])"
-    for module in $testsrelated_modules; do
-      func_verify_module
-      if test -n "$module"; then
-        func_get_autoconf_snippet "$module" \
-          | sed -e '/^$/d;' -e 's/^/  /' \
-                -e 's/AM_GNU_GETTEXT(\[external\])/dnl you must add AM_GNU_GETTEXT([external]) or similar to configure.ac./' \
-                -e "$sed_replace_build_aux" \
-                -e 's/\$gl_cond_libtool/false/g' \
-                -e 's/gl_libdeps/gltests_libdeps/g' \
-                -e 's/gl_ltlibdeps/gltests_ltlibdeps/g'
-      fi
-    done
+    func_emit_autoconf_snippets "$testsrelated_modules" func_verify_module true true true
     echo "  m4_popdef([gl_MODULE_INDICATOR_CONDITION])"
     func_emit_initmacro_end ${macro_prefix}tests
     # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
@@ -5136,34 +5169,9 @@ func_create_testdir ()
      # autoconf snippets. It's cleanest to put those of the library before
      # those of the tests.
      echo "gl_source_base='../$sourcebase'"
-     for module in $modules; do
-       func_verify_nontests_module
-       if test -n "$module"; then
-         case $module in
-           gnumakefile | maintainer-makefile)
-             # These modules are meant to be used only in the top-level directory.
-             ;;
-           *)
-             func_get_autoconf_snippet "$module" \
-               | sed -e "$sed_replace_build_aux"
-             if test "$module" = 'alloca' && test "$libtool" = true; then
-               echo 'changequote(,)dnl'
-               echo 'LTALLOCA=`echo "$ALLOCA" | sed -e '"'"'s/\.[^.]* /.lo /g;s/\.[^.]*$/.lo/'"'"'`'
-               echo 'changequote([, ])dnl'
-               echo 'AC_SUBST([LTALLOCA])'
-             fi
-             ;;
-         esac
-       fi
-     done
+     func_emit_autoconf_snippets "$modules" func_verify_nontests_module false false false
      echo "gl_source_base='.'"
-     for module in $modules; do
-       func_verify_tests_module
-       if test -n "$module"; then
-         func_get_autoconf_snippet "$module" \
-           | sed -e "$sed_replace_build_aux"
-       fi
-     done
+     func_emit_autoconf_snippets "$modules" func_verify_tests_module false false false
      func_emit_initmacro_end $macro_prefix
      # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
      # created using libtool, because libtool already handles the dependencies.
@@ -5269,19 +5277,7 @@ func_create_testdir ()
    echo "gl_m4_base='$m4base'"
    func_emit_initmacro_start $macro_prefix
    echo "gl_source_base='$sourcebase'"
-   for module in $modules; do
-     func_verify_nontests_module
-     if test -n "$module"; then
-       func_get_autoconf_snippet "$module" \
-         | sed -e "$sed_replace_build_aux"
-       if test "$module" = 'alloca' && test "$libtool" = true; then
-         echo 'changequote(,)dnl'
-         echo 'LTALLOCA=`echo "$ALLOCA" | sed -e '"'"'s/\.[^.]* /.lo /g;s/\.[^.]*$/.lo/'"'"'`'
-         echo 'changequote([, ])dnl'
-         echo 'AC_SUBST([LTALLOCA])'
-       fi
-     fi
-   done
+   func_emit_autoconf_snippets "$modules" func_verify_nontests_module true false false
    func_emit_initmacro_end $macro_prefix
    # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
    # created using libtool, because libtool already handles the dependencies.
