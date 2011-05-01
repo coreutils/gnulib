@@ -1,5 +1,11 @@
 2011-05-01  Bruno Haible  <bruno@clisp.org>
 
+	Update DEPENDENCIES.
+	* DEPENDENCIES (gettext): Recommend the newest release.
+	Reported by Simon Josefsson.
+
+2011-05-01  Bruno Haible  <bruno@clisp.org>
+
 	gnulib-tool: Reduce code duplication.
 	* gnulib-tool (func_emit_autoconf_snippets): New function.
 	(func_import, func_create_testdir): Use it.
