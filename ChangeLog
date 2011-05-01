@@ -61,11 +61,6 @@
 	manywarnings: fix indentation
 	* m4/manywarnings.m4: Indent by 2 spaces consistently.
 
-2011-04-30  Bruno Haible  <bruno@clisp.org>
-
-	netdb: Fix invalid C syntax.
-	* lib/netdb.in.h (AI_ADDRCONFIG): Fix comment syntax.
-
 2011-04-30  Pádraig Brady <P@draigBrady.com>
 
 	manywarnings: add -Wno-missing-field-initializers if needed.
