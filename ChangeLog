@@ -1,5 +1,11 @@
 2011-05-02  Eric Blake  <eblake@redhat.com>
 
+	fclose: reduced dependencies
+	* modules/fclose (Depends-on): Switch from fflush/fseeko to
+	simpler lseek.
+	* lib/fclose.c (rpl_fclose): Likewise.
+	Reported by Simon Josefsson.
+
 	exit: drop remaining clients
 	* modules/argmatch (Depends-on): Replace exit with stdlib.
 	* modules/copy-file (Depends-on): Likewise.

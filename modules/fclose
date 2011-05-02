@@ -8,9 +8,8 @@ m4/fclose.m4
 Depends-on:
 stdio
 close
-fflush
 freading
-fseeko
+lseek
 
 configure.ac:
 gl_FUNC_FCLOSE

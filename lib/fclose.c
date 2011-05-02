@@ -33,8 +33,10 @@ rpl_fclose (FILE *fp)
   int saved_errno = 0;
 
   /* We only need to flush the file if it is not reading or if it is
-     seekable.  */
-  if ((!freading (fp) || fseeko (fp, 0, SEEK_CUR) == 0) && fflush (fp))
+     seekable.  This only guarantees the file position of input files
+     if the fflush module is also in use.  */
+  if ((!freading (fp) || lseek (fileno (fp), 0, SEEK_CUR) != -1)
+      && fflush (fp))
     saved_errno = errno;
 
   if (close (fileno (fp)) < 0 && saved_errno == 0)
