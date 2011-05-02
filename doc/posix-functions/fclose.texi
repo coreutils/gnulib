@@ -4,9 +4,17 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/fclose.html}
 
-Gnulib module: fclose
+Gnulib module: fclose, fflush
 
-Portability problems fixed by Gnulib:
+Portability problems fixed by Gnulib module @code{fflush}:
+@itemize
+@item
+On some platforms, this function fails to set the file position of a
+seekable input stream to the byte after the last one actually read:
+glibc 2.13, FreeBSD.
+@end itemize
+
+Portability problems fixed by Gnulib module @code{fclose}:
 @itemize
 @item
 On Windows platforms (excluding Cygwin), @code{socket} and @code{accept}
@@ -16,10 +24,6 @@ followed by @code{fdopen} do not return streams that can be closed by
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-On some platforms, this function fails to set the file position of a
-seekable input stream to the byte after the last one actually read:
-glibc 2.13, FreeBSD.
 @item
 On Windows platforms (excluding Cygwin), this function does not set @code{errno}
 upon failure.

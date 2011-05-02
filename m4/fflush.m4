@@ -1,4 +1,4 @@
-# fflush.m4 serial 8
+# fflush.m4 serial 9
 
 # Copyright (C) 2007-2011 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -61,6 +61,7 @@ AC_DEFUN([gl_FUNC_FFLUSH],
     ])
   if test $gl_cv_func_fflush_stdin = no; then
     gl_REPLACE_FFLUSH
+    gl_REPLACE_FCLOSE
   fi
 ])
 

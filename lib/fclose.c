@@ -24,13 +24,19 @@
 
 #include "freading.h"
 
-/* Override fclose() to call the overridden close().  */
+/* Override fclose() to call the overridden fflush() or close().  */
 
 int
 rpl_fclose (FILE *fp)
 #undef fclose
 {
   int saved_errno = 0;
+  int fd;
+
+  /* Don't change behavior on memstreams.  */
+  fd = fileno (fp);
+  if (fd < 0)
+    return fclose (fp);
 
   /* We only need to flush the file if it is not reading or if it is
      seekable.  This only guarantees the file position of input files
@@ -39,7 +45,7 @@ rpl_fclose (FILE *fp)
       && fflush (fp))
     saved_errno = errno;
 
-  if (close (fileno (fp)) < 0 && saved_errno == 0)
+  if (close (fd) < 0 && saved_errno == 0)
     saved_errno = errno;
 
   fclose (fp); /* will fail with errno = EBADF */

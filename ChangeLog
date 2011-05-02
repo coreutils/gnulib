@@ -1,5 +1,15 @@
 2011-05-02  Eric Blake  <eblake@redhat.com>
 
+	fflush: also replace fclose when fixing fflush
+	* modules/fflush (Depends-on): Add fclose.
+	* m4/fflush.m4 (gl_FUNC_FFLUSH): Also replace fclose.
+	* lib/fclose.c (rpl_fclose): Don't cause spurious failures on
+	memstreams with no backing fd.
+	* doc/posix-functions/fclose.texi (fclose): Document the use of
+	fflush module to fix the bug.
+	* tests/test-fclose.c (main): Relax test when fclose is used in
+	isolation.
+
 	fclose: add some tests
 	* modules/fclose-tests: New test module.
 	* tests/test-fclose.c: New file.

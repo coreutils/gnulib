@@ -7,6 +7,7 @@ lib/stdio-impl.h
 m4/fflush.m4
 
 Depends-on:
+fclose
 fpurge
 ftello
 freading
@@ -20,6 +21,7 @@ AC_REQUIRE([AC_FUNC_FSEEKO])
 
 configure.ac:
 gl_FUNC_FFLUSH
+gl_MODULE_INDICATOR([fflush])
 gl_STDIO_MODULE_INDICATOR([fflush])
 
 Makefile.am:

@@ -62,7 +62,9 @@ main (int argc, char **argv)
   ASSERT (errno == EBADF);
   ASSERT (lseek (fd, 0, SEEK_CUR) == 2);
 
-  /* Likewise for an input stream.  */
+#if GNULIB_FFLUSH
+  /* Likewise for an input stream, but only when we know fflush works
+     on input streams.  */
   fd2 = dup (fd);
   ASSERT (0 <= fd2);
   f = fdopen (fd2, "r");
@@ -73,6 +75,7 @@ main (int argc, char **argv)
   ASSERT (lseek (fd2, 0, SEEK_CUR) == -1);
   ASSERT (errno == EBADF);
   ASSERT (lseek (fd, 0, SEEK_CUR) == 3);
+#endif
 
   /* Test that fclose() sets errno if someone else closes the stream
      fd behind the back of stdio.  */
