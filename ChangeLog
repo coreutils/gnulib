@@ -1,5 +1,10 @@
 2011-05-02  Eric Blake  <eblake@redhat.com>
 
+	fclose: add some tests
+	* modules/fclose-tests: New test module.
+	* tests/test-fclose.c: New file.
+	* doc/posix-functions/fclose.texi (fclose): Document the bug.
+
 	fclose: reduced dependencies
 	* modules/fclose (Depends-on): Switch from fflush/fseeko to
 	simpler lseek.
