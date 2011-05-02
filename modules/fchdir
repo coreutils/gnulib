@@ -15,7 +15,6 @@ fcntl
 fcntl-h
 filenamecat-lgpl
 getcwd-lgpl
-include_next
 malloc-posix
 open
 realloc-posix

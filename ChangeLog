@@ -1,5 +1,10 @@
 2011-05-02  Bruno Haible  <bruno@clisp.org>
 
+	fchdir: Remove unused dependencies.
+	* modules/fchdir (Depends-on): Remove include_next.
+
+2011-05-02  Bruno Haible  <bruno@clisp.org>
+
 	gnulib-tool: Refactor.
 	* gnulib-tool (func_emit_autoconf_snippet): New function, extracted
 	from func_emit_autoconf_snippets.
