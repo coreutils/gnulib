@@ -8,6 +8,7 @@ m4/long-options.m4
 
 Depends-on:
 getopt-gnu
+stdlib
 version-etc
 
 configure.ac:

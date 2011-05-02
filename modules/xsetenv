@@ -10,8 +10,8 @@ Depends-on:
 setenv
 unsetenv
 error
-exit
 gettext-h
+stdlib
 
 configure.ac:
 

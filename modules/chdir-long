@@ -15,6 +15,7 @@ memchr
 mempcpy
 memrchr
 stdbool
+stdlib
 
 configure.ac:
 gl_FUNC_CHDIR_LONG

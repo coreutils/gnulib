@@ -12,7 +12,6 @@ cloexec
 dup2
 environ
 error
-exit
 fatal-signal
 gettext-h
 open
@@ -30,6 +29,7 @@ posix_spawnattr_setsigmask
 posix_spawnattr_setflags
 posix_spawnattr_destroy
 stdbool
+stdlib
 strpbrk
 unistd
 unistd-safer

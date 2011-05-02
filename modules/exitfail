@@ -6,7 +6,7 @@ lib/exitfail.h
 lib/exitfail.c
 
 Depends-on:
-exit
+stdlib
 
 configure.ac:
 
