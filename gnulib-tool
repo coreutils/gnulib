@@ -3360,20 +3360,74 @@ func_emit_initmacro_done ()
   echo "])"
 }
 
-# func_emit_autoconf_snippets modules verifier toplevel disable_libtool disable_gettext
-# collects and emit the autoconf snippets of a set of modules.
-# - modules is the list of modules.
-# - verifier is one of func_verify_module, func_verify_nontests_module,
-#   func_verify_tests_module. It selects the subset of $modules to consider.
-# - toplevel is true or false. 'false' means a subordinate use of gnulib-tool.
-# - disable_libtool is true or false. It tells whether to disable libtool
-#   handling even if it has been specified through the command line options.
-# - disable_gettext is true or false. It tells whether to disable AM_GNU_GETTEXT
-#   invocations.
+# func_emit_autoconf_snippet indentation
+# emits the autoconf snippet of a module.
 # Input:
 # - local_gnulib_dir  from --local-dir
 # - modcache          true or false, from --cache-modules/--no-cache-modules
 # - sed_replace_build_aux  sed expression that replaces reference to build-aux
+# - module            the module name
+# - toplevel          true or false. 'false' means a subordinate use of
+#                     gnulib-tool.
+# - disable_libtool   true or false. It tells whether to disable libtool
+#                     handling even if it has been specified through the
+#                     command line options.
+# - disable_gettext   true or false. It tells whether to disable AM_GNU_GETTEXT
+#                     invocations.
+# - indentation       spaces to prepend on each line
+func_emit_autoconf_snippet ()
+{
+  if { case $module in
+         gnumakefile | maintainer-makefile)
+           # These modules are meant to be used only in the top-level directory.
+           $toplevel ;;
+         *)
+           true ;;
+       esac
+     }; then
+    func_get_autoconf_snippet "$module" \
+      | sed -e '/^$/d;' -e "s/^/$indentation/" \
+            -e "$sed_replace_build_aux" \
+      | { if $disable_libtool; then
+            sed -e 's/\$gl_cond_libtool/false/g' \
+                -e 's/gl_libdeps/gltests_libdeps/g' \
+                -e 's/gl_ltlibdeps/gltests_ltlibdeps/g'
+          else
+            cat
+          fi
+        } \
+      | { if $disable_gettext; then
+            sed -e 's/AM_GNU_GETTEXT(\[external\])/dnl you must add AM_GNU_GETTEXT([external]) or similar to configure.ac./'
+          else
+            cat
+          fi
+        }
+    if test "$module" = 'alloca' && test "$libtool" = true && ! $disable_libtool; then
+      echo 'changequote(,)dnl'
+      echo 'LTALLOCA=`echo "$ALLOCA" | sed -e '"'"'s/\.[^.]* /.lo /g;s/\.[^.]*$/.lo/'"'"'`'
+      echo 'changequote([, ])dnl'
+      echo 'AC_SUBST([LTALLOCA])'
+    fi
+  fi
+}
+
+# func_emit_autoconf_snippets modules verifier toplevel disable_libtool disable_gettext
+# collects and emit the autoconf snippets of a set of modules.
+# Input:
+# - local_gnulib_dir  from --local-dir
+# - modcache          true or false, from --cache-modules/--no-cache-modules
+# - sed_replace_build_aux  sed expression that replaces reference to build-aux
+# - modules           the list of modules.
+# - verifier          one of func_verify_module, func_verify_nontests_module,
+#                     func_verify_tests_module. It selects the subset of
+#                     $modules to consider.
+# - toplevel          true or false. 'false' means a subordinate use of
+#                     gnulib-tool.
+# - disable_libtool   true or false. It tells whether to disable libtool
+#                     handling even if it has been specified through the
+#                     command line options.
+# - disable_gettext   true or false. It tells whether to disable AM_GNU_GETTEXT
+#                     invocations.
 func_emit_autoconf_snippets ()
 {
   verifier="$2"
@@ -3383,38 +3437,7 @@ func_emit_autoconf_snippets ()
   for module in $1; do
     eval $verifier # one of func_verify_module, func_verify_nontests_module, func_verify_tests_module.
     if test -n "$module"; then
-      if { case $module in
-             gnumakefile | maintainer-makefile)
-               # These modules are meant to be used only in the top-level directory.
-               $toplevel ;;
-             *)
-               true ;;
-           esac
-         }; then
-        func_get_autoconf_snippet "$module" \
-          | sed -e '/^$/d;' -e 's/^/  /' \
-                -e "$sed_replace_build_aux" \
-          | { if $disable_libtool; then
-                sed -e 's/\$gl_cond_libtool/false/g' \
-                    -e 's/gl_libdeps/gltests_libdeps/g' \
-                    -e 's/gl_ltlibdeps/gltests_ltlibdeps/g'
-              else
-                cat
-              fi
-            } \
-          | { if $disable_gettext; then
-                sed -e 's/AM_GNU_GETTEXT(\[external\])/dnl you must add AM_GNU_GETTEXT([external]) or similar to configure.ac./'
-              else
-                cat
-              fi
-            }
-        if test "$module" = 'alloca' && test "$libtool" = true && ! $disable_libtool; then
-          echo 'changequote(,)dnl'
-          echo 'LTALLOCA=`echo "$ALLOCA" | sed -e '"'"'s/\.[^.]* /.lo /g;s/\.[^.]*$/.lo/'"'"'`'
-          echo 'changequote([, ])dnl'
-          echo 'AC_SUBST([LTALLOCA])'
-        fi
-      fi
+      func_emit_autoconf_snippet "  "
     fi
   done
 }
