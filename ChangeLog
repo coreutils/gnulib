@@ -1,3 +1,8 @@
+2011-05-02  Eric Blake  <eblake@redhat.com>
+
+	freading: relax license from LGPLv3+ to LGPLv2+
+	* modules/freading (License): Relax LGPL version.
+
 2011-05-02  Bruno Haible  <bruno@clisp.org>
 
 	fchdir: Remove unused dependencies.
