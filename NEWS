@@ -12,6 +12,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2011-05-02  exit            The module is removed.  It was deprecated
+                            on 2010-03-05.  Use 'stdlib' directly instead.
+
 2011-04-27  mgetgroups      The 'xgetgroups' function has been split into
                             a new 'xgetgroups' module.
 
