@@ -1,3 +1,8 @@
+2011-05-03  Eric Blake  <eblake@redhat.com>
+
+	test-getaddrinfo: report error information
+	* tests/test-getaddrinfo.c (simple): Use err outside of dbprintf.
+
 2011-05-03  Jim Meyering  <meyering@redhat.com>
 
 	bootstrap: avoid build failure when $GZIP is set
