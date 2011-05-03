@@ -1,3 +1,29 @@
+2011-05-03  Bruno Haible  <bruno@clisp.org>
+
+	Support for conditional dependencies.
+	* doc/gnulib.texi (Module description): Document the syntax of
+	conditional dependencies.
+	* gnulib-tool: New option --conditional-dependencies.
+	(func_usage): Document it.
+	(cond_dependencies): New variable.
+	(func_get_automake_snippet_conditional,
+	func_get_automake_snippet_unconditional): New functions, extracted from
+	func_get_automake_snippet.
+	(func_get_automake_snippet): Use them.
+	(sed_first_32_chars): New variable.
+	(func_module_shellfunc_name): New function.
+	(func_module_shellvar_name): New function.
+	(func_module_conditional_name): New function.
+	(func_uncond_add_module, func_conddep_add_module, func_cond_module_p,
+	func_cond_module_condition): New functions.
+	(func_modules_transitive_closure): Add support for conditional
+	dependencies.
+	(func_emit_lib_Makefile_am): For a conditional module, enclose the
+	conditional automake snippet in an automake conditional.
+	(func_emit_autoconf_snippets): Emit shell functions that contain the
+	code for conditional modules.
+	(func_import, func_create_testdir): Update specification.
+
 2011-05-03  Eric Blake  <eblake@redhat.com>
 
 	test-getaddrinfo: report error information
