@@ -1,3 +1,10 @@
+2011-05-03  Jim Meyering  <meyering@redhat.com>
+
+	bootstrap: avoid build failure when $GZIP is set
+	* build-aux/bootstrap (check_versions): Do not treat $GZIP as a
+	program name.  If defined at all, it is supposed to list gzip options.
+	Reported by Alan Curry in http://debbugs.gnu.org/8609
+
 2011-05-03  Reuben Thomas  <rrt@sc3d.org>
 
 	readme-release: new module with release instructions
