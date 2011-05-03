@@ -9,11 +9,11 @@ m4/fdopendir.m4
 
 Depends-on:
 dirent
-errno
 extensions
-fchdir
-openat-die
-save-cwd
+errno           [test $HAVE_FDOPENDIR = 0 || test $REPLACE_FDOPENDIR = 1]
+fchdir          [test $HAVE_FDOPENDIR = 0 || test $REPLACE_FDOPENDIR = 1]
+openat-die      [test $HAVE_FDOPENDIR = 0 || test $REPLACE_FDOPENDIR = 1]
+save-cwd        [test $HAVE_FDOPENDIR = 0 || test $REPLACE_FDOPENDIR = 1]
 
 configure.ac:
 gl_FUNC_FDOPENDIR

@@ -6,10 +6,10 @@ lib/utimensat.c
 m4/utimensat.m4
 
 Depends-on:
-openat
 sys_stat
-utimens
 extensions
+openat          [test $HAVE_UTIMENSAT = 0 || test $REPLACE_UTIMENSAT = 1]
+utimens         [test $HAVE_UTIMENSAT = 0 || test $REPLACE_UTIMENSAT = 1]
 
 configure.ac:
 gl_FUNC_UTIMENSAT

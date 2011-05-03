@@ -7,12 +7,12 @@ lib/mknodat.c
 m4/mkfifoat.m4
 
 Depends-on:
+sys_stat
 extensions
 fcntl-h
-mkfifo
-mknod
-openat
-sys_stat
+mkfifo          [test $HAVE_MKFIFOAT = 0]
+mknod           [test $HAVE_MKNODAT = 0]
+openat          [test $HAVE_MKFIFOAT = 0 || test $HAVE_MKNODAT = 0]
 
 configure.ac:
 gl_FUNC_MKFIFOAT

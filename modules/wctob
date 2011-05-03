@@ -9,7 +9,7 @@ m4/codeset.m4
 
 Depends-on:
 wchar
-wctomb
+wctomb          [test $ac_cv_func_wctob = no || test $REPLACE_WCTOB = 1]
 
 configure.ac:
 gl_FUNC_WCTOB

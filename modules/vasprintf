@@ -12,10 +12,10 @@ lib/asprintf.c
 m4/vasprintf.m4
 
 Depends-on:
-extensions
-vasnprintf
 stdio
-errno
+extensions
+vasnprintf      [test $HAVE_VASPRINTF = 0 || test $REPLACE_VASPRINTF = 1]
+errno           [test $HAVE_VASPRINTF = 0 || test $REPLACE_VASPRINTF = 1]
 
 configure.ac:
 gl_FUNC_VASPRINTF

@@ -24,18 +24,18 @@ fcntl-h
 fdopendir
 gettext-h
 intprops
-lchown
+lchown          [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
 lstat
-mkdir
+mkdir           [test $HAVE_MKDIRAT = 0]
 open
 openat-die
-rmdir
+rmdir           [test $REPLACE_UNLINKAT = 1]
 same-inode
 save-cwd
 stdbool
 sys_stat
 unistd
-unlink
+unlink          [test $REPLACE_UNLINKAT = 1]
 
 configure.ac:
 gl_FUNC_OPENAT

@@ -7,9 +7,9 @@ lib/mkostemp.c
 m4/mkostemp.m4
 
 Depends-on:
-extensions
 stdlib
-tempname
+extensions
+tempname        [test $HAVE_MKOSTEMP = 0]
 
 configure.ac:
 gl_FUNC_MKOSTEMP

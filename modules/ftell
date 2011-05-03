@@ -6,9 +6,9 @@ lib/ftell.c
 m4/ftell.m4
 
 Depends-on:
-ftello
 stdio
 errno
+ftello          [test $REPLACE_FTELL = 1]
 
 configure.ac:
 gl_FUNC_FTELL

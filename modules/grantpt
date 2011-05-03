@@ -8,9 +8,9 @@ m4/grantpt.m4
 Depends-on:
 stdlib
 extensions
-pt_chown
-waitpid
-configmake
+pt_chown        [test $HAVE_GRANTPT = 0]
+waitpid         [test $HAVE_GRANTPT = 0]
+configmake      [test $HAVE_GRANTPT = 0]
 
 configure.ac:
 gl_FUNC_GRANTPT

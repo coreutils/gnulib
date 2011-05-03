@@ -8,12 +8,12 @@ m4/strsignal.m4
 
 Depends-on:
 string
-gettext-h
-lock
-tls
-snprintf
-memset
 extensions
+gettext-h       [test $ac_cv_func_strsignal = no || test $REPLACE_STRSIGNAL = 1]
+lock            [test $ac_cv_func_strsignal = no || test $REPLACE_STRSIGNAL = 1]
+tls             [test $ac_cv_func_strsignal = no || test $REPLACE_STRSIGNAL = 1]
+snprintf        [test $ac_cv_func_strsignal = no || test $REPLACE_STRSIGNAL = 1]
+memset          [test $ac_cv_func_strsignal = no || test $REPLACE_STRSIGNAL = 1]
 
 configure.ac:
 gl_FUNC_STRSIGNAL

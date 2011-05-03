@@ -6,11 +6,11 @@ lib/getdelim.c
 m4/getdelim.m4
 
 Depends-on:
-extensions
 stdio
-stdint
-realloc-posix
-errno
+extensions
+stdint          [test $HAVE_DECL_GETDELIM = 0 || test $REPLACE_GETDELIM = 1]
+realloc-posix   [test $HAVE_DECL_GETDELIM = 0 || test $REPLACE_GETDELIM = 1]
+errno           [test $HAVE_DECL_GETDELIM = 0 || test $REPLACE_GETDELIM = 1]
 
 configure.ac:
 gl_FUNC_GETDELIM

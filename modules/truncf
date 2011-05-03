@@ -9,7 +9,7 @@ m4/truncf.m4
 Depends-on:
 math
 extensions
-float
+float           [test $HAVE_DECL_TRUNCF = 0 || test $REPLACE_TRUNCF = 1]
 
 configure.ac:
 gl_FUNC_TRUNCF

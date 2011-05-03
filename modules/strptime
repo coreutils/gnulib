@@ -7,13 +7,13 @@ m4/strptime.m4
 m4/tm_gmtoff.m4
 
 Depends-on:
-extensions
-sys_time
-string
-strcase
-stdbool
 time
-time_r
+extensions
+sys_time        [test $HAVE_STRPTIME = 0]
+string          [test $HAVE_STRPTIME = 0]
+strcase         [test $HAVE_STRPTIME = 0]
+stdbool         [test $HAVE_STRPTIME = 0]
+time_r          [test $HAVE_STRPTIME = 0]
 
 configure.ac:
 gl_FUNC_STRPTIME

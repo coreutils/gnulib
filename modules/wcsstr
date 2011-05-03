@@ -8,7 +8,7 @@ m4/wcsstr.m4
 
 Depends-on:
 wchar
-wcschr
+wcschr          [test $HAVE_WCSSTR = 0]
 
 configure.ac:
 gl_FUNC_WCSSTR

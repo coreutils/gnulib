@@ -12,9 +12,9 @@ m4/locale-zh.m4
 m4/codeset.m4
 
 Depends-on:
-extensions
 wchar
-mbsinit
+extensions
+mbsinit         [test $HAVE_WCRTOMB = 0 || test $REPLACE_WCRTOMB = 1]
 
 configure.ac:
 gl_FUNC_WCRTOMB

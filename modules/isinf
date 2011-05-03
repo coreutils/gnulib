@@ -7,9 +7,9 @@ m4/isinf.m4
 m4/check-math-lib.m4
 
 Depends-on:
-float
 math
 extensions
+float           [test $REPLACE_ISINF = 1]
 
 configure.ac:
 gl_ISINF

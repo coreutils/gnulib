@@ -8,7 +8,7 @@ m4/ptsname.m4
 Depends-on:
 stdlib
 extensions
-ttyname_r
+ttyname_r       [test $HAVE_PTSNAME = 0]
 
 configure.ac:
 gl_FUNC_PTSNAME

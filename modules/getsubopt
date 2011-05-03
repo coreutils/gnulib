@@ -6,10 +6,10 @@ lib/getsubopt.c
 m4/getsubopt.m4
 
 Depends-on:
-extensions
-strchrnul
 stdlib
-memchr
+extensions
+strchrnul       [test $HAVE_GETSUBOPT = 0]
+memchr          [test $HAVE_GETSUBOPT = 0]
 
 configure.ac:
 gl_FUNC_GETSUBOPT

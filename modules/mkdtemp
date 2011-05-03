@@ -6,9 +6,9 @@ lib/mkdtemp.c
 m4/mkdtemp.m4
 
 Depends-on:
-stdint
 stdlib
-tempname
+stdint          [test $HAVE_MKDTEMP = 0]
+tempname        [test $HAVE_MKDTEMP = 0]
 
 configure.ac:
 gt_FUNC_MKDTEMP

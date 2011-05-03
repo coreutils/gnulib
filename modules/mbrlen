@@ -8,8 +8,8 @@ m4/mbstate_t.m4
 
 Depends-on:
 wchar
-mbrtowc
 extensions
+mbrtowc         [test $HAVE_MBRLEN = 0 || test $REPLACE_MBRLEN = 1]
 
 configure.ac:
 gl_FUNC_MBRLEN

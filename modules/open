@@ -8,7 +8,7 @@ m4/mode_t.m4
 
 Depends-on:
 fcntl-h
-stat
+stat            [test $REPLACE_OPEN = 1]
 
 configure.ac:
 gl_FUNC_OPEN

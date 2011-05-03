@@ -7,12 +7,12 @@ lib/argz.c
 m4/argz.m4
 
 Depends-on:
-memmove
-mempcpy
-stpcpy
-strndup
-strnlen
-strstr
+memmove         [test -n "$ARGZ_H"]
+mempcpy         [test -n "$ARGZ_H"]
+stpcpy          [test -n "$ARGZ_H"]
+strndup         [test -n "$ARGZ_H"]
+strnlen         [test -n "$ARGZ_H"]
+strstr          [test -n "$ARGZ_H"]
 
 configure.ac:
 gl_FUNC_ARGZ

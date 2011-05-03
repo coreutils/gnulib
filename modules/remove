@@ -6,9 +6,9 @@ lib/remove.c
 m4/remove.m4
 
 Depends-on:
-rmdir
 stdio
-unlink
+rmdir           [test $REPLACE_REMOVE = 1]
+unlink          [test $REPLACE_REMOVE = 1]
 
 configure.ac:
 gl_FUNC_REMOVE

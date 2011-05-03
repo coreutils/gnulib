@@ -9,11 +9,11 @@ m4/mbsnrtowcs.m4
 m4/mbstate_t.m4
 
 Depends-on:
-extensions
 wchar
-mbrtowc
-minmax
-strnlen1
+extensions
+mbrtowc         [test $HAVE_MBSNRTOWCS = 0 || test $REPLACE_MBSNRTOWCS = 1]
+minmax          [test $HAVE_MBSNRTOWCS = 0 || test $REPLACE_MBSNRTOWCS = 1]
+strnlen1        [test $HAVE_MBSNRTOWCS = 0 || test $REPLACE_MBSNRTOWCS = 1]
 
 configure.ac:
 gl_FUNC_MBSNRTOWCS

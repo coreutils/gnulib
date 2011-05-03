@@ -8,8 +8,8 @@ m4/wcsdup.m4
 
 Depends-on:
 wchar
-wcslen
-wmemcpy
+wcslen          [test $HAVE_WCSDUP = 0]
+wmemcpy         [test $HAVE_WCSDUP = 0]
 
 configure.ac:
 gl_FUNC_WCSDUP

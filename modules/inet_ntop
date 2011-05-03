@@ -6,11 +6,11 @@ lib/inet_ntop.c
 m4/inet_ntop.m4
 
 Depends-on:
-sys_socket
 arpa_inet
-errno
-netinet_in
 extensions
+sys_socket      [test "$ac_cv_search_inet_ntop" = no && test $ac_cv_func_inet_ntop = no]
+errno           [test "$ac_cv_search_inet_ntop" = no && test $ac_cv_func_inet_ntop = no]
+netinet_in      [test "$ac_cv_search_inet_ntop" = no && test $ac_cv_func_inet_ntop = no]
 
 configure.ac:
 gl_FUNC_INET_NTOP

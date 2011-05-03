@@ -6,8 +6,8 @@ lib/readlink.c
 m4/readlink.m4
 
 Depends-on:
-stat
 unistd
+stat            [test $HAVE_READLINK = 0 || test $REPLACE_READLINK = 1]
 
 configure.ac:
 gl_FUNC_READLINK

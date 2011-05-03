@@ -9,22 +9,22 @@ lib/glob.c
 m4/glob.m4
 
 Depends-on:
-alloca
 arg-nonnull
 c++defs
-d-type
-dirfd
 extensions
-fnmatch
-getlogin_r
-memchr
-mempcpy
-stdbool
-strdup
-sys_stat
-unistd
 warn-on-use
-malloc-posix
+alloca          [test -n "$GLOB_H"]
+d-type          [test -n "$GLOB_H"]
+dirfd           [test -n "$GLOB_H"]
+fnmatch         [test -n "$GLOB_H"]
+getlogin_r      [test -n "$GLOB_H"]
+memchr          [test -n "$GLOB_H"]
+mempcpy         [test -n "$GLOB_H"]
+stdbool         [test -n "$GLOB_H"]
+strdup          [test -n "$GLOB_H"]
+sys_stat        [test -n "$GLOB_H"]
+unistd          [test -n "$GLOB_H"]
+malloc-posix    [test -n "$GLOB_H"]
 
 configure.ac:
 gl_GLOB

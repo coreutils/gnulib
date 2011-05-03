@@ -7,8 +7,8 @@ m4/setenv.m4
 
 Depends-on:
 stdlib
-unistd
-environ
+unistd          [test $ac_cv_func_unsetenv = no || test $REPLACE_UNSETENV = 1]
+environ         [test $ac_cv_func_unsetenv = no || test $REPLACE_UNSETENV = 1]
 
 configure.ac:
 gl_FUNC_UNSETENV

@@ -13,9 +13,9 @@ m4/locale-zh.m4
 m4/codeset.m4
 
 Depends-on:
-extensions
 wchar
-wcrtomb
+extensions
+wcrtomb         [test $HAVE_WCSNRTOMBS = 0 || test $REPLACE_WCSNRTOMBS = 1]
 
 configure.ac:
 gl_FUNC_WCSNRTOMBS

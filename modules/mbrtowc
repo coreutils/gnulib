@@ -12,11 +12,11 @@ m4/codeset.m4
 
 Depends-on:
 wchar
-mbsinit
-localcharset
-streq
-verify
 extensions
+mbsinit         [test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1]
+localcharset    [test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1]
+streq           [test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1]
+verify          [test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1]
 
 configure.ac:
 gl_FUNC_MBRTOWC

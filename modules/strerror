@@ -6,9 +6,9 @@ lib/strerror.c
 m4/strerror.m4
 
 Depends-on:
-errno
-intprops
 string
+errno           [test $REPLACE_STRERROR = 1]
+intprops        [test $REPLACE_STRERROR = 1]
 
 configure.ac:
 gl_FUNC_STRERROR

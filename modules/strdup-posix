@@ -7,7 +7,7 @@ m4/strdup.m4
 
 Depends-on:
 string
-malloc-posix
+malloc-posix    [test $ac_cv_func_strdup = no || test $REPLACE_STRDUP = 1]
 
 configure.ac:
 gl_FUNC_STRDUP_POSIX

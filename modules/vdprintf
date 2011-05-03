@@ -7,9 +7,9 @@ m4/vdprintf.m4
 
 Depends-on:
 stdio
-vasnprintf
-full-write
-errno
+vasnprintf      [test $ac_cv_func_vdprintf = no || test $REPLACE_VDPRINTF = 1]
+full-write      [test $ac_cv_func_vdprintf = no || test $REPLACE_VDPRINTF = 1]
+errno           [test $ac_cv_func_vdprintf = no || test $REPLACE_VDPRINTF = 1]
 
 configure.ac:
 gl_FUNC_VDPRINTF

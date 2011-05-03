@@ -8,12 +8,12 @@ m4/wchar_t.m4
 m4/wint_t.m4
 
 Depends-on:
-extensions
 wchar
-wctype-h
-localcharset
-streq
-uniwidth/width
+extensions
+wctype-h        [test $ac_cv_func_wcwidth != yes || test $REPLACE_WCWIDTH = 1]
+localcharset    [test $ac_cv_func_wcwidth != yes || test $REPLACE_WCWIDTH = 1]
+streq           [test $ac_cv_func_wcwidth != yes || test $REPLACE_WCWIDTH = 1]
+uniwidth/width  [test $ac_cv_func_wcwidth != yes || test $REPLACE_WCWIDTH = 1]
 
 configure.ac:
 gl_FUNC_WCWIDTH

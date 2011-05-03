@@ -6,9 +6,9 @@ lib/lstat.c
 m4/lstat.m4
 
 Depends-on:
-dosname
-stat
 sys_stat
+dosname         [test $REPLACE_LSTAT = 1]
+stat            [test $REPLACE_LSTAT = 1]
 
 configure.ac:
 gl_FUNC_LSTAT

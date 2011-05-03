@@ -6,10 +6,10 @@ m4/fcntl.m4
 lib/fcntl.c
 
 Depends-on:
-dup2
 fcntl-h
-getdtablesize
 extensions
+dup2            [test $HAVE_FCNTL = 0 || test $REPLACE_FCNTL = 1]
+getdtablesize   [test $HAVE_FCNTL = 0 || test $REPLACE_FCNTL = 1]
 
 configure.ac:
 gl_FUNC_FCNTL

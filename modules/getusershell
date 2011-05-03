@@ -8,8 +8,8 @@ m4/getusershell.m4
 Depends-on:
 unistd
 extensions
-fopen-safer
-xalloc
+fopen-safer     [test $ac_cv_func_getusershell = no]
+xalloc          [test $ac_cv_func_getusershell = no]
 
 configure.ac:
 gl_FUNC_GETUSERSHELL

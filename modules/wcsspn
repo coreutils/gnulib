@@ -14,7 +14,7 @@ m4/wcsspn.m4
 
 Depends-on:
 wchar
-wcschr
+wcschr          [test $HAVE_WCSSPN = 0]
 
 configure.ac:
 gl_FUNC_WCSSPN

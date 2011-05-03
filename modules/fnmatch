@@ -11,14 +11,14 @@ m4/fnmatch.m4
 Depends-on:
 arg-nonnull
 extensions
-alloca
-stdbool
-wchar
-wctype-h
-memchr
-memcmp
-mbsrtowcs
-mbsinit
+alloca          [test -n "$FNMATCH_H"]
+stdbool         [test -n "$FNMATCH_H"]
+wchar           [test -n "$FNMATCH_H"]
+wctype-h        [test -n "$FNMATCH_H"]
+memchr          [test -n "$FNMATCH_H"]
+memcmp          [test -n "$FNMATCH_H"]
+mbsrtowcs       [test -n "$FNMATCH_H"]
+mbsinit         [test -n "$FNMATCH_H"]
 
 configure.ac:
 gl_FUNC_FNMATCH_POSIX

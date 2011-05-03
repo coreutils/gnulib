@@ -8,10 +8,10 @@ m4/longlong.m4
 m4/strtoumax.m4
 
 Depends-on:
-strtoull
-verify
 inttypes-incomplete
-stdint
+verify          [test "$ac_cv_have_decl_strtoumax" != yes && test $ac_cv_func_strtoumax = no]
+stdint          [test "$ac_cv_have_decl_strtoumax" != yes && test $ac_cv_func_strtoumax = no]
+strtoull        [test "$ac_cv_have_decl_strtoumax" != yes && test $ac_cv_func_strtoumax = no && test $ac_cv_type_unsigned_long_long_int = yes]
 
 configure.ac:
 gl_FUNC_STRTOUMAX

@@ -7,10 +7,10 @@ m4/strerror_r.m4
 
 Depends-on:
 string
-errno
 extensions
-lock
-strerror
+errno           [test $HAVE_DECL_STRERROR_R = 0 || test $REPLACE_STRERROR_R = 1]
+lock            [test $HAVE_DECL_STRERROR_R = 0 || test $REPLACE_STRERROR_R = 1]
+strerror        [test $HAVE_DECL_STRERROR_R = 0 || test $REPLACE_STRERROR_R = 1]
 
 configure.ac:
 gl_FUNC_STRERROR_R

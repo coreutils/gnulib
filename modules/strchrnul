@@ -8,9 +8,9 @@ lib/strchrnul.valgrind
 m4/strchrnul.m4
 
 Depends-on:
-extensions
 string
-rawmemchr
+extensions
+rawmemchr       [test $HAVE_STRCHRNUL = 0 || test $REPLACE_STRCHRNUL = 1]
 
 configure.ac:
 gl_FUNC_STRCHRNUL

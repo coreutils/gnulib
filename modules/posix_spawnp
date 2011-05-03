@@ -7,7 +7,7 @@ m4/posix_spawn.m4
 
 Depends-on:
 spawn
-posix_spawn-internal
+posix_spawn-internal [test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1]
 
 configure.ac:
 gl_POSIX_SPAWN

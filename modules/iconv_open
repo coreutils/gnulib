@@ -14,8 +14,8 @@ Depends-on:
 gperf
 iconv-h
 iconv
-c-ctype
-c-strcase
+c-ctype         [test $REPLACE_ICONV_OPEN = 1]
+c-strcase       [test $REPLACE_ICONV_OPEN = 1]
 
 configure.ac:
 gl_FUNC_ICONV_OPEN

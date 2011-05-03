@@ -6,10 +6,10 @@ lib/link.c
 m4/link.m4
 
 Depends-on:
-stat
-strdup-posix
-sys_stat
 unistd
+stat            [test $HAVE_LINK = 0 || test $REPLACE_LINK = 1]
+strdup-posix    [test $HAVE_LINK = 0 || test $REPLACE_LINK = 1]
+sys_stat        [test $HAVE_LINK = 0 || test $REPLACE_LINK = 1]
 
 configure.ac:
 gl_FUNC_LINK

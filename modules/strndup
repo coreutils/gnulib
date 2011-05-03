@@ -6,9 +6,9 @@ lib/strndup.c
 m4/strndup.m4
 
 Depends-on:
-extensions
 string
-strnlen
+extensions
+strnlen         [test $ac_cv_func_strndup = no || test $REPLACE_STRNDUP = 1]
 
 configure.ac:
 gl_FUNC_STRNDUP
