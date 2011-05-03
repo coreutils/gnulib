@@ -1,3 +1,10 @@
+2011-05-03  Reuben Thomas  <rrt@sc3d.org>
+
+	readme-release: new module with release instructions
+	* modules/readme-release: New module.
+	* top/README-release: New file, from coreutils, grep, diffutils.
+	* MODULES.html.sh (Support for maintaining and releasing): Add it.
+
 2011-05-02  Eric Blake  <eblake@redhat.com>
 
 	fflush: also replace fclose when fixing fflush

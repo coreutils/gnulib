@@ -3476,6 +3476,7 @@ func_all_modules ()
   func_module gnupload
   func_module maintainer-makefile
   func_module mktempd
+  func_module readme-release
   func_module update-copyright
   func_module useless-if-before-free
   func_module vc-list-files
