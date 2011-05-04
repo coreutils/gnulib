@@ -3,7 +3,7 @@
 # controlled .prev-version file, automate the procedure by which we record
 # the date, release-type and version string in the NEWS file.  That commit
 # will serve to identify the release, so apply a signed tag to it as well.
-VERSION=2010-06-07.07 # UTC
+VERSION=2011-05-04.11 # UTC
 
 # Note: this is a bash script (could be zsh or dash)
 
@@ -32,7 +32,7 @@ help_version()
 {
   case $1 in
     --help) cat <<EOF
-Usage: $ME VERSION RELEASE_TYPE
+Usage: $ME [OPTION...] VERSION RELEASE_TYPE
 
 Run this script to perform the final pre-release NEWS update
 in which the date, release-type and version string are recorded.
@@ -46,8 +46,9 @@ Requirements:
 - a version-controlled .prev-version file
 
 Options:
-  --help     print this help, then exit
-  --version  print version number, then exit
+  --branch BRANCH            set release branch (default: master)
+  --help                     print this help, then exit
+  --version                  print version number, then exit
 
 EXAMPLE:
 To update NEWS and tag the beta 8.1 release of coreutils, I would run this:
@@ -73,10 +74,15 @@ EOF
   esac
 }
 
+branch=master
+case $1 in
+  --branch) shift; branch=$1; shift ;;
+esac
+
 case $# in
   1) help_version $1; exit 0;;
   2) ;;
-  *) warn "Usage: $ME VERSION TYPE"; exit 1;;
+  *) warn "Usage: $ME [OPTION...] VERSION TYPE"; exit 1;;
 esac
 
 ver=$1
@@ -121,9 +127,9 @@ perl -MPOSIX -ni -e 'my $today = strftime "%F", localtime time;' \
  -e 'print $.==3 ? "$pfx $ver ($today) [$type]\n" : $_' \
      NEWS || die 'failed to update NEWS'
 
-# Ensure the current branch name is "master":
+# Ensure the current branch name is correct:
 curr_br=$(git rev-parse --symbolic-full-name HEAD)
-test "$curr_br" = refs/heads/master || die not on master
+test "$curr_br" = refs/heads/$branch || die not on branch $branch
 
 printf "version $ver\n\n* NEWS: Record release date.\n" \
     | git commit -F -  -a || die 'git commit failed'

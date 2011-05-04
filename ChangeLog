@@ -1,3 +1,8 @@
+2011-05-04  Reuben Thomas  <rrt@sc3d.org>
+
+	Add option to do-release-commit-and-tag to specify branch.
+	* build-aux/do-release-commit-and-tag: Add --branch.
+
 2011-05-03  Bruno Haible  <bruno@clisp.org>
 
 	Avoid unnecessary compilation units, through conditional dependencies.
