@@ -1,4 +1,4 @@
-# wctob.m4 serial 7
+# wctob.m4 serial 8
 dnl Copyright (C) 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,7 +11,6 @@ AC_DEFUN([gl_FUNC_WCTOB],
   AC_CHECK_FUNCS_ONCE([wctob])
   if test $ac_cv_func_wctob = no; then
     HAVE_DECL_WCTOB=0
-    gl_REPLACE_WCHAR_H
     AC_LIBOBJ([wctob])
     gl_PREREQ_WCTOB
   else
@@ -103,7 +102,6 @@ int main ()
       *) REPLACE_WCTOB=1 ;;
     esac
     if test $REPLACE_WCTOB = 1; then
-      gl_REPLACE_WCHAR_H
       AC_LIBOBJ([wctob])
       gl_PREREQ_WCTOB
     else
@@ -121,7 +119,6 @@ int main ()
 ])
       if test $ac_cv_have_decl_wctob != yes; then
         HAVE_DECL_WCTOB=0
-        gl_REPLACE_WCHAR_H
       fi
     fi
   fi

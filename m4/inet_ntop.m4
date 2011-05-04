@@ -1,4 +1,4 @@
-# inet_ntop.m4 serial 13
+# inet_ntop.m4 serial 14
 dnl Copyright (C) 2005-2006, 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,8 +8,6 @@ AC_DEFUN([gl_FUNC_INET_NTOP],
 [
   dnl Persuade Solaris <arpa/inet.h> to declare inet_ntop.
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
-
-  gl_REPLACE_ARPA_INET_H
 
   dnl Most platforms that provide inet_ntop define it in libc.
   dnl Solaris 8..10 provide inet_ntop in libnsl instead.

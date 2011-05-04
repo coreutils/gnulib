@@ -1,4 +1,4 @@
-# wcsrtombs.m4 serial 8
+# wcsrtombs.m4 serial 9
 dnl Copyright (C) 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -35,7 +35,6 @@ AC_DEFUN([gl_FUNC_WCSRTOMBS],
     fi
   fi
   if test $HAVE_WCSRTOMBS = 0 || test $REPLACE_WCSRTOMBS = 1; then
-    gl_REPLACE_WCHAR_H
     AC_LIBOBJ([wcsrtombs])
     AC_LIBOBJ([wcsrtombs-state])
     gl_PREREQ_WCSRTOMBS

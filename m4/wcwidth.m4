@@ -1,4 +1,4 @@
-# wcwidth.m4 serial 18
+# wcwidth.m4 serial 19
 dnl Copyright (C) 2006-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -92,10 +92,6 @@ changequote([,])dnl
   fi
   if test $ac_cv_func_wcwidth != yes || test $REPLACE_WCWIDTH = 1; then
     AC_LIBOBJ([wcwidth])
-  fi
-  if test $ac_cv_func_wcwidth != yes || test $REPLACE_WCWIDTH = 1 \
-     || test $HAVE_DECL_WCWIDTH = 0; then
-    gl_REPLACE_WCHAR_H
   fi
   dnl We don't substitute HAVE_WCWIDTH. We assume that if the system does not
   dnl have the wcwidth function, then it does not declare it.

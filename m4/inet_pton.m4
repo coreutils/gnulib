@@ -1,4 +1,4 @@
-# inet_pton.m4 serial 11
+# inet_pton.m4 serial 12
 dnl Copyright (C) 2006, 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,8 +8,6 @@ AC_DEFUN([gl_FUNC_INET_PTON],
 [
   dnl Persuade Solaris <arpa/inet.h> to declare inet_pton.
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
-
-  gl_REPLACE_ARPA_INET_H
 
   dnl Most platforms that provide inet_pton define it in libc.
   dnl Solaris 8..10 provide inet_pton in libnsl instead.

@@ -1,4 +1,4 @@
-# arpa_inet_h.m4 serial 11
+# arpa_inet_h.m4 serial 12
 dnl Copyright (C) 2006, 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -36,13 +36,6 @@ AC_DEFUN([gl_HEADER_ARPA_INET],
 #endif
 #include <arpa/inet.h>
     ]], [inet_ntop inet_pton])
-])
-
-dnl Unconditionally enables the replacement of <arpa/inet.h>.
-AC_DEFUN([gl_REPLACE_ARPA_INET_H],
-[
-  dnl This is a no-op, because <arpa/inet.h> is always overridden.
-  :
 ])
 
 AC_DEFUN([gl_ARPA_INET_MODULE_INDICATOR],

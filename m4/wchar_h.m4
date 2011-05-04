@@ -7,7 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 dnl Written by Eric Blake.
 
-# wchar_h.m4 serial 38
+# wchar_h.m4 serial 39
 
 AC_DEFUN([gl_WCHAR_H],
 [
@@ -117,13 +117,6 @@ C99 mode. You have four options:
   - Don't use the flags -std=c99 or -std=gnu99.
 Configuration aborted.])
   fi
-])
-
-dnl Unconditionally enables the replacement of <wchar.h>.
-AC_DEFUN([gl_REPLACE_WCHAR_H],
-[
-  dnl This is a no-op, because <wchar.h> is always overridden.
-  :
 ])
 
 AC_DEFUN([gl_WCHAR_MODULE_INDICATOR],

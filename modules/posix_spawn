@@ -12,7 +12,6 @@ posix_spawn-internal [test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 
 configure.ac:
 gl_POSIX_SPAWN
 if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1; then
-  gl_REPLACE_SPAWN_H
   AC_LIBOBJ([spawn])
   gl_POSIX_SPAWN_INTERNAL
 fi

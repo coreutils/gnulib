@@ -1,4 +1,4 @@
-# duplocale.m4 serial 5
+# duplocale.m4 serial 6
 dnl Copyright (C) 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -60,7 +60,6 @@ int main ()
     HAVE_DUPLOCALE=0
   fi
   if test $REPLACE_DUPLOCALE = 1; then
-    gl_REPLACE_LOCALE_H
     AC_LIBOBJ([duplocale])
     gl_PREREQ_DUPLOCALE
   fi

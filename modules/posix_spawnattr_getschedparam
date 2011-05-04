@@ -14,7 +14,6 @@ gl_POSIX_SPAWN
 if test $HAVE_POSIX_SPAWN = 0 \
    || test $REPLACE_POSIX_SPAWN = 1 \
    || test $gl_cv_func_spawnattr_setschedparam = no; then
-  gl_REPLACE_SPAWN_H
   AC_LIBOBJ([spawnattr_getschedparam])
 fi
 gl_SPAWN_MODULE_INDICATOR([posix_spawnattr_getschedparam])

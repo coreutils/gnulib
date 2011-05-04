@@ -1,3 +1,55 @@
+2011-05-05  Eric Blake  <eblake@redhat.com>
+
+	maint: remove useless REPLACE_*_H macros
+	* m4/arpa_inet_h.m4 (gl_REPLACE_ARPA_INET_H): Delete.
+	* m4/dirent_h.m4 (gl_REPLACE_DIRENT_H): Likewise.
+	* m4/locale_h.m4 (gl_REPLACE_LOCALE_H): Likewise.
+	* m4/poll_h.m4 (gl_REPLACE_POLL_H): Likewise.
+	* m4/spawn_h.m4 (gl_REPLACE_SPAWN_H): Likewise.
+	* m4/sys_ioctl_h.m4 (gl_REPLACE_SYS_IOCTL_H): Likewise.
+	* m4/wchar_h.m4 (gl_REPLACE_WCHAR_H): Likewise.
+	* m4/btowc.m4: Update callers.
+	* m4/dirfd.m4: Likewise.
+	* m4/duplocale.m4: Likewise.
+	* m4/fchdir.m4: Likewise.
+	* m4/fdopendir.m4: Likewise.
+	* m4/inet_ntop.m4: Likewise.
+	* m4/inet_pton.m4: Likewise.
+	* m4/ioctl.m4: Likewise.
+	* m4/mbrlen.m4: Likewise.
+	* m4/mbrtowc.m4: Likewise.
+	* m4/mbsinit.m4: Likewise.
+	* m4/mbsnrtowcs.m4: Likewise.
+	* m4/mbsrtowcs.m4: Likewise.
+	* m4/poll.m4: Likewise.
+	* m4/setlocale.m4: Likewise.
+	* m4/wcrtomb.m4: Likewise.
+	* m4/wcsnrtombs.m4: Likewise.
+	* m4/wcsrtombs.m4: Likewise.
+	* m4/wctob.m4: Likewise.
+	* m4/wcwidth.m4: Likewise.
+	* modules/posix_spawn: Likewise.
+	* modules/posix_spawn_file_actions_addclose: Likewise.
+	* modules/posix_spawn_file_actions_adddup2: Likewise.
+	* modules/posix_spawn_file_actions_addopen: Likewise.
+	* modules/posix_spawn_file_actions_destroy: Likewise.
+	* modules/posix_spawn_file_actions_init: Likewise.
+	* modules/posix_spawnattr_destroy: Likewise.
+	* modules/posix_spawnattr_getflags: Likewise.
+	* modules/posix_spawnattr_getpgroup: Likewise.
+	* modules/posix_spawnattr_getschedparam: Likewise.
+	* modules/posix_spawnattr_getschedpolicy: Likewise.
+	* modules/posix_spawnattr_getsigdefault: Likewise.
+	* modules/posix_spawnattr_getsigmask: Likewise.
+	* modules/posix_spawnattr_init: Likewise.
+	* modules/posix_spawnattr_setflags: Likewise.
+	* modules/posix_spawnattr_setpgroup: Likewise.
+	* modules/posix_spawnattr_setschedparam: Likewise.
+	* modules/posix_spawnattr_setschedpolicy: Likewise.
+	* modules/posix_spawnattr_setsigdefault: Likewise.
+	* modules/posix_spawnattr_setsigmask: Likewise.
+	* modules/posix_spawnp: Likewise.
+
 2011-05-04  Reuben Thomas  <rrt@sc3d.org>
 
 	Add option to do-release-commit-and-tag to specify branch.
