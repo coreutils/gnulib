@@ -1,5 +1,14 @@
 2011-05-05  Bruno Haible  <bruno@clisp.org>
 
+	calloc-posix, calloc-gnu: Move AC_LIBOBJs to module description.
+	* m4/calloc.m4 (gl_REPLACE_CALLOC): Remove macro.
+	(gl_FUNC_CALLOC_GNU, gl_FUNC_CALLOC_POSIX): Instead, just set
+	REPLACE_CALLOC.
+	* modules/calloc-posix (configure.ac): Invoke AC_LIBOBJ here.
+	* modules/calloc-gnu (configure.ac): Likewise.
+
+2011-05-05  Bruno Haible  <bruno@clisp.org>
+
 	btowc: Move AC_LIBOBJ invocations to module description.
 	* m4/btowc.m4 (gl_FUNC_BTOWC): Move AC_LIBOBJ and gl_PREREQ_BTOWC
 	invocations from here...

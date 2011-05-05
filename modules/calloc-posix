@@ -11,6 +11,9 @@ stdlib
 
 configure.ac:
 gl_FUNC_CALLOC_POSIX
+if test $REPLACE_CALLOC = 1; then
+  AC_LIBOBJ([calloc])
+fi
 gl_STDLIB_MODULE_INDICATOR([calloc-posix])
 
 Makefile.am:

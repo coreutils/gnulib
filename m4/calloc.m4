@@ -1,4 +1,4 @@
-# calloc.m4 serial 12
+# calloc.m4 serial 13
 
 # Copyright (C) 2004-2011 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -49,7 +49,7 @@ AC_DEFUN([gl_FUNC_CALLOC_GNU],
                [Define to 1 if your system has a GNU libc compatible `calloc'
                 function, and to 0 otherwise.])],
     [AC_DEFINE([HAVE_CALLOC_GNU], [0])
-     gl_REPLACE_CALLOC
+     REPLACE_CALLOC=1
     ])
 ])# gl_FUNC_CALLOC_GNU
 
@@ -66,12 +66,6 @@ AC_DEFUN([gl_FUNC_CALLOC_POSIX],
     AC_DEFINE([HAVE_CALLOC_POSIX], [1],
       [Define if the 'calloc' function is POSIX compliant.])
   else
-    gl_REPLACE_CALLOC
+    REPLACE_CALLOC=1
   fi
-])
-
-AC_DEFUN([gl_REPLACE_CALLOC],
-[
-  AC_LIBOBJ([calloc])
-  REPLACE_CALLOC=1
 ])
