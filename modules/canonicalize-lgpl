@@ -21,6 +21,9 @@ sys_stat        [test $HAVE_CANONICALIZE_FILE_NAME = 0 || test $REPLACE_CANONICA
 
 configure.ac:
 gl_CANONICALIZE_LGPL
+if test $HAVE_CANONICALIZE_FILE_NAME = 0 || test $REPLACE_CANONICALIZE_FILE_NAME = 1; then
+  AC_LIBOBJ([canonicalize-lgpl])
+fi
 gl_MODULE_INDICATOR([canonicalize-lgpl])
 gl_STDLIB_MODULE_INDICATOR([canonicalize_file_name])
 gl_STDLIB_MODULE_INDICATOR([realpath])

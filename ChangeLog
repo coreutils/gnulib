@@ -1,5 +1,12 @@
 2011-05-05  Bruno Haible  <bruno@clisp.org>
 
+	canonicalize-lgpl: Move AC_LIBOBJ invocations to module description.
+	* m4/canonicalize.m4 (gl_CANONICALIZE_LGPL): Move AC_LIBOBJ invocation
+	from here...
+	* modules/canonicalize-lgpl (configure.ac): ... to here.
+
+2011-05-05  Bruno Haible  <bruno@clisp.org>
+
 	calloc-posix, calloc-gnu: Move AC_LIBOBJs to module description.
 	* m4/calloc.m4 (gl_REPLACE_CALLOC): Remove macro.
 	(gl_FUNC_CALLOC_GNU, gl_FUNC_CALLOC_POSIX): Instead, just set
