@@ -16,7 +16,7 @@ Include:
 <time.h>
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Jim Meyering

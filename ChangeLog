@@ -1,5 +1,9 @@
 2011-05-05  Bruno Haible  <bruno@clisp.org>
 
+	tzset: Relicense under LGPL.
+	* modules/tzset (License): Change to LGPL.
+	No agreement needed; it's a no-op.
+
 	strtoimax, strtoumax: Relicense under LGPL.
 	* modules/strtoimax (License): Change to LGPL.
 	* modules/strtoumax (License): Likewise.
