@@ -20,6 +20,10 @@ stdlib          [test $gl_cv_have_arbitrary_file_name_length_limit = yes]
 
 configure.ac:
 gl_FUNC_CHDIR_LONG
+if test $gl_cv_have_arbitrary_file_name_length_limit = yes; then
+  AC_LIBOBJ([chdir-long])
+  gl_PREREQ_CHDIR_LONG
+fi
 
 Makefile.am:
 

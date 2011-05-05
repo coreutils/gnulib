@@ -1,5 +1,12 @@
 2011-05-05  Bruno Haible  <bruno@clisp.org>
 
+	chdir-long: Move AC_LIBOBJ invocations to module description.
+	* m4/chdir-long.m4 (gl_FUNC_CHDIR_LONG): Move AC_LIBOBJ and
+	gl_PREREQ_CHDIR_LONG invocations from here...
+	* modules/chdir-long (configure.ac): ... to here.
+
+2011-05-05  Bruno Haible  <bruno@clisp.org>
+
 	canonicalize-lgpl: Move AC_LIBOBJ invocations to module description.
 	* m4/canonicalize.m4 (gl_CANONICALIZE_LGPL): Move AC_LIBOBJ invocation
 	from here...
