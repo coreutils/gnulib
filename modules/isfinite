@@ -23,7 +23,7 @@ Include:
 <math.h>
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Ben Pfaff
