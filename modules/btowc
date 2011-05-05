@@ -12,6 +12,10 @@ mbtowc          [test $HAVE_BTOWC = 0 || test $REPLACE_BTOWC = 1]
 
 configure.ac:
 gl_FUNC_BTOWC
+if test $HAVE_BTOWC = 0 || test $REPLACE_BTOWC = 1; then
+  AC_LIBOBJ([btowc])
+  gl_PREREQ_BTOWC
+fi
 gl_WCHAR_MODULE_INDICATOR([btowc])
 
 Makefile.am:

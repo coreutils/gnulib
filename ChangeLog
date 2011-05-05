@@ -1,3 +1,10 @@
+2011-05-05  Bruno Haible  <bruno@clisp.org>
+
+	btowc: Move AC_LIBOBJ invocations to module description.
+	* m4/btowc.m4 (gl_FUNC_BTOWC): Move AC_LIBOBJ and gl_PREREQ_BTOWC
+	invocations from here...
+	* modules/btowc (configure.ac): ... to here.
+
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
 	atexit: Move AC_LIBOBJ invocations to module description.
