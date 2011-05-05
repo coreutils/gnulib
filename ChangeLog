@@ -1,5 +1,21 @@
 2011-05-05  Bruno Haible  <bruno@clisp.org>
 
+	acosl..tanl: Relicense under LGPL.
+	* modules/acosl (License): Change to LGPL.
+	* modules/asinl (License): Likewise.
+	* modules/atanl (License): Likewise.
+	* modules/cosl (License): Likewise.
+	* modules/expl (License): Likewise.
+	* modules/logl (License): Likewise.
+	* modules/sinl (License): Likewise.
+	* modules/sqrtl (License): Likewise.
+	* modules/tanl (License): Likewise.
+	Source code originally from glibc and Paolo Bonzini. Agreements:
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-05/msg00137.html>
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-05/msg00128.html>
+
+2011-05-05  Bruno Haible  <bruno@clisp.org>
+
 	signal: Define sighandler_t.
 	* lib/signal.in.h (sighandler_t): New type.
 	* m4/signal_h.m4 (gl_SIGNAL_H): Require AC_USE_SYSTEM_EXTENSIONS. Test

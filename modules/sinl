@@ -29,7 +29,7 @@ Link:
 $(SINL_LIBM)
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Paolo Bonzini

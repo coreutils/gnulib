@@ -23,7 +23,7 @@ Link:
 $(ASINL_LIBM)
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Paolo Bonzini

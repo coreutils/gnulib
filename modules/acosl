@@ -24,7 +24,7 @@ Link:
 $(ACOSL_LIBM)
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Paolo Bonzini

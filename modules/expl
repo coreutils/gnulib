@@ -24,7 +24,7 @@ Link:
 $(EXPL_LIBM)
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Paolo Bonzini

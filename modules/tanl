@@ -28,7 +28,7 @@ Link:
 $(TANL_LIBM)
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Paolo Bonzini
