@@ -1,4 +1,4 @@
-# fflush.m4 serial 9
+# fflush.m4 serial 10
 
 # Copyright (C) 2007-2011 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -11,6 +11,18 @@ dnl Find out how to obey POSIX semantics of fflush(stdin) discarding
 dnl unread input on seekable streams, rather than C99 undefined semantics.
 
 AC_DEFUN([gl_FUNC_FFLUSH],
+[
+  gl_FUNC_FFLUSH_STDIN
+  if test $gl_cv_func_fflush_stdin = no; then
+    gl_REPLACE_FFLUSH
+    gl_REPLACE_FCLOSE
+  fi
+])
+
+dnl Determine whether fflush works on input streams.
+dnl Sets gl_cv_func_fflush_stdin.
+
+AC_DEFUN([gl_FUNC_FFLUSH_STDIN],
 [
   AC_CACHE_CHECK([whether fflush works on input streams],
     [gl_cv_func_fflush_stdin],
@@ -59,10 +71,6 @@ AC_DEFUN([gl_FUNC_FFLUSH],
       gl_cv_func_fflush_stdin=no])
      rm conftest.txt
     ])
-  if test $gl_cv_func_fflush_stdin = no; then
-    gl_REPLACE_FFLUSH
-    gl_REPLACE_FCLOSE
-  fi
 ])
 
 AC_DEFUN([gl_REPLACE_FFLUSH],
@@ -71,7 +79,6 @@ AC_DEFUN([gl_REPLACE_FFLUSH],
   AC_REQUIRE([gl_STDIO_H_DEFAULTS])
   REPLACE_FFLUSH=1
   gl_PREREQ_FFLUSH
-  gl_REPLACE_FSEEKO
 ])
 
 # Prerequisites of lib/fflush.c.

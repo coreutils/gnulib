@@ -1,5 +1,15 @@
 2011-05-05  Bruno Haible  <bruno@clisp.org>
 
+	fflush, fseeko: Respect rules for use of AC_LIBOBJ.
+	* m4/fflush.m4 (gl_FUNC_FFLUSH_STDIN): New macro, extracted from
+	gl_FUNC_FFLUSH.
+	(gl_FUNC_FFLUSH): Use it.
+	(gl_REPLACE_FFLUSH): Don't invoke gl_REPLACE_FSEEKO.
+	* m4/fseeko.m4 (gl_FUNC_FSEEKO): Invoke gl_FUNC_FFLUSH_STDIN and
+	gl_REPLACE_FSEEKO here.
+
+2011-05-05  Bruno Haible  <bruno@clisp.org>
+
 	tzset: Relicense under LGPL.
 	* modules/tzset (License): Change to LGPL.
 	No agreement needed; it's a no-op.
