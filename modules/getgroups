@@ -20,7 +20,7 @@ Include:
 <unistd.h>
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Jim Meyering, Eric Blake
