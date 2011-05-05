@@ -1,5 +1,15 @@
 2011-05-05  Bruno Haible  <bruno@clisp.org>
 
+	fclose, fflush: Respect rules for use of AC_LIBOBJ.
+	* m4/fflush.m4 (gl_FUNC_FFLUSH): Don't invoke gl_REPLACE_FCLOSE.
+	* m4/fclose.m4 (gl_FUNC_FCLOSE): Invoke gl_FUNC_FFLUSH_STDIN and
+	gl_REPLACE_FCLOSE here.
+	* modules/fflush (Depends-on): Remove fclose.
+	* doc/posix-functions/fclose.texi: Mention module 'fflush' only in
+	combination with module 'fclose'.
+
+2011-05-05  Bruno Haible  <bruno@clisp.org>
+
 	fflush, fseeko: Respect rules for use of AC_LIBOBJ.
 	* m4/fflush.m4 (gl_FUNC_FFLUSH_STDIN): New macro, extracted from
 	gl_FUNC_FFLUSH.

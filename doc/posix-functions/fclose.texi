@@ -6,7 +6,7 @@ POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/funct
 
 Gnulib module: fclose, fflush
 
-Portability problems fixed by Gnulib module @code{fflush}:
+Portability problems fixed by Gnulib module @code{fclose} together with module @code{fflush}:
 @itemize
 @item
 On some platforms, this function fails to set the file position of a
