@@ -16,6 +16,9 @@ strstr          [test -n "$ARGZ_H"]
 
 configure.ac:
 gl_FUNC_ARGZ
+if test -n "$ARGZ_H"; then
+  AC_LIBOBJ([argz])
+fi
 
 Makefile.am:
 BUILT_SOURCES += $(ARGZ_H)

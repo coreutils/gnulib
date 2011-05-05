@@ -7,7 +7,7 @@
 # unlimited permission to copy and/or distribute it, with or without
 # modifications, as long as this notice is preserved.
 
-# serial 9 argz.m4
+# serial 10 argz.m4
 
 AC_DEFUN([gl_FUNC_ARGZ],
 [gl_PREREQ_ARGZ
@@ -27,7 +27,7 @@ AC_CHECK_TYPES([error_t],
 #endif])
 
 ARGZ_H=
-AC_CHECK_FUNC([argz_replace], [], [ARGZ_H=argz.h; AC_LIBOBJ([argz])])
+AC_CHECK_FUNC([argz_replace], [], [ARGZ_H=argz.h])
 
 dnl if have system argz functions, allow forced use of
 dnl libltdl-supplied implementation (and default to do so
@@ -70,8 +70,7 @@ AS_IF([test -z "$ARGZ_H"],
      AS_IF([test "$lt_cv_sys_argz_works" = yes],
         [AC_DEFINE([HAVE_WORKING_ARGZ], [1],
                    [This value is set to 1 to indicate that the system argz facility works])],
-        [ARGZ_H=argz.h
-        AC_LIBOBJ([argz])])])
+        [ARGZ_H=argz.h])])
 
 AC_SUBST([ARGZ_H])
 AM_CONDITIONAL([GL_GENERATE_ARGZ_H], [test -n "$ARGZ_H"])

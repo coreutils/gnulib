@@ -1,5 +1,11 @@
 2011-05-05  Bruno Haible  <bruno@clisp.org>
 
+	argz: Move AC_LIBOBJ invocations to module description.
+	* m4/argz.m4 (gl_FUNC_ARGZ): Move AC_LIBOBJ invocation from here...
+	* modules/argz (configure.ac): ... to here.
+
+2011-05-05  Bruno Haible  <bruno@clisp.org>
+
 	alphasort: Move AC_LIBOBJ invocations to module description.
 	* m4/alphasort.m4 (gl_FUNC_ALPHASORT): Move AC_LIBOBJ and
 	gl_PREREQ_ALPHASORT invocations from here...
