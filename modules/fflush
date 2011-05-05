@@ -30,7 +30,7 @@ Include:
 <stdio.h>
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Eric Blake
