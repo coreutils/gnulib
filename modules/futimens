@@ -23,7 +23,7 @@ Link:
 $(LIB_CLOCK_GETTIME)
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Eric Blake
