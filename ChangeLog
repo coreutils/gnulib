@@ -1,3 +1,15 @@
+2011-05-05  Bruno Haible  <bruno@clisp.org>
+
+	signal: Define sighandler_t.
+	* lib/signal.in.h (sighandler_t): New type.
+	* m4/signal_h.m4 (gl_SIGNAL_H): Require AC_USE_SYSTEM_EXTENSIONS. Test
+	whether sighandler_t is defined.
+	(gl_SIGNAL_H_DEFAULTS): Initialize HAVE_SIGHANDLER_T.
+	* modules/signal (Depends-on): Add extensions.
+	(Makefile.am): Substitute HAVE_SIGHANDLER_T.
+	* doc/posix-headers/signal.texi: Mention the problem with sighandler_t.
+	Suggested by Markus Steinborn <gnugv_maintainer@yahoo.de>.
+
 2011-05-05  Eric Blake  <eblake@redhat.com>
 
 	maint: remove useless REPLACE_*_H macros

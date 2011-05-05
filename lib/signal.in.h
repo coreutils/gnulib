@@ -66,6 +66,20 @@ typedef unsigned int sigset_t;
 # endif
 #endif
 
+/* Define sighandler_t, the type of signal handlers.  A GNU extension.  */
+#if !@HAVE_SIGHANDLER_T@
+# ifdef __cplusplus
+extern "C" {
+# endif
+# if !GNULIB_defined_sighandler_t
+typedef void (*sighandler_t) (int);
+#  define GNULIB_defined_sighandler_t 1
+# endif
+# ifdef __cplusplus
+}
+# endif
+#endif
+
 
 #if @GNULIB_SIGNAL_H_SIGPIPE@
 # ifndef SIGPIPE

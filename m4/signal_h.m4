@@ -1,4 +1,4 @@
-# signal_h.m4 serial 11
+# signal_h.m4 serial 12
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,13 +8,21 @@ AC_DEFUN([gl_SIGNAL_H],
 [
   AC_REQUIRE([gl_SIGNAL_H_DEFAULTS])
   gl_NEXT_HEADERS([signal.h])
+
 # AIX declares sig_atomic_t to already include volatile, and C89 compilers
 # then choke on 'volatile sig_atomic_t'.  C99 requires that it compile.
   AC_CHECK_TYPE([volatile sig_atomic_t], [],
     [HAVE_TYPE_VOLATILE_SIG_ATOMIC_T=0], [[
 #include <signal.h>
     ]])
+
   AC_REQUIRE([AC_TYPE_UID_T])
+
+  dnl Persuade glibc <signal.h> to define sighandler_t.
+  AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
+  AC_CHECK_TYPE([sighandler_t], [], [HAVE_SIGHANDLER_T=0], [[
+#include <signal.h>
+    ]])
 
   dnl Check for declarations of anything we want to poison if the
   dnl corresponding gnulib module is not in use.
@@ -46,4 +54,5 @@ AC_DEFUN([gl_SIGNAL_H_DEFAULTS],
                                AC_SUBST([HAVE_STRUCT_SIGACTION_SA_SIGACTION])
   HAVE_TYPE_VOLATILE_SIG_ATOMIC_T=1;
                                AC_SUBST([HAVE_TYPE_VOLATILE_SIG_ATOMIC_T])
+  HAVE_SIGHANDLER_T=1;         AC_SUBST([HAVE_SIGHANDLER_T])
 ])
