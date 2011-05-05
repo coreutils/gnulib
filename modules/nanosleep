@@ -30,7 +30,7 @@ Link:
 $(LIB_NANOSLEEP)
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Jim Meyering

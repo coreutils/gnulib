@@ -1,5 +1,14 @@
 2011-05-05  Bruno Haible  <bruno@clisp.org>
 
+	nanosleep: Relicense under LGPL.
+	* modules/nanosleep (License): Change to LGPL.
+	With permission from Jim Meyering, Paul Eggert, Eric Blake, Bruno
+	Haible:
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-05/msg00111.html>
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-05/msg00148.html>
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-05/msg00138.html>
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-05/msg00131.html>
+
 	futimens: Relicense under LGPL.
 	* modules/futimens (License): Change to LGPL.
 	With permission from Eric Blake:
