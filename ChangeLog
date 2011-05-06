@@ -1,3 +1,10 @@
+2011-05-06  Bruno Haible  <bruno@clisp.org>
+
+	_Exit: Move AC_LIBOBJ invocations to module description.
+	* m4/_Exit.m4 (gl_FUNC__EXIT): Move AC_LIBOBJ and gl_PREREQ__EXIT
+	invocations from here...
+	* modules/_Exit (configure.ac): ... to here.
+
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
 	euidaccess: Respect rules for use of AC_LIBOBJ.

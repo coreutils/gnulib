@@ -1,4 +1,4 @@
-# _Exit.m4 serial 1
+# _Exit.m4 serial 2
 dnl Copyright (C) 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,8 +10,6 @@ AC_DEFUN([gl_FUNC__EXIT],
   AC_CHECK_FUNCS([_Exit])
   if test $ac_cv_func__Exit = no; then
     HAVE__EXIT=0
-    AC_LIBOBJ([_Exit])
-    gl_PREREQ__EXIT
   fi
 ])
 
