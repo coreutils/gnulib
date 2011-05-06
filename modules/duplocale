@@ -10,6 +10,10 @@ locale
 
 configure.ac:
 gl_FUNC_DUPLOCALE
+if test $REPLACE_DUPLOCALE = 1; then
+  AC_LIBOBJ([duplocale])
+  gl_PREREQ_DUPLOCALE
+fi
 gl_LOCALE_MODULE_INDICATOR([duplocale])
 
 Makefile.am:

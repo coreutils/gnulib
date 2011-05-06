@@ -1,3 +1,10 @@
+2011-05-06  Bruno Haible  <bruno@clisp.org>
+
+	duplocale: Move AC_LIBOBJ invocations to module description.
+	* m4/duplocale.m4 (gl_FUNC_DUPLOCALE): Move AC_LIBOBJ and
+	gl_PREREQ_DUPLOCALE invocations from here...
+	* modules/duplocale (configure.ac): ... to here.
+
 2011-05-05  Bruno Haible  <bruno@clisp.org>
 
 	dirfd: Move AC_LIBOBJ invocations to module description.
