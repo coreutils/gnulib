@@ -1,3 +1,10 @@
+2011-05-06  Eric Blake  <eblake@redhat.com>
+
+	fclose: guarantee behavior on seekable stdin
+	* modules/fclose (Depends-on): Add fflush.
+	* doc/posix-functions/fclose.texi (fclose): Document this.
+	* tests/test-fclose.c (main): Make test for this unconditional.
+
 2011-05-06  Bruno Haible  <bruno@clisp.org>
 
 	fflush, fpurge: Relicense under LGPLv2+.
