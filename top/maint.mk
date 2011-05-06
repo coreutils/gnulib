@@ -1123,11 +1123,20 @@ gpg_key_ID ?= \
 	  | sed -n '/.*key ID \([0-9A-F]*\)/s//\1/p'; rm -f .ann-sig)
 
 translation_project_ ?= coordinator@translationproject.org
-announcement_Cc_ ?= $(translation_project_), $(PACKAGE_BUGREPORT)
-announcement_mail_headers_ ?=						\
-To: info-gnu@gnu.org							\
-Cc: $(announcement_Cc_)							\
-Mail-Followup-To: $(PACKAGE_BUGREPORT)
+
+# Make info-gnu the default only for a stable release.
+ifeq ($(RELEASE_TYPE),stable)
+  announcement_Cc_ ?= $(translation_project_), $(PACKAGE_BUGREPORT)
+  announcement_mail_headers_ ?=						\
+    To: info-gnu@gnu.org						\
+    Cc: $(announcement_Cc_)						\
+    Mail-Followup-To: $(PACKAGE_BUGREPORT)
+else
+  announcement_Cc_ ?= $(translation_project_)
+  announcement_mail_headers_ ?=						\
+    To: $(PACKAGE_BUGREPORT)						\
+    Cc: $(announcement_Cc_)
+endif
 
 announcement: NEWS ChangeLog $(rel-files)
 	@$(build_aux)/announce-gen					\

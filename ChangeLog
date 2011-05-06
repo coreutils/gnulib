@@ -1,3 +1,11 @@
+2011-05-06  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: use info-gnu@ as the default only for a stable release
+	* top/maint.mk: Don't default to info-gnu for alpha or beta releases.
+	For those, just use $(PACKAGE_BUGREPORT), in which case we don't have
+	to set the Mail-Followup-To header.  Prompted by Reuben Thomas in
+	http://thread.gmane.org/gmane.comp.lib.gnulib.bugs/26488
+
 2011-05-05  Paul Eggert  <eggert@cs.ucla.edu>
 
 	assert-h: new module, which supports C1X-style static_assert
