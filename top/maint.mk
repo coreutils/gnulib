@@ -987,12 +987,13 @@ apply the above patch\n'
 
 # Verify that all source files using _() are listed in po/POTFILES.in.
 po_file ?= $(srcdir)/po/POTFILES.in
+generated_files ?= $(srcdir)/lib/*.[ch]
 sc_po_check:
 	@if test -f $(po_file); then					\
 	  grep -E -v '^(#|$$)' $(po_file)				\
 	    | grep -v '^src/false\.c$$' | sort > $@-1;			\
 	  files=;							\
-	  for file in $$($(VC_LIST_EXCEPT)) $(srcdir)/lib/*.[ch]; do	\
+	  for file in $$($(VC_LIST_EXCEPT)) $(generated_files); do	\
 	    test -r $$file || continue;					\
 	    case $$file in						\
 	      *.m4|*.mk) continue ;;					\

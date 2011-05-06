@@ -1,5 +1,9 @@
 2011-05-06  Eric Blake  <eblake@redhat.com>
 
+	maintainer-makefile: make sc_po_check easier to tune
+	* top/maint.mk (sc_po_check): Allow overriding which non-VC files
+	to probe for strings, such as an alternate location for gnulib.
+
 	fclose: guarantee behavior on seekable stdin
 	* modules/fclose (Depends-on): Add fflush.
 	* doc/posix-functions/fclose.texi (fclose): Document this.
