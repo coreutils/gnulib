@@ -1,5 +1,11 @@
 2011-05-05  Bruno Haible  <bruno@clisp.org>
 
+	chown: Respect rules for use of AC_LIBOBJ.
+	* m4/chown.m4 (gl_FUNC_CHOWN): Move AC_LIBOBJ invocations from here...
+	* modules/chown (configure.ac): ... to here.
+
+2011-05-05  Bruno Haible  <bruno@clisp.org>
+
 	chdir-long: Move AC_LIBOBJ invocations to module description.
 	* m4/chdir-long.m4 (gl_FUNC_CHDIR_LONG): Move AC_LIBOBJ and
 	gl_PREREQ_CHDIR_LONG invocations from here...
