@@ -1,5 +1,15 @@
 2011-05-05  Bruno Haible  <bruno@clisp.org>
 
+	dirfd: Move AC_LIBOBJ invocations to module description.
+	* m4/dirfd.m4 (gl_PREREQ_DIRFD): New macro, extracted from
+	gl_FUNC_DIRFD.
+	(gl_FUNC_DIRFD): Move AC_LIBOBJ and gl_PREREQ_DIRFD invocations from
+	here...
+	* modules/dirfd (configure.ac): ... to here.
+	(Depends-on): Fix condition.
+
+2011-05-05  Bruno Haible  <bruno@clisp.org>
+
 	chown: Respect rules for use of AC_LIBOBJ.
 	* m4/chown.m4 (gl_FUNC_CHOWN): Move AC_LIBOBJ invocations from here...
 	* modules/chown (configure.ac): ... to here.

@@ -1,4 +1,4 @@
-# serial 20   -*- Autoconf -*-
+# serial 21   -*- Autoconf -*-
 
 dnl Find out how to get the file descriptor associated with an open DIR*.
 
@@ -36,45 +36,48 @@ AC_DEFUN([gl_FUNC_DIRFD],
        gl_cv_func_dirfd_macro=no)])
 
   # Use the replacement only if we have no function or macro with that name.
-  if test $ac_cv_func_dirfd,$gl_cv_func_dirfd_macro = no,no; then
+  if test $ac_cv_func_dirfd = no && test $gl_cv_func_dirfd_macro = no; then
     if test $ac_cv_have_decl_dirfd = yes; then
       # If the system declares dirfd already, let's declare rpl_dirfd instead.
       REPLACE_DIRFD=1
     fi
-    AC_LIBOBJ([dirfd])
-    AC_CACHE_CHECK(
-              [how to get the file descriptor associated with an open DIR*],
-                   gl_cv_sys_dir_fd_member_name,
-      [
-        dirfd_save_CFLAGS=$CFLAGS
-        for ac_expr in d_fd dd_fd; do
+  fi
+])
 
-          CFLAGS="$CFLAGS -DDIR_FD_MEMBER_NAME=$ac_expr"
-          AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-             #include <sys/types.h>
-             #include <dirent.h>]],
-            [[DIR *dir_p = opendir("."); (void) dir_p->DIR_FD_MEMBER_NAME;]])],
-            [dir_fd_found=yes]
-          )
-          CFLAGS=$dirfd_save_CFLAGS
-          test "$dir_fd_found" = yes && break
-        done
-        test "$dir_fd_found" = yes || ac_expr=no_such_member
+dnl Prerequisites of lib/dirfd.c.
+AC_DEFUN([gl_PREREQ_DIRFD],
+[
+  AC_CACHE_CHECK([how to get the file descriptor associated with an open DIR*],
+                 [gl_cv_sys_dir_fd_member_name],
+    [
+      dirfd_save_CFLAGS=$CFLAGS
+      for ac_expr in d_fd dd_fd; do
 
-        gl_cv_sys_dir_fd_member_name=$ac_expr
-      ]
-    )
-    if test $gl_cv_sys_dir_fd_member_name != no_such_member; then
-      AC_DEFINE_UNQUOTED([DIR_FD_MEMBER_NAME],
-        $gl_cv_sys_dir_fd_member_name,
-        [the name of the file descriptor member of DIR])
-    fi
-    AH_VERBATIM(DIR_TO_FD,
-                [#ifdef DIR_FD_MEMBER_NAME
+        CFLAGS="$CFLAGS -DDIR_FD_MEMBER_NAME=$ac_expr"
+        AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+           #include <sys/types.h>
+           #include <dirent.h>]],
+          [[DIR *dir_p = opendir("."); (void) dir_p->DIR_FD_MEMBER_NAME;]])],
+          [dir_fd_found=yes]
+        )
+        CFLAGS=$dirfd_save_CFLAGS
+        test "$dir_fd_found" = yes && break
+      done
+      test "$dir_fd_found" = yes || ac_expr=no_such_member
+
+      gl_cv_sys_dir_fd_member_name=$ac_expr
+    ]
+  )
+  if test $gl_cv_sys_dir_fd_member_name != no_such_member; then
+    AC_DEFINE_UNQUOTED([DIR_FD_MEMBER_NAME],
+      [$gl_cv_sys_dir_fd_member_name],
+      [the name of the file descriptor member of DIR])
+  fi
+  AH_VERBATIM([DIR_TO_FD],
+              [#ifdef DIR_FD_MEMBER_NAME
 # define DIR_TO_FD(Dir_p) ((Dir_p)->DIR_FD_MEMBER_NAME)
 #else
 # define DIR_TO_FD(Dir_p) -1
 #endif
 ])
-  fi
 ])
