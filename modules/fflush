@@ -20,6 +20,10 @@ AC_REQUIRE([AC_FUNC_FSEEKO])
 
 configure.ac:
 gl_FUNC_FFLUSH
+if test $REPLACE_FFLUSH = 1; then
+  AC_LIBOBJ([fflush])
+  gl_PREREQ_FFLUSH
+fi
 gl_MODULE_INDICATOR([fflush])
 gl_STDIO_MODULE_INDICATOR([fflush])
 

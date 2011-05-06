@@ -1,4 +1,4 @@
-# fflush.m4 serial 11
+# fflush.m4 serial 12
 
 # Copyright (C) 2007-2011 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -12,9 +12,10 @@ dnl unread input on seekable streams, rather than C99 undefined semantics.
 
 AC_DEFUN([gl_FUNC_FFLUSH],
 [
+  AC_REQUIRE([gl_STDIO_H_DEFAULTS])
   gl_FUNC_FFLUSH_STDIN
   if test $gl_cv_func_fflush_stdin = no; then
-    gl_REPLACE_FFLUSH
+    REPLACE_FFLUSH=1
   fi
 ])
 
@@ -70,14 +71,6 @@ AC_DEFUN([gl_FUNC_FFLUSH_STDIN],
       gl_cv_func_fflush_stdin=no])
      rm conftest.txt
     ])
-])
-
-AC_DEFUN([gl_REPLACE_FFLUSH],
-[
-  AC_LIBOBJ([fflush])
-  AC_REQUIRE([gl_STDIO_H_DEFAULTS])
-  REPLACE_FFLUSH=1
-  gl_PREREQ_FFLUSH
 ])
 
 # Prerequisites of lib/fflush.c.

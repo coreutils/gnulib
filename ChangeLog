@@ -1,5 +1,13 @@
 2011-05-06  Bruno Haible  <bruno@clisp.org>
 
+	fflush: Move AC_LIBOBJ invocations to module description.
+	* m4/fflush.m4 (gl_REPLACE_FFLUSH): Remove macro.
+	(gl_FUNC_FFLUSH): Inline it here. Move AC_LIBOBJ and gl_PREREQ_FFLUSH
+	invocations from here...
+	* modules/fflush (configure.ac): ... to here.
+
+2011-05-06  Bruno Haible  <bruno@clisp.org>
+
 	fdopendir: Move AC_LIBOBJ invocations to module description.
 	* m4/fdopendir.m4 (gl_FUNC_FDOPENDIR): Move AC_LIBOBJ invocations from
 	here...
