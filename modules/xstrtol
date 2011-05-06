@@ -14,7 +14,7 @@ error
 getopt-gnu
 gettext-h
 intprops
-inttypes
+inttypes-incomplete
 
 configure.ac:
 gl_XSTRTOL

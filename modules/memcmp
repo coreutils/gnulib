@@ -12,7 +12,7 @@ lib/memcmp.c
 m4/memcmp.m4
 
 Depends-on:
-stdint
+stdint          [test $ac_cv_func_memcmp_working = no]
 
 configure.ac:
 gl_FUNC_MEMCMP

@@ -7,8 +7,8 @@ lib/w32sock.h
 
 Depends-on:
 sys_socket
-sys_time
-errno
+sys_time        [test "$ac_cv_header_winsock2_h" = yes]
+errno           [test "$ac_cv_header_winsock2_h" = yes]
 
 configure.ac:
 AC_REQUIRE([gl_HEADER_SYS_SOCKET])

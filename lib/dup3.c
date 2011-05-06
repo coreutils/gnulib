@@ -26,20 +26,6 @@
 
 #include "binary-io.h"
 
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-/* Native Woe32 API.  */
-
-# include <string.h>
-
-/* Get declarations of the Win32 API functions.  */
-# define WIN32_LEAN_AND_MEAN
-# include <windows.h>
-
-/* Upper bound on getdtablesize().  See lib/getdtablesize.c.  */
-# define OPEN_MAX_MAX 0x10000
-
-#endif
-
 int
 dup3 (int oldfd, int newfd, int flags)
 {

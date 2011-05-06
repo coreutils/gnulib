@@ -15,8 +15,8 @@ m4/asm-underscore.m4
 
 Depends-on:
 stdio
-vfprintf-posix
 printf-safe
+vfprintf-posix  [test $REPLACE_PRINTF = 1]
 
 configure.ac:
 gl_FUNC_PRINTF_POSIX

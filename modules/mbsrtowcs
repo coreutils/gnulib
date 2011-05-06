@@ -14,9 +14,9 @@ m4/codeset.m4
 
 Depends-on:
 wchar
-mbrtowc
-strnlen1
 extensions
+mbrtowc         [test $HAVE_MBSRTOWCS = 0 || test $REPLACE_MBSRTOWCS = 1]
+strnlen1        [test $HAVE_MBSRTOWCS = 0 || test $REPLACE_MBSRTOWCS = 1]
 
 configure.ac:
 gl_FUNC_MBSRTOWCS

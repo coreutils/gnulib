@@ -9,7 +9,7 @@ m4/unlockpt.m4
 Depends-on:
 stdlib
 extensions
-ptsname
+ptsname         [test $HAVE_UNLOCKPT = 0]
 
 configure.ac:
 gl_FUNC_UNLOCKPT

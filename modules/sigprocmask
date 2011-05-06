@@ -7,8 +7,8 @@ m4/signalblocking.m4
 
 Depends-on:
 signal
-stdint
-raise
+stdint          [test $HAVE_POSIX_SIGNALBLOCKING = 0]
+raise           [test $HAVE_POSIX_SIGNALBLOCKING = 0]
 
 configure.ac:
 gl_SIGNALBLOCKING

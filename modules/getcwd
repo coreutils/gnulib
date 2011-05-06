@@ -8,18 +8,19 @@ m4/getcwd-path-max.m4
 m4/getcwd.m4
 
 Depends-on:
-mempcpy
-d-ino
-extensions
-memmove
-openat
-stdbool
 unistd
-malloc-posix
-strdup-posix
+extensions
+mempcpy         [test $REPLACE_GETCWD = 1]
+d-ino           [test $REPLACE_GETCWD = 1]
+memmove         [test $REPLACE_GETCWD = 1]
+openat          [test $REPLACE_GETCWD = 1]
+stdbool         [test $REPLACE_GETCWD = 1]
+malloc-posix    [test $REPLACE_GETCWD = 1]
+strdup-posix    [test $REPLACE_GETCWD = 1]
 
 configure.ac:
 gl_FUNC_GETCWD
+gl_MODULE_INDICATOR([getcwd])
 gl_UNISTD_MODULE_INDICATOR([getcwd])
 
 Makefile.am:

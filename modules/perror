@@ -7,8 +7,8 @@ m4/perror.m4
 
 Depends-on:
 stdio
-errno
-strerror
+errno           [test $REPLACE_PERROR = 1]
+strerror        [test $REPLACE_PERROR = 1]
 
 configure.ac:
 gl_FUNC_PERROR

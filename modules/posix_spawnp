@@ -7,12 +7,11 @@ m4/posix_spawn.m4
 
 Depends-on:
 spawn
-posix_spawn-internal
+posix_spawn-internal [test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1]
 
 configure.ac:
 gl_POSIX_SPAWN
 if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1; then
-  gl_REPLACE_SPAWN_H
   AC_LIBOBJ([spawnp])
   gl_POSIX_SPAWN_INTERNAL
 fi

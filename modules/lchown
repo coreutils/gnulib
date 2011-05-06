@@ -6,12 +6,12 @@ lib/lchown.c
 m4/lchown.m4
 
 Depends-on:
-chown
-errno
-lstat
-stdbool
-sys_stat
 unistd
+chown           [test $HAVE_LCHOWN = 0 || test $REPLACE_LCHOWN = 1]
+errno           [test $HAVE_LCHOWN = 0 || test $REPLACE_LCHOWN = 1]
+lstat           [test $HAVE_LCHOWN = 0 || test $REPLACE_LCHOWN = 1]
+stdbool         [test $HAVE_LCHOWN = 0 || test $REPLACE_LCHOWN = 1]
+sys_stat        [test $HAVE_LCHOWN = 0 || test $REPLACE_LCHOWN = 1]
 
 configure.ac:
 gl_FUNC_LCHOWN

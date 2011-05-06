@@ -1,5 +1,5 @@
 Description:
-Parametrizable hash table.
+Parameterizable hash table.
 
 Files:
 lib/hash.c
@@ -10,7 +10,7 @@ Depends-on:
 bitrotate
 stdbool
 stdint
-xalloc
+xalloc-oversized
 
 configure.ac:
 gl_HASH

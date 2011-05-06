@@ -7,8 +7,8 @@ m4/dirfd.m4
 
 Depends-on:
 dirent
-errno
 extensions
+errno           [test $ac_cv_have_decl_dirfd = no || test $REPLACE_DIRFD = 1]
 
 configure.ac:
 gl_FUNC_DIRFD

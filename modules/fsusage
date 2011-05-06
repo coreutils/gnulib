@@ -7,9 +7,9 @@ lib/fsusage.c
 m4/fsusage.m4
 
 Depends-on:
-full-read
 stdbool
 stdint
+full-read       [test $gl_cv_fs_space = yes]
 
 configure.ac:
 gl_FSUSAGE

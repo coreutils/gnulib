@@ -9,12 +9,12 @@ m4/savewd.m4
 Depends-on:
 dosname
 errno
-exit
 fchdir
 fcntl-safer
 fcntl-h
 raise
 stdbool
+stdlib
 xalloc
 
 configure.ac:

@@ -12,15 +12,22 @@ Portability problems fixed by Gnulib:
 This function is missing on some platforms:
 mingw.
 @item
+This function is declared in @code{<unistd.h>} instead of @code{<stdlib.h>}
+on some platforms:
+MacOS X 10.3.
+@item
 On some platforms (HP-UX 10.20, SunOS 4.1.4, Solaris 2.5.1), mkstemp has a silly
 limit that it can create no more than 26 files from a given template.  On
 OSF/1 4.0f, it can create only 32 files per process.
+@item
+On some older platforms, @code{mkstemp} can create a world or group
+writable or readable file, if you haven't set the process umask to
+077.  This is a security risk.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-On platforms other than glibc 2.0.7 or newer, @code{mkstemp} can create a
-world or group writable or readable file, if you haven't set the process
-umask to 077.  This is a security risk.
 @end itemize
+
+The gnulib module @code{clean-temp} can create temporary files that will not
+be left behind after signals such as SIGINT.

@@ -8,8 +8,8 @@ m4/printf.m4
 
 Depends-on:
 stdio
-vasnprintf
-errno
+vasnprintf      [test $ac_cv_func_snprintf = no || test $REPLACE_SNPRINTF = 1]
+errno           [test $ac_cv_func_snprintf = no || test $REPLACE_SNPRINTF = 1]
 
 configure.ac:
 gl_FUNC_SNPRINTF

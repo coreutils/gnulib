@@ -8,7 +8,7 @@ m4/asinl.m4
 Depends-on:
 math
 extensions
-sqrtl
+sqrtl           [test $HAVE_ASINL = 0]
 
 configure.ac:
 gl_FUNC_ASINL
@@ -23,7 +23,7 @@ Link:
 $(ASINL_LIBM)
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Paolo Bonzini

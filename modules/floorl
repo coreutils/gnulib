@@ -9,7 +9,7 @@ m4/floorl.m4
 Depends-on:
 math
 extensions
-float
+float           [test $HAVE_DECL_FLOORL = 0 || test $REPLACE_FLOORL = 1]
 
 configure.ac:
 gl_FUNC_FLOORL

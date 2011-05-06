@@ -19,4 +19,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-fdutimensat
 check_PROGRAMS += test-fdutimensat
-test_fdutimensat_LDADD = $(LDADD) $(LIB_CLOCK_GETTIME) @LIBINTL@
+test_fdutimensat_LDADD = $(LDADD) $(LIB_CLOCK_GETTIME)

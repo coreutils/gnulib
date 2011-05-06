@@ -7,7 +7,7 @@ m4/atoll.m4
 m4/longlong.m4
 
 Depends-on:
-strtoll
+strtoll         [test $HAVE_ATOLL = 0]
 
 configure.ac:
 gl_FUNC_ATOLL

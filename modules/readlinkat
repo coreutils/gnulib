@@ -6,11 +6,11 @@ lib/readlinkat.c
 m4/readlinkat.m4
 
 Depends-on:
+unistd
 extensions
 fcntl-h
-openat
-readlink
-unistd
+openat          [test $HAVE_READLINKAT = 0]
+readlink        [test $HAVE_READLINKAT = 0]
 
 configure.ac:
 gl_FUNC_READLINKAT

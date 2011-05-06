@@ -10,7 +10,7 @@ Depends-on:
 getgroups
 getugroups
 realloc-gnu
-xalloc
+xalloc-oversized
 
 configure.ac:
 gl_MGETGROUPS

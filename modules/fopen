@@ -7,7 +7,7 @@ m4/fopen.m4
 
 Depends-on:
 stdio
-unistd
+unistd          [test $REPLACE_FOPEN = 1]
 
 configure.ac:
 gl_FUNC_FOPEN

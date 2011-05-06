@@ -4,9 +4,9 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/dup2.html}
 
-Gnulib module: dup2
+Gnulib module: dup2 or dup2-obsolete
 
-Portability problems fixed by Gnulib:
+Portability problems fixed by either Gnulib module @code{dup2} or @code{dup2-obsolete}:
 @itemize
 @item
 This function always returns 0 for success on some platforms:
@@ -34,7 +34,10 @@ This function returns @code{EMFILE} instead of @code{EBADF} for
 extremely large targets, which interferes with using
 @code{dup2(fd,fd)==fd)} as the minimal @code{EBADF} filter:
 FreeBSD 6.1, Cygwin 1.5.
+@end itemize
 
+Portability problems fixed by Gnulib module @code{dup2-obsolete}:
+@itemize
 @item
 This function is missing on some older platforms.
 @end itemize

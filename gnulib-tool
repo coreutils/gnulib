@@ -223,6 +223,10 @@ Options for --import, --add/remove-import,
       --avoid=MODULE        Avoid including the given MODULE. Useful if you
                             have code that provides equivalent functionality.
                             This option can be repeated.
+      --conditional-dependencies
+                            Support conditional dependencies (experimental,
+                            may save configure time and object code, not
+                            compatible with --with-tests).
       --libtool             Use libtool rules.
       --no-libtool          Don't use libtool rules.
 
@@ -912,6 +916,8 @@ fi
 # - excl_unportable_tests  true if --without-unportable-tests was given, blank
 #                          otherwise
 # - avoidlist       list of modules to avoid, from --avoid
+# - cond_dependencies  true if --conditional-dependencies was given, blank
+#                      otherwise
 # - lgpl            yes or a number if --lgpl was given, blank otherwise
 # - makefile_name   from --makefile-name
 # - libtool         true if --libtool was given, false if --no-libtool was
@@ -953,6 +959,7 @@ fi
   excl_privileged_tests=
   excl_unportable_tests=
   avoidlist=
+  cond_dependencies=
   lgpl=
   makefile_name=
   libtool=
@@ -1002,7 +1009,7 @@ fi
       --extract-* )
         mode=`echo "X$1" | sed -e 's/^X--//'`
         shift ;;
-      --copy-file | --copy-fil | --copy-fi | --copy-f | --copy- | --copy | --cop | --co )
+      --copy-file | --copy-fil | --copy-fi | --copy-f | --copy- | --copy | --cop )
         mode=copy-file
         shift ;;
       --dir )
@@ -1153,6 +1160,9 @@ fi
         arg=`echo "X$1" | sed -e 's/^X--avoid=//'`
         func_append avoidlist " $arg"
         shift ;;
+      --conditional-dependencies | --conditional-dependencie | --conditional-dependenci | --conditional-dependenc | --conditional-dependen | --conditional-depende | --conditional-depend | --conditional-depen | --conditional-depe | --conditional-dep | --conditional-de | --conditional-d | --conditional- | --conditional | --conditiona | --condition | --conditio | --conditi | --condit | --condi | --cond | --con)
+        cond_dependencies=true
+        shift ;;
       --lgpl )
         lgpl=yes
         shift ;;
@@ -1297,6 +1307,10 @@ fi
   fi
   if test -z "$pobase" && test -n "$po_domain"; then
     func_warning "--po-domain has no effect without a --po-base option"
+  fi
+  if test -n "$cond_dependencies" && test -n "$inctests"; then
+    echo "gnulib-tool: option --conditional-dependencies is not supported with --with-tests" 1>&2
+    func_exit 1
   fi
 
   # Determine the minimum supported autoconf version from the project's
@@ -2128,11 +2142,13 @@ func_get_autoconf_snippet ()
   fi
 }
 
-# func_get_automake_snippet module
+# func_get_automake_snippet_conditional module
+# returns the part of the Makefile.am snippet that can be put inside Automake
+# conditionals.
 # Input:
 # - local_gnulib_dir  from --local-dir
 # - modcache          true or false, from --cache-modules/--no-cache-modules
-func_get_automake_snippet ()
+func_get_automake_snippet_conditional ()
 {
   if ! $modcache; then
     func_lookup_file "modules/$1"
@@ -2152,6 +2168,16 @@ func_get_automake_snippet ()
       fi
     fi
   fi
+}
+
+# func_get_automake_snippet_unconditional module
+# returns the part of the Makefile.am snippet that must stay outside of
+# Automake conditionals.
+# Input:
+# - local_gnulib_dir  from --local-dir
+# - modcache          true or false, from --cache-modules/--no-cache-modules
+func_get_automake_snippet_unconditional ()
+{
   case "$1" in
     *-tests)
       # *-tests module live in tests/, not lib/.
@@ -2176,8 +2202,10 @@ func_get_automake_snippet ()
       sed_extract_mentioned_files='s/^lib_SOURCES[	 ]*+=[	 ]*//p'
       already_mentioned_files=` \
         { if ! $modcache; then
+            func_lookup_file "modules/$1"
             sed -n -e "/^Makefile\.am$sed_extract_prog" < "$lookedup_file"
           else
+            func_cache_lookup_module "$1"
             if $have_associative; then
               if eval 'test -n "${modcache_makefile[$1]+set}"'; then
                 eval 'echo "${modcache_makefile[$1]}"'
@@ -2241,6 +2269,16 @@ func_get_automake_snippet ()
       fi
       ;;
   esac
+}
+
+# func_get_automake_snippet module
+# Input:
+# - local_gnulib_dir  from --local-dir
+# - modcache          true or false, from --cache-modules/--no-cache-modules
+func_get_automake_snippet ()
+{
+  func_get_automake_snippet_conditional "$1"
+  func_get_automake_snippet_unconditional "$1"
 }
 
 # func_get_include_directive module
@@ -2380,6 +2418,143 @@ func_acceptable ()
   return 0
 }
 
+# sed expression to keep the first 32 characters of each line.
+sed_first_32_chars='s/^\(................................\).*/\1/'
+
+# func_module_shellfunc_name module
+# computes the shell function name that will contain the m4 macros for the module.
+# Input:
+# - macro_prefix    prefix to use
+# Output:
+# - shellfunc       shell function name
+func_module_shellfunc_name ()
+{
+  case $1 in
+    *[!a-zA-Z0-9_]*)
+      shellfunc=func_${macro_prefix}_gnulib_m4code_`echo "$1" | md5sum | LC_ALL=C sed -e "$sed_first_32_chars"` ;;
+    *)
+      shellfunc=func_${macro_prefix}_gnulib_m4code_$1 ;;
+  esac
+}
+
+# func_module_shellvar_name module
+# computes the shell variable name the will be set to true once the m4 macros
+# for the module have been executed.
+# Output:
+# - shellvar        shell variable name
+func_module_shellvar_name ()
+{
+  case $1 in
+    *[!a-zA-Z0-9_]*)
+      shellvar=${macro_prefix}_gnulib_enabled_`echo "$1" | md5sum | LC_ALL=C sed -e "$sed_first_32_chars"` ;;
+    *)
+      shellvar=${macro_prefix}_gnulib_enabled_$1 ;;
+  esac
+}
+
+# func_module_conditional_name module
+# computes the automake conditional name for the module.
+# Output:
+# - conditional     name of automake conditional
+func_module_conditional_name ()
+{
+  case $1 in
+    *[!a-zA-Z0-9_]*)
+      conditional=${macro_prefix}_GNULIB_ENABLED_`echo "$1" | md5sum | LC_ALL=C sed -e "$sed_first_32_chars"` ;;
+    *)
+      conditional=${macro_prefix}_GNULIB_ENABLED_$1 ;;
+  esac
+}
+
+# func_uncond_add_module B
+# notes the presence of B as an unconditional module.
+#
+# func_conddep_add_module A B cond
+# notes the presence of a conditional dependency from module A to module B,
+# subject to the condition that A is enabled and cond is true.
+#
+# func_cond_module_p B
+# tests whether module B is conditional.
+#
+# func_cond_module_condition A B
+# returns the condition when B should be enabled as a dependency of A, once the
+# m4 code for A has been executed.
+# Output: - condition
+#
+if $have_associative; then
+  declare -A conddep_isuncond
+  declare -A conddep_dependers
+  declare -A conddep_condition
+  func_uncond_add_module ()
+  {
+    eval 'conddep_isuncond[$1]=true'
+    eval 'unset conddep_dependers[$1]'
+  }
+  func_conddep_add_module ()
+  {
+    eval 'isuncond="${conddep_isuncond[$2]}"'
+    if test -z "$isuncond"; then
+      # No unconditional dependency to B known at this point.
+      eval 'conddep_dependers[$2]="${conddep_dependers[$2]} $1"'
+      eval 'conddep_condition[$1---$2]="$3"'
+    fi
+  }
+  func_cond_module_p ()
+  {
+    eval 'previous_dependers="${conddep_dependers[$1]}"'
+    test -n "$previous_dependers"
+  }
+  func_cond_module_condition ()
+  {
+    eval 'condition="${conddep_condition[$1---$2]}"'
+  }
+else
+  func_uncond_add_module ()
+  {
+    case $1 in
+      *[!a-zA-Z0-9_]*)
+        suffix=`echo "$1" | md5sum | LC_ALL=C sed -e "$sed_first_32_chars"` ;;
+      *)
+        suffix=$1 ;;
+    esac
+    eval 'conddep_isuncond_'"$suffix"'=true'
+    eval 'unset conddep_dependers_'"$suffix"
+  }
+  func_conddep_add_module ()
+  {
+    case $2 in
+      *[!a-zA-Z0-9_]*)
+        suffix=`echo "$2" | md5sum | LC_ALL=C sed -e "$sed_first_32_chars"` ;;
+      *)
+        suffix=$2 ;;
+    esac
+    eval 'isuncond="${conddep_isuncond_'"$suffix"'}"'
+    if test -z "$isuncond"; then
+      eval 'conddep_dependers_'"$suffix"'="${conddep_dependers_'"$suffix"'} $1"'
+      suffix=`echo "$1---$2" | md5sum | LC_ALL=C sed -e "$sed_first_32_chars"`
+      eval 'conddep_condition_'"$suffix"'="$3"'
+    fi
+  }
+  func_cond_module_p ()
+  {
+    case $1 in
+      *[!a-zA-Z0-9_]*)
+        suffix=`echo "$1" | md5sum | LC_ALL=C sed -e "$sed_first_32_chars"` ;;
+      *)
+        suffix=$1 ;;
+    esac
+    eval 'previous_dependers="${conddep_dependers_'"$suffix"'}"'
+    test -n "$previous_dependers"
+  }
+  func_cond_module_condition ()
+  {
+    suffix=`echo "$1---$2" | md5sum | LC_ALL=C sed -e "$sed_first_32_chars"`
+    eval 'condition="${conddep_condition_'"$suffix"'}"'
+  }
+fi
+
+sed_dependencies_without_conditions='s/ *\[.*//'
+
 # func_modules_transitive_closure
 # Input:
 # - local_gnulib_dir  from --local-dir
@@ -2411,11 +2586,16 @@ func_acceptable ()
 # - excl_unportable_tests  true if tests that fail on some platforms should be
 #                          excluded, blank otherwise
 # - avoidlist       list of modules to avoid
+# - cond_dependencies  true if conditional dependencies shall be supported,
+#                      blank otherwise
 # - tmp             pathname of a temporary directory
 # Output:
 # - modules         list of modules, including dependencies
+# - conddep_dependers, conddep_condition  information about conditionally
+#                                         enabled modules
 func_modules_transitive_closure ()
 {
+  sed_escape_dependency='s|\([/.]\)|\\\1|g'
   # In order to process every module only once (for speed), process an "input
   # list" of modules, producing an "output list" of modules. During each round,
   # more modules can be queued in the input list. Once a module on the input
@@ -2425,6 +2605,16 @@ func_modules_transitive_closure ()
   inmodules="$modules"
   outmodules=
   fmtc_inc_all_tests="$inc_all_direct_tests"
+  if test -n "$cond_dependencies"; then
+    for module in $inmodules; do
+      func_verify_module
+      if test -n "$module"; then
+        if func_acceptable $module; then
+          func_uncond_add_module $module
+        fi
+      fi
+    done
+  fi
   while test -n "$inmodules"; do
     inmodules_this_round="$inmodules"
     inmodules=                    # Accumulator, queue for next round
@@ -2433,7 +2623,23 @@ func_modules_transitive_closure ()
       if test -n "$module"; then
         if func_acceptable $module; then
           func_append outmodules " $module"
-          deps=`func_get_dependencies $module`
+          if test -n "$cond_dependencies"; then
+            if func_get_automake_snippet_conditional $module | grep '^if ' > /dev/null; then
+              # A module whose Makefile.am snippet contains a reference to an
+              # automake conditional. If we were to use it conditionally, we
+              # would get an error
+              #   configure: error: conditional "..." was never defined.
+              # because automake 1.11.1 does not handle nested conditionals
+              # correctly. As a workaround, make the module unconditional.
+              func_uncond_add_module $module
+            fi
+            if func_cond_module_p $module; then
+              conditional=true
+            else
+              conditional=false
+            fi
+          fi
+          deps=`func_get_dependencies $module | sed -e "$sed_dependencies_without_conditions"`
           # Duplicate dependencies are harmless, but Jim wants a warning.
           duplicated_deps=`echo "$deps" | LC_ALL=C sort | LC_ALL=C uniq -d`
           if test -n "$duplicated_deps"; then
@@ -2486,6 +2692,24 @@ func_modules_transitive_closure ()
             done
             if $inc; then
               func_append inmodules " $dep"
+              if test -n "$cond_dependencies"; then
+                escaped_dep=`echo "$dep" | sed -e "$sed_escape_dependency"`
+                sed_extract_condition1='/^ *'"$escaped_dep"' *$/{s/^.*$/true/p}'
+                sed_extract_condition2='/^ *'"$escaped_dep"' *\[.*\] *$/{s/^ *'"$escaped_dep"' *\[\(.*\)\] *$/\1/p}'
+                condition=`func_get_dependencies $module | sed -n -e "$sed_extract_condition1" -e "$sed_extract_condition2"`
+                if test "$condition" = true; then
+                  condition=
+                fi
+                if test -n "$condition"; then
+                  func_conddep_add_module "$module" "$dep" "$condition"
+                else
+                  if $conditional; then
+                    func_conddep_add_module "$module" "$dep" true
+                  else
+                    func_uncond_add_module "$dep"
+                  fi
+                fi
+              fi
             fi
           done
         fi
@@ -2522,7 +2746,7 @@ func_show_module_list ()
   echo "Module list with included dependencies (indented):"
   echo "$specified_modules" | sed -e '/^$/d' -e 's/$/| /' > "$tmp"/specified-modules
   echo "$modules" | sed -e '/^$/d' \
-    | LC_ALL=C join -t '|' -a 2 "$tmp"/specified-modules - \
+    | LC_ALL=C join -t '|' -a2 "$tmp"/specified-modules - \
     | sed -e 's/^\(.*\)|.*/|\1/' -e 's/^/    /' -e 's/^    |\(.*\)$/  '"${bold_on}"'\1'"${bold_off}"'/'
 }
 
@@ -2812,7 +3036,7 @@ func_emit_lib_Makefile_am ()
       func_verify_nontests_module
       if test -n "$module"; then
         {
-          func_get_automake_snippet "$module" |
+          func_get_automake_snippet_conditional "$module" |
             LC_ALL=C \
             sed -e 's,lib_LIBRARIES,lib%_LIBRARIES,g' \
                 -e 's,lib_LTLIBRARIES,lib%_LTLIBRARIES,g' \
@@ -2826,16 +3050,32 @@ func_emit_lib_Makefile_am ()
             echo "${libname}_${libext}_LIBADD += @${perhapsLT}ALLOCA@"
             echo "${libname}_${libext}_DEPENDENCIES += @${perhapsLT}ALLOCA@"
           fi
-        } > "$tmp"/amsnippet
+        } > "$tmp"/amsnippet1
+        {
+          func_get_automake_snippet_unconditional "$module" |
+            LC_ALL=C sed -e 's,lib_\([A-Z][A-Z]*\),'"${libname}_${libext}"'_\1,g'
+        } > "$tmp"/amsnippet2
         # Skip the contents if it's entirely empty.
-        if grep '[^	 ]' "$tmp"/amsnippet > /dev/null ; then
+        if grep '[^	 ]' "$tmp"/amsnippet1 "$tmp"/amsnippet2 > /dev/null ; then
           echo "## begin gnulib module $module"
           echo
-          cat "$tmp"/amsnippet
+          if test -n "$cond_dependencies"; then
+            if func_cond_module_p "$module"; then
+              func_module_conditional_name "$module"
+              echo "if $conditional"
+            fi
+          fi
+          cat "$tmp"/amsnippet1
+          if test -n "$cond_dependencies"; then
+            if func_cond_module_p "$module"; then
+              echo "endif"
+            fi
+          fi
+          cat "$tmp"/amsnippet2
           echo "## end   gnulib module $module"
           echo
         fi
-        rm -f "$tmp"/amsnippet
+        rm -f "$tmp"/amsnippet1 "$tmp"/amsnippet2
         # Test whether there are some source files in subdirectories.
         for f in `func_get_filelist "$module"`; do
           case $f in
@@ -3380,6 +3620,190 @@ func_emit_initmacro_done ()
   echo "])"
 }
 
+# func_emit_autoconf_snippet indentation
+# emits the autoconf snippet of a module.
+# Input:
+# - local_gnulib_dir  from --local-dir
+# - modcache          true or false, from --cache-modules/--no-cache-modules
+# - sed_replace_build_aux  sed expression that replaces reference to build-aux
+# - module            the module name
+# - toplevel          true or false. 'false' means a subordinate use of
+#                     gnulib-tool.
+# - disable_libtool   true or false. It tells whether to disable libtool
+#                     handling even if it has been specified through the
+#                     command line options.
+# - disable_gettext   true or false. It tells whether to disable AM_GNU_GETTEXT
+#                     invocations.
+# - indentation       spaces to prepend on each line
+func_emit_autoconf_snippet ()
+{
+  if { case $module in
+         gnumakefile | maintainer-makefile)
+           # These modules are meant to be used only in the top-level directory.
+           $toplevel ;;
+         *)
+           true ;;
+       esac
+     }; then
+    func_get_autoconf_snippet "$module" \
+      | sed -e '/^$/d;' -e "s/^/$indentation/" \
+            -e "$sed_replace_build_aux" \
+      | { if $disable_libtool; then
+            sed -e 's/\$gl_cond_libtool/false/g' \
+                -e 's/gl_libdeps/gltests_libdeps/g' \
+                -e 's/gl_ltlibdeps/gltests_ltlibdeps/g'
+          else
+            cat
+          fi
+        } \
+      | { if $disable_gettext; then
+            sed -e 's/AM_GNU_GETTEXT(\[external\])/dnl you must add AM_GNU_GETTEXT([external]) or similar to configure.ac./'
+          else
+            cat
+          fi
+        }
+    if test "$module" = 'alloca' && test "$libtool" = true && ! $disable_libtool; then
+      echo 'changequote(,)dnl'
+      echo 'LTALLOCA=`echo "$ALLOCA" | sed -e '"'"'s/\.[^.]* /.lo /g;s/\.[^.]*$/.lo/'"'"'`'
+      echo 'changequote([, ])dnl'
+      echo 'AC_SUBST([LTALLOCA])'
+    fi
+  fi
+}
+
+# func_emit_autoconf_snippets modules verifier toplevel disable_libtool disable_gettext
+# collects and emit the autoconf snippets of a set of modules.
+# Input:
+# - local_gnulib_dir  from --local-dir
+# - modcache          true or false, from --cache-modules/--no-cache-modules
+# - sed_replace_build_aux  sed expression that replaces reference to build-aux
+# - modules           the list of modules.
+# - verifier          one of func_verify_module, func_verify_nontests_module,
+#                     func_verify_tests_module. It selects the subset of
+#                     $modules to consider.
+# - toplevel          true or false. 'false' means a subordinate use of
+#                     gnulib-tool.
+# - disable_libtool   true or false. It tells whether to disable libtool
+#                     handling even if it has been specified through the
+#                     command line options.
+# - disable_gettext   true or false. It tells whether to disable AM_GNU_GETTEXT
+#                     invocations.
+func_emit_autoconf_snippets ()
+{
+  verifier="$2"
+  toplevel="$3"
+  disable_libtool="$4"
+  disable_gettext="$5"
+  if test -n "$cond_dependencies"; then
+    # Emit the autoconf code for the unconditional modules.
+    for module in $1; do
+      eval $verifier
+      if test -n "$module"; then
+        if func_cond_module_p "$module"; then
+          :
+        else
+          func_emit_autoconf_snippet "  "
+        fi
+      fi
+    done
+    # Initialize the shell variables indicating that the modules are enabled.
+    for module in $1; do
+      eval $verifier
+      if test -n "$module"; then
+        if func_cond_module_p "$module"; then
+          func_module_shellvar_name "$module"
+          echo "  $shellvar=false"
+        fi
+      fi
+    done
+    # Emit the autoconf code for the conditional modules, each in a separate
+    # function. This makes it possible to support cycles among conditional
+    # modules.
+    for module in $1; do
+      eval $verifier
+      if test -n "$module"; then
+        if func_cond_module_p "$module"; then
+          func_module_shellfunc_name "$module"
+          func_module_shellvar_name "$module"
+          echo "  $shellfunc ()"
+          echo '  {'
+          echo "    if ! \$$shellvar; then"
+          func_emit_autoconf_snippet "      "
+          echo "      $shellvar=true"
+          deps=`func_get_dependencies $module | sed -e "$sed_dependencies_without_conditions"`
+          for dep in $deps; do
+            if func_cond_module_p "$dep"; then
+              func_module_shellfunc_name "$dep"
+              func_cond_module_condition "$module" "$dep"
+              if test "$condition" != true; then
+                echo '      if $condition; then'
+                echo "        $shellfunc"
+                echo '      fi'
+              else
+                echo "      $shellfunc"
+              fi
+            else
+              # The autoconf code for $dep has already been emitted above and
+              # therefore is already executed when this function is run.
+              :
+            fi
+          done
+          echo '    fi'
+          echo '  }'
+        fi
+      fi
+    done
+    # Emit the dependencies from the unconditional to the conditional modules.
+    for module in $1; do
+      eval $verifier
+      if test -n "$module"; then
+        if func_cond_module_p "$module"; then
+          :
+        else
+          deps=`func_get_dependencies $module | sed -e "$sed_dependencies_without_conditions"`
+          for dep in $deps; do
+            if func_cond_module_p "$dep"; then
+              func_module_shellfunc_name "$dep"
+              func_cond_module_condition "$module" "$dep"
+              if test "$condition" != true; then
+                echo "  if $condition; then"
+                echo "    $shellfunc"
+                echo '  fi'
+              else
+                echo "  $shellfunc"
+              fi
+            else
+              # The autoconf code for $dep has already been emitted above and
+              # therefore is already executed when this code is run.
+              :
+            fi
+          done
+        fi
+      fi
+    done
+    # Define the Automake conditionals.
+    echo "  m4_pattern_allow([^${macro_prefix}_GNULIB_ENABLED_])"
+    for module in $1; do
+      eval $verifier
+      if test -n "$module"; then
+        if func_cond_module_p "$module"; then
+          func_module_conditional_name "$module"
+          func_module_shellvar_name "$module"
+          echo "  AM_CONDITIONAL([$conditional], [\$$shellvar])"
+        fi
+      fi
+    done
+  else
+    # Ignore the conditions, and enable all modules unconditionally.
+    for module in $1; do
+      eval $verifier
+      if test -n "$module"; then
+        func_emit_autoconf_snippet "  "
+      fi
+    done
+  fi
+}
+
 # func_import modules
 # Uses also the variables
 # - mode            import or add-import or remove-import or update
@@ -3406,6 +3830,8 @@ func_emit_initmacro_done ()
 #                         otherwise
 # - inc_all_tests   true if --with-all-tests was given, blank otherwise
 # - avoidlist       list of modules to avoid, from --avoid
+# - cond_dependencies  true if conditional dependencies shall be supported,
+#                      blank otherwise
 # - lgpl            yes or a number if library's license shall be LGPL,
 #                   blank otherwise
 # - makefile_name   from --makefile-name
@@ -4568,22 +4994,7 @@ s,//*$,/,'
     echo "  gl_m4_base='$m4base'"
     func_emit_initmacro_start $macro_prefix
     echo "  gl_source_base='$sourcebase'"
-    for module in $main_modules; do
-      func_verify_module
-      if test -n "$module"; then
-        echo "  # Code from module $module:"
-        func_get_autoconf_snippet "$module" \
-          | sed -e '/^$/d;' -e 's/^/  /' \
-                -e 's/AM_GNU_GETTEXT(\[external\])/dnl you must add AM_GNU_GETTEXT([external]) or similar to configure.ac./' \
-                -e "$sed_replace_build_aux"
-        if test "$module" = 'alloca' && test "$libtool" = true; then
-          echo 'changequote(,)dnl'
-          echo 'LTALLOCA=`echo "$ALLOCA" | sed -e '"'"'s/\.[^.]* /.lo /g;s/\.[^.]*$/.lo/'"'"'`'
-          echo 'changequote([, ])dnl'
-          echo 'AC_SUBST([LTALLOCA])'
-        fi
-      fi
-    done
+    func_emit_autoconf_snippets "$main_modules" func_verify_module true false true
     echo "  # End of code from modules"
     func_emit_initmacro_end $macro_prefix
     echo "  gltests_libdeps="
@@ -4599,18 +5010,7 @@ s,//*$,/,'
     echo "  AC_SUBST([${macro_prefix}tests_WITNESS])"
     echo "  gl_module_indicator_condition=\$${macro_prefix}tests_WITNESS"
     echo "  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [\$gl_module_indicator_condition])"
-    for module in $testsrelated_modules; do
-      func_verify_module
-      if test -n "$module"; then
-        func_get_autoconf_snippet "$module" \
-          | sed -e '/^$/d;' -e 's/^/  /' \
-                -e 's/AM_GNU_GETTEXT(\[external\])/dnl you must add AM_GNU_GETTEXT([external]) or similar to configure.ac./' \
-                -e "$sed_replace_build_aux" \
-                -e 's/\$gl_cond_libtool/false/g' \
-                -e 's/gl_libdeps/gltests_libdeps/g' \
-                -e 's/gl_ltlibdeps/gltests_ltlibdeps/g'
-      fi
-    done
+    func_emit_autoconf_snippets "$testsrelated_modules" func_verify_module true true true
     echo "  m4_popdef([gl_MODULE_INDICATOR_CONDITION])"
     func_emit_initmacro_end ${macro_prefix}tests
     # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
@@ -4891,6 +5291,8 @@ s,//*$,/,'
 # - excl_unportable_tests  true if tests that fail on some platforms should be
 #                          excluded, blank otherwise
 # - avoidlist       list of modules to avoid
+# - cond_dependencies  true if conditional dependencies shall be supported,
+#                      blank otherwise
 # - libtool         true if --libtool was given, false if --no-libtool was
 #                   given, blank otherwise
 # - symbolic        true if files should be symlinked, copied otherwise
@@ -5163,34 +5565,9 @@ func_create_testdir ()
      # autoconf snippets. It's cleanest to put those of the library before
      # those of the tests.
      echo "gl_source_base='../$sourcebase'"
-     for module in $modules; do
-       func_verify_nontests_module
-       if test -n "$module"; then
-         case $module in
-           gnumakefile | maintainer-makefile)
-             # These modules are meant to be used only in the top-level directory.
-             ;;
-           *)
-             func_get_autoconf_snippet "$module" \
-               | sed -e "$sed_replace_build_aux"
-             if test "$module" = 'alloca' && test "$libtool" = true; then
-               echo 'changequote(,)dnl'
-               echo 'LTALLOCA=`echo "$ALLOCA" | sed -e '"'"'s/\.[^.]* /.lo /g;s/\.[^.]*$/.lo/'"'"'`'
-               echo 'changequote([, ])dnl'
-               echo 'AC_SUBST([LTALLOCA])'
-             fi
-             ;;
-         esac
-       fi
-     done
+     func_emit_autoconf_snippets "$modules" func_verify_nontests_module false false false
      echo "gl_source_base='.'"
-     for module in $modules; do
-       func_verify_tests_module
-       if test -n "$module"; then
-         func_get_autoconf_snippet "$module" \
-           | sed -e "$sed_replace_build_aux"
-       fi
-     done
+     func_emit_autoconf_snippets "$modules" func_verify_tests_module false false false
      func_emit_initmacro_end $macro_prefix
      # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
      # created using libtool, because libtool already handles the dependencies.
@@ -5296,19 +5673,7 @@ func_create_testdir ()
    echo "gl_m4_base='$m4base'"
    func_emit_initmacro_start $macro_prefix
    echo "gl_source_base='$sourcebase'"
-   for module in $modules; do
-     func_verify_nontests_module
-     if test -n "$module"; then
-       func_get_autoconf_snippet "$module" \
-         | sed -e "$sed_replace_build_aux"
-       if test "$module" = 'alloca' && test "$libtool" = true; then
-         echo 'changequote(,)dnl'
-         echo 'LTALLOCA=`echo "$ALLOCA" | sed -e '"'"'s/\.[^.]* /.lo /g;s/\.[^.]*$/.lo/'"'"'`'
-         echo 'changequote([, ])dnl'
-         echo 'AC_SUBST([LTALLOCA])'
-       fi
-     fi
-   done
+   func_emit_autoconf_snippets "$modules" func_verify_nontests_module true false false
    func_emit_initmacro_end $macro_prefix
    # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
    # created using libtool, because libtool already handles the dependencies.

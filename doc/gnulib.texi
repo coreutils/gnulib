@@ -396,6 +396,15 @@ Tests modules can depend on non-tests modules.  Non-tests modules should not
 depend on tests modules. (Recall that tests modules are built in a separate
 directory.)
 
+Each listed required module may be declared a conditional dependency.  This
+is indicated by placing the condition for the dependency on the same line,
+enclosed in brackets, after the name of the required module.  The condition
+is a shell expression that is run after the module's @code{configure.ac}
+statements.  For example:
+@smallexample
+strtoull   [test $ac_cv_func_strtoumax = no]
+@end smallexample
+
 @item configure.ac-early
 This field contains @file{configure.ac} stuff (Autoconf macro invocations and
 shell statements) that are logically placed early in the @file{configure.ac}

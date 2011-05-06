@@ -1,4 +1,4 @@
-# sched_h.m4 serial 3
+# sched_h.m4 serial 4
 dnl Copyright (C) 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -32,4 +32,5 @@ AC_DEFUN([gl_SCHED_H],
      AC_SUBST([HAVE_STRUCT_SCHED_PARAM])
     ])
   AC_SUBST([SCHED_H])
+  AM_CONDITIONAL([GL_GENERATE_SCHED_H], [test -n "$SCHED_H"])
 ])

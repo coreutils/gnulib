@@ -6,16 +6,16 @@ lib/nanosleep.c
 m4/nanosleep.m4
 
 Depends-on:
-extensions
-intprops
-multiarch
-select
-sigaction
-stdbool
-sys_select
-sys_time
 time
-verify
+extensions
+multiarch
+intprops        [test $HAVE_NANOSLEEP = 0 || test $REPLACE_NANOSLEEP = 1]
+select          [test $HAVE_NANOSLEEP = 0 || test $REPLACE_NANOSLEEP = 1]
+sigaction       [test $HAVE_NANOSLEEP = 0 || test $REPLACE_NANOSLEEP = 1]
+stdbool         [test $HAVE_NANOSLEEP = 0 || test $REPLACE_NANOSLEEP = 1]
+sys_select      [test $HAVE_NANOSLEEP = 0 || test $REPLACE_NANOSLEEP = 1]
+sys_time        [test $HAVE_NANOSLEEP = 0 || test $REPLACE_NANOSLEEP = 1]
+verify          [test $HAVE_NANOSLEEP = 0 || test $REPLACE_NANOSLEEP = 1]
 
 configure.ac:
 gl_FUNC_NANOSLEEP
@@ -30,7 +30,7 @@ Link:
 $(LIB_NANOSLEEP)
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Jim Meyering

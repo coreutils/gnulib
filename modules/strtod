@@ -7,9 +7,10 @@ m4/strtod.m4
 m4/ldexp.m4
 
 Depends-on:
-c-ctype
-stdbool
 stdlib
+strtod-obsolete
+c-ctype         [test $HAVE_STRTOD = 0 || test $REPLACE_STRTOD = 1]
+stdbool         [test $HAVE_STRTOD = 0 || test $REPLACE_STRTOD = 1]
 
 configure.ac:
 gl_FUNC_STRTOD

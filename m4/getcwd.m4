@@ -6,10 +6,11 @@
 # with or without modifications, as long as this notice is preserved.
 
 # Written by Paul Eggert.
-# serial 3
+# serial 6
 
 AC_DEFUN([gl_FUNC_GETCWD_NULL],
   [
+   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
    AC_CACHE_CHECK([whether getcwd (NULL, 0) allocates memory for result],
      [gl_cv_func_getcwd_null],
      [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
@@ -19,7 +20,8 @@ AC_DEFUN([gl_FUNC_GETCWD_NULL],
 #        endif
 ]], [[
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-/* mingw cwd does not start with '/', but getcwd does allocate.  */
+/* mingw cwd does not start with '/', but getcwd does allocate.
+   However, mingw fails to honor non-zero size.  */
 #else
            if (chdir ("/") != 0)
              return 1;
@@ -35,6 +37,9 @@ AC_DEFUN([gl_FUNC_GETCWD_NULL],
                return 0;
              }
 #endif
+         /* If size is non-zero, allocation must fail if size is too small */
+         if (getcwd (NULL, 1))
+           return 5;
          ]])],
         [gl_cv_func_getcwd_null=yes],
         [gl_cv_func_getcwd_null=no],
@@ -44,14 +49,37 @@ AC_DEFUN([gl_FUNC_GETCWD_NULL],
          *-gnu*)               gl_cv_func_getcwd_null="guessing yes";;
                                # Guess yes on Cygwin.
          cygwin*)              gl_cv_func_getcwd_null="guessing yes";;
-                               # Guess yes on mingw.
-         mingw*)               gl_cv_func_getcwd_null="guessing yes";;
                                # If we don't know, assume the worst.
          *)                    gl_cv_func_getcwd_null="guessing no";;
        esac
         ]])])
 ])
 
+
+dnl Guarantee that getcwd will malloc with a NULL first argument.  Assumes
+dnl that either the system getcwd is robust, or that calling code is okay
+dnl with spurious failures when run from a directory with an absolute name
+dnl larger than 4k bytes.
+dnl
+dnl Assumes that getcwd exists; if you are worried about obsolete
+dnl platforms that lacked getcwd(), then you need to use the GPL module.
+AC_DEFUN([gl_FUNC_GETCWD_LGPL],
+[
+  AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
+  AC_REQUIRE([gl_FUNC_GETCWD_NULL])
+
+  case $gl_cv_func_getcwd_null in
+  *yes) ;;
+  *)
+    dnl Minimal replacement
+    REPLACE_GETCWD=1
+    AC_LIBOBJ([getcwd-lgpl])
+    ;;
+  esac
+])
+
+dnl Check for all known getcwd bugs; useful for a program likely to be
+dnl executed from an arbitrary location.
 AC_DEFUN([gl_FUNC_GETCWD],
 [
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
@@ -70,13 +98,14 @@ AC_DEFUN([gl_FUNC_GETCWD],
   case $gl_cv_func_getcwd_null,$gl_cv_func_getcwd_path_max,$gl_abort_bug in
   *yes,yes,no) ;;
   *)
+    dnl Full replacement, overrides LGPL replacement.
     REPLACE_GETCWD=1
     AC_LIBOBJ([getcwd])
     gl_PREREQ_GETCWD;;
   esac
 ])
 
-# Prerequisites of lib/getcwd.c.
+# Prerequisites of lib/getcwd.c, when full replacement is in effect.
 AC_DEFUN([gl_PREREQ_GETCWD],
 [
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])

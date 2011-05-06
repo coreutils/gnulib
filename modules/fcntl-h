@@ -24,7 +24,7 @@ BUILT_SOURCES += fcntl.h
 
 # We need the following in order to create <fcntl.h> when the system
 # doesn't have one that works with the given compiler.
-fcntl.h: fcntl.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
+fcntl.h: fcntl.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
@@ -32,6 +32,7 @@ fcntl.h: fcntl.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
 	      -e 's|@''NEXT_FCNTL_H''@|$(NEXT_FCNTL_H)|g' \
 	      -e 's|@''GNULIB_FCNTL''@|$(GNULIB_FCNTL)|g' \
+	      -e 's|@''GNULIB_NONBLOCKING''@|$(GNULIB_NONBLOCKING)|g' \
 	      -e 's|@''GNULIB_OPEN''@|$(GNULIB_OPEN)|g' \
 	      -e 's|@''GNULIB_OPENAT''@|$(GNULIB_OPENAT)|g' \
 	      -e 's|@''HAVE_FCNTL''@|$(HAVE_FCNTL)|g' \

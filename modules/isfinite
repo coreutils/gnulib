@@ -7,11 +7,11 @@ m4/isfinite.m4
 m4/check-math-lib.m4
 
 Depends-on:
-isnanf-nolibm
-isnand-nolibm
-isnanl-nolibm
 math
 extensions
+isnanf-nolibm   [test $REPLACE_ISFINITE = 1]
+isnand-nolibm   [test $REPLACE_ISFINITE = 1]
+isnanl-nolibm   [test $REPLACE_ISFINITE = 1]
 
 configure.ac:
 gl_ISFINITE
@@ -23,7 +23,7 @@ Include:
 <math.h>
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Ben Pfaff

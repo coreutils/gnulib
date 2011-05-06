@@ -10,7 +10,7 @@ m4/sockets.m4
 Depends-on:
 socketlib
 sys_socket
-close-hook
+fd-hook
 
 configure.ac:
 gl_SOCKETS

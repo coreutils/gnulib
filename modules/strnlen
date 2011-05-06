@@ -6,9 +6,9 @@ lib/strnlen.c
 m4/strnlen.m4
 
 Depends-on:
-extensions
 string
-memchr
+extensions
+memchr-obsolete [test $HAVE_DECL_STRNLEN = 0 || test $REPLACE_STRNLEN = 1]
 
 configure.ac:
 gl_FUNC_STRNLEN

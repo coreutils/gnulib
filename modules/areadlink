@@ -6,10 +6,7 @@ lib/areadlink.h
 lib/areadlink.c
 
 Depends-on:
-readlink
-ssize_t
-stdint
-unistd
+careadlinkat
 
 configure.ac:
 

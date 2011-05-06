@@ -23,7 +23,7 @@ nobase_nodist_pkginclude_HEADERS += selinux/selinux.h
 lib_SOURCES += se-context.in.h se-selinux.in.h
 
 BUILT_SOURCES += selinux/selinux.h
-selinux/selinux.h: se-selinux.in.h $(UNUSED_PARAMETER_H)
+selinux/selinux.h: se-selinux.in.h $(top_builddir)/config.status $(UNUSED_PARAMETER_H)
 	$(AM_V_at)$(MKDIR_P) selinux
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
@@ -39,7 +39,8 @@ selinux/selinux.h: se-selinux.in.h $(UNUSED_PARAMETER_H)
 MOSTLYCLEANFILES += selinux/selinux.h selinux/selinux.h-t
 
 BUILT_SOURCES += $(SELINUX_CONTEXT_H)
-selinux/context.h: se-context.in.h $(UNUSED_PARAMETER_H)
+if GL_GENERATE_SELINUX_CONTEXT_H
+selinux/context.h: se-context.in.h $(top_builddir)/config.status $(UNUSED_PARAMETER_H)
 	$(AM_V_at)$(MKDIR_P) selinux
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
@@ -48,6 +49,10 @@ selinux/context.h: se-context.in.h $(UNUSED_PARAMETER_H)
 	} > $@-t && \
 	chmod a-x $@-t && \
 	mv $@-t $@
+else
+selinux/context.h: $(top_builddir)/config.status
+	rm -f $@
+endif
 MOSTLYCLEANFILES += selinux/context.h selinux/context.h-t
 MOSTLYCLEANDIRS += selinux
 

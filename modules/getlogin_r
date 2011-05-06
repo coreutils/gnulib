@@ -6,9 +6,9 @@ lib/getlogin_r.c
 m4/getlogin_r.m4
 
 Depends-on:
-extensions
 unistd
-memchr
+extensions
+memchr          [test $HAVE_GETLOGIN_R = 0 || test $REPLACE_GETLOGIN_R = 1]
 
 configure.ac:
 gl_FUNC_GETLOGIN_R

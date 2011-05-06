@@ -22,7 +22,8 @@ BUILT_SOURCES += $(ICONV_H)
 
 # We need the following in order to create <iconv.h> when the system
 # doesn't have one that works with the given compiler.
-iconv.h: iconv.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
+if GL_GENERATE_ICONV_H
+iconv.h: iconv.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
@@ -40,6 +41,10 @@ iconv.h: iconv.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	      < $(srcdir)/iconv.in.h; \
 	} > $@-t && \
 	mv $@-t $@
+else
+iconv.h: $(top_builddir)/config.status
+	rm -f $@
+endif
 MOSTLYCLEANFILES += iconv.h iconv.h-t
 
 Include:

@@ -33,7 +33,6 @@ GZIP_ENV = '--no-name --best $(gzip_rsyncable)'
 
 GIT = git
 VC = $(GIT)
-VC-tag = git tag -s -m '$(VERSION)' 'v$(VERSION)' -u '$(gpg_key_ID)'
 
 VC_LIST = $(build_aux)/vc-list-files -C $(srcdir)
 
@@ -823,8 +822,8 @@ require_exactly_one_NL_at_EOF_ =					\
   END { exit defined $$fail }
 sc_prohibit_empty_lines_at_EOF:
 	@perl -le '$(require_exactly_one_NL_at_EOF_)' $$($(VC_LIST_EXCEPT)) \
-          || { echo '$(ME): empty line(s) or no newline at EOF' 	\
-		1>&2; exit 1; } || :;					\
+	  || { echo '$(ME): empty line(s) or no newline at EOF'		\
+		1>&2; exit 1; } || :
 
 # Make sure we don't use st_blocks.  Use ST_NBLOCKS instead.
 # This is a bit of a kludge, since it prevents use of the string
@@ -839,6 +838,31 @@ sc_prohibit_stat_st_blocks:
 sc_prohibit_S_IS_definition:
 	@prohibit='^ *# *define  *S_IS'					\
 	halt='do not define S_IS* macros; include <sys/stat.h>'		\
+	  $(_sc_search_regexp)
+
+prohibit_doubled_word_RE_ ?= \
+  /\b(then?|[iao]n|i[fst]|but|f?or|at|and|[dt]o)\s+\1\b/gims
+prohibit_doubled_word_ =						\
+    -e 'while ($(prohibit_doubled_word_RE_))'				\
+    -e '  {'								\
+    -e '    $$n = ($$` =~ tr/\n/\n/ + 1);'				\
+    -e '    ($$v = $$&) =~ s/\n/\\n/g;'					\
+    -e '    print "$$ARGV:$$n:$$v\n";'					\
+    -e '  }'
+
+# Define this to a regular expression that matches
+# any filename:dd:match lines you want to ignore.
+# The default is to ignore no matches.
+ignore_doubled_word_match_RE_ ?= ^$$
+
+sc_prohibit_doubled_word:
+	@perl -n -0777 $(prohibit_doubled_word_) $$($(VC_LIST_EXCEPT))	\
+	  | grep -vE '$(ignore_doubled_word_match_RE_)'			\
+	  | grep . && { echo '$(ME): doubled words' 1>&2; exit 1; } || :
+
+sc_prohibit_can_not:
+	@prohibit='\<can[ ]not\>'					\
+	halt='use "cannot", not "can'' not"'				\
 	  $(_sc_search_regexp)
 
 _ptm1 = use "test C1 && test C2", not "test C1 -''a C2"
@@ -917,16 +941,23 @@ update-NEWS-hash: NEWS
 # Ensure that we use only the standard $(VAR) notation,
 # not @...@ in Makefile.am, now that we can rely on automake
 # to emit a definition for each substituted variable.
-# We use perl rather than "grep -nE ..." to exempt a single
-# use of an @...@-delimited variable name in src/Makefile.am.
+# However, there is still one case in which @VAR@ use is not just
+# legitimate, but actually required: when augmenting an automake-defined
+# variable with a prefix.  For example, gettext uses this:
+# MAKEINFO = env LANG= LC_MESSAGES= LC_ALL= LANGUAGE= @MAKEINFO@
+# otherwise, makeinfo would put German or French (current locale)
+# navigation hints in the otherwise-English documentation.
+#
 # Allow the package to add exceptions via a hook in cfg.mk;
 # for example, @PRAGMA_SYSTEM_HEADER@ can be permitted by
 # setting this to ' && !/PRAGMA_SYSTEM_HEADER/'.
 _makefile_at_at_check_exceptions ?=
 sc_makefile_at_at_check:
-	@perl -ne '/\@[A-Z_0-9]+\@/'$(_makefile_at_at_check_exceptions)	\
+	@perl -ne '/\@[A-Z_0-9]+\@/'					\
+          -e ' && !/([A-Z_0-9]+)\s+=.*\@\1\@$$/'			\
+          -e ''$(_makefile_at_at_check_exceptions)			\
 	  -e 'and (print "$$ARGV:$$.: $$_"), $$m=1; END {exit !$$m}'	\
-	    $$($(VC_LIST_EXCEPT) | grep -E '(^|/)Makefile\.am$$')	\
+	    $$($(VC_LIST_EXCEPT) | grep -E '(^|/)(Makefile\.am|[^/]+\.mk)$$') \
 	  && { echo '$(ME): use $$(...), not @...@' 1>&2; exit 1; } || :
 
 news-check: NEWS
@@ -1092,11 +1123,20 @@ gpg_key_ID ?= \
 	  | sed -n '/.*key ID \([0-9A-F]*\)/s//\1/p'; rm -f .ann-sig)
 
 translation_project_ ?= coordinator@translationproject.org
-announcement_Cc_ ?= $(translation_project_), $(PACKAGE_BUGREPORT)
-announcement_mail_headers_ ?=						\
-To: info-gnu@gnu.org							\
-Cc: $(announcement_Cc_)							\
-Mail-Followup-To: $(PACKAGE_BUGREPORT)
+
+# Make info-gnu the default only for a stable release.
+ifeq ($(RELEASE_TYPE),stable)
+  announcement_Cc_ ?= $(translation_project_), $(PACKAGE_BUGREPORT)
+  announcement_mail_headers_ ?=						\
+    To: info-gnu@gnu.org						\
+    Cc: $(announcement_Cc_)						\
+    Mail-Followup-To: $(PACKAGE_BUGREPORT)
+else
+  announcement_Cc_ ?= $(translation_project_)
+  announcement_mail_headers_ ?=						\
+    To: $(PACKAGE_BUGREPORT)						\
+    Cc: $(announcement_Cc_)
+endif
 
 announcement: NEWS ChangeLog $(rel-files)
 	@$(build_aux)/announce-gen					\

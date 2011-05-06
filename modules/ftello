@@ -8,9 +8,9 @@ m4/fseeko.m4
 m4/ftello.m4
 
 Depends-on:
-extensions
-lseek
 stdio
+extensions
+lseek           [test $HAVE_FTELLO = 0 || test $REPLACE_FTELLO = 1]
 
 configure.ac-early:
 AC_REQUIRE([AC_FUNC_FSEEKO])

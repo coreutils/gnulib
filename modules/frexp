@@ -7,7 +7,7 @@ m4/frexp.m4
 
 Depends-on:
 math
-isnand-nolibm
+isnand-nolibm   [test $gl_func_frexp != yes]
 
 configure.ac:
 gl_FUNC_FREXP

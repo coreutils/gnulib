@@ -8,8 +8,9 @@ m4/ioctl.m4
 
 Depends-on:
 sys_ioctl
-sys_socket
-errno
+sys_socket      [test "$ac_cv_header_winsock2_h" = yes || test $REPLACE_IOCTL = 1]
+errno           [test "$ac_cv_header_winsock2_h" = yes || test $REPLACE_IOCTL = 1]
+fd-hook         [test "$ac_cv_header_winsock2_h" = yes || test $REPLACE_IOCTL = 1]
 
 configure.ac:
 gl_FUNC_IOCTL

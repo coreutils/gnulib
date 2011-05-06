@@ -44,35 +44,36 @@ rpl_ioctl (int fd, int request, ... /* {void *,char *} arg */)
 
 #else /* mingw */
 
-# define WIN32_LEAN_AND_MEAN
-/* Get winsock2.h. */
-# include <sys/socket.h>
+# include <errno.h>
 
-/* Get set_winsock_errno, FD_TO_SOCKET etc. */
-# include "w32sock.h"
+# include "fd-hook.h"
 
-int
-ioctl (int fd, int req, ...)
+static int
+primary_ioctl (int fd, int request, void *arg)
 {
-  void *buf;
-  va_list args;
-  SOCKET sock;
-  int r;
-
-  va_start (args, req);
-  buf = va_arg (args, void *);
-  va_end (args);
-
   /* We don't support FIONBIO on pipes here.  If you want to make pipe
      fds non-blocking, use the gnulib 'nonblocking' module, until
      gnulib implements fcntl F_GETFL / F_SETFL with O_NONBLOCK.  */
 
-  sock = FD_TO_SOCKET (fd);
-  r = ioctlsocket (sock, req, buf);
-  if (r < 0)
-    set_winsock_errno ();
+  errno = ENOSYS;
+  return -1;
+}
 
-  return r;
+int
+ioctl (int fd, int request, ... /* {void *,char *} arg */)
+{
+  void *arg;
+  va_list args;
+
+  va_start (args, request);
+  arg = va_arg (args, void *);
+  va_end (args);
+
+# if WINDOWS_SOCKETS
+  return execute_all_ioctl_hooks (primary_ioctl, fd, request, arg);
+# else
+  return primary_ioctl (fd, request, arg);
+# endif
 }
 
 #endif

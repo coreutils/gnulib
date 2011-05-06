@@ -8,11 +8,17 @@ AC_DEFUN([gl_FUNC_DUP2],
 [
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
   AC_REQUIRE([AC_CANONICAL_HOST])
-  AC_CHECK_FUNCS_ONCE([dup2 fcntl])
-  if test $ac_cv_func_dup2 = no; then
-    HAVE_DUP2=0
-    AC_LIBOBJ([dup2])
-  else
+  m4_ifdef([gl_FUNC_DUP2_OBSOLETE], [
+    AC_CHECK_FUNCS_ONCE([dup2])
+    if test $ac_cv_func_dup2 = no; then
+      HAVE_DUP2=0
+      AC_LIBOBJ([dup2])
+    fi
+  ], [
+    AC_DEFINE([HAVE_DUP2], [1], [Define to 1 if you have the 'dup2' function.])
+  ])
+  AC_CHECK_FUNCS_ONCE([fcntl])
+  if test $HAVE_DUP2 = 1; then
     AC_CACHE_CHECK([whether dup2 works], [gl_cv_func_dup2_works],
       [AC_RUN_IFELSE([
          AC_LANG_PROGRAM([[#include <unistd.h>
@@ -63,6 +69,7 @@ AC_DEFUN([gl_FUNC_DUP2],
 AC_DEFUN([gl_REPLACE_DUP2],
 [
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
+  AC_CHECK_FUNCS_ONCE([dup2])
   if test $ac_cv_func_dup2 = yes; then
     REPLACE_DUP2=1
   fi

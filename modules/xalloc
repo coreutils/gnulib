@@ -9,6 +9,7 @@ m4/xalloc.m4
 Depends-on:
 inline
 xalloc-die
+xalloc-oversized
 
 configure.ac:
 gl_XALLOC

@@ -4,10 +4,12 @@ An interface to the write() function that retries after interrupts.
 Files:
 lib/safe-write.h
 lib/safe-write.c
+lib/safe-read.c
 m4/safe-write.m4
+m4/safe-read.m4
 
 Depends-on:
-safe-read
+ssize_t
 write
 
 configure.ac:

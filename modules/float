@@ -19,7 +19,8 @@ BUILT_SOURCES += $(FLOAT_H)
 
 # We need the following in order to create <float.h> when the system
 # doesn't have one that works with the given compiler.
-float.h: float.in.h
+if GL_GENERATE_FLOAT_H
+float.h: float.in.h $(top_builddir)/config.status
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
@@ -29,6 +30,10 @@ float.h: float.in.h
 	      < $(srcdir)/float.in.h; \
 	} > $@-t && \
 	mv $@-t $@
+else
+float.h: $(top_builddir)/config.status
+	rm -f $@
+endif
 MOSTLYCLEANFILES += float.h float.h-t
 
 Include:

@@ -24,20 +24,23 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
-#include <sys/uio.h>
 #include <unistd.h>
 
 #include <sys/socket.h>
-#if HAVE_SYS_UN_H
-# include <sys/un.h>
-#endif
 
 #include "cloexec.h"
 
+/* The code that uses CMSG_FIRSTHDR is enabled on
+   Linux, MacOS X, FreeBSD, OpenBSD, NetBSD, AIX, OSF/1, Cygwin.
+   The code that uses HAVE_STRUCT_MSGHDR_MSG_ACCRIGHTS is enabled on
+   HP-UX, IRIX, Solaris.  */
+
+/* MSG_CMSG_CLOEXEC is defined only on Linux, as of 2011.  */
 #ifndef MSG_CMSG_CLOEXEC
 # define MSG_CMSG_CLOEXEC 0
 #endif
 
+#if HAVE_SENDMSG
 /* sendfd sends the file descriptor fd along the socket
    to a process calling recvfd on the other end.
 
@@ -46,24 +49,24 @@
 int
 sendfd (int sock, int fd)
 {
-  char send = 0;
+  char byte = 0;
   struct iovec iov;
   struct msghdr msg;
-#if HAVE_UNIXSOCKET_SCM_RIGHTS_BSD44_WAY
+# ifdef CMSG_FIRSTHDR
   struct cmsghdr *cmsg;
   char buf[CMSG_SPACE (sizeof fd)];
-#endif
+# endif
 
   /* send at least one char */
   memset (&msg, 0, sizeof msg);
-  iov.iov_base = &send;
+  iov.iov_base = &byte;
   iov.iov_len = 1;
   msg.msg_iov = &iov;
   msg.msg_iovlen = 1;
   msg.msg_name = NULL;
   msg.msg_namelen = 0;
 
-#if HAVE_UNIXSOCKET_SCM_RIGHTS_BSD44_WAY
+# ifdef CMSG_FIRSTHDR
   msg.msg_control = buf;
   msg.msg_controllen = sizeof buf;
   cmsg = CMSG_FIRSTHDR (&msg);
@@ -72,19 +75,29 @@ sendfd (int sock, int fd)
   cmsg->cmsg_len = CMSG_LEN (sizeof fd);
   /* Initialize the payload: */
   memcpy (CMSG_DATA (cmsg), &fd, sizeof fd);
-#elif HAVE_UNIXSOCKET_SCM_RIGHTS_BSD43_WAY
+# elif HAVE_STRUCT_MSGHDR_MSG_ACCRIGHTS
   msg.msg_accrights = &fd;
   msg.msg_accrightslen = sizeof fd;
-#else
+# else
   errno = ENOSYS;
   return -1;
-#endif
+# endif
 
   if (sendmsg (sock, &msg, 0) != iov.iov_len)
     return -1;
   return 0;
 }
+#else
+int
+sendfd (int sock _GL_UNUSED, int fd _GL_UNUSED)
+{
+  errno = ENOSYS;
+  return -1;
+}
+#endif
 
+
+#if HAVE_RECVMSG
 /* recvfd receives a file descriptor through the socket.
    The flags are a bitmask, possibly including O_CLOEXEC (defined in <fcntl.h>).
 
@@ -93,15 +106,15 @@ sendfd (int sock, int fd)
 int
 recvfd (int sock, int flags)
 {
-  char recv = 0;
+  char byte = 0;
   struct iovec iov;
   struct msghdr msg;
   int fd = -1;
-#if HAVE_UNIXSOCKET_SCM_RIGHTS_BSD44_WAY
+# ifdef CMSG_FIRSTHDR
   struct cmsghdr *cmsg;
   char buf[CMSG_SPACE (sizeof fd)];
   int flags_recvmsg = flags & O_CLOEXEC ? MSG_CMSG_CLOEXEC : 0;
-#endif
+# endif
 
   if ((flags & ~O_CLOEXEC) != 0)
     {
@@ -111,14 +124,14 @@ recvfd (int sock, int flags)
 
   /* send at least one char */
   memset (&msg, 0, sizeof msg);
-  iov.iov_base = &recv;
+  iov.iov_base = &byte;
   iov.iov_len = 1;
   msg.msg_iov = &iov;
   msg.msg_iovlen = 1;
   msg.msg_name = NULL;
   msg.msg_namelen = 0;
 
-#if HAVE_UNIXSOCKET_SCM_RIGHTS_BSD44_WAY
+# ifdef CMSG_FIRSTHDR
   msg.msg_control = buf;
   msg.msg_controllen = sizeof buf;
   cmsg = CMSG_FIRSTHDR (&msg);
@@ -156,7 +169,7 @@ recvfd (int sock, int flags)
         }
     }
 
-#elif HAVE_UNIXSOCKET_SCM_RIGHTS_BSD43_WAY
+# elif HAVE_STRUCT_MSGHDR_MSG_ACCRIGHTS
   msg.msg_accrights = &fd;
   msg.msg_accrightslen = sizeof fd;
   if (recvmsg (sock, &msg, 0) < 0)
@@ -173,9 +186,17 @@ recvfd (int sock, int flags)
           return -1;
         }
     }
-#else
+# else
   errno = ENOSYS;
-#endif
+# endif
 
   return fd;
 }
+#else
+int
+recvfd (int sock _GL_UNUSED, int flags _GL_UNUSED)
+{
+  errno = ENOSYS;
+  return -1;
+}
+#endif

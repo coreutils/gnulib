@@ -6,7 +6,7 @@ lib/imaxabs.c
 m4/imaxabs.m4
 
 Depends-on:
-inttypes
+inttypes-incomplete
 
 configure.ac:
 gl_FUNC_IMAXABS

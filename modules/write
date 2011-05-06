@@ -7,7 +7,7 @@ m4/write.m4
 
 Depends-on:
 unistd
-raise
+raise           [test $REPLACE_WRITE = 1]
 
 configure.ac:
 gl_FUNC_WRITE

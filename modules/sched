@@ -19,7 +19,8 @@ BUILT_SOURCES += $(SCHED_H)
 
 # We need the following in order to create a replacement for <sched.h> when
 # the system doesn't have one.
-sched.h: sched.in.h
+if GL_GENERATE_SCHED_H
+sched.h: sched.in.h $(top_builddir)/config.status
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|@''HAVE_SCHED_H''@|$(HAVE_SCHED_H)|g' \
@@ -31,6 +32,10 @@ sched.h: sched.in.h
 	      < $(srcdir)/sched.in.h; \
 	} > $@-t && \
 	mv $@-t $@
+else
+sched.h: $(top_builddir)/config.status
+	rm -f $@
+endif
 MOSTLYCLEANFILES += sched.h sched.h-t
 
 Include:

@@ -7,9 +7,9 @@ lib/obstack.c
 
 Depends-on:
 gettext-h
-exit
 exitfail
 stdint
+stdlib
 
 configure.ac:
 AC_FUNC_OBSTACK

@@ -156,6 +156,8 @@ func_verbose $compile_command \
              "$srcdir"/progname.c \
              "$srcdir"/progreloc.c \
              "$srcdir"/areadlink.c \
+             "$srcdir"/careadlinkat.c \
+             "$srcdir"/allocator.c \
              "$srcdir"/readlink.c \
              "$srcdir"/canonicalize-lgpl.c \
              "$srcdir"/malloca.c \
@@ -172,6 +174,8 @@ rm -f relocwrapper.o \
       progreloc.o \
       xreadlink.o \
       areadlink.o \
+      careadlinkat.o \
+      allocator.o \
       canonicalize-lgpl.o \
       malloca.o \
       relocatable.o \

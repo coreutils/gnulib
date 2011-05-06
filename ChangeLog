@@ -1,3 +1,1649 @@
+2011-05-06  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: use info-gnu@ as the default only for a stable release
+	* top/maint.mk: Don't default to info-gnu for alpha or beta releases.
+	For those, just use $(PACKAGE_BUGREPORT), in which case we don't have
+	to set the Mail-Followup-To header.  Prompted by Reuben Thomas in
+	http://thread.gmane.org/gmane.comp.lib.gnulib.bugs/26488
+
+2011-05-05  Paul Eggert  <eggert@cs.ucla.edu>
+
+	assert-h: new module, which supports C1X-style static_assert
+	* lib/assert.in.h, m4/assert_h.m4, modules/assert-h: New files.
+	* lib/verify.h: Revamp so that this can be copied into assert.h,
+	while retaining the ability to use it standalone as before.
+	Rename private identifiers so as not to encroach on the
+	standard C namespace, since this is now used by assert.h.
+	(_GL_VERIFY_TYPE): New macro, factoring out differing parts of
+	the old verify_true.
+	(_GL_VERIFY_TRUE): New macro, with much of the contents of
+	the old verify_true.  Use _GL_VERIFY_TYPE.
+	(_GL_VERIFY): New macro, with much of the contents of the old verify.
+	(static_assert): New macro, if _GL_STATIC_ASSERT_H
+	is defined and static_assert is not; _GL_STATIC_ASSERT_H is
+	defined when this file is copied into the replacement assert.h.
+	(_Static_assert): New macro, if _GL_STATIC_ASSERT_H is defined
+	and _Static_assert is not built in.
+	(verify_true, verify): Define only if _GL_STATIC_ASSERT_H is not
+	defined, and use the new macros mentioned above.
+	* doc/posix-headers/assert.texi: Document this.
+
+2011-05-05  Bruno Haible  <bruno@clisp.org>
+
+	fclose, fflush: Respect rules for use of AC_LIBOBJ.
+	* m4/fflush.m4 (gl_FUNC_FFLUSH): Don't invoke gl_REPLACE_FCLOSE.
+	* m4/fclose.m4 (gl_FUNC_FCLOSE): Invoke gl_FUNC_FFLUSH_STDIN and
+	gl_REPLACE_FCLOSE here.
+	* modules/fflush (Depends-on): Remove fclose.
+	* doc/posix-functions/fclose.texi: Mention module 'fflush' only in
+	combination with module 'fclose'.
+
+2011-05-05  Bruno Haible  <bruno@clisp.org>
+
+	fflush, fseeko: Respect rules for use of AC_LIBOBJ.
+	* m4/fflush.m4 (gl_FUNC_FFLUSH_STDIN): New macro, extracted from
+	gl_FUNC_FFLUSH.
+	(gl_FUNC_FFLUSH): Use it.
+	(gl_REPLACE_FFLUSH): Don't invoke gl_REPLACE_FSEEKO.
+	* m4/fseeko.m4 (gl_FUNC_FSEEKO): Invoke gl_FUNC_FFLUSH_STDIN and
+	gl_REPLACE_FSEEKO here.
+
+2011-05-05  Bruno Haible  <bruno@clisp.org>
+
+	tzset: Relicense under LGPL.
+	* modules/tzset (License): Change to LGPL.
+	No agreement needed; it's a no-op.
+
+	strtoimax, strtoumax: Relicense under LGPL.
+	* modules/strtoimax (License): Change to LGPL.
+	* modules/strtoumax (License): Likewise.
+	With permission from Jim Meyering, Paul Eggert:
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-05/msg00124.html>
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-05/msg00109.html>
+
+	getgroups: Relicense under LGPL.
+	* modules/getgroups (License): Change to LGPL.
+	With permission from Jim Meyering, Paul Eggert, Eric Blake:
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-05/msg00111.html>
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-05/msg00148.html>
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-05/msg00138.html>
+
+	nanosleep: Relicense under LGPL.
+	* modules/nanosleep (License): Change to LGPL.
+	With permission from Jim Meyering, Paul Eggert, Eric Blake, Bruno
+	Haible:
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-05/msg00111.html>
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-05/msg00148.html>
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-05/msg00138.html>
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-05/msg00131.html>
+
+	futimens: Relicense under LGPL.
+	* modules/futimens (License): Change to LGPL.
+	With permission from Eric Blake:
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-05/msg00138.html>
+
+	fflush: Relicense under LGPL.
+	* modules/fflush (License): Change to LGPL.
+	With permission from Eric Blake, Bruno Haible, Jim Meyering:
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-05/msg00138.html>
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-05/msg00131.html>
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-05/msg00133.html>
+
+	tmpfile: Relicense under LGPL.
+	* modules/tmpfile (License): Change to LGPL.
+	With permission from Ben Pfaff:
+	<http://lists.gnu.org/archive/html/bug-gnulib/2010-12/msg00185.html>
+
+	isfinite: Relicense under LGPL.
+	* modules/isfinite (License): Change to LGPL.
+	With permission from Ben Pfaff, Bruno Haible:
+	<http://lists.gnu.org/archive/html/bug-gnulib/2010-12/msg00185.html>
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-05/msg00130.html>
+
+	acosl..tanl: Relicense under LGPL.
+	* modules/acosl (License): Change to LGPL.
+	* modules/asinl (License): Likewise.
+	* modules/atanl (License): Likewise.
+	* modules/cosl (License): Likewise.
+	* modules/expl (License): Likewise.
+	* modules/logl (License): Likewise.
+	* modules/sinl (License): Likewise.
+	* modules/sqrtl (License): Likewise.
+	* modules/tanl (License): Likewise.
+	Source code originally from glibc and Paolo Bonzini. Agreements:
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-05/msg00137.html>
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-05/msg00128.html>
+
+2011-05-05  Bruno Haible  <bruno@clisp.org>
+
+	signal: Define sighandler_t.
+	* lib/signal.in.h (sighandler_t): New type.
+	* m4/signal_h.m4 (gl_SIGNAL_H): Require AC_USE_SYSTEM_EXTENSIONS. Test
+	whether sighandler_t is defined.
+	(gl_SIGNAL_H_DEFAULTS): Initialize HAVE_SIGHANDLER_T.
+	* modules/signal (Depends-on): Add extensions.
+	(Makefile.am): Substitute HAVE_SIGHANDLER_T.
+	* doc/posix-headers/signal.texi: Mention the problem with sighandler_t.
+	Suggested by Markus Steinborn <gnugv_maintainer@yahoo.de>.
+
+2011-05-05  Eric Blake  <eblake@redhat.com>
+
+	maint: remove useless REPLACE_*_H macros
+	* m4/arpa_inet_h.m4 (gl_REPLACE_ARPA_INET_H): Delete.
+	* m4/dirent_h.m4 (gl_REPLACE_DIRENT_H): Likewise.
+	* m4/locale_h.m4 (gl_REPLACE_LOCALE_H): Likewise.
+	* m4/poll_h.m4 (gl_REPLACE_POLL_H): Likewise.
+	* m4/spawn_h.m4 (gl_REPLACE_SPAWN_H): Likewise.
+	* m4/sys_ioctl_h.m4 (gl_REPLACE_SYS_IOCTL_H): Likewise.
+	* m4/wchar_h.m4 (gl_REPLACE_WCHAR_H): Likewise.
+	* m4/btowc.m4: Update callers.
+	* m4/dirfd.m4: Likewise.
+	* m4/duplocale.m4: Likewise.
+	* m4/fchdir.m4: Likewise.
+	* m4/fdopendir.m4: Likewise.
+	* m4/inet_ntop.m4: Likewise.
+	* m4/inet_pton.m4: Likewise.
+	* m4/ioctl.m4: Likewise.
+	* m4/mbrlen.m4: Likewise.
+	* m4/mbrtowc.m4: Likewise.
+	* m4/mbsinit.m4: Likewise.
+	* m4/mbsnrtowcs.m4: Likewise.
+	* m4/mbsrtowcs.m4: Likewise.
+	* m4/poll.m4: Likewise.
+	* m4/setlocale.m4: Likewise.
+	* m4/wcrtomb.m4: Likewise.
+	* m4/wcsnrtombs.m4: Likewise.
+	* m4/wcsrtombs.m4: Likewise.
+	* m4/wctob.m4: Likewise.
+	* m4/wcwidth.m4: Likewise.
+	* modules/posix_spawn: Likewise.
+	* modules/posix_spawn_file_actions_addclose: Likewise.
+	* modules/posix_spawn_file_actions_adddup2: Likewise.
+	* modules/posix_spawn_file_actions_addopen: Likewise.
+	* modules/posix_spawn_file_actions_destroy: Likewise.
+	* modules/posix_spawn_file_actions_init: Likewise.
+	* modules/posix_spawnattr_destroy: Likewise.
+	* modules/posix_spawnattr_getflags: Likewise.
+	* modules/posix_spawnattr_getpgroup: Likewise.
+	* modules/posix_spawnattr_getschedparam: Likewise.
+	* modules/posix_spawnattr_getschedpolicy: Likewise.
+	* modules/posix_spawnattr_getsigdefault: Likewise.
+	* modules/posix_spawnattr_getsigmask: Likewise.
+	* modules/posix_spawnattr_init: Likewise.
+	* modules/posix_spawnattr_setflags: Likewise.
+	* modules/posix_spawnattr_setpgroup: Likewise.
+	* modules/posix_spawnattr_setschedparam: Likewise.
+	* modules/posix_spawnattr_setschedpolicy: Likewise.
+	* modules/posix_spawnattr_setsigdefault: Likewise.
+	* modules/posix_spawnattr_setsigmask: Likewise.
+	* modules/posix_spawnp: Likewise.
+
+2011-05-04  Reuben Thomas  <rrt@sc3d.org>
+
+	Add option to do-release-commit-and-tag to specify branch.
+	* build-aux/do-release-commit-and-tag: Add --branch.
+
+2011-05-03  Bruno Haible  <bruno@clisp.org>
+
+	Avoid unnecessary compilation units, through conditional dependencies.
+	* modules/accept (Depends-on): Add conditions to the dependencies.
+	* modules/acosl (Depends-on): Likewise.
+	* modules/argz (Depends-on): Likewise.
+	* modules/asinl (Depends-on): Likewise.
+	* modules/atanl (Depends-on): Likewise.
+	* modules/atoll (Depends-on): Likewise.
+	* modules/bind (Depends-on): Likewise.
+	* modules/btowc (Depends-on): Likewise.
+	* modules/canonicalize-lgpl (Depends-on): Likewise.
+	* modules/ceil (Depends-on): Likewise.
+	* modules/ceilf (Depends-on): Likewise.
+	* modules/ceill (Depends-on): Likewise.
+	* modules/chdir-long (Depends-on): Likewise.
+	* modules/chown (Depends-on): Likewise.
+	* modules/close (Depends-on): Likewise.
+	* modules/connect (Depends-on): Likewise.
+	* modules/cosl (Depends-on): Likewise.
+	* modules/dirfd (Depends-on): Likewise.
+	* modules/dprintf (Depends-on): Likewise.
+	* modules/dprintf-posix (Depends-on): Likewise.
+	* modules/error (Depends-on): Likewise.
+	* modules/euidaccess (Depends-on): Likewise.
+	* modules/expl (Depends-on): Likewise.
+	* modules/faccessat (Depends-on): Likewise.
+	* modules/fchdir (Depends-on): Likewise.
+	* modules/fclose (Depends-on): Likewise.
+	* modules/fcntl (Depends-on): Likewise.
+	* modules/fdopendir (Depends-on): Likewise.
+	* modules/fflush (Depends-on): Likewise.
+	* modules/floor (Depends-on): Likewise.
+	* modules/floorf (Depends-on): Likewise.
+	* modules/floorl (Depends-on): Likewise.
+	* modules/fnmatch (Depends-on): Likewise.
+	* modules/fopen (Depends-on): Likewise.
+	* modules/fprintf-posix (Depends-on): Likewise.
+	* modules/frexp (Depends-on): Likewise.
+	* modules/frexp-nolibm (Depends-on): Likewise.
+	* modules/frexpl (Depends-on): Likewise.
+	* modules/frexpl-nolibm (Depends-on): Likewise.
+	* modules/fseek (Depends-on): Likewise.
+	* modules/fsusage (Depends-on): Likewise.
+	* modules/ftell (Depends-on): Likewise.
+	* modules/ftello (Depends-on): Likewise.
+	* modules/futimens (Depends-on): Likewise.
+	* modules/getcwd (Depends-on): Likewise.
+	* modules/getcwd-lgpl (Depends-on): Likewise.
+	* modules/getdelim (Depends-on): Likewise.
+	* modules/getdomainname (Depends-on): Likewise.
+	* modules/getgroups (Depends-on): Likewise.
+	* modules/gethostname (Depends-on): Likewise.
+	* modules/getline (Depends-on): Likewise.
+	* modules/getlogin_r (Depends-on): Likewise.
+	* modules/getopt-posix (Depends-on): Likewise.
+	* modules/getpeername (Depends-on): Likewise.
+	* modules/getsockname (Depends-on): Likewise.
+	* modules/getsockopt (Depends-on): Likewise.
+	* modules/getsubopt (Depends-on): Likewise.
+	* modules/getusershell (Depends-on): Likewise.
+	* modules/glob (Depends-on): Likewise.
+	* modules/grantpt (Depends-on): Likewise.
+	* modules/iconv_open (Depends-on): Likewise.
+	* modules/iconv_open-utf (Depends-on): Likewise.
+	* modules/inet_ntop (Depends-on): Likewise.
+	* modules/inet_pton (Depends-on): Likewise.
+	* modules/ioctl (Depends-on): Likewise.
+	* modules/isapipe (Depends-on): Likewise.
+	* modules/isfinite (Depends-on): Likewise.
+	* modules/isinf (Depends-on): Likewise.
+	* modules/lchown (Depends-on): Likewise.
+	* modules/ldexpl (Depends-on): Likewise.
+	* modules/link (Depends-on): Likewise.
+	* modules/linkat (Depends-on): Likewise.
+	* modules/listen (Depends-on): Likewise.
+	* modules/logl (Depends-on): Likewise.
+	* modules/lstat (Depends-on): Likewise.
+	* modules/mbrlen (Depends-on): Likewise.
+	* modules/mbrtowc (Depends-on): Likewise.
+	* modules/mbsinit (Depends-on): Likewise.
+	* modules/mbsnrtowcs (Depends-on): Likewise.
+	* modules/mbsrtowcs (Depends-on): Likewise.
+	* modules/mbtowc (Depends-on): Likewise.
+	* modules/memcmp (Depends-on): Likewise.
+	* modules/mkdir (Depends-on): Likewise.
+	* modules/mkdtemp (Depends-on): Likewise.
+	* modules/mkfifo (Depends-on): Likewise.
+	* modules/mkfifoat (Depends-on): Likewise.
+	* modules/mknod (Depends-on): Likewise.
+	* modules/mkostemp (Depends-on): Likewise.
+	* modules/mkostemps (Depends-on): Likewise.
+	* modules/mkstemp (Depends-on): Likewise.
+	* modules/mkstemps (Depends-on): Likewise.
+	* modules/mktime (Depends-on): Likewise.
+	* modules/nanosleep (Depends-on): Likewise.
+	* modules/open (Depends-on): Likewise.
+	* modules/openat (Depends-on): Likewise.
+	* modules/perror (Depends-on): Likewise.
+	* modules/poll (Depends-on): Likewise.
+	* modules/popen (Depends-on): Likewise.
+	* modules/posix_spawn (Depends-on): Likewise.
+	* modules/posix_spawn_file_actions_addclose (Depends-on): Likewise.
+	* modules/posix_spawn_file_actions_adddup2 (Depends-on): Likewise.
+	* modules/posix_spawn_file_actions_addopen (Depends-on): Likewise.
+	* modules/posix_spawnp (Depends-on): Likewise.
+	* modules/pread (Depends-on): Likewise.
+	* modules/printf-posix (Depends-on): Likewise.
+	* modules/ptsname (Depends-on): Likewise.
+	* modules/putenv (Depends-on): Likewise.
+	* modules/pwrite (Depends-on): Likewise.
+	* modules/readline (Depends-on): Likewise.
+	* modules/readlink (Depends-on): Likewise.
+	* modules/readlinkat (Depends-on): Likewise.
+	* modules/recv (Depends-on): Likewise.
+	* modules/recvfrom (Depends-on): Likewise.
+	* modules/regex (Depends-on): Likewise.
+	* modules/remove (Depends-on): Likewise.
+	* modules/rename (Depends-on): Likewise.
+	* modules/renameat (Depends-on): Likewise.
+	* modules/rmdir (Depends-on): Likewise.
+	* modules/round (Depends-on): Likewise.
+	* modules/roundf (Depends-on): Likewise.
+	* modules/roundl (Depends-on): Likewise.
+	* modules/rpmatch (Depends-on): Likewise.
+	* modules/select (Depends-on): Likewise.
+	* modules/send (Depends-on): Likewise.
+	* modules/sendto (Depends-on): Likewise.
+	* modules/setenv (Depends-on): Likewise.
+	* modules/setlocale (Depends-on): Likewise.
+	* modules/setsockopt (Depends-on): Likewise.
+	* modules/shutdown (Depends-on): Likewise.
+	* modules/sigaction (Depends-on): Likewise.
+	* modules/signbit (Depends-on): Likewise.
+	* modules/sigprocmask (Depends-on): Likewise.
+	* modules/sinl (Depends-on): Likewise.
+	* modules/sleep (Depends-on): Likewise.
+	* modules/snprintf (Depends-on): Likewise.
+	* modules/snprintf-posix (Depends-on): Likewise.
+	* modules/socket (Depends-on): Likewise.
+	* modules/sprintf-posix (Depends-on): Likewise.
+	* modules/sqrtl (Depends-on): Likewise.
+	* modules/stat (Depends-on): Likewise.
+	* modules/strchrnul (Depends-on): Likewise.
+	* modules/strdup-posix (Depends-on): Likewise.
+	* modules/strerror (Depends-on): Likewise.
+	* modules/strerror_r-posix (Depends-on): Likewise.
+	* modules/strndup (Depends-on): Likewise.
+	* modules/strnlen (Depends-on): Likewise.
+	* modules/strptime (Depends-on): Likewise.
+	* modules/strsep (Depends-on): Likewise.
+	* modules/strsignal (Depends-on): Likewise.
+	* modules/strstr-simple (Depends-on): Likewise.
+	* modules/strtod (Depends-on): Likewise.
+	* modules/strtoimax (Depends-on): Likewise.
+	* modules/strtok_r (Depends-on): Likewise.
+	* modules/strtoumax (Depends-on): Likewise.
+	* modules/symlink (Depends-on): Likewise.
+	* modules/symlinkat (Depends-on): Likewise.
+	* modules/tanl (Depends-on): Likewise.
+	* modules/tcgetsid (Depends-on): Likewise.
+	* modules/tmpfile (Depends-on): Likewise.
+	* modules/trunc (Depends-on): Likewise.
+	* modules/truncf (Depends-on): Likewise.
+	* modules/truncl (Depends-on): Likewise.
+	* modules/uname (Depends-on): Likewise.
+	* modules/unlink (Depends-on): Likewise.
+	* modules/unlockpt (Depends-on): Likewise.
+	* modules/unsetenv (Depends-on): Likewise.
+	* modules/usleep (Depends-on): Likewise.
+	* modules/utimensat (Depends-on): Likewise.
+	* modules/vasprintf (Depends-on): Likewise.
+	* modules/vdprintf (Depends-on): Likewise.
+	* modules/vdprintf-posix (Depends-on): Likewise.
+	* modules/vfprintf-posix (Depends-on): Likewise.
+	* modules/vprintf-posix (Depends-on): Likewise.
+	* modules/vsnprintf (Depends-on): Likewise.
+	* modules/vsnprintf-posix (Depends-on): Likewise.
+	* modules/vsprintf-posix (Depends-on): Likewise.
+	* modules/wcrtomb (Depends-on): Likewise.
+	* modules/wcscasecmp (Depends-on): Likewise.
+	* modules/wcscspn (Depends-on): Likewise.
+	* modules/wcsdup (Depends-on): Likewise.
+	* modules/wcsncasecmp (Depends-on): Likewise.
+	* modules/wcsnrtombs (Depends-on): Likewise.
+	* modules/wcspbrk (Depends-on): Likewise.
+	* modules/wcsrtombs (Depends-on): Likewise.
+	* modules/wcsspn (Depends-on): Likewise.
+	* modules/wcsstr (Depends-on): Likewise.
+	* modules/wcstok (Depends-on): Likewise.
+	* modules/wcswidth (Depends-on): Likewise.
+	* modules/wctob (Depends-on): Likewise.
+	* modules/wctomb (Depends-on): Likewise.
+	* modules/wctype (Depends-on): Likewise.
+	* modules/wcwidth (Depends-on): Likewise.
+	* modules/write (Depends-on): Likewise.
+
+2011-05-03  Bruno Haible  <bruno@clisp.org>
+
+	Support for conditional dependencies.
+	* doc/gnulib.texi (Module description): Document the syntax of
+	conditional dependencies.
+	* gnulib-tool: New option --conditional-dependencies.
+	(func_usage): Document it.
+	(cond_dependencies): New variable.
+	(func_get_automake_snippet_conditional,
+	func_get_automake_snippet_unconditional): New functions, extracted from
+	func_get_automake_snippet.
+	(func_get_automake_snippet): Use them.
+	(sed_first_32_chars): New variable.
+	(func_module_shellfunc_name): New function.
+	(func_module_shellvar_name): New function.
+	(func_module_conditional_name): New function.
+	(func_uncond_add_module, func_conddep_add_module, func_cond_module_p,
+	func_cond_module_condition): New functions.
+	(func_modules_transitive_closure): Add support for conditional
+	dependencies.
+	(func_emit_lib_Makefile_am): For a conditional module, enclose the
+	conditional automake snippet in an automake conditional.
+	(func_emit_autoconf_snippets): Emit shell functions that contain the
+	code for conditional modules.
+	(func_import, func_create_testdir): Update specification.
+
+2011-05-03  Eric Blake  <eblake@redhat.com>
+
+	test-getaddrinfo: report error information
+	* tests/test-getaddrinfo.c (simple): Use err outside of dbprintf.
+
+2011-05-03  Jim Meyering  <meyering@redhat.com>
+
+	bootstrap: avoid build failure when $GZIP is set
+	* build-aux/bootstrap (check_versions): Do not treat $GZIP as a
+	program name.  If defined at all, it is supposed to list gzip options.
+	Reported by Alan Curry in http://debbugs.gnu.org/8609
+
+2011-05-03  Reuben Thomas  <rrt@sc3d.org>
+
+	readme-release: new module with release instructions
+	* modules/readme-release: New module.
+	* top/README-release: New file, from coreutils, grep, diffutils.
+	* MODULES.html.sh (Support for maintaining and releasing): Add it.
+
+2011-05-02  Eric Blake  <eblake@redhat.com>
+
+	fflush: also replace fclose when fixing fflush
+	* modules/fflush (Depends-on): Add fclose.
+	* m4/fflush.m4 (gl_FUNC_FFLUSH): Also replace fclose.
+	* lib/fclose.c (rpl_fclose): Don't cause spurious failures on
+	memstreams with no backing fd.
+	* doc/posix-functions/fclose.texi (fclose): Document the use of
+	fflush module to fix the bug.
+	* tests/test-fclose.c (main): Relax test when fclose is used in
+	isolation.
+
+	fclose: add some tests
+	* modules/fclose-tests: New test module.
+	* tests/test-fclose.c: New file.
+	* doc/posix-functions/fclose.texi (fclose): Document the bug.
+
+	fclose: reduced dependencies
+	* modules/fclose (Depends-on): Switch from fflush/fseeko to
+	simpler lseek.
+	* lib/fclose.c (rpl_fclose): Likewise.
+	Reported by Simon Josefsson.
+
+	exit: drop remaining clients
+	* modules/argmatch (Depends-on): Replace exit with stdlib.
+	* modules/copy-file (Depends-on): Likewise.
+	* modules/execute (Depends-on): Likewise.
+	* modules/exitfail (Depends-on): Likewise.
+	* modules/obstack (Depends-on): Likewise.
+	* modules/pagealign_alloc (Depends-on): Likewise.
+	* modules/pipe-filter-gi (Depends-on): Likewise.
+	* modules/pipe-filter-ii (Depends-on): Likewise.
+	* modules/savewd (Depends-on): Likewise.
+	* modules/spawn-pipe (Depends-on): Likewise.
+	* modules/wait-process (Depends-on): Likewise.
+	* modules/xsetenv (Depends-on): Likewise.
+	* modules/chdir-long (Depends-on): Add stdlib, for EXIT_FAILURE.
+	* modules/git-merge-changelog (Depends-on): Likewise.
+	* modules/long-options (Depends-on): Likewise.
+	* modules/pt_chown (Depends-on): Likewise.
+	* modules/sysexits (Depends-on): Likewise.
+
+	freading: relax license from LGPLv3+ to LGPLv2+
+	* modules/freading (License): Relax LGPL version.
+
+2011-05-02  Bruno Haible  <bruno@clisp.org>
+
+	fchdir: Remove unused dependencies.
+	* modules/fchdir (Depends-on): Remove include_next.
+
+2011-05-02  Bruno Haible  <bruno@clisp.org>
+
+	gnulib-tool: Refactor.
+	* gnulib-tool (func_emit_autoconf_snippet): New function, extracted
+	from func_emit_autoconf_snippets.
+	(func_emit_autoconf_snippets): Use it.
+
+2011-05-02  Simon Josefsson  <simon@josefsson.org>
+
+	* NEWS: Document removal of 'exit'.
+	* modules/exit: Remove file.
+
+2011-05-01  Bruno Haible  <bruno@clisp.org>
+
+	Update DEPENDENCIES.
+	* DEPENDENCIES (gettext): Recommend the newest release.
+	Reported by Simon Josefsson.
+
+2011-05-01  Bruno Haible  <bruno@clisp.org>
+
+	gnulib-tool: Reduce code duplication.
+	* gnulib-tool (func_emit_autoconf_snippets): New function.
+	(func_import, func_create_testdir): Use it.
+
+2011-04-30  Eric Blake  <eblake@redhat.com>
+
+	fclose: don't fail on non-seekable input stream
+	* modules/fclose (Depends-on): Add freading, fflush, fseeko.
+	* lib/fclose.c (rpl_fclose): Skip fflush for non-seekable input,
+	since fflush is allowed to fail in that case.
+
+2011-04-30  Bruno Haible  <bruno@clisp.org>
+
+	dup3: cleanup
+	* lib/dup3.c: Remove old code, leftover from 2009-12-16.
+
+2011-04-30  Bruno Haible  <bruno@clisp.org>
+
+	netdb: Make it work in C++ mode.
+	* lib/netdb.in.h (struct addrinfo): In C++, define as a C struct.
+	(getaddrinfo, freeaddrinfo, getnameinfo): Use macros from c++defs
+	module.
+	* m4/netdb_h.m4 (gl_NETDB_MODULE_INDICATOR): Invoke
+	gl_MODULE_INDICATOR_FOR_TESTS.
+	* modules/netdb-tests (Depends-on): Add netdb-c++-tests.
+	* modules/netdb-c++-tests: New file.
+	* tests/test-netdb-c++.cc: New file.
+
+2011-04-30  Bruno Haible  <bruno@clisp.org>
+
+	New modules 'vfscanf', 'vscanf'.
+	* modules/vfscanf: New file.
+	* modules/vscanf: New file.
+	* m4/stdio_h.m4 (gl_STDIO_H): Don't set GNULIB_VFSCANF, GNULIB_VSCANF
+	here.
+	* doc/posix-functions/vfscanf.texi: Mention module 'vfscanf'.
+	* doc/posix-functions/vscanf.texi: Mention module 'vscanf'.
+
+2011-04-30  Bruno Haible  <bruno@clisp.org>
+
+	passfd: Add comments.
+	* lib/passfd.c: Add comments about platforms.
+
+2011-04-30  Bruno Haible  <bruno@clisp.org>
+
+	sys_uio: Make <sys/uio.h> self-contained.
+	* lib/sys_uio.in.h: Include <sys/types.h> before <sys/uio.h>.
+	* doc/posix-headers/sys_uio.texi: Mention the OpenBSD problem.
+
+2011-04-30  Bruno Haible  <bruno@clisp.org>
+
+	sys_socket: Ensure 'struct iovec' definition.
+	* lib/sys_socket.in.h: Include <sys/uio.h> also on platforms that have
+	<sys/socket.h>.
+	* doc/posix-headers/sys_socket.texi: Mention the OpenBSD problem.
+
+2011-04-30  Bruno Haible  <bruno@clisp.org>
+
+	sys_uio: Protect definition of 'struct iovec'.
+	* lib/sys_uio.in.h (struct iovec): Avoid redefinition. In C++, define
+	it as a C struct.
+
+2011-04-30  Bruno Haible  <bruno@clisp.org>
+
+	manywarnings: fix indentation
+	* m4/manywarnings.m4: Indent by 2 spaces consistently.
+
+2011-04-30  Pádraig Brady <P@draigBrady.com>
+
+	manywarnings: add -Wno-missing-field-initializers if needed.
+	* m4/manywarnings.m4 (gl_MANYWARN_ALL_GCC): Add the above
+	option if it's needed to allow initialization with { 0, }
+
+2011-04-29  Reuben Thomas  <rrt@sc3d.org>
+
+	announce-gen: cosmetic improvement
+	* build-aux/announce-gen: Strip any leading ./ from the NEWS file name.
+
+2011-04-29  Jim Meyering  <meyering@redhat.com>
+
+	vc-list-files: indent with spaces, not TABs
+	* build-aux/vc-list-files: Convert leading TABs to spaces,
+	to match the style of most other files in gnulib.
+
+	announce-gen: indent with spaces, not TABs
+	* build-aux/announce-gen: Convert all TABs to spaces, to match
+	the style of most other files in gnulib.
+
+2011-04-29  Eric Blake  <eblake@redhat.com>
+
+	quotearg: avoid uninitialized variable use
+	* lib/quotearg.c (quoting_options_from_style): Initialize
+	remaining fields, and ensure that custom styles are only used via
+	quoting_options rather than quoting_style.
+
+2011-04-29  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: remove unused VC-tag variable
+	* top/maint.mk (VC-tag): Remove unused variable.
+
+2011-04-29  Bruno Haible  <bruno@clisp.org>
+
+	netdb: fix gai_strerror replacements
+	* lib/netdb.in.h: Add _GL_FUNCDECL_RPL definitions.
+	* modules/netdb: Substitute it.
+
+2011-04-29  Jim Meyering  <meyering@redhat.com>
+
+	test-getcwd.c: avoid new set-but-not-used warning
+	* tests/test-getcwd.c (test_abort_bug): Exit nonzero for any problem,
+	not just the glibc/abort one that getcwd-abort-bug.m4 detects.
+	* m4/getcwd-abort-bug.m4: Update this now-duplicated code to match,
+	and adjust the code that sets gl_cv_func_getcwd_abort_bug accordingly.
+
+	test-hash.c: avoid a new shadowing warning
+	* tests/test-hash.c (main): Don't shadow "dup".
+
+2011-04-28  Eric Blake  <eblake@redhat.com>
+
+	getaddrinfo: fix gai_strerror signature
+	* m4/getaddrinfo.m4 (gl_GETADDRINFO): Detect broken signatures,
+	and work around mingw with UNICODE defined.
+	(gl_PREREQ_GETADDRINFO): Drop redundant decl check.
+	* m4/netdb_h.m4 (gl_NETDB_H_DEFAULTS): Add witness.
+	* modules/netdb (Makefile.am): Substitute it.
+	* lib/netdb.in.h (gai_strerror): Declare replacement.
+	* lib/gai_strerror.c (rpl_gai_strerror): Fix signature.
+	* doc/posix-functions/gai_strerror.texi (gai_strerror): Document
+	the fix.
+
+	getsockopt: avoid compiler warning
+	* lib/getsockopt.c (rpl_getsockopt): Add a cast for mingw.
+	Reported by Matthias Bolte.
+
+	tests: drop unused link dependency
+	* modules/areadlinkat-tests (Makefile.am): Drop stale LDADD.
+	* modules/dirent-safer-tests (Makefile.am): Likewise.
+	* modules/fdopendir-tests (Makefile.am): Likewise.
+	* modules/mkfifoat-tests (Makefile.am): Likewise.
+	* modules/openat-safer-tests (Makefile.am): Likewise.
+	* modules/openat-tests (Makefile.am): Likewise.
+	* modules/readlinkat-tests (Makefile.am): Likewise.
+	* modules/symlinkat-tests (Makefile.am): Likewise.
+	* modules/linkat-tests (Makefile.am): Likewise.
+	(Depends-on): Switch to filenamecat-lgpl.
+	* modules/fdutimensat-tests (test_fdutimensat_LDADD): Drop unused
+	LIBINTL.
+	* modules/utimensat-tests (test_utimensat_LDADD): Likewise.
+	* tests/test-linkat.c (main): Don't require xalloc.
+
+	hash, mgetgroups: drop xalloc dependency
+	* lib/hash.c (includes): Adjust includes.
+	* lib/mgetgroups.c (includes): Likewise.
+	(xgetgroups): Move...
+	* lib/xgetgroups.c: ...to new file.
+	* lib/mgetgroups.h (xgetgroups): Make declaration conditional.
+	* modules/xgetgroups: New file, split from...
+	* modules/mgetgroups: ...here.
+	(Depends-on): Add xalloc-oversized.
+	* modules/hash (Depends-on): Likewise.
+	* modules/hash-tests (Depends-on): Drop xalloc.
+	(test_hash_LDADD): Drop unused library.
+	* tests/test-hash.c (main): Break xalloc dependency.
+	(includes): Drop unused include.
+
+	xalloc-oversized: new module
+	* modules/xalloc-oversized: New module.
+	* modules/xalloc (Depends-on): Add it.
+	* lib/xalloc.h (xalloc_oversized): Move...
+	* lib/xalloc-oversized.h: ...into new file.
+
+	utimecmp: drop dependency on xmalloc
+	* lib/utimecmp.c (utimecmp): Work even if hash table cache fails
+	due to memory pressure.
+	* modules/utimecmp (Depends-on): Drop xalloc.
+
+2011-04-27  Eric Blake  <eblake@redhat.com>
+
+	getcwd: fix mingw bugs
+	* m4/getcwd.m4 (gl_FUNC_GETCWD_NULL): Detect one mingw bug.
+	* doc/posix-functions/getcwd.texi (getcwd): Document the problems.
+	* lib/getcwd-lgpl.c (rpl_getcwd): Fix return type.
+
+2011-04-27  Bruno Haible  <bruno@clisp.org>
+
+	mkstemps: Ensure declaration on MacOS X 10.5.
+	* lib/stdlib.in.h: Include <unistd.h> when mkstemps is requested.
+	* doc/glibc-functions/mkstemps.texi: Document header file problem on
+	MacOS X.
+
+2011-04-27  Bruno Haible  <bruno@clisp.org>
+
+	mkstemp: More documentation.
+	* doc/posix-functions/mkstemp.texi: Document header file problem on
+	MacOS X.
+
+2011-04-27  Bruno Haible  <bruno@clisp.org>
+
+	mkstemp: Tweak configure message when cross-compiling.
+	* m4/mkstemp.m4 (gl_FUNC_MKSTEMP): When cross-compiling, qualify the
+	result as a guess.
+
+2011-04-27  Bruno Haible  <bruno@clisp.org>
+
+	clean-temp: Clarify what it does.
+	* lib/clean-temp.h: Add more comments.
+	* doc/posix-functions/mkstemp.texi: Tweak reference to 'clean-temp'
+	module.
+	* doc/glibc-functions/mkostemp.texi: Mention 'clean-temp' here too.
+	* doc/glibc-functions/mkstemps.texi: Likewise.
+	* doc/glibc-functions/mkostemps.texi: Likewise.
+
+2011-04-27  Eric Blake  <eblake@redhat.com>
+
+	fchdir: avoid extra chdir and fix test
+	* modules/fchdir (Depends-on): Add dosname, filenamecat-lgpl,
+	getcwd-lgpl.
+	* lib/fchdir.c (get_name): Any absolute name will do; it does not
+	have to be canonical.
+	(canonicalize_file_name): Drop unused macro.
+	* m4/dup2.m4 (gl_REPLACE_DUP2): Ensure dup2 is replaced.
+
+	filenamecat-lgpl: fix licence
+	* modules/filenamecat-lgpl (License): Mark as LGPLv2+, as intended
+	when it was first created.
+
+	linkat, renameat: add missing dependency
+	* modules/linkat (Depends-on): Require getcwd-lgpl.
+	* modules/renameat (Depends-on): Likewise.
+
+	tests: reduce dependencies
+	* tests/test-linkat.c (main): Use lighter-weight getcwd.
+	* tests/test-renameat.c (main): Likewise.
+	* modules/linkat-tests (Depends-on): Relax dependency.
+	* modules/renameat-tests (Depends-on): Likewise.
+	* modules/fchdir-tests (Depends-on): Likewise.  Also make cloexec
+	dependency explicit.
+
+	save-cwd: reduce default dependency
+	* modules/save-cwd (Depends-on): Use getcwd-lgpl.
+	* lib/save-cwd.c: Update comments.
+	* NEWS: Document the semantic change.
+
+	getcwd: enhance tests
+	* tests/test-getcwd-lgpl.c: New file, taken from...
+	* tests/test-getcwd.c: ...old contents.  Rewrite this file to
+	repeat long path stress tests from m4 probe.
+	* modules/getcwd-lgpl-tests: New module.
+	* modules/getcwd-tests (Depends-on): Depend on lgpl tests.
+	* m4/getcwd-abort-bug.m4: Update comment.
+	* m4/getcwd-path-max.m4: Likewise.
+
+	getcwd-lgpl: new module
+	* modules/getcwd-lgpl: New module.
+	* lib/getcwd-lgpl.c: New file.
+	* doc/posix-functions/getcwd.texi (getcwd): Document it.
+	* MODULES.html.sh (lacking POSIX:2008): Likewise.
+	* modules/getcwd (configure.ac): Set C witness.
+	* m4/getcwd.m4 (gl_FUNC_GETCWD_LGPL): New macro.
+
+	getcwd: tweak comments
+	* m4/getcwd-abort-bug.m4: Fix comments.
+	* m4/getcwd-path-max.m4: Likewise.
+	* m4/getcwd.m4: Likewise.
+
+2011-04-27  Reuben Thomas  <rrt@sc3d.org>
+	and Eric Blake  <eblake@redhat.com>
+
+	mkstemp: replace if system version uses wrong permissions
+	* m4/mkstemp.m4 (gl_FUNC_MKSTEMP): Add test for non-owner
+	read/write mode bits set in file created by mkstemp.
+	* doc/posix-functions/mkstemp.texi (mkstemp): Document the fix.
+
+2011-04-27  Eric Blake  <eblake@redhat.com>
+
+	passfd: avoid compiler warning
+	* lib/passfd.c (sendfd, recvfd): Avoid shadowing names.
+	Reported by Laine Stump.
+
+2011-04-27  J.T. Conklin  <jtc@acorntoolworks.com>  (tiny change)
+
+	* gnulib-tool: change "join -a 2" to "join -a2", the latter is
+	required by the NetBSD (and perhaps other 4.4BSD derived) join.
+
+2011-04-27  Reuben Thomas  <rrt@sc3d.org>
+	and Eric Blake  <eblake@redhat.com>
+
+	mkstemp: mention clean-temp module
+	* lib/mkstemp.c: Add comment.
+	* doc/posix-functions/mkstemp.texi (mkstemp): Likewise.
+
+2011-04-26  Paul Eggert  <eggert@cs.ucla.edu>
+
+	inttypes: also provide default values for 32-bit tests
+	* m4/inttypes.m4 (gl_INTTYPES_H_DEFAULTS): Also provide default values
+	for INT32_MAX_LT_INTMAX_MAX and for UINT32_MAX_LT_UINTMAX_MAX.
+
+2011-04-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	strtoumax: remove dependency on strtoimax
+	This is like the strtoull change of yesterday.
+	* modules/strtoumax (Files): Add lib/strtoimax.c.
+	(Depends-on): Remove strtoimax and add verify.
+
+	inttypes-incomplete: new module
+	* m4/inttypes.m4 (gl_INTTYPES_INCOMPLETE): New macro, containing
+	all but the PRI* and SCN* parts of gl_INTTYPES_H.
+	(gl_INTTYPES_PRI_SCN): New macro, containing the PRI* and SCN* parts
+	of gl_INTTYPES_H.
+	(gl_INTTYPES_H): Rewrite in terms of these new macros.
+	(gl_INTTYPES_H_DEFAULTS): Provide defaults for the PRI* and SCN*
+	parts, in case gl_INTTYPE_PRI_SCN is not invoked.
+	* modules/imaxabs, modules/imaxdiv, modules/strtoimax (Depends-on):
+	* modules/strtoumax, modules/xstrtol (Depends-on):
+	Depend on inttypes-incomplete, not inttypes.
+	* modules/inttypes-incomplete: New module, containing the contents
+	of the old modules/inttypes module, except that the Files: section
+	omits m4/inttypes-pri.m4, and the configure.ac section invokes
+	gl_INTTYPES_INCOMPLETE rather than gl_INTTYPES_H.
+	* modules/inttypes (Files): Remove lib/inttypes.in.h, m4/inttypes.m4.
+	(Depends-on): Depend only on inttypes-incomplete.
+	(Makefile.am): Remove everything; this is now in inttypes-incomplete.
+
+	inttypes: omit now-redundant strtoimax and strtoumax work
+	* m4/inttypes.m4 (gl_INTTYPES_H): Do not check for strtoimax and
+	strtoumax decls; gl_FUNC_STRTOIMAX and gl_FUNC_STRTOUMAX now do this.
+
+	strtoimax, strtoumax: simplify, port to HP-UX 11.00 64-bit
+	This supports apps that need pointers to strtoimax and strtoumax,
+	and ports to HP-UX 11.00 64.bit, which has macros that expand to
+	nonexistent functions.  See
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-04/msg00241.html>
+	et seq.
+	* lib/inttypes.in.h (strtoimax, strtoumax): #undef before declaring.
+	* m4/strtoimax.m4 (gl_FUNC_STRTOIMAX): Don't check whether it's
+	a macro.
+	* m4/strtoumax.m4 (gl_FUNC_STRTOUMAX): Likewise.
+
+2011-04-25  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/gnumakefile (configure.ac): Replace TAB with SPCs.
+
+2011-04-25  Bruno Haible  <bruno@clisp.org>
+
+	strtol, strtoul: Mark modules as obsolete.
+	* modules/strtol (Status, Notice): New sections.
+	* modules/strtoul (Status, Notice): New sections.
+
+2011-04-25  Bruno Haible  <bruno@clisp.org>
+
+	strtod: Remove check for strtod, unless supporting old platforms.
+	* modules/strtod-obsolete: New file.
+	* m4/strtod-obsolete.m4: New file.
+	* m4/strtod.m4 (gl_FUNC_STRTOD): Don't check whether strtod is declared
+	if gl_FUNC_STRTOD_OBSOLETE is not also defined.
+	* modules/strtod (Depends-on): Add strtod-obsolete.
+	* doc/posix-functions/strtod.texi: Mention module strtod-obsolete.
+
+2011-04-25  Bruno Haible  <bruno@clisp.org>
+
+	strcase: Make module obsolete.
+	* modules/strcase (Status, Notice): New sections.
+
+2011-04-25  Bruno Haible  <bruno@clisp.org>
+
+	dup2: Remove check for dup2, unless supporting old obsolete platforms.
+	* modules/dup2-obsolete: New file.
+	* m4/dup2-obsolete.m4: New file.
+	* m4/dup2.m4 (gl_FUNC_DUP2): Don't check whether dup2 exists if
+	gl_FUNC_DUP2_OBSOLETE is not also defined.
+	* modules/dup2 (Depends-on): Add dup2-obsolete.
+	* doc/posix-functions/dup2.texi: Mention module dup2-obsolete.
+
+2011-04-25  Bruno Haible  <bruno@clisp.org>
+
+	strnlen: Avoid memchr related link error on old obsolete platforms.
+	* modules/memchr-obsolete: New file.
+	* m4/memchr-obsolete.m4: New file.
+	* m4/memchr.m4 (gl_FUNC_MEMCHR): Don't check whether memchr exists if
+	gl_FUNC_MEMCHR_OBSOLETE is not also defined.
+	* modules/memchr (Depends-on): Add memchr-obsolete.
+	* modules/strnlen (Depends-on): Likewise.
+	* doc/posix-functions/memchr.texi: Mention module memchr-obsolete.
+
+2011-04-25  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: makefile_at_at_check extend and clean up
+	* top/maint.mk (sc_makefile_at_at_check): Check *.mk files
+	in addition to */Makefile.am.
+	Exempt legitimate uses of @VAR@ notation, e.g.,
+	MAKEINFO = env LANG= LC_MESSAGES= LC_ALL= LANGUAGE= @MAKEINFO@
+	Remove obsolete coreutils-specific comment.
+	Prompted by discussion here:
+	http://thread.gmane.org/gmane.comp.lib.gnulib.bugs/26074
+
+2011-04-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	strtoul: remove dependency on strtol
+	This is so that 'configure' need not check for strtol merely because
+	the application needs strtoul.
+	* modules/strtoul (Files): Add lib/strtol.c.
+	(Depends-on): Remove strtol.
+
+	strtoull: remove dependency on strtoul
+	This is like the strtoll change.
+	* modules/strtoull (Files): Add lib/strtol.c, lib/strtoul.c.
+	(Depends-on): Remove strtoul.
+
+	strtoll: remove dependency on strtol
+	This is so that 'configure' need not check for strtol merely because
+	the application needs strtoll.
+	* modules/strtoll (Files): Add lib/strtol.c.
+	(Depends-on): Remove strtol.
+
+2011-04-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	inttypes: Move some configure check to module 'imaxdiv'.
+	* m4/imaxdiv.m4 (gl_FUNC_IMAXDIV): Require gl_INTTYPES_H_DEFAULTS
+	instead of gl_INTTYPES_H.  Check for imaxdiv decl here.
+	* m4/inttypes.m4 (gl_INTTYPES_H): Don't check for imaxdiv decl here.
+
+2011-04-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	inttypes: Move some configure check to module 'imaxabs'.
+	* m4/imaxabs.m4 (gl_FUNC_IMAXABS): Require gl_INTTYPES_H_DEFAULTS
+	instead of gl_INTTYPES_H.  Check for imaxabs decl here.
+	* m4/inttypes.m4 (gl_INTTYPES_H): Don't check for imaxabs decl here.
+
+2011-04-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	inttypes: Remove configure tests that are not needed since 2009-12-31.
+	* m4/inttypes.m4 (gl_INTTYPES_H): Remove determination of
+	gl_cv_header_working_inttypes_h.
+
+2011-04-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/strnlen (Depends-on): Remove memchr.
+	The strnlen implementation doesn't need the memchr module's fixes; see
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-04/msg00237.html>.
+
+	strtol: remove dependency on wchar
+	* lib/strtol.c: Include <wchar.h> only if USE_WIDE_CHAR is defined.
+	* modules/strtol (Depends-on): Remove wchar.
+
+2011-04-21  Eric Blake  <eblake@redhat.com>
+
+	passfd: fix test regression on Linux
+	* modules/passfd-tests (configure.ac): Correct socketpair check.
+
+	passfd: speed up configure and drop unused code
+	* m4/afunix.m4 (gl_SOCKET_AFUNIX): Rename...
+	* m4/passfd.m4 (gl_PASSFD): ...to something more fitting of
+	its use.  Drop test for setting unused HAVE_UNIXSOCKET_SCM_RIGHTS.
+	Instead of probing at configure for unix_scm_rights_bsd44_way,
+	instead probe for CMSG_FIRSTHDR at compile time.  Simplify BSD 4.3
+	check to a struct member probe.
+	* lib/passfd.c (includes): Nothing here requires <sys/un.h>.
+	(sendfd, recvfd): Update preprocessor checks.
+	* modules/passfd (Files): Reflect rename, and drop unused file.
+	(Depends-on): Drop unused dependency.
+
+	passfd: allow compilation on mingw
+	* modules/sys_socket (Depends-on): Add sys_uio.
+	* lib/sys_socket.in.h [!@HAVE_SYS_SOCKET_H@]: Use it for struct
+	iovec and a minimal struct msghdr.
+	* m4/afunix.m4 (gl_SOCKET_AFUNIX): Detect recvmsg/sendmsg.
+	* tests/test-sys_socket.c (main): Enhance test.
+	* lib/passfd.c (include): Drop <sys/uio.h>; <sys/sockets.h> is
+	guaranteed to provide what we need.
+	(sendmsg, recvmsg): Declare fallbacks if we lack sendmsg.
+	* modules/passfd-tests (Depends-on): Add sys_wait.
+	* tests/test-passfd.c (main): Skip test on mingw, for now.
+	* doc/posix-headers/sys_socket.texi (sys/socket.h): Document the
+	partial 'struct msghdr' implementation.
+
+	sys_uio: new module
+	* modules/sys_uio: New module.
+	* modules/sys_uio-tests: Likewise.
+	* lib/sys_uio.in.h: New file.
+	* m4/sys_uio_h.m4: Likewise.
+	* tests/test-sys_uio.c: Likewise.
+	* doc/posix-headers/sys_uio.texi (sys/uio.h): Document it.
+	* MODULES.html.sh (systems lacking POSIX:2008): Likewise.
+
+2011-04-20  Jim Meyering  <meyering@redhat.com>
+
+	useless-if-before-free: avoid false-positive
+	* build-aux/useless-if-before-free: Adjust regexp for the non-brace
+	disjunct so that it too requires a terminating ";".  Without that,
+	this script would identify as useless one statement from gcc that
+	was not:
+	  if (aligned_ptr)
+	    free (((void **) aligned_ptr) [-1]);
+
+2011-04-20  Giuseppe Scrivano  <gscrivano@gnu.org>
+
+	doc: update users.txt.
+	* users.txt: Add barcode.
+
+2011-04-19  Bruno Haible  <bruno@clisp.org>
+
+	ioctl: Remove link dependency on native Windows.
+	* lib/fd-hook.h: Renamed from lib/close-hook.h.
+	(gl_close_fn, gl_ioctl_fn): New types.
+	(struct fd_hook): Renamed from struct close_hook. Change type of
+	private_close_fn field. Add private_ioctl_fn field.
+	(close_hook_fn): Add parameter for primary close method.
+	(execute_close_hooks, execute_all_close_hooks): Likewise.
+	(ioctl_hook_fn): New type.
+	(execute_ioctl_hooks, execute_all_ioctl_hooks): New declarations.
+	(register_fd_hook): Renamed from register_close_hook. Add ioctl_hook
+	argument.
+	(unregister_fd_hook): Renamed from unregister_close_hook.
+	* lib/fd-hook.c: Renamed from lib/close-hook.c.
+	Don't include <unistd.h>.
+	(close): Remove undef.
+	(anchor): Update.
+	(execute_close_hooks): Add argument for primary close method.
+	(execute_all_close_hooks): Likewise.
+	(execute_ioctl_hooks, execute_all_ioctl_hooks): New functions.
+	(register_fd_hook): Renamed from register_close_hook. Add ioctl_hook
+	argument. Allow each argument to be NULL.
+	(unregister_fd_hook): Renamed from unregister_close_hook.
+	* lib/close.c (rpl_close): Pass 'close' function pointer to
+	execute_all_close_hooks.
+	* lib/ioctl.c: Include <errno.h>, fd-hook.h.
+	(primary_ioctl): New function.
+	(ioctl): Don't call ioctlsocket here. Instead, call
+	execute_all_ioctl_hooks.
+	* lib/sockets.c (close_fd_maybe_socket): Add argument for primary
+	close method.
+	(ioctl_fd_maybe_socket): New function, with code from lib/ioctl.c.
+	(fd_sockets_hook): Renamed from close_sockets_hook.
+	(gl_sockets_startup, gl_sockets_cleanup): Update.
+	* modules/fd-hook: Renamed from modules/close-hook. Update.
+	* modules/close (Depends-on): Add fd-hook, remove close-hook.
+	* modules/sockets (Depends-on): Likewise.
+	* modules/ioctl (Depends-on): Add fd-hook.
+	* tests/test-nonblocking.c (main): Use GNULIB_TEST_SOCKET, not
+	GNULIB_SOCKET.
+
+2011-04-19  Bruno Haible  <bruno@clisp.org>
+
+	Move the support of O_NONBLOCK in open() to the 'open' module.
+	* modules/nonblocking (Depends-on): Remove 'open'.
+	* m4/nonblocking.m4 (gl_NONBLOCKING_IO_BODY): Set
+	gl_cv_have_open_O_NONBLOCK.
+	* m4/open.m4 (gl_FUNC_OPEN): Replace open() also when required for
+	O_NONBLOCK support.
+	* doc/posix-functions/open.texi: Document support for O_NONBLOCK.
+
+2011-04-17  Bruno Haible  <bruno@clisp.org>
+
+	pipe2: Simplify code.
+	* lib/pipe2.c (pipe2): Reduce code duplication.
+
+2011-04-17  Bruno Haible  <bruno@clisp.org>
+
+	nonblocking: Add comment.
+	* lib/fcntl.in.h (O_NONBLOCK): Add comment.
+
+2011-04-17  Bruno Haible  <bruno@clisp.org>
+
+	nonblocking: Add tests for sockets.
+	* tests/test-nonblocking-socket.sh: New file.
+	* tests/test-nonblocking-socket-main.c: New file.
+	* tests/test-nonblocking-socket-child.c: New file.
+	* tests/test-nonblocking-socket.h: New file.
+	* tests/socket-server.h: New file.
+	* tests/socket-client.h: New file.
+	* modules/nonblocking-socket-tests: New file.
+	* modules/nonblocking-tests (Depends-on): Add nonblocking-socket-tests.
+
+2011-04-17  Bruno Haible  <bruno@clisp.org>
+
+	nonblocking: Add tests for pipes.
+	* tests/test-nonblocking-pipe.sh: New file.
+	* tests/test-nonblocking-pipe-main.c: New file.
+	* tests/test-nonblocking-pipe-child.c: New file.
+	* tests/test-nonblocking-pipe.h: New file.
+	* tests/test-nonblocking-writer.h: New file.
+	* tests/test-nonblocking-reader.h: New file.
+	* tests/test-nonblocking-misc.h: New file.
+	* modules/nonblocking-pipe-tests: New file.
+	* modules/nonblocking-tests (Depends-on): Add nonblocking-pipe-tests.
+
+2011-04-16  Bruno Haible  <bruno@clisp.org>
+
+	gettext: Clarify the needed programmer actions.
+	* modules/gettext (Notice): New field.
+	Suggested by Ben Pfaff <blp@cs.stanford.edu>.
+
+2011-04-16  Bruno Haible  <bruno@clisp.org>
+
+	strchrnul: Tweak last commit.
+	* doc/glibc-functions/strchrnul.texi: Add more details about Cygwin
+	bug.
+	* lib/string.in.h (strchrnul): Use same arguments in _GL_FUNCDECL_RPL
+	as in _GL_FUNCDECL_SYS.
+	* m4/strchrnul.m4 (gl_FUNC_STRCHRNUL): Invoke gl_PREREQ_STRCHRNUL after
+	AC_LIBOBJ. When cross-compiling, say "guessing yes" not "yes".
+
+2011-04-15  Eric Blake  <eblake@redhat.com>
+
+	strchrnul: work around cygwin bug
+	* doc/glibc-functions/strchrnul.texi (strchrnul): Document bug.
+	* m4/strchrnul.m4 (gl_FUNC_STRCHRNUL): Detect it.
+	* m4/string_h.m4 (gl_HEADER_STRING_H_DEFAULTS): New witness.
+	* modules/string (Makefile.am): Substitute it.
+	* lib/string.in.h (strchrnul): Use it.
+
+2011-04-15  Bruno Haible  <bruno@clisp.org>
+
+	Don't require lib/stdio-write.c when only module 'stdio' is used.
+	* m4/stdio_h.m4 (gl_STDIO_H): Move the AC_LIBOBJ back into the m4_ifdef
+	invocation.
+	Reported by Rob Vermaas <rob.vermaas@gmail.com>.
+
+2011-04-14  Bruno Haible  <bruno@clisp.org>
+
+	Support non-blocking pipe I/O in read() on native Windows.
+	* lib/unistd.in.h: Include <sys/types.h> also for 'read'.
+	(read): New declaration.
+	* lib/read.c: New file.
+	* lib/stdio.in.h (_GL_ATTRIBUTE_FORMAT_SCANF,
+	_GL_ATTRIBUTE_FORMAT_SCANF_SYSTEM): New macros.
+	(fgetc, fgets, fread, fscanf, getc, getchar, gets, scanf, vfscanf,
+	vscanf): New declarations.
+	* lib/stdio-read.c: New file.
+	* m4/read.m4: New file.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize GNULIB_READ,
+	REPLACE_READ.
+	* m4/stdio_h.m4 (gl_STDIO_H): Set GNULIB_FGETC, GNULIB_FGETS,
+	GNULIB_FREAD, GNULIB_FSCANF, GNULIB_GETC, GNULIB_GETCHAR, GNULIB_GETS,
+	GNULIB_SCANF, GNULIB_VFSCANF, GNULIB_VSCANF. In non-blocking I/O is
+	desired and needs workarounds, set REPLACE_STDIO_READ_FUNCS.
+	(gl_STDIO_H_DEFAULTS): Initialize GNULIB_FGETC, GNULIB_FGETS,
+	GNULIB_FREAD, GNULIB_FSCANF, GNULIB_GETC, GNULIB_GETCHAR, GNULIB_GETS,
+	GNULIB_SCANF, GNULIB_VFSCANF, GNULIB_VSCANF, REPLACE_STDIO_READ_FUNCS.
+	* modules/read: New file.
+	* modules/nonblocking (Files): Add lib/stdio-read.c.
+	* modules/unistd (Makefile.am): Substitute GNULIB_READ, REPLACE_READ.
+	* modules/stdio (Makefile.am): Substitute GNULIB_FGETC, GNULIB_FGETS,
+	GNULIB_FREAD, GNULIB_FSCANF, GNULIB_GETC, GNULIB_GETCHAR, GNULIB_GETS,
+	GNULIB_SCANF, GNULIB_VFSCANF, GNULIB_VSCANF, REPLACE_STDIO_READ_FUNCS.
+	* modules/pread (Depends-on): Add read.
+	* modules/safe-read (Depends-on): Likewise.
+	* tests/test-stdio-c++.cc (fgetc, fgets, fread, fscanf, getc, getchar,
+	gets, scanf, vfscanf, vscanf): Verify signatures.
+	* doc/posix-functions/read.texi: Mention 'nonblocking' module and
+	problem with non-blocking pipes.
+	* doc/posix-functions/fgetc.texi: Likewise.
+	* doc/posix-functions/fgets.texi: Likewise.
+	* doc/posix-functions/fread.texi: Likewise.
+	* doc/posix-functions/fscanf.texi: Likewise.
+	* doc/posix-functions/getc.texi: Likewise.
+	* doc/posix-functions/getchar.texi: Likewise.
+	* doc/posix-functions/gets.texi: Likewise.
+	* doc/posix-functions/scanf.texi: Likewise.
+	* doc/posix-functions/vfscanf.texi: Likewise.
+	* doc/posix-functions/vscanf.texi: Likewise.
+
+2011-04-14  Bruno Haible  <bruno@clisp.org>
+
+	Support non-blocking pipe I/O in write() on native Windows.
+	* lib/write.c (rpl_write): Split a write request that failed merely
+	because the byte count was larger than the pipe buffer's size.
+	* doc/posix-functions/write.texi: Mention the problem with large byte
+	counts.
+
+2011-04-14  Bruno Haible  <bruno@clisp.org>
+
+	wchar: Ensure that wchar_t gets defined on uClibc.
+	* lib/wchar.in.h: On uClibc, include <stddef.h>.
+	Reported by Giuseppe Scrivano <gscrivano@gnu.org>.
+
+2011-04-13  Bruno Haible  <bruno@clisp.org>
+
+	safe-write, full-read: Avoid unnecessary compilation units.
+	* modules/safe-write (Files): Add lib/safe-read.c, m4/safe-read.m4.
+	(Depends-on): Remove safe-read. Add ssize_t.
+	* modules/full-read (Files): Add lib/full-write.c.
+	(Depends-on): Add full-write.
+
+2011-04-13  Bruno Haible  <bruno@clisp.org>
+
+	Support non-blocking pipe I/O and SIGPIPE in pwrite().
+	* modules/pwrite (Depends-on): Add 'write'.
+
+2011-04-13  Bruno Haible  <bruno@clisp.org>
+
+	Support non-blocking pipe I/O in write() on native Windows.
+	* lib/unistd.in.h (write): Enable replacement also if
+	GNULIB_UNISTD_H_NONBLOCKING is 1.
+	* lib/write.c: Enable replacement also if GNULIB_NONBLOCKING.
+	(rpl_write): When failing to write on a non-blocking pipe, change
+	errno from ENOSPC to EAGAIN.
+	* lib/stdio.in.h (fprintf, fputc, fputs, fwrite, printf, putc,
+	putchar, puts, vfprintf, vprintf): Enable replacement also if
+	GNULIB_STDIO_H_NONBLOCKING is 1.
+	* lib/stdio-write.c: Enable replacements also if GNULIB_NONBLOCKING.
+	(CLEAR_ERRNO, HANDLE_ENOSPC): New macros.
+	(CLEAR_LastError, HANDLE_ERROR_NO_DATA): New macros, extracted from
+	CALL_WITH_SIGPIPE_EMULATION.
+	(CALL_WITH_SIGPIPE_EMULATION): Use them.
+	* m4/nonblocking.m4: New file.
+	* m4/write.m4 (gl_FUNC_WRITE): Enable REPLACE_WRITE also if required
+	for non-blocking I/O support.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize
+	GNULIB_UNISTD_H_NONBLOCKING.
+	* m4/stdio_h.m4 (gl_STDIO_H): Enable REPLACE_STDIO_WRITE_FUNCS also if
+	required for non-blocking I/O support.
+	(gl_STDIO_H_DEFAULTS): Initialize GNULIB_STDIO_H_NONBLOCKING.
+	* modules/nonblocking (Files): Add m4/nonblocking.m4,
+	lib/stdio-write.c, m4/asm-underscore.m4.
+	(Depends-on): Add stdio, unistd.
+	(configure.ac): Invoke gl_NONBLOCKING_IO. Define GNULIB_NONBLOCKING.
+	Set GNULIB_STDIO_H_NONBLOCKING, GNULIB_UNISTD_H_NONBLOCKING.
+	* modules/unistd (Makefile.am): Substitute GNULIB_UNISTD_H_NONBLOCKING.
+	* modules/stdio (Makefile.am): Substitute GNULIB_STDIO_H_NONBLOCKING.
+	* doc/posix-functions/fprintf.texi: Mention 'nonblocking' module and
+	problem with non-blocking pipes.
+	* doc/posix-functions/fputc.texi: Likewise.
+	* doc/posix-functions/fputs.texi: Likewise.
+	* doc/posix-functions/fwrite.texi: Likewise.
+	* doc/posix-functions/printf.texi: Likewise.
+	* doc/posix-functions/putc.texi: Likewise.
+	* doc/posix-functions/putchar.texi: Likewise.
+	* doc/posix-functions/puts.texi: Likewise.
+	* doc/posix-functions/vfprintf.texi: Likewise.
+	* doc/posix-functions/vprintf.texi: Likewise.
+	* doc/posix-functions/write.texi: Likewise.
+
+2011-04-10  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: prohibit doubled words
+	Detect them also when they're separated by a newline.
+	There are 3 ways to customize it:
+	  - disable the test on a per file basis, as usual with rules using
+	    $(VC_LIST_EXCEPT)
+	  - replace the default doubled-word-selecting regexp (affects all files)
+	  - ignore a particular file-vs-doubled-word match
+	I nearly used that last one to ignore the "is is" match in
+	coreutils' NEWS file, since the text was "ls -is is ..."
+	To do that, I would have added this line to cfg.mk:
+	  ignore_doubled_word_match_RE_ = ^NEWS:[0-9]+:is[ ]is$
+	but it would have ignored any "is is" match in NEWS.
+	Low probability, but still...
+	Instead, I changed the text, slightly:
+	  -  ls -is is now consistent with ls -lis in ignoring values returned
+	  +  "ls -is" is now consistent with ls -lis in ignoring values returned
+	* top/maint.mk (prohibit_double_word_RE_): Provide default.
+	(prohibit_doubled_word_): Define.
+	(sc_prohibit_doubled_word): New rule.
+	(sc_prohibit_the_the): Remove.  Subsumed by the above.
+
+2011-04-10  Jim Meyering  <meyering@redhat.com>
+
+	maint: fix doubled-word typo in comment
+	* m4/gethostname.m4: s/is is/it is/
+	* m4/getdomainname.m4: Likewise.
+
+2011-04-10  Jim Meyering  <meyering@redhat.com>
+
+	maint: remove doubled word: s/it it/it/
+	* lib/stat-time.h (get_stat_birthtime): s/it it/it/
+
+2011-04-10  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: remove useless semicolon and backslash
+	* top/maint.mk (sc_prohibit_empty_lines_at_EOF): Remove stray
+	semicolon and backslash.
+
+2011-04-10  Bruno Haible  <bruno@clisp.org>
+
+	stdint test: Fix compilation failure on OSF/1 with DTK compiler.
+	* modules/stdint-tests (Depends-on): Add wchar.
+
+2011-04-10  Jim Meyering  <meyering@redhat.com>
+
+	maint: remove doubled words in comments, e.g., s/a a/a/
+	* lib/strptime.c (day_of_the_week): s/the the/the/
+	* tests/test-chown.h (test_chown): s/a a/a/
+
+	test-chown.h: correct a cast
+	* tests/test-chown.h (test_chown): Cast -1 to gid_t (not uid_t)
+	when the destination is a stat.st_gid.
+
+2011-04-09  Mats Erik Andersson  <mats.andersson@gisladisker.se>  (tiny change)
+
+	getaddrinfo: Fix test for sa_len member.
+	* m4/getaddrinfo.m4 (gl_PREREQ_GETADDRINFO): When testing for sa_len,
+	include <sys/types.h> before <sys/socket.h>.
+
+2011-04-09  Paul Eggert  <eggert@cs.ucla.edu>
+
+	maint: change "can not" to "cannot"
+	* doc/posix-functions/iconv.texi (iconv): This one crossed line
+	boundaries.
+
+2011-04-09  Jim Meyering  <meyering@redhat.com>
+
+	maint: change "a a" to "a"
+	* tests/test-lchown.h (test_lchown): s/a a/a/
+
+	maint.mk: prohibit \<the the\>
+	* top/maint.mk (sc_prohibit_the_the): New rule.
+
+	maint: fix "the the" in comment
+	* lib/count-one-bits.h: s/the the/the/
+
+	maint: change "can not" to "cannot"
+	But do not change the occurrences in maintain.texi or in
+	build-aux/po/Makefile.in.in, which I presume comes from gettext.
+	* doc/gnulib-tool.texi: s/can not/cannot/
+	* doc/posix-functions/accept.texi (accept): Likewise.
+	* doc/posix-functions/socket.texi (socket): Likewise.
+	* lib/mbrtowc.c: Likewise.
+
+	maint.mk: prohibit use of "can not"
+	* top/maint.mk (sc_prohibit_can_not): New rule.
+	Writing "can not" (rather than "cannot") is too common.  Prohibit it.
+
+2011-04-09  Bruno Haible  <bruno@clisp.org>
+
+	careadlinkat: Guard against misuse of careadlinkatcwd.
+	* lib/careadlinkat.c: Include <stdlib.h>.
+	(careadlinkatcwd): Check that the fd argument is as expected.
+
+2011-04-09  Bruno Haible  <bruno@clisp.org>
+
+	careadlinkat: Use common coding style.
+	* lib/careadlinkat.c: Move gnulib includes after system includes.
+
+2011-04-09  Bruno Haible  <bruno@clisp.org>
+
+	careadlinkat: Clarify specification.
+	* lib/careadlinkat.h (careadlinkat): Clarify preadlinkat argument.
+	(careadlinkatcwd): Add comment.
+	* lib/careadlinkat.c (careadlinkat): Clarify preadlinkat argument.
+
+2011-04-09  Bruno Haible  <bruno@clisp.org>
+
+	areadlinkat: Avoid link error on many platforms.
+	* modules/areadlinkat (Depends-on): Add areadlink.
+
+2011-04-09  Bruno Haible  <bruno@clisp.org>
+
+	allocator, careadlinkat: Fix double-inclusion guard.
+	* lib/allocator.h: Fix double-inclusion guard.
+	* lib/careadlinkat.h: Likewise.
+
+2011-04-09  Bruno Haible  <bruno@clisp.org>
+
+	relocatable-prog-wrapper: Update after module 'areadlink' changed.
+	* lib/relocwrapper.c: Update dependencies hierarchy.
+	* build-aux/install-reloc: Update list of files to be compiled.
+	* modules/relocatable-prog-wrapper (Files): Add lib/careadlinkat.[hc],
+	lib/allocator.[hc].
+
+2011-04-08  Eric Blake  <eblake@redhat.com>
+
+	strftime: silence gnulib-tool warning
+	* modules/strftime-tests (Depends-on): Drop automatic dependency.
+
+2011-04-08  Bruno Haible  <bruno@clisp.org>
+
+	verify: Fix syntax error with GCC 4.6 in C++ mode.
+	* lib/verify.h (HAVE__STATIC_ASSERT): Don't define in C++ mode.
+	(HAVE_STATIC_ASSERT): New macro.
+	(verify_true, verify): Use 'static_assert' if it is supported and
+	'_Static_assert' is not supported.
+
+2011-04-08  Paul Eggert  <eggert@cs.ucla.edu>
+
+	allocator: New module.
+	* modules/allocator, lib/allocator.c: New files.
+	* lib/allocator.h (stdlib_allocator): New decl.
+	* lib/careadlinkat.c (_GL_USE_STDLIB_ALLOC, standard_allocator):
+	Remove.  Do not include <stdlib.h>.
+	(careadlinkat): Use stdlib_allocator instead of rolling our own.
+	* modules/careadlinkat (Files): Remove lib/allocator.h.
+	(Depends-on): Add allocator.
+
+	stdlib: let modules use system malloc, realloc
+	* lib/stdlib.in.h (malloc, realloc): Don't #define or add warnings
+	if !_GL_USE_STDLIB_ALLOC.
+	(malloc, realloc): Limit this change to a smaller scope.
+
+	* lib/careadlinkat.c (_GL_USE_STDLIB_ALLOC): Define.
+	(malloc, realloc): Don't #undef; no longer needed.
+	* lib/malloca.c (_GL_USE_STDLIB_ALLOC, malloc): Likewise.
+	* lib/progreloc.c (_GL_USE_STDLIB_ALLOC, malloc): Likewise.
+	* lib/setenv.c (_GL_USE_STDLIB_ALLOC, malloc, realloc): Likewise.
+	* lib/canonicalize-lgpl.c (_GL_USE_STDLIB_ALLOC, malloc): Likewise.
+	* lib/relocatable.c (_GL_USE_STDLIB_ALLOC, malloc): Likewise.
+	* lib/relocwrapper.c (_GL_USE_STDLIB_ALLOC, malloc): Likewise.
+	* lib/malloc.c (_GL_USE_STDLIB_ALLOC, malloc): Likewise.
+	* lib/realloc.c (_GL_USE_STDLIB_ALLOC, malloc, realloc): Likewise.
+
+	careadlinkat: rename members to avoid problem
+	* lib/allocator.h (struct allocator): Rename members from
+	malloc/realloc to allocate/reallocate, to avoid problems if malloc
+	and realloc are #define'd.  Reported by Eric Blake in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-04/msg00091.html>.
+	* lib/careadlinkat.c (careadlinkat): Adjust to renaming.
+
+2011-04-08  Eric Blake  <eblake@redhat.com>
+
+	nonblocking: reduce dependency
+	* tests/test-nonblocking.c: Only test sockets when in use.
+	* modules/nonblocking-tests (Depends-on): Drop socket.
+	(Makefile.am): Link even if sockets are not present.
+	* modules/pipe2-tests (Makefile.am): Likewise.
+	* lib/ioctl.c (ioctl) [WIN32]: Fail if sockets are not also in use.
+
+	pipe2: fix O_NONBLOCK support on mingw
+	* modules/pipe2 (Depends-on): Add nonblocking.
+	* lib/pipe2.c (pipe2) [WIN32]: Add O_NONBLOCK support.
+	* tests/test-pipe2.c (is_nonblocking): Adjust test accordingly.
+	* tests/test-nonblocking.c (main): Likewise.
+	* modules/pipe2-tests (Makefile.am): Avoid link failure.
+
+	fcntl-h: fix O_ACCMODE on cygwin
+	* doc/posix-headers/fcntl.texi (fcntl.h): Document the bug.
+	* lib/fcntl.in.h (O_ACCMODE): Fix it.
+
+	pipe-filter: drop O_NONBLOCK workarounds
+	* modules/pipe-filter-gi (Depends-on): Add fcntl-h.
+	* modules/pipe-filter-ii (Depends-on): Likewise.
+	* lib/pipe-filter-aux.h (O_NONBLOCK): Delete workaround.
+
+	nonblocking: provide O_NONBLOCK for mingw
+	* modules/nonblocking (Depends-on): Add open.
+	(configure.ac): Set new witness macro.
+	* m4/fcntl_h.m4 (gl_FCNTL_H_DEFAULTS): Provide default for it.
+	* modules/fcntl-h (Makefile.am): Substitute it.
+	* lib/fcntl.in.h (O_NONBLOCK): Guarantee non-zero definition when
+	nonblocking module is in use.
+	* lib/nonblocking.c: Adjust portability test.
+	* lib/open.c (open): Don't let native open see gnulib flag.
+	* tests/test-fcntl-h.c (main): Enhance test.
+	* tests/test-open.h (test_open): Likewise.
+	* doc/posix-headers/fcntl.texi (fcntl.h): Document the replacement.
+
+	careadlinkat: fix compilation error on mingw
+	* lib/careadlinkat.c (standard_allocator): Avoid renaming fields
+	within struct allocator.
+
+2011-04-06  Eric Blake  <eblake@redhat.com>
+
+	binary-io: relicense under LGPLv2+
+	* modules/binary-io (License): Relax to LGPLv2+.
+	Requested for libvirt, and required by pipe2.
+
+2011-04-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	verify: use _Static_assert if available
+	* lib/verify.h (HAVE__STATIC_ASSERT): New macro.
+	(verify_true, verify): Use it if available.  This generates better
+	diagnostics with GCC 4.6.0 and later.
+
+2011-04-05  Bruno Haible  <bruno@clisp.org>
+
+	Remove leftover generated .h files after config.status changed.
+
+	* m4/alloca.m4 (gl_FUNC_ALLOCA): New automake conditional
+	GL_GENERATE_ALLOCA_H.
+	* modules/alloca-opt (Makefile.am): Remove alloca.h if
+	GL_GENERATE_ALLOCA_H evaluates to false.
+
+	* m4/argz.m4 (gl_FUNC_ARGZ): New automake conditional
+	GL_GENERATE_ARGZ_H.
+	* modules/argz (Makefile.am): Remove argz.h if GL_GENERATE_ARGZ_H
+	evaluates to false.
+
+	* m4/byteswap.m4 (gl_BYTESWAP): New automake conditional
+	GL_GENERATE_BYTESWAP_H.
+	* modules/byteswap (Makefile.am): Remove byteswap.h if
+	GL_GENERATE_BYTESWAP_H evaluates to false.
+
+	* m4/errno_h.m4 (gl_HEADER_ERRNO_H): New automake conditional
+	GL_GENERATE_ERRNO_H.
+	* modules/errno (Makefile.am): Remove errno.h if GL_GENERATE_ERRNO_H
+	evaluates to false.
+
+	* m4/float_h.m4 (gl_FLOAT_H): New automake conditional
+	GL_GENERATE_FLOAT_H.
+	* modules/float (Makefile.am): Remove float.h if GL_GENERATE_FLOAT_H
+	evaluates to false.
+
+	* m4/fnmatch.m4 (gl_FUNC_FNMATCH_POSIX): New automake conditional
+	GL_GENERATE_FNMATCH_H.
+	* modules/fnmatch (Makefile.am): Remove fnmatch.h if
+	GL_GENERATE_FNMATCH_H evaluates to false.
+
+	* m4/glob.m4 (gl_GLOB_SUBSTITUTE, gl_GLOB): New automake conditional
+	GL_GENERATE_GLOB_H.
+	* modules/glob (Makefile.am): Remove glob.h if GL_GENERATE_GLOB_H
+	evaluates to false.
+
+	* m4/iconv_h.m4 (gl_REPLACE_ICONV_H, gl_ICONV_H_DEFAULTS): New
+	automake conditional GL_GENERATE_ICONV_H.
+	* modules/iconv-h (Makefile.am): Remove iconv.h if GL_GENERATE_ICONV_H
+	evaluates to false.
+
+	* m4/netinet_in_h.m4 (gl_HEADER_NETINET_IN): New automake conditional
+	GL_GENERATE_NETINET_IN_H.
+	* modules/netinet_in (Makefile.am): Remove netinet/in.h if
+	GL_GENERATE_NETINET_IN_H evaluates to false.
+
+	* m4/pthread.m4 (gl_PTHREAD_CHECK): Set PTHREAD_H here. New automake
+	conditional GL_GENERATE_PTHREAD_H.
+	(gl_PTHREAD_DEFAULTS): Don't set PTHREAD_H here.
+	* modules/pthread (Makefile.am): Remove pthread.h if
+	GL_GENERATE_PTHREAD_H evaluates to false.
+
+	* m4/sched_h.m4 (gl_SCHED_H): New automake conditional
+	GL_GENERATE_SCHED_H.
+	* modules/sched (Makefile.am): Remove sched.h if GL_GENERATE_SCHED_H
+	evaluates to false.
+
+	* m4/selinux-context-h.m4 (gl_HEADERS_SELINUX_CONTEXT_H): New automake
+	conditional GL_GENERATE_SELINUX_CONTEXT_H.
+	* modules/selinux-h (Makefile.am): Remove selinux/context.h if
+	GL_GENERATE_SELINUX_CONTEXT_H evaluates to false.
+
+	* m4/stdarg.m4 (gl_STDARG_H): New automake conditional
+	GL_GENERATE_STDARG_H.
+	* modules/stdarg (Makefile.am): Remove stdarg.h if
+	GL_GENERATE_STDARG_H evaluates to false.
+
+	* m4/stdbool.m4 (AM_STDBOOL_H): New automake conditional
+	GL_GENERATE_STDBOOL_H.
+	* modules/stdbool (Makefile.am): Remove stdbool.h if
+	GL_GENERATE_STDBOOL_H evaluates to false.
+
+	* m4/stddef_h.m4 (gl_STDDEF_H): Set STDDEF_H here. New automake
+	conditional GL_GENERATE_STDDEF_H.
+	(gl_STDDEF_H_DEFAULTS): Don't set STDDEF_H here.
+	* modules/stddef (Makefile.am): Remove stddef.h if
+	GL_GENERATE_STDDEF_H evaluates to false.
+
+	* m4/stdint.m4 (gl_STDINT_H): New automake conditional
+	GL_GENERATE_STDINT_H.
+	* modules/stdint (Makefile.am): Remove stdint.h if
+	GL_GENERATE_STDINT_H evaluates to false.
+
+	* m4/sysexits.m4 (gl_SYSEXITS): New automake conditional
+	GL_GENERATE_SYSEXITS_H.
+	* modules/sysexits (Makefile.am): Remove sysexits.h if
+	GL_GENERATE_SYSEXITS_H evaluates to false.
+
+	Reported by Karl Berry and Ralf Wildenhues.
+
+2011-04-05  Bruno Haible  <bruno@clisp.org>
+
+	Ensure to rebuild generated .h files when config.status has changed.
+	* modules/arpa_inet (Makefile.am): Add dependency from .h file to
+	config.status.
+	* modules/ctype (Makefile.am): Likewise.
+	* modules/dirent (Makefile.am): Likewise.
+	* modules/errno (Makefile.am): Likewise.
+	* modules/fcntl-h (Makefile.am): Likewise.
+	* modules/float (Makefile.am): Likewise.
+	* modules/getopt-posix (Makefile.am): Likewise.
+	* modules/glob (Makefile.am): Likewise.
+	* modules/iconv-h (Makefile.am): Likewise.
+	* modules/inttypes (Makefile.am): Likewise.
+	* modules/langinfo (Makefile.am): Likewise.
+	* modules/locale (Makefile.am): Likewise.
+	* modules/math (Makefile.am): Likewise.
+	* modules/netdb (Makefile.am): Likewise.
+	* modules/netinet_in (Makefile.am): Likewise.
+	* modules/poll-h (Makefile.am): Likewise.
+	* modules/pthread (Makefile.am): Likewise.
+	* modules/pty (Makefile.am): Likewise.
+	* modules/sched (Makefile.am): Likewise.
+	* modules/search (Makefile.am): Likewise.
+	* modules/selinux-h (Makefile.am): Likewise.
+	* modules/signal (Makefile.am): Likewise.
+	* modules/spawn (Makefile.am): Likewise.
+	* modules/stdarg (Makefile.am): Likewise.
+	* modules/stdbool (Makefile.am): Likewise.
+	* modules/stddef (Makefile.am): Likewise.
+	* modules/stdint (Makefile.am): Likewise.
+	* modules/stdio (Makefile.am): Likewise.
+	* modules/stdlib (Makefile.am): Likewise.
+	* modules/string (Makefile.am): Likewise.
+	* modules/strings (Makefile.am): Likewise.
+	* modules/sys_file (Makefile.am): Likewise.
+	* modules/sys_ioctl (Makefile.am): Likewise.
+	* modules/sys_select (Makefile.am): Likewise.
+	* modules/sys_socket (Makefile.am): Likewise.
+	* modules/sys_stat (Makefile.am): Likewise.
+	* modules/sys_time (Makefile.am): Likewise.
+	* modules/sys_times (Makefile.am): Likewise.
+	* modules/sys_utsname (Makefile.am): Likewise.
+	* modules/sys_wait (Makefile.am): Likewise.
+	* modules/sysexits (Makefile.am): Likewise.
+	* modules/termios (Makefile.am): Likewise.
+	* modules/time (Makefile.am): Likewise.
+	* modules/unistd (Makefile.am): Likewise.
+	* modules/wchar (Makefile.am): Likewise.
+	* modules/wctype-h (Makefile.am): Likewise.
+	Reported by Karl Berry, Eric Blake, and Ralf Wildenhues.
+
+2011-04-05  Bruno Haible  <bruno@clisp.org>
+
+	pipe2: Relicense under LGPLv2+.
+	* modules/pipe2 (License): Change to LGPLv2+.
+	Requested by Eric Blake, for libvirt.
+
+2011-04-05  Bruce Korb  <bkorb@gnu.org>
+
+	bootstrap: compute gnulib_extra_files after updating build_aux
+	* build-aux/bootstrap (gnulib_extra_files): bootstrap.conf may
+	change build_aux or also supply gnulib_extra_files.  Handle correctly.
+
+2011-04-05  Eric Blake  <eblake@redhat.com>
+
+	bootstrap: preserve git whitelist item sorting
+	* build-aux/bootstrap (sort_patterns): New function.
+	(insert_sorted_if_absent): Use it to sink ! lines to the bottom.
+
+2011-04-05  Simon Josefsson  <simon@josefsson.org>
+
+	* top/maint.mk (sc_prohibit_empty_lines_at_EOF): Don't trigger
+	sc_space_tab check.
+
+2011-04-05  Paul Eggert  <eggert@cs.ucla.edu>
+
+	areadlink, areadlinkat: rewrite in terms of careadlinkat
+	* lib/areadlink.c, lib/areadlinkat.c: Include careadlinkat.h
+	instead of errno.h, limits.h, stdint.h, stdlib.h, string.h, unistd.h.
+	(SSIZE_MAX, INITIAL_BUF_SIZE): Remove.
+	(malloc, realloc): Remove #undefs.
+	(areadlink, areadlinkat): Rewrite in terms of careadlinkat.
+	* modules/areadlink (Depends-on): Add careadlinkat.  Remove
+	readlink, ssize_t, stdint, unistd.
+	* modules/areadlinkat (Depends-on): Add careadlinkat.  Remove
+	areadlink, stdint.
+
+	careadlinkat: new module
+	* lib/allocator.h, lib/careadlinkat.h, lib/careadlinkat.c:
+	* modules/careadlinkat: New files, written by me with
+	a review and feedback from Ben Pfaff in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-04/msg00008.html>.
+
 2011-04-01  Bruno Haible  <bruno@clisp.org>
 
 	wmemchr, wcschr, wcsrchr, wcspbrk, wcsstr: Avoid errors in C++ mode.
@@ -606,7 +2252,7 @@
 	Reported by Tom G. Christensen <tgc@jupiterrise.com>.
 
 2011-03-20  Paul Eggert  <eggert@cs.ucla.edu>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	socklen: do not depend on sys_socket
 	While trying to modify Emacs to use gnulib's socklen module,
@@ -643,7 +2289,7 @@
 	* m4/socklen.m4: Update comment about platforms.
 
 2011-03-19  Paul Eggert  <eggert@cs.ucla.edu>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	inet_ntop, inet_pton: Simplify.
 	* modules/inet_ntop (Depends-on): Remove socklen, since sys_socket is
@@ -652,7 +2298,7 @@
 	* lib/arpa_inet.in.h: Adjust comment.
 
 2011-03-19  Paul Eggert  <eggert@cs.ucla.edu>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	netdb: Simplify.
 	* modules/netdb (Depends-on): Remove socklen, since sys_socket is
@@ -741,7 +2387,7 @@
 	(check): Depend on the new variable, not the hard-coded list.
 
 2011-03-13  Bastien Roucariès  <roucaries.bastien@gmail.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	passfd module, part 3.
 	* lib/passfd.h (recvfd): Add a flags argument.
@@ -917,8 +2563,8 @@
 	Suggested by Simon Josefsson <simon@josefsson.org>.
 
 2011-02-28  Corinna Vinschen  <vinschen@redhat.com>  (tiny change)
-            Charles Wilson  <cygwin@cwilson.fastmail.fm>  (tiny change)
-            Bruno Haible  <bruno@clisp.org>  (tiny change)
+	    Charles Wilson  <cygwin@cwilson.fastmail.fm>  (tiny change)
+	    Bruno Haible  <bruno@clisp.org>  (tiny change)
 
 	On Cygwin, use /proc file system instead of win32 API.
 	* lib/relocatable.c: On Cygwin, use file names from /proc, rather than
@@ -2765,7 +4411,7 @@
 	* lib/strerror_r.c (strerror_r): Fix return type.
 
 2011-01-21  Pádraig Brady  <P@draigBrady.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	uN_strstr: New unit tests.
 	* modules/unistr/u8-strstr-tests: New file.
@@ -2777,7 +4423,7 @@
 	* tests/unistr/test-u32-strstr.c: New file.
 
 2011-01-21  Pádraig Brady  <P@draigBrady.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Make uN_strstr functions O(n) worst-case.
 	* lib/unistr/u-strstr.h (FUNC): In the 8-bit case, use strstr. In the
@@ -2801,7 +4447,7 @@
 	(configure.ac): Update required libunistring version.
 
 2011-01-21  Pádraig Brady  <P@draigBrady.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Prepare for faster uN_strstr functions.
 	* lib/str-kmp.h: Support definable UNITs.
@@ -4344,7 +5990,7 @@
 	http://sourceware.org/bugzilla/show_bug.cgi?id=12348
 
 2010-12-28  Bruno Haible  <bruno@clisp.org>
-            Paul Eggert <eggert@cs.ucla.edu>
+	    Paul Eggert <eggert@cs.ucla.edu>
 
 	linkat: Make implementation robust against system behaviour variations.
 	* m4/link-follow.m4 (gl_FUNC_LINK_FOLLOWS_SYMLINK): Define
@@ -5377,7 +7023,7 @@
 	relate to each other.
 
 2010-12-15  Pádraig Brady <P@draigBrady.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Improve cross-compilation guesses for uClibc.
 	* m4/memmem.m4 (gl_FUNC_MEMMEM_SIMPLE): When cross-compiling, assume
@@ -5613,7 +7259,7 @@
 	* m4/strerror_r.m4 (gl_FUNC_STRERROR_R): Fix typo.
 
 2010-11-28  Bruno Haible  <bruno@clisp.org>
-            Paul Eggert  <eggert@cs.ucla.edu>
+	    Paul Eggert  <eggert@cs.ucla.edu>
 
 	Tests for module 'getdomainname'.
 	* modules/getdomainname-tests: New file.
@@ -5621,7 +7267,7 @@
 	tests/test-gethostname.c.
 
 2010-11-28  Bruno Haible  <bruno@clisp.org>
-            Paul Eggert  <eggert@cs.ucla.edu>
+	    Paul Eggert  <eggert@cs.ucla.edu>
 
 	getdomainname: Use the system function when possible.
 	* lib/unistd.in.h: Include <netdb.h>, for getdomainname's declaration.
@@ -7169,7 +8815,7 @@
 	styles, and some unnecessary blank lines.
 
 2010-10-03  Bruno Haible  <bruno@clisp.org>
-            Joachim Schmitz  <schmitz@hp.com>  (tiny change)
+	    Joachim Schmitz  <schmitz@hp.com>  (tiny change)
 
 	acl: Add support for ACLs on NonStop Kernel.
 	* m4/acl.m4 (gl_FUNC_ACL): For Solaris, test for facl(), not for acl().
@@ -7441,7 +9087,7 @@
 	Reported by Paul Eggert.
 
 2010-09-22  Pádraig Brady  <P@draigbrady.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Fix endless loop in mbmemcasecoll.
 	* lib/mbmemcasecoll.c (apply_towlower): When mbrtowc returns 0, copy 1
@@ -8217,7 +9863,7 @@
 	Reported by Johan Hattne <johan.hattne@utsouthwestern.edu>.
 
 2010-08-29  Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Make the module 'realloc-gnu' work again on AIX and OSF/1.
 	* m4/realloc.m4 (gl_FUNC_REALLOC_GNU): Define HAVE_REALLOC_GNU instead
@@ -8228,7 +9874,7 @@
 	* modules/realloc-gnu (configure.ac): Use gl_MODULE_INDICATOR.
 
 2010-08-29  Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Make the module 'calloc-gnu' work again on AIX and OSF/1.
 	* m4/calloc.m4 (gl_FUNC_CALLOC_GNU): Define HAVE_CALLOC_GNU instead of
@@ -8239,7 +9885,7 @@
 	* modules/calloc-gnu (configure.ac): Invoke gl_MODULE_INDICATOR.
 
 2010-08-29  Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Make the module 'malloc-gnu' work again on AIX and OSF/1.
 	* m4/malloc.m4 (gl_FUNC_MALLOC_GNU): Define HAVE_MALLOC_GNU instead of
@@ -8315,8 +9961,8 @@
 	* lib/read-file.c (fread_file): Shrink the buffer at the end.
 
 2010-08-28  Giuseppe Scrivano  <gscrivano@gnu.org>
-            Eric Blake  <eblake@redhat.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Eric Blake  <eblake@redhat.com>
+	    Bruno Haible  <bruno@clisp.org>
 
 	read-file: Avoid memory reallocations with regular files.
 	* lib/read-file.c: Include <sys/stat.h>, <stdio.h>, <stdint.h>.
@@ -8654,7 +10300,7 @@
 	(Match-end-of-line Operator): Mention 'not_eol'.
 
 2010-08-14  Brian Gough  <bjg@gnu.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	git-merge-changelog: add doc relating to use with bzr and hg.
 	* lib/git-merge-changelog.c: Add comments regarding bzr, hg, diff3.
@@ -9345,7 +10991,7 @@
 	* modules/strtod-tests (Makefile.am): Likewise.
 
 2010-07-11  Pádraig Brady  <P@draigBrady.com>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	unistr/u8-strchr: Optimize ASCII argument case.
 	* lib/unistr/u8-strchr.c (u8_strchr): For ASCII arguments, use strchr.
@@ -9703,7 +11349,7 @@
 	* tests/test-inttostr.c: New file.  Test these functions.
 
 2010-06-09  Ben Pfaff  <blp@cs.stanford.edu>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Add "Extending Gnulib" chapter to manual.
 	* doc/gnulib.texi (Writing Modules): Add cross-reference to new
@@ -9743,7 +11389,7 @@
 	Suggested by Eric Blake.
 
 2010-06-04  Martin Lambers  <marlam@marlam.de>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	havelib: Allow library names with '+' characters.
 	* m4/lib-link.m4 (AC_LIB_LINKFLAGS, AC_LIB_HAVE_LINKFLAGS,
@@ -9999,7 +11645,7 @@
 	* modules/libunistring-optional (Files): Likewise.
 
 2010-05-18  Paolo Bonzini  <bonzini@gnu.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	New module 'libunistring-optional'.
 	* modules/libunistring-optional: New file.
@@ -11551,7 +13197,7 @@
 	(func_import): Set the excl_*_tests variables to empty.
 
 2010-04-25  Simon Josefsson  <simon@josefsson.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Work around a MacOS X 10.4 bug with openpty.
 	* doc/glibc-functions/openpty.texi: Mention the MacOS X 10.4 bug.
@@ -11620,7 +13266,7 @@
 	EPIPE.
 
 2010-04-20  Simon Josefsson  <simon@josefsson.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	visibility: Don't use -fvisibility if it leads to a warning.
 	* m4/visibility.m4 (gl_VISIBILITY): Check whether -Werror is usable. If
@@ -11656,7 +13302,7 @@
 	Reported by Ian Beckwith <ianb@erislabs.net>.
 
 2010-04-18  Andreas Gruenbacher  <agruen@suse.de>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	diffseq: Accommodate use-case with abstract arrays.
 	* lib/diffseq.h (struct context): Remove xvec, yvec fields if ELEMENT
@@ -11807,7 +13453,7 @@
 	declared.
 
 2010-04-11  Paolo Bonzini  <bonzini@gnu.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	libunistring: Improve configure output.
 	* m4/libunistring.m4 (gl_LIBUNISTRING): Check for libiconv first.
@@ -12230,14 +13876,14 @@
 	Reported by Hauke Fath <hauke@espresso.rhein-neckar.de>.
 
 2010-04-04  Hauke Fath  <hauke@espresso.rhein-neckar.de>  (tiny change)
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	wchar: Port to NetBSD 1.5.
 	* lib/wchar.in.h (WEOF): Provide fallback also when wint_t exists.
 	* lib/wctype.in.h (WEOF): Likewise.
 
 2010-04-04  Hauke Fath  <hauke@espresso.rhein-neckar.de>  (tiny change)
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Port extended stdio to NetBSD 1.5.
 	* lib/stdio-impl.h [NetBSD]: Include <sys/param.h>.
@@ -13018,7 +14664,7 @@
 	$(LIBSOCKET).
 
 2010-03-28  Bruno Haible  <bruno@clisp.org>
-            Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
+	    Ralf Wildenhues  <Ralf.Wildenhues@gmx.de>
 
 	lib-ignore: Determine different options for different compilers.
 	* m4/lib-ignore.m4 (gl_IGNORE_UNUSED_LIBRARIES): Set a variable which

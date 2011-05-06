@@ -10,10 +10,10 @@ m4/tanl.m4
 Depends-on:
 math
 extensions
-float
-isnanl
-floor
-floorl
+float           [test $HAVE_TANL = 0]
+isnanl          [test $HAVE_TANL = 0]
+floor           [test $HAVE_TANL = 0]
+floorl          [test $HAVE_TANL = 0]
 
 configure.ac:
 gl_FUNC_TANL
@@ -28,7 +28,7 @@ Link:
 $(TANL_LIBM)
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Paolo Bonzini

@@ -8,8 +8,8 @@ m4/expl.m4
 Depends-on:
 math
 extensions
-float
-floorl
+float           [test $HAVE_EXPL = 0]
+floorl          [test $HAVE_EXPL = 0]
 
 configure.ac:
 gl_FUNC_EXPL
@@ -24,7 +24,7 @@ Link:
 $(EXPL_LIBM)
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Paolo Bonzini

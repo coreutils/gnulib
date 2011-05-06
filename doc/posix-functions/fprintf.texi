@@ -4,7 +4,7 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/fprintf.html}
 
-Gnulib module: fprintf-posix or stdio, sigpipe
+Gnulib module: fprintf-posix or stdio, nonblocking, sigpipe
 
 Portability problems fixed by Gnulib module @code{fprintf-posix}:
 @itemize
@@ -62,6 +62,15 @@ Solaris 10.
 @item
 This function can crash in out-of-memory conditions on some platforms:
 MacOS X 10.3, FreeBSD 6.0, NetBSD 5.0.
+@end itemize
+
+Portability problems fixed by Gnulib module @code{stdio} or @code{fprintf-posix}, together with module @code{nonblocking}:
+@itemize
+@item
+When writing to a non-blocking pipe whose buffer is full, this function fails
+with @code{errno} being set to @code{ENOSPC} instead of @code{EAGAIN} on some
+platforms:
+mingw.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{stdio} or @code{fprintf-posix}, together with module @code{sigpipe}:

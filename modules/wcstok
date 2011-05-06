@@ -8,8 +8,8 @@ m4/wcstok.m4
 
 Depends-on:
 wchar
-wcsspn
-wcspbrk
+wcsspn          [test $HAVE_WCSTOK = 0]
+wcspbrk         [test $HAVE_WCSTOK = 0]
 
 configure.ac:
 gl_FUNC_WCSTOK

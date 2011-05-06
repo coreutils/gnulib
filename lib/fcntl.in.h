@@ -182,8 +182,7 @@ _GL_WARN_ON_USE (openat, "openat is not portable - "
 #endif
 
 #if !defined O_CLOEXEC && defined O_NOINHERIT
-/* Mingw spells it `O_NOINHERIT'.  Intentionally leave it
-   undefined if not available.  */
+/* Mingw spells it `O_NOINHERIT'.  */
 # define O_CLOEXEC O_NOINHERIT
 #endif
 
@@ -219,6 +218,19 @@ _GL_WARN_ON_USE (openat, "openat is not portable - "
 # define O_NONBLOCK O_NDELAY
 #endif
 
+/* If the gnulib module 'nonblocking' is in use, guarantee a working non-zero
+   value of O_NONBLOCK.  Otherwise, O_NONBLOCK is defined (above) to O_NDELAY
+   or to 0 as fallback.  */
+#if @GNULIB_NONBLOCKING@
+# if O_NONBLOCK
+#  define GNULIB_defined_O_NONBLOCK 0
+# else
+#  define GNULIB_defined_O_NONBLOCK 1
+#  undef O_NONBLOCK
+#  define O_NONBLOCK 0x40000000
+# endif
+#endif
+
 #ifndef O_NOCTTY
 # define O_NOCTTY 0
 #endif
@@ -245,6 +257,11 @@ _GL_WARN_ON_USE (openat, "openat is not portable - "
 
 #ifndef O_TTY_INIT
 # define O_TTY_INIT 0
+#endif
+
+#if O_ACCMODE != (O_RDONLY | O_WRONLY | O_RDWR | O_EXEC | O_SEARCH)
+# undef O_ACCMODE
+# define O_ACCMODE (O_RDONLY | O_WRONLY | O_RDWR | O_EXEC | O_SEARCH)
 #endif
 
 /* For systems that distinguish between text and binary I/O.

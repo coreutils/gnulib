@@ -90,7 +90,9 @@ at any time.
     http://ftp.gnu.org/gnu/grep/
     ftp://ftp.gnu.org/gnu/grep/
 
-* GNU gettext 0.16.1.
+* GNU gettext.
+  + Always use the newest available gettext release, see
+    <http://www.gnu.org/software/gnulib/manual/html_node/gettextize-and-autopoint.html>.
   + Recommended.
     Needed if you use modules that use internationalization (many do).
   + Homepage:

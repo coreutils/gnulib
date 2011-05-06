@@ -6,9 +6,9 @@ lib/getgroups.c
 m4/getgroups.m4
 
 Depends-on:
-malloc-posix
-stdint
 unistd
+malloc-posix    [test $HAVE_GETGROUPS = 0 || test $REPLACE_GETGROUPS = 1]
+stdint          [test $HAVE_GETGROUPS = 0 || test $REPLACE_GETGROUPS = 1]
 
 configure.ac:
 gl_FUNC_GETGROUPS
@@ -20,7 +20,7 @@ Include:
 <unistd.h>
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Jim Meyering, Eric Blake

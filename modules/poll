@@ -7,11 +7,11 @@ m4/poll.m4
 
 Depends-on:
 poll-h
-alloca
-select
-sys_select
-sys_time
-errno
+alloca          [test $HAVE_POLL = 0 || test $REPLACE_POLL = 1]
+select          [test $HAVE_POLL = 0 || test $REPLACE_POLL = 1]
+sys_select      [test $HAVE_POLL = 0 || test $REPLACE_POLL = 1]
+sys_time        [test $HAVE_POLL = 0 || test $REPLACE_POLL = 1]
+errno           [test $HAVE_POLL = 0 || test $REPLACE_POLL = 1]
 
 configure.ac:
 gl_FUNC_POLL

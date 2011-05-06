@@ -14,8 +14,8 @@ m4/printf.m4
 
 Depends-on:
 stdio
-vfprintf-posix
 printf-safe
+vfprintf-posix  [test $REPLACE_VPRINTF = 1]
 
 configure.ac:
 gl_FUNC_VPRINTF_POSIX

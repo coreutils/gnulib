@@ -277,17 +277,28 @@ _GL_WARN_ON_USE (strchr, "strchr cannot work correctly on character strings "
 
 /* Find the first occurrence of C in S or the final NUL byte.  */
 #if @GNULIB_STRCHRNUL@
-# if ! @HAVE_STRCHRNUL@
+# if @REPLACE_STRCHRNUL@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define strchrnul rpl_strchrnul
+#  endif
+_GL_FUNCDECL_RPL (strchrnul, char *, (const char *__s, int __c_in)
+                                     _GL_ATTRIBUTE_PURE
+                                     _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (strchrnul, char *,
+                  (const char *str, int ch));
+# else
+#  if ! @HAVE_STRCHRNUL@
 _GL_FUNCDECL_SYS (strchrnul, char *, (char const *__s, int __c_in)
                                      _GL_ATTRIBUTE_PURE
                                      _GL_ARG_NONNULL ((1)));
-# endif
+#  endif
   /* On some systems, this function is defined as an overloaded function:
        extern "C++" { const char * std::strchrnul (const char *, int); }
        extern "C++" { char * std::strchrnul (char *, int); }  */
 _GL_CXXALIAS_SYS_CAST2 (strchrnul,
                         char *, (char const *__s, int __c_in),
                         char const *, (char const *__s, int __c_in));
+# endif
 # if ((__GLIBC__ == 2 && __GLIBC_MINOR__ >= 10) && !defined __UCLIBC__) \
      && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
 _GL_CXXALIASWARN1 (strchrnul, char *, (char *__s, int __c_in));

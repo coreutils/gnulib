@@ -7,14 +7,16 @@ lib/chdir-long.c
 m4/chdir-long.m4
 
 Depends-on:
-atexit
-fchdir
-fcntl-h
-openat
-memchr
-mempcpy
-memrchr
-stdbool
+unistd
+atexit          [test $gl_cv_have_arbitrary_file_name_length_limit = yes]
+fchdir          [test $gl_cv_have_arbitrary_file_name_length_limit = yes]
+fcntl-h         [test $gl_cv_have_arbitrary_file_name_length_limit = yes]
+openat          [test $gl_cv_have_arbitrary_file_name_length_limit = yes]
+memchr          [test $gl_cv_have_arbitrary_file_name_length_limit = yes]
+mempcpy         [test $gl_cv_have_arbitrary_file_name_length_limit = yes]
+memrchr         [test $gl_cv_have_arbitrary_file_name_length_limit = yes]
+stdbool         [test $gl_cv_have_arbitrary_file_name_length_limit = yes]
+stdlib          [test $gl_cv_have_arbitrary_file_name_length_limit = yes]
 
 configure.ac:
 gl_FUNC_CHDIR_LONG

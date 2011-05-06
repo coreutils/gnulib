@@ -10,10 +10,11 @@ Depends-on:
 spawn-pipe
 wait-process
 error
-exit
+fcntl-h
 gettext-h
 stdbool
 stdint
+stdlib
 sys_select
 unistd
 

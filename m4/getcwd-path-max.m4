@@ -1,10 +1,10 @@
-# serial 15
+# serial 16
 # Check for several getcwd bugs with long file names.
 # If so, arrange to compile the wrapper function.
 
 # This is necessary for at least GNU libc on linux-2.4.19 and 2.4.20.
 # I've heard that this is due to a Linux kernel bug, and that it has
-# been fixed between 2.4.21-pre3 and 2.4.21-pre4.  */
+# been fixed between 2.4.21-pre3 and 2.4.21-pre4.
 
 # Copyright (C) 2003-2007, 2009-2011 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -21,6 +21,7 @@ AC_DEFUN([gl_FUNC_GETCWD_PATH_MAX],
     gl_cv_func_getcwd_path_max,
     [# Arrange for deletion of the temporary directory this test creates.
      ac_clean_files="$ac_clean_files confdir3"
+     dnl Please keep this in sync with tests/test-getcwd.c.
      AC_RUN_IFELSE(
        [AC_LANG_SOURCE(
           [[

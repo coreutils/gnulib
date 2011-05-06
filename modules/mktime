@@ -8,7 +8,7 @@ m4/mktime.m4
 
 Depends-on:
 multiarch
-time_r
+time_r          [test $REPLACE_MKTIME = 1]
 
 configure.ac:
 gl_FUNC_MKTIME

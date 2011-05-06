@@ -7,9 +7,9 @@ m4/tmpfile.m4
 
 Depends-on:
 stdio
-pathmax
-tempname
-tmpdir
+pathmax         [test $REPLACE_TMPFILE = 1]
+tempname        [test $REPLACE_TMPFILE = 1]
+tmpdir          [test $REPLACE_TMPFILE = 1]
 
 configure.ac:
 gl_FUNC_TMPFILE
@@ -21,7 +21,7 @@ Include:
 <stdio.h>
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Ben Pfaff

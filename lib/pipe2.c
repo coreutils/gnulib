@@ -24,6 +24,7 @@
 #include <fcntl.h>
 
 #include "binary-io.h"
+#include "nonblocking.h"
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 /* Native Woe32 API.  */
@@ -55,34 +56,37 @@ pipe2 (int fd[2], int flags)
   }
 #endif
 
+  /* Check the supported flags.  */
+  if ((flags & ~(O_CLOEXEC | O_NONBLOCK | O_BINARY | O_TEXT)) != 0)
+    {
+      errno = EINVAL;
+      return -1;
+    }
+
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 /* Native Woe32 API.  */
 
-  /* Check the supported flags.  */
-  if ((flags & ~(O_CLOEXEC | O_BINARY | O_TEXT)) != 0)
+  if (_pipe (fd, 4096, flags & ~O_NONBLOCK) < 0)
+    return -1;
+
+  if (flags & O_NONBLOCK)
     {
-      errno = EINVAL;
-      return -1;
+      if (set_nonblocking_flag (fd[0], true) != 0
+          || set_nonblocking_flag (fd[1], true) != 0)
+        goto fail;
     }
 
-  return _pipe (fd, 4096, flags);
+  return 0;
 
 #else
 /* Unix API.  */
-
-  /* Check the supported flags.  */
-  if ((flags & ~(O_CLOEXEC | O_NONBLOCK | O_TEXT | O_BINARY)) != 0)
-    {
-      errno = EINVAL;
-      return -1;
-    }
 
   if (pipe (fd) < 0)
     return -1;
 
   /* POSIX <http://www.opengroup.org/onlinepubs/9699919799/functions/pipe.html>
      says that initially, the O_NONBLOCK and FD_CLOEXEC flags are cleared on
-     both fd[0] amd fd[1].  */
+     both fd[0] and fd[1].  */
 
   if (flags & O_NONBLOCK)
     {
@@ -121,6 +125,8 @@ pipe2 (int fd[2], int flags)
 
   return 0;
 
+#endif
+
  fail:
   {
     int saved_errno = errno;
@@ -129,6 +135,4 @@ pipe2 (int fd[2], int flags)
     errno = saved_errno;
     return -1;
   }
-
-#endif
 }

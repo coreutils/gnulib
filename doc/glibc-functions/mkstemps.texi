@@ -10,8 +10,15 @@ Portability problems fixed by Gnulib:
 This function is missing on many non-glibc platforms:
 glibc 2.10, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin
 1.5.x, mingw, Interix 3.5, BeOS.
+@item
+This function is declared in @code{<unistd.h>} instead of @code{<stdlib.h>}
+on some platforms:
+MacOS X 10.5.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
 @end itemize
+
+The gnulib module @code{clean-temp} can create temporary files that will not
+be left behind after signals such as SIGINT.

@@ -1,4 +1,4 @@
-# serial 2
+# serial 4
 # Determine whether getcwd aborts when the length of the working directory
 # name is unusually large.  Any length between 4k and 16k trigger the bug
 # when using glibc-2.4.90-9 or older.
@@ -21,6 +21,7 @@ AC_DEFUN([gl_FUNC_GETCWD_ABORT_BUG],
      rm -rf confdir-14B---
      # Arrange for deletion of the temporary directory this test creates.
      ac_clean_files="$ac_clean_files confdir-14B---"
+     dnl Please keep this in sync with tests/test-getcwd.c.
      AC_RUN_IFELSE(
        [AC_LANG_SOURCE(
           [[
@@ -58,13 +59,13 @@ main ()
   size_t d;
 
   /* The bug is triggered when PATH_MAX < getpagesize (), so skip
-     this relative expensive and invasive test if that's not true.  */
+     this relatively expensive and invasive test if that's not true.  */
   if (getpagesize () <= PATH_MAX)
     return 0;
 
   cwd = getcwd (NULL, 0);
   if (cwd == NULL)
-    return 0;
+    return 2;
 
   initial_cwd_len = strlen (cwd);
   free (cwd);
@@ -91,15 +92,22 @@ main ()
   while (0 < d--)
     {
       if (chdir ("..") < 0)
-        break;
+        {
+          fail = 5;
+          break;
+        }
       rmdir (dir_name);
     }
 
-  return 0;
+  return fail;
 }
           ]])],
     [gl_cv_func_getcwd_abort_bug=no],
-    [gl_cv_func_getcwd_abort_bug=yes],
+    dnl A "regular" nonzero return does not indicate this bug.
+    dnl An abort will provoke an exit code of something like 134 (128 + 6).
+    [test $? -gt 128 \
+      && gl_cv_func_getcwd_abort_bug=yes \
+      || gl_cv_func_getcwd_abort_bug=no],
     [gl_cv_func_getcwd_abort_bug=yes])
   ])
   AS_IF([test $gl_cv_func_getcwd_abort_bug = yes], [$1], [$2])

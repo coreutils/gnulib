@@ -61,9 +61,13 @@
    <wchar.h>.
    BSD/OS 4.0.1 has a bug: <stddef.h>, <stdio.h> and <time.h> must be
    included before <wchar.h>.
+   In some builds of uClibc, <wchar.h> is nonexistent and wchar_t is defined
+   by <stddef.h>.
    But avoid namespace pollution on glibc systems.  */
-#ifndef __GLIBC__
+#if !(defined __GLIBC__ && !defined __UCLIBC__)
 # include <stddef.h>
+#endif
+#ifndef __GLIBC__
 # include <stdio.h>
 # include <time.h>
 #endif

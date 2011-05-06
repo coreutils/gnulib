@@ -6,9 +6,9 @@ lib/getline.c
 m4/getline.m4
 
 Depends-on:
-extensions
-getdelim
 stdio
+extensions
+getdelim        [test $REPLACE_GETLINE = 1]
 
 configure.ac:
 gl_FUNC_GETLINE

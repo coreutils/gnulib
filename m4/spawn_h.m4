@@ -1,4 +1,4 @@
-# spawn_h.m4 serial 12
+# spawn_h.m4 serial 13
 dnl Copyright (C) 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -28,7 +28,6 @@ AC_DEFUN([gl_SPAWN_H],
     HAVE_SPAWN_H=0
     HAVE_POSIX_SPAWNATTR_T=0
     HAVE_POSIX_SPAWN_FILE_ACTIONS_T=0
-    gl_REPLACE_SPAWN_H
   fi
   AC_SUBST([HAVE_SPAWN_H])
 
@@ -63,13 +62,6 @@ AC_DEFUN([gl_HAVE_POSIX_SPAWN],
   if test $ac_cv_func_posix_spawn != yes; then
     HAVE_POSIX_SPAWN=0
   fi
-])
-
-dnl Unconditionally enables the replacement of <spawn.h>.
-AC_DEFUN([gl_REPLACE_SPAWN_H],
-[
-  dnl This is a no-op, because <spawn.h> is always overridden.
-  :
 ])
 
 AC_DEFUN([gl_SPAWN_MODULE_INDICATOR],

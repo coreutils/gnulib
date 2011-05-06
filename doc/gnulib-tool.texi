@@ -287,7 +287,7 @@ Also, on some platforms macros like @samp{_FILE_OFFSET_BITS} and
 @samp{_GNU_SOURCE} may be ineffective, or may have only a limited
 effect, if defined after the first system header file is included.
 
-Finally, note that you can not use @code{AC_LIBOBJ} or
+Finally, note that you cannot use @code{AC_LIBOBJ} or
 @code{AC_REPLACE_FUNCS} in your @file{configure.ac} and expect the
 resulting object files to be automatically added to @file{lib/libgnu.a}.
 This is because your @code{AC_LIBOBJ} and @code{AC_REPLACE_FUNCS} invocations

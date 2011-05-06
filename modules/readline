@@ -7,8 +7,8 @@ lib/readline.c
 m4/readline.m4
 
 Depends-on:
-getline
 havelib
+getline         [test "$gl_cv_lib_readline" = no]
 
 configure.ac:
 gl_FUNC_READLINE

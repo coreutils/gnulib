@@ -11,10 +11,10 @@ gettext-h
 error
 quotearg
 quote
-exit
 exitfail
 verify
 stdbool
+stdlib
 memcmp
 
 configure.ac:

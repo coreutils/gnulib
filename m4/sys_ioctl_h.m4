@@ -1,4 +1,4 @@
-# sys_ioctl_h.m4 serial 9
+# sys_ioctl_h.m4 serial 10
 dnl Copyright (C) 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -42,13 +42,6 @@ AC_DEFUN([gl_SYS_IOCTL_H],
 # include <unistd.h>
 #endif
     ]], [ioctl])
-])
-
-dnl Unconditionally enables the replacement of <sys/ioctl.h>.
-AC_DEFUN([gl_REPLACE_SYS_IOCTL_H],
-[
-  dnl This is a no-op, because <sys/ioctl.h> is always overridden.
-  :
 ])
 
 AC_DEFUN([gl_SYS_IOCTL_MODULE_INDICATOR],

@@ -8,8 +8,8 @@ m4/frexpl.m4
 
 Depends-on:
 math
-isnanl-nolibm
-fpucw
+isnanl-nolibm   [test $HAVE_DECL_FREXPL = 0 || test $gl_func_frexpl = no]
+fpucw           [test $HAVE_DECL_FREXPL = 0 || test $gl_func_frexpl = no]
 
 configure.ac:
 gl_FUNC_FREXPL

@@ -1,4 +1,4 @@
-# fchdir.m4 serial 15
+# fchdir.m4 serial 16
 dnl Copyright (C) 2006-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -33,7 +33,6 @@ AC_DEFUN([gl_FUNC_FCHDIR],
     gl_REPLACE_DUP2
     dnl dup3 is already unconditionally replaced
     gl_REPLACE_FCNTL
-    gl_REPLACE_DIRENT_H
     AC_CACHE_CHECK([whether open can visit directories],
       [gl_cv_func_open_directory_works],
       [AC_RUN_IFELSE([AC_LANG_PROGRAM([[#include <fcntl.h>

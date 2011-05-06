@@ -29,17 +29,11 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#include "dosname.h"
+#include "filenamecat.h"
+
 #ifndef REPLACE_OPEN_DIRECTORY
 # define REPLACE_OPEN_DIRECTORY 0
-#endif
-
-#ifndef HAVE_CANONICALIZE_FILE_NAME
-# if GNULIB_CANONICALIZE || GNULIB_CANONICALIZE_LGPL
-#  define HAVE_CANONICALIZE_FILE_NAME 1
-# else
-#  define HAVE_CANONICALIZE_FILE_NAME 0
-#  define canonicalize_file_name(name) NULL
-# endif
 #endif
 
 /* This replacement assumes that a directory is not renamed while opened
@@ -90,36 +84,26 @@ ensure_dirs_slot (size_t fd)
   return true;
 }
 
-/* Return the canonical name of DIR in malloc'd storage.  */
+/* Return an absolute name of DIR in malloc'd storage.  */
 static char *
 get_name (char const *dir)
 {
+  char *cwd;
   char *result;
-  if (REPLACE_OPEN_DIRECTORY || !HAVE_CANONICALIZE_FILE_NAME)
-    {
-      /* The function canonicalize_file_name has not yet been ported
-         to mingw, with all its drive letter and backslash quirks.
-         Fortunately, getcwd is reliable in this case, but we ensure
-         we can get back to where we started before using it.  Treat
-         "." as a special case, as it is frequently encountered.  */
-      char *cwd = getcwd (NULL, 0);
-      int saved_errno;
-      if (dir[0] == '.' && dir[1] == '\0')
-        return cwd;
-      if (chdir (cwd))
-        return NULL;
-      result = chdir (dir) ? NULL : getcwd (NULL, 0);
-      saved_errno = errno;
-      if (chdir (cwd))
-        abort ();
-      free (cwd);
-      errno = saved_errno;
-    }
-  else
-    {
-      /* Avoid changing the directory.  */
-      result = canonicalize_file_name (dir);
-    }
+  int saved_errno;
+
+  if (IS_ABSOLUTE_FILE_NAME (dir))
+    return strdup (dir);
+
+  /* We often encounter "."; treat it as a special case.  */
+  cwd = getcwd (NULL, 0);
+  if (!cwd || (dir[0] == '.' && dir[1] == '\0'))
+    return cwd;
+
+  result = mfile_name_concat (cwd, dir, NULL);
+  saved_errno = errno;
+  free (cwd);
+  errno = saved_errno;
   return result;
 }
 

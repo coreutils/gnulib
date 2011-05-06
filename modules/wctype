@@ -14,7 +14,7 @@ m4/wctype.m4
 
 Depends-on:
 wctype-h
-iswblank
+iswblank        [test $HAVE_WCTYPE_T = 0]
 
 configure.ac:
 gl_FUNC_WCTYPE

@@ -50,7 +50,8 @@
    The `raison d'etre' for this interface is that the working directory
    is sometimes inaccessible, and getcwd is not robust or as efficient.
    So, we prefer to use the open/fchdir approach, but fall back on
-   getcwd if necessary.
+   getcwd if necessary.  This module works for most cases with just
+   the getcwd-lgpl module, but to be truly robust, use the getcwd module.
 
    Some systems lack fchdir altogether: e.g., OS/2, pre-2001 Cygwin,
    SCO Xenix.  Also, SunOS 4 and Irix 5.3 provide the function, yet it

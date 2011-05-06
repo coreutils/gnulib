@@ -6,8 +6,8 @@ lib/mkdir.c
 m4/mkdir.m4
 
 Depends-on:
-dirname-lgpl
 sys_stat
+dirname-lgpl    [test $REPLACE_MKDIR = 1]
 
 configure.ac:
 gl_FUNC_MKDIR

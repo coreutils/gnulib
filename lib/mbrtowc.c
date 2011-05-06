@@ -335,7 +335,7 @@ rpl_mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
   {
     static mbstate_t internal_state;
 
-    /* Override mbrtowc's internal state.  We can not call mbsinit() on the
+    /* Override mbrtowc's internal state.  We cannot call mbsinit() on the
        hidden internal state, but we can call it on our variable.  */
     if (ps == NULL)
       ps = &internal_state;

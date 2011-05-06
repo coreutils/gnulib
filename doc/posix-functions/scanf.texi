@@ -4,10 +4,15 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/scanf.html}
 
-Gnulib module: ---
+Gnulib module: stdio, nonblocking
 
-Portability problems fixed by Gnulib:
+Portability problems fixed by Gnulib module @code{stdio}, together with module @code{nonblocking}:
 @itemize
+@item
+When reading from a non-blocking pipe whose buffer is empty, this function
+fails with @code{errno} being set to @code{EINVAL} instead of @code{EAGAIN} on
+some platforms:
+mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:

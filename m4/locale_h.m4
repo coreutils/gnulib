@@ -1,4 +1,4 @@
-# locale_h.m4 serial 13
+# locale_h.m4 serial 14
 dnl Copyright (C) 2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -57,12 +57,6 @@ AC_DEFUN([gl_LOCALE_H],
   dnl <locale.h> is always overridden, because of GNULIB_POSIXCHECK.
   gl_NEXT_HEADERS([locale.h])
 
-  if test -n "$STDDEF_H" \
-     || test $gl_cv_header_locale_h_posix2001 = no \
-     || test $gl_cv_header_locale_h_needs_xlocale_h = yes; then
-    gl_REPLACE_LOCALE_H
-  fi
-
   dnl Check for declarations of anything we want to poison if the
   dnl corresponding gnulib module is not in use.
   gl_WARN_ON_USE_PREPARE([[#include <locale.h>
@@ -72,13 +66,6 @@ AC_DEFUN([gl_LOCALE_H],
 #endif
     ]],
     [setlocale duplocale])
-])
-
-dnl Unconditionally enables the replacement of <locale.h>.
-AC_DEFUN([gl_REPLACE_LOCALE_H],
-[
-  dnl This is a no-op, because <locale.h> is always overridden.
-  :
 ])
 
 AC_DEFUN([gl_LOCALE_MODULE_INDICATOR],

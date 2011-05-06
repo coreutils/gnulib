@@ -9,13 +9,13 @@ lib/float+.h
 m4/signbit.m4
 
 Depends-on:
-float
 math
-isnanf-nolibm
-isnand-nolibm
-isnanl-nolibm
-fpieee
-memcmp
+float           [test $REPLACE_SIGNBIT = 1]
+isnanf-nolibm   [test $REPLACE_SIGNBIT = 1]
+isnand-nolibm   [test $REPLACE_SIGNBIT = 1]
+isnanl-nolibm   [test $REPLACE_SIGNBIT = 1]
+fpieee          [test $REPLACE_SIGNBIT = 1]
+memcmp          [test $REPLACE_SIGNBIT = 1]
 
 configure.ac:
 gl_SIGNBIT

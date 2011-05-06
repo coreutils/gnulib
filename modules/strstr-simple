@@ -8,9 +8,9 @@ m4/strstr.m4
 
 Depends-on:
 string
-stdbool
-memchr
-memcmp
+stdbool         [test $REPLACE_STRSTR = 1]
+memchr          [test $REPLACE_STRSTR = 1]
+memcmp          [test $REPLACE_STRSTR = 1]
 
 configure.ac:
 gl_FUNC_STRSTR_SIMPLE

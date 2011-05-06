@@ -33,7 +33,6 @@ SIGNATURE_CHECK (renameat, int, (int, char const *, int, char const *));
 #include <sys/stat.h>
 
 #include "filenamecat.h"
-#include "xgetcwd.h"
 #include "ignore-value.h"
 #include "macros.h"
 
@@ -79,7 +78,8 @@ main (void)
   dfd = creat (BASE "00", 0600);
   ASSERT (0 <= dfd);
   ASSERT (close (dfd) == 0);
-  cwd = xgetcwd ();
+  cwd = getcwd (NULL, 0);
+  ASSERT (cwd);
 
   dfd = open (BASE "sub1", O_RDONLY);
   ASSERT (0 <= dfd);

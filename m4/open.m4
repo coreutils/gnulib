@@ -1,4 +1,4 @@
-# open.m4 serial 11
+# open.m4 serial 12
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -62,6 +62,15 @@ changequote([,])dnl
       esac
       ;;
   esac
+  dnl Replace open() for supporting the gnulib-defined O_NONBLOCK flag.
+  m4_ifdef([gl_NONBLOCKING_IO], [
+    if test $REPLACE_OPEN = 0; then
+      gl_NONBLOCKING_IO
+      if test $gl_cv_have_open_O_NONBLOCK != yes; then
+        gl_REPLACE_OPEN
+      fi
+    fi
+  ])
 ])
 
 AC_DEFUN([gl_REPLACE_OPEN],

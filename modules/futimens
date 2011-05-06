@@ -7,8 +7,8 @@ m4/futimens.m4
 
 Depends-on:
 sys_stat
-utimens
 extensions
+utimens         [test $HAVE_FUTIMENS = 0 || test $REPLACE_FUTIMENS = 1]
 
 configure.ac:
 gl_FUNC_FUTIMENS
@@ -23,7 +23,7 @@ Link:
 $(LIB_CLOCK_GETTIME)
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Eric Blake

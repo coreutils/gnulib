@@ -7,7 +7,7 @@ m4/strtok_r.m4
 
 Depends-on:
 string
-strpbrk
+strpbrk         [test $ac_cv_func_strtok_r = no]
 
 configure.ac:
 gl_FUNC_STRTOK_R

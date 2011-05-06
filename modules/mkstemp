@@ -6,9 +6,9 @@ lib/mkstemp.c
 m4/mkstemp.m4
 
 Depends-on:
-extensions
 stdlib
-tempname
+extensions
+tempname        [test $HAVE_MKSTEMP = 0 || test $REPLACE_MKSTEMP = 1]
 
 configure.ac:
 gl_FUNC_MKSTEMP

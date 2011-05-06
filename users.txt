@@ -7,6 +7,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   anubis          http://cvs.sv.gnu.org/viewcvs/anubis/anubis/
   augeas          http://augeas.net/
   autobuild       http://josefsson.org/autobuild/
+  barcode         http://git.sv.gnu.org/cgit/barcode.git/
   bison           http://git.sv.gnu.org/gitweb/?p=bison.git
   clisp           http://clisp.cvs.sourceforge.net/clisp/clisp/
   coreutils       http://git.sv.gnu.org/gitweb/?p=coreutils.git

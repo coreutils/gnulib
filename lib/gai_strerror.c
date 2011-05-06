@@ -32,6 +32,22 @@
 # define N_(String) String
 #endif
 
+#if HAVE_DECL_GAI_STRERROR
+
+# include <sys/socket.h>
+# undef gai_strerror
+# if HAVE_DECL_GAI_STRERRORA
+#  define gai_strerror gai_strerrorA
+# endif
+
+const char *
+rpl_gai_strerror (int code)
+{
+  return gai_strerror (code);
+}
+
+#else /* !HAVE_DECL_GAI_STRERROR */
+
 static struct
   {
     int code;
@@ -71,6 +87,7 @@ gai_strerror (int code)
 
   return _("Unknown error");
 }
-#ifdef _LIBC
+# ifdef _LIBC
 libc_hidden_def (gai_strerror)
-#endif
+# endif
+#endif /* !HAVE_DECL_GAI_STRERROR */

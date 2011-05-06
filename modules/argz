@@ -7,12 +7,12 @@ lib/argz.c
 m4/argz.m4
 
 Depends-on:
-memmove
-mempcpy
-stpcpy
-strndup
-strnlen
-strstr
+memmove         [test -n "$ARGZ_H"]
+mempcpy         [test -n "$ARGZ_H"]
+stpcpy          [test -n "$ARGZ_H"]
+strndup         [test -n "$ARGZ_H"]
+strnlen         [test -n "$ARGZ_H"]
+strstr          [test -n "$ARGZ_H"]
 
 configure.ac:
 gl_FUNC_ARGZ
@@ -25,12 +25,17 @@ BUILT_SOURCES += $(ARGZ_H)
 
 # We need the following in order to create <argz.h> when the system
 # doesn't have one that works with the given compiler.
-argz.h: argz.in.h
+if GL_GENERATE_ARGZ_H
+argz.h: argz.in.h $(top_builddir)/config.status
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  cat $(srcdir)/argz.in.h; \
 	} > $@-t && \
 	mv -f $@-t $@
+else
+argz.h: $(top_builddir)/config.status
+	rm -f $@
+endif
 MOSTLYCLEANFILES += argz.h argz.h-t
 
 Include:

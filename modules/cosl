@@ -11,10 +11,10 @@ m4/cosl.m4
 Depends-on:
 math
 extensions
-float
-isnanl
-floor
-floorl
+float           [test $HAVE_COSL = 0]
+isnanl          [test $HAVE_COSL = 0]
+floor           [test $HAVE_COSL = 0]
+floorl          [test $HAVE_COSL = 0]
 
 configure.ac:
 gl_FUNC_COSL
@@ -29,7 +29,7 @@ Link:
 $(ACOSL_LIBM)
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Paolo Bonzini

@@ -8,7 +8,7 @@ m4/locale-fr.m4
 
 Depends-on:
 wchar
-mbtowc
+mbtowc          [test $HAVE_BTOWC = 0 || test $REPLACE_BTOWC = 1]
 
 configure.ac:
 gl_FUNC_BTOWC

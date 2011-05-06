@@ -8,8 +8,8 @@ m4/acosl.m4
 Depends-on:
 math
 extensions
-asinl
-sqrtl
+asinl           [test $HAVE_ACOSL = 0]
+sqrtl           [test $HAVE_ACOSL = 0]
 
 configure.ac:
 gl_FUNC_ACOSL
@@ -24,7 +24,7 @@ Link:
 $(ACOSL_LIBM)
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Paolo Bonzini

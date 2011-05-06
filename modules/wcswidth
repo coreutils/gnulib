@@ -9,7 +9,7 @@ m4/wcswidth.m4
 
 Depends-on:
 wchar
-wcwidth
+wcwidth         [test $HAVE_WCSWIDTH = 0 || test $REPLACE_WCSWIDTH = 1]
 
 configure.ac:
 gl_FUNC_WCSWIDTH

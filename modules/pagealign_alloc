@@ -9,10 +9,10 @@ m4/pagealign_alloc.m4
 
 Depends-on:
 error
-exit
 extensions
 getpagesize
 gettext-h
+stdlib
 xalloc
 unistd
 

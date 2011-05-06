@@ -11,7 +11,6 @@ hash
 stat-time
 time
 utimens
-xalloc
 intprops
 lstat
 stdbool

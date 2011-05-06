@@ -9,12 +9,11 @@ m4/posix_spawn.m4
 
 Depends-on:
 spawn
-getdtablesize
+getdtablesize   [test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1]
 
 configure.ac:
 gl_POSIX_SPAWN
 if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1; then
-  gl_REPLACE_SPAWN_H
   AC_LIBOBJ([spawn_faction_addopen])
 fi
 gl_SPAWN_MODULE_INDICATOR([posix_spawn_file_actions_addopen])

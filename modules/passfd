@@ -4,17 +4,15 @@ Pass file descriptors along Unix domain sockets
 Files:
 lib/passfd.h
 lib/passfd.c
-m4/afunix.m4
-m4/sockpfaf.m4
+m4/passfd.m4
 
 Depends-on:
 cloexec
 sys_socket
 socketlib
-extensions
 
 configure.ac:
-gl_SOCKET_AFUNIX
+gl_PASSFD
 
 Makefile.am:
 lib_SOURCES += passfd.c

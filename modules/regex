@@ -12,23 +12,23 @@ m4/regex.m4
 m4/mbstate_t.m4
 
 Depends-on:
-alloca-opt
-btowc
 extensions
-gettext-h
-localcharset
-malloc-gnu
-memcmp
-memmove
-mbrtowc
-mbsinit
-nl_langinfo
-stdbool
-stdint
 ssize_t
-wchar
-wcrtomb
-wctype-h
+alloca-opt      [test $ac_use_included_regex = yes]
+btowc           [test $ac_use_included_regex = yes]
+gettext-h       [test $ac_use_included_regex = yes]
+localcharset    [test $ac_use_included_regex = yes]
+malloc-gnu      [test $ac_use_included_regex = yes]
+memcmp          [test $ac_use_included_regex = yes]
+memmove         [test $ac_use_included_regex = yes]
+mbrtowc         [test $ac_use_included_regex = yes]
+mbsinit         [test $ac_use_included_regex = yes]
+nl_langinfo     [test $ac_use_included_regex = yes]
+stdbool         [test $ac_use_included_regex = yes]
+stdint          [test $ac_use_included_regex = yes]
+wchar           [test $ac_use_included_regex = yes]
+wcrtomb         [test $ac_use_included_regex = yes]
+wctype-h        [test $ac_use_included_regex = yes]
 
 configure.ac:
 gl_REGEX

@@ -8,9 +8,9 @@ m4/logl.m4
 Depends-on:
 math
 extensions
-frexpl
-isnanl
-floorl
+frexpl          [test $HAVE_LOGL = 0]
+isnanl          [test $HAVE_LOGL = 0]
+floorl          [test $HAVE_LOGL = 0]
 
 configure.ac:
 gl_FUNC_LOGL
@@ -25,7 +25,7 @@ Link:
 $(LOGL_LIBM)
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Paolo Bonzini

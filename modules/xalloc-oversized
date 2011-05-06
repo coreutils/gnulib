@@ -1,0 +1,20 @@
+Description:
+Check for memory allocation overflow.  Also see xalloc.
+
+Files:
+lib/xalloc-oversized.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+"xalloc-oversized.h"
+
+License:
+GPL
+
+Maintainer:
+all

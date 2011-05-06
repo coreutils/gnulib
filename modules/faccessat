@@ -6,11 +6,11 @@ lib/faccessat.c
 m4/faccessat.m4
 
 Depends-on:
-euidaccess
+unistd
 extensions
 fcntl-h
-openat
-unistd
+euidaccess      [test $HAVE_FACCESSAT = 0]
+openat          [test $HAVE_FACCESSAT = 0]
 
 configure.ac:
 gl_FUNC_FACCESSAT

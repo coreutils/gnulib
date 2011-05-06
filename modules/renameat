@@ -7,14 +7,15 @@ lib/renameat.c
 m4/renameat.m4
 
 Depends-on:
+stdio
 extensions
 fcntl-h
-filenamecat-lgpl
-openat
-rename
-same-inode
-stdio
-stpcpy
+filenamecat-lgpl [test $HAVE_RENAMEAT = 0 || test $REPLACE_RENAMEAT = 1]
+getcwd-lgpl      [test $HAVE_RENAMEAT = 0 || test $REPLACE_RENAMEAT = 1]
+openat           [test $HAVE_RENAMEAT = 0 || test $REPLACE_RENAMEAT = 1]
+rename           [test $HAVE_RENAMEAT = 0 || test $REPLACE_RENAMEAT = 1]
+same-inode       [test $HAVE_RENAMEAT = 0 || test $REPLACE_RENAMEAT = 1]
+stpcpy           [test $HAVE_RENAMEAT = 0 || test $REPLACE_RENAMEAT = 1]
 
 configure.ac:
 gl_FUNC_RENAMEAT

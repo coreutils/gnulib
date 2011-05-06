@@ -8,11 +8,11 @@ m4/sqrtl.m4
 Depends-on:
 math
 extensions
-float
-isnanl
-frexpl
-ldexpl
-sqrt
+float           [test $HAVE_SQRTL = 0]
+isnanl          [test $HAVE_SQRTL = 0]
+frexpl          [test $HAVE_SQRTL = 0]
+ldexpl          [test $HAVE_SQRTL = 0]
+sqrt            [test $HAVE_SQRTL = 0]
 
 configure.ac:
 gl_FUNC_SQRTL
@@ -27,7 +27,7 @@ Link:
 $(SQRTL_LIBM)
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Paolo Bonzini

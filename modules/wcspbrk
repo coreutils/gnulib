@@ -14,7 +14,7 @@ m4/wcspbrk.m4
 
 Depends-on:
 wchar
-wcschr
+wcschr          [test $HAVE_WCSPBRK = 0]
 
 configure.ac:
 gl_FUNC_WCSPBRK

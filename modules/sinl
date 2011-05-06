@@ -11,10 +11,10 @@ m4/sinl.m4
 Depends-on:
 math
 extensions
-float
-isnanl
-floor
-floorl
+float           [test $HAVE_SINL = 0]
+isnanl          [test $HAVE_SINL = 0]
+floor           [test $HAVE_SINL = 0]
+floorl          [test $HAVE_SINL = 0]
 
 configure.ac:
 gl_FUNC_SINL
@@ -29,7 +29,7 @@ Link:
 $(SINL_LIBM)
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Paolo Bonzini

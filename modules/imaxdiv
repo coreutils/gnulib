@@ -6,7 +6,7 @@ lib/imaxdiv.c
 m4/imaxdiv.m4
 
 Depends-on:
-inttypes
+inttypes-incomplete
 
 configure.ac:
 gl_FUNC_IMAXDIV

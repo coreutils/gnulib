@@ -1,4 +1,4 @@
-# poll_h.m4 serial 1
+# poll_h.m4 serial 2
 dnl Copyright (C) 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,7 +17,6 @@ AC_DEFUN([gl_POLL_H],
     HAVE_POLL_H=1
   else
     HAVE_POLL_H=0
-    gl_REPLACE_POLL_H
   fi
   AC_SUBST([HAVE_POLL_H])
 
@@ -28,13 +27,6 @@ AC_DEFUN([gl_POLL_H],
   dnl corresponding gnulib module is not in use.
   gl_WARN_ON_USE_PREPARE([[#include <poll.h>]],
     [poll])
-])
-
-dnl Unconditionally enables the replacement of <poll.h>.
-AC_DEFUN([gl_REPLACE_POLL_H],
-[
-  dnl This is a no-op, because <poll.h> is always overridden.
-  :
 ])
 
 AC_DEFUN([gl_POLL_MODULE_INDICATOR],

@@ -33,13 +33,6 @@ main (void)
   const char *file = "test-nonblock.tmp";
   int fd_file;
   int fd_pipe[2];
-  int fd_sock;
-  bool sock_works = true;
-
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-  /* For now, we can't get nonblocking status of windows sockets.  */
-  sock_works = false;
-#endif
 
   fd_file = creat (file, 0600);
 
@@ -79,28 +72,39 @@ main (void)
   ASSERT (close (fd_pipe[1]) == 0);
 
 #if GNULIB_TEST_PIPE2
-  /* mingw still lacks O_NONBLOCK replacement.  */
   ASSERT (pipe2 (fd_pipe, O_NONBLOCK) == 0);
-  ASSERT (get_nonblocking_flag (fd_pipe[0]) == !!O_NONBLOCK);
-  ASSERT (get_nonblocking_flag (fd_pipe[1]) == !!O_NONBLOCK);
+  ASSERT (get_nonblocking_flag (fd_pipe[0]) == 1);
+  ASSERT (get_nonblocking_flag (fd_pipe[1]) == 1);
   ASSERT (close (fd_pipe[0]) == 0);
   ASSERT (close (fd_pipe[1]) == 0);
 #endif /* GNULIB_TEST_PIPE2 */
 
-  /* Test sockets.  */
-  fd_sock = socket (AF_INET, SOCK_STREAM, 0);
-  ASSERT (get_nonblocking_flag (fd_sock) == (sock_works ? 0 : -1));
-  ASSERT (set_nonblocking_flag (fd_sock, true) == 0);
-  ASSERT (get_nonblocking_flag (fd_sock) == (sock_works ? 1 : -1));
-  ASSERT (set_nonblocking_flag (fd_sock, false) == 0);
-  ASSERT (get_nonblocking_flag (fd_sock) == (sock_works ? 0 : -1));
-  ASSERT (close (fd_sock) == 0);
+#if GNULIB_TEST_SOCKET
+  {
+    /* Test sockets.  */
+    bool sock_works = true;
+    int fd_sock;
 
-#if SOCK_NONBLOCK
-  fd_sock = socket (AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0);
-  ASSERT (get_nonblocking_flag (fd_sock) == (sock_works ? 1 : -1));
-  ASSERT (close (fd_sock) == 0);
-#endif /* SOCK_NONBLOCK */
+# if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+    /* For now, we can't get nonblocking status of windows sockets.  */
+    sock_works = false;
+# endif
+
+    fd_sock = socket (AF_INET, SOCK_STREAM, 0);
+    ASSERT (get_nonblocking_flag (fd_sock) == (sock_works ? 0 : -1));
+    ASSERT (set_nonblocking_flag (fd_sock, true) == 0);
+    ASSERT (get_nonblocking_flag (fd_sock) == (sock_works ? 1 : -1));
+    ASSERT (set_nonblocking_flag (fd_sock, false) == 0);
+    ASSERT (get_nonblocking_flag (fd_sock) == (sock_works ? 0 : -1));
+    ASSERT (close (fd_sock) == 0);
+
+# if SOCK_NONBLOCK
+    fd_sock = socket (AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0);
+    ASSERT (get_nonblocking_flag (fd_sock) == (sock_works ? 1 : -1));
+    ASSERT (close (fd_sock) == 0);
+# endif /* SOCK_NONBLOCK */
+  }
+#endif /* GNULIB_TEST_SOCKET */
 
   /* Test error handling.  */
   {

@@ -6,9 +6,9 @@ lib/stat.c
 m4/stat.m4
 
 Depends-on:
-dosname
-stdbool
 sys_stat
+dosname         [test $REPLACE_STAT = 1]
+stdbool         [test $REPLACE_STAT = 1]
 
 configure.ac:
 gl_FUNC_STAT

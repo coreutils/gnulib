@@ -9,10 +9,10 @@ m4/floor.m4
 m4/ceil.m4
 
 Depends-on:
-float
-floor
 math
 extensions
+float           [test $HAVE_DECL_ROUND = 0 || test $REPLACE_ROUND = 1]
+floor           [test $HAVE_DECL_ROUND = 0 || test $REPLACE_ROUND = 1]
 
 configure.ac:
 gl_FUNC_ROUND

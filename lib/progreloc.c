@@ -16,6 +16,7 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 
+#define _GL_USE_STDLIB_ALLOC 1
 #include <config.h>
 
 /* Specification.  */
@@ -94,7 +95,6 @@ extern char * canonicalize_file_name (const char *name);
 #undef close
 
 /* Use the system functions, not the gnulib overrides in this file.  */
-#undef malloc
 #undef sprintf
 
 #undef set_program_name

@@ -7,7 +7,7 @@ m4/setlocale.m4
 
 Depends-on:
 locale
-localename
+localename      [test $REPLACE_SETLOCALE = 1]
 
 configure.ac:
 gl_FUNC_SETLOCALE

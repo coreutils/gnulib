@@ -17,6 +17,9 @@ This header file is not self-contained on some platforms: it requires
 This header file does not define the type @code{socklen_t} on some platforms:
 HP-UX 10.20, IRIX 6.5, OSF/1 4.0, Interix 3.5, BeOS.
 @item
+This header file does not define the type @code{struct iovec} on some platforms:
+OpenBSD 4.4.
+@item
 This header file is lacking the @code{SHUT_RD}, @code{SHUT_WR},
 @code{SHUT_RDWR} macros on some platforms, despite having the @code{shutdown}
 functions:
@@ -29,4 +32,10 @@ AIX 7.1.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This header file does not declare the @code{msg_control} and
+@code{msg_controllen} members of @code{struct msghdr} on some
+platforms.  This can be detected by the absence of the
+@code{CMSG_FIRSTHDR} macro:
+gnulib replacement header, old BSD
 @end itemize

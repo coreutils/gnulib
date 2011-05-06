@@ -38,7 +38,7 @@ test_chown (int (*func) (char const *, uid_t, gid_t), bool print)
   int result;
 
   /* Solaris 8 is interesting - if the current process belongs to
-     multiple groups, the current directory is owned by a a group that
+     multiple groups, the current directory is owned by a group that
      the current process belongs to but different than getegid(), and
      the current directory does not have the S_ISGID bit, then regular
      files created in the directory belong to the directory's group,
@@ -71,7 +71,7 @@ test_chown (int (*func) (char const *, uid_t, gid_t), bool print)
   ASSERT (close (creat (BASE "dir/file", 0600)) == 0);
   ASSERT (stat (BASE "dir/file", &st1) == 0);
   ASSERT (st1.st_uid != (uid_t) -1);
-  ASSERT (st1.st_gid != (uid_t) -1);
+  ASSERT (st1.st_gid != (gid_t) -1);
   ASSERT (st1.st_gid == getegid ());
 
   /* Sanity check of error cases.  */

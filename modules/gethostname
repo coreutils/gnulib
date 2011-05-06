@@ -8,9 +8,9 @@ lib/w32sock.h
 
 Depends-on:
 unistd
-sys_socket
-errno
-sockets
+sys_socket      [test $HAVE_GETHOSTNAME = 0]
+errno           [test $HAVE_GETHOSTNAME = 0]
+sockets         [test $HAVE_GETHOSTNAME = 0]
 
 configure.ac:
 gl_FUNC_GETHOSTNAME

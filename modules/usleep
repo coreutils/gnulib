@@ -6,9 +6,9 @@ lib/usleep.c
 m4/usleep.m4
 
 Depends-on:
-extensions
-sleep
 unistd
+extensions
+sleep           [test $HAVE_USLEEP = 0 || test $REPLACE_USLEEP = 1]
 
 configure.ac:
 gl_FUNC_USLEEP

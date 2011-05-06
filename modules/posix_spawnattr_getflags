@@ -12,7 +12,6 @@ spawn
 configure.ac:
 gl_POSIX_SPAWN
 if test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1; then
-  gl_REPLACE_SPAWN_H
   AC_LIBOBJ([spawnattr_getflags])
 fi
 gl_SPAWN_MODULE_INDICATOR([posix_spawnattr_getflags])

@@ -1,4 +1,4 @@
-# strtod.m4 serial 19
+# strtod.m4 serial 20
 dnl Copyright (C) 2002-2003, 2006-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,15 +7,18 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_STRTOD],
 [
   AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
-  dnl Test whether strtod is declared.
-  dnl Don't call AC_FUNC_STRTOD, because it does not have the right guess
-  dnl when cross-compiling.
-  dnl Don't call AC_CHECK_FUNCS([strtod]) because it would collide with the
-  dnl ac_cv_func_strtod variable set by the AC_FUNC_STRTOD macro.
-  AC_CHECK_DECLS_ONCE([strtod])
-  if test $ac_cv_have_decl_strtod != yes; then
-    HAVE_STRTOD=0
-  else
+  m4_ifdef([gl_FUNC_STRTOD_OBSOLETE], [
+    dnl Test whether strtod is declared.
+    dnl Don't call AC_FUNC_STRTOD, because it does not have the right guess
+    dnl when cross-compiling.
+    dnl Don't call AC_CHECK_FUNCS([strtod]) because it would collide with the
+    dnl ac_cv_func_strtod variable set by the AC_FUNC_STRTOD macro.
+    AC_CHECK_DECLS_ONCE([strtod])
+    if test $ac_cv_have_decl_strtod != yes; then
+      HAVE_STRTOD=0
+    fi
+  ])
+  if test $HAVE_STRTOD = 1; then
     AC_CACHE_CHECK([whether strtod obeys C99], [gl_cv_func_strtod_works],
       [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
 #include <stdlib.h>

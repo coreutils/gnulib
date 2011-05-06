@@ -9,7 +9,7 @@ m4/ceill.m4
 Depends-on:
 math
 extensions
-float
+float           [test $HAVE_DECL_CEILL = 0 || test $REPLACE_CEILL = 1]
 
 configure.ac:
 gl_FUNC_CEILL

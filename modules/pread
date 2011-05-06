@@ -6,9 +6,10 @@ lib/pread.c
 m4/pread.m4
 
 Depends-on:
-extensions
-lseek
 unistd
+extensions
+lseek           [test $HAVE_PREAD = 0 || test $REPLACE_PREAD = 1]
+read            [test $HAVE_PREAD = 0 || test $REPLACE_PREAD = 1]
 
 configure.ac:
 gl_FUNC_PREAD

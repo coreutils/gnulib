@@ -7,19 +7,20 @@ lib/stdio-impl.h
 m4/fflush.m4
 
 Depends-on:
-fpurge
-ftello
-freading
-lseek
 stdio
-unistd
-fseeko
+fpurge          [test $REPLACE_FFLUSH = 1]
+ftello          [test $REPLACE_FFLUSH = 1]
+freading        [test $REPLACE_FFLUSH = 1]
+lseek           [test $REPLACE_FFLUSH = 1]
+unistd          [test $REPLACE_FFLUSH = 1]
+fseeko          [test $REPLACE_FFLUSH = 1]
 
 configure.ac-early:
 AC_REQUIRE([AC_FUNC_FSEEKO])
 
 configure.ac:
 gl_FUNC_FFLUSH
+gl_MODULE_INDICATOR([fflush])
 gl_STDIO_MODULE_INDICATOR([fflush])
 
 Makefile.am:
@@ -28,7 +29,7 @@ Include:
 <stdio.h>
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Eric Blake

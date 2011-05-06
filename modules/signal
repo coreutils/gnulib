@@ -10,6 +10,7 @@ arg-nonnull
 c++defs
 include_next
 warn-on-use
+extensions
 
 configure.ac:
 gl_SIGNAL_H
@@ -21,7 +22,7 @@ BUILT_SOURCES += signal.h
 
 # We need the following in order to create <signal.h> when the system
 # doesn't have a complete one.
-signal.h: signal.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
+signal.h: signal.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
 	  sed -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
@@ -37,6 +38,7 @@ signal.h: signal.in.h $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
 	      -e 's|@''HAVE_SIGACTION''@|$(HAVE_SIGACTION)|g' \
 	      -e 's|@''HAVE_STRUCT_SIGACTION_SA_SIGACTION''@|$(HAVE_STRUCT_SIGACTION_SA_SIGACTION)|g' \
 	      -e 's|@''HAVE_TYPE_VOLATILE_SIG_ATOMIC_T''@|$(HAVE_TYPE_VOLATILE_SIG_ATOMIC_T)|g' \
+	      -e 's|@''HAVE_SIGHANDLER_T''@|$(HAVE_SIGHANDLER_T)|g' \
 	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
 	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
 	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \

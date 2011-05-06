@@ -2,16 +2,10 @@ Description:
 An <inttypes.h> that nearly conforms to C99.
 
 Files:
-lib/inttypes.in.h
 m4/inttypes-pri.m4
-m4/inttypes.m4
 
 Depends-on:
-arg-nonnull
-include_next
-multiarch
-stdint
-warn-on-use
+inttypes-incomplete
 
 configure.ac:
 gl_INTTYPES_H

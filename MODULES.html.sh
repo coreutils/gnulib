@@ -2353,6 +2353,7 @@ func_all_modules ()
   func_module futimens
   func_module getaddrinfo
   func_module getcwd
+  func_module getcwd-lgpl
   func_module getgroups
   func_module gethostname
   func_module getlogin
@@ -2464,6 +2465,7 @@ func_all_modules ()
   func_module sys_stat
   func_module sys_time
   func_module sys_times
+  func_module sys_uio
   func_module sys_utsname
   func_module sys_wait
   func_module tsearch
@@ -3474,6 +3476,7 @@ func_all_modules ()
   func_module gnupload
   func_module maintainer-makefile
   func_module mktempd
+  func_module readme-release
   func_module update-copyright
   func_module useless-if-before-free
   func_module vc-list-files

@@ -10,11 +10,11 @@ Depends-on:
 acl
 binary-io
 error
-exit
 full-write
 gettext-h
 open
 safe-read
+stdlib
 unistd
 xalloc
 

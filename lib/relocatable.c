@@ -25,6 +25,7 @@
 # define _GNU_SOURCE 1
 #endif
 
+#define _GL_USE_STDLIB_ALLOC 1
 #include <config.h>
 
 /* Specification.  */
@@ -85,9 +86,6 @@
 # define IS_PATH_WITH_DIR(P) (strchr (P, '/') != NULL)
 # define FILE_SYSTEM_PREFIX_LEN(P) 0
 #endif
-
-/* Use the system functions, not the gnulib overrides in this file.  */
-#undef malloc
 
 /* Original installation prefix.  */
 static char *orig_prefix;

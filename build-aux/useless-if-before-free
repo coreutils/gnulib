@@ -4,7 +4,7 @@ eval '(exit $?0)' && eval 'exec perl -wST "$0" ${1+"$@"}'
 # Detect instances of "if (p) free (p);".
 # Likewise "if (p != 0)", "if (0 != p)", or with NULL; and with braces.
 
-my $VERSION = '2011-01-09 01:39'; # UTC
+my $VERSION = '2011-04-20 13:43'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -132,7 +132,7 @@ sub is_NULL ($)
           while ($line =~
               /\b(if\s*\(\s*([^)]+?)(?:\s*!=\s*([^)]+?))?\s*\)
               #  1          2                  3
-               (?:   \s*$regexp\s*\((?:\s*\([^)]+\))?\s*([^)]+)\)|
+               (?:   \s*$regexp\s*\((?:\s*\([^)]+\))?\s*([^)]+)\)\s*;|
                 \s*\{\s*$regexp\s*\((?:\s*\([^)]+\))?\s*([^)]+)\)\s*;\s*\}))/sxg)
             {
               my $all = $1;
@@ -179,7 +179,7 @@ free=xfree
 git grep -l -z "$free *(" \
   | xargs -0 useless-if-before-free -l --name="$free" \
   | xargs -0 perl -0x3b -pi -e \
-   's/\bif\s*\(\s*(\S+?)(?:\s*!=\s*(?:0|NULL))?\s*\)\s+('"$free"'\s*\((?:\s*\([^)]+\))?\s*\1\s*\))/$2/s'
+   's/\bif\s*\(\s*(\S+?)(?:\s*!=\s*(?:0|NULL))?\s*\)\s+('"$free"'\s*\((?:\s*\([^)]+\))?\s*\1\s*\)\s*;)/$2/s'
 
 # Use the following to remove redundant uses of kfree inside braces.
 # Note that -0777 puts perl in slurp-whole-file mode;

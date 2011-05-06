@@ -7,7 +7,7 @@ m4/uname.m4
 
 Depends-on:
 sys_utsname
-gethostname
+gethostname     [test $HAVE_UNAME = 0]
 
 configure.ac:
 gl_FUNC_UNAME

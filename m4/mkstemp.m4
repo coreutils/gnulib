@@ -1,4 +1,4 @@
-#serial 19
+#serial 20
 
 # Copyright (C) 2001, 2003-2007, 2009-2011 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -10,6 +10,8 @@
 # Other systems lack mkstemp altogether.
 # On OSF1/Tru64 V4.0F, the system-provided mkstemp function can create
 # only 32 files per process.
+# On some hosts, mkstemp creates files with mode 0666, which is a security
+# problem and a violation of POSIX 2008.
 # On systems like the above, arrange to use the replacement function.
 AC_DEFUN([gl_FUNC_MKSTEMP],
 [
@@ -30,6 +32,7 @@ AC_DEFUN([gl_FUNC_MKSTEMP],
               off_t large = (off_t) 4294967295u;
               if (large < 0)
                 large = 2147483647;
+              umask (0);
               for (i = 0; i < 70; i++)
                 {
                   char templ[] = "conftest.mkstemp/coXXXXXX";
@@ -39,18 +42,24 @@ AC_DEFUN([gl_FUNC_MKSTEMP],
                     result |= 1;
                   else
                     {
+                      struct stat st;
                       if (lseek (fd, large, SEEK_SET) != large)
                         result |= 2;
-                      close (fd);
+                      if (fstat (fd, &st) < 0)
+                        result |= 4;
+                      else if (st.st_mode & 0077)
+                        result |= 8;
+                      if (close (fd))
+                        result |= 16;
                     }
                 }
               return result;]])],
           [gl_cv_func_working_mkstemp=yes],
           [gl_cv_func_working_mkstemp=no],
-          [gl_cv_func_working_mkstemp=no])
+          [gl_cv_func_working_mkstemp="guessing no"])
         rm -rf conftest.mkstemp
       ])
-    if test $gl_cv_func_working_mkstemp != yes; then
+    if test "$gl_cv_func_working_mkstemp" != yes; then
       REPLACE_MKSTEMP=1
       AC_LIBOBJ([mkstemp])
       gl_PREREQ_MKSTEMP

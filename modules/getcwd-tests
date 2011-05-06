@@ -1,9 +1,11 @@
 Files:
 tests/test-getcwd.c
-tests/signature.h
-tests/macros.h
 
 Depends-on:
+errno
+fcntl-h
+getcwd-lgpl
+sys_stat
 
 configure.ac:
 

@@ -7,9 +7,9 @@ lib/isapipe.h
 m4/isapipe.m4
 
 Depends-on:
-stdbool
-sys_stat
-unistd
+stdbool         [test $ac_cv_func_isapipe = no]
+sys_stat        [test $ac_cv_func_isapipe = no]
+unistd          [test $ac_cv_func_isapipe = no]
 
 configure.ac:
 gl_ISAPIPE

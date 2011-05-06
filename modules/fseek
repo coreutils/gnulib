@@ -6,8 +6,8 @@ lib/fseek.c
 m4/fseek.m4
 
 Depends-on:
-fseeko
 stdio
+fseeko          [test $REPLACE_FSEEK = 1]
 
 configure.ac:
 gl_FUNC_FSEEK

@@ -10,9 +10,9 @@ m4/floorl.m4
 m4/ceill.m4
 
 Depends-on:
-float
 math
 extensions
+float           [test $HAVE_DECL_ROUNDL = 0 || test $REPLACE_ROUNDL = 1]
 
 configure.ac:
 gl_FUNC_ROUNDL

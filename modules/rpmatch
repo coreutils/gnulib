@@ -8,10 +8,10 @@ m4/rpmatch.m4
 Depends-on:
 stdlib
 extensions
-stdbool
-gettext-h
-regex
-strdup
+stdbool         [test $HAVE_RPMATCH = 0]
+gettext-h       [test $HAVE_RPMATCH = 0]
+regex           [test $HAVE_RPMATCH = 0]
+strdup          [test $HAVE_RPMATCH = 0]
 
 configure.ac:
 gl_FUNC_RPMATCH

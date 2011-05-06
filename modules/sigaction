@@ -8,7 +8,7 @@ m4/sigaction.m4
 
 Depends-on:
 signal
-sigprocmask
+sigprocmask     [test $HAVE_SIGACTION = 0]
 
 configure.ac:
 gl_SIGACTION

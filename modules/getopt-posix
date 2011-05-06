@@ -9,11 +9,11 @@ lib/getopt_int.h
 m4/getopt.m4
 
 Depends-on:
-gettext-h
 unistd
 extensions
 include_next
 arg-nonnull
+gettext-h       [test $GNULIB_UNISTD_H_GETOPT = 1]
 
 configure.ac:
 gl_FUNC_GETOPT_POSIX
@@ -26,7 +26,7 @@ BUILT_SOURCES += $(GETOPT_H)
 
 # We need the following in order to create <getopt.h> when the system
 # doesn't have one that works with the given compiler.
-getopt.h: getopt.in.h $(ARG_NONNULL_H)
+getopt.h: getopt.in.h $(top_builddir)/config.status $(ARG_NONNULL_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|@''HAVE_GETOPT_H''@|$(HAVE_GETOPT_H)|g' \

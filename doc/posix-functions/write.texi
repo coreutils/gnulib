@@ -4,9 +4,24 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/write.html}
 
-Gnulib module: write, sigpipe
+Gnulib module: write, nonblocking, sigpipe
 
-Portability problems fixed by Gnulib:
+Portability problems fixed by Gnulib module @code{stdio}, together with module @code{nonblocking}:
+@itemize
+@item
+When writing to a non-blocking pipe whose buffer is full, this function fails
+with @code{errno} being set to @code{ENOSPC} instead of @code{EAGAIN} on some
+platforms:
+mingw.
+@item
+When writing to a non-blocking pipe on which no reader is currently waiting
+an amount of bytes that exceeds the pipe buffer's size, then -- even if the
+pipe's buffer is empty -- this function fails, instead of performing a partial
+write into the pipe buffer, on some platforms:
+mingw.
+@end itemize
+
+Portability problems fixed by Gnulib module @code{stdio}, together with module @code{sigpipe}:
 @itemize
 @item
 When writing to a pipe with no readers, this function fails with error

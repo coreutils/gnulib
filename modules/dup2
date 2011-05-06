@@ -7,6 +7,7 @@ m4/dup2.m4
 
 Depends-on:
 unistd
+dup2-obsolete
 
 configure.ac:
 gl_FUNC_DUP2

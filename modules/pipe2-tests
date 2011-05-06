@@ -11,3 +11,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-pipe2
 check_PROGRAMS += test-pipe2
+test_pipe2_LDADD = $(LDADD) $(LIBSOCKET)

@@ -7,6 +7,7 @@ m4/sysexits.m4
 
 Depends-on:
 include_next
+stdlib
 
 configure.ac:
 gl_SYSEXITS
@@ -19,7 +20,8 @@ BUILT_SOURCES += $(SYSEXITS_H)
 
 # We need the following in order to create <sysexits.h> when the system
 # doesn't have one that works with the given compiler.
-sysexits.h: sysexits.in.h
+if GL_GENERATE_SYSEXITS_H
+sysexits.h: sysexits.in.h $(top_builddir)/config.status
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|@''HAVE_SYSEXITS_H''@|$(HAVE_SYSEXITS_H)|g' \
@@ -30,6 +32,10 @@ sysexits.h: sysexits.in.h
 	      < $(srcdir)/sysexits.in.h; \
 	} > $@-t && \
 	mv -f $@-t $@
+else
+sysexits.h: $(top_builddir)/config.status
+	rm -f $@
+endif
 MOSTLYCLEANFILES += sysexits.h sysexits.h-t
 
 Include:
