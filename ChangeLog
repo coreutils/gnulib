@@ -1,3 +1,7 @@
+2011-05-06  Karl Berry  <karl@gnu.org>
+
+	* MODULES.html.sh (func_all_modules): remove exit.
+
 2011-05-06  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: use info-gnu@ as the default only for a stable release

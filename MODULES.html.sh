@@ -1604,7 +1604,6 @@ func_all_modules ()
 
   func_begin_table
   func_module stdlib
-  func_module exit
   func_module strtol
   func_module strtoul
   func_module memcmp
