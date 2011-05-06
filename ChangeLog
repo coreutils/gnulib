@@ -1,3 +1,25 @@
+2011-05-05  Paul Eggert  <eggert@cs.ucla.edu>
+
+	assert-h: new module, which supports C1X-style static_assert
+	* lib/assert.in.h, m4/assert_h.m4, modules/assert-h: New files.
+	* lib/verify.h: Revamp so that this can be copied into assert.h,
+	while retaining the ability to use it standalone as before.
+	Rename private identifiers so as not to encroach on the
+	standard C namespace, since this is now used by assert.h.
+	(_GL_VERIFY_TYPE): New macro, factoring out differing parts of
+	the old verify_true.
+	(_GL_VERIFY_TRUE): New macro, with much of the contents of
+	the old verify_true.  Use _GL_VERIFY_TYPE.
+	(_GL_VERIFY): New macro, with much of the contents of the old verify.
+	(static_assert): New macro, if _GL_STATIC_ASSERT_H
+	is defined and static_assert is not; _GL_STATIC_ASSERT_H is
+	defined when this file is copied into the replacement assert.h.
+	(_Static_assert): New macro, if _GL_STATIC_ASSERT_H is defined
+	and _Static_assert is not built in.
+	(verify_true, verify): Define only if _GL_STATIC_ASSERT_H is not
+	defined, and use the new macros mentioned above.
+	* doc/posix-headers/assert.texi: Document this.
+
 2011-05-05  Bruno Haible  <bruno@clisp.org>
 
 	fclose, fflush: Respect rules for use of AC_LIBOBJ.
