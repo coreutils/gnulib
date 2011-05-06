@@ -19,7 +19,7 @@ Include:
 <stdio.h>
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Bruno Haible, Eric Blake
