@@ -17,6 +17,10 @@ unistd          [test $ac_cv_lib_error_at_line = no]
 
 configure.ac:
 gl_ERROR
+if test $ac_cv_lib_error_at_line = no; then
+  AC_LIBOBJ([error])
+  gl_PREREQ_ERROR
+fi
 m4_ifdef([AM_XGETTEXT_OPTION],
   [AM_][XGETTEXT_OPTION([--flag=error:3:c-format])
    AM_][XGETTEXT_OPTION([--flag=error_at_line:5:c-format])])

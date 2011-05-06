@@ -1,5 +1,13 @@
 2011-05-06  Bruno Haible  <bruno@clisp.org>
 
+	error: Move AC_LIBOBJ invocations to module description.
+	* m4/error.m4 (gl_ERROR): Inline AC_FUNC_ERROR_AT_LINE. Remove
+	AC_LIBSOURCES invocation. Move AC_LIBOBJ and gl_PREREQ_ERROR
+	invocations from here...
+	* modules/error (configure.ac): ... to here.
+
+2011-05-06  Bruno Haible  <bruno@clisp.org>
+
 	duplocale: Move AC_LIBOBJ invocations to module description.
 	* m4/duplocale.m4 (gl_FUNC_DUPLOCALE): Move AC_LIBOBJ and
 	gl_PREREQ_DUPLOCALE invocations from here...
