@@ -10,13 +10,19 @@ m4/fdopendir.m4
 Depends-on:
 dirent
 extensions
-errno           [test $HAVE_FDOPENDIR = 0 || test $REPLACE_FDOPENDIR = 1]
-fchdir          [test $HAVE_FDOPENDIR = 0 || test $REPLACE_FDOPENDIR = 1]
-openat-die      [test $HAVE_FDOPENDIR = 0 || test $REPLACE_FDOPENDIR = 1]
-save-cwd        [test $HAVE_FDOPENDIR = 0 || test $REPLACE_FDOPENDIR = 1]
+errno           [test $HAVE_FDOPENDIR = 0]
+fchdir          [test $HAVE_FDOPENDIR = 0]
+openat-die      [test $HAVE_FDOPENDIR = 0]
+save-cwd        [test $HAVE_FDOPENDIR = 0]
 
 configure.ac:
 gl_FUNC_FDOPENDIR
+if test $HAVE_FDOPENDIR = 0 || test $REPLACE_FDOPENDIR = 1; then
+  AC_LIBOBJ([fdopendir])
+fi
+if test $HAVE_FDOPENDIR = 0; then
+  AC_LIBOBJ([openat-proc])
+fi
 gl_DIRENT_MODULE_INDICATOR([fdopendir])
 gl_MODULE_INDICATOR([fdopendir])
 

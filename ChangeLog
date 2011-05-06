@@ -1,5 +1,13 @@
 2011-05-06  Bruno Haible  <bruno@clisp.org>
 
+	fdopendir: Move AC_LIBOBJ invocations to module description.
+	* m4/fdopendir.m4 (gl_FUNC_FDOPENDIR): Move AC_LIBOBJ invocations from
+	here...
+	* modules/fdopendir (configure.ac): ... to here.
+	(Depends-on): Improve conditions.
+
+2011-05-06  Bruno Haible  <bruno@clisp.org>
+
 	_Exit: Move AC_LIBOBJ invocations to module description.
 	* m4/_Exit.m4 (gl_FUNC__EXIT): Move AC_LIBOBJ and gl_PREREQ__EXIT
 	invocations from here...
