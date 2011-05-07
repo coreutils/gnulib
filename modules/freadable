@@ -12,6 +12,9 @@ stdbool
 
 configure.ac:
 gl_FUNC_FREADABLE
+if test $ac_cv_func___freadable = no; then
+  AC_LIBOBJ([freadable])
+fi
 
 Makefile.am:
 

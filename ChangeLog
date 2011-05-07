@@ -1,5 +1,12 @@
 2011-05-07  Bruno Haible  <bruno@clisp.org>
 
+	freadable: Move AC_LIBOBJ invocations to module description.
+	* m4/freadable.m4 (gl_FUNC_FREADABLE): Move AC_LIBOBJ invocation from
+	here...
+	* modules/freadable (configure.ac): ... to here.
+
+2011-05-07  Bruno Haible  <bruno@clisp.org>
+
 	fpurge: Move AC_LIBOBJ invocations to module description.
 	* m4/fpurge.m4 (gl_FUNC_FPURGE): Set HAVE_FPURGE. Move AC_LIBOBJ
 	invocations from here...
