@@ -1,5 +1,12 @@
 2011-05-07  Bruno Haible  <bruno@clisp.org>
 
+	fpurge: Move AC_LIBOBJ invocations to module description.
+	* m4/fpurge.m4 (gl_FUNC_FPURGE): Set HAVE_FPURGE. Move AC_LIBOBJ
+	invocations from here...
+	* modules/fpurge (configure.ac): ... to here.
+
+2011-05-07  Bruno Haible  <bruno@clisp.org>
+
 	fpending: Move AC_LIBOBJ invocations to module description.
 	* m4/fpending.m4 (gl_PREREQ_FPENDING): New macro, extracted from
 	gl_FUNC_FPENDING.

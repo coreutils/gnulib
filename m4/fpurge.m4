@@ -1,4 +1,4 @@
-# fpurge.m4 serial 6
+# fpurge.m4 serial 7
 dnl Copyright (C) 2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,6 +11,7 @@ AC_DEFUN([gl_FUNC_FPURGE],
   AC_CHECK_FUNCS_ONCE([__fpurge])
   AC_CHECK_DECLS([fpurge], , , [[#include <stdio.h>]])
   if test "x$ac_cv_func_fpurge" = xyes; then
+    HAVE_FPURGE=1
     # Detect BSD bug.  Only cygwin 1.7 is known to be immune.
     AC_CACHE_CHECK([whether fpurge works], [gl_cv_func_fpurge_works],
       [AC_RUN_IFELSE([AC_LANG_PROGRAM([[#include <stdio.h>
@@ -34,10 +35,9 @@ AC_DEFUN([gl_FUNC_FPURGE],
       [gl_cv_func_fpurge_works='guessing no'])])
     if test "x$gl_cv_func_fpurge_works" != xyes; then
       REPLACE_FPURGE=1
-      AC_LIBOBJ([fpurge])
     fi
   else
-    AC_LIBOBJ([fpurge])
+    HAVE_FPURGE=0
   fi
   if test "x$ac_cv_have_decl_fpurge" = xno; then
     HAVE_DECL_FPURGE=0

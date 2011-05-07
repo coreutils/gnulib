@@ -11,6 +11,9 @@ stdio
 
 configure.ac:
 gl_FUNC_FPURGE
+if test $HAVE_FPURGE = 0 || test $REPLACE_FPURGE = 1; then
+  AC_LIBOBJ([fpurge])
+fi
 gl_STDIO_MODULE_INDICATOR([fpurge])
 
 Makefile.am:
