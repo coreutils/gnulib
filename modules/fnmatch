@@ -22,6 +22,10 @@ mbsinit         [test -n "$FNMATCH_H"]
 
 configure.ac:
 gl_FUNC_FNMATCH_POSIX
+if test -n "$FNMATCH_H"; then
+  AC_LIBOBJ([fnmatch])
+  gl_PREREQ_FNMATCH
+fi
 
 Makefile.am:
 BUILT_SOURCES += $(FNMATCH_H)

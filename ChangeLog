@@ -1,5 +1,15 @@
 2011-05-07  Bruno Haible  <bruno@clisp.org>
 
+	fnmatch, fnmatch-gnu: Move AC_LIBOBJ invocations to module description.
+	* m4/fnmatch.m4 (gl_PREREQ_FNMATCH): New macro, extracted from
+	gl_FUNC_FNMATCH_POSIX.
+	(gl_FUNC_FNMATCH_POSIX): Move AC_LIBOBJ and gl_PREREQ_FNMATCH
+	invocations from here...
+	* modules/fnmatch (configure.ac): ... to here.
+	* modules/fnmatch-gnu (configure.ac): ... and here.
+
+2011-05-07  Bruno Haible  <bruno@clisp.org>
+
 	flock: Move AC_LIBOBJ invocations to module description.
 	* m4/flock.m4 (gl_FUNC_FLOCK): Move AC_LIBOBJ and gl_PREREQ_FLOCK
 	invocations from here...

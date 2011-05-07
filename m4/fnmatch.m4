@@ -1,4 +1,4 @@
-# Check for fnmatch - serial 6.
+# Check for fnmatch - serial 7.
 
 # Copyright (C) 2000-2007, 2009-2011 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -128,17 +128,6 @@ AC_DEFUN([gl_FUNC_FNMATCH_POSIX],
     rm -f "$gl_source_base/fnmatch.h"
   else
     FNMATCH_H=fnmatch.h
-    AC_LIBOBJ([fnmatch])
-    dnl We must choose a different name for our function, since on ELF systems
-    dnl a broken fnmatch() in libc.so would override our fnmatch() if it is
-    dnl compiled into a shared library.
-    AC_DEFINE_UNQUOTED([fnmatch], [${gl_fnmatch_required_lowercase}_fnmatch],
-      [Define to a replacement function name for fnmatch().])
-    dnl Prerequisites of lib/fnmatch.c.
-    AC_REQUIRE([AC_TYPE_MBSTATE_T])
-    AC_CHECK_DECLS([isblank], [], [], [#include <ctype.h>])
-    AC_CHECK_FUNCS_ONCE([btowc isblank iswctype mbsrtowcs mempcpy wmemchr wmemcpy wmempcpy])
-    AC_CHECK_HEADERS_ONCE([wctype.h])
   fi
   AC_SUBST([FNMATCH_H])
   AM_CONDITIONAL([GL_GENERATE_FNMATCH_H], [test -n "$FNMATCH_H"])
@@ -150,4 +139,18 @@ AC_DEFUN([gl_FUNC_FNMATCH_GNU],
   m4_divert_text([INIT_PREPARE], [gl_fnmatch_required=GNU])
 
   AC_REQUIRE([gl_FUNC_FNMATCH_POSIX])
+])
+
+AC_DEFUN([gl_PREREQ_FNMATCH],
+[
+  dnl We must choose a different name for our function, since on ELF systems
+  dnl a broken fnmatch() in libc.so would override our fnmatch() if it is
+  dnl compiled into a shared library.
+  AC_DEFINE_UNQUOTED([fnmatch], [${gl_fnmatch_required_lowercase}_fnmatch],
+    [Define to a replacement function name for fnmatch().])
+  dnl Prerequisites of lib/fnmatch.c.
+  AC_REQUIRE([AC_TYPE_MBSTATE_T])
+  AC_CHECK_DECLS([isblank], [], [], [#include <ctype.h>])
+  AC_CHECK_FUNCS_ONCE([btowc isblank iswctype mbsrtowcs mempcpy wmemchr wmemcpy wmempcpy])
+  AC_CHECK_HEADERS_ONCE([wctype.h])
 ])
