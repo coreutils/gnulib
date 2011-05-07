@@ -1,4 +1,4 @@
-# fseek.m4 serial 2
+# fseek.m4 serial 3
 dnl Copyright (C) 2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,7 +9,9 @@ AC_DEFUN([gl_FUNC_FSEEK],
   AC_REQUIRE([gl_STDIO_H_DEFAULTS])
   AC_REQUIRE([gl_FUNC_FSEEKO])
   dnl When fseeko needs fixes, fseek needs them too.
-  dnl gl_FUNC_FSEEKO takes care of calling gl_REPLACE_FSEEK
+  if test $HAVE_FSEEKO = 0 || test $REPLACE_FSEEKO = 1; then
+    gl_REPLACE_FSEEK
+  fi
 ])
 
 AC_DEFUN([gl_REPLACE_FSEEK],

@@ -1,4 +1,4 @@
-# fseeko.m4 serial 13
+# fseeko.m4 serial 14
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -27,10 +27,6 @@ AC_DEFUN([gl_FUNC_FSEEKO],
         REPLACE_FSEEKO=1
       fi
     ])
-  fi
-  if test $HAVE_FSEEKO = 0 || test $REPLACE_FSEEKO = 1; then
-    dnl If we are also using the fseek module, then fseek needs replacing, too.
-    m4_ifdef([gl_REPLACE_FSEEK], [gl_REPLACE_FSEEK])
   fi
 ])
 
