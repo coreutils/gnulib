@@ -1,3 +1,9 @@
+2011-05-07  Bruno Haible  <bruno@clisp.org>
+
+	canonicalize-lgpl: Fix autoconf macro ordering bug.
+	* m4/canonicalize.m4 (gl_CANONICALIZE_LGPL): Require
+	gl_STDLIB_H_DEFAULTS.
+
 2011-05-06  Eric Blake  <eblake@redhat.com>
 
 	maintainer-makefile: make sc_po_check easier to tune

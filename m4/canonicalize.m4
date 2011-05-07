@@ -26,6 +26,7 @@ AC_DEFUN([gl_FUNC_CANONICALIZE_FILENAME_MODE],
 # Provides canonicalize_file_name and realpath.
 AC_DEFUN([gl_CANONICALIZE_LGPL],
 [
+  AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
   AC_REQUIRE([gl_CANONICALIZE_LGPL_SEPARATE])
   if test $ac_cv_func_canonicalize_file_name = no; then
     HAVE_CANONICALIZE_FILE_NAME=0
