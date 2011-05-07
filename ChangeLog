@@ -1,5 +1,12 @@
 2011-05-07  Bruno Haible  <bruno@clisp.org>
 
+	fsync: Move AC_LIBOBJ invocations to module description.
+	* m4/fsync.m4 (gl_FUNC_FSYNC): Move AC_LIBOBJ and gl_PREREQ_FSYNC
+	invocations from here...
+	* modules/fsync (configure.ac): ... to here.
+
+2011-05-07  Bruno Haible  <bruno@clisp.org>
+
 	fsusage: Move AC_LIBOBJ invocations to module description.
 	* m4/fsusage.m4 (gl_FUNC_FREOPEN): Move AC_LIBOBJ and
 	gl_PREREQ_FSUSAGE_EXTRA invocations from here...

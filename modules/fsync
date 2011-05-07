@@ -10,6 +10,10 @@ unistd
 
 configure.ac:
 gl_FUNC_FSYNC
+if test $HAVE_FSYNC = 0; then
+  AC_LIBOBJ([fsync])
+  gl_PREREQ_FSYNC
+fi
 gl_UNISTD_MODULE_INDICATOR([fsync])
 
 Makefile.am:
