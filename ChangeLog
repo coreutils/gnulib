@@ -1,5 +1,12 @@
 2011-05-07  Bruno Haible  <bruno@clisp.org>
 
+	freopen: Move AC_LIBOBJ invocations to module description.
+	* m4/freopen.m4 (gl_FUNC_FREOPEN): Move AC_LIBOBJ and gl_PREREQ_FREOPEN
+	invocations from here...
+	* modules/freopen (configure.ac): ... to here.
+
+2011-05-07  Bruno Haible  <bruno@clisp.org>
+
 	free: Move AC_LIBOBJ invocations to module description.
 	* m4/free.m4 (gl_FUNC_FREE): Move AC_LIBOBJ and missing gl_PREREQ_FREE
 	invocations from here...

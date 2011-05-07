@@ -1,4 +1,4 @@
-# freopen.m4 serial 2
+# freopen.m4 serial 3
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,8 +11,6 @@ AC_DEFUN([gl_FUNC_FREOPEN],
   case "$host_os" in
     mingw* | pw*)
       REPLACE_FREOPEN=1
-      AC_LIBOBJ([freopen])
-      gl_PREREQ_FREOPEN
       ;;
   esac
 ])

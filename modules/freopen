@@ -10,6 +10,10 @@ stdio
 
 configure.ac:
 gl_FUNC_FREOPEN
+if test $REPLACE_FREOPEN = 1; then
+  AC_LIBOBJ([freopen])
+  gl_PREREQ_FREOPEN
+fi
 gl_STDIO_MODULE_INDICATOR([freopen])
 
 Makefile.am:
