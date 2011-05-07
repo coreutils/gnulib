@@ -10,7 +10,6 @@ configure.ac:
 AC_REQUIRE([AC_C_INLINE])
 
 Makefile.am:
-lib_SOURCES += ignore-value.h
 
 Include:
 "ignore-value.h"

@@ -9,7 +9,6 @@ Depends-on:
 configure.ac:
 
 Makefile.am:
-lib_SOURCES += verify.h
 
 Include:
 "verify.h"
