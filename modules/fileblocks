@@ -9,6 +9,10 @@ Depends-on:
 
 configure.ac:
 gl_FILEBLOCKS
+if test $ac_cv_member_struct_stat_st_blocks = no; then
+  AC_LIBOBJ([fileblocks])
+  gl_PREREQ_FILEBLOCKS
+fi
 
 Makefile.am:
 

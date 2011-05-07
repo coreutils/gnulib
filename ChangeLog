@@ -1,3 +1,10 @@
+2011-05-07  Bruno Haible  <bruno@clisp.org>
+
+	fileblocks: Move AC_LIBOBJ invocations to module description.
+	* m4/fileblocks.m4 (gl_FILEBLOCKS): Move AC_LIBOBJ and
+	gl_PREREQ_FILEBLOCKS invocations from here...
+	* modules/fileblocks (configure.ac): ... to here.
+
 2011-05-06  Bruno Haible  <bruno@clisp.org>
 
 	fflush: Move AC_LIBOBJ invocations to module description.
