@@ -10,6 +10,10 @@ Depends-on:
 
 configure.ac:
 gl_FUNC_FPENDING
+if test $ac_cv_func___fpending = no; then
+  AC_LIBOBJ([fpending])
+  gl_PREREQ_FPENDING
+fi
 
 Makefile.am:
 

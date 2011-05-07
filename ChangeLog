@@ -1,5 +1,14 @@
 2011-05-07  Bruno Haible  <bruno@clisp.org>
 
+	fpending: Move AC_LIBOBJ invocations to module description.
+	* m4/fpending.m4 (gl_PREREQ_FPENDING): New macro, extracted from
+	gl_FUNC_FPENDING.
+	(gl_FUNC_FPENDING): Move AC_LIBOBJ and gl_PREREQ_FPENDING
+	invocations from here...
+	* modules/fpending (configure.ac): ... to here.
+
+2011-05-07  Bruno Haible  <bruno@clisp.org>
+
 	fopen: Move AC_LIBOBJ invocations to module description.
 	* m4/fopen.m4 (gl_FUNC_FOPEN): Move AC_LIBOBJ and gl_PREREQ_FOPEN
 	invocations from here...
