@@ -1,5 +1,11 @@
 2011-05-07  Bruno Haible  <bruno@clisp.org>
 
+	crypto/gc: Move AC_LIBOBJ invocations to module description.
+	* m4/gc.m4 (gl_GC): Move AC_LIBOBJ invocations from here...
+	* modules/crypto/gc (configure.ac): ... to here.
+
+2011-05-07  Bruno Haible  <bruno@clisp.org>
+
 	fwriting: Move AC_LIBOBJ invocations to module description.
 	* m4/fwriting.m4 (gl_FUNC_FWRITINT): Move AC_LIBOBJ invocation from
 	here...

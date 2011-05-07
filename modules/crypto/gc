@@ -12,6 +12,11 @@ havelib
 
 configure.ac:
 gl_GC
+if test "$ac_cv_libgcrypt" = yes; then
+  AC_LIBOBJ([gc-libgcrypt])
+else
+  AC_LIBOBJ([gc-gnulib])
+fi
 if test $gl_cond_libtool = false; then
   gl_ltlibdeps="$gl_ltlibdeps $LTLIBGCRYPT"
   gl_libdeps="$gl_libdeps $LIBGCRYPT"
