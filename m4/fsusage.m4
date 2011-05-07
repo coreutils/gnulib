@@ -1,4 +1,4 @@
-# serial 27
+# serial 28
 # Obtaining file system usage information.
 
 # Copyright (C) 1997-1998, 2000-2001, 2003-2011 Free Software Foundation, Inc.
@@ -19,10 +19,6 @@ AC_DEFUN([gl_FSUSAGE],
        #include <sys/param.h>
       #endif]])
   gl_FILE_SYSTEM_USAGE([gl_cv_fs_space=yes], [gl_cv_fs_space=no])
-  if test $gl_cv_fs_space = yes; then
-    AC_LIBOBJ([fsusage])
-    gl_PREREQ_FSUSAGE_EXTRA
-  fi
 ])
 
 # Try to determine how a program can obtain file system usage information.

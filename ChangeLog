@@ -1,5 +1,12 @@
 2011-05-07  Bruno Haible  <bruno@clisp.org>
 
+	fsusage: Move AC_LIBOBJ invocations to module description.
+	* m4/fsusage.m4 (gl_FUNC_FREOPEN): Move AC_LIBOBJ and
+	gl_PREREQ_FSUSAGE_EXTRA invocations from here...
+	* modules/fsusage (configure.ac): ... to here.
+
+2011-05-07  Bruno Haible  <bruno@clisp.org>
+
 	freopen: Move AC_LIBOBJ invocations to module description.
 	* m4/freopen.m4 (gl_FUNC_FREOPEN): Move AC_LIBOBJ and gl_PREREQ_FREOPEN
 	invocations from here...
