@@ -30,7 +30,6 @@ AC_DEFUN([gl_FUNC_FREE],
        [gl_cv_func_free=no])])
 
   if test $gl_cv_func_free = no; then
-    AC_LIBOBJ([free])
     AC_DEFINE([free], [rpl_free],
       [Define to rpl_free if the replacement function should be used.])
   fi

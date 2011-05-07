@@ -12,6 +12,10 @@ Depends-on:
 
 configure.ac:
 gl_FUNC_FREE
+if test $gl_cv_func_free = no; then
+  AC_LIBOBJ([free])
+  gl_PREREQ_FREE
+fi
 
 Makefile.am:
 
