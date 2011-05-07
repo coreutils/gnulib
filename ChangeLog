@@ -1,5 +1,11 @@
 2011-05-07  Bruno Haible  <bruno@clisp.org>
 
+	ftell: Move AC_LIBOBJ invocations to module description.
+	* m4/ftell.m4 (gl_FUNC_FTELL): Move AC_LIBOBJ invocation from here...
+	* modules/ftell (configure.ac): ... to here.
+
+2011-05-07  Bruno Haible  <bruno@clisp.org>
+
 	ftello: Respect rules for use of AC_LIBOBJ.
 	* m4/ftello.m4 (gl_REPLACE_FTELLO): Remove macro.
 	(gl_FUNC_FTELLO): Inline it here. Move AC_LIBOBJ invocation from

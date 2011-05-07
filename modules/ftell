@@ -12,6 +12,9 @@ ftello          [test $REPLACE_FTELL = 1]
 
 configure.ac:
 gl_FUNC_FTELL
+if test $REPLACE_FTELL = 1; then
+  AC_LIBOBJ([ftell])
+fi
 gl_STDIO_MODULE_INDICATOR([ftell])
 
 Makefile.am:
