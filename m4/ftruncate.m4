@@ -1,4 +1,4 @@
-# serial 15
+# serial 16
 
 # See if we need to emulate a missing ftruncate function using fcntl or chsize.
 
@@ -21,8 +21,6 @@ AC_DEFUN([gl_FUNC_FTRUNCATE],
   AC_CHECK_FUNCS_ONCE([ftruncate])
   if test $ac_cv_func_ftruncate = no; then
     HAVE_FTRUNCATE=0
-    AC_LIBOBJ([ftruncate])
-    gl_PREREQ_FTRUNCATE
     case "$host_os" in
       mingw*)
         # Yes, we know mingw lacks ftruncate.

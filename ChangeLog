@@ -1,5 +1,12 @@
 2011-05-07  Bruno Haible  <bruno@clisp.org>
 
+	ftruncate: Move AC_LIBOBJ invocations to module description.
+	* m4/ftruncate.m4 (gl_FUNC_FTRUNCATE): Move AC_LIBOBJ and
+	gl_PREREQ_FTRUNCATE invocations from here...
+	* modules/ftruncate (configure.ac): ... to here.
+
+2011-05-07  Bruno Haible  <bruno@clisp.org>
+
 	fsync: Move AC_LIBOBJ invocations to module description.
 	* m4/fsync.m4 (gl_FUNC_FSYNC): Move AC_LIBOBJ and gl_PREREQ_FSYNC
 	invocations from here...

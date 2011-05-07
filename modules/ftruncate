@@ -16,6 +16,10 @@ unistd
 
 configure.ac:
 gl_FUNC_FTRUNCATE
+if test $HAVE_FTRUNCATE = 0; then
+  AC_LIBOBJ([ftruncate])
+  gl_PREREQ_FTRUNCATE
+fi
 gl_UNISTD_MODULE_INDICATOR([ftruncate])
 
 Makefile.am:
