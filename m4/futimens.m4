@@ -1,4 +1,4 @@
-# serial 5
+# serial 6
 # See if we need to provide futimens replacement.
 
 dnl Copyright (C) 2009-2011 Free Software Foundation, Inc.
@@ -15,7 +15,6 @@ AC_DEFUN([gl_FUNC_FUTIMENS],
   AC_CHECK_FUNCS_ONCE([futimens])
   if test $ac_cv_func_futimens = no; then
     HAVE_FUTIMENS=0
-    AC_LIBOBJ([futimens])
   else
     AC_CACHE_CHECK([whether futimens works],
       [gl_cv_func_futimens_works],
@@ -55,7 +54,6 @@ choke me
       rm -f conftest.file])
     if test "$gl_cv_func_futimens_works" != yes; then
       REPLACE_FUTIMENS=1
-      AC_LIBOBJ([futimens])
     fi
   fi
 ])

@@ -1,5 +1,12 @@
 2011-05-07  Bruno Haible  <bruno@clisp.org>
 
+	futimens: Move AC_LIBOBJ invocations to module description.
+	* m4/futimens.m4 (gl_FUNC_FUTIMENS): Move AC_LIBOBJ invocations from
+	here...
+	* modules/futimens (configure.ac): ... to here.
+
+2011-05-07  Bruno Haible  <bruno@clisp.org>
+
 	ftruncate: Move AC_LIBOBJ invocations to module description.
 	* m4/ftruncate.m4 (gl_FUNC_FTRUNCATE): Move AC_LIBOBJ and
 	gl_PREREQ_FTRUNCATE invocations from here...

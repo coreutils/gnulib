@@ -12,6 +12,9 @@ utimens         [test $HAVE_FUTIMENS = 0 || test $REPLACE_FUTIMENS = 1]
 
 configure.ac:
 gl_FUNC_FUTIMENS
+if test $HAVE_FUTIMENS = 0 || test $REPLACE_FUTIMENS = 1; then
+  AC_LIBOBJ([futimens])
+fi
 gl_SYS_STAT_MODULE_INDICATOR([futimens])
 
 Makefile.am:
