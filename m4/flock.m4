@@ -1,4 +1,4 @@
-# flock.m4 serial 2
+# flock.m4 serial 3
 dnl Copyright (C) 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,8 +10,6 @@ AC_DEFUN([gl_FUNC_FLOCK],
   AC_CHECK_FUNCS_ONCE([flock])
   if test $ac_cv_func_flock = no; then
     HAVE_FLOCK=0
-    AC_LIBOBJ([flock])
-    gl_PREREQ_FLOCK
   fi
 ])
 

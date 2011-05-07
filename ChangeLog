@@ -1,5 +1,12 @@
 2011-05-07  Bruno Haible  <bruno@clisp.org>
 
+	flock: Move AC_LIBOBJ invocations to module description.
+	* m4/flock.m4 (gl_FUNC_FLOCK): Move AC_LIBOBJ and gl_PREREQ_FLOCK
+	invocations from here...
+	* modules/flock (configure.ac): ... to here.
+
+2011-05-07  Bruno Haible  <bruno@clisp.org>
+
 	fileblocks: Move AC_LIBOBJ invocations to module description.
 	* m4/fileblocks.m4 (gl_FILEBLOCKS): Move AC_LIBOBJ and
 	gl_PREREQ_FILEBLOCKS invocations from here...
