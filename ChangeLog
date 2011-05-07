@@ -1,5 +1,11 @@
 2011-05-07  Bruno Haible  <bruno@clisp.org>
 
+	fseeko: Simplify.
+	* m4/fseeko.m4 (gl_HAVE_FSEEKO): Remove macro.
+	(gl_FUNC_FSEEKO): Inline it here.
+
+2011-05-07  Bruno Haible  <bruno@clisp.org>
+
 	fseek: Move AC_LIBOBJ invocations to module description.
 	* m4/fseek.m4 (gl_REPLACE_FSEEK): Remove macro.
 	(gl_FUNC_FSEEK): Inline it here. Move AC_LIBOBJ invocation from here...
