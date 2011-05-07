@@ -1,5 +1,11 @@
 2011-05-07  Bruno Haible  <bruno@clisp.org>
 
+	fclose: Simplify autoconf macro.
+	* m4/fclose.m4 (gl_FUNC_FCLOSE): Assume gl_FUNC_FFLUSH_STDIN is
+	defined.
+
+2011-05-07  Bruno Haible  <bruno@clisp.org>
+
 	canonicalize-lgpl: Fix autoconf macro ordering bug.
 	* m4/canonicalize.m4 (gl_CANONICALIZE_LGPL): Require
 	gl_STDLIB_H_DEFAULTS.
