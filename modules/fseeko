@@ -16,6 +16,9 @@ AC_REQUIRE([AC_FUNC_FSEEKO])
 
 configure.ac:
 gl_FUNC_FSEEKO
+if test $HAVE_FSEEKO = 0 || test $REPLACE_FSEEKO = 1; then
+  AC_LIBOBJ([fseeko])
+fi
 gl_STDIO_MODULE_INDICATOR([fseeko])
 
 Makefile.am:

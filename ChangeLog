@@ -1,3 +1,11 @@
+2011-05-07  Bruno Haible  <bruno@clisp.org>
+
+	fseeko: Respect rules for use of AC_LIBOBJ.
+	* m4/fseeko.m4 (gl_REPLACE_FSEEKO): Remove macro.
+	(gl_FUNC_FSEEKO): Inline it here. Move AC_LIBOBJ invocation from
+	here...
+	* modules/fseeko (configure.ac): ... to here.
+
 2011-06-13  Bruno Haible  <bruno@clisp.org>
 
 	gnulib-tool: Allow comments in the 'Depends-on' section.

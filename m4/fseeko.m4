@@ -1,4 +1,4 @@
-# fseeko.m4 serial 12
+# fseeko.m4 serial 13
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,18 +17,21 @@ AC_DEFUN([gl_FUNC_FSEEKO],
 
   if test $gl_cv_func_fseeko = no; then
     HAVE_FSEEKO=0
-    gl_REPLACE_FSEEKO
   else
     if test $gl_cv_var_stdin_large_offset = no; then
-      gl_REPLACE_FSEEKO
+      REPLACE_FSEEKO=1
     fi
+    m4_ifdef([gl_FUNC_FFLUSH_STDIN], [
+      gl_FUNC_FFLUSH_STDIN
+      if test $gl_cv_func_fflush_stdin = no; then
+        REPLACE_FSEEKO=1
+      fi
+    ])
   fi
-  m4_ifdef([gl_FUNC_FFLUSH_STDIN], [
-    gl_FUNC_FFLUSH_STDIN
-    if test $gl_cv_func_fflush_stdin = no; then
-      gl_REPLACE_FSEEKO
-    fi
-  ])
+  if test $HAVE_FSEEKO = 0 || test $REPLACE_FSEEKO = 1; then
+    dnl If we are also using the fseek module, then fseek needs replacing, too.
+    m4_ifdef([gl_REPLACE_FSEEK], [gl_REPLACE_FSEEK])
+  fi
 ])
 
 dnl Tests whether fseeko is available.
@@ -46,18 +49,6 @@ AC_DEFUN([gl_HAVE_FSEEKO],
 ]], [fseeko (stdin, 0, 0);])],
         [gl_cv_func_fseeko=yes], [gl_cv_func_fseeko=no])
     ])
-])
-
-AC_DEFUN([gl_REPLACE_FSEEKO],
-[
-  AC_REQUIRE([gl_STDIO_H_DEFAULTS])
-  AC_REQUIRE([gl_HAVE_FSEEKO])
-  if test $gl_cv_func_fseeko = yes; then
-    REPLACE_FSEEKO=1
-  fi
-  AC_LIBOBJ([fseeko])
-  dnl If we are also using the fseek module, then fseek needs replacing, too.
-  m4_ifdef([gl_REPLACE_FSEEK], [gl_REPLACE_FSEEK])
 ])
 
 dnl Code shared by fseeko and ftello.  Determine if large files are supported,
