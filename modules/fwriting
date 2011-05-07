@@ -12,6 +12,9 @@ stdbool
 
 configure.ac:
 gl_FUNC_FWRITING
+if test $ac_cv_func___fwriting = no; then
+  AC_LIBOBJ([fwriting])
+fi
 
 Makefile.am:
 
