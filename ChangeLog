@@ -1,5 +1,12 @@
 2011-05-07  Bruno Haible  <bruno@clisp.org>
 
+	fwritable: Move AC_LIBOBJ invocations to module description.
+	* m4/fwritable.m4 (gl_FUNC_FWRITABLE): Move AC_LIBOBJ invocation from
+	here...
+	* modules/fwritable (configure.ac): ... to here.
+
+2011-05-07  Bruno Haible  <bruno@clisp.org>
+
 	futimens: Move AC_LIBOBJ invocations to module description.
 	* m4/futimens.m4 (gl_FUNC_FUTIMENS): Move AC_LIBOBJ invocations from
 	here...

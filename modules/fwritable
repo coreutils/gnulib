@@ -12,6 +12,9 @@ stdbool
 
 configure.ac:
 gl_FUNC_FWRITABLE
+if test $ac_cv_func___fwritable = no; then
+  AC_LIBOBJ([fwritable])
+fi
 
 Makefile.am:
 
