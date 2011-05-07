@@ -1,4 +1,4 @@
-# ftello.m4 serial 9
+# ftello.m4 serial 10
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -124,12 +124,4 @@ main (void)
       esac
     fi
   fi
-  if test $HAVE_FTELLO = 0 || test $REPLACE_FTELLO = 1; then
-    gl_REPLACE_FTELLO
-  fi
-])
-
-AC_DEFUN([gl_REPLACE_FTELLO],
-[
-  AC_LIBOBJ([ftello])
 ])

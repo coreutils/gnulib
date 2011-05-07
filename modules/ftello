@@ -17,6 +17,9 @@ AC_REQUIRE([AC_FUNC_FSEEKO])
 
 configure.ac:
 gl_FUNC_FTELLO
+if test $HAVE_FTELLO = 0 || test $REPLACE_FTELLO = 1; then
+  AC_LIBOBJ([ftello])
+fi
 gl_STDIO_MODULE_INDICATOR([ftello])
 
 Makefile.am:
