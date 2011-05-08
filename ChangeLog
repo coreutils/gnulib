@@ -1,5 +1,11 @@
 2011-05-08  Bruno Haible  <bruno@clisp.org>
 
+	isinf: Move AC_LIBOBJ invocations to module description.
+	* m4/isinf.m4 (gl_ISINF): Move AC_LIBOBJ invocation from here...
+	* modules/isinf (configure.ac): ... to here.
+
+2011-05-08  Bruno Haible  <bruno@clisp.org>
+
 	isfinite: Move AC_LIBOBJ invocations to module description.
 	* m4/isfinite.m4 (gl_ISFINITE): Move AC_LIBOBJ invocation from here...
 	* modules/isfinite (configure.ac): ... to here.
