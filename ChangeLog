@@ -1,5 +1,12 @@
 2011-05-08  Bruno Haible  <bruno@clisp.org>
 
+	getpagesize: Move AC_LIBOBJ invocations to module description.
+	* m4/getpagesize.m4 (gl_FUNC_GETPAGESIZE): Move AC_LIBOBJ invocation
+	from here...
+	* modules/getpagesize (configure.ac): ... to here.
+
+2011-05-08  Bruno Haible  <bruno@clisp.org>
+
 	getopt: Move AC_LIBOBJ invocations to module description.
 	* m4/getopt.m4 (gl_REPLACE_GETOPT): Remove macro.
 	(gl_FUNC_GETOPT): Inline it here. Move AC_LIBOBJ and gl_PREREQ_GETOPT
