@@ -11,9 +11,11 @@ dnl Written by Paul Eggert.
 AC_DEFUN([gl_ISAPIPE],
 [
   # OpenVMS has isapipe already, so check for it.
-  AC_REPLACE_FUNCS([isapipe])
-  if test $ac_cv_func_isapipe = no; then
-    gl_PREREQ_ISAPIPE
+  AC_CHECK_FUNCS([isapipe])
+  if test $ac_cv_func_isapipe = yes; then
+    HAVE_ISAPIPE=1
+  else
+    HAVE_ISAPIPE=0
   fi
 ])
 
