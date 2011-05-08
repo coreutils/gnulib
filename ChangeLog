@@ -1,5 +1,15 @@
 2011-05-08  Bruno Haible  <bruno@clisp.org>
 
+	gettimeofday, tzset: Respect rules for use of AC_LIBOBJ.
+	* modules/tzset (configure.ac): Don't invoke gl_FUNC_TZSET_CLOBBER,
+	just gl_FUNC_TZSET.
+	* m4/tzset.m4 (gl_FUNC_TZSET): New macro.
+	(gl_FUNC_TZSET_CLOBBER): Remove actions.
+	* m4/gettimeofday.m4 (gl_FUNC_GETTIMEOFDAY): Invoke
+	gl_FUNC_TZSET_CLOBBER and its actions here, if present.
+
+2011-05-08  Bruno Haible  <bruno@clisp.org>
+
 	getsubopt: Move AC_LIBOBJ invocations to module description.
 	* m4/getsubopt.m4 (gl_FUNC_GETSUBOPT): Move AC_LIBOBJ and
 	gl_PREREQ_GETSUBOPT invocations from here...

@@ -8,7 +8,7 @@ Depends-on:
 gettimeofday
 
 configure.ac:
-gl_FUNC_TZSET_CLOBBER
+gl_FUNC_TZSET
 
 Makefile.am:
 
