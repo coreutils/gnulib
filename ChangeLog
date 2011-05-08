@@ -1,5 +1,13 @@
 2011-05-08  Bruno Haible  <bruno@clisp.org>
 
+	gettimeofday: Move AC_LIBOBJ invocations to module description.
+	* m4/gettimeofday.m4 (gl_FUNC_GETTIMEOFDAY,
+	gl_GETTIMEOFDAY_REPLACE_LOCALTIME): Move AC_LIBOBJ and
+	gl_PREREQ_GETTIMEOFDAY invocations from here...
+	* modules/gettimeofday (configure.ac): ... to here.
+
+2011-05-08  Bruno Haible  <bruno@clisp.org>
+
 	gettimeofday, tzset: Respect rules for use of AC_LIBOBJ.
 	* modules/tzset (configure.ac): Don't invoke gl_FUNC_TZSET_CLOBBER,
 	just gl_FUNC_TZSET.
