@@ -1,5 +1,12 @@
 2011-05-08  Bruno Haible  <bruno@clisp.org>
 
+	isblank: Move AC_LIBOBJ invocations to module description.
+	* m4/isblank.m4 (gl_FUNC_ISBLANK): Move AC_LIBOBJ invocation from
+	here...
+	* modules/isblank (configure.ac): ... to here.
+
+2011-05-08  Bruno Haible  <bruno@clisp.org>
+
 	isapipe: Move AC_LIBOBJ invocations to module description.
 	* m4/isapipe.m4 (gl_ISAPIPE): Set HAVE_ISAPIPE. Move AC_LIBOBJ and
 	gl_PREREQ_ISAPIPE invocations from here...

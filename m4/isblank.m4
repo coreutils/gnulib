@@ -1,4 +1,4 @@
-# isblank.m4 serial 2
+# isblank.m4 serial 3
 dnl Copyright (C) 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,6 +13,5 @@ AC_DEFUN([gl_FUNC_ISBLANK],
   AC_CHECK_FUNCS_ONCE([isblank])
   if test $ac_cv_func_isblank = no; then
     HAVE_ISBLANK=0
-    AC_LIBOBJ([isblank])
   fi
 ])
