@@ -29,13 +29,15 @@ AC_DEFUN([gl_FUNC_GETPASS_GNU],
 
   AC_CHECK_DECLS_ONCE([getpass])
   dnl TODO: Detect when GNU getpass() is already found in glibc.
-  AC_LIBOBJ([getpass])
-  gl_PREREQ_GETPASS
-  dnl We must choose a different name for our function, since on ELF systems
-  dnl an unusable getpass() in libc.so would override our getpass() if it is
-  dnl compiled into a shared library.
-  AC_DEFINE([getpass], [gnu_getpass],
-    [Define to a replacement function name for getpass().])
+  REPLACE_GETPASS=1
+
+  if test $REPLACE_GETPASS = 1; then
+    dnl We must choose a different name for our function, since on ELF systems
+    dnl an unusable getpass() in libc.so would override our getpass() if it is
+    dnl compiled into a shared library.
+    AC_DEFINE([getpass], [gnu_getpass],
+      [Define to a replacement function name for getpass().])
+  fi
 ])
 
 # Prerequisites of lib/getpass.c.

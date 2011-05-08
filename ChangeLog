@@ -1,5 +1,12 @@
 2011-05-08  Bruno Haible  <bruno@clisp.org>
 
+	getpass-gnu: Move AC_LIBOBJ invocations to module description.
+	* m4/getpass.m4 (gl_FUNC_GETPASS_GNU): Set REPLACE_GETPASS. Move
+	AC_LIBOBJ and gl_PREREQ_GETPASS invocations from here...
+	* modules/getpass-gnu (configure.ac): ... to here.
+
+2011-05-08  Bruno Haible  <bruno@clisp.org>
+
 	getpass: Move AC_LIBOBJ invocations to module description.
 	* m4/getpass.m4 (gl_FUNC_GETPASS): Set HAVE_GETPASS. Move AC_LIBOBJ and
 	gl_PREREQ_GETPASS invocations from here...
