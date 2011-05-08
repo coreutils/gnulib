@@ -55,12 +55,18 @@
         ? (t) -1                                                        \
         : ((((t) 1 << (sizeof (t) * CHAR_BIT - 2)) - 1) * 2 + 1)))
 
-/* Return zero if T can be determined to be an unsigned type.
-   Otherwise, return 1.
-   When compiling with GCC, INT_STRLEN_BOUND uses this macro to obtain a
-   tighter bound.  Otherwise, it overestimates the true bound by one byte
-   when applied to unsigned types of size 2, 4, 16, ... bytes.  */
-#if __GNUC__ >= 2
+/* Return 1 if the __typeof__ keyword works.  This could be done by
+   'configure', but for now it's easier to do it by hand.  */
+#if 2 <= __GNUC__ || 0x5110 <= __SUNPRO_C
+# define _GL_HAVE___TYPEOF__ 1
+#else
+# define _GL_HAVE___TYPEOF__ 0
+#endif
+
+/* Return 1 if the integer type or expression T might be signed.  Return 0
+   if it is definitely unsigned.  This macro does not evaluate its argument,
+   and expands to an integer constant expression.  */
+#if _GL_HAVE___TYPEOF__
 # define _GL_SIGNED_TYPE_OR_EXPR(t) TYPE_SIGNED (__typeof__ (t))
 #else
 # define _GL_SIGNED_TYPE_OR_EXPR(t) 1
@@ -73,7 +79,11 @@
 
 /* Bound on length of the string representing an integer type or expression T.
    Subtract 1 for the sign bit if T is signed, and then add 1 more for
-   a minus sign if needed.  */
+   a minus sign if needed.
+
+   Because _GL_SIGNED_TYPE_OR_EXPR sometimes returns 0 when its argument is
+   signed, this macro may overestimate the true bound by one byte when
+   applied to unsigned types of size 2, 4, 16, ... bytes.  */
 #define INT_STRLEN_BOUND(t)                                     \
   (INT_BITS_STRLEN_BOUND (sizeof (t) * CHAR_BIT                 \
                           - _GL_SIGNED_TYPE_OR_EXPR (t))        \

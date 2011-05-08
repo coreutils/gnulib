@@ -1,8 +1,15 @@
 2011-05-08  Paul Eggert  <eggert@cs.ucla.edu>
 
+	intprops: Sun C 5.11 supports __typeof__
+	* lib/intprops.h (_GL_HAVE___TYPEOF__): New macro, which is set
+	for either GCC 2 or later, as before, or for Sun C 5.11 or later,
+	which is new.
+	(_GL_SIGNED_TYPE_OR_EXPR): Use it.
+
 	intprops: switch to usual gnulib indenting and naming
 	* lib/intprops.h (_GL_INTPROPS_H): Rename from GL_INTPROPS_H.
 	(_GL_SIGNED_TYPE_OR_EXPR): Rename from signed_type_or_expr__.
+
 	* tests/test-inttostr.c (IS_TIGHT): Adjust to above renaming.
 
 2011-05-08  Jim Meyering  <meyering@redhat.com>
