@@ -1,4 +1,4 @@
-# gethostname.m4 serial 11
+# gethostname.m4 serial 12
 dnl Copyright (C) 2002, 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -37,9 +37,7 @@ AC_DEFUN([gl_FUNC_GETHOSTNAME],
   AC_SUBST([GETHOSTNAME_LIB])
 
   if test "$ac_cv_func_gethostname" = no; then
-    AC_LIBOBJ([gethostname])
     HAVE_GETHOSTNAME=0
-    gl_PREREQ_GETHOSTNAME
   fi
 
   dnl Also provide HOST_NAME_MAX when <limits.h> lacks it.

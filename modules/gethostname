@@ -14,6 +14,10 @@ sockets         [test $HAVE_GETHOSTNAME = 0]
 
 configure.ac:
 gl_FUNC_GETHOSTNAME
+if test $HAVE_GETHOSTNAME = 0; then
+  AC_LIBOBJ([gethostname])
+  gl_PREREQ_GETHOSTNAME
+fi
 gl_UNISTD_MODULE_INDICATOR([gethostname])
 
 Makefile.am:

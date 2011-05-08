@@ -1,5 +1,12 @@
 2011-05-08  Bruno Haible  <bruno@clisp.org>
 
+	gethostname: Move AC_LIBOBJ invocations to module description.
+	* m4/gethostname.m4 (gl_FUNC_GETHOSTNAME): Move AC_LIBOBJ and
+	gl_PREREQ_GETHOSTNAME invocations from here...
+	* modules/gethostname (configure.ac): ... to here.
+
+2011-05-08  Bruno Haible  <bruno@clisp.org>
+
 	getgroups: Move AC_LIBOBJ invocations to module description.
 	* m4/getgroups.m4 (gl_FUNC_GETGROUPS): Move AC_LIBOBJ invocations from
 	here...
