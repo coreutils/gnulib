@@ -1,5 +1,12 @@
 2011-05-08  Bruno Haible  <bruno@clisp.org>
 
+	grantpt: Move AC_LIBOBJ invocations to module description.
+	* m4/grantpt.m4 (gl_FUNC_GRANTPT): Move AC_LIBOBJ and gl_PREREQ_GRANTPT
+	invocations from here...
+	* modules/grantpt (configure.ac): ... to here.
+
+2011-05-08  Bruno Haible  <bruno@clisp.org>
+
 	glob: Move AC_LIBOBJ invocations to module description.
 	* m4/glob.m4 (gl_GLOB): Move AC_LIBOBJ and gl_PREREQ_GLOB invocations
 	from here...

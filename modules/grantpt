@@ -14,6 +14,10 @@ configmake      [test $HAVE_GRANTPT = 0]
 
 configure.ac:
 gl_FUNC_GRANTPT
+if test $HAVE_GRANTPT = 0; then
+  AC_LIBOBJ([grantpt])
+  gl_PREREQ_GRANTPT
+fi
 gl_STDLIB_MODULE_INDICATOR([grantpt])
 
 Makefile.am:
