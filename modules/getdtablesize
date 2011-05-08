@@ -10,6 +10,9 @@ unistd
 
 configure.ac:
 gl_FUNC_GETDTABLESIZE
+if test $HAVE_GETDTABLESIZE = 0; then
+  AC_LIBOBJ([getdtablesize])
+fi
 gl_UNISTD_MODULE_INDICATOR([getdtablesize])
 
 Makefile.am:
