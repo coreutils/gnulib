@@ -1,4 +1,4 @@
-# glob.m4 serial 13
+# glob.m4 serial 14
 dnl Copyright (C) 2005-2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -55,10 +55,6 @@ if (glob ("conf*-globtest", 0, NULL, &found) == GLOB_NOMATCH) return 1;]])],
 
   rm -f conf$$-globtest
 
-  if test -n "$GLOB_H"; then
-    AC_LIBOBJ([glob])
-    gl_PREREQ_GLOB
-  fi
   AC_SUBST([GLOB_H])
   AM_CONDITIONAL([GL_GENERATE_GLOB_H], [test -n "$GLOB_H"])
 ])

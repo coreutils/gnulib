@@ -28,6 +28,10 @@ malloc-posix    [test -n "$GLOB_H"]
 
 configure.ac:
 gl_GLOB
+if test -n "$GLOB_H"; then
+  AC_LIBOBJ([glob])
+  gl_PREREQ_GLOB
+fi
 
 Makefile.am:
 BUILT_SOURCES += $(GLOB_H)
