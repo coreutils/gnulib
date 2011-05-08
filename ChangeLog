@@ -1,3 +1,10 @@
+2011-05-08  Paul Eggert  <eggert@cs.ucla.edu>
+
+	intprops: switch to usual gnulib indenting and naming
+	* lib/intprops.h (_GL_INTPROPS_H): Rename from GL_INTPROPS_H.
+	(_GL_SIGNED_TYPE_OR_EXPR): Rename from signed_type_or_expr__.
+	* tests/test-inttostr.c (IS_TIGHT): Adjust to above renaming.
+
 2011-05-08  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: suppress "Entering/Leaving directory" diag in announcement
