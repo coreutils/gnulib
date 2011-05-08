@@ -15,6 +15,10 @@ strdup-posix
 
 configure.ac:
 gl_FUNC_GETPASS
+if test $HAVE_GETPASS = 0; then
+  AC_LIBOBJ([getpass])
+  gl_PREREQ_GETPASS
+fi
 
 Makefile.am:
 

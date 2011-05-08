@@ -1,4 +1,4 @@
-# getpass.m4 serial 12
+# getpass.m4 serial 13
 dnl Copyright (C) 2002-2003, 2005-2006, 2009-2011 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -11,10 +11,12 @@ AC_DEFUN([gl_FUNC_GETPASS],
   dnl Persuade Solaris <unistd.h> and <stdlib.h> to declare getpass().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
-  AC_REPLACE_FUNCS([getpass])
+  AC_CHECK_FUNCS([getpass])
   AC_CHECK_DECLS_ONCE([getpass])
-  if test $ac_cv_func_getpass = no; then
-    gl_PREREQ_GETPASS
+  if test $ac_cv_func_getpass = yes; then
+    HAVE_GETPASS=1
+  else
+    HAVE_GETPASS=0
   fi
 ])
 
