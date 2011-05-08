@@ -1,4 +1,4 @@
-# imaxabs.m4 serial 2
+# imaxabs.m4 serial 3
 dnl Copyright (C) 2006, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,8 +10,6 @@ AC_DEFUN([gl_FUNC_IMAXABS],
   AC_CHECK_DECLS_ONCE([imaxabs])
   if test "$ac_cv_have_decl_imaxabs" != yes; then
     HAVE_DECL_IMAXABS=0
-    AC_LIBOBJ([imaxabs])
-    gl_PREREQ_IMAXABS
   fi
 ])
 

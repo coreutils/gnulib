@@ -10,6 +10,10 @@ inttypes-incomplete
 
 configure.ac:
 gl_FUNC_IMAXABS
+if test $HAVE_DECL_IMAXABS = 0; then
+  AC_LIBOBJ([imaxabs])
+  gl_PREREQ_IMAXABS
+fi
 gl_INTTYPES_MODULE_INDICATOR([imaxabs])
 
 Makefile.am:
