@@ -6,7 +6,7 @@
 # with or without modifications, as long as this notice is preserved.
 
 # Written by Paul Eggert.
-# serial 6
+# serial 7
 
 AC_DEFUN([gl_FUNC_GETCWD_NULL],
   [
@@ -71,9 +71,8 @@ AC_DEFUN([gl_FUNC_GETCWD_LGPL],
   case $gl_cv_func_getcwd_null in
   *yes) ;;
   *)
-    dnl Minimal replacement
+    dnl Minimal replacement lib/getcwd-lgpl.c.
     REPLACE_GETCWD=1
-    AC_LIBOBJ([getcwd-lgpl])
     ;;
   esac
 ])

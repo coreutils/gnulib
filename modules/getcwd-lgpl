@@ -11,6 +11,9 @@ strdup          [test $REPLACE_GETCWD = 1]
 
 configure.ac:
 gl_FUNC_GETCWD_LGPL
+if test $REPLACE_GETCWD = 1; then
+  AC_LIBOBJ([getcwd-lgpl])
+fi
 gl_UNISTD_MODULE_INDICATOR([getcwd])
 
 Makefile.am:
