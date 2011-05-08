@@ -24,6 +24,13 @@ unistr/u8-uctomb  [test $REPLACE_ICONV_UTF = 1]
 
 configure.ac:
 gl_FUNC_ICONV_OPEN
+if test $REPLACE_ICONV_OPEN = 1; then
+  AC_LIBOBJ([iconv_open])
+fi
+if test $REPLACE_ICONV = 1; then
+  AC_LIBOBJ([iconv])
+  AC_LIBOBJ([iconv_close])
+fi
 
 Makefile.am:
 iconv_open-aix.h: iconv_open-aix.gperf

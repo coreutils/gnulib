@@ -1,4 +1,4 @@
-# iconv_open.m4 serial 13
+# iconv_open.m4 serial 14
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -44,8 +44,6 @@ AC_DEFUN([gl_FUNC_ICONV_OPEN],
           [Define if the iconv() functions are enhanced to handle the UTF-{16,32}{BE,LE} encodings.])
         REPLACE_ICONV=1
         gl_REPLACE_ICONV_OPEN
-        AC_LIBOBJ([iconv])
-        AC_LIBOBJ([iconv_close])
       fi
     ])
   fi
@@ -55,5 +53,4 @@ AC_DEFUN([gl_REPLACE_ICONV_OPEN],
 [
   gl_REPLACE_ICONV_H
   REPLACE_ICONV_OPEN=1
-  AC_LIBOBJ([iconv_open])
 ])

@@ -1,5 +1,12 @@
 2011-05-08  Bruno Haible  <bruno@clisp.org>
 
+	iconv_open: Move AC_LIBOBJ invocations to module description.
+	* m4/iconv_open.m4 (gl_FUNC_ICONV_OPEN, gl_REPLACE_ICONV_OPEN): Move
+	AC_LIBOBJ invocations from here...
+	* modules/iconv_open (configure.ac): ... to here.
+
+2011-05-08  Bruno Haible  <bruno@clisp.org>
+
 	iconv_open, iconv_open-utf: Respect rules for use of AC_LIBOBJ.
 	If module 'iconv_open' is among the main modules and module
 	'iconv_open-utf' is among the tests dependencies, then
