@@ -10,6 +10,9 @@ unistd
 
 configure.ac:
 gl_FUNC_GETLOGIN
+if test $HAVE_GETLOGIN = 0; then
+  AC_LIBOBJ([getlogin])
+fi
 gl_UNISTD_MODULE_INDICATOR([getlogin])
 
 Makefile.am:
