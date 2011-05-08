@@ -1,4 +1,4 @@
-# getline.m4 serial 23
+# getline.m4 serial 24
 
 dnl Copyright (C) 1998-2003, 2005-2007, 2009-2011 Free Software Foundation,
 dnl Inc.
@@ -93,5 +93,5 @@ AC_DEFUN([gl_FUNC_GETLINE],
 # Prerequisites of lib/getline.c.
 AC_DEFUN([gl_PREREQ_GETLINE],
 [
-  gl_FUNC_GETDELIM
+  :
 ])

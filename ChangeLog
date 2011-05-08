@@ -1,5 +1,11 @@
 2011-05-08  Bruno Haible  <bruno@clisp.org>
 
+	getline: Simplify.
+	* m4/getline.m4 (gl_PREREQ_GETLINE): Don't invoke gl_FUNC_GETDELIM.
+	It's already handled through the module dependency.
+
+2011-05-08  Bruno Haible  <bruno@clisp.org>
+
 	getdelim: Move AC_LIBOBJ invocations to module description.
 	* m4/getdelim.m4 (gl_FUNC_GETDELIM): Set HAVE_GETDELIM. Move AC_LIBOBJ
 	and gl_PREREQ_GETDELIM invocations from here...
