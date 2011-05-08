@@ -2,15 +2,10 @@ Description:
 Character set conversion support for UTF-{16,32}{BE,LE} encodings.
 
 Files:
-lib/iconv.c
-lib/iconv_close.c
-m4/iconv_open.m4
+m4/iconv_open-utf.m4
 
 Depends-on:
 iconv_open
-stdint            [test $REPLACE_ICONV_UTF = 1]
-unistr/u8-mbtoucr [test $REPLACE_ICONV_UTF = 1]
-unistr/u8-uctomb  [test $REPLACE_ICONV_UTF = 1]
 
 configure.ac:
 gl_FUNC_ICONV_OPEN_UTF

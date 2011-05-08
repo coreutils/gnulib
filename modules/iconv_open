@@ -8,14 +8,19 @@ lib/iconv_open-hpux.gperf
 lib/iconv_open-irix.gperf
 lib/iconv_open-osf.gperf
 lib/iconv_open-solaris.gperf
+lib/iconv.c
+lib/iconv_close.c
 m4/iconv_open.m4
 
 Depends-on:
 gperf
 iconv-h
 iconv
-c-ctype         [test $REPLACE_ICONV_OPEN = 1]
-c-strcase       [test $REPLACE_ICONV_OPEN = 1]
+c-ctype           [test $REPLACE_ICONV_OPEN = 1]
+c-strcase         [test $REPLACE_ICONV_OPEN = 1]
+stdint            [test $REPLACE_ICONV_UTF = 1]
+unistr/u8-mbtoucr [test $REPLACE_ICONV_UTF = 1]
+unistr/u8-uctomb  [test $REPLACE_ICONV_UTF = 1]
 
 configure.ac:
 gl_FUNC_ICONV_OPEN

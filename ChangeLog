@@ -1,5 +1,24 @@
 2011-05-08  Bruno Haible  <bruno@clisp.org>
 
+	iconv_open, iconv_open-utf: Respect rules for use of AC_LIBOBJ.
+	If module 'iconv_open' is among the main modules and module
+	'iconv_open-utf' is among the tests dependencies, then
+	REPLACE_ICONV_UTF will be defined to 1, hence iconv_open() in lib may
+	return the special iconv_t values. Therefore iconv() and iconv_close()
+	must support these special iconv_t values, already in lib, not only in
+	tests.
+	* m4/iconv_open-utf.m4: New file, extracted from m4/iconv_open.m4.
+	* m4/iconv_open.m4 (gl_FUNC_ICONV_OPEN): Invoke
+	gl_FUNC_ICONV_OPEN_UTF_SUPPORT if present.
+	(gl_FUNC_ICONV_OPEN_UTF): Remove macro.
+	* modules/iconv_open (Files): Add lib/iconv.c, lib/iconv_close.c.
+	(Depends-on): Add the dependencies of iconv_open-utf.
+	* modules/iconv_open-utf (Files): Add m4/iconv_open-utf.m4. Remove
+	m4/iconv_open.m4, lib/iconv.c, lib/iconv_close.c.
+	(Depends-on): Remove modules needed by lib/iconv.c, lib/iconv_close.c.
+
+2011-05-08  Bruno Haible  <bruno@clisp.org>
+
 	group-member: Move AC_LIBOBJ invocations to module description.
 	* m4/group-member.m4 (gl_FUNC_GROUP_MEMBER): Move AC_LIBOBJ and
 	gl_PREREQ_GROUP_MEMBER invocations from here...
