@@ -1,5 +1,13 @@
 2011-05-08  Bruno Haible  <bruno@clisp.org>
 
+	getopt, argp: Respect rules for use of AC_LIBOBJ.
+	* m4/argp.m4 (gl_ARGP): Don't invoke gl_REPLACE_GETOPT.
+	(gl_REPLACE_GETOPT_ALWAYS): New macro.
+	* m4/getopt.m4 (gl_FUNC_GETOPT_POSIX): Test whether
+	gl_REPLACE_GETOPT_ALWAYS is defined. Set REPLACE_GETOPT.
+
+2011-05-08  Bruno Haible  <bruno@clisp.org>
+
 	getlogin_r: Move AC_LIBOBJ invocations to module description.
 	* m4/getlogin_r.m4 (gl_FUNC_GETLOGIN_R): Move AC_LIBOBJ and
 	gl_PREREQ_GETLOGIN_R invocations from here...

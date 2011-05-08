@@ -1,4 +1,4 @@
-# getopt.m4 serial 34
+# getopt.m4 serial 35
 dnl Copyright (C) 2002-2006, 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,10 +9,22 @@ AC_DEFUN([gl_FUNC_GETOPT_POSIX],
 [
   m4_divert_text([DEFAULTS], [gl_getopt_required=POSIX])
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
-  gl_GETOPT_IFELSE([
+  dnl Other modules can request the gnulib implementation of the getopt
+  dnl functions unconditionally, by defining gl_REPLACE_GETOPT_ALWAYS.
+  dnl argp.m4 does this.
+  m4_ifdef([gl_REPLACE_GETOPT_ALWAYS], [
+    gl_GETOPT_IFELSE([], [])
+    REPLACE_GETOPT=1
+  ], [
+    REPLACE_GETOPT=0
+    gl_GETOPT_IFELSE([
+      REPLACE_GETOPT=1
+    ],
+    [])
+  ])
+  if test $REPLACE_GETOPT = 1; then
     gl_REPLACE_GETOPT
-  ],
-  [])
+  fi
 ])
 
 # Request a POSIX compliant getopt function with GNU extensions (such as
@@ -26,7 +38,6 @@ AC_DEFUN([gl_FUNC_GETOPT_GNU],
 ])
 
 # Request the gnulib implementation of the getopt functions unconditionally.
-# argp.m4 uses this.
 AC_DEFUN([gl_REPLACE_GETOPT],
 [
   dnl Arrange for getopt.h to be created.
