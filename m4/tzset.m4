@@ -1,4 +1,4 @@
-# serial 4
+# serial 5
 
 # Copyright (C) 2003, 2007, 2009-2011 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -49,6 +49,7 @@ main ()
     [Define to 1 if you have run the test for working tzset.])
 
   if test $gl_cv_func_tzset_clobber = yes; then
+    REPLACE_GETTIMEOFDAY=1
     gl_GETTIMEOFDAY_REPLACE_LOCALTIME
 
     AC_DEFINE([tzset], [rpl_tzset],

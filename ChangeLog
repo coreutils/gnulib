@@ -1,3 +1,9 @@
+2011-05-08  Bruno Haible  <bruno@clisp.org>
+
+	tzset: Fix gettimeofday wrapper on Solaris 2.6.
+	* m4/tzset.m4 (gl_FUNC_TZSET_CLOBBER): When invoking
+	gl_GETTIMEOFDAY_REPLACE_LOCALTIME, also set REPLACE_GETTIMEOFDAY.
+
 2011-05-07  Paul Eggert  <eggert@cs.ucla.edu>
 
 	ignore-value, verify: Omit include files from lib_SOURCES.
