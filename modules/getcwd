@@ -20,6 +20,10 @@ strdup-posix    [test $REPLACE_GETCWD = 1]
 
 configure.ac:
 gl_FUNC_GETCWD
+if test $REPLACE_GETCWD = 1; then
+  AC_LIBOBJ([getcwd])
+  gl_PREREQ_GETCWD
+fi
 gl_MODULE_INDICATOR([getcwd])
 gl_UNISTD_MODULE_INDICATOR([getcwd])
 

@@ -1,5 +1,12 @@
 2011-05-08  Bruno Haible  <bruno@clisp.org>
 
+	getcwd: Move AC_LIBOBJ invocations to module description.
+	* m4/getcwd.m4 (gl_FUNC_GETCWD): Move AC_LIBOBJ and gl_PREREQ_GETCWD
+	invocations from here...
+	* modules/getcwd (configure.ac): ... to here.
+
+2011-05-08  Bruno Haible  <bruno@clisp.org>
+
 	getcwd-lgpl: Move AC_LIBOBJ invocations to module description.
 	* m4/getcwd.m4 (gl_FUNC_GETCWD_LGPL): Move AC_LIBOBJ invocation from
 	here...

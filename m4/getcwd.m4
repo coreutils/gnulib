@@ -97,10 +97,8 @@ AC_DEFUN([gl_FUNC_GETCWD],
   case $gl_cv_func_getcwd_null,$gl_cv_func_getcwd_path_max,$gl_abort_bug in
   *yes,yes,no) ;;
   *)
-    dnl Full replacement, overrides LGPL replacement.
-    REPLACE_GETCWD=1
-    AC_LIBOBJ([getcwd])
-    gl_PREREQ_GETCWD;;
+    dnl Full replacement lib/getcwd.c, overrides LGPL replacement.
+    REPLACE_GETCWD=1;;
   esac
 ])
 
