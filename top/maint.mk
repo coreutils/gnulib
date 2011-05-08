@@ -1238,7 +1238,7 @@ gl_noteworthy_news_ = * Noteworthy changes in release ?.? (????-??-??) [?]
 release-prep:
 	case $$RELEASE_TYPE in alpha|beta|stable) ;; \
 	  *) echo "invalid RELEASE_TYPE: $$RELEASE_TYPE" 1>&2; exit 1;; esac
-	$(MAKE) -s announcement > ~/announce-$(my_distdir)
+	$(MAKE) --no-print-directory -s announcement > ~/announce-$(my_distdir)
 	if test -d $(release_archive_dir); then			\
 	  ln $(rel-files) $(release_archive_dir);		\
 	  chmod a-w $(rel-files);				\

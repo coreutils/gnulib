@@ -1,3 +1,11 @@
+2011-05-08  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: suppress "Entering/Leaving directory" diag in announcement
+	* top/maint.mk (release-prep): Use make's --no-print-directory
+	option when generating the announcement.  This eliminates the
+	pesky "make[2]: Entering/Leaving directory" diagnostics in the
+	generated announcement template.
+
 2011-05-08  Bruno Haible  <bruno@clisp.org>
 
 	tzset: Fix gettimeofday wrapper on Solaris 2.6.
