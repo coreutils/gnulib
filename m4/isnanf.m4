@@ -17,6 +17,7 @@ AC_DEFUN([gl_FUNC_ISNANF],
       ISNANF_LIBM=-lm
     fi
   fi
+  dnl The variable gl_func_isnanf set here is used by isnan.m4.
   if test $gl_cv_func_isnanf_no_libm = yes \
      || test $gl_cv_func_isnanf_in_libm = yes; then
     save_LIBS="$LIBS"

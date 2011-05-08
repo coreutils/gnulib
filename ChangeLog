@@ -1,5 +1,11 @@
 2011-05-08  Bruno Haible  <bruno@clisp.org>
 
+	Comments.
+	* m4/isnanf.m4: Add comment.
+	* m4/isnanl.m4: Likewise.
+
+2011-05-08  Bruno Haible  <bruno@clisp.org>
+
 	glob: Remove obsolete macro.
 	* m4/glob.m4 (gl_GLOB_SUBSTITUTE): Remove macro.
 
