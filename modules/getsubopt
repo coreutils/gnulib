@@ -13,6 +13,10 @@ memchr          [test $HAVE_GETSUBOPT = 0]
 
 configure.ac:
 gl_FUNC_GETSUBOPT
+if test $HAVE_GETSUBOPT = 0; then
+  AC_LIBOBJ([getsubopt])
+  gl_PREREQ_GETSUBOPT
+fi
 gl_STDLIB_MODULE_INDICATOR([getsubopt])
 
 Makefile.am:
