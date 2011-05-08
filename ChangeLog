@@ -1,5 +1,15 @@
 2011-05-08  Bruno Haible  <bruno@clisp.org>
 
+	getopt: Move AC_LIBOBJ invocations to module description.
+	* m4/getopt.m4 (gl_REPLACE_GETOPT): Remove macro.
+	(gl_FUNC_GETOPT): Inline it here. Move AC_LIBOBJ and gl_PREREQ_GETOPT
+	invocations from here...
+	* modules/getopt-gnu (configure.ac): ... to here.
+	* modules/getopt-posix (configure.ac): ... and here.
+	(Depends-on): Update condition.
+
+2011-05-08  Bruno Haible  <bruno@clisp.org>
+
 	getopt, argp: Respect rules for use of AC_LIBOBJ.
 	* m4/argp.m4 (gl_ARGP): Don't invoke gl_REPLACE_GETOPT.
 	(gl_REPLACE_GETOPT_ALWAYS): New macro.

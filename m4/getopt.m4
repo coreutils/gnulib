@@ -23,7 +23,10 @@ AC_DEFUN([gl_FUNC_GETOPT_POSIX],
     [])
   ])
   if test $REPLACE_GETOPT = 1; then
-    gl_REPLACE_GETOPT
+    dnl Arrange for getopt.h to be created.
+    gl_GETOPT_SUBSTITUTE_HEADER
+    dnl Arrange for unistd.h to include getopt.h.
+    GNULIB_UNISTD_H_GETOPT=1
   fi
 ])
 
@@ -35,19 +38,6 @@ AC_DEFUN([gl_FUNC_GETOPT_GNU],
   m4_divert_text([INIT_PREPARE], [gl_getopt_required=GNU])
 
   AC_REQUIRE([gl_FUNC_GETOPT_POSIX])
-])
-
-# Request the gnulib implementation of the getopt functions unconditionally.
-AC_DEFUN([gl_REPLACE_GETOPT],
-[
-  dnl Arrange for getopt.h to be created.
-  gl_GETOPT_SUBSTITUTE_HEADER
-  dnl Arrange for unistd.h to include getopt.h.
-  GNULIB_UNISTD_H_GETOPT=1
-  dnl Arrange to compile the getopt implementation.
-  AC_LIBOBJ([getopt])
-  AC_LIBOBJ([getopt1])
-  gl_PREREQ_GETOPT
 ])
 
 # emacs' configure.in uses this.

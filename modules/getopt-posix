@@ -13,10 +13,15 @@ unistd
 extensions
 include_next
 arg-nonnull
-gettext-h       [test $GNULIB_UNISTD_H_GETOPT = 1]
+gettext-h       [test $REPLACE_GETOPT = 1]
 
 configure.ac:
 gl_FUNC_GETOPT_POSIX
+if test $REPLACE_GETOPT = 1; then
+  AC_LIBOBJ([getopt])
+  AC_LIBOBJ([getopt1])
+  gl_PREREQ_GETOPT
+fi
 
 Makefile.am:
 BUILT_SOURCES += $(GETOPT_H)
