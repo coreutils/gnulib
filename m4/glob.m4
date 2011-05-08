@@ -1,4 +1,4 @@
-# glob.m4 serial 12
+# glob.m4 serial 13
 dnl Copyright (C) 2005-2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,16 +7,6 @@ dnl with or without modifications, as long as this notice is preserved.
 # The glob module assumes you want GNU glob, with glob_pattern_p etc,
 # rather than vanilla POSIX glob.  This means your code should
 # always include <glob.h> for the glob prototypes.
-
-AC_DEFUN([gl_GLOB_SUBSTITUTE],
-[
-  AC_LIBOBJ([glob])
-  gl_PREREQ_GLOB
-
-  GLOB_H=glob.h
-  AC_SUBST([GLOB_H])
-  AM_CONDITIONAL([GL_GENERATE_GLOB_H], [test -n "$GLOB_H"])
-])
 
 AC_DEFUN([gl_GLOB],
 [ GLOB_H=

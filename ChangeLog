@@ -1,3 +1,8 @@
+2011-05-08  Bruno Haible  <bruno@clisp.org>
+
+	glob: Remove obsolete macro.
+	* m4/glob.m4 (gl_GLOB_SUBSTITUTE): Remove macro.
+
 2011-05-08  Paul Eggert  <eggert@cs.ucla.edu>
 
 	intprops: Sun C 5.11 supports __typeof__
