@@ -1,5 +1,12 @@
 2011-05-08  Bruno Haible  <bruno@clisp.org>
 
+	imaxdiv: Move AC_LIBOBJ invocations to module description.
+	* m4/imaxdiv.m4 (gl_FUNC_IMAXDIV): Move AC_LIBOBJ and gl_PREREQ_IMAXDIV
+	invocations from here...
+	* modules/imaxdiv (configure.ac): ... to here.
+
+2011-05-08  Bruno Haible  <bruno@clisp.org>
+
 	imaxabs: Move AC_LIBOBJ invocations to module description.
 	* m4/imaxabs.m4 (gl_FUNC_IMAXABS): Move AC_LIBOBJ and gl_PREREQ_IMAXABS
 	invocations from here...
