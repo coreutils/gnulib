@@ -1,5 +1,16 @@
 2011-05-08  Bruno Haible  <bruno@clisp.org>
 
+	inet_pton. getaddrinfo: Respect rules for use of AC_LIBOBJ.
+	* m4/inet_pton.m4 (gl_FUNC_INET_PTON): Set HAVE_INET_PTON. Call
+	AC_CHECK_FUNCS instead of AC_REPLACE_FUNCS. Don't invoke
+	gl_PREREQ_INET_PTON. Move tests for declaration of inet_pton here...
+	(gl_PREREQ_INET_PTON): ... from here.
+	* modules/inet_pton (configure.ac): Invoke AC_LIBOBJ and
+	gl_PREREQ_INET_PTON here.
+	(Depends-on): Update condition.
+
+2011-05-08  Bruno Haible  <bruno@clisp.org>
+
 	inet_ntop. getaddrinfo: Respect rules for use of AC_LIBOBJ.
 	* m4/inet_ntop.m4 (gl_FUNC_INET_NTOP): Set HAVE_INET_NTOP. Call
 	AC_CHECK_FUNCS instead of AC_REPLACE_FUNCS. Don't invoke

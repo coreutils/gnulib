@@ -8,13 +8,17 @@ m4/inet_pton.m4
 Depends-on:
 arpa_inet
 extensions
-c-ctype         [test "$ac_cv_search_inet_pton" = no && test $ac_cv_func_inet_pton = no]
-sys_socket      [test "$ac_cv_search_inet_pton" = no && test $ac_cv_func_inet_pton = no]
-errno           [test "$ac_cv_search_inet_pton" = no && test $ac_cv_func_inet_pton = no]
-netinet_in      [test "$ac_cv_search_inet_pton" = no && test $ac_cv_func_inet_pton = no]
+c-ctype         [test $HAVE_INET_PTON = 0]
+sys_socket      [test $HAVE_INET_PTON = 0]
+errno           [test $HAVE_INET_PTON = 0]
+netinet_in      [test $HAVE_INET_PTON = 0]
 
 configure.ac:
 gl_FUNC_INET_PTON
+if test $HAVE_INET_PTON = 0; then
+  AC_LIBOBJ([inet_pton])
+  gl_PREREQ_INET_PTON
+fi
 gl_ARPA_INET_MODULE_INDICATOR([inet_pton])
 
 Makefile.am:
