@@ -1,5 +1,13 @@
 2011-05-08  Bruno Haible  <bruno@clisp.org>
 
+	getdelim: Move AC_LIBOBJ invocations to module description.
+	* m4/getdelim.m4 (gl_FUNC_GETDELIM): Set HAVE_GETDELIM. Move AC_LIBOBJ
+	and gl_PREREQ_GETDELIM invocations from here...
+	* modules/getdelim (configure.ac): ... to here.
+	(Depends-on): Fix condition.
+
+2011-05-08  Bruno Haible  <bruno@clisp.org>
+
 	getcwd: Move AC_LIBOBJ invocations to module description.
 	* m4/getcwd.m4 (gl_FUNC_GETCWD): Move AC_LIBOBJ and gl_PREREQ_GETCWD
 	invocations from here...
