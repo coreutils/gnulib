@@ -7,20 +7,26 @@ lib/gai_strerror.c
 m4/getaddrinfo.m4
 
 Depends-on:
-extensions
-gettext-h
-inet_ntop
-snprintf
-stdbool
-sys_socket
 netdb
-strdup
-servent
-hostent
-sockets
+sys_socket
+extensions
+gettext-h       [test $HAVE_GETADDRINFO = 0 || test $HAVE_DECL_GAI_STRERROR = 0 || test $REPLACE_GAI_STRERROR = 1]
+inet_ntop       [test $HAVE_GETADDRINFO = 0]
+snprintf        [test $HAVE_GETADDRINFO = 0]
+stdbool         [test $HAVE_GETADDRINFO = 0]
+strdup          [test $HAVE_GETADDRINFO = 0]
+servent         [test $HAVE_GETADDRINFO = 0]
+hostent         [test $HAVE_GETADDRINFO = 0]
+sockets         [test $HAVE_GETADDRINFO = 0]
 
 configure.ac:
 gl_GETADDRINFO
+if test $HAVE_GETADDRINFO = 0; then
+  AC_LIBOBJ([getaddrinfo])
+fi
+if test $HAVE_DECL_GAI_STRERROR = 0 || test $REPLACE_GAI_STRERROR = 1; then
+  AC_LIBOBJ([gai_strerror])
+fi
 gl_NETDB_MODULE_INDICATOR([getaddrinfo])
 
 Makefile.am:

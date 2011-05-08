@@ -1,5 +1,13 @@
 2011-05-08  Bruno Haible  <bruno@clisp.org>
 
+	getaddrinfo: Move AC_LIBOBJ invocations to module description.
+	* m4/getaddrinfo.m4 (gl_GETADDRINFO): Set HAVE_GETADDRINFO, Move
+	AC_LIBOBJ invocations from here...
+	* modules/getaddrinfo (configure.ac): ... to here.
+	(Depends-on): Add conditions.
+
+2011-05-08  Bruno Haible  <bruno@clisp.org>
+
 	inet_pton. getaddrinfo: Respect rules for use of AC_LIBOBJ.
 	* m4/inet_pton.m4 (gl_FUNC_INET_PTON): Set HAVE_INET_PTON. Call
 	AC_CHECK_FUNCS instead of AC_REPLACE_FUNCS. Don't invoke
