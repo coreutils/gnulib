@@ -12,6 +12,10 @@ memchr          [test $HAVE_GETLOGIN_R = 0 || test $REPLACE_GETLOGIN_R = 1]
 
 configure.ac:
 gl_FUNC_GETLOGIN_R
+if test $HAVE_GETLOGIN_R = 0 || test $REPLACE_GETLOGIN_R = 1; then
+  AC_LIBOBJ([getlogin_r])
+  gl_PREREQ_GETLOGIN_R
+fi
 gl_UNISTD_MODULE_INDICATOR([getlogin_r])
 
 Makefile.am:

@@ -1,4 +1,4 @@
-#serial 9
+#serial 10
 
 # Copyright (C) 2005-2007, 2009-2011 Free Software Foundation, Inc.
 #
@@ -75,10 +75,6 @@ main (void)
       *yes) ;;
       *) REPLACE_GETLOGIN_R=1 ;;
     esac
-  fi
-  if test $HAVE_GETLOGIN_R = 0 || test $REPLACE_GETLOGIN_R = 1; then
-    AC_LIBOBJ([getlogin_r])
-    gl_PREREQ_GETLOGIN_R
   fi
 ])
 

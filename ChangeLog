@@ -1,5 +1,12 @@
 2011-05-08  Bruno Haible  <bruno@clisp.org>
 
+	getlogin_r: Move AC_LIBOBJ invocations to module description.
+	* m4/getlogin_r.m4 (gl_FUNC_GETLOGIN_R): Move AC_LIBOBJ and
+	gl_PREREQ_GETLOGIN_R invocations from here...
+	* modules/getlogin_r (configure.ac): ... to here.
+
+2011-05-08  Bruno Haible  <bruno@clisp.org>
+
 	getlogin: Move AC_LIBOBJ invocations to module description.
 	* m4/getlogin.m4 (gl_FUNC_GETLOGIN): Move AC_LIBOBJ invocation from
 	here...
