@@ -1,5 +1,12 @@
 2011-05-08  Bruno Haible  <bruno@clisp.org>
 
+	getloadavg: Move AC_LIBOBJ invocations to module description.
+	* m4/getloadavg.m4 (gl_FUNC_GETDELIM): Set HAVE_GETLOADAVG. Move
+	AC_LIBOBJ and gl_PREREQ_GETLOADAVG invocations from here...
+	* modules/getloadavg (configure.ac): ... to here.
+
+2011-05-08  Bruno Haible  <bruno@clisp.org>
+
 	gethrxtime: Move AC_LIBOBJ invocations to module description.
 	* m4/gethrxtime.m4 (gl_PREREQ_GETHRXTIME): Move code that determines
 	LIB_GETHRXTIME from here...

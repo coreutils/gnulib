@@ -13,6 +13,10 @@ stdlib
 
 configure.ac:
 gl_GETLOADAVG
+if test $HAVE_GETLOADAVG = 0; then
+  AC_LIBOBJ([getloadavg])
+  gl_PREREQ_GETLOADAVG
+fi
 gl_STDLIB_MODULE_INDICATOR([getloadavg])
 
 Makefile.am:
