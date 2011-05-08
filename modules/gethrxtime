@@ -16,6 +16,10 @@ sys_time
 
 configure.ac:
 gl_GETHRXTIME
+if test $ac_cv_have_decl_gethrtime = no || test $gl_cv_arithmetic_hrtime_t = no; then
+  AC_LIBOBJ([gethrxtime])
+  gl_PREREQ_GETHRXTIME
+fi
 
 Makefile.am:
 

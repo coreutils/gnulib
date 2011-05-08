@@ -1,5 +1,14 @@
 2011-05-08  Bruno Haible  <bruno@clisp.org>
 
+	gethrxtime: Move AC_LIBOBJ invocations to module description.
+	* m4/gethrxtime.m4 (gl_PREREQ_GETHRXTIME): Move code that determines
+	LIB_GETHRXTIME from here...
+	(gl_GETHRXTIME): ... to here. Move AC_LIBOBJ and gl_PREREQ_GETHRXTIME
+	invocations from here...
+	* modules/gethrxtime (configure.ac): ... to here.
+
+2011-05-08  Bruno Haible  <bruno@clisp.org>
+
 	gethostname: Move AC_LIBOBJ invocations to module description.
 	* m4/gethostname.m4 (gl_FUNC_GETHOSTNAME): Move AC_LIBOBJ and
 	gl_PREREQ_GETHOSTNAME invocations from here...
