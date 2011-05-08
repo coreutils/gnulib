@@ -1,4 +1,4 @@
-# serial 15
+# serial 16
 
 dnl From Jim Meyering.
 dnl A wrapper around AC_FUNC_GETGROUPS.
@@ -15,11 +15,9 @@ AC_DEFUN([gl_FUNC_GETGROUPS],
   AC_REQUIRE([AC_TYPE_GETGROUPS])
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
   if test "$ac_cv_func_getgroups" != yes; then
-    AC_LIBOBJ([getgroups])
     HAVE_GETGROUPS=0
   elif test "$ac_cv_func_getgroups_works.$ac_cv_type_getgroups" != yes.gid_t
   then
-    AC_LIBOBJ([getgroups])
     REPLACE_GETGROUPS=1
     AC_DEFINE([GETGROUPS_ZERO_BUG], [1], [Define this to 1 if
       getgroups(0,NULL) does not return the number of groups.])
@@ -35,7 +33,6 @@ AC_DEFUN([gl_FUNC_GETGROUPS],
         [gl_cv_func_getgroups_works=no],
         [gl_cv_func_getgroups_works="guessing no"])])
     if test "$gl_cv_func_getgroups_works" != yes; then
-      AC_LIBOBJ([getgroups])
       REPLACE_GETGROUPS=1
     fi
   fi

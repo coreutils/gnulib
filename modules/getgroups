@@ -12,6 +12,9 @@ stdint          [test $HAVE_GETGROUPS = 0 || test $REPLACE_GETGROUPS = 1]
 
 configure.ac:
 gl_FUNC_GETGROUPS
+if test $HAVE_GETGROUPS = 0 || test $REPLACE_GETGROUPS = 1; then
+  AC_LIBOBJ([getgroups])
+fi
 gl_UNISTD_MODULE_INDICATOR([getgroups])
 
 Makefile.am:

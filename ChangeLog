@@ -1,5 +1,12 @@
 2011-05-08  Bruno Haible  <bruno@clisp.org>
 
+	getgroups: Move AC_LIBOBJ invocations to module description.
+	* m4/getgroups.m4 (gl_FUNC_GETGROUPS): Move AC_LIBOBJ invocations from
+	here...
+	* modules/getgroups (configure.ac): ... to here.
+
+2011-05-08  Bruno Haible  <bruno@clisp.org>
+
 	getdtablesize: Move AC_LIBOBJ invocations to module description.
 	* m4/getdtablesize.m4 (gl_FUNC_GETDTABLESIZE): Move AC_LIBOBJ
 	invocation from here...
