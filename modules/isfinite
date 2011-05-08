@@ -15,6 +15,9 @@ isnanl-nolibm   [test $REPLACE_ISFINITE = 1]
 
 configure.ac:
 gl_ISFINITE
+if test $REPLACE_ISFINITE = 1; then
+  AC_LIBOBJ([isfinite])
+fi
 gl_MATH_MODULE_INDICATOR([isfinite])
 
 Makefile.am:

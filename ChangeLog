@@ -1,5 +1,11 @@
 2011-05-08  Bruno Haible  <bruno@clisp.org>
 
+	isfinite: Move AC_LIBOBJ invocations to module description.
+	* m4/isfinite.m4 (gl_ISFINITE): Move AC_LIBOBJ invocation from here...
+	* modules/isfinite (configure.ac): ... to here.
+
+2011-05-08  Bruno Haible  <bruno@clisp.org>
+
 	isblank: Move AC_LIBOBJ invocations to module description.
 	* m4/isblank.m4 (gl_FUNC_ISBLANK): Move AC_LIBOBJ invocation from
 	here...
