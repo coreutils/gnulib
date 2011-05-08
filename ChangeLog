@@ -1,5 +1,12 @@
 2011-05-08  Bruno Haible  <bruno@clisp.org>
 
+	getdomainname: Move AC_LIBOBJ invocations to module description.
+	* m4/getdomainname.m4 (gl_FUNC_GETDOMAINNAME): Move AC_LIBOBJ and
+	gl_PREREQ_GETDOMAINNAME invocations from here...
+	* modules/getdomainname (configure.ac): ... to here.
+
+2011-05-08  Bruno Haible  <bruno@clisp.org>
+
 	getline: Move AC_LIBOBJ invocations to module description.
 	* m4/getline.m4 (gl_FUNC_GETLINE): Move AC_LIBOBJ and gl_PREREQ_GETLINE
 	invocations from here...

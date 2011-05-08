@@ -1,4 +1,4 @@
-# getdomainname.m4 serial 6
+# getdomainname.m4 serial 7
 dnl Copyright (C) 2002-2003, 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -81,11 +81,6 @@ AC_DEFUN([gl_FUNC_GETDOMAINNAME],
      } \
      || test "$gl_cv_func_getdomainname_in_libnsl" = yes; then
     REPLACE_GETDOMAINNAME=1
-  fi
-
-  if test $HAVE_DECL_GETDOMAINNAME = 0 || test $REPLACE_GETDOMAINNAME = 1; then
-    AC_LIBOBJ([getdomainname])
-    gl_PREREQ_GETDOMAINNAME
   fi
 ])
 
