@@ -1351,13 +1351,22 @@ ifeq (a,b)
 # and `usage' are exceptions: they're always extern, but
 # do not need to be marked.
 _gl_TS_unmarked_extern_functions ?= main usage
-_gl_TS_function_regex ?= \
-  ^(?:extern|XTERN) +(?:void|(?:struct |const |enum )?\S+) +\**(\S+) +\(
+_gl_TS_function_match ?= \
+  /^(?:extern|XTERN) +(?:void|(?:struct |const |enum )?\S+) +\**(\S+) +\(/
 
 # The second nm|grep checks for file-scope variables with `extern' scope.
 # Without gnulib's progname module, you might put program_name here.
 _gl_TS_unmarked_extern_vars ?=
-_gl_TS_var_regex ?= ^(?:extern|XTERN) .*?\**(\w+)(\[.*?\])?;
+
+# NOTE: the _match variables are perl expressions -- not mere regular
+# expressions -- so that you can extend them to match other patterns
+# and easily extract matched variable names.
+# For example, if your project declares some global variables via
+# a macro like this: GLOBAL(type, var_name, initializer), then you
+# can override this definition to automatically extract those names:
+# export _gl_TS_var_match = \
+#   /^(?:extern|XTERN) .*?\**(\w+)(\[.*?\])?;/ || /\bGLOBAL\(.*?,\s*(.*?),/
+_gl_TS_var_match ?= /^(?:extern|XTERN) .*?\**(\w+)(\[.*?\])?;/
 .PHONY: _gl_tight_scope
 _gl_tight_scope: $(bin_PROGRAMS)
 	t=exceptions-$$$$;						\
@@ -1372,14 +1381,14 @@ _gl_tight_scope: $(bin_PROGRAMS)
 	( printf '^%s$$\n' $(_gl_TS_unmarked_extern_functions);		\
 	  grep -h -A1 '^extern .*[^;]$$' $$src				\
 	    | grep -vE '^(extern |--)' | sed 's/ .*//';			\
-	  perl -lne '/$(_gl_TS_function_regex)/'			\
+	  perl -lne '$(_gl_TS_function_match)'				\
                  -e 'and print $$1' $$hdr;				\
 	) | sort -u | sed 's/^/^/;s/$$/$$/' > $$t;			\
 	nm -e *.$(OBJEXT) | sed -n 's/.* T //p' | grep -Ev -f $$t	\
 	  && { echo the above functions should have static scope >&2;	\
 	       exit 1; } || : ;						\
 	( printf '^%s$$\n' $(_gl_TS_unmarked_extern_vars);		\
-	  perl -lne '/$(_gl_TS_var_regex)/ and print "^$$1\$$"'		\
+	  perl -lne '$(_gl_TS_var_match) and print "^$$1\$$"'		\
 	    $$hdr *.h ) | sort -u > $$t;				\
 	nm -e *.$(OBJEXT) | sed -n 's/.* [BCDGRS] //p'			\
             | sort -u | grep -Ev -f $$t					\

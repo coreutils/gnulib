@@ -1,5 +1,9 @@
 2011-05-09  Jim Meyering  <meyering@redhat.com>
 
+	maint.mk: change semantics/name of tight_scope variables
+	* top/maint.mk (_gl_TS_var_match, _gl_TS_function_match):
+	Rename variables to align with semantics that make them more useful.
+
 	maint.mk: tweak new rule's name not to impinge
 	* top/maint.mk (_gl_tight_scope): Rename from sc_tight_scope-0.
 	(sc_tight_scope): Use new rule name rather than $@-0.
