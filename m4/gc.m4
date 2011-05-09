@@ -1,4 +1,4 @@
-# gc.m4 serial 6
+# gc.m4 serial 7
 dnl Copyright (C) 2005-2006, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,11 +17,4 @@ AC_DEFUN([gl_GC],
   else
     AC_LIBOBJ([gc-gnulib])
   fi
-])
-
-# Prerequisites of lib/gc.h
-AC_DEFUN([gl_PREREQ_GC],
-[
-  AC_REQUIRE([AC_C_RESTRICT])
-  :
 ])
