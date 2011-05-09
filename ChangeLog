@@ -1,5 +1,9 @@
 2011-05-09  Jim Meyering  <meyering@redhat.com>
 
+	maint.mk: tweak new rule's name not to impinge
+	* top/maint.mk (_gl_tight_scope): Rename from sc_tight_scope-0.
+	(sc_tight_scope): Use new rule name rather than $@-0.
+
 	maint.mk: add a syntax-check rule to ensure tightly-scoped symbols
 	* top/maint.mk (sc_tight_scope): New rule.
 	(sc_tight_scope-0): New rule, ifdef'd out.

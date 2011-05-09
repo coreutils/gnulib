@@ -1334,8 +1334,8 @@ _gl_TS_dir ?= src
 ALL_RECURSIVE_TARGETS += sc_tight_scope
 sc_tight_scope: tight-scope.mk
 	@grep noinst_HEADERS $(_gl_TS_dir)/Makefile.am > /dev/null 2>&1	\
-	  && $(MAKE) -s -C $(_gl_TS_dir)				\
-	      -f Makefile -f '$(abs_srcdir)/tight-scope.mk' $@-0	\
+	  && $(MAKE) -s -C $(_gl_TS_dir) -f Makefile			\
+	      -f '$(abs_srcdir)/tight-scope.mk' _gl_tight_scope
 	  || :
 	@rm -f $<
 
@@ -1358,8 +1358,8 @@ _gl_TS_function_regex ?= \
 # Without gnulib's progname module, you might put program_name here.
 _gl_TS_unmarked_extern_vars ?=
 _gl_TS_var_regex ?= ^(?:extern|XTERN) .*?\**(\w+)(\[.*?\])?;
-.PHONY: sc_tight_scope-0
-sc_tight_scope-0: $(bin_PROGRAMS)
+.PHONY: _gl_tight_scope
+_gl_tight_scope: $(bin_PROGRAMS)
 	t=exceptions-$$$$;						\
 	trap 's=$$?; rm -f $$t; exit $$s' 0;				\
 	for sig in 1 2 3 13 15; do					\
