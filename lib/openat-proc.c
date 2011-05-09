@@ -31,7 +31,6 @@
 #include <unistd.h>
 
 #include "intprops.h"
-#include "same-inode.h"
 
 /* The results of open() in this file are not used with fchdir,
    and we do not leak fds to any single-threaded code that could use stdio,
@@ -75,20 +74,15 @@ openat_proc_name (char buf[OPENAT_BUFFER_SIZE], int fd, char const *file)
          problem is exhibited on code that built on Solaris 8 and
          running on Solaris 10.  */
 
-      int proc_self_fd = open ("/proc/self/fd", O_SEARCH);
+      int proc_self_fd = open ("/proc/self/fd",
+                               O_SEARCH | O_DIRECTORY | O_NOCTTY | O_NONBLOCK);
       if (proc_self_fd < 0)
         proc_status = -1;
       else
         {
-          struct stat proc_self_fd_dotdot_st;
-          struct stat proc_self_st;
-          char dotdot_buf[PROC_SELF_FD_NAME_SIZE_BOUND (sizeof ".." - 1)];
-          sprintf (dotdot_buf, PROC_SELF_FD_FORMAT, proc_self_fd, "..");
-          proc_status =
-            ((stat (dotdot_buf, &proc_self_fd_dotdot_st) == 0
-              && stat ("/proc/self", &proc_self_st) == 0
-              && SAME_INODE (proc_self_fd_dotdot_st, proc_self_st))
-             ? 1 : -1);
+          char dotdot_buf[PROC_SELF_FD_NAME_SIZE_BOUND (sizeof "../fd" - 1)];
+          sprintf (dotdot_buf, PROC_SELF_FD_FORMAT, proc_self_fd, "../fd");
+          proc_status = access (dotdot_buf, F_OK) ? -1 : 1;
           close (proc_self_fd);
         }
     }

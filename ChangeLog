@@ -1,3 +1,11 @@
+2011-05-09  Eric Blake  <eblake@redhat.com>
+
+	openat: reduce syscalls in first probe of /proc
+	* lib/openat-proc.c (openat_proc_name): Require that /proc/self/fd
+	be a directory.  Simplify the probe for .. bugs.
+	* modules/openat (Depends-on): Drop same-inode.
+	Reported by Bastien ROUCARIES.
+
 2011-05-09  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: change semantics/name of tight_scope variables

@@ -30,7 +30,6 @@ mkdir           [test $HAVE_MKDIRAT = 0]
 open
 openat-die
 rmdir           [test $REPLACE_UNLINKAT = 1]
-same-inode
 save-cwd
 stdbool
 sys_stat
