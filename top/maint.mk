@@ -1325,3 +1325,65 @@ update-copyright:
 	grep -l -w Copyright                                             \
 	  $$(export VC_LIST_EXCEPT_DEFAULT=COPYING && $(VC_LIST_EXCEPT)) \
 	  | $(update-copyright-env) xargs $(build_aux)/$@
+
+# NOTE: This test is silently skipped if $(_gl_TS_dir)/Makefile.am
+# does not mention noinst_HEADERS.
+# NOTE: to override these _gl_TS_* default values, you must
+# define the variable(s) using "export" in cfg.mk.
+_gl_TS_dir ?= src
+ALL_RECURSIVE_TARGETS += sc_tight_scope
+sc_tight_scope: tight-scope.mk
+	@grep noinst_HEADERS $(_gl_TS_dir)/Makefile.am > /dev/null 2>&1	\
+	  && $(MAKE) -s -C $(_gl_TS_dir)				\
+	      -f Makefile -f '$(abs_srcdir)/tight-scope.mk' $@-0	\
+	  || :
+	@rm -f $<
+
+tight-scope.mk: $(ME)
+	@rm -f $@ $@-t
+	@perl -ne '/^# TS-start/.../^# TS-end/ and print' $(ME) > $@-t
+	@chmod a=r $@-t && mv $@-t $@
+
+ifeq (a,b)
+# TS-start
+# Most functions should have static scope.
+# Any that don't must be marked with `extern', but `main'
+# and `usage' are exceptions: they're always extern, but
+# do not need to be marked.
+_gl_TS_unmarked_extern_functions ?= main usage
+_gl_TS_function_regex ?= \
+  ^(?:extern|XTERN) +(?:void|(?:struct |const |enum )?\S+) +\**(\S+) +\(
+
+# The second nm|grep checks for file-scope variables with `extern' scope.
+# Without gnulib's progname module, you might put program_name here.
+_gl_TS_unmarked_extern_vars ?=
+_gl_TS_var_regex ?= ^(?:extern|XTERN) .*?\**(\w+)(\[.*?\])?;
+.PHONY: sc_tight_scope-0
+sc_tight_scope-0: $(bin_PROGRAMS)
+	t=exceptions-$$$$;						\
+	trap 's=$$?; rm -f $$t; exit $$s' 0;				\
+	for sig in 1 2 3 13 15; do					\
+	  eval "trap 'v=`expr $$sig + 128`; (exit $$v); exit $$v' $$sig"; \
+	done;								\
+	src=`for f in $(SOURCES); do					\
+	       test -f $$f && d= || d=$(srcdir)/; echo $$d$$f; done`;	\
+	hdr=`for f in $(noinst_HEADERS); do				\
+	       test -f $$f && d= || d=$(srcdir)/; echo $$d$$f; done`;	\
+	( printf '^%s$$\n' $(_gl_TS_unmarked_extern_functions);		\
+	  grep -h -A1 '^extern .*[^;]$$' $$src				\
+	    | grep -vE '^(extern |--)' | sed 's/ .*//';			\
+	  perl -lne '/$(_gl_TS_function_regex)/'			\
+                 -e 'and print $$1' $$hdr;				\
+	) | sort -u | sed 's/^/^/;s/$$/$$/' > $$t;			\
+	nm -e *.$(OBJEXT) | sed -n 's/.* T //p' | grep -Ev -f $$t	\
+	  && { echo the above functions should have static scope >&2;	\
+	       exit 1; } || : ;						\
+	( printf '^%s$$\n' $(_gl_TS_unmarked_extern_vars);		\
+	  perl -lne '/$(_gl_TS_var_regex)/ and print "^$$1\$$"'		\
+	    $$hdr *.h ) | sort -u > $$t;				\
+	nm -e *.$(OBJEXT) | sed -n 's/.* [BCDGRS] //p'			\
+            | sort -u | grep -Ev -f $$t					\
+	  && { echo the above variables should have static scope >&2;	\
+	       exit 1; } || :
+# TS-end
+endif

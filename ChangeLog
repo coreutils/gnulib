@@ -1,3 +1,12 @@
+2011-05-09  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: add a syntax-check rule to ensure tightly-scoped symbols
+	* top/maint.mk (sc_tight_scope): New rule.
+	(sc_tight_scope-0): New rule, ifdef'd out.
+	(_gl_TS_dir): Default.
+	(_gl_TS_unmarked_extern_functions, _gl_TS_function_regex): Define.
+	(_gl_TS_unmarked_extern_vars, _gl_TS_var_regex): Define.
+
 2011-05-09  Simon Josefsson  <simon@josefsson.org>
 
 	* m4/gc.m4: Remove gl_PREREQ_GC (not used).  Reported by Bruno
