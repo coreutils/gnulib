@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate March 28, 2011
+@set lastupdate May 5, 2011
 @c %**end of header
 
 @dircategory GNU organization
@@ -181,6 +181,7 @@ Or turn some parts of the program into independently usable libraries.
 Or use a simple garbage collector instead of tracking precisely when
 to free memory, or use a new GNU facility such as obstacks.
 
+
 @node Contributions
 @section Accepting Contributions
 @cindex legal papers
@@ -223,10 +224,11 @@ The very worst thing is if you forget to tell us about the other
 contributor.  We could be very embarrassed in court some day as a
 result.
 
-We have more detailed advice for maintainers of programs; if you have
-reached the stage of actually maintaining a program for GNU (whether
-released or not), please ask us for a copy.  It is also available
-online for your perusal: @uref{http://www.gnu.org/prep/maintain/}.
+We have more detailed advice for maintainers of GNU packages.  If you
+have reached the stage of maintaining a GNU program (whether released
+or not), please take a look: @pxref{Legal Matters,,, maintain,
+Information for GNU Maintainers}.
+
 
 @node Trademarks
 @section Trademarks
@@ -594,6 +596,7 @@ POSIX is never a problem in practice, and it is very useful.
 In particular, don't reject a new feature, or remove an old one,
 merely because a standard says it is ``forbidden'' or ``deprecated.''
 
+
 @node Semantics
 @section Writing Robust Programs
 
@@ -604,6 +607,7 @@ all data structures dynamically.  In most Unix utilities, ``long lines
 are silently truncated''.  This is not acceptable in a GNU utility.
 
 @cindex @code{NUL} characters
+@findex libiconv
 Utilities reading files should not drop NUL characters, or any other
 nonprinting characters @emph{including those with codes above 0177}.
 The only sensible exceptions would be utilities specifically intended
@@ -611,15 +615,16 @@ for interface to certain types of terminals or printers
 that can't handle those characters.
 Whenever possible, try to make programs work properly with
 sequences of bytes that represent multibyte characters, using encodings
-such as UTF-8 and others.
+such as UTF-8 and others.  You can use libiconv to deal with a wide
+range of encodings.
 
 @cindex error messages
-Check every system call for an error return, unless you know you wish to
-ignore errors.  Include the system error text (from @code{perror} or
-equivalent) in @emph{every} error message resulting from a failing
-system call, as well as the name of the file if any and the name of the
-utility.  Just ``cannot open foo.c'' or ``stat failed'' is not
-sufficient.
+Check every system call for an error return, unless you know you wish
+to ignore errors.  Include the system error text (from @code{perror},
+@code{strerror}, or equivalent) in @emph{every} error message
+resulting from a failing system call, as well as the name of the file
+if any and the name of the utility.  Just ``cannot open foo.c'' or
+``stat failed'' is not sufficient.
 
 @cindex @code{malloc} return value
 @cindex memory allocation failure
@@ -2329,10 +2334,11 @@ memory and give a fatal error if @code{malloc} returns zero.
 
 @pindex valgrind
 @cindex memory leak
-Memory leak detectors such as @command{valgrind} can be useful, but
+Memory analysis tools such as @command{valgrind} can be useful, but
 don't complicate a program merely to avoid their false alarms.  For
 example, if memory is used until just before a process exits, don't
-free it simply to silence a leak detector.
+free it simply to silence such a tool.
+
 
 @node File Usage
 @section File Usage

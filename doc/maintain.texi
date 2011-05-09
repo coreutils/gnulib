@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate January 20, 2011
+@set lastupdate May 9, 2011
 @c %**end of header
 
 @dircategory GNU organization
@@ -128,10 +128,12 @@ This release of the GNU Maintainer Information was last updated
 @cindex help, getting
 
 @cindex @code{mentors@@gnu.org} mailing list
-If you have general questions or encounter a situation where it isn't
-clear what to do, you can ask @email{mentors@@gnu.org}, which is a
-list of a few experienced GNU contributors who have offered to answer
-questions for new maintainers.
+If you have any general questions or encounter a situation where it
+isn't clear how to get something done or who to ask, you (as a GNU
+contributor) can always write to @email{mentors@@gnu.org}, which is a
+list of a few experienced GNU folks who have volunteered to answer
+questions.  Any GNU-related question is fair game for the
+@code{mentors} list.
 
 @cindex advisory committee
 The GNU Advisory Committee helps to coordinate activities in the GNU
@@ -142,6 +144,21 @@ committee at @email{gnu-advisory@@gnu.org}.  See
 committee members.  Additional information is in
 @file{/gd/gnuorg/advisory}.
 
+@cindex down, when GNU machines are
+@cindex outage, of GNU machines
+@cindex @url{http://identi.ca/group/fsfstatus}
+If you find that any GNU computer systems (@code{fencepost.gnu.org},
+@code{ftp.gnu.org}, @code{www.gnu.org}, @code{savannah.gnu.org},
+@dots{}) seem to be down, you can check the current status at
+@url{http://identi.ca/group/fsfstatus}.  Most likely the problem, if
+it can be alleviated at the FSF end, is already being worked on.
+
+@cindex sysadmin, FSF
+@cindex FSF system administrators
+@cindex GNU system administrators
+The FSF system administrators are responsible for the network and GNU
+hardware.  You can email them at @email{sysadmin@@fsf.org}, but please
+try not to burden them unnecessarily.
 
 
 @node Getting a GNU Account
@@ -161,15 +178,6 @@ the package.
 @end macro
 
 @gdgnuorgtext{}
-
-@cindex down, when GNU machines are
-@cindex outage, of GNU machines
-@cindex @url{http://identi.ca/group/fsfstatus}
-If you find that any GNU computer systems (@code{fencepost.gnu.org},
-@code{ftp.gnu.org}, @code{www.gnu.org}, @code{savannah.gnu.org},
-@dots{}) seem to be down, you can check the current status at
-@url{http://identi.ca/group/fsfstatus}.  Most likely the problem, if
-it can be alleviated at the FSF end, is already being worked on.
 
 
 @node Stepping Down
@@ -1163,8 +1171,9 @@ useful for your package.
 It is very important to keep backup files of all source files of GNU.
 You can do this using a source control system (such as Bazaar, RCS,
 CVS, Git, Subversion, @dots{}) if you like.  The easiest way to use
-RCS or CVS is via the Version Control library in Emacs (@pxref{VC
-Concepts,, Concepts of Version Control, emacs, The GNU Emacs Manual}).
+RCS or CVS is via the Version Control library in Emacs
+(@pxref{Introduction to VC,, Introduction to Version Control, emacs,
+The GNU Emacs Manual}).
 
 The history of previous revisions and log entries is very important for
 future maintainers of the package, so even if you do not make it
