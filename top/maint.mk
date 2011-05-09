@@ -1335,7 +1335,7 @@ ALL_RECURSIVE_TARGETS += sc_tight_scope
 sc_tight_scope: tight-scope.mk
 	@grep noinst_HEADERS $(_gl_TS_dir)/Makefile.am > /dev/null 2>&1	\
 	  && $(MAKE) -s -C $(_gl_TS_dir) -f Makefile			\
-	      -f '$(abs_srcdir)/tight-scope.mk' _gl_tight_scope
+	      -f '$(abs_srcdir)/tight-scope.mk' _gl_tight_scope		\
 	  || :
 	@rm -f $<
 
