@@ -1,3 +1,9 @@
+2011-05-10  Jim Meyering  <meyering@redhat.com>
+
+	openat: add comments
+	* lib/openat-proc.c (openat_proc_name): Add comments,
+	mostly from Eric Blake.
+
 2011-05-09  Eric Blake  <eblake@redhat.com>
 
 	openat: reduce syscalls in first probe of /proc
