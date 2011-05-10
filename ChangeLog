@@ -1,3 +1,9 @@
+2011-05-10  Eric Blake  <eblake@redhat.com>
+
+	fclose: avoid double close race when possible
+	* lib/fclose.c (rpl_fclose): Rewrite to avoid double-close race on
+	all but WINDOWS_SOCKETS.
+
 2011-05-10  Bastien Roucariès  <roucaries.bastien@gmail.com>
 
 	openat: correct new comment

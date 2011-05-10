@@ -32,6 +32,7 @@ rpl_fclose (FILE *fp)
 {
   int saved_errno = 0;
   int fd;
+  int result = 0;
 
   /* Don't change behavior on memstreams.  */
   fd = fileno (fp);
@@ -45,15 +46,30 @@ rpl_fclose (FILE *fp)
       && fflush (fp))
     saved_errno = errno;
 
+#if WINDOWS_SOCKETS
+  /* There is a minor race where some other thread could open fd
+     between our close and fopen, but it is no worse than the race in
+     close_fd_maybe_socket.  */
   if (close (fd) < 0 && saved_errno == 0)
     saved_errno = errno;
 
-  fclose (fp); /* will fail with errno = EBADF */
+  fclose (fp); /* will fail with errno = EBADF, if we did not lose a race */
 
   if (saved_errno != 0)
     {
       errno = saved_errno;
-      return EOF;
+      result = EOF;
     }
-  return 0;
+
+#else /* !WINDOWS_SOCKETS */
+  /* No race here.  */
+  result = fclose (fp);
+
+# if REPLACE_FCHDIR
+  if (result == 0)
+    unregister_shadow_fd (fd);
+# endif
+#endif /* !WINDOWS_SOCKETS */
+
+  return result;
 }
