@@ -80,10 +80,11 @@ openat_proc_name (char buf[OPENAT_BUFFER_SIZE], int fd, char const *file)
         proc_status = -1;
       else
         {
-          /* Detect whether /proc/self/fd/../fd exists.  On Linux, that name
-             resolves to /proc/self/fd, which was opened above.  However, on
-             Solaris, it may resolve to /proc/self/fd/fd, which cannot exist,
-             since all names in /proc/self/fd are numeric.  */
+          /* Detect whether /proc/self/fd/%i/../fd exists, where %i is the
+             number of a file descriptor open on /proc/self/fd.  On Linux,
+             that name resolves to /proc/self/fd, which was opened above.
+             However, on Solaris, it may resolve to /proc/self/fd/fd, which
+             cannot exist, since all names in /proc/self/fd are numeric.  */
           char dotdot_buf[PROC_SELF_FD_NAME_SIZE_BOUND (sizeof "../fd" - 1)];
           sprintf (dotdot_buf, PROC_SELF_FD_FORMAT, proc_self_fd, "../fd");
           proc_status = access (dotdot_buf, F_OK) ? -1 : 1;

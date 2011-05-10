@@ -1,3 +1,8 @@
+2011-05-10  Bastien Roucariès  <roucaries.bastien@gmail.com>
+
+	openat: correct new comment
+	* lib/openat-proc.c (openat_proc_name): Correct the comment.
+
 2011-05-10  Jim Meyering  <meyering@redhat.com>
 
 	openat: add comments
