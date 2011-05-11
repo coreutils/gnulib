@@ -37,6 +37,10 @@ close_fd_maybe_socket (const struct fd_hook *remaining_list,
                        gl_close_fn primary,
                        int fd)
 {
+  /* Note about multithread-safety: There is a race condition where, between
+     our calls to closesocket() and the primary close(), some other thread
+     could make system calls that allocate precisely the same HANDLE value
+     as sock; then the primary close() would call CloseHandle() on it.  */
   SOCKET sock;
   WSANETWORKEVENTS ev;
 

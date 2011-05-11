@@ -1,3 +1,11 @@
+2011-05-11  Bruno Haible  <bruno@clisp.org>
+
+	fclose: Fix possible link error.
+	* lib/fclose.c (rpl_fclose): Invoke _gl_unregister_fd, not
+	unregister_shadow_fd. Improve comments.
+	* lib/sockets.c (close_fd_maybe_socket): Add comments. Reported by
+	Eric Blake.
+
 2011-05-11  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: improve "can not" detection and generalize rule name
