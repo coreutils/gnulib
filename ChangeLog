@@ -1,5 +1,10 @@
 2011-05-11  Eric Blake  <eblake@redhat.com>
 
+	bootstrap: support a prereq of 'rpcgen -' on RHEL5
+	* build-aux/bootstrap (check_versions): When no specific version
+	is required, merely check that the app produces an exit status
+	that indicates its existence.
+
 	maint.mk: drop redundant check
 	* top/maint.mk (sc_the_the): Delete; sc_prohibit_doubled_word does
 	the same but better.
