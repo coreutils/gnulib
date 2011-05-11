@@ -57,12 +57,6 @@ rpl_fclose (FILE *fp)
 
   fclose (fp); /* will fail with errno = EBADF, if we did not lose a race */
 
-  if (saved_errno != 0)
-    {
-      errno = saved_errno;
-      result = EOF;
-    }
-
 #else /* !WINDOWS_SOCKETS */
   /* Call fclose() and invoke all hooks of the overridden close().  */
 
@@ -79,6 +73,12 @@ rpl_fclose (FILE *fp)
 # endif
 
 #endif /* !WINDOWS_SOCKETS */
+
+  if (saved_errno != 0)
+    {
+      errno = saved_errno;
+      result = EOF;
+    }
 
   return result;
 }

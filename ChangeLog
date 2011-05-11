@@ -1,5 +1,9 @@
 2011-05-11  Eric Blake  <eblake@redhat.com>
 
+	fclose: preserve fflush errors
+	* lib/fclose.c (rpl_fclose): Don't lose fflush errors.
+	Reported by Jim Meyering.
+
 	bootstrap: support a prereq of 'rpcgen -' on RHEL5
 	* build-aux/bootstrap (check_versions): When no specific version
 	is required, merely check that the app produces an exit status
