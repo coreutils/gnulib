@@ -1,3 +1,9 @@
+2011-05-11  Eric Blake  <eblake@redhat.com>
+
+	maint.mk: drop redundant check
+	* top/maint.mk (sc_the_the): Delete; sc_prohibit_doubled_word does
+	the same but better.
+
 2011-05-11  Bruno Haible  <bruno@clisp.org>
 
 	fclose: Fix possible link error.
