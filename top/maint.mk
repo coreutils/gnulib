@@ -840,15 +840,20 @@ sc_prohibit_S_IS_definition:
 	halt='do not define S_IS* macros; include <sys/stat.h>'		\
 	  $(_sc_search_regexp)
 
-prohibit_doubled_word_RE_ ?= \
-  /\b(then?|[iao]n|i[fst]|but|f?or|at|and|[dt]o)\s+\1\b/gims
-prohibit_doubled_word_ =						\
-    -e 'while ($(prohibit_doubled_word_RE_))'				\
+# Perl block to convert a match to FILE_NAME:LINENO:TEST,
+# that is shared by two definitions below.
+perl_filename_lineno_text_ =						\
     -e '  {'								\
     -e '    $$n = ($$` =~ tr/\n/\n/ + 1);'				\
     -e '    ($$v = $$&) =~ s/\n/\\n/g;'					\
     -e '    print "$$ARGV:$$n:$$v\n";'					\
     -e '  }'
+
+prohibit_doubled_word_RE_ ?= \
+  /\b(then?|[iao]n|i[fst]|but|f?or|at|and|[dt]o)\s+\1\b/gims
+prohibit_doubled_word_ =						\
+    -e 'while ($(prohibit_doubled_word_RE_))'				\
+    $(perl_filename_lineno_text_)
 
 # Define this to a regular expression that matches
 # any filename:dd:match lines you want to ignore.
@@ -860,10 +865,19 @@ sc_prohibit_doubled_word:
 	  | grep -vE '$(ignore_doubled_word_match_RE_)'			\
 	  | grep . && { echo '$(ME): doubled words' 1>&2; exit 1; } || :
 
-sc_prohibit_can_not:
-	@prohibit='\<can[ ]not\>'					\
-	halt='use "cannot", not "can'' not"'				\
-	  $(_sc_search_regexp)
+# A regular expression matching undesirable combinations of words like
+# "can not"; this matches them even when the two words appear on different
+# lines, but not when there is an intervening delimiter like "#" or "*".
+prohibit_misc_RE_ ?= \
+  /\bcan\s+not\b/gims
+prohibit_misc_ =							\
+    -e 'while ($(prohibit_misc_RE_))'					\
+    $(perl_filename_lineno_text_)
+
+sc_prohibit_misc:
+	@perl -n -0777 $(prohibit_misc_) $$($(VC_LIST_EXCEPT))		\
+	  | grep -vE '$(prohibit_misc_RE_)'				\
+	  | grep . && { echo '$(ME): undesirable words' 1>&2; exit 1; } || :
 
 _ptm1 = use "test C1 && test C2", not "test C1 -''a C2"
 _ptm2 = use "test C1 || test C2", not "test C1 -''o C2"
