@@ -1,15 +1,16 @@
 2011-05-11  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: improve "can not" detection and generalize rule name
-	* top/maint.mk (sc_prohibit_misc): Renamed from sc_prohibit_can_not,
-	since we'll probably add a few more word pairs here.
+	* top/maint.mk (sc_prohibit_undesirable_word_seq): Renamed from
+	sc_prohibit_can_not, since we'll probably add a few more word pairs here.
 	Use the same technique as in sc_prohibit_doubled_word, so that
 	we recognize "can not" also when the words are separated by a newline.
 	Suggested by Eric Blake.
 	(perl_filename_lineno_text_): Define.  Factored out of...
 	(prohibit_doubled_word_): ...here.  Use the new definition.
-	(prohibit_misc_): New var.  Use it here, too.
-	(prohibit_misc_RE_): New overridable variable.
+	(prohibit_undesirable_word_seq_): New var.  Use it here, too.
+	(prohibit_undesirable_word_seq_RE_): New overridable variable.
+	(ignore_undesirable_word_sequence_RE_): New overridable variable.
 
 2011-05-10  Eric Blake  <eblake@redhat.com>
 

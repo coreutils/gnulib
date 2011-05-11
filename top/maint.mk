@@ -868,16 +868,21 @@ sc_prohibit_doubled_word:
 # A regular expression matching undesirable combinations of words like
 # "can not"; this matches them even when the two words appear on different
 # lines, but not when there is an intervening delimiter like "#" or "*".
-prohibit_misc_RE_ ?= \
+prohibit_undesirable_word_seq_RE_ ?=					\
   /\bcan\s+not\b/gims
-prohibit_misc_ =							\
-    -e 'while ($(prohibit_misc_RE_))'					\
+prohibit_undesirable_word_seq_ =					\
+    -e 'while ($(prohibit_undesirable_word_seq_RE_))'			\
     $(perl_filename_lineno_text_)
+# Define this to a regular expression that matches
+# any filename:dd:match lines you want to ignore.
+# The default is to ignore no matches.
+ignore_undesirable_word_sequence_RE_ ?= ^$$
 
-sc_prohibit_misc:
-	@perl -n -0777 $(prohibit_misc_) $$($(VC_LIST_EXCEPT))		\
-	  | grep -vE '$(prohibit_misc_RE_)'				\
-	  | grep . && { echo '$(ME): undesirable words' 1>&2; exit 1; } || :
+sc_prohibit_undesirable_word_seq:
+	@perl -n -0777 $(prohibit_undesirable_word_seq_)		\
+	     $$($(VC_LIST_EXCEPT))					\
+	  | grep -vE '$(ignore_undesirable_word_sequence_RE_)' | grep .	\
+	  && { echo '$(ME): undesirable word sequence' >&2; exit 1; } || :
 
 _ptm1 = use "test C1 && test C2", not "test C1 -''a C2"
 _ptm2 = use "test C1 || test C2", not "test C1 -''o C2"
