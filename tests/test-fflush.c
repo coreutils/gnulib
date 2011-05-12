@@ -50,7 +50,8 @@ main (void)
   if (!f || 0 > fd || fread (buffer, 1, 5, f) != 5)
     {
       fputs ("Failed initial read of sample file.\n", stderr);
-      fclose (f);
+      if (f)
+        fclose (f);
       unlink ("test-fflush.txt");
       return 1;
     }
