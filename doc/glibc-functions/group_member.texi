@@ -2,15 +2,15 @@
 @subsection @code{group_member}
 @findex group_member
 
-Gnulib module: ---
+Gnulib module: group-member
 
 Portability problems fixed by Gnulib:
-@itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on all non-glibc platforms:
 MacOS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 11 2010-11, Cygwin, mingw, Interix 3.5, BeOS.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @end itemize

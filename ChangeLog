@@ -1,5 +1,11 @@
 2011-05-11  Bruno Haible  <bruno@clisp.org>
 
+	group-member: Document module.
+	* doc/glibc-functions/group_member.texi: Mention the 'group-member'
+	module.
+
+2011-05-11  Bruno Haible  <bruno@clisp.org>
+
 	fclose: Fix mistake earlier today.
 	* lib/fclose.c (rpl_fclose): Don't assume that EOF < 0.
 
