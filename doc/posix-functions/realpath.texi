@@ -14,7 +14,7 @@ mingw, BeOS.
 @item
 This function does not allow for a NULL @samp{resolved} parameter on
 some platforms:
-Solaris 10.
+MacOS X 10.5, FreeBSD 6.4, OpenBSD 4.4, Solaris 10.
 @item
 This function does not always return an absolute path on some
 platforms:

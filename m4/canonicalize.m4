@@ -1,4 +1,4 @@
-# canonicalize.m4 serial 17
+# canonicalize.m4 serial 18
 
 dnl Copyright (C) 2003-2007, 2009-2011 Free Software Foundation, Inc.
 
@@ -64,6 +64,7 @@ AC_DEFUN([gl_FUNC_REALPATH_WORKS],
     touch conftest.a
     AC_RUN_IFELSE([
       AC_LANG_PROGRAM([[
+        ]GL_NOCRASH[
         #include <stdlib.h>
       ]], [[
         int result = 0;

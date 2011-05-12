@@ -1,5 +1,14 @@
 2011-05-11  Bruno Haible  <bruno@clisp.org>
 
+	canonicalize, canonicalize-lgpl: Avoid crash dialog on MacOS X.
+	* m4/canonicalize.m4 (gl_FUNC_REALPATH_WORKS): Add GL_NOCRASH code.
+	* modules/canonicalize (Depends-on): Add 'nocrash'.
+	* modules/canonicalize-lgpl (Depends-on): Likewise.
+	* doc/posix-functions/realpath.texi: Update platforms list.
+	Reported by Ryan Schmidt <ryandesign@macports.org>.
+
+2011-05-11  Bruno Haible  <bruno@clisp.org>
+
 	group-member: Declare function in <unistd.h>.
 	* lib/unistd.in.h (group_member): New declaration.
 	* lib/group-member.h: Remove file.
