@@ -1,3 +1,11 @@
+2011-05-12  James Youngman  <jay@gnu.org>
+
+	Add a test for glibc's Bugzilla bug #12378.
+	* m4/fnmatch.m4: Use gnulib's fnmatch if the system fnmatch
+	doesn't allow the literal matching of a lone "[" (which is
+	required by POSIX).
+	* tests/test-fnmatch.c (main): Check that "[/b" matches itself.
+
 2011-05-11  Ulrich Drepper  <drepper@gmail.com>
 
 	Sync glibc change fixing Bugzilla bug #12378.

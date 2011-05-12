@@ -46,5 +46,11 @@ main ()
   ASSERT (res = fnmatch ("foo\\.txt", "foo.txt", 0) == 0);
   ASSERT (res = fnmatch ("foo\\.txt", "foo.txt", FNM_NOESCAPE) == FNM_NOMATCH);
 
+  /* Verify that an unmatched [ is treated as a literal, as POSIX
+     requires.  This test ensures that glibc Bugzilla bug #12378 stays
+     fixed.
+   */
+  ASSERT (res = fnmatch ("[/b", "[/b", 0) == 0);
+
   return 0;
 }

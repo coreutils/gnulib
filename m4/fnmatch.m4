@@ -65,6 +65,8 @@ AC_DEFUN([gl_FUNC_FNMATCH_POSIX],
               return 1;
             if (!y ("a*", "abc", 0))
               return 1;
+            if (!y ("[/b", "[/b", 0)) /*"]]"*/ /* glibc Bugzilla bug 12378 */
+              return 1;
             if (!n ("d*/*1", "d/s/1", FNM_PATHNAME))
               return 2;
             if (!y ("a\\\\bc", "abc", 0))
