@@ -1,3 +1,8 @@
+2011-05-11  Bruno Haible  <bruno@clisp.org>
+
+	fclose: Fix mistake earlier today.
+	* lib/fclose.c (rpl_fclose): Don't assume that EOF < 0.
+
 2011-05-11  Eric Blake  <eblake@redhat.com>
 
 	fclose: preserve fflush errors

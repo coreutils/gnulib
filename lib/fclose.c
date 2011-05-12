@@ -65,7 +65,7 @@ rpl_fclose (FILE *fp)
      Some other thread could open fd between our calls to fclose and
      _gl_unregister_fd.  */
   result = fclose (fp);
-  if (result >= 0)
+  if (result == 0)
     _gl_unregister_fd (fd);
 # else
   /* No race condition here.  */
