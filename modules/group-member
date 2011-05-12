@@ -2,23 +2,24 @@ Description:
 Determine whether the current process has the permissions of a given group ID.
 
 Files:
-lib/group-member.h
 lib/group-member.c
 m4/group-member.m4
 
 Depends-on:
+unistd
 extensions
-getgroups
-xalloc
-stdbool
+getgroups       [test $HAVE_GROUP_MEMBER = 0]
+xalloc          [test $HAVE_GROUP_MEMBER = 0]
+stdbool         [test $HAVE_GROUP_MEMBER = 0]
 
 configure.ac:
 gl_FUNC_GROUP_MEMBER
+gl_UNISTD_MODULE_INDICATOR([group-member])
 
 Makefile.am:
 
 Include:
-"group-member.h"
+<unistd.h>
 
 License:
 GPL

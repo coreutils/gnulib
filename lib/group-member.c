@@ -18,14 +18,13 @@
 
 #include <config.h>
 
-#include "group-member.h"
+/* Specification.  */
+#include <unistd.h>
 
 #include <stdbool.h>
 #include <stdio.h>
 #include <sys/types.h>
 #include <stdlib.h>
-
-#include <unistd.h>
 
 #include "xalloc.h"
 

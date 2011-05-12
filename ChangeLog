@@ -1,5 +1,26 @@
 2011-05-11  Bruno Haible  <bruno@clisp.org>
 
+	group-member: Declare function in <unistd.h>.
+	* lib/unistd.in.h (group_member): New declaration.
+	* lib/group-member.h: Remove file.
+	* lib/group-member.c: Include <unistd.h> instead of group-member.h.
+	* tests/test-unistd-c++.cc: Check signature of group_member.
+	* m4/group-member.m4 (gl_FUNC_GROUP_MEMBER): Require
+	gl_UNISTD_H_DEFAULTS. Set HAVE_GROUP_MEMBER.
+	* m4/unistd_h.m4 (gl_UNISTD_H): Check whether group_member is declared.
+	(gl_UNISTD_H_DEFAULTS): Initialize GNULIB_GROUP_MEMBER,
+	HAVE_GROUP_MEMBER.
+	* modules/group-member (Files): Remove lib/group-member.h.
+	(Depends-on): Add unistd. Specify conditions.
+	(configure.ac): Invoke gl_UNISTD_MODULE_INDICATOR.
+	(Include): Change to <unistd.h>.
+	* modules/unistd (Makefile.am): Substitute GNULIB_GROUP_MEMBER,
+	HAVE_GROUP_MEMBER.
+	* NEWS: Mention the change.
+	* lib/euidaccess.c: Don't include group-member.h.
+
+2011-05-11  Bruno Haible  <bruno@clisp.org>
+
 	group-member: Document module.
 	* doc/glibc-functions/group_member.texi: Mention the 'group-member'
 	module.

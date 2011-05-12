@@ -63,10 +63,6 @@
 # undef stat
 # define stat stat64
 
-#else
-
-# include "group-member.h"
-
 #endif
 
 /* Return 0 if the user has permission of type MODE on FILE;

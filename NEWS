@@ -12,6 +12,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2011-05-11  group-member    The include file is changed from "group-member.h"
+                            to <unistd.h>.
+
 2011-05-02  exit            The module is removed.  It was deprecated
                             on 2010-03-05.  Use 'stdlib' directly instead.
 

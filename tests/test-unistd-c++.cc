@@ -112,6 +112,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::setusershell, void, (void));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::endusershell, void, (void));
 #endif
 
+#if GNULIB_TEST_GROUP_MEMBER
+SIGNATURE_CHECK (GNULIB_NAMESPACE::group_member, int, (gid_t));
+#endif
+
 #if GNULIB_TEST_LCHOWN
 SIGNATURE_CHECK (GNULIB_NAMESPACE::lchown, int, (char const *, uid_t, gid_t));
 #endif
