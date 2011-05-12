@@ -200,6 +200,8 @@ FCT (const CHAR *pattern, const CHAR *string, const CHAR *string_end,
         case L_('['):
           {
             /* Nonzero if the sense of the character class is inverted.  */
+            CHAR *p_init = p;
+            CHAR *n_init = n;
             register bool not;
             CHAR cold;
             UCHAR fn;
@@ -410,8 +412,13 @@ FCT (const CHAR *pattern, const CHAR *string, const CHAR *string_end,
                   }
 #endif
                 else if (c == L_('\0'))
-                  /* [ (unterminated) loses.  */
-                  return FNM_NOMATCH;
+                  {
+                    /* [ unterminated, treat as normal character.  */
+                    p = p_init;
+                    n = n_init;
+                    c = L_('[');
+                    goto normal_match;
+                  }
                 else
                   {
                     bool is_range = false;

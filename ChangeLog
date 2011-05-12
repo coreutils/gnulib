@@ -1,3 +1,11 @@
+2011-05-11  Ulrich Drepper  <drepper@gmail.com>
+
+	Sync glibc change fixing Bugzilla bug #12378.
+	* lib/fnmatch_loop.c (FCT): When matching '[' keep track of
+	beginning and fall back to matching as normal character if the
+	string ends before the matching ']' is found.  This is what POSIX
+	requires.
+
 2011-05-13  Eric Blake  <eblake@redhat.com>
 
 	getcwd-lgpl: relax test for FreeBSD
