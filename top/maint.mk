@@ -568,6 +568,16 @@ sc_prohibit_signal_without_use:
 	re='\<($(_sig_function_re)) *\(|\<($(_sig_syms_re))\>'		\
 	  $(_sc_header_without_use)
 
+# Don't include stdio--.h unless you use one of its functions.
+sc_prohibit_stdio--_without_use:
+	@h='"stdio--.h"' re='\<((f(re)?|p)open|tmpfile) *\('	\
+	  $(_sc_header_without_use)
+
+# Don't include stdio-safer.h unless you use one of its functions.
+sc_prohibit_stdio-safer_without_use:
+	@h='"stdio-safer.h"' re='\<((f(re)?|p)open|tmpfile)_safer *\('	\
+	  $(_sc_header_without_use)
+
 # Prohibit the inclusion of strings.h without a sensible use.
 # Using the likes of bcmp, bcopy, bzero, index or rindex is not sensible.
 sc_prohibit_strings_without_use:
@@ -594,6 +604,10 @@ sc_prohibit_stddef_without_use:
 	@h='<stddef.h>'							\
 	re='\<($(_stddef_syms_re)) *\('					\
 	  $(_sc_header_without_use)
+
+# Don't include xfreopen.h unless you use one of its functions.
+sc_prohibit_xfreopen_without_use:
+	@h='"xfreopen.h"' re='\<xfreopen *\(' $(_sc_header_without_use)
 
 sc_obsolete_symbols:
 	@prohibit='\<(HAVE''_FCNTL_H|O''_NDELAY)\>'			\

@@ -1,3 +1,10 @@
+2011-05-13  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: three new prohibit_<HDR>_without_use rules
+	* top/maint.mk (sc_prohibit_stdio--_without_use): New rule.
+	(sc_prohibit_stdio-safer_without_use): Likewise.
+	(sc_prohibit_xfreopen_without_use): Likewise.
+
 2011-05-17  Jim Meyering  <meyering@redhat.com>
 
 	announce-gen: fail if the NEWS delta is empty
