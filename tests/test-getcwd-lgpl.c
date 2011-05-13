@@ -65,12 +65,22 @@ main (int argc, char **argv)
     pwd2 = malloc (len + 2);
     for ( ; i <= len; i++)
       {
+        char *tmp;
         errno = 0;
         ASSERT (getcwd (pwd2, i) == NULL);
         ASSERT (errno == ERANGE);
+        /* Allow either glibc or BSD behavior, since POSIX allows both.  */
         errno = 0;
-        ASSERT (getcwd (NULL, i) == NULL);
-        ASSERT (errno == ERANGE);
+        tmp = getcwd (NULL, i);
+        if (tmp)
+          {
+            ASSERT (strcmp (pwd1, tmp) == 0);
+            free (tmp);
+          }
+        else
+          {
+            ASSERT (errno == ERANGE);
+          }
       }
     ASSERT (getcwd (pwd2, len + 1) == pwd2);
     pwd2[len] = '/';
@@ -79,6 +89,11 @@ main (int argc, char **argv)
   ASSERT (strstr (pwd2, "/./") == NULL);
   ASSERT (strstr (pwd2, "/../") == NULL);
   ASSERT (strstr (pwd2 + 1 + (pwd2[1] == '/'), "//") == NULL);
+
+  /* Validate a POSIX requirement on size.  */
+  errno = 0;
+  ASSERT (getcwd(pwd2, 0) == NULL);
+  ASSERT (errno == EINVAL);
 
   free (pwd1);
   free (pwd2);
