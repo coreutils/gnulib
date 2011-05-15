@@ -1,5 +1,8 @@
 2011-05-13  Paul Eggert  <eggert@cs.ucla.edu>
 
+	intprops-tests: new module
+	* modules/intprops-tests, tests/test-intprops.c: New files.
+
 	intprops: add safe, portable integer overflow checking
 	* lib/intprops.h (_GL_INT_CONVERT, _GL_INT_TWOS_COMPLEMENT):
 	(_GL_INT_SIGNED, _GL_INT_MINIMUM, _GL_INT_MAXIMUM):

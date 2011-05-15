@@ -1,0 +1,13 @@
+Files:
+tests/test-intprops.c
+
+Depends-on:
+inttypes
+stdbool
+verify
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-intprops
+check_PROGRAMS += test-intprops
