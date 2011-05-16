@@ -1,3 +1,7 @@
+2011-05-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* build-aux/bootstrap (gnulib_tool): Handle symlink timestamps better.
+
 2011-05-13  Paul Eggert  <eggert@cs.ucla.edu>
 
 	intprops-tests: new module
