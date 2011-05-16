@@ -77,6 +77,7 @@ changes.
 
 Contributing to Gnulib
 ======================
+
 All software here is copyrighted by the Free Software Foundation - you need
 to have filled out an assignment form for a project that uses the
 module for that contribution to be accepted here.
@@ -201,7 +202,8 @@ Portability guidelines
 ----------------------
 
 Gnulib code is intended to be portable to a wide variety of platforms,
-not just GNU platforms.
+not just GNU platforms.  See the documentation section "Target Platforms"
+for details.
 
 Many Gnulib modules exist so that applications need not worry about
 undesirable variability in implementations.  For example, an
@@ -210,27 +212,17 @@ application that uses the 'malloc' module need not worry about (malloc
 need not worry about localtime_r returning int (not char *) on some
 platforms that predate POSIX 1003.1-2001.
 
-Originally much of the Gnulib code was portable to ancient hosts like
-4.2BSD, but it is a maintenance hassle to maintain compatibility with
-unused hosts, so currently we assume at least a freestanding C89
-compiler, possibly operating with a C library that predates C89.  The
-oldest environment currently ported to is probably SunOS 4 + GCC 1.x,
-though we haven't tested this exact combination.  SunOS 4 last shipped
-on 1998-09-30, and Sun dropped support for it on 2003-10-01, so at
-some point we may start assuming a C89 library as well.
+Currently we assume at least a freestanding C89 compiler, possibly
+operating with a C library that predates C89.  The oldest environment
+currently ported to are probably HP-UX 10.20 and IRIX 5.3, though we
+are not testing these platform very often.
 
 Because we assume a freestanding C89 compiler, Gnulib code can include
 <float.h>, <limits.h>, <stdarg.h>, and <stddef.h> unconditionally.  It
 can also assume the existence of <ctime.h>, <errno.h>, <fcntl.h>,
-<locale.h>, <signal.h>, <stdio.h>, <stdlib.h>, <string.h>, and
-<time.h>.  Some of these headers, such as <errno.h>, were present in
-Unix Version 7 and are thus widely available.  <string.h> and
-<stdlib.h> were not in Unix Version 7, so they weren't universally
-available on ancient hosts, but they are both in SunOS 4 (the oldest
-platform still in relatively-common use) so Gnulib assumes them now.
-Similarly, many modules include <sys/types.h> even though it's not
-even in C99; that's OK since <sys/types.h> has been around nearly
-forever.
+<locale.h>, <signal.h>, <stdio.h>, <stdlib.h>, <string.h>, and <time.h>.
+Similarly, many modules include <sys/types.h> even though it's not even
+in C99; that's OK since <sys/types.h> has been around nearly forever.
 
 Even if the include files exist, they may not conform to C89.
 However, GCC has a "fixincludes" script that attempts to fix most
@@ -239,10 +231,10 @@ largely conform to C89 or better.  People still using ancient hosts
 should use fixincludes or fix their include files manually.
 
 Even if the include files conform to C89, the library itself may not.
-For example, SunOS 4's (free (NULL)) can dump core, so Gnulib code
-must avoid freeing a null pointer, even though C89 allows it.
+For example, strtod and mktime have some bugs on some platforms.
 You can work around some of these problems by requiring the relevant
-modules, e.g., the Gnulib 'free' module supplies a conforming 'free'.
+modules, e.g., the Gnulib 'mktime' module supplies a working and
+conforming 'mktime'.
 
 The GNU coding standards allow one departure from strict C99: Gnulib
 code can assume that standard internal types like size_t are no wider

@@ -108,6 +108,7 @@ Resources:
 * Benefits::
 * Library vs Reusable Code::
 * Portability and Application Code::
+* Target Platforms::
 * Modules::
 * Various Kinds of Modules::
 * Collaborative Development::

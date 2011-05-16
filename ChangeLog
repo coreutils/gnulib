@@ -1,3 +1,15 @@
+2011-05-16  Bruno Haible  <bruno@clisp.org>
+
+	doc: List the target platforms.
+	* doc/gnulib-intro.texi (Target Platforms): New section.
+	* doc/gnulib.texi (Introduction): Update menu.
+	* README (Portability guidelines): Refer to the new section. Update
+	statement about oldest supported environment. Remove rationale why
+	<errno.h>, <string.h>, <stdlib.h> are assumed. Update example of an
+	unportable C89 function.
+	Reported by Bastien Roucariès <roucaries.bastien@gmail.com> and
+	Charles Wilson <cygwin@cwilson.fastmail.fm>. Feedback from Paul Eggert.
+
 2011-05-16  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* build-aux/bootstrap (gnulib_tool): Handle symlink timestamps better.
