@@ -1,3 +1,9 @@
+2011-05-16  Sam Steingold <sds@gnu.org>
+	and Eric Blake  <eblake@redhat.com>
+
+	vc-list-files: accept multiple directory operands
+	* build-aux/vc-list-files: Iterate over all remaining operands.
+
 2011-05-16  Bruno Haible  <bruno@clisp.org>
 
 	Fix confusion regarding deprecated modules.
