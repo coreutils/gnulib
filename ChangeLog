@@ -1,3 +1,9 @@
+2011-05-16  Eric Blake  <eblake@redhat.com>
+
+	inttypes: avoid autoconf warning
+	* m4/inttypes.m4 (gl_INTTYPES_INCOMPLETE): Only expand once.
+	* m4/stdint.m4 (gl_STDINT_H): Likewise.
+
 2011-05-16  Sam Steingold <sds@gnu.org>
 	and Eric Blake  <eblake@redhat.com>
 
