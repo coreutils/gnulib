@@ -2,10 +2,10 @@ Description:
 Test whether a Unicode character belongs to a given bidi category.
 
 Status:
-obsolete
+deprecated
 
 Notice:
-This module is obsolete. Use the module 'unictype/bidiclass-test' instead.
+This module is deprecated. Use the module 'unictype/bidiclass-test' instead.
 
 Files:
 

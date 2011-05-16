@@ -2,10 +2,10 @@ Description:
 rename() function: change the name or location of a file.
 
 Status:
-obsolete
+deprecated
 
 Notice:
-This module is obsolete; use the rename module instead.
+This module is deprecated. Use the 'rename' module instead.
 
 Files:
 

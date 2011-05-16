@@ -2,10 +2,10 @@ Description:
 Convert a date/time string to linear time.
 
 Status:
-obsolete
+deprecated
 
 Notice:
-This module is obsolete. Use the module 'parse-datetime' instead.
+This module is deprecated. Use the module 'parse-datetime' instead.
 
 Files:
 doc/getdate.texi

@@ -2,10 +2,10 @@ Description:
 calloc() function that is glibc compatible.
 
 Status:
-obsolete
+deprecated
 
 Notice:
-This module is obsolete. Use the module 'calloc-gnu' instead.
+This module is deprecated. Use the module 'calloc-gnu' instead.
 
 Files:
 

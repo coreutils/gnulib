@@ -1,5 +1,23 @@
 2011-05-16  Bruno Haible  <bruno@clisp.org>
 
+	Fix confusion regarding deprecated modules.
+	* modules/calloc (Status, Notice): Mark module as deprecated, not
+	obsolete.
+	* modules/fnmatch-posix (Status, Notice): Likewise.
+	* modules/getdate (Status, Notice): Likewise.
+	* modules/getopt (Status, Notice): Likewise.
+	* modules/malloc (Status, Notice): Likewise.
+	* modules/pipe (Status, Notice): Likewise.
+	* modules/realloc (Status, Notice): Likewise.
+	* modules/rename-dest-slash (Status, Notice): Likewise.
+	* modules/unictype/bidicategory-all (Status, Notice): Likewise.
+	* modules/unictype/bidicategory-byname (Status, Notice): Likewise.
+	* modules/unictype/bidicategory-name (Status, Notice): Likewise.
+	* modules/unictype/bidicategory-of (Status, Notice): Likewise.
+	* modules/unictype/bidicategory-test (Status, Notice): Likewise.
+
+2011-05-16  Bruno Haible  <bruno@clisp.org>
+
 	doc: List the target platforms.
 	* doc/gnulib-intro.texi (Target Platforms): New section.
 	* doc/gnulib.texi (Introduction): Update menu.

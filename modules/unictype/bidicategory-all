@@ -2,10 +2,10 @@ Description:
 Unicode character bidi category functions.
 
 Status:
-obsolete
+deprecated
 
 Notice:
-This module is obsolete. Use the module 'unictype/bidiclass-all' instead.
+This module is deprecated. Use the module 'unictype/bidiclass-all' instead.
 
 Files:
 

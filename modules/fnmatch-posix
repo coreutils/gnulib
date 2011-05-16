@@ -2,10 +2,10 @@ Description:
 fnmatch() function: wildcard matching.
 
 Status:
-obsolete
+deprecated
 
 Notice:
-This module is obsolete. Use the module 'fnmatch' instead.
+This module is deprecated. Use the module 'fnmatch' instead.
 
 Files:
 

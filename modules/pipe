@@ -2,10 +2,10 @@ Description:
 Creation of subprocesses, communicating via pipes.
 
 Status:
-obsolete
+deprecated
 
 Notice:
-This module is obsolete. Use the module 'spawn-pipe' instead.
+This module is deprecated. Use the module 'spawn-pipe' instead.
 
 Files:
 lib/pipe.h

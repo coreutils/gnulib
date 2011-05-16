@@ -2,10 +2,10 @@ Description:
 Find a Unicode character bidi category, given its name.
 
 Status:
-obsolete
+deprecated
 
 Notice:
-This module is obsolete. Use the module 'unictype/bidiclass-byname' instead.
+This module is deprecated. Use the module 'unictype/bidiclass-byname' instead.
 
 Files:
 

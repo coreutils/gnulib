@@ -2,10 +2,10 @@ Description:
 Determine bidi category of a Unicode character.
 
 Status:
-obsolete
+deprecated
 
 Notice:
-This module is obsolete. Use the module 'unictype/bidiclass-of' instead.
+This module is deprecated. Use the module 'unictype/bidiclass-of' instead.
 
 Files:
 

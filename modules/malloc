@@ -7,10 +7,10 @@ otherwise when this module occurs as a tests-related module, it will
 have side effects on the compilation of the main modules in lib/.
 
 Status:
-obsolete
+deprecated
 
 Notice:
-This module is obsolete. Use the module 'malloc-gnu' instead.
+This module is deprecated. Use the module 'malloc-gnu' instead.
 
 Files:
 

@@ -2,10 +2,10 @@ Description:
 Process command line arguments.
 
 Status:
-obsolete
+deprecated
 
 Notice:
-This module is obsolete. Use the module 'getopt-posix' or 'getopt-gnu' instead.
+This module is deprecated. Use the module 'getopt-posix' or 'getopt-gnu' instead.
 
 Files:
 

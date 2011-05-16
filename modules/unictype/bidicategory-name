@@ -2,10 +2,10 @@ Description:
 Name of Unicode character bidi category.
 
 Status:
-obsolete
+deprecated
 
 Notice:
-This module is obsolete. Use the module 'unictype/bidiclass-name' instead.
+This module is deprecated. Use the module 'unictype/bidiclass-name' instead.
 
 Files:
 
