@@ -110,7 +110,7 @@ As of 2011, the list of supported platforms is the following:
 
 @itemize
 @item
-glibc systems.  With glibc 2.8 or newer, they are frequenty tested.  With
+glibc systems.  With glibc 2.8 or newer, they are frequently tested.  With
 glibc 2.3 or newer, they are occasionally tested.
 @item
 MacOS X.  In versions 10.5 and 10.6, it's frequently tested.  In version
