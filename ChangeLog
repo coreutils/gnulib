@@ -1,5 +1,8 @@
 2011-05-17  Jim Meyering  <meyering@redhat.com>
 
+	warnings.m4: don't usurp save_CPPFLAGS variable name
+	* m4/warnings.m4: Prefix local temporary variable name with gl_.
+
 	doc: fix typo
 	* doc/gnulib-intro.texi (Target Platforms): s/is/are/
 

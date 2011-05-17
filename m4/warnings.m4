@@ -1,4 +1,4 @@
-# warnings.m4 serial 2
+# warnings.m4 serial 3
 dnl Copyright (C) 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -21,12 +21,12 @@ m4_ifdef([AS_VAR_APPEND],
 AC_DEFUN([gl_WARN_ADD],
 [AS_VAR_PUSHDEF([gl_Warn], [gl_cv_warn_$1])dnl
 AC_CACHE_CHECK([whether compiler handles $1], [gl_Warn], [
-  save_CPPFLAGS="$CPPFLAGS"
+  gl_save_CPPFLAGS="$CPPFLAGS"
   CPPFLAGS="${CPPFLAGS} $1"
   AC_PREPROC_IFELSE([AC_LANG_PROGRAM([])],
                     [AS_VAR_SET([gl_Warn], [yes])],
                     [AS_VAR_SET([gl_Warn], [no])])
-  CPPFLAGS="$save_CPPFLAGS"
+  CPPFLAGS="$gl_save_CPPFLAGS"
 ])
 AS_VAR_PUSHDEF([gl_Flags], m4_if([$2], [], [[WARN_CFLAGS]], [[$2]]))dnl
 AS_VAR_IF([gl_Warn], [yes], [gl_AS_VAR_APPEND([gl_Flags], [" $1"])])
