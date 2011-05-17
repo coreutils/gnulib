@@ -1362,13 +1362,16 @@ ifeq (a,b)
 # Most functions should have static scope.
 # Any that don't must be marked with `extern', but `main'
 # and `usage' are exceptions: they're always extern, but
-# do not need to be marked.
+# do not need to be marked.  Symbols matching `__.*' are
+# reserved by the compiler, so are automatically excluded below.
 _gl_TS_unmarked_extern_functions ?= main usage
 _gl_TS_function_match ?= \
   /^(?:extern|XTERN) +(?:void|(?:struct |const |enum )?\S+) +\**(\S+) +\(/
 
 # The second nm|grep checks for file-scope variables with `extern' scope.
 # Without gnulib's progname module, you might put program_name here.
+# Symbols matching `__.*' are reserved by the compiler,
+# so are automatically excluded below.
 _gl_TS_unmarked_extern_vars ?=
 
 # NOTE: the _match variables are perl expressions -- not mere regular
@@ -1391,7 +1394,7 @@ _gl_tight_scope: $(bin_PROGRAMS)
 	       test -f $$f && d= || d=$(srcdir)/; echo $$d$$f; done`;	\
 	hdr=`for f in $(noinst_HEADERS); do				\
 	       test -f $$f && d= || d=$(srcdir)/; echo $$d$$f; done`;	\
-	( printf '^%s$$\n' $(_gl_TS_unmarked_extern_functions);		\
+	( printf '^%s$$\n' '__.*' $(_gl_TS_unmarked_extern_functions);	\
 	  grep -h -A1 '^extern .*[^;]$$' $$src				\
 	    | grep -vE '^(extern |--)' | sed 's/ .*//';			\
 	  perl -lne '$(_gl_TS_function_match)'				\
@@ -1400,7 +1403,7 @@ _gl_tight_scope: $(bin_PROGRAMS)
 	nm -e *.$(OBJEXT) | sed -n 's/.* T //p' | grep -Ev -f $$t	\
 	  && { echo the above functions should have static scope >&2;	\
 	       exit 1; } || : ;						\
-	( printf '^%s$$\n' $(_gl_TS_unmarked_extern_vars);		\
+	( printf '^%s$$\n' '__.*' $(_gl_TS_unmarked_extern_vars);	\
 	  perl -lne '$(_gl_TS_var_match) and print "^$$1\$$"'		\
 	    $$hdr *.h ) | sort -u > $$t;				\
 	nm -e *.$(OBJEXT) | sed -n 's/.* [BCDGRS] //p'			\

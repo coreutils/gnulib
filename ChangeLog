@@ -1,3 +1,8 @@
+2011-05-17  Pádraig Brady <P@draigBrady.com>
+
+	* top/maint.mk (_gl_tight_scope:): Automatically exclude compiler
+	reserved symbols starting with double underscore from the check.
+
 2011-05-17  Paul Eggert  <eggert@cs.ucla.edu>
 
 	intprops: add doc
