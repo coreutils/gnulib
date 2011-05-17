@@ -17,7 +17,7 @@
 @findex verify_true
 
 The @samp{verify} module supports compile-time tests, as opposed to
-the standard @file{assert.h} header which supports only runtime tests.
+the standard @code{assert} macro which supports only runtime tests.
 Since the tests occur at compile-time, they are more reliable, and
 they require no runtime overhead.
 
@@ -45,7 +45,17 @@ integer constant expression, then a compiler might reject a usage like
 @samp{verify (@var{EXPRESSION});} even when @var{EXPRESSION} is
 nonzero.
 
-Here are some example uses.
+Although the standard @code{assert} macro is a runtime test, draft C1X
+specifies a builtin @code{_Static_assert (@var{EXPRESSION},
+@var{STRING-LITERAL})}, its @file{assert.h} header has a similar macro
+named @code{static_assert}, and draft C++0X has a similar
+@code{static_assert} builtin.  These draft builtins and macros differ
+from @code{verify} in two major ways.  First, they can also be used
+within a @code{struct} or @code{union} specifier, in place of an
+ordinary member declaration.  Second, they require the programmer to
+specify a compile-time diagnostic as a string literal.
+
+Here are some example uses of @code{verify} and @code{verify_true}.
 
 @example
 #include <verify.h>
@@ -56,9 +66,8 @@ Here are some example uses.
 /* Verify that time_t is an integer type.  */
 verify ((time_t) 1.5 == 1);
 
-/* Verify that time_t is at least as wide as int.  */
-verify (INT_MIN == (time_t) INT_MIN);
-verify (INT_MAX == (time_t) INT_MAX);
+/* Verify that time_t is no smaller than int.  */
+verify (sizeof (int) <= sizeof (time_t));
 
 /* Verify that time_t is signed.  */
 verify ((time_t) -1 < 0);

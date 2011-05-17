@@ -6496,6 +6496,7 @@ This list of functions is sorted according to the header that declares them.
 * alloca::
 * alloca-opt::
 * Safe Allocation Macros::
+* Compile-time Assertions::
 * String Functions in C Locale::
 * Quoting::
 * error and progname::
@@ -6523,6 +6524,8 @@ This list of functions is sorted according to the header that declares them.
 @include alloca-opt.texi
 
 @include safe-alloc.texi
+
+@include verify.texi
 
 @node String Functions in C Locale
 @section Character and String Functions in C Locale

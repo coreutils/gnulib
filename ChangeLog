@@ -1,3 +1,10 @@
+2011-05-17  Paul Eggert  <eggert@cs.ucla.edu>
+
+	verify: add doc to gnulib manual and fix example
+	* doc/gnulib.texi (Compile-time Assertions): New node, for 'verify'.
+	* doc/verify.texi (Compile-time Assertions): Update 'assert' doc.
+	(Compile-time Assertions): Fix example so it can't overflow.
+
 2011-05-17  Jim Meyering  <meyering@redhat.com>
 
 	warnings.m4: don't usurp save_CPPFLAGS variable name
