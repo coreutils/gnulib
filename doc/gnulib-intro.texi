@@ -133,7 +133,7 @@ OSF/1 5.1 is occasionally tested.  OSF/1 4.0 is rarely tested and low
 priority.
 @item
 Solaris 8 and newer are occasionally tested.  Solaris 7 is rarely tested.
-Solaris 2.6 and older is rarely tested and low priority.
+Solaris 2.6 and older are rarely tested and low priority.
 @item
 Cygwin 1.7.x is frequently tested.  Cygwin 1.5.x is occasionally tested.
 @item

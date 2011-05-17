@@ -1,3 +1,8 @@
+2011-05-17  Jim Meyering  <meyering@redhat.com>
+
+	doc: fix typo
+	* doc/gnulib-intro.texi (Target Platforms): s/is/are/
+
 2011-05-16  Paul Eggert  <eggert@cs.ucla.edu>
             Bruno Haible  <bruno@clisp.org>
 
