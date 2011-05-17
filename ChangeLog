@@ -1,3 +1,10 @@
+2011-05-17  Jim Meyering  <meyering@redhat.com>
+
+	announce-gen: fail if the NEWS delta is empty
+	If there's nothing noteworthy in NEWS, then either you forgot
+	or you shouldn't be releasing.
+	* build-aux/announce-gen: Die if the NEWS delta is effectively empty.
+
 2011-05-17  Pádraig Brady <P@draigBrady.com>
 
 	* top/maint.mk (_gl_tight_scope:): Automatically exclude compiler

@@ -3,7 +3,7 @@ eval '(exit $?0)' && eval 'exec perl -wS "$0" ${1+"$@"}'
     if 0;
 # Generate a release announcement message.
 
-my $VERSION = '2011-04-29 21:01'; # UTC
+my $VERSION = '2011-05-17 20:25'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -192,6 +192,7 @@ sub print_news_deltas ($$$)
 
   my $re_prefix = qr/(?:\* )?(?:Noteworthy c|Major c|C)(?i:hanges)/;
 
+  my $found_news;
   open NEWS, '<', $news_file
     or die "$ME: $news_file: cannot open for reading: $!\n";
   while (defined (my $line = <NEWS>))
@@ -214,12 +215,16 @@ sub print_news_deltas ($$$)
           $line =~ /^$re_prefix.*(?:[^\d.]|$)\Q$prev_version\E(?:[^\d.]|$)/o
             and last;
           print $line;
+          $line =~ /\S/
+            and $found_news = 1;
         }
     }
   close NEWS;
 
   $in_items
     or die "$ME: $news_file: no matching lines for `$curr_version'\n";
+  $found_news
+    or die "$ME: $news_file: no news item found for `$curr_version'\n";
 }
 
 sub print_changelog_deltas ($$)
