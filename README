@@ -213,9 +213,9 @@ need not worry about localtime_r returning int (not char *) on some
 platforms that predate POSIX 1003.1-2001.
 
 Currently we assume at least a freestanding C89 compiler, possibly
-operating with a C library that predates C89.  The oldest environment
+operating with a C library that predates C89.  The oldest environments
 currently ported to are probably HP-UX 10.20 and IRIX 5.3, though we
-are not testing these platform very often.
+are not testing these platforms very often.
 
 Because we assume a freestanding C89 compiler, Gnulib code can include
 <float.h>, <limits.h>, <stdarg.h>, and <stddef.h> unconditionally.  It

@@ -89,14 +89,12 @@ Some operating systems are not very widespread, but are Free Software and
 are actively developed.  Such platforms are also supported by Gnulib, if
 that OS's developers community keeps in touch with the Gnulib developers,
 by providing bug reports, analyses, or patches.  For such platforms, Gnulib
-will not support all versions that are at most three years old, but only
-the versions of the last year or the last few months, depending on the
-maturity of said OS project, the number of its users, and how often these
-users upgrade.
+supports only the versions of the last year or the last few months,
+depending on the maturity of said OS project, the number of its users, and
+how often these users upgrade.
 
 Niche operating systems are generally unsupported by Gnulib, unless some
-people from their developers or users community contributes support to
-Gnulib.
+of their developers or users contribute support to Gnulib.
 
 The degree of support Gnulib guarantees for a platform depends on the
 amount of testing it gets from volunteers.  Platforms on which Gnulib
@@ -150,6 +148,8 @@ Native Windows, with MSVC as compiler, is not tested and low priority.
 @item
 mingw in 64-bit mode is not tested and low priority so far.
 @item
+Interix 6.1 is rarely tested, and requires the @code{suacomp} library
+(@url{http://sourceforge.net/projects/suacomp/}) in version 0.6.8 or newer.
 Interix 3.5 is not tested.
 @item
 Haiku is rarely tested, BeOS is not tested and low priority.
@@ -159,7 +159,7 @@ uClibc on Linux is rarely tested.
 QNX is not tested and low priority.
 @end itemize
 
-These operating systems are all supported in an unvirtualized environment.
+Gnulib supports these operating systems only in an unvirtualized environment.
 When you run an OS inside a virtual machine, you have to be aware that the
 virtual machine can bring in bugs of its own.  For example, floating-point
 operations on Solaris can behave slightly differently in QEMU than on real
@@ -170,8 +170,11 @@ Similarly, running native Windows binaries on GNU/Linux under WINE is
 rarely tested and low priority: WINE has a set of behaviours and bugs that
 is slightly different from native Windows.
 
-The following platforms are @emph{not} supported by Gnulib.  Even correct
-patches for their support will not be applied.
+The following platforms are not supported by Gnulib.  The cost of
+supporting them would exceed the benefit because they are rarely used, or
+poorly documented, or have been supplanted by other platforms, or diverge
+too much from POSIX, or some combination of these and other factors.
+Please don't bother sending us patches for them.
 
 @itemize
 @item

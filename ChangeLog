@@ -1,3 +1,11 @@
+2011-05-16  Paul Eggert  <eggert@cs.ucla.edu>
+            Bruno Haible  <bruno@clisp.org>
+
+	doc: Tweak recent change.
+	* README (Portability guidelines): Tweak new text.
+	* doc/gnulib-intro.texi (Target Platforms): Likewise. Mention
+	Interix 6.1.
+
 2011-05-16  Eric Blake  <eblake@redhat.com>
 
 	inttypes: avoid autoconf warning
