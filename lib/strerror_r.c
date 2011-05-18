@@ -92,6 +92,30 @@ gl_lock_define_initialized(static, strerror_lock)
 
 #endif
 
+/* Copy as much of MSG into BUF as possible, without corrupting errno.
+   Return 0 if MSG fit in BUFLEN, otherwise return ERANGE.  */
+static int
+safe_copy (char *buf, size_t buflen, const char *msg)
+{
+  size_t len = strlen (msg);
+  int ret;
+
+  if (len < buflen)
+    {
+      /* Although POSIX allows memcpy() to corrupt errno, we don't
+         know of any implementation where this is a real problem.  */
+      memcpy (buf, msg, len + 1);
+      ret = 0;
+    }
+  else
+    {
+      memcpy (buf, msg, buflen - 1);
+      buf[buflen - 1] = '\0';
+      ret = ERANGE;
+    }
+  return ret;
+}
+
 
 int
 strerror_r (int errnum, char *buf, size_t buflen)
@@ -102,9 +126,10 @@ strerror_r (int errnum, char *buf, size_t buflen)
   if (buflen <= 1)
     {
       if (buflen)
-        *buf = 0;
+        *buf = '\0';
       return ERANGE;
     }
+  *buf = '\0';
 
 #if GNULIB_defined_ETXTBSY \
     || GNULIB_defined_ESOCK \
@@ -413,19 +438,7 @@ strerror_r (int errnum, char *buf, size_t buflen)
       }
 
     if (msg)
-      {
-        int saved_errno = errno;
-        size_t len = strlen (msg);
-        int ret = ERANGE;
-
-        if (len < buflen)
-          {
-            memcpy (buf, msg, len + 1);
-            ret = 0;
-          }
-        errno = saved_errno;
-        return ret;
-      }
+      return safe_copy (buf, buflen, msg);
   }
 #endif
 
@@ -441,6 +454,13 @@ strerror_r (int errnum, char *buf, size_t buflen)
       ret = __xpg_strerror_r (errnum, buf, buflen);
       if (ret < 0)
         ret = errno;
+      if (!*buf)
+        {
+          /* glibc 2.13 would not touch buf on err, so we have to fall
+             back to GNU strerror_r which always returns a thread-safe
+             untruncated string to (partially) copy into our buf.  */
+          safe_copy (buf, buflen, strerror_r (errnum, buf, buflen));
+        }
     }
 
 #elif USE_SYSTEM_STRERROR_R
@@ -453,18 +473,11 @@ strerror_r (int errnum, char *buf, size_t buflen)
     {
       char stackbuf[80];
 
-      if (buflen < sizeof (stackbuf))
+      if (buflen < sizeof stackbuf)
         {
-          ret = strerror_r (errnum, stackbuf, sizeof (stackbuf));
+          ret = strerror_r (errnum, stackbuf, sizeof stackbuf);
           if (ret == 0)
-            {
-              size_t len = strlen (stackbuf);
-
-              if (len < buflen)
-                memcpy (buf, stackbuf, len + 1);
-              else
-                ret = ERANGE;
-            }
+            ret = safe_copy (buf, buflen, stackbuf);
         }
       else
         ret = strerror_r (errnum, buf, buflen);
@@ -479,19 +492,7 @@ strerror_r (int errnum, char *buf, size_t buflen)
 
     /* FreeBSD rejects 0; see http://austingroupbugs.net/view.php?id=382.  */
     if (errnum == 0 && ret == EINVAL)
-      {
-        if (buflen <= strlen ("Success"))
-          {
-            ret = ERANGE;
-            if (buflen)
-              buf[0] = 0;
-          }
-        else
-          {
-            ret = 0;
-            strcpy (buf, "Success");
-          }
-      }
+      ret = safe_copy (buf, buflen, "Success");
 
 #else /* USE_SYSTEM_STRERROR */
 
@@ -528,17 +529,7 @@ strerror_r (int errnum, char *buf, size_t buflen)
         if (errmsg == NULL || *errmsg == '\0')
           ret = EINVAL;
         else
-          {
-            size_t len = strlen (errmsg);
-
-            if (len < buflen)
-              {
-                memcpy (buf, errmsg, len + 1);
-                ret = 0;
-              }
-            else
-              ret = ERANGE;
-          }
+          ret = safe_copy (buf, buflen, errmsg);
 #  if HAVE_CATGETS && (defined __NetBSD__ || defined __hpux)
         if (catd != (nl_catd)-1)
           catclose (catd);
@@ -558,17 +549,7 @@ strerror_r (int errnum, char *buf, size_t buflen)
         if (errmsg == NULL || *errmsg == '\0')
           ret = EINVAL;
         else
-          {
-            size_t len = strlen (errmsg);
-
-            if (len < buflen)
-              {
-                memcpy (buf, errmsg, len + 1);
-                ret = 0;
-              }
-            else
-              ret = ERANGE;
-          }
+          ret = safe_copy (buf, buflen, errmsg);
       }
     else
       ret = EINVAL;
@@ -586,17 +567,7 @@ strerror_r (int errnum, char *buf, size_t buflen)
       if (errmsg == NULL || *errmsg == '\0')
         ret = EINVAL;
       else
-        {
-          size_t len = strlen (errmsg);
-
-          if (len < buflen)
-            {
-              memcpy (buf, errmsg, len + 1);
-              ret = 0;
-            }
-          else
-            ret = ERANGE;
-        }
+        ret = safe_copy (buf, buflen, errmsg);
     }
 
     gl_lock_unlock (strerror_lock);
@@ -604,6 +575,9 @@ strerror_r (int errnum, char *buf, size_t buflen)
 # endif
 
 #endif
+
+    if (ret == EINVAL && !*buf)
+      snprintf (buf, buflen, "Unknown error %d", errnum);
 
     errno = saved_errno;
     return ret;

@@ -51,15 +51,21 @@ This function always fails when the third argument is less than 80 on some
 platforms:
 HP-UX 11.31.
 @item
-When the buffer is too small, this function does not fail, but instead
-truncates the result and returns 0 on some platforms:
-OSF/1 5.1.
+When the buffer is too small and the value is in range, this function
+does not fail, but instead truncates the result and returns 0 on some
+platforms:
+AIX 6.1, OSF/1 5.1.
+@item
+When the value is not in range or the buffer is too small, this
+function fails to leave a NUL-terminated string in the buffer on some
+platforms:
+glibc 2.13, FreeBSD 8.2.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-When the buffer is too small, this function does not fail, but instead
-truncates the result and returns 0 on some platforms:
-AIX 6.1.
+Calling this function can clobber the buffer used by @code{strerror}
+on some platforms:
+Cygwin 1.7.9.
 @end itemize

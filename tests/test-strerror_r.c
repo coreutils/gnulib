@@ -36,21 +36,24 @@ main (void)
 
   errno = 0;
   buf[0] = '\0';
-  ASSERT (strerror_r (EACCES, buf, sizeof (buf)) == 0);
+  ASSERT (strerror_r (EACCES, buf, sizeof buf) == 0);
   ASSERT (buf[0] != '\0');
   ASSERT (errno == 0);
+  ASSERT (strlen (buf) < sizeof buf);
 
   errno = 0;
   buf[0] = '\0';
-  ASSERT (strerror_r (ETIMEDOUT, buf, sizeof (buf)) == 0);
+  ASSERT (strerror_r (ETIMEDOUT, buf, sizeof buf) == 0);
   ASSERT (buf[0] != '\0');
   ASSERT (errno == 0);
+  ASSERT (strlen (buf) < sizeof buf);
 
   errno = 0;
   buf[0] = '\0';
-  ASSERT (strerror_r (EOVERFLOW, buf, sizeof (buf)) == 0);
+  ASSERT (strerror_r (EOVERFLOW, buf, sizeof buf) == 0);
   ASSERT (buf[0] != '\0');
   ASSERT (errno == 0);
+  ASSERT (strlen (buf) < sizeof buf);
 
   /* POSIX requires strerror (0) to succeed.  Reject use of "Unknown
      error", but allow "Success", "No error", or even Solaris' "Error
@@ -58,54 +61,69 @@ main (void)
      http://austingroupbugs.net/view.php?id=382  */
   errno = 0;
   buf[0] = '\0';
-  ret = strerror_r (0, buf, sizeof (buf));
+  ret = strerror_r (0, buf, sizeof buf);
   ASSERT (ret == 0);
   ASSERT (buf[0]);
   ASSERT (errno == 0);
   ASSERT (strstr (buf, "nknown") == NULL);
 
-  /* Test results with out-of-range errnum and enough room.  */
-
+  /* Test results with out-of-range errnum and enough room.  POSIX
+     allows an empty string on success, and allows an unchanged buf on
+     error, but these are not useful, so we guarantee contents.  */
   errno = 0;
   buf[0] = '^';
-  ret = strerror_r (-3, buf, sizeof (buf));
+  ret = strerror_r (-3, buf, sizeof buf);
   ASSERT (ret == 0 || ret == EINVAL);
-  if (ret == 0)
-    ASSERT (buf[0] != '^');
+  ASSERT (buf[0] != '^');
+  ASSERT (*buf);
   ASSERT (errno == 0);
+  ASSERT (strlen (buf) < sizeof buf);
 
-  /* Test results with a too small buffer.  */
-
-  ASSERT (strerror_r (EACCES, buf, sizeof (buf)) == 0);
+  /* Test results with a too small buffer.  POSIX requires an error;
+     only ERANGE for 0 and valid errors, and a choice of ERANGE or
+     EINVAL for out-of-range values.  On error, POSIX permits buf to
+     be empty, unchanged, or unterminated, but these are not useful,
+     so we guarantee NUL-terminated truncated contents for all but
+     size 0.  http://austingroupbugs.net/view.php?id=398  */
   {
-    size_t len = strlen (buf);
-    size_t i;
-
-    for (i = 0; i <= len; i++)
+    int errs[] = { EACCES, 0, -3, };
+    int j;
+    for (j = 0; j < SIZEOF (errs); j++)
       {
+        int err = errs[j];
+        char buf2[sizeof buf] = "";
+        size_t len;
+        size_t i;
+
+        strerror_r (err, buf2, sizeof buf2);
+        len = strlen (buf2);
+
+        for (i = 0; i <= len; i++)
+          {
+            strcpy (buf, "BADFACE");
+            errno = 0;
+            ret = strerror_r (err, buf, i);
+            ASSERT (errno == 0);
+            if (err < 0)
+              ASSERT (ret == ERANGE || ret == EINVAL);
+            else
+              ASSERT (ret == ERANGE);
+            if (i == 0)
+              ASSERT (strcmp (buf, "BADFACE") == 0);
+            else
+              {
+                ASSERT (strncmp (buf, buf2, i - 1) == 0);
+                ASSERT (buf[i - 1] == '\0');
+              }
+          }
+
         strcpy (buf, "BADFACE");
         errno = 0;
-        ret = strerror_r (EACCES, buf, i);
+        ret = strerror_r (err, buf, len + 1);
+        ASSERT (ret != ERANGE);
         ASSERT (errno == 0);
-        if (ret == 0)
-          {
-            /* Truncated result.  POSIX allows this, and it actually
-               happens on AIX 6.1 and Cygwin.  */
-            ASSERT ((strcmp (buf, "BADFACE") == 0) == (i == 0));
-          }
-        else
-          {
-            /* Failure.  */
-            ASSERT (ret == ERANGE);
-            /* buf is clobbered nevertheless, on FreeBSD and MacOS X.  */
-          }
+        ASSERT (strcmp (buf, buf2) == 0);
       }
-
-    strcpy (buf, "BADFACE");
-    errno = 0;
-    ret = strerror_r (EACCES, buf, len + 1);
-    ASSERT (ret == 0);
-    ASSERT (errno == 0);
   }
 
 #if GNULIB_STRERROR
