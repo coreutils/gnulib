@@ -1,3 +1,9 @@
+2011-05-18  Eric Blake  <eblake@redhat.com>
+
+	fnmatch: avoid compiler warning
+	* lib/fnmatch_loop.c (FCT): Use correct type.
+	Reported by Matthias Bolte.
+
 2011-05-13  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: three new prohibit_<HDR>_without_use rules
