@@ -64,7 +64,19 @@ int
 strerror_r (int errnum, char *buf, size_t buflen)
 #undef strerror_r
 {
-#if EXTEND_STRERROR_R
+#if GNULIB_defined_ETXTBSY \
+    || GNULIB_defined_ESOCK \
+    || GNULIB_defined_ENOMSG \
+    || GNULIB_defined_EIDRM \
+    || GNULIB_defined_ENOLINK \
+    || GNULIB_defined_EPROTO \
+    || GNULIB_defined_EMULTIHOP \
+    || GNULIB_defined_EBADMSG \
+    || GNULIB_defined_EOVERFLOW \
+    || GNULIB_defined_ENOTSUP \
+    || GNULIB_defined_ESTALE \
+    || GNULIB_defined_EDQUOT \
+    || GNULIB_defined_ECANCELED
   {
     char const *msg = NULL;
     /* These error messages are taken from glibc/sysdeps/gnu/errlist.c.  */

@@ -1,3 +1,11 @@
+2011-05-19  Bruno Haible  <bruno@clisp.org>
+
+	strerror_r: Fix test failure on mingw.
+	* m4/strerror_r.m4 (gl_FUNC_STRERROR_R): Don't define
+	EXTEND_STRERROR_R.
+	* lib/strerror_r.c (strerror_r): Test the various GNULIB_defined_*
+	macros from errno.in.h instead.
+
 2011-05-19  Eric Blake  <eblake@redhat.com>
 
 	strerror: relax test for Solaris

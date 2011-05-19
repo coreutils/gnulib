@@ -1,4 +1,4 @@
-# strerror_r.m4 serial 4
+# strerror_r.m4 serial 5
 dnl Copyright (C) 2002, 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -93,9 +93,6 @@ changequote([,])dnl
       dnl The system's strerror_r() cannot know about the new errno values we
       dnl add to <errno.h>. Replace it.
       REPLACE_STRERROR_R=1
-      AC_DEFINE([EXTEND_STRERROR_R], [1],
-        [Define to 1 if strerror_r needs to be extended so that it handles the
-         extra errno values.])
     fi
   fi
   if test $HAVE_DECL_STRERROR_R = 0 || test $REPLACE_STRERROR_R = 1; then
