@@ -34,7 +34,11 @@
 # endif
 
 
-#if HAVE_DECL_STRERROR_R && !(__GLIBC__ >= 2 || defined __UCLIBC__)
+#if (__GLIBC__ >= 2 || defined __UCLIBC__ || defined __CYGWIN__) && HAVE___XPG_STRERROR_R /* glibc >= 2.3.4, cygwin >= 1.7.9 */
+
+# define USE_XPG_STRERROR_R 1
+
+#elif HAVE_DECL_STRERROR_R && !(__GLIBC__ >= 2 || defined __UCLIBC__)
 
 /* The system's strerror_r function is OK, except that its third argument
    is 'int', not 'size_t', or its return type is wrong.  */
@@ -42,10 +46,6 @@
 # include <limits.h>
 
 # define USE_SYSTEM_STRERROR_R 1
-
-#elif (__GLIBC__ >= 2 || defined __UCLIBC__) && HAVE___XPG_STRERROR_R /* glibc >= 2.3.4 */
-
-# define USE_XPG_STRERROR_R 1
 
 #else /* (__GLIBC__ >= 2 || defined __UCLIBC__ ? !HAVE___XPG_STRERROR_R : !HAVE_DECL_STRERROR_R) */
 
@@ -446,7 +446,7 @@ strerror_r (int errnum, char *buf, size_t buflen)
         ret = strerror_r (errnum, buf, buflen);
     }
 # elif defined __CYGWIN__
-    /* Cygwin only provides the glibc interface, is thread-safe, and
+    /* Cygwin 1.7.8 only provides the glibc interface, is thread-safe, and
        always succeeds (although it may truncate). */
     strerror_r (errnum, buf, buflen);
     ret = 0;

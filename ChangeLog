@@ -1,3 +1,9 @@
+2011-05-19  Eric Blake  <eblake@redhat.com>
+
+	strerror_r: fix on newer cygwin
+	* lib/strerror_r.c (rpl_strerror_r): Cygwin now has
+	__xpg_strerror_r, use it.
+
 2011-05-19  Bruno Haible  <bruno@clisp.org>
 
 	strerror_r: Avoid clobbering the strerror buffer when possible.
