@@ -51,15 +51,15 @@ main (void)
   ASSERT (*str);
   ASSERT (errno == 0);
 
-  /* POSIX requires strerror (0) to succeed; use of "Unknown error" or
-     "error 0" does not count as success, but "No error" works.
+  /* POSIX requires strerror (0) to succeed.  Reject use of "Unknown
+     error", but allow "Success", "No error", or even Solaris' "Error
+     0" which are distinct patterns from true out-of-range strings.
      http://austingroupbugs.net/view.php?id=382  */
   errno = 0;
   str = strerror (0);
   ASSERT (str);
   ASSERT (*str);
   ASSERT (errno == 0);
-  ASSERT (strchr (str, '0') == NULL);
   ASSERT (strstr (str, "nknown") == NULL);
 
   /* POSIX requires strerror to produce a non-NULL result for all

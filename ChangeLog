@@ -1,5 +1,9 @@
 2011-05-19  Eric Blake  <eblake@redhat.com>
 
+	strerror: relax test for Solaris
+	* tests/test-strerror.c (main): Permit Solaris behavior.
+	* tests/test-strerror_r.c (main): Likewise.
+
 	strerror: enforce POSIX ruling on strerror(0)
 	* m4/strerror.m4 (gl_FUNC_STRERROR_SEPARATE): Expose BSD bug.
 	* m4/strerror_r.m4 (gl_FUNC_STRERROR_R): Likewise.
