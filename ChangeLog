@@ -1,3 +1,13 @@
+2011-05-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	intprops: TYPE_IS_INTEGER, TYPE_SIGNED not integer constant exprs
+	* doc/intprops.texi (Integer Type Determination): Fix
+	documentation for TYPE_IS_INTEGER: it returns an constant
+	expression, not an integer constant expression.  Fix doc for
+	TYPE_SIGNED: it returns an integer constant expression only if its
+	argument is an integer type.  (TYPE_IS_INTEGER is the same, but is
+	hardly worth documented that way....)
+
 2011-05-18  Bruno Haible  <bruno@clisp.org>
 
 	strerror_r: Avoid clobbering the strerror buffer when possible.

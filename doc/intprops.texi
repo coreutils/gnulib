@@ -57,14 +57,15 @@ while the second, for integer types, is easier to use.
 @subsection Integer Type Determination
 
 @findex TYPE_IS_INTEGER
-@code{TYPE_IS_INTEGER (@var{t})} expands to an integer constant
+@code{TYPE_IS_INTEGER (@var{t})} expands to a constant
 expression that is 1 if the arithmetic type @var{t} is a integer type.
 @code{_Bool} counts as an integer type.
 
 @findex TYPE_SIGNED
-@code{TYPE_SIGNED (@var{t})} expands to an integer constant expression
+@code{TYPE_SIGNED (@var{t})} expands to a constant expression
 that is 1 if the arithmetic type @var{t} is a signed integer type or a
-floating type.
+floating type.  If @var{t} is an integer type, @code{TYPE_SIGNED (@var{t})}
+expands to an integer constant expression.
 
 Example usage:
 
