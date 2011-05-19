@@ -179,16 +179,21 @@
    : 0 < (a))
 
 /* Return 1 if A * B would overflow in [MIN,MAX] arithmetic.
-   See above for restrictions.  */
+   See above for restrictions.  Avoid && and || as they tickle
+   bugs in Sun C 5.11 2010/08/13 and other compilers; see
+   <http://lists.gnu.org/archive/html/bug-gnulib/2011-05/msg00401.html>.  */
 #define INT_MULTIPLY_RANGE_OVERFLOW(a, b, min, max)     \
   ((b) < 0                                              \
    ? ((a) < 0                                           \
       ? (a) < (max) / (b)                               \
-      : (b) < -1 && (min) / (b) < (a))                  \
-   : (0 < (b)                                           \
-      && ((a) < 0                                       \
-          ? (a) < (min) / (b)                           \
-          : (max) / (b) < (a))))
+      : (b) == -1                                       \
+      ? 0                                               \
+      : (min) / (b) < (a))                              \
+   : (b) == 0                                           \
+   ? 0                                                  \
+   : ((a) < 0                                           \
+      ? (a) < (min) / (b)                               \
+      : (max) / (b) < (a)))
 
 /* Return 1 if A / B would overflow in [MIN,MAX] arithmetic.
    See above for restrictions.  Do not check for division by zero.  */
