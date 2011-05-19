@@ -3,6 +3,7 @@ strerror() function: return string describing error code.
 
 Files:
 lib/strerror.c
+lib/strerror-impl.h
 m4/strerror.m4
 
 Depends-on:

@@ -1,3 +1,15 @@
+2011-05-19  Bruno Haible  <bruno@clisp.org>
+
+	perror: Avoid clobbering the strerror buffer when possible.
+	* lib/strerror-impl.h: New file, extracted from lib/strerror.c.
+	* lib/strerror.c: Include it.
+	* modules/strerror (Files): Add lib/strerror-impl.h.
+	* lib/perror.c: Include <stdlib.h>, intprops.h, verify.h.
+	(my_strerror): New function, defined through lib/strerror-impl.h.
+	(perror): Use it instead of strerror.
+	* modules/perror (Files): Add lib/strerror-impl.h.
+	(Depends-on): Remove strerror. Add intprops, verify, strerror_r-posix.
+
 2011-05-19  Eric Blake  <eblake@redhat.com>
 
 	strerror_r: fix on newer cygwin

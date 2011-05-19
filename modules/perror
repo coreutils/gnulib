@@ -3,12 +3,15 @@ perror() function: print a message describing error code.
 
 Files:
 lib/perror.c
+lib/strerror-impl.h
 m4/perror.m4
 
 Depends-on:
 stdio
-errno           [test $REPLACE_PERROR = 1]
-strerror        [test $REPLACE_PERROR = 1]
+errno            [test $REPLACE_PERROR = 1]
+intprops         [test $REPLACE_PERROR = 1]
+verify           [test $REPLACE_PERROR = 1]
+strerror_r-posix [test $REPLACE_PERROR = 1]
 
 configure.ac:
 gl_FUNC_PERROR

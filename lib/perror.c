@@ -21,12 +21,26 @@
 #include <stdio.h>
 
 #include <errno.h>
+#include <stdlib.h>
 #include <string.h>
+
+#include "intprops.h"
+#include "verify.h"
+
+/* Use the system functions, not the gnulib overrides in this file.  */
+#undef sprintf
+
+/* my_strerror (errnum) is equivalent to strerror (errnum).
+   But it uses its own buffer, not the one from strerror().  */
+#define STATIC static
+#undef strerror
+#define strerror my_strerror
+#include "strerror-impl.h"
 
 void
 perror (const char *string)
 {
-  const char *errno_description = strerror (errno);
+  const char *errno_description = my_strerror (errno);
 
   if (string != NULL && *string != '\0')
     fprintf (stderr, "%s: %s\n", string, errno_description);
