@@ -1,5 +1,11 @@
 2011-05-19  Bruno Haible  <bruno@clisp.org>
 
+	strerror_r: Reorder #if blocks.
+	* lib/strerror_r.c (strerror_r): Reorder conditionals in the function
+	for consistency with the previous commit.
+
+2011-05-19  Bruno Haible  <bruno@clisp.org>
+
 	perror: Avoid clobbering the strerror buffer when possible.
 	* lib/strerror-impl.h: New file, extracted from lib/strerror.c.
 	* lib/strerror.c: Include it.
@@ -13,7 +19,7 @@
 2011-05-19  Eric Blake  <eblake@redhat.com>
 
 	strerror_r: fix on newer cygwin
-	* lib/strerror_r.c (rpl_strerror_r): Cygwin now has
+	* lib/strerror_r.c (strerror_r): Cygwin now has
 	__xpg_strerror_r, use it.
 
 2011-05-19  Bruno Haible  <bruno@clisp.org>

@@ -419,7 +419,17 @@ strerror_r (int errnum, char *buf, size_t buflen)
   {
     int ret;
 
-#if USE_SYSTEM_STRERROR_R
+#if USE_XPG_STRERROR_R
+
+    {
+      extern int __xpg_strerror_r (int errnum, char *buf, size_t buflen);
+
+      ret = __xpg_strerror_r (errnum, buf, buflen);
+      if (ret < 0)
+        ret = errno;
+    }
+
+#elif USE_SYSTEM_STRERROR_R
 
     if (buflen > INT_MAX)
       buflen = INT_MAX;
@@ -494,16 +504,6 @@ strerror_r (int errnum, char *buf, size_t buflen)
             strcpy (buf, "Success");
           }
       }
-
-#elif USE_XPG_STRERROR_R
-
-    {
-      extern int __xpg_strerror_r (int errnum, char *buf, size_t buflen);
-
-      ret = __xpg_strerror_r (errnum, buf, buflen);
-      if (ret < 0)
-        ret = errno;
-    }
 
 #else /* USE_SYSTEM_STRERROR */
 
