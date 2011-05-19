@@ -1,3 +1,13 @@
+2011-05-18  Bruno Haible  <bruno@clisp.org>
+
+	strerror_r: Avoid clobbering the strerror buffer when possible.
+	* lib/strerror_r.c (strerror_r): Merge the three implementations.
+	Handle gnulib defined errno values here. When strerror() returns NULL
+	or an empty string, return EINVAL.
+	* lib/strerror.c (strerror): Always call strerror_r. Don't handle
+	gnulib defined errno values here.
+	* modules/strerror (Depends-on): Add verify, strerror_r-posix.
+
 2011-05-18  Eric Blake  <eblake@redhat.com>
 
 	fnmatch: avoid compiler warning
