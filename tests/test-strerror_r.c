@@ -46,13 +46,17 @@ main (void)
   ASSERT (strerror_r (EOVERFLOW, buf, sizeof (buf)) == 0);
   ASSERT (buf[0] != '\0');
 
-  /* Test results with out-of-range errnum and enough room.  */
-
-  buf[0] = '^';
+  /* POSIX requires strerror (0) to succeed; use of "Unknown error" or
+     "error 0" does not count as success, but "No error" works.
+     http://austingroupbugs.net/view.php?id=382  */
+  buf[0] = '\0';
   ret = strerror_r (0, buf, sizeof (buf));
-  ASSERT (ret == 0 || ret == EINVAL);
-  if (ret == 0)
-    ASSERT (buf[0] != '^');
+  ASSERT (ret == 0);
+  ASSERT (buf[0]);
+  ASSERT (strchr (buf, '0') == NULL);
+  ASSERT (strstr (buf, "nknown") == NULL);
+
+  /* Test results with out-of-range errnum and enough room.  */
 
   buf[0] = '^';
   ret = strerror_r (-3, buf, sizeof (buf));

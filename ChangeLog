@@ -1,3 +1,14 @@
+2011-05-19  Eric Blake  <eblake@redhat.com>
+
+	strerror: enforce POSIX ruling on strerror(0)
+	* m4/strerror.m4 (gl_FUNC_STRERROR_SEPARATE): Expose BSD bug.
+	* m4/strerror_r.m4 (gl_FUNC_STRERROR_R): Likewise.
+	* lib/strerror_r.c (rpl_strerror_r): Work around it.
+	* doc/posix-functions/strerror.texi (strerror): Document it.
+	* doc/posix-functions/strerror_r.texi (strerror_r): Likewise.
+	* tests/test-strerror.c (main): Strengthen test.
+	* tests/test-strerror_r.c (main): Likewise.
+
 2011-05-19  Paul Eggert  <eggert@cs.ucla.edu>
 
 	intprop-tests: port to older and more-pedantic compilers

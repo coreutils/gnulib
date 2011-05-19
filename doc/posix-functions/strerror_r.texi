@@ -37,6 +37,10 @@ This function does not support the error values that are specified by POSIX
 but not defined by the system, on some platforms:
 OpenBSD 4.0, OSF/1 5.1, NonStop Kernel, Cygwin 1.5.x.
 @item
+This function reports failure for @code{strerror_r(0, buf, len)},
+although POSIX requires this to succeed, on some platforms:
+FreeBSD 8.2
+@item
 This function always fails when the third argument is less than 80 on some
 platforms:
 HP-UX 11.31.

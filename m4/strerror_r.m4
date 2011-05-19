@@ -1,4 +1,4 @@
-# strerror_r.m4 serial 3
+# strerror_r.m4 serial 4
 dnl Copyright (C) 2002, 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -41,6 +41,7 @@ AC_DEFUN([gl_FUNC_STRERROR_R],
         dnl AIX 6.1 strerror_r fails by returning -1, not an error number.
         dnl HP-UX 11.31 strerror_r always fails when the buffer length argument
         dnl is less than 80.
+        dnl FreeBSD 8.s strerror_r claims failure on 0
         AC_CACHE_CHECK([whether strerror_r works],
           [gl_cv_func_strerror_r_works],
           [AC_RUN_IFELSE(
@@ -53,8 +54,13 @@ AC_DEFUN([gl_FUNC_STRERROR_R],
                   char buf[79];
                   if (strerror_r (EACCES, buf, 0) < 0)
                     result |= 1;
-                  if (strerror_r (EACCES, buf, sizeof (buf)) != 0)
+                  errno = 0;
+                  if (strerror_r (EACCES, buf, sizeof buf) != 0)
                     result |= 2;
+                  if (strerror_r (0, buf, sizeof buf) != 0)
+                    result |= 4;
+                  if (errno)
+                    result |= 8;
                   return result;
                 ]])],
              [gl_cv_func_strerror_r_works=yes],
@@ -66,6 +72,8 @@ changequote(,)dnl
                 aix*)  gl_cv_func_strerror_r_works="guessing no";;
                        # Guess no on HP-UX.
                 hpux*) gl_cv_func_strerror_r_works="guessing no";;
+                       # Guess no on FreeBSD.
+                freebsd*)  gl_cv_func_strerror_r_works="guessing no";;
                        # Guess yes otherwise.
                 *)     gl_cv_func_strerror_r_works="guessing yes";;
               esac
@@ -78,7 +86,7 @@ changequote([,])dnl
       else
         dnl The system's strerror() has a wrong signature. Replace it.
         REPLACE_STRERROR_R=1
-        dnl glibc >= 2.3.4 has a function __xpg_strerror_r.
+        dnl glibc >= 2.3.4 and cygwin 1.7.9 have a function __xpg_strerror_r.
         AC_CHECK_FUNCS([__xpg_strerror_r])
       fi
     else

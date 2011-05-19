@@ -436,6 +436,22 @@ strerror_r (int errnum, char *buf, size_t buflen)
     if (ret < 0)
       ret = errno;
 
+    /* FreeBSD rejects 0; see http://austingroupbugs.net/view.php?id=382.  */
+    if (errnum == 0 && ret == EINVAL)
+      {
+        if (buflen <= strlen ("Success"))
+          {
+            ret = ERANGE;
+            if (buflen)
+              buf[0] = 0;
+          }
+        else
+          {
+            ret = 0;
+            strcpy (buf, "Success");
+          }
+      }
+
 #elif USE_XPG_STRERROR_R
 
     {
