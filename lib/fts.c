@@ -710,7 +710,7 @@ leaf_optimization_applies (int dir_fd _GL_UNUSED) { return false; }
 #endif
 
 /* link-count-optimization entry:
-   map an stat.st_dev number to a boolean: leaf_optimization_works */
+   map a stat.st_dev number to a boolean: leaf_optimization_works */
 struct LCO_ent
 {
   dev_t st_dev;

@@ -62,7 +62,7 @@ extern int
 
 /* Grapheme cluster breaks.  */
 
-/* Returns true if there is an grapheme cluster boundary between Unicode code
+/* Returns true if there is a grapheme cluster boundary between Unicode code
    points A and B.  A "grapheme cluster" is an approximation to a
    user-perceived character, which sometimes corresponds to multiple code
    points.  For example, an English letter followed by an acute accent can be

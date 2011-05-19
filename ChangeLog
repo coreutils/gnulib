@@ -1,3 +1,15 @@
+2011-05-19  Jim Meyering  <meyering@redhat.com>
+
+	maint: correct misuse of "a" and "an"
+	* doc/regex.texi (Collating Symbol Operators): s/an close.../a close/
+	* lib/argp-help.c: "an docum...": s/an/a/
+	* lib/argp-parse.c: "An vector": s/An/A/
+	* lib/execute.c: "an native": s/an/a/
+	* lib/spawn-pipe.c: Likewise.
+	* lib/gc.h: "an Gc_rc": s/an/a/
+	* lib/unigbrk.in.h: "an grapheme": s/an/a/
+	* lib/fts.c: "an stat.st_dev": s/an/a/
+
 2011-05-19  Paul Eggert  <eggert@cs.ucla.edu>
 
 	intprops-tests: work around HP-UX 11.23 cc bug with constants

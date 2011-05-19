@@ -885,7 +885,7 @@ All other characters are ordinary.  For example, @samp{[.*]} matches
 Collating symbols can be represented inside lists.
 You form a @dfn{collating symbol} by
 putting a collating element between an @dfn{open-collating-symbol
-operator} and an @dfn{close-collating-symbol operator}.  @samp{[.}
+operator} and a @dfn{close-collating-symbol operator}.  @samp{[.}
 represents the open-collating-symbol operator and @samp{.]} represents
 the close-collating-symbol operator.  For example, if @samp{ll} is a
 collating element, then @samp{[[.ll.]]} would match @samp{ll}.

@@ -254,7 +254,7 @@ struct parser
   struct group *groups;
   /* The end of the GROUPS array.  */
   struct group *egroup;
-  /* An vector containing storage for the CHILD_INPUTS field in all groups.  */
+  /* A vector containing storage for the CHILD_INPUTS field in all groups.  */
   void **child_inputs;
 
   /* True if we think using getopt is still useful; if false, then

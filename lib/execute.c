@@ -158,7 +158,7 @@ execute (const char *progname,
                            (const char **) environ);
       if (exitcode < 0 && errno == ENOEXEC)
         {
-          /* prog is not an native executable.  Try to execute it as a
+          /* prog is not a native executable.  Try to execute it as a
              shell script.  Note that prepare_spawn() has already prepended
              a hidden element "sh.exe" to prog_argv.  */
           --prog_argv;

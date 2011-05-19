@@ -259,7 +259,7 @@ fill_in_uparams (const struct argp_state *state)
 /* Returns true if OPT is an alias for an earlier option.  */
 #define oalias(opt) ((opt)->flags & OPTION_ALIAS)
 
-/* Returns true if OPT is an documentation-only entry.  */
+/* Returns true if OPT is a documentation-only entry.  */
 #define odoc(opt) ((opt)->flags & OPTION_DOC)
 
 /* Returns true if OPT should not be translated */
