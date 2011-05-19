@@ -24,22 +24,19 @@
 #include <stdbool.h>
 #include <inttypes.h>
 
-/* TYPE_IS_INTEGER.  */
-verify (TYPE_IS_INTEGER (bool));
-verify (TYPE_IS_INTEGER (char));
-verify (TYPE_IS_INTEGER (signed char));
-verify (TYPE_IS_INTEGER (unsigned char));
-verify (TYPE_IS_INTEGER (short int));
-verify (TYPE_IS_INTEGER (unsigned short int));
-verify (TYPE_IS_INTEGER (int));
-verify (TYPE_IS_INTEGER (unsigned int));
-verify (TYPE_IS_INTEGER (long int));
-verify (TYPE_IS_INTEGER (unsigned long int));
-verify (TYPE_IS_INTEGER (intmax_t));
-verify (TYPE_IS_INTEGER (uintmax_t));
-verify (! TYPE_IS_INTEGER (float));
-verify (! TYPE_IS_INTEGER (double));
-verify (! TYPE_IS_INTEGER (long double));
+#include "macros.h"
+
+/* Work around compiler bugs in HP-UX 11.23 cc, IRIX 6.5 cc, OSF/1 5.1
+   cc, and Solaris 9 cc.  See
+   <http://lists.gnu.org/archive/html/bug-gnulib/2011-05/msg00401.html>.  */
+#undef UINT_MAX
+#undef ULONG_MAX
+#undef UINTMAX_MAX
+#define UINT_MAX ((unsigned int) -1)
+#define ULONG_MAX ((unsigned long int) -1)
+#define UINTMAX_MAX ((uintmax_t) -1)
+#define U0 ((unsigned int) 0)
+#define U1 ((unsigned int) 1)
 
 /* Integer representation.  */
 verify (INT_MIN + INT_MAX < 0
@@ -60,9 +57,6 @@ verify (TYPE_SIGNED (long int));
 verify (! TYPE_SIGNED (unsigned long int));
 verify (TYPE_SIGNED (intmax_t));
 verify (! TYPE_SIGNED (uintmax_t));
-verify (TYPE_SIGNED (float));
-verify (TYPE_SIGNED (double));
-verify (TYPE_SIGNED (long double));
 
 /* TYPE_MINIMUM, TYPE_MAXIMUM.  */
 verify (TYPE_MINIMUM (char) == CHAR_MIN);
@@ -118,23 +112,23 @@ verify (check_binop (ADD, INT_MAX, 1, INT_MIN, INT_MAX, true));
 verify (check_binop (ADD, INT_MAX, -1, INT_MIN, INT_MAX, false));
 verify (check_binop (ADD, INT_MIN, 1, INT_MIN, INT_MAX, false));
 verify (check_binop (ADD, INT_MIN, -1, INT_MIN, INT_MAX, true));
-verify (check_binop (ADD, UINT_MAX, 1u, 0u, UINT_MAX, true));
-verify (check_binop (ADD, 0u, 1u, 0u, UINT_MAX, false));
+verify (check_binop (ADD, UINT_MAX, U1, U0, UINT_MAX, true));
+verify (check_binop (ADD, U0, U1, U0, UINT_MAX, false));
 
 verify (check_binop (SUBTRACT, INT_MAX, 1, INT_MIN, INT_MAX, false));
 verify (check_binop (SUBTRACT, INT_MAX, -1, INT_MIN, INT_MAX, true));
 verify (check_binop (SUBTRACT, INT_MIN, 1, INT_MIN, INT_MAX, true));
 verify (check_binop (SUBTRACT, INT_MIN, -1, INT_MIN, INT_MAX, false));
-verify (check_binop (SUBTRACT, UINT_MAX, 1u, 0u, UINT_MAX, false));
-verify (check_binop (SUBTRACT, 0u, 1u, 0u, UINT_MAX, true));
+verify (check_binop (SUBTRACT, UINT_MAX, U1, U0, UINT_MAX, false));
+verify (check_binop (SUBTRACT, U0, U1, U0, UINT_MAX, true));
 
 verify (check_unop (NEGATE, INT_MIN, INT_MIN, INT_MAX,
                     TYPE_TWOS_COMPLEMENT (int)));
 verify (check_unop (NEGATE, 0, INT_MIN, INT_MAX, false));
 verify (check_unop (NEGATE, INT_MAX, INT_MIN, INT_MAX, false));
-verify (check_unop (NEGATE, 0u, 0u, UINT_MAX, false));
-verify (check_unop (NEGATE, 1u, 0u, UINT_MAX, true));
-verify (check_unop (NEGATE, UINT_MAX, 0u, UINT_MAX, true));
+verify (check_unop (NEGATE, U0, U0, UINT_MAX, false));
+verify (check_unop (NEGATE, U1, U0, UINT_MAX, true));
+verify (check_unop (NEGATE, UINT_MAX, U0, UINT_MAX, true));
 
 verify (check_binop (MULTIPLY, INT_MAX, INT_MAX, INT_MIN, INT_MAX, true));
 verify (check_binop (MULTIPLY, INT_MAX, INT_MIN, INT_MIN, INT_MAX, true));
@@ -149,17 +143,17 @@ verify (check_binop (DIVIDE, INT_MIN, -1, INT_MIN, INT_MAX,
                      INT_NEGATE_OVERFLOW (INT_MIN)));
 verify (check_binop (DIVIDE, INT_MAX, 1, INT_MIN, INT_MAX, false));
 verify (check_binop (DIVIDE, (unsigned int) INT_MIN,
-                     -1u, 0u, UINT_MAX, false));
+                     -U1, U0, UINT_MAX, false));
 
 verify (check_binop (REMAINDER, INT_MIN, -1, INT_MIN, INT_MAX,
                      INT_NEGATE_OVERFLOW (INT_MIN)));
 verify (check_binop (REMAINDER, INT_MAX, 1, INT_MIN, INT_MAX, false));
 verify (check_binop (REMAINDER, (unsigned int) INT_MIN,
-                     -1u, 0u, UINT_MAX, false));
+                     -U1, U0, UINT_MAX, false));
 
-verify (check_binop (LEFT_SHIFT, UINT_MAX, 1, 0u, UINT_MAX, true));
-verify (check_binop (LEFT_SHIFT, UINT_MAX / 2 + 1, 1, 0u, UINT_MAX, true));
-verify (check_binop (LEFT_SHIFT, UINT_MAX / 2, 1, 0u, UINT_MAX, false));
+verify (check_binop (LEFT_SHIFT, UINT_MAX, 1, U0, UINT_MAX, true));
+verify (check_binop (LEFT_SHIFT, UINT_MAX / 2 + 1, 1, U0, UINT_MAX, true));
+verify (check_binop (LEFT_SHIFT, UINT_MAX / 2, 1, U0, UINT_MAX, false));
 
 /* INT_<op>_OVERFLOW with mixed types.  */
 #define check_sum(a, b, overflow)                       \
@@ -167,51 +161,51 @@ verify (check_binop (LEFT_SHIFT, UINT_MAX / 2, 1, 0u, UINT_MAX, false));
   verify (INT_ADD_OVERFLOW (b, a) == (overflow))
 check_sum (-1, LONG_MIN, true);
 check_sum (-1, UINT_MAX, false);
-check_sum (-1L, INT_MIN, INT_MIN == LONG_MIN);
-check_sum (0u, -1, true);
-check_sum (0u, 0, false);
-check_sum (0u, 1, false);
+check_sum (- (long) 1, INT_MIN, INT_MIN == LONG_MIN);
+check_sum (U0, -1, true);
+check_sum (U0, 0, false);
+check_sum (U0, 1, false);
 check_sum (1, LONG_MAX, true);
 check_sum (1, UINT_MAX, true);
-check_sum (1L, INT_MAX, INT_MAX == LONG_MAX);
-check_sum (1u, INT_MAX, INT_MAX == UINT_MAX);
-check_sum (1u, INT_MIN, true);
+check_sum ((long) 1, INT_MAX, INT_MAX == LONG_MAX);
+check_sum (U1, INT_MAX, INT_MAX == UINT_MAX);
+check_sum (U1, INT_MIN, true);
 
-verify (! INT_SUBTRACT_OVERFLOW (INT_MAX, 1u));
+verify (! INT_SUBTRACT_OVERFLOW (INT_MAX, U1));
 verify (! INT_SUBTRACT_OVERFLOW (UINT_MAX, 1));
-verify (! INT_SUBTRACT_OVERFLOW (0u, -1));
+verify (! INT_SUBTRACT_OVERFLOW (U0, -1));
 verify (INT_SUBTRACT_OVERFLOW (UINT_MAX, -1));
-verify (INT_SUBTRACT_OVERFLOW (INT_MIN, 1u));
-verify (INT_SUBTRACT_OVERFLOW (-1, 0u));
+verify (INT_SUBTRACT_OVERFLOW (INT_MIN, U1));
+verify (INT_SUBTRACT_OVERFLOW (-1, U0));
 
 #define check_product(a, b, overflow)                   \
   verify (INT_MULTIPLY_OVERFLOW (a, b) == (overflow));   \
   verify (INT_MULTIPLY_OVERFLOW (b, a) == (overflow))
 
-check_product (-1, 1u, true);
+check_product (-1, U1, true);
 check_product (-1, INT_MIN, INT_NEGATE_OVERFLOW (INT_MIN));
 check_product (-1, UINT_MAX, true);
 check_product (-12345, LONG_MAX / -12345 - 1, true);
 check_product (-12345, LONG_MAX / -12345, false);
 check_product (0, -1, false);
 check_product (0, 0, false);
-check_product (0, 0u, false);
+check_product (0, U0, false);
 check_product (0, 1, false);
 check_product (0, INT_MAX, false);
 check_product (0, INT_MIN, false);
 check_product (0, UINT_MAX, false);
-check_product (0u, -1, false);
-check_product (0u, 0, false);
-check_product (0u, 0u, false);
-check_product (0u, 1, false);
-check_product (0u, INT_MAX, false);
-check_product (0u, INT_MIN, false);
-check_product (0u, UINT_MAX, false);
+check_product (U0, -1, false);
+check_product (U0, 0, false);
+check_product (U0, U0, false);
+check_product (U0, 1, false);
+check_product (U0, INT_MAX, false);
+check_product (U0, INT_MIN, false);
+check_product (U0, UINT_MAX, false);
 check_product (1, INT_MAX, false);
 check_product (1, INT_MIN, false);
 check_product (1, UINT_MAX, false);
-check_product (1u, INT_MIN, true);
-check_product (1u, INT_MAX, UINT_MAX < INT_MAX);
+check_product (U1, INT_MIN, true);
+check_product (U1, INT_MAX, UINT_MAX < INT_MAX);
 check_product (INT_MAX, UINT_MAX, true);
 check_product (INT_MAX, ULONG_MAX, true);
 check_product (INT_MIN, LONG_MAX / INT_MIN - 1, true);
@@ -219,19 +213,19 @@ check_product (INT_MIN, LONG_MAX / INT_MIN, false);
 check_product (INT_MIN, UINT_MAX, true);
 check_product (INT_MIN, ULONG_MAX, true);
 
-verify (INT_DIVIDE_OVERFLOW (INT_MIN, -1L)
+verify (INT_DIVIDE_OVERFLOW (INT_MIN, - (long) 1)
         == (TYPE_TWOS_COMPLEMENT (long int) && INT_MIN == LONG_MIN));
 verify (! INT_DIVIDE_OVERFLOW (INT_MIN, UINT_MAX));
 verify (! INT_DIVIDE_OVERFLOW (INTMAX_MIN, UINTMAX_MAX));
 verify (! INT_DIVIDE_OVERFLOW (INTMAX_MIN, UINT_MAX));
-verify (INT_DIVIDE_OVERFLOW (-11, 10u));
-verify (INT_DIVIDE_OVERFLOW (-10, 10u));
-verify (! INT_DIVIDE_OVERFLOW (-9, 10u));
-verify (INT_DIVIDE_OVERFLOW (11u, -10));
-verify (INT_DIVIDE_OVERFLOW (10u, -10));
+verify (INT_DIVIDE_OVERFLOW (-11, (unsigned int) 10));
+verify (INT_DIVIDE_OVERFLOW (-10, (unsigned int) 10));
+verify (! INT_DIVIDE_OVERFLOW (-9, (unsigned int) 10));
+verify (INT_DIVIDE_OVERFLOW ((unsigned int) 11, -10));
+verify (INT_DIVIDE_OVERFLOW ((unsigned int) 10, -10));
 verify (! INT_DIVIDE_OVERFLOW (9u, -10));
 
-verify (INT_REMAINDER_OVERFLOW (INT_MIN, -1L)
+verify (INT_REMAINDER_OVERFLOW (INT_MIN, - (long) 1)
         == (TYPE_TWOS_COMPLEMENT (long int) && INT_MIN == LONG_MIN));
 verify (INT_REMAINDER_OVERFLOW (-1, UINT_MAX));
 verify (INT_REMAINDER_OVERFLOW ((intmax_t) -1, UINTMAX_MAX));
@@ -240,14 +234,38 @@ verify (INT_REMAINDER_OVERFLOW (INTMAX_MIN, UINT_MAX)
             && - (unsigned int) INTMAX_MIN % UINT_MAX != 0));
 verify (INT_REMAINDER_OVERFLOW (INT_MIN, ULONG_MAX)
         == (INT_MIN % ULONG_MAX != 1));
-verify (! INT_REMAINDER_OVERFLOW (1u, -1));
-verify (! INT_REMAINDER_OVERFLOW (37*39u, -39));
-verify (INT_REMAINDER_OVERFLOW (37*39u + 1, -39));
-verify (INT_REMAINDER_OVERFLOW (37*39u - 1, -39));
+verify (! INT_REMAINDER_OVERFLOW (U1, -1));
+verify (! INT_REMAINDER_OVERFLOW (37 * (unsigned int) 39, -39));
+verify (INT_REMAINDER_OVERFLOW (37 * (unsigned int) 39 + 1, -39));
+verify (INT_REMAINDER_OVERFLOW (37 * (unsigned int) 39 - 1, -39));
 verify (! INT_REMAINDER_OVERFLOW (LONG_MAX, -INT_MAX));
 
 int
 main (void)
 {
+  /* Test expressions that might not be integer constant expressions.  */
+
+  /* TYPE_IS_INTEGER.  */
+  ASSERT (TYPE_IS_INTEGER (bool));
+  ASSERT (TYPE_IS_INTEGER (char));
+  ASSERT (TYPE_IS_INTEGER (signed char));
+  ASSERT (TYPE_IS_INTEGER (unsigned char));
+  ASSERT (TYPE_IS_INTEGER (short int));
+  ASSERT (TYPE_IS_INTEGER (unsigned short int));
+  ASSERT (TYPE_IS_INTEGER (int));
+  ASSERT (TYPE_IS_INTEGER (unsigned int));
+  ASSERT (TYPE_IS_INTEGER (long int));
+  ASSERT (TYPE_IS_INTEGER (unsigned long int));
+  ASSERT (TYPE_IS_INTEGER (intmax_t));
+  ASSERT (TYPE_IS_INTEGER (uintmax_t));
+  ASSERT (! TYPE_IS_INTEGER (float));
+  ASSERT (! TYPE_IS_INTEGER (double));
+  ASSERT (! TYPE_IS_INTEGER (long double));
+
+  /* TYPE_SIGNED.  */
+  ASSERT (TYPE_SIGNED (float));
+  ASSERT (TYPE_SIGNED (double));
+  ASSERT (TYPE_SIGNED (long double));
+
   return 0;
 }

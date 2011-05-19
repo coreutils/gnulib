@@ -1,5 +1,19 @@
 2011-05-19  Paul Eggert  <eggert@cs.ucla.edu>
 
+	intprop-tests: port to older and more-pedantic compilers
+	* modules/intprops-tests (Files): Add tests/macros.h.
+	* tests/test-intprops.c: Include macros.h.
+	(TYPE_IS_INTEGER): Use ASSERT, not verify, to test this macro, as
+	it's no longer documented to expand to an integer constant expression.
+	(TYPE_SIGNED): Use ASSERT, not verify, to test this macro when the
+	argument is floating point, as it's no longer documented to expand
+	to an integer constant expression in that case.
+	(UINT_MAX, ULONG_MAX, UINTMAX_MAX): Redefine to work around
+	compiler bugs reported by Bruno Haible.  See
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-05/msg00401.html>.
+	(U0, U1): New constants, to work around the same bugs.  Also,
+	in tests, use e.g., "(unsigned int) 39" rather than "39u".
+
 	intprops: work around C compiler bugs
 	* lib/intprops.h (INT_MULTIPLY_RANGE_OVERFLOW): Work around compiler
 	bug in Sun C 5.11 2010/08/13 and other compilers; see

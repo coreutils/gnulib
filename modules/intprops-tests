@@ -1,5 +1,6 @@
 Files:
 tests/test-intprops.c
+tests/macros.h
 
 Depends-on:
 inttypes
