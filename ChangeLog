@@ -1,3 +1,11 @@
+2011-05-19  Eric Blake  <eblake@redhat.com>
+
+	strerror_r: guarantee unchanged errno
+	* lib/strerror_r.c (strerror_r): Guarantee unchanged errno.
+	* lib/strerror-impl.h (strerror): Set errno to match strerror_r
+	failure.
+	* tests/test-strerror_r.c (main): Enhance test.
+
 2011-05-19  Bruno Haible  <bruno@clisp.org>
 
 	strerror_r: Reorder #if blocks.

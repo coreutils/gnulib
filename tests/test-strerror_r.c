@@ -34,35 +34,45 @@ main (void)
 
   /* Test results with valid errnum and enough room.  */
 
+  errno = 0;
   buf[0] = '\0';
   ASSERT (strerror_r (EACCES, buf, sizeof (buf)) == 0);
   ASSERT (buf[0] != '\0');
+  ASSERT (errno == 0);
 
+  errno = 0;
   buf[0] = '\0';
   ASSERT (strerror_r (ETIMEDOUT, buf, sizeof (buf)) == 0);
   ASSERT (buf[0] != '\0');
+  ASSERT (errno == 0);
 
+  errno = 0;
   buf[0] = '\0';
   ASSERT (strerror_r (EOVERFLOW, buf, sizeof (buf)) == 0);
   ASSERT (buf[0] != '\0');
+  ASSERT (errno == 0);
 
   /* POSIX requires strerror (0) to succeed.  Reject use of "Unknown
      error", but allow "Success", "No error", or even Solaris' "Error
      0" which are distinct patterns from true out-of-range strings.
      http://austingroupbugs.net/view.php?id=382  */
+  errno = 0;
   buf[0] = '\0';
   ret = strerror_r (0, buf, sizeof (buf));
   ASSERT (ret == 0);
   ASSERT (buf[0]);
+  ASSERT (errno == 0);
   ASSERT (strstr (buf, "nknown") == NULL);
 
   /* Test results with out-of-range errnum and enough room.  */
 
+  errno = 0;
   buf[0] = '^';
   ret = strerror_r (-3, buf, sizeof (buf));
   ASSERT (ret == 0 || ret == EINVAL);
   if (ret == 0)
     ASSERT (buf[0] != '^');
+  ASSERT (errno == 0);
 
   /* Test results with a too small buffer.  */
 
@@ -74,7 +84,9 @@ main (void)
     for (i = 0; i <= len; i++)
       {
         strcpy (buf, "BADFACE");
+        errno = 0;
         ret = strerror_r (EACCES, buf, i);
+        ASSERT (errno == 0);
         if (ret == 0)
           {
             /* Truncated result.  POSIX allows this, and it actually
@@ -90,8 +102,10 @@ main (void)
       }
 
     strcpy (buf, "BADFACE");
+    errno = 0;
     ret = strerror_r (EACCES, buf, len + 1);
     ASSERT (ret == 0);
+    ASSERT (errno == 0);
   }
 
   return 0;

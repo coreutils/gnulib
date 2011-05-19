@@ -403,21 +403,24 @@ strerror_r (int errnum, char *buf, size_t buflen)
 
     if (msg)
       {
+        int saved_errno = errno;
         size_t len = strlen (msg);
+        int ret = ERANGE;
 
         if (len < buflen)
           {
             memcpy (buf, msg, len + 1);
-            return 0;
+            ret = 0;
           }
-        else
-          return ERANGE;
+        errno = saved_errno;
+        return ret;
       }
   }
 #endif
 
   {
     int ret;
+    int saved_errno = errno;
 
 #if USE_XPG_STRERROR_R
 
@@ -519,7 +522,6 @@ strerror_r (int errnum, char *buf, size_t buflen)
     if (errnum >= 0 && errnum < sys_nerr)
       {
 #  if HAVE_CATGETS && (defined __NetBSD__ || defined __hpux)
-        int saved_errno = errno;
 #   if defined __NetBSD__
         nl_catd catd = catopen ("libc", NL_CAT_LOCALE);
         const char *errmsg =
@@ -554,7 +556,6 @@ strerror_r (int errnum, char *buf, size_t buflen)
 #  if HAVE_CATGETS && (defined __NetBSD__ || defined __hpux)
         if (catd != (nl_catd)-1)
           catclose (catd);
-        errno = saved_errno;
 #  endif
       }
     else
@@ -618,6 +619,7 @@ strerror_r (int errnum, char *buf, size_t buflen)
 
 #endif
 
+    errno = saved_errno;
     return ret;
   }
 }
