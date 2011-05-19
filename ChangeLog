@@ -1,5 +1,14 @@
 2011-05-19  Bruno Haible  <bruno@clisp.org>
 
+	strerror_r: Avoid clobbering the strerror buffer when possible.
+	* lib/strerror.c: Define _NETBSD_SOURCE. Include <nl_types.h>.
+	(sys_nerr, sys_errlist): New declarations.
+	(strerror_r): Be careful not to clobber the strerror buffer on NetBSD,
+	HP-UX, native Win32, IRIX, and 32-bit Solaris.
+	* m4/strerror_r.m4 (gl_PREREQ_STRERROR_R): Test whether catgets exists.
+
+2011-05-19  Bruno Haible  <bruno@clisp.org>
+
 	strerror_r: Fix test failure on mingw.
 	* m4/strerror_r.m4 (gl_FUNC_STRERROR_R): Don't define
 	EXTEND_STRERROR_R.

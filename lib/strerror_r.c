@@ -19,6 +19,9 @@
 
 #include <config.h>
 
+/* Enable declaration of sys_nerr and sys_errlist in <errno.h> on NetBSD.  */
+#define _NETBSD_SOURCE 1
+
 /* Specification.  */
 #include <string.h>
 
@@ -46,16 +49,44 @@
 
 #else /* (__GLIBC__ >= 2 || defined __UCLIBC__ ? !HAVE___XPG_STRERROR_R : !HAVE_DECL_STRERROR_R) */
 
-# include "glthread/lock.h"
-
-/* Use strerror(), with locking.  */
+/* Use the system's strerror().  */
 # undef strerror
 
 # define USE_SYSTEM_STRERROR 1
 
+# if defined __NetBSD__ || defined __hpux || ((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__) || defined __sgi || (defined __sun && !defined _LP64)
+
+/* No locking needed.  */
+
+/* Get catgets internationalization functions.  */
+#  if HAVE_CATGETS
+#   include <nl_types.h>
+#  endif
+
+/* Get sys_nerr, sys_errlist on HP-UX (otherwise only declared in C++ mode).
+   Get sys_nerr, sys_errlist on IRIX (otherwise only declared with _SGIAPI).  */
+#  if defined __hpux || defined __sgi
+extern int sys_nerr;
+extern char *sys_errlist[];
+#  endif
+
+/* Get sys_nerr on Solaris.  */
+#  if defined __sun && !defined _LP64
+extern int sys_nerr;
+#  endif
+
+/* Get sys_nerr, sys_errlist on native Windows.  */
+#  include <stdlib.h>
+
+# else
+
+#  include "glthread/lock.h"
+
 /* This lock protects the buffer returned by strerror().  We assume that
    no other uses of strerror() exist in the program.  */
 gl_lock_define_initialized(static, strerror_lock)
+
+# endif
 
 #endif
 
@@ -476,6 +507,87 @@ strerror_r (int errnum, char *buf, size_t buflen)
 
 #else /* USE_SYSTEM_STRERROR */
 
+    /* Try to do what strerror (errnum) does, but without clobbering the
+       buffer used by strerror().  */
+
+# if defined __NetBSD__ || defined __hpux || ((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__) /* NetBSD, HP-UX, native Win32 */
+
+    /* NetBSD:        sys_nerr, sys_errlist are declared through _NETBSD_SOURCE
+                      and <errno.h> above.
+       HP-UX:         sys_nerr, sys_errlist are declared explicitly above.
+       native Win32:  sys_nerr, sys_errlist are declared in <stdlib.h>.  */
+    if (errnum >= 0 && errnum < sys_nerr)
+      {
+#  if HAVE_CATGETS && (defined __NetBSD__ || defined __hpux)
+        int saved_errno = errno;
+#   if defined __NetBSD__
+        nl_catd catd = catopen ("libc", NL_CAT_LOCALE);
+        const char *errmsg =
+          (catd != (nl_catd)-1
+           ? catgets (catd, 1, errnum, sys_errlist[errnum])
+           : sys_errlist[errnum]);
+#   endif
+#   if defined __hpux
+        nl_catd catd = catopen ("perror", NL_CAT_LOCALE);
+        const char *errmsg =
+          (catd != (nl_catd)-1
+           ? catgets (catd, 1, 1 + errnum, sys_errlist[errnum])
+           : sys_errlist[errnum]);
+#   endif
+#  else
+        const char *errmsg = sys_errlist[errnum];
+#  endif
+        if (errmsg == NULL || *errmsg == '\0')
+          ret = EINVAL;
+        else
+          {
+            size_t len = strlen (errmsg);
+
+            if (len < buflen)
+              {
+                memcpy (buf, errmsg, len + 1);
+                ret = 0;
+              }
+            else
+              ret = ERANGE;
+          }
+#  if HAVE_CATGETS && (defined __NetBSD__ || defined __hpux)
+        if (catd != (nl_catd)-1)
+          catclose (catd);
+        errno = saved_errno;
+#  endif
+      }
+    else
+      ret = EINVAL;
+
+# elif defined __sgi || (defined __sun && !defined _LP64) /* IRIX, Solaris <= 9 32-bit */
+
+    /* For a valid error number, the system's strerror() function returns
+       a pointer to a not copied string, not to a buffer.  */
+    if (errnum >= 0 && errnum < sys_nerr)
+      {
+        char *errmsg = strerror (errnum);
+
+        if (errmsg == NULL || *errmsg == '\0')
+          ret = EINVAL;
+        else
+          {
+            size_t len = strlen (errmsg);
+
+            if (len < buflen)
+              {
+                memcpy (buf, errmsg, len + 1);
+                ret = 0;
+              }
+            else
+              ret = ERANGE;
+          }
+      }
+    else
+      ret = EINVAL;
+
+# else
+
     gl_lock_lock (strerror_lock);
 
     {
@@ -501,6 +613,8 @@ strerror_r (int errnum, char *buf, size_t buflen)
     }
 
     gl_lock_unlock (strerror_lock);
+
+# endif
 
 #endif
 

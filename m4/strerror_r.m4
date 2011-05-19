@@ -1,4 +1,4 @@
-# strerror_r.m4 serial 5
+# strerror_r.m4 serial 6
 dnl Copyright (C) 2002, 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -103,5 +103,6 @@ changequote([,])dnl
 
 # Prerequisites of lib/strerror_r.c.
 AC_DEFUN([gl_PREREQ_STRERROR_R], [
+  AC_CHECK_FUNCS_ONCE([catgets])
   :
 ])
