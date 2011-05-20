@@ -26,212 +26,22 @@
 
 #include "macros.h"
 
-/* Integer representation.  */
-verify (INT_MIN + INT_MAX < 0
-        ? (TYPE_TWOS_COMPLEMENT (int)
-           && ! TYPE_ONES_COMPLEMENT (int) && ! TYPE_SIGNED_MAGNITUDE (int))
-        : (! TYPE_TWOS_COMPLEMENT (int)
-           && (TYPE_ONES_COMPLEMENT (int) || TYPE_SIGNED_MAGNITUDE (int))));
-
-/* TYPE_SIGNED.  */
-/* verify (! TYPE_SIGNED (bool)); */ /* not guaranteed by gnulib substitute */
-verify (TYPE_SIGNED (signed char));
-verify (! TYPE_SIGNED (unsigned char));
-verify (TYPE_SIGNED (short int));
-verify (! TYPE_SIGNED (unsigned short int));
-verify (TYPE_SIGNED (int));
-verify (! TYPE_SIGNED (unsigned int));
-verify (TYPE_SIGNED (long int));
-verify (! TYPE_SIGNED (unsigned long int));
-verify (TYPE_SIGNED (intmax_t));
-verify (! TYPE_SIGNED (uintmax_t));
-
-/* TYPE_MINIMUM, TYPE_MAXIMUM.  */
-verify (TYPE_MINIMUM (char) == CHAR_MIN);
-verify (TYPE_MAXIMUM (char) == CHAR_MAX);
-verify (TYPE_MINIMUM (unsigned char) == 0);
-verify (TYPE_MAXIMUM (unsigned char) == UCHAR_MAX);
-verify (TYPE_MINIMUM (signed char) == SCHAR_MIN);
-verify (TYPE_MAXIMUM (signed char) == SCHAR_MAX);
-verify (TYPE_MINIMUM (short int) == SHRT_MIN);
-verify (TYPE_MAXIMUM (short int) == SHRT_MAX);
-verify (TYPE_MINIMUM (unsigned short int) == 0);
-verify (TYPE_MAXIMUM (unsigned short int) == USHRT_MAX);
-verify (TYPE_MINIMUM (int) == INT_MIN);
-verify (TYPE_MAXIMUM (int) == INT_MAX);
-verify (TYPE_MINIMUM (unsigned int) == 0);
-verify (TYPE_MAXIMUM (unsigned int) == UINT_MAX);
-verify (TYPE_MINIMUM (long int) == LONG_MIN);
-verify (TYPE_MAXIMUM (long int) == LONG_MAX);
-verify (TYPE_MINIMUM (unsigned long int) == 0);
-verify (TYPE_MAXIMUM (unsigned long int) == ULONG_MAX);
-verify (TYPE_MINIMUM (intmax_t) == INTMAX_MIN);
-verify (TYPE_MAXIMUM (intmax_t) == INTMAX_MAX);
-verify (TYPE_MINIMUM (uintmax_t) == 0);
-verify (TYPE_MAXIMUM (uintmax_t) == UINTMAX_MAX);
-
-/* INT_BITS_STRLEN_BOUND.  */
-verify (INT_BITS_STRLEN_BOUND (1) == 1);
-verify (INT_BITS_STRLEN_BOUND (2620) == 789);
-
-/* INT_STRLEN_BOUND, INT_BUFSIZE_BOUND.  */
-#ifdef INT32_MAX /* POSIX guarantees int32_t; this ports to non-POSIX hosts */
-verify (INT_STRLEN_BOUND (int32_t) == sizeof ("-2147483648") - 1);
-verify (INT_BUFSIZE_BOUND (int32_t) == sizeof ("-2147483648"));
+/* VERIFY (X) uses a static assertion for compilers that are known to work,
+   and falls back on a dynamic assertion for other compilers.
+   These tests should be checkable via 'verify' rather than 'ASSERT', but
+   using 'verify' would run into a bug with HP-UX 11.23 cc; see
+   <http://lists.gnu.org/archive/html/bug-gnulib/2011-05/msg00401.html>.  */
+#if __GNUC__ || __SUNPRO_C
+# define VERIFY(x) do { verify (x); } while (0)
+#else
+# define VERIFY(x) ASSERT (x)
 #endif
-#ifdef INT64_MAX
-verify (INT_STRLEN_BOUND (int64_t) == sizeof ("-9223372036854775808") - 1);
-verify (INT_BUFSIZE_BOUND (int64_t) == sizeof ("-9223372036854775808"));
-#endif
-
-/* All the INT_<op>_RANGE_OVERFLOW tests are equally valid as
-   INT_<op>_OVERFLOW tests, so define a single macro to do both.  */
-#define check_binop(op, a, b, min, max, overflow)                      \
-  (INT_##op##_RANGE_OVERFLOW (a, b, min, max) == (overflow)            \
-   && INT_##op##_OVERFLOW (a, b) == (overflow))
-#define check_unop(op, a, min, max, overflow)                          \
-  (INT_##op##_RANGE_OVERFLOW (a, min, max) == (overflow)               \
-   && INT_##op##_OVERFLOW (a) == (overflow))
-
-/* INT_<op>_RANGE_OVERFLOW, INT_<op>_OVERFLOW.  */
-verify (INT_ADD_RANGE_OVERFLOW (INT_MAX, 1, INT_MIN, INT_MAX));
-verify (INT_ADD_OVERFLOW (INT_MAX, 1));
-verify (check_binop (ADD, INT_MAX, 1, INT_MIN, INT_MAX, true));
-verify (check_binop (ADD, INT_MAX, -1, INT_MIN, INT_MAX, false));
-verify (check_binop (ADD, INT_MIN, 1, INT_MIN, INT_MAX, false));
-verify (check_binop (ADD, INT_MIN, -1, INT_MIN, INT_MAX, true));
-verify (check_binop (ADD, UINT_MAX, 1u, 0u, UINT_MAX, true));
-verify (check_binop (ADD, 0u, 1u, 0u, UINT_MAX, false));
-
-verify (check_binop (SUBTRACT, INT_MAX, 1, INT_MIN, INT_MAX, false));
-verify (check_binop (SUBTRACT, INT_MAX, -1, INT_MIN, INT_MAX, true));
-verify (check_binop (SUBTRACT, INT_MIN, 1, INT_MIN, INT_MAX, true));
-verify (check_binop (SUBTRACT, INT_MIN, -1, INT_MIN, INT_MAX, false));
-verify (check_binop (SUBTRACT, UINT_MAX, 1u, 0u, UINT_MAX, false));
-verify (check_binop (SUBTRACT, 0u, 1u, 0u, UINT_MAX, true));
-
-verify (check_unop (NEGATE, INT_MIN, INT_MIN, INT_MAX,
-                    TYPE_TWOS_COMPLEMENT (int)));
-verify (check_unop (NEGATE, 0, INT_MIN, INT_MAX, false));
-verify (check_unop (NEGATE, INT_MAX, INT_MIN, INT_MAX, false));
-verify (check_unop (NEGATE, 0u, 0u, UINT_MAX, false));
-verify (check_unop (NEGATE, 1u, 0u, UINT_MAX, true));
-verify (check_unop (NEGATE, UINT_MAX, 0u, UINT_MAX, true));
-
-verify (check_binop (MULTIPLY, INT_MAX, INT_MAX, INT_MIN, INT_MAX, true));
-verify (check_binop (MULTIPLY, INT_MAX, INT_MIN, INT_MIN, INT_MAX, true));
-verify (check_binop (MULTIPLY, INT_MIN, INT_MAX, INT_MIN, INT_MAX, true));
-verify (check_binop (MULTIPLY, INT_MIN, INT_MIN, INT_MIN, INT_MAX, true));
-verify (check_binop (MULTIPLY, -1, INT_MIN, INT_MIN, INT_MAX,
-                     INT_NEGATE_OVERFLOW (INT_MIN)));
-verify (check_binop (MULTIPLY, LONG_MIN / INT_MAX, (long int) INT_MAX,
-                     LONG_MIN, LONG_MIN, false));
-
-verify (check_binop (DIVIDE, INT_MIN, -1, INT_MIN, INT_MAX,
-                     INT_NEGATE_OVERFLOW (INT_MIN)));
-verify (check_binop (DIVIDE, INT_MAX, 1, INT_MIN, INT_MAX, false));
-verify (check_binop (DIVIDE, (unsigned int) INT_MIN,
-                     -1u, 0u, UINT_MAX, false));
-
-verify (check_binop (REMAINDER, INT_MIN, -1, INT_MIN, INT_MAX,
-                     INT_NEGATE_OVERFLOW (INT_MIN)));
-verify (check_binop (REMAINDER, INT_MAX, 1, INT_MIN, INT_MAX, false));
-verify (check_binop (REMAINDER, (unsigned int) INT_MIN,
-                     -1u, 0u, UINT_MAX, false));
-
-verify (check_binop (LEFT_SHIFT, UINT_MAX, 1, 0u, UINT_MAX, true));
-verify (check_binop (LEFT_SHIFT, UINT_MAX / 2 + 1, 1, 0u, UINT_MAX, true));
-verify (check_binop (LEFT_SHIFT, UINT_MAX / 2, 1, 0u, UINT_MAX, false));
-
-/* INT_<op>_OVERFLOW with mixed types.  */
-#define check_sum(a, b, overflow)                       \
-  verify (INT_ADD_OVERFLOW (a, b) == (overflow));       \
-  verify (INT_ADD_OVERFLOW (b, a) == (overflow))
-check_sum (-1, LONG_MIN, true);
-check_sum (-1, UINT_MAX, false);
-check_sum (-1L, INT_MIN, INT_MIN == LONG_MIN);
-check_sum (0u, -1, true);
-check_sum (0u, 0, false);
-check_sum (0u, 1, false);
-check_sum (1, LONG_MAX, true);
-check_sum (1, UINT_MAX, true);
-check_sum (1L, INT_MAX, INT_MAX == LONG_MAX);
-check_sum (1u, INT_MAX, INT_MAX == UINT_MAX);
-check_sum (1u, INT_MIN, true);
-
-verify (! INT_SUBTRACT_OVERFLOW (INT_MAX, 1u));
-verify (! INT_SUBTRACT_OVERFLOW (UINT_MAX, 1));
-verify (! INT_SUBTRACT_OVERFLOW (0u, -1));
-verify (INT_SUBTRACT_OVERFLOW (UINT_MAX, -1));
-verify (INT_SUBTRACT_OVERFLOW (INT_MIN, 1u));
-verify (INT_SUBTRACT_OVERFLOW (-1, 0u));
-
-#define check_product(a, b, overflow)                   \
-  verify (INT_MULTIPLY_OVERFLOW (a, b) == (overflow));   \
-  verify (INT_MULTIPLY_OVERFLOW (b, a) == (overflow))
-
-check_product (-1, 1u, true);
-check_product (-1, INT_MIN, INT_NEGATE_OVERFLOW (INT_MIN));
-check_product (-1, UINT_MAX, true);
-check_product (-12345, LONG_MAX / -12345 - 1, true);
-check_product (-12345, LONG_MAX / -12345, false);
-check_product (0, -1, false);
-check_product (0, 0, false);
-check_product (0, 0u, false);
-check_product (0, 1, false);
-check_product (0, INT_MAX, false);
-check_product (0, INT_MIN, false);
-check_product (0, UINT_MAX, false);
-check_product (0u, -1, false);
-check_product (0u, 0, false);
-check_product (0u, 0u, false);
-check_product (0u, 1, false);
-check_product (0u, INT_MAX, false);
-check_product (0u, INT_MIN, false);
-check_product (0u, UINT_MAX, false);
-check_product (1, INT_MAX, false);
-check_product (1, INT_MIN, false);
-check_product (1, UINT_MAX, false);
-check_product (1u, INT_MIN, true);
-check_product (1u, INT_MAX, UINT_MAX < INT_MAX);
-check_product (INT_MAX, UINT_MAX, true);
-check_product (INT_MAX, ULONG_MAX, true);
-check_product (INT_MIN, LONG_MAX / INT_MIN - 1, true);
-check_product (INT_MIN, LONG_MAX / INT_MIN, false);
-check_product (INT_MIN, UINT_MAX, true);
-check_product (INT_MIN, ULONG_MAX, true);
-
-verify (INT_DIVIDE_OVERFLOW (INT_MIN, -1L)
-        == (TYPE_TWOS_COMPLEMENT (long int) && INT_MIN == LONG_MIN));
-verify (! INT_DIVIDE_OVERFLOW (INT_MIN, UINT_MAX));
-verify (! INT_DIVIDE_OVERFLOW (INTMAX_MIN, UINTMAX_MAX));
-verify (! INT_DIVIDE_OVERFLOW (INTMAX_MIN, UINT_MAX));
-verify (INT_DIVIDE_OVERFLOW (-11, 10u));
-verify (INT_DIVIDE_OVERFLOW (-10, 10u));
-verify (! INT_DIVIDE_OVERFLOW (-9, 10u));
-verify (INT_DIVIDE_OVERFLOW (11u, -10));
-verify (INT_DIVIDE_OVERFLOW (10u, -10));
-verify (! INT_DIVIDE_OVERFLOW (9u, -10));
-
-verify (INT_REMAINDER_OVERFLOW (INT_MIN, -1L)
-        == (TYPE_TWOS_COMPLEMENT (long int) && INT_MIN == LONG_MIN));
-verify (INT_REMAINDER_OVERFLOW (-1, UINT_MAX));
-verify (INT_REMAINDER_OVERFLOW ((intmax_t) -1, UINTMAX_MAX));
-verify (INT_REMAINDER_OVERFLOW (INTMAX_MIN, UINT_MAX)
-        == (INTMAX_MAX < UINT_MAX
-            && - (unsigned int) INTMAX_MIN % UINT_MAX != 0));
-verify (INT_REMAINDER_OVERFLOW (INT_MIN, ULONG_MAX)
-        == (INT_MIN % ULONG_MAX != 1));
-verify (! INT_REMAINDER_OVERFLOW (1u, -1));
-verify (! INT_REMAINDER_OVERFLOW (37*39u, -39));
-verify (INT_REMAINDER_OVERFLOW (37*39u + 1, -39));
-verify (INT_REMAINDER_OVERFLOW (37*39u - 1, -39));
-verify (! INT_REMAINDER_OVERFLOW (LONG_MAX, -INT_MAX));
 
 int
 main (void)
 {
-  /* Test expressions that might not be integer constant expressions.  */
+  /* Use VERIFY for tests that must be integer constant expressions,
+     ASSERT otherwise.  */
 
   /* TYPE_IS_INTEGER.  */
   ASSERT (TYPE_IS_INTEGER (bool));
@@ -251,9 +61,209 @@ main (void)
   ASSERT (! TYPE_IS_INTEGER (long double));
 
   /* TYPE_SIGNED.  */
+  /* VERIFY (! TYPE_SIGNED (bool)); // not guaranteed by gnulib substitute */
+  VERIFY (TYPE_SIGNED (signed char));
+  VERIFY (! TYPE_SIGNED (unsigned char));
+  VERIFY (TYPE_SIGNED (short int));
+  VERIFY (! TYPE_SIGNED (unsigned short int));
+  VERIFY (TYPE_SIGNED (int));
+  VERIFY (! TYPE_SIGNED (unsigned int));
+  VERIFY (TYPE_SIGNED (long int));
+  VERIFY (! TYPE_SIGNED (unsigned long int));
+  VERIFY (TYPE_SIGNED (intmax_t));
+  VERIFY (! TYPE_SIGNED (uintmax_t));
   ASSERT (TYPE_SIGNED (float));
   ASSERT (TYPE_SIGNED (double));
   ASSERT (TYPE_SIGNED (long double));
+
+  /* Integer representation.  */
+  VERIFY (INT_MIN + INT_MAX < 0
+          ? (TYPE_TWOS_COMPLEMENT (int)
+             && ! TYPE_ONES_COMPLEMENT (int) && ! TYPE_SIGNED_MAGNITUDE (int))
+          : (! TYPE_TWOS_COMPLEMENT (int)
+             && (TYPE_ONES_COMPLEMENT (int) || TYPE_SIGNED_MAGNITUDE (int))));
+
+  /* TYPE_MINIMUM, TYPE_MAXIMUM.  */
+  VERIFY (TYPE_MINIMUM (char) == CHAR_MIN);
+  VERIFY (TYPE_MAXIMUM (char) == CHAR_MAX);
+  VERIFY (TYPE_MINIMUM (unsigned char) == 0);
+  VERIFY (TYPE_MAXIMUM (unsigned char) == UCHAR_MAX);
+  VERIFY (TYPE_MINIMUM (signed char) == SCHAR_MIN);
+  VERIFY (TYPE_MAXIMUM (signed char) == SCHAR_MAX);
+  VERIFY (TYPE_MINIMUM (short int) == SHRT_MIN);
+  VERIFY (TYPE_MAXIMUM (short int) == SHRT_MAX);
+  VERIFY (TYPE_MINIMUM (unsigned short int) == 0);
+  VERIFY (TYPE_MAXIMUM (unsigned short int) == USHRT_MAX);
+  VERIFY (TYPE_MINIMUM (int) == INT_MIN);
+  VERIFY (TYPE_MAXIMUM (int) == INT_MAX);
+  VERIFY (TYPE_MINIMUM (unsigned int) == 0);
+  VERIFY (TYPE_MAXIMUM (unsigned int) == UINT_MAX);
+  VERIFY (TYPE_MINIMUM (long int) == LONG_MIN);
+  VERIFY (TYPE_MAXIMUM (long int) == LONG_MAX);
+  VERIFY (TYPE_MINIMUM (unsigned long int) == 0);
+  VERIFY (TYPE_MAXIMUM (unsigned long int) == ULONG_MAX);
+  VERIFY (TYPE_MINIMUM (intmax_t) == INTMAX_MIN);
+  VERIFY (TYPE_MAXIMUM (intmax_t) == INTMAX_MAX);
+  VERIFY (TYPE_MINIMUM (uintmax_t) == 0);
+  VERIFY (TYPE_MAXIMUM (uintmax_t) == UINTMAX_MAX);
+
+  /* INT_BITS_STRLEN_BOUND.  */
+  VERIFY (INT_BITS_STRLEN_BOUND (1) == 1);
+  VERIFY (INT_BITS_STRLEN_BOUND (2620) == 789);
+
+  /* INT_STRLEN_BOUND, INT_BUFSIZE_BOUND.  */
+  #ifdef INT32_MAX /* POSIX guarantees int32_t; this ports to non-POSIX.  */
+  VERIFY (INT_STRLEN_BOUND (int32_t) == sizeof ("-2147483648") - 1);
+  VERIFY (INT_BUFSIZE_BOUND (int32_t) == sizeof ("-2147483648"));
+  #endif
+  #ifdef INT64_MAX
+  VERIFY (INT_STRLEN_BOUND (int64_t) == sizeof ("-9223372036854775808") - 1);
+  VERIFY (INT_BUFSIZE_BOUND (int64_t) == sizeof ("-9223372036854775808"));
+  #endif
+
+  /* All the INT_<op>_RANGE_OVERFLOW tests are equally valid as
+     INT_<op>_OVERFLOW tests, so define a single macro to do both.  */
+  #define CHECK_BINOP(op, a, b, min, max, overflow)                      \
+    (INT_##op##_RANGE_OVERFLOW (a, b, min, max) == (overflow)            \
+     && INT_##op##_OVERFLOW (a, b) == (overflow))
+  #define CHECK_UNOP(op, a, min, max, overflow)                          \
+    (INT_##op##_RANGE_OVERFLOW (a, min, max) == (overflow)               \
+     && INT_##op##_OVERFLOW (a) == (overflow))
+
+  /* INT_<op>_RANGE_OVERFLOW, INT_<op>_OVERFLOW.  */
+  VERIFY (INT_ADD_RANGE_OVERFLOW (INT_MAX, 1, INT_MIN, INT_MAX));
+  VERIFY (INT_ADD_OVERFLOW (INT_MAX, 1));
+  VERIFY (CHECK_BINOP (ADD, INT_MAX, 1, INT_MIN, INT_MAX, true));
+  VERIFY (CHECK_BINOP (ADD, INT_MAX, -1, INT_MIN, INT_MAX, false));
+  VERIFY (CHECK_BINOP (ADD, INT_MIN, 1, INT_MIN, INT_MAX, false));
+  VERIFY (CHECK_BINOP (ADD, INT_MIN, -1, INT_MIN, INT_MAX, true));
+  VERIFY (CHECK_BINOP (ADD, UINT_MAX, 1u, 0u, UINT_MAX, true));
+  VERIFY (CHECK_BINOP (ADD, 0u, 1u, 0u, UINT_MAX, false));
+
+  VERIFY (CHECK_BINOP (SUBTRACT, INT_MAX, 1, INT_MIN, INT_MAX, false));
+  VERIFY (CHECK_BINOP (SUBTRACT, INT_MAX, -1, INT_MIN, INT_MAX, true));
+  VERIFY (CHECK_BINOP (SUBTRACT, INT_MIN, 1, INT_MIN, INT_MAX, true));
+  VERIFY (CHECK_BINOP (SUBTRACT, INT_MIN, -1, INT_MIN, INT_MAX, false));
+  VERIFY (CHECK_BINOP (SUBTRACT, UINT_MAX, 1u, 0u, UINT_MAX, false));
+  VERIFY (CHECK_BINOP (SUBTRACT, 0u, 1u, 0u, UINT_MAX, true));
+
+  VERIFY (CHECK_UNOP (NEGATE, INT_MIN, INT_MIN, INT_MAX,
+                      TYPE_TWOS_COMPLEMENT (int)));
+  VERIFY (CHECK_UNOP (NEGATE, 0, INT_MIN, INT_MAX, false));
+  VERIFY (CHECK_UNOP (NEGATE, INT_MAX, INT_MIN, INT_MAX, false));
+  VERIFY (CHECK_UNOP (NEGATE, 0u, 0u, UINT_MAX, false));
+  VERIFY (CHECK_UNOP (NEGATE, 1u, 0u, UINT_MAX, true));
+  VERIFY (CHECK_UNOP (NEGATE, UINT_MAX, 0u, UINT_MAX, true));
+
+  VERIFY (CHECK_BINOP (MULTIPLY, INT_MAX, INT_MAX, INT_MIN, INT_MAX, true));
+  VERIFY (CHECK_BINOP (MULTIPLY, INT_MAX, INT_MIN, INT_MIN, INT_MAX, true));
+  VERIFY (CHECK_BINOP (MULTIPLY, INT_MIN, INT_MAX, INT_MIN, INT_MAX, true));
+  VERIFY (CHECK_BINOP (MULTIPLY, INT_MIN, INT_MIN, INT_MIN, INT_MAX, true));
+  VERIFY (CHECK_BINOP (MULTIPLY, -1, INT_MIN, INT_MIN, INT_MAX,
+                       INT_NEGATE_OVERFLOW (INT_MIN)));
+  VERIFY (CHECK_BINOP (MULTIPLY, LONG_MIN / INT_MAX, (long int) INT_MAX,
+                       LONG_MIN, LONG_MIN, false));
+
+  VERIFY (CHECK_BINOP (DIVIDE, INT_MIN, -1, INT_MIN, INT_MAX,
+                       INT_NEGATE_OVERFLOW (INT_MIN)));
+  VERIFY (CHECK_BINOP (DIVIDE, INT_MAX, 1, INT_MIN, INT_MAX, false));
+  VERIFY (CHECK_BINOP (DIVIDE, (unsigned int) INT_MIN,
+                       -1u, 0u, UINT_MAX, false));
+
+  VERIFY (CHECK_BINOP (REMAINDER, INT_MIN, -1, INT_MIN, INT_MAX,
+                       INT_NEGATE_OVERFLOW (INT_MIN)));
+  VERIFY (CHECK_BINOP (REMAINDER, INT_MAX, 1, INT_MIN, INT_MAX, false));
+  VERIFY (CHECK_BINOP (REMAINDER, (unsigned int) INT_MIN,
+                       -1u, 0u, UINT_MAX, false));
+
+  VERIFY (CHECK_BINOP (LEFT_SHIFT, UINT_MAX, 1, 0u, UINT_MAX, true));
+  VERIFY (CHECK_BINOP (LEFT_SHIFT, UINT_MAX / 2 + 1, 1, 0u, UINT_MAX, true));
+  VERIFY (CHECK_BINOP (LEFT_SHIFT, UINT_MAX / 2, 1, 0u, UINT_MAX, false));
+
+  /* INT_<op>_OVERFLOW with mixed types.  */
+  #define CHECK_SUM(a, b, overflow)                       \
+    VERIFY (INT_ADD_OVERFLOW (a, b) == (overflow));       \
+    VERIFY (INT_ADD_OVERFLOW (b, a) == (overflow))
+  CHECK_SUM (-1, LONG_MIN, true);
+  CHECK_SUM (-1, UINT_MAX, false);
+  CHECK_SUM (-1L, INT_MIN, INT_MIN == LONG_MIN);
+  CHECK_SUM (0u, -1, true);
+  CHECK_SUM (0u, 0, false);
+  CHECK_SUM (0u, 1, false);
+  CHECK_SUM (1, LONG_MAX, true);
+  CHECK_SUM (1, UINT_MAX, true);
+  CHECK_SUM (1L, INT_MAX, INT_MAX == LONG_MAX);
+  CHECK_SUM (1u, INT_MAX, INT_MAX == UINT_MAX);
+  CHECK_SUM (1u, INT_MIN, true);
+
+  VERIFY (! INT_SUBTRACT_OVERFLOW (INT_MAX, 1u));
+  VERIFY (! INT_SUBTRACT_OVERFLOW (UINT_MAX, 1));
+  VERIFY (! INT_SUBTRACT_OVERFLOW (0u, -1));
+  VERIFY (INT_SUBTRACT_OVERFLOW (UINT_MAX, -1));
+  VERIFY (INT_SUBTRACT_OVERFLOW (INT_MIN, 1u));
+  VERIFY (INT_SUBTRACT_OVERFLOW (-1, 0u));
+
+  #define CHECK_PRODUCT(a, b, overflow)                   \
+    VERIFY (INT_MULTIPLY_OVERFLOW (a, b) == (overflow));   \
+    VERIFY (INT_MULTIPLY_OVERFLOW (b, a) == (overflow))
+
+  CHECK_PRODUCT (-1, 1u, true);
+  CHECK_PRODUCT (-1, INT_MIN, INT_NEGATE_OVERFLOW (INT_MIN));
+  CHECK_PRODUCT (-1, UINT_MAX, true);
+  CHECK_PRODUCT (-12345, LONG_MAX / -12345 - 1, true);
+  CHECK_PRODUCT (-12345, LONG_MAX / -12345, false);
+  CHECK_PRODUCT (0, -1, false);
+  CHECK_PRODUCT (0, 0, false);
+  CHECK_PRODUCT (0, 0u, false);
+  CHECK_PRODUCT (0, 1, false);
+  CHECK_PRODUCT (0, INT_MAX, false);
+  CHECK_PRODUCT (0, INT_MIN, false);
+  CHECK_PRODUCT (0, UINT_MAX, false);
+  CHECK_PRODUCT (0u, -1, false);
+  CHECK_PRODUCT (0u, 0, false);
+  CHECK_PRODUCT (0u, 0u, false);
+  CHECK_PRODUCT (0u, 1, false);
+  CHECK_PRODUCT (0u, INT_MAX, false);
+  CHECK_PRODUCT (0u, INT_MIN, false);
+  CHECK_PRODUCT (0u, UINT_MAX, false);
+  CHECK_PRODUCT (1, INT_MAX, false);
+  CHECK_PRODUCT (1, INT_MIN, false);
+  CHECK_PRODUCT (1, UINT_MAX, false);
+  CHECK_PRODUCT (1u, INT_MIN, true);
+  CHECK_PRODUCT (1u, INT_MAX, UINT_MAX < INT_MAX);
+  CHECK_PRODUCT (INT_MAX, UINT_MAX, true);
+  CHECK_PRODUCT (INT_MAX, ULONG_MAX, true);
+  CHECK_PRODUCT (INT_MIN, LONG_MAX / INT_MIN - 1, true);
+  CHECK_PRODUCT (INT_MIN, LONG_MAX / INT_MIN, false);
+  CHECK_PRODUCT (INT_MIN, UINT_MAX, true);
+  CHECK_PRODUCT (INT_MIN, ULONG_MAX, true);
+
+  VERIFY (INT_DIVIDE_OVERFLOW (INT_MIN, -1L)
+          == (TYPE_TWOS_COMPLEMENT (long int) && INT_MIN == LONG_MIN));
+  VERIFY (! INT_DIVIDE_OVERFLOW (INT_MIN, UINT_MAX));
+  VERIFY (! INT_DIVIDE_OVERFLOW (INTMAX_MIN, UINTMAX_MAX));
+  VERIFY (! INT_DIVIDE_OVERFLOW (INTMAX_MIN, UINT_MAX));
+  VERIFY (INT_DIVIDE_OVERFLOW (-11, 10u));
+  VERIFY (INT_DIVIDE_OVERFLOW (-10, 10u));
+  VERIFY (! INT_DIVIDE_OVERFLOW (-9, 10u));
+  VERIFY (INT_DIVIDE_OVERFLOW (11u, -10));
+  VERIFY (INT_DIVIDE_OVERFLOW (10u, -10));
+  VERIFY (! INT_DIVIDE_OVERFLOW (9u, -10));
+
+  VERIFY (INT_REMAINDER_OVERFLOW (INT_MIN, -1L)
+          == (TYPE_TWOS_COMPLEMENT (long int) && INT_MIN == LONG_MIN));
+  VERIFY (INT_REMAINDER_OVERFLOW (-1, UINT_MAX));
+  VERIFY (INT_REMAINDER_OVERFLOW ((intmax_t) -1, UINTMAX_MAX));
+  VERIFY (INT_REMAINDER_OVERFLOW (INTMAX_MIN, UINT_MAX)
+          == (INTMAX_MAX < UINT_MAX
+              && - (unsigned int) INTMAX_MIN % UINT_MAX != 0));
+  VERIFY (INT_REMAINDER_OVERFLOW (INT_MIN, ULONG_MAX)
+          == (INT_MIN % ULONG_MAX != 1));
+  VERIFY (! INT_REMAINDER_OVERFLOW (1u, -1));
+  VERIFY (! INT_REMAINDER_OVERFLOW (37*39u, -39));
+  VERIFY (INT_REMAINDER_OVERFLOW (37*39u + 1, -39));
+  VERIFY (INT_REMAINDER_OVERFLOW (37*39u - 1, -39));
+  VERIFY (! INT_REMAINDER_OVERFLOW (LONG_MAX, -INT_MAX));
 
   return 0;
 }
