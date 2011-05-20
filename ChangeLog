@@ -1,5 +1,8 @@
 2011-05-20  Eric Blake  <eblake@redhat.com>
 
+	strerror_r: simplify AIX code.
+	* lib/strerror_r.c (strerror_r): Filter out buflen of 1 up front.
+
 	test-perror: avoid spurious failure on FreeBSD
 	* modules/perror-tests (Depends-on): Add strerror, now that
 	strerror_r no longer pulls it in.

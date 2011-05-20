@@ -95,6 +95,15 @@ int
 strerror_r (int errnum, char *buf, size_t buflen)
 #undef strerror_r
 {
+  /* Filter this out now, so that rest of this replacement knows that
+     there is room for a non-empty message and trailing NUL.  */
+  if (buflen <= 1)
+    {
+      if (buflen)
+        *buf = 0;
+      return ERANGE;
+    }
+
 #if GNULIB_defined_ETXTBSY \
     || GNULIB_defined_ESOCK \
     || GNULIB_defined_ENOMSG \
@@ -490,27 +499,6 @@ strerror_r (int errnum, char *buf, size_t buflen)
     }
 # else
     ret = strerror_r (errnum, buf, buflen);
-# endif
-
-# ifdef _AIX
-    /* On AIX 6.1, strerror_r returns -1 and sets errno to EINVAL
-       if buflen <= 1.  */
-    if (ret < 0 && errno == EINVAL && buflen <= 1)
-      {
-        /* Retry with a larger buffer.  */
-        char largerbuf[10];
-        ret = strerror_r (errnum, largerbuf, sizeof (largerbuf));
-        if (ret < 0 && errno == EINVAL)
-          {
-            /* errnum was out of range.  */
-            ret = EINVAL;
-          }
-        else
-          {
-            /* buf was too small.  */
-            ret = ERANGE;
-          }
-      }
 # endif
 
     /* Some old implementations may return (-1, EINVAL) instead of EINVAL.  */
