@@ -311,13 +311,10 @@
 /* Return 1 if the expression A <op> B would overflow,
    where OP_RESULT_OVERFLOW (A, B, MIN, MAX) does the actual test,
    assuming MIN and MAX are the minimum and maximum for the result type.
-
-   This macro assumes that A | B is a valid integer if both A and B are,
-   which is true of all known practical hosts.  If this is a problem
-   for you, please let us know how to fix it for your host.  */
+   Arguments should be free of side effects.  */
 #define _GL_BINARY_OP_OVERFLOW(a, b, op_result_overflow)        \
   op_result_overflow (a, b,                                     \
-                      _GL_INT_MINIMUM ((a) | (b)),              \
-                      _GL_INT_MAXIMUM ((a) | (b)))
+                      _GL_INT_MINIMUM ((b) - (b) + (a)),        \
+                      _GL_INT_MAXIMUM ((b) - (b) + (a)))
 
 #endif /* _GL_INTPROPS_H */
