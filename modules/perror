@@ -16,6 +16,9 @@ strerror_r-posix [test $REPLACE_PERROR = 1]
 configure.ac:
 gl_FUNC_PERROR
 gl_STRING_MODULE_INDICATOR([perror])
+if test $REPLACE_PERROR = 1; then
+  AC_LIBOBJ([perror])
+fi
 
 Makefile.am:
 

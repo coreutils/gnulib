@@ -1,5 +1,12 @@
 2011-05-20  Eric Blake  <eblake@redhat.com>
 
+	perror: work around FreeBSD bug
+	* m4/perror.m4 (gl_FUNC_PERROR): Also replace perror if strerror_r
+	is broken.  Move AC_LIBOBJ...
+	* modules/perror (configure.ac): Here.
+	* doc/posix-functions/perror.texi (perror): Document this.
+	* tests/test-perror2.c (main): Enhance test.
+
 	test-perror: check for strerror interactions
 	* tests/macros.h (STREQ) Add macro.
 	* modules/perror-tests (Files): Add second test.

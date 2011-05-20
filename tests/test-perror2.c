@@ -88,6 +88,28 @@ main (void)
     ASSERT (STREQ (msg4, str4));
   }
 
+  /* Test that perror uses the same message as strerror.  */
+  {
+    int errs[] = { EACCES, 0, -3, };
+    int i;
+    for (i = 0; i < SIZEOF (errs); i++)
+      {
+        char buf[256];
+        char *err = strerror (errs[i]);
+
+        ASSERT (err);
+        ASSERT (strlen (err) < sizeof buf);
+        rewind (stderr);
+        ASSERT (ftruncate (fileno (stderr), 0) == 0);
+        errno = errs[i];
+        perror (NULL);
+        ASSERT (!ferror (stderr));
+        rewind (stderr);
+        ASSERT (fgets (buf, sizeof buf, stderr) == buf);
+        ASSERT (strstr (buf, err));
+      }
+  }
+
   /* Test that perror reports write failure.  */
   {
     ASSERT (freopen (BASE ".tmp", "r", stderr) == stderr);

@@ -12,6 +12,10 @@ Portability problems fixed by Gnulib:
 This function does not support the error values that are specified by POSIX
 but not defined by the system, on some platforms:
 OpenBSD 4.0, OSF/1 5.1, Cygwin 1.5.x, mingw.
+@item
+This function treats @code{errno} of 0 like failure, although POSIX
+requires that the message declare it as a success, on some platforms:
+FreeBSD 8.2
 @end itemize
 
 Portability problems not fixed by Gnulib:
