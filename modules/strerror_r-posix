@@ -10,7 +10,6 @@ string
 extensions
 errno           [test $HAVE_DECL_STRERROR_R = 0 || test $REPLACE_STRERROR_R = 1]
 lock            [test $HAVE_DECL_STRERROR_R = 0 || test $REPLACE_STRERROR_R = 1]
-strerror        [test $HAVE_DECL_STRERROR_R = 0 || test $REPLACE_STRERROR_R = 1]
 
 configure.ac:
 gl_FUNC_STRERROR_R
