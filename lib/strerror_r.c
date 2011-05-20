@@ -459,10 +459,35 @@ strerror_r (int errnum, char *buf, size_t buflen)
         ret = strerror_r (errnum, buf, buflen);
     }
 # elif defined __CYGWIN__
-    /* Cygwin 1.7.8 only provides the glibc interface, is thread-safe, and
-       always succeeds (although it may truncate). */
-    strerror_r (errnum, buf, buflen);
-    ret = 0;
+    /* Cygwin <= 1.7.7 only provides the glibc interface, is thread-safe, and
+       always succeeds (although it may truncate).  In Cygwin >= 1.7.8, for
+       valid errnum values, instead of truncating, it leaves the buffer
+       untouched.  */
+    {
+      char stackbuf[256];
+
+      if (buflen < sizeof (stackbuf))
+        {
+          size_t len;
+
+          stackbuf[0] = '\0'; /* in case strerror_r does nothing */
+          strerror_r (errnum, stackbuf, sizeof (stackbuf));
+          len = strlen (stackbuf);
+          if (len < buflen)
+            {
+              memcpy (buf, stackbuf, len + 1);
+              ret = 0;
+            }
+          else
+            ret = ERANGE;
+        }
+      else
+        {
+          buf[0] = '\0'; /* in case strerror_r does nothing */
+          strerror_r (errnum, buf, buflen);
+          ret = 0;
+        }
+    }
 # else
     ret = strerror_r (errnum, buf, buflen);
 # endif
