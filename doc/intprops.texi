@@ -58,7 +58,7 @@ while the second, for integer types, is easier to use.
 
 @findex TYPE_IS_INTEGER
 @code{TYPE_IS_INTEGER (@var{t})} expands to a constant
-expression that is 1 if the arithmetic type @var{t} is a integer type.
+expression that is 1 if the arithmetic type @var{t} is an integer type.
 @code{_Bool} counts as an integer type.
 
 @findex TYPE_SIGNED

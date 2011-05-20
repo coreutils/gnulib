@@ -1,3 +1,15 @@
+2011-05-20  Jim Meyering  <meyering@redhat.com>
+
+	maint: replace misused "a" with "an"
+	* doc/intprops.texi: "a integer"
+	* doc/regex.texi: "a explanation"
+	* lib/alignof.h: "a object"
+	* lib/argmatch.h: "a explanation"
+	* lib/argp-help.c: "a option" and "a OPTION_DOC"
+	* lib/stdint.in.h: "a integer"
+	* lib/userspec.c: "a owner"
+	* doc/gnulib.texi: Fix "a idea", and reword.
+
 2011-05-19  Jim Meyering  <meyering@redhat.com>
 
 	maint: correct misuse of "a" and "an"

@@ -254,7 +254,7 @@ parse_user_spec (char const *spec, uid_t *uid, gid_t *gid,
   if (!colon && error_msg)
     {
       /* If there's no colon but there is a dot, and if looking up the
-         whole spec failed (i.e., the spec is not a owner name that
+         whole spec failed (i.e., the spec is not an owner name that
          includes a dot), then try again, but interpret the dot as a
          separator.  This is a compatible extension to POSIX, since
          the POSIX-required behavior is always tried first.  */

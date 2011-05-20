@@ -550,7 +550,7 @@ used here.  It contains a convenient @code{ASSERT} macro.
 
 The body of the test, then, contains many @code{ASSERT} invocations.  When
 a test fails, the @code{ASSERT} macro prints the line number of the failing
-statement, thus giving you as a developer a idea which part of the test
+statement, thus giving you, the developer, an idea of which part of the test
 failed, even when you don't have access to the machine where the test failed
 and the reporting user cannot run a debugger.
 

@@ -73,8 +73,8 @@ void argmatch_valid (char const *const *arglist,
 
 
 
-/* Same as argmatch, but upon failure, reports a explanation on the
-   failure, and exits using the function EXIT_FN. */
+/* Same as argmatch, but upon failure, report an explanation of the
+   failure, and exit using the function EXIT_FN. */
 
 ptrdiff_t __xargmatch_internal (char const *context,
                                 char const *arg, char const *const *arglist,

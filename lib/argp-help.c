@@ -359,7 +359,7 @@ struct hol_entry
   /* A pointers into the HOL's short_options field, to the first short option
      letter for this entry.  The order of the characters following this point
      corresponds to the order of options pointed to by OPT, and there are at
-     most NUM.  A short option recorded in a option following OPT is only
+     most NUM.  A short option recorded in an option following OPT is only
      valid if it occurs in the right place in SHORT_OPTIONS (otherwise it's
      probably been shadowed by some other entry).  */
   char *short_options;
@@ -713,7 +713,7 @@ hol_cluster_is_child (const struct hol_cluster *cl1,
   return cl1 == cl2;
 }
 
-/* Given the name of a OPTION_DOC option, modifies NAME to start at the tail
+/* Given the name of an OPTION_DOC option, modifies NAME to start at the tail
    that should be used for comparisons, and returns true iff it should be
    treated as a non-option.  */
 static int
@@ -1551,7 +1551,7 @@ argp_doc (const struct argp *argp, const struct argp_state *state,
     free ((char *) inp_text);   /* We copied INP_TEXT, so free it now.  */
 
   if (post && argp->help_filter)
-    /* Now see if we have to output a ARGP_KEY_HELP_EXTRA text.  */
+    /* Now see if we have to output an ARGP_KEY_HELP_EXTRA text.  */
     {
       text = (*argp->help_filter) (ARGP_KEY_HELP_EXTRA, 0, input);
       if (text)

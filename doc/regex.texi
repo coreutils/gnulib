@@ -1624,7 +1624,7 @@ compiled pattern.  @var{string} is the string you want to match; it can
 contain newline and null characters.  @var{size} is the length of that
 string.  @var{start} is the string index at which you want to
 begin matching; the first character of @var{string} is at index zero.
-@xref{Using Registers}, for a explanation of @var{regs}; you can safely
+@xref{Using Registers}, for an explanation of @var{regs}; you can safely
 pass zero.
 
 @code{re_match} matches the regular expression in @var{pattern_buffer}
