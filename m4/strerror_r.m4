@@ -1,4 +1,4 @@
-# strerror_r.m4 serial 7
+# strerror_r.m4 serial 8
 dnl Copyright (C) 2002, 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -42,6 +42,7 @@ AC_DEFUN([gl_FUNC_STRERROR_R],
         dnl HP-UX 11.31 strerror_r always fails when the buffer length argument
         dnl is less than 80.
         dnl FreeBSD 8.s strerror_r claims failure on 0
+        dnl Solaris 10 strerror_r corrupts errno on failure
         AC_CACHE_CHECK([whether strerror_r works],
           [gl_cv_func_strerror_r_works],
           [AC_RUN_IFELSE(
@@ -60,6 +61,11 @@ AC_DEFUN([gl_FUNC_STRERROR_R],
                     result |= 4;
                   if (errno)
                     result |= 8;
+                  errno = 0;
+                  if (strerror_r (-3, buf, sizeof buf) != 0)
+                    result |= 0x10;
+                  if (errno)
+                    result |= 0x20;
                   return result;
                 ]])],
              [gl_cv_func_strerror_r_works=yes],

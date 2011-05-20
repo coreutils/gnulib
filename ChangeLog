@@ -1,5 +1,9 @@
 2011-05-20  Eric Blake  <eblake@redhat.com>
 
+	strerror_r: avoid corrupting errno on Solaris
+	* m4/strerror_r.m4 (gl_FUNC_STRERROR_R): Check for Solaris behavior.
+	* doc/posix-functions/strerror_r.texi (strerror_r): Document it.
+
 	strerror_r: avoid compiler warning
 	* m4/strerror_r.m4 (gl_FUNC_STRERROR_R): Don't return a char*.
 

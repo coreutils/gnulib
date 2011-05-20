@@ -33,6 +33,9 @@ When this function fails, it returns -1 and sets @code{errno}, instead of
 returning the error number, on some platforms:
 glibc 2.12 with @code{-D_POSIX_C_SOURCE=200112L}, AIX 6.1, OSF/1 5.1.
 @item
+When this function fails, it corrupts @code{errno}, on some platforms:
+Solaris 10.
+@item
 This function does not support the error values that are specified by POSIX
 but not defined by the system, on some platforms:
 OpenBSD 4.0, OSF/1 5.1, NonStop Kernel, Cygwin 1.5.x.
