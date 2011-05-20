@@ -1,3 +1,20 @@
+2011-05-20  Bruno Haible  <bruno@clisp.org>
+
+	isnan*: Separate the AC_LIBOBJ invocations.
+	* m4/isnanf.m4 (gl_PREREQ_ISNANF): Renamed from gl_BUILD_ISNANF. Remove
+	AC_LIBOBJ invocation.
+	(gl_FUNC_ISNANF, gl_FUNC_ISNANF_NO_LIBM): Update. Invoke AC_LIBOBJ
+	here.
+	* m4/isnand.m4 (gl_PREREQ_ISNAND): Renamed from gl_BUILD_ISNAND. Remove
+	AC_LIBOBJ invocation.
+	(gl_FUNC_ISNAND, gl_FUNC_ISNAND_NO_LIBM): Update. Invoke AC_LIBOBJ
+	here.
+	* m4/isnanl.m4 (gl_PREREQ_ISNANL): Renamed from gl_BUILD_ISNANL. Remove
+	AC_LIBOBJ invocation.
+	(gl_FUNC_ISNANL, gl_FUNC_ISNANL_NO_LIBM): Update. Invoke AC_LIBOBJ
+	here.
+	* m4/isnan.m4 (gl_ISNAN): Update. Invoke AC_LIBOBJ here.
+
 2011-05-08  Bruno Haible  <bruno@clisp.org>
 
 	isinf: Move AC_LIBOBJ invocations to module description.
