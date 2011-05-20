@@ -1,4 +1,4 @@
-# strerror_r.m4 serial 6
+# strerror_r.m4 serial 7
 dnl Copyright (C) 2002, 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -33,7 +33,7 @@ AC_DEFUN([gl_FUNC_STRERROR_R],
               [[#include <string.h>
                 int strerror_r (int, char *, size_t);
               ]],
-              [[return strerror (0);]])],
+              [])],
            [gl_cv_func_strerror_r_posix_signature=yes],
            [gl_cv_func_strerror_r_posix_signature=no])
         ])
@@ -48,7 +48,6 @@ AC_DEFUN([gl_FUNC_STRERROR_R],
              [AC_LANG_PROGRAM(
                 [[#include <errno.h>
                   #include <string.h>
-                  int strerror_r (int, char *, size_t);
                 ]],
                 [[int result = 0;
                   char buf[79];
