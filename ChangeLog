@@ -1,3 +1,11 @@
+2011-05-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	intprops-tests: revert unsigned part of previous change
+	* tests/test-intprops.c (UINT_MAX, ULONG_MAX, UINTMAX_MAX, U0, U1):
+	Remove; they weren't actually needed.  All uses of U0 and U1 removed,
+	and other casts to 'unsigned int' reverted to 'u' suffixes.  See
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-05/msg00406.html>.
+
 2011-05-19  Bruno Haible  <bruno@clisp.org>
 
 	strerror_r: Work around strerror_r() change in Cygwin 1.7.8.
