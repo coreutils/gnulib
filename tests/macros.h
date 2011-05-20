@@ -62,3 +62,7 @@
    *not* work for function parameters of array type, because they are actually
    parameters of pointer type.  */
 #define SIZEOF(array) (sizeof (array) / sizeof (array[0]))
+
+/* STREQ (str1, str2)
+   Return true if two strings compare equal.  */
+#define STREQ(a, b) (strcmp (a, b) == 0)

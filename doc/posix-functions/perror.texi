@@ -16,4 +16,8 @@ OpenBSD 4.0, OSF/1 5.1, Cygwin 1.5.x, mingw.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+POSIX requires that this function set the stream error bit (detected
+by @code{ferror}) on write failure, but not all platforms do this:
+glibc 2.13.
 @end itemize

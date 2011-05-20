@@ -1,5 +1,11 @@
 2011-05-20  Eric Blake  <eblake@redhat.com>
 
+	test-perror: check for strerror interactions
+	* tests/macros.h (STREQ) Add macro.
+	* modules/perror-tests (Files): Add second test.
+	* tests/test-perror2.c (main): New file.
+	* doc/posix-functions/perror.texi (perror): Document glibc bug.
+
 	test-perror: rewrite to use init script
 	* modules/perror-tests (Files): Add init.sh.
 	* tests/test-perror.sh: Use temporary directory.
