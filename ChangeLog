@@ -1,5 +1,11 @@
 2011-05-19  Paul Eggert  <eggert@cs.ucla.edu>
 
+	intprops: work around IRIX 6.5 cc bug with 0u - 0u + -1
+	See http://lists.gnu.org/archive/html/bug-gnulib/2011-05/msg00406.html
+	* lib/intprops.h (_GL_INT_NEGATE_CONVERT): New macro.
+	(_GL_INT_SIGNED, _GL_INT_MAXIMUM, _GL_DIVIDE_OVERFLOW):
+	(_GL_REMAINDER_OVERFLOW): Use it.
+
 	intprops-tests: revert unsigned part of previous change
 	* tests/test-intprops.c (UINT_MAX, ULONG_MAX, UINTMAX_MAX, U0, U1):
 	Remove; they weren't actually needed.  All uses of U0 and U1 removed,

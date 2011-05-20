@@ -27,6 +27,10 @@
    E should not have side effects.  */
 #define _GL_INT_CONVERT(e, v) ((e) - (e) + (v))
 
+/* Act like _GL_INT_CONVERT (E, -V) but work around a bug in IRIX 6.5 cc; see
+   <http://lists.gnu.org/archive/html/bug-gnulib/2011-05/msg00406.html>.  */
+#define _GL_INT_NEGATE_CONVERT(e, v) ((e) - (e) - (v))
+
 /* The extra casts in the following macros work around compiler bugs,
    e.g., in Cray C 5.0.3.0.  */
 
@@ -50,7 +54,7 @@
 
 /* Return 1 if the integer expression E, after integer promotion, has
    a signed type.  E should not have side effects.  */
-#define _GL_INT_SIGNED(e) (_GL_INT_CONVERT (e, -1) < 0)
+#define _GL_INT_SIGNED(e) (_GL_INT_NEGATE_CONVERT (e, 1) < 0)
 
 
 /* Minimum and maximum values for integer types and expressions.  These
@@ -79,7 +83,7 @@
 #define _GL_INT_MAXIMUM(e)                                              \
   (_GL_INT_SIGNED (e)                                                   \
    ? _GL_SIGNED_INT_MAXIMUM (e)                                         \
-   : _GL_INT_CONVERT (e, -1))
+   : _GL_INT_NEGATE_CONVERT (e, 1))
 #define _GL_SIGNED_INT_MAXIMUM(e)                                       \
   (((_GL_INT_CONVERT (e, 1) << (sizeof ((e) + 0) * CHAR_BIT - 2)) - 1) * 2 + 1)
 
@@ -239,11 +243,11 @@
   (((min) == 0 && (((a) < 0 && 0 < (b)) || ((b) < 0 && 0 < (a))))       \
    || INT_MULTIPLY_RANGE_OVERFLOW (a, b, min, max))
 #define _GL_DIVIDE_OVERFLOW(a, b, min, max)                             \
-  ((min) < 0 ? (b) == _GL_INT_CONVERT (min, -1) && (a) < - (max)        \
+  ((min) < 0 ? (b) == _GL_INT_NEGATE_CONVERT (min, 1) && (a) < - (max)  \
    : (a) < 0 ? (b) <= (a) + (b) - 1                                     \
    : (b) < 0 && (a) + (b) <= (a))
 #define _GL_REMAINDER_OVERFLOW(a, b, min, max)                          \
-  ((min) < 0 ? (b) == _GL_INT_CONVERT (min, -1) && (a) < - (max)        \
+  ((min) < 0 ? (b) == _GL_INT_NEGATE_CONVERT (min, 1) && (a) < - (max)  \
    : (a) < 0 ? (a) % (b) != ((max) - (b) + 1) % (b)                     \
    : (b) < 0 && ! _GL_UNSIGNED_NEG_MULTIPLE (a, b, max))
 
