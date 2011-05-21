@@ -13,6 +13,9 @@ floorl          [test $HAVE_EXPL = 0]
 
 configure.ac:
 gl_FUNC_EXPL
+if test $HAVE_EXPL = 0; then
+  AC_LIBOBJ([expl])
+fi
 gl_MATH_MODULE_INDICATOR([expl])
 
 Makefile.am:

@@ -1,5 +1,11 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	expl: Move AC_LIBOBJ invocations to module description.
+	* m4/expl.m4 (gl_FUNC_EXPL): Move AC_LIBOBJ invocation from here...
+	* modules/expl (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	roundl: Move AC_LIBOBJ invocations to module description.
 	* m4/roundl.m4 (gl_FUNC_ROUNDL): Move AC_LIBOBJ invocation from here...
 	* modules/roundl (configure.ac): ... to here.

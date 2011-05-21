@@ -1,4 +1,4 @@
-# expl.m4 serial 2
+# expl.m4 serial 3
 dnl Copyright (C) 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -55,7 +55,7 @@ AC_DEFUN([gl_FUNC_EXPL],
   else
     HAVE_DECL_EXPL=0
     HAVE_EXPL=0
-    AC_LIBOBJ([expl])
+    dnl Find libraries needed to link lib/expl.c.
     AC_REQUIRE([gl_FUNC_FLOORL])
     EXPL_LIBM="$FLOORL_LIBM"
   fi
