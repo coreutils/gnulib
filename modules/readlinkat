@@ -14,6 +14,9 @@ readlink        [test $HAVE_READLINKAT = 0]
 
 configure.ac:
 gl_FUNC_READLINKAT
+if test $HAVE_READLINKAT = 0; then
+  AC_LIBOBJ([readlinkat])
+fi
 gl_UNISTD_MODULE_INDICATOR([readlinkat])
 
 Makefile.am:

@@ -1,4 +1,4 @@
-# serial 1
+# serial 2
 # See if we need to provide readlinkat replacement.
 
 dnl Copyright (C) 2009-2011 Free Software Foundation, Inc.
@@ -16,6 +16,5 @@ AC_DEFUN([gl_FUNC_READLINKAT],
   AC_CHECK_FUNCS_ONCE([readlinkat])
   if test $ac_cv_func_readlinkat = no; then
     HAVE_READLINKAT=0
-    AC_LIBOBJ([readlinkat])
   fi
 ])
