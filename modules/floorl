@@ -13,6 +13,9 @@ float           [test $HAVE_DECL_FLOORL = 0 || test $REPLACE_FLOORL = 1]
 
 configure.ac:
 gl_FUNC_FLOORL
+if test $HAVE_DECL_FLOORL = 0 || test $REPLACE_FLOORL = 1; then
+  AC_LIBOBJ([floorl])
+fi
 gl_MATH_MODULE_INDICATOR([floorl])
 
 Makefile.am:

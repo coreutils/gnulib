@@ -1,5 +1,11 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	floorl: Respect rules for use of AC_LIBOBJ.
+	* m4/floorl.m4 (gl_FUNC_FLOORL): Move AC_LIBOBJ invocation from here...
+	* modules/floorl (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	floor: Respect rules for use of AC_LIBOBJ.
 	* m4/floor.m4 (gl_FUNC_FLOOR): Move AC_LIBOBJ invocation from here...
 	* modules/floor (configure.ac): ... to here.
