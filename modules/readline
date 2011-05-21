@@ -12,6 +12,10 @@ getline         [test "$gl_cv_lib_readline" = no]
 
 configure.ac:
 gl_FUNC_READLINE
+if test "$gl_cv_lib_readline" = no; then
+  AC_LIBOBJ([readline])
+  gl_PREREQ_READLINE
+fi
 
 Makefile.am:
 

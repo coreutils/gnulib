@@ -1,4 +1,4 @@
-# readline.m4 serial 8
+# readline.m4 serial 9
 dnl Copyright (C) 2005-2006, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -73,11 +73,6 @@ AC_DEFUN([gl_FUNC_READLINE],
   AC_SUBST([LTLIBREADLINE])
 
   AC_CHECK_HEADERS([readline/readline.h])
-
-  if test "$gl_cv_lib_readline" = no; then
-    AC_LIBOBJ([readline])
-    gl_PREREQ_READLINE
-  fi
 ])
 
 # Prerequisites of lib/readline.c.
