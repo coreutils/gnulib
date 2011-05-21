@@ -1,3 +1,8 @@
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
+	perror: Use common idiom.
+	* modules/perror (configure.ac): Reorder statements.
+
 2011-06-07  Stefano Lattarini  <stefano.lattarini@gmail.com>
 
 	tests: fix usage message in 'mktempd_'
