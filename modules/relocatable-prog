@@ -26,6 +26,9 @@ strdup
 
 configure.ac:
 gl_RELOCATABLE([$gl_source_base])
+if test $RELOCATABLE = yes; then
+  AC_LIBOBJ([progreloc])
+fi
 
 Makefile.am:
 DEFS += -DEXEEXT=\"@EXEEXT@\"
