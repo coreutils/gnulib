@@ -15,6 +15,10 @@ Depends-on:
 
 configure.ac:
 gl_FUNC_MEMSET
+if test $ac_cv_func_memset = no; then
+  AC_LIBOBJ([memset])
+  gl_PREREQ_MEMSET
+fi
 
 Makefile.am:
 
