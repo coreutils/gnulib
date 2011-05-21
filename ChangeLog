@@ -1,5 +1,11 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	pwrite: Move AC_LIBOBJ invocations to module description.
+	* m4/pwrite.m4 (gl_FUNC_PWRITE): Move AC_LIBOBJ invocation from here...
+	* modules/pwrite (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	putenv: Move AC_LIBOBJ invocations to module description.
 	* m4/putenv.m4 (gl_FUNC_PUTENV): Move AC_LIBOBJ invocation from here...
 	* modules/putenv (configure.ac): ... to here.

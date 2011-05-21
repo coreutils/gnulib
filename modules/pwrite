@@ -13,6 +13,9 @@ write           [test $HAVE_PWRITE = 0 || test $REPLACE_PWRITE = 1]
 
 configure.ac:
 gl_FUNC_PWRITE
+if test $HAVE_PWRITE = 0 || test $REPLACE_PWRITE = 1; then
+  AC_LIBOBJ([pwrite])
+fi
 gl_UNISTD_MODULE_INDICATOR([pwrite])
 
 Makefile.am:

@@ -1,4 +1,4 @@
-# pwrite.m4 serial 3
+# pwrite.m4 serial 4
 dnl Copyright (C) 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -99,8 +99,5 @@ changequote([,])dnl
     esac
   else
     HAVE_PWRITE=0
-  fi
-  if test $HAVE_PWRITE = 0 || test $REPLACE_PWRITE = 1; then
-    AC_LIBOBJ([pwrite])
   fi
 ])
