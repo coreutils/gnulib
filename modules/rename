@@ -17,6 +17,9 @@ strdup            [test $REPLACE_RENAME = 1]
 
 configure.ac:
 gl_FUNC_RENAME
+if test $REPLACE_RENAME = 1; then
+  AC_LIBOBJ([rename])
+fi
 gl_STDIO_MODULE_INDICATOR([rename])
 
 Makefile.am:

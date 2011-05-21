@@ -1,4 +1,4 @@
-# serial 23
+# serial 24
 
 # Copyright (C) 2001, 2003, 2005-2006, 2009-2011 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -58,7 +58,6 @@ AC_DEFUN([gl_FUNC_RENAME],
     rm -rf conftest.f conftest.f1 conftest.f2 conftest.d1 conftest.d2 conftest.lnk
   ])
   if test "x$gl_cv_func_rename_slash_dst_works" != xyes; then
-    AC_LIBOBJ([rename])
     REPLACE_RENAME=1
     AC_DEFINE([RENAME_TRAILING_SLASH_DEST_BUG], [1],
       [Define if rename does not correctly handle slashes on the destination
@@ -102,7 +101,6 @@ AC_DEFUN([gl_FUNC_RENAME],
     rm -rf conftest.f conftest.f1 conftest.d1 conftest.d2 conftest.d3 conftest.lnk
   ])
   if test "x$gl_cv_func_rename_slash_src_works" != xyes; then
-    AC_LIBOBJ([rename])
     REPLACE_RENAME=1
     AC_DEFINE([RENAME_TRAILING_SLASH_SOURCE_BUG], [1],
       [Define if rename does not correctly handle slashes on the source
@@ -144,7 +142,6 @@ AC_DEFUN([gl_FUNC_RENAME],
     rm -rf conftest.f conftest.f1
   ])
   if test "x$gl_cv_func_rename_link_works" != xyes; then
-    AC_LIBOBJ([rename])
     REPLACE_RENAME=1
     AC_DEFINE([RENAME_HARD_LINK_BUG], [1],
       [Define if rename fails to leave hard links alone, as on NetBSD 1.6
@@ -179,7 +176,6 @@ AC_DEFUN([gl_FUNC_RENAME],
     rm -rf conftest.f conftest.d1 conftest.d2
   ])
   if test "x$gl_cv_func_rename_dest_works" != xyes; then
-    AC_LIBOBJ([rename])
     REPLACE_RENAME=1
     AC_DEFINE([RENAME_DEST_EXISTS_BUG], [1],
       [Define if rename does not work when the destination file exists,

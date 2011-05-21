@@ -1,5 +1,12 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	rename: Respect rules for use of AC_LIBOBJ.
+	* m4/rename.m4 (gl_FUNC_RENAME): Move AC_LIBOBJ invocations from
+	here...
+	* modules/rename (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	remove: Move AC_LIBOBJ invocations to module description.
 	* m4/remove.m4 (gl_FUNC_REMOVE): Move AC_LIBOBJ invocations from
 	here...
