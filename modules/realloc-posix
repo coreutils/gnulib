@@ -11,6 +11,9 @@ stdlib
 
 configure.ac:
 gl_FUNC_REALLOC_POSIX
+if test $REPLACE_REALLOC = 1; then
+  AC_LIBOBJ([realloc])
+fi
 gl_STDLIB_MODULE_INDICATOR([realloc-posix])
 
 Makefile.am:

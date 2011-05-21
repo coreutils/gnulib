@@ -1,5 +1,14 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	realloc-*: Move AC_LIBOBJ invocations to module description.
+	* m4/realloc.m4 (gl_REPLACE_REALLOC): Remove macro.
+	(gl_FUNC_REALLOC_GNU, gl_FUNC_REALLOC_POSIX): Inline it here. Move
+	AC_LIBOBJ invocations from here...
+	* modules/realloc-gnu (configure.ac): ... to here.
+	* modules/realloc-posix (configure.ac): ... and here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	readutmp: Move AC_LIBOBJ invocations to module description.
 	* m4/readutmp.m4 (gl_READUTMP): Move AC_LIBOBJ invocation from here...
 	* modules/readutmp (configure.ac): ... to here.
