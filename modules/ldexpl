@@ -12,6 +12,9 @@ fpucw           [test $HAVE_DECL_LDEXPL = 0 || test $gl_func_ldexpl = no]
 
 configure.ac:
 gl_FUNC_LDEXPL
+if test $HAVE_DECL_LDEXPL = 0 || test $gl_func_ldexpl = no; then
+  AC_LIBOBJ([ldexpl])
+fi
 gl_MATH_MODULE_INDICATOR([ldexpl])
 
 Makefile.am:

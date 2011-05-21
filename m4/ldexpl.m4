@@ -1,4 +1,4 @@
-# ldexpl.m4 serial 10
+# ldexpl.m4 serial 11
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -52,7 +52,7 @@ AC_DEFUN([gl_FUNC_LDEXPL],
     fi
   fi
   if test $HAVE_DECL_LDEXPL = 0 || test $gl_func_ldexpl = no; then
-    AC_LIBOBJ([ldexpl])
+    dnl Find libraries needed to link lib/ldexpl.c.
     LDEXPL_LIBM="$ISNANL_LIBM"
   fi
   AC_SUBST([LDEXPL_LIBM])
