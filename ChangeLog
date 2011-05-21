@@ -1,5 +1,13 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	rawmemchr: Move AC_LIBOBJ invocations to module description.
+	* m4/rawmemchr.m4 (gl_FUNC_RAWMEMCHR): Call AC_CHECK_FUNCS instead of
+	AC_REPLACE_FUNCS. Move AC_LIBOBJ and gl_PREREQ_RAWMEMCHR invocations
+	from here...
+	* modules/rawmemchr (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	random_r: Move AC_LIBOBJ invocations to module description.
 	* m4/random_r.m4 (gl_FUNC_RANDOM_R): Move AC_LIBOBJ and
 	gl_PREREQ_RANDOM_R invocations from here...
