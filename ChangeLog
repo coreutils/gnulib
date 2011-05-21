@@ -1,5 +1,12 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	nanosleep: Move AC_LIBOBJ invocations to module description.
+	* m4/nanosleep.m4 (gl_FUNC_NANOSLEEP): Move AC_LIBOBJ and
+	gl_PREREQ_NANOSLEEP invocations from here...
+	* modules/nanosleep (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	mountlist: Move AC_LIBOBJ invocations to module description.
 	* m4/mountlist.m4 (gl_MOUNTLIST): Move AC_LIBOBJ and
 	gl_PREREQ_MOUNTLIST_EXTRA invocations from here...

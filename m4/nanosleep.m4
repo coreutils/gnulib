@@ -1,4 +1,4 @@
-# serial 33
+# serial 34
 
 dnl From Jim Meyering.
 dnl Check for the nanosleep function.
@@ -121,10 +121,6 @@ AC_DEFUN([gl_FUNC_NANOSLEEP],
    HAVE_NANOSLEEP=0
  fi
  LIBS=$nanosleep_save_libs
- if test $HAVE_NANOSLEEP = 0 || test $REPLACE_NANOSLEEP = 1; then
-   AC_LIBOBJ([nanosleep])
-   gl_PREREQ_NANOSLEEP
- fi
 ])
 
 # Prerequisites of lib/nanosleep.c.
