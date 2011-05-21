@@ -1,4 +1,4 @@
-# tanl.m4 serial 3
+# tanl.m4 serial 4
 dnl Copyright (C) 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -55,8 +55,7 @@ AC_DEFUN([gl_FUNC_TANL],
   else
     HAVE_DECL_TANL=0
     HAVE_TANL=0
-    AC_LIBOBJ([tanl])
-    AC_LIBOBJ([trigl])
+    dnl Find libraries needed to link lib/tanl.c, lib/trigl.c.
     AC_REQUIRE([gl_FUNC_ISNANL])
     AC_REQUIRE([gl_FUNC_FLOOR])
     AC_REQUIRE([gl_FUNC_FLOORL])
