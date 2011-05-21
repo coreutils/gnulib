@@ -12,6 +12,9 @@ sys_ioctl
 
 configure.ac:
 gl_FUNC_LOGIN_TTY
+if test $ac_cv_func_login_tty = no; then
+  AC_LIBOBJ([login_tty])
+fi
 gl_PTY_MODULE_INDICATOR([login_tty])
 
 Makefile.am:

@@ -1,4 +1,4 @@
-# pty.m4 serial 11
+# pty.m4 serial 12
 dnl Copyright (C) 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -143,7 +143,4 @@ AC_DEFUN([gl_FUNC_LOGIN_TTY],
   LIBS="$LIBS $PTY_LIB"
   AC_CHECK_FUNCS([login_tty])
   LIBS="$gl_saved_LIBS"
-  if test $ac_cv_func_login_tty = no; then
-    AC_LIBOBJ([login_tty])
-  fi
 ])
