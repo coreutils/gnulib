@@ -1,5 +1,11 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	asinl: Respect rules for use of AC_LIBOBJ.
+	* m4/asinl.m4 (gl_FUNC_ASINL): Move AC_LIBOBJ invocation from here...
+	* modules/asinl (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	tanl: Move AC_LIBOBJ invocations to module description.
 	* m4/tanl.m4 (gl_FUNC_TANL): Move AC_LIBOBJ invocations from here...
 	* modules/tanl (configure.ac): ... to here.

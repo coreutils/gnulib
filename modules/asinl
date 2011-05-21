@@ -12,6 +12,9 @@ sqrtl           [test $HAVE_ASINL = 0]
 
 configure.ac:
 gl_FUNC_ASINL
+if test $HAVE_ASINL = 0; then
+  AC_LIBOBJ([asinl])
+fi
 gl_MATH_MODULE_INDICATOR([asinl])
 
 Makefile.am:

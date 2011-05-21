@@ -1,4 +1,4 @@
-# asinl.m4 serial 3
+# asinl.m4 serial 4
 dnl Copyright (C) 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -55,7 +55,7 @@ AC_DEFUN([gl_FUNC_ASINL],
   else
     HAVE_DECL_ASINL=0
     HAVE_ASINL=0
-    AC_LIBOBJ([asinl])
+    dnl Find libraries needed to link lib/asinl.c.
     AC_REQUIRE([gl_FUNC_SQRTL])
     dnl Append $SQRTL_LIBM to ASINL_LIBM, avoiding gratuitous duplicates.
     case " $ASINL_LIBM " in
