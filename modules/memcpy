@@ -15,6 +15,10 @@ Depends-on:
 
 configure.ac:
 gl_FUNC_MEMCPY
+if test $ac_cv_func_memcpy = no; then
+  AC_LIBOBJ([memcpy])
+  gl_PREREQ_MEMCPY
+fi
 
 Makefile.am:
 
