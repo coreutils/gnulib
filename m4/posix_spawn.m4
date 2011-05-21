@@ -1,4 +1,4 @@
-# posix_spawn.m4 serial 8
+# posix_spawn.m4 serial 9
 dnl Copyright (C) 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -391,10 +391,9 @@ main (int argc, char *argv[])
     ])
 ])
 
-AC_DEFUN([gl_POSIX_SPAWN_INTERNAL],
+# Prerequisites of lib/spawni.c.
+AC_DEFUN([gl_PREREQ_POSIX_SPAWN_INTERNAL],
 [
-  AC_LIBOBJ([spawni])
-  dnl Prerequisites of lib/spawni.c.
   AC_CHECK_HEADERS([paths.h])
   AC_CHECK_FUNCS([confstr sched_setparam sched_setscheduler setegid seteuid vfork])
 ])
