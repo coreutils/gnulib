@@ -1,4 +1,4 @@
-# ceilf.m4 serial 8
+# ceilf.m4 serial 9
 dnl Copyright (C) 2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -58,7 +58,7 @@ int main()
     HAVE_DECL_CEILF=0
   fi
   if test $HAVE_DECL_CEILF = 0 || test $REPLACE_CEILF = 1; then
-    AC_LIBOBJ([ceilf])
+    dnl No libraries are needed to link lib/ceilf.c.
     CEILF_LIBM=
   fi
   AC_SUBST([CEILF_LIBM])

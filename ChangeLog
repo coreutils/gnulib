@@ -1,5 +1,11 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	ceilf: Move AC_LIBOBJ invocations to module description.
+	* m4/ceilf.m4 (gl_FUNC_CEILF): Move AC_LIBOBJ invocation from here...
+	* modules/ceilf (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	floorl: Respect rules for use of AC_LIBOBJ.
 	* m4/floorl.m4 (gl_FUNC_FLOORL): Move AC_LIBOBJ invocation from here...
 	* modules/floorl (configure.ac): ... to here.
