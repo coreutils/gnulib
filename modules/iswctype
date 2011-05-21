@@ -17,6 +17,9 @@ wctype-h
 
 configure.ac:
 gl_FUNC_ISWCTYPE
+if test $HAVE_WCTYPE_T = 0; then
+  AC_LIBOBJ([iswctype])
+fi
 gl_WCTYPE_MODULE_INDICATOR([iswctype])
 
 Makefile.am:
