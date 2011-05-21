@@ -1,5 +1,14 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	malloc-*: Move AC_LIBOBJ invocations to module description.
+	* m4/malloc.m4 (gl_REPLACE_MALLOC): Remove macro.
+	(gl_FUNC_MALLOC_GNU, gl_FUNC_MALLOC_POSIX): Inline it here. Move
+	AC_LIBOBJ invocations from here...
+	* modules/malloc-gnu (configure.ac): ... to here.
+	* modules/malloc-posix (configure.ac): ... and here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	lstat, openat: Respect rules for use of AC_LIBOBJ.
 	* m4/lstat.m4 (gl_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK): Renamed from
 	AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK. Set variable

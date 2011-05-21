@@ -10,6 +10,9 @@ stdlib
 
 configure.ac:
 gl_FUNC_MALLOC_POSIX
+if test $REPLACE_MALLOC = 1; then
+  AC_LIBOBJ([malloc])
+fi
 gl_STDLIB_MODULE_INDICATOR([malloc-posix])
 
 Makefile.am:
