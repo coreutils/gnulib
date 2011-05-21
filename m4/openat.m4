@@ -1,4 +1,4 @@
-# serial 31
+# serial 32
 # See if we need to use our replacement for Solaris' openat et al functions.
 
 dnl Copyright (C) 2004-2011 Free Software Foundation, Inc.
@@ -26,9 +26,9 @@ AC_DEFUN([gl_FUNC_OPENAT],
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_CHECK_FUNCS_ONCE([lchmod])
   AC_REPLACE_FUNCS([fchmodat fstatat mkdirat openat unlinkat])
-  AC_REQUIRE([AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK])
+  AC_REQUIRE([gl_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK])
   AC_REQUIRE([gl_FUNC_UNLINK])
-  case $ac_cv_func_openat+$ac_cv_func_lstat_dereferences_slashed_symlink in
+  case $ac_cv_func_openat+$gl_cv_func_lstat_dereferences_slashed_symlink in
   yes+yes)
     # GNU/Hurd has unlinkat, but it has the same bug as unlink.
     if test $REPLACE_UNLINK = 1; then
