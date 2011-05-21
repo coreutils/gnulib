@@ -16,7 +16,10 @@ memcmp
 
 configure.ac:
 gl_FUNC_ISNANL
-if test $HAVE_ISNANL = 0; then
+m4_ifdef([gl_ISNAN], [
+  AC_REQUIRE([gl_ISNAN])
+])
+if test $HAVE_ISNANL = 0 || test $REPLACE_ISNAN = 1; then
   AC_LIBOBJ([isnanl])
   gl_PREREQ_ISNANL
 fi

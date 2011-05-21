@@ -1,5 +1,15 @@
 2011-05-20  Bruno Haible  <bruno@clisp.org>
 
+	isnan: Respect rules for use of AC_LIBOBJ.
+	* m4/isnan.m4 (gl_ISNAN): Don't do the AC_LIBOBJ and gl_PREREQ_ISNAN*
+	invocations here.
+	* modules/isnanf (configure.ac): Require gl_ISNAN if it exists. Test
+	REPLACE_ISNAN.
+	* modules/isnand (configure.ac): Likewise.
+	* modules/isnanl (configure.ac): Likewise.
+
+2011-05-20  Bruno Haible  <bruno@clisp.org>
+
 	isnanl*: Respect rules for use of AC_LIBOBJ.
 	* m4/isnanl.m4 (gl_FUNC_ISNANL, gl_FUNC_ISNANL_NO_LIBM): Move AC_LIBOBJ
 	invocation from here...

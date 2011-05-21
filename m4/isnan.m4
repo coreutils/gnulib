@@ -1,4 +1,4 @@
-# isnan.m4 serial 4
+# isnan.m4 serial 5
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -36,14 +36,8 @@ AC_DEFUN([gl_ISNAN],
     esac
   else
     AC_MSG_RESULT([no])
+    dnl REPLACE_ISNAN=1 also makes sure the rpl_isnan[fdl] functions get built.
     REPLACE_ISNAN=1
-    # Make sure the rpl_isnan[fdl] functions get built.
-    AC_LIBOBJ([isnanf])
-    gl_PREREQ_ISNANF
-    AC_LIBOBJ([isnand])
-    gl_PREREQ_ISNAND
-    AC_LIBOBJ([isnanl])
-    gl_PREREQ_ISNANL
     ISNAN_LIBM=
   fi
   AC_SUBST([ISNAN_LIBM])
