@@ -12,6 +12,10 @@ tempname        [test $HAVE_MKDTEMP = 0]
 
 configure.ac:
 gl_FUNC_MKDTEMP
+if test $HAVE_MKDTEMP = 0; then
+  AC_LIBOBJ([mkdtemp])
+  gl_PREREQ_MKDTEMP
+fi
 gl_STDLIB_MODULE_INDICATOR([mkdtemp])
 
 Makefile.am:

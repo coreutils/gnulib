@@ -1,5 +1,12 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	mkdtemp: Move AC_LIBOBJ invocations to module description.
+	* m4/mkdtemp.m4 (gl_FUNC_MKDTEMP): Move AC_LIBOBJ and gl_PREREQ_MKDTEMP
+	invocations from here...
+	* modules/mkdtemp (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	mkdir: Move AC_LIBOBJ invocations to module description.
 	* m4/mkdir.m4 (gl_FUNC_MKDIR): Move AC_LIBOBJ invocations from here...
 	* modules/mkdir (configure.ac): ... to here.
