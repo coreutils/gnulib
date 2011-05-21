@@ -1,5 +1,12 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	linkat: Move AC_LIBOBJ invocations to module description.
+	* m4/linkat.m4 (gl_FUNC_LINKAT): Move AC_LIBOBJ invocations from
+	here...
+	* modules/linkat (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	link: Respect rules for use of AC_LIBOBJ.
 	* m4/link.m4 (gl_FUNC_LINK): Move AC_LIBOBJ invocations from here...
 	* modules/link (configure.ac): ... to here.

@@ -1,4 +1,4 @@
-# serial 5
+# serial 6
 # See if we need to provide linkat replacement.
 
 dnl Copyright (C) 2009-2011 Free Software Foundation, Inc.
@@ -19,8 +19,6 @@ AC_DEFUN([gl_FUNC_LINKAT],
   AC_CHECK_HEADERS_ONCE([sys/param.h])
   if test $ac_cv_func_linkat = no; then
     HAVE_LINKAT=0
-    AC_LIBOBJ([linkat])
-    AC_LIBOBJ([at-func2])
   else
     AC_CACHE_CHECK([whether linkat(,AT_SYMLINK_FOLLOW) works],
       [gl_cv_func_linkat_follow],
@@ -90,7 +88,6 @@ choke me
     if test "$gl_cv_func_linkat_follow" != yes \
        || test $gl_linkat_slash_bug = 1; then
       REPLACE_LINKAT=1
-      AC_LIBOBJ([linkat])
       AC_DEFINE_UNQUOTED([LINKAT_TRAILING_SLASH_BUG], [$gl_linkat_slash_bug],
         [Define to 1 if linkat fails to recognize a trailing slash.])
     fi

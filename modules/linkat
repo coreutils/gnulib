@@ -27,6 +27,12 @@ symlink          [test $HAVE_LINKAT = 0 || test $REPLACE_LINKAT = 1]
 
 configure.ac:
 gl_FUNC_LINKAT
+if test $HAVE_LINKAT = 0 || test $REPLACE_LINKAT = 1; then
+  AC_LIBOBJ([linkat])
+fi
+if test $HAVE_LINKAT = 0; then
+  AC_LIBOBJ([at-func2])
+fi
 gl_UNISTD_MODULE_INDICATOR([linkat])
 
 Makefile.am:
