@@ -17,6 +17,11 @@ strnlen1        [test $HAVE_MBSNRTOWCS = 0 || test $REPLACE_MBSNRTOWCS = 1]
 
 configure.ac:
 gl_FUNC_MBSNRTOWCS
+if test $HAVE_MBSNRTOWCS = 0 || test $REPLACE_MBSNRTOWCS = 1; then
+  AC_LIBOBJ([mbsnrtowcs])
+  AC_LIBOBJ([mbsrtowcs-state])
+  gl_PREREQ_MBSNRTOWCS
+fi
 gl_WCHAR_MODULE_INDICATOR([mbsnrtowcs])
 
 Makefile.am:
