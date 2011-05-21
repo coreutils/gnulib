@@ -11,6 +11,9 @@ isnand-nolibm   [test $gl_func_frexp != yes]
 
 configure.ac:
 gl_FUNC_FREXP
+if test $gl_func_frexp != yes; then
+  AC_LIBOBJ([frexp])
+fi
 gl_MATH_MODULE_INDICATOR([frexp])
 
 Makefile.am:

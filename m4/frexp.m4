@@ -1,4 +1,4 @@
-# frexp.m4 serial 10
+# frexp.m4 serial 11
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -44,8 +44,6 @@ AC_DEFUN([gl_FUNC_FREXP],
   if test $gl_func_frexp = yes; then
     AC_DEFINE([HAVE_FREXP], [1],
       [Define if the frexp() function is available and works.])
-  else
-    AC_LIBOBJ([frexp])
   fi
   AC_SUBST([FREXP_LIBM])
 ])
@@ -68,8 +66,6 @@ AC_DEFUN([gl_FUNC_FREXP_NO_LIBM],
   if test $gl_func_frexp_no_libm = yes; then
     AC_DEFINE([HAVE_FREXP_IN_LIBC], [1],
       [Define if the frexp() function is available in libc.])
-  else
-    AC_LIBOBJ([frexp])
   fi
 ])
 
