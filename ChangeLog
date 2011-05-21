@@ -1,5 +1,11 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	logl: Move AC_LIBOBJ invocations to module description.
+	* m4/logl.m4 (gl_FUNC_LOGL): Move AC_LIBOBJ invocation from here...
+	* modules/logl (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	expl: Move AC_LIBOBJ invocations to module description.
 	* m4/expl.m4 (gl_FUNC_EXPL): Move AC_LIBOBJ invocation from here...
 	* modules/expl (configure.ac): ... to here.

@@ -1,4 +1,4 @@
-# logl.m4 serial 3
+# logl.m4 serial 4
 dnl Copyright (C) 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -55,7 +55,7 @@ AC_DEFUN([gl_FUNC_LOGL],
   else
     HAVE_DECL_LOGL=0
     HAVE_LOGL=0
-    AC_LIBOBJ([logl])
+    dnl Find libraries needed to link lib/logl.c.
     AC_REQUIRE([gl_FUNC_FREXPL])
     AC_REQUIRE([gl_FUNC_ISNANL])
     AC_REQUIRE([gl_FUNC_FLOORL])

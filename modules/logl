@@ -14,6 +14,9 @@ floorl          [test $HAVE_LOGL = 0]
 
 configure.ac:
 gl_FUNC_LOGL
+if test $HAVE_LOGL = 0; then
+  AC_LIBOBJ([logl])
+fi
 gl_MATH_MODULE_INDICATOR([logl])
 
 Makefile.am:
