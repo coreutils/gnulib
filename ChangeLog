@@ -1,5 +1,12 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	memchr: Respect rules for use of AC_LIBOBJ.
+	* m4/memchr.m4 (gl_FUNC_MEMCHR): Move AC_LIBOBJ and gl_PREREQ_MEMCHR
+	invocations from here...
+	* modules/memchr (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	mbtowc: Move AC_LIBOBJ invocations to module description.
 	* m4/mbtowc.m4 (gl_FUNC_MBTOWC): Move AC_LIBOBJ and gl_PREREQ_MBTOWC
 	invocations from here...
