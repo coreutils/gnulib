@@ -1,4 +1,4 @@
-# atanl.m4 serial 3
+# atanl.m4 serial 4
 dnl Copyright (C) 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -55,7 +55,7 @@ AC_DEFUN([gl_FUNC_ATANL],
   else
     HAVE_DECL_ATANL=0
     HAVE_ATANL=0
-    AC_LIBOBJ([atanl])
+    dnl Find libraries needed to link lib/atanl.c.
     AC_REQUIRE([gl_FUNC_ISNANL])
     dnl Append $ISNANL_LIBM to ATANL_LIBM, avoiding gratuitous duplicates.
     case " $ATANL_LIBM " in

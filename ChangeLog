@@ -1,5 +1,11 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	atanl: Move AC_LIBOBJ invocations to module description.
+	* m4/atanl.m4 (gl_FUNC_ATANL): Move AC_LIBOBJ invocation from here...
+	* modules/atanl (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	acosl: Move AC_LIBOBJ invocations to module description.
 	* m4/acosl.m4 (gl_FUNC_ACOSL): Move AC_LIBOBJ invocation from here...
 	* modules/acosl (configure.ac): ... to here.
