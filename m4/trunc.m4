@@ -1,4 +1,4 @@
-# trunc.m4 serial 5
+# trunc.m4 serial 6
 dnl Copyright (C) 2007, 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -79,7 +79,7 @@ int main()
     HAVE_DECL_TRUNC=0
   fi
   if test $HAVE_DECL_TRUNC = 0 || test $REPLACE_TRUNC = 1; then
-    AC_LIBOBJ([trunc])
+    dnl No libraries are needed to link lib/trunc.c.
     TRUNC_LIBM=
   fi
   AC_SUBST([TRUNC_LIBM])
