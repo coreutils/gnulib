@@ -1,5 +1,12 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	lseek: Move AC_LIBOBJ invocations to module description.
+	* m4/lseek.m4 (gl_REPLACE_LSEEK): Remove macro.
+	(gl_FUNC_LSEEK): Inline it here. Move AC_LIBOBJ invocation from here...
+	* modules/lseek (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	linkat: Move AC_LIBOBJ invocations to module description.
 	* m4/linkat.m4 (gl_FUNC_LINKAT): Move AC_LIBOBJ invocations from
 	here...

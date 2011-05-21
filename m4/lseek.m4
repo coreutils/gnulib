@@ -1,4 +1,4 @@
-# lseek.m4 serial 6
+# lseek.m4 serial 7
 dnl Copyright (C) 2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -35,15 +35,8 @@ AC_DEFUN([gl_FUNC_LSEEK],
          [gl_cv_func_lseek_pipe=yes], [gl_cv_func_lseek_pipe=no])
      fi])
   if test $gl_cv_func_lseek_pipe = no; then
-    gl_REPLACE_LSEEK
+    REPLACE_LSEEK=1
+    AC_DEFINE([LSEEK_PIPE_BROKEN], [1],
+      [Define to 1 if lseek does not detect pipes.])
   fi
-])
-
-AC_DEFUN([gl_REPLACE_LSEEK],
-[
-  AC_LIBOBJ([lseek])
-  AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
-  REPLACE_LSEEK=1
-  AC_DEFINE([LSEEK_PIPE_BROKEN], [1],
-            [Define to 1 if lseek does not detect pipes.])
 ])
