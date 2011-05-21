@@ -1,5 +1,13 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	obstack-printf*: Move AC_LIBOBJ invocations to module description.
+	* m4/obstack-printf.m4 (gl_REPLACE_OBSTACK_PRINTF): Move AC_LIBOBJ
+	invocation from here...
+	* modules/obstack-printf (configure.ac): ... to here.
+	* modules/obstack-printf-posix (configure.ac): ... and here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	nl_langinfo: Move AC_LIBOBJ invocations to module description.
 	* m4/nl_langinfo.m4 (gl_FUNC_NL_LANGINFO): Move AC_LIBOBJ invocations
 	from here...
