@@ -15,6 +15,10 @@ Depends-on:
 
 configure.ac:
 gl_FUNC_MEMMOVE
+if test $ac_cv_func_memmove = no; then
+  AC_LIBOBJ([memmove])
+  gl_PREREQ_MEMMOVE
+fi
 
 Makefile.am:
 
