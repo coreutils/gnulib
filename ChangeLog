@@ -1,5 +1,11 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	read: Move AC_LIBOBJ invocations to module description.
+	* m4/read.m4 (gl_FUNC_READ): Move AC_LIBOBJ invocation from here...
+	* modules/read (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	rawmemchr: Move AC_LIBOBJ invocations to module description.
 	* m4/rawmemchr.m4 (gl_FUNC_RAWMEMCHR): Call AC_CHECK_FUNCS instead of
 	AC_REPLACE_FUNCS. Move AC_LIBOBJ and gl_PREREQ_RAWMEMCHR invocations
