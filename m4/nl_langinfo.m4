@@ -1,4 +1,4 @@
-# nl_langinfo.m4 serial 4
+# nl_langinfo.m4 serial 5
 dnl Copyright (C) 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -43,10 +43,8 @@ AC_DEFUN([gl_FUNC_NL_LANGINFO],
       REPLACE_NL_LANGINFO=1
       AC_DEFINE([REPLACE_NL_LANGINFO], [1],
         [Define if nl_langinfo exists but is overridden by gnulib.])
-      AC_LIBOBJ([nl_langinfo])
     fi
   else
     HAVE_NL_LANGINFO=0
-    AC_LIBOBJ([nl_langinfo])
   fi
 ])

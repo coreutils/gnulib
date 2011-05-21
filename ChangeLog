@@ -1,5 +1,12 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	nl_langinfo: Move AC_LIBOBJ invocations to module description.
+	* m4/nl_langinfo.m4 (gl_FUNC_NL_LANGINFO): Move AC_LIBOBJ invocations
+	from here...
+	* modules/nl_langinfo (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	nanosleep: Move AC_LIBOBJ invocations to module description.
 	* m4/nanosleep.m4 (gl_FUNC_NANOSLEEP): Move AC_LIBOBJ and
 	gl_PREREQ_NANOSLEEP invocations from here...
