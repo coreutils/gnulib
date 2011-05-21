@@ -15,6 +15,10 @@ Depends-on:
 
 configure.ac:
 gl_FUNC_ATEXIT
+if test $ac_cv_func_atexit = no; then
+  AC_LIBOBJ([atexit])
+  gl_PREREQ_ATEXIT
+fi
 
 Makefile.am:
 

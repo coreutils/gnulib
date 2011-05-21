@@ -1,3 +1,11 @@
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
+	atexit: Move AC_LIBOBJ invocations to module description.
+	* m4/atexit.m4 (gl_FUNC_ATEXIT): Call AC_CHECK_FUNCS instead of
+	AC_REPLACE_FUNCS. Move AC_LIBOBJ and gl_PREREQ_ATEXIT invocations from
+	here...
+	* modules/atexit (configure.ac): ... to here.
+
 2011-05-05  Bruno Haible  <bruno@clisp.org>
 
 	atoll: Move AC_LIBOBJ invocations to module description.
