@@ -1,4 +1,4 @@
-# pty.m4 serial 9
+# pty.m4 serial 10
 dnl Copyright (C) 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -67,12 +67,10 @@ AC_DEFUN([gl_FUNC_FORKPTY],
       ])
     if test $gl_cv_func_forkpty_const != yes; then
       REPLACE_FORKPTY=1
-      AC_LIBOBJ([forkpty])
     fi
   else
     dnl The system does not have forkpty.
     HAVE_FORKPTY=0
-    AC_LIBOBJ([forkpty])
   fi
 ])
 

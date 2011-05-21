@@ -13,6 +13,9 @@ login_tty
 
 configure.ac:
 gl_FUNC_FORKPTY
+if test $HAVE_FORKPTY = 0 || test $REPLACE_FORKPTY = 1; then
+  AC_LIBOBJ([forkpty])
+fi
 gl_PTY_MODULE_INDICATOR([forkpty])
 
 Makefile.am:

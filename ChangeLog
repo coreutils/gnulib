@@ -1,5 +1,11 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	forkpty: Move AC_LIBOBJ invocations to module description.
+	* m4/pty.m4 (gl_FUNC_FORKPTY): Move AC_LIBOBJ invocations from here...
+	* modules/forkpty (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	ptsname: Move AC_LIBOBJ invocations to module description.
 	* m4/ptsname.m4 (gl_FUNC_PTSNAME): Move AC_LIBOBJ and gl_PREREQ_PTSNAME
 	invocations from here...
