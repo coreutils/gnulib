@@ -1,5 +1,12 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	select: Respect rules for use of AC_LIBOBJ.
+	* m4/select.m4 (gl_FUNC_SELECT): Move AC_LIBOBJ invocations from
+	here...
+	* modules/select (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	scandir: Move AC_LIBOBJ invocations to module description.
 	* m4/scandir.m4 (gl_FUNC_SCANDIR): Move AC_LIBOBJ and gl_PREREQ_SCANDIR
 	invocations from here...

@@ -1,4 +1,4 @@
-# select.m4 serial 4
+# select.m4 serial 5
 dnl Copyright (C) 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,7 +11,6 @@ AC_DEFUN([gl_FUNC_SELECT],
   AC_REQUIRE([gl_SOCKETS])
   if test "$ac_cv_header_winsock2_h" = yes; then
     REPLACE_SELECT=1
-    AC_LIBOBJ([select])
   else
     dnl On Interix 3.5, select(0, NULL, NULL, NULL, timeout) fails with error
     dnl EFAULT.
@@ -45,10 +44,7 @@ changequote([,])dnl
       ])
     case "$gl_cv_func_select_supports0" in
       *yes) ;;
-      *)
-        REPLACE_SELECT=1
-        AC_LIBOBJ([select])
-        ;;
+      *) REPLACE_SELECT=1 ;;
     esac
   fi
 ])
