@@ -1,5 +1,11 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	roundf: Move AC_LIBOBJ invocations to module description.
+	* m4/roundf.m4 (gl_FUNC_ROUNDF): Move AC_LIBOBJ invocation from here...
+	* modules/roundf (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	truncl: Move AC_LIBOBJ invocations to module description.
 	* m4/truncl.m4 (gl_FUNC_TRUNCL): Move AC_LIBOBJ invocation from here...
 	* modules/truncl (configure.ac): ... to here.
