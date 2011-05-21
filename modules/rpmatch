@@ -15,6 +15,10 @@ strdup          [test $HAVE_RPMATCH = 0]
 
 configure.ac:
 gl_FUNC_RPMATCH
+if test $HAVE_RPMATCH = 0; then
+  AC_LIBOBJ([rpmatch])
+  gl_PREREQ_RPMATCH
+fi
 gl_STDLIB_MODULE_INDICATOR([rpmatch])
 
 Makefile.am:

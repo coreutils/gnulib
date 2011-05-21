@@ -1,4 +1,4 @@
-# rpmatch.m4 serial 9
+# rpmatch.m4 serial 10
 dnl Copyright (C) 2002-2003, 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,10 +10,9 @@ AC_DEFUN([gl_FUNC_RPMATCH],
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
   AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
-  AC_REPLACE_FUNCS([rpmatch])
+  AC_CHECK_FUNCS([rpmatch])
   if test $ac_cv_func_rpmatch = no; then
     HAVE_RPMATCH=0
-    gl_PREREQ_RPMATCH
   fi
 ])
 
