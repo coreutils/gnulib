@@ -1,4 +1,4 @@
-# serial 9
+# serial 10
 
 # Copyright (C) 2001, 2003-2004, 2006, 2008-2011 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -27,7 +27,6 @@ AC_DEFUN([gl_FUNC_MKDIR],
   )
   if test "$gl_cv_func_mkdir_trailing_slash_works" != yes; then
     REPLACE_MKDIR=1
-    AC_LIBOBJ([mkdir])
   fi
 
   AC_CACHE_CHECK([whether mkdir handles trailing dot],
@@ -45,7 +44,6 @@ AC_DEFUN([gl_FUNC_MKDIR],
   )
   if test "$gl_cv_func_mkdir_trailing_dot_works" != yes; then
     REPLACE_MKDIR=1
-    AC_LIBOBJ([mkdir])
     AC_DEFINE([FUNC_MKDIR_DOT_BUG], [1], [Define to 1 if mkdir mistakenly
       creates a directory given with a trailing dot component.])
   fi

@@ -1,5 +1,11 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	mkdir: Move AC_LIBOBJ invocations to module description.
+	* m4/mkdir.m4 (gl_FUNC_MKDIR): Move AC_LIBOBJ invocations from here...
+	* modules/mkdir (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	memset: Move AC_LIBOBJ invocations to module description.
 	* m4/memset.m4 (gl_FUNC_MEMSET): Call AC_CHECK_FUNCS instead of
 	AC_REPLACE_FUNCS. Move AC_LIBOBJ and gl_PREREQ_MEMSET invocations from

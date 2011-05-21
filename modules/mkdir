@@ -11,6 +11,9 @@ dirname-lgpl    [test $REPLACE_MKDIR = 1]
 
 configure.ac:
 gl_FUNC_MKDIR
+if test $REPLACE_MKDIR = 1; then
+  AC_LIBOBJ([mkdir])
+fi
 
 Makefile.am:
 
