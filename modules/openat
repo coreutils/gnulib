@@ -38,6 +38,25 @@ unlink          [test $REPLACE_UNLINKAT = 1]
 
 configure.ac:
 gl_FUNC_OPENAT
+AC_LIBOBJ([openat-proc])
+if test $HAVE_FCHMODAT = 0; then
+  AC_LIBOBJ([fchmodat])
+fi
+if test $ac_cv_func_fstatat = no || test $REPLACE_FSTATAT = 1; then
+  AC_LIBOBJ([fstatat])
+fi
+if test $HAVE_MKDIRAT = 0; then
+  AC_LIBOBJ([mkdirat])
+fi
+if test $HAVE_OPENAT = 0 || test $REPLACE_OPENAT = 1; then
+  AC_LIBOBJ([openat])
+fi
+if test $ac_cv_func_unlinkat = no || test $REPLACE_UNLINKAT = 1; then
+  AC_LIBOBJ([unlinkat])
+fi
+if test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1; then
+  AC_LIBOBJ([fchownat])
+fi
 
 Makefile.am:
 
