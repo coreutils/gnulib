@@ -1,4 +1,4 @@
-# remove.m4 serial 2
+# remove.m4 serial 3
 dnl Copyright (C) 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -14,7 +14,6 @@ AC_DEFUN([gl_FUNC_REMOVE],
     dnl If either underlying syscall is broken, then remove likely has
     dnl the same bug; blindly use our replacement.
     REPLACE_REMOVE=1
-    AC_LIBOBJ([remove])
   else
     dnl C89 requires remove(), but only POSIX requires it to handle
     dnl directories.  On mingw, directories fails with EPERM.
@@ -32,8 +31,7 @@ AC_DEFUN([gl_FUNC_REMOVE],
           esac])
        rm -rf conftest.dir])
     case $gl_cv_func_remove_dir_works in
-      *no*) REPLACE_REMOVE=1
-        AC_LIBOBJ([remove]);;
+      *no*) REPLACE_REMOVE=1;;
     esac
   fi
 ])

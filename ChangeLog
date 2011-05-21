@@ -1,5 +1,12 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	remove: Move AC_LIBOBJ invocations to module description.
+	* m4/remove.m4 (gl_FUNC_REMOVE): Move AC_LIBOBJ invocations from
+	here...
+	* modules/remove (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	relocatable-lib: Move AC_LIBOBJ invocations to module description.
 	* m4/relocatable-lib.m4 (gl_RELOCATABLE_LIBRARY_SEPARATE): Remove
 	macro.
