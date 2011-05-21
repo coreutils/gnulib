@@ -14,6 +14,9 @@ stdint
 
 configure.ac:
 gl_READUTMP
+if test $ac_cv_header_utmp_h = yes || test $ac_cv_header_utmpx_h = yes; then
+  AC_LIBOBJ([readutmp])
+fi
 
 Makefile.am:
 

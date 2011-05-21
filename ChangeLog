@@ -1,5 +1,11 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	readutmp: Move AC_LIBOBJ invocations to module description.
+	* m4/readutmp.m4 (gl_READUTMP): Move AC_LIBOBJ invocation from here...
+	* modules/readutmp (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	readlinkat: Move AC_LIBOBJ invocations to module description.
 	* m4/readlinkat.m4 (gl_FUNC_READLINKAT): Move AC_LIBOBJ invocation from
 	here...
