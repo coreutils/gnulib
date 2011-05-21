@@ -1,5 +1,12 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	poll: Move AC_LIBOBJ invocations to module description.
+	* m4/poll.m4 (gl_FUNC_POLL): Move AC_LIBOBJ and gl_PREREQ_POLL
+	invocations from here...
+	* modules/poll (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	pipe-posix: Move AC_LIBOBJ invocations to module description.
 	* m4/pipe.m4 (gl_FUNC_PIPE): Move AC_LIBOBJ invocation from here...
 	* modules/pipe-posix (configure.ac): ... to here.
