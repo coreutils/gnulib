@@ -1,4 +1,4 @@
-# floor.m4 serial 5
+# floor.m4 serial 6
 dnl Copyright (C) 2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -48,7 +48,7 @@ int main()
     fi
   ])
   if test $REPLACE_FLOOR = 1; then
-    AC_LIBOBJ([floor])
+    dnl No libraries are needed to link lib/floor.c.
     FLOOR_LIBM=
   fi
   AC_SUBST([FLOOR_LIBM])
