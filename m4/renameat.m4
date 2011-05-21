@@ -1,4 +1,4 @@
-# serial 2
+# serial 3
 # See if we need to provide renameat replacement.
 
 dnl Copyright (C) 2009-2011 Free Software Foundation, Inc.
@@ -17,12 +17,8 @@ AC_DEFUN([gl_FUNC_RENAMEAT],
   AC_CHECK_FUNCS_ONCE([renameat])
   if test $ac_cv_func_renameat = no; then
     HAVE_RENAMEAT=0
-    AC_LIBOBJ([renameat])
-    AC_LIBOBJ([at-func2])
   elif test $REPLACE_RENAME = 1; then
     dnl Solaris 9 and 10 have the same bugs in renameat as in rename.
     REPLACE_RENAMEAT=1
-    AC_LIBOBJ([renameat])
-    AC_LIBOBJ([at-func2])
   fi
 ])
