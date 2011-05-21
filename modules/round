@@ -16,6 +16,9 @@ floor           [test $HAVE_DECL_ROUND = 0 || test $REPLACE_ROUND = 1]
 
 configure.ac:
 gl_FUNC_ROUND
+if test $HAVE_DECL_ROUND = 0 || test $REPLACE_ROUND = 1; then
+  AC_LIBOBJ([round])
+fi
 gl_MATH_MODULE_INDICATOR([round])
 
 Makefile.am:

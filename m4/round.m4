@@ -1,4 +1,4 @@
-# round.m4 serial 10
+# round.m4 serial 11
 dnl Copyright (C) 2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -92,7 +92,7 @@ int main()
     HAVE_DECL_ROUND=0
   fi
   if test $HAVE_DECL_ROUND = 0 || test $REPLACE_ROUND = 1; then
-    AC_LIBOBJ([round])
+    dnl Find libraries needed to link lib/round.c.
     gl_FUNC_FLOOR_LIBS
     gl_FUNC_CEIL_LIBS
     ROUND_LIBM=
