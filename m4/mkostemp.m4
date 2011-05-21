@@ -1,4 +1,4 @@
-# mkostemp.m4 serial 1
+# mkostemp.m4 serial 2
 dnl Copyright (C) 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -14,8 +14,6 @@ AC_DEFUN([gl_FUNC_MKOSTEMP],
   AC_CHECK_FUNCS_ONCE([mkostemp])
   if test $ac_cv_func_mkostemp != yes; then
     HAVE_MKOSTEMP=0
-    AC_LIBOBJ([mkostemp])
-    gl_PREREQ_MKOSTEMP
   fi
 ])
 
