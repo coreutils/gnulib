@@ -1,4 +1,4 @@
-#serial 20
+#serial 21
 
 # Copyright (C) 2001, 2003-2007, 2009-2011 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -61,13 +61,9 @@ AC_DEFUN([gl_FUNC_MKSTEMP],
       ])
     if test "$gl_cv_func_working_mkstemp" != yes; then
       REPLACE_MKSTEMP=1
-      AC_LIBOBJ([mkstemp])
-      gl_PREREQ_MKSTEMP
     fi
   else
     HAVE_MKSTEMP=0
-    AC_LIBOBJ([mkstemp])
-    gl_PREREQ_MKSTEMP
   fi
 ])
 
