@@ -1,5 +1,16 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	mktime: Respect rules for use of AC_LIBOBJ.
+	* m4/mktime.m4 (AC_FUNC_MKTIME): Remove macro.
+	(gl_FUNC_MKTIME): Inline it here. Set gl_cv_func_working_mktime. Move
+	AC_LIBOBJ and gl_PREREQ_MKTIME invocations from here...
+	(gl_FUNC_MKTIME_INTERNAL): ... and here...
+	* modules/mktime (configure.ac): ... to here.
+	* modules/mktime-internal (configure.ac): ... and here.
+	* m4/timegm.m4 (gl_FUNC_TIMEGM): Update.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	mkstemps: Move AC_LIBOBJ invocations to module description.
 	* m4/mkstemps.m4 (gl_FUNC_MKSTEMPS): Move AC_LIBOBJ invocation from
 	here...

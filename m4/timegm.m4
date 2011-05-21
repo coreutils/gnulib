@@ -1,4 +1,4 @@
-# timegm.m4 serial 9
+# timegm.m4 serial 10
 dnl Copyright (C) 2003, 2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,7 +11,7 @@ AC_DEFUN([gl_FUNC_TIMEGM],
   REPLACE_TIMEGM=0
   AC_CHECK_FUNCS_ONCE([timegm])
   if test $ac_cv_func_timegm = yes; then
-    if test $ac_cv_func_working_mktime = no; then
+    if test $gl_cv_func_working_mktime = no; then
       # Assume that timegm is buggy if mktime is.
       REPLACE_TIMEGM=1
     fi
