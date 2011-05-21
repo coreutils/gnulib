@@ -1,5 +1,12 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	mkstemps: Move AC_LIBOBJ invocations to module description.
+	* m4/mkstemps.m4 (gl_FUNC_MKSTEMPS): Move AC_LIBOBJ invocation from
+	here...
+	* modules/mkstemps (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	mkstemp: Move AC_LIBOBJ invocations to module description.
 	* m4/mkstemp.m4 (gl_FUNC_MKSTEMP): Move AC_LIBOBJ and
 	gl_PREREQ_MKSTEMP invocations from here...
