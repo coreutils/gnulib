@@ -1,4 +1,4 @@
-# serial 15
+# serial 16
 # Determine whether we need the lchown wrapper.
 
 dnl Copyright (C) 1998, 2001, 2003-2007, 2009-2011 Free Software Foundation,
@@ -17,13 +17,12 @@ AC_DEFUN([gl_FUNC_LCHOWN],
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
   AC_REQUIRE([gl_FUNC_CHOWN])
   AC_CHECK_FUNCS_ONCE([lchmod])
-  AC_REPLACE_FUNCS([lchown])
+  AC_CHECK_FUNCS([lchown])
   if test $ac_cv_func_lchown = no; then
     HAVE_LCHOWN=0
   elif test "$gl_cv_func_chown_slash_works" != yes \
       || test "$gl_cv_func_chown_ctime_works" != yes; then
     dnl Trailing slash and ctime bugs in chown also occur in lchown.
-    AC_LIBOBJ([lchown])
     REPLACE_LCHOWN=1
   fi
 ])
