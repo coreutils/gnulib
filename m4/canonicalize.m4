@@ -1,4 +1,4 @@
-# canonicalize.m4 serial 18
+# canonicalize.m4 serial 19
 
 dnl Copyright (C) 2003-2007, 2009-2011 Free Software Foundation, Inc.
 
@@ -44,7 +44,7 @@ AC_DEFUN([gl_CANONICALIZE_LGPL],
 ])
 
 # Like gl_CANONICALIZE_LGPL, except prepare for separate compilation
-# (no AC_LIBOBJ).
+# (no REPLACE_CANONICALIZE_FILE_NAME, no REPLACE_REALPATH, no AC_LIBOBJ).
 AC_DEFUN([gl_CANONICALIZE_LGPL_SEPARATE],
 [
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])

@@ -1,5 +1,14 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	relocatable-prog-wrapper: Fix possible link error.
+	* m4/setenv.m4 (gl_FUNC_SETENV_SEPARATE): Move determination of
+	HAVE_SETENV and REPLACE_SETENV and AC_LIBOBJ invocation from here...
+	(gl_FUNC_SETENV): ... to here.
+	* m4/canonicalize.m4 (gl_CANONICALIZE_LGPL_SEPARATE): Update comment.
+	* m4/readlink.m4 (gl_FUNC_READLINK_SEPARATE): Likewise.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	relocatable-prog-wrapper: Assume strerror() exists.
 	* modules/relocatable-prog-wrapper (Files): Remove lib/strerror.c,
 	m4/strerror.m4.
