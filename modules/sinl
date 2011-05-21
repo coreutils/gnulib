@@ -18,6 +18,11 @@ floorl          [test $HAVE_SINL = 0]
 
 configure.ac:
 gl_FUNC_SINL
+if test $HAVE_SINL = 0; then
+  AC_LIBOBJ([sinl])
+  AC_LIBOBJ([sincosl])
+  AC_LIBOBJ([trigl])
+fi
 gl_MATH_MODULE_INDICATOR([sinl])
 
 Makefile.am:

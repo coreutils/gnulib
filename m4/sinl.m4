@@ -1,4 +1,4 @@
-# sinl.m4 serial 3
+# sinl.m4 serial 4
 dnl Copyright (C) 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -55,9 +55,7 @@ AC_DEFUN([gl_FUNC_SINL],
   else
     HAVE_DECL_SINL=0
     HAVE_SINL=0
-    AC_LIBOBJ([sinl])
-    AC_LIBOBJ([sincosl])
-    AC_LIBOBJ([trigl])
+    dnl Find libraries needed to link lib/sinl.c, lib/sincosl.c, lib/trigl.c.
     AC_REQUIRE([gl_FUNC_ISNANL])
     AC_REQUIRE([gl_FUNC_FLOOR])
     AC_REQUIRE([gl_FUNC_FLOORL])

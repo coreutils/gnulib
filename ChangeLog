@@ -1,5 +1,11 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	sinl: Move AC_LIBOBJ invocations to module description.
+	* m4/sinl.m4 (gl_FUNC_SINL): Move AC_LIBOBJ invocations from here...
+	* modules/sinl (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	logl: Move AC_LIBOBJ invocations to module description.
 	* m4/logl.m4 (gl_FUNC_LOGL): Move AC_LIBOBJ invocation from here...
 	* modules/logl (configure.ac): ... to here.
