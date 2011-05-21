@@ -21,7 +21,6 @@ lib/malloca.c
 lib/relocatable.h
 lib/relocatable.c
 lib/setenv.c
-lib/strerror.c
 lib/c-ctype.h
 lib/c-ctype.c
 m4/malloca.m4
@@ -32,7 +31,6 @@ m4/longlong.m4
 m4/readlink.m4
 m4/relocatable-lib.m4
 m4/setenv.m4
-m4/strerror.m4
 
 Depends-on:
 alloca-opt
@@ -54,7 +52,6 @@ gl_CANONICALIZE_LGPL_SEPARATE
 gl_MALLOCA
 gl_RELOCATABLE_LIBRARY_SEPARATE
 gl_FUNC_SETENV_SEPARATE
-gl_FUNC_STRERROR_SEPARATE
 
 Makefile.am:
 

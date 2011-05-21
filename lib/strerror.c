@@ -20,18 +20,14 @@
 /* Specification.  */
 #include <string.h>
 
-#if REPLACE_STRERROR
+#include <errno.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-# include <errno.h>
-# include <stdio.h>
-# include <stdlib.h>
-
-# include "intprops.h"
-# include "verify.h"
+#include "intprops.h"
+#include "verify.h"
 
 /* Use the system functions, not the gnulib overrides in this file.  */
-# undef sprintf
+#undef sprintf
 
-# include "strerror-impl.h"
-
-#endif
+#include "strerror-impl.h"

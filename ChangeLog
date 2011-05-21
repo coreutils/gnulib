@@ -1,5 +1,17 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	relocatable-prog-wrapper: Assume strerror() exists.
+	* modules/relocatable-prog-wrapper (Files): Remove lib/strerror.c,
+	m4/strerror.m4.
+	(configure.ac): Don't invoke gl_FUNC_STRERROR_SEPARATE.
+	* lib/relocwrapper.c: Remove mention of strerror module.
+	* lib/strerror.c: Assume REPLACE_STRERROR is 1.
+	* m4/strerror.m4 (gl_FUNC_STRERROR_SEPARATE): Remove macro.
+	(gl_FUNC_STRERROR): Inline it here. Don't define REPLACE_STRERROR as a
+	C macro.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	select: Simplify replacement idiom.
 	* m4/select.m4 (gl_FUNC_SELECT): Set REPLACE_SELECT also on native
 	Win32 platforms.

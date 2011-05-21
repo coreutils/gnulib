@@ -1,21 +1,10 @@
-# strerror.m4 serial 10
+# strerror.m4 serial 11
 dnl Copyright (C) 2002, 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_STRERROR],
-[
-  AC_REQUIRE([gl_FUNC_STRERROR_SEPARATE])
-  if test $REPLACE_STRERROR = 1; then
-    AC_LIBOBJ([strerror])
-    AC_DEFINE_UNQUOTED([REPLACE_STRERROR], [$REPLACE_STRERROR],
-      [Define this to 1 if strerror is broken.])
-  fi
-])
-
-# Like gl_FUNC_STRERROR, except prepare for separate compilation (no AC_LIBOBJ).
-AC_DEFUN([gl_FUNC_STRERROR_SEPARATE],
 [
   AC_REQUIRE([gl_HEADER_STRING_H_DEFAULTS])
   AC_REQUIRE([gl_HEADER_ERRNO_H])
@@ -49,6 +38,7 @@ AC_DEFUN([gl_FUNC_STRERROR_SEPARATE],
     REPLACE_STRERROR=1
   fi
   if test $REPLACE_STRERROR = 1; then
+    AC_LIBOBJ([strerror])
     gl_PREREQ_STRERROR
   fi
 ])
