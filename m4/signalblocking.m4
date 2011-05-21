@@ -1,4 +1,4 @@
-# signalblocking.m4 serial 10
+# signalblocking.m4 serial 11
 dnl Copyright (C) 2001-2002, 2006-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,8 +19,6 @@ AC_DEFUN([gl_SIGNALBLOCKING],
   fi
   if test -z "$gl_cv_func_sigprocmask"; then
     HAVE_POSIX_SIGNALBLOCKING=0
-    AC_LIBOBJ([sigprocmask])
-    gl_PREREQ_SIGPROCMASK
   fi
 ])
 

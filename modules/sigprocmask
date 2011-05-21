@@ -12,6 +12,10 @@ raise           [test $HAVE_POSIX_SIGNALBLOCKING = 0]
 
 configure.ac:
 gl_SIGNALBLOCKING
+if test $HAVE_POSIX_SIGNALBLOCKING = 0; then
+  AC_LIBOBJ([sigprocmask])
+  gl_PREREQ_SIGPROCMASK
+fi
 gl_SIGNAL_MODULE_INDICATOR([sigprocmask])
 
 Makefile.am:
