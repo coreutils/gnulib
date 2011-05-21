@@ -20,6 +20,10 @@ verify          [test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1]
 
 configure.ac:
 gl_FUNC_MBRTOWC
+if test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1; then
+  AC_LIBOBJ([mbrtowc])
+  gl_PREREQ_MBRTOWC
+fi
 gl_WCHAR_MODULE_INDICATOR([mbrtowc])
 
 Makefile.am:

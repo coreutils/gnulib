@@ -1,4 +1,4 @@
-# mbrtowc.m4 serial 23
+# mbrtowc.m4 serial 24
 dnl Copyright (C) 2001-2002, 2004-2005, 2008-2011 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -52,10 +52,6 @@ AC_DEFUN([gl_FUNC_MBRTOWC],
            ;;
       esac
     fi
-  fi
-  if test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1; then
-    AC_LIBOBJ([mbrtowc])
-    gl_PREREQ_MBRTOWC
   fi
 ])
 

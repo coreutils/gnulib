@@ -1,5 +1,12 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	mbrtowc: Respect rules for use of AC_LIBOBJ.
+	* m4/mbrtowc.m4 (gl_FUNC_MBRTOWC): Move AC_LIBOBJ and gl_PREREQ_MBRTOWC
+	invocations from here...
+	* modules/mbrtowc (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	malloc-*: Move AC_LIBOBJ invocations to module description.
 	* m4/malloc.m4 (gl_REPLACE_MALLOC): Remove macro.
 	(gl_FUNC_MALLOC_GNU, gl_FUNC_MALLOC_POSIX): Inline it here. Move
