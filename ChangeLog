@@ -1,5 +1,12 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	readlink: Move AC_LIBOBJ invocations to module description.
+	* m4/readlink.m4 (gl_FUNC_READLINK): Move AC_LIBOBJ and
+	gl_PREREQ_READLINK invocations from here...
+	* modules/readlink (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	readline: Move AC_LIBOBJ invocations to module description.
 	* m4/readline.m4 (gl_FUNC_READLINE): Move AC_LIBOBJ and
 	gl_PREREQ_READLINE invocations from here...

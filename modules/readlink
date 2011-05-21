@@ -11,6 +11,10 @@ stat            [test $HAVE_READLINK = 0 || test $REPLACE_READLINK = 1]
 
 configure.ac:
 gl_FUNC_READLINK
+if test $HAVE_READLINK = 0 || test $REPLACE_READLINK = 1; then
+  AC_LIBOBJ([readlink])
+  gl_PREREQ_READLINK
+fi
 gl_UNISTD_MODULE_INDICATOR([readlink])
 
 Makefile.am:
