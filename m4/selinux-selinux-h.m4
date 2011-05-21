@@ -1,4 +1,4 @@
-# serial 4   -*- Autoconf -*-
+# serial 5   -*- Autoconf -*-
 # Copyright (C) 2006-2007, 2009-2011 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -18,7 +18,6 @@ AC_DEFUN([gl_HEADERS_SELINUX_SELINUX_H],
     if test "$ac_cv_header_selinux_selinux_h" = yes; then
       # We do have <selinux/selinux.h>, so do compile getfilecon.c
       # and arrange to use its wrappers.
-      AC_LIBOBJ([getfilecon])
       gl_CHECK_NEXT_HEADERS([selinux/selinux.h])
       AC_DEFINE([getfilecon], [rpl_getfilecon],
                 [Always use our getfilecon wrapper.])

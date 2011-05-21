@@ -16,6 +16,9 @@ configure.ac:
 gl_HEADERS_SELINUX_SELINUX_H
 gl_HEADERS_SELINUX_CONTEXT_H
 AC_REQUIRE([AC_C_INLINE])
+if test "$with_selinux" != no && test "$ac_cv_header_selinux_selinux_h" = yes; then
+  AC_LIBOBJ([getfilecon])
+fi
 
 Makefile.am:
 lib_SOURCES += se-context.in.h se-selinux.in.h
