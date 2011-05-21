@@ -32,6 +32,10 @@ wctype-h        [test $ac_use_included_regex = yes]
 
 configure.ac:
 gl_REGEX
+if test $ac_use_included_regex = yes; then
+  AC_LIBOBJ([regex])
+  gl_PREREQ_REGEX
+fi
 
 Makefile.am:
 

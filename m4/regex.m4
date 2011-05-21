@@ -1,4 +1,4 @@
-# serial 58
+# serial 59
 
 # Copyright (C) 1996-2001, 2003-2011 Free Software Foundation, Inc.
 #
@@ -207,8 +207,6 @@ AC_DEFUN([gl_REGEX],
       [Define to rpl_regerror if the replacement should be used.])
     AC_DEFINE([regfree], [rpl_regfree],
       [Define to rpl_regfree if the replacement should be used.])
-    AC_LIBOBJ([regex])
-    gl_PREREQ_REGEX
   fi
 ])
 

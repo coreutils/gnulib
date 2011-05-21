@@ -1,5 +1,12 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	regex: Move AC_LIBOBJ invocations to module description.
+	* m4/regex.m4 (gl_REGEX): Move AC_LIBOBJ and gl_PREREQ_REGEX
+	invocations from here...
+	* modules/regex (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	realloc-*: Move AC_LIBOBJ invocations to module description.
 	* m4/realloc.m4 (gl_REPLACE_REALLOC): Remove macro.
 	(gl_FUNC_REALLOC_GNU, gl_FUNC_REALLOC_POSIX): Inline it here. Move
