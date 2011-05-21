@@ -1,5 +1,12 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	scandir: Move AC_LIBOBJ invocations to module description.
+	* m4/scandir.m4 (gl_FUNC_SCANDIR): Move AC_LIBOBJ and gl_PREREQ_SCANDIR
+	invocations from here...
+	* modules/scandir (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	rpmatch: Move AC_LIBOBJ invocations to module description.
 	* m4/rpmatch.m4 (gl_FUNC_RPMATCH): Call AC_CHECK_FUNCS instead of
 	AC_REPLACE_FUNCS. Move AC_LIBOBJ and gl_PREREQ_RPMATCH invocations from
