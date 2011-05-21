@@ -12,6 +12,10 @@ sigprocmask     [test $HAVE_SIGACTION = 0]
 
 configure.ac:
 gl_SIGACTION
+if test $HAVE_SIGACTION = 0; then
+  AC_LIBOBJ([sigaction])
+  gl_PREREQ_SIGACTION
+fi
 gl_SIGNAL_MODULE_INDICATOR([sigaction])
 
 Makefile.am:
