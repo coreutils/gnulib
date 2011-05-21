@@ -1,4 +1,4 @@
-# setlocale.m4 serial 3
+# setlocale.m4 serial 4
 dnl Copyright (C) 2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -20,10 +20,6 @@ AC_DEFUN([gl_FUNC_SETLOCALE],
       esac
       ;;
   esac
-  if test $REPLACE_SETLOCALE = 1; then
-    AC_LIBOBJ([setlocale])
-    gl_PREREQ_SETLOCALE
-  fi
 ])
 
 # Prerequisites of lib/setlocale.c.

@@ -1,5 +1,12 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	setlocale: Move AC_LIBOBJ invocations to module description.
+	* m4/setlocale.m4 (gl_FUNC_SETLOCALE): Move AC_LIBOBJ and
+	gl_PREREQ_SETLOCALE invocations from here...
+	* modules/setlocale (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	unsetenv: Move AC_LIBOBJ invocations to module description.
 	* m4/setenv.m4 (gl_FUNC_UNSETENV): Set HAVE_UNSETENV. Move AC_LIBOBJ
 	and gl_PREREQ_UNSETENV invocations from here...
