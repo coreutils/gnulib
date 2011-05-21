@@ -14,6 +14,10 @@ verify          [test $HAVE_MBSINIT = 0 || test $REPLACE_MBSINIT = 1]
 
 configure.ac:
 gl_FUNC_MBSINIT
+if test $HAVE_MBSINIT = 0 || test $REPLACE_MBSINIT = 1; then
+  AC_LIBOBJ([mbsinit])
+  gl_PREREQ_MBSINIT
+fi
 gl_WCHAR_MODULE_INDICATOR([mbsinit])
 
 Makefile.am:

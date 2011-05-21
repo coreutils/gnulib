@@ -1,5 +1,12 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	mbsinit: Move AC_LIBOBJ invocations to module description.
+	* m4/mbsinit.m4 (gl_FUNC_MBSINIT): Move AC_LIBOBJ and gl_PREREQ_MBSINIT
+	invocations from here...
+	* modules/mbsinit (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	mbrlen: Move AC_LIBOBJ invocations to module description.
 	* m4/mbrlen.m4 (gl_FUNC_MBRLEN): Move AC_LIBOBJ and gl_PREREQ_MBRLEN
 	invocations from here...
