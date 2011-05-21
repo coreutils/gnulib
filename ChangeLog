@@ -1,3 +1,11 @@
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
+	euidaccess: Respect rules for use of AC_LIBOBJ.
+	* m4/euidaccess.m4 (gl_FUNC_EUIDACCESS): Call AC_CHECK_FUNCS instead of
+	AC_REPLACE_FUNCS. Move AC_LIBOBJ and gl_PREREQ_EUIDACCESS invocations
+	from here...
+	* modules/euidaccess (configure.ac): ... to here.
+
 2011-05-06  Bruno Haible  <bruno@clisp.org>
 
 	error: Move AC_LIBOBJ invocations to module description.

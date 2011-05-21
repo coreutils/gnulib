@@ -1,4 +1,4 @@
-# euidaccess.m4 serial 12
+# euidaccess.m4 serial 13
 dnl Copyright (C) 2002-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -22,10 +22,9 @@ AC_DEFUN([gl_FUNC_EUIDACCESS],
   dnl Persuade glibc <unistd.h> to declare euidaccess().
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
-  AC_REPLACE_FUNCS([euidaccess])
+  AC_CHECK_FUNCS([euidaccess])
   if test $ac_cv_func_euidaccess = no; then
     HAVE_EUIDACCESS=0
-    gl_PREREQ_EUIDACCESS
   fi
 ])
 
