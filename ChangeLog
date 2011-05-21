@@ -1,5 +1,11 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	mknod: Move AC_LIBOBJ invocations to module description.
+	* m4/mknod.m4 (gl_FUNC_MKNOD): Move AC_LIBOBJ invocations from here...
+	* modules/mknod (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	mkfifoat: Move AC_LIBOBJ invocations to module description.
 	* m4/mkfifoat.m4 (gl_FUNC_MKFIFOAT): Move AC_LIBOBJ invocations from
 	here...
