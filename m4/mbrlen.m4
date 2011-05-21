@@ -1,4 +1,4 @@
-# mbrlen.m4 serial 6
+# mbrlen.m4 serial 7
 dnl Copyright (C) 2008, 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -21,10 +21,6 @@ AC_DEFUN([gl_FUNC_MBRLEN],
     if test $REPLACE_MBRTOWC = 1; then
       REPLACE_MBRLEN=1
     fi
-  fi
-  if test $HAVE_MBRLEN = 0 || test $REPLACE_MBRLEN = 1; then
-    AC_LIBOBJ([mbrlen])
-    gl_PREREQ_MBRLEN
   fi
 ])
 
