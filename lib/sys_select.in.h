@@ -89,7 +89,7 @@
 
 
 #if @GNULIB_SELECT@
-# if @HAVE_WINSOCK2_H@ || @REPLACE_SELECT@
+# if @REPLACE_SELECT@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef select
 #   define select rpl_select

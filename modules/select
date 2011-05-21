@@ -7,8 +7,8 @@ m4/select.m4
 
 Depends-on:
 sys_select
-alloca          [test "$ac_cv_header_winsock2_h" = yes || test $REPLACE_SELECT = 1]
-sockets         [test "$ac_cv_header_winsock2_h" = yes || test $REPLACE_SELECT = 1]
+alloca          [test $REPLACE_SELECT = 1]
+sockets         [test $REPLACE_SELECT = 1]
 
 configure.ac:
 gl_FUNC_SELECT

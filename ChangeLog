@@ -1,5 +1,13 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	select: Simplify replacement idiom.
+	* m4/select.m4 (gl_FUNC_SELECT): Set REPLACE_SELECT also on native
+	Win32 platforms.
+	* lib/sys_select.in.h (select): Simplify accordingly.
+	* modules/select (Depends-on): Likewise.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	mkdir-p: Simplify autoconf macro.
 	* m4/mkdir-p.m4 (gl_MKDIR_PARENTS): Don't require gl_FUNC_LCHMOD,
 	gl_FUNC_LCHOWN.
