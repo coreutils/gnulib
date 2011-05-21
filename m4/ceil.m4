@@ -1,4 +1,4 @@
-# ceil.m4 serial 5
+# ceil.m4 serial 6
 dnl Copyright (C) 2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -48,7 +48,7 @@ int main()
     fi
   ])
   if test $REPLACE_CEIL = 1; then
-    AC_LIBOBJ([ceil])
+    dnl No libraries are needed to link lib/ceil.c.
     CEIL_LIBM=
   fi
   AC_SUBST([CEIL_LIBM])

@@ -1,5 +1,11 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	ceil: Move AC_LIBOBJ invocations to module description.
+	* m4/ceil.m4 (gl_FUNC_CEIL): Move AC_LIBOBJ invocation from here...
+	* modules/ceil (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	ceilf: Move AC_LIBOBJ invocations to module description.
 	* m4/ceilf.m4 (gl_FUNC_CEILF): Move AC_LIBOBJ invocation from here...
 	* modules/ceilf (configure.ac): ... to here.
