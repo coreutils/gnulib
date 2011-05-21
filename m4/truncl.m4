@@ -1,4 +1,4 @@
-# truncl.m4 serial 6
+# truncl.m4 serial 7
 dnl Copyright (C) 2007-2008, 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -107,7 +107,7 @@ int main()
     HAVE_DECL_TRUNCL=0
   fi
   if test $HAVE_DECL_TRUNCL = 0 || test $REPLACE_TRUNCL = 1; then
-    AC_LIBOBJ([truncl])
+    dnl No libraries are needed to link lib/truncl.c.
     TRUNCL_LIBM=
   fi
   AC_SUBST([TRUNCL_LIBM])
