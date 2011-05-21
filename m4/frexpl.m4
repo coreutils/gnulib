@@ -1,4 +1,4 @@
-# frexpl.m4 serial 13
+# frexpl.m4 serial 14
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -50,9 +50,6 @@ AC_DEFUN([gl_FUNC_FREXPL],
         [Define if the frexpl() function is available.])
     fi
   fi
-  if test $HAVE_DECL_FREXPL = 0 || test $gl_func_frexpl = no; then
-    AC_LIBOBJ([frexpl])
-  fi
   AC_SUBST([FREXPL_LIBM])
 ])
 
@@ -79,9 +76,6 @@ AC_DEFUN([gl_FUNC_FREXPL_NO_LIBM],
       AC_DEFINE([HAVE_FREXPL_IN_LIBC], [1],
         [Define if the frexpl() function is available in libc.])
     fi
-  fi
-  if test $HAVE_DECL_FREXPL = 0 || test $gl_func_frexpl_no_libm = no; then
-    AC_LIBOBJ([frexpl])
   fi
 ])
 
