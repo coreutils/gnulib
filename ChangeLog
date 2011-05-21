@@ -1,5 +1,13 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	stat: Move AC_LIBOBJ invocations to module description.
+	* m4/stat.m4 (gl_PREREQ_STAT): New macro, extracted from gl_FUNC_STAT.
+	(gl_FUNC_STAT): Move AC_LIBOBJ and gl_PREREQ_STAT invocations from
+	here...
+	* modules/stat (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	sleep: Move AC_LIBOBJ invocations to module description.
 	* m4/sleep.m4 (gl_FUNC_SLEEP): Move AC_LIBOBJ invocations from here...
 	* modules/sleep (configure.ac): ... to here.

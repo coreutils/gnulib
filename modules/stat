@@ -12,6 +12,10 @@ stdbool         [test $REPLACE_STAT = 1]
 
 configure.ac:
 gl_FUNC_STAT
+if test $REPLACE_STAT = 1; then
+  AC_LIBOBJ([stat])
+  gl_PREREQ_STAT
+fi
 gl_SYS_STAT_MODULE_INDICATOR([stat])
 
 Makefile.am:
