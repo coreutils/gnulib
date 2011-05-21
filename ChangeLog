@@ -1,5 +1,13 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	memrchr: Move AC_LIBOBJ invocations to module description.
+	* m4/memrchr.m4 (gl_FUNC_MEMRCHR): Call AC_CHECK_FUNCS instead of
+	AC_REPLACE_FUNCS. Move AC_LIBOBJ and gl_PREREQ_MEMRCHR invocations from
+	here...
+	* modules/memrchr (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	mempcpy: Move AC_LIBOBJ invocations to module description.
 	* m4/mempcpy.m4 (gl_FUNC_MEMPCPY): Call AC_CHECK_FUNCS instead of
 	AC_REPLACE_FUNCS. Move AC_LIBOBJ and gl_PREREQ_MEMPCPY invocations from
