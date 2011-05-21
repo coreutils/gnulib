@@ -13,6 +13,9 @@ ioctl
 
 configure.ac:
 gl_FUNC_OPENPTY
+if test $HAVE_OPENPTY = 0 || test $REPLACE_OPENPTY = 1; then
+  AC_LIBOBJ([openpty])
+fi
 gl_PTY_MODULE_INDICATOR([openpty])
 
 Makefile.am:
