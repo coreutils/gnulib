@@ -1,5 +1,12 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	memcmp: Simplify autoconf macro.
+	* m4/memcmp.m4 (gl_FUNC_MEMCMP): Merge the cross-compilation code into
+	the AC_RUN_IFELSE invocation. Set gl_func_memcmp.
+	* modules/memcmp (Depends-on, configure.ac): Test gl_func_memcmp.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	memcmp: Move AC_LIBOBJ invocations to module description.
 	* m4/memcmp.m4 (AC_FUNC_MEMCMP): Remove macro.
 	(gl_FUNC_MEMCMP): Inline it here. Set gl_cv_func_memcmp_working. Move

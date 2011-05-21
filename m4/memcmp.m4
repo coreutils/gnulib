@@ -6,18 +6,6 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_MEMCMP],
 [
-  if test $cross_compiling != no; then
-    # The test below defaults to 'no' when cross compiling.
-    # We default to yes if memcmp appears to exist, which works
-    # better for MinGW.
-    AC_CACHE_CHECK([whether cross-compiling target has memcmp],
-                   [gl_cv_func_memcmp_working],
-                   [AC_LINK_IFELSE([
-                        AC_LANG_PROGRAM([[#include <string.h>
-                                ]], [[int ret = memcmp ("foo", "bar", 0);]])],
-                        [gl_cv_func_memcmp_working=yes],
-                        [gl_cv_func_memcmp_working=no])])
-  fi
   dnl We don't use AC_FUNC_MEMCMP any more, because it is no longer maintained
   dnl in Autoconf and because it invokes AC_LIBOBJ.
   AC_CACHE_CHECK([for working memcmp], [gl_cv_func_memcmp_working],
@@ -49,8 +37,21 @@ AC_DEFUN([gl_FUNC_MEMCMP],
           ]])],
        [gl_cv_func_memcmp_working=yes],
        [gl_cv_func_memcmp_working=no],
-       [gl_cv_func_memcmp_working=no])])
-  if test $gl_cv_func_memcmp_working = no; then
+       [dnl When cross-compiling, guess memcmp works when it exists.
+        dnl This is useful for mingw.
+        AC_LINK_IFELSE(
+          [AC_LANG_PROGRAM(
+             [[#include <string.h>]],
+             [[int ret = memcmp ("foo", "bar", 0);]])],
+          [gl_cv_func_memcmp_working="guessing yes"],
+          [gl_cv_func_memcmp_working="guessing no"])
+       ])
+    ])
+  case "$gl_cv_func_memcmp_working" in
+    *yes) gl_func_memcmp=yes ;;
+    *)    gl_func_memcmp=no ;;
+  esac
+  if test $gl_func_memcmp = no; then
     AC_DEFINE([memcmp], [rpl_memcmp],
       [Define to rpl_memcmp if the replacement function should be used.])
   fi
