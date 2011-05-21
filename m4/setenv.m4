@@ -1,4 +1,4 @@
-# setenv.m4 serial 22
+# setenv.m4 serial 23
 dnl Copyright (C) 2001-2004, 2006-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -37,9 +37,6 @@ AC_DEFUN([gl_FUNC_SETENV],
     if test "$gl_cv_func_setenv_works" != yes; then
       REPLACE_SETENV=1
     fi
-  fi
-  if test $HAVE_SETENV$REPLACE_SETENV != 10; then
-    AC_LIBOBJ([setenv])
   fi
 ])
 
