@@ -1,5 +1,11 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	rmdir: Respect rules for use of AC_LIBOBJ.
+	* m4/rmdir.m4 (gl_FUNC_RMDIR): Move AC_LIBOBJ invocation from here...
+	* modules/rmdir (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	renameat: Move AC_LIBOBJ invocations to module description.
 	* m4/renameat.m4 (gl_FUNC_RENAMEAT): Move AC_LIBOBJ invocations from
 	here...

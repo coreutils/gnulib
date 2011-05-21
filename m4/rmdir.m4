@@ -1,4 +1,4 @@
-# rmdir.m4 serial 10
+# rmdir.m4 serial 11
 dnl Copyright (C) 2002, 2005, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -30,6 +30,5 @@ AC_DEFUN([gl_FUNC_RMDIR],
      rm -rf conftest.dir conftest.file])
   if test x"$gl_cv_func_rmdir_works" != xyes; then
     REPLACE_RMDIR=1
-    AC_LIBOBJ([rmdir])
   fi
 ])

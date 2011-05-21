@@ -12,6 +12,9 @@ sys_stat        [test $REPLACE_RMDIR = 1]
 
 configure.ac:
 gl_FUNC_RMDIR
+if test $REPLACE_RMDIR = 1; then
+  AC_LIBOBJ([rmdir])
+fi
 gl_UNISTD_MODULE_INDICATOR([rmdir])
 
 Makefile.am:
