@@ -15,6 +15,7 @@ strerror_r-posix [test $REPLACE_STRERROR = 1]
 
 configure.ac:
 gl_FUNC_STRERROR
+gl_MODULE_INDICATOR([strerror])
 gl_STRING_MODULE_INDICATOR([strerror])
 
 Makefile.am:

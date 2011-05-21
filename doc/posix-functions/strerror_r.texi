@@ -22,6 +22,9 @@ is essentially equivalent to this code using the glibc function:
 char *s = strerror_r (err, buf, buflen);
 @end smallexample
 @item
+This function clobbers the @code{strerror} buffer on some platforms:
+Cygwin 1.7.9.
+@item
 This function is sometimes not declared in @code{<string.h>} on some platforms:
 glibc 2.8, OSF/1 5.1.
 @item

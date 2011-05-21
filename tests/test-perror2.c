@@ -86,6 +86,11 @@ main (void)
     ASSERT (msg2 == msg4 || STREQ (msg2, str2));
     ASSERT (msg3 == msg4 || STREQ (msg3, str3));
     ASSERT (STREQ (msg4, str4));
+
+    free (str1);
+    free (str2);
+    free (str3);
+    free (str4);
   }
 
   /* Test that perror uses the same message as strerror.  */

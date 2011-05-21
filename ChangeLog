@@ -1,3 +1,13 @@
+2011-05-21  Eric Blake  <eblake@redhat.com>
+
+	strerror_r: avoid clobbering strerror on cygwin
+	* lib/strerror_r.c (strerror_r): Don't use cygwin's strerror_r;
+	fall back instead to sys_errlist.
+	* modules/strerror (configure.ac): Add witness.
+	* tests/test-strerror_r.c (main): Enhance test.
+	* doc/posix-functions/strerror_r.texi (strerror_r): Document it.
+	* tests/test-perror2.c (main): Free memory before exit.
+
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
 	mkdtemp: Use gnulib naming conventions.

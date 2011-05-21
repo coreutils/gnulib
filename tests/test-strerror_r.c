@@ -108,5 +108,53 @@ main (void)
     ASSERT (errno == 0);
   }
 
+#if GNULIB_STRERROR
+  /* Test that strerror_r does not clobber strerror buffer.  On some
+     platforms, this test can only succeed if gnulib also replaces
+     strerror.  */
+  {
+    const char *msg1;
+    const char *msg2;
+    const char *msg3;
+    const char *msg4;
+    char *str1;
+    char *str2;
+    char *str3;
+    char *str4;
+
+    msg1 = strerror (ENOENT);
+    ASSERT (msg1);
+    str1 = strdup (msg1);
+    ASSERT (str1);
+
+    msg2 = strerror (ERANGE);
+    ASSERT (msg2);
+    str2 = strdup (msg2);
+    ASSERT (str2);
+
+    msg3 = strerror (-4);
+    ASSERT (msg3);
+    str3 = strdup (msg3);
+    ASSERT (str3);
+
+    msg4 = strerror (1729576);
+    ASSERT (msg4);
+    str4 = strdup (msg4);
+    ASSERT (str4);
+
+    strerror_r (EACCES, buf, sizeof buf);
+    strerror_r (-5, buf, sizeof buf);
+    ASSERT (msg1 == msg2 || msg1 == msg4 || STREQ (msg1, str1));
+    ASSERT (msg2 == msg4 || STREQ (msg2, str2));
+    ASSERT (msg3 == msg4 || STREQ (msg3, str3));
+    ASSERT (STREQ (msg4, str4));
+
+    free (str1);
+    free (str2);
+    free (str3);
+    free (str4);
+  }
+#endif
+
   return 0;
 }

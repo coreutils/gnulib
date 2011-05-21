@@ -38,7 +38,7 @@
 
 # define USE_XPG_STRERROR_R 1
 
-#elif HAVE_DECL_STRERROR_R && !(__GLIBC__ >= 2 || defined __UCLIBC__)
+#elif HAVE_DECL_STRERROR_R && !(__GLIBC__ >= 2 || defined __UCLIBC__ || defined __CYGWIN__)
 
 /* The system's strerror_r function is OK, except that its third argument
    is 'int', not 'size_t', or its return type is wrong.  */
@@ -47,14 +47,16 @@
 
 # define USE_SYSTEM_STRERROR_R 1
 
-#else /* (__GLIBC__ >= 2 || defined __UCLIBC__ ? !HAVE___XPG_STRERROR_R : !HAVE_DECL_STRERROR_R) */
+#else /* (__GLIBC__ >= 2 || defined __UCLIBC__ || defined __CYGWIN__ ? !HAVE___XPG_STRERROR_R : !HAVE_DECL_STRERROR_R) */
 
-/* Use the system's strerror().  */
+/* Use the system's strerror().  Exclude glibc and cygwin because the
+   system strerror_r has the wrong return type, and cygwin 1.7.9
+   strerror_r clobbers strerror.  */
 # undef strerror
 
 # define USE_SYSTEM_STRERROR 1
 
-# if defined __NetBSD__ || defined __hpux || ((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__) || defined __sgi || (defined __sun && !defined _LP64)
+# if defined __NetBSD__ || defined __hpux || ((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__) || defined __sgi || (defined __sun && !defined _LP64) || defined __CYGWIN__
 
 /* No locking needed.  */
 
@@ -75,7 +77,7 @@ extern char *sys_errlist[];
 extern int sys_nerr;
 #  endif
 
-/* Get sys_nerr, sys_errlist on native Windows.  */
+/* Get sys_nerr, sys_errlist on native Windows and Cygwin.  */
 #  include <stdlib.h>
 
 # else
@@ -467,36 +469,6 @@ strerror_r (int errnum, char *buf, size_t buflen)
       else
         ret = strerror_r (errnum, buf, buflen);
     }
-# elif defined __CYGWIN__
-    /* Cygwin <= 1.7.7 only provides the glibc interface, is thread-safe, and
-       always succeeds (although it may truncate).  In Cygwin >= 1.7.8, for
-       valid errnum values, instead of truncating, it leaves the buffer
-       untouched.  */
-    {
-      char stackbuf[256];
-
-      if (buflen < sizeof (stackbuf))
-        {
-          size_t len;
-
-          stackbuf[0] = '\0'; /* in case strerror_r does nothing */
-          strerror_r (errnum, stackbuf, sizeof (stackbuf));
-          len = strlen (stackbuf);
-          if (len < buflen)
-            {
-              memcpy (buf, stackbuf, len + 1);
-              ret = 0;
-            }
-          else
-            ret = ERANGE;
-        }
-      else
-        {
-          buf[0] = '\0'; /* in case strerror_r does nothing */
-          strerror_r (errnum, buf, buflen);
-          ret = 0;
-        }
-    }
 # else
     ret = strerror_r (errnum, buf, buflen);
 # endif
@@ -526,12 +498,13 @@ strerror_r (int errnum, char *buf, size_t buflen)
     /* Try to do what strerror (errnum) does, but without clobbering the
        buffer used by strerror().  */
 
-# if defined __NetBSD__ || defined __hpux || ((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__) /* NetBSD, HP-UX, native Win32 */
+# if defined __NetBSD__ || defined __hpux || ((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__) || defined __CYGWIN__ /* NetBSD, HP-UX, native Win32, Cygwin */
 
     /* NetBSD:        sys_nerr, sys_errlist are declared through _NETBSD_SOURCE
                       and <errno.h> above.
        HP-UX:         sys_nerr, sys_errlist are declared explicitly above.
-       native Win32:  sys_nerr, sys_errlist are declared in <stdlib.h>.  */
+       native Win32:  sys_nerr, sys_errlist are declared in <stdlib.h>.
+       Cygwin:        sys_nerr, sys_errlist are declared in <stdlib.h>.  */
     if (errnum >= 0 && errnum < sys_nerr)
       {
 #  if HAVE_CATGETS && (defined __NetBSD__ || defined __hpux)
