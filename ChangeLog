@@ -1,5 +1,15 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	memmem*: Move AC_LIBOBJ invocations to module description.
+	* m4/memmem.m4 (gl_FUNC_MEMMEM_SIMPLE): Call AC_CHECK_FUNCS instead of
+	AC_REPLACE_FUNCS. Set HAVE_MEMMEM. Move AC_LIBOBJ invocations from
+	here...
+	(gl_FUNC_MEMMEM): ... and here...
+	* modules/memmem-simple (configure.ac): ... to here.
+	* modules/memmem (configure.ac): ... and here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	memcpy: Move AC_LIBOBJ invocations to module description.
 	* m4/memcpy.m4 (gl_FUNC_MEMCPY): Call AC_CHECK_FUNCS instead of
 	AC_REPLACE_FUNCS. Move AC_LIBOBJ and gl_PREREQ_MEMCPY invocations from

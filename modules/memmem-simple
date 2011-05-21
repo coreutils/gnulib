@@ -15,6 +15,9 @@ memcmp
 
 configure.ac:
 gl_FUNC_MEMMEM_SIMPLE
+if test $HAVE_MEMMEM = 0 || test $REPLACE_MEMMEM = 1; then
+  AC_LIBOBJ([memmem])
+fi
 gl_STRING_MODULE_INDICATOR([memmem])
 
 Makefile.am:
