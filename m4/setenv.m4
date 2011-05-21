@@ -1,4 +1,4 @@
-# setenv.m4 serial 23
+# setenv.m4 serial 24
 dnl Copyright (C) 2001-2004, 2006-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -62,9 +62,9 @@ AC_DEFUN([gl_FUNC_UNSETENV],
   fi
   AC_CHECK_FUNCS([unsetenv])
   if test $ac_cv_func_unsetenv = no; then
-    AC_LIBOBJ([unsetenv])
-    gl_PREREQ_UNSETENV
+    HAVE_UNSETENV=0
   else
+    HAVE_UNSETENV=1
     dnl Some BSDs return void, failing to do error checking.
     AC_CACHE_CHECK([for unsetenv() return type], [gt_cv_func_unsetenv_ret],
       [AC_COMPILE_IFELSE(
@@ -90,7 +90,6 @@ int unsetenv();
       AC_DEFINE([VOID_UNSETENV], [1], [Define to 1 if unsetenv returns void
        instead of int.])
       REPLACE_UNSETENV=1
-      AC_LIBOBJ([unsetenv])
     fi
 
     dnl Solaris 10 unsetenv does not remove all copies of a name.
@@ -123,7 +122,6 @@ int unsetenv();
       [gl_cv_func_unsetenv_works="guessing no"])])
     if test "$gl_cv_func_unsetenv_works" != yes; then
       REPLACE_UNSETENV=1
-      AC_LIBOBJ([unsetenv])
     fi
   fi
 ])

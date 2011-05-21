@@ -1,5 +1,13 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	unsetenv: Move AC_LIBOBJ invocations to module description.
+	* m4/setenv.m4 (gl_FUNC_UNSETENV): Set HAVE_UNSETENV. Move AC_LIBOBJ
+	and gl_PREREQ_UNSETENV invocations from here...
+	* modules/unsetenv (configure.ac): ... to here.
+	(Depends-on): Update.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	setenv: Move AC_LIBOBJ invocations to module description.
 	* m4/setenv.m4 (gl_FUNC_SETENV): Move AC_LIBOBJ invocations from
 	here...
