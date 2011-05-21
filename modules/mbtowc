@@ -13,6 +13,10 @@ wchar           [test $REPLACE_MBTOWC = 1]
 
 configure.ac:
 gl_FUNC_MBTOWC
+if test $REPLACE_MBTOWC = 1; then
+  AC_LIBOBJ([mbtowc])
+  gl_PREREQ_MBTOWC
+fi
 gl_STDLIB_MODULE_INDICATOR([mbtowc])
 
 Makefile.am:
