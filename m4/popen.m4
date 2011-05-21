@@ -1,4 +1,4 @@
-# popen.m4 serial 3
+# popen.m4 serial 4
 dnl Copyright (C) 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -27,8 +27,6 @@ AC_DEFUN([gl_FUNC_POPEN],
   ])
   if test "$gl_cv_func_popen_works" = no; then
     REPLACE_POPEN=1
-    AC_LIBOBJ([popen])
-    gl_PREREQ_POPEN
   fi
 ])
 

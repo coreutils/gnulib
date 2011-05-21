@@ -11,6 +11,10 @@ open            [test $REPLACE_POPEN = 1]
 
 configure.ac:
 gl_FUNC_POPEN
+if test $REPLACE_POPEN = 1; then
+  AC_LIBOBJ([popen])
+  gl_PREREQ_POPEN
+fi
 gl_STDIO_MODULE_INDICATOR([popen])
 
 Makefile.am:

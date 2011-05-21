@@ -1,5 +1,12 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	popen: Move AC_LIBOBJ invocations to module description.
+	* m4/popen.m4 (gl_FUNC_POPEN): Move AC_LIBOBJ and gl_PREREQ_POPEN
+	invocations from here...
+	* modules/popen (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	poll: Move AC_LIBOBJ invocations to module description.
 	* m4/poll.m4 (gl_FUNC_POLL): Move AC_LIBOBJ and gl_PREREQ_POLL
 	invocations from here...
