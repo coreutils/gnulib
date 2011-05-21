@@ -1,5 +1,15 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	relocatable-lib: Move AC_LIBOBJ invocations to module description.
+	* m4/relocatable-lib.m4 (gl_RELOCATABLE_LIBRARY_SEPARATE): Remove
+	macro.
+	(gl_RELOCATABLE_LIBRARY): Move AC_LIBOBJ invocation from here...
+	* modules/relocatable-lib (configure.ac): ... to here.
+	* modules/relocatable-prog-wrapper (configure.ac): Invoke
+	gl_RELOCATABLE_LIBRARY instead of gl_RELOCATABLE_LIBRARY_SEPARATE.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	relocatable-prog: Move AC_LIBOBJ invocations to module description.
 	* m4/relocatable.m4 (gl_RELOCATABLE): Move AC_LIBOBJ invocation from
 	here...

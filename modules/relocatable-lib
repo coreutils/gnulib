@@ -14,6 +14,9 @@ strdup
 
 configure.ac:
 gl_RELOCATABLE_LIBRARY
+if test $RELOCATABLE = yes; then
+  AC_LIBOBJ([relocatable])
+fi
 
 Makefile.am:
 
