@@ -1,5 +1,12 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	mountlist: Move AC_LIBOBJ invocations to module description.
+	* m4/mountlist.m4 (gl_MOUNTLIST): Move AC_LIBOBJ and
+	gl_PREREQ_MOUNTLIST_EXTRA invocations from here...
+	* modules/mountlist (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	mktime: Respect rules for use of AC_LIBOBJ.
 	* m4/mktime.m4 (AC_FUNC_MKTIME): Remove macro.
 	(gl_FUNC_MKTIME): Inline it here. Set gl_cv_func_working_mktime. Move

@@ -16,6 +16,10 @@ xalloc
 
 configure.ac:
 gl_MOUNTLIST
+if test $gl_cv_list_mounted_fs = yes; then
+  AC_LIBOBJ([mountlist])
+  gl_PREREQ_MOUNTLIST_EXTRA
+fi
 
 Makefile.am:
 
