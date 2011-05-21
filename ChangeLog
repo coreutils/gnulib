@@ -1,5 +1,12 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	random_r: Move AC_LIBOBJ invocations to module description.
+	* m4/random_r.m4 (gl_FUNC_RANDOM_R): Move AC_LIBOBJ and
+	gl_PREREQ_RANDOM_R invocations from here...
+	* modules/random_r (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	pwrite: Move AC_LIBOBJ invocations to module description.
 	* m4/pwrite.m4 (gl_FUNC_PWRITE): Move AC_LIBOBJ invocation from here...
 	* modules/pwrite (configure.ac): ... to here.

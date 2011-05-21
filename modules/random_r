@@ -11,6 +11,10 @@ stdint
 
 configure.ac:
 gl_FUNC_RANDOM_R
+if test $HAVE_RANDOM_R = 0; then
+  AC_LIBOBJ([random_r])
+  gl_PREREQ_RANDOM_R
+fi
 gl_STDLIB_MODULE_INDICATOR([random_r])
 
 Makefile.am:
