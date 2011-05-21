@@ -12,6 +12,9 @@ verify          [test $HAVE_SLEEP = 0 || test $REPLACE_SLEEP = 1]
 
 configure.ac:
 gl_FUNC_SLEEP
+if test $HAVE_SLEEP = 0 || test $REPLACE_SLEEP = 1; then
+  AC_LIBOBJ([sleep])
+fi
 gl_UNISTD_MODULE_INDICATOR([sleep])
 
 Makefile.am:
