@@ -1,4 +1,4 @@
-# floorf.m4 serial 8
+# floorf.m4 serial 9
 dnl Copyright (C) 2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -58,7 +58,7 @@ int main()
     HAVE_DECL_FLOORF=0
   fi
   if test $HAVE_DECL_FLOORF = 0 || test $REPLACE_FLOORF = 1; then
-    AC_LIBOBJ([floorf])
+    dnl No libraries are needed to link lib/floorf.c.
     FLOORF_LIBM=
   fi
   AC_SUBST([FLOORF_LIBM])
