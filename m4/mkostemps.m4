@@ -1,4 +1,4 @@
-# mkostemps.m4 serial 1
+# mkostemps.m4 serial 2
 dnl Copyright (C) 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -14,6 +14,5 @@ AC_DEFUN([gl_FUNC_MKOSTEMPS],
   AC_CHECK_FUNCS_ONCE([mkostemps])
   if test $ac_cv_func_mkostemps != yes; then
     HAVE_MKOSTEMPS=0
-    AC_LIBOBJ([mkostemps])
   fi
 ])
