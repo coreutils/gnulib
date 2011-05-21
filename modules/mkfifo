@@ -11,6 +11,9 @@ stat            [test $HAVE_MKFIFO = 0 || test $REPLACE_MKFIFO = 1]
 
 configure.ac:
 gl_FUNC_MKFIFO
+if test $HAVE_MKFIFO = 0 || test $REPLACE_MKFIFO = 1; then
+  AC_LIBOBJ([mkfifo])
+fi
 gl_UNISTD_MODULE_INDICATOR([mkfifo])
 
 Makefile.am:

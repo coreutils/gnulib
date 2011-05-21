@@ -1,4 +1,4 @@
-# serial 2
+# serial 3
 # See if we need to provide mkfifo replacement.
 
 dnl Copyright (C) 2009-2011 Free Software Foundation, Inc.
@@ -14,7 +14,6 @@ AC_DEFUN([gl_FUNC_MKFIFO],
   AC_CHECK_FUNCS_ONCE([mkfifo])
   if test $ac_cv_func_mkfifo = no; then
     HAVE_MKFIFO=0
-    AC_LIBOBJ([mkfifo])
   else
     dnl Check for Solaris 9 and FreeBSD bug with trailing slash.
     AC_CHECK_FUNCS_ONCE([lstat])
@@ -44,7 +43,6 @@ AC_DEFUN([gl_FUNC_MKFIFO],
       AC_DEFINE([MKFIFO_TRAILING_SLASH_BUG], [1], [Define to 1 if mkfifo
         does not reject trailing slash])
       REPLACE_MKFIFO=1
-      AC_LIBOBJ([mkfifo])
     fi
   fi
 ])
