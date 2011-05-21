@@ -12,6 +12,10 @@ ttyname_r       [test $HAVE_PTSNAME = 0]
 
 configure.ac:
 gl_FUNC_PTSNAME
+if test $HAVE_PTSNAME = 0; then
+  AC_LIBOBJ([ptsname])
+  gl_PREREQ_PTSNAME
+fi
 gl_STDLIB_MODULE_INDICATOR([ptsname])
 
 Makefile.am:

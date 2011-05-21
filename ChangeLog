@@ -1,5 +1,12 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	ptsname: Move AC_LIBOBJ invocations to module description.
+	* m4/ptsname.m4 (gl_FUNC_PTSNAME): Move AC_LIBOBJ and gl_PREREQ_PTSNAME
+	invocations from here...
+	* modules/ptsname (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	pread: Move AC_LIBOBJ invocations to module description.
 	* m4/pread.m4 (gl_FUNC_PREAD): Move AC_LIBOBJ invocation from here...
 	* modules/pread (configure.ac): ... to here.
