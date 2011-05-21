@@ -56,7 +56,7 @@
 	* tests/test-perror2.c (main): Enhance test.
 
 	test-perror: check for strerror interactions
-	* tests/macros.h (STREQ) Add macro.
+	* tests/macros.h (STREQ): Add macro.
 	* modules/perror-tests (Files): Add second test.
 	* tests/test-perror2.c (main): New file.
 	* doc/posix-functions/perror.texi (perror): Document glibc bug.
@@ -11420,14 +11420,14 @@
 
 	(x)memcoll: speedup when input is known to be NUL delimited
 	* lib/memcoll.c: Include stdlib.
-	(memcoll0) New function.
-	(strcoll_loop) New function, refactored for use in both memcoll
+	(memcoll0): New function.
+	(strcoll_loop): New function, refactored for use in both memcoll
 	and memcoll0.
-	* lib/memcoll.h: Add prototype for memcoll0.
-	* lib/xmemcoll.c: (xmemcoll0) New function.
-	(collate_error) New function, refactored for use in both xmemcoll
+	* lib/memcoll.h (memcoll0): Add prototype.
+	* lib/xmemcoll.c (xmemcoll0): New function.
+	(collate_error): New function, refactored for use in both xmemcoll
 	and xmemcoll0.
-	* lib/xmemcoll.h: Add prototype for xmemcoll0.
+	* lib/xmemcoll.h (xmemcoll0): Add prototype.
 	* m4/memcoll.m4: add inline invocation.
 
 2010-07-06  Pádraig Brady  <P@draigBrady.com>
@@ -11807,7 +11807,7 @@
 2010-06-08  Peter Simons  <simons@cryp.to>
 
 	maint.mk: make the news-check rule more configurable
-	* top/maint.mk (news-check-lines-spec) New variable.
+	* top/maint.mk (news-check-lines-spec): New variable.
 	(news-check): Use "sed -n 1,10p" in place of "head".
 
 2010-06-07  Jim Meyering  <meyering@redhat.com>
@@ -27324,7 +27324,8 @@
 	* lib/pipe.c (create_pipe) [WIN32]: Likewise. Use fd_safer_noinherit
 	instead of fd_safer.
 	* tests/test-pipe.c: Include <windows.h>.
-	(child_main) [WIN32]: Test the handle of STDERR_FILENO, not its close() result.
+	(child_main) [WIN32]: Test the handle of STDERR_FILENO, not its close()
+	result.
 
 	* tests/test-pipe.c (child_main, parent_main): New functions, extracted
 	from main.
@@ -50104,7 +50105,7 @@
 	(signbit): New macro.
 	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize GNULIB_SIGNBIT and
 	REPLACE_SIGNBIT.
-	* modules/math (Makefile.am) Substibute also GNULIB_SIGNBIT and
+	* modules/math (Makefile.am): Substibute also GNULIB_SIGNBIT and
 	REPLACE_FREXPL into math.h.
 
 2007-04-06  Bruno Haible  <bruno@clisp.org>
@@ -50791,7 +50792,8 @@
 	* lib/math_.h (frexpl): Define as a replacement macro if REPLACE_FREXPL
 	is set. Don't provide a prototype if REPLACE_FREXPL is not set.
 	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize REPLACE_FREXPL.
-	* modules/math (Makefile.am) Substibute also REPLACE_FREXPL into math.h.
+	* modules/math (Makefile.am): Substibute also REPLACE_FREXPL into
+	math.h.
 
 2007-03-25  Bruno Haible  <bruno@clisp.org>
 
@@ -54282,8 +54284,8 @@
 	* modules/tempname (Depends-on): Likewise.
 	* modules/utimens (Depends-on): Likewise.
 	* modules/gettimeofday (Files): Remove lib/gettimeofday.h.
-	(Include:) Change back to <sys/time.h>.
-	(Maintainer:) Add self.
+	(Include): Change back to <sys/time.h>.
+	(Maintainer): Add self.
 	* modules/sys_time: New file.
 	* modules/tempname (Depends-on): Add gettimeofday.
 	* tests/test-gettimeofday.c: Include <sys/time.h>
@@ -60851,7 +60853,7 @@
 	* m4/ulonglong.m4 (AC_TYPE_UNSIGNED_LONG_LONG_INT): Likewise.
 	* m4/longlong.m4 (gl_AC_TYPE_LONG_LONG): Now just call
 	AC_TYPE_LONG_LONG_INT.  This macro is obsolete and will go soon.
-	* m4/ulonglong.m4 (gl_AC_TYPE_UNSIGNED_LONG_LONG) Likewise.
+	* m4/ulonglong.m4 (gl_AC_TYPE_UNSIGNED_LONG_LONG): Likewise.
 
 	* m4/stdint.m4 (gl_STDINT_H): Rewrite to accommodate stdint_.h
 	changes.  Make 2.59 a prerequisite.  Check and substitute for
@@ -67245,7 +67247,7 @@
 2005-04-21  Oskar Liljeblad  <oskar@osk.mine.nu>
 
 	* gnulib-tool (Options): Add -s for --symlink/--symbolic.
-	(func_ln_if_changed) Remove forcibly for no error message
+	(func_ln_if_changed): Remove forcibly for no error message
 	in case file does not exist.
 
 2005-04-19  Simon Josefsson  <jas@extundo.com>
@@ -67695,7 +67697,7 @@
 	* lib/gethrxtime.h, lib/gethrxtime.c, lib/xtime.h: New files.
 	* lib/timespec.h (gettime): Return void, since it always
 	succeeds now.  All uses changed.
-	* lib/gettime.c (gettime) Likewise.
+	* lib/gettime.c (gettime): Likewise.
 	[HAVE_NANOTIME]: Prefer nanotime.
 	Assume gettimeofday succeeds, as POSIX requires.
 	Assime time () succeeds, since other code already does.
@@ -76380,7 +76382,7 @@
 	* lib/full-write.c: Correct credits, as cccp.c no longer
 	exists and anyway it was so heavily changed from the old cccp
 	code as to be unrecognizable.  Include full-write.h.
-	(full_write) Return size_t, with short writes meaning failure.
+	(full_write): Return size_t, with short writes meaning failure.
 	All callers changed.  This fixes a bug with large buffers
 	on 64-bit hosts.
 	* lib/utime.c: Include full-write.h.
