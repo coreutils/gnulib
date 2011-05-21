@@ -1,4 +1,4 @@
-# mbsrtowcs.m4 serial 11
+# mbsrtowcs.m4 serial 12
 dnl Copyright (C) 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -24,11 +24,6 @@ AC_DEFUN([gl_FUNC_MBSRTOWCS],
         *) REPLACE_MBSRTOWCS=1 ;;
       esac
     fi
-  fi
-  if test $HAVE_MBSRTOWCS = 0 || test $REPLACE_MBSRTOWCS = 1; then
-    AC_LIBOBJ([mbsrtowcs])
-    AC_LIBOBJ([mbsrtowcs-state])
-    gl_PREREQ_MBSRTOWCS
   fi
 ])
 

@@ -1,5 +1,12 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	mbsrtowcs: Move AC_LIBOBJ invocations to module description.
+	* m4/mbsrtowcs.m4 (gl_FUNC_MBSRTOWCS): Move AC_LIBOBJ and
+	gl_PREREQ_MBSRTOWCS invocations from here...
+	* modules/mbsrtowcs (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	mbsnrtowcs: Move AC_LIBOBJ invocations to module description.
 	* m4/mbsnrtowcs.m4 (gl_FUNC_MBSNRTOWCS): Move AC_LIBOBJ and
 	gl_PREREQ_MBSNRTOWCS invocations from here...
