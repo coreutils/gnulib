@@ -1,4 +1,4 @@
-# acosl.m4 serial 3
+# acosl.m4 serial 4
 dnl Copyright (C) 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -55,7 +55,7 @@ AC_DEFUN([gl_FUNC_ACOSL],
   else
     HAVE_DECL_ACOSL=0
     HAVE_ACOSL=0
-    AC_LIBOBJ([acosl])
+    dnl Find libraries needed to link lib/acosl.c.
     AC_REQUIRE([gl_FUNC_ASINL])
     AC_REQUIRE([gl_FUNC_SQRTL])
     dnl Append $ASINL_LIBM to ACOSL_LIBM, avoiding gratuitous duplicates.
