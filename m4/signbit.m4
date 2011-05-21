@@ -1,4 +1,4 @@
-# signbit.m4 serial 9
+# signbit.m4 serial 10
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -58,10 +58,8 @@ AC_DEFUN([gl_SIGNBIT],
     REPLACE_SIGNBIT_USING_GCC=1
   else
     if test "$gl_cv_func_signbit" != yes; then
+      dnl REPLACE_SIGNBIT=1 makes sure the signbit[fdl] functions get built.
       REPLACE_SIGNBIT=1
-      AC_LIBOBJ([signbitf])
-      AC_LIBOBJ([signbitd])
-      AC_LIBOBJ([signbitl])
       gl_FLOAT_SIGN_LOCATION
       gl_DOUBLE_SIGN_LOCATION
       gl_LONG_DOUBLE_SIGN_LOCATION

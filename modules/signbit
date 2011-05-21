@@ -19,6 +19,11 @@ memcmp          [test $REPLACE_SIGNBIT = 1]
 
 configure.ac:
 gl_SIGNBIT
+if test $REPLACE_SIGNBIT = 1; then
+  AC_LIBOBJ([signbitf])
+  AC_LIBOBJ([signbitd])
+  AC_LIBOBJ([signbitl])
+fi
 gl_MATH_MODULE_INDICATOR([signbit])
 
 Makefile.am:

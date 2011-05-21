@@ -1,5 +1,11 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	signbit: Move AC_LIBOBJ invocations to module description.
+	* m4/signbit.m4 (gl_SIGNBIT): Move AC_LIBOBJ invocations from here...
+	* modules/signbit (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	sigprocmask: Move AC_LIBOBJ invocations to module description.
 	* m4/signalblocking.m4 (gl_SIGNALBLOCKING): Move AC_LIBOBJ and
 	gl_PREREQ_SIGPROMASK invocations from here...
