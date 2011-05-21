@@ -1,4 +1,4 @@
-# pread.m4 serial 4
+# pread.m4 serial 5
 dnl Copyright (C) 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -81,8 +81,5 @@ changequote([,])dnl
     esac
   else
     HAVE_PREAD=0
-  fi
-  if test $HAVE_PREAD = 0 || test $REPLACE_PREAD = 1; then
-    AC_LIBOBJ([pread])
   fi
 ])

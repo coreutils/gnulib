@@ -1,5 +1,11 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	pread: Move AC_LIBOBJ invocations to module description.
+	* m4/pread.m4 (gl_FUNC_PREAD): Move AC_LIBOBJ invocation from here...
+	* modules/pread (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	posix_spawn*: Move AC_LIBOBJ invocations to module description.
 	* m4/posix_spawn.m4 (gl_PREREQ_POSIX_SPAWN_INTERNAL): Renamed from
 	gl_POSIX_SPAWN_INTERNAL. Move AC_LIBOBJ invocation from here...
