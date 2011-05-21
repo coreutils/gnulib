@@ -1,4 +1,4 @@
-# sqrtl.m4 serial 3
+# sqrtl.m4 serial 4
 dnl Copyright (C) 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -55,7 +55,7 @@ AC_DEFUN([gl_FUNC_SQRTL],
   else
     HAVE_DECL_SQRTL=0
     HAVE_SQRTL=0
-    AC_LIBOBJ([sqrtl])
+    dnl Find libraries needed to link lib/sqrtl.c.
     AC_REQUIRE([gl_FUNC_ISNANL])
     AC_REQUIRE([gl_FUNC_FREXPL])
     AC_REQUIRE([gl_FUNC_LDEXPL])
