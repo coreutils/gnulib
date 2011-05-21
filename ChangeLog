@@ -1,3 +1,9 @@
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
+	mkdir-p: Simplify autoconf macro.
+	* m4/mkdir-p.m4 (gl_MKDIR_PARENTS): Don't require gl_FUNC_LCHMOD,
+	gl_FUNC_LCHOWN.
+
 2011-05-21  Eric Blake  <eblake@redhat.com>
 
 	strerror_r: avoid clobbering strerror on cygwin
