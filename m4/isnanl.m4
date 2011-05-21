@@ -1,4 +1,4 @@
-# isnanl.m4 serial 15
+# isnanl.m4 serial 16
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -31,8 +31,6 @@ AC_DEFUN([gl_FUNC_ISNANL],
   fi
   if test $gl_func_isnanl != yes; then
     HAVE_ISNANL=0
-    AC_LIBOBJ([isnanl])
-    gl_PREREQ_ISNANL
   fi
   AC_SUBST([ISNANL_LIBM])
 ])
@@ -51,9 +49,6 @@ AC_DEFUN([gl_FUNC_ISNANL_NO_LIBM],
   if test $gl_func_isnanl_no_libm = yes; then
     AC_DEFINE([HAVE_ISNANL_IN_LIBC], [1],
       [Define if the isnan(long double) function is available in libc.])
-  else
-    AC_LIBOBJ([isnanl])
-    gl_PREREQ_ISNANL
   fi
 ])
 

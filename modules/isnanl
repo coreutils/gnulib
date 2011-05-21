@@ -16,6 +16,10 @@ memcmp
 
 configure.ac:
 gl_FUNC_ISNANL
+if test $HAVE_ISNANL = 0; then
+  AC_LIBOBJ([isnanl])
+  gl_PREREQ_ISNANL
+fi
 gl_MATH_MODULE_INDICATOR([isnanl])
 
 Makefile.am:

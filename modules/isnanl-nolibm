@@ -16,6 +16,10 @@ memcmp
 
 configure.ac:
 gl_FUNC_ISNANL_NO_LIBM
+if test $gl_func_isnanl_no_libm != yes; then
+  AC_LIBOBJ([isnanl])
+  gl_PREREQ_ISNANL
+fi
 
 Makefile.am:
 
