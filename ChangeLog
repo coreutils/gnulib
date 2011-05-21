@@ -1,3 +1,9 @@
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
+	mkdtemp: Use gnulib naming conventions.
+	* m4/mkdtemp.m4 (gl_FUNC_MKDTEMP): Renamed from gt_FUNC_MKDTEMP.
+	* modules/mkdtemp (configure.ac): Update.
+
 2011-05-20  Eric Blake  <eblake@redhat.com>
 
 	strerror_r: avoid corrupting errno on Solaris

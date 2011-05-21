@@ -11,7 +11,7 @@ stdint          [test $HAVE_MKDTEMP = 0]
 tempname        [test $HAVE_MKDTEMP = 0]
 
 configure.ac:
-gt_FUNC_MKDTEMP
+gl_FUNC_MKDTEMP
 gl_STDLIB_MODULE_INDICATOR([mkdtemp])
 
 Makefile.am:
