@@ -1,4 +1,4 @@
-# iswblank.m4 serial 2
+# iswblank.m4 serial 3
 dnl Copyright (C) 2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -24,7 +24,7 @@ AC_DEFUN([gl_FUNC_ISWBLANK],
   else
     if test $HAVE_ISWBLANK = 0 || test $REPLACE_ISWBLANK = 1; then
       dnl Redefine only iswblank.
-      AC_LIBOBJ([iswblank])
+      :
     fi
   fi
 
