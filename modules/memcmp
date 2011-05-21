@@ -12,10 +12,14 @@ lib/memcmp.c
 m4/memcmp.m4
 
 Depends-on:
-stdint          [test $ac_cv_func_memcmp_working = no]
+stdint          [test $gl_cv_func_memcmp_working = no]
 
 configure.ac:
 gl_FUNC_MEMCMP
+if test $gl_cv_func_memcmp_working = no; then
+  AC_LIBOBJ([memcmp])
+  gl_PREREQ_MEMCMP
+fi
 
 Makefile.am:
 

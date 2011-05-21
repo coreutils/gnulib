@@ -1,5 +1,14 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	memcmp: Move AC_LIBOBJ invocations to module description.
+	* m4/memcmp.m4 (AC_FUNC_MEMCMP): Remove macro.
+	(gl_FUNC_MEMCMP): Inline it here. Set gl_cv_func_memcmp_working. Move
+	AC_LIBOBJ and gl_PREREQ_MEMCMP invocations from here...
+	* modules/memcmp (configure.ac): ... to here.
+	(Depends-on): Update conditions.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	memchr: Respect rules for use of AC_LIBOBJ.
 	* m4/memchr.m4 (gl_FUNC_MEMCHR): Move AC_LIBOBJ and gl_PREREQ_MEMCHR
 	invocations from here...
