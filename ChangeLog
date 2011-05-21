@@ -1,5 +1,11 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	link: Respect rules for use of AC_LIBOBJ.
+	* m4/link.m4 (gl_FUNC_LINK): Move AC_LIBOBJ invocations from here...
+	* modules/link (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	lchown: Move AC_LIBOBJ invocations to module description.
 	* m4/lchown.m4 (gl_FUNC_EUIDACCESS): Call AC_CHECK_FUNCS instead of
 	AC_REPLACE_FUNCS. Move AC_LIBOBJ invocations from here...
