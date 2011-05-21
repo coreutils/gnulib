@@ -1,5 +1,11 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	putenv: Move AC_LIBOBJ invocations to module description.
+	* m4/putenv.m4 (gl_FUNC_PUTENV): Move AC_LIBOBJ invocation from here...
+	* modules/putenv (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	login_tty: Move AC_LIBOBJ invocations to module description.
 	* m4/pty.m4 (gl_FUNC_LOGIN_TTY): Move AC_LIBOBJ invocation from here...
 	* modules/login_tty (configure.ac): ... to here.
