@@ -1,5 +1,12 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	mkfifoat: Move AC_LIBOBJ invocations to module description.
+	* m4/mkfifoat.m4 (gl_FUNC_MKFIFOAT): Move AC_LIBOBJ invocations from
+	here...
+	* modules/mkfifoat (configure.ac): ... to here.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	mkfifo: Respect rules for use of AC_LIBOBJ.
 	* m4/mkfifo.m4 (gl_FUNC_MKFIFO): Move AC_LIBOBJ invocations from
 	here...

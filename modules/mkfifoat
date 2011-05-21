@@ -16,6 +16,12 @@ openat          [test $HAVE_MKFIFOAT = 0 || test $HAVE_MKNODAT = 0]
 
 configure.ac:
 gl_FUNC_MKFIFOAT
+if test $HAVE_MKFIFOAT = 0; then
+  AC_LIBOBJ([mkfifoat])
+fi
+if test $HAVE_MKNODAT = 0; then
+  AC_LIBOBJ([mknodat])
+fi
 gl_UNISTD_MODULE_INDICATOR([mkfifoat])
 gl_UNISTD_MODULE_INDICATOR([mknodat])
 
