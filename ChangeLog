@@ -1,5 +1,11 @@
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
+	wcpcpy: Move AC_LIBOBJ invocations to module description.
+	* m4/wcpcpy.m4 (gl_FUNC_WCPCPY): Move AC_LIBOBJ invocation from here...
+	* modules/wcpcpy (configure.ac): ... to here.
+
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
 	waitpid: Move AC_LIBOBJ invocations to module description.
 	* m4/waitpid.m4 (gl_FUNC_WAITPID): Set HAVE_WAITPID. Move AC_LIBOBJ
 	invocation from here...
