@@ -11,6 +11,9 @@ wchar
 
 configure.ac:
 gl_FUNC_WMEMMOVE
+if test $HAVE_WMEMMOVE = 0; then
+  AC_LIBOBJ([wmemmove])
+fi
 gl_WCHAR_MODULE_INDICATOR([wmemmove])
 
 Makefile.am:
