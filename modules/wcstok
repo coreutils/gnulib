@@ -13,6 +13,9 @@ wcspbrk         [test $HAVE_WCSTOK = 0]
 
 configure.ac:
 gl_FUNC_WCSTOK
+if test $HAVE_WCSTOK = 0; then
+  AC_LIBOBJ([wcstok])
+fi
 gl_WCHAR_MODULE_INDICATOR([wcstok])
 
 Makefile.am:
