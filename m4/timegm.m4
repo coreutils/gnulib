@@ -26,13 +26,5 @@ AC_DEFUN([gl_FUNC_TIMEGM],
 
 # Prerequisites of lib/timegm.c.
 AC_DEFUN([gl_PREREQ_TIMEGM], [
-  AC_REQUIRE([gl_FUNC_MKTIME])
-  if test $ac_cv_func_working_mktime = yes; then
-    AC_CHECK_FUNC([__mktime_internal], ,
-      [# mktime works but it doesn't export __mktime_internal,
-       # so we need to substitute our own mktime implementation.
-       AC_LIBOBJ([mktime])
-       REPLACE_MKTIME=1
-       gl_PREREQ_MKTIME])
-  fi
+  :
 ])

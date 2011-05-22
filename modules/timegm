@@ -7,9 +7,9 @@ lib/timegm.c
 m4/timegm.m4
 
 Depends-on:
-mktime
 time
-time_r
+mktime-internal [test $HAVE_TIMEGM = 0 || test $REPLACE_TIMEGM = 1]
+time_r          [test $HAVE_TIMEGM = 0 || test $REPLACE_TIMEGM = 1]
 
 configure.ac:
 gl_FUNC_TIMEGM

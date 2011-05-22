@@ -1,0 +1,23 @@
+Description:
+mktime_internal() function: convert broken-down time to linear time.
+
+Files:
+lib/mktime-internal.h
+lib/mktime.c
+
+Depends-on:
+mktime
+
+configure.ac:
+gl_FUNC_MKTIME_INTERNAL
+
+Makefile.am:
+
+Include:
+"mktime-internal.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+Bruno Haible, Paul Eggert

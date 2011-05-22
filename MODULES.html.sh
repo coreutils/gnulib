@@ -1834,6 +1834,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module mktime-internal
   func_module parse-datetime
   func_module timegm
   func_module tzset

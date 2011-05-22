@@ -1,5 +1,16 @@
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
+	New module 'mktime-internal'.
+	* modules/mktime-internal: New file.
+	* m4/timegm.m4 (gl_PREREQ_TIMEGM): Move contents to ...
+	* m4/mktime.m4 (gl_FUNC_MKTIME_INTERNAL): New macro. Define
+	mktime_internal as a C macro if libc has __mktime_internal.
+	* modules/timegm (Depends-on): Add mktime-internal. Remove mktime. Add
+	conditions.
+	* MODULES.html.sh (Date and time <time.h>): Add mktime-internal.
+
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
 	timegm: Correct mktime replacement statements.
 	* m4/timegm.m4 (gl_PREREQ_TIMEGM): Set REPLACE_MKTIME, instead of
 	defining mktime as a C macro. This completes a 2009-07-28 commit.
