@@ -1,5 +1,13 @@
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
+	strdup, strdup-posix: Move AC_LIBOBJ invocations to module description.
+	* m4/strdup.m4 (gl_FUNC_STRDUP): Move AC_LIBOBJ and gl_PREREQ_STRDUP
+	invocations from here...
+	* modules/strdup (configure.ac): ... to here.
+	* modules/strdup-posix (configure.ac): ... and here.
+
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
 	strcspn: Move AC_LIBOBJ invocations to module description.
 	* m4/strcspn.m4 (gl_FUNC_STRCSPN): Call AC_CHECK_FUNCS instead of
 	AC_REPLACE_FUNCS. Move AC_LIBOBJ and gl_PREREQ_STRCSPN invocations from

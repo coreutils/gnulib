@@ -1,4 +1,4 @@
-# strdup.m4 serial 12
+# strdup.m4 serial 13
 
 dnl Copyright (C) 2002-2011 Free Software Foundation, Inc.
 
@@ -10,10 +10,6 @@ AC_DEFUN([gl_FUNC_STRDUP],
 [
   AC_REQUIRE([gl_HEADER_STRING_H_DEFAULTS])
   AC_CHECK_FUNCS_ONCE([strdup])
-  if test $ac_cv_func_strdup != yes; then
-    AC_LIBOBJ([strdup])
-    gl_PREREQ_STRDUP
-  fi
   AC_CHECK_DECLS_ONCE([strdup])
   if test $ac_cv_have_decl_strdup = no; then
     HAVE_DECL_STRDUP=0
@@ -28,12 +24,7 @@ AC_DEFUN([gl_FUNC_STRDUP_POSIX],
   if test $ac_cv_func_strdup = yes; then
     if test $gl_cv_func_malloc_posix != yes; then
       REPLACE_STRDUP=1
-      AC_LIBOBJ([strdup])
-      gl_PREREQ_STRDUP
     fi
-  else
-    AC_LIBOBJ([strdup])
-    gl_PREREQ_STRDUP
   fi
   AC_CHECK_DECLS_ONCE([strdup])
   if test $ac_cv_have_decl_strdup = no; then
