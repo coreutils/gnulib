@@ -16,6 +16,10 @@ string
 
 configure.ac:
 gl_FUNC_STRPBRK
+if test $HAVE_STRPBRK = 0; then
+  AC_LIBOBJ([strpbrk])
+  gl_PREREQ_STRPBRK
+fi
 gl_STRING_MODULE_INDICATOR([strpbrk])
 
 Makefile.am:

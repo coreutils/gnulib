@@ -1,5 +1,13 @@
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
+	strpbrk: Move AC_LIBOBJ invocations to module description.
+	* m4/strpbrk.m4 (gl_FUNC_STRPBRK): Call AC_CHECK_FUNCS instead of
+	AC_REPLACE_FUNCS. Move AC_LIBOBJ and gl_PREREQ_STRPBRK invocations from
+	here...
+	* modules/strpbrk (configure.ac): ... to here.
+
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
 	strnlen: Move AC_LIBOBJ invocations to module description.
 	* m4/strnlen.m4 (gl_FUNC_STRNLEN): Move AC_LIBOBJ and gl_PREREQ_STRNLEN
 	invocations from here...
