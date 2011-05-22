@@ -1,4 +1,4 @@
-# stpncpy.m4 serial 13
+# stpncpy.m4 serial 14
 dnl Copyright (C) 2002-2003, 2005-2007, 2009-2011 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -78,13 +78,9 @@ int main ()
         [Define if you have the stpncpy() function and it works.])
     else
       REPLACE_STPNCPY=1
-      AC_LIBOBJ([stpncpy])
-      gl_PREREQ_STPNCPY
     fi
   else
     HAVE_STPNCPY=0
-    AC_LIBOBJ([stpncpy])
-    gl_PREREQ_STPNCPY
   fi
 ])
 

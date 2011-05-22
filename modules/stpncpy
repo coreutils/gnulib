@@ -11,6 +11,10 @@ string
 
 configure.ac:
 gl_FUNC_STPNCPY
+if test $HAVE_STPNCPY = 0 || test $REPLACE_STPNCPY = 1; then
+  AC_LIBOBJ([stpncpy])
+  gl_PREREQ_STPNCPY
+fi
 gl_STRING_MODULE_INDICATOR([stpncpy])
 
 Makefile.am:
