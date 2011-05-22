@@ -1,5 +1,12 @@
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
+	utimensat: Move AC_LIBOBJ invocations to module description.
+	* m4/utimensat.m4 (gl_FUNC_UTIMENSAT): Move AC_LIBOBJ invocations from
+	here...
+	* modules/utimensat (configure.ac): ... to here.
+
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
 	usleep: Move AC_LIBOBJ invocations to module description.
 	* m4/usleep.m4 (gl_FUNC_USLEEP): Move AC_LIBOBJ invocations from
 	here...
