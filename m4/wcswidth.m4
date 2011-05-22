@@ -1,4 +1,4 @@
-# wcswidth.m4 serial 1
+# wcswidth.m4 serial 2
 dnl Copyright (C) 2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,8 +17,5 @@ AC_DEFUN([gl_FUNC_WCSWIDTH],
       dnl as well.
       REPLACE_WCSWIDTH=1
     fi
-  fi
-  if test $HAVE_WCSWIDTH = 0 || test $REPLACE_WCSWIDTH = 1; then
-    AC_LIBOBJ([wcswidth])
   fi
 ])
