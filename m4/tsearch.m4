@@ -1,4 +1,4 @@
-# tsearch.m4 serial 5
+# tsearch.m4 serial 6
 dnl Copyright (C) 2006-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -46,14 +46,10 @@ main ()
     case "$gl_cv_func_tdelete_works" in
       *no)
         REPLACE_TSEARCH=1
-        AC_LIBOBJ([tsearch])
-        gl_PREREQ_TSEARCH
         ;;
     esac
   else
     HAVE_TSEARCH=0
-    AC_LIBOBJ([tsearch])
-    gl_PREREQ_TSEARCH
   fi
 ])
 
