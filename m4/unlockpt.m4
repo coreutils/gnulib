@@ -1,4 +1,4 @@
-# unlockpt.m4 serial 1
+# unlockpt.m4 serial 2
 dnl Copyright (C) 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -14,8 +14,6 @@ AC_DEFUN([gl_FUNC_UNLOCKPT],
   AC_CHECK_FUNCS([unlockpt])
   if test $ac_cv_func_unlockpt = no; then
     HAVE_UNLOCKPT=0
-    AC_LIBOBJ([unlockpt])
-    gl_PREREQ_UNLOCKPT
   fi
 ])
 

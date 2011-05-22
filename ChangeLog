@@ -1,5 +1,12 @@
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
+	unlockpt: Move AC_LIBOBJ invocations to module description.
+	* m4/unlockpt.m4 (gl_FUNC_UNLOCKPT): Move AC_LIBOBJ and
+	gl_PREREQ_UNLOCKPT invocations from here...
+	* modules/unlockpt (configure.ac): ... to here.
+
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
 	unlink: Respect rules for use of AC_LIBOBJ.
 	* m4/unlink.m4 (gl_FUNC_UNLINK): Move AC_LIBOBJ invocation from here...
 	* modules/unlink (configure.ac): ... to here.
