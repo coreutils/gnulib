@@ -1,4 +1,4 @@
-# strncat.m4 serial 1
+# strncat.m4 serial 2
 dnl Copyright (C) 2002-2004, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -92,11 +92,7 @@ AC_DEFUN_ONCE([gl_FUNC_STRNCAT],
     ])
   case "$gl_cv_func_strncat_works" in
     *yes) ;;
-    *)
-      REPLACE_STRNCAT=1
-      AC_LIBOBJ([strncat])
-      gl_PREREQ_STRNCAT
-      ;;
+    *) REPLACE_STRNCAT=1 ;;
   esac
 ])
 

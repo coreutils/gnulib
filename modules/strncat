@@ -11,6 +11,10 @@ string
 
 configure.ac:
 gl_FUNC_STRNCAT
+if test $REPLACE_STRNCAT = 1; then
+  AC_LIBOBJ([strncat])
+  gl_PREREQ_STRNCAT
+fi
 gl_STRING_MODULE_INDICATOR([strncat])
 
 Makefile.am:
