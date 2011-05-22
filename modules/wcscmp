@@ -17,6 +17,9 @@ wchar
 
 configure.ac:
 gl_FUNC_WCSCMP
+if test $HAVE_WCSCMP = 0; then
+  AC_LIBOBJ([wcscmp])
+fi
 gl_WCHAR_MODULE_INDICATOR([wcscmp])
 
 Makefile.am:
