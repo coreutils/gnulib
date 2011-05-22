@@ -1,5 +1,13 @@
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
+	wcwidth: Respect rules for use of AC_LIBOBJ.
+	* m4/wcwidth.m4 (gl_FUNC_WCWIDTH): Set HAVE_WCWIDTH. Move AC_LIBOBJ
+	invocation from here...
+	* modules/wcwidth (configure.ac): ... to here.
+	(Depends-on): Update conditions.
+
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
 	wctype: Move AC_LIBOBJ invocations to module description.
 	* m4/wctype.m4 (gl_FUNC_WCTYPE): Set HAVE_WCTYPE. Move AC_LIBOBJ
 	invocation from here...
