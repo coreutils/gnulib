@@ -1,4 +1,4 @@
-# strtod.m4 serial 20
+# strtod.m4 serial 21
 dnl Copyright (C) 2002-2003, 2006-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -117,10 +117,6 @@ numeric_equal (double x, double y)
     if test "$gl_cv_func_strtod_works" != yes; then
       REPLACE_STRTOD=1
     fi
-  fi
-  if test $HAVE_STRTOD = 0 || test $REPLACE_STRTOD = 1; then
-    AC_LIBOBJ([strtod])
-    gl_PREREQ_STRTOD
   fi
 ])
 

@@ -1,5 +1,12 @@
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
+	strtod: Move AC_LIBOBJ invocations to module description.
+	* m4/strtod.m4 (gl_FUNC_STRTOD): Move AC_LIBOBJ and gl_PREREQ_STRTOD
+	invocations from here...
+	* modules/strtod (configure.ac): ... to here.
+
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
 	strstr*: Move AC_LIBOBJ invocations to module description.
 	* m4/strstr.m4 (gl_FUNC_STRSTR_SIMPLE, gl_FUNC_STRSTR): Move AC_LIBOBJ
 	invocations from here...
