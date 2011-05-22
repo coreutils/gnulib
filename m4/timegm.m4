@@ -32,8 +32,7 @@ AC_DEFUN([gl_PREREQ_TIMEGM], [
       [# mktime works but it doesn't export __mktime_internal,
        # so we need to substitute our own mktime implementation.
        AC_LIBOBJ([mktime])
-       AC_DEFINE([mktime], [rpl_mktime],
-         [Define to rpl_mktime if the replacement function should be used.])
+       REPLACE_MKTIME=1
        gl_PREREQ_MKTIME])
   fi
 ])

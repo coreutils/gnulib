@@ -1,5 +1,11 @@
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
+	timegm: Correct mktime replacement statements.
+	* m4/timegm.m4 (gl_PREREQ_TIMEGM): Set REPLACE_MKTIME, instead of
+	defining mktime as a C macro. This completes a 2009-07-28 commit.
+
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
 	timegm: Simplify autoconf macro.
 	* m4/timegm.m4 (gl_PREREQ_TIMEGM): Don't require gl_TIME_R.
 
