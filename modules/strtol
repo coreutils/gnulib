@@ -15,6 +15,9 @@ Depends-on:
 
 configure.ac:
 gl_FUNC_STRTOL
+if test $ac_cv_func_strtol = no; then
+  AC_LIBOBJ([strtol])
+fi
 
 Makefile.am:
 
