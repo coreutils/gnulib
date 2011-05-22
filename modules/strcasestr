@@ -8,6 +8,10 @@ strcasestr-simple
 
 configure.ac:
 gl_FUNC_STRCASESTR
+if test $HAVE_STRCASESTR = 0 || test $REPLACE_STRCASESTR = 1; then
+  AC_LIBOBJ([strcasestr])
+  gl_PREREQ_STRCASESTR
+fi
 
 Makefile.am:
 

@@ -1,5 +1,13 @@
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
+	strcasestr*: Move AC_LIBOBJ invocations to module description.
+	* m4/strcasestr.m4 (gl_FUNC_STRCASESTR_SIMPLE, gl_FUNC_STRCASESTR):
+	Move AC_LIBOBJ and gl_PREREQ_STRCASESTR invocations from here...
+	* modules/strcasestr-simple (configure.ac): ... to here.
+	* modules/strcasestr (configure.ac): ... and here.
+
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
 	strcase: Move AC_LIBOBJ invocations to module description.
 	* m4/strcase.m4 (gl_FUNC_STRNCASECMP): Set HAVE_STRNCASECMP.
 	(gl_FUNC_STRCASECMP, gl_FUNC_STRNCASECMP): Call AC_CHECK_FUNCS instead

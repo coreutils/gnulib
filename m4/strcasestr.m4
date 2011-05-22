@@ -1,4 +1,4 @@
-# strcasestr.m4 serial 19
+# strcasestr.m4 serial 20
 dnl Copyright (C) 2005, 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -60,13 +60,8 @@ AC_DEFUN([gl_FUNC_STRCASESTR_SIMPLE],
         ])
       if test "$gl_cv_func_strcasestr_works_always" != yes; then
         REPLACE_STRCASESTR=1
-        AC_LIBOBJ([strcasestr])
       fi
     fi
-  fi
-  if test $HAVE_STRCASESTR = 0 || test $REPLACE_STRCASESTR = 1; then
-    AC_LIBOBJ([strcasestr])
-    gl_PREREQ_STRCASESTR
   fi
 ]) # gl_FUNC_STRCASESTR_SIMPLE
 
@@ -131,8 +126,6 @@ static void quit (int sig) { exit (sig + 128); }
       ])
     if test "$gl_cv_func_strcasestr_linear" != yes; then
       REPLACE_STRCASESTR=1
-      AC_LIBOBJ([strcasestr])
-      gl_PREREQ_STRCASESTR
     fi
   fi
 ]) # gl_FUNC_STRCASESTR
