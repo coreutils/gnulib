@@ -19,6 +19,11 @@ wcrtomb         [test $HAVE_WCSNRTOMBS = 0 || test $REPLACE_WCSNRTOMBS = 1]
 
 configure.ac:
 gl_FUNC_WCSNRTOMBS
+if test $HAVE_WCSNRTOMBS = 0 || test $REPLACE_WCSNRTOMBS = 1; then
+  AC_LIBOBJ([wcsnrtombs])
+  AC_LIBOBJ([wcsrtombs-state])
+  gl_PREREQ_WCSNRTOMBS
+fi
 gl_WCHAR_MODULE_INDICATOR([wcsnrtombs])
 
 Makefile.am:

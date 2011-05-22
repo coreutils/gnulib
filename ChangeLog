@@ -1,5 +1,12 @@
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
+	wcsnrtombs: Move AC_LIBOBJ invocations to module description.
+	* m4/wcsnrtombs.m4 (gl_FUNC_WCSNRTOMBS): Move AC_LIBOBJ and
+	gl_PREREQ_WCSNRTOMBS invocations from here...
+	* modules/wcsnrtombs (configure.ac): ... to here.
+
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
 	wcsnlen: Move AC_LIBOBJ invocations to module description.
 	* m4/wcsnlen.m4 (gl_FUNC_WCSNLEN): Move AC_LIBOBJ invocation from
 	here...
