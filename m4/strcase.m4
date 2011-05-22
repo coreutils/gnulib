@@ -1,4 +1,4 @@
-# strcase.m4 serial 10
+# strcase.m4 serial 11
 dnl Copyright (C) 2002, 2005-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,19 +13,20 @@ AC_DEFUN([gl_STRCASE],
 AC_DEFUN([gl_FUNC_STRCASECMP],
 [
   AC_REQUIRE([gl_HEADER_STRINGS_H_DEFAULTS])
-  AC_REPLACE_FUNCS([strcasecmp])
+  AC_CHECK_FUNCS([strcasecmp])
   if test $ac_cv_func_strcasecmp = no; then
     HAVE_STRCASECMP=0
-    gl_PREREQ_STRCASECMP
   fi
 ])
 
 AC_DEFUN([gl_FUNC_STRNCASECMP],
 [
   AC_REQUIRE([gl_HEADER_STRINGS_H_DEFAULTS])
-  AC_REPLACE_FUNCS([strncasecmp])
-  if test $ac_cv_func_strncasecmp = no; then
-    gl_PREREQ_STRNCASECMP
+  AC_CHECK_FUNCS([strncasecmp])
+  if test $ac_cv_func_strncasecmp = yes; then
+    HAVE_STRNCASECMP=1
+  else
+    HAVE_STRNCASECMP=0
   fi
   AC_CHECK_DECLS([strncasecmp])
   if test $ac_cv_have_decl_strncasecmp = no; then
