@@ -1,5 +1,13 @@
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
+	strndup: Move AC_LIBOBJ invocations to module description.
+	* m4/strndup.m4 (gl_FUNC_STRNDUP): Set HAVE_STRNDUP. Move AC_LIBOBJ
+	invocations from here...
+	* modules/strndup (configure.ac): ... to here.
+	(Depends-on): Update conditions.
+
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
 	strncat: Move AC_LIBOBJ invocations to module description.
 	* m4/strncat.m4 (gl_FUNC_STRNCAT): Move AC_LIBOBJ and gl_PREREQ_STRNCAT
 	invocations from here...
