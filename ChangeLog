@@ -1,5 +1,11 @@
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
+	times: Move AC_LIBOBJ invocations to module description.
+	* m4/times.m4 (gl_FUNC_TIMES): Move AC_LIBOBJ invocation from here...
+	* modules/times (configure.ac): ... to here.
+
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
 	time_r: Move AC_LIBOBJ invocations to module description.
 	* m4/time_r.m4 (gl_TIME_R): Move AC_LIBOBJ and gl_PREREQ_TIME_R
 	invocations from here...

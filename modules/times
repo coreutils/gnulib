@@ -10,6 +10,9 @@ sys_times
 
 configure.ac:
 gl_FUNC_TIMES
+if test $HAVE_TIMES = 0; then
+  AC_LIBOBJ([times])
+fi
 gl_SYS_TIMES_MODULE_INDICATOR([times])
 
 Makefile.am:
