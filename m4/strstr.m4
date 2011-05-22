@@ -1,4 +1,4 @@
-# strstr.m4 serial 13
+# strstr.m4 serial 14
 dnl Copyright (C) 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,7 +11,6 @@ AC_DEFUN([gl_FUNC_STRSTR_SIMPLE],
   AC_REQUIRE([gl_FUNC_MEMCHR])
   if test "$gl_cv_func_memchr_works" != yes; then
     REPLACE_STRSTR=1
-    AC_LIBOBJ([strstr])
   else
     dnl Detect http://sourceware.org/bugzilla/show_bug.cgi?id=12092.
     AC_CACHE_CHECK([whether strstr works],
@@ -53,7 +52,6 @@ AC_DEFUN([gl_FUNC_STRSTR_SIMPLE],
       ])
     if test "$gl_cv_func_strstr_works_always" != yes; then
       REPLACE_STRSTR=1
-      AC_LIBOBJ([strstr])
     fi
   fi
 ]) # gl_FUNC_STRSTR_SIMPLE
@@ -120,8 +118,5 @@ static void quit (int sig) { exit (sig + 128); }
     if test "$gl_cv_func_strstr_linear" != yes; then
       REPLACE_STRSTR=1
     fi
-  fi
-  if test $REPLACE_STRSTR = 1; then
-    AC_LIBOBJ([strstr])
   fi
 ]) # gl_FUNC_STRSTR

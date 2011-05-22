@@ -1,5 +1,13 @@
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
+	strstr*: Move AC_LIBOBJ invocations to module description.
+	* m4/strstr.m4 (gl_FUNC_STRSTR_SIMPLE, gl_FUNC_STRSTR): Move AC_LIBOBJ
+	invocations from here...
+	* modules/strstr-simple (configure.ac): ... to here.
+	* modules/strstr (configure.ac): ... and here.
+
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
 	strsignal: Move AC_LIBOBJ invocations to module description.
 	* m4/strsignal.m4 (gl_FUNC_STRSIGNAL): Set HAVE_STRSIGNAL. Move
 	AC_LIBOBJ and gl_PREREQ_STRSIGNAL invocations from here...

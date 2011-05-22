@@ -8,6 +8,9 @@ strstr-simple
 
 configure.ac:
 gl_FUNC_STRSTR
+if test $REPLACE_STRSTR = 1; then
+  AC_LIBOBJ([strstr])
+fi
 
 Makefile.am:
 
