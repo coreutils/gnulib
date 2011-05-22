@@ -17,6 +17,9 @@ wchar
 
 configure.ac:
 gl_FUNC_WCSCOLL
+if test $HAVE_WCSCOLL = 0; then
+  AC_LIBOBJ([wcscoll])
+fi
 gl_WCHAR_MODULE_INDICATOR([wcscoll])
 
 Makefile.am:
