@@ -13,6 +13,10 @@ wchar           [test $REPLACE_WCTOMB = 1]
 
 configure.ac:
 gl_FUNC_WCTOMB
+if test $REPLACE_WCTOMB = 1; then
+  AC_LIBOBJ([wctomb])
+  gl_PREREQ_WCTOMB
+fi
 gl_STDLIB_MODULE_INDICATOR([wctomb])
 
 Makefile.am:

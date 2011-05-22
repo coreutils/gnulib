@@ -1,5 +1,12 @@
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
+	wctomb: Move AC_LIBOBJ invocations to module description.
+	* m4/wctomb.m4 (gl_FUNC_WCTOMB): Move AC_LIBOBJ and gl_PREREQ_WCTOMB
+	invocations from here...
+	* modules/wctomb (configure.ac): ... to here.
+
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
 	wctob: Move AC_LIBOBJ invocations to module description.
 	* m4/wctob.m4 (gl_FUNC_WCTOB): Set HAVE_WCTOB. Move AC_LIBOBJ and
 	gl_PREREQ_WCTOB invocations from here...
