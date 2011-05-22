@@ -1,5 +1,13 @@
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
+	strtoull: Move AC_LIBOBJ invocations to module description.
+	* m4/strtoull.m4 (gl_FUNC_STRTOULL): Call AC_CHECK_FUNCS instead of
+	AC_REPLACE_FUNCS. Move AC_LIBOBJ and gl_PREREQ_STRTOULL invocations
+	from here...
+	* modules/strtoull (configure.ac): ... to here.
+
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
 	strtoll: Move AC_LIBOBJ invocations to module description.
 	* m4/strtoll.m4 (gl_FUNC_STRTOLL): Call AC_CHECK_FUNCS instead of
 	AC_REPLACE_FUNCS. Move AC_LIBOBJ and gl_PREREQ_STRTOLL invocations from
