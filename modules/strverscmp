@@ -11,6 +11,10 @@ string
 
 configure.ac:
 gl_FUNC_STRVERSCMP
+if test $HAVE_STRVERSCMP = 0; then
+  AC_LIBOBJ([strverscmp])
+  gl_PREREQ_STRVERSCMP
+fi
 gl_STRING_MODULE_INDICATOR([strverscmp])
 
 Makefile.am:
