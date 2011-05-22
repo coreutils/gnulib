@@ -15,6 +15,10 @@ Depends-on:
 
 configure.ac:
 gl_FUNC_STRCSPN
+if test $ac_cv_func_strcspn = no; then
+  AC_LIBOBJ([strcspn])
+  gl_PREREQ_STRCSPN
+fi
 
 Makefile.am:
 
