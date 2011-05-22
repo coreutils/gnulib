@@ -1,5 +1,10 @@
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
+	strerror_r: Fix comments.
+	* lib/strerror_r.c (strerror_r): Fix comment about Cygwin and sys_nerr.
+
+2011-05-21  Bruno Haible  <bruno@clisp.org>
+
 	relocatable-prog-wrapper: Fix possible link error.
 	* m4/setenv.m4 (gl_FUNC_SETENV_SEPARATE): Move determination of
 	HAVE_SETENV and REPLACE_SETENV and AC_LIBOBJ invocation from here...

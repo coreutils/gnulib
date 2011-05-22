@@ -77,7 +77,7 @@ extern char *sys_errlist[];
 extern int sys_nerr;
 #  endif
 
-/* Get sys_nerr, sys_errlist on native Windows and Cygwin.  */
+/* Get sys_nerr, sys_errlist on native Windows.  */
 #  include <stdlib.h>
 
 # else
@@ -504,7 +504,7 @@ strerror_r (int errnum, char *buf, size_t buflen)
                       and <errno.h> above.
        HP-UX:         sys_nerr, sys_errlist are declared explicitly above.
        native Win32:  sys_nerr, sys_errlist are declared in <stdlib.h>.
-       Cygwin:        sys_nerr, sys_errlist are declared in <stdlib.h>.  */
+       Cygwin:        sys_nerr, sys_errlist are declared in <errno.h>.  */
     if (errnum >= 0 && errnum < sys_nerr)
       {
 #  if HAVE_CATGETS && (defined __NetBSD__ || defined __hpux)
