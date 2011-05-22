@@ -1,4 +1,4 @@
-# strtok_r.m4 serial 12
+# strtok_r.m4 serial 13
 dnl Copyright (C) 2002-2004, 2006-2007, 2009-2011 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -14,6 +14,7 @@ AC_DEFUN([gl_FUNC_STRTOK_R],
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CHECK_FUNCS([strtok_r])
   if test $ac_cv_func_strtok_r = yes; then
+    HAVE_STRTOK_R=1
     dnl glibc 2.7 has a bug in strtok_r that causes a segmentation fault
     dnl when the second argument to strtok_r is a constant string that has
     dnl exactly one byte and compiling with optimization.  This bug is, for
@@ -52,15 +53,14 @@ changequote([,])dnl
       ])
     case "$gl_cv_func_strtok_r_works" in
       *no)
-        dnl We could set REPLACE_STRTOK_R=1 and AC_LIBOBJ([strtok_r]) here,
-        dnl but it's only the macro version in <bits/string2.h> which is wrong.
-        dnl The code compiled into libc is fine.
+        dnl We could set REPLACE_STRTOK_R=1 here, but it's only the macro
+        dnl version in <bits/string2.h> which is wrong. The code compiled
+        dnl into libc is fine.
         UNDEFINE_STRTOK_R=1
         ;;
     esac
   else
-    AC_LIBOBJ([strtok_r])
-    gl_PREREQ_STRTOK_R
+    HAVE_STRTOK_R=0
   fi
   AC_CHECK_DECLS_ONCE([strtok_r])
   if test $ac_cv_have_decl_strtok_r = no; then
