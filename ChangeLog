@@ -1,5 +1,12 @@
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
+	wcsxfrm: Move AC_LIBOBJ invocations to module description.
+	* m4/wcsxfrm.m4 (gl_FUNC_WCSXFRM): Move AC_LIBOBJ invocation from
+	here...
+	* modules/wcsxfrm (configure.ac): ... to here.
+
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
 	wcstok: Move AC_LIBOBJ invocations to module description.
 	* m4/wcstok.m4 (gl_FUNC_WCSTOK): Move AC_LIBOBJ invocation from here...
 	* modules/wcstok (configure.ac): ... to here.

@@ -12,6 +12,9 @@ wchar
 
 configure.ac:
 gl_FUNC_WCSXFRM
+if test $HAVE_WCSXFRM = 0; then
+  AC_LIBOBJ([wcsxfrm])
+fi
 gl_WCHAR_MODULE_INDICATOR([wcsxfrm])
 
 Makefile.am:

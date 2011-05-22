@@ -1,4 +1,4 @@
-# wcsxfrm.m4 serial 1
+# wcsxfrm.m4 serial 2
 dnl Copyright (C) 2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,6 +10,5 @@ AC_DEFUN([gl_FUNC_WCSXFRM],
   AC_CHECK_FUNCS_ONCE([wcsxfrm])
   if test $ac_cv_func_wcsxfrm = no; then
     HAVE_WCSXFRM=0
-    AC_LIBOBJ([wcsxfrm])
   fi
 ])
