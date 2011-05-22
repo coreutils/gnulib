@@ -1,4 +1,4 @@
-# ttyname_r.m4 serial 7
+# ttyname_r.m4 serial 8
 dnl Copyright (C) 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -92,10 +92,6 @@ main (void)
         *) REPLACE_TTYNAME_R=1 ;;
       esac
     fi
-  fi
-  if test $HAVE_TTYNAME_R = 0 || test $REPLACE_TTYNAME_R = 1; then
-    AC_LIBOBJ([ttyname_r])
-    gl_PREREQ_TTYNAME_R
   fi
 ])
 

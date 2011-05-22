@@ -1,5 +1,12 @@
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
+	ttyname_r: Move AC_LIBOBJ invocations to module description.
+	* m4/ttyname_r.m4 (gl_FUNC_TTYNAME_R): Move AC_LIBOBJ and
+	gl_PREREQ_TTYNAME_R invocations from here...
+	* modules/ttyname_r (configure.ac): ... to here.
+
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
 	tsearch: Move AC_LIBOBJ invocations to module description.
 	* m4/tsearch.m4 (gl_FUNC_TSEARCH): Move AC_LIBOBJ and gl_PREREQ_TSEARCH
 	invocations from here...
