@@ -1,5 +1,12 @@
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
+	wcsrchr: Move AC_LIBOBJ invocations to module description.
+	* m4/wcsrchr.m4 (gl_FUNC_WCSRCHR): Move AC_LIBOBJ invocation from
+	here...
+	* modules/wcsrchr (configure.ac): ... to here.
+
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
 	wcspbrk: Move AC_LIBOBJ invocations to module description.
 	* m4/wcspbrk.m4 (gl_FUNC_WCSPBRK): Move AC_LIBOBJ invocation from
 	here...
