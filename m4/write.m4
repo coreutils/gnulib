@@ -1,4 +1,4 @@
-# write.m4 serial 2
+# write.m4 serial 3
 dnl Copyright (C) 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -22,7 +22,4 @@ AC_DEFUN([gl_FUNC_WRITE],
       REPLACE_WRITE=1
     fi
   ])
-  if test $REPLACE_WRITE = 1; then
-    AC_LIBOBJ([write])
-  fi
 ])

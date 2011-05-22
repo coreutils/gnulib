@@ -1,5 +1,11 @@
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
+	write: Move AC_LIBOBJ invocations to module description.
+	* m4/write.m4 (gl_FUNC_WRITE): Move AC_LIBOBJ invocation from here...
+	* modules/write (configure.ac): ... to here.
+
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
 	wmemset: Move AC_LIBOBJ invocations to module description.
 	* m4/wmemset.m4 (gl_FUNC_WMEMSET): Move AC_LIBOBJ invocation from
 	here...
