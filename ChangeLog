@@ -1,5 +1,12 @@
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
+	timegm: Move AC_LIBOBJ invocations to module description.
+	* m4/timegm.m4 (gl_FUNC_TIMEGM): Move AC_LIBOBJ and gl_PREREQ_TIMEGM
+	invocations from here...
+	* modules/timegm (configure.ac): ... to here.
+
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
 	tcgetsid: Move AC_LIBOBJ invocations to module description.
 	* m4/tcgetsid.m4 (gl_FUNC_TCGETSID): Set HAVE_TCGETSID. Move AC_LIBOBJ
 	and gl_PREREQ_TCGETSID invocations from here...

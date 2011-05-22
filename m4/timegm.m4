@@ -1,4 +1,4 @@
-# timegm.m4 serial 10
+# timegm.m4 serial 11
 dnl Copyright (C) 2003, 2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,10 +17,6 @@ AC_DEFUN([gl_FUNC_TIMEGM],
     fi
   else
     HAVE_TIMEGM=0
-  fi
-  if test $HAVE_TIMEGM = 0 || test $REPLACE_TIMEGM = 1; then
-    AC_LIBOBJ([timegm])
-    gl_PREREQ_TIMEGM
   fi
 ])
 
