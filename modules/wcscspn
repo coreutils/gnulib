@@ -19,6 +19,9 @@ wcschr          [test $HAVE_WCSCSPN = 0]
 
 configure.ac:
 gl_FUNC_WCSCSPN
+if test $HAVE_WCSCSPN = 0; then
+  AC_LIBOBJ([wcscspn])
+fi
 gl_WCHAR_MODULE_INDICATOR([wcscspn])
 
 Makefile.am:
