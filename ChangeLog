@@ -1,5 +1,12 @@
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
+	usleep: Move AC_LIBOBJ invocations to module description.
+	* m4/usleep.m4 (gl_FUNC_USLEEP): Move AC_LIBOBJ invocations from
+	here...
+	* modules/usleep (configure.ac): ... to here.
+
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
 	unlockpt: Move AC_LIBOBJ invocations to module description.
 	* m4/unlockpt.m4 (gl_FUNC_UNLOCKPT): Move AC_LIBOBJ and
 	gl_PREREQ_UNLOCKPT invocations from here...

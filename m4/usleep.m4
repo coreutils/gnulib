@@ -1,4 +1,4 @@
-# usleep.m4 serial 1
+# usleep.m4 serial 2
 dnl Copyright (C) 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,7 +18,6 @@ AC_DEFUN([gl_FUNC_USLEEP],
       type if <sys/types.h> lacks this type.])])
   if test $ac_cv_func_usleep = no; then
     HAVE_USLEEP=0
-    AC_LIBOBJ([usleep])
   else
     dnl POSIX allows implementations to reject arguments larger than
     dnl 999999, but GNU guarantees it will work.
@@ -31,7 +30,6 @@ AC_DEFUN([gl_FUNC_USLEEP],
         [gl_cv_func_usleep_works="guessing no"])])
     if test "$gl_cv_func_usleep_works" != yes; then
       REPLACE_USLEEP=1
-      AC_LIBOBJ([usleep])
     fi
   fi
 ])
