@@ -1,5 +1,12 @@
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
+	wmemchr: Move AC_LIBOBJ invocations to module description.
+	* m4/wmemchr.m4 (gl_FUNC_WMEMCHR): Move AC_LIBOBJ invocation from
+	here...
+	* modules/wmemchr (configure.ac): ... to here.
+
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
 	wcswidth: Move AC_LIBOBJ invocations to module description.
 	* m4/wcswidth.m4 (gl_FUNC_WCSWIDTH): Move AC_LIBOBJ invocation from
 	here...

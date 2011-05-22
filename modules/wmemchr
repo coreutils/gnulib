@@ -11,6 +11,9 @@ wchar
 
 configure.ac:
 gl_FUNC_WMEMCHR
+if test $HAVE_WMEMCHR = 0; then
+  AC_LIBOBJ([wmemchr])
+fi
 gl_WCHAR_MODULE_INDICATOR([wmemchr])
 
 Makefile.am:
