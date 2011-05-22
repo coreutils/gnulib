@@ -1,4 +1,4 @@
-# strchrnul.m4 serial 8
+# strchrnul.m4 serial 9
 dnl Copyright (C) 2003, 2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -43,10 +43,6 @@ AC_DEFUN([gl_FUNC_STRCHRNUL],
       *yes) ;;
       *) REPLACE_STRCHRNUL=1 ;;
     esac
-  fi
-  if test $HAVE_STRCHRNUL = 0 || test $REPLACE_STRCHRNUL = 1; then
-    AC_LIBOBJ([strchrnul])
-    gl_PREREQ_STRCHRNUL
   fi
 ])
 

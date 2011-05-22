@@ -1,5 +1,12 @@
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
+	strchrnul: Move AC_LIBOBJ invocations to module description.
+	* m4/strchrnul.m4 (gl_FUNC_STRCHRNUL): Move AC_LIBOBJ and
+	gl_PREREQ_STRCHRNUL invocations from here...
+	* modules/strchrnul (configure.ac): ... to here.
+
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
 	strcasestr*: Move AC_LIBOBJ invocations to module description.
 	* m4/strcasestr.m4 (gl_FUNC_STRCASESTR_SIMPLE, gl_FUNC_STRCASESTR):
 	Move AC_LIBOBJ and gl_PREREQ_STRCASESTR invocations from here...
