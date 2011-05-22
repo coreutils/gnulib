@@ -14,10 +14,13 @@ m4/wctype.m4
 
 Depends-on:
 wctype-h
-iswblank        [test $HAVE_WCTYPE_T = 0]
+iswblank        [test $HAVE_WCTYPE = 0]
 
 configure.ac:
 gl_FUNC_WCTYPE
+if test $HAVE_WCTYPE = 0; then
+  AC_LIBOBJ([wctype])
+fi
 gl_WCTYPE_MODULE_INDICATOR([wctype])
 
 Makefile.am:

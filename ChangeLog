@@ -1,5 +1,13 @@
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
+	wctype: Move AC_LIBOBJ invocations to module description.
+	* m4/wctype.m4 (gl_FUNC_WCTYPE): Set HAVE_WCTYPE. Move AC_LIBOBJ
+	invocation from here...
+	* modules/wctype (configure.ac): ... to here.
+	(Depends-on): Update conditions.
+
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
 	wctrans: Move AC_LIBOBJ invocations to module description.
 	* m4/wctrans.m4 (gl_FUNC_WCTRANS): Set HAVE_WCTRANS. Move AC_LIBOBJ
 	invocation from here...
