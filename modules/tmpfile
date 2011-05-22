@@ -13,6 +13,10 @@ tmpdir          [test $REPLACE_TMPFILE = 1]
 
 configure.ac:
 gl_FUNC_TMPFILE
+if test $REPLACE_TMPFILE = 1; then
+  AC_LIBOBJ([tmpfile])
+  gl_PREREQ_TMPFILE
+fi
 gl_STDIO_MODULE_INDICATOR([tmpfile])
 
 Makefile.am:

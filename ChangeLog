@@ -1,5 +1,12 @@
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
+	tmpfile: Move AC_LIBOBJ invocations to module description.
+	* m4/tmpfile.m4 (gl_FUNC_TMPFILE): Move AC_LIBOBJ and gl_PREREQ_TMPFILE
+	invocations from here...
+	* modules/tmpfile (configure.ac): ... to here.
+
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
 	times: Move AC_LIBOBJ invocations to module description.
 	* m4/times.m4 (gl_FUNC_TIMES): Move AC_LIBOBJ invocation from here...
 	* modules/times (configure.ac): ... to here.

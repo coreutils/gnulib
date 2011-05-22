@@ -1,4 +1,4 @@
-# tmpfile.m4 serial 1
+# tmpfile.m4 serial 2
 # Copyright (C) 2007, 2009-2011 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -31,8 +31,6 @@ choke me
        [gl_cv_func_tmpfile_unusable=no])])
   if test $gl_cv_func_tmpfile_unusable = yes; then
     REPLACE_TMPFILE=1
-    AC_LIBOBJ([tmpfile])
-    gl_PREREQ_TMPFILE
   fi
 ])
 
