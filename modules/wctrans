@@ -11,6 +11,9 @@ wctype-h
 
 configure.ac:
 gl_FUNC_WCTRANS
+if test $HAVE_WCTRANS = 0; then
+  AC_LIBOBJ([wctrans])
+fi
 gl_WCTYPE_MODULE_INDICATOR([wctrans])
 
 Makefile.am:
