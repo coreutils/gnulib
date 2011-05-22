@@ -1,4 +1,4 @@
-# tcgetsid.m4 serial 2
+# tcgetsid.m4 serial 3
 dnl Copyright (C) 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,9 +17,10 @@ AC_DEFUN([gl_FUNC_TCGETSID],
   fi
 
   AC_CHECK_FUNCS([tcgetsid])
-  if test $ac_cv_func_tcgetsid = no; then
-    AC_LIBOBJ([tcgetsid])
-    gl_PREREQ_TCGETSID
+  if test $ac_cv_func_tcgetsid = yes; then
+    HAVE_TCGETSID=1
+  else
+    HAVE_TCGETSID=0
   fi
 ])
 

@@ -1,5 +1,13 @@
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
+	tcgetsid: Move AC_LIBOBJ invocations to module description.
+	* m4/tcgetsid.m4 (gl_FUNC_TCGETSID): Set HAVE_TCGETSID. Move AC_LIBOBJ
+	and gl_PREREQ_TCGETSID invocations from here...
+	* modules/tcgetsid (configure.ac): ... to here.
+	(Depends-on): Update conditions.
+
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
 	symlinkat: Move AC_LIBOBJ invocations to module description.
 	* m4/symlinkat.m4 (gl_FUNC_SYMLINKAT): Move AC_LIBOBJ invocation from
 	here...
