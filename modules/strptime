@@ -17,6 +17,10 @@ time_r          [test $HAVE_STRPTIME = 0]
 
 configure.ac:
 gl_FUNC_STRPTIME
+if test $HAVE_STRPTIME = 0; then
+  AC_LIBOBJ([strptime])
+  gl_PREREQ_STRPTIME
+fi
 gl_TIME_MODULE_INDICATOR([strptime])
 
 Makefile.am:
