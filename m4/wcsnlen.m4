@@ -1,4 +1,4 @@
-# wcsnlen.m4 serial 1
+# wcsnlen.m4 serial 2
 dnl Copyright (C) 2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,6 +10,5 @@ AC_DEFUN([gl_FUNC_WCSNLEN],
   AC_CHECK_FUNCS_ONCE([wcsnlen])
   if test $ac_cv_func_wcsnlen = no; then
     HAVE_WCSNLEN=0
-    AC_LIBOBJ([wcsnlen])
   fi
 ])

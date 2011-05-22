@@ -11,6 +11,9 @@ wchar
 
 configure.ac:
 gl_FUNC_WCSNLEN
+if test $HAVE_WCSNLEN = 0; then
+  AC_LIBOBJ([wcsnlen])
+fi
 gl_WCHAR_MODULE_INDICATOR([wcsnlen])
 
 Makefile.am:
