@@ -13,6 +13,9 @@ wmemcpy         [test $HAVE_WCSDUP = 0]
 
 configure.ac:
 gl_FUNC_WCSDUP
+if test $HAVE_WCSDUP = 0; then
+  AC_LIBOBJ([wcsdup])
+fi
 gl_WCHAR_MODULE_INDICATOR([wcsdup])
 
 Makefile.am:
