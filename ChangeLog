@@ -1,5 +1,12 @@
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
+	wcscasecmp: Move AC_LIBOBJ invocations to module description.
+	* m4/wcscasecmp.m4 (gl_FUNC_WCSCASECMP): Move AC_LIBOBJ invocation from
+	here...
+	* modules/wcscasecmp (configure.ac): ... to here.
+
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
 	wcrtomb: Move AC_LIBOBJ invocations to module description.
 	* m4/wcrtomb.m4 (gl_FUNC_WCRTOMB): Move AC_LIBOBJ and gl_PREREQ_WCRTOMB
 	invocations from here...
