@@ -1,5 +1,11 @@
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
+	wcschr: Move AC_LIBOBJ invocations to module description.
+	* m4/wcschr.m4 (gl_FUNC_WCSCHR): Move AC_LIBOBJ invocation from here...
+	* modules/wcschr (configure.ac): ... to here.
+
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
 	wcscat: Move AC_LIBOBJ invocations to module description.
 	* m4/wcscat.m4 (gl_FUNC_WCSCAT): Move AC_LIBOBJ invocation from here...
 	* modules/wcscat (configure.ac): ... to here.
