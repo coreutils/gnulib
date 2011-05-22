@@ -18,6 +18,10 @@ mbsinit         [test $HAVE_WCRTOMB = 0 || test $REPLACE_WCRTOMB = 1]
 
 configure.ac:
 gl_FUNC_WCRTOMB
+if test $HAVE_WCRTOMB = 0 || test $REPLACE_WCRTOMB = 1; then
+  AC_LIBOBJ([wcrtomb])
+  gl_PREREQ_WCRTOMB
+fi
 gl_WCHAR_MODULE_INDICATOR([wcrtomb])
 
 Makefile.am:
