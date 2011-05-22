@@ -1,3 +1,9 @@
+2011-05-21  Paul Eggert  <eggert@cs.ucla.edu>
+
+	clock-time: change to LGPLv2+.
+	* modules/clock-time: Change from GPL to LGPLv2+.  Actually, it's
+	BSD-like but we have no mark for that; this is good enough for now.
+
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
 	strerror_r: Fix comments.
