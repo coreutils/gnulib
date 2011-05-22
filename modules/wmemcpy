@@ -11,6 +11,9 @@ wchar
 
 configure.ac:
 gl_FUNC_WMEMCPY
+if test $HAVE_WMEMCPY = 0; then
+  AC_LIBOBJ([wmemcpy])
+fi
 gl_WCHAR_MODULE_INDICATOR([wmemcpy])
 
 Makefile.am:

@@ -1,5 +1,12 @@
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
+	wmemcpy: Move AC_LIBOBJ invocations to module description.
+	* m4/wmemcpy.m4 (gl_FUNC_WMEMCPY): Move AC_LIBOBJ invocation from
+	here...
+	* modules/wmemcpy (configure.ac): ... to here.
+
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
 	wmemcmp: Move AC_LIBOBJ invocations to module description.
 	* m4/wmemcmp.m4 (gl_FUNC_WMEMCMP): Move AC_LIBOBJ invocation from
 	here...
