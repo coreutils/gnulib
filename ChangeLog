@@ -1,5 +1,12 @@
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
+	wcsncasecmp: Move AC_LIBOBJ invocations to module description.
+	* m4/wcsncasecmp.m4 (gl_FUNC_WCSNCASECMP): Move AC_LIBOBJ invocation
+	from here...
+	* modules/wcsncasecmp (configure.ac): ... to here.
+
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
 	wcslen: Move AC_LIBOBJ invocations to module description.
 	* m4/wcslen.m4 (gl_FUNC_WCSLEN): Move AC_LIBOBJ invocation from here...
 	* modules/wcslen (configure.ac): ... to here.
