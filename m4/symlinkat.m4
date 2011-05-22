@@ -1,4 +1,4 @@
-# serial 4
+# serial 5
 # See if we need to provide symlinkat replacement.
 
 dnl Copyright (C) 2009-2011 Free Software Foundation, Inc.
@@ -16,6 +16,5 @@ AC_DEFUN([gl_FUNC_SYMLINKAT],
   AC_CHECK_FUNCS_ONCE([symlinkat])
   if test $ac_cv_func_symlinkat = no; then
     HAVE_SYMLINKAT=0
-    AC_LIBOBJ([symlinkat])
   fi
 ])

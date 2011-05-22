@@ -1,5 +1,12 @@
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
+	symlinkat: Move AC_LIBOBJ invocations to module description.
+	* m4/symlinkat.m4 (gl_FUNC_SYMLINKAT): Move AC_LIBOBJ invocation from
+	here...
+	* modules/symlinkat (configure.ac): ... to here.
+
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
 	symlink: Move AC_LIBOBJ invocations to module description.
 	* m4/symlink.m4 (gl_FUNC_SYMLINK): Move AC_LIBOBJ invocations from
 	here...
