@@ -15,6 +15,10 @@ strtoull        [test "$ac_cv_have_decl_strtoumax" != yes && test $ac_cv_func_st
 
 configure.ac:
 gl_FUNC_STRTOUMAX
+if test "$ac_cv_have_decl_strtoumax" != yes && test $ac_cv_func_strtoumax = no; then
+  AC_LIBOBJ([strtoumax])
+  gl_PREREQ_STRTOUMAX
+fi
 gl_INTTYPES_MODULE_INDICATOR([strtoumax])
 
 Makefile.am:
