@@ -1,4 +1,4 @@
-# strsignal.m4 serial 5
+# strsignal.m4 serial 6
 dnl Copyright (C) 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,6 +19,7 @@ AC_DEFUN([gl_FUNC_STRSIGNAL],
 
   AC_CHECK_FUNCS([strsignal])
   if test $ac_cv_func_strsignal = yes; then
+    HAVE_STRSIGNAL=1
     dnl Check if strsignal behaves reasonably for out-of-range signal numbers.
     dnl On Solaris it returns NULL; on AIX 5.1 it returns (char *) -1.
     AC_CACHE_CHECK([whether strsignal always returns a string],
@@ -42,16 +43,11 @@ AC_DEFUN([gl_FUNC_STRSIGNAL],
             solaris* | aix*) gl_cv_func_working_strsignal=no;;
             *)               gl_cv_func_working_strsignal="guessing yes";;
           esac])])
-  else
-    gl_cv_func_working_strsignal=no
-  fi
-
-  if test "$gl_cv_func_working_strsignal" = no; then
-    if test $ac_cv_func_strsignal = yes; then
+    if test "$gl_cv_func_working_strsignal" = no; then
       REPLACE_STRSIGNAL=1
     fi
-    AC_LIBOBJ([strsignal])
-    gl_PREREQ_STRSIGNAL
+  else
+    HAVE_STRSIGNAL=0
   fi
 ])
 
