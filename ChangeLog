@@ -1,5 +1,11 @@
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
+	wcscpy: Move AC_LIBOBJ invocations to module description.
+	* m4/wcscpy.m4 (gl_FUNC_WCSCPY): Move AC_LIBOBJ invocation from here...
+	* modules/wcscpy (configure.ac): ... to here.
+
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
 	wcscoll: Move AC_LIBOBJ invocations to module description.
 	* m4/wcscoll.m4 (gl_FUNC_WCSCOLL): Move AC_LIBOBJ invocation from
 	here...

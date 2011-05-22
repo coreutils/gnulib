@@ -17,6 +17,9 @@ wchar
 
 configure.ac:
 gl_FUNC_WCSCPY
+if test $HAVE_WCSCPY = 0; then
+  AC_LIBOBJ([wcscpy])
+fi
 gl_WCHAR_MODULE_INDICATOR([wcscpy])
 
 Makefile.am:
