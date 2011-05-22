@@ -1,4 +1,4 @@
-# strerror.m4 serial 11
+# strerror.m4 serial 12
 dnl Copyright (C) 2002, 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -36,10 +36,6 @@ AC_DEFUN([gl_FUNC_STRERROR],
     dnl The system's strerror() cannot know about the new errno values we add
     dnl to <errno.h>. Replace it.
     REPLACE_STRERROR=1
-  fi
-  if test $REPLACE_STRERROR = 1; then
-    AC_LIBOBJ([strerror])
-    gl_PREREQ_STRERROR
   fi
 ])
 

@@ -1,3 +1,10 @@
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
+	strerror: Move AC_LIBOBJ invocations to module description.
+	* m4/strerror.m4 (gl_FUNC_STRERROR): Move AC_LIBOBJ and
+	gl_PREREQ_STRERROR invocations from here...
+	* modules/strerror (configure.ac): ... to here.
+
 2011-05-21  Bruno Haible  <bruno@clisp.org>
 
 	perror: Use common idiom.
