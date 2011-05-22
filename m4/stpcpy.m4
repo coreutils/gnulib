@@ -1,4 +1,4 @@
-# stpcpy.m4 serial 7
+# stpcpy.m4 serial 8
 dnl Copyright (C) 2002, 2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,10 +13,9 @@ AC_DEFUN([gl_FUNC_STPCPY],
   AC_REQUIRE([AC_C_RESTRICT])
 
   AC_REQUIRE([gl_HEADER_STRING_H_DEFAULTS])
-  AC_REPLACE_FUNCS([stpcpy])
+  AC_CHECK_FUNCS([stpcpy])
   if test $ac_cv_func_stpcpy = no; then
     HAVE_STPCPY=0
-    gl_PREREQ_STPCPY
   fi
 ])
 
