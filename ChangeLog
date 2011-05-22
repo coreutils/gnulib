@@ -1,5 +1,10 @@
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
+	xgetcwd: Simplify autoconf macro.
+	* m4/xgetcwd.m4 (gl_XGETCWD): Don't require gl_FUNC_GETCWD.
+
+2011-05-22  Bruno Haible  <bruno@clisp.org>
+
 	New module 'mktime-internal'.
 	* modules/mktime-internal: New file.
 	* m4/timegm.m4 (gl_PREREQ_TIMEGM): Move contents to ...
