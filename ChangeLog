@@ -1,5 +1,13 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	crypto/hmac-sha1: Move AC_LIBOBJ invocations to module description.
+	* m4/hmac-sha1.m4: Remove file.
+	* modules/crypto/hmac-sha1 (Files): Remove it.
+	(configure.ac): Remove gl_HMAC_SHA1 call.
+	(Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	crypto/hmac-md5: Move AC_LIBOBJ invocations to module description.
 	* m4/hmac-md5.m4: Remove file.
 	* modules/crypto/hmac-md5 (Files): Remove it.

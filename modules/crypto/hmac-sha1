@@ -4,16 +4,15 @@ Compute hashed message authentication codes with SHA1.
 Files:
 lib/hmac.h
 lib/hmac-sha1.c
-m4/hmac-sha1.m4
 
 Depends-on:
 memxor
 crypto/sha1
 
 configure.ac:
-gl_HMAC_SHA1
 
 Makefile.am:
+lib_SOURCES += hmac-sha1.c
 
 Include:
 "hmac.h"
