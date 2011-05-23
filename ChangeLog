@@ -1,5 +1,11 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	crypto/md5: Move AC_LIBOBJ invocations to module description.
+	* m4/md5.m4 (gl_MD5): Remove AC_LIBOBJ invocation.
+	* modules/crypto/md5 (Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	crypto/md4: Move AC_LIBOBJ invocations to module description.
 	* m4/md4.m4 (gl_MD4): Remove AC_LIBOBJ invocation.
 	* modules/crypto/md4 (Makefile.am): Augment lib_SOURCES.
