@@ -4,15 +4,14 @@ Compute MD2 checksum.
 Files:
 lib/md2.h
 lib/md2.c
-m4/md2.m4
 
 Depends-on:
 minmax
 
 configure.ac:
-gl_MD2
 
 Makefile.am:
+lib_SOURCES += md2.c
 
 Include:
 "md2.h"
