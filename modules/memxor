@@ -12,6 +12,7 @@ configure.ac:
 gl_MEMXOR
 
 Makefile.am:
+lib_SOURCES += memxor.c
 
 Include:
 "memxor.h"
