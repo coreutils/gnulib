@@ -16,6 +16,7 @@ configure.ac:
 gl_SETTIME
 
 Makefile.am:
+lib_SOURCES += settime.c
 
 Include:
 "timespec.h"
