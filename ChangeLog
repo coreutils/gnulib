@@ -1,5 +1,11 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	cycle-check: Move AC_LIBOBJ invocations to module description.
+	* m4/cycle-check.m4 (gl_CYCLE_CHECK): Remove AC_LIBOBJ invocation.
+	* modules/cycle-check (Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	c-strtold: Move AC_LIBOBJ invocations to module description.
 	* m4/c-strtod.m4 (gl_C_STRTOLD): Remove AC_LIBOBJ invocation.
 	* modules/c-strtold (Makefile.am): Augment lib_SOURCES.

@@ -16,6 +16,7 @@ configure.ac:
 gl_CYCLE_CHECK
 
 Makefile.am:
+lib_SOURCES += cycle-check.c
 
 Include:
 "cycle-check.h"
