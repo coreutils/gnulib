@@ -1,5 +1,11 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	crypto/sha512: Move AC_LIBOBJ invocations to module description.
+	* m4/sha512.m4 (gl_SHA512): Remove AC_LIBOBJ invocation.
+	* modules/crypto/sha512 (Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	crypto/sha256: Move AC_LIBOBJ invocations to module description.
 	* m4/sha256.m4 (gl_SHA256): Remove AC_LIBOBJ invocation.
 	* modules/crypto/sha256 (Makefile.am): Augment lib_SOURCES.
