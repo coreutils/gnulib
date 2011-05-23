@@ -5,17 +5,16 @@ Files:
 lib/stdio--.h
 lib/stdio-safer.h
 lib/fopen-safer.c
-m4/stdio-safer.m4
 
 Depends-on:
 fopen
 unistd-safer
 
 configure.ac:
-gl_FOPEN_SAFER
 gl_MODULE_INDICATOR([fopen-safer])
 
 Makefile.am:
+lib_SOURCES += fopen-safer.c
 
 Include:
 "stdio-safer.h"
