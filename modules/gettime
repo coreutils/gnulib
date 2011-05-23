@@ -16,6 +16,7 @@ configure.ac:
 gl_GETTIME
 
 Makefile.am:
+lib_SOURCES += gettime.c
 
 Include:
 "timespec.h"

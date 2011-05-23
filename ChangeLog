@@ -1,5 +1,11 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	gettime: Move AC_LIBOBJ invocations to module description.
+	* m4/gettime.m4 (gl_GETTIME): Remove AC_LIBOBJ invocation.
+	* modules/gettime (Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	getndelim2: Move AC_LIBOBJ invocations to module description.
 	* m4/getndelim2.m4 (gl_GETNDELIM2): Remove AC_LIBOBJ invocation.
 	* modules/getndelim2 (Makefile.am): Augment lib_SOURCES.
