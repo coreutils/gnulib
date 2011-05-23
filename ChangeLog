@@ -1,5 +1,11 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	idcache: Move AC_LIBOBJ invocations to module description.
+	* m4/idcache.m4 (gl_IDCACHE): Remove AC_LIBOBJ invocation.
+	* modules/idcache (Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	human: Move AC_LIBOBJ invocations to module description.
 	* m4/human.m4 (gl_HUMAN): Remove AC_LIBOBJ invocation.
 	* modules/human (Makefile.am): Augment lib_SOURCES.
