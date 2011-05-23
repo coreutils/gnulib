@@ -18,6 +18,7 @@ configure.ac:
 gl_CLOSEOUT
 
 Makefile.am:
+lib_SOURCES += closeout.c
 
 Include:
 "closeout.h"
