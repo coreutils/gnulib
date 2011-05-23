@@ -1,5 +1,10 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	hash: Simplify autoconf macro.
+	* m4/hash.m4 (gl_HASH): Don't require AM_STDBOOL_H.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	getugroups: Fix module description.
 	* modules/getugroups (Include): Set to "getugroups.h".
 
