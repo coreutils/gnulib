@@ -26,6 +26,9 @@ unistd-safer
 
 configure.ac:
 gl_FUNC_FTS
+dnl Use this version of fts unconditionally, since the GNU libc and
+dnl NetBSD versions have bugs and/or unnecessary limitations.
+AC_LIBOBJ([fts])
 
 Makefile.am:
 

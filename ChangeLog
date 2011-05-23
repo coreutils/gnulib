@@ -1,5 +1,11 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	fts: Move AC_LIBOBJ invocations to module description.
+	* m4/fts.m4 (gl_FUNC_FTS_CORE): Move AC_LIBOBJ invocation from here...
+	* modules/fts (configure.ac): ... to here.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	file-type: Move AC_LIBOBJ invocations to module description.
 	* m4/file-type.m4: Remove file.
 	* modules/file-type (Files): Remove it.
