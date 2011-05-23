@@ -20,6 +20,7 @@ configure.ac:
 gl_PAGEALIGN_ALLOC
 
 Makefile.am:
+lib_SOURCES += pagealign_alloc.c
 
 Include:
 "pagealign_alloc.h"

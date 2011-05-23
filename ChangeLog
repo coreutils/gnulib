@@ -1,5 +1,12 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	pagealign_alloc: Move AC_LIBOBJ invocations to module description.
+	* m4/pagealign_alloc.m4 (gl_PAGEALIGN_ALLOC): Remove AC_LIBOBJ
+	invocation.
+	* modules/pagealign_alloc (Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	mpsort: Move AC_LIBOBJ invocations to module description.
 	* m4/mpsort.m4 (gl_MPSORT): Remove AC_LIBOBJ invocation.
 	* modules/mpsort (Makefile.am): Augment lib_SOURCES.
