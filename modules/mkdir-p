@@ -26,6 +26,7 @@ configure.ac:
 gl_MKDIR_PARENTS
 
 Makefile.am:
+lib_SOURCES += dirchownmod.c mkdir-p.c
 
 Include:
 "mkdir-p.h"

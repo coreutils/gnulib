@@ -1,5 +1,11 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	mkdir-p: Move AC_LIBOBJ invocations to module description.
+	* m4/mkdir-p.m4 (gl_MKDIR_PARENTS): Remove AC_LIBOBJ invocations.
+	* modules/mkdir-p (Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	mkancesdirs: Move AC_LIBOBJ invocations to module description.
 	* m4/mkancesdirs.m4 (gl_MKANCESDIRS): Remove AC_LIBOBJ invocation.
 	* modules/mkancesdirs (Makefile.am): Augment lib_SOURCES.
