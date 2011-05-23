@@ -9,7 +9,8 @@
 	A sed command like "/x/{s/a/b/}" is not portable; a newline is needed
 	before the "}".  Problem reported by Leo in
 	<http://lists.gnu.org/archive/html/emacs-devel/2011-05/msg00717.html>.
-	* gnulib-tool (sed_dependencies_without_conditions):
+	* gnulib-tool (func_modules_transitive_closure): Insert newlines in
+	sed_extract_condition1, sed_extract_condition2.
 
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
