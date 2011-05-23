@@ -1,4 +1,4 @@
-# physmem.m4 serial 10
+# physmem.m4 serial 11
 dnl Copyright (C) 2002-2003, 2005-2006, 2008-2011 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -28,8 +28,6 @@ AC_DEFUN([gl_SYS__SYSTEM_CONFIGURATION],
 
 AC_DEFUN([gl_PHYSMEM],
 [
-  AC_LIBOBJ([physmem])
-
   # Prerequisites of lib/physmem.c.
   AC_CHECK_HEADERS([sys/pstat.h sys/sysmp.h sys/sysinfo.h \
     machine/hal_sysinfo.h sys/table.h sys/param.h sys/systemcfg.h],,,

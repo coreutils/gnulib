@@ -12,6 +12,7 @@ configure.ac:
 gl_PHYSMEM
 
 Makefile.am:
+lib_SOURCES += physmem.c
 
 Include:
 "physmem.h"
