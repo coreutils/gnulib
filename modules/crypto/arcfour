@@ -4,15 +4,14 @@ ARCFOUR stream cipher implementation
 Files:
 lib/arcfour.h
 lib/arcfour.c
-m4/arcfour.m4
 
 Depends-on:
 stdint
 
 configure.ac:
-gl_ARCFOUR
 
 Makefile.am:
+lib_SOURCES += arcfour.c
 
 Include:
 "arcfour.h"

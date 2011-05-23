@@ -1,3 +1,11 @@
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
+	crypto/arcfour: Move AC_LIBOBJ invocations to module description.
+	* m4/arcfour.m4: Remove file.
+	* modules/crypto/arcfour (Files): Remove it.
+	(configure.ac): Remove gl_ARCFOUR call.
+	(Makefile.am): Augment lib_SOURCES.
+
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
 	write: Move AC_LIBOBJ invocations to module description.
