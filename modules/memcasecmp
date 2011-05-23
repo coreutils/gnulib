@@ -12,6 +12,7 @@ configure.ac:
 gl_MEMCASECMP
 
 Makefile.am:
+lib_SOURCES += memcasecmp.c
 
 Include:
 "memcasecmp.h"
