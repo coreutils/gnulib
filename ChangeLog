@@ -1,5 +1,13 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	cloexec: Move AC_LIBOBJ invocations to module description.
+	* m4/cloexec.m4: Remove file.
+	* modules/cloexec (Files): Remove it.
+	(configure.ac): Remove gl_CLOEXEC call.
+	(Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	check-version: Move AC_LIBOBJ invocations to module description.
 	* m4/check-version.m4: Remove file.
 	* modules/check-version (Files): Remove it.

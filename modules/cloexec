@@ -4,7 +4,6 @@ Set or clear the close-on-exec descriptor flag.
 Files:
 lib/cloexec.c
 lib/cloexec.h
-m4/cloexec.m4
 
 Depends-on:
 dup2
@@ -12,10 +11,10 @@ fcntl
 stdbool
 
 configure.ac:
-gl_CLOEXEC
 gl_MODULE_INDICATOR_FOR_TESTS([cloexec])
 
 Makefile.am:
+lib_SOURCES += cloexec.c
 
 Include:
 "cloexec.h"
