@@ -15,6 +15,7 @@ configure.ac:
 gl_FILEMODE
 
 Makefile.am:
+lib_SOURCES += filemode.c
 
 Include:
 "filemode.h"
