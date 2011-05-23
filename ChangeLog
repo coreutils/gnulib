@@ -1,5 +1,13 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	hash: Move AC_LIBOBJ invocations to module description.
+	* m4/hash.m4: Remove file.
+	* modules/hash (Files): Remove it.
+	(configure.ac): Remove gl_HASH call.
+	(Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	hard-locale: Move AC_LIBOBJ invocations to module description.
 	* m4/hard-locale.m4 (gl_HARD_LOCALE): Remove AC_LIBOBJ invocation.
 	* modules/hard-locale (Makefile.am): Augment lib_SOURCES.
