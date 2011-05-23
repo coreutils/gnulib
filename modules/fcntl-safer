@@ -19,6 +19,7 @@ gl_FCNTL_SAFER
 gl_MODULE_INDICATOR([fcntl-safer])
 
 Makefile.am:
+lib_SOURCES += creat-safer.c open-safer.c
 
 Include:
 "fcntl-safer.h"
