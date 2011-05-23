@@ -14,6 +14,7 @@ configure.ac:
 gl_HARD_LOCALE
 
 Makefile.am:
+lib_SOURCES += hard-locale.c
 
 Include:
 "hard-locale.h"

@@ -1,5 +1,11 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	hard-locale: Move AC_LIBOBJ invocations to module description.
+	* m4/hard-locale.m4 (gl_HARD_LOCALE): Remove AC_LIBOBJ invocation.
+	* modules/hard-locale (Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	getugroups: Move AC_LIBOBJ invocations to module description.
 	* m4/getugroups.m4 (gl_GETUGROUPS): Remove AC_LIBOBJ invocation.
 	* modules/getugroups (Makefile.am): Augment lib_SOURCES.
