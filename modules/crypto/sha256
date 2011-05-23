@@ -13,6 +13,7 @@ configure.ac:
 gl_SHA256
 
 Makefile.am:
+lib_SOURCES += sha256.c
 
 Include:
 "sha256.h"
