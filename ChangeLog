@@ -1,5 +1,13 @@
 2011-05-23  Jim Meyering  <meyering@redhat.com>
 
+	maint.mk: more tight_scope improvements
+	* top/maint.mk: (_gl_TS_var_match): Use $(_gl_TS_extern) here, too.
+	(_gl_TS_headers): Define only in if-0'd block.
+	(_gl_TS_dir): Omit the $(srcdir)/ prefix.  Sometimes we need it,
+	sometimes we must *not* use it.  Adjust uses accordingly.
+	(sc_tight_scope): Use much simpler grep-based test to determine
+	whether we skip this rule.
+
 	maint.mk: generalize/improve the tight-scope rule
 	* top/maint.mk: Emit a warning when the test is skipped.
 	(_gl_TS_dir): Add $(srcdir)/ prefix.

@@ -1353,27 +1353,27 @@ update-copyright:
 	  $$(export VC_LIST_EXCEPT_DEFAULT=COPYING && $(VC_LIST_EXCEPT)) \
 	  | $(update-copyright-env) xargs $(build_aux)/$@
 
-# NOTE: This test is skipped with a warning if $(_gl_TS_headers) still
-# has its default value and $(_gl_TS_dir)/Makefile.am does not mention
-# noinst_HEADERS.
+# This tight_scope test is skipped with a warning if $(_gl_TS_headers) is not
+# overridden and $(_gl_TS_dir)/Makefile.am does not mention noinst_HEADERS.
 
 # NOTE: to override any _gl_TS_* default value, you must
 # define the variable(s) using "export" in cfg.mk.
-_gl_TS_dir ?= $(srcdir)/src
-
-# The file(s) to search for extern declarations.
-_gl_TS_headers ?= $(noinst_HEADERS)
+_gl_TS_dir ?= src
 
 ALL_RECURSIVE_TARGETS += sc_tight_scope
 sc_tight_scope: tight-scope.mk
-	@if test 'x$(_gl_TS_headers)' = 'x$(noinst_HEADERS)'		\
-	  && ! grep -w noinst_HEADERS $(_gl_TS_dir)/Makefile.am		\
+	@if ! grep '^ *export _gl_TS_headers *=' $(srcdir)/cfg.mk	\
+		> /dev/null						\
+	   && ! grep -w noinst_HEADERS $(srcdir)/$(_gl_TS_dir)/Makefile.am \
 		> /dev/null 2>&1; then					\
 	    echo '$(ME): skipping $@';					\
 	else								\
-	    $(MAKE) -s -C $(_gl_TS_dir) -f $(abs_builddir)/$<		\
-		-f Makefile _gl_tight_scope				\
-	      || fail=1;						\
+	    $(MAKE) -s -C $(_gl_TS_dir)					\
+		-f Makefile						\
+		-f $(abs_top_srcdir)/cfg.mk				\
+		-f $(abs_top_builddir)/$<				\
+	      _gl_tight_scope						\
+		|| fail=1;						\
 	fi
 	@rm -f $<
 
@@ -1411,11 +1411,15 @@ _gl_TS_unmarked_extern_vars ?=
 # a macro like this: GLOBAL(type, var_name, initializer), then you
 # can override this definition to automatically extract those names:
 # export _gl_TS_var_match = \
-#   /^(?:extern|XTERN) .*?\**(\w+)(\[.*?\])?;/ || /\bGLOBAL\(.*?,\s*(.*?),/
-_gl_TS_var_match ?= /^(?:extern|XTERN) .*?(\w+)(\[.*?\])?;/
+#   /^(?:$(_gl_TS_extern)) .*?\**(\w+)(\[.*?\])?;/ || /\bGLOBAL\(.*?,\s*(.*?),/
+_gl_TS_var_match ?= /^(?:$(_gl_TS_extern)) .*?(\w+)(\[.*?\])?;/
 
 # The names of object files in (or relative to) $(_gl_TS_dir).
 _gl_TS_obj_files ?= *.$(OBJEXT)
+
+# Files in which to search for the one-line style extern declarations.
+# $(_gl_TS_dir)-relative.
+_gl_TS_headers ?= $(noinst_HEADERS)
 
 .PHONY: _gl_tight_scope
 _gl_tight_scope: $(bin_PROGRAMS)
