@@ -1,5 +1,11 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	closein: Move AC_LIBOBJ invocations to module description.
+	* m4/closein.m4 (gl_CLOSEIN): Remove AC_LIBOBJ invocation.
+	* modules/closein (Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	cloexec: Move AC_LIBOBJ invocations to module description.
 	* m4/cloexec.m4: Remove file.
 	* modules/cloexec (Files): Remove it.

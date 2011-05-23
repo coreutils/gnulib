@@ -16,6 +16,7 @@ configure.ac:
 gl_CLOSEIN
 
 Makefile.am:
+lib_SOURCES += closein.c
 
 Include:
 "closein.h"
