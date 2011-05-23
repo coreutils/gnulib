@@ -1,5 +1,11 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	savedir: Move AC_LIBOBJ invocations to module description.
+	* m4/savedir.m4 (gl_SAVEDIR): Remove AC_LIBOBJ invocation.
+	* modules/savedir (Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	save-cwd: Move AC_LIBOBJ invocations to module description.
 	* m4/save-cwd.m4 (gl_SAVE_CWD): Remove AC_LIBOBJ invocation.
 	* modules/save-cwd (Makefile.am): Augment lib_SOURCES.
