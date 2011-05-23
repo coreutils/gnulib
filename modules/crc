@@ -4,15 +4,14 @@ Compute cyclic redundancy codes.
 Files:
 lib/crc.h
 lib/crc.c
-m4/crc.m4
 
 Depends-on:
 stdint
 
 configure.ac:
-gl_CRC
 
 Makefile.am:
+lib_SOURCES += crc.c
 
 Include:
 "crc.h"

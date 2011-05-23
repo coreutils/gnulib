@@ -1,5 +1,13 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	crc: Move AC_LIBOBJ invocations to module description.
+	* m4/crc.m4: Remove file.
+	* modules/crc (Files): Remove it.
+	(configure.ac): Remove gl_CRC call.
+	(Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	close-stream: Move AC_LIBOBJ invocations to module description.
 	* m4/close-stream.m4 (gl_CLOSE_STREAM): Remove AC_LIBOBJ invocation.
 	* modules/close-stream (Makefile.am): Augment lib_SOURCES.
