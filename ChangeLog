@@ -1,5 +1,11 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	posixtm: Move AC_LIBOBJ invocations to module description.
+	* m4/posixtm.m4 (gl_POSIXTM): Remove AC_LIBOBJ invocation.
+	* modules/posixtm (Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	physmem: Move AC_LIBOBJ invocations to module description.
 	* m4/physmem.m4 (gl_PHYSMEM): Remove AC_LIBOBJ invocation.
 	* modules/physmem (Makefile.am): Augment lib_SOURCES.

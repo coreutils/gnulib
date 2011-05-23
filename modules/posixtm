@@ -15,6 +15,7 @@ configure.ac:
 gl_POSIXTM
 
 Makefile.am:
+lib_SOURCES += posixtm.c
 
 Include:
 "posixtm.h"
