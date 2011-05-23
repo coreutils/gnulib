@@ -1,4 +1,9 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
+
+	linkat: Simplify autoconf macro.
+	* m4/linkat.m4 (gl_FUNC_LINKAT): Don't require gl_FUNC_LINK.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
 	    Eric Blake  <eblake@redhat.com>
 
 	linkat, renameat: Update dependencies.

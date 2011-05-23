@@ -1,4 +1,4 @@
-# serial 4
+# serial 5
 # See if we need to provide linkat replacement.
 
 dnl Copyright (C) 2009-2011 Free Software Foundation, Inc.
@@ -11,7 +11,6 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_LINKAT],
 [
   AC_REQUIRE([gl_FUNC_OPENAT])
-  AC_REQUIRE([gl_FUNC_LINK])
   AC_REQUIRE([gl_FUNC_LINK_FOLLOWS_SYMLINK])
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
