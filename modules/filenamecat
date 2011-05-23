@@ -14,6 +14,7 @@ gl_FILE_NAME_CONCAT
 gl_MODULE_INDICATOR([filenamecat])
 
 Makefile.am:
+lib_SOURCES += filenamecat.c
 
 Include:
 "filenamecat.h"
