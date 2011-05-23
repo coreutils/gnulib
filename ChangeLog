@@ -1,5 +1,11 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	getndelim2: Move AC_LIBOBJ invocations to module description.
+	* m4/getndelim2.m4 (gl_GETNDELIM2): Remove AC_LIBOBJ invocation.
+	* modules/getndelim2 (Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	crypto/gc-pbkdf2-sha1: Move AC_LIBOBJ invocations to module description.
 	* m4/gc-pbkdf2-sha1.m4: Remove file.
 	* modules/crypto/gc-pbkdf2-sha1 (Files): Remove it.
