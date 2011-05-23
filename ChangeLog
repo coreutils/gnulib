@@ -1,5 +1,11 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	same: Move AC_LIBOBJ invocations to module description.
+	* m4/same.m4 (gl_SAME): Remove AC_LIBOBJ invocation.
+	* modules/same (Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	safe-write: Move AC_LIBOBJ invocations to module description.
 	* m4/safe-write.m4 (gl_SAFE_WRITE): Remove macro.
 	* modules/safe-write (configure.ac): Invoke gl_PREREQ_SAFE_WRITE

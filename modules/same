@@ -19,6 +19,7 @@ configure.ac:
 gl_SAME
 
 Makefile.am:
+lib_SOURCES += same.c
 
 Include:
 "same.h"
