@@ -15,6 +15,7 @@ gl_GETUGROUPS
 Makefile.am:
 
 Include:
+"getugroups.h"
 
 License:
 GPL
