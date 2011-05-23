@@ -11,9 +11,10 @@ read
 ssize_t
 
 configure.ac:
-gl_SAFE_READ
+gl_PREREQ_SAFE_READ
 
 Makefile.am:
+lib_SOURCES += safe-read.c
 
 Include:
 "safe-read.h"
