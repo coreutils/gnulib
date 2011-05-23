@@ -1,5 +1,11 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	openat-safer: Move AC_LIBOBJ invocations to module description.
+	* m4/fcntl-safer.m4 (gl_OPENAT_SAFER): Remove AC_LIBOBJ invocation.
+	* modules/openat-safer (Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	fcntl-safer: Move AC_LIBOBJ invocations to module description.
 	* m4/fcntl-safer.m4 (gl_FCNTL_SAFER): Remove AC_LIBOBJ invocations.
 	* modules/fcntl-safer (Makefile.am): Augment lib_SOURCES.
