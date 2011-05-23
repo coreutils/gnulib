@@ -17,6 +17,7 @@ gl_DIRENT_SAFER
 gl_MODULE_INDICATOR([dirent-safer])
 
 Makefile.am:
+lib_SOURCES += opendir-safer.c
 
 Include:
 "dirent-safer.h"

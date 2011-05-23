@@ -1,5 +1,11 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	dirent-safer: Move AC_LIBOBJ invocations to module description.
+	* m4/dirent-safer.m4 (gl_DIRENT_SAFER): Remove AC_LIBOBJ invocation.
+	* modules/dirent-safer (Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	crypto/des: Move AC_LIBOBJ invocations to module description.
 	* m4/des.m4: Remove file.
 	* modules/crypto/des (Files): Remove it.
