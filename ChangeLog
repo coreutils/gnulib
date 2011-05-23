@@ -1,3 +1,17 @@
+2011-05-23  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: generalize/improve the tight-scope rule
+	* top/maint.mk: Emit a warning when the test is skipped.
+	(_gl_TS_dir): Add $(srcdir)/ prefix.
+	(_gl_TS_function_match): Simplify, rather than trying
+	to enumerate common types.  Otherwise, it would fail to match an
+	"extern unsigned char const *" declaration in idutils.
+	(_gl_TS_extern): Do not endorse use of "XTERN", but do provide
+	a way to support use of that type of macro.
+	(_gl_TS_var_match): Simplify regexp.
+	(_gl_TS_obj_files): New configurable variable.
+	(_gl_TS_headers): Likewise.
+
 2011-05-22  Paul Eggert  <eggert@cs.ucla.edu>
 
 	verify: fix bug when gnulib <assert.h> is also included
