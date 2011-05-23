@@ -1,5 +1,11 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	getugroups: Move AC_LIBOBJ invocations to module description.
+	* m4/getugroups.m4 (gl_GETUGROUPS): Remove AC_LIBOBJ invocation.
+	* modules/getugroups (Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	gettime: Move AC_LIBOBJ invocations to module description.
 	* m4/gettime.m4 (gl_GETTIME): Remove AC_LIBOBJ invocation.
 	* modules/gettime (Makefile.am): Augment lib_SOURCES.

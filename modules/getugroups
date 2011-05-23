@@ -13,6 +13,7 @@ configure.ac:
 gl_GETUGROUPS
 
 Makefile.am:
+lib_SOURCES += getugroups.c
 
 Include:
 "getugroups.h"
