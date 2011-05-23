@@ -13,9 +13,10 @@ ssize_t
 write
 
 configure.ac:
-gl_SAFE_WRITE
+gl_PREREQ_SAFE_WRITE
 
 Makefile.am:
+lib_SOURCES += safe-write.c
 
 Include:
 "safe-write.h"

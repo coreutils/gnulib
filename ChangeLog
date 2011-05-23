@@ -1,5 +1,13 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	safe-write: Move AC_LIBOBJ invocations to module description.
+	* m4/safe-write.m4 (gl_SAFE_WRITE): Remove macro.
+	* modules/safe-write (configure.ac): Invoke gl_PREREQ_SAFE_WRITE
+	instead of gl_SAFE_WRITE.
+	(Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	safe-read: Move AC_LIBOBJ invocations to module description.
 	* m4/safe-read.m4 (gl_SAFE_READ): Remove macro.
 	* modules/safe-read (configure.ac): Invoke gl_PREREQ_SAFE_READ instead
