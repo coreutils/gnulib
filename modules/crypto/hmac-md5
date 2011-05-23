@@ -4,16 +4,15 @@ Compute hashed message authentication codes with MD5.
 Files:
 lib/hmac.h
 lib/hmac-md5.c
-m4/hmac-md5.m4
 
 Depends-on:
 memxor
 crypto/md5
 
 configure.ac:
-gl_HMAC_MD5
 
 Makefile.am:
+lib_SOURCES += hmac-md5.c
 
 Include:
 "hmac.h"
