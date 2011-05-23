@@ -1,5 +1,13 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	crypto/gc-pbkdf2-sha1: Move AC_LIBOBJ invocations to module description.
+	* m4/gc-pbkdf2-sha1.m4: Remove file.
+	* modules/crypto/gc-pbkdf2-sha1 (Files): Remove it.
+	(configure.ac): Remove gl_GC_PBKDF2_SHA1 call.
+	(Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	fts: Move AC_LIBOBJ invocations to module description.
 	* m4/fts.m4 (gl_FUNC_FTS_CORE): Move AC_LIBOBJ invocation from here...
 	* modules/fts (configure.ac): ... to here.
