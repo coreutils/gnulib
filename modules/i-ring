@@ -14,6 +14,7 @@ configure.ac:
 gl_I_RING
 
 Makefile.am:
+lib_SOURCES += i-ring.c
 
 Include:
 "i-ring.h"
