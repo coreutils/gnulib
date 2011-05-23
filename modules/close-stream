@@ -15,6 +15,7 @@ gl_CLOSE_STREAM
 gl_MODULE_INDICATOR([close-stream])
 
 Makefile.am:
+lib_SOURCES += close-stream.c
 
 Include:
 "close-stream.h"
