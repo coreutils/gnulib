@@ -1,5 +1,13 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	canon-host: Move AC_LIBOBJ invocations to module description.
+	* m4/canon-host.m4 (gl_CANON_HOST): Remove macro.
+	* modules/canon-host (configure.ac): Invoke gl_PREREQ_CANON_HOST
+	instead of gl_CANON_HOST.
+	(Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	backupfile: Move AC_LIBOBJ invocations to module description.
 	* m4/backupfile.m4 (gl_BACKUPFILE): Remove AC_LIBOBJ invocation.
 	* modules/backupfile (Makefile.am): Augment lib_SOURCES.

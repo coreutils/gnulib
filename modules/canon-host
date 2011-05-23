@@ -12,9 +12,10 @@ getaddrinfo
 strdup
 
 configure.ac:
-gl_CANON_HOST
+gl_PREREQ_CANON_HOST
 
 Makefile.am:
+lib_SOURCES += canon-host.c
 
 Include:
 "canon-host.h"
