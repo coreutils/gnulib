@@ -1,5 +1,11 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	mgetgroups: Move AC_LIBOBJ invocations to module description.
+	* m4/mgetgroups.m4 (gl_MGETGROUPS): Remove AC_LIBOBJ invocation.
+	* modules/mgetgroups (Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	memxor: Move AC_LIBOBJ invocations to module description.
 	* m4/memxor.m4 (gl_MEMXOR): Remove AC_LIBOBJ invocation.
 	* modules/memxor (Makefile.am): Augment lib_SOURCES.

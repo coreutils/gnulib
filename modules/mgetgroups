@@ -16,6 +16,7 @@ configure.ac:
 gl_MGETGROUPS
 
 Makefile.am:
+lib_SOURCES += mgetgroups.c
 
 Include:
 "mgetgroups.h"
