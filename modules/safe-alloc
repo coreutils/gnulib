@@ -10,6 +10,7 @@ configure.ac:
 gl_SAFE_ALLOC
 
 Makefile.am:
+lib_SOURCES += safe-alloc.c
 
 Include:
 "safe-alloc.h"

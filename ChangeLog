@@ -1,5 +1,11 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	safe-alloc: Move AC_LIBOBJ invocations to module description.
+	* m4/safe-alloc.m4 (gl_SAFE_ALLOC): Remove AC_LIBOBJ invocation.
+	* modules/safe-alloc (Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	crypto/rijndael: Move AC_LIBOBJ invocations to module description.
 	* m4/rijndael.m4: Remove file.
 	* modules/crypto/rijndael (Files): Remove it.
