@@ -13,6 +13,7 @@ configure.ac:
 gl_POSIXVER
 
 Makefile.am:
+lib_SOURCES += posixver.c
 
 Include:
 "posixver.h"
