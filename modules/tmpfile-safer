@@ -5,7 +5,6 @@ Files:
 lib/stdio--.h
 lib/stdio-safer.h
 lib/tmpfile-safer.c
-m4/stdio-safer.m4
 
 Depends-on:
 binary-io
@@ -13,10 +12,10 @@ tmpfile
 unistd-safer
 
 configure.ac:
-gl_TMPFILE_SAFER
 gl_MODULE_INDICATOR([tmpfile-safer])
 
 Makefile.am:
+lib_SOURCES += tmpfile-safer.c
 
 Include:
 "stdio-safer.h"
