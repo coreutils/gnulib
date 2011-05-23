@@ -4,16 +4,15 @@ Return a string describing the type of a file.
 Files:
 lib/file-type.h
 lib/file-type.c
-m4/file-type.m4
 
 Depends-on:
 gettext-h
 sys_stat
 
 configure.ac:
-gl_FILE_TYPE
 
 Makefile.am:
+lib_SOURCES += file-type.c
 
 Include:
 "file-type.h"

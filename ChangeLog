@@ -1,5 +1,13 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	file-type: Move AC_LIBOBJ invocations to module description.
+	* m4/file-type.m4: Remove file.
+	* modules/file-type (Files): Remove it.
+	(configure.ac): Remove gl_FILE_TYPE call.
+	(Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	filenamecat*: Respect rules for use of AC_LIBOBJ.
 	* m4/filenamecat.m4 (gl_FILE_NAME_CONCAT, gl_FILE_NAME_CONCAT_LGPL):
 	Remove AC_LIBOBJ invocation.
