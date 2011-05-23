@@ -18,6 +18,7 @@ configure.ac:
 gl_DIRNAME_LGPL
 
 Makefile.am:
+lib_SOURCES += dirname-lgpl.c basename-lgpl.c stripslash.c
 
 Include:
 "dirname.h"

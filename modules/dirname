@@ -16,6 +16,7 @@ gl_DIRNAME
 gl_MODULE_INDICATOR([dirname])
 
 Makefile.am:
+lib_SOURCES += dirname.c basename.c
 
 Include:
 "dirname.h"
