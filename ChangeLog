@@ -1,5 +1,13 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	crypto/rijndael: Move AC_LIBOBJ invocations to module description.
+	* m4/rijndael.m4: Remove file.
+	* modules/crypto/rijndael (Files): Remove it.
+	(configure.ac): Remove gl_RIJNDAEL call.
+	(Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	readtokens: Move AC_LIBOBJ invocations to module description.
 	* m4/readtokens.m4 (gl_READTOKENS): Remove AC_LIBOBJ invocation.
 	* modules/readtokens (Makefile.am): Augment lib_SOURCES.

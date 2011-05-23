@@ -6,15 +6,14 @@ lib/rijndael-alg-fst.c
 lib/rijndael-alg-fst.h
 lib/rijndael-api-fst.c
 lib/rijndael-api-fst.h
-m4/rijndael.m4
 
 Depends-on:
 stdint
 
 configure.ac:
-gl_RIJNDAEL
 
 Makefile.am:
+lib_SOURCES += rijndael-alg-fst.c rijndael-api-fst.c
 
 Include:
 "rijndael-alg-fst.h"
