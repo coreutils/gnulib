@@ -1,5 +1,11 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	human: Move AC_LIBOBJ invocations to module description.
+	* m4/human.m4 (gl_HUMAN): Remove AC_LIBOBJ invocation.
+	* modules/human (Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	crypto/hmac-sha1: Move AC_LIBOBJ invocations to module description.
 	* m4/hmac-sha1.m4: Remove file.
 	* modules/crypto/hmac-sha1 (Files): Remove it.
