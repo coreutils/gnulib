@@ -13,6 +13,7 @@ configure.ac:
 gl_MEMCOLL
 
 Makefile.am:
+lib_SOURCES += memcoll.c
 
 Include:
 "memcoll.h"
