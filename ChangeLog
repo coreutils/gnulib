@@ -1,5 +1,11 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	crypto/sha1: Move AC_LIBOBJ invocations to module description.
+	* m4/sha1.m4 (gl_SHA1): Remove AC_LIBOBJ invocation.
+	* modules/crypto/sha1 (Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	settime: Move AC_LIBOBJ invocations to module description.
 	* m4/settime.m4 (gl_SETTIME): Remove AC_LIBOBJ invocation.
 	* modules/settime (Makefile.am): Augment lib_SOURCES.

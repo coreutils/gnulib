@@ -13,6 +13,7 @@ configure.ac:
 gl_SHA1
 
 Makefile.am:
+lib_SOURCES += sha1.c
 
 Include:
 "sha1.h"
