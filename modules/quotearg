@@ -24,6 +24,7 @@ configure.ac:
 gl_QUOTEARG
 
 Makefile.am:
+lib_SOURCES += quotearg.c
 
 Include:
 "quotearg.h"

@@ -1,5 +1,11 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	quotearg: Move AC_LIBOBJ invocations to module description.
+	* m4/quotearg.m4 (gl_QUOTEARG): Remove AC_LIBOBJ invocation.
+	* modules/quotearg (Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	quote: Move AC_LIBOBJ invocations to module description.
 	* m4/quote.m4 (gl_QUOTE): Remove AC_LIBOBJ invocation.
 	* modules/quote (Makefile.am): Augment lib_SOURCES.
