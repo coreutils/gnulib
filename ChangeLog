@@ -1,5 +1,13 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	freopen-safer: Move AC_LIBOBJ invocations to module description.
+	* m4/stdio-safer.m4 (gl_FREOPEN_SAFER): Remove macro.
+	* modules/freopen-safer (Files): Remove m4/stdio-safer.m4.
+	(configure.ac): Remove gl_FREOPEN_SAFER call.
+	(Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	fopen-safer: Move AC_LIBOBJ invocations to module description.
 	* m4/stdio-safer.m4 (gl_FOPEN_SAFER): Remove macro.
 	* modules/fopen-safer (Files): Remove m4/stdio-safer.m4.

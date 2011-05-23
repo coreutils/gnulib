@@ -5,7 +5,6 @@ Files:
 lib/stdio--.h
 lib/stdio-safer.h
 lib/freopen-safer.c
-m4/stdio-safer.m4
 
 Depends-on:
 dup2
@@ -14,10 +13,10 @@ open
 stdbool
 
 configure.ac:
-gl_FREOPEN_SAFER
 gl_MODULE_INDICATOR([freopen-safer])
 
 Makefile.am:
+lib_SOURCES += freopen-safer.c
 
 Include:
 "stdio-safer.h"
