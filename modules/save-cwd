@@ -18,6 +18,7 @@ configure.ac:
 gl_SAVE_CWD
 
 Makefile.am:
+lib_SOURCES += save-cwd.c
 
 Include:
 "save-cwd.h"
