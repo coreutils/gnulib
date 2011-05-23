@@ -19,6 +19,7 @@ configure.ac:
 gl_BACKUPFILE
 
 Makefile.am:
+lib_SOURCES += backupfile.c
 
 Include:
 "backupfile.h"

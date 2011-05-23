@@ -1,5 +1,11 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	backupfile: Move AC_LIBOBJ invocations to module description.
+	* m4/backupfile.m4 (gl_BACKUPFILE): Remove AC_LIBOBJ invocation.
+	* modules/backupfile (Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	argmatch: Move AC_LIBOBJ invocations to module description.
 	* m4/argmatch.m4: Remove file.
 	* modules/argmatch (Files): Remove it.
