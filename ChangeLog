@@ -1,5 +1,13 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	read-file: Move AC_LIBOBJ invocations to module description.
+	* m4/read-file.m4 (gl_FUNC_READ_FILE): Remove macro.
+	* modules/read-file (configure.ac): Invoke gl_PREREQ_READ_FILE instead
+	of gl_FUNC_READ_FILE.
+	(Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	quotearg: Move AC_LIBOBJ invocations to module description.
 	* m4/quotearg.m4 (gl_QUOTEARG): Remove AC_LIBOBJ invocation.
 	* modules/quotearg (Makefile.am): Augment lib_SOURCES.

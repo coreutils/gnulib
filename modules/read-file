@@ -14,9 +14,10 @@ stdint
 sys_stat
 
 configure.ac:
-gl_FUNC_READ_FILE
+gl_PREREQ_READ_FILE
 
 Makefile.am:
+lib_SOURCES += read-file.c
 
 Include:
 "read-file.h"
