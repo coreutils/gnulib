@@ -1,4 +1,4 @@
-# c-strtod.m4 serial 12
+# c-strtod.m4 serial 13
 
 # Copyright (C) 2004-2006, 2009-2011 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -33,11 +33,9 @@ AC_DEFUN([gl_C99_STRTOLD],
   fi
 ])
 
+dnl Prerequisites of lib/c-strtod.c.
 AC_DEFUN([gl_C_STRTOD],
 [
-  AC_LIBOBJ([c-strtod])
-
-  dnl Prerequisites of lib/c-strtod.c.
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_CHECK_FUNCS([strtod_l])
 

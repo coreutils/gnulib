@@ -15,6 +15,7 @@ configure.ac:
 gl_C_STRTOD
 
 Makefile.am:
+lib_SOURCES += c-strtod.c
 
 Include:
 "c-strtod.h"
