@@ -1,5 +1,13 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	exclude: Move AC_LIBOBJ invocations to module description.
+	* m4/exclude.m4: Remove file.
+	* modules/exclude (Files): Remove it.
+	(configure.ac): Remove gl_EXCLUDE call.
+	(Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	dirname*: Respect rules for use of AC_LIBOBJ.
 	* m4/dirname.m4 (gl_DIRNAME, gl_DIRNAME_LGPL): Remove AC_LIBOBJ
 	invocations.
