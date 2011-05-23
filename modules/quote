@@ -13,6 +13,7 @@ configure.ac:
 gl_QUOTE
 
 Makefile.am:
+lib_SOURCES += quote.c
 
 Include:
 "quote.h"
