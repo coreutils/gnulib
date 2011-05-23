@@ -1,4 +1,4 @@
-# canonicalize.m4 serial 22
+# canonicalize.m4 serial 23
 
 dnl Copyright (C) 2003-2007, 2009-2011 Free Software Foundation, Inc.
 
@@ -10,8 +10,6 @@ dnl with or without modifications, as long as this notice is preserved.
 # not provide or fix realpath.
 AC_DEFUN([gl_FUNC_CANONICALIZE_FILENAME_MODE],
 [
-  AC_LIBOBJ([canonicalize])
-
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_CHECK_FUNCS_ONCE([canonicalize_file_name])
   AC_REQUIRE([gl_DOUBLE_SLASH_ROOT])

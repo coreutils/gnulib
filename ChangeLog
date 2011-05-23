@@ -1,5 +1,12 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	canonicalize: Move AC_LIBOBJ invocations to module description.
+	* m4/canonicalize.m4 (gl_FUNC_CANONICALIZE_FILENAME_MODE): Remove
+	AC_LIBOBJ invocation.
+	* modules/canonicalize (Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	canon-host: Move AC_LIBOBJ invocations to module description.
 	* m4/canon-host.m4 (gl_CANON_HOST): Remove macro.
 	* modules/canon-host (configure.ac): Invoke gl_PREREQ_CANON_HOST

@@ -28,6 +28,7 @@ gl_MODULE_INDICATOR_FOR_TESTS([canonicalize])
 gl_STDLIB_MODULE_INDICATOR([canonicalize_file_name])
 
 Makefile.am:
+lib_SOURCES += canonicalize.c
 
 Include:
 "canonicalize.h"
