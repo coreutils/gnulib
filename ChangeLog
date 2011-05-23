@@ -1,5 +1,13 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	long-options: Move AC_LIBOBJ invocations to module description.
+	* m4/long-options.m4: Remove file.
+	* modules/long-options (Files): Remove it.
+	(configure.ac): Remove gl_LONG_OPTIONS call.
+	(Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	i-ring: Move AC_LIBOBJ invocations to module description.
 	* m4/i-ring.m4 (gl_I_RING): Remove AC_LIBOBJ invocation.
 	* modules/i-ring (Makefile.am): Augment lib_SOURCES.

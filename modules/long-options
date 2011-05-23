@@ -4,7 +4,6 @@ Handle --help and --version options.
 Files:
 lib/long-options.h
 lib/long-options.c
-m4/long-options.m4
 
 Depends-on:
 getopt-gnu
@@ -12,9 +11,9 @@ stdlib
 version-etc
 
 configure.ac:
-gl_LONG_OPTIONS
 
 Makefile.am:
+lib_SOURCES += long-options.c
 
 Include:
 "long-options.h"
