@@ -1,5 +1,11 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	mpsort: Move AC_LIBOBJ invocations to module description.
+	* m4/mpsort.m4 (gl_MPSORT): Remove AC_LIBOBJ invocation.
+	* modules/mpsort (Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	modechange: Move AC_LIBOBJ invocations to module description.
 	* m4/modechange.m4 (gl_MODECHANGE): Remove AC_LIBOBJ invocation.
 	* modules/modechange (Makefile.am): Augment lib_SOURCES.

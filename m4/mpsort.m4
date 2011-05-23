@@ -9,5 +9,4 @@
 AC_DEFUN([gl_MPSORT],
 [
   AC_REQUIRE([AC_C_RESTRICT])
-  AC_LIBOBJ([mpsort])
 ])

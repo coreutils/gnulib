@@ -12,6 +12,7 @@ configure.ac:
 gl_MPSORT
 
 Makefile.am:
+lib_SOURCES += mpsort.c
 
 Include:
 "mpsort.h"
