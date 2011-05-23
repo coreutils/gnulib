@@ -1,5 +1,11 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	chdir-safer: Move AC_LIBOBJ invocations to module description.
+	* m4/chdir-safer.m4 (gl_CHDIR_SAFER): Remove AC_LIBOBJ invocation.
+	* modules/chdir-safer (Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	canonicalize: Move AC_LIBOBJ invocations to module description.
 	* m4/canonicalize.m4 (gl_FUNC_CANONICALIZE_FILENAME_MODE): Remove
 	AC_LIBOBJ invocation.
