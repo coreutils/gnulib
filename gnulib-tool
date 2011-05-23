@@ -2694,8 +2694,12 @@ func_modules_transitive_closure ()
               func_append inmodules " $dep"
               if test -n "$cond_dependencies"; then
                 escaped_dep=`echo "$dep" | sed -e "$sed_escape_dependency"`
-                sed_extract_condition1='/^ *'"$escaped_dep"' *$/{s/^.*$/true/p}'
-                sed_extract_condition2='/^ *'"$escaped_dep"' *\[.*\] *$/{s/^ *'"$escaped_dep"' *\[\(.*\)\] *$/\1/p}'
+                sed_extract_condition1='/^ *'"$escaped_dep"' *$/{
+                  s/^.*$/true/p
+                }'
+                sed_extract_condition2='/^ *'"$escaped_dep"' *\[.*\] *$/{
+                  s/^ *'"$escaped_dep"' *\[\(.*\)\] *$/\1/p
+                }'
                 condition=`func_get_dependencies $module | sed -n -e "$sed_extract_condition1" -e "$sed_extract_condition2"`
                 if test "$condition" = true; then
                   condition=
