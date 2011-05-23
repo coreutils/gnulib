@@ -5,7 +5,6 @@ Files:
 lib/stdio--.h
 lib/stdio-safer.h
 lib/popen-safer.c
-m4/stdio-safer.m4
 
 Depends-on:
 cloexec
@@ -14,10 +13,10 @@ popen
 unistd-safer
 
 configure.ac:
-gl_POPEN_SAFER
 gl_MODULE_INDICATOR([popen-safer])
 
 Makefile.am:
+lib_SOURCES += popen-safer.c
 
 Include:
 "stdio-safer.h"
