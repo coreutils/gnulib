@@ -13,6 +13,7 @@ configure.ac:
 gl_MD4
 
 Makefile.am:
+lib_SOURCES += md4.c
 
 Include:
 "md4.h"
