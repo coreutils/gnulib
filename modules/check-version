@@ -2,7 +2,6 @@ Description:
 Check version string compatibility.
 
 Files:
-m4/check-version.m4
 lib/check-version.h
 lib/check-version.c
 
@@ -10,9 +9,9 @@ Depends-on:
 strverscmp
 
 configure.ac:
-gl_CHECK_VERSION
 
 Makefile.am:
+lib_SOURCES += check-version.c
 
 Include:
 "check-version.h"
