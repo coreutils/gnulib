@@ -17,6 +17,7 @@ configure.ac:
 gl_MKANCESDIRS
 
 Makefile.am:
+lib_SOURCES += mkancesdirs.c
 
 Include:
 "mkancesdirs.h"
