@@ -16,6 +16,7 @@ gl_IDCACHE
 Makefile.am:
 
 Include:
+"idcache.h"
 
 License:
 GPL
