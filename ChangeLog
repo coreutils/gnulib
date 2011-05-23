@@ -1,5 +1,11 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	readtokens: Move AC_LIBOBJ invocations to module description.
+	* m4/readtokens.m4 (gl_READTOKENS): Remove AC_LIBOBJ invocation.
+	* modules/readtokens (Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	read-file: Move AC_LIBOBJ invocations to module description.
 	* m4/read-file.m4 (gl_FUNC_READ_FILE): Remove macro.
 	* modules/read-file (configure.ac): Invoke gl_PREREQ_READ_FILE instead
