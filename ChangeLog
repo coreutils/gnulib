@@ -1,5 +1,11 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	c-strtold: Move AC_LIBOBJ invocations to module description.
+	* m4/c-strtod.m4 (gl_C_STRTOLD): Remove AC_LIBOBJ invocation.
+	* modules/c-strtold (Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	c-strtod: Move AC_LIBOBJ invocations to module description.
 	* m4/c-strtod.m4 (gl_C_STRTOD): Remove AC_LIBOBJ invocation.
 	* modules/c-strtod (Makefile.am): Augment lib_SOURCES.
