@@ -4,7 +4,6 @@ DES block cipher.
 Files:
 lib/des.c
 lib/des.h
-m4/des.m4
 
 Depends-on:
 stdint
@@ -12,9 +11,9 @@ stdbool
 memcmp
 
 configure.ac:
-gl_DES
 
 Makefile.am:
+lib_SOURCES += des.c
 
 Include:
 "des.h"
