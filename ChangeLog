@@ -1,3 +1,11 @@
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+	    Eric Blake  <eblake@redhat.com>
+
+	linkat, renameat: Update dependencies.
+	* modules/renameat (Depends-on): Add dosname, save-cwd. Remove stpcpy.
+	* modules/linkat (Depends-on): Likewise. Remove also readlink,
+	symlinkat.
+
 2011-05-23  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: more tight_scope improvements

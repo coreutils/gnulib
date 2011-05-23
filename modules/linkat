@@ -12,6 +12,7 @@ extensions
 areadlink        [test $HAVE_LINKAT = 0 || test $REPLACE_LINKAT = 1]
 areadlinkat      [test $HAVE_LINKAT = 0 || test $REPLACE_LINKAT = 1]
 dirname-lgpl     [test $HAVE_LINKAT = 0 || test $REPLACE_LINKAT = 1]
+dosname          [test $HAVE_LINKAT = 0 || test $REPLACE_LINKAT = 1]
 errno            [test $HAVE_LINKAT = 0 || test $REPLACE_LINKAT = 1]
 fcntl-h          [test $HAVE_LINKAT = 0 || test $REPLACE_LINKAT = 1]
 filenamecat-lgpl [test $HAVE_LINKAT = 0 || test $REPLACE_LINKAT = 1]
@@ -20,11 +21,9 @@ openat           [test $HAVE_LINKAT = 0 || test $REPLACE_LINKAT = 1]
 link             [test $HAVE_LINKAT = 0 || test $REPLACE_LINKAT = 1]
 link-follow      [test $HAVE_LINKAT = 0 || test $REPLACE_LINKAT = 1]
 lstat            [test $HAVE_LINKAT = 0 || test $REPLACE_LINKAT = 1]
-readlink         [test $HAVE_LINKAT = 0 || test $REPLACE_LINKAT = 1]
 same-inode       [test $HAVE_LINKAT = 0 || test $REPLACE_LINKAT = 1]
-stpcpy           [test $HAVE_LINKAT = 0 || test $REPLACE_LINKAT = 1]
+save-cwd         [test $HAVE_LINKAT = 0 || test $REPLACE_LINKAT = 1]
 symlink          [test $HAVE_LINKAT = 0 || test $REPLACE_LINKAT = 1]
-symlinkat        [test $HAVE_LINKAT = 0 || test $REPLACE_LINKAT = 1]
 
 configure.ac:
 gl_FUNC_LINKAT
