@@ -16,6 +16,7 @@ configure.ac:
 gl_XNANOSLEEP
 
 Makefile.am:
+lib_SOURCES += xnanosleep.c
 
 Include:
 "xnanosleep.h"
