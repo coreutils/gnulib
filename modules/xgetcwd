@@ -15,6 +15,7 @@ configure.ac:
 gl_XGETCWD
 
 Makefile.am:
+lib_SOURCES += xgetcwd.c
 
 Include:
 "xgetcwd.h"

@@ -1,5 +1,11 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	xgetcwd: Move AC_LIBOBJ invocations to module description.
+	* m4/xgetcwd.m4 (gl_XGETCWD): Remove AC_LIBOBJ invocation.
+	* modules/xgetcwd (Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	xalloc: Move AC_LIBOBJ invocations to module description.
 	* m4/xalloc.m4 (gl_XALLOC): Remove AC_LIBOBJ invocation.
 	* modules/xalloc (Makefile.am): Augment lib_SOURCES.
