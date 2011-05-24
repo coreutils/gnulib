@@ -1,3 +1,10 @@
+2011-05-24  Bruno Haible  <bruno@clisp.org>
+
+	strerror_r-posix: Respect rules for use of AC_LIBOBJ.
+	* m4/strerror_r.m4 (gl_FUNC_STRERROR_R): Move AC_LIBOBJ and
+	gl_PREREQ_STRERROR_R invocations from here...
+	* modules/strerror_r-posix (configure.ac): ... to here.
+
 2011-05-24  Eric Blake  <eblake@redhat.com>
 
 	strerror_r: fix missing header

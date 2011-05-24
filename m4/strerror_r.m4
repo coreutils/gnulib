@@ -1,4 +1,4 @@
-# strerror_r.m4 serial 8
+# strerror_r.m4 serial 9
 dnl Copyright (C) 2002, 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -99,10 +99,6 @@ changequote([,])dnl
       dnl add to <errno.h>. Replace it.
       REPLACE_STRERROR_R=1
     fi
-  fi
-  if test $HAVE_DECL_STRERROR_R = 0 || test $REPLACE_STRERROR_R = 1; then
-    AC_LIBOBJ([strerror_r])
-    gl_PREREQ_STRERROR_R
   fi
 ])
 
