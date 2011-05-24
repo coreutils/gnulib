@@ -21,4 +21,4 @@ diff t-perror2.tmp t-perror3.tmp || fail_ "prefix applied incorrectly"
 test-perror >out 2>/dev/null || fail_ "unexpected exit status"
 test -s out && fail_ "unexpected output"
 
-exit 0
+Exit 0

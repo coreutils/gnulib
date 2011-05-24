@@ -1,5 +1,8 @@
 2011-05-24  Eric Blake  <eblake@redhat.com>
 
+	perror: avoid spurious test failure on HP-UX
+	* tests/test-perror.sh: Use Exit to avoid wrong exit status.
+
 	tests: fix logic bug in init.sh
 	* tests/init.sh: (gl_set_x_corrupts_stderr_): Clear for successful
 	shell.
