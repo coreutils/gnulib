@@ -1,4 +1,5 @@
 Files:
+tests/init.sh
 tests/test-closein.sh
 tests/test-closein.c
 

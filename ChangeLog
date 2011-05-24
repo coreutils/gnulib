@@ -1,5 +1,9 @@
 2011-05-24  Eric Blake  <eblake@redhat.com>
 
+	closein-tests: convert to init.sh
+	* modules/closein-tests (Files): Add init.sh
+	* tests/test-closein.sh Use it.
+
 	yesno-tests: convert to init.sh
 	* modules/yesno-tests (Files): Add init.sh.
 	* tests/test-yesno.sh: Use it.
