@@ -1,5 +1,11 @@
 2011-05-24  Eric Blake  <eblake@redhat.com>
 
+	docs: document recently fixed glibc printf bug
+	* doc/posix-functions/fprintf.texi (fprintf): Document it.
+	* doc/posix-functions/printf.texi (printf): Likewise.
+	* doc/posix-functions/vfprintf.texi (vfprintf): Likewise.
+	* doc/posix-functions/vprintf.texi (vprintf): Likewise.
+
 	closein-tests: convert to init.sh
 	* modules/closein-tests (Files): Add init.sh
 	* tests/test-closein.sh Use it.
