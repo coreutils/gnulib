@@ -473,7 +473,8 @@ strerror_r (int errnum, char *buf, size_t buflen)
       buflen = INT_MAX;
 
 # ifdef __hpux
-    /* On HP-UX 11.31, strerror_r always fails when buflen < 80.  */
+    /* On HP-UX 11.31, strerror_r always fails when buflen < 80; it
+       also fails to change buf on EINVAL.  */
     {
       char stackbuf[80];
 
@@ -498,6 +499,23 @@ strerror_r (int errnum, char *buf, size_t buflen)
         if (strerror_r (errnum, stackbuf, sizeof stackbuf) == ERANGE)
           abort ();
         safe_copy (buf, buflen, stackbuf);
+      }
+# endif
+
+# ifdef _AIX
+    /* AIX returns 0 rather than ERANGE when truncating strings; try
+       again until we are sure we got the entire string.  */
+    if (!ret && strlen (buf) == buflen - 1)
+      {
+        char stackbuf[STACKBUF_LEN];
+        size_t len;
+        strerror_r (errnum, stackbuf, sizeof stackbuf);
+        len = strlen (stackbuf);
+        /* stackbuf should have been large enough.  */
+        if (len + 1 == sizeof stackbuf)
+          abort ();
+        if (buflen <= len)
+          ret = ERANGE;
       }
 # endif
 

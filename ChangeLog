@@ -1,5 +1,9 @@
 2011-05-24  Eric Blake  <eblake@redhat.com>
 
+	strerror_r: fix AIX test failures
+	* lib/strerror_r.c (strerror_r): Convert silent truncation to
+	ERANGE failure.
+
 	strerror_r: fix Solaris test failures
 	* lib/strerror_r.c (strerror_r): Partially populate buf on ERANGE
 	failures.
