@@ -1,5 +1,13 @@
 2011-05-24  Jim Meyering  <meyering@redhat.com>
 
+	utimensat: do not reference an out-of-scope buffer
+	Otherwise, with __linux__ defined, "times" would point to a buffer, "ts"
+	declared in an inner scope, yet "times" would be dereferenced outside
+	the scope in which "ts" was valid.
+	* lib/utimensat.c (rpl_utimensat) [__linux__]: Move the declaration
+	of ts[2] "out/up", so that the use of aliased "times" (via "times = ts;")
+	does not end up referencing an out-of-scope "ts"
+
 	opendir-safer.c: don't clobber errno; don't close negative FD
 	* lib/opendir-safer.c (opendir_safer):
 	[HAVE_FDOPENDIR || GNULIB_FDOPENDIR]: Don't close a negative

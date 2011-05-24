@@ -48,6 +48,10 @@ int
 rpl_utimensat (int fd, char const *file, struct timespec const times[2],
                int flag)
 {
+# ifdef __linux__
+  struct timespec ts[2];
+# endif
+
   /* See comments in utimens.c for details.  */
   static int utimensat_works_really; /* 0 = unknown, 1 = yes, -1 = no.  */
   if (0 <= utimensat_works_really)
@@ -55,7 +59,6 @@ rpl_utimensat (int fd, char const *file, struct timespec const times[2],
       int result;
 # ifdef __linux__
       struct stat st;
-      struct timespec ts[2];
       /* As recently as Linux kernel 2.6.32 (Dec 2009), several file
          systems (xfs, ntfs-3g) have bugs with a single UTIME_OMIT,
          but work if both times are either explicitly specified or
