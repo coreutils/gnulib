@@ -1,5 +1,11 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	tempname: Move AC_LIBOBJ invocations to module description.
+	* m4/tempname.m4 (gl_FUNC_GEN_TEMPNAME): Remove AC_LIBOBJ invocation.
+	* modules/tempname (Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	strftime: Move AC_LIBOBJ invocations to module description.
 	* m4/strftime.m4 (gl_FUNC_STRFTIME): Remove AC_LIBOBJ invocation.
 	* modules/strftime (Makefile.am): Augment lib_SOURCES.

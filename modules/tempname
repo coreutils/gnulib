@@ -18,6 +18,7 @@ configure.ac:
 gl_FUNC_GEN_TEMPNAME
 
 Makefile.am:
+lib_SOURCES += tempname.c
 
 Include:
 "tempname.h"
