@@ -23,6 +23,7 @@ configure.ac:
 gl_UTIMENS
 
 Makefile.am:
+lib_SOURCES += utimens.c
 
 Include:
 "utimens.h"

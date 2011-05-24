@@ -1,5 +1,11 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	utimens: Move AC_LIBOBJ invocations to module description.
+	* m4/utimens.m4 (gl_UTIMENS): Remove AC_LIBOBJ invocation.
+	* modules/utimens (Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	utimecmp: Move AC_LIBOBJ invocations to module description.
 	* m4/utimecmp.m4 (gl_UTIMECMP): Remove AC_LIBOBJ invocation.
 	* modules/utimecmp (Makefile.am): Augment lib_SOURCES.
