@@ -37,8 +37,6 @@ static FILE *myerr;
 int
 main (void)
 {
-  FILE *fp;
-
   /* We change fd 2 later, so save it in fd 10.  */
   if (dup2 (STDERR_FILENO, BACKUP_STDERR_FILENO) != BACKUP_STDERR_FILENO
       || (myerr = fdopen (BACKUP_STDERR_FILENO, "w")) == NULL)

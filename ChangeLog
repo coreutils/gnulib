@@ -1,3 +1,8 @@
+2011-05-24  Jim Meyering  <meyering@redhat.com>
+
+	test-perror2.c: avoid warning about unused variable
+	* tests/test-perror2.c (main): Remove declaration of unused "fp".
+
 2011-05-24  Eric Blake  <eblake@redhat.com>
 
 	perror: avoid spurious test failure on HP-UX
