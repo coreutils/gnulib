@@ -16,6 +16,7 @@ configure.ac:
 gl_FUNC_GNU_STRFTIME
 
 Makefile.am:
+lib_SOURCES += strftime.c
 
 Include:
 "strftime.h"
