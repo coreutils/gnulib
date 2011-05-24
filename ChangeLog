@@ -1,5 +1,11 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	yesno: Move AC_LIBOBJ invocations to module description.
+	* m4/yesno.m4 (gl_YESNO): Remove AC_LIBOBJ invocation.
+	* modules/yesno (Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	xstrtol: Move AC_LIBOBJ invocations to module description.
 	* m4/xstrtol.m4 (gl_XSTRTOL): Remove AC_LIBOBJ invocations.
 	* modules/xstrtol (Makefile.am): Augment lib_SOURCES.

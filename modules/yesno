@@ -16,6 +16,7 @@ configure.ac:
 gl_YESNO
 
 Makefile.am:
+lib_SOURCES += yesno.c
 
 Include:
 "yesno.h"
