@@ -5,7 +5,6 @@ Files:
 lib/stdlib--.h
 lib/stdlib-safer.h
 lib/mkstemp-safer.c
-m4/stdlib-safer.m4
 
 Depends-on:
 fd-safer-flag
@@ -14,9 +13,9 @@ stdlib
 unistd-safer
 
 configure.ac:
-gl_STDLIB_SAFER
 
 Makefile.am:
+lib_SOURCES += mkstemp-safer.c
 
 Include:
 "stdlib-safer.h"

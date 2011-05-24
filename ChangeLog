@@ -1,5 +1,13 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	stdlib-safer: Move AC_LIBOBJ invocations to module description.
+	* m4/stdlib-safer.m4: Remove file.
+	* modules/stdlib-safer (Files): Remove m4/stdlib-safer.m4.
+	(configure.ac): Remove gl_STDLIB_SAFER call.
+	(Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	tmpfile-safer: Move AC_LIBOBJ invocations to module description.
 	* m4/stdio-safer.m4: Remove file.
 	* modules/tmpfile-safer (Files): Remove m4/stdio-safer.m4.
