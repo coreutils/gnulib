@@ -15,6 +15,7 @@ configure.ac:
 gl_XALLOC
 
 Makefile.am:
+lib_SOURCES += xmalloc.c
 
 Include:
 "xalloc.h"
