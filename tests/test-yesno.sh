@@ -1,10 +1,6 @@
 #!/bin/sh
-
-tmpfiles=
-trap 'rm -fr $tmpfiles' 1 2 3 15
-
-p=t-yesno-
-tmpfiles="${p}in.tmp ${p}xout.tmp ${p}out1.tmp ${p}out.tmp ${p}err.tmp"
+: ${srcdir=.}
+. "$srcdir/init.sh"; path_prepend_ .
 
 # For now, only test with C locale
 LC_ALL=C
@@ -19,7 +15,7 @@ else
 fi
 
 # Test with seekable stdin; the followon process must see remaining data.
-tr @ '\177' <<EOF > ${p}in.tmp
+tr @ '\177' <<EOF > in.tmp
 nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn - entire line consumed
 y@n - backspace does not change result
 y
@@ -27,7 +23,7 @@ does not match either yesexpr or noexpr
 n
 EOF
 
-cat <<EOF > ${p}xout.tmp
+cat <<EOF > xout.tmp
 N
 Y
 Y
@@ -35,40 +31,36 @@ N
 n
 EOF
 
-(./test-yesno${EXEEXT}; ./test-yesno${EXEEXT} 3; cat) \
-  < ${p}in.tmp > ${p}out1.tmp || exit 1
-LC_ALL=C tr -d "$cr" < ${p}out1.tmp > ${p}out.tmp || exit 1
-cmp ${p}xout.tmp ${p}out.tmp || exit 1
+fail=0
+(test-yesno; test-yesno 3; cat) < in.tmp > out1.tmp || fail=1
+LC_ALL=C tr -d "$cr" < out1.tmp > out.tmp || fail=1
+cmp xout.tmp out.tmp || fail=1
 
-(./test-yesno${EXEEXT} 3; ./test-yesno${EXEEXT}; cat) \
-  < ${p}in.tmp > ${p}out1.tmp || exit 1
-LC_ALL=C tr -d "$cr" < ${p}out1.tmp > ${p}out.tmp || exit 1
-cmp ${p}xout.tmp ${p}out.tmp || exit 1
+(test-yesno 3; test-yesno; cat) < in.tmp > out1.tmp || fail=1
+LC_ALL=C tr -d "$cr" < out1.tmp > out.tmp || fail=1
+cmp xout.tmp out.tmp || fail=1
 
 # Test for behavior on pipe
-cat <<EOF > ${p}xout.tmp
+cat <<EOF > xout.tmp
 Y
 N
 EOF
-echo yes | ./test-yesno${EXEEXT} 2 > ${p}out1.tmp || exit 1
-LC_ALL=C tr -d "$cr" < ${p}out1.tmp > ${p}out.tmp || exit 1
-cmp ${p}xout.tmp ${p}out.tmp || exit 1
+echo yes | test-yesno 2 > out1.tmp || fail=1
+LC_ALL=C tr -d "$cr" < out1.tmp > out.tmp || fail=1
+cmp xout.tmp out.tmp || fail=1
 
 # Test for behavior on EOF
-cat <<EOF > ${p}xout.tmp
+cat <<EOF > xout.tmp
 N
 EOF
-./test-yesno${EXEEXT} </dev/null > ${p}out1.tmp || exit 1
-LC_ALL=C tr -d "$cr" < ${p}out1.tmp > ${p}out.tmp || exit 1
-cmp ${p}xout.tmp ${p}out.tmp || exit 1
+test-yesno </dev/null > out1.tmp || fail=1
+LC_ALL=C tr -d "$cr" < out1.tmp > out.tmp || fail=1
+cmp xout.tmp out.tmp || fail=1
 
 # Test for behavior when stdin is closed
-./test-yesno${EXEEXT} 0 <&- > ${p}out1.tmp 2> ${p}err.tmp && exit 1
-LC_ALL=C tr -d "$cr" < ${p}out1.tmp > ${p}out.tmp || exit 1
-cmp ${p}xout.tmp ${p}out.tmp || exit 1
-test -s ${p}err.tmp || exit 1
+test-yesno 0 <&- > out1.tmp 2> err.tmp && fail=1
+LC_ALL=C tr -d "$cr" < out1.tmp > out.tmp || fail=1
+cmp xout.tmp out.tmp || fail=1
+test -s err.tmp || fail=1
 
-# Cleanup
-rm -fr $tmpfiles
-
-exit 0
+Exit $fail

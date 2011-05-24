@@ -1,4 +1,5 @@
 Files:
+tests/init.sh
 tests/test-yesno.c
 tests/test-yesno.sh
 

@@ -1,5 +1,9 @@
 2011-05-24  Eric Blake  <eblake@redhat.com>
 
+	yesno-tests: convert to init.sh
+	* modules/yesno-tests (Files): Add init.sh.
+	* tests/test-yesno.sh: Use it.
+
 	atexit-tests: ensure reliable exit status
 	* tests/test-atexit.sh: Prefer 'Exit' over 'exit'.
 	Reported by Bruno Haible.
