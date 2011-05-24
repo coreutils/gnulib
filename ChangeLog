@@ -1,5 +1,10 @@
 2011-05-24  Eric Blake  <eblake@redhat.com>
 
+	strerror_r: fix Solaris test failures
+	* lib/strerror_r.c (strerror_r): Partially populate buf on ERANGE
+	failures.
+	* doc/posix-functions/strerror_r.texi (strerror_r): Document this.
+
 	strerror_r: enforce POSIX recommendations
 	* lib/strerror_r.c (safe_copy): New helper method.
 	(strerror_r): Guarantee a non-empty string.

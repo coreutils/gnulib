@@ -27,12 +27,16 @@
 
 #include <errno.h>
 
-# if GNULIB_defined_ESOCK /* native Windows platforms */
-#  if HAVE_WINSOCK2_H
-#   include <winsock2.h>
-#  endif
+#if GNULIB_defined_ESOCK /* native Windows platforms */
+# if HAVE_WINSOCK2_H
+#  include <winsock2.h>
 # endif
+#endif
 
+/* Reasonable buffer size that should never trigger ERANGE; if this
+   proves too small, we intentionally abort(), to remind us to fix
+   this value as well as strerror-impl.h.  */
+#define STACKBUF_LEN 256
 
 #if (__GLIBC__ >= 2 || defined __UCLIBC__ || defined __CYGWIN__) && HAVE___XPG_STRERROR_R /* glibc >= 2.3.4, cygwin >= 1.7.9 */
 
@@ -483,7 +487,18 @@ strerror_r (int errnum, char *buf, size_t buflen)
         ret = strerror_r (errnum, buf, buflen);
     }
 # else
+    /* Solaris 10 does not populate buf on ERANGE.  */
     ret = strerror_r (errnum, buf, buflen);
+    if (ret == ERANGE && !*buf)
+      {
+        char stackbuf[STACKBUF_LEN];
+
+        /* strerror-impl.h is also affected if our choice of stackbuf
+           size is not large enough.  */
+        if (strerror_r (errnum, stackbuf, sizeof stackbuf) == ERANGE)
+          abort ();
+        safe_copy (buf, buflen, stackbuf);
+      }
 # endif
 
     /* Some old implementations may return (-1, EINVAL) instead of EINVAL.  */

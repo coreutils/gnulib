@@ -59,7 +59,7 @@ AIX 6.1, OSF/1 5.1.
 When the value is not in range or the buffer is too small, this
 function fails to leave a NUL-terminated string in the buffer on some
 platforms:
-glibc 2.13, FreeBSD 8.2.
+glibc 2.13, FreeBSD 8.2, Solaris 10.
 @end itemize
 
 Portability problems not fixed by Gnulib:
