@@ -1,5 +1,11 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	unlinkdir: Move AC_LIBOBJ invocations to module description.
+	* m4/unlinkdir.m4 (gl_UNLINKDIR): Remove AC_LIBOBJ invocation.
+	* modules/unlinkdir (Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	unistd-safer: Move AC_LIBOBJ invocations to module description.
 	* m4/unistd-safer.m4 (gl_UNISTD_SAFER): Remove AC_LIBOBJ invocations.
 	* modules/unistd-safer (Makefile.am): Augment lib_SOURCES.

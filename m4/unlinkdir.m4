@@ -1,4 +1,4 @@
-# serial 6
+# serial 7
 
 # Copyright (C) 2005-2007, 2009-2011 Free Software Foundation, Inc.
 #
@@ -12,8 +12,6 @@ AC_DEFUN([gl_UNLINKDIR],
 [
   AC_REQUIRE([AC_CANONICAL_HOST])
   AC_CHECK_HEADERS_ONCE([priv.h])
-
-  AC_LIBOBJ([unlinkdir])
 
   # The Hurd, the Linux kernel, the FreeBSD kernel version 2.2 and later,
   # Cygwin, and mingw never let anyone (even root) unlink directories.

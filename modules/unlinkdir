@@ -14,6 +14,7 @@ configure.ac:
 gl_UNLINKDIR
 
 Makefile.am:
+lib_SOURCES += unlinkdir.c
 
 Include:
 "unlinkdir.h"
