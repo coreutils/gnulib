@@ -14,6 +14,7 @@ configure.ac:
 gl_WRITE_ANY_FILE
 
 Makefile.am:
+lib_SOURCES += write-any-file.c
 
 Include:
 "write-any-file.h"
