@@ -1,5 +1,18 @@
 2011-06-01  Eric Blake  <eblake@redhat.com>
 
+	strerror: drop strerror_r dependency
+	* lib/strerror_r.c (strerror_r): Move gnulib replacement strings...
+	* lib/strerror-override.c (strerror_override): ...to new file.
+	* lib/strerror-override.h: Add prototype.
+	* lib/strerror-impl.h: Delete.
+	* lib/strerror.c (strerror): New implementation.
+	* modules/errno (Files): Add new files.
+	(configure.ac): Compile new file as appropriate.
+	* modules/strerror (Files): Drop unused file.
+	(Depends-on): Drop strerror_r-posix.
+	* MODULES.html.sh: Document strerror_r-posix.
+	Requested by Sam Steingold.
+
 	perror: call strerror_r directly
 	* modules/perror (Files): Drop strerror-impl.h.
 	* lib/perror.c (perror): Use our own stack buffer, rather than

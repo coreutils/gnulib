@@ -3,6 +3,8 @@ A POSIX-like <errno.h>.
 
 Files:
 lib/errno.in.h
+lib/strerror-override.h
+lib/strerror-override.c
 m4/errno_h.m4
 
 Depends-on:
@@ -10,6 +12,9 @@ include_next
 
 configure.ac:
 gl_HEADER_ERRNO_H
+if test -n "$ERRNO_H"; then
+  AC_LIBOBJ([strerror-override])
+fi
 
 Makefile.am:
 BUILT_SOURCES += $(ERRNO_H)

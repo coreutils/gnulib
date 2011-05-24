@@ -1789,6 +1789,7 @@ func_all_modules ()
   func_module strcasestr-simple
   func_module strchrnul
   func_module streq
+  func_module strerror_r-posix
   func_module strnlen
   func_module strnlen1
   func_module strndup

@@ -3,7 +3,6 @@ strerror() function: return string describing error code.
 
 Files:
 lib/strerror.c
-lib/strerror-impl.h
 m4/strerror.m4
 
 Depends-on:
@@ -11,7 +10,6 @@ string
 errno            [test $REPLACE_STRERROR = 1]
 intprops         [test $REPLACE_STRERROR = 1]
 verify           [test $REPLACE_STRERROR = 1]
-strerror_r-posix [test $REPLACE_STRERROR = 1]
 
 configure.ac:
 gl_FUNC_STRERROR
