@@ -1,3 +1,12 @@
+2011-05-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	intprops: shorten, to pacify gcc -Woverlength-strings
+	* lib/intprops.h (_GL_INT_CONVERT, _GL_INT_NEGATE_CONVERT):
+	(_GL_BINARY_OP_OVERFLOW): Say "0 * (x)" rather than "(x) - (x)",
+	so that, for example, verify (INT_MULTIPLY_OVERFLOW (...)) is less
+	likely to run afoul of C compiler limits for string constant lengths.
+	See <http://lists.gnu.org/archive/html/bug-gnulib/2011-05/msg00528.html>.
+
 2011-05-24  Eric Blake  <eblake@redhat.com>
 
 	docs: document recently fixed glibc printf bug
