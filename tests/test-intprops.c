@@ -16,6 +16,12 @@
 
 /* Written by Paul Eggert.  */
 
+/* Tell gcc not to warn about the many (X < 0) expressions that
+   the overflow macros expand to.  */
+#if (__GNUC__ == 4 && 3 <= __GNUC_MINOR__) || 4 < __GNUC__
+# pragma GCC diagnostic ignored "-Wtype-limits"
+#endif
+
 #include <config.h>
 
 #include "intprops.h"
