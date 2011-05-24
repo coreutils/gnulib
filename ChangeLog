@@ -1,5 +1,11 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	xstrtod: Move AC_LIBOBJ invocations to module description.
+	* m4/xstrtod.m4 (gl_XSTRTOD): Remove AC_LIBOBJ invocation.
+	* modules/xstrtod (Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	xnanosleep: Move AC_LIBOBJ invocations to module description.
 	* m4/xnanosleep.m4 (gl_XNANOSLEEP): Remove AC_LIBOBJ invocation.
 	* modules/xnanosleep (Makefile.am): Augment lib_SOURCES.
