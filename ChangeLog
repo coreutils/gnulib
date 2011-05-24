@@ -1,5 +1,12 @@
 2011-06-01  Eric Blake  <eblake@redhat.com>
 
+	perror: call strerror_r directly
+	* modules/perror (Files): Drop strerror-impl.h.
+	* lib/perror.c (perror): Use our own stack buffer, rather than
+	calling a wrapper that uses static storage.
+	* doc/posix-functions/perror.texi (perror): Document a limitation
+	of our replacement.
+
 	strerror_r: fix includes for FreeBSD
 	* lib/strerror_r.c (includes): Use <stdlib.h> unconditionally,
 	since we use abort on some platforms.

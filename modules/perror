@@ -3,7 +3,6 @@ perror() function: print a message describing error code.
 
 Files:
 lib/perror.c
-lib/strerror-impl.h
 m4/perror.m4
 
 Depends-on:

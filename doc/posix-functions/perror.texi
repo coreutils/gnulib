@@ -24,4 +24,8 @@ Portability problems not fixed by Gnulib:
 POSIX requires that this function set the stream error bit (detected
 by @code{ferror}) on write failure, but not all platforms do this:
 glibc 2.13.
+@item
+POSIX requires that this function not alter stream orientation, but
+the gnulib replacement locks in byte orientation and fails on wide
+character streams.
 @end itemize
