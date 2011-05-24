@@ -17,6 +17,7 @@ configure.ac:
 gl_UNISTD_SAFER
 
 Makefile.am:
+lib_SOURCES += dup-safer.c fd-safer.c pipe-safer.c
 
 Include:
 "unistd-safer.h"

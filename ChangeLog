@@ -1,5 +1,11 @@
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
+	unistd-safer: Move AC_LIBOBJ invocations to module description.
+	* m4/unistd-safer.m4 (gl_UNISTD_SAFER): Remove AC_LIBOBJ invocations.
+	* modules/unistd-safer (Makefile.am): Augment lib_SOURCES.
+
+2011-05-23  Bruno Haible  <bruno@clisp.org>
+
 	tempname: Move AC_LIBOBJ invocations to module description.
 	* m4/tempname.m4 (gl_FUNC_GEN_TEMPNAME): Remove AC_LIBOBJ invocation.
 	* modules/tempname (Makefile.am): Augment lib_SOURCES.
