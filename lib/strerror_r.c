@@ -26,6 +26,7 @@
 #include <string.h>
 
 #include <errno.h>
+#include <stdio.h>
 
 #if GNULIB_defined_ESOCK /* native Windows platforms */
 # if HAVE_WINSOCK2_H
