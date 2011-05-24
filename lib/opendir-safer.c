@@ -50,10 +50,18 @@ opendir_safer (char const *name)
           int e;
 #if HAVE_FDOPENDIR || GNULIB_FDOPENDIR
           int f = dup_safer (fd);
-          newdp = fdopendir (f);
-          e = errno;
-          if (! newdp)
-            close (f);
+          if (f < 0)
+            {
+              e = errno;
+              newdp = NULL;
+            }
+          else
+            {
+              newdp = fdopendir (f);
+              e = errno;
+              if (! newdp)
+                close (f);
+            }
 #else /* !FDOPENDIR */
           newdp = opendir_safer (name);
           e = errno;

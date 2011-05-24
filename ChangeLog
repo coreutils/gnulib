@@ -1,3 +1,13 @@
+2011-05-24  Jim Meyering  <meyering@redhat.com>
+
+	opendir-safer.c: don't clobber errno; don't close negative FD
+	* lib/opendir-safer.c (opendir_safer):
+	[HAVE_FDOPENDIR || GNULIB_FDOPENDIR]: Don't close a negative
+	file descriptor, and more importantly, don't clobber the
+	offending errno value with EINVAL.  Before, upon failure
+	of dup_safer, we would pass the negative file descriptor to
+	fdopendir, which would clobber errno.
+
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
 	idcache: Fix module description.
