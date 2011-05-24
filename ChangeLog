@@ -1,3 +1,9 @@
+2011-05-24  Eric Blake  <eblake@redhat.com>
+
+	tests: fix logic bug in init.sh
+	* tests/init.sh: (gl_set_x_corrupts_stderr_): Clear for successful
+	shell.
+
 2011-05-24  Jim Meyering  <meyering@redhat.com>
 
 	utimensat: do not reference an out-of-scope buffer
@@ -5,8 +11,8 @@
 	declared in an inner scope, yet "times" would be dereferenced outside
 	the scope in which "ts" was valid.
 	* lib/utimensat.c (rpl_utimensat) [__linux__]: Move the declaration
-	of ts[2] "out/up", so that the use of aliased "times" (via "times = ts;")
-	does not end up referencing an out-of-scope "ts"
+	of ts[2] "out/up", so that the use of aliased "times" (via
+	"times = ts;") does not end up referencing an out-of-scope "ts"
 
 	opendir-safer.c: don't clobber errno; don't close negative FD
 	* lib/opendir-safer.c (opendir_safer):

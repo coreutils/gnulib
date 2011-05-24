@@ -167,7 +167,10 @@ else
     st_=$?
 
     # $re_shell_ works just fine.  Use it.
-    test $st_ = 10 && break
+    if test $st_ = 10; then
+      gl_set_x_corrupts_stderr_=false
+      break
+    fi
 
     # If this is our first marginally acceptable shell, remember it.
     if test "$st_:$marginal_" = 9: ; then
