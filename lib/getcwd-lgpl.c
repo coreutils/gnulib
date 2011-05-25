@@ -45,7 +45,14 @@ rpl_getcwd (char *buf, size_t size)
 
   /* Handle single size operations.  */
   if (buf)
-    return getcwd (buf, size);
+    {
+      if (!size)
+        {
+          errno = EINVAL;
+          return NULL;
+        }
+      return getcwd (buf, size);
+    }
 
   if (size)
     {

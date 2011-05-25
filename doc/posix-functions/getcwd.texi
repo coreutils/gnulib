@@ -16,6 +16,10 @@ On some other platforms, this call is not allowed.
 On some platforms, the prototype for @code{getcwd} uses @code{int}
 instead of @code{size_t} for the size argument:
 mingw.
+@item
+On some platforms, @code{getcwd (buf, 0)} fails with @code{ERANGE}
+instead of the required @code{EINVAL}:
+mingw.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{getcwd}:

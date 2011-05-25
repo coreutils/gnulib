@@ -1,3 +1,10 @@
+2011-05-25  Eric Blake  <eblake@redhat.com>
+
+	getcwd: work around mingw bug
+	* lib/getcwd-lgpl.c (rpl_getcwd): Guarantee correct error.
+	* doc/posix-functions/getcwd.texi (getcwd): Document it.
+	Reported by Matthias Bolte.
+
 2011-05-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	test-intprops: disable -Wtype-limits diagnostics
