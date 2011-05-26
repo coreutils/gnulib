@@ -1,3 +1,12 @@
+2011-05-15  James Youngman  <jay@gnu.org>
+
+	getopt: for ambiguous options, enumerate the possibilities.
+	* lib/getopt.c (_getopt_internal_r): Merge glibc change printing
+	the ambiguous options when an ambiguous prefix is given. This was
+	http://sourceware.org/bugzilla/show_bug.cgi?id=7101.  The merged
+	glibc change was
+	http://sourceware.org/git/?p=glibc.git;a=commit;h=bd25564e1e98910ed69043ed6a6f884ce60e5780.
+
 2011-05-25  Eric Blake  <eblake@redhat.com>
 
 	getcwd: work around mingw bug
