@@ -5672,7 +5672,7 @@ output_tables (const char *filename, const char *version)
   fprintf (stream, "escape_char /\n");
   fprintf (stream, "comment_char %%\n");
   fprintf (stream, "\n");
-  fprintf (stream, "%% Generated automatically by gen-unicode-ctype for Unicode %s.\n",
+  fprintf (stream, "%% Generated automatically by gen-uni-tables.c for Unicode %s.\n",
            version);
   fprintf (stream, "\n");
 
@@ -7297,7 +7297,7 @@ output_lbrk_tables (const char *filename1, const char *filename2, const char *ve
 
       fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
       fprintf (stream, "/* Line breaking properties of Unicode characters.  */\n");
-      fprintf (stream, "/* Generated automatically by gen-lbrk for Unicode %s.  */\n",
+      fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
                version);
       fprintf (stream, "\n");
 
@@ -7778,7 +7778,7 @@ output_wbrk_tables (const char *filename, const char *version)
 
   fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
   fprintf (stream, "/* Line breaking properties of Unicode characters.  */\n");
-  fprintf (stream, "/* Generated automatically by gen-uni-tables for Unicode %s.  */\n",
+  fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
            version);
   fprintf (stream, "\n");
 
@@ -8528,7 +8528,7 @@ output_composition_tables (const char *filename, const char *version)
 
   fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
   fprintf (stream, "/* Canonical composition of Unicode characters.  */\n");
-  fprintf (stream, "/* Generated automatically by gen-uni-tables for Unicode %s.  */\n",
+  fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
            version);
   fprintf (stream, "\n");
 
@@ -8661,7 +8661,7 @@ output_simple_mapping_test (const char *filename,
   fprintf (stream, "   You should have received a copy of the GNU General Public License\n");
   fprintf (stream, "   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */\n");
   fprintf (stream, "\n");
-  fprintf (stream, "/* Generated automatically by gen-case.c for Unicode %s.  */\n",
+  fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
            version);
   fprintf (stream, "\n");
   fprintf (stream, "#include \"test-mapping-part1.h\"\n");
@@ -8723,7 +8723,7 @@ output_simple_mapping (const char *filename,
 
   fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
   fprintf (stream, "/* Simple character mapping of Unicode characters.  */\n");
-  fprintf (stream, "/* Generated automatically by gen-case.c for Unicode %s.  */\n",
+  fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
            version);
 
   t.p = 7;
