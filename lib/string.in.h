@@ -736,9 +736,9 @@ _GL_CXXALIASWARN (mbschr);
    and return a pointer to it.  Return NULL if C is not found in STRING.
    Unlike strrchr(), this function works correctly in multibyte locales with
    encodings such as GB18030.  */
-# if defined __hpux
+# if defined __hpux || defined __INTERIX
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
-#   define mbsrchr rpl_mbsrchr /* avoid collision with HP-UX function */
+#   define mbsrchr rpl_mbsrchr /* avoid collision with system function */
 #  endif
 _GL_FUNCDECL_RPL (mbsrchr, char *, (const char *string, int c)
                                    _GL_ARG_NONNULL ((1)));
