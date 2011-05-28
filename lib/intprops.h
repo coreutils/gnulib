@@ -22,9 +22,8 @@
 
 #include <limits.h>
 
-/* Return a integer value, converted to the same type as the integer
-   expression E after integer type promotion.  V is the unconverted value.
-   E should not have side effects.  */
+/* Return an integer value, converted to the same type as the integer
+   expression E after integer type promotion.  V is the unconverted value.  */
 #define _GL_INT_CONVERT(e, v) (0 * (e) + (v))
 
 /* Act like _GL_INT_CONVERT (E, -V) but work around a bug in IRIX 6.5 cc; see
