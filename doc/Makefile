@@ -68,7 +68,7 @@ gnulib.info gnulib.html gnulib.dvi gnulib.pdf: $(GNULIB_TEXI_FILES) updated-stam
 standards.info standards.html standards.dvi: standards.texi make-stds.texi fdl.texi
 
 mostlyclean:
-	rm -f *.aux *.cp *.cps *.fn *.ky *.log *.pg *.toc *.tp *.vr *.vrs
+	rm -f *.aux *.cn *.cp *.cps *.fn *.ky *.log *.pg *.toc *.tp *.vr *.vrs
 	rm -f updated-stamp
 
 clean: mostlyclean

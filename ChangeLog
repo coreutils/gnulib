@@ -1,5 +1,10 @@
 2011-05-28  Bruno Haible  <bruno@clisp.org>
 
+	doc: Cleanup yet another file produced by texinfo.tex.
+	* doc/Makefile (mostlyclean): Remove also gnulib.cn.
+
+2011-05-28  Bruno Haible  <bruno@clisp.org>
+
 	Finish the conditional dependencies mechanism.
 	* gnulib-tool: New option --no-conditional-dependencies.
 	(func_usage): Document it. Don't mark --conditional-dependencies as
