@@ -52,7 +52,7 @@
 #define TYPE_SIGNED(t) (! ((t) 0 < (t) -1))
 
 /* Return 1 if the integer expression E, after integer promotion, has
-   a signed type.  E should not have side effects.  */
+   a signed type.  */
 #define _GL_INT_SIGNED(e) (_GL_INT_NEGATE_CONVERT (e, 1) < 0)
 
 

@@ -3,6 +3,7 @@
 	intprops.h: adjust comment to match code change
 	* lib/intprops.h (_GL_INT_CONVERT): Adjust comment: now that E is used
 	only once, it *may* have side effects.  Also fix an unrelated typo.
+	(_GL_INT_SIGNED): Likewise.
 
 2011-05-26  Simon Josefsson  <simon@josefsson.org>
 
