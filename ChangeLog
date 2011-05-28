@@ -1,5 +1,13 @@
 2011-05-28  Bruno Haible  <bruno@clisp.org>
 
+	getloadavg: Remove an unreliable safety check.
+	* m4/getloadavg.m4 (gl_GETLOADAVG): Drop argument. Remove test whether
+	getloadavg.c is in place.
+	* modules/getloadavg (configure.ac): Drop argument of gl_GETLOADAVG.
+	Reported by Sam Steingold <sds@gnu.org>.
+
+2011-05-28  Bruno Haible  <bruno@clisp.org>
+
 	doc: Cleanup yet another file produced by texinfo.tex.
 	* doc/Makefile (mostlyclean): Remove also gnulib.cn.
 
