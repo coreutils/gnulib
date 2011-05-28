@@ -48,6 +48,7 @@ a real run without changing anything.
 * Localization::                Handling Gnulib's own message translations.
 * VCS Issues::                  Integration with Version Control Systems.
 * Unit tests::                  Bundling the unit tests of the Gnulib modules.
+* Conditional dependencies::    Avoiding unnecessary checks and compilations.
 @end menu
 
 
@@ -713,3 +714,54 @@ Note: In packages which use more than one invocation of @code{gnulib-tool}
 in the scope of the same @code{configure.ac}, you cannot use
 @samp{--with-tests}.  You will have to use a separate @code{configure.ac}
 in this case.
+
+
+@node Conditional dependencies
+@section Avoiding unnecessary checks and compilations
+
+@cindex conditional dependencies
+In some cases, a module is needed by another module only on specific
+platforms.  But when a module is present, its autoconf checks are always
+executed, and its @code{Makefile.am} additions are always enabled.  So
+it can happen that some autoconf checks are executed and some source files
+are compiled, although no other module needs them on this particular
+platform, just @emph{in case} some other module would need them.
+
+The option @samp{--conditional-dependencies} enables an optimization of
+configure checks and @code{Makefile.am} snippets that avoids this.  With
+this option, whether a module is considered ``present'' is no longer decided
+when @code{gnulib-tool} is invoked, but later, when @code{configure} is run.
+This applies to modules that were added as dependencies while
+@code{gnulib-tool} was run; modules that were passed on the command line
+explicitly are always ``present''.
+
+For example, the @code{timegm} module needs, on platforms
+where the system's @code{timegm} function is missing or buggy, a replacement
+that is based on a function @code{mktime_internal}.  The module
+@code{mktime-internal} that provides this function provides it on all
+platforms.  So, by default, the file @file{mktime-internal.c} will be
+compiled on all platforms --- even on glibc and BSD systems which have a
+working @code{timegm} function.  When the option
+@samp{--conditional-dependencies} is given, on the other hand, and if
+@code{mktime-internal} was not explicitly required on the command line,
+the file @file{mktime-internal.c} will only be compiled on the platforms
+where the @code{timegm} needs them.
+
+Conditional dependencies are specified in the module description by putting
+the condition on the same line as the dependent module, enclosed in brackets.
+The condition is a boolean shell expression that can assume that the
+@code{configure.ac} snippet from the module description has already been
+executed.  In the example above, the dependency from @code{timegm} to
+@code{mktime-internal} is written like this:
+
+@smallexample
+Depends-on:
+...
+mktime-internal [test $HAVE_TIMEGM = 0 || test $REPLACE_TIMEGM = 1]
+...
+@end smallexample
+
+Note: The option @samp{--conditional-dependencies} cannot be used together
+with the option @samp{--with-tests}.  It also cannot be used when a package
+uses @code{gnulib-tool} for several subdirectories, with different values
+of @samp{--source-base}, in the scope of a single @code{configure.ac} file.

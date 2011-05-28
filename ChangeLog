@@ -1,5 +1,16 @@
 2011-05-28  Bruno Haible  <bruno@clisp.org>
 
+	Finish the conditional dependencies mechanism.
+	* gnulib-tool: New option --no-conditional-dependencies.
+	(func_usage): Document it. Don't mark --conditional-dependencies as
+	experimental.
+	(cond_dependencies): The possible values can now be true, false, empty.
+	(func_modules_transitive_closure, func_emit_autoconf_snippets): Update.
+	(func_import): Store setting in gnulib-cache.m4 and read it from there.
+	* doc/gnulib-tool.texi (Conditional dependencies): New section.
+
+2011-05-28  Bruno Haible  <bruno@clisp.org>
+
 	doc: Use a recent texinfo.tex.
 	* doc/Makefile (tex_opts): New variable.
 	(%.dvi, %.pdf): Pass it to texi2dvi and texi2pdf.

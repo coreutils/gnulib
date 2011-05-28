@@ -224,9 +224,10 @@ Options for --import, --add/remove-import,
                             have code that provides equivalent functionality.
                             This option can be repeated.
       --conditional-dependencies
-                            Support conditional dependencies (experimental,
-                            may save configure time and object code, not
-                            compatible with --with-tests).
+                            Support conditional dependencies (may save configure
+                            time and object code).
+      --no-conditional-dependencies
+                            Don't use conditional dependencies.
       --libtool             Use libtool rules.
       --no-libtool          Don't use libtool rules.
 
@@ -916,8 +917,8 @@ fi
 # - excl_unportable_tests  true if --without-unportable-tests was given, blank
 #                          otherwise
 # - avoidlist       list of modules to avoid, from --avoid
-# - cond_dependencies  true if --conditional-dependencies was given, blank
-#                      otherwise
+# - cond_dependencies  true if --conditional-dependencies was given, false if
+#                      --no-conditional-dependencies was given, blank otherwise
 # - lgpl            yes or a number if --lgpl was given, blank otherwise
 # - makefile_name   from --makefile-name
 # - libtool         true if --libtool was given, false if --no-libtool was
@@ -1163,6 +1164,9 @@ fi
       --conditional-dependencies | --conditional-dependencie | --conditional-dependenci | --conditional-dependenc | --conditional-dependen | --conditional-depende | --conditional-depend | --conditional-depen | --conditional-depe | --conditional-dep | --conditional-de | --conditional-d | --conditional- | --conditional | --conditiona | --condition | --conditio | --conditi | --condit | --condi | --cond | --con)
         cond_dependencies=true
         shift ;;
+      --no-conditional-dependencies | --no-conditional-dependencie | --no-conditional-dependenci | --no-conditional-dependenc | --no-conditional-dependen | --no-conditional-depende | --no-conditional-depend | --no-conditional-depen | --no-conditional-depe | --no-conditional-dep | --no-conditional-de | --no-conditional-d | --no-conditional- | --no-conditional | --no-conditiona | --no-condition | --no-conditio | --no-conditi | --no-condit | --no-condi | --no-cond | --no-con | --no-co)
+        cond_dependencies=false
+        shift ;;
       --lgpl )
         lgpl=yes
         shift ;;
@@ -1308,7 +1312,7 @@ fi
   if test -z "$pobase" && test -n "$po_domain"; then
     func_warning "--po-domain has no effect without a --po-base option"
   fi
-  if test -n "$cond_dependencies" && test -n "$inctests"; then
+  if test "$cond_dependencies" = true && test -n "$inctests"; then
     echo "gnulib-tool: option --conditional-dependencies is not supported with --with-tests" 1>&2
     func_exit 1
   fi
@@ -2605,7 +2609,7 @@ func_modules_transitive_closure ()
   inmodules="$modules"
   outmodules=
   fmtc_inc_all_tests="$inc_all_direct_tests"
-  if test -n "$cond_dependencies"; then
+  if test "$cond_dependencies" = true; then
     for module in $inmodules; do
       func_verify_module
       if test -n "$module"; then
@@ -2623,7 +2627,7 @@ func_modules_transitive_closure ()
       if test -n "$module"; then
         if func_acceptable $module; then
           func_append outmodules " $module"
-          if test -n "$cond_dependencies"; then
+          if test "$cond_dependencies" = true; then
             if func_get_automake_snippet_conditional $module | grep '^if ' > /dev/null; then
               # A module whose Makefile.am snippet contains a reference to an
               # automake conditional. If we were to use it conditionally, we
@@ -2692,7 +2696,7 @@ func_modules_transitive_closure ()
             done
             if $inc; then
               func_append inmodules " $dep"
-              if test -n "$cond_dependencies"; then
+              if test "$cond_dependencies" = true; then
                 escaped_dep=`echo "$dep" | sed -e "$sed_escape_dependency"`
                 sed_extract_condition1='/^ *'"$escaped_dep"' *$/{
                   s/^.*$/true/p
@@ -3057,14 +3061,14 @@ func_emit_lib_Makefile_am ()
         if grep '[^	 ]' "$tmp"/amsnippet1 "$tmp"/amsnippet2 > /dev/null ; then
           echo "## begin gnulib module $module"
           echo
-          if test -n "$cond_dependencies"; then
+          if test "$cond_dependencies" = true; then
             if func_cond_module_p "$module"; then
               func_module_conditional_name "$module"
               echo "if $conditional"
             fi
           fi
           cat "$tmp"/amsnippet1
-          if test -n "$cond_dependencies"; then
+          if test "$cond_dependencies" = true; then
             if func_cond_module_p "$module"; then
               echo "endif"
             fi
@@ -3678,7 +3682,7 @@ func_emit_autoconf_snippets ()
   toplevel="$3"
   disable_libtool="$4"
   disable_gettext="$5"
-  if test -n "$cond_dependencies"; then
+  if test "$cond_dependencies" = true; then
     # Emit the autoconf code for the unconditional modules.
     for module in $1; do
       eval $verifier
@@ -3814,8 +3818,8 @@ func_emit_autoconf_snippets ()
 #                         otherwise
 # - inc_all_tests   true if --with-all-tests was given, blank otherwise
 # - avoidlist       list of modules to avoid, from --avoid
-# - cond_dependencies  true if conditional dependencies shall be supported,
-#                      blank otherwise
+# - cond_dependencies  true if --conditional-dependencies was given, false if
+#                      --no-conditional-dependencies was given, blank otherwise
 # - lgpl            yes or a number if library's license shall be LGPL,
 #                   blank otherwise
 # - makefile_name   from --makefile-name
@@ -3856,6 +3860,7 @@ func_import ()
   cached_libname=
   cached_lgpl=
   cached_makefile_name=
+  cached_cond_dependencies=
   cached_libtool=
   cached_macro_prefix=
   cached_po_domain=
@@ -3930,6 +3935,9 @@ func_import ()
       }
       /gl_MAKEFILE_NAME(/ {
         s,^.*gl_MAKEFILE_NAME([[ ]*\([^]"$`\\)]*\).*$,cached_makefile_name="\1",p
+      }
+      /gl_CONDITIONAL_DEPENDENCIES/ {
+        s,^.*$,cached_cond_dependencies=true,p
       }
       /gl_LIBTOOL/ {
         s,^.*$,cached_libtool=true,p
@@ -4106,6 +4114,10 @@ func_import ()
     if test -z "$makefile_name"; then
       makefile_name="$cached_makefile_name"
     fi
+    # Use conditional dependencies if specified either way.
+    if test -z "$cond_dependencies"; then
+      cond_dependencies="$cached_cond_dependencies"
+    fi
     # Use libtool if specified either way, or if guessed.
     if test -z "$libtool"; then
       if test -n "$cached_m4base"; then
@@ -4128,6 +4140,11 @@ func_import ()
     # The vc_files defaults to the cached one.
     if test -z "$vc_files"; then
       vc_files="$cached_vc_files"
+    fi
+    # Ensure constraints.
+    if test "$cond_dependencies" = true && test -n "$inctests"; then
+      echo "gnulib-tool: option --conditional-dependencies is not supported with --with-tests" 1>&2
+      func_exit 1
     fi
   fi
   # --without-*-tests options are not supported here.
@@ -4577,6 +4594,11 @@ s,^\(.................................................[^ ]*\) *,                
   if test -n "$makefile_name"; then
     func_append actioncmd " --makefile-name=$makefile_name"
   fi
+  if test "$cond_dependencies" = true; then
+    func_append actioncmd " --conditional-dependencies"
+  else
+    func_append actioncmd " --no-conditional-dependencies"
+  fi
   if test "$libtool" = true; then
     func_append actioncmd " --libtool"
   else
@@ -4871,6 +4893,9 @@ s,//*$,/,'
       fi
     fi
     echo "gl_MAKEFILE_NAME([$makefile_name])"
+    if test "$cond_dependencies" = true; then
+      echo "gl_CONDITIONAL_DEPENDENCIES"
+    fi
     if test "$libtool" = true; then
       echo "gl_LIBTOOL"
     fi
@@ -5268,8 +5293,8 @@ s,//*$,/,'
 # - excl_unportable_tests  true if tests that fail on some platforms should be
 #                          excluded, blank otherwise
 # - avoidlist       list of modules to avoid
-# - cond_dependencies  true if conditional dependencies shall be supported,
-#                      blank otherwise
+# - cond_dependencies  true if --conditional-dependencies was given, false if
+#                      --no-conditional-dependencies was given, blank otherwise
 # - libtool         true if --libtool was given, false if --no-libtool was
 #                   given, blank otherwise
 # - symbolic        true if files should be symlinked, copied otherwise
