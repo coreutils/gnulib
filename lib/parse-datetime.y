@@ -1119,7 +1119,7 @@ yylex (YYSTYPE *lvalp, parser_control *pc)
 
           do
             {
-              if (p < buff + sizeof buff - 1)
+              if (p - buff < sizeof buff - 1)
                 *p++ = c;
               c = *++pc->input;
             }

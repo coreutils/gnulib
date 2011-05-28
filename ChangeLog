@@ -1,5 +1,9 @@
 2011-05-28  Jim Meyering  <meyering@redhat.com>
 
+	parse-datetime.y: accommodate -Wstrict-overflow
+	* lib/parse-datetime.y (yylex): Rearrange pointer arithmetic to
+	placate -Wstrict-overflow.
+
 	trim: avoid a warning from -O2 -Wstrict-overflow
 	* lib/trim.c (trim2): Declare local to be "unsigned int", not "int".
 
