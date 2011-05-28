@@ -65,7 +65,7 @@ trim2 (const char *s, int how)
       /* Trim trailing whitespaces. */
       if (how != TRIM_LEADING)
         {
-          int state = 0;
+          unsigned int state = 0;
           char *r IF_LINT (= NULL); /* used only while state = 2 */
 
           mbi_init (i, d, strlen (d));
@@ -130,4 +130,3 @@ trim2 (const char *s, int how)
 
   return d;
 }
-
